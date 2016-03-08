@@ -6,7 +6,7 @@ namespace mdl {
  
 void Symbol::show(string& str) const {
 	str += smm::Smm::get().lex.symbols.toStr(literal);
-	if (isVar) str += '#';
+	//if (isVar) str += '#';
 }
   
 }

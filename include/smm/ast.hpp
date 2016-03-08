@@ -112,8 +112,10 @@ struct Assertion : public Showable {
 
 class Source : public Showable {
 public :
-	Source() : top(false), name(), contents() { }
-	Source(const string& n, bool t = false) : top(t), name(n), contents() { }
+	Source(const string& n) :
+	top(false), name(n), contents() {
+		static bool t = true; top = t; t = false;
+	}
 	virtual ~Source() {
 		for (auto it = contents.begin(); it != contents.end(); ++ it) {
 			Showable* obj = *it;

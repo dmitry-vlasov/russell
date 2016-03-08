@@ -19,7 +19,7 @@ namespace phoenix = boost::phoenix;
 
 struct str_wrapper {
 	str_wrapper(std::string::const_iterator it) :
-	str (it, it + 64){ }
+	str (it, it + 128){ }
 	std::string str;
 };
 
@@ -70,8 +70,16 @@ struct LabelToInt {
     template <typename T>
     struct result { typedef uint type; };
     uint operator()(const std::vector<char>& lab) const {
-	std::string label(lab.begin(), lab.end());
-	return Smm::mod().lex.labels.toInt(label);
+		std::string label(lab.begin(), lab.end());
+		return Smm::mod().lex.labels.toInt(label);
+    }
+};
+
+struct ParseInclusion {
+    template <typename T>
+    struct result { typedef Source* type; };
+    Source* operator()(const string& path) const {
+    	return source(path);
     }
 };
 
@@ -86,9 +94,10 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 		using phoenix::push_back;
 		using phoenix::new_;
 
-		const phoenix::function<LabelToInt>  labelToInt;
-		const phoenix::function<SymbolToInt> symbolToInt;
-		const phoenix::function<AddToMath>   addToMath;
+		const phoenix::function<LabelToInt>     labelToInt;
+		const phoenix::function<SymbolToInt>    symbolToInt;
+		const phoenix::function<AddToMath>      addToMath;
+		const phoenix::function<ParseInclusion> parseInclusion;
 
 		symbol = lexeme[+(ascii::char_ - '$' - ' ')] [at_c<0>(_val) = symbolToInt(_1)];
 		label  = lexeme[+(ascii::char_ - '$' - ' ')] [_val = labelToInt(_1)];
@@ -123,19 +132,19 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 			> expr_e    [at_c<2>(_val) = _1];
 		essential =
 			lit("e")
-			> uint_ [at_c<0>(_val) = _1]
+			> uint_     [at_c<0>(_val) = _1]
 			> "$e"
 			> expr_e    [at_c<1>(_val) = _1];
 		inner =
 			lit("i")
-			> uint_ [at_c<0>(_val) = _1]
+			> uint_     [at_c<0>(_val) = _1]
 			> "$f"
 			> expr_f    [at_c<1>(_val) = _1];
 		floating =
 			lit("f")
-			> uint_ [at_c<0>(_val) = _1]
+			> uint_     [at_c<0>(_val) = _1]
 			> "$f"
-			> expr_f [at_c<1>(_val) = _1];
+			> expr_f    [at_c<1>(_val) = _1];
 		disjointed %= lit("$d") > expr_e;
 		variables  %= lit("$v") > expr_e;
 		assertion =
@@ -146,15 +155,16 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 			> *floating      [push_back(phoenix::at_c<3>(*_val), _1)]
 			> *inner         [push_back(phoenix::at_c<4>(*_val), _1)]
 			>  (axiomatic    [phoenix::at_c<5>(*_val) = _1] |
-				(provable     [phoenix::at_c<5>(*_val) = _1]
+				(provable    [phoenix::at_c<5>(*_val) = _1]
 				> proof      [phoenix::at_c<6>(*_val) = _1])
 			)
 			> lit("$}")      [addToMath(_val)];
 		constants =
 			lit("$c") [_val = new_<smm::Constants>()]
-			> expr_e    [phoenix::at_c<0>(*_val) = _1, addToMath(_val)];
+			> expr_e  [phoenix::at_c<0>(*_val) = _1]
+			> qi::eps [addToMath(_val)];
 		inclusion = lit("$[")
-			> path [_val = new_<smm::Source>(_1)]
+			> path [_val = parseInclusion(_1)]
 			> "$]";
 		comment = lit("$(") >> lexeme[+(ascii::char_ - '$')] >> "$)";
 		source = +(
@@ -222,8 +232,8 @@ void Grammar<Iterator>::initNames() {
 	source.name("source");
 }
 
-Source* source(const string& file, const string& root) {
-	ifstream in(file, std::ios_base::in);
+Source* source(const string& path) {
+	ifstream in(path, std::ios_base::in);
 	if (!in)
 		throw Error("Could not open input file");
 
@@ -238,7 +248,7 @@ Source* source(const string& file, const string& root) {
 	string::const_iterator end = storage.end();
 
 	Grammar<string::const_iterator> grammar;
-	Source* source = new Source(file, true);
+	Source* source = new Source(path);
 	bool r = phrase_parse(iter, end, grammar, ascii::space, *source);
 	if (!r || iter != end) {
 		throw Error("parsing failed");

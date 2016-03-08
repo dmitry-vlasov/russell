@@ -69,11 +69,11 @@ struct Smm : public Showable {
 };
 
 namespace parse {
-Source* source(const string& in, const string& root);
+Source* source(const string& path);
 }
 
 namespace parse1 {
-Source* source(const string& in, const string& root);
+Source* source(const string& path);
 }
 
 namespace verify {

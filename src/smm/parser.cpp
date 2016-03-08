@@ -391,11 +391,11 @@ static Assertion* assertion(Reader& rd, Token& tok) {
 	return ass;
 }
 
-Source* source(const string& in, const string& root)
+Source* source(const string& path)
 {
 	stack<Reader*> readers;
-	Source* source = new Source(in);
-	readers.push(new Reader(in));
+	Source* source = new Source(path);
+	readers.push(new Reader(path));
 	Reader* rd = readers.top();
 	while (true) {
 		Token tok = lexer::scan(*rd);

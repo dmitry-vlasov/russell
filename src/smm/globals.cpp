@@ -34,7 +34,7 @@ namespace mdl { namespace smm {
 	{
 		try {
 			timers.read.start();
-			source = parse1::source(config.in, config.root);
+			source = parse1::source(config.in);
 
 			//cout << *source << endl;
 
