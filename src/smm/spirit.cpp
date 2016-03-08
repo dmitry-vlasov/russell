@@ -153,11 +153,15 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 		constants =
 			lit("$c") [_val = new_<smm::Constants>()]
 			> expr_e    [phoenix::at_c<0>(*_val) = _1, addToMath(_val)];
-		inclusion = lit("$[") > path > "$]";
+		inclusion = lit("$[")
+			> path [_val = new_<smm::Source>(_1)]
+			> "$]";
 		comment = lit("$(") >> lexeme[+(ascii::char_ - '$')] >> "$)";
 		source = +(
 			constants [push_back(at_c<1>(_val), _1)] |
-			assertion [push_back(at_c<1>(_val), _1)] | inclusion | comment);
+			assertion [push_back(at_c<1>(_val), _1)] |
+			inclusion [push_back(at_c<1>(_val), _1)] |
+			comment);
 
 		qi::on_error<qi::fail>(
 			source,
@@ -188,7 +192,7 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 	qi::rule<Iterator, Variables(), ascii::space_type> variables;
 	qi::rule<Iterator, Assertion*(), ascii::space_type> assertion;
 	qi::rule<Iterator, Constants*(), ascii::space_type> constants;
-	qi::rule<Iterator, qi::unused_type, ascii::space_type> inclusion;
+	qi::rule<Iterator, Source*(), ascii::space_type> inclusion;
 	qi::rule<Iterator, qi::unused_type, ascii::space_type> comment;
 	qi::rule<Iterator, Source(), ascii::space_type> source;
 };
