@@ -34,4 +34,6 @@ struct Location {
 	string file;
 };
 
+std::ostream& operator << (std::ostream& os, const Location& loc);
+
 } 

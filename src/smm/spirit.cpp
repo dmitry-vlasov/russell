@@ -17,34 +17,19 @@ namespace qi = boost::spirit::qi;
 namespace ascii = boost::spirit::ascii;
 namespace phoenix = boost::phoenix;
 
-struct str_wrapper {
-	str_wrapper(std::string::const_iterator it) :
-	str (it, it + 128){ }
-	std::string str;
-};
-
 class LocationIter : public string::const_iterator {
-	uint prev;
 	void inc(char ch) {
 		if (ch == '\n') {
-			prev = loc.col;
 			loc.col = 0;
 			++ loc.line;
 		} else
 			++ loc.col;
 	}
-	void dec(char ch) {
-		if (ch == '\n') {
-			loc.col = prev;
-			-- loc.line;
-		} else
-			-- loc.col;
-	}
 public:
 	LocationIter(const LocationIter& it) :
-	string::const_iterator(it), prev(it.prev), loc(it.loc) { }
+	string::const_iterator(it), loc(it.loc) { }
 	LocationIter(string::const_iterator it, const string& file) :
-	string::const_iterator(it), prev(0), loc(file) { }
+	string::const_iterator(it), loc(file) { }
 
 	LocationIter& operator ++() {
 		inc(*string::const_iterator::operator++());
@@ -55,20 +40,11 @@ public:
 		inc(*string::const_iterator::operator++());
 		return curr;
 	}
-	LocationIter& operator --() {
-		dec(*string::const_iterator::operator--());
-		return *this;
-	}
-	LocationIter operator --(int) {
-		LocationIter curr(*this);
-		dec(*string::const_iterator::operator--());
-		return curr;
-	}
 	Location loc;
 };
 
-std::ostream& operator << (std::ostream& os, const str_wrapper& wr){
-	os << wr.str;
+std::ostream& operator << (std::ostream& os, const LocationIter& it){
+	os << it.loc;
 	return os;
 }
 
@@ -99,7 +75,6 @@ struct AddToMath {
 			Smm::mod().math.constants.insert(*it);
 	}
 };
-
 
 struct SymbolToInt {
     template <typename T>
@@ -227,12 +202,10 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 			inclusion [push_back(at_c<1>(_val), _1)] |
 			comment);
 
-		on_success(assertion, setLocation(_val, _1));
-
+		qi::on_success(assertion, setLocation(_val, _1));
 		qi::on_error<qi::fail>(
 			source,
-			std::cout << phoenix::val("Error! Expecting ") << _4 << phoenix::val(" here: \n")
-			<< phoenix::construct<str_wrapper>(_3) << phoenix::val("\n") << std::endl);
+			std::cout << phoenix::val("Syntax error. Expecting ") << _4 << phoenix::val(" here: \n") << _3);
 		initNames();
 	}
 	void initNames();
