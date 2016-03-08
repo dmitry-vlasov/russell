@@ -42,11 +42,10 @@ class LocationIter : public string::const_iterator {
 	}
 public:
 	LocationIter(const LocationIter& it) :
-	string::const_iterator(it), prev(it.prev), loc(it.loc) {
-	}
-	LocationIter(string::const_iterator it) :
-	string::const_iterator(it), prev(0), loc() {
-	}
+	string::const_iterator(it), prev(it.prev), loc(it.loc) { }
+	LocationIter(string::const_iterator it, const string& file) :
+	string::const_iterator(it), prev(0), loc(file) { }
+
 	LocationIter& operator ++() {
 		inc(*string::const_iterator::operator++());
 		return *this;
@@ -128,6 +127,15 @@ struct ParseInclusion {
     }
 };
 
+template<typename Iterator>
+struct SetLocation {
+    template <typename T1, typename T2>
+    struct result { typedef void type; };
+    void operator()(Assertion* ass, Iterator it) const {
+    	ass->loc = it.loc;
+    }
+};
+
 template <typename Iterator>
 struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 	Grammar() : Grammar::base_type(source, "russell") {
@@ -143,6 +151,7 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 		const phoenix::function<SymbolToInt>    symbolToInt;
 		const phoenix::function<AddToMath>      addToMath;
 		const phoenix::function<ParseInclusion> parseInclusion;
+		const phoenix::function<SetLocation<Iterator>> setLocation;
 
 		symbol = lexeme[+(ascii::char_ - '$' - ' ')] [at_c<0>(_val) = symbolToInt(_1)];
 		label  = lexeme[+(ascii::char_ - '$' - ' ')] [_val = labelToInt(_1)];
@@ -218,6 +227,8 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 			inclusion [push_back(at_c<1>(_val), _1)] |
 			comment);
 
+		on_success(assertion, setLocation(_val, _1));
+
 		qi::on_error<qi::fail>(
 			source,
 			std::cout << phoenix::val("Error! Expecting ") << _4 << phoenix::val(" here: \n")
@@ -289,12 +300,8 @@ Source* source(const string& path) {
 		std::istream_iterator<char>(),
 		std::back_inserter(storage));
 
-	//string::const_iterator iter = storage.begin();
-	//string::const_iterator end = storage.end();
-	//Grammar<string::const_iterator> grammar;
-
-	LocationIter iter(storage.begin());
-	LocationIter end(storage.end());
+	LocationIter iter(storage.begin(), path);
+	LocationIter end(storage.end(), path);
 	Grammar<LocationIter> grammar;
 
 	Source* source = new Source(path);
