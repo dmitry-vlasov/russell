@@ -14,10 +14,6 @@
 
 namespace mdl {
 
-	/****************************
-	 *		Public members
-	 ****************************/
-
 	Timer :: Timer (const bool brief) :
 	isOn_ (false),
 	isUsed_ (false),

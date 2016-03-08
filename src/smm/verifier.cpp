@@ -1,4 +1,5 @@
 #include "smm/ast.hpp"
+#include "smm/globals.hpp"
 
 namespace mdl { namespace smm {
 
@@ -58,6 +59,67 @@ static Expr apply(const Subst& sub, const Expr& expr) {
 	return  ret;
 }
 
+static void checkSymbols(const Assertion* ass, const Expr& expr) {
+	for (auto it = expr.symbols.cbegin(); it != expr.symbols.cend(); ++ it) {
+		bool is_const = (Smm::get().math.constants.find(*it) != Smm::get().math.constants.end());
+		bool is_var = false;
+		for (auto jt = ass->variables.cbegin(); jt != ass->variables.cend(); ++ jt) {
+			if (jt->expr.contains(*it)) {
+				is_var = true;
+				break;
+			}
+		}
+		if (is_const && is_var)
+			throw Error("constant symbol is marked as variable", &ass->loc);
+		if (!is_const && !is_var)
+			throw Error("symbol neither constant nor variable", &ass->loc);
+	}
+}
+
+template<typename T>
+static void checkSymbols(const Assertion* ass, const vector<T>& lines) {
+	for (auto it = lines.cbegin(); it != lines.cend(); ++ it)
+		checkSymbols(ass, it->expr);
+}
+
+template<typename T>
+static void checkFloating(const Assertion* ass, const vector<T>& floatings) {
+	for (auto it = floatings.cbegin(); it != floatings.cend(); ++ it) {
+		if (it->expr.symbols.size() != 2)
+			throw Error("floating declaration must have exactly 2 symbols", &ass->loc);
+		if (it->expr.symbols[0].isVar)
+			throw Error("floating first symbol must be type (constant)", &ass->loc);
+		if (!it->expr.symbols[1].isVar) {
+			string str;
+			it->expr.show(str);
+			throw Error("floating second symbol must be type variable ", str, &ass->loc);
+		}
+	}
+}
+
+static void checkDisjointed(const Assertion* ass, Symbol var) {
+	for (auto it = ass->variables.cbegin(); it != ass->variables.cend(); ++ it)
+		if (it->expr.contains(var))
+			return;
+	throw Error("disjointed symbols must be variables", &ass->loc);
+}
+
+
+static void checkDisjointed(const Assertion* ass, const vector<Disjointed>& disjointeds) {
+	for (auto it = disjointeds.cbegin(); it != disjointeds.cend(); ++ it)
+		for (auto jt = it->expr.symbols.cbegin(); jt != it->expr.symbols.cend(); ++ jt)
+			checkDisjointed(ass, *jt);
+}
+
+static void checkSymbols(const Assertion* ass) {
+	checkSymbols(ass, ass->essential);
+	checkSymbols(ass, ass->floating);
+	checkSymbols(ass, ass->prop.expr);
+	checkFloating(ass, ass->floating);
+	checkFloating(ass, ass->inner);
+	checkDisjointed(ass, ass->disjointed);
+}
+
 static void apply(const Assertion* ass, const Assertion* th, stack<Expr>& expr_stack) {
 	Subst sub;
 	for (auto it = ass->floating.crbegin(); it != ass->floating.crend(); ++ it) {
@@ -80,6 +142,7 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Expr>& expr_s
 namespace verify {
 
 void assertion(const Assertion* ass, const vector<Assertion*>& theory) {
+	checkSymbols(ass);
 	stack<Expr> expr_stack;
 	const Proof* proof = ass->proof;
 	if (!proof) return;

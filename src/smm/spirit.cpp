@@ -48,6 +48,17 @@ std::ostream& operator << (std::ostream& os, const LocationIter& it){
 	return os;
 }
 
+inline void makeVars(Expr& expr) {
+	for (auto v_it = expr.symbols.begin(); v_it != expr.symbols.end(); ++ v_it)
+		v_it->isVar = true;
+}
+
+template<typename T>
+inline void makeVars(vector<T>& vars) {
+	for (auto v_it = vars.begin(); v_it != vars.end(); ++ v_it)
+		makeVars(v_it->expr);
+}
+
 static void markVars(const vector<Variables>& vars, Expr& expr) {
 	for (auto v_it = vars.cbegin(); v_it != vars.cend(); ++ v_it) {
 		expr.markVars(v_it->expr);
@@ -65,7 +76,10 @@ struct AddToMath {
 	template<typename T>
 	struct result { typedef void type; };
 	void operator()(Assertion* ass) const {
+		makeVars(ass->variables);
+		makeVars(ass->disjointed);
 		markVars(ass->variables, ass->floating);
+		markVars(ass->variables, ass->inner);
 		markVars(ass->variables, ass->essential);
 		markVars(ass->variables, ass->prop.expr);
 		Smm::mod().math.assertions.push_back(ass);

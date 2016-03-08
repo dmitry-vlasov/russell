@@ -14,7 +14,7 @@ public :
 		msg += "error: ";
 		msg += str;
 		if (loc) {
-			msg += " at: ";
+			msg += "\nat: ";
 			loc->show(msg);
 		}
 	}
@@ -25,11 +25,10 @@ public :
 		msg += " : ";
 		msg += s;
 		if (loc) {
-			msg += "\nat ";
+			msg += "\nat: ";
 			loc->show(msg);
 		}
 	}
-
 	virtual const char* what() const throw() {
 		return msg.c_str();
 	}
