@@ -23,6 +23,51 @@ struct str_wrapper {
 	std::string str;
 };
 
+class LocationIter : public string::const_iterator {
+	uint prev;
+	void inc(char ch) {
+		if (ch == '\n') {
+			prev = loc.col;
+			loc.col = 0;
+			++ loc.line;
+		} else
+			++ loc.col;
+	}
+	void dec(char ch) {
+		if (ch == '\n') {
+			loc.col = prev;
+			-- loc.line;
+		} else
+			-- loc.col;
+	}
+public:
+	LocationIter(const LocationIter& it) :
+	string::const_iterator(it), prev(it.prev), loc(it.loc) {
+	}
+	LocationIter(string::const_iterator it) :
+	string::const_iterator(it), prev(0), loc() {
+	}
+	LocationIter& operator ++() {
+		inc(*string::const_iterator::operator++());
+		return *this;
+	}
+	LocationIter operator ++(int) {
+		LocationIter curr(*this);
+		inc(*string::const_iterator::operator++());
+		return curr;
+	}
+	LocationIter& operator --() {
+		dec(*string::const_iterator::operator--());
+		return *this;
+	}
+	LocationIter operator --(int) {
+		LocationIter curr(*this);
+		dec(*string::const_iterator::operator--());
+		return curr;
+	}
+	Location loc;
+};
+
 std::ostream& operator << (std::ostream& os, const str_wrapper& wr){
 	os << wr.str;
 	return os;
@@ -244,10 +289,14 @@ Source* source(const string& path) {
 		std::istream_iterator<char>(),
 		std::back_inserter(storage));
 
-	string::const_iterator iter = storage.begin();
-	string::const_iterator end = storage.end();
+	//string::const_iterator iter = storage.begin();
+	//string::const_iterator end = storage.end();
+	//Grammar<string::const_iterator> grammar;
 
-	Grammar<string::const_iterator> grammar;
+	LocationIter iter(storage.begin());
+	LocationIter end(storage.end());
+	Grammar<LocationIter> grammar;
+
 	Source* source = new Source(path);
 	bool r = phrase_parse(iter, end, grammar, ascii::space, *source);
 	if (!r || iter != end) {
