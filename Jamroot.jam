@@ -1,0 +1,28 @@
+
+project russell
+    : requirements 
+        <include>include <include>src 
+        <toolset>gcc:<cxxflags>-std=c++11
+        <toolset>gcc:<c++-template-depth>300
+        <variant>release:<location>"bin/release"
+        <variant>debug:<location>"bin/debug"
+    ;
+
+exe smm : 
+  src/timer.cpp
+  src/smm/expr.cpp
+  src/smm/ast.cpp
+  src/smm/globals.cpp
+  src/smm/spirit.cpp
+  src/smm/parser.cpp
+  src/smm/verifier.cpp
+  src/smm/main.cpp ;
+ 
+lib smml : 
+  src/timer.cpp
+  src/smm/expr.cpp
+  src/smm/ast.cpp
+  src/smm/globals.cpp
+  src/smm/spirit.cpp
+  src/smm/parser.cpp
+  src/smm/verifier.cpp ;
