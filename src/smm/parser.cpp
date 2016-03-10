@@ -180,7 +180,7 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 		inclusion = lit("$[")
 			> path [_val = parseInclusion(_1)]
 			> "$]";
-		comment = lit("$(") >> lexeme[+(ascii::char_ - '$')] >> "$)";
+		comment = lit("$(") >> lexeme[*(ascii::char_ - "$)")] >> "$)";
 		source = +(
 			constants [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
 			assertion [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |

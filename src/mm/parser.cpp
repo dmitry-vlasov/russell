@@ -122,27 +122,27 @@ struct Grammar : qi::grammar<Iterator, Block(), ascii::space_type> {
 			> "$.";
 		theorem =
 			eps         [_val = new_<mm::Theorem>()]
-			> label     [phoenix::at_c<0>(*_val) = _1]
-			> "$p"
+			>> label    [phoenix::at_c<0>(*_val) = _1]
+			>> "$p"
 			> expr      [phoenix::at_c<1>(*_val) = _1]
 			> lit("$=") [addToMath(_val)]
 			> proof     [phoenix::at_c<2>(*_val) = _1];
 		axiom =
 			eps         [_val = new_<mm::Axiom>()]
-			> label     [phoenix::at_c<0>(*_val) = _1]
-			> "$a"
+			>> label    [phoenix::at_c<0>(*_val) = _1]
+			>> "$a"
 			> expr      [phoenix::at_c<1>(*_val) = _1]
 			> lit("$.") [addToMath(_val)];
 		essential =
 			eps         [_val = new_<mm::Essential>()]
-			> label     [phoenix::at_c<0>(*_val) = _1]
-			> "$e"
+			>> label    [phoenix::at_c<0>(*_val) = _1]
+			>> "$e"
 			> expr      [phoenix::at_c<1>(*_val) = _1]
 			> lit("$.") [addToMath(_val)];
 		floating =
 			eps         [_val = new_<mm::Floating>()]
-			> label     [phoenix::at_c<0>(*_val) = _1]
-			> "$f"
+			>> label    [phoenix::at_c<0>(*_val) = _1]
+			>> "$f"
 			> expr      [phoenix::at_c<1>(*_val) = _1]
 			> lit("$.") [addToMath(_val)];
 		disjointed =
@@ -158,26 +158,26 @@ struct Grammar : qi::grammar<Iterator, Block(), ascii::space_type> {
 			> expr      [phoenix::at_c<0>(*_val) = _1]
 			> "$.";
 		inclusion = lit("$[") > path [_val = parseInclusion(_1)] > "$]";
-		comment = lit("$(") >> lexeme[+(ascii::char_ - '$')] >> "$)";
+		comment = lit("$(") >> lexeme[*(ascii::char_ - "$)")] >> "$)";
 		node %= (
 			constants  |
 			variables  |
 			disjointed |
+			block      |
 			floating   |
 			essential  |
 			axiom      |
-			theorem    |
-			block      );
+			theorem    );
 		block =
 			lit("${") [_val = new_<mm::Block>()]
 			> + (
-				node  [push_back(phoenix::at_c<2>(*_val), _1)] |
-				comment)
+				comment |
+				node  [push_back(phoenix::at_c<2>(*_val), _1)])
 			> "$}";
 		source = +(
+			comment |
 			node      [push_back(phoenix::at_c<2>(_val), _1)] |
-			inclusion [push_back(phoenix::at_c<2>(_val), phoenix::construct<Node>(_1))] |
-			comment);
+			inclusion [push_back(phoenix::at_c<2>(_val), phoenix::construct<Node>(_1))]);
 
 		//qi::on_success(assertion, setLocation(_val, _1));
 		qi::on_error<qi::fail>(
@@ -246,6 +246,14 @@ static Block* source(const string& path) {
 	Block* source = new Block(path);
 	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, *source);
 	if (!r || iter != end) {
+		cout << (!r ? "R" : "I") << endl;
+		if (iter != end) {
+			LocationIter it(storage.begin(), path);
+			for (;it != iter; ++ it) {
+				cout << *it;
+			}
+			cout << endl;
+		}
 		throw Error("parsing failed");
 	}
 	return source;
