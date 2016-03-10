@@ -26,11 +26,6 @@ void Node::destroy() {
 	type = NONE;
 }
 
-Source::~ Source() {
-	for (auto& node : contents)
-		node.destroy();
-}
-
 void Smm::run() {
 	timers.total.start();
 	if (config.verbose)

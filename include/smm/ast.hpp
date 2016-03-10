@@ -124,7 +124,10 @@ struct Source {
 	top(false), name(n), contents() {
 		static bool t = true; top = t; t = false;
 	}
-	~ Source();
+	~ Source() {
+		for (auto& node : contents)
+			node.destroy();
+	}
 
 	bool   top;
 	string name;
