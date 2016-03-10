@@ -113,9 +113,9 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 		const phoenix::function<ParseInclusion> parseInclusion;
 		const phoenix::function<SetLocation<Iterator>> setLocation;
 
-		symbol = lexeme[+(ascii::char_ - '$' - ' ')] [at_c<0>(_val) = symbolToInt(_1)];
-		label  = lexeme[+(ascii::char_ - '$' - ' ')] [_val = labelToInt(_1)];
-		path   = lexeme[+(ascii::char_ - '$' - ' ')];
+		symbol = lexeme[+(ascii::char_ - '$' - ascii::space)] [at_c<0>(_val) = symbolToInt(_1)];
+		label  = lexeme[+(ascii::char_ - '$' - ascii::space)] [_val = labelToInt(_1)];
+		path   = lexeme[+(ascii::char_ - '$' - ascii::space)];
 
 		expr_e = + symbol [push_back(at_c<0>(_val), _1)] > "$.";
 		expr_p = + symbol [push_back(at_c<0>(_val), _1)] > "$=";

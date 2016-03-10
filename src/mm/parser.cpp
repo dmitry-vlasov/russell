@@ -76,7 +76,8 @@ struct CreateRef {
 		else if (math.theorems.has(lab))
 			return Node(math.theorems[lab]);
 		else
-			throw Error("unknown label in proof", Mm::get().lex.labels.toStr(lab));
+			return Node();
+			//throw Error("unknown label in proof", Mm::get().lex.labels.toStr(lab));
 	}
 };
 
@@ -109,11 +110,11 @@ struct Grammar : qi::grammar<Iterator, Block(), ascii::space_type> {
 		const phoenix::function<CreateRef>      createRef;
 		//const phoenix::function<SetLocation<Iterator>> setLocation;
 
-		symbol = lexeme[+(ascii::char_ - '$' - ' ')] [at_c<0>(_val) = symbolToInt(_1)];
-		label  = lexeme[+(ascii::char_ - '$' - ' ')] [_val = labelToInt(_1)];
-		path   = lexeme[+(ascii::char_ - '$' - ' ')];
+		symbol = lexeme[+(ascii::char_ - '$' - ascii::space)] [at_c<0>(_val) = symbolToInt(_1)];
+		label  = lexeme[+(ascii::char_ - '$' - ascii::space)] [_val = labelToInt(_1)];
+		path   = lexeme[+(ascii::char_ - '$' - ascii::space)];
 
-		expr  =  symbol [push_back(at_c<0>(_val), _1)];
+		expr = +symbol [push_back(at_c<0>(_val), _1)];
 
 		ref  = label    [phoenix::at_c<0>(_val) = createRef(_1)];
 		proof =
@@ -246,14 +247,6 @@ static Block* source(const string& path) {
 	Block* source = new Block(path);
 	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, *source);
 	if (!r || iter != end) {
-		cout << (!r ? "R" : "I") << endl;
-		if (iter != end) {
-			LocationIter it(storage.begin(), path);
-			for (;it != iter; ++ it) {
-				cout << *it;
-			}
-			cout << endl;
-		}
 		throw Error("parsing failed");
 	}
 	return source;

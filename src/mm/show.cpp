@@ -78,11 +78,13 @@ ostream& operator << (ostream& os, const Node& node) {
 }
 
 ostream& operator << (ostream& os, const Block& block) {
-	if (block.top) {
+	//if (block.top) {
+		os << "${\n";
 		for (auto& node : block.contents)
-			os << node << '\n';
-	} else
-		os << "$[" << block.name << "$]";
+			os << '\t' << node << '\n';
+		os << "$}\n";
+	//} else
+	//	os << "${" << block.name << "$}";
 	return os;
 }
 

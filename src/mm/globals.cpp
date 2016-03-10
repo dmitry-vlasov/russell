@@ -56,7 +56,7 @@ bool Mm::parse() {
 		timers.read.start();
 		source = mm::parse(config.in);
 
-		cout << *source << endl;
+		cout << endl << *source << endl;
 		timers.read.stop();
 		return true;
 	} catch (Error& err) {
