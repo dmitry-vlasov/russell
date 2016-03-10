@@ -50,7 +50,7 @@ std::ostream& operator << (std::ostream& os, const LocationIter& it){
 
 inline void makeVars(Expr& expr) {
 	for (auto v_it = expr.symbols.begin(); v_it != expr.symbols.end(); ++ v_it)
-		v_it->isVar = true;
+		v_it->var = true;
 }
 
 template<typename T>

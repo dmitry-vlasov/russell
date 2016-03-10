@@ -17,22 +17,22 @@
 namespace mdl {
 
 struct Symbol {
-	Symbol(): literal(-1), isVar(false) { }
-	Symbol(int lit, bool var = false) :
-	literal (lit), isVar (var) {
+	Symbol(): lit(-1), var(false) { }
+	Symbol(int l, bool v = false) :
+	lit (l), var (v) {
 	}
 
 	bool operator == (const Symbol& s) const {
-		return literal == s.literal && isVar == s.isVar;
+		return lit == s.lit && var == s.var;
 	}
 	bool operator != (const Symbol& s) const {
 		return !operator ==(s);
 	}
 	bool operator < (const Symbol& s) const {
-		return literal < s.literal;
+		return lit < s.lit;
 	}
-	uint literal;
-	bool isVar;
+	uint lit;
+	bool var;
 };
 
 struct Expr {
@@ -43,19 +43,19 @@ public :
 	}
 	void markVars(const Expr& vars) {
 		for (auto it = symbols.begin(); it != symbols.end(); ++ it) {
-			if (vars.contains(it->literal))
-				it->isVar = true;
+			if (vars.contains(it->lit))
+				it->var = true;
 		}
 	}
 	void push_back(Symbol s) {
 		symbols.push_back(s);
 	}
 	bool contains(Symbol s) const {
-		return contains(s.literal);
+		return contains(s.lit);
 	}
 	bool contains(uint lit) const {
 		for (auto it = symbols.cbegin(); it != symbols.cend(); ++ it) {
-			if (it->literal == lit)
+			if (it->lit == lit)
 				return true;
 		}
 		return false;

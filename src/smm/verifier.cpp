@@ -19,9 +19,9 @@ string show (const Subst& subst) {
 static void checkDisjPair(const Expr& ex1, const Expr& ex2, const Assertion* th) {
 	for (auto it = ex1.symbols.cbegin(); it != ex1.symbols.cend(); ++ it) {
 		for (auto jt = ex2.symbols.cbegin(); jt != ex2.symbols.cend(); ++ jt) {
-			if (it->isVar && it == jt)
+			if (it->var && it == jt)
 				throw Error("verification", "disjointed violation", &th->loc);
-			if (it->isVar && jt->isVar && !th->areDisjointed(it->literal, jt->literal)) {
+			if (it->var && jt->var && !th->areDisjointed(it->lit, jt->lit)) {
 				string msg = "inherited disjointed violation, vars: ";
 				msg += show(*it);
 				msg += " and ";
@@ -47,7 +47,7 @@ static Expr apply(const Subst& sub, const Expr& expr) {
 	Expr ret;
 	for (auto it = expr.symbols.cbegin(); it != expr.symbols.cend(); ++ it) {
 		Symbol s = *it;
-		if (s.isVar) {
+		if (s.var) {
 			auto ex = sub.find(s);
 			if (ex == sub.cend())
 				ret += s;
@@ -87,9 +87,9 @@ static void checkFloating(const Assertion* ass, const vector<T>& floatings) {
 	for (auto it = floatings.cbegin(); it != floatings.cend(); ++ it) {
 		if (it->expr.symbols.size() != 2)
 			throw Error("floating declaration must have exactly 2 symbols", &ass->loc);
-		if (it->expr.symbols[0].isVar)
+		if (it->expr.symbols[0].var)
 			throw Error("floating first symbol must be type (constant)", &ass->loc);
-		if (!it->expr.symbols[1].isVar) {
+		if (!it->expr.symbols[1].var) {
 			throw Error("floating second symbol must be type variable ", show(it->expr), &ass->loc);
 		}
 	}

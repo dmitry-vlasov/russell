@@ -2,8 +2,8 @@
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::Symbol,
-	(uint, literal)
-	(bool, isVar)
+	(uint, lit)
+	(bool, var)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
