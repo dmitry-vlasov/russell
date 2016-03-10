@@ -49,26 +49,26 @@ std::ostream& operator << (std::ostream& os, const LocationIter& it){
 }
 
 inline void makeVars(Expr& expr) {
-	for (auto v_it = expr.symbols.begin(); v_it != expr.symbols.end(); ++ v_it)
-		v_it->var = true;
+	for (auto& symb : expr.symbols)
+		symb.var = true;
 }
 
 template<typename T>
 inline void makeVars(vector<T>& vars) {
-	for (auto v_it = vars.begin(); v_it != vars.end(); ++ v_it)
-		makeVars(v_it->expr);
+	for (auto& v_it : vars)
+		makeVars(v_it.expr);
 }
 
 static void markVars(const vector<Variables>& vars, Expr& expr) {
-	for (auto v_it = vars.cbegin(); v_it != vars.cend(); ++ v_it) {
-		expr.markVars(v_it->expr);
+	for (auto& v_it : vars) {
+		expr.markVars(v_it.expr);
 	}
 }
 
 template<class T>
 static void markVars(const vector<Variables>& vars, vector<T>& components) {
-	for (auto ex_it = components.begin(); ex_it != components.end(); ++ ex_it) {
-		markVars(vars, ex_it->expr);
+	for (auto& comp : components) {
+		markVars(vars, comp.expr);
 	}
 }
 
@@ -85,8 +85,8 @@ struct AddToMath {
 		Smm::mod().math.assertions.push_back(ass);
 	}
 	void operator()(Constants* c) const {
-		for (auto it = c->expr.symbols.begin(); it != c->expr.symbols.end(); ++ it)
-			Smm::mod().math.constants.insert(*it);
+		for (auto symb : c->expr.symbols)
+			Smm::mod().math.constants.insert(symb);
 	}
 };
 

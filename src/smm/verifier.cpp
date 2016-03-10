@@ -7,25 +7,25 @@ typedef map<Symbol, Expr> Subst;
 
 string show (const Subst& subst) {
 	string str;
-	for (auto it = subst.cbegin(); it != subst.cend(); ++ it) {
-		str += show(it->first);
+	for (auto it : subst) {
+		str += show(it.first);
 		str += " => ";
-		str += show(it->second);
+		str += show(it.second);
 		str += '\n';
 	}
 	return str;
 }
 
 static void checkDisjPair(const Expr& ex1, const Expr& ex2, const Assertion* th) {
-	for (auto it = ex1.symbols.cbegin(); it != ex1.symbols.cend(); ++ it) {
-		for (auto jt = ex2.symbols.cbegin(); jt != ex2.symbols.cend(); ++ jt) {
-			if (it->var && it == jt)
+	for (auto s_1 : ex1.symbols) {
+		for (auto s_2 : ex2.symbols) {
+			if (s_1.var && s_1 == s_2)
 				throw Error("verification", "disjointed violation", &th->loc);
-			if (it->var && jt->var && !th->areDisjointed(it->lit, jt->lit)) {
+			if (s_1.var && s_2.var && !th->areDisjointed(s_1.lit, s_2.lit)) {
 				string msg = "inherited disjointed violation, vars: ";
-				msg += show(*it);
+				msg += show(s_1);
 				msg += " and ";
-				msg += show(*jt);
+				msg += show(s_2);
 				throw Error("verification", msg, &th->loc);
 			}
 		}
@@ -33,20 +33,19 @@ static void checkDisjPair(const Expr& ex1, const Expr& ex2, const Assertion* th)
 }
 
 static void checkDisj(const Subst& sub, const Assertion* ass, const Assertion* th) {
-	for (auto it = sub.cbegin(); it != sub.cend(); ++ it) {
-		for (auto jt = sub.cbegin(); jt != sub.cend(); ++ jt) {
-			if (it->first == jt->first)
+	for (auto p_1 : sub) {
+		for (auto p_2 : sub) {
+			if (p_1.first == p_2.first)
 				continue;
-			if (ass->areDisjointed(it->first, jt->first))
-				checkDisjPair(it->second, jt->second, th);
+			if (ass->areDisjointed(p_1.first, p_2.first))
+				checkDisjPair(p_1.second, p_2.second, th);
 		}
 	}
 }
 
 static Expr apply(const Subst& sub, const Expr& expr) {
 	Expr ret;
-	for (auto it = expr.symbols.cbegin(); it != expr.symbols.cend(); ++ it) {
-		Symbol s = *it;
+	for (auto s : expr.symbols) {
 		if (s.var) {
 			auto ex = sub.find(s);
 			if (ex == sub.cend())
@@ -60,11 +59,11 @@ static Expr apply(const Subst& sub, const Expr& expr) {
 }
 
 static void checkSymbols(const Assertion* ass, const Expr& expr) {
-	for (auto it = expr.symbols.cbegin(); it != expr.symbols.cend(); ++ it) {
-		bool is_const = (Smm::get().math.constants.find(*it) != Smm::get().math.constants.end());
+	for (auto s : expr.symbols) {
+		bool is_const = (Smm::get().math.constants.find(s) != Smm::get().math.constants.end());
 		bool is_var = false;
-		for (auto jt = ass->variables.cbegin(); jt != ass->variables.cend(); ++ jt) {
-			if (jt->expr.contains(*it)) {
+		for (auto& v : ass->variables) {
+			if (v.expr.contains(s)) {
 				is_var = true;
 				break;
 			}
@@ -78,35 +77,35 @@ static void checkSymbols(const Assertion* ass, const Expr& expr) {
 
 template<typename T>
 static void checkSymbols(const Assertion* ass, const vector<T>& lines) {
-	for (auto it = lines.cbegin(); it != lines.cend(); ++ it)
-		checkSymbols(ass, it->expr);
+	for (auto& line : lines)
+		checkSymbols(ass, line.expr);
 }
 
 template<typename T>
 static void checkFloating(const Assertion* ass, const vector<T>& floatings) {
-	for (auto it = floatings.cbegin(); it != floatings.cend(); ++ it) {
-		if (it->expr.symbols.size() != 2)
+	for (auto& flo : floatings) {
+		if (flo.expr.symbols.size() != 2)
 			throw Error("floating declaration must have exactly 2 symbols", &ass->loc);
-		if (it->expr.symbols[0].var)
+		if (flo.expr.symbols[0].var)
 			throw Error("floating first symbol must be type (constant)", &ass->loc);
-		if (!it->expr.symbols[1].var) {
-			throw Error("floating second symbol must be type variable ", show(it->expr), &ass->loc);
+		if (!flo.expr.symbols[1].var) {
+			throw Error("floating second symbol must be type variable ", show(flo.expr), &ass->loc);
 		}
 	}
 }
 
 static void checkDisjointed(const Assertion* ass, Symbol var) {
-	for (auto it = ass->variables.cbegin(); it != ass->variables.cend(); ++ it)
-		if (it->expr.contains(var))
+	for (auto& vars : ass->variables)
+		if (vars.expr.contains(var))
 			return;
 	throw Error("disjointed symbols must be variables", &ass->loc);
 }
 
 
 static void checkDisjointed(const Assertion* ass, const vector<Disjointed>& disjointeds) {
-	for (auto it = disjointeds.cbegin(); it != disjointeds.cend(); ++ it)
-		for (auto jt = it->expr.symbols.cbegin(); jt != it->expr.symbols.cend(); ++ jt)
-			checkDisjointed(ass, *jt);
+	for (auto& disj : disjointeds)
+		for (auto s : disj.expr.symbols)
+			checkDisjointed(ass, s);
 }
 
 static void checkSymbols(const Assertion* ass) {
@@ -142,13 +141,13 @@ static void assertion(const Assertion* ass, const vector<Assertion*>& theory) {
 	stack<Expr> expr_stack;
 	const Proof* proof = ass->proof;
 	if (!proof) return;
-	for (auto it = proof->refs.cbegin(); it != proof->refs.cend(); ++ it) {
-		switch (it->type) {
-		case Ref::PREF_E : expr_stack.push(ass->essential[it->index].expr); break;
-		case Ref::PREF_F : expr_stack.push(ass->floating[it->index].expr); break;
-		case Ref::PREF_I : expr_stack.push(ass->inner[it->index].expr); break;
+	for (auto& ref : proof->refs) {
+		switch (ref.type) {
+		case Ref::PREF_E : expr_stack.push(ass->essential[ref.index].expr); break;
+		case Ref::PREF_F : expr_stack.push(ass->floating[ref.index].expr); break;
+		case Ref::PREF_I : expr_stack.push(ass->inner[ref.index].expr); break;
 		case Ref::PREF_A : // intentionally left blank
-		case Ref::PREF_P : apply(theory[it->index], ass, expr_stack); break;
+		case Ref::PREF_P : apply(theory[ref.index], ass, expr_stack); break;
 		}
 	}
 	if (expr_stack.top() != ass->prop.expr) {
@@ -161,8 +160,8 @@ static void assertion(const Assertion* ass, const vector<Assertion*>& theory) {
 }
 
 static void math(const vector<Assertion*>& theory) {
-	for (auto it = theory.begin(); it != theory.cend(); ++ it) {
-		assertion(*it, theory);
+	for (auto ass : theory) {
+		assertion(ass, theory);
 	}
 }
 
