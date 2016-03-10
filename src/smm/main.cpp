@@ -16,7 +16,7 @@ using namespace mdl;
 using namespace smm;
 
 static void showHelp() {
-	cout << "smm verifier for simplified metatmath" << endl;
+	cout << "smm verifier for simplified Metatmath" << endl;
 	cout << "Version: " << VERSION << endl;
 	cout << "Usage: smm [options] file" << endl;
 	cout << "Options:" << endl;
@@ -32,23 +32,23 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 		conf.help = true;
 		return true;
 	}
-	for (int i = 1; i < argc; ++ i) {
+	for (int i = 1; i < argc - 1; ++ i) {
 		string arg = argv[i];
 		if (arg == "-h" || arg == "--help")
 			conf.help = true;
-		if (arg == "-v" || arg == "--verbose")
+		else if (arg == "-v" || arg == "--verbose")
 			conf.verbose = true;
-		if (arg == "-l" || arg == "--labels")
+		else if (arg == "-l" || arg == "--labels")
 			conf.labels = true;
-		if (arg == "-i" || arg == "--info")
+		else if (arg == "-i" || arg == "--info")
 			conf.info = true;
-		if (arg == "-r" || arg == "--root") {
-			++ i;
-			if (i == argc)
+		else if (arg == "-r" || arg == "--root") {
+			if (++ i == argc)
 				return false;
 			else
 				conf.root = argv[i];
-		}
+		} else
+			return false;
 	}
 	conf.in = argv[argc - 1];
 	return true;
