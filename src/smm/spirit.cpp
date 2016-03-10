@@ -211,9 +211,9 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 			> "$]";
 		comment = lit("$(") >> lexeme[+(ascii::char_ - '$')] >> "$)";
 		source = +(
-			constants [push_back(at_c<2>(_val), _1)] |
-			assertion [push_back(at_c<2>(_val), _1)] |
-			inclusion [push_back(at_c<2>(_val), _1)] |
+			constants [push_back(at_c<2>(_val), phoenix::construct<Source::Node>(_1))] |
+			assertion [push_back(at_c<2>(_val), phoenix::construct<Source::Node>(_1))] |
+			inclusion [push_back(at_c<2>(_val), phoenix::construct<Source::Node>(_1))] |
 			comment);
 
 		qi::on_success(assertion, setLocation(_val, _1));

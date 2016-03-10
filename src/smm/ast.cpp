@@ -117,7 +117,12 @@ void Source::show(string& str) const {
 	//str += gen::source(this);
 	if (top) {
 		for (auto it = contents.cbegin(); it != contents.cend(); ++ it) {
-			(*it)->show(str);
+			switch(it->type) {
+			case Node::ASSERTION: it->val.ass->show(str); break;
+			case Node::CONSTANTS: it->val.cst->show(str); break;
+			case Node::SOURCE:    it->val.src->show(str);    break;
+			default : assert(false && "impossible");
+			}
 			str += '\n';
 		}
 	} else {

@@ -51,11 +51,13 @@ namespace mdl {
 	using std::ptrdiff_t;
 	using std::ostream;
 	using std::ifstream;
+	using std::ostringstream;
 	using std::string;
 	using std::cout;
 	using std::cerr;
 	using std::endl;
 	using std::flush;
+	using std::to_string;
 	
 	typedef unsigned uint;
 }

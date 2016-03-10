@@ -61,7 +61,7 @@ struct Essential : public Showable {
 	Expr expr;
 };
 
-struct Floating {
+struct Floating : public Showable {
 	const Symbol& type() const { return expr.symbols[0]; }
 	const Symbol& var() const { return expr.symbols[1]; }
 	virtual void show (string& str) const;
@@ -111,14 +111,35 @@ struct Assertion : public Showable {
 
 class Source : public Showable {
 public :
+	struct Node {
+		Node(Assertion* a) : type (ASSERTION), val() { val.ass = a; }
+		Node(Constants* c) : type (CONSTANTS), val() { val.cst = c; }
+		Node(Source* s)    : type (SOURCE),    val() { val.src = s; }
+		enum Type {
+			ASSERTION,
+			CONSTANTS,
+			SOURCE
+		};
+		Type type;
+		union Value {
+			Assertion* ass;
+			Constants* cst;
+			Source*    src;
+		};
+		Value val;
+	};
 	Source(const string& n) :
 	top(false), name(n), contents() {
 		static bool t = true; top = t; t = false;
 	}
 	virtual ~Source() {
 		for (auto it = contents.begin(); it != contents.end(); ++ it) {
-			Showable* obj = *it;
-			delete obj;
+			switch(it->type) {
+			case Node::ASSERTION: delete it->val.ass; break;
+			case Node::CONSTANTS: delete it->val.cst; break;
+			case Node::SOURCE:    delete it->val.src; break;
+			default : assert(false && "impossible");
+			}
 		}
 	}
 
@@ -126,8 +147,22 @@ public :
 
 	bool   top;
 	string name;
-	vector<Showable*> contents;
+	vector<Node> contents;
 };
+
+ostream& show(ostream& os, Symbol symb);
+ostream& show(ostream& os, const Expr& expr);
+ostream& show(ostream& os, const Constants* cst);
+ostream& show(ostream& os, const Ref ref);
+ostream& show(ostream& os, const Proof* proof);
+ostream& show(ostream& os, const Variables& vars);
+ostream& show(ostream& os, const Variables& disj);
+ostream& show(ostream& os, const Essential& ess);
+ostream& show(ostream& os, const Floating& flo);
+ostream& show(ostream& os, const Inner& inn);
+ostream& show(ostream& os, const Proposition& prop);
+ostream& show(ostream& os, const Assertion* ass);
+ostream& show(ostream& os, const Source* src);
 
 }} // mdl::smm
 
