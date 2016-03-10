@@ -15,54 +15,54 @@
 
 namespace mdl { namespace smm {
 
-	void Smm::run()
-	{
-		timers.total.start();
-		if (config.verbose)
-			cout << "verifying file " << config.in << " ... " << flush;
-		if (!parse()) {
-			failed = true; return;
-		}
-		if (!verify()) {
-			failed = true; return;
-		}
-		timers.total.stop();
-		if (config.verbose)
-			cout << "done in " << timers.total << endl;
+void Smm::run() {
+	timers.total.start();
+	if (config.verbose)
+		cout << "verifying file " << config.in << " ... " << flush;
+	if (!parse()) {
+		failed = true; return;
 	}
-	bool Smm::parse()
-	{
-		try {
-			timers.read.start();
-			source = parse1::source(config.in);
+	if (!verify()) {
+		failed = true; return;
+	}
+	timers.total.stop();
+	if (config.verbose)
+		cout << "done in " << timers.total << endl;
+}
 
-			cout << *source << endl;
+bool Smm::parse() {
+	try {
+		timers.read.start();
+		source = parse1::source(config.in);
 
-			timers.read.stop();
-			return true;
-		} catch (Error& err) {
-			status += '\n';
-			status += err.what();
-			failed = true;
-			return false;
-		}
+		cout << *source << endl;
+		timers.read.stop();
+		return true;
+	} catch (Error& err) {
+		status += '\n';
+		status += err.what();
+		failed = true;
+		return false;
 	}
-	bool Smm::verify()
-	{
-		try {
-			timers.verify.start();
-			verify::math(math.assertions);
-			timers.verify.stop();
-			return true;
-		} catch (Error& err) {
-			status += '\n';
-			status += err.what();
-			failed = true;
-			return false;
-		}
+}
+
+bool Smm::verify() {
+	try {
+		timers.verify.start();
+		verify::math(math.assertions);
+		timers.verify.stop();
+		return true;
+	} catch (Error& err) {
+		status += '\n';
+		status += err.what();
+		failed = true;
+		return false;
 	}
-	void Smm::show (string& str) const {
-		str += status;
-	}
+}
+
+ostream& show (ostream& os, const Smm& s) {
+	os << s.status;
+	return os;
+}
 	
 }} // mdl::smm

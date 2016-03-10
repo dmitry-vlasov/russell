@@ -31,7 +31,7 @@ struct Config {
 	string root;
 };
 
-struct Smm : public Showable {
+struct Smm {
 	~ Smm() {
 		if (source) delete source;
 	}
@@ -62,11 +62,11 @@ struct Smm : public Showable {
 	bool parse();
 	bool verify();
 
-	virtual void show (string&) const;
-
 	static const Smm& get() { return mod(); }
 	static Smm& mod() { static Smm smm; return smm; }
 };
+
+ostream& show (ostream& os, const Smm& s);
 
 namespace parse {
 Source* source(const string& path);
@@ -78,12 +78,6 @@ Source* source(const string& path);
 
 namespace verify {
 void math(const vector<Assertion*>& theory);
-}
-namespace gen {
-string expr(const mdl::Expr& ex);
-string constants(const smm::Constants* consts);
-string assertion(const smm::Assertion* consts);
-string source(const smm::Source* consts);
 }
 
 }} // mdl::smm

@@ -34,7 +34,6 @@ ostream& show(ostream& os, const Ref ref) {
 	return os;
 }
 
-
 ostream& show(ostream& os, const Proof* proof) {
 	for (auto it = proof->refs.cbegin(); it != proof->refs.cend(); ++ it)
 		os << *it << ' ';
