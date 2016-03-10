@@ -28,6 +28,7 @@ struct Config {
 	bool help;
 
 	string in;
+	string out;
 	string root;
 };
 

@@ -18,15 +18,15 @@ using namespace mm;
 static void showHelp() {
 	cout << "mm translator from Metatmath to smm" << endl;
 	cout << "Version: " << VERSION << endl;
-	cout << "Usage: mm [options] file" << endl;
+	cout << "Usage: mm [options]" << endl;
 	cout << "Options:" << endl;
-	cout << " -i  --in       input file"  << endl;
-	cout << " -o  --out      output file"  << endl;
-	cout << " -h  --help     print the help" << endl;
-	cout << " -v  --verbose  not be silent"  << endl;
-	cout << " -l  --labels   source with labels"  << endl;
-	cout << " -i  --info     info about math: timings, memory, stats"  << endl;
-	cout << " -r  --root     root directory (for inclusions)" << endl;
+	cout << " -i  --in <path>    input file"  << endl;
+	cout << " -o  --out <path>   output file"  << endl;
+	cout << " -r  --root <path>  root directory (for inclusions)" << endl;
+	cout << " -h  --help         print the help" << endl;
+	cout << " -v  --verbose      not be silent"  << endl;
+	cout << " -l  --labels       source with labels"  << endl;
+	cout << "     --info         info about math: timings, memory, stats"  << endl;
 }
 
 static bool parseConfig(int argc, const char* argv[], Config& conf) {
@@ -55,7 +55,7 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 			conf.help = true;
 		else if (arg == "-v" || arg == "--verbose")
 			conf.verbose = true;
-		else if (arg == "-i" || arg == "--info")
+		else if (arg == "--info")
 			conf.info = true;
 		else
 			return false;

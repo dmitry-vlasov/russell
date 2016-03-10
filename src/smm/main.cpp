@@ -18,13 +18,15 @@ using namespace smm;
 static void showHelp() {
 	cout << "smm verifier for simplified Metatmath" << endl;
 	cout << "Version: " << VERSION << endl;
-	cout << "Usage: smm [options] file" << endl;
+	cout << "Usage: smm [options]" << endl;
 	cout << "Options:" << endl;
-	cout << " -h  --help     print the help" << endl;
-	cout << " -v  --verbose  not be silent"  << endl;
-	cout << " -l  --labels   source with labels"  << endl;
-	cout << " -i  --info     info about math: timings, memory, stats"  << endl;
-	cout << " -r  --root     root directory (for inclusions)" << endl;
+	cout << " -i  --in <path>    input file"  << endl;
+	cout << " -o  --out <path>   output file"  << endl;
+	cout << " -r  --root <path>  root directory (for inclusions)" << endl;
+	cout << " -h  --help         print the help" << endl;
+	cout << " -v  --verbose      not be silent"  << endl;
+	cout << " -l  --labels       source with labels"  << endl;
+	cout << "     --info         info about math: timings, memory, stats"  << endl;
 }
 
 static bool parseConfig(int argc, const char* argv[], Config& conf) {
@@ -32,25 +34,34 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 		conf.help = true;
 		return true;
 	}
-	for (int i = 1; i < argc - 1; ++ i) {
+	for (int i = 1; i < argc; ++ i) {
 		string arg = argv[i];
-		if (arg == "-h" || arg == "--help")
+		if (arg == "-i" || arg == "--in") {
+			if (++ i == argc)
+				return false;
+			else
+				conf.in = argv[i];
+		} else if (arg == "-o" || arg == "--out") {
+			if (++ i == argc)
+				return false;
+			else
+				conf.out = argv[i];
+		} else if (arg == "-r" || arg == "--root") {
+			if (++ i == argc)
+				return false;
+			else
+				conf.root = argv[i];
+		} else if (arg == "-h" || arg == "--help")
 			conf.help = true;
 		else if (arg == "-v" || arg == "--verbose")
 			conf.verbose = true;
 		else if (arg == "-l" || arg == "--labels")
 			conf.labels = true;
-		else if (arg == "-i" || arg == "--info")
+		else if (arg == "--info")
 			conf.info = true;
-		else if (arg == "-r" || arg == "--root") {
-			if (++ i == argc)
-				return false;
-			else
-				conf.root = argv[i];
-		} else
+		else
 			return false;
 	}
-	conf.in = argv[argc - 1];
 	return true;
 }
 
