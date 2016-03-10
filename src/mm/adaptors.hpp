@@ -38,13 +38,13 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Essential,
-	(uint, index)
+	(uint, label)
 	(mdl::Expr, expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Floating,
-	(uint, index)
+	(uint, label)
 	(mdl::Expr, expr)
 )
 

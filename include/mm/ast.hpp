@@ -102,6 +102,7 @@ struct Proof {
 };
 
 struct Block {
+	Block(): top(false), name(), contents() { }
 	Block(const string& n) :
 	top(false), name(n), contents() {
 		static bool t = true; top = t; t = false;

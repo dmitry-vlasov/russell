@@ -54,9 +54,11 @@ struct Mm {
 		bool has(uint lab) const {
 			return table.find(lab) != table.end();
 		}
+		T& operator[] (uint ind) {
+			return table[ind];
+		}
 	};
 	struct Math {
-		//set<Symbol>       constants;
 		Table<Theorem*>   theorems;
 		Table<Axiom*>     axioms;
 		Table<Essential*> essentials;

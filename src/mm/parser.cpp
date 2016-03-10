@@ -16,62 +16,21 @@ namespace mdl { namespace mm {
 namespace qi = boost::spirit::qi;
 namespace ascii = boost::spirit::ascii;
 namespace phoenix = boost::phoenix;
-/*
-inline void makeVars(Expr& expr) {
-	for (auto& symb : expr.symbols)
-		symb.var = true;
-}
 
-template<typename T>
-inline void makeVars(vector<T>& vars) {
-	for (auto& v_it : vars)
-		makeVars(v_it.expr);
-}
-
-static void markVars(const vector<Variables>& vars, Expr& expr) {
-	for (auto& v_it : vars) {
-		expr.markVars(v_it.expr);
-	}
-}
-
-template<class T>
-static void markVars(const vector<Variables>& vars, vector<T>& components) {
-	for (auto& comp : components) {
-		markVars(vars, comp.expr);
-	}
-}
-*/
 struct AddToMath {
 	template<typename T>
 	struct result { typedef void type; };
-	void operator()(const Node& node) const {
-		/*makeVars(ass->variables);
-		makeVars(ass->disjointed);
-		markVars(ass->variables, ass->floating);
-		markVars(ass->variables, ass->inner);
-		markVars(ass->variables, ass->essential);
-		markVars(ass->variables, ass->prop.expr);*/
-		Mm::Math& math = Mm::mod().math;
-		switch (node.type) {
-		case Node::NONE: assert(false && "impossible"); break;
-		case Node::CONSTANTS:  break;
-		case Node::VARIABLES:  break;
-		case Node::DISJOINTED: break;
-		case Node::BLOCK:      break;
-		case Node::FLOATING:
-			math.floatings.table[node.val.flo->label] = node.val.flo;
-			break;
-		case Node::ESSENTIAL:
-			math.essentials.table[node.val.ess->label] = node.val.ess;
-			break;
-		case Node::AXIOM:
-			math.axioms.table[node.val.ax->label] = node.val.ax;
-			break;
-		case Node::THEOREM:
-			math.theorems.table[node.val.th->label] = node.val.th;
-			break;
-		default : assert(false && "impossible"); break;
-		}
+	void operator()(Floating* flo) const {
+		Mm::mod().math.floatings[flo->label] = flo;
+	}
+	void operator()(Essential* ess) const {
+		Mm::mod().math.essentials[ess->label] = ess;
+	}
+	void operator()(Axiom* ax) const {
+		Mm::mod().math.axioms[ax->label] = ax;
+	}
+	void operator()(Theorem* th) const {
+		Mm::mod().math.theorems[th->label] = th;
 	}
 };
 
@@ -107,23 +66,17 @@ struct CreateRef {
 	template <typename T>
 	struct result { typedef Node type; };
 	Node operator()(uint lab) const {
-		Node node;
 		Mm::Math& math = Mm::mod().math;
-		if (math.floatings.has(lab)) {
-			node.type = Node::FLOATING;
-			node.val.flo = math.floatings.table[lab];
-		} else if (math.essentials.has(lab)) {
-			node.type = Node::ESSENTIAL;
-			node.val.ess = math.essentials.table[lab];
-		} else if (math.axioms.has(lab)) {
-			node.type = Node::AXIOM;
-			node.val.ax = math.axioms.table[lab];
-		} else if (math.theorems.has(lab)) {
-			node.type = Node::THEOREM;
-			node.val.th = math.theorems.table[lab];
-		} else
+		if (math.floatings.has(lab))
+			return Node(math.floatings[lab]);
+		else if (math.essentials.has(lab))
+			return Node(math.essentials[lab]);
+		else if (math.axioms.has(lab))
+			return Node(math.axioms[lab]);
+		else if (math.theorems.has(lab))
+			return Node(math.theorems[lab]);
+		else
 			throw Error("unknown label in proof", Mm::get().lex.labels.toStr(lab));
-		return node;
 	}
 };
 
@@ -143,6 +96,7 @@ struct Grammar : qi::grammar<Iterator, Block(), ascii::space_type> {
 		using qi::lit;
 		using qi::uint_;
 		using qi::lexeme;
+		using qi::eps;
 		using namespace qi::labels;
 		using phoenix::at_c;
 		using phoenix::push_back;
@@ -161,37 +115,70 @@ struct Grammar : qi::grammar<Iterator, Block(), ascii::space_type> {
 
 		expr  =  symbol [push_back(at_c<0>(_val), _1)];
 
-		ref  = label [phoenix::at_c<0>(_val) = createRef(_1)];
+		ref  = label    [phoenix::at_c<0>(_val) = createRef(_1)];
 		proof =
-			qi::eps [_val = new_<mm::Proof>()]
-			> +ref [push_back(phoenix::at_c<0>(*_val), _1)]
+			eps         [_val = new_<mm::Proof>()]
+			> +ref      [push_back(phoenix::at_c<0>(*_val), _1)]
 			> "$.";
-/*		theorem    %= label [_val = new_<mm::Theorem>()] > "$p" > expr > "$=" > proof [addToMath(_val)];
-		axiom      %= label [_val = new_<mm::Axiom>()] > "$a" > expr > lit("$.") [addToMath(_val)];
-		essential  %= label [_val = new_<mm::Essential>()]> "$e" > expr > lit("$.") [addToMath(_val)];
-		floating   %= label [_val = new_<mm::Floating>()]> "$f" > expr > lit("$.") [addToMath(_val)];
-		disjointed %= lit("$d") [_val = new_<mm::Disjointed>()] > expr > "$.";
-		variables  %= lit("$v") [_val = new_<mm::Variables>()]> expr > "$.";
-		constants = lit("$c") [_val = new_<mm::Constants>()]
-			> expr  [phoenix::at_c<0>(*_val) = _1]
-			> lit("$.")  [addToMath(_val)];
+		theorem =
+			eps         [_val = new_<mm::Theorem>()]
+			> label     [phoenix::at_c<0>(*_val) = _1]
+			> "$p"
+			> expr      [phoenix::at_c<1>(*_val) = _1]
+			> lit("$=") [addToMath(_val)]
+			> proof     [phoenix::at_c<2>(*_val) = _1];
+		axiom =
+			eps         [_val = new_<mm::Axiom>()]
+			> label     [phoenix::at_c<0>(*_val) = _1]
+			> "$a"
+			> expr      [phoenix::at_c<1>(*_val) = _1]
+			> lit("$.") [addToMath(_val)];
+		essential =
+			eps         [_val = new_<mm::Essential>()]
+			> label     [phoenix::at_c<0>(*_val) = _1]
+			> "$e"
+			> expr      [phoenix::at_c<1>(*_val) = _1]
+			> lit("$.") [addToMath(_val)];
+		floating =
+			eps         [_val = new_<mm::Floating>()]
+			> label     [phoenix::at_c<0>(*_val) = _1]
+			> "$f"
+			> expr      [phoenix::at_c<1>(*_val) = _1]
+			> lit("$.") [addToMath(_val)];
+		disjointed =
+			lit("$d")   [_val = new_<mm::Disjointed>()]
+			> expr      [phoenix::at_c<0>(*_val) = _1]
+			> "$.";
+		variables =
+			lit("$v")   [_val = new_<mm::Variables>()]
+			> expr      [phoenix::at_c<0>(*_val) = _1]
+			> "$.";
+		constants =
+			lit("$c")   [_val = new_<mm::Constants>()]
+			> expr      [phoenix::at_c<0>(*_val) = _1]
+			> "$.";
 		inclusion = lit("$[") > path [_val = parseInclusion(_1)] > "$]";
 		comment = lit("$(") >> lexeme[+(ascii::char_ - '$')] >> "$)";
-		node = (
-			constants  [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
-			variables  [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
-			disjointed [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
-			floating   [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
-			essential  [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
-			axiom      [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
-			theorem    [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
-			block      [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] );
-		block = lit("${") > + (node | comment) > "$}";
+		node %= (
+			constants  |
+			variables  |
+			disjointed |
+			floating   |
+			essential  |
+			axiom      |
+			theorem    |
+			block      );
+		block =
+			lit("${") [_val = new_<mm::Block>()]
+			> + (
+				node  [push_back(phoenix::at_c<2>(*_val), _1)] |
+				comment)
+			> "$}";
 		source = +(
-			node |
-			inclusion [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
+			node      [push_back(phoenix::at_c<2>(_val), _1)] |
+			inclusion [push_back(phoenix::at_c<2>(_val), phoenix::construct<Node>(_1))] |
 			comment);
-*/
+
 		//qi::on_success(assertion, setLocation(_val, _1));
 		qi::on_error<qi::fail>(
 			source,
