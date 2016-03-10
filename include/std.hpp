@@ -60,34 +60,12 @@ namespace mdl {
 	using std::to_string;
 	
 	typedef unsigned uint;
-}
-
-/*
-#include "smm_memory.hpp"
-
-namespace smm {
-
-	template<class T>
-	using vector = std::vector<T, Allocator<T>>;
-	template<class T>
-	using set = std::set<T, Allocator<T>>;
-	template<class T>
-	using deque = std::deque<T, Allocator<T>>;
-	template<class T>
-	using stack = std::stack<T, deque<T>>;
-	template<class K, class T>
-	using map = std::map<K, T, std::less<K>, Allocator<T>>;
-}*/
-
-
-namespace mdl {
 
 	using std::vector;
 	using std::set;
 	using std::deque;
 	using std::stack;
 	using std::map;
-
 }
 
 

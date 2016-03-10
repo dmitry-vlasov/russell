@@ -8,9 +8,9 @@ typedef map<Symbol, Expr> Subst;
 string show (const Subst& subst) {
 	string str;
 	for (auto it = subst.cbegin(); it != subst.cend(); ++ it) {
-		it->first.show (str);
+		str += show(it->first);
 		str += " => ";
-		it->second.show (str);
+		str += show(it->second);
 		str += '\n';
 	}
 	return str;
@@ -23,9 +23,9 @@ static void checkDisjPair(const Expr& ex1, const Expr& ex2, const Assertion* th)
 				throw Error("verification", "disjointed violation", &th->loc);
 			if (it->isVar && jt->isVar && !th->areDisjointed(it->literal, jt->literal)) {
 				string msg = "inherited disjointed violation, vars: ";
-				it->show(msg);
+				msg += show(*it);
 				msg += " and ";
-				jt->show(msg);
+				msg += show(*jt);
 				throw Error("verification", msg, &th->loc);
 			}
 		}
@@ -90,9 +90,7 @@ static void checkFloating(const Assertion* ass, const vector<T>& floatings) {
 		if (it->expr.symbols[0].isVar)
 			throw Error("floating first symbol must be type (constant)", &ass->loc);
 		if (!it->expr.symbols[1].isVar) {
-			string str;
-			it->expr.show(str);
-			throw Error("floating second symbol must be type variable ", str, &ass->loc);
+			throw Error("floating second symbol must be type variable ", show(it->expr), &ass->loc);
 		}
 	}
 }

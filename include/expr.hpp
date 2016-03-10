@@ -16,27 +16,7 @@
 
 namespace mdl {
 
-class Showable {
-public :
-	virtual ~ Showable() { }
-	virtual void show (string&) const = 0;
-	virtual void show (ostream& str) const {
-		static string buffer;
-		buffer.clear();
-		show (buffer);
-		str << buffer;
-	}
-};
-
-	inline string&
-	operator << (string& str, const Showable& obj) { obj.show(str); return str; }
-	inline ostream&
-	operator << (ostream& str, const Showable& obj) { obj.show(str); return str; }
-
-
-
-
-struct Symbol : public Showable {
+struct Symbol {
 	Symbol(): literal(-1), isVar(false) { }
 	Symbol(int lit, bool var = false) :
 	literal (lit), isVar (var) {
@@ -51,13 +31,11 @@ struct Symbol : public Showable {
 	bool operator < (const Symbol& s) const {
 		return literal < s.literal;
 	}
-	virtual void show (string&) const;
-
 	uint literal;
 	bool isVar;
 };
 
-struct Expr : public Showable {
+struct Expr {
 public :
 	Expr(const Expr& ex) : symbols(ex.symbols) {
 	}
@@ -99,13 +77,12 @@ public :
 	bool operator != (const Expr& ex) const {
 		return !operator ==(ex);
 	}
-	virtual void show (string& str) const {
-		for (auto it = symbols.cbegin(); it != symbols.cend(); ++ it) {
-			it->show(str);
-			str += ' ';
-		}
-	}
 	vector<Symbol> symbols;
 };
+
+ostream& operator << (ostream& os, const Symbol& symb);
+ostream& operator << (ostream& os, const Expr& expr);
+inline string show(Symbol symb) { ostringstream os; os << symb; return os.str(); }
+inline string show(const Expr& expr) { ostringstream os; os << expr; return os.str(); }
 
 }

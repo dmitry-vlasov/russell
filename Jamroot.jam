@@ -11,11 +11,10 @@ project russell
 exe smm : 
   src/timer.cpp
   src/smm/expr.cpp
-  src/smm/ast.cpp
+#  src/smm/ast.cpp
   src/smm/globals.cpp
   src/smm/show.cpp
   src/smm/spirit.cpp
-#  src/smm/karma.cpp
   src/smm/parser.cpp
   src/smm/verifier.cpp
   src/smm/main.cpp ;
@@ -23,7 +22,7 @@ exe smm :
 lib smml : 
   src/timer.cpp
   src/smm/expr.cpp
-  src/smm/ast.cpp
+#  src/smm/ast.cpp
   src/smm/globals.cpp
   src/smm/spirit.cpp
   src/smm/parser.cpp

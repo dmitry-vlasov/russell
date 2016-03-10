@@ -16,12 +16,11 @@
 
 namespace mdl { namespace smm {
 
-struct Constants : public Showable {
-	virtual void show (string& str) const;
+struct Constants {
 	Expr expr;
 };
 
-struct Ref : public Showable {
+struct Ref {
 public :
 	enum Type {
 		PREF_E, ///< "e"
@@ -30,59 +29,51 @@ public :
 		PREF_A, ///< "a"
 		PREF_P  ///< "p"
 	};
-	virtual void show (string& str) const;
 	Type type;
 	uint index;
 };
 
 class Assertion;
 
-class Proof : public Showable {
+class Proof {
 public :
-	virtual void show (string& str) const;
 	vector<Ref> refs;
 };
 
 
-struct Variables : public Showable {
-	virtual void show (string& str) const;
+struct Variables {
 	Expr expr;
 };
 
 
-struct Disjointed : public Showable {
-	virtual void show (string& str) const;
+struct Disjointed {
 	Expr expr;
 };
 
-struct Essential : public Showable {
-	virtual void show (string& str) const;
+struct Essential {
 	uint index;
 	Expr expr;
 };
 
-struct Floating : public Showable {
+struct Floating  {
 	const Symbol& type() const { return expr.symbols[0]; }
 	const Symbol& var() const { return expr.symbols[1]; }
-	virtual void show (string& str) const;
 	uint index;
 	Expr expr;
 };
 
-struct Inner : public Showable {
-	virtual void show (string& str) const;
+struct Inner {
 	uint index;
 	Expr expr;
 };
 
-struct Proposition : public Showable {
-	virtual void show (string& str) const;
+struct Proposition {
 	bool axiom;
 	uint label;
 	Expr expr;
 };
 
-struct Assertion : public Showable {
+struct Assertion {
 	Assertion () :
 	variables(), disjointed(), essential(),
 	floating(), inner(),
@@ -95,9 +86,13 @@ struct Assertion : public Showable {
 		if (proof) delete proof;
 	}
 
-	bool areDisjointed (Symbol s1, Symbol s2) const;
-
-	virtual void show(string&) const;
+	bool areDisjointed(Symbol s1, Symbol s2) const {
+		for (auto it = disjointed.cbegin(); it != disjointed.cend(); ++ it) {
+			if (it->expr.contains(s1) && it->expr.contains(s2))
+				return true;
+		}
+		return false;
+	}
 
 	vector<Variables>  variables;
 	vector<Disjointed> disjointed;
@@ -109,7 +104,7 @@ struct Assertion : public Showable {
 	Location           loc;
 };
 
-class Source : public Showable {
+class Source {
 public :
 	struct Node {
 		Node(Assertion* a) : type (ASSERTION), val() { val.ass = a; }
@@ -142,27 +137,22 @@ public :
 			}
 		}
 	}
-
-	virtual void show(string&) const;
-
 	bool   top;
 	string name;
 	vector<Node> contents;
 };
 
-ostream& operator << (ostream& os, Symbol symb);
-ostream& operator << (ostream& os, const Expr& expr);
-ostream& operator << (ostream& os, const Constants* cst);
-ostream& operator << (ostream& os, const Ref ref);
-ostream& operator << (ostream& os, const Proof* proof);
+ostream& operator << (ostream& os, const Constants& cst);
+ostream& operator << (ostream& os, const Ref& ref);
+ostream& operator << (ostream& os, const Proof& proof);
 ostream& operator << (ostream& os, const Variables& vars);
 ostream& operator << (ostream& os, const Variables& disj);
 ostream& operator << (ostream& os, const Essential& ess);
 ostream& operator << (ostream& os, const Floating& flo);
 ostream& operator << (ostream& os, const Inner& inn);
 ostream& operator << (ostream& os, const Proposition& prop);
-ostream& operator << (ostream& os, const Assertion* ass);
-ostream& operator << (ostream& os, const Source* src);
+ostream& operator << (ostream& os, const Assertion& ass);
+ostream& operator << (ostream& os, const Source& src);
 
 }} // mdl::smm
 

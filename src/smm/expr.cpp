@@ -4,9 +4,15 @@
 
 namespace mdl {
  
-void Symbol::show(string& str) const {
-	str += smm::Smm::get().lex.symbols.toStr(literal);
-	//if (isVar) str += '#';
+ostream& operator << (ostream& os, const Symbol& symb) {
+	os << smm::Smm::get().lex.symbols.toStr(symb.literal);
+	return os;
+}
+
+ostream& operator << (ostream& os, const Expr& expr) {
+	for (auto it = expr.symbols.cbegin(); it != expr.symbols.cend(); ++ it)
+		os << *it << ' ';
+	return os;
 }
   
 }

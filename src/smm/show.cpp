@@ -3,23 +3,12 @@
 
 namespace mdl { namespace smm {
 
-ostream& operator << (ostream& os, Symbol symb) {
-	os << Smm::get().lex.symbols.toStr(symb.literal);
+ostream& operator << (ostream& os, const Constants& cst) {
+	os << "$c " << cst.expr << "$.";
 	return os;
 }
 
-ostream& operator << (ostream& os, const Expr& expr) {
-	for (auto it = expr.symbols.cbegin(); it != expr.symbols.cend(); ++ it)
-		os << *it << ' ';
-	return os;
-}
-
-ostream& operator << (ostream& os, const Constants* cst) {
-	os << "$c " << cst->expr << "$.";
-	return os;
-}
-
-ostream& operator << (ostream& os, const Ref ref) {
+ostream& operator << (ostream& os, const Ref& ref) {
 	switch (ref.type) {
 	case Ref::PREF_E: os << "e"; break;
 	case Ref::PREF_F: os << "f"; break;
@@ -34,8 +23,8 @@ ostream& operator << (ostream& os, const Ref ref) {
 	return os;
 }
 
-ostream& operator << (ostream& os, const Proof* proof) {
-	for (auto it = proof->refs.cbegin(); it != proof->refs.cend(); ++ it)
+ostream& operator << (ostream& os, const Proof& proof) {
+	for (auto it = proof.refs.cbegin(); it != proof.refs.cend(); ++ it)
 		os << *it << ' ';
 	os << "$.";
 	return os;
@@ -83,24 +72,24 @@ void showComponents(ostream& os, const vector<T>& components) {
 		os << "\t" << *it << "\n";
 }
 
-ostream& operator << (ostream& os, const Assertion* ass) {
+ostream& operator << (ostream& os, const Assertion& ass) {
 	os << "${\n";
-	showComponents<Variables>(os, ass->variables);
-	showComponents<Disjointed>(os, ass->disjointed);
-	showComponents<Essential>(os, ass->essential);
-	showComponents<Floating>(os, ass->floating);
-	showComponents<Inner>(os, ass->inner);
-	os << "\t" << ass->prop << "\n";
-	if (ass->proof) {
-		os << "\t" << ass->proof << "\n";
+	showComponents<Variables>(os, ass.variables);
+	showComponents<Disjointed>(os, ass.disjointed);
+	showComponents<Essential>(os, ass.essential);
+	showComponents<Floating>(os, ass.floating);
+	showComponents<Inner>(os, ass.inner);
+	os << "\t" << ass.prop << "\n";
+	if (ass.proof) {
+		os << "\t" << ass.proof << "\n";
 	}
 	os << "$}\n";
 	return os;
 }
 
-ostream& operator << (ostream& os, const Source* src) {
-	if (src->top) {
-		for (auto it = src->contents.cbegin(); it != src->contents.cend(); ++ it) {
+ostream& operator << (ostream& os, const Source& src) {
+	if (src.top) {
+		for (auto it = src.contents.cbegin(); it != src.contents.cend(); ++ it) {
 			switch(it->type) {
 			case Source::Node::ASSERTION: os << *(it->val.ass); break;
 			case Source::Node::CONSTANTS: os << *(it->val.cst); break;
@@ -110,7 +99,7 @@ ostream& operator << (ostream& os, const Source* src) {
 			os << '\n';
 		}
 	} else
-		os << "$[" << src->name << "$]";
+		os << "$[" << src.name << "$]";
 	return os;
 }
 
