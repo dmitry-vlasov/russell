@@ -67,18 +67,8 @@ struct Smm {
 };
 
 ostream& show (ostream& os, const Smm& s);
-
-namespace parse {
-Source* source(const string& path);
-}
-
-namespace parse1 {
-Source* source(const string& path);
-}
-
-namespace verify {
-void math(const vector<Assertion*>& theory);
-}
+Source* parse(const string& path);
+void verify(const vector<Assertion*>& theory);
 
 }} // mdl::smm
 

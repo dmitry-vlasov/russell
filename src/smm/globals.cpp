@@ -33,7 +33,7 @@ void Smm::run() {
 bool Smm::parse() {
 	try {
 		timers.read.start();
-		source = parse1::source(config.in);
+		source = smm::parse(config.in);
 
 		cout << *source << endl;
 		timers.read.stop();
@@ -49,7 +49,7 @@ bool Smm::parse() {
 bool Smm::verify() {
 	try {
 		timers.verify.start();
-		verify::math(math.assertions);
+		smm::verify(math.assertions);
 		timers.verify.stop();
 		return true;
 	} catch (Error& err) {

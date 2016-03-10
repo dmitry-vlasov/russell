@@ -137,9 +137,7 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Expr>& expr_s
 	expr_stack.push(apply(sub, ass->prop.expr));
 }
 
-namespace verify {
-
-void assertion(const Assertion* ass, const vector<Assertion*>& theory) {
+static void assertion(const Assertion* ass, const vector<Assertion*>& theory) {
 	checkSymbols(ass);
 	stack<Expr> expr_stack;
 	const Proof* proof = ass->proof;
@@ -162,10 +160,14 @@ void assertion(const Assertion* ass, const vector<Assertion*>& theory) {
 	}
 }
 
-void math(const vector<Assertion*>& theory) {
+static void math(const vector<Assertion*>& theory) {
 	for (auto it = theory.begin(); it != theory.cend(); ++ it) {
 		assertion(*it, theory);
 	}
 }
 
-}}} // mdl::smm::verify
+void verify(const vector<Assertion*>& theory) {
+	math(theory);
+}
+
+}} // mdl::smm::verify
