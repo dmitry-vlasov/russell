@@ -10,7 +10,7 @@ project russell
 
 exe smm : 
   src/timer.cpp
-  src/smm/expr.cpp
+  src/expr.cpp
   src/smm/globals.cpp
   src/smm/show.cpp
   src/smm/parser.cpp
@@ -19,7 +19,7 @@ exe smm :
  
 lib smml : 
   src/timer.cpp
-  src/smm/expr.cpp
+  src/expr.cpp
   src/smm/globals.cpp
   src/smm/parser.cpp
   src/smm/verifier.cpp ;
