@@ -25,6 +25,17 @@ struct Location {
 	string file;
 };
 
+struct LocationIter : public string::const_iterator {
+	LocationIter(const LocationIter& it) :
+	string::const_iterator(it), loc(it.loc) { }
+	LocationIter(string::const_iterator it, const string& file) :
+	string::const_iterator(it), loc(file) { }
+
+	LocationIter& operator ++();
+	LocationIter operator ++(int);
+	Location loc;
+};
+
 inline ostream& operator << (ostream& os, const Location& loc) {
 	os << "file: " << loc.file << " ";
 	os << "line: " << to_string(loc.line + 1) << " ";
@@ -35,6 +46,11 @@ inline string show(const Location& loc) {
 	ostringstream os;
 	os << loc;
 	return os.str();
+}
+
+inline ostream& operator << (ostream& os, const LocationIter& it){
+	os << show(it.loc);
+	return os;
 }
 
 } 

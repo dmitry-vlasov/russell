@@ -48,10 +48,20 @@ struct Mm {
 		Timer translate;
 		Timer total;
 	};
+	template<typename T>
+	struct Table {
+		map<uint, T> table;
+		bool hasLabel(unit lab) {
+			return table.find(lab) != table.end();
+		}
+	}
 	struct Math {
-		set<Symbol>      constants;
-		vector<Theorem*> theorems;
-		map<uint, Node*> table;
+		//set<Symbol>       constants;
+		Table<Theorem*>   theorems;
+		Table<Axiom*>     axioms;
+		Table<Essential*> essentials;
+		Table<Floating*>  floatings;
+		vector<Theorem*>  theory;
 	};
 
 	Config  config;

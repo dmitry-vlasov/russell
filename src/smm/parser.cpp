@@ -17,37 +17,6 @@ namespace qi = boost::spirit::qi;
 namespace ascii = boost::spirit::ascii;
 namespace phoenix = boost::phoenix;
 
-class LocationIter : public string::const_iterator {
-	void inc(char ch) {
-		if (ch == '\n') {
-			loc.col = 0;
-			++ loc.line;
-		} else
-			++ loc.col;
-	}
-public:
-	LocationIter(const LocationIter& it) :
-	string::const_iterator(it), loc(it.loc) { }
-	LocationIter(string::const_iterator it, const string& file) :
-	string::const_iterator(it), loc(file) { }
-
-	LocationIter& operator ++() {
-		inc(*string::const_iterator::operator++());
-		return *this;
-	}
-	LocationIter operator ++(int) {
-		LocationIter curr(*this);
-		inc(*string::const_iterator::operator++());
-		return curr;
-	}
-	Location loc;
-};
-
-std::ostream& operator << (std::ostream& os, const LocationIter& it){
-	os << show(it.loc);
-	return os;
-}
-
 inline void makeVars(Expr& expr) {
 	for (auto& symb : expr.symbols)
 		symb.var = true;

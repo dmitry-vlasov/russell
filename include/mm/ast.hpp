@@ -20,14 +20,6 @@ struct Constants {
 	Expr expr;
 };
 
-struct Ref {
-	uint index;
-};
-
-struct Proof {
-	vector<Ref> refs;
-};
-
 struct Variables {
 	Expr expr;
 };
@@ -37,14 +29,12 @@ struct Disjointed {
 };
 
 struct Essential {
-	uint index;
+	uint label;
 	Expr expr;
 };
 
 struct Floating  {
-	const Symbol& type() const { return expr.symbols[0]; }
-	const Symbol& var() const { return expr.symbols[1]; }
-	uint index;
+	uint label;
 	Expr expr;
 };
 
@@ -112,6 +102,10 @@ struct Node {
 		Block*      blk;
 	};
 	Value val;
+};
+
+struct Proof {
+	vector<Node> refs;
 };
 
 struct Block {
