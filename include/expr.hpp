@@ -80,8 +80,22 @@ public :
 };
 
 ostream& operator << (ostream& os, const Symbol& symb);
-ostream& operator << (ostream& os, const Expr& expr);
-inline string show(Symbol symb) { ostringstream os; os << symb; return os.str(); }
-inline string show(const Expr& expr) { ostringstream os; os << expr; return os.str(); }
+
+inline ostream& operator << (ostream& os, const Expr& expr) {
+	for (auto symb : expr.symbols)
+		os << symb << ' ';
+	return os;
+}
+
+inline string show(Symbol symb) {
+	ostringstream os; os << symb;
+	return os.str();
+}
+
+inline string show(const Expr& expr) {
+	ostringstream os;
+	os << expr;
+	return os.str();
+}
 
 }

@@ -9,10 +9,4 @@ ostream& operator << (ostream& os, const Symbol& symb) {
 	return os;
 }
 
-ostream& operator << (ostream& os, const Expr& expr) {
-	for (auto symb : expr.symbols)
-		os << symb << ' ';
-	return os;
-}
-
 }
