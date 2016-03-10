@@ -33,12 +33,7 @@ public :
 	inline ostream&
 	operator << (ostream& str, const Showable& obj) { obj.show(str); return str; }
 
-template<typename T>
-string show(const T& val) {
-	ostringstream os;
-	show (os, val);
-	return os.str();
-}
+
 
 
 struct Symbol : public Showable {

@@ -4,7 +4,7 @@
 
 namespace mdl {
 
-class Timer : public Showable {
+class Timer {
 public :
 	Timer (const bool brief = false);
 
@@ -33,8 +33,6 @@ public :
 	void operator += (const Timer&);
 	void operator /= (const double);
 
-	virtual void show(string&) const;
-
 	timeval getDelta() const;
 	timeval getCumulative() const;
 
@@ -42,7 +40,6 @@ public :
 	void setCumulative (timeval);
 
 
-private :
 	static void addTime (timeval&, const timeval);
 
 	enum {
@@ -66,6 +63,14 @@ private :
 
 	mutable bool showCumulativeTime_;
 };
+
+ostream& operator << (ostream& os, const Timer& t);
+
+inline string show(const Timer& tm) {
+	ostringstream os;
+	os << tm;
+	return os.str();
+}
 
 }
 

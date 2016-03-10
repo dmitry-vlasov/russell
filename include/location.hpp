@@ -20,20 +20,21 @@ struct Location {
 		return *this;
 	}
 
-	void show (string& str) const {
-		str += "file: ";
-		str += file;
-		str += " line: ";
-		str += std::to_string(line + 1);
-		str += " col: ";
-		str += std::to_string(col + 1);
-	}
-
 	uint   line;
 	uint   col;
 	string file;
 };
 
-std::ostream& operator << (std::ostream& os, const Location& loc);
+inline ostream& operator << (ostream& os, const Location& loc) {
+	os << "file: " << loc.file << " ";
+	os << "line: " << to_string(loc.line + 1) << " ";
+	os << "col: " << to_string(loc.col + 1);
+	return os;
+}
+inline string show(const Location& loc) {
+	ostringstream os;
+	os << loc;
+	return os.str();
+}
 
 } 

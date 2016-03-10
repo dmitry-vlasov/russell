@@ -44,7 +44,7 @@ public:
 };
 
 std::ostream& operator << (std::ostream& os, const LocationIter& it){
-	os << it.loc;
+	os << show(it.loc);
 	return os;
 }
 

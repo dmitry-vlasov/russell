@@ -10,7 +10,6 @@ project russell
 
 exe smm : 
   src/timer.cpp
-  src/location.cpp
   src/smm/expr.cpp
   src/smm/ast.cpp
   src/smm/globals.cpp
@@ -23,7 +22,6 @@ exe smm :
  
 lib smml : 
   src/timer.cpp
-  src/location.cpp
   src/smm/expr.cpp
   src/smm/ast.cpp
   src/smm/globals.cpp

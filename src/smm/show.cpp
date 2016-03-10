@@ -3,23 +3,23 @@
 
 namespace mdl { namespace smm {
 
-ostream& show(ostream& os, Symbol symb) {
+ostream& operator << (ostream& os, Symbol symb) {
 	os << Smm::get().lex.symbols.toStr(symb.literal);
 	return os;
 }
 
-ostream& show(ostream& os, const Expr& expr) {
+ostream& operator << (ostream& os, const Expr& expr) {
 	for (auto it = expr.symbols.cbegin(); it != expr.symbols.cend(); ++ it)
 		os << *it << ' ';
 	return os;
 }
 
-ostream& show(ostream& os, const Constants* cst) {
+ostream& operator << (ostream& os, const Constants* cst) {
 	os << "$c " << cst->expr << "$.";
 	return os;
 }
 
-ostream& show(ostream& os, const Ref ref) {
+ostream& operator << (ostream& os, const Ref ref) {
 	switch (ref.type) {
 	case Ref::PREF_E: os << "e"; break;
 	case Ref::PREF_F: os << "f"; break;
@@ -34,39 +34,39 @@ ostream& show(ostream& os, const Ref ref) {
 	return os;
 }
 
-ostream& show(ostream& os, const Proof* proof) {
+ostream& operator << (ostream& os, const Proof* proof) {
 	for (auto it = proof->refs.cbegin(); it != proof->refs.cend(); ++ it)
 		os << *it << ' ';
 	os << "$.";
 	return os;
 }
 
-ostream& show(ostream& os, const Variables& vars) {
+ostream& operator << (ostream& os, const Variables& vars) {
 	os << "$v " << vars.expr << "$.";
 	return os;
 }
 
-ostream& show(ostream& os, const Disjointed& disj) {
+ostream& operator << (ostream& os, const Disjointed& disj) {
 	os << "$d " << disj.expr << "$.";
 	return os;
 }
 
-ostream& show(ostream& os, const Essential& ess) {
+ostream& operator << (ostream& os, const Essential& ess) {
 	os << "e" << to_string(ess.index) << " $e " << ess.expr << "$.";
 	return os;
 }
 
-ostream& show(ostream& os, const Floating& flo) {
+ostream& operator << (ostream& os, const Floating& flo) {
 	os << "f" << to_string(flo.index) << " $f " << flo.expr << "$.";
 	return os;
 }
 
-ostream& show(ostream& os, const Inner& inn) {
+ostream& operator << (ostream& os, const Inner& inn) {
 	os << "i" << to_string(inn.index) << " $i " << inn.expr << "$.";
 	return os;
 }
 
-ostream& show(ostream& os, const Proposition& prop) {
+ostream& operator << (ostream& os, const Proposition& prop) {
 	const bool ax = prop.axiom;
 	os << (ax ? "a" : "p");
 	if (Smm::get().config.labels)
@@ -83,7 +83,7 @@ void showComponents(ostream& os, const vector<T>& components) {
 		os << "\t" << *it << "\n";
 }
 
-ostream& show(ostream& os, const Assertion* ass) {
+ostream& operator << (ostream& os, const Assertion* ass) {
 	os << "${\n";
 	showComponents<Variables>(os, ass->variables);
 	showComponents<Disjointed>(os, ass->disjointed);
@@ -98,7 +98,7 @@ ostream& show(ostream& os, const Assertion* ass) {
 	return os;
 }
 
-ostream& show(ostream& os, const Source* src) {
+ostream& operator << (ostream& os, const Source* src) {
 	if (src->top) {
 		for (auto it = src->contents.cbegin(); it != src->contents.cend(); ++ it) {
 			switch(it->type) {

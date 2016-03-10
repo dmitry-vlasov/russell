@@ -15,7 +15,7 @@ public :
 		msg += str;
 		if (loc) {
 			msg += "\nat: ";
-			loc->show(msg);
+			msg += show(*loc);
 		}
 	}
 	Error (const char* str, const string& s, const Location* loc = nullptr) throw() :
@@ -26,7 +26,7 @@ public :
 		msg += s;
 		if (loc) {
 			msg += "\nat: ";
-			loc->show(msg);
+			msg += show(*loc);
 		}
 	}
 	virtual const char* what() const throw() {

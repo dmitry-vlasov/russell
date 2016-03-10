@@ -150,19 +150,19 @@ public :
 	vector<Node> contents;
 };
 
-ostream& show(ostream& os, Symbol symb);
-ostream& show(ostream& os, const Expr& expr);
-ostream& show(ostream& os, const Constants* cst);
-ostream& show(ostream& os, const Ref ref);
-ostream& show(ostream& os, const Proof* proof);
-ostream& show(ostream& os, const Variables& vars);
-ostream& show(ostream& os, const Variables& disj);
-ostream& show(ostream& os, const Essential& ess);
-ostream& show(ostream& os, const Floating& flo);
-ostream& show(ostream& os, const Inner& inn);
-ostream& show(ostream& os, const Proposition& prop);
-ostream& show(ostream& os, const Assertion* ass);
-ostream& show(ostream& os, const Source* src);
+ostream& operator << (ostream& os, Symbol symb);
+ostream& operator << (ostream& os, const Expr& expr);
+ostream& operator << (ostream& os, const Constants* cst);
+ostream& operator << (ostream& os, const Ref ref);
+ostream& operator << (ostream& os, const Proof* proof);
+ostream& operator << (ostream& os, const Variables& vars);
+ostream& operator << (ostream& os, const Variables& disj);
+ostream& operator << (ostream& os, const Essential& ess);
+ostream& operator << (ostream& os, const Floating& flo);
+ostream& operator << (ostream& os, const Inner& inn);
+ostream& operator << (ostream& os, const Proposition& prop);
+ostream& operator << (ostream& os, const Assertion* ass);
+ostream& operator << (ostream& os, const Source* src);
 
 }} // mdl::smm
 

@@ -244,20 +244,6 @@ namespace mdl {
 		cumulativeTime_ = cumulative;
 	}
 
-	void
-	Timer :: show(string& str) const
-	{
-		if (!isUsed_) {
-			str += "unknown period";
-			return;
-		}
-		if (showCumulativeTime_) {
-			showTime(str, cumulativeTime_);
-		} else {
-			showTime(str, deltaTime_);
-		}
-	}
-
 	/****************************
 	 *		Private members
 	 ****************************/
@@ -327,6 +313,23 @@ namespace mdl {
 			++ time_1.tv_sec;
 		}
 	}
+
+	ostream& operator << (ostream& os, const Timer& t)
+	{
+		if (!t.isUsed_) {
+			os << "unknown period";
+			return os;
+		}
+		string str;
+		if (t.showCumulativeTime_) {
+			t.showTime(str, t.cumulativeTime_);
+		} else {
+			t.showTime(str, t.deltaTime_);
+		}
+		os << str;
+		return os;
+	}
+
 } // mdl
 
 
