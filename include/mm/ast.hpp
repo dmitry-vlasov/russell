@@ -43,9 +43,11 @@ struct Axiom {
 	Expr expr;
 };
 
+class Proof;
+
 struct Theorem {
 	Theorem() : label(-1), expr(), proof(nullptr) { }
-	~Theorem() { if (proof) delete proof; }
+	~Theorem();
 	uint   label;
 	Expr   expr;
 	Proof* proof;
@@ -63,20 +65,6 @@ struct Node {
 	Node(Axiom* a)      : type (AXIOM),      val() { val.ax  = a; }
 	Node(Theorem* t)    : type (THEOREM),    val() { val.th  = t; }
 	Node(Block* b)      : type (BLOCK),      val() { val.blk = b; }
-	~Node() {
-		switch(type) {
-		case NONE: break;
-		case CONSTANTS:  delete val.cst; break;
-		case VARIABLES:  delete val.var; break;
-		case DISJOINTED: delete val.dis; break;
-		case FLOATING:   delete val.flo; break;
-		case ESSENTIAL:  delete val.ess; break;
-		case AXIOM:      delete val.ax;  break;
-		case THEOREM:    delete val.th;  break;
-		case BLOCK:      delete val.blk; break;
-		default : assert(false && "impossible"); break;
-		}
-	}
 	void destroy();
 
 	enum Type {
@@ -92,6 +80,7 @@ struct Node {
 	};
 	Type type;
 	union Value {
+		void*       non;
 		Constants*  cst;
 		Variables*  var;
 		Disjointed* dis;
@@ -104,8 +93,12 @@ struct Node {
 	Value val;
 };
 
+struct Ref {
+	Node node;
+};
+
 struct Proof {
-	vector<Node> refs;
+	vector<Ref> refs;
 };
 
 struct Block {

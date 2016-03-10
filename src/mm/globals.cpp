@@ -10,35 +10,40 @@
 /* License:         GNU General Public License Version 3                     */
 /*****************************************************************************/
 
-#include "smm/ast.hpp"
-#include "smm/globals.hpp"
+#include "mm/ast.hpp"
+#include "mm/globals.hpp"
 
-namespace mdl { namespace smm {
+namespace mdl { namespace mm {
 
 void Node::destroy() {
 	switch(type) {
 	case NONE: break;
-	case ASSERTION: delete val.ass; break;
-	case CONSTANTS: delete val.cst; break;
-	case SOURCE:    delete val.src; break;
-	default : assert(false && "impossible");  break;
+	case CONSTANTS:  delete val.cst; break;
+	case VARIABLES:  delete val.var; break;
+	case DISJOINTED: delete val.dis; break;
+	case FLOATING:   delete val.flo; break;
+	case ESSENTIAL:  delete val.ess; break;
+	case AXIOM:      delete val.ax;  break;
+	case THEOREM:    delete val.th;  break;
+	case BLOCK:      delete val.blk; break;
+	default : assert(false && "impossible"); break;
 	}
 	type = NONE;
 }
 
-Source::~ Source() {
-	for (auto& node : contents)
-		node.destroy();
+Theorem::~Theorem() {
+	if (proof)
+		delete proof;
 }
 
-void Smm::run() {
+void Mm::run() {
 	timers.total.start();
 	if (config.verbose)
 		cout << "verifying file " << config.in << " ... " << flush;
 	if (!parse()) {
 		failed = true; return;
 	}
-	if (!verify()) {
+	if (!translate()) {
 		failed = true; return;
 	}
 	timers.total.stop();
@@ -46,10 +51,10 @@ void Smm::run() {
 		cout << "done in " << timers.total << endl;
 }
 
-bool Smm::parse() {
+bool Mm::parse() {
 	try {
 		timers.read.start();
-		source = smm::parse(config.in);
+		source = mm::parse(config.in);
 
 		cout << *source << endl;
 		timers.read.stop();
@@ -62,11 +67,11 @@ bool Smm::parse() {
 	}
 }
 
-bool Smm::verify() {
+bool Mm::translate() {
 	try {
-		timers.verify.start();
-		smm::verify(math.assertions);
-		timers.verify.stop();
+		timers.translate.start();
+		target = mm::translate(source);
+		timers.translate.stop();
 		return true;
 	} catch (Error& err) {
 		status += '\n';
@@ -76,9 +81,9 @@ bool Smm::verify() {
 	}
 }
 
-ostream& show (ostream& os, const Smm& s) {
+ostream& show (ostream& os, const Mm& s) {
 	os << s.status;
 	return os;
 }
 	
-}} // mdl::smm
+}} // mdl::mm

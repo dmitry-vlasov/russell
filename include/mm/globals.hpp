@@ -51,10 +51,10 @@ struct Mm {
 	template<typename T>
 	struct Table {
 		map<uint, T> table;
-		bool hasLabel(unit lab) {
+		bool has(uint lab) const {
 			return table.find(lab) != table.end();
 		}
-	}
+	};
 	struct Math {
 		//set<Symbol>       constants;
 		Table<Theorem*>   theorems;
@@ -77,8 +77,8 @@ struct Mm {
 	bool parse();
 	bool translate();
 
-	static const Smm& get() { return mod(); }
-	static Smm& mod() { static Smm smm; return smm; }
+	static const Mm& get() { return mod(); }
+	static Mm& mod() { static Mm mm; return mm; }
 };
 
 ostream& show (ostream& os, const Mm& s);

@@ -33,7 +33,8 @@ struct Config {
 
 struct Smm {
 	~ Smm() {
-		if (source) delete source;
+		if (source)
+			delete source;
 	}
 
 	struct Lex {
@@ -62,7 +63,7 @@ struct Smm {
 	bool parse();
 	bool verify();
 
-	static const Smm& get() { return mod(); }
+	static const Smm& get() { return mod();}
 	static Smm& mod() { static Smm smm; return smm; }
 };
 

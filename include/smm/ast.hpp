@@ -124,10 +124,8 @@ struct Source {
 	top(false), name(n), contents() {
 		static bool t = true; top = t; t = false;
 	}
-	~ Source() {
-		for (auto& node : contents)
-			node.destroy();
-	}
+	~ Source();
+
 	bool   top;
 	string name;
 	vector<Node> contents;
