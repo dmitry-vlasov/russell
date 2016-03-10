@@ -96,38 +96,39 @@ struct Assertion {
 	Location           loc;
 };
 
-class Source {
-public :
-	struct Node {
-		Node(Assertion* a) : type (ASSERTION), val() { val.ass = a; }
-		Node(Constants* c) : type (CONSTANTS), val() { val.cst = c; }
-		Node(Source* s)    : type (SOURCE),    val() { val.src = s; }
-		enum Type {
-			ASSERTION,
-			CONSTANTS,
-			SOURCE
-		};
-		Type type;
-		union Value {
-			Assertion* ass;
-			Constants* cst;
-			Source*    src;
-		};
-		Value val;
+class Source;
+
+struct Node {
+	Node() : type(NONE), val() { val.non = nullptr; }
+	Node(Assertion* a) : type (ASSERTION), val() { val.ass = a; }
+	Node(Constants* c) : type (CONSTANTS), val() { val.cst = c; }
+	Node(Source* s)    : type (SOURCE),    val() { val.src = s; }
+	void destroy();
+
+	enum Type {
+		NONE,
+		ASSERTION,
+		CONSTANTS,
+		SOURCE
 	};
+	Type type;
+	union Value {
+		void*      non;
+		Assertion* ass;
+		Constants* cst;
+		Source*    src;
+	};
+	Value val;
+};
+
+struct Source {
 	Source(const string& n) :
 	top(false), name(n), contents() {
 		static bool t = true; top = t; t = false;
 	}
-	~Source() {
-		for (auto it = contents.begin(); it != contents.end(); ++ it) {
-			switch(it->type) {
-			case Node::ASSERTION: delete it->val.ass; break;
-			case Node::CONSTANTS: delete it->val.cst; break;
-			case Node::SOURCE:    delete it->val.src; break;
-			default : assert(false && "impossible");  break;
-			}
-		}
+	~ Source() {
+		for (auto& node : contents)
+			node.destroy();
 	}
 	bool   top;
 	string name;
@@ -144,6 +145,7 @@ ostream& operator << (ostream& os, const Floating& flo);
 ostream& operator << (ostream& os, const Inner& inn);
 ostream& operator << (ostream& os, const Proposition& prop);
 ostream& operator << (ostream& os, const Assertion& ass);
+ostream& operator << (ostream& os, const Node& node);
 ostream& operator << (ostream& os, const Source& src);
 
 }} // mdl::smm

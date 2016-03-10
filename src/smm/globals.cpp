@@ -15,6 +15,17 @@
 
 namespace mdl { namespace smm {
 
+void Node::destroy() {
+	switch(type) {
+	case NONE: break;
+	case ASSERTION: delete val.ass; break;
+	case CONSTANTS: delete val.cst; break;
+	case SOURCE:    delete val.src; break;
+	default : assert(false && "impossible");  break;
+	}
+	type = NONE;
+}
+
 void Smm::run() {
 	timers.total.start();
 	if (config.verbose)

@@ -87,17 +87,21 @@ ostream& operator << (ostream& os, const Assertion& ass) {
 	return os;
 }
 
+ostream& operator << (ostream& os, const Node& node) {
+	switch(node.type) {
+	case Node::NONE: return os;
+	case Node::ASSERTION: os << *(node.val.ass); break;
+	case Node::CONSTANTS: os << *(node.val.cst); break;
+	case Node::SOURCE:    os << *(node.val.src); break;
+	default : assert(false && "impossible"); break;
+	}
+	return os;
+}
+
 ostream& operator << (ostream& os, const Source& src) {
 	if (src.top) {
-		for (auto& node : src.contents) {
-			switch(node.type) {
-			case Source::Node::ASSERTION: os << *(node.val.ass); break;
-			case Source::Node::CONSTANTS: os << *(node.val.cst); break;
-			case Source::Node::SOURCE:    os << *(node.val.src); break;
-			default : assert(false && "impossible"); break;
-			}
-			os << '\n';
-		}
+		for (auto& node : src.contents)
+			os << node << '\n';
 	} else
 		os << "$[" << src.name << "$]";
 	return os;

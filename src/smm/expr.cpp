@@ -14,5 +14,5 @@ ostream& operator << (ostream& os, const Expr& expr) {
 		os << symb << ' ';
 	return os;
 }
-  
+
 }
