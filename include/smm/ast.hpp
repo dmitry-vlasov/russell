@@ -21,7 +21,6 @@ struct Constants {
 };
 
 struct Ref {
-public :
 	enum Type {
 		PREF_E, ///< "e"
 		PREF_F, ///< "f"
@@ -33,8 +32,7 @@ public :
 	uint index;
 };
 
-class Proof {
-public :
+struct Proof {
 	vector<Ref> refs;
 };
 
