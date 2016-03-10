@@ -1,3 +1,4 @@
+#include <boost/range/adaptor/reversed.hpp>
 #include "smm/ast.hpp"
 #include "smm/globals.hpp"
 
@@ -119,16 +120,16 @@ static void checkSymbols(const Assertion* ass) {
 
 static void apply(const Assertion* ass, const Assertion* th, stack<Expr>& expr_stack) {
 	Subst sub;
-	for (auto it = ass->floating.crbegin(); it != ass->floating.crend(); ++ it) {
+	for (auto& flo : boost::adaptors::reverse(ass->floating)) {
 		if (expr_stack.empty())
 			throw Error("verification", "empty stack", &th->loc);
-		sub[it->var()] = expr_stack.top();
+		sub[flo.var()] = expr_stack.top();
 		expr_stack.pop();
 	}
-	for (auto it = ass->essential.crbegin(); it != ass->essential.crend(); ++ it) {
+	for (auto& ess : boost::adaptors::reverse(ass->essential)) {
 		if (expr_stack.empty())
 			throw Error("verification", "empty stack", &th->loc);
-		if (apply(sub, it->expr) != expr_stack.top())
+		if (apply(sub, ess.expr) != expr_stack.top())
 			throw Error("verification", "hypothesis mismatch", &th->loc);
 		expr_stack.pop();
 	}

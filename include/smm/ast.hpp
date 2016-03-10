@@ -33,18 +33,14 @@ public :
 	uint index;
 };
 
-class Assertion;
-
 class Proof {
 public :
 	vector<Ref> refs;
 };
 
-
 struct Variables {
 	Expr expr;
 };
-
 
 struct Disjointed {
 	Expr expr;
@@ -78,11 +74,7 @@ struct Assertion {
 	variables(), disjointed(), essential(),
 	floating(), inner(),
 	prop(), proof(nullptr), loc() { }
-	Assertion (const Location& l) :
-	variables(), disjointed(), essential(),
-	floating(), inner(),
-	prop(), proof(nullptr), loc(l) { }
-	virtual ~Assertion() {
+	~Assertion() {
 		if (proof) delete proof;
 	}
 
@@ -127,13 +119,13 @@ public :
 	top(false), name(n), contents() {
 		static bool t = true; top = t; t = false;
 	}
-	virtual ~Source() {
+	~Source() {
 		for (auto it = contents.begin(); it != contents.end(); ++ it) {
 			switch(it->type) {
 			case Node::ASSERTION: delete it->val.ass; break;
 			case Node::CONSTANTS: delete it->val.cst; break;
 			case Node::SOURCE:    delete it->val.src; break;
-			default : assert(false && "impossible");
+			default : assert(false && "impossible");  break;
 			}
 		}
 	}

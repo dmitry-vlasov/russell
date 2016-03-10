@@ -81,7 +81,7 @@ ostream& operator << (ostream& os, const Assertion& ass) {
 	showComponents<Inner>(os, ass.inner);
 	os << "\t" << ass.prop << "\n";
 	if (ass.proof) {
-		os << "\t" << ass.proof << "\n";
+		os << "\t" << *ass.proof << "\n";
 	}
 	os << "$}\n";
 	return os;
@@ -94,7 +94,7 @@ ostream& operator << (ostream& os, const Source& src) {
 			case Source::Node::ASSERTION: os << *(node.val.ass); break;
 			case Source::Node::CONSTANTS: os << *(node.val.cst); break;
 			case Source::Node::SOURCE:    os << *(node.val.src); break;
-			default : assert(false && "impossible");
+			default : assert(false && "impossible"); break;
 			}
 			os << '\n';
 		}

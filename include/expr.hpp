@@ -21,7 +21,6 @@ struct Symbol {
 	Symbol(int l, bool v = false) :
 	lit (l), var (v) {
 	}
-
 	bool operator == (const Symbol& s) const {
 		return lit == s.lit && var == s.var;
 	}
