@@ -79,6 +79,12 @@ Source* source(const string& path);
 namespace verify {
 void math(const vector<Assertion*>& theory);
 }
+namespace gen {
+string expr(const mdl::Expr& ex);
+string constants(const smm::Constants* consts);
+string assertion(const smm::Assertion* consts);
+string source(const smm::Source* consts);
+}
 
 }} // mdl::smm
 

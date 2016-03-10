@@ -56,7 +56,10 @@ struct Symbol : public Showable {
 
 struct Expr : public Showable {
 public :
-	Expr() : symbols() { }
+	Expr(const Expr& ex) : symbols(ex.symbols) {
+	}
+	Expr() : symbols() {
+	}
 	void markVars(const Expr& vars) {
 		for (auto it = symbols.begin(); it != symbols.end(); ++ it) {
 			if (vars.contains(it->literal))

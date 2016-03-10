@@ -4,6 +4,7 @@
 namespace mdl { namespace smm {
 
 void Constants::show (string& str) const {
+	//str += gen::constants(this);
 	str += "$c ";
 	expr.show(str);
 	str += "$.";
@@ -113,6 +114,7 @@ void Assertion::show (string& str) const {
 }
 
 void Source::show(string& str) const {
+	//str += gen::source(this);
 	if (top) {
 		for (auto it = contents.cbegin(); it != contents.cend(); ++ it) {
 			(*it)->show(str);

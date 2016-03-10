@@ -40,7 +40,6 @@ class Assertion;
 class Proof : public Showable {
 public :
 	virtual void show (string& str) const;
-	Assertion*  theorem;
 	vector<Ref> refs;
 };
 

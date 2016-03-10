@@ -91,29 +91,29 @@ struct AddToMath {
 };
 
 struct SymbolToInt {
-    template <typename T>
-    struct result { typedef uint type; };
-    uint operator()(const std::vector<char>& symb) const {
-    	std::string symbol(symb.begin(), symb.end());
-    	return Smm::mod().lex.symbols.toInt(symbol);
-    }
+	template <typename T>
+	struct result { typedef uint type; };
+	uint operator()(const std::vector<char>& symb) const {
+		std::string symbol(symb.begin(), symb.end());
+		return Smm::mod().lex.symbols.toInt(symbol);
+	}
 };
 
 struct LabelToInt {
-    template <typename T>
-    struct result { typedef uint type; };
-    uint operator()(const std::vector<char>& lab) const {
+	template <typename T>
+	struct result { typedef uint type; };
+	uint operator()(const std::vector<char>& lab) const {
 		std::string label(lab.begin(), lab.end());
 		return Smm::mod().lex.labels.toInt(label);
-    }
+	}
 };
 
 struct ParseInclusion {
-    template <typename T>
-    struct result { typedef Source* type; };
-    Source* operator()(const string& path) const {
-    	return source(path);
-    }
+	template <typename T>
+	struct result { typedef Source* type; };
+	Source* operator()(const string& path) const {
+		return source(path);
+	}
 };
 
 template<typename Iterator>
@@ -161,7 +161,7 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 
 		proof =
 			qi::eps [_val = new_<smm::Proof>()]
-			> +(a_ref | p_ref | e_ref | f_ref | i_ref) [push_back(phoenix::at_c<1>(*_val), _1)]
+			> +(a_ref | p_ref | e_ref | f_ref | i_ref) [push_back(phoenix::at_c<0>(*_val), _1)]
 			> "$.";
 		provable =
 			lit("p")    [at_c<0>(_val) = false]
@@ -211,9 +211,9 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 			> "$]";
 		comment = lit("$(") >> lexeme[+(ascii::char_ - '$')] >> "$)";
 		source = +(
-			constants [push_back(at_c<1>(_val), _1)] |
-			assertion [push_back(at_c<1>(_val), _1)] |
-			inclusion [push_back(at_c<1>(_val), _1)] |
+			constants [push_back(at_c<2>(_val), _1)] |
+			assertion [push_back(at_c<2>(_val), _1)] |
+			inclusion [push_back(at_c<2>(_val), _1)] |
 			comment);
 
 		qi::on_success(assertion, setLocation(_val, _1));
@@ -289,10 +289,8 @@ Source* source(const string& path) {
 
 	LocationIter iter(storage.begin(), path);
 	LocationIter end(storage.end(), path);
-	Grammar<LocationIter> grammar;
-
 	Source* source = new Source(path);
-	bool r = phrase_parse(iter, end, grammar, ascii::space, *source);
+	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, *source);
 	if (!r || iter != end) {
 		throw Error("parsing failed");
 	}

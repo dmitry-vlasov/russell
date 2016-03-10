@@ -378,9 +378,8 @@ static Assertion* assertion(Reader& rd, Token& tok) {
 			token(rd, tok, Token::PROVABLE);
 			ass->prop.expr = expression(rd, tok, false, Token::EQUALITY);
 			ass->proof = proof(rd, tok);
-			ass->proof->theorem = ass;
 			goto out;
-		default : throw Error("uexpected", tok.body, &rd.loc);
+		default : throw Error("unexpected", tok.body, &rd.loc);
 		}
 	}
 	out :
