@@ -1,3 +1,5 @@
+#define BOOST_SPIRIT_USE_PHOENIX_V3
+
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
@@ -141,28 +143,28 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 			> +ref      [push_back(phoenix::at_c<0>(*_val), _1)]
 			> "$.";
 		theorem =
-			eps         [_val = new_<mm::Theorem>()]
-			>> label    [phoenix::at_c<0>(*_val) = _1]
-			>> "$p"
+			  label     [_a = _1]
+			>> lit("$p")[_val = new_<mm::Theorem>()]
+			> eps       [phoenix::at_c<0>(*_val) = _a]
 			> expr      [phoenix::at_c<1>(*_val) = _1]
 			> lit("$=") [addToMath(_val)]
 			> proof     [phoenix::at_c<2>(*_val) = _1];
 		axiom =
-			eps         [_val = new_<mm::Axiom>()]
-			>> label    [phoenix::at_c<0>(*_val) = _1]
-			>> "$a"
+			   label    [_a = _1]
+			>> lit("$a")[_val = new_<mm::Axiom>()]
+			> eps       [phoenix::at_c<0>(*_val) = _a]
 			> expr      [phoenix::at_c<1>(*_val) = _1]
 			> lit("$.") [addToMath(_val)];
 		essential =
-			eps         [_val = new_<mm::Essential>()]
-			>> label    [phoenix::at_c<0>(*_val) = _1]
-			>> "$e"
+			  label     [_a = _1]
+			>> lit("$e")[_val = new_<mm::Essential>()]
+			> eps       [phoenix::at_c<0>(*_val) = _a]
 			> expr      [phoenix::at_c<1>(*_val) = _1]
 			> lit("$.") [addToMath(_val)];
 		floating =
-			eps         [_val = new_<mm::Floating>()]
-			>> label    [phoenix::at_c<0>(*_val) = _1]
-			>> "$f"
+			  label     [_a = _1]
+			>> lit("$f")[_val = new_<mm::Floating>()]
+			> eps       [phoenix::at_c<0>(*_val) = _a]
 			> expr      [phoenix::at_c<1>(*_val) = _1]
 			> lit("$.") [addToMath(_val)];
 		disjointed =
@@ -217,7 +219,7 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 				node    [push_back(phoenix::at_c<2>(*_val), _1)])
 			> lit("$}") [phoenix::ref(parent) = phoenix::at_c<3>(*_val)];
 		source =
-			eps         [phoenix::at_c<3>(*_val) = phoenix::val(parent)]
+			  eps       [phoenix::at_c<3>(*_val) = phoenix::val(parent)]
 			> eps       [phoenix::ref(parent) = _val]
 			> +(
 			comment |
@@ -239,12 +241,12 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 	qi::rule<Iterator, std::string(), ascii::space_type> path;
 	qi::rule<Iterator, Ref(), ascii::space_type> ref;
 	qi::rule<Iterator, Proof*(), ascii::space_type> proof;
-	qi::rule<Iterator, Essential*(), ascii::space_type> essential;
-	qi::rule<Iterator, Floating*(), ascii::space_type> floating;
+	qi::rule<Iterator, Essential*(), qi::locals<uint>, ascii::space_type> essential;
+	qi::rule<Iterator, Floating*(), qi::locals<uint>, ascii::space_type> floating;
 	qi::rule<Iterator, Disjointed*(), ascii::space_type> disjointed;
 	qi::rule<Iterator, Variables*(), ascii::space_type> variables;
-	qi::rule<Iterator, Axiom*(), ascii::space_type> axiom;
-	qi::rule<Iterator, Theorem*(), ascii::space_type> theorem;
+	qi::rule<Iterator, Axiom*(), qi::locals<uint>, ascii::space_type> axiom;
+	qi::rule<Iterator, Theorem*(), qi::locals<uint>, ascii::space_type> theorem;
 	qi::rule<Iterator, Constants*(), ascii::space_type> constants;
 	qi::rule<Iterator, Node(), ascii::space_type> node;
 	qi::rule<Iterator, Block*(), ascii::space_type> block;
