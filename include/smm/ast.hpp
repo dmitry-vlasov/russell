@@ -134,6 +134,17 @@ struct Source {
 	vector<Node> contents;
 };
 
+inline void Node::destroy() {
+	switch(type) {
+	case NONE: break;
+	case ASSERTION: delete val.ass; break;
+	case CONSTANTS: delete val.cst; break;
+	case SOURCE:    delete val.src; break;
+	default : assert(false && "impossible");  break;
+	}
+	type = NONE;
+}
+
 ostream& operator << (ostream& os, const Constants& cst);
 ostream& operator << (ostream& os, const Ref& ref);
 ostream& operator << (ostream& os, const Proof& proof);

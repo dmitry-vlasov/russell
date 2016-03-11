@@ -4,7 +4,7 @@
 
 namespace mdl {
  
-ostream& operator << (ostream& os, const Symbol& symb) {
+ostream& operator << (ostream& os, Symbol symb) {
 	os << smm::Smm::get().lex.symbols.toStr(symb.lit);
 	return os;
 }

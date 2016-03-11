@@ -59,7 +59,7 @@ namespace mdl {
 	using std::flush;
 	using std::to_string;
 	
-	typedef unsigned uint;
+	typedef std::uint32_t uint;
 
 	using std::vector;
 	using std::set;

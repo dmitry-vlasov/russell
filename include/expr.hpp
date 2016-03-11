@@ -18,7 +18,7 @@ namespace mdl {
 
 struct Symbol {
 	Symbol(): lit(-1), var(false) { }
-	Symbol(int l, bool v = false) :
+	Symbol(uint l, bool v = false) :
 	lit (l), var (v) {
 	}
 	bool operator == (const Symbol& s) const {
@@ -32,6 +32,20 @@ struct Symbol {
 	}
 	uint lit;
 	bool var;
+};
+
+struct Label {
+	Label(uint l = -1) : lab (l) {	}
+	bool operator == (const Label& l) const {
+		return lab == l.lab;
+	}
+	bool operator != (const Label& l) const {
+		return !operator ==(l);
+	}
+	bool operator < (const Label& l) const {
+		return lab < l.lab;
+	}
+	uint lab;
 };
 
 struct Expr {
@@ -79,7 +93,8 @@ public :
 	vector<Symbol> symbols;
 };
 
-ostream& operator << (ostream& os, const Symbol& symb);
+ostream& operator << (ostream& os, Symbol symb);
+ostream& operator << (ostream& os, Label label);
 
 inline ostream& operator << (ostream& os, const Expr& expr) {
 	for (auto symb : expr.symbols)

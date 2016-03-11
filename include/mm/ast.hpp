@@ -103,10 +103,10 @@ struct Proof {
 };
 
 struct Block {
-	Block(): name(), contents(), parent(nullptr) { }
-	Block(Block* p) : name(), contents(), parent(p) { }
+	Block(): name(), contents(), parent(nullptr), ind(-1) { }
+	Block(Block* p) : name(), contents(), parent(p), ind(-1) { }
 	Block(const string& n) :
-	name(n), contents(), parent(nullptr) { }
+	name(n), contents(), parent(nullptr), ind(-1) { }
 	~ Block() {
 		for (auto& node : contents)
 			node.destroy();
@@ -114,6 +114,7 @@ struct Block {
 	string name;
 	vector<Node> contents;
 	Block* parent;
+	uint   ind;
 };
 
 ostream& operator << (ostream& os, const Constants& cst);

@@ -85,6 +85,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(std::string, name)
 	(std::vector<mdl::mm::Node>, contents)
 	(mdl::mm::Block*, parent)
+	(uint, ind)
 )
 
 

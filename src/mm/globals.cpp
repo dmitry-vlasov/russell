@@ -11,6 +11,7 @@
 /*****************************************************************************/
 
 #include "mm/ast.hpp"
+#include "smm/ast.hpp"
 #include "mm/globals.hpp"
 
 namespace mdl { namespace mm {
@@ -70,7 +71,9 @@ bool Mm::parse() {
 bool Mm::translate() {
 	try {
 		timers.translate.start();
-		target = mm::translate(source);
+		//target = mm::translate(source);
+
+		//cout << endl << *target;
 		timers.translate.stop();
 		return true;
 	} catch (Error& err) {
