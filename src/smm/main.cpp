@@ -70,6 +70,7 @@ int main (int argc, const char* argv[])
 	Smm& smm = Smm::mod();
 	Config& conf = smm.config;
 	if (!parseConfig(argc, argv, conf)) {
+		showHelp();
 		return 1;
 	}
 	if (conf.help) {

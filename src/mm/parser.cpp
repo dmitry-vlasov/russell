@@ -76,8 +76,7 @@ struct CreateRef {
 		else if (math.theorems.has(lab))
 			return Node(math.theorems[lab]);
 		else
-			return Node();
-			//throw Error("unknown label in proof", Mm::get().lex.labels.toStr(lab));
+			throw Error("unknown label in proof", Mm::get().lex.labels.toStr(lab));
 	}
 };
 
@@ -91,8 +90,28 @@ struct SetLocation {
     }
 };
 */
+
+static Block* parent = nullptr;
+
+struct PushParent {
+    template <typename T1>
+    struct result { typedef void type; };
+    void operator()(Block* block) const {
+    	block->parent = parent;
+    	parent = block;
+    }
+};
+
+struct PopParent {
+    template <typename T1>
+    struct result { typedef void type; };
+    void operator()(Block* block) const {
+    	parent = block->parent;
+    }
+};
+
 template <typename Iterator>
-struct Grammar : qi::grammar<Iterator, Block(), ascii::space_type> {
+struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 	Grammar() : Grammar::base_type(source, "russell") {
 		using qi::lit;
 		using qi::uint_;
@@ -116,7 +135,7 @@ struct Grammar : qi::grammar<Iterator, Block(), ascii::space_type> {
 
 		expr = +symbol [push_back(at_c<0>(_val), _1)];
 
-		ref  = label    [phoenix::at_c<0>(_val) = createRef(_1)];
+		ref   = label   [phoenix::at_c<0>(_val) = createRef(_1)];
 		proof =
 			eps         [_val = new_<mm::Proof>()]
 			> +ref      [push_back(phoenix::at_c<0>(*_val), _1)]
@@ -169,16 +188,42 @@ struct Grammar : qi::grammar<Iterator, Block(), ascii::space_type> {
 			essential  |
 			axiom      |
 			theorem    );
+
+		const phoenix::function<PushParent> pushParent;
+		const phoenix::function<PopParent>  popParent;
+
 		block =
-			lit("${") [_val = new_<mm::Block>()]
+			lit("${")   [_val = new_<mm::Block>(phoenix::val(parent))]
+			> eps       [pushParent(_val)]
 			> + (
 				comment |
-				node  [push_back(phoenix::at_c<2>(*_val), _1)])
-			> "$}";
-		source = +(
+				node    [push_back(phoenix::at_c<2>(*_val), _1)])
+			> lit("$}") [popParent(_val)];
+		source =
+			eps         [phoenix::at_c<3>(*_val) = phoenix::val(parent)]
+			> eps       [pushParent(_val)]
+			> +(
 			comment |
-			node      [push_back(phoenix::at_c<2>(_val), _1)] |
-			inclusion [push_back(phoenix::at_c<2>(_val), phoenix::construct<Node>(_1))]);
+			node        [push_back(phoenix::at_c<2>(*_val), _1)] |
+			inclusion   [push_back(phoenix::at_c<2>(*_val), phoenix::construct<Node>(_1))])
+			> eps       [popParent(_val)];
+
+		//static Block* parent = nullptr;
+		/*block =
+			lit("${")   [_val = new_<mm::Block>(phoenix::val(parent))]
+			> eps       [phoenix::ref(parent) = _val]
+			> + (
+				comment |
+				node    [push_back(phoenix::at_c<2>(*_val), _1)])
+			> lit("$}") [phoenix::ref(parent) = phoenix::at_c<3>(*_val)];
+		source =
+			eps         [phoenix::at_c<3>(*_val) = phoenix::val(parent)]
+			> eps       [phoenix::ref(parent) = _val]
+			> +(
+			comment |
+			node        [push_back(phoenix::at_c<2>(*_val), _1)] |
+			inclusion   [push_back(phoenix::at_c<2>(*_val), phoenix::construct<Node>(_1))])
+			> eps       [phoenix::ref(parent) = phoenix::at_c<3>(*_val)];*/
 
 		//qi::on_success(assertion, setLocation(_val, _1));
 		qi::on_error<qi::fail>(
@@ -205,7 +250,7 @@ struct Grammar : qi::grammar<Iterator, Block(), ascii::space_type> {
 	qi::rule<Iterator, Block*(), ascii::space_type> block;
 	qi::rule<Iterator, Block*(), ascii::space_type> inclusion;
 	qi::rule<Iterator, qi::unused_type, ascii::space_type> comment;
-	qi::rule<Iterator, Block(), ascii::space_type> source;
+	qi::rule<Iterator, Block*(), ascii::space_type> source;
 };
 
 template <typename Iterator>
@@ -245,7 +290,7 @@ static Block* source(const string& path) {
 	LocationIter iter(storage.begin(), path);
 	LocationIter end(storage.end(), path);
 	Block* source = new Block(path);
-	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, *source);
+	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, source);
 	if (!r || iter != end) {
 		throw Error("parsing failed");
 	}

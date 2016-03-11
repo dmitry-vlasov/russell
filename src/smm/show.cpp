@@ -69,7 +69,7 @@ ostream& operator << (ostream& os, const Proposition& prop) {
 template<class T>
 void showComponents(ostream& os, const vector<T>& components) {
 	for (auto& comp : components)
-		os << "\t" << comp << "\n";
+		os << indent() << comp << "\n";
 }
 
 ostream& operator << (ostream& os, const Assertion& ass) {
@@ -79,9 +79,9 @@ ostream& operator << (ostream& os, const Assertion& ass) {
 	showComponents<Essential>(os, ass.essential);
 	showComponents<Floating>(os, ass.floating);
 	showComponents<Inner>(os, ass.inner);
-	os << "\t" << ass.prop << "\n";
+	os << indent() << ass.prop << "\n";
 	if (ass.proof) {
-		os << "\t" << *ass.proof << "\n";
+		os << indent() << *ass.proof << "\n";
 	}
 	os << "$}\n";
 	return os;

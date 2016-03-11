@@ -68,6 +68,7 @@ int main (int argc, const char* argv[])
 	Mm& mm = Mm::mod();
 	Config& conf = mm.config;
 	if (!parseConfig(argc, argv, conf)) {
+		showHelp();
 		return 1;
 	}
 	if (conf.help) {

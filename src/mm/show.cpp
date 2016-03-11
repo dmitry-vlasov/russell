@@ -77,14 +77,24 @@ ostream& operator << (ostream& os, const Node& node) {
 	return os;
 }
 
+static int depth(const Block& block) {
+	int d = 0;
+	Block* b = block.parent;
+	while (b) { ++ d; b = b->parent; }
+	return d;
+}
+
 ostream& operator << (ostream& os, const Block& block) {
-	//if (block.top) {
-		os << "${\n";
+	int d = depth(block);
+	if (!block.name.empty() && block.parent)
+		os << indent(d - 1) << "$[" << block.name << "$]";
+	else {
+		if (block.parent) os << indent(d - 1) << "${\n";
 		for (auto& node : block.contents)
-			os << '\t' << node << '\n';
-		os << "$}\n";
-	//} else
-	//	os << "${" << block.name << "$}";
+			os << indent(d)  << node << '\n';
+		if (block.parent) os << indent(d - 1) << "$}";
+		else os << "\n";
+	}
 	return os;
 }
 

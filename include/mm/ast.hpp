@@ -102,9 +102,11 @@ struct Proof {
 };
 
 struct Block {
-	Block(): top(false), name(), contents() { }
+	Block(): top(false), name(), contents(), parent(nullptr) { }
+	Block(Block* p) : top(false), name(), contents(), parent(p) {
+	}
 	Block(const string& n) :
-	top(false), name(n), contents() {
+	top(false), name(n), contents(), parent(nullptr) {
 		static bool t = true; top = t; t = false;
 	}
 	~ Block() {
@@ -114,6 +116,7 @@ struct Block {
 	bool   top;
 	string name;
 	vector<Node> contents;
+	Block* parent;
 };
 
 ostream& operator << (ostream& os, const Constants& cst);

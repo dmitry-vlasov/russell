@@ -39,7 +39,7 @@ Theorem::~Theorem() {
 void Mm::run() {
 	timers.total.start();
 	if (config.verbose)
-		cout << "verifying file " << config.in << " ... " << flush;
+		cout << "translating file " << config.in << " ... " << flush;
 	if (!parse()) {
 		failed = true; return;
 	}
@@ -56,7 +56,7 @@ bool Mm::parse() {
 		timers.read.start();
 		source = mm::parse(config.in);
 
-		cout << endl << *source << endl;
+		//cout << endl << *source;
 		timers.read.stop();
 		return true;
 	} catch (Error& err) {
