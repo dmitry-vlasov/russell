@@ -34,20 +34,6 @@ struct Symbol {
 	bool var;
 };
 
-struct Label {
-	Label(uint l = -1) : lab (l) {	}
-	bool operator == (const Label& l) const {
-		return lab == l.lab;
-	}
-	bool operator != (const Label& l) const {
-		return !operator ==(l);
-	}
-	bool operator < (const Label& l) const {
-		return lab < l.lab;
-	}
-	uint lab;
-};
-
 struct Expr {
 public :
 	Expr(const Expr& ex) : symbols(ex.symbols) {
@@ -94,7 +80,6 @@ public :
 };
 
 ostream& operator << (ostream& os, Symbol symb);
-ostream& operator << (ostream& os, Label label);
 
 inline ostream& operator << (ostream& os, const Expr& expr) {
 	for (auto symb : expr.symbols)

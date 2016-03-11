@@ -14,7 +14,13 @@
 #include "smm/ast.hpp"
 #include "mm/globals.hpp"
 
-namespace mdl { namespace mm {
+namespace mdl {
+
+void label::write(ostream& os) {
+	os << mm::Mm::get().lex.labels.toStr(lab);
+}
+
+namespace mm {
 
 void Node::destroy() {
 	switch(type) {
@@ -71,9 +77,9 @@ bool Mm::parse() {
 bool Mm::translate() {
 	try {
 		timers.translate.start();
-		//target = mm::translate(source);
+		target = mm::translate(source);
 
-		//cout << endl << *target;
+		cout << endl << *target;
 		timers.translate.stop();
 		return true;
 	} catch (Error& err) {

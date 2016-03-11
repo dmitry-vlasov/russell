@@ -17,13 +17,26 @@ class indent {
 public:
 	indent(int n = 1, char d = '\t') : num(n), del(d) {
 	}
-	void make(ostream& os) {
+	void write(ostream& os) {
 		while (num --) os << del;
 	}
 };
 
-inline ostream& operator <<(ostream& os, indent ind) {
-	ind.make(os);
+class label {
+	uint lab;
+public:
+	label(uint l) : lab(l) {
+	}
+	void write(ostream& os);
+};
+
+inline ostream& operator << (ostream& os, indent ind) {
+	ind.write(os);
+	return os;
+}
+
+inline ostream& operator << (ostream& os, label lab) {
+	lab.write(os);
 	return os;
 }
 

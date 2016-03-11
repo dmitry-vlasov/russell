@@ -14,10 +14,10 @@ ostream& operator << (ostream& os, const Ref& ref) {
 	case Node::CONSTANTS:  assert(false && "impossible"); break;
 	case Node::VARIABLES:  assert(false && "impossible"); break;
 	case Node::DISJOINTED: assert(false && "impossible"); break;
-	case Node::FLOATING:   os << Mm::get().lex.labels.toStr(ref.node.val.flo->label); break;
-	case Node::ESSENTIAL:  os << Mm::get().lex.labels.toStr(ref.node.val.ess->label); break;
-	case Node::AXIOM:      os << Mm::get().lex.labels.toStr(ref.node.val.ax->label);  break;
-	case Node::THEOREM:    os << Mm::get().lex.labels.toStr(ref.node.val.th->label);  break;
+	case Node::FLOATING:   os << label(ref.node.val.flo->label); break;
+	case Node::ESSENTIAL:  os << label(ref.node.val.ess->label); break;
+	case Node::AXIOM:      os << label(ref.node.val.ax->label);  break;
+	case Node::THEOREM:    os << label(ref.node.val.th->label);  break;
 	case Node::BLOCK:      assert(false && "impossible"); break;
 	default :              assert(false && "impossible"); break;
 	}
@@ -42,22 +42,22 @@ ostream& operator << (ostream& os, const Disjointed& disj) {
 }
 
 ostream& operator << (ostream& os, const Essential& ess) {
-	os << Mm::get().lex.labels.toStr(ess.label) << " $e " << ess.expr << "$.";
+	os << label(ess.label) << " $e " << ess.expr << "$.";
 	return os;
 }
 
 ostream& operator << (ostream& os, const Floating& flo) {
-	os << Mm::get().lex.labels.toStr(flo.label) << " $f " << flo.expr << "$.";
+	os << label(flo.label) << " $f " << flo.expr << "$.";
 	return os;
 }
 
 ostream& operator << (ostream& os, const Axiom& ax) {
-	os << Mm::get().lex.labels.toStr(ax.label) << " $a " << ax.expr << "$.";
+	os << label(ax.label) << " $a " << ax.expr << "$.";
 	return os;
 }
 
 ostream& operator << (ostream& os, const Theorem& th) {
-	os << Mm::get().lex.labels.toStr(th.label) << " $p " << th.expr << "$= " << *th.proof;
+	os << label(th.label) << " $p " << th.expr << "$= " << *th.proof;
 	return os;
 }
 

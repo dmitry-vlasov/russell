@@ -11,6 +11,9 @@ project russell
 exe smm : 
   src/timer.cpp
   src/location.cpp
+  
+  src/mm/show.cpp
+  
   src/smm/expr.cpp
   src/smm/globals.cpp
   src/smm/show.cpp
@@ -22,6 +25,8 @@ exe smm :
 exe mm : 
   src/timer.cpp
   src/location.cpp
+  
+  src/smm/show.cpp
   
   src/mm/expr.cpp
   src/mm/globals.cpp

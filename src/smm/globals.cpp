@@ -13,7 +13,16 @@
 #include "smm/ast.hpp"
 #include "smm/globals.hpp"
 
-namespace mdl { namespace smm {
+namespace mdl {
+
+void label::write(ostream& os) {
+	if (smm::Smm::get().config.labels)
+		os << smm::Smm::get().lex.labels.toStr(lab);
+	else
+		os << to_string(lab);
+}
+
+namespace smm {
 
 void Smm::run() {
 	timers.total.start();

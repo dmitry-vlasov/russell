@@ -16,8 +16,8 @@ ostream& operator << (ostream& os, const Ref& ref) {
 	case Ref::PREF_A: os << "a"; break;
 	case Ref::PREF_P: os << "p"; break;
 	}
-	if (Smm::get().config.labels && (ref.type == Ref::PREF_A || ref.type == Ref::PREF_P))
-		os << Smm::get().lex.labels.toStr(ref.index);
+	if (ref.type == Ref::PREF_A || ref.type == Ref::PREF_P)
+		os << label(ref.index);
 	else
 		os << to_string(ref.index);
 	return os;
@@ -58,10 +58,7 @@ ostream& operator << (ostream& os, const Inner& inn) {
 ostream& operator << (ostream& os, const Proposition& prop) {
 	const bool ax = prop.axiom;
 	os << (ax ? "a" : "p");
-	if (Smm::get().config.labels)
-		os << Smm::get().lex.labels.toStr(prop.label);
-	else
-		os << to_string(prop.label);
+	os << label(prop.label);
 	os << (ax ? " $a " : " $p ") << prop.expr << (ax ? "$." : "$=");
 	return os;
 }
