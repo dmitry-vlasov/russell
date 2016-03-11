@@ -2,7 +2,7 @@
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::Symbol,
-	(uint, lit)
+	(mdl::uint, lit)
 	(bool, var)
 )
 
@@ -38,25 +38,25 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Essential,
-	(uint, label)
+	(mdl::uint, label)
 	(mdl::Expr, expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Floating,
-	(uint, label)
+	(mdl::uint, label)
 	(mdl::Expr, expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Axiom,
-	(uint, label)
+	(mdl::uint, label)
 	(mdl::Expr, expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Theorem,
-	(uint, label)
+	(mdl::uint, label)
 	(mdl::Expr, expr)
 	(mdl::mm::Proof*, proof)
 )
@@ -75,13 +75,13 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Node,
+	(mdl::uint, type)
 	(mdl::mm::Node::Type, type)
 	(mdl::mm::Node::Value, val)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Block,
-	(bool, top)
 	(std::string, name)
 	(std::vector<mdl::mm::Node>, contents)
 	(mdl::mm::Block*, parent)

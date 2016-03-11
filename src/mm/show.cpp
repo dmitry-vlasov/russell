@@ -91,7 +91,7 @@ ostream& operator << (ostream& os, const Block& block) {
 	else {
 		if (block.parent) os << indent(d - 1) << "${\n";
 		for (auto& node : block.contents)
-			os << indent(d)  << node << '\n';
+			os << indent(d) << node << '\n';
 		if (block.parent) os << indent(d - 1) << "$}";
 		else os << "\n";
 	}

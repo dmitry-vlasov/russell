@@ -56,15 +56,15 @@ struct Theorem {
 class Block;
 
 struct Node {
-	Node() : type(NONE), val() { val.non = nullptr;}
-	Node(Constants* c)  : type (CONSTANTS),  val() { val.cst = c; }
-	Node(Variables* v)  : type (VARIABLES),  val() { val.var = v; }
-	Node(Disjointed* d) : type (DISJOINTED), val() { val.dis = d; }
-	Node(Floating* f)   : type (FLOATING),   val() { val.flo = f; }
-	Node(Essential* e)  : type (ESSENTIAL),  val() { val.ess = e; }
-	Node(Axiom* a)      : type (AXIOM),      val() { val.ax  = a; }
-	Node(Theorem* t)    : type (THEOREM),    val() { val.th  = t; }
-	Node(Block* b)      : type (BLOCK),      val() { val.blk = b; }
+	Node()              : ind(-1), type(NONE),       val() { val.non = nullptr; }
+	Node(Constants* c)  : ind(-1), type(CONSTANTS),  val() { val.cst = c; }
+	Node(Variables* v)  : ind(-1), type(VARIABLES),  val() { val.var = v; }
+	Node(Disjointed* d) : ind(-1), type(DISJOINTED), val() { val.dis = d; }
+	Node(Floating* f)   : ind(-1), type(FLOATING),   val() { val.flo = f; }
+	Node(Essential* e)  : ind(-1), type(ESSENTIAL),  val() { val.ess = e; }
+	Node(Axiom* a)      : ind(-1), type(AXIOM),      val() { val.ax  = a; }
+	Node(Theorem* t)    : ind(-1), type(THEOREM),    val() { val.th  = t; }
+	Node(Block* b)      : ind(-1), type(BLOCK),      val() { val.blk = b; }
 	void destroy();
 
 	enum Type {
@@ -78,7 +78,6 @@ struct Node {
 		THEOREM,
 		BLOCK
 	};
-	Type type;
 	union Value {
 		void*       non;
 		Constants*  cst;
@@ -90,6 +89,8 @@ struct Node {
 		Theorem*    th;
 		Block*      blk;
 	};
+	uint ind;
+	Type type;
 	Value val;
 };
 
@@ -102,18 +103,14 @@ struct Proof {
 };
 
 struct Block {
-	Block(): top(false), name(), contents(), parent(nullptr) { }
-	Block(Block* p) : top(false), name(), contents(), parent(p) {
-	}
+	Block(): name(), contents(), parent(nullptr) { }
+	Block(Block* p) : name(), contents(), parent(p) { }
 	Block(const string& n) :
-	top(false), name(n), contents(), parent(nullptr) {
-		static bool t = true; top = t; t = false;
-	}
+	name(n), contents(), parent(nullptr) { }
 	~ Block() {
 		for (auto& node : contents)
 			node.destroy();
 	}
-	bool   top;
 	string name;
 	vector<Node> contents;
 	Block* parent;

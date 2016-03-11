@@ -112,6 +112,15 @@ struct PopParent {
     }
 };
 
+struct PushNode {
+    template <typename T1, typename T2>
+    struct result { typedef void type; };
+    void operator()(Block* block, Node node) const {
+    	node.ind = block->contents.size();
+    	block->contents.push_back(node);
+    }
+};
+
 template <typename Iterator>
 struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 	Grammar() : Grammar::base_type(source, "russell") {
@@ -193,21 +202,22 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 
 		const phoenix::function<PushParent> pushParent;
 		const phoenix::function<PopParent>  popParent;
+		const phoenix::function<PushNode>   pushNode;
 
 		block =
 			lit("${")   [_val = new_<mm::Block>(phoenix::val(parent))]
 			> eps       [pushParent(_val)]
 			> + (
 				comment |
-				node    [push_back(phoenix::at_c<2>(*_val), _1)])
+				node    [pushNode(_val, _1)])
 			> lit("$}") [popParent(_val)];
 		source =
-			eps         [phoenix::at_c<3>(*_val) = phoenix::val(parent)]
+			eps         [phoenix::at_c<2>(*_val) = phoenix::val(parent)]
 			> eps       [pushParent(_val)]
 			> +(
 			comment |
-			node        [push_back(phoenix::at_c<2>(*_val), _1)] |
-			inclusion   [push_back(phoenix::at_c<2>(*_val), phoenix::construct<Node>(_1))])
+			node        [pushNode(_val, _1)] |
+			inclusion   [pushNode(_val, phoenix::construct<Node>(_1))])
 			> eps       [popParent(_val)];
 
 		//static Block* parent = nullptr;
