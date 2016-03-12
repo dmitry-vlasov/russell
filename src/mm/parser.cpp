@@ -40,7 +40,7 @@ struct SymbolToInt {
 	template <typename T>
 	struct result { typedef uint type; };
 	uint operator()(const std::vector<char>& symb) const {
-		std::string symbol(symb.begin(), symb.end());
+		string symbol(symb.begin(), symb.end());
 		return Mm::mod().lex.symbols.toInt(symbol);
 	}
 };
@@ -49,7 +49,8 @@ struct LabelToInt {
 	template <typename T>
 	struct result { typedef uint type; };
 	uint operator()(const std::vector<char>& lab) const {
-		std::string label(lab.begin(), lab.end());
+		string label(lab.begin(), lab.end());
+		for (char& ch : label) ch = (ch == '.') ? '_' : ch;
 		return Mm::mod().lex.labels.toInt(label);
 	}
 };
@@ -96,16 +97,16 @@ struct SetLocation {
 struct PushParent {
     template <typename T1, typename T2>
     struct result { typedef void type; };
-    void operator()(Block* block, Block* parent) const {
+    void operator()(Block* block, Block*& parent) const {
     	block->parent = parent;
     	parent = block;
     }
 };
 
 struct PopParent {
-    template <typename T1, typename >
+    template <typename T1, typename T2>
     struct result { typedef void type; };
-    void operator()(Block* block, Block* parent) const {
+    void operator()(Block* block, Block*& parent) const {
     	parent = block->parent;
     }
 };

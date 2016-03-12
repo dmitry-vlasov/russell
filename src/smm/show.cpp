@@ -80,7 +80,7 @@ ostream& operator << (ostream& os, const Assertion& ass) {
 	if (ass.proof) {
 		os << indent() << *ass.proof << "\n";
 	}
-	os << "$}\n";
+	os << "$}";
 	return os;
 }
 

@@ -115,6 +115,27 @@ struct Block {
 	uint   ind;
 };
 
+inline Theorem::~Theorem() {
+	if (proof)
+		delete proof;
+}
+
+inline void Node::destroy() {
+	switch(type) {
+	case NONE: break;
+	case CONSTANTS:  delete val.cst; break;
+	case VARIABLES:  delete val.var; break;
+	case DISJOINTED: delete val.dis; break;
+	case FLOATING:   delete val.flo; break;
+	case ESSENTIAL:  delete val.ess; break;
+	case AXIOM:      delete val.ax;  break;
+	case THEOREM:    delete val.th;  break;
+	case BLOCK:      delete val.blk; break;
+	default : assert(false && "impossible"); break;
+	}
+	type = NONE;
+}
+
 ostream& operator << (ostream& os, const Constants& cst);
 ostream& operator << (ostream& os, const Proof& proof);
 ostream& operator << (ostream& os, const Variables& vars);

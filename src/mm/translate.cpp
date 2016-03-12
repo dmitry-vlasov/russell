@@ -4,27 +4,12 @@
 
 namespace mdl { namespace mm {
 
-void mark_expr_vars(const Variables& vars, const Expr& expr) {
-	//for (Symbol& s : expr.symbols)
-	//	if (vars.expr.contains(s)) s.var = true;
-}
-
-void mark_expr_vars(const Block* block, const Expr& expr) {
-	/*for (Symbol& s : expr.symbols) {
-		const Block* b = block;
-		while (b) {
-			if (b->vars.expr.contains(s)) s.var = true;
-			b = b->parent;
-		}
-	}*/
-}
-
-void gather_expr_vars(set<Symbol>& vars, const Expr& expr) {
+static void gather_expr_vars(set<Symbol>& vars, const Expr& expr) {
 	for (Symbol s : expr.symbols)
 		if (s.var) vars.insert(s);
 }
 
-void gather_inner_vars(const set<Symbol>& fvars,
+static void gather_inner_vars(const set<Symbol>& fvars,
 	set<Symbol>& ivars, set<Symbol>& avars, const Proof* proof) {
 	if (!proof) return;
 	for (Node n : proof->refs) {
@@ -37,9 +22,11 @@ void gather_inner_vars(const set<Symbol>& fvars,
 	}
 }
 
+typedef map<uint, uint> Reindex;
+
 // Replace variable sets with single set, which contains only needed variables.
 //
-void reduce_variables(smm::Assertion* ass, const set<Symbol>& needed) {
+static void reduce_variables(smm::Assertion* ass, const set<Symbol>& needed) {
 	Expr rvars;
 	for (const smm::Variables& vars : ass->variables) {
 		for (Symbol v : vars.expr.symbols) {
@@ -53,46 +40,38 @@ void reduce_variables(smm::Assertion* ass, const set<Symbol>& needed) {
 
 // Remove floatings, which variable is not needed.
 //
-void reduce_floatings(smm::Assertion* ass, const set<Symbol>& needed) {
+static void reduce_floatings(smm::Assertion* ass, const set<Symbol>& needed, Reindex& reindex) {
 	vector<smm::Floating> red_flos;
+	uint i = 0;
 	for (auto& flo : ass->floating) {
-		if (needed.find(flo.var()) != needed.end())
+		if (needed.find(flo.var()) != needed.end()) {
+			reindex[flo.index] = i;
+			flo.index = i++;
 			red_flos.push_back(flo);
+		}
 	}
 	ass->floating = red_flos;
 }
 
-void reduce(smm::Assertion* ass, Proof* proof = nullptr) {
-	// Gather the variables, used in assertion hypotheses and statement (header).
-	set<Symbol> flo_vars;
+// Reindex essentials.
+//
+static void reindex_essentials(smm::Assertion* ass, Reindex& reindex) {
+	uint i = 0;
 	for (auto& ess : ass->essential) {
-		gather_expr_vars(flo_vars, ess.expr);
+		reindex[ess.index] = i;
+		ess.index = i++;
 	}
-	gather_expr_vars(flo_vars, ass->prop.expr);
-
-	for (auto s : flo_vars) {
-		cout << s << ", ";
-	}
-	cout << endl;
-
-	// Gather the variables, used in proof but not in header, and collect all vars.
-	set<Symbol> inn_vars;
-	set<Symbol> all_vars(flo_vars);
-	gather_inner_vars(flo_vars, inn_vars, all_vars, proof);
-
-	reduce_variables(ass, all_vars);
-	reduce_floatings(ass, flo_vars);
 }
 
-smm::Proof* translate(Proof* mproof) {
+static smm::Proof* translate(Proof* mproof, Reindex& reindex) {
 	typedef smm::Ref::Type RType;
 	smm::Proof* sproof = new smm::Proof();
 	for (auto& node : mproof->refs) {
 		smm::Ref sref;
 		Node::Value val = node.val;
 		switch (node.type) {
-		case Node::FLOATING:  sref = smm::Ref { RType::PREF_F, val.flo->label }; break;
-		case Node::ESSENTIAL: sref = smm::Ref { RType::PREF_E, val.ess->label }; break;
+		case Node::FLOATING:  sref = smm::Ref { RType::PREF_F, reindex[val.flo->label] }; break;
+		case Node::ESSENTIAL: sref = smm::Ref { RType::PREF_E, reindex[val.ess->label] }; break;
 		case Node::AXIOM:     sref = smm::Ref { RType::PREF_A, val.ax->label };  break;
 		case Node::THEOREM:   sref = smm::Ref { RType::PREF_P, val.th->label };  break;
 		default : assert(false && "impossible"); break;
@@ -102,7 +81,30 @@ smm::Proof* translate(Proof* mproof) {
 	return sproof;
 }
 
-void gather(uint ind, const Block* block, smm::Assertion* ass) {
+
+static void reduce(smm::Assertion* ass, Proof* proof = nullptr) {
+	// Gather the variables, used in assertion hypotheses and statement (header).
+	set<Symbol> flo_vars;
+	for (auto& ess : ass->essential) {
+		gather_expr_vars(flo_vars, ess.expr);
+	}
+	gather_expr_vars(flo_vars, ass->prop.expr);
+
+	// Gather the variables, used in proof but not in header, and collect all vars.
+	set<Symbol> inn_vars;
+	set<Symbol> all_vars(flo_vars);
+	gather_inner_vars(flo_vars, inn_vars, all_vars, proof);
+
+	Reindex reindex;
+	reduce_variables(ass, all_vars);
+	reduce_floatings(ass, flo_vars, reindex);
+	reindex_essentials(ass, reindex);
+	if (proof) {
+		ass->proof = translate(proof, reindex);
+	}
+}
+
+static void gather(uint ind, const Block* block, smm::Assertion* ass) {
 	deque<Variables*>  vars;
 	deque<Disjointed*> disj;
 	deque<Floating*>   flos;
@@ -123,19 +125,16 @@ void gather(uint ind, const Block* block, smm::Assertion* ass) {
 	for (auto ess : esss) ass->essential.push_back(smm::Essential {ess->label, ess->expr });
 }
 
-void translate(const Block* source, Target* target);
+static void translate(const Block* source, Target* target);
 
-void translate(const Node& node, const Block* block, Target* target) {
+static void translate(const Node& node, const Block* block, Target* target) {
 	switch(node.type) {
 	case Node::NONE: assert(false && "impossible"); break;;
 	case Node::CONSTANTS: {
 		smm::Constants* c = new smm::Constants { node.val.cst->expr };
 		target->contents.push_back(smm::Node(c));
 	} break;
-	case Node::VARIABLES: {
-		//for (Symbol v : node.val.var->expr.symbols)
-		//	block->vars.insert(v);
-	}	break;
+	case Node::VARIABLES:  break;
 	case Node::DISJOINTED: break;
 	case Node::FLOATING:   break;
 	case Node::ESSENTIAL:  break;
@@ -151,7 +150,6 @@ void translate(const Node& node, const Block* block, Target* target) {
 		th->prop = smm::Proposition { false, node.val.th->label, node.val.th->expr };
 		gather(node.ind, block, th);
 		reduce(th, node.val.th->proof);
-		th->proof = translate(node.val.th->proof);
 		target->contents.push_back(smm::Node(th));
 	}	break;
 	case Node::BLOCK:

@@ -63,7 +63,7 @@ struct SymbolToInt {
 	template <typename T>
 	struct result { typedef uint type; };
 	uint operator()(const std::vector<char>& symb) const {
-		std::string symbol(symb.begin(), symb.end());
+		string symbol(symb.begin(), symb.end());
 		return Smm::mod().lex.symbols.toInt(symbol);
 	}
 };
@@ -72,7 +72,7 @@ struct LabelToInt {
 	template <typename T>
 	struct result { typedef uint type; };
 	uint operator()(const std::vector<char>& lab) const {
-		std::string label(lab.begin(), lab.end());
+		string label(lab.begin(), lab.end());
 		return Smm::mod().lex.labels.toInt(label);
 	}
 };
