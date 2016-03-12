@@ -19,6 +19,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Proof,
 	(std::vector<mdl::mm::Node>, refs)
+	(bool, tree)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -47,14 +48,15 @@ BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Axiom,
 	(mdl::uint, label)
 	(mdl::Expr, expr)
+	(mdl::uint, arity)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Theorem,
 	(mdl::uint, label)
 	(mdl::Expr, expr)
+	(mdl::uint, arity)
 	(mdl::mm::Proof*, proof)
-	(bool, tree)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(

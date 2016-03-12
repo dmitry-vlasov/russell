@@ -3,8 +3,6 @@
 
 namespace mdl { namespace smm {
 
-typedef map<uint, Node*> Table;
-
 struct Maps {
 	map<uint, mm::Theorem*>   theorems;
 	map<uint, mm::Axiom*>     axioms;
@@ -59,7 +57,10 @@ static void translate(const Node& node, mm::Block* target, Maps& maps) {
 		}
 		if (ass->proof) {
 			mm::Proof* pr = translate(maps, ass->proof);
-			mm::Theorem* th = new mm::Theorem { ass->prop.label, ass->prop.expr, pr };
+			mm::Theorem* th = new mm::Theorem();
+			th->label = ass->prop.label;
+			th->expr = ass->prop.expr;
+			th->proof = pr;
 			block->contents.push_back(mm::Node(th));
 			maps.theorems[ass->prop.label] = th;
 		} else {

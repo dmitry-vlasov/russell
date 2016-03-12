@@ -23,6 +23,7 @@ public:
 		case Node::ESSENTIAL:  os << label(node.val.ess->label); break;
 		case Node::AXIOM:      os << label(node.val.ax->label);  break;
 		case Node::THEOREM:    os << label(node.val.th->label);  break;
+		case Node::PROOF:      os << *node.val.prf;           break;
 		case Node::BLOCK:      assert(false && "impossible"); break;
 		default :              assert(false && "impossible"); break;
 		}
@@ -35,6 +36,13 @@ ostream& operator << (ostream& os, ref r) {
 }
 
 ostream& operator << (ostream& os, const Proof& proof) {
+	if (proof.tree) {
+		os << "( ";
+		for (auto& node : proof.refs)
+			os << ref(node) << ' ';
+		os << ")";
+		return os;
+	}
 	for (auto& node : proof.refs)
 		os << ref(node) << ' ';
 	os << "$.";

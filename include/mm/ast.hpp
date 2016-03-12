@@ -43,16 +43,18 @@ struct Floating  {
 struct Axiom {
 	uint label;
 	Expr expr;
+	uint arity;
 };
 
 class Proof;
 
 struct Theorem {
+	Theorem() : label(-1), expr(), arity(0), proof(nullptr) { }
 	~Theorem();
 	uint   label;
 	Expr   expr;
+	uint   arity;
 	Proof* proof;
-	bool   tree;
 };
 
 class Block;
@@ -100,7 +102,10 @@ struct Node {
 };
 
 struct Proof {
+	Proof() : refs(), tree(false) { }
+	~Proof();
 	vector<Node> refs;
+	bool         tree;
 };
 
 struct Block {
@@ -137,6 +142,16 @@ inline void Node::destroy() {
 	default : assert(false && "impossible"); break;
 	}
 	type = NONE;
+}
+
+inline Proof::~Proof() {
+	if (tree) {
+		for (auto& node : refs) {
+			if (node.type == Node::PROOF) {
+				delete node.val.prf;
+			}
+		}
+	}
 }
 
 ostream& operator << (ostream& os, const Constants& cst);

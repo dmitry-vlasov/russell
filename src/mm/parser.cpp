@@ -224,7 +224,7 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 			> expr      [phoenix::at_c<1>(*_val) = _1]
 			> eps       [markVars(phoenix::at_c<1>(*_val), phoenix::ref(stack))]
 			> lit("$=") [addToMath(_val)]
-			> proof     [phoenix::at_c<2>(*_val) = _1];
+			> proof     [phoenix::at_c<3>(*_val) = _1];
 		axiom =
 			   label    [_a = _1]
 			>> lit("$a")[_val = new_<mm::Axiom>()]
