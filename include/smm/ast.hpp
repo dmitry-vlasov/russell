@@ -50,8 +50,8 @@ struct Essential {
 };
 
 struct Floating  {
-	const Symbol& type() const { return expr.symbols[0]; }
-	const Symbol& var() const { return expr.symbols[1]; }
+	Symbol type() const { return expr.symbols[0]; }
+	Symbol var() const { return expr.symbols[1]; }
 	uint index;
 	Expr expr;
 };

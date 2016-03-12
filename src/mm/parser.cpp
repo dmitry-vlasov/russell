@@ -19,6 +19,27 @@ namespace qi = boost::spirit::qi;
 namespace ascii = boost::spirit::ascii;
 namespace phoenix = boost::phoenix;
 
+struct VarConst {
+	set<Symbol> vars;
+	set<Symbol> consts;
+};
+
+typedef vector<VarConst> Stack;
+
+void mark_vars(Expr& expr, const Stack& stack) {
+	for (Symbol& s : expr.symbols) {
+		for (const VarConst& vc : stack) {
+			bool is_var   = (vc.vars.find(s) == vc.vars.end());
+			bool is_const = (vc.consts.find(s) == vc.consts.end());
+			if (is_var && is_const)
+				throw Error("constant symbol is marked as variable");
+			if (!is_var && !is_const)
+				throw Error("symbol neither constant nor variable");
+			s.var = is_var;
+		}
+	}
+}
+
 struct AddToMath {
 	template<typename T>
 	struct result { typedef void type; };
@@ -93,21 +114,19 @@ struct SetLocation {
 };
 */
 
-static Block* parent = nullptr;
-
 struct PushParent {
-    template <typename T1>
+    template <typename T1, typename T2>
     struct result { typedef void type; };
-    void operator()(Block* block) const {
+    void operator()(Block* block, Block* parent) const {
     	block->parent = parent;
     	parent = block;
     }
 };
 
 struct PopParent {
-    template <typename T1>
+    template <typename T1, typename >
     struct result { typedef void type; };
-    void operator()(Block* block) const {
+    void operator()(Block* block, Block* parent) const {
     	parent = block->parent;
     }
 };
@@ -118,6 +137,22 @@ struct PushNode {
     void operator()(Block* block, Node node) const {
     	node.ind = block->contents.size();
     	block->contents.push_back(node);
+    }
+};
+
+struct PushVC {
+    template <typename T1>
+    struct result { typedef void type; };
+    void operator()(Stack& vc) const {
+    	vc.push_back(VarConst());
+    }
+};
+
+struct PopVC {
+    template <typename T1>
+    struct result { typedef void type; };
+    void operator()(Stack& vc) const {
+    	vc.pop_back();
     }
 };
 
@@ -203,24 +238,31 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 		const phoenix::function<PushParent> pushParent;
 		const phoenix::function<PopParent>  popParent;
 		const phoenix::function<PushNode>   pushNode;
+		const phoenix::function<PushVC>     pushVC;
+		const phoenix::function<PopVC>      popVC;
+
+		static Block* parent = nullptr;
+		static Stack stack;
 
 		block =
 			lit("${")   [_val = new_<mm::Block>(phoenix::val(parent))]
-			> eps       [pushParent(_val)]
+			> eps       [pushParent(_val, phoenix::ref(parent))]
+			> eps       [pushVC(phoenix::ref(stack))]
 			> + (
 				comment |
 				node    [pushNode(_val, _1)])
-			> lit("$}") [popParent(_val)];
+			> lit("$}") [popParent(_val, phoenix::ref(parent))]
+			> eps       [popVC(phoenix::ref(stack))];
 		source =
 			eps         [phoenix::at_c<2>(*_val) = phoenix::val(parent)]
-			> eps       [pushParent(_val)]
+			> eps       [pushParent(_val, phoenix::ref(parent))]
 			> +(
 			comment |
 			node        [pushNode(_val, _1)] |
 			inclusion   [pushNode(_val, phoenix::construct<Node>(_1))])
-			> eps       [popParent(_val)];
+			> eps       [popParent(_val, phoenix::ref(parent))];
 
-		//static Block* parent = nullptr;
+		//
 		/*block =
 			lit("${")   [_val = new_<mm::Block>(phoenix::val(parent))]
 			> eps       [phoenix::ref(parent) = _val]

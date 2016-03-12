@@ -34,6 +34,8 @@ struct Essential {
 };
 
 struct Floating  {
+	Symbol type() const { return expr.symbols[0]; }
+	Symbol var() const { return expr.symbols[1]; }
 	uint label;
 	Expr expr;
 };
