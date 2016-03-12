@@ -26,7 +26,7 @@ void gather(uint ind, const Block* block, smm::Assertion* ass) {
 	for (auto var : vars) ass->variables.push_back(smm::Variables { var->expr });
 	for (auto dis : disj) ass->disjointed.push_back(smm::Disjointed { dis->expr });
 	for (auto flo : flos) ass->floating.push_back(smm::Floating {0, flo->expr });
-	for (auto ess : vars) ass->essential.push_back(smm::Essential {0, ess->expr });
+	for (auto ess : esss) ass->essential.push_back(smm::Essential {0, ess->expr });
 }
 
 static void translate(const Block* source, Target* target);
@@ -44,11 +44,13 @@ static void translate(const Node& node, const Block* block, Target* target) {
 	case Node::ESSENTIAL:  break;
 	case Node::AXIOM: {
 		smm::Assertion* ass = new smm::Assertion();
+		ass->prop = smm::Proposition { true, 0, node.val.ax->expr };
 		gather(node.ind, block, ass);
 		target->contents.push_back(smm::Node(ass));
 	} break;
 	case Node::THEOREM: {
 		smm::Assertion* th = new smm::Assertion();
+		th->prop = smm::Proposition { false, 0, node.val.th->expr };
 		gather(node.ind, block, th);
 		th->proof = translate(node.val.th->proof);
 		target->contents.push_back(smm::Node(th));
