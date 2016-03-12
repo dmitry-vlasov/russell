@@ -4,11 +4,25 @@
 
 namespace mdl { namespace mm {
 
-smm::Proof* translate(Proof* proof) {
-	return nullptr;
+static smm::Proof* translate(Proof* mproof) {
+	typedef smm::Ref::Type RType;
+	smm::Proof* sproof = new smm::Proof();
+	for (auto& mref : mproof->refs) {
+		smm::Ref sref;
+		Node::Value val = mref.node.val;
+		switch (mref.node.type) {
+		case Node::FLOATING:  sref = smm::Ref { RType::PREF_F, val.flo->label }; break;
+		case Node::ESSENTIAL: sref = smm::Ref { RType::PREF_E, val.ess->label }; break;
+		case Node::AXIOM:     sref = smm::Ref { RType::PREF_A, val.ax->label };  break;
+		case Node::THEOREM:   sref = smm::Ref { RType::PREF_P, val.th->label };  break;
+		default : assert(false && "impossible"); break;
+		}
+		sproof->refs.push_back(sref);
+	}
+	return sproof;
 }
 
-void gather(uint ind, const Block* block, smm::Assertion* ass) {
+static void gather(uint ind, const Block* block, smm::Assertion* ass) {
 	deque<Variables*>  vars;
 	deque<Disjointed*> disj;
 	deque<Floating*>   flos;
