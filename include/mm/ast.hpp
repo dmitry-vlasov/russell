@@ -48,11 +48,11 @@ struct Axiom {
 class Proof;
 
 struct Theorem {
-	Theorem() : label(-1), expr(), proof(nullptr) { }
 	~Theorem();
 	uint   label;
 	Expr   expr;
 	Proof* proof;
+	bool   tree;
 };
 
 class Block;
@@ -67,6 +67,7 @@ struct Node {
 	Node(Axiom* a)      : ind(-1), type(AXIOM),      val() { val.ax  = a; }
 	Node(Theorem* t)    : ind(-1), type(THEOREM),    val() { val.th  = t; }
 	Node(Block* b)      : ind(-1), type(BLOCK),      val() { val.blk = b; }
+	Node(Proof* p)      : ind(-1), type(PROOF),      val() { val.prf = p; }
 	void destroy();
 
 	enum Type {
@@ -78,7 +79,8 @@ struct Node {
 		ESSENTIAL,
 		AXIOM,
 		THEOREM,
-		BLOCK
+		BLOCK,
+		PROOF
 	};
 	union Value {
 		void*       non;
@@ -90,6 +92,7 @@ struct Node {
 		Axiom*      ax;
 		Theorem*    th;
 		Block*      blk;
+		Proof*      prf;
 	};
 	uint ind;
 	Type type;

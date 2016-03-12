@@ -125,9 +125,9 @@ static void gather(uint ind, const Block* block, smm::Assertion* ass) {
 	for (auto ess : esss) ass->essential.push_back(smm::Essential {ess->label, ess->expr });
 }
 
-static void translate(const Block* source, Target* target);
+static void translate(const Block* source, smm::Source* target);
 
-static void translate(const Node& node, const Block* block, Target* target) {
+static void translate(const Node& node, const Block* block, smm::Source* target) {
 	switch(node.type) {
 	case Node::NONE: assert(false && "impossible"); break;;
 	case Node::CONSTANTS: {
@@ -160,13 +160,13 @@ static void translate(const Node& node, const Block* block, Target* target) {
 	}
 }
 
-static void translate(const Block* source, Target* target) {
+static void translate(const Block* source, smm::Source* target) {
 	for (auto& node : source->contents)
 		translate(node, source, target);
 }
 
-Target* translate(const Block* source) {
-	Target* target = new smm::Source(Mm::get().config.out);
+smm::Source* translate(const Block* source) {
+	smm::Source* target = new smm::Source(Mm::get().config.out);
 	translate(source, target);
 	return target;
 }

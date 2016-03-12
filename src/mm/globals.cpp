@@ -59,11 +59,12 @@ bool Mm::translate() {
 			return false;
 		}
 		timers.translate.start();
-		target = mm::translate(source);
+		smm::Source* target = mm::translate(source);
 		//cout << endl << *target;
 		ofstream out(config.out);
 		out << *target << endl;
 		out.close();
+		delete target;
 		timers.translate.stop();
 		return true;
 	} catch (Error& err) {

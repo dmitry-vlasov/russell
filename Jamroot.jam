@@ -20,6 +20,7 @@ exe smm :
   src/smm/parser.cpp
   src/smm/verifier.cpp
   src/smm/globals.cpp
+  src/smm/translate.cpp
   src/smm/main.cpp ;
   
 exe mm : 

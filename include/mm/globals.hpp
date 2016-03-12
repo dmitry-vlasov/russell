@@ -32,12 +32,9 @@ struct Config {
 	string root;
 };
 
-typedef smm::Source Target;
-
 struct Mm {
 	~ Mm() {
 		if (source) delete source;
-		if (target) delete target;
 	}
 
 	struct Lex {
@@ -72,7 +69,6 @@ struct Mm {
 	Lex     lex;
 	Math    math;
 	Block*  source;
-	Target* target;
 	string  status;
 	bool    failed;
 
@@ -86,7 +82,7 @@ struct Mm {
 
 ostream& show (ostream& os, const Mm& s);
 Block* parse(const string& path);
-Target* translate(const Block* source);
+smm::Source* translate(const Block* source);
 
 }} // mdl::mm
 

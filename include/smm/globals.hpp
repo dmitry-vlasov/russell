@@ -13,6 +13,7 @@
 #pragma once
 
 #include "smm/ast.hpp"
+#include "mm/ast.hpp"
 #include "timer.hpp"
 
 namespace mdl { namespace smm {
@@ -34,8 +35,7 @@ struct Config {
 
 struct Smm {
 	~ Smm() {
-		if (source)
-			delete source;
+		if (source) delete source;
 	}
 
 	struct Lex {
@@ -45,6 +45,7 @@ struct Smm {
 	struct Timers {
 		Timer read;
 		Timer verify;
+		Timer translate;
 		Timer total;
 	};
 	struct Math {
@@ -63,6 +64,7 @@ struct Smm {
 	void run();
 	bool parse();
 	bool verify();
+	bool translate();
 
 	static const Smm& get() { return mod();}
 	static Smm& mod() { static Smm smm; return smm; }
@@ -71,6 +73,7 @@ struct Smm {
 ostream& show (ostream& os, const Smm& s);
 Source* parse(const string& path);
 void verify(const vector<Assertion*>& theory);
+mm::Block* translate_to_mm(const Source* source);
 
 }} // mdl::smm
 

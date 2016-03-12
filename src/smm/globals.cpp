@@ -34,6 +34,9 @@ void Smm::run() {
 	if (!verify()) {
 		failed = true; return;
 	}
+	if (!translate()) {
+		failed = true; return;
+	}
 	timers.total.stop();
 	if (config.verbose)
 		cout << "done in " << timers.total << endl;
@@ -43,8 +46,7 @@ bool Smm::parse() {
 	try {
 		timers.read.start();
 		source = smm::parse(config.in);
-
-		cout << *source << endl;
+		//cout << *source << endl;
 		timers.read.stop();
 		return true;
 	} catch (Error& err) {
@@ -60,6 +62,30 @@ bool Smm::verify() {
 		timers.verify.start();
 		smm::verify(math.assertions);
 		timers.verify.stop();
+		return true;
+	} catch (Error& err) {
+		status += '\n';
+		status += err.what();
+		failed = true;
+		return false;
+	}
+}
+
+bool Smm::translate() {
+	try {
+		if (config.out.empty()) return true;
+		if (config.verbose)
+			cout << "translating file " << config.in << " ... " << flush;
+		timers.translate.start();
+		mm::Block* target = smm::translate_to_mm(source);
+		//cout << endl << *target;
+		ofstream out(config.out);
+		out << *target << endl;
+		out.close();
+		delete target;
+		timers.translate.stop();
+		if (config.verbose)
+			cout << "done in " << timers.translate << endl;
 		return true;
 	} catch (Error& err) {
 		status += '\n';

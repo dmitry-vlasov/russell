@@ -54,6 +54,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::uint, label)
 	(mdl::Expr, expr)
 	(mdl::mm::Proof*, proof)
+	(bool, tree)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
