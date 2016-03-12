@@ -51,6 +51,7 @@ namespace mdl {
 	using std::ptrdiff_t;
 	using std::ostream;
 	using std::ifstream;
+	using std::ofstream;
 	using std::ostringstream;
 	using std::string;
 	using std::cout;

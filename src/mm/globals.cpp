@@ -22,27 +22,6 @@ void label::write(ostream& os) {
 
 namespace mm {
 
-void Node::destroy() {
-	switch(type) {
-	case NONE: break;
-	case CONSTANTS:  delete val.cst; break;
-	case VARIABLES:  delete val.var; break;
-	case DISJOINTED: delete val.dis; break;
-	case FLOATING:   delete val.flo; break;
-	case ESSENTIAL:  delete val.ess; break;
-	case AXIOM:      delete val.ax;  break;
-	case THEOREM:    delete val.th;  break;
-	case BLOCK:      delete val.blk; break;
-	default : assert(false && "impossible"); break;
-	}
-	type = NONE;
-}
-
-Theorem::~Theorem() {
-	if (proof)
-		delete proof;
-}
-
 void Mm::run() {
 	timers.total.start();
 	if (config.verbose)
@@ -62,7 +41,6 @@ bool Mm::parse() {
 	try {
 		timers.read.start();
 		source = mm::parse(config.in);
-
 		//cout << endl << *source;
 		timers.read.stop();
 		return true;
@@ -76,10 +54,16 @@ bool Mm::parse() {
 
 bool Mm::translate() {
 	try {
+		if (config.out.empty()) {
+			status += "output file is not specified";
+			return false;
+		}
 		timers.translate.start();
 		target = mm::translate(source);
-
-		cout << endl << *target;
+		//cout << endl << *target;
+		ofstream out(config.out);
+		out << *target << endl;
+		out.close();
 		timers.translate.stop();
 		return true;
 	} catch (Error& err) {

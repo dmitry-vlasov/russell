@@ -160,7 +160,7 @@ static void translate(const Node& node, const Block* block, Target* target) {
 	}
 }
 
-void translate(const Block* source, Target* target) {
+static void translate(const Block* source, Target* target) {
 	for (auto& node : source->contents)
 		translate(node, source, target);
 }

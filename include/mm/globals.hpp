@@ -37,6 +37,7 @@ typedef smm::Source Target;
 struct Mm {
 	~ Mm() {
 		if (source) delete source;
+		if (target) delete target;
 	}
 
 	struct Lex {

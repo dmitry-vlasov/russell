@@ -62,6 +62,7 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 		else
 			return false;
 	}
+	if (conf.in.empty()) return false;
 	return true;
 }
 
