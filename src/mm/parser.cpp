@@ -19,27 +19,6 @@ namespace qi = boost::spirit::qi;
 namespace ascii = boost::spirit::ascii;
 namespace phoenix = boost::phoenix;
 
-struct VarConst {
-	set<Symbol> vars;
-	set<Symbol> consts;
-};
-
-typedef vector<VarConst> Stack;
-
-void mark_vars(Expr& expr, const Stack& stack) {
-	for (Symbol& s : expr.symbols) {
-		for (const VarConst& vc : stack) {
-			bool is_var   = (vc.vars.find(s) == vc.vars.end());
-			bool is_const = (vc.consts.find(s) == vc.consts.end());
-			if (is_var && is_const)
-				throw Error("constant symbol is marked as variable");
-			if (!is_var && !is_const)
-				throw Error("symbol neither constant nor variable");
-			s.var = is_var;
-		}
-	}
-}
-
 struct AddToMath {
 	template<typename T>
 	struct result { typedef void type; };
@@ -140,6 +119,13 @@ struct PushNode {
     }
 };
 
+struct VarConst {
+	set<Symbol> vars;
+	set<Symbol> consts;
+};
+
+typedef vector<VarConst> Stack;
+
 struct PushVC {
     template <typename T1>
     struct result { typedef void type; };
@@ -153,6 +139,44 @@ struct PopVC {
     struct result { typedef void type; };
     void operator()(Stack& vc) const {
     	vc.pop_back();
+    }
+};
+
+struct AddVars {
+    template <typename T1, typename T2>
+    struct result { typedef void type; };
+    void operator()(Stack& vc, const Expr& vars) const {
+    	for (Symbol v : vars.symbols)
+			vc.back().vars.insert(v);
+    }
+};
+
+struct AddConsts {
+    template <typename T1, typename T2>
+    struct result { typedef void type; };
+    void operator()(Stack& vc, const Expr& consts) const {
+    	for (Symbol c : consts.symbols)
+			vc.back().consts.insert(c);
+    }
+};
+
+struct MarkVars {
+    template <typename T1, typename T2>
+    struct result { typedef void type; };
+    void operator()(Expr& expr, const Stack& stack) const {
+    	for (Symbol& s : expr.symbols) {
+    		bool is_var   = false;
+    		bool is_const = false;
+			for (const VarConst& vc : stack) {
+				if (vc.vars.find(s) != vc.vars.end()) is_var = true;
+				if (vc.consts.find(s) != vc.consts.end()) is_const = true;
+			}
+			if (is_var && is_const)
+				throw Error("constant symbol is marked as variable", show(s));
+			if (!is_var && !is_const)
+				throw Error("symbol is neither constant nor variable", show(s));
+			s.var = is_var;
+		}
     }
 };
 
@@ -173,13 +197,19 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 		const phoenix::function<AddToMath>      addToMath;
 		const phoenix::function<ParseInclusion> parseInclusion;
 		const phoenix::function<CreateRef>      createRef;
+		const phoenix::function<AddVars>        addVars;
+		const phoenix::function<AddConsts>      addConsts;
+		const phoenix::function<MarkVars>       markVars;
+
+		static Stack stack;
+		static Block* parent = nullptr;
 		//const phoenix::function<SetLocation<Iterator>> setLocation;
 
 		symbol = lexeme[+(ascii::char_ - '$' - ascii::space)] [at_c<0>(_val) = symbolToInt(_1)];
 		label  = lexeme[+(ascii::char_ - '$' - ascii::space)] [_val = labelToInt(_1)];
 		path   = lexeme[+(ascii::char_ - '$' - ascii::space)];
 
-		expr = +symbol [push_back(at_c<0>(_val), _1)];
+		expr  = +symbol     [push_back(at_c<0>(_val), _1)];
 
 		ref   = label   [_val = createRef(_1)];
 		proof =
@@ -191,6 +221,7 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 			>> lit("$p")[_val = new_<mm::Theorem>()]
 			> eps       [phoenix::at_c<0>(*_val) = _a]
 			> expr      [phoenix::at_c<1>(*_val) = _1]
+			> eps       [markVars(phoenix::at_c<1>(*_val), phoenix::ref(stack))]
 			> lit("$=") [addToMath(_val)]
 			> proof     [phoenix::at_c<2>(*_val) = _1];
 		axiom =
@@ -198,31 +229,35 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 			>> lit("$a")[_val = new_<mm::Axiom>()]
 			> eps       [phoenix::at_c<0>(*_val) = _a]
 			> expr      [phoenix::at_c<1>(*_val) = _1]
+			> eps       [markVars(phoenix::at_c<1>(*_val), phoenix::ref(stack))]
 			> lit("$.") [addToMath(_val)];
 		essential =
 			  label     [_a = _1]
 			>> lit("$e")[_val = new_<mm::Essential>()]
 			> eps       [phoenix::at_c<0>(*_val) = _a]
 			> expr      [phoenix::at_c<1>(*_val) = _1]
+			> eps       [markVars(phoenix::at_c<1>(*_val), phoenix::ref(stack))]
 			> lit("$.") [addToMath(_val)];
 		floating =
 			  label     [_a = _1]
 			>> lit("$f")[_val = new_<mm::Floating>()]
 			> eps       [phoenix::at_c<0>(*_val) = _a]
 			> expr      [phoenix::at_c<1>(*_val) = _1]
+			> eps       [markVars(phoenix::at_c<1>(*_val), phoenix::ref(stack))]
 			> lit("$.") [addToMath(_val)];
 		disjointed =
 			lit("$d")   [_val = new_<mm::Disjointed>()]
 			> expr      [phoenix::at_c<0>(*_val) = _1]
+			> eps       [markVars(phoenix::at_c<0>(*_val), phoenix::ref(stack))]
 			> "$.";
 		variables =
 			lit("$v")   [_val = new_<mm::Variables>()]
 			> expr      [phoenix::at_c<0>(*_val) = _1]
-			> "$.";
+			> lit("$.") [addVars(phoenix::ref(stack), phoenix::at_c<0>(*_val))];
 		constants =
 			lit("$c")   [_val = new_<mm::Constants>()]
 			> expr      [phoenix::at_c<0>(*_val) = _1]
-			> "$.";
+			> lit("$.") [addConsts(phoenix::ref(stack), phoenix::at_c<0>(*_val))];
 		inclusion = lit("$[") > path [_val = parseInclusion(_1)] > "$]";
 		comment = lit("$(") >> lexeme[*(ascii::char_ - "$)")] >> "$)";
 		node %= (
@@ -241,9 +276,6 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 		const phoenix::function<PushVC>     pushVC;
 		const phoenix::function<PopVC>      popVC;
 
-		static Block* parent = nullptr;
-		static Stack stack;
-
 		block =
 			lit("${")   [_val = new_<mm::Block>(phoenix::val(parent))]
 			> eps       [pushParent(_val, phoenix::ref(parent))]
@@ -256,11 +288,13 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 		source =
 			eps         [phoenix::at_c<2>(*_val) = phoenix::val(parent)]
 			> eps       [pushParent(_val, phoenix::ref(parent))]
+			> eps       [pushVC(phoenix::ref(stack))]
 			> +(
 			comment |
 			node        [pushNode(_val, _1)] |
 			inclusion   [pushNode(_val, phoenix::construct<Node>(_1))])
-			> eps       [popParent(_val, phoenix::ref(parent))];
+			> eps       [popParent(_val, phoenix::ref(parent))]
+			> eps       [popVC(phoenix::ref(stack))];
 
 		//
 		/*block =
