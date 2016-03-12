@@ -146,7 +146,7 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 
 		expr = +symbol [push_back(at_c<0>(_val), _1)];
 
-		ref   = label   [phoenix::at_c<0>(_val) = createRef(_1)];
+		ref   = label   [_val = createRef(_1)];
 		proof =
 			eps         [_val = new_<mm::Proof>()]
 			> +ref      [push_back(phoenix::at_c<0>(*_val), _1)]
@@ -249,7 +249,7 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 	qi::rule<Iterator, Symbol(), ascii::space_type> symbol;
 	qi::rule<Iterator, uint(),        ascii::space_type> label;
 	qi::rule<Iterator, std::string(), ascii::space_type> path;
-	qi::rule<Iterator, Ref(), ascii::space_type> ref;
+	qi::rule<Iterator, Node(), ascii::space_type> ref;
 	qi::rule<Iterator, Proof*(), ascii::space_type> proof;
 	qi::rule<Iterator, Essential*(), qi::locals<uint>, ascii::space_type> essential;
 	qi::rule<Iterator, Floating*(), qi::locals<uint>, ascii::space_type> floating;

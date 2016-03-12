@@ -17,13 +17,8 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
-	mdl::mm::Ref,
-	(mdl::mm::Node, node)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Proof,
-	(std::vector<mdl::mm::Ref>, refs)
+	(std::vector<mdl::mm::Node>, refs)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(

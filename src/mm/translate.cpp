@@ -7,10 +7,10 @@ namespace mdl { namespace mm {
 static smm::Proof* translate(Proof* mproof) {
 	typedef smm::Ref::Type RType;
 	smm::Proof* sproof = new smm::Proof();
-	for (auto& mref : mproof->refs) {
+	for (auto& node : mproof->refs) {
 		smm::Ref sref;
-		Node::Value val = mref.node.val;
-		switch (mref.node.type) {
+		Node::Value val = node.val;
+		switch (node.type) {
 		case Node::FLOATING:  sref = smm::Ref { RType::PREF_F, val.flo->label }; break;
 		case Node::ESSENTIAL: sref = smm::Ref { RType::PREF_E, val.ess->label }; break;
 		case Node::AXIOM:     sref = smm::Ref { RType::PREF_A, val.ax->label };  break;

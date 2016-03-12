@@ -8,25 +8,35 @@ ostream& operator << (ostream& os, const Constants& cst) {
 	return os;
 }
 
-ostream& operator << (ostream& os, const Ref& ref) {
-	switch (ref.node.type) {
-	case Node::NONE:       assert(false && "impossible"); break;
-	case Node::CONSTANTS:  assert(false && "impossible"); break;
-	case Node::VARIABLES:  assert(false && "impossible"); break;
-	case Node::DISJOINTED: assert(false && "impossible"); break;
-	case Node::FLOATING:   os << label(ref.node.val.flo->label); break;
-	case Node::ESSENTIAL:  os << label(ref.node.val.ess->label); break;
-	case Node::AXIOM:      os << label(ref.node.val.ax->label);  break;
-	case Node::THEOREM:    os << label(ref.node.val.th->label);  break;
-	case Node::BLOCK:      assert(false && "impossible"); break;
-	default :              assert(false && "impossible"); break;
+class ref {
+	Node node;
+public:
+	ref(Node n) : node(n) {
 	}
+	void write(ostream& os) {
+		switch (node.type) {
+		case Node::NONE:       assert(false && "impossible"); break;
+		case Node::CONSTANTS:  assert(false && "impossible"); break;
+		case Node::VARIABLES:  assert(false && "impossible"); break;
+		case Node::DISJOINTED: assert(false && "impossible"); break;
+		case Node::FLOATING:   os << label(node.val.flo->label); break;
+		case Node::ESSENTIAL:  os << label(node.val.ess->label); break;
+		case Node::AXIOM:      os << label(node.val.ax->label);  break;
+		case Node::THEOREM:    os << label(node.val.th->label);  break;
+		case Node::BLOCK:      assert(false && "impossible"); break;
+		default :              assert(false && "impossible"); break;
+		}
+	}
+};
+
+ostream& operator << (ostream& os, ref r) {
+	r.write(os);
 	return os;
 }
 
 ostream& operator << (ostream& os, const Proof& proof) {
-	for (auto& ref : proof.refs)
-		os << ref << ' ';
+	for (auto& node : proof.refs)
+		os << ref(node) << ' ';
 	os << "$.";
 	return os;
 }
