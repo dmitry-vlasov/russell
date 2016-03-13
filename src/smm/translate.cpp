@@ -1,4 +1,5 @@
 #include "smm/ast.hpp"
+#include "smm/tree.hpp"
 #include "smm/globals.hpp"
 
 namespace mdl { namespace smm {
@@ -8,22 +9,46 @@ struct Maps {
 	map<uint, mm::Axiom*>     axioms;
 	map<uint, mm::Essential*> essentials;
 	map<uint, mm::Floating*>  floatings;
+	tree::Transform           transform;
 };
 
-static mm::Proof* translate(Maps& maps, const Proof* proof) {
+static mm::Proof* translate(const Maps& maps, const Proof* proof) {
+	Tree* tree = to_tree(proof);
+
+	cout << "tree: " << *tree << endl;
+
+	transform(tree, maps.transform);
+
+	cout << "trans: " << *tree << endl;
+
+	Proof* rpn = to_rpn(tree);
+
+	cout << "rpn: " << *rpn << endl;
+
 	mm::Proof* pr = new mm::Proof();
-	for (auto& ref : proof->refs) {
+	for (auto& ref : rpn->refs) {
 		mm::Node node;
 		switch (ref.type) {
-		case Ref::PREF_A: node = mm::Node(maps.axioms[ref.index]); break;
-		case Ref::PREF_P: node = mm::Node(maps.theorems[ref.index]); break;
-		case Ref::PREF_F: node = mm::Node(maps.floatings[ref.index]); break;
-		case Ref::PREF_E: node = mm::Node(maps.essentials[ref.index]); break;
+		case Ref::PREF_A: node = mm::Node(maps.axioms.find(ref.index)->second); break;
+		case Ref::PREF_P: node = mm::Node(maps.theorems.find(ref.index)->second); break;
+		case Ref::PREF_F: node = mm::Node(maps.floatings.find(ref.index)->second); break;
+		case Ref::PREF_E: node = mm::Node(maps.essentials.find(ref.index)->second); break;
 		default : assert(false && "impossible"); break;
 		}
 		pr->refs.push_back(node);
 	}
+	delete rpn;
+	delete tree;
 	return pr;
+}
+
+static tree::Perm create_permutation(uint flos, uint esss) {
+	tree::Perm perm;
+	for (uint i = 0; i < esss; ++ i)
+		perm[i] = i + flos;
+	for (uint i = 0; i < flos; ++ i)
+		perm[i + flos] = i;
+	return perm;
 }
 
 static void translate(const Node& node, mm::Block* target, Maps& maps) {
@@ -70,6 +95,8 @@ static void translate(const Node& node, mm::Block* target, Maps& maps) {
 		}
 		block->parent = target;
 		target->contents.push_back(mm::Node(block));
+		tree::Perm perm = create_permutation(ass->floating.size(), ass->essential.size());
+		maps.transform[ass->prop.label] = perm;
 	}	break;
 	case Node::SOURCE:
 		// TODO:

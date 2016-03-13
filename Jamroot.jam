@@ -14,6 +14,7 @@ exe smm :
   
   src/mm/show.cpp
   
+  src/smm/tree.cpp
   src/smm/expr.cpp
   src/smm/globals.cpp
   src/smm/show.cpp
