@@ -190,7 +190,9 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 		qi::on_success(assertion, setLocation(_val, _1));
 		qi::on_error<qi::fail>(
 			source,
-			std::cout << phoenix::val("Syntax error. Expecting ") << _4 << phoenix::val(" here: \n") << _3);
+			std::cout << phoenix::val("Syntax error. Expecting ") << _4
+			<< phoenix::val(" here: \n") << _3 << phoenix::val("\n")
+			<< phoenix::val("code: \n") <<phoenix::construct<wrapper<>>(_3));
 		initNames();
 	}
 	void initNames();
@@ -223,6 +225,9 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 
 template <typename Iterator>
 void Grammar<Iterator>::initNames() {
+	expr_e.name("expr_e");
+	expr_f.name("expr_f");
+	expr_p.name("expr_p");
 	symbol.name("symbol");
 	label.name("label");
 	path.name("path");

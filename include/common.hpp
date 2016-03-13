@@ -40,6 +40,19 @@ inline ostream& operator << (ostream& os, label lab) {
 	return os;
 }
 
+template<int len_f = 64, int len_b = 8>
+struct wrapper {
+	wrapper(string::const_iterator it) :
+	str (it - len_b, it + len_f){ }
+	string str;
+};
+
+template<int len_f, int len_b>
+std::ostream& operator << (std::ostream& os, const wrapper<len_f, len_b>& wr){
+	os << wr.str;
+	return os;
+}
+
 }
 
   

@@ -317,7 +317,9 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 		//qi::on_success(assertion, setLocation(_val, _1));
 		qi::on_error<qi::fail>(
 			source,
-			std::cout << phoenix::val("Syntax error. Expecting ") << _4 << phoenix::val(" here: \n") << _3);
+			std::cout << phoenix::val("Syntax error. Expecting ") << _4
+			<< phoenix::val(" here: \n") << _3 << phoenix::val("\n")
+			<< phoenix::val("code: \n") <<phoenix::construct<wrapper<>>(_3));
 		initNames();
 	}
 	void initNames();
