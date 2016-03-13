@@ -207,9 +207,13 @@ static Reindex reduce(Transform& trans, smm::Assertion* ass, ArgMap& args, const
 }
 
 smm::Proof* transform_proof(const Transform& trans, const Reindex& reindex, const Proof* proof) {
+	//cout << endl << "proof: " << *proof << endl;
 	Proof* tree = to_tree(proof);
+	//cout << endl << "tree: " << *tree << endl;
 	transform(tree, trans);
+	//cout << endl << "trans: " << *tree << endl;
 	Proof* rpn = to_rpn(tree);
+	//cout << endl << "rpn: " << *rpn << endl;
 	smm::Proof* pr = translate_proof(rpn, reindex);
 	delete tree;
 	delete rpn;

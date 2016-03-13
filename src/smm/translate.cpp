@@ -13,18 +13,13 @@ struct Maps {
 };
 
 static mm::Proof* translate(const Maps& maps, const Proof* proof) {
+	//cout << endl << "proof: " << *proof << endl;
 	Tree* tree = to_tree(proof);
-
-	cout << "tree: " << *tree << endl;
-
+	//cout << endl << "tree: " << *tree << endl;
 	transform(tree, maps.transform);
-
-	cout << "trans: " << *tree << endl;
-
+	//cout << endl << "trans: " << *tree << endl;
 	Proof* rpn = to_rpn(tree);
-
-	cout << "rpn: " << *rpn << endl;
-
+	//cout << endl << "rpn: " << *rpn << endl;
 	mm::Proof* pr = new mm::Proof();
 	for (auto& ref : rpn->refs) {
 		mm::Node node;
@@ -47,7 +42,7 @@ static tree::Perm create_permutation(uint flos, uint esss) {
 	for (uint i = 0; i < esss; ++ i)
 		perm[i] = i + flos;
 	for (uint i = 0; i < flos; ++ i)
-		perm[i + flos] = i;
+		perm[i + esss] = i;
 	return perm;
 }
 
@@ -66,19 +61,26 @@ static void translate(const Node& node, mm::Block* target, Maps& maps) {
 			block->contents.push_back(mm::Node(new mm::Variables { vars.expr }));
 		for (auto& disj : ass->disjointed)
 			block->contents.push_back(mm::Node(new mm::Disjointed { disj.expr }));
-		for (auto& ess : ass->essential) {
-			string label = "e" + name + "_" + to_string(ess.index);
-			uint new_index = Smm::mod().lex.labels.toInt(label);
-			mm::Essential* mm_ess = new mm::Essential { new_index, ess.expr };
-			block->contents.push_back(mm::Node(mm_ess));
-			maps.essentials[ess.index] = mm_ess;
-		}
 		for (auto& flo : ass->floating) {
 			string label = "f" + name + "_" + to_string(flo.index);
 			uint new_index = Smm::mod().lex.labels.toInt(label);
 			mm::Floating* mm_flo = new mm::Floating { new_index, flo.expr };
 			block->contents.push_back(mm::Node(mm_flo));
 			maps.floatings[flo.index] = mm_flo;
+		}
+		for (auto& inn : ass->inner) {
+			string label = "i" + name + "_" + to_string(inn.index);
+			uint new_index = Smm::mod().lex.labels.toInt(label);
+			mm::Floating* mm_flo = new mm::Floating { new_index, inn.expr };
+			block->contents.push_back(mm::Node(mm_flo));
+			maps.floatings[inn.index] = mm_flo;
+		}
+		for (auto& ess : ass->essential) {
+			string label = "e" + name + "_" + to_string(ess.index);
+			uint new_index = Smm::mod().lex.labels.toInt(label);
+			mm::Essential* mm_ess = new mm::Essential { new_index, ess.expr };
+			block->contents.push_back(mm::Node(mm_ess));
+			maps.essentials[ess.index] = mm_ess;
 		}
 		if (ass->proof) {
 			mm::Proof* pr = translate(maps, ass->proof);
@@ -95,7 +97,10 @@ static void translate(const Node& node, mm::Block* target, Maps& maps) {
 		}
 		block->parent = target;
 		target->contents.push_back(mm::Node(block));
-		tree::Perm perm = create_permutation(ass->floating.size(), ass->essential.size());
+		tree::Perm perm = create_permutation(
+			ass->floating.size() + ass->inner.size(),
+			ass->essential.size()
+		);
 		maps.transform[ass->prop.label] = perm;
 	}	break;
 	case Node::SOURCE:

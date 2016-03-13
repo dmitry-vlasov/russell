@@ -80,6 +80,13 @@ ostream& operator << (ostream& os, const tree::Node& node) {
 	return os;
 }
 
+ostream& operator << (ostream& os, const tree::Perm& perm) {
+	for (auto& p : perm) {
+		os << p.first << " -> " << p.second << endl;
+	}
+	return os;
+}
+
 }} // mdl::mm
 
 

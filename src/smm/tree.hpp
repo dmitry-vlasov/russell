@@ -32,7 +32,7 @@ struct Node {
 	Node(Tree* t) : ref(), tree(true), val() {
 		val.tre = t;
 	}
-	~Node();
+	void destroy();
 
 	uint label() const {
 		assert(ref.type == Ref::PREF_A || ref.type == Ref::PREF_P);
@@ -54,13 +54,18 @@ struct Node {
 } // tree
 
 struct Tree {
+	~ Tree() {
+		for (auto& n : nodes)
+			n.destroy();
+	}
 	vector<tree::Node> nodes;
 };
 
 ostream& operator << (ostream& os, const Tree&);
 ostream& operator << (ostream& os, const tree::Node&);
+ostream& operator << (ostream& os, const tree::Perm&);
 
-inline tree::Node::~Node() {
+inline void tree::Node::destroy() {
 	if (tree) delete val.tre;
 }
 
