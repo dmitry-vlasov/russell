@@ -5,10 +5,6 @@
 
 namespace mdl { namespace mm {
 
-inline uint arity(const Node& node) {
-	return node.type == Node::AXIOM ? node.val.ax->arity : node.val.th->arity;
-}
-
 Proof* to_tree(const Proof* proof) {
 	stack<Node> stack;
 	for (auto n : proof->refs) {
@@ -16,12 +12,10 @@ Proof* to_tree(const Proof* proof) {
 		case Node::ESSENTIAL:
 		case Node::FLOATING:
 		case Node::PROOF:
-			// Operand
 			stack.push(n);
 			break;
 		case Node::AXIOM:
 		case Node::THEOREM: {
-			// Operator
 			Proof* p = new Proof();
 			p->tree = true;
 			p->refs.push_back(n);
@@ -65,11 +59,7 @@ Proof* to_rpn(const Proof* pr) {
 	return rpn;
 }
 
-inline uint ass_label(const Node& node) {
-	return node.type == Node::AXIOM ? node.val.ax->label : node.val.th->label;
-}
-
-void transform(Proof* proof, Transform& trans) {
+void transform(Proof* proof, const Transform& trans) {
 	assert(proof->tree);
 	for (uint i = 0; i < proof->refs.size() - 1; ++ i) {
 		if (proof->refs[i].type == Node::PROOF)
@@ -77,7 +67,7 @@ void transform(Proof* proof, Transform& trans) {
 	}
 	Node op = proof->refs.back();
 	assert(op.type == Node::AXIOM || op.type == Node::THEOREM);
-	Perm perm = trans[ass_label(op)];
+	Perm perm = trans.find(ass_label(op))->second;
 	vector<Node> new_refs = proof->refs;
 	for (uint i = 0; i < new_refs.size() - 1; ++ i)
 		new_refs[i] = proof->refs[perm[i]];
