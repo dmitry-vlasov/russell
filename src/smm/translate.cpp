@@ -9,24 +9,22 @@ struct Maps {
 	map<uint, mm::Axiom*>     axioms;
 	map<uint, mm::Essential*> essentials;
 	map<uint, mm::Floating*>  floatings;
+	map<uint, mm::Floating*>  inners;
 	tree::Transform           transform;
 };
 
 static mm::Proof* translate(const Maps& maps, const Proof* proof) {
-	//cout << endl << "proof: " << *proof << endl;
 	Tree* tree = to_tree(proof);
-	//cout << endl << "tree: " << *tree << endl;
 	transform(tree, maps.transform);
-	//cout << endl << "trans: " << *tree << endl;
 	Proof* rpn = to_rpn(tree);
-	//cout << endl << "rpn: " << *rpn << endl;
 	mm::Proof* pr = new mm::Proof();
 	for (auto& ref : rpn->refs) {
 		mm::Node node;
 		switch (ref.type) {
-		case Ref::PREF_A: node = mm::Node(maps.axioms.find(ref.index)->second); break;
-		case Ref::PREF_P: node = mm::Node(maps.theorems.find(ref.index)->second); break;
-		case Ref::PREF_F: node = mm::Node(maps.floatings.find(ref.index)->second); break;
+		case Ref::PREF_A: node = mm::Node(maps.axioms.find(ref.index)->second);     break;
+		case Ref::PREF_P: node = mm::Node(maps.theorems.find(ref.index)->second);   break;
+		case Ref::PREF_F: node = mm::Node(maps.floatings.find(ref.index)->second);  break;
+		case Ref::PREF_I: node = mm::Node(maps.inners.find(ref.index)->second);     break;
 		case Ref::PREF_E: node = mm::Node(maps.essentials.find(ref.index)->second); break;
 		default : assert(false && "impossible"); break;
 		}
@@ -61,19 +59,19 @@ static void translate(const Node& node, mm::Block* target, Maps& maps) {
 			block->contents.push_back(mm::Node(new mm::Variables { vars.expr }));
 		for (auto& disj : ass->disjointed)
 			block->contents.push_back(mm::Node(new mm::Disjointed { disj.expr }));
+		for (auto& inn : ass->inner) {
+			string label = "i" + name + "_" + to_string(inn.index);
+			uint new_index = Smm::mod().lex.labels.toInt(label);
+			mm::Floating* mm_flo = new mm::Floating { new_index, inn.expr };
+			block->contents.push_back(mm::Node(mm_flo));
+			maps.inners[inn.index] = mm_flo;
+		}
 		for (auto& flo : ass->floating) {
 			string label = "f" + name + "_" + to_string(flo.index);
 			uint new_index = Smm::mod().lex.labels.toInt(label);
 			mm::Floating* mm_flo = new mm::Floating { new_index, flo.expr };
 			block->contents.push_back(mm::Node(mm_flo));
 			maps.floatings[flo.index] = mm_flo;
-		}
-		for (auto& inn : ass->inner) {
-			string label = "i" + name + "_" + to_string(inn.index);
-			uint new_index = Smm::mod().lex.labels.toInt(label);
-			mm::Floating* mm_flo = new mm::Floating { new_index, inn.expr };
-			block->contents.push_back(mm::Node(mm_flo));
-			maps.floatings[inn.index] = mm_flo;
 		}
 		for (auto& ess : ass->essential) {
 			string label = "e" + name + "_" + to_string(ess.index);
@@ -98,7 +96,7 @@ static void translate(const Node& node, mm::Block* target, Maps& maps) {
 		block->parent = target;
 		target->contents.push_back(mm::Node(block));
 		tree::Perm perm = create_permutation(
-			ass->floating.size() + ass->inner.size(),
+			ass->floating.size(),
 			ass->essential.size()
 		);
 		maps.transform[ass->prop.label] = perm;

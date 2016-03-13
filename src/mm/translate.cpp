@@ -207,13 +207,9 @@ static Reindex reduce(Transform& trans, smm::Assertion* ass, ArgMap& args, const
 }
 
 smm::Proof* transform_proof(const Transform& trans, const Reindex& reindex, const Proof* proof) {
-	//cout << endl << "proof: " << *proof << endl;
 	Proof* tree = to_tree(proof);
-	//cout << endl << "tree: " << *tree << endl;
 	transform(tree, trans);
-	//cout << endl << "trans: " << *tree << endl;
 	Proof* rpn = to_rpn(tree);
-	//cout << endl << "rpn: " << *rpn << endl;
 	smm::Proof* pr = translate_proof(rpn, reindex);
 	delete tree;
 	delete rpn;
@@ -285,7 +281,6 @@ static ArgMap arg_map(const deque<Node>& ar_orig) {
 
 static smm::Assertion* translate_ass(Transform& trans, const Node& n, const Block* block)  {
 	smm::Assertion* ass = new smm::Assertion();
-	//cout << "translating: " << label(ass_label(n)) << endl;
 	ass->prop = smm::Proposition {n.type == Node::AXIOM, ass_label(n), ass_expr(n)};
 	Header header;
 	gather(n.ind, block, header);
