@@ -19,12 +19,12 @@ Proof* to_tree(const Proof* proof) {
 			Proof* p = new Proof();
 			p->tree = true;
 			p->refs.push_back(n);
-			for (uint i = 0; i < n.val.ax->arity; ++ i) {
+			for (uint i = 0; i < ass_arity(n); ++ i) {
 				p->refs.push_back(stack.top());
 				stack.pop();
 			}
 			std::reverse(p->refs.begin(), p->refs.end());
-			stack.push(p);
+			stack.push(Node(p));
 		}	break;
 		default : assert(false && "impossible"); break;
 		}
@@ -70,7 +70,7 @@ void transform(Proof* proof, const Transform& trans) {
 	Perm perm = trans.find(ass_label(op))->second;
 	vector<Node> new_refs = proof->refs;
 	for (uint i = 0; i < new_refs.size() - 1; ++ i)
-		new_refs[i] = proof->refs[perm[i]];
+		new_refs[perm[i]] = proof->refs[i];
 	proof->refs = new_refs;
 }
 

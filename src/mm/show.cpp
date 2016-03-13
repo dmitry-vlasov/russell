@@ -15,16 +15,11 @@ public:
 	}
 	void write(ostream& os) {
 		switch (node.type) {
-		case Node::NONE:       assert(false && "impossible"); break;
-		case Node::CONSTANTS:  assert(false && "impossible"); break;
-		case Node::VARIABLES:  assert(false && "impossible"); break;
-		case Node::DISJOINTED: assert(false && "impossible"); break;
 		case Node::FLOATING:   os << label(node.val.flo->label); break;
 		case Node::ESSENTIAL:  os << label(node.val.ess->label); break;
 		case Node::AXIOM:      os << label(node.val.ax->label);  break;
 		case Node::THEOREM:    os << label(node.val.th->label);  break;
 		case Node::PROOF:      os << *node.val.prf;           break;
-		case Node::BLOCK:      assert(false && "impossible"); break;
 		default :              assert(false && "impossible"); break;
 		}
 	}
@@ -81,7 +76,6 @@ ostream& operator << (ostream& os, const Theorem& th) {
 
 ostream& operator << (ostream& os, const Node& node) {
 	switch(node.type) {
-	case Node::NONE: return os;
 	case Node::CONSTANTS:  os << *(node.val.cst); break;
 	case Node::VARIABLES:  os << *(node.val.var); break;
 	case Node::DISJOINTED: os << *(node.val.dis); break;

@@ -109,10 +109,14 @@ static smm::Proof* translate_proof(const Proof* mproof, const Reindex& reindex) 
 		smm::Ref sref;
 		Node::Value val = node.val;
 		switch (node.type) {
-		case Node::FLOATING:  sref = smm::Ref { RType::PREF_F, reindex.find(val.flo->label)->second }; break;
-		case Node::ESSENTIAL: sref = smm::Ref { RType::PREF_E, reindex.find(val.ess->label)->second }; break;
-		case Node::AXIOM:     sref = smm::Ref { RType::PREF_A, val.ax->label };  break;
-		case Node::THEOREM:   sref = smm::Ref { RType::PREF_P, val.th->label };  break;
+		case Node::FLOATING:
+			sref = smm::Ref { RType::PREF_F, reindex.find(val.flo->label)->second }; break;
+		case Node::ESSENTIAL:
+			sref = smm::Ref { RType::PREF_E, reindex.find(val.ess->label)->second }; break;
+		case Node::AXIOM:
+			sref = smm::Ref { RType::PREF_A, val.ax->label };  break;
+		case Node::THEOREM:
+			sref = smm::Ref { RType::PREF_P, val.th->label };  break;
 		default : assert(false && "impossible"); break;
 		}
 		sproof->refs.push_back(sref);
@@ -234,15 +238,10 @@ static void translate_block(Transform& trans, const Block* source, smm::Source* 
 
 static void translate_node(Transform& trans, const Node& node, const Block* block, smm::Source* target) {
 	switch(node.type) {
-	case Node::NONE: assert(false && "impossible"); break;;
 	case Node::CONSTANTS: {
 		smm::Constants* c = new smm::Constants { node.val.cst->expr };
 		target->contents.push_back(smm::Node(c));
 	} break;
-	case Node::VARIABLES:  break;
-	case Node::DISJOINTED: break;
-	case Node::FLOATING:   break;
-	case Node::ESSENTIAL:  break;
 	case Node::THEOREM:
 	case Node::AXIOM: {
 		smm::Assertion* ass = translate_ass(trans, node, block);
@@ -252,6 +251,10 @@ static void translate_node(Transform& trans, const Node& node, const Block* bloc
 		node.val.blk->ind = node.ind;
 		translate_block(trans, node.val.blk, target);
 		break;
+	case Node::VARIABLES:  break;
+	case Node::DISJOINTED: break;
+	case Node::FLOATING:   break;
+	case Node::ESSENTIAL:  break;
 	default : assert(false && "impossible"); break;
 	}
 }
