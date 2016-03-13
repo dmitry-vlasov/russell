@@ -36,7 +36,8 @@ static void reduce_variables(smm::Assertion* ass, const set<Symbol>& needed) {
 		}
 	}
 	ass->variables.clear();
-	ass->variables.push_back(smm::Variables { rvars });
+	if (!rvars.symbols.empty())
+		ass->variables.push_back(smm::Variables { rvars });
 }
 
 // Remove floatings, which variable is not needed.
