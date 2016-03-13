@@ -51,7 +51,7 @@ ostream& operator << (ostream& os, const Floating& flo) {
 }
 
 ostream& operator << (ostream& os, const Inner& inn) {
-	os << "i" << to_string(inn.index) << " $i " << inn.expr << "$.";
+	os << "i" << to_string(inn.index) << " $f " << inn.expr << "$.";
 	return os;
 }
 

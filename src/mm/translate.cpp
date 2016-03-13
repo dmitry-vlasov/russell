@@ -23,15 +23,19 @@ static void gather_inner_vars(const set<Symbol>& fvars,
 	}
 }
 
-typedef map<uint, uint> Reindex;
+struct Reindex {
+	map<uint, uint> ess;
+	map<uint, uint> flo;
+	map<uint, uint> inn;
+};
 
 // Replace variable sets with single set, which contains only needed variables.
 //
-static void reduce_variables(smm::Assertion* ass, const set<Symbol>& needed) {
+static void reduce_variables(smm::Assertion* ass, const set<Symbol>& all_vars) {
 	Expr rvars;
 	for (const smm::Variables& vars : ass->variables) {
 		for (Symbol v : vars.expr.symbols) {
-			if (needed.find(v) != needed.end())
+			if (all_vars.find(v) != all_vars.end())
 				rvars += v;
 		}
 	}
@@ -40,19 +44,44 @@ static void reduce_variables(smm::Assertion* ass, const set<Symbol>& needed) {
 		ass->variables.push_back(smm::Variables { rvars });
 }
 
-// Remove floatings, which variable is not needed.
+// Replace variable sets with single set, which contains only needed variables.
 //
-static void reduce_floatings(smm::Assertion* ass, const set<Symbol>& needed, Reindex& reindex) {
+static void reduce_disjointed(smm::Assertion* ass, const set<Symbol>& all_vars) {
+	vector<smm::Disjointed> red_disjs;
+	for (auto& disj : ass->disjointed) {
+		smm::Disjointed red_disj;
+		for (Symbol s : disj.expr.symbols) {
+			if (all_vars.find(s) != all_vars.end())
+				red_disj.expr.push_back(s);
+		}
+		if (red_disj.expr.symbols.size() > 1) red_disjs.push_back(red_disj);
+	}
+	ass->disjointed = red_disjs;
+}
+
+// Remove floatings, which variable is not needed, and switch those flos,
+// which are used only in proof to inner.
+//
+static void reduce_floatings(smm::Assertion* ass, const set<Symbol>& flo_vars,
+	const set<Symbol>& inn_vars, Reindex& reindex) {
 	vector<smm::Floating> red_flos;
-	uint i = 0;
+	vector<smm::Inner>    red_inns;
+	uint flo_ind = 0;
+	uint inn_ind = 0;
 	for (auto& flo : ass->floating) {
-		if (needed.find(flo.var()) != needed.end()) {
-			reindex[flo.index] = i;
-			flo.index = i++;
+		if (flo_vars.find(flo.var()) != flo_vars.end()) {
+			reindex.flo[flo.index] = flo_ind;
+			flo.index = flo_ind ++;
 			red_flos.push_back(flo);
+		}
+		if (inn_vars.find(flo.var()) != inn_vars.end()) {
+			reindex.inn[flo.index] = inn_ind;
+			flo.index = inn_ind ++;
+			red_inns.push_back(smm::Inner {flo.index, flo.expr});
 		}
 	}
 	ass->floating = red_flos;
+	ass->inner = red_inns;
 }
 
 struct ArgMap;
@@ -122,7 +151,7 @@ static void reduce_permutation(smm::Assertion* ass, const set<Symbol>& needed, A
 static void reindex_essentials(smm::Assertion* ass, Reindex& reindex) {
 	uint i = 0;
 	for (auto& ess : ass->essential) {
-		reindex[ess.index] = i;
+		reindex.ess[ess.index] = i;
 		ess.index = i++;
 	}
 }
@@ -135,9 +164,13 @@ static smm::Proof* translate_proof(const Proof* mproof, const Reindex& reindex) 
 		Node::Value val = node.val;
 		switch (node.type) {
 		case Node::FLOATING:
-			sref = smm::Ref { RType::PREF_F, reindex.find(val.flo->label)->second }; break;
+			if (reindex.flo.find(val.flo->label) != reindex.flo.end())
+				sref = smm::Ref { RType::PREF_F, reindex.flo.find(val.flo->label)->second };
+			else
+				sref = smm::Ref { RType::PREF_I, reindex.inn.find(val.flo->label)->second };
+			break;
 		case Node::ESSENTIAL:
-			sref = smm::Ref { RType::PREF_E, reindex.find(val.ess->label)->second }; break;
+			sref = smm::Ref { RType::PREF_E, reindex.ess.find(val.ess->label)->second }; break;
 		case Node::AXIOM:
 			sref = smm::Ref { RType::PREF_A, val.ax->label };  break;
 		case Node::THEOREM:
@@ -164,8 +197,9 @@ static Reindex reduce(Transform& trans, smm::Assertion* ass, ArgMap& args, const
 
 	Reindex reindex;
 	reduce_variables(ass, all_vars);
+	reduce_disjointed(ass, all_vars);
 	reduce_permutation(ass, flo_vars, args);
-	reduce_floatings(ass, flo_vars, reindex);
+	reduce_floatings(ass, flo_vars, inn_vars, reindex);
 	reindex_essentials(ass, reindex);
 
 	trans[ass->prop.label] = args.create_permutation();

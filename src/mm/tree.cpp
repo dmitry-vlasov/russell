@@ -1,7 +1,7 @@
 #include <boost/range/adaptor/reversed.hpp>
 
 #include "mm/ast.hpp"
-#include "tree.hpp"
+#include "mm/tree.hpp"
 
 namespace mdl { namespace mm {
 
