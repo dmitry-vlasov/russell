@@ -54,6 +54,10 @@ static void reduce_floatings(smm::Assertion* ass, const set<Symbol>& needed, Rei
 	ass->floating = red_flos;
 }
 
+struct ArgMap;
+
+ostream& operator << (ostream&, const ArgMap&);
+
 struct ArgMap {
 	struct Arg {
 		uint label;
@@ -71,16 +75,36 @@ struct ArgMap {
 		Iter found = args.end();
 		Iter begin = args.begin();
 		Iter end   = args.end();
+		uint found_ind = -1;
 		for (auto it = begin; it != end; ++ it) {
-			if (it->ind > found - begin)
+			if (it->ind > found_ind)
 				-- it->ind;
-			if (it->label == label)
+			if (it->label == label) {
 				found = it;
+				found_ind = it->ind;
+			}
 		}
 		if (found != end) args.erase(found);
+		assert(verify());
+	}
+	bool verify() {
+		vector<uint> c(args.size(), 0);
+		for (Arg arg : args) {
+			++ c[arg.ind];
+		}
+		return std::count(c.begin(), c.end(), 1) == (int)args.size();
 	}
 	vector<Arg> args;
 };
+
+ostream& operator << (ostream& os, const ArgMap& amap) {
+	os << endl;
+	for (uint i = 0; i < amap.args.size(); ++ i) {
+		ArgMap::Arg arg = amap.args[i];
+		os << label(arg.label) << ": " << i << " -> " << arg.ind << endl;
+	}
+	return os;
+}
 
 // Reduce permutation, remove variable which are not needed.
 //
@@ -222,6 +246,7 @@ static ArgMap arg_map(const deque<Node>& ar_orig) {
 
 static smm::Assertion* translate_ass(Transform& trans, const Node& n, const Block* block)  {
 	smm::Assertion* ass = new smm::Assertion();
+	//cout << "translating: " << label(ass_label(n)) << endl;
 	ass->prop = smm::Proposition {n.type == Node::AXIOM, ass_label(n), ass_expr(n)};
 	Header header;
 	gather(n.ind, block, header);

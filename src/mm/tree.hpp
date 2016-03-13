@@ -9,7 +9,7 @@ typedef map<uint, Perm> Transform;
 
 Proof* to_tree(const Proof* pr);
 Proof* to_rpn(const Proof* pr);
-void transform(Proof* proof, const Transform& trans);
+void transform(Proof* proof, const Transform& trans, bool forward = true);
 
 inline uint ass_label(const Node& node) {
 	return node.type == Node::AXIOM ? node.val.ax->label : node.val.th->label;

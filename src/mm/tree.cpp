@@ -59,7 +59,7 @@ Proof* to_rpn(const Proof* pr) {
 	return rpn;
 }
 
-void transform(Proof* proof, const Transform& trans) {
+void transform(Proof* proof, const Transform& trans, bool forward) {
 	assert(proof->tree);
 	for (uint i = 0; i < proof->refs.size() - 1; ++ i) {
 		if (proof->refs[i].type == Node::PROOF)
@@ -68,9 +68,11 @@ void transform(Proof* proof, const Transform& trans) {
 	Node op = proof->refs.back();
 	assert(op.type == Node::AXIOM || op.type == Node::THEOREM);
 	Perm perm = trans.find(ass_label(op))->second;
+	assert(perm.size() + 1 == proof->refs.size());
 	vector<Node> new_refs = proof->refs;
 	for (uint i = 0; i < new_refs.size() - 1; ++ i)
-		new_refs[perm[i]] = proof->refs[i];
+		if (forward) new_refs[perm[i]] = proof->refs[i];
+		else         new_refs[i] = proof->refs[perm[i]];
 	proof->refs = new_refs;
 }
 
