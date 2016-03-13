@@ -1,6 +1,6 @@
+#define BOOST_SPIRIT_USE_PHOENIX_V3
+
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_fusion.hpp>
@@ -131,9 +131,9 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 		i_ref = lit('i') [at_c<0>(_val) = Ref::PREF_I] > uint_ [at_c<1>(_val) = _1];
 
 		proof =
-			qi::eps [_val = new_<smm::Proof>()]
+			qi::eps     [_val = new_<smm::Proof>()]
 			> +(a_ref | p_ref | e_ref | f_ref | i_ref) [push_back(phoenix::at_c<0>(*_val), _1)]
-			> "$.";
+			> lit("$.") [phoenix::at_c<1>(*_val) = _r1];
 		provable =
 			lit("p")    [at_c<0>(_val) = false]
 			> label     [at_c<1>(_val) = _1]
@@ -170,7 +170,7 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 			> *inner         [push_back(phoenix::at_c<4>(*_val), _1)]
 			>  (axiomatic    [phoenix::at_c<5>(*_val) = _1] |
 				(provable    [phoenix::at_c<5>(*_val) = _1]
-				> proof      [phoenix::at_c<6>(*_val) = _1])
+				> proof(_val)[phoenix::at_c<6>(*_val) = _1])
 			)
 			> lit("$}")      [addToMath(_val)];
 		constants =
@@ -208,7 +208,7 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 	qi::rule<Iterator, Ref(), ascii::space_type> e_ref;
 	qi::rule<Iterator, Ref(), ascii::space_type> f_ref;
 	qi::rule<Iterator, Ref(), ascii::space_type> i_ref;
-	qi::rule<Iterator, Proof*(), ascii::space_type> proof;
+	qi::rule<Iterator, Proof*(Assertion*), ascii::space_type> proof;
 	qi::rule<Iterator, Proposition(), ascii::space_type> provable;
 	qi::rule<Iterator, Proposition(), ascii::space_type> axiomatic;
 	qi::rule<Iterator, Essential(), ascii::space_type> essential;

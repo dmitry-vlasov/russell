@@ -11,7 +11,7 @@ Proof* to_tree(const Proof* proof) {
 		switch(n.type) {
 		case Node::ESSENTIAL:
 		case Node::FLOATING:
-		case Node::PROOF:
+		//case Node::PROOF:
 			stack.push(n);
 			break;
 		case Node::AXIOM:

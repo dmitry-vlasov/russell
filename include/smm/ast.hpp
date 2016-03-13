@@ -32,8 +32,11 @@ struct Ref {
 	uint index;
 };
 
+struct Assertion;
+
 struct Proof {
 	vector<Ref> refs;
+	Assertion*  theorem;
 };
 
 struct Variables {
@@ -76,6 +79,9 @@ struct Assertion {
 		if (proof) delete proof;
 	}
 
+	uint arity() const {
+		return essential.size() + floating.size();
+	}
 	bool areDisjointed(Symbol s1, Symbol s2) const {
 		for (auto it = disjointed.cbegin(); it != disjointed.cend(); ++ it) {
 			if (it->expr.contains(s1) && it->expr.contains(s2))

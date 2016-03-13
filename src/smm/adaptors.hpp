@@ -25,6 +25,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::smm::Proof,
 	(std::vector<mdl::smm::Ref>, refs)
+	(mdl::smm::Assertion*, theorem)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
