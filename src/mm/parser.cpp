@@ -27,9 +27,11 @@ struct AddToMath {
 		Mm::mod().math.essentials[ess->label] = ess;
 	}
 	void operator()(Axiom* ax) const {
+		//cout << "parsed: " << label(ax->label) << endl;
 		Mm::mod().math.axioms[ax->label] = ax;
 	}
 	void operator()(Theorem* th) const {
+		//cout << "parsed: " << label(th->label) << endl;
 		Mm::mod().math.theorems[th->label] = th;
 	}
 };
@@ -179,6 +181,26 @@ struct MarkVars {
     }
 };
 
+/*struct Final {
+    template <typename T1>
+    struct result { typedef void type; };
+    void operator()(const Block* block) const {
+    	cout << "source parsed" << endl;
+    	cout << "size: " << block->contents.size() << endl;
+    }
+};*/
+
+/*
+template <typename Iterator>
+struct Comments : qi::grammar<Iterator> {
+	Comments() : Comments::base_type(start) {
+		qi::char_type char_;
+		ascii::space_type space;
+		start = space | "$(" >> *(char_ - "$)") >> "$)";
+	}
+	qi::rule<Iterator> start;
+};
+*/
 template <typename Iterator>
 struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 	Grammar() : Grammar::base_type(source, "russell") {
@@ -208,7 +230,7 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 		label  = lexeme[+(ascii::char_ - '$' - ascii::space)] [_val = labelToInt(_1)];
 		path   = lexeme[+(ascii::char_ - '$' - ascii::space)];
 
-		expr  = +symbol     [push_back(at_c<0>(_val), _1)];
+		expr  = + (symbol [push_back(at_c<0>(_val), _1)] | comment);
 
 		ref   = label   [_val = createRef(_1)];
 		proof =
@@ -274,6 +296,7 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 		const phoenix::function<PushNode>   pushNode;
 		const phoenix::function<PushVC>     pushVC;
 		const phoenix::function<PopVC>      popVC;
+		//const phoenix::function<Final>      final;
 
 		block =
 			lit("${")   [_val = new_<mm::Block>(phoenix::val(parent))]
@@ -294,6 +317,7 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 			inclusion   [pushNode(_val, phoenix::construct<Node>(_1))])
 			> eps       [popParent(_val, phoenix::ref(parent))]
 			> eps       [popVC(phoenix::ref(stack))];
+			//> qi::eoi   [final(_val)];
 
 		//
 		/*block =

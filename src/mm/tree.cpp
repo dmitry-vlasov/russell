@@ -11,7 +11,6 @@ Proof* to_tree(const Proof* proof) {
 		switch(n.type) {
 		case Node::ESSENTIAL:
 		case Node::FLOATING:
-		//case Node::PROOF:
 			stack.push(n);
 			break;
 		case Node::AXIOM:
@@ -29,7 +28,10 @@ Proof* to_tree(const Proof* proof) {
 		default : assert(false && "impossible"); break;
 		}
 	}
-	Proof* tree = stack.top().val.prf;
+	Proof* tree =
+		 stack.top().type == Node::PROOF ?
+		 stack.top().val.prf :
+		 nullptr;
 	stack.pop();
 	assert(stack.empty());
 	return tree;

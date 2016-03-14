@@ -208,6 +208,8 @@ static Reindex reduce(Transform& trans, smm::Assertion* ass, ArgMap& args, const
 
 smm::Proof* transform_proof(const Transform& trans, const Reindex& reindex, const Proof* proof) {
 	Proof* tree = to_tree(proof);
+	if (tree == nullptr)
+		return nullptr;
 	transform(tree, trans);
 	Proof* rpn = to_rpn(tree);
 	smm::Proof* pr = translate_proof(rpn, reindex);
@@ -281,6 +283,7 @@ static ArgMap arg_map(const deque<Node>& ar_orig) {
 
 static smm::Assertion* translate_ass(Transform& trans, const Node& n, const Block* block)  {
 	smm::Assertion* ass = new smm::Assertion();
+	//cout << "translating: " << label(ass_label(n)) << endl;
 	ass->prop = smm::Proposition {n.type == Node::AXIOM, ass_label(n), ass_expr(n)};
 	Header header;
 	gather(n.ind, block, header);
@@ -288,8 +291,14 @@ static smm::Assertion* translate_ass(Transform& trans, const Node& n, const Bloc
 	ArgMap args = arg_map(header.args);
 	Reindex reindex = reduce(trans, ass, args, ass_proof(n));
 	ass_arity(n) = ass->essential.size() + ass->floating.size();
-	if (n.type == Node::THEOREM)
+	if (n.type == Node::THEOREM) {
 		ass->proof = transform_proof(trans, reindex, n.val.th->proof);
+		if (!ass->proof) {
+			// Dummy theorem
+			delete ass;
+			ass = nullptr;
+		}
+	}
 	return ass;
 }
 
@@ -304,7 +313,7 @@ static void translate_node(Transform& trans, const Node& node, const Block* bloc
 	case Node::THEOREM:
 	case Node::AXIOM: {
 		smm::Assertion* ass = translate_ass(trans, node, block);
-		target->contents.push_back(smm::Node(ass));
+		if (ass) target->contents.push_back(smm::Node(ass));
 	} break;
 	case Node::BLOCK:
 		node.val.blk->ind = node.ind;

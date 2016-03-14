@@ -117,8 +117,8 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 		label  = lexeme[+(ascii::char_ - '$' - ascii::space)] [_val = labelToInt(_1)];
 		path   = lexeme[+(ascii::char_ - '$' - ascii::space)];
 
-		expr_e = + symbol [push_back(at_c<0>(_val), _1)] > "$.";
-		expr_p = + symbol [push_back(at_c<0>(_val), _1)] > "$=";
+		expr_e = + (symbol [push_back(at_c<0>(_val), _1)] | comment) > "$.";
+		expr_p = + (symbol [push_back(at_c<0>(_val), _1)] | comment)> "$=";
 		expr_f =
 			  symbol [push_back(at_c<0>(_val), _1)]
 			> symbol [push_back(at_c<0>(_val), _1)]
