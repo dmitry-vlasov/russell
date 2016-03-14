@@ -1,7 +1,8 @@
-#include <boost/range/adaptor/reversed.hpp>
+//#include <boost/range/adaptor/reversed.hpp>
 
 #include "mm/ast.hpp"
 #include "mm/tree.hpp"
+#include "mm/globals.hpp"
 
 namespace mdl { namespace mm {
 
@@ -69,13 +70,35 @@ void transform(Proof* proof, const Transform& trans, bool forward) {
 	}
 	Node op = proof->refs.back();
 	assert(op.type == Node::AXIOM || op.type == Node::THEOREM);
-	Perm perm = trans.find(ass_label(op))->second;
+	Perm perm = trans.find(node_label(op))->second;
 	assert(perm.size() + 1 == proof->refs.size());
 	vector<Node> new_refs = proof->refs;
 	for (uint i = 0; i < new_refs.size() - 1; ++ i)
 		if (forward) new_refs[perm[i]] = proof->refs[i];
 		else         new_refs[i] = proof->refs[perm[i]];
 	proof->refs = new_refs;
+}
+
+void reduce_node(Node& node, const set<uint>& red) {
+	if (node.type == Node::PROOF) {
+		Proof* proof = node.val.prf;
+		if (red.find(node_label(proof->refs.back())) != red.end()) {
+			node = proof->refs[proof->refs.size() - 2];
+			proof->refs[proof->refs.size() - 2].type = Node::NONE;
+			delete proof;
+			reduce_node(node, red);
+		} else {
+			for (Node& n : proof->refs)
+				reduce_node(n, red);
+		}
+	}
+}
+
+void reduce(Proof*& proof, const set<uint>& red) {
+	Node node = Node(proof);
+	reduce_node(node, red);
+	assert(node.type == Node::PROOF);
+	proof = node.val.prf;
 }
 
 }} // mdl::mm

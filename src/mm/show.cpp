@@ -1,7 +1,48 @@
 #include "mm/ast.hpp"
 #include "mm/globals.hpp"
+#include "mm/tree.hpp"
 
 namespace mdl { namespace mm {
+
+uint length(const Proof& p);
+uint length(const Node& n) {
+	if (n.type == Node::PROOF) return length(*n.val.prf);
+	else return 1;
+}
+uint length(const Proof& p) {
+	assert(p.tree);
+	uint len = 1;
+	for (uint i = 0; i + 1 < p.refs.size(); ++ i) {
+		len += length(p.refs[i]);
+	}
+	return len;
+}
+
+string show(const Proof& tree);
+string show(const Node& n) {
+	if (n.type == Node::PROOF)
+		return show(*n.val.prf);
+	else {
+		uint lab = -1;
+		switch(n.type) {
+		case Node::FLOATING:   lab = n.val.flo->label; break;
+		case Node::ESSENTIAL:  lab = n.val.ess->label; break;
+		default : assert(false && "impossible"); break;
+		}
+		return Mm::get().lex.labels.toStr(lab);
+	}
+}
+
+string show(const Proof& tree) {
+	string space = length(tree) > 16 ? "\n" : " ";
+	string str = Mm::get().lex.labels.toStr(node_label(tree.refs.back()));
+	str += "(";
+	for (uint i = 0; i + 1 <tree.refs.size(); ++ i)
+		str += indent::paragraph(space + show(tree.refs[i]), "  ");
+	str += space + ")";
+	return str;
+}
+
 
 ostream& operator << (ostream& os, const Constants& cst) {
 	os << "$c " << cst.expr << "$.";
@@ -32,10 +73,7 @@ ostream& operator << (ostream& os, ref r) {
 
 ostream& operator << (ostream& os, const Proof& proof) {
 	if (proof.tree) {
-		os << "( ";
-		for (auto& node : proof.refs)
-			os << ref(node) << ' ';
-		os << ")";
+		os << show(proof);
 		return os;
 	}
 	for (auto& node : proof.refs)

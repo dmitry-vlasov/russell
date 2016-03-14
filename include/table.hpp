@@ -9,11 +9,11 @@ class Table {
 	map<string, uint> table;
 public:
 	Table() : strings(), table() { }
-	uint getInt(const string& str) {
+	uint getInt(const string& str) const {
 		if (table.find(str) == table.end())
 			return -1;
 		else
-			return table[str];
+			return table.find(str)->second;
 	}
 	uint toInt(const string& str) {
 		if (table.find(str) == table.end()) {

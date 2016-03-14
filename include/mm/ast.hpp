@@ -154,6 +154,38 @@ inline Proof::~Proof() {
 	}
 }
 
+inline uint node_label(const Node& n) {
+	switch (n.type) {
+	case Node::FLOATING:   return n.val.flo->label;
+	case Node::ESSENTIAL:  return n.val.ess->label;
+	case Node::AXIOM:      return n.val.ax->label;
+	case Node::THEOREM:    return n.val.th->label;
+	default : assert(false && "impossible");
+	}
+	return -1; // Pacifying compiler
+}
+
+inline Expr& node_expr(const Node& n) {
+	switch (n.type) {
+	case Node::FLOATING:   return n.val.flo->expr;
+	case Node::ESSENTIAL:  return n.val.ess->expr;
+	case Node::AXIOM:      return n.val.ax->expr;
+	case Node::THEOREM:    return n.val.th->expr;
+	default : assert(false && "impossible");
+	}
+	static Expr ex; return ex; // Pacifying compiler
+}
+
+inline const Proof* ass_proof(const Node& node) {
+	return node.type == Node::AXIOM ? nullptr : node.val.th->proof;
+}
+
+inline uint& ass_arity(const Node& node) {
+	return node.type == Node::AXIOM ? node.val.ax->arity : node.val.th->arity;
+}
+
+
+ostream& operator << (ostream& os, const Node& node);
 ostream& operator << (ostream& os, const Constants& cst);
 ostream& operator << (ostream& os, const Proof& proof);
 ostream& operator << (ostream& os, const Variables& vars);

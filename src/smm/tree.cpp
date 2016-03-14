@@ -66,11 +66,46 @@ void transform(Tree* tree, const tree::Transform& trans, bool forward) {
 	tree->nodes = new_nodes;
 }
 
+
+uint length(const Tree& tree);
+uint length(const tree::Node& n) {
+	if (n.tree) return length(*n.val.tre);
+	else        return 1;
+}
+uint length(const Tree& tree) {
+	uint len = 1;
+	for (uint i = 0; i + 1 < tree.nodes.size(); ++ i) {
+		len += length(tree.nodes[i]);
+	}
+	return len;
+}
+
+string show(Ref ref) {
+	ostringstream os;
+	os << ref;
+	return os.str();
+}
+
+string show(const Tree& tree);
+
+string show(const tree::Node& n) {
+	if (n.tree) return show(*n.val.tre);
+	else           return show(n.ref);
+}
+
+string show(const Tree& tree) {
+	const Assertion* ass = tree.nodes.back().val.ass;
+	string space = length(tree) > 16 ? "\n" : " ";
+	string str = Smm::get().lex.labels.toStr(ass->prop.label);
+	str += "(";
+	for (uint i = 0; i + 1 <tree.nodes.size(); ++ i)
+		str += indent::paragraph(space + show(tree.nodes[i]), "  ");
+	str += space + ")";
+	return str;
+}
+
 ostream& operator << (ostream& os, const Tree& tree) {
-	os << "( ";
-	for (auto& node : tree.nodes)
-		os << node << ' ';
-	os << ")";
+	os << show(tree);
 	return os;
 }
 

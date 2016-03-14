@@ -1,5 +1,6 @@
 #include <boost/range/adaptor/reversed.hpp>
 #include "smm/ast.hpp"
+#include "smm/tree.hpp"
 #include "smm/globals.hpp"
 
 namespace mdl { namespace smm {
@@ -124,16 +125,31 @@ static void checkSymbols(const Assertion* ass) {
 static void apply(const Assertion* ass, const Assertion* th, stack<Expr>& expr_stack) {
 	Subst sub;
 	for (auto& flo : boost::adaptors::reverse(ass->floating)) {
-		if (expr_stack.empty())
-			throw Error("verification", "empty stack", &th->loc);
+		if (expr_stack.empty()) {
+			string msg = "empty stack (floating):\n";
+			msg += "theorem " + Smm::get().lex.labels.toStr(th->prop.label) + "\n";
+			msg += "assertion " + Smm::get().lex.labels.toStr(ass->prop.label) + "\n";
+			throw Error("verification", msg, &th->loc);
+		}
 		sub[flo.var()] = expr_stack.top();
 		expr_stack.pop();
 	}
 	for (auto& ess : boost::adaptors::reverse(ass->essential)) {
-		if (expr_stack.empty())
-			throw Error("verification", "empty stack", &th->loc);
-		if (apply(sub, ess.expr) != expr_stack.top())
-			throw Error("verification", "hypothesis mismatch", &th->loc);
+		if (expr_stack.empty()) {
+			string msg = "empty stack (essential):\n";
+			msg += "theorem " + Smm::get().lex.labels.toStr(th->prop.label) + "\n";
+			msg += "assertion " + Smm::get().lex.labels.toStr(ass->prop.label) + "\n";
+			throw Error("verification", msg, &th->loc);
+		}
+		if (apply(sub, ess.expr) != expr_stack.top()) {
+			string msg = "hypothesis mismatch:\n";
+			msg += show(apply(sub, ess.expr)) + "\n";
+			msg += "and\n";
+			msg += show(expr_stack.top()) + "\n";
+			msg += "theorem " + Smm::get().lex.labels.toStr(th->prop.label) + "\n";
+			msg += "assertion " + Smm::get().lex.labels.toStr(ass->prop.label) + "\n";
+			throw Error("verification", msg, &th->loc);
+		}
 		expr_stack.pop();
 	}
 	checkDisj(sub, ass, th);

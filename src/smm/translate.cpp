@@ -87,10 +87,12 @@ static void translate(const Node& node, mm::Block* target, Maps& maps) {
 			th->expr = ass->prop.expr;
 			th->proof = pr;
 			block->contents.push_back(mm::Node(th));
+			assert(maps.theorems.find(ass->prop.label) == maps.theorems.end());
 			maps.theorems[ass->prop.label] = th;
 		} else {
 			mm::Axiom* ax = new mm::Axiom { ass->prop.label, ass->prop.expr };
 			block->contents.push_back(mm::Node(ax));
+			assert(maps.axioms.find(ass->prop.label) == maps.axioms.end());
 			maps.axioms[ass->prop.label] = ax;
 		}
 		block->parent = target;

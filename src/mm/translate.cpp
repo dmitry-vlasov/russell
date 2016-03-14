@@ -206,10 +206,11 @@ static Reindex reduce(Transform& trans, smm::Assertion* ass, ArgMap& args, const
 	return reindex;
 }
 
-smm::Proof* transform_proof(const Transform& trans, const Reindex& reindex, const Proof* proof) {
+smm::Proof* transform_proof(const Transform& trans, const Reindex& reindex, const set<uint>& red, const Proof* proof) {
 	Proof* tree = to_tree(proof);
 	if (tree == nullptr)
 		return nullptr;
+	reduce(tree, red);
 	transform(tree, trans);
 	Proof* rpn = to_rpn(tree);
 	smm::Proof* pr = translate_proof(rpn, reindex);
@@ -283,8 +284,8 @@ static ArgMap arg_map(const deque<Node>& ar_orig) {
 
 static smm::Assertion* translate_ass(Transform& trans, const Node& n, const Block* block)  {
 	smm::Assertion* ass = new smm::Assertion();
-	//cout << "translating: " << label(ass_label(n)) << endl;
-	ass->prop = smm::Proposition {n.type == Node::AXIOM, ass_label(n), ass_expr(n)};
+	static set<uint> red;
+	ass->prop = smm::Proposition {n.type == Node::AXIOM, node_label(n), node_expr(n)};
 	Header header;
 	gather(n.ind, block, header);
 	add(header, ass);
@@ -292,9 +293,10 @@ static smm::Assertion* translate_ass(Transform& trans, const Node& n, const Bloc
 	Reindex reindex = reduce(trans, ass, args, ass_proof(n));
 	ass_arity(n) = ass->essential.size() + ass->floating.size();
 	if (n.type == Node::THEOREM) {
-		ass->proof = transform_proof(trans, reindex, n.val.th->proof);
+		ass->proof = transform_proof(trans, reindex, red, n.val.th->proof);
 		if (!ass->proof) {
-			// Dummy theorem
+			// Dummy (redundant) theorem
+			red.insert(node_label(n));
 			delete ass;
 			ass = nullptr;
 		}
