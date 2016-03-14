@@ -19,6 +19,15 @@ namespace mdl {
 void label::write(ostream& os) {
 	os << mm::Mm::get().lex.labels.toStr(lab);
 }
+string label::show() {
+	return mm::Mm::get().lex.labels.toStr(lab);
+}
+void symbol::write(ostream& os) {
+	os << mm::Mm::get().lex.symbols.toStr(lit);
+}
+string symbol::show() {
+	return mm::Mm::get().lex.symbols.toStr(lit);
+}
 
 namespace mm {
 

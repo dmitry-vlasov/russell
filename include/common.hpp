@@ -36,7 +36,18 @@ public:
 	label(uint l) : lab(l) {
 	}
 	void write(ostream& os);
+	string show();
 };
+
+class symbol {
+	uint lit;
+public:
+	symbol(uint l) : lit(l) {
+	}
+	void write(ostream& os);
+	string show();
+};
+
 
 inline ostream& operator << (ostream& os, indent ind) {
 	ind.write(os);

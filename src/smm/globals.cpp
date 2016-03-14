@@ -21,6 +21,19 @@ void label::write(ostream& os) {
 	else
 		os << to_string(lab);
 }
+string label::show() {
+	if (smm::Smm::get().config.labels)
+		return smm::Smm::get().lex.labels.toStr(lab);
+	else
+		return to_string(lab);
+}
+void symbol::write(ostream& os) {
+	os << smm::Smm::get().lex.symbols.toStr(lit);
+}
+string symbol::show() {
+	return smm::Smm::get().lex.symbols.toStr(lit);
+}
+
 
 namespace smm {
 
