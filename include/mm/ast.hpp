@@ -160,7 +160,7 @@ inline uint node_label(const Node& n) {
 	case Node::ESSENTIAL:  return n.val.ess->label;
 	case Node::AXIOM:      return n.val.ax->label;
 	case Node::THEOREM:    return n.val.th->label;
-	default : assert(false && "impossible");
+	default : assert(false && "impossible"); break;
 	}
 	return -1; // Pacifying compiler
 }
@@ -171,7 +171,7 @@ inline Expr& node_expr(const Node& n) {
 	case Node::ESSENTIAL:  return n.val.ess->expr;
 	case Node::AXIOM:      return n.val.ax->expr;
 	case Node::THEOREM:    return n.val.th->expr;
-	default : assert(false && "impossible");
+	default : assert(false && "impossible"); break;
 	}
 	static Expr ex; return ex; // Pacifying compiler
 }

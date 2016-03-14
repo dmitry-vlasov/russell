@@ -16,16 +16,10 @@
 namespace mdl {
 
 void label::write(ostream& os) {
-	if (smm::Smm::get().config.labels)
-		os << smm::Smm::get().lex.labels.toStr(lab);
-	else
-		os << to_string(lab);
+	os << smm::Smm::get().lex.labels.toStr(lab);
 }
 string label::show() {
-	if (smm::Smm::get().config.labels)
-		return smm::Smm::get().lex.labels.toStr(lab);
-	else
-		return to_string(lab);
+	return smm::Smm::get().lex.labels.toStr(lab);
 }
 void symbol::write(ostream& os) {
 	os << smm::Smm::get().lex.symbols.toStr(lit);

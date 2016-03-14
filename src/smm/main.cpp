@@ -25,7 +25,6 @@ static void showHelp() {
 	cout << " -r  --root <path>  root directory (for inclusions)" << endl;
 	cout << " -h  --help         print the help" << endl;
 	cout << " -v  --verbose      not be silent"  << endl;
-	cout << " -l  --labels       source with labels"  << endl;
 	cout << "     --info         info about math: timings, memory, stats"  << endl;
 }
 
@@ -55,8 +54,6 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 			conf.help = true;
 		else if (arg == "-v" || arg == "--verbose")
 			conf.verbose = true;
-		else if (arg == "-l" || arg == "--labels")
-			conf.labels = true;
 		else if (arg == "--info")
 			conf.info = true;
 		else

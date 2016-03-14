@@ -20,10 +20,9 @@ namespace mdl { namespace smm {
 
 struct Config {
 	Config() :
-	labels(false), verbose(false), info(false), help(false),
+	verbose(false), info(false), help(false),
 	in(), root() { }
 
-	bool labels;
 	bool verbose;
 	bool info;
 	bool help;
