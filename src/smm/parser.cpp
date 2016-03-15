@@ -2,7 +2,7 @@
 
 namespace mdl { namespace smm {
 
-static Source* source(const string& path) {
+Source* parse(const string& path) {
 	ifstream in(path, std::ios_base::in);
 	if (!in)
 		throw Error("Could not open input file");
@@ -22,10 +22,6 @@ static Source* source(const string& path) {
 		throw Error("parsing failed");
 	}
 	return source;
-}
-
-Source* parse(const string& path) {
-	return source(path);
 }
 
 }} // mdl::smm

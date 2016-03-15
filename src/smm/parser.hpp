@@ -1,5 +1,3 @@
-#define BOOST_SPIRIT_USE_PHOENIX_V3
-
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
@@ -77,13 +75,11 @@ struct LabelToInt {
 	}
 };
 
-static Source* source(const string& path);
-
 struct ParseInclusion {
 	template <typename T>
 	struct result { typedef Source* type; };
 	Source* operator()(const string& path) const {
-		return source(path);
+		return parse(path);
 	}
 };
 
