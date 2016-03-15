@@ -20,25 +20,6 @@ struct Constants {
 	Expr expr;
 };
 
-struct Ref {
-	enum Type {
-		PREF_E, ///< "e"
-		PREF_F, ///< "f"
-		PREF_I, ///< "i"
-		PREF_A, ///< "a"
-		PREF_P  ///< "p"
-	};
-	Type type;
-	uint index;
-};
-
-struct Assertion;
-
-struct Proof {
-	vector<Ref> refs;
-	Assertion*  theorem;
-};
-
 struct Variables {
 	Expr expr;
 };
@@ -70,34 +51,89 @@ struct Proposition {
 	Expr expr;
 };
 
+struct Proof;
+
 struct Assertion {
-	Assertion () :
-	variables(), disjointed(), essential(),
-	floating(), inner(),
-	prop(), proof(nullptr), loc() { }
-	~Assertion() {
-		if (proof) delete proof;
-	}
+	Assertion ();
+	~Assertion();
 
 	uint arity() const {
 		return essential.size() + floating.size();
 	}
 	bool areDisjointed(Symbol s1, Symbol s2) const {
 		for (auto it = disjointed.cbegin(); it != disjointed.cend(); ++ it) {
-			if (it->expr.contains(s1) && it->expr.contains(s2))
+			if ((*it)->expr.contains(s1) && (*it)->expr.contains(s2))
 				return true;
 		}
 		return false;
 	}
 
-	vector<Variables>  variables;
-	vector<Disjointed> disjointed;
-	vector<Essential>  essential;
-	vector<Floating>   floating;
-	vector<Inner>      inner;
-	Proposition        prop;
-	Proof*             proof;
-	Location           loc;
+	vector<Variables*>  variables;
+	vector<Disjointed*> disjointed;
+	vector<Essential*>  essential;
+	vector<Floating*>   floating;
+	vector<Inner*>      inner;
+	Proposition prop;
+	Proof*      proof;
+	Location    loc;
+};
+
+struct Proof;
+
+struct Ref {
+	enum Type {
+		NONE,
+		ESSENTIAL,
+		FLOATING,
+		INNER,
+		AXIOM,
+		THEOREM,
+		PROOF
+	};
+	union Value {
+		void*       non;
+		Floating*   flo;
+		Essential*  ess;
+		Inner*      inn;
+		Assertion*  ass;
+		Proof*      prf;
+	};
+	Ref() : type(NONE), val() { val.non = nullptr; }
+	Ref(Floating* f)  : type(FLOATING),  val() { val.flo = f; }
+	Ref(Essential* e) : type(ESSENTIAL), val() { val.ess = e; }
+	Ref(Inner* i)     : type(INNER),     val() { val.inn = i; }
+	Ref(Assertion* a, bool ax) : type(ax ? AXIOM : THEOREM), val() { val.ass = a; }
+	Ref(Proof* p)     : type(PROOF),     val() { val.prf = p; }
+	void destroy();
+
+	uint label() const {
+		assert(type == THEOREM || type == AXIOM);
+		return val.ass->prop.label;
+	}
+	uint index() const {
+		switch (type) {
+		case ESSENTIAL : return val.ess->index;
+		case FLOATING  : return val.flo->index;
+		case INNER     : return val.inn->index;
+		default : assert(false && "impossible");
+		}
+		return -1; // pacify compiler
+	}
+
+	Type type;
+	Value val;
+};
+
+struct Proof {
+	enum Type {
+		TREE,
+		RPN
+	};
+	Proof(Type tp = RPN) : refs(), theorem(nullptr), type(tp) { }
+	~ Proof();
+	vector<Ref> refs;
+	Assertion*  theorem;
+	Type        type;
 };
 
 class Source;
@@ -140,6 +176,21 @@ struct Source {
 	vector<Node> contents;
 };
 
+
+inline Assertion::Assertion() :
+	variables(), disjointed(), essential(),
+	floating(), inner(),
+	prop(), proof(), loc() {
+}
+inline Assertion::~Assertion() {
+	for (Variables* v : variables)   delete v;
+	for (Disjointed* d : disjointed) delete d;
+	for (Essential* e : essential)   delete e;
+	for (Floating* f : floating)     delete f;
+	for (Inner* i : inner)           delete i;
+	if (proof) delete proof;
+}
+
 inline void Node::destroy() {
 	switch(type) {
 	case NONE: break;
@@ -149,6 +200,16 @@ inline void Node::destroy() {
 	default : assert(false && "impossible");  break;
 	}
 	type = NONE;
+}
+
+inline void Ref::destroy() {
+	if (type == PROOF)
+		delete val.prf;
+}
+
+inline Proof::~ Proof() {
+	for (auto& r : refs)
+		r.destroy();
 }
 
 ostream& operator << (ostream& os, const Constants& cst);

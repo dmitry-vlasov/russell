@@ -68,7 +68,7 @@ static void checkSymbols(const Assertion* ass, const Expr& expr) {
 		bool is_const = (Smm::get().math.constants.find(s) != Smm::get().math.constants.end());
 		bool is_var = false;
 		for (auto& v : ass->variables) {
-			if (v.expr.contains(s)) {
+			if (v->expr.contains(s)) {
 				is_var = true;
 				break;
 			}
@@ -81,35 +81,35 @@ static void checkSymbols(const Assertion* ass, const Expr& expr) {
 }
 
 template<typename T>
-static void checkSymbols(const Assertion* ass, const vector<T>& lines) {
+static void checkSymbols(const Assertion* ass, const vector<T*>& lines) {
 	for (auto& line : lines)
-		checkSymbols(ass, line.expr);
+		checkSymbols(ass, line->expr);
 }
 
 template<typename T>
 static void checkFloating(const Assertion* ass, const vector<T>& floatings) {
-	for (auto& flo : floatings) {
-		if (flo.expr.symbols.size() != 2)
+	for (auto flo : floatings) {
+		if (flo->expr.symbols.size() != 2)
 			throw Error("floating declaration must have exactly 2 symbols", &ass->loc);
-		if (flo.expr.symbols[0].var)
+		if (flo->expr.symbols[0].var)
 			throw Error("floating first symbol must be type (constant)", &ass->loc);
-		if (!flo.expr.symbols[1].var) {
-			throw Error("floating second symbol must be type variable ", show(flo.expr), &ass->loc);
+		if (!flo->expr.symbols[1].var) {
+			throw Error("floating second symbol must be type variable ", show(flo->expr), &ass->loc);
 		}
 	}
 }
 
 static void checkDisjointed(const Assertion* ass, Symbol var) {
-	for (auto& vars : ass->variables)
-		if (vars.expr.contains(var))
+	for (auto vars : ass->variables)
+		if (vars->expr.contains(var))
 			return;
 	throw Error("disjointed symbols must be variables", &ass->loc);
 }
 
 
-static void checkDisjointed(const Assertion* ass, const vector<Disjointed>& disjointeds) {
-	for (auto& disj : disjointeds)
-		for (auto s : disj.expr.symbols)
+static void checkDisjointed(const Assertion* ass, const vector<Disjointed*>& disjointeds) {
+	for (auto disj : disjointeds)
+		for (auto s : disj->expr.symbols)
 			checkDisjointed(ass, s);
 }
 
@@ -124,26 +124,26 @@ static void checkSymbols(const Assertion* ass) {
 
 static void apply(const Assertion* ass, const Assertion* th, stack<Expr>& expr_stack) {
 	Subst sub;
-	for (auto& flo : boost::adaptors::reverse(ass->floating)) {
+	for (auto flo : boost::adaptors::reverse(ass->floating)) {
 		if (expr_stack.empty()) {
 			string msg = "empty stack (floating):\n";
 			msg += "theorem " + Smm::get().lex.labels.toStr(th->prop.label) + "\n";
 			msg += "assertion " + Smm::get().lex.labels.toStr(ass->prop.label) + "\n";
 			throw Error("verification", msg, &th->loc);
 		}
-		sub[flo.var()] = expr_stack.top();
+		sub[flo->var()] = expr_stack.top();
 		expr_stack.pop();
 	}
-	for (auto& ess : boost::adaptors::reverse(ass->essential)) {
+	for (auto ess : boost::adaptors::reverse(ass->essential)) {
 		if (expr_stack.empty()) {
 			string msg = "empty stack (essential):\n";
 			msg += "theorem " + Smm::get().lex.labels.toStr(th->prop.label) + "\n";
 			msg += "assertion " + Smm::get().lex.labels.toStr(ass->prop.label) + "\n";
 			throw Error("verification", msg, &th->loc);
 		}
-		if (apply(sub, ess.expr) != expr_stack.top()) {
+		if (apply(sub, ess->expr) != expr_stack.top()) {
 			string msg = "hypothesis mismatch:\n";
-			msg += show(apply(sub, ess.expr)) + "\n";
+			msg += show(apply(sub, ess->expr)) + "\n";
 			msg += "and\n";
 			msg += show(expr_stack.top()) + "\n";
 			msg += "theorem " + Smm::get().lex.labels.toStr(th->prop.label) + "\n";
@@ -163,11 +163,12 @@ static void assertion(const Assertion* ass, const vector<Assertion*>& theory) {
 	if (!proof) return;
 	for (auto& ref : proof->refs) {
 		switch (ref.type) {
-		case Ref::PREF_E : expr_stack.push(ass->essential[ref.index].expr); break;
-		case Ref::PREF_F : expr_stack.push(ass->floating[ref.index].expr); break;
-		case Ref::PREF_I : expr_stack.push(ass->inner[ref.index].expr); break;
-		case Ref::PREF_A : // intentionally left blank
-		case Ref::PREF_P : apply(theory[ref.index], ass, expr_stack); break;
+		case Ref::ESSENTIAL : expr_stack.push(ref.val.ess->expr); break;
+		case Ref::FLOATING  : expr_stack.push(ref.val.flo->expr); break;
+		case Ref::INNER     : expr_stack.push(ref.val.inn->expr); break;
+		case Ref::AXIOM: // intentionally left blank
+		case Ref::THEOREM   : apply(ref.val.ass, ass, expr_stack); break;
+		default : assert(false && "impossible"); break;
 		}
 	}
 	if (expr_stack.top() != ass->prop.expr) {

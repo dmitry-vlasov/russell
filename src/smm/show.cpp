@@ -3,6 +3,42 @@
 
 namespace mdl { namespace smm {
 
+static uint length(const Proof& tree);
+static uint length(const Ref& r) {
+	if (r.type == Ref::PROOF)
+		return length(*r.val.prf);
+	else
+		return 1;
+}
+static uint length(const Proof& tree) {
+	uint len = 1;
+	for (uint i = 0; i + 1 < tree.refs.size(); ++ i) {
+		len += length(tree.refs[i]);
+	}
+	return len;
+}
+
+static string show(const Proof& tree);
+
+static string show(const Ref& n) {
+	if (n.type == Ref::PROOF)
+		return show(*n.val.prf);
+	else
+		return show(n);
+}
+
+static string show(const Proof& tree) {
+	const Assertion* ass = tree.refs.back().val.ass;
+	string space = length(tree) > 16 ? "\n" : " ";
+	string str = Smm::get().lex.labels.toStr(ass->prop.label);
+	str += "(";
+	for (uint i = 0; i + 1 <tree.refs.size(); ++ i)
+		str += indent::paragraph(space + show(tree.refs[i]), "  ");
+	str += space + ")";
+	return str;
+}
+
+
 ostream& operator << (ostream& os, const Constants& cst) {
 	os << "$c " << cst.expr << "$.";
 	return os;
@@ -10,24 +46,31 @@ ostream& operator << (ostream& os, const Constants& cst) {
 
 ostream& operator << (ostream& os, const Ref& ref) {
 	switch (ref.type) {
-	case Ref::PREF_E: os << "e"; break;
-	case Ref::PREF_F: os << "f"; break;
-	case Ref::PREF_I: os << "i"; break;
-	case Ref::PREF_A: os << "a"; break;
-	case Ref::PREF_P: os << "p"; break;
+	case Ref::ESSENTIAL: os << "e"; break;
+	case Ref::FLOATING : os << "f"; break;
+	case Ref::INNER    : os << "i"; break;
+	case Ref::AXIOM    : os << "a"; break;
+	case Ref::THEOREM  : os << "p"; break;
+	case Ref::PROOF    : os << *ref.val.prf; break;
+	default : assert(false && "impossible"); break;
 	}
-	if (ref.type == Ref::PREF_A || ref.type == Ref::PREF_P)
-		os << label(ref.index);
+	if (ref.type == Ref::AXIOM || ref.type == Ref::THEOREM)
+		os << label(ref.label());
 	else
-		os << to_string(ref.index);
+		os << to_string(ref.index());
 	return os;
 }
 
 ostream& operator << (ostream& os, const Proof& proof) {
-	for (auto& ref : proof.refs)
-		os << ref << ' ';
-	os << "$.";
-	return os;
+	if (proof.type == Proof::RPN) {
+		for (auto& ref : proof.refs)
+			os << ref << ' ';
+		os << "$.";
+		return os;
+	} else {
+		os << show(proof);
+		return os;
+	}
 }
 
 ostream& operator << (ostream& os, const Variables& vars) {
@@ -64,9 +107,9 @@ ostream& operator << (ostream& os, const Proposition& prop) {
 }
 
 template<class T>
-void showComponents(ostream& os, const vector<T>& components) {
-	for (auto& comp : components)
-		os << indent() << comp << "\n";
+void showComponents(ostream& os, const vector<T*>& components) {
+	for (auto comp : components)
+		os << indent() << *comp << "\n";
 }
 
 ostream& operator << (ostream& os, const Assertion& ass) {

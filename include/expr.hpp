@@ -35,7 +35,6 @@ struct Symbol {
 };
 
 struct Expr {
-public :
 	Expr(const Expr& ex) : symbols(ex.symbols) {
 	}
 	Expr() : symbols() {

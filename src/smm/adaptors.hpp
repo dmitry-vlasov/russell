@@ -17,9 +17,18 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
+	mdl::smm::Ref::Value,
+	(mdl::smm::Floating*,   flo)
+	(mdl::smm::Essential*,  ess)
+	(mdl::smm::Inner*,      inn)
+	(mdl::smm::Assertion*,  ass)
+	(mdl::smm::Proof*,      prf)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
 	mdl::smm::Ref,
 	(mdl::smm::Ref::Type, type)
-	(uint, index)
+	(mdl::smm::Ref::Value, val)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -65,11 +74,11 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::smm::Assertion,
-	(std::vector<mdl::smm::Variables>, variables)
-	(std::vector<mdl::smm::Disjointed>, disjointed)
-	(std::vector<mdl::smm::Essential>, essential)
-	(std::vector<mdl::smm::Floating>, floating)
-	(std::vector<mdl::smm::Inner>, inner)
+	(std::vector<mdl::smm::Variables*>, variables)
+	(std::vector<mdl::smm::Disjointed*>, disjointed)
+	(std::vector<mdl::smm::Essential*>, essential)
+	(std::vector<mdl::smm::Floating*>, floating)
+	(std::vector<mdl::smm::Inner*>, inner)
 	(mdl::smm::Proposition, prop)
 	(mdl::smm::Proof*, proof)
 	(mdl::Location, loc)

@@ -21,21 +21,21 @@ inline void makeVars(Expr& expr) {
 }
 
 template<typename T>
-inline void makeVars(vector<T>& vars) {
+inline void makeVars(vector<T*>& vars) {
 	for (auto& v_it : vars)
-		makeVars(v_it.expr);
+		makeVars(v_it->expr);
 }
 
-inline void markVars(const vector<Variables>& vars, Expr& expr) {
+inline void markVars(const vector<Variables*>& vars, Expr& expr) {
 	for (auto& v_it : vars) {
-		expr.markVars(v_it.expr);
+		expr.markVars(v_it->expr);
 	}
 }
 
 template<class T>
-inline void markVars(const vector<Variables>& vars, vector<T>& components) {
+inline void markVars(const vector<Variables*>& vars, vector<T>& components) {
 	for (auto& comp : components) {
-		markVars(vars, comp.expr);
+		markVars(vars, comp->expr);
 	}
 }
 
@@ -92,30 +92,58 @@ struct SetLocation {
     }
 };
 
+struct HypRefs : qi::symbols<char, Ref::Type> {
+	HypRefs() {
+		add
+		("e", Ref::ESSENTIAL)
+		("f", Ref::FLOATING)
+		("i", Ref::INNER);
+	}
+};
+
+struct PropRefs : qi::symbols<char, Ref::Type> {
+	PropRefs() {
+		add
+		("a", Ref::AXIOM)
+		("p", Ref::THEOREM);
+	}
+};
+
+struct CreateRef {
+    template <typename T1, typename T2, typename T3>
+    struct result { typedef Ref type; };
+    Ref operator()(Ref::Type tp, uint ind, Assertion* ass) const {
+    	switch (tp) {
+    	case Ref::ESSENTIAL: return Ref(ass->essential[ind]);
+    	case Ref::FLOATING:  return Ref(ass->floating[ind]);
+    	case Ref::INNER:     return Ref(ass->inner[ind]);
+    	case Ref::AXIOM:     return Ref(Smm::get().math.assertions[ind], true);
+    	case Ref::THEOREM:   return Ref(Smm::get().math.assertions[ind], false);
+    	default : assert(false && "impossible");
+    	}
+    }
+};
+
 template <typename Iterator>
 struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 	Grammar();
 	void initNames();
 
-	qi::rule<Iterator, Expr(), ascii::space_type> expr_e;
-	qi::rule<Iterator, Expr(), ascii::space_type> expr_f;
-	qi::rule<Iterator, Expr(), ascii::space_type> expr_p;
+	PropRefs prop_refs;
+	HypRefs  hyp_refs;
+	qi::rule<Iterator, Expr(), ascii::space_type> expr;
 	qi::rule<Iterator, Symbol(), ascii::space_type> symbol;
 	qi::rule<Iterator, uint(),        ascii::space_type> label;
 	qi::rule<Iterator, std::string(), ascii::space_type> path;
-	qi::rule<Iterator, Ref(), ascii::space_type> a_ref;
-	qi::rule<Iterator, Ref(), ascii::space_type> p_ref;
-	qi::rule<Iterator, Ref(), ascii::space_type> e_ref;
-	qi::rule<Iterator, Ref(), ascii::space_type> f_ref;
-	qi::rule<Iterator, Ref(), ascii::space_type> i_ref;
+	qi::rule<Iterator, Ref(Assertion*), qi::locals<Ref::Type>, ascii::space_type> ref;
 	qi::rule<Iterator, Proof*(Assertion*), ascii::space_type> proof;
 	qi::rule<Iterator, Proposition(), ascii::space_type> provable;
 	qi::rule<Iterator, Proposition(), ascii::space_type> axiomatic;
-	qi::rule<Iterator, Essential(), ascii::space_type> essential;
-	qi::rule<Iterator, Floating(), ascii::space_type> floating;
-	qi::rule<Iterator, Inner(), ascii::space_type> inner;
-	qi::rule<Iterator, Disjointed(), ascii::space_type> disjointed;
-	qi::rule<Iterator, Variables(), ascii::space_type> variables;
+	qi::rule<Iterator, Essential*(), ascii::space_type> essential;
+	qi::rule<Iterator, Floating*(), ascii::space_type> floating;
+	qi::rule<Iterator, Inner*(), ascii::space_type> inner;
+	qi::rule<Iterator, Disjointed*(), ascii::space_type> disjointed;
+	qi::rule<Iterator, Variables*(), ascii::space_type> variables;
 	qi::rule<Iterator, Assertion*(), ascii::space_type> assertion;
 	qi::rule<Iterator, Constants*(), ascii::space_type> constants;
 	qi::rule<Iterator, Source*(), ascii::space_type> inclusion;
@@ -125,17 +153,11 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 
 template <typename Iterator>
 void Grammar<Iterator>::initNames() {
-	expr_e.name("expr_e");
-	expr_f.name("expr_f");
-	expr_p.name("expr_p");
+	expr.name("expr");
 	symbol.name("symbol");
 	label.name("label");
 	path.name("path");
-	a_ref.name("a ref");
-	p_ref.name("p ref");
-	e_ref.name("e ref");
-	f_ref.name("f ref");
-	i_ref.name("i ref");
+	ref.name("ref");
 	proof.name("proof");
 	provable.name("provable");
 	axiomatic.name("axiomatic");
