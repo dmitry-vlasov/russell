@@ -61,9 +61,9 @@ static void reduce_disjointed(smm::Assertion* ass, const set<Symbol>& all_vars) 
 		if (red_disj->expr.symbols.size() > 1)
 			red_disjs.push_back(red_disj);
 		else {
-			delete disj;
 			delete red_disj;
 		}
+		delete disj;
 	}
 	ass->disjointed = red_disjs;
 }
