@@ -61,17 +61,17 @@ struct ParseInclusion {
 
 struct CreateRef {
 	template <typename T>
-	struct result { typedef Node type; };
-	Node operator()(uint lab) const {
+	struct result { typedef Ref type; };
+	Ref operator()(uint lab) const {
 		Mm::Math& math = Mm::mod().math;
 		if (math.floatings.has(lab))
-			return Node(math.floatings[lab]);
+			return Ref(math.floatings[lab]);
 		else if (math.essentials.has(lab))
-			return Node(math.essentials[lab]);
+			return Ref(math.essentials[lab]);
 		else if (math.axioms.has(lab))
-			return Node(math.axioms[lab]);
+			return Ref(math.axioms[lab]);
 		else if (math.theorems.has(lab))
-			return Node(math.theorems[lab]);
+			return Ref(math.theorems[lab]);
 		else
 			throw Error("unknown label in proof", Mm::get().lex.labels.toStr(lab));
 	}
@@ -204,7 +204,7 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 	qi::rule<Iterator, Symbol(), ascii::space_type> symbol;
 	qi::rule<Iterator, uint(),        ascii::space_type> label;
 	qi::rule<Iterator, std::string(), ascii::space_type> path;
-	qi::rule<Iterator, Node(), ascii::space_type> ref;
+	qi::rule<Iterator, Ref(), ascii::space_type> ref;
 	qi::rule<Iterator, Proof*(), ascii::space_type> proof;
 	qi::rule<Iterator, Essential*(), qi::locals<uint>, ascii::space_type> essential;
 	qi::rule<Iterator, Floating*(), qi::locals<uint>, ascii::space_type> floating;

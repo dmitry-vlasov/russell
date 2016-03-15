@@ -17,8 +17,24 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
+	mdl::mm::Ref::Value,
+	(void*, non)
+	(mdl::mm::Floating*,  flo)
+	(mdl::mm::Essential*, ess)
+	(mdl::mm::Axiom*,     ax)
+	(mdl::mm::Theorem*,   th)
+	(mdl::mm::Proof*,     prf)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+	mdl::mm::Ref,
+	(mdl::mm::Ref::Type, type)
+	(mdl::mm::Ref::Value, val)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Proof,
-	(std::vector<mdl::mm::Node>, refs)
+	(std::vector<mdl::mm::Ref>, refs)
 	(bool, tree)
 )
 

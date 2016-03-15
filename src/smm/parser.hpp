@@ -121,6 +121,7 @@ struct CreateRef {
     	case Ref::THEOREM:   return Ref(Smm::get().math.assertions[ind], false);
     	default : assert(false && "impossible");
     	}
+    	return Ref(); // pacifying compiler
     }
 };
 

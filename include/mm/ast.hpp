@@ -57,21 +57,64 @@ struct Theorem {
 	Proof* proof;
 };
 
+
+struct Ref {
+	enum Type {
+		NONE,
+		FLOATING,
+		ESSENTIAL,
+		AXIOM,
+		THEOREM,
+		PROOF
+	};
+	union Value {
+		void*       non;
+		Floating*   flo;
+		Essential*  ess;
+		Axiom*      ax;
+		Theorem*    th;
+		Proof*      prf;
+	};
+
+	Ref()              : type(NONE),       val() { val.non = nullptr; }
+	Ref(Floating* f)   : type(FLOATING),   val() { val.flo = f; }
+	Ref(Essential* e)  : type(ESSENTIAL),  val() { val.ess = e; }
+	Ref(Axiom* a)      : type(AXIOM),      val() { val.ax  = a; }
+	Ref(Theorem* t)    : type(THEOREM),    val() { val.th  = t; }
+	Ref(Proof* p)      : type(PROOF),      val() { val.prf = p; }
+	void destroy();
+
+	uint label() const {
+		switch (type) {
+		case FLOATING:   return val.flo->label;
+		case ESSENTIAL:  return val.ess->label;
+		case AXIOM:      return val.ax->label;
+		case THEOREM:    return val.th->label;
+		default : assert(false && "impossible"); break;
+		}
+		return -1; // Pacifying compiler
+	}
+	uint arity() const {
+		assert(type == AXIOM || type == THEOREM);
+		return type == AXIOM ? val.ax->arity : val.th->arity;
+	}
+
+	Type type;
+	Value val;
+};
+
+
+struct Proof {
+	Proof(bool t = false) : refs(), tree(t) { }
+	~Proof();
+	vector<Ref> refs;
+	bool        tree;
+};
+
+
 class Block;
 
 struct Node {
-	Node()              : ind(-1), type(NONE),       val() { val.non = nullptr; }
-	Node(Constants* c)  : ind(-1), type(CONSTANTS),  val() { val.cst = c; }
-	Node(Variables* v)  : ind(-1), type(VARIABLES),  val() { val.var = v; }
-	Node(Disjointed* d) : ind(-1), type(DISJOINTED), val() { val.dis = d; }
-	Node(Floating* f)   : ind(-1), type(FLOATING),   val() { val.flo = f; }
-	Node(Essential* e)  : ind(-1), type(ESSENTIAL),  val() { val.ess = e; }
-	Node(Axiom* a)      : ind(-1), type(AXIOM),      val() { val.ax  = a; }
-	Node(Theorem* t)    : ind(-1), type(THEOREM),    val() { val.th  = t; }
-	Node(Block* b)      : ind(-1), type(BLOCK),      val() { val.blk = b; }
-	Node(Proof* p)      : ind(-1), type(PROOF),      val() { val.prf = p; }
-	void destroy();
-
 	enum Type {
 		NONE,
 		CONSTANTS,
@@ -81,8 +124,7 @@ struct Node {
 		ESSENTIAL,
 		AXIOM,
 		THEOREM,
-		BLOCK,
-		PROOF
+		BLOCK
 	};
 	union Value {
 		void*       non;
@@ -94,19 +136,53 @@ struct Node {
 		Axiom*      ax;
 		Theorem*    th;
 		Block*      blk;
-		Proof*      prf;
 	};
+
+	Node()              : ind(-1), type(NONE),       val() { val.non = nullptr; }
+	Node(Constants* c)  : ind(-1), type(CONSTANTS),  val() { val.cst = c; }
+	Node(Variables* v)  : ind(-1), type(VARIABLES),  val() { val.var = v; }
+	Node(Disjointed* d) : ind(-1), type(DISJOINTED), val() { val.dis = d; }
+	Node(Floating* f)   : ind(-1), type(FLOATING),   val() { val.flo = f; }
+	Node(Essential* e)  : ind(-1), type(ESSENTIAL),  val() { val.ess = e; }
+	Node(Axiom* a)      : ind(-1), type(AXIOM),      val() { val.ax  = a; }
+	Node(Theorem* t)    : ind(-1), type(THEOREM),    val() { val.th  = t; }
+	Node(Block* b)      : ind(-1), type(BLOCK),      val() { val.blk = b; }
+	void destroy();
+
+	uint label() const {
+		switch (type) {
+		case FLOATING:   return val.flo->label;
+		case ESSENTIAL:  return val.ess->label;
+		case AXIOM:      return val.ax->label;
+		case THEOREM:    return val.th->label;
+		default : assert(false && "impossible"); break;
+		}
+		return -1; // Pacifying compiler
+	}
+	Expr& expr() const {
+		switch (type) {
+		case FLOATING:   return val.flo->expr;
+		case ESSENTIAL:  return val.ess->expr;
+		case AXIOM:      return val.ax->expr;
+		case THEOREM:    return val.th->expr;
+		default : assert(false && "impossible"); break;
+		}
+		static Expr ex; return ex; // Pacifying compiler
+	}
+	const Proof* proof() const {
+		assert(type == AXIOM || type == THEOREM);
+		return type == AXIOM ? nullptr : val.th->proof;
+	}
+	uint& arity() const {
+		assert(type == AXIOM || type == THEOREM);
+		return type == AXIOM ? val.ax->arity : val.th->arity;
+	}
+
 	uint ind;
 	Type type;
 	Value val;
 };
 
-struct Proof {
-	Proof() : refs(), tree(false) { }
-	~Proof();
-	vector<Node> refs;
-	bool         tree;
-};
 
 struct Block {
 	Block(): name(), contents(), parent(nullptr), ind(-1) { }
@@ -146,44 +222,13 @@ inline void Node::destroy() {
 
 inline Proof::~Proof() {
 	if (tree) {
-		for (auto& node : refs) {
-			if (node.type == Node::PROOF) {
-				delete node.val.prf;
+		for (auto& r : refs) {
+			if (r.type == Ref::PROOF) {
+				delete r.val.prf;
 			}
 		}
 	}
 }
-
-inline uint node_label(const Node& n) {
-	switch (n.type) {
-	case Node::FLOATING:   return n.val.flo->label;
-	case Node::ESSENTIAL:  return n.val.ess->label;
-	case Node::AXIOM:      return n.val.ax->label;
-	case Node::THEOREM:    return n.val.th->label;
-	default : assert(false && "impossible"); break;
-	}
-	return -1; // Pacifying compiler
-}
-
-inline Expr& node_expr(const Node& n) {
-	switch (n.type) {
-	case Node::FLOATING:   return n.val.flo->expr;
-	case Node::ESSENTIAL:  return n.val.ess->expr;
-	case Node::AXIOM:      return n.val.ax->expr;
-	case Node::THEOREM:    return n.val.th->expr;
-	default : assert(false && "impossible"); break;
-	}
-	static Expr ex; return ex; // Pacifying compiler
-}
-
-inline const Proof* ass_proof(const Node& node) {
-	return node.type == Node::AXIOM ? nullptr : node.val.th->proof;
-}
-
-inline uint& ass_arity(const Node& node) {
-	return node.type == Node::AXIOM ? node.val.ax->arity : node.val.th->arity;
-}
-
 
 ostream& operator << (ostream& os, const Node& node);
 ostream& operator << (ostream& os, const Constants& cst);

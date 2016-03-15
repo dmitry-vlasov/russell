@@ -7,30 +7,29 @@
 namespace mdl { namespace mm {
 
 Proof* to_tree(const Proof* proof) {
-	stack<Node> stack;
-	for (auto n : proof->refs) {
-		switch(n.type) {
-		case Node::ESSENTIAL:
-		case Node::FLOATING:
-			stack.push(n);
+	stack<Ref> stack;
+	for (auto r : proof->refs) {
+		switch(r.type) {
+		case Ref::ESSENTIAL:
+		case Ref::FLOATING:
+			stack.push(r);
 			break;
-		case Node::AXIOM:
-		case Node::THEOREM: {
-			Proof* p = new Proof();
-			p->tree = true;
-			p->refs.push_back(n);
-			for (uint i = 0; i < ass_arity(n); ++ i) {
+		case Ref::AXIOM:
+		case Ref::THEOREM: {
+			Proof* p = new Proof(true);
+			p->refs.push_back(r);
+			for (uint i = 0; i < r.arity(); ++ i) {
 				p->refs.push_back(stack.top());
 				stack.pop();
 			}
 			std::reverse(p->refs.begin(), p->refs.end());
-			stack.push(Node(p));
+			stack.push(Ref(p));
 		}	break;
 		default : assert(false && "impossible"); break;
 		}
 	}
 	Proof* tree =
-		 stack.top().type == Node::PROOF ?
+		 stack.top().type == Ref::PROOF ?
 		 stack.top().val.prf :
 		 nullptr;
 	stack.pop();
@@ -38,16 +37,16 @@ Proof* to_tree(const Proof* proof) {
 	return tree;
 }
 
-static void to_rpn(const Proof* pr, vector<Node>& proof) {
+static void to_rpn(const Proof* pr, vector<Ref>& proof) {
 	for (auto& node : pr->refs) {
 		switch(node.type) {
-		case Node::ESSENTIAL:
-		case Node::FLOATING:
-		case Node::AXIOM:
-		case Node::THEOREM:
+		case Ref::ESSENTIAL:
+		case Ref::FLOATING:
+		case Ref::AXIOM:
+		case Ref::THEOREM:
 			proof.push_back(node);
 			break;
-		case Node::PROOF:
+		case Ref::PROOF:
 			to_rpn(node.val.prf, proof);
 			break;
 		default : assert(false && "impossible"); break;
@@ -57,7 +56,7 @@ static void to_rpn(const Proof* pr, vector<Node>& proof) {
 
 Proof* to_rpn(const Proof* pr) {
 	Proof* rpn = new Proof();
-	vector<Node>& proof = rpn->refs;
+	vector<Ref>& proof = rpn->refs;
 	to_rpn(pr, proof);
 	return rpn;
 }
@@ -65,40 +64,40 @@ Proof* to_rpn(const Proof* pr) {
 void transform(Proof* proof, const Transform& trans, bool forward) {
 	assert(proof->tree);
 	for (uint i = 0; i < proof->refs.size() - 1; ++ i) {
-		if (proof->refs[i].type == Node::PROOF)
+		if (proof->refs[i].type == Ref::PROOF)
 			transform(proof->refs[i].val.prf, trans);
 	}
-	Node op = proof->refs.back();
-	assert(op.type == Node::AXIOM || op.type == Node::THEOREM);
-	Perm perm = trans.find(node_label(op))->second;
+	Ref op = proof->refs.back();
+	assert(op.type == Ref::AXIOM || op.type == Ref::THEOREM);
+	Perm perm = trans.find(op.label())->second;
 	assert(perm.size() + 1 == proof->refs.size());
-	vector<Node> new_refs = proof->refs;
+	vector<Ref> new_refs = proof->refs;
 	for (uint i = 0; i < new_refs.size() - 1; ++ i)
 		if (forward) new_refs[perm[i]] = proof->refs[i];
 		else         new_refs[i] = proof->refs[perm[i]];
 	proof->refs = new_refs;
 }
 
-void reduce_node(Node& node, const set<uint>& red) {
-	if (node.type == Node::PROOF) {
-		Proof* proof = node.val.prf;
-		if (red.find(node_label(proof->refs.back())) != red.end()) {
-			node = proof->refs[proof->refs.size() - 2];
-			proof->refs[proof->refs.size() - 2].type = Node::NONE;
+void reduce_ref(Ref& ref, const set<uint>& red) {
+	if (ref.type == Ref::PROOF) {
+		Proof* proof = ref.val.prf;
+		if (red.find(proof->refs.back().label()) != red.end()) {
+			ref = proof->refs[proof->refs.size() - 2];
+			proof->refs[proof->refs.size() - 2].type = Ref::NONE;
 			delete proof;
-			reduce_node(node, red);
+			reduce_ref(ref, red);
 		} else {
-			for (Node& n : proof->refs)
-				reduce_node(n, red);
+			for (Ref& r : proof->refs)
+				reduce_ref(r, red);
 		}
 	}
 }
 
 void reduce(Proof*& proof, const set<uint>& red) {
-	Node node = Node(proof);
-	reduce_node(node, red);
-	assert(node.type == Node::PROOF);
-	proof = node.val.prf;
+	Ref ref = Ref(proof);
+	reduce_ref(ref, red);
+	assert(ref.type == Ref::PROOF);
+	proof = ref.val.prf;
 }
 
 }} // mdl::mm

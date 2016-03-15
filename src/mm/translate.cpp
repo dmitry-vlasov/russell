@@ -13,8 +13,8 @@ static void gather_expr_vars(set<Symbol>& vars, const Expr& expr) {
 static void gather_inner_vars(const set<Symbol>& fvars,
 	set<Symbol>& ivars, set<Symbol>& avars, const Proof* proof) {
 	if (!proof) return;
-	for (Node n : proof->refs) {
-		if (n.type == Node::FLOATING) {
+	for (Ref n : proof->refs) {
+		if (n.type == Ref::FLOATING) {
 			Symbol v = n.val.flo->var();
 			avars.insert(v);
 			if (fvars.find(v) == fvars.end())
@@ -111,7 +111,7 @@ static void reindex_essentials(smm::Assertion* ass) {
 
 struct ArgMap;
 
-ostream& operator << (ostream&, const ArgMap&);
+//ostream& operator << (ostream&, const ArgMap&);
 
 struct ArgMap {
 	struct Arg {
@@ -174,19 +174,19 @@ static void reduce_permutation(smm::Assertion* ass, const set<Symbol>& needed, A
 static smm::Proof* translate_proof(const Maps& maps, const Proof* mproof) {
 	smm::Proof* sproof = new smm::Proof();
 	for (auto& node : mproof->refs) {
-		Node::Value val = node.val;
+		Ref::Value val = node.val;
 		switch (node.type) {
-		case Node::FLOATING:
+		case Ref::FLOATING:
 			if (maps.floatings.find(val.flo) != maps.floatings.end())
 				sproof->refs.push_back(smm::Ref(maps.floatings.find(val.flo)->second));
 			else
 				sproof->refs.push_back(smm::Ref(maps.inners.find(val.flo)->second));
 			break;
-		case Node::ESSENTIAL:
+		case Ref::ESSENTIAL:
 			sproof->refs.push_back(smm::Ref(maps.essentials.find(val.ess)->second)); break;
-		case Node::AXIOM:
+		case Ref::AXIOM:
 			sproof->refs.push_back(smm::Ref(maps.axioms.find(val.ax)->second, true)); break;
-		case Node::THEOREM:
+		case Ref::THEOREM:
 			sproof->refs.push_back(smm::Ref(maps.theorems.find(val.th)->second, false)); break;
 		default : assert(false && "impossible"); break;
 		}
@@ -299,18 +299,18 @@ static ArgMap arg_map(const deque<Node>& ar_orig) {
 static smm::Assertion* translate_ass(Maps& maps, const Node& n, const Block* block)  {
 	smm::Assertion* ass = new smm::Assertion();
 	static set<uint> red;
-	ass->prop = smm::Proposition {n.type == Node::AXIOM, node_label(n), node_expr(n)};
+	ass->prop = smm::Proposition {n.type == Node::AXIOM, n.label(), n.expr()};
 	Header header;
 	gather(n.ind, block, header);
 	add(maps, header, ass);
 	ArgMap args = arg_map(header.args);
-	reduce(maps, ass, args, ass_proof(n));
-	ass_arity(n) = ass->essential.size() + ass->floating.size();
+	reduce(maps, ass, args, n.proof());
+	n.arity() = ass->essential.size() + ass->floating.size();
 	if (n.type == Node::THEOREM) {
 		ass->proof = transform_proof(maps, red, n.val.th->proof);
 		if (!ass->proof) {
 			// Dummy (redundant) theorem
-			red.insert(node_label(n));
+			red.insert(n.label());
 			delete ass;
 			ass = nullptr;
 		} else {

@@ -18,6 +18,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::smm::Ref::Value,
+	(void*, non)
 	(mdl::smm::Floating*,   flo)
 	(mdl::smm::Essential*,  ess)
 	(mdl::smm::Inner*,      inn)

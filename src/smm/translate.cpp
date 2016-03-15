@@ -18,17 +18,17 @@ static mm::Proof* translate(const Maps& maps, const Proof* proof) {
 	transform(tree, maps.transform);
 	Proof* rpn = to_rpn(tree);
 	mm::Proof* pr = new mm::Proof();
-	for (auto& ref : rpn->refs) {
-		mm::Node node;
-		switch (ref.type) {
-		case Ref::AXIOM:     node = mm::Node(maps.axioms.find(ref.val.ass)->second);     break;
-		case Ref::THEOREM:   node = mm::Node(maps.theorems.find(ref.val.ass)->second);   break;
-		case Ref::FLOATING:  node = mm::Node(maps.floatings.find(ref.val.flo)->second);  break;
-		case Ref::INNER:     node = mm::Node(maps.inners.find(ref.val.inn)->second);     break;
-		case Ref::ESSENTIAL: node = mm::Node(maps.essentials.find(ref.val.ess)->second); break;
+	for (auto& r : rpn->refs) {
+		mm::Ref ref;
+		switch (r.type) {
+		case Ref::AXIOM:     ref = mm::Ref(maps.axioms.find(r.val.ass)->second);     break;
+		case Ref::THEOREM:   ref = mm::Ref(maps.theorems.find(r.val.ass)->second);   break;
+		case Ref::FLOATING:  ref = mm::Ref(maps.floatings.find(r.val.flo)->second);  break;
+		case Ref::INNER:     ref = mm::Ref(maps.inners.find(r.val.inn)->second);     break;
+		case Ref::ESSENTIAL: ref = mm::Ref(maps.essentials.find(r.val.ess)->second); break;
 		default : assert(false && "impossible"); break;
 		}
-		pr->refs.push_back(node);
+		pr->refs.push_back(ref);
 	}
 	delete rpn;
 	delete tree;

@@ -5,8 +5,8 @@
 namespace mdl { namespace mm {
 
 uint length(const Proof& p);
-uint length(const Node& n) {
-	if (n.type == Node::PROOF) return length(*n.val.prf);
+uint length(const Ref& r) {
+	if (r.type == Ref::PROOF) return length(*r.val.prf);
 	else return 1;
 }
 uint length(const Proof& p) {
@@ -19,23 +19,16 @@ uint length(const Proof& p) {
 }
 
 string show(const Proof& tree);
-string show(const Node& n) {
-	if (n.type == Node::PROOF)
-		return show(*n.val.prf);
-	else {
-		uint lab = -1;
-		switch(n.type) {
-		case Node::FLOATING:   lab = n.val.flo->label; break;
-		case Node::ESSENTIAL:  lab = n.val.ess->label; break;
-		default : assert(false && "impossible"); break;
-		}
-		return Mm::get().lex.labels.toStr(lab);
-	}
+string show(const Ref& r) {
+	if (r.type == Ref::PROOF)
+		return show(*r.val.prf);
+	else
+		return Mm::get().lex.labels.toStr(r.label());
 }
 
 string show(const Proof& tree) {
 	string space = length(tree) > 16 ? "\n" : " ";
-	string str = Mm::get().lex.labels.toStr(node_label(tree.refs.back()));
+	string str = Mm::get().lex.labels.toStr(tree.refs.back().label());
 	str += "(";
 	for (uint i = 0; i + 1 <tree.refs.size(); ++ i)
 		str += indent::paragraph(space + show(tree.refs[i]), "  ");
@@ -50,19 +43,15 @@ ostream& operator << (ostream& os, const Constants& cst) {
 }
 
 class ref {
-	Node node;
+	Ref r;
 public:
-	ref(Node n) : node(n) {
+	ref(Ref rf) : r(rf) {
 	}
 	void write(ostream& os) {
-		switch (node.type) {
-		case Node::FLOATING:   os << label(node.val.flo->label); break;
-		case Node::ESSENTIAL:  os << label(node.val.ess->label); break;
-		case Node::AXIOM:      os << label(node.val.ax->label);  break;
-		case Node::THEOREM:    os << label(node.val.th->label);  break;
-		case Node::PROOF:      os << *node.val.prf;           break;
-		default :              assert(false && "impossible"); break;
-		}
+		if (r.type == Ref::PROOF)
+			os << *r.val.prf;
+		else
+			os << label(r.label());
 	}
 };
 
