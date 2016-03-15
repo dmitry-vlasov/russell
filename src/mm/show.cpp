@@ -10,7 +10,7 @@ uint length(const Ref& r) {
 	else return 1;
 }
 uint length(const Proof& p) {
-	assert(p.tree);
+	assert(p.type == Proof::TREE);
 	uint len = 1;
 	for (uint i = 0; i + 1 < p.refs.size(); ++ i) {
 		len += length(p.refs[i]);
@@ -61,7 +61,7 @@ ostream& operator << (ostream& os, ref r) {
 }
 
 ostream& operator << (ostream& os, const Proof& proof) {
-	if (proof.tree) {
+	if (proof.type == Proof::TREE) {
 		os << show(proof);
 		return os;
 	}

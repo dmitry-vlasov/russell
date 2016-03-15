@@ -16,7 +16,7 @@ Proof* to_tree(const Proof* proof) {
 			break;
 		case Ref::AXIOM:
 		case Ref::THEOREM: {
-			Proof* p = new Proof(true);
+			Proof* p = new Proof(Proof::TREE);
 			p->refs.push_back(r);
 			for (uint i = 0; i < r.arity(); ++ i) {
 				p->refs.push_back(stack.top());
@@ -62,7 +62,7 @@ Proof* to_rpn(const Proof* pr) {
 }
 
 void transform(Proof* proof, const Transform& trans, bool forward) {
-	assert(proof->tree);
+	assert(proof->type == Proof::TREE);
 	for (uint i = 0; i < proof->refs.size() - 1; ++ i) {
 		if (proof->refs[i].type == Ref::PROOF)
 			transform(proof->refs[i].val.prf, trans);

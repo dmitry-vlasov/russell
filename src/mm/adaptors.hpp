@@ -35,7 +35,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Proof,
 	(std::vector<mdl::mm::Ref>, refs)
-	(bool, tree)
+	(mdl::mm::Proof::Type, type)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(

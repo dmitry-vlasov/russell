@@ -105,10 +105,14 @@ struct Ref {
 
 
 struct Proof {
-	Proof(bool t = false) : refs(), tree(t) { }
+	enum Type {
+		TREE,
+		RPN
+	};
+	Proof(Type t = RPN) : refs(), type(t) { }
 	~Proof();
 	vector<Ref> refs;
-	bool        tree;
+	Type        type;
 };
 
 
@@ -221,7 +225,7 @@ inline void Node::destroy() {
 }
 
 inline Proof::~Proof() {
-	if (tree) {
+	if (type == TREE) {
 		for (auto& r : refs) {
 			if (r.type == Ref::PROOF) {
 				delete r.val.prf;
