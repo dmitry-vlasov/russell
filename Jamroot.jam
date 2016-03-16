@@ -1,13 +1,13 @@
 
 project russell
-    : requirements 
-        <include>include <include>src 
-        <toolset>gcc:<cxxflags>-std=c++11
-        <toolset>gcc:<c++-template-depth>300
-        <variant>release:<location>"bin/release"
-        <variant>debug:<location>"bin/debug"
-    ;
-
+	: requirements 	
+		<include>include <include>src 
+		<toolset>gcc:<cxxflags>-std=c++11
+		<toolset>gcc:<c++-template-depth>300
+		<variant>release:<location>"bin/release"
+		<variant>debug:<location>"bin/debug"
+	;
+	
 exe smm : 
   src/timer.cpp
   src/location.cpp
@@ -56,4 +56,46 @@ lib mml :
   src/mm/parser.cpp
   src/mm/translate.cpp ;
   
+  
+  
+  
+  
+import python ;
+
+#if ! [ python.configured ]
+#{
+#    ECHO "notice: no Python configured in user-config.jam" ;
+#    ECHO "notice: will use default configuration" ;
+#    using python ;
+#}
+
+using python : 2.7 : usr/bin/python ; 
+#using boost : 1.54 : <library>/usr/lib/x86_64-linux-gnu ;
+
+#using python ;
+
+project
+	: requirements
+#		<library>/boost/python//boost_python 
+		#<library>/usr/lib/x86_64-linux-gnu/libboost_python.so
+		#<library>/boost/libboost_python
+		#<library>/usr/lib/libboost_python.so 
+		<include>include
+		<toolset>gcc:<cxxflags>-std=c++11
+	;
+
+#python-extension pymdl : 
+#	wrapper/mdl.cpp 
+#	smml 
+#	/usr/lib/x86_64-linux-gnu/libboost_python.so
+#	;
+
+#install convenient_copy 
+#  : pymdl 
+#  : <install-dependencies>on <install-type>SHARED_LIB <install-type>PYTHON_EXTENSION 
+#    <location>. 
+#  ;
+
+
+
   

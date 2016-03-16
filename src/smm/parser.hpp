@@ -26,9 +26,16 @@ inline void makeVars(vector<T*>& vars) {
 		makeVars(v_it->expr);
 }
 
+inline void markVars(Expr& ex, const Expr& vars) {
+	for (auto& s : ex.symbols) {
+		if (vars.contains(s.lit))
+			s.var = true;
+	}
+}
+
 inline void markVars(const vector<Variables*>& vars, Expr& expr) {
 	for (auto& v_it : vars) {
-		expr.markVars(v_it->expr);
+		markVars(expr, v_it->expr);
 	}
 }
 

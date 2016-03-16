@@ -18,9 +18,9 @@ namespace mdl {
 
 struct Symbol {
 	Symbol(): lit(-1), var(false) { }
-	Symbol(uint l, bool v = false) :
-	lit (l), var (v) {
-	}
+	Symbol(uint l) : lit (l), var (false) { }
+	Symbol(uint l, bool v) : lit (l), var (v) { }
+
 	bool operator == (const Symbol& s) const {
 		return lit == s.lit && var == s.var;
 	}
@@ -35,16 +35,8 @@ struct Symbol {
 };
 
 struct Expr {
-	Expr(const Expr& ex) : symbols(ex.symbols) {
-	}
-	Expr() : symbols() {
-	}
-	void markVars(const Expr& vars) {
-		for (auto it = symbols.begin(); it != symbols.end(); ++ it) {
-			if (vars.contains(it->lit))
-				it->var = true;
-		}
-	}
+	Expr() : symbols() { }
+	Expr(const Expr& ex) : symbols(ex.symbols) { }
 	void push_back(Symbol s) {
 		symbols.push_back(s);
 	}
@@ -63,10 +55,8 @@ struct Expr {
 		return *this;
 	}
 	Expr& operator += (const Expr& ex) {
-		auto it = ex.symbols.cbegin();
-		++ it;
-		for (; it != ex.symbols.cend(); ++ it)
-			symbols.push_back(*it);
+		for (auto s : ex.symbols)
+			symbols.push_back(s);
 		return *this;
 	}
 	bool operator == (const Expr& ex) const {

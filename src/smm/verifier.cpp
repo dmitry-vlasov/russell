@@ -48,15 +48,22 @@ static void checkDisj(const Subst& sub, const Assertion* ass, const Assertion* t
 	}
 }
 
+inline void append_expr(Expr& ex_1, const Expr& ex_2) {
+	auto it = ex_2.symbols.cbegin();
+	++ it;
+	for (; it != ex_2.symbols.cend(); ++ it)
+		ex_1.symbols.push_back(*it);
+}
+
 static Expr apply(const Subst& sub, const Expr& expr) {
 	Expr ret;
 	for (auto s : expr.symbols) {
 		if (s.var) {
 			auto ex = sub.find(s);
 			if (ex == sub.cend())
-				ret += s;
+				ret.symbols.push_back(s);
 			else
-				ret += ex->second;
+				append_expr(ret, ex->second);
 		} else
 			ret += s;
 	}
