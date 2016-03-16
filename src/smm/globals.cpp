@@ -10,7 +10,6 @@
 /* License:         GNU General Public License Version 3                     */
 /*****************************************************************************/
 
-#include "smm/ast.hpp"
 #include "smm/globals.hpp"
 
 namespace mdl {

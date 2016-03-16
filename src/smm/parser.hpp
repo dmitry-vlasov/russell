@@ -5,7 +5,6 @@
 #include <boost/spirit/include/phoenix_stl.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
 
-#include "smm/ast.hpp"
 #include "smm/globals.hpp"
 #include "smm/adaptors.hpp"
 
