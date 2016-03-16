@@ -7,13 +7,12 @@ namespace mdl { namespace rus {
 struct Type;
 
 struct Symbol {
-	Symbol(): lit(0), rep(false), type(nullptr) { }
+	Symbol(): lit(-1), rep(false), type(nullptr), type(nullptr) { }
 	bool operator == (const Symbol& s) const { return lit == s.lit; }
 	bool operator != (const Symbol& s) const { return !operator ==(s); }
 	bool operator < (const Symbol& s) const { return lit < s.lit; }
 	uint  lit:30;
 	char  rep:1;
-	char  res:1;
 	Type* type;
 };
 
