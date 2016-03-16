@@ -18,6 +18,14 @@ string show (const Subst& subst) {
 	return str;
 }
 
+bool areDisjointed(const Assertion* ass, Symbol s1, Symbol s2) {
+	for (auto it = ass->disjointed.cbegin(); it != ass->disjointed.cend(); ++ it) {
+		if ((*it)->expr.contains(s1) && (*it)->expr.contains(s2))
+			return true;
+	}
+	return false;
+}
+
 static void checkDisjPair(const Expr& ex1, const Expr& ex2, const Assertion* th, const Assertion* ass) {
 	for (auto s_1 : ex1.symbols) {
 		for (auto s_2 : ex2.symbols) {
@@ -26,7 +34,7 @@ static void checkDisjPair(const Expr& ex1, const Expr& ex2, const Assertion* th,
 				msg += "variable " + show(s_1) + " is common for " + show(ex1) + " and " + show(ex2);
 				throw Error("verification", msg, &th->loc);
 			}
-			if (s_1.var && s_2.var && !th->areDisjointed(s_1.lit, s_2.lit)) {
+			if (s_1.var && s_2.var && !areDisjointed(th, s_1.lit, s_2.lit)) {
 				string msg = "inherited disjointed violation, vars: ";
 				msg += show(s_1) + " and " + show(s_2) + " ";
 				msg += "are not disjointed in " + Smm::get().lex.labels.toStr(th->prop.label) + ", ";
@@ -42,7 +50,7 @@ static void checkDisj(const Subst& sub, const Assertion* ass, const Assertion* t
 		for (auto p_2 : sub) {
 			if (p_1.first == p_2.first)
 				continue;
-			if (ass->areDisjointed(p_1.first, p_2.first))
+			if (areDisjointed(ass, p_1.first, p_2.first))
 				checkDisjPair(p_1.second, p_2.second, th, ass);
 		}
 	}

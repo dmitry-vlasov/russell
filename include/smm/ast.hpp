@@ -60,13 +60,6 @@ struct Assertion {
 	uint arity() const {
 		return essential.size() + floating.size();
 	}
-	bool areDisjointed(Symbol s1, Symbol s2) const {
-		for (auto it = disjointed.cbegin(); it != disjointed.cend(); ++ it) {
-			if ((*it)->expr.contains(s1) && (*it)->expr.contains(s2))
-				return true;
-		}
-		return false;
-	}
 
 	vector<Variables*>  variables;
 	vector<Disjointed*> disjointed;
