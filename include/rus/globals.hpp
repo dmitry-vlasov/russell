@@ -59,9 +59,6 @@ struct Rus {
 	struct Math {
 		Table<Theorem*>   theorems;
 		Table<Axiom*>     axioms;
-		Table<Essential*> essentials;
-		Table<Floating*>  floatings;
-		vector<Theorem*>  theory;
 	};
 
 	Config  config;
@@ -82,6 +79,8 @@ struct Rus {
 
 ostream& show (ostream& os, const Rus& s);
 Source* parse(const string& path);
+void unify(Source*);
+void verify(const Source*);
 smm::Source* translate(const Source* source);
 
 }} // mdl::rus

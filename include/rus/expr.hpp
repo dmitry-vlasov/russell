@@ -16,10 +16,11 @@ struct Symbol {
 	Type* type;
 };
 
-template<typename Node>
+template<typename N>
 class iterator {
-	Node* n;
+	N* n;
 public :
+	typedef N Node;
 	iterator() : n(nullptr) { }
 	iterator(Node* nd) : n(nd) { }
 	iterator& operator ++() { n = n->next; return *this; }
@@ -31,10 +32,11 @@ public :
 	Node* operator -> () { return n; }
 };
 
-template<typename Node>
+template<typename N>
 class const_iterator {
-	const Node* n;
+	const N* n;
 public :
+	typedef N Node;
 	iterator() : n(nullptr) { }
 	iterator(const Node* nd) : n(nd) { }
 	iterator& operator ++() { n = n->next; return *this; }
@@ -48,8 +50,9 @@ public :
 
 struct Rule;
 
-template<typename Node>
+template<typename N>
 struct Term {
+	typedef N Node;
 	Node* begin() { return iterator<Node>(b); }
 	Node* end() { return iterator<Node>(); }
 	const Node* cbegin() { return const_iterator<Node>(b); }
@@ -95,6 +98,12 @@ struct Tree {
 
 struct Expr {
 	Term<List> term;
+};
+
+template<typename N = List>
+struct Sub {
+	typedef N Node;
+	map<Symbol, Term<Node>> sub;
 };
 
 }} // mdl::rus
