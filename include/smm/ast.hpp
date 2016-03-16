@@ -209,7 +209,7 @@ ostream& operator << (ostream& os, const Constants& cst);
 ostream& operator << (ostream& os, const Ref& ref);
 ostream& operator << (ostream& os, const Proof& proof);
 ostream& operator << (ostream& os, const Variables& vars);
-ostream& operator << (ostream& os, const Variables& disj);
+ostream& operator << (ostream& os, const Disjointed& disj);
 ostream& operator << (ostream& os, const Essential& ess);
 ostream& operator << (ostream& os, const Floating& flo);
 ostream& operator << (ostream& os, const Inner& inn);
