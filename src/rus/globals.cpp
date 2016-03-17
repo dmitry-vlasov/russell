@@ -26,9 +26,8 @@ void symbol::write(ostream& os) {
 string symbol::show() {
 	return rus::Rus::get().lex.symbs.toStr(lit);
 }
-ostream& operator << (ostream& os, Symbol symb) {
-	os << rus::Rus::get().lex.symbs.toStr(symb.lit);
-	return os;
+string show(Symbol symb) {
+	return rus::Rus::get().lex.symbs.toStr(symb.lit);
 }
 
 namespace rus {

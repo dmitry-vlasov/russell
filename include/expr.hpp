@@ -68,23 +68,23 @@ struct Expr {
 	vector<Symbol> symbols;
 };
 
-ostream& operator << (ostream& os, Symbol symb);
+string show(Symbol symb);
 
-inline ostream& operator << (ostream& os, const Expr& expr) {
+inline string show(const Expr& expr) {
+	string s;
 	for (auto symb : expr.symbols)
-		os << symb << ' ';
+		s += show(symb) + " ";
+	return s;
+}
+
+inline ostream& operator << (ostream& os, Symbol s) {
+	os << show(s);
 	return os;
 }
 
-inline string show(Symbol symb) {
-	ostringstream os; os << symb;
-	return os.str();
-}
-
-inline string show(const Expr& expr) {
-	ostringstream os;
-	os << expr;
-	return os.str();
+inline ostream& operator << (ostream& os, const Expr& ex) {
+	os << show(ex);
+	return os;
 }
 
 }

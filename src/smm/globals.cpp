@@ -26,9 +26,8 @@ void symbol::write(ostream& os) {
 string symbol::show() {
 	return smm::Smm::get().lex.symbols.toStr(lit);
 }
-ostream& operator << (ostream& os, Symbol symb) {
-	os << smm::Smm::get().lex.symbols.toStr(symb.lit);
-	return os;
+string show(Symbol symb) {
+	return smm::Smm::get().lex.symbols.toStr(symb.lit);
 }
 
 namespace smm {
