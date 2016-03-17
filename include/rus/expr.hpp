@@ -7,14 +7,22 @@ namespace mdl { namespace rus {
 struct Type;
 
 struct Symbol {
-	Symbol(): lit(-1), rep(false), type(nullptr), type(nullptr) { }
+	Symbol(): lit(-1), rep(false), type(nullptr) { }
 	bool operator == (const Symbol& s) const { return lit == s.lit; }
 	bool operator != (const Symbol& s) const { return !operator ==(s); }
 	bool operator < (const Symbol& s) const { return lit < s.lit; }
-	uint  lit:30;
-	char  rep:1;
+	bool undef() const { return lit == (uint)-1; }
+	uint  lit;
+	bool  rep;
 	Type* type;
 };
+
+string show(Symbol s);
+
+inline ostream& operator << (ostream& os, Symbol s) {
+	os << show(s);
+	return os;
+}
 
 template<typename N>
 class iterator {
@@ -37,13 +45,13 @@ class const_iterator {
 	const N* n;
 public :
 	typedef N Node;
-	iterator() : n(nullptr) { }
-	iterator(const Node* nd) : n(nd) { }
-	iterator& operator ++() { n = n->next; return *this; }
-	iterator& operator +()  { n = n->side; return *this; }
-	iterator& operator --() { n = n->prev; return *this; }
-	bool operator == (iterator it) { return n == it.n; }
-	bool operator != (iterator it) { return !operator == (it); }
+	const_iterator() : n(nullptr) { }
+	const_iterator(const Node* nd) : n(nd) { }
+	const_iterator& operator ++() { n = n->next; return *this; }
+	const_iterator& operator +()  { n = n->side; return *this; }
+	const_iterator& operator --() { n = n->prev; return *this; }
+	bool operator == (const_iterator it) { return n == it.n; }
+	bool operator != (const_iterator it) { return !operator == (it); }
 	const Node& operator *()   { return *n; }
 	const Node* operator -> () { return n; }
 };
@@ -53,14 +61,17 @@ struct Rule;
 template<typename N>
 struct Term {
 	typedef N Node;
-	Node* begin() { return iterator<Node>(b); }
-	Node* end() { return iterator<Node>(); }
-	const Node* cbegin() { return const_iterator<Node>(b); }
-	const Node* cend() { return const_iterator<Node>(); }
-	Node* rbegin() { return iterator<Node>(e); }
-	Node* rend() { return iterator<Node>(); }
-	const Node* crbegin() { return iterator<Node>(e); }
-	const Node* crend() { return iterator<Node>(); }
+	typedef iterator<Node> Iterator;
+	typedef const_iterator<Node> ConstIterator;
+
+	Iterator begin() { return Iterator(b); }
+	Iterator end()   { return Iterator(); }
+	ConstIterator begin() const { return ConstIterator(b); }
+	ConstIterator end() const { return ConstIterator(); }
+	Iterator rbegin() { return Iterator(e); }
+	Iterator rend() { return Iterator(); }
+	const Node* rbegin() const { return ConstIterator(e); }
+	const Node* rend() const { return ConstIterator(); }
 
 	Node* b;
 	Node* e;
@@ -98,7 +109,15 @@ struct Tree {
 
 struct Expr {
 	Term<List> term;
+	Type* type();
 };
+
+string show(const Expr&);
+
+inline ostream& operator << (ostream& os, const Expr& ex) {
+	os << show(ex);
+	return os;
+}
 
 template<typename N = List>
 struct Sub {

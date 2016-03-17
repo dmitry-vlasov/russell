@@ -38,6 +38,20 @@ exe mm :
   src/mm/translate.cpp
   src/mm/main.cpp ;
  
+exe mdl : 
+  src/timer.cpp
+  src/location.cpp
+  
+  src/smm/show.cpp
+  
+  src/rus/expr.cpp
+  src/rus/globals.cpp
+  src/rus/show.cpp
+  src/rus/unify.cpp
+  src/rus/parser.cpp
+  src/rus/translate.cpp
+  src/rus/main.cpp ;
+ 
 lib smml : 
   src/timer.cpp
   src/location.cpp

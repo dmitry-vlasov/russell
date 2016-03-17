@@ -39,10 +39,11 @@ struct Rus {
 
 	struct Lex {
 		Table ids;
-		Table symbols;
+		Table symbs;
 	};
 	struct Timers {
 		Timer read;
+		Timer unify;
 		Timer translate;
 		Timer total;
 	};
@@ -71,6 +72,7 @@ struct Rus {
 
 	void run();
 	bool parse();
+	bool unify();
 	bool translate();
 
 	static const Rus& get() { return mod(); }
@@ -80,7 +82,6 @@ struct Rus {
 ostream& show (ostream& os, const Rus& s);
 Source* parse(const string& path);
 void unify(Source*);
-void verify(const Source*);
 smm::Source* translate(const Source* source);
 
 }} // mdl::rus

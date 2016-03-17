@@ -48,7 +48,6 @@ public:
 	string show();
 };
 
-
 inline ostream& operator << (ostream& os, indent ind) {
 	ind.write(os);
 	return os;

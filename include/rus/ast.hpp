@@ -5,12 +5,18 @@
 
 namespace mdl { namespace rus {
 
-struct Consts {
-	vector<Symbol> symbols;
+struct Const {
+	Symbol symb;
+	Symbol ascii;
+	Symbol latex;
 };
 
 struct Vars {
-	vector<Symbol> symbols;
+	vector<Symbol> v;
+};
+
+struct Disj {
+	vector<vector<Symbol>> d;
 };
 
 struct Rule;
@@ -19,18 +25,17 @@ struct Type {
 	uint name;
 	vector<Type*> super;
 	vector<Type*> infer;
-	Tree<Rule*>   rules;
+	//Tree<Rule*>   rules;
 };
 
 struct Rule {
+	uint  name;
 	Type* type;
 	Vars  vars;
 	Expr  term;
 };
 
-struct Disj {
-	vector<Symbol> vars;
-};
+inline Type* Expr::type() { return term.rule->type; }
 
 struct Hyp {
 	uint index;
@@ -45,8 +50,9 @@ struct Prop {
 struct Proof;
 
 struct Assertion {
-	Vars          vars;
-	vector<Disj*> disjs;
+	uint id;
+	Vars vars;
+	Disj disj;
 	vector<Hyp*>  hyps;
 	vector<Prop*> props;
 	Location      loc;
@@ -116,20 +122,22 @@ struct Qed {
 	Step* step;
 };
 
-struct Claim {
-	uint        index;
-	Expr        expr;
-	vector<Ref> refs;
-	Proof*      proof;
-};
-
 struct Proof {
 	Proof() : steps(), theorem(nullptr) { }
 	~ Proof();
+	Vars        vars;
 	vector<Ref> steps;
 	vector<Ref> roots;
 	Assertion*  theorem;
 };
+
+struct Claim {
+	uint        index;
+	Expr        expr;
+	vector<Ref> refs;
+	Proof       proof;
+};
+
 
 class Theory;
 class Import;
@@ -149,7 +157,7 @@ struct Node {
 	};
 	union Value {
 		void*      non;
-		Consts*    cst;
+		Const*     cst;
 		Type*      tp;
 		Rule*      rul;
 		Axiom*     ax;
@@ -161,7 +169,7 @@ struct Node {
 	};
 
 	Node() : kind(NONE), val() { val.non = nullptr; }
-	Node(Consts* c)  : kind(CONST),   val() { val.cst = c; }
+	Node(Const* c)   : kind(CONST),   val() { val.cst = c; }
 	Node(Type* t)    : kind(TYPE),    val() { val.tp  = t; }
 	Node(Rule* r)    : kind(RULE),    val() { val.rul = r; }
 	Node(Axiom* a)   : kind(AXIOM),   val() { val.ax  = a; }
@@ -194,7 +202,7 @@ struct Theory {
 
 struct Source {
 	Source(const string& n) :
-	top(false), name(n), contents() {
+	top(false), name(n), theory() {
 		static bool t = true; top = t; t = false;
 	}
 	bool   top;
@@ -202,46 +210,78 @@ struct Source {
 	Theory theory;
 };
 
-/*
 inline void Node::destroy() {
-	switch(type) {
-	case NONE: break;
-	case ASSERTION: delete val.ass; break;
-	case CONSTANTS: delete val.cst; break;
-	case SOURCE:    delete val.src; break;
-	default : assert(false && "impossible");  break;
+	switch(kind) {
+	case CONST:   delete val.cst; break;
+	case TYPE:    delete val.tp;  break;
+	case RULE:    delete val.rul; break;
+	case AXIOM:   delete val.ax;  break;
+	case DEF:     delete val.def; break;
+	case THEOREM: delete val.thm; break;
+	case PROOF:   delete val.prf; break;
+	case THEORY:  delete val.thy; break;
+	case IMPORT:  delete val.imp; break;
+	default : assert(false && "impossible"); break;
 	}
-	type = NONE;
+	kind = NONE;
 }
 
+
 inline void Ref::destroy() {
-	if (type == PROOF)
-		delete val.prf;
+	switch (kind) {
+	case STEP : delete val.step; break;
+	case CLAIM: delete val.claim; break;
+	case QED:   delete val.qed; break;
+	default : assert(false && "impossible"); break;
+	}
+	kind = NONE;
 }
 
 inline Proof::~ Proof() {
-	for (auto& r : refs)
-		r.destroy();
+	for (auto& s : steps)
+		s.destroy();
 }
-*/
 
-ostream& operator << (ostream& os, const Consts&);
-ostream& operator << (ostream& os, const Vars&);
-ostream& operator << (ostream& os, const Type&);
-ostream& operator << (ostream& os, const Rule&);
-ostream& operator << (ostream& os, const Axiom&);
-ostream& operator << (ostream& os, const Def&);
-ostream& operator << (ostream& os, const Theorem&);
-ostream& operator << (ostream& os, const Proof&);
-ostream& operator << (ostream& os, const Step&);
-ostream& operator << (ostream& os, const Ref&);
-ostream& operator << (ostream& os, const Qed&);
-ostream& operator << (ostream& os, const Claim&);
-ostream& operator << (ostream& os, const Hyp&);
-ostream& operator << (ostream& os, const Prop&);
-ostream& operator << (ostream& os, const Node&);
-ostream& operator << (ostream& os, const Import&);
-ostream& operator << (ostream& os, const Theory&);
-ostream& operator << (ostream& os, const Source&);
+
+string show(uint id);
+string show(const Const&);
+string show(const Vars&);
+string show(const Disj&);
+string show(const Type&);
+string show(const Rule&);
+string show(const Axiom&);
+string show(const Def&);
+string show(const Theorem&);
+string show(const Proof&);
+string show(const Step&);
+string show(const Ref&);
+string show(const Qed&);
+string show(const Claim&);
+string show(const Hyp&);
+string show(const Prop&);
+string show(const Node&);
+string show(const Import&);
+string show(ostream& os, const Theory&);
+string show(ostream& os, const Source&);
+
+inline ostream& operator << (ostream& os, const Const& c) { os << show(c); return os; }
+inline ostream& operator << (ostream& os, const Vars& v)  { os << show(v); return os; }
+inline ostream& operator << (ostream& os, const Disj& d)  { os << show(d); return os; }
+inline ostream& operator << (ostream& os, const Type& t)  { os << show(t); return os; }
+inline ostream& operator << (ostream& os, const Rule& r)  { os << show(r); return os; }
+inline ostream& operator << (ostream& os, const Axiom& a) { os << show(a); return os; }
+inline ostream& operator << (ostream& os, const Def& d)   { os << show(d); return os; }
+inline ostream& operator << (ostream& os, const Theorem& t) { os << show(t); return os; }
+inline ostream& operator << (ostream& os, const Proof& p) { os << show(p); return os; }
+inline ostream& operator << (ostream& os, const Step& s)  { os << show(s); return os; }
+inline ostream& operator << (ostream& os, const Ref& r)   { os << show(r); return os; }
+inline ostream& operator << (ostream& os, const Qed& q)   { os << show(q); return os; }
+inline ostream& operator << (ostream& os, const Claim& c) { os << show(c); return os; }
+inline ostream& operator << (ostream& os, const Hyp& h)   { os << show(h); return os; }
+inline ostream& operator << (ostream& os, const Prop& p)  { os << show(p); return os; }
+inline ostream& operator << (ostream& os, const Node& n)  { os << show(n); return os; }
+inline ostream& operator << (ostream& os, const Import& i){ os << show(i); return os; }
+//inline ostream& operator << (ostream& os, const Theory& t){ os << show(t); return os; }
+//inline ostream& operator << (ostream& os, const Source& s){ os << show(s); return os; }
 
 }} // mdl::rus

@@ -10,15 +10,15 @@
 /* License:         GNU General Public License Version 3                     */
 /*****************************************************************************/
 
-#include "mm/globals.hpp"
+#include "rus/globals.hpp"
 
 using namespace mdl;
-using namespace mm;
+using namespace rus;
 
 static void showHelp() {
-	cout << "mm translator from Metatmath to smm" << endl;
+	cout << "Russell language implementation - mdl" << endl;
 	cout << "Version: " << VERSION << endl;
-	cout << "Usage: mm [options]" << endl;
+	cout << "Usage: mdl [options]" << endl;
 	cout << "Options:" << endl;
 	cout << " -i  --in <path>    input file"  << endl;
 	cout << " -o  --out <path>   output file"  << endl;
@@ -65,8 +65,8 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 
 int main (int argc, const char* argv[])
 {
-	Mm& mm = Mm::mod();
-	Config& conf = mm.config;
+	Rus& rus = Rus::mod();
+	Config& conf = rus.config;
 	if (!parseConfig(argc, argv, conf)) {
 		showHelp();
 		return 1;
@@ -76,9 +76,9 @@ int main (int argc, const char* argv[])
 		return 0;
 	}
 	try {
-		mm.run();
-		if (conf.verbose || mm.failed)
-			cout << mm.status;
+		rus.run();
+		if (conf.verbose || rus.failed)
+			cout << rus.status;
 	} catch (const Error& err) {
 		cerr << err.what();
 		return 1;
