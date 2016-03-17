@@ -2,9 +2,9 @@
 
 #define BOOST_SPIRIT_USE_PHOENIX_V3
 
-#include "smm/parser.hpp"
+#include "rus/parser.hpp"
 
-namespace mdl { namespace smm {
+namespace mdl { namespace rus {
 
 template<typename Iterator>
 Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
@@ -23,9 +23,9 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	const phoenix::function<SetLocation<Iterator>> setLocation;
 	const phoenix::function<CreateRef>      createRef;
 
-	symbol = lexeme[+(ascii::char_ - '$' - ascii::space)] [at_c<0>(_val) = symbolToInt(_1)];
-	label  = lexeme[+(ascii::char_ - '$' - ascii::space)] [_val = labelToInt(_1)];
-	path   = lexeme[+(ascii::char_ - '$' - ascii::space)];
+	symbol = lexeme[+(ascii::char_ - ';' - ascii::space)] [at_c<0>(_val) = symbolToInt(_1)];
+	id     = lexeme[+(ascii::char_ - ';' - ascii::space)] [_val = labelToInt(_1)];
+	path   = lexeme[+(ascii::char_ - ';' - ascii::space)];
 	expr   = + (symbol [push_back(at_c<0>(_val), _1)] | comment);
 
 	ref = (
@@ -33,7 +33,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		(prop_refs [_a = _1] > label [_val = createRef(_a, _1, _r1)])
 	);
 	proof =
-		qi::eps     [_val = new_<smm::Proof>()]
+		qi::eps     [_val = new_<rus::Proof>()]
 		> + ref(_r1)[push_back(phoenix::at_c<0>(*_val), _1)]
 		> lit("$.") [phoenix::at_c<1>(*_val) = _r1];
 	provable =
@@ -49,33 +49,33 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> expr      [at_c<2>(_val) = _1]
 		> "$.";
 	essential =
-		lit("e")    [_val = new_<smm::Essential>()]
+		lit("e")    [_val = new_<rus::Essential>()]
 		> uint_     [at_c<0>(*_val) = _1]
 		> "$e"
 		> expr      [at_c<1>(*_val) = _1]
 		> "$.";
 	inner =
-		lit("i")    [_val = new_<smm::Inner>()]
+		lit("i")    [_val = new_<rus::Inner>()]
 		> uint_     [at_c<0>(*_val) = _1]
 		> "$f"
 		> expr      [at_c<1>(*_val) = _1]
 		> "$.";
 	floating =
-		lit("f")    [_val = new_<smm::Floating>()]
+		lit("f")    [_val = new_<rus::Floating>()]
 		> uint_     [at_c<0>(*_val) = _1]
 		> "$f"
 		> expr      [at_c<1>(*_val) = _1]
 		> "$.";
 	disjointed =
-		lit("$d")   [_val = new_<smm::Disjointed>()]
+		lit("$d")   [_val = new_<rus::Disjointed>()]
 		> expr      [at_c<0>(*_val) = _1]
 		> "$.";
 	variables =
-		lit("$v")   [_val = new_<smm::Variables>()]
+		lit("$v")   [_val = new_<rus::Variables>()]
 		> expr      [at_c<0>(*_val) = _1]
 		> "$.";
 	assertion =
-		lit("${")        [_val = new_<smm::Assertion>()]
+		lit("${")        [_val = new_<rus::Assertion>()]
 		> *variables     [push_back(phoenix::at_c<0>(*_val), _1)]
 		> *disjointed    [push_back(phoenix::at_c<1>(*_val), _1)]
 		> *essential     [push_back(phoenix::at_c<2>(*_val), _1)]
@@ -87,7 +87,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		)
 		> lit("$}")      [addToMath(_val)];
 	constants =
-		lit("$c")        [_val = new_<smm::Constants>()]
+		lit("$c")        [_val = new_<rus::Constants>()]
 		> expr           [phoenix::at_c<0>(*_val) = _1]
 		> lit("$.")      [addToMath(_val)];
 	inclusion = lit("$[") > path [_val = parseInclusion(_1)] > "$]";
@@ -107,4 +107,4 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	initNames();
 }
 
-}} //mdl::smm
+}} //mdl::rus

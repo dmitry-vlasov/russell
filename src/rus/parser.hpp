@@ -66,18 +66,26 @@ struct AddToMath {
 struct SymbolToInt {
 	template <typename T>
 	struct result { typedef uint type; };
-	uint operator()(const std::vector<char>& symb) const {
-		string symbol(symb.begin(), symb.end());
-		return Smm::mod().lex.symbols.toInt(symbol);
+	uint operator()(const std::vector<char>& s) const {
+		string symb(s.begin(), s.end());
+		return Rus::mod().lex.symbs.toInt(symb);
 	}
 };
 
-struct LabelToInt {
+struct IdToInt {
 	template <typename T>
 	struct result { typedef uint type; };
-	uint operator()(const std::vector<char>& lab) const {
-		string label(lab.begin(), lab.end());
-		return Smm::mod().lex.labels.toInt(label);
+	uint operator()(const std::vector<char>& id) const {
+		string id_str(id.begin(), id.end());
+		return Rus::mod().lex.ids.toInt(id_str);
+	}
+};
+
+struct AddSymbol {
+	template <typename T1, typename T2>
+	struct result { typedef void type; };
+	void operator()(Expr& ex, Symbols ) const {
+		return parse(path);
 	}
 };
 
@@ -132,7 +140,7 @@ struct CreateRef {
 };
 
 template <typename Iterator>
-struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
+struct Grammar : qi::grammar<Iterator, rus::Source(), ascii::space_type> {
 	Grammar();
 	void initNames();
 
@@ -140,7 +148,7 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 	HypRefs  hyp_refs;
 	qi::rule<Iterator, Expr(), ascii::space_type> expr;
 	qi::rule<Iterator, Symbol(), ascii::space_type> symbol;
-	qi::rule<Iterator, uint(),        ascii::space_type> label;
+	qi::rule<Iterator, uint(),        ascii::space_type> id;
 	qi::rule<Iterator, std::string(), ascii::space_type> path;
 	qi::rule<Iterator, Ref(Assertion*), qi::locals<Ref::Type>, ascii::space_type> ref;
 	qi::rule<Iterator, Proof*(Assertion*), ascii::space_type> proof;
@@ -180,4 +188,4 @@ void Grammar<Iterator>::initNames() {
 	source.name("source");
 }
 
-}} // mdl::smm
+}} // mdl::rus
