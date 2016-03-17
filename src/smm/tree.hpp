@@ -20,5 +20,6 @@ Proof* to_tree(const Proof* pr);
 Proof* to_rpn(const Proof* pr);
 void transform(Proof* proof, const Transform& trans, bool forward = true);
 Expr eval(Proof* proof);
+Expr eval(Ref&);
 
 }} // mdl::smm

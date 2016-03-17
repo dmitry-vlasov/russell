@@ -3,8 +3,7 @@
 namespace mdl { namespace rus {
 
 string show(const Const& c) {
-	string s;
-	s += "const {\n";
+	string s = "const {\n";
 	s += "\tsymb " + show(c.symb) + ";\n";
 	if (!c.ascii.undef())
 		s += "\tascii " + show(c.ascii) + ";\n";
@@ -72,7 +71,7 @@ inline string show_type(const Expr& ex) {
 
 string show(const Hyp& h) {
 	string s;
-	s += "hyp " + to_string(h.index) + " : ";
+	s += "hyp " + to_string(h.index + 1) + " : ";
 	s += show_type(h.expr) + " = ";
 	s += "|- " + show(h.expr) + ";";
 	return s;
@@ -80,7 +79,7 @@ string show(const Hyp& h) {
 
 string show(const Prop& p) {
 	string s;
-	s += "prop " + to_string(p.index) + " : ";
+	s += "prop " + to_string(p.index + 1) + " : ";
 	s += show_type(p.expr) + " = ";
 	s += "|- " + show(p.expr) + ";";
 	return s;
@@ -119,9 +118,67 @@ string show(const Def& def) {
 	return s;
 }
 
-string show(const Proof& proof) {
-	string s;
-	//s += "theorem " + show(thm.ass);
+
+static string show_refs(const vector<Ref>& refs) {
+	string s = "(";
+	for (uint i = 0; i < refs.size(); ++ i) {
+		Ref r = refs[i];
+		switch (r.kind) {
+		case Ref::HYP:  s += "hyp "  + to_string(r.val.hyp->index + 1);  break;
+		case Ref::PROP: s += "prop " + to_string(r.val.prop->index + 1); break;
+		case Ref::STEP: s += "step " + to_string(r.val.step->index + 1); break;
+		default : assert(false && "impossible"); break;
+		}
+		if (i + 1 < refs.size()) s += ", ";
+	}
+	s += ")";
+	return s;
+}
+
+string show(const Step& st) {
+	string s = "step " + to_string(st.index + 1) + " : ";
+	s += show_type(st.expr) + " = ";
+	s += show_id(st.ass->id) + " ";
+	s += show_refs(st.refs) + " ";
+	s += "|- " + show(st.expr) + ";";
+	return s;
+}
+
+string show(const Claim& c) {
+	string s = "step " + to_string(c.index + 1) + " : ";
+	s += show_type(c.expr) + " = ";
+	s += "claim " + show_refs(c.refs) + " ";
+	s += "|- " + show(c.expr) + "; {\n";
+	for (auto& st : c.proof.steps)
+		s += "\t" + show(st) + "\n";
+	s += "}";
+	return s;
+}
+
+string show(const Qed& q) {
+	string s = "qed ";
+	s += "prop " + to_string(q.prop->index + 1) + " = ";
+	s += "step " + to_string(q.step->index + 1) + " ;";
+	return s;
+}
+
+string show(const Ref& ref) {
+	switch (ref.kind) {
+	case Ref::STEP:  return show(*ref.val.step);
+	case Ref::CLAIM: return show(*ref.val.claim);
+	case Ref::QED:   return show(*ref.val.qed);
+	default : assert(false && "impossible"); break;
+	}
+	return "";
+}
+
+string show(const Proof& p) {
+	string s = "proof ";
+	if (p.name != (uint)-1) s += show_id(p.name) + " ";
+	s += "of " + show_id(p.theorem->id) + " {\n";
+	for (auto& st : p.steps)
+		s += "\t" + show(st) + "\n";
+	s += "}";
 	return s;
 }
 

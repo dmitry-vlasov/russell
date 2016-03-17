@@ -117,14 +117,16 @@ struct Step {
 };
 
 struct Qed {
-	uint  index;
 	Prop* prop;
 	Step* step;
 };
 
 struct Proof {
-	Proof() : steps(), theorem(nullptr) { }
+	Proof() :
+	name(-1), vars(), steps(),
+	roots(), theorem(nullptr) { }
 	~ Proof();
+	uint        name;
 	Vars        vars;
 	vector<Ref> steps;
 	vector<Ref> roots;

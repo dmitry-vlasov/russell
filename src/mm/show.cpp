@@ -32,7 +32,7 @@ string show(const Proof& tree) {
 	str += "(";
 	for (uint i = 0; i + 1 <tree.refs.size(); ++ i)
 		str += indent::paragraph(space + show(tree.refs[i]), "  ");
-	str += space + ")";
+	str += space + ") ";
 	return str;
 }
 

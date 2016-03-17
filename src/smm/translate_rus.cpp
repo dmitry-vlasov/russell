@@ -26,6 +26,12 @@ inline bool is_def(uint label) {
 inline uint wff_id() {
 	return Smm::mod().lex.labels.toInt("wff");
 }
+inline uint equiv_sy() {
+	return Smm::mod().lex.symbols.toInt("<->");
+}
+inline uint equal_sy() {
+	return Smm::mod().lex.symbols.toInt("=");
+}
 
 static rus::Expr translate_expr(const Expr& e, Maps& maps) {
 	rus::Expr ex(e);
@@ -107,6 +113,8 @@ static void translate_axiom(const Assertion* ass, rus::Theory& target, Maps& map
 }
 
 static void translate_def(const Assertion* ass, rus::Theory& target, Maps& maps) {
+
+
 	rus::Axiom* ax = new rus::Axiom;
 	translate_assertion<rus::Axiom>(ass, ax, maps);
 	target.nodes.push_back(ax);
@@ -115,11 +123,8 @@ static void translate_def(const Assertion* ass, rus::Theory& target, Maps& maps)
 
 static rus::Ref translate_ref(Ref ref, vector<rus::Ref>& proof, rus::Theorem* thm, Maps& maps) {
 	switch (ref.type) {
-	case Ref::ESSENTIAL: {
-		rus::Ref hr = rus::Ref(thm->ass.hyps[ref.val.ess->index]);
-		proof.push_back(hr);
-		return hr;
-	}
+	case Ref::ESSENTIAL:
+		return rus::Ref(thm->ass.hyps[ref.val.ess->index]);
 	case Ref::FLOATING:  return rus::Ref();
 	case Ref::INNER:	 return rus::Ref();
 	case Ref::PROOF: {
@@ -130,8 +135,9 @@ static rus::Ref translate_ref(Ref ref, vector<rus::Ref>& proof, rus::Theorem* th
 			rus::Ref hr = translate_ref(ref.val.prf->refs[i], proof, thm, maps);
 			sr.val.step->refs.push_back(hr);
 		}
-		sr.val.step->index = proof.size() + 1;
-		sr.val.step->expr = ref.expr;
+		sr.val.step->index = proof.size();
+		sr.val.step->expr = translate_expr(ref.expr, maps);
+		proof.push_back(sr);
 		return sr;
 	}
 	default : assert(false && "impossible"); break;
@@ -140,14 +146,17 @@ static rus::Ref translate_ref(Ref ref, vector<rus::Ref>& proof, rus::Theorem* th
 }
 
 static void translate_proof(const Assertion* ass, rus::Theorem* thm, rus::Theory& target, Maps& maps) {
-	Proof* tree = to_tree(ass->proof);
+	Ref tree = Ref(to_tree(ass->proof));
 	eval(tree);
 	rus::Proof* p = new rus::Proof();
 	p->vars = translate_vars(ass->inner, maps);
 	p->theorem = &thm->ass;
-	translate_ref(Ref(tree), p->steps, thm, maps);
+	translate_ref(tree, p->steps, thm, maps);
+	rus::Prop* pr = thm->ass.props.front();
+	rus::Step* st = p->steps.back().val.step;
+	p->steps.push_back(new rus::Qed{pr, st});
 	target.nodes.push_back(p);
-	delete tree;
+	tree.destroy();
 }
 
 static void translate_theorem(const Assertion* ass, rus::Theory& target, Maps& maps) {
@@ -168,7 +177,6 @@ rus::Node::Kind ass_kind(const Assertion* ass) {
 	} else {
 		return rus::Node::THEOREM;
 	}
-
 }
 
 static void translate_ass(const Assertion* ass, rus::Theory& target, Maps& maps) {
@@ -183,12 +191,8 @@ static void translate_ass(const Assertion* ass, rus::Theory& target, Maps& maps)
 
 static void translate_node(const Node& node, rus::Theory& target, Maps& maps) {
 	switch(node.type) {
-	case Node::CONSTANTS:
-		translate_const(node.val.cst->expr, target);
-		break;
-	case Node::ASSERTION:
-		translate_ass(node.val.ass, target, maps);
-		break;
+	case Node::CONSTANTS: translate_const(node.val.cst->expr, target); break;
+	case Node::ASSERTION: translate_ass(node.val.ass, target, maps);   break;
 	case Node::SOURCE:
 		// TODO:
 		//translate(node.val.blk, target);
@@ -202,7 +206,7 @@ static void translate_theory(const Source* source, rus::Theory& target, Maps& ma
 		translate_node(n, target, maps);
 }
 
-}
+} // anonymous namespace
 
 rus::Source* translate_to_rus(const Source* source) {
 	rus::Source* target = new rus::Source(Smm::get().config.out);
