@@ -1,7 +1,7 @@
 #include "smm/tree.hpp"
 #include "smm/globals.hpp"
 
-namespace mdl { namespace smm {
+namespace mdl { namespace smm { namespace {
 
 struct Maps {
 	map<const smm::Assertion*, mm::Theorem*>   theorems;
@@ -114,6 +114,8 @@ static void translate(const Source* source, mm::Block* target) {
 	Maps maps;
 	for (auto& node : source->contents)
 		translate(node, target, maps);
+}
+
 }
 
 mm::Block* translate_to_mm(const Source* source) {

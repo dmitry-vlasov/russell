@@ -88,7 +88,7 @@ bool Smm::translate() {
 		}	break;
 		case Config::TARGET_RUS: {
 			rus::Source* target = smm::translate_to_rus(source);
-			//cout << endl << *target;
+			cout << endl << *target;
 			ofstream out(config.out);
 			out << *target << endl;
 			out.close();

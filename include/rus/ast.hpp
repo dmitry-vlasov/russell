@@ -192,12 +192,15 @@ struct Import {
 };
 
 struct Theory {
+	Theory() : name(-1), nodes(), parent(nullptr) { }
+	Theory(uint n, Theory* p) : name(n), nodes(), parent(p) { }
 	~ Theory() {
 		for (auto& n : nodes)
 			n.destroy();
 	}
 	uint         name;
 	vector<Node> nodes;
+	Theory*      parent;
 };
 
 struct Source {
@@ -242,8 +245,6 @@ inline Proof::~ Proof() {
 		s.destroy();
 }
 
-
-string show(uint id);
 string show(const Const&);
 string show(const Vars&);
 string show(const Disj&);

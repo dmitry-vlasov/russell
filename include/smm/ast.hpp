@@ -41,6 +41,8 @@ struct Floating  {
 };
 
 struct Inner {
+	Symbol type() const { return expr.symbols[0]; }
+	Symbol var() const { return expr.symbols[1]; }
 	uint index;
 	Expr expr;
 };

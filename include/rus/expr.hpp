@@ -114,6 +114,7 @@ struct Tree {
 };
 
 struct Expr {
+	Expr() : term() { }
 	Expr(const mdl::Expr&);
 	Term<List> term;
 	Type* type();
