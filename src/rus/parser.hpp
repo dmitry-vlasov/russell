@@ -63,7 +63,7 @@ struct AddToMath {
 	}
 };
 
-struct SymbolToInt {
+struct SymbToInt {
 	template <typename T>
 	struct result { typedef uint type; };
 	uint operator()(const std::vector<char>& s) const {
@@ -84,10 +84,19 @@ struct IdToInt {
 struct AddSymbol {
 	template <typename T1, typename T2>
 	struct result { typedef void type; };
-	void operator()(Expr& ex, Symbols ) const {
-		return parse(path);
+	void operator()(Expr& ex, Symbol s) const {
+		return ex.push_back(s);
 	}
 };
+
+struct ParseExpr {
+	template <typename T1>
+	struct result { typedef void type; };
+	void operator()(Expr& ex) const {
+		return ex.parse();
+	}
+};
+
 
 struct ParseInclusion {
 	template <typename T>

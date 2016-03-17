@@ -59,5 +59,9 @@ void Expr::push_back(Symbol s) {
 	}
 }
 
+void Expr::parse(){
+	// TODO
+}
+
 
 }}

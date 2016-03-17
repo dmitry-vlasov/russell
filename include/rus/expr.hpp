@@ -117,6 +117,7 @@ struct Expr {
 	Expr() : term() { }
 	Expr(const mdl::Expr&);
 	void push_back(Symbol);
+	void parse();
 	Term<List> term;
 	Type* type();
 };

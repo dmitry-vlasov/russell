@@ -16,8 +16,10 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	using phoenix::push_back;
 	using phoenix::new_;
 
-	const phoenix::function<LabelToInt>     labelToInt;
-	const phoenix::function<SymbolToInt>    symbolToInt;
+	const phoenix::function<IdToInt>     idToInt;
+	const phoenix::function<SymbToInt>   symbToInt;
+	const phoenix::function<AddSymbol>   addSymbol;
+	const phoenix::function<ParseExpr>   parseExpr;
 	const phoenix::function<AddToMath>      addToMath;
 	const phoenix::function<ParseInclusion> parseInclusion;
 	const phoenix::function<SetLocation<Iterator>> setLocation;
@@ -26,7 +28,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	symbol = lexeme[+(ascii::char_ - ';' - ascii::space)] [at_c<0>(_val) = symbolToInt(_1)];
 	id     = lexeme[+(ascii::char_ - ';' - ascii::space)] [_val = labelToInt(_1)];
 	path   = lexeme[+(ascii::char_ - ';' - ascii::space)];
-	expr   = + (symbol [push_back(at_c<0>(_val), _1)] | comment);
+	expr   = + (symbol [addSymbol(_val, _1)] | comment) > eps [parseExpr(_val)];
 
 	ref = (
 		(hyp_refs  [_a = _1] > uint_ [_val = createRef(_a, _1, _r1)]) |
