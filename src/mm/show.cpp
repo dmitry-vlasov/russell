@@ -51,7 +51,7 @@ public:
 		if (r.type == Ref::PROOF)
 			os << *r.val.prf;
 		else
-			os << label(r.label());
+			os << show_id(r.label());
 	}
 };
 
@@ -82,22 +82,22 @@ ostream& operator << (ostream& os, const Disjointed& disj) {
 }
 
 ostream& operator << (ostream& os, const Essential& ess) {
-	os << label(ess.label) << " $e " << ess.expr << "$.";
+	os << show_id(ess.label) << " $e " << ess.expr << "$.";
 	return os;
 }
 
 ostream& operator << (ostream& os, const Floating& flo) {
-	os << label(flo.label) << " $f " << flo.expr << "$.";
+	os << show_id(flo.label) << " $f " << flo.expr << "$.";
 	return os;
 }
 
 ostream& operator << (ostream& os, const Axiom& ax) {
-	os << label(ax.label) << " $a " << ax.expr << "$.";
+	os << show_id(ax.label) << " $a " << ax.expr << "$.";
 	return os;
 }
 
 ostream& operator << (ostream& os, const Theorem& th) {
-	os << label(th.label) << " $p " << th.expr << "$= " << *th.proof;
+	os << show_id(th.label) << " $p " << th.expr << "$= " << *th.proof;
 	return os;
 }
 

@@ -9,9 +9,9 @@ typedef map<Symbol, Expr> Subst;
 string show (const Subst& subst) {
 	string str;
 	for (auto it : subst) {
-		str += show(it.first);
+		str += show_sy(it.first);
 		str += " => ";
-		str += show(it.second);
+		str += show_ex(it.second);
 		str += '\n';
 	}
 	return str;
@@ -30,12 +30,12 @@ static void checkDisjPair(const Expr& ex1, const Expr& ex2, const Assertion* th,
 		for (auto s_2 : ex2.symbols) {
 			if (s_1.var && s_1 == s_2) {
 				string msg = "disjointed violation, ";
-				msg += "variable " + show(s_1) + " is common for " + show(ex1) + " and " + show(ex2);
+				msg += "variable " + show_sy(s_1) + " is common for " + show_ex(ex1) + " and " + show_ex(ex2);
 				throw Error("verification", msg, &th->loc);
 			}
 			if (s_1.var && s_2.var && !areDisjointed(th, s_1.lit, s_2.lit)) {
 				string msg = "inherited disjointed violation, vars: ";
-				msg += show(s_1) + " and " + show(s_2) + " ";
+				msg += show_sy(s_1) + " and " + show_sy(s_2) + " ";
 				msg += "are not disjointed in " + Smm::get().lex.labels.toStr(th->prop.label) + ", ";
 				msg += "while claimed to be disjointed in " + Smm::get().lex.labels.toStr(ass->prop.label);
 				throw Error("verification", msg, &th->loc);
@@ -108,7 +108,7 @@ static void checkFloating(const Assertion* ass, const vector<T>& floatings) {
 		if (flo->expr.symbols[0].var)
 			throw Error("floating first symbol must be type (constant)", &ass->loc);
 		if (!flo->expr.symbols[1].var) {
-			throw Error("floating second symbol must be type variable ", show(flo->expr), &ass->loc);
+			throw Error("floating second symbol must be type variable ", show_ex(flo->expr), &ass->loc);
 		}
 	}
 }
@@ -157,9 +157,9 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Expr>& expr_s
 		}
 		if (apply(sub, ess->expr) != expr_stack.top()) {
 			string msg = "hypothesis mismatch:\n";
-			msg += show(apply(sub, ess->expr)) + "\n";
+			msg += show_ex(apply(sub, ess->expr)) + "\n";
 			msg += "and\n";
-			msg += show(expr_stack.top()) + "\n";
+			msg += show_ex(expr_stack.top()) + "\n";
 			msg += "theorem " + Smm::get().lex.labels.toStr(th->prop.label) + "\n";
 			msg += "assertion " + Smm::get().lex.labels.toStr(ass->prop.label) + "\n";
 			throw Error("verification", msg, &th->loc);

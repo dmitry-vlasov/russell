@@ -167,9 +167,9 @@ struct MarkVars {
 				if (vc.consts.find(s) != vc.consts.end()) is_const = true;
 			}
 			if (is_var && is_const)
-				throw Error("constant symbol is marked as variable", show(s));
+				throw Error("constant symbol is marked as variable", show_sy(s));
 			if (!is_var && !is_const)
-				throw Error("symbol is neither constant nor variable", show(s));
+				throw Error("symbol is neither constant nor variable", show_sy(s));
 			s.var = is_var;
 		}
     }

@@ -14,20 +14,11 @@
 
 namespace mdl {
 
-void label::write(ostream& os) {
-	os << rus::Rus::get().lex.ids.toStr(lab);
-}
-string label::show() {
-	return rus::Rus::get().lex.ids.toStr(lab);
-}
-void symbol::write(ostream& os) {
-	os << rus::Rus::get().lex.symbs.toStr(lit);
-}
-string symbol::show() {
-	return rus::Rus::get().lex.symbs.toStr(lit);
-}
-string show(Symbol symb) {
+string show_sy(Symbol symb) {
 	return rus::Rus::get().lex.symbs.toStr(symb.lit);
+}
+string show_id(uint lab) {
+	return rus::Rus::get().lex.ids.toStr(lab);
 }
 
 namespace rus {
@@ -104,7 +95,7 @@ bool Rus::translate() {
 	}
 }
 
-ostream& show (ostream& os, const Rus& s) {
+ostream& operator << (ostream& os, const Rus& s) {
 	os << s.status;
 	return os;
 }

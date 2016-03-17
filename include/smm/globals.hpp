@@ -72,7 +72,7 @@ struct Smm {
 	static Smm& mod() { static Smm smm; return smm; }
 };
 
-ostream& show (ostream& os, const Smm& s);
+ostream& operator << (ostream& os, const Smm& s);
 Source* parse(const string& path);
 void verify(const vector<Assertion*>& theory);
 mm::Block*   translate_to_mm(const Source* source);

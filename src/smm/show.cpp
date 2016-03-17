@@ -54,7 +54,7 @@ ostream& operator << (ostream& os, const Ref& ref) {
 	default : assert(false && "impossible"); break;
 	}
 	if (ref.type == Ref::AXIOM || ref.type == Ref::THEOREM)
-		os << label(ref.label());
+		os << show_id(ref.label());
 	else
 		os << to_string(ref.index());
 	return os;
@@ -100,7 +100,7 @@ ostream& operator << (ostream& os, const Inner& inn) {
 ostream& operator << (ostream& os, const Proposition& prop) {
 	const bool ax = prop.axiom;
 	os << (ax ? "a" : "p");
-	os << label(prop.label);
+	os << show_id(prop.label);
 	os << (ax ? " $a " : " $p ") << prop.expr << (ax ? "$." : "$=");
 	return os;
 }

@@ -79,7 +79,7 @@ struct Rus {
 	static Rus& mod() { static Rus rus; return rus; }
 };
 
-ostream& show (ostream& os, const Rus& s);
+ostream& operator << (ostream& os, const Rus& s);
 Source* parse(const string& path);
 void unify(Source*);
 smm::Source* translate(const Source* source);

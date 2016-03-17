@@ -67,6 +67,7 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 		conf.target = Config::TARGET_RUS;
 	else
 		return false;
+	return true; // pacify the compiler
 }
 
 int main (int argc, const char* argv[])

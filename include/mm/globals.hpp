@@ -80,7 +80,7 @@ struct Mm {
 	static Mm& mod() { static Mm mm; return mm; }
 };
 
-ostream& show (ostream& os, const Mm& s);
+ostream& operator << (ostream& os, const Mm& s);
 Block* parse(const string& path);
 smm::Source* translate(const Block* source);
 

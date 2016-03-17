@@ -156,7 +156,7 @@ ostream& operator << (ostream& os, const ArgMap& amap) {
 	os << endl;
 	for (uint i = 0; i < amap.args.size(); ++ i) {
 		ArgMap::Arg arg = amap.args[i];
-		os << label(arg.label) << ": " << i << " -> " << arg.ind << endl;
+		os << show(arg.label) << ": " << i << " -> " << arg.ind << endl;
 	}
 	return os;
 }

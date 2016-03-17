@@ -14,20 +14,11 @@
 
 namespace mdl {
 
-void label::write(ostream& os) {
-	os << smm::Smm::get().lex.labels.toStr(lab);
-}
-string label::show() {
-	return smm::Smm::get().lex.labels.toStr(lab);
-}
-void symbol::write(ostream& os) {
-	os << smm::Smm::get().lex.symbols.toStr(lit);
-}
-string symbol::show() {
-	return smm::Smm::get().lex.symbols.toStr(lit);
-}
-string show(Symbol symb) {
+string show_sy(Symbol symb) {
 	return smm::Smm::get().lex.symbols.toStr(symb.lit);
+}
+string show_id(uint lab) {
+	return smm::Smm::get().lex.labels.toStr(lab);
 }
 
 namespace smm {
@@ -117,7 +108,7 @@ bool Smm::translate() {
 	}
 }
 
-ostream& show (ostream& os, const Smm& s) {
+ostream& operator << (ostream& os, const Smm& s) {
 	os << s.status;
 	return os;
 }
