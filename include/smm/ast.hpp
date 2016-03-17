@@ -115,6 +115,7 @@ struct Ref {
 
 	Type type;
 	Value val;
+	Expr expr;
 };
 
 struct Proof {

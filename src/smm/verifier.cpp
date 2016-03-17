@@ -4,19 +4,6 @@
 
 namespace mdl { namespace smm {
 
-typedef map<Symbol, Expr> Subst;
-
-string show (const Subst& subst) {
-	string str;
-	for (auto it : subst) {
-		str += show_sy(it.first);
-		str += " => ";
-		str += show_ex(it.second);
-		str += '\n';
-	}
-	return str;
-}
-
 bool areDisjointed(const Assertion* ass, Symbol s1, Symbol s2) {
 	for (auto it = ass->disjointed.cbegin(); it != ass->disjointed.cend(); ++ it) {
 		if ((*it)->expr.contains(s1) && (*it)->expr.contains(s2))
@@ -62,7 +49,7 @@ inline void append_expr(Expr& ex_1, const Expr& ex_2) {
 		ex_1.symbols.push_back(*it);
 }
 
-static Expr apply(const Subst& sub, const Expr& expr) {
+Expr apply(const Subst& sub, const Expr& expr) {
 	Expr ret;
 	for (auto s : expr.symbols) {
 		if (s.var) {

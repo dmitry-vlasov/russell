@@ -30,6 +30,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	mdl::smm::Ref,
 	(mdl::smm::Ref::Type, type)
 	(mdl::smm::Ref::Value, val)
+	(mdl::Expr,           expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(

@@ -64,6 +64,47 @@ void transform(Proof* tree, const Transform& trans, bool forward) {
 	tree->refs = new_refs;
 }
 
+Expr eval(Proof* proof);
+
+Expr eval(Ref& ref) {
+	if (!ref.expr.undef()) return ref.expr;
+	switch (ref.type) {
+	case Ref::ESSENTIAL: ref.expr = ref.val.ess->expr; break;
+	case Ref::FLOATING:  ref.expr = ref.val.flo->expr; break;
+	case Ref::INNER:	 ref.expr = ref.val.inn->expr; break;
+	case Ref::PROOF:     ref.expr = eval(ref.val.prf); break;
+	default : assert(false && "impossible"); break;
+	}
+	return ref.expr;
+}
+
+Expr eval(Proof* proof) {
+	assert(proof->type == Proof::TREE);
+	Ref& ref = proof->refs.back();
+	if (!ref.expr.undef())
+		return ref.expr;
+
+	const Assertion* ass = ref.val.ass;
+	Subst sub;
+	uint flo_ind = 0, esss = ass->essential.size();
+	for (auto flo : ass->floating) {
+		sub[flo->var()] = eval(proof->refs[esss + flo_ind ++]);
+	}
+	uint ess_ind = 0;
+	for (auto ess : ass->essential) {
+		if (apply(sub, ess->expr) != eval(proof->refs[ess_ind ++])) {
+			string msg = "hypothesis mismatch:\n";
+			msg += show_ex(apply(sub, ess->expr)) + "\n";
+			msg += "and\n";
+			msg += show_ex(eval(proof->refs[ess_ind])) + "\n";
+			msg += "assertion " + Smm::get().lex.labels.toStr(ass->prop.label) + "\n";
+			throw Error("verification", msg);
+		}
+	}
+	ref.expr = apply(sub, ass->prop.expr);
+	return ref.expr;
+}
+
 }} // mdl::mm
 
 

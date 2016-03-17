@@ -65,6 +65,9 @@ struct Expr {
 	bool operator != (const Expr& ex) const {
 		return !operator ==(ex);
 	}
+	bool undef() const {
+		return symbols.size() == 0;
+	}
 	vector<Symbol> symbols;
 };
 

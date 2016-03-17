@@ -19,11 +19,10 @@ static uint length(const Proof& tree) {
 
 static string show(const Proof& tree);
 
-static string show(const Ref& n) {
-	if (n.type == Ref::PROOF)
-		return show(*n.val.prf);
-	else
-		return show(n);
+static string show(const Ref& ref) {
+	ostringstream os;
+	os << ref;
+	return os.str();
 }
 
 static string show(const Proof& tree) {
@@ -55,7 +54,7 @@ ostream& operator << (ostream& os, const Ref& ref) {
 	}
 	if (ref.type == Ref::AXIOM || ref.type == Ref::THEOREM)
 		os << show_id(ref.label());
-	else
+	else if (ref.type != Ref::PROOF)
 		os << to_string(ref.index());
 	return os;
 }
