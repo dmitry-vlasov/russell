@@ -85,7 +85,7 @@ static void translate_rule(const Assertion* ass, rus::Theory& target, Maps& maps
 		translate_vars(ass->floating, maps),
 		rus::Expr(ass->prop.expr)
 	};
-	if (!maps.wff_rule && rule->type->name == wff_id()) {
+	if (!maps.wff_rule && rule->type->id == wff_id()) {
 		maps.wff_rule = rule;
 	}
 	target.nodes.push_back(rule);
@@ -135,7 +135,7 @@ static rus::Ref translate_ref(Ref ref, vector<rus::Ref>& proof, rus::Theorem* th
 			rus::Ref hr = translate_ref(ref.val.prf->refs[i], proof, thm, maps);
 			sr.val.step->refs.push_back(hr);
 		}
-		sr.val.step->index = proof.size();
+		sr.val.step->ind = proof.size();
 		sr.val.step->expr = translate_expr(ref.expr, maps);
 		proof.push_back(sr);
 		return sr;

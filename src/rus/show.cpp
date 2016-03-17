@@ -17,7 +17,7 @@ string show(const Vars& vars) {
 	string s;
 	for (uint i = 0; i < vars.v.size(); ++ i) {
 		Symbol var = vars.v[i];
-		s += show(var) + " : " + show_id(var.type->name);
+		s += show(var) + " : " + show_id(var.type->id);
 		if (i + 1 < vars.v.size())
 			s += ", ";
 	}
@@ -43,12 +43,12 @@ string show(const Disj& disj) {
 
 string show(const Type& type) {
 	string s;
-	s += "type " + show_id(type.name);
-	if (type.super.size() > 0) {
+	s += "type " + show_id(type.id);
+	if (type.sup.size() > 0) {
 		s += " : ";
-		for (uint i = 0; i < type.super.size(); ++ i) {
-			s += show_id(type.super[i]->name);
-			if (i + 1 < type.super.size()) s += ", ";
+		for (uint i = 0; i < type.sup.size(); ++ i) {
+			s += show_id(type.sup[i]->id);
+			if (i + 1 < type.sup.size()) s += ", ";
 		}
 	}
 	s += ";";
@@ -57,21 +57,21 @@ string show(const Type& type) {
 
 string show(const Rule& r) {
 	string s;
-	s += "rule " + show_id(r.name) + " ";
+	s += "rule " + show_id(r.id) + " ";
 	s += "(" + show(r.vars) + ") {\n";
-	s += "\tterm : " + show_id(r.type->name) + " = ";
+	s += "\tterm : " + show_id(r.type->id) + " = ";
 	s += "# " + show(r.term) + ";\n";
 	s += "}";
 	return s;
 }
 
 inline string show_type(const Expr& ex) {
-	return show_id(ex.term.rule->type->name);
+	return show_id(ex.term.rule->type->id);
 }
 
 string show(const Hyp& h) {
 	string s;
-	s += "hyp " + to_string(h.index + 1) + " : ";
+	s += "hyp " + to_string(h.ind + 1) + " : ";
 	s += show_type(h.expr) + " = ";
 	s += "|- " + show(h.expr) + ";";
 	return s;
@@ -79,7 +79,7 @@ string show(const Hyp& h) {
 
 string show(const Prop& p) {
 	string s;
-	s += "prop " + to_string(p.index + 1) + " : ";
+	s += "prop " + to_string(p.ind + 1) + " : ";
 	s += show_type(p.expr) + " = ";
 	s += "|- " + show(p.expr) + ";";
 	return s;
@@ -124,9 +124,9 @@ static string show_refs(const vector<Ref>& refs) {
 	for (uint i = 0; i < refs.size(); ++ i) {
 		Ref r = refs[i];
 		switch (r.kind) {
-		case Ref::HYP:  s += "hyp "  + to_string(r.val.hyp->index + 1);  break;
-		case Ref::PROP: s += "prop " + to_string(r.val.prop->index + 1); break;
-		case Ref::STEP: s += "step " + to_string(r.val.step->index + 1); break;
+		case Ref::HYP:  s += "hyp "  + to_string(r.val.hyp->ind + 1);  break;
+		case Ref::PROP: s += "prop " + to_string(r.val.prop->ind + 1); break;
+		case Ref::STEP: s += "step " + to_string(r.val.step->ind + 1); break;
 		default : assert(false && "impossible"); break;
 		}
 		if (i + 1 < refs.size()) s += ", ";
@@ -136,7 +136,7 @@ static string show_refs(const vector<Ref>& refs) {
 }
 
 string show(const Step& st) {
-	string s = "step " + to_string(st.index + 1) + " : ";
+	string s = "step " + to_string(st.ind + 1) + " : ";
 	s += show_type(st.expr) + " = ";
 	s += show_id(st.ass->id) + " ";
 	s += show_refs(st.refs) + " ";
@@ -145,7 +145,7 @@ string show(const Step& st) {
 }
 
 string show(const Claim& c) {
-	string s = "step " + to_string(c.index + 1) + " : ";
+	string s = "step " + to_string(c.ind + 1) + " : ";
 	s += show_type(c.expr) + " = ";
 	s += "claim " + show_refs(c.refs) + " ";
 	s += "|- " + show(c.expr) + "; {\n";
@@ -157,8 +157,8 @@ string show(const Claim& c) {
 
 string show(const Qed& q) {
 	string s = "qed ";
-	s += "prop " + to_string(q.prop->index + 1) + " = ";
-	s += "step " + to_string(q.step->index + 1) + " ;";
+	s += "prop " + to_string(q.prop->ind + 1) + " = ";
+	s += "step " + to_string(q.step->ind + 1) + " ;";
 	return s;
 }
 
@@ -174,7 +174,7 @@ string show(const Ref& ref) {
 
 string show(const Proof& p) {
 	string s = "proof ";
-	if (p.name != (uint)-1) s += show_id(p.name) + " ";
+	if (p.id != (uint)-1) s += show_id(p.id) + " ";
 	s += "of " + show_id(p.theorem->id) + " {\n";
 	for (auto& st : p.steps)
 		s += "\t" + show(st) + "\n";
@@ -212,7 +212,7 @@ static int depth(const Theory& thy) {
 }
 
 string show(const Theory& thy) {
-	string s = "theory " + show_id(thy.name) + "{";
+	string s = "theory " + show_id(thy.id) + "{";
 	for (auto& n : thy.nodes) {
 		//s += indent::paragraph("\n" + show(n));
 		s += show(n) + "\n\n";

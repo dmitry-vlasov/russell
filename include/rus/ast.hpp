@@ -22,14 +22,14 @@ struct Disj {
 struct Rule;
 
 struct Type {
-	uint name;
-	vector<Type*> super;
-	vector<Type*> infer;
+	uint id;
+	vector<Type*> sup;
+	vector<Type*> inf;
 	//Tree<Rule*>   rules;
 };
 
 struct Rule {
-	uint  name;
+	uint  id;
 	Type* type;
 	Vars  vars;
 	Expr  term;
@@ -38,12 +38,12 @@ struct Rule {
 inline Type* Expr::type() { return term.rule->type; }
 
 struct Hyp {
-	uint index;
+	uint ind;
 	Expr expr;
 };
 
 struct Prop {
-	uint index;
+	uint ind;
 	Expr expr;
 };
 
@@ -109,7 +109,7 @@ struct Ref {
 
 
 struct Step {
-	uint        index;
+	uint        ind;
 	Expr        expr;
 	vector<Ref> refs;
 	Assertion*  ass;
@@ -123,10 +123,10 @@ struct Qed {
 
 struct Proof {
 	Proof() :
-	name(-1), vars(), steps(),
+	id(-1), vars(), steps(),
 	roots(), theorem(nullptr) { }
 	~ Proof();
-	uint        name;
+	uint        id;
 	Vars        vars;
 	vector<Ref> steps;
 	vector<Ref> roots;
@@ -134,7 +134,7 @@ struct Proof {
 };
 
 struct Claim {
-	uint        index;
+	uint        ind;
 	Expr        expr;
 	vector<Ref> refs;
 	Proof       proof;
@@ -158,16 +158,16 @@ struct Node {
 		IMPORT
 	};
 	union Value {
-		void*      non;
-		Const*     cst;
-		Type*      tp;
-		Rule*      rul;
-		Axiom*     ax;
-		Def*       def;
-		Theorem*   thm;
-		Proof*     prf;
-		Theory*    thy;
-		Import*    imp;
+		void*    non;
+		Const*   cst;
+		Type*    tp;
+		Rule*    rul;
+		Axiom*   ax;
+		Def*     def;
+		Theorem* thm;
+		Proof*   prf;
+		Theory*  thy;
+		Import*  imp;
 	};
 
 	Node() : kind(NONE), val() { val.non = nullptr; }
@@ -194,13 +194,13 @@ struct Import {
 };
 
 struct Theory {
-	Theory() : name(-1), nodes(), parent(nullptr) { }
-	Theory(uint n, Theory* p) : name(n), nodes(), parent(p) { }
+	Theory() : id(-1), nodes(), parent(nullptr) { }
+	Theory(uint n, Theory* p) : id(n), nodes(), parent(p) { }
 	~ Theory() {
 		for (auto& n : nodes)
 			n.destroy();
 	}
-	uint         name;
+	uint         id;
 	vector<Node> nodes;
 	Theory*      parent;
 };
