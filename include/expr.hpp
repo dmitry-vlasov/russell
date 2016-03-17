@@ -68,6 +68,12 @@ struct Expr {
 	bool undef() const {
 		return symbols.size() == 0;
 	}
+	Symbol& operator [] (uint i) {
+		return symbols[i];
+	}
+	Symbol operator [] (uint i) const {
+		return symbols[i];
+	}
 	vector<Symbol> symbols;
 };
 

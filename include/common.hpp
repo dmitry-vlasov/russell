@@ -43,7 +43,7 @@ struct wrapper {
 };
 
 template<int len_f, int len_b>
-std::ostream& operator << (std::ostream& os, const wrapper<len_f, len_b>& wr){
+ostream& operator << (ostream& os, const wrapper<len_f, len_b>& wr){
 	os << wr.str;
 	return os;
 }

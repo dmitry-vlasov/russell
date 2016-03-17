@@ -8,6 +8,12 @@ struct Type;
 
 struct Symbol {
 	Symbol(): lit(-1), rep(false), type(nullptr) { }
+	Symbol(const mdl::Symbol s, bool r = false) :
+	lit(s.lit), rep(r), type(nullptr) {
+	}
+	Symbol(const mdl::Symbol s, bool r, Type* tp) :
+	lit(s.lit), rep(r), type(tp) {
+	}
 	bool operator == (const Symbol& s) const { return lit == s.lit; }
 	bool operator != (const Symbol& s) const { return !operator ==(s); }
 	bool operator < (const Symbol& s) const { return lit < s.lit; }
@@ -108,6 +114,7 @@ struct Tree {
 };
 
 struct Expr {
+	Expr(const mdl::Expr&);
 	Term<List> term;
 	Type* type();
 };

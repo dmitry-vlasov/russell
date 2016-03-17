@@ -14,4 +14,8 @@ string show(const Expr& ex) {
 	return s;
 }
 
+Expr::Expr(const mdl::Expr& ex) : term() {
+}
+
+
 }}

@@ -45,7 +45,6 @@ static Perm create_permutation(uint flos, uint esss) {
 
 static void translate(const Node& node, mm::Block* target, Maps& maps) {
 	switch(node.type) {
-	case Node::NONE: assert(false && "impossible"); break;;
 	case Node::CONSTANTS: {
 		mm::Constants* c = new mm::Constants { node.val.cst->expr };
 		target->contents.push_back(mm::Node(c));
