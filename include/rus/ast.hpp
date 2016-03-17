@@ -261,8 +261,8 @@ string show(const Hyp&);
 string show(const Prop&);
 string show(const Node&);
 string show(const Import&);
-string show(ostream& os, const Theory&);
-string show(ostream& os, const Source&);
+string show(const Theory&);
+string show(const Source&);
 
 inline ostream& operator << (ostream& os, const Const& c) { os << show(c); return os; }
 inline ostream& operator << (ostream& os, const Vars& v)  { os << show(v); return os; }
@@ -281,7 +281,7 @@ inline ostream& operator << (ostream& os, const Hyp& h)   { os << show(h); retur
 inline ostream& operator << (ostream& os, const Prop& p)  { os << show(p); return os; }
 inline ostream& operator << (ostream& os, const Node& n)  { os << show(n); return os; }
 inline ostream& operator << (ostream& os, const Import& i){ os << show(i); return os; }
-//inline ostream& operator << (ostream& os, const Theory& t){ os << show(t); return os; }
-//inline ostream& operator << (ostream& os, const Source& s){ os << show(s); return os; }
+inline ostream& operator << (ostream& os, const Theory& t){ os << show(t); return os; }
+inline ostream& operator << (ostream& os, const Source& s){ os << show(s); return os; }
 
 }} // mdl::rus

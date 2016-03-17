@@ -26,7 +26,10 @@ void symbol::write(ostream& os) {
 string symbol::show() {
 	return smm::Smm::get().lex.symbols.toStr(lit);
 }
-
+ostream& operator << (ostream& os, Symbol symb) {
+	os << smm::Smm::get().lex.symbols.toStr(symb.lit);
+	return os;
+}
 
 namespace smm {
 
@@ -83,12 +86,26 @@ bool Smm::translate() {
 		if (config.verbose)
 			cout << "translating file " << config.in << " ... " << flush;
 		timers.translate.start();
-		mm::Block* target = smm::translate_to_mm(source);
-		//cout << endl << *target;
-		ofstream out(config.out);
-		out << *target << endl;
-		out.close();
-		delete target;
+		switch (config.target) {
+		case Config::TARGET_NONE: break;
+		case Config::TARGET_MM: {
+			mm::Block* target = smm::translate_to_mm(source);
+			//cout << endl << *target;
+			ofstream out(config.out);
+			out << *target << endl;
+			out.close();
+			delete target;
+		}	break;
+		case Config::TARGET_RUS: {
+			rus::Source* target = smm::translate_to_rus(source);
+			//cout << endl << *target;
+			ofstream out(config.out);
+			out << *target << endl;
+			out.close();
+			delete target;
+		}	break;
+		}
+
 		timers.translate.stop();
 		if (config.verbose)
 			cout << "done in " << timers.translate << endl;

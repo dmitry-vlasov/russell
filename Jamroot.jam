@@ -13,15 +13,17 @@ exe smm :
   src/location.cpp
   
   src/mm/show.cpp
+  src/rus/show.cpp
+  src/rus/expr.cpp
   
   src/smm/tree.cpp
-  src/smm/expr.cpp
   src/smm/globals.cpp
   src/smm/show.cpp
   src/smm/parser.cpp
   src/smm/verifier.cpp
   src/smm/globals.cpp
-  src/smm/translate.cpp
+  src/smm/translate_mm.cpp
+  src/smm/translate_rus.cpp
   src/smm/main.cpp ;
   
 exe mm : 
@@ -31,7 +33,6 @@ exe mm :
   src/smm/show.cpp
   
   src/mm/tree.cpp
-  src/mm/expr.cpp
   src/mm/globals.cpp
   src/mm/show.cpp
   src/mm/parser.cpp
@@ -55,7 +56,6 @@ exe mdl :
 lib smml : 
   src/timer.cpp
   src/location.cpp
-  src/smm/expr.cpp
   src/smm/show.cpp
   src/smm/globals.cpp
   src/smm/parser.cpp
@@ -64,7 +64,6 @@ lib smml :
 lib mml : 
   src/timer.cpp
   src/location.cpp
-  src/mm/expr.cpp
   src/mm/globals.cpp
   src/mm/show.cpp
   src/mm/parser.cpp

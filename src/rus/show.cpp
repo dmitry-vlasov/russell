@@ -117,5 +117,10 @@ string show(const Theorem& th) {
 }
 
 
+string show(const Source& c) {
+	string s;
+
+	return s;
+}
 
 }} // mdl::smm

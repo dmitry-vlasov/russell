@@ -21,7 +21,7 @@ static void showHelp() {
 	cout << "Usage: smm [options]" << endl;
 	cout << "Options:" << endl;
 	cout << " -i  --in <path>    input file"  << endl;
-	cout << " -o  --out <path>   output file"  << endl;
+	cout << " -o  --out <path>   output file. Type of target is determined by extension: mm or rus"  << endl;
 	cout << " -r  --root <path>  root directory (for inclusions)" << endl;
 	cout << " -h  --help         print the help" << endl;
 	cout << " -v  --verbose      not be silent"  << endl;
@@ -60,7 +60,13 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 			return false;
 	}
 	if (conf.in.empty()) return false;
-	return true;
+	if (conf.out.empty()) return true;
+	if (conf.out.substr(conf.out.size() - 3) == ".mm")
+		conf.target = Config::TARGET_MM;
+	else if (conf.out.substr(conf.out.size() - 4) == ".rus")
+		conf.target = Config::TARGET_RUS;
+	else
+		return false;
 }
 
 int main (int argc, const char* argv[])

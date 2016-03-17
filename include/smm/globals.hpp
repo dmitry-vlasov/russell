@@ -14,14 +14,16 @@
 
 #include "smm/ast.hpp"
 #include "mm/ast.hpp"
+#include "rus/ast.hpp"
 #include "timer.hpp"
 
 namespace mdl { namespace smm {
 
 struct Config {
+	enum Target { TARGET_NONE, TARGET_MM, TARGET_RUS };
 	Config() :
 	verbose(false), info(false), help(false),
-	in(), root() { }
+	in(), root(), target(TARGET_NONE) { }
 
 	bool verbose;
 	bool info;
@@ -30,6 +32,7 @@ struct Config {
 	string in;
 	string out;
 	string root;
+	Target target;
 };
 
 struct Smm {
@@ -72,7 +75,8 @@ struct Smm {
 ostream& show (ostream& os, const Smm& s);
 Source* parse(const string& path);
 void verify(const vector<Assertion*>& theory);
-mm::Block* translate_to_mm(const Source* source);
+mm::Block*   translate_to_mm(const Source* source);
+rus::Source* translate_to_rus(const Source* source);
 
 }} // mdl::smm
 

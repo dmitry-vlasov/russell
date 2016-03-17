@@ -1,12 +1,6 @@
 #include "rus/globals.hpp"
 
 namespace mdl {
- 
-ostream& operator << (ostream& os, Symbol symb) {
-	os << rus::Rus::get().lex.symbs.toStr(symb.lit);
-	return os;
-}
-
 namespace rus {
 
 string show(Symbol s) {
