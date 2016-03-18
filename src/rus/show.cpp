@@ -66,7 +66,7 @@ string show(const Rule& r) {
 }
 
 inline string show_type(const Expr& ex) {
-	return show_id(ex.term.rule->type->id);
+	return show_id(ex.type->id);
 }
 
 string show(const Hyp& h) {

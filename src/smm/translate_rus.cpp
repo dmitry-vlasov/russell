@@ -8,12 +8,14 @@ struct Maps {
 	map<const Assertion*, rus::Assertion*> assertions;
 	map<uint, rus::Type*> types;
 	rus::Type*            wff;
+	set<uint>             redundant_consts;
 };
 
-static void translate_const(const Expr& consts, rus::Theory& target) {
+static void translate_const(const Expr& consts, rus::Theory& target, const Maps& maps) {
 	for (auto s : consts.symbols) {
 		rus::Const* c = new rus::Const{rus::Symbol(s), rus::Symbol(), rus::Symbol()};
-		target.nodes.push_back(rus::Node(c));
+		if (maps.redundant_consts.find(s.lit) == maps.redundant_consts.end())
+			target.nodes.push_back(rus::Node(c));
 	}
 }
 
@@ -192,8 +194,8 @@ static void translate_ass(const Assertion* ass, rus::Theory& target, Maps& maps)
 
 static void translate_node(const Node& node, rus::Theory& target, Maps& maps) {
 	switch(node.type) {
-	case Node::CONSTANTS: translate_const(node.val.cst->expr, target); break;
-	case Node::ASSERTION: translate_ass(node.val.ass, target, maps);   break;
+	case Node::CONSTANTS: translate_const(node.val.cst->expr, target, maps); break;
+	case Node::ASSERTION: translate_ass(node.val.ass, target, maps); break;
 	case Node::SOURCE:
 		// TODO:
 		//translate(node.val.blk, target);
@@ -213,6 +215,10 @@ rus::Source* translate_to_rus(const Source* source) {
 	rus::Source* target = new rus::Source(Smm::get().config.out);
 	Maps maps;
 	maps.wff = nullptr;
+	maps.redundant_consts.insert(Smm::get().lex.symbols.getInt("wff"));
+	maps.redundant_consts.insert(Smm::get().lex.symbols.getInt("set"));
+	maps.redundant_consts.insert(Smm::get().lex.symbols.getInt("class"));
+	maps.redundant_consts.insert(Smm::get().lex.symbols.getInt("|-"));
 	translate_theory(source, target->theory, maps);
 	return target;
 }
