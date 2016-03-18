@@ -18,16 +18,11 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::rus::Type*, type)
 )
 
-//BOOST_FUSION_ADAPT_STRUCT(
-//	mdl::Expr,
-//	(std::vector<mdl::Symbol>, symbols)
-//)
-
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Const,
-	(Symbol, symb)
-	(Symbol, ascii)
-	(Symbol, latex)
+	(mdl::rus::Symbol, symb)
+	(mdl::rus::Symbol, ascii)
+	(mdl::rus::Symbol, latex)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -42,8 +37,9 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Type,
-	(mdl::vector<mdl::rus::Type*>, super)
-	(mdl::vector<mdl::rus::Type*>, infer)
+	(mdl::vector<mdl::rus::Type*>,    super)
+	(mdl::vector<mdl::rus::Type*>,    infer)
+	(mdl::rus::Tree<mdl::rus::Rule*>, rules;)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -56,19 +52,19 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Hyp,
-	(unit, ind)
+	(uint, ind)
 	(mdl::rus::Expr, expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Prop,
-	(unit, ind)
+	(uint, ind)
 	(mdl::rus::Expr, expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Assertion,
-	(unit, id)
+	(uint, id)
 	(mdl::rus::Vars, vars)
 	(mdl::rus::Disj, disj)
 	(mdl::vector<mdl::rus::Hyp*>,  hyps)
@@ -94,12 +90,6 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
-	mdl::rus::Proof,
-	(mdl::rus::Assertion, ass)
-	(mdl::vector<mdl::rus::Proof*>, proofs)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Ref::Value,
 	(void*,  non)
 	(mdl::rus::Hyp*,   hyp)
@@ -122,6 +112,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::rus::Expr, expr)
 	(mdl::vector<mdl::rus::Ref>, refs)
 	(mdl::rus::Assertion*, ass)
+	(mdl::rus::Step::Kind, kind)
 	(mdl::rus::Sub<>*, sub)
 )
 
@@ -135,8 +126,8 @@ BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Proof,
 	(uint, id)
 	(mdl::rus::Vars, vars)
-	(md::vector<mdl::rus::Ref>, steps)
-	(md::vector<mdl::rus::Ref>, roots)
+	(mdl::vector<mdl::rus::Ref>, steps)
+	(mdl::vector<mdl::rus::Ref>, roots)
 	(mdl::rus::Assertion*, theorem)
 )
 

@@ -120,6 +120,17 @@ static void translate_def(const Assertion* ass, rus::Theory& target, Maps& maps)
 	target.nodes.push_back(ax);
 }
 
+rus::Node::Kind ass_kind(const Assertion* ass) {
+	if (!is_turnstile(ass->prop.expr.symbols.front())) {
+		return rus::Node::RULE;
+	} else if (is_def(ass->prop.label)) {
+		return rus::Node::DEF;
+	} else if (!ass->proof) {
+		return rus::Node::AXIOM;
+	} else {
+		return rus::Node::THEOREM;
+	}
+}
 
 static rus::Ref translate_ref(Ref ref, vector<rus::Ref>& proof, rus::Theorem* thm, Maps& maps) {
 	switch (ref.type) {
@@ -137,6 +148,12 @@ static rus::Ref translate_ref(Ref ref, vector<rus::Ref>& proof, rus::Theorem* th
 		}
 		sr.val.step->ind = proof.size();
 		sr.val.step->expr = translate_expr(ref.expr, maps);
+		switch (ass_kind(ass)) {
+		case rus::Node::AXIOM:   sr.val.step->kind = rus::Step::AX; break;
+		case rus::Node::DEF:     sr.val.step->kind = rus::Step::DF; break;
+		case rus::Node::THEOREM: sr.val.step->kind = rus::Step::TH; break;
+		default : assert(false && "impossible"); break;
+		}
 		proof.push_back(sr);
 		return sr;
 	}
@@ -165,18 +182,6 @@ static void translate_theorem(const Assertion* ass, rus::Theory& target, Maps& m
 	target.nodes.push_back(thm);
 	translate_proof(ass, thm, target, maps);
 	maps.assertions[ass] = &thm->ass;
-}
-
-rus::Node::Kind ass_kind(const Assertion* ass) {
-	if (!is_turnstile(ass->prop.expr.symbols.front())) {
-		return rus::Node::RULE;
-	} else if (is_def(ass->prop.label)) {
-		return rus::Node::DEF;
-	} else if (!ass->proof) {
-		return rus::Node::AXIOM;
-	} else {
-		return rus::Node::THEOREM;
-	}
 }
 
 static void translate_ass(const Assertion* ass, rus::Theory& target, Maps& maps) {

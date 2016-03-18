@@ -1,4 +1,4 @@
-//#include "rus/grammar.hpp"
+#include "rus/grammar.hpp"
 #include "rus/globals.hpp"
 
 namespace mdl { namespace rus {
@@ -18,10 +18,10 @@ Source* parse(const string& path) {
 	LocationIter iter(storage.begin(), path);
 	LocationIter end(storage.end(), path);
 	Source* source = new Source(path);
-	//bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, *source);
-	//if (!r || iter != end) {
-	//	throw Error("parsing failed");
-	//}
+	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, *source);
+	if (!r || iter != end) {
+		throw Error("parsing failed");
+	}
 	return source;
 }
 

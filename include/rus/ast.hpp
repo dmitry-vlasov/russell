@@ -25,7 +25,7 @@ struct Type {
 	uint id;
 	vector<Type*> sup;
 	vector<Type*> inf;
-	//Tree<Rule*>   rules;
+	Tree<Rule*>   rules;
 };
 
 struct Rule {
@@ -109,10 +109,12 @@ struct Ref {
 
 
 struct Step {
+	enum Kind {AX, TH, DF};
 	uint        ind;
 	Expr        expr;
 	vector<Ref> refs;
 	Assertion*  ass;
+	Kind        kind;
 	Sub<>       sub;
 };
 

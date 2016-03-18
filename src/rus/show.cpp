@@ -4,11 +4,11 @@ namespace mdl { namespace rus {
 
 string show(const Const& c) {
 	string s = "const {\n";
-	s += "\tsymb " + show(c.symb) + ";\n";
+	s += "\tsymbol " + show(c.symb) + " ;\n";
 	if (!c.ascii.undef())
-		s += "\tascii " + show(c.ascii) + ";\n";
+		s += "\tascii " + show(c.ascii) + " ;\n";
 	if (!c.latex.undef())
-		s += "\tlatex " + show(c.latex) + ";\n";
+		s += "\tlatex " + show(c.latex) + " ;\n";
 	s += "}";
 	return s;
 }
@@ -138,6 +138,11 @@ static string show_refs(const vector<Ref>& refs) {
 string show(const Step& st) {
 	string s = "step " + to_string(st.ind + 1) + " : ";
 	s += show_type(st.expr) + " = ";
+	switch (st.kind) {
+	case Step::AX : s += "ax "; break;
+	case Step::TH : s += "th "; break;
+	case Step::DF : s += "df "; break;
+	}
 	s += show_id(st.ass->id) + " ";
 	s += show_refs(st.refs) + " ";
 	s += "|- " + show(st.expr) + ";";

@@ -56,10 +56,17 @@ struct Rus {
 		T& operator[] (uint ind) {
 			return table[ind];
 		}
+		T operator[] (uint ind) const {
+			return table.find(ind)->second;
+		}
 	};
 	struct Math {
-		Table<Theorem*>   theorems;
-		Table<Axiom*>     axioms;
+		Table<Type*>    types;
+		Table<Theorem*> theorems;
+		Table<Axiom*>   axioms;
+		Table<Def*>     defs;
+		Table<Rule*>    rules;
+		set<Symbol>     consts;
 	};
 
 	Config  config;

@@ -97,12 +97,17 @@ struct List {
 	vector<Term<List>> final;
 };
 
+struct Expr;
+
 template<typename T>
 struct Tree {
 	Tree() : symb(), next(nullptr),
 	prev(nullptr), side(nullptr), init(), final(), data() { }
 	Tree(Symbol s) : symb(s), next(nullptr),
 	prev(nullptr), side(nullptr), init(), final(), data() { }
+	void add(const Expr&, T d) {
+		// TODO
+	}
 	Symbol symb;
 	Tree*  next;
 	Tree*  prev;
@@ -117,7 +122,7 @@ struct Expr {
 	Expr() : term() { }
 	Expr(const mdl::Expr&);
 	void push_back(Symbol);
-	void parse();
+	void parse(Type*);
 	Term<List> term;
 	Type* type();
 };

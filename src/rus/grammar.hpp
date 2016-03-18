@@ -15,92 +15,118 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	using phoenix::at_c;
 	using phoenix::push_back;
 	using phoenix::new_;
+	using phoenix::val;
 
 	const phoenix::function<IdToInt>     idToInt;
 	const phoenix::function<SymbToInt>   symbToInt;
 	const phoenix::function<AddSymbol>   addSymbol;
 	const phoenix::function<ParseExpr>   parseExpr;
-	const phoenix::function<AddToMath>      addToMath;
-	const phoenix::function<ParseInclusion> parseInclusion;
+	const phoenix::function<FindType>    findType;
+	const phoenix::function<AddDisjVar>  addDisjVar;
+	const phoenix::function<NewDisjSet>  newDisjSet;
+	const phoenix::function<AddToMath>   addToMath;
+	const phoenix::function<ParseImport> parseImport;
 	const phoenix::function<SetLocation<Iterator>> setLocation;
-	const phoenix::function<CreateRef>      createRef;
 
-	symbol = lexeme[+(ascii::char_ - ';' - ascii::space)] [at_c<0>(_val) = symbolToInt(_1)];
-	id     = lexeme[+(ascii::char_ - ';' - ascii::space)] [_val = labelToInt(_1)];
-	path   = lexeme[+(ascii::char_ - ';' - ascii::space)];
-	expr   = + (symbol [addSymbol(_val, _1)] | comment) > eps [parseExpr(_val)];
+	symb = lexeme[+(ascii::char_ - ';' - ascii::space)] [at_c<0>(_val) = symbToInt(_1)];
+	id   = lexeme[+(ascii::char_ - ';' - ascii::space)] [_val = idToInt(_1)];
+	path = lexeme[+(ascii::char_ - ';' - ascii::space)];
 
-	ref = (
-		(hyp_refs  [_a = _1] > uint_ [_val = createRef(_a, _1, _r1)]) |
-		(prop_refs [_a = _1] > label [_val = createRef(_a, _1, _r1)])
-	);
-	proof =
-		qi::eps     [_val = new_<rus::Proof>()]
-		> + ref(_r1)[push_back(phoenix::at_c<0>(*_val), _1)]
-		> lit("$.") [phoenix::at_c<1>(*_val) = _r1];
-	provable =
-		lit("p")    [at_c<0>(_val) = false]
-		> label     [at_c<1>(_val) = _1]
-		> "$p"
-		> expr      [at_c<2>(_val) = _1]
-		> "$=";
-	axiomatic =
-		lit("a")    [at_c<0>(_val) = true]
-		> label     [at_c<1>(_val) = _1]
-		> "$a"
-		> expr      [at_c<2>(_val) = _1]
-		> "$.";
-	essential =
-		lit("e")    [_val = new_<rus::Essential>()]
-		> uint_     [at_c<0>(*_val) = _1]
-		> "$e"
-		> expr      [at_c<1>(*_val) = _1]
-		> "$.";
-	inner =
-		lit("i")    [_val = new_<rus::Inner>()]
-		> uint_     [at_c<0>(*_val) = _1]
-		> "$f"
-		> expr      [at_c<1>(*_val) = _1]
-		> "$.";
-	floating =
-		lit("f")    [_val = new_<rus::Floating>()]
-		> uint_     [at_c<0>(*_val) = _1]
-		> "$f"
-		> expr      [at_c<1>(*_val) = _1]
-		> "$.";
-	disjointed =
-		lit("$d")   [_val = new_<rus::Disjointed>()]
-		> expr      [at_c<0>(*_val) = _1]
-		> "$.";
-	variables =
-		lit("$v")   [_val = new_<rus::Variables>()]
-		> expr      [at_c<0>(*_val) = _1]
-		> "$.";
-	assertion =
-		lit("${")        [_val = new_<rus::Assertion>()]
-		> *variables     [push_back(phoenix::at_c<0>(*_val), _1)]
-		> *disjointed    [push_back(phoenix::at_c<1>(*_val), _1)]
-		> *essential     [push_back(phoenix::at_c<2>(*_val), _1)]
-		> *floating      [push_back(phoenix::at_c<3>(*_val), _1)]
-		> *inner         [push_back(phoenix::at_c<4>(*_val), _1)]
-		>  (axiomatic    [phoenix::at_c<5>(*_val) = _1] |
-			(provable    [phoenix::at_c<5>(*_val) = _1]
-			> proof(_val)[phoenix::at_c<6>(*_val) = _1])
+	/*
+	expr = + (symbol [addSymbol(_val, _1)] | comment) > eps [parseExpr(_val, _r1)];
+
+
+	disj =
+		lit("(")
+		> *( + symb [addDisjVar(phoenix::at_c<0>(_val), _1)] ) [newDisjSet(_val)]
+		> ")";
+
+	vars =
+		*(symbol    [_a =_1]
+		> ":" > id  [phoenix::at_c<2>(_a) = findType(_1)]
+		> eps       [push_back(phoenix::at_c<0>(_val), _a)]
+		);
+
+	prop =
+		lit("prop")  [_val = new_<Prop>]
+		> ? uint_    [phoenix::at_c<0>(_val) = _1]
+		> ":"
+		> id        [_a = _1]
+		> "=" > "|-"
+		> expr(_a)  [phoenix::at_c<1>(_val) = _1]
+		> lit(";")  [parseExpr(phoenix::at_c<1>(_val), _a)];
+
+	hyp =
+		lit("hyp")  [_val = new_<Hyp>]
+		> ? uint_    [phoenix::at_c<0>(_val) = _1]
+		> ":"
+		> id        [_a = _1]
+		> "=" > "|-"
+		> expr(_a)  [phoenix::at_c<1>(_val) = _1]
+		> lit(";")  [parseExpr(phoenix::at_c<1>(_val), _a)];
+
+	axiom =
+		lit("axiom")[_val = new_<Axiom>]
+		> eps       [_a = phoenix::at_c<0>(*_val)]
+		> id        [phoenix::at_c<0>(_a) = _1]
+		> "("
+		> vars      [phoenix::at_c<1>(_a) = _1]
+		> ")"
+		> ? disjs    [phoenix::at_c<2>(_a) = _1]
+		> "{"
+		> ?( + (hyp [push_back(phoenix::at_c<3>(_a), _1)]) > bar)
+		> + (prop   [push_back(phoenix::at_c<4>(_a), _1)])
+		> "}"       [addToMath(_val)];
+
+	rule =
+		lit("rule") [_val = new_<Rule>]
+		> ? id      [phoenix::at_c<0>(*_val) = _1]
+		> "("
+		> vars      [phoenix::at_c<2>(*_val) = _1]
+		> ")" > "{" > "term" > ":"
+		> id        [phoenix::at_c<1>(*_val) = findType(_1)]
+		> "=" > "#"
+		> expr(val(-1)) [phoenix::at_c<3>(*_val) = _1]
+		> ";"
+		> lit("}")  [addToMath(_val)];
+
+	type =
+		lit("type") [_val = new_<Const>()]
+		> id        [phoenix::at_c<0>(*_val) = _1]
+		>> (":"
+			> + id  [push_back(phoenix::at_c<1>(*_val), findType(_1))]
 		)
-		> lit("$}")      [addToMath(_val)];
-	constants =
-		lit("$c")        [_val = new_<rus::Constants>()]
-		> expr           [phoenix::at_c<0>(*_val) = _1]
-		> lit("$.")      [addToMath(_val)];
-	inclusion = lit("$[") > path [_val = parseInclusion(_1)] > "$]";
-	comment = lit("$(") >> lexeme[*(ascii::char_ - "$)")] >> "$)";
+		> lit(";")  [addToMath(_val)];
+	*/
+
+	constant =
+		lit("constant") [_val = new_<Const>()]
+		> "symbol"
+		> symb          [phoenix::at_c<0>(*_val) = _1]
+		> lit(";")
+		>> "ascii"
+		> symb          [phoenix::at_c<1>(*_val) = _1]
+		> lit(";")
+		>> "latex"
+		> symb          [phoenix::at_c<2>(*_val) = _1]
+		> lit(";")
+		> lit(";")      [addToMath(_val)];
+
+	import = lit("import") > path [_val = parseImport(_1)] > ";";
+
+	comment = lit("/*") >> lexeme[*(ascii::char_ - "*/")] >> "*/" |
+			  lit("//") >> lexeme[*(ascii::char_ - "\n")] >> "\n";
 	source = +(
-		constants [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
-		assertion [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
-		inclusion [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
+		constant [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
+	/*	type     [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
+		rule     [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
+		axiom    [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
+		def      [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
+		theorem  [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
+		proof    [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |*/
 		comment);
 
-	qi::on_success(assertion, setLocation(_val, _1));
+	//qi::on_success(assertion, setLocation(_val, _1));
 	qi::on_error<qi::fail>(
 		source,
 		std::cout << phoenix::val("Syntax error. Expecting ") << _4

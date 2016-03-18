@@ -59,7 +59,7 @@ void Expr::push_back(Symbol s) {
 	}
 }
 
-void Expr::parse(){
+void Expr::parse(Type* type){
 	// TODO
 }
 
