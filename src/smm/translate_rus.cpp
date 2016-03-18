@@ -7,7 +7,7 @@ namespace mdl { namespace smm { namespace {
 struct Maps {
 	map<const Assertion*, rus::Assertion*> assertions;
 	map<uint, rus::Type*> types;
-	rus::Rule*            wff_rule;
+	rus::Type*            wff;
 };
 
 static void translate_const(const Expr& consts, rus::Theory& target) {
@@ -23,9 +23,6 @@ inline bool is_turnstile(Symbol s) {
 inline bool is_def(uint label) {
 	return Smm::get().lex.labels.toStr(label).substr(0,4) == "def-";
 }
-inline uint wff_id() {
-	return Smm::mod().lex.labels.toInt("wff");
-}
 inline uint equiv_sy() {
 	return Smm::mod().lex.symbols.toInt("<->");
 }
@@ -36,7 +33,7 @@ inline uint equal_sy() {
 static rus::Expr translate_expr(const Expr& e, Maps& maps) {
 	rus::Expr ex(e);
 	// it's the best what we can do here ...
-	ex.term.rule = maps.wff_rule;
+	ex.type = maps.wff;
 	return ex;
 }
 
@@ -73,6 +70,8 @@ static rus::Type* translate_type(uint type_lit, rus::Theory& target, Maps& maps)
 		rus::Type* type = new rus::Type { type_id };
 		maps.types[type_lit] = type;
 		target.nodes.push_back(type);
+		if (type_str == "wff")
+			maps.wff = type;
 		return type;
 	} else
 		return maps.types.find(type_lit)->second;
@@ -85,9 +84,6 @@ static void translate_rule(const Assertion* ass, rus::Theory& target, Maps& maps
 		translate_vars(ass->floating, maps),
 		rus::Expr(ass->prop.expr)
 	};
-	if (!maps.wff_rule && rule->type->id == wff_id()) {
-		maps.wff_rule = rule;
-	}
 	target.nodes.push_back(rule);
 }
 
@@ -216,7 +212,7 @@ static void translate_theory(const Source* source, rus::Theory& target, Maps& ma
 rus::Source* translate_to_rus(const Source* source) {
 	rus::Source* target = new rus::Source(Smm::get().config.out);
 	Maps maps;
-	maps.wff_rule = nullptr;
+	maps.wff = nullptr;
 	translate_theory(source, target->theory, maps);
 	return target;
 }

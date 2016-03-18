@@ -119,12 +119,12 @@ struct Tree {
 };
 
 struct Expr {
-	Expr() : term() { }
+	Expr() : term(), type(nullptr) { }
 	Expr(const mdl::Expr&);
 	void push_back(Symbol);
-	void parse(Type*);
+	void parse();
 	Term<List> term;
-	Type* type();
+	Type*      type;
 };
 
 string show(const Expr&);

@@ -3,7 +3,7 @@
 namespace mdl { namespace rus {
 
 string show(const Const& c) {
-	string s = "const {\n";
+	string s = "constant {\n";
 	s += "\tsymbol " + show(c.symb) + " ;\n";
 	if (!c.ascii.undef())
 		s += "\tascii " + show(c.ascii) + " ;\n";

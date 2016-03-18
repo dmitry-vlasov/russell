@@ -14,7 +14,7 @@ string show(const Expr& ex) {
 	return s;
 }
 
-Expr::Expr(const mdl::Expr& ex) : term() {
+Expr::Expr(const mdl::Expr& ex) : term(), type(nullptr) {
 	for (auto it = ex.symbols.begin(); it != ex.symbols.end(); ++ it) {
 		// pass the first symbol
 		if (it == ex.symbols.begin())
@@ -59,7 +59,7 @@ void Expr::push_back(Symbol s) {
 	}
 }
 
-void Expr::parse(Type* type){
+void Expr::parse(){
 	// TODO
 }
 

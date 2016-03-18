@@ -26,7 +26,7 @@ namespace rus {
 void Rus::run() {
 	timers.total.start();
 	if (config.verbose)
-		cout << "verifying file " << config.in << " ... " << flush;
+		cout << "processing file " << config.in << " ... " << flush;
 	if (!parse()) {
 		failed = true; return;
 	}
@@ -45,7 +45,7 @@ bool Rus::parse() {
 	try {
 		timers.read.start();
 		source = rus::parse(config.in);
-		//cout << *source << endl;
+		cout << *source << endl;
 		timers.read.stop();
 		return true;
 	} catch (Error& err) {

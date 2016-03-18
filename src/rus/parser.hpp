@@ -60,11 +60,11 @@ struct AddSymbol {
 };
 
 struct ParseExpr {
-	template <typename T1>
+	template <typename T1, typename T2, typename T3>
 	struct result { typedef void type; };
-	void operator()(Expr& ex, uint id) const {
-		Type* type = find_type(id);
-		return ex.parse(type);
+	void operator()(Expr& ex, Type* tp, bool x) const {
+		ex.type = tp;
+		if (x) ex.parse();
 	}
 };
 
@@ -82,12 +82,12 @@ struct FindType {
 	template <typename T>
 	struct result { typedef Type* type; };
 	Type* operator()(uint id) const {
-		return find_type(id);
+		return (id == (uint)-1) ? nullptr : find_type(id);
 	}
 };
 
 struct AddDisjVar {
-	template <typename T>
+	template <typename T1, typename T2>
 	struct result { typedef void type; };
 	void operator()(vector<vector<Symbol>>& disj, Symbol v) const {
 		disj.back().push_back(v);
@@ -117,7 +117,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), ascii::space_type> {
 	Grammar();
 	void initNames();
 
-	qi::rule<Iterator, Expr(uint), ascii::space_type> expr;
+	qi::rule<Iterator, Expr(Type*, bool), ascii::space_type> expr;
 	qi::rule<Iterator, Symbol(), ascii::space_type> symb;
 	qi::rule<Iterator, uint(),        ascii::space_type> id;
 	qi::rule<Iterator, std::string(), ascii::space_type> path;

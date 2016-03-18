@@ -35,8 +35,6 @@ struct Rule {
 	Expr  term;
 };
 
-inline Type* Expr::type() { return term.rule->type; }
-
 struct Hyp {
 	uint ind;
 	Expr expr;
