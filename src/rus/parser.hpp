@@ -31,6 +31,9 @@ struct AddToMath {
 		r->type->rules.add(r->term, r);
 		Rus::mod().math.rules[r->id] = r;
 	}
+	void operator()(Axiom* a) const {
+		Rus::mod().math.axioms[a->ass.id] = a;
+	}
 };
 
 struct SymbToInt {
@@ -117,6 +120,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), ascii::space_type> {
 	Grammar();
 	void initNames();
 
+	qi::rule<Iterator, qi::unused_type> bar;
 	qi::rule<Iterator, Expr(Type*, bool), ascii::space_type> expr;
 	qi::rule<Iterator, Symbol(), ascii::space_type> symb;
 	qi::rule<Iterator, uint(),        ascii::space_type> id;
@@ -128,7 +132,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), ascii::space_type> {
 	qi::rule<Iterator, Proof*(), ascii::space_type> proof;
 	qi::rule<Iterator, Theorem*(), ascii::space_type> theorem;
 	qi::rule<Iterator, Def*(), ascii::space_type> def;
-	qi::rule<Iterator, Axiom*(), qi::locals<Assertion&>, ascii::space_type> axiom;
+	qi::rule<Iterator, Axiom*(), qi::locals<Assertion*>, ascii::space_type> axiom;
 	qi::rule<Iterator, Rule*(), ascii::space_type> rule;
 	qi::rule<Iterator, Type*(), ascii::space_type> type;
 	qi::rule<Iterator, Const*(), ascii::space_type> constant;
@@ -139,6 +143,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), ascii::space_type> {
 
 template <typename Iterator>
 void Grammar<Iterator>::initNames() {
+	bar.name("bar");
 	expr.name("expr");
 	symb.name("symbol");
 	id.name("id");

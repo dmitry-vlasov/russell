@@ -80,7 +80,7 @@ bool Rus::translate() {
 		smm::Source* target = rus::translate(source);
 		//cout << endl << *target;
 		ofstream out(config.out);
-		out << *target << endl;
+		//out << *target << endl;
 		out.close();
 		delete target;
 		timers.translate.stop();

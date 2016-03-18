@@ -29,14 +29,15 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	const phoenix::function<ParseImport> parseImport;
 	const phoenix::function<SetLocation<Iterator>> setLocation;
 
+	bar  = lexeme[lit("-----")] >> * ascii::char_('-');
 	symb = lexeme[+(ascii::char_ - ';' - ascii::space)] [at_c<0>(_val) = symbToInt(_1)];
-	id   = lexeme[ + ascii::char_("a-zA-Z0-9_.\\-")]    [_val = idToInt(_1)];
+	id   = lexeme[+ ascii::char_("a-zA-Z0-9_.\\-")]    [_val = idToInt(_1)];
 	path = lexeme[+(ascii::char_ - ';' - ascii::space)];
 
 	expr = + (symb [addSymbol(_val, _1)] | comment) > eps [parseExpr(_val, _r1, _r2)];
 
 	disj =
-		lit("(")
+		lit("disjointed") > "("
 		> + (
 			eps      [newDisjSet(phoenix::at_c<0>(_val))]
 			> + symb [addDisjVar(phoenix::at_c<0>(_val), _1)]
@@ -44,43 +45,48 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> ")";
 
 	vars =
-		* ( !lit(")")
+		( !lit(")")
 		> symb       [_a =_1]
 		> ":" > id   [phoenix::at_c<2>(_a) = findType(_1)]
 		> eps        [push_back(phoenix::at_c<0>(_val), _a)]
-		);
-	/*
+		) % ",";
+
+//axiom ax-1 (ph : wff, ps : wff) {
+//	prop 1 : wff = |- ( ph -> ( ps -> ph ) ) ;
+//}
 	prop =
-		lit("prop")  [_val = new_<Prop>]
-		> ? uint_    [phoenix::at_c<0>(_val) = _1]
+		lit("prop")  [_val = new_<Prop>()]
+		> - uint_    [phoenix::at_c<0>(*_val) = _1 - 1]
 		> ":"
-		> id        [_a = _1]
+		> id         [_a = _1]
 		> "=" > "|-"
-		> expr(_a)  [phoenix::at_c<1>(_val) = _1]
-		> lit(";")  [parseExpr(phoenix::at_c<1>(_val), _a)];
+		> expr(findType(_a), val(true))
+		             [phoenix::at_c<1>(*_val) = _1]
+		> lit(";");
 
 	hyp =
-		lit("hyp")  [_val = new_<Hyp>]
-		> ? uint_    [phoenix::at_c<0>(_val) = _1]
+		lit("hyp")   [_val = new_<Hyp>()]
+		> - uint_    [phoenix::at_c<0>(*_val) = _1 - 1]
 		> ":"
-		> id        [_a = _1]
+		> id         [_a = _1]
 		> "=" > "|-"
-		> expr(_a)  [phoenix::at_c<1>(_val) = _1]
-		> lit(";")  [parseExpr(phoenix::at_c<1>(_val), _a)];
+		> expr(findType(_a), val(true))
+		             [phoenix::at_c<1>(*_val) = _1]
+		> lit(";");
 
 	axiom =
-		lit("axiom")[_val = new_<Axiom>]
-		> eps       [_a = phoenix::at_c<0>(*_val)]
-		> id        [phoenix::at_c<0>(_a) = _1]
+		lit("axiom") [_val = new_<Axiom>()]
+		> eps        [_a = &phoenix::at_c<0>(*_val)]
+		> id         [phoenix::at_c<0>(*_a) = _1]
 		> "("
-		> vars      [phoenix::at_c<1>(_a) = _1]
+		> vars       [phoenix::at_c<1>(*_a) = _1]
 		> ")"
-		> - disjs    [phoenix::at_c<2>(_a) = _1]
+		> - disj     [phoenix::at_c<2>(*_a) = _1]
 		> "{"
-		> - ( + (hyp [push_back(phoenix::at_c<3>(_a), _1)]) > bar)
-		> + (prop   [push_back(phoenix::at_c<4>(_a), _1)])
-		> "}"       [addToMath(_val)];
-	*/
+		> - ( + (hyp [push_back(phoenix::at_c<3>(*_a), _1)]) > bar )
+		> + (prop    [push_back(phoenix::at_c<4>(*_a), _1)])
+		> lit("}")   [addToMath(_val)];
+
 	rule =
 		lit("rule")  [_val = new_<Rule>()]
 		> - id       [phoenix::at_c<0>(*_val) = _1]
@@ -97,7 +103,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	type =
 		lit("type") [_val = new_<Type>()]
 		> id        [phoenix::at_c<0>(*_val) = _1]
-		>> -(lit(":")
+		> - (lit(":")
 			>  id [push_back(phoenix::at_c<1>(*_val), findType(_1))] % ","
 		)
 		> lit(";")  [addToMath(_val)];
@@ -127,8 +133,8 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		constant [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
 		type     [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
 		rule     [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
-	/*	axiom    [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
-		def      [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
+		axiom    [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
+	/*	def      [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
 		theorem  [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
 		proof    [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |*/
 		comment);
