@@ -16,7 +16,7 @@ struct Vars {
 	vector<Symbol> v;
 };
 
-void parse(Expr& ex, const vector<Vars>& varsStack, bool prim);
+void parse(Expr& ex, vector<Vars>& varsStack, bool prim);
 
 struct Disj {
 	vector<vector<Symbol>> d;

@@ -45,8 +45,39 @@ void Expr::push_back(Symbol s) {
 	}
 }
 
-void parse(Expr& ex, const vector<Vars>& varsStack, bool prim){
-	// TODO
+inline Type* find_type(Vars& vars, Symbol s) {
+	for (auto var : vars.v)
+		if (var == s) return var.type;
+	return nullptr;
+}
+
+inline Type* find_type(vector<Vars>& var_stack, Symbol s) {
+	for (auto& vars : var_stack)
+		if (Type* tp = find_type(vars, s)) return tp;
+	return nullptr;
+}
+
+void parse_prim(Expr& ex, vector<Vars>& var_stack) {
+	for (auto n : ex.term) {
+		n.symb.type = find_type(var_stack, n.symb);
+		bool is_var = n.symb.type != nullptr;
+		bool is_const = Rus::get().math.consts.has(n.symb);
+		if (is_const && is_var)
+			throw Error("constant symbol is marked as variable");
+		if (!is_const && !is_var)
+			throw Error("symbol neither constant nor variable");
+	}
+}
+
+void parse_cplx(Expr& ex, vector<Vars>& var_stack) {
+
+}
+
+void parse(Expr& ex, vector<Vars>& var_stack, bool prim){
+	if (prim)
+		parse_prim(ex, var_stack);
+	else
+		parse_cplx(ex, var_stack);
 }
 
 

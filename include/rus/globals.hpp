@@ -60,13 +60,20 @@ struct Rus {
 			return table.find(ind)->second;
 		}
 	};
+	template<typename T>
+	struct Set {
+		set<T> s;
+		bool has(T val) const {
+			return s.find(val) != s.end();
+		}
+	};
 	struct Math {
 		Table<Type*>    types;
 		Table<Theorem*> theorems;
 		Table<Axiom*>   axioms;
 		Table<Def*>     defs;
 		Table<Rule*>    rules;
-		set<Symbol>     consts;
+		Set<Symbol>     consts;
 	};
 
 	Config  config;

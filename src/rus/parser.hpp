@@ -22,7 +22,7 @@ inline Type* find_type(uint id, Location* loc = nullptr) {
 
 struct AddToMath {
 	void operator()(Const* c) const {
-		Rus::mod().math.consts.insert(c->symb);
+		Rus::mod().math.consts.s.insert(c->symb);
 	}
 	void operator()(Type* t) const {
 		Rus::mod().math.types[t->id] = t;
@@ -72,9 +72,9 @@ struct AddSymbol {
 struct ParseExpr {
 	template <typename T1, typename T2, typename T3, typename T4>
 	struct result { typedef void type; };
-	void operator()(Expr& ex, Type* tp, const vector<Vars> varsStack, bool x) const {
+	void operator()(Expr& ex, Type* tp, vector<Vars> var_stack, bool x) const {
 		ex.type = tp;
-		parse(ex, varsStack, x);
+		parse(ex, var_stack, x);
 	}
 };
 
