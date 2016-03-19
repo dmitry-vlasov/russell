@@ -70,11 +70,11 @@ struct AddSymbol {
 };
 
 struct ParseExpr {
-	template <typename T1, typename T2, typename T3>
+	template <typename T1, typename T2, typename T3, typename T4>
 	struct result { typedef void type; };
-	void operator()(Expr& ex, Type* tp, bool x) const {
+	void operator()(Expr& ex, Type* tp, const vector<Vars> varsStack, bool x) const {
 		ex.type = tp;
-		if (x) ex.parse();
+		parse(ex, varsStack, x);
 	}
 };
 
@@ -181,11 +181,43 @@ struct SetLocation {
     }
 };
 
+struct PushVars {
+	template <typename T1>
+	struct result { typedef void type; };
+	void operator()(vector<Vars>& var_stack) const {
+		var_stack.push_back(Vars());
+	}
+};
+
+struct AddVars {
+	template <typename T1, typename T2>
+	struct result { typedef void type; };
+	void operator()(vector<Vars>& var_stack, Vars vars) const {
+		for (auto v : vars.v) {
+			var_stack.back().v.push_back(v);
+		}
+	}
+	void operator()(vector<Vars>& var_stack, Theorem* thm) const {
+		for (auto v : thm->ass.vars.v) {
+			var_stack.back().v.push_back(v);
+		}
+	}
+};
+
+struct PopVars {
+	template <typename T1>
+	struct result { typedef void type; };
+	void operator()(vector<Vars>& varStack) const {
+		varStack.pop_back();
+	}
+};
+
 template <typename Iterator>
 struct Grammar : qi::grammar<Iterator, rus::Source(), ascii::space_type> {
 	Grammar();
 	void initNames();
 
+	vector<Vars> var_stack;
 	qi::rule<Iterator, qi::unused_type> bar;
 	qi::rule<Iterator, Expr(Type*, bool), ascii::space_type> expr;
 	qi::rule<Iterator, Symbol(), ascii::space_type> symb;
@@ -200,9 +232,10 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), ascii::space_type> {
 	qi::rule<Iterator, vector<Ref>(Proof*), ascii::space_type> refs;
 	qi::rule<Iterator, Step*(Proof*), qi::locals<uint>, qi::locals<Step::Kind>, ascii::space_type> step;
 	qi::rule<Iterator, Qed*(Proof*), qi::locals<uint>, ascii::space_type> qed;
-	qi::rule<Iterator, Proof::Elem(Proof*), ascii::space_type> elem;
+	qi::rule<Iterator, Proof::Elem(Proof*), ascii::space_type> proof_elem;
 
 
+	qi::rule<Iterator, void(Proof*), ascii::space_type> proof_body;
 	qi::rule<Iterator, Proof*(), ascii::space_type> proof;
 	qi::rule<Iterator, Theorem*(), qi::locals<Assertion*>, ascii::space_type> theorem;
 	qi::rule<Iterator, Def*(),qi::locals<Assertion*>, ascii::space_type> def;

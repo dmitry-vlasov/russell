@@ -16,6 +16,8 @@ struct Vars {
 	vector<Symbol> v;
 };
 
+void parse(Expr& ex, const vector<Vars>& varsStack, bool prim);
+
 struct Disj {
 	vector<vector<Symbol>> d;
 };
@@ -162,13 +164,14 @@ struct Proof {
 		Value val;
 	};
 
-	Proof() : id(-1), vars(), elems(), thm(nullptr) { }
+	Proof() : id(-1), vars(), elems(), thm(nullptr), par(nullptr) { }
 	~ Proof() { for (auto& e : elems) e.destroy(); }
 
 	uint         id;
 	Vars         vars;
 	vector<Elem> elems;
 	Theorem*     thm;
+	Proof*       par;
 };
 
 

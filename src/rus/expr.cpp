@@ -45,7 +45,7 @@ void Expr::push_back(Symbol s) {
 	}
 }
 
-void Expr::parse(){
+void parse(Expr& ex, const vector<Vars>& varsStack, bool prim){
 	// TODO
 }
 
