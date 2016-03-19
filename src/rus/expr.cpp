@@ -25,7 +25,7 @@ Expr::Expr(const mdl::Expr& ex) : term(), type(nullptr) {
 
 void Expr::destroy() {
 	while (term.e) {
-		List* prev = term.e->prev;
+		Node* prev = term.e->prev;
 		delete term.e;
 		term.e = prev;
 	}
@@ -35,10 +35,10 @@ void Expr::destroy() {
 
 void Expr::push_back(Symbol s) {
 	if (!term.b) {
-		term.b = new List(s);
+		term.b = new Node(s);
 		term.e = term.b;
 	} else {
-		List* n = new List(s);
+		Node* n = new Node(s);
 		n->prev = term.e;
 		term.e->next = n;
 		term.e = n;
@@ -47,7 +47,7 @@ void Expr::push_back(Symbol s) {
 
 inline Type* find_type(Vars& vars, Symbol s) {
 	for (auto var : vars.v)
-		if (var == s) return var.type;
+		if (var.lit == s.lit) return var.type;
 	return nullptr;
 }
 
@@ -67,6 +67,8 @@ void parse_prim(Expr& ex, vector<Vars>& var_stack) {
 		if (!is_const && !is_var)
 			throw Error("symbol neither constant nor variable");
 	}
+	ex.term.b->init.push_back(ex.term);
+	ex.term.e->final.push_back(ex.term);
 }
 
 void parse_cplx(Expr& ex, vector<Vars>& var_stack) {
@@ -81,4 +83,4 @@ void parse(Expr& ex, vector<Vars>& var_stack, bool prim){
 }
 
 
-}}
+}} // mdl::rus

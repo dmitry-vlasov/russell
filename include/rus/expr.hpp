@@ -14,9 +14,15 @@ struct Symbol {
 	Symbol(const mdl::Symbol s, bool r, Type* tp) :
 	lit(s.lit), rep(r), type(tp) {
 	}
-	bool operator == (const Symbol& s) const { return lit == s.lit; }
-	bool operator != (const Symbol& s) const { return !operator ==(s); }
-	bool operator < (const Symbol& s) const { return lit < s.lit; }
+	bool operator == (const Symbol& s) const {
+		return lit == s.lit && type == s.type;
+	}
+	bool operator != (const Symbol& s) const {
+		return !operator ==(s);
+	}
+	bool operator < (const Symbol& s) const {
+		return type == s.type ? lit < s.lit : type < s.type;
+	}
 	bool undef() const { return lit == (uint)-1; }
 	uint  lit;
 	bool  rep;
@@ -31,9 +37,7 @@ inline ostream& operator << (ostream& os, Symbol s) {
 }
 
 template<typename N>
-class iterator {
-	N* n;
-public :
+struct iterator {
 	typedef N Node;
 	iterator() : n(nullptr) { }
 	iterator(Node* nd) : n(nd) { }
@@ -44,12 +48,11 @@ public :
 	bool operator != (iterator it) { return !operator == (it); }
 	Node& operator *()   { return *n; }
 	Node* operator -> () { return n; }
+	N* n;
 };
 
 template<typename N>
-class const_iterator {
-	const N* n;
-public :
+struct const_iterator {
 	typedef N Node;
 	const_iterator() : n(nullptr) { }
 	const_iterator(const Node* nd) : n(nd) { }
@@ -60,6 +63,42 @@ public :
 	bool operator != (const_iterator it) { return !operator == (it); }
 	const Node& operator *()   { return *n; }
 	const Node* operator -> () { return n; }
+	const N* n;
+};
+
+// Iterator modificators
+
+template<typename I>
+class memorized : I {
+	memorized() : I() { }
+	memorized(I i) : I(i), mem() { }
+	void remember() { mem = *this; }
+	void recall() { *this = mem; }
+	I mem;
+};
+
+template<typename I>
+struct tracing : I {
+	tracing() : I(), back() { }
+	tracing(I i) : I(i), back() { }
+	void unshift() { *this = back; }
+	tracing& operator ++() { back = *this; I::operator ++(); return *this; }
+	tracing& operator +()  { back = *this; I::operator  +(); return *this; }
+	tracing& operator --() { back = *this; I::operator --(); return *this; }
+	I back;
+};
+
+template<typename I1, typename I2>
+struct pairing {
+	typedef pairing<I2, I1> reversed;
+	pairing() : first(), second() { }
+	pairing(I1 i1, I2 i2) : first(i1), second(i2) { }
+	pairing& operator ++() { ++first; ++second; return *this; }
+	pairing& operator +()  { +first;  +second;  return *this; }
+	pairing& operator --() { --first; --second; return *this; }
+	reversed reverse() { return reversed(second, first); }
+	I1 first;
+	I2 second;
 };
 
 struct Rule;
@@ -85,19 +124,19 @@ struct Term {
 	vector<Term*> children;
 };
 
-struct List {
-	List() : symb(), next(nullptr),
+namespace node {
+
+struct Expr {
+	Expr() : symb(), next(nullptr),
 	prev(nullptr), init(), final() { }
-	List(Symbol s) : symb(s), next(nullptr),
+	Expr(Symbol s) : symb(s), next(nullptr),
 	prev(nullptr), init(), final() { }
 	Symbol symb;
-	List*  next;
-	List*  prev;
-	vector<Term<List>> init;
-	vector<Term<List>> final;
+	Expr*  next;
+	Expr*  prev;
+	vector<Term<Expr>> init;
+	vector<Term<Expr>> final;
 };
-
-struct Expr;
 
 template<typename T>
 struct Tree {
@@ -105,9 +144,6 @@ struct Tree {
 	prev(nullptr), side(nullptr), init(), final(), data() { }
 	Tree(Symbol s) : symb(s), next(nullptr),
 	prev(nullptr), side(nullptr), init(), final(), data() { }
-	void add(const Expr&, T d) {
-		// TODO
-	}
 	Symbol symb;
 	Tree*  next;
 	Tree*  prev;
@@ -118,12 +154,51 @@ struct Tree {
 	T data;
 };
 
+} // namespace node
+
+struct Expr;
+
+template<typename T>
+struct Tree {
+	typedef node::Tree<T> Node;
+	typedef tracing<iterator<Node>> iter_tree;
+	typedef tracing<iterator<node::Expr>> iter_expr;
+	typedef pairing<iter_tree, iter_expr> iter_pair;
+
+
+	bool add_common(iter_pair& i) {
+
+	}
+
+	Tree() : root(nullptr) { }
+	void add(Expr& ex, T data) {
+		/*Iter i(root);
+		for (auto n : ex.term) {
+			Iter last;
+			bool new_node = true;
+			for (Iter j = i; j != Iter(); + j) {
+				if (j->symb == n.symb) {
+					++ i;
+					new_node = false
+					break;
+				}
+				last = j;
+			}
+			last->side = new Node(n.symb);
+			i = + last;
+		}*/
+	}
+	Node* root;
+};
+
+
 struct Expr {
+	typedef node::Expr Node;
 	Expr() : term(), type(nullptr) { }
 	Expr(const mdl::Expr&);
 	void destroy();
 	void push_back(Symbol);
-	Term<List> term;
+	Term<Node> term;
 	Type*      type;
 };
 
@@ -134,7 +209,7 @@ inline ostream& operator << (ostream& os, const Expr& ex) {
 	return os;
 }
 
-template<typename N = List>
+template<typename N = node::Expr>
 struct Sub {
 	typedef N Node;
 	map<Symbol, Term<Node>> sub;
