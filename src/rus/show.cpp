@@ -135,28 +135,35 @@ static string show_refs(const vector<Ref>& refs) {
 	return s;
 }
 
+string show(const Proof::Elem& el) {
+	switch (el.kind) {
+	case Proof::Elem::VARS:  return show(*el.val.vars);
+	case Proof::Elem::STEP:  return show(*el.val.step);
+	case Proof::Elem::QED:   return show(*el.val.qed);
+	default : assert(false && "impossible"); break;
+	}
+	return "";
+}
+
 string show(const Step& st) {
 	string s = "step " + to_string(st.ind + 1) + " : ";
 	s += show_type(st.expr) + " = ";
 	switch (st.kind) {
-	case Step::AX : s += "ax "; break;
-	case Step::TH : s += "th "; break;
-	case Step::DF : s += "df "; break;
+	case Step::NONE: s += "? "; break;
+	case Step::AXM:  s += "axm " + show_id(st.ass.axm->ass.id) + " "; break;
+	case Step::THM:  s += "thm " + show_id(st.ass.thm->ass.id)+ " "; break;
+	case Step::DEF:  s += "def " + show_id(st.ass.def->ass.id)+ " "; break;
+	case Step::CLAIM:s += "claim "; break;
 	}
-	s += show_id(st.ass->id) + " ";
-	s += show_refs(st.refs) + " ";
+	if (st.kind != Step::NONE)
+		s += show_refs(st.refs) + " ";
 	s += "|- " + show(st.expr) + ";";
-	return s;
-}
-
-string show(const Claim& c) {
-	string s = "step " + to_string(c.ind + 1) + " : ";
-	s += show_type(c.expr) + " = ";
-	s += "claim " + show_refs(c.refs) + " ";
-	s += "|- " + show(c.expr) + "; {\n";
-	for (auto& st : c.proof.steps)
-		s += "\t" + show(st) + "\n";
-	s += "}";
+	if (st.kind == Step::CLAIM) {
+		s += " {\n";
+		for (auto& el : st.ass.prf->elems)
+			s += "\t" + show(el) + "\n";
+		s += "}";
+	}
 	return s;
 }
 
@@ -167,21 +174,11 @@ string show(const Qed& q) {
 	return s;
 }
 
-string show(const Ref& ref) {
-	switch (ref.kind) {
-	case Ref::STEP:  return show(*ref.val.step);
-	case Ref::CLAIM: return show(*ref.val.claim);
-	case Ref::QED:   return show(*ref.val.qed);
-	default : assert(false && "impossible"); break;
-	}
-	return "";
-}
-
 string show(const Proof& p) {
 	string s = "proof ";
 	if (p.id != (uint)-1) s += show_id(p.id) + " ";
-	s += "of " + show_id(p.theorem->id) + " {\n";
-	for (auto& st : p.steps)
+	s += "of " + show_id(p.thm->ass.id) + " {\n";
+	for (auto& st : p.elems)
 		s += "\t" + show(st) + "\n";
 	s += "}";
 	return s;

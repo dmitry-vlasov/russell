@@ -1,5 +1,6 @@
 #pragma once
 
+#include <boost/variant/recursive_variant.hpp>
 #include "common.hpp"
 #include "rus/expr.hpp"
 
@@ -61,8 +62,8 @@ struct Axiom {
 };
 
 struct Def {
-	Assertion def;
 	Assertion ass;
+	Assertion def;
 };
 
 struct Proof;
@@ -73,33 +74,24 @@ struct Theorem {
 };
 
 struct Step;
-struct Claim;
-struct Qed;
 
 struct Ref {
 	enum Kind {
 		NONE,
 		HYP,
 		PROP,
-		STEP,
-		CLAIM,
-		QED
+		STEP
 	};
 	union Value {
 		void*  non;
 		Hyp*   hyp;
 		Prop*  prop;
 		Step*  step;
-		Claim* claim;
-		Qed*   qed;
 	};
 	Ref() : kind(NONE), val() { val.non = nullptr; }
 	Ref(Hyp* h)   : kind(HYP),  val()  { val.hyp = h; }
 	Ref(Prop* p)  : kind(PROP), val()  { val.prop = p; }
 	Ref(Step* s)  : kind(STEP), val()  { val.step = s; }
-	Ref(Claim* c) : kind(CLAIM), val() { val.claim = c; }
-	Ref(Qed* q)   : kind(QED), val()   { val.qed = q; }
-	void destroy();
 
 	Kind kind;
 	Value val;
@@ -107,12 +99,28 @@ struct Ref {
 
 
 struct Step {
-	enum Kind {AX, TH, DF};
+	enum Kind {
+		NONE,
+		AXM,
+		THM,
+		DEF,
+		CLAIM
+	};
+	union Ass {
+		void*    non;
+		Axiom*   axm;
+		Def*     def;
+		Theorem* thm;
+		Proof*   prf;
+	};
+
+	Step() : ind(-1), expr(), kind(NONE), ass(), refs(), sub() { ass.non = nullptr; }
+
 	uint        ind;
 	Expr        expr;
-	vector<Ref> refs;
-	Assertion*  ass;
 	Kind        kind;
+	Ass         ass;
+	vector<Ref> refs;
 	Sub<>       sub;
 };
 
@@ -122,22 +130,38 @@ struct Qed {
 };
 
 struct Proof {
-	Proof() :
-	id(-1), vars(), steps(),
-	roots(), theorem(nullptr) { }
-	~ Proof();
-	uint        id;
-	Vars        vars;
-	vector<Ref> steps;
-	vector<Ref> roots;
-	Assertion*  theorem;
-};
+	//typedef boost::variant<Step, Qed> Elem;
 
-struct Claim {
-	uint        ind;
-	Expr        expr;
-	vector<Ref> refs;
-	Proof       proof;
+	struct Elem {
+		enum Kind {
+			NONE,
+			VARS,
+			STEP,
+			QED
+		};
+		union Value {
+			void* non;
+			Vars* vars;
+			Step* step;
+			Qed*  qed;
+		};
+		Elem() : kind(NONE), val() { val.non = nullptr; }
+		Elem(Vars* v)  : kind(VARS), val()  { val.vars = v; }
+		Elem(Step* s)  : kind(STEP), val()  { val.step = s; }
+		Elem(Qed* q)   : kind(QED), val()   { val.qed = q; }
+		void destroy();
+
+		Kind kind;
+		Value val;
+	};
+
+	Proof() :
+	id(-1), vars(), elems(), thm(nullptr) { }
+	~ Proof();
+	uint         id;
+	Vars         vars;
+	vector<Elem> elems;
+	Theorem*     thm;
 };
 
 
@@ -232,10 +256,10 @@ inline void Node::destroy() {
 }
 
 
-inline void Ref::destroy() {
+inline void Proof::Elem::destroy() {
 	switch (kind) {
 	case STEP : delete val.step; break;
-	case CLAIM: delete val.claim; break;
+	case VARS:  delete val.vars; break;
 	case QED:   delete val.qed; break;
 	default : assert(false && "impossible"); break;
 	}
@@ -243,8 +267,8 @@ inline void Ref::destroy() {
 }
 
 inline Proof::~ Proof() {
-	for (auto& s : steps)
-		s.destroy();
+	for (auto& el : elems)
+		el.destroy();
 }
 
 string show(const Const&);
@@ -259,7 +283,6 @@ string show(const Proof&);
 string show(const Step&);
 string show(const Ref&);
 string show(const Qed&);
-string show(const Claim&);
 string show(const Hyp&);
 string show(const Prop&);
 string show(const Node&);
@@ -279,7 +302,6 @@ inline ostream& operator << (ostream& os, const Proof& p) { os << show(p); retur
 inline ostream& operator << (ostream& os, const Step& s)  { os << show(s); return os; }
 inline ostream& operator << (ostream& os, const Ref& r)   { os << show(r); return os; }
 inline ostream& operator << (ostream& os, const Qed& q)   { os << show(q); return os; }
-inline ostream& operator << (ostream& os, const Claim& c) { os << show(c); return os; }
 inline ostream& operator << (ostream& os, const Hyp& h)   { os << show(h); return os; }
 inline ostream& operator << (ostream& os, const Prop& p)  { os << show(p); return os; }
 inline ostream& operator << (ostream& os, const Node& n)  { os << show(n); return os; }

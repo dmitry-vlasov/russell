@@ -5,7 +5,9 @@
 namespace mdl { namespace smm { namespace {
 
 struct Maps {
-	map<const Assertion*, rus::Assertion*> assertions;
+	map<const Assertion*, rus::Axiom*>   axioms;
+	map<const Assertion*, rus::Theorem*> theorems;
+	map<const Assertion*, rus::Def*>     defs;
 	map<uint, rus::Type*> types;
 	rus::Type*            wff;
 	set<uint>             redundant_consts;
@@ -107,7 +109,7 @@ static void translate_axiom(const Assertion* ass, rus::Theory& target, Maps& map
 	rus::Axiom* ax = new rus::Axiom;
 	translate_assertion<rus::Axiom>(ass, ax, maps);
 	target.nodes.push_back(ax);
-	maps.assertions[ass] = &ax->ass;
+	maps.axioms[ass] = ax;
 }
 
 static void translate_def(const Assertion* ass, rus::Theory& target, Maps& maps) {
@@ -116,6 +118,7 @@ static void translate_def(const Assertion* ass, rus::Theory& target, Maps& maps)
 	rus::Axiom* ax = new rus::Axiom;
 	translate_assertion<rus::Axiom>(ass, ax, maps);
 	target.nodes.push_back(ax);
+	maps.axioms[ass] = ax;
 }
 
 rus::Node::Kind ass_kind(const Assertion* ass) {
@@ -130,34 +133,37 @@ rus::Node::Kind ass_kind(const Assertion* ass) {
 	}
 }
 
-static rus::Ref translate_ref(Ref ref, vector<rus::Ref>& proof, rus::Theorem* thm, Maps& maps) {
-	switch (ref.type) {
-	case Ref::ESSENTIAL:
-		return rus::Ref(thm->ass.hyps[ref.val.ess->index]);
-	case Ref::FLOATING:  return rus::Ref();
-	case Ref::INNER:	 return rus::Ref();
-	case Ref::PROOF: {
-		rus::Ref sr(new rus::Step());
-		Assertion* ass = ref.val.prf->refs.back().val.ass;
-		sr.val.step->ass = maps.assertions.find(ass)->second;
-		for (uint i = 0; i < ass->essential.size(); ++ i) {
-			rus::Ref hr = translate_ref(ref.val.prf->refs[i], proof, thm, maps);
-			sr.val.step->refs.push_back(hr);
+static rus::Proof::Elem translate_step(Ref ref, vector<rus::Proof::Elem>& proof, rus::Theorem* thm, Maps& maps) {
+	assert(ref.type == Ref::PROOF);
+	rus::Proof::Elem el(new rus::Step());
+	Assertion* ass = ref.val.prf->refs.back().val.ass;
+	for (uint i = 0; i < ass->essential.size(); ++ i) {
+		Ref r = ref.val.prf->refs[i];
+		assert(r.type == Ref::ESSENTIAL || r.type == Ref::PROOF);
+		rus::Ref hr;
+		if (r.type == Ref::ESSENTIAL) {
+			hr = rus::Ref(thm->ass.hyps[r.index()]);
+		} else {
+			hr = rus::Ref(translate_step(r, proof, thm, maps).val.step);
 		}
-		sr.val.step->ind = proof.size();
-		sr.val.step->expr = translate_expr(ref.expr, maps);
-		switch (ass_kind(ass)) {
-		case rus::Node::AXIOM:   sr.val.step->kind = rus::Step::AX; break;
-		case rus::Node::DEF:     sr.val.step->kind = rus::Step::DF; break;
-		case rus::Node::THEOREM: sr.val.step->kind = rus::Step::TH; break;
-		default : assert(false && "impossible"); break;
-		}
-		proof.push_back(sr);
-		return sr;
+		el.val.step->refs.push_back(hr);
 	}
+	el.val.step->ind = proof.size();
+	el.val.step->expr = translate_expr(ref.expr, maps);
+	switch (ass_kind(ass)) {
+	case rus::Node::AXIOM:
+		el.val.step->ass.axm = maps.axioms.find(ass)->second;
+		el.val.step->kind = rus::Step::AXM; break;
+	case rus::Node::DEF:
+		el.val.step->ass.def = maps.defs.find(ass)->second;
+		el.val.step->kind = rus::Step::DEF; break;
+	case rus::Node::THEOREM:
+		el.val.step->ass.thm = maps.theorems.find(ass)->second;
+		el.val.step->kind = rus::Step::THM; break;
 	default : assert(false && "impossible"); break;
 	}
-	return rus::Ref(); // pacifying compiler
+	proof.push_back(el);
+	return el;
 }
 
 static void translate_proof(const Assertion* ass, rus::Theorem* thm, rus::Theory& target, Maps& maps) {
@@ -165,11 +171,11 @@ static void translate_proof(const Assertion* ass, rus::Theorem* thm, rus::Theory
 	eval(tree);
 	rus::Proof* p = new rus::Proof();
 	p->vars = translate_vars(ass->inner, maps);
-	p->theorem = &thm->ass;
-	translate_ref(tree, p->steps, thm, maps);
+	p->thm = thm;
+	translate_step(tree, p->elems, thm, maps);
 	rus::Prop* pr = thm->ass.props.front();
-	rus::Step* st = p->steps.back().val.step;
-	p->steps.push_back(new rus::Qed{pr, st});
+	rus::Step* st = p->elems.back().val.step;
+	p->elems.push_back(new rus::Qed{pr, st});
 	target.nodes.push_back(p);
 	tree.destroy();
 }
@@ -179,7 +185,7 @@ static void translate_theorem(const Assertion* ass, rus::Theory& target, Maps& m
 	translate_assertion<rus::Theorem>(ass, thm, maps);
 	target.nodes.push_back(thm);
 	translate_proof(ass, thm, target, maps);
-	maps.assertions[ass] = &thm->ass;
+	maps.theorems[ass] = thm;
 }
 
 static void translate_ass(const Assertion* ass, rus::Theory& target, Maps& maps) {

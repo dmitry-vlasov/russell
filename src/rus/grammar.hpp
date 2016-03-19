@@ -23,6 +23,12 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	const phoenix::function<AddSymbol>   addSymbol;
 	const phoenix::function<ParseExpr>   parseExpr;
 	const phoenix::function<FindType>    findType;
+	const phoenix::function<FindTheorem> findTheorem;
+	const phoenix::function<FindAxiom>   findAxiom;
+	const phoenix::function<FindDef>     findDef;
+	const phoenix::function<CreateStepRef> createStepRef;
+	const phoenix::function<GetProp>     getProp;
+	const phoenix::function<GetStep>     getStep;
 	const phoenix::function<AddDisjVar>  addDisjVar;
 	const phoenix::function<NewDisjSet>  newDisjSet;
 	const phoenix::function<AddToMath>   addToMath;
@@ -51,9 +57,6 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> eps        [push_back(phoenix::at_c<0>(_val), _a)]
 		) % ",";
 
-//axiom ax-1 (ph : wff, ps : wff) {
-//	prop 1 : wff = |- ( ph -> ( ps -> ph ) ) ;
-//}
 	prop =
 		lit("prop")  [_val = new_<Prop>()]
 		> - uint_    [phoenix::at_c<0>(*_val) = _1 - 1]
@@ -74,18 +77,83 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		             [phoenix::at_c<1>(*_val) = _1]
 		> lit(";");
 
+	assertion =
+		  id         [phoenix::at_c<0>(*_r1) = _1]
+		> "("
+		> vars       [phoenix::at_c<1>(*_r1) = _1]
+		> ")"
+		> - disj     [phoenix::at_c<2>(*_r1) = _1]
+		> "{"
+		> - ( + (hyp [push_back(phoenix::at_c<3>(*_r1), _1)]) > bar )
+		> + (prop    [push_back(phoenix::at_c<4>(*_r1), _1)])
+		> "}";
+
+	refs =
+		lit("(")
+		>  *(
+			("hyp"  > uint_ [push_back(_val, createStepRef(_1, _r1, val(Ref::HYP)))])  |
+			("prop" > uint_ [push_back(_val, createStepRef(_1, _r1, val(Ref::PROP)))]) |
+			("step" > uint_ [push_back(_val, createStepRef(_1, _r1, val(Ref::STEP)))])
+		)
+		> ")";
+
+	step =
+		eps     [_val = new_<Step>()]
+		> uint_ [phoenix::at_c<0>(*_val) = _1]
+		> ":"
+		> id    [_a = _1]
+		> "="
+		> (
+			(lit("axm") [phoenix::at_c<2>(*_val) = val(Step::AXM)]
+			> id        [phoenix::at_c<1>(phoenix::at_c<3>(*_val)) = findAxiom(_1)]
+			) |
+			(lit("thm") [phoenix::at_c<2>(*_val) = val(Step::THM)]
+			> id        [phoenix::at_c<3>(phoenix::at_c<3>(*_val)) = findTheorem(_1)]
+			) |
+			(lit("def") [phoenix::at_c<2>(*_val) = val(Step::DEF)]
+			> id        [phoenix::at_c<2>(phoenix::at_c<3>(*_val)) = findDef(_1)]
+			)
+		)
+		> refs(_r1) [phoenix::at_c<4>(*_val) = _1]
+		> "|-"
+		> expr(findType(_a), val(true))
+		        [phoenix::at_c<1>(*_val) = _1]
+		> lit(";");
+
+	qed =
+		lit("prop") [_val = new_<Qed>()]
+		> eps       [_a =  0]
+		> - uint_   [_a = _1]
+		> lit("=")  [phoenix::at_c<0>(*_val) = getProp(_a, _r1)]
+		> "step"
+		> uint_     [phoenix::at_c<1>(*_val) = getStep(_1, _r1)];
+
+	elem = (
+		("step"  > step(_r1) [_val = phoenix::construct<Proof::Elem>(_1)]) |
+		("qed"   > qed(_r1)  [_val = phoenix::construct<Proof::Elem>(_1)])
+	);
+
+	proof =
+		lit("proof") [_val = new_<Proof>()]
+		> - id       [phoenix::at_c<0>(*_val) = _1]
+		> "of"
+		> id         [phoenix::at_c<3>(*_val) = findTheorem(_1)]
+		> "{"
+		> - (lit("var") > vars [phoenix::at_c<1>(*_val) = _1] > lit(";"))
+		> + elem(_val)[push_back(phoenix::at_c<2>(*_val), _1)]
+		> lit("}")   [addToMath(_val)];
+
+	theorem =
+		lit("theorem") [_val = new_<Theorem>()]
+		> eps          [_a = &phoenix::at_c<0>(*_val)]
+		> assertion(_a)
+		> eps          [addToMath(_val)];
+
 	axiom =
 		lit("axiom") [_val = new_<Axiom>()]
 		> eps        [_a = &phoenix::at_c<0>(*_val)]
-		> id         [phoenix::at_c<0>(*_a) = _1]
-		> "("
-		> vars       [phoenix::at_c<1>(*_a) = _1]
-		> ")"
-		> - disj     [phoenix::at_c<2>(*_a) = _1]
-		> "{"
-		> - ( + (hyp [push_back(phoenix::at_c<3>(*_a), _1)]) > bar )
-		> + (prop    [push_back(phoenix::at_c<4>(*_a), _1)])
-		> lit("}")   [addToMath(_val)];
+		> assertion(_a)
+		> eps        [addToMath(_val)];
 
 	rule =
 		lit("rule")  [_val = new_<Rule>()]
@@ -134,9 +202,9 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		type     [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
 		rule     [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
 		axiom    [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
-	/*	def      [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
+	//	def      [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
 		theorem  [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
-		proof    [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |*/
+		/*proof    [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |*/
 		comment);
 
 	//qi::on_success(assertion, setLocation(_val, _1));

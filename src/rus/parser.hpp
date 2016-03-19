@@ -34,6 +34,13 @@ struct AddToMath {
 	void operator()(Axiom* a) const {
 		Rus::mod().math.axioms[a->ass.id] = a;
 	}
+	void operator()(Theorem* th) const {
+		Rus::mod().math.theorems[th->ass.id] = th;
+	}
+	void operator()(Proof* p) const {
+		// TODO:
+		//Rus::mod().math.proofs[p->id] = p;
+	}
 };
 
 struct SymbToInt {
@@ -89,6 +96,36 @@ struct FindType {
 	}
 };
 
+struct FindTheorem {
+	template <typename T>
+	struct result { typedef Theorem* type; };
+	Theorem* operator()(uint id) const {
+		if (!Rus::get().math.theorems.has(id))
+			throw Error("unknown theorem", show_id(id));
+		return Rus::get().math.theorems[id];
+	}
+};
+
+struct FindAxiom {
+	template <typename T1>
+	struct result { typedef Axiom* type; };
+	Axiom* operator()(uint id) const {
+		if (!Rus::get().math.axioms.has(id))
+			throw Error("unknown axiom", show_id(id));
+		return Rus::get().math.axioms[id];
+	}
+};
+
+struct FindDef {
+	template <typename T1>
+	struct result { typedef Def* type; };
+	Def* operator()(uint id) const {
+		if (!Rus::get().math.defs.has(id))
+			throw Error("unknown definition", show_id(id));
+		return Rus::get().math.defs[id];
+	}
+};
+
 struct AddDisjVar {
 	template <typename T1, typename T2>
 	struct result { typedef void type; };
@@ -102,6 +139,35 @@ struct NewDisjSet {
 	struct result { typedef void type; };
 	void operator()(vector<vector<Symbol>>& disj) const {
 		disj.push_back(vector<Symbol>());
+	}
+};
+
+struct CreateStepRef {
+	template <typename T1, typename T2, typename T3>
+	struct result { typedef void Ref; };
+	Ref operator()(uint ind, Proof* p, Ref::Kind k) const {
+		switch (k) {
+		case Ref::HYP:  return Ref(p->thm->ass.hyps[ind]);
+		case Ref::PROP: return Ref(p->thm->ass.props[ind]);
+		case Ref::STEP: return Ref(p->elems[ind].val.step);
+		default : assert(false && "impossible");
+		}
+	}
+};
+
+struct GetProp {
+	template <typename T1, typename T2>
+	struct result { typedef Prop* type; };
+	Prop* operator()(uint ind, Proof* p) const {
+		return p->thm->ass.props[ind];
+	}
+};
+
+struct GetStep {
+	template <typename T1, typename T2>
+	struct result { typedef Step* type; };
+	Step* operator()(uint ind, Proof* p) const {
+		return p->elems[ind].val.step;
 	}
 };
 
@@ -129,10 +195,19 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), ascii::space_type> {
 	qi::rule<Iterator, Vars(), qi::locals<Symbol>, ascii::space_type> vars;
 	qi::rule<Iterator, Hyp*(), qi::locals<uint>, ascii::space_type> hyp;
 	qi::rule<Iterator, Prop*(), qi::locals<uint>, ascii::space_type> prop;
+
+	qi::rule<Iterator, Ref(Proof*), ascii::space_type> ref;
+	qi::rule<Iterator, vector<Ref>(Proof*), ascii::space_type> refs;
+	qi::rule<Iterator, Step*(Proof*), qi::locals<uint>, qi::locals<Step::Kind>, ascii::space_type> step;
+	qi::rule<Iterator, Qed*(Proof*), qi::locals<uint>, ascii::space_type> qed;
+	qi::rule<Iterator, Proof::Elem(Proof*), ascii::space_type> elem;
+
+
 	qi::rule<Iterator, Proof*(), ascii::space_type> proof;
-	qi::rule<Iterator, Theorem*(), ascii::space_type> theorem;
-	qi::rule<Iterator, Def*(), ascii::space_type> def;
+	qi::rule<Iterator, Theorem*(), qi::locals<Assertion*>, ascii::space_type> theorem;
+	qi::rule<Iterator, Def*(),qi::locals<Assertion*>, ascii::space_type> def;
 	qi::rule<Iterator, Axiom*(), qi::locals<Assertion*>, ascii::space_type> axiom;
+	qi::rule<Iterator, void(Assertion*), ascii::space_type> assertion;
 	qi::rule<Iterator, Rule*(), ascii::space_type> rule;
 	qi::rule<Iterator, Type*(), ascii::space_type> type;
 	qi::rule<Iterator, Const*(), ascii::space_type> constant;
@@ -156,6 +231,7 @@ void Grammar<Iterator>::initNames() {
 	theorem.name("theorem");
 	def.name("def");
 	axiom.name("axiom");
+	assertion.name("assertion");
 	rule.name("rule");
 	type.name("type");
 	constant.name("constant");
