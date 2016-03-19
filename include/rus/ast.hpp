@@ -30,6 +30,7 @@ struct Type {
 };
 
 struct Rule {
+	~Rule() { term.destroy(); }
 	uint  id;
 	Type* type;
 	Vars  vars;
@@ -37,11 +38,13 @@ struct Rule {
 };
 
 struct Hyp {
+	~Hyp() { expr.destroy(); }
 	uint ind;
 	Expr expr;
 };
 
 struct Prop {
+	~Prop() { expr.destroy(); }
 	uint ind;
 	Expr expr;
 };
@@ -49,6 +52,10 @@ struct Prop {
 struct Proof;
 
 struct Assertion {
+	~ Assertion() {
+		for (auto h : hyps) delete h;
+		for (auto p : props) delete p;
+	}
 	uint id;
 	Vars vars;
 	Disj disj;
@@ -115,7 +122,7 @@ struct Step {
 	};
 
 	Step() : ind(-1), expr(), kind(NONE), ass(), refs(), sub() { ass.non = nullptr; }
-
+	~Step() { expr.destroy(); }
 	uint        ind;
 	Expr        expr;
 	Kind        kind;
@@ -155,9 +162,9 @@ struct Proof {
 		Value val;
 	};
 
-	Proof() :
-	id(-1), vars(), elems(), thm(nullptr) { }
-	~ Proof();
+	Proof() : id(-1), vars(), elems(), thm(nullptr) { }
+	~ Proof() { for (auto& e : elems) e.destroy(); }
+
 	uint         id;
 	Vars         vars;
 	vector<Elem> elems;
@@ -220,10 +227,8 @@ struct Import {
 struct Theory {
 	Theory() : id(-1), nodes(), parent(nullptr) { }
 	Theory(uint n, Theory* p) : id(n), nodes(), parent(p) { }
-	~ Theory() {
-		for (auto& n : nodes)
-			n.destroy();
-	}
+	~ Theory() { for (auto& n : nodes) n.destroy(); }
+
 	uint         id;
 	vector<Node> nodes;
 	Theory*      parent;
@@ -264,11 +269,6 @@ inline void Proof::Elem::destroy() {
 	default : assert(false && "impossible"); break;
 	}
 	kind = NONE;
-}
-
-inline Proof::~ Proof() {
-	for (auto& el : elems)
-		el.destroy();
 }
 
 string show(const Const&);

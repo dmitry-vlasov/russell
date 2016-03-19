@@ -121,6 +121,8 @@ struct Tree {
 struct Expr {
 	Expr() : term(), type(nullptr) { }
 	Expr(const mdl::Expr&);
+	void destroy();
+
 	void push_back(Symbol);
 	void parse();
 	Term<List> term;

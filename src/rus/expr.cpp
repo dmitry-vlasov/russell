@@ -23,36 +23,22 @@ Expr::Expr(const mdl::Expr& ex) : term(), type(nullptr) {
 	}
 }
 
-/*
-Expr::Expr(const mdl::Expr& ex) : term() {
-	List* prev  = nullptr;
-	List* first = nullptr;
-	List* last  = nullptr;
-	for (auto it = ex.symbols.begin(); it != ex.symbols.end(); ++ it) {
-		// pass the first symbol
-		if (it == ex.symbols.begin())
-			continue;
-		List* last = new List;
-		if (!first) first = last;
-		last->symb = Symbol(*it);
-		last->prev = prev;
-		last->next = nullptr;
-		if (prev) prev->next = last;
-		prev = last;
+void Expr::destroy() {
+	while (term.e) {
+		List* prev = term.e->prev;
+		delete term.e;
+		term.e = prev;
 	}
-	term.b = first;
-	term.e = last;
+	term.b = nullptr;
+	term.e = nullptr;
 }
- */
 
 void Expr::push_back(Symbol s) {
 	if (!term.b) {
-		term.b = new List;
-		term.b->symb = s;
+		term.b = new List(s);
 		term.e = term.b;
 	} else {
-		List* n = new List;
-		n->symb = s;
+		List* n = new List(s);
 		n->prev = term.e;
 		term.e->next = n;
 		term.e = n;

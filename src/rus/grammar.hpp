@@ -90,11 +90,11 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 
 	refs =
 		lit("(")
-		>  *(
-			("hyp"  > uint_ [push_back(_val, createStepRef(_1, _r1, val(Ref::HYP)))])  |
-			("prop" > uint_ [push_back(_val, createStepRef(_1, _r1, val(Ref::PROP)))]) |
-			("step" > uint_ [push_back(_val, createStepRef(_1, _r1, val(Ref::STEP)))])
-		)
+		> - ((
+			("hyp"  > uint_ [push_back(_val, createStepRef(_1 - 1, _r1, val(Ref::HYP)))])  |
+			("prop" > uint_ [push_back(_val, createStepRef(_1 - 1, _r1, val(Ref::PROP)))]) |
+			("step" > uint_ [push_back(_val, createStepRef(_1 - 1, _r1, val(Ref::STEP)))])
+		) % ",")
 		> ")";
 
 	step =
@@ -124,9 +124,10 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		lit("prop") [_val = new_<Qed>()]
 		> eps       [_a =  0]
 		> - uint_   [_a = _1]
-		> lit("=")  [phoenix::at_c<0>(*_val) = getProp(_a, _r1)]
+		> lit("=")  [phoenix::at_c<0>(*_val) = getProp(_a - 1, _r1)]
 		> "step"
-		> uint_     [phoenix::at_c<1>(*_val) = getStep(_1, _r1)];
+		> uint_     [phoenix::at_c<1>(*_val) = getStep(_1 - 1, _r1)]
+		> ";";
 
 	elem = (
 		("step"  > step(_r1) [_val = phoenix::construct<Proof::Elem>(_1)]) |
@@ -135,7 +136,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 
 	proof =
 		lit("proof") [_val = new_<Proof>()]
-		> - id       [phoenix::at_c<0>(*_val) = _1]
+		> - (!lit("of") > - id       [phoenix::at_c<0>(*_val) = _1])
 		> "of"
 		> id         [phoenix::at_c<3>(*_val) = findTheorem(_1)]
 		> "{"
@@ -204,7 +205,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		axiom    [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
 	//	def      [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
 		theorem  [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
-		/*proof    [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |*/
+		proof    [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
 		comment);
 
 	//qi::on_success(assertion, setLocation(_val, _1));
