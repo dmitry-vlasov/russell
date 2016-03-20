@@ -68,7 +68,7 @@ void parse_prim(Expr& ex, vector<Vars>& var_stack) {
 			throw Error("symbol neither constant nor variable");
 	}
 	ex.term.b->init.push_back(ex.term);
-	ex.term.e->final.push_back(ex.term);
+	ex.term.e->final.push_back(&ex.term.b->init.back());
 }
 
 void parse_cplx(Expr& ex, vector<Vars>& var_stack) {

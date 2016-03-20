@@ -155,8 +155,8 @@ struct Expr {
 	Symbol symb;
 	Expr*  next;
 	Expr*  prev;
-	vector<Term<Expr>> init;
-	vector<Term<Expr>> final;
+	vector<Term<Expr>>  init;
+	vector<Term<Expr>*> final;
 };
 
 template<typename T>
@@ -170,8 +170,8 @@ struct Tree {
 	Tree*  prev;
 	Tree*  side;
 	uint   level;
-	vector<Term<Tree>> init;
-	vector<Term<Tree>> final;
+	vector<Term<Tree>>  init;
+	vector<Term<Tree>*> final;
 	T data;
 };
 
@@ -265,28 +265,53 @@ inline N* new_side(N* n, Symbol s) {
 	return n->side;
 }
 
+template<class N>
+Term<N>& add_term(Term<node::Expr>* st, map<Expr::Node*, N*>& mp) {
+	assert(st);
+	assert(mp.find(st->b) != mp.end());
+	assert(mp.find(st->e) != mp.end());
+	mp[st->b]->init.push_back(Term<N>());
+	Term<N>& tt = mp[st->b]->init.back();
+	mp[st->e]->final.push_back(&tt);
+	tt.b = mp[st->b];
+	tt.e = mp[st->e];
+	tt.rule = st->rule;
+	for (auto ch : st->children) {
+		tt.children.push_back(&add_term(ch, mp));
+	}
+	return tt;
+}
+
 template<typename T>
 T& Tree<T>::add(Expr& ex) {
 	assert(ex.term.b);
-	if (!root) root = new Node(ex.term.b->symb);
+	if (!root)
+		root = new Node(ex.term.b->symb);
 	Node* n = root;
 	Expr::Node* m = ex.term.b;
+	map<Expr::Node*, Node*> mp;
+	mp[m] = n;
 	while (true) {
 		while (n->side && m->symb != n->symb)
 			n = n->side;
 		if (n->symb == m->symb && m->next && n->next) {
+			mp[m] = n;
 			n = n->next;
 			m = m->next;
 		} else break;
 	}
 	if (m->next) {
-		if (n->symb != m->symb)
+		if (n->symb != m->symb) {
 			n = new_side(n, m->symb);
+			mp[m] = n;
+		}
 		while (m->next) {
 			m = m->next;
 			n = new_next(n, m->symb);
+			mp[m] = n;
 		}
 	}
+	add_term<typename Tree<T>::Node>(&ex.term, mp);
 	//cout << endl << "tree:" << endl;
 	//cout << *this << endl;
 	return n->data;
