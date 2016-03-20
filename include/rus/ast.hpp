@@ -25,6 +25,7 @@ struct Disj {
 struct Rule;
 
 struct Type {
+	~Type() { rules.destroy(); }
 	uint id;
 	vector<Type*> sup;
 	vector<Type*> inf;

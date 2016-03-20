@@ -130,6 +130,8 @@ struct Term {
 	typedef iterator<Node> Iterator;
 	typedef const_iterator<Node> ConstIterator;
 
+
+
 	Iterator begin() { return Iterator(b); }
 	Iterator end()   { return Iterator(); }
 	ConstIterator begin() const { return ConstIterator(b); }
@@ -152,10 +154,14 @@ struct Expr {
 	prev(nullptr), init(), final() { }
 	Expr(Symbol s) : symb(s), next(nullptr),
 	prev(nullptr), init(), final() { }
+	~Expr() {
+		for (auto t : init) delete t;
+		if (next) delete next;
+	}
 	Symbol symb;
 	Expr*  next;
 	Expr*  prev;
-	vector<Term<Expr>>  init;
+	vector<Term<Expr>*>  init;
 	vector<Term<Expr>*> final;
 };
 
@@ -165,12 +171,17 @@ struct Tree {
 	prev(nullptr), side(nullptr), init(), final(), data() { }
 	Tree(Symbol s) : symb(s), next(nullptr),
 	prev(nullptr), side(nullptr), init(), final(), data() { }
+	~Tree() {
+		for (auto t : init) delete t;
+		if (next) delete next;
+		if (side) delete side;
+	}
 	Symbol symb;
 	Tree*  next;
 	Tree*  prev;
 	Tree*  side;
 	uint   level;
-	vector<Term<Tree>>  init;
+	vector<Term<Tree>*>  init;
 	vector<Term<Tree>*> final;
 	T data;
 };
@@ -182,23 +193,22 @@ struct Expr;
 template<typename T>
 struct Tree {
 	typedef node::Tree<T> Node;
-	typedef iterator<Node> iter_tree;
-	typedef iterator<node::Expr> iter_expr;
-	typedef pairing<iter_tree, treeing<iter_expr>, tracing> iter_pair;
-
 	Tree() : root(nullptr) { }
 	T& add(Expr& ex);
+	void destroy() { if (root) delete root; }
 	Node* root;
 };
 
 struct Expr {
 	typedef node::Expr Node;
-	Expr() : term(), type(nullptr) { }
+	Expr() : first(nullptr), last(nullptr), type(nullptr) { }
 	Expr(const mdl::Expr&);
-	void destroy();
+	void destroy() { if (first) delete first; }
 	void push_back(Symbol);
-	Term<Node> term;
-	Type*      type;
+	Term<Node>* term() { return first->init.back(); }
+	Node* first;
+	Node* last;
+	Type* type;
 };
 
 string show(const Expr&);
@@ -266,31 +276,32 @@ inline N* new_side(N* n, Symbol s) {
 }
 
 template<class N>
-Term<N>& add_term(Term<node::Expr>* st, map<Expr::Node*, N*>& mp) {
+Term<N>* add_term(Term<node::Expr>* st, map<Expr::Node*, N*>& mp) {
 	assert(st);
 	assert(mp.find(st->b) != mp.end());
 	assert(mp.find(st->e) != mp.end());
-	mp[st->b]->init.push_back(Term<N>());
-	Term<N>& tt = mp[st->b]->init.back();
-	mp[st->e]->final.push_back(&tt);
-	tt.b = mp[st->b];
-	tt.e = mp[st->e];
-	tt.rule = st->rule;
+	Term<N>* tt = new Term<N>();
+	mp[st->b]->init.push_back(tt);
+	mp[st->e]->final.push_back(tt);
+	tt->b = mp[st->b];
+	tt->e = mp[st->e];
+	tt->rule = st->rule;
 	for (auto ch : st->children) {
-		tt.children.push_back(&add_term(ch, mp));
+		tt->children.push_back(add_term(ch, mp));
 	}
 	return tt;
 }
 
 template<typename T>
 T& Tree<T>::add(Expr& ex) {
-	assert(ex.term.b);
-	if (!root)
-		root = new Node(ex.term.b->symb);
-	Node* n = root;
-	Expr::Node* m = ex.term.b;
+	assert(ex.first);
 	map<Expr::Node*, Node*> mp;
-	mp[m] = n;
+	Expr::Node* m = ex.first;
+	if (!root) {
+		root = new Node(m->symb);
+		mp[m] = root;
+	}
+	Node* n = root;
 	while (true) {
 		while (n->side && m->symb != n->symb)
 			n = n->side;
@@ -311,7 +322,8 @@ T& Tree<T>::add(Expr& ex) {
 			mp[m] = n;
 		}
 	}
-	add_term<typename Tree<T>::Node>(&ex.term, mp);
+	//add_term<typename Tree<T>::Node>(ex.term(), mp);
+
 	//cout << endl << "tree:" << endl;
 	//cout << *this << endl;
 	return n->data;

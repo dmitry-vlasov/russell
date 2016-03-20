@@ -9,12 +9,15 @@ string show(Symbol s) {
 
 string show(const Expr& ex) {
 	string s;
-	for (auto& e : ex.term)
-		s += show(e.symb) + " ";
+	Expr::Node* n = ex.first;
+	while (n) {
+		s += show(n->symb) + " ";
+		n = n->next;
+	}
 	return s;
 }
 
-Expr::Expr(const mdl::Expr& ex) : term(), type(nullptr) {
+Expr::Expr(const mdl::Expr& ex) : first(nullptr), last(nullptr), type(nullptr) {
 	for (auto it = ex.symbols.begin(); it != ex.symbols.end(); ++ it) {
 		// pass the first symbol
 		if (it == ex.symbols.begin())
@@ -23,25 +26,14 @@ Expr::Expr(const mdl::Expr& ex) : term(), type(nullptr) {
 	}
 }
 
-void Expr::destroy() {
-	while (term.e) {
-		Node* prev = term.e->prev;
-		delete term.e;
-		term.e = prev;
-	}
-	term.b = nullptr;
-	term.e = nullptr;
-}
-
 void Expr::push_back(Symbol s) {
-	if (!term.b) {
-		term.b = new Node(s);
-		term.e = term.b;
+	if (!first) {
+		first = new Node(s);
+		last  = first;
 	} else {
-		Node* n = new Node(s);
-		n->prev = term.e;
-		term.e->next = n;
-		term.e = n;
+		last->next = new Node(s);
+		last->next->prev = last;
+		last = last->next;
 	}
 }
 
@@ -57,29 +49,39 @@ inline Type* find_type(vector<Vars>& var_stack, Symbol s) {
 	return nullptr;
 }
 
-void parse_prim(Expr& ex, vector<Vars>& var_stack) {
-	for (auto n : ex.term) {
-		n.symb.type = find_type(var_stack, n.symb);
-		bool is_var = n.symb.type != nullptr;
-		bool is_const = Rus::get().math.consts.has(n.symb);
+void mark_vars(Expr& ex, vector<Vars>& var_stack) {
+	Expr::Node* n = ex.first;
+	while (n) {
+		n->symb.type = find_type(var_stack, n->symb);
+		bool is_var = n->symb.type != nullptr;
+		bool is_const = Rus::get().math.consts.has(n->symb);
 		if (is_const && is_var)
 			throw Error("constant symbol is marked as variable");
 		if (!is_const && !is_var)
 			throw Error("symbol neither constant nor variable");
+		n = n->next;
 	}
-	ex.term.b->init.push_back(ex.term);
-	ex.term.e->final.push_back(&ex.term.b->init.back());
 }
 
-void parse_cplx(Expr& ex, vector<Vars>& var_stack) {
-
+Term<node::Expr>* parse_term(Expr::Node* m, Type* tp) {
+	Tree<Rule*>::Node* n = tp->rules.root;
+	while (true) {
+		while (n->side && m->symb != n->symb)
+			n = n->side;
+		if (n->symb == m->symb && m->next && n->next) {
+			//mp[m] = n;
+			n = n->next;
+			m = m->next;
+		} else break;
+	}
+	return nullptr;
 }
 
 void parse(Expr& ex, vector<Vars>& var_stack, bool prim){
-	if (prim)
-		parse_prim(ex, var_stack);
-	else
-		parse_cplx(ex, var_stack);
+	mark_vars(ex, var_stack);
+	//if (!prim) ex.term = parse_term(ex.term->b, ex.type);
+	//ex.first->init.push_back(ex.term);
+	//ex.last->final.push_back(ex.term->b->init.back());
 }
 
 
