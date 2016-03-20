@@ -48,6 +48,8 @@ struct iterator {
 	bool operator != (iterator it) { return !operator == (it); }
 	Node& operator *()   { return *n; }
 	Node* operator -> () { return n; }
+	iterator next() const { return n->next; }
+	iterator side() const { return n->side; }
 	N* n;
 };
 
@@ -63,6 +65,8 @@ struct const_iterator {
 	bool operator != (const_iterator it) { return !operator == (it); }
 	const Node& operator *()   { return *n; }
 	const Node* operator -> () { return n; }
+	const_iterator next() const { return n->next; }
+	const_iterator side() const { return n->side; }
 	const N* n;
 };
 
@@ -88,7 +92,20 @@ struct tracing : I {
 	I back;
 };
 
-template<typename I1, typename I2>
+template<typename I>
+struct identical : I {
+	identical() : I() { }
+	identical(I i) : I(i) { }
+};
+
+template<typename I>
+struct treeing : I {
+	treeing() : I() { }
+	treeing(I i) : I(i) { }
+	treeing& operator +()  { I::n = nullptr; return *this; }
+};
+
+template<typename I1, typename I2, template<typename> class Wrapper = identical>
 struct pairing {
 	typedef pairing<I2, I1> reversed;
 	pairing() : first(), second() { }
@@ -97,8 +114,12 @@ struct pairing {
 	pairing& operator +()  { +first;  +second;  return *this; }
 	pairing& operator --() { --first; --second; return *this; }
 	reversed reverse() { return reversed(second, first); }
-	I1 first;
-	I2 second;
+	bool equal() const { return first.n->symb == second.n->symb; }
+	bool defined() const { return first.n && second.n; }
+	pairing next() const { return pairing(first.next(), second.next()); }
+	pairing side() const { return pairing(first.side(), second.side()); }
+	Wrapper<I1> first;
+	Wrapper<I2> second;
 };
 
 struct Rule;
@@ -161,36 +182,14 @@ struct Expr;
 template<typename T>
 struct Tree {
 	typedef node::Tree<T> Node;
-	typedef tracing<iterator<Node>> iter_tree;
-	typedef tracing<iterator<node::Expr>> iter_expr;
-	typedef pairing<iter_tree, iter_expr> iter_pair;
-
-
-	bool add_common(iter_pair& i) {
-
-	}
+	typedef iterator<Node> iter_tree;
+	typedef iterator<node::Expr> iter_expr;
+	typedef pairing<iter_tree, treeing<iter_expr>, tracing> iter_pair;
 
 	Tree() : root(nullptr) { }
-	void add(Expr& ex, T data) {
-		/*Iter i(root);
-		for (auto n : ex.term) {
-			Iter last;
-			bool new_node = true;
-			for (Iter j = i; j != Iter(); + j) {
-				if (j->symb == n.symb) {
-					++ i;
-					new_node = false
-					break;
-				}
-				last = j;
-			}
-			last->side = new Node(n.symb);
-			i = + last;
-		}*/
-	}
+	T& add(Expr& ex);
 	Node* root;
 };
-
 
 struct Expr {
 	typedef node::Expr Node;
@@ -204,15 +203,93 @@ struct Expr {
 
 string show(const Expr&);
 
-inline ostream& operator << (ostream& os, const Expr& ex) {
-	os << show(ex);
-	return os;
-}
-
 template<typename N = node::Expr>
 struct Sub {
 	typedef N Node;
 	map<Symbol, Term<Node>> sub;
 };
+
+template<typename T>
+string show_backward(const typename Tree<T>::Node* n) {
+	deque<Symbol> symbs;
+	while (n) {
+		symbs.push_front(n->symb);
+		n = n->prev;
+	}
+	string str;
+	for (auto s : symbs)
+		str += show(s) + " ";
+	return str + "\n";
+}
+
+template<typename T>
+string show_forward(const typename Tree<T>::Node* n) {
+	string s;
+	while (n) {
+		if (!n->next)
+			s += show_backward<T>(n);
+		else
+			s += show_forward<T>(n->next);
+		n = n->side;
+	}
+	return s;
+}
+
+template<typename T>
+string show(const Tree<T>& tr) {
+	return show_forward<T>(tr.root);
+}
+
+inline ostream& operator << (ostream& os, const Expr& ex) {
+	os << show(ex);
+	return os;
+}
+
+template<typename T>
+inline ostream& operator << (ostream& os, const Tree<T>& tr) {
+	os << show(tr);
+	return os;
+}
+
+
+template<typename N>
+inline N* new_next(N* n, Symbol s) {
+	n->next = new N(s);
+	n->next->prev = n;
+	return n->next;
+}
+template<typename N>
+inline N* new_side(N* n, Symbol s) {
+	n->side = new N(s);
+	n->side->prev = n->prev;
+	return n->side;
+}
+
+template<typename T>
+T& Tree<T>::add(Expr& ex) {
+	assert(ex.term.b);
+	if (!root) root = new Node(ex.term.b->symb);
+	Node* n = root;
+	Expr::Node* m = ex.term.b;
+	while (true) {
+		while (n->side && m->symb != n->symb)
+			n = n->side;
+		if (n->symb == m->symb && m->next && n->next) {
+			n = n->next;
+			m = m->next;
+		} else break;
+	}
+	if (m->next) {
+		if (n->symb != m->symb)
+			n = new_side(n, m->symb);
+		while (m->next) {
+			m = m->next;
+			n = new_next(n, m->symb);
+		}
+	}
+	//cout << endl << "tree:" << endl;
+	//cout << *this << endl;
+	return n->data;
+}
 
 }} // mdl::rus

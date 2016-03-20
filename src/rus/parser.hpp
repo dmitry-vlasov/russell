@@ -28,7 +28,7 @@ struct AddToMath {
 		Rus::mod().math.types[t->id] = t;
 	}
 	void operator()(Rule* r) const {
-		r->type->rules.add(r->term, r);
+		r->type->rules.add(r->term) = r;
 		Rus::mod().math.rules[r->id] = r;
 	}
 	void operator()(Axiom* a) const {
