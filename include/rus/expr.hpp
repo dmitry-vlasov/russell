@@ -141,6 +141,13 @@ struct Term {
 	Iterator rend() { return Iterator(); }
 	const Node* rbegin() const { return ConstIterator(last); }
 	const Node* rend() const { return ConstIterator(); }
+	bool isvar() const { return first == last && first->symb.type; }
+	Term* clone() const {
+		Term* ret = new Term(first, last, rule);
+		for (auto ch : children)
+			ret->children.push_back(ch->clone());
+		return ret;
+	}
 
 	Node* first;
 	Node* last;
@@ -200,6 +207,16 @@ struct Tree {
 	Node* root;
 };
 
+template<typename N = node::Expr>
+struct Sub {
+	typedef N Node;
+	~Sub() { for (auto p : sub) delete p.second; }
+	void join(Sub& s) {
+		for (auto p : s.sub) sub[p.first] = p.second->clone();
+	}
+	map<Symbol, Term<Node>*> sub;
+};
+
 struct Expr {
 	typedef node::Expr Node;
 	Expr() : first(nullptr), last(nullptr), type(nullptr) { }
@@ -207,18 +224,14 @@ struct Expr {
 	void destroy() { if (first) delete first; }
 	void push_back(Symbol);
 	Term<Node>* term() { return first->init.back(); }
+	Sub<>* uinfy(Expr&);
+
 	Node* first;
 	Node* last;
 	Type* type;
 };
 
 string show(const Expr&);
-
-template<typename N = node::Expr>
-struct Sub {
-	typedef N Node;
-	map<Symbol, Term<Node>> sub;
-};
 
 template<typename T>
 string show_backward(const typename Tree<T>::Node* n) {

@@ -129,5 +129,45 @@ void parse_term(Expr& ex, vector<Vars>& var_stack, Rule* rule){
 	add_terms(new Term<node::Expr>(ex.first, ex.last, rule));
 }
 
+Sub<>* try_unify(Term<Expr::Node>* p, Term<Expr::Node>* q) {
+	if (p->isvar()) {
+		Symbol var = p->first->symb;
+		if (var.type == q->rule->type) {
+			Sub<>* s = new Sub<>();
+			s->sub[var] = q->clone();
+			return s;
+		} else if (Rule* super = q->rule->type->supers.find(var.type)->second) {
+			Sub<>* s = new Sub<>();
+			s->sub[var] = new Term<Expr::Node>(q->first, q->last, super);
+			s->sub[var]->children.push_back(q->clone());
+			return s;
+		}
+		return nullptr;
+	} else {
+		if (p->rule != q->rule) {
+			return nullptr;
+		}
+		Sub<>* sub = new Sub<>();
+		auto p_ch = p->children.begin();
+		auto q_ch = q->children.begin();
+		while (p_ch != p->children.end()) {
+			if (Sub<>* s = try_unify(*p_ch, *q_ch)) {
+				sub->join(*s);
+				delete s;
+			} else {
+				delete sub;
+				return nullptr;
+			}
+			++p_ch;
+			++q_ch;
+		}
+		return sub;
+	}
+}
+
+Sub<>* Expr::uinfy(Expr& ex) {
+	return try_unify(term(), ex.term());
+}
+
 
 }} // mdl::rus
