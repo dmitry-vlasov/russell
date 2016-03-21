@@ -16,19 +16,19 @@ struct Vars {
 	vector<Symbol> v;
 };
 
-void parse(Expr& ex, vector<Vars>& varsStack, bool prim);
-
 struct Disj {
 	vector<vector<Symbol>> d;
 };
 
 struct Rule;
 
+void parse_expr(Expr& ex, vector<Vars>& varsStack);
+void parse_term(Expr& ex, vector<Vars>& varsStack, Rule* rule);
+
 struct Type {
 	~Type() { rules.destroy(); }
 	uint id;
 	vector<Type*> sup;
-	vector<Type*> inf;
 	Tree<Rule*>   rules;
 };
 

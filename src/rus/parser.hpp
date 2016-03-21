@@ -70,11 +70,20 @@ struct AddSymbol {
 };
 
 struct ParseExpr {
+	template <typename T1, typename T2, typename T3>
+	struct result { typedef void type; };
+	void operator()(Expr& ex, Type* tp, vector<Vars> var_stack) const {
+		ex.type = tp;
+		parse_expr(ex, var_stack);
+	}
+};
+
+struct ParseTerm {
 	template <typename T1, typename T2, typename T3, typename T4>
 	struct result { typedef void type; };
-	void operator()(Expr& ex, Type* tp, vector<Vars> var_stack, bool x) const {
-		ex.type = tp;
-		parse(ex, var_stack, x);
+	void operator()(Expr& ex, Rule* r, vector<Vars> var_stack) const {
+		ex.type = r->type;
+		parse_term(ex, var_stack, r);
 	}
 };
 
@@ -150,8 +159,9 @@ struct CreateStepRef {
 		case Ref::HYP:  return Ref(p->thm->ass.hyps[ind]);
 		case Ref::PROP: return Ref(p->thm->ass.props[ind]);
 		case Ref::STEP: return Ref(p->elems[ind].val.step);
-		default : assert(false && "impossible");
+		default : assert(false && "impossible"); break;
 		}
+		return Ref();
 	}
 };
 
@@ -219,7 +229,8 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), ascii::space_type> {
 
 	vector<Vars> var_stack;
 	qi::rule<Iterator, qi::unused_type> bar;
-	qi::rule<Iterator, Expr(Type*, bool), ascii::space_type> expr;
+	qi::rule<Iterator, Expr(Rule*), ascii::space_type> term;
+	qi::rule<Iterator, Expr(Type*), ascii::space_type> expr;
 	qi::rule<Iterator, Symbol(), ascii::space_type> symb;
 	qi::rule<Iterator, uint(),        ascii::space_type> id;
 	qi::rule<Iterator, std::string(), ascii::space_type> path;

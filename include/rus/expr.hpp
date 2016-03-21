@@ -130,19 +130,21 @@ struct Term {
 	typedef iterator<Node> Iterator;
 	typedef const_iterator<Node> ConstIterator;
 
+	//Term() : beg(nullptr), end(nullptr), rule(nullptr), children()  { }
+	Term(Node* f, Node* l, Rule* r) :
+	first(f), last(l), rule(r), children()  { }
 
-
-	Iterator begin() { return Iterator(b); }
+	Iterator begin() { return Iterator(first); }
 	Iterator end()   { return Iterator(); }
-	ConstIterator begin() const { return ConstIterator(b); }
+	ConstIterator begin() const { return ConstIterator(first); }
 	ConstIterator end() const { return ConstIterator(); }
-	Iterator rbegin() { return Iterator(e); }
+	Iterator rbegin() { return Iterator(last); }
 	Iterator rend() { return Iterator(); }
-	const Node* rbegin() const { return ConstIterator(e); }
+	const Node* rbegin() const { return ConstIterator(last); }
 	const Node* rend() const { return ConstIterator(); }
 
-	Node* b;
-	Node* e;
+	Node* first;
+	Node* last;
 	Rule* rule;
 	vector<Term*> children;
 };
@@ -278,14 +280,11 @@ inline N* new_side(N* n, Symbol s) {
 template<class N>
 Term<N>* add_term(Term<node::Expr>* st, map<Expr::Node*, N*>& mp) {
 	assert(st);
-	assert(mp.find(st->b) != mp.end());
-	assert(mp.find(st->e) != mp.end());
-	Term<N>* tt = new Term<N>();
-	mp[st->b]->init.push_back(tt);
-	mp[st->e]->final.push_back(tt);
-	tt->b = mp[st->b];
-	tt->e = mp[st->e];
-	tt->rule = st->rule;
+	assert(mp.find(st->first) != mp.end());
+	assert(mp.find(st->last) != mp.end());
+	Term<N>* tt = new Term<N>(mp[st->first], mp[st->last], st->rule);
+	mp[st->first]->init.push_back(tt);
+	mp[st->last]->final.push_back(tt);
 	for (auto ch : st->children) {
 		tt->children.push_back(add_term(ch, mp));
 	}
@@ -324,8 +323,8 @@ T& Tree<T>::add(Expr& ex) {
 	}
 	//add_term<typename Tree<T>::Node>(ex.term(), mp);
 
-	//cout << endl << "tree:" << endl;
-	//cout << *this << endl;
+	cout << endl << "tree:" << endl;
+	cout << *this << endl;
 	return n->data;
 }
 

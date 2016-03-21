@@ -23,6 +23,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	const phoenix::function<AddSymbol>   addSymbol;
 
 	const phoenix::function<ParseExpr>   parseExpr;
+	const phoenix::function<ParseTerm>   parseTerm;
 
 	const phoenix::function<PushVars>    pushVars;
 	const phoenix::function<PopVars>     popVars;
@@ -49,7 +50,8 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	id   = lexeme[+ ascii::char_("a-zA-Z0-9_.\\-")]    [_val = idToInt(_1)];
 	path = lexeme[+(ascii::char_ - ';' - ascii::space)];
 
-	expr = + (symb [addSymbol(_val, _1)] | comment) > eps [parseExpr(_val, _r1, phoenix::ref(var_stack), _r2)];
+	term = + (symb [addSymbol(_val, _1)] | comment) > eps [parseTerm(_val, _r1, phoenix::ref(var_stack))];
+	expr = + (symb [addSymbol(_val, _1)] | comment) > eps [parseExpr(_val, _r1, phoenix::ref(var_stack))];
 
 	disj =
 		lit("disjointed") > "("
@@ -73,7 +75,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> ":"
 		> id         [_a = _1]
 		> "=" > "|-"
-		> expr(findType(_a), val(true))
+		> expr(findType(_a))
 		             [phoenix::at_c<1>(*_val) = _1]
 		> lit(";");
 
@@ -83,7 +85,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> ":"
 		> id         [_a = _1]
 		> "=" > "|-"
-		> expr(findType(_a), val(true))
+		> expr(findType(_a))
 		             [phoenix::at_c<1>(*_val) = _1]
 		> lit(";");
 
@@ -135,7 +137,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		)
 		> refs(_r1) [phoenix::at_c<4>(*_val) = _1]
 		> "|-"
-		> expr(findType(_a), val(true))
+		> expr(findType(_a))
 		        [phoenix::at_c<1>(*_val) = _1]
 		> lit(";");
 
@@ -190,8 +192,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> ")" > "{" > "term" > ":"
 		> id         [phoenix::at_c<1>(*_val) = findType(_1)]
 		> "=" > "#"
-		> expr(phoenix::at_c<1>(*_val), val(false))
-					 [phoenix::at_c<3>(*_val) = _1]
+		> term(_val) [phoenix::at_c<3>(*_val) = _1]
 		> ";"
 		> lit("}")   [addToMath(_val)]
 		> eps        [popVars(phoenix::ref(var_stack))];

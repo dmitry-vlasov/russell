@@ -89,25 +89,26 @@ using python : 2.7 : usr/bin/python ;
 
 project
 	: requirements
-#		<library>/boost/python//boost_python 
-		#<library>/usr/lib/x86_64-linux-gnu/libboost_python.so
+		#<library>/boost/python//boost_python 
+		<library>/usr/lib/x86_64-linux-gnu/libboost_python.so
 		#<library>/boost/libboost_python
 		#<library>/usr/lib/libboost_python.so 
 		<include>include
+		<include>/usr/include/python2.7
 		<toolset>gcc:<cxxflags>-std=c++11
 	;
 
-#python-extension pymdl : 
-#	wrapper/mdl.cpp 
-#	smml 
-#	/usr/lib/x86_64-linux-gnu/libboost_python.so
-#	;
+python-extension pymdl : 
+	wrapper/mdl.cpp 
+	smml 
+	/usr/lib/x86_64-linux-gnu/libboost_python-py27.so
+	;
 
-#install convenient_copy 
-#  : pymdl 
-#  : <install-dependencies>on <install-type>SHARED_LIB <install-type>PYTHON_EXTENSION 
-#    <location>. 
-#  ;
+install convenient_copy 
+  : pymdl 
+  : <install-dependencies>on <install-type>SHARED_LIB <install-type>PYTHON_EXTENSION 
+    <location>. 
+  ;
 
 
 
