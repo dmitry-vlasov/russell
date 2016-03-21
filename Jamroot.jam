@@ -20,7 +20,7 @@ exe smm :
   src/smm/globals.cpp
   src/smm/show.cpp
   src/smm/parser.cpp
-  src/smm/verifier.cpp
+  src/smm/verify.cpp
   src/smm/globals.cpp
   src/smm/translate_mm.cpp
   src/smm/translate_rus.cpp
@@ -48,7 +48,7 @@ exe mdl :
   src/rus/expr.cpp
   src/rus/globals.cpp
   src/rus/show.cpp
-  src/rus/unify.cpp
+  src/rus/verify.cpp
   src/rus/parser.cpp
   src/rus/translate.cpp
   src/rus/main.cpp ;
@@ -59,7 +59,7 @@ lib smml :
   src/smm/show.cpp
   src/smm/globals.cpp
   src/smm/parser.cpp
-  src/smm/verifier.cpp ;
+  src/smm/verify.cpp ;
  
 lib mml : 
   src/timer.cpp
