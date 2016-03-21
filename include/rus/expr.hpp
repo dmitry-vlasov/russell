@@ -11,7 +11,7 @@ struct Symbol {
 	Symbol(const mdl::Symbol s, bool r = false) :
 	lit(s.lit), rep(r), type(nullptr) {
 	}
-	Symbol(const mdl::Symbol s, bool r, Type* tp) :
+	Symbol(const mdl::Symbol s, Type* tp, bool r = false) :
 	lit(s.lit), rep(r), type(tp) {
 	}
 	bool operator == (const Symbol& s) const {
@@ -320,11 +320,13 @@ T& Tree<T>::add(Expr& ex) {
 			mp[m] = n;
 		}
 	}
-	//add_term<typename Tree<T>::Node>(ex.term(), mp);
+	add_term<typename Tree<T>::Node>(ex.term(), mp);
 
 	cout << endl << "tree:" << endl;
 	cout << *this << endl;
 	return n->data;
 }
+
+
 
 }} // mdl::rus

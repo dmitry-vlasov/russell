@@ -26,10 +26,11 @@ void parse_expr(Expr& ex, vector<Vars>& varsStack);
 void parse_term(Expr& ex, vector<Vars>& varsStack, Rule* rule);
 
 struct Type {
-	~Type() { rules.destroy(); }
+	~Type();
 	uint id;
-	vector<Type*> sup;
-	Tree<Rule*>   rules;
+	vector<Type*>     sup;
+	Tree<Rule*>       rules;
+	map<Type*, Rule*> supers;
 };
 
 struct Rule {
@@ -39,6 +40,11 @@ struct Rule {
 	Vars  vars;
 	Expr  term;
 };
+
+inline Type::~Type() {
+	rules.destroy();
+	for (auto p : supers) delete p.second;
+}
 
 struct Hyp {
 	~Hyp() { expr.destroy(); }

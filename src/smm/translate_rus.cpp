@@ -48,7 +48,7 @@ static rus::Vars translate_vars(vector<T*> decls, Maps& maps) {
 		if (maps.types.find(flo->type().lit) == maps.types.end())
 			throw Error("unknown type", show_sy(flo->type()));
 		rus::Type* type = maps.types[flo->type().lit];
-		rus_vars.v.push_back(rus::Symbol(flo->var(), true, type));
+		rus_vars.v.push_back(rus::Symbol(flo->var(), type, true));
 	}
 	return rus_vars;
 }
@@ -61,7 +61,7 @@ static rus::Disj translate_disj(const Assertion* ass, Maps& maps) {
 			if (maps.types.find(v.lit) == maps.types.end())
 				throw Error("unknown type", show_sy(v));
 			rus::Type* type = maps.types[v.lit];
-			rus_disj.d.back().push_back(rus::Symbol(v.lit, true, type));
+			rus_disj.d.back().push_back(rus::Symbol(v.lit, type, true));
 		}
 	}
 	return rus_disj;

@@ -33,9 +33,7 @@ struct Config {
 };
 
 struct Rus {
-	~ Rus() {
-		if (source) delete source;
-	}
+	~ Rus() { if (source) delete source; }
 
 	struct Lex {
 		Table ids;
@@ -50,8 +48,8 @@ struct Rus {
 	template<typename T>
 	struct Table {
 		map<uint, T> table;
-		bool has(uint lab) const {
-			return table.find(lab) != table.end();
+		bool has(uint ind) const {
+			return table.find(ind) != table.end();
 		}
 		T& operator[] (uint ind) {
 			return table[ind];

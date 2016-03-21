@@ -63,13 +63,6 @@ void mark_vars(Expr& ex, vector<Vars>& var_stack) {
 	}
 }
 
-inline bool is_suptype(Type* sup, Type* inf) {
-	if (sup == inf)
-		return true;
-	else {
-		return (inf && std::find(inf->sup.begin(), inf->sup.end(), sup) != inf->sup.end());
-	}
-}
 
 template<typename N>
 inline bool shift_next(N*& n) {
@@ -82,8 +75,12 @@ inline bool shift_side(N*& n) {
 }
 
 Term<node::Expr>* parse_term(Expr::Node* last, Type* type) {
-	if (is_suptype(type, last->symb.type)) {
-		return new Term<node::Expr>(last, last, nullptr);
+	if (last->symb.type){
+		if (last->symb.type == type) {
+			return new Term<node::Expr>(last, last, nullptr);
+		} else if (Rule* super = type->supers.find(last->symb.type)->second) {
+			return new Term<node::Expr>(last, last, super);
+		}
 	}
 	Tree<Rule*>::Node* n = type->rules.root;
 	vector<Term<node::Expr>*> children;

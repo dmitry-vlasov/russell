@@ -20,11 +20,36 @@ inline Type* find_type(uint id, Location* loc = nullptr) {
 	return Rus::get().math.types[id];
 }
 
+inline uint create_id(string pref, string s1, string s2) {
+	return Rus::mod().lex.ids.toInt(pref + "_" + s1 + "_ " + s2);
+}
+
+inline Symbol create_symbol(string str, Type* tp) {
+	return Symbol(Rus::mod().lex.symbs.toInt(str), tp, tp);
+}
+
+Rule* create_super(Type* inf, Type* sup) {
+	Rule* rule = new Rule;
+	rule->id = create_id("sup", show_id(inf->id), show_id(sup->id));
+	rule->vars.v.push_back(create_symbol("x", inf));
+	rule->term.push_back(create_symbol("x", inf));
+	rule->type = sup;
+	return rule;
+}
+
+void collect_supers(Type* inf, Type* s) {
+	for (auto sup : s->sup) {
+		inf->supers[sup] = create_super(inf, sup);
+		collect_supers(inf, sup);
+	}
+}
+
 struct AddToMath {
 	void operator()(Const* c) const {
 		Rus::mod().math.consts.s.insert(c->symb);
 	}
 	void operator()(Type* t) const {
+		collect_supers(t, t);
 		Rus::mod().math.types[t->id] = t;
 	}
 	void operator()(Rule* r) const {
