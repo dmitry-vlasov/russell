@@ -130,9 +130,8 @@ struct Term {
 	typedef iterator<Node> Iterator;
 	typedef const_iterator<Node> ConstIterator;
 
-	//Term() : beg(nullptr), end(nullptr), rule(nullptr), children()  { }
 	Term(Node* f, Node* l, Rule* r) :
-	first(f), last(l), rule(r), children()  { }
+	first(f), last(l), rule(r), children() { }
 
 	Iterator begin() { return Iterator(first); }
 	Iterator end()   { return Iterator(); }

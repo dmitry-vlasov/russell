@@ -64,7 +64,11 @@ void mark_vars(Expr& ex, vector<Vars>& var_stack) {
 }
 
 inline bool is_suptype(Type* sup, Type* inf) {
-	return (sup == inf) || (std::find(inf->sup.begin(), inf->sup.end(), sup) != inf->sup.end());
+	if (sup == inf)
+		return true;
+	else {
+		return (inf && std::find(inf->sup.begin(), inf->sup.end(), sup) != inf->sup.end());
+	}
 }
 
 template<typename N>
@@ -78,16 +82,15 @@ inline bool shift_side(N*& n) {
 }
 
 Term<node::Expr>* parse_term(Expr::Node* last, Type* type) {
+	if (is_suptype(type, last->symb.type)) {
+		return new Term<node::Expr>(last, last, nullptr);
+	}
 	Tree<Rule*>::Node* n = type->rules.root;
 	vector<Term<node::Expr>*> children;
 	Expr::Node* first = last;
 	while (n && last) {
 		if (Type* tp = n->symb.type) {
-			if (is_suptype(tp, last->symb.type)) {
-				if (!shift_next(n)) break;
-				last = last->next;
-				continue;
-			} else if (Term<node::Expr>* child = parse_term(last, tp)) {
+			if (Term<node::Expr>* child = parse_term(last, tp)) {
 				children.push_back(child);
 				if (!shift_next(n)) break;
 				last = child->last->next;
@@ -100,7 +103,7 @@ Term<node::Expr>* parse_term(Expr::Node* last, Type* type) {
 		}
 		if (!shift_side(n)) break;
 	}
-	if (!n->next) {
+	if (last && !n->next) {
 		Term<node::Expr>* term = new Term<node::Expr>(first, last, n->data);
 		term->children = children;
 		return term;
@@ -118,14 +121,15 @@ void add_terms(Term<node::Expr>* term) {
 
 void parse_expr(Expr& ex, vector<Vars>& var_stack){
 	mark_vars(ex, var_stack);
-	//Term<node::Expr>* term = parse_term(ex.first, ex.type);
-	//add_terms(term);
+	if (Term<node::Expr>* term = parse_term(ex.first, ex.type))
+		add_terms(term);
+	else
+		throw Error("error at parsing", show(ex));
 }
 
 void parse_term(Expr& ex, vector<Vars>& var_stack, Rule* rule){
 	mark_vars(ex, var_stack);
-	Term<node::Expr>* term = new Term<node::Expr>(ex.first, ex.last, rule);
-	add_terms(term);
+	add_terms(new Term<node::Expr>(ex.first, ex.last, rule));
 }
 
 
