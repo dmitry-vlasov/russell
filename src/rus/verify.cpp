@@ -1,9 +1,50 @@
 #include "rus/globals.hpp"
 
-namespace mdl { namespace rus {
+namespace mdl { namespace rus { namespace {
 
-void unify(Source* ) {
+void verify_proof(Proof* pf);
 
+void verify_step(Step* st) {
+	if (st->kind == Step::CLAIM) {
+		verify_proof(st->ass.prf);
+		return;
+	}
+	Assertion* ass = st->assertion();
+	Sub<>* ps = ass->props[0]->expr.unify(st->expr);
+	if (!ps) throw Error("proposition unification failed");
+	for (uint i = 0; i < ass->arity(); ++ i) {
+		Sub<>* hs = ass->hyps[i]->expr.unify(st->refs[i].expr());
+		if (!hs) throw Error("hypothesis unification failed");
+		if (!ps->join(hs)) throw Error("hypothesis unification failed");
+	}
+}
+
+void verify_qed(Qed* qed) {
+	if (qed->prop->expr != qed->step->expr)
+		throw Error("qed prop doesn't match qed step");
+}
+
+void verify_proof(Proof* proof) {
+	for (auto el : proof->elems) {
+		switch (el.kind){
+		case Proof::Elem::STEP: verify_step(el.val.step); break;
+		case Proof::Elem::QED: verify_qed(el.val.qed); break;
+		default : break;
+		}
+	}
+}
+
+void verify_theory(Theory* theory) {
+	for (auto n : theory->nodes) {
+		if (n.kind == Node::PROOF)
+			verify_proof(n.val.prf);
+	}
+}
+
+} // anonympus namespace
+
+void verify(Source* source) {
+	verify_theory(&source->theory);
 }
 
 }} // mdl::rus

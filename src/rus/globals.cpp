@@ -59,7 +59,7 @@ bool Rus::parse() {
 bool Rus::unify() {
 	try {
 		timers.unify.start();
-		rus::unify(source);
+		rus::verify(source);
 		timers.unify.stop();
 		return true;
 	} catch (Error& err) {

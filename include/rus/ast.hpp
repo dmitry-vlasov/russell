@@ -65,6 +65,7 @@ struct Assertion {
 		for (auto h : hyps) delete h;
 		for (auto p : props) delete p;
 	}
+	uint arity() const { return hyps.size(); }
 	uint id;
 	Vars vars;
 	Disj disj;
@@ -108,6 +109,7 @@ struct Ref {
 	Ref(Hyp* h)   : kind(HYP),  val()  { val.hyp = h; }
 	Ref(Prop* p)  : kind(PROP), val()  { val.prop = p; }
 	Ref(Step* s)  : kind(STEP), val()  { val.step = s; }
+	Expr& expr();
 
 	Kind kind;
 	Value val;
@@ -132,6 +134,16 @@ struct Step {
 
 	Step() : ind(-1), expr(), kind(NONE), ass(), refs(), sub() { ass.non = nullptr; }
 	~Step() { expr.destroy(); }
+
+	Assertion* assertion() {
+		switch(kind) {
+		case Step::AXM: return &ass.axm->ass;
+		case Step::THM: return &ass.thm->ass;
+		case Step::DEF: return &ass.def->ass;
+		default : assert(false && "impossible");
+		}
+	}
+
 	uint        ind;
 	Expr        expr;
 	Kind        kind;
@@ -139,6 +151,15 @@ struct Step {
 	vector<Ref> refs;
 	Sub<>       sub;
 };
+
+inline Expr& Ref::expr() {
+	switch (kind) {
+	case HYP : return val.hyp->expr;
+	case PROP: return val.prop->expr;
+	case STEP: return val.step->expr;
+	default  : assert(false && "impossible");
+	}
+}
 
 struct Qed {
 	Prop* prop;

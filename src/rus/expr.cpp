@@ -37,6 +37,16 @@ void Expr::push_back(Symbol s) {
 	}
 }
 
+bool Expr::operator == (const Expr& ex) const {
+	const Node* n = ex.first;
+	const Node* m = first;
+	while (n && m) {
+		if (n->symb != m->symb) return false;
+		n = n->next; m = m ->next;
+	}
+	return !n && !m;
+}
+
 inline Type* find_type(Vars& vars, Symbol s) {
 	for (auto var : vars.v)
 		if (var.lit == s.lit) return var.type;
@@ -152,7 +162,10 @@ Sub<>* try_unify(Term<Expr::Node>* p, Term<Expr::Node>* q) {
 		auto q_ch = q->children.begin();
 		while (p_ch != p->children.end()) {
 			if (Sub<>* s = try_unify(*p_ch, *q_ch)) {
-				sub->join(*s);
+				if (!sub->join(s)) {
+					delete sub;
+					return nullptr;
+				}
 				delete s;
 			} else {
 				delete sub;
@@ -165,7 +178,7 @@ Sub<>* try_unify(Term<Expr::Node>* p, Term<Expr::Node>* q) {
 	}
 }
 
-Sub<>* Expr::uinfy(Expr& ex) {
+Sub<>* Expr::unify(Expr& ex) {
 	return try_unify(term(), ex.term());
 }
 

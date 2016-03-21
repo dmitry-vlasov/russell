@@ -142,11 +142,10 @@ struct Term {
 	const Node* rbegin() const { return ConstIterator(last); }
 	const Node* rend() const { return ConstIterator(); }
 	bool isvar() const { return first == last && first->symb.type; }
-	Term* clone() const {
-		Term* ret = new Term(first, last, rule);
-		for (auto ch : children)
-			ret->children.push_back(ch->clone());
-		return ret;
+	Term* clone() const;
+	bool operator == (const Term& t) const;
+	bool operator != (const Term& t) const {
+		return !operator == (t);
 	}
 
 	Node* first;
@@ -211,9 +210,8 @@ template<typename N = node::Expr>
 struct Sub {
 	typedef N Node;
 	~Sub() { for (auto p : sub) delete p.second; }
-	void join(Sub& s) {
-		for (auto p : s.sub) sub[p.first] = p.second->clone();
-	}
+	bool join(Sub* s);
+
 	map<Symbol, Term<Node>*> sub;
 };
 
@@ -223,8 +221,12 @@ struct Expr {
 	Expr(const mdl::Expr&);
 	void destroy() { if (first) delete first; }
 	void push_back(Symbol);
+	bool operator == (const Expr& ex) const;
+	bool operator != (const Expr& ex) const {
+		return !operator == (ex);
+	}
 	Term<Node>* term() { return first->init.back(); }
-	Sub<>* uinfy(Expr&);
+	Sub<>* unify(Expr&);
 
 	Node* first;
 	Node* last;
@@ -340,6 +342,41 @@ T& Tree<T>::add(Expr& ex) {
 	return n->data;
 }
 
+template<typename N>
+bool Sub<N>::join(Sub* s) {
+	for (auto p : s->sub) {
+		auto it = sub.find(p.first);
+		if (it != sub.end()) {
+			if (*(*it).second != *p.second) {
+				return false;
+			}
+		} else {
+			sub[p.first] = p.second->clone();
+		}
+	}
+	return true;
+}
 
+template<typename N>
+Term<N>* Term<N>::clone() const {
+	Term* ret = new Term(first, last, rule);
+	for (auto ch : children)
+		ret->children.push_back(ch->clone());
+	return ret;
+}
+template<typename N>
+bool Term<N> :: operator == (const Term& t) const {
+	if (first->symb != t.first->symb)
+		return false;
+	if (rule != t.rule)
+		return false;
+	auto p_ch = children.begin();
+	auto q_ch = t.children.begin();
+	while (p_ch != children.end()) {
+		if (*p_ch != *q_ch) return false;
+		++ p_ch; ++ q_ch;
+	}
+	return true;
+}
 
 }} // mdl::rus

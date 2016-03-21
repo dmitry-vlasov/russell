@@ -93,7 +93,7 @@ struct Rus {
 
 ostream& operator << (ostream& os, const Rus& s);
 Source* parse(const string& path);
-void unify(Source*);
+void verify(Source*);
 smm::Source* translate(const Source* source);
 
 }} // mdl::rus
