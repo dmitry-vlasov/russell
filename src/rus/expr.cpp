@@ -139,14 +139,19 @@ void parse_term(Expr& ex, vector<Vars>& var_stack, Rule* rule){
 	add_terms(new Term<node::Expr>(ex.first, ex.last, rule));
 }
 
+template<typename N>
+inline Type* type(Term<N>* t) {
+	return t->rule ? t->rule->type : t->first->symb.type;
+}
+
 Sub<>* try_unify(Term<Expr::Node>* p, Term<Expr::Node>* q) {
 	if (p->isvar()) {
 		Symbol var = p->first->symb;
-		if (var.type == q->rule->type) {
+		if (var.type == type(q)) {
 			Sub<>* s = new Sub<>();
 			s->sub[var] = q->clone();
 			return s;
-		} else if (Rule* super = q->rule->type->supers.find(var.type)->second) {
+		} else if (Rule* super = type(q)->supers.find(var.type)->second) {
 			Sub<>* s = new Sub<>();
 			s->sub[var] = new Term<Expr::Node>(q->first, q->last, super);
 			s->sub[var]->children.push_back(q->clone());

@@ -141,6 +141,7 @@ struct Term {
 	Iterator rend() { return Iterator(); }
 	const Node* rbegin() const { return ConstIterator(last); }
 	const Node* rend() const { return ConstIterator(); }
+	//Type* type() { return rule ? rule->type : first->symb.type; }
 	bool isvar() const { return first == last && first->symb.type; }
 	Term* clone() const;
 	bool operator == (const Term& t) const;
