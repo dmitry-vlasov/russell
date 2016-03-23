@@ -8,6 +8,7 @@ struct Type;
 
 struct Symbol {
 	Symbol(): lit(-1), rep(false), type(nullptr) { }
+	Symbol(uint l): lit(l), rep(false), type(nullptr) { }
 	Symbol(const mdl::Symbol s, bool r = false) :
 	lit(s.lit), rep(r), type(nullptr) {
 	}
@@ -244,6 +245,16 @@ struct Expr {
 	Node* last;
 	Type* type;
 };
+
+inline iterator<node::Expr> begin(Expr& ex) { return ex.term()->begin(); }
+inline iterator<node::Expr> end(Expr& ex)   { return ex.term()->end(); }
+inline const_iterator<node::Expr> begin(const Expr& ex) { return ex.term()->begin(); }
+inline const_iterator<node::Expr> end(const Expr& ex) { return ex.term()->end(); }
+inline iterator<node::Expr> rbegin(Expr& ex) { return ex.term()->rbegin(); }
+inline iterator<node::Expr> rend(Expr& ex) { return ex.term()->rend(); }
+inline const_iterator<node::Expr> rbegin(const Expr& ex) { return ex.term()->rbegin(); }
+inline const_iterator<node::Expr> rend(const Expr& ex) { return ex.term()->rend(); }
+
 
 Sub<>* unify(const Term<Expr::Node>* p, const Term<Expr::Node>* q);
 inline Sub<>* unify(const Expr& ex1, const Expr& ex2) {
