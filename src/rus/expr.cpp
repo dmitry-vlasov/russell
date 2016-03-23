@@ -22,8 +22,10 @@ string show_ast(const Term<Expr::Node>* t) {
 		return show(t->first->symb) + " ";
 	} else {
 		string s = show_id(t->rule->id) + "(";
-		for (auto ch : t->children)
-			s += show_ast(ch) + ", ";
+		for (uint i = 0; i < t->children.size(); ++ i) {
+			s += show_ast(t->children[i]);
+			if (i + 1 < t->children.size()) s += ", ";
+		}
 		s += ")";
 		return s;
 	}
@@ -209,5 +211,12 @@ Sub<>* Expr::unify(Expr& ex) {
 	return try_unify(term(), ex.term());
 }
 
+
+void dump(const Symbol& s) { cout << show(s) << endl; }
+void dump(const Expr& ex) { cout << show(ex) << endl; }
+void dump_ast(const Expr& ex) { cout << show_ast(ex) << endl; }
+void dump(const Term<Expr::Node>* tm) { cout << show(*tm) << endl; }
+void dump_ast(const Term<Expr::Node>* tm) { cout << show_ast(tm) << endl; }
+void dump(const Sub<Expr::Node>& sb) { cout << show(sb) << endl; }
 
 }} // mdl::rus

@@ -134,13 +134,13 @@ struct Term {
 	first(f), last(l), rule(r), children() { }
 
 	Iterator begin() { return Iterator(first); }
-	Iterator end()   { return Iterator(); }
+	Iterator end()   { return last->next ? Iterator(last->next) : Iterator(); }
 	ConstIterator begin() const { return ConstIterator(first); }
-	ConstIterator end() const { return ConstIterator(); }
+	ConstIterator end() const { return last->next ? ConstIterator(last->next) : ConstIterator(); }
 	Iterator rbegin() { return Iterator(last); }
-	Iterator rend() { return Iterator(); }
+	Iterator rend() { return first->prev ? Iterator(first->prev) : Iterator(); }
 	ConstIterator rbegin() const { return ConstIterator(last); }
-	ConstIterator rend() const { return ConstIterator(); }
+	ConstIterator rend() const { return first->prev ? ConstIterator(first->prev) : ConstIterator(); }
 	//Type* type() { return rule ? rule->type : first->symb.type; }
 	bool isvar() const { return first == last && first->symb.type; }
 	Term* clone() const;
@@ -398,25 +398,23 @@ bool Term<N> :: operator == (const Term& t) const {
 		return false;
 	if (rule != t.rule)
 		return false;
-	auto p_ch = children.begin();
-	auto q_ch = t.children.begin();
-	while (p_ch != children.end()) {
-		if (*p_ch != *q_ch) return false;
-		++ p_ch; ++ q_ch;
+	auto i_p = children.begin();
+	auto i_q = t.children.begin();
+	while (i_p != children.end()) {
+		const Term* ch_p = *i_p;
+		const Term* ch_q = *i_q;
+		if (*ch_p != *ch_q) return false;
+		++ i_p; ++ i_q;
 	}
 	return true;
 }
 
-inline void dump(const Symbol& s) { cout << show(s) << endl; }
-inline void dump(const Expr& ex) { cout << show(ex) << endl; }
-template<class N>
-inline void dump(const Term<N>* tm) { cout << show(*tm) << endl; }
-template<class N>
-inline void dump_ast(const Term<N>* tm) { cout << show_ast(*tm) << endl; }
-template<class T>
-inline void dump(const Tree<T>& tr) { cout << show(tr) << endl; }
-template<class T>
-inline void dump(const Sub<T>& sb) { cout << show(sb) << endl; }
+void dump(const Symbol& s);
+void dump(const Expr& ex);
+void dump_ast(const Expr& ex);
+void dump(const Term<Expr::Node>* tm);
+void dump_ast(const Term<Expr::Node>* tm);
+void dump(const Sub<Expr::Node>& sb);
 
 
 }} // mdl::rus
