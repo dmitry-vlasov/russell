@@ -139,8 +139,8 @@ struct Term {
 	ConstIterator end() const { return ConstIterator(); }
 	Iterator rbegin() { return Iterator(last); }
 	Iterator rend() { return Iterator(); }
-	const Node* rbegin() const { return ConstIterator(last); }
-	const Node* rend() const { return ConstIterator(); }
+	ConstIterator rbegin() const { return ConstIterator(last); }
+	ConstIterator rend() const { return ConstIterator(); }
 	//Type* type() { return rule ? rule->type : first->symb.type; }
 	bool isvar() const { return first == last && first->symb.type; }
 	Term* clone() const;
@@ -227,6 +227,7 @@ struct Expr {
 		return !operator == (ex);
 	}
 	Term<Node>* term() { return first->init.back(); }
+	const Term<Node>* term() const { return first->init.back(); }
 	Sub<>* unify(Expr&);
 
 	Node* first;
@@ -235,6 +236,32 @@ struct Expr {
 };
 
 string show(const Expr&);
+string show_ast(const Term<Expr::Node>*);
+inline string show_ast(const Expr& ex) {
+	return show_ast(ex.term());
+}
+
+template<typename N>
+string show(const Term<N>& t) {
+	deque<Symbol> symbs;
+	string s;
+	for (auto it = t.rbegin(); it != t.rend(); -- it) {
+		symbs.push_front(it->symb);
+	}
+	string str;
+	for (auto s : symbs)
+		str += show(s) + " ";
+	return str;
+}
+
+template<typename N>
+string show(const Sub<N>& s) {
+	string str;
+	for (auto p : s.sub) {
+		str += show(p.first) + " --> " + show(*p.second) + "\n";
+	}
+	return str;
+}
 
 template<typename T>
 string show_backward(const typename Tree<T>::Node* n) {

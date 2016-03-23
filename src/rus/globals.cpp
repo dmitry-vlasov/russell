@@ -45,7 +45,7 @@ bool Rus::parse() {
 	try {
 		timers.read.start();
 		source = rus::parse(config.in);
-		cout << *source << endl;
+		//cout << *source << endl;
 		timers.read.stop();
 		return true;
 	} catch (Error& err) {

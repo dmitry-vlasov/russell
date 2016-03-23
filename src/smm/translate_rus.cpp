@@ -133,9 +133,10 @@ rus::Node::Kind ass_kind(const Assertion* ass) {
 	}
 }
 
-static rus::Proof::Elem translate_step(Ref ref, vector<rus::Proof::Elem>& proof, rus::Theorem* thm, Maps& maps) {
+static rus::Proof::Elem translate_step(Ref ref, rus::Proof* proof, rus::Theorem* thm, Maps& maps) {
 	assert(ref.type == Ref::PROOF);
-	rus::Proof::Elem el(new rus::Step());
+	vector<rus::Proof::Elem>& elems = proof->elems;
+	rus::Proof::Elem el(new rus::Step(proof));
 	Assertion* ass = ref.val.prf->refs.back().val.ass;
 	for (uint i = 0; i < ass->essential.size(); ++ i) {
 		Ref r = ref.val.prf->refs[i];
@@ -148,7 +149,7 @@ static rus::Proof::Elem translate_step(Ref ref, vector<rus::Proof::Elem>& proof,
 		}
 		el.val.step->refs.push_back(hr);
 	}
-	el.val.step->ind = proof.size();
+	el.val.step->ind = elems.size();
 	el.val.step->expr = translate_expr(ref.expr, maps);
 	switch (ass_kind(ass)) {
 	case rus::Node::AXIOM:
@@ -162,7 +163,7 @@ static rus::Proof::Elem translate_step(Ref ref, vector<rus::Proof::Elem>& proof,
 		el.val.step->kind = rus::Step::THM; break;
 	default : assert(false && "impossible"); break;
 	}
-	proof.push_back(el);
+	elems.push_back(el);
 	return el;
 }
 
@@ -172,7 +173,7 @@ static void translate_proof(const Assertion* ass, rus::Theorem* thm, rus::Theory
 	rus::Proof* p = new rus::Proof();
 	p->vars = translate_vars(ass->inner, maps);
 	p->thm = thm;
-	translate_step(tree, p->elems, thm, maps);
+	translate_step(tree, p, thm, maps);
 	rus::Prop* pr = thm->ass.props.front();
 	rus::Step* st = p->elems.back().val.step;
 	p->elems.push_back(new rus::Qed{pr, st});

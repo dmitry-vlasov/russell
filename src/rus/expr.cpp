@@ -17,6 +17,18 @@ string show(const Expr& ex) {
 	return s;
 }
 
+string show_ast(const Term<Expr::Node>* t) {
+	if (t->isvar()) {
+		return show(t->first->symb) + " ";
+	} else {
+		string s = show_id(t->rule->id) + "(";
+		for (auto ch : t->children)
+			s += show_ast(ch) + ", ";
+		s += ")";
+		return s;
+	}
+}
+
 Expr::Expr(const mdl::Expr& ex) : first(nullptr), last(nullptr), type(nullptr) {
 	for (auto it = ex.symbols.begin(); it != ex.symbols.end(); ++ it) {
 		// pass the first symbol
@@ -73,6 +85,14 @@ void mark_vars(Expr& ex, vector<Vars>& var_stack) {
 	}
 }
 
+/*
+bool verify_term(Term<node::Expr>* term) {
+	if (term->isvar()) {
+
+	}
+	node::Expr* first = term->first;
+	auto rule_iter =
+}*/
 
 template<typename N>
 inline bool shift_next(N*& n) {
@@ -128,9 +148,11 @@ void add_terms(Term<node::Expr>* term) {
 
 void parse_expr(Expr& ex, vector<Vars>& var_stack){
 	mark_vars(ex, var_stack);
-	if (Term<node::Expr>* term = parse_term(ex.first, ex.type))
+	if (Term<node::Expr>* term = parse_term(ex.first, ex.type)) {
+		//cout << "\nto parse: " + show(ex) + "\n";
 		add_terms(term);
-	else
+		//cout << "ast: " + show_ast(ex) + "\n";
+	} else
 		throw Error("error at parsing", show(ex));
 }
 

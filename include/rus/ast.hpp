@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/variant/recursive_variant.hpp>
+//#include <boost/variant/recursive_variant.hpp>
 #include "common.hpp"
 #include "rus/expr.hpp"
 
@@ -132,7 +132,8 @@ struct Step {
 		Proof*   prf;
 	};
 
-	Step() : ind(-1), expr(), kind(NONE), ass(), refs(), sub() { ass.non = nullptr; }
+	Step(Proof* pr) : ind(-1), expr(), kind(NONE), ass(),
+	refs(), proof(pr) { ass.non = nullptr; }
 	~Step() { expr.destroy(); }
 
 	Assertion* assertion() {
@@ -149,7 +150,7 @@ struct Step {
 	Kind        kind;
 	Ass         ass;
 	vector<Ref> refs;
-	Sub<>       sub;
+	Proof*      proof;
 };
 
 inline Expr& Ref::expr() {

@@ -14,8 +14,29 @@ void verify_step(Step* st) {
 	if (!ps) throw Error("proposition unification failed");
 	for (uint i = 0; i < ass->arity(); ++ i) {
 		Sub<>* hs = ass->hyps[i]->expr.unify(st->refs[i].expr());
-		if (!hs) throw Error("hypothesis unification failed");
-		if (!ps->join(hs)) throw Error("hypothesis unification failed");
+		if (!hs) {
+			string msg = "\nhypothesis:\n";
+			msg += show(*ass->hyps[i]) + "\n";
+			msg += "step:\n";
+			msg += show(*st) + "\n";
+			msg += "ref expr:\n";
+			msg += show(st->refs[i].expr()) + "\n";
+			msg += "assertion " + Rus::get().lex.ids.toStr(ass->id) + "\n";
+			msg += "substitution:\n" + show(*ps) + "\n";
+			throw Error("hypothesis unification failed", msg);
+		}
+		if (!ps->join(hs)) {
+			string msg = "\nhypothesis:\n";
+			msg += show(*ass->hyps[i]) + "\n";
+			msg += "step:\n";
+			msg += show(*st) + "\n";
+			msg += "ref expr:\n";
+			msg += show(st->refs[i].expr()) + "\n";
+			//msg += "assertion " + Rus::get().lex.ids.toStr(ass->id) + "\n";
+			msg += "prop substitution:\n" + show(*ps) + "\n";
+			msg += "hyp substitution:\n" + show(*hs) + "\n";
+			throw Error("substitution join failed", msg);
+		}
 	}
 }
 

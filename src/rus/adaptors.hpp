@@ -119,7 +119,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::rus::Step::Kind, kind)
 	(mdl::rus::Step::Ass, ass)
 	(mdl::vector<mdl::rus::Ref>, refs)
-	(mdl::rus::Sub<>*, sub)
+	(mdl::rus::Proof*, proof)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
