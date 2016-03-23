@@ -407,4 +407,16 @@ bool Term<N> :: operator == (const Term& t) const {
 	return true;
 }
 
+inline void dump(const Symbol& s) { cout << show(s) << endl; }
+inline void dump(const Expr& ex) { cout << show(ex) << endl; }
+template<class N>
+inline void dump(const Term<N>* tm) { cout << show(*tm) << endl; }
+template<class N>
+inline void dump_ast(const Term<N>* tm) { cout << show_ast(*tm) << endl; }
+template<class T>
+inline void dump(const Tree<T>& tr) { cout << show(tr) << endl; }
+template<class T>
+inline void dump(const Sub<T>& sb) { cout << show(sb) << endl; }
+
+
 }} // mdl::rus

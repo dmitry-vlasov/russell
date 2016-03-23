@@ -118,17 +118,19 @@ string show(const Def& def) {
 	return s;
 }
 
+string show(const Ref& ref) {
+	switch (ref.kind) {
+	case Ref::HYP:  return "hyp "  + to_string(ref.val.hyp->ind + 1);
+	case Ref::PROP: return "prop " + to_string(ref.val.prop->ind + 1);
+	case Ref::STEP: return"step " + to_string(ref.val.step->ind + 1);
+	default : assert(false && "impossible"); return string();
+	}
+}
 
 static string show_refs(const vector<Ref>& refs) {
 	string s = "(";
 	for (uint i = 0; i < refs.size(); ++ i) {
-		Ref r = refs[i];
-		switch (r.kind) {
-		case Ref::HYP:  s += "hyp "  + to_string(r.val.hyp->ind + 1);  break;
-		case Ref::PROP: s += "prop " + to_string(r.val.prop->ind + 1); break;
-		case Ref::STEP: s += "step " + to_string(r.val.step->ind + 1); break;
-		default : assert(false && "impossible"); break;
-		}
+		s += show(refs[i]);
 		if (i + 1 < refs.size()) s += ", ";
 	}
 	s += ")";
@@ -230,5 +232,26 @@ string show(const Source& c) {
 	}
 	return s;
 }
+
+
+void dump(const Const& c)     { cout << show(c) << endl; }
+void dump(const Vars& v)      { cout << show(v) << endl; }
+void dump(const Disj& d)      { cout << show(d) << endl; }
+void dump(const Type& t)      { cout << show(t) << endl; }
+void dump(const Rule& r)      { cout << show(r) << endl; }
+void dump(const Axiom& a)     { cout << show(a) << endl; }
+void dump(const Def& d)       { cout << show(d) << endl; }
+void dump(const Assertion& a) { cout << show(a) << endl; }
+void dump(const Theorem& t)   { cout << show(t) << endl; }
+void dump(const Proof& p)     { cout << show(p) << endl; }
+void dump(const Step& s)      { cout << show(s) << endl; }
+void dump(const Ref& r)       { cout << show(r) << endl; }
+void dump(const Qed& q)       { cout << show(q) << endl; }
+void dump(const Hyp& h)       { cout << show(h) << endl; }
+void dump(const Prop& p)      { cout << show(p) << endl; }
+void dump(const Node& n)      { cout << show(n) << endl; }
+void dump(const Import& i)    { cout << show(i) << endl; }
+void dump(const Theory& t)    { cout << show(t) << endl; }
+void dump(const Source& s)    { cout << show(s) << endl; }
 
 }} // mdl::smm

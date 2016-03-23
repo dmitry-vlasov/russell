@@ -310,6 +310,7 @@ string show(const Type&);
 string show(const Rule&);
 string show(const Axiom&);
 string show(const Def&);
+string show(const Assertion&);
 string show(const Theorem&);
 string show(const Proof&);
 string show(const Step&);
@@ -340,5 +341,25 @@ inline ostream& operator << (ostream& os, const Node& n)  { os << show(n); retur
 inline ostream& operator << (ostream& os, const Import& i){ os << show(i); return os; }
 inline ostream& operator << (ostream& os, const Theory& t){ os << show(t); return os; }
 inline ostream& operator << (ostream& os, const Source& s){ os << show(s); return os; }
+
+void dump(const Const& c);
+void dump(const Vars& v);
+void dump(const Disj& d);
+void dump(const Type& t);
+void dump(const Rule& r);
+void dump(const Axiom& a);
+void dump(const Def& d);
+void dump(const Assertion& a);
+void dump(const Theorem& t);
+void dump(const Proof& p);
+void dump(const Step& s);
+void dump(const Ref& r);
+void dump(const Qed& q);
+void dump(const Hyp& h);
+void dump(const Prop& p);
+void dump(const Node& n);
+void dump(const Import& i);
+void dump(const Theory& t);
+void dump(const Source& s);
 
 }} // mdl::rus
