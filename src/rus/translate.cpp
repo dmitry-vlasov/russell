@@ -64,7 +64,7 @@ vector<smm::Disjointed*> translate_disj(const Disj& rdisj) {
 smm::Assertion* translate_rule(const Rule* rule, Maps& maps);
 
 vector<smm::Node> translate_type(const Type* type, Maps& maps) {
-	string type_str = "ty_" + Rus::get().lex.ids.toStr(type->id);
+	string type_str = Rus::get().lex.ids.toStr(type->id);
 	uint type_sy = Rus::mod().lex.symbs.toInt(type_str);
 	maps.types[type] = type_sy;
 	smm::Constants* consts = new smm::Constants;
@@ -102,7 +102,7 @@ smm::Assertion* translate_rule(const Rule* rule, Maps& maps) {
 	ra->floating = translate_floating(rule->vars, maps);
 	ra->prop.axiom = true;
 	ra->prop.expr  = translate_term(rule->term, rule->type, maps);
-	string rule_str = "ru_" + Rus::get().lex.ids.toStr(rule->id);
+	string rule_str = Rus::get().lex.ids.toStr(rule->id);
 	uint rule_lab = Rus::mod().lex.ids.toInt(rule_str);
 	maps.rules[rule] = rule_lab;
 	ra->prop.label = rule_lab;
@@ -118,8 +118,9 @@ vector<smm::Node> translate_assertion(const Assertion* ass, Maps& maps) {
 		for (auto hyp : ass->hyps)
 			ra->essential.push_back(translate_hyp(hyp, maps));
 		ra->prop.expr  = translate_expr(prop->expr, maps);
-		string ass_str = "as_" + to_string(prop->ind) + "_";
-		ass_str += Rus::get().lex.ids.toStr(ass->id);
+		string ass_str = Rus::get().lex.ids.toStr(ass->id);
+		if (prop->ind)
+			ass_str += "_" + to_string(prop->ind);
 		uint ass_lab = Rus::mod().lex.ids.toInt(ass_str);
 		maps.assertions[ass] = ass_lab;
 		ra->prop.label = ass_lab;
