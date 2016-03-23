@@ -87,15 +87,6 @@ void mark_vars(Expr& ex, vector<Vars>& var_stack) {
 	}
 }
 
-/*
-bool verify_term(Term<node::Expr>* term) {
-	if (term->isvar()) {
-
-	}
-	node::Expr* first = term->first;
-	auto rule_iter =
-}*/
-
 template<typename N>
 inline bool shift_next(N*& n) {
 	if (n->next) { n = n->next; return true; } else return false;
@@ -164,11 +155,11 @@ void parse_term(Expr& ex, vector<Vars>& var_stack, Rule* rule){
 }
 
 template<typename N>
-inline Type* type(Term<N>* t) {
+inline const Type* type(const Term<N>* t) {
 	return t->rule ? t->rule->type : t->first->symb.type;
 }
 
-Sub<>* unify(Term<Expr::Node>* p, Term<Expr::Node>* q) {
+Sub<>* unify(const Term<Expr::Node>* p, const Term<Expr::Node>* q) {
 	if (p->isvar()) {
 		Symbol var = p->first->symb;
 		if (var.type == type(q)) {

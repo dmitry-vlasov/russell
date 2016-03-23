@@ -245,8 +245,8 @@ struct Expr {
 	Type* type;
 };
 
-Sub<>* unify(Term<Expr::Node>* p, Term<Expr::Node>* q);
-inline Sub<>* unify(Expr& ex1, Expr& ex2) {
+Sub<>* unify(const Term<Expr::Node>* p, const Term<Expr::Node>* q);
+inline Sub<>* unify(const Expr& ex1, const Expr& ex2) {
 	return unify(ex1.term(), ex2.term());
 }
 
