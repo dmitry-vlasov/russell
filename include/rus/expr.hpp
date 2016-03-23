@@ -228,12 +228,16 @@ struct Expr {
 	}
 	Term<Node>* term() { return first->init.back(); }
 	const Term<Node>* term() const { return first->init.back(); }
-	Sub<>* unify(Expr&);
 
 	Node* first;
 	Node* last;
 	Type* type;
 };
+
+Sub<>* unify(Term<Expr::Node>* p, Term<Expr::Node>* q);
+inline Sub<>* unify(Expr& ex1, Expr& ex2) {
+	return unify(ex1.term(), ex2.term());
+}
 
 string show(const Expr&);
 string show_ast(const Term<Expr::Node>*);

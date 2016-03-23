@@ -168,7 +168,7 @@ inline Type* type(Term<N>* t) {
 	return t->rule ? t->rule->type : t->first->symb.type;
 }
 
-Sub<>* try_unify(Term<Expr::Node>* p, Term<Expr::Node>* q) {
+Sub<>* unify(Term<Expr::Node>* p, Term<Expr::Node>* q) {
 	if (p->isvar()) {
 		Symbol var = p->first->symb;
 		if (var.type == type(q)) {
@@ -190,7 +190,7 @@ Sub<>* try_unify(Term<Expr::Node>* p, Term<Expr::Node>* q) {
 		auto p_ch = p->children.begin();
 		auto q_ch = q->children.begin();
 		while (p_ch != p->children.end()) {
-			if (Sub<>* s = try_unify(*p_ch, *q_ch)) {
+			if (Sub<>* s = unify(*p_ch, *q_ch)) {
 				if (!sub->join(s)) {
 					delete sub;
 					return nullptr;
@@ -205,10 +205,6 @@ Sub<>* try_unify(Term<Expr::Node>* p, Term<Expr::Node>* q) {
 		}
 		return sub;
 	}
-}
-
-Sub<>* Expr::unify(Expr& ex) {
-	return try_unify(term(), ex.term());
 }
 
 

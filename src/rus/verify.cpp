@@ -10,10 +10,10 @@ void verify_step(Step* st) {
 		return;
 	}
 	Assertion* ass = st->assertion();
-	Sub<>* ps = ass->props[0]->expr.unify(st->expr);
+	Sub<>* ps = unify(ass->props[0]->expr, st->expr);
 	if (!ps) throw Error("proposition unification failed");
 	for (uint i = 0; i < ass->arity(); ++ i) {
-		Sub<>* hs = ass->hyps[i]->expr.unify(st->refs[i].expr());
+		Sub<>* hs = unify(ass->hyps[i]->expr, st->refs[i].expr());
 		if (!hs) {
 			string msg = "\nhypothesis:\n";
 			msg += show(*ass->hyps[i]) + "\n";
