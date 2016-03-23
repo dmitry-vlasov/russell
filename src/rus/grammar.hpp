@@ -111,10 +111,10 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 
 	step =
 		eps     [_val = new_<Step>(_r1)]
-		> uint_ [phoenix::at_c<0>(*_val) = _1]
+		> uint_ [phoenix::at_c<0>(*_val) = _1 - 1]
 		> ":"
 		> id    [_a = _1]
-		> "="   //[phoenix::at_c<5>(*_val) = _r1]
+		> "="
 		> (
 			(lit("axm") [phoenix::at_c<2>(*_val) = val(Step::AXM)]
 			//> eps       [_b = val(Step::AXM)]

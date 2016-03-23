@@ -21,7 +21,7 @@ void verify_step(Step* st) {
 			msg += show(*st) + "\n";
 			msg += "ref expr:\n";
 			msg += show(st->refs[i].expr()) + "\n";
-			msg += "assertion " + Rus::get().lex.ids.toStr(ass->id) + "\n";
+			msg += "theorem " + Rus::get().lex.ids.toStr(st->proof->thm->ass.id) + "\n";
 			msg += "substitution:\n" + show(*ps) + "\n";
 			throw Error("hypothesis unification failed", msg);
 		}
@@ -32,7 +32,7 @@ void verify_step(Step* st) {
 			msg += show(*st) + "\n";
 			msg += "ref expr:\n";
 			msg += show(st->refs[i].expr()) + "\n";
-			//msg += "assertion " + Rus::get().lex.ids.toStr(ass->id) + "\n";
+			msg += "theorem " + Rus::get().lex.ids.toStr(st->proof->thm->ass.id) + "\n";
 			msg += "prop substitution:\n" + show(*ps) + "\n";
 			msg += "hyp substitution:\n" + show(*hs) + "\n";
 			throw Error("substitution join failed", msg);
