@@ -148,6 +148,12 @@ struct Term {
 	bool operator != (const Term& t) const {
 		return !operator == (t);
 	}
+	void destroy() {
+		for(auto ch : children) {
+			ch->destroy();
+			delete ch;
+		}
+	}
 
 	Node* first;
 	Node* last;
@@ -210,7 +216,12 @@ struct Tree {
 template<typename N = node::Expr>
 struct Sub {
 	typedef N Node;
-	~Sub() { for (auto p : sub) delete p.second; }
+	~Sub() {
+		for (auto p : sub) {
+			p.second->destroy();
+			delete p.second;
+		}
+	}
 	bool join(Sub* s);
 
 	map<Symbol, Term<Node>*> sub;
@@ -368,9 +379,6 @@ T& Tree<T>::add(Expr& ex) {
 		}
 	}
 	add_term<typename Tree<T>::Node>(ex.term(), mp);
-
-	cout << endl << "tree:" << endl;
-	cout << *this << endl;
 	return n->data;
 }
 
