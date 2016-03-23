@@ -77,12 +77,12 @@ bool Rus::translate() {
 		if (config.verbose)
 			cout << "translating file " << config.in << " ... " << flush;
 		timers.translate.start();
-		//smm::Source* target = rus::translate(source);
-		//cout << endl << *target;
+		smm::Source* target = rus::translate(source);
+		cout << endl << *target;
 		ofstream out(config.out);
-		//out << *target << endl;
+		out << *target << endl;
 		out.close();
-		//delete target;
+		delete target;
 		timers.translate.stop();
 		if (config.verbose)
 			cout << "done in " << timers.translate << endl;
