@@ -9,7 +9,9 @@ struct State {
 	map<const Assertion*, rus::Theorem*> theorems;
 	map<const Assertion*, rus::Def*>     defs;
 	map<Symbol, rus::Type*> types;
-	rus::Type*    wff;
+	rus::Type*    type_wff;
+	rus::Type*    type_set;
+	rus::Type*    type_class;
 	set<Symbol>   redundant_consts;
 	rus::Theory*  theory;
 };
@@ -23,22 +25,17 @@ static void translate_const(const Expr& consts, const State& state) {
 }
 
 inline bool is_turnstile(Symbol s) {
-	return s.lit == Smm::mod().lex.symbols.toInt("|-");
+	static Symbol t(Smm::mod().lex.symbols.toInt("|-"));
+	return s == t;
 }
 inline bool is_def(uint label) {
-	return Smm::get().lex.labels.toStr(label).substr(0,4) == "def-";
-}
-inline uint equiv_sy() {
-	return Smm::mod().lex.symbols.toInt("<->");
-}
-inline uint equal_sy() {
-	return Smm::mod().lex.symbols.toInt("=");
+	return Smm::get().lex.labels.toStr(label).substr(0,3) == "df-";
 }
 
 static rus::Expr translate_expr(const Expr& e, State& state) {
 	rus::Expr ex(e);
 	// it's the best what we can do here ...
-	ex.type = state.wff;
+	ex.type = state.type_wff;
 	return ex;
 }
 
@@ -58,9 +55,14 @@ static rus::Disj translate_disj(const Assertion* ass, State& state) {
 	rus::Disj rus_disj;
 	for (auto dis : ass->disjointed) {
 		rus_disj.d.push_back(vector<rus::Symbol>());
+		vector<rus::Symbol>& rus_dis = rus_disj.d.back();
 		for (auto v : dis->expr.symbols) {
-			rus::Type* type = translate_type(v, state);
-			rus_disj.d.back().push_back(rus::Symbol(v.lit, type, true));
+			rus::Type* type = nullptr;
+			for (auto flo : ass->floating) {
+				if (flo->var() == v) type = translate_type(flo->type(), state);
+			}
+			rus::Symbol rv = rus::Symbol(v.lit, type, true);
+			rus_dis.push_back(rv);
 		}
 	}
 	return rus_disj;
@@ -73,8 +75,9 @@ static rus::Type* translate_type(Symbol type_sy, State& state) {
 		rus::Type* type = new rus::Type { type_id };
 		state.types[type_sy] = type;
 		state.theory->nodes.push_back(type);
-		if (type_str == "wff")
-			state.wff = type;
+		if (type_str == "wff") state.type_wff = type;
+		if (type_str == "set") state.type_set = type;
+		if (type_str == "class") state.type_class = type;
 		return type;
 	} else
 		return state.types.find(type_sy)->second;
@@ -143,9 +146,78 @@ static void translate_axiom(const Assertion* ass, State& state) {
 	state.axioms[ass] = ax;
 }
 
+
+inline Symbol open_brace() { static Symbol s(Smm::mod().lex.symbols.toInt("{")); return s; }
+inline Symbol close_brace() {static Symbol s(Smm::mod().lex.symbols.toInt("}")); return s; }
+inline Symbol open_brack() { static Symbol s(Smm::mod().lex.symbols.toInt("(")); return s; }
+inline Symbol close_brack() { static Symbol s(Smm::mod().lex.symbols.toInt(")")); return s; }
+inline Symbol eqty() { static Symbol s(Smm::mod().lex.symbols.toInt("=")); return s; }
+inline Symbol eqiv() { static Symbol s(Smm::mod().lex.symbols.toInt("<->")); return s; }
+inline Symbol dfm() { static Symbol s(Smm::mod().lex.symbols.toInt("defiendum")); return s; }
+inline Symbol dfs() { static Symbol s(Smm::mod().lex.symbols.toInt("definiens")); return s; }
+
+inline void count_br(Symbol s, uint& brack_depth, uint& brace_depth) {
+	if (s == open_brace())  ++ brace_depth;
+	if (s == close_brace()) -- brace_depth;
+	if (s == open_brack())  ++ brack_depth;
+	if (s == close_brack()) -- brack_depth;
+}
+inline bool low_depth(uint brack_depth, uint brace_depth) {
+	return
+		(brack_depth <= 1 && brace_depth == 0) ||
+		(brack_depth == 0 && brace_depth <= 1);
+}
+
+static vector<Symbol>::const_iterator eq_position(const Expr& ex) {
+	uint brack_depth = 0;
+	uint brace_depth = 0;
+	for (auto it = ex.symbols.begin() + 1; it != ex.symbols.end(); ++ it) {
+		count_br(*it, brack_depth, brace_depth);
+		if (*it == eqiv() && low_depth(brack_depth, brace_depth)) return it;
+	}
+	brack_depth = 0;
+	brace_depth = 0;
+	for (auto it = ex.symbols.begin() + 1; it != ex.symbols.end(); ++ it) {
+		count_br(*it, brack_depth, brace_depth);
+		if (*it == eqty() && low_depth(brack_depth, brace_depth)) return it;
+	}
+	return ex.symbols.end();
+}
+
 static void translate_def(const Assertion* ass, State& state) {
 	rus::Def* def = new rus::Def;
 	translate_assertion<rus::Def>(ass, def, state);
+	const Expr& ex = ass->prop.expr;
+	auto eq_pos = eq_position(ex);
+
+	auto dfm_beg = ex.symbols.begin() + 1;
+	auto dfm_end = eq_pos;
+	auto dfs_beg = eq_pos + 1;
+	auto dfs_end = ex.symbols.end();
+
+	if (*eq_pos == eqiv()) {
+		++ dfm_beg;
+		-- dfs_end;
+		def->dfm.type = state.type_wff;
+		def->dfs.type = state.type_wff;
+	} else {
+		def->dfm.type = state.type_class;
+		def->dfs.type = state.type_class;
+	}
+	def->prop.type = state.type_wff;
+	for (auto it = ex.symbols.begin() + 1; it != ex.symbols.end(); ++ it) {
+		if ((dfm_beg <= it) && (it < dfm_end)) {
+			if (dfm_beg == it)
+				def->prop.push_back(dfm());
+			def->dfm.push_back(*it);
+		} else if ((dfs_beg <= it) && (it < dfs_end)) {
+			if (dfs_beg == it)
+				def->prop.push_back(dfs());
+			def->dfs.push_back(*it);
+		} else {
+			def->prop.push_back(*it);
+		}
+	}
 	state.theory->nodes.push_back(def);
 	state.defs[ass] = def;
 }
@@ -154,8 +226,7 @@ static rus::Node::Kind ass_kind(const Assertion* ass) {
 	if (!is_turnstile(ass->prop.expr.symbols.front())) {
 		return rus::Node::RULE;
 	} else if (is_def(ass->prop.label)) {
-		//return rus::Node::DEF;
-		return rus::Node::AXIOM;
+		return rus::Node::DEF;
 	} else if (!ass->proof) {
 		return rus::Node::AXIOM;
 	} else {
@@ -252,7 +323,9 @@ rus::Source* translate_to_rus(const Source* source) {
 	rus::Source* out = new rus::Source(Smm::get().config.out);
 	State state;
 	state.theory = &out->theory;
-	state.wff = nullptr;
+	state.type_wff = nullptr;
+	state.type_set = nullptr;
+	state.type_class = nullptr;
 	state.redundant_consts.insert(Smm::get().lex.symbols.getInt("wff"));
 	state.redundant_consts.insert(Smm::get().lex.symbols.getInt("set"));
 	state.redundant_consts.insert(Smm::get().lex.symbols.getInt("class"));

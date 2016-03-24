@@ -43,6 +43,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 
 	const phoenix::function<AddToMath>   addToMath;
 	const phoenix::function<ParseImport> parseImport;
+	const phoenix::function<AssembleDef> assembleDef;
 	const phoenix::function<SetLocation<Iterator>> setLocation;
 
 	bar  = lexeme[lit("-----")] >> * ascii::char_('-');
@@ -196,18 +197,20 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> - ( + (hyp [push_back(phoenix::at_c<3>(*_a), _1)]) )
 		> "defiendum" > ":"
 		> id         [_b = findType(_1)]
-		> "="
+		> "=" > "#"
 		> expr(_b)   [phoenix::at_c<1>(*_val) = _1]
 		> "definiens" > ":"
 		> id         [_b = findType(_1)]
-		> "="
+		> "=" > "#"
 		> expr(_b)   [phoenix::at_c<2>(*_val) = _1]
 		> bar
 		> "prop" > ":"
 		> id         [_b = findType(_1)]
 		> "=" > "|-"
 		> plain(_b)  [phoenix::at_c<3>(*_val) = _1]
-		> lit("}")   [pushVars(phoenix::ref(var_stack))];
+		> eps        [assembleDef(_val, phoenix::ref(var_stack))]
+		> lit("}")   [pushVars(phoenix::ref(var_stack))]
+		> eps        [addToMath(_val)];
 
 
 	rule =

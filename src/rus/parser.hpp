@@ -250,6 +250,28 @@ struct PopVars {
 	}
 };
 
+struct AssembleDef {
+	template <typename T1, typename T2>
+	struct result { typedef void type; };
+	void operator()(Def* d, vector<Vars>& varsStack) const {
+		static Symbol dfm(Rus::mod().lex.symbs.toInt("defiendum"));
+		static Symbol dfs(Rus::mod().lex.symbs.toInt("definiens"));
+		Prop* prop = new Prop;
+		for (Expr::Node* n = d->prop.first; n; n = n->next) {
+			if (n->symb == dfm) {
+				for (Expr::Node* m = d->dfm.first; m; m = m->next)
+					prop->expr.push_back(m->symb);
+			} else if (n->symb == dfs) {
+				for (Expr::Node* m = d->dfs.first; m; m = m->next)
+					prop->expr.push_back(m->symb);
+			} else
+				prop->expr.push_back(n->symb);
+		}
+		parse_expr(prop->expr, varsStack);
+		d->ass.props.push_back(prop);
+	}
+};
+
 template <typename Iterator>
 struct Grammar : qi::grammar<Iterator, rus::Source(), ascii::space_type> {
 	Grammar();

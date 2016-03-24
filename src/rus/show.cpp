@@ -29,9 +29,9 @@ string show(const Disj& disj) {
 	string s;
 	s += "disjointed(";
 	for (uint i = 0; i < disj.d.size(); ++ i) {
-		const vector<Symbol> dis = disj.d[i];
+		const vector<Symbol>& dis = disj.d[i];
 		for (uint j = 0; j < dis.size(); ++ j) {
-			Symbol var = dis[i];
+			Symbol var = dis[j];
 			s += show(var);
 			if (j + 1 < dis.size())	s += " ";
 		}
@@ -88,7 +88,7 @@ string show(const Prop& p) {
 string show(const Assertion& a) {
 	string s;
 	s += show_id(a.id) + " ";
-	s += "(" + show(a.vars) + ") " + show(a.disj) + "{\n";
+	s += "(" + show(a.vars) + ") " + show(a.disj) + " {\n";
 	if (a.hyps.size() > 0) {
 		for (Hyp* h : a.hyps)
 			s += "\t" + show(*h) + "\n";
@@ -114,7 +114,21 @@ string show(const Theorem& thm) {
 
 string show(const Def& def) {
 	string s;
-	//s += "theorem " + show(thm.ass);
+	s += "definition ";
+	s += show_id(def.ass.id) + " ";
+	s += "(" + show(def.ass.vars) + ") " + show(def.ass.disj) + " {\n";
+	if (def.ass.hyps.size() > 0) {
+		for (Hyp* h : def.ass.hyps)
+			s += "\t" + show(*h) + "\n";
+	}
+	s += "\tdefiendum : " + show_id(def.dfm.type->id) + " ";
+	s += "= # " + show(def.dfm) + ";\n";
+	s += "\tdefiniens : " + show_id(def.dfs.type->id) + " ";
+	s += "= # " + show(def.dfs) + ";\n";
+	s += "\t-----------------------\n";
+	s += "\tprop : " + show_id(def.prop.type->id) + " ";
+	s += "= |- " + show(def.prop) + ";\n";
+	s += "}";
 	return s;
 }
 
