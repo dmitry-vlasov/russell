@@ -284,24 +284,22 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), ascii::space_type> {
 
 	vector<Vars> var_stack;
 	qi::rule<Iterator, qi::unused_type> bar;
-	qi::rule<Iterator, Expr(Rule*), ascii::space_type> term;
-	qi::rule<Iterator, Expr(Type*), ascii::space_type> expr;
-	qi::rule<Iterator, Expr(Type*), ascii::space_type> plain;
+	qi::rule<Iterator, Symbol(), ascii::space_type> var;
 	qi::rule<Iterator, Symbol(), ascii::space_type> symb;
 	qi::rule<Iterator, uint(),        ascii::space_type> id;
 	qi::rule<Iterator, std::string(), ascii::space_type> path;
+	qi::rule<Iterator, Expr(Rule*), ascii::space_type> term;
+	qi::rule<Iterator, Expr(Type*), ascii::space_type> expr;
+	qi::rule<Iterator, Expr(Type*), ascii::space_type> plain;
 	qi::rule<Iterator, Disj(), ascii::space_type> disj;
 	qi::rule<Iterator, Vars(), qi::locals<Symbol>, ascii::space_type> vars;
 	qi::rule<Iterator, Hyp*(), qi::locals<uint>, ascii::space_type> hyp;
 	qi::rule<Iterator, Prop*(), qi::locals<uint>, ascii::space_type> prop;
-
 	qi::rule<Iterator, Ref(Proof*), ascii::space_type> ref;
 	qi::rule<Iterator, vector<Ref>(Proof*), ascii::space_type> refs;
 	qi::rule<Iterator, Step*(Proof*), qi::locals<uint, Step::Kind>, ascii::space_type> step;
 	qi::rule<Iterator, Qed*(Proof*), qi::locals<uint>, ascii::space_type> qed;
 	qi::rule<Iterator, Proof::Elem(Proof*), ascii::space_type> proof_elem;
-
-
 	qi::rule<Iterator, void(Proof*), ascii::space_type> proof_body;
 	qi::rule<Iterator, Proof*(), ascii::space_type> proof;
 	qi::rule<Iterator, Theorem*(), qi::locals<Assertion*>, ascii::space_type> theorem;
@@ -319,15 +317,23 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), ascii::space_type> {
 template <typename Iterator>
 void Grammar<Iterator>::initNames() {
 	bar.name("bar");
-	expr.name("expr");
-	plain.name("plain");
+	var.name("var");
 	symb.name("symbol");
+	expr.name("expr");
 	id.name("id");
 	path.name("path");
+	term.name("term");
+	plain.name("plain");
 	disj.name("disjointed");
 	vars.name("variables");
 	prop.name("prop");
 	hyp.name("hyp");
+	ref.name("ref");
+	refs.name("refs");
+	step.name("step");
+	qed.name("qed");
+	proof_elem.name("proof_elem");
+	proof_body.name("proof_body");
 	proof.name("proof");
 	theorem.name("theorem");
 	def.name("def");

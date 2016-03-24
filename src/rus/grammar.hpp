@@ -47,8 +47,9 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	const phoenix::function<SetLocation<Iterator>> setLocation;
 
 	bar  = lexeme[lit("-----")] >> * ascii::char_('-');
-	symb = lexeme[+(ascii::char_ - ';' - ascii::space)] [at_c<0>(_val) = symbToInt(_1)];
-	id   = lexeme[+ ascii::char_("a-zA-Z0-9_.\\-")]    [_val = idToInt(_1)];
+	var  = lexeme[+ ascii::char_("a-zA-Z0-9_.\\-")]        [at_c<0>(_val) = symbToInt(_1)];
+	symb = lexeme[+(ascii::char_ - ';' - ascii::space)]    [at_c<0>(_val) = symbToInt(_1)];
+	id   = lexeme[+ ascii::char_("a-zA-Z0-9_.\\-")]        [_val = idToInt(_1)];
 	path = lexeme[+(ascii::char_ - ';' - ascii::space)];
 
 	term  = + (symb [addSymbol(_val, _1)] | comment) > eps [parseTerm(_val, _r1, phoenix::ref(var_stack))];
@@ -57,15 +58,15 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 
 	disj =
 		lit("disjointed") > "("
-		> + (
-			eps      [newDisjSet(phoenix::at_c<0>(_val))]
-			> + symb [addDisjVar(phoenix::at_c<0>(_val), _1)]
+		> + ( !(lit(")") | lit(","))
+			> eps    [newDisjSet(phoenix::at_c<0>(_val))]
+			> + var  [addDisjVar(phoenix::at_c<0>(_val), _1)]
 		) % ","
 		> ")";
 
 	vars =
 		( !lit(")")
-		> symb       [_a =_1]
+		> var        [_a =_1]
 		> ":" > id   [phoenix::at_c<2>(_a) = findType(_1)]
 		> eps        [push_back(phoenix::at_c<0>(_val), _a)]
 		) % ","
@@ -269,7 +270,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		source,
 		std::cout << phoenix::val("Syntax error. Expecting ") << _4
 		<< phoenix::val(" here: \n") << _3 << phoenix::val("\n")
-		<< phoenix::val("code: \n") <<phoenix::construct<wrapper<>>(_3));
+		<< phoenix::val("code: \n") << phoenix::construct<wrapper<>>(_3));
 	initNames();
 }
 

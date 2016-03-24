@@ -20,10 +20,6 @@ Source* parse(const string& path) {
 	Source* source = new Source(path);
 	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, *source);
 	if (!r || iter != end) {
-		if (!r)
-			cout << "R" << endl;
-		else
-			cout << "I" << endl;
 		throw Error("parsing failed");
 	}
 	return source;
