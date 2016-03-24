@@ -154,12 +154,12 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 
 	proof_elem = (
 		("step"  > step(_r1) [_val = phoenix::construct<Proof::Elem>(_1)]) |
-		("qed"   > qed(_r1)  [_val = phoenix::construct<Proof::Elem>(_1)]) |
-		("var"   > vars      [phoenix::at_c<1>(*_r1) = _1] > lit(";"))
+		("qed"   > qed(_r1)  [_val = phoenix::construct<Proof::Elem>(_1)])
 	);
 
 	proof_body =
 		lit("{")   [pushVars(phoenix::ref(var_stack))]
+		> - ("var" > vars [phoenix::at_c<1>(*_r1) = _1] > lit(";"))
 		> + proof_elem(_r1)[push_back(phoenix::at_c<2>(*_r1), _1)]
 		> lit("}") [popVars(phoenix::ref(var_stack))];
 

@@ -136,7 +136,7 @@ string show(const Ref& ref) {
 	switch (ref.kind) {
 	case Ref::HYP:  return "hyp "  + to_string(ref.val.hyp->ind + 1);
 	case Ref::PROP: return "prop " + to_string(ref.val.prop->ind + 1);
-	case Ref::STEP: return"step " + to_string(ref.val.step->ind + 1);
+	case Ref::STEP: return "step " + to_string(ref.val.step->ind + 1);
 	default : assert(false && "impossible"); return string();
 	}
 }
@@ -153,7 +153,7 @@ static string show_refs(const vector<Ref>& refs) {
 
 string show(const Proof::Elem& el) {
 	switch (el.kind) {
-	case Proof::Elem::VARS:  return show(*el.val.vars);
+	//case Proof::Elem::VARS:  return show(*el.val.vars);
 	case Proof::Elem::STEP:  return show(*el.val.step);
 	case Proof::Elem::QED:   return show(*el.val.qed);
 	default : assert(false && "impossible"); break;
@@ -194,6 +194,8 @@ string show(const Proof& p) {
 	string s = "proof ";
 	if (p.id != (uint)-1) s += show_id(p.id) + " ";
 	s += "of " + show_id(p.thm->ass.id) + " {\n";
+	if (p.vars.v.size())
+		s += "\tvar " + show(p.vars) + ";\n";
 	for (auto& st : p.elems)
 		s += "\t" + show(st) + "\n";
 	s += "}";
