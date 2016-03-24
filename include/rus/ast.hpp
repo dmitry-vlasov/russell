@@ -125,7 +125,7 @@ struct Step {
 		DEF,
 		CLAIM
 	};
-	union Ass {
+	union Value {
 		void*    non;
 		Axiom*   axm;
 		Def*     def;
@@ -133,23 +133,23 @@ struct Step {
 		Proof*   prf;
 	};
 
-	Step(Proof* pr) : ind(-1), expr(), kind(NONE), ass(),
-	refs(), proof(pr) { ass.non = nullptr; }
+	Step(Proof* pr) : ind(-1), expr(), kind(NONE), val(),
+	refs(), proof(pr) { val.non = nullptr; }
 	~Step() { expr.destroy(); }
 
 	Assertion* assertion() {
 		switch(kind) {
-		case Step::AXM: return &ass.axm->ass;
-		case Step::THM: return &ass.thm->ass;
-		case Step::DEF: return &ass.def->ass;
+		case Step::AXM: return &val.axm->ass;
+		case Step::THM: return &val.thm->ass;
+		case Step::DEF: return &val.def->ass;
 		default : assert(false && "impossible");
 		}
 	}
 	const Assertion* assertion() const {
 		switch(kind) {
-		case Step::AXM: return &ass.axm->ass;
-		case Step::THM: return &ass.thm->ass;
-		case Step::DEF: return &ass.def->ass;
+		case Step::AXM: return &val.axm->ass;
+		case Step::THM: return &val.thm->ass;
+		case Step::DEF: return &val.def->ass;
 		default : assert(false && "impossible");
 		}
 	}
@@ -157,7 +157,7 @@ struct Step {
 	uint        ind;
 	Expr        expr;
 	Kind        kind;
-	Ass         ass;
+	Value       val;
 	vector<Ref> refs;
 	Proof*      proof;
 };

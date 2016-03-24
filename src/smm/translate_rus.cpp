@@ -153,13 +153,13 @@ static rus::Proof::Elem translate_step(Ref ref, rus::Proof* proof, rus::Theorem*
 	el.val.step->expr = translate_expr(ref.expr, maps);
 	switch (ass_kind(ass)) {
 	case rus::Node::AXIOM:
-		el.val.step->ass.axm = maps.axioms.find(ass)->second;
+		el.val.step->val.axm = maps.axioms.find(ass)->second;
 		el.val.step->kind = rus::Step::AXM; break;
 	case rus::Node::DEF:
-		el.val.step->ass.def = maps.defs.find(ass)->second;
+		el.val.step->val.def = maps.defs.find(ass)->second;
 		el.val.step->kind = rus::Step::DEF; break;
 	case rus::Node::THEOREM:
-		el.val.step->ass.thm = maps.theorems.find(ass)->second;
+		el.val.step->val.thm = maps.theorems.find(ass)->second;
 		el.val.step->kind = rus::Step::THM; break;
 	default : assert(false && "impossible"); break;
 	}

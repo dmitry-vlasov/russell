@@ -6,7 +6,7 @@ void verify_proof(Proof* pf);
 
 void verify_step(Step* st) {
 	if (st->kind == Step::CLAIM) {
-		verify_proof(st->ass.prf);
+		verify_proof(st->val.prf);
 		return;
 	}
 	Assertion* ass = st->assertion();

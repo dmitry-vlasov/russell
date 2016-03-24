@@ -104,7 +104,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
-	mdl::rus::Step::Ass,
+	mdl::rus::Step::Value,
 	(void*,  non)
 	(mdl::rus::Axiom*,   axm)
 	(mdl::rus::Def*,     def)
@@ -117,7 +117,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(uint, ind)
 	(mdl::rus::Expr, expr)
 	(mdl::rus::Step::Kind, kind)
-	(mdl::rus::Step::Ass, ass)
+	(mdl::rus::Step::Value, val)
 	(mdl::vector<mdl::rus::Ref>, refs)
 	(mdl::rus::Proof*, proof)
 )

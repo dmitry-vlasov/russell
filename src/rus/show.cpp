@@ -152,9 +152,9 @@ string show(const Step& st) {
 	s += show_type(st.expr) + " = ";
 	switch (st.kind) {
 	case Step::NONE: s += "? "; break;
-	case Step::AXM:  s += "axm " + show_id(st.ass.axm->ass.id) + " "; break;
-	case Step::THM:  s += "thm " + show_id(st.ass.thm->ass.id)+ " "; break;
-	case Step::DEF:  s += "def " + show_id(st.ass.def->ass.id)+ " "; break;
+	case Step::AXM:  s += "axm " + show_id(st.val.axm->ass.id) + " "; break;
+	case Step::THM:  s += "thm " + show_id(st.val.thm->ass.id)+ " "; break;
+	case Step::DEF:  s += "def " + show_id(st.val.def->ass.id)+ " "; break;
 	case Step::CLAIM:s += "claim "; break;
 	}
 	if (st.kind != Step::NONE)
@@ -162,7 +162,7 @@ string show(const Step& st) {
 	s += "|- " + show(st.expr) + ";";
 	if (st.kind == Step::CLAIM) {
 		s += " {\n";
-		for (auto& el : st.ass.prf->elems)
+		for (auto& el : st.val.prf->elems)
 			s += "\t" + show(el) + "\n";
 		s += "}";
 	}

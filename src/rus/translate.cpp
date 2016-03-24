@@ -192,7 +192,7 @@ void translate_proof(const Proof* proof, const Assertion* thm, vector<smm::Ref>&
 
 void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps) {
 	if (st->kind == Step::CLAIM) {
-		translate_proof(st->ass.prf, thm, smm_proof, maps);
+		translate_proof(st->val.prf, thm, smm_proof, maps);
 		return;
 	}
 	for (auto ref : st->refs)
@@ -220,7 +220,6 @@ void translate_proof(const Proof* proof, const Assertion* thm, vector<smm::Ref>&
 		}
 	}
 }
-
 
 vector<smm::Node> translate_proof(const Proof* proof, Maps& maps) {
 	vector<smm::Node> nodes;
