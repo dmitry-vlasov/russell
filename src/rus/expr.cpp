@@ -112,8 +112,9 @@ Term<node::Expr>* parse_term(Expr::Node* last, Type* type) {
 		if (Type* tp = n->symb.type) {
 			if (Term<node::Expr>* child = parse_term(last, tp)) {
 				children.push_back(child);
+				last = child->last;
 				if (!shift_next(n)) break;
-				last = child->last->next;
+				last = last->next;
 				continue;
 			}
 		} else if (n->symb == last->symb) {
@@ -143,8 +144,10 @@ void parse_expr(Expr& ex, vector<Vars>& var_stack){
 	mark_vars(ex, var_stack);
 	if (Term<node::Expr>* term = parse_term(ex.first, ex.type))
 		add_terms(term);
-	else
+	else {
+		parse_term(ex.first, ex.type);
 		throw Error("error at parsing", show(ex));
+	}
 }
 
 Term<node::Expr>* create_term(Expr::Node* first, Expr::Node* last, Rule* rule) {
@@ -160,7 +163,6 @@ Term<node::Expr>* create_term(Expr::Node* first, Expr::Node* last, Rule* rule) {
 
 void parse_term(Expr& ex, vector<Vars>& var_stack, Rule* rule){
 	mark_vars(ex, var_stack);
-	//add_terms(new Term<node::Expr>(ex.first, ex.last, rule));
 	add_terms(create_term(ex.first, ex.last, rule));
 }
 
