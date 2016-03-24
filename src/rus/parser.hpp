@@ -34,6 +34,10 @@ Rule* create_super(Type* inf, Type* sup) {
 	rule->vars.v.push_back(create_symbol("x", inf));
 	rule->term.push_back(create_symbol("x", inf));
 	rule->type = sup;
+
+	vector<Vars> var_stack;
+	var_stack.push_back(rule->vars);
+	parse_term(rule->term, var_stack, rule);
 	return rule;
 }
 
