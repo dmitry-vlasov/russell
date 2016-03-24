@@ -8,15 +8,15 @@ struct Maps {
 	map<const Assertion*, rus::Axiom*>   axioms;
 	map<const Assertion*, rus::Theorem*> theorems;
 	map<const Assertion*, rus::Def*>     defs;
-	map<uint, rus::Type*> types;
-	rus::Type*            wff;
-	set<uint>             redundant_consts;
+	map<Symbol, rus::Type*> types;
+	rus::Type*              wff;
+	set<Symbol>             redundant_consts;
 };
 
 static void translate_const(const Expr& consts, rus::Theory& target, const Maps& maps) {
 	for (auto s : consts.symbols) {
 		rus::Const* c = new rus::Const{rus::Symbol(s), rus::Symbol(), rus::Symbol()};
-		if (maps.redundant_consts.find(s.lit) == maps.redundant_consts.end())
+		if (maps.redundant_consts.find(s) == maps.redundant_consts.end())
 			target.nodes.push_back(rus::Node(c));
 	}
 }
@@ -67,24 +67,41 @@ static rus::Disj translate_disj(const Assertion* ass, Maps& maps) {
 	return rus_disj;
 }
 
-static rus::Type* translate_type(uint type_lit, rus::Theory& target, Maps& maps) {
-	string type_str = Smm::get().lex.symbols.toStr(type_lit);
-	uint type_id = Smm::mod().lex.labels.toInt(type_str);
-	if (maps.types.find(type_lit) == maps.types.end()) {
+static rus::Type* translate_type(Symbol type_sy, rus::Theory& target, Maps& maps) {
+	if (maps.types.find(type_sy) == maps.types.end()) {
+		string type_str = Smm::get().lex.symbols.toStr(type_sy.lit);
+		uint type_id = Smm::mod().lex.labels.toInt(type_str);
 		rus::Type* type = new rus::Type { type_id };
-		maps.types[type_lit] = type;
+		maps.types[type_sy] = type;
 		target.nodes.push_back(type);
 		if (type_str == "wff")
 			maps.wff = type;
 		return type;
 	} else
-		return maps.types.find(type_lit)->second;
+		return maps.types.find(type_sy)->second;
+}
+
+inline bool rule_term_is_super(const Expr& term) {
+	return term.symbols.size() == 2 && !term.symbols[0].var && term.symbols[1].var;
+}
+
+static void translate_super(const Assertion* ass, rus::Theory& target, Maps& maps) {
+	Symbol super_sy = ass->prop.expr[0];
+	Symbol infer_sy = ass->floating[0]->type();
+	assert(ass->prop.expr[1] == ass->floating[0]->var());
+	rus::Type* super = translate_type(super_sy, target, maps);
+	rus::Type* infer = translate_type(infer_sy, target, maps);
+	infer->sup.push_back(super);
 }
 
 static void translate_rule(const Assertion* ass, rus::Theory& target, Maps& maps) {
+	if (rule_term_is_super(ass->prop.expr)) {
+		translate_super(ass, target, maps);
+		return;
+	}
 	rus::Rule* rule = new rus::Rule {
 		ass->prop.label,
-		translate_type(ass->prop.expr[0].lit, target, maps),
+		translate_type(ass->prop.expr[0], target, maps),
 		translate_vars(ass->floating, maps),
 		rus::Expr(ass->prop.expr)
 	};
