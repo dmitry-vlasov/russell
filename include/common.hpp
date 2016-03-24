@@ -48,6 +48,11 @@ ostream& operator << (ostream& os, const wrapper<len_f, len_b>& wr){
 	return os;
 }
 
+template<typename T>
+void join(vector<T>& v1, const vector<T>& v2) {
+	for (auto p : v2) v1.push_back(p);
+}
+
 }
 
   

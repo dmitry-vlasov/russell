@@ -100,9 +100,9 @@ inline bool shift_side(N*& n) {
 Term<node::Expr>* parse_term(Expr::Node* last, Type* type) {
 	if (last->symb.type){
 		if (last->symb.type == type) {
-			return new Term<node::Expr>(last, last, nullptr);
+			return new Term<node::Expr>(last);
 		} else if (Rule* super = type->supers.find(last->symb.type)->second) {
-			return new Term<node::Expr>(last, last, super);
+			return new Term<node::Expr>(last, super);
 		}
 	}
 	Tree<Rule*>::Node* n = type->rules.root;
@@ -141,17 +141,27 @@ void add_terms(Term<node::Expr>* term) {
 
 void parse_expr(Expr& ex, vector<Vars>& var_stack){
 	mark_vars(ex, var_stack);
-	if (Term<node::Expr>* term = parse_term(ex.first, ex.type)) {
-		//cout << "\nto parse: " + show(ex) + "\n";
+	if (Term<node::Expr>* term = parse_term(ex.first, ex.type))
 		add_terms(term);
-		//cout << "ast: " + show_ast(ex) + "\n";
-	} else
+	else
 		throw Error("error at parsing", show(ex));
+}
+
+Term<node::Expr>* create_term(Expr::Node* first, Expr::Node* last, Rule* rule) {
+	Term<node::Expr>* term = new Term<node::Expr>(first, last, rule);
+	Expr::Node* n = first;
+	while (n) {
+		if (n->symb.type)
+			term->children.push_back(new Term<node::Expr>(n));
+		n = n->next;
+	}
+	return term;
 }
 
 void parse_term(Expr& ex, vector<Vars>& var_stack, Rule* rule){
 	mark_vars(ex, var_stack);
-	add_terms(new Term<node::Expr>(ex.first, ex.last, rule));
+	//add_terms(new Term<node::Expr>(ex.first, ex.last, rule));
+	add_terms(create_term(ex.first, ex.last, rule));
 }
 
 template<typename N>

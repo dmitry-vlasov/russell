@@ -133,6 +133,8 @@ struct Term {
 
 	Term(Node* f, Node* l, Rule* r) :
 	first(f), last(l), rule(r), children() { }
+	Term(Node* v, Rule* r = nullptr) :
+	first(v), last(v), rule(r), children() { }
 
 	Iterator begin() { return Iterator(first); }
 	Iterator end()   { return last->next ? Iterator(last->next) : Iterator(); }
@@ -142,8 +144,10 @@ struct Term {
 	Iterator rend() { return first->prev ? Iterator(first->prev) : Iterator(); }
 	ConstIterator rbegin() const { return ConstIterator(last); }
 	ConstIterator rend() const { return first->prev ? ConstIterator(first->prev) : ConstIterator(); }
-	//Type* type() { return rule ? rule->type : first->symb.type; }
+
 	bool isvar() const { return first == last && first->symb.type; }
+	Symbol getvar() const { return first->symb; }
+
 	Term* clone() const;
 	bool operator == (const Term& t) const;
 	bool operator != (const Term& t) const {
@@ -224,12 +228,20 @@ struct Sub {
 		}
 	}
 	bool join(Sub* s);
+	Term<Node>* find(Symbol v) {
+		auto it = sub.find(v);
+		if (it == sub.end()) return nullptr;
+		else return it->second;
+	}
 
 	map<Symbol, Term<Node>*> sub;
 };
 
 struct Expr {
 	typedef node::Expr Node;
+	typedef iterator<Node> Iterator;
+	typedef const_iterator<Node> ConstIterator;
+
 	Expr() : first(nullptr), last(nullptr), type(nullptr) { }
 	Expr(const mdl::Expr&);
 	void destroy() { if (first) delete first; }
@@ -240,20 +252,28 @@ struct Expr {
 	}
 	Term<Node>* term() { return first->init.back(); }
 	const Term<Node>* term() const { return first->init.back(); }
+	Iterator begin() { return Iterator(first); }
+	Iterator end()   { return last->next ? Iterator(last->next) : Iterator(); }
+	ConstIterator begin() const { return ConstIterator(first); }
+	ConstIterator end() const { return last->next ? ConstIterator(last->next) : ConstIterator(); }
+	Iterator rbegin() { return Iterator(last); }
+	Iterator rend() { return first->prev ? Iterator(first->prev) : Iterator(); }
+	ConstIterator rbegin() const { return ConstIterator(last); }
+	ConstIterator rend() const { return first->prev ? ConstIterator(first->prev) : ConstIterator(); }
 
 	Node* first;
 	Node* last;
 	Type* type;
 };
 
-inline iterator<node::Expr> begin(Expr& ex) { return ex.term()->begin(); }
-inline iterator<node::Expr> end(Expr& ex)   { return ex.term()->end(); }
-inline const_iterator<node::Expr> begin(const Expr& ex) { return ex.term()->begin(); }
-inline const_iterator<node::Expr> end(const Expr& ex) { return ex.term()->end(); }
-inline iterator<node::Expr> rbegin(Expr& ex) { return ex.term()->rbegin(); }
-inline iterator<node::Expr> rend(Expr& ex) { return ex.term()->rend(); }
-inline const_iterator<node::Expr> rbegin(const Expr& ex) { return ex.term()->rbegin(); }
-inline const_iterator<node::Expr> rend(const Expr& ex) { return ex.term()->rend(); }
+inline iterator<node::Expr> begin(Expr& ex) { return ex.begin(); }
+inline iterator<node::Expr> end(Expr& ex)   { return ex.end(); }
+inline const_iterator<node::Expr> begin(const Expr& ex) { return ex.begin(); }
+inline const_iterator<node::Expr> end(const Expr& ex) { return ex.end(); }
+inline iterator<node::Expr> rbegin(Expr& ex) { return ex.rbegin(); }
+inline iterator<node::Expr> rend(Expr& ex) { return ex.rend(); }
+inline const_iterator<node::Expr> rbegin(const Expr& ex) { return ex.rbegin(); }
+inline const_iterator<node::Expr> rend(const Expr& ex) { return ex.rend(); }
 
 
 Sub<>* unify(const Term<Expr::Node>* p, const Term<Expr::Node>* q);

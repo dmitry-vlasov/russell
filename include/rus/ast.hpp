@@ -110,6 +110,7 @@ struct Ref {
 	Ref(Prop* p)  : kind(PROP), val()  { val.prop = p; }
 	Ref(Step* s)  : kind(STEP), val()  { val.step = s; }
 	Expr& expr();
+	const Expr& expr() const;
 
 	Kind kind;
 	Value val;
@@ -144,6 +145,14 @@ struct Step {
 		default : assert(false && "impossible");
 		}
 	}
+	const Assertion* assertion() const {
+		switch(kind) {
+		case Step::AXM: return &ass.axm->ass;
+		case Step::THM: return &ass.thm->ass;
+		case Step::DEF: return &ass.def->ass;
+		default : assert(false && "impossible");
+		}
+	}
 
 	uint        ind;
 	Expr        expr;
@@ -154,6 +163,15 @@ struct Step {
 };
 
 inline Expr& Ref::expr() {
+	switch (kind) {
+	case HYP : return val.hyp->expr;
+	case PROP: return val.prop->expr;
+	case STEP: return val.step->expr;
+	default  : assert(false && "impossible");
+	}
+}
+
+inline const Expr& Ref::expr() const {
 	switch (kind) {
 	case HYP : return val.hyp->expr;
 	case PROP: return val.prop->expr;
