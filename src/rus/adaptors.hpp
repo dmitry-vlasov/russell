@@ -12,6 +12,13 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
+	mdl::rus::Expr,
+	(mdl::rus::node::Expr*, first)
+	(mdl::rus::node::Expr*, last)
+	(mdl::rus::Type*, type)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Symbol,
 	(uint, lit)
 	(bool, rep)
@@ -80,7 +87,9 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Def,
 	(mdl::rus::Assertion, ass)
-	(mdl::rus::Assertion, def)
+	(mdl::rus::Expr, dfm)
+	(mdl::rus::Expr, dfs)
+	(mdl::rus::Expr, prop)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(

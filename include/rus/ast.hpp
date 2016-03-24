@@ -80,7 +80,9 @@ struct Axiom {
 
 struct Def {
 	Assertion ass;
-	Assertion def;
+	Expr dfm;
+	Expr dfs;
+	Expr prop;
 };
 
 struct Proof;

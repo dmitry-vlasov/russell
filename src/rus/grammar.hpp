@@ -50,8 +50,9 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	id   = lexeme[+ ascii::char_("a-zA-Z0-9_.\\-")]    [_val = idToInt(_1)];
 	path = lexeme[+(ascii::char_ - ';' - ascii::space)];
 
-	term = + (symb [addSymbol(_val, _1)] | comment) > eps [parseTerm(_val, _r1, phoenix::ref(var_stack))];
-	expr = + (symb [addSymbol(_val, _1)] | comment) > eps [parseExpr(_val, _r1, phoenix::ref(var_stack))];
+	term  = + (symb [addSymbol(_val, _1)] | comment) > eps [parseTerm(_val, _r1, phoenix::ref(var_stack))];
+	expr  = + (symb [addSymbol(_val, _1)] | comment) > eps [parseExpr(_val, _r1, phoenix::ref(var_stack))];
+	plain = + (symb [addSymbol(_val, _1)] | comment) > eps [phoenix::at_c<2>(_val) = _r1];
 
 	disj =
 		lit("disjointed") > "("
@@ -184,6 +185,31 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> assertion(_a)
 		> eps        [addToMath(_val)];
 
+	def = lit("definition") [_val = new_<Def>()]
+		> eps        [_a = &phoenix::at_c<0>(*_val)]
+		> id         [phoenix::at_c<0>(*_a) = _1]
+		> lit("(")   [pushVars(phoenix::ref(var_stack))]
+		> vars       [phoenix::at_c<1>(*_a) = _1]
+		> ")"
+		> - disj     [phoenix::at_c<2>(*_a) = _1]
+		> "{"
+		> - ( + (hyp [push_back(phoenix::at_c<3>(*_a), _1)]) )
+		> "defiendum" > ":"
+		> id         [_b = findType(_1)]
+		> "="
+		> expr(_b)   [phoenix::at_c<1>(*_val) = _1]
+		> "definiens" > ":"
+		> id         [_b = findType(_1)]
+		> "="
+		> expr(_b)   [phoenix::at_c<2>(*_val) = _1]
+		> bar
+		> "prop" > ":"
+		> id         [_b = findType(_1)]
+		> "=" > "|-"
+		> plain(_b)  [phoenix::at_c<3>(*_val) = _1]
+		> lit("}")   [pushVars(phoenix::ref(var_stack))];
+
+
 	rule =
 		lit("rule")  [_val = new_<Rule>()]
 		> - id       [phoenix::at_c<0>(*_val) = _1]
@@ -231,7 +257,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		type     [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
 		rule     [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
 		axiom    [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
-	//	def      [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
+		def      [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
 		theorem  [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
 		proof    [push_back(at_c<1>(at_c<2>(_val)), phoenix::construct<Node>(_1))] |
 		comment);

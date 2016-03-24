@@ -59,6 +59,9 @@ struct AddToMath {
 	void operator()(Axiom* a) const {
 		Rus::mod().math.axioms[a->ass.id] = a;
 	}
+	void operator()(Def* d) const {
+		Rus::mod().math.defs[d->ass.id] = d;
+	}
 	void operator()(Theorem* th) const {
 		Rus::mod().math.theorems[th->ass.id] = th;
 	}
@@ -256,6 +259,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), ascii::space_type> {
 	qi::rule<Iterator, qi::unused_type> bar;
 	qi::rule<Iterator, Expr(Rule*), ascii::space_type> term;
 	qi::rule<Iterator, Expr(Type*), ascii::space_type> expr;
+	qi::rule<Iterator, Expr(Type*), ascii::space_type> plain;
 	qi::rule<Iterator, Symbol(), ascii::space_type> symb;
 	qi::rule<Iterator, uint(),        ascii::space_type> id;
 	qi::rule<Iterator, std::string(), ascii::space_type> path;
@@ -266,7 +270,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), ascii::space_type> {
 
 	qi::rule<Iterator, Ref(Proof*), ascii::space_type> ref;
 	qi::rule<Iterator, vector<Ref>(Proof*), ascii::space_type> refs;
-	qi::rule<Iterator, Step*(Proof*), qi::locals<uint>, qi::locals<Step::Kind>, ascii::space_type> step;
+	qi::rule<Iterator, Step*(Proof*), qi::locals<uint, Step::Kind>, ascii::space_type> step;
 	qi::rule<Iterator, Qed*(Proof*), qi::locals<uint>, ascii::space_type> qed;
 	qi::rule<Iterator, Proof::Elem(Proof*), ascii::space_type> proof_elem;
 
@@ -274,7 +278,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), ascii::space_type> {
 	qi::rule<Iterator, void(Proof*), ascii::space_type> proof_body;
 	qi::rule<Iterator, Proof*(), ascii::space_type> proof;
 	qi::rule<Iterator, Theorem*(), qi::locals<Assertion*>, ascii::space_type> theorem;
-	qi::rule<Iterator, Def*(),qi::locals<Assertion*>, ascii::space_type> def;
+	qi::rule<Iterator, Def*(), qi::locals<Assertion*, Type*>, ascii::space_type> def;
 	qi::rule<Iterator, Axiom*(), qi::locals<Assertion*>, ascii::space_type> axiom;
 	qi::rule<Iterator, void(Assertion*), ascii::space_type> assertion;
 	qi::rule<Iterator, Rule*(), ascii::space_type> rule;
@@ -289,6 +293,7 @@ template <typename Iterator>
 void Grammar<Iterator>::initNames() {
 	bar.name("bar");
 	expr.name("expr");
+	plain.name("plain");
 	symb.name("symbol");
 	id.name("id");
 	path.name("path");
