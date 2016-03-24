@@ -144,19 +144,18 @@ static void translate_axiom(const Assertion* ass, State& state) {
 }
 
 static void translate_def(const Assertion* ass, State& state) {
-
-
-	rus::Axiom* ax = new rus::Axiom;
-	translate_assertion<rus::Axiom>(ass, ax, state);
-	state.theory->nodes.push_back(ax);
-	state.axioms[ass] = ax;
+	rus::Def* def = new rus::Def;
+	translate_assertion<rus::Def>(ass, def, state);
+	state.theory->nodes.push_back(def);
+	state.defs[ass] = def;
 }
 
 static rus::Node::Kind ass_kind(const Assertion* ass) {
 	if (!is_turnstile(ass->prop.expr.symbols.front())) {
 		return rus::Node::RULE;
 	} else if (is_def(ass->prop.label)) {
-		return rus::Node::DEF;
+		//return rus::Node::DEF;
+		return rus::Node::AXIOM;
 	} else if (!ass->proof) {
 		return rus::Node::AXIOM;
 	} else {
