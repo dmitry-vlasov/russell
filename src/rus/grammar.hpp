@@ -198,16 +198,16 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> "defiendum" > ":"
 		> id         [_b = findType(_1)]
 		> "=" > "#"
-		> expr(_b)   [phoenix::at_c<1>(*_val) = _1]
+		> expr(_b)   [phoenix::at_c<1>(*_val) = _1] > ";"
 		> "definiens" > ":"
 		> id         [_b = findType(_1)]
 		> "=" > "#"
-		> expr(_b)   [phoenix::at_c<2>(*_val) = _1]
+		> expr(_b)   [phoenix::at_c<2>(*_val) = _1] > ";"
 		> bar
 		> "prop" > ":"
 		> id         [_b = findType(_1)]
 		> "=" > "|-"
-		> plain(_b)  [phoenix::at_c<3>(*_val) = _1]
+		> plain(_b)  [phoenix::at_c<3>(*_val) = _1] > ";"
 		> eps        [assembleDef(_val, phoenix::ref(var_stack))]
 		> lit("}")   [pushVars(phoenix::ref(var_stack))]
 		> eps        [addToMath(_val)];
@@ -221,8 +221,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> ")" > "{" > "term" > ":"
 		> id         [phoenix::at_c<1>(*_val) = findType(_1)]
 		> "=" > "#"
-		> term(_val) [phoenix::at_c<3>(*_val) = _1]
-		> ";"
+		> term(_val) [phoenix::at_c<3>(*_val) = _1] > ";"
 		> lit("}")   [addToMath(_val)]
 		> eps        [popVars(phoenix::ref(var_stack))];
 

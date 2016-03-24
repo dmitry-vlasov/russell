@@ -267,6 +267,7 @@ struct AssembleDef {
 			} else
 				prop->expr.push_back(n->symb);
 		}
+		prop->expr.type = d->prop.type;
 		parse_expr(prop->expr, varsStack);
 		d->ass.props.push_back(prop);
 	}
