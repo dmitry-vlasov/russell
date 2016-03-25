@@ -87,17 +87,7 @@ void mark_vars(Expr& ex, vector<Vars>& var_stack) {
 	}
 }
 
-//bool trace = false;
-
-template<typename N>
-inline bool shift_next(N*& n) {
-	if (n->next) { n = n->next; return true; } else return false;
-}
-
-template<typename N>
-inline bool shift_side(N*& n) {
-	if (n->side) { n = n->side; return true; } else return false;
-}
+bool trace = false;
 
 inline Rule* find_super(Type* type, Type* super) {
 	auto it =type->supers.find(super);
@@ -107,35 +97,56 @@ inline Rule* find_super(Type* type, Type* super) {
 		return nullptr;
 }
 
-Term<node::Expr>* parse_term(Expr::Node* last, Type* type) {
-	if (last->symb.type){
-		if (last->symb.type == type)
-			return new Term<node::Expr>(last);
-		else if (Rule* super = find_super(last->symb.type, type))
-			return new Term<node::Expr>(last, super);
+Term<node::Expr>* parse_term(Expr::Node* x, Type* type) {
+	if (x->symb.type){
+		if (x->symb.type == type)
+			return new Term<node::Expr>(x);
+		else if (Rule* super = find_super(x->symb.type, type))
+			return new Term<node::Expr>(x, super);
 	}
-	Tree<Rule*>::Node* n = type->rules.root;
-	if (!n) return nullptr;
+	if (!type->rules.root) return nullptr;
 	vector<Term<node::Expr>*> children;
-	Expr::Node* first = last;
-	while (n && last) {
-		if (Type* tp = n->symb.type) {
-			if (Term<node::Expr>* child = parse_term(last, tp)) {
+	Expr::Node* f = x;
+
+	stack<Tree<Rule*>::Node*> n;
+	stack<Expr::Node*> m;
+	n.push(type->rules.root);
+	m.push(x);
+
+	while (!n.empty() && !m.empty()) {
+		if (Type* tp = n.top()->symb.type) {
+			if (Term<node::Expr>* child = parse_term(m.top(), tp)) {
 				children.push_back(child);
-				last = child->last;
-				if (!shift_next(n))
-					return new Term<node::Expr>(first, last, n->data, children);
-				last = last->next;
+				m.top() = child->last;
+				if (!n.top()->next)
+					return new Term<node::Expr>(f, m.top(), n.top()->data, children);
+				else if (!m.top()->next)
+					goto end;
+				else {
+					n.push(n.top()->next);
+					m.push(m.top()->next);
+				}
 				continue;
 			}
-		} else if (n->symb == last->symb) {
-			if (!shift_next(n))
-				return new Term<node::Expr>(first, last, n->data, children);
-			last = last->next;
+		} else if (n.top()->symb == m.top()->symb) {
+			if (!n.top()->next)
+				return new Term<node::Expr>(f, m.top(), n.top()->data, children);
+			else if (!m.top()->next)
+				goto end;
+			else {
+				n.push(n.top()->next);
+				m.push(m.top()->next);
+			}
 			continue;
 		}
-		if (!shift_side(n)) break;
+		while (!n.top()->side) {
+			n.pop();
+			m.pop();
+			if (n.empty() || m.empty()) goto end;
+		}
+		n.top() = n.top()->side;
 	}
+	end:
 	for (auto t : children) delete t;
 	return nullptr;
 }
@@ -151,8 +162,8 @@ void parse_expr(Expr& ex, vector<Vars>& var_stack){
 	if (Term<node::Expr>* term = parse_term(ex.first, ex.type))
 		add_terms(term);
 	else {
-		//trace = true;
-		//parse_term(ex.first, ex.type);
+		trace = true;
+		parse_term(ex.first, ex.type);
 		throw Error("error at parsing", show(ex));
 	}
 }

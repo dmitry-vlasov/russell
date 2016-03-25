@@ -45,7 +45,7 @@ bool Rus::parse() {
 	try {
 		timers.read.start();
 		source = rus::parse(config.in);
-		cout << *source << endl;
+		//cout << *source << endl;
 		timers.read.stop();
 		return true;
 	} catch (Error& err) {
@@ -78,7 +78,7 @@ bool Rus::translate() {
 			cout << "translating file " << config.in << " ... " << flush;
 		timers.translate.start();
 		smm::Source* target = rus::translate(source);
-		cout << endl << *target;
+		//cout << endl << *target;
 		ofstream out(config.out);
 		out << *target << endl;
 		out.close();
