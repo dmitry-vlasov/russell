@@ -95,7 +95,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	assertion =
 		  id         [phoenix::at_c<0>(*_r1) = _1]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
-		> vars       [phoenix::at_c<1>(*_r1) = _1]
+		> - vars     [phoenix::at_c<1>(*_r1) = _1]
 		> ")"
 		> - disj     [phoenix::at_c<2>(*_r1) = _1]
 		> "{"
@@ -191,7 +191,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> eps        [_a = &phoenix::at_c<0>(*_val)]
 		> id         [phoenix::at_c<0>(*_a) = _1]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
-		> vars       [phoenix::at_c<1>(*_a) = _1]
+		> - vars     [phoenix::at_c<1>(*_a) = _1]
 		> ")"
 		> - disj     [phoenix::at_c<2>(*_a) = _1]
 		> "{"
@@ -218,7 +218,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		lit("rule")  [_val = new_<Rule>()]
 		> - id       [phoenix::at_c<0>(*_val) = _1]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
-		> vars       [phoenix::at_c<2>(*_val) = _1]
+		> - vars     [phoenix::at_c<2>(*_val) = _1]
 		> ")" > "{" > "term" > ":"
 		> id         [phoenix::at_c<1>(*_val) = findType(_1)]
 		> "=" > "#"

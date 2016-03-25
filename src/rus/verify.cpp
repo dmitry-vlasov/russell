@@ -11,16 +11,25 @@ void verify_step(Step* st) {
 	}
 	Assertion* ass = st->assertion();
 	Sub<>* ps = unify(ass->props[0]->expr, st->expr);
-	if (!ps) throw Error("proposition unification failed");
+	if (!ps) {
+		string msg = "proposition:\n";
+		msg += show(*ass->props[0]) + "\n";
+		msg += "ref expr:\n";
+		msg += show(st->expr) + "\n\n";
+		msg += "step:\n";
+		msg += show(*st) + "\n\n";
+		msg += "theorem " + Rus::get().lex.ids.toStr(st->proof->thm->ass.id) + "\n";
+		throw Error("proposition unification failed", msg);
+	}
 	for (uint i = 0; i < ass->arity(); ++ i) {
 		Sub<>* hs = unify(ass->hyps[i]->expr, st->refs[i].expr());
 		if (!hs) {
 			string msg = "\nhypothesis:\n";
 			msg += show(*ass->hyps[i]) + "\n";
-			msg += "step:\n";
-			msg += show(*st) + "\n";
 			msg += "ref expr:\n";
-			msg += show(st->refs[i].expr()) + "\n";
+			msg += show(st->refs[i].expr()) + "\n\n";
+			msg += "step:\n";
+			msg += show(*st) + "\n\n";
 			msg += "theorem " + Rus::get().lex.ids.toStr(st->proof->thm->ass.id) + "\n";
 			msg += "substitution:\n" + show(*ps) + "\n";
 			delete ps;
@@ -29,10 +38,10 @@ void verify_step(Step* st) {
 		if (!ps->join(hs)) {
 			string msg = "\nhypothesis:\n";
 			msg += show(*ass->hyps[i]) + "\n";
-			msg += "step:\n";
-			msg += show(*st) + "\n";
 			msg += "ref expr:\n";
-			msg += show(st->refs[i].expr()) + "\n";
+			msg += show(st->refs[i].expr()) + "\n\n";
+			msg += "step:\n";
+			msg += show(*st) + "\n\n";
 			msg += "theorem " + Rus::get().lex.ids.toStr(st->proof->thm->ass.id) + "\n";
 			msg += "prop substitution:\n" + show(*ps) + "\n";
 			msg += "hyp substitution:\n" + show(*hs) + "\n";

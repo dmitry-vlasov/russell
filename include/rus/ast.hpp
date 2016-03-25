@@ -79,6 +79,11 @@ struct Axiom {
 };
 
 struct Def {
+	~Def() {
+		dfm.destroy();
+		dfs.destroy();
+		prop.destroy();
+	}
 	Assertion ass;
 	Expr dfm;
 	Expr dfs;

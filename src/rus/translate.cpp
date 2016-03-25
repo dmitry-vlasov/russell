@@ -11,6 +11,7 @@ struct Maps {
 	map<const Type*, uint> types;
 	map<const Rule*, smm::Assertion*> rules;
 	map<const Rule*, map<Symbol, uint>> rules_args;
+	smm::Assertion* thm;
 	mdl::Symbol turnstile;
 };
 
@@ -167,13 +168,13 @@ vector<smm::Node> translate_def(const Def* ax, Maps& maps) {
 }
 
 
-void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref>& smm_proof, smm::Assertion* ass, Maps& maps);
+void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps);
 
-void translate_ref(Ref ref, const Assertion* thm, vector<smm::Ref>& smm_proof, smm::Assertion* ass, Maps& maps) {
+void translate_ref(Ref ref, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps) {
 	switch (ref.kind) {
 	case Ref::HYP:  smm_proof.push_back(smm::Ref(maps.essentials[thm][ref.val.hyp])); break;
 	case Ref::PROP: break;
-	case Ref::STEP: translate_step(ref.val.step, thm, smm_proof, ass, maps); break;
+	case Ref::STEP: translate_step(ref.val.step, thm, smm_proof, maps); break;
 	default : assert(false); break;
 	}
 }
@@ -193,15 +194,15 @@ void translate_term(const Term<node::Expr>* t, const Assertion* thm, vector<smm:
 	}
 }
 
-void translate_proof(const Proof* proof, const Assertion* thm, vector<smm::Ref>& smm_proof, smm::Assertion* ass, Maps& maps, uint ind = 0);
+void translate_proof(const Proof* proof, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps, uint ind = 0);
 
-void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref>& smm_proof, smm::Assertion* sass, Maps& maps) {
+void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps) {
 	if (st->kind == Step::CLAIM) {
-		translate_proof(st->val.prf, thm, smm_proof, sass, maps);
+		translate_proof(st->val.prf, thm, smm_proof, maps);
 		return;
 	}
 	for (auto ref : st->refs)
-		translate_ref(ref, thm, smm_proof, sass, maps);
+		translate_ref(ref, thm, smm_proof, maps);
 	const Assertion* ass = st->assertion();
 	Sub<>* ps = unify(ass->props[0]->expr, st->expr);
 	if (!ps) throw Error("proposition unification failed");
@@ -219,6 +220,11 @@ void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref>& smm_
 
 vector<smm::Inner*> translate_inners(const Vars& vars, Maps& maps, const Assertion* thm, uint ind_0) {
 	vector<smm::Inner*> inn_vect;
+	smm::Variables* smm_vars = nullptr;
+	if (vars.v.size()) {
+		maps.thm->variables.push_back(new smm::Variables);
+		smm_vars = maps.thm->variables.back();
+	}
 	for (uint i = 0; i < vars.v.size(); ++ i) {
 		Symbol v = vars.v[i];
 		smm::Inner* inn = new smm::Inner;
@@ -226,16 +232,17 @@ vector<smm::Inner*> translate_inners(const Vars& vars, Maps& maps, const Asserti
 		inn->expr += mdl::Symbol(maps.types[v.type]);
 		inn->expr += mdl::Symbol(v.lit, true);
 		inn_vect.push_back(inn);
+		smm_vars->expr.push_back(mdl::Symbol(v.lit, true));
 		maps.inners[thm][v] = inn;
 	}
 	return inn_vect;
 }
 
-void translate_proof(const Proof* proof, const Assertion* thm, vector<smm::Ref>& smm_proof, smm::Assertion* ass, Maps& maps, uint ind) {
-	join(ass->inner, translate_inners(proof->vars, maps, thm, ass->inner.size()));
+void translate_proof(const Proof* proof, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps, uint ind) {
+	join(maps.thm->inner, translate_inners(proof->vars, maps, thm, maps.thm->inner.size()));
 	for (auto el : proof->elems) {
 		if (el.kind == Proof::Elem::QED && el.val.qed->prop->ind == ind) {
-			translate_step(el.val.qed->step, thm, smm_proof, ass, maps);
+			translate_step(el.val.qed->step, thm, smm_proof, maps);
 			break;
 		}
 	}
@@ -248,9 +255,9 @@ vector<smm::Node> translate_proof(const Proof* proof, Maps& maps) {
 		// TODO
 	}
 	for (uint i = 0; i < asss.size(); ++ i) {
-		smm::Node n = asss[i];
-		n.val.ass->proof = new smm::Proof();
-		translate_proof(proof, &proof->thm->ass, n.val.ass->proof->refs, n.val.ass, maps, i);
+		maps.thm = asss[i].val.ass;
+		maps.thm->proof = new smm::Proof();
+		translate_proof(proof, &proof->thm->ass, maps.thm->proof->refs, maps, i);
 	}
 	join(nodes, asss);
 	return nodes;
@@ -280,6 +287,7 @@ vector<smm::Node> translate_theory(const Theory* thy, Maps& maps) {
 smm::Source* translate(const Source* src) {
 	smm::Source* target = new smm::Source(Rus::get().config.out);
 	Maps maps;
+	maps.thm = nullptr;
 	target->contents = translate_theory(&src->theory, maps);
 	return target;
 }

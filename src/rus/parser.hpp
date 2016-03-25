@@ -21,7 +21,7 @@ inline Type* find_type(uint id, Location* loc = nullptr) {
 }
 
 inline uint create_id(string pref, string s1, string s2) {
-	return Rus::mod().lex.ids.toInt(pref + "_" + s1 + "_ " + s2);
+	return Rus::mod().lex.ids.toInt(pref + "_" + s1 + "_" + s2);
 }
 
 inline Symbol create_symbol(string str, Type* tp) {

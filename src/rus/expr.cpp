@@ -87,6 +87,8 @@ void mark_vars(Expr& ex, vector<Vars>& var_stack) {
 	}
 }
 
+//bool trace = false;
+
 template<typename N>
 inline bool shift_next(N*& n) {
 	if (n->next) { n = n->next; return true; } else return false;
@@ -107,11 +109,10 @@ inline Rule* find_super(Type* type, Type* super) {
 
 Term<node::Expr>* parse_term(Expr::Node* last, Type* type) {
 	if (last->symb.type){
-		if (last->symb.type == type) {
+		if (last->symb.type == type)
 			return new Term<node::Expr>(last);
-		} else if (Rule* super = find_super(last->symb.type, type)) {
+		else if (Rule* super = find_super(last->symb.type, type))
 			return new Term<node::Expr>(last, super);
-		}
 	}
 	Tree<Rule*>::Node* n = type->rules.root;
 	if (!n) return nullptr;
@@ -122,25 +123,21 @@ Term<node::Expr>* parse_term(Expr::Node* last, Type* type) {
 			if (Term<node::Expr>* child = parse_term(last, tp)) {
 				children.push_back(child);
 				last = child->last;
-				if (!shift_next(n)) break;
+				if (!shift_next(n))
+					return new Term<node::Expr>(first, last, n->data, children);
 				last = last->next;
 				continue;
 			}
 		} else if (n->symb == last->symb) {
-			if (!shift_next(n)) break;
+			if (!shift_next(n))
+				return new Term<node::Expr>(first, last, n->data, children);
 			last = last->next;
 			continue;
 		}
 		if (!shift_side(n)) break;
 	}
-	if (last && !n->next) {
-		Term<node::Expr>* term = new Term<node::Expr>(first, last, n->data);
-		term->children = children;
-		return term;
-	} else {
-		for (auto t : children) delete t;
-		return nullptr;
-	}
+	for (auto t : children) delete t;
+	return nullptr;
 }
 
 void add_terms(Term<node::Expr>* term) {
@@ -154,7 +151,8 @@ void parse_expr(Expr& ex, vector<Vars>& var_stack){
 	if (Term<node::Expr>* term = parse_term(ex.first, ex.type))
 		add_terms(term);
 	else {
-		parse_term(ex.first, ex.type);
+		//trace = true;
+		//parse_term(ex.first, ex.type);
 		throw Error("error at parsing", show(ex));
 	}
 }
@@ -176,7 +174,7 @@ void parse_term(Expr& ex, vector<Vars>& var_stack, Rule* rule) {
 }
 
 template<typename N>
-inline const Type* type(const Term<N>* t) {
+inline Type* type(const Term<N>* t) {
 	return t->rule ? t->rule->type : t->first->symb.type;
 }
 
@@ -187,7 +185,7 @@ Sub<>* unify(const Term<Expr::Node>* p, const Term<Expr::Node>* q) {
 			Sub<>* s = new Sub<>();
 			s->sub[var] = q->clone();
 			return s;
-		} else if (Rule* super = type(q)->supers.find(var.type)->second) {
+		} else if (Rule* super = find_super(const_cast<Type*>(var.type), type(q))) {
 			Sub<>* s = new Sub<>();
 			s->sub[var] = new Term<Expr::Node>(q->first, q->last, super);
 			s->sub[var]->children.push_back(q->clone());

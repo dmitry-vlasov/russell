@@ -135,6 +135,8 @@ struct Term {
 	first(f), last(l), rule(r), children() { }
 	Term(Node* v, Rule* r = nullptr) :
 	first(v), last(v), rule(r), children() { }
+	Term(Node* f, Node* l, Rule* r, const vector<Term*>& ch) :
+	first(f), last(l), rule(r), children(ch) { }
 
 	Iterator begin() { return Iterator(first); }
 	Iterator end()   { return last->next ? Iterator(last->next) : Iterator(); }
@@ -308,8 +310,8 @@ string show(const Sub<N>& s) {
 	return str;
 }
 
-template<typename T>
-string show_backward(const typename Tree<T>::Node* n) {
+template<typename N>
+string show_backward(const N* n) {
 	deque<Symbol> symbs;
 	while (n) {
 		symbs.push_front(n->symb);
@@ -318,7 +320,7 @@ string show_backward(const typename Tree<T>::Node* n) {
 	string str;
 	for (auto s : symbs)
 		str += show(s) + " ";
-	return str + "\n";
+	return str;
 }
 
 template<typename T>
@@ -326,7 +328,7 @@ string show_forward(const typename Tree<T>::Node* n) {
 	string s;
 	while (n) {
 		if (!n->next)
-			s += show_backward<T>(n);
+			s += show_backward(n) + "\n";
 		else
 			s += show_forward<T>(n->next);
 		n = n->side;
@@ -397,16 +399,14 @@ T& Tree<T>::add(Expr& ex) {
 			m = m->next;
 		} else break;
 	}
-	if (m->next) {
-		if (n->symb != m->symb) {
-			n = new_side(n, m->symb);
-			mp[m] = n;
-		}
-		while (m->next) {
-			m = m->next;
-			n = new_next(n, m->symb);
-			mp[m] = n;
-		}
+	if (n->symb != m->symb) {
+		n = new_side(n, m->symb);
+		mp[m] = n;
+	}
+	while (m->next) {
+		m = m->next;
+		n = new_next(n, m->symb);
+		mp[m] = n;
 	}
 	add_term<typename Tree<T>::Node>(ex.term(), mp);
 	return n->data;
@@ -436,8 +436,8 @@ Term<N>* Term<N>::clone() const {
 }
 template<typename N>
 bool Term<N> :: operator == (const Term& t) const {
-	if (first->symb != t.first->symb)
-		return false;
+	if (isvar() && t.isvar() && first->symb == t.first->symb)
+		return true;
 	if (rule != t.rule)
 		return false;
 	auto i_p = children.begin();
