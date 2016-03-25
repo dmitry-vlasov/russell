@@ -109,7 +109,7 @@ Term<node::Expr>* parse_term(Expr::Node* last, Type* type) {
 	if (last->symb.type){
 		if (last->symb.type == type) {
 			return new Term<node::Expr>(last);
-		} else if (Rule* super = find_super(type, last->symb.type)) {
+		} else if (Rule* super = find_super(last->symb.type, type)) {
 			return new Term<node::Expr>(last, super);
 		}
 	}

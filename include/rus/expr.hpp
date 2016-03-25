@@ -290,7 +290,6 @@ inline string show_ast(const Expr& ex) {
 template<typename N>
 string show(const Term<N>& t) {
 	deque<Symbol> symbs;
-	string s;
 	for (auto it = t.rbegin(); it != t.rend(); -- it) {
 		symbs.push_front(it->symb);
 	}
