@@ -43,7 +43,9 @@ Rule* create_super(Type* inf, Type* sup) {
 
 void collect_supers(Type* inf, Type* s) {
 	for (auto sup : s->sup) {
-		inf->supers[sup] = create_super(inf, sup);
+		Rule* super = create_super(inf, sup);
+		inf->supers[sup] = super;
+		//inf->rules.add(super->term) = super;
 		collect_supers(inf, sup);
 	}
 }
@@ -53,6 +55,7 @@ struct AddToMath {
 		Rus::mod().math.consts.s.insert(c->symb);
 	}
 	void operator()(Type* t) const {
+		//t->rules.add(Expr(create_symbol("x", t))) = nullptr; // id rule
 		collect_supers(t, t);
 		Rus::mod().math.types[t->id] = t;
 	}

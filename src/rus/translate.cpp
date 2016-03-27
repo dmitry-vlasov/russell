@@ -109,7 +109,8 @@ vector<smm::Floating*> translate_floatings(const Vars& vars, Maps& maps, const A
 
 smm::Assertion* translate_rule(const Rule* rule, Maps& maps) {
 	smm::Assertion* ra = new smm::Assertion();
-	ra->variables.push_back(translate_vars(rule->vars));
+	if (rule->vars.v.size())
+		ra->variables.push_back(translate_vars(rule->vars));
 	ra->floating = translate_floatings(rule->vars, maps);
 	ra->prop.axiom = true;
 	ra->prop.expr  = translate_term(rule->term, rule->type, maps);
@@ -134,7 +135,8 @@ vector<smm::Node> translate_assertion(const Assertion* ass, Maps& maps) {
 	vector<smm::Node> ra_vect;
 	for (auto prop : ass->props) {
 		smm::Assertion* ra = new smm::Assertion();
-		ra->variables.push_back(translate_vars(ass->vars));
+		if (ass->vars.v.size())
+			ra->variables.push_back(translate_vars(ass->vars));
 		ra->floating = translate_floatings(ass->vars, maps, ass);
 		ra->essential= translate_essentials(ass, maps);
 		ra->prop.expr  = translate_expr(prop->expr, maps);

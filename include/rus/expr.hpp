@@ -215,7 +215,7 @@ template<typename T>
 struct Tree {
 	typedef node::Tree<T> Node;
 	Tree() : root(nullptr) { }
-	T& add(Expr& ex);
+	T& add(const Expr& ex);
 	void destroy() { if (root) delete root; }
 	Node* root;
 };
@@ -246,14 +246,21 @@ struct Expr {
 
 	Expr() : first(nullptr), last(nullptr), type(nullptr) { }
 	Expr(const mdl::Expr&);
+	Expr(Symbol s) : first(nullptr), last(nullptr), type(nullptr) {
+		push_back(s);
+	}
 	void destroy() { if (first) delete first; }
 	void push_back(Symbol);
 	bool operator == (const Expr& ex) const;
 	bool operator != (const Expr& ex) const {
 		return !operator == (ex);
 	}
-	Term<Node>* term() { return first->init.back(); }
-	const Term<Node>* term() const { return first->init.back(); }
+	Term<Node>* term() {
+		return first->init.size() ? first->init.back() : nullptr;
+	}
+	const Term<Node>* term() const {
+		return first->init.size() ? first->init.back() : nullptr;
+	}
 	Iterator begin() { return Iterator(first); }
 	Iterator end()   { return last->next ? Iterator(last->next) : Iterator(); }
 	ConstIterator begin() const { return ConstIterator(first); }
@@ -267,6 +274,8 @@ struct Expr {
 	Node* last;
 	Type* type;
 };
+
+typedef Term<node::Expr> ExprTerm;
 
 inline iterator<node::Expr> begin(Expr& ex) { return ex.begin(); }
 inline iterator<node::Expr> end(Expr& ex)   { return ex.end(); }
@@ -367,8 +376,8 @@ inline N* new_side(N* n, Symbol s) {
 }
 
 template<class N>
-Term<N>* add_term(Term<node::Expr>* st, map<Expr::Node*, N*>& mp) {
-	assert(st);
+Term<N>* add_term(const Term<node::Expr>* st, map<Expr::Node*, N*>& mp) {
+	if (!st) return nullptr;
 	assert(mp.find(st->first) != mp.end());
 	assert(mp.find(st->last) != mp.end());
 	Term<N>* tt = new Term<N>(mp[st->first], mp[st->last], st->rule);
@@ -381,7 +390,7 @@ Term<N>* add_term(Term<node::Expr>* st, map<Expr::Node*, N*>& mp) {
 }
 
 template<typename T>
-T& Tree<T>::add(Expr& ex) {
+T& Tree<T>::add(const Expr& ex) {
 	assert(ex.first);
 	map<Expr::Node*, Node*> mp;
 	Expr::Node* m = ex.first;
