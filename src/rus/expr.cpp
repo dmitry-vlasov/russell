@@ -96,7 +96,7 @@ inline Rule* find_super(Type* type, Type* super) {
 }
 
 
-void assemble_expr(ExprTerm* t, Expr& ex) {
+void assemble_expr(Expr& ex, const ExprTerm* t, map<Expr::Node*, Expr::Node*> mp) {
 	if (!t->rule) {
 		ex.push_back(t->first->symb);
 		return;
@@ -105,15 +105,21 @@ void assemble_expr(ExprTerm* t, Expr& ex) {
 	Expr::Node* n = t->rule->term.first;
 	while (n) {
 		if (n->symb.type)
-			assemble_expr(t->children[i++], ex);
-		else
+			assemble_expr(ex, t->children[i++], mp);
+		else {
 			ex.push_back(n->symb);
+			mp[n] = ex.last;
+		}
 		n = n->next;
 	}
-
 }
 
-
+Expr assemble(const Expr& ex) {
+	Expr e; map<Expr::Node*, Expr::Node*> mp;
+	assemble_expr(e, ex.term(), mp);
+	add_term(ex.term(), mp);
+	return e;
+}
 
 
 
