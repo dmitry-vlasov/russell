@@ -69,6 +69,7 @@ namespace mdl {
 	using std::deque;
 	using std::stack;
 	using std::map;
+	using std::pair;
 }
 
 
