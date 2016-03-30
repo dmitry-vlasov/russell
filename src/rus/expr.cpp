@@ -7,6 +7,10 @@ string show(Symbol s) {
 	return show_sy(s.lit);
 }
 
+Symbol::Symbol(string s) : lit(-1), rep(false), type(nullptr) {
+	lit = Rus::mod().lex.symbs.toInt(s);
+}
+
 string show(const Expr& ex) {
 	string s;
 	Expr::Node* n = ex.first;
@@ -48,6 +52,17 @@ void Expr::push_back(Symbol s) {
 		last->next = new Node(s);
 		last->next->prev = last;
 		last = last->next;
+	}
+}
+
+void Expr::push_front(Symbol s) {
+	if (!first) {
+		first = new Node(s);
+		last  = first;
+	} else {
+		first->prev = new Node(s);
+		first->prev->next = first;
+		first = first->prev;
 	}
 }
 
