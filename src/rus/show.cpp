@@ -243,7 +243,7 @@ string show(const Theory& thy) {
 
 string show(const Source& c) {
 	string s;
-	for (auto& n : c.theory.nodes) {
+	for (auto& n : c.theory->nodes) {
 		s += show(n) + "\n\n";
 	}
 	return s;

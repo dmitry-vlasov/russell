@@ -322,7 +322,7 @@ static void translate_theory(const Source* source, State& state) {
 rus::Source* translate_to_rus(const Source* source) {
 	rus::Source* out = new rus::Source(Smm::get().config.out);
 	State state;
-	state.theory = &out->theory;
+	state.theory = out->theory;
 	state.type_wff = nullptr;
 	state.type_set = nullptr;
 	state.type_class = nullptr;

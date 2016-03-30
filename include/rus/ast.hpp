@@ -293,12 +293,13 @@ struct Theory {
 
 struct Source {
 	Source(const string& n) :
-	top(false), name(n), theory() {
+	top(false), name(n), theory(new Theory()) {
 		static bool t = true; top = t; t = false;
 	}
-	bool   top;
-	string name;
-	Theory theory;
+	~Source() { if (theory) delete theory; }
+	bool    top;
+	string  name;
+	Theory* theory;
 };
 
 inline void Node::destroy() {

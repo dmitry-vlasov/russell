@@ -290,7 +290,7 @@ smm::Source* translate(const Source* src) {
 	smm::Source* target = new smm::Source(Rus::get().config.out);
 	Maps maps;
 	maps.thm = nullptr;
-	target->contents = translate_theory(&src->theory, maps);
+	target->contents = translate_theory(src->theory, maps);
 	return target;
 }
 

@@ -79,7 +79,7 @@ void verify_theory(Theory* theory) {
 } // anonympus namespace
 
 void verify(Source* source) {
-	verify_theory(&source->theory);
+	verify_theory(source->theory);
 }
 
 }} // mdl::rus
