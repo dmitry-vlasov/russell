@@ -227,6 +227,8 @@ struct Stacks {
 	}
 	void pop_child() {
 		assert(t_stack.back()->children.size());
+		t_stack.back()->children.back()->destroy();
+		delete t_stack.back()->children.back();
 		t_stack.back()->children.pop_back();
 	}
 
@@ -364,8 +366,8 @@ void add_terms(Term<node::Expr>* term) {
 
 void parse_expr(Expr& ex, vector<Vars>& var_stack){
 	mark_vars(ex, var_stack);
-	//static uint c = 0;
-	//cout << "parsing: " << c++ << " = " << show(ex) << endl;
+	static uint c = 0;
+	cout << "parsing: " << c++ << " = " << show(ex) << endl;
 	if (Term<node::Expr>* term = parse_term(ex.first, ex.type)) {
 		//Expr e;
 		//assemble_expr(term, e);
