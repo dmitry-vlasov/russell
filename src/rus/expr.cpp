@@ -237,19 +237,23 @@ struct Stacks {
 			ExprTerm* ch = t_stack.back();
 			ch->last = m;
 			ch->rule = n->data;
-			verify();
+			//verify();
 			if (n_stack.empty()) return nullptr;
 			n = n_stack.back();
 			pop();
 			push_child(ch);
 		}
-		verify();
+		//verify();
 		return n;
 	}
 
-	void pop() {
+	void pop(bool del = false) {
 		assert(depth);
 		-- depth;
+		if (del) {
+			t_stack.back()->destroy();
+			delete t_stack.back();
+		}
 		t_stack.pop_back();
 		n_stack.pop_back();
 	}
@@ -324,9 +328,7 @@ ExprTerm* parse_variants(Expr::Node* m, Tree<Rule*>::Node* n, Stacks s) {
 					parse_next(m, n->symb.type->rules.root, s) :
 					parse_variants(m, n->symb.type->rules.root, s);
 				if (t) return t;
-				else {
-					s.pop();
-				}
+				else s.pop(true);
 			}
 		}
 		n = n->side;

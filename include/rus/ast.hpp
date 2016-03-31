@@ -293,7 +293,7 @@ struct Theory {
 
 struct Source {
 	Source(const string& n) :
-	top(false), name(n), theory(new Theory()) {
+	top(false), name(n), theory(nullptr) {
 		static bool t = true; top = t; t = false;
 	}
 	~Source() { if (theory) delete theory; }
