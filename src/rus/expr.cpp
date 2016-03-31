@@ -272,7 +272,7 @@ struct Stacks {
 	}
 };
 
-ExprTerm* parse_variants(Expr::Node* m, Tree<Rule*>::Node* n, Stacks s);
+ExprTerm* parse_variants(Expr::Node* m, Tree<Rule*>::Node* n, Stacks& s);
 
 ExprTerm* parse_next(Expr::Node* m, Tree<Rule*>::Node* n, Stacks s) {
 	if (trace) {
@@ -312,7 +312,7 @@ ExprTerm* parse_var(Expr::Node* m, Tree<Rule*>::Node* n, Stacks& s) {
 	return nullptr;
 }
 
-ExprTerm* parse_variants(Expr::Node* m, Tree<Rule*>::Node* n, Stacks s) {
+ExprTerm* parse_variants(Expr::Node* m, Tree<Rule*>::Node* n, Stacks& s) {
 	while (n) {
 		if (!n->symb.type && n->symb.lit == m->symb.lit) {
 			if (ExprTerm* t = parse_next(m, n, s)) return t;
@@ -349,11 +349,6 @@ ExprTerm* parse_term(Expr::Node* m, Type* type) {
 	}
 	Stacks s;
 	s.t_stack.push_back(new Term<Expr::Node>(m));
-
-	if (trace) {
-		cout << type->rules << endl;
-	}
-
 	return parse_variants(m, type->rules.root, s);
 }
 
