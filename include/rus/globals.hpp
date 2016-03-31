@@ -19,17 +19,23 @@
 namespace mdl { namespace rus {
 
 struct Config {
+	enum Mode   { MODE_NONE, MODE_TRANSL, MODE_GRAMM, MODE_PROVE };
+	enum Target { TARG_NONE, TARG_SMM, TARG_RUS };
 	Config() :
 	verbose(false), info(false), help(false),
-	in(), root() { }
+	mode(MODE_NONE),
+	in(), root(), target(TARG_NONE) { }
 
 	bool verbose;
 	bool info;
 	bool help;
 
+	Mode mode;
+
 	string in;
 	string out;
 	string root;
+	Target target;
 };
 
 struct Rus {
@@ -83,9 +89,6 @@ struct Rus {
 	bool    failed;
 
 	void run();
-	bool parse();
-	bool unify();
-	bool translate();
 
 	static const Rus& get() { return mod(); }
 	static Rus& mod() { static Rus rus; return rus; }

@@ -9,7 +9,7 @@ void modify_grammar(Expr& ex) {
 	ex = e;
 }
 
-Expr transform(const Expr& ex) {
+void transform(Expr& ex) {
 	if (ex.first->symb.type && ex.first != ex.last) {
 		Expr e = assemble(ex);
 		e.push_front(Symbol("("));
@@ -20,14 +20,13 @@ Expr transform(const Expr& ex) {
 		e.last->prev->final.clear();
 		for (auto t : e.first->init) t->first = e.first;
 		for (auto t : e.last->final) t->last = e.last;
+		ex.destroy();
+		ex = e;
 	}
-	return ex;
 }
 
 void modify_grammar(Rule* rule) {
-	Expr new_term = transform(rule->term);
-	rule->term.destroy();
-	rule->term = new_term;
+	transform(rule->term);
 }
 
 

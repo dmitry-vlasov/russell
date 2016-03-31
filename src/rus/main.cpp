@@ -26,6 +26,7 @@ static void showHelp() {
 	cout << " -h  --help         print the help" << endl;
 	cout << " -v  --verbose      not be silent"  << endl;
 	cout << "     --info         info about math: timings, memory, stats"  << endl;
+	cout << "     --mod-gramm    modify grammar: make it LL"  << endl;
 }
 
 static bool parseConfig(int argc, const char* argv[], Config& conf) {
@@ -56,10 +57,20 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 			conf.verbose = true;
 		else if (arg == "--info")
 			conf.info = true;
+		else if (arg == "--mod-gramm")
+			conf.mode = Config::MODE_GRAMM;
 		else
 			return false;
 	}
 	if (conf.in.empty()) return false;
+	if (!conf.out.empty()) {
+		if (conf.out.substr(conf.out.size() - 4) == ".smm") {
+			if (conf.mode == Config::MODE_NONE) conf.mode = Config::MODE_TRANSL;
+			else return false;
+			conf.target = Config::TARG_SMM;
+		} else if (conf.out.substr(conf.out.size() - 4) == ".rus")
+			conf.target = Config::TARG_RUS;
+	}
 	return true;
 }
 

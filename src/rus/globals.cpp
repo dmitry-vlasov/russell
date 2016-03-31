@@ -21,78 +21,108 @@ string show_id(uint lab) {
 	return rus::Rus::get().lex.ids.toStr(lab);
 }
 
-namespace rus {
+namespace rus { namespace {
+
+bool parse_rus(Rus& rus) {
+	try {
+		rus.timers.read.start();
+		rus.source = parse(rus.config.in);
+		//cout << *rus.source << endl;
+		rus.timers.read.stop();
+		return true;
+	} catch (Error& err) {
+		rus.status += '\n';
+		rus.status += err.what();
+		rus.failed = true;
+		return false;
+	}
+}
+
+bool unify_rus(Rus& rus) {
+	try {
+		rus.timers.unify.start();
+		verify(rus.source);
+		rus.timers.unify.stop();
+		return true;
+	} catch (Error& err) {
+		rus.status += '\n';
+		rus.status += err.what();
+		rus.failed = true;
+		return false;
+	}
+}
+
+
+bool translate_rus(Rus& rus) {
+	try {
+		if (rus.config.out.empty()) return true;
+		if (rus.config.verbose)
+			cout << "translating file " << rus.config.in << " ... " << flush;
+		rus.timers.translate.start();
+		smm::Source* target = translate(rus.source);
+		//cout << endl << *target;
+		ofstream out(rus.config.out);
+		out << *target << endl;
+		out.close();
+		delete target;
+		rus.timers.translate.stop();
+		if (rus.config.verbose)
+			cout << "done in " << rus.timers.translate << endl;
+		return true;
+	} catch (Error& err) {
+		rus.status += '\n';
+		rus.status += err.what();
+		rus.failed = true;
+		return false;
+	}
+}
+
+bool write_rus(Rus& rus) {
+	try {
+		if (rus.config.out.empty()) return true;
+		if (rus.config.verbose)
+			cout << "replicating file " << rus.config.in << " ... " << flush;
+		//cout << endl << *rus.source;
+		ofstream out(rus.config.out);
+		out << *rus.source << endl;
+		out.close();
+		if (rus.config.verbose)
+			cout << "done in " << rus.timers.translate << endl;
+		return true;
+	} catch (Error& err) {
+		rus.status += '\n';
+		rus.status += err.what();
+		rus.failed = true;
+		return false;
+	}
+}
+
+}
 
 void Rus::run() {
 	timers.total.start();
 	if (config.verbose)
 		cout << "processing file " << config.in << " ... " << flush;
-	if (!parse()) {
+	if (!parse_rus(*this)) {
 		failed = true; return;
 	}
-	if (!unify()) {
+	if (!unify_rus(*this)) {
 		failed = true; return;
 	}
-	if (!translate()) {
-		failed = true; return;
+	switch (config.mode) {
+	case Config::MODE_GRAMM:  modify_grammar(source); break;
+	case Config::MODE_PROVE:  break;
+	case Config::MODE_TRANSL: break;
+	default : break;
+	}
+	switch (config.target) {
+	case Config::TARG_RUS: write_rus(*this); break;
+	case Config::TARG_SMM: translate_rus(*this); break;
+	default : break;
 	}
 	timers.total.stop();
 	if (config.verbose)
 		cout << "done in " << timers.total << endl;
-}
-
-bool Rus::parse() {
-	try {
-		timers.read.start();
-		source = rus::parse(config.in);
-		//cout << *source << endl;
-		timers.read.stop();
-		return true;
-	} catch (Error& err) {
-		status += '\n';
-		status += err.what();
-		failed = true;
-		return false;
-	}
-}
-
-bool Rus::unify() {
-	try {
-		timers.unify.start();
-		rus::verify(source);
-		timers.unify.stop();
-		return true;
-	} catch (Error& err) {
-		status += '\n';
-		status += err.what();
-		failed = true;
-		return false;
-	}
-}
-
-
-bool Rus::translate() {
-	try {
-		if (config.out.empty()) return true;
-		if (config.verbose)
-			cout << "translating file " << config.in << " ... " << flush;
-		timers.translate.start();
-		smm::Source* target = rus::translate(source);
-		//cout << endl << *target;
-		ofstream out(config.out);
-		out << *target << endl;
-		out.close();
-		delete target;
-		timers.translate.stop();
-		if (config.verbose)
-			cout << "done in " << timers.translate << endl;
-		return true;
-	} catch (Error& err) {
-		status += '\n';
-		status += err.what();
-		failed = true;
-		return false;
-	}
 }
 
 ostream& operator << (ostream& os, const Rus& s) {

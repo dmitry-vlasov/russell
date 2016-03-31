@@ -111,28 +111,32 @@ inline Rule* find_super(Type* type, Type* super) {
 }
 
 
-void assemble_expr(Expr& ex, const ExprTerm* t, map<Expr::Node*, Expr::Node*> mp) {
+void assemble_expr(Expr& ex, const ExprTerm* t) {
 	if (!t->rule) {
 		ex.push_back(t->first->symb);
+		ExprTerm* at = new ExprTerm(ex.first);
+		ex.first->init.push_back(at);
+		ex.last->final.push_back(at);
 		return;
 	}
 	uint i = 0;
 	Expr::Node* n = t->rule->term.first;
 	while (n) {
 		if (n->symb.type)
-			assemble_expr(ex, t->children[i++], mp);
-		else {
+			assemble_expr(ex, t->children[i++]);
+		else
 			ex.push_back(n->symb);
-			mp[n] = ex.last;
-		}
 		n = n->next;
 	}
+	ExprTerm* at = new ExprTerm(ex.first, ex.last, t->rule);
+	ex.first->init.push_back(at);
+	ex.last->final.push_back(at);
 }
 
 Expr assemble(const Expr& ex) {
-	Expr e; map<Expr::Node*, Expr::Node*> mp;
-	assemble_expr(e, ex.term(), mp);
-	add_term(ex.term(), mp);
+	Expr e;
+	assemble_expr(e, ex.term());
+	e.type = ex.type;
 	return e;
 }
 
@@ -199,8 +203,14 @@ string show_w_ind(const Expr& ex) {
 bool trace = false;
 
 struct Stacks {
-	Stacks() : n_stack(), t_stack(), depth(0) { }
-	Stacks(const Stacks& s) : n_stack(s.n_stack), t_stack(s.t_stack), depth(s.depth) { }
+	Stacks() :
+		pool(new set<ExprTerm*>()), n_stack(), t_stack(), depth(0) {
+	}
+	Stacks(const Stacks& s) :
+		pool(s.pool), n_stack(s.n_stack), t_stack(s.t_stack), depth(s.depth) {
+	}
+
+	set<ExprTerm*>*            pool;
 	vector<Tree<Rule*>::Node*> n_stack;
 	vector<ExprTerm*>          t_stack;
 	uint depth;
@@ -216,6 +226,7 @@ struct Stacks {
 		++ depth;
 		n_stack.push_back(n);
 		t_stack.push_back(new Term<Expr::Node>(m));
+		pool->insert(t_stack.back());
 	}
 	ExprTerm* get_ret() {
 		assert(t_stack.size() == 1);
@@ -223,12 +234,13 @@ struct Stacks {
 	}
 
 	void push_child(ExprTerm* ch) {
+		pool->insert(ch);
 		t_stack.back()->children.push_back(ch);
 	}
 	void pop_child() {
 		assert(t_stack.back()->children.size());
-		t_stack.back()->children.back()->destroy();
-		delete t_stack.back()->children.back();
+		//t_stack.back()->children.back()->destroy();
+		//delete t_stack.back()->children.back();
 		t_stack.back()->children.pop_back();
 	}
 
@@ -237,25 +249,27 @@ struct Stacks {
 			ExprTerm* ch = t_stack.back();
 			ch->last = m;
 			ch->rule = n->data;
-			//verify();
+			verify();
 			if (n_stack.empty()) return nullptr;
 			n = n_stack.back();
 			pop();
 			push_child(ch);
 		}
-		//verify();
+		verify();
 		return n;
 	}
 
 	void pop(bool del = false) {
+		verify();
 		assert(depth);
 		-- depth;
-		if (del) {
+		/*if (del) {
 			t_stack.back()->destroy();
 			delete t_stack.back();
-		}
+		}*/
 		t_stack.pop_back();
 		n_stack.pop_back();
+		verify();
 	}
 
 	string show() const {
@@ -305,6 +319,7 @@ ExprTerm* parse_var(Expr::Node* m, Tree<Rule*>::Node* n, Stacks& s) {
 		ExprTerm* st = new Term<Expr::Node>(m, super);
 		ExprTerm* vt = new Term<Expr::Node>(m);
 		st->children.push_back(vt);
+		s.pool->insert(vt);
 		s.push_child(st);
 		if (ExprTerm* t = parse_next(m, n, s)) return t;
 		else s.pop_child();
@@ -337,6 +352,13 @@ ExprTerm* parse_variants(Expr::Node* m, Tree<Rule*>::Node* n, Stacks& s) {
 }
 
 
+void remove_children(set<ExprTerm*>* pool, ExprTerm* t) {
+	pool->erase(t);
+	for (auto ch : t->children) {
+		remove_children(pool, ch);
+	}
+}
+
 ExprTerm* parse_term(Expr::Node* m, Type* type) {
 	if (m->symb.type && !m->next) {
 		if (m->symb.type == type) return new Term<Expr::Node>(m);
@@ -349,7 +371,17 @@ ExprTerm* parse_term(Expr::Node* m, Type* type) {
 	}
 	Stacks s;
 	s.t_stack.push_back(new Term<Expr::Node>(m));
-	return parse_variants(m, type->rules.root, s);
+	ExprTerm* t = parse_variants(m, type->rules.root, s);
+	remove_children(s.pool, t);
+	static uint c = 0;
+	c ++;
+	if (s.pool->size() > 1000) {
+		//cout << "parsing: " << c++ << " = " << show(*t) << " -- ";
+		cout << c << ": extra terms: " << s.pool->size() << show(*t) << endl;
+	}
+	for (auto x : *s.pool) delete x;
+	delete s.pool;
+	return t;
 }
 
 
@@ -363,8 +395,6 @@ void add_terms(Term<node::Expr>* term) {
 
 void parse_expr(Expr& ex, vector<Vars>& var_stack){
 	mark_vars(ex, var_stack);
-	static uint c = 0;
-	cout << "parsing: " << c++ << " = " << show(ex) << endl;
 	if (Term<node::Expr>* term = parse_term(ex.first, ex.type)) {
 		//Expr e;
 		//assemble_expr(term, e);
