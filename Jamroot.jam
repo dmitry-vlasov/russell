@@ -45,6 +45,7 @@ exe mdl :
   
   src/smm/show.cpp
   
+  src/rus/modify_grammar.cpp
   src/rus/expr.cpp
   src/rus/globals.cpp
   src/rus/show.cpp

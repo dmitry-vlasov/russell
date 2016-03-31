@@ -95,6 +95,7 @@ ostream& operator << (ostream& os, const Rus& s);
 Source* parse(const string& path);
 void verify(Source*);
 smm::Source* translate(const Source* source);
+void modify_grammar(Source* src);
 
 }} // mdl::rus
 
