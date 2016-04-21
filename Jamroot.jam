@@ -45,12 +45,15 @@ exe mdl :
   
   src/smm/show.cpp
   
+  src/rus/expr_parser.cpp
+  src/rus/expr_grammar.hpp
+  src/rus/expr_grammar.cpp
   src/rus/modify_grammar.cpp
   src/rus/expr.cpp
   src/rus/globals.cpp
   src/rus/show.cpp
   src/rus/verify.cpp
-  src/rus/parser.cpp
+  src/rus/rus_parser.cpp
   src/rus/translate.cpp
   src/rus/main.cpp ;
  

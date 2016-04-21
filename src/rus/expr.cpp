@@ -7,7 +7,7 @@ string show(Symbol s) {
 	return show_sy(s.lit);
 }
 
-Symbol::Symbol(string s) : lit(-1), rep(false), type(nullptr) {
+Symbol::Symbol(string s, Type* t) : lit(-1), rep(false), type(t) {
 	lit = Rus::mod().lex.symbs.toInt(s);
 }
 

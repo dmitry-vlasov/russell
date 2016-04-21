@@ -25,6 +25,9 @@
 #include <deque>
 #include <limits>
 #include <iterator>
+#include <bitset>
+#include <utility>
+#include <queue>
 
 #include <cstdlib>
 #include <cstring>
@@ -67,9 +70,11 @@ namespace mdl {
 	using std::vector;
 	using std::set;
 	using std::deque;
+	using std::queue;
 	using std::stack;
 	using std::map;
 	using std::pair;
+	using std::bitset;
 }
 
 

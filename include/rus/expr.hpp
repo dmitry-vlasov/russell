@@ -7,7 +7,7 @@ namespace mdl { namespace rus {
 struct Type;
 
 struct Symbol {
-	Symbol(string s);
+	Symbol(string s, Type* t = nullptr);
 	Symbol(): lit(-1), rep(false), type(nullptr) { }
 	Symbol(uint l): lit(l), rep(false), type(nullptr) { }
 	Symbol(const mdl::Symbol s, bool r = false) :
