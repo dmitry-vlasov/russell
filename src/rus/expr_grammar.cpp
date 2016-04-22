@@ -1,3 +1,4 @@
+#include "common.hpp"
 #include "rus/expr_grammar.hpp"
 
 namespace mdl { namespace rus { namespace expr {
@@ -43,7 +44,7 @@ struct Item {
 };
 
 string show(const Item& it) {
-	string str = "[";
+	string str = "item [";
 	str += show(it.prod->left) + " → ";
 	for (uint i = 0; i < it.prod->right.size(); ++ i) {
 		if (i == it.dot) str += " .";
@@ -76,16 +77,26 @@ struct State {
 
 uint State::count = 0;
 
+string show(const State& st) {
+	string str = "state ";
+	str += to_string(st.ind) + " {\n";
+	for (const Item& it : st.items) {
+		str += "\t" + show(it) + "\n";
+	}
+	str += "}\n";
+	return str;
+}
+
 string show(const Action& act) {
 	switch (act.kind) {
 	case Action::ERROR:
 		return string("<err>");
 	case Action::ACCEPT:
-		return string("<acc>");
+		return string("<acc> ") + to_string(act.val.prod->ind);
 	case Action::REDUCE:
-		return string("r_") + to_string(act.val.prod->ind);
+		return string("<red> ") + to_string(act.val.prod->ind);
 	case Action::SHIFT:
-		return string("s_") + to_string(act.val.state->ind);
+		return string("<shft> ") + to_string(act.val.state->ind);
 	default: assert(false && "impossible"); return "";
 	}
 }
@@ -130,9 +141,111 @@ LR::~ LR() {
 
 static LR lr;
 
+string show(const LR& lr) {
+	string str = "LR = \n";
+
+	str += "Symbols:\n\t";
+	for (auto s : lr.symbol_set)
+		str += show(s) + " ";
+	str += "\n";
+
+	str += "Rule map:\n";
+	for (auto s : lr.rule_map) {
+		str += "\t" + show(s.first) + " |--> ";
+		for (auto p : s.second)
+			str += "\t\t" + show(*p) + "\n";
+		str += "\n";
+	}
+	str += "\n";
+
+	str += "First map:\n";
+	for (auto p : lr.first_map) {
+		str += "\t" + show(p.first) + " |--> {";
+		for (auto s : p.second)
+			str += show(s) + " ";
+		str += "}\n";
+	}
+	str += "\n";
+
+	str += "Follow map:\n";
+	for (auto p : lr.follow_map) {
+		str += "\t" + show(p.first) + " |--> {";
+		for (auto s : p.second)
+			str += show(s) + " ";
+		str += "}\n";
+	}
+	str += "\n";
+
+	str += "Products:\n";
+	for (auto p : lr.prod_vect)
+		str += "\t" + show(*p) + "\n";
+	str += "\n";
+
+	str += "Init prods:\n";
+	for (auto p : lr.init_prods)
+		str += "\t" + show(*p) + "\n";
+	str += "\n";
+
+	str += "Init map:\n";
+	for (auto p : lr.init_map)
+		str += "\t" + show_id(p.first->id) + " |--> " + show(*p.second) + "\n";
+	str += "\n";
+
+	str += "States:\n";
+	for (State* s : lr.state_set)
+		str += indent::paragraph(show(*s)) + "\n";
+	str += "\n";
+
+	return str;
+}
+
 Table& table() { return lr.table; }
 
 
+/*
+ *
+typedef map<State*, map<Symbol, State*>> Gotos;
+typedef map<State*, map<Symbol, Action>> Actions;
+typedef map<Type*, State*>               Inits;
+
+struct Table {
+	Inits   inits;
+	Gotos   gotos;
+	Actions actions;
+};
+ */
+
+string show(const Table& tab) {
+	string str = "Tables:\n";
+	str += "------------\n";
+	str += "Gotos:\n";
+	for (auto p1 : tab.gotos) {
+		str += "\t" + to_string(p1.first->ind) + " x\n";
+		for (auto p2 : p1.second) {
+			str += "\t\t" + to_string(p2.second->ind) + " |--> " + to_string(p2.second->ind) + "\n";
+		}
+		str += "\n";
+	}
+	str += "\n";
+
+	str += "Actions:\n";
+	for (auto p1 : tab.actions) {
+		str += "\t" + to_string(p1.first->ind) + " x\n";
+		for (auto p2 : p1.second) {
+			str += "\t\t" + show(p2.second) + " |--> " + show(p2.second) + "\n";
+		}
+		str += "\n";
+	}
+	str += "\n";
+
+	str += "Inits:\n";
+	for (auto p : tab.inits) {
+		str += "\t" + show_id(p.first->id) +  " |--> " + to_string(p.second->ind) + "\n";
+	}
+	str += "\n";
+
+	return str;
+}
 
 /*
 SetOfltems CLOSURE(I) {
