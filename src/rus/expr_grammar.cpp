@@ -8,14 +8,28 @@ static Symbol make_non_term(Type* t, const char* prefix = "") {
 	return Symbol(s, t);
 }
 
+static uint prod_count = 0;
+
 Product::Product(rus::Rule* r) :
-left(make_non_term(r->type)), right(), rule(r) {
+left(make_non_term(r->type)), right(), rule(r), ind(prod_count++) {
 	for (auto s : r->term) {
 		if (s.symb.type)
 			right.push_back(make_non_term(s.symb.type));
 		else
 			right.push_back(s.symb);
 	}
+}
+
+Product::Product(Symbol l, Symbol r) : left(l), right(), rule(nullptr), ind(prod_count++) {
+	right.push_back(r);
+}
+
+string show(const Product& p) {
+	string str;
+	str += show(p.left) + " → ";
+	for (auto s : p.right)
+		str += show(s) + " ";
+	return str;
 }
 
 struct Item {
@@ -27,6 +41,17 @@ struct Item {
 	Symbol before_dot() const { return prod->right[dot - 1]; }
 	bool completed() const { return dot == prod->right.size(); }
 };
+
+string show(const Item& it) {
+	string str = "[";
+	str += show(it.prod->left) + " → ";
+	for (uint i = 0; i < it.prod->right.size(); ++ i) {
+		if (i == it.dot) str += " .";
+		str += show(it.prod->right[i]) + " ";
+	}
+	str += ", " + show(it.lookahead) + "]";
+	return str;
+}
 
 template<typename> struct Less;
 
@@ -42,9 +67,28 @@ struct Less<Item> {
 	}
 };
 
+
 struct State {
 	set<Item, Less<Item>> items;
+	uint                  ind;
+	static uint           count;
 };
+
+uint State::count = 0;
+
+string show(const Action& act) {
+	switch (act.kind) {
+	case Action::ERROR:
+		return string("<err>");
+	case Action::ACCEPT:
+		return string("<acc>");
+	case Action::REDUCE:
+		return string("r_") + to_string(act.val.prod->ind);
+	case Action::SHIFT:
+		return string("s_") + to_string(act.val.state->ind);
+	default: assert(false && "impossible"); return "";
+	}
+}
 
 template<>
 struct Less<State*> {
@@ -181,6 +225,7 @@ void collect_states() {
 				State t = make_goto(*from, x);
 				if (!t.items.empty() && (lr.state_set.find(&t) == lr.state_set.end())) {
 					State* to = new State(t);
+					to->ind = State::count++;
 					lr.state_vect.push_back(to);
 					lr.state_set.insert(to);
 					new_state = true;

@@ -6,15 +6,15 @@ namespace mdl { namespace rus { namespace expr {
 struct State;
 
 struct Product {
-	Product(Symbol l, Symbol r) : left(l), right(), rule(nullptr) {
-		right.push_back(r);
-	}
+	Product(Symbol l, Symbol r);
 	Product(rus::Rule*);
 	Symbol          left;
 	vector<Symbol>  right;
 	rus::Rule*      rule;
+	uint            ind;
 };
 
+string show(const Product&);
 
 struct Action {
 	enum Kind {
@@ -29,6 +29,8 @@ struct Action {
 	Value val;
 };
 
+string show(const Action&);
+
 typedef map<State*, map<Symbol, State*>> Gotos;
 typedef map<State*, map<Symbol, Action>> Actions;
 typedef map<Type*, State*>               Inits;
@@ -38,6 +40,8 @@ struct Table {
 	Gotos   gotos;
 	Actions actions;
 };
+
+string show(const Table&);
 
 void add_rule(rus::Rule*);
 void parse(Expr& ex);
