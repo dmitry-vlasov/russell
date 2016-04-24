@@ -25,6 +25,9 @@ struct Action {
 		Product* prod;
 		State*   state;
 	};
+	Action() : kind(ERROR), val() {
+		val.none = nullptr;
+	}
 	Kind kind;
 	Value val;
 };
@@ -42,6 +45,7 @@ struct Table {
 };
 
 string show(const Table&);
+string show_lr();
 
 void add_rule(rus::Rule*);
 void parse(Expr& ex);

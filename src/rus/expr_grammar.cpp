@@ -50,6 +50,8 @@ string show(const Item& it) {
 		if (i == it.dot) str += " .";
 		str += show(it.prod->right[i]) + " ";
 	}
+	if (it.dot == it.prod->right.size())
+		str += ".";
 	str += ", " + show(it.lookahead) + "]";
 	return str;
 }
@@ -62,7 +64,7 @@ struct Less<Item> {
 			 if (item1.prod < item2.prod) return true;
 		else if (item1.prod > item2.prod) return false;
 		else if (item1.dot < item2.dot)   return true;
-		else if (item1.dot > item2.dot)   return true;
+		else if (item1.dot > item2.dot)   return false;
 		else if (item1.lookahead < item2.lookahead) return true;
 		else return false;
 	}
@@ -70,6 +72,11 @@ struct Less<Item> {
 
 
 struct State {
+	enum Kind { FINAL, TRIAL };
+	State(Kind k) :
+		items(), ind(k == FINAL ? count++ : -1) { }
+	State(const State& st, Kind k) :
+		items(st.items), ind(k == FINAL ? count++ : st.ind) { }
 	set<Item, Less<Item>> items;
 	uint                  ind;
 	static uint           count;
@@ -97,7 +104,9 @@ string show(const Action& act) {
 		return string("<red> ") + to_string(act.val.prod->ind);
 	case Action::SHIFT:
 		return string("<shft> ") + to_string(act.val.state->ind);
-	default: assert(false && "impossible"); return "";
+	default:
+		return string("<IMPOSSIBLE> ") + to_string(act.kind);
+		//assert(false && "impossible"); return "";
 	}
 }
 
@@ -105,7 +114,7 @@ template<>
 struct Less<State*> {
 	bool operator () (const State* s1, const State* s2) {
 		static Less<Item> less;
-		if (s1->items.size() < s2->items.size()) return true;
+			 if (s1->items.size() < s2->items.size()) return true;
 		else if (s1->items.size() > s2->items.size()) return false;
 		else {
 			for (auto i = s1->items.begin(), j = s2->items.begin(); i != s1->items.end(); ++ i, ++ j) {
@@ -119,6 +128,19 @@ struct Less<State*> {
 
 struct LR {
 	~ LR();
+
+	bool has_rule(Symbol s) {
+		return rule_map.find(s) != rule_map.end();
+	}
+	bool has_first(Symbol s) {
+		return first_map.find(s) != first_map.end();
+	}
+	bool has_follow(Symbol s) {
+		return follow_map.find(s) != follow_map.end();
+	}
+	bool has_init(Type* t) {
+		return init_map.find(t) != init_map.end();
+	}
 
 	set<Symbol>                symbol_set;
 	map<Symbol, set<Product*>> rule_map;
@@ -151,7 +173,7 @@ string show(const LR& lr) {
 
 	str += "Rule map:\n";
 	for (auto s : lr.rule_map) {
-		str += "\t" + show(s.first) + " |--> ";
+		str += "\t" + show(s.first) + " |--> \n";
 		for (auto p : s.second)
 			str += "\t\t" + show(*p) + "\n";
 		str += "\n";
@@ -247,6 +269,13 @@ string show(const Table& tab) {
 	return str;
 }
 
+string show_lr() {
+	string str;
+	str += show(lr);
+	str += show(table());
+	return str;
+}
+
 /*
 SetOfltems CLOSURE(I) {
 	repeat
@@ -265,7 +294,11 @@ void make_closure(State& state) {
 		new_items = false;
 		for (const Item& i : state.items) {
 			Symbol b = i.after_dot();
+			if (!lr.has_rule(b))
+				continue;
 			for (Product* p : lr.rule_map[b]) {
+				if (!lr.has_follow(b))
+					continue;
 				for (Symbol x : lr.follow_map[b]) {
 					Item j(p, x);
 					if (state.items.find(j) == state.items.end()) {
@@ -275,7 +308,7 @@ void make_closure(State& state) {
 				}
 			}
 		}
-	} while (!new_items);
+	} while (new_items);
 }
 
 void complement_tables(State* from, Symbol x, State* to) {
@@ -283,9 +316,17 @@ void complement_tables(State* from, Symbol x, State* to) {
 	Action act;
 	for (const Item& i : from->items) {
 		if (i.completed()) {
-			if (act.kind != Action::ERROR)
+			if (act.kind != Action::ERROR) {
+				cout << "already has action: " << show(act) << endl;
+				if (lr.init_prods.find(i.prod) != lr.init_prods.end())
+					act.kind = Action::ACCEPT;
+				else
+					act.kind = Action::REDUCE;
+				act.val.prod = i.prod;
+				cout << "going to be: " << show(act) << endl;
+				cout << show_lr() << endl;
 				throw Error("non LR(1) grammar");
-			else {
+			} else {
 				if (lr.init_prods.find(i.prod) != lr.init_prods.end())
 					act.kind = Action::ACCEPT;
 				else
@@ -293,9 +334,15 @@ void complement_tables(State* from, Symbol x, State* to) {
 				act.val.prod = i.prod;
 			}
 		} else {
-			if (act.kind != Action::ERROR)
+			if (act.kind != Action::ERROR) {
+				cout << "already has action: " << show(act) << endl;
+				act.kind = Action::SHIFT;
+				act.val.state = to;
+				cout << "going to be: " << show(act) << endl;
+				cout << show_lr() << endl;
 				throw Error("non LR(1) grammar");
-			else if (is_terminal(x) && i.before_dot() == x) {
+			}
+			else if (is_terminal(x) && i.after_dot() == x) {
 				act.kind = Action::SHIFT;
 				act.val.state = to;
 			}
@@ -314,7 +361,7 @@ SetOfltems GOTO(I, X) {
  */
 
 State make_goto(const State& from, Symbol X) {
-	State to;
+	State to(State::TRIAL);
 	for (Item it : from.items) {
 		if (it.dot < it.prod->right.size()) {
 			it.dot += 1;
@@ -343,6 +390,9 @@ void collect_states() {
 					lr.state_set.insert(to);
 					new_state = true;
 					complement_tables(from, x, to);
+
+
+					cout << show(*to) << endl;
 				}
 			}
 		}
@@ -354,6 +404,8 @@ void add_rule(rus::Rule* r) {
 	Product* prod = new Product(r);
 	lr.prod_vect.push_back(prod);
 	lr.rule_map[prod->left].insert(prod);
+
+	cout << endl << show(*prod) << endl << endl;
 
 	// Arrange first:
 	Symbol s = prod->right[0];
@@ -380,11 +432,17 @@ void add_rule(rus::Rule* r) {
 		Symbol s = make_non_term(r->type);
 		Symbol s_prime = make_non_term(r->type, "prime_");
 		Product* p = new Product(s_prime, s);
+
+		cout << endl << show(*p) << endl << endl;
+
 		lr.prod_vect.push_back(p);
 		Item it(p, end_marker());
-		State* init = new State;
+		State* init = new State(State::FINAL);
 		init->items.insert(it);
 		make_closure(*init);
+
+		cout << endl << show(*init) << endl << endl;
+
 		lr.state_set.insert(init);
 		lr.state_vect.push_back(init);
 		lr.init_prods.insert(p);
@@ -397,6 +455,9 @@ void add_rule(rus::Rule* r) {
 		lr.symbol_set.insert(s);
 
 	collect_states();
+
+
+	cout << show_lr() << endl;
 }
 
 

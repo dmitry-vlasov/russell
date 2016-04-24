@@ -180,6 +180,17 @@ struct Expr {
 		for (auto t : init) delete t;
 		if (next) delete next;
 	}
+	Expr(const Expr& ex) : symb(ex.symb), next(nullptr),
+	prev(nullptr), init(), final() {
+	}
+	Expr& operator = (const Expr& ex) {
+		symb = ex.symb;
+		next = nullptr;
+		prev = nullptr;
+		init.clear();
+		final.clear();
+		return *this;
+	}
 	Symbol symb;
 	Expr*  next;
 	Expr*  prev;
@@ -197,6 +208,18 @@ struct Tree {
 		for (auto t : init) delete t;
 		if (next) delete next;
 		if (side) delete side;
+	}
+	Tree(const Tree& tr) : symb(tr.symb), next(nullptr),
+	prev(nullptr), side(nullptr), init(), final(), data() {
+	}
+	Tree& operator = (const Tree& tr) {
+		symb = tr.symb;
+		next = nullptr;
+		prev = nullptr;
+		side = nullptr;
+		init.clear();
+		final.clear();
+		return *this;
 	}
 	Symbol symb;
 	Tree*  next;
@@ -247,9 +270,11 @@ struct Expr {
 
 	Expr() : first(nullptr), last(nullptr), type(nullptr) { }
 	Expr(const mdl::Expr&);
-	Expr(Symbol s) : first(nullptr), last(nullptr), type(nullptr) {
+	Expr(Symbol s) : first(nullptr), last(nullptr), type(s.type) {
 		push_back(s);
 	}
+	Expr(const Expr&);
+	Expr& operator = (const Expr&);
 	void destroy() { if (first) delete first; }
 	void push_back(Symbol);
 	void push_front(Symbol);
@@ -258,9 +283,11 @@ struct Expr {
 		return !operator == (ex);
 	}
 	Term<Node>* term() {
+		if (!first) return nullptr; else
 		return first->init.size() ? first->init.back() : nullptr;
 	}
 	const Term<Node>* term() const {
+		if (!first) return nullptr; else
 		return first->init.size() ? first->init.back() : nullptr;
 	}
 	Iterator begin() { return Iterator(first); }

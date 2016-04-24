@@ -43,6 +43,30 @@ Expr::Expr(const mdl::Expr& ex) : first(nullptr), last(nullptr), type(nullptr) {
 		push_back(*it);
 	}
 }
+Expr::Expr(const Expr& ex) : first(nullptr), last(nullptr), type(ex.type) {
+	map<Node*, Node*> mp;
+	Node* n = ex.first;
+	while (n){
+		push_back(n->symb);
+		mp[n] = last;
+		n = n->next;
+	}
+	add_term(ex.term(), mp);
+}
+Expr& Expr::operator = (const Expr& ex) {
+	destroy();
+	first = nullptr;
+	type = ex.type;
+	map<Node*, Node*> mp;
+	Node* n = ex.first;
+	while (n){
+		push_back(n->symb);
+		mp[n] = last;
+		n = n->next;
+	}
+	add_term(ex.term(), mp);
+	return *this;
+}
 
 void Expr::push_back(Symbol s) {
 	if (!first) {

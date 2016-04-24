@@ -7,6 +7,7 @@
 
 #include "rus/globals.hpp"
 #include "rus/adaptors.hpp"
+#include "rus/expr_grammar.hpp"
 
 namespace mdl { namespace rus {
 
@@ -62,6 +63,7 @@ struct AddToMath {
 	void operator()(Rule* r) const {
 		r->type->rules.add(r->term) = r;
 		Rus::mod().math.rules[r->id] = r;
+		expr::add_rule(r);
 	}
 	void operator()(Axiom* a) const {
 		Rus::mod().math.axioms[a->ass.id] = a;
