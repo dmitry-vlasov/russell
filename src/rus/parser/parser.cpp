@@ -1,5 +1,5 @@
+#include "grammar.hpp"
 #include "rus/globals.hpp"
-#include "rus_grammar.hpp"
 
 namespace mdl { namespace rus {
 
