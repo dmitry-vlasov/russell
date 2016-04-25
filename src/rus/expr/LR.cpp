@@ -143,7 +143,7 @@ void add_rule(rus::Rule* r) {
 	lr.prod_vect.push_back(prod);
 	lr.rule_map[prod->left].s.insert(prod);
 
-	cout << endl << show(*prod) << endl << endl;
+	//cout << endl << show(*prod) << endl << endl;
 
 	// Arrange first:
 	Symbol s = prod->right[0];
@@ -157,7 +157,7 @@ void add_rule(rus::Rule* r) {
 		s = prod->right[i];
 		if (i + 1 < prod->right.size()) {
 			Symbol x = prod->right[i + 1];
-			if (is_non_term(s)){
+			if (/*is_non_term(s) && */lr.first_map.has(x)) {
 				lr.follow_map[s].s.insert(lr.first_map[x].s.begin(), lr.first_map[x].s.end());
 			}
 		} else if (is_non_term(s)) {
@@ -171,7 +171,7 @@ void add_rule(rus::Rule* r) {
 		Symbol s_prime = make_non_term(r->type, "prime_");
 		Product* p = new Product(s_prime, s);
 
-		cout << endl << show(*p) << endl << endl;
+		//cout << endl << show(*p) << endl << endl;
 
 		lr.prod_vect.push_back(p);
 		Item it(p, end_marker());
@@ -179,7 +179,7 @@ void add_rule(rus::Rule* r) {
 		init->items.insert(it);
 		make_closure(*init);
 
-		cout << endl << show(*init) << endl << endl;
+		//cout << endl << show(*init) << endl << endl;
 
 		lr.state_set.s.insert(init);
 		lr.state_vect.push_back(init);
