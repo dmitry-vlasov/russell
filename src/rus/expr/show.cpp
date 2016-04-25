@@ -71,18 +71,18 @@ string show(const LR& lr) {
 
 	str += "First map:\n";
 	for (auto p : lr.first_map.m) {
-		str += "\t" + show(p.first) + " |--> {";
+		str += "\t" + show(p.first) + "\t|--> { ";
 		for (auto s : p.second.s)
-			str += show(s) + " ";
+			str += show(s) + "\t";
 		str += "}\n";
 	}
 	str += "\n";
 
 	str += "Follow map:\n";
 	for (auto p : lr.follow_map.m) {
-		str += "\t" + show(p.first) + " |--> {";
+		str += "\t" + show(p.first) + "\t|--> { ";
 		for (auto s : p.second.s)
-			str += show(s) + " ";
+			str += show(s) + "\t";
 		str += "}\n";
 	}
 	str += "\n";

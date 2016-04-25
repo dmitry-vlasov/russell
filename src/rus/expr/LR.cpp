@@ -137,6 +137,31 @@ void collect_states() {
 	} while (new_state);
 }
 
+void add_first(Product* prod) {
+	// Arrange first:
+	Symbol s = prod->right[0];
+	if (is_terminal(s))
+		lr.first_map[prod->left].s.insert(s);
+	else
+		lr.first_map[prod->left].s.insert(lr.first_map[s].s.begin(), lr.first_map[s].s.end());
+}
+
+void add_follow(Product* prod) {
+	// Arrange follow:
+	for (uint i = 0; i < prod->right.size(); ++ i) {
+		Symbol s = prod->right[i];
+		if (is_terminal(s))
+			lr.first_map[s].s.insert(s);
+		if (i + 1 < prod->right.size()) {
+			Symbol x = prod->right[i + 1];
+			if (lr.first_map.has(x)) {
+				lr.follow_map[s].s.insert(lr.first_map[x].s.begin(), lr.first_map[x].s.end());
+			}
+		} else if (is_non_term(s) && lr.follow_map.has(prod->left)) {
+			lr.follow_map[s].s.insert(lr.follow_map[prod->left].s.begin(), lr.follow_map[prod->left].s.end());
+		}
+	}
+}
 
 void add_rule(rus::Rule* r) {
 	Product* prod = new Product(r);
@@ -145,25 +170,10 @@ void add_rule(rus::Rule* r) {
 
 	//cout << endl << show(*prod) << endl << endl;
 
-	// Arrange first:
-	Symbol s = prod->right[0];
-	if (is_terminal(s))
-		lr.first_map[prod->left].s.insert(s);
-	else
-		lr.first_map[prod->left].s.insert(lr.first_map[s].s.begin(), lr.first_map[s].s.end());
+	add_first(prod);
+	for (Product* p : lr.prod_vect)
+		add_follow(p);
 
-	// Arrange follow:
-	for (uint i = 0; i < prod->right.size(); ++ i) {
-		s = prod->right[i];
-		if (i + 1 < prod->right.size()) {
-			Symbol x = prod->right[i + 1];
-			if (/*is_non_term(s) && */lr.first_map.has(x)) {
-				lr.follow_map[s].s.insert(lr.first_map[x].s.begin(), lr.first_map[x].s.end());
-			}
-		} else if (is_non_term(s)) {
-			lr.follow_map[s].s.insert(lr.follow_map[prod->left].s.begin(), lr.follow_map[prod->left].s.end());
-		}
-	}
 
 	// Add initial state
 	if (!lr.symbol_set.has(prod->left)) {
