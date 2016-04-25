@@ -1,5 +1,5 @@
 #include <boost/range/adaptor/reversed.hpp>
-#include "rus/expr_grammar.hpp"
+#include "rus/expr/table.hpp"
 
 namespace mdl { namespace rus { namespace expr {
 
