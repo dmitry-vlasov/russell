@@ -47,15 +47,8 @@ struct Mm {
 		Timer total;
 	};
 	template<typename T>
-	struct Table {
-		map<uint, T> table;
-		bool has(uint lab) const {
-			return table.find(lab) != table.end();
-		}
-		T& operator[] (uint ind) {
-			return table[ind];
-		}
-	};
+	using Table = Map<uint, T>;
+
 	struct Math {
 		Table<Theorem*>   theorems;
 		Table<Axiom*>     axioms;

@@ -52,18 +52,8 @@ struct Rus {
 		Timer total;
 	};
 	template<typename T>
-	struct Table {
-		map<uint, T> table;
-		bool has(uint ind) const {
-			return table.find(ind) != table.end();
-		}
-		T& operator[] (uint ind) {
-			return table[ind];
-		}
-		T operator[] (uint ind) const {
-			return table.find(ind)->second;
-		}
-	};
+	using Table = Map<uint, T>;
+
 	template<typename T>
 	struct Set {
 		set<T> s;

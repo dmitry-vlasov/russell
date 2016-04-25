@@ -12,6 +12,7 @@
 
 #pragma once
 
+#include <memory>
 #include <algorithm>
 #include <exception>
 #include <ostream>

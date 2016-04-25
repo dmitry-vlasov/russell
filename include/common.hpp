@@ -11,6 +11,25 @@
 
 namespace mdl {
 
+template<
+	class Key,
+	class T,
+	class Compare = std::less<Key>,
+	class Alloc = std::allocator<pair<const Key,T>>
+>
+struct Map {
+	map<Key, T, Compare, Alloc> m;
+	bool has(Key k) const {
+		return m.find(k) != m.end();
+	}
+	T& operator[] (Key k) {
+		return m[k];
+	}
+	T operator[] (Key k) const {
+		return m.find(k)->second;
+	}
+};
+
 class indent {
 	int  num;
 	char del;
