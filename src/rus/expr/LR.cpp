@@ -42,12 +42,12 @@ void make_closure(State& state) {
 		new_items = false;
 		for (const Item& i : state.items) {
 			Symbol b = i.after_dot();
-			if (!lr.has_rule(b))
+			if (!lr.rule_map.has(b))
 				continue;
-			for (Product* p : lr.rule_map[b]) {
-				if (!lr.has_follow(b))
+			for (Product* p : lr.rule_map[b].s) {
+				if (!lr.follow_map.has(b))
 					continue;
-				for (Symbol x : lr.follow_map[b]) {
+				for (Symbol x : lr.follow_map[b].s) {
 					Item j(p, x);
 					if (state.items.find(j) == state.items.end()) {
 						new_items = true;
@@ -66,7 +66,7 @@ void complement_tables(State* from, Symbol x, State* to) {
 		if (i.completed()) {
 			if (act.kind != Action::ERROR) {
 				cout << "already has action: " << show(act) << endl;
-				if (lr.init_prods.find(i.prod) != lr.init_prods.end())
+				if (lr.init_prods.has(i.prod))
 					act.kind = Action::ACCEPT;
 				else
 					act.kind = Action::REDUCE;
@@ -75,7 +75,7 @@ void complement_tables(State* from, Symbol x, State* to) {
 				cout << show_lr() << endl;
 				throw Error("non LR(1) grammar");
 			} else {
-				if (lr.init_prods.find(i.prod) != lr.init_prods.end())
+				if (lr.init_prods.has(i.prod))
 					act.kind = Action::ACCEPT;
 				else
 					act.kind = Action::REDUCE;
@@ -118,14 +118,14 @@ void collect_states() {
 	bool new_state = false;
 	do {
 		new_state = false;
-		for (State* from : lr.state_set) {
-			for (Symbol x : lr.symbol_set) {
+		for (State* from : lr.state_set.s) {
+			for (Symbol x : lr.symbol_set.s) {
 				State t = make_goto(*from, x);
-				if (!t.items.empty() && (lr.state_set.find(&t) == lr.state_set.end())) {
+				if (!t.items.empty() && !lr.state_set.has(&t)) {
 					State* to = new State(t);
 					to->ind = State::count++;
 					lr.state_vect.push_back(to);
-					lr.state_set.insert(to);
+					lr.state_set.s.insert(to);
 					new_state = true;
 					complement_tables(from, x, to);
 
@@ -141,16 +141,16 @@ void collect_states() {
 void add_rule(rus::Rule* r) {
 	Product* prod = new Product(r);
 	lr.prod_vect.push_back(prod);
-	lr.rule_map[prod->left].insert(prod);
+	lr.rule_map[prod->left].s.insert(prod);
 
 	cout << endl << show(*prod) << endl << endl;
 
 	// Arrange first:
 	Symbol s = prod->right[0];
 	if (is_terminal(s))
-		lr.first_map[prod->left].insert(s);
+		lr.first_map[prod->left].s.insert(s);
 	else
-		lr.first_map[prod->left].insert(lr.first_map[s].begin(), lr.first_map[s].end());
+		lr.first_map[prod->left].s.insert(lr.first_map[s].s.begin(), lr.first_map[s].s.end());
 
 	// Arrange follow:
 	for (uint i = 0; i < prod->right.size(); ++ i) {
@@ -158,15 +158,15 @@ void add_rule(rus::Rule* r) {
 		if (i + 1 < prod->right.size()) {
 			Symbol x = prod->right[i + 1];
 			if (is_non_term(s)){
-				lr.follow_map[s].insert(lr.first_map[x].begin(), lr.first_map[x].end());
+				lr.follow_map[s].s.insert(lr.first_map[x].s.begin(), lr.first_map[x].s.end());
 			}
 		} else if (is_non_term(s)) {
-			lr.follow_map[s].insert(lr.follow_map[prod->left].begin(), lr.follow_map[prod->left].end());
+			lr.follow_map[s].s.insert(lr.follow_map[prod->left].s.begin(), lr.follow_map[prod->left].s.end());
 		}
 	}
 
 	// Add initial state
-	if (lr.symbol_set.find(prod->left) == lr.symbol_set.end()) {
+	if (!lr.symbol_set.has(prod->left)) {
 		Symbol s = make_non_term(r->type);
 		Symbol s_prime = make_non_term(r->type, "prime_");
 		Product* p = new Product(s_prime, s);
@@ -181,16 +181,16 @@ void add_rule(rus::Rule* r) {
 
 		cout << endl << show(*init) << endl << endl;
 
-		lr.state_set.insert(init);
+		lr.state_set.s.insert(init);
 		lr.state_vect.push_back(init);
-		lr.init_prods.insert(p);
+		lr.init_prods.s.insert(p);
 		lr.init_map[r->type] = init;
 	}
 
 	// Add symbols
-	lr.symbol_set.insert(prod->left);
+	lr.symbol_set.s.insert(prod->left);
 	for (auto s : prod->right)
-		lr.symbol_set.insert(s);
+		lr.symbol_set.s.insert(s);
 
 	collect_states();
 

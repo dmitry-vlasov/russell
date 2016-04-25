@@ -56,32 +56,32 @@ string show(const LR& lr) {
 	string str = "LR = \n";
 
 	str += "Symbols:\n\t";
-	for (auto s : lr.symbol_set)
+	for (auto s : lr.symbol_set.s)
 		str += show(s) + " ";
 	str += "\n";
 
 	str += "Rule map:\n";
-	for (auto s : lr.rule_map) {
+	for (auto s : lr.rule_map.m) {
 		str += "\t" + show(s.first) + " |--> \n";
-		for (auto p : s.second)
+		for (auto p : s.second.s)
 			str += "\t\t" + show(*p) + "\n";
 		str += "\n";
 	}
 	str += "\n";
 
 	str += "First map:\n";
-	for (auto p : lr.first_map) {
+	for (auto p : lr.first_map.m) {
 		str += "\t" + show(p.first) + " |--> {";
-		for (auto s : p.second)
+		for (auto s : p.second.s)
 			str += show(s) + " ";
 		str += "}\n";
 	}
 	str += "\n";
 
 	str += "Follow map:\n";
-	for (auto p : lr.follow_map) {
+	for (auto p : lr.follow_map.m) {
 		str += "\t" + show(p.first) + " |--> {";
-		for (auto s : p.second)
+		for (auto s : p.second.s)
 			str += show(s) + " ";
 		str += "}\n";
 	}
@@ -93,17 +93,17 @@ string show(const LR& lr) {
 	str += "\n";
 
 	str += "Init prods:\n";
-	for (auto p : lr.init_prods)
+	for (auto p : lr.init_prods.s)
 		str += "\t" + show(*p) + "\n";
 	str += "\n";
 
 	str += "Init map:\n";
-	for (auto p : lr.init_map)
+	for (auto p : lr.init_map.m)
 		str += "\t" + show_id(p.first->id) + " |--> " + show(*p.second) + "\n";
 	str += "\n";
 
 	str += "States:\n";
-	for (State* s : lr.state_set)
+	for (State* s : lr.state_set.s)
 		str += indent::paragraph(show(*s)) + "\n";
 	str += "\n";
 
