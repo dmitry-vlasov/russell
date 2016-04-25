@@ -30,6 +30,18 @@ struct Map {
 	}
 };
 
+template<
+	class T,
+	class Compare = std::less<T>,
+	class Alloc = std::allocator<T>
+>
+struct Set {
+	set<T, Compare, Alloc> s;
+	bool has(T val) const {
+		return s.find(val) != s.end();
+	}
+};
+
 class indent {
 	int  num;
 	char del;

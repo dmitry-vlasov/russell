@@ -54,13 +54,6 @@ struct Rus {
 	template<typename T>
 	using Table = Map<uint, T>;
 
-	template<typename T>
-	struct Set {
-		set<T> s;
-		bool has(T val) const {
-			return s.find(val) != s.end();
-		}
-	};
 	struct Math {
 		Table<Type*>    types;
 		Table<Theorem*> theorems;
