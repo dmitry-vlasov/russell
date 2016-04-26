@@ -9,6 +9,11 @@ static Symbol make_non_term(Type* t, const char* prefix = "") {
 	return Symbol(s, t);
 }
 
+static Symbol make_terminal(Type* t, const char* postfix = "") {
+	string s = Rus::get().lex.ids.toStr(t->id) + postfix;
+	return Symbol(s);
+}
+
 static uint prod_count = 0;
 
 Product::Product(rus::Rule* r) :
@@ -169,8 +174,18 @@ void add_follow(Product* prod) {
 	}
 }
 
-void add_rule(rus::Rule* r) {
-	Product* prod = new Product(r);
+
+void check_prod(Product* prod) {
+	if (!lr.non_terminals.has(prod->left))
+		throw Error("undefined type ", show(prod->left));
+	for (Symbol s : prod->right)
+		if (!lr.symbol_set.has(s))
+			throw Error("undefined symbol ", show(s));
+}
+
+void add_product(Product* prod) {
+	check_prod(prod);
+
 	lr.prod_vect.push_back(prod);
 	lr.rule_map[prod->left].s.insert(prod);
 
@@ -180,38 +195,68 @@ void add_rule(rus::Rule* r) {
 	for (Product* p : lr.prod_vect)
 		add_follow(p);
 
-
-	// Add initial state
-	if (!lr.symbol_set.has(prod->left)) {
-		Symbol s = make_non_term(r->type);
-		Symbol s_prime = make_non_term(r->type, "prime_");
-		Product* p = new Product(s_prime, s);
-
-		//cout << endl << show(*p) << endl << endl;
-
-		lr.prod_vect.push_back(p);
-		Item it(p, end_marker());
-		State* init = new State(State::FINAL);
-		init->items.insert(it);
-		make_closure(*init);
-
-		//cout << endl << show(*init) << endl << endl;
-
-		lr.state_set.s.insert(init);
-		lr.state_vect.push_back(init);
-		lr.init_prods.s.insert(p);
-		lr.init_map[r->type] = init;
-	}
-
-	// Add symbols
-	lr.symbol_set.s.insert(prod->left);
-	for (auto s : prod->right)
-		lr.symbol_set.s.insert(s);
-
 	collect_states();
+}
+
+void add_rule(Rule* rule) {
+	Product* prod = new Product(rule);
+	add_product(prod);
+}
+
+static void add_term_product(Symbol s, Symbol s_) {
+	Product* prod = new Product(s, s_);
+	add_product(prod);
+	//lr.prod_vect.push_back(prod);
+	//lr.rule_map[prod->left].s.insert(prod);
+}
+
+static void add_init_product(Symbol _s, Symbol s) {
+	Product* prod = new Product(_s, s);
+
+	//cout << endl << show(*p) << endl << endl;
 
 
-	cout << show_lr() << endl;
+	//lr.prod_vect.push_back(prod);
+	//lr.rule_map[prod->left].s.insert(prod);
+
+	Item it(prod, end_marker());
+	State* init = new State(State::FINAL);
+	init->items.insert(it);
+	make_closure(*init);
+
+	//cout << endl << show(*init) << endl << endl;
+
+	lr.state_set.s.insert(init);
+	lr.state_vect.push_back(init);
+	lr.init_prods.s.insert(prod);
+	lr.init_map[s.type] = init;
+
+	add_product(prod);
+}
+
+void add_type(Type* type) {
+	Symbol  s  = make_non_term(type);
+	Symbol _s  = make_non_term(type, "_");
+	Symbol  s_ = make_terminal(type, "_");
+	if (lr.non_terminals.has(s))
+		throw Error("type already declared", show_id(type->id));
+
+	lr.non_terminals.s.insert(s);
+	lr.non_terminals.s.insert(_s);
+	lr.terminals.s.insert(s_);
+	lr.symbol_set.s.insert(s);
+	lr.symbol_set.s.insert(_s);
+	lr.symbol_set.s.insert(s_);
+
+	add_init_product(_s, s);
+	add_term_product(s, s_);
+}
+
+void add_const(Const* c) {
+	if (lr.terminals.has(c->symb))
+		throw Error("type already declared", show(c->symb));
+	lr.terminals.s.insert(c->symb);
+	lr.symbol_set.s.insert(c->symb);
 }
 
 

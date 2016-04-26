@@ -55,11 +55,13 @@ void collect_supers(Type* inf, Type* s) {
 struct AddToMath {
 	void operator()(Const* c) const {
 		Rus::mod().math.consts.s.insert(c->symb);
+		expr::add_const(c);
 	}
 	void operator()(Type* t) const {
 		//t->rules.add(Expr(create_symbol("x", t))) = nullptr; // id rule
 		collect_supers(t, t);
 		Rus::mod().math.types[t->id] = t;
+		expr::add_type(t);
 	}
 	void operator()(Rule* r) const {
 		r->type->rules.add(r->term) = r;

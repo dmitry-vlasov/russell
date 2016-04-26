@@ -7,11 +7,11 @@ struct State;
 
 struct Product {
 	Product(Symbol l, Symbol r);
-	Product(rus::Rule*);
-	Symbol          left;
-	vector<Symbol>  right;
-	rus::Rule*      rule;
-	uint            ind;
+	Product(Rule*);
+	Symbol         left;
+	vector<Symbol> right;
+	Rule*          rule;
+	uint           ind;
 };
 
 string show(const Product&);
@@ -47,7 +47,9 @@ struct Table {
 string show(const Table&);
 string show_lr();
 
-void add_rule(rus::Rule*);
+void add_type(Type*);
+void add_rule(Rule*);
+void add_const(Const*);
 void parse(Expr& ex);
 
 Table& table();

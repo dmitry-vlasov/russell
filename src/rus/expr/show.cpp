@@ -59,6 +59,14 @@ string show(const LR& lr) {
 	for (auto s : lr.symbol_set.s)
 		str += show(s) + " ";
 	str += "\n";
+	str += "Terminals:\n\t";
+	for (auto s : lr.terminals.s)
+		str += show(s) + " ";
+	str += "\n";
+	str += "Non-Terminals:\n\t";
+	for (auto s : lr.non_terminals.s)
+		str += show(s) + " ";
+	str += "\n";
 
 	str += "Rule map:\n";
 	for (auto s : lr.rule_map.m) {

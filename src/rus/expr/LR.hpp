@@ -63,12 +63,10 @@ struct Less<State*> {
 struct LR {
 	~ LR();
 
-	/*bool has_rule(Symbol s) { return rule_map.find(s) != rule_map.end(); }
-	bool has_first(Symbol s) { return first_map.find(s) != first_map.end(); }
-	bool has_follow(Symbol s) { return follow_map.find(s) != follow_map.end(); }
-	bool has_init(Type* t) { return init_map.find(t) != init_map.end(); }*/
-
 	Set<Symbol>                symbol_set;
+	Set<Symbol>                terminals;
+	Set<Symbol>                non_terminals;
+
 	Map<Symbol, Set<Product*>> rule_map;
 	Map<Symbol, Set<Symbol>>   first_map;
 	Map<Symbol, Set<Symbol>>   follow_map;
