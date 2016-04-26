@@ -29,7 +29,7 @@ string show(const Item& it) {
 string show(const State& st) {
 	string str = "state ";
 	str += to_string(st.ind) + " {\n";
-	for (const Item& it : st.items) {
+	for (const Item& it : st.items.s) {
 		str += "\t" + show(it) + "\n";
 	}
 	str += "}\n";
@@ -97,11 +97,6 @@ string show(const LR& lr) {
 
 	str += "Products:\n";
 	for (auto p : lr.prod_vect)
-		str += "\t" + show(*p) + "\n";
-	str += "\n";
-
-	str += "Init prods:\n";
-	for (auto p : lr.init_prods.s)
 		str += "\t" + show(*p) + "\n";
 	str += "\n";
 

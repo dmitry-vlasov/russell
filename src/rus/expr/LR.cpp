@@ -16,8 +16,8 @@ static Symbol make_terminal(Type* t, const char* postfix = "") {
 
 static uint prod_count = 0;
 
-Product::Product(rus::Rule* r) :
-left(make_non_term(r->type)), right(), rule(r), ind(prod_count++) {
+Product::Product(rus::Rule* r, Kind k) :
+left(make_non_term(r->type)), right(), kind(k), rule(r), ind(prod_count++) {
 	for (auto s : r->term) {
 		if (s.symb.type)
 			right.push_back(make_non_term(s.symb.type));
@@ -26,11 +26,12 @@ left(make_non_term(r->type)), right(), rule(r), ind(prod_count++) {
 	}
 }
 
-Product::Product(Symbol l, Symbol r) : left(l), right(), rule(nullptr), ind(prod_count++) {
+Product::Product(Symbol l, Symbol r, Kind k) :
+left(l), right(), kind(k), rule(nullptr), ind(prod_count++) {
 	right.push_back(r);
 }
 
-uint State::count = 0;
+static uint state_count = 0;
 
 LR::~ LR() {
 	for (State* s : state_vect) delete s;
@@ -45,7 +46,7 @@ void make_closure(State& state) {
 	bool new_items = false;
 	do {
 		new_items = false;
-		for (const Item& i : state.items) {
+		for (const Item& i : state.items.s) {
 			Symbol b = i.after_dot();
 			if (!lr.rule_map.has(b))
 				continue;
@@ -54,9 +55,9 @@ void make_closure(State& state) {
 					continue;
 				for (Symbol x : lr.follow_map[b].s) {
 					Item j(p, x);
-					if (state.items.find(j) == state.items.end()) {
+					if (!state.items.has(j)) {
 						new_items = true;
-						state.items.insert(j);
+						state.items.s.insert(j);
 					}
 				}
 			}
@@ -67,11 +68,11 @@ void make_closure(State& state) {
 void complement_tables(State* from, Symbol x, State* to) {
 	lr.table.gotos[from][x] = to;
 	Action act;
-	for (const Item& i : from->items) {
+	for (auto& i : from->items.s) {
 		if (i.completed()) {
 			if (act.kind != Action::ERROR) {
 				cout << "already has action: " << show(act) << endl;
-				if (lr.init_prods.has(i.prod))
+				if (i.prod->kind == Product::INIT)
 					act.kind = Action::ACCEPT;
 				else
 					act.kind = Action::REDUCE;
@@ -80,7 +81,7 @@ void complement_tables(State* from, Symbol x, State* to) {
 				cout << show_lr() << endl;
 				throw Error("non LR(1) grammar");
 			} else {
-				if (lr.init_prods.has(i.prod))
+				if (i.prod->kind == Product::INIT)
 					act.kind = Action::ACCEPT;
 				else
 					act.kind = Action::REDUCE;
@@ -106,11 +107,12 @@ void complement_tables(State* from, Symbol x, State* to) {
 
 
 State make_goto(const State& from, Symbol X) {
-	State to(State::TRIAL);
-	for (Item it : from.items) {
+	State to;
+	to.ind = -1;
+	for (Item it : from.items.s) {
 		if (it.dot < it.prod->right.size()) {
 			it.dot += 1;
-			to.items.insert(it);
+			to.items.s.insert(it);
 		}
 	}
 	make_closure(to);
@@ -126,16 +128,16 @@ void collect_states() {
 		for (State* from : lr.state_set.s) {
 			for (Symbol x : lr.symbol_set.s) {
 				State t = make_goto(*from, x);
-				if (!t.items.empty() && !lr.state_set.has(&t)) {
+				if (!t.items.s.empty() && !lr.state_set.has(&t)) {
 					State* to = new State(t);
-					to->ind = State::count++;
+					to->ind = state_count++;
 					lr.state_vect.push_back(to);
 					lr.state_set.s.insert(to);
 					new_state = true;
 					complement_tables(from, x, to);
 
 
-					cout << show(*to) << endl;
+					//cout << show(*to) << endl;
 				}
 			}
 		}
@@ -183,6 +185,29 @@ static void check_prod(Product* prod) {
 			throw Error("undefined symbol ", show(s));
 }
 
+
+static void remove_states() {
+	for (State* s : lr.state_vect) delete s;
+	lr.state_vect.clear();
+	lr.state_set.s.clear();
+	state_count = 0;
+}
+
+static void add_init_states() {
+	for (auto p : lr.init_map.m) {
+		Product* prod = p.second;
+
+		Item it(prod, end_marker());
+		State* init = new State;
+		init->ind = state_count ++ ;
+		init->items.s.insert(it);
+		make_closure(*init);
+
+		lr.state_set.s.insert(init);
+		lr.state_vect.push_back(init);
+	}
+}
+
 static void add_product(Product* prod) {
 	check_prod(prod);
 
@@ -193,6 +218,8 @@ static void add_product(Product* prod) {
 	for (Product* p : lr.prod_vect)
 		add_follow(p);
 
+	remove_states();
+	add_init_states();
 	collect_states();
 }
 
@@ -203,17 +230,7 @@ static void add_term_product(Symbol s, Symbol s_) {
 
 static void add_init_product(Symbol _s, Symbol s) {
 	Product* prod = new Product(_s, s);
-
-	Item it(prod, end_marker());
-	State* init = new State(State::FINAL);
-	init->items.insert(it);
-	make_closure(*init);
-
-	lr.state_set.s.insert(init);
-	lr.state_vect.push_back(init);
-	lr.init_prods.s.insert(prod);
-	lr.init_map[s.type] = init;
-
+	lr.init_map[s.type] = prod;
 	add_product(prod);
 }
 

@@ -6,10 +6,14 @@ namespace mdl { namespace rus { namespace expr {
 struct State;
 
 struct Product {
-	Product(Symbol l, Symbol r);
-	Product(Rule*);
+	enum Kind {
+		REGULAR, INIT, VAR, CHAIN
+	};
+	Product(Symbol l, Symbol r, Kind k = REGULAR);
+	Product(Rule*, Kind k = REGULAR);
 	Symbol         left;
 	vector<Symbol> right;
+	Kind           kind;
 	Rule*          rule;
 	uint           ind;
 };
