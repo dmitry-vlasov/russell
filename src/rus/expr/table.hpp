@@ -22,15 +22,21 @@ string show(const Product&);
 
 struct Action {
 	enum Kind {
-		ERROR, SHIFT, REDUCE, ACCEPT
+		NONE, SHIFT, REDUCE, ACCEPT
 	};
 	union Value {
 		void*    none;
 		Product* prod;
 		State*   state;
 	};
-	Action() : kind(ERROR), val() {
+	Action() : kind(NONE), val() {
 		val.none = nullptr;
+	}
+	bool operator == (const Action& a) {
+		return kind == a.kind && val.none == a.val.none;
+	}
+	bool operator != (const Action& a) {
+		return !operator == (a);
 	}
 	Kind kind;
 	Value val;
@@ -38,9 +44,9 @@ struct Action {
 
 string show(const Action&);
 
-typedef map<State*, map<Symbol, State*>> Gotos;
-typedef map<State*, map<Symbol, Action>> Actions;
-typedef map<Type*, State*>               Inits;
+typedef Map<State*, Map<Symbol, State*>> Gotos;
+typedef Map<State*, Map<Symbol, Action>> Actions;
+typedef Map<Type*, State*>               Inits;
 
 struct Table {
 	Inits   inits;

@@ -19,6 +19,10 @@ void parse(Expr& ex) {
 	stack.push(Unit{init, nullptr, nullptr});
 	while (n) {
 		Unit u = stack.top();
+		if (!table().actions.has(u.state))
+			throw Error("expression syntax error: ", show(ex));
+		if (!table().actions[u.state].has(n->symb))
+			throw Error("expression syntax error: ", show(ex));
 		Action act = table().actions[u.state][n->symb];
 		switch (act.kind) {
 		case Action::SHIFT:
@@ -41,8 +45,8 @@ void parse(Expr& ex) {
 			assert(stack.top().state == init);
 			assert(!n);
 			break;
-		case Action::ERROR:
-			throw Error("expression syntax error: ", show(ex));
+		default:
+			assert(false && "Impossible");
 		}
 	}
 }

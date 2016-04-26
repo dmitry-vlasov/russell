@@ -38,8 +38,8 @@ string show(const State& st) {
 
 string show(const Action& act) {
 	switch (act.kind) {
-	case Action::ERROR:
-		return string("<err>");
+	case Action::NONE:
+		return string("<non>");
 	case Action::ACCEPT:
 		return string("<acc> ") + to_string(act.val.prod->ind);
 	case Action::REDUCE:
@@ -117,9 +117,9 @@ string show(const Table& tab) {
 	string str = "Tables:\n";
 	str += "------------\n";
 	str += "Gotos:\n";
-	for (auto p1 : tab.gotos) {
+	for (auto p1 : tab.gotos.m) {
 		str += "\t" + to_string(p1.first->ind) + " x\n";
-		for (auto p2 : p1.second) {
+		for (auto p2 : p1.second.m) {
 			str += "\t\t" + to_string(p2.second->ind) + " |--> " + to_string(p2.second->ind) + "\n";
 		}
 		str += "\n";
@@ -127,9 +127,9 @@ string show(const Table& tab) {
 	str += "\n";
 
 	str += "Actions:\n";
-	for (auto p1 : tab.actions) {
+	for (auto p1 : tab.actions.m) {
 		str += "\t" + to_string(p1.first->ind) + " x\n";
-		for (auto p2 : p1.second) {
+		for (auto p2 : p1.second.m) {
 			str += "\t\t" + show(p2.second) + " |--> " + show(p2.second) + "\n";
 		}
 		str += "\n";
@@ -137,7 +137,7 @@ string show(const Table& tab) {
 	str += "\n";
 
 	str += "Inits:\n";
-	for (auto p : tab.inits) {
+	for (auto p : tab.inits.m) {
 		str += "\t" + show_id(p.first->id) +  " |--> " + to_string(p.second->ind) + "\n";
 	}
 	str += "\n";

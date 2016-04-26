@@ -65,42 +65,41 @@ void make_closure(State& state) {
 	} while (new_items);
 }
 
+Action construct_action(const Item& i, Symbol x, State* to) {
+	Action act;
+	if (i.completed()) {
+		if (i.prod->kind == Product::INIT)
+			act.kind = Action::ACCEPT;
+		else
+			act.kind = Action::REDUCE;
+		act.val.prod = i.prod;
+	} else if (is_terminal(x) && i.after_dot() == x) {
+		act.kind = Action::SHIFT;
+		act.val.state = to;
+	}
+	return act;
+}
+
 void complement_tables(State* from, Symbol x, State* to) {
 	lr.table.gotos[from][x] = to;
 	Action act;
+	uint c = 0;
 	for (auto& i : from->items.s) {
-		if (i.completed()) {
-			if (act.kind != Action::ERROR) {
-				cout << "already has action: " << show(act) << endl;
-				if (i.prod->kind == Product::INIT)
-					act.kind = Action::ACCEPT;
-				else
-					act.kind = Action::REDUCE;
-				act.val.prod = i.prod;
-				cout << "going to be: " << show(act) << endl;
-				cout << show_lr() << endl;
-				throw Error("non LR(1) grammar");
-			} else {
-				if (i.prod->kind == Product::INIT)
-					act.kind = Action::ACCEPT;
-				else
-					act.kind = Action::REDUCE;
-				act.val.prod = i.prod;
-			}
-		} else {
-			if (act.kind != Action::ERROR) {
-				cout << "already has action: " << show(act) << endl;
-				act.kind = Action::SHIFT;
-				act.val.state = to;
-				cout << "going to be: " << show(act) << endl;
-				cout << show_lr() << endl;
-				throw Error("non LR(1) grammar");
-			}
-			else if (is_terminal(x) && i.after_dot() == x) {
-				act.kind = Action::SHIFT;
-				act.val.state = to;
-			}
+		Action a = construct_action(i, x, to);
+		if (act.kind != Action::NONE && a != act) {
+			cout << endl << "conflicting actions: " << show(act) << " and " << show(a) << endl;
+
+			cout << "ITER: " << c << endl << endl;
+			cout << "FROM: " << endl << show(*from) << endl << endl;
+			cout << "X: " << endl << show(x) << endl << endl;
+			cout << "TO: " << endl << show(*to) << endl << endl;
+			cout << "ITEM: " << endl << show(i) << endl << endl;
+
+			cout << endl << show_lr() << endl;
+			throw Error("non LR(1) grammar");
 		}
+		act = a;
+		++ c;
 	}
 	lr.table.actions[from][x] = act;
 }
@@ -120,8 +119,8 @@ State make_goto(const State& from, Symbol X) {
 }
 
 void collect_states() {
-	lr.table.actions.clear();
-	lr.table.gotos.clear();
+	lr.table.actions.m.clear();
+	lr.table.gotos.m.clear();
 	bool new_state = false;
 	do {
 		new_state = false;
