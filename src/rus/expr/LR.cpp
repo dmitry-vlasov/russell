@@ -175,7 +175,7 @@ void add_follow(Product* prod) {
 }
 
 
-void check_prod(Product* prod) {
+static void check_prod(Product* prod) {
 	if (!lr.non_terminals.has(prod->left))
 		throw Error("undefined type ", show(prod->left));
 	for (Symbol s : prod->right)
@@ -183,13 +183,11 @@ void check_prod(Product* prod) {
 			throw Error("undefined symbol ", show(s));
 }
 
-void add_product(Product* prod) {
+static void add_product(Product* prod) {
 	check_prod(prod);
 
 	lr.prod_vect.push_back(prod);
 	lr.rule_map[prod->left].s.insert(prod);
-
-	//cout << endl << show(*prod) << endl << endl;
 
 	add_first(prod);
 	for (Product* p : lr.prod_vect)
@@ -198,39 +196,29 @@ void add_product(Product* prod) {
 	collect_states();
 }
 
-void add_rule(Rule* rule) {
-	Product* prod = new Product(rule);
-	add_product(prod);
-}
-
 static void add_term_product(Symbol s, Symbol s_) {
 	Product* prod = new Product(s, s_);
 	add_product(prod);
-	//lr.prod_vect.push_back(prod);
-	//lr.rule_map[prod->left].s.insert(prod);
 }
 
 static void add_init_product(Symbol _s, Symbol s) {
 	Product* prod = new Product(_s, s);
-
-	//cout << endl << show(*p) << endl << endl;
-
-
-	//lr.prod_vect.push_back(prod);
-	//lr.rule_map[prod->left].s.insert(prod);
 
 	Item it(prod, end_marker());
 	State* init = new State(State::FINAL);
 	init->items.insert(it);
 	make_closure(*init);
 
-	//cout << endl << show(*init) << endl << endl;
-
 	lr.state_set.s.insert(init);
 	lr.state_vect.push_back(init);
 	lr.init_prods.s.insert(prod);
 	lr.init_map[s.type] = init;
 
+	add_product(prod);
+}
+
+void add_rule(Rule* rule) {
+	Product* prod = new Product(rule);
 	add_product(prod);
 }
 

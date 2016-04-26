@@ -3,8 +3,12 @@
 namespace mdl {
 namespace rus {
 
-string show(Symbol s) {
-	return show_sy(s.lit);
+string show(Symbol s, bool full) {
+	if (!full || !s.type)
+		return show_sy(s.lit);
+	else {
+		return string("<") + show_sy(s.lit) + ">";
+	}
 }
 
 Symbol::Symbol(string s, Type* t) : lit(-1), rep(false), type(t) {

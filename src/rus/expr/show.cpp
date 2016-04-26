@@ -9,7 +9,7 @@ string show(const Product& p) {
 	string str;
 	str += show(p.left) + " → ";
 	for (auto s : p.right)
-		str += show(s) + " ";
+		str += show(s, true) + " ";
 	return str;
 }
 

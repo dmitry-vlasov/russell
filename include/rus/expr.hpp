@@ -31,7 +31,7 @@ struct Symbol {
 	Type* type;
 };
 
-string show(Symbol s);
+string show(Symbol s, bool full = false);
 
 inline ostream& operator << (ostream& os, Symbol s) {
 	os << show(s);
