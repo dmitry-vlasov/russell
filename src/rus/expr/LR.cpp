@@ -144,21 +144,27 @@ void add_first(Product* prod) {
 		lr.first_map[prod->left].s.insert(s);
 	else
 		lr.first_map[prod->left].s.insert(lr.first_map[s].s.begin(), lr.first_map[s].s.end());
+
+	for (uint i = 0; i < prod->right.size(); ++ i) {
+		Symbol s = prod->right[i];
+		if (is_terminal(s))
+			lr.first_map[s].s.insert(s);
+	}
 }
 
 void add_follow(Product* prod) {
 	// Arrange follow:
 	for (uint i = 0; i < prod->right.size(); ++ i) {
 		Symbol s = prod->right[i];
-		if (is_terminal(s))
-			lr.first_map[s].s.insert(s);
-		if (i + 1 < prod->right.size()) {
-			Symbol x = prod->right[i + 1];
-			if (lr.first_map.has(x)) {
-				lr.follow_map[s].s.insert(lr.first_map[x].s.begin(), lr.first_map[x].s.end());
+		if (is_non_term(s)) {
+			if (i + 1 < prod->right.size()) {
+				Symbol x = prod->right[i + 1];
+				if (lr.first_map.has(x)) {
+					lr.follow_map[s].s.insert(lr.first_map[x].s.begin(), lr.first_map[x].s.end());
+				}
+			} else if (lr.follow_map.has(prod->left)) {
+				lr.follow_map[s].s.insert(lr.follow_map[prod->left].s.begin(), lr.follow_map[prod->left].s.end());
 			}
-		} else if (is_non_term(s) && lr.follow_map.has(prod->left)) {
-			lr.follow_map[s].s.insert(lr.follow_map[prod->left].s.begin(), lr.follow_map[prod->left].s.end());
 		}
 	}
 }
