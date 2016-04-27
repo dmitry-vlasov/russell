@@ -47,7 +47,7 @@ void make_closure(State& state) {
 	do {
 		new_items = false;
 		for (const Item& i : state.items.s) {
-			Symbol b = i.after_dot();
+			Symbol b = i.get_symb();
 			if (!lr.rule_map.has(b))
 				continue;
 			for (Product* p : lr.rule_map[b].s) {
@@ -73,7 +73,7 @@ Action construct_action(const Item& i, Symbol x, State* to) {
 		else
 			act.kind = Action::REDUCE;
 		act.val.prod = i.prod;
-	} else if (is_terminal(x) && i.after_dot() == x) {
+	} else if (is_terminal(x) && i.get_symb() == x) {
 		act.kind = Action::SHIFT;
 		act.val.state = to;
 	}
