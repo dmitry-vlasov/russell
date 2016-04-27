@@ -54,6 +54,7 @@ struct Table {
 	Actions actions;
 };
 
+string show(const Symbol&, bool full = true);
 string show(const Table&);
 string show_lr();
 

@@ -51,9 +51,10 @@ void make_closure(State& state) {
 			if (!lr.rule_map.has(b))
 				continue;
 			for (Product* p : lr.rule_map[b].s) {
-				if (!lr.follow_map.has(b))
+				Symbol c = i.has_symb(1) ? i.get_symb(1) : i.lookahead;
+				if (!lr.first_map.has(c))
 					continue;
-				for (Symbol x : lr.follow_map[b].s) {
+				for (Symbol x : lr.first_map[c].s) {
 					Item j(p, x);
 					if (!state.items.has(j)) {
 						new_items = true;
@@ -91,7 +92,7 @@ void complement_tables(State* from, Symbol x, State* to) {
 
 			cout << "ITER: " << c << endl << endl;
 			cout << "FROM: " << endl << show(*from) << endl << endl;
-			cout << "X: " << endl << show(x) << endl << endl;
+			cout << "X: " << endl << expr::show(x) << endl << endl;
 			cout << "TO: " << endl << show(*to) << endl << endl;
 			cout << "ITEM: " << endl << show(i) << endl << endl;
 
@@ -178,10 +179,10 @@ void add_follow(Product* prod) {
 
 static void check_prod(Product* prod) {
 	if (!lr.non_terminals.has(prod->left))
-		throw Error("undefined type ", show(prod->left));
+		throw Error("undefined type ", expr::show(prod->left));
 	for (Symbol s : prod->right)
 		if (!lr.symbol_set.has(s))
-			throw Error("undefined symbol ", show(s));
+			throw Error("undefined symbol ", expr::show(s));
 }
 
 
@@ -257,8 +258,16 @@ void add_type(Type* type) {
 }
 
 void add_const(Const* c) {
+	static bool first = true;
+	if (first) {
+		lr.terminals.s.insert(end_marker());
+		lr.symbol_set.s.insert(end_marker());
+		lr.first_map[end_marker()].s.insert(end_marker());
+		first = false;
+	}
+
 	if (lr.terminals.has(c->symb))
-		throw Error("type already declared", show(c->symb));
+		throw Error("type already declared", expr::show(c->symb));
 	lr.terminals.s.insert(c->symb);
 	lr.symbol_set.s.insert(c->symb);
 }

@@ -5,24 +5,34 @@ namespace mdl { namespace rus { namespace expr {
 
 extern LR lr;
 
+string show(const Symbol& s, bool full) {
+	if (s == end_marker()) {
+		return "<END>";
+	} else if (s == eps()) {
+		return "<EPS>";
+	} else {
+		return rus::show(s, full);
+	}
+}
+
 string show(const Product& p) {
 	string str;
-	str += show(p.left) + " → ";
+	str += expr::show(p.left) + " → ";
 	for (auto s : p.right)
-		str += show(s, true) + " ";
+		str += expr::show(s, true) + " ";
 	return str;
 }
 
 string show(const Item& it) {
 	string str = "item [";
-	str += show(it.prod->left) + " → ";
+	str += expr::show(it.prod->left) + " → ";
 	for (uint i = 0; i < it.prod->right.size(); ++ i) {
 		if (i == it.dot) str += " .";
-		str += show(it.prod->right[i]) + " ";
+		str += expr::show(it.prod->right[i]) + " ";
 	}
 	if (it.dot == it.prod->right.size())
 		str += ".";
-	str += ", " + show(it.lookahead) + "]";
+	str += ", " + expr::show(it.lookahead) + "]";
 	return str;
 }
 
@@ -57,20 +67,20 @@ string show(const LR& lr) {
 
 	str += "Symbols:\n\t";
 	for (auto s : lr.symbol_set.s)
-		str += show(s) + " ";
+		str += expr::show(s) + " ";
 	str += "\n";
 	str += "Terminals:\n\t";
 	for (auto s : lr.terminals.s)
-		str += show(s) + " ";
+		str += expr::show(s) + " ";
 	str += "\n";
 	str += "Non-Terminals:\n\t";
 	for (auto s : lr.non_terminals.s)
-		str += show(s) + " ";
+		str += expr::show(s) + " ";
 	str += "\n";
 
 	str += "Rule map:\n";
 	for (auto s : lr.rule_map.m) {
-		str += "\t" + show(s.first) + " |--> \n";
+		str += "\t" + expr::show(s.first) + " |--> \n";
 		for (auto p : s.second.s)
 			str += "\t\t" + show(*p) + "\n";
 		str += "\n";
@@ -79,18 +89,18 @@ string show(const LR& lr) {
 
 	str += "First map:\n";
 	for (auto p : lr.first_map.m) {
-		str += "\t" + show(p.first) + "\t|--> { ";
+		str += "\t" + expr::show(p.first) + "\t|--> { ";
 		for (auto s : p.second.s)
-			str += show(s) + "\t";
+			str += expr::show(s) + "\t";
 		str += "}\n";
 	}
 	str += "\n";
 
 	str += "Follow map:\n";
 	for (auto p : lr.follow_map.m) {
-		str += "\t" + show(p.first) + "\t|--> { ";
+		str += "\t" + expr::show(p.first) + "\t|--> { ";
 		for (auto s : p.second.s)
-			str += show(s) + "\t";
+			str += expr::show(s) + "\t";
 		str += "}\n";
 	}
 	str += "\n";
