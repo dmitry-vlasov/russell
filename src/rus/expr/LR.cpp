@@ -40,8 +40,6 @@ LR::~ LR() {
 
 LR lr;
 
-Table& table() { return lr.table; }
-
 void make_closure(State& state) {
 	bool new_items = false;
 	do {
@@ -81,8 +79,11 @@ Action construct_action(const Item& i, Symbol x, State* to) {
 	return act;
 }
 
-void complement_tables(State* from, Symbol x, State* to) {
-	lr.table.gotos[from][x] = to;
+void complement_tables(State* from, Symbol x, State* to, Table& table) {
+	if (is_terminal(x)) {
+		table.gotos[from][x] = to;
+		return;
+	}
 	Action act;
 	uint c = 0;
 	for (auto& i : from->items.s) {
@@ -102,7 +103,7 @@ void complement_tables(State* from, Symbol x, State* to) {
 		act = a;
 		++ c;
 	}
-	lr.table.actions[from][x] = act;
+	table.actions[from][x] = act;
 }
 
 
@@ -119,9 +120,7 @@ State make_goto(const State& from, Symbol X) {
 	return to;
 }
 
-void collect_states() {
-	lr.table.actions.m.clear();
-	lr.table.gotos.m.clear();
+void collect_states(Table& table) {
 	bool new_state = false;
 	do {
 		new_state = false;
@@ -134,10 +133,7 @@ void collect_states() {
 					lr.state_vect.push_back(to);
 					lr.state_set.s.insert(to);
 					new_state = true;
-					complement_tables(from, x, to);
-
-
-					//cout << show(*to) << endl;
+					complement_tables(from, x, to, table);
 				}
 			}
 		}
@@ -190,13 +186,6 @@ static void check_prod(Product* prod) {
 }
 
 
-static void remove_states() {
-	for (State* s : lr.state_vect) delete s;
-	lr.state_vect.clear();
-	lr.state_set.s.clear();
-	state_count = 0;
-}
-
 static void add_init_states() {
 	for (auto p : lr.init_map.m) {
 		Product* prod = p.second;
@@ -212,6 +201,18 @@ static void add_init_states() {
 	}
 }
 
+Table create_table() {
+	Table table;
+	add_init_states();
+	collect_states(table);
+	return table;
+}
+
+Table& table() {
+	static Table table = create_table();
+	return table;
+}
+
 static void add_product(Product* prod) {
 	check_prod(prod);
 
@@ -221,10 +222,6 @@ static void add_product(Product* prod) {
 	add_first(prod);
 	for (Product* p : lr.prod_vect)
 		add_follow(p);
-
-	remove_states();
-	add_init_states();
-	collect_states();
 }
 
 static void add_term_product(Symbol s, Symbol s_) {

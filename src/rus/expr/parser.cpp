@@ -12,13 +12,9 @@ struct Unit {
 	Node*  node;
 };
 
-void mark_vars(Expr& ex, vector<Vars>& var_stack);
+static vector<Expr*> queue;
 
-void enqueue(Expr& ex) {
-
-}
-
-void parse(Expr& ex) {
+static void parse(Expr& ex) {
 	Node* n = ex.first;
 	stack<Unit> stack;
 	State* init = table().inits[ex.type];
@@ -57,5 +53,15 @@ void parse(Expr& ex) {
 	}
 }
 
+
+void enqueue(Expr& ex) {
+	queue.push_back(&ex);
+}
+
+void parse() {
+	for (Expr* ex : queue)
+		parse(*ex);
+	queue.clear();
+}
 
 }}} // namespace mdl::rus::expr

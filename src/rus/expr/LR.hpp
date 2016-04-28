@@ -69,8 +69,6 @@ struct LR {
 
 	vector<State*>             state_vect;
 	vector<Product*>           prod_vect;
-
-	Table table;
 };
 
 string show(const LR&);

@@ -142,7 +142,8 @@ struct ParseExpr {
 	void operator()(Expr& ex, Type* tp, vector<Vars> var_stack) const {
 		ex.type = tp;
 		mark_vars(ex, var_stack);
-		parse_expr(ex);
+		//parse_expr(ex);
+		expr::enqueue(ex);
 	}
 };
 

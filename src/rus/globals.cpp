@@ -28,6 +28,7 @@ bool parse_rus(Rus& rus) {
 	try {
 		rus.timers.read.start();
 		rus.source = parse(rus.config.in);
+		expr::parse();
 		//cout << *rus.source << endl;
 		rus.timers.read.stop();
 		return true;

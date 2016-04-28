@@ -61,7 +61,10 @@ string show_lr();
 void add_type(Type*);
 void add_rule(Rule*);
 void add_const(Const*);
-void parse(Expr& ex);
+//void parse(Expr& ex);
+
+void parse();
+void enqueue(Expr& ex);
 
 Table& table();
 
