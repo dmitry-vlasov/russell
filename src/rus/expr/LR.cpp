@@ -152,10 +152,16 @@ void add_first(Product* prod) {
 	else
 		lr.first_map[prod->left].s.insert(lr.first_map[s].s.begin(), lr.first_map[s].s.end());
 
-	for (uint i = 0; i < prod->right.size(); ++ i) {
-		Symbol s = prod->right[i];
+	for (Symbol s : prod->right) {
 		if (is_terminal(s))
 			lr.first_map[s].s.insert(s);
+	}
+	for (Product* p : lr.prod_vect) {
+		if (p == prod)
+			continue;
+		Symbol x = p->right[0];
+		if (is_non_term(x) && x == prod->left)
+			lr.first_map[p->left].s.insert(lr.first_map[prod->left].s.begin(), lr.first_map[prod->left].s.end());
 	}
 }
 
