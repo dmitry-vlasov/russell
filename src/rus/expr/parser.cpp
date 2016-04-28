@@ -59,6 +59,7 @@ void enqueue(Expr& ex) {
 }
 
 void parse() {
+	cout << endl << show_lr() << endl;
 	for (Expr* ex : queue)
 		parse(*ex);
 	queue.clear();

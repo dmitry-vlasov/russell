@@ -120,6 +120,16 @@ string show(const LR& lr) {
 		str += indent::paragraph(show(*s)) + "\n";
 	str += "\n";
 
+	str += "Gotos:\n";
+	for (auto p1 : lr.goto_map.m) {
+		str += "\t" + to_string(p1.first->ind) + " x\n";
+		for (auto p2 : p1.second.m) {
+			str += "\t\t" + expr::show(p2.first) + " |--> " + to_string(p2.second->ind) + "\n";
+		}
+		str += "\n";
+	}
+	str += "\n";
+
 	return str;
 }
 
@@ -130,7 +140,7 @@ string show(const Table& tab) {
 	for (auto p1 : tab.gotos.m) {
 		str += "\t" + to_string(p1.first->ind) + " x\n";
 		for (auto p2 : p1.second.m) {
-			str += "\t\t" + to_string(p2.second->ind) + " |--> " + to_string(p2.second->ind) + "\n";
+			str += "\t\t" + expr::show(p2.first) + " |--> " + to_string(p2.second->ind) + "\n";
 		}
 		str += "\n";
 	}
@@ -140,7 +150,7 @@ string show(const Table& tab) {
 	for (auto p1 : tab.actions.m) {
 		str += "\t" + to_string(p1.first->ind) + " x\n";
 		for (auto p2 : p1.second.m) {
-			str += "\t\t" + show(p2.second) + " |--> " + show(p2.second) + "\n";
+			str += "\t\t" + expr::show(p2.first) + " |--> " + show(p2.second) + "\n";
 		}
 		str += "\n";
 	}
@@ -157,8 +167,8 @@ string show(const Table& tab) {
 
 string show_lr() {
 	string str;
-	str += show(lr);
 	str += show(table());
+	str += show(lr);
 	return str;
 }
 

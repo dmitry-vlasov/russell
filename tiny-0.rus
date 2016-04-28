@@ -1,0 +1,27 @@
+constant {
+	symbol * ;
+}
+
+type wff;
+
+rule wn (ph : wff) {
+	term : wff = # * ph ;
+}
+
+axiom ax-neg (ph : wff, ps : wff)  {
+	hyp 1 : wff = |- ph ;
+	-----------------------
+	prop 1 : wff = |- * * ph ;
+}
+
+theorem neg2 (ph : wff)  {
+	hyp 1 : wff = |- ph ;
+	-----------------------
+	prop 1 : wff = |- * * * * ph ;
+}
+
+proof of neg2 {
+	step 1 : wff = axm ax-neg (hyp 1) |- * *  ph ;
+	step 2 : wff = axm ax-neg (step 1) |- * * * *  ph ;
+	qed prop 1 = step 2 ;
+}

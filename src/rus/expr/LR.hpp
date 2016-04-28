@@ -67,6 +67,8 @@ struct LR {
 	Set<State*, Less<State*>>  state_set;
 	Map<Type*, Product*>       init_map;
 
+	Map<State*, Map<Symbol, State*>> goto_map;
+
 	vector<State*>             state_vect;
 	vector<Product*>           prod_vect;
 };

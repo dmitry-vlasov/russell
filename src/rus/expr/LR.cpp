@@ -79,31 +79,31 @@ Action construct_action(const Item& i, Symbol x, State* to) {
 	return act;
 }
 
-void complement_tables(State* from, Symbol x, State* to, Table& table) {
-	if (is_terminal(x)) {
+bool complement_tables(State* from, Symbol x, State* to, Table& table) {
+	if (is_non_term(x)) {
 		table.gotos[from][x] = to;
-		return;
+		return true;
 	}
 	Action act;
-	uint c = 0;
 	for (auto& i : from->items.s) {
 		Action a = construct_action(i, x, to);
 		if (act.kind != Action::NONE && a.kind != Action::NONE && a != act) {
 			cout << endl << "conflicting actions: " << show(act) << " and " << show(a) << endl;
-
-			cout << "ITER: " << c << endl << endl;
 			cout << "FROM: " << endl << show(*from) << endl << endl;
 			cout << "X: " << endl << expr::show(x) << endl << endl;
 			cout << "TO: " << endl << show(*to) << endl << endl;
 			cout << "ITEM: " << endl << show(i) << endl << endl;
-
 			cout << endl << show_lr() << endl;
 			throw Error("non LR(1) grammar");
 		}
-		act = a;
-		++ c;
+		if (act.kind == Action::NONE)
+			act = a;
 	}
-	table.actions[from][x] = act;
+	if (act.kind != Action::NONE) {
+		table.actions[from][x] = act;
+		return true;
+	}
+	return false;
 }
 
 
@@ -120,25 +120,52 @@ State make_goto(const State& from, Symbol X) {
 	return to;
 }
 
-void collect_states(Table& table) {
+void collect_states() {
 	bool new_state = false;
 	do {
 		new_state = false;
 		for (State* from : lr.state_set.s) {
 			for (Symbol x : lr.symbol_set.s) {
 				State t = make_goto(*from, x);
-				if (!t.items.s.empty() && !lr.state_set.has(&t)) {
-					State* to = new State(t);
+				if (t.items.s.empty())
+					continue;
+				State* to = nullptr;
+				if (!lr.state_set.has(&t)) {
+					to = new State(t);
 					to->ind = state_count++;
 					lr.state_vect.push_back(to);
 					lr.state_set.s.insert(to);
 					new_state = true;
-					complement_tables(from, x, to, table);
+				} else {
+					to = *lr.state_set.s.find(&t);
 				}
+				lr.goto_map[from][x] = to;
 			}
 		}
 	} while (new_state);
 }
+
+void create_tables(Table& table) {
+	for (auto p1 : lr.goto_map.m) {
+		State* from = p1.first;
+		for (auto p2 : p1.second.m) {
+			Symbol x = p2.first;
+			State* to = p2.second;
+
+			cout << endl << "FROM: " << to_string(from->ind) << " X: " << expr::show(x) << " TO: " << to_string(to->ind) << endl;
+
+			cout << (complement_tables(from, x, to, table) ? "SUCCESS" : "FAIL") << endl;
+		}
+	}
+/*
+	for (State* from : lr.state_set.s) {
+		for (Symbol x : lr.symbol_set.s) {
+			State* to = lr.goto_map.has(from) ? lr.goto_map[from].has(x) ? :lr.goto_map[from][x] : nullptr;
+
+		}
+	}*/
+}
+
 
 void add_first(Product* prod) {
 	Symbol s = prod->right[0];
@@ -186,7 +213,7 @@ static void check_prod(Product* prod) {
 }
 
 
-static void add_init_states() {
+static void add_init_states(Table& table) {
 	for (auto p : lr.init_map.m) {
 		Product* prod = p.second;
 
@@ -198,13 +225,16 @@ static void add_init_states() {
 
 		lr.state_set.s.insert(init);
 		lr.state_vect.push_back(init);
+
+		table.inits[prod->left.type] = init;
 	}
 }
 
 Table create_table() {
 	Table table;
-	add_init_states();
-	collect_states(table);
+	add_init_states(table);
+	collect_states();
+	create_tables(table);
 	return table;
 }
 
