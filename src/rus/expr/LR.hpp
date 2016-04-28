@@ -10,8 +10,8 @@ struct Item {
 	Product* prod;
 	uint     dot;
 	Symbol   lookahead;
-	bool has_symb(int offset) const { return offset + dot >= 0 && offset + dot < prod->right.size(); }
-	Symbol get_symb(int offset = 0) const { return prod->right[dot + offset]; }
+	bool has(int offset = 0) const { return offset + dot >= 0 && offset + dot < prod->right.size(); }
+	Symbol get(int offset = 0) const { return prod->right[dot + offset]; }
 	bool completed() const { return dot == prod->right.size(); }
 };
 

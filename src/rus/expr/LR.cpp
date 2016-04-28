@@ -47,11 +47,11 @@ void make_closure(State& state) {
 	do {
 		new_items = false;
 		for (const Item& i : state.items.s) {
-			Symbol b = i.get_symb();
+			Symbol b = i.get();
 			if (!lr.rule_map.has(b))
 				continue;
 			for (Product* p : lr.rule_map[b].s) {
-				Symbol c = i.has_symb(1) ? i.get_symb(1) : i.lookahead;
+				Symbol c = i.has(1) ? i.get(1) : i.lookahead;
 				if (!lr.first_map.has(c))
 					continue;
 				for (Symbol x : lr.first_map[c].s) {
@@ -74,7 +74,7 @@ Action construct_action(const Item& i, Symbol x, State* to) {
 		else
 			act.kind = Action::REDUCE;
 		act.val.prod = i.prod;
-	} else if (is_terminal(x) && i.get_symb() == x) {
+	} else if (is_terminal(x) && i.get() == x) {
 		act.kind = Action::SHIFT;
 		act.val.state = to;
 	}
@@ -110,7 +110,7 @@ State make_goto(const State& from, Symbol X) {
 	State to;
 	to.ind = -1;
 	for (Item it : from.items.s) {
-		if (it.dot < it.prod->right.size()) {
+		if (it.has() && it.get() == X) {
 			it.dot += 1;
 			to.items.s.insert(it);
 		}
