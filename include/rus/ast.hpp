@@ -22,8 +22,8 @@ struct Disj {
 
 struct Rule;
 
-void parse_expr(Expr& ex, vector<Vars>& varsStack);
-void parse_term(Expr& ex, vector<Vars>& varsStack, Rule* rule);
+void parse_expr(Expr& ex);
+void parse_term(Expr& ex, Rule* rule);
 
 struct Type {
 	~Type();

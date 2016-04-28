@@ -12,6 +12,12 @@ struct Unit {
 	Node*  node;
 };
 
+void mark_vars(Expr& ex, vector<Vars>& var_stack);
+
+void enqueue(Expr& ex) {
+
+}
+
 void parse(Expr& ex) {
 	Node* n = ex.first;
 	stack<Unit> stack;

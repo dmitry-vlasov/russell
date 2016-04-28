@@ -16,6 +16,32 @@ namespace qi = boost::spirit::qi;
 namespace ascii = boost::spirit::ascii;
 namespace phoenix = boost::phoenix;
 
+inline Type* find_type(Vars& vars, Symbol s) {
+	for (auto var : vars.v)
+		if (var.lit == s.lit) return var.type;
+	return nullptr;
+}
+
+inline Type* find_type(vector<Vars>& var_stack, Symbol s) {
+	for (auto& vars : var_stack)
+		if (Type* tp = find_type(vars, s)) return tp;
+	return nullptr;
+}
+
+static void mark_vars(Expr& ex, vector<Vars>& var_stack) {
+	Expr::Node* n = ex.first;
+	while (n) {
+		n->symb.type = find_type(var_stack, n->symb);
+		bool is_var = n->symb.type != nullptr;
+		bool is_const = Rus::get().math.consts.has(n->symb);
+		if (is_const && is_var)
+			throw Error("constant symbol is marked as variable");
+		if (!is_const && !is_var)
+			throw Error("symbol neither constant nor variable");
+		n = n->next;
+	}
+}
+
 inline Type* find_type(uint id, Location* loc = nullptr) {
 	if (!Rus::get().math.types.has(id))
 		throw Error("unknown type", show_id(id), loc);
@@ -39,7 +65,8 @@ Rule* create_super(Type* inf, Type* sup) {
 
 	vector<Vars> var_stack;
 	var_stack.push_back(rule->vars);
-	parse_term(rule->term, var_stack, rule);
+	mark_vars(rule->term, var_stack);
+	parse_term(rule->term, rule);
 	return rule;
 }
 
@@ -114,7 +141,8 @@ struct ParseExpr {
 	struct result { typedef void type; };
 	void operator()(Expr& ex, Type* tp, vector<Vars> var_stack) const {
 		ex.type = tp;
-		parse_expr(ex, var_stack);
+		mark_vars(ex, var_stack);
+		parse_expr(ex);
 	}
 };
 
@@ -123,7 +151,8 @@ struct ParseTerm {
 	struct result { typedef void type; };
 	void operator()(Expr& ex, Rule* r, vector<Vars> var_stack) const {
 		ex.type = r->type;
-		parse_term(ex, var_stack, r);
+		mark_vars(ex, var_stack);
+		parse_term(ex, r);
 	}
 };
 
@@ -281,7 +310,8 @@ struct AssembleDef {
 		}
 		prop->ind = 0;
 		prop->expr.type = d->prop.type;
-		parse_expr(prop->expr, varsStack);
+		mark_vars(prop->expr, varsStack);
+		parse_expr(prop->expr);
 		d->ass.props.push_back(prop);
 	}
 };

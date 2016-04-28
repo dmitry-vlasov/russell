@@ -104,32 +104,6 @@ bool Expr::operator == (const Expr& ex) const {
 	return !n && !m;
 }
 
-inline Type* find_type(Vars& vars, Symbol s) {
-	for (auto var : vars.v)
-		if (var.lit == s.lit) return var.type;
-	return nullptr;
-}
-
-inline Type* find_type(vector<Vars>& var_stack, Symbol s) {
-	for (auto& vars : var_stack)
-		if (Type* tp = find_type(vars, s)) return tp;
-	return nullptr;
-}
-
-void mark_vars(Expr& ex, vector<Vars>& var_stack) {
-	Expr::Node* n = ex.first;
-	while (n) {
-		n->symb.type = find_type(var_stack, n->symb);
-		bool is_var = n->symb.type != nullptr;
-		bool is_const = Rus::get().math.consts.has(n->symb);
-		if (is_const && is_var)
-			throw Error("constant symbol is marked as variable");
-		if (!is_const && !is_var)
-			throw Error("symbol neither constant nor variable");
-		n = n->next;
-	}
-}
-
 inline Rule* find_super(Type* type, Type* super) {
 	auto it =type->supers.find(super);
 	if (it != type->supers.end())
@@ -421,6 +395,23 @@ void add_terms(Term<node::Expr>* term) {
 	term->last->final.push_back(term);
 }
 
+void parse_expr(Expr& ex) {
+	//mark_vars(ex, var_stack);
+	if (Term<node::Expr>* term = parse_term(ex.first, ex.type)) {
+		//Expr e;
+		//assemble_expr(term, e);
+		//assert(e == ex);
+		add_terms(term);
+	} else {
+		trace = true;
+		cout << "parsing: " << show(ex) << endl;
+		cout << "parsing: " << show_w_ind(ex) << endl;
+		parse_term(ex.first, ex.type);
+		throw Error("could not parse the expression", show(ex));
+	}
+}
+
+/*
 void parse_expr(Expr& ex, vector<Vars>& var_stack){
 	mark_vars(ex, var_stack);
 	if (Term<node::Expr>* term = parse_term(ex.first, ex.type)) {
@@ -436,7 +427,7 @@ void parse_expr(Expr& ex, vector<Vars>& var_stack){
 		throw Error("could not parse the expression", show(ex));
 	}
 }
-
+*/
 Term<node::Expr>* create_term(Expr::Node* first, Expr::Node* last, Rule* rule) {
 	Term<node::Expr>* term = new Term<node::Expr>(first, last, rule);
 	Expr::Node* n = first;
@@ -448,8 +439,7 @@ Term<node::Expr>* create_term(Expr::Node* first, Expr::Node* last, Rule* rule) {
 	return term;
 }
 
-void parse_term(Expr& ex, vector<Vars>& var_stack, Rule* rule) {
-	mark_vars(ex, var_stack);
+void parse_term(Expr& ex, Rule* rule) {
 	add_terms(create_term(ex.first, ex.last, rule));
 }
 
