@@ -87,7 +87,7 @@ void complement_tables(State* from, Symbol x, State* to) {
 	uint c = 0;
 	for (auto& i : from->items.s) {
 		Action a = construct_action(i, x, to);
-		if (act.kind != Action::NONE && a != act) {
+		if (act.kind != Action::NONE && a.kind != Action::NONE && a != act) {
 			cout << endl << "conflicting actions: " << show(act) << " and " << show(a) << endl;
 
 			cout << "ITER: " << c << endl << endl;
@@ -145,7 +145,6 @@ void collect_states() {
 }
 
 void add_first(Product* prod) {
-	// Arrange first:
 	Symbol s = prod->right[0];
 	if (is_terminal(s))
 		lr.first_map[prod->left].s.insert(s);
@@ -166,7 +165,6 @@ void add_first(Product* prod) {
 }
 
 void add_follow(Product* prod) {
-	// Arrange follow:
 	for (uint i = 0; i < prod->right.size(); ++ i) {
 		Symbol s = prod->right[i];
 		if (is_non_term(s)) {
@@ -258,6 +256,7 @@ void add_type(Type* type) {
 	lr.symbol_set.s.insert(s);
 	lr.symbol_set.s.insert(_s);
 	lr.symbol_set.s.insert(s_);
+	lr.follow_map[_s].s.insert(end_marker());
 
 	add_init_product(_s, s);
 	add_term_product(s, s_);
