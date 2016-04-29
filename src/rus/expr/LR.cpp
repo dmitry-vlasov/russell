@@ -64,49 +64,6 @@ void make_closure(State& state) {
 	} while (new_items);
 }
 
-Action construct_action(const Item& i, Symbol x, State* to) {
-	Action act;
-	if (i.completed()) {
-		if (i.prod->kind == Product::INIT)
-			act.kind = Action::ACCEPT;
-		else
-			act.kind = Action::REDUCE;
-		act.val.prod = i.prod;
-	} else if (is_terminal(x) && i.get() == x) {
-		act.kind = Action::SHIFT;
-		act.val.state = to;
-	}
-	return act;
-}
-
-bool complement_tables(State* from, Symbol x, State* to, Table& table) {
-	if (is_non_term(x)) {
-		table.gotos[from][x] = to;
-		return true;
-	}
-	Action act;
-	for (auto& i : from->items.s) {
-		Action a = construct_action(i, x, to);
-		if (act.kind != Action::NONE && a.kind != Action::NONE && a != act) {
-			cout << endl << "conflicting actions: " << show(act) << " and " << show(a) << endl;
-			cout << "FROM: " << endl << show(*from) << endl << endl;
-			cout << "X: " << endl << expr::show(x) << endl << endl;
-			cout << "TO: " << endl << show(*to) << endl << endl;
-			cout << "ITEM: " << endl << show(i) << endl << endl;
-			cout << endl << show_lr() << endl;
-			throw Error("non LR(1) grammar");
-		}
-		if (act.kind == Action::NONE)
-			act = a;
-	}
-	if (act.kind != Action::NONE) {
-		table.actions[from][x] = act;
-		return true;
-	}
-	return false;
-}
-
-
 State make_goto(const State& from, Symbol X) {
 	State to;
 	to.ind = -1;
@@ -145,25 +102,56 @@ void collect_states() {
 	} while (new_state);
 }
 
-void create_tables(Table& table) {
-	for (auto p1 : lr.goto_map.m) {
-		State* from = p1.first;
-		for (auto p2 : p1.second.m) {
-			Symbol x = p2.first;
-			State* to = p2.second;
-
-			cout << endl << "FROM: " << to_string(from->ind) << " X: " << expr::show(x) << " TO: " << to_string(to->ind) << endl;
-
-			cout << (complement_tables(from, x, to, table) ? "SUCCESS" : "FAIL") << endl;
-		}
+Action construct_action(const Item& i, Symbol x, State* to) {
+	Action act;
+	if (i.completed() && i.lookahead == x) {
+		if (i.prod->kind == Product::INIT) {
+			if (x == end_marker())
+				act.kind = Action::ACCEPT;
+		} else
+			act.kind = Action::REDUCE;
+		act.val.prod = i.prod;
+	} else if (to && i.get() == x) {
+		act.kind = Action::SHIFT;
+		act.val.state = to;
 	}
-/*
+	return act;
+}
+
+bool complement_tables(State* from, Symbol x, State* to, Table& table) {
+	if (is_non_term(x) && to) {
+		table.gotos[from][x] = to;
+		return true;
+	}
+	Action act;
+	for (auto& i : from->items.s) {
+		Action a = construct_action(i, x, to);
+		if (act.kind != Action::NONE && a.kind != Action::NONE && a != act) {
+			cout << endl << "conflicting actions: " << show(act) << " and " << show(a) << endl;
+			cout << "FROM: " << endl << show(*from) << endl << endl;
+			cout << "X: " << endl << expr::show(x) << endl << endl;
+			cout << "TO: " << endl << show(*to) << endl << endl;
+			cout << "ITEM: " << endl << show(i) << endl << endl;
+			cout << endl << show_lr() << endl;
+			throw Error("non LR(1) grammar");
+		}
+		if (act.kind == Action::NONE)
+			act = a;
+	}
+	if (act.kind == Action::NONE)
+		return false;
+	table.actions[from][x] = act;
+	return true;
+}
+
+
+void create_tables(Table& table) {
 	for (State* from : lr.state_set.s) {
 		for (Symbol x : lr.symbol_set.s) {
-			State* to = lr.goto_map.has(from) ? lr.goto_map[from].has(x) ? :lr.goto_map[from][x] : nullptr;
-
+			State* to = lr.goto_map.has(from) ? (lr.goto_map[from].has(x) ? lr.goto_map[from][x] : nullptr) : nullptr;
+			complement_tables(from, x, to, table);
 		}
-	}*/
+	}
 }
 
 
@@ -260,7 +248,7 @@ static void add_term_product(Symbol s, Symbol s_) {
 }
 
 static void add_init_product(Symbol _s, Symbol s) {
-	Product* prod = new Product(_s, s);
+	Product* prod = new Product(_s, s, Product::INIT);
 	lr.init_map[s.type] = prod;
 	add_product(prod);
 }
