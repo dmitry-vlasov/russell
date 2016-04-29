@@ -1,3 +1,5 @@
+#pragma once
+
 #include "rus/expr.hpp"
 #include "rus/globals.hpp"
 
