@@ -25,9 +25,13 @@ void show_stack(vector<Unit>& stack, Node* n) {
 			cout << " ";
 	}
 	cout << " -- ";
-	while (n) {
-		cout << expr::show(n->symb) << " ";
-		n = n->next;
+	if (!n) {
+		cout << "<end>";
+	} else {
+		while (n) {
+			cout << expr::show(n->symb) << " ";
+			n = n->next;
+		}
 	}
 	cout << endl;
 }
@@ -38,8 +42,11 @@ void add_terms(Term* term) {
 	term->last->final.push_back(term);
 }
 
+Symbol current(Node* n) {
+	return n ? n->symb : end_marker();
+}
+
 static void parse(Expr& ex) {
-	ex.push_back(end_marker());
 	Node* n = ex.first;
 	vector<Unit> stack;
 	Table& tab = table();
@@ -47,60 +54,66 @@ static void parse(Expr& ex) {
 		throw Error("expression syntax error: ", show(ex));
 	State* init = tab.inits[ex.type];
 	stack.push_back(Unit{init, nullptr, n});
-	while (n) {
+	while (true) {
 		show_stack(stack, n);
 		Unit u = stack.back();
 		if (!tab.actions.has(u.state))
 			throw Error("expression syntax error: ", show(ex));
-		if (n->symb.type && !tab.vars.has(n->symb.type))
+		Symbol x = current(n);
+		Symbol s = x.type ? tab.vars[x.type] : x;
+		if (s.type && !tab.vars.has(s.type))
 			throw Error("expression syntax error: ", show(ex));
-		Symbol s = n->symb.type ? tab.vars[n->symb.type] : n->symb;
 		if (!tab.actions[u.state].has(s))
 			throw Error("expression syntax error: ", show(ex));
 		Action act = tab.actions[u.state][s];
 		switch (act.kind) {
 		case Action::SHIFT:
-			stack.push_back(Unit{act.val.state, n->symb.type ? new Term(n) : nullptr, n});
+			if (!n)
+				throw Error("expression syntax error: ", show(ex));
+			stack.push_back(Unit{act.val.state, nullptr, n});
 			n = n->next;
 			break;
 		case Action::REDUCE: {
+			Unit w = u;
 			vector<Term*> terms;
 			for (Symbol s : boost::adaptors::reverse(act.val.prod->right)) {
 				//assert(s == stack.top().state.);
-				terms.push_back(u.term);
+				if (w.term)
+					terms.push_back(u.term);
 				stack.pop_back();
+				w = stack.back();
 			}
-			u = stack.back();
-			if (!tab.gotos.has(u.state))
+			if (!tab.gotos.has(w.state))
 				throw Error("expression syntax error: ", show(ex));
-			if (!tab.gotos[u.state].has(act.val.prod->left))
+			if (!tab.gotos[w.state].has(act.val.prod->left))
 				throw Error("expression syntax error: ", show(ex));
-			State* s = tab.gotos[u.state][act.val.prod->left];
+			State* s = tab.gotos[w.state][act.val.prod->left];
 			Term*  t = nullptr;
 			if (act.val.prod->kind == Product::VAR) {
 				//assert(u.node == n ||
 				//	(u.node->next == n && n->symb == end_marker()));
-				assert(terms.size() == 1);
+				assert(terms.size() == 0);
 				assert(!act.val.prod->rule);
 				t = new Term(u.node);
 			} else {
 				assert(act.val.prod->rule);
-				t = new Term(u.node, n, act.val.prod->rule, terms);
+				t = new Term(w.node, (n ? n : ex.last), act.val.prod->rule, terms);
 			}
 			stack.push_back(Unit{s, t, n});
 		}	break;
 		case Action::ACCEPT:
-			n = n->next;
+			assert(!n);
 			add_terms(u.term);
 			stack.pop_back();
 			assert(stack.back().state == init);
 			assert(!n);
+			goto end;
 			break;
 		default:
 			assert(false && "Impossible");
 		}
 	}
-	ex.pop_back();
+	end :
 	cout << endl << "AST:\n" << show_ast(ex) << endl;
 }
 
