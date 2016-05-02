@@ -274,7 +274,11 @@ struct Expr {
 		push_back(s);
 	}
 	Expr(const Expr&);
+	Expr(Expr&&);
+	~Expr() { destroy(); }
 	Expr& operator = (const Expr&);
+	Expr& operator = (Expr&&);
+	void copy(const Expr&);
 	void destroy() { if (first) delete first; }
 	void push_back(Symbol);
 	void push_front(Symbol);

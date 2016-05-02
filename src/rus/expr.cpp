@@ -57,6 +57,11 @@ Expr::Expr(const Expr& ex) : first(nullptr), last(nullptr), type(ex.type) {
 	}
 	add_term(ex.term(), mp);
 }
+Expr::Expr(Expr&& ex) : first(ex.first), last(ex.last), type(ex.type) {
+	ex.first = nullptr;
+	ex.last  = nullptr;
+	ex.type  = nullptr;
+}
 Expr& Expr::operator = (const Expr& ex) {
 	destroy();
 	first = nullptr;
@@ -71,6 +76,16 @@ Expr& Expr::operator = (const Expr& ex) {
 	add_term(ex.term(), mp);
 	return *this;
 }
+Expr& Expr::operator = (Expr&& ex) {
+	first = ex.first;
+	last  = ex.last;
+	type  = ex.type;
+	ex.first = nullptr;
+	ex.last  = nullptr;
+	ex.type  = nullptr;
+	return *this;
+}
+
 
 void Expr::push_back(Symbol s) {
 	if (!first) {
@@ -177,7 +192,7 @@ Expr assemble(const Expr& ex) {
 
 
 
-
+/*
 
 
 
@@ -283,7 +298,7 @@ struct Stacks {
 		/*if (del) {
 			t_stack.back()->destroy();
 			delete t_stack.back();
-		}*/
+		}* /
 		t_stack.pop_back();
 		n_stack.pop_back();
 		verify();
@@ -401,7 +416,7 @@ ExprTerm* parse_term(Expr::Node* m, Type* type) {
 	return t;
 }
 
-
+*/
 
 
 void add_terms(Term<node::Expr>* term) {
@@ -409,7 +424,7 @@ void add_terms(Term<node::Expr>* term) {
 	term->first->init.push_back(term);
 	term->last->final.push_back(term);
 }
-
+/*
 void parse_expr(Expr& ex) {
 	//mark_vars(ex, var_stack);
 	if (Term<node::Expr>* term = parse_term(ex.first, ex.type)) {
@@ -425,6 +440,7 @@ void parse_expr(Expr& ex) {
 		throw Error("could not parse the expression", show(ex));
 	}
 }
+*/
 
 /*
 void parse_expr(Expr& ex, vector<Vars>& var_stack){

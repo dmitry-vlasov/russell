@@ -334,7 +334,7 @@ struct AssembleDef {
 		prop->ind = 0;
 		prop->expr.type = d->prop.type;
 		mark_vars(prop->expr, varsStack);
-		parse_expr(prop->expr);
+		//parse_expr(prop->expr);
 		d->ass.props.push_back(prop);
 	}
 };
