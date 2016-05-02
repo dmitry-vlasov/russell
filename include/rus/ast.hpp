@@ -34,9 +34,6 @@ struct Type {
 };
 
 struct Rule {
-	~Rule() {
-		//term.destroy();
-	}
 	uint  id;
 	Type* type;
 	Vars  vars;
@@ -44,22 +41,15 @@ struct Rule {
 };
 
 inline Type::~Type() {
-	rules.destroy();
 	for (auto p : supers) delete p.second;
 }
 
 struct Hyp {
-	~Hyp() {
-		//expr.destroy();
-	}
 	uint ind;
 	Expr expr;
 };
 
 struct Prop {
-	~Prop() {
-		//expr.destroy();
-	}
 	uint ind;
 	Expr expr;
 };
@@ -85,11 +75,6 @@ struct Axiom {
 };
 
 struct Def {
-	~Def() {
-		//dfm.destroy();
-		//dfs.destroy();
-		//prop.destroy();
-	}
 	Assertion ass;
 	Expr dfm;
 	Expr dfs;
@@ -148,9 +133,6 @@ struct Step {
 
 	Step(Proof* pr) : ind(-1), expr(), kind(NONE), val(),
 	refs(), proof(pr) { val.non = nullptr; }
-	~Step() {
-		//expr.destroy();
-	}
 
 	Assertion* assertion() {
 		switch(kind) {

@@ -62,12 +62,26 @@ Expr::Expr(Expr&& ex) : first(ex.first), last(ex.last), type(ex.type) {
 	ex.last  = nullptr;
 	ex.type  = nullptr;
 }
+Expr::~Expr() {
+	Node* n = last;
+	while (n) {
+		Node* to_delete = n;
+		n = n->prev;
+		delete to_delete;
+	}
+}
 Expr& Expr::operator = (const Expr& ex) {
-	destroy();
+	Node* n = last;
+	while (n) {
+		Node* to_delete = n;
+		n = n->prev;
+		delete to_delete;
+	}
+	last = nullptr;
 	first = nullptr;
 	type = ex.type;
 	map<Node*, Node*> mp;
-	Node* n = ex.first;
+	n = ex.first;
 	while (n){
 		push_back(n->symb);
 		mp[n] = last;
@@ -132,6 +146,7 @@ bool Expr::operator == (const Expr& ex) const {
 	}
 	return !n && !m;
 }
+
 
 inline Rule* find_super(Type* type, Type* super) {
 	auto it =type->supers.find(super);

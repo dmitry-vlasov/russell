@@ -178,7 +178,6 @@ struct Expr {
 	prev(nullptr), init(), final() { }
 	~Expr() {
 		for (auto t : init) delete t;
-		if (next) delete next;
 	}
 	Expr(const Expr& ex) : symb(ex.symb), next(nullptr),
 	prev(nullptr), init(), final() {
@@ -206,8 +205,6 @@ struct Tree {
 	prev(nullptr), side(nullptr), init(), final(), data() { }
 	~Tree() {
 		for (auto t : init) delete t;
-		if (next) delete next;
-		if (side) delete side;
 	}
 	Tree(const Tree& tr) : symb(tr.symb), next(nullptr),
 	prev(nullptr), side(nullptr), init(), final(), data() {
@@ -239,8 +236,8 @@ template<typename T>
 struct Tree {
 	typedef node::Tree<T> Node;
 	Tree() : root(nullptr) { }
+	~Tree();
 	T& add(const Expr& ex);
-	void destroy() { if (root) delete root; }
 	Node* root;
 };
 
@@ -275,11 +272,10 @@ struct Expr {
 	}
 	Expr(const Expr&);
 	Expr(Expr&&);
-	~Expr() { destroy(); }
+	~Expr();
 	Expr& operator = (const Expr&);
 	Expr& operator = (Expr&&);
 	void copy(const Expr&);
-	void destroy() { if (first) delete first; }
 	void push_back(Symbol);
 	void push_front(Symbol);
 	Symbol pop_back();
@@ -457,6 +453,24 @@ T& Tree<T>::add(const Expr& ex) {
 	}
 	add_term<typename Tree<T>::Node>(ex.term(), mp);
 	return n->data;
+}
+
+template<typename N>
+void gather_tree_nodes(vector<N*>& nodes, N* n) {
+	if (n->next)
+		gather_tree_nodes(nodes, n->next);
+	if (n->side)
+		gather_tree_nodes(nodes, n->side);
+	nodes.push_back(n);
+}
+
+template<typename T>
+Tree<T>::~Tree() {
+	vector<Node*> nodes;
+	gather_tree_nodes(nodes, root);
+	root = nullptr;
+	for (Node* n : nodes)
+		delete n;
 }
 
 template<typename N>

@@ -5,7 +5,6 @@ namespace mdl { namespace rus { namespace {
 
 void modify_grammar(Expr& ex) {
 	Expr e = assemble(ex);
-	ex.destroy();
 	ex = e;
 }
 
@@ -20,7 +19,6 @@ void transform(Expr& ex) {
 		e.last->prev->final.clear();
 		for (auto t : e.first->init) t->first = e.first;
 		for (auto t : e.last->final) t->last = e.last;
-		ex.destroy();
 		ex = e;
 	}
 }
