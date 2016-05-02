@@ -49,9 +49,11 @@ string show(const Action&);
 typedef Map<State*, Map<Symbol, State*>> Gotos;
 typedef Map<State*, Map<Symbol, Action>> Actions;
 typedef Map<Type*, State*>               Inits;
+typedef Map<Type*, Symbol>               Vars;
 
 struct Table {
 	Inits   inits;
+	Vars    vars;
 	Gotos   gotos;
 	Actions actions;
 };

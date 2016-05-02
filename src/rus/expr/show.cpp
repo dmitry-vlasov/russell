@@ -162,6 +162,12 @@ string show(const Table& tab) {
 	}
 	str += "\n";
 
+	str += "Vars:\n";
+	for (auto p : tab.vars.m) {
+		str += "\t" + show_id(p.first->id) +  " |--> " + expr::show(p.second) + "\n";
+	}
+	str += "\n";
+
 	return str;
 }
 

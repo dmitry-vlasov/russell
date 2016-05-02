@@ -79,6 +79,24 @@ void collect_supers(Type* inf, Type* s) {
 	}
 }
 
+void enqueue_expressions(Assertion& ass) {
+	for (Hyp* hyp : ass.hyps)
+		expr::enqueue(hyp->expr);
+	for (Prop* prop : ass.props)
+		expr::enqueue(prop->expr);
+}
+
+void enqueue_expressions(Proof* proof) {
+	for (auto& el : proof->elems) {
+		if (el.kind == Proof::Elem::STEP) {
+			Step* step = el.val.step;
+			expr::enqueue(step->expr);
+			if (step->kind == Step::CLAIM)
+				enqueue_expressions(step->proof);
+		}
+	}
+}
+
 struct AddToMath {
 	void operator()(Const* c) const {
 		Rus::mod().math.consts.s.insert(c->symb);
@@ -97,16 +115,20 @@ struct AddToMath {
 	}
 	void operator()(Axiom* a) const {
 		Rus::mod().math.axioms[a->ass.id] = a;
+		enqueue_expressions(a->ass);
 	}
 	void operator()(Def* d) const {
 		Rus::mod().math.defs[d->ass.id] = d;
+		enqueue_expressions(d->ass);
 	}
 	void operator()(Theorem* th) const {
 		Rus::mod().math.theorems[th->ass.id] = th;
+		enqueue_expressions(th->ass);
 	}
 	void operator()(Proof* p) const {
 		// TODO:
 		//Rus::mod().math.proofs[p->id] = p;
+		enqueue_expressions(p);
 	}
 };
 
@@ -143,7 +165,7 @@ struct ParseExpr {
 		ex.type = tp;
 		mark_vars(ex, var_stack);
 		//parse_expr(ex);
-		expr::enqueue(ex);
+		//expr::enqueue(ex);
 	}
 };
 

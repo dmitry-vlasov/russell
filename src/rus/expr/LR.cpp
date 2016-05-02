@@ -223,6 +223,7 @@ Table create_table() {
 	add_init_states(table);
 	collect_states();
 	create_tables(table);
+	table.vars = lr.var_map;
 	return table;
 }
 
@@ -242,8 +243,8 @@ static void add_product(Product* prod) {
 		add_follow(p);
 }
 
-static void add_term_product(Symbol s, Symbol s_) {
-	Product* prod = new Product(s, s_);
+static void add_var_product(Symbol s, Symbol s_) {
+	Product* prod = new Product(s, s_, Product::VAR);
 	add_product(prod);
 }
 
@@ -272,9 +273,10 @@ void add_type(Type* type) {
 	lr.symbol_set.s.insert(_s);
 	lr.symbol_set.s.insert(s_);
 	lr.follow_map[_s].s.insert(end_marker());
+	lr.var_map[type] = s_;
 
 	add_init_product(_s, s);
-	add_term_product(s, s_);
+	add_var_product(s, s_);
 }
 
 void add_const(Const* c) {

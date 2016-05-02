@@ -66,6 +66,7 @@ struct LR {
 	Map<Symbol, Set<Symbol>>   follow_map;
 	Set<State*, Less<State*>>  state_set;
 	Map<Type*, Product*>       init_map;
+	Map<Type*, Symbol>         var_map;
 
 	Map<State*, Map<Symbol, State*>> goto_map;
 

@@ -94,6 +94,21 @@ void Expr::push_front(Symbol s) {
 	}
 }
 
+Symbol Expr::pop_back() {
+	assert(first);
+	assert(last->final.empty());
+	assert(last->init.empty());
+	Symbol s = last->symb;
+	if (last == first) {
+		delete first;
+		first = nullptr;
+	} else {
+		last = last->prev;
+		delete last->next;
+	}
+	return s;
+}
+
 bool Expr::operator == (const Expr& ex) const {
 	const Node* n = ex.first;
 	const Node* m = first;

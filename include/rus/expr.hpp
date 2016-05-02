@@ -278,6 +278,7 @@ struct Expr {
 	void destroy() { if (first) delete first; }
 	void push_back(Symbol);
 	void push_front(Symbol);
+	Symbol pop_back();
 	bool operator == (const Expr& ex) const;
 	bool operator != (const Expr& ex) const {
 		return !operator == (ex);
@@ -325,7 +326,10 @@ Expr assemble(const Expr& ex);
 string show(const Expr&);
 string show_ast(const Term<Expr::Node>*);
 inline string show_ast(const Expr& ex) {
-	return show_ast(ex.term());
+	if (ex.term())
+		return show_ast(ex.term());
+	else
+		return "<no ast>";
 }
 
 template<typename N>
