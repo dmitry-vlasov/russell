@@ -2,7 +2,7 @@
 #include "rus/expr/table.hpp"
 #include "rus/expr/LR.hpp"
 
-namespace mdl { namespace rus { namespace expr {
+namespace mdl { namespace rus { namespace expr { namespace {
 
 typedef Expr::Node Node;
 typedef Term<Node> Term;
@@ -13,7 +13,7 @@ struct Unit {
 	Node*  node;
 };
 
-static vector<Expr*> queue;
+vector<Expr*> queue;
 
 void show_stack(vector<Unit>& stack, Node* n) {
 	cout << "\t";
@@ -43,11 +43,11 @@ void add_terms(Term* term) {
 	term->last->final.push_back(term);
 }
 
-Symbol current(Node* n) {
+inline Symbol current(Node* n) {
 	return n ? n->symb : end_marker();
 }
 
-static void parse(Expr* ex) {
+void parse(Expr* ex) {
 	Node* n = ex->first;
 	vector<Unit> stack;
 	Table& tab = table();
@@ -55,8 +55,9 @@ static void parse(Expr* ex) {
 		throw Error("expression syntax error: ", show(*ex));
 	State* init = tab.inits[ex->type];
 	stack.push_back(Unit{init, nullptr, n});
-	while (true) {
-		show_stack(stack, n);
+	bool end = false;
+	while (!end) {
+		//show_stack(stack, n);
 		Unit u = stack.back();
 		if (!tab.actions.has(u.state))
 			throw Error("expression syntax error: ", show(*ex));
@@ -77,8 +78,8 @@ static void parse(Expr* ex) {
 		case Action::REDUCE: {
 			Unit w = u;
 			vector<Term*> terms;
-			for (Symbol s : boost::adaptors::reverse(act.val.prod->right)) {
-				//assert(s == stack.top().state.);
+			//for (Symbol s : boost::adaptors::reverse(act.val.prod->right)) {
+			for (uint i = 0; i < act.val.prod->right.size(); ++ i) {
 				if (w.term)
 					terms.push_back(w.term);
 				stack.pop_back();
@@ -108,16 +109,16 @@ static void parse(Expr* ex) {
 			stack.pop_back();
 			assert(stack.back().state == init);
 			assert(!n);
-			goto end;
+			end = true;
 			break;
 		default:
 			assert(false && "Impossible");
 		}
 	}
-	end :
-	cout << endl << "AST:\n" << show_ast(*ex) << endl;
+	//cout << endl << "AST:\n" << show_ast(*ex) << endl;
 }
 
+} // anonymous namespace
 
 void enqueue(Expr& ex) {
 	queue.push_back(&ex);

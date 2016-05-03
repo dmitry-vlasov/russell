@@ -171,12 +171,4 @@ string show(const Table& tab) {
 	return str;
 }
 
-string show_lr() {
-	string str;
-	str += show(table());
-	str += show(lr);
-	return str;
-}
-
-
 }}} // namespace mdl::rus::expr

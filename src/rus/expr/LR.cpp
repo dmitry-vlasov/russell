@@ -1,43 +1,21 @@
 #include "common.hpp"
 #include "rus/expr/LR.hpp"
 
-namespace mdl { namespace rus { namespace expr {
+namespace mdl { namespace rus { namespace expr { namespace {
 
-static Symbol make_non_term(Type* t, const char* prefix = "") {
+Symbol make_non_term(Type* t, const char* prefix = "") {
 	string s = prefix;
 	s += Rus::get().lex.ids.toStr(t->id);
 	return Symbol(s, t);
 }
 
-static Symbol make_terminal(Type* t, const char* postfix = "") {
+Symbol make_terminal(Type* t, const char* postfix = "") {
 	string s = Rus::get().lex.ids.toStr(t->id) + postfix;
 	return Symbol(s);
 }
 
-static uint prod_count = 0;
-
-Product::Product(rus::Rule* r, Kind k) :
-left(make_non_term(r->type)), right(), kind(k), rule(r), ind(prod_count++) {
-	for (auto s : r->term) {
-		if (s.symb.type)
-			right.push_back(make_non_term(s.symb.type));
-		else
-			right.push_back(s.symb);
-	}
-}
-
-Product::Product(Symbol l, Symbol r, Kind k) :
-left(l), right(), kind(k), rule(nullptr), ind(prod_count++) {
-	right.push_back(r);
-}
-
-static uint state_count = 0;
-
-LR::~ LR() {
-	for (State* s : state_vect) delete s;
-	for (Product* p : prod_vect) delete p;
-}
-
+uint prod_count = 0;
+uint state_count = 0;
 LR lr;
 
 void make_closure(State& state) {
@@ -192,7 +170,7 @@ void add_follow(Product* prod) {
 }
 
 
-static void check_prod(Product* prod) {
+void check_prod(Product* prod) {
 	if (!lr.non_terminals.has(prod->left))
 		throw Error("undefined type ", expr::show(prod->left));
 	for (Symbol s : prod->right)
@@ -201,7 +179,7 @@ static void check_prod(Product* prod) {
 }
 
 
-static void add_init_states(Table& table) {
+void add_init_states(Table& table) {
 	for (auto p : lr.init_map.m) {
 		Product* prod = p.second;
 
@@ -227,12 +205,7 @@ Table create_table() {
 	return table;
 }
 
-Table& table() {
-	static Table table = create_table();
-	return table;
-}
-
-static void add_product(Product* prod) {
+void add_product(Product* prod) {
 	check_prod(prod);
 
 	lr.prod_vect.push_back(prod);
@@ -243,15 +216,49 @@ static void add_product(Product* prod) {
 		add_follow(p);
 }
 
-static void add_var_product(Symbol s, Symbol s_) {
+void add_var_product(Symbol s, Symbol s_) {
 	Product* prod = new Product(s, s_, Product::VAR);
 	add_product(prod);
 }
 
-static void add_init_product(Symbol _s, Symbol s) {
+void add_init_product(Symbol _s, Symbol s) {
 	Product* prod = new Product(_s, s, Product::INIT);
 	lr.init_map[s.type] = prod;
 	add_product(prod);
+}
+
+} // anonymous namespace
+
+string show_lr() {
+	string str;
+	str += show(table());
+	str += show(lr);
+	return str;
+}
+
+LR::~ LR() {
+	for (State* s : state_vect) delete s;
+	for (Product* p : prod_vect) delete p;
+}
+
+Product::Product(rus::Rule* r, Kind k) :
+left(make_non_term(r->type)), right(), kind(k), rule(r), ind(prod_count++) {
+	for (auto s : r->term) {
+		if (s.symb.type)
+			right.push_back(make_non_term(s.symb.type));
+		else
+			right.push_back(s.symb);
+	}
+}
+
+Product::Product(Symbol l, Symbol r, Kind k) :
+left(l), right(), kind(k), rule(nullptr), ind(prod_count++) {
+	right.push_back(r);
+}
+
+Table& table() {
+	static Table table = create_table();
+	return table;
 }
 
 void add_rule(Rule* rule) {
@@ -293,6 +300,5 @@ void add_const(Const* c) {
 	lr.terminals.s.insert(c->symb);
 	lr.symbol_set.s.insert(c->symb);
 }
-
 
 }}} // namespace mdl::rus::expr
