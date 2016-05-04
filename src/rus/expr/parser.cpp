@@ -33,7 +33,6 @@ void show_stack(vector<Unit>& stack, Node* n) {
 			n = n->next;
 		}
 	}
-	cout << endl;
 }
 
 void add_terms(Term* term) {
@@ -47,31 +46,34 @@ inline Symbol current(Node* n) {
 	return n ? n->symb : end_marker();
 }
 
-void parse(Expr* ex) {
+void parse(Expr* ex, bool trace = false) {
 	Node* n = ex->first;
 	vector<Unit> stack;
 	Table& tab = table();
 	if (!tab.inits.has(ex->type))
-		throw Error("expression syntax error: ", show(*ex));
+		throw Error("expression syntax error (0): ", show(*ex));
 	State* init = tab.inits[ex->type];
 	stack.push_back(Unit{init, nullptr, n});
 	bool end = false;
 	while (!end) {
-		//show_stack(stack, n);
+		if (trace)
+			show_stack(stack, n);
 		Unit u = stack.back();
 		if (!tab.actions.has(u.state))
-			throw Error("expression syntax error: ", show(*ex));
+			throw Error("expression syntax error (1): ", show(*ex));
 		Symbol x = current(n);
 		Symbol s = x.type ? tab.vars[x.type] : x;
 		if (s.type && !tab.vars.has(s.type))
-			throw Error("expression syntax error: ", show(*ex));
+			throw Error("expression syntax error (2): ", show(*ex));
 		if (!tab.actions[u.state].has(s))
-			throw Error("expression syntax error: ", show(*ex));
+			throw Error("expression syntax error (3): ", show(*ex));
 		Action act = tab.actions[u.state][s];
+		if (trace)
+			cout << "            " << show(act) << endl;
 		switch (act.kind) {
 		case Action::SHIFT:
 			if (!n)
-				throw Error("expression syntax error: ", show(*ex));
+				throw Error("expression syntax error (4): ", show(*ex));
 			stack.push_back(Unit{act.val.state, nullptr, n});
 			n = n->next;
 			break;
@@ -86,9 +88,9 @@ void parse(Expr* ex) {
 				w = stack.back();
 			}
 			if (!tab.gotos.has(w.state))
-				throw Error("expression syntax error: ", show(*ex));
+				throw Error("expression syntax error (5): ", show(*ex));
 			if (!tab.gotos[w.state].has(act.val.prod->left))
-				throw Error("expression syntax error: ", show(*ex));
+				throw Error("expression syntax error (6): ", show(*ex));
 			State* s = tab.gotos[w.state][act.val.prod->left];
 			Term*  t = nullptr;
 			if (act.val.prod->kind == Product::VAR) {
@@ -128,8 +130,15 @@ void parse() {
 	//cout << endl << show_lr() << endl;
 	cout << endl << "making table" << endl;
 	cout << table().show() << endl;
-	for (Expr* ex : queue)
-		parse(ex);
+	for (Expr* ex : queue) {
+		try {
+			parse(ex);
+		} catch (Error& err) {
+			parse(ex, true);
+			cout << endl << err.what() << endl;
+			throw err;
+		}
+	}
 	queue.clear();
 }
 
