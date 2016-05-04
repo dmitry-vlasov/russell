@@ -56,6 +56,7 @@ struct Table {
 	Vars    vars;
 	Gotos   gotos;
 	Actions actions;
+	string show() const;
 };
 
 string show(const Symbol&, bool full = true);

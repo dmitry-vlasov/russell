@@ -104,16 +104,19 @@ bool complement_tables(State* from, Symbol x, State* to, Table& table) {
 	Action act;
 	for (auto& i : from->items.s) {
 		Action a = construct_action(i, x, to);
-		if (act.kind != Action::NONE && a.kind != Action::NONE && a != act) {
+		if (act.kind != Action::NONE && a.kind != Action::NONE && a != act &&
+			!(act.kind == Action::REDUCE && a.kind == Action::SHIFT) &&
+			!(act.kind == Action::SHIFT && a.kind == Action::REDUCE)) {
 			cout << endl << "conflicting actions: " << show(act) << " and " << show(a) << endl;
 			cout << "FROM: " << endl << show(*from) << endl << endl;
 			cout << "X: " << endl << expr::show(x) << endl << endl;
 			cout << "TO: " << endl << show(*to) << endl << endl;
 			cout << "ITEM: " << endl << show(i) << endl << endl;
-			cout << endl << show_lr() << endl;
+			//cout << endl << show_lr() << endl;
 			throw Error("non LR(1) grammar");
 		}
-		if (act.kind == Action::NONE)
+		if (act.kind == Action::NONE ||
+			(a.kind == Action::SHIFT && act.kind == Action::REDUCE))
 			act = a;
 	}
 	if (act.kind == Action::NONE)
@@ -231,8 +234,23 @@ void add_init_product(Symbol _s, Symbol s) {
 
 string show_lr() {
 	string str;
-	str += show(table());
+	//str += show(table());
 	str += show(lr);
+	return str;
+}
+
+string Table::show() const {
+	string str;
+	str += "Parsing tables statistics:\n";
+	str += "  states : " + to_string(actions.m.size()) + "\n";
+	uint act_count = 0;
+	for (auto p : actions.m)
+		act_count += p.second.m.size();
+	str += "  actions:" + to_string(act_count) + "\n";
+	uint goto_count = 0;
+	for (auto p : gotos.m)
+		goto_count += p.second.m.size();
+	str += "  gotos  :" + to_string(goto_count) + "\n";
 	return str;
 }
 

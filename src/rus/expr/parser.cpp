@@ -125,7 +125,9 @@ void enqueue(Expr& ex) {
 }
 
 void parse() {
-	cout << endl << show_lr() << endl;
+	//cout << endl << show_lr() << endl;
+	cout << endl << "making table" << endl;
+	cout << table().show() << endl;
 	for (Expr* ex : queue)
 		parse(ex);
 	queue.clear();

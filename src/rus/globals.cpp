@@ -122,9 +122,6 @@ void Rus::run() {
 	case Config::TARG_SMM: translate_rus(*this); break;
 	default : break;
 	}
-
-	cout << expr::show_lr() << endl;
-
 	timers.total.stop();
 	if (config.verbose)
 		cout << "done in " << timers.total << endl;

@@ -466,11 +466,13 @@ void gather_tree_nodes(vector<N*>& nodes, N* n) {
 
 template<typename T>
 Tree<T>::~Tree() {
-	vector<Node*> nodes;
-	gather_tree_nodes(nodes, root);
-	root = nullptr;
-	for (Node* n : nodes)
-		delete n;
+	if (root) {
+		vector<Node*> nodes;
+		gather_tree_nodes(nodes, root);
+		root = nullptr;
+		for (Node* n : nodes)
+			delete n;
+	}
 }
 
 template<typename N>

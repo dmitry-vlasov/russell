@@ -106,6 +106,8 @@ struct AddToMath {
 		collect_supers(t, t);
 		Rus::mod().math.types[t->id] = t;
 		expr::add_type(t);
+		for (auto p : t->supers)
+			expr::add_rule(p.second);
 	}
 	void operator()(Rule* r) const {
 		r->type->rules.add(r->term) = r;
