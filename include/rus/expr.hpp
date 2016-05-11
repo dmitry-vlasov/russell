@@ -266,7 +266,6 @@ struct Expr {
 	typedef const_iterator<Node> ConstIterator;
 
 	Expr() : first(nullptr), last(nullptr), type(nullptr) { }
-	Expr(const mdl::Expr&);
 	Expr(Symbol s) : first(nullptr), last(nullptr), type(s.type) {
 		push_back(s);
 	}

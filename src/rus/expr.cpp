@@ -39,14 +39,6 @@ string show_ast(const ExprTerm* t, bool full) {
 	}
 }
 
-Expr::Expr(const mdl::Expr& ex) : first(nullptr), last(nullptr), type(nullptr) {
-	for (auto it = ex.symbols.begin(); it != ex.symbols.end(); ++ it) {
-		// pass the first symbol
-		if (it == ex.symbols.begin())
-			continue;
-		push_back(*it);
-	}
-}
 Expr::Expr(const Expr& ex) : first(nullptr), last(nullptr), type(ex.type) {
 	map<Node*, Node*> mp;
 	Node* n = ex.first;

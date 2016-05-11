@@ -8,6 +8,7 @@ struct State {
 	map<const Assertion*, rus::Axiom*>   axioms;
 	map<const Assertion*, rus::Theorem*> theorems;
 	map<const Assertion*, rus::Def*>     defs;
+	map<const rus::Rule*, rus::Node*>    rules;
 	map<Symbol, rus::Type*> types;
 	rus::Type*    type_wff;
 	rus::Type*    type_set;
@@ -15,6 +16,32 @@ struct State {
 	set<Symbol>   redundant_consts;
 	rus::Theory*  theory;
 };
+
+static rus::Expr translate_expr(const Expr& ex, const State& state, const Assertion* ass) {
+	rus::Expr e;
+	for (auto it = ex.symbols.begin(); it != ex.symbols.end(); ++ it) {
+		// pass the first symbol
+		if (it == ex.symbols.begin())
+			continue;
+		rus::Type* t = nullptr;
+		for (auto f : ass->floating)
+			if (f->var() == *it) {
+				assert(state.types.find(f->type()) != state.types.end());
+				t = state.types.find(f->type())->second;
+				break;
+			}
+		for (auto i : ass->inner)
+			if (i->var() == *it) {
+				assert(state.types.find(i->type()) != state.types.end());
+				t = state.types.find(i->type())->second;
+				break;
+			}
+		e.push_back(rus::Symbol(*it, t));
+	}
+	// it's the best what we can do here ...
+	e.type = state.type_wff;
+	return e;
+}
 
 static void translate_const(const Expr& consts, const State& state) {
 	for (auto s : consts.symbols) {
@@ -30,13 +57,6 @@ inline bool is_turnstile(Symbol s) {
 }
 inline bool is_def(uint label) {
 	return Smm::get().lex.labels.toStr(label).substr(0,3) == "df-";
-}
-
-static rus::Expr translate_expr(const Expr& e, State& state) {
-	rus::Expr ex(e);
-	// it's the best what we can do here ...
-	ex.type = state.type_wff;
-	return ex;
 }
 
 static rus::Type* translate_type(Symbol type_sy, State& state);
@@ -111,6 +131,36 @@ static void translate_super(const Assertion* ass, State& state) {
 	}
 }
 
+inline bool super_type(const rus::Type* t1, const rus::Type* t2) {
+	if (t1 == t2) return true;
+	for (auto s : t1->sup)
+		if (t2 == s)
+			return true;
+	return false;
+
+}
+
+static bool less_general(const rus::Rule* r1, const rus::Rule* r2) {
+	if (!super_type(r2->type, r1->type))
+		return false;
+	const rus::Expr::Node *n = r1->term.first;
+	const rus::Expr::Node *m = r2->term.first;
+	while (n && m) {
+		if (!n->symb.type && !m->symb.type) {
+			if (n->symb != m->symb)
+				return false;
+		} else if (n->symb.type && m->symb.type) {
+			if (!super_type(n->symb.type, m->symb.type))
+				return false;
+		} else {
+			return false;
+		}
+		n = n->next;
+		m = m->next;
+	}
+	return n == m;
+}
+
 static void translate_rule(const Assertion* ass, State& state) {
 	if (rule_term_is_super(ass->prop.expr)) {
 		translate_super(ass, state);
@@ -120,9 +170,20 @@ static void translate_rule(const Assertion* ass, State& state) {
 		ass->prop.label,
 		translate_type(ass->prop.expr[0], state),
 		translate_vars(ass->floating, state),
-		rus::Expr(ass->prop.expr)
+		translate_expr(ass->prop.expr, state, ass)
 	};
+	for (auto p : state.rules) {
+		if (less_general(p.first, rule)) {
+			delete p.second->val.rul;
+			*p.second = rus::Node(rule);
+			return;
+		} else if (less_general(rule, p.first)) {
+			delete rule;
+			return;
+		}
+	}
 	state.theory->nodes.push_back(rule);
+	state.rules[rule] = &state.theory->nodes.back();
 }
 
 template<class T>
@@ -132,10 +193,10 @@ void translate_assertion(const Assertion* ass, T* a, State& state) {
 	a->ass.disj = translate_disj(ass, state);
 	uint hc = 0;
 	for (auto ess : ass->essential) {
-		rus::Expr ex = translate_expr(ess->expr, state);
+		rus::Expr ex = translate_expr(ess->expr, state, ass);
 		a->ass.hyps.push_back(new rus::Hyp{hc++, ex});
 	}
-	rus::Expr ex = translate_expr(ass->prop.expr, state);
+	rus::Expr ex = translate_expr(ass->prop.expr, state, ass);
 	a->ass.props.push_back(new rus::Prop{0, ex});
 }
 
@@ -234,7 +295,7 @@ static rus::Node::Kind ass_kind(const Assertion* ass) {
 	}
 }
 
-static rus::Proof::Elem translate_step(Ref ref, rus::Proof* proof, rus::Theorem* thm, State& state) {
+static rus::Proof::Elem translate_step(Ref ref, rus::Proof* proof, rus::Theorem* thm, State& state, const Assertion* a) {
 	assert(ref.type == Ref::PROOF);
 	vector<rus::Proof::Elem>& elems = proof->elems;
 	rus::Proof::Elem el(new rus::Step(proof));
@@ -246,12 +307,12 @@ static rus::Proof::Elem translate_step(Ref ref, rus::Proof* proof, rus::Theorem*
 		if (r.type == Ref::ESSENTIAL) {
 			hr = rus::Ref(thm->ass.hyps[r.index()]);
 		} else {
-			hr = rus::Ref(translate_step(r, proof, thm, state).val.step);
+			hr = rus::Ref(translate_step(r, proof, thm, state, a).val.step);
 		}
 		el.val.step->refs.push_back(hr);
 	}
 	el.val.step->ind = elems.size();
-	el.val.step->expr = translate_expr(ref.expr, state);
+	el.val.step->expr = translate_expr(ref.expr, state, ass);
 	switch (ass_kind(ass)) {
 	case rus::Node::AXIOM:
 		el.val.step->val.axm = state.axioms.find(ass)->second;
@@ -274,7 +335,7 @@ static void translate_proof(const Assertion* ass, rus::Theorem* thm, State& stat
 	rus::Proof* p = new rus::Proof();
 	p->vars = translate_vars(ass->inner, state);
 	p->thm = thm;
-	translate_step(tree, p, thm, state);
+	translate_step(tree, p, thm, state, ass);
 	rus::Prop* pr = thm->ass.props.front();
 	rus::Step* st = p->elems.back().val.step;
 	p->elems.push_back(new rus::Qed{pr, st});
@@ -321,6 +382,7 @@ static void translate_theory(const Source* source, State& state) {
 
 rus::Source* translate_to_rus(const Source* source) {
 	rus::Source* out = new rus::Source(Smm::get().config.out);
+	out->theory = new rus::Theory();
 	State state;
 	state.theory = out->theory;
 	state.type_wff = nullptr;
