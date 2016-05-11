@@ -324,7 +324,7 @@ inline Sub<>* unify(const Expr& ex1, const Expr& ex2) {
 Expr assemble(const Expr& ex);
 
 string show(const Expr&);
-string show_ast(const Term<Expr::Node>*);
+string show_ast(const Term<Expr::Node>*, bool full = false);
 inline string show_ast(const Expr& ex) {
 	if (ex.term())
 		return show_ast(ex.term());

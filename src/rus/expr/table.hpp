@@ -20,7 +20,7 @@ struct Product {
 	uint           ind;
 };
 
-string show(const Product&);
+string show(const Product&, bool show_left = true);
 
 struct Action {
 	enum Kind {
@@ -62,6 +62,8 @@ struct Table {
 string show(const Symbol&, bool full = true);
 string show(const Table&);
 string show_lr();
+string show_symbols();
+string show_grammar();
 
 void add_type(Type*);
 void add_rule(Rule*);

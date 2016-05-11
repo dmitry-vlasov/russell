@@ -7,7 +7,7 @@ string show(Symbol s, bool full) {
 	if (!full || !s.type)
 		return show_sy(s.lit);
 	else {
-		return string("<") + show_sy(s.lit) + ">";
+		return string("<") + show_sy(s.lit) + ":" + show_id(s.type->id) + ">";
 	}
 }
 
@@ -25,13 +25,13 @@ string show(const Expr& ex) {
 	return s;
 }
 
-string show_ast(const ExprTerm* t) {
+string show_ast(const ExprTerm* t, bool full) {
 	if (t->isvar()) {
-		return show(t->first->symb) + " ";
+		return show(t->first->symb, full ) + " ";
 	} else {
 		string s = (t->rule ? show_id(t->rule->id) : "?") + " (";
 		for (uint i = 0; i < t->children.size(); ++ i) {
-			s += show_ast(t->children[i]);
+			s += show_ast(t->children[i], full);
 			if (i + 1 < t->children.size()) s += ", ";
 		}
 		s += ")";

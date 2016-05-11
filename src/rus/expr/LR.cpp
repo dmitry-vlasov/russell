@@ -1,7 +1,11 @@
 #include "common.hpp"
 #include "rus/expr/LR.hpp"
 
-namespace mdl { namespace rus { namespace expr { namespace {
+namespace mdl { namespace rus { namespace expr {
+
+LR lr;
+
+namespace {
 
 Symbol make_non_term(Type* t, const char* prefix = "") {
 	string s = prefix;
@@ -16,7 +20,6 @@ Symbol make_terminal(Type* t, const char* postfix = "") {
 
 uint prod_count = 0;
 uint state_count = 0;
-LR lr;
 
 void make_closure(State& state) {
 	bool new_items = false;

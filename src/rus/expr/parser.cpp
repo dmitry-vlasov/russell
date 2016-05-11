@@ -20,7 +20,7 @@ void show_stack(vector<Unit>& stack, Node* n) {
 	for (Unit& u : stack) {
 		cout << u.state->ind << " ";
 		if (u.term)
-			cout << "<" << show_ast(u.term) << "> ";
+			cout << show_ast(u.term, true);
 		else
 			cout << " ";
 	}
@@ -50,8 +50,12 @@ void parse(Expr* ex, bool trace = false) {
 	Node* n = ex->first;
 	vector<Unit> stack;
 	Table& tab = table();
-	if (!tab.inits.has(ex->type))
-		throw Error("expression syntax error (0): ", show(*ex));
+	if (!tab.inits.has(ex->type)) {
+		string msg("expression doesn't have a valid start non-terminal.\n");
+		msg += string("expression: ") + show(*ex) + "\n";
+		msg += show_grammar();
+		throw Error("expression syntax error (0): ", msg);
+	}
 	State* init = tab.inits[ex->type];
 	stack.push_back(Unit{init, nullptr, n});
 	bool end = false;
@@ -59,21 +63,43 @@ void parse(Expr* ex, bool trace = false) {
 		if (trace)
 			show_stack(stack, n);
 		Unit u = stack.back();
-		if (!tab.actions.has(u.state))
-			throw Error("expression syntax error (1): ", show(*ex));
+		if (!tab.actions.has(u.state)) {
+			string msg("actions table doesn't have a state.\n");
+			msg += string("state: ") + to_string(u.state->ind) + "\n";
+			msg += string("expression: ") + show(*ex) + "\n";
+			msg += show_grammar();
+			throw Error("expression syntax error (1): ", msg);
+		}
 		Symbol x = current(n);
+		if (x.type && !tab.vars.has(x.type)) {
+			string msg("variable table doesn't have a variable of type.\n");
+			msg += string("type: ") + show_id(x.type->id) + "\n";
+			msg += string("expression: ") + show(*ex) + "\n";
+			msg += show_grammar();
+			throw Error("expression syntax error (2): ", msg);
+		}
 		Symbol s = x.type ? tab.vars[x.type] : x;
-		if (s.type && !tab.vars.has(s.type))
-			throw Error("expression syntax error (2): ", show(*ex));
-		if (!tab.actions[u.state].has(s))
-			throw Error("expression syntax error (3): ", show(*ex));
+		if (!tab.actions[u.state].has(s)) {
+			string msg("action table doesn't have a symbol.\n");
+			msg += string("symbol: ") + expr::show(s, false) + "\n";
+			msg += string("expression: ") + show(*ex) + "\n";
+			msg += show_grammar();
+			msg += "actions:\n";
+			for (auto p : tab.actions[u.state].m)
+				msg += "\t" + expr::show(p.first) + " --> " + show(p.second) + "\n";
+			throw Error("expression syntax error (3): ", msg);
+		}
 		Action act = tab.actions[u.state][s];
 		if (trace)
 			cout << "            " << show(act) << endl;
 		switch (act.kind) {
 		case Action::SHIFT:
-			if (!n)
-				throw Error("expression syntax error (4): ", show(*ex));
+			if (!n) {
+				string msg("shift is impossible.\n");
+				msg += string("expression: ") + show(*ex) + "\n";
+				msg += show_grammar();
+				throw Error("expression syntax error (4): ", msg);
+			}
 			stack.push_back(Unit{act.val.state, nullptr, n});
 			n = n->next;
 			break;
@@ -87,10 +113,20 @@ void parse(Expr* ex, bool trace = false) {
 				stack.pop_back();
 				w = stack.back();
 			}
-			if (!tab.gotos.has(w.state))
-				throw Error("expression syntax error (5): ", show(*ex));
-			if (!tab.gotos[w.state].has(act.val.prod->left))
-				throw Error("expression syntax error (6): ", show(*ex));
+			if (!tab.gotos.has(w.state)) {
+				string msg("goto table doesn't have a state.\n");
+				msg += string("state: ") + to_string(u.state->ind) + "\n";
+				msg += string("expression: ") + show(*ex) + "\n";
+				msg += show_grammar();
+				throw Error("expression syntax error (5): ", msg);
+			}
+			if (!tab.gotos[w.state].has(act.val.prod->left)) {
+				string msg("goto table doesn't have a symbol.\n");
+				msg += string("symbol: ") + expr::show(act.val.prod->left, false) + "\n";
+				msg += string("expression: ") + show(*ex) + "\n";
+				msg += show_grammar();
+				throw Error("expression syntax error (6): ", msg);
+			}
 			State* s = tab.gotos[w.state][act.val.prod->left];
 			Term*  t = nullptr;
 			if (act.val.prod->kind == Product::VAR) {
@@ -130,12 +166,17 @@ void parse() {
 	//cout << endl << show_lr() << endl;
 	cout << endl << "making table" << endl;
 	cout << table().show() << endl;
+	cout << show_grammar() << endl;
+	uint c = 0;
 	for (Expr* ex : queue) {
 		try {
 			parse(ex);
+			c += 1;
 		} catch (Error& err) {
+			cout << endl;
+			cout << "expression no.: " << c << endl;
 			parse(ex, true);
-			cout << endl << err.what() << endl;
+			cout << err.what() << endl;
 			throw err;
 		}
 	}

@@ -15,9 +15,10 @@ string show(const Symbol& s, bool full) {
 	}
 }
 
-string show(const Product& p) {
+string show(const Product& p, bool show_left) {
 	string str;
-	str += expr::show(p.left) + " → ";
+	if (show_left)
+		str += expr::show(p.left) + " → ";
 	for (auto s : p.right)
 		str += expr::show(s, true) + " ";
 	return str;
@@ -60,6 +61,36 @@ string show(const Action& act) {
 		return string("<IMPOSSIBLE> ") + to_string(act.kind);
 		//assert(false && "impossible"); return "";
 	}
+}
+
+string show_symbols() {
+	string str;
+	str += "Symbols:\n\t";
+	for (auto s : lr.symbol_set.s)
+		str += expr::show(s) + " ";
+	str += "\n";
+	str += "Terminals:\n\t";
+	for (auto s : lr.terminals.s)
+		str += expr::show(s) + " ";
+	str += "\n";
+	str += "Non-Terminals:\n\t";
+	for (auto s : lr.non_terminals.s)
+		str += expr::show(s) + " ";
+	str += "\n";
+	return str;
+}
+
+string show_grammar() {
+	string str;
+	str += "Grammar:\n";
+	for (auto s : lr.rule_map.m) {
+		str += "\t" + expr::show(s.first) + " ::= \n";
+		for (auto p : s.second.s)
+			str += "\t\t" + show(*p, false) + "\n";
+		str += "\n";
+	}
+	str += "\n";
+	return str;
 }
 
 string show(const LR& lr) {
@@ -170,5 +201,7 @@ string show(const Table& tab) {
 
 	return str;
 }
+
+
 
 }}} // namespace mdl::rus::expr
