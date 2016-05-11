@@ -106,13 +106,13 @@ void parse(Expr* ex, bool trace = false) {
 		case Action::REDUCE: {
 			Unit w = u;
 			vector<Term*> terms;
-			//for (Symbol s : boost::adaptors::reverse(act.val.prod->right)) {
 			for (uint i = 0; i < act.val.prod->right.size(); ++ i) {
 				if (w.term)
 					terms.push_back(w.term);
 				stack.pop_back();
 				w = stack.back();
 			}
+			std::reverse(terms.begin(), terms.end());
 			if (!tab.gotos.has(w.state)) {
 				string msg("goto table doesn't have a state.\n");
 				msg += string("state: ") + to_string(u.state->ind) + "\n";
@@ -153,7 +153,10 @@ void parse(Expr* ex, bool trace = false) {
 			assert(false && "Impossible");
 		}
 	}
-	//cout << endl << "AST:\n" << show_ast(*ex) << endl;
+	//cout << endl;
+	//cout << "expr: " << show(*ex) << endl;
+	//cout << "AST: " << show_ast(*ex) << endl;
+	//cout << endl;
 }
 
 } // anonymous namespace
