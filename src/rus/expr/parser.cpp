@@ -167,8 +167,12 @@ void enqueue(Expr& ex) {
 
 void parse() {
 	//cout << endl << show_lr() << endl;
-	cout << endl << "making table" << endl;
+	Timer t;
+	t.start();
+	cout << endl << "making table ... " << endl;
 	cout << table().show() << endl;
+	t.stop();
+	cout << "done in " << t << endl;
 	cout << show_grammar() << endl;
 	uint c = 0;
 	for (Expr* ex : queue) {

@@ -107,7 +107,8 @@ bool complement_tables(State* from, Symbol x, State* to, Table& table) {
 	Action act;
 	for (auto& i : from->items.s) {
 		Action a = construct_action(i, x, to);
-		if (act.kind != Action::NONE && a.kind != Action::NONE && a != act &&
+		if (act.kind != Action::NONE && a.kind != Action::NONE && a != act
+			&&
 			!(act.kind == Action::REDUCE && a.kind == Action::SHIFT) &&
 			!(act.kind == Action::SHIFT && a.kind == Action::REDUCE)) {
 			cout << endl << "conflicting actions: " << show(act) << " and " << show(a) << endl;
@@ -118,8 +119,9 @@ bool complement_tables(State* from, Symbol x, State* to, Table& table) {
 			//cout << endl << show_lr() << endl;
 			throw Error("non LR(1) grammar");
 		}
-		if (act.kind == Action::NONE ||
-			(a.kind == Action::SHIFT && act.kind == Action::REDUCE))
+		if (act.kind == Action::NONE
+			//|| (a.kind == Action::SHIFT && act.kind == Action::REDUCE))
+			|| (a.kind == Action::REDUCE && act.kind == Action::SHIFT))
 			act = a;
 	}
 	if (act.kind == Action::NONE)
