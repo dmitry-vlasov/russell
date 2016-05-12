@@ -55,9 +55,6 @@ inline bool is_turnstile(Symbol s) {
 	static Symbol t(Smm::mod().lex.symbols.toInt("|-"));
 	return s == t;
 }
-inline bool is_def(uint label) {
-	return Smm::get().lex.labels.toStr(label).substr(0,3) == "df-";
-}
 
 static rus::Type* translate_type(Symbol type_sy, State& state);
 
@@ -283,10 +280,17 @@ static void translate_def(const Assertion* ass, State& state) {
 	state.defs[ass] = def;
 }
 
+static bool is_def(const Assertion* ass) {
+	if (Smm::get().lex.labels.toStr(ass->prop.label).substr(0,3) != "df-") return false;
+	const Expr& ex = ass->prop.expr;
+	auto eq_pos = eq_position(ex);
+	return eq_pos != ex.symbols.end();
+}
+
 static rus::Node::Kind ass_kind(const Assertion* ass) {
 	if (!is_turnstile(ass->prop.expr.symbols.front())) {
 		return rus::Node::RULE;
-	} else if (is_def(ass->prop.label)) {
+	} else if (is_def(ass)) {
 		return rus::Node::DEF;
 	} else if (!ass->proof) {
 		return rus::Node::AXIOM;
