@@ -27,18 +27,26 @@ struct Action {
 		NONE, SHIFT, REDUCE, ACCEPT
 	};
 	union Value {
-		void*    none;
+		void*    ptr;
 		Product* prod;
 		State*   state;
 	};
 	Action() : kind(NONE), val() {
-		val.none = nullptr;
+		val.ptr = nullptr;
 	}
-	bool operator == (const Action& a) {
-		return kind == a.kind && val.none == a.val.none;
+	bool operator == (const Action& a) const {
+		return kind == a.kind && val.ptr == a.val.ptr;
 	}
-	bool operator != (const Action& a) {
+	bool operator != (const Action& a) const {
 		return !operator == (a);
+	}
+	bool operator < (const Action& a) const {
+		if (kind < a.kind)
+			return true;
+		else if (kind > a.kind)
+			return false;
+		else
+			return val.ptr < a.val.ptr;
 	}
 	Kind kind;
 	Value val;
@@ -47,7 +55,7 @@ struct Action {
 string show(const Action&);
 
 typedef Map<State*, Map<Symbol, State*>> Gotos;
-typedef Map<State*, Map<Symbol, Action>> Actions;
+typedef Map<State*, Map<Symbol, Set<Action>>> Actions;
 typedef Map<Type*, State*>               Inits;
 typedef Map<Type*, Symbol>               Vars;
 

@@ -181,7 +181,10 @@ string show(const Table& tab) {
 	for (auto p1 : tab.actions.m) {
 		str += "\t" + to_string(p1.first->ind) + " x\n";
 		for (auto p2 : p1.second.m) {
-			str += "\t\t" + expr::show(p2.first) + " |--> " + show(p2.second) + "\n";
+			str += "\t\t" + expr::show(p2.first) + " |--> {";
+			//for (auto act : p2.second.s)
+			//	str += show(act) + ", ";
+			str += "}\n";
 		}
 		str += "\n";
 	}
