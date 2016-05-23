@@ -78,7 +78,7 @@ void add_rule(Rule*);
 void add_const(Const*);
 //void parse(Expr& ex);
 
-void parse();
+bool parse();
 void enqueue(Expr& ex);
 
 Table& table();

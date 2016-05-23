@@ -47,10 +47,9 @@ exe mdl :
   
   src/rus/parser/parser.cpp
   
-  src/rus/expr/LR.cpp
+  src/rus/expr/GLR.cpp
   src/rus/expr/parser.cpp
   src/rus/expr/show.cpp
-  src/rus/expr/LR.cpp
   
   #src/rus/expr_grammar.cpp
   #src/rus/expr_parser.cpp

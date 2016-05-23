@@ -1,5 +1,5 @@
 #include "common.hpp"
-#include "rus/expr/LR.hpp"
+#include "GLR.hpp"
 
 namespace mdl { namespace rus { namespace expr {
 

@@ -27,7 +27,12 @@ namespace rus { namespace {
 bool parse_rus(Rus& rus) {
 	try {
 		rus.timers.read.start();
+		Timer t;
+		t.start();
+		cout << endl << "parsing russell source ... " << endl;
 		rus.source = parse(rus.config.in);
+		t.stop();
+		cout << "done in " << t << endl;
 		expr::parse();
 		//cout << *rus.source << endl;
 		rus.timers.read.stop();
