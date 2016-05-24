@@ -162,7 +162,7 @@ struct AddSymbol {
 struct ParseExpr {
 	template <typename T1, typename T2, typename T3>
 	struct result { typedef void type; };
-	void operator()(Expr& ex, Type* tp, vector<Vars> var_stack) const {
+	void operator()(Expr& ex, Type* tp, vector<Vars>& var_stack) const {
 		ex.type = tp;
 		mark_vars(ex, var_stack);
 		//parse_expr(ex);
@@ -173,7 +173,7 @@ struct ParseExpr {
 struct ParseTerm {
 	template <typename T1, typename T2, typename T3, typename T4>
 	struct result { typedef void type; };
-	void operator()(Expr& ex, Rule* r, vector<Vars> var_stack) const {
+	void operator()(Expr& ex, Rule* r, vector<Vars>& var_stack) const {
 		ex.type = r->type;
 		mark_vars(ex, var_stack);
 		parse_term(ex, r);
@@ -351,9 +351,9 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), ascii::space_type> {
 	qi::rule<Iterator, Symbol(), ascii::space_type> symb;
 	qi::rule<Iterator, uint(),        ascii::space_type> id;
 	qi::rule<Iterator, std::string(), ascii::space_type> path;
-	qi::rule<Iterator, Expr(Rule*), ascii::space_type> term;
-	qi::rule<Iterator, Expr(Type*), ascii::space_type> expr;
-	qi::rule<Iterator, Expr(Type*), ascii::space_type> plain;
+	qi::rule<Iterator, void(Expr&, Rule*), ascii::space_type> term;
+	qi::rule<Iterator, void(Expr&, Type*), ascii::space_type> expr;
+	qi::rule<Iterator, void(Expr&, Type*), ascii::space_type> plain;
 	qi::rule<Iterator, Disj(), ascii::space_type> disj;
 	qi::rule<Iterator, Vars(), qi::locals<Symbol>, ascii::space_type> vars;
 	qi::rule<Iterator, Hyp*(), qi::locals<uint>, ascii::space_type> hyp;

@@ -52,9 +52,13 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	id   = lexeme[+ ascii::char_("a-zA-Z0-9_.\\-")]        [_val = idToInt(_1)];
 	path = lexeme[+(ascii::char_ - ';' - ascii::space)];
 
-	term  = + (symb [addSymbol(_val, _1)] | comment) > eps [parseTerm(_val, _r1, phoenix::ref(var_stack))];
-	expr  = + (symb [addSymbol(_val, _1)] | comment) > eps [parseExpr(_val, _r1, phoenix::ref(var_stack))];
-	plain = + (symb [addSymbol(_val, _1)] | comment) > eps [phoenix::at_c<2>(_val) = _r1];
+	//term  = + (symb [addSymbol(_val, _1)] | comment) > eps [parseTerm(_val, _r1, phoenix::ref(var_stack))];
+	//expr  = + (symb [addSymbol(_val, _1)] | comment) > eps [parseExpr(_val, _r1, phoenix::ref(var_stack))];
+	//plain = + (symb [addSymbol(_val, _1)] | comment) > eps [phoenix::at_c<2>(_val) = _r1];
+
+	term  = + (symb [addSymbol(_r1, _1)] | comment) > eps [parseTerm(_r1, _r2, phoenix::ref(var_stack))];
+	expr  = + (symb [addSymbol(_r1, _1)] | comment) > eps [parseExpr(_r1, _r2, phoenix::ref(var_stack))];
+	plain = + (symb [addSymbol(_r1, _1)] | comment) > eps [phoenix::at_c<2>(_r1) = _r2];
 
 	disj =
 		lit("disjointed") > "("
@@ -78,8 +82,8 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> ":"
 		> id         [_a = _1]
 		> "=" > "|-"
-		> expr(findType(_a))
-		             [phoenix::at_c<1>(*_val) = _1]
+		> expr(phoenix::at_c<1>(*_val), findType(_a))
+		         /*   [phoenix::at_c<1>(*_val) = _1]*/
 		> lit(";");
 
 	hyp =
@@ -88,8 +92,8 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> ":"
 		> id         [_a = _1]
 		> "=" > "|-"
-		> expr(findType(_a))
-		             [phoenix::at_c<1>(*_val) = _1]
+		> expr(phoenix::at_c<1>(*_val), findType(_a))
+		         /*    [phoenix::at_c<1>(*_val) = _1]*/
 		> lit(";");
 
 	assertion =
@@ -140,8 +144,8 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		)
 		> refs(_r1) [phoenix::at_c<4>(*_val) = _1]
 		> "|-"
-		> expr(findType(_a))
-		        [phoenix::at_c<1>(*_val) = _1]
+		> expr(phoenix::at_c<1>(*_val), findType(_a))
+		     /*   [phoenix::at_c<1>(*_val) = _1]*/
 		> lit(";");
 
 	qed =
@@ -199,16 +203,19 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> "defiendum" > ":"
 		> id         [_b = findType(_1)]
 		> "=" > "#"
-		> expr(_b)   [phoenix::at_c<1>(*_val) = _1] > ";"
+		> expr(phoenix::at_c<1>(*_val), _b)
+					/* [phoenix::at_c<1>(*_val) = _1] */  > ";"
 		> "definiens" > ":"
 		> id         [_b = findType(_1)]
 		> "=" > "#"
-		> expr(_b)   [phoenix::at_c<2>(*_val) = _1] > ";"
+		> expr(phoenix::at_c<2>(*_val), _b)
+					/* [phoenix::at_c<2>(*_val) = _1] */ > ";"
 		> bar
 		> "prop" > ":"
 		> id         [_b = findType(_1)]
 		> "=" > "|-"
-		> plain(_b)  [phoenix::at_c<3>(*_val) = _1] > ";"
+		> plain(phoenix::at_c<3>(*_val), _b)
+					/*[phoenix::at_c<3>(*_val) = _1] */ > ";"
 		> eps        [assembleDef(_val, phoenix::ref(var_stack))]
 		> lit("}")   [pushVars(phoenix::ref(var_stack))]
 		> eps        [addToMath(_val)];
@@ -222,7 +229,8 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> ")" > "{" > "term" > ":"
 		> id         [phoenix::at_c<1>(*_val) = findType(_1)]
 		> "=" > "#"
-		> term(_val) [phoenix::at_c<3>(*_val) = _1] > ";"
+		> term(phoenix::at_c<3>(*_val), _val)
+					/* [phoenix::at_c<3>(*_val) = _1]*/ > ";"
 		> lit("}")   [addToMath(_val)]
 		> eps        [popVars(phoenix::ref(var_stack))];
 
