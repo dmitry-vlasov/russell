@@ -45,6 +45,28 @@ void make_closure(State& state) {
 	} while (new_items);
 }
 
+
+/*
+void make_closure(State& state) {
+	Items new_items;
+	for (const Item& i : state.items.s) {
+		new_items.s.insert(i);
+		Symbol x = i.get(0);
+		Symbol y = i.has(1) ? i.get(1) : i.lookahead;
+		if (!lr.rule_map.has(x))
+			continue;
+		for (Product* p : lr.rule_map[x].s) {
+			if (!lr.rtc_map.has(p))
+				continue;
+			for (Product* q : lr.rtc_map[p].s) {
+				new_items.s.insert(Item(q, y));
+			}
+		}
+	}
+	state.items = new_items;
+}
+*/
+
 State make_goto(const State& from, Symbol X) {
 	State to;
 	to.ind = -1;
@@ -185,8 +207,21 @@ void add_init_states(Table& table) {
 	}
 }
 
+void make_RTC() {
+	for (Product* p : lr.prod_vect) {
+		for (Product* q : lr.prod_vect) {
+			if (lr.rtc_map[q].has(p)) {
+				for (Product* r : lr.rtc_map[p].s) {
+					lr.rtc_map[q].s.insert(r);
+				}
+			}
+		}
+	}
+}
+
 Table create_table() {
 	Table table;
+	make_RTC();
 	add_init_states(table);
 	collect_states();
 	create_tables(table);
@@ -201,8 +236,14 @@ void add_product(Product* prod) {
 	lr.rule_map[prod->left].s.insert(prod);
 
 	add_first(prod);
-	for (Product* p : lr.prod_vect)
+	for (Product* p : lr.prod_vect) {
 		add_follow(p);
+
+		if (p->left == prod->right[0])
+			lr.rtc_map[prod].s.insert(p);
+		else if (prod->left == p->right[0])
+			lr.rtc_map[p].s.insert(p);
+	}
 }
 
 void add_var_product(Symbol s, Symbol s_) {

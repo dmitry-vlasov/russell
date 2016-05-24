@@ -31,9 +31,11 @@ struct Less<Item> {
 	}
 };
 
+typedef Set<Item, Less<Item>> Items;
+
 struct State {
-	Set<Item, Less<Item>> items;
-	uint                  ind;
+	Items items;
+	uint  ind;
 };
 
 string show(const State& st);
@@ -67,6 +69,8 @@ struct LR {
 	Set<State*, Less<State*>>  state_set;
 	Map<Type*, Product*>       init_map;
 	Map<Type*, Symbol>         var_map;
+
+	Map<Product*, Set<Product*>> rtc_map;
 
 	Map<State*, Map<Symbol, State*>> goto_map;
 

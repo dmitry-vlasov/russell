@@ -113,7 +113,7 @@ void Rus::run() {
 	if (!parse_rus(*this)) {
 		failed = true; return;
 	}
-	if (!unify_rus(*this)) {
+	/*if (!unify_rus(*this)) {
 		failed = true; return;
 	}
 	switch (config.mode) {
@@ -126,7 +126,7 @@ void Rus::run() {
 	case Config::TARG_RUS: write_rus(*this); break;
 	case Config::TARG_SMM: translate_rus(*this); break;
 	default : break;
-	}
+	}*/
 	timers.total.stop();
 	if (config.verbose)
 		cout << "done in " << timers.total << endl;

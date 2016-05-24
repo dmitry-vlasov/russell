@@ -179,7 +179,7 @@ bool parse() {
 	//cout << show_grammar() << endl;
 	uint c = 0;
 	bool ret = true;
-	t.start();
+	/*t.start();
 	cout << endl << "doing expression parsing ... " << endl;
 	for (Expr* ex : queue) {
 		if (!parse_GLR(ex)) {
@@ -195,7 +195,7 @@ bool parse() {
 	}
 	t.stop();
 	cout << "done in " << t << endl;
-	queue.clear();
+	queue.clear();*/
 	return ret;
 }
 
