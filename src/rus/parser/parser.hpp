@@ -11,32 +11,62 @@
 
 namespace mdl { namespace rus {
 
-namespace qi = boost::spirit::qi;
-namespace ascii = boost::spirit::ascii;
+namespace qi      = boost::spirit::qi;
+namespace ascii   = boost::spirit::ascii;
 namespace phoenix = boost::phoenix;
 
-inline Type* find_type(Vars& vars, Symbol s) {
-	for (auto var : vars.v)
-		if (var.lit == s.lit) return var.type;
-	return nullptr;
-}
+struct VarStack {
+	vector<Vars> stack;
+	Map<Symbol, Type*> map;
+};
 
-inline Type* find_type(vector<Vars>& var_stack, Symbol s) {
-	for (auto& vars : var_stack)
-		if (Type* tp = find_type(vars, s)) return tp;
-	return nullptr;
-}
+struct PushVars {
+	template <typename T1>
+	struct result { typedef void type; };
+	void operator()(VarStack& var_stack) const {
+		var_stack.stack.push_back(Vars());
+	}
+};
 
-static void mark_vars(Expr& ex, vector<Vars>& var_stack) {
+struct AddVars {
+	template <typename T1, typename T2>
+	struct result { typedef void type; };
+	void operator()(VarStack& var_stack, Vars vars) const {
+		for (auto v : vars.v) {
+			var_stack.stack.back().v.push_back(v);
+			var_stack.map[v.lit] = v.type;
+		}
+	}
+	void operator()(VarStack& var_stack, Theorem* thm) const {
+		for (auto v : thm->ass.vars.v) {
+			var_stack.stack.back().v.push_back(v);
+			var_stack.map[v.lit] = v.type;
+		}
+	}
+};
+
+struct PopVars {
+	template <typename T1>
+	struct result { typedef void type; };
+	void operator()(VarStack& var_stack) const {
+		Vars& vars = var_stack.stack.back();
+		for (auto v : vars.v)
+			var_stack.map.m.erase(v.lit);
+		var_stack.stack.pop_back();
+	}
+};
+
+static void mark_vars(Expr& ex, VarStack& var_stack) {
 	Expr::Node* n = ex.first;
 	while (n) {
-		n->symb.type = find_type(var_stack, n->symb);
-		bool is_var = n->symb.type != nullptr;
+		bool is_var = var_stack.map.has(n->symb.lit);
 		bool is_const = Rus::get().math.consts.has(n->symb);
 		if (is_const && is_var)
 			throw Error("constant symbol is marked as variable");
 		if (!is_const && !is_var)
 			throw Error("symbol neither constant nor variable");
+		if (is_var)
+			n->symb.type = var_stack.map[n->symb.lit];
 		n = n->next;
 	}
 }
@@ -62,8 +92,11 @@ Rule* create_super(Type* inf, Type* sup) {
 	rule->term.push_back(create_symbol("x", inf));
 	rule->type = sup;
 
-	vector<Vars> var_stack;
-	var_stack.push_back(rule->vars);
+	VarStack var_stack;
+	AddVars add_vars;
+	PushVars push_vars;
+	push_vars(var_stack);
+	add_vars(var_stack, rule->vars);
 	mark_vars(rule->term, var_stack);
 	parse_term(rule->term, rule);
 	return rule;
@@ -162,18 +195,16 @@ struct AddSymbol {
 struct ParseExpr {
 	template <typename T1, typename T2, typename T3>
 	struct result { typedef void type; };
-	void operator()(Expr& ex, Type* tp, vector<Vars>& var_stack) const {
+	void operator()(Expr& ex, Type* tp, VarStack& var_stack) const {
 		ex.type = tp;
 		mark_vars(ex, var_stack);
-		//parse_expr(ex);
-		//expr::enqueue(ex);
 	}
 };
 
 struct ParseTerm {
 	template <typename T1, typename T2, typename T3, typename T4>
 	struct result { typedef void type; };
-	void operator()(Expr& ex, Rule* r, vector<Vars>& var_stack) const {
+	void operator()(Expr& ex, Rule* r, VarStack& var_stack) const {
 		ex.type = r->type;
 		mark_vars(ex, var_stack);
 		parse_term(ex, r);
@@ -284,41 +315,10 @@ struct SetLocation {
     }
 };
 
-struct PushVars {
-	template <typename T1>
-	struct result { typedef void type; };
-	void operator()(vector<Vars>& var_stack) const {
-		var_stack.push_back(Vars());
-	}
-};
-
-struct AddVars {
-	template <typename T1, typename T2>
-	struct result { typedef void type; };
-	void operator()(vector<Vars>& var_stack, Vars vars) const {
-		for (auto v : vars.v) {
-			var_stack.back().v.push_back(v);
-		}
-	}
-	void operator()(vector<Vars>& var_stack, Theorem* thm) const {
-		for (auto v : thm->ass.vars.v) {
-			var_stack.back().v.push_back(v);
-		}
-	}
-};
-
-struct PopVars {
-	template <typename T1>
-	struct result { typedef void type; };
-	void operator()(vector<Vars>& varStack) const {
-		varStack.pop_back();
-	}
-};
-
 struct AssembleDef {
 	template <typename T1, typename T2>
 	struct result { typedef void type; };
-	void operator()(Def* d, vector<Vars>& varsStack) const {
+	void operator()(Def* d, VarStack& varsStack) const {
 		static Symbol dfm(Rus::mod().lex.symbs.toInt("defiendum"));
 		static Symbol dfs(Rus::mod().lex.symbs.toInt("definiens"));
 		Prop* prop = new Prop;
@@ -335,7 +335,6 @@ struct AssembleDef {
 		prop->ind = 0;
 		prop->expr.type = d->prop.type;
 		mark_vars(prop->expr, varsStack);
-		//parse_expr(prop->expr);
 		d->ass.props.push_back(prop);
 	}
 };
@@ -345,11 +344,11 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), ascii::space_type> {
 	Grammar();
 	void initNames();
 
-	vector<Vars> var_stack;
+	VarStack var_stack;
 	qi::rule<Iterator, qi::unused_type> bar;
 	qi::rule<Iterator, Symbol(), ascii::space_type> var;
 	qi::rule<Iterator, Symbol(), ascii::space_type> symb;
-	qi::rule<Iterator, uint(),        ascii::space_type> id;
+	qi::rule<Iterator, uint(), ascii::space_type> id;
 	qi::rule<Iterator, std::string(), ascii::space_type> path;
 	qi::rule<Iterator, void(Expr&, Rule*), ascii::space_type> term;
 	qi::rule<Iterator, void(Expr&, Type*), ascii::space_type> expr;
