@@ -71,6 +71,7 @@ struct LR {
 	Map<Type*, Symbol>         var_map;
 
 	Map<Product*, Set<Product*>> rtc_map;
+	Map<Product*, Map<Product*, bool>> rtc_map_1;
 
 	Map<State*, Map<Symbol, State*>> goto_map;
 

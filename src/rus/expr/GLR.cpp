@@ -29,15 +29,19 @@ void make_closure(State& state) {
 			Symbol b = i.get();
 			if (!lr.rule_map.has(b))
 				continue;
+			Symbol c = i.has(1) ? i.get(1) : i.lookahead;
+			if (!lr.first_map.has(c))
+				continue;
 			for (Product* p : lr.rule_map[b].s) {
-				Symbol c = i.has(1) ? i.get(1) : i.lookahead;
-				if (!lr.first_map.has(c))
+				if (!lr.rtc_map.has(p))
 					continue;
-				for (Symbol x : lr.first_map[c].s) {
-					Item j(p, x);
-					if (!state.items.has(j)) {
-						new_items = true;
-						state.items.s.insert(j);
+				for (Product* q : lr.rtc_map[p].s) {
+					for (Symbol x : lr.first_map[c].s) {
+						Item j(q, x);
+						if (!state.items.has(j)) {
+							new_items = true;
+							state.items.s.insert(j);
+						}
 					}
 				}
 			}
@@ -45,7 +49,6 @@ void make_closure(State& state) {
 	} while (new_items);
 }
 */
-
 
 void make_closure(State& state) {
 	Items new_items;
@@ -57,13 +60,18 @@ void make_closure(State& state) {
 		Symbol c = i.has(1) ? i.get(1) : i.lookahead;
 		if (!lr.first_map.has(c))
 			continue;
-		for (Product* p : lr.rule_map[b].s) {
-			if (!lr.rtc_map.has(p))
-				continue;
-			for (Product* q : lr.rtc_map[p].s) {
-				for (Symbol x : lr.first_map[c].s) {
+		for (Symbol x : lr.first_map[c].s) {
+			for (Product* p : lr.rule_map[b].s) {
+				if (!lr.rtc_map.has(p))
+					continue;
+				for (Product* q : lr.rtc_map[p].s) {
 					new_items.s.insert(Item(q, x));
 				}
+				/*for (Product* q : lr.prod_vect) {
+					if (lr.rtc_map_1[p][q]) {
+						new_items.s.insert(Item(q, x));
+					}
+				}*/
 			}
 		}
 	}
@@ -211,21 +219,44 @@ void add_init_states(Table& table) {
 	}
 }
 
-/*
+
 void make_RTC() {
 	for (Product* p : lr.prod_vect) {
 		for (Product* q : lr.prod_vect) {
-			if (lr.rtc_map[q].has(p)) {
-				for (Product* r : lr.rtc_map[p].s) {
-					lr.rtc_map[q].s.insert(r);
+			if (lr.rtc_map[p].has(q)) {
+				for (Product* r : lr.rtc_map[q].s) {
+					lr.rtc_map[p].s.insert(r);
 				}
 			}
 		}
 	}
 }
-*/
 
+void make_RTC_1() {
+	for (Product* p : lr.prod_vect) {
+		for (Product* q : lr.prod_vect) {
+			lr.rtc_map_1[p][q] = (p == q) || (q->left == p->right[0]);
+		}
+	}
+	for (Product* q : lr.prod_vect) {
+		for (Product* p : lr.prod_vect) {
+			if (lr.rtc_map_1[p][q]) {
+				for (Product* r : lr.prod_vect) {
+					lr.rtc_map_1[p][r] = lr.rtc_map_1[p][r] || lr.rtc_map_1[q][r];
+				}
+			}
+		}
+	}
+	for (Product* p : lr.prod_vect) {
+		for (Product* q : lr.prod_vect) {
+			if (lr.rtc_map_1[p][q]) {
+				lr.rtc_map[p].s.insert(q);
+			}
+		}
+	}
+}
 
+/*
 void make_RTC() {
 	for (Product* q : lr.prod_vect) {
 		for (Product* p : lr.prod_vect) {
@@ -234,7 +265,8 @@ void make_RTC() {
 					if (lr.rtc_map[r].has(p))
 						lr.rtc_map[r].s.insert(q);
 				}
-			} else if (lr.rtc_map[q].has(p)) {
+			}
+			if (lr.rtc_map[q].has(p)) {
 				for (Product* r : lr.prod_vect) {
 					if (lr.rtc_map[r].has(q))
 						lr.rtc_map[r].s.insert(p);
@@ -242,7 +274,7 @@ void make_RTC() {
 			}
 		}
 	}
-}
+}*/
 
 string show_RTC() {
 	string str("RTC:\n");
@@ -264,12 +296,34 @@ string show_RTC() {
 
 Table create_table() {
 	Table table;
+	Timer t;
+	t.start();
+	cout << endl << "making reflexive transitive closure ... " << flush;
 	make_RTC();
+	//make_RTC_1();
+	t.stop();
+	cout << "done in " << t << endl;
 	//cout << show_grammar() << endl;
 	//cout << show_RTC() << endl;
+
+	cout << endl << "init states ... " << flush;
+	t.start();
 	add_init_states(table);
+	t.stop();
+	cout << "done in " << t << endl;
+
+	cout << endl << "collect states ... " << flush;
+	t.start();
 	collect_states();
+	t.stop();
+	cout << "done in " << t << endl;
+
+	cout << endl << "creating tables ... " << flush;
+	t.start();
 	create_tables(table);
+	t.stop();
+	cout << "done in " << t << endl;
+
 	table.vars = lr.var_map;
 	return table;
 }
@@ -345,6 +399,7 @@ left(make_non_term(r->type)), right(), kind(k), rule(r), ind(prod_count++) {
 Product::Product(Symbol l, Symbol r, Kind k) :
 left(l), right(), kind(k), rule(nullptr), ind(prod_count++) {
 	right.push_back(r);
+	assert(left.type);
 }
 
 Table& table() {
