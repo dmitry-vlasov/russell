@@ -179,7 +179,7 @@ bool parse() {
 	//cout << show_grammar() << endl;
 	uint c = 0;
 	bool ret = true;
-	/*t.start();
+	t.start();
 	cout << endl << "doing expression parsing ... " << endl;
 	for (Expr* ex : queue) {
 		if (!parse_GLR(ex)) {
@@ -187,7 +187,7 @@ bool parse() {
 			cout << "error parsing expression: " << *ex << endl;
 			cout << "expression no.: " << c++ << endl;
 			ret = false;
-			//throw Error("expression syntax error");
+			throw Error("expression syntax error");
 			//parse(ex, true);
 			//cout << err.what() << endl;
 			//throw err;
@@ -195,7 +195,7 @@ bool parse() {
 	}
 	t.stop();
 	cout << "done in " << t << endl;
-	queue.clear();*/
+	queue.clear();
 	return ret;
 }
 

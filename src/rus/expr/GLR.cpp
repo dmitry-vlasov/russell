@@ -20,7 +20,7 @@ Symbol make_terminal(Type* t, const char* postfix = "") {
 
 uint prod_count = 0;
 uint state_count = 0;
-
+/*
 void make_closure(State& state) {
 	bool new_items = false;
 	do {
@@ -44,28 +44,32 @@ void make_closure(State& state) {
 		}
 	} while (new_items);
 }
+*/
 
 
-/*
 void make_closure(State& state) {
 	Items new_items;
 	for (const Item& i : state.items.s) {
 		new_items.s.insert(i);
-		Symbol x = i.get(0);
-		Symbol y = i.has(1) ? i.get(1) : i.lookahead;
-		if (!lr.rule_map.has(x))
+		Symbol b = i.get(0);
+		if (!lr.rule_map.has(b))
 			continue;
-		for (Product* p : lr.rule_map[x].s) {
+		Symbol c = i.has(1) ? i.get(1) : i.lookahead;
+		if (!lr.first_map.has(c))
+			continue;
+		for (Product* p : lr.rule_map[b].s) {
 			if (!lr.rtc_map.has(p))
 				continue;
 			for (Product* q : lr.rtc_map[p].s) {
-				new_items.s.insert(Item(q, y));
+				for (Symbol x : lr.first_map[c].s) {
+					new_items.s.insert(Item(q, x));
+				}
 			}
 		}
 	}
 	state.items = new_items;
 }
-*/
+
 
 State make_goto(const State& from, Symbol X) {
 	State to;
@@ -207,6 +211,7 @@ void add_init_states(Table& table) {
 	}
 }
 
+/*
 void make_RTC() {
 	for (Product* p : lr.prod_vect) {
 		for (Product* q : lr.prod_vect) {
@@ -218,10 +223,50 @@ void make_RTC() {
 		}
 	}
 }
+*/
+
+
+void make_RTC() {
+	for (Product* q : lr.prod_vect) {
+		for (Product* p : lr.prod_vect) {
+			if (lr.rtc_map[p].has(q)) {
+				for (Product* r : lr.prod_vect) {
+					if (lr.rtc_map[r].has(p))
+						lr.rtc_map[r].s.insert(q);
+				}
+			} else if (lr.rtc_map[q].has(p)) {
+				for (Product* r : lr.prod_vect) {
+					if (lr.rtc_map[r].has(q))
+						lr.rtc_map[r].s.insert(p);
+				}
+			}
+		}
+	}
+}
+
+string show_RTC() {
+	string str("RTC:\n");
+	for (auto pp : lr.rtc_map.m) {
+		Product* p = pp.first;
+		str += "\t" + show(*p) + " -> ";
+		if (pp.second.s.empty()) {
+			str += "EMPTY\n";
+		} else {
+			str += "{\n\t\t";
+			for (Product* q : pp.second.s) {
+				str += show(*q) + ", ";
+			}
+			str += "\n\t}\n";
+		}
+	}
+	return str;
+}
 
 Table create_table() {
 	Table table;
 	make_RTC();
+	//cout << show_grammar() << endl;
+	//cout << show_RTC() << endl;
 	add_init_states(table);
 	collect_states();
 	create_tables(table);
@@ -236,13 +281,14 @@ void add_product(Product* prod) {
 	lr.rule_map[prod->left].s.insert(prod);
 
 	add_first(prod);
+	lr.rtc_map[prod].s.insert(prod);
 	for (Product* p : lr.prod_vect) {
 		add_follow(p);
 
 		if (p->left == prod->right[0])
 			lr.rtc_map[prod].s.insert(p);
 		else if (prod->left == p->right[0])
-			lr.rtc_map[p].s.insert(p);
+			lr.rtc_map[p].s.insert(prod);
 	}
 }
 
@@ -273,11 +319,11 @@ string Table::show() const {
 	uint act_count = 0;
 	for (auto p : actions.m)
 		act_count += p.second.m.size();
-	str += "  actions:" + to_string(act_count) + "\n";
+	str += "  actions: " + to_string(act_count) + "\n";
 	uint goto_count = 0;
 	for (auto p : gotos.m)
 		goto_count += p.second.m.size();
-	str += "  gotos  :" + to_string(goto_count) + "\n";
+	str += "  gotos  : " + to_string(goto_count) + "\n";
 	return str;
 }
 
