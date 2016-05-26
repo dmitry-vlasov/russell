@@ -20,7 +20,7 @@ Symbol make_terminal(Type* t, const char* postfix = "") {
 
 uint prod_count = 0;
 uint state_count = 0;
-/*
+
 void make_closure(State& state) {
 	bool new_items = false;
 	do {
@@ -48,9 +48,8 @@ void make_closure(State& state) {
 		}
 	} while (new_items);
 }
-*/
 
-void make_closure(State& state) {
+void make_closure_fast(State& state) {
 	Items new_items;
 	for (const Item& i : state.items.s) {
 		new_items.s.insert(i);
@@ -78,6 +77,44 @@ void make_closure(State& state) {
 	state.items = new_items;
 }
 
+inline bool diff_items (const Item& i1, const Item& i2) {
+	return !(i1.prod == i2.prod && i1.lookahead == i2.lookahead && i1.dot == i2.dot);
+}
+
+bool diff_states (const State& s1, const State& s2) {
+	if (s1.items.s.size() != s2.items.s.size())
+		return true;
+	for (auto i : s1.items.s) {
+		if (s2.items.s.find(i) == s2.items.s.end())
+			return true;
+	}
+	return false;
+}
+
+string show_diff(const State& s1, const State& s2) {
+	string str;
+	str += "s1\\s2 = {\n";
+	int c = 0;
+	for (auto i : s1.items.s) {
+		if (s2.items.s.find(i) == s2.items.s.end()) {
+			str += "\t" + show(i) + ",\n";
+			if ((++ c) > 10)
+				break;
+		}
+	}
+	str += "}\n";
+	str += "s2\\s1 = {\n";
+	c = 0;
+	for (auto i : s2.items.s) {
+		if (s1.items.s.find(i) == s1.items.s.end()) {
+			str += "\t" + show(i) + ",\n";
+			if ((++ c) > 10)
+				break;
+		}
+	}
+	str += "}\n";
+	return str;
+}
 
 State make_goto(const State& from, Symbol X) {
 	State to;
@@ -88,7 +125,27 @@ State make_goto(const State& from, Symbol X) {
 			to.items.s.insert(it);
 		}
 	}
+	State x = to;
+	State y = to;
+	State z = to;
+	State a = to;
 	make_closure(to);
+	make_closure_fast(x);
+	if (diff_states(to, x)) {
+		cout << endl;
+		cout << "orig item:" << endl;
+		cout << show(a) << endl;
+		cout << "diff closures:" << endl;
+		cout << show_diff(to, x) << endl;
+		cout << show_grammar() << endl;
+		cout << "to = " << to.items.s.size() << endl;
+		cout << show(to) << endl;
+		cout << "x  = " << x.items.s.size() << endl;
+		cout << show(x)  << endl;
+		make_closure(y);
+		make_closure_fast(z);
+		throw Error("fuck off");
+	}
 	return to;
 }
 
@@ -280,13 +337,17 @@ string show_RTC() {
 	string str("RTC:\n");
 	for (auto pp : lr.rtc_map.m) {
 		Product* p = pp.first;
-		str += "\t" + show(*p) + " -> ";
 		if (pp.second.s.empty()) {
-			str += "EMPTY\n";
+			//str += "\t" + show(*p) + " -> ";
+			//str += "EMPTY\n";
+		} else if (pp.second.s.size() == 1) {
+			//str += "\t" + show(*p) + " -> ";
+			//str += "SINGULAR\n";
 		} else {
-			str += "{\n\t\t";
+			str += "\t" + show(*p) + " -> ";
+			str += "{\n";
 			for (Product* q : pp.second.s) {
-				str += show(*q) + ", ";
+				str += "\t\t" + show(*q) + ",\n";
 			}
 			str += "\n\t}\n";
 		}
@@ -298,8 +359,9 @@ Table create_table() {
 	Table table;
 	Timer t;
 	t.start();
-	cout << endl << "making reflexive transitive closure ... " << flush;
+	cout << endl << "making reflexive transitive closure ... " << endl;
 	make_RTC();
+	cout << show_RTC();
 	//make_RTC_1();
 	t.stop();
 	cout << "done in " << t << endl;
