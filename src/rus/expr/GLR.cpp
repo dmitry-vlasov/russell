@@ -32,17 +32,17 @@ void make_closure(State& state) {
 			Symbol c = i.has(1) ? i.get(1) : i.lookahead;
 			if (!lr.first_map.has(c))
 				continue;
-			for (Product* p : lr.rule_map[b].s) {
-				if (!lr.rtc_map.has(p))
-					continue;
-				for (Product* q : lr.rtc_map[p].s) {
-					for (Symbol x : lr.first_map[c].s) {
-						Item j(q, x);
+			for (Symbol x : lr.first_map[c].s) {
+				for (Product* p : lr.rule_map[b].s) {
+					//if (!lr.rtc_map.has(p))
+					//	continue;
+					//for (Product* q : lr.rtc_map[p].s) {
+						Item j(p, x);
 						if (!state.items.has(j)) {
 							new_items = true;
 							state.items.s.insert(j);
 						}
-					}
+					//}
 				}
 			}
 		}
@@ -125,7 +125,8 @@ State make_goto(const State& from, Symbol X) {
 			to.items.s.insert(it);
 		}
 	}
-	State x = to;
+	make_closure(to);
+	/*State x = to;
 	State y = to;
 	State z = to;
 	State a = to;
@@ -145,16 +146,36 @@ State make_goto(const State& from, Symbol X) {
 		make_closure(y);
 		make_closure_fast(z);
 		throw Error("fuck off");
-	}
+	}*/
 	return to;
 }
 
+struct StateSymb {
+	State* state;
+	Symbol symb;
+};
+
+struct LessStateSymb {
+	bool operator () (const StateSymb& s1, const StateSymb& s2) const {
+		static Less<State*> less;
+			 if (less(s1.state, s2.state)) return true;
+		else if (less(s2.state, s1.state)) return false;
+		else return s1.symb < s2.symb;
+	}
+};
+
 void collect_states() {
 	bool new_state = false;
+	Set<StateSymb, LessStateSymb> visited;
 	do {
 		new_state = false;
 		for (State* from : lr.state_set.s) {
 			for (Symbol x : lr.symbol_set.s) {
+				/*if (visited.has(StateSymb {from, x}))
+					continue;
+				else
+					visited.s.insert(StateSymb {from, x});*/
+
 				State t = make_goto(*from, x);
 				if (t.items.s.empty())
 					continue;
@@ -289,6 +310,27 @@ void make_RTC() {
 	}
 }
 
+
+bool check_RTC_1() {
+	bool correct = true;
+	for (Product* p : lr.prod_vect) {
+		for (Product* q : lr.prod_vect) {
+			for (Product* r : lr.prod_vect) {
+				if (lr.rtc_map_1[p][q] && lr.rtc_map_1[q][r] && !lr.rtc_map_1[p][r]) {
+					cout << endl;
+					cout << "RTC ERROR: has [p][q], [q][r] but don't have [p][r]" << endl;
+					cout << "p = " << show(*p) << endl;
+					cout << "q = " << show(*q) << endl;
+					cout << "r = " << show(*r) << endl;
+					correct = false;
+				}
+			}
+		}
+	}
+	return correct;
+}
+
+
 void make_RTC_1() {
 	for (Product* p : lr.prod_vect) {
 		for (Product* q : lr.prod_vect) {
@@ -304,12 +346,30 @@ void make_RTC_1() {
 			}
 		}
 	}
+	if (!check_RTC_1()) {
+		cout << "RTC_1 IS NOT CORRECT" << endl;
+	} else {
+		cout << "RTC_1 IS CORRECT" << endl;
+	}
 	for (Product* p : lr.prod_vect) {
 		for (Product* q : lr.prod_vect) {
 			if (lr.rtc_map_1[p][q]) {
 				lr.rtc_map[p].s.insert(q);
 			}
 		}
+	}
+	bool correct = true;
+	for (Product* p : lr.prod_vect) {
+		for (Product* q : lr.prod_vect) {
+			if (lr.rtc_map_1[p][q] != lr.rtc_map[p].has(q)) {
+				correct = false;
+			}
+		}
+	}
+	if (!correct) {
+		cout << "RTC IS NOT CORRECT" << endl;
+	} else {
+		cout << "RTC IS CORRECT" << endl;
 	}
 }
 
@@ -358,15 +418,19 @@ string show_RTC() {
 Table create_table() {
 	Table table;
 	Timer t;
+
+	/*
 	t.start();
 	cout << endl << "making reflexive transitive closure ... " << endl;
-	make_RTC();
+	//make_RTC();
+	make_RTC_1();
 	cout << show_RTC();
-	//make_RTC_1();
 	t.stop();
 	cout << "done in " << t << endl;
 	//cout << show_grammar() << endl;
 	//cout << show_RTC() << endl;
+	 *
+	 */
 
 	cout << endl << "init states ... " << flush;
 	t.start();

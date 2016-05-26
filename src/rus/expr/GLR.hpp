@@ -73,6 +73,9 @@ struct LR {
 	Map<Product*, Set<Product*>> rtc_map;
 	Map<Product*, Map<Product*, bool>> rtc_map_1;
 
+	Map<Item, Set<Item>> rtc_imap;
+	Map<Item, Map<Item, bool>> rtc_imap_1;
+
 	Map<State*, Map<Symbol, State*>> goto_map;
 
 	vector<State*>             state_vect;
