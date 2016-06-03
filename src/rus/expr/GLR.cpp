@@ -186,6 +186,7 @@ void collect_states() {
 					lr.state_vect.push_back(to);
 					lr.state_set.s.insert(to);
 					new_state = true;
+					lr.goto_map[from][x] = to;
 				} else {
 					to = *lr.state_set.s.find(&t);
 				}
@@ -373,25 +374,47 @@ void make_RTC_1() {
 	}
 }
 
-/*
-void make_RTC() {
+void make_iRTC_1() {
+	for (Product* p : lr.prod_vect) {
+		for (Product* q : lr.prod_vect) {
+			lr.rtc_map_1[p][q] = (p == q) || (q->left == p->right[0]);
+		}
+	}
 	for (Product* q : lr.prod_vect) {
 		for (Product* p : lr.prod_vect) {
-			if (lr.rtc_map[p].has(q)) {
+			if (lr.rtc_map_1[p][q]) {
 				for (Product* r : lr.prod_vect) {
-					if (lr.rtc_map[r].has(p))
-						lr.rtc_map[r].s.insert(q);
-				}
-			}
-			if (lr.rtc_map[q].has(p)) {
-				for (Product* r : lr.prod_vect) {
-					if (lr.rtc_map[r].has(q))
-						lr.rtc_map[r].s.insert(p);
+					lr.rtc_map_1[p][r] = lr.rtc_map_1[p][r] || lr.rtc_map_1[q][r];
 				}
 			}
 		}
 	}
-}*/
+	if (!check_RTC_1()) {
+		cout << "RTC_1 IS NOT CORRECT" << endl;
+	} else {
+		cout << "RTC_1 IS CORRECT" << endl;
+	}
+	for (Product* p : lr.prod_vect) {
+		for (Product* q : lr.prod_vect) {
+			if (lr.rtc_map_1[p][q]) {
+				lr.rtc_map[p].s.insert(q);
+			}
+		}
+	}
+	bool correct = true;
+	for (Product* p : lr.prod_vect) {
+		for (Product* q : lr.prod_vect) {
+			if (lr.rtc_map_1[p][q] != lr.rtc_map[p].has(q)) {
+				correct = false;
+			}
+		}
+	}
+	if (!correct) {
+		cout << "RTC IS NOT CORRECT" << endl;
+	} else {
+		cout << "RTC IS CORRECT" << endl;
+	}
+}
 
 string show_RTC() {
 	string str("RTC:\n");
