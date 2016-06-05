@@ -18,8 +18,12 @@ echo "smm -> rus"
 ../bin/release/smm -v -i ${file}.smm -o ${file}.rus
 echo -e 'done\n\n'
 
+echo "rus -> rus'"
+../bin/release/mdl -v -g -i ${file}.rus -o ${file}-1.rus
+echo -e 'done\n\n'
+
 echo "rus -> smm"
-../bin/release/mdl -v -i ${file}.rus -o ${file}-1.smm
+../bin/release/mdl -v -i ${file}-1.rus -o ${file}-1.smm
 echo -e 'done\n\n'
 
 echo "verify smm"
