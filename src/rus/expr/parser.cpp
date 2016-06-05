@@ -162,17 +162,86 @@ bool parse_GLR(Expr* ex, bool trace = false) {
 	return parse_GLR(tab, ex, n, Unit{init, nullptr, n, nullptr});
 }
 
-
-} // anonymous namespace
-
-void enqueue(Expr& ex) {
-	queue.push_back(&ex);
+inline Rule* find_super(Type* type, Type* super) {
+	auto it =type->supers.find(super);
+	if (it != type->supers.end())
+		return it->second;
+	else
+		return nullptr;
 }
 
-bool parse() {
+Term* parse_LL(Node* x, Type* type) {
+	if (x->symb.type){
+		if (x->symb.type == type)
+			return new Term(x);
+		else if (Rule* super = find_super(x->symb.type, type))
+			return new Term(x, super);
+	}
+	if (!type->rules.root) return nullptr;
+	vector<Term*> children;
+	Expr::Node* f = x;
+
+	stack<Tree<Rule*>::Node*> n;
+	stack<Expr::Node*> m;
+	n.push(type->rules.root);
+	m.push(x);
+
+	while (!n.empty() && !m.empty()) {
+		if (Type* tp = n.top()->symb.type) {
+			if (Term* child = parse_LL(m.top(), tp)) {
+				children.push_back(child);
+				m.top() = child->last;
+				if (!n.top()->next)
+					return new Term(f, m.top(), n.top()->data, children);
+				else if (!m.top()->next)
+					goto end;
+				else {
+					n.push(n.top()->next);
+					m.push(m.top()->next);
+				}
+				continue;
+			}
+		} else if (n.top()->symb == m.top()->symb) {
+			if (!n.top()->next)
+				return new Term(f, m.top(), n.top()->data, children);
+			else if (!m.top()->next)
+				goto end;
+			else {
+				n.push(n.top()->next);
+				m.push(m.top()->next);
+			}
+			continue;
+		}
+		while (!n.top()->side) {
+			n.pop();
+			m.pop();
+			if (n.empty() || m.empty()) goto end;
+		}
+		n.top() = n.top()->side;
+	}
+	end:
+	for (auto t : children) delete t;
+	return nullptr;
+}
+
+
+bool parse_LL(Expr* ex){
+	if (Term* term = parse_LL(ex->first, ex->type)) {
+		add_terms(term);
+		return true;
+	} else {
+		//trace = true;
+		//parse_term(ex.first, ex.type);
+		//throw Error("error at parsing", show(ex));
+		return false;
+	}
+}
+
+
+bool parse_LR() {
 	Timer t;
 	t.start();
-	cout << endl << "creating parsing tables ... " << endl;
+	cout << endl << "creating LR parsing tables ... " << endl;
 	cout << table().show() << endl;
 	t.stop();
 	cout << "done in " << t << endl;
@@ -180,7 +249,7 @@ bool parse() {
 	uint c = 0;
 	bool ret = true;
 	t.start();
-	cout << endl << "doing expression parsing ... " << endl;
+	cout << endl << "parsing with LR ... " << endl;
 	for (Expr* ex : queue) {
 		if (!parse_GLR(ex)) {
 			cout << endl;
@@ -195,8 +264,45 @@ bool parse() {
 	}
 	t.stop();
 	cout << "done in " << t << endl;
-	queue.clear();
 	return ret;
+}
+
+bool parse_LL() {
+	Timer t;
+	t.start();
+	cout << endl << "parsing with LL ... " << endl;
+	cout << "done in " << t << endl;
+	//cout << show_grammar() << endl;
+	uint c = 0;
+	bool ret = true;
+	for (Expr* ex : queue) {
+		if (!parse_LL(ex)) {
+			cout << "failure ";
+			cout << "expression no.: " << c++ << endl;
+			ret = false;
+			break;
+		}
+	}
+	t.stop();
+	cout << "done in " << t << endl;
+	return ret;
+}
+
+} // anonymous namespace
+
+void enqueue(Expr& ex) {
+	queue.push_back(&ex);
+}
+
+bool parse() {
+	if (parse_LL()) {
+		queue.clear();
+		return true;
+	} else if (parse_LR()) {
+		queue.clear();
+		return true;
+	} else
+		return false;
 }
 
 }}} // namespace mdl::rus::expr
