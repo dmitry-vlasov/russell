@@ -2,10 +2,12 @@
 
 file=$1
 
-if [ ! -d tmp ] 
+if [ -d tmp ] 
 then
-    mkdir tmp
+    rm -fr tmp
 fi
+
+mkdir tmp
 
 cp ${file}.mm ./tmp/${file}.mm
 cd tmp
@@ -35,7 +37,7 @@ echo "smm' -> mm'"
 echo -e 'done\n\n'
 
 echo "verify mm'"
-../bin/release/mm -v -i ${file}-1.mm
+metamath "read ${file}-1.mm" 'verify proof *' exit
 echo -e 'done\n'
 
 echo -e 'translation tests passed =)\n'

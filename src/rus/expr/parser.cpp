@@ -291,10 +291,10 @@ void enqueue(Expr& ex) {
 }
 
 bool parse() {
-	if (parse_LL()) {
+	/*if (parse_LL()) {
 		queue.clear();
 		return true;
-	} else if (parse_LR()) {
+	} else*/ if (parse_LR()) {
 		queue.clear();
 		return true;
 	} else
