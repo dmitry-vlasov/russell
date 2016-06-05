@@ -415,7 +415,7 @@ string show_RTC() {
 	return str;
 }
 
-Table create_table() {
+Table create_table(bool track_time) {
 	Table table;
 	Timer t;
 
@@ -432,23 +432,23 @@ Table create_table() {
 	 *
 	 */
 
-	cout << endl << "init states ... " << flush;
+	if (track_time) cout << "init states ... " << flush;
 	t.start();
 	add_init_states(table);
 	t.stop();
-	cout << "done in " << t << endl;
+	if (track_time) cout << "done in " << t << endl;
 
-	cout << endl << "collect states ... " << flush;
+	if (track_time) cout << "collect states ... " << flush;
 	t.start();
 	collect_states();
 	t.stop();
-	cout << "done in " << t << endl;
+	if (track_time) cout << "done in " << t << endl;
 
-	cout << endl << "creating tables ... " << flush;
+	if (track_time) cout << "creating tables ... " << flush;
 	t.start();
 	create_tables(table);
 	t.stop();
-	cout << "done in " << t << endl;
+	if (track_time) cout << "done in " << t << endl;
 
 	table.vars = lr.var_map;
 	return table;
@@ -529,7 +529,7 @@ left(l), right(), kind(k), rule(nullptr), ind(prod_count++) {
 }
 
 Table& table() {
-	static Table table = create_table();
+	static Table table = create_table(false);
 	return table;
 }
 

@@ -241,15 +241,15 @@ bool parse_LL(Expr* ex){
 bool parse_LR() {
 	Timer t;
 	t.start();
-	cout << endl << "creating LR parsing tables ... " << endl;
-	cout << table().show() << endl;
+	cout << "creating LR parsing tables ... " << endl;
+	cout << table().show();
 	t.stop();
 	cout << "done in " << t << endl;
 	//cout << show_grammar() << endl;
 	uint c = 0;
 	bool ret = true;
 	t.start();
-	cout << endl << "parsing with LR ... " << endl;
+	cout << "parsing with LR ... " << flush;
 	for (Expr* ex : queue) {
 		if (!parse_GLR(ex)) {
 			cout << endl;
@@ -270,15 +270,11 @@ bool parse_LR() {
 bool parse_LL() {
 	Timer t;
 	t.start();
-	cout << endl << "parsing with LL ... " << endl;
-	cout << "done in " << t << endl;
-	//cout << show_grammar() << endl;
-	uint c = 0;
+	cout << "parsing with LL ... " << flush;
 	bool ret = true;
 	for (Expr* ex : queue) {
 		if (!parse_LL(ex)) {
-			cout << "failure ";
-			cout << "expression no.: " << c++ << endl;
+			cout << "failed. ";
 			ret = false;
 			break;
 		}

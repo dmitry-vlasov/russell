@@ -29,7 +29,7 @@ bool parse_rus(Rus& rus) {
 		rus.timers.read.start();
 		Timer t;
 		t.start();
-		cout << endl << "parsing russell source ... " << endl;
+		cout << "parsing russell source ... " << flush;
 		rus.source = parse(rus.config.in);
 		t.stop();
 		cout << "done in " << t << endl;
@@ -109,7 +109,7 @@ bool write_rus(Rus& rus) {
 void Rus::run() {
 	timers.total.start();
 	if (config.verbose)
-		cout << "processing file " << config.in << " ... " << flush;
+		cout << "processing file " << config.in << " ... " << endl;
 	if (!parse_rus(*this)) {
 		failed = true; return;
 	}
