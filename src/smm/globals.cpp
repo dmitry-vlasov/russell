@@ -26,7 +26,7 @@ namespace smm {
 void Smm::run() {
 	timers.total.start();
 	if (config.verbose)
-		cout << "verifying file " << config.in << " ... " << flush;
+		cout << "verifying file " << config.in << " ... " << endl;
 	if (!parse()) {
 		failed = true; return;
 	}
@@ -38,7 +38,7 @@ void Smm::run() {
 	}
 	timers.total.stop();
 	if (config.verbose)
-		cout << "done in " << timers.total << endl;
+		cout << "all done in " << timers.total << endl;
 }
 
 bool Smm::parse() {

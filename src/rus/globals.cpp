@@ -29,7 +29,7 @@ bool parse_rus(Rus& rus) {
 		rus.timers.read.start();
 		Timer t;
 		t.start();
-		cout << endl << "parsing russell source ... " << endl;
+		cout << "parsing russell source ... " << flush;
 		rus.source = parse(rus.config.in);
 		t.stop();
 		cout << "done in " << t << endl;
@@ -109,11 +109,11 @@ bool write_rus(Rus& rus) {
 void Rus::run() {
 	timers.total.start();
 	if (config.verbose)
-		cout << "processing file " << config.in << " ... " << flush;
+		cout << "processing file " << config.in << " ... " << endl;
 	if (!parse_rus(*this)) {
 		failed = true; return;
 	}
-	/*if (!unify_rus(*this)) {
+	if (!unify_rus(*this)) {
 		failed = true; return;
 	}
 	switch (config.mode) {
@@ -126,10 +126,10 @@ void Rus::run() {
 	case Config::TARG_RUS: write_rus(*this); break;
 	case Config::TARG_SMM: translate_rus(*this); break;
 	default : break;
-	}*/
+	}
 	timers.total.stop();
 	if (config.verbose)
-		cout << "done in " << timers.total << endl;
+		cout << "all done in " << timers.total << endl;
 }
 
 ostream& operator << (ostream& os, const Rus& s) {
