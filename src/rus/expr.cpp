@@ -149,7 +149,7 @@ inline Rule* find_super(Type* type, Type* super) {
 }
 
 void assemble_expr(Expr& ex, const ExprTerm* t) {
-	if (!t->rule) {
+	if (t->isvar()) {
 		ex.push_back(t->first->symb);
 		ExprTerm* at = new ExprTerm(ex.first);
 		ex.first->init.push_back(at);
@@ -159,9 +159,15 @@ void assemble_expr(Expr& ex, const ExprTerm* t) {
 	uint i = 0;
 	Expr::Node* n = t->rule->term.first;
 	while (n) {
-		if (n->symb.type)
-			assemble_expr(ex, t->children[i++]);
-		else
+		if (n->symb.type) {
+			if (i + 1 > t->children.size()) {
+				cout << " ERROR!!" << endl;
+				ex.push_back(Symbol("<<"));
+				ex.push_back(n->symb);
+				ex.push_back(Symbol(">>"));
+			} else
+				assemble_expr(ex, t->children[i++]);
+		} else
 			ex.push_back(n->symb);
 		n = n->next;
 	}
@@ -170,11 +176,15 @@ void assemble_expr(Expr& ex, const ExprTerm* t) {
 	ex.last->final.push_back(at);
 }
 
-Expr assemble(const Expr& ex) {
+Expr assemble(const ExprTerm* t) {
 	Expr e;
-	assemble_expr(e, ex.term());
-	e.type = ex.type;
+	assemble_expr(e, t);
+	e.type = t->rule ? t->rule->type : t->first->symb.type;
 	return e;
+}
+
+Expr assemble(const Expr& ex) {
+	return assemble(ex.term());
 }
 
 void add_terms(Term<node::Expr>* term) {

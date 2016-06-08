@@ -129,6 +129,12 @@ void enqueue_expressions(Proof* proof) {
 	}
 }
 
+void enqueue_expressions(Def* def) {
+	expr::enqueue(def->dfm);
+	expr::enqueue(def->dfs);
+	enqueue_expressions(def->ass);
+}
+
 struct AddToMath {
 	void operator()(Const* c) const {
 		Rus::mod().math.consts.s.insert(c->symb);
@@ -153,7 +159,7 @@ struct AddToMath {
 	}
 	void operator()(Def* d) const {
 		Rus::mod().math.defs[d->ass.id] = d;
-		enqueue_expressions(d->ass);
+		enqueue_expressions(d);
 	}
 	void operator()(Theorem* th) const {
 		Rus::mod().math.theorems[th->ass.id] = th;

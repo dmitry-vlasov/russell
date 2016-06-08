@@ -7,6 +7,7 @@ namespace mdl { namespace rus { namespace expr { namespace {
 
 typedef Expr::Node Node;
 typedef Term<Node> Term;
+typedef Tree<Rule*>::Node TreeNode;
 
 struct Unit {
 	State* state;
@@ -170,7 +171,22 @@ inline Rule* find_super(Type* type, Type* super) {
 		return nullptr;
 }
 
-Term* parse_LL(Node* x, Type* type) {
+string show_stack(vector<TreeNode*>& n, vector<Node*>& m) {
+	string str;
+	str += "n = ";
+	for (TreeNode* n_node : n)
+		str += rus::show(n_node->symb, true) + " ";
+	str += "\n";
+	str += "m = ";
+	for (Node* m_node : m)
+		str += rus::show(m_node->symb, true) + " ";
+	str += "\n";
+	return str;
+}
+
+bool shit = false;
+
+Term* parse_LL(Node* x, Type* type, bool trace) {
 	if (x->symb.type){
 		if (x->symb.type == type)
 			return new Term(x);
@@ -179,45 +195,53 @@ Term* parse_LL(Node* x, Type* type) {
 	}
 	if (!type->rules.root) return nullptr;
 	vector<Term*> children;
-	Expr::Node* f = x;
+	Node* f = x;
 
-	stack<Tree<Rule*>::Node*> n;
-	stack<Expr::Node*> m;
-	n.push(type->rules.root);
-	m.push(x);
+	vector<TreeNode*> n;
+	vector<Node*> m;
+	n.push_back(type->rules.root);
+	m.push_back(x);
 
 	while (!n.empty() && !m.empty()) {
-		if (Type* tp = n.top()->symb.type) {
-			if (Term* child = parse_LL(m.top(), tp)) {
+		//if (trace) cout << "trying: " << show_stack(n, m) << endl;
+		if (Type* tp = n.back()->symb.type) {
+			if (Term* child = parse_LL(m.back(), tp, trace)) {
+				if (trace) {
+					add_terms(child);
+					cout << "trying: " << show_stack(n, m);
+					cout << "got term: " << show(*child) << endl;
+					cout << "assembled: " << assemble(child) << endl << endl;
+				}
 				children.push_back(child);
-				m.top() = child->last;
-				if (!n.top()->next)
-					return new Term(f, m.top(), n.top()->data, children);
-				else if (!m.top()->next)
+				m.back() = child->last;
+				if (!n.back()->next) {
+
+					return new Term(f, m.back(), n.back()->data, children);
+				} else if (!m.back()->next)
 					goto end;
 				else {
-					n.push(n.top()->next);
-					m.push(m.top()->next);
+					n.push_back(n.back()->next);
+					m.push_back(m.back()->next);
 				}
 				continue;
 			}
-		} else if (n.top()->symb == m.top()->symb) {
-			if (!n.top()->next)
-				return new Term(f, m.top(), n.top()->data, children);
-			else if (!m.top()->next)
+		} else if (n.back()->symb == m.back()->symb) {
+			if (!n.back()->next)
+				return new Term(f, m.back(), n.back()->data, children);
+			else if (!m.back()->next)
 				goto end;
 			else {
-				n.push(n.top()->next);
-				m.push(m.top()->next);
+				n.push_back(n.back()->next);
+				m.push_back(m.back()->next);
 			}
 			continue;
 		}
-		while (!n.top()->side) {
-			n.pop();
-			m.pop();
+		while (!n.back()->side) {
+			n.pop_back();
+			m.pop_back();
 			if (n.empty() || m.empty()) goto end;
 		}
-		n.top() = n.top()->side;
+		n.back() = n.back()->side;
 	}
 	end:
 	for (auto t : children) delete t;
@@ -225,8 +249,12 @@ Term* parse_LL(Node* x, Type* type) {
 }
 
 
-bool parse_LL(Expr* ex){
-	if (Term* term = parse_LL(ex->first, ex->type)) {
+bool parse_LL(Expr* ex, bool trace = false){
+	if (Term* term = parse_LL(ex->first, ex->type, trace)) {
+		if (shit) {
+			cout << endl << "shit" << endl;
+			cout << "got term: " << show(*term) << endl << endl;
+		}
 		add_terms(term);
 		return true;
 	} else {
@@ -261,6 +289,12 @@ bool parse_LR() {
 			//cout << err.what() << endl;
 			//throw err;
 		}
+		Expr e = assemble(*ex);
+		if (e != *ex) {
+			cout << "e  = " << e << endl;
+			cout << "ex = " << *ex << endl;
+			throw Error("expression syntax error");
+		}
 	}
 	t.stop();
 	cout << "done in " << t << endl;
@@ -272,12 +306,28 @@ bool parse_LL() {
 	t.start();
 	cout << "parsing with LL ... " << flush;
 	bool ret = true;
+	cout << endl;
+	int c = 0;
 	for (Expr* ex : queue) {
+		cout << "doing " << c++ << " : " << show(*ex) << " ... " << flush;
+		if (c == 23288) {
+			cout << "AAA";
+			shit = true;
+		}
 		if (!parse_LL(ex)) {
 			cout << "failed. ";
 			ret = false;
 			break;
 		}
+
+		Expr e = assemble(*ex);
+		if (e != *ex) {
+			cout << "e  = " << e << endl;
+			cout << "ex = " << *ex << endl;
+			parse_LL(ex, true);
+			throw Error("expression syntax error");
+		}
+		cout << " DONE" << endl;
 	}
 	t.stop();
 	cout << "done in " << t << endl;
@@ -291,10 +341,10 @@ void enqueue(Expr& ex) {
 }
 
 bool parse() {
-	/*if (parse_LL()) {
+	if (parse_LL()) {
 		queue.clear();
 		return true;
-	} else*/ if (parse_LR()) {
+	} else if (parse_LR()) {
 		queue.clear();
 		return true;
 	} else

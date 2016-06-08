@@ -90,9 +90,11 @@ bool write_rus(Rus& rus) {
 		if (rus.config.verbose)
 			cout << "replicating file " << rus.config.in << " ... " << flush;
 		//cout << endl << *rus.source;
+		rus.timers.translate.start();
 		ofstream out(rus.config.out);
 		out << *rus.source << endl;
 		out.close();
+		rus.timers.translate.stop();
 		if (rus.config.verbose)
 			cout << "done in " << rus.timers.translate << endl;
 		return true;
@@ -113,7 +115,7 @@ void Rus::run() {
 	if (!parse_rus(*this)) {
 		failed = true; return;
 	}
-	if (!unify_rus(*this)) {
+	if (config.mode != Config::MODE_GRAMM && !unify_rus(*this)) {
 		failed = true; return;
 	}
 	switch (config.mode) {
