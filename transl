@@ -36,9 +36,9 @@ echo "smm' -> mm'"
 ../bin/release/smm -v -i ${file}-1.smm -o ${file}-1.mm
 echo -e 'done\n\n'
 
-echo "verify mm'"
-metamath "read ${file}-1.mm" 'verify proof *' exit
-echo -e 'done\n'
+#echo "verify mm'"
+#../metamath "read ${file}-1.mm" 'verify proof *' exit
+#echo -e 'done\n'
 
 echo -e 'translation tests passed =)\n'
 

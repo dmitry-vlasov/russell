@@ -171,16 +171,30 @@ inline Rule* find_super(Type* type, Type* super) {
 		return nullptr;
 }
 
-string show_stack(vector<TreeNode*>& n, vector<Node*>& m) {
+string show_stack(vector<TreeNode*>& n, vector<Node*>& m, vector<TreeNode*>& childnodes) {
 	string str;
-	str += "n = ";
+	str += "stack n = ";
 	for (TreeNode* n_node : n)
 		str += rus::show(n_node->symb, true) + " ";
 	str += "\n";
-	str += "m = ";
+	str += "stack m = ";
 	for (Node* m_node : m)
 		str += rus::show(m_node->symb, true) + " ";
 	str += "\n";
+	/*str += "childnodes = ";
+	for (TreeNode* m_node : childnodes)
+		str += rus::show(m_node->symb, true) + " ";
+	str += "\n";*/
+	return str;
+}
+
+string show_node(Node* x) {
+	string str;
+	str += "expr = ";
+	while (x) {
+		str += rus::show(x->symb, true) + " ";
+		x = x->next;
+	}
 	return str;
 }
 
@@ -195,6 +209,7 @@ Term* parse_LL(Node* x, Type* type, bool trace) {
 	}
 	if (!type->rules.root) return nullptr;
 	vector<Term*> children;
+	vector<TreeNode*> childnodes;
 	Node* f = x;
 
 	vector<TreeNode*> n;
@@ -202,33 +217,65 @@ Term* parse_LL(Node* x, Type* type, bool trace) {
 	n.push_back(type->rules.root);
 	m.push_back(x);
 
+	static int c_1 = 0;
+	static int c_2 = 0;
+
+	if (trace)  {
+		cout << endl;
+		cout << "PARSING: " << endl;
+		cout << show_node(x);
+	}
+
 	while (!n.empty() && !m.empty()) {
-		//if (trace) cout << "trying: " << show_stack(n, m) << endl;
+		if (trace)  {
+			c_1 ++;
+			cout << endl;
+			cout << "c_1 = " << c_1 << endl;
+			cout << "trying: " << endl;
+			cout << show_stack(n, m, childnodes);
+		}
 		if (Type* tp = n.back()->symb.type) {
 			if (Term* child = parse_LL(m.back(), tp, trace)) {
 				if (trace) {
+					c_2 ++;
 					add_terms(child);
-					cout << "trying: " << show_stack(n, m);
-					cout << "got term: " << show(*child) << endl;
-					cout << "assembled: " << assemble(child) << endl << endl;
+					if (c_2 == 3) {
+						cout << "FUCKING SHIT" << endl;
+					}
+					cout << "c_2 = " << c_2 << endl;
+					cout << "got child: " << show(*child) << endl;
+					//cout << "assembled: " << assemble(child) << endl << endl;
 				}
 				children.push_back(child);
-				m.back() = child->last;
+				childnodes.push_back(n.back());
+				//m.back() = child->last;
 				if (!n.back()->next) {
-
-					return new Term(f, m.back(), n.back()->data, children);
-				} else if (!m.back()->next)
+					Term* t = new Term(f, child->last, n.back()->data, children);
+					if (trace) {
+						//cout << "children.size() = " << children.size() << endl;
+						cout << "RETURN: " << show(*t) << endl;
+						//cout << "assembled: " << assemble(t) << endl << endl;
+					}
+					return t;
+				} else if (!child->last->next)
 					goto end;
 				else {
 					n.push_back(n.back()->next);
-					m.push_back(m.back()->next);
+					m.push_back(child->last->next);
 				}
 				continue;
 			}
 		} else if (n.back()->symb == m.back()->symb) {
-			if (!n.back()->next)
-				return new Term(f, m.back(), n.back()->data, children);
-			else if (!m.back()->next)
+			if (!n.back()->next) {
+				Term* t = new Term(f, m.back(), n.back()->data, children);
+				if (trace) {
+						//cout << "stacks: " << show_stack(n, m, childnodes);
+						//cout << "children.size() = " << children.size() << endl;
+						cout << "RETURN: " << show(*t) << endl;
+						//cout << "assembled: " << assemble(t) << endl << endl;
+					}
+				return t;
+			} else if (!m.back()->next)
 				goto end;
 			else {
 				n.push_back(n.back()->next);
@@ -237,8 +284,27 @@ Term* parse_LL(Node* x, Type* type, bool trace) {
 			continue;
 		}
 		while (!n.back()->side) {
+			/*if (trace) {
+				cout << "POPPING: " << endl;
+				cout << "stacks before: " << show_stack(n, m, childnodes);
+				cout << "children.size() before = " << children.size() << endl;
+			}*/
+			/*if (!childnodes.empty() && childnodes.back() == n.back()) {
+				children.pop_back();
+				childnodes.pop_back();
+			}*/
 			n.pop_back();
 			m.pop_back();
+			if (!childnodes.empty() && childnodes.back() == n.back()) {
+				children.pop_back();
+				childnodes.pop_back();
+			}
+
+			/*if (trace) {
+				cout << "stacks AFTER: " << show_stack(n, m, childnodes);
+				cout << "children.size() AFTER = " << children.size() << endl << endl;
+			}*/
+
 			if (n.empty() || m.empty()) goto end;
 		}
 		n.back() = n.back()->side;
@@ -306,16 +372,17 @@ bool parse_LL() {
 	t.start();
 	cout << "parsing with LL ... " << flush;
 	bool ret = true;
-	cout << endl;
-	int c = 0;
+	//cout << endl;
+	//int c = 0;
 	for (Expr* ex : queue) {
-		cout << "doing " << c++ << " : " << show(*ex) << " ... " << flush;
-		if (c == 23288) {
+		/*cout << "doing " << c++ << " : " << show(*ex) << " ... " << flush;
+		if (c == 26020) {
 			cout << "AAA";
 			shit = true;
-		}
+		}*/
 		if (!parse_LL(ex)) {
 			cout << "failed. ";
+			//parse_LL(ex, true);
 			ret = false;
 			break;
 		}
@@ -327,7 +394,7 @@ bool parse_LL() {
 			parse_LL(ex, true);
 			throw Error("expression syntax error");
 		}
-		cout << " DONE" << endl;
+		//cout << " DONE" << endl;
 	}
 	t.stop();
 	cout << "done in " << t << endl;
