@@ -12,9 +12,24 @@ mkdir tmp
 cp ${file}.mm ./tmp/${file}.mm
 cd tmp
 
+echo "MM <-> SMM TRANSLATION"
+
 echo "mm -> smm"
 ../bin/release/mm  -v -i ${file}.mm  -o $file.smm
 echo -e 'done\n\n'
+
+echo "smm -> mm"
+../bin/release/smm -v -i ${file}.smm -o ${file}-0.mm
+echo -e 'done\n\n'
+
+echo "verify mm"
+../metamath "read ${file}-0.mm" 'verify proof *' exit
+echo -e 'done\n'
+
+echo
+echo
+
+echo "MM <-> RUS TRANSLATION"
 
 echo "smm -> rus"
 ../bin/release/smm -v -i ${file}.smm -o ${file}.rus
@@ -32,13 +47,18 @@ echo "verify smm'"
 ../bin/release/smm -v -i ${file}-1.smm
 echo -e 'done\n'
 
+echo
+echo
+
+echo "MM' VERIFICATION"
+
 echo "smm' -> mm'"
 ../bin/release/smm -v -i ${file}-1.smm -o ${file}-1.mm
 echo -e 'done\n\n'
 
-#echo "verify mm'"
-#../metamath "read ${file}-1.mm" 'verify proof *' exit
-#echo -e 'done\n'
+echo "verify mm'"
+../metamath "read ${file}-1.mm" 'verify proof *' exit
+echo -e 'done\n'
 
 echo -e 'translation tests passed =)\n'
 
