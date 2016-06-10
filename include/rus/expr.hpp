@@ -4,6 +4,8 @@
 
 namespace mdl { namespace rus {
 
+#define END_MARKER ";;"
+
 struct Type;
 
 struct Symbol {

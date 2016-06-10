@@ -47,10 +47,10 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	const phoenix::function<SetLocation<Iterator>> setLocation;
 
 	bar  = lexeme[lit("-----")] >> * ascii::char_('-');
-	var  = lexeme[+ ascii::char_("a-zA-Z0-9_.\\-")]        [at_c<0>(_val) = symbToInt(_1)];
-	symb = lexeme[+(ascii::char_ - ';' - ascii::space)]    [at_c<0>(_val) = symbToInt(_1)];
-	id   = lexeme[+ ascii::char_("a-zA-Z0-9_.\\-")]        [_val = idToInt(_1)];
-	path = lexeme[+(ascii::char_ - ';' - ascii::space)];
+	var  = lexeme[+(ascii::char_ - END_MARKER - ascii::space - ascii::char_("),"))] [at_c<0>(_val) = symbToInt(_1)];
+	symb = lexeme[+(ascii::char_ - END_MARKER - ascii::space)] [at_c<0>(_val) = symbToInt(_1)];
+	id   = lexeme[+ ascii::char_("a-zA-Z0-9_.\\-")]            [_val = idToInt(_1)];
+	path = lexeme[+(ascii::char_ - END_MARKER - ascii::space)];
 
 	term  = + (symb [addSymbol(_r1, _1)] | comment) > eps [parseTerm(_r1, _r2, phoenix::ref(var_stack))];
 	expr  = + (symb [addSymbol(_r1, _1)] | comment) > eps [parseExpr(_r1, _r2, phoenix::ref(var_stack))];
@@ -79,7 +79,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> id         [_a = _1]
 		> "=" > "|-"
 		> expr(phoenix::at_c<1>(*_val), findType(_a))
-		> lit(";");
+		> lit(END_MARKER);
 
 	hyp =
 		lit("hyp")   [_val = new_<Hyp>()]
@@ -88,7 +88,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> id         [_a = _1]
 		> "=" > "|-"
 		> expr(phoenix::at_c<1>(*_val), findType(_a))
-		> lit(";");
+		> lit(END_MARKER);
 
 	assertion =
 		  id         [phoenix::at_c<0>(*_r1) = _1]
@@ -139,7 +139,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> refs(_r1) [phoenix::at_c<4>(*_val) = _1]
 		> "|-"
 		> expr(phoenix::at_c<1>(*_val), findType(_a))
-		> lit(";");
+		> lit(END_MARKER);
 
 	qed =
 		lit("prop") [_val = new_<Qed>()]
@@ -148,7 +148,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> lit("=")  [phoenix::at_c<0>(*_val) = getProp(_a - 1, _r1)]
 		> "step"
 		> uint_     [phoenix::at_c<1>(*_val) = getStep(_1 - 1, _r1)]
-		> ";";
+		> END_MARKER;
 
 	proof_elem = (
 		("step"  > step(_r1) [_val = phoenix::construct<Proof::Elem>(_1)]) |
@@ -157,7 +157,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 
 	proof_body =
 		lit("{")   [pushVars(phoenix::ref(var_stack))]
-		> - ("var" > vars [phoenix::at_c<1>(*_r1) = _1] > lit(";"))
+		> - ("var" > vars [phoenix::at_c<1>(*_r1) = _1] > lit(END_MARKER))
 		> + proof_elem(_r1)[push_back(phoenix::at_c<2>(*_r1), _1)]
 		> lit("}") [popVars(phoenix::ref(var_stack))];
 
@@ -196,16 +196,16 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> "defiendum" > ":"
 		> id         [_b = findType(_1)]
 		> "=" > "#"
-		> expr(phoenix::at_c<1>(*_val), _b) > ";"
+		> expr(phoenix::at_c<1>(*_val), _b) > END_MARKER
 		> "definiens" > ":"
 		> id         [_b = findType(_1)]
 		> "=" > "#"
-		> expr(phoenix::at_c<2>(*_val), _b) > ";"
+		> expr(phoenix::at_c<2>(*_val), _b) > END_MARKER
 		> bar
 		> "prop" > ":"
 		> id         [_b = findType(_1)]
 		> "=" > "|-"
-		> plain(phoenix::at_c<3>(*_val), _b) > ";"
+		> plain(phoenix::at_c<3>(*_val), _b) > END_MARKER
 		> eps        [assembleDef(_val, phoenix::ref(var_stack))]
 		> lit("}")   [pushVars(phoenix::ref(var_stack))]
 		> eps        [addToMath(_val)];
@@ -219,7 +219,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> ")" > "{" > "term" > ":"
 		> id         [phoenix::at_c<1>(*_val) = findType(_1)]
 		> "=" > "#"
-		> term(phoenix::at_c<3>(*_val), _val) > ";"
+		> term(phoenix::at_c<3>(*_val), _val) > END_MARKER
 		> lit("}")   [addToMath(_val)]
 		> eps        [popVars(phoenix::ref(var_stack))];
 
@@ -229,26 +229,26 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> - (lit(":")
 			>  id [push_back(phoenix::at_c<1>(*_val), findType(_1))] % ","
 		)
-		> lit(";")  [addToMath(_val)];
+		> lit(END_MARKER)  [addToMath(_val)];
 
 	constant =
 		lit("constant") [_val = new_<Const>()] > "{"
 		> "symbol"
 		> symb          [phoenix::at_c<0>(*_val) = _1]
-		> lit(";")
+		> lit(END_MARKER)
 		>> -(
 			lit("ascii")
 			> symb          [phoenix::at_c<1>(*_val) = _1]
-			> lit(";")
+			> lit(END_MARKER)
 			>> -(
 				lit("latex")
 				> symb      [phoenix::at_c<2>(*_val) = _1]
-				> lit(";")
+				> lit(END_MARKER)
 			)
 		)
 		> lit("}")      [addToMath(_val)];
 
-	import = lit("import") > path [_val = parseImport(_1)] > ";";
+	import = lit("import") > path [_val = parseImport(_1)] > END_MARKER;
 
 	comment = lit("/*") >> lexeme[*(ascii::char_ - "*/")] >> "*/" |
 			  lit("//") >> lexeme[*(ascii::char_ - "\n")] >> "\n";

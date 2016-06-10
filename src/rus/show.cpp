@@ -4,11 +4,11 @@ namespace mdl { namespace rus {
 
 string show(const Const& c) {
 	string s = "constant {\n";
-	s += "\tsymbol " + show(c.symb) + " ;\n";
+	s += "\tsymbol " + show(c.symb) + " " + END_MARKER + "\n";
 	if (!c.ascii.undef())
-		s += "\tascii " + show(c.ascii) + " ;\n";
+		s += "\tascii " + show(c.ascii) + " " + END_MARKER + "\n";
 	if (!c.latex.undef())
-		s += "\tlatex " + show(c.latex) + " ;\n";
+		s += "\tlatex " + show(c.latex) + " " + END_MARKER + "\n";
 	s += "}";
 	return s;
 }
@@ -51,7 +51,7 @@ string show(const Type& type) {
 			if (i + 1 < type.sup.size()) s += ", ";
 		}
 	}
-	s += ";";
+	s += END_MARKER;
 	return s;
 }
 
@@ -60,7 +60,7 @@ string show(const Rule& r) {
 	s += "rule " + show_id(r.id) + " ";
 	s += "(" + show(r.vars) + ") {\n";
 	s += "\tterm : " + show_id(r.type->id) + " = ";
-	s += "# " + show(r.term) + ";\n";
+	s += "# " + show(r.term) + END_MARKER + "\n";
 	s += "}";
 	return s;
 }
@@ -73,7 +73,7 @@ string show(const Hyp& h) {
 	string s;
 	s += "hyp " + to_string(h.ind + 1) + " : ";
 	s += show_type(h.expr) + " = ";
-	s += "|- " + show(h.expr) + ";";
+	s += "|- " + show(h.expr) + END_MARKER;
 	return s;
 }
 
@@ -81,7 +81,7 @@ string show(const Prop& p) {
 	string s;
 	s += "prop " + to_string(p.ind + 1) + " : ";
 	s += show_type(p.expr) + " = ";
-	s += "|- " + show(p.expr) + ";";
+	s += "|- " + show(p.expr) + END_MARKER;
 	return s;
 }
 
@@ -122,12 +122,12 @@ string show(const Def& def) {
 			s += "\t" + show(*h) + "\n";
 	}
 	s += "\tdefiendum : " + show_id(def.dfm.type->id) + " ";
-	s += "= # " + show(def.dfm) + ";\n";
+	s += "= # " + show(def.dfm) + END_MARKER + "\n";
 	s += "\tdefiniens : " + show_id(def.dfs.type->id) + " ";
-	s += "= # " + show(def.dfs) + ";\n";
+	s += "= # " + show(def.dfs) + END_MARKER + "\n";
 	s += "\t-----------------------\n";
 	s += "\tprop : " + show_id(def.prop.type->id) + " ";
-	s += "= |- " + show(def.prop) + ";\n";
+	s += "= |- " + show(def.prop) + END_MARKER + "\n";
 	s += "}";
 	return s;
 }
@@ -173,7 +173,7 @@ string show(const Step& st) {
 	}
 	if (st.kind != Step::NONE)
 		s += show_refs(st.refs) + " ";
-	s += "|- " + show(st.expr) + ";";
+	s += "|- " + show(st.expr) + END_MARKER;
 	if (st.kind == Step::CLAIM) {
 		s += " {\n";
 		for (auto& el : st.val.prf->elems)
@@ -186,7 +186,7 @@ string show(const Step& st) {
 string show(const Qed& q) {
 	string s = "qed ";
 	s += "prop " + to_string(q.prop->ind + 1) + " = ";
-	s += "step " + to_string(q.step->ind + 1) + " ;";
+	s += "step " + to_string(q.step->ind + 1) + " " + END_MARKER;
 	return s;
 }
 
@@ -195,7 +195,7 @@ string show(const Proof& p) {
 	if (p.id != (uint)-1) s += show_id(p.id) + " ";
 	s += "of " + show_id(p.thm->ass.id) + " {\n";
 	if (p.vars.v.size())
-		s += "\tvar " + show(p.vars) + ";\n";
+		s += "\tvar " + show(p.vars) + END_MARKER + "\n";
 	for (auto& st : p.elems)
 		s += "\t" + show(st) + "\n";
 	s += "}";
