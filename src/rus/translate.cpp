@@ -192,8 +192,9 @@ void translate_term(const Term<node::Expr>* t, const Assertion* thm, vector<smm:
 	} else {
 		for (auto v : t->rule->vars.v)
 			translate_term(t->children[maps.rules_args[t->rule][v]], thm, smm_proof, maps);
-		smm_proof.push_back(smm::Ref(maps.rules[t->rule], true));
 	}
+	if(t->rule)
+		smm_proof.push_back(smm::Ref(maps.rules[t->rule], true));
 }
 
 void translate_proof(const Proof* proof, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps, uint ind = 0);
