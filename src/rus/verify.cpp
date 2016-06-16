@@ -10,7 +10,15 @@ void verify_step(Step* st) {
 		return;
 	}
 	Assertion* ass = st->assertion();
+	static int c = 0;
+	//cout << "\tverifying step: " << c++ << " = " << show_id(ass->id) << endl;
 	Sub<>* ps = unify(ass->props[0]->expr, st->expr);
+	if (c == 4828) {
+		cout << show_ast(st->expr) << endl;
+		cout << show(*ps) << endl;
+	}
+
+	//Sub<>* ps = unify(ass->props[0]->expr, st->expr);
 	if (!ps) {
 		string msg = "proposition:\n";
 		msg += show(*ass->props[0]) + "\n";
@@ -71,8 +79,10 @@ void verify_proof(Proof* proof) {
 
 void verify_theory(Theory* theory) {
 	for (auto n : theory->nodes) {
-		if (n.kind == Node::PROOF)
+		if (n.kind == Node::PROOF) {
+			//cout << "verifying proof: " << show_id(n.val.prf->thm->ass.id) << endl;
 			verify_proof(n.val.prf);
+		}
 	}
 }
 

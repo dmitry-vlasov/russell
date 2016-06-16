@@ -137,7 +137,9 @@ struct Term {
 	Term(Node* f, Node* l, Rule* r) :
 	first(f), last(l), rule(r), children() { }
 	Term(Node* v, Rule* r = nullptr) :
-	first(v), last(v), rule(r), children() { }
+	first(v), last(v), rule(r), children() {
+		if (rule) children.push_back(new Term(v));
+	}
 	Term(Node* f, Node* l, Rule* r, const vector<Term*>& ch) :
 	first(f), last(l), rule(r), children(ch) { }
 
@@ -150,7 +152,7 @@ struct Term {
 	ConstIterator rbegin() const { return ConstIterator(last); }
 	ConstIterator rend() const { return first->prev ? ConstIterator(first->prev) : ConstIterator(); }
 
-	bool isvar() const { return first == last && first->symb.type; }
+	bool isvar() const { return first == last && first->symb.type && !rule; }
 	Symbol getvar() const { return first->symb; }
 
 	Term* clone() const;
@@ -350,7 +352,7 @@ template<typename N>
 string show(const Sub<N>& s) {
 	string str;
 	for (auto p : s.sub) {
-		str += show(p.first) + " --> " + show(*p.second) + "\n";
+		str += show(p.first, true) + " --> " + show_ast(p.second) + "\n";
 	}
 	return str;
 }

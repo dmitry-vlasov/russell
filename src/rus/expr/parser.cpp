@@ -372,14 +372,14 @@ bool parse_LL() {
 	t.start();
 	cout << "parsing with LL ... " << flush;
 	bool ret = true;
-	//cout << endl;
-	//int c = 0;
+	cout << endl;
+	int c = 0;
 	for (Expr* ex : queue) {
-		/*cout << "doing " << c++ << " : " << show(*ex) << " ... " << flush;
-		if (c == 26020) {
+		//cout << "doing " << c++ << " : " << show(*ex) << " ... " << endl;
+		if (c == 7920) {
 			cout << "AAA";
 			shit = true;
-		}*/
+		}
 		if (!parse_LL(ex)) {
 			cout << "failed. ";
 			//parse_LL(ex, true);
@@ -388,9 +388,12 @@ bool parse_LL() {
 		}
 
 		Expr e = assemble(*ex);
-		if (e != *ex) {
+		if (e != *ex || c == 7920) {
+			cout << "term(e)  = " << show_ast(e) << endl;
+			cout << "term(ex)  = " << show_ast(*ex) << endl;
 			cout << "e  = " << e << endl;
 			cout << "ex = " << *ex << endl;
+			shit = false;
 			parse_LL(ex, true);
 			throw Error("expression syntax error");
 		}

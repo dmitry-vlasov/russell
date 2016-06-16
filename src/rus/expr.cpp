@@ -26,9 +26,9 @@ string show(const Expr& ex) {
 }
 
 string show_ast(const ExprTerm* t, bool full) {
-	if (t->isvar()) {
-		return show(t->first->symb, full ) + " ";
-	} else {
+	if (t->isvar())
+		return show(t->first->symb, full);
+	else {
 		string s = (t->rule ? show_id(t->rule->id) : "?") + " (";
 		for (uint i = 0; i < t->children.size(); ++ i) {
 			s += show_ast(t->children[i], full);
@@ -148,16 +148,17 @@ inline Rule* find_super(Type* type, Type* super) {
 		return nullptr;
 }
 
-void assemble_expr(Expr& ex, const ExprTerm* t) {
+ExprTerm* assemble_expr(Expr& ex, const ExprTerm* t) {
 	if (t->isvar()) {
 		ex.push_back(t->first->symb);
 		ExprTerm* at = new ExprTerm(ex.first);
 		ex.first->init.push_back(at);
 		ex.last->final.push_back(at);
-		return;
+		return at;
 	}
 	uint i = 0;
-	Expr::Node* n = t->rule->term.first;
+	Expr::Node* n = t->rule ? t->rule->term.first : t->first;
+	vector<ExprTerm*> children;
 	while (n) {
 		if (n->symb.type) {
 			if (i + 1 > t->children.size()) {
@@ -165,15 +166,18 @@ void assemble_expr(Expr& ex, const ExprTerm* t) {
 				ex.push_back(Symbol("<<"));
 				ex.push_back(n->symb);
 				ex.push_back(Symbol(">>"));
-			} else
-				assemble_expr(ex, t->children[i++]);
+			} else {
+				ExprTerm* ch = assemble_expr(ex, t->children[i++]);
+				children.push_back(ch);
+			}
 		} else
 			ex.push_back(n->symb);
 		n = n->next;
 	}
-	ExprTerm* at = new ExprTerm(ex.first, ex.last, t->rule);
+	ExprTerm* at = new ExprTerm(ex.first, ex.last, t->rule, children);
 	ex.first->init.push_back(at);
 	ex.last->final.push_back(at);
+	return at;
 }
 
 Expr assemble(const ExprTerm* t) {
@@ -220,7 +224,7 @@ Sub<>* unify(const Term<Expr::Node>* p, const Term<Expr::Node>* q) {
 			Sub<>* s = new Sub<>();
 			s->sub[var] = q->clone();
 			return s;
-		} else if (Rule* super = find_super(const_cast<Type*>(var.type), type(q))) {
+		} else if (Rule* super = find_super(type(q), const_cast<Type*>(var.type))) {
 			Sub<>* s = new Sub<>();
 			s->sub[var] = new Term<Expr::Node>(q->first, q->last, super);
 			s->sub[var]->children.push_back(q->clone());
