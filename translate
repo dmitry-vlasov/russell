@@ -1,5 +1,16 @@
 #!/bin/bash
 
+if [ -z $1 ]; then
+    echo "usage: "
+    echo "  translate <file> [memcheck]"
+    echo "where: "
+    echo "  <file>     is a mm source without .mm extension"
+    echo "  [memcheck] is an option for memory leaks tests (slows down the script)"
+    echo
+    exit 0
+fi
+
+
 file=$1
 
 if [ -d tmp ]; then
@@ -7,6 +18,11 @@ if [ -d tmp ]; then
 fi
 
 mkdir tmp
+
+if [ ! -f ${file}.mm ]; then
+    echo "source file desn't exist"
+    exit 1
+fi
 
 cp ${file}.mm ./tmp/${file}.mm
 cd tmp
