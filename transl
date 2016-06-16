@@ -2,8 +2,7 @@
 
 file=$1
 
-if [ -d tmp ] 
-then
+if [ -d tmp ]; then
     rm -fr tmp
 fi
 
@@ -12,82 +11,182 @@ mkdir tmp
 cp ${file}.mm ./tmp/${file}.mm
 cd tmp
 
+VALGRIND="valgrind --tool=memcheck"
+if [ $2 == "memcheck" ]; then
+    MEMCHECK="yes"
+fi
+
+function check() {
+    if [ $MEMCHECK = "yes" ]; then
+	$VALGRIND $1
+    else
+	$1
+    fi
+}
+
+echo "----------------------"
 echo "MM <-> SMM TRANSLATION"
+echo "----------------------"
 
 echo "mm -> smm"
-../bin/release/mm  -v -i ${file}.mm  -o $file.smm
+check "../bin/release/mm  -v -i ${file}.mm  -o $file.smm"
 echo -e 'done\n\n'
 
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
+
 echo "smm -> mm"
-../bin/release/smm -v -i ${file}.smm -o ${file}-0.mm
+check "../bin/release/smm -v -i ${file}.smm -o ${file}-0.mm"
 echo -e 'done\n\n'
+
+if [ $? != 0 ]; then
+    echo "TEST FAILED."; exit
+fi;
 
 echo "verify mm"
 ../metamath "read ${file}-0.mm" 'verify proof *' exit
 echo -e 'done\n'
 
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
+
 echo
 echo
 
+echo "----------------------"
 echo "MM <-> RUS TRANSLATION"
+echo "----------------------"
 
 echo "smm -> rus"
-../bin/release/smm -v -i ${file}.smm -o ${file}.rus
+check "../bin/release/smm -v -i ${file}.smm -o ${file}.rus"
 echo -e 'done\n\n'
+
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
 
 echo "rus -> smm"
-../bin/release/mdl -v -i ${file}.rus -o ${file}-1.smm
+check "../bin/release/mdl -v -i ${file}.rus -o ${file}-1.smm"
 echo -e 'done\n\n'
 
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
+
 echo "verify smm"
-../bin/release/smm -v -i ${file}-1.smm
+check "../bin/release/smm -v -i ${file}-1.smm"
 echo -e 'done\n'
+
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
 
 echo "smm -> mm"
-../bin/release/smm -v -i ${file}-1.smm -o ${file}-1.mm
+check "../bin/release/smm -v -i ${file}-1.smm -o ${file}-1.mm"
 echo -e 'done\n\n'
 
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
+
 echo "mm -> smm"
-../bin/release/mm -v -i ${file}-1.mm -o ${file}-3.smm
+check "../bin/release/mm -v -i ${file}-1.mm -o ${file}-3.smm"
 echo -e 'done\n'
 
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
+
 echo "verify smm"
-../bin/release/smm -v -i ${file}-3.smm
+check "../bin/release/smm -v -i ${file}-3.smm"
 echo -e 'done\n'
+
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
 
 echo "verify mm"
 ../metamath "read ${file}-1.mm" 'verify proof *' exit
 echo -e 'done\n'
 
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
+
 echo
 echo
 
+echo "-----------------------"
 echo "MM <-> RUS' TRANSLATION"
+echo "-----------------------"
+
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
 
 echo "rus -> rus'"
-../bin/release/mdl -v -g -i ${file}.rus -o ${file}-1.rus
+check "../bin/release/mdl -v -g -i ${file}.rus -o ${file}-1.rus"
 echo -e 'done\n\n'
+
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
 
 echo "rus' -> smm'"
-../bin/release/mdl -v -i ${file}-1.rus -o ${file}-2.smm
+check "../bin/release/mdl -v -i ${file}-1.rus -o ${file}-2.smm"
 echo -e 'done\n\n'
+
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
 
 echo "verify smm'"
-../bin/release/smm -v -i ${file}-2.smm
+check "../bin/release/smm -v -i ${file}-2.smm"
 echo -e 'done\n'
 
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
+
 echo
 echo
 
+echo "----------------"
 echo "MM' VERIFICATION"
+echo "----------------"
 
 echo "smm' -> mm'"
-../bin/release/smm -v -i ${file}-2.smm -o ${file}-2.mm
+check "../bin/release/smm -v -i ${file}-2.smm -o ${file}-2.mm"
 echo -e 'done\n\n'
+
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
 
 echo "verify mm'"
 ../metamath "read ${file}-2.mm" 'verify proof *' exit
 echo -e 'done\n'
+
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
 
 echo -e 'translation tests passed =)\n'
 
