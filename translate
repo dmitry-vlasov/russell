@@ -28,12 +28,12 @@ cp ${file}.mm ./tmp/${file}.mm
 cd tmp
 
 VALGRIND="valgrind --tool=memcheck"
-if [ $2 == "memcheck" ]; then
+if [ "$2" == "memcheck" ]; then
     MEMCHECK="yes"
 fi
 
 function check() {
-    if [ $MEMCHECK = "yes" ]; then
+    if [ eq $MEMCHECK = "yes" ]; then
 	$VALGRIND $1
     else
 	$1
