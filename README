@@ -1,0 +1,54 @@
+
+Russell logical framework
+================================
+
+mdl is the implementation of Russell logical framework.
+This is a language for pure mathematics, build upon a metamath (www.metamath.org)
+language as a high level superstructure. mdl supports fully automatic proving
+facility.
+
+In fact, mdl program is a compiler from a relativily high-level language for the 
+representation of formal mathematics to the simple and robust for checking
+language metamath.
+
+The package contains folowing programs:
+	- mdl : the mdl prover and the compiler from russell language to metamath.
+	- mm : the decompiler from metamath to mdl.
+	- metamath : original metamath checker.
+	- smm : the verifier and tanslator for the smm language (simplified metamath)
+
+Also package contains extensive theorem basis uset-200000.mm (metamath base), 
+which includes propositional logic, predicate logic, set theory, number systems 
+(natural, rational, real, complex, etc.) and some more. It is a first 200 000 lines
+of set.mm metamath theorem base
+
+For more information on mdl see the website at
+http://mathdevlanguage.sf.net
+http://russellmath.org
+
+Installation/Building
+=====================
+For installation/building instructions read INSTALL.
+
+System requirements
+===================
+Full translation tests demand not less then 1Gb of RAM, not less then 150 of
+free space on the hard disk.
+
+Test scripts
+============
+Test scripts may be run to test the system and to obtain working mdl math library
+from the original metamath library. To run tests first compile mdl, mm, smm and
+metamath with the command './configure; make'. Then go to the directory 'math' and 
+run appropriate script.
+
+Translation tests
+=================
+Script 'translation', runs a chain of translations and verification. 
+To run the test on a propositional logic base run:
+    :~$./translate uset-200000
+To run the test with the valgrind-based memory leaks tests run:
+    :~$./translate uset-25000 memcheck.
+
+CAUTION: complete test suite, which runs on the whole metamath theorem base, will
+demand a lot of RAM.

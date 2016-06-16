@@ -1,0 +1,8 @@
+Building
+--------------
+To build russell environment the bjam builder is required.
+The default compiler is g++ from gcc
+Run:
+    1) to build optimized version:  bjam release -j 4 toolset=gcc
+    2) to build the debug version:  bjam debug -j 4 toolset=gcc
+    
