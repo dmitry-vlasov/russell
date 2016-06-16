@@ -48,6 +48,8 @@ static void translate_const(const Expr& consts, const State& state) {
 		rus::Const* c = new rus::Const{rus::Symbol(s), rus::Symbol(), rus::Symbol()};
 		if (state.redundant_consts.find(s) == state.redundant_consts.end())
 			state.theory->nodes.push_back(rus::Node(c));
+		else
+			delete c;
 	}
 }
 
