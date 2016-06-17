@@ -26,11 +26,20 @@ smm::Constants* translate_turnstile(Maps& maps) {
 		return nullptr;
 }
 
+inline uint translate_symb(uint s) {
+	if (!Rus::get().math.consts.has(s))
+		return s;
+	else {
+		Const* c = Rus::get().math.consts[s];
+		return c->ascii.lit == static_cast<uint>(-1) ? s : c->ascii.lit;
+	}
+}
+
 mdl::Expr translate_expr(const Expr& ex, Maps& maps) {
 	mdl::Expr expr;
 	expr += maps.turnstile;
 	for (auto it = ex.term()->begin(); it != ex.term()->end(); ++ it)
-		expr += mdl::Symbol(it->symb.lit, it->symb.type);
+		expr += mdl::Symbol(translate_symb(it->symb.lit), it->symb.type);
 	return expr;
 }
 
@@ -38,13 +47,13 @@ mdl::Expr translate_term(const Expr& ex, const Type* tp, Maps& maps) {
 	mdl::Expr expr;
 	expr += mdl::Symbol(maps.types[tp]);
 	for (auto it = ex.term()->begin(); it != ex.term()->end(); ++ it)
-		expr += mdl::Symbol(it->symb.lit, it->symb.type);
+		expr += mdl::Symbol(translate_symb(it->symb.lit), it->symb.type);
 	return expr;
 }
 
 smm::Constants* translate_const(const Const* c) {
 	smm::Constants* consts = new smm::Constants;
-	consts->expr += mdl::Symbol(c->symb.lit);
+	consts->expr += mdl::Symbol(translate_symb(c->symb.lit));
 	return consts;
 }
 
@@ -254,7 +263,7 @@ void translate_proof(const Proof* proof, const Assertion* thm, vector<smm::Ref>&
 vector<smm::Node> translate_proof(const Proof* proof, Maps& maps) {
 	vector<smm::Node> nodes;
 	vector<smm::Node> asss = translate_assertion(&proof->thm->ass, maps);
-	if (proof->id != -1) {
+	if (proof->id != static_cast<uint>(-1)) {
 		// TODO
 	}
 	for (uint i = 0; i < asss.size(); ++ i) {

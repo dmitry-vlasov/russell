@@ -2,7 +2,11 @@
 #include "rus/ast.hpp"
 #include "smm/globals.hpp"
 
-namespace mdl { namespace smm { namespace {
+namespace mdl { namespace smm {
+
+extern map<uint, rus::Const> math_symb;
+
+namespace {
 
 struct State {
 	map<const Assertion*, rus::Axiom*>   axioms;
@@ -16,6 +20,17 @@ struct State {
 	set<Symbol>   redundant_consts;
 	rus::Theory*  theory;
 };
+
+inline rus::Symbol translate_symb(Symbol s, rus::Type* t = nullptr) {
+	auto p = math_symb.find(s.lit);
+	if (p == math_symb.end())
+		return rus::Symbol(s, t);
+	else {
+		rus::Symbol rs = (*p).second.symb;
+		rs.type = t;
+		return rs;
+	}
+}
 
 static rus::Expr translate_expr(const Expr& ex, const State& state, const Assertion* ass) {
 	rus::Expr e;
@@ -36,7 +51,7 @@ static rus::Expr translate_expr(const Expr& ex, const State& state, const Assert
 				t = state.types.find(i->type())->second;
 				break;
 			}
-		e.push_back(rus::Symbol(*it, t));
+		e.push_back(translate_symb(*it, t));
 	}
 	// it's the best what we can do here ...
 	e.type = state.type_wff;
@@ -45,7 +60,12 @@ static rus::Expr translate_expr(const Expr& ex, const State& state, const Assert
 
 static void translate_const(const Expr& consts, const State& state) {
 	for (auto s : consts.symbols) {
-		rus::Const* c = new rus::Const{rus::Symbol(s), rus::Symbol(), rus::Symbol()};
+		rus::Const* c = nullptr;
+		auto p = math_symb.find(s.lit);
+		if (p == math_symb.end())
+			c = new rus::Const{rus::Symbol(s), rus::Symbol(), rus::Symbol()};
+		else
+			c = new rus::Const{(*p).second.symb, (*p).second.ascii, (*p).second.latex};
 		if (state.redundant_consts.find(s) == state.redundant_consts.end())
 			state.theory->nodes.push_back(rus::Node(c));
 		else
@@ -269,13 +289,13 @@ static void translate_def(const Assertion* ass, State& state) {
 		if ((dfm_beg <= it) && (it < dfm_end)) {
 			if (dfm_beg == it)
 				def->prop.push_back(dfm());
-			def->dfm.push_back(*it);
+			def->dfm.push_back(translate_symb(*it));
 		} else if ((dfs_beg <= it) && (it < dfs_end)) {
 			if (dfs_beg == it)
 				def->prop.push_back(dfs());
-			def->dfs.push_back(*it);
+			def->dfs.push_back(translate_symb(*it));
 		} else {
-			def->prop.push_back(*it);
+			def->prop.push_back(translate_symb(*it));
 		}
 	}
 	state.theory->nodes.push_back(def);

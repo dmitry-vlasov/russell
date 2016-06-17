@@ -22,6 +22,7 @@ exe smm :
   src/smm/parser.cpp
   src/smm/verify.cpp
   src/smm/globals.cpp
+  src/smm/math_symb.cpp
   src/smm/translate_mm.cpp
   src/smm/translate_rus.cpp
   src/smm/main.cpp ;

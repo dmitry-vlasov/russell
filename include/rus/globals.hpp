@@ -60,7 +60,7 @@ struct Rus {
 		Table<Axiom*>   axioms;
 		Table<Def*>     defs;
 		Table<Rule*>    rules;
-		Set<Symbol>     consts;
+		Table<Const*>   consts;
 	};
 
 	Config  config;

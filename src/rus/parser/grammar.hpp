@@ -1,6 +1,7 @@
 #pragma once
 
 #define BOOST_SPIRIT_USE_PHOENIX_V3
+#define BOOST_SPIRIT_UNICODE
 
 #include "parser.hpp"
 
@@ -46,11 +47,11 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	const phoenix::function<AssembleDef> assembleDef;
 	const phoenix::function<SetLocation<Iterator>> setLocation;
 
-	bar  = lexeme[lit("-----")] >> * ascii::char_('-');
-	var  = lexeme[+(ascii::char_ - END_MARKER - ascii::space - ascii::char_("),"))] [at_c<0>(_val) = symbToInt(_1)];
-	symb = lexeme[+(ascii::char_ - END_MARKER - ascii::space)] [at_c<0>(_val) = symbToInt(_1)];
-	id   = lexeme[+ ascii::char_("a-zA-Z0-9_.\\-")]            [_val = idToInt(_1)];
-	path = lexeme[+(ascii::char_ - END_MARKER - ascii::space)];
+	bar  = lexeme[lit("-----")] >> * unicode::char_('-');
+	var  = lexeme[+(unicode::char_ - END_MARKER - unicode::space - unicode::char_("),"))] [at_c<0>(_val) = symbToInt(_1)];
+	symb = lexeme[+(unicode::char_ - END_MARKER - unicode::space)] [at_c<0>(_val) = symbToInt(_1)];
+	id   = lexeme[+ unicode::char_("a-zA-Z0-9_.\\-")]            [_val = idToInt(_1)];
+	path = lexeme[+(unicode::char_ - END_MARKER - unicode::space)];
 
 	term  = + (symb [addSymbol(_r1, _1)] | comment) > eps [parseTerm(_r1, _r2, phoenix::ref(var_stack))];
 	expr  = + (symb [addSymbol(_r1, _1)] | comment) > eps [parseExpr(_r1, _r2, phoenix::ref(var_stack))];
@@ -236,11 +237,11 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> "symbol"
 		> symb          [phoenix::at_c<0>(*_val) = _1]
 		> lit(END_MARKER)
-		>> -(
+		> -(
 			lit("ascii")
 			> symb          [phoenix::at_c<1>(*_val) = _1]
 			> lit(END_MARKER)
-			>> -(
+			> -(
 				lit("latex")
 				> symb      [phoenix::at_c<2>(*_val) = _1]
 				> lit(END_MARKER)
@@ -250,8 +251,8 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 
 	import = lit("import") > path [_val = parseImport(_1)] > END_MARKER;
 
-	comment = lit("/*") >> lexeme[*(ascii::char_ - "*/")] >> "*/" |
-			  lit("//") >> lexeme[*(ascii::char_ - "\n")] >> "\n";
+	comment = lit("/*") >> lexeme[*(unicode::char_ - "*/")] >> "*/" |
+			  lit("//") >> lexeme[*(unicode::char_ - "\n")] >> "\n";
 	source =
 		eps [at_c<2>(_val) = new_<Theory>()]
 		> +(

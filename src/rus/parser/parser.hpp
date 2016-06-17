@@ -12,7 +12,7 @@
 namespace mdl { namespace rus {
 
 namespace qi      = boost::spirit::qi;
-namespace ascii   = boost::spirit::ascii;
+namespace unicode = boost::spirit::unicode;
 namespace phoenix = boost::phoenix;
 
 struct VarStack {
@@ -60,11 +60,14 @@ static void mark_vars(Expr& ex, VarStack& var_stack) {
 	Expr::Node* n = ex.first;
 	while (n) {
 		bool is_var = var_stack.map.has(n->symb.lit);
-		bool is_const = Rus::get().math.consts.has(n->symb);
+		bool is_const = Rus::get().math.consts.has(n->symb.lit);
 		if (is_const && is_var)
 			throw Error("constant symbol is marked as variable");
-		if (!is_const && !is_var)
-			throw Error("symbol neither constant nor variable");
+		if (!is_const && !is_var) {
+			string msg = "symbol " + Rus::get().lex.symbs.toStr(n->symb.lit) + " ";
+			msg += " neither constant nor variable";
+			throw Error(msg);
+		}
 		if (is_var)
 			n->symb.type = var_stack.map[n->symb.lit];
 		n = n->next;
@@ -137,7 +140,7 @@ void enqueue_expressions(Def* def) {
 
 struct AddToMath {
 	void operator()(Const* c) const {
-		Rus::mod().math.consts.s.insert(c->symb);
+		Rus::mod().math.consts[c->symb.lit] = c;
 		expr::add_const(c);
 	}
 	void operator()(Type* t) const {
@@ -179,12 +182,20 @@ struct SymbToInt {
 		string symb(s.begin(), s.end());
 		return Rus::mod().lex.symbs.toInt(symb);
 	}
+	uint operator()(const std::vector<uint>& s) const {
+		string symb(s.begin(), s.end());
+		return Rus::mod().lex.symbs.toInt(symb);
+	}
 };
 
 struct IdToInt {
 	template <typename T>
 	struct result { typedef uint type; };
 	uint operator()(const std::vector<char>& id) const {
+		string id_str(id.begin(), id.end());
+		return Rus::mod().lex.ids.toInt(id_str);
+	}
+	uint operator()(const std::vector<uint>& id) const {
 		string id_str(id.begin(), id.end());
 		return Rus::mod().lex.ids.toInt(id_str);
 	}
@@ -346,40 +357,40 @@ struct AssembleDef {
 };
 
 template <typename Iterator>
-struct Grammar : qi::grammar<Iterator, rus::Source(), ascii::space_type> {
+struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	Grammar();
 	void initNames();
 
 	VarStack var_stack;
 	qi::rule<Iterator, qi::unused_type> bar;
-	qi::rule<Iterator, Symbol(), ascii::space_type> var;
-	qi::rule<Iterator, Symbol(), ascii::space_type> symb;
-	qi::rule<Iterator, uint(), ascii::space_type> id;
-	qi::rule<Iterator, std::string(), ascii::space_type> path;
-	qi::rule<Iterator, void(Expr&, Rule*), ascii::space_type> term;
-	qi::rule<Iterator, void(Expr&, Type*), ascii::space_type> expr;
-	qi::rule<Iterator, void(Expr&, Type*), ascii::space_type> plain;
-	qi::rule<Iterator, Disj(), ascii::space_type> disj;
-	qi::rule<Iterator, Vars(), qi::locals<Symbol>, ascii::space_type> vars;
-	qi::rule<Iterator, Hyp*(), qi::locals<uint>, ascii::space_type> hyp;
-	qi::rule<Iterator, Prop*(), qi::locals<uint>, ascii::space_type> prop;
-	qi::rule<Iterator, Ref(Proof*), ascii::space_type> ref;
-	qi::rule<Iterator, vector<Ref>(Proof*), ascii::space_type> refs;
-	qi::rule<Iterator, Step*(Proof*), qi::locals<uint, Step::Kind>, ascii::space_type> step;
-	qi::rule<Iterator, Qed*(Proof*), qi::locals<uint>, ascii::space_type> qed;
-	qi::rule<Iterator, Proof::Elem(Proof*), ascii::space_type> proof_elem;
-	qi::rule<Iterator, void(Proof*), ascii::space_type> proof_body;
-	qi::rule<Iterator, Proof*(), ascii::space_type> proof;
-	qi::rule<Iterator, Theorem*(), qi::locals<Assertion*>, ascii::space_type> theorem;
-	qi::rule<Iterator, Def*(), qi::locals<Assertion*, Type*>, ascii::space_type> def;
-	qi::rule<Iterator, Axiom*(), qi::locals<Assertion*>, ascii::space_type> axiom;
-	qi::rule<Iterator, void(Assertion*), ascii::space_type> assertion;
-	qi::rule<Iterator, Rule*(), ascii::space_type> rule;
-	qi::rule<Iterator, Type*(), ascii::space_type> type;
-	qi::rule<Iterator, Const*(), ascii::space_type> constant;
-	qi::rule<Iterator, Source*(), ascii::space_type> import;
-	qi::rule<Iterator, qi::unused_type, ascii::space_type> comment;
-	qi::rule<Iterator, Source(), ascii::space_type> source;
+	qi::rule<Iterator, Symbol(), unicode::space_type> var;
+	qi::rule<Iterator, Symbol(), unicode::space_type> symb;
+	qi::rule<Iterator, uint(), unicode::space_type> id;
+	qi::rule<Iterator, std::string(), unicode::space_type> path;
+	qi::rule<Iterator, void(Expr&, Rule*), unicode::space_type> term;
+	qi::rule<Iterator, void(Expr&, Type*), unicode::space_type> expr;
+	qi::rule<Iterator, void(Expr&, Type*), unicode::space_type> plain;
+	qi::rule<Iterator, Disj(), unicode::space_type> disj;
+	qi::rule<Iterator, Vars(), qi::locals<Symbol>, unicode::space_type> vars;
+	qi::rule<Iterator, Hyp*(), qi::locals<uint>, unicode::space_type> hyp;
+	qi::rule<Iterator, Prop*(), qi::locals<uint>, unicode::space_type> prop;
+	qi::rule<Iterator, Ref(Proof*), unicode::space_type> ref;
+	qi::rule<Iterator, vector<Ref>(Proof*), unicode::space_type> refs;
+	qi::rule<Iterator, Step*(Proof*), qi::locals<uint, Step::Kind>, unicode::space_type> step;
+	qi::rule<Iterator, Qed*(Proof*), qi::locals<uint>, unicode::space_type> qed;
+	qi::rule<Iterator, Proof::Elem(Proof*), unicode::space_type> proof_elem;
+	qi::rule<Iterator, void(Proof*), unicode::space_type> proof_body;
+	qi::rule<Iterator, Proof*(), unicode::space_type> proof;
+	qi::rule<Iterator, Theorem*(), qi::locals<Assertion*>, unicode::space_type> theorem;
+	qi::rule<Iterator, Def*(), qi::locals<Assertion*, Type*>, unicode::space_type> def;
+	qi::rule<Iterator, Axiom*(), qi::locals<Assertion*>, unicode::space_type> axiom;
+	qi::rule<Iterator, void(Assertion*), unicode::space_type> assertion;
+	qi::rule<Iterator, Rule*(), unicode::space_type> rule;
+	qi::rule<Iterator, Type*(), unicode::space_type> type;
+	qi::rule<Iterator, Const*(), unicode::space_type> constant;
+	qi::rule<Iterator, Source*(), unicode::space_type> import;
+	qi::rule<Iterator, qi::unused_type, unicode::space_type> comment;
+	qi::rule<Iterator, Source(), unicode::space_type> source;
 };
 
 template <typename Iterator>
