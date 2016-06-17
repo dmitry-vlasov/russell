@@ -33,7 +33,7 @@ if [ "$2" == "memcheck" ]; then
 fi
 
 function check() {
-    if [ eq $MEMCHECK = "yes" ]; then
+    if [ $MEMCHECK == "yes" ]; then
 	$VALGRIND $1
     else
 	$1
