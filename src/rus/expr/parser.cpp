@@ -117,50 +117,50 @@ Term* parse_LL(Node* x, Type* type, bool trace) {
 	}
 	if (!type->rules.root) return nullptr;
 	vector<Term*> children;
-	vector<TreeNode*> childnodes;
 	Node* f = x;
 
-	vector<TreeNode*> n;
-	vector<Node*> m;
-	n.push_back(type->rules.root);
-	m.push_back(x);
+	stack<TreeNode*> n;
+	stack<Node*> m;
+	stack<TreeNode*> childnodes;
+	n.push(type->rules.root);
+	m.push(x);
 
 	while (!n.empty() && !m.empty()) {
-		if (Type* tp = n.back()->symb.type) {
-			if (Term* child = parse_LL(m.back(), tp, trace)) {
+		if (Type* tp = n.top()->symb.type) {
+			if (Term* child = parse_LL(m.top(), tp, trace)) {
 				children.push_back(child);
-				childnodes.push_back(n.back());
-				if (!n.back()->next)
-					return new Term(f, child->last, n.back()->data, children);
+				childnodes.push(n.top());
+				if (!n.top()->next)
+					return new Term(f, child->last, n.top()->data, children);
 				else if (!child->last->next)
 					goto end;
 				else {
-					n.push_back(n.back()->next);
-					m.push_back(child->last->next);
+					n.push(n.top()->next);
+					m.push(child->last->next);
 				}
 				continue;
 			}
-		} else if (n.back()->symb == m.back()->symb) {
-			if (!n.back()->next)
-				return new Term(f, m.back(), n.back()->data, children);
-			else if (!m.back()->next)
+		} else if (n.top()->symb == m.top()->symb) {
+			if (!n.top()->next)
+				return new Term(f, m.top(), n.top()->data, children);
+			else if (!m.top()->next)
 				goto end;
 			else {
-				n.push_back(n.back()->next);
-				m.push_back(m.back()->next);
+				n.push(n.top()->next);
+				m.push(m.top()->next);
 			}
 			continue;
 		}
-		while (!n.back()->side) {
-			n.pop_back();
-			m.pop_back();
-			if (!childnodes.empty() && childnodes.back() == n.back()) {
+		while (!n.top()->side) {
+			n.pop();
+			m.pop();
+			if (!childnodes.empty() && childnodes.top() == n.top()) {
 				children.pop_back();
-				childnodes.pop_back();
+				childnodes.pop();
 			}
 			if (n.empty() || m.empty()) goto end;
 		}
-		n.back() = n.back()->side;
+		n.top() = n.top()->side;
 	}
 	end:
 	for (auto t : children) delete t;
