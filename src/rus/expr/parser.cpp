@@ -18,26 +18,6 @@ struct Unit {
 
 vector<Expr*> queue;
 
-/*void show_stack(vector<Unit>& stack, Node* n) {
-	cout << "\t";
-	for (Unit& u : stack) {
-		cout << u.state->ind << " ";
-		if (u.term)
-			cout << show_ast(u.term, true);
-		else
-			cout << " ";
-	}
-	cout << " -- ";
-	if (!n) {
-		cout << "<end>";
-	} else {
-		while (n) {
-			cout << expr::show(n->symb) << " ";
-			n = n->next;
-		}
-	}
-}*/
-
 void add_terms(Term* term) {
 	for (auto t : term->children)
 		add_terms(t);
@@ -50,45 +30,19 @@ inline Symbol current(Node* n) {
 }
 
 bool parse_GLR(Table& tab, Expr* ex, Node* n, Unit u) {
-	if (!tab.actions.has(u.state)) {
+	if (!tab.actions.has(u.state))
 		return false;
-		/*string msg("actions table doesn't have a state.\n");
-		msg += string("state: ") + to_string(u.state->ind) + "\n";
-		msg += string("expression: ") + show(*ex) + "\n";
-		msg += show_grammar();
-		throw Error("expression syntax error (1): ", msg);*/
-	}
 	Symbol x = current(n);
-	if (x.type && !tab.vars.has(x.type)) {
+	if (x.type && !tab.vars.has(x.type))
 		return false;
-		/*string msg("variable table doesn't have a variable of type.\n");
-		msg += string("type: ") + show_id(x.type->id) + "\n";
-		msg += string("expression: ") + show(*ex) + "\n";
-		msg += show_grammar();
-		throw Error("expression syntax error (2): ", msg);*/
-	}
 	Symbol s = x.type ? tab.vars[x.type] : x;
-	if (!tab.actions[u.state].has(s)) {
+	if (!tab.actions[u.state].has(s))
 		return false;
-		/*string msg("action table doesn't have a symbol.\n");
-		msg += string("symbol: ") + expr::show(s, false) + "\n";
-		msg += string("expression: ") + show(*ex) + "\n";
-		msg += show_grammar();
-		msg += "actions:\n";
-		throw Error("expression syntax error (3): ", msg);*/
-	}
 	for (Action act : tab.actions[u.state][s].s) {
-		//if (trace)
-		//	cout << "            " << show(act) << endl;
 		switch (act.kind) {
 		case Action::SHIFT:
-			if (!n) {
+			if (!n)
 				break;
-				/*string msg("shift is impossible.\n");
-				msg += string("expression: ") + show(*ex) + "\n";
-				msg += show_grammar();
-				throw Error("expression syntax error (4): ", msg);*/
-			}
 			if (parse_GLR(tab, ex, n->next, Unit{act.val.state, nullptr, n, &u}))
 				return true;
 			break;
@@ -102,22 +56,10 @@ bool parse_GLR(Table& tab, Expr* ex, Node* n, Unit u) {
 				w = *w.prev;
 			}
 			std::reverse(terms.begin(), terms.end());
-			if (!tab.gotos.has(w.state)) {
+			if (!tab.gotos.has(w.state))
 				break;
-				/*string msg("goto table doesn't have a state.\n");
-				msg += string("state: ") + to_string(u.state->ind) + "\n";
-				msg += string("expression: ") + show(*ex) + "\n";
-				msg += show_grammar();
-				throw Error("expression syntax error (5): ", msg);*/
-			}
-			if (!tab.gotos[w.state].has(act.val.prod->left)) {
+			if (!tab.gotos[w.state].has(act.val.prod->left))
 				break;
-				/*string msg("goto table doesn't have a symbol.\n");
-				msg += string("symbol: ") + expr::show(act.val.prod->left, false) + "\n";
-				msg += string("expression: ") + show(*ex) + "\n";
-				msg += show_grammar();
-				throw Error("expression syntax error (6): ", msg);*/
-			}
 			State* s = tab.gotos[w.state][act.val.prod->left];
 			Term*  t = nullptr;
 			if (act.val.prod->kind == Product::VAR) {
@@ -152,13 +94,8 @@ bool parse_GLR(Table& tab, Expr* ex, Node* n, Unit u) {
 bool parse_GLR(Expr* ex, bool trace = false) {
 	Node* n = ex->first;
 	Table& tab = table();
-	if (!tab.inits.has(ex->type)) {
+	if (!tab.inits.has(ex->type))
 		return false;
-		/*string msg("expression doesn't have a valid start non-terminal.\n");
-		msg += string("expression: ") + show(*ex) + "\n";
-		msg += show_grammar();
-		throw Error("expression syntax error (0): ", msg);*/
-	}
 	State* init = tab.inits[ex->type];
 	return parse_GLR(tab, ex, n, Unit{init, nullptr, n, nullptr});
 }
@@ -170,35 +107,6 @@ inline Rule* find_super(Type* type, Type* super) {
 	else
 		return nullptr;
 }
-
-string show_stack(vector<TreeNode*>& n, vector<Node*>& m, vector<TreeNode*>& childnodes) {
-	string str;
-	str += "stack n = ";
-	for (TreeNode* n_node : n)
-		str += rus::show(n_node->symb, true) + " ";
-	str += "\n";
-	str += "stack m = ";
-	for (Node* m_node : m)
-		str += rus::show(m_node->symb, true) + " ";
-	str += "\n";
-	/*str += "childnodes = ";
-	for (TreeNode* m_node : childnodes)
-		str += rus::show(m_node->symb, true) + " ";
-	str += "\n";*/
-	return str;
-}
-
-string show_node(Node* x) {
-	string str;
-	str += "expr = ";
-	while (x) {
-		str += rus::show(x->symb, true) + " ";
-		x = x->next;
-	}
-	return str;
-}
-
-bool shit = false;
 
 Term* parse_LL(Node* x, Type* type, bool trace) {
 	if (x->symb.type){
@@ -217,47 +125,14 @@ Term* parse_LL(Node* x, Type* type, bool trace) {
 	n.push_back(type->rules.root);
 	m.push_back(x);
 
-	static int c_1 = 0;
-	static int c_2 = 0;
-
-	if (trace)  {
-		cout << endl;
-		cout << "PARSING: " << endl;
-		cout << show_node(x);
-	}
-
 	while (!n.empty() && !m.empty()) {
-		if (trace)  {
-			c_1 ++;
-			cout << endl;
-			cout << "c_1 = " << c_1 << endl;
-			cout << "trying: " << endl;
-			cout << show_stack(n, m, childnodes);
-		}
 		if (Type* tp = n.back()->symb.type) {
 			if (Term* child = parse_LL(m.back(), tp, trace)) {
-				if (trace) {
-					c_2 ++;
-					add_terms(child);
-					if (c_2 == 3) {
-						cout << "FUCKING SHIT" << endl;
-					}
-					cout << "c_2 = " << c_2 << endl;
-					cout << "got child: " << show(*child) << endl;
-					//cout << "assembled: " << assemble(child) << endl << endl;
-				}
 				children.push_back(child);
 				childnodes.push_back(n.back());
-				//m.back() = child->last;
-				if (!n.back()->next) {
-					Term* t = new Term(f, child->last, n.back()->data, children);
-					if (trace) {
-						//cout << "children.size() = " << children.size() << endl;
-						cout << "RETURN: " << show(*t) << endl;
-						//cout << "assembled: " << assemble(t) << endl << endl;
-					}
-					return t;
-				} else if (!child->last->next)
+				if (!n.back()->next)
+					return new Term(f, child->last, n.back()->data, children);
+				else if (!child->last->next)
 					goto end;
 				else {
 					n.push_back(n.back()->next);
@@ -266,16 +141,9 @@ Term* parse_LL(Node* x, Type* type, bool trace) {
 				continue;
 			}
 		} else if (n.back()->symb == m.back()->symb) {
-			if (!n.back()->next) {
-				Term* t = new Term(f, m.back(), n.back()->data, children);
-				if (trace) {
-						//cout << "stacks: " << show_stack(n, m, childnodes);
-						//cout << "children.size() = " << children.size() << endl;
-						cout << "RETURN: " << show(*t) << endl;
-						//cout << "assembled: " << assemble(t) << endl << endl;
-					}
-				return t;
-			} else if (!m.back()->next)
+			if (!n.back()->next)
+				return new Term(f, m.back(), n.back()->data, children);
+			else if (!m.back()->next)
 				goto end;
 			else {
 				n.push_back(n.back()->next);
@@ -284,27 +152,12 @@ Term* parse_LL(Node* x, Type* type, bool trace) {
 			continue;
 		}
 		while (!n.back()->side) {
-			/*if (trace) {
-				cout << "POPPING: " << endl;
-				cout << "stacks before: " << show_stack(n, m, childnodes);
-				cout << "children.size() before = " << children.size() << endl;
-			}*/
-			/*if (!childnodes.empty() && childnodes.back() == n.back()) {
-				children.pop_back();
-				childnodes.pop_back();
-			}*/
 			n.pop_back();
 			m.pop_back();
 			if (!childnodes.empty() && childnodes.back() == n.back()) {
 				children.pop_back();
 				childnodes.pop_back();
 			}
-
-			/*if (trace) {
-				cout << "stacks AFTER: " << show_stack(n, m, childnodes);
-				cout << "children.size() AFTER = " << children.size() << endl << endl;
-			}*/
-
 			if (n.empty() || m.empty()) goto end;
 		}
 		n.back() = n.back()->side;
@@ -317,18 +170,10 @@ Term* parse_LL(Node* x, Type* type, bool trace) {
 
 bool parse_LL(Expr* ex, bool trace = false){
 	if (Term* term = parse_LL(ex->first, ex->type, trace)) {
-		if (shit) {
-			cout << endl << "shit" << endl;
-			cout << "got term: " << show(*term) << endl << endl;
-		}
 		add_terms(term);
 		return true;
-	} else {
-		//trace = true;
-		//parse_term(ex.first, ex.type);
-		//throw Error("error at parsing", show(ex));
+	} else
 		return false;
-	}
 }
 
 
@@ -340,26 +185,13 @@ bool parse_LR() {
 	t.stop();
 	cout << "done in " << t << endl;
 	//cout << show_grammar() << endl;
-	uint c = 0;
 	bool ret = true;
 	t.start();
 	cout << "parsing with LR ... " << flush;
 	for (Expr* ex : queue) {
 		if (!parse_GLR(ex)) {
-			cout << endl;
-			cout << "error parsing expression: " << *ex << endl;
-			cout << "expression no.: " << c++ << endl;
 			ret = false;
-			throw Error("expression syntax error");
-			//parse(ex, true);
-			//cout << err.what() << endl;
-			//throw err;
-		}
-		Expr e = assemble(*ex);
-		if (e != *ex) {
-			cout << "e  = " << e << endl;
-			cout << "ex = " << *ex << endl;
-			throw Error("expression syntax error");
+			break;
 		}
 	}
 	t.stop();
@@ -372,32 +204,11 @@ bool parse_LL() {
 	t.start();
 	cout << "parsing with LL ... " << flush;
 	bool ret = true;
-	cout << endl;
-	int c = 0;
 	for (Expr* ex : queue) {
-		//cout << "doing " << c++ << " : " << show(*ex) << " ... " << endl;
-		if (c == 7920) {
-			cout << "AAA";
-			shit = true;
-		}
 		if (!parse_LL(ex)) {
-			cout << "failed. ";
-			//parse_LL(ex, true);
 			ret = false;
 			break;
 		}
-
-		Expr e = assemble(*ex);
-		if (e != *ex || c == 7920) {
-			cout << "term(e)  = " << show_ast(e) << endl;
-			cout << "term(ex)  = " << show_ast(*ex) << endl;
-			cout << "e  = " << e << endl;
-			cout << "ex = " << *ex << endl;
-			shit = false;
-			parse_LL(ex, true);
-			throw Error("expression syntax error");
-		}
-		//cout << " DONE" << endl;
 	}
 	t.stop();
 	cout << "done in " << t << endl;
