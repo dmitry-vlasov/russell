@@ -9,21 +9,22 @@ extern map<uint, rus::Const> math_symb;
 namespace {
 
 struct State {
-	map<const Assertion*, rus::Axiom*>   axioms;
-	map<const Assertion*, rus::Theorem*> theorems;
-	map<const Assertion*, rus::Def*>     defs;
-	map<const rus::Rule*, rus::Node*>    rules;
-	map<Symbol, rus::Type*> types;
+	Map<const Assertion*, rus::Axiom*>   axioms;
+	Map<const Assertion*, rus::Theorem*> theorems;
+	Map<const Assertion*, rus::Def*>     defs;
+	Map<const rus::Rule*, rus::Node*>    rules;
+	Map<Symbol, rus::Type*> types;
 	rus::Type*    type_wff;
 	rus::Type*    type_set;
 	rus::Type*    type_class;
-	set<Symbol>   redundant_consts;
+	Set<Symbol>   redundant_consts;
+	Set<rus::Symbol> constants;
 	rus::Theory*  theory;
 };
 
 inline rus::Symbol translate_symb(Symbol s, rus::Type* t = nullptr) {
 	auto p = math_symb.find(s.lit);
-	if (p == math_symb.end())
+	if (p == math_symb.end() || t)
 		return rus::Symbol(s, t);
 	else {
 		rus::Symbol rs = (*p).second.symb;
@@ -41,14 +42,14 @@ static rus::Expr translate_expr(const Expr& ex, const State& state, const Assert
 		rus::Type* t = nullptr;
 		for (auto f : ass->floating)
 			if (f->var() == *it) {
-				assert(state.types.find(f->type()) != state.types.end());
-				t = state.types.find(f->type())->second;
+				assert(state.types.has(f->type()));
+				t = state.types.m.find(f->type())->second;
 				break;
 			}
 		for (auto i : ass->inner)
 			if (i->var() == *it) {
-				assert(state.types.find(i->type()) != state.types.end());
-				t = state.types.find(i->type())->second;
+				assert(state.types.has(i->type()));
+				t = state.types.m.find(i->type())->second;
 				break;
 			}
 		e.push_back(translate_symb(*it, t));
@@ -58,18 +59,23 @@ static rus::Expr translate_expr(const Expr& ex, const State& state, const Assert
 	return e;
 }
 
-static void translate_const(const Expr& consts, const State& state) {
-	for (auto s : consts.symbols) {
+static void translate_const(const Constants* consts, State& state) {
+	for (auto s : consts->expr.symbols) {
+		if (state.redundant_consts.has(s))
+			continue;
 		rus::Const* c = nullptr;
 		auto p = math_symb.find(s.lit);
 		if (p == math_symb.end())
 			c = new rus::Const{rus::Symbol(s), rus::Symbol(), rus::Symbol()};
 		else
 			c = new rus::Const{(*p).second.symb, (*p).second.ascii, (*p).second.latex};
-		if (state.redundant_consts.find(s) == state.redundant_consts.end())
-			state.theory->nodes.push_back(rus::Node(c));
-		else
+
+		if (state.constants.has(c->symb))
 			delete c;
+		else {
+			state.constants.s.insert(c->symb);
+			state.theory->nodes.push_back(rus::Node(c));
+		}
 	}
 }
 
@@ -108,7 +114,9 @@ static rus::Disj translate_disj(const Assertion* ass, State& state) {
 }
 
 static rus::Type* translate_type(Symbol type_sy, State& state) {
-	if (state.types.find(type_sy) == state.types.end()) {
+	if (state.types.has(type_sy))
+		return state.types.m.find(type_sy)->second;
+	else {
 		string type_str = Smm::get().lex.symbols.toStr(type_sy.lit);
 		uint type_id = Smm::mod().lex.labels.toInt(type_str);
 		rus::Type* type = new rus::Type { type_id };
@@ -118,8 +126,7 @@ static rus::Type* translate_type(Symbol type_sy, State& state) {
 		if (type_str == "set") state.type_set = type;
 		if (type_str == "class") state.type_class = type;
 		return type;
-	} else
-		return state.types.find(type_sy)->second;
+	}
 }
 
 inline bool rule_term_is_super(const Expr& term) {
@@ -191,10 +198,11 @@ static void translate_rule(const Assertion* ass, State& state) {
 		translate_vars(ass->floating, state),
 		translate_expr(ass->prop.expr, state, ass)
 	};
-	for (auto p : state.rules) {
+	for (auto p : state.rules.m) {
 		if (less_general(p.first, rule)) {
 			delete p.second->val.rul;
-			*p.second = rus::Node(rule);
+			p.second->val.rul = rule;
+			//*p.second = rus::Node(rule);
 			return;
 		} else if (less_general(rule, p.first)) {
 			delete rule;
@@ -338,16 +346,16 @@ static rus::Proof::Elem translate_step(Ref ref, rus::Proof* proof, rus::Theorem*
 		el.val.step->refs.push_back(hr);
 	}
 	el.val.step->ind = elems.size();
-	el.val.step->expr = translate_expr(ref.expr, state, ass);
+	el.val.step->expr = translate_expr(ref.expr, state, a);
 	switch (ass_kind(ass)) {
 	case rus::Node::AXIOM:
-		el.val.step->val.axm = state.axioms.find(ass)->second;
+		el.val.step->val.axm = state.axioms.m.find(ass)->second;
 		el.val.step->kind = rus::Step::AXM; break;
 	case rus::Node::DEF:
-		el.val.step->val.def = state.defs.find(ass)->second;
+		el.val.step->val.def = state.defs.m.find(ass)->second;
 		el.val.step->kind = rus::Step::DEF; break;
 	case rus::Node::THEOREM:
-		el.val.step->val.thm = state.theorems.find(ass)->second;
+		el.val.step->val.thm = state.theorems.m.find(ass)->second;
 		el.val.step->kind = rus::Step::THM; break;
 	default : assert(false && "impossible"); break;
 	}
@@ -389,7 +397,7 @@ static void translate_ass(const Assertion* ass, State& state) {
 
 static void translate_node(const Node& node, State& state) {
 	switch(node.type) {
-	case Node::CONSTANTS: translate_const(node.val.cst->expr, state); break;
+	case Node::CONSTANTS: translate_const(node.val.cst, state); break;
 	case Node::ASSERTION: translate_ass(node.val.ass, state); break;
 	case Node::SOURCE:
 		// TODO:
@@ -414,10 +422,10 @@ rus::Source* translate_to_rus(const Source* source) {
 	state.type_wff = nullptr;
 	state.type_set = nullptr;
 	state.type_class = nullptr;
-	state.redundant_consts.insert(Smm::get().lex.symbols.getInt("wff"));
-	state.redundant_consts.insert(Smm::get().lex.symbols.getInt("set"));
-	state.redundant_consts.insert(Smm::get().lex.symbols.getInt("class"));
-	state.redundant_consts.insert(Smm::get().lex.symbols.getInt("|-"));
+	state.redundant_consts.s.insert(Smm::get().lex.symbols.getInt("wff"));
+	state.redundant_consts.s.insert(Smm::get().lex.symbols.getInt("set"));
+	state.redundant_consts.s.insert(Smm::get().lex.symbols.getInt("class"));
+	state.redundant_consts.s.insert(Smm::get().lex.symbols.getInt("|-"));
 	translate_theory(source, state);
 	return out;
 }

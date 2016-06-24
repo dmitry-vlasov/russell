@@ -591,7 +591,7 @@ void add_const(Const* c) {
 	}
 
 	if (lr.terminals.has(c->symb))
-		throw Error("type already declared", expr::show(c->symb));
+		throw Error("сonstant already declared", expr::show(c->symb));
 	lr.terminals.s.insert(c->symb);
 	lr.symbol_set.s.insert(c->symb);
 }
