@@ -49,7 +49,7 @@ map<uint, rus::Const> math_symb = {
 		{make_key("U_"), make_symb("U_", "⋃_", "\\bigcup")},
 		{make_key("|^|_"), make_symb("|^|_", "⋂_", "\\bigcap")},
 		{make_key("_E"), make_symb("_E", "𝛜", "\\epsilon")},
-		{make_key("_I"), make_symb("_I", "Id", "\\rm{Id}")},
+		{make_key("_I"), make_symb("_I", "_I", "\\rm{Id}")},
 		{make_key("om"), make_symb("om", "ω", "\\omega")},
 		{make_key("X."), make_symb("X.", "×", "\\times")},
 		{make_key("`'"), make_symb("`'", "⁻¹", "{}^{-1}")},

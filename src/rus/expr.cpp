@@ -25,6 +25,18 @@ string show(const Expr& ex) {
 	return s;
 }
 
+size_t memsize(const Expr& ex) {
+	size_t s = 0;
+	Expr::Node* n = ex.first;
+	while (n) {
+		s += memsize(*n);
+		for (Term<Expr::Node>* t : n->init)
+			s += memsize(*t);
+		n = n->next;
+	}
+	return s;
+}
+
 string show_ast(const ExprTerm* t, bool full) {
 	if (t->isvar())
 		return show(t->first->symb, full);

@@ -52,6 +52,11 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+size_t get_total_mem();
+size_t get_peak_RSS();
+size_t get_current_RSS();
+size_t get_current_free();
+
 namespace mdl { 
 	using std::size_t;
 	using std::ptrdiff_t;

@@ -9,6 +9,7 @@ project russell
 	;
 	
 exe smm : 
+  src/memusage.cpp
   src/timer.cpp
   src/location.cpp
   
@@ -28,6 +29,7 @@ exe smm :
   src/smm/main.cpp ;
   
 exe mm : 
+  src/memusage.cpp
   src/timer.cpp
   src/location.cpp
   
@@ -41,6 +43,7 @@ exe mm :
   src/mm/main.cpp ;
  
 exe mdl : 
+  src/memusage.cpp
   src/timer.cpp
   src/location.cpp
   
@@ -63,7 +66,8 @@ exe mdl :
   src/rus/translate.cpp
   src/rus/main.cpp ;
  
-lib smml : 
+lib smml :
+  src/memusage.cpp 
   src/timer.cpp
   src/location.cpp
   src/smm/show.cpp
@@ -72,6 +76,7 @@ lib smml :
   src/smm/verify.cpp ;
  
 lib mml : 
+  src/memusage.cpp
   src/timer.cpp
   src/location.cpp
   src/mm/globals.cpp

@@ -526,4 +526,34 @@ void dump_ast(const Term<Expr::Node>* tm);
 void dump(const Sub<Expr::Node>& sb);
 
 
+inline size_t memsize(const Symbol& s) {
+	return sizeof(Symbol);
+}
+template<class N>
+inline size_t memsize(const Term<N>& t) {
+	return sizeof(Term<N>) + t.children.capacity() * sizeof(void*);
+}
+inline size_t memsize(const node::Expr& n) {
+	return sizeof(node::Expr) + (n.init.capacity() + n.final.capacity()) * sizeof(void*);
+}
+template<class T>
+inline size_t memsize(const node::Tree<T>& n) {
+	return sizeof(node::Expr) + (n.init.capacity() + n.final.capacity()) * sizeof(void*) + memsize(n.data);
+}
+template<class T>
+size_t memsize(const Tree<T>& t) {
+	size_t s = 0;
+	if (t.root) {
+		vector<node::Tree<T>*> nodes;
+		gather_tree_nodes(nodes, t.root);
+		for (node::Tree<T>* n : nodes) {
+			s += memsize(*n);
+			for (Term<typename Tree<T>::Node>* x : n->init)
+				s += memsize(*x);
+		}
+	}
+	return s;
+}
+
+
 }} // mdl::rus

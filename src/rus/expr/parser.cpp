@@ -1,5 +1,7 @@
 //#include <boost/range/adaptor/reversed.hpp>
 
+#include <new>
+
 #include "GLR.hpp"
 #include "rus/expr/table.hpp"
 
@@ -204,11 +206,19 @@ bool parse_LL() {
 	t.start();
 	cout << "parsing with LL ... " << flush;
 	bool ret = true;
+	cout << endl;
+	int c = 0;
 	for (Expr* ex : queue) {
-		if (!parse_LL(ex)) {
-			ret = false;
-			break;
+		cout << "doing " << c++ << ", free: " << get_current_free() << " , exp: " << show(*ex) << " ... " << flush;
+		try {
+			if (!parse_LL(ex)) {
+				ret = false;
+				break;
+			}
+		} catch (std::bad_alloc& ba) {
+			std::cerr << "bad_alloc caught: " << ba.what() << '\n';
 		}
+		cout << "done" << endl;
 	}
 	t.stop();
 	cout << "done in " << t << endl;

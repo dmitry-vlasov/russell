@@ -148,7 +148,6 @@ static void translate_super(const Assertion* ass, State& state) {
 	rus::Type* super = translate_type(super_sy, state);
 	rus::Type* infer = translate_type(infer_sy, state);
 	infer->sup.push_back(super);
-
 	auto sup_it = type_index(super, state);
 	auto inf_it = type_index(infer, state);
 	if (sup_it > inf_it) {
@@ -199,12 +198,13 @@ static void translate_rule(const Assertion* ass, State& state) {
 		translate_expr(ass->prop.expr, state, ass)
 	};
 	for (auto p : state.rules.m) {
-		if (less_general(p.first, rule)) {
+		bool less_gen = less_general(p.first, rule);
+		bool more_gen = less_general(rule, p.first);
+		if (less_gen && !more_gen) {
 			delete p.second->val.rul;
 			p.second->val.rul = rule;
-			//*p.second = rus::Node(rule);
 			return;
-		} else if (less_general(rule, p.first)) {
+		} else if (more_gen) {
 			delete rule;
 			return;
 		}
