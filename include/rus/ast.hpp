@@ -378,4 +378,24 @@ void dump(const Import& i);
 void dump(const Theory& t);
 void dump(const Source& s);
 
+size_t memvol(const Const&);
+size_t memvol(const Vars&);
+size_t memvol(const Disj&);
+size_t memvol(const Type&);
+size_t memvol(const Rule&);
+size_t memvol(const Axiom&);
+size_t memvol(const Def&);
+size_t memvol(const Assertion&);
+size_t memvol(const Theorem&);
+size_t memvol(const Proof&);
+size_t memvol(const Step&);
+size_t memvol(const Ref&);
+size_t memvol(const Qed&);
+size_t memvol(const Hyp&);
+size_t memvol(const Prop&);
+size_t memvol(const Node&);
+size_t memvol(const Import&);
+size_t memvol(const Theory&);
+size_t memvol(const Source&);
+
 }} // mdl::rus

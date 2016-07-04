@@ -25,7 +25,7 @@ string show(const Expr& ex) {
 	return s;
 }
 
-size_t memsize(const Expr& ex) {
+size_t memvol(const Expr& ex) {
 	size_t s = 0;
 	Expr::Node* n = ex.first;
 	while (n) {

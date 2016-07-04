@@ -50,6 +50,7 @@ exe mdl :
   src/smm/show.cpp
   
   src/rus/parser/parser.cpp
+  src/rus/memvol.cpp
   
   src/rus/expr/GLR.cpp
   src/rus/expr/parser.cpp

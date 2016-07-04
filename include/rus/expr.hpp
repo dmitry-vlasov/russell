@@ -526,22 +526,22 @@ void dump_ast(const Term<Expr::Node>* tm);
 void dump(const Sub<Expr::Node>& sb);
 
 
-inline size_t memsize(const Symbol& s) {
-	return sizeof(Symbol);
+inline size_t memvol(const Symbol& s) {
+	return 0;
 }
 template<class N>
-inline size_t memsize(const Term<N>& t) {
-	return sizeof(Term<N>) + t.children.capacity() * sizeof(void*);
+inline size_t memvol(const Term<N>& t) {
+	return t.children.capacity() * sizeof(void*);
 }
-inline size_t memsize(const node::Expr& n) {
-	return sizeof(node::Expr) + (n.init.capacity() + n.final.capacity()) * sizeof(void*);
-}
-template<class T>
-inline size_t memsize(const node::Tree<T>& n) {
-	return sizeof(node::Expr) + (n.init.capacity() + n.final.capacity()) * sizeof(void*) + memsize(n.data);
+inline size_t memvol(const node::Expr& n) {
+	return (n.init.capacity() + n.final.capacity()) * sizeof(void*);
 }
 template<class T>
-size_t memsize(const Tree<T>& t) {
+inline size_t memvol(const node::Tree<T>& n) {
+	return (n.init.capacity() + n.final.capacity()) * sizeof(void*) + memsize(n.data);
+}
+template<class T>
+size_t memvol(const Tree<T>& t) {
 	size_t s = 0;
 	if (t.root) {
 		vector<node::Tree<T>*> nodes;
@@ -554,6 +554,7 @@ size_t memsize(const Tree<T>& t) {
 	}
 	return s;
 }
+size_t memvol(const Expr& ex);
 
 
 }} // mdl::rus

@@ -84,6 +84,16 @@ void join(vector<T>& v1, const vector<T>& v2) {
 	for (auto p : v2) v1.push_back(p);
 }
 
+template<class T>
+size_t memvol(const T& x) {
+	return 0;
+}
+
+template<class T>
+size_t memsize(const T& x) {
+	return sizeof(T) + memvol(x);
+}
+
 }
 
   
