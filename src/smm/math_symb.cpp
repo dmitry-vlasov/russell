@@ -69,7 +69,7 @@ map<uint, rus::Const> math_symb = {
 		{make_key("^o"), make_symb("^o", "↑ₒ", "\\uparrow_o")},
 		{make_key("1o"), make_symb("1o", "1ₒ", "1_o")},
 		{make_key("2o"), make_symb("2o", "2ₒ", "2_o")},
-		{make_key("/."), make_symb("/.", "/", "\\diagup")},
+		{make_key("/."), make_symb("/.", "/.", "\\diagup")},
 		{make_key("~~"), make_symb("~~", "≈", "\\approx")},
 		{make_key("~<_"), make_symb("~<_", "≼", "\\preccurlyeq")},
 		{make_key("~<"), make_symb("~<", "≺", "\\prec")},

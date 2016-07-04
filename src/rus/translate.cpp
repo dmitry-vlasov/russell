@@ -4,13 +4,13 @@
 namespace mdl { namespace rus {
 
 struct Maps {
-	map<const Assertion*, map<const Hyp*, smm::Essential*>> essentials;
-	map<const Assertion*, map<Symbol, smm::Floating*>> floatings;
-	map<const Assertion*, map<Symbol, smm::Inner*>> inners;
-	map<const Assertion*, smm::Assertion*> assertions;
-	map<const Type*, uint> types;
-	map<const Rule*, smm::Assertion*> rules;
-	map<const Rule*, map<Symbol, uint>> rules_args;
+	Map<const Assertion*, Map<const Hyp*, smm::Essential*>> essentials;
+	Map<const Assertion*, Map<Symbol, smm::Floating*>> floatings;
+	Map<const Assertion*, Map<Symbol, smm::Inner*>> inners;
+	Map<const Assertion*, smm::Assertion*> assertions;
+	Map<const Type*, uint> types;
+	Map<const Rule*, smm::Assertion*> rules;
+	Map<const Rule*, Map<Symbol, uint>> rules_args;
 	smm::Assertion* thm;
 	mdl::Symbol turnstile;
 };
@@ -192,9 +192,9 @@ void translate_ref(Ref ref, const Assertion* thm, vector<smm::Ref>& smm_proof, M
 
 void translate_term(const Term<node::Expr>* t, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps) {
 	if (t->isvar()) {
-		if (maps.floatings[thm].find(t->getvar()) != maps.floatings[thm].end())
+		if (maps.floatings[thm].has(t->getvar()))
 			smm_proof.push_back(maps.floatings[thm][t->getvar()]);
-		else if (maps.inners[thm].find(t->getvar()) != maps.inners[thm].end())
+		else if (maps.inners[thm].has(t->getvar()))
 			smm_proof.push_back(maps.inners[thm][t->getvar()]);
 		else
 			throw Error("undeclared variable", show(t->getvar()));
@@ -202,8 +202,18 @@ void translate_term(const Term<node::Expr>* t, const Assertion* thm, vector<smm:
 		for (auto v : t->rule->vars.v)
 			translate_term(t->children[maps.rules_args[t->rule][v]], thm, smm_proof, maps);
 	}
-	if (t->rule)
-		smm_proof.push_back(smm::Ref(maps.rules[t->rule], true));
+	if (t->rule) {
+		if (!maps.rules.has(t->rule)) {
+			cout << "X: " << endl;
+			cout << "t: " << show(*t) << endl;
+			cout << "rule: " << show(*t->rule) << endl;
+		} else if (!maps.rules[t->rule]) {
+			cout << "Y: " << endl;
+			cout << "t: " << show(*t) << endl;
+			cout << "rule: " << show(*t->rule) << endl;
+		} else
+			smm_proof.push_back(smm::Ref(maps.rules[t->rule], true));
+	}
 }
 
 void translate_proof(const Proof* proof, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps, uint ind = 0);
@@ -227,6 +237,17 @@ void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref>& smm_
 	for (auto v : st->assertion()->vars.v)
 		translate_term(ps->find(v), thm, smm_proof, maps);
 	delete ps;
+	if (!maps.assertions.has(ass)) {
+		cout << "A: " << endl;
+		cout << "ass: " << show(*ass) << endl;
+		cout << "thm: " << show(*thm) << endl;
+	}
+	if (!maps.assertions[ass]) {
+		cout << "B: " << endl;
+		cout << "ass: " << show(*ass) << endl;
+		cout << "thm: " << show(*thm) << endl;
+	}
+	assert(maps.assertions.has(ass));
 	smm_proof.push_back(smm::Ref(maps.assertions[ass], st->kind != Step::THM));
 }
 
