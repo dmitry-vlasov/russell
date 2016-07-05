@@ -327,11 +327,16 @@ inline Sub<>* unify(const Expr& ex1, const Expr& ex2) {
 Expr assemble(const Expr& ex);
 Expr assemble(const ExprTerm* t);
 
+namespace expr {
+	bool parse_LL(Expr* ex, bool trace = false);
+	bool parse_GLR(Expr* ex);
+}
+
 string show(const Expr&);
 string show_ast(const Term<Expr::Node>*, bool full = false);
-inline string show_ast(const Expr& ex) {
+inline string show_ast(const Expr& ex, bool full = false) {
 	if (ex.term())
-		return show_ast(ex.term());
+		return show_ast(ex.term(), full);
 	else
 		return "<no ast>";
 }

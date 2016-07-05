@@ -23,10 +23,15 @@ void verify_step(Step* st) {
 		string msg = "proposition:\n";
 		msg += show(*ass->props[0]) + "\n";
 		msg += "ref expr:\n";
-		msg += show(st->expr) + "\n\n";
+		msg += show(ass->props[0]->expr) + "\n";
+		msg += show_ast(ass->props[0]->expr, true) + "\n\n";
 		msg += "step:\n";
-		msg += show(*st) + "\n\n";
+		msg += show(*st) + "\n";
+		msg += show_ast(st->expr, true) + "\n\n";
 		msg += "theorem " + Rus::get().lex.ids.toStr(st->proof->thm->ass.id) + "\n";
+
+		expr::parse_LL(&st->expr, true);
+
 		throw Error("proposition unification failed", msg);
 	}
 	for (uint i = 0; i < ass->arity(); ++ i) {

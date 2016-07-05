@@ -93,15 +93,6 @@ bool parse_GLR(Table& tab, Expr* ex, Node* n, Unit u) {
 	return false;
 }
 
-bool parse_GLR(Expr* ex, bool trace = false) {
-	Node* n = ex->first;
-	Table& tab = table();
-	if (!tab.inits.has(ex->type))
-		return false;
-	State* init = tab.inits[ex->type];
-	return parse_GLR(tab, ex, n, Unit{init, nullptr, n, nullptr});
-}
-
 inline Rule* find_super(Type* type, Type* super) {
 	auto it =type->supers.find(super);
 	if (it != type->supers.end())
@@ -110,7 +101,78 @@ inline Rule* find_super(Type* type, Type* super) {
 		return nullptr;
 }
 
-Term* parse_LL(Node* x, Type* type, bool trace) {
+Term* parse_LL(Node* x, Type* type, bool trace, bool initial = false) {
+	if (!initial && type->rules.root) {
+		vector<Term*> children;
+		Node* f = x;
+
+		stack<TreeNode*> n;
+		stack<Node*> m;
+		stack<TreeNode*> childnodes;
+		n.push(type->rules.root);
+		m.push(x);
+
+		while (!n.empty() && !m.empty()) {
+			if (Type* tp = n.top()->symb.type) {
+				if (Term* child = parse_LL(m.top(), tp, trace, n.top() == type->rules.root)) {
+					children.push_back(child);
+					childnodes.push(n.top());
+					if (!n.top()->next) {
+						Term* t = new Term(f, child->last, n.top()->data, children);
+						if (trace) cout << "CHILD: " << show_ast(t, true) << endl;
+						return t;
+					} else if (!child->last->next)
+						goto end;
+					else {
+						n.push(n.top()->next);
+						m.push(child->last->next);
+					}
+					continue;
+				}
+			} else if (n.top()->symb == m.top()->symb) {
+				if (!n.top()->next) {
+					Term* t = new Term(f, m.top(), n.top()->data, children);
+					if (trace) cout << "END: " << show_ast(t, true) << endl;
+					return t;
+				} else if (!m.top()->next)
+					goto end;
+				else {
+					n.push(n.top()->next);
+					m.push(m.top()->next);
+				}
+				continue;
+			}
+			while (!n.top()->side) {
+				n.pop();
+				m.pop();
+				if (!childnodes.empty() && childnodes.top() == n.top()) {
+					children.pop_back();
+					childnodes.pop();
+				}
+				if (n.empty() || m.empty()) goto end;
+			}
+			n.top() = n.top()->side;
+		}
+		end:
+		for (auto t : children) delete t;
+	}
+	if (x->symb.type) {
+		if (x->symb.type == type) {
+			Term* t = new Term(x);
+			if (trace) cout << "VAR: " << show_ast(t, true) << endl;
+			return t;
+		} else if (Rule* super = find_super(x->symb.type, type)) {
+			Term* t = new Term(x, super);
+			if (trace) cout << "SUPER: " << show_ast(t, true) << endl;
+			return t;
+		}
+	}
+	return nullptr;
+}
+
+
+/*
+Term* parse_LL(Node* x, Type* type) {
 	if (x->symb.type){
 		if (x->symb.type == type)
 			return new Term(x);
@@ -129,7 +191,7 @@ Term* parse_LL(Node* x, Type* type, bool trace) {
 
 	while (!n.empty() && !m.empty()) {
 		if (Type* tp = n.top()->symb.type) {
-			if (Term* child = parse_LL(m.top(), tp, trace)) {
+			if (Term* child = parse_LL(m.top(), tp)) {
 				children.push_back(child);
 				childnodes.push(n.top());
 				if (!n.top()->next)
@@ -169,15 +231,7 @@ Term* parse_LL(Node* x, Type* type, bool trace) {
 	return nullptr;
 }
 
-
-bool parse_LL(Expr* ex, bool trace = false){
-	if (Term* term = parse_LL(ex->first, ex->type, trace)) {
-		add_terms(term);
-		return true;
-	} else
-		return false;
-}
-
+ */
 
 bool parse_LR() {
 	Timer t;
@@ -191,7 +245,7 @@ bool parse_LR() {
 	t.start();
 	cout << "parsing with LR ... " << flush;
 	for (Expr* ex : queue) {
-		if (!parse_GLR(ex)) {
+		if (!expr::parse_GLR(ex)) {
 			ret = false;
 			break;
 		}
@@ -211,7 +265,7 @@ bool parse_LL() {
 	for (Expr* ex : queue) {
 		//cout << "doing " << c++ << ", free: " << get_current_free() << " , exp: " << show(*ex) << " ... " << flush;
 		try {
-			if (!parse_LL(ex)) {
+			if (!expr::parse_LL(ex)) {
 				ret = false;
 				break;
 			}
@@ -227,11 +281,33 @@ bool parse_LL() {
 
 } // anonymous namespace
 
+bool parse_GLR(Expr* ex) {
+	Node* n = ex->first;
+	Table& tab = table();
+	if (!tab.inits.has(ex->type))
+		return false;
+	State* init = tab.inits[ex->type];
+	return parse_GLR(tab, ex, n, Unit{init, nullptr, n, nullptr});
+}
+
+bool parse_LL(Expr* ex, bool trace) {
+	if (Term* term = parse_LL(ex->first, ex->type, trace)) {
+		add_terms(term);
+		return true;
+	} else
+		return false;
+}
+
+
 void enqueue(Expr& ex) {
-	queue.push_back(&ex);
+	if (!parse_LL(&ex)) {
+		throw Error("expression parsing error", show(ex));
+	}
+	//queue.push_back(&ex);
 }
 
 bool parse() {
+	return true;
 	if (parse_LL()) {
 		queue.clear();
 		return true;

@@ -224,12 +224,12 @@ string show(const Node& n) {
 	return ""; // pacify the compiler
 }
 
-static int depth(const Theory& thy) {
+/*static int depth(const Theory& thy) {
 	int d = 0;
 	Theory* p = thy.parent;
 	while (p) { ++ d; p = p->parent; }
 	return d;
-}
+}*/
 
 string show(const Theory& thy) {
 	string s = "theory " + show_id(thy.id) + "{";

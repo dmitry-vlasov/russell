@@ -141,6 +141,7 @@ struct Step {
 		case Step::DEF: return &val.def->ass;
 		default : assert(false && "impossible");
 		}
+		return nullptr;
 	}
 	const Assertion* assertion() const {
 		switch(kind) {
@@ -149,6 +150,7 @@ struct Step {
 		case Step::DEF: return &val.def->ass;
 		default : assert(false && "impossible");
 		}
+		return nullptr;
 	}
 
 	uint        ind;
@@ -166,6 +168,7 @@ inline Expr& Ref::expr() {
 	case STEP: return val.step->expr;
 	default  : assert(false && "impossible");
 	}
+	return val.step->expr;
 }
 
 inline const Expr& Ref::expr() const {
@@ -175,6 +178,7 @@ inline const Expr& Ref::expr() const {
 	case STEP: return val.step->expr;
 	default  : assert(false && "impossible");
 	}
+	return val.step->expr;
 }
 
 struct Qed {

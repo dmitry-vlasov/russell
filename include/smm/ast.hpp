@@ -97,10 +97,7 @@ struct Ref {
 	Ref(Floating* f)  : type(FLOATING),  val() { val.flo = f; }
 	Ref(Essential* e) : type(ESSENTIAL), val() { val.ess = e; }
 	Ref(Inner* i)     : type(INNER),     val() { val.inn = i; }
-	Ref(Assertion* a, bool ax) : type(ax ? AXIOM : THEOREM), val() {
-		if (!a) cout << "FUCK!!" << endl;
-		val.ass = a;
-	}
+	Ref(Assertion* a, bool ax) : type(ax ? AXIOM : THEOREM), val() { val.ass = a; }
 	Ref(Proof* p)     : type(PROOF),     val() { val.prf = p; }
 	void destroy();
 

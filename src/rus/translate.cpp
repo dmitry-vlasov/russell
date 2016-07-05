@@ -203,16 +203,9 @@ void translate_term(const Term<node::Expr>* t, const Assertion* thm, vector<smm:
 			translate_term(t->children[maps.rules_args[t->rule][v]], thm, smm_proof, maps);
 	}
 	if (t->rule) {
-		if (!maps.rules.has(t->rule)) {
-			cout << "X: " << endl;
-			cout << "t: " << show(*t) << endl;
-			cout << "rule: " << show(*t->rule) << endl;
-		} else if (!maps.rules[t->rule]) {
-			cout << "Y: " << endl;
-			cout << "t: " << show(*t) << endl;
-			cout << "rule: " << show(*t->rule) << endl;
-		} else
-			smm_proof.push_back(smm::Ref(maps.rules[t->rule], true));
+		if (!maps.rules.has(t->rule))
+			throw Error("undefined reference to rule");
+		smm_proof.push_back(smm::Ref(maps.rules[t->rule], true));
 	}
 }
 
@@ -237,16 +230,8 @@ void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref>& smm_
 	for (auto v : st->assertion()->vars.v)
 		translate_term(ps->find(v), thm, smm_proof, maps);
 	delete ps;
-	if (!maps.assertions.has(ass)) {
-		cout << "A: " << endl;
-		cout << "ass: " << show(*ass) << endl;
-		cout << "thm: " << show(*thm) << endl;
-	}
-	if (!maps.assertions[ass]) {
-		cout << "B: " << endl;
-		cout << "ass: " << show(*ass) << endl;
-		cout << "thm: " << show(*thm) << endl;
-	}
+	if (!maps.assertions.has(ass))
+		throw Error("undefined reference to assertion");
 	assert(maps.assertions.has(ass));
 	smm_proof.push_back(smm::Ref(maps.assertions[ass], st->kind != Step::THM));
 }
