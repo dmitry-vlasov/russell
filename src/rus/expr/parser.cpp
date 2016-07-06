@@ -7,8 +7,8 @@
 
 namespace mdl { namespace rus { namespace expr { namespace {
 
-typedef Expr::Node Node;
-typedef term::Expr<Node> Term;
+typedef node::Expr Node;
+typedef term::Expr Term;
 typedef Tree<Rule*>::Node TreeNode;
 
 struct Unit {

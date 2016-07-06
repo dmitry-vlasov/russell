@@ -30,14 +30,14 @@ size_t memvol(const Expr& ex) {
 	Expr::Node* n = ex.first;
 	while (n) {
 		s += memsize(*n);
-		for (term::Expr<Expr::Node>* t : n->init)
+		for (term::Expr* t : n->init)
 			s += memsize(*t);
 		n = n->next;
 	}
 	return s;
 }
 
-string show_ast(const ExprTerm* t, bool full) {
+string show_ast(const term::Expr* t, bool full) {
 	if (t->isvar())
 		return show(t->first->symb, full);
 	else {
@@ -59,7 +59,7 @@ Expr::Expr(const Expr& ex) : first(nullptr), last(nullptr), type(ex.type) {
 		mp[n] = last;
 		n = n->next;
 	}
-	add_term(ex.term(), mp);
+	add_term<term::Expr, node::Expr>(ex.term(), mp);
 }
 Expr::Expr(Expr&& ex) : first(ex.first), last(ex.last), type(ex.type) {
 	ex.first = nullptr;
@@ -91,7 +91,7 @@ Expr& Expr::operator = (const Expr& ex) {
 		mp[n] = last;
 		n = n->next;
 	}
-	add_term(ex.term(), mp);
+	add_term<term::Expr, node::Expr>(ex.term(), mp);
 	return *this;
 }
 Expr& Expr::operator = (Expr&& ex) {
@@ -160,17 +160,17 @@ inline Rule* find_super(Type* type, Type* super) {
 		return nullptr;
 }
 
-ExprTerm* assemble_expr(Expr& ex, const ExprTerm* t) {
+term::Expr* assemble_expr(Expr& ex, const term::Expr* t) {
 	if (t->isvar()) {
 		ex.push_back(t->first->symb);
-		ExprTerm* at = new ExprTerm(ex.first);
+		term::Expr* at = new term::Expr(ex.first);
 		ex.first->init.push_back(at);
 		ex.last->final.push_back(at);
 		return at;
 	}
 	uint i = 0;
 	Expr::Node* n = t->rule ? t->rule->term.first : t->first;
-	vector<ExprTerm*> children;
+	vector<term::Expr*> children;
 	while (n) {
 		if (n->symb.type) {
 			if (i + 1 > t->children.size()) {
@@ -179,20 +179,20 @@ ExprTerm* assemble_expr(Expr& ex, const ExprTerm* t) {
 				ex.push_back(n->symb);
 				ex.push_back(Symbol(">>"));
 			} else {
-				ExprTerm* ch = assemble_expr(ex, t->children[i++]);
+				term::Expr* ch = assemble_expr(ex, t->children[i++]);
 				children.push_back(ch);
 			}
 		} else
 			ex.push_back(n->symb);
 		n = n->next;
 	}
-	ExprTerm* at = new ExprTerm(ex.first, ex.last, t->rule, children);
+	term::Expr* at = new term::Expr(ex.first, ex.last, t->rule, children);
 	ex.first->init.push_back(at);
 	ex.last->final.push_back(at);
 	return at;
 }
 
-Expr assemble(const ExprTerm* t) {
+Expr assemble(const term::Expr* t) {
 	Expr e;
 	assemble_expr(e, t);
 	e.type = t->rule ? t->rule->type : t->first->symb.type;
@@ -203,18 +203,18 @@ Expr assemble(const Expr& ex) {
 	return assemble(ex.term());
 }
 
-void add_terms(term::Expr<node::Expr>* term) {
+void add_terms(term::Expr* term) {
 	for (auto t : term->children) add_terms(t);
 	term->first->init.push_back(term);
 	term->last->final.push_back(term);
 }
 
-term::Expr<node::Expr>* create_term(Expr::Node* first, Expr::Node* last, Rule* rule) {
-	term::Expr<node::Expr>* term = new term::Expr<node::Expr>(first, last, rule);
+term::Expr* create_term(Expr::Node* first, Expr::Node* last, Rule* rule) {
+	term::Expr* term = new term::Expr(first, last, rule);
 	Expr::Node* n = first;
 	while (n) {
 		if (n->symb.type)
-			term->children.push_back(new term::Expr<node::Expr>(n));
+			term->children.push_back(new term::Expr(n));
 		n = n->next;
 	}
 	return term;
@@ -224,12 +224,12 @@ void parse_term(Expr& ex, Rule* rule) {
 	add_terms(create_term(ex.first, ex.last, rule));
 }
 
-template<typename N>
-inline Type* type(const term::Expr<N>* t) {
+template<typename T>
+inline Type* type(const T* t) {
 	return t->rule ? t->rule->type : t->first->symb.type;
 }
 
-Sub<>* unify(const term::Expr<Expr::Node>* p, const term::Expr<Expr::Node>* q) {
+Sub<>* unify(const term::Expr* p, const term::Expr* q) {
 	if (p->isvar()) {
 		Symbol var = p->first->symb;
 		if (var.type == type(q)) {
@@ -238,7 +238,7 @@ Sub<>* unify(const term::Expr<Expr::Node>* p, const term::Expr<Expr::Node>* q) {
 			return s;
 		} else if (Rule* super = find_super(type(q), const_cast<Type*>(var.type))) {
 			Sub<>* s = new Sub<>();
-			s->sub[var] = new term::Expr<Expr::Node>(q->first, q->last, super);
+			s->sub[var] = new term::Expr(q->first, q->last, super);
 			s->sub[var]->children.push_back(q->clone());
 			return s;
 		}
@@ -271,8 +271,8 @@ Sub<>* unify(const term::Expr<Expr::Node>* p, const term::Expr<Expr::Node>* q) {
 void dump(const Symbol& s) { cout << show(s) << endl; }
 void dump(const Expr& ex) { cout << show(ex) << endl; }
 void dump_ast(const Expr& ex) { cout << show_ast(ex) << endl; }
-void dump(const term::Expr<Expr::Node>* tm) { cout << show(*tm) << endl; }
-void dump_ast(const term::Expr<Expr::Node>* tm) { cout << show_ast(tm) << endl; }
+void dump(const term::Expr* tm) { cout << show(*tm) << endl; }
+void dump_ast(const term::Expr* tm) { cout << show_ast(tm) << endl; }
 void dump(const Sub<Expr::Node>& sb) { cout << show(sb) << endl; }
 
 }} // mdl::rus

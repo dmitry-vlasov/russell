@@ -138,9 +138,8 @@ struct Tree;
 
 namespace term {
 
-template<class N>
 struct Expr {
-	typedef N Node;
+	typedef node::Expr Node;
 	typedef iterator<Node> Iterator;
 	typedef const_iterator<Node> ConstIterator;
 
@@ -153,17 +152,17 @@ struct Expr {
 	Expr(Node* f, Node* l, Rule* r, const vector<Expr*>& ch) :
 	first(f), last(l), rule(r), children(ch) { }
 
-	Iterator begin() { return Iterator(first); }
-	Iterator end()   { return last->next ? Iterator(last->next) : Iterator(); }
-	ConstIterator begin() const { return ConstIterator(first); }
-	ConstIterator end() const { return last->next ? ConstIterator(last->next) : ConstIterator(); }
-	Iterator rbegin() { return Iterator(last); }
-	Iterator rend() { return first->prev ? Iterator(first->prev) : Iterator(); }
-	ConstIterator rbegin() const { return ConstIterator(last); }
-	ConstIterator rend() const { return first->prev ? ConstIterator(first->prev) : ConstIterator(); }
+	Iterator begin();
+	Iterator end();
+	ConstIterator begin() const;
+	ConstIterator end() const;
+	Iterator rbegin();
+	Iterator rend();
+	ConstIterator rbegin() const;
+	ConstIterator rend() const;
 
-	bool isvar() const { return first == last && first->symb.type && !rule; }
-	Symbol getvar() const { return first->symb; }
+	bool isvar() const;
+	Symbol getvar() const;
 
 	Expr* clone() const;
 	bool operator == (const Expr& t) const;
@@ -182,6 +181,52 @@ struct Expr {
 	Rule* rule;
 	vector<Expr*> children;
 };
+
+template<class T>
+struct Tree {
+	typedef node::Tree<T> Node;
+	typedef iterator<Node> Iterator;
+	typedef const_iterator<Node> ConstIterator;
+
+	Tree(Node* f, Node* l, Rule* r) :
+	first(f), last(l), rule(r), children() { }
+	Tree(Node* v, Rule* r = nullptr) :
+	first(v), last(v), rule(r), children() {
+		if (rule) children.push_back(new Tree(v));
+	}
+	Tree(Node* f, Node* l, Rule* r, const vector<Tree*>& ch) :
+	first(f), last(l), rule(r), children(ch) { }
+
+	Iterator begin() { return Iterator(first); }
+	Iterator end()   { return last->next ? Iterator(last->next) : Iterator(); }
+	ConstIterator begin() const { return ConstIterator(first); }
+	ConstIterator end() const { return last->next ? ConstIterator(last->next) : ConstIterator(); }
+	Iterator rbegin() { return Iterator(last); }
+	Iterator rend() { return first->prev ? Iterator(first->prev) : Iterator(); }
+	ConstIterator rbegin() const { return ConstIterator(last); }
+	ConstIterator rend() const { return first->prev ? ConstIterator(first->prev) : ConstIterator(); }
+
+	bool isvar() const { return first == last && first->symb.type && !rule; }
+	Symbol getvar() const { return first->symb; }
+
+	Tree* clone() const;
+	bool operator == (const Tree& t) const;
+	bool operator != (const Tree& t) const {
+		return !operator == (t);
+	}
+	void destroy() {
+		for(auto ch : children) {
+			ch->destroy();
+			delete ch;
+		}
+	}
+
+	Node* first;
+	Node* last;
+	Rule* rule;
+	vector<Tree*> children;
+};
+
 
 }
 
@@ -209,8 +254,8 @@ struct Expr {
 	Symbol symb;
 	Expr*  next;
 	Expr*  prev;
-	vector<term::Expr<Expr>*>  init;
-	vector<term::Expr<Expr>*> final;
+	vector<term::Expr*>  init;
+	vector<term::Expr*> final;
 };
 
 template<typename T>
@@ -239,8 +284,8 @@ struct Tree {
 	Tree*  prev;
 	Tree*  side;
 	uint   level;
-	vector<term::Expr<Tree>*>  init;
-	vector<term::Expr<Tree>*> final;
+	vector<term::Tree<T>*>  init;
+	vector<term::Tree<T>*> final;
 	T data;
 };
 
@@ -267,13 +312,13 @@ struct Sub {
 		}
 	}
 	bool join(Sub* s);
-	term::Expr<Node>* find(Symbol v) {
+	term::Expr* find(Symbol v) {
 		auto it = sub.find(v);
 		if (it == sub.end()) return nullptr;
 		else return it->second;
 	}
 
-	map<Symbol, term::Expr<Node>*> sub;
+	map<Symbol, term::Expr*> sub;
 };
 
 struct Expr {
@@ -298,11 +343,11 @@ struct Expr {
 	bool operator != (const Expr& ex) const {
 		return !operator == (ex);
 	}
-	term::Expr<Node>* term() {
+	term::Expr* term() {
 		if (!first) return nullptr; else
 		return first->init.size() ? first->init.back() : nullptr;
 	}
-	const term::Expr<Node>* term() const {
+	const term::Expr* term() const {
 		if (!first) return nullptr; else
 		return first->init.size() ? first->init.back() : nullptr;
 	}
@@ -320,7 +365,7 @@ struct Expr {
 	Type* type;
 };
 
-typedef term::Expr<node::Expr> ExprTerm;
+//typedef term::Expr ExprTerm;
 
 inline iterator<node::Expr> begin(Expr& ex) { return ex.begin(); }
 inline iterator<node::Expr> end(Expr& ex)   { return ex.end(); }
@@ -331,13 +376,50 @@ inline iterator<node::Expr> rend(Expr& ex) { return ex.rend(); }
 inline const_iterator<node::Expr> rbegin(const Expr& ex) { return ex.rbegin(); }
 inline const_iterator<node::Expr> rend(const Expr& ex) { return ex.rend(); }
 
+namespace term {
 
-Sub<>* unify(const term::Expr<Expr::Node>* p, const term::Expr<Expr::Node>* q);
+inline Expr::Iterator Expr::begin() { return Iterator(first); }
+inline Expr::Iterator Expr::end()   { return last->next ? Iterator(last->next) : Iterator(); }
+inline Expr::ConstIterator Expr::begin() const { return ConstIterator(first); }
+inline Expr::ConstIterator Expr::end() const { return last->next ? ConstIterator(last->next) : ConstIterator(); }
+inline Expr::Iterator Expr::rbegin() { return Iterator(last); }
+inline Expr::Iterator Expr::rend() { return first->prev ? Iterator(first->prev) : Iterator(); }
+inline Expr::ConstIterator Expr::rbegin() const { return ConstIterator(last); }
+inline Expr::ConstIterator Expr::rend() const { return first->prev ? ConstIterator(first->prev) : ConstIterator(); }
+inline bool Expr::isvar() const { return first == last && first->symb.type && !rule; }
+inline Symbol Expr::getvar() const { return first->symb; }
+
+inline Expr* Expr::clone() const {
+	Expr* ret = new Expr(first, last, rule);
+	for (auto ch : children)
+		ret->children.push_back(ch->clone());
+	return ret;
+}
+inline bool Expr :: operator == (const Expr& t) const {
+	if (isvar() && t.isvar() && first->symb == t.first->symb)
+		return true;
+	if (rule != t.rule)
+		return false;
+	auto i_p = children.begin();
+	auto i_q = t.children.begin();
+	while (i_p != children.end()) {
+		const Expr* ch_p = *i_p;
+		const Expr* ch_q = *i_q;
+		if (*ch_p != *ch_q) return false;
+		++ i_p; ++ i_q;
+	}
+	return true;
+}
+
+}
+
+
+Sub<>* unify(const term::Expr* p, const term::Expr* q);
 inline Sub<>* unify(const Expr& ex1, const Expr& ex2) {
 	return unify(ex1.term(), ex2.term());
 }
 Expr assemble(const Expr& ex);
-Expr assemble(const ExprTerm* t);
+Expr assemble(const term::Expr* t);
 
 namespace expr {
 	bool parse_LL(Expr* ex, bool trace = false);
@@ -345,7 +427,7 @@ namespace expr {
 }
 
 string show(const Expr&);
-string show_ast(const term::Expr<Expr::Node>*, bool full = false);
+string show_ast(const term::Expr*, bool full = false);
 inline string show_ast(const Expr& ex, bool full = false) {
 	if (ex.term())
 		return show_ast(ex.term(), full);
@@ -353,8 +435,7 @@ inline string show_ast(const Expr& ex, bool full = false) {
 		return "<no ast>";
 }
 
-template<typename N>
-string show(const term::Expr<N>& t) {
+inline string show(const term::Expr& t) {
 	deque<Symbol> symbs;
 	for (auto it = t.rbegin(); it != t.rend(); -- it) {
 		symbs.push_front(it->symb);
@@ -430,16 +511,16 @@ inline N* new_side(N* n, Symbol s) {
 	return n->side;
 }
 
-template<class N>
-term::Expr<N>* add_term(const term::Expr<node::Expr>* st, map<Expr::Node*, N*>& mp) {
+template<class T, class N>
+T* add_term(const term::Expr* st, map<node::Expr*, N*>& mp) {
 	if (!st) return nullptr;
 	assert(mp.find(st->first) != mp.end());
 	assert(mp.find(st->last) != mp.end());
-	term::Expr<N>* tt = new term::template Expr<N>(mp[st->first], mp[st->last], st->rule);
+	T* tt = new T(mp[st->first], mp[st->last], st->rule);
 	mp[st->first]->init.push_back(tt);
 	mp[st->last]->final.push_back(tt);
 	for (auto ch : st->children) {
-		tt->children.push_back(add_term(ch, mp));
+		tt->children.push_back(add_term<T, N>(ch, mp));
 	}
 	return tt;
 }
@@ -447,13 +528,13 @@ term::Expr<N>* add_term(const term::Expr<node::Expr>* st, map<Expr::Node*, N*>& 
 template<typename T>
 T& Tree<T>::add(const Expr& ex) {
 	assert(ex.first);
-	map<Expr::Node*, Node*> mp;
-	Expr::Node* m = ex.first;
+	map<node::Expr*, node::Tree<T>*> mp;
+	node::Expr* m = ex.first;
 	if (!root) {
-		root = new Node(m->symb);
+		root = new node::Tree<T>(m->symb);
 		mp[m] = root;
 	}
-	Node* n = root;
+	node::Tree<T>* n = root;
 	while (true) {
 		while (n->side && m->symb != n->symb)
 			n = n->side;
@@ -472,7 +553,7 @@ T& Tree<T>::add(const Expr& ex) {
 		n = new_next(n, m->symb);
 		mp[m] = n;
 	}
-	add_term<typename Tree<T>::Node>(ex.term(), mp);
+	add_term<term::Tree<T>, node::Tree<T>>(ex.term(), mp);
 	return n->data;
 }
 
@@ -511,43 +592,18 @@ bool Sub<N>::join(Sub* s) {
 	return true;
 }
 
-template<typename N>
-term::Expr<N>* term::Expr<N>::clone() const {
-	Expr* ret = new Expr(first, last, rule);
-	for (auto ch : children)
-		ret->children.push_back(ch->clone());
-	return ret;
-}
-template<typename N>
-bool term::Expr<N> :: operator == (const Expr& t) const {
-	if (isvar() && t.isvar() && first->symb == t.first->symb)
-		return true;
-	if (rule != t.rule)
-		return false;
-	auto i_p = children.begin();
-	auto i_q = t.children.begin();
-	while (i_p != children.end()) {
-		const Expr* ch_p = *i_p;
-		const Expr* ch_q = *i_q;
-		if (*ch_p != *ch_q) return false;
-		++ i_p; ++ i_q;
-	}
-	return true;
-}
-
 void dump(const Symbol& s);
 void dump(const Expr& ex);
 void dump_ast(const Expr& ex);
-void dump(const term::Expr<Expr::Node>* tm);
-void dump_ast(const term::Expr<Expr::Node>* tm);
+void dump(const term::Expr* tm);
+void dump_ast(const term::Expr* tm);
 void dump(const Sub<Expr::Node>& sb);
 
 
 inline size_t memvol(const Symbol& s) {
 	return 0;
 }
-template<class N>
-inline size_t memvol(const term::Expr<N>& t) {
+inline size_t memvol(const term::Expr& t) {
 	return t.children.capacity() * sizeof(void*);
 }
 inline size_t memvol(const node::Expr& n) {
@@ -565,7 +621,7 @@ size_t memvol(const Tree<T>& t) {
 		gather_tree_nodes(nodes, t.root);
 		for (node::Tree<T>* n : nodes) {
 			s += memsize(*n);
-			for (term::Expr<typename Tree<T>::Node>* x : n->init)
+			for (term::Tree<T>* x : n->init)
 				s += memsize(*x);
 		}
 	}

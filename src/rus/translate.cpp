@@ -190,7 +190,7 @@ void translate_ref(Ref ref, const Assertion* thm, vector<smm::Ref>& smm_proof, M
 	}
 }
 
-void translate_term(const term::Expr<node::Expr>* t, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps) {
+void translate_term(const term::Expr* t, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps) {
 	if (t->isvar()) {
 		if (maps.floatings[thm].has(t->getvar()))
 			smm_proof.push_back(maps.floatings[thm][t->getvar()]);
