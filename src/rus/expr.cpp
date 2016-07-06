@@ -30,7 +30,7 @@ size_t memvol(const Expr& ex) {
 	Expr::Node* n = ex.first;
 	while (n) {
 		s += memsize(*n);
-		for (Term<Expr::Node>* t : n->init)
+		for (term::Expr<Expr::Node>* t : n->init)
 			s += memsize(*t);
 		n = n->next;
 	}
@@ -203,18 +203,18 @@ Expr assemble(const Expr& ex) {
 	return assemble(ex.term());
 }
 
-void add_terms(Term<node::Expr>* term) {
+void add_terms(term::Expr<node::Expr>* term) {
 	for (auto t : term->children) add_terms(t);
 	term->first->init.push_back(term);
 	term->last->final.push_back(term);
 }
 
-Term<node::Expr>* create_term(Expr::Node* first, Expr::Node* last, Rule* rule) {
-	Term<node::Expr>* term = new Term<node::Expr>(first, last, rule);
+term::Expr<node::Expr>* create_term(Expr::Node* first, Expr::Node* last, Rule* rule) {
+	term::Expr<node::Expr>* term = new term::Expr<node::Expr>(first, last, rule);
 	Expr::Node* n = first;
 	while (n) {
 		if (n->symb.type)
-			term->children.push_back(new Term<node::Expr>(n));
+			term->children.push_back(new term::Expr<node::Expr>(n));
 		n = n->next;
 	}
 	return term;
@@ -225,11 +225,11 @@ void parse_term(Expr& ex, Rule* rule) {
 }
 
 template<typename N>
-inline Type* type(const Term<N>* t) {
+inline Type* type(const term::Expr<N>* t) {
 	return t->rule ? t->rule->type : t->first->symb.type;
 }
 
-Sub<>* unify(const Term<Expr::Node>* p, const Term<Expr::Node>* q) {
+Sub<>* unify(const term::Expr<Expr::Node>* p, const term::Expr<Expr::Node>* q) {
 	if (p->isvar()) {
 		Symbol var = p->first->symb;
 		if (var.type == type(q)) {
@@ -238,7 +238,7 @@ Sub<>* unify(const Term<Expr::Node>* p, const Term<Expr::Node>* q) {
 			return s;
 		} else if (Rule* super = find_super(type(q), const_cast<Type*>(var.type))) {
 			Sub<>* s = new Sub<>();
-			s->sub[var] = new Term<Expr::Node>(q->first, q->last, super);
+			s->sub[var] = new term::Expr<Expr::Node>(q->first, q->last, super);
 			s->sub[var]->children.push_back(q->clone());
 			return s;
 		}
@@ -271,8 +271,8 @@ Sub<>* unify(const Term<Expr::Node>* p, const Term<Expr::Node>* q) {
 void dump(const Symbol& s) { cout << show(s) << endl; }
 void dump(const Expr& ex) { cout << show(ex) << endl; }
 void dump_ast(const Expr& ex) { cout << show_ast(ex) << endl; }
-void dump(const Term<Expr::Node>* tm) { cout << show(*tm) << endl; }
-void dump_ast(const Term<Expr::Node>* tm) { cout << show_ast(tm) << endl; }
+void dump(const term::Expr<Expr::Node>* tm) { cout << show(*tm) << endl; }
+void dump_ast(const term::Expr<Expr::Node>* tm) { cout << show_ast(tm) << endl; }
 void dump(const Sub<Expr::Node>& sb) { cout << show(sb) << endl; }
 
 }} // mdl::rus

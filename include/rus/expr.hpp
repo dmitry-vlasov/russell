@@ -128,19 +128,29 @@ struct pairing {
 
 struct Rule;
 
-template<typename N>
-struct Term {
+namespace node {
+
+struct Expr;
+template<class>
+struct Tree;
+
+}
+
+namespace term {
+
+template<class N>
+struct Expr {
 	typedef N Node;
 	typedef iterator<Node> Iterator;
 	typedef const_iterator<Node> ConstIterator;
 
-	Term(Node* f, Node* l, Rule* r) :
+	Expr(Node* f, Node* l, Rule* r) :
 	first(f), last(l), rule(r), children() { }
-	Term(Node* v, Rule* r = nullptr) :
+	Expr(Node* v, Rule* r = nullptr) :
 	first(v), last(v), rule(r), children() {
-		if (rule) children.push_back(new Term(v));
+		if (rule) children.push_back(new Expr(v));
 	}
-	Term(Node* f, Node* l, Rule* r, const vector<Term*>& ch) :
+	Expr(Node* f, Node* l, Rule* r, const vector<Expr*>& ch) :
 	first(f), last(l), rule(r), children(ch) { }
 
 	Iterator begin() { return Iterator(first); }
@@ -155,9 +165,9 @@ struct Term {
 	bool isvar() const { return first == last && first->symb.type && !rule; }
 	Symbol getvar() const { return first->symb; }
 
-	Term* clone() const;
-	bool operator == (const Term& t) const;
-	bool operator != (const Term& t) const {
+	Expr* clone() const;
+	bool operator == (const Expr& t) const;
+	bool operator != (const Expr& t) const {
 		return !operator == (t);
 	}
 	void destroy() {
@@ -170,8 +180,10 @@ struct Term {
 	Node* first;
 	Node* last;
 	Rule* rule;
-	vector<Term*> children;
+	vector<Expr*> children;
 };
+
+}
 
 namespace node {
 
@@ -197,8 +209,8 @@ struct Expr {
 	Symbol symb;
 	Expr*  next;
 	Expr*  prev;
-	vector<Term<Expr>*>  init;
-	vector<Term<Expr>*> final;
+	vector<term::Expr<Expr>*>  init;
+	vector<term::Expr<Expr>*> final;
 };
 
 template<typename T>
@@ -227,8 +239,8 @@ struct Tree {
 	Tree*  prev;
 	Tree*  side;
 	uint   level;
-	vector<Term<Tree>*>  init;
-	vector<Term<Tree>*> final;
+	vector<term::Expr<Tree>*>  init;
+	vector<term::Expr<Tree>*> final;
 	T data;
 };
 
@@ -255,13 +267,13 @@ struct Sub {
 		}
 	}
 	bool join(Sub* s);
-	Term<Node>* find(Symbol v) {
+	term::Expr<Node>* find(Symbol v) {
 		auto it = sub.find(v);
 		if (it == sub.end()) return nullptr;
 		else return it->second;
 	}
 
-	map<Symbol, Term<Node>*> sub;
+	map<Symbol, term::Expr<Node>*> sub;
 };
 
 struct Expr {
@@ -286,11 +298,11 @@ struct Expr {
 	bool operator != (const Expr& ex) const {
 		return !operator == (ex);
 	}
-	Term<Node>* term() {
+	term::Expr<Node>* term() {
 		if (!first) return nullptr; else
 		return first->init.size() ? first->init.back() : nullptr;
 	}
-	const Term<Node>* term() const {
+	const term::Expr<Node>* term() const {
 		if (!first) return nullptr; else
 		return first->init.size() ? first->init.back() : nullptr;
 	}
@@ -308,7 +320,7 @@ struct Expr {
 	Type* type;
 };
 
-typedef Term<node::Expr> ExprTerm;
+typedef term::Expr<node::Expr> ExprTerm;
 
 inline iterator<node::Expr> begin(Expr& ex) { return ex.begin(); }
 inline iterator<node::Expr> end(Expr& ex)   { return ex.end(); }
@@ -320,7 +332,7 @@ inline const_iterator<node::Expr> rbegin(const Expr& ex) { return ex.rbegin(); }
 inline const_iterator<node::Expr> rend(const Expr& ex) { return ex.rend(); }
 
 
-Sub<>* unify(const Term<Expr::Node>* p, const Term<Expr::Node>* q);
+Sub<>* unify(const term::Expr<Expr::Node>* p, const term::Expr<Expr::Node>* q);
 inline Sub<>* unify(const Expr& ex1, const Expr& ex2) {
 	return unify(ex1.term(), ex2.term());
 }
@@ -333,7 +345,7 @@ namespace expr {
 }
 
 string show(const Expr&);
-string show_ast(const Term<Expr::Node>*, bool full = false);
+string show_ast(const term::Expr<Expr::Node>*, bool full = false);
 inline string show_ast(const Expr& ex, bool full = false) {
 	if (ex.term())
 		return show_ast(ex.term(), full);
@@ -342,7 +354,7 @@ inline string show_ast(const Expr& ex, bool full = false) {
 }
 
 template<typename N>
-string show(const Term<N>& t) {
+string show(const term::Expr<N>& t) {
 	deque<Symbol> symbs;
 	for (auto it = t.rbegin(); it != t.rend(); -- it) {
 		symbs.push_front(it->symb);
@@ -419,11 +431,11 @@ inline N* new_side(N* n, Symbol s) {
 }
 
 template<class N>
-Term<N>* add_term(const Term<node::Expr>* st, map<Expr::Node*, N*>& mp) {
+term::Expr<N>* add_term(const term::Expr<node::Expr>* st, map<Expr::Node*, N*>& mp) {
 	if (!st) return nullptr;
 	assert(mp.find(st->first) != mp.end());
 	assert(mp.find(st->last) != mp.end());
-	Term<N>* tt = new Term<N>(mp[st->first], mp[st->last], st->rule);
+	term::Expr<N>* tt = new term::template Expr<N>(mp[st->first], mp[st->last], st->rule);
 	mp[st->first]->init.push_back(tt);
 	mp[st->last]->final.push_back(tt);
 	for (auto ch : st->children) {
@@ -500,14 +512,14 @@ bool Sub<N>::join(Sub* s) {
 }
 
 template<typename N>
-Term<N>* Term<N>::clone() const {
-	Term* ret = new Term(first, last, rule);
+term::Expr<N>* term::Expr<N>::clone() const {
+	Expr* ret = new Expr(first, last, rule);
 	for (auto ch : children)
 		ret->children.push_back(ch->clone());
 	return ret;
 }
 template<typename N>
-bool Term<N> :: operator == (const Term& t) const {
+bool term::Expr<N> :: operator == (const Expr& t) const {
 	if (isvar() && t.isvar() && first->symb == t.first->symb)
 		return true;
 	if (rule != t.rule)
@@ -515,8 +527,8 @@ bool Term<N> :: operator == (const Term& t) const {
 	auto i_p = children.begin();
 	auto i_q = t.children.begin();
 	while (i_p != children.end()) {
-		const Term* ch_p = *i_p;
-		const Term* ch_q = *i_q;
+		const Expr* ch_p = *i_p;
+		const Expr* ch_q = *i_q;
 		if (*ch_p != *ch_q) return false;
 		++ i_p; ++ i_q;
 	}
@@ -526,8 +538,8 @@ bool Term<N> :: operator == (const Term& t) const {
 void dump(const Symbol& s);
 void dump(const Expr& ex);
 void dump_ast(const Expr& ex);
-void dump(const Term<Expr::Node>* tm);
-void dump_ast(const Term<Expr::Node>* tm);
+void dump(const term::Expr<Expr::Node>* tm);
+void dump_ast(const term::Expr<Expr::Node>* tm);
 void dump(const Sub<Expr::Node>& sb);
 
 
@@ -535,7 +547,7 @@ inline size_t memvol(const Symbol& s) {
 	return 0;
 }
 template<class N>
-inline size_t memvol(const Term<N>& t) {
+inline size_t memvol(const term::Expr<N>& t) {
 	return t.children.capacity() * sizeof(void*);
 }
 inline size_t memvol(const node::Expr& n) {
@@ -553,7 +565,7 @@ size_t memvol(const Tree<T>& t) {
 		gather_tree_nodes(nodes, t.root);
 		for (node::Tree<T>* n : nodes) {
 			s += memsize(*n);
-			for (Term<typename Tree<T>::Node>* x : n->init)
+			for (term::Expr<typename Tree<T>::Node>* x : n->init)
 				s += memsize(*x);
 		}
 	}
