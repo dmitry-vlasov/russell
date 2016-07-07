@@ -5,9 +5,10 @@
 #include <boost/spirit/include/phoenix_stl.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
 
-#include "rus/parser/adaptors.hpp"
 #include "rus/globals.hpp"
 #include "rus/expr/table.hpp"
+#include "rus/parser/ind.hpp"
+#include "rus/parser/adaptors.hpp"
 
 namespace mdl { namespace rus { namespace parser {
 
@@ -19,13 +20,8 @@ struct IncInd {
 	template <typename T>
 	struct result { typedef uint type; };
 	uint operator()() const {
-		return ind ++;
+		return inc_ind();
 	}
-	static uint get_ind() {
-		return ind;
-	}
-private:
-	static uint ind;
 };
 
 struct VarStack {

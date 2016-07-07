@@ -1,9 +1,14 @@
-#include "grammar.hpp"
+#include "rus/parser/grammar.hpp"
 #include "rus/globals.hpp"
 
 namespace mdl { namespace rus { namespace parser {
 
-uint IncInd::ind = 0;
+namespace {
+	uint ind = 0;
+}
+
+uint get_ind() { return ind; }
+uint inc_ind() { return ind ++; }
 
 } // parser
 

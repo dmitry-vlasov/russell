@@ -4,6 +4,7 @@
 
 #include "GLR.hpp"
 #include "rus/expr/table.hpp"
+#include "rus/parser/ind.hpp"
 
 namespace mdl { namespace rus { namespace expr { namespace {
 
@@ -18,7 +19,7 @@ struct Unit {
 	Unit*  prev;
 };
 
-vector<Expr*> queue;
+vector<pair<Expr*, uint>> queue;
 
 void add_terms(Term* term) {
 	for (auto t : term->children)
@@ -101,7 +102,7 @@ inline Rule* find_super(Type* type, Type* super) {
 		return nullptr;
 }
 
-Term* parse_LL(Node* x, Type* type, bool trace, bool initial = false) {
+Term* parse_LL(Node* x, Type* type, uint ind, bool initial = false) {
 	if (!initial && type->rules.root) {
 		vector<Term*> children;
 		Node* f = x;
@@ -114,13 +115,16 @@ Term* parse_LL(Node* x, Type* type, bool trace, bool initial = false) {
 
 		while (!n.empty() && !m.empty()) {
 			if (Type* tp = n.top()->symb.type) {
-				if (Term* child = parse_LL(m.top(), tp, trace, n.top() == type->rules.root)) {
+				if (Term* child = parse_LL(m.top(), tp, ind, n.top() == type->rules.root)) {
 					children.push_back(child);
 					childnodes.push(n.top());
 					if (!n.top()->next) {
-						Term* t = new Term(f, child->last, n.top()->data, children);
-						if (trace) cout << "CHILD: " << show_ast(t, true) << endl;
-						return t;
+						if (n.top()->data->ind <= ind) {
+							Term* t = new Term(f, child->last, n.top()->data, children);
+							//if (trace) cout << "CHILD: " << show_ast(t, true) << endl;
+							return t;
+						} else
+							goto end;
 					} else if (!child->last->next)
 						goto end;
 					else {
@@ -131,9 +135,12 @@ Term* parse_LL(Node* x, Type* type, bool trace, bool initial = false) {
 				}
 			} else if (n.top()->symb == m.top()->symb) {
 				if (!n.top()->next) {
-					Term* t = new Term(f, m.top(), n.top()->data, children);
-					if (trace) cout << "END: " << show_ast(t, true) << endl;
-					return t;
+					if (n.top()->data->ind <= ind) {
+						Term* t = new Term(f, m.top(), n.top()->data, children);
+						//if (trace) cout << "END: " << show_ast(t, true) << endl;
+						return t;
+					} else
+						goto end;
 				} else if (!m.top()->next)
 					goto end;
 				else {
@@ -159,11 +166,11 @@ Term* parse_LL(Node* x, Type* type, bool trace, bool initial = false) {
 	if (x->symb.type) {
 		if (x->symb.type == type) {
 			Term* t = new Term(x);
-			if (trace) cout << "VAR: " << show_ast(t, true) << endl;
+			//if (trace) cout << "VAR: " << show_ast(t, true) << endl;
 			return t;
 		} else if (Rule* super = find_super(x->symb.type, type)) {
 			Term* t = new Term(x, super);
-			if (trace) cout << "SUPER: " << show_ast(t, true) << endl;
+			//if (trace) cout << "SUPER: " << show_ast(t, true) << endl;
 			return t;
 		}
 	}
@@ -244,7 +251,8 @@ bool parse_LR() {
 	bool ret = true;
 	t.start();
 	cout << "parsing with LR ... " << flush;
-	for (Expr* ex : queue) {
+	for (auto p : queue) {
+		Expr* ex = p.first;
 		if (!expr::parse_GLR(ex)) {
 			ret = false;
 			break;
@@ -262,10 +270,11 @@ bool parse_LL() {
 	bool ret = true;
 	//cout << endl;
 	//int c = 0;
-	for (Expr* ex : queue) {
+	for (auto p : queue) {
+		Expr* ex = p.first;
 		//cout << "doing " << c++ << ", free: " << get_current_free() << " , exp: " << show(*ex) << " ... " << flush;
 		try {
-			if (!expr::parse_LL(ex)) {
+			if (!expr::parse_LL(ex, p.second)) {
 				ret = false;
 				break;
 			}
@@ -290,8 +299,8 @@ bool parse_GLR(Expr* ex) {
 	return parse_GLR(tab, ex, n, Unit{init, nullptr, n, nullptr});
 }
 
-bool parse_LL(Expr* ex, bool trace) {
-	if (Term* term = parse_LL(ex->first, ex->type, trace)) {
+bool parse_LL(Expr* ex, uint ind) {
+	if (Term* term = parse_LL(ex->first, ex->type, ind)) {
 		add_terms(term);
 		return true;
 	} else
@@ -300,14 +309,14 @@ bool parse_LL(Expr* ex, bool trace) {
 
 
 void enqueue(Expr& ex) {
-	if (!parse_LL(&ex)) {
+	/*if (!parse_LL(&ex)) {
 		throw Error("expression parsing error", show(ex));
-	}
-	//queue.push_back(&ex);
+	}*/
+	queue.push_back(pair<Expr*, uint>(&ex, parser::get_ind()));
 }
 
 bool parse() {
-	return true;
+	//return true;
 	if (parse_LL()) {
 		queue.clear();
 		return true;
