@@ -159,17 +159,18 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 
 	proof_body =
 		lit("{")   [pushVars(phoenix::ref(var_stack))]
-		> - ("var" > vars [phoenix::at_c<1>(*_r1) = _1] > lit(END_MARKER))
-		> + proof_elem(_r1)[push_back(phoenix::at_c<2>(*_r1), _1)]
+		> - ("var" > vars [phoenix::at_c<2>(*_r1) = _1] > lit(END_MARKER))
+		> + proof_elem(_r1)[push_back(phoenix::at_c<3>(*_r1), _1)]
 		> lit("}") [popVars(phoenix::ref(var_stack))];
 
 	proof =
 		lit("proof") [_val = new_<Proof>()]
-		> - (!lit("of") > - id [phoenix::at_c<0>(*_val) = _1])
+		> eps        [phoenix::at_c<0>(*_val) = phoenix::val(ind ++)]
+		> - (!lit("of") > - id [phoenix::at_c<1>(*_val) = _1])
 		> "of"
-		> id         [phoenix::at_c<3>(*_val) = findTheorem(_1)]
+		> id         [phoenix::at_c<4>(*_val) = findTheorem(_1)]
 		> eps        [pushVars(phoenix::ref(var_stack))]
-		> eps        [addVars(phoenix::ref(var_stack), phoenix::at_c<3>(*_val))]
+		> eps        [addVars(phoenix::ref(var_stack), phoenix::at_c<4>(*_val))]
 		> proof_body(_val)
 		> eps        [popVars(phoenix::ref(var_stack))]
 		> eps        [addToMath(_val)];

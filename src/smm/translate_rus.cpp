@@ -231,6 +231,7 @@ void translate_assertion(const Assertion* ass, T* a, State& state) {
 
 static void translate_axiom(const Assertion* ass, State& state) {
 	rus::Axiom* ax = new rus::Axiom;
+	ax->ass.ind = state.ind ++;
 	translate_assertion<rus::Axiom>(ass, ax, state);
 	state.theory->nodes.push_back(ax);
 	state.axioms[ass] = ax;
@@ -276,6 +277,7 @@ static vector<Symbol>::const_iterator eq_position(const Expr& ex) {
 
 static void translate_def(const Assertion* ass, State& state) {
 	rus::Def* def = new rus::Def;
+	def->ass.ind = state.ind ++;
 	translate_assertion<rus::Def>(ass, def, state);
 	const Expr& ex = ass->prop.expr;
 	auto eq_pos = eq_position(ex);
@@ -369,6 +371,7 @@ static void translate_proof(const Assertion* ass, rus::Theorem* thm, State& stat
 	Ref tree = Ref(to_tree(ass->proof));
 	eval(tree);
 	rus::Proof* p = new rus::Proof();
+	p->ind = state.ind ++;
 	p->vars = translate_vars(ass->inner, state);
 	p->thm = thm;
 	translate_step(tree, p, thm, state, ass);
@@ -381,6 +384,7 @@ static void translate_proof(const Assertion* ass, rus::Theorem* thm, State& stat
 
 static void translate_theorem(const Assertion* ass, State& state) {
 	rus::Theorem* thm = new rus::Theorem;
+	thm->ass.ind = state.ind ++;
 	translate_assertion<rus::Theorem>(ass, thm, state);
 	state.theory->nodes.push_back(thm);
 	translate_proof(ass, thm, state);
