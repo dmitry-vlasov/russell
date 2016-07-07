@@ -28,6 +28,7 @@ void parse_term(Expr& ex, Rule* rule);
 
 struct Type {
 	~Type();
+	uint ind;
 	uint id;
 	vector<Type*>     sup;
 	Tree<Rule*>       rules;

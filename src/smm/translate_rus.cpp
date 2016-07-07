@@ -120,7 +120,7 @@ static rus::Type* translate_type(Symbol type_sy, State& state) {
 	else {
 		string type_str = Smm::get().lex.symbols.toStr(type_sy.lit);
 		uint type_id = Smm::mod().lex.labels.toInt(type_str);
-		rus::Type* type = new rus::Type { type_id };
+		rus::Type* type = new rus::Type { state.ind ++, type_id };
 		state.types[type_sy] = type;
 		state.theory->nodes.push_back(type);
 		if (type_str == "wff") state.type_wff = type;
