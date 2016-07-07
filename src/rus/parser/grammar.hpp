@@ -214,13 +214,14 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 
 	rule =
 		lit("rule")  [_val = new_<Rule>()]
-		> - id       [phoenix::at_c<0>(*_val) = _1]
+		> eps        [phoenix::at_c<0>(*_val) = phoenix::val(ind ++)]
+		> - id       [phoenix::at_c<1>(*_val) = _1]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
-		> - vars     [phoenix::at_c<2>(*_val) = _1]
+		> - vars     [phoenix::at_c<3>(*_val) = _1]
 		> ")" > "{" > "term" > ":"
-		> id         [phoenix::at_c<1>(*_val) = findType(_1)]
+		> id         [phoenix::at_c<2>(*_val) = findType(_1)]
 		> "=" > "#"
-		> term(phoenix::at_c<3>(*_val), _val) > END_MARKER
+		> term(phoenix::at_c<4>(*_val), _val) > END_MARKER
 		> lit("}")   [addToMath(_val)]
 		> eps        [popVars(phoenix::ref(var_stack))];
 

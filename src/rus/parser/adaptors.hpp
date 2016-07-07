@@ -54,6 +54,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Rule,
+	(mdl::uint, ind)
 	(mdl::uint, id)
 	(mdl::rus::Type*, type)
 	(mdl::rus::Vars, vars)
