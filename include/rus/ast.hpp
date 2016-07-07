@@ -65,6 +65,7 @@ struct Assertion {
 		for (auto p : props) delete p;
 	}
 	uint arity() const { return hyps.size(); }
+	uint ind;
 	uint id;
 	Vars vars;
 	Disj disj;

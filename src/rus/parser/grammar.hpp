@@ -92,14 +92,15 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 		> lit(END_MARKER);
 
 	assertion =
-		  id         [phoenix::at_c<0>(*_r1) = _1]
+		  eps        [phoenix::at_c<0>(*_r1) = phoenix::val(ind ++)]
+		> id         [phoenix::at_c<1>(*_r1) = _1]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
-		> - vars     [phoenix::at_c<1>(*_r1) = _1]
+		> - vars     [phoenix::at_c<2>(*_r1) = _1]
 		> ")"
-		> - disj     [phoenix::at_c<2>(*_r1) = _1]
+		> - disj     [phoenix::at_c<3>(*_r1) = _1]
 		> "{"
-		> - ( + (hyp [push_back(phoenix::at_c<3>(*_r1), _1)]) > bar )
-		> + (prop    [push_back(phoenix::at_c<4>(*_r1), _1)])
+		> - ( + (hyp [push_back(phoenix::at_c<4>(*_r1), _1)]) > bar )
+		> + (prop    [push_back(phoenix::at_c<5>(*_r1), _1)])
 		> lit("}")   [pushVars(phoenix::ref(var_stack))];
 
 	refs =
@@ -187,13 +188,14 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 
 	def = lit("definition") [_val = new_<Def>()]
 		> eps        [_a = &phoenix::at_c<0>(*_val)]
-		> id         [phoenix::at_c<0>(*_a) = _1]
+		> eps        [phoenix::at_c<0>(*_a) = phoenix::val(ind ++)]
+		> id         [phoenix::at_c<1>(*_a) = _1]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
-		> - vars     [phoenix::at_c<1>(*_a) = _1]
+		> - vars     [phoenix::at_c<2>(*_a) = _1]
 		> ")"
-		> - disj     [phoenix::at_c<2>(*_a) = _1]
+		> - disj     [phoenix::at_c<3>(*_a) = _1]
 		> "{"
-		> - ( + (hyp [push_back(phoenix::at_c<3>(*_a), _1)]) )
+		> - ( + (hyp [push_back(phoenix::at_c<4>(*_a), _1)]) )
 		> "defiendum" > ":"
 		> id         [_b = findType(_1)]
 		> "=" > "#"
