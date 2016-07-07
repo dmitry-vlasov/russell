@@ -5,10 +5,10 @@
 
 #include "parser.hpp"
 
-namespace mdl { namespace rus {
+namespace mdl { namespace rus { namespace parser {
 
 template<typename Iterator>
-Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(), ind(0) {
+Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack() {
 	using qi::lit;
 	using qi::uint_;
 	using qi::lexeme;
@@ -46,6 +46,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 	const phoenix::function<ParseImport> parseImport;
 	const phoenix::function<AssembleDef> assembleDef;
 	const phoenix::function<SetLocation<Iterator>> setLocation;
+	const phoenix::function<IncInd>      incInd;
 
 	bar  = lexeme[lit("-----")] >> * unicode::char_('-');
 	var  = lexeme[+(unicode::char_ - END_MARKER - unicode::space - unicode::char_("),"))] [at_c<0>(_val) = symbToInt(_1)];
@@ -92,7 +93,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 		> lit(END_MARKER);
 
 	assertion =
-		  eps        [phoenix::at_c<0>(*_r1) = phoenix::val(ind ++)]
+		  eps        [phoenix::at_c<0>(*_r1) = incInd()]
 		> id         [phoenix::at_c<1>(*_r1) = _1]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
 		> - vars     [phoenix::at_c<2>(*_r1) = _1]
@@ -165,7 +166,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 
 	proof =
 		lit("proof") [_val = new_<Proof>()]
-		> eps        [phoenix::at_c<0>(*_val) = phoenix::val(ind ++)]
+		> eps        [phoenix::at_c<0>(*_val) = incInd()]
 		> - (!lit("of") > - id [phoenix::at_c<1>(*_val) = _1])
 		> "of"
 		> id         [phoenix::at_c<4>(*_val) = findTheorem(_1)]
@@ -189,7 +190,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 
 	def = lit("definition") [_val = new_<Def>()]
 		> eps        [_a = &phoenix::at_c<0>(*_val)]
-		> eps        [phoenix::at_c<0>(*_a) = phoenix::val(ind ++)]
+		> eps        [phoenix::at_c<0>(*_a) = incInd()]
 		> id         [phoenix::at_c<1>(*_a) = _1]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
 		> - vars     [phoenix::at_c<2>(*_a) = _1]
@@ -217,7 +218,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 
 	rule =
 		lit("rule")  [_val = new_<Rule>()]
-		> eps        [phoenix::at_c<0>(*_val) = phoenix::val(ind ++)]
+		> eps        [phoenix::at_c<0>(*_val) = incInd()]
 		> - id       [phoenix::at_c<1>(*_val) = _1]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
 		> - vars     [phoenix::at_c<3>(*_val) = _1]
@@ -230,7 +231,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 
 	type =
 		lit("type") [_val = new_<Type>()]
-		> eps       [phoenix::at_c<0>(*_val) = phoenix::val(ind ++)]
+		> eps       [phoenix::at_c<0>(*_val) = incInd()]
 		> id        [phoenix::at_c<1>(*_val) = _1]
 		> - (lit(":")
 			>  id [push_back(phoenix::at_c<2>(*_val), findType(_1))] % ","
@@ -239,7 +240,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 
 	constant =
 		lit("constant") [_val = new_<Const>()] > "{"
-		> lit("symbol") [phoenix::at_c<0>(*_val) = phoenix::val(ind ++)]
+		> lit("symbol") [phoenix::at_c<0>(*_val) = incInd()]
 		> symb          [phoenix::at_c<1>(*_val) = _1]
 		> lit(END_MARKER)
 		> -(
@@ -279,4 +280,4 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 	initNames();
 }
 
-}} //mdl::rus
+}}} //mdl::rus::parser

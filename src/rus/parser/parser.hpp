@@ -9,11 +9,24 @@
 #include "rus/globals.hpp"
 #include "rus/expr/table.hpp"
 
-namespace mdl { namespace rus {
+namespace mdl { namespace rus { namespace parser {
 
 namespace qi      = boost::spirit::qi;
 namespace unicode = boost::spirit::unicode;
 namespace phoenix = boost::phoenix;
+
+struct IncInd {
+	template <typename T>
+	struct result { typedef uint type; };
+	uint operator()() const {
+		return ind ++;
+	}
+	static uint get_ind() {
+		return ind;
+	}
+private:
+	static uint ind;
+};
 
 struct VarStack {
 	vector<Vars> stack;
@@ -356,13 +369,13 @@ struct AssembleDef {
 	}
 };
 
+
 template <typename Iterator>
 struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	Grammar();
 	void initNames();
 
 	VarStack var_stack;
-	uint     ind;
 	qi::rule<Iterator, qi::unused_type> bar;
 	qi::rule<Iterator, Symbol(), unicode::space_type> var;
 	qi::rule<Iterator, Symbol(), unicode::space_type> symb;
@@ -427,4 +440,4 @@ void Grammar<Iterator>::initNames() {
 	source.name("source");
 }
 
-}} // mdl::rus
+}}} // mdl::rus::parser
