@@ -1,6 +1,7 @@
 //#include <boost/range/adaptor/reversed.hpp>
 
 #include <new>
+#include <thread>
 
 #include "GLR.hpp"
 #include "rus/expr/table.hpp"
@@ -288,6 +289,44 @@ bool parse_LL() {
 	return ret;
 }
 
+const uint N = 4;
+
+void parse_LL_concur(uint s) {
+	Timer t;
+	t.start();
+	cout << "parsing with LL ... " << flush;
+	bool ret = true;
+	//cout << endl;
+	int c = 0;
+	for (auto p : queue) {
+		if (c++ % N != s)
+			continue;
+		Expr* ex = p.first;
+		//cout << "doing " << c++ << ", free: " << get_current_free() << " , exp: " << show(*ex) << " ... " << flush;
+		try {
+			if (!expr::parse_LL(ex, p.second)) {
+				ret = false;
+				break;
+			}
+		} catch (std::bad_alloc& ba) {
+			std::cerr << "bad_alloc caught: " << ba.what() << '\n';
+		}
+		//cout << "done" << endl;
+	}
+	t.stop();
+	cout << "done in " << t << endl;
+}
+
+bool parse_LL_conc() {
+	std::thread* thds[N];
+	for (uint i = 0; i < N; ++ i)
+		thds[i] = new std::thread(parse_LL_concur, i);
+	for (uint i = 0; i < N; ++ i)
+		thds[i]->join();
+	return true;
+}
+
+
 } // anonymous namespace
 
 bool parse_GLR(Expr* ex) {
@@ -317,7 +356,7 @@ void enqueue(Expr& ex) {
 
 bool parse() {
 	//return true;
-	if (parse_LL()) {
+	if (parse_LL_conc()) {
 		queue.clear();
 		return true;
 	} else if (parse_LR()) {
