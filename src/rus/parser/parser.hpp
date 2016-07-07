@@ -5,8 +5,8 @@
 #include <boost/spirit/include/phoenix_stl.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
 
+#include "rus/parser/adaptors.hpp"
 #include "rus/globals.hpp"
-#include "rus/adaptors.hpp"
 #include "rus/expr/table.hpp"
 
 namespace mdl { namespace rus {
@@ -362,6 +362,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	void initNames();
 
 	VarStack var_stack;
+	uint     ind;
 	qi::rule<Iterator, qi::unused_type> bar;
 	qi::rule<Iterator, Symbol(), unicode::space_type> var;
 	qi::rule<Iterator, Symbol(), unicode::space_type> symb;

@@ -1,8 +1,9 @@
+#include "rus/ast.hpp"
 #include <boost/fusion/include/adapt_struct.hpp>
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::Symbol,
-	(uint, lit)
+	(mdl::uint, lit)
 	(bool, var)
 )
 
@@ -20,13 +21,14 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Symbol,
-	(uint, lit)
+	(mdl::uint, lit)
 	(bool, rep)
 	(mdl::rus::Type*, type)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Const,
+	(mdl::uint,        ind)
 	(mdl::rus::Symbol, symb)
 	(mdl::rus::Symbol, ascii)
 	(mdl::rus::Symbol, latex)
@@ -59,19 +61,19 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Hyp,
-	(uint, ind)
+	(mdl::uint, ind)
 	(mdl::rus::Expr, expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Prop,
-	(uint, ind)
+	(mdl::uint, ind)
 	(mdl::rus::Expr, expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Assertion,
-	(uint, id)
+	(mdl::uint, id)
 	(mdl::rus::Vars, vars)
 	(mdl::rus::Disj, disj)
 	(mdl::vector<mdl::rus::Hyp*>,  hyps)
@@ -123,7 +125,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Step,
-	(uint, ind)
+	(mdl::uint, ind)
 	(mdl::rus::Expr, expr)
 	(mdl::rus::Step::Kind, kind)
 	(mdl::rus::Step::Value, val)
@@ -154,7 +156,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Proof,
-	(uint, id)
+	(mdl::uint, id)
 	(mdl::rus::Vars, vars)
 	(mdl::vector<mdl::rus::Proof::Elem>, elems)
 	(mdl::rus::Theorem*, thm)
@@ -189,7 +191,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Theory,
-	(uint, id)
+	(mdl::uint, id)
 	(mdl::vector<mdl::rus::Node>, nodes)
 	(mdl::rus::Theory*, parent)
 )

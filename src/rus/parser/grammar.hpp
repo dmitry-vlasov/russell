@@ -8,7 +8,7 @@
 namespace mdl { namespace rus {
 
 template<typename Iterator>
-Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
+Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(), ind(0) {
 	using qi::lit;
 	using qi::uint_;
 	using qi::lexeme;
@@ -234,16 +234,16 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 
 	constant =
 		lit("constant") [_val = new_<Const>()] > "{"
-		> "symbol"
-		> symb          [phoenix::at_c<0>(*_val) = _1]
+		> lit("symbol") [phoenix::at_c<0>(*_val) = phoenix::val(ind ++)]
+		> symb          [phoenix::at_c<1>(*_val) = _1]
 		> lit(END_MARKER)
 		> -(
 			lit("ascii")
-			> symb          [phoenix::at_c<1>(*_val) = _1]
+			> symb          [phoenix::at_c<2>(*_val) = _1]
 			> lit(END_MARKER)
 			> -(
 				lit("latex")
-				> symb      [phoenix::at_c<2>(*_val) = _1]
+				> symb      [phoenix::at_c<3>(*_val) = _1]
 				> lit(END_MARKER)
 			)
 		)

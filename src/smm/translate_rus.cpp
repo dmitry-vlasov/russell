@@ -20,6 +20,7 @@ struct State {
 	Set<Symbol>   redundant_consts;
 	Set<rus::Symbol> constants;
 	rus::Theory*  theory;
+	uint ind;
 };
 
 inline rus::Symbol translate_symb(Symbol s, rus::Type* t = nullptr) {
@@ -66,9 +67,9 @@ static void translate_const(const Constants* consts, State& state) {
 		rus::Const* c = nullptr;
 		auto p = math_symb.find(s.lit);
 		if (p == math_symb.end())
-			c = new rus::Const{rus::Symbol(s), rus::Symbol(), rus::Symbol()};
+			c = new rus::Const{state.ind ++, rus::Symbol(s), rus::Symbol(), rus::Symbol()};
 		else
-			c = new rus::Const{(*p).second.symb, (*p).second.ascii, (*p).second.latex};
+			c = new rus::Const{state.ind ++ , (*p).second.symb, (*p).second.ascii, (*p).second.latex};
 
 		if (state.constants.has(c->symb))
 			delete c;
@@ -418,6 +419,7 @@ rus::Source* translate_to_rus(const Source* source) {
 	rus::Source* out = new rus::Source(Smm::get().config.out);
 	out->theory = new rus::Theory();
 	State state;
+	state.ind = 0;
 	state.theory = out->theory;
 	state.type_wff = nullptr;
 	state.type_set = nullptr;
