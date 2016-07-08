@@ -229,15 +229,29 @@ inline Type* type(const T* t) {
 	return t->rule ? t->rule->type : t->first->symb.type;
 }
 
-Sub<>* unify(const term::Expr* p, const term::Expr* q) {
+bool sub::Expr::join(Expr* s) {
+	for (auto p : s->sub) {
+		auto it = sub.find(p.first);
+		if (it != sub.end()) {
+			if (*(*it).second != *p.second) {
+				return false;
+			}
+		} else {
+			sub[p.first] = p.second->clone();
+		}
+	}
+	return true;
+}
+
+sub::Expr* unify(const term::Expr* p, const term::Expr* q) {
 	if (p->isvar()) {
 		Symbol var = p->first->symb;
 		if (var.type == type(q)) {
-			Sub<>* s = new Sub<>();
+			sub::Expr* s = new sub::Expr();
 			s->sub[var] = q->clone();
 			return s;
 		} else if (Rule* super = find_super(type(q), const_cast<Type*>(var.type))) {
-			Sub<>* s = new Sub<>();
+			sub::Expr* s = new sub::Expr();
 			s->sub[var] = new term::Expr(q->first, q->last, super);
 			s->sub[var]->children.push_back(q->clone());
 			return s;
@@ -247,11 +261,11 @@ Sub<>* unify(const term::Expr* p, const term::Expr* q) {
 		if (p->rule != q->rule) {
 			return nullptr;
 		}
-		Sub<>* sub = new Sub<>();
+		sub::Expr* sub = new sub::Expr();
 		auto p_ch = p->children.begin();
 		auto q_ch = q->children.begin();
 		while (p_ch != p->children.end()) {
-			if (Sub<>* s = unify(*p_ch, *q_ch)) {
+			if (sub::Expr* s = unify(*p_ch, *q_ch)) {
 				if (!sub->join(s)) {
 					delete sub;
 					return nullptr;
@@ -273,6 +287,6 @@ void dump(const Expr& ex) { cout << show(ex) << endl; }
 void dump_ast(const Expr& ex) { cout << show_ast(ex) << endl; }
 void dump(const term::Expr* tm) { cout << show(*tm) << endl; }
 void dump_ast(const term::Expr* tm) { cout << show_ast(tm) << endl; }
-void dump(const Sub<Expr::Node>& sb) { cout << show(sb) << endl; }
+void dump(const sub::Expr& sb) { cout << show(sb) << endl; }
 
 }} // mdl::rus

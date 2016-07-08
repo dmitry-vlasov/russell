@@ -12,7 +12,7 @@ void verify_step(Step* st) {
 	Assertion* ass = st->assertion();
 	static int c = 0;
 	//cout << "\tverifying step: " << c++ << " = " << show_id(ass->id) << endl;
-	Sub<>* ps = unify(ass->props[0]->expr, st->expr);
+	sub::Expr* ps = unify(ass->props[0]->expr, st->expr);
 	if (c == 4828) {
 		cout << show_ast(st->expr) << endl;
 		cout << show(*ps) << endl;
@@ -35,7 +35,7 @@ void verify_step(Step* st) {
 		throw Error("proposition unification failed", msg);
 	}
 	for (uint i = 0; i < ass->arity(); ++ i) {
-		Sub<>* hs = unify(ass->hyps[i]->expr, st->refs[i].expr());
+		sub::Expr* hs = unify(ass->hyps[i]->expr, st->refs[i].expr());
 		if (!hs) {
 			string msg = "\nhypothesis:\n";
 			msg += show(*ass->hyps[i]) + "\n";

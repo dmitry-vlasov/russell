@@ -291,6 +291,27 @@ struct Tree {
 
 } // namespace node
 
+namespace sub {
+
+struct Expr {
+	~Expr() {
+		for (auto p : sub) {
+			p.second->destroy();
+			delete p.second;
+		}
+	}
+	bool join(Expr* s);
+	term::Expr* find(Symbol v) {
+		auto it = sub.find(v);
+		if (it == sub.end()) return nullptr;
+		else return it->second;
+	}
+
+	map<Symbol, term::Expr*> sub;
+};
+
+}
+
 struct Expr;
 
 template<typename T>
@@ -302,24 +323,7 @@ struct Tree {
 	Node* root;
 };
 
-template<typename N = node::Expr>
-struct Sub {
-	typedef N Node;
-	~Sub() {
-		for (auto p : sub) {
-			p.second->destroy();
-			delete p.second;
-		}
-	}
-	bool join(Sub* s);
-	term::Expr* find(Symbol v) {
-		auto it = sub.find(v);
-		if (it == sub.end()) return nullptr;
-		else return it->second;
-	}
 
-	map<Symbol, term::Expr*> sub;
-};
 
 struct Expr {
 	typedef node::Expr Node;
@@ -414,8 +418,8 @@ inline bool Expr :: operator == (const Expr& t) const {
 }
 
 
-Sub<>* unify(const term::Expr* p, const term::Expr* q);
-inline Sub<>* unify(const Expr& ex1, const Expr& ex2) {
+sub::Expr* unify(const term::Expr* p, const term::Expr* q);
+inline sub::Expr* unify(const Expr& ex1, const Expr& ex2) {
 	return unify(ex1.term(), ex2.term());
 }
 Expr assemble(const Expr& ex);
@@ -446,8 +450,7 @@ inline string show(const term::Expr& t) {
 	return str;
 }
 
-template<typename N>
-string show(const Sub<N>& s) {
+inline string show(const sub::Expr& s) {
 	string str;
 	for (auto p : s.sub) {
 		str += show(p.first, true) + " --> " + show_ast(p.second) + "\n";
@@ -577,27 +580,12 @@ Tree<T>::~Tree() {
 	}
 }
 
-template<typename N>
-bool Sub<N>::join(Sub* s) {
-	for (auto p : s->sub) {
-		auto it = sub.find(p.first);
-		if (it != sub.end()) {
-			if (*(*it).second != *p.second) {
-				return false;
-			}
-		} else {
-			sub[p.first] = p.second->clone();
-		}
-	}
-	return true;
-}
-
 void dump(const Symbol& s);
 void dump(const Expr& ex);
 void dump_ast(const Expr& ex);
 void dump(const term::Expr* tm);
 void dump_ast(const term::Expr* tm);
-void dump(const Sub<Expr::Node>& sb);
+void dump(const sub::Expr& sb);
 
 
 inline size_t memvol(const Symbol& s) {
