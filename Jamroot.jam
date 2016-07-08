@@ -2,8 +2,8 @@
 project russell
 	: requirements 	
 		<include>include <include>src 
-		<library>/usr/lib/x86_64-linux-gnu/libpthread.so
-		<toolset>gcc:<cxxflags>-std=c++11
+		<toolset>gcc:<cxxflags>-std=gnu++14
+		<toolset>gcc:<linkflags>-lpthread 
 		<toolset>gcc:<c++-template-depth>300
 		<variant>release:<location>"bin/release"
 		<variant>debug:<location>"bin/debug"
@@ -57,16 +57,14 @@ exe mdl :
   src/rus/expr/parser.cpp
   src/rus/expr/show.cpp
   
-  #src/rus/expr_grammar.cpp
-  #src/rus/expr_parser.cpp
-  
   src/rus/modify_grammar.cpp
   src/rus/expr.cpp
   src/rus/globals.cpp
   src/rus/show.cpp
   src/rus/verify.cpp
   src/rus/translate.cpp
-  src/rus/main.cpp ;
+  src/rus/main.cpp
+  ;
  
 #lib smml :
 #  src/memusage.cpp 
@@ -90,7 +88,7 @@ exe mdl :
   
   
   
-import python ;
+#import python ;
 
 #if ! [ python.configured ]
 #{
@@ -99,21 +97,21 @@ import python ;
 #    using python ;
 #}
 
-using python : 2.7 : usr/bin/python ; 
+#using python : 2.7 : usr/bin/python ; 
 #using boost : 1.54 : <library>/usr/lib/x86_64-linux-gnu ;
 
 #using python ;
 
-project
-	: requirements
-		#<library>/boost/python//boost_python 
-		<library>/usr/lib/x86_64-linux-gnu/libboost_python.so
-		#<library>/boost/libboost_python
-		#<library>/usr/lib/libboost_python.so 
-		<include>include
-		<include>/usr/include/python2.7
-		<toolset>gcc:<cxxflags>-std=c++11
-	;
+#project
+#	: requirements
+#		#<library>/boost/python//boost_python 
+#		<library>/usr/lib/x86_64-linux-gnu/libboost_python.so
+#		#<library>/boost/libboost_python
+#		#<library>/usr/lib/libboost_python.so 
+#		<include>include
+#		<include>/usr/include/python2.7
+#		<toolset>gcc:<cxxflags>-std=c++11
+#	;
 
 #python-extension pymdl : 
 #	wrapper/mdl.cpp 

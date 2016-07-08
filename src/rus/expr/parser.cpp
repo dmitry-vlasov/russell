@@ -292,10 +292,8 @@ bool parse_LL() {
 const uint N = 4;
 
 void parse_LL_concur(uint s) {
-	Timer t;
-	t.start();
-	cout << "parsing with LL ... " << flush;
-	bool ret = true;
+
+	//bool ret = true;
 	//cout << endl;
 	int c = 0;
 	for (auto p : queue) {
@@ -305,7 +303,7 @@ void parse_LL_concur(uint s) {
 		//cout << "doing " << c++ << ", free: " << get_current_free() << " , exp: " << show(*ex) << " ... " << flush;
 		try {
 			if (!expr::parse_LL(ex, p.second)) {
-				ret = false;
+				//ret = false;
 				break;
 			}
 		} catch (std::bad_alloc& ba) {
@@ -313,16 +311,19 @@ void parse_LL_concur(uint s) {
 		}
 		//cout << "done" << endl;
 	}
-	t.stop();
-	cout << "done in " << t << endl;
 }
 
 bool parse_LL_conc() {
+	Timer t;
+	t.start();
+	cout << "parsing with LL ... " << flush;
 	std::thread* thds[N];
 	for (uint i = 0; i < N; ++ i)
 		thds[i] = new std::thread(parse_LL_concur, i);
 	for (uint i = 0; i < N; ++ i)
 		thds[i]->join();
+	t.stop();
+	cout << "done in " << t << endl;
 	return true;
 }
 

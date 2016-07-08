@@ -1,5 +1,10 @@
 #!/bin/bash
 
+
+cd ../math
+
+binpath='../../russell/bin/'
+
 if [ -z $1 ]; then
     echo "usage: "
     echo "  translate <file> [memcheck]"
@@ -45,7 +50,7 @@ echo "MM <-> SMM TRANSLATION"
 echo "----------------------"
 
 echo "mm -> smm"
-check "../bin/release/mm  -v -i ${file}.mm  -o $file.smm"
+check "${binpath}release/mm  -v -i ${file}.mm  -o $file.smm"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -54,7 +59,7 @@ fi;
 
 
 echo "smm -> mm"
-check "../bin/release/smm -v -i ${file}.smm -o ${file}-0.mm"
+check "${binpath}smm -v -i ${file}.smm -o ${file}-0.mm"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then
@@ -78,7 +83,7 @@ echo "MM <-> RUS TRANSLATION"
 echo "----------------------"
 
 echo "smm -> rus"
-check "../bin/release/smm -v -i ${file}.smm -o ${file}.rus"
+check "${binpath}smm -v -i ${file}.smm -o ${file}.rus"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -87,7 +92,7 @@ fi;
 
 
 echo "rus -> smm"
-check "../bin/release/mdl -v -i ${file}.rus -o ${file}-1.smm"
+check "${binpath}mdl -v -i ${file}.rus -o ${file}-1.smm"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -96,7 +101,7 @@ fi;
 
 
 echo "verify smm"
-check "../bin/release/smm -v -i ${file}-1.smm"
+check "${binpath}smm -v -i ${file}-1.smm"
 echo -e 'done\n'
 
 if [ $? != 0 ]; then 
@@ -105,7 +110,7 @@ fi;
 
 
 echo "smm -> mm"
-check "../bin/release/smm -v -i ${file}-1.smm -o ${file}-1.mm"
+check "${binpath}smm -v -i ${file}-1.smm -o ${file}-1.mm"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -114,7 +119,7 @@ fi;
 
 
 echo "mm -> smm"
-check "../bin/release/mm -v -i ${file}-1.mm -o ${file}-3.smm"
+check "${binpath}mm -v -i ${file}-1.mm -o ${file}-3.smm"
 echo -e 'done\n'
 
 if [ $? != 0 ]; then 
@@ -123,7 +128,7 @@ fi;
 
 
 echo "verify smm"
-check "../bin/release/smm -v -i ${file}-3.smm"
+check "${binpath}smm -v -i ${file}-3.smm"
 echo -e 'done\n'
 
 if [ $? != 0 ]; then 
@@ -153,7 +158,7 @@ fi;
 
 
 echo "rus -> rus'"
-check "../bin/release/mdl -v -g -i ${file}.rus -o ${file}-1.rus"
+check "${binpath}mdl -v -g -i ${file}.rus -o ${file}-1.rus"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -162,7 +167,7 @@ fi;
 
 
 echo "rus' -> smm'"
-check "../bin/release/mdl -v -i ${file}-1.rus -o ${file}-2.smm"
+check "${binpath}mdl -v -i ${file}-1.rus -o ${file}-2.smm"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -171,7 +176,7 @@ fi;
 
 
 echo "verify smm'"
-check "../bin/release/smm -v -i ${file}-2.smm"
+check "${binpath}smm -v -i ${file}-2.smm"
 echo -e 'done\n'
 
 if [ $? != 0 ]; then 
@@ -187,7 +192,7 @@ echo "MM' VERIFICATION"
 echo "----------------"
 
 echo "smm' -> mm'"
-check "../bin/release/smm -v -i ${file}-2.smm -o ${file}-2.mm"
+check "${binpath}smm -v -i ${file}-2.smm -o ${file}-2.mm"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
