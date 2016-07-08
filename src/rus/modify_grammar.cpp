@@ -32,11 +32,14 @@ private:
 };
 
 term::Expr* transform(term::Expr* t) {
+	if (!t->rule) return t;
 	if (t->rule->id == Ids::get().co &&
+		t->children[1]->rule &&
 		t->children[1]->rule->id == Ids::get().cdiv) {
 		term::Expr* nt = new term::Expr(t->first, t->last, Rules::get().cqs);
 		nt->children.push_back(t->children[0]);
 		nt->children.push_back(t->children[2]);
+		delete t->children[1];
 		t->children.clear();
 		delete t;
 		t = nt;
@@ -48,11 +51,11 @@ term::Expr* transform(term::Expr* t) {
 
 void modify_grammar(Expr& ex) {
 	ex.term = transform(ex.term);
-	ex = assemble(ex);
+	//ex = assemble(ex);
 }
 
 void transform(Expr& ex) {
-	if (ex.first->symb.type && ex.first != ex.last) {
+	/*if (ex.first->symb.type && ex.first != ex.last) {
 		Expr e = assemble(ex);
 		e.push_front(Symbol("("));
 		e.push_back(Symbol(")"));
@@ -63,7 +66,7 @@ void transform(Expr& ex) {
 		//for (auto t : e.first->init) t->first = e.first;
 		//for (auto t : e.last->final) t->last = e.last;
 		ex = e;
-	}
+	}*/
 }
 
 void modify_grammar(Rule* rule) {
@@ -81,10 +84,10 @@ void modify_grammar(Def* def) {
 	modify_grammar(def->ass);
 	modify_grammar(def->dfm);
 	modify_grammar(def->dfs);
-	if (def->prop.first->symb != Symbol("(")) {
+	/*if (def->prop.first->symb != Symbol("(")) {
 		def->prop.push_front(Symbol("("));
 		def->prop.push_back(Symbol(")"));
-	}
+	}*/
 }
 
 
@@ -115,8 +118,13 @@ void modify_grammar(Node& n) {
 }
 
 void modify_grammar(Source* src) {
+	Timer t;
+	t.start();
+	cout << "modifying grammar ... " << flush;
 	for (auto n : src->theory->nodes)
 		modify_grammar(n);
+	t.stop();
+	cout << "done in " << t << endl;
 }
 
 

@@ -124,6 +124,11 @@ void Rus::run() {
 	case Config::MODE_TRANSL: break;
 	default : break;
 	}
+
+	if (!unify_rus(*this)) {
+		failed = true; return;
+	}
+
 	switch (config.target) {
 	case Config::TARG_RUS: write_rus(*this); break;
 	case Config::TARG_SMM: translate_rus(*this); break;
