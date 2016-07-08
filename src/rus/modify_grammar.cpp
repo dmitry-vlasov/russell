@@ -3,6 +3,49 @@
 
 namespace mdl { namespace rus { namespace {
 
+/**
+ * Struct which stores the id's of the
+ * proper rule names
+ */
+struct Ids {
+	const uint co;
+	const uint cqs;
+	const uint cdiv;
+	static Ids& get() { static Ids ids; return ids; }
+private:
+	Ids() :
+		co(Rus::get().lex.ids.getInt("co")),
+		cqs(Rus::get().lex.ids.getInt("cqs")),
+		cdiv(Rus::get().lex.ids.getInt("cdiv")) { }
+};
+
+
+/**
+ * Struct which stores rules with
+ * the proper names
+ */
+struct Rules {
+	Rule* const cqs;
+	static Rules& get() { static Rules rules; return rules; }
+private:
+	Rules() : cqs(Rus::get().math.rules[Ids::get().cqs]) { }
+};
+
+term::Expr* transform(term::Expr* t) {
+	if (t->rule->id == Ids::get().co &&
+		t->children[1]->rule->id == Ids::get().cdiv) {
+		term::Expr* nt = new term::Expr(t->first, t->last, Rules::get().cqs);
+		nt->children.push_back(t->children[0]);
+		nt->children.push_back(t->children[2]);
+		t->children.clear();
+		delete t;
+		t = nt;
+	}
+	for (auto& ch : t->children)
+		ch = transform(ch);
+	return t;
+}
+
 void modify_grammar(Expr& ex) {
 	Expr e = assemble(ex);
 	ex = e;
