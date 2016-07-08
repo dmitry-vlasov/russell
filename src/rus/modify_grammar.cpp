@@ -47,8 +47,8 @@ term::Expr* transform(term::Expr* t) {
 }
 
 void modify_grammar(Expr& ex) {
-	Expr e = assemble(ex);
-	ex = e;
+	ex.term = transform(ex.term);
+	ex = assemble(ex);
 }
 
 void transform(Expr& ex) {
@@ -56,18 +56,18 @@ void transform(Expr& ex) {
 		Expr e = assemble(ex);
 		e.push_front(Symbol("("));
 		e.push_back(Symbol(")"));
-		e.first->init = e.first->next->init;
-		e.last->final = e.last->prev->final;
-		e.first->next->init.clear();
-		e.last->prev->final.clear();
-		for (auto t : e.first->init) t->first = e.first;
-		for (auto t : e.last->final) t->last = e.last;
+		//e.first->init = e.first->next->init;
+		//e.last->final = e.last->prev->final;
+		//e.first->next->init.clear();
+		//e.last->prev->final.clear();
+		//for (auto t : e.first->init) t->first = e.first;
+		//for (auto t : e.last->final) t->last = e.last;
 		ex = e;
 	}
 }
 
 void modify_grammar(Rule* rule) {
-	transform(rule->term);
+	//transform(rule->term);
 }
 
 

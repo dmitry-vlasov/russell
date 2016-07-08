@@ -38,7 +38,7 @@ inline uint translate_symb(uint s) {
 mdl::Expr translate_expr(const Expr& ex, Maps& maps) {
 	mdl::Expr expr;
 	expr += maps.turnstile;
-	for (auto it = ex.term()->begin(); it != ex.term()->end(); ++ it)
+	for (auto it = ex.term->begin(); it != ex.term->end(); ++ it)
 		expr += mdl::Symbol(translate_symb(it->symb.lit), it->symb.type);
 	return expr;
 }
@@ -46,7 +46,7 @@ mdl::Expr translate_expr(const Expr& ex, Maps& maps) {
 mdl::Expr translate_term(const Expr& ex, const Type* tp, Maps& maps) {
 	mdl::Expr expr;
 	expr += mdl::Symbol(maps.types[tp]);
-	for (auto it = ex.term()->begin(); it != ex.term()->end(); ++ it)
+	for (auto it = ex.term->begin(); it != ex.term->end(); ++ it)
 		expr += mdl::Symbol(translate_symb(it->symb.lit), it->symb.type);
 	return expr;
 }
@@ -129,7 +129,7 @@ smm::Assertion* translate_rule(const Rule* rule, Maps& maps) {
 	maps.rules[rule] = ra;
 	for (auto v : rule->vars.v) {
 		uint i = 0;
-		for (auto ch : rule->term.term()->children) {
+		for (auto ch : rule->term.term->children) {
 			if (ch->getvar() == v) {
 				maps.rules_args[rule][v] = i;
 				break;

@@ -30,8 +30,6 @@ size_t memvol(const Expr& ex) {
 	Expr::Node* n = ex.first;
 	while (n) {
 		s += memsize(*n);
-		for (term::Expr* t : n->init)
-			s += memsize(*t);
 		n = n->next;
 	}
 	return s;
@@ -51,7 +49,7 @@ string show_ast(const term::Expr* t, bool full) {
 	}
 }
 
-Expr::Expr(const Expr& ex) : first(nullptr), last(nullptr), type(ex.type) {
+Expr::Expr(const Expr& ex) : first(nullptr), last(nullptr), type(ex.type), term(nullptr) {
 	map<Node*, Node*> mp;
 	Node* n = ex.first;
 	while (n){
@@ -59,12 +57,13 @@ Expr::Expr(const Expr& ex) : first(nullptr), last(nullptr), type(ex.type) {
 		mp[n] = last;
 		n = n->next;
 	}
-	add_term<term::Expr, node::Expr>(ex.term(), mp);
+	term = add_term<term::Expr, node::Expr>(ex.term, mp);
 }
-Expr::Expr(Expr&& ex) : first(ex.first), last(ex.last), type(ex.type) {
+Expr::Expr(Expr&& ex) : first(ex.first), last(ex.last), type(ex.type), term(ex.term) {
 	ex.first = nullptr;
 	ex.last  = nullptr;
 	ex.type  = nullptr;
+	ex.term  = nullptr;
 }
 Expr::~Expr() {
 	Node* n = last;
@@ -73,6 +72,7 @@ Expr::~Expr() {
 		n = n->prev;
 		delete to_delete;
 	}
+	if (term) delete term;
 }
 Expr& Expr::operator = (const Expr& ex) {
 	Node* n = last;
@@ -91,16 +91,18 @@ Expr& Expr::operator = (const Expr& ex) {
 		mp[n] = last;
 		n = n->next;
 	}
-	add_term<term::Expr, node::Expr>(ex.term(), mp);
+	term = add_term<term::Expr, node::Expr>(ex.term, mp);
 	return *this;
 }
 Expr& Expr::operator = (Expr&& ex) {
 	first = ex.first;
 	last  = ex.last;
 	type  = ex.type;
+	term  = ex.term;
 	ex.first = nullptr;
 	ex.last  = nullptr;
 	ex.type  = nullptr;
+	ex.term  = nullptr;
 	return *this;
 }
 
@@ -128,8 +130,6 @@ void Expr::push_front(Symbol s) {
 
 Symbol Expr::pop_back() {
 	assert(first);
-	assert(last->final.empty());
-	assert(last->init.empty());
 	Symbol s = last->symb;
 	if (last == first) {
 		delete first;
@@ -163,10 +163,8 @@ inline Rule* find_super(Type* type, Type* super) {
 term::Expr* assemble_expr(Expr& ex, const term::Expr* t) {
 	if (t->isvar()) {
 		ex.push_back(t->first->symb);
-		term::Expr* at = new term::Expr(ex.first);
-		ex.first->init.push_back(at);
-		ex.last->final.push_back(at);
-		return at;
+		ex.term = new term::Expr(ex.first);
+		return ex.term;
 	}
 	uint i = 0;
 	Expr::Node* n = t->rule ? t->rule->term.first : t->first;
@@ -186,10 +184,8 @@ term::Expr* assemble_expr(Expr& ex, const term::Expr* t) {
 			ex.push_back(n->symb);
 		n = n->next;
 	}
-	term::Expr* at = new term::Expr(ex.first, ex.last, t->rule, children);
-	ex.first->init.push_back(at);
-	ex.last->final.push_back(at);
-	return at;
+	ex.term = new term::Expr(ex.first, ex.last, t->rule, children);
+	return ex.term;
 }
 
 Expr assemble(const term::Expr* t) {
@@ -200,13 +196,7 @@ Expr assemble(const term::Expr* t) {
 }
 
 Expr assemble(const Expr& ex) {
-	return assemble(ex.term());
-}
-
-void add_terms(term::Expr* term) {
-	for (auto t : term->children) add_terms(t);
-	term->first->init.push_back(term);
-	term->last->final.push_back(term);
+	return assemble(ex.term);
 }
 
 term::Expr* create_term(Expr::Node* first, Expr::Node* last, Rule* rule) {
@@ -221,7 +211,7 @@ term::Expr* create_term(Expr::Node* first, Expr::Node* last, Rule* rule) {
 }
 
 void parse_term(Expr& ex, Rule* rule) {
-	add_terms(create_term(ex.first, ex.last, rule));
+	ex.term = create_term(ex.first, ex.last, rule);
 }
 
 template<typename T>

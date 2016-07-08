@@ -22,12 +22,14 @@ struct Unit {
 
 vector<pair<Expr*, uint>> queue;
 
+/*
 void add_terms(Term* term) {
 	for (auto t : term->children)
 		add_terms(t);
 	term->first->init.push_back(term);
 	term->last->final.push_back(term);
 }
+*/
 
 inline Symbol current(Node* n) {
 	return n ? n->symb : end_marker();
@@ -81,7 +83,8 @@ bool parse_GLR(Table& tab, Expr* ex, Node* n, Unit u) {
 		}	break;
 		case Action::ACCEPT:
 			assert(!n);
-			add_terms(u.term);
+			//add_terms(u.term);
+			ex->term = u.term;
 			//assert(!u.prev);
 			//stack.pop_back();
 			//assert(u.state == init);
@@ -341,7 +344,8 @@ bool parse_GLR(Expr* ex) {
 
 bool parse_LL(Expr* ex, uint ind) {
 	if (Term* term = parse_LL(ex->first, ex->type, ind)) {
-		add_terms(term);
+		ex->term = term;
+		//add_terms(term);
 		return true;
 	} else
 		return false;

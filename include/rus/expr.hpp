@@ -233,29 +233,18 @@ struct Tree {
 namespace node {
 
 struct Expr {
-	Expr() : symb(), next(nullptr),
-	prev(nullptr), init(), final() { }
-	Expr(Symbol s) : symb(s), next(nullptr),
-	prev(nullptr), init(), final() { }
-	~Expr() {
-		for (auto t : init) delete t;
-	}
-	Expr(const Expr& ex) : symb(ex.symb), next(nullptr),
-	prev(nullptr), init(), final() {
-	}
+	Expr() : symb(), next(nullptr), prev(nullptr) { }
+	Expr(Symbol s) : symb(s), next(nullptr), prev(nullptr)  { }
+	Expr(const Expr& ex) : symb(ex.symb), next(nullptr), prev(nullptr) { }
 	Expr& operator = (const Expr& ex) {
 		symb = ex.symb;
 		next = nullptr;
 		prev = nullptr;
-		init.clear();
-		final.clear();
 		return *this;
 	}
 	Symbol symb;
 	Expr*  next;
 	Expr*  prev;
-	vector<term::Expr*>  init;
-	vector<term::Expr*> final;
 };
 
 template<typename T>
@@ -322,8 +311,8 @@ struct Expr {
 	typedef iterator<Node> Iterator;
 	typedef const_iterator<Node> ConstIterator;
 
-	Expr() : first(nullptr), last(nullptr), type(nullptr) { }
-	Expr(Symbol s) : first(nullptr), last(nullptr), type(s.type) {
+	Expr() : first(nullptr), last(nullptr), type(nullptr), term(nullptr) { }
+	Expr(Symbol s) : first(nullptr), last(nullptr), type(s.type), term(nullptr) {
 		push_back(s);
 	}
 	Expr(const Expr&);
@@ -339,14 +328,6 @@ struct Expr {
 	bool operator != (const Expr& ex) const {
 		return !operator == (ex);
 	}
-	term::Expr* term() {
-		if (!first) return nullptr; else
-		return first->init.size() ? first->init.back() : nullptr;
-	}
-	const term::Expr* term() const {
-		if (!first) return nullptr; else
-		return first->init.size() ? first->init.back() : nullptr;
-	}
 	Iterator begin() { return Iterator(first); }
 	Iterator end()   { return last->next ? Iterator(last->next) : Iterator(); }
 	ConstIterator begin() const { return ConstIterator(first); }
@@ -359,6 +340,7 @@ struct Expr {
 	Node* first;
 	Node* last;
 	Type* type;
+	term::Expr* term;
 };
 
 inline iterator<node::Expr> begin(Expr& ex) { return ex.begin(); }
@@ -410,7 +392,7 @@ inline bool Expr :: operator == (const Expr& t) const {
 
 sub::Expr* unify(const term::Expr* p, const term::Expr* q);
 inline sub::Expr* unify(const Expr& ex1, const Expr& ex2) {
-	return unify(ex1.term(), ex2.term());
+	return unify(ex1.term, ex2.term);
 }
 Expr assemble(const Expr& ex);
 Expr assemble(const term::Expr* t);
@@ -423,8 +405,8 @@ namespace expr {
 string show(const Expr&);
 string show_ast(const term::Expr*, bool full = false);
 inline string show_ast(const Expr& ex, bool full = false) {
-	if (ex.term())
-		return show_ast(ex.term(), full);
+	if (ex.term)
+		return show_ast(ex.term, full);
 	else
 		return "<no ast>";
 }
@@ -544,7 +526,7 @@ T& Tree<T>::add(const Expr& ex) {
 		n = new_next(n, m->symb);
 		mp[m] = n;
 	}
-	add_term<term::Tree<T>, node::Tree<T>>(ex.term(), mp);
+	add_term<term::Tree<T>, node::Tree<T>>(ex.term, mp);
 	return n->data;
 }
 
@@ -583,7 +565,7 @@ inline size_t memvol(const term::Expr& t) {
 	return t.children.capacity() * sizeof(void*);
 }
 inline size_t memvol(const node::Expr& n) {
-	return (n.init.capacity() + n.final.capacity()) * sizeof(void*);
+	return 0;
 }
 template<class T>
 inline size_t memvol(const node::Tree<T>& n) {
