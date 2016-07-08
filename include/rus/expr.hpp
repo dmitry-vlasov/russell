@@ -261,22 +261,16 @@ struct Expr {
 template<typename T>
 struct Tree {
 	Tree() : symb(), next(nullptr),
-	prev(nullptr), side(nullptr), init(), final(), data() { }
+	prev(nullptr), side(nullptr), data() { }
 	Tree(Symbol s) : symb(s), next(nullptr),
-	prev(nullptr), side(nullptr), init(), final(), data() { }
-	~Tree() {
-		for (auto t : init) delete t;
-	}
+	prev(nullptr), side(nullptr), data() { }
 	Tree(const Tree& tr) : symb(tr.symb), next(nullptr),
-	prev(nullptr), side(nullptr), init(), final(), data() {
-	}
+	prev(nullptr), side(nullptr), data() { }
 	Tree& operator = (const Tree& tr) {
 		symb = tr.symb;
 		next = nullptr;
 		prev = nullptr;
 		side = nullptr;
-		init.clear();
-		final.clear();
 		return *this;
 	}
 	Symbol symb;
@@ -284,8 +278,6 @@ struct Tree {
 	Tree*  prev;
 	Tree*  side;
 	uint   level;
-	vector<term::Tree<T>*>  init;
-	vector<term::Tree<T>*> final;
 	T data;
 };
 
@@ -368,8 +360,6 @@ struct Expr {
 	Node* last;
 	Type* type;
 };
-
-//typedef term::Expr ExprTerm;
 
 inline iterator<node::Expr> begin(Expr& ex) { return ex.begin(); }
 inline iterator<node::Expr> end(Expr& ex)   { return ex.end(); }
@@ -520,8 +510,6 @@ T* add_term(const term::Expr* st, map<node::Expr*, N*>& mp) {
 	assert(mp.find(st->first) != mp.end());
 	assert(mp.find(st->last) != mp.end());
 	T* tt = new T(mp[st->first], mp[st->last], st->rule);
-	mp[st->first]->init.push_back(tt);
-	mp[st->last]->final.push_back(tt);
 	for (auto ch : st->children) {
 		tt->children.push_back(add_term<T, N>(ch, mp));
 	}
@@ -599,7 +587,7 @@ inline size_t memvol(const node::Expr& n) {
 }
 template<class T>
 inline size_t memvol(const node::Tree<T>& n) {
-	return (n.init.capacity() + n.final.capacity()) * sizeof(void*) + memsize(n.data);
+	return memsize(n.data);
 }
 template<class T>
 size_t memvol(const Tree<T>& t) {
@@ -607,11 +595,8 @@ size_t memvol(const Tree<T>& t) {
 	if (t.root) {
 		vector<node::Tree<T>*> nodes;
 		gather_tree_nodes(nodes, t.root);
-		for (node::Tree<T>* n : nodes) {
+		for (node::Tree<T>* n : nodes)
 			s += memsize(*n);
-			for (term::Tree<T>* x : n->init)
-				s += memsize(*x);
-		}
 	}
 	return s;
 }
