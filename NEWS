@@ -1,0 +1,4 @@
+
+31.01.2010
+* made executables to run mdl, mm and metamath in windows.
+* made reduced test suite to fit in a little memory: prop-translate
