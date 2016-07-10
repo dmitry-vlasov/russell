@@ -5,8 +5,8 @@ project russell
 		<toolset>gcc:<cxxflags>-std=gnu++14
 		<toolset>gcc:<linkflags>-lpthread 
 		<toolset>gcc:<c++-template-depth>300
-		<variant>release:<location>"bin/release"
-		<variant>debug:<location>"bin/debug"
+		<variant>release:<location>"../bin/release"
+		<variant>debug:<location>"../bin/debug"
 	;
 	
 exe smm : 
