@@ -68,8 +68,10 @@ static void translate_const(const Constants* consts, State& state) {
 		auto p = math_symb.find(s.lit);
 		if (p == math_symb.end())
 			c = new rus::Const{state.ind ++, rus::Symbol(s), rus::Symbol(), rus::Symbol()};
-		else
-			c = new rus::Const{state.ind ++ , (*p).second.symb, (*p).second.ascii, (*p).second.latex};
+		else {
+			rus::Const& rc = (*p).second;
+			c = new rus::Const{state.ind ++ , rc.symb, rc.ascii, rc.latex};
+		}
 
 		if (state.constants.has(c->symb))
 			delete c;

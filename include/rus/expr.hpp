@@ -308,6 +308,7 @@ struct Tree {
 
 struct Expr {
 	typedef node::Expr Node;
+	typedef term::Expr Term;
 	typedef iterator<Node> Iterator;
 	typedef const_iterator<Node> ConstIterator;
 
@@ -340,7 +341,7 @@ struct Expr {
 	Node* first;
 	Node* last;
 	Type* type;
-	term::Expr* term;
+	Term* term;
 };
 
 inline iterator<node::Expr> begin(Expr& ex) { return ex.begin(); }

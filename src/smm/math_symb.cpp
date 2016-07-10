@@ -4,7 +4,7 @@
 namespace mdl { namespace smm {
 
 inline rus::Const make_symb(const char* ascii, const char* unicode, const char* latex) {
-	return rus::Const {
+	return rus::Const { 0,
 		Smm::mod().lex.symbols.toInt(unicode),
 		Smm::mod().lex.symbols.toInt(ascii),
 		Smm::mod().lex.symbols.toInt(latex)
@@ -61,7 +61,7 @@ map<uint, rus::Const> math_symb = {
 		{make_key("-onto->"), make_symb("-onto->", "↠", "\\twoheadrightarrow")},
 		{make_key("-1-1-onto->"), make_symb("-1-1-onto->", "⤖", "\\rightarrowtail\\twoheadrightarrow")},
 		{make_key("X_"), make_symb("X_", "×_", "\\times")},
-		{make_key("|->"), make_symb("|->", "↦", "\\times")},
+		{make_key("|->"), make_symb("|->", "↦", "\\mapsto")},
 		{make_key("^m"), make_symb("^m", "↑m", "\\uparrow_m")},
 		{make_key("^pm"), make_symb("^pm", "↑pm", "\\uparrow_{pm}")},
 		{make_key("+o"), make_symb("+o", "+ₒ", "+_o")},

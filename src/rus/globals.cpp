@@ -26,16 +26,13 @@ namespace rus { namespace {
 
 bool parse_rus(Rus& rus) {
 	try {
-		rus.timers.read.start();
-		Timer t;
-		t.start();
 		cout << "parsing russell source ... " << flush;
+		rus.timers.read.start();
 		rus.source = parse(rus.config.in);
-		t.stop();
-		cout << "done in " << t << endl;
 		expr::parse();
 		//cout << *rus.source << endl;
 		rus.timers.read.stop();
+		cout << "done in " << rus.timers.read << endl;
 		return true;
 	} catch (Error& err) {
 		rus.status += '\n';
@@ -47,9 +44,11 @@ bool parse_rus(Rus& rus) {
 
 bool unify_rus(Rus& rus) {
 	try {
+		cout << "verifying russell source ... " << flush;
 		rus.timers.unify.start();
 		verify(rus.source);
 		rus.timers.unify.stop();
+		cout << "done in " << rus.timers.unify << endl;
 		return true;
 	} catch (Error& err) {
 		rus.status += '\n';
@@ -125,9 +124,9 @@ void Rus::run() {
 	default : break;
 	}
 
-	if (!unify_rus(*this)) {
-		failed = true; return;
-	}
+	//if (!unify_rus(*this)) {
+	//	failed = true; return;
+	//}
 
 	switch (config.target) {
 	case Config::TARG_RUS: write_rus(*this); break;
