@@ -110,11 +110,10 @@ void Rus::run() {
 	if (!parse_rus(*this)) {
 		failed = true; return;
 	}
-	if (config.mode != Config::MODE_GRAMM && !unify_rus(*this)) {
+	if (!unify_rus(*this)) {
 		failed = true; return;
 	}
 	switch (config.mode) {
-	case Config::MODE_GRAMM:  modify_grammar(source); break;
 	case Config::MODE_PROVE:  break;
 	case Config::MODE_TRANSL: break;
 	default : break;

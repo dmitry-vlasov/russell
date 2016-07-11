@@ -60,7 +60,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 
 	disj =
 		lit("disjointed") > "("
-		> + ( !(lit(")") | lit(","))
+		> + ( (!(lit(")") | lit(",")))
 			> eps    [newDisjSet(phoenix::at_c<0>(_val))]
 			> + var  [addDisjVar(phoenix::at_c<0>(_val), _1)]
 		) % ","

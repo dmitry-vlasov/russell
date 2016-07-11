@@ -55,7 +55,6 @@ exe mdl :
   
   src/rus/expr/parser.cpp
 
-  src/rus/modify_grammar.cpp
   src/rus/expr.cpp
   src/rus/globals.cpp
   src/rus/show.cpp
@@ -63,66 +62,3 @@ exe mdl :
   src/rus/translate.cpp
   src/rus/main.cpp
   ;
- 
-#lib smml :
-#  src/memusage.cpp 
-#  src/timer.cpp
-#  src/location.cpp
-#  src/smm/show.cpp
-#  src/smm/globals.cpp
-#  src/smm/parser.cpp
-#  src/smm/verify.cpp ;
- 
-#lib mml : 
-#  src/memusage.cpp
-#  src/timer.cpp
-#  src/location.cpp
-#  src/mm/globals.cpp
-#  src/mm/show.cpp
-#  src/mm/parser.cpp
-#  src/mm/translate.cpp ;
-  
-  
-  
-  
-  
-#import python ;
-
-#if ! [ python.configured ]
-#{
-#    ECHO "notice: no Python configured in user-config.jam" ;
-#    ECHO "notice: will use default configuration" ;
-#    using python ;
-#}
-
-#using python : 2.7 : usr/bin/python ; 
-#using boost : 1.54 : <library>/usr/lib/x86_64-linux-gnu ;
-
-#using python ;
-
-#project
-#	: requirements
-#		#<library>/boost/python//boost_python 
-#		<library>/usr/lib/x86_64-linux-gnu/libboost_python.so
-#		#<library>/boost/libboost_python
-#		#<library>/usr/lib/libboost_python.so 
-#		<include>include
-#		<include>/usr/include/python2.7
-#		<toolset>gcc:<cxxflags>-std=c++11
-#	;
-
-#python-extension pymdl : 
-#	wrapper/mdl.cpp 
-#	smml 
-#	/usr/lib/x86_64-linux-gnu/libboost_python-py27.so
-#	;
-
-#install convenient_copy 
-#  : pymdl 
-#  : <install-dependencies>on <install-type>SHARED_LIB <install-type>PYTHON_EXTENSION 
-#    <location>. 
-#  ;
-
-
-
-  

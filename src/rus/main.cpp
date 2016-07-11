@@ -25,7 +25,6 @@ static void showHelp() {
 	cout << " -r  --root <path>  root directory (for inclusions)" << endl;
 	cout << " -h  --help         print the help" << endl;
 	cout << " -v  --verbose      not be silent"  << endl;
-	cout << " -g  --mod-gramm    modify grammar: make it LL"  << endl;
 	cout << "     --info         info about math: timings, memory, stats"  << endl;
 }
 
@@ -57,8 +56,6 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 			conf.verbose = true;
 		else if (arg == "--info")
 			conf.info = true;
-		else if (arg == "-g" || arg == "--mod-gramm")
-			conf.mode = Config::MODE_GRAMM;
 		else
 			return false;
 	}

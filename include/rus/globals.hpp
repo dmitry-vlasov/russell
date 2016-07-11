@@ -19,7 +19,7 @@
 namespace mdl { namespace rus {
 
 struct Config {
-	enum Mode   { MODE_NONE, MODE_TRANSL, MODE_GRAMM, MODE_PROVE };
+	enum Mode   { MODE_NONE, MODE_TRANSL, MODE_PROVE };
 	enum Target { TARG_NONE, TARG_SMM, TARG_RUS };
 	Config() :
 	verbose(false), info(false), help(false),
@@ -81,7 +81,6 @@ ostream& operator << (ostream& os, const Rus& s);
 Source* parse(const string& path);
 void verify(Source*);
 smm::Source* translate(const Source* source);
-void modify_grammar(Source* src);
 
 }} // mdl::rus
 
