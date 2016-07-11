@@ -119,9 +119,4 @@ size_t memvol(const Source& src) {
 	return s;
 }
 
-
-
 }} // mdl::rus
-
-
-

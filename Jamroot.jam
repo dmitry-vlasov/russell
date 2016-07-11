@@ -54,6 +54,7 @@ exe mdl :
   src/rus/memvol.cpp
   
   src/rus/expr/parse.cpp
+  src/rus/expr/unify.cpp
 
   src/rus/expr.cpp
   src/rus/globals.cpp
