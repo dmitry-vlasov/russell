@@ -122,11 +122,9 @@ Term* parse_LL(Node* x, Type* type, uint ind, bool initial = false) {
 					children.push_back(child);
 					childnodes.push(n.top());
 					if (!n.top()->next) {
-						if (n.top()->data->ind <= ind) {
-							Term* t = new Term(f, child->last, n.top()->data, children);
-							//if (trace) cout << "CHILD: " << show_ast(t, true) << endl;
-							return t;
-						} else
+						if (n.top()->data->ind <= ind)
+							return new Term(f, child->last, n.top()->data, children);
+						else
 							goto end;
 					} else if (!child->last->next)
 						goto end;
@@ -138,11 +136,9 @@ Term* parse_LL(Node* x, Type* type, uint ind, bool initial = false) {
 				}
 			} else if (n.top()->symb == m.top()->symb) {
 				if (!n.top()->next) {
-					if (n.top()->data->ind <= ind) {
-						Term* t = new Term(f, m.top(), n.top()->data, children);
-						//if (trace) cout << "END: " << show_ast(t, true) << endl;
-						return t;
-					} else
+					if (n.top()->data->ind <= ind)
+						return new Term(f, m.top(), n.top()->data, children);
+					else
 						goto end;
 				} else if (!m.top()->next)
 					goto end;
@@ -167,81 +163,13 @@ Term* parse_LL(Node* x, Type* type, uint ind, bool initial = false) {
 		for (auto t : children) delete t;
 	}
 	if (x->symb.type) {
-		if (x->symb.type == type) {
-			Term* t = new Term(x);
-			//if (trace) cout << "VAR: " << show_ast(t, true) << endl;
-			return t;
-		} else if (Rule* super = find_super(x->symb.type, type)) {
-			Term* t = new Term(x, super);
-			//if (trace) cout << "SUPER: " << show_ast(t, true) << endl;
-			return t;
-		}
-	}
-	return nullptr;
-}
-
-
-/*
-Term* parse_LL(Node* x, Type* type) {
-	if (x->symb.type){
 		if (x->symb.type == type)
 			return new Term(x);
 		else if (Rule* super = find_super(x->symb.type, type))
 			return new Term(x, super);
 	}
-	if (!type->rules.root) return nullptr;
-	vector<Term*> children;
-	Node* f = x;
-
-	stack<TreeNode*> n;
-	stack<Node*> m;
-	stack<TreeNode*> childnodes;
-	n.push(type->rules.root);
-	m.push(x);
-
-	while (!n.empty() && !m.empty()) {
-		if (Type* tp = n.top()->symb.type) {
-			if (Term* child = parse_LL(m.top(), tp)) {
-				children.push_back(child);
-				childnodes.push(n.top());
-				if (!n.top()->next)
-					return new Term(f, child->last, n.top()->data, children);
-				else if (!child->last->next)
-					goto end;
-				else {
-					n.push(n.top()->next);
-					m.push(child->last->next);
-				}
-				continue;
-			}
-		} else if (n.top()->symb == m.top()->symb) {
-			if (!n.top()->next)
-				return new Term(f, m.top(), n.top()->data, children);
-			else if (!m.top()->next)
-				goto end;
-			else {
-				n.push(n.top()->next);
-				m.push(m.top()->next);
-			}
-			continue;
-		}
-		while (!n.top()->side) {
-			n.pop();
-			m.pop();
-			if (!childnodes.empty() && childnodes.top() == n.top()) {
-				children.pop_back();
-				childnodes.pop();
-			}
-			if (n.empty() || m.empty()) goto end;
-		}
-		n.top() = n.top()->side;
-	}
-	end:
-	for (auto t : children) delete t;
 	return nullptr;
 }
-
- */
 
 bool parse_LR() {
 	Timer t;
@@ -266,66 +194,25 @@ bool parse_LR() {
 	return ret;
 }
 
-bool parse_LL() {
-	Timer t;
-	t.start();
-	cout << "parsing with LL ... " << flush;
-	bool ret = true;
-	//cout << endl;
-	//int c = 0;
-	for (auto p : queue) {
-		Expr* ex = p.first;
-		//cout << "doing " << c++ << ", free: " << get_current_free() << " , exp: " << show(*ex) << " ... " << flush;
-		try {
-			if (!expr::parse_LL(ex, p.second)) {
-				ret = false;
-				break;
-			}
-		} catch (std::bad_alloc& ba) {
-			std::cerr << "bad_alloc caught: " << ba.what() << '\n';
-		}
-		//cout << "done" << endl;
-	}
-	t.stop();
-	cout << "done in " << t << endl;
-	return ret;
-}
-
 const uint THREADS = thread::hardware_concurrency() ? thread::hardware_concurrency() : 1;
 
 void parse_LL_concur(uint s) {
-
-	//bool ret = true;
-	//cout << endl;
 	int c = 0;
 	for (auto p : queue) {
 		if (c++ % THREADS != s)
 			continue;
 		Expr* ex = p.first;
-		//cout << "doing " << c++ << ", free: " << get_current_free() << " , exp: " << show(*ex) << " ... " << flush;
-		try {
-			if (!expr::parse_LL(ex, p.second)) {
-				//ret = false;
-				break;
-			}
-		} catch (std::bad_alloc& ba) {
-			std::cerr << "bad_alloc caught: " << ba.what() << '\n';
-		}
-		//cout << "done" << endl;
+		if (!expr::parse_LL(ex, p.second))
+			break;
 	}
 }
 
 bool parse_LL_conc() {
-	Timer t;
-	t.start();
-	cout << "parsing with LL ... " << flush;
 	thread* thds[THREADS];
 	for (uint i = 0; i < THREADS; ++ i)
 		thds[i] = new std::thread(parse_LL_concur, i);
 	for (uint i = 0; i < THREADS; ++ i)
 		thds[i]->join();
-	t.stop();
-	cout << "done in " << t << endl;
 	return true;
 }
 
