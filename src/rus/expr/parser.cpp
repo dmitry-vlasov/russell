@@ -1,10 +1,7 @@
 //#include <boost/range/adaptor/reversed.hpp>
 
-#include <new>
-
-#include "GLR.hpp"
-#include "rus/expr/table.hpp"
 #include "rus/parser/ind.hpp"
+#include "rus/globals.hpp"
 
 namespace mdl { namespace rus { namespace expr { namespace {
 
@@ -12,90 +9,7 @@ typedef node::Expr Node;
 typedef term::Expr Term;
 typedef Tree<Rule*>::Node TreeNode;
 
-struct Unit {
-	State* state;
-	Term*  term;
-	Node*  node;
-	Unit*  prev;
-};
-
 vector<pair<Expr*, uint>> queue;
-
-/*
-void add_terms(Term* term) {
-	for (auto t : term->children)
-		add_terms(t);
-	term->first->init.push_back(term);
-	term->last->final.push_back(term);
-}
-*/
-
-inline Symbol current(Node* n) {
-	return n ? n->symb : end_marker();
-}
-
-bool parse_GLR(Table& tab, Expr* ex, Node* n, Unit u) {
-	if (!tab.actions.has(u.state))
-		return false;
-	Symbol x = current(n);
-	if (x.type && !tab.vars.has(x.type))
-		return false;
-	Symbol s = x.type ? tab.vars[x.type] : x;
-	if (!tab.actions[u.state].has(s))
-		return false;
-	for (Action act : tab.actions[u.state][s].s) {
-		switch (act.kind) {
-		case Action::SHIFT:
-			if (!n)
-				break;
-			if (parse_GLR(tab, ex, n->next, Unit{act.val.state, nullptr, n, &u}))
-				return true;
-			break;
-		case Action::REDUCE: {
-			Unit w = u;
-			vector<Term*> terms;
-			for (uint i = 0; i < act.val.prod->right.size(); ++ i) {
-				if (w.term)
-					terms.push_back(w.term);
-				assert(w.prev);
-				w = *w.prev;
-			}
-			std::reverse(terms.begin(), terms.end());
-			if (!tab.gotos.has(w.state))
-				break;
-			if (!tab.gotos[w.state].has(act.val.prod->left))
-				break;
-			State* s = tab.gotos[w.state][act.val.prod->left];
-			Term*  t = nullptr;
-			if (act.val.prod->kind == Product::VAR) {
-				//assert(u.node == n ||
-				//	(u.node->next == n && n->symb == end_marker()));
-				assert(terms.size() == 0);
-				assert(!act.val.prod->rule);
-				t = new Term(u.node);
-			} else {
-				assert(act.val.prod->rule);
-				t = new Term(w.node, (n ? n : ex->last), act.val.prod->rule, terms);
-			}
-			if (parse_GLR(tab, ex, n, Unit{s, t, n, &w}))
-				return true;
-		}	break;
-		case Action::ACCEPT:
-			assert(!n);
-			//add_terms(u.term);
-			ex->term = u.term;
-			//assert(!u.prev);
-			//stack.pop_back();
-			//assert(u.state == init);
-			assert(!n);
-			return true;
-			break;
-		default:
-			assert(false && "Impossible");
-		}
-	}
-	return false;
-}
 
 inline Rule* find_super(Type* type, Type* super) {
 	auto it =type->supers.find(super);
@@ -171,28 +85,14 @@ Term* parse_LL(Node* x, Type* type, uint ind, bool initial = false) {
 	return nullptr;
 }
 
-bool parse_LR() {
-	Timer t;
-	t.start();
-	cout << "creating LR parsing tables ... " << endl;
-	cout << table().show();
-	t.stop();
-	cout << "done in " << t << endl;
-	//cout << show_grammar() << endl;
-	bool ret = true;
-	t.start();
-	cout << "parsing with LR ... " << flush;
-	for (auto p : queue) {
-		Expr* ex = p.first;
-		if (!expr::parse_GLR(ex)) {
-			ret = false;
-			break;
-		}
-	}
-	t.stop();
-	cout << "done in " << t << endl;
-	return ret;
+bool parse_LL(Expr* ex, uint ind) {
+	if (Term* term = parse_LL(ex->first, ex->type, ind)) {
+		ex->term = term;
+		return true;
+	} else
+		return false;
 }
+
 
 const uint THREADS = thread::hardware_concurrency() ? thread::hardware_concurrency() : 1;
 
@@ -216,41 +116,14 @@ bool parse_LL_conc() {
 	return true;
 }
 
-
 } // anonymous namespace
 
-bool parse_GLR(Expr* ex) {
-	Node* n = ex->first;
-	Table& tab = table();
-	if (!tab.inits.has(ex->type))
-		return false;
-	State* init = tab.inits[ex->type];
-	return parse_GLR(tab, ex, n, Unit{init, nullptr, n, nullptr});
-}
-
-bool parse_LL(Expr* ex, uint ind) {
-	if (Term* term = parse_LL(ex->first, ex->type, ind)) {
-		ex->term = term;
-		//add_terms(term);
-		return true;
-	} else
-		return false;
-}
-
-
 void enqueue(Expr& ex) {
-	/*if (!parse_LL(&ex)) {
-		throw Error("expression parsing error", show(ex));
-	}*/
 	queue.push_back(pair<Expr*, uint>(&ex, parser::get_ind()));
 }
 
 bool parse() {
-	//return true;
 	if (parse_LL_conc()) {
-		queue.clear();
-		return true;
-	} else if (parse_LR()) {
 		queue.clear();
 		return true;
 	} else

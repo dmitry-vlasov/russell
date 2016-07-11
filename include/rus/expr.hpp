@@ -399,8 +399,8 @@ Expr assemble(const Expr& ex);
 Expr assemble(const term::Expr* t);
 
 namespace expr {
-	bool parse_LL(Expr* ex, uint ind = -1);
-	bool parse_GLR(Expr* ex);
+	void enqueue(Expr& ex);
+	bool parse();
 }
 
 string show(const Expr&);

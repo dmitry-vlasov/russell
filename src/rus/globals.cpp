@@ -10,7 +10,6 @@
 /* License:         GNU General Public License Version 3                     */
 /*****************************************************************************/
 
-#include "rus/expr/table.hpp"
 #include "rus/globals.hpp"
 
 namespace mdl {
@@ -30,7 +29,6 @@ bool parse_rus(Rus& rus) {
 		rus.timers.read.start();
 		rus.source = parse(rus.config.in);
 		expr::parse();
-		//cout << *rus.source << endl;
 		rus.timers.read.stop();
 		cout << "done in " << rus.timers.read << endl;
 		return true;
@@ -66,7 +64,6 @@ bool translate_rus(Rus& rus) {
 			cout << "translating file " << rus.config.in << " ... " << flush;
 		rus.timers.translate.start();
 		smm::Source* target = translate(rus.source);
-		//cout << endl << *target;
 		ofstream out(rus.config.out);
 		out << *target << endl;
 		out.close();
@@ -88,7 +85,6 @@ bool write_rus(Rus& rus) {
 		if (rus.config.out.empty()) return true;
 		if (rus.config.verbose)
 			cout << "replicating file " << rus.config.in << " ... " << flush;
-		//cout << endl << *rus.source;
 		rus.timers.translate.start();
 		ofstream out(rus.config.out);
 		out << *rus.source << endl;
@@ -123,11 +119,6 @@ void Rus::run() {
 	case Config::MODE_TRANSL: break;
 	default : break;
 	}
-
-	//if (!unify_rus(*this)) {
-	//	failed = true; return;
-	//}
-
 	switch (config.target) {
 	case Config::TARG_RUS: write_rus(*this); break;
 	case Config::TARG_SMM: translate_rus(*this); break;

@@ -10,15 +10,9 @@ void verify_step(Step* st) {
 		return;
 	}
 	Assertion* ass = st->assertion();
-	static int c = 0;
+	//static int c = 0;
 	//cout << "\tverifying step: " << c++ << " = " << show_id(ass->id) << endl;
 	sub::Expr* ps = unify(ass->props[0]->expr, st->expr);
-	if (c == 4828) {
-		cout << show_ast(st->expr) << endl;
-		cout << show(*ps) << endl;
-	}
-
-	//Sub<>* ps = unify(ass->props[0]->expr, st->expr);
 	if (!ps) {
 		string msg = "proposition:\n";
 		msg += show(*ass->props[0]) + "\n";
@@ -29,9 +23,6 @@ void verify_step(Step* st) {
 		msg += show(*st) + "\n";
 		msg += show_ast(st->expr, true) + "\n\n";
 		msg += "theorem " + Rus::get().lex.ids.toStr(st->proof->thm->ass.id) + "\n";
-
-		expr::parse_LL(&st->expr, true);
-
 		throw Error("proposition unification failed", msg);
 	}
 	for (uint i = 0; i < ass->arity(); ++ i) {
