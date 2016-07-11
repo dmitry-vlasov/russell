@@ -53,7 +53,7 @@ exe mdl :
   src/rus/parser/parser.cpp
   src/rus/memvol.cpp
   
-  src/rus/expr/parser.cpp
+  src/rus/expr/parse.cpp
 
   src/rus/expr.cpp
   src/rus/globals.cpp
