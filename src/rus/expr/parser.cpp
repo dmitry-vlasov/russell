@@ -1,7 +1,6 @@
 //#include <boost/range/adaptor/reversed.hpp>
 
 #include <new>
-#include <thread>
 
 #include "GLR.hpp"
 #include "rus/expr/table.hpp"
@@ -292,7 +291,7 @@ bool parse_LL() {
 	return ret;
 }
 
-const uint N = 4;
+const uint THREADS = thread::hardware_concurrency() ? thread::hardware_concurrency() : 1;
 
 void parse_LL_concur(uint s) {
 
@@ -300,7 +299,7 @@ void parse_LL_concur(uint s) {
 	//cout << endl;
 	int c = 0;
 	for (auto p : queue) {
-		if (c++ % N != s)
+		if (c++ % THREADS != s)
 			continue;
 		Expr* ex = p.first;
 		//cout << "doing " << c++ << ", free: " << get_current_free() << " , exp: " << show(*ex) << " ... " << flush;
@@ -320,10 +319,10 @@ bool parse_LL_conc() {
 	Timer t;
 	t.start();
 	cout << "parsing with LL ... " << flush;
-	std::thread* thds[N];
-	for (uint i = 0; i < N; ++ i)
+	thread* thds[THREADS];
+	for (uint i = 0; i < THREADS; ++ i)
 		thds[i] = new std::thread(parse_LL_concur, i);
-	for (uint i = 0; i < N; ++ i)
+	for (uint i = 0; i < THREADS; ++ i)
 		thds[i]->join();
 	t.stop();
 	cout << "done in " << t << endl;

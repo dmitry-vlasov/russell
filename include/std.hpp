@@ -29,6 +29,7 @@
 #include <bitset>
 #include <utility>
 #include <queue>
+#include <thread>
 
 #include <cstdlib>
 #include <cstring>
@@ -81,6 +82,7 @@ namespace mdl {
 	using std::map;
 	using std::pair;
 	using std::bitset;
+	using std::thread;
 }
 
 
