@@ -82,5 +82,10 @@ Source* parse(const string& path);
 void verify(Source*);
 smm::Source* translate(const Source* source);
 
+namespace parser {
+	uint get_ind();
+	uint inc_ind();
+}
+
 }} // mdl::rus
 
