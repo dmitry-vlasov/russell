@@ -1,7 +1,7 @@
 #include "smm/ast.hpp"
 #include "rus/globals.hpp"
 
-namespace mdl { namespace rus {
+namespace mdl { namespace rus { namespace {
 
 struct Maps {
 	Map<const Assertion*, Map<const Hyp*, smm::Essential*>> essentials;
@@ -146,6 +146,8 @@ vector<smm::Node> translate_assertion(const Assertion* ass, Maps& maps) {
 		smm::Assertion* ra = new smm::Assertion();
 		if (ass->vars.v.size())
 			ra->variables.push_back(translate_vars(ass->vars));
+		if (ass->disj.d.size())
+			ra->disjointed = translate_disj(ass->disj);
 		ra->floating = translate_floatings(ass->vars, maps, ass);
 		ra->essential= translate_essentials(ass, maps);
 		ra->prop.expr  = translate_expr(prop->expr, maps);
@@ -300,6 +302,8 @@ vector<smm::Node> translate_theory(const Theory* thy, Maps& maps) {
 		}
 	}
 	return nodes;
+}
+
 }
 
 smm::Source* translate(const Source* src) {
