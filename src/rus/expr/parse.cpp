@@ -84,25 +84,33 @@ Term* parse_LL(Node* x, Type* type, uint ind, bool initial = false) {
 	return nullptr;
 }
 
-bool parse_LL(Expr* ex, uint ind) {
+void parse_LL(Expr* ex, uint ind) {
 	if (Term* term = parse_LL(ex->first, ex->type, ind)) {
 		ex->term = term;
-		return true;
 	} else
-		return false;
+		throw new Error("parsing error", string("expression: ") + show(*ex));
 }
 
 
 const uint THREADS = thread::hardware_concurrency() ? thread::hardware_concurrency() : 1;
+vector<std::exception_ptr> exceptions;
+mutex exc_mutex;
+
 
 void parse_LL_concur(uint s) {
 	int c = 0;
 	for (auto p : queue) {
 		if (c++ % THREADS != s)
 			continue;
-		Expr* ex = p.first;
-		if (!expr::parse_LL(ex, p.second))
+		if (exceptions.size())
 			break;
+		try {
+			parse_LL(p.first, p.second);
+		} catch (...) {
+			exc_mutex.lock();
+			exceptions.push_back(std::current_exception());
+			exc_mutex.unlock();
+		}
 	}
 }
 
@@ -112,6 +120,9 @@ bool parse_LL_conc() {
 		thds[i] = new std::thread(parse_LL_concur, i);
 	for (uint i = 0; i < THREADS; ++ i)
 		thds[i]->join();
+	for (auto& ex : exceptions) {
+		if (ex) std::rethrow_exception(ex);
+	}
 	return true;
 }
 

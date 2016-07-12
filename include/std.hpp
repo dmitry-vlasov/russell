@@ -30,6 +30,7 @@
 #include <utility>
 #include <queue>
 #include <thread>
+#include <mutex>
 
 #include <cstdlib>
 #include <cstring>
@@ -83,6 +84,7 @@ namespace mdl {
 	using std::pair;
 	using std::bitset;
 	using std::thread;
+	using std::mutex;
 }
 
 
