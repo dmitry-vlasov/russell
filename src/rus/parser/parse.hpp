@@ -116,7 +116,6 @@ void collect_supers(Type* inf, Type* s) {
 	for (auto sup : s->sup) {
 		Rule* super = create_super(inf, sup);
 		inf->supers[sup] = super;
-		//inf->rules.add(super->term) = super;
 		collect_supers(inf, sup);
 	}
 }
@@ -148,20 +147,14 @@ void enqueue_expressions(Def* def) {
 struct AddToMath {
 	void operator()(Const* c) const {
 		Rus::mod().math.consts[c->symb.lit] = c;
-		//expr::add_const(c);
 	}
 	void operator()(Type* t) const {
-		//t->rules.add(Expr(create_symbol("x", t))) = nullptr; // id rule
 		collect_supers(t, t);
 		Rus::mod().math.types[t->id] = t;
-		/*expr::add_type(t);
-		for (auto p : t->supers)
-			expr::add_rule(p.second);*/
 	}
 	void operator()(Rule* r) const {
 		r->type->rules.add(r->term) = r;
 		Rus::mod().math.rules[r->id] = r;
-		//expr::add_rule(r);
 	}
 	void operator()(Axiom* a) const {
 		Rus::mod().math.axioms[a->ass.id] = a;
@@ -177,6 +170,7 @@ struct AddToMath {
 	}
 	void operator()(Proof* p) const {
 		// TODO:
+		if (!p->id)
 		//Rus::mod().math.proofs[p->id] = p;
 		enqueue_expressions(p);
 	}
