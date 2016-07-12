@@ -1,6 +1,5 @@
 #include "rus/ast.hpp"
 
-
 namespace mdl { namespace rus {
 
 size_t memvol(const Const& c) {

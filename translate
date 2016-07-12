@@ -92,7 +92,7 @@ fi;
 
 
 echo "rus -> smm"
-check "${binpath}release/mdl -v -i ${file}.rus -o ${file}-1.smm"
+check "${binpath}release/mdl --info -v -i ${file}.rus -o ${file}-1.smm"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 

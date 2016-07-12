@@ -1,5 +1,3 @@
-//#include <boost/range/adaptor/reversed.hpp>
-
 #include "rus/globals.hpp"
 
 namespace mdl { namespace rus { namespace expr { namespace {

@@ -1,15 +1,3 @@
-/*****************************************************************************/
-/* Project name:    smm - verifier for the Simplified MetaMath language      */
-/* File Name:       smm_main.cpp                                             */
-/* Description:     main function for smm                                    */
-/* Copyright:       (c) 2006-2010 Dmitri Vlasov                              */
-/* Author:          Dmitri Yurievich Vlasov, Novosibirsk, Russia             */
-/* Email:           vlasov at academ.org                                     */
-/* URL:             http://mathdevlanguage.sourceforge.net                   */
-/* Modified by:                                                              */
-/* License:         GNU General Public License Version 3                     */
-/*****************************************************************************/
-
 #include "rus/globals.hpp"
 
 using namespace mdl;
@@ -87,8 +75,8 @@ int main (int argc, const char* argv[])
 	}
 	try {
 		rus.run();
-		if (conf.verbose || rus.failed)
-			cout << rus.status;
+		if (rus.error.size()) cerr << rus.error;
+		else if (conf.info)   cout << show(rus);
 	} catch (const Error& err) {
 		cerr << err.what();
 		return 1;

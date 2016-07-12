@@ -563,7 +563,11 @@ inline size_t memvol(const Symbol& s) {
 	return 0;
 }
 inline size_t memvol(const term::Expr& t) {
-	return t.children.capacity() * sizeof(void*);
+	size_t vol = 0;
+	vol += t.children.capacity();
+	for (const term::Expr* ch : t.children)
+		vol += memsize(*ch);
+	return vol;
 }
 inline size_t memvol(const node::Expr& n) {
 	return 0;

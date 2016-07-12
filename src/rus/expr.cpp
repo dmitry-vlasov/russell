@@ -32,6 +32,7 @@ size_t memvol(const Expr& ex) {
 		s += memsize(*n);
 		n = n->next;
 	}
+	s += memsize(*ex.term);
 	return s;
 }
 

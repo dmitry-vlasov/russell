@@ -46,7 +46,8 @@ struct Rus {
 		Table symbs;
 	};
 	struct Timers {
-		Timer read;
+		Timer parse_rus;
+		Timer parse_expr;
 		Timer unify;
 		Timer translate;
 		Timer total;
@@ -55,12 +56,13 @@ struct Rus {
 	using Table = Map<uint, T>;
 
 	struct Math {
+		Table<Const*>   consts;
 		Table<Type*>    types;
-		Table<Theorem*> theorems;
+		Table<Rule*>    rules;
 		Table<Axiom*>   axioms;
 		Table<Def*>     defs;
-		Table<Rule*>    rules;
-		Table<Const*>   consts;
+		Table<Theorem*> theorems;
+		//Table<Proof*>   proofs;
 	};
 
 	Config  config;
@@ -68,8 +70,7 @@ struct Rus {
 	Lex     lex;
 	Math    math;
 	Source* source;
-	string  status;
-	bool    failed;
+	string  error;
 
 	void run();
 
@@ -77,7 +78,8 @@ struct Rus {
 	static Rus& mod() { static Rus rus; return rus; }
 };
 
-ostream& operator << (ostream& os, const Rus& s);
+string show(const Rus&);
+inline ostream& operator << (ostream& os, const Rus& r) { os << show(r); return os; }
 Source* parse(const string& path);
 void verify(Source*);
 smm::Source* translate(const Source* source);

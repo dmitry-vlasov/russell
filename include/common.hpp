@@ -94,6 +94,35 @@ size_t memsize(const T& x) {
 	return sizeof(T) + memvol(x);
 }
 
+template<class T>
+size_t memvol(const Map<uint, T*>& map) {
+	size_t vol = 0;
+	for (auto& p : map.m) {
+		vol += memsize(*p.second);
+	}
+	return vol;
+}
+
+namespace mem {
+	enum Units {
+		KB = 1024,
+		MB = KB * 1024,
+		GB = MB * 1024
+	};
+}
+
+inline string showmem(size_t s) {
+	const uint gb =  s / mem::GB;
+	const uint mb = (s - gb * mem::GB) / mem::MB;
+	const uint kb = (s - gb * mem::GB - mb * mem::MB) / mem::KB;
+	const uint  b =  s - gb * mem::GB - mb * mem::MB - kb * mem::KB;
+
+	     if (gb) return to_string(gb) + " gb " + to_string(mb) + " mb";
+	else if (mb) return to_string(mb) + " mb " + to_string(kb) + " kb";
+	else if (kb) return to_string(kb) + " kb " + to_string(b)  + " b";
+	else         return to_string(b)  + " b";
+}
+
 }
 
   
