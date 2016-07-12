@@ -3,6 +3,7 @@
 namespace mdl {
 
 inline void inc(Location&loc, char ch) {
+	++ loc.pos;
 	if (ch == '\n') {
 		loc.col = 0;
 		++ loc.line;

@@ -170,7 +170,7 @@ struct AddToMath {
 	}
 	void operator()(Proof* p) const {
 		// TODO:
-		if (!p->id)
+		//if (!p->id)
 		//Rus::mod().math.proofs[p->id] = p;
 		enqueue_expressions(p);
 	}

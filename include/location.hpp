@@ -6,15 +6,16 @@ namespace mdl {
 
 struct Location {
 	Location() :
-	line(0), col(0), file() { }
+	line(0), col(0), pos(0), file() { }
 	Location(const string& f) :
-	line(0), col(0), file(f) { }
+	line(0), col(0), pos(0), file(f) { }
 	Location(const Location& loc) :
-	line(loc.line), col(loc.col), file(loc.file) { }
+	line(loc.line), col(loc.col), pos(loc.pos), file(loc.file) { }
 
 	Location& operator = (const Location& loc) {
 		line = loc.line;
 		col  = loc.col;
+		pos  = loc.pos;
 		if (file.empty())
 			file = loc.file;
 		return *this;
@@ -22,6 +23,7 @@ struct Location {
 
 	uint   line;
 	uint   col;
+	uint   pos;
 	string file;
 };
 
