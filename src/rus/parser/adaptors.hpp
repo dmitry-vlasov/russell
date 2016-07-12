@@ -163,6 +163,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::rus::Vars, vars)
 	(mdl::vector<mdl::rus::Proof::Elem>, elems)
 	(mdl::rus::Theorem*, thm)
+	(bool, has_id)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(

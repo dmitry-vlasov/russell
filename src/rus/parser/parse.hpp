@@ -169,9 +169,9 @@ struct AddToMath {
 		enqueue_expressions(th->ass);
 	}
 	void operator()(Proof* p) const {
-		// TODO:
-		//if (!p->id)
-		//Rus::mod().math.proofs[p->id] = p;
+		p->has_id = !undef(p->id);
+		if (!p->has_id) p->id = Rus::mod().lex.ids.toInt(to_string(p->ind));
+		Rus::mod().math.proofs[p->id] = p;
 		enqueue_expressions(p);
 	}
 };
@@ -243,7 +243,7 @@ struct FindType {
 	template <typename T>
 	struct result { typedef Type* type; };
 	Type* operator()(uint id) const {
-		return (id == (uint)-1) ? nullptr : find_type(id);
+		return undef(id) ? nullptr : find_type(id);
 	}
 };
 

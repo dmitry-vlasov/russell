@@ -9,6 +9,8 @@
 
 namespace mdl {
 
+inline bool undef(uint x) { return x == (uint)-1; }
+
 template<
 	class Key,
 	class T,

@@ -62,7 +62,7 @@ struct Rus {
 		Table<Axiom*>   axioms;
 		Table<Def*>     defs;
 		Table<Theorem*> theorems;
-		//Table<Proof*>   proofs;
+		Table<Proof*>   proofs;
 	};
 
 	Config  config;

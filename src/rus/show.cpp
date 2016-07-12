@@ -153,7 +153,7 @@ static string show_refs(const vector<Ref>& refs) {
 
 string show(const Proof::Elem& el) {
 	switch (el.kind) {
-	//case Proof::Elem::VARS:  return show(*el.val.vars);
+	case Proof::Elem::VARS:  return show(*el.val.vars);
 	case Proof::Elem::STEP:  return show(*el.val.step);
 	case Proof::Elem::QED:   return show(*el.val.qed);
 	default : assert(false && "impossible"); break;
@@ -192,7 +192,7 @@ string show(const Qed& q) {
 
 string show(const Proof& p) {
 	string s = "proof ";
-	if (p.id != (uint)-1) s += show_id(p.id) + " ";
+	if (p.has_id) s += show_id(p.id) + " ";
 	s += "of " + show_id(p.thm->ass.id) + " {\n";
 	if (p.vars.v.size())
 		s += "\tvar " + show(p.vars) + END_MARKER + "\n";
@@ -223,13 +223,6 @@ string show(const Node& n) {
 	}
 	return ""; // pacify the compiler
 }
-
-/*static int depth(const Theory& thy) {
-	int d = 0;
-	Theory* p = thy.parent;
-	while (p) { ++ d; p = p->parent; }
-	return d;
-}*/
 
 string show(const Theory& thy) {
 	string s = "theory " + show_id(thy.id) + "{";

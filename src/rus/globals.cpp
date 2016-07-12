@@ -127,11 +127,11 @@ string show(const Rus& rus) {
 	const size_t axiom_vol = memvol(rus.math.axioms);
 	const size_t defs_vol  = memvol(rus.math.defs);
 	const size_t thems_vol = memvol(rus.math.theorems);
+	const size_t proof_vol = memvol(rus.math.proofs);
 	const size_t source_vol = memvol(*rus.source);
-	//const size_t proof_vol  = memvol(rus.math.proofs);
 	const size_t total_vol =
 		const_vol + types_vol + rules_vol +
-		axiom_vol + defs_vol + thems_vol;
+		axiom_vol + defs_vol + thems_vol + proof_vol;
 
 	stats += "Volume\n";
 	stats += "\tconsts:   " + showmem(const_vol) + "\n";
@@ -140,7 +140,7 @@ string show(const Rus& rus) {
 	stats += "\taxioms:   " + showmem(axiom_vol) + "\n";
 	stats += "\tdefs:     " + showmem(defs_vol) + "\n";
 	stats += "\ttheorems: " + showmem(thems_vol) + "\n";
-	//stats += "\tproofs: " + memvol(rus.math.proofs) + "\n";
+	stats += "\tproofs:   " + showmem(proof_vol) + "\n";
 	stats += "\n";
 	stats += "\ttotal:  " + showmem(total_vol) + "\n";
 	stats += "\tsource: " + showmem(source_vol) + "\n";
@@ -153,7 +153,7 @@ string show(const Rus& rus) {
 	stats += "\taxioms:   " + to_string(rus.math.axioms.m.size()) + "\n";
 	stats += "\tdefs:     " + to_string(rus.math.defs.m.size()) + "\n";
 	stats += "\ttheorems: " + to_string(rus.math.theorems.m.size()) + "\n";
-	//stats += "\tproofs: " + memvol(rus.math.proofs) + "\n";
+	stats += "\tproofs:   " + to_string(rus.math.proofs.m.size()) + "\n";
 	stats += "\n";
 
 	return stats;
