@@ -27,7 +27,8 @@ exe smm :
   src/smm/math_symb.cpp
   src/smm/translate_mm.cpp
   src/smm/translate_rus.cpp
-  src/smm/main.cpp ;
+  src/smm/main.cpp 
+  ;
   
 exe mm : 
   src/memusage.cpp
@@ -41,7 +42,8 @@ exe mm :
   src/mm/show.cpp
   src/mm/parser.cpp
   src/mm/translate.cpp
-  src/mm/main.cpp ;
+  src/mm/main.cpp 
+  ;
  
 exe mdl : 
   src/memusage.cpp
@@ -62,4 +64,14 @@ exe mdl :
   src/rus/verify.cpp
   src/rus/translate.cpp
   src/rus/main.cpp
+  ;
+
+exe cut :
+  src/memusage.cpp
+  src/timer.cpp
+  src/location.cpp
+
+  src/cut/parser.cpp
+  src/cut/globals.cpp
+  src/cut/main.cpp
   ;
