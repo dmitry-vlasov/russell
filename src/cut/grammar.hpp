@@ -17,44 +17,30 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "cut") {
 		const phoenix::function<Add> add;
 		const phoenix::function<MakeString> makeString;
 
-		paragraph =
-			  lit("$(\n")                         [_val = new_<cut::Paragraph>()]
-			> lexeme[+(ascii::char_ - PARAGRAPH)]
-			> lit(PARAGRAPH)
-			> lexeme[+(ascii::char_ - PARAGRAPH)] [at_c<1>(*_val) = makeString(_1)]
-			> lit(PARAGRAPH)
-			> lit("\n")
-			> lexeme[+(ascii::char_ - "$)")]      [at_c<2>(*_val) = makeString(_1)]
-			> lit("$)\n")                         [add(_val)];
 
-		chapter =
-			  lit("$(\n")                         [_val = new_<cut::Chapter>()]
-			> lexeme[+(ascii::char_ - CHAPTER)]
-			> lit(CHAPTER)
-			> lexeme[+(ascii::char_ - CHAPTER)]   [at_c<1>(*_val) = makeString(_1)]
-			> lit(CHAPTER)
-			> lit("\n")
-			> lexeme[+(ascii::char_ - "$)")]      [at_c<2>(*_val) = makeString(_1)]
-			> lit("$)\n")                         [add(_val)];
+		border =
+			  lit(PARAGRAPH_STR) [_val = cut::Type::PARAGRAPH]
+			| lit(CHAPTER_STR)   [_val = cut::Type::CHAPTER]
+			| lit(PART_STR)      [_val = cut::Type::PART];
 
-		part =
-			  lit("$(\n")                         [_val = new_<cut::Part>()]
-			> lexeme[+(ascii::char_ - PART)]
-			> lit(PART)
-			> lexeme[+(ascii::char_ - PART)]      [at_c<1>(*_val) = makeString(_1)]
-			> lit(PART)
-			> lit("\n")
-			> lexeme[+(ascii::char_ - "$)")]      [at_c<2>(*_val) = makeString(_1)]
+		header %= lexeme[+(ascii::char_ - FULL_PART_STR)];
+
+		section =
+			  lit("$(\n")                           [_val = new_<cut::Section>()]
+			> lexeme[*(ascii::char_ - '#' - '=')] [at_c<1>(*_val) = makeString(_1)]
+			> border                              [at_c<0>(*_val) = _1]
+			> lexeme[+(ascii::char_ - '#' - '=')] [at_c<2>(*_val) = makeString(_1)]
+			> border
+			> lexeme[*(ascii::char_ - "$)")]      [at_c<3>(*_val) = makeString(_1)]
 			> lit("$)\n")                         [add(_val)];
 
 		contents %=
-			lexeme[+(ascii::char_ - FULL_PARAGRAPH - FULL_CHAPTER - FULL_PART)];
+			lexeme[+(ascii::char_ - FULL_PARAGRAPH_STR - FULL_CHAPTER_STR - FULL_PART_STR)];
 
 		source =
-			+ (
-				part      |
-				chapter   |
-				paragraph |
+			  header [add(_1)]
+			> + (
+				section |
 				contents [add(_1)]
 			);
 

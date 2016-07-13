@@ -18,13 +18,11 @@ namespace phoenix = boost::phoenix;
 struct Add {
 	template<typename T>
 	struct result { typedef void type; };
-	void operator()(Paragraph* p) const {
-	}
-	void operator()(Chapter* ch) const {
-	}
-	void operator()(Part* p) const {
+	void operator()(Section* s) const {
+		cout << show(*s) << endl;
 	}
 	void operator()(string& str) const {
+		cout << "\n<STR>\n" << str << "\n</STR>\n" << endl;
 	}
 };
 
@@ -42,18 +40,18 @@ struct Grammar : qi::grammar<Iterator, void(), ascii::space_type> {
 	Grammar();
 	void initNames();
 
-	qi::rule<Iterator, Paragraph*(), ascii::space_type> paragraph;
-	qi::rule<Iterator, Chapter*(), ascii::space_type> chapter;
-	qi::rule<Iterator, Part*(), ascii::space_type> part;
-	qi::rule<Iterator, std::string(), ascii::space_type> contents;
+	qi::rule<Iterator, Type(), qi::unused_type> border;
+	qi::rule<Iterator, string(), qi::unused_type> header;
+	qi::rule<Iterator, Section*(), qi::unused_type> section;
+	qi::rule<Iterator, string(), qi::unused_type> contents;
 	qi::rule<Iterator, void(), ascii::space_type> source;
 };
 
 template <typename Iterator>
 void Grammar<Iterator>::initNames() {
-	paragraph.name("paragraph");
-	chapter.name("chapter");
-	part.name("part");
+	border.name("border");
+	header.name("header");
+	section.name("section");
 	contents.name("contents");
 	source.name("source");
 }

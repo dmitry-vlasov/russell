@@ -72,6 +72,7 @@ exe cut :
   src/location.cpp
 
   src/cut/parser.cpp
+  src/cut/show.cpp
   src/cut/globals.cpp
   src/cut/main.cpp
   ;

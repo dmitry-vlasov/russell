@@ -1,6 +1,14 @@
 #include <boost/fusion/include/adapt_struct.hpp>
 
 BOOST_FUSION_ADAPT_STRUCT(
+	mdl::cut::Section,
+	(mdl::cut::Type, type)
+	(mdl::string, header)
+	(mdl::string, name)
+	(mdl::string, footer)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
 	mdl::cut::Paragraph,
 	(mdl::string, file)
 	(mdl::string, name)
