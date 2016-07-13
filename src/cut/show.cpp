@@ -17,7 +17,7 @@ string show(const Section& s) {
 	return str;
 }
 
-
+/*
 string show(const Paragraph& p) {
 	string str;
 	str += "\n<PARAGPRAPH>\n";
@@ -65,6 +65,6 @@ string show(const Source& s) {
 	str += s.contents;
 	return str;
 }
-
+*/
 
 }} // mdl::cut

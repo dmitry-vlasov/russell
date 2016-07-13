@@ -17,7 +17,7 @@ void Cut::run() {
 
 bool Cut::parse() {
 	try {
-		source = cut::parse(config.in);
+		cut::parse(config.in);
 		//cout << endl << *source;
 		return true;
 	} catch (Error& err) {

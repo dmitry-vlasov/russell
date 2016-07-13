@@ -17,7 +17,6 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "cut") {
 		const phoenix::function<Add> add;
 		const phoenix::function<MakeString> makeString;
 
-
 		border =
 			  lit(PARAGRAPH_STR) [_val = cut::Type::PARAGRAPH]
 			| lit(CHAPTER_STR)   [_val = cut::Type::CHAPTER]

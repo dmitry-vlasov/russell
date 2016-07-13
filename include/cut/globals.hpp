@@ -22,10 +22,10 @@ struct Cut {
 		if (source) delete source;
 	}
 
-	Config  config;
-	Timer   timer;
-	Source* source;
-	string  error;
+	Config   config;
+	Timer    timer;
+	Section* source;
+	string   error;
 
 	void run();
 	bool parse();
@@ -36,7 +36,7 @@ struct Cut {
 };
 
 //ostream& operator << (ostream& os, const Cut&);
-Source* parse(const string& path);
+void parse(const string& path);
 //smm::Source* translate(const Block* source);
 
 }} // mdl::mm

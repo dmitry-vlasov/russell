@@ -15,11 +15,38 @@ namespace qi      = boost::spirit::qi;
 namespace ascii   = boost::spirit::ascii;
 namespace phoenix = boost::phoenix;
 
+struct Stack {
+	Section* source;
+	Section* part;
+	Section* chapter;
+	Section* paragraph;
+};
+
+static Stack stack;
+
 struct Add {
 	template<typename T>
 	struct result { typedef void type; };
-	void operator()(Section* s) const {
-		cout << show(*s) << endl;
+	void operator()(Section* sect) const {
+		switch (sect->type) {
+		case Type::PARAGRAPH:
+			stack.chapter->parts.push_back(sect);
+			stack.paragraph = stack.chapter->parts.back();
+			break;
+		case Type::CHAPTER:
+			stack.part->parts.push_back(sect);
+			stack.chapter = stack.part->parts.back();
+			stack.paragraph = nullptr;
+			break;
+		case Type::PART:
+			stack.source->parts.push_back(sect);
+			stack.part = stack.source->parts.back();
+			stack.chapter = nullptr;
+			stack.paragraph = nullptr;
+			break;
+		default: throw Error("impossible");
+		}
+		cout << show(*sect) << endl;
 	}
 	void operator()(string& str) const {
 		cout << "\n<STR>\n" << str << "\n</STR>\n" << endl;

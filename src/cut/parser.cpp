@@ -2,7 +2,7 @@
 
 namespace mdl { namespace cut {
 
-Source* parse(const string& path) {
+void parse(const string& path) {
 	ifstream in(path, std::ios_base::in);
 	if (!in)
 		throw Error("Could not open input file");
@@ -16,12 +16,12 @@ Source* parse(const string& path) {
 
 	LocationIter iter(storage.begin(), path);
 	LocationIter end(storage.end(), path);
-	Source* source = new Source(path);
-	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, source);
+	Cut::mod().source = new Section;
+	Cut::mod().source->file = path;
+	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, Cut::mod().source);
 	if (!r || iter != end) {
 		throw Error("parsing failed");
 	}
-	return source;
 }
 
 }} // mdl::cut
