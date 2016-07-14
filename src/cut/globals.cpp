@@ -18,7 +18,7 @@ void Cut::run() {
 bool Cut::parse() {
 	try {
 		cut::parse(config.in);
-		//cout << endl << *source;
+		//cout << endl << show(*source);
 		return true;
 	} catch (Error& err) {
 		error += '\n';
@@ -28,7 +28,16 @@ bool Cut::parse() {
 }
 
 bool Cut::save() {
-	return true;
+	try {
+		ofstream out(config.out);
+		out << *source << endl;
+		out.close();
+		return true;
+	} catch (Error& err) {
+		error += '\n';
+		error += err.what();
+		return false;
+	}
 }
 	
 }} // mdl::cut

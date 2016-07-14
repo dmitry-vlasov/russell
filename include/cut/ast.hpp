@@ -14,7 +14,7 @@ namespace mdl { namespace cut {
 
 enum class Type { PARAGRAPH, CHAPTER, PART, SOURCE };
 
-inline string section_str(const Type tp) {
+inline string border(const Type tp) {
 	switch (tp) {
 	case Type::PARAGRAPH : return PARAGRAPH_STR;
 	case Type::CHAPTER   : return CHAPTER_STR;
@@ -36,6 +36,10 @@ struct Section {
 };
 
 string show(const Section&);
+inline ostream& operator << (ostream& os, const Section& sect) {
+	os << show(sect);
+	return os;
+}
 
 }} // mdl::cut
 

@@ -25,7 +25,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "cut") {
 		header %= lexeme[+(ascii::char_ - FULL_PART_STR)];
 
 		section =
-			  lit("$(\n")                         [_val = new_<cut::Section>()]
+			   lit("$(\n")                         [_val = new_<cut::Section>()]
 			>> lexeme[*(ascii::char_ - '#' - '=')] [at_c<1>(*_val) = makeString(_1)]
 			>> border                              [at_c<0>(*_val) = _1]
 			>> lexeme[+(ascii::char_ - '#' - '=')] [at_c<2>(*_val) = makeString(_1)]
@@ -33,15 +33,15 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "cut") {
 			>> lexeme[*(ascii::char_ - "$)")]      [at_c<3>(*_val) = makeString(_1)]
 			>> lit("$)\n")                         [add(_val)];
 
-		contents %=
-			lexeme[+(ascii::char_ - FULL_PARAGRAPH_STR - FULL_CHAPTER_STR - FULL_PART_STR)];
+		contents =
+			lexeme[+(ascii::char_ - FULL_PARAGRAPH_STR - FULL_CHAPTER_STR - FULL_PART_STR)] [_val = makeString(_1)];
 
 		source =
-			  eps        [add(_val)]
+			  eps         [add(_val)]
 			>> header     [add(_1)]
 			>> + (
 				section |
-				contents [add(_1)]
+				contents  [add(_1)]
 			);
 
 		qi::on_error<qi::fail>(

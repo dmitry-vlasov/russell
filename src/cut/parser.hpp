@@ -58,11 +58,9 @@ struct Add {
 			break;
 		default: throw Error("impossible");
 		}
-		//cout << show(*sect) << endl;
 	}
 	void operator()(string& str) const {
 		stack.top->contents += str;
-		//cout << "\n<STR>\n" << str << "\n</STR>\n" << endl;
 	}
 };
 
