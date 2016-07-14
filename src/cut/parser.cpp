@@ -16,9 +16,11 @@ void parse(const string& path) {
 
 	LocationIter iter(storage.begin(), path);
 	LocationIter end(storage.end(), path);
-	Cut::mod().source = new Section;
-	Cut::mod().source->file = path;
-	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, Cut::mod().source);
+	Section* source = new Section;
+	Cut::mod().source = source;
+	source->file = path;
+	source->type = Type::SOURCE;
+	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, source);
 	if (!r || iter != end) {
 		throw Error("parsing failed");
 	}

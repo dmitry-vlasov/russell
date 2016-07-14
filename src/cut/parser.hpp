@@ -20,6 +20,7 @@ struct Stack {
 	Section* part;
 	Section* chapter;
 	Section* paragraph;
+	Section* top;
 };
 
 static Stack stack;
@@ -28,28 +29,40 @@ struct Add {
 	template<typename T>
 	struct result { typedef void type; };
 	void operator()(Section* sect) const {
+		stack.top = sect;
 		switch (sect->type) {
 		case Type::PARAGRAPH:
+			if (!stack.chapter) throw Error("empty chapter");
 			stack.chapter->parts.push_back(sect);
 			stack.paragraph = stack.chapter->parts.back();
 			break;
 		case Type::CHAPTER:
+			if (!stack.part) throw Error("empty part");
 			stack.part->parts.push_back(sect);
 			stack.chapter = stack.part->parts.back();
 			stack.paragraph = nullptr;
 			break;
 		case Type::PART:
+			if (!stack.source) throw Error("empty source");
 			stack.source->parts.push_back(sect);
 			stack.part = stack.source->parts.back();
 			stack.chapter = nullptr;
 			stack.paragraph = nullptr;
 			break;
+		case Type::SOURCE:
+			if (stack.source) throw Error("source already added");
+			stack.source = sect;
+			stack.part = nullptr;
+			stack.chapter = nullptr;
+			stack.paragraph = nullptr;
+			break;
 		default: throw Error("impossible");
 		}
-		cout << show(*sect) << endl;
+		//cout << show(*sect) << endl;
 	}
 	void operator()(string& str) const {
-		cout << "\n<STR>\n" << str << "\n</STR>\n" << endl;
+		stack.top->contents += str;
+		//cout << "\n<STR>\n" << str << "\n</STR>\n" << endl;
 	}
 };
 
@@ -63,7 +76,7 @@ struct MakeString {
 
 
 template <typename Iterator>
-struct Grammar : qi::grammar<Iterator, void(), ascii::space_type> {
+struct Grammar : qi::grammar<Iterator, Section*(), ascii::space_type> {
 	Grammar();
 	void initNames();
 
@@ -71,7 +84,7 @@ struct Grammar : qi::grammar<Iterator, void(), ascii::space_type> {
 	qi::rule<Iterator, string(), qi::unused_type> header;
 	qi::rule<Iterator, Section*(), qi::unused_type> section;
 	qi::rule<Iterator, string(), qi::unused_type> contents;
-	qi::rule<Iterator, void(), ascii::space_type> source;
+	qi::rule<Iterator, Section*(), ascii::space_type> source;
 };
 
 template <typename Iterator>
