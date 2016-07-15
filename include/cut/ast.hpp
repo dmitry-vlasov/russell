@@ -34,6 +34,7 @@ struct Section {
 	string contents;
 	string dir;
 	string file;
+	string path;
 	const Section* parent;
 	vector<Section*> parts;
 };

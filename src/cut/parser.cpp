@@ -1,3 +1,5 @@
+#include <boost/algorithm/string.hpp>
+
 #include "cut/grammar.hpp"
 
 namespace mdl { namespace cut {
@@ -18,6 +20,8 @@ void parse(const string& path) {
 	LocationIter end(storage.end(), path);
 	Section* source = new Section;
 	source->file = Cut::get().config.out;
+	source->path = Cut::get().config.out;
+	boost::erase_last(source->file, ".mm");
 	source->type = Type::SOURCE;
 	Cut::mod().source = source;
 	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, source);

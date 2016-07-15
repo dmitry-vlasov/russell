@@ -106,7 +106,8 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 			> eps       [pushVC(phoenix::ref(stack))]
 			> + (
 				comment |
-				node    [pushNode(_val, _1)])
+				node    [pushNode(_val, _1)]
+			)
 			> lit("$}") [popParent(_val, phoenix::ref(parent))]
 			> eps       [popVC(phoenix::ref(stack))];
 		source =
@@ -114,9 +115,10 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 			> eps       [pushParent(_val, phoenix::ref(parent))]
 			> eps       [pushVC(phoenix::ref(stack))]
 			> +(
-			comment |
-			node        [pushNode(_val, _1)] |
-			inclusion   [pushNode(_val, phoenix::construct<Node>(_1))])
+				comment |
+				node        [pushNode(_val, _1)] |
+				inclusion   [pushNode(_val, phoenix::construct<Node>(_1))]
+			)
 			> eps       [popParent(_val, phoenix::ref(parent))]
 			> eps       [popVC(phoenix::ref(stack))];
 			//> qi::eoi   [final(_val)];

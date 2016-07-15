@@ -9,6 +9,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::string, contents)
 	(mdl::string, dir)
 	(mdl::string, file)
+	(mdl::string, path)
 	(mdl::cut::Section*, parent)
 	(mdl::vector<mdl::cut::Section*>, parts)
 )

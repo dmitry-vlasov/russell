@@ -18,8 +18,11 @@ Block* parse(const string& path) {
 	LocationIter end(storage.end(), path);
 	Block* source = new Block(path);
 	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, source);
-	if (!r || iter != end) {
-		throw Error("parsing failed");
+	if (!r) {
+		throw Error("parsing failed: false");
+	}
+	if (iter != end) {
+		throw Error("parsing failed: iter != end");
 	}
 	return source;
 }

@@ -19,20 +19,27 @@ namespace phoenix = boost::phoenix;
 namespace {
 	void init(Section* sect) {
 		if (!sect->file.size()) {
-			sect->dir = sect->name;
-			boost::trim(sect->dir);
-			boost::replace_all(sect->dir, " ", "_");
-			boost::replace_all(sect->dir, "/", "_");
-			boost::replace_all(sect->dir, ":", "_");
-			boost::replace_all(sect->dir, ".", "_");
-			boost::replace_all(sect->dir, "?", "_");
-			boost::replace_all(sect->dir, "!", "_");
-			sect->file = sect->dir + ".mm";
+			sect->file = sect->name;
+			boost::trim(sect->file);
+			boost::replace_all(sect->file, " ", "_");
+			boost::replace_all(sect->file, "/", "_");
+			boost::replace_all(sect->file, ":", "_");
+			boost::replace_all(sect->file, ".", "_");
+			boost::replace_all(sect->file, "?", "_");
+			boost::replace_all(sect->file, "!", "_");
+
 			const Section* par = sect->parent;
-			while (par && par->dir.size()) {
-				sect->file = par->dir + "/" + sect->file;
+			while (par && par->file.size()) {
+				sect->dir = par->file + "/" + sect->dir;
 				par = par->parent;
 			}
+			sect->path = sect->dir + sect->file + ".mm";
+
+			/*cout << endl;
+			cout << "dir: " << sect->dir << endl;
+			cout << "file: " << sect->file << endl;
+			cout << "path: " << sect->path << endl;
+			cout << endl;*/
 		}
 	}
 }

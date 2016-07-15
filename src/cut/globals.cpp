@@ -48,13 +48,19 @@ bool Cut::save() {
 }
 
 void Section::save() const {
-	if (type != Type::PARAGRAPH && type != Type::SOURCE)
+	if (type != Type::SOURCE)
 		fs::create_directories(dir);
-	ofstream out(file);
+
+	/*cout << endl;
+	cout << "writing " << path << endl;
+	cout << "dir " << dir << endl;
+	cout << endl;*/
+
+	ofstream out(path);
 	out << show_contents(*this) << endl;
 	for (Section* s : parts) {
 		s->save();
-		out << "[" << s->file << "]\n";
+		out << "[" << s->path << "]\n";
 	}
 	out.close();
 }
