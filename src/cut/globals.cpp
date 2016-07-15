@@ -1,8 +1,12 @@
+#include <boost/filesystem.hpp>
+
 #include "cut/ast.hpp"
 #include "cut/globals.hpp"
 
 namespace mdl {
 namespace cut {
+
+namespace fs = boost::filesystem;
 
 void Cut::run() {
 	timer.start();
@@ -29,9 +33,12 @@ bool Cut::parse() {
 
 bool Cut::save() {
 	try {
-		ofstream out(config.out);
-		out << *source << endl;
-		out.close();
+		if (!config.out.size()) return false;
+		if (config.out.substr(config.out.size() - 3) != ".mm") return false;
+		source->save();
+		//ofstream out(config.out);
+		//out << *source << endl;
+		//out.close();
 		return true;
 	} catch (Error& err) {
 		error += '\n';
@@ -39,5 +46,17 @@ bool Cut::save() {
 		return false;
 	}
 }
-	
+
+void Section::save() const {
+	if (type != Type::PARAGRAPH && type != Type::SOURCE)
+		fs::create_directories(dir);
+	ofstream out(file);
+	out << show_contents(*this) << endl;
+	for (Section* s : parts) {
+		s->save();
+		out << "[" << s->file << "]\n";
+	}
+	out.close();
+}
+
 }} // mdl::cut

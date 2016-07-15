@@ -37,6 +37,7 @@ struct Cut {
 
 //ostream& operator << (ostream& os, const Cut&);
 void parse(const string& path);
+
 //smm::Source* translate(const Block* source);
 
 }} // mdl::mm

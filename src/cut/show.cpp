@@ -2,7 +2,7 @@
 
 namespace mdl { namespace cut {
 
-string show(const Section& s) {
+string show_contents(const Section& s) {
 	string str;
 	if(s.type != Type::SOURCE) {
 		str += "$(\n";
@@ -14,8 +14,14 @@ string show(const Section& s) {
 		str += "$)\n";
 	}
 	str += s.contents;
+	return str;
+}
+
+string show_all(const Section& s) {
+	string str;
+	str += show_contents(s);
 	for (auto p : s.parts)
-		str += show(*p);
+		str += show_all(*p);
 	return str;
 }
 

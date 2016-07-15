@@ -26,18 +26,22 @@ inline string border(const Type tp) {
 
 struct Section {
 	~ Section() { for (auto* p : parts) delete p; }
+	void save() const;
 	Type   type;
 	string header;
 	string name;
 	string footer;
 	string contents;
+	string dir;
 	string file;
+	const Section* parent;
 	vector<Section*> parts;
 };
 
-string show(const Section&);
+string show_all(const Section&);
+string show_contents(const Section&);
 inline ostream& operator << (ostream& os, const Section& sect) {
-	os << show(sect);
+	os << show_all(sect);
 	return os;
 }
 

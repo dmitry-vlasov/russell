@@ -2,8 +2,9 @@
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_fusion.hpp>
-#include <boost/spirit/include/phoenix_stl.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
+
+#include <boost/algorithm/string.hpp>
 
 #include "cut/ast.hpp"
 #include "cut/globals.hpp"
@@ -14,6 +15,27 @@ namespace mdl { namespace cut {
 namespace qi      = boost::spirit::qi;
 namespace ascii   = boost::spirit::ascii;
 namespace phoenix = boost::phoenix;
+
+namespace {
+	void init(Section* sect) {
+		if (!sect->file.size()) {
+			sect->dir = sect->name;
+			boost::trim(sect->dir);
+			boost::replace_all(sect->dir, " ", "_");
+			boost::replace_all(sect->dir, "/", "_");
+			boost::replace_all(sect->dir, ":", "_");
+			boost::replace_all(sect->dir, ".", "_");
+			boost::replace_all(sect->dir, "?", "_");
+			boost::replace_all(sect->dir, "!", "_");
+			sect->file = sect->dir + ".mm";
+			const Section* par = sect->parent;
+			while (par && par->dir.size()) {
+				sect->file = par->dir + "/" + sect->file;
+				par = par->parent;
+			}
+		}
+	}
+}
 
 struct Stack {
 	Section* source;
@@ -33,17 +55,20 @@ struct Add {
 		switch (sect->type) {
 		case Type::PARAGRAPH:
 			if (!stack.chapter) throw Error("empty chapter");
+			sect->parent = stack.chapter;
 			stack.chapter->parts.push_back(sect);
 			stack.paragraph = stack.chapter->parts.back();
 			break;
 		case Type::CHAPTER:
 			if (!stack.part) throw Error("empty part");
+			sect->parent = stack.part;
 			stack.part->parts.push_back(sect);
 			stack.chapter = stack.part->parts.back();
 			stack.paragraph = nullptr;
 			break;
 		case Type::PART:
 			if (!stack.source) throw Error("empty source");
+			sect->parent = stack.source;
 			stack.source->parts.push_back(sect);
 			stack.part = stack.source->parts.back();
 			stack.chapter = nullptr;
@@ -51,6 +76,7 @@ struct Add {
 			break;
 		case Type::SOURCE:
 			if (stack.source) throw Error("source already added");
+			sect->parent = nullptr;
 			stack.source = sect;
 			stack.part = nullptr;
 			stack.chapter = nullptr;
@@ -58,6 +84,7 @@ struct Add {
 			break;
 		default: throw Error("impossible");
 		}
+		init(sect);
 	}
 	void operator()(string& str) const {
 		stack.top->contents += str;
