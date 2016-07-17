@@ -62,7 +62,7 @@ struct Mm {
 };
 
 ostream& operator << (ostream& os, const Mm& s);
-Block* parse(const string& path);
+Block* parse(const string& path, Block* src = nullptr);
 smm::Source* translate(const Block* source);
 
 }} // mdl::mm

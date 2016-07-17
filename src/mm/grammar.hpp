@@ -81,7 +81,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 			lit("$c")   [_val = new_<mm::Constants>()]
 			> expr      [phoenix::at_c<0>(*_val) = _1]
 			> lit("$.") [addConsts(phoenix::ref(stack), phoenix::at_c<0>(*_val))];
-		inclusion = lit("$[") > path [_val = parseInclusion(_1)] > "$]";
+		inclusion = lit("$[") > path [parseInclusion(_1, _r1)] > "$]";
 		comment = lit("$(") >> lexeme[*(ascii::char_ - "$)")] >> "$)";
 		node %= (
 			constants  |
@@ -104,41 +104,25 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 			lit("${")   [_val = new_<mm::Block>(phoenix::val(parent))]
 			> eps       [pushParent(_val, phoenix::ref(parent))]
 			> eps       [pushVC(phoenix::ref(stack))]
-			> + (
+			> * (
 				comment |
 				node    [pushNode(_val, _1)]
 			)
 			> lit("$}") [popParent(_val, phoenix::ref(parent))]
 			> eps       [popVC(phoenix::ref(stack))];
+
 		source =
 			eps         [phoenix::at_c<2>(*_val) = phoenix::val(parent)]
 			> eps       [pushParent(_val, phoenix::ref(parent))]
 			> eps       [pushVC(phoenix::ref(stack))]
-			> +(
+			> * (
 				comment |
-				node        [pushNode(_val, _1)] |
-				inclusion   [pushNode(_val, phoenix::construct<Node>(_1))]
+				node            [pushNode(_val, _1)] |
+				inclusion(_val)
 			)
 			> eps       [popParent(_val, phoenix::ref(parent))]
 			> eps       [popVC(phoenix::ref(stack))];
 			//> qi::eoi   [final(_val)];
-
-		//
-		/*block =
-			lit("${")   [_val = new_<mm::Block>(phoenix::val(parent))]
-			> eps       [phoenix::ref(parent) = _val]
-			> + (
-				comment |
-				node    [push_back(phoenix::at_c<2>(*_val), _1)])
-			> lit("$}") [phoenix::ref(parent) = phoenix::at_c<3>(*_val)];
-		source =
-			  eps       [phoenix::at_c<3>(*_val) = phoenix::val(parent)]
-			> eps       [phoenix::ref(parent) = _val]
-			> +(
-			comment |
-			node        [push_back(phoenix::at_c<2>(*_val), _1)] |
-			inclusion   [push_back(phoenix::at_c<2>(*_val), phoenix::construct<Node>(_1))])
-			> eps       [phoenix::ref(parent) = phoenix::at_c<3>(*_val)];*/
 
 		//qi::on_success(assertion, setLocation(_val, _1));
 		qi::on_error<qi::fail>(

@@ -6,7 +6,7 @@ namespace mdl { namespace cut {
 
 void parse(const string& path) {
 	ifstream in(path, std::ios_base::in);
-	if (!in)
+	if (!in.is_open())
 		throw Error("Could not open input file");
 
 	string storage;

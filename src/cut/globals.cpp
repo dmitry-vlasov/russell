@@ -51,6 +51,7 @@ void split_section(Section* sect) {
 	case Type::PART:      header->type = Type::CHAPTER;   break;
 	case Type::SOURCE:    header->type = Type::PART;      break;
 	}
+	sect->contents.clear();
 
 	//cout << "Splitting: " << show_contents(*header) << endl;
 	//cout << "Splitting: " << endl << header->path << endl;
@@ -102,7 +103,7 @@ void Section::save() const {
 	ofstream out(path);
 	out << show_contents(*this) << endl;
 	for (Section* s : parts) {
-		out << "[" << s->path << "]\n";
+		out << "$[" << s->path << "$]\n";
 	}
 	out.close();
 }

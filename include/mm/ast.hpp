@@ -131,6 +131,7 @@ struct Node {
 	};
 
 	Node()              : ind(-1), type(NONE),       val() { val.non = nullptr; }
+	Node(void*)         : ind(-1), type(NONE),       val() { val.non = nullptr; }
 	Node(Constants* c)  : ind(-1), type(CONSTANTS),  val() { val.cst = c; }
 	Node(Variables* v)  : ind(-1), type(VARIABLES),  val() { val.var = v; }
 	Node(Disjointed* d) : ind(-1), type(DISJOINTED), val() { val.dis = d; }

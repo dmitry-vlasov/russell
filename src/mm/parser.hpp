@@ -11,8 +11,8 @@
 
 namespace mdl { namespace mm {
 
-namespace qi = boost::spirit::qi;
-namespace ascii = boost::spirit::ascii;
+namespace qi      = boost::spirit::qi;
+namespace ascii   = boost::spirit::ascii;
 namespace phoenix = boost::phoenix;
 
 struct AddToMath {
@@ -52,10 +52,13 @@ struct LabelToInt {
 };
 
 struct ParseInclusion {
-	template <typename T>
-	struct result { typedef Block* type; };
-	Block* operator()(const string& path) const {
-		return parse(path);
+	template <typename T1, typename T2>
+	struct result { typedef void type; };
+	void operator()(const string& path, Block* src) const {
+		static Set<string> included;
+		if (included.has(path)) return;
+		included.s.insert(path);
+		parse(path, src);
 	}
 };
 
@@ -109,6 +112,7 @@ struct PushNode {
     template <typename T1, typename T2>
     struct result { typedef void type; };
     void operator()(Block* block, Node node) const {
+    	if (node.type == Node::NONE) return;
     	node.ind = block->contents.size();
     	block->contents.push_back(node);
     }
@@ -215,7 +219,7 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 	qi::rule<Iterator, Constants*(), ascii::space_type> constants;
 	qi::rule<Iterator, Node(), ascii::space_type> node;
 	qi::rule<Iterator, Block*(), ascii::space_type> block;
-	qi::rule<Iterator, Block*(), ascii::space_type> inclusion;
+	qi::rule<Iterator, void(Block*), ascii::space_type> inclusion;
 	qi::rule<Iterator, qi::unused_type, ascii::space_type> comment;
 	qi::rule<Iterator, Block*(), ascii::space_type> source;
 };

@@ -14,7 +14,7 @@ uint inc_ind() { return ind ++; }
 
 Source* parse(const string& path) {
 	ifstream in(path, std::ios_base::in);
-	if (!in)
+	if (!in.is_open())
 		throw Error("Could not open input file");
 
 	string storage;
