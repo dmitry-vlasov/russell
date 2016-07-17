@@ -15,6 +15,14 @@ namespace qi      = boost::spirit::qi;
 namespace ascii   = boost::spirit::ascii;
 namespace phoenix = boost::phoenix;
 
+struct MakeString {
+	template <typename T>
+	struct result { typedef string type; };
+	string operator()(const vector<char>& s) const {
+		return string(s.begin(), s.end());
+	}
+};
+
 struct AddToMath {
 	template<typename T>
 	struct result { typedef void type; };
@@ -220,7 +228,7 @@ struct Grammar : qi::grammar<Iterator, Source*(), ascii::space_type> {
 	qi::rule<Iterator, Node(), ascii::space_type> node;
 	qi::rule<Iterator, Block*(), ascii::space_type> block;
 	qi::rule<Iterator, Inclusion*(), ascii::space_type> inclusion;
-	qi::rule<Iterator, qi::unused_type, ascii::space_type> comment;
+	qi::rule<Iterator, Comment*(), ascii::space_type> comment;
 	qi::rule<Iterator, Source*(), ascii::space_type> source;
 };
 

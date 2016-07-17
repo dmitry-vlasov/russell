@@ -112,3 +112,8 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::mm::Source*, source)
 )
 
+BOOST_FUSION_ADAPT_STRUCT(
+	mdl::mm::Comment,
+	(std::string, text)
+)
+

@@ -23,6 +23,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		const phoenix::function<AddVars>        addVars;
 		const phoenix::function<AddConsts>      addConsts;
 		const phoenix::function<MarkVars>       markVars;
+		const phoenix::function<MakeString>     makeString;
 
 		static Stack  stack;
 		static Block* parent = nullptr;
@@ -82,8 +83,9 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 			lit("$c")   [_val = new_<mm::Constants>()]
 			> expr      [phoenix::at_c<0>(*_val) = _1]
 			> lit("$.") [addConsts(phoenix::ref(stack), phoenix::at_c<0>(*_val))];
-		inclusion = lit("$[") > path [parseInclusion(_1)] > "$]";
-		comment = lit("$(") >> lexeme[*(ascii::char_ - "$)")] >> "$)";
+		inclusion = lit("$[") > path [_val = parseInclusion(_1)] > "$]";
+		comment =
+			lit("$(") >> lexeme[*(ascii::char_ - "$)")] [_val = new_<mm::Comment>(makeString(_1))] >> "$)";
 		node %= (
 			constants  |
 			variables  |
@@ -106,7 +108,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 			> eps       [pushParent(_val, phoenix::ref(parent))]
 			> eps       [pushVC(phoenix::ref(stack), phoenix::val(true))]
 			> * (
-				comment |
+				comment [pushNode(_val, _1)] |
 				node    [pushNode(_val, _1)]
 			)
 			> lit("$}") [popParent(_val, phoenix::ref(parent))]
@@ -116,7 +118,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 			  eps       [pushVC(phoenix::ref(stack), phoenix::val(is_top))]
 			> eps       [pushParent(phoenix::at_c<1>(*_val), phoenix::ref(parent))]
 			> * (
-				comment |
+				comment   [pushNode(phoenix::at_c<1>(*_val), _1)] |
 				node      [pushNode(phoenix::at_c<1>(*_val), _1)] |
 				inclusion [pushNode(phoenix::at_c<1>(*_val), _1)]
 			)

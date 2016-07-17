@@ -104,6 +104,11 @@ struct Proof {
 };
 
 
+struct Comment {
+	Comment(string t) : text(t) { }
+	string text;
+};
+
 class Block;
 class Source;
 class Inclusion;
@@ -120,7 +125,8 @@ struct Node {
 		THEOREM,
 		BLOCK,
 		SOURCE,
-		INCLUSION
+		INCLUSION,
+		COMMENT
 	};
 	union Value {
 		void*       non;
@@ -134,10 +140,10 @@ struct Node {
 		Block*      blk;
 		Source*     src;
 		Inclusion*  inc;
+		Comment*    com;
 	};
 
 	Node()              : ind(-1), type(NONE),       val() { val.non = nullptr; }
-	Node(void*)         : ind(-1), type(NONE),       val() { val.non = nullptr; }
 	Node(Constants* c)  : ind(-1), type(CONSTANTS),  val() { val.cst = c; }
 	Node(Variables* v)  : ind(-1), type(VARIABLES),  val() { val.var = v; }
 	Node(Disjointed* d) : ind(-1), type(DISJOINTED), val() { val.dis = d; }
@@ -148,6 +154,7 @@ struct Node {
 	Node(Block* b)      : ind(-1), type(BLOCK),      val() { val.blk = b; }
 	Node(Source* s)     : ind(-1), type(SOURCE),     val() { val.src = s; }
 	Node(Inclusion* i)  : ind(-1), type(INCLUSION),  val() { val.inc = i; }
+	Node(Comment* c)    : ind(-1), type(COMMENT),    val() { val.com = c; }
 
 	void destroy();
 
@@ -254,6 +261,7 @@ ostream& operator << (ostream& os, const Theorem& th);
 ostream& operator << (ostream& os, const Block& block);
 ostream& operator << (ostream& os, const Source& source);
 ostream& operator << (ostream& os, const Inclusion& inc);
+ostream& operator << (ostream& os, const Comment& com);
 
 }} // mdl::mm
 

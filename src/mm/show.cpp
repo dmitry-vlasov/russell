@@ -142,4 +142,9 @@ ostream& operator << (ostream& os, const Inclusion& inc) {
 	return os;
 }
 
+ostream& operator << (ostream& os, const Comment& com) {
+	os << "$(" << com.text << "$)\n";
+	return os;
+}
+
 }} // mdl::mm
