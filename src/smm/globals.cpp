@@ -67,7 +67,7 @@ bool Smm::translate() {
 		switch (config.target) {
 		case Config::TARGET_NONE: break;
 		case Config::TARGET_MM: {
-			mm::Block* target = smm::translate_to_mm(source);
+			mm::Source* target = smm::translate_to_mm(source);
 			//cout << endl << *target;
 			ofstream out(config.out);
 			out << *target << endl;

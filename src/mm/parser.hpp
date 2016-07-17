@@ -54,11 +54,11 @@ struct LabelToInt {
 struct ParseInclusion {
 	template <typename T1>
 	struct result { typedef void type; };
-	Block* operator()(const string& path) const {
+	Inclusion* operator()(const string& path) const {
 		static Set<string> included;
 		if (included.has(path)) return nullptr;
 		included.s.insert(path);
-		return parse(path);
+		return new Inclusion(parse(path));
 	}
 };
 
@@ -200,7 +200,7 @@ struct Comments : qi::grammar<Iterator> {
 };
 */
 template <typename Iterator>
-struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
+struct Grammar : qi::grammar<Iterator, Source*(), ascii::space_type> {
 	Grammar();
 	void initNames();
 
@@ -219,9 +219,9 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 	qi::rule<Iterator, Constants*(), ascii::space_type> constants;
 	qi::rule<Iterator, Node(), ascii::space_type> node;
 	qi::rule<Iterator, Block*(), ascii::space_type> block;
-	qi::rule<Iterator, Block*(), ascii::space_type> inclusion;
+	qi::rule<Iterator, Inclusion*(), ascii::space_type> inclusion;
 	qi::rule<Iterator, qi::unused_type, ascii::space_type> comment;
-	qi::rule<Iterator, Block*(), ascii::space_type> source;
+	qi::rule<Iterator, Source*(), ascii::space_type> source;
 };
 
 template <typename Iterator>

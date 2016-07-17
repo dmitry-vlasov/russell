@@ -352,10 +352,10 @@ static void translate_block(Maps& maps, const Block* source, smm::Source* target
 		translate_node(maps, node, source, target);
 }
 
-smm::Source* translate(const Block* source) {
+smm::Source* translate(const Source* source) {
 	smm::Source* target = new smm::Source(Mm::get().config.out);
 	Maps maps;
-	translate_block(maps, source, target);
+	translate_block(maps, source->block, target);
 	return target;
 }
 

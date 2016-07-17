@@ -49,7 +49,7 @@ struct Mm {
 	Timers  timers;
 	Lex     lex;
 	Math    math;
-	Block*  source;
+	Source* source;
 	string  status;
 	bool    failed;
 
@@ -62,8 +62,8 @@ struct Mm {
 };
 
 ostream& operator << (ostream& os, const Mm& s);
-Block* parse(const string& path);
-smm::Source* translate(const Block* source);
+Source* parse(const string& path);
+smm::Source* translate(const Source* source);
 
 }} // mdl::mm
 

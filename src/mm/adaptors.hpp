@@ -96,12 +96,19 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Block,
-	(std::string, name)
 	(std::vector<mdl::mm::Node>, contents)
 	(mdl::mm::Block*, parent)
 	(uint, ind)
 )
 
+BOOST_FUSION_ADAPT_STRUCT(
+	mdl::mm::Source,
+	(std::string, name)
+	(mdl::mm::Block*, block)
+)
 
-
+BOOST_FUSION_ADAPT_STRUCT(
+	mdl::mm::Inclusion,
+	(mdl::mm::Source*, source)
+)
 

@@ -105,6 +105,8 @@ struct Proof {
 
 
 class Block;
+class Source;
+class Inclusion;
 
 struct Node {
 	enum Type {
@@ -117,6 +119,7 @@ struct Node {
 		AXIOM,
 		THEOREM,
 		BLOCK,
+		SOURCE,
 		INCLUSION
 	};
 	union Value {
@@ -129,6 +132,8 @@ struct Node {
 		Axiom*      ax;
 		Theorem*    th;
 		Block*      blk;
+		Source*     src;
+		Inclusion*  inc;
 	};
 
 	Node()              : ind(-1), type(NONE),       val() { val.non = nullptr; }
@@ -141,6 +146,8 @@ struct Node {
 	Node(Axiom* a)      : ind(-1), type(AXIOM),      val() { val.ax  = a; }
 	Node(Theorem* t)    : ind(-1), type(THEOREM),    val() { val.th  = t; }
 	Node(Block* b)      : ind(-1), type(BLOCK),      val() { val.blk = b; }
+	Node(Source* s)     : ind(-1), type(SOURCE),     val() { val.src = s; }
+	Node(Inclusion* i)  : ind(-1), type(INCLUSION),  val() { val.inc = i; }
 
 	void destroy();
 
@@ -180,26 +187,26 @@ struct Node {
 
 
 struct Block {
-	Block(): name(), contents(), parent(nullptr), ind(-1) { }
-	Block(Block* p) : name(), contents(), parent(p), ind(-1) { }
-	Block(const string& n) :
-	name(n), contents(), parent(nullptr), ind(-1) { }
+	Block(): contents(), parent(nullptr), ind(-1) { }
+	Block(Block* p) : contents(), parent(p), ind(-1) { }
 	~ Block() {
 		for (auto& node : contents)
 			node.destroy();
 	}
-	string name;
 	vector<Node> contents;
 	Block* parent;
 	uint   ind;
 };
 
 struct Source {
-
+	Source(const string& n) : name(n), block(new Block) { }
+	string name;
+	Block* block;
 };
 
 struct Inclusion {
-	Inclusion() {}
+	Inclusion(Source* src) : source(src) {}
+	Source* source;
 };
 
 inline Theorem::~Theorem() {
@@ -218,6 +225,8 @@ inline void Node::destroy() {
 	case AXIOM:      delete val.ax;  break;
 	case THEOREM:    delete val.th;  break;
 	case BLOCK:      delete val.blk; break;
+	case SOURCE:     delete val.src; break;
+	case INCLUSION:  delete val.inc; break;
 	default : assert(false && "impossible"); break;
 	}
 	type = NONE;
@@ -243,6 +252,8 @@ ostream& operator << (ostream& os, const Floating& flo);
 ostream& operator << (ostream& os, const Axiom& ax);
 ostream& operator << (ostream& os, const Theorem& th);
 ostream& operator << (ostream& os, const Block& block);
+ostream& operator << (ostream& os, const Source& source);
+ostream& operator << (ostream& os, const Inclusion& inc);
 
 }} // mdl::mm
 

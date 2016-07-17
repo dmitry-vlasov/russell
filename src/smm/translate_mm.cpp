@@ -118,9 +118,9 @@ static void translate(const Source* source, mm::Block* target) {
 
 }
 
-mm::Block* translate_to_mm(const Source* source) {
-	mm::Block* target = new mm::Block(Smm::get().config.out);
-	translate(source, target);
+mm::Source* translate_to_mm(const Source* source) {
+	mm::Source* target = new mm::Source(Smm::get().config.out);
+	translate(source, target->block);
 	return target;
 }
 

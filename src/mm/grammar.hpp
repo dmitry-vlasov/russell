@@ -113,15 +113,14 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 			> eps       [popVC(phoenix::ref(stack), phoenix::val(true))];
 
 		source =
-			  eps       [phoenix::at_c<2>(*_val) = phoenix::val(parent)]
-			> eps       [pushParent(_val, phoenix::ref(parent))]
-			> eps       [pushVC(phoenix::ref(stack), phoenix::val(is_top))]
+			  eps       [pushVC(phoenix::ref(stack), phoenix::val(is_top))]
+			> eps       [pushParent(phoenix::at_c<1>(*_val), phoenix::ref(parent))]
 			> * (
 				comment |
-				node      [pushNode(_val, _1)] |
-				inclusion //[pushNode(_val, _1)]
+				node      [pushNode(phoenix::at_c<1>(*_val), _1)] |
+				inclusion [pushNode(phoenix::at_c<1>(*_val), _1)]
 			)
-			> eps       [popParent(_val, phoenix::ref(parent))]
+			> eps       [popParent(phoenix::at_c<1>(*_val), phoenix::ref(parent))]
 			> eps       [popVC(phoenix::ref(stack), phoenix::val(is_top))];
 			//> qi::eoi   [final(_val)];
 

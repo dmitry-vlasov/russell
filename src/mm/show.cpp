@@ -125,15 +125,20 @@ static int depth(const Block& block) {
 
 ostream& operator << (ostream& os, const Block& block) {
 	int d = depth(block);
-	if (!block.name.empty() && block.parent)
-		os << indent(d - 1) << "$[" << block.name << "$]";
-	else {
-		if (block.parent) os << indent(d - 1) << "${\n";
-		for (auto& node : block.contents)
-			os << indent(d) << node << '\n';
-		if (block.parent) os << indent(d - 1) << "$}";
-		else os << "\n";
-	}
+	if (block.parent) os << indent(d - 1) << "${\n";
+	for (auto& node : block.contents)
+		os << indent(d) << node << '\n';
+	if (block.parent) os << indent(d - 1) << "$}";
+	return os;
+}
+
+ostream& operator << (ostream& os, const Source& source) {
+	os << *source.block;
+	return os;
+}
+
+ostream& operator << (ostream& os, const Inclusion& inc) {
+	os << "$[" << inc.source->name << "$]\n";
 	return os;
 }
 

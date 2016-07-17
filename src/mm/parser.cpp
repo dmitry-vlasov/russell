@@ -2,7 +2,7 @@
 
 namespace mdl { namespace mm {
 
-Block* parse(const string& path) {
+Source* parse(const string& path) {
 	ifstream in(path, std::ios_base::in);
 	if (!in.is_open())
 		throw Error("Could not open input file");
@@ -20,7 +20,7 @@ Block* parse(const string& path) {
 
 	LocationIter iter(storage.begin(), path);
 	LocationIter end(storage.end(), path);
-	Block* source = new Block(path);
+	Source* source = new Source(path);
 	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, source);
 	if (!r) {
 		throw Error("parsing failed: false");
