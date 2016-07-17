@@ -17,7 +17,7 @@ namespace ascii   = boost::spirit::ascii;
 namespace phoenix = boost::phoenix;
 
 namespace {
-	void init(Section* sect) {
+	void init_paths(Section* sect) {
 		if (!sect->file.size()) {
 			sect->file = sect->name;
 			boost::trim(sect->file);
@@ -34,22 +34,19 @@ namespace {
 				par = par->parent;
 			}
 			sect->path = sect->dir + sect->file + ".mm";
-
-			/*cout << endl;
-			cout << "dir: " << sect->dir << endl;
-			cout << "file: " << sect->file << endl;
-			cout << "path: " << sect->path << endl;
-			cout << endl;*/
 		}
 	}
 }
 
 struct Stack {
+	Stack() :
+	source(nullptr), part(nullptr), chapter(nullptr),
+	paragraph(nullptr), last(nullptr) { }
 	Section* source;
 	Section* part;
 	Section* chapter;
 	Section* paragraph;
-	Section* top;
+	Section* last;
 };
 
 static Stack stack;
@@ -58,18 +55,27 @@ struct Add {
 	template<typename T>
 	struct result { typedef void type; };
 	void operator()(Section* sect) const {
-		stack.top = sect;
+		sect->prev_sect = stack.last;
+		if (stack.last)
+			stack.last->next_sect = sect;
+		stack.last = sect;
 		switch (sect->type) {
 		case Type::PARAGRAPH:
 			if (!stack.chapter) throw Error("empty chapter");
 			sect->parent = stack.chapter;
 			stack.chapter->parts.push_back(sect);
+			sect->prev_sibling = stack.paragraph;
+			if (stack.paragraph)
+				stack.paragraph->next_sibling = sect;
 			stack.paragraph = stack.chapter->parts.back();
 			break;
 		case Type::CHAPTER:
 			if (!stack.part) throw Error("empty part");
 			sect->parent = stack.part;
 			stack.part->parts.push_back(sect);
+			sect->prev_sibling = stack.chapter;
+			if (stack.chapter)
+				stack.chapter->next_sibling = sect;
 			stack.chapter = stack.part->parts.back();
 			stack.paragraph = nullptr;
 			break;
@@ -77,6 +83,9 @@ struct Add {
 			if (!stack.source) throw Error("empty source");
 			sect->parent = stack.source;
 			stack.source->parts.push_back(sect);
+			sect->prev_sibling = stack.part;
+			if (stack.part)
+				stack.part->next_sibling = sect;
 			stack.part = stack.source->parts.back();
 			stack.chapter = nullptr;
 			stack.paragraph = nullptr;
@@ -91,10 +100,10 @@ struct Add {
 			break;
 		default: throw Error("impossible");
 		}
-		init(sect);
+		init_paths(sect);
 	}
 	void operator()(string& str) const {
-		stack.top->contents += str;
+		stack.last->contents += str;
 	}
 };
 

@@ -25,6 +25,11 @@ inline string border(const Type tp) {
 }
 
 struct Section {
+	Section() : type(Type::SOURCE), header(), name(), footer(),
+	contents(), dir(), file(), path(),
+	prev_sect(nullptr), next_sect(nullptr),
+	prev_sibling(nullptr), next_sibling(nullptr),
+	parent(nullptr), parts() { }
 	~ Section() { for (auto* p : parts) delete p; }
 	void save() const;
 	Type   type;
@@ -35,7 +40,11 @@ struct Section {
 	string dir;
 	string file;
 	string path;
-	const Section* parent;
+	Section* prev_sect;
+	Section* next_sect;
+	Section* prev_sibling;
+	Section* next_sibling;
+	Section* parent;
 	vector<Section*> parts;
 };
 

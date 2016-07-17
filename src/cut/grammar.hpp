@@ -38,7 +38,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "cut") {
 
 		source =
 			  eps         [add(_val)]
-			>> header     [add(_1)]
+			>> header     //[add(_1)]
 			>> + (
 				section |
 				contents  [add(_1)]
