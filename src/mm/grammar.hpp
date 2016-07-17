@@ -24,8 +24,9 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		const phoenix::function<AddConsts>      addConsts;
 		const phoenix::function<MarkVars>       markVars;
 
-		static Stack stack;
+		static Stack  stack;
 		static Block* parent = nullptr;
+		const bool is_top = stack.empty();
 		//const phoenix::function<SetLocation<Iterator>> setLocation;
 
 		symbol = lexeme[+(ascii::char_ - '$' - ascii::space)] [at_c<0>(_val) = symbolToInt(_1)];
@@ -81,7 +82,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 			lit("$c")   [_val = new_<mm::Constants>()]
 			> expr      [phoenix::at_c<0>(*_val) = _1]
 			> lit("$.") [addConsts(phoenix::ref(stack), phoenix::at_c<0>(*_val))];
-		inclusion = lit("$[") > path [parseInclusion(_1, _r1)] > "$]";
+		inclusion = lit("$[") > path [parseInclusion(_1)] > "$]";
 		comment = lit("$(") >> lexeme[*(ascii::char_ - "$)")] >> "$)";
 		node %= (
 			constants  |
@@ -103,25 +104,25 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		block =
 			lit("${")   [_val = new_<mm::Block>(phoenix::val(parent))]
 			> eps       [pushParent(_val, phoenix::ref(parent))]
-			> eps       [pushVC(phoenix::ref(stack))]
+			> eps       [pushVC(phoenix::ref(stack), phoenix::val(true))]
 			> * (
 				comment |
 				node    [pushNode(_val, _1)]
 			)
 			> lit("$}") [popParent(_val, phoenix::ref(parent))]
-			> eps       [popVC(phoenix::ref(stack))];
+			> eps       [popVC(phoenix::ref(stack), phoenix::val(true))];
 
 		source =
-			eps         [phoenix::at_c<2>(*_val) = phoenix::val(parent)]
+			  eps       [phoenix::at_c<2>(*_val) = phoenix::val(parent)]
 			> eps       [pushParent(_val, phoenix::ref(parent))]
-			> eps       [pushVC(phoenix::ref(stack))]
+			> eps       [pushVC(phoenix::ref(stack), phoenix::val(is_top))]
 			> * (
 				comment |
-				node            [pushNode(_val, _1)] |
-				inclusion(_val)
+				node      [pushNode(_val, _1)] |
+				inclusion //[pushNode(_val, _1)]
 			)
 			> eps       [popParent(_val, phoenix::ref(parent))]
-			> eps       [popVC(phoenix::ref(stack))];
+			> eps       [popVC(phoenix::ref(stack), phoenix::val(is_top))];
 			//> qi::eoi   [final(_val)];
 
 		//qi::on_success(assertion, setLocation(_val, _1));

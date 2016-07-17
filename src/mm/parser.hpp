@@ -52,13 +52,13 @@ struct LabelToInt {
 };
 
 struct ParseInclusion {
-	template <typename T1, typename T2>
+	template <typename T1>
 	struct result { typedef void type; };
-	void operator()(const string& path, Block* src) const {
+	Block* operator()(const string& path) const {
 		static Set<string> included;
-		if (included.has(path)) return;
+		if (included.has(path)) return nullptr;
 		included.s.insert(path);
-		parse(path, src);
+		return parse(path);
 	}
 };
 
@@ -126,18 +126,18 @@ struct VarConst {
 typedef vector<VarConst> Stack;
 
 struct PushVC {
-    template <typename T1>
+    template <typename T1, typename T2>
     struct result { typedef void type; };
-    void operator()(Stack& vc) const {
-    	vc.push_back(VarConst());
+    void operator()(Stack& vc, bool doit = true) const {
+    	if (doit) vc.push_back(VarConst());
     }
 };
 
 struct PopVC {
-    template <typename T1>
+    template <typename T1, typename T2>
     struct result { typedef void type; };
-    void operator()(Stack& vc) const {
-    	vc.pop_back();
+    void operator()(Stack& vc, bool doit = true) const {
+    	if (doit) vc.pop_back();
     }
 };
 
@@ -219,7 +219,7 @@ struct Grammar : qi::grammar<Iterator, Block*(), ascii::space_type> {
 	qi::rule<Iterator, Constants*(), ascii::space_type> constants;
 	qi::rule<Iterator, Node(), ascii::space_type> node;
 	qi::rule<Iterator, Block*(), ascii::space_type> block;
-	qi::rule<Iterator, void(Block*), ascii::space_type> inclusion;
+	qi::rule<Iterator, Block*(), ascii::space_type> inclusion;
 	qi::rule<Iterator, qi::unused_type, ascii::space_type> comment;
 	qi::rule<Iterator, Block*(), ascii::space_type> source;
 };

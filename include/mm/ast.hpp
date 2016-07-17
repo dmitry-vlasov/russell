@@ -116,7 +116,8 @@ struct Node {
 		ESSENTIAL,
 		AXIOM,
 		THEOREM,
-		BLOCK
+		BLOCK,
+		INCLUSION
 	};
 	union Value {
 		void*       non;
@@ -140,6 +141,7 @@ struct Node {
 	Node(Axiom* a)      : ind(-1), type(AXIOM),      val() { val.ax  = a; }
 	Node(Theorem* t)    : ind(-1), type(THEOREM),    val() { val.th  = t; }
 	Node(Block* b)      : ind(-1), type(BLOCK),      val() { val.blk = b; }
+
 	void destroy();
 
 	uint label() const {
@@ -190,6 +192,14 @@ struct Block {
 	vector<Node> contents;
 	Block* parent;
 	uint   ind;
+};
+
+struct Source {
+
+};
+
+struct Inclusion {
+	Inclusion() {}
 };
 
 inline Theorem::~Theorem() {
