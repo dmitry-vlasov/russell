@@ -4,7 +4,7 @@
 
 namespace mdl { namespace mm { namespace cut {
 
-Section* parse(const string& path) {
+Section* parse(const string& path, const string& out) {
 	ifstream in(path, std::ios_base::in);
 	if (!in.is_open())
 		throw Error("Could not open input file");
@@ -19,11 +19,10 @@ Section* parse(const string& path) {
 	LocationIter iter(storage.begin(), path);
 	LocationIter end(storage.end(), path);
 	Section* source = new Section;
-	source->file = Cut::get().config.out;
-	source->path = Cut::get().config.out;
+	source->file = out;
+	source->path = out;
 	boost::erase_last(source->file, ".mm");
 	source->type = Type::SOURCE;
-	Cut::mod().source = source;
 	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, source);
 	if (!r || iter != end) {
 		throw Error("parsing failed");

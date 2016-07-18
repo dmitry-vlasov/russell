@@ -61,7 +61,7 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 			else
 				return false;
 			conf.target = Config::Target::SMM;
-		} else if (conf.out.substr(conf.out.size() - 4) == ".mm") {
+		} else if (conf.out.substr(conf.out.size() - 3) == ".mm") {
 			if (conf.mode != Config::Mode::CUT && conf.mode != Config::Mode::MERGE)
 				return false;
 			conf.target = Config::Target::MM;

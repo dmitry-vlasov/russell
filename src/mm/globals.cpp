@@ -1,5 +1,6 @@
 #include "mm/ast.hpp"
 #include "smm/ast.hpp"
+#include "cut/ast.hpp"
 #include "mm/globals.hpp"
 
 namespace mdl {
@@ -30,8 +31,10 @@ bool parse_mm(Mm& mm) {
 bool cut_mm(Mm& mm) {
 	try {
 		mm.timers.work.start();
-		//mm.source = parse(mm.config.in);
-		//cout << endl << *source;
+		cut::Section* source = cut::parse(mm.config.in, mm.config.out);
+		cut::split(source);
+		cut::save(source);
+		delete source;
 		mm.timers.work.stop();
 		return true;
 	} catch (Error& err) {

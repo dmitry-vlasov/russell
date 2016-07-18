@@ -2,33 +2,8 @@
 #include <boost/algorithm/string.hpp>
 
 #include "mm/cut/ast.hpp"
-#include "mm/cut/globals.hpp"
 
 namespace mdl { namespace mm { namespace cut {
-
-namespace fs = boost::filesystem;
-
-void Cut::run() {
-	timer.start();
-	if (config.verbose)
-		cout << "cutting file " << config.in << " ... " << flush;
-	if (!parse()) return;
-	if (!save())  return;
-	timer.stop();
-	if (config.verbose)
-		cout << "done in " << timer << endl;
-}
-
-bool Cut::parse() {
-	try {
-		cut::parse(config.in);
-		return true;
-	} catch (Error& err) {
-		error += '\n';
-		error += err.what();
-		return false;
-	}
-}
 
 namespace {
 
@@ -65,7 +40,9 @@ void split_section(Section* sect) {
 	header->next_sibling->prev_sibling = header;
 }
 
-void split_sections(Section* src) {
+}
+
+void split(Section* src) {
 	Section* s = src;
 	while (s) {
 		split_section(s);
@@ -73,25 +50,15 @@ void split_sections(Section* src) {
 	}
 }
 
-}
-
-bool Cut::save() {
-	try {
-		if (!config.out.size()) return false;
-		if (config.out.substr(config.out.size() - 3) != ".mm") return false;
-		split_sections(source);
-		Section* sect = source;
-		while (sect) {
-			sect->save();
-			sect = sect->next_sect;
-		}
-		return true;
-	} catch (Error& err) {
-		error += '\n';
-		error += err.what();
-		return false;
+void save(Section* src) {
+	Section* sect = src;
+	while (sect) {
+		sect->save();
+		sect = sect->next_sect;
 	}
 }
+
+namespace fs = boost::filesystem;
 
 void Section::save() const {
 	if (type != Type::SOURCE)

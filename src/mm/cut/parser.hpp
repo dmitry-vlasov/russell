@@ -7,7 +7,6 @@
 #include <boost/algorithm/string.hpp>
 
 #include "mm/cut/ast.hpp"
-#include "mm/cut/globals.hpp"
 #include "mm/cut/adaptors.hpp"
 
 namespace mdl { namespace mm { namespace cut {

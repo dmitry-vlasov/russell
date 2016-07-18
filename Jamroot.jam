@@ -44,6 +44,10 @@ exe mm :
   src/mm/parser.cpp
   src/mm/translate.cpp
   src/mm/main.cpp 
+  
+  src/mm/cut/parser.cpp
+  src/mm/cut/show.cpp
+  src/mm/cut/globals.cpp
   ;
  
 exe mdl : 
@@ -65,15 +69,4 @@ exe mdl :
   src/rus/verify.cpp
   src/rus/translate.cpp
   src/rus/main.cpp
-  ;
-
-exe cut : 
-  src/memusage.cpp
-  src/timer.cpp
-  src/location.cpp
-  
-  src/mm/cut/parser.cpp
-  src/mm/cut/show.cpp
-  src/mm/cut/globals.cpp
-  src/mm/cut/main.cpp
   ;
