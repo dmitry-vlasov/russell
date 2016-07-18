@@ -54,7 +54,19 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 			return false;
 	}
 	if (conf.mode == Config::Mode::NONE) conf.mode = Config::Mode::TRANSL;
-	if (conf.in.empty()) return false;
+	if (!conf.out.empty()) {
+		if (conf.out.substr(conf.out.size() - 4) == ".smm") {
+			if (conf.mode == Config::Mode::NONE)
+				conf.mode = Config::Mode::TRANSL;
+			else
+				return false;
+			conf.target = Config::Target::SMM;
+		} else if (conf.out.substr(conf.out.size() - 4) == ".mm") {
+			if (conf.mode != Config::Mode::CUT && conf.mode != Config::Mode::MERGE)
+				return false;
+			conf.target = Config::Target::MM;
+		} else return false;
+	} else return false;
 	return true;
 }
 

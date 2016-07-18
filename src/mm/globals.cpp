@@ -27,20 +27,70 @@ bool parse_mm(Mm& mm) {
 	}
 }
 
-bool translate_mm(Mm& mm) {
+bool cut_mm(Mm& mm) {
+	try {
+		mm.timers.work.start();
+		//mm.source = parse(mm.config.in);
+		//cout << endl << *source;
+		mm.timers.work.stop();
+		return true;
+	} catch (Error& err) {
+		mm.error += '\n';
+		mm.error += err.what();
+		return false;
+	}
+}
+
+bool merge_mm(Mm& mm) {
+	try {
+		mm.timers.work.start();
+		//mm.source = parse(mm.config.in);
+		//cout << endl << *source;
+		mm.timers.work.stop();
+		return true;
+	} catch (Error& err) {
+		mm.error += '\n';
+		mm.error += err.what();
+		return false;
+	}
+}
+
+bool write_mm(Mm& mm) {
 	try {
 		if (mm.config.out.empty()) {
 			mm.error += "output file is not specified";
 			return false;
 		}
-		mm.timers.translate.start();
+		mm.timers.work.start();
 		smm::Source* target = translate(mm.source);
 		//cout << endl << *target;
 		ofstream out(mm.config.out);
 		out << *target << endl;
 		out.close();
 		delete target;
-		mm.timers.translate.stop();
+		mm.timers.work.stop();
+		return true;
+	} catch (Error& err) {
+		mm.error += '\n';
+		mm.error += err.what();
+		return false;
+	}
+}
+
+bool translate_mm(Mm& mm) {
+	try {
+		if (mm.config.out.empty()) {
+			mm.error += "output file is not specified";
+			return false;
+		}
+		mm.timers.work.start();
+		smm::Source* target = translate(mm.source);
+		//cout << endl << *target;
+		ofstream out(mm.config.out);
+		out << *target << endl;
+		out.close();
+		delete target;
+		mm.timers.work.stop();
 		return true;
 	} catch (Error& err) {
 		mm.error += '\n';
@@ -54,9 +104,19 @@ bool translate_mm(Mm& mm) {
 void Mm::run() {
 	timers.total.start();
 	if (config.verbose)
-		cout << "translating file " << config.in << " ... " << flush;
+		cout << "processing file " << config.in << " ... " << flush;
 	if (!parse_mm(*this)) return;
-	if (!translate_mm(*this)) return;
+	switch (config.mode) {
+	case Config::Mode::CUT:    cut_mm(*this); break;
+	case Config::Mode::MERGE:  merge_mm(*this); break;
+	case Config::Mode::TRANSL: translate_mm(*this); break;
+	default : break;
+	}
+	switch (config.target) {
+	case Config::Target::MM:  write_mm(*this); break;
+	case Config::Target::SMM: translate_mm(*this); break;
+	default : break;
+	}
 	timers.total.stop();
 	if (config.verbose)
 		cout << "done in " << timers.total << endl;

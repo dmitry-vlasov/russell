@@ -7,16 +7,18 @@
 namespace mdl { namespace mm {
 
 struct Config {
-	enum class Mode { NONE, TRANSL, CUT, MERGE };
+	enum class Mode   { NONE, TRANSL, CUT, MERGE };
+	enum class Target { NONE, SMM, MM };
 	Config() :
 	verbose(false), info(false), help(false),
-	mode(Mode::NONE), in(), root() { }
+	mode(Mode::NONE), target(Target::NONE), in(), root() { }
 
 	bool verbose;
 	bool info;
 	bool help;
 
-	Mode mode;
+	Mode   mode;
+	Target target;
 
 	string in;
 	string out;
@@ -34,7 +36,7 @@ struct Mm {
 	};
 	struct Timers {
 		Timer read;
-		Timer translate;
+		Timer work;
 		Timer total;
 	};
 	template<typename T>
