@@ -11,53 +11,55 @@ string show_id(uint lab) {
 	return mm::Mm::get().lex.labels.toStr(lab);
 }
 
-namespace mm {
+namespace mm { namespace {
+
+bool parse_mm(Mm& mm) {
+	try {
+		mm.timers.read.start();
+		mm.source = parse(mm.config.in);
+		//cout << endl << *source;
+		mm.timers.read.stop();
+		return true;
+	} catch (Error& err) {
+		mm.error += '\n';
+		mm.error += err.what();
+		return false;
+	}
+}
+
+bool translate_mm(Mm& mm) {
+	try {
+		if (mm.config.out.empty()) {
+			mm.error += "output file is not specified";
+			return false;
+		}
+		mm.timers.translate.start();
+		smm::Source* target = translate(mm.source);
+		//cout << endl << *target;
+		ofstream out(mm.config.out);
+		out << *target << endl;
+		out.close();
+		delete target;
+		mm.timers.translate.stop();
+		return true;
+	} catch (Error& err) {
+		mm.error += '\n';
+		mm.error += err.what();
+		return false;
+	}
+}
+
+}
 
 void Mm::run() {
 	timers.total.start();
 	if (config.verbose)
 		cout << "translating file " << config.in << " ... " << flush;
-	if (!parse()) return;
-	if (!translate()) return;
+	if (!parse_mm(*this)) return;
+	if (!translate_mm(*this)) return;
 	timers.total.stop();
 	if (config.verbose)
 		cout << "done in " << timers.total << endl;
-}
-
-bool Mm::parse() {
-	try {
-		timers.read.start();
-		source = mm::parse(config.in);
-		//cout << endl << *source;
-		timers.read.stop();
-		return true;
-	} catch (Error& err) {
-		error += '\n';
-		error += err.what();
-		return false;
-	}
-}
-
-bool Mm::translate() {
-	try {
-		if (config.out.empty()) {
-			error += "output file is not specified";
-			return false;
-		}
-		timers.translate.start();
-		smm::Source* target = mm::translate(source);
-		//cout << endl << *target;
-		ofstream out(config.out);
-		out << *target << endl;
-		out.close();
-		delete target;
-		timers.translate.stop();
-		return true;
-	} catch (Error& err) {
-		error += '\n';
-		error += err.what();
-		return false;
-	}
 }
 	
 }} // mdl::mm

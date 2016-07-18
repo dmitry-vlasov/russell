@@ -56,8 +56,6 @@ struct Mm {
 	string  error;
 
 	void run();
-	bool parse();
-	bool translate();
 
 	static const Mm& get() { return mod(); }
 	static Mm& mod() { static Mm mm; return mm; }
