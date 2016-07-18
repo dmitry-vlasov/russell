@@ -131,7 +131,7 @@ ostream& operator << (ostream& os, const Node& node) {
 	case Node::NONE: return os;
 	case Node::ASSERTION: os << *(node.val.ass); break;
 	case Node::CONSTANTS: os << *(node.val.cst); break;
-	case Node::SOURCE:    os << *(node.val.src); break;
+	case Node::INCLUSION: os << *(node.val.inc); break;
 	case Node::COMMENT:   os << *(node.val.com); break;
 	default : assert(false && "impossible"); break;
 	}
@@ -139,16 +139,18 @@ ostream& operator << (ostream& os, const Node& node) {
 }
 
 ostream& operator << (ostream& os, const Source& src) {
-	if (src.top) {
-		for (auto& node : src.contents)
-			os << node << '\n';
-	} else
-		os << "$[" << src.name << "$]";
+	for (auto& node : src.contents)
+		os << node << '\n';
 	return os;
 }
 
 ostream& operator << (ostream& os, const Comment& com) {
 	os << "$( " << com.text << " $)";
+	return os;
+}
+
+ostream& operator << (ostream& os, const Inclusion& inc) {
+	os << "$[ " << inc.source->name << " $]";
 	return os;
 }
 

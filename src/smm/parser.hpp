@@ -91,9 +91,9 @@ struct LabelToInt {
 
 struct ParseInclusion {
 	template <typename T>
-	struct result { typedef Source* type; };
-	Source* operator()(const string& path) const {
-		return parse(path);
+	struct result { typedef Inclusion* type; };
+	Inclusion* operator()(const string& path) const {
+		return new Inclusion(parse(path));
 	}
 };
 
@@ -161,7 +161,7 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 	qi::rule<Iterator, Variables*(), ascii::space_type> variables;
 	qi::rule<Iterator, Assertion*(), ascii::space_type> assertion;
 	qi::rule<Iterator, Constants*(), ascii::space_type> constants;
-	qi::rule<Iterator, Source*(), ascii::space_type> inclusion;
+	qi::rule<Iterator, Inclusion*(), ascii::space_type> inclusion;
 	qi::rule<Iterator, Comment*(), ascii::space_type> comment;
 	qi::rule<Iterator, Source(), ascii::space_type> source;
 };

@@ -127,11 +127,17 @@ struct Comment {
 
 class Source;
 
+struct Inclusion {
+	Inclusion(Source* s) : source(s) { }
+	~Inclusion();
+	Source* source;
+};
+
 struct Node {
 	Node() : type(NONE), val() { val.non = nullptr; }
 	Node(Assertion* a) : type (ASSERTION), val() { val.ass = a; }
 	Node(Constants* c) : type (CONSTANTS), val() { val.cst = c; }
-	Node(Source* s)    : type (SOURCE),    val() { val.src = s; }
+	Node(Inclusion* i) : type (INCLUSION), val() { val.inc = i; }
 	Node(Comment* c)   : type (COMMENT),   val() { val.com = c; }
 	void destroy();
 
@@ -139,7 +145,7 @@ struct Node {
 		NONE,
 		ASSERTION,
 		CONSTANTS,
-		SOURCE,
+		INCLUSION,
 		COMMENT
 	};
 	Type type;
@@ -147,7 +153,7 @@ struct Node {
 		void*      non;
 		Assertion* ass;
 		Constants* cst;
-		Source*    src;
+		Inclusion* inc;
 		Comment*   com;
 	};
 	Value val;
@@ -155,19 +161,16 @@ struct Node {
 
 struct Source {
 	Source(const string& n) :
-	top(false), name(n), contents() {
-		static bool t = true; top = t; t = false;
-	}
+	name(n), contents() {}
 	~ Source() {
 		for (auto& node : contents)
 			node.destroy();
 	}
-
-	bool   top;
 	string name;
 	vector<Node> contents;
 };
 
+inline Inclusion::~Inclusion() { if (source) delete source; }
 
 inline Assertion::Assertion() :
 	variables(), disjointed(), essential(),
@@ -188,7 +191,7 @@ inline void Node::destroy() {
 	case NONE: break;
 	case ASSERTION: delete val.ass; break;
 	case CONSTANTS: delete val.cst; break;
-	case SOURCE:    delete val.src; break;
+	case INCLUSION: delete val.inc; break;
 	default : assert(false && "impossible");  break;
 	}
 	type = NONE;
@@ -217,6 +220,7 @@ ostream& operator << (ostream& os, const Assertion& ass);
 ostream& operator << (ostream& os, const Node& node);
 ostream& operator << (ostream& os, const Source& src);
 ostream& operator << (ostream& os, const Comment& com);
+ostream& operator << (ostream& os, const Inclusion& inc);
 
 }} // mdl::smm
 

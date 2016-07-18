@@ -407,7 +407,7 @@ static void translate_node(const Node& node, State& state) {
 	switch(node.type) {
 	case Node::CONSTANTS: translate_const(node.val.cst, state); break;
 	case Node::ASSERTION: translate_ass(node.val.ass, state); break;
-	case Node::SOURCE:
+	case Node::INCLUSION:
 		// TODO:
 		//translate(node.val.blk, target);
 		break;

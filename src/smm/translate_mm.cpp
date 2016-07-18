@@ -101,7 +101,7 @@ static void translate(const Node& node, mm::Block* target, Maps& maps) {
 		);
 		maps.transform[ass->prop.label] = perm;
 	}	break;
-	case Node::SOURCE:
+	case Node::INCLUSION:
 		// TODO:
 		//translate(node.val.blk, target);
 		break;

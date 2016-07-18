@@ -212,7 +212,8 @@ struct Source {
 };
 
 struct Inclusion {
-	Inclusion(Source* src) : source(src) {}
+	Inclusion(Source* src) : source(src) { }
+	~ Inclusion() { if (source) delete source; }
 	Source* source;
 };
 
