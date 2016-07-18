@@ -97,7 +97,8 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		constants [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
 		assertion [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
 		inclusion [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
-		comment);
+		comment   [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))]
+	);
 
 	qi::on_success(assertion, setLocation(_val, _1));
 	qi::on_error<qi::fail>(

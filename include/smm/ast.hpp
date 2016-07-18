@@ -132,13 +132,15 @@ struct Node {
 	Node(Assertion* a) : type (ASSERTION), val() { val.ass = a; }
 	Node(Constants* c) : type (CONSTANTS), val() { val.cst = c; }
 	Node(Source* s)    : type (SOURCE),    val() { val.src = s; }
+	Node(Comment* c)   : type (COMMENT),   val() { val.com = c; }
 	void destroy();
 
 	enum Type {
 		NONE,
 		ASSERTION,
 		CONSTANTS,
-		SOURCE
+		SOURCE,
+		COMMENT
 	};
 	Type type;
 	union Value {
@@ -146,6 +148,7 @@ struct Node {
 		Assertion* ass;
 		Constants* cst;
 		Source*    src;
+		Comment*   com;
 	};
 	Value val;
 };

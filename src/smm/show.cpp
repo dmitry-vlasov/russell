@@ -132,6 +132,7 @@ ostream& operator << (ostream& os, const Node& node) {
 	case Node::ASSERTION: os << *(node.val.ass); break;
 	case Node::CONSTANTS: os << *(node.val.cst); break;
 	case Node::SOURCE:    os << *(node.val.src); break;
+	case Node::COMMENT:   os << *(node.val.com); break;
 	default : assert(false && "impossible"); break;
 	}
 	return os;
