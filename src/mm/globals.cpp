@@ -112,12 +112,14 @@ void Mm::run() {
 	switch (config.mode) {
 	case Config::Mode::CUT:    cut_mm(*this); break;
 	case Config::Mode::MERGE:  merge_mm(*this); break;
-	case Config::Mode::TRANSL: translate_mm(*this); break;
-	default : break;
-	}
-	switch (config.target) {
-	case Config::Target::MM:  write_mm(*this); break;
-	case Config::Target::SMM: translate_mm(*this); break;
+	case Config::Mode::TRANSL:
+		translate_mm(*this);
+		switch (config.target) {
+		case Config::Target::MM:  write_mm(*this); break;
+		case Config::Target::SMM: translate_mm(*this); break;
+		default : break;
+		}
+		break;
 	default : break;
 	}
 	timers.total.stop();

@@ -13,6 +13,7 @@ static void showHelp() {
 	cout << " -r  --root <path>  root directory (for inclusions)" << endl;
 	cout << " -h  --help         print the help" << endl;
 	cout << " -v  --verbose      not be silent"  << endl;
+	cout << " -t  --translate    translate source to smm" << endl;
 	cout << " -c  --cut          cut source into pieces" << endl;
 	cout << " -m  --merge        merge source from pieces" << endl;
 	cout << "     --info         info about math: timings, memory, stats"  << endl;
@@ -48,12 +49,14 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 			conf.mode = Config::Mode::CUT;
 		else if (arg == "-m" || arg == "--merge")
 			conf.mode = Config::Mode::MERGE;
+		else if (arg == "-t" || arg == "--translate")
+			conf.mode = Config::Mode::TRANSL;
 		else if (arg == "--info")
 			conf.info = true;
 		else
 			return false;
 	}
-	if (conf.mode == Config::Mode::NONE) conf.mode = Config::Mode::TRANSL;
+	//if (conf.mode == Config::Mode::NONE) conf.mode = Config::Mode::TRANSL;
 	if (!conf.out.empty()) {
 		if (conf.out.substr(conf.out.size() - 4) == ".smm") {
 			if (conf.mode == Config::Mode::NONE)
