@@ -111,6 +111,8 @@ ostream& operator << (ostream& os, const Node& node) {
 	case Node::AXIOM:      os << *(node.val.ax);  break;
 	case Node::THEOREM:    os << *(node.val.th);  break;
 	case Node::BLOCK:      os << *(node.val.blk); break;
+	case Node::COMMENT:    os << *(node.val.com); break;
+	case Node::INCLUSION:  os << *(node.val.inc); break;
 	default : assert(false && "impossible"); break;
 	}
 	return os;

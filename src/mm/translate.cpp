@@ -326,6 +326,10 @@ void translate_block(Maps& maps, const Block* source, smm::Source* target);
 
 void translate_node(Maps& maps, const Node& node, const Block* block, smm::Source* target) {
 	switch(node.type) {
+	case Node::COMMENT: {
+		smm::Comment* c = new smm::Comment(node.val.com->text);
+		target->contents.push_back(smm::Node(c));
+	} break;
 	case Node::CONSTANTS: {
 		smm::Constants* c = new smm::Constants { node.val.cst->expr };
 		target->contents.push_back(smm::Node(c));
@@ -348,8 +352,10 @@ void translate_node(Maps& maps, const Node& node, const Block* block, smm::Sourc
 }
 
 void translate_block(Maps& maps, const Block* source, smm::Source* target) {
-	for (auto& node : source->contents)
+	for (auto& node : source->contents) {
+		cout << "translating: " << node << endl;
 		translate_node(maps, node, source, target);
+	}
 }
 
 }

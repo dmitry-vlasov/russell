@@ -50,7 +50,7 @@ echo "MM <-> SMM TRANSLATION"
 echo "----------------------"
 
 echo "mm -> smm"
-check "${binpath}release/mm  -v -i ${file}.mm  -o $file.smm"
+check "${binpath}release/mm -t -v -i ${file}.mm  -o $file.smm"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -119,7 +119,7 @@ fi;
 
 
 echo "mm -> smm"
-check "${binpath}release/mm -v -i ${file}-1.mm -o ${file}-3.smm"
+check "${binpath}release/mm -t -v -i ${file}-1.mm -o ${file}-3.smm"
 echo -e 'done\n'
 
 if [ $? != 0 ]; then 

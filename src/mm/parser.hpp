@@ -120,7 +120,17 @@ struct PushNode {
     template <typename T1, typename T2>
     struct result { typedef void type; };
     void operator()(Block* block, Node node) const {
-    	if (node.type == Node::NONE) return;
+
+    	//cout << "pushing: " << node.type << endl << node << endl;
+
+    	if (node.type == Node::NONE) {
+    		//cout << "NULL NODE: " << endl;
+    		return;
+    	}
+
+    	//if (node.type == Node::COMMENT)
+    	//	cout << "COMMM: " << node.val.com->text << endl;
+
     	node.ind = block->contents.size();
     	block->contents.push_back(node);
     }

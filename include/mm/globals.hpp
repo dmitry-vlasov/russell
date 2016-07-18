@@ -8,17 +8,15 @@ namespace mdl { namespace mm {
 
 struct Config {
 	enum class Mode   { NONE, TRANSL, CUT, MERGE };
-	enum class Target { NONE, SMM, MM };
 	Config() :
 	verbose(false), info(false), help(false),
-	mode(Mode::NONE), target(Target::NONE), in(), root() { }
+	mode(Mode::NONE), in(), root() { }
 
 	bool verbose;
 	bool info;
 	bool help;
 
 	Mode   mode;
-	Target target;
 
 	string in;
 	string out;

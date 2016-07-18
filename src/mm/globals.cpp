@@ -58,28 +58,6 @@ bool merge_mm(Mm& mm) {
 	}
 }
 
-bool write_mm(Mm& mm) {
-	try {
-		if (mm.config.out.empty()) {
-			mm.error += "output file is not specified";
-			return false;
-		}
-		mm.timers.work.start();
-		smm::Source* target = translate(mm.source);
-		//cout << endl << *target;
-		ofstream out(mm.config.out);
-		out << *target << endl;
-		out.close();
-		delete target;
-		mm.timers.work.stop();
-		return true;
-	} catch (Error& err) {
-		mm.error += '\n';
-		mm.error += err.what();
-		return false;
-	}
-}
-
 bool translate_mm(Mm& mm) {
 	try {
 		if (mm.config.out.empty()) {
@@ -109,17 +87,11 @@ void Mm::run() {
 	if (config.verbose)
 		cout << "processing file " << config.in << " ... " << flush;
 	if (!parse_mm(*this)) return;
+	//cout << *source << endl;
 	switch (config.mode) {
-	case Config::Mode::CUT:    cut_mm(*this); break;
-	case Config::Mode::MERGE:  merge_mm(*this); break;
-	case Config::Mode::TRANSL:
-		translate_mm(*this);
-		switch (config.target) {
-		case Config::Target::MM:  write_mm(*this); break;
-		case Config::Target::SMM: translate_mm(*this); break;
-		default : break;
-		}
-		break;
+	case Config::Mode::CUT:    cut_mm(*this);       break;
+	case Config::Mode::MERGE:  merge_mm(*this);     break;
+	case Config::Mode::TRANSL: translate_mm(*this); break;
 	default : break;
 	}
 	timers.total.stop();

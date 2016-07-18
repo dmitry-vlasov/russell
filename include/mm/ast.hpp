@@ -235,6 +235,7 @@ inline void Node::destroy() {
 	case BLOCK:      delete val.blk; break;
 	case SOURCE:     delete val.src; break;
 	case INCLUSION:  delete val.inc; break;
+	case COMMENT:    delete val.com; break;
 	default : assert(false && "impossible"); break;
 	}
 	type = NONE;
