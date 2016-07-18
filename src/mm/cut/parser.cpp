@@ -1,10 +1,10 @@
 #include <boost/algorithm/string.hpp>
 
-#include "cut/grammar.hpp"
+#include "mm/cut/grammar.hpp"
 
-namespace mdl { namespace cut {
+namespace mdl { namespace mm { namespace cut {
 
-void parse(const string& path) {
+Section* parse(const string& path) {
 	ifstream in(path, std::ios_base::in);
 	if (!in.is_open())
 		throw Error("Could not open input file");
@@ -28,6 +28,7 @@ void parse(const string& path) {
 	if (!r || iter != end) {
 		throw Error("parsing failed");
 	}
+	return source;
 }
 
-}} // mdl::cut
+}}} // mdl::mm::cut

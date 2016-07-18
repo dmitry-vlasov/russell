@@ -2,7 +2,7 @@
 
 #include "common.hpp"
 
-namespace mdl { namespace cut {
+namespace mdl { namespace mm { namespace cut {
 
 #define PARAGRAPH_STR "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="
 #define CHAPTER_STR   "#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#"
@@ -55,6 +55,6 @@ inline ostream& operator << (ostream& os, const Section& sect) {
 	return os;
 }
 
-}} // mdl::cut
+}}} // mdl::mm::cut
 
 

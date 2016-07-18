@@ -1,8 +1,9 @@
+
 #define BOOST_SPIRIT_USE_PHOENIX_V3
 
-#include "cut/parser.hpp"
+#include "mm/cut/parser.hpp"
 
-namespace mdl { namespace cut {
+namespace mdl { namespace mm { namespace cut {
 
 template <typename Iterator>
 Grammar<Iterator>::Grammar() : Grammar::base_type(source, "cut") {
@@ -52,4 +53,4 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "cut") {
 		initNames();
 	}
 
-}} // mdl::mm
+}}} // mdl::mm::cut

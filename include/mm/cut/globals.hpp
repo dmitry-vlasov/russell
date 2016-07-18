@@ -1,9 +1,9 @@
 #pragma once
 
-#include "cut/ast.hpp"
+#include "mm/cut/ast.hpp"
 #include "timer.hpp"
 
-namespace mdl { namespace cut {
+namespace mdl { namespace mm { namespace cut {
 
 struct Config {
 	Config() :
@@ -36,9 +36,9 @@ struct Cut {
 };
 
 //ostream& operator << (ostream& os, const Cut&);
-void parse(const string& path);
+Section* parse(const string& path);
 
 //smm::Source* translate(const Block* source);
 
-}} // mdl::mm
+}}} // mdl::mm::cut
 

@@ -6,11 +6,11 @@
 
 #include <boost/algorithm/string.hpp>
 
-#include "cut/ast.hpp"
-#include "cut/globals.hpp"
-#include "cut/adaptors.hpp"
+#include "mm/cut/ast.hpp"
+#include "mm/cut/globals.hpp"
+#include "mm/cut/adaptors.hpp"
 
-namespace mdl { namespace cut {
+namespace mdl { namespace mm { namespace cut {
 
 namespace qi      = boost::spirit::qi;
 namespace ascii   = boost::spirit::ascii;
@@ -140,4 +140,4 @@ void Grammar<Iterator>::initNames() {
 	source.name("source");
 }
 
-}} // mdl::cut
+}}} // mdl::mm::cut

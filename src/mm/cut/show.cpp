@@ -1,6 +1,6 @@
-#include "cut/ast.hpp"
+#include "mm/cut/ast.hpp"
 
-namespace mdl { namespace cut {
+namespace mdl { namespace mm { namespace cut {
 
 string show_contents(const Section& s) {
 	string str;
@@ -30,4 +30,4 @@ string show_all(const Section& s) {
 	return str;
 }
 
-}} // mdl::cut
+}}} // mdl::mm::cut

@@ -1,6 +1,7 @@
-#include "cut/globals.hpp"
+#include "mm/cut/globals.hpp"
 
 using namespace mdl;
+using namespace mm;
 using namespace cut;
 
 static void showHelp() {

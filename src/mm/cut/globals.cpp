@@ -1,11 +1,10 @@
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
 
-#include "cut/ast.hpp"
-#include "cut/globals.hpp"
+#include "mm/cut/ast.hpp"
+#include "mm/cut/globals.hpp"
 
-namespace mdl {
-namespace cut {
+namespace mdl { namespace mm { namespace cut {
 
 namespace fs = boost::filesystem;
 
@@ -108,4 +107,4 @@ void Section::save() const {
 	out.close();
 }
 
-}} // mdl::cut
+}}} // mdl::mm::cut
