@@ -103,7 +103,7 @@ void Section::save() const {
 	ofstream out(path);
 	out << show_contents(*this) << endl;
 	for (Section* s : parts) {
-		out << "$[" << s->path << "$]\n";
+		out << "$[ " << s->path << " $]\n";
 	}
 	out.close();
 }

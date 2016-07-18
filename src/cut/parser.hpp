@@ -27,6 +27,9 @@ namespace {
 			boost::replace_all(sect->file, ".", "_");
 			boost::replace_all(sect->file, "?", "_");
 			boost::replace_all(sect->file, "!", "_");
+			boost::replace_all(sect->file, "$", "_");
+			boost::replace_all(sect->file, "\\", "_");
+			boost::replace_all(sect->file, "'", "_");
 
 			const Section* par = sect->parent;
 			while (par && par->file.size()) {

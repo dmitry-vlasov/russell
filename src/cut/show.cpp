@@ -8,7 +8,7 @@ string show_contents(const Section& s) {
 	while (imp && !imp->prev_sibling)
 		imp = imp->parent;
 	if (imp)
-		str += "\n$[" + imp->prev_sibling->path + "$]\n\n";
+		str += "\n$[ " + imp->prev_sibling->path + " $]\n\n";
 	if (s.type != Type::SOURCE) {
 		str += "$(\n";
 		str += s.header;
@@ -16,7 +16,7 @@ string show_contents(const Section& s) {
 		str += s.name;
 		str += border(s.type);
 		str += s.footer;
-		str += "$)\n";
+		str += "\n$)\n";
 	}
 	str += s.contents;
 	return str;
