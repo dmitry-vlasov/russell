@@ -22,6 +22,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	const phoenix::function<ParseInclusion> parseInclusion;
 	const phoenix::function<SetLocation<Iterator>> setLocation;
 	const phoenix::function<CreateRef>      createRef;
+	const phoenix::function<MakeString>     makeString;
 
 	symbol = lexeme[+(ascii::char_ - '$' - ascii::space)] [at_c<0>(_val) = symbolToInt(_1)];
 	label  = lexeme[+(ascii::char_ - '$' - ascii::space)] [_val = labelToInt(_1)];
@@ -91,7 +92,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		> expr           [phoenix::at_c<0>(*_val) = _1]
 		> lit("$.")      [addToMath(_val)];
 	inclusion = lit("$[") > path [_val = parseInclusion(_1)] > "$]";
-	comment = lit("$(") >> lexeme[*(ascii::char_ - "$)")] >> "$)";
+	comment = lit("$(") >> lexeme[*(ascii::char_ - "$)")] [_val = new_<smm::Comment>(makeString(_1))] >> "$)";
 	source = +(
 		constants [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |
 		assertion [push_back(at_c<2>(_val), phoenix::construct<Node>(_1))] |

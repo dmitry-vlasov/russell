@@ -146,4 +146,9 @@ ostream& operator << (ostream& os, const Source& src) {
 	return os;
 }
 
+ostream& operator << (ostream& os, const Comment& com) {
+	os << "$( " << com.text << " $)";
+	return os;
+}
+
 }} // mdl::smm

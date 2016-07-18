@@ -120,6 +120,11 @@ struct Proof {
 	Type        type;
 };
 
+struct Comment {
+	Comment(const string& t) : text(t) { }
+	string text;
+};
+
 class Source;
 
 struct Node {
@@ -208,6 +213,7 @@ ostream& operator << (ostream& os, const Proposition& prop);
 ostream& operator << (ostream& os, const Assertion& ass);
 ostream& operator << (ostream& os, const Node& node);
 ostream& operator << (ostream& os, const Source& src);
+ostream& operator << (ostream& os, const Comment& com);
 
 }} // mdl::smm
 

@@ -93,6 +93,9 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(std::vector<mdl::smm::Node>, contents)
 )
 
-
+BOOST_FUSION_ADAPT_STRUCT(
+	mdl::smm::Comment,
+	(std::string, text)
+)
 
 
