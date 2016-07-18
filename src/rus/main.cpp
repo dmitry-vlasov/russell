@@ -50,13 +50,13 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 	if (conf.in.empty()) return false;
 	if (!conf.out.empty()) {
 		if (conf.out.substr(conf.out.size() - 4) == ".smm") {
-			if (conf.mode == Config::MODE_NONE)
-				conf.mode = Config::MODE_TRANSL;
+			if (conf.mode == Config::Mode::NONE)
+				conf.mode = Config::Mode::TRANSL;
 			else
 				return false;
-			conf.target = Config::TARG_SMM;
+			conf.target = Config::Target::SMM;
 		} else if (conf.out.substr(conf.out.size() - 4) == ".rus")
-			conf.target = Config::TARG_RUS;
+			conf.target = Config::Target::RUS;
 	}
 	return true;
 }

@@ -17,12 +17,8 @@ void Mm::run() {
 	timers.total.start();
 	if (config.verbose)
 		cout << "translating file " << config.in << " ... " << flush;
-	if (!parse()) {
-		failed = true; return;
-	}
-	if (!translate()) {
-		failed = true; return;
-	}
+	if (!parse()) return;
+	if (!translate()) return;
 	timers.total.stop();
 	if (config.verbose)
 		cout << "done in " << timers.total << endl;
@@ -36,9 +32,8 @@ bool Mm::parse() {
 		timers.read.stop();
 		return true;
 	} catch (Error& err) {
-		status += '\n';
-		status += err.what();
-		failed = true;
+		error += '\n';
+		error += err.what();
 		return false;
 	}
 }
@@ -46,7 +41,7 @@ bool Mm::parse() {
 bool Mm::translate() {
 	try {
 		if (config.out.empty()) {
-			status += "output file is not specified";
+			error += "output file is not specified";
 			return false;
 		}
 		timers.translate.start();
@@ -59,16 +54,10 @@ bool Mm::translate() {
 		timers.translate.stop();
 		return true;
 	} catch (Error& err) {
-		status += '\n';
-		status += err.what();
-		failed = true;
+		error += '\n';
+		error += err.what();
 		return false;
 	}
-}
-
-ostream& operator << (ostream& os, const Mm& s) {
-	os << s.status;
-	return os;
 }
 	
 }} // mdl::mm

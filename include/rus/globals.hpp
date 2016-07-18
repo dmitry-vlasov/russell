@@ -7,12 +7,12 @@
 namespace mdl { namespace rus {
 
 struct Config {
-	enum Mode   { MODE_NONE, MODE_TRANSL, MODE_PROVE };
-	enum Target { TARG_NONE, TARG_SMM, TARG_RUS };
+	enum class Mode   { NONE, TRANSL, PROVE };
+	enum class Target { NONE, SMM, RUS };
 	Config() :
 	verbose(false), info(false), help(false),
-	mode(MODE_NONE),
-	in(), root(), target(TARG_NONE) { }
+	mode(Mode::NONE),
+	in(), root(), target(Target::NONE) { }
 
 	bool verbose;
 	bool info;

@@ -7,13 +7,16 @@
 namespace mdl { namespace mm {
 
 struct Config {
+	enum class Mode { NONE, TRANSL, CUT, MERGE };
 	Config() :
 	verbose(false), info(false), help(false),
-	in(), root() { }
+	mode(Mode::NONE), in(), root() { }
 
 	bool verbose;
 	bool info;
 	bool help;
+
+	Mode mode;
 
 	string in;
 	string out;
@@ -50,8 +53,7 @@ struct Mm {
 	Lex     lex;
 	Math    math;
 	Source* source;
-	string  status;
-	bool    failed;
+	string  error;
 
 	void run();
 	bool parse();
@@ -61,7 +63,6 @@ struct Mm {
 	static Mm& mod() { static Mm mm; return mm; }
 };
 
-ostream& operator << (ostream& os, const Mm& s);
 Source* parse(const string& path);
 smm::Source* translate(const Source* source);
 

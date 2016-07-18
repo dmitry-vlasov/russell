@@ -13,6 +13,8 @@ static void showHelp() {
 	cout << " -r  --root <path>  root directory (for inclusions)" << endl;
 	cout << " -h  --help         print the help" << endl;
 	cout << " -v  --verbose      not be silent"  << endl;
+	cout << " -c  --cut          cut source into pieces" << endl;
+	cout << " -m  --merge        merge source from pieces" << endl;
 	cout << "     --info         info about math: timings, memory, stats"  << endl;
 }
 
@@ -42,11 +44,16 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 			conf.help = true;
 		else if (arg == "-v" || arg == "--verbose")
 			conf.verbose = true;
+		else if (arg == "-c" || arg == "--cut")
+			conf.mode = Config::Mode::CUT;
+		else if (arg == "-m" || arg == "--merge")
+			conf.mode = Config::Mode::MERGE;
 		else if (arg == "--info")
 			conf.info = true;
 		else
 			return false;
 	}
+	if (conf.mode == Config::Mode::NONE) conf.mode = Config::Mode::TRANSL;
 	if (conf.in.empty()) return false;
 	return true;
 }
@@ -65,8 +72,7 @@ int main (int argc, const char* argv[])
 	}
 	try {
 		mm.run();
-		if (conf.verbose || mm.failed)
-			cout << mm.status;
+		if (mm.error.size()) cerr << mm.error;
 	} catch (const Error& err) {
 		cerr << err.what();
 		return 1;
