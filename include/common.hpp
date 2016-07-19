@@ -25,9 +25,7 @@ struct Map {
 	T& operator[] (Key k) {
 		return m[k];
 	}
-	T operator[] (Key k) const {
-		return m.find(k)->second;
-	}
+	T operator[] (Key k) const;
 };
 
 template<
@@ -175,6 +173,15 @@ public :
 	}
 	string   msg;
 };
+
+template<class Key, class T, class Compare, class Alloc>
+T Map<Key, T, Compare, Alloc>::operator[] (Key k) const {
+	if (has(k))
+		return m.find(k)->second;
+	else
+		throw Error("map doesn't have an element");
+}
+
 
 }
 

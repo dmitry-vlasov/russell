@@ -192,6 +192,7 @@ inline void Node::destroy() {
 	case ASSERTION: delete val.ass; break;
 	case CONSTANTS: delete val.cst; break;
 	case INCLUSION: delete val.inc; break;
+	case COMMENT:   delete val.com; break;
 	default : assert(false && "impossible");  break;
 	}
 	type = NONE;

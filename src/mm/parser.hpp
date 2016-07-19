@@ -123,10 +123,10 @@ struct PushNode {
 
     	//cout << "pushing: " << node.type << endl << node << endl;
 
-    	if (node.type == Node::NONE) {
+    	//if (node.type == Node::NONE) {
     		//cout << "NULL NODE: " << endl;
-    		return;
-    	}
+    		//return;
+    	//}
 
     	//if (node.type == Node::COMMENT)
     	//	cout << "COMMM: " << node.val.com->text << endl;

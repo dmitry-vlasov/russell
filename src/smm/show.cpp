@@ -139,8 +139,10 @@ ostream& operator << (ostream& os, const Node& node) {
 }
 
 ostream& operator << (ostream& os, const Source& src) {
-	for (auto& node : src.contents)
+	for (auto& node : src.contents) {
+		//cout << "writing: " << node << endl;
 		os << node << '\n';
+	}
 	return os;
 }
 

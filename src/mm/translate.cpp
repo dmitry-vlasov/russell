@@ -24,11 +24,11 @@ void gather_inner_vars(const set<Symbol>& fvars,
 }
 
 struct Maps {
-	map<const mm::Theorem*,   smm::Assertion*> theorems;
-	map<const mm::Axiom*,     smm::Assertion*> axioms;
-	map<const mm::Essential*, smm::Essential*> essentials;
-	map<const mm::Floating*,  smm::Floating*>  floatings;
-	map<const mm::Floating*,  smm::Inner*>     inners;
+	Map<const mm::Theorem*,   smm::Assertion*> theorems;
+	Map<const mm::Axiom*,     smm::Assertion*> axioms;
+	Map<const mm::Essential*, smm::Essential*> essentials;
+	Map<const mm::Floating*,  smm::Floating*>  floatings;
+	Map<const mm::Floating*,  smm::Inner*>     inners;
 	Transform transform;
 };
 
@@ -88,11 +88,11 @@ void reduce_floatings(smm::Assertion* ass, const set<Symbol>& flo_vars,
 			red_inns.push_back(new smm::Inner {flo->index, flo->expr});
 			const Floating* mm_flo =
 				std::find_if(
-				maps.floatings.begin(),
-				maps.floatings.end(),
+				maps.floatings.m.begin(),
+				maps.floatings.m.end(),
 				[flo](std::pair<const Floating*, smm::Floating*> p) { return p.second == flo; }
 				)->first;
-			maps.floatings.erase(mm_flo);
+			maps.floatings.m.erase(mm_flo);
 			maps.inners[mm_flo] = red_inns.back();
 		}
 		delete flo;
@@ -177,17 +177,19 @@ smm::Proof* translate_proof(const Maps& maps, const Proof* mproof) {
 		Ref::Value val = node.val;
 		switch (node.type) {
 		case Ref::FLOATING:
-			if (maps.floatings.find(val.flo) != maps.floatings.end())
-				sproof->refs.push_back(smm::Ref(maps.floatings.find(val.flo)->second));
+			if (maps.floatings.has(val.flo))
+				sproof->refs.push_back(smm::Ref(maps.floatings[val.flo]));
 			else
-				sproof->refs.push_back(smm::Ref(maps.inners.find(val.flo)->second));
+				sproof->refs.push_back(smm::Ref(maps.inners[val.flo]));
 			break;
 		case Ref::ESSENTIAL:
-			sproof->refs.push_back(smm::Ref(maps.essentials.find(val.ess)->second)); break;
+			sproof->refs.push_back(smm::Ref(maps.essentials[val.ess])); break;
 		case Ref::AXIOM:
-			sproof->refs.push_back(smm::Ref(maps.axioms.find(val.ax)->second, true)); break;
+			sproof->refs.push_back(smm::Ref(maps.axioms[val.ax], true)); break;
 		case Ref::THEOREM:
-			sproof->refs.push_back(smm::Ref(maps.theorems.find(val.th)->second, false)); break;
+			if (maps.theorems.has(val.th))
+				sproof->refs.push_back(smm::Ref(maps.theorems[val.th], false));
+			break;
 		default : assert(false && "impossible"); break;
 		}
 	}
@@ -353,7 +355,6 @@ void translate_node(Maps& maps, const Node& node, const Block* block, smm::Sourc
 
 void translate_block(Maps& maps, const Block* source, smm::Source* target) {
 	for (auto& node : source->contents) {
-		cout << "translating: " << node << endl;
 		translate_node(maps, node, source, target);
 	}
 }
