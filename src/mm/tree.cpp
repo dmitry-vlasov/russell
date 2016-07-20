@@ -76,10 +76,10 @@ void transform(Proof* proof, const Transform& trans, bool forward) {
 	proof->refs = new_refs;
 }
 
-void reduce_ref(Ref& ref, const set<uint>& red) {
+void reduce_ref(Ref& ref, const Set<uint>& red) {
 	if (ref.type == Ref::PROOF) {
 		Proof* proof = ref.val.prf;
-		if (red.find(proof->refs.back().label()) != red.end()) {
+		if (red.has(proof->refs.back().label())) {
 			ref = proof->refs[proof->refs.size() - 2];
 			proof->refs[proof->refs.size() - 2].type = Ref::NONE;
 			delete proof;
@@ -91,7 +91,7 @@ void reduce_ref(Ref& ref, const set<uint>& red) {
 	}
 }
 
-void reduce(Proof*& proof, const set<uint>& red) {
+void reduce(Proof*& proof, const Set<uint>& red) {
 	Ref ref = Ref(proof);
 	reduce_ref(ref, red);
 	assert(ref.type == Ref::PROOF);

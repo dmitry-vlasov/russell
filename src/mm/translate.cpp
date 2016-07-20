@@ -187,9 +187,9 @@ smm::Proof* translate_proof(const Maps& maps, const Proof* mproof) {
 		case Ref::AXIOM:
 			sproof->refs.push_back(smm::Ref(maps.axioms[val.ax], true)); break;
 		case Ref::THEOREM:
-			if (maps.theorems.has(val.th))
+			//if (maps.theorems.has(val.th))
 				sproof->refs.push_back(smm::Ref(maps.theorems[val.th], false));
-			break;
+			//break;
 		default : assert(false && "impossible"); break;
 		}
 	}
@@ -218,7 +218,7 @@ void reduce(Maps& maps, smm::Assertion* ass, ArgMap& args, const Proof* proof) {
 	maps.transform[ass->prop.label] = args.create_permutation();
 }
 
-smm::Proof* transform_proof(const Maps& maps, const set<uint>& red, const Proof* proof) {
+smm::Proof* transform_proof(const Maps& maps, const Set<uint>& red, const Proof* proof) {
 	Proof* tree = to_tree(proof);
 	if (tree == nullptr)
 		return nullptr;
@@ -300,7 +300,7 @@ ArgMap arg_map(const deque<Node>& ar_orig) {
 
 smm::Assertion* translate_ass(Maps& maps, const Node& n, const Block* block)  {
 	smm::Assertion* ass = new smm::Assertion();
-	set<uint> red;
+	Set<uint> red;
 	ass->prop = smm::Proposition {n.type == Node::AXIOM, n.label(), n.expr()};
 	Header header;
 	gather(n.ind, block, header);
@@ -312,7 +312,7 @@ smm::Assertion* translate_ass(Maps& maps, const Node& n, const Block* block)  {
 		ass->proof = transform_proof(maps, red, n.val.th->proof);
 		if (!ass->proof) {
 			// Dummy (redundant) theorem
-			red.insert(n.label());
+			red.s.insert(n.label());
 			delete ass;
 			ass = nullptr;
 		} else {
