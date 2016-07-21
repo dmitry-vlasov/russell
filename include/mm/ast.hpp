@@ -212,9 +212,10 @@ struct Source {
 };
 
 struct Inclusion {
-	Inclusion(Source* src) : source(src) { }
+	Inclusion(Source* src, bool prim) : source(src), primary(prim) { }
 	~ Inclusion() { if (source) delete source; }
 	Source* source;
+	bool primary;
 };
 
 inline Theorem::~Theorem() {
@@ -253,6 +254,7 @@ inline Proof::~Proof() {
 
 ostream& operator << (ostream& os, const Node& node);
 ostream& operator << (ostream& os, const Constants& cst);
+ostream& operator << (ostream& os, const Ref& ref);
 ostream& operator << (ostream& os, const Proof& proof);
 ostream& operator << (ostream& os, const Variables& vars);
 ostream& operator << (ostream& os, const Variables& disj);

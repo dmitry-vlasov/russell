@@ -115,7 +115,8 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 			> eps       [popVC(phoenix::ref(stack), phoenix::val(true))];
 
 		source =
-			  eps       [pushVC(phoenix::ref(stack), phoenix::val(is_top))]
+			  eps       [phoenix::at_c<1>(*phoenix::at_c<1>(*_val)) = phoenix::val(parent)]
+			> eps       [pushVC(phoenix::ref(stack), phoenix::val(is_top))]
 			> eps       [pushParent(phoenix::at_c<1>(*_val), phoenix::ref(parent))]
 			> * (
 				comment   [pushNode(phoenix::at_c<1>(*_val), _1)] |

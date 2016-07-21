@@ -1,3 +1,5 @@
+#include <boost/algorithm/string.hpp>
+
 #include "smm/ast.hpp"
 #include "mm/ast.hpp"
 #include "mm/tree.hpp"
@@ -29,6 +31,7 @@ struct Maps {
 	Map<const mm::Essential*, smm::Essential*> essentials;
 	Map<const mm::Floating*,  smm::Floating*>  floatings;
 	Map<const mm::Floating*,  smm::Inner*>     inners;
+	Map<const mm::Source*,    smm::Source*>    sources;
 	Transform transform;
 };
 
@@ -307,7 +310,13 @@ smm::Assertion* translate_ass(Maps& maps, const Node& n, const Block* block)  {
 	reduce(maps, ass, args, n.proof());
 	n.arity() = ass->essential.size() + ass->floating.size();
 	if (n.type == Node::THEOREM) {
-		ass->proof = transform_proof(maps, red, n.val.th->proof);
+		try {
+			ass->proof = transform_proof(maps, red, n.val.th->proof);
+		} catch (Error& err) {
+			cout << err.what() << endl;
+			cout << n << endl;
+			cout << *ass << endl;
+		}
 		if (!ass->proof) {
 			// Dummy (redundant) theorem
 			red.s.insert(n.label());
@@ -323,6 +332,7 @@ smm::Assertion* translate_ass(Maps& maps, const Node& n, const Block* block)  {
 }
 
 void translate_block(Maps& maps, const Block* source, smm::Source* target);
+smm::Source* translate_source(Maps& maps, const Source* src);
 
 void translate_node(Maps& maps, const Node& node, const Block* block, smm::Source* target) {
 	switch(node.type) {
@@ -343,17 +353,36 @@ void translate_node(Maps& maps, const Node& node, const Block* block, smm::Sourc
 		node.val.blk->ind = node.ind;
 		translate_block(maps, node.val.blk, target);
 		break;
+	case Node::INCLUSION: {
+		smm::Source* s = translate_source(maps, node.val.inc->source);
+		smm::Inclusion* i = new smm::Inclusion(s, node.val.inc->primary);
+		target->contents.push_back(smm::Node(i));
+	} break;
 	case Node::VARIABLES:  break;
 	case Node::DISJOINTED: break;
 	case Node::FLOATING:   break;
 	case Node::ESSENTIAL:  break;
-	default : assert(false && "impossible"); break;
+	default :
+		cout << node << endl;
+		assert(false && "impossible"); break;
 	}
 }
 
 void translate_block(Maps& maps, const Block* source, smm::Source* target) {
 	for (auto& node : source->contents) {
 		translate_node(maps, node, source, target);
+	}
+}
+
+smm::Source* translate_source(Maps& maps, const Source* src) {
+	if (maps.sources.has(src))
+		return maps.sources[src];
+	else {
+		string name = src->name;
+		boost::replace_last(name, ".mm", ".smm");
+		smm::Source* target = new smm::Source(name);
+		translate_block(maps, src->block, target);
+		return target;
 	}
 }
 

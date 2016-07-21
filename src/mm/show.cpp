@@ -42,22 +42,17 @@ ostream& operator << (ostream& os, const Constants& cst) {
 	return os;
 }
 
-class ref {
-	Ref r;
-public:
-	ref(Ref rf) : r(rf) {
-	}
-	void write(ostream& os) {
-		if (r.type == Ref::PROOF)
-			os << *r.val.prf;
-		else
-			os << show_id(r.label());
-	}
-};
-
-ostream& operator << (ostream& os, ref r) {
-	r.write(os);
+ostream& operator << (ostream& os, const Ref& ref) {
+	os << show_id(ref.label());
 	return os;
+}
+
+
+void write_proof_ref(ostream& os, const Ref& r) {
+	if (r.type == Ref::PROOF)
+		os << *r.val.prf << ' ';
+	else
+		os << r << ' ';
 }
 
 ostream& operator << (ostream& os, const Proof& proof) {
@@ -66,7 +61,7 @@ ostream& operator << (ostream& os, const Proof& proof) {
 		return os;
 	}
 	for (auto& node : proof.refs)
-		os << ref(node) << ' ';
+		write_proof_ref(os, node);
 	os << "$.";
 	return os;
 }

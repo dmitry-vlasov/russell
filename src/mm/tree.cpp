@@ -6,6 +6,7 @@ namespace mdl { namespace mm {
 
 Proof* to_tree(const Proof* proof) {
 	stack<Ref> stack;
+	cout << endl << "to_tree" << *proof << endl;
 	for (auto r : proof->refs) {
 		switch(r.type) {
 		case Ref::ESSENTIAL:
@@ -16,6 +17,9 @@ Proof* to_tree(const Proof* proof) {
 		case Ref::THEOREM: {
 			Proof* p = new Proof(Proof::TREE);
 			p->refs.push_back(r);
+
+			cout << "ref: " <<  r << ", arity: " << r.arity() << endl;
+
 			for (uint i = 0; i < r.arity(); ++ i) {
 				p->refs.push_back(stack.top());
 				stack.pop();
@@ -31,6 +35,14 @@ Proof* to_tree(const Proof* proof) {
 		 stack.top().val.prf :
 		 nullptr;
 	stack.pop();
+	if (!stack.empty()) {
+		cout << endl << *proof << endl;
+		while (!stack.empty()) {
+			cout << stack.top() << endl;
+			stack.pop();
+		}
+		throw Error("non-empty stack");
+	}
 	assert(stack.empty());
 	return tree;
 }

@@ -93,7 +93,15 @@ struct ParseInclusion {
 	template <typename T>
 	struct result { typedef Inclusion* type; };
 	Inclusion* operator()(const string& path) const {
-		return new Inclusion(parse(path));
+		static Map<string, Inclusion*> included;
+		if (included.has(path)) {
+			Inclusion* inc = included[path];
+			return new Inclusion(inc->source, false);
+		} else {
+			Inclusion* inc = new Inclusion(parse(path), true);
+			included[path] = inc;
+			return inc;
+		}
 	}
 };
 

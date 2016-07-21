@@ -128,9 +128,10 @@ struct Comment {
 class Source;
 
 struct Inclusion {
-	Inclusion(Source* s) : source(s) { }
+	Inclusion(Source* s, bool p) : source(s), primary(p) { }
 	~Inclusion();
 	Source* source;
+	bool    primary;
 };
 
 struct Node {

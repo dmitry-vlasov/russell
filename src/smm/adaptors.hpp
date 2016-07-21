@@ -98,4 +98,8 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(std::string, text)
 )
 
-
+BOOST_FUSION_ADAPT_STRUCT(
+	mdl::smm::Inclusion,
+	(mdl::smm::Source*, source)
+	(bool,             primary)
+)

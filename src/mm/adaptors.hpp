@@ -110,6 +110,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Inclusion,
 	(mdl::mm::Source*, source)
+	(bool,            primary)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
