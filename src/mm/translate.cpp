@@ -187,9 +187,7 @@ smm::Proof* translate_proof(const Maps& maps, const Proof* mproof) {
 		case Ref::AXIOM:
 			sproof->refs.push_back(smm::Ref(maps.axioms[val.ax], true)); break;
 		case Ref::THEOREM:
-			//if (maps.theorems.has(val.th))
-				sproof->refs.push_back(smm::Ref(maps.theorems[val.th], false));
-			//break;
+			sproof->refs.push_back(smm::Ref(maps.theorems[val.th], false)); break;
 		default : assert(false && "impossible"); break;
 		}
 	}
@@ -300,7 +298,7 @@ ArgMap arg_map(const deque<Node>& ar_orig) {
 
 smm::Assertion* translate_ass(Maps& maps, const Node& n, const Block* block)  {
 	smm::Assertion* ass = new smm::Assertion();
-	Set<uint> red;
+	static Set<uint> red;
 	ass->prop = smm::Proposition {n.type == Node::AXIOM, n.label(), n.expr()};
 	Header header;
 	gather(n.ind, block, header);
