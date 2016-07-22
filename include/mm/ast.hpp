@@ -194,15 +194,15 @@ struct Node {
 
 
 struct Block {
-	Block(): contents(), parent(nullptr), ind(-1) { }
-	Block(Block* p) : contents(), parent(p), ind(-1) { }
+	Block(): ind(-1), parent(nullptr), contents() { }
+	Block(Block* p) : ind(-1), parent(p), contents() { }
 	~ Block() {
 		for (auto& node : contents)
 			node.destroy();
 	}
-	vector<Node> contents;
+	uint ind;
 	Block* parent;
-	uint   ind;
+	vector<Node> contents;
 };
 
 struct Source {

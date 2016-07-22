@@ -6,11 +6,13 @@ namespace mdl { namespace mm {
 
 Proof* to_tree(const Proof* proof) {
 	stack<Ref> stack;
-	cout << endl << "to_tree" << *proof << endl;
+	static int c = 0;
+	//cout << endl << "to_tree: " << *proof << endl;
 	for (auto r : proof->refs) {
 		switch(r.type) {
 		case Ref::ESSENTIAL:
 		case Ref::FLOATING:
+			//cout << "A) push ref: " << r << ", c = " << c << endl;
 			stack.push(r);
 			break;
 		case Ref::AXIOM:
@@ -18,7 +20,7 @@ Proof* to_tree(const Proof* proof) {
 			Proof* p = new Proof(Proof::TREE);
 			p->refs.push_back(r);
 
-			cout << "ref: " <<  r << ", arity: " << r.arity() << endl;
+			//cout << "B) pop ref: " <<  r << ", arity: " << r.arity() << endl;
 
 			for (uint i = 0; i < r.arity(); ++ i) {
 				p->refs.push_back(stack.top());
@@ -26,6 +28,9 @@ Proof* to_tree(const Proof* proof) {
 			}
 			std::reverse(p->refs.begin(), p->refs.end());
 			stack.push(Ref(p));
+
+			//cout << "B) push ref: " <<  Ref(p) << endl;
+
 		}	break;
 		default : assert(false && "impossible"); break;
 		}
@@ -42,6 +47,10 @@ Proof* to_tree(const Proof* proof) {
 			stack.pop();
 		}
 		throw Error("non-empty stack");
+	}
+	if (++c > 10) {
+		//exit(-1);
+		//throw Error("time to stop");
 	}
 	assert(stack.empty());
 	return tree;
