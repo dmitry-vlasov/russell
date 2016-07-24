@@ -302,13 +302,7 @@ smm::Assertion* translate_ass(Maps& maps, const Node& n, const Block* block)  {
 	reduce(maps, ass, args, n.proof());
 	n.arity() = ass->essential.size() + ass->floating.size();
 	if (n.type == Node::THEOREM) {
-		try {
-			ass->proof = transform_proof(maps, red, n.val.th->proof);
-		} catch (Error& err) {
-			cout << err.what() << endl;
-			cout << n << endl;
-			cout << *ass << endl;
-		}
+		ass->proof = transform_proof(maps, red, n.val.th->proof);
 		if (!ass->proof) {
 			// Dummy (redundant) theorem
 			red.s.insert(n.label());
@@ -375,13 +369,14 @@ void translate_block(Maps& maps, const Block* source, smm::Source* target) {
 }
 
 smm::Source* translate_source(Maps& maps, const Source* src) {
-	if (maps.sources.has(src))
+	if (maps.sources.has(src)) {
 		return maps.sources[src];
-	else {
+	} else {
 		string name = src->name;
 		boost::replace_last(name, ".mm", ".smm");
 		smm::Source* target = new smm::Source(name);
 		translate_block(maps, src->block, target);
+		maps.sources[src] = target;
 		return target;
 	}
 }

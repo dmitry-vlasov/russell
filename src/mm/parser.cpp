@@ -7,16 +7,12 @@ Source* parse(const string& path) {
 	if (!in.is_open())
 		throw Error("Could not open input file");
 
-	//cout << "LOADING:" << endl << path << endl;
-
 	string storage;
 	in.unsetf(std::ios::skipws);
 	std::copy(
 		std::istream_iterator<char>(in),
 		std::istream_iterator<char>(),
 		std::back_inserter(storage));
-
-	//cout << endl << endl << endl << "GOT:" << endl << storage << endl << endl;
 
 	LocationIter iter(storage.begin(), path);
 	LocationIter end(storage.end(), path);
@@ -28,9 +24,6 @@ Source* parse(const string& path) {
 	if (iter != end) {
 		throw Error("parsing failed: iter != end");
 	}
-
-	//cout << "FINISHED:" << endl << path << endl << "\n\n\n\n\n" << endl;
-
 	return source;
 }
 

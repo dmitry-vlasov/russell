@@ -171,7 +171,7 @@ struct Source {
 	vector<Node> contents;
 };
 
-inline Inclusion::~Inclusion() { if (source) delete source; }
+inline Inclusion::~Inclusion() { if (primary && source) delete source; }
 
 inline Assertion::Assertion() :
 	variables(), disjointed(), essential(),
