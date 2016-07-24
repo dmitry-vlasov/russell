@@ -61,11 +61,8 @@ void save(Section* src) {
 namespace fs = boost::filesystem;
 
 void Section::save() const {
-	if (type != Type::SOURCE)
+	if (dir.size() && !fs::exists(dir))
 		fs::create_directories(dir);
-
-	//cout << endl << "writing: " << path << endl;
-
 	ofstream out(path);
 	out << show_contents(*this) << endl;
 	for (Section* s : parts) {

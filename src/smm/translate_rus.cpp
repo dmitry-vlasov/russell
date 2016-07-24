@@ -410,19 +410,7 @@ inline rus::Import* translate_import(const Inclusion* inc, State& s) {
 	rus::Source* src = translate_source(inc->source, s);
 	return new rus::Import(src, inc->primary);
 }
-/*
-void translate_node(const Node& node, State& state) {
-	switch(node.type) {
-	case Node::CONSTANTS: translate_const(node.val.cst, state); break;
-	case Node::ASSERTION: translate_ass(node.val.ass, state); break;
-	case Node::INCLUSION:
-		// TODO:
-		//translate(node.val.blk, target);
-		break;
-	default : assert(false && "impossible"); break;
-	}
-}
-*/
+
 void translate_theory(const Source* source, State& state) {
 	for (auto node : source->contents) {
 		if (node.type == Node::INCLUSION) {

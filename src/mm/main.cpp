@@ -60,7 +60,8 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 			return false;
 	}
 	if (conf.mode == Config::Mode::NONE) return false;
-	if (!conf.out.empty() && !conf.deep) {
+	if (conf.out.empty()) return false;
+	if (!conf.deep) {
 		if (boost::ends_with(conf.out, ".smm") &&
 			conf.mode != Config::Mode::TRANSL) {
 			return false;
@@ -68,8 +69,7 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 			conf.mode == Config::Mode::TRANSL) {
 			return false;
 		}
-	} else
-		return false;
+	}
 	return true;
 }
 

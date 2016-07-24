@@ -19,8 +19,9 @@ Section* parse(const string& path, const string& out) {
 	LocationIter iter(storage.begin(), path);
 	LocationIter end(storage.end(), path);
 	Section* source = new Section;
-	source->file = out;
 	source->path = out;
+	source->file = out;
+	source->dir = out.substr(0, out.find_last_of("/")) + "/";
 	boost::erase_last(source->file, ".mm");
 	source->type = Type::SOURCE;
 	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, source);

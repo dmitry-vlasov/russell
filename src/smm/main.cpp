@@ -52,12 +52,14 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 	}
 	if (conf.in.empty()) return false;
 	if (conf.out.empty()) return true;
-	if (conf.out.substr(conf.out.size() - 3) == ".mm")
-		conf.target = Config::TARGET_MM;
-	else if (conf.out.substr(conf.out.size() - 4) == ".rus")
-		conf.target = Config::TARGET_RUS;
-	else
-		return false;
+	if (!conf.deep) {
+		if (boost::ends_with(conf.out, ".mm"))
+			conf.target = Config::TARGET_MM;
+		else if (boost::ends_with(conf.out, ".rus"))
+			conf.target = Config::TARGET_RUS;
+		else
+			return false;
+	}
 	return true; // pacify the compiler
 }
 

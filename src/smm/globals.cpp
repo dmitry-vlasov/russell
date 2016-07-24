@@ -1,3 +1,4 @@
+#include <boost/filesystem.hpp>
 #include "smm/globals.hpp"
 
 namespace mdl {
@@ -58,6 +59,8 @@ bool Smm::verify() {
 	}
 }
 
+namespace fs = boost::filesystem;
+
 bool Smm::translate() {
 	try {
 		if (config.out.empty()) return true;
@@ -74,8 +77,10 @@ bool Smm::translate() {
 				to_write.push(target);
 				while (!to_write.empty()) {
 					mm::Source* src = to_write.top();
+					if (!fs::exists(src->dir()))
+						fs::create_directories(src->dir());
 					ofstream out(src->path());
-					out << *target << endl;
+					out << *src << endl;
 					out.close();
 					written.s.insert(src);
 					to_write.pop();

@@ -51,7 +51,8 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 			return false;
 	}
 	if (conf.in.empty()) return false;
-	if (!conf.out.empty() && !conf.deep) {
+	if (conf.out.empty()) return true;
+	if (!conf.deep) {
 		if (boost::ends_with(conf.out, ".smm")) {
 			if (conf.mode == Config::Mode::NONE)
 				conf.mode = Config::Mode::TRANSL;

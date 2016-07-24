@@ -1,3 +1,5 @@
+#include <boost/filesystem.hpp>
+
 #include "mm/ast.hpp"
 #include "smm/ast.hpp"
 #include "cut/ast.hpp"
@@ -58,6 +60,8 @@ bool merge_mm(Mm& mm) {
 	}
 }
 
+namespace fs = boost::filesystem;
+
 bool translate_mm(Mm& mm) {
 	try {
 		if (mm.config.out.empty()) {
@@ -73,8 +77,10 @@ bool translate_mm(Mm& mm) {
 			to_write.push(target);
 			while (!to_write.empty()) {
 				smm::Source* src = to_write.top();
+				if (!fs::exists(src->dir()))
+					fs::create_directories(src->dir());
 				ofstream out(src->path());
-				out << *target << endl;
+				out << *src << endl;
 				out.close();
 				written.s.insert(src);
 				to_write.pop();

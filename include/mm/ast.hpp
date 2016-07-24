@@ -215,6 +215,7 @@ struct Source {
 	string root;
 	string name;
 	string path() { return (root.size() ? root + "/" + name : name) + ".mm"; }
+	string dir() { string p = path(); return p.substr(0, p.find_last_of("/")) + "/"; }
 	Block* block;
 };
 
