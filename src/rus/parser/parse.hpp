@@ -232,10 +232,17 @@ struct ParseTerm {
 
 struct ParseImport {
 	template <typename T>
-	struct result { typedef Source* type; };
-	Source* operator()(const string& path) const {
-		// TODO
-		return nullptr; //parse(path);
+	struct result { typedef Import* type; };
+	Import* operator()(const string& path) const {
+		static Map<string, Import*> imported;
+		if (imported.has(path)) {
+			Import* imp = imported[path];
+			return new Import(imp->source, false);
+		} else {
+			Import* imp = new Import(parse(path), true);
+			imported[path] = imp;
+			return imp;
+		}
 	}
 };
 
@@ -390,7 +397,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, Rule*(), unicode::space_type> rule;
 	qi::rule<Iterator, Type*(), unicode::space_type> type;
 	qi::rule<Iterator, Const*(), unicode::space_type> constant;
-	qi::rule<Iterator, Source*(), unicode::space_type> import;
+	qi::rule<Iterator, Import*(), unicode::space_type> import;
 	qi::rule<Iterator, qi::unused_type, unicode::space_type> comment;
 	qi::rule<Iterator, Source(), unicode::space_type> source;
 };

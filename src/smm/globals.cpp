@@ -68,10 +68,30 @@ bool Smm::translate() {
 		case Config::TARGET_NONE: break;
 		case Config::TARGET_MM: {
 			mm::Source* target = smm::translate_to_mm(source);
-			//cout << endl << *target;
-			ofstream out(config.out);
-			out << *target << endl;
-			out.close();
+			if (config.deep) {
+				Set<mm::Source*> written;
+				stack<mm::Source*> to_write;
+				to_write.push(target);
+				while (!to_write.empty()) {
+					mm::Source* src = to_write.top();
+					ofstream out(src->path());
+					out << *target << endl;
+					out.close();
+					written.s.insert(src);
+					to_write.pop();
+					for (auto n : src->block->contents) {
+						if (n.type == mm::Node::INCLUSION) {
+							if (!written.has(n.val.inc->source)) {
+								to_write.push(n.val.inc->source);
+							}
+						}
+					}
+				}
+			} else {
+				ofstream out(config.out);
+				out << *target << endl;
+				out.close();
+			}
 			delete target;
 		}	break;
 		case Config::TARGET_RUS: {

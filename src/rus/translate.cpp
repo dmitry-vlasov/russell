@@ -11,6 +11,7 @@ struct Maps {
 	Map<const Type*, uint> types;
 	Map<const Rule*, smm::Assertion*> rules;
 	Map<const Rule*, Map<Symbol, uint>> rules_args;
+	Map<const Source*, smm::Source*> sources;
 	smm::Assertion* thm;
 	mdl::Symbol turnstile;
 };
@@ -283,35 +284,61 @@ vector<smm::Node> translate_proof(const Proof* proof, Maps& maps) {
 	return nodes;
 }
 
+smm::Source* translate_source(const Source* src, Maps& maps, smm::Source* target = nullptr);
+
+smm::Inclusion* translate_import(const Import* imp, Maps& maps) {
+	smm::Source* src = translate_source(imp->source, maps);
+	return new smm::Inclusion(src, imp->source->top);
+}
+
 vector<smm::Node> translate_theory(const Theory* thy, Maps& maps) {
 	vector<smm::Node> nodes;
 	if (!thy->parent)
 		nodes.push_back(translate_turnstile(maps));
 	for (auto n : thy->nodes) {
 		switch (n.kind) {
-		case Node::CONST:   nodes.push_back(translate_const(n.val.cst));      break;
-		case Node::TYPE:    join(nodes, translate_type(n.val.tp, maps));      break;
-		case Node::RULE:    nodes.push_back(translate_rule(n.val.rul, maps)); break;
-		case Node::AXIOM:   join(nodes, translate_axiom(n.val.ax, maps));     break;
-		case Node::DEF:     join(nodes, translate_def(n.val.def, maps));       break;
+		case Node::CONST:   nodes.push_back(translate_const(n.val.cst));        break;
+		case Node::TYPE:    join(nodes, translate_type(n.val.tp, maps));        break;
+		case Node::RULE:    nodes.push_back(translate_rule(n.val.rul, maps));   break;
+		case Node::AXIOM:   join(nodes, translate_axiom(n.val.ax, maps));       break;
+		case Node::DEF:     join(nodes, translate_def(n.val.def, maps));        break;
 		case Node::THEOREM: break;  // theorem is translated implicitly in proof
-		case Node::PROOF:   join(nodes, translate_proof(n.val.prf, maps));    break;
-		case Node::THEORY:  join(nodes, translate_theory(n.val.thy, maps));   break;
-		case Node::IMPORT: break;
+		case Node::PROOF:   join(nodes, translate_proof(n.val.prf, maps));      break;
+		case Node::THEORY:  join(nodes, translate_theory(n.val.thy, maps));     break;
+		case Node::IMPORT:  nodes.push_back(translate_import(n.val.imp, maps)); break;
 		default : assert(false && "impossible"); break;
 		}
 	}
 	return nodes;
 }
 
+smm::Source* translate_source(const Source* src, Maps& maps, smm::Source* target) {
+	if (maps.sources.has(src)) {
+		return maps.sources[src];
+	} else {
+		Config conf = Rus::get().config;
+		if (!target)
+			target = new smm::Source(
+				conf.deep ? conf.out : conf.root,
+				src->name
+			);
+		maps.sources[src] = target;
+		target->contents = translate_theory(src->theory, maps);
+		return target;
+	}
+}
+
 }
 
 smm::Source* translate(const Source* src) {
-	smm::Source* target = new smm::Source(Rus::get().config.out);
+	Config conf = Rus::get().config;
+	smm::Source* target = new smm::Source(
+		conf.deep ? conf.out : conf.root,
+		conf.deep ? conf.in  : conf.out
+	);
 	Maps maps;
 	maps.thm = nullptr;
-	target->contents = translate_theory(src->theory, maps);
-	return target;
+	return translate_source(src, maps, target);
 }
 
 }} // mdl::rus

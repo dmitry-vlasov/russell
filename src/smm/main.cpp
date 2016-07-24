@@ -11,6 +11,7 @@ static void showHelp() {
 	cout << " -i  --in <path>    input file"  << endl;
 	cout << " -o  --out <path>   output file. Type of target is determined by extension: mm or rus"  << endl;
 	cout << " -r  --root <path>  root directory (for inclusions)" << endl;
+	cout << " -d  --deep         deep translation" << endl;
 	cout << " -h  --help         print the help" << endl;
 	cout << " -v  --verbose      not be silent"  << endl;
 	cout << "     --info         info about math: timings, memory, stats"  << endl;
@@ -40,6 +41,8 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 				conf.root = argv[i];
 		} else if (arg == "-h" || arg == "--help")
 			conf.help = true;
+		else if (arg == "-d" || arg == "--deep")
+			conf.deep = true;
 		else if (arg == "-v" || arg == "--verbose")
 			conf.verbose = true;
 		else if (arg == "--info")

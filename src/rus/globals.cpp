@@ -55,9 +55,30 @@ bool translate_rus(Rus& rus) {
 		if (rus.config.verbose) cout << "translating file " << rus.config.in << " ... " << flush;
 		rus.timers.translate.start();
 		smm::Source* target = translate(rus.source);
-		ofstream out(rus.config.out);
-		out << *target << endl;
-		out.close();
+		if (rus.config.deep) {
+			Set<smm::Source*> written;
+			stack<smm::Source*> to_write;
+			to_write.push(target);
+			while (!to_write.empty()) {
+				smm::Source* src = to_write.top();
+				ofstream out(src->path());
+				out << *target << endl;
+				out.close();
+				written.s.insert(src);
+				to_write.pop();
+				for (auto n : src->contents) {
+					if (n.type == smm::Node::INCLUSION) {
+						if (!written.has(n.val.inc->source)) {
+							to_write.push(n.val.inc->source);
+						}
+					}
+				}
+			}
+		} else {
+			ofstream out(rus.config.out);
+			out << *target << endl;
+			out.close();
+		}
 		delete target;
 		rus.timers.translate.stop();
 		if (rus.config.verbose) cout << "done in " << rus.timers.translate << endl;

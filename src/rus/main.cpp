@@ -12,6 +12,7 @@ static void showHelp() {
 	cout << " -o  --out <path>   output file"  << endl;
 	cout << " -r  --root <path>  root directory (for inclusions)" << endl;
 	cout << " -h  --help         print the help" << endl;
+	cout << " -d  --deep         deep translation" << endl;
 	cout << " -v  --verbose      not be silent"  << endl;
 	cout << "     --info         info about math: timings, memory, stats"  << endl;
 }
@@ -42,20 +43,22 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 			conf.help = true;
 		else if (arg == "-v" || arg == "--verbose")
 			conf.verbose = true;
+		else if (arg == "-d" || arg == "--deep")
+			conf.deep = true;
 		else if (arg == "--info")
 			conf.info = true;
 		else
 			return false;
 	}
 	if (conf.in.empty()) return false;
-	if (!conf.out.empty()) {
-		if (conf.out.substr(conf.out.size() - 4) == ".smm") {
+	if (!conf.out.empty() && !conf.deep) {
+		if (boost::ends_with(conf.out, ".smm")) {
 			if (conf.mode == Config::Mode::NONE)
 				conf.mode = Config::Mode::TRANSL;
 			else
 				return false;
 			conf.target = Config::Target::SMM;
-		} else if (conf.out.substr(conf.out.size() - 4) == ".rus")
+		} else if (boost::ends_with(conf.out, ".rus"))
 			conf.target = Config::Target::RUS;
 	}
 	return true;

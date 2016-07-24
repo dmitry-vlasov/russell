@@ -9,12 +9,13 @@ namespace mdl { namespace mm {
 struct Config {
 	enum class Mode   { NONE, TRANSL, CUT, MERGE };
 	Config() :
-	verbose(false), info(false), help(false),
+	verbose(false), info(false), help(false), deep(false),
 	mode(Mode::NONE), in(), root() { }
 
 	bool verbose;
 	bool info;
 	bool help;
+	bool deep;
 
 	Mode   mode;
 

@@ -2,7 +2,11 @@
 
 namespace mdl { namespace smm {
 
-Source* parse(const string& path) {
+Source* parse(const string& name) {
+	string path =
+		Smm::get().config.root.size() ?
+		Smm::get().config.root + "/" + name :
+		name;
 	ifstream in(path, std::ios_base::in);
 	if (!in.is_open())
 		throw Error("Could not open input file");
@@ -16,7 +20,7 @@ Source* parse(const string& path) {
 
 	LocationIter iter(storage.begin(), path);
 	LocationIter end(storage.end(), path);
-	Source* source = new Source(path);
+	Source* source = new Source(Smm::get().config.root, name);
 	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, *source);
 	if (!r || iter != end) {
 		throw Error("parsing failed");

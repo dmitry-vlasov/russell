@@ -92,14 +92,14 @@ struct LabelToInt {
 struct ParseInclusion {
 	template <typename T>
 	struct result { typedef Inclusion* type; };
-	Inclusion* operator()(const string& path) const {
+	Inclusion* operator()(const string& name) const {
 		static Map<string, Inclusion*> included;
-		if (included.has(path)) {
-			Inclusion* inc = included[path];
+		if (included.has(name)) {
+			Inclusion* inc = included[name];
 			return new Inclusion(inc->source, false);
 		} else {
-			Inclusion* inc = new Inclusion(parse(path), true);
-			included[path] = inc;
+			Inclusion* inc = new Inclusion(parse(name), true);
+			included[name] = inc;
 			return inc;
 		}
 	}

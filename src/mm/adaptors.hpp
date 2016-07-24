@@ -104,9 +104,9 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Source,
+	(std::string, root)
 	(std::string, name)
 	(mdl::mm::Block*, block)
-	(std::vector<mdl::mm::Node>, contents)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(

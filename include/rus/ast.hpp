@@ -1,5 +1,5 @@
 #pragma once
-
+#include <boost/algorithm/string.hpp>
 //#include <boost/variant/recursive_variant.hpp>
 #include "common.hpp"
 #include "rus/expr.hpp"
@@ -277,8 +277,10 @@ struct Node {
 struct Source;
 
 struct Import {
-	string  path;
+	Import(Source* src, bool prim) : source(src), primary(prim) { }
+	~Import();
 	Source* source;
+	bool    primary;
 };
 
 struct Theory {
@@ -292,13 +294,15 @@ struct Theory {
 };
 
 struct Source {
-	Source(const string& n) :
-	top(false), name(n), theory(nullptr) {
+	Source(const string& r, const string& n) :
+	top(false), root(r), name(n), theory(nullptr) {
 		static bool t = true; top = t; t = false;
 	}
 	~Source() { if (theory) delete theory; }
 	bool    top;
+	string  root;
 	string  name;
+	string  path() { return (root.size() ? root + "/" + name : name) + ".rus"; }
 	Theory* theory;
 };
 
@@ -327,6 +331,10 @@ inline void Proof::Elem::destroy() {
 	default : assert(false && "impossible"); break;
 	}
 	kind = NONE;
+}
+
+inline Import::~Import() {
+	if (primary && source) delete source;
 }
 
 string show(const Const&);

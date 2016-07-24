@@ -4,15 +4,16 @@
 namespace mdl { namespace smm { namespace {
 
 struct Maps {
-	map<const smm::Assertion*, mm::Theorem*>   theorems;
-	map<const smm::Assertion*, mm::Axiom*>     axioms;
-	map<const smm::Essential*, mm::Essential*> essentials;
-	map<const smm::Floating*,  mm::Floating*>  floatings;
-	map<const smm::Inner*,     mm::Floating*>  inners;
+	Map<const smm::Assertion*, mm::Theorem*>   theorems;
+	Map<const smm::Assertion*, mm::Axiom*>     axioms;
+	Map<const smm::Essential*, mm::Essential*> essentials;
+	Map<const smm::Floating*,  mm::Floating*>  floatings;
+	Map<const smm::Inner*,     mm::Floating*>  inners;
+	Map<const smm::Source*,    mm::Source*>    sources;
 	Transform                            transform;
 };
 
-static mm::Proof* translate(const Maps& maps, const Proof* proof) {
+mm::Proof* translate(const Maps& maps, const Proof* proof) {
 	Proof* tree = to_tree(proof);
 	transform(tree, maps.transform);
 	Proof* rpn = to_rpn(tree);
@@ -20,11 +21,11 @@ static mm::Proof* translate(const Maps& maps, const Proof* proof) {
 	for (auto& r : rpn->refs) {
 		mm::Ref ref;
 		switch (r.type) {
-		case Ref::AXIOM:     ref = mm::Ref(maps.axioms.find(r.val.ass)->second);     break;
-		case Ref::THEOREM:   ref = mm::Ref(maps.theorems.find(r.val.ass)->second);   break;
-		case Ref::FLOATING:  ref = mm::Ref(maps.floatings.find(r.val.flo)->second);  break;
-		case Ref::INNER:     ref = mm::Ref(maps.inners.find(r.val.inn)->second);     break;
-		case Ref::ESSENTIAL: ref = mm::Ref(maps.essentials.find(r.val.ess)->second); break;
+		case Ref::AXIOM:     ref = mm::Ref(maps.axioms[r.val.ass]);     break;
+		case Ref::THEOREM:   ref = mm::Ref(maps.theorems[r.val.ass]);   break;
+		case Ref::FLOATING:  ref = mm::Ref(maps.floatings[r.val.flo]);  break;
+		case Ref::INNER:     ref = mm::Ref(maps.inners[r.val.inn]);     break;
+		case Ref::ESSENTIAL: ref = mm::Ref(maps.essentials[r.val.ess]); break;
 		default : assert(false && "impossible"); break;
 		}
 		pr->refs.push_back(ref);
@@ -34,7 +35,7 @@ static mm::Proof* translate(const Maps& maps, const Proof* proof) {
 	return pr;
 }
 
-static Perm create_permutation(uint flos, uint esss) {
+Perm create_permutation(uint flos, uint esss) {
 	Perm perm;
 	for (uint i = 0; i < esss; ++ i)
 		perm[i] = i + flos;
@@ -43,7 +44,9 @@ static Perm create_permutation(uint flos, uint esss) {
 	return perm;
 }
 
-static void translate(const Node& node, mm::Block* target, Maps& maps) {
+mm::Source* translate_source(const Source* src, Maps& maps, mm::Source* target = nullptr);
+
+void translate(const Node& node, mm::Block* target, Maps& maps) {
 	switch(node.type) {
 	case Node::CONSTANTS: {
 		mm::Constants* c = new mm::Constants { node.val.cst->expr };
@@ -85,12 +88,12 @@ static void translate(const Node& node, mm::Block* target, Maps& maps) {
 			th->expr = ass->prop.expr;
 			th->proof = pr;
 			block->contents.push_back(mm::Node(th));
-			assert(maps.theorems.find(ass) == maps.theorems.end());
+			assert(!maps.theorems.has(ass));
 			maps.theorems[ass] = th;
 		} else {
 			mm::Axiom* ax = new mm::Axiom { ass->prop.label, ass->prop.expr };
 			block->contents.push_back(mm::Node(ax));
-			assert(maps.axioms.find(ass) == maps.axioms.end());
+			assert(!maps.axioms.has(ass));
 			maps.axioms[ass] = ax;
 		}
 		block->parent = target;
@@ -101,27 +104,43 @@ static void translate(const Node& node, mm::Block* target, Maps& maps) {
 		);
 		maps.transform[ass->prop.label] = perm;
 	}	break;
-	case Node::INCLUSION:
-		// TODO:
-		//translate(node.val.blk, target);
-		break;
+	case Node::INCLUSION:{
+		mm::Source* s = translate_source(node.val.inc->source, maps);
+		mm::Inclusion* i = new mm::Inclusion(s, node.val.inc->primary);
+		target->contents.push_back(mm::Node(i));
+	} 	break;
 	default : assert(false && "impossible"); break;
 	}
 }
 
 
-static void translate(const Source* source, mm::Block* target) {
-	Maps maps;
-	for (auto& node : source->contents)
-		translate(node, target, maps);
+mm::Source* translate_source(const Source* src, Maps& maps, mm::Source* target) {
+	if (maps.sources.has(src)) {
+		return maps.sources[src];
+	} else {
+		Config conf = Smm::get().config;
+		if (!target)
+			target = new mm::Source(
+				conf.deep ? conf.out : conf.root,
+				src->name
+			);
+		maps.sources[src] = target;
+		for (auto& node : src->contents)
+			translate(node, target->block, maps);
+		return target;
+	}
 }
 
 }
 
 mm::Source* translate_to_mm(const Source* source) {
-	mm::Source* target = new mm::Source(Smm::get().config.out);
-	translate(source, target->block);
-	return target;
+	Config conf = Smm::get().config;
+	mm::Source* target = new mm::Source(
+		conf.deep ? conf.out : conf.root,
+		conf.deep ? conf.in  : conf.out
+	);
+	Maps maps;
+	return translate_source(source, maps, target);
 }
 
 }} // mdl::smm

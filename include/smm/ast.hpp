@@ -1,5 +1,7 @@
 #pragma once
 
+#include <boost/algorithm/string.hpp>
+
 #include "common.hpp"
 
 namespace mdl { namespace smm {
@@ -161,13 +163,16 @@ struct Node {
 };
 
 struct Source {
-	Source(const string& n) :
-	name(n), contents() {}
+	Source(const string& r, const string& n) : root(r), name(n), contents() {
+		boost::erase_last(name, ".smm");
+	}
 	~ Source() {
 		for (auto& node : contents)
 			node.destroy();
 	}
+	string root;
 	string name;
+	string path() { return (root.size() ? root + "/" + name : name) + ".mm"; }
 	vector<Node> contents;
 };
 

@@ -318,7 +318,7 @@ smm::Assertion* translate_ass(Maps& maps, const Node& n, const Block* block)  {
 }
 
 void translate_block(Maps& maps, const Block* source, smm::Source* target);
-smm::Source* translate_source(Maps& maps, const Source* src);
+smm::Source* translate_source(Maps& maps, const Source* src, smm::Source* target = nullptr);
 
 void translate_node(Maps& maps, const Node& node, const Block* block, smm::Source* target) {
 	switch(node.type) {
@@ -368,15 +368,18 @@ void translate_block(Maps& maps, const Block* source, smm::Source* target) {
 	}
 }
 
-smm::Source* translate_source(Maps& maps, const Source* src) {
+smm::Source* translate_source(Maps& maps, const Source* src, smm::Source* target) {
 	if (maps.sources.has(src)) {
 		return maps.sources[src];
 	} else {
-		string name = src->name;
-		boost::replace_last(name, ".mm", ".smm");
-		smm::Source* target = new smm::Source(name);
-		translate_block(maps, src->block, target);
+		Config conf = Mm::get().config;
+		if (!target)
+			target = new smm::Source(
+				conf.deep ? conf.out : conf.root,
+				src->name
+			);
 		maps.sources[src] = target;
+		translate_block(maps, src->block, target);
 		return target;
 	}
 }
@@ -384,7 +387,11 @@ smm::Source* translate_source(Maps& maps, const Source* src) {
 }
 
 smm::Source* translate(const Source* source) {
-	smm::Source* target = new smm::Source(Mm::get().config.out);
+	Config conf = Mm::get().config;
+	smm::Source* target = new smm::Source(
+		conf.deep ? conf.out : conf.root,
+		conf.deep ? conf.in  : conf.out
+	);
 	Maps maps;
 	scope_stack.push_back(Scope());
 	translate_block(maps, source->block, target);

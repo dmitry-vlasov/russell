@@ -14,6 +14,7 @@ static void showHelp() {
 	cout << " -h  --help         print the help" << endl;
 	cout << " -v  --verbose      not be silent"  << endl;
 	cout << " -t  --translate    translate source to smm" << endl;
+	cout << " -d  --deep         deep translation to smm" << endl;
 	cout << " -c  --cut          cut source into pieces" << endl;
 	cout << " -m  --merge        merge source from pieces" << endl;
 	cout << "     --info         info about math: timings, memory, stats"  << endl;
@@ -51,17 +52,19 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 			conf.mode = Config::Mode::MERGE;
 		else if (arg == "-t" || arg == "--translate")
 			conf.mode = Config::Mode::TRANSL;
+		else if (arg == "-d" || arg == "--deep")
+			conf.deep = true;
 		else if (arg == "--info")
 			conf.info = true;
 		else
 			return false;
 	}
 	if (conf.mode == Config::Mode::NONE) return false;
-	if (!conf.out.empty()) {
-		if (conf.out.substr(conf.out.size() - 4) == ".smm" &&
+	if (!conf.out.empty() && !conf.deep) {
+		if (boost::ends_with(conf.out, ".smm") &&
 			conf.mode != Config::Mode::TRANSL) {
 			return false;
-		} else if (conf.out.substr(conf.out.size() - 3) == ".mm" &&
+		} else if (boost::ends_with(conf.out, ".mm") &&
 			conf.mode == Config::Mode::TRANSL) {
 			return false;
 		}

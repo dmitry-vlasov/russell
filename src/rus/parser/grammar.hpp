@@ -260,15 +260,16 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 	comment = lit("/*") >> lexeme[*(unicode::char_ - "*/")] >> "*/" |
 			  lit("//") >> lexeme[*(unicode::char_ - "\n")] >> "\n";
 	source =
-		eps [at_c<2>(_val) = new_<Theory>()]
+		eps [at_c<3>(_val) = new_<Theory>()]
 		> +(
-		constant [push_back(at_c<1>(*at_c<2>(_val)), phoenix::construct<Node>(_1))] |
-		type     [push_back(at_c<1>(*at_c<2>(_val)), phoenix::construct<Node>(_1))] |
-		rule     [push_back(at_c<1>(*at_c<2>(_val)), phoenix::construct<Node>(_1))] |
-		axiom    [push_back(at_c<1>(*at_c<2>(_val)), phoenix::construct<Node>(_1))] |
-		def      [push_back(at_c<1>(*at_c<2>(_val)), phoenix::construct<Node>(_1))] |
-		theorem  [push_back(at_c<1>(*at_c<2>(_val)), phoenix::construct<Node>(_1))] |
-		proof    [push_back(at_c<1>(*at_c<2>(_val)), phoenix::construct<Node>(_1))] |
+		import   [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
+		constant [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
+		type     [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
+		rule     [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
+		axiom    [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
+		def      [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
+		theorem  [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
+		proof    [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
 		comment);
 
 	//qi::on_success(assertion, setLocation(_val, _1));

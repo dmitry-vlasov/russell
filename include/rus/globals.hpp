@@ -10,13 +10,14 @@ struct Config {
 	enum class Mode   { NONE, TRANSL, PROVE };
 	enum class Target { NONE, SMM, RUS };
 	Config() :
-	verbose(false), info(false), help(false),
+	verbose(false), info(false), help(false), deep(false),
 	mode(Mode::NONE),
 	in(), root(), target(Target::NONE) { }
 
 	bool verbose;
 	bool info;
 	bool help;
+	bool deep;
 
 	Mode mode;
 

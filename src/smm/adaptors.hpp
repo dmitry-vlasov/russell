@@ -88,7 +88,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::smm::Source,
-	(bool, top)
+	(std::string, root)
 	(std::string, name)
 	(std::vector<mdl::smm::Node>, contents)
 )

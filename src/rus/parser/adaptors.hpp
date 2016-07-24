@@ -189,7 +189,8 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Import,
-	(mdl::string, path)
+	(mdl::string, root)
+	(mdl::string, name)
 	(mdl::rus::Source*, source)
 )
 
@@ -203,6 +204,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Source,
 	(bool, top)
+	(mdl::string, root)
 	(mdl::string, name)
 	(mdl::rus::Theory*, theory)
 )

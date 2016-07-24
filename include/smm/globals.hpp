@@ -10,12 +10,13 @@ namespace mdl { namespace smm {
 struct Config {
 	enum Target { TARGET_NONE, TARGET_MM, TARGET_RUS };
 	Config() :
-	verbose(false), info(false), help(false),
+	verbose(false), info(false), help(false), deep(false),
 	in(), root(), target(TARGET_NONE) { }
 
 	bool verbose;
 	bool info;
 	bool help;
+	bool deep;
 
 	string in;
 	string out;

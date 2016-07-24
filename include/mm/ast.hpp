@@ -1,5 +1,7 @@
 #pragma once
 
+#include <boost/algorithm/string.hpp>
+
 #include "common.hpp"
 
 namespace mdl { namespace mm {
@@ -207,15 +209,18 @@ struct Block {
 };
 
 struct Source {
-	Source(const string& n) : name(n), block(new Block) { }
-	Source(const string& n, Block* r) : name(n), block(r) { }
+	Source(const string& r, const string& n) : root(r), name(n), block(new Block) {
+		boost::erase_last(name, ".mm");
+	}
+	string root;
 	string name;
+	string path() { return (root.size() ? root + "/" + name : name) + ".mm"; }
 	Block* block;
 };
 
 struct Inclusion {
 	Inclusion(Source* src, bool prim) : source(src), primary(prim) { }
-	~ Inclusion() { if (source) delete source; }
+	~ Inclusion() { if (primary && source) delete source; }
 	Source* source;
 	bool primary;
 };

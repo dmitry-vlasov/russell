@@ -67,9 +67,30 @@ bool translate_mm(Mm& mm) {
 		mm.timers.work.start();
 		smm::Source* target = translate(mm.source);
 		//cout << endl << *target;
-		ofstream out(mm.config.out);
-		out << *target << endl;
-		out.close();
+		if (mm.config.deep) {
+			Set<smm::Source*> written;
+			stack<smm::Source*> to_write;
+			to_write.push(target);
+			while (!to_write.empty()) {
+				smm::Source* src = to_write.top();
+				ofstream out(src->path());
+				out << *target << endl;
+				out.close();
+				written.s.insert(src);
+				to_write.pop();
+				for (auto n : src->contents) {
+					if (n.type == smm::Node::INCLUSION) {
+						if (!written.has(n.val.inc->source)) {
+							to_write.push(n.val.inc->source);
+						}
+					}
+				}
+			}
+		} else {
+			ofstream out(mm.config.out);
+			out << *target << endl;
+			out.close();
+		}
 		delete target;
 		mm.timers.work.stop();
 		return true;
