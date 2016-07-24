@@ -232,7 +232,7 @@ smm::Proof* transform_proof(const Maps& maps, const Set<uint>& red, const Proof*
 	return pr;
 }
 
-struct Header {
+struct Scope {
 	deque<Variables*>  vars;
 	deque<Disjointed*> disj;
 	deque<Floating*>   flos;
@@ -240,39 +240,30 @@ struct Header {
 	deque<Node>        args;
 };
 
-void gather(uint ind, const Block* block, Header& header) {
-	for (int i = ind - 1; i >= 0; -- i) {
-		switch (block->contents[i].type) {
-		case Node::VARIABLES:
-			header.vars.push_front(block->contents[i].val.var);
-			break;
-		case Node::DISJOINTED:
-			header.disj.push_front(block->contents[i].val.dis);
-			break;
-		case Node::FLOATING:
-			header.flos.push_front(block->contents[i].val.flo);
-			header.args.push_front(block->contents[i]);
-			break;
-		case Node::ESSENTIAL:
-			header.esss.push_front(block->contents[i].val.ess);
-			header.args.push_front(block->contents[i]);
-			break;
-		default : break;
-		}
+vector<Scope> scope_stack;
+
+Scope gather_scope() {
+	Scope scope;
+	for (auto& s : scope_stack) {
+		for (auto v : s.vars) scope.vars.push_back(v);
+		for (auto d : s.disj) scope.disj.push_back(d);
+		for (auto f : s.flos) scope.flos.push_back(f);
+		for (auto e : s.esss) scope.esss.push_back(e);
+		for (auto a : s.args) scope.args.push_back(a);
 	}
-	if (block->parent) gather(block->ind, block->parent, header);
+	return scope;
 }
 
-void add(Maps& maps, const Header& header, smm::Assertion* ass) {
-	for (auto var : header.vars)
+void add(Maps& maps, const Scope& scope, smm::Assertion* ass) {
+	for (auto var : scope.vars)
 		ass->variables.push_back(new smm::Variables { var->expr });
-	for (auto dis : header.disj)
+	for (auto dis : scope.disj)
 		ass->disjointed.push_back(new smm::Disjointed { dis->expr });
-	for (auto ess : header.esss) {
+	for (auto ess : scope.esss) {
 		ass->essential.push_back(new smm::Essential {ess->label, ess->expr });
 		maps.essentials[ess] = ass->essential.back();
 	}
-	for (auto flo : header.flos) {
+	for (auto flo : scope.flos) {
 		ass->floating.push_back(new smm::Floating {flo->label, flo->expr });
 		maps.floatings[flo] = ass->floating.back();
 	}
@@ -303,10 +294,11 @@ smm::Assertion* translate_ass(Maps& maps, const Node& n, const Block* block)  {
 	smm::Assertion* ass = new smm::Assertion();
 	static Set<uint> red;
 	ass->prop = smm::Proposition {n.type == Node::AXIOM, n.label(), n.expr()};
-	Header header;
-	gather(n.ind, block, header);
-	add(maps, header, ass);
-	ArgMap args = arg_map(header.args);
+
+	Scope scope = gather_scope();
+	add(maps, scope, ass);
+	ArgMap args = arg_map(scope.args);
+
 	reduce(maps, ass, args, n.proof());
 	n.arity() = ass->essential.size() + ass->floating.size();
 	if (n.type == Node::THEOREM) {
@@ -351,17 +343,25 @@ void translate_node(Maps& maps, const Node& node, const Block* block, smm::Sourc
 	} break;
 	case Node::BLOCK:
 		node.val.blk->ind = node.ind;
+		scope_stack.push_back(Scope());
 		translate_block(maps, node.val.blk, target);
+		scope_stack.pop_back();
 		break;
 	case Node::INCLUSION: {
 		smm::Source* s = translate_source(maps, node.val.inc->source);
 		smm::Inclusion* i = new smm::Inclusion(s, node.val.inc->primary);
 		target->contents.push_back(smm::Node(i));
 	} break;
-	case Node::VARIABLES:  break;
-	case Node::DISJOINTED: break;
-	case Node::FLOATING:   break;
-	case Node::ESSENTIAL:  break;
+	case Node::VARIABLES:
+		scope_stack.back().vars.push_back(node.val.var); break;
+	case Node::DISJOINTED:
+		scope_stack.back().disj.push_back(node.val.dis); break;
+	case Node::FLOATING:
+		scope_stack.back().args.push_back(node);
+		scope_stack.back().flos.push_back(node.val.flo); break;
+	case Node::ESSENTIAL:
+		scope_stack.back().args.push_back(node);
+		scope_stack.back().esss.push_back(node.val.ess); break;
 	default :
 		cout << node << endl;
 		assert(false && "impossible"); break;
@@ -391,7 +391,9 @@ smm::Source* translate_source(Maps& maps, const Source* src) {
 smm::Source* translate(const Source* source) {
 	smm::Source* target = new smm::Source(Mm::get().config.out);
 	Maps maps;
+	scope_stack.push_back(Scope());
 	translate_block(maps, source->block, target);
+	scope_stack.pop_back();
 	return target;
 }
 
