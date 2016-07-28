@@ -152,7 +152,7 @@ ostream& operator << (ostream& os, const Comment& com) {
 }
 
 ostream& operator << (ostream& os, const Inclusion& inc) {
-	os << "$[ " << inc.source->name << " $]";
+	os << "$[ " << inc.source->name << ".smm $]";
 	return os;
 }
 

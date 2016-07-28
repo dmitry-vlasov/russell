@@ -135,7 +135,7 @@ ostream& operator << (ostream& os, const Source& source) {
 }
 
 ostream& operator << (ostream& os, const Inclusion& inc) {
-	os << "$[" << inc.source->name << "$]\n";
+	os << "$[ " << inc.source->name << ".mm $]\n";
 	return os;
 }
 
