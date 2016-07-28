@@ -33,7 +33,7 @@ bool parse_mm(Mm& mm) {
 bool cut_mm(Mm& mm) {
 	try {
 		mm.timers.work.start();
-		cut::Section* source = cut::parse(mm.config.in, mm.config.out);
+		cut::Section* source = cut::parse(mm.config.root, mm.config.in, mm.config.out);
 		cut::split(source);
 		cut::save(source);
 		delete source;

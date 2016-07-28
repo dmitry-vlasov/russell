@@ -69,6 +69,10 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 			conf.mode == Config::Mode::TRANSL) {
 			return false;
 		}
+		if (conf.mode == Config::Mode::CUT) {
+			cout << "makes no sense cutting without --deep option" << endl;
+			return false;
+		}
 	}
 	return true;
 }
