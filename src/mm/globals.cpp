@@ -3,6 +3,7 @@
 #include "mm/ast.hpp"
 #include "smm/ast.hpp"
 #include "cut/ast.hpp"
+#include "merge/ast.hpp"
 #include "mm/globals.hpp"
 
 namespace mdl {
@@ -49,8 +50,10 @@ bool cut_mm(Mm& mm) {
 bool merge_mm(Mm& mm) {
 	try {
 		mm.timers.work.start();
-		//mm.source = parse(mm.config.in);
-		//cout << endl << *source;
+		merge::parse(mm.config.in);
+		ofstream out(mm.config.out);
+		out << merge::Source::get().contents.str();
+		out.close();
 		mm.timers.work.stop();
 		return true;
 	} catch (Error& err) {

@@ -66,6 +66,7 @@ namespace mdl {
 	using std::ostream;
 	using std::ifstream;
 	using std::ofstream;
+	using std::stringstream;
 	using std::ostringstream;
 	using std::string;
 	using std::cout;

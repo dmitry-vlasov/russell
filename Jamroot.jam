@@ -45,6 +45,7 @@ exe mm :
   src/mm/translate.cpp
   src/mm/main.cpp 
   
+  src/mm/merge/parser.cpp
   src/mm/cut/parser.cpp
   src/mm/cut/show.cpp
   src/mm/cut/globals.cpp
