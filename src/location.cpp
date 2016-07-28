@@ -1,3 +1,4 @@
+#include "common.hpp"
 #include "location.hpp"
 
 namespace mdl {
@@ -15,10 +16,27 @@ LocationIter& LocationIter::operator ++() {
 	inc(loc, *string::const_iterator::operator++());
 	return *this;
 }
+
 LocationIter LocationIter::operator ++(int) {
 	LocationIter curr(*this);
 	inc(loc, *string::const_iterator::operator++());
 	return curr;
+}
+
+ifstream open_smart(string path, string root) {
+	if (root.size() && root.back() != '/')
+		root += '/';
+	ifstream is;
+	while (true) {
+		is.open(root + path, std::ios_base::in);
+		if (is.is_open())
+			return is;
+		string shorter = cut_outer_directory(path);
+		if (path == shorter)
+			throw Error("Could not open input file");
+		else
+			path = shorter;
+	}
 }
 
 }

@@ -1,23 +1,20 @@
-#include <boost/algorithm/string.hpp>
 
+#include "mm/globals.hpp"
 #include "mm/merge/grammar.hpp"
 
 namespace mdl { namespace mm { namespace merge {
 
-void parse(const string& name) {
-	ifstream instream(name, std::ios_base::in);
-	if (!instream.is_open())
-		throw Error("Could not open input file");
-
+void parse(const string& path) {
+	ifstream is = open_smart(path, Mm::get().config.root);
 	string storage;
-	instream.unsetf(std::ios::skipws);
+	is.unsetf(std::ios::skipws);
 	std::copy(
-		std::istream_iterator<char>(instream),
+		std::istream_iterator<char>(is),
 		std::istream_iterator<char>(),
 		std::back_inserter(storage));
 
-	LocationIter iter(storage.begin(), name);
-	LocationIter end(storage.end(), name);
+	LocationIter iter(storage.begin(), path);
+	LocationIter end(storage.end(), path);
 
 	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space);
 	if (!r || iter != end) {

@@ -13,13 +13,7 @@ uint inc_ind() { return ind ++; }
 } // parser
 
 Source* parse(const string& name) {
-	string path =
-		Rus::get().config.root.size() ?
-		Rus::get().config.root + "/" + name :
-		name;
-	ifstream in(path, std::ios_base::in);
-	if (!in.is_open())
-		throw Error("Could not open input file");
+	ifstream in = open_smart(name, Rus::get().config.root);
 
 	string storage;
 	in.unsetf(std::ios::skipws);
@@ -28,8 +22,8 @@ Source* parse(const string& name) {
 		std::istream_iterator<char>(),
 		std::back_inserter(storage));
 
-	LocationIter iter(storage.begin(), path);
-	LocationIter end(storage.end(), path);
+	LocationIter iter(storage.begin(), name);
+	LocationIter end(storage.end(), name);
 	Source* source = new Source(Rus::get().config.root, name);
 	bool r = phrase_parse(iter, end, parser::Grammar<LocationIter>(), parser::unicode::space, *source);
 	if (!r || iter != end) {

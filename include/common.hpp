@@ -182,6 +182,12 @@ T Map<Key, T, Compare, Alloc>::operator[] (Key k) const {
 		throw Error("map doesn't have an element");
 }
 
+inline string cut_outer_directory(string path) {
+	size_t slash_pos = path.find_first_of("/");
+	return path.substr(slash_pos == string::npos ? 0 : slash_pos + 1);
+}
+
+ifstream open_smart(string path, string root = "");
 
 }
 
