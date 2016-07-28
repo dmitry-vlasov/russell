@@ -1,3 +1,4 @@
+#include <boost/algorithm/string.hpp>
 #include "common.hpp"
 #include "location.hpp"
 
@@ -24,11 +25,14 @@ LocationIter LocationIter::operator ++(int) {
 }
 
 ifstream open_smart(string path, string root) {
+	boost::trim(path);
+	boost::trim(root);
 	if (root.size() && root.back() != '/')
 		root += '/';
 	ifstream is;
 	while (true) {
-		is.open(root + path, std::ios_base::in);
+		string full_path = root + path;
+		is.open(full_path, std::ios_base::in);
 		if (is.is_open())
 			return is;
 		string shorter = cut_outer_directory(path);

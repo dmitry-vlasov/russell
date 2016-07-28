@@ -6,7 +6,6 @@ namespace mdl { namespace mm { namespace cut {
 
 Section* parse(const string& root, const string& in, const string& out) {
 	ifstream is = open_smart(in, root);
-
 	string storage;
 	is.unsetf(std::ios::skipws);
 	std::copy(

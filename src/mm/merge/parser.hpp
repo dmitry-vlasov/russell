@@ -20,20 +20,13 @@ struct Add {
 	}
 };
 
-struct MakeString {
-	template <typename T>
-	struct result { typedef string type; };
-	string operator()(const vector<char>& s) const {
-		return string(s.begin(), s.end());
-	}
-};
-
 struct Include {
 	template <typename T>
 	struct result { typedef string type; };
 	void operator()(const string& path) const {
 		static Set<string> included;
 		if (included.has(path)) return;
+		included.s.insert(path);
 		parse(path);
 	}
 };

@@ -8,29 +8,15 @@ namespace mdl { namespace mm { namespace merge {
 template <typename Iterator>
 Grammar<Iterator>::Grammar() : Grammar::base_type(source, "merge") {
 		using qi::lit;
-		using qi::uint_;
 		using qi::lexeme;
-		using qi::eps;
 		using namespace qi::labels;
-		using phoenix::at_c;
-		using phoenix::new_;
 
 		const phoenix::function<Add> add;
 		const phoenix::function<Include> include;
-		const phoenix::function<MakeString> makeString;
 
-
-		contents = lexeme[*(ascii::char_ - "$[")] [_val = makeString(_1)];
-		inclusion =
-			  lit("$[")
-			> lexeme[*(ascii::char_ - "$]")] [_val = makeString(_1)]
-			> "$]";
-
-		source =
-			+ (
-				inclusion [include(_1)] |
-				contents  [add(_1)]
-			);
+		contents  %= lexeme[+(ascii::char_ - "$[")];
+		inclusion %= lit("$[") > lexeme[+(ascii::char_ - "$]")] > "$]";
+		source = + (inclusion [include(_1)] | contents  [add(_1)] );
 
 		qi::on_error<qi::fail>(
 			source,
