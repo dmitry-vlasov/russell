@@ -32,7 +32,10 @@ namespace {
 
 			const Section* par = sect->parent;
 			while (par && par->file.size()) {
-				sect->dir = par->file + "/" + sect->dir;
+				if (par->parent)
+					sect->dir = par->file + "/" + sect->dir;
+				else
+					sect->dir = par->dir + par->file + "/" + sect->dir;
 				par = par->parent;
 			}
 			sect->path = sect->dir + sect->file + ".mm";
