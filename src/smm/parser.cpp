@@ -2,7 +2,7 @@
 
 namespace mdl { namespace smm {
 
-Source* parse(const string& name) {
+Source* parse(string name) {
 	ifstream in = open_smart(name, Smm::get().config.root);
 	string storage;
 	in.unsetf(std::ios::skipws);

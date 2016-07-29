@@ -24,7 +24,7 @@ LocationIter LocationIter::operator ++(int) {
 	return curr;
 }
 
-ifstream open_smart(string path, string root) {
+ifstream open_smart(string& path, string root) {
 	boost::trim(path);
 	boost::trim(root);
 	if (root.size() && root.back() != '/')
@@ -37,7 +37,7 @@ ifstream open_smart(string path, string root) {
 			return is;
 		string shorter = cut_outer_directory(path);
 		if (path == shorter)
-			throw Error("Could not open input file");
+			throw Error("Could not open input file", path);
 		else
 			path = shorter;
 	}

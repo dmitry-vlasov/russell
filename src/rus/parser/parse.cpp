@@ -12,7 +12,7 @@ uint inc_ind() { return ind ++; }
 
 } // parser
 
-Source* parse(const string& name) {
+Source* parse(string name) {
 	ifstream in = open_smart(name, Rus::get().config.root);
 
 	string storage;

@@ -62,7 +62,7 @@ struct Smm {
 };
 
 ostream& operator << (ostream& os, const Smm& s);
-Source* parse(const string& path);
+Source* parse(string path);
 void verify(const vector<Assertion*>& theory);
 mm::Source*  translate_to_mm(const Source* source);
 rus::Source* translate_to_rus(const Source* source);

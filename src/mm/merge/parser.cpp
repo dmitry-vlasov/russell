@@ -31,7 +31,7 @@ namespace {
 	}
 }
 
-void parse(const string& path) {
+void parse(string path) {
 	ifstream is = open_smart(path, Mm::get().config.root);
 	string storage;
 	is.unsetf(std::ios::skipws);

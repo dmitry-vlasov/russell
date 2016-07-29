@@ -69,7 +69,7 @@ struct Rus {
 
 string show(const Rus&);
 inline ostream& operator << (ostream& os, const Rus& r) { os << show(r); return os; }
-Source* parse(const string& path);
+Source* parse(string path);
 void verify(Source*);
 smm::Source* translate(const Source* source);
 

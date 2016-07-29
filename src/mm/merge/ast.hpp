@@ -10,7 +10,7 @@ struct Source {
 	stringstream contents;
 };
 
-void parse(const string& path);
+void parse(string path);
 
 }}} // mdl::mm::merge
 

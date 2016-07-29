@@ -62,7 +62,7 @@ struct Mm {
 	static Mm& mod() { static Mm mm; return mm; }
 };
 
-Source* parse(const string& path);
+Source* parse(string path);
 smm::Source* translate(const Source* source);
 
 }} // mdl::mm

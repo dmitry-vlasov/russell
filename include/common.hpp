@@ -187,7 +187,7 @@ inline string cut_outer_directory(string path) {
 	return path.substr(slash_pos == string::npos ? 0 : slash_pos + 1);
 }
 
-ifstream open_smart(string path, string root = "");
+ifstream open_smart(string& path, string root = "");
 
 }
 

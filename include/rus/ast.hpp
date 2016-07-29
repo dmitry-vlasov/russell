@@ -297,6 +297,9 @@ struct Source {
 	Source(const string& r, const string& n) :
 	top(false), root(r), name(n), theory(nullptr) {
 		static bool t = true; top = t; t = false;
+		boost::erase_last(name, ".smm");
+		boost::erase_last(name, ".mm");
+		boost::erase_last(name, ".rus");
 	}
 	~Source() { if (theory) delete theory; }
 	bool    top;
