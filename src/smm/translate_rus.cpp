@@ -411,6 +411,11 @@ inline rus::Import* translate_import(const Inclusion* inc, State& s) {
 	return new rus::Import(src, inc->primary);
 }
 
+inline void translate_comment(const Comment* com, State& s) {
+	rus::Comment* comment = new rus::Comment { com->text };
+	s.theory->nodes.push_back(comment);
+}
+
 void translate_theory(const Source* source, State& state) {
 	for (auto node : source->contents) {
 		if (node.type == Node::INCLUSION) {
@@ -422,6 +427,7 @@ void translate_theory(const Source* source, State& state) {
 		switch (node.type) {
 		case Node::CONSTANTS: translate_const(node.val.cst, state); break;
 		case Node::ASSERTION: translate_ass(node.val.ass, state); break;
+		case Node::COMMENT:   translate_comment(node.val.com, state); break;
 		default : assert(false && "impossible"); break;
 		}
 	}

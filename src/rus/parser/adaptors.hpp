@@ -26,6 +26,11 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
+	mdl::rus::Comment,
+	(mdl::string, text)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Const,
 	(mdl::uint,        ind)
 	(mdl::rus::Symbol, symb)

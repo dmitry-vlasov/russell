@@ -14,6 +14,14 @@ namespace qi      = boost::spirit::qi;
 namespace unicode = boost::spirit::unicode;
 namespace phoenix = boost::phoenix;
 
+struct MakeString {
+	template <typename T>
+	struct result { typedef string type; };
+	string operator()(const vector<char>& s) const {
+		return string(s.begin(), s.end());
+	}
+};
+
 struct IncInd {
 	template <typename T>
 	struct result { typedef uint type; };
@@ -398,7 +406,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, Type*(), unicode::space_type> type;
 	qi::rule<Iterator, Const*(), unicode::space_type> constant;
 	qi::rule<Iterator, Import*(), unicode::space_type> import;
-	qi::rule<Iterator, qi::unused_type, unicode::space_type> comment;
+	qi::rule<Iterator, Comment*(), unicode::space_type> comment;
 	qi::rule<Iterator, Source(), unicode::space_type> source;
 };
 

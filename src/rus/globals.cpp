@@ -48,6 +48,11 @@ bool unify_rus(Rus& rus) {
 	}
 }
 
+namespace {
+	vector<smm::Node>& get_cont(smm::Source* src) { return src->contents; }
+	smm::Source* get_inc(smm::Node n) { return n.val.inc->source; }
+	bool is_inc(smm::Node n) { return n.type == smm::Node::INCLUSION; }
+}
 
 bool translate_rus(Rus& rus) {
 	try {
@@ -56,24 +61,7 @@ bool translate_rus(Rus& rus) {
 		rus.timers.translate.start();
 		smm::Source* target = translate(rus.source);
 		if (rus.config.deep) {
-			Set<smm::Source*> written;
-			stack<smm::Source*> to_write;
-			to_write.push(target);
-			while (!to_write.empty()) {
-				smm::Source* src = to_write.top();
-				ofstream out(src->path());
-				out << *target << endl;
-				out.close();
-				written.s.insert(src);
-				to_write.pop();
-				for (auto n : src->contents) {
-					if (n.type == smm::Node::INCLUSION) {
-						if (!written.has(n.val.inc->source)) {
-							to_write.push(n.val.inc->source);
-						}
-					}
-				}
-			}
+			deep_write(target, get_cont, get_inc, is_inc);
 		} else {
 			ofstream out(rus.config.out);
 			out << *target << endl;

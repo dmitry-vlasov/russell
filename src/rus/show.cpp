@@ -2,6 +2,10 @@
 
 namespace mdl { namespace rus {
 
+string show(const Comment& c) {
+	return string("/* ") + c.text + " */";
+}
+
 string show(const Const& c) {
 	string s = "constant {\n";
 	s += "\tsymbol " + show(c.symb) + " " + END_MARKER + "\n";
@@ -262,5 +266,6 @@ void dump(const Node& n)      { cout << show(n) << endl; }
 void dump(const Import& i)    { cout << show(i) << endl; }
 void dump(const Theory& t)    { cout << show(t) << endl; }
 void dump(const Source& s)    { cout << show(s) << endl; }
+void dump(const Comment& c)   { cout << show(c) << endl; }
 
 }} // mdl::smm

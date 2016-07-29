@@ -2,6 +2,9 @@
 
 namespace mdl { namespace rus {
 
+size_t memvol(const Comment& c) {
+	return c.text.size();
+}
 size_t memvol(const Const& c) {
 	return 0;
 }

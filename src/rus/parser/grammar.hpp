@@ -47,6 +47,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 	const phoenix::function<AssembleDef> assembleDef;
 	const phoenix::function<SetLocation<Iterator>> setLocation;
 	const phoenix::function<IncInd>      incInd;
+	const phoenix::function<MakeString>  makeString;
 
 	bar  = lexeme[lit("-----")] >> * unicode::char_('-');
 	var  = lexeme[+(unicode::char_ - END_MARKER - unicode::space - unicode::char_("),"))] [at_c<0>(_val) = symbToInt(_1)];
@@ -257,8 +258,15 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 
 	import = lit("import") > path [_val = parseImport(_1)] > END_MARKER;
 
-	comment = lit("/*") >> lexeme[*(unicode::char_ - "*/")] >> "*/" |
-			  lit("//") >> lexeme[*(unicode::char_ - "\n")] >> "\n";
+	comment =
+		   lit("/*")                        [_val = new_<Comment>()]
+		>> lexeme[+(unicode::char_ - "*/")] [phoenix::at_c<0>(*_val) = makeString(_1)]
+		>> "*/"
+		|
+		   lit("//")                        [_val = new_<Comment>()]
+		>> lexeme[+(unicode::char_ - "\n")] //[phoenix::at_c<0>(*_val) = makeString(_1)]
+		>> "\n";
+
 	source =
 		eps [at_c<3>(_val) = new_<Theory>()]
 		> +(
@@ -270,7 +278,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 		def      [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
 		theorem  [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
 		proof    [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
-		comment);
+		comment  [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))]);
 
 	//qi::on_success(assertion, setLocation(_val, _1));
 	qi::on_error<qi::fail>(

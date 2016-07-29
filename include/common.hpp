@@ -189,6 +189,33 @@ inline string cut_outer_directory(string path) {
 
 ifstream open_smart(string& path, string root = "");
 
+template<class T>
+void deep_write(T* target, auto (get_cont)(T*), T* (get_inc)(auto), bool (is_inc)(auto)) {
+	typedef T Source;
+	namespace fs = boost::filesystem;
+	Set<Source*> written;
+	stack<Source*> to_write;
+	to_write.push(target);
+	while (!to_write.empty()) {
+		Source* src = to_write.top();
+		if (!fs::exists(src->dir()))
+			fs::create_directories(src->dir());
+		ofstream out(src->path());
+		out << *src << endl;
+		out.close();
+		written.s.insert(src);
+		to_write.pop();
+		for (auto n : get_cont(src)) {
+			if (is_inc(n)) {
+				Source* inc = get_inc(n);
+				if (!written.has(inc)) {
+					to_write.push(inc);
+				}
+			}
+		}
+	}
+}
+
 }
 
   

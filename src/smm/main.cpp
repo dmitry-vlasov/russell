@@ -8,13 +8,15 @@ static void showHelp() {
 	cout << "Version: " << VERSION << endl;
 	cout << "Usage: smm [options]" << endl;
 	cout << "Options:" << endl;
-	cout << " -i  --in <path>    input file"  << endl;
-	cout << " -o  --out <path>   output file. Type of target is determined by extension: mm or rus"  << endl;
-	cout << " -r  --root <path>  root directory (for inclusions)" << endl;
-	cout << " -d  --deep         deep translation" << endl;
-	cout << " -h  --help         print the help" << endl;
-	cout << " -v  --verbose      not be silent"  << endl;
-	cout << "     --info         info about math: timings, memory, stats"  << endl;
+	cout << " -i  --in <path>     input file"  << endl;
+	cout << " -o  --out <path>    output file. Type of target is determined by extension: mm or rus"  << endl;
+	cout << " -r  --root <path>   root directory (for inclusions)" << endl;
+	cout << " -d  --deep          deep translation" << endl;
+	cout << " -tr --translate-rus translate to Russell" << endl;
+	cout << " -tm --translate-mm  translate to Metamath" << endl;
+	cout << " -h  --help          print the help" << endl;
+	cout << " -v  --verbose       not be silent"  << endl;
+	cout << "     --info          info about math: timings, memory, stats"  << endl;
 }
 
 static bool parseConfig(int argc, const char* argv[], Config& conf) {
@@ -43,6 +45,10 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 			conf.help = true;
 		else if (arg == "-d" || arg == "--deep")
 			conf.deep = true;
+		else if (arg == "-tr" || arg == "--translate-rus")
+			conf.target = Config::TARGET_RUS;
+		else if (arg == "-tm" || arg == "--translate-mm")
+			conf.target = Config::TARGET_MM;
 		else if (arg == "-v" || arg == "--verbose")
 			conf.verbose = true;
 		else if (arg == "--info")

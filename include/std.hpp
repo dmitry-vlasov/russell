@@ -55,6 +55,9 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#include <boost/filesystem.hpp>
+#include <boost/algorithm/string.hpp>
+
 size_t get_total_mem();
 size_t get_peak_RSS();
 size_t get_current_RSS();

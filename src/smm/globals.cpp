@@ -61,6 +61,16 @@ bool Smm::verify() {
 
 namespace fs = boost::filesystem;
 
+namespace {
+	vector<mm::Node>& get_mm_cont(mm::Source* src) { return src->block->contents; }
+	mm::Source* get_mm_inc(mm::Node n) { return n.val.inc->source; }
+	bool is_mm_inc(mm::Node n) { return n.type == mm::Node::INCLUSION; }
+
+	vector<rus::Node>& get_rus_cont(rus::Source* src) { return src->theory->nodes; }
+	rus::Source* get_rus_inc(rus::Node n) { return n.val.imp->source; }
+	bool is_rus_inc(rus::Node n) { return n.kind == rus::Node::IMPORT; }
+}
+
 bool Smm::translate() {
 	try {
 		if (config.out.empty()) return true;
@@ -72,26 +82,7 @@ bool Smm::translate() {
 		case Config::TARGET_MM: {
 			mm::Source* target = smm::translate_to_mm(source);
 			if (config.deep) {
-				Set<mm::Source*> written;
-				stack<mm::Source*> to_write;
-				to_write.push(target);
-				while (!to_write.empty()) {
-					mm::Source* src = to_write.top();
-					if (!fs::exists(src->dir()))
-						fs::create_directories(src->dir());
-					ofstream out(src->path());
-					out << *src << endl;
-					out.close();
-					written.s.insert(src);
-					to_write.pop();
-					for (auto n : src->block->contents) {
-						if (n.type == mm::Node::INCLUSION) {
-							if (!written.has(n.val.inc->source)) {
-								to_write.push(n.val.inc->source);
-							}
-						}
-					}
-				}
+				deep_write(target, get_mm_cont, get_mm_inc, is_mm_inc);
 			} else {
 				ofstream out(config.out);
 				out << *target << endl;
@@ -101,14 +92,16 @@ bool Smm::translate() {
 		}	break;
 		case Config::TARGET_RUS: {
 			rus::Source* target = smm::translate_to_rus(source);
-			//cout << endl << *target;
-			ofstream out(config.out);
-			out << *target << endl;
-			out.close();
+			if (config.deep) {
+				deep_write(target, get_rus_cont, get_rus_inc, is_rus_inc);
+			} else {
+				ofstream out(config.out);
+				out << *target << endl;
+				out.close();
+			}
 			delete target;
 		}	break;
 		}
-
 		timers.translate.stop();
 		if (config.verbose)
 			cout << "done in " << timers.translate << endl;

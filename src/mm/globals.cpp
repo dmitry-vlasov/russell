@@ -65,6 +65,12 @@ bool merge_mm(Mm& mm) {
 
 namespace fs = boost::filesystem;
 
+namespace {
+	vector<smm::Node>& get_cont(smm::Source* src) { return src->contents; }
+	smm::Source* get_inc(smm::Node n) { return n.val.inc->source; }
+	bool is_inc(smm::Node n) { return n.type == smm::Node::INCLUSION; }
+}
+
 bool translate_mm(Mm& mm) {
 	try {
 		if (mm.config.out.empty()) {
@@ -73,28 +79,8 @@ bool translate_mm(Mm& mm) {
 		}
 		mm.timers.work.start();
 		smm::Source* target = translate(mm.source);
-		//cout << endl << *target;
 		if (mm.config.deep) {
-			Set<smm::Source*> written;
-			stack<smm::Source*> to_write;
-			to_write.push(target);
-			while (!to_write.empty()) {
-				smm::Source* src = to_write.top();
-				if (!fs::exists(src->dir()))
-					fs::create_directories(src->dir());
-				ofstream out(src->path());
-				out << *src << endl;
-				out.close();
-				written.s.insert(src);
-				to_write.pop();
-				for (auto n : src->contents) {
-					if (n.type == smm::Node::INCLUSION) {
-						if (!written.has(n.val.inc->source)) {
-							to_write.push(n.val.inc->source);
-						}
-					}
-				}
-			}
+			deep_write(target, get_cont, get_inc, is_inc);
 		} else {
 			ofstream out(mm.config.out);
 			out << *target << endl;
