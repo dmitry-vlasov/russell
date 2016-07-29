@@ -147,7 +147,7 @@ ostream& operator << (ostream& os, const Source& src) {
 }
 
 ostream& operator << (ostream& os, const Comment& com) {
-	os << "$( " << com.text << " $)";
+	os << "$(" << com.text << "$)";
 	return os;
 }
 

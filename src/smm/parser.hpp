@@ -170,7 +170,7 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 	qi::rule<Iterator, Assertion*(), ascii::space_type> assertion;
 	qi::rule<Iterator, Constants*(), ascii::space_type> constants;
 	qi::rule<Iterator, Inclusion*(), ascii::space_type> inclusion;
-	qi::rule<Iterator, Comment*(), ascii::space_type> comment;
+	qi::rule<Iterator, Comment*(), qi::unused_type> comment;
 	qi::rule<Iterator, Source(), ascii::space_type> source;
 };
 

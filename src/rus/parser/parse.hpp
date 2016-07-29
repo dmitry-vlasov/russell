@@ -406,7 +406,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, Type*(), unicode::space_type> type;
 	qi::rule<Iterator, Const*(), unicode::space_type> constant;
 	qi::rule<Iterator, Import*(), unicode::space_type> import;
-	qi::rule<Iterator, Comment*(), unicode::space_type> comment;
+	qi::rule<Iterator, Comment*(), qi::unused_type> comment;
 	qi::rule<Iterator, Source(), unicode::space_type> source;
 };
 

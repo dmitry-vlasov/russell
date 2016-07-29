@@ -16,7 +16,7 @@ string show_contents(const Section& s) {
 		str += s.name;
 		str += border(s.type);
 		str += s.footer;
-		str += "\n$)\n";
+		str += "$)\n";
 	}
 	str += s.contents;
 	return str;

@@ -3,7 +3,7 @@
 namespace mdl { namespace rus {
 
 string show(const Comment& c) {
-	return string("/* ") + c.text + " */";
+	return string("/*") + c.text + "*/";
 }
 
 string show(const Const& c) {
@@ -207,9 +207,7 @@ string show(const Proof& p) {
 }
 
 string show(const Import& imp) {
-	string s;
-	//s += "theorem " + show(thm.ass);
-	return s;
+	return string("import ") + imp.source->name + ";";
 }
 
 string show(const Node& n) {
@@ -223,6 +221,7 @@ string show(const Node& n) {
 	case Node::PROOF:   return show(*n.val.prf);
 	case Node::THEORY:  return show(*n.val.thy);
 	case Node::IMPORT:  return show(*n.val.imp);
+	case Node::COMMENT: return show(*n.val.com);
 	default : assert(false && "impossible");
 	}
 	return ""; // pacify the compiler

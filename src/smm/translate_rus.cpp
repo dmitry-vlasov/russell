@@ -20,7 +20,7 @@ struct State {
 	rus::Type*    type_class;
 	Set<Symbol>   redundant_consts;
 	Set<rus::Symbol> constants;
-	rus::Theory*  theory;
+	stack<rus::Theory*>  theory;
 	uint ind;
 };
 
@@ -78,7 +78,7 @@ void translate_const(const Constants* consts, State& state) {
 			delete c;
 		else {
 			state.constants.s.insert(c->symb);
-			state.theory->nodes.push_back(rus::Node(c));
+			state.theory.top()->nodes.push_back(rus::Node(c));
 		}
 	}
 }
@@ -125,7 +125,7 @@ rus::Type* translate_type(Symbol type_sy, State& state) {
 		uint type_id = Smm::mod().lex.labels.toInt(type_str);
 		rus::Type* type = new rus::Type { state.ind ++, type_id };
 		state.types[type_sy] = type;
-		state.theory->nodes.push_back(type);
+		state.theory.top()->nodes.push_back(type);
 		if (type_str == "wff") state.type_wff = type;
 		if (type_str == "set") state.type_set = type;
 		if (type_str == "class") state.type_class = type;
@@ -138,11 +138,11 @@ inline bool rule_term_is_super(const Expr& term) {
 }
 
 vector<rus::Node>::iterator type_index(const rus::Type* type, State& state) {
-	for (auto it = state.theory->nodes.begin(); it != state.theory->nodes.end(); ++ it) {
+	for (auto it = state.theory.top()->nodes.begin(); it != state.theory.top()->nodes.end(); ++ it) {
 		if (it->kind == rus::Node::TYPE && type == it->val.tp)
 			return it;
 	}
-	return state.theory->nodes.end();
+	return state.theory.top()->nodes.end();
 }
 
 void translate_super(const Assertion* ass, State& state) {
@@ -155,8 +155,8 @@ void translate_super(const Assertion* ass, State& state) {
 	auto sup_it = type_index(super, state);
 	auto inf_it = type_index(infer, state);
 	if (sup_it > inf_it) {
-		state.theory->nodes.erase(sup_it);
-		state.theory->nodes.insert(inf_it, super);
+		state.theory.top()->nodes.erase(sup_it);
+		state.theory.top()->nodes.insert(inf_it, super);
 	}
 }
 
@@ -214,8 +214,8 @@ void translate_rule(const Assertion* ass, State& state) {
 			return;
 		}
 	}
-	state.theory->nodes.push_back(rule);
-	state.rules[rule] = &state.theory->nodes.back();
+	state.theory.top()->nodes.push_back(rule);
+	state.rules[rule] = &state.theory.top()->nodes.back();
 }
 
 template<class T>
@@ -236,7 +236,7 @@ void translate_axiom(const Assertion* ass, State& state) {
 	rus::Axiom* ax = new rus::Axiom;
 	ax->ass.ind = state.ind ++;
 	translate_assertion<rus::Axiom>(ass, ax, state);
-	state.theory->nodes.push_back(ax);
+	state.theory.top()->nodes.push_back(ax);
 	state.axioms[ass] = ax;
 }
 
@@ -313,7 +313,7 @@ void translate_def(const Assertion* ass, State& state) {
 			def->prop.push_back(translate_symb(*it));
 		}
 	}
-	state.theory->nodes.push_back(def);
+	state.theory.top()->nodes.push_back(def);
 	state.defs[ass] = def;
 }
 
@@ -381,7 +381,7 @@ void translate_proof(const Assertion* ass, rus::Theorem* thm, State& state) {
 	rus::Prop* pr = thm->ass.props.front();
 	rus::Step* st = p->elems.back().val.step;
 	p->elems.push_back(new rus::Qed{pr, st});
-	state.theory->nodes.push_back(p);
+	state.theory.top()->nodes.push_back(p);
 	tree.destroy();
 }
 
@@ -389,7 +389,7 @@ void translate_theorem(const Assertion* ass, State& state) {
 	rus::Theorem* thm = new rus::Theorem;
 	thm->ass.ind = state.ind ++;
 	translate_assertion<rus::Theorem>(ass, thm, state);
-	state.theory->nodes.push_back(thm);
+	state.theory.top()->nodes.push_back(thm);
 	translate_proof(ass, thm, state);
 	state.theorems[ass] = thm;
 }
@@ -413,14 +413,14 @@ inline rus::Import* translate_import(const Inclusion* inc, State& s) {
 
 inline void translate_comment(const Comment* com, State& s) {
 	rus::Comment* comment = new rus::Comment { com->text };
-	s.theory->nodes.push_back(comment);
+	s.theory.top()->nodes.push_back(comment);
 }
 
 void translate_theory(const Source* source, State& state) {
 	for (auto node : source->contents) {
 		if (node.type == Node::INCLUSION) {
 			rus::Import* imp = translate_import(node.val.inc, state);
-			state.theory->nodes.push_back(imp);
+			state.theory.top()->nodes.push_back(imp);
 		}
 	}
 	for (auto node : source->contents) {
@@ -428,6 +428,7 @@ void translate_theory(const Source* source, State& state) {
 		case Node::CONSTANTS: translate_const(node.val.cst, state); break;
 		case Node::ASSERTION: translate_ass(node.val.ass, state); break;
 		case Node::COMMENT:   translate_comment(node.val.com, state); break;
+		case Node::INCLUSION: continue;
 		default : assert(false && "impossible"); break;
 		}
 	}
@@ -446,8 +447,9 @@ rus::Source* translate_source(const Source* src, State& state, rus::Source* targ
 			target->theory = new rus::Theory();
 		}
 		state.sources[src] = target;
-		state.theory = target->theory;
+		state.theory.push(target->theory);
 		translate_theory(src, state);
+		state.theory.pop();
 		return target;
 	}
 }
