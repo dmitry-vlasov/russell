@@ -286,7 +286,7 @@ vector<smm::Node> translate_proof(const Proof* proof, Maps& maps) {
 
 smm::Source* translate_source(const Source* src, Maps& maps, smm::Source* target = nullptr);
 
-smm::Inclusion* translate_import(const Import* imp, Maps& maps) {
+inline smm::Inclusion* translate_import(const Import* imp, Maps& maps) {
 	smm::Source* src = translate_source(imp->source, maps);
 	return new smm::Inclusion(src, imp->source->top);
 }
@@ -306,6 +306,7 @@ vector<smm::Node> translate_theory(const Theory* thy, Maps& maps) {
 		case Node::PROOF:   join(nodes, translate_proof(n.val.prf, maps));      break;
 		case Node::THEORY:  join(nodes, translate_theory(n.val.thy, maps));     break;
 		case Node::IMPORT:  nodes.push_back(translate_import(n.val.imp, maps)); break;
+		case Node::COMMENT: nodes.push_back(new smm::Comment(n.val.com->text)); break;
 		default : assert(false && "impossible"); break;
 		}
 	}
