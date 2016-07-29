@@ -17,7 +17,7 @@ namespace phoenix = boost::phoenix;
 struct MakeString {
 	template <typename T>
 	struct result { typedef string type; };
-	string operator()(const vector<char>& s) const {
+	string operator()(const vector<uint>& s) const {
 		return string(s.begin(), s.end());
 	}
 };
@@ -187,10 +187,10 @@ struct AddToMath {
 struct SymbToInt {
 	template <typename T>
 	struct result { typedef uint type; };
-	uint operator()(const std::vector<char>& s) const {
+	/*uint operator()(const std::vector<char>& s) const {
 		string symb(s.begin(), s.end());
 		return Rus::mod().lex.symbs.toInt(symb);
-	}
+	}*/
 	uint operator()(const std::vector<uint>& s) const {
 		string symb(s.begin(), s.end());
 		return Rus::mod().lex.symbs.toInt(symb);
@@ -200,10 +200,10 @@ struct SymbToInt {
 struct IdToInt {
 	template <typename T>
 	struct result { typedef uint type; };
-	uint operator()(const std::vector<char>& id) const {
+	/*uint operator()(const std::vector<char>& id) const {
 		string id_str(id.begin(), id.end());
 		return Rus::mod().lex.ids.toInt(id_str);
-	}
+	}*/
 	uint operator()(const std::vector<uint>& id) const {
 		string id_str(id.begin(), id.end());
 		return Rus::mod().lex.ids.toInt(id_str);

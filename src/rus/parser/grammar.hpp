@@ -264,7 +264,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 		>> "*/"
 		|
 		   lit("//")                        [_val = new_<Comment>()]
-		>> lexeme[+(unicode::char_ - "\n")] //[phoenix::at_c<0>(*_val) = makeString(_1)]
+		>> lexeme[+(unicode::char_ - "\n")] [phoenix::at_c<0>(*_val) = makeString(_1)]
 		>> "\n";
 
 	source =
