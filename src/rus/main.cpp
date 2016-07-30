@@ -11,7 +11,8 @@ static void showHelp() {
 	cout << " -i  --in <path>    input file"  << endl;
 	cout << " -o  --out <path>   output file"  << endl;
 	cout << " -r  --root <path>  root directory (for inclusions)" << endl;
-	//cout << " -t --translate     translate to simplified Metamath (smm)" << endl;
+	cout << " -t  --translate    translate to simplified Metamath (smm)" << endl;
+	cout << " -p  --prove        prove as a Russell source" << endl;
 	cout << " -h  --help         print the help" << endl;
 	cout << " -d  --deep         deep translation" << endl;
 	cout << " -v  --verbose      not be silent"  << endl;
@@ -40,6 +41,12 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 				return false;
 			else
 				conf.root = argv[i];
+		} else if (arg == "-t" || arg == "--translate") {
+			conf.mode = Config::Mode::TRANSL;
+			conf.target = Config::Target::SMM;
+		} else if (arg == "-p" || arg == "--prove") {
+			conf.mode = Config::Mode::PROVE;
+			conf.target = Config::Target::RUS;
 		} else if (arg == "-h" || arg == "--help")
 			conf.help = true;
 		else if (arg == "-v" || arg == "--verbose")
@@ -53,7 +60,7 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 	}
 	if (conf.in.empty()) return false;
 	if (conf.out.empty()) return true;
-	if (!conf.deep) {
+	/*if (!conf.deep) {
 		if (boost::ends_with(conf.out, ".smm")) {
 			if (conf.mode == Config::Mode::NONE)
 				conf.mode = Config::Mode::TRANSL;
@@ -62,7 +69,7 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 			conf.target = Config::Target::SMM;
 		} else if (boost::ends_with(conf.out, ".rus"))
 			conf.target = Config::Target::RUS;
-	}
+	}*/
 	return true;
 }
 

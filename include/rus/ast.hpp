@@ -277,6 +277,8 @@ struct Node {
 	Node(Comment* c) : kind(COMMENT), val() { val.com = c; }
 	void destroy();
 
+	bool operator==(const Node& n) { return val.non == n.val.non; }
+
 	Kind kind;
 	Value val;
 };

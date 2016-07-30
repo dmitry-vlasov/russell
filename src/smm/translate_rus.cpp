@@ -14,10 +14,12 @@ struct State {
 	Map<const Assertion*, rus::Axiom*>   axioms;
 	Map<const Assertion*, rus::Theorem*> theorems;
 	Map<const Assertion*, rus::Def*>     defs;
-	Map<const rus::Rule*, rus::Node*>    rule_nodes;
-	Map<const rus::Type*, NodeIter>      type_nodes;
+	Map<const rus::Rule*, rus::Theory*>  rule_theory;
+	Map<const rus::Type*, rus::Theory*>  type_theory;
 	Map<const Source*,    rus::Source*>  sources;
-	Map<Symbol, rus::Type*> types;
+	Map<Symbol, rus::Type*>              types;
+	Set<rus::Rule*>                      rules;
+
 	rus::Type*    type_wff;
 	rus::Type*    type_set;
 	rus::Type*    type_class;
@@ -129,24 +131,12 @@ rus::Type* translate_type(Symbol type_sy, State& state) {
 		rus::Type* type = new rus::Type { state.ind ++, type_id };
 		state.types[type_sy] = type;
 		state.theory.top()->nodes.push_back(type);
-		state.type_nodes[type] = -- state.theory.top()->nodes.end();
+		state.type_theory[type] = state.theory.top();
 		if (type_str == "wff") state.type_wff = type;
 		if (type_str == "set") state.type_set = type;
 		if (type_str == "class") state.type_class = type;
 		return type;
 	}
-}
-
-inline bool rule_term_is_super(const Expr& term) {
-	return term.symbols.size() == 2 && !term.symbols[0].var && term.symbols[1].var;
-}
-
-vector<rus::Node>::iterator type_index(const rus::Type* type, State& state) {
-	for (auto it = state.theory.top()->nodes.begin(); it != state.theory.top()->nodes.end(); ++ it) {
-		if (it->kind == rus::Node::TYPE && type == it->val.tp)
-			return it;
-	}
-	return state.theory.top()->nodes.end();
 }
 
 void translate_super(const Assertion* ass, State& state) {
@@ -156,11 +146,13 @@ void translate_super(const Assertion* ass, State& state) {
 	rus::Type* super = translate_type(super_sy, state);
 	rus::Type* infer = translate_type(infer_sy, state);
 	infer->sup.push_back(super);
-	auto sup_it = type_index(super, state);
-	auto inf_it = type_index(infer, state);
 	if (super->ind > infer->ind) {
-		state.theory.top()->nodes.erase(sup_it);
-		state.theory.top()->nodes.insert(inf_it, super);
+		rus::Theory* sup_th = state.type_theory[super];
+		rus::Theory* inf_th = state.type_theory[infer];
+		NodeIter sup = find(sup_th->nodes.begin(), sup_th->nodes.end(), rus::Node(super));
+		NodeIter inf = find(inf_th->nodes.begin(), inf_th->nodes.end(), rus::Node(infer));
+		sup_th->nodes.erase(sup);
+		inf_th->nodes.insert(inf, super);
 	}
 }
 
@@ -194,6 +186,10 @@ bool less_general(const rus::Rule* r1, const rus::Rule* r2) {
 	return n == m;
 }
 
+inline bool rule_term_is_super(const Expr& term) {
+	return term.symbols.size() == 2 && !term.symbols[0].var && term.symbols[1].var;
+}
+
 void translate_rule(const Assertion* ass, State& state) {
 	if (rule_term_is_super(ass->prop.expr)) {
 		translate_super(ass, state);
@@ -206,12 +202,15 @@ void translate_rule(const Assertion* ass, State& state) {
 		translate_vars(ass->floating, state),
 		translate_expr(ass->prop.expr, state, ass)
 	};
-	for (auto p : state.rule_nodes.m) {
-		bool less_gen = less_general(p.first, rule);
-		bool more_gen = less_general(rule, p.first);
+	for (rus::Rule* r : state.rules.s) {
+		bool less_gen = less_general(r, rule);
+		bool more_gen = less_general(rule, r);
 		if (less_gen && !more_gen) {
-			delete p.second->val.rul;
-			p.second->val.rul = rule;
+			rus::Theory* th = state.rule_theory[r];
+			NodeIter it = find(th->nodes.begin(), th->nodes.end(), rus::Node(r));
+			state.rules.s.erase(r);
+			delete it->val.rul;
+			it->val.rul = rule;
 			return;
 		} else if (more_gen) {
 			delete rule;
@@ -219,7 +218,8 @@ void translate_rule(const Assertion* ass, State& state) {
 		}
 	}
 	state.theory.top()->nodes.push_back(rule);
-	state.rule_nodes[rule] = &state.theory.top()->nodes.back();
+	state.rule_theory[rule] = state.theory.top();
+	state.rules.s.insert(rule);
 }
 
 template<class T>
