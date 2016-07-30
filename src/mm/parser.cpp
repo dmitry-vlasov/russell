@@ -15,11 +15,8 @@ Source* parse(string name) {
 	LocationIter end(storage.end(), name);
 	Source* source = new Source(Mm::get().config.root, name);
 	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, source);
-	if (!r) {
-		throw Error("parsing failed: false");
-	}
-	if (iter != end) {
-		throw Error("parsing failed: iter != end");
+	if (!r || iter != end) {
+		throw Error("parsing failed", name);
 	}
 	return source;
 }

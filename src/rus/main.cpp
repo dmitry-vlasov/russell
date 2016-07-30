@@ -11,6 +11,7 @@ static void showHelp() {
 	cout << " -i  --in <path>    input file"  << endl;
 	cout << " -o  --out <path>   output file"  << endl;
 	cout << " -r  --root <path>  root directory (for inclusions)" << endl;
+	//cout << " -t --translate     translate to simplified Metamath (smm)" << endl;
 	cout << " -h  --help         print the help" << endl;
 	cout << " -d  --deep         deep translation" << endl;
 	cout << " -v  --verbose      not be silent"  << endl;

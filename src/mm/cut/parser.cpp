@@ -29,7 +29,7 @@ Section* parse(const string& root, string in, const string& out) {
 	source->type = Type::SOURCE;
 	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, source);
 	if (!r || iter != end) {
-		throw Error("parsing failed");
+		throw Error("parsing failed", in);
 	}
 	return source;
 }

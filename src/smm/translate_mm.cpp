@@ -104,10 +104,14 @@ void translate(const Node& node, mm::Block* target, Maps& maps) {
 		);
 		maps.transform[ass->prop.label] = perm;
 	}	break;
-	case Node::INCLUSION:{
+	case Node::INCLUSION: {
 		mm::Source* s = translate_source(node.val.inc->source, maps);
 		mm::Inclusion* i = new mm::Inclusion(s, node.val.inc->primary);
 		target->contents.push_back(mm::Node(i));
+	} 	break;
+	case Node::COMMENT: {
+		mm::Comment* c = new mm::Comment(node.val.com->text);
+		target->contents.push_back(mm::Node(c));
 	} 	break;
 	default : assert(false && "impossible"); break;
 	}

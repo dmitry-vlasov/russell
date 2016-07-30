@@ -15,6 +15,7 @@ void split_section(Section* sect) {
 
 	Section* header = new Section;
 	header->name = sect->name;
+	header->footer = sect->footer;
 	header->contents = sect->contents;
 	header->file = sect->file;
 	header->dir = sect->dir + sect->file + "/";

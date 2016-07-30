@@ -13,8 +13,8 @@ uint inc_ind() { return ind ++; }
 } // parser
 
 Source* parse(string name) {
+	string orig_name = name;
 	ifstream in = open_smart(name, Rus::get().config.root);
-
 	string storage;
 	in.unsetf(std::ios::skipws);
 	std::copy(
@@ -27,7 +27,7 @@ Source* parse(string name) {
 	Source* source = new Source(Rus::get().config.root, name);
 	bool r = phrase_parse(iter, end, parser::Grammar<LocationIter>(), parser::unicode::space, *source);
 	if (!r || iter != end) {
-		throw Error("parsing failed");
+		throw Error("parsing failed", orig_name);
 	}
 	return source;
 }

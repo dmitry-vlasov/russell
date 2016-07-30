@@ -7,7 +7,6 @@
 namespace mdl { namespace rus {
 
 struct Comment {
-	//Comment(const string& t) : text(t) { }
 	string text;
 };
 

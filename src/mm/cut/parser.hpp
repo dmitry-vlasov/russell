@@ -122,7 +122,7 @@ struct MakeString {
 
 
 template <typename Iterator>
-struct Grammar : qi::grammar<Iterator, Section*(), ascii::space_type> {
+struct Grammar : qi::grammar<Iterator, Section*(), qi::unused_type> {
 	Grammar();
 	void initNames();
 
@@ -130,7 +130,7 @@ struct Grammar : qi::grammar<Iterator, Section*(), ascii::space_type> {
 	qi::rule<Iterator, string(), qi::unused_type> header;
 	qi::rule<Iterator, Section*(), qi::unused_type> section;
 	qi::rule<Iterator, string(), qi::unused_type> contents;
-	qi::rule<Iterator, Section*(), ascii::space_type> source;
+	qi::rule<Iterator, Section*(), qi::unused_type> source;
 };
 
 template <typename Iterator>

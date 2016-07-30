@@ -207,7 +207,7 @@ string show(const Proof& p) {
 }
 
 string show(const Import& imp) {
-	return string("import ") + imp.source->name + ";";
+	return string("import ") + imp.source->name + ".rus" + END_MARKER;
 }
 
 string show(const Node& n) {

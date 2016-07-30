@@ -46,7 +46,7 @@ void parse(string path) {
 
 	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space);
 	if (!r || iter != end) {
-		throw Error("parsing failed");
+		throw Error("parsing failed", path);
 	}
 }
 
