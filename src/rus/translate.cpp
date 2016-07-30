@@ -16,17 +16,6 @@ struct Maps {
 	mdl::Symbol turnstile;
 };
 
-smm::Constants* translate_turnstile(Maps& maps) {
-	uint ts = Rus::mod().lex.symbs.toInt("|-");
-	if (!Rus::get().math.consts.has(ts)) {
-		smm::Constants* consts = new smm::Constants;
-		maps.turnstile = mdl::Symbol(ts);
-		consts->expr += maps.turnstile;
-		return consts;
-	} else
-		return nullptr;
-}
-
 inline uint translate_symb(uint s) {
 	if (!Rus::get().math.consts.has(s))
 		return s;
@@ -52,8 +41,15 @@ mdl::Expr translate_term(const Expr& ex, const Type* tp, Maps& maps) {
 	return expr;
 }
 
-smm::Constants* translate_const(const Const* c) {
+smm::Constants* translate_const(const Const* c, Maps& maps) {
 	smm::Constants* consts = new smm::Constants;
+	static bool first_time = true;
+	if (first_time) {
+		uint ts = Rus::mod().lex.symbs.toInt("|-");
+		maps.turnstile = mdl::Symbol(ts);
+		consts->expr += maps.turnstile;
+		first_time = false;
+	}
 	consts->expr += mdl::Symbol(translate_symb(c->symb.lit));
 	return consts;
 }
@@ -293,11 +289,9 @@ inline smm::Inclusion* translate_import(const Import* imp, Maps& maps) {
 
 vector<smm::Node> translate_theory(const Theory* thy, Maps& maps) {
 	vector<smm::Node> nodes;
-	if (!thy->parent)
-		nodes.push_back(translate_turnstile(maps));
 	for (auto n : thy->nodes) {
 		switch (n.kind) {
-		case Node::CONST:   nodes.push_back(translate_const(n.val.cst));        break;
+		case Node::CONST:   nodes.push_back(translate_const(n.val.cst, maps));  break;
 		case Node::TYPE:    join(nodes, translate_type(n.val.tp, maps));        break;
 		case Node::RULE:    nodes.push_back(translate_rule(n.val.rul, maps));   break;
 		case Node::AXIOM:   join(nodes, translate_axiom(n.val.ax, maps));       break;
