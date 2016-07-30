@@ -8,11 +8,14 @@ extern map<uint, rus::Const> math_symb;
 
 namespace {
 
+typedef vector<rus::Node>::iterator NodeIter;
+
 struct State {
 	Map<const Assertion*, rus::Axiom*>   axioms;
 	Map<const Assertion*, rus::Theorem*> theorems;
 	Map<const Assertion*, rus::Def*>     defs;
-	Map<const rus::Rule*, rus::Node*>    rules;
+	Map<const rus::Rule*, rus::Node*>    rule_nodes;
+	Map<const rus::Type*, NodeIter>      type_nodes;
 	Map<const Source*,    rus::Source*>  sources;
 	Map<Symbol, rus::Type*> types;
 	rus::Type*    type_wff;
@@ -126,6 +129,7 @@ rus::Type* translate_type(Symbol type_sy, State& state) {
 		rus::Type* type = new rus::Type { state.ind ++, type_id };
 		state.types[type_sy] = type;
 		state.theory.top()->nodes.push_back(type);
+		state.type_nodes[type] = -- state.theory.top()->nodes.end();
 		if (type_str == "wff") state.type_wff = type;
 		if (type_str == "set") state.type_set = type;
 		if (type_str == "class") state.type_class = type;
@@ -154,7 +158,7 @@ void translate_super(const Assertion* ass, State& state) {
 	infer->sup.push_back(super);
 	auto sup_it = type_index(super, state);
 	auto inf_it = type_index(infer, state);
-	if (sup_it > inf_it) {
+	if (super->ind > infer->ind) {
 		state.theory.top()->nodes.erase(sup_it);
 		state.theory.top()->nodes.insert(inf_it, super);
 	}
@@ -202,7 +206,7 @@ void translate_rule(const Assertion* ass, State& state) {
 		translate_vars(ass->floating, state),
 		translate_expr(ass->prop.expr, state, ass)
 	};
-	for (auto p : state.rules.m) {
+	for (auto p : state.rule_nodes.m) {
 		bool less_gen = less_general(p.first, rule);
 		bool more_gen = less_general(rule, p.first);
 		if (less_gen && !more_gen) {
@@ -215,7 +219,7 @@ void translate_rule(const Assertion* ass, State& state) {
 		}
 	}
 	state.theory.top()->nodes.push_back(rule);
-	state.rules[rule] = &state.theory.top()->nodes.back();
+	state.rule_nodes[rule] = &state.theory.top()->nodes.back();
 }
 
 template<class T>
