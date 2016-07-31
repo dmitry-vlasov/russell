@@ -63,6 +63,7 @@ Term* parse_LL(Node* x, Type* type, uint ind, bool initial = false) {
 				n.pop();
 				m.pop();
 				if (!childnodes.empty() && childnodes.top() == n.top()) {
+					delete children.back();
 					children.pop_back();
 					childnodes.pop();
 				}
