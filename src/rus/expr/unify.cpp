@@ -4,8 +4,8 @@ namespace mdl {
 namespace rus {
 
 template<typename T>
-inline Type* type(const T* t) {
-	return t->rule ? t->rule->type : t->first->symb.type;
+inline Type* type(const T& t) {
+	return t.rule ? t.rule->type : t.first->symb.type;
 }
 
 inline Rule* find_super(Type* type, Type* super) {
@@ -17,28 +17,28 @@ inline Rule* find_super(Type* type, Type* super) {
 }
 
 
-sub::Expr* unify(const term::Expr* p, const term::Expr* q) {
-	if (p->isvar()) {
-		Symbol var = p->first->symb;
+sub::Expr* unify(const term::Expr& p, const term::Expr& q) {
+	if (p.isvar()) {
+		Symbol var = p.first->symb;
 		if (var.type == type(q)) {
 			sub::Expr* s = new sub::Expr();
-			s->sub[var] = q->clone();
+			s->sub[var] = q;
 			return s;
 		} else if (Rule* super = find_super(type(q), const_cast<Type*>(var.type))) {
 			sub::Expr* s = new sub::Expr();
-			s->sub[var] = new term::Expr(q->first, q->last, super);
-			s->sub[var]->children.push_back(q->clone());
+			s->sub[var] = term::Expr(q.first, q.last, super);
+			s->sub[var].children.push_back(q);
 			return s;
 		}
 		return nullptr;
 	} else {
-		if (p->rule != q->rule) {
+		if (p.rule != q.rule) {
 			return nullptr;
 		}
 		sub::Expr* sub = new sub::Expr();
-		auto p_ch = p->children.begin();
-		auto q_ch = q->children.begin();
-		while (p_ch != p->children.end()) {
+		auto p_ch = p.children.begin();
+		auto q_ch = q.children.begin();
+		while (p_ch != p.children.end()) {
 			if (sub::Expr* s = unify(*p_ch, *q_ch)) {
 				if (!sub->join(s)) {
 					delete sub;

@@ -32,22 +32,32 @@ size_t memvol(const Expr& ex) {
 		s += memsize(*n);
 		n = n->next;
 	}
-	s += memsize(*ex.term);
+	s += memvol(ex.term);
 	return s;
 }
 
-string show_ast(const term::Expr* t, bool full) {
-	if (t->isvar())
-		return show(t->first->symb, full);
+string show_ast(const term::Expr& t, bool full) {
+	if (t.isvar())
+		return t.first ? show(t.first->symb, full) : "<null>";
 	else {
-		string s = (t->rule ? show_id(t->rule->id) : "?") + " (";
-		for (uint i = 0; i < t->children.size(); ++ i) {
-			s += show_ast(t->children[i], full);
-			if (i + 1 < t->children.size()) s += ", ";
+		string s = (t.rule ? show_id(t.rule->id) : "?") + " (";
+		for (uint i = 0; i < t.children.size(); ++ i) {
+			s += show_ast(t.children[i], full);
+			if (i + 1 < t.children.size()) s += ", ";
 		}
 		s += ")";
 		return s;
 	}
+}
+
+term::Expr copy_term(const term::Expr& st, map<node::Expr*, node::Expr*>& mp) {
+	assert(mp.find(st.first) != mp.end());
+	assert(mp.find(st.last) != mp.end());
+	term::Expr tt(mp[st.first], mp[st.last], st.rule);
+	for (auto ch : st.children) {
+		tt.children.push_back(copy_term(ch, mp));
+	}
+	return tt;
 }
 
 Expr::Expr(const Expr& ex) : first(nullptr), last(nullptr), type(ex.type), term(nullptr) {
@@ -58,7 +68,7 @@ Expr::Expr(const Expr& ex) : first(nullptr), last(nullptr), type(ex.type), term(
 		mp[n] = last;
 		n = n->next;
 	}
-	term = add_term<term::Expr, node::Expr>(ex.term, mp);
+	term = copy_term(ex.term, mp);
 }
 Expr::Expr(Expr&& ex) : first(ex.first), last(ex.last), type(ex.type), term(ex.term) {
 	ex.first = nullptr;
@@ -73,7 +83,6 @@ Expr::~Expr() {
 		n = n->prev;
 		delete to_delete;
 	}
-	if (term) delete term;
 }
 Expr& Expr::operator = (const Expr& ex) {
 	Node* n = last;
@@ -92,7 +101,7 @@ Expr& Expr::operator = (const Expr& ex) {
 		mp[n] = last;
 		n = n->next;
 	}
-	term = add_term<term::Expr, node::Expr>(ex.term, mp);
+	term = copy_term(ex.term, mp);
 	return *this;
 }
 Expr& Expr::operator = (Expr&& ex) {
@@ -152,38 +161,37 @@ bool Expr::operator == (const Expr& ex) const {
 	return !n && !m;
 }
 
-term::Expr* assemble_expr(Expr& ex, const term::Expr* t) {
-	if (t->isvar()) {
-		ex.push_back(t->first->symb);
-		ex.term = new term::Expr(ex.first);
+term::Expr assemble_expr(Expr& ex, const term::Expr& t) {
+	if (t.isvar()) {
+		ex.push_back(t.first->symb);
+		ex.term = term::Expr(ex.first);
 		return ex.term;
 	}
 	uint i = 0;
-	Expr::Node* n = t->rule ? t->rule->term.first : t->first;
-	vector<term::Expr*> children;
+	Expr::Node* n = t.rule ? t.rule->term.first : t.first;
+	vector<term::Expr> children;
 	while (n) {
 		if (n->symb.type) {
-			if (i + 1 > t->children.size()) {
+			if (i + 1 > t.children.size()) {
 				cout << " ERROR!!" << endl;
 				ex.push_back(Symbol("<<"));
 				ex.push_back(n->symb);
 				ex.push_back(Symbol(">>"));
 			} else {
-				term::Expr* ch = assemble_expr(ex, t->children[i++]);
+				term::Expr ch = assemble_expr(ex, t.children[i++]);
 				children.push_back(ch);
 			}
 		} else
 			ex.push_back(n->symb);
 		n = n->next;
 	}
-	ex.term = new term::Expr(ex.first, ex.last, t->rule, children);
-	return ex.term;
+	return term::Expr(ex.first, ex.last, t.rule, children);
 }
 
-Expr assemble(const term::Expr* t) {
+Expr assemble(const term::Expr& t) {
 	Expr e;
 	assemble_expr(e, t);
-	e.type = t->rule ? t->rule->type : t->first->symb.type;
+	e.type = t.rule ? t.rule->type : t.first->symb.type;
 	return e;
 }
 
@@ -191,12 +199,12 @@ Expr assemble(const Expr& ex) {
 	return assemble(ex.term);
 }
 
-term::Expr* create_term(Expr::Node* first, Expr::Node* last, Rule* rule) {
-	term::Expr* term = new term::Expr(first, last, rule);
+term::Expr create_term(Expr::Node* first, Expr::Node* last, Rule* rule) {
+	term::Expr term(first, last, rule);
 	Expr::Node* n = first;
 	while (n) {
 		if (n->symb.type)
-			term->children.push_back(new term::Expr(n));
+			term.children.push_back(term::Expr(n));
 		n = n->next;
 	}
 	return term;
@@ -207,14 +215,14 @@ void parse_term(Expr& ex, Rule* rule) {
 }
 
 bool sub::Expr::join(Expr* s) {
-	for (auto p : s->sub) {
-		auto it = sub.find(p.first);
-		if (it != sub.end()) {
-			if (*(*it).second != *p.second) {
+	for (auto& p : s->sub.m) {
+		auto it = sub.m.find(p.first);
+		if (it != sub.m.end()) {
+			if ((*it).second != p.second) {
 				return false;
 			}
 		} else {
-			sub[p.first] = p.second->clone();
+			sub.m[p.first] = p.second;
 		}
 	}
 	return true;
@@ -224,7 +232,7 @@ void dump(const Symbol& s) { cout << show(s) << endl; }
 void dump(const Expr& ex) { cout << show(ex) << endl; }
 void dump_ast(const Expr& ex) { cout << show_ast(ex) << endl; }
 void dump(const term::Expr* tm) { cout << show(*tm) << endl; }
-void dump_ast(const term::Expr* tm) { cout << show_ast(tm) << endl; }
+void dump_ast(const term::Expr& tm) { cout << show_ast(tm) << endl; }
 void dump(const sub::Expr& sb) { cout << show(sb) << endl; }
 
 }} // mdl::rus

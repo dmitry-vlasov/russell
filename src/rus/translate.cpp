@@ -28,7 +28,7 @@ inline uint translate_symb(uint s) {
 mdl::Expr translate_expr(const Expr& ex, Maps& maps) {
 	mdl::Expr expr;
 	expr += maps.turnstile;
-	for (auto it = ex.term->begin(); it != ex.term->end(); ++ it)
+	for (auto it = ex.term.begin(); it != ex.term.end(); ++ it)
 		expr += mdl::Symbol(translate_symb(it->symb.lit), it->symb.type);
 	return expr;
 }
@@ -36,7 +36,7 @@ mdl::Expr translate_expr(const Expr& ex, Maps& maps) {
 mdl::Expr translate_term(const Expr& ex, const Type* tp, Maps& maps) {
 	mdl::Expr expr;
 	expr += mdl::Symbol(maps.types[tp]);
-	for (auto it = ex.term->begin(); it != ex.term->end(); ++ it)
+	for (auto it = ex.term.begin(); it != ex.term.end(); ++ it)
 		expr += mdl::Symbol(translate_symb(it->symb.lit), it->symb.type);
 	return expr;
 }
@@ -126,8 +126,8 @@ smm::Assertion* translate_rule(const Rule* rule, Maps& maps) {
 	maps.rules[rule] = ra;
 	for (auto v : rule->vars.v) {
 		uint i = 0;
-		for (auto ch : rule->term.term->children) {
-			if (ch->getvar() == v) {
+		for (auto& ch : rule->term.term.children) {
+			if (ch.getvar() == v) {
 				maps.rules_args[rule][v] = i;
 				break;
 			}
@@ -189,22 +189,22 @@ void translate_ref(Ref ref, const Assertion* thm, vector<smm::Ref>& smm_proof, M
 	}
 }
 
-void translate_term(const term::Expr* t, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps) {
-	if (t->isvar()) {
-		if (maps.floatings[thm].has(t->getvar()))
-			smm_proof.push_back(maps.floatings[thm][t->getvar()]);
-		else if (maps.inners[thm].has(t->getvar()))
-			smm_proof.push_back(maps.inners[thm][t->getvar()]);
+void translate_term(const term::Expr& t, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps) {
+	if (t.isvar()) {
+		if (maps.floatings[thm].has(t.getvar()))
+			smm_proof.push_back(maps.floatings[thm][t.getvar()]);
+		else if (maps.inners[thm].has(t.getvar()))
+			smm_proof.push_back(maps.inners[thm][t.getvar()]);
 		else
-			throw Error("undeclared variable", show(t->getvar()));
+			throw Error("undeclared variable", show(t.getvar()));
 	} else {
-		for (auto v : t->rule->vars.v)
-			translate_term(t->children[maps.rules_args[t->rule][v]], thm, smm_proof, maps);
+		for (auto v : t.rule->vars.v)
+			translate_term(t.children[maps.rules_args[t.rule][v]], thm, smm_proof, maps);
 	}
-	if (t->rule) {
-		if (!maps.rules.has(t->rule))
+	if (t.rule) {
+		if (!maps.rules.has(t.rule))
 			throw Error("undefined reference to rule");
-		smm_proof.push_back(smm::Ref(maps.rules[t->rule], true));
+		smm_proof.push_back(smm::Ref(maps.rules[t.rule], true));
 	}
 }
 

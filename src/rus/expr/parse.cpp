@@ -16,40 +16,45 @@ inline Rule* find_super(Type* type, Type* super) {
 		return nullptr;
 }
 
-Term* parse_LL(Node* x, Type* type, uint ind, bool initial = false) {
+bool parse_LL(Term& t, Node* x, Type* type, uint ind, bool initial = false) {
 	if (!initial && type->rules.root) {
-		vector<Term*> children;
-		Node* f = x;
-
+		t.first = x;
 		stack<TreeNode*> n;
 		stack<Node*> m;
 		stack<TreeNode*> childnodes;
 		n.push(type->rules.root);
 		m.push(x);
-
 		while (!n.empty() && !m.empty()) {
 			if (Type* tp = n.top()->symb.type) {
-				if (Term* child = parse_LL(m.top(), tp, ind, n.top() == type->rules.root)) {
-					children.push_back(child);
-					childnodes.push(n.top());
+				t.children.push_back(Term());
+				childnodes.push(n.top());
+				Term& child = t.children.back();
+				if (parse_LL(child, m.top(), tp, ind, n.top() == type->rules.root)) {
 					if (!n.top()->next) {
-						if (n.top()->data->ind <= ind)
-							return new Term(f, child->last, n.top()->data, children);
-						else
+						if (n.top()->data->ind <= ind) {
+							t.last = child.last;
+							t.rule = n.top()->data;
+							return true;
+						} else
 							goto end;
-					} else if (!child->last->next)
+					} else if (!child.last->next)
 						goto end;
 					else {
 						n.push(n.top()->next);
-						m.push(child->last->next);
+						m.push(child.last->next);
 					}
 					continue;
+				} else {
+					t.children.pop_back();
+					childnodes.pop();
 				}
 			} else if (n.top()->symb == m.top()->symb) {
 				if (!n.top()->next) {
-					if (n.top()->data->ind <= ind)
-						return new Term(f, m.top(), n.top()->data, children);
-					else
+					if (n.top()->data->ind <= ind) {
+						t.last = m.top();
+						t.rule = n.top()->data;
+						return true;
+					} else
 						goto end;
 				} else if (!m.top()->next)
 					goto end;
@@ -63,30 +68,29 @@ Term* parse_LL(Node* x, Type* type, uint ind, bool initial = false) {
 				n.pop();
 				m.pop();
 				if (!childnodes.empty() && childnodes.top() == n.top()) {
-					delete children.back();
-					children.pop_back();
+					t.children.pop_back();
 					childnodes.pop();
 				}
 				if (n.empty() || m.empty()) goto end;
 			}
 			n.top() = n.top()->side;
 		}
-		end:
-		for (auto t : children) delete t;
+		end: ;
 	}
 	if (x->symb.type) {
-		if (x->symb.type == type)
-			return new Term(x);
-		else if (Rule* super = find_super(x->symb.type, type))
-			return new Term(x, super);
+		if (x->symb.type == type) {
+			t = Term(x);
+			return true;
+		} else if (Rule* super = find_super(x->symb.type, type)) {
+			t = Term(x, super);
+			return true;
+		}
 	}
-	return nullptr;
+	return false;
 }
 
 void parse_LL(Expr* ex, uint ind) {
-	if (Term* term = parse_LL(ex->first, ex->type, ind)) {
-		ex->term = term;
-	} else
+	if (!parse_LL(ex->term, ex->first, ex->type, ind))
 		throw new Error("parsing error", string("expression: ") + show(*ex));
 }
 

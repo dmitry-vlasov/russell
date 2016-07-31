@@ -139,21 +139,20 @@ namespace term {
 
 struct Expr {
 	typedef node::Expr Node;
-	typedef vector<Expr*> Children;
+	typedef vector<Expr> Children;
 	typedef iterator<Node> Iterator;
 	typedef const_iterator<Node> ConstIterator;
 
+	Expr() :
+	first(nullptr), last(nullptr), rule(nullptr), children() { }
 	Expr(Node* f, Node* l, Rule* r) :
 	first(f), last(l), rule(r), children() { }
 	Expr(Node* v, Rule* r = nullptr) :
 	first(v), last(v), rule(r), children() {
-		if (rule) children.push_back(new Expr(v));
+		if (rule) children.push_back(Expr(v));
 	}
 	Expr(Node* f, Node* l, Rule* r, const Children& ch) :
 	first(f), last(l), rule(r), children(ch) { }
-	~Expr() {
-		for (auto ch : children) delete ch;
-	}
 
 	Iterator begin();
 	Iterator end();
@@ -167,7 +166,6 @@ struct Expr {
 	bool isvar() const;
 	Symbol getvar() const;
 
-	Expr* clone() const;
 	bool operator == (const Expr& t) const;
 	bool operator != (const Expr& t) const {
 		return !operator == (t);
@@ -246,19 +244,14 @@ struct Tree {
 namespace sub {
 
 struct Expr {
-	~Expr() {
-		for (auto p : sub) {
-			delete p.second;
-		}
-	}
 	bool join(Expr* s);
-	term::Expr* find(Symbol v) {
-		auto it = sub.find(v);
-		if (it == sub.end()) return nullptr;
-		else return it->second;
-	}
 
-	map<Symbol, term::Expr*> sub;
+	term::Expr& find(Symbol v) {
+		return sub.m.find(v)->second;
+	}
+	bool has(Symbol v) { return sub.has(v); }
+
+	Map<Symbol, term::Expr> sub;
 };
 
 }
@@ -287,8 +280,8 @@ struct Expr {
 	typedef iterator<Node> Iterator;
 	typedef const_iterator<Node> ConstIterator;
 
-	Expr() : first(nullptr), last(nullptr), type(nullptr), term(nullptr) { }
-	Expr(Symbol s) : first(nullptr), last(nullptr), type(s.type), term(nullptr) {
+	Expr() : first(nullptr), last(nullptr), type(nullptr), term() { }
+	Expr(Symbol s) : first(nullptr), last(nullptr), type(s.type), term() {
 		push_back(s);
 	}
 	Expr(const Expr&);
@@ -316,7 +309,7 @@ struct Expr {
 	Node* first;
 	Node* last;
 	Type* type;
-	Term* term;
+	Term  term;
 };
 
 inline iterator<node::Expr> begin(Expr& ex) { return ex.begin(); }
@@ -341,12 +334,6 @@ inline Expr::ConstIterator Expr::rend() const { return first->prev ? ConstIterat
 inline bool Expr::isvar() const { return first == last && first->symb.type && !rule; }
 inline Symbol Expr::getvar() const { return first->symb; }
 
-inline Expr* Expr::clone() const {
-	Expr* ret = new Expr(first, last, rule);
-	for (auto ch : children)
-		ret->children.push_back(ch->clone());
-	return ret;
-}
 inline bool Expr :: operator == (const Expr& t) const {
 	if (isvar() && t.isvar() && first->symb == t.first->symb)
 		return true;
@@ -355,9 +342,7 @@ inline bool Expr :: operator == (const Expr& t) const {
 	auto i_p = children.begin();
 	auto i_q = t.children.begin();
 	while (i_p != children.end()) {
-		const Expr* ch_p = *i_p;
-		const Expr* ch_q = *i_q;
-		if (*ch_p != *ch_q) return false;
+		if (*i_p != *i_q) return false;
 		++ i_p; ++ i_q;
 	}
 	return true;
@@ -366,7 +351,7 @@ inline bool Expr :: operator == (const Expr& t) const {
 }
 
 
-sub::Expr* unify(const term::Expr* p, const term::Expr* q);
+sub::Expr* unify(const term::Expr& p, const term::Expr& q);
 inline sub::Expr* unify(const Expr& ex1, const Expr& ex2) {
 	return unify(ex1.term, ex2.term);
 }
@@ -379,12 +364,9 @@ namespace expr {
 }
 
 string show(const Expr&);
-string show_ast(const term::Expr*, bool full = false);
+string show_ast(const term::Expr&, bool full = false);
 inline string show_ast(const Expr& ex, bool full = false) {
-	if (ex.term)
-		return show_ast(ex.term, full);
-	else
-		return "<no ast>";
+	return show_ast(ex.term, full);
 }
 
 inline string show(const term::Expr& t) {
@@ -400,8 +382,8 @@ inline string show(const term::Expr& t) {
 
 inline string show(const sub::Expr& s) {
 	string str;
-	for (auto p : s.sub) {
-		str += show(p.first, true) + " --> " + show_ast(p.second) + "\n";
+	for (auto p : s.sub.m) {
+		str += show(p.first, true) + " --> " + show_ast(p.second) + "\t ==\t"  + show(p.second) + "\n";
 	}
 	return str;
 }
@@ -462,6 +444,7 @@ inline N* new_side(N* n, Symbol s) {
 	return n->side;
 }
 
+/*
 template<class T, class N>
 T* add_term(const term::Expr* st, map<node::Expr*, N*>& mp) {
 	if (!st) return nullptr;
@@ -473,26 +456,27 @@ T* add_term(const term::Expr* st, map<node::Expr*, N*>& mp) {
 	}
 	return tt;
 }
+*/
+
 
 template<class T, class N>
-void add_term(term::Map<T>& tree_m, const term::Expr* expr_t, map<node::Expr*, N*>& mp) {
-	if (!expr_t) return;
-	assert(mp.find(expr_t->first) != mp.end());
-	assert(mp.find(expr_t->last) != mp.end());
+void add_term(term::Map<T>& tree_m, const term::Expr& expr_t, map<node::Expr*, N*>& mp) {
+	assert(mp.find(expr_t.first) != mp.end());
+	assert(mp.find(expr_t.last) != mp.end());
 
-	term::Tree<T>& tree_t = tree_m.map[expr_t->rule];
+	term::Tree<T>& tree_t = tree_m.map[expr_t.rule];
 	if (tree_t.first) {
-		assert(tree_t.first == mp[expr_t->first]);
-		assert(tree_t.children.size() == expr_t->children.size());
+		assert(tree_t.first == mp[expr_t.first]);
+		assert(tree_t.children.size() == expr_t.children.size());
 	} else {
-		tree_t.first = mp[expr_t->first];
-		for (auto ch : expr_t->children) {
+		tree_t.first = mp[expr_t.first];
+		for (auto& _ : expr_t.children) {
 			tree_t.children.push_back(term::Map<T>());
 		}
 	}
-	tree_t.last.push_back(mp[expr_t->last]);
+	tree_t.last.push_back(mp[expr_t.last]);
 	auto tree_ch = tree_t.children.begin();
-	for (auto expr_ch : expr_t->children) {
+	for (auto& expr_ch : expr_t.children) {
 		add_term(*tree_ch ++, expr_ch, mp);
 	}
 }
@@ -563,8 +547,8 @@ inline size_t memvol(const Symbol& s) {
 inline size_t memvol(const term::Expr& t) {
 	size_t vol = 0;
 	vol += t.children.capacity();
-	for (const term::Expr* ch : t.children)
-		vol += memsize(*ch);
+	for (const term::Expr ch : t.children)
+		vol += memvol(ch);
 	return vol;
 }
 inline size_t memvol(const node::Expr& n) {

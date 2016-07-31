@@ -75,9 +75,15 @@ void verify_proof(Proof* proof) {
 
 void verify_theory(Theory* theory) {
 	for (auto n : theory->nodes) {
-		if (n.kind == Node::PROOF) {
-			//cout << "verifying proof: " << show_id(n.val.prf->thm->ass.id) << endl;
-			verify_proof(n.val.prf);
+		switch (n.kind) {
+		case Node::PROOF:  verify_proof(n.val.prf); break;
+		case Node::THEORY: verify_theory(n.val.thy); break;
+		case Node::IMPORT: {
+			Import* imp = n.val.imp;
+			if (imp->primary) verify_theory(imp->source->theory);
+			break;
+		}
+		default: break;
 		}
 	}
 }
