@@ -185,8 +185,8 @@ struct Expr {
 template<class T>
 struct Tree {
 	typedef node::Tree<T> Node;
-	typedef iterator<Node> Iterator;
-	typedef const_iterator<Node> ConstIterator;
+	//typedef iterator<Node> Iterator;
+	//typedef const_iterator<Node> ConstIterator;
 
 	Tree(Node* f, Node* l, Rule* r) :
 	first(f), last(), rule(r), children() { last.push_back(l); }
@@ -299,10 +299,14 @@ struct Expr;
 template<typename T>
 struct Tree {
 	typedef node::Tree<T> Node;
-	Tree() : root(nullptr) { }
+	typedef term::Tree<T> Term;
+
+	Tree() : root(nullptr), term(nullptr) { }
 	~Tree();
 	T& add(const Expr& ex);
+
 	Node* root;
+	Term* term;
 };
 
 
@@ -550,6 +554,7 @@ Tree<T>::~Tree() {
 		for (Node* n : nodes)
 			delete n;
 	}
+	if (term) delete term;
 }
 
 void dump(const Symbol& s);
