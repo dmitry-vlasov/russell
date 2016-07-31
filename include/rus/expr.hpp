@@ -189,24 +189,25 @@ struct Tree {
 	typedef const_iterator<Node> ConstIterator;
 
 	Tree(Node* f, Node* l, Rule* r) :
-	first(f), last(l), rule(r), children() { }
+	first(f), last(), rule(r), children() { last.push_back(l); }
 	Tree(Node* v, Rule* r = nullptr) :
-	first(v), last(v), rule(r), children() {
+	first(v), last(), rule(r), children() {
+		last.push_back(v);
 		if (rule) children.push_back(new Tree(v));
 	}
 	Tree(Node* f, Node* l, Rule* r, const vector<Tree*>& ch) :
-	first(f), last(l), rule(r), children(ch) { }
+	first(f), last(l), rule(r), children(ch) { last.push_back(l); }
 
-	Iterator begin() { return Iterator(first); }
+	/*Iterator begin() { return Iterator(first); }
 	Iterator end()   { return last->next ? Iterator(last->next) : Iterator(); }
 	ConstIterator begin() const { return ConstIterator(first); }
 	ConstIterator end() const { return last->next ? ConstIterator(last->next) : ConstIterator(); }
 	Iterator rbegin() { return Iterator(last); }
 	Iterator rend() { return first->prev ? Iterator(first->prev) : Iterator(); }
 	ConstIterator rbegin() const { return ConstIterator(last); }
-	ConstIterator rend() const { return first->prev ? ConstIterator(first->prev) : ConstIterator(); }
+	ConstIterator rend() const { return first->prev ? ConstIterator(first->prev) : ConstIterator(); }*/
 
-	bool isvar() const { return first == last && first->symb.type && !rule; }
+	bool isvar() const { return first == last.back() && first->symb.type && !rule; }
 	Symbol getvar() const { return first->symb; }
 
 	Tree* clone() const;
@@ -221,9 +222,9 @@ struct Tree {
 		}
 	}
 
-	Node* first;
-	Node* last;
-	Rule* rule;
+	Node*         first;
+	vector<Node*> last;
+	Rule*         rule;
 	vector<Tree*> children;
 };
 
