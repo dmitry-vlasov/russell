@@ -28,9 +28,6 @@ void split_section(Section* sect) {
 	}
 	sect->contents.clear();
 
-	//cout << "Splitting: " << show_contents(*header) << endl;
-	//cout << "Splitting: " << endl << header->path << endl;
-
 	header->prev_sect = sect->prev_sect;
 	header->next_sect = sect;
 	header->prev_sect->next_sect = header;
@@ -39,6 +36,7 @@ void split_section(Section* sect) {
 	header->prev_sibling = nullptr;
 	header->next_sibling = header->next_sect;
 	header->next_sibling->prev_sibling = header;
+	sect->incs.push_back(header);
 }
 
 }

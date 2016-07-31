@@ -30,7 +30,10 @@ struct Section {
 	prev_sect(nullptr), next_sect(nullptr),
 	prev_sibling(nullptr), next_sibling(nullptr),
 	parent(nullptr), parts() { }
-	~ Section() { for (auto* p : parts) delete p; }
+	~ Section() {
+		for (auto* p : parts) delete p;
+		for (auto* i : incs)  delete i;
+	}
 	void save() const;
 	Type   type;
 	string header;
@@ -45,6 +48,7 @@ struct Section {
 	Section* prev_sibling;
 	Section* next_sibling;
 	Section* parent;
+	vector<Section*> incs;
 	vector<Section*> parts;
 };
 

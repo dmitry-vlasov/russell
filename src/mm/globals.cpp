@@ -102,7 +102,9 @@ void Mm::run() {
 	timers.total.start();
 	if (config.verbose)
 		cout << "processing file " << config.in << " ... " << flush;
-	if (config.mode != Config::Mode::MERGE && !parse_mm(*this)) return;
+	if (config.mode == Config::Mode::TRANSL)
+		if (!parse_mm(*this))
+			return;
 	//cout << *source << endl;
 	switch (config.mode) {
 	case Config::Mode::CUT:    cut_mm(*this);       break;

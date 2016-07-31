@@ -284,7 +284,7 @@ smm::Source* translate_source(const Source* src, Maps& maps, smm::Source* target
 
 inline smm::Inclusion* translate_import(const Import* imp, Maps& maps) {
 	smm::Source* src = translate_source(imp->source, maps);
-	return new smm::Inclusion(src, imp->source->top);
+	return new smm::Inclusion(src, imp->primary);
 }
 
 vector<smm::Node> translate_theory(const Theory* thy, Maps& maps) {

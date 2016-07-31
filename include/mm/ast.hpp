@@ -214,6 +214,7 @@ struct Source {
 		boost::erase_last(name, ".mm");
 		boost::erase_last(name, ".rus");
 	}
+	~Source() { if (block) delete block; }
 	string root;
 	string name;
 	string path() { return (root.size() ? root + "/" + name : name) + ".mm"; }
