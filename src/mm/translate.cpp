@@ -154,7 +154,7 @@ struct ArgMap {
 	}
 	vector<Arg> args;
 };
-
+/*
 ostream& operator << (ostream& os, const ArgMap& amap) {
 	os << endl;
 	for (uint i = 0; i < amap.args.size(); ++ i) {
@@ -163,7 +163,7 @@ ostream& operator << (ostream& os, const ArgMap& amap) {
 	}
 	return os;
 }
-
+*/
 // Reduce permutation, remove variable which are not needed.
 //
 void reduce_permutation(smm::Assertion* ass, const set<Symbol>& needed, ArgMap& args) {

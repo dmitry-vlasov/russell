@@ -455,9 +455,11 @@ void add_term(term::Map<T>& tree_m, const term::Expr& expr_t, map<node::Expr*, N
 		assert(tree_t.children.size() == expr_t.children.size());
 	} else {
 		tree_t.first = mp[expr_t.first];
-		for (auto& _ : expr_t.children) {
-			tree_t.children.push_back(term::Map<T>());
-		}
+		for_each(
+			expr_t.children.begin(),
+			expr_t.children.end(),
+			[&tree_t](auto) mutable { tree_t.children.push_back(term::Map<T>()); }
+		);
 	}
 	tree_t.last.push_back(mp[expr_t.last]);
 	auto tree_ch = tree_t.children.begin();

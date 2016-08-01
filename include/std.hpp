@@ -90,6 +90,8 @@ namespace mdl {
 	using std::bitset;
 	using std::thread;
 	using std::mutex;
+
+	using std::for_each;
 }
 
 

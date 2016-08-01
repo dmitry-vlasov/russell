@@ -154,29 +154,36 @@ void enqueue_expressions(Def* def) {
 
 struct AddToMath {
 	void operator()(Const* c) const {
+		//cout << "c: " << show(c->symb) << endl;
 		Rus::mod().math.consts[c->symb.lit] = c;
 	}
 	void operator()(Type* t) const {
+		//cout << "tp: " << show_id(t->id) << endl;
 		collect_supers(t, t);
 		Rus::mod().math.types[t->id] = t;
 	}
 	void operator()(Rule* r) const {
+		//cout << "ru: " << show_id(r->id) << endl;
 		r->type->rules.add(r->term) = r;
 		Rus::mod().math.rules[r->id] = r;
 	}
 	void operator()(Axiom* a) const {
+		//cout << "ax: " << show_id(a->ass.id) << endl;
 		Rus::mod().math.axioms[a->ass.id] = a;
 		enqueue_expressions(a->ass);
 	}
 	void operator()(Def* d) const {
+		//cout << "def: " << show_id(d->ass.id) << endl;
 		Rus::mod().math.defs[d->ass.id] = d;
 		enqueue_expressions(d);
 	}
 	void operator()(Theorem* th) const {
+		//cout << "th: " << show_id(th->ass.id) << endl;
 		Rus::mod().math.theorems[th->ass.id] = th;
 		enqueue_expressions(th->ass);
 	}
 	void operator()(Proof* p) const {
+		//cout << "pr: " << show_id(p->thm->ass.id) << endl;
 		p->has_id = !undef(p->id);
 		if (!p->has_id) p->id = Rus::mod().lex.ids.toInt(to_string(p->ind));
 		Rus::mod().math.proofs[p->id] = p;
@@ -365,6 +372,23 @@ struct AssembleDef {
 };
 
 
+struct DeleteComment {
+	template <typename T>
+	struct result { typedef void type; };
+	void operator()(Comment* c) const {
+		delete c;
+	}
+};
+
+struct AppendComment {
+	template <typename T1, typename T2>
+	struct result { typedef void type; };
+	void operator()(Comment* c1, Comment* c2) const {
+		c1->text += show(*c2);
+		delete c2;
+	}
+};
+
 template <typename Iterator>
 struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	Grammar();
@@ -375,7 +399,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, Symbol(), unicode::space_type> var;
 	qi::rule<Iterator, Symbol(), unicode::space_type> symb;
 	qi::rule<Iterator, uint(), unicode::space_type> id;
-	qi::rule<Iterator, std::string(), unicode::space_type> path;
+	qi::rule<Iterator, string(), unicode::space_type> path;
 	qi::rule<Iterator, void(Expr&, Rule*), unicode::space_type> term;
 	qi::rule<Iterator, void(Expr&, Type*), unicode::space_type> expr;
 	qi::rule<Iterator, void(Expr&, Type*), unicode::space_type> plain;
@@ -398,6 +422,9 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, Type*(), unicode::space_type> type;
 	qi::rule<Iterator, Const*(), unicode::space_type> constant;
 	qi::rule<Iterator, Import*(), unicode::space_type> import;
+	qi::rule<Iterator, string(), qi::unused_type> comment_text;
+	qi::rule<Iterator, Comment*(), qi::unused_type> comment_ml;
+	qi::rule<Iterator, Comment*(), qi::unused_type> comment_sl;
 	qi::rule<Iterator, Comment*(), qi::unused_type> comment;
 	qi::rule<Iterator, Source(), unicode::space_type> source;
 };
@@ -430,6 +457,9 @@ void Grammar<Iterator>::initNames() {
 	rule.name("rule");
 	type.name("type");
 	constant.name("constant");
+	comment_text.name("comment text");
+	comment_ml.name("multiline comment");
+	comment_sl.name("singleline comment");
 	comment.name("comment");
 	import.name("import");
 	source.name("source");

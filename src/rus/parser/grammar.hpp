@@ -48,6 +48,8 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 	const phoenix::function<SetLocation<Iterator>> setLocation;
 	const phoenix::function<IncInd>      incInd;
 	const phoenix::function<MakeString>  makeString;
+	const phoenix::function<DeleteComment> deleteComment;
+	const phoenix::function<AppendComment> appendComment;
 
 	bar  = lexeme[lit("-----")] >> * unicode::char_('-');
 	var  = lexeme[+(unicode::char_ - END_MARKER - unicode::space - unicode::char_("),"))] [at_c<0>(_val) = symbToInt(_1)];
@@ -55,9 +57,9 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 	id   = lexeme[+ unicode::char_("a-zA-Z0-9_.\\-")]            [_val = idToInt(_1)];
 	path = lexeme[+(unicode::char_ - END_MARKER - unicode::space)];
 
-	term  = + (symb [addSymbol(_r1, _1)] | comment) > eps [parseTerm(_r1, _r2, phoenix::ref(var_stack))];
-	expr  = + (symb [addSymbol(_r1, _1)] | comment) > eps [parseExpr(_r1, _r2, phoenix::ref(var_stack))];
-	plain = + (symb [addSymbol(_r1, _1)] | comment) > eps [phoenix::at_c<2>(_r1) = _r2];
+	term  = + (symb [addSymbol(_r1, _1)] | comment [deleteComment(_1)]) > eps [parseTerm(_r1, _r2, phoenix::ref(var_stack))];
+	expr  = + (symb [addSymbol(_r1, _1)] | comment [deleteComment(_1)]) > eps [parseExpr(_r1, _r2, phoenix::ref(var_stack))];
+	plain = + (symb [addSymbol(_r1, _1)] | comment [deleteComment(_1)]) > eps [phoenix::at_c<2>(_r1) = _r2];
 
 	disj =
 		lit("disjointed") > "("
@@ -258,27 +260,34 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 
 	import = lit("import") > path [_val = parseImport(_1)] > END_MARKER;
 
-	comment =
+	comment_text %= lexeme[+(unicode::char_ - "*/" - "/*")]; //[phoenix::at_c<0>(*_val) = makeString(_1)]
+	comment_ml =
 		   lit("/*")                        [_val = new_<Comment>()]
-		>> lexeme[+(unicode::char_ - "*/")] [phoenix::at_c<0>(*_val) = makeString(_1)]
-		>> "*/"
-		|
+		>> *(
+			comment_text [phoenix::at_c<0>(*_val) = _1] |
+			comment_ml [appendComment(_val, _1)]
+		)
+		>> lit("*/");
+
+	comment_sl =
 		   lit("//")                        [_val = new_<Comment>()]
-		>> lexeme[+(unicode::char_ - "\n")] [phoenix::at_c<0>(*_val) = makeString(_1)]
-		>> "\n";
+		>> lexeme[+(unicode::char_ - "\n")] [phoenix::at_c<0>(*_val) = makeString(_1)];
+
+	comment %= comment_ml | comment_sl;
 
 	source =
 		eps [at_c<3>(_val) = new_<Theory>()]
 		> +(
-		import   [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
-		constant [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
-		type     [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
-		rule     [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
-		axiom    [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
-		def      [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
-		theorem  [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
-		proof    [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
-		comment  [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))]);
+			import   [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
+			constant [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
+			type     [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
+			rule     [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
+			axiom    [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
+			def      [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
+			theorem  [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
+			proof    [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
+			comment  [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))]
+		);
 
 	//qi::on_success(assertion, setLocation(_val, _1));
 	qi::on_error<qi::fail>(
