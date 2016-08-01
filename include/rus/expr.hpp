@@ -350,7 +350,6 @@ inline bool Expr :: operator == (const Expr& t) const {
 
 }
 
-
 sub::Expr* unify(const term::Expr& p, const term::Expr& q);
 inline sub::Expr* unify(const Expr& ex1, const Expr& ex2) {
 	return unify(ex1.term, ex2.term);
@@ -443,20 +442,6 @@ inline N* new_side(N* n, Symbol s) {
 	n->side->prev = n->prev;
 	return n->side;
 }
-
-/*
-template<class T, class N>
-T* add_term(const term::Expr* st, map<node::Expr*, N*>& mp) {
-	if (!st) return nullptr;
-	assert(mp.find(st->first) != mp.end());
-	assert(mp.find(st->last) != mp.end());
-	T* tt = new T(mp[st->first], mp[st->last], st->rule);
-	for (auto ch : st->children) {
-		tt->children.push_back(add_term<T, N>(ch, mp));
-	}
-	return tt;
-}
-*/
 
 
 template<class T, class N>
