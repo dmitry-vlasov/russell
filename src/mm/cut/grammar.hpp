@@ -27,9 +27,9 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "cut") {
 
 		section =
 			   lit("$(\n")                         [_val = new_<cut::Section>()]
-			>> lexeme[*(ascii::char_ - '#' - '=')] [at_c<1>(*_val) = makeString(_1)]
+			>> lexeme[*(ascii::char_ - "##" - "#*" - "=-")] [at_c<1>(*_val) = makeString(_1)]
 			>> border                              [at_c<0>(*_val) = _1]
-			>> lexeme[+(ascii::char_ - '#' - '=')] [at_c<2>(*_val) = makeString(_1)]
+			>> lexeme[+(ascii::char_ - "##" - "#*" - "=-")] [at_c<2>(*_val) = makeString(_1)]
 			>> border
 			>> lexeme[*(ascii::char_ - "$)")]      [at_c<3>(*_val) = makeString(_1)]
 			>> lit("$)\n")                         [add(_val)];

@@ -66,6 +66,7 @@ struct Add {
 		stack.last = sect;
 		switch (sect->type) {
 		case Type::PARAGRAPH:
+			//cout << "paragraph: " << sect->name << endl;
 			if (!stack.chapter) throw Error("empty chapter");
 			sect->parent = stack.chapter;
 			stack.chapter->parts.push_back(sect);
@@ -75,6 +76,7 @@ struct Add {
 			stack.paragraph = stack.chapter->parts.back();
 			break;
 		case Type::CHAPTER:
+			//cout << "chapter: " << sect->name << endl;
 			if (!stack.part) throw Error("empty part");
 			sect->parent = stack.part;
 			stack.part->parts.push_back(sect);
@@ -85,6 +87,7 @@ struct Add {
 			stack.paragraph = nullptr;
 			break;
 		case Type::PART:
+			//cout << "part: " << sect->name << endl;
 			if (!stack.source) throw Error("empty source");
 			sect->parent = stack.source;
 			stack.source->parts.push_back(sect);
@@ -96,6 +99,7 @@ struct Add {
 			stack.paragraph = nullptr;
 			break;
 		case Type::SOURCE:
+			//cout << "source: " << sect->name << endl;
 			if (stack.source) throw Error("source already added");
 			sect->parent = nullptr;
 			stack.source = sect;
