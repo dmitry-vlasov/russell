@@ -9,7 +9,7 @@
 #include "mm/globals.hpp"
 #include "mm/adaptors.hpp"
 
-namespace mdl { namespace mm {
+namespace mdl { namespace mm { namespace parser {
 
 namespace qi      = boost::spirit::qi;
 namespace ascii   = boost::spirit::ascii;
@@ -27,15 +27,19 @@ struct AddToMath {
 	template<typename T>
 	struct result { typedef void type; };
 	void operator()(Floating* flo) const {
+		//cout << "flo: " << show_id(flo->label) << endl;
 		Mm::mod().math.floatings[flo->label] = flo;
 	}
 	void operator()(Essential* ess) const {
+		//cout << "ess: " << show_id(ess->label) << endl;
 		Mm::mod().math.essentials[ess->label] = ess;
 	}
 	void operator()(Axiom* ax) const {
+		//cout << "ax: " << show_id(ax->label) << endl;
 		Mm::mod().math.axioms[ax->label] = ax;
 	}
 	void operator()(Theorem* th) const {
+		//cout << "thm: " << show_id(th->label) << endl;
 		Mm::mod().math.theorems[th->label] = th;
 	}
 };
@@ -59,19 +63,39 @@ struct LabelToInt {
 	}
 };
 
+//Source* create(string path, string& data);
+//void parse(Source*, string&);
+
+template<class> class Grammar;
+
 struct ParseInclusion {
 	template <typename T1>
 	struct result { typedef void type; };
-	Inclusion* operator()(const string& path) const {
-		static Map<string, Inclusion*> included;
+	Inclusion* operator()(string path) const {
+		typedef Grammar<LocationIter> Parser;
+		return
+			mdl::include<Source, Parser, Inclusion>(
+				path,
+				Mm::get().config.root,
+				ascii::space,
+				[] (Inclusion* inc) -> Source* { return inc->source; }
+			);
+
+		/*static Map<string, Inclusion*> included;
 		if (included.has(path)) {
 			Inclusion* inc = included[path];
 			return new Inclusion(inc->source, false);
 		} else {
-			Inclusion* inc = new Inclusion(parse(path), true);
+			//cout << "src: " << path << endl;
+			typedef Grammar<LocationIter> Parser;
+			string data;
+			read_smart(data, path, Mm::get().config.root);
+			Source* src = new Source()
+			Inclusion* inc = new Inclusion(src, true);
 			included[path] = inc;
+			mdl::parse<Source, Parser>(src, data, ascii::space);
 			return inc;
-		}
+		}*/
 	}
 };
 
@@ -212,7 +236,7 @@ struct Comments : qi::grammar<Iterator> {
 };
 */
 template <typename Iterator>
-struct Grammar : qi::grammar<Iterator, Source*(), ascii::space_type> {
+struct Grammar : qi::grammar<Iterator, Source(), ascii::space_type> {
 	Grammar();
 	void initNames();
 
@@ -233,7 +257,7 @@ struct Grammar : qi::grammar<Iterator, Source*(), ascii::space_type> {
 	qi::rule<Iterator, Block*(), ascii::space_type> block;
 	qi::rule<Iterator, Inclusion*(), ascii::space_type> inclusion;
 	qi::rule<Iterator, Comment*(), qi::unused_type> comment;
-	qi::rule<Iterator, Source*(), ascii::space_type> source;
+	qi::rule<Iterator, Source(), ascii::space_type> source;
 };
 
 template <typename Iterator>
@@ -258,4 +282,4 @@ void Grammar<Iterator>::initNames() {
 	source.name("source");
 }
 
-}} // mdl::mm
+}}} // mdl::mm::parser

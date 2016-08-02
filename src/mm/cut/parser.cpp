@@ -5,13 +5,17 @@
 namespace mdl { namespace mm { namespace cut {
 
 Section* parse(const string& root, string in, const string& out) {
-	ifstream is = open_smart(in, root);
+	/*ifstream is = open_smart(in, root);
 	string storage;
 	is.unsetf(std::ios::skipws);
 	std::copy(
 		std::istream_iterator<char>(is),
 		std::istream_iterator<char>(),
 		std::back_inserter(storage));
+	is.close();*/
+
+	string storage;
+	read_smart(storage, in, root);
 
 	LocationIter iter(storage.begin(), in);
 	LocationIter end(storage.end(), in);

@@ -187,7 +187,8 @@ inline string cut_outer_directory(string path) {
 	return path.substr(slash_pos == string::npos ? 0 : slash_pos + 1);
 }
 
-ifstream open_smart(string& path, string root = "");
+//ifstream open_smart(string& path, string root = "");
+void read_smart(string& data, string& path, string root = "");
 
 template<class T>
 void deep_write(T* target, auto (get_cont)(T*), T* (get_inc)(auto), bool (is_inc)(auto)) {
@@ -213,6 +214,43 @@ void deep_write(T* target, auto (get_cont)(T*), T* (get_inc)(auto), bool (is_inc
 				}
 			}
 		}
+	}
+}
+
+template<class Source, class Parser>
+void parse(Source* src, string& data, auto space) {
+	LocationIter iter(data.begin(), src->name);
+	LocationIter end(data.end(), src->name);
+	if (!phrase_parse(iter, end, Parser(), space, *src) || iter != end) {
+		throw Error("parsing failed", src->name);
+	}
+}
+
+template<class Source, class Parser>
+Source* parse(string name, string root, auto space) {
+	string data;
+	read_smart(data, name, root);
+	Source* src = new Source(root, name);
+	parse<Source, Parser>(src, data, space);
+	return src;
+}
+
+template<class Source, class Parser, class Inclusion>
+Inclusion* include(string path, string root, auto space, Source* (get_src)(Inclusion*)) {
+	static Map<string, Inclusion*> included;
+	if (included.has(path)) {
+		Inclusion* inc = included[path];
+		return new Inclusion(get_src(inc), false);
+	} else {
+		//cout << "parsing src: " << path << endl;
+		string data;
+		string orig_path(path);
+		read_smart(data, path, root);
+		Source* src = new Source(root, path);
+		Inclusion* inc = new Inclusion(src, true);
+		included[orig_path] = inc;
+		parse<Source, Parser>(src, data, space);
+		return inc;
 	}
 }
 

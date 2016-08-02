@@ -12,24 +12,25 @@ uint inc_ind() { return ind ++; }
 
 } // parser
 
-Source* parse(string name) {
-	string orig_name = name;
-	ifstream in = open_smart(name, Rus::get().config.root);
-	string storage;
-	in.unsetf(std::ios::skipws);
-	std::copy(
-		std::istream_iterator<char>(in),
-		std::istream_iterator<char>(),
-		std::back_inserter(storage));
-
-	LocationIter iter(storage.begin(), name);
-	LocationIter end(storage.end(), name);
-	Source* source = new Source(Rus::get().config.root, name);
-	bool r = phrase_parse(iter, end, parser::Grammar<LocationIter>(), parser::unicode::space, *source);
-	if (!r || iter != end) {
-		throw Error("parsing failed", orig_name);
+/*
+void parse(Source* src, string& data) {
+	typedef parser::Grammar<LocationIter> Parser;
+	LocationIter iter(data.begin(), src->name);
+	LocationIter end(data.end(), src->name);
+	if (!phrase_parse(iter, end, Parser(), parser::unicode::space, *src) || iter != end) {
+		throw Error("parsing failed", src->name);
 	}
-	return source;
+}
+*/
+
+Source* parse(string name) {
+	/*string data;
+	open_smart(data, name, Rus::get().config.root);
+	Source* src = new Source(Rus::get().config.root, name);
+	parse(src, data);
+	return src;*/
+	typedef parser::Grammar<LocationIter> Parser;
+	return mdl::parse<Source, Parser>(name, Rus::get().config.root, parser::unicode::space);
 }
 
 }} // mdl::rus

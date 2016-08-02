@@ -32,22 +32,17 @@ namespace {
 }
 
 void parse(string path) {
-	ifstream is = open_smart(path, Mm::get().config.root);
-	string storage;
-	is.unsetf(std::ios::skipws);
-	std::copy(
-		std::istream_iterator<char>(is),
-		std::istream_iterator<char>(),
-		std::back_inserter(storage));
-
-	remove_commented_imports(storage);
-	LocationIter iter(storage.begin(), path);
-	LocationIter end(storage.end(), path);
-
+	string data;
+	read_smart(data, path, Mm::get().config.root);
+	remove_commented_imports(data);
+	LocationIter iter(data.begin(), path);
+	LocationIter end(data.end(), path);
 	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space);
 	if (!r || iter != end) {
 		throw Error("parsing failed", path);
 	}
+	//typedef Grammar<LocationIter> Parser;
+	//mdl::parse<Source, Parser>(path, Mm::get().config.root, ascii::space);
 }
 
 }}} // mdl::mm::merge

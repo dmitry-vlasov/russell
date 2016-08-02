@@ -4,7 +4,7 @@
 
 #include "smm/parser.hpp"
 
-namespace mdl { namespace smm {
+namespace mdl { namespace smm { namespace parser {
 
 template<typename Iterator>
 Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
@@ -109,4 +109,4 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	initNames();
 }
 
-}} //mdl::smm
+}}} //mdl::smm:parser

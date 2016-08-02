@@ -236,20 +236,38 @@ struct ParseTerm {
 	}
 };
 
+//Source* create(string path, string& data);
+//void parse(Source*, string&);
+//template<class> class Grammar;
+
+template<class> class Grammar;
 
 struct ParseImport {
 	template <typename T>
 	struct result { typedef Import* type; };
-	Import* operator()(const string& path) const {
-		static Map<string, Import*> imported;
+	Import* operator()(string path) const {
+		typedef Grammar<LocationIter> Parser;
+		return
+			mdl::include<Source, Parser, Import>(
+				path,
+				Rus::get().config.root,
+				unicode::space,
+				[] (Import* inc) -> Source* { return inc->source; }
+			);
+		/*static Map<string, Import*> imported;
 		if (imported.has(path)) {
 			Import* imp = imported[path];
 			return new Import(imp->source, false);
 		} else {
-			Import* imp = new Import(parse(path), true);
+			typedef Grammar<LocationIter> Parser;
+			string data;
+			mdl::read_smart(data, path, Rus::get().config.root);
+			Source* src = new Source(Rus::get().config.root, path);
+			Import* imp = new Import(src, true);
 			imported[path] = imp;
+			mdl::parse<Source, Parser>(src, data, parser::unicode::space);
 			return imp;
-		}
+		}*/
 	}
 };
 

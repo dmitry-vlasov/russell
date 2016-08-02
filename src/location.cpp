@@ -34,14 +34,24 @@ ifstream open_smart(string& path, string root) {
 	while (true) {
 		string full_path = root + path;
 		is.open(full_path, std::ios_base::in);
-		if (is.is_open())
+		if (!is.fail())
 			return is;
 		string shorter = cut_outer_directory(path);
-		if (path == shorter)
+		if (path == shorter) {
 			throw Error("Could not open input file", orig_path);
-		else
+		} else
 			path = shorter;
 	}
+}
+
+void read_smart(string& data, string& path, string root) {
+	ifstream in = open_smart(path, root);
+	in.unsetf(std::ios::skipws);
+	std::copy(
+		std::istream_iterator<char>(in),
+		std::istream_iterator<char>(),
+		std::back_inserter(data));
+	in.close();
 }
 
 }

@@ -2,7 +2,7 @@
 
 #include "mm/parser.hpp"
 
-namespace mdl { namespace mm {
+namespace mdl { namespace mm { namespace parser {
 
 template <typename Iterator>
 Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
@@ -115,15 +115,15 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 			> eps       [popVC(phoenix::ref(stack), phoenix::val(true))];
 
 		source =
-			  eps       [phoenix::at_c<1>(*phoenix::at_c<2>(*_val)) = phoenix::val(parent)]
+			  eps       [phoenix::at_c<1>(*phoenix::at_c<2>(_val)) = phoenix::val(parent)]
 			> eps       [pushVC(phoenix::ref(stack), phoenix::val(is_top))]
-			> eps       [pushParent(phoenix::at_c<2>(*_val), phoenix::ref(parent))]
+			> eps       [pushParent(phoenix::at_c<2>(_val), phoenix::ref(parent))]
 			> * (
-				comment   [pushNode(phoenix::at_c<2>(*_val), _1)] |
-				node      [pushNode(phoenix::at_c<2>(*_val), _1)] |
-				inclusion [pushNode(phoenix::at_c<2>(*_val), _1)]
+				comment   [pushNode(phoenix::at_c<2>(_val), _1)] |
+				node      [pushNode(phoenix::at_c<2>(_val), _1)] |
+				inclusion [pushNode(phoenix::at_c<2>(_val), _1)]
 			)
-			> eps       [popParent(phoenix::at_c<2>(*_val), phoenix::ref(parent))]
+			> eps       [popParent(phoenix::at_c<2>(_val), phoenix::ref(parent))]
 			> eps       [popVC(phoenix::ref(stack), phoenix::val(is_top))];
 			//> qi::eoi   [final(_val)];
 
@@ -136,4 +136,4 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		initNames();
 	}
 
-}} // mdl::mm
+}}} // mdl::mm::parser

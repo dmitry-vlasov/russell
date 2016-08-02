@@ -8,7 +8,7 @@
 #include "smm/globals.hpp"
 #include "smm/adaptors.hpp"
 
-namespace mdl { namespace smm {
+namespace mdl { namespace smm { namespace parser {
 
 namespace qi = boost::spirit::qi;
 namespace ascii = boost::spirit::ascii;
@@ -89,19 +89,37 @@ struct LabelToInt {
 	}
 };
 
+template<class> class Grammar;
+
 struct ParseInclusion {
 	template <typename T>
 	struct result { typedef Inclusion* type; };
-	Inclusion* operator()(const string& name) const {
-		static Map<string, Inclusion*> included;
+	Inclusion* operator()(string name) const {
+		typedef Grammar<LocationIter> Parser;
+		return
+			mdl::include<Source, Parser, Inclusion>(
+				name,
+				Smm::get().config.root,
+				ascii::space,
+				[] (Inclusion* inc) -> Source* { return inc->source; }
+			);
+		/*static Map<string, Inclusion*> included;
 		if (included.has(name)) {
 			Inclusion* inc = included[name];
 			return new Inclusion(inc->source, false);
 		} else {
+			/*included[name] = inc;
 			Inclusion* inc = new Inclusion(parse(name), true);
+			return inc;* /
+			typedef Grammar<LocationIter> Parser;
+			string data;
+			mdl::read_smart(data, name, Smm::get().config.root);
+			Source* src = new Source(Smm::get().config.root, name);
+			Inclusion* inc = new Inclusion(src, true);
 			included[name] = inc;
+			mdl::parse<Source, Parser>(src, data, ascii::space);
 			return inc;
-		}
+		}*/
 	}
 };
 
@@ -196,4 +214,4 @@ void Grammar<Iterator>::initNames() {
 	source.name("source");
 }
 
-}} // mdl::smm
+}}} // mdl::smm::parser
