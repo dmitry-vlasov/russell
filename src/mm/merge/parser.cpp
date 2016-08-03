@@ -41,8 +41,6 @@ void parse(string path) {
 	if (!r || iter != end) {
 		throw Error("parsing failed", path);
 	}
-	//typedef Grammar<LocationIter> Parser;
-	//mdl::parse<Source, Parser>(path, Mm::get().config.root, ascii::space);
 }
 
 }}} // mdl::mm::merge

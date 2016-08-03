@@ -103,23 +103,6 @@ struct ParseInclusion {
 				ascii::space,
 				[] (Inclusion* inc) -> Source* { return inc->source; }
 			);
-		/*static Map<string, Inclusion*> included;
-		if (included.has(name)) {
-			Inclusion* inc = included[name];
-			return new Inclusion(inc->source, false);
-		} else {
-			/*included[name] = inc;
-			Inclusion* inc = new Inclusion(parse(name), true);
-			return inc;* /
-			typedef Grammar<LocationIter> Parser;
-			string data;
-			mdl::read_smart(data, name, Smm::get().config.root);
-			Source* src = new Source(Smm::get().config.root, name);
-			Inclusion* inc = new Inclusion(src, true);
-			included[name] = inc;
-			mdl::parse<Source, Parser>(src, data, ascii::space);
-			return inc;
-		}*/
 	}
 };
 

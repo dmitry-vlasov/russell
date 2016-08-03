@@ -63,9 +63,6 @@ struct LabelToInt {
 	}
 };
 
-//Source* create(string path, string& data);
-//void parse(Source*, string&);
-
 template<class> class Grammar;
 
 struct ParseInclusion {
@@ -80,22 +77,6 @@ struct ParseInclusion {
 				ascii::space,
 				[] (Inclusion* inc) -> Source* { return inc->source; }
 			);
-
-		/*static Map<string, Inclusion*> included;
-		if (included.has(path)) {
-			Inclusion* inc = included[path];
-			return new Inclusion(inc->source, false);
-		} else {
-			//cout << "src: " << path << endl;
-			typedef Grammar<LocationIter> Parser;
-			string data;
-			read_smart(data, path, Mm::get().config.root);
-			Source* src = new Source()
-			Inclusion* inc = new Inclusion(src, true);
-			included[path] = inc;
-			mdl::parse<Source, Parser>(src, data, ascii::space);
-			return inc;
-		}*/
 	}
 };
 
@@ -116,17 +97,6 @@ struct CreateRef {
 			throw Error("unknown label in proof", Mm::get().lex.labels.toStr(lab));
 	}
 };
-
-/*
-template<typename Iterator>
-struct SetLocation {
-    template <typename T1, typename T2>
-    struct result { typedef void type; };
-    void operator()(Assertion* ass, Iterator it) const {
-    	ass->loc = it.loc;
-    }
-};
-*/
 
 struct PushParent {
     template <typename T1, typename T2>
@@ -215,26 +185,6 @@ struct MarkVars {
     }
 };
 
-/*struct Final {
-    template <typename T1>
-    struct result { typedef void type; };
-    void operator()(const Block* block) const {
-    	cout << "source parsed" << endl;
-    	cout << "size: " << block->contents.size() << endl;
-    }
-};*/
-
-/*
-template <typename Iterator>
-struct Comments : qi::grammar<Iterator> {
-	Comments() : Comments::base_type(start) {
-		qi::char_type char_;
-		ascii::space_type space;
-		start = space | "$(" >> *(char_ - "$)") >> "$)";
-	}
-	qi::rule<Iterator> start;
-};
-*/
 template <typename Iterator>
 struct Grammar : qi::grammar<Iterator, Source(), ascii::space_type> {
 	Grammar();

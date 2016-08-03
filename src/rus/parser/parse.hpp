@@ -236,10 +236,6 @@ struct ParseTerm {
 	}
 };
 
-//Source* create(string path, string& data);
-//void parse(Source*, string&);
-//template<class> class Grammar;
-
 template<class> class Grammar;
 
 struct ParseImport {
@@ -254,20 +250,6 @@ struct ParseImport {
 				unicode::space,
 				[] (Import* inc) -> Source* { return inc->source; }
 			);
-		/*static Map<string, Import*> imported;
-		if (imported.has(path)) {
-			Import* imp = imported[path];
-			return new Import(imp->source, false);
-		} else {
-			typedef Grammar<LocationIter> Parser;
-			string data;
-			mdl::read_smart(data, path, Rus::get().config.root);
-			Source* src = new Source(Rus::get().config.root, path);
-			Import* imp = new Import(src, true);
-			imported[path] = imp;
-			mdl::parse<Source, Parser>(src, data, parser::unicode::space);
-			return imp;
-		}*/
 	}
 };
 

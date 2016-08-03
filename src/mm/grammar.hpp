@@ -101,7 +101,6 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		const phoenix::function<PushNode>   pushNode;
 		const phoenix::function<PushVC>     pushVC;
 		const phoenix::function<PopVC>      popVC;
-		//const phoenix::function<Final>      final;
 
 		block =
 			lit("${")   [_val = new_<mm::Block>(phoenix::val(parent))]
@@ -125,7 +124,6 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 			)
 			> eps       [popParent(phoenix::at_c<2>(_val), phoenix::ref(parent))]
 			> eps       [popVC(phoenix::ref(stack), phoenix::val(is_top))];
-			//> qi::eoi   [final(_val)];
 
 		//qi::on_success(assertion, setLocation(_val, _1));
 		qi::on_error<qi::fail>(

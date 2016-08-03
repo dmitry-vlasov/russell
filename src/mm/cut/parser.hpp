@@ -38,7 +38,7 @@ namespace {
 		string orig_name = sect->name;
 		boost::trim_right(orig_name);
 		for (int i = 0; names.has(dir + sect->name); ++i) {
-			sect->name = dir + orig_name + "_" + to_string(i);
+			sect->name = orig_name + "_" + to_string(i);
 			//cout << "making new name: " << sect->name << endl;
 		}
 		names.s.insert(dir + sect->name);

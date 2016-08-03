@@ -44,16 +44,6 @@ void parse(Source* src, string& data) {
 */
 
 Source* parse(string name) {
-	/*string data;
-	read_smart(data, name, data);
-	LocationIter iter(data.begin(), name);
-	LocationIter end(data.end(), name);
-	Source* source = new Source(Mm::get().config.root, name);
-	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, source);
-	if (!r || iter != end) {
-		throw Error("parsing failed", name);
-	}
-	return source;*/
 	typedef parser::Grammar<LocationIter> Parser;
 	return mdl::parse<Source, Parser>(name, Mm::get().config.root, parser::ascii::space);
 }
