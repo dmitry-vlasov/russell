@@ -63,14 +63,6 @@ bool merge_mm(Mm& mm) {
 	}
 }
 
-namespace fs = boost::filesystem;
-
-namespace {
-	vector<smm::Node>& get_cont(smm::Source* src) { return src->contents; }
-	smm::Source* get_inc(smm::Node n) { return n.val.inc->source; }
-	bool is_inc(smm::Node n) { return n.type == smm::Node::INCLUSION; }
-}
-
 bool translate_mm(Mm& mm) {
 	try {
 		if (mm.config.out.empty()) {
@@ -80,7 +72,12 @@ bool translate_mm(Mm& mm) {
 		mm.timers.work.start();
 		smm::Source* target = translate(mm.source);
 		if (mm.config.deep) {
-			deep_write(target, get_cont, get_inc, is_inc);
+			deep_write(
+				target,
+				[](smm::Source* src) -> vector<smm::Node>& { return src->contents; },
+				[](smm::Node n) -> smm::Source* { return n.val.inc->source; },
+				[](smm::Node n) -> bool { return n.type == smm::Node::INCLUSION; }
+			);
 		} else {
 			ofstream out(mm.config.out);
 			out << *target << endl;

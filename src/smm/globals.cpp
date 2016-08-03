@@ -59,18 +59,6 @@ bool Smm::verify() {
 	}
 }
 
-namespace fs = boost::filesystem;
-
-namespace {
-	vector<mm::Node>& get_mm_cont(mm::Source* src) { return src->block->contents; }
-	mm::Source* get_mm_inc(mm::Node n) { return n.val.inc->source; }
-	bool is_mm_inc(mm::Node n) { return n.type == mm::Node::INCLUSION; }
-
-	vector<rus::Node>& get_rus_cont(rus::Source* src) { return src->theory->nodes; }
-	rus::Source* get_rus_inc(rus::Node n) { return n.val.imp->source; }
-	bool is_rus_inc(rus::Node n) { return n.kind == rus::Node::IMPORT; }
-}
-
 bool Smm::translate() {
 	try {
 		if (config.out.empty()) return true;
@@ -82,7 +70,12 @@ bool Smm::translate() {
 		case Config::TARGET_MM: {
 			mm::Source* target = smm::translate_to_mm(source);
 			if (config.deep) {
-				deep_write(target, get_mm_cont, get_mm_inc, is_mm_inc);
+				deep_write(
+					target,
+					[](mm::Source* src) -> vector<mm::Node>& { return src->block->contents; },
+					[](mm::Node n) -> mm::Source* { return n.val.inc->source; },
+					[](mm::Node n) -> bool { return n.type == mm::Node::INCLUSION; }
+				);
 			} else {
 				ofstream out(config.out);
 				out << *target << endl;
@@ -93,7 +86,12 @@ bool Smm::translate() {
 		case Config::TARGET_RUS: {
 			rus::Source* target = smm::translate_to_rus(source);
 			if (config.deep) {
-				deep_write(target, get_rus_cont, get_rus_inc, is_rus_inc);
+				deep_write(
+					target,
+					[](rus::Source* src) -> vector<rus::Node>& { return src->theory->nodes; },
+					[](rus::Node n) -> rus::Source* { return n.val.imp->source; },
+					[](rus::Node n) -> bool { return n.kind == rus::Node::IMPORT; }
+				);
 			} else {
 				ofstream out(config.out);
 				out << *target << endl;

@@ -187,11 +187,10 @@ inline string cut_outer_directory(string path) {
 	return path.substr(slash_pos == string::npos ? 0 : slash_pos + 1);
 }
 
-//ifstream open_smart(string& path, string root = "");
 void read_smart(string& data, string& path, string root = "");
 
 template<class T>
-void deep_write(T* target, auto (get_cont)(T*), T* (get_inc)(auto), bool (is_inc)(auto)) {
+void deep_write(T* target, auto get_cont, auto get_inc, auto is_inc) {
 	typedef T Source;
 	namespace fs = boost::filesystem;
 	Set<Source*> written;
