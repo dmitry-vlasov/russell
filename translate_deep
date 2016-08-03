@@ -46,12 +46,15 @@ function check() {
     fi
 }
 
+#distrib=debug
+distrib=release
+
 echo "----------------------"
 echo "MM <-> SMM TRANSLATION"
 echo "----------------------"
 
 echo "cut: mm -> mm"
-check "${binpath}release/mm -d -c -v -i ${file}.mm  -o mm"
+check "${binpath}${distrib}/mm -d -c -v -i ${file}.mm  -o mm"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -59,7 +62,7 @@ if [ $? != 0 ]; then
 fi;
 
 echo "mm -> smm"
-check "${binpath}release/mm -t -d -v -r mm -i ${file}.mm  -o smm"
+check "${binpath}${distrib}/mm -t -d -v -r mm -i ${file}.mm  -o smm"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -68,7 +71,7 @@ fi;
 
 
 echo "smm -> mm"
-check "${binpath}release/smm -tm -d -v -r smm -i ${file}.smm -o mm-0"
+check "${binpath}${distrib}/smm -tm -d -v -r smm -i ${file}.smm -o mm-0"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then
@@ -76,7 +79,7 @@ if [ $? != 0 ]; then
 fi;
 
 echo "merge: mm -> mm"
-check "${binpath}release/mm -m -v -r mm-0 -i ${file}.mm -o ${file}-0.mm"
+check "${binpath}${distrib}/mm -m -v -r mm-0 -i ${file}.mm -o ${file}-0.mm"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then
@@ -100,7 +103,7 @@ echo "MM <-> RUS TRANSLATION"
 echo "----------------------"
 
 echo "smm -> rus"
-check "${binpath}release/smm -tr -d -v -r smm -i ${file}.smm -o rus"
+check "${binpath}${distrib}/smm -tr -d -v -r smm -i ${file}.smm -o rus"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -109,7 +112,7 @@ fi;
 
 
 echo "rus -> smm"
-check "${binpath}release/mdl -t -d --info -v -r rus -i ${file}.rus -o smm-1"
+check "${binpath}${distrib}/mdl -t -d --info -v -r rus -i ${file}.rus -o smm-1"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -118,7 +121,7 @@ fi;
 
 
 echo "verify smm"
-check "${binpath}release/smm -v -r smm-1 -i ${file}.smm"
+check "${binpath}${distrib}/smm -v -r smm-1 -i ${file}.smm"
 echo -e 'done\n'
 
 if [ $? != 0 ]; then 
@@ -127,7 +130,7 @@ fi;
 
 
 echo "smm -> mm"
-check "${binpath}release/smm -d -tm -v -r smm-1 -i ${file}.smm -o mm-1"
+check "${binpath}${distrib}/smm -d -tm -v -r smm-1 -i ${file}.smm -o mm-1"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -136,7 +139,7 @@ fi;
 
 
 echo "mm -> smm"
-check "${binpath}release/mm -d -t -v -r mm-1 -i ${file}.mm -o smm-2"
+check "${binpath}${distrib}/mm -d -t -v -r mm-1 -i ${file}.mm -o smm-2"
 echo -e 'done\n'
 
 if [ $? != 0 ]; then 
@@ -145,7 +148,7 @@ fi;
 
 
 echo "verify smm"
-check "${binpath}release/smm -v -r smm-2 -i ${file}.smm"
+check "${binpath}${distrib}/smm -v -r smm-2 -i ${file}.smm"
 echo -e 'done\n'
 
 if [ $? != 0 ]; then 
@@ -154,7 +157,7 @@ fi;
 
 
 echo "merge: mm -> mm"
-check "${binpath}release/mm -d -m -v -r mm-1 -i ${file}.mm -o ${file}-1.mm"
+check "${binpath}${distrib}/mm -d -m -v -r mm-1 -i ${file}.mm -o ${file}-1.mm"
 echo -e 'done\n'
 
 if [ $? != 0 ]; then 

@@ -5,6 +5,38 @@
 namespace mdl { namespace mm { namespace cut {
 
 static pair<string, string> patches[] = {
+{R"($( [18-Mar-2007] $)
+
+$(
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+            Derive the Power Set, Infinity and Choice Axioms
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+
+    $( Derive the Axiom of Power Sets ~ ax-pow from the Tarksi-Grothendieck
+       axiom ~ ax-groth .  That it follows is mentioned by Bob Solovay at
+       ~ http://www.cs.nyu.edu/pipermail/fom/2008-March/012783.html .  Note
+       that ~ ax-pow is not used by the proof.  (Contributed by G&eacute;rard
+       Lang, 22-Jun-2009.) $)
+    grothpw $p |- E. y A. z ( A. w ( w e. z -> w e. x ) -> z e. y ) $=)",
+R"($( [18-Mar-2007] $)
+  $}
+
+$(
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+            Derive the Power Set, Infinity and Choice Axioms
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+
+  ${
+    $d x y z w v u f $.
+    $( Derive the Axiom of Power Sets ~ ax-pow from the Tarksi-Grothendieck
+       axiom ~ ax-groth .  That it follows is mentioned by Bob Solovay at
+       ~ http://www.cs.nyu.edu/pipermail/fom/2008-March/012783.html .  Note
+       that ~ ax-pow is not used by the proof.  (Contributed by G&eacute;rard
+       Lang, 22-Jun-2009.) $)
+    grothpw $p |- E. y A. z ( A. w ( w e. z -> w e. x ) -> z e. y ) $=)"
+},
 {R"($(
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
        Linear, continuous, bounded, Hermitian, unitary operators and norms
@@ -380,7 +412,9 @@ $(
 $)
 
   ${
-    $d t u v w x y z T $.
+    $d f n u v w x T $.
+    nlelch.1 $e |- T e. LinFn $.
+    nlelch.2 $e |- T e. ConFn $.
     $( A continuous linear functional can be expressed as an inner product.
        Existence part of Theorem 3.9 of [Beran] p. 104.  (Contributed by NM,
        13-Feb-2006.) $)

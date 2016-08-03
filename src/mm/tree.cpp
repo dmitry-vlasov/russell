@@ -31,7 +31,8 @@ Proof* to_tree(const Proof* proof) {
 		 stack.top().val.prf :
 		 nullptr;
 	stack.pop();
-	assert(stack.empty());
+	if (!stack.empty())
+		throw Error("non-empty stack at the end of the proof");
 	return tree;
 }
 
