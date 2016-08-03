@@ -16,7 +16,34 @@ namespace ascii   = boost::spirit::ascii;
 namespace phoenix = boost::phoenix;
 
 namespace {
+
+	string init_dir (Section* sect) {
+		string dir;
+		const Section* par = sect->parent;
+		while (par && par->file.size()) {
+			if (par->parent)
+				dir = par->file + "/" + dir;
+			else
+				dir = par->dir + par->file + "/" + dir;
+			par = par->parent;
+		}
+		return dir;
+	}
+
 	void init_paths(Section* sect) {
+		static Set<string> names;
+		string dir = init_dir(sect);
+		bool has_endline = (*sect->name.rbegin() == '\n');
+
+		string orig_name = sect->name;
+		boost::trim_right(orig_name);
+		for (int i = 0; names.has(dir + sect->name); ++i) {
+			sect->name = dir + orig_name + "_" + to_string(i);
+			//cout << "making new name: " << sect->name << endl;
+		}
+		names.s.insert(dir + sect->name);
+		if (has_endline) sect->name += '\n';
+
 		if (!sect->file.size()) {
 			sect->file = sect->name;
 			boost::trim(sect->file);
@@ -29,15 +56,7 @@ namespace {
 			boost::replace_all(sect->file, "$", "_");
 			boost::replace_all(sect->file, "\\", "_");
 			boost::replace_all(sect->file, "'", "_");
-
-			const Section* par = sect->parent;
-			while (par && par->file.size()) {
-				if (par->parent)
-					sect->dir = par->file + "/" + sect->dir;
-				else
-					sect->dir = par->dir + par->file + "/" + sect->dir;
-				par = par->parent;
-			}
+			sect->dir = dir;
 			sect->path = sect->dir + sect->file + ".mm";
 		}
 	}
