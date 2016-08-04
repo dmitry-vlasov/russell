@@ -5,12 +5,13 @@
 namespace mdl { namespace rus {
 
 #define END_MARKER ";;"
+#define UNDEF 0x7FFFFFFF
 
 struct Type;
 
 struct Symbol {
 	Symbol(string s, Type* t = nullptr);
-	Symbol(): lit(-1), rep(false), type(nullptr) { }
+	Symbol(): lit(UNDEF), rep(false), type(nullptr) { }
 	Symbol(uint l): lit(l), rep(false), type(nullptr) { }
 	Symbol(const mdl::Symbol s, bool r = false) :
 	lit(s.lit), rep(r), type(nullptr) {
@@ -27,9 +28,9 @@ struct Symbol {
 	bool operator < (const Symbol& s) const {
 		return type == s.type ? lit < s.lit : type < s.type;
 	}
-	bool undef() const { return lit == (uint)-1; }
-	uint  lit;
-	bool  rep;
+	bool undef() const { return lit == UNDEF; }
+	uint  lit:31;
+	bool  rep:1;
 	Type* type;
 };
 

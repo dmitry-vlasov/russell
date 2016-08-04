@@ -11,7 +11,7 @@ string show(Symbol s, bool full) {
 	}
 }
 
-Symbol::Symbol(string s, Type* t) : lit(-1), rep(false), type(t) {
+Symbol::Symbol(string s, Type* t) : lit(UNDEF), rep(false), type(t) {
 	lit = Rus::mod().lex.symbs.toInt(s);
 }
 

@@ -22,6 +22,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 	const phoenix::function<IdToInt>     idToInt;
 	const phoenix::function<SymbToInt>   symbToInt;
 	const phoenix::function<AddSymbol>   addSymbol;
+	const phoenix::function<CreateSymb>  createSymb;
 
 	const phoenix::function<ParseExpr>   parseExpr;
 	const phoenix::function<ParseTerm>   parseTerm;
@@ -52,8 +53,8 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 	const phoenix::function<AppendComment> appendComment;
 
 	bar  = lexeme[lit("-----")] >> * unicode::char_('-');
-	var  = lexeme[+(unicode::char_ - END_MARKER - unicode::space - unicode::char_("),"))] [at_c<0>(_val) = symbToInt(_1)];
-	symb = lexeme[+(unicode::char_ - END_MARKER - unicode::space)] [at_c<0>(_val) = symbToInt(_1)];
+	var  = lexeme[+(unicode::char_ - END_MARKER - unicode::space - unicode::char_("),"))] [_val = createSymb(_1)];
+	symb = lexeme[+(unicode::char_ - END_MARKER - unicode::space)] [_val = createSymb(_1)];
 	id   = lexeme[+ unicode::char_("a-zA-Z0-9_.\\-")]            [_val = idToInt(_1)];
 	path = lexeme[+(unicode::char_ - END_MARKER - unicode::space)];
 

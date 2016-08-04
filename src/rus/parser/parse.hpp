@@ -217,6 +217,15 @@ struct AddSymbol {
 	}
 };
 
+struct CreateSymb {
+	template <typename T>
+	struct result { typedef Symbol type; };
+	Symbol operator()(const std::vector<uint>& s) const {
+		string symb(s.begin(), s.end());
+		return Symbol(Rus::mod().lex.symbs.toInt(symb));
+	}
+};
+
 struct ParseExpr {
 	template <typename T1, typename T2, typename T3>
 	struct result { typedef void type; };
