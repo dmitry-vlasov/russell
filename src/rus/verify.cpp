@@ -18,10 +18,10 @@ void verify_step(Step* st) {
 		msg += show(*ass->props[0]) + "\n";
 		msg += "ref expr:\n";
 		msg += show(ass->props[0]->expr) + "\n";
-		msg += show_ast(ass->props[0]->expr, true) + "\n\n";
+		//msg += show_ast(ass->props[0]->expr, true) + "\n\n";
 		msg += "step:\n";
 		msg += show(*st) + "\n";
-		msg += show_ast(st->expr, true) + "\n\n";
+		//msg += show_ast(st->expr, true) + "\n\n";
 		msg += "theorem " + Rus::get().lex.ids.toStr(st->proof->thm->ass.id) + "\n";
 		throw Error("proposition unification failed", msg);
 	}

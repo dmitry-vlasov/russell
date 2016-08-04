@@ -154,36 +154,36 @@ void enqueue_expressions(Def* def) {
 
 struct AddToMath {
 	void operator()(Const* c) const {
-		//cout << "c: " << show(c->symb) << endl;
+		cout << "c: " << show(c->symb) << endl;
 		Rus::mod().math.consts[c->symb.lit] = c;
 	}
 	void operator()(Type* t) const {
-		//cout << "tp: " << show_id(t->id) << endl;
+		cout << "tp: " << show_id(t->id) << endl;
 		collect_supers(t, t);
 		Rus::mod().math.types[t->id] = t;
 	}
 	void operator()(Rule* r) const {
-		//cout << "ru: " << show_id(r->id) << endl;
+		cout << "ru: " << show_id(r->id) << endl;
 		r->type->rules.add(r->term) = r;
 		Rus::mod().math.rules[r->id] = r;
 	}
 	void operator()(Axiom* a) const {
-		//cout << "ax: " << show_id(a->ass.id) << endl;
+		cout << "ax: " << show_id(a->ass.id) << endl;
 		Rus::mod().math.axioms[a->ass.id] = a;
 		enqueue_expressions(a->ass);
 	}
 	void operator()(Def* d) const {
-		//cout << "def: " << show_id(d->ass.id) << endl;
+		cout << "def: " << show_id(d->ass.id) << endl;
 		Rus::mod().math.defs[d->ass.id] = d;
 		enqueue_expressions(d);
 	}
 	void operator()(Theorem* th) const {
-		//cout << "th: " << show_id(th->ass.id) << endl;
+		cout << "th: " << show_id(th->ass.id) << endl;
 		Rus::mod().math.theorems[th->ass.id] = th;
 		enqueue_expressions(th->ass);
 	}
 	void operator()(Proof* p) const {
-		//cout << "pr: " << show_id(p->thm->ass.id) << endl;
+		cout << "pr: " << show_id(p->thm->ass.id) << endl;
 		p->has_id = !undef(p->id);
 		if (!p->has_id) p->id = Rus::mod().lex.ids.toInt(to_string(p->ind));
 		Rus::mod().math.proofs[p->id] = p;

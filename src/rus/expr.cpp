@@ -107,7 +107,7 @@ Expr& Expr::operator = (const Expr& ex) {
 	term = copy_term(ex.term, mp);
 	return *this;
 }
-/*
+
 Expr& Expr::operator = (Expr&& ex) {
 	first = ex.first;
 	last  = ex.last;
@@ -116,10 +116,9 @@ Expr& Expr::operator = (Expr&& ex) {
 	ex.first = nullptr;
 	ex.last  = nullptr;
 	ex.type  = nullptr;
-	ex.term  = nullptr;
+	ex.term  = term::Expr();
 	return *this;
 }
-*/
 void Expr::push_back(Symbol s) {
 	if (!first) {
 		first = new Node(s);
@@ -234,7 +233,7 @@ bool sub::Expr::join(Expr* s) {
 
 void dump(const Symbol& s) { cout << show(s) << endl; }
 void dump(const Expr& ex) { cout << show(ex) << endl; }
-void dump_ast(const Expr& ex) { cout << show_ast(ex) << endl; }
+//void dump_ast(const Expr& ex) { cout << show_ast(ex) << endl; }
 //void dump(const term::Expr* tm) { cout << show(*tm) << endl; }
 //void dump_ast(const term::Expr& tm) { cout << show_ast(tm) << endl; }
 //void dump(const sub::Expr& sb) { cout << show(sb) << endl; }

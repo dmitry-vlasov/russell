@@ -163,7 +163,7 @@ struct Expr {
 		val.node->rule = r;
 		val.node->children = ch;
 	}
-	~ Expr() { if (kind == NODE) delete val.node; }
+	~ Expr() { if (kind == NODE && val.node) delete val.node; }
 
 	bool operator == (const Expr& t) const;
 	bool operator != (const Expr& t) const {
@@ -177,7 +177,7 @@ struct Expr {
 template<class T>
 struct Tree {
 	Map<Rule*, vector<Tree<T>>> rules;
-	Map<Expr*, node::Expr*>     entries;
+	Map<const rus::Expr*, node::Tree<T>*>     entries;
 };
 
 }
@@ -343,10 +343,13 @@ namespace expr {
 }
 
 string show(const Expr&);
+/*
 string show_ast(const term::Expr&, bool full = false);
 inline string show_ast(const Expr& ex, bool full = false) {
 	return show_ast(ex.term, full);
 }
+*/
+
 /*
 inline string show(const term::Expr& t) {
 	deque<Symbol> symbs;
@@ -425,20 +428,20 @@ inline N* new_side(N* n, Symbol s) {
 
 
 template<class T, class N>
-void add_term(term::Tree<T>& tree_m, const term::Expr& expr_t, map<T*, N*> mp, Expr* ex) {
+void add_term(term::Tree<T>& tree_m, const term::Expr& expr_t, map<node::Expr*, N*>& mp, const Expr* ex) {
 	if (expr_t.kind == term::Expr::VAR) {
 		tree_m.entries[ex] = mp[expr_t.val.var];
 		return;
 	}
-	if (!tree_m.map.has(expr_t.val.node->rule)) {
-		vector<term::Tree<T>>& tree_t = tree_m.map[expr_t.val.node->rule];
+	if (!tree_m.rules.has(expr_t.val.node->rule)) {
+		vector<term::Tree<T>>& tree_t = tree_m.rules[expr_t.val.node->rule];
 		for_each(
 			expr_t.val.node->children.begin(),
 			expr_t.val.node->children.end(),
 			[&tree_t](auto) mutable { tree_t.push_back(term::Tree<T>()); }
 		);
 	}
-	vector<term::Tree<T>>& tree_t = tree_m.map[expr_t.val.node->rule];
+	vector<term::Tree<T>>& tree_t = tree_m.rules[expr_t.val.node->rule];
 	auto tree_ch = tree_t.begin();
 	for (auto& expr_ch : expr_t.val.node->children) {
 		add_term(*tree_ch ++, expr_ch, mp, ex);

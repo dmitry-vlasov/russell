@@ -38,6 +38,7 @@ if [ "$2" == "memcheck" ]; then
 fi
 
 function check() {
+    echo $1
     if [ "$MEMCHECK" == "yes" ]; then
 	$VALGRIND $1
     else
