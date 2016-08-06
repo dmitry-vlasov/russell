@@ -126,7 +126,7 @@ smm::Assertion* translate_rule(const Rule* rule, Maps& maps) {
 	maps.rules[rule] = ra;
 	for (auto v : rule->vars.v) {
 		uint i = 0;
-		for (auto& ch : rule->term.term.val.node->children) {
+		for (auto& ch : rule->term.term.children) {
 			if (ch.kind == term::Expr::VAR && ch.val.var->symb == v) {
 				maps.rules_args[rule][v] = i;
 				break;
@@ -198,13 +198,13 @@ void translate_term(const term::Expr& t, const Assertion* thm, vector<smm::Ref>&
 		else
 			throw Error("undeclared variable", show(t.val.var->symb));
 	} else {
-		for (auto v : t.val.node->rule->vars.v)
-			translate_term(t.val.node->children[maps.rules_args[t.val.node->rule][v]], thm, smm_proof, maps);
+		for (auto v : t.val.rule->vars.v)
+			translate_term(t.children[maps.rules_args[t.val.rule][v]], thm, smm_proof, maps);
 	}
 	if (t.kind == term::Expr::NODE) {
-		if (!maps.rules.has(t.val.node->rule))
+		if (!maps.rules.has(t.val.rule))
 			throw Error("undefined reference to rule");
-		smm_proof.push_back(smm::Ref(maps.rules[t.val.node->rule], true));
+		smm_proof.push_back(smm::Ref(maps.rules[t.val.rule], true));
 	}
 }
 
@@ -227,7 +227,7 @@ void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref>& smm_
 		delete hs;
 	}
 	for (auto v : st->assertion()->vars.v)
-		translate_term(ps->find(v), thm, smm_proof, maps);
+		translate_term(ps->sub[v], thm, smm_proof, maps);
 	delete ps;
 	if (!maps.assertions.has(ass))
 		throw Error("undefined reference to assertion");

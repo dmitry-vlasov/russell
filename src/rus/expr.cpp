@@ -35,12 +35,12 @@ size_t memvol(const Expr& ex) {
 	s += memvol(ex.term);
 	return s;
 }
-/*
+
 string show_ast(const term::Expr& t, bool full) {
-	if (t.isvar())
-		return t.first ? show(t.first->symb, full) : "<null>";
+	if (t.kind == term::Expr::VAR)
+		return t.val.var ? show(t.val.var->symb, full) : "<null>";
 	else {
-		string s = (t.rule ? show_id(t.rule->id) : "?") + " (";
+		string s = (t.val.rule ? show_id(t.val.rule->id) : "?") + " (";
 		for (uint i = 0; i < t.children.size(); ++ i) {
 			s += show_ast(t.children[i], full);
 			if (i + 1 < t.children.size()) s += ", ";
@@ -49,16 +49,43 @@ string show_ast(const term::Expr& t, bool full) {
 		return s;
 	}
 }
-*/
-term::Expr copy_term(const term::Expr& st, map<node::Expr*, node::Expr*>& mp) {
-	if (st.kind == term::Expr::VAR)
-		return term::Expr(st.val.var);
 
-	term::Expr tt(st.val.node->rule);
-	for (auto ch : st.val.node->children) {
-		tt.val.node->children.push_back(copy_term(ch, mp));
+string show(const term::Expr& t, bool full) {
+	if (t.kind == term::Expr::VAR)
+		return t.val.var ? show(t.val.var->symb, full) : "<null>";
+	else {
+		string s(" ");
+		uint i = 0;
+		for (auto n : t.val.rule->term) {
+			if (n.symb.type) {
+				s += show(t.children[i++], full) + ' ';
+			} else {
+				s += show(n.symb) + ' ';
+			}
+		}
+		return s;
 	}
-	return tt;
+}
+
+namespace term {
+	bool Expr :: operator == (const Expr& t) const {
+		if (kind != t.kind) return false;
+		switch (kind) {
+		case VAR:  return val.var->symb == t.val.var->symb;
+		case NODE: {
+			if (val.rule != t.val.rule) return false;
+			auto i_p = children.begin();
+			auto i_q = t.children.begin();
+			while (i_p != children.end()) {
+				if (*i_p != *i_q) return false;
+				++ i_p; ++ i_q;
+			}
+			return true;
+		}
+		default : break;
+		}
+		return true;
+	}
 }
 
 Expr::Expr(const Expr& ex) : first(nullptr), last(nullptr), type(ex.type), term() {
@@ -69,16 +96,9 @@ Expr::Expr(const Expr& ex) : first(nullptr), last(nullptr), type(ex.type), term(
 		mp[n] = last;
 		n = n->next;
 	}
-	term = copy_term(ex.term, mp);
+	term = ex.term;
 }
-/*
-Expr::Expr(Expr&& ex) : first(ex.first), last(ex.last), type(ex.type), term(ex.term) {
-	ex.first = nullptr;
-	ex.last  = nullptr;
-	ex.type  = nullptr;
-	//ex.term  = nullptr;
-}
-*/
+
 Expr::~Expr() {
 	Node* n = last;
 	while (n) {
@@ -104,7 +124,7 @@ Expr& Expr::operator = (const Expr& ex) {
 		mp[n] = last;
 		n = n->next;
 	}
-	term = copy_term(ex.term, mp);
+	term = ex.term;
 	return *this;
 }
 
@@ -207,7 +227,7 @@ term::Expr create_term(Expr::Node* first, Expr::Node* last, Rule* rule) {
 	Expr::Node* n = first;
 	while (n) {
 		if (n->symb.type)
-			term.val.node->children.push_back(term::Expr(n));
+			term.children.push_back(term::Expr(n));
 		n = n->next;
 	}
 	return term;

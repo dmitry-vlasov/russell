@@ -75,58 +75,6 @@ struct const_iterator {
 	const N* n;
 };
 
-// Iterator modificators
-
-template<typename I>
-class memorized : I {
-	memorized() : I() { }
-	memorized(I i) : I(i), mem() { }
-	void remember() { mem = *this; }
-	void recall() { *this = mem; }
-	I mem;
-};
-
-template<typename I>
-struct tracing : I {
-	tracing() : I(), back() { }
-	tracing(I i) : I(i), back() { }
-	void unshift() { *this = back; }
-	tracing& operator ++() { back = *this; I::operator ++(); return *this; }
-	tracing& operator +()  { back = *this; I::operator  +(); return *this; }
-	tracing& operator --() { back = *this; I::operator --(); return *this; }
-	I back;
-};
-
-template<typename I>
-struct identical : I {
-	identical() : I() { }
-	identical(I i) : I(i) { }
-};
-
-template<typename I>
-struct treeing : I {
-	treeing() : I() { }
-	treeing(I i) : I(i) { }
-	treeing& operator +()  { I::n = nullptr; return *this; }
-};
-
-template<typename I1, typename I2, template<typename> class Wrapper = identical>
-struct pairing {
-	typedef pairing<I2, I1> reversed;
-	pairing() : first(), second() { }
-	pairing(I1 i1, I2 i2) : first(i1), second(i2) { }
-	pairing& operator ++() { ++first; ++second; return *this; }
-	pairing& operator +()  { +first;  +second;  return *this; }
-	pairing& operator --() { --first; --second; return *this; }
-	reversed reverse() { return reversed(second, first); }
-	bool equal() const { return first.n->symb == second.n->symb; }
-	bool defined() const { return first.n && second.n; }
-	pairing next() const { return pairing(first.next(), second.next()); }
-	pairing side() const { return pairing(first.side(), second.side()); }
-	Wrapper<I1> first;
-	Wrapper<I2> second;
-};
-
 struct Rule;
 struct Expr;
 
@@ -141,30 +89,19 @@ namespace term {
 
 struct Expr {
 	typedef vector<Expr> Children;
-	enum Kind { NODE, VAR };
-	struct Node {
-		Rule* rule;
-		Children children;
-	};
+	enum Kind { NONE, NODE, VAR };
 	union Value {
-		Node*       node;
+		void*       none;
+		Rule*       rule;
 		node::Expr* var;
 	};
 
-	Expr() : kind(VAR) { val.var = nullptr; }
-	Expr(Rule* r) : kind(NODE)  {
-		val.node = new Node;
-		val.node->rule = r;
+	Expr() : kind(NONE), val(), children() { val.none = nullptr; }
+	Expr(Rule* r) : kind(NODE)  { val.rule = r; }
+	Expr(node::Expr* v) : kind(VAR), val(), children() { val.var = v; }
+	Expr(Rule* r, const Children& ch) : kind(NODE), val(), children(ch) {
+		val.rule = r;
 	}
-	Expr(node::Expr* v) :
-	kind(VAR) { val.var = v; }
-	Expr(Rule* r, const Children& ch) : kind(NODE) {
-		val.node = new Node;
-		val.node->rule = r;
-		val.node->children = ch;
-	}
-	~ Expr() { if (kind == NODE && val.node) delete val.node; }
-
 	bool operator == (const Expr& t) const;
 	bool operator != (const Expr& t) const {
 		return !operator == (t);
@@ -172,6 +109,7 @@ struct Expr {
 
 	Kind kind;
 	Value val;
+	Children children;
 };
 
 template<class T>
@@ -228,12 +166,7 @@ namespace sub {
 
 struct Expr {
 	bool join(Expr* s);
-
-	term::Expr& find(Symbol v) {
-		return sub.m.find(v)->second;
-	}
 	bool has(Symbol v) { return sub.has(v); }
-
 	Map<Symbol, term::Expr> sub;
 };
 
@@ -301,35 +234,6 @@ inline iterator<node::Expr> rend(Expr& ex) { return ex.rend(); }
 inline const_iterator<node::Expr> rbegin(const Expr& ex) { return ex.rbegin(); }
 inline const_iterator<node::Expr> rend(const Expr& ex) { return ex.rend(); }
 
-namespace term {
-/*
-inline Expr::Iterator Expr::begin() { return Iterator(first); }
-inline Expr::Iterator Expr::end()   { return last->next ? Iterator(last->next) : Iterator(); }
-inline Expr::ConstIterator Expr::begin() const { return ConstIterator(first); }
-inline Expr::ConstIterator Expr::end() const { return last->next ? ConstIterator(last->next) : ConstIterator(); }
-inline Expr::Iterator Expr::rbegin() { return Iterator(last); }
-inline Expr::Iterator Expr::rend() { return first->prev ? Iterator(first->prev) : Iterator(); }
-inline Expr::ConstIterator Expr::rbegin() const { return ConstIterator(last); }
-inline Expr::ConstIterator Expr::rend() const { return first->prev ? ConstIterator(first->prev) : ConstIterator(); }
-inline bool Expr::isvar() const { return first == last && first->symb.type && !rule; }
-inline Symbol Expr::getvar() const { return first->symb; }
-*/
-inline bool Expr :: operator == (const Expr& t) const {
-	if (kind == Expr::VAR && t.kind == Expr::VAR && val.var == t.val.var)
-		return true;
-	if (val.node->rule != t.val.node->rule)
-		return false;
-	auto i_p = val.node->children.begin();
-	auto i_q = t.val.node->children.begin();
-	while (i_p != val.node->children.end()) {
-		if (*i_p != *i_q) return false;
-		++ i_p; ++ i_q;
-	}
-	return true;
-}
-
-}
-
 sub::Expr* unify(const term::Expr& p, const term::Expr& q);
 inline sub::Expr* unify(const Expr& ex1, const Expr& ex2) {
 	return unify(ex1.term, ex2.term);
@@ -343,24 +247,13 @@ namespace expr {
 }
 
 string show(const Expr&);
-/*
 string show_ast(const term::Expr&, bool full = false);
 inline string show_ast(const Expr& ex, bool full = false) {
 	return show_ast(ex.term, full);
 }
-*/
 
-/*
-inline string show(const term::Expr& t) {
-	deque<Symbol> symbs;
-	for (auto it = t.rbegin(); it != t.rend(); -- it) {
-		symbs.push_front(it->symb);
-	}
-	string str;
-	for (auto s : symbs)
-		str += show(s) + " ";
-	return str;
-}
+string show(const term::Expr& t, bool full = false);
+
 
 inline string show(const sub::Expr& s) {
 	string str;
@@ -370,48 +263,10 @@ inline string show(const sub::Expr& s) {
 	return str;
 }
 
-template<typename N>
-string show_backward(const N* n) {
-	deque<Symbol> symbs;
-	while (n) {
-		symbs.push_front(n->symb);
-		n = n->prev;
-	}
-	string str;
-	for (auto s : symbs)
-		str += show(s) + " ";
-	return str;
-}
-
-template<typename T>
-string show_forward(const typename Tree<T>::Node* n) {
-	string s;
-	while (n) {
-		if (!n->next)
-			s += show_backward(n) + "\n";
-		else
-			s += show_forward<T>(n->next);
-		n = n->side;
-	}
-	return s;
-}
-
-template<typename T>
-string show(const Tree<T>& tr) {
-	return show_forward<T>(tr.root);
-}
-*/
 inline ostream& operator << (ostream& os, const Expr& ex) {
 	os << show(ex);
 	return os;
 }
-/*
-template<typename T>
-inline ostream& operator << (ostream& os, const Tree<T>& tr) {
-	os << show(tr);
-	return os;
-}
-*/
 
 template<typename N>
 inline N* new_next(N* n, Symbol s) {
@@ -433,17 +288,17 @@ void add_term(term::Tree<T>& tree_m, const term::Expr& expr_t, map<node::Expr*, 
 		tree_m.entries[ex] = mp[expr_t.val.var];
 		return;
 	}
-	if (!tree_m.rules.has(expr_t.val.node->rule)) {
-		vector<term::Tree<T>>& tree_t = tree_m.rules[expr_t.val.node->rule];
+	if (!tree_m.rules.has(expr_t.val.rule)) {
+		vector<term::Tree<T>>& tree_t = tree_m.rules[expr_t.val.rule];
 		for_each(
-			expr_t.val.node->children.begin(),
-			expr_t.val.node->children.end(),
+			expr_t.children.begin(),
+			expr_t.children.end(),
 			[&tree_t](auto) mutable { tree_t.push_back(term::Tree<T>()); }
 		);
 	}
-	vector<term::Tree<T>>& tree_t = tree_m.rules[expr_t.val.node->rule];
+	vector<term::Tree<T>>& tree_t = tree_m.rules[expr_t.val.rule];
 	auto tree_ch = tree_t.begin();
-	for (auto& expr_ch : expr_t.val.node->children) {
+	for (auto& expr_ch : expr_t.children) {
 		add_term(*tree_ch ++, expr_ch, mp, ex);
 	}
 }
@@ -513,9 +368,9 @@ inline size_t memvol(const Symbol& s) {
 }
 inline size_t memvol(const term::Expr& t) {
 	size_t vol = 0;
-	//vol += t.children.capacity();
-	//for (const term::Expr ch : t.children)
-	//	vol += memvol(ch);
+	vol += t.children.capacity();
+	for (const term::Expr ch : t.children)
+		vol += memvol(ch);
 	return vol;
 }
 inline size_t memvol(const node::Expr& n) {

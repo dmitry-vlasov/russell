@@ -26,15 +26,14 @@ Node* parse_LL(Term& t, Node* x, Type* type, uint ind, bool initial = false) {
 		m.push(x);
 		while (!n.empty() && !m.empty()) {
 			if (Type* tp = n.top()->symb.type) {
-				t.val.node = new term::Expr::Node;
-				t.val.node->children.push_back(Term());
+				t.children.push_back(Term());
 				childnodes.push(n.top());
-				Term& child = t.val.node->children.back();
+				Term& child = t.children.back();
 				if (Node* ch = parse_LL(child, m.top(), tp, ind, n.top() == type->rules.root)) {
 					if (!n.top()->next) {
 						if (n.top()->data->ind <= ind) {
-							t.val.node->rule = n.top()->data;
-							return m.top();
+							t.val.rule = n.top()->data;
+							return ch;
 						} else
 							goto end;
 					} else if (!ch->next)
@@ -45,14 +44,13 @@ Node* parse_LL(Term& t, Node* x, Type* type, uint ind, bool initial = false) {
 					}
 					continue;
 				} else {
-					t.val.node->children.pop_back();
+					t.children.pop_back();
 					childnodes.pop();
 				}
 			} else if (n.top()->symb == m.top()->symb) {
 				if (!n.top()->next) {
 					if (n.top()->data->ind <= ind) {
-						//t.last = m.top();
-						t.val.node->rule = n.top()->data;
+						t.val.rule = n.top()->data;
 						return m.top();
 					} else
 						goto end;
@@ -68,14 +66,14 @@ Node* parse_LL(Term& t, Node* x, Type* type, uint ind, bool initial = false) {
 				n.pop();
 				m.pop();
 				if (!childnodes.empty() && childnodes.top() == n.top()) {
-					t.val.node->children.pop_back();
+					t.children.pop_back();
 					childnodes.pop();
 				}
 				if (n.empty() || m.empty()) goto end;
 			}
 			n.top() = n.top()->side;
 		}
-		end: ; //delete t.val.node;
+		end: ;
 	}
 	if (x->symb.type) {
 		if (x->symb.type == type) {
@@ -83,7 +81,7 @@ Node* parse_LL(Term& t, Node* x, Type* type, uint ind, bool initial = false) {
 			return x;
 		} else if (Rule* super = find_super(x->symb.type, type)) {
 			t = Term(super);
-			t.val.node->children.push_back(Term(x));
+			t.children.push_back(Term(x));
 			return x;
 		}
 	}
@@ -91,8 +89,9 @@ Node* parse_LL(Term& t, Node* x, Type* type, uint ind, bool initial = false) {
 }
 
 void parse_LL(Expr* ex, uint ind) {
-	if (!parse_LL(ex->term, ex->first, ex->type, ind))
-		throw new Error("parsing error", string("expression: ") + show(*ex));
+	if (!parse_LL(ex->term, ex->first, ex->type, ind)) {
+		throw Error("parsing error", string("expression: ") + show(*ex));
+	}
 }
 
 

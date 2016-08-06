@@ -14,14 +14,15 @@ void verify_step(Step* st) {
 	//cout << "\tverifying step: " << c++ << " = " << show_id(ass->id) << endl;
 	sub::Expr* ps = unify(ass->props[0]->expr, st->expr);
 	if (!ps) {
+		ps = unify(ass->props[0]->expr, st->expr);
 		string msg = "proposition:\n";
 		msg += show(*ass->props[0]) + "\n";
 		msg += "ref expr:\n";
 		msg += show(ass->props[0]->expr) + "\n";
-		//msg += show_ast(ass->props[0]->expr, true) + "\n\n";
+		msg += show_ast(ass->props[0]->expr, true) + "\n\n";
 		msg += "step:\n";
 		msg += show(*st) + "\n";
-		//msg += show_ast(st->expr, true) + "\n\n";
+		msg += show_ast(st->expr, true) + "\n\n";
 		msg += "theorem " + Rus::get().lex.ids.toStr(st->proof->thm->ass.id) + "\n";
 		throw Error("proposition unification failed", msg);
 	}
@@ -35,7 +36,7 @@ void verify_step(Step* st) {
 			msg += "step:\n";
 			msg += show(*st) + "\n\n";
 			msg += "theorem " + Rus::get().lex.ids.toStr(st->proof->thm->ass.id) + "\n";
-			//msg += "substitution:\n" + show(*ps) + "\n";
+			msg += "substitution:\n" + show(*ps) + "\n";
 			delete ps;
 			throw Error("hypothesis unification failed", msg);
 		}
@@ -47,8 +48,8 @@ void verify_step(Step* st) {
 			msg += "step:\n";
 			msg += show(*st) + "\n\n";
 			msg += "theorem " + Rus::get().lex.ids.toStr(st->proof->thm->ass.id) + "\n";
-			//msg += "prop substitution:\n" + show(*ps) + "\n";
-			//msg += "hyp substitution:\n" + show(*hs) + "\n";
+			msg += "prop substitution:\n" + show(*ps) + "\n";
+			msg += "hyp substitution:\n" + show(*hs) + "\n";
 			delete hs;
 			delete ps;
 			throw Error("substitution join failed", msg);

@@ -60,16 +60,6 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 	}
 	if (conf.in.empty()) return false;
 	if (conf.out.empty()) return true;
-	/*if (!conf.deep) {
-		if (boost::ends_with(conf.out, ".smm")) {
-			if (conf.mode == Config::Mode::NONE)
-				conf.mode = Config::Mode::TRANSL;
-			else
-				return false;
-			conf.target = Config::Target::SMM;
-		} else if (boost::ends_with(conf.out, ".rus"))
-			conf.target = Config::Target::RUS;
-	}*/
 	return true;
 }
 
