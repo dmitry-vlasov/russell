@@ -46,7 +46,7 @@ struct Expr;
 
 namespace node {
 	template<class>
-	struct Tree;
+	struct PTree;
 }
 
 namespace term {
@@ -78,7 +78,7 @@ struct Expr {
 template<class T>
 struct Tree {
 	Map<Rule*, vector<Tree<T>>> rules;
-	Map<const rus::Expr*, node::Tree<T>*> entries;
+	Map<const rus::Expr*, node::PTree<T>*> entries;
 };
 
 }
@@ -86,14 +86,14 @@ struct Tree {
 namespace node {
 
 template<typename T>
-struct Tree {
-	Tree() : symb(), next(nullptr),
+struct PTree {
+	PTree() : symb(), next(nullptr),
 	prev(nullptr), side(nullptr), data() { }
-	Tree(Symbol s) : symb(s), next(nullptr),
+	PTree(Symbol s) : symb(s), next(nullptr),
 	prev(nullptr), side(nullptr), data() { }
-	Tree(const Tree& tr) : symb(tr.symb), next(nullptr),
+	PTree(const PTree& tr) : symb(tr.symb), next(nullptr),
 	prev(nullptr), side(nullptr), data() { }
-	Tree& operator = (const Tree& tr) {
+	PTree& operator = (const PTree& tr) {
 		symb = tr.symb;
 		next = nullptr;
 		prev = nullptr;
@@ -101,11 +101,21 @@ struct Tree {
 		return *this;
 	}
 	Symbol symb;
-	Tree*  next;
-	Tree*  prev;
-	Tree*  side;
+	PTree*  next;
+	PTree*  prev;
+	PTree*  side;
 	uint   level;
 	T data;
+};
+
+template<typename T>
+struct TreeMap {
+	struct Node {
+		TreeMap<T> tree;
+		uint level;
+		T data;
+	};
+	Map<Symbol, Node> map;
 };
 
 } // namespace node
@@ -122,7 +132,7 @@ struct Expr {
 
 template<typename T>
 struct Tree {
-	typedef node::Tree<T> Node;
+	typedef node::PTree<T> Node;
 	typedef term::Tree<T> Term;
 
 	Tree() : root(nullptr), term() { }
@@ -234,14 +244,14 @@ void add_term(term::Tree<T>& tree_m, const term::Expr& expr_t, map<const Symbol*
 template<typename T>
 T& Tree<T>::add(const Expr& ex) {
 	assert(ex.symbols.size());
-	map<const Symbol*, node::Tree<T>*> mp;
+	map<const Symbol*, node::PTree<T>*> mp;
 	Symbols::const_iterator it = ex.symbols.begin();
 	Symbols::const_iterator last = ex.symbols.end() - 1;
 	if (!root) {
-		root = new node::Tree<T>(*it);
+		root = new node::PTree<T>(*it);
 		mp[&(*it)] = root;
 	}
-	node::Tree<T>* n = root;
+	node::PTree<T>* n = root;
 	while (true) {
 		while (n->side && *it != n->symb)
 			n = n->side;
@@ -303,16 +313,16 @@ inline size_t memvol(const term::Expr& t) {
 	return vol;
 }
 template<class T>
-inline size_t memvol(const node::Tree<T>& n) {
+inline size_t memvol(const node::PTree<T>& n) {
 	return memsize(n.data);
 }
 template<class T>
 size_t memvol(const Tree<T>& t) {
 	size_t s = 0;
 	if (t.root) {
-		vector<node::Tree<T>*> nodes;
+		vector<node::PTree<T>*> nodes;
 		gather_tree_nodes(nodes, t.root);
-		for (node::Tree<T>* n : nodes)
+		for (node::PTree<T>* n : nodes)
 			s += memsize(*n);
 	}
 	return s;
