@@ -21,7 +21,7 @@ inline uint translate_symb(uint s) {
 		return s;
 	else {
 		Const* c = Rus::get().math.consts[s];
-		return c->ascii.lit == UNDEF ? s : c->ascii.lit;
+		return c->ascii.lit == UNDEF_LIT ? s : c->ascii.lit;
 	}
 }
 

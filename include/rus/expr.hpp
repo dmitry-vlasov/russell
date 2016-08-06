@@ -1,17 +1,16 @@
 #pragma once
 
-#include "common.hpp"
+#include "expr.hpp"
 
 namespace mdl { namespace rus {
 
 #define END_MARKER ";;"
-#define UNDEF 0x7FFFFFFF
 
 struct Type;
 
 struct Symbol {
 	Symbol(string s, Type* t = nullptr);
-	Symbol(): lit(UNDEF), rep(false), type(nullptr) { }
+	Symbol(): lit(UNDEF_LIT), rep(false), type(nullptr) { }
 	Symbol(uint l): lit(l), rep(false), type(nullptr) { }
 	Symbol(const mdl::Symbol s, bool r = false) :
 	lit(s.lit), rep(r), type(nullptr) {
@@ -28,7 +27,7 @@ struct Symbol {
 	bool operator < (const Symbol& s) const {
 		return type == s.type ? lit < s.lit : type < s.type;
 	}
-	bool undef() const { return lit == UNDEF; }
+	bool undef() const { return lit == UNDEF_LIT; }
 	uint  lit:31;
 	bool  rep:1;
 	Type* type;
