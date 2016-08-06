@@ -3,7 +3,7 @@
 namespace mdl { namespace rus { namespace expr { namespace {
 
 typedef term::Expr Term;
-typedef Tree<Rule*>::Node TreeNode;
+typedef PTree<Rule*>::Node TreeNode;
 typedef Symbols::iterator Iterator;
 
 vector<pair<Expr*, uint>> queue;

@@ -35,7 +35,7 @@ struct Type {
 	uint ind;
 	uint id;
 	vector<Type*>     sup;
-	Tree<Rule*>       rules;
+	PTree<Rule*>       rules;
 	map<Type*, Rule*> supers;
 };
 

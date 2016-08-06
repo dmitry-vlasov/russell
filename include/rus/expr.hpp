@@ -109,11 +109,11 @@ struct PTree {
 };
 
 template<typename T>
-struct TreeMap {
+struct Tree {
 	struct Node {
-		TreeMap<T> tree;
-		uint level;
-		T data;
+		Tree<T> tree;
+		uint    level;
+		T       data;
 	};
 	Map<Symbol, Node> map;
 };
@@ -131,12 +131,12 @@ struct Expr {
 }
 
 template<typename T>
-struct Tree {
+struct PTree {
 	typedef node::PTree<T> Node;
 	typedef term::Tree<T> Term;
 
-	Tree() : root(nullptr), term() { }
-	~Tree();
+	PTree() : root(nullptr), term() { }
+	~PTree();
 	T& add(const Expr& ex);
 
 	Node* root;
@@ -242,7 +242,7 @@ void add_term(term::Tree<T>& tree_m, const term::Expr& expr_t, map<const Symbol*
 }
 
 template<typename T>
-T& Tree<T>::add(const Expr& ex) {
+T& PTree<T>::add(const Expr& ex) {
 	assert(ex.symbols.size());
 	map<const Symbol*, node::PTree<T>*> mp;
 	Symbols::const_iterator it = ex.symbols.begin();
@@ -284,7 +284,7 @@ void gather_tree_nodes(vector<N*>& nodes, N* n) {
 }
 
 template<typename T>
-Tree<T>::~Tree() {
+PTree<T>::~PTree() {
 	if (root) {
 		vector<Node*> nodes;
 		gather_tree_nodes(nodes, root);
@@ -317,7 +317,7 @@ inline size_t memvol(const node::PTree<T>& n) {
 	return memsize(n.data);
 }
 template<class T>
-size_t memvol(const Tree<T>& t) {
+size_t memvol(const PTree<T>& t) {
 	size_t s = 0;
 	if (t.root) {
 		vector<node::PTree<T>*> nodes;
