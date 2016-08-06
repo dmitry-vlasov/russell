@@ -8,28 +8,27 @@ namespace mdl { namespace rus {
 
 struct Type;
 
-struct Symbol {
+struct Symbol : public mdl::Symbol {
 	Symbol(string s, Type* t = nullptr);
-	Symbol(): lit(UNDEF_LIT), rep(false), type(nullptr) { }
-	Symbol(uint l): lit(l), rep(false), type(nullptr) { }
-	Symbol(const mdl::Symbol s, bool r = false) :
-	lit(s.lit), rep(r), type(nullptr) {
-	}
-	Symbol(const mdl::Symbol s, Type* tp, bool r = false) :
-	lit(s.lit), rep(r), type(tp) {
-	}
+	Symbol() : mdl::Symbol(), type(nullptr) { }
+	Symbol(uint l): mdl::Symbol(l), type(nullptr) { }
+	Symbol(const mdl::Symbol s, bool v = false) :
+	mdl::Symbol(s.lit, v), type(nullptr) { }
+	Symbol(const mdl::Symbol s, Type* tp, bool v = false) :
+	mdl::Symbol(s.lit, v), type(tp) { }
+
 	bool operator == (const Symbol& s) const {
-		return lit == s.lit && type == s.type;
+		return mdl::Symbol::operator == (s) && type == s.type;
 	}
 	bool operator != (const Symbol& s) const {
 		return !operator ==(s);
 	}
 	bool operator < (const Symbol& s) const {
-		return type == s.type ? lit < s.lit : type < s.type;
+		return
+			type == s.type ?
+			mdl::Symbol::operator < (s.lit) :
+			type < s.type;
 	}
-	bool undef() const { return lit == UNDEF_LIT; }
-	uint  lit:31;
-	bool  rep:1;
 	Type* type;
 };
 
@@ -62,7 +61,7 @@ struct Expr {
 
 	Expr() : kind(VAR), val(), children() { val.var = nullptr; }
 	Expr(Rule* r) : kind(NODE)  { val.rule = r; }
-	Expr(Symbol* v) : kind(VAR), val(), children() { val.var = v; }
+	Expr(Symbol& v) : kind(VAR), val(), children() { val.var = &v; }
 	Expr(Rule* r, const Children& ch) : kind(NODE), val(), children(ch) {
 		val.rule = r;
 	}

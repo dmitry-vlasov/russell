@@ -78,11 +78,11 @@ Iterator parse_LL(Term& t, Iterator x, Iterator last, Type* type, uint ind, bool
 	}
 	if (x->type) {
 		if (x->type == type) {
-			t = Term(&(*x));
+			t = Term(*x);
 			return x;
 		} else if (Rule* super = find_super(x->type, type)) {
 			t = Term(super);
-			t.children.push_back(Term(&(*x)));
+			t.children.push_back(Term(*x));
 			return x;
 		}
 	}

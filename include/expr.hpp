@@ -19,8 +19,7 @@ namespace mdl {
 
 struct Symbol {
 	Symbol(): lit(UNDEF_LIT), var(false) { }
-	Symbol(uint l) : lit (l), var (false) { }
-	Symbol(uint l, bool v) : lit (l), var (v) { }
+	Symbol(uint l, bool v = false) : lit (l), var (v) { }
 
 	bool operator == (const Symbol& s) const {
 		return lit == s.lit && var == s.var;

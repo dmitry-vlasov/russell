@@ -11,8 +11,7 @@ string show(Symbol s, bool full) {
 	}
 }
 
-Symbol::Symbol(string s, Type* t) : lit(UNDEF_LIT), rep(false), type(t) {
-	lit = Rus::mod().lex.symbs.toInt(s);
+Symbol::Symbol(string s, Type* t) : mdl::Symbol(Rus::mod().lex.symbs.toInt(s)), type(t) {
 }
 
 string show(const Expr& ex) {
@@ -125,7 +124,7 @@ void parse_term(Expr& ex, Rule* rule) {
 	ex.term = term::Expr(rule);
 	for (auto& s : ex.symbols) {
 		if (s.type)
-			ex.term.children.push_back(term::Expr(&s));
+			ex.term.children.push_back(term::Expr(s));
 	}
 }
 
