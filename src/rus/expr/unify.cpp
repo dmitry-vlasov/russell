@@ -5,7 +5,7 @@ namespace rus {
 
 template<typename T>
 inline Type* type(const T& t) {
-	return t.kind == T::NODE ? t.val.rule->type : t.val.var->symb.type;
+	return t.kind == T::NODE ? t.val.rule->type : t.val.var->type;
 }
 
 inline Rule* find_super(Type* type, Type* super) {
@@ -20,7 +20,7 @@ inline Rule* find_super(Type* type, Type* super) {
 sub::Expr* unify(const term::Expr& p, const term::Expr& q) {
 	switch (p.kind) {
 	case term::Expr::VAR: {
-		Symbol var = p.val.var->symb;
+		Symbol var = *p.val.var;
 		if (var.type == type(q)) {
 			sub::Expr* s = new sub::Expr();
 			s->sub[var] = q;

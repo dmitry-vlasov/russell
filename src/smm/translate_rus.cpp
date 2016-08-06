@@ -191,22 +191,23 @@ inline bool super_type(const rus::Type* t1, const rus::Type* t2) {
 bool less_general(const rus::Rule* r1, const rus::Rule* r2) {
 	if (!super_type(r2->type, r1->type))
 		return false;
-	const rus::Expr::Node *n = r1->term.first;
-	const rus::Expr::Node *m = r2->term.first;
-	while (n && m) {
-		if (!n->symb.type && !m->symb.type) {
-			if (n->symb != m->symb)
+	auto n = r1->term.symbols.begin();
+	auto n_end = r1->term.symbols.end();
+	auto m = r2->term.symbols.begin();
+	auto m_end = r2->term.symbols.end();
+	while (n != n_end && m != m_end) {
+		if (!n->type && !m->type) {
+			if (*n != *m)
 				return false;
-		} else if (n->symb.type && m->symb.type) {
-			if (!super_type(n->symb.type, m->symb.type))
+		} else if (n->type && m->type) {
+			if (!super_type(n->type, m->type))
 				return false;
 		} else {
 			return false;
 		}
-		n = n->next;
-		m = m->next;
+		++ n; ++ m;
 	}
-	return n == m;
+	return n == n_end && m == m_end;
 }
 
 inline bool rule_term_is_super(const Expr& term) {

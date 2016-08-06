@@ -2,9 +2,9 @@
 
 namespace mdl { namespace rus { namespace expr { namespace {
 
-typedef node::Expr Node;
 typedef term::Expr Term;
 typedef Tree<Rule*>::Node TreeNode;
+typedef Symbols::iterator Iterator;
 
 vector<pair<Expr*, uint>> queue;
 
@@ -16,11 +16,11 @@ inline Rule* find_super(Type* type, Type* super) {
 		return nullptr;
 }
 
-Node* parse_LL(Term& t, Node* x, Type* type, uint ind, bool initial = false) {
+Iterator parse_LL(Term& t, Iterator x, Iterator last, Type* type, uint ind, bool initial = false) {
 	if (!initial && type->rules.root) {
 		t.kind = term::Expr::NODE;
 		stack<TreeNode*> n;
-		stack<Node*> m;
+		stack<Iterator> m;
 		stack<TreeNode*> childnodes;
 		n.push(type->rules.root);
 		m.push(x);
@@ -29,36 +29,37 @@ Node* parse_LL(Term& t, Node* x, Type* type, uint ind, bool initial = false) {
 				t.children.push_back(Term());
 				childnodes.push(n.top());
 				Term& child = t.children.back();
-				if (Node* ch = parse_LL(child, m.top(), tp, ind, n.top() == type->rules.root)) {
+				Iterator ch = parse_LL(child, m.top(), last, tp, ind, n.top() == type->rules.root);
+				if (ch != Iterator()) {
 					if (!n.top()->next) {
 						if (n.top()->data->ind <= ind) {
 							t.val.rule = n.top()->data;
 							return ch;
 						} else
-							goto end;
-					} else if (!ch->next)
-						goto end;
+							goto out;
+					} else if (ch == last)
+						goto out;
 					else {
 						n.push(n.top()->next);
-						m.push(ch->next);
+						m.push(ch + 1);
 					}
 					continue;
 				} else {
 					t.children.pop_back();
 					childnodes.pop();
 				}
-			} else if (n.top()->symb == m.top()->symb) {
+			} else if (n.top()->symb == *m.top()) {
 				if (!n.top()->next) {
 					if (n.top()->data->ind <= ind) {
 						t.val.rule = n.top()->data;
 						return m.top();
 					} else
-						goto end;
-				} else if (!m.top()->next)
-					goto end;
+						goto out;
+				} else if (m.top() == last)
+					goto out;
 				else {
 					n.push(n.top()->next);
-					m.push(m.top()->next);
+					m.push(m.top() + 1);
 				}
 				continue;
 			}
@@ -69,27 +70,29 @@ Node* parse_LL(Term& t, Node* x, Type* type, uint ind, bool initial = false) {
 					t.children.pop_back();
 					childnodes.pop();
 				}
-				if (n.empty() || m.empty()) goto end;
+				if (n.empty() || m.empty()) goto out;
 			}
 			n.top() = n.top()->side;
 		}
-		end: ;
+		out: ;
 	}
-	if (x->symb.type) {
-		if (x->symb.type == type) {
-			t = Term(x);
+	if (x->type) {
+		if (x->type == type) {
+			t = Term(&(*x));
 			return x;
-		} else if (Rule* super = find_super(x->symb.type, type)) {
+		} else if (Rule* super = find_super(x->type, type)) {
 			t = Term(super);
-			t.children.push_back(Term(x));
+			t.children.push_back(Term(&(*x)));
 			return x;
 		}
 	}
-	return nullptr;
+	return Iterator();
 }
 
 void parse_LL(Expr* ex, uint ind) {
-	if (!parse_LL(ex->term, ex->first, ex->type, ind)) {
+	Iterator begin = ex->symbols.begin();
+	Iterator last  = ex->symbols.end() - 1;
+	if (parse_LL(ex->term, begin, last, ex->type, ind) == Iterator()) {
 		throw Error("parsing error", string("expression: ") + show(*ex));
 	}
 }

@@ -16,29 +16,21 @@ Symbol::Symbol(string s, Type* t) : lit(UNDEF), rep(false), type(t) {
 }
 
 string show(const Expr& ex) {
-	string s;
-	Expr::Node* n = ex.first;
-	while (n) {
-		s += show(n->symb) + " ";
-		n = n->next;
-	}
-	return s;
+	string str;
+	for (auto s : ex.symbols) str += show(s) + " ";
+	return str;
 }
 
 size_t memvol(const Expr& ex) {
 	size_t s = 0;
-	Expr::Node* n = ex.first;
-	while (n) {
-		s += memsize(*n);
-		n = n->next;
-	}
+	s += ex.symbols.capacity() * sizeof (Symbols);
 	s += memvol(ex.term);
 	return s;
 }
 
 string show_ast(const term::Expr& t, bool full) {
 	if (t.kind == term::Expr::VAR)
-		return t.val.var ? show(t.val.var->symb, full) : "<null>";
+		return t.val.var ? show(*t.val.var, full) : "<null>";
 	else {
 		string s = (t.val.rule ? show_id(t.val.rule->id) : "?") + " (";
 		for (uint i = 0; i < t.children.size(); ++ i) {
@@ -52,18 +44,18 @@ string show_ast(const term::Expr& t, bool full) {
 
 string show(const term::Expr& t, bool full) {
 	if (t.kind == term::Expr::VAR)
-		return t.val.var ? show(t.val.var->symb, full) : "<null>";
+		return t.val.var ? show(*t.val.var, full) : "<null>";
 	else {
-		string s(" ");
+		string str(" ");
 		uint i = 0;
-		for (auto n : t.val.rule->term) {
-			if (n.symb.type) {
-				s += show(t.children[i++], full) + ' ';
+		for (auto s : t.val.rule->term.symbols) {
+			if (s.type) {
+				str += show(t.children[i++], full) + ' ';
 			} else {
-				s += show(n.symb) + ' ';
+				str += show(s) + ' ';
 			}
 		}
-		return s;
+		return str;
 	}
 }
 
@@ -71,7 +63,7 @@ namespace term {
 	bool Expr :: operator == (const Expr& t) const {
 		if (kind != t.kind) return false;
 		switch (kind) {
-		case VAR:  return val.var->symb == t.val.var->symb;
+		case VAR:  return *val.var == *t.val.var;
 		case NODE: {
 			if (val.rule != t.val.rule) return false;
 			auto i_p = children.begin();
@@ -88,101 +80,7 @@ namespace term {
 	}
 }
 
-Expr::Expr(const Expr& ex) : first(nullptr), last(nullptr), type(ex.type), term() {
-	map<Node*, Node*> mp;
-	Node* n = ex.first;
-	while (n){
-		push_back(n->symb);
-		mp[n] = last;
-		n = n->next;
-	}
-	term = ex.term;
-}
 
-Expr::~Expr() {
-	Node* n = last;
-	while (n) {
-		Node* to_delete = n;
-		n = n->prev;
-		delete to_delete;
-	}
-}
-Expr& Expr::operator = (const Expr& ex) {
-	Node* n = last;
-	while (n) {
-		Node* to_delete = n;
-		n = n->prev;
-		delete to_delete;
-	}
-	last = nullptr;
-	first = nullptr;
-	type = ex.type;
-	map<Node*, Node*> mp;
-	n = ex.first;
-	while (n){
-		push_back(n->symb);
-		mp[n] = last;
-		n = n->next;
-	}
-	term = ex.term;
-	return *this;
-}
-
-Expr& Expr::operator = (Expr&& ex) {
-	first = ex.first;
-	last  = ex.last;
-	type  = ex.type;
-	term  = ex.term;
-	ex.first = nullptr;
-	ex.last  = nullptr;
-	ex.type  = nullptr;
-	ex.term  = term::Expr();
-	return *this;
-}
-void Expr::push_back(Symbol s) {
-	if (!first) {
-		first = new Node(s);
-		last  = first;
-	} else {
-		last->next = new Node(s);
-		last->next->prev = last;
-		last = last->next;
-	}
-}
-
-void Expr::push_front(Symbol s) {
-	if (!first) {
-		first = new Node(s);
-		last  = first;
-	} else {
-		first->prev = new Node(s);
-		first->prev->next = first;
-		first = first->prev;
-	}
-}
-
-Symbol Expr::pop_back() {
-	assert(first);
-	Symbol s = last->symb;
-	if (last == first) {
-		delete first;
-		first = nullptr;
-	} else {
-		last = last->prev;
-		delete last->next;
-	}
-	return s;
-}
-
-bool Expr::operator == (const Expr& ex) const {
-	const Node* n = ex.first;
-	const Node* m = first;
-	while (n && m) {
-		if (n->symb != m->symb) return false;
-		n = n->next; m = m ->next;
-	}
-	return !n && !m;
-}
 /*
 term::Expr assemble_expr(Expr& ex, const term::Expr& t) {
 	if (t.isvar()) {
@@ -222,19 +120,13 @@ Expr assemble(const Expr& ex) {
 	return assemble(ex.term);
 }
 */
-term::Expr create_term(Expr::Node* first, Expr::Node* last, Rule* rule) {
-	term::Expr term(rule);
-	Expr::Node* n = first;
-	while (n) {
-		if (n->symb.type)
-			term.children.push_back(term::Expr(n));
-		n = n->next;
-	}
-	return term;
-}
 
 void parse_term(Expr& ex, Rule* rule) {
-	ex.term = create_term(ex.first, ex.last, rule);
+	ex.term = term::Expr(rule);
+	for (auto& s : ex.symbols) {
+		if (s.type)
+			ex.term.children.push_back(term::Expr(&s));
+	}
 }
 
 bool sub::Expr::join(Expr* s) {
@@ -253,9 +145,9 @@ bool sub::Expr::join(Expr* s) {
 
 void dump(const Symbol& s) { cout << show(s) << endl; }
 void dump(const Expr& ex) { cout << show(ex) << endl; }
-//void dump_ast(const Expr& ex) { cout << show_ast(ex) << endl; }
-//void dump(const term::Expr* tm) { cout << show(*tm) << endl; }
-//void dump_ast(const term::Expr& tm) { cout << show_ast(tm) << endl; }
-//void dump(const sub::Expr& sb) { cout << show(sb) << endl; }
+void dump_ast(const Expr& ex) { cout << show_ast(ex) << endl; }
+void dump(const term::Expr* tm) { cout << show(*tm) << endl; }
+void dump_ast(const term::Expr& tm) { cout << show_ast(tm) << endl; }
+void dump(const sub::Expr& sb) { cout << show(sb) << endl; }
 
 }} // mdl::rus

@@ -60,7 +60,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 
 	term  = + (symb [addSymbol(_r1, _1)] | comment [deleteComment(_1)]) > eps [parseTerm(_r1, _r2, phoenix::ref(var_stack))];
 	expr  = + (symb [addSymbol(_r1, _1)] | comment [deleteComment(_1)]) > eps [parseExpr(_r1, _r2, phoenix::ref(var_stack))];
-	plain = + (symb [addSymbol(_r1, _1)] | comment [deleteComment(_1)]) > eps [phoenix::at_c<2>(_r1) = _r2];
+	plain = + (symb [addSymbol(_r1, _1)] | comment [deleteComment(_1)]) > eps [phoenix::at_c<0>(_r1) = _r2];
 
 	disj =
 		lit("disjointed") > "("

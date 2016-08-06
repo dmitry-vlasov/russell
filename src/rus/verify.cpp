@@ -14,7 +14,6 @@ void verify_step(Step* st) {
 	//cout << "\tverifying step: " << c++ << " = " << show_id(ass->id) << endl;
 	sub::Expr* ps = unify(ass->props[0]->expr, st->expr);
 	if (!ps) {
-		ps = unify(ass->props[0]->expr, st->expr);
 		string msg = "proposition:\n";
 		msg += show(*ass->props[0]) + "\n";
 		msg += "ref expr:\n";

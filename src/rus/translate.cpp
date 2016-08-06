@@ -28,16 +28,16 @@ inline uint translate_symb(uint s) {
 mdl::Expr translate_expr(const Expr& ex, Maps& maps) {
 	mdl::Expr expr;
 	expr += maps.turnstile;
-	for (auto it = ex.begin(); it != ex.end(); ++ it)
-		expr += mdl::Symbol(translate_symb(it->symb.lit), it->symb.type);
+	for (auto s : ex.symbols)
+		expr += mdl::Symbol(translate_symb(s.lit), s.type);
 	return expr;
 }
 
 mdl::Expr translate_term(const Expr& ex, const Type* tp, Maps& maps) {
 	mdl::Expr expr;
 	expr += mdl::Symbol(maps.types[tp]);
-	for (auto it = ex.begin(); it != ex.end(); ++ it)
-		expr += mdl::Symbol(translate_symb(it->symb.lit), it->symb.type);
+	for (auto s : ex.symbols)
+		expr += mdl::Symbol(translate_symb(s.lit), s.type);
 	return expr;
 }
 
@@ -127,7 +127,7 @@ smm::Assertion* translate_rule(const Rule* rule, Maps& maps) {
 	for (auto v : rule->vars.v) {
 		uint i = 0;
 		for (auto& ch : rule->term.term.children) {
-			if (ch.kind == term::Expr::VAR && ch.val.var->symb == v) {
+			if (ch.kind == term::Expr::VAR && *ch.val.var == v) {
 				maps.rules_args[rule][v] = i;
 				break;
 			}
@@ -191,12 +191,12 @@ void translate_ref(Ref ref, const Assertion* thm, vector<smm::Ref>& smm_proof, M
 
 void translate_term(const term::Expr& t, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps) {
 	if (t.kind == term::Expr::VAR) {
-		if (maps.floatings[thm].has(t.val.var->symb))
-			smm_proof.push_back(maps.floatings[thm][t.val.var->symb]);
-		else if (maps.inners[thm].has(t.val.var->symb))
-			smm_proof.push_back(maps.inners[thm][t.val.var->symb]);
+		if (maps.floatings[thm].has(*t.val.var))
+			smm_proof.push_back(maps.floatings[thm][*t.val.var]);
+		else if (maps.inners[thm].has(*t.val.var))
+			smm_proof.push_back(maps.inners[thm][*t.val.var]);
 		else
-			throw Error("undeclared variable", show(t.val.var->symb));
+			throw Error("undeclared variable", show(*t.val.var));
 	} else {
 		for (auto v : t.val.rule->vars.v)
 			translate_term(t.children[maps.rules_args[t.val.rule][v]], thm, smm_proof, maps);

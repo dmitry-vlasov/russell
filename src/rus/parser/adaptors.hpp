@@ -13,9 +13,9 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Expr,
-	(mdl::rus::node::Expr*, first)
-	(mdl::rus::node::Expr*, last)
 	(mdl::rus::Type*, type)
+	(mdl::rus::term::Expr*, term)
+	(mdl::vector<mdl::rus::Symbol>, symbols)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(

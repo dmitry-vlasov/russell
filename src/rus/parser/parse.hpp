@@ -72,20 +72,17 @@ struct PopVars {
 };
 
 static void mark_vars(Expr& ex, VarStack& var_stack) {
-	Expr::Node* n = ex.first;
-	while (n) {
-		bool is_var = var_stack.map.has(n->symb.lit);
-		bool is_const = Rus::get().math.consts.has(n->symb.lit);
+	for (auto& s : ex.symbols) {
+		bool is_var = var_stack.map.has(s.lit);
+		bool is_const = Rus::get().math.consts.has(s.lit);
 		if (is_const && is_var)
 			throw Error("constant symbol is marked as variable");
 		if (!is_const && !is_var) {
-			string msg = "symbol " + Rus::get().lex.symbs.toStr(n->symb.lit) + " ";
+			string msg = "symbol " + Rus::get().lex.symbs.toStr(s.lit) + " ";
 			msg += " neither constant nor variable";
 			throw Error(msg);
 		}
-		if (is_var)
-			n->symb.type = var_stack.map[n->symb.lit];
-		n = n->next;
+		if (is_var) s.type = var_stack.map[s.lit];
 	}
 }
 
@@ -363,15 +360,15 @@ struct AssembleDef {
 		static Symbol dfm(Rus::mod().lex.symbs.toInt("defiendum"));
 		static Symbol dfs(Rus::mod().lex.symbs.toInt("definiens"));
 		Prop* prop = new Prop;
-		for (Expr::Node* n = d->prop.first; n; n = n->next) {
-			if (n->symb == dfm) {
-				for (Expr::Node* m = d->dfm.first; m; m = m->next)
-					prop->expr.push_back(m->symb);
-			} else if (n->symb == dfs) {
-				for (Expr::Node* m = d->dfs.first; m; m = m->next)
-					prop->expr.push_back(m->symb);
+		for (auto s : d->prop.symbols) {
+			if (s == dfm) {
+				for (auto s_dfm : d->dfm.symbols)
+					prop->expr.push_back(s_dfm);
+			} else if (s == dfs) {
+				for (auto s_dfs : d->dfs.symbols)
+					prop->expr.push_back(s_dfs);
 			} else
-				prop->expr.push_back(n->symb);
+				prop->expr.push_back(s);
 		}
 		prop->ind = 0;
 		prop->expr.type = d->prop.type;
