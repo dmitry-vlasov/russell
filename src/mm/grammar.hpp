@@ -15,8 +15,8 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		using phoenix::push_back;
 		using phoenix::new_;
 
-		const phoenix::function<LabelToInt>     labelToInt;
-		const phoenix::function<SymbolToInt>    symbolToInt;
+		const phoenix::function<CreateLabel>    createLabel;
+		const phoenix::function<CreateSymb>     createSymb;
 		const phoenix::function<AddToMath>      addToMath;
 		const phoenix::function<ParseInclusion> parseInclusion;
 		const phoenix::function<CreateRef>      createRef;
@@ -30,8 +30,8 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 		const bool is_top = stack.empty();
 		//const phoenix::function<SetLocation<Iterator>> setLocation;
 
-		symbol = lexeme[+(ascii::char_ - '$' - ascii::space)] [at_c<0>(_val) = symbolToInt(_1)];
-		label  = lexeme[+(ascii::char_ - '$' - ascii::space)] [_val = labelToInt(_1)];
+		symbol = lexeme[+(ascii::char_ - '$' - ascii::space)] [_val = createSymb(_1)];
+		label  = lexeme[+(ascii::char_ - '$' - ascii::space)] [_val = createLabel(_1)];
 		path   = lexeme[+(ascii::char_ - '$' - ascii::space)];
 
 		expr  = + (symbol [push_back(at_c<0>(_val), _1)] | comment);

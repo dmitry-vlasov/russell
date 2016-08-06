@@ -13,11 +13,12 @@
 #pragma once
 
 #include "std.hpp"
+#define UNDEF_LIT 0x7FFFFFFF
 
 namespace mdl {
 
 struct Symbol {
-	Symbol(): lit(-1), var(false) { }
+	Symbol(): lit(UNDEF_LIT), var(false) { }
 	Symbol(uint l) : lit (l), var (false) { }
 	Symbol(uint l, bool v) : lit (l), var (v) { }
 
@@ -30,8 +31,9 @@ struct Symbol {
 	bool operator < (const Symbol& s) const {
 		return lit < s.lit;
 	}
-	uint lit;
-	bool var;
+	bool undef() const { return lit == UNDEF_LIT; }
+	uint lit:31;
+	bool var:1;
 };
 
 struct Expr {

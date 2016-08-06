@@ -71,21 +71,21 @@ struct AddToMath {
 	}
 };
 
-struct SymbolToInt {
-	template <typename T>
-	struct result { typedef uint type; };
-	uint operator()(const std::vector<char>& symb) const {
-		string symbol(symb.begin(), symb.end());
-		return Smm::mod().lex.symbols.toInt(symbol);
-	}
-};
-
-struct LabelToInt {
+struct CreateLabel {
 	template <typename T>
 	struct result { typedef uint type; };
 	uint operator()(const std::vector<char>& lab) const {
 		string label(lab.begin(), lab.end());
 		return Smm::mod().lex.labels.toInt(label);
+	}
+};
+
+struct CreateSymb {
+	template <typename T>
+	struct result { typedef Symbol type; };
+	Symbol operator()(const std::vector<char>& s) const {
+		string symb(s.begin(), s.end());
+		return Symbol(Smm::mod().lex.symbols.toInt(symb));
 	}
 };
 
