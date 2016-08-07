@@ -128,7 +128,7 @@ SymbIter parse_LL_1(Term& t, SymbIter x, Type* type, uint ind, bool initial = fa
 		stack<SymbIter> m;
 		stack<MapIter> childnodes;
 
-		//n.push(MapIter(type->rules.root.begin(), type->rules.root.end() - 1));
+		n.push(MapIter(type->rules.root.map.m.begin(), -- type->rules.root.map.m.end()));
 
 		m.push(x);
 		while (!n.empty() && !m.empty()) {
@@ -182,7 +182,7 @@ SymbIter parse_LL_1(Term& t, SymbIter x, Type* type, uint ind, bool initial = fa
 
 
 void parse_LL(Expr* ex, uint ind) {
-	SymbIter begin(ex->symbols.begin(), ex->symbols.end() - 1);
+	SymbIter begin(ex->symbols.begin(), --ex->symbols.end());
 	if (parse_LL(ex->term, begin, ex->type, ind) == SymbIter()) {
 		throw Error("parsing error", string("expression: ") + show(*ex));
 	}

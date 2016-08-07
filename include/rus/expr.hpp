@@ -84,7 +84,7 @@ struct PTree {
 template<class T>
 struct Tree {
 	Map<Rule*, vector<Tree<T>>>    rules;
-	Map<const rus::Expr*, Symbol*> entries;
+	Map<const rus::Expr*, const Symbol*> entries;
 };
 
 }
@@ -298,8 +298,8 @@ T& PTree<T>::add(const Expr& ex) {
 
 
 
-template<class T, class N>
-void add_term(term::Tree<T>& tree_m, const term::Expr& expr_t, map<const Symbol*, N*>& mp, const Expr* ex) {
+template<class T>
+void add_term(term::Tree<T>& tree_m, const term::Expr& expr_t, map<const Symbol*, const Symbol*>& mp, const Expr* ex) {
 	if (expr_t.kind == term::Expr::VAR) {
 		tree_m.entries[ex] = mp[expr_t.val.var];
 		return;
@@ -322,14 +322,15 @@ void add_term(term::Tree<T>& tree_m, const term::Expr& expr_t, map<const Symbol*
 template<typename T>
 T& Tree<T>::add(const Expr& ex) {
 	assert(ex.symbols.size());
-	map<const Symbol*, Symbol*> mp;
+	map<const Symbol*, const Symbol*> mp;
 	Map& m = root;
 	typename Map::Node* n = nullptr;
 	for (auto& s : ex.symbols) {
-		m = m[s].tree;
+		Map& new_m = m.map[s].tree;
 		auto i = m.map.m.find(s);
 		mp[&s] = &i->first;
 		n = &i->second;
+		m = new_m;
 	}
 	assert(n);
 	add_term(term, ex.term, mp, &ex);
