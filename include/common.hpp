@@ -11,6 +11,28 @@ namespace mdl {
 
 inline bool undef(uint x) { return x == (uint)-1; }
 
+template<class I>
+struct BiIter {
+	typedef I Iter;
+	BiIter() : it(), last() { }
+	BiIter(Iter i, Iter l) : it(i), last(l) { }
+	Iter it;
+	const Iter last;
+	bool is_last() const { return it == last; }
+	bool operator == (const BiIter& i) const {
+		return it == i.it;
+	}
+	bool operator != (const BiIter& i) const {
+		return !operator == (i);
+	}
+};
+
+template<class I>
+BiIter<I> operator + (BiIter<I> i, uint n) {
+	i.it += n;
+	return i;
+}
+
 template<
 	class Key,
 	class T,
@@ -18,7 +40,8 @@ template<
 	class Alloc = std::allocator<pair<const Key,T>>
 >
 struct Map {
-	map<Key, T, Compare, Alloc> m;
+	typedef map<Key, T, Compare, Alloc> Map_;
+	Map_ m;
 	bool has(Key k) const {
 		return m.find(k) != m.end();
 	}
@@ -34,16 +57,16 @@ template<
 	class Alloc = std::allocator<T>
 >
 struct Set {
-	set<T, Compare, Alloc> s;
+	typedef set<T, Compare, Alloc> Set_;
+	Set_ s;
 	bool has(T val) const {
 		return s.find(val) != s.end();
 	}
 };
 
-class Table {
-	vector<string> strings;
-	map<string, uint> table;
-public:
+struct Table {
+	typedef map<string, uint> Table_;
+	typedef vector<string> Strings_;
 	Table() : strings(), table() { }
 	uint getInt(const string& str) const {
 		if (table.find(str) == table.end())
@@ -66,6 +89,8 @@ public:
 		}
 		return strings[i];
 	}
+	Strings_ strings;
+	Table_   table;
 };
 
 class indent {

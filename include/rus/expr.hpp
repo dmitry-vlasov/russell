@@ -76,9 +76,15 @@ struct Expr {
 };
 
 template<class T>
-struct Tree {
-	Map<Rule*, vector<Tree<T>>> rules;
+struct PTree {
+	Map<Rule*, vector<PTree<T>>> rules;
 	Map<const rus::Expr*, node::PTree<T>*> entries;
+};
+
+template<class T>
+struct Tree {
+	Map<Rule*, vector<Tree<T>>>    rules;
+	Map<const rus::Expr*, Symbol*> entries;
 };
 
 }
@@ -115,7 +121,8 @@ struct Tree {
 		uint    level;
 		T       data;
 	};
-	Map<Symbol, Node> map;
+	typedef mdl::Map<Symbol, Node> Map;
+	Map map;
 };
 
 } // namespace node
@@ -133,7 +140,7 @@ struct Expr {
 template<typename T>
 struct PTree {
 	typedef node::PTree<T> Node;
-	typedef term::Tree<T> Term;
+	typedef term::PTree<T> Term;
 
 	PTree() : root(nullptr), term() { }
 	~PTree();
@@ -142,6 +149,17 @@ struct PTree {
 	Node* root;
 	Term  term;
 };
+
+template<typename T>
+struct Tree {
+	typedef node::Tree<T> Map;
+	typedef term::Tree<T> Term;
+	T& add(const Expr& ex);
+
+	Map  root;
+	Term term;
+};
+
 
 struct Expr {
 	typedef term::Expr Term;
@@ -221,20 +239,20 @@ inline N* new_side(N* n, Symbol s) {
 }
 
 template<class T, class N>
-void add_term(term::Tree<T>& tree_m, const term::Expr& expr_t, map<const Symbol*, N*>& mp, const Expr* ex) {
+void add_term(term::PTree<T>& tree_m, const term::Expr& expr_t, map<const Symbol*, N*>& mp, const Expr* ex) {
 	if (expr_t.kind == term::Expr::VAR) {
 		tree_m.entries[ex] = mp[expr_t.val.var];
 		return;
 	}
 	if (!tree_m.rules.has(expr_t.val.rule)) {
-		vector<term::Tree<T>>& tree_t = tree_m.rules[expr_t.val.rule];
+		vector<term::PTree<T>>& tree_t = tree_m.rules[expr_t.val.rule];
 		for_each(
 			expr_t.children.begin(),
 			expr_t.children.end(),
-			[&tree_t](auto) mutable { tree_t.push_back(term::Tree<T>()); }
+			[&tree_t](auto) mutable { tree_t.push_back(term::PTree<T>()); }
 		);
 	}
-	vector<term::Tree<T>>& tree_t = tree_m.rules[expr_t.val.rule];
+	vector<term::PTree<T>>& tree_t = tree_m.rules[expr_t.val.rule];
 	auto tree_ch = tree_t.begin();
 	for (auto& expr_ch : expr_t.children) {
 		add_term(*tree_ch ++, expr_ch, mp, ex);
@@ -273,6 +291,52 @@ T& PTree<T>::add(const Expr& ex) {
 	add_term(term, ex.term, mp, &ex);
 	return n->data;
 }
+
+
+
+
+
+
+
+template<class T, class N>
+void add_term(term::Tree<T>& tree_m, const term::Expr& expr_t, map<const Symbol*, N*>& mp, const Expr* ex) {
+	if (expr_t.kind == term::Expr::VAR) {
+		tree_m.entries[ex] = mp[expr_t.val.var];
+		return;
+	}
+	if (!tree_m.rules.has(expr_t.val.rule)) {
+		vector<term::Tree<T>>& tree_t = tree_m.rules[expr_t.val.rule];
+		for_each(
+			expr_t.children.begin(),
+			expr_t.children.end(),
+			[&tree_t](auto) mutable { tree_t.push_back(term::Tree<T>()); }
+		);
+	}
+	vector<term::Tree<T>>& tree_t = tree_m.rules[expr_t.val.rule];
+	auto tree_ch = tree_t.begin();
+	for (auto& expr_ch : expr_t.children) {
+		add_term(*tree_ch ++, expr_ch, mp, ex);
+	}
+}
+
+template<typename T>
+T& Tree<T>::add(const Expr& ex) {
+	assert(ex.symbols.size());
+	map<const Symbol*, Symbol*> mp;
+	Map& m = root;
+	typename Map::Node* n = nullptr;
+	for (auto& s : ex.symbols) {
+		m = m[s].tree;
+		auto i = m.map.m.find(s);
+		mp[&s] = &i->first;
+		n = &i->second;
+	}
+	assert(n);
+	add_term(term, ex.term, mp, &ex);
+	return n->data;
+}
+
+
 
 template<typename N>
 void gather_tree_nodes(vector<N*>& nodes, N* n) {

@@ -4,7 +4,11 @@ namespace mdl { namespace rus { namespace expr { namespace {
 
 typedef term::Expr Term;
 typedef PTree<Rule*>::Node TreeNode;
-typedef Symbols::iterator Iterator;
+
+typedef node::Tree<Rule*>::Map TreeMap;
+typedef BiIter<TreeMap::Map_::const_iterator> MapIter;
+typedef BiIter<Symbols::iterator> SymbIter;
+
 
 vector<pair<Expr*, uint>> queue;
 
@@ -16,11 +20,29 @@ inline Rule* find_super(Type* type, Type* super) {
 		return nullptr;
 }
 
-Iterator parse_LL(Term& t, Iterator x, Iterator last, Type* type, uint ind, bool initial = false) {
+enum class Action { RET, BREAK, CONT };
+
+inline Action act (auto& n, auto& m, SymbIter ch, Term& t, uint ind) {
+	if (!n.top()->next) {
+		if (n.top()->data->ind <= ind) {
+			t.val.rule = n.top()->data;
+			return Action::RET;
+		} else
+			return Action::BREAK;
+	} else if (ch.is_last())
+		return Action::BREAK;
+	else {
+		n.push(n.top()->next);
+		m.push(ch + 1);
+	}
+	return Action::CONT;
+}
+
+SymbIter parse_LL(Term& t, SymbIter x, Type* type, uint ind, bool initial = false) {
 	if (!initial && type->rules.root) {
 		t.kind = term::Expr::NODE;
 		stack<TreeNode*> n;
-		stack<Iterator> m;
+		stack<SymbIter> m;
 		stack<TreeNode*> childnodes;
 		n.push(type->rules.root);
 		m.push(x);
@@ -29,39 +51,106 @@ Iterator parse_LL(Term& t, Iterator x, Iterator last, Type* type, uint ind, bool
 				t.children.push_back(Term());
 				childnodes.push(n.top());
 				Term& child = t.children.back();
-				Iterator ch = parse_LL(child, m.top(), last, tp, ind, n.top() == type->rules.root);
-				if (ch != Iterator()) {
-					if (!n.top()->next) {
-						if (n.top()->data->ind <= ind) {
-							t.val.rule = n.top()->data;
-							return ch;
-						} else
-							goto out;
-					} else if (ch == last)
-						goto out;
-					else {
-						n.push(n.top()->next);
-						m.push(ch + 1);
+				SymbIter ch = parse_LL(child, m.top(), tp, ind, n.top() == type->rules.root);
+				if (ch != SymbIter()) {
+					switch (act(n, m, ch, t, ind)) {
+					case Action::RET  : return ch;
+					case Action::BREAK: goto out;
+					case Action::CONT : continue;
 					}
-					continue;
 				} else {
 					t.children.pop_back();
 					childnodes.pop();
 				}
-			} else if (n.top()->symb == *m.top()) {
-				if (!n.top()->next) {
-					if (n.top()->data->ind <= ind) {
-						t.val.rule = n.top()->data;
-						return m.top();
-					} else
-						goto out;
-				} else if (m.top() == last)
-					goto out;
-				else {
-					n.push(n.top()->next);
-					m.push(m.top() + 1);
+			} else if (n.top()->symb == *m.top().it) {
+				switch (act(n, m, m.top(), t, ind)) {
+				case Action::RET  : return m.top();
+				case Action::BREAK: goto out;
+				case Action::CONT : continue;
 				}
-				continue;
+			}
+			while (!n.top()->side) {
+				n.pop();
+				m.pop();
+				if (!childnodes.empty() && childnodes.top() == n.top()) {
+					t.children.pop_back();
+					childnodes.pop();
+				}
+				if (n.empty() || m.empty()) goto out;
+			}
+			n.top() = n.top()->side;
+		}
+		out: ;
+	}
+	if (x.it->type) {
+		if (x.it->type == type) {
+			t = Term(*x.it);
+			return x;
+		} else if (Rule* super = find_super(x.it->type, type)) {
+			t = Term(super);
+			t.children.push_back(Term(*x.it));
+			return x;
+		}
+	}
+	return SymbIter();
+}
+
+
+
+
+
+/*
+inline Action act_1 (auto& n, auto& m, SymbIter ch, SymbIter last, auto last_n, Term& t, uint ind) {
+	if (n.top() == last_n) {
+		if (n.top()->second.data->ind <= ind) {
+			t.val.rule = n.top()->second->data;
+			return Action::RET;
+		} else
+			return Action::BREAK;
+	} else if (ch == last)
+		return Action::BREAK;
+	else {
+		n.push(n.top() + 1);
+		m.push(ch + 1);
+	}
+	return Action::CONT;
+}
+
+
+
+SymbIter parse_LL_1(Term& t, SymbIter x, SymbIter last_m, Type* type, uint ind, bool initial = false) {
+	if (!initial && type->rules.root) {
+		t.kind = term::Expr::NODE;
+
+
+		stack<MapIter> n;
+		stack<SymbIter> m;
+		stack<MapIter> childnodes;
+		n.push(MapIter(type->rules.root.begin(), type->rules.root.end() - 1));
+
+		m.push(x);
+		while (!n.empty() && !m.empty()) {
+			if (Type* tp = n.top().it->first.type) {
+				t.children.push_back(Term());
+				childnodes.push(n.top());
+				Term& child = t.children.back();
+				SymbIter ch = parse_LL(child, m.top(), last_m, tp, ind, n.top() == type->rules.root);
+				if (ch != SymbIter()) {
+					switch (act(n, m, ch, last_m,  t, ind)) {
+					case Action::RET  : return ch;
+					case Action::BREAK: goto out;
+					case Action::CONT : continue;
+					}
+				} else {
+					t.children.pop_back();
+					childnodes.pop();
+				}
+			} else if (n.top()->first == *m.top()) {
+				switch (act(n, m, m.top(), last_m, t, ind)) {
+				case Action::RET  : return m.top();
+				case Action::BREAK: goto out;
+				case Action::CONT : continue;
+				}
 			}
 			while (!n.top()->side) {
 				n.pop();
@@ -86,13 +175,13 @@ Iterator parse_LL(Term& t, Iterator x, Iterator last, Type* type, uint ind, bool
 			return x;
 		}
 	}
-	return Iterator();
+	return SymbIter();
 }
+*/
 
 void parse_LL(Expr* ex, uint ind) {
-	Iterator begin = ex->symbols.begin();
-	Iterator last  = ex->symbols.end() - 1;
-	if (parse_LL(ex->term, begin, last, ex->type, ind) == Iterator()) {
+	SymbIter begin(ex->symbols.begin(), ex->symbols.end() - 1);
+	if (parse_LL(ex->term, begin, ex->type, ind) == SymbIter()) {
 		throw Error("parsing error", string("expression: ") + show(*ex));
 	}
 }
