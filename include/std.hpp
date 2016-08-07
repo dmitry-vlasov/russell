@@ -94,4 +94,5 @@ namespace mdl {
 	using std::for_each;
 }
 
-
+#define UNDEF_LIT 0x7FFFFFFF
+#define VERSION "0.3"
