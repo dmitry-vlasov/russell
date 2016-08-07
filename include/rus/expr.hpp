@@ -117,6 +117,9 @@ struct PTree {
 template<typename T>
 struct Tree {
 	struct Node {
+		Node() : tree(), level(), data() {
+			Undef<T>::set(data);
+		}
 		Tree<T> tree;
 		uint    level;
 		T       data;
@@ -320,17 +323,41 @@ void add_term(term::Tree<T>& tree_m, const term::Expr& expr_t, map<const Symbol*
 }
 
 template<typename T>
+vector<string> show(const node::Tree<T>& n) {
+	vector<string> vect;
+	for (auto& p : n.map.m) {
+		vector<string> v = show(p.second.tree);
+		if (p.second.tree.map.m.size()) {
+			for (string& s : v)
+				vect.push_back(show(p.first) + ' ' + s);
+		} else {
+			vect.push_back(show(p.first) + " --> " + show(*p.second.data));
+		}
+	}
+	return vect;
+}
+
+template<typename T>
+string show(const Tree<T>& tr) {
+	string str;
+	for (string& s : show(tr.root)) {
+		str += s + "\n";
+	}
+	return str;
+}
+
+template<typename T>
 T& Tree<T>::add(const Expr& ex) {
 	assert(ex.symbols.size());
+	typedef typename Map::Node Node;
 	map<const Symbol*, const Symbol*> mp;
-	Map& m = root;
-	typename Map::Node* n = nullptr;
+	Map*  m = &root;
+	Node* n = nullptr;
 	for (auto& s : ex.symbols) {
-		Map& new_m = m.map[s].tree;
-		auto i = m.map.m.find(s);
+		n = &m->map.m[s];
+		auto i = m->map.m.find(s);
 		mp[&s] = &i->first;
-		n = &i->second;
-		m = new_m;
+		m = &n->tree;
 	}
 	assert(n);
 	add_term(term, ex.term, mp, &ex);

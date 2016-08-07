@@ -5,11 +5,19 @@
 #include "timer.hpp"
 #include "expr.hpp"
 
-#define VERSION "0.2"
-
 namespace mdl {
 
-inline bool undef(uint x) { return x == (uint)-1; }
+template<class T> struct Undef;
+template<> struct Undef<uint> {
+	static uint get()        { return UNDEF_LIT; }
+	static bool is(uint x)   { return x == UNDEF_LIT; }
+	static void set(uint& x) { x = UNDEF_LIT; }
+};
+template<class T> struct Undef<T*> {
+	static T*   get()      { return nullptr; }
+	static bool is(T* x)   { return x == nullptr; }
+	static void set(T*& x) { x = nullptr;  }
+};
 
 template<class I>
 struct BiIter {
@@ -25,7 +33,8 @@ struct BiIter {
 	bool operator != (const BiIter& i) const {
 		return !operator == (i);
 	}
-	BiIter inc() { ++ it; return *this; }
+	BiIter next() const { BiIter i(it, last); ++ i.it; return i; }
+	void inc() { ++it; }
 };
 
 template<
