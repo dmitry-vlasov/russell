@@ -25,13 +25,8 @@ struct BiIter {
 	bool operator != (const BiIter& i) const {
 		return !operator == (i);
 	}
+	BiIter inc() { ++ it; return *this; }
 };
-
-template<class I>
-BiIter<I> operator + (BiIter<I> i, uint n) {
-	i.it += n;
-	return i;
-}
 
 template<
 	class Key,
