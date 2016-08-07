@@ -39,19 +39,19 @@ inline Action act (auto& n, auto& m, SymbIter ch, Term& t, uint ind) {
 }
 
 SymbIter parse_LL(Term& t, SymbIter x, Type* type, uint ind, bool initial = false) {
-	if (!initial && type->rules.root) {
+	if (!initial && type->prules.root) {
 		t.kind = term::Expr::NODE;
 		stack<TreeNode*> n;
 		stack<SymbIter> m;
 		stack<TreeNode*> childnodes;
-		n.push(type->rules.root);
+		n.push(type->prules.root);
 		m.push(x);
 		while (!n.empty() && !m.empty()) {
 			if (Type* tp = n.top()->symb.type) {
 				t.children.push_back(Term());
 				childnodes.push(n.top());
 				Term& child = t.children.back();
-				SymbIter ch = parse_LL(child, m.top(), tp, ind, n.top() == type->rules.root);
+				SymbIter ch = parse_LL(child, m.top(), tp, ind, n.top() == type->prules.root);
 				if (ch != SymbIter()) {
 					switch (act(n, m, ch, t, ind)) {
 					case Action::RET  : return ch;
@@ -120,7 +120,7 @@ inline Action act_1 (auto& n, auto& m, SymbIter ch, Term& t, uint ind) {
 
 
 SymbIter parse_LL_1(Term& t, SymbIter x, Type* type, uint ind, bool initial = false) {
-	if (!initial && type->rules.root) {
+	if (!initial && type->prules.root) {
 		t.kind = term::Expr::NODE;
 
 
