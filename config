@@ -2,3 +2,5 @@
 
 binpath='../../russell/bin/'
 mathpath='../../math'
+#distrib=debug
+distrib=release
