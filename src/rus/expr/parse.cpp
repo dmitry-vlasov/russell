@@ -199,19 +199,19 @@ inline Action act_1 (auto& n, auto& m, SymbIter ch, Term& t, uint ind) {
 }
 
 SymbIter parse_LL_1(Term& t, SymbIter x, Type* type, uint ind, bool initial = false) {
-	if (!initial && type->rules.root.map.m.size()) {
+	if (!initial && type->trules.root.map.m.size()) {
 		t.kind = term::Expr::NODE;
 		stack<MapIter>  n;
 		stack<SymbIter> m;
 		stack<MapIter> childnodes;
-		n.push(MapIter(type->rules.root.map.m.begin(), -- type->rules.root.map.m.end()));
+		n.push(MapIter(type->trules.root.map.m.begin(), -- type->trules.root.map.m.end()));
 		m.push(x);
 		while (!n.empty() && !m.empty()) {
 			if (Type* tp = n.top().it->first.type) {
 				t.children.push_back(Term());
 				childnodes.push(n.top());
 				Term& child = t.children.back();
-				SymbIter ch = parse_LL_1(child, m.top(), tp, ind, n.top().it == type->rules.root.map.m.begin());
+				SymbIter ch = parse_LL_1(child, m.top(), tp, ind, n.top().it == type->trules.root.map.m.begin());
 				if (ch != SymbIter()) {
 					switch (act_1(n, m, ch, t, ind)) {
 					case Action::RET  : return ch;
@@ -257,19 +257,19 @@ SymbIter parse_LL_1(Term& t, SymbIter x, Type* type, uint ind, bool initial = fa
 
 
 SymbIter parse_LL_2(Term& t, SymbIter x, Type* type, uint ind, bool initial = false) {
-	if (!initial && type->rules.root.map.m.size()) {
+	if (!initial && type->trules.root.map.m.size()) {
 		t.kind = term::Expr::NODE;
 		stack<MapIter>  n;
 		stack<SymbIter> m;
 		stack<MapIter> childnodes;
-		n.push(MapIter(type->rules.root.map.m.begin(), -- type->rules.root.map.m.end()));
+		n.push(MapIter(type->trules.root.map.m.begin(), -- type->trules.root.map.m.end()));
 		m.push(x);
 		while (!n.empty() && !m.empty()) {
 			if (Type* tp = n.top().it->first.type) {
 				t.children.push_back(Term());
 				childnodes.push(n.top());
 				Term& child = t.children.back();
-				SymbIter ch = parse_LL_2(child, m.top(), tp, ind, n.top().it == type->rules.root.map.m.begin());
+				SymbIter ch = parse_LL_2(child, m.top(), tp, ind, n.top().it == type->trules.root.map.m.begin());
 				if (ch != SymbIter()) {
 					if (Rule* r = n.top().it->second.data) {
 						if (r->ind <= ind) {
