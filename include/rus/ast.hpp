@@ -38,7 +38,7 @@ struct Type {
 	PTree<Rule*>      prules;
 	map<Type*, Rule*> supers;
 	Tree<Rule*>       trules;
-//	RuleTree          rules;
+	RuleTree          rules;
 };
 
 struct Rule {
