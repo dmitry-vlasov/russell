@@ -71,3 +71,23 @@ exe mdl :
   src/rus/translate.cpp
   src/rus/main.cpp
   ;
+
+exe metamath : 
+  src/metamath/metamath.c
+  src/metamath/mmcmdl.c
+  src/metamath/mmcmds.c
+  src/metamath/mmdata.c
+  src/metamath/mmhlpa.c
+  src/metamath/mmhlpb.c
+  src/metamath/mminou.c
+  src/metamath/mmmaci.c
+  src/metamath/mmpars.c
+  src/metamath/mmpfas.c
+  src/metamath/mmunif.c
+  src/metamath/mmutil.c
+  src/metamath/mmveri.c
+  src/metamath/mmvstr.c
+  src/metamath/mmword.c
+  src/metamath/mmwtex.c
+  ;  
+  
