@@ -35,7 +35,8 @@ Scripts 'translate' and 'translate_deep', runs some chains of translations and v
 repository. 
  2. Then write the correct paths to the binary dir and to the mathematics source dir in
 the `config` file. 
- 3. Finally, to run test do: `translate uset-100000` (without extension!).
+ 3. Finally, to run test do: `translate uset-100000` or `translate_deep uset-100000`
+ (attention: the metamath file `uset-100000.mm` has extension, but to translation script it is passed without extension!).
  4. To add valgrind memcheck add the `memcheck` option to the command (as the last parameter).
 
  
