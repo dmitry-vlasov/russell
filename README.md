@@ -25,8 +25,8 @@ Building
 --------
 To build russell environment the boost jam builder is required.
 Run:
- 1) to build optimized version:  `bjam release -j 4 toolset=gcc`
- 2) to build the debug version:  `bjam debug -j 4 toolset=gcc`
+ 1. to build optimized version:  `bjam release -j 4 toolset=gcc`
+ 2. to build the debug version:  `bjam debug -j 4 toolset=gcc`
 
 Translation tests
 -----------------
