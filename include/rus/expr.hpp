@@ -165,9 +165,9 @@ struct Tree {
 
 struct RuleTree {
 	struct Node;
+	typedef Map<Symbol, Node> TreeMap;
 	Rule*& add(const Expr& ex);
-	Map<Symbol, Node> symb;
-	Map<Type*, Node>  type;
+	TreeMap map;
 };
 
 struct RuleTree::Node {

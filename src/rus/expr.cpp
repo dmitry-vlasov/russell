@@ -147,13 +147,8 @@ Rule*& RuleTree::add(const Expr& ex) {
 	RuleTree* m = this;
 	Node* n = nullptr;
 	for (const Symbol& s : ex.symbols) {
-		if (s.var) {
-			n = &m->type[s.type];
-			m = &n->tree;
-		} else {
-			n = &m->symb[s];
-			m = &n->tree;
-		}
+		n = &m->map[s];
+		m = &n->tree;
 	}
 	return n->rule;
 }

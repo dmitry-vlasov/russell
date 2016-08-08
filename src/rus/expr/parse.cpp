@@ -335,9 +335,101 @@ SymbIter parse_LL_2(Term& t, SymbIter x, Type* type, uint ind, bool initial = fa
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+inline Action act_3(auto& n, auto& m, SymbIter ch, Term& t, uint ind) {
+	if (Rule* r = n.top().it->second.rule) {
+		if (r->ind <= ind) {
+			t.val.rule = r;
+			return Action::RET;
+		} else
+			return Action::BREAK;
+	} else if (ch.is_last())
+		return Action::BREAK;
+	else {
+		typedef BiIter<RuleTree::TreeMap::Map_::const_iterator> MapIter;
+		const RuleTree::TreeMap& tree_map = n.top().it->second.tree.map;
+		MapIter next = MapIter(tree_map.m.begin(), -- tree_map.m.end());
+		n.push(next);
+		m.push(ch.next());
+	}
+	return Action::CONT;
+}
+
+SymbIter parse_LL_3(Term& t, SymbIter x, Type* type, uint ind, bool initial = false) {
+	if (!initial && type->rules.map.m.size()) {
+		t.kind = term::Expr::NODE;
+		typedef BiIter<RuleTree::TreeMap::Map_::const_iterator> MapIter;
+
+		stack<MapIter>  n;
+		stack<SymbIter> m;
+		stack<MapIter> childnodes;
+		n.push(MapIter(type->rules.map.m.begin(), -- type->rules.map.m.end()));
+		m.push(x);
+		while (!n.empty() && !m.empty()) {
+			if (Type* tp = n.top().it->first.type) {
+				t.children.push_back(Term());
+				childnodes.push(n.top());
+				Term& child = t.children.back();
+				SymbIter ch = parse_LL_3(child, m.top(), tp, ind, n.top().it == type->rules.map.m.begin());
+				if (ch != SymbIter()) {
+					switch (act_3(n, m, ch, t, ind)) {
+					case Action::RET  : return ch;
+					case Action::BREAK: goto out;
+					case Action::CONT : continue;
+					}
+				} else {
+					t.children.pop_back();
+					childnodes.pop();
+				}
+			} else if (n.top().it->first == *m.top().it) {
+				switch (act_3(n, m, m.top(), t, ind)) {
+				case Action::RET  : return m.top();
+				case Action::BREAK: goto out;
+				case Action::CONT : continue;
+				}
+			}
+			while (n.top().is_last()) {
+				n.pop();
+				m.pop();
+				if (!childnodes.empty() && childnodes.top() == n.top()) {
+					t.children.pop_back();
+					childnodes.pop();
+				}
+				if (n.empty() || m.empty()) goto out;
+			}
+			n.top().inc();
+		}
+		out: ;
+	}
+	if (x.it->type) {
+		if (x.it->type == type) {
+			t = Term(*x.it);
+			return x;
+		} else if (Rule* super = find_super(x.it->type, type)) {
+			t = Term(super);
+			t.children.push_back(Term(*x.it));
+			return x;
+		}
+	}
+	return SymbIter();
+}
+
+
 void parse_LL(Expr* ex, uint ind) {
 	SymbIter begin(ex->symbols.begin(), --ex->symbols.end());
-	if (parse_LL_2(ex->term, begin, ex->type, ind) == SymbIter()) {
+	if (parse_LL_3(ex->term, begin, ex->type, ind) == SymbIter()) {
 		throw Error("parsing error", string("expression: ") + show(*ex));
 	}
 }
