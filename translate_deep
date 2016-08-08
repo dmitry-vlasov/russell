@@ -1,9 +1,8 @@
 #!/bin/bash
 
+source ./config
 
-cd ../../math
-
-binpath='../../russell/bin/'
+cd $mathpath
 
 if [ -z $1 ]; then
     echo "usage: "

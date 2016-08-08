@@ -1,0 +1,4 @@
+#!/bin/bash
+
+binpath='../../russell/bin/'
+mathpath='../../math'
