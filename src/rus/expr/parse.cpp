@@ -95,8 +95,6 @@ SymbIter parse_LL(Term& t, SymbIter x, Type* type, uint ind, bool initial = fals
 	return SymbIter();
 }
 
-
-
 SymbIter parse_LL_0(Term& t, SymbIter x, Type* type, uint ind, bool initial = false) {
 	if (!initial && type->prules.root) {
 		t.kind = term::Expr::NODE;
@@ -258,20 +256,6 @@ SymbIter parse_LL_1(Term& t, SymbIter x, Type* type, uint ind, bool initial = fa
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 SymbIter parse_LL_2(Term& t, SymbIter x, Type* type, uint ind, bool initial = false) {
 	if (!initial && type->rules.root.map.m.size()) {
 		t.kind = term::Expr::NODE;
@@ -353,7 +337,7 @@ SymbIter parse_LL_2(Term& t, SymbIter x, Type* type, uint ind, bool initial = fa
 
 void parse_LL(Expr* ex, uint ind) {
 	SymbIter begin(ex->symbols.begin(), --ex->symbols.end());
-	if (parse_LL(ex->term, begin, ex->type, ind) == SymbIter()) {
+	if (parse_LL_2(ex->term, begin, ex->type, ind) == SymbIter()) {
 		throw Error("parsing error", string("expression: ") + show(*ex));
 	}
 }

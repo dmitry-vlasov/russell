@@ -142,6 +142,22 @@ bool sub::Expr::join(Expr* s) {
 	return true;
 }
 
+Rule*& RuleTree::add(const Expr& ex) {
+	assert(ex.symbols.size());
+	RuleTree* m = this;
+	Node* n = nullptr;
+	for (const Symbol& s : ex.symbols) {
+		if (s.var) {
+			n = &m->type[s.type];
+			m = &n->tree;
+		} else {
+			n = &m->symb[s];
+			m = &n->tree;
+		}
+	}
+	return n->rule;
+}
+
 void dump(const Symbol& s) { cout << show(s) << endl; }
 void dump(const Expr& ex) { cout << show(ex) << endl; }
 void dump_ast(const Expr& ex) { cout << show_ast(ex) << endl; }

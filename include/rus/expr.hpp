@@ -163,6 +163,20 @@ struct Tree {
 	Term term;
 };
 
+struct RuleTree {
+	struct Node;
+	Rule*& add(const Expr& ex);
+	Map<Symbol, Node> symb;
+	Map<Type*, Node>  type;
+};
+
+struct RuleTree::Node {
+Node() : tree(), level(), rule(nullptr) { }
+	RuleTree tree;
+	uint     level;
+	Rule*    rule;
+};
+
 
 struct Expr {
 	typedef term::Expr Term;
