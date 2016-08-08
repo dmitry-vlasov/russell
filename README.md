@@ -19,7 +19,8 @@ The package contains folowing programs:
 
 Dependencies
 ------------
-mdl uses some boost libraries: spirit, string algos, filesystem.
+mdl uses some boost libraries: spirit, string algos, filesystem. To be sure all of these
+are avaliable, install libboost-all-dev (linux).
 
 Building
 --------
@@ -27,6 +28,10 @@ To build russell environment the boost jam builder is required.
 Run:
  1. to build optimized version:  `bjam release -j 4 toolset=gcc`
  2. to build the debug version:  `bjam debug -j 4 toolset=gcc`
+ 
+CAUTION: compilation demandas A LOT of memory, on a system with less
+then 8 gb of RAM it most likely will not be built. 
+
 
 Translation tests
 -----------------
