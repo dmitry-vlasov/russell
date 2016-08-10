@@ -30,7 +30,8 @@ struct Symbol {
 	bool operator < (const Symbol& s) const {
 		return lit < s.lit;
 	}
-	bool undef() const { return lit == UNDEF_LIT; }
+	bool is_undef() const { return lit == UNDEF_LIT; }
+	static bool is_undef(uint lit) { return lit == UNDEF_LIT; }
 	uint lit:31;
 	bool var:1;
 };

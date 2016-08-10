@@ -9,9 +9,9 @@ string show(const Comment& c) {
 string show(const Const& c) {
 	string s = "constant {\n";
 	s += "\tsymbol " + show(c.symb) + " " + END_MARKER + "\n";
-	if (!c.ascii.undef())
+	if (!c.ascii.is_undef())
 		s += "\tascii " + show(c.ascii) + " " + END_MARKER + "\n";
-	if (!c.latex.undef())
+	if (!c.latex.is_undef())
 		s += "\tlatex " + show(c.latex) + " " + END_MARKER + "\n";
 	s += "}";
 	return s;
