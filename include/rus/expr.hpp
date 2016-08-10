@@ -171,7 +171,9 @@ struct RuleTree {
 };
 
 struct RuleTree::Node {
-Node() : tree(), level(), rule(nullptr) { }
+Node() : final(false), leaf(false), tree(), level(), rule(nullptr) { }
+	bool     final;
+	bool     leaf;
 	RuleTree tree;
 	uint     level;
 	Rule*    rule;

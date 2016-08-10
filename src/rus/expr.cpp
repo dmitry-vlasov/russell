@@ -147,7 +147,11 @@ Rule*& RuleTree::add(const Expr& ex) {
 	RuleTree* m = this;
 	Node* n = nullptr;
 	for (const Symbol& s : ex.symbols) {
+		TreeMap::Map_& mm = m->map.m;
+		if (mm.size()) (--mm.end())->second.final = false;
 		n = &m->map[s];
+		if (s.end) mm.find(s)->second.leaf = true;
+		(--mm.end())->second.final = true;
 		m = &n->tree;
 	}
 	return n->rule;

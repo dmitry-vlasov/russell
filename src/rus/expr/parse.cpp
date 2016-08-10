@@ -428,7 +428,9 @@ SymbIter parse_LL_3(Term& t, SymbIter x, Type* type, uint ind, bool initial = fa
 
 
 void parse_LL(Expr* ex, uint ind) {
-	SymbIter begin(ex->symbols.begin(), --ex->symbols.end());
+	auto last = --ex->symbols.end();
+	last->end = true;
+	SymbIter begin(ex->symbols.begin(), last);
 	if (parse_LL_3(ex->term, begin, ex->type, ind) == SymbIter()) {
 		throw Error("parsing error", string("expression: ") + show(*ex));
 	}
