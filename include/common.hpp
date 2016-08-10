@@ -9,9 +9,9 @@ namespace mdl {
 
 template<class T> struct Undef;
 template<> struct Undef<uint> {
-	static uint get()        { return UNDEF_LIT; }
-	static bool is(uint x)   { return x == UNDEF_LIT; }
-	static void set(uint& x) { x = UNDEF_LIT; }
+	static uint get()        { return UNDEF_UINT; }
+	static bool is(uint x)   { return x == UNDEF_UINT; }
+	static void set(uint& x) { x = UNDEF_UINT; }
 };
 template<class T> struct Undef<T*> {
 	static T*   get()      { return nullptr; }

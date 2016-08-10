@@ -13,6 +13,7 @@
 #pragma once
 
 #include "std.hpp"
+#define UNDEF_LIT 0x7FFFFFFF
 
 namespace mdl {
 
