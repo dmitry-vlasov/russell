@@ -13,13 +13,13 @@
 #pragma once
 
 #include "std.hpp"
-#define UNDEF_LIT 0x7FFFFFFF
+#define UNDEF_LIT 0x0FFFFFFF
 
 namespace mdl {
 
 struct Symbol {
-	Symbol(): lit(UNDEF_LIT), var(false) { }
-	Symbol(uint l, bool v = false) : lit (l), var (v) { }
+	Symbol(): lit(UNDEF_LIT), var(false), end(false), rep(false), fin(false) { }
+	Symbol(uint l, bool v = false) : lit (l), var (v), end(false), rep(false), fin(false) { }
 
 	bool operator == (const Symbol& s) const {
 		return lit == s.lit && var == s.var;
@@ -32,8 +32,13 @@ struct Symbol {
 	}
 	bool is_undef() const { return lit == UNDEF_LIT; }
 	static bool is_undef(uint lit) { return lit == UNDEF_LIT; }
-	uint lit:31;
-	bool var:1;
+	uint lit:28;
+
+	// Flags
+	bool var:1; //< is variable
+	bool end:1; //< is end of an expression
+	bool rep:1; //< is replaceable var
+	bool fin:1; //< final node in a tree (in a horizontal iteration)
 };
 
 struct Expr {
