@@ -142,9 +142,9 @@ bool sub::Expr::join(Expr* s) {
 	return true;
 }
 
-Rule*& RuleTree::add(const Expr& ex) {
+Rule*& MRuleTree::add(const Expr& ex) {
 	assert(ex.symbols.size());
-	RuleTree* m = this;
+	MRuleTree* m = this;
 	Node* n = nullptr;
 	for (const Symbol& s : ex.symbols) {
 		TreeMap::Map_& mm = m->map.m;

@@ -172,18 +172,18 @@ struct Tree {
 	Term term;
 };
 
-struct RuleTree {
+struct MRuleTree {
 	struct Node;
 	typedef Map<Symbol, Node> TreeMap;
 	Rule*& add(const Expr& ex);
 	TreeMap map;
 };
 
-struct RuleTree::Node {
+struct MRuleTree::Node {
 Node() : final(false), leaf(false), tree(), level(), rule(nullptr) { }
 	bool     final;
 	bool     leaf;
-	RuleTree tree;
+	MRuleTree tree;
 	uint     level;
 	Rule*    rule;
 };

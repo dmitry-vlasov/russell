@@ -358,8 +358,8 @@ inline Action act_3(auto& n, auto& m, SymbIter ch, Term& t, uint ind) {
 	} else if (ch.is_last())
 		return Action::BREAK;
 	else {
-		typedef BiIter<RuleTree::TreeMap::Map_::const_iterator> MapIter;
-		const RuleTree::TreeMap& tree_map = n.top().it->second.tree.map;
+		typedef BiIter<MRuleTree::TreeMap::Map_::const_iterator> MapIter;
+		const MRuleTree::TreeMap& tree_map = n.top().it->second.tree.map;
 		MapIter next = MapIter(tree_map.m.begin(), -- tree_map.m.end());
 		n.push(next);
 		m.push(ch.next());
@@ -370,7 +370,7 @@ inline Action act_3(auto& n, auto& m, SymbIter ch, Term& t, uint ind) {
 SymbIter parse_LL_3(Term& t, SymbIter x, Type* type, uint ind, bool initial = false) {
 	if (!initial && type->rules.map.m.size()) {
 		t.kind = term::Expr::NODE;
-		typedef BiIter<RuleTree::TreeMap::Map_::const_iterator> MapIter;
+		typedef BiIter<MRuleTree::TreeMap::Map_::const_iterator> MapIter;
 
 		stack<MapIter>  n;
 		stack<SymbIter> m;
@@ -447,9 +447,9 @@ inline Action act_4(auto& n, auto& m, Symbols::iterator ch, Term& t, uint ind) {
 	} else if (ch->end)
 		return Action::BREAK;
 	else {
-		typedef RuleTree::TreeMap::Map_::const_iterator MapIter;
-		const RuleTree::Node& nn = n.top()->second;
-		const RuleTree::TreeMap& tree_map = nn.tree.map;
+		typedef MRuleTree::TreeMap::Map_::const_iterator MapIter;
+		const MRuleTree::Node& nn = n.top()->second;
+		const MRuleTree::TreeMap& tree_map = nn.tree.map;
 		MapIter next = tree_map.m.begin();
 		n.push(next);
 		m.push(++ch);
@@ -460,7 +460,7 @@ inline Action act_4(auto& n, auto& m, Symbols::iterator ch, Term& t, uint ind) {
 Symbols::iterator parse_LL_4(Term& t, Symbols::iterator x, Type* type, uint ind, bool initial = false) {
 	if (!initial && type->rules.map.m.size()) {
 		t.kind = term::Expr::NODE;
-		typedef RuleTree::TreeMap::Map_::const_iterator MapIter;
+		typedef MRuleTree::TreeMap::Map_::const_iterator MapIter;
 
 		stack<MapIter> n;
 		stack<Symbols::iterator> m;
