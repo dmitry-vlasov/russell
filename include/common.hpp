@@ -55,6 +55,26 @@ struct Map {
 	T operator[] (Key k) const;
 };
 
+
+template<
+	class Key,
+	class T,
+	class Hash = std::hash<Key>,
+	class Pred = std::equal_to<Key>,
+	class Alloc = std::allocator<pair<const Key,T>>
+>
+struct HashMap {
+	typedef std::unordered_map<Key, T, Hash, Pred, Alloc> Map_;
+	Map_ m;
+	bool has(Key k) const {
+		return m.find(k) != m.end();
+	}
+	T& operator[] (Key k) {
+		return m[k];
+	}
+	T operator[] (Key k) const;
+};
+
 template<
 	class T,
 	class Compare = std::less<T>,
@@ -67,6 +87,24 @@ struct Set {
 		return s.find(val) != s.end();
 	}
 };
+/*
+template<
+	class Key,
+	class T,
+	class Alloc = std::allocator<pair<const Key,T>>
+>
+struct VectorMap {
+	typedef map<Key, T, Compare, Alloc> Map_;
+	Map_ m;
+	bool has(Key k) const {
+		return m.find(k) != m.end();
+	}
+	T& operator[] (Key k) {
+		return m[k];
+	}
+	T operator[] (Key k) const;
+};
+*/
 
 struct Table {
 	typedef map<string, uint> Table_;

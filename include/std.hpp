@@ -31,6 +31,7 @@
 #include <queue>
 #include <thread>
 #include <mutex>
+#include <unordered_map>
 
 #include <cstdlib>
 #include <cstring>
