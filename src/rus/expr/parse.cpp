@@ -427,7 +427,98 @@ SymbIter parse_LL_3(Term& t, SymbIter x, Type* type, uint ind, bool initial = fa
 }
 
 
-void parse_LL(Expr* ex, uint ind) {
+
+
+
+
+
+
+
+
+
+
+inline Action act_4(auto& n, auto& m, Symbols::iterator ch, Term& t, uint ind) {
+	if (Rule* r = n.top()->second.rule) {
+		if (r->ind <= ind) {
+			t.val.rule = r;
+			return Action::RET;
+		} else
+			return Action::BREAK;
+	} else if (ch->end)
+		return Action::BREAK;
+	else {
+		typedef RuleTree::TreeMap::Map_::const_iterator MapIter;
+		const RuleTree::Node& nn = n.top()->second;
+		const RuleTree::TreeMap& tree_map = nn.tree.map;
+		MapIter next = tree_map.m.begin();
+		n.push(next);
+		m.push(++ch);
+	}
+	return Action::CONT;
+}
+
+Symbols::iterator parse_LL_4(Term& t, Symbols::iterator x, Type* type, uint ind, bool initial = false) {
+	if (!initial && type->rules.map.m.size()) {
+		t.kind = term::Expr::NODE;
+		typedef RuleTree::TreeMap::Map_::const_iterator MapIter;
+
+		stack<MapIter> n;
+		stack<Symbols::iterator> m;
+		stack<MapIter> childnodes;
+		n.push(type->rules.map.m.begin());
+		m.push(x);
+		while (!n.empty() && !m.empty()) {
+			if (Type* tp = n.top()->first.type) {
+				t.children.push_back(Term());
+				childnodes.push(n.top());
+				Term& child = t.children.back();
+				auto ch = parse_LL_4(child, m.top(), tp, ind, n.top() == type->rules.map.m.begin());
+				if (ch != Symbols::iterator()) {
+					switch (act_4(n, m, ch, t, ind)) {
+					case Action::RET  : return ch;
+					case Action::BREAK: goto out;
+					case Action::CONT : continue;
+					}
+				} else {
+					t.children.pop_back();
+					childnodes.pop();
+				}
+			} else if (n.top()->first == *m.top()) {
+				switch (act_4(n, m, m.top(), t, ind)) {
+				case Action::RET  : return m.top();
+				case Action::BREAK: goto out;
+				case Action::CONT : continue;
+				}
+			}
+			while (n.top()->second.final) {
+				n.pop();
+				m.pop();
+				if (!childnodes.empty() && childnodes.top() == n.top()) {
+					t.children.pop_back();
+					childnodes.pop();
+				}
+				if (n.empty() || m.empty()) goto out;
+			}
+			++n.top();
+		}
+		out: ;
+	}
+	if (x->type) {
+		if (x->type == type) {
+			t = Term(*x);
+			return x;
+		} else if (Rule* super = find_super(x->type, type)) {
+			t = Term(super);
+			t.children.push_back(Term(*x));
+			return x;
+		}
+	}
+	return Symbols::iterator();
+}
+
+
+
+void parse_LL_A(Expr* ex, uint ind) {
 	auto last = --ex->symbols.end();
 	last->end = true;
 	SymbIter begin(ex->symbols.begin(), last);
@@ -436,6 +527,14 @@ void parse_LL(Expr* ex, uint ind) {
 	}
 }
 
+void parse_LL_B(Expr* ex, uint ind) {
+	(--ex->symbols.end())->end = true;
+	if (parse_LL_4(ex->term, ex->symbols.end(), ex->type, ind) == Symbols::iterator()) {
+		throw Error("parsing error", string("expression: ") + show(*ex));
+	}
+}
+
+
 
 const uint THREADS = thread::hardware_concurrency() ? thread::hardware_concurrency() : 1;
 vector<std::exception_ptr> exceptions;
@@ -443,7 +542,7 @@ mutex exc_mutex;
 
 void parse_LL_sequent() {
 	for (auto p : queue) {
-		parse_LL(p.first, p.second);
+		parse_LL_A(p.first, p.second);
 	}
 }
 
@@ -455,7 +554,7 @@ void parse_LL_concurrent(uint s) {
 		if (exceptions.size())
 			break;
 		try {
-			parse_LL(p.first, p.second);
+			parse_LL_B(p.first, p.second);
 		} catch (...) {
 			exc_mutex.lock();
 			exceptions.push_back(std::current_exception());
