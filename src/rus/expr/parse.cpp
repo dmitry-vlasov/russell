@@ -522,7 +522,7 @@ void parse_LL_A(Expr* ex, uint ind) {
 	auto last = --ex->symbols.end();
 	last->end = true;
 	SymbIter begin(ex->symbols.begin(), last);
-	if (parse_LL_3(ex->term, begin, ex->type, ind) == SymbIter()) {
+	if (parse_LL_0(ex->term, begin, ex->type, ind) == SymbIter()) {
 		throw Error("parsing error", string("expression: ") + show(*ex));
 	}
 }
@@ -542,7 +542,7 @@ mutex exc_mutex;
 
 void parse_LL_sequent() {
 	for (auto p : queue) {
-		parse_LL_A(p.first, p.second);
+		parse_LL_B(p.first, p.second);
 	}
 }
 
