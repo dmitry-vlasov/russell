@@ -163,6 +163,7 @@ struct AddToMath {
 		//cout << "ru: " << show_id(r->id) << endl;
 		r->type->prules.add(r->term) = r;
 		r->type->trules.add(r->term) = r;
+		r->type->mrules.add(r->term) = r;
 		r->type->rules.add(r->term) = r;
 		Rus::mod().math.rules[r->id] = r;
 	}

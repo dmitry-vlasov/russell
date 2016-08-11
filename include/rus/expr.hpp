@@ -192,6 +192,26 @@ Node() : final(false), leaf(false), tree(), level(), rule(nullptr) { }
 
 
 
+struct RuleTree {
+	struct Node;
+	typedef pair<Symbol, Node> Pair;
+	typedef vector<Pair> Map;
+	Rule*& add(const Expr& ex);
+	vector<Pair> map;
+};
+
+struct RuleTree::Node {
+Node() : final(false), leaf(false), tree(), level(), rule(nullptr) { }
+	bool     final;
+	bool     leaf;
+	RuleTree tree;
+	uint     level;
+	Rule*    rule;
+};
+
+
+
+
 struct Expr {
 	typedef term::Expr Term;
 

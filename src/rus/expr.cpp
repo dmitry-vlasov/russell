@@ -157,6 +157,42 @@ Rule*& MRuleTree::add(const Expr& ex) {
 	return n->rule;
 }
 
+
+
+
+Rule*& RuleTree::add(const Expr& ex) {
+	assert(ex.symbols.size());
+	RuleTree* m = this;
+	Node* n = nullptr;
+	for (const Symbol& s : ex.symbols) {
+		bool new_symb = true;
+		for (Pair& p : m->map) {
+			if (p.first == s) {
+				n = &p.second;
+				m = &n->tree;
+				if (s.end) n->leaf = true;
+				new_symb = false;
+				break;
+			}
+		}
+		if (new_symb) {
+			if (m->map.size()) (--m->map.end())->second.final = false;
+			m->map.push_back(Pair(s, Node()));
+			n = &(-- m->map.end())->second;
+			n->final = true;
+		}
+		/*TreeMap::Map_& mm = m->map.m;
+		if (mm.size()) (--mm.end())->second.final = false;
+		n = &m->map[s];
+		if (s.end) mm.find(s)->second.leaf = true;
+		(--mm.end())->second.final = true;
+		m = &n->tree;*/
+	}
+	return n->rule;
+}
+
+
+
 void dump(const Symbol& s) { cout << show(s) << endl; }
 void dump(const Expr& ex) { cout << show(ex) << endl; }
 void dump_ast(const Expr& ex) { cout << show_ast(ex) << endl; }
