@@ -529,7 +529,7 @@ void parse_LL_A(Expr* ex, uint ind) {
 
 void parse_LL_B(Expr* ex, uint ind) {
 	(--ex->symbols.end())->end = true;
-	if (parse_LL_4(ex->term, ex->symbols.end(), ex->type, ind) == Symbols::iterator()) {
+	if (parse_LL_4(ex->term, ex->symbols.begin(), ex->type, ind) == Symbols::iterator()) {
 		throw Error("parsing error", string("expression: ") + show(*ex));
 	}
 }
