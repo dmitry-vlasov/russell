@@ -165,6 +165,7 @@ struct AddToMath {
 		r->type->trules.add(r->term) = r;
 		r->type->mrules.add(r->term) = r;
 		r->type->rules.add(r->term) = r;
+		//cout << show(r->type->rules) << endl;
 		Rus::mod().math.rules[r->id] = r;
 	}
 	void operator()(Axiom* a) const {

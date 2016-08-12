@@ -622,16 +622,16 @@ void parse_LL_A(Expr* ex, uint ind) {
 
 void parse_LL_B(Expr* ex, uint ind) {
 	(--ex->symbols.end())->end = true;
-	cout << "parsing: " << ind << " -- " << show(*ex) << flush;
+	//cout << "parsing: " << ind << " -- " << show(*ex) << flush;
 	if (parse_LL_5(ex->term, ex->symbols.begin(), ex->type, ind) == Symbols::iterator()) {
 		throw Error("parsing error", string("expression: ") + show(*ex));
 	}
-	cout << "done" << endl;
+	//cout << "done" << endl;
 }
 
 
 
-const uint THREADS = 1; //thread::hardware_concurrency() ? thread::hardware_concurrency() : 1;
+const uint THREADS = thread::hardware_concurrency() ? thread::hardware_concurrency() : 1;
 vector<std::exception_ptr> exceptions;
 mutex exc_mutex;
 

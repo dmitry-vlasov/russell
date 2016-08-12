@@ -209,7 +209,7 @@ Node() : final(false), leaf(false), tree(), level(), rule(nullptr) { }
 	Rule*    rule;
 };
 
-
+string show(const RuleTree& tr);
 
 
 struct Expr {

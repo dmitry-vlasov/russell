@@ -160,6 +160,38 @@ Rule*& MRuleTree::add(const Expr& ex) {
 
 
 
+
+
+
+
+
+
+
+vector<string> show_lines(const RuleTree& tr) {
+	vector<string> vect;
+	for (const RuleTree::Pair& p : tr.map) {
+		vector<string> v = show_lines(p.second.tree);
+		if (p.second.tree.map.size()) {
+			for (string& s : v)
+				vect.push_back(show(p.first) + ' ' + s);
+		} else {
+			vect.push_back(show(p.first) + " --> " +
+				(p.second.rule ? show(*p.second.rule) : "null")
+			);
+		}
+	}
+	return vect;
+}
+
+string show(const RuleTree& tr) {
+	string str;
+	for (string& s : show_lines(tr)) {
+		str += s + "\n";
+	}
+	return str;
+}
+
+
 Rule*& RuleTree::add(const Expr& ex) {
 	assert(ex.symbols.size());
 	RuleTree* m = this;
@@ -176,17 +208,12 @@ Rule*& RuleTree::add(const Expr& ex) {
 			}
 		}
 		if (new_symb) {
-			if (m->map.size()) (--m->map.end())->second.final = false;
+			if (m->map.size()) m->map.back().second.final = false;
 			m->map.push_back(Pair(s, Node()));
-			n = &(-- m->map.end())->second;
+			n = &m->map.back().second;
 			n->final = true;
+			m = &n->tree;
 		}
-		/*TreeMap::Map_& mm = m->map.m;
-		if (mm.size()) (--mm.end())->second.final = false;
-		n = &m->map[s];
-		if (s.end) mm.find(s)->second.leaf = true;
-		(--mm.end())->second.final = true;
-		m = &n->tree;*/
 	}
 	return n->rule;
 }
