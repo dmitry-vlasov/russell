@@ -69,7 +69,7 @@ void transform(Proof* proof, Transform& trans, bool forward) {
 	Ref op = proof->refs.back();
 	assert(op.type == Ref::AXIOM || op.type == Ref::THEOREM);
 	Perm perm = trans[op.label()];
-	assert(perm.m.size() + 1 == proof->refs.size());
+	assert(perm.size() + 1 == proof->refs.size());
 	vector<Ref> new_refs = proof->refs;
 	for (uint i = 0; i < new_refs.size() - 1; ++ i)
 		if (forward) new_refs[perm[i]] = proof->refs[i];

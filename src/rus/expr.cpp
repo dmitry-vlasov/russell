@@ -103,14 +103,14 @@ bool Substitution::join(Substitution* s) {
 
 vector<string> show_lines(const RuleTree& tr) {
 	vector<string> vect;
-	for (const RuleTree::Pair& p : tr.map) {
-		vector<string> v = show_lines(p.second.tree);
-		if (p.second.tree.map.size()) {
+	for (const RuleTree::Node& p : tr.map) {
+		vector<string> v = show_lines(p.tree);
+		if (p.tree.map.size()) {
 			for (string& s : v)
-				vect.push_back(show(p.first) + ' ' + s);
+				vect.push_back(show(p.symb) + ' ' + s);
 		} else {
-			vect.push_back(show(p.first) + " --> " +
-				(p.second.rule ? show(*p.second.rule) : "null")
+			vect.push_back(show(p.symb) + " --> " +
+				(p.rule ? show(*p.rule) : "null")
 			);
 		}
 	}
@@ -132,20 +132,19 @@ Rule*& RuleTree::add(const Expr& ex) {
 	Node* n = nullptr;
 	for (const Symbol& s : ex.symbols) {
 		bool new_symb = true;
-		for (Pair& p : m->map) {
-			if (p.first == s) {
-				n = &p.second;
-				m = &n->tree;
-				if (s.end) n->leaf = true;
+		for (Node& p : m->map) {
+			if (p.symb == s) {
+				n = &p;
+				m = &p.tree;
 				new_symb = false;
 				break;
 			}
 		}
 		if (new_symb) {
-			if (m->map.size()) m->map.back().second.final = false;
-			m->map.push_back(Pair(s, Node()));
-			n = &m->map.back().second;
-			n->final = true;
+			if (m->map.size()) m->map.back().symb.fin = false;
+			m->map.push_back(Node(s));
+			n = &m->map.back();
+			n->symb.fin = true;
 			m = &n->tree;
 		}
 	}
@@ -154,9 +153,9 @@ Rule*& RuleTree::add(const Expr& ex) {
 
 size_t memvol(const RuleTree& rt) {
 	size_t vol = 0;
-	vol += rt.map.capacity() * sizeof (RuleTree::Pair);
+	vol += rt.map.capacity() * sizeof (RuleTree::Node);
 	for (auto& p : rt.map) {
-		vol += memvol(p.second.tree);
+		vol += memvol(p.tree);
 	}
 	return vol;
 }

@@ -16,7 +16,7 @@ inline Rule* find_super(Type* type, Type* super) {
 enum class Action { RET, BREAK, CONT };
 
 inline Action act(auto& n, auto& m, Symbols::iterator ch, Term& t, uint ind) {
-	if (Rule* r = n.top()->second.rule) {
+	if (Rule* r = n.top()->rule) {
 		if (r->ind <= ind) {
 			t.val.rule = r;
 			return Action::RET;
@@ -25,7 +25,7 @@ inline Action act(auto& n, auto& m, Symbols::iterator ch, Term& t, uint ind) {
 	} else if (ch->end)
 		return Action::BREAK;
 	else {
-		n.push(n.top()->second.tree.map.begin());
+		n.push(n.top()->tree.map.begin());
 		m.push(++ch);
 	}
 	return Action::CONT;
@@ -42,7 +42,7 @@ Symbols::iterator parse_LL(Term& t, Symbols::iterator x, Type* type, uint ind, b
 		n.push(type->rules.map.begin());
 		m.push(x);
 		while (!n.empty() && !m.empty()) {
-			if (Type* tp = n.top()->first.type) {
+			if (Type* tp = n.top()->symb.type) {
 				t.children.push_back(Term());
 				childnodes.push(n.top());
 				Term& child = t.children.back();
@@ -57,14 +57,14 @@ Symbols::iterator parse_LL(Term& t, Symbols::iterator x, Type* type, uint ind, b
 					t.children.pop_back();
 					childnodes.pop();
 				}
-			} else if (n.top()->first == *m.top()) {
+			} else if (n.top()->symb == *m.top()) {
 				switch (act(n, m, m.top(), t, ind)) {
 				case Action::RET  : return m.top();
 				case Action::BREAK: goto out;
 				case Action::CONT : continue;
 				}
 			}
-			while (n.top()->second.final) {
+			while (n.top()->symb.fin) {
 				n.pop();
 				m.pop();
 				if (!childnodes.empty() && childnodes.top() == n.top()) {

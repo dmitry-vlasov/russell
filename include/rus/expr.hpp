@@ -99,16 +99,14 @@ struct Substitution {
 
 struct RuleTree {
 	struct Node;
-	typedef pair<Symbol, Node> Pair;
-	typedef vector<Pair> Map;
+	typedef vector<Node> Map;
 	Rule*& add(const Expr& ex);
-	vector<Pair> map;
+	Map map;
 };
 
 struct RuleTree::Node {
-Node() : final(false), leaf(false), tree(), level(), rule(nullptr) { }
-	bool     final;
-	bool     leaf;
+	Node(Symbol s) : symb(s), tree(), level(), rule(nullptr) { }
+	Symbol   symb;
 	RuleTree tree;
 	uint     level;
 	Rule*    rule;
