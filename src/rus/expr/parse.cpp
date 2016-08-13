@@ -34,7 +34,7 @@ inline Action act(auto& n, auto& m, Symbols::iterator ch, Term& t, uint ind) {
 Symbols::iterator parse_LL(Term& t, Symbols::iterator x, Type* type, uint ind, bool initial = false) {
 	if (!initial && type->rules.map.size()) {
 		t.kind = term::Expr::NODE;
-		typedef RuleTree::Map::const_iterator MapIter;
+		typedef Rules::Map::const_iterator MapIter;
 
 		stack<MapIter> n;
 		stack<Symbols::iterator> m;

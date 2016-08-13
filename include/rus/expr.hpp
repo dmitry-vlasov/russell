@@ -97,22 +97,22 @@ struct Substitution {
 	map<Symbol, term::Expr> sub;
 };
 
-struct RuleTree {
+struct Rules {
 	struct Node;
 	typedef vector<Node> Map;
 	Rule*& add(const Expr& ex);
 	Map map;
 };
 
-struct RuleTree::Node {
+struct Rules::Node {
 	Node(Symbol s) : symb(s), tree(), level(), rule(nullptr) { }
 	Symbol   symb;
-	RuleTree tree;
+	Rules tree;
 	uint     level;
 	Rule*    rule;
 };
 
-string show(const RuleTree& tr);
+string show(const Rules& tr);
 
 
 struct Expr {
@@ -220,6 +220,6 @@ inline size_t memvol(const term::Expr& t) {
 }
 
 size_t memvol(const Expr& ex);
-size_t memvol(const RuleTree&);
+size_t memvol(const Rules&);
 
 }} // mdl::rus

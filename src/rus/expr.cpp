@@ -101,9 +101,9 @@ bool Substitution::join(Substitution* s) {
 	return true;
 }
 
-vector<string> show_lines(const RuleTree& tr) {
+vector<string> show_lines(const Rules& tr) {
 	vector<string> vect;
-	for (const RuleTree::Node& p : tr.map) {
+	for (const Rules::Node& p : tr.map) {
 		vector<string> v = show_lines(p.tree);
 		if (p.tree.map.size()) {
 			for (string& s : v)
@@ -117,7 +117,7 @@ vector<string> show_lines(const RuleTree& tr) {
 	return vect;
 }
 
-string show(const RuleTree& tr) {
+string show(const Rules& tr) {
 	string str;
 	for (string& s : show_lines(tr)) {
 		str += s + "\n";
@@ -126,9 +126,9 @@ string show(const RuleTree& tr) {
 }
 
 
-Rule*& RuleTree::add(const Expr& ex) {
+Rule*& Rules::add(const Expr& ex) {
 	assert(ex.symbols.size());
-	RuleTree* m = this;
+	Rules* m = this;
 	Node* n = nullptr;
 	for (const Symbol& s : ex.symbols) {
 		bool new_symb = true;
@@ -151,9 +151,9 @@ Rule*& RuleTree::add(const Expr& ex) {
 	return n->rule;
 }
 
-size_t memvol(const RuleTree& rt) {
+size_t memvol(const Rules& rt) {
 	size_t vol = 0;
-	vol += rt.map.capacity() * sizeof (RuleTree::Node);
+	vol += rt.map.capacity() * sizeof (Rules::Node);
 	for (auto& p : rt.map) {
 		vol += memvol(p.tree);
 	}
