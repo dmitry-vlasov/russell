@@ -92,15 +92,11 @@ struct Tree {
 
 }
 
-namespace sub {
-
-struct Expr {
-	bool join(Expr* s);
+struct Substitution {
+	bool join(Substitution* s);
 	bool has(Symbol v) { return sub.has(v); }
 	Map<Symbol, term::Expr> sub;
 };
-
-}
 
 struct RuleTree {
 	struct Node;
@@ -152,8 +148,8 @@ struct Expr {
 	Symbols symbols;
 };
 
-sub::Expr* unify(const term::Expr& p, const term::Expr& q);
-inline sub::Expr* unify(const Expr& ex1, const Expr& ex2) {
+Substitution* unify(const term::Expr& p, const term::Expr& q);
+inline Substitution* unify(const Expr& ex1, const Expr& ex2) {
 	return unify(ex1.term, ex2.term);
 }
 Expr assemble(const Expr& ex);
@@ -173,7 +169,7 @@ inline string show_ast(const Expr& ex, bool full = false) {
 string show(const term::Expr& t, bool full = false);
 
 
-inline string show(const sub::Expr& s) {
+inline string show(const Substitution& s) {
 	string str;
 	for (auto p : s.sub.m) {
 		str += show(p.first, true) + " --> " + show_ast(p.second) + "\t ==\t"  + show(p.second) + "\n";
@@ -185,79 +181,6 @@ inline ostream& operator << (ostream& os, const Expr& ex) {
 	os << show(ex);
 	return os;
 }
-/*
-template<typename N>
-inline N* new_next(N* n, Symbol s) {
-	n->next = new N(s);
-	n->next->prev = n;
-	return n->next;
-}
-template<typename N>
-inline N* new_side(N* n, Symbol s) {
-	n->side = new N(s);
-	n->side->prev = n->prev;
-	return n->side;
-}
-
-template<class T, class N>
-void add_term(term::PTree<T>& tree_m, const term::Expr& expr_t, map<const Symbol*, N*>& mp, const Expr* ex) {
-	if (expr_t.kind == term::Expr::VAR) {
-		tree_m.entries[ex] = mp[expr_t.val.var];
-		return;
-	}
-	if (!tree_m.rules.has(expr_t.val.rule)) {
-		vector<term::PTree<T>>& tree_t = tree_m.rules[expr_t.val.rule];
-		for_each(
-			expr_t.children.begin(),
-			expr_t.children.end(),
-			[&tree_t](auto) mutable { tree_t.push_back(term::PTree<T>()); }
-		);
-	}
-	vector<term::PTree<T>>& tree_t = tree_m.rules[expr_t.val.rule];
-	auto tree_ch = tree_t.begin();
-	for (auto& expr_ch : expr_t.children) {
-		add_term(*tree_ch ++, expr_ch, mp, ex);
-	}
-}
-
-template<typename T>
-T& PTree<T>::add(const Expr& ex) {
-	assert(ex.symbols.size());
-	map<const Symbol*, node::PTree<T>*> mp;
-	Symbols::const_iterator it = ex.symbols.begin();
-	Symbols::const_iterator last = ex.symbols.end() - 1;
-	if (!root) {
-		root = new node::PTree<T>(*it);
-		mp[&(*it)] = root;
-	}
-	node::PTree<T>* n = root;
-	while (true) {
-		while (n->side && *it != n->symb)
-			n = n->side;
-		if (n->symb == *it && (it != last) && n->next) {
-			mp[&(*it)] = n;
-			n = n->next;
-			++it;
-		} else break;
-	}
-	if (n->symb != *it) {
-		n = new_side(n, *it);
-		mp[&(*it)] = n;
-	}
-	while (it != last) {
-		++ it;
-		n = new_next(n, *it);
-		mp[&(*it)] = n;
-	}
-	add_term(term, ex.term, mp, &ex);
-	return n->data;
-}
-*/
-
-
-
-
-
 
 template<class T>
 void add_term(term::Tree<T>& tree_m, const term::Expr& expr_t, map<const Symbol*, const Symbol*>& mp, const Expr* ex) {
@@ -279,78 +202,13 @@ void add_term(term::Tree<T>& tree_m, const term::Expr& expr_t, map<const Symbol*
 		add_term(*tree_ch ++, expr_ch, mp, ex);
 	}
 }
-/*
-template<typename T>
-vector<string> show(const node::Tree<T>& n) {
-	vector<string> vect;
-	for (auto& p : n.map.m) {
-		vector<string> v = show(p.second.tree);
-		if (p.second.tree.map.m.size()) {
-			for (string& s : v)
-				vect.push_back(show(p.first) + ' ' + s);
-		} else {
-			vect.push_back(show(p.first) + " --> " + show(*p.second.data));
-		}
-	}
-	return vect;
-}
-
-template<typename T>
-string show(const Tree<T>& tr) {
-	string str;
-	for (string& s : show(tr.root)) {
-		str += s + "\n";
-	}
-	return str;
-}
-
-template<typename T>
-T& Tree<T>::add(const Expr& ex) {
-	assert(ex.symbols.size());
-	typedef typename Map::Node Node;
-	map<const Symbol*, const Symbol*> mp;
-	Map*  m = &root;
-	Node* n = nullptr;
-	for (auto& s : ex.symbols) {
-		n = &m->map.m[s];
-		auto i = m->map.m.find(s);
-		mp[&s] = &i->first;
-		m = &n->tree;
-	}
-	assert(n);
-	add_term(term, ex.term, mp, &ex);
-	return n->data;
-}
-*/
-
-/*
-template<typename N>
-void gather_tree_nodes(vector<N*>& nodes, N* n) {
-	if (n->next)
-		gather_tree_nodes(nodes, n->next);
-	if (n->side)
-		gather_tree_nodes(nodes, n->side);
-	nodes.push_back(n);
-}
-
-template<typename T>
-PTree<T>::~PTree() {
-	if (root) {
-		vector<Node*> nodes;
-		gather_tree_nodes(nodes, root);
-		root = nullptr;
-		for (Node* n : nodes)
-			delete n;
-	}
-}
-*/
 
 void dump(const Symbol& s);
 void dump(const Expr& ex);
 void dump_ast(const Expr& ex);
 void dump(const term::Expr* tm);
 void dump_ast(const term::Expr* tm);
-void dump(const sub::Expr& sb);
+void dump(const Substitution& sb);
 
 
 inline size_t memvol(const Symbol& s) {
@@ -363,25 +221,7 @@ inline size_t memvol(const term::Expr& t) {
 		vol += memvol(ch);
 	return vol;
 }
-/*
-template<class T>
-inline size_t memvol(const node::PTree<T>& n) {
-	return memsize(n.data);
-}
-*/
-/*
-template<class T>
-size_t memvol(const PTree<T>& t) {
-	size_t s = 0;
-	if (t.root) {
-		vector<node::PTree<T>*> nodes;
-		gather_tree_nodes(nodes, t.root);
-		for (node::PTree<T>* n : nodes)
-			s += memsize(*n);
-	}
-	return s;
-}
-*/
+
 size_t memvol(const Expr& ex);
 size_t memvol(const RuleTree&);
 

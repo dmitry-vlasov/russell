@@ -17,16 +17,16 @@ inline Rule* find_super(Type* type, Type* super) {
 }
 
 
-sub::Expr* unify(const term::Expr& p, const term::Expr& q) {
+Substitution* unify(const term::Expr& p, const term::Expr& q) {
 	switch (p.kind) {
 	case term::Expr::VAR: {
 		Symbol var = *p.val.var;
 		if (var.type == type(q)) {
-			sub::Expr* s = new sub::Expr();
+			Substitution* s = new Substitution();
 			s->sub[var] = q;
 			return s;
 		} else if (Rule* super = find_super(type(q), const_cast<Type*>(var.type))) {
-			sub::Expr* s = new sub::Expr();
+			Substitution* s = new Substitution();
 			s->sub[var] = term::Expr(super);
 			s->sub[var].children.push_back(q);
 			return s;
@@ -35,11 +35,11 @@ sub::Expr* unify(const term::Expr& p, const term::Expr& q) {
 	}
 	case term::Expr::NODE: {
 		if (p.val.rule != q.val.rule) return nullptr;
-		sub::Expr* sub = new sub::Expr();
+		Substitution* sub = new Substitution();
 		auto p_ch = p.children.begin();
 		auto q_ch = q.children.begin();
 		while (p_ch != p.children.end()) {
-			if (sub::Expr* s = unify(*p_ch, *q_ch)) {
+			if (Substitution* s = unify(*p_ch, *q_ch)) {
 				if (!sub->join(s)) {
 					delete sub;
 					return nullptr;

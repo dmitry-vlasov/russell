@@ -2,7 +2,7 @@
 #include <boost/algorithm/string.hpp>
 //#include <boost/variant/recursive_variant.hpp>
 #include "common.hpp"
-#include "rus/expr.hpp"
+#include "expr.hpp"
 
 namespace mdl { namespace rus {
 
@@ -35,10 +35,7 @@ struct Type {
 	uint ind;
 	uint id;
 	vector<Type*>     sup;
-	//PTree<Rule*>      prules;
 	map<Type*, Rule*> supers;
-	//Tree<Rule*>       trules;
-	//MRuleTree         mrules;
 	RuleTree          rules;
 };
 

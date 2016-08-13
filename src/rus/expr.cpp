@@ -79,47 +79,6 @@ namespace term {
 	}
 }
 
-
-/*
-term::Expr assemble_expr(Expr& ex, const term::Expr& t) {
-	if (t.isvar()) {
-		ex.push_back(t.first->symb);
-		ex.term = term::Expr(ex.first);
-		return ex.term;
-	}
-	uint i = 0;
-	Expr::Node* n = t.rule ? t.rule->term.first : t.first;
-	vector<term::Expr> children;
-	while (n) {
-		if (n->symb.type) {
-			if (i + 1 > t.children.size()) {
-				cout << " ERROR!!" << endl;
-				ex.push_back(Symbol("<<"));
-				ex.push_back(n->symb);
-				ex.push_back(Symbol(">>"));
-			} else {
-				term::Expr ch = assemble_expr(ex, t.children[i++]);
-				children.push_back(ch);
-			}
-		} else
-			ex.push_back(n->symb);
-		n = n->next;
-	}
-	return term::Expr(ex.first, ex.last, t.rule, children);
-}
-
-Expr assemble(const term::Expr& t) {
-	Expr e;
-	assemble_expr(e, t);
-	e.type = t.rule ? t.rule->type : t.first->symb.type;
-	return e;
-}
-
-Expr assemble(const Expr& ex) {
-	return assemble(ex.term);
-}
-*/
-
 void parse_term(Expr& ex, Rule* rule) {
 	ex.term = term::Expr(rule);
 	for (auto& s : ex.symbols) {
@@ -128,7 +87,7 @@ void parse_term(Expr& ex, Rule* rule) {
 	}
 }
 
-bool sub::Expr::join(Expr* s) {
+bool Substitution::join(Substitution* s) {
 	for (auto& p : s->sub.m) {
 		auto it = sub.m.find(p.first);
 		if (it != sub.m.end()) {
@@ -141,31 +100,6 @@ bool sub::Expr::join(Expr* s) {
 	}
 	return true;
 }
-/*
-Rule*& MRuleTree::add(const Expr& ex) {
-	assert(ex.symbols.size());
-	MRuleTree* m = this;
-	Node* n = nullptr;
-	for (const Symbol& s : ex.symbols) {
-		TreeMap::Map_& mm = m->map.m;
-		if (mm.size()) (--mm.end())->second.final = false;
-		n = &m->map[s];
-		if (s.end) mm.find(s)->second.leaf = true;
-		(--mm.end())->second.final = true;
-		m = &n->tree;
-	}
-	return n->rule;
-}
-*/
-
-
-
-
-
-
-
-
-
 
 vector<string> show_lines(const RuleTree& tr) {
 	vector<string> vect;
@@ -233,6 +167,6 @@ void dump(const Expr& ex) { cout << show(ex) << endl; }
 void dump_ast(const Expr& ex) { cout << show_ast(ex) << endl; }
 void dump(const term::Expr* tm) { cout << show(*tm) << endl; }
 void dump_ast(const term::Expr& tm) { cout << show_ast(tm) << endl; }
-void dump(const sub::Expr& sb) { cout << show(sb) << endl; }
+void dump(const Substitution& sb) { cout << show(sb) << endl; }
 
 }} // mdl::rus
