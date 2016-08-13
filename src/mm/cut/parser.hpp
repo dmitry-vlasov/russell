@@ -31,17 +31,17 @@ namespace {
 	}
 
 	void init_paths(Section* sect) {
-		static Set<string> names;
+		static set<string> names;
 		string dir = init_dir(sect);
 		bool has_endline = (*sect->name.rbegin() == '\n');
 
 		string orig_name = sect->name;
 		boost::trim_right(orig_name);
-		for (int i = 0; names.has(dir + sect->name); ++i) {
+		for (int i = 0; names.count(dir + sect->name); ++i) {
 			sect->name = orig_name + "_" + to_string(i);
 			//cout << "making new name: " << sect->name << endl;
 		}
-		names.s.insert(dir + sect->name);
+		names.insert(dir + sect->name);
 		if (has_endline) sect->name += '\n';
 
 		if (!sect->file.size()) {

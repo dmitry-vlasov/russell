@@ -88,14 +88,14 @@ void parse_term(Expr& ex, Rule* rule) {
 }
 
 bool Substitution::join(Substitution* s) {
-	for (auto& p : s->sub.m) {
-		auto it = sub.m.find(p.first);
-		if (it != sub.m.end()) {
+	for (auto& p : s->sub) {
+		auto it = sub.find(p.first);
+		if (it != sub.end()) {
 			if ((*it).second != p.second) {
 				return false;
 			}
 		} else {
-			sub.m[p.first] = p.second;
+			sub[p.first] = p.second;
 		}
 	}
 	return true;

@@ -85,13 +85,13 @@ struct CreateRef {
 	struct result { typedef Ref type; };
 	Ref operator()(uint lab) const {
 		Mm::Math& math = Mm::mod().math;
-		if (math.floatings.has(lab))
+		if (math.floatings.count(lab))
 			return Ref(math.floatings[lab]);
-		else if (math.essentials.has(lab))
+		else if (math.essentials.count(lab))
 			return Ref(math.essentials[lab]);
-		else if (math.axioms.has(lab))
+		else if (math.axioms.count(lab))
 			return Ref(math.axioms[lab]);
-		else if (math.theorems.has(lab))
+		else if (math.theorems.count(lab))
 			return Ref(math.theorems[lab]);
 		else
 			throw Error("unknown label in proof", Mm::get().lex.labels.toStr(lab));

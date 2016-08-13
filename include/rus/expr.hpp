@@ -86,16 +86,15 @@ struct Expr {
 
 template<class T>
 struct Tree {
-	Map<Rule*, vector<Tree<T>>>    rules;
-	Map<const rus::Expr*, const Symbol*> entries;
+	map<Rule*, vector<Tree<T>>> rules;
+	map<const rus::Expr*, const Symbol*> entries;
 };
 
 }
 
 struct Substitution {
 	bool join(Substitution* s);
-	bool has(Symbol v) { return sub.has(v); }
-	Map<Symbol, term::Expr> sub;
+	map<Symbol, term::Expr> sub;
 };
 
 struct RuleTree {
@@ -171,7 +170,7 @@ string show(const term::Expr& t, bool full = false);
 
 inline string show(const Substitution& s) {
 	string str;
-	for (auto p : s.sub.m) {
+	for (auto p : s.sub) {
 		str += show(p.first, true) + " --> " + show_ast(p.second) + "\t ==\t"  + show(p.second) + "\n";
 	}
 	return str;

@@ -4,16 +4,16 @@
 namespace mdl { namespace smm { namespace {
 
 struct Maps {
-	Map<const smm::Assertion*, mm::Theorem*>   theorems;
-	Map<const smm::Assertion*, mm::Axiom*>     axioms;
-	Map<const smm::Essential*, mm::Essential*> essentials;
-	Map<const smm::Floating*,  mm::Floating*>  floatings;
-	Map<const smm::Inner*,     mm::Floating*>  inners;
-	Map<const smm::Source*,    mm::Source*>    sources;
+	map<const smm::Assertion*, mm::Theorem*>   theorems;
+	map<const smm::Assertion*, mm::Axiom*>     axioms;
+	map<const smm::Essential*, mm::Essential*> essentials;
+	map<const smm::Floating*,  mm::Floating*>  floatings;
+	map<const smm::Inner*,     mm::Floating*>  inners;
+	map<const smm::Source*,    mm::Source*>    sources;
 	Transform                            transform;
 };
 
-mm::Proof* translate(const Maps& maps, const Proof* proof) {
+mm::Proof* translate(Maps& maps, const Proof* proof) {
 	Proof* tree = to_tree(proof);
 	transform(tree, maps.transform);
 	Proof* rpn = to_rpn(tree);
@@ -88,12 +88,12 @@ void translate(const Node& node, mm::Block* target, Maps& maps) {
 			th->expr = ass->prop.expr;
 			th->proof = pr;
 			block->contents.push_back(mm::Node(th));
-			assert(!maps.theorems.has(ass));
+			assert(!maps.theorems.count(ass));
 			maps.theorems[ass] = th;
 		} else {
 			mm::Axiom* ax = new mm::Axiom { ass->prop.label, ass->prop.expr };
 			block->contents.push_back(mm::Node(ax));
-			assert(!maps.axioms.has(ass));
+			assert(!maps.axioms.count(ass));
 			maps.axioms[ass] = ax;
 		}
 		block->parent = target;
@@ -119,7 +119,7 @@ void translate(const Node& node, mm::Block* target, Maps& maps) {
 
 
 mm::Source* translate_source(const Source* src, Maps& maps, mm::Source* target) {
-	if (maps.sources.has(src)) {
+	if (maps.sources.count(src)) {
 		return maps.sources[src];
 	} else {
 		Config conf = Smm::get().config;

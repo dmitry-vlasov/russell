@@ -39,7 +39,7 @@ struct Mm {
 		Timer total;
 	};
 	template<typename T>
-	using Table = Map<uint, T>;
+	using Table = map<uint, T>;
 
 	struct Math {
 		Table<Theorem*>   theorems;

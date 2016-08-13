@@ -4,23 +4,23 @@
 namespace mdl { namespace rus { namespace {
 
 struct Maps {
-	Map<const Assertion*, Map<const Hyp*, smm::Essential*>> essentials;
-	Map<const Assertion*, Map<Symbol, smm::Floating*>> floatings;
-	Map<const Assertion*, Map<Symbol, smm::Inner*>> inners;
-	Map<const Assertion*, smm::Assertion*> assertions;
-	Map<const Type*, uint> types;
-	Map<const Rule*, smm::Assertion*> rules;
-	Map<const Rule*, Map<Symbol, uint>> rules_args;
-	Map<const Source*, smm::Source*> sources;
+	map<const Assertion*, map<const Hyp*, smm::Essential*>> essentials;
+	map<const Assertion*, map<Symbol, smm::Floating*>> floatings;
+	map<const Assertion*, map<Symbol, smm::Inner*>> inners;
+	map<const Assertion*, smm::Assertion*> assertions;
+	map<const Type*, uint> types;
+	map<const Rule*, smm::Assertion*> rules;
+	map<const Rule*, map<Symbol, uint>> rules_args;
+	map<const Source*, smm::Source*> sources;
 	smm::Assertion* thm;
 	mdl::Symbol turnstile;
 };
 
 inline uint translate_symb(uint s) {
-	if (!Rus::get().math.consts.has(s))
+	if (!Rus::get().math.consts.count(s))
 		return s;
 	else {
-		Const* c = Rus::get().math.consts[s];
+		Const* c = Rus::mod().math.consts[s];
 		return mdl::Symbol::is_undef(c->ascii.lit) ? s : c->ascii.lit;
 	}
 }
@@ -191,9 +191,9 @@ void translate_ref(Ref ref, const Assertion* thm, vector<smm::Ref>& smm_proof, M
 
 void translate_term(const term::Expr& t, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps) {
 	if (t.kind == term::Expr::VAR) {
-		if (maps.floatings[thm].has(*t.val.var))
+		if (maps.floatings[thm].count(*t.val.var))
 			smm_proof.push_back(maps.floatings[thm][*t.val.var]);
-		else if (maps.inners[thm].has(*t.val.var))
+		else if (maps.inners[thm].count(*t.val.var))
 			smm_proof.push_back(maps.inners[thm][*t.val.var]);
 		else
 			throw Error("undeclared variable", show(*t.val.var));
@@ -202,7 +202,7 @@ void translate_term(const term::Expr& t, const Assertion* thm, vector<smm::Ref>&
 			translate_term(t.children[maps.rules_args[t.val.rule][v]], thm, smm_proof, maps);
 	}
 	if (t.kind == term::Expr::NODE) {
-		if (!maps.rules.has(t.val.rule))
+		if (!maps.rules.count(t.val.rule))
 			throw Error("undefined reference to rule");
 		smm_proof.push_back(smm::Ref(maps.rules[t.val.rule], true));
 	}
@@ -229,9 +229,9 @@ void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref>& smm_
 	for (auto v : st->assertion()->vars.v)
 		translate_term(ps->sub[v], thm, smm_proof, maps);
 	delete ps;
-	if (!maps.assertions.has(ass))
+	if (!maps.assertions.count(ass))
 		throw Error("undefined reference to assertion");
-	assert(maps.assertions.has(ass));
+	assert(maps.assertions.count(ass));
 	smm_proof.push_back(smm::Ref(maps.assertions[ass], st->kind != Step::THM));
 }
 
@@ -308,7 +308,7 @@ vector<smm::Node> translate_theory(const Theory* thy, Maps& maps) {
 }
 
 smm::Source* translate_source(const Source* src, Maps& maps, smm::Source* target) {
-	if (maps.sources.has(src)) {
+	if (maps.sources.count(src)) {
 		return maps.sources[src];
 	} else {
 		Config conf = Rus::get().config;

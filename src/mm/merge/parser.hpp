@@ -24,9 +24,9 @@ struct Include {
 	template <typename T>
 	struct result { typedef string type; };
 	void operator()(const string& path) const {
-		static Set<string> included;
-		if (included.has(path)) return;
-		included.s.insert(path);
+		static set<string> included;
+		if (included.count(path)) return;
+		included.insert(path);
 		parse(path);
 	}
 };

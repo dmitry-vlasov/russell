@@ -32,7 +32,7 @@ struct IncInd {
 
 struct VarStack {
 	vector<Vars> stack;
-	Map<Symbol, Type*> map;
+	map<Symbol, Type*> mapping;
 };
 
 struct PushVars {
@@ -49,13 +49,13 @@ struct AddVars {
 	void operator()(VarStack& var_stack, Vars vars) const {
 		for (auto v : vars.v) {
 			var_stack.stack.back().v.push_back(v);
-			var_stack.map[v.lit] = v.type;
+			var_stack.mapping[v.lit] = v.type;
 		}
 	}
 	void operator()(VarStack& var_stack, Theorem* thm) const {
 		for (auto v : thm->ass.vars.v) {
 			var_stack.stack.back().v.push_back(v);
-			var_stack.map[v.lit] = v.type;
+			var_stack.mapping[v.lit] = v.type;
 		}
 	}
 };
@@ -66,15 +66,15 @@ struct PopVars {
 	void operator()(VarStack& var_stack) const {
 		Vars& vars = var_stack.stack.back();
 		for (auto v : vars.v)
-			var_stack.map.m.erase(v.lit);
+			var_stack.mapping.erase(v.lit);
 		var_stack.stack.pop_back();
 	}
 };
 
 static void mark_vars(Expr& ex, VarStack& var_stack) {
 	for (auto& s : ex.symbols) {
-		bool is_var = var_stack.map.has(s.lit);
-		bool is_const = Rus::get().math.consts.has(s.lit);
+		bool is_var = var_stack.mapping.count(s.lit);
+		bool is_const = Rus::get().math.consts.count(s.lit);
 		if (is_const && is_var)
 			throw Error("constant symbol is marked as variable");
 		if (!is_const && !is_var) {
@@ -82,14 +82,14 @@ static void mark_vars(Expr& ex, VarStack& var_stack) {
 			msg += " neither constant nor variable";
 			throw Error(msg);
 		}
-		if (is_var) s.type = var_stack.map[s.lit];
+		if (is_var) s.type = var_stack.mapping[s.lit];
 	}
 }
 
 inline Type* find_type(uint id, Location* loc = nullptr) {
-	if (!Rus::get().math.types.has(id))
+	if (!Rus::get().math.types.count(id))
 		throw Error("unknown type", show_id(id), loc);
-	return Rus::get().math.types[id];
+	return Rus::mod().math.types[id];
 }
 
 inline uint create_id(string pref, string s1, string s2) {
@@ -272,9 +272,9 @@ struct FindTheorem {
 	template <typename T>
 	struct result { typedef Theorem* type; };
 	Theorem* operator()(uint id) const {
-		if (!Rus::get().math.theorems.has(id))
+		if (!Rus::get().math.theorems.count(id))
 			throw Error("unknown theorem", show_id(id));
-		return Rus::get().math.theorems[id];
+		return Rus::mod().math.theorems[id];
 	}
 };
 
@@ -282,9 +282,9 @@ struct FindAxiom {
 	template <typename T1>
 	struct result { typedef Axiom* type; };
 	Axiom* operator()(uint id) const {
-		if (!Rus::get().math.axioms.has(id))
+		if (!Rus::get().math.axioms.count(id))
 			throw Error("unknown axiom", show_id(id));
-		return Rus::get().math.axioms[id];
+		return Rus::mod().math.axioms[id];
 	}
 };
 
@@ -292,9 +292,9 @@ struct FindDef {
 	template <typename T1>
 	struct result { typedef Def* type; };
 	Def* operator()(uint id) const {
-		if (!Rus::get().math.defs.has(id))
+		if (!Rus::get().math.defs.count(id))
 			throw Error("unknown definition", show_id(id));
-		return Rus::get().math.defs[id];
+		return Rus::mod().math.defs[id];
 	}
 };
 

@@ -13,59 +13,11 @@ template<> struct Undef<uint> {
 	static bool is(uint x)   { return x == UNDEF_UINT; }
 	static void set(uint& x) { x = UNDEF_UINT; }
 };
+
 template<class T> struct Undef<T*> {
 	static T*   get()      { return nullptr; }
 	static bool is(T* x)   { return x == nullptr; }
 	static void set(T*& x) { x = nullptr;  }
-};
-
-template<class I>
-struct BiIter {
-	typedef I Iter;
-	BiIter() : it(), last() { }
-	BiIter(Iter i, Iter l) : it(i), last(l) { }
-	Iter it;
-	const Iter last;
-	bool is_last() const { return it == last; }
-	bool operator == (const BiIter& i) const {
-		return it == i.it;
-	}
-	bool operator != (const BiIter& i) const {
-		return !operator == (i);
-	}
-	BiIter next() const { BiIter i(it, last); ++ i.it; return i; }
-	void inc() { ++it; }
-};
-
-template<
-	class Key,
-	class T,
-	class Compare = std::less<Key>,
-	class Alloc = std::allocator<pair<const Key,T>>
->
-struct Map {
-	typedef map<Key, T, Compare, Alloc> Map_;
-	Map_ m;
-	bool has(Key k) const {
-		return m.find(k) != m.end();
-	}
-	T& operator[] (Key k) {
-		return m[k];
-	}
-	T operator[] (Key k) const;
-};
-
-template<
-	class T,
-	class Compare = std::less<T>,
-	class Alloc = std::allocator<T>
->
-struct Set {
-	typedef set<T, Compare, Alloc> Set_;
-	Set_ s;
-	bool has(T val) const {
-		return s.find(val) != s.end();
-	}
 };
 
 struct Table {
@@ -150,9 +102,9 @@ size_t memsize(const T& x) {
 }
 
 template<class T>
-size_t memvol(const Map<uint, T*>& map) {
+size_t memvol(const map<uint, T*>& map) {
 	size_t vol = 0;
-	for (auto& p : map.m) {
+	for (auto& p : map) {
 		vol += memsize(*p.second);
 	}
 	return vol;
@@ -203,14 +155,6 @@ public :
 	string   msg;
 };
 
-template<class Key, class T, class Compare, class Alloc>
-T Map<Key, T, Compare, Alloc>::operator[] (Key k) const {
-	if (has(k))
-		return m.find(k)->second;
-	else
-		throw Error("map doesn't have an element");
-}
-
 inline string cut_outer_directory(string path) {
 	size_t slash_pos = path.find_first_of("/");
 	return path.substr(slash_pos == string::npos ? 0 : slash_pos + 1);
@@ -222,7 +166,7 @@ template<class T>
 void deep_write(T* target, auto get_cont, auto get_inc, auto is_inc) {
 	typedef T Source;
 	namespace fs = boost::filesystem;
-	Set<Source*> written;
+	set<Source*> written;
 	stack<Source*> to_write;
 	to_write.push(target);
 	while (!to_write.empty()) {
@@ -232,12 +176,12 @@ void deep_write(T* target, auto get_cont, auto get_inc, auto is_inc) {
 		ofstream out(src->path());
 		out << *src << endl;
 		out.close();
-		written.s.insert(src);
+		written.insert(src);
 		to_write.pop();
 		for (auto n : get_cont(src)) {
 			if (is_inc(n)) {
 				Source* inc = get_inc(n);
-				if (!written.has(inc)) {
+				if (!written.count(inc)) {
 					to_write.push(inc);
 				}
 			}
@@ -265,8 +209,8 @@ Source* parse(string name, string root, auto space) {
 
 template<class Source, class Parser, class Inclusion>
 Inclusion* include(string path, string root, auto space, Source* (get_src)(Inclusion*)) {
-	static Map<string, Inclusion*> included;
-	if (included.has(path)) {
+	static map<string, Inclusion*> included;
+	if (included.count(path)) {
 		Inclusion* inc = included[path];
 		return new Inclusion(get_src(inc), false);
 	} else {

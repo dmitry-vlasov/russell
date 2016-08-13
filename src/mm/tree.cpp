@@ -60,7 +60,7 @@ Proof* to_rpn(const Proof* pr) {
 	return rpn;
 }
 
-void transform(Proof* proof, const Transform& trans, bool forward) {
+void transform(Proof* proof, Transform& trans, bool forward) {
 	assert(proof->type == Proof::TREE);
 	for (uint i = 0; i < proof->refs.size() - 1; ++ i) {
 		if (proof->refs[i].type == Ref::PROOF)
@@ -77,10 +77,10 @@ void transform(Proof* proof, const Transform& trans, bool forward) {
 	proof->refs = new_refs;
 }
 
-void reduce_ref(Ref& ref, const Set<uint>& red) {
+void reduce_ref(Ref& ref, const set<uint>& red) {
 	if (ref.type == Ref::PROOF) {
 		Proof* proof = ref.val.prf;
-		if (red.has(proof->refs.back().label())) {
+		if (red.count(proof->refs.back().label())) {
 			ref = proof->refs[proof->refs.size() - 2];
 			proof->refs[proof->refs.size() - 2].type = Ref::NONE;
 			delete proof;
@@ -92,7 +92,7 @@ void reduce_ref(Ref& ref, const Set<uint>& red) {
 	}
 }
 
-void reduce(Proof*& proof, const Set<uint>& red) {
+void reduce(Proof*& proof, set<uint>& red) {
 	Ref ref = Ref(proof);
 	reduce_ref(ref, red);
 	assert(ref.type == Ref::PROOF);

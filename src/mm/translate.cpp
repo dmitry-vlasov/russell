@@ -26,12 +26,12 @@ void gather_inner_vars(const set<Symbol>& fvars,
 }
 
 struct Maps {
-	Map<const mm::Theorem*,   smm::Assertion*> theorems;
-	Map<const mm::Axiom*,     smm::Assertion*> axioms;
-	Map<const mm::Essential*, smm::Essential*> essentials;
-	Map<const mm::Floating*,  smm::Floating*>  floatings;
-	Map<const mm::Floating*,  smm::Inner*>     inners;
-	Map<const mm::Source*,    smm::Source*>    sources;
+	map<const mm::Theorem*,   smm::Assertion*> theorems;
+	map<const mm::Axiom*,     smm::Assertion*> axioms;
+	map<const mm::Essential*, smm::Essential*> essentials;
+	map<const mm::Floating*,  smm::Floating*>  floatings;
+	map<const mm::Floating*,  smm::Inner*>     inners;
+	map<const mm::Source*,    smm::Source*>    sources;
 	Transform transform;
 };
 
@@ -91,11 +91,11 @@ void reduce_floatings(smm::Assertion* ass, const set<Symbol>& flo_vars,
 			red_inns.push_back(new smm::Inner {flo->index, flo->expr});
 			const Floating* mm_flo =
 				std::find_if(
-				maps.floatings.m.begin(),
-				maps.floatings.m.end(),
+				maps.floatings.begin(),
+				maps.floatings.end(),
 				[flo](std::pair<const Floating*, smm::Floating*> p) { return p.second == flo; }
 				)->first;
-			maps.floatings.m.erase(mm_flo);
+			maps.floatings.erase(mm_flo);
 			maps.inners[mm_flo] = red_inns.back();
 		}
 		delete flo;
@@ -174,13 +174,13 @@ void reduce_permutation(smm::Assertion* ass, const set<Symbol>& needed, ArgMap& 
 	}
 }
 
-smm::Proof* translate_proof(const Maps& maps, const Proof* mproof) {
+smm::Proof* translate_proof(Maps& maps, const Proof* mproof) {
 	smm::Proof* sproof = new smm::Proof();
 	for (auto& node : mproof->refs) {
 		Ref::Value val = node.val;
 		switch (node.type) {
 		case Ref::FLOATING:
-			if (maps.floatings.has(val.flo))
+			if (maps.floatings.count(val.flo))
 				sproof->refs.push_back(smm::Ref(maps.floatings[val.flo]));
 			else
 				sproof->refs.push_back(smm::Ref(maps.inners[val.flo]));
@@ -219,7 +219,7 @@ void reduce(Maps& maps, smm::Assertion* ass, ArgMap& args, const Proof* proof) {
 	maps.transform[ass->prop.label] = args.create_permutation();
 }
 
-smm::Proof* transform_proof(const Maps& maps, const Set<uint>& red, const Proof* proof) {
+smm::Proof* transform_proof(Maps& maps, set<uint>& red, const Proof* proof) {
 	Proof* tree = to_tree(proof);
 	if (tree == nullptr)
 		return nullptr;
@@ -292,7 +292,7 @@ ArgMap arg_map(const deque<Node>& ar_orig) {
 
 smm::Assertion* translate_ass(Maps& maps, const Node& n, const Block* block)  {
 	smm::Assertion* ass = new smm::Assertion();
-	static Set<uint> red;
+	static set<uint> red;
 	ass->prop = smm::Proposition {n.type == Node::AXIOM, n.label(), n.expr()};
 
 	Scope scope = gather_scope();
@@ -305,7 +305,7 @@ smm::Assertion* translate_ass(Maps& maps, const Node& n, const Block* block)  {
 		ass->proof = transform_proof(maps, red, n.val.th->proof);
 		if (!ass->proof) {
 			// Dummy (redundant) theorem
-			red.s.insert(n.label());
+			red.insert(n.label());
 			delete ass;
 			ass = nullptr;
 		} else {
@@ -369,7 +369,7 @@ void translate_block(Maps& maps, const Block* source, smm::Source* target) {
 }
 
 smm::Source* translate_source(Maps& maps, const Source* src, smm::Source* target) {
-	if (maps.sources.has(src)) {
+	if (maps.sources.count(src)) {
 		return maps.sources[src];
 	} else {
 		Config conf = Mm::get().config;

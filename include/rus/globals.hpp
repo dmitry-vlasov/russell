@@ -42,7 +42,7 @@ struct Rus {
 		Timer total;
 	};
 	template<typename T>
-	using Table = Map<uint, T>;
+	using Table = map<uint, T>;
 
 	struct Math {
 		Table<Const*>   consts;

@@ -129,13 +129,13 @@ string show(const Rus& rus) {
 	stats += "\ttotal: " + show(rus.timers.total) + "\n";
 	stats += "\n";
 
-	const size_t const_vol = memvol(rus.math.consts);
-	const size_t types_vol = memvol(rus.math.types);
-	const size_t rules_vol = memvol(rus.math.rules);
-	const size_t axiom_vol = memvol(rus.math.axioms);
-	const size_t defs_vol  = memvol(rus.math.defs);
-	const size_t thems_vol = memvol(rus.math.theorems);
-	const size_t proof_vol = memvol(rus.math.proofs);
+	const size_t const_vol = mdl::memvol(rus.math.consts);
+	const size_t types_vol = mdl::memvol(rus.math.types);
+	const size_t rules_vol = mdl::memvol(rus.math.rules);
+	const size_t axiom_vol = mdl::memvol(rus.math.axioms);
+	const size_t defs_vol  = mdl::memvol(rus.math.defs);
+	const size_t thems_vol = mdl::memvol(rus.math.theorems);
+	const size_t proof_vol = mdl::memvol(rus.math.proofs);
 	const size_t source_vol = memvol(*rus.source);
 	const size_t total_vol =
 		const_vol + types_vol + rules_vol +
@@ -155,13 +155,13 @@ string show(const Rus& rus) {
 	stats += "\n";
 
 	stats += "Size\n";
-	stats += "\tconsts:   " + to_string(rus.math.consts.m.size()) + "\n";
-	stats += "\ttypes:    " + to_string(rus.math.types.m.size()) + "\n";
-	stats += "\trules:    " + to_string(rus.math.rules.m.size()) + "\n";
-	stats += "\taxioms:   " + to_string(rus.math.axioms.m.size()) + "\n";
-	stats += "\tdefs:     " + to_string(rus.math.defs.m.size()) + "\n";
-	stats += "\ttheorems: " + to_string(rus.math.theorems.m.size()) + "\n";
-	stats += "\tproofs:   " + to_string(rus.math.proofs.m.size()) + "\n";
+	stats += "\tconsts:   " + to_string(rus.math.consts.size()) + "\n";
+	stats += "\ttypes:    " + to_string(rus.math.types.size()) + "\n";
+	stats += "\trules:    " + to_string(rus.math.rules.size()) + "\n";
+	stats += "\taxioms:   " + to_string(rus.math.axioms.size()) + "\n";
+	stats += "\tdefs:     " + to_string(rus.math.defs.size()) + "\n";
+	stats += "\ttheorems: " + to_string(rus.math.theorems.size()) + "\n";
+	stats += "\tproofs:   " + to_string(rus.math.proofs.size()) + "\n";
 	stats += "\n";
 
 	return stats;
