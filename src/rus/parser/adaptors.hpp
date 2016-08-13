@@ -52,8 +52,8 @@ BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Type,
 	(mdl::uint, ind)
 	(mdl::uint, id)
-	(mdl::vector<mdl::rus::Type*>,    sup)
-	(mdl::rus::PTree<mdl::rus::Rule*>, rules)
+	(mdl::vector<mdl::rus::Type*>, sup)
+	//(mdl::rus::RuleTree<mdl::rus::Rule*>, rules)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(

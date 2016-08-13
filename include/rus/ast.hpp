@@ -35,10 +35,10 @@ struct Type {
 	uint ind;
 	uint id;
 	vector<Type*>     sup;
-	PTree<Rule*>      prules;
+	//PTree<Rule*>      prules;
 	map<Type*, Rule*> supers;
-	Tree<Rule*>       trules;
-	MRuleTree         mrules;
+	//Tree<Rule*>       trules;
+	//MRuleTree         mrules;
 	RuleTree          rules;
 };
 

@@ -3,11 +3,11 @@
 namespace mdl { namespace rus { namespace expr { namespace {
 
 typedef term::Expr Term;
-typedef PTree<Rule*>::Node TreeNode;
+//typedef PTree<Rule*>::Node TreeNode;
 
-typedef node::Tree<Rule*>::Map TreeMap;
-typedef BiIter<TreeMap::Map_::const_iterator> MapIter;
-typedef BiIter<Symbols::iterator>             SymbIter;
+//typedef node::Tree<Rule*>::Map TreeMap;
+//typedef BiIter<TreeMap::Map_::const_iterator> MapIter;
+typedef BiIter<Symbols::iterator> SymbIter;
 
 
 vector<pair<Expr*, uint>> queue;
@@ -22,6 +22,7 @@ inline Rule* find_super(Type* type, Type* super) {
 
 enum class Action { RET, BREAK, CONT };
 
+/*
 inline Action act (auto& n, auto& m, SymbIter ch, Term& t, uint ind) {
 	if (!n.top()->next) {
 		if (n.top()->data->ind <= ind) {
@@ -110,11 +111,6 @@ SymbIter parse_LL_0(Term& t, SymbIter x, Type* type, uint ind, bool initial = fa
 				Term& child = t.children.back();
 				SymbIter ch = parse_LL_0(child, m.top(), tp, ind, n.top() == type->prules.root);
 				if (ch != SymbIter()) {
-					/*switch (act(n, m, ch, t, ind)) {
-					case Action::RET  : return ch;
-					case Action::BREAK: goto out;
-					case Action::CONT : continue;
-					}*/
 					if (!n.top()->next) {
 						if (n.top()->data->ind <= ind) {
 							t.val.rule = n.top()->data;
@@ -133,11 +129,6 @@ SymbIter parse_LL_0(Term& t, SymbIter x, Type* type, uint ind, bool initial = fa
 					childnodes.pop();
 				}
 			} else if (n.top()->symb == *m.top().it) {
-				/*switch (act(n, m, m.top(), t, ind)) {
-				case Action::RET  : return m.top();
-				case Action::BREAK: goto out;
-				case Action::CONT : continue;
-				}*/
 				if (!n.top()->next) {
 					if (n.top()->data->ind <= ind) {
 						t.val.rule = n.top()->data;
@@ -522,7 +513,7 @@ Symbols::iterator parse_LL_4(Term& t, Symbols::iterator x, Type* type, uint ind,
 
 
 
-
+*/
 
 
 
@@ -610,7 +601,7 @@ Symbols::iterator parse_LL_5(Term& t, Symbols::iterator x, Type* type, uint ind,
 
 
 
-
+/*
 void parse_LL_A(Expr* ex, uint ind) {
 	auto last = --ex->symbols.end();
 	last->end = true;
@@ -619,7 +610,7 @@ void parse_LL_A(Expr* ex, uint ind) {
 		throw Error("parsing error", string("expression: ") + show(*ex));
 	}
 }
-
+*/
 void parse_LL_B(Expr* ex, uint ind) {
 	(--ex->symbols.end())->end = true;
 	//cout << "parsing: " << ind << " -- " << show(*ex) << flush;

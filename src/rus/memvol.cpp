@@ -20,7 +20,7 @@ size_t memvol(const Disj& disj) {
 size_t memvol(const Type& type) {
 	size_t s = 0;
 	s += type.sup.capacity() * sizeof(Type*);
-	s += memvol(type.prules);
+	s += memvol(type.rules);
 	s += type.supers.size() * sizeof(pair<Type*, Rule*>);
 	for (auto p : type.supers)
 		s += memsize(*p.second);

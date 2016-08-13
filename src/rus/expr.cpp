@@ -141,7 +141,7 @@ bool sub::Expr::join(Expr* s) {
 	}
 	return true;
 }
-
+/*
 Rule*& MRuleTree::add(const Expr& ex) {
 	assert(ex.symbols.size());
 	MRuleTree* m = this;
@@ -156,7 +156,7 @@ Rule*& MRuleTree::add(const Expr& ex) {
 	}
 	return n->rule;
 }
-
+*/
 
 
 
@@ -218,6 +218,14 @@ Rule*& RuleTree::add(const Expr& ex) {
 	return n->rule;
 }
 
+size_t memvol(const RuleTree& rt) {
+	size_t vol = 0;
+	vol += rt.map.capacity() * sizeof (RuleTree::Pair);
+	for (auto& p : rt.map) {
+		vol += memvol(p.second.tree);
+	}
+	return vol;
+}
 
 
 void dump(const Symbol& s) { cout << show(s) << endl; }

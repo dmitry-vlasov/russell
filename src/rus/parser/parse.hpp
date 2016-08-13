@@ -161,9 +161,9 @@ struct AddToMath {
 	}
 	void operator()(Rule* r) const {
 		//cout << "ru: " << show_id(r->id) << endl;
-		r->type->prules.add(r->term) = r;
-		r->type->trules.add(r->term) = r;
-		r->type->mrules.add(r->term) = r;
+		//r->type->prules.add(r->term) = r;
+		//r->type->trules.add(r->term) = r;
+		//r->type->mrules.add(r->term) = r;
 		r->type->rules.add(r->term) = r;
 		//cout << show(r->type->rules) << endl;
 		Rus::mod().math.rules[r->id] = r;

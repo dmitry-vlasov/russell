@@ -85,59 +85,12 @@ struct Expr {
 };
 
 template<class T>
-struct PTree {
-	Map<Rule*, vector<PTree<T>>> rules;
-	Map<const rus::Expr*, node::PTree<T>*> entries;
-};
-
-template<class T>
 struct Tree {
 	Map<Rule*, vector<Tree<T>>>    rules;
 	Map<const rus::Expr*, const Symbol*> entries;
 };
 
 }
-
-namespace node {
-
-template<typename T>
-struct PTree {
-	PTree() : symb(), next(nullptr),
-	prev(nullptr), side(nullptr), data() { }
-	PTree(Symbol s) : symb(s), next(nullptr),
-	prev(nullptr), side(nullptr), data() { }
-	PTree(const PTree& tr) : symb(tr.symb), next(nullptr),
-	prev(nullptr), side(nullptr), data() { }
-	PTree& operator = (const PTree& tr) {
-		symb = tr.symb;
-		next = nullptr;
-		prev = nullptr;
-		side = nullptr;
-		return *this;
-	}
-	Symbol symb;
-	PTree*  next;
-	PTree*  prev;
-	PTree*  side;
-	uint   level;
-	T data;
-};
-
-template<typename T>
-struct Tree {
-	struct Node {
-		Node() : tree(), level(), data() {
-			Undef<T>::set(data);
-		}
-		Tree<T> tree;
-		uint    level;
-		T       data;
-	};
-	typedef mdl::Map<Symbol, Node> Map;
-	Map map;
-};
-
-} // namespace node
 
 namespace sub {
 
@@ -148,49 +101,6 @@ struct Expr {
 };
 
 }
-
-template<typename T>
-struct PTree {
-	typedef node::PTree<T> Node;
-	typedef term::PTree<T> Term;
-
-	PTree() : root(nullptr), term() { }
-	~PTree();
-	T& add(const Expr& ex);
-
-	Node* root;
-	Term  term;
-};
-
-template<typename T>
-struct Tree {
-	typedef node::Tree<T> Map;
-	typedef term::Tree<T> Term;
-	T& add(const Expr& ex);
-
-	Map  root;
-	Term term;
-};
-
-struct MRuleTree {
-	struct Node;
-	typedef Map<Symbol, Node> TreeMap;
-	Rule*& add(const Expr& ex);
-	TreeMap map;
-};
-
-struct MRuleTree::Node {
-Node() : final(false), leaf(false), tree(), level(), rule(nullptr) { }
-	bool     final;
-	bool     leaf;
-	MRuleTree tree;
-	uint     level;
-	Rule*    rule;
-};
-
-
-
-
 
 struct RuleTree {
 	struct Node;
@@ -275,7 +185,7 @@ inline ostream& operator << (ostream& os, const Expr& ex) {
 	os << show(ex);
 	return os;
 }
-
+/*
 template<typename N>
 inline N* new_next(N* n, Symbol s) {
 	n->next = new N(s);
@@ -342,7 +252,7 @@ T& PTree<T>::add(const Expr& ex) {
 	add_term(term, ex.term, mp, &ex);
 	return n->data;
 }
-
+*/
 
 
 
@@ -369,7 +279,7 @@ void add_term(term::Tree<T>& tree_m, const term::Expr& expr_t, map<const Symbol*
 		add_term(*tree_ch ++, expr_ch, mp, ex);
 	}
 }
-
+/*
 template<typename T>
 vector<string> show(const node::Tree<T>& n) {
 	vector<string> vect;
@@ -411,9 +321,9 @@ T& Tree<T>::add(const Expr& ex) {
 	add_term(term, ex.term, mp, &ex);
 	return n->data;
 }
+*/
 
-
-
+/*
 template<typename N>
 void gather_tree_nodes(vector<N*>& nodes, N* n) {
 	if (n->next)
@@ -433,6 +343,7 @@ PTree<T>::~PTree() {
 			delete n;
 	}
 }
+*/
 
 void dump(const Symbol& s);
 void dump(const Expr& ex);
@@ -452,10 +363,13 @@ inline size_t memvol(const term::Expr& t) {
 		vol += memvol(ch);
 	return vol;
 }
+/*
 template<class T>
 inline size_t memvol(const node::PTree<T>& n) {
 	return memsize(n.data);
 }
+*/
+/*
 template<class T>
 size_t memvol(const PTree<T>& t) {
 	size_t s = 0;
@@ -467,7 +381,8 @@ size_t memvol(const PTree<T>& t) {
 	}
 	return s;
 }
+*/
 size_t memvol(const Expr& ex);
-
+size_t memvol(const RuleTree&);
 
 }} // mdl::rus
