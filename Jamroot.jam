@@ -49,6 +49,7 @@ exe mm :
   src/mm/cut/parser.cpp
   src/mm/cut/show.cpp
   src/mm/cut/globals.cpp
+  src/mm/ctags/parser.cpp
   ;
  
 exe mdl : 
