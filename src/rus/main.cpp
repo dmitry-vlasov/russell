@@ -8,15 +8,16 @@ static void showHelp() {
 	cout << "Version: " << VERSION << endl;
 	cout << "Usage: mdl [options]" << endl;
 	cout << "Options:" << endl;
-	cout << " -i  --in <path>    input file"  << endl;
-	cout << " -o  --out <path>   output file"  << endl;
-	cout << " -r  --root <path>  root directory (for inclusions)" << endl;
-	cout << " -t  --translate    translate to simplified Metamath (smm)" << endl;
-	cout << " -p  --prove        prove as a Russell source" << endl;
-	cout << " -h  --help         print the help" << endl;
-	cout << " -d  --deep         deep translation" << endl;
-	cout << " -v  --verbose      not be silent"  << endl;
-	cout << "     --info         info about math: timings, memory, stats"  << endl;
+	cout << " -i  --in <path>     input file"  << endl;
+	cout << " -o  --out <path>    output file"  << endl;
+	cout << " -r  --root <path>   root directory (for inclusions)" << endl;
+	cout << " -t  --translate     translate to simplified Metamath (smm)" << endl;
+	cout << " -p  --prove         prove as a Russell source" << endl;
+	cout << " -h  --help          print the help" << endl;
+	cout << " -d  --deep          deep translation" << endl;
+	cout << " -v  --verbose       not be silent"  << endl;
+	cout << " -m  --monitor <int> monitor source files via port <int>"  << endl;
+	cout << "     --info          info about math: timings, memory, stats"  << endl;
 }
 
 static bool parseConfig(int argc, const char* argv[], Config& conf) {
@@ -41,6 +42,12 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 				return false;
 			else
 				conf.root = argv[i];
+		} else if (arg == "-m" || arg == "--monitor") {
+			conf.mode = Config::Mode::MONITOR;
+			if (++ i == argc)
+				return false;
+			else
+				conf.port = std::stoi(argv[i]);
 		} else if (arg == "-t" || arg == "--translate") {
 			conf.mode = Config::Mode::TRANSL;
 			conf.target = Config::Target::SMM;

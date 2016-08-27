@@ -7,12 +7,15 @@
 namespace mdl { namespace rus {
 
 struct Config {
-	enum class Mode   { NONE, TRANSL, PROVE };
+	enum {
+		DEFAULT_PORT = 808011
+	};
+	enum class Mode   { NONE, TRANSL, PROVE, MONITOR };
 	enum class Target { NONE, SMM, RUS };
 	Config() :
 	verbose(false), info(false), help(false), deep(false),
 	mode(Mode::NONE),
-	in(), root(), target(Target::NONE) { }
+	in(), root(), target(Target::NONE), port(DEFAULT_PORT) { }
 
 	bool verbose;
 	bool info;
@@ -25,6 +28,7 @@ struct Config {
 	string out;
 	string root;
 	Target target;
+	uint   port;
 };
 
 struct Rus {

@@ -18,13 +18,6 @@ bool parse_rus(Rus& rus) {
 		rus.source = parse(rus.config.in);
 		rus.timers.parse_rus.stop();
 		if (rus.config.verbose) cout << "done in " << rus.timers.parse_rus << endl;
-
-		if (rus.config.verbose) cout << "parsing expressions ... " << flush;
-		rus.timers.parse_expr.start();
-		expr::parse();
-		rus.timers.parse_expr.stop();
-		if (rus.config.verbose) cout << "done in " << rus.timers.parse_expr << endl;
-
 		return true;
 	} catch (Error& err) {
 		rus.error += '\n';
@@ -32,6 +25,22 @@ bool parse_rus(Rus& rus) {
 		return false;
 	}
 }
+
+bool parse_exp(Rus& rus) {
+	try {
+		if (rus.config.verbose) cout << "parsing expressions ... " << flush;
+		rus.timers.parse_expr.start();
+		expr::parse();
+		rus.timers.parse_expr.stop();
+		if (rus.config.verbose) cout << "done in " << rus.timers.parse_expr << endl;
+		return true;
+	} catch (Error& err) {
+		rus.error += '\n';
+		rus.error += err.what();
+		return false;
+	}
+}
+
 
 bool unify_rus(Rus& rus) {
 	try {
@@ -102,10 +111,12 @@ void Rus::run() {
 	if (config.verbose)
 		cout << "processing file " << config.in << " ... " << endl;
 	if (!parse_rus(*this)) return;
+	if (!parse_exp(*this)) return;
 	if (!unify_rus(*this)) return;
 	switch (config.mode) {
-	case Config::Mode::PROVE:  break;
-	case Config::Mode::TRANSL: break;
+	case Config::Mode::PROVE:   break;
+	case Config::Mode::TRANSL:  break;
+	case Config::Mode::MONITOR: break;
 	default : break;
 	}
 	switch (config.target) {
