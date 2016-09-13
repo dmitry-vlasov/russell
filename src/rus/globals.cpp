@@ -111,12 +111,15 @@ void Rus::run() {
 	if (config.verbose)
 		cout << "processing file " << config.in << " ... " << endl;
 	if (!parse_rus(*this)) return;
-	if (!parse_exp(*this)) return;
-	if (!unify_rus(*this)) return;
-	switch (config.mode) {
-	case Config::Mode::PROVE:   break;
-	case Config::Mode::TRANSL:  break;
-	case Config::Mode::MONITOR: break;
+	switch (config.task) {
+	case Config::Task::PROVE:   break;
+	case Config::Task::TRANSL:
+		if (!parse_exp(*this)) return;
+		if (!unify_rus(*this)) return;
+		break;
+	case Config::Task::MONITOR:
+		monitor();
+		break;
 	default : break;
 	}
 	switch (config.target) {

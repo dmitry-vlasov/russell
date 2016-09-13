@@ -43,16 +43,16 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 			else
 				conf.root = argv[i];
 		} else if (arg == "-m" || arg == "--monitor") {
-			conf.mode = Config::Mode::MONITOR;
+			conf.task = Config::Task::MONITOR;
 			if (++ i == argc)
 				return false;
 			else
 				conf.port = std::stoi(argv[i]);
 		} else if (arg == "-t" || arg == "--translate") {
-			conf.mode = Config::Mode::TRANSL;
+			conf.task = Config::Task::TRANSL;
 			conf.target = Config::Target::SMM;
 		} else if (arg == "-p" || arg == "--prove") {
-			conf.mode = Config::Mode::PROVE;
+			conf.task = Config::Task::PROVE;
 			conf.target = Config::Target::RUS;
 		} else if (arg == "-h" || arg == "--help")
 			conf.help = true;

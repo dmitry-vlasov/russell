@@ -10,11 +10,12 @@ struct Config {
 	enum {
 		DEFAULT_PORT = 808011
 	};
-	enum class Mode   { NONE, TRANSL, PROVE, MONITOR };
+	enum class Mode   { APP, SERVICE, DEFAULT = APP };
+	enum class Task   { NONE, TRANSL, PROVE, MONITOR };
 	enum class Target { NONE, SMM, RUS };
 	Config() :
 	verbose(false), info(false), help(false), deep(false),
-	mode(Mode::NONE),
+	task(Task::NONE), mode(Mode::DEFAULT),
 	in(), root(), target(Target::NONE), port(DEFAULT_PORT) { }
 
 	bool verbose;
@@ -22,6 +23,7 @@ struct Config {
 	bool help;
 	bool deep;
 
+	Task task;
 	Mode mode;
 
 	string in;
@@ -76,6 +78,7 @@ inline ostream& operator << (ostream& os, const Rus& r) { os << show(r); return 
 Source* parse(string path);
 void verify(Source*);
 smm::Source* translate(const Source* source);
+void monitor();
 
 namespace parser {
 	uint get_ind();
