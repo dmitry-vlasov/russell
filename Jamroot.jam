@@ -1,10 +1,11 @@
-using qt : /usr/lib/x86_64-linux-gnu/qt5/ ;
+#using qt5 : /usr/lib/x86_64-linux-gnu/qt5 ;
 
 project russell
 	: requirements 	
 		<include>include 
 		<include>src
 		<include>/usr/include/x86_64-linux-gnu/qt5
+		<library>/usr/lib/x86_64-linux-gnu/libQt5Core.so.5.5.1
 		<toolset>gcc:<cxxflags>-std=gnu++14
 		<toolset>gcc:<linkflags>-lpthread 
 		<toolset>gcc:<linkflags>-lboost_system
@@ -14,7 +15,6 @@ project russell
 		<variant>debug:<location>"../bin/debug"
 	;
 	
-
 	
 exe smm : 
   src/memusage.cpp
@@ -78,7 +78,6 @@ exe mdl :
   src/rus/translate.cpp
   src/rus/monitor.cpp
   src/rus/main.cpp
-  /qt//QtCore
   ;
 
 exe metamath : 
