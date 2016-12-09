@@ -68,8 +68,8 @@ struct System {
 
 	void run();
 
-	static const System& get() { return mod(); }
-	static System& mod() { static System rus; return rus; }
+	static const System& get();
+	static System& mod();
 };
 
 // Library, singleton, which contains a variety of deductive systems
@@ -78,11 +78,13 @@ struct Lib {
 	static Lib& mod() { static Lib lib; return lib; }
 
 	System& sys() { return systems[current]; }
-	const System& sys() const { return systems[current]; }
 
 	map<string, System> systems;
 	string current;
 };
+
+inline const System& System::get() { return mod(); }
+inline System& System::mod() { return Lib::mod().sys(); }
 
 
 string show(const System&);
