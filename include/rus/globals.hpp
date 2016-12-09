@@ -31,6 +31,7 @@ struct Config {
 	uint   port;
 };
 
+// Deductive system
 struct System {
 	~ System() { if (source) delete source; }
 
@@ -71,7 +72,18 @@ struct System {
 	static System& mod() { static System rus; return rus; }
 };
 
-//struct Daemon
+// Library, singleton, which contains a variety of deductive systems
+struct Lib {
+	static const Lib& get() { return mod(); }
+	static Lib& mod() { static Lib lib; return lib; }
+
+	System& sys() { return systems[current]; }
+	const System& sys() const { return systems[current]; }
+
+	map<string, System> systems;
+	string current;
+};
+
 
 string show(const System&);
 inline ostream& operator << (ostream& os, const System& r) { os << show(r); return os; }
