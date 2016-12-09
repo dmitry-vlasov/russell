@@ -3,15 +3,15 @@
 namespace mdl {
 
 string show_sy(Symbol symb) {
-	return rus::Rus::get().lex.symbs.toStr(symb.lit);
+	return rus::System::get().lex.symbs.toStr(symb.lit);
 }
 string show_id(uint lab) {
-	return rus::Rus::get().lex.ids.toStr(lab);
+	return rus::System::get().lex.ids.toStr(lab);
 }
 
 namespace rus { namespace {
 
-bool parse_rus(Rus& rus) {
+bool parse_rus(System& rus) {
 	try {
 		if (rus.config.verbose) cout << "parsing russell source ... " << flush;
 		rus.timers.parse_rus.start();
@@ -26,7 +26,7 @@ bool parse_rus(Rus& rus) {
 	}
 }
 
-bool parse_exp(Rus& rus) {
+bool parse_exp(System& rus) {
 	try {
 		if (rus.config.verbose) cout << "parsing expressions ... " << flush;
 		rus.timers.parse_expr.start();
@@ -42,7 +42,7 @@ bool parse_exp(Rus& rus) {
 }
 
 
-bool unify_rus(Rus& rus) {
+bool unify_rus(System& rus) {
 	try {
 		if (rus.config.verbose) cout << "verifying russell source ... " << flush;
 		rus.timers.unify.start();
@@ -57,7 +57,7 @@ bool unify_rus(Rus& rus) {
 	}
 }
 
-bool translate_rus(Rus& rus) {
+bool translate_rus(System& rus) {
 	try {
 		if (rus.config.out.empty()) return true;
 		if (rus.config.verbose) cout << "translating file " << rus.config.in << " ... " << flush;
@@ -86,7 +86,7 @@ bool translate_rus(Rus& rus) {
 	}
 }
 
-bool write_rus(Rus& rus) {
+bool write_rus(System& rus) {
 	try {
 		if (rus.config.out.empty()) return true;
 		if (rus.config.verbose) cout << "replicating file " << rus.config.in << " ... " << flush;
@@ -106,7 +106,7 @@ bool write_rus(Rus& rus) {
 
 }
 
-void Rus::run() {
+void System::run() {
 	timers.total.start();
 	if (config.verbose)
 		cout << "processing file " << config.in << " ... " << endl;
@@ -129,7 +129,7 @@ void Rus::run() {
 		cout << "all done in " << timers.total << endl;
 }
 
-string show(const Rus& rus) {
+string show(const System& rus) {
 	string stats;
 	stats += "Timings\n";
 	stats += "\tparse rus:  " + show(rus.timers.parse_rus) + "\n";

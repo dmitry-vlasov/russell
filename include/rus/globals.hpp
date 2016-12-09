@@ -31,8 +31,8 @@ struct Config {
 	uint   port;
 };
 
-struct Rus {
-	~ Rus() { if (source) delete source; }
+struct System {
+	~ System() { if (source) delete source; }
 
 	struct Lex {
 		Table ids;
@@ -67,12 +67,14 @@ struct Rus {
 
 	void run();
 
-	static const Rus& get() { return mod(); }
-	static Rus& mod() { static Rus rus; return rus; }
+	static const System& get() { return mod(); }
+	static System& mod() { static System rus; return rus; }
 };
 
-string show(const Rus&);
-inline ostream& operator << (ostream& os, const Rus& r) { os << show(r); return os; }
+//struct Daemon
+
+string show(const System&);
+inline ostream& operator << (ostream& os, const System& r) { os << show(r); return os; }
 Source* parse(string path);
 void verify(Source*);
 smm::Source* translate(const Source* source);

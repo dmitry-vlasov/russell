@@ -74,11 +74,11 @@ struct PopVars {
 static void mark_vars(Expr& ex, VarStack& var_stack) {
 	for (auto& s : ex.symbols) {
 		bool is_var = var_stack.mapping.count(s.lit);
-		bool is_const = Rus::get().math.consts.count(s.lit);
+		bool is_const = System::get().math.consts.count(s.lit);
 		if (is_const && is_var)
 			throw Error("constant symbol is marked as variable");
 		if (!is_const && !is_var) {
-			string msg = "symbol " + Rus::get().lex.symbs.toStr(s.lit) + " ";
+			string msg = "symbol " + System::get().lex.symbs.toStr(s.lit) + " ";
 			msg += " neither constant nor variable";
 			throw Error(msg);
 		}
@@ -87,17 +87,17 @@ static void mark_vars(Expr& ex, VarStack& var_stack) {
 }
 
 inline Type* find_type(uint id, Location* loc = nullptr) {
-	if (!Rus::get().math.types.count(id))
+	if (!System::get().math.types.count(id))
 		throw Error("unknown type", show_id(id), loc);
-	return Rus::mod().math.types[id];
+	return System::mod().math.types[id];
 }
 
 inline uint create_id(string pref, string s1, string s2) {
-	return Rus::mod().lex.ids.toInt(pref + "_" + s1 + "_" + s2);
+	return System::mod().lex.ids.toInt(pref + "_" + s1 + "_" + s2);
 }
 
 inline Symbol create_symbol(string str, Type* tp) {
-	return Symbol(Rus::mod().lex.symbs.toInt(str), tp, tp);
+	return Symbol(System::mod().lex.symbs.toInt(str), tp, tp);
 }
 
 Rule* create_super(Type* inf, Type* sup) {
@@ -152,39 +152,39 @@ void enqueue_expressions(Def* def) {
 struct AddToMath {
 	void operator()(Const* c) const {
 		//cout << "c: " << show(c->symb) << endl;
-		Rus::mod().math.consts[c->symb.lit] = c;
+		System::mod().math.consts[c->symb.lit] = c;
 	}
 	void operator()(Type* t) const {
 		//cout << "tp: " << show_id(t->id) << endl;
 		collect_supers(t, t);
-		Rus::mod().math.types[t->id] = t;
+		System::mod().math.types[t->id] = t;
 	}
 	void operator()(Rule* r) const {
 		//cout << "ru: " << show_id(r->id) << endl;
 		r->type->rules.add(r->term) = r;
 		//cout << show(r->type->rules) << endl;
-		Rus::mod().math.rules[r->id] = r;
+		System::mod().math.rules[r->id] = r;
 	}
 	void operator()(Axiom* a) const {
 		//cout << "ax: " << show_id(a->ass.id) << endl;
-		Rus::mod().math.axioms[a->ass.id] = a;
+		System::mod().math.axioms[a->ass.id] = a;
 		enqueue_expressions(a->ass);
 	}
 	void operator()(Def* d) const {
 		//cout << "def: " << show_id(d->ass.id) << endl;
-		Rus::mod().math.defs[d->ass.id] = d;
+		System::mod().math.defs[d->ass.id] = d;
 		enqueue_expressions(d);
 	}
 	void operator()(Theorem* th) const {
 		//cout << "th: " << show_id(th->ass.id) << endl;
-		Rus::mod().math.theorems[th->ass.id] = th;
+		System::mod().math.theorems[th->ass.id] = th;
 		enqueue_expressions(th->ass);
 	}
 	void operator()(Proof* p) const {
 		//cout << "pr: " << show_id(p->thm->ass.id) << endl;
 		p->has_id = !Undef<uint>::is(p->id);
-		if (!p->has_id) p->id = Rus::mod().lex.ids.toInt(to_string(p->ind));
-		Rus::mod().math.proofs[p->id] = p;
+		if (!p->has_id) p->id = System::mod().lex.ids.toInt(to_string(p->ind));
+		System::mod().math.proofs[p->id] = p;
 		enqueue_expressions(p);
 	}
 };
@@ -194,7 +194,7 @@ struct SymbToInt {
 	struct result { typedef uint type; };
 	uint operator()(const std::vector<uint>& s) const {
 		string symb(s.begin(), s.end());
-		return Rus::mod().lex.symbs.toInt(symb);
+		return System::mod().lex.symbs.toInt(symb);
 	}
 };
 
@@ -203,7 +203,7 @@ struct IdToInt {
 	struct result { typedef uint type; };
 	uint operator()(const std::vector<uint>& id) const {
 		string id_str(id.begin(), id.end());
-		return Rus::mod().lex.ids.toInt(id_str);
+		return System::mod().lex.ids.toInt(id_str);
 	}
 };
 
@@ -220,7 +220,7 @@ struct CreateSymb {
 	struct result { typedef Symbol type; };
 	Symbol operator()(const std::vector<uint>& s) const {
 		string symb(s.begin(), s.end());
-		return Symbol(Rus::mod().lex.symbs.toInt(symb));
+		return Symbol(System::mod().lex.symbs.toInt(symb));
 	}
 };
 
@@ -253,7 +253,7 @@ struct ParseImport {
 		return
 			mdl::include<Source, Parser, Import>(
 				path,
-				Rus::get().config.root,
+				System::get().config.root,
 				unicode::space,
 				[] (Import* inc) -> Source* { return inc->source; }
 			);
@@ -272,9 +272,9 @@ struct FindTheorem {
 	template <typename T>
 	struct result { typedef Theorem* type; };
 	Theorem* operator()(uint id) const {
-		if (!Rus::get().math.theorems.count(id))
+		if (!System::get().math.theorems.count(id))
 			throw Error("unknown theorem", show_id(id));
-		return Rus::mod().math.theorems[id];
+		return System::mod().math.theorems[id];
 	}
 };
 
@@ -282,9 +282,9 @@ struct FindAxiom {
 	template <typename T1>
 	struct result { typedef Axiom* type; };
 	Axiom* operator()(uint id) const {
-		if (!Rus::get().math.axioms.count(id))
+		if (!System::get().math.axioms.count(id))
 			throw Error("unknown axiom", show_id(id));
-		return Rus::mod().math.axioms[id];
+		return System::mod().math.axioms[id];
 	}
 };
 
@@ -292,9 +292,9 @@ struct FindDef {
 	template <typename T1>
 	struct result { typedef Def* type; };
 	Def* operator()(uint id) const {
-		if (!Rus::get().math.defs.count(id))
+		if (!System::get().math.defs.count(id))
 			throw Error("unknown definition", show_id(id));
-		return Rus::mod().math.defs[id];
+		return System::mod().math.defs[id];
 	}
 };
 
@@ -358,8 +358,8 @@ struct AssembleDef {
 	template <typename T1, typename T2>
 	struct result { typedef void type; };
 	void operator()(Def* d, VarStack& varsStack) const {
-		static Symbol dfm(Rus::mod().lex.symbs.toInt("defiendum"));
-		static Symbol dfs(Rus::mod().lex.symbs.toInt("definiens"));
+		static Symbol dfm(System::mod().lex.symbs.toInt("defiendum"));
+		static Symbol dfs(System::mod().lex.symbs.toInt("definiens"));
 		Prop* prop = new Prop;
 		for (auto s : d->prop.symbols) {
 			if (s == dfm) {

@@ -72,7 +72,7 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 
 int main (int argc, const char* argv[])
 {
-	Rus& rus = Rus::mod();
+	System& rus = System::mod();
 	Config& conf = rus.config;
 	if (!parseConfig(argc, argv, conf)) {
 		showHelp();
