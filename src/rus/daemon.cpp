@@ -12,7 +12,7 @@ int main (int argc, const char* argv[])
 {
 	try {
 		po::options_description desc(
-			string("Russell language implementation - mdl daemon\n") +
+			string("Russell language implementation - mdld daemon\n") +
 			"Version: " + VERSION + "\n" +
 			"Usage: mdld [options]\n"
 		);
@@ -34,8 +34,8 @@ int main (int argc, const char* argv[])
         	cout << "port: " << daemon::Config::mod().port << endl;
         }
 	}
-    catch (exception& e) {
-        cerr << "error: " << e.what() << "\n";
+    catch (exception& ex) {
+        cerr << "error: " << ex.what() << "\n";
         return 1;
     }
     catch (...) {

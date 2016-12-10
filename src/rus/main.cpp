@@ -1,88 +1,60 @@
+#include <boost/program_options.hpp>
+
 #include "rus/globals.hpp"
+
+namespace po = boost::program_options;
 
 using namespace mdl;
 using namespace rus;
 
-static void showHelp() {
-	cout << "Russell language implementation - mdl" << endl;
-	cout << "Version: " << VERSION << endl;
-	cout << "Usage: mdl [options]" << endl;
-	cout << "Options:" << endl;
-	cout << " -i  --in <path>     input file"  << endl;
-	cout << " -o  --out <path>    output file"  << endl;
-	cout << " -r  --root <path>   root directory (for inclusions)" << endl;
-	cout << " -t  --translate     translate to simplified Metamath (smm)" << endl;
-	cout << " -p  --prove         prove as a Russell source" << endl;
-	cout << " -h  --help          print the help" << endl;
-	cout << " -d  --deep          deep translation" << endl;
-	cout << " -v  --verbose       not be silent"  << endl;
-	cout << " -m  --monitor <int> monitor source files via port <int>"  << endl;
-	cout << "     --info          info about math: timings, memory, stats"  << endl;
-}
-
-static bool parseConfig(int argc, const char* argv[], Config& conf) {
-	if (argc <= 1) {
-		conf.help = true;
-		return true;
+void initConf(const po::variables_map& vm, Config& conf) {
+	if (vm.count("in"))   conf.in = vm["in"].as<string>();
+	if (vm.count("out"))  conf.out = vm["out"].as<string>();
+	if (vm.count("root")) conf.root = vm["root"].as<string>();
+	if (vm.count("translate")) {
+		conf.mode = Config::Mode::TRANSL;
+		conf.target = Config::Target::SMM;
 	}
-	for (int i = 1; i < argc; ++ i) {
-		string arg = argv[i];
-		if (arg == "-i" || arg == "--in") {
-			if (++ i == argc)
-				return false;
-			else
-				conf.in = argv[i];
-		} else if (arg == "-o" || arg == "--out") {
-			if (++ i == argc)
-				return false;
-			else
-				conf.out = argv[i];
-		} else if (arg == "-r" || arg == "--root") {
-			if (++ i == argc)
-				return false;
-			else
-				conf.root = argv[i];
-		} else if (arg == "-m" || arg == "--monitor") {
-			conf.mode = Config::Mode::MONITOR;
-			if (++ i == argc)
-				return false;
-			//else
-			//	conf.port = std::stoi(argv[i]);
-		} else if (arg == "-t" || arg == "--translate") {
-			conf.mode = Config::Mode::TRANSL;
-			conf.target = Config::Target::SMM;
-		} else if (arg == "-p" || arg == "--prove") {
-			conf.mode = Config::Mode::PROVE;
-			conf.target = Config::Target::RUS;
-		} else if (arg == "-h" || arg == "--help")
-			conf.help = true;
-		else if (arg == "-v" || arg == "--verbose")
-			conf.verbose = true;
-		else if (arg == "-d" || arg == "--deep")
-			conf.deep = true;
-		else if (arg == "--info")
-			conf.info = true;
-		else
-			return false;
+	if (vm.count("prove")) {
+		conf.mode = Config::Mode::PROVE;
+		conf.target = Config::Target::RUS;
 	}
-	if (conf.in.empty()) return false;
-	if (conf.out.empty()) return true;
-	return true;
+	if (vm.count("verbose")) conf.verbose = true;
+	if (vm.count("deep"))    conf.deep = true;
+	if (vm.count("info"))    conf.info = true;
 }
 
 int main (int argc, const char* argv[])
 {
-	System& rus = System::mod();
-	Config& conf = rus.config;
-	if (!parseConfig(argc, argv, conf)) {
-		showHelp();
-		return 1;
-	}
-	if (conf.help) {
-		showHelp();
-		return 0;
-	}
 	try {
+		po::options_description desc(
+			string("Russell language implementation - mdl\n") +
+			"Version: " + VERSION + "\n" +
+			"Usage: mdl [options]\n"
+		);
+		desc.add_options()
+			("help,h",      "print help message")
+			("in,i", po::value<string>(),   "input file")
+			("out,o", po::value<string>(),  "output file")
+			("root,r", po::value<string>(), "root directory (for inclusions)")
+			("translate,t", "translate to simplified Metamath (smm)")
+			("prove,p",     "prove as a Russell source")
+			("deep,d",      "deep translation")
+			("verbose,v",   "not be silent")
+			("info",        "info about math: timings, memory, stats")
+		;
+		po::variables_map vm;
+        po::store(po::parse_command_line(argc, argv, desc), vm);
+        po::notify(vm);
+
+        if (vm.count("help") || argc <= 1 || !vm.count("in")) {
+            cout << desc << endl;
+            return 0;
+        }
+        System& rus = System::mod();
+		Config& conf = rus.config;
+		initConf(vm, conf);
+
 		rus.run();
 		if (rus.error.size()) cerr << rus.error;
 		else if (conf.info)   cout << show(rus);
