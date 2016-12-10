@@ -5,6 +5,7 @@ project russell
 		<toolset>gcc:<linkflags>-lpthread 
 		<toolset>gcc:<linkflags>-lboost_system
 		<toolset>gcc:<linkflags>-lboost_filesystem
+		<toolset>gcc:<linkflags>-lboost_program_options
 		<toolset>gcc:<c++-template-depth>300
 		<variant>release:<location>"../bin/release"
 		<variant>debug:<location>"../bin/debug"
@@ -72,6 +73,28 @@ exe mdl :
   src/rus/translate.cpp
   src/rus/main.cpp
   ;
+
+exe mdld : 
+  src/memusage.cpp
+  src/timer.cpp
+  src/location.cpp
+  
+  src/smm/show.cpp
+  
+  src/rus/parser/parse.cpp
+  src/rus/memvol.cpp
+  
+  src/rus/expr/parse.cpp
+  src/rus/expr/unify.cpp
+
+  src/rus/expr.cpp
+  src/rus/globals.cpp
+  src/rus/show.cpp
+  src/rus/verify.cpp
+  src/rus/translate.cpp
+  src/rus/daemon.cpp
+  ;
+
 
 exe metamath : 
   src/metamath/metamath.c

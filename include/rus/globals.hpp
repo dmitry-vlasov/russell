@@ -6,16 +6,14 @@
 
 namespace mdl { namespace rus {
 
+// Configuration for a deductive system
 struct Config {
-	enum {
-		DEFAULT_PORT = 808011
-	};
 	enum class Mode   { NONE, TRANSL, PROVE, MONITOR };
 	enum class Target { NONE, SMM, RUS };
 	Config() :
 	verbose(false), info(false), help(false), deep(false),
 	mode(Mode::NONE),
-	in(), root(), target(Target::NONE), port(DEFAULT_PORT) { }
+	in(), root(), target(Target::NONE) { }
 
 	bool verbose;
 	bool info;
@@ -28,7 +26,6 @@ struct Config {
 	string out;
 	string root;
 	Target target;
-	uint   port;
 };
 
 // Deductive system
@@ -68,7 +65,7 @@ struct System {
 
 	void run();
 
-	static const System& get();
+	static const System& get() { return mod(); }
 	static System& mod();
 };
 
@@ -81,17 +78,33 @@ struct Lib {
 
 	map<string, System> systems;
 	string current;
+
+private:
+	Lib() : systems(), current() { }
 };
 
-inline const System& System::get() { return mod(); }
 inline System& System::mod() { return Lib::mod().sys(); }
-
 
 string show(const System&);
 inline ostream& operator << (ostream& os, const System& r) { os << show(r); return os; }
 Source* parse(string path);
 void verify(Source*);
 smm::Source* translate(const Source* source);
+
+namespace daemon {
+
+struct Config {
+	enum {
+		DEFAULT_PORT = 808011
+	};
+	Config() : port(DEFAULT_PORT) { }
+	static Config& mod() { static Config d; return d; }
+	uint   port;
+};
+
+}
+
+void execute(const string& command);
 
 namespace parser {
 	uint get_ind();

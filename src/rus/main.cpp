@@ -46,8 +46,8 @@ static bool parseConfig(int argc, const char* argv[], Config& conf) {
 			conf.mode = Config::Mode::MONITOR;
 			if (++ i == argc)
 				return false;
-			else
-				conf.port = std::stoi(argv[i]);
+			//else
+			//	conf.port = std::stoi(argv[i]);
 		} else if (arg == "-t" || arg == "--translate") {
 			conf.mode = Config::Mode::TRANSL;
 			conf.target = Config::Target::SMM;
