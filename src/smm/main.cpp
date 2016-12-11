@@ -7,13 +7,19 @@ namespace po = boost::program_options;
 using namespace mdl;
 using namespace smm;
 
-static void initConf(const po::variables_map& vm, Config& conf) {
+static bool initConf(const po::variables_map& vm, Config& conf) {
 	if (vm.count("in"))   conf.in = vm["in"].as<string>();
 	if (vm.count("out"))  conf.out = vm["out"].as<string>();
 	if (vm.count("root")) conf.root = vm["root"].as<string>();
 	if (vm.count("lang")) {
-		if (vm["lang"].as<string>() == "rus") conf.target = Config::TARGET_RUS;
-		if (vm["lang"].as<string>() == "mm")  conf.target = Config::TARGET_MM;
+		if (vm["lang"].as<string>() == "rus") {
+			if (conf.target != Config::TARGET_NONE) return false;
+			conf.target = Config::TARGET_RUS;
+		}
+		if (vm["lang"].as<string>() == "mm")  {
+			if (conf.target != Config::TARGET_NONE) return false;
+			conf.target = Config::TARGET_MM;
+		}
 	}
 	if (vm.count("verbose")) conf.verbose = true;
 	if (vm.count("deep"))    conf.deep = true;
@@ -22,6 +28,8 @@ static void initConf(const po::variables_map& vm, Config& conf) {
 		if (boost::ends_with(conf.out, ".mm"))  conf.target = Config::TARGET_MM;
 		if (boost::ends_with(conf.out, ".rus")) conf.target = Config::TARGET_RUS;
 	}
+	if (conf.in == "") return false;
+	return true;
 }
 
 int main (int argc, const char* argv[])
@@ -46,13 +54,16 @@ int main (int argc, const char* argv[])
         po::store(po::parse_command_line(argc, argv, desc), vm);
         po::notify(vm);
 
-        if (vm.count("help") || argc <= 1 || !vm.count("in")) {
+        if (vm.count("help") || argc <= 1) {
             cout << desc << endl;
             return 0;
         }
         Smm& smm = Smm::mod();
         Config& conf = smm.config;
-        initConf(vm, conf);
+        if (!initConf(vm, conf)) {
+        	cout << desc << endl;
+            return 1;
+        }
 
 		smm.run();
 		if (conf.verbose || smm.failed)

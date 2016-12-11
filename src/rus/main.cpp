@@ -7,7 +7,7 @@ namespace po = boost::program_options;
 using namespace mdl;
 using namespace rus;
 
-static void initConf(const po::variables_map& vm, Config& conf) {
+static bool initConf(const po::variables_map& vm, Config& conf) {
 	if (vm.count("in"))   conf.in = vm["in"].as<string>();
 	if (vm.count("out"))  conf.out = vm["out"].as<string>();
 	if (vm.count("root")) conf.root = vm["root"].as<string>();
@@ -22,6 +22,8 @@ static void initConf(const po::variables_map& vm, Config& conf) {
 	if (vm.count("verbose")) conf.verbose = true;
 	if (vm.count("deep"))    conf.deep = true;
 	if (vm.count("info"))    conf.info = true;
+	if (conf.in == "") return false;
+	return true;
 }
 
 int main (int argc, const char* argv[])
@@ -53,8 +55,10 @@ int main (int argc, const char* argv[])
         }
         System& rus = System::mod();
 		Config& conf = rus.config;
-		initConf(vm, conf);
-
+		if (!initConf(vm, conf)) {
+			cout << desc << endl;
+            return 1;
+		}
 		rus.run();
 		if (rus.error.size()) cerr << rus.error;
 		else if (conf.info)   cout << show(rus);

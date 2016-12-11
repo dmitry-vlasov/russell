@@ -67,7 +67,7 @@ fi;
 
 
 echo "smm -> mm"
-check "${binpath}${distrib}/smm -tm -d -v -r smm -i ${file}.smm -o mm-0"
+check "${binpath}${distrib}/smm -l mm -d -v -r smm -i ${file}.smm -o mm-0"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then
@@ -99,7 +99,7 @@ echo "MM <-> RUS TRANSLATION"
 echo "----------------------"
 
 echo "smm -> rus"
-check "${binpath}${distrib}/smm -tr -d -v -r smm -i ${file}.smm -o rus"
+check "${binpath}${distrib}/smm -l rus -d -v -r smm -i ${file}.smm -o rus"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -126,7 +126,7 @@ fi;
 
 
 echo "smm -> mm"
-check "${binpath}${distrib}/smm -d -tm -v -r smm-1 -i ${file}.smm -o mm-1"
+check "${binpath}${distrib}/smm -d -l mm -v -r smm-1 -i ${file}.smm -o mm-1"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
