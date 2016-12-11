@@ -42,31 +42,5 @@ int main (int argc, const char* argv[])
         cerr << "Exception of unknown type!\n";
         return 2;
     }
-/*
-	System& rus = System::mod();
-	Config& conf = rus.config;
-	if (!parseConfig(argc, argv, conf)) {
-		showHelp();
-		return 1;
-	}
-	if (conf.help) {
-		showHelp();
-		return 0;
-	}
-	try {
-		rus.run();
-		if (rus.error.size()) cerr << rus.error;
-		else if (conf.info)   cout << show(rus);
-	} catch (const Error& err) {
-		cerr << err.what();
-		return 1;
-	} catch (std::exception& ex) {
-		cerr << ex.what();
-		return 1;
-	} catch (...) {
-		cerr << "unhandled exception. Sorry.\n";
-		return 1;
-	}
-*/
 	return 0;
 }

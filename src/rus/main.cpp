@@ -7,7 +7,7 @@ namespace po = boost::program_options;
 using namespace mdl;
 using namespace rus;
 
-void initConf(const po::variables_map& vm, Config& conf) {
+static void initConf(const po::variables_map& vm, Config& conf) {
 	if (vm.count("in"))   conf.in = vm["in"].as<string>();
 	if (vm.count("out"))  conf.out = vm["out"].as<string>();
 	if (vm.count("root")) conf.root = vm["root"].as<string>();

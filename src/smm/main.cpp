@@ -1,87 +1,59 @@
+#include <boost/program_options.hpp>
+
 #include "smm/globals.hpp"
+
+namespace po = boost::program_options;
 
 using namespace mdl;
 using namespace smm;
 
-static void showHelp() {
-	cout << "smm verifier for simplified Metatmath" << endl;
-	cout << "Version: " << VERSION << endl;
-	cout << "Usage: smm [options]" << endl;
-	cout << "Options:" << endl;
-	cout << " -i  --in <path>     input file"  << endl;
-	cout << " -o  --out <path>    output file. Type of target is determined by extension: mm or rus"  << endl;
-	cout << " -r  --root <path>   root directory (for inclusions)" << endl;
-	cout << " -d  --deep          deep translation" << endl;
-	cout << " -tr --translate-rus translate to Russell" << endl;
-	cout << " -tm --translate-mm  translate to Metamath" << endl;
-	cout << " -h  --help          print the help" << endl;
-	cout << " -v  --verbose       not be silent"  << endl;
-	cout << "     --info          info about math: timings, memory, stats"  << endl;
-}
-
-static bool parseConfig(int argc, const char* argv[], Config& conf) {
-	if (argc <= 1) {
-		conf.help = true;
-		return true;
+static void initConf(const po::variables_map& vm, Config& conf) {
+	if (vm.count("in"))   conf.in = vm["in"].as<string>();
+	if (vm.count("out"))  conf.out = vm["out"].as<string>();
+	if (vm.count("root")) conf.root = vm["root"].as<string>();
+	if (vm.count("lang")) {
+		if (vm["lang"].as<string>() == "rus") conf.target = Config::TARGET_RUS;
+		if (vm["lang"].as<string>() == "mm")  conf.target = Config::TARGET_MM;
 	}
-	for (int i = 1; i < argc; ++ i) {
-		string arg = argv[i];
-		if (arg == "-i" || arg == "--in") {
-			if (++ i == argc)
-				return false;
-			else
-				conf.in = argv[i];
-		} else if (arg == "-o" || arg == "--out") {
-			if (++ i == argc)
-				return false;
-			else
-				conf.out = argv[i];
-		} else if (arg == "-r" || arg == "--root") {
-			if (++ i == argc)
-				return false;
-			else
-				conf.root = argv[i];
-		} else if (arg == "-h" || arg == "--help")
-			conf.help = true;
-		else if (arg == "-d" || arg == "--deep")
-			conf.deep = true;
-		else if (arg == "-tr" || arg == "--translate-rus")
-			conf.target = Config::TARGET_RUS;
-		else if (arg == "-tm" || arg == "--translate-mm")
-			conf.target = Config::TARGET_MM;
-		else if (arg == "-v" || arg == "--verbose")
-			conf.verbose = true;
-		else if (arg == "--info")
-			conf.info = true;
-		else
-			return false;
-	}
-	if (conf.in.empty()) return false;
-	if (conf.out.empty()) return true;
+	if (vm.count("verbose")) conf.verbose = true;
+	if (vm.count("deep"))    conf.deep = true;
+	if (vm.count("info"))    conf.info = true;
 	if (!conf.deep) {
-		if (boost::ends_with(conf.out, ".mm"))
-			conf.target = Config::TARGET_MM;
-		else if (boost::ends_with(conf.out, ".rus"))
-			conf.target = Config::TARGET_RUS;
-		else
-			return false;
+		if (boost::ends_with(conf.out, ".mm"))  conf.target = Config::TARGET_MM;
+		if (boost::ends_with(conf.out, ".rus")) conf.target = Config::TARGET_RUS;
 	}
-	return true; // pacify the compiler
 }
 
 int main (int argc, const char* argv[])
 {
-	Smm& smm = Smm::mod();
-	Config& conf = smm.config;
-	if (!parseConfig(argc, argv, conf)) {
-		showHelp();
-		return 1;
-	}
-	if (conf.help) {
-		showHelp();
-		return 0;
-	}
 	try {
+		po::options_description desc(
+			string("smm verifier for simplified Metatmath\n") +
+			"Version: " + VERSION + "\n" +
+			"Usage: mdl [options]\n"
+		);
+		desc.add_options()
+			("in,i",   po::value<string>(), "input file")
+			("out,o",  po::value<string>(), "output file")
+			("root,r", po::value<string>(), "root directory (for inclusions)")
+			("lang,l", po::value<string>(), "target language: rus for Russell or mm for Metamath")
+			("deep,d",      "deep translation")
+			("verbose,v",   "not be silent")
+			("info",        "info about math: timings, memory, stats")
+			("help,h",      "print help message")
+		;
+		po::variables_map vm;
+        po::store(po::parse_command_line(argc, argv, desc), vm);
+        po::notify(vm);
+
+        if (vm.count("help") || argc <= 1 || !vm.count("in")) {
+            cout << desc << endl;
+            return 0;
+        }
+        Smm& smm = Smm::mod();
+        Config& conf = smm.config;
+        initConf(vm, conf);
+
 		smm.run();
 		if (conf.verbose || smm.failed)
 			cout << smm.status;
