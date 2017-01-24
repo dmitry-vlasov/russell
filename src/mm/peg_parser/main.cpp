@@ -395,13 +395,19 @@ int main() {
 		return new mm::Disjointed { Expr(sv.transform<Symbol>()) };
 	};
 	parser["ESS"] = [](const SemanticValues& sv) {
-		return new mm::Essential { sv[0].get<uint>(), Expr(sv.transform<Symbol>(1)) };
+		mm::Essential* ess = new mm::Essential { sv[0].get<uint>(), Expr(sv.transform<Symbol>(1)) };
+		Mm::mod().math.essentials[ess->label] = ess;
+		return ess;
 	};
 	parser["FLO"] = [](const SemanticValues& sv) {
-		return new mm::Floating { sv[0].get<uint>(), Expr(sv.transform<Symbol>(1)) };
+		mm::Floating* flo = new mm::Floating { sv[0].get<uint>(), Expr(sv.transform<Symbol>(1)) };
+		Mm::mod().math.floatings[flo->label] = flo;
+		return flo;
 	};
 	parser["AX"] = [](const SemanticValues& sv) {
-		return new mm::Axiom { sv[0].get<uint>(), Expr(sv.transform<Symbol>(1)), (uint) -1 };
+		mm::Axiom* ax = new mm::Axiom { sv[0].get<uint>(), Expr(sv.transform<Symbol>(1)), (uint) -1 };
+		Mm::mod().math.axioms[ax->label] = ax;
+		return ax;
 	};
 	parser["TH"] = [](const SemanticValues& sv) {
 		uint sz = sv.size();
@@ -409,6 +415,7 @@ int main() {
 		th->label = sv[0].get<uint>();
 		th->expr = Expr(sv.transform<Symbol>(1, sz - 1));
 		th->proof = sv[sz - 1].get<mm::Proof*>();
+		Mm::mod().math.theorems[th->label] = th;
 		return th;
 	};
 	parser["PROOF"] = [](const SemanticValues& sv) {
