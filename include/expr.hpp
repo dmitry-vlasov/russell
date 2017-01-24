@@ -44,6 +44,7 @@ struct Symbol {
 struct Expr {
 	Expr() : symbols() { }
 	Expr(const Expr& ex) : symbols(ex.symbols) { }
+	Expr(const vector<Symbol>& s) : symbols(s) { }
 	void push_back(Symbol s) {
 		symbols.push_back(s);
 	}

@@ -92,7 +92,8 @@ ostream& operator << (ostream& os, const Axiom& ax) {
 }
 
 ostream& operator << (ostream& os, const Theorem& th) {
-	os << show_id(th.label) << " $p " << th.expr << "$= " << *th.proof;
+	os << show_id(th.label) << " $p " << th.expr << "$= ";
+	if (th.proof) os << *th.proof;
 	return os;
 }
 

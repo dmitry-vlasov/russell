@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "peglib.h"
+#include "mm/globals.hpp"
 
 using namespace std;
 
@@ -343,20 +344,21 @@ $)
 
 using namespace std;
 using namespace peg;
+using namespace mdl;
 
 auto mm_syntax = R"(
     # Metamath grammar
 
     SOURCE  <- ELEMENT*
     ELEMENT <- COMMENT / CONST / VAR / DISJ / FLO / ESS / AX / TH /  BLOCK
-    CONST   <-      '$c' SYMB* '$.'
-    VAR     <-      '$v' SYMB* '$.'
-    DISJ    <-      '$d' SYMB* '$.'
-    FLO     <- LAB  '$f' SYMB* '$.'
-    ESS     <- LAB  '$e' SYMB* '$.'
-    AX      <- LAB  '$a' SYMB* '$.'
-    TH      <- LAB  '$p' SYMB* '$=' PROOF
-    PROOF   <- LAB* '$.'
+    CONST   <-      '$c' SYMB+ '$.'
+    VAR     <-      '$v' SYMB+ '$.'
+    DISJ    <-      '$d' SYMB+ '$.'
+    FLO     <- LAB  '$f' SYMB+ '$.'
+    ESS     <- LAB  '$e' SYMB+ '$.'
+    AX      <- LAB  '$a' SYMB+ '$.'
+    TH      <- LAB  '$p' SYMB+ '$=' PROOF
+    PROOF   <- LAB+ '$.'
     BLOCK   <- '${' ELEMENT* '$}' 
 
     SYMB    <- < (![ \t\r\n$] .)+ >
@@ -375,27 +377,78 @@ int main() {
 	} else {
 		cout << "FAIL GR" << endl;
 	}
+	parser.enable_ast();
 
-	//parser.enable_packrat_parsing(); // Enable packrat parsing.
-/*
-	parser["TOKEN"] = [](const SemanticValues& sv) {
-		// 'token' doesn't include trailing whitespaces
-		auto token = sv.token();
+	parser["SYMB"] = [](const SemanticValues& sv) {
+		return Symbol(mm::Mm::mod().lex.symbols.toInt(sv.token()));
 	};
-*/
-	bool ret = parser.parse(src);
+	parser["LAB"] = [](const SemanticValues& sv) {
+		return mm::Mm::mod().lex.labels.toInt(sv.token());
+	};
+	parser["CONST"] = [](const SemanticValues& sv) {
+		return new mm::Constants { Expr(sv.transform<Symbol>()) };
+	};
+	parser["VAR"] = [](const SemanticValues& sv) {
+		return new mm::Variables { Expr(sv.transform<Symbol>()) };
+	};
+	parser["DISJ"] = [](const SemanticValues& sv) {
+		return new mm::Disjointed { Expr(sv.transform<Symbol>()) };
+	};
+	parser["ESS"] = [](const SemanticValues& sv) {
+		return new mm::Essential { sv[0].get<uint>(), Expr(sv.transform<Symbol>(1)) };
+	};
+	parser["FLO"] = [](const SemanticValues& sv) {
+		return new mm::Floating { sv[0].get<uint>(), Expr(sv.transform<Symbol>(1)) };
+	};
+	parser["AX"] = [](const SemanticValues& sv) {
+		return new mm::Axiom { sv[0].get<uint>(), Expr(sv.transform<Symbol>(1)), (uint) -1 };
+	};
+	parser["TH"] = [](const SemanticValues& sv) {
+		uint sz = sv.size();
+		mm::Theorem* th = new mm::Theorem();
+		th->label = sv[0].get<uint>();
+		th->expr = Expr(sv.transform<Symbol>(1, sz - 1));
+		th->proof = sv[sz - 1].get<mm::Proof*>();
+		return th;
+	};
+	parser["PROOF"] = [](const SemanticValues& sv) {
+		return (mm::Proof*)nullptr;
+	};
+	parser["COMMENT"] = [](const SemanticValues& sv) {
+		return new mm::Comment(sv.token());
+	};
+	parser["ELEMENT"] = [](const SemanticValues& sv) {
+		// COMMENT / CONST / VAR / DISJ / FLO / ESS / AX / TH /  BLOCK
+		switch (sv.choice()) {
+		case 0: return mm::Node(sv[0].get<mm::Comment*>());
+		case 1: return mm::Node(sv[0].get<mm::Constants*>());
+		case 2: return mm::Node(sv[0].get<mm::Variables*>());
+		case 3: return mm::Node(sv[0].get<mm::Disjointed*>());
+		case 4: return mm::Node(sv[0].get<mm::Floating*>());
+		case 5: return mm::Node(sv[0].get<mm::Essential*>());
+		case 6: return mm::Node(sv[0].get<mm::Axiom*>());
+		case 7: return mm::Node(sv[0].get<mm::Theorem*>());
+		case 8: return mm::Node(sv[0].get<mm::Block*>());
+		}
+		return mm::Node();
+	};
+	parser["BLOCK"] = [](const SemanticValues& sv) {
+		mm::Block* b =  new mm::Block();
+		b->contents = sv.transform<mm::Node>();
+		return b;
+	};
+	parser["SOURCE"] = [](const SemanticValues& sv) {
+		mm::Source* s =  new mm::Source("aaa", "bbb");
+		s->block->contents = sv.transform<mm::Node>();
+		return s;
+	};
 
-	if (ret) {
+	mm::Source* s = nullptr;
+	if (parser.parse<mm::Source*>(src, s)) {
+		cout << *s << endl;
 		cout << "SUCCESS PARSE" << endl;
 	} else {
 		cout << "FAIL PARSE" << endl;
 	}
-
-	/*
-	if (parser.parse(src_0)) {
-		cout << "SUCCESS PARSE" << endl;
-	} else {
-		cout << "FAIL PARSE" << endl;
-	}*/
 	return 0;
 }
