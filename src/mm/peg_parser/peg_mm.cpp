@@ -4,40 +4,7 @@
 
 using namespace std;
 
-auto syntax =
-R"(
-   # Metamath grammar
-
-   SOURCE  <- ( ELEMENT )*
-   ELEMENT <- CONST / VAR / DISJ / FLO / ESS / AX / TH / COMM / BLOCK
-   CONST   <-     '$c' ( SYMB )* '$.'
-   VAR     <-     '$v' ( SYMB )* '$.'
-   DISJ    <-     '$d' ( SYMB )* '$.'
-   FLO     <- LAB '$f' ( SYMB )* '$.'
-   ESS     <- LAB '$e' ( SYMB )* '$.'
-   AX      <- LAB '$a' ( SYMB )* '$.'
-   TH      <- LAB '$p' ( SYMB )* '$=' PROOF
-   PROOF   <- ( LAB )* '$.'
-   BLOCK   <- '${' ( ELEMENT )* '$}' 
-   COMM    <- '$(' COMM_TXT '$)'
-   
-   SYMB     <- < [^ \t\r\n]+   >
-   LAB      <- < [a-zA-Z0-9_]+ >
-   COMM_TXT <-  (!'$)' < [^ \t\r\n] > ) + 
-
-   %whitespace  <-  [ \t\r\n]*
-)";
-
-const string src_0 =
-R"(
-$(
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-        Recursively define primitive wffs for propositional calculus
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-$)
-)";
-
-const string src =
+const auto src =
 R"(
 
   $( Declare the primitive constant symbols for propositional calculus. $)
@@ -377,23 +344,58 @@ $)
 using namespace std;
 using namespace peg;
 
+auto mm_syntax = R"(
+    # Metamath grammar
+
+    SOURCE  <- ELEMENT*
+    ELEMENT <- COMMENT / CONST / VAR / DISJ / FLO / ESS / AX / TH /  BLOCK
+    CONST   <-      '$c' SYMB* '$.'
+    VAR     <-      '$v' SYMB* '$.'
+    DISJ    <-      '$d' SYMB* '$.'
+    FLO     <- LAB  '$f' SYMB* '$.'
+    ESS     <- LAB  '$e' SYMB* '$.'
+    AX      <- LAB  '$a' SYMB* '$.'
+    TH      <- LAB  '$p' SYMB* '$=' PROOF
+    PROOF   <- LAB* '$.'
+    BLOCK   <- '${' ELEMENT* '$}' 
+
+    SYMB    <- < (![ \t\r\n$] .)+ >
+    LAB     <- < [a-zA-Z0-9-_.]+ >
+    COMMENT <- '$(' < (!'$)' .)* > '$)'
+
+    %whitespace <- [ \t\r\n]*
+)";
+
 int main() {
 
 
 	peg::parser parser;
-	if (parser.load_grammar(syntax)) {
+	if (parser.load_grammar(mm_syntax)) {
 		cout << "SUCCESS GR" << endl;
 	} else {
 		cout << "FAIL GR" << endl;
 	}
 
 	//parser.enable_packrat_parsing(); // Enable packrat parsing.
+/*
+	parser["TOKEN"] = [](const SemanticValues& sv) {
+		// 'token' doesn't include trailing whitespaces
+		auto token = sv.token();
+	};
+*/
+	bool ret = parser.parse(src);
 
-
-	if (parser.parse(src_0.c_str())) {
+	if (ret) {
 		cout << "SUCCESS PARSE" << endl;
 	} else {
 		cout << "FAIL PARSE" << endl;
 	}
+
+	/*
+	if (parser.parse(src_0)) {
+		cout << "SUCCESS PARSE" << endl;
+	} else {
+		cout << "FAIL PARSE" << endl;
+	}*/
 	return 0;
 }
