@@ -53,6 +53,14 @@ exe mm :
   src/mm/ctags/parser.cpp
   ;
  
+exe ppp : 
+  src/memusage.cpp
+  src/timer.cpp
+  src/location.cpp
+  
+  src/mm/peg_parser/main.cpp
+  ; 
+ 
 exe mdl : 
   src/memusage.cpp
   src/timer.cpp
