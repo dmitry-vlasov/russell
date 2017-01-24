@@ -21,7 +21,8 @@ auto mm_syntax = R"(
     ESS     <- LAB  '$e' SYMB+ '$.'
     AX      <- LAB  '$a' SYMB+ '$.'
     TH      <- LAB  '$p' SYMB+ '$=' PROOF
-    PROOF   <- LAB+ '$.'
+    PROOF   <- REF+ '$.'
+    REF     <- LAB
     BLOCK   <- '${' ELEMENT* '$}' 
 
     SYMB    <- < (![ \t\r\n$] .)+ >
@@ -30,6 +31,10 @@ auto mm_syntax = R"(
 
     %whitespace <- [ \t\r\n]*
 )";
+
+void init_indexes(vector<Node>& nodes) {
+	for (uint i = 0; i < nodes.size(); ++ i) nodes[i].ind = i;
+}
 
 int main() {
 
@@ -82,7 +87,23 @@ int main() {
 		return th;
 	};
 	parser["PROOF"] = [](const SemanticValues& sv) {
-		return (mm::Proof*)nullptr;
+		Proof* pr = new Proof();
+		pr->refs = sv.transform<Ref>();
+		return pr;
+	};
+	parser["REF"] = [](const SemanticValues& sv) {
+		uint lab = sv[0].get<uint>();
+		Mm::Math& math = Mm::mod().math;
+		if (math.floatings.count(lab))
+			return Ref(math.floatings[lab]);
+		else if (math.essentials.count(lab))
+			return Ref(math.essentials[lab]);
+		else if (math.axioms.count(lab))
+			return Ref(math.axioms[lab]);
+		else if (math.theorems.count(lab))
+			return Ref(math.theorems[lab]);
+		else
+			throw Error("unknown label in proof", Mm::get().lex.labels.toStr(lab));
 	};
 	parser["COMMENT"] = [](const SemanticValues& sv) {
 		return new mm::Comment(sv.token());
@@ -105,11 +126,13 @@ int main() {
 	parser["BLOCK"] = [](const SemanticValues& sv) {
 		mm::Block* b =  new mm::Block();
 		b->contents = sv.transform<mm::Node>();
+		init_indexes(b->contents);
 		return b;
 	};
 	parser["SOURCE"] = [](const SemanticValues& sv) {
 		mm::Source* s =  new mm::Source("aaa", "bbb");
 		s->block->contents = sv.transform<mm::Node>();
+		init_indexes(s->block->contents);
 		return s;
 	};
 
