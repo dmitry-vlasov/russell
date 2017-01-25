@@ -1,3 +1,7 @@
+const auto mm_src_1 =
+R"()";
+
+
 const auto mm_src =
 R"(
 

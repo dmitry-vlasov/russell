@@ -21,11 +21,11 @@ struct Scope {
 	};
 	typedef vector<Scope> Stack;
 
-void markVars(Expr& expr, const Stack& stack) {
+void markVars(Expr& expr, const Stack* stack) {
     	for (Symbol& s : expr.symbols) {
     		bool is_var   = false;
     		bool is_const = false;
-			for (const Scope& vc : stack) {
+			for (const Scope& vc : *stack) {
 				if (vc.vars.find(s) != vc.vars.end()) is_var = true;
 				if (vc.consts.find(s) != vc.consts.end()) is_const = true;
 			}
@@ -77,13 +77,13 @@ struct Parser {
 		parser["CONST"] = [](const SemanticValues& sv, any& stack) {
 			Constants* consts = new Constants { Expr(sv.transform<Symbol>()) };
 			for (Symbol c : consts->expr.symbols)
-				stack.get<Stack&>().back().consts.insert(c);
+				stack.get<shared_ptr<Stack>>()->back().consts.insert(c);
 			return consts;
 		};
 		parser["VAR"] = [](const SemanticValues& sv, any& stack) {
 			Variables* vars = new Variables { Expr(sv.transform<Symbol>()) };
 			for (Symbol c : vars->expr.symbols)
-				stack.get<Stack&>().back().vars.insert(c);
+				stack.get<shared_ptr<Stack>>()->back().vars.insert(c);
 			return vars;
 		};
 		parser["DISJ"] = [](const SemanticValues& sv, any& stack) {
@@ -91,19 +91,19 @@ struct Parser {
 		};
 		parser["ESS"] = [](const SemanticValues& sv, any& stack) {
 			Essential* ess = new Essential { sv[0].get<uint>(), Expr(sv.transform<Symbol>(1)) };
-			markVars(ess->expr, stack.get<Stack&>());
+			markVars(ess->expr, stack.get<shared_ptr<Stack>>().get());
 			Mm::mod().math.essentials[ess->label] = ess;
 			return ess;
 		};
 		parser["FLO"] = [](const SemanticValues& sv, any& stack) {
 			Floating* flo = new Floating { sv[0].get<uint>(), Expr(sv.transform<Symbol>(1)) };
-			markVars(flo->expr, stack.get<Stack&>());
+			markVars(flo->expr, stack.get<shared_ptr<Stack>>().get());
 			Mm::mod().math.floatings[flo->label] = flo;
 			return flo;
 		};
 		parser["AX"] = [](const SemanticValues& sv, any& stack) {
 			Axiom* ax = new Axiom { sv[0].get<uint>(), Expr(sv.transform<Symbol>(1)), (uint) -1 };
-			markVars(ax->expr, stack.get<Stack&>());
+			markVars(ax->expr, stack.get<shared_ptr<Stack>>().get());
 			Mm::mod().math.axioms[ax->label] = ax;
 			return ax;
 		};
@@ -113,7 +113,7 @@ struct Parser {
 			th->label = sv[0].get<uint>();
 			th->expr = Expr(sv.transform<Symbol>(1, sz - 1));
 			th->proof = sv[sz - 1].get<Proof*>();
-			markVars(th->expr, stack.get<Stack&>());
+			markVars(th->expr, stack.get<shared_ptr<Stack>>().get());
 			Mm::mod().math.theorems[th->label] = th;
 			return th;
 		};
@@ -154,39 +154,42 @@ struct Parser {
 			}
 			return Node();
 		};
-		parser["BLOCK"] = [](const SemanticValues& sv, any& stack) {
-			Block* b = stack.get<Stack&>().back().block;
+		parser["BLOCK"] = [](const SemanticValues& sv, any& s) {
+			auto stack = s.get<shared_ptr<Stack>>();
+			Block* b = stack->back().block;
 			b->contents = sv.transform<Node>();
 			init_indexes(b->contents);
 			return b;
 		};
 		parser["BLOCK"].enter = [](any& s) {
-			Stack& stack = s.get<Stack&>();
-			stack.push_back(Scope(new Block(stack.back().block)));
+			auto stack = s.get<shared_ptr<Stack>>();
+			stack->push_back(Scope(new Block(stack->back().block)));
 		};
-		parser["BLOCK"].leave = [](any& stack) {
-			stack.get<Stack&>().pop_back();
+		parser["BLOCK"].leave = [](any& s) {
+			auto stack = s.get<shared_ptr<Stack>>();
+			stack->pop_back();
 		};
 		parser["SOURCE"] = [](const SemanticValues& sv, any& s) {
 			Source* src = new Source("aaa", "bbb");
-			Stack& stack = s.get<Stack&>();
-			stack.back().block->contents = sv.transform<Node>();
-			src->block = stack.back().block;
+			auto stack = s.get<shared_ptr<Stack>>();
+			stack->back().block->contents = sv.transform<Node>();
+			src->block = stack->back().block;
 			init_indexes(src->block->contents);
 			return src;
 		};
 		parser["SOURCE"].enter = [](any& s) {
-			Stack& stack = s.get<Stack&>();
-			stack.push_back(Scope(new Block()));
+			auto stack = s.get<shared_ptr<Stack>>();
+			stack->push_back(Scope(new Block()));
 		};
-		parser["SOURCE"].leave = [](any& stack) {
-			stack.get<Stack&>().pop_back();
+		parser["SOURCE"].leave = [](any& s) {
+			auto stack = s.get<shared_ptr<Stack>>();
+			stack->pop_back();
 		};
 	}
 
 	Source* parse(const char* src) {
 		mdl::mm::Source* s = nullptr;
-		Stack stack;
+		auto stack = make_shared<Stack>();
 		any any_stack(stack);
 		if (parser.parse<mdl::mm::Source*>(mm_src, any_stack, s)) {
 			return s;
@@ -202,10 +205,10 @@ private:
 
 int main() {
 	mdl::mm::Parser p;
-	mdl::mm::Source* s = nullptr;
-	if (p.parser.parse<mdl::mm::Source*>(mm_src, s)) {
+	if (mdl::mm::Source* s = p.parse(mm_src)) {
 		cout << *s << endl;
 		cout << "SUCCESS PARSE" << endl;
+		delete s;
 	} else {
 		cout << "FAIL PARSE" << endl;
 	}
