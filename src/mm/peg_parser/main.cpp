@@ -13,31 +13,14 @@ void init_indexes(vector<Node>& nodes) {
 	for (uint i = 0; i < nodes.size(); ++ i) nodes[i].ind = i;
 }
 
-struct Scope {
+struct Parser {
+	struct Scope {
 		Scope(Block* b = nullptr) : vars(), consts(), block(b) { }
 		set<Symbol> vars;
 		set<Symbol> consts;
 		Block*      block;
 	};
 	typedef vector<Scope> Stack;
-
-void markVars(Expr& expr, const Stack* stack) {
-    	for (Symbol& s : expr.symbols) {
-    		bool is_var   = false;
-    		bool is_const = false;
-			for (const Scope& vc : *stack) {
-				if (vc.vars.find(s) != vc.vars.end()) is_var = true;
-				if (vc.consts.find(s) != vc.consts.end()) is_const = true;
-			}
-			if (is_var && is_const)
-				throw Error("constant symbol is marked as variable", show_sy(s));
-			if (!is_var && !is_const)
-				throw Error("symbol is neither constant nor variable", show_sy(s));
-			s.var = is_var;
-		}
-    }
-struct Parser {
-
 
 	peg::parser parser;
 
@@ -46,8 +29,9 @@ struct Parser {
 		return R"(
 			# Metamath grammar
 		
-			SOURCE  <- ELEMENT*
-			ELEMENT <- COMMENT / CONST / VAR / DISJ / FLO / ESS / AX / TH /  BLOCK
+            SOURCE  <- BLOCK
+			BLOCK   <- ELEMENT*
+			ELEMENT <- COMMENT / CONST / VAR / DISJ / FLO / ESS / AX / TH / '${' BLOCK '$}'
 			CONST   <-      '$c' SYMB+ '$.'
 			VAR     <-      '$v' SYMB+ '$.'
 			DISJ    <-      '$d' SYMB+ '$.'
@@ -57,7 +41,6 @@ struct Parser {
 			TH      <- LAB  '$p' SYMB+ '$=' PROOF
 			PROOF   <- REF+ '$.'
 			REF     <- LAB
-			BLOCK   <- '${' ELEMENT* '$}' 
 		
 			SYMB    <- < (![ \t\r\n$] .)+ >
 			LAB     <- < [a-zA-Z0-9-_.]+ >
@@ -166,8 +149,7 @@ struct Parser {
 		};
 		parser["BLOCK"].enter = [](any& s) {
 			auto stack = s.get<shared_ptr<Stack>>();
-			Block* parent = stack->back().block;
-			assert(parent);
+			Block* parent = stack->size() ? stack->back().block : nullptr;
 			Block* child = new Block(parent);
 			stack->push_back(Scope(child));
 		};
@@ -177,19 +159,8 @@ struct Parser {
 		};
 		parser["SOURCE"] = [](const SemanticValues& sv, any& s) {
 			Source* src = new Source("aaa", "bbb");
-			auto stack = s.get<shared_ptr<Stack>>();
-			stack->back().block->contents = sv.transform<Node>();
-			src->block = stack->back().block;
-			init_indexes(src->block->contents);
+			src->block = sv[0].get<Block*>();
 			return src;
-		};
-		parser["SOURCE"].enter = [](any& s) {
-			auto stack = s.get<shared_ptr<Stack>>();
-			stack->push_back(Scope(new Block()));
-		};
-		parser["SOURCE"].leave = [](any& s) {
-			auto stack = s.get<shared_ptr<Stack>>();
-			stack->pop_back();
 		};
 	}
 
@@ -203,15 +174,30 @@ struct Parser {
 			return nullptr;
 		}
 	}
-private:
 
+private:
+	static void markVars(Expr& expr, const Stack* stack) {
+    	for (Symbol& s : expr.symbols) {
+    		bool is_var   = false;
+    		bool is_const = false;
+			for (const Scope& vc : *stack) {
+				if (vc.vars.find(s) != vc.vars.end()) is_var = true;
+				if (vc.consts.find(s) != vc.consts.end()) is_const = true;
+			}
+			if (is_var && is_const)
+				throw Error("constant symbol is marked as variable", show_sy(s));
+			if (!is_var && !is_const)
+				throw Error("symbol is neither constant nor variable", show_sy(s));
+			s.var = is_var;
+		}
+    }
 };
 
 }}
 
 int main() {
 	mdl::mm::Parser p;
-	if (mdl::mm::Source* s = p.parse(mm_src_1)) {
+	if (mdl::mm::Source* s = p.parse(mm_src)) {
 		cout << *s << endl;
 		cout << "SUCCESS PARSE" << endl;
 		delete s;

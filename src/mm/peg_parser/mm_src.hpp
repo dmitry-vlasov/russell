@@ -1,5 +1,16 @@
 const auto mm_src_1 =
 R"(
+  $c |- $.  $v ph $.
+  ${
+    dummylink.1 $e |- ph $.
+  $}
+
+
+)";
+
+/*
+const auto mm_src_1 =
+R"(
 
   $c ( $.  $( Left parenthesis $)
   $c ) $.  $( Right parenthesis $)
@@ -32,6 +43,7 @@ R"(
 
 
 )";
+ */
 
 
 const auto mm_src =
