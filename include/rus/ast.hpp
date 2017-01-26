@@ -304,7 +304,7 @@ struct Theory {
 
 struct Source {
 	Source(const string& r, const string& n) :
-	top(false), root(r), name(n), theory(nullptr) {
+	top(false), root(r), name(n), data(), theory(nullptr) {
 		static bool t = true; top = t; t = false;
 		boost::erase_last(name, ".smm");
 		boost::erase_last(name, ".mm");
@@ -314,6 +314,7 @@ struct Source {
 	bool    top;
 	string  root;
 	string  name;
+	string  data;
 	string  path() { return (root.size() ? root + "/" + name : name) + ".rus"; }
 	string  dir() { string p = path(); return p.substr(0, p.find_last_of("/")) + "/"; }
 	Theory* theory;

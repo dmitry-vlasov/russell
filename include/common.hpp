@@ -160,7 +160,8 @@ inline string cut_outer_directory(string path) {
 	return path.substr(slash_pos == string::npos ? 0 : slash_pos + 1);
 }
 
-void read_smart(string& data, string& path, string root = "");
+ifstream open_smart(string& path, string root);
+void read_smart(string& data, ifstream&);
 
 template<class T>
 void deep_write(T* target, auto get_cont, auto get_inc, auto is_inc) {
@@ -200,10 +201,10 @@ void parse(Source* src, string& data, auto space) {
 
 template<class Source, class Parser>
 Source* parse(string name, string root, auto space) {
-	string data;
-	read_smart(data, name, root);
+	ifstream in = open_smart(name, root);
 	Source* src = new Source(root, name);
-	parse<Source, Parser>(src, data, space);
+	read_smart(src->data, in);
+	parse<Source, Parser>(src, src->data, space);
 	return src;
 }
 
@@ -217,11 +218,13 @@ Inclusion* include(string path, string root, auto space, Source* (get_src)(Inclu
 		//cout << "parsing src: " << path << endl;
 		string data;
 		string orig_path(path);
-		read_smart(data, path, root);
+		ifstream in = open_smart(path, root);
 		Source* src = new Source(root, path);
+		read_smart(src->data, in);
+
 		Inclusion* inc = new Inclusion(src, true);
 		included[orig_path] = inc;
-		parse<Source, Parser>(src, data, space);
+		parse<Source, Parser>(src, src->data, space);
 		return inc;
 	}
 }

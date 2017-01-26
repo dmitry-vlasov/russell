@@ -44,8 +44,7 @@ ifstream open_smart(string& path, string root) {
 	}
 }
 
-void read_smart(string& data, string& path, string root) {
-	ifstream in = open_smart(path, root);
+void read_smart(string& data, ifstream& in) {
 	in.unsetf(std::ios::skipws);
 	std::copy(
 		std::istream_iterator<char>(in),

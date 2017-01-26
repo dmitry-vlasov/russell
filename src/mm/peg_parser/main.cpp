@@ -31,7 +31,7 @@ struct Parser {
 		
             SOURCE  <- BLOCK
 			BLOCK   <- ELEMENT*
-			ELEMENT <- COMMENT / CONST / VAR / DISJ / FLO / ESS / AX / TH / '${' BLOCK '$}'
+			ELEMENT <- COMMENT / CONST / VAR / DISJ / FLO / ESS / AX / TH / IMPORT / '${' BLOCK '$}'
 			CONST   <-      '$c' SYMB+ '$.'
 			VAR     <-      '$v' SYMB+ '$.'
 			DISJ    <-      '$d' SYMB+ '$.'
@@ -45,6 +45,7 @@ struct Parser {
 			SYMB    <- < (![ \t\r\n$] .)+ >
 			LAB     <- < [a-zA-Z0-9-_.]+ >
 			COMMENT <- '$(' < (!'$)' .)* > '$)'
+            IMPORT  <- '$[' < (!'$]' .)* > '$]'
 		
 			%whitespace <- [ \t\r\n]*
 		)";
@@ -158,9 +159,18 @@ struct Parser {
 			stack->pop_back();
 		};
 		parser["SOURCE"] = [](const SemanticValues& sv, any& s) {
-			Source* src = new Source("aaa", "bbb");
+			Source* src = new Source("aaa", "bbb", "ccc");
 			src->block = sv[0].get<Block*>();
 			return src;
+		};
+		parser["IMPORT"] = [](const SemanticValues& sv) {
+			return
+			mdl::include<Source, Parser, Inclusion>(
+				sv.token(),
+				Mm::get().config.root,
+				" ",
+				[] (Inclusion* inc) -> Source* { return inc->source; }
+			);
 		};
 	}
 
