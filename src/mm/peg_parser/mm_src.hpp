@@ -1,5 +1,37 @@
 const auto mm_src_1 =
-R"()";
+R"(
+
+  $c ( $.  $( Left parenthesis $)
+  $c ) $.  $( Right parenthesis $)
+  $c -> $. $( Right arrow (read:  "implies") $)
+  $c -. $. $( Right handle (read:  "not") $)
+  $c wff $. $( Well-formed formula symbol (read:  "the following symbol
+               sequence is a wff") $)
+  $c |- $. $( Turnstile (read:  "the following symbol sequence is provable" or
+              'a proof exists for") $)
+  $v ph $.  $( Greek phi $)
+  $v ps $.  $( Greek psi $)
+  $v ch $.  $( Greek chi $)
+  $v th $.  $( Greek theta $)
+
+  $( Let variable ` ph ` be a wff. $)
+  wph $f wff ph $.
+  $( Let variable ` ps ` be a wff. $)
+  wps $f wff ps $.
+  $( Let variable ` ch ` be a wff. $)
+  wch $f wff ch $.
+  $( Let variable ` th ` be a wff. $)
+  wth $f wff th $.
+
+  ${
+    dummylink.1 $e |- ph $.
+    dummylink.2 $e |- ps $.
+    dummylink $p |- ph $=
+      dummylink.1 $.
+  $}
+
+
+)";
 
 
 const auto mm_src =

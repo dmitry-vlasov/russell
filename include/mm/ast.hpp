@@ -209,7 +209,7 @@ struct Block {
 };
 
 struct Source {
-	Source(const string& r, const string& n) : root(r), name(n), block(new Block) {
+	Source(const string& r, const string& n) : root(r), name(n), block(nullptr) {
 		boost::erase_last(name, ".smm");
 		boost::erase_last(name, ".mm");
 		boost::erase_last(name, ".rus");

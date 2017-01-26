@@ -139,20 +139,23 @@ struct Parser {
 		parser["COMMENT"] = [](const SemanticValues& sv) {
 			return new Comment(sv.token());
 		};
-		parser["ELEMENT"] = [](const SemanticValues& sv, any& stack) {
+		parser["ELEMENT"] = [](const SemanticValues& sv, any& s) {
 			// COMMENT / CONST / VAR / DISJ / FLO / ESS / AX / TH /  BLOCK
+			Node node;
 			switch (sv.choice()) {
-			case 0: return Node(sv[0].get<Comment*>());
-			case 1: return Node(sv[0].get<Constants*>());
-			case 2: return Node(sv[0].get<Variables*>());
-			case 3: return Node(sv[0].get<Disjointed*>());
-			case 4: return Node(sv[0].get<Floating*>());
-			case 5: return Node(sv[0].get<Essential*>());
-			case 6: return Node(sv[0].get<Axiom*>());
-			case 7: return Node(sv[0].get<Theorem*>());
-			case 8: return Node(sv[0].get<Block*>());
+			case 0: node = Node(sv[0].get<Comment*>());   break;
+			case 1: node = Node(sv[0].get<Constants*>()); break;
+			case 2: node = Node(sv[0].get<Variables*>()); break;
+			case 3: node = Node(sv[0].get<Disjointed*>());break;
+			case 4: node = Node(sv[0].get<Floating*>());  break;
+			case 5: node = Node(sv[0].get<Essential*>()); break;
+			case 6: node = Node(sv[0].get<Axiom*>());     break;
+			case 7: node = Node(sv[0].get<Theorem*>());   break;
+			case 8: node = Node(sv[0].get<Block*>());     break;
 			}
-			return Node();
+			auto stack = s.get<shared_ptr<Stack>>();
+			stack->back().block->contents.push_back(node);
+			return node;
 		};
 		parser["BLOCK"] = [](const SemanticValues& sv, any& s) {
 			auto stack = s.get<shared_ptr<Stack>>();
@@ -163,7 +166,10 @@ struct Parser {
 		};
 		parser["BLOCK"].enter = [](any& s) {
 			auto stack = s.get<shared_ptr<Stack>>();
-			stack->push_back(Scope(new Block(stack->back().block)));
+			Block* parent = stack->back().block;
+			assert(parent);
+			Block* child = new Block(parent);
+			stack->push_back(Scope(child));
 		};
 		parser["BLOCK"].leave = [](any& s) {
 			auto stack = s.get<shared_ptr<Stack>>();
@@ -191,7 +197,7 @@ struct Parser {
 		mdl::mm::Source* s = nullptr;
 		auto stack = make_shared<Stack>();
 		any any_stack(stack);
-		if (parser.parse<mdl::mm::Source*>(mm_src, any_stack, s)) {
+		if (parser.parse<mdl::mm::Source*>(src, any_stack, s)) {
 			return s;
 		} else {
 			return nullptr;
@@ -205,7 +211,7 @@ private:
 
 int main() {
 	mdl::mm::Parser p;
-	if (mdl::mm::Source* s = p.parse(mm_src)) {
+	if (mdl::mm::Source* s = p.parse(mm_src_1)) {
 		cout << *s << endl;
 		cout << "SUCCESS PARSE" << endl;
 		delete s;
