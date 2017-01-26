@@ -1026,7 +1026,7 @@ public:
 
     any reduce(const SemanticValues& sv, any& dt) const;
 
-    std::weak_ptr<Ope> ope_;
+    std::shared_ptr<Ope> ope_;
     Definition*          outer_;
 
     friend class Definition;
@@ -1310,7 +1310,7 @@ public:
     }
 
     std::shared_ptr<Ope> get_core_operator() {
-        return holder_->ope_.lock();
+        return holder_->ope_;
     }
 
     std::string                    name;
@@ -1398,7 +1398,7 @@ inline size_t TokenBoundary::parse(const char* s, size_t n, SemanticValues& sv, 
 }
 
 inline size_t Holder::parse(const char* s, size_t n, SemanticValues& sv, Context& c, any& dt) const {
-    if (!ope_.lock()) {
+    if (!ope_) {
         throw std::logic_error("Uninitialized definition ope was used...");
     }
 
@@ -1424,7 +1424,7 @@ inline size_t Holder::parse(const char* s, size_t n, SemanticValues& sv, Context
             }
         });
 
-        const auto& rule = *ope_.lock();
+        const auto& rule = *ope_;
         len = rule.parse(s, n, chldsv, c, dt);
 
         // Invoke action
@@ -1515,7 +1515,7 @@ inline void AssignIDToDefinition::visit(Holder& ope) {
     auto id = ids.size();
     ids[p] = id;
     ope.outer_->id = id;
-    ope.ope_.lock()->accept(*this);
+    ope.ope_->accept(*this);
 }
 
 /*
@@ -1732,7 +1732,7 @@ private:
             ope.weak_.lock()->accept(*this);
         }
         void visit(Holder& ope) override {
-            ope.ope_.lock()->accept(*this);
+            ope.ope_->accept(*this);
         }
         void visit(DefinitionReference& ope) override {
             if (ope.name_ == name_) {
