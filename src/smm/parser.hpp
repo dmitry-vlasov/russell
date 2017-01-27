@@ -173,6 +173,10 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 	qi::rule<Iterator, Inclusion*(), ascii::space_type> inclusion;
 	qi::rule<Iterator, Comment*(), qi::unused_type> comment;
 	qi::rule<Iterator, Source(), ascii::space_type> source;
+
+	static bool parse(Iterator& beg, Iterator& end, auto space, Source& src) {
+		return qi::phrase_parse(beg, end, Grammar(), space, src);
+	}
 };
 
 template <typename Iterator>

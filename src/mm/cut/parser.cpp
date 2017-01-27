@@ -448,7 +448,8 @@ void patch(string& data) {
 
 Section* parse(const string& root, string in, const string& out) {
 	string data;
-	read_smart(data, in, root);
+	ifstream ifn = open_smart(in, root);
+	read_smart(data, ifn);
 	patch(data);
 
 	LocationIter iter(data.begin(), in);

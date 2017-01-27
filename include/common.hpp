@@ -194,7 +194,7 @@ template<class Source, class Parser>
 void parse(Source* src, string& data, auto space) {
 	LocationIter iter(data.begin(), src->name);
 	LocationIter end(data.end(), src->name);
-	if (!phrase_parse(iter, end, Parser(), space, *src) || iter != end) {
+	if (!Parser::parse(iter, end, space, *src) || iter != end) {
 		throw Error("parsing failed", src->name);
 	}
 }

@@ -434,6 +434,10 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, Comment*(), qi::unused_type> comment_sl;
 	qi::rule<Iterator, Comment*(), qi::unused_type> comment;
 	qi::rule<Iterator, Source(), unicode::space_type> source;
+
+	static bool parse(Iterator& beg, Iterator& end, auto space, Source& src) {
+		return qi::phrase_parse(beg, end, Grammar(), space, src);
+	}
 };
 
 template <typename Iterator>

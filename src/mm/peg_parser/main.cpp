@@ -159,7 +159,7 @@ struct Parser {
 			stack->pop_back();
 		};
 		parser["SOURCE"] = [](const SemanticValues& sv, any& s) {
-			Source* src = new Source("aaa", "bbb", "ccc");
+			Source* src = new Source("aaa", "bbb");
 			src->block = sv[0].get<Block*>();
 			return src;
 		};
@@ -183,6 +183,13 @@ struct Parser {
 		} else {
 			return nullptr;
 		}
+	}
+
+	static bool parse(LocationIter& beg, LocationIter& end, auto space, mdl::mm::Source& src) {
+		Parser p;
+		auto stack = make_shared<Stack>();
+		any any_stack(stack);
+		return p.parser.parse<mdl::mm::Source&>(&*beg, any_stack, src);
 	}
 
 private:
