@@ -134,4 +134,16 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	initNames();
 }
 
-}}} // mdl::mm::parser
+}} //mm::parser
+
+template<>
+inline mm::Source* parse<mm::Source, mm::parser::Grammar<LocationIter>>(string name, string root, boost::spirit::ascii::space_type space) {
+	ifstream in = open_smart(name, root);
+	mm::Source* src = new mm::Source(root, name);
+	src->block = new mm::Block;
+	read_smart(src->data, in);
+	parse<mm::Source, mm::parser::Grammar<LocationIter>>(src, src->data, space);
+	return src;
+}
+
+} // mdl

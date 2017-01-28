@@ -9,7 +9,40 @@
 #include "mm/globals.hpp"
 #include "mm/adaptors.hpp"
 
-namespace mdl { namespace mm { namespace parser {
+namespace mdl {
+namespace mm { namespace parser {
+
+template<class>
+class Grammar;
+
+}}
+
+
+template<>
+inline mm::Inclusion* include<mm::Source, mm::parser::Grammar<LocationIter>, mm::Inclusion>
+	(string path, string root, boost::spirit::ascii::space_type space, mm::Source* (get_src)(mm::Inclusion*)) {
+	static map<string, mm::Inclusion*> included;
+	if (included.count(path)) {
+		mm::Inclusion* inc = included[path];
+		return new mm::Inclusion(get_src(inc), false);
+	} else {
+		//cout << "parsing src: " << path << endl;
+		string data;
+		string orig_path(path);
+		ifstream in = open_smart(path, root);
+		mm::Source* src = new mm::Source(root, path);
+		src->block = new mm::Block;
+		read_smart(src->data, in);
+
+		mm::Inclusion* inc = new mm::Inclusion(src, true);
+		included[orig_path] = inc;
+		parse<mm::Source, mm::parser::Grammar<LocationIter>>(src, src->data, space);
+		return inc;
+	}
+}
+
+
+namespace mm { namespace parser {
 
 namespace qi      = boost::spirit::qi;
 namespace ascii   = boost::spirit::ascii;

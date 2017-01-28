@@ -9,10 +9,6 @@ using namespace peg;
 
 namespace mdl { namespace mm {
 
-void init_indexes(vector<Node>& nodes) {
-	for (uint i = 0; i < nodes.size(); ++ i) nodes[i].ind = i;
-}
-
 struct Parser {
 	struct Scope {
 		Scope(Block* b = nullptr) : vars(), consts(), block(b) { }
@@ -31,7 +27,7 @@ struct Parser {
 		
             SOURCE  <- BLOCK
 			BLOCK   <- ELEMENT*
-			ELEMENT <- COMMENT / CONST / VAR / DISJ / FLO / ESS / AX / TH / IMPORT / '${' BLOCK '$}'
+			ELEMENT <- COMMENT / CONST / VAR / DISJ / FLO / ESS / AX / TH / INCLUDE / '${' BLOCK '$}'
 			CONST   <-      '$c' SYMB+ '$.'
 			VAR     <-      '$v' SYMB+ '$.'
 			DISJ    <-      '$d' SYMB+ '$.'
@@ -45,7 +41,7 @@ struct Parser {
 			SYMB    <- < (![ \t\r\n$] .)+ >
 			LAB     <- < [a-zA-Z0-9-_.]+ >
 			COMMENT <- '$(' < (!'$)' .)* > '$)'
-            IMPORT  <- '$[' < (!'$]' .)* > '$]'
+            INCLUDE <- '$[' < (!'$]' .)* > '$]'
 		
 			%whitespace <- [ \t\r\n]*
 		)";
@@ -135,7 +131,8 @@ struct Parser {
 			case 5: node = Node(sv[0].get<Essential*>()); break;
 			case 6: node = Node(sv[0].get<Axiom*>());     break;
 			case 7: node = Node(sv[0].get<Theorem*>());   break;
-			case 8: node = Node(sv[0].get<Block*>());     break;
+			case 8: node = Node(sv[0].get<Inclusion*>());     break;
+			case 9: node = Node(sv[0].get<Block*>());     break;
 			}
 			auto stack = s.get<shared_ptr<Stack>>();
 			stack->back().block->contents.push_back(node);
@@ -163,8 +160,7 @@ struct Parser {
 			src->block = sv[0].get<Block*>();
 			return src;
 		};
-		parser["IMPORT"] = [](const SemanticValues& sv) {
-			return
+		parser["INCLUDE"] = [](const SemanticValues& sv) {
 			mdl::include<Source, Parser, Inclusion>(
 				sv.token(),
 				Mm::get().config.root,
@@ -208,6 +204,9 @@ private:
 			s.var = is_var;
 		}
     }
+	static void init_indexes(vector<Node>& nodes) {
+		for (uint i = 0; i < nodes.size(); ++ i) nodes[i].ind = i;
+	}
 };
 
 }}

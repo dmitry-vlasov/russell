@@ -123,11 +123,13 @@ mm::Source* translate_source(const Source* src, Maps& maps, mm::Source* target) 
 		return maps.sources[src];
 	} else {
 		Config conf = Smm::get().config;
-		if (!target)
+		if (!target) {
 			target = new mm::Source(
 				conf.deep ? conf.out : conf.root,
 				src->name
 			);
+			target->block = new mm::Block;
+		}
 		maps.sources[src] = target;
 		for (auto& node : src->contents)
 			translate(node, target->block, maps);
@@ -143,6 +145,7 @@ mm::Source* translate_to_mm(const Source* source) {
 		conf.deep ? conf.out : conf.root,
 		conf.deep ? conf.in  : conf.out
 	);
+	target->block = new mm::Block;
 	Maps maps;
 	return translate_source(source, maps, target);
 }
