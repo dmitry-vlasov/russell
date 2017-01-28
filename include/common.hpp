@@ -191,7 +191,7 @@ void deep_write(T* target, auto get_cont, auto get_inc, auto is_inc) {
 }
 
 template<class Source, class Parser>
-void parse(Source* src, string& data, auto space) {
+void parse(Source*& src, string& data, auto space) {
 	LocationIter iter(data.begin(), src->name);
 	LocationIter end(data.end(), src->name);
 	if (!Parser::parse(iter, end, space, *src) || iter != end) {

@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include <boost/spirit/include/qi.hpp>
+
 #include "peglib.h"
 #include "mm/globals.hpp"
 #include "mm_src.hpp"
@@ -10,6 +12,7 @@ using namespace peg;
 namespace mdl { namespace mm {
 
 struct Parser {
+private:
 	struct Scope {
 		Scope(Block* b = nullptr) : vars(), consts(), block(b) { }
 		set<Symbol> vars;
@@ -20,7 +23,7 @@ struct Parser {
 
 	peg::parser parser;
 
-
+public:
 	static const char* mm_syntax() {
 		return R"(
 			# Metamath grammar
@@ -46,7 +49,7 @@ struct Parser {
 			%whitespace <- [ \t\r\n]*
 		)";
 	}
-	Parser() : parser(mm_syntax()) {
+	Parser(string name, string root) : parser(mm_syntax()) {
 
 		parser["SYMB"] = [](const SemanticValues& sv) {
 			return Symbol(Mm::mod().lex.symbols.toInt(sv.token()));
@@ -155,21 +158,38 @@ struct Parser {
 			auto stack = s.get<shared_ptr<Stack>>();
 			stack->pop_back();
 		};
-		parser["SOURCE"] = [](const SemanticValues& sv, any& s) {
-			Source* src = new Source("aaa", "bbb");
+		parser["SOURCE"] = [name, root](const SemanticValues& sv, any& s) {
+			Source* src = new Source(name, root);
 			src->block = sv[0].get<Block*>();
 			return src;
 		};
-		parser["INCLUDE"] = [](const SemanticValues& sv) {
-			mdl::include<Source, Parser, Inclusion>(
-				sv.token(),
-				Mm::get().config.root,
-				" ",
-				[] (Inclusion* inc) -> Source* { return inc->source; }
-			);
+		parser["INCLUDE"] = [root](const SemanticValues& sv) {
+			string path = sv.token();
+			static map<string, mm::Inclusion*> included;
+			if (included.count(path)) {
+				mm::Inclusion* inc = included[path];
+				return new mm::Inclusion(inc->source, false);
+			} else {
+				mm::Inclusion* inc = new mm::Inclusion(nullptr, true);
+				included[path] = inc;
+				inc->source = parse(path, root);
+				return inc;
+			}
 		};
 	}
 
+	static Source* parse(string name, string root) {
+		ifstream in = open_smart(name, root);
+		string data;
+		read_smart(data, in);
+
+		Parser p(name, root);
+		Source* src = p.parse(data.c_str());
+		std::swap(data, src->data);
+		return src;
+	}
+
+private:
 	Source* parse(const char* src) {
 		mdl::mm::Source* s = nullptr;
 		auto stack = make_shared<Stack>();
@@ -181,14 +201,6 @@ struct Parser {
 		}
 	}
 
-	static bool parse(LocationIter& beg, LocationIter& end, auto space, mdl::mm::Source& src) {
-		Parser p;
-		auto stack = make_shared<Stack>();
-		any any_stack(stack);
-		return p.parser.parse<mdl::mm::Source&>(&*beg, any_stack, src);
-	}
-
-private:
 	static void markVars(Expr& expr, const Stack* stack) {
     	for (Symbol& s : expr.symbols) {
     		bool is_var   = false;
@@ -209,18 +221,44 @@ private:
 	}
 };
 
-}}
+} // mm
 
-int main() {
-	mdl::mm::Parser p;
-	if (mdl::mm::Source* s = p.parse(mm_src)) {
-		cout << *s << endl;
-		cout << "SUCCESS PARSE" << endl;
-		delete s;
-	} else {
-		cout << "FAIL PARSE" << endl;
-	}
-	return 0;
+/*
+template<>
+inline mm::Source* parse<mm::Source, mm::Parser>(string name, string root, boost::spirit::ascii::space_type space) {
+	ifstream in = open_smart(name, root);
+	mm::Source* src = nullptr;
+	string data;
+	read_smart(data, in);
+	parse<mm::Source, mm::Parser>(src, data, space);
+	std::swap(data, src->data);
+	return src;
 }
+
+template<>
+inline mm::Inclusion* include<mm::Source, mm::Parser, mm::Inclusion>(string path, string root, boost::spirit::ascii::space_type space, mm::Source* (get_src)(mm::Inclusion*)) {
+	static map<string, mm::Inclusion*> included;
+	if (included.count(path)) {
+		mm::Inclusion* inc = included[path];
+		return new mm::Inclusion(get_src(inc), false);
+	} else {
+		//cout << "parsing src: " << path << endl;
+		string data;
+		string orig_path(path);
+		ifstream in = open_smart(path, root);
+		mm::Source* src = nullptr;
+		read_smart(data, in);
+
+		mm::Inclusion* inc = new mm::Inclusion(src, true);
+		included[orig_path] = inc;
+		parse<mm::Source, mm::Parser>(src, data, space);
+		std::swap(data, src->data);
+		return inc;
+	}
+}
+*/
+
+} //mdl
+
 
 

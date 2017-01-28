@@ -52,23 +52,6 @@ exe mm :
   src/mm/cut/globals.cpp
   ;
  
-exe ppp : 
-  src/memusage.cpp
-  src/timer.cpp
-  src/location.cpp
-  src/smm/show.cpp
-  src/mm/tree.cpp
-  src/mm/parser.cpp
-  src/mm/translate.cpp
-  src/mm/merge/parser.cpp
-  src/mm/cut/parser.cpp
-  src/mm/cut/show.cpp
-  src/mm/cut/globals.cpp
-  src/mm/globals.cpp
-  src/mm/show.cpp
-  src/mm/peg_parser/main.cpp
-  ; 
- 
 exe mdl : 
   src/memusage.cpp
   src/timer.cpp
