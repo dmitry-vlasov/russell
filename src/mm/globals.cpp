@@ -15,7 +15,13 @@ string show_id(uint lab) {
 	return mm::Mm::get().lex.labels.toStr(lab);
 }
 
-namespace mm { namespace {
+namespace mm {
+
+Source* parse(string path) {
+	return parse_peg(path);
+}
+
+namespace {
 
 bool parse_mm(Mm& mm) {
 	try {

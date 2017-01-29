@@ -6,14 +6,15 @@ namespace mdl { namespace mm {
 struct Parser {
 private:
 	struct Scope {
-		unordered_set<Symbol> vars;
-		unordered_set<Symbol> consts;
+		set<Symbol> vars;
+		set<Symbol> consts;
 	};
 	typedef vector<Scope> Stack;
 	struct Context {
 		Stack  stack;
 		bool   source;
 		Block* block;
+		set<Block*> src_blocks;
 	};
 	peg::parser parser;
 
@@ -156,16 +157,24 @@ public:
 		parser["BLOCK"].enter = [](peg::any& c) {
 			Context* context = c.get<std::shared_ptr<Context>>().get();
 			context->block = new Block(context->block);
-			if (!context->source) context->stack.push_back(Scope());
+			if (!context->source) {
+				context->stack.push_back(Scope());
+			} else {
+				context->src_blocks.insert(context->block);
+			}
 			context->source = false;
 		};
 		parser["BLOCK"].leave = [](peg::any& c) {
 			Context* context = c.get<std::shared_ptr<Context>>().get();
-			if (context->block->parent) context->stack.pop_back();
+			if (!context->src_blocks.count(context->block)) {
+				context->stack.pop_back();
+			} else {
+				context->src_blocks.erase(context->block);
+			}
 			context->block = context->block->parent;
 		};
 		parser["SOURCE"] = [name, root](const peg::SemanticValues& sv, peg::any& context) {
-			Source* src = new Source(name, root);
+			Source* src = new Source(root, name);
 			src->block = sv[0].get<Block*>();
 			return src;
 		};

@@ -64,9 +64,8 @@ struct Mm {
 
 Source* parse_spirit(string path);
 Source* parse_peg(string path);
-inline Source* parse(string path) {
-	return parse_peg(path);
-}
+Source* parse(string path);
+
 smm::Source* translate(const Source* source);
 
 }} // mdl::mm
