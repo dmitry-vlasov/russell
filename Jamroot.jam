@@ -39,10 +39,12 @@ exe mm :
   
   src/smm/show.cpp
   
+  src/mm/spirit_parser.cpp
+  src/mm/peg_parser.cpp
+  
   src/mm/tree.cpp
   src/mm/globals.cpp
   src/mm/show.cpp
-  src/mm/parser.cpp
   src/mm/translate.cpp
   src/mm/main.cpp 
   
@@ -50,7 +52,6 @@ exe mm :
   src/mm/cut/parser.cpp
   src/mm/cut/show.cpp
   src/mm/cut/globals.cpp
-  src/mm/peg_parser/parser.cpp
   ;
  
 exe mdl : 

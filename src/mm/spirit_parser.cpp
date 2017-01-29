@@ -1,4 +1,4 @@
-#include "mm/grammar.hpp"
+#include "spirit_grammar.hpp"
 
 namespace mdl { namespace mm {
 
