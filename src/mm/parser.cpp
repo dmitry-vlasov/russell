@@ -2,7 +2,7 @@
 
 namespace mdl { namespace mm {
 
-Source* parse(string name) {
+Source* parse_spirit(string name) {
 	typedef parser::Grammar<LocationIter> Parser;
 	return mdl::parse<Source, Parser>(name, Mm::get().config.root, parser::ascii::space);
 }

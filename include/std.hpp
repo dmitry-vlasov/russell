@@ -32,6 +32,7 @@
 #include <thread>
 #include <mutex>
 #include <unordered_map>
+#include <unordered_set>
 
 #include <cstdlib>
 #include <cstring>
@@ -91,6 +92,8 @@ namespace mdl {
 	using std::bitset;
 	using std::thread;
 	using std::mutex;
+	using std::unordered_map;
+	using std::unordered_set;
 
 	using std::for_each;
 }

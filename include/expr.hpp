@@ -41,10 +41,34 @@ struct Symbol {
 	bool fin:1; //< final node in a tree (in a horizontal iteration)
 };
 
+} // mdl
+
+namespace std {
+	template<>
+	struct hash<mdl::Symbol> {
+		size_t operator()(const mdl::Symbol& s) const noexcept {
+			return s.lit;
+		}
+	};
+}
+
+namespace mdl {
+
 struct Expr {
 	Expr() : symbols() { }
 	Expr(const Expr& ex) : symbols(ex.symbols) { }
+	Expr(Expr&& ex) : symbols(ex.symbols) { }
 	Expr(const vector<Symbol>& s) : symbols(s) { }
+
+	Expr& operator = (const Expr& ex) {
+		symbols = ex.symbols;
+		return *this;
+	}
+	Expr& operator = (Expr&& ex) {
+		symbols = ex.symbols;
+		return *this;
+	}
+
 	void push_back(Symbol s) {
 		symbols.push_back(s);
 	}

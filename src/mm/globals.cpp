@@ -21,6 +21,7 @@ bool parse_mm(Mm& mm) {
 	try {
 		mm.timers.read.start();
 		mm.source = parse(mm.config.in);
+		if (!mm.source) throw Error("parsing of " + mm.config.in + " failed");
 		//cout << endl << *source;
 		mm.timers.read.stop();
 		return true;

@@ -90,6 +90,12 @@ public:
         return content_ == nullptr;
     }
 
+    template <typename T>
+    bool is() const {
+        if (!content_) return false;
+        return dynamic_cast<holder<T>*>(content_);
+    }
+
     template <
         typename T,
         typename std::enable_if<!std::is_same<T, any>::value>::type*& = enabler

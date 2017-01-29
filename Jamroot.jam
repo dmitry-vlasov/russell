@@ -50,6 +50,7 @@ exe mm :
   src/mm/cut/parser.cpp
   src/mm/cut/show.cpp
   src/mm/cut/globals.cpp
+  src/mm/peg_parser/parser.cpp
   ;
  
 exe mdl : 

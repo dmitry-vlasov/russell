@@ -62,7 +62,11 @@ struct Mm {
 	static Mm& mod() { static Mm mm; return mm; }
 };
 
-Source* parse(string path);
+Source* parse_spirit(string path);
+Source* parse_peg(string path);
+inline Source* parse(string path) {
+	return parse_peg(path);
+}
 smm::Source* translate(const Source* source);
 
 }} // mdl::mm

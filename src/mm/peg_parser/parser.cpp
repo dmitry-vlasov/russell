@@ -1,26 +1,20 @@
-#include <iostream>
-
-#include <boost/spirit/include/qi.hpp>
-
 #include "peglib.h"
 #include "mm/globals.hpp"
-#include "mm_src.hpp"
-
-using namespace std;
-using namespace peg;
 
 namespace mdl { namespace mm {
 
 struct Parser {
 private:
 	struct Scope {
-		Scope(Block* b = nullptr) : vars(), consts(), block(b) { }
-		set<Symbol> vars;
-		set<Symbol> consts;
-		Block*      block;
+		unordered_set<Symbol> vars;
+		unordered_set<Symbol> consts;
 	};
 	typedef vector<Scope> Stack;
-
+	struct Context {
+		Stack  stack;
+		bool   source;
+		Block* block;
+	};
 	peg::parser parser;
 
 public:
@@ -30,19 +24,20 @@ public:
 		
             SOURCE  <- BLOCK
 			BLOCK   <- ELEMENT*
-			ELEMENT <- COMMENT / CONST / VAR / DISJ / FLO / ESS / AX / TH / INCLUDE / '${' BLOCK '$}'
-			CONST   <-      '$c' SYMB+ '$.'
-			VAR     <-      '$v' SYMB+ '$.'
-			DISJ    <-      '$d' SYMB+ '$.'
-			FLO     <- LAB  '$f' SYMB+ '$.'
-			ESS     <- LAB  '$e' SYMB+ '$.'
-			AX      <- LAB  '$a' SYMB+ '$.'
-			TH      <- LAB  '$p' SYMB+ '$=' PROOF
+			ELEMENT <- COMMENT / DISJ / ESS / TH / '${' BLOCK '$}'/ AX / CONST / VAR / FLO / INCLUDE 
+			EXPR    <- (SYMB / COMMENT)+
+			CONST   <-      '$c' EXPR '$.'
+			VAR     <-      '$v' EXPR '$.'
+			DISJ    <-      '$d' EXPR '$.'
+			FLO     <- LAB  '$f' EXPR '$.'
+			ESS     <- LAB  '$e' EXPR '$.'
+			AX      <- LAB  '$a' EXPR '$.'
+			TH      <- LAB  '$p' EXPR '$=' PROOF
 			PROOF   <- REF+ '$.'
 			REF     <- LAB
 		
 			SYMB    <- < (![ \t\r\n$] .)+ >
-			LAB     <- < [a-zA-Z0-9-_.]+ >
+			LAB     <- < (![ \t\r\n$] .)+ >
 			COMMENT <- '$(' < (!'$)' .)* > '$)'
             INCLUDE <- '$[' < (!'$]' .)* > '$]'
 		
@@ -51,61 +46,72 @@ public:
 	}
 	Parser(string name, string root) : parser(mm_syntax()) {
 
-		parser["SYMB"] = [](const SemanticValues& sv) {
+		parser["SYMB"] = [](const peg::SemanticValues& sv) {
 			return Symbol(Mm::mod().lex.symbols.toInt(sv.token()));
 		};
-		parser["LAB"] = [](const SemanticValues& sv) {
+		parser["LAB"] = [](const peg::SemanticValues& sv) {
 			return Mm::mod().lex.labels.toInt(sv.token());
 		};
-		parser["CONST"] = [](const SemanticValues& sv, any& stack) {
-			Constants* consts = new Constants { Expr(sv.transform<Symbol>()) };
+		parser["EXPR"] = [](const peg::SemanticValues& sv) {
+			Expr expr;
+			expr.symbols.reserve(sv.size());
+			for (auto& s : sv) {
+				if (s.is<Symbol>()) expr += s.get<Symbol>();
+				else delete s.get<Comment*>();
+			}
+			return expr;
+		};
+		parser["CONST"] = [](const peg::SemanticValues& sv, peg::any& context) {
+			Constants* consts = new Constants { sv[0].get<Expr>() };
 			for (Symbol c : consts->expr.symbols)
-				stack.get<shared_ptr<Stack>>()->back().consts.insert(c);
+				context.get<std::shared_ptr<Context>>()->stack.back().consts.insert(c);
 			return consts;
 		};
-		parser["VAR"] = [](const SemanticValues& sv, any& stack) {
-			Variables* vars = new Variables { Expr(sv.transform<Symbol>()) };
+		parser["VAR"] = [](const peg::SemanticValues& sv, peg::any& context) {
+			Variables* vars = new Variables { sv[0].get<Expr>() };
 			for (Symbol c : vars->expr.symbols)
-				stack.get<shared_ptr<Stack>>()->back().vars.insert(c);
+				context.get<std::shared_ptr<Context>>()->stack.back().vars.insert(c);
 			return vars;
 		};
-		parser["DISJ"] = [](const SemanticValues& sv, any& stack) {
-			return new Disjointed { Expr(sv.transform<Symbol>()) };
+		parser["DISJ"] = [](const peg::SemanticValues& sv, peg::any& context) {
+			Disjointed* disj = new Disjointed { sv[0].get<Expr>() };
+			for (Symbol v : disj->expr.symbols)
+				context.get<std::shared_ptr<Context>>()->stack.back().vars.insert(v);
+			return disj;
 		};
-		parser["ESS"] = [](const SemanticValues& sv, any& stack) {
-			Essential* ess = new Essential { sv[0].get<uint>(), Expr(sv.transform<Symbol>(1)) };
-			markVars(ess->expr, stack.get<shared_ptr<Stack>>().get());
+		parser["ESS"] = [](const peg::SemanticValues& sv, peg::any& context) {
+			Essential* ess = new Essential { sv[0].get<uint>(), sv[1].get<Expr>() };
+			markVars(ess->expr, context.get<std::shared_ptr<Context>>()->stack);
 			Mm::mod().math.essentials[ess->label] = ess;
 			return ess;
 		};
-		parser["FLO"] = [](const SemanticValues& sv, any& stack) {
-			Floating* flo = new Floating { sv[0].get<uint>(), Expr(sv.transform<Symbol>(1)) };
-			markVars(flo->expr, stack.get<shared_ptr<Stack>>().get());
+		parser["FLO"] = [](const peg::SemanticValues& sv, peg::any& context) {
+			Floating* flo = new Floating { sv[0].get<uint>(), sv[1].get<Expr>() };
+			markVars(flo->expr, context.get<std::shared_ptr<Context>>()->stack);
 			Mm::mod().math.floatings[flo->label] = flo;
 			return flo;
 		};
-		parser["AX"] = [](const SemanticValues& sv, any& stack) {
-			Axiom* ax = new Axiom { sv[0].get<uint>(), Expr(sv.transform<Symbol>(1)), (uint) -1 };
-			markVars(ax->expr, stack.get<shared_ptr<Stack>>().get());
+		parser["AX"] = [](const peg::SemanticValues& sv, peg::any& context) {
+			Axiom* ax = new Axiom { sv[0].get<uint>(), sv[1].get<Expr>(), (uint) -1 };
+			markVars(ax->expr, context.get<std::shared_ptr<Context>>()->stack);
 			Mm::mod().math.axioms[ax->label] = ax;
 			return ax;
 		};
-		parser["TH"] = [](const SemanticValues& sv, any& stack) {
-			uint sz = sv.size();
+		parser["TH"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Theorem* th = new Theorem();
 			th->label = sv[0].get<uint>();
-			th->expr = Expr(sv.transform<Symbol>(1, sz - 1));
-			th->proof = sv[sz - 1].get<Proof*>();
-			markVars(th->expr, stack.get<shared_ptr<Stack>>().get());
+			th->expr  = sv[1].get<Expr>();
+			th->proof = sv[2].get<Proof*>();
+			markVars(th->expr, context.get<std::shared_ptr<Context>>()->stack);
 			Mm::mod().math.theorems[th->label] = th;
 			return th;
 		};
-		parser["PROOF"] = [](const SemanticValues& sv) {
+		parser["PROOF"] = [](const peg::SemanticValues& sv) {
 			Proof* pr = new Proof();
 			pr->refs = sv.transform<Ref>();
 			return pr;
 		};
-		parser["REF"] = [](const SemanticValues& sv) {
+		parser["REF"] = [](const peg::SemanticValues& sv) {
 			uint lab = sv[0].get<uint>();
 			Mm::Math& math = Mm::mod().math;
 			if (math.floatings.count(lab))
@@ -119,51 +125,54 @@ public:
 			else
 				throw Error("unknown label in proof", Mm::get().lex.labels.toStr(lab));
 		};
-		parser["COMMENT"] = [](const SemanticValues& sv) {
-			return new Comment(sv.token());
+		parser["COMMENT"] = [](const peg::SemanticValues& sv) {
+			string text = sv.token();
+			return new Comment(text.front() == ' ' ? text : " " + text);
 		};
-		parser["ELEMENT"] = [](const SemanticValues& sv, any& s) {
-			// COMMENT / CONST / VAR / DISJ / FLO / ESS / AX / TH /  BLOCK
+		parser["ELEMENT"] = [&](const peg::SemanticValues& sv, peg::any& context) {
+			// COMMENT / DISJ / ESS / TH / '${' BLOCK '$}'/ AX / CONST / VAR / FLO / INCLUDE
 			Node node;
 			switch (sv.choice()) {
 			case 0: node = Node(sv[0].get<Comment*>());   break;
-			case 1: node = Node(sv[0].get<Constants*>()); break;
-			case 2: node = Node(sv[0].get<Variables*>()); break;
-			case 3: node = Node(sv[0].get<Disjointed*>());break;
-			case 4: node = Node(sv[0].get<Floating*>());  break;
-			case 5: node = Node(sv[0].get<Essential*>()); break;
-			case 6: node = Node(sv[0].get<Axiom*>());     break;
-			case 7: node = Node(sv[0].get<Theorem*>());   break;
-			case 8: node = Node(sv[0].get<Inclusion*>());     break;
-			case 9: node = Node(sv[0].get<Block*>());     break;
+			case 1: node = Node(sv[0].get<Disjointed*>());break;
+			case 2: node = Node(sv[0].get<Essential*>()); break;
+			case 3: node = Node(sv[0].get<Theorem*>());   break;
+			case 4: node = Node(sv[0].get<Block*>());     break;
+			case 5: node = Node(sv[0].get<Axiom*>());     break;
+			case 6: node = Node(sv[0].get<Constants*>()); break;
+			case 7: node = Node(sv[0].get<Variables*>()); break;
+			case 8: node = Node(sv[0].get<Floating*>());  break;
+			case 9: node = Node(sv[0].get<Inclusion*>()); break;
 			}
-			auto stack = s.get<shared_ptr<Stack>>();
-			stack->back().block->contents.push_back(node);
+			context.get<std::shared_ptr<Context>>()->block->contents.push_back(node);
 			return node;
 		};
-		parser["BLOCK"] = [](const SemanticValues& sv, any& s) {
-			auto stack = s.get<shared_ptr<Stack>>();
-			Block* b = stack->back().block;
+		parser["BLOCK"] = [](const peg::SemanticValues& sv, peg::any& context) {
+			Block* b = context.get<std::shared_ptr<Context>>()->block;
 			b->contents = sv.transform<Node>();
 			init_indexes(b->contents);
 			return b;
 		};
-		parser["BLOCK"].enter = [](any& s) {
-			auto stack = s.get<shared_ptr<Stack>>();
-			Block* parent = stack->size() ? stack->back().block : nullptr;
-			Block* child = new Block(parent);
-			stack->push_back(Scope(child));
+		parser["BLOCK"].enter = [](peg::any& c) {
+			Context* context = c.get<std::shared_ptr<Context>>().get();
+			context->block = new Block(context->block);
+			if (!context->source) context->stack.push_back(Scope());
+			context->source = false;
 		};
-		parser["BLOCK"].leave = [](any& s) {
-			auto stack = s.get<shared_ptr<Stack>>();
-			stack->pop_back();
+		parser["BLOCK"].leave = [](peg::any& c) {
+			Context* context = c.get<std::shared_ptr<Context>>().get();
+			if (context->block->parent) context->stack.pop_back();
+			context->block = context->block->parent;
 		};
-		parser["SOURCE"] = [name, root](const SemanticValues& sv, any& s) {
+		parser["SOURCE"] = [name, root](const peg::SemanticValues& sv, peg::any& context) {
 			Source* src = new Source(name, root);
 			src->block = sv[0].get<Block*>();
 			return src;
 		};
-		parser["INCLUDE"] = [root](const SemanticValues& sv) {
+		parser["SOURCE"].enter = [](peg::any& context) {
+			context.get<std::shared_ptr<Context>>()->source = true;
+		};
+		parser["INCLUDE"] = [root](const peg::SemanticValues& sv, peg::any& context) {
 			string path = sv.token();
 			static map<string, mm::Inclusion*> included;
 			if (included.count(path)) {
@@ -172,42 +181,42 @@ public:
 			} else {
 				mm::Inclusion* inc = new mm::Inclusion(nullptr, true);
 				included[path] = inc;
-				inc->source = parse(path, root);
+				inc->source = parse(path, root, context.get<std::shared_ptr<Context>>());
 				return inc;
 			}
 		};
 	}
 
 	static Source* parse(string name, string root) {
+		auto context = std::make_shared<Context>();
+		context->stack.push_back(Scope());
+		Source* src = parse(name, root, context);
+		assert(!context->stack.empty());
+		context->stack.pop_back();
+		assert(context->stack.empty());
+		return src;
+	}
+
+private:
+	static Source* parse(string name, string root, std::shared_ptr<Context>& context) {
 		ifstream in = open_smart(name, root);
 		string data;
 		read_smart(data, in);
 
 		Parser p(name, root);
-		Source* src = p.parse(data.c_str());
+		mdl::mm::Source* src = nullptr;
+		peg::any c(context);
+		if (!p.parser.parse<mdl::mm::Source*>(data.c_str(), c, src)) return nullptr;
 		std::swap(data, src->data);
 		return src;
 	}
-
-private:
-	Source* parse(const char* src) {
-		mdl::mm::Source* s = nullptr;
-		auto stack = make_shared<Stack>();
-		any any_stack(stack);
-		if (parser.parse<mdl::mm::Source*>(src, any_stack, s)) {
-			return s;
-		} else {
-			return nullptr;
-		}
-	}
-
-	static void markVars(Expr& expr, const Stack* stack) {
+	static void markVars(Expr& expr, const Stack& stack) {
     	for (Symbol& s : expr.symbols) {
     		bool is_var   = false;
     		bool is_const = false;
-			for (const Scope& vc : *stack) {
-				if (vc.vars.find(s) != vc.vars.end()) is_var = true;
-				if (vc.consts.find(s) != vc.consts.end()) is_const = true;
+			for (const Scope& vc : stack) {
+				if (vc.vars.count(s)) is_var = true;
+				if (vc.consts.count(s)) is_const = true;
 			}
 			if (is_var && is_const)
 				throw Error("constant symbol is marked as variable", show_sy(s));
@@ -221,44 +230,8 @@ private:
 	}
 };
 
-} // mm
-
-/*
-template<>
-inline mm::Source* parse<mm::Source, mm::Parser>(string name, string root, boost::spirit::ascii::space_type space) {
-	ifstream in = open_smart(name, root);
-	mm::Source* src = nullptr;
-	string data;
-	read_smart(data, in);
-	parse<mm::Source, mm::Parser>(src, data, space);
-	std::swap(data, src->data);
-	return src;
+Source* parse_peg(string name) {
+	return Parser::parse(name, Mm::get().config.root);
 }
 
-template<>
-inline mm::Inclusion* include<mm::Source, mm::Parser, mm::Inclusion>(string path, string root, boost::spirit::ascii::space_type space, mm::Source* (get_src)(mm::Inclusion*)) {
-	static map<string, mm::Inclusion*> included;
-	if (included.count(path)) {
-		mm::Inclusion* inc = included[path];
-		return new mm::Inclusion(get_src(inc), false);
-	} else {
-		//cout << "parsing src: " << path << endl;
-		string data;
-		string orig_path(path);
-		ifstream in = open_smart(path, root);
-		mm::Source* src = nullptr;
-		read_smart(data, in);
-
-		mm::Inclusion* inc = new mm::Inclusion(src, true);
-		included[orig_path] = inc;
-		parse<mm::Source, mm::Parser>(src, data, space);
-		std::swap(data, src->data);
-		return inc;
-	}
-}
-*/
-
-} //mdl
-
-
-
+}} // mdl::mm
