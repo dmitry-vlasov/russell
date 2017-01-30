@@ -1,6 +1,6 @@
 project russell
 	: requirements 	
-		<include>include <include>src 
+		<include>include <include>src <include>peglib 
 		<toolset>gcc:<cxxflags>-std=gnu++14
 		<toolset>gcc:<linkflags>-lpthread 
 		<toolset>gcc:<linkflags>-lboost_system
