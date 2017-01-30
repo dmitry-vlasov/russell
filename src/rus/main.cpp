@@ -2,6 +2,8 @@
 
 #include "rus/globals.hpp"
 
+#include "rus/expr2.hpp"
+
 namespace po = boost::program_options;
 
 using namespace mdl;

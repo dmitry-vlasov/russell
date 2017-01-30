@@ -31,6 +31,7 @@
 #include <queue>
 #include <thread>
 #include <mutex>
+#include <memory>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -94,6 +95,10 @@ namespace mdl {
 	using std::mutex;
 	using std::unordered_map;
 	using std::unordered_set;
+
+	using std::unique_ptr;
+	using std::shared_ptr;
+	using std::weak_ptr;
 
 	using std::for_each;
 }
