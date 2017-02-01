@@ -2,7 +2,7 @@
 
 namespace mdl { namespace rus { namespace expr { namespace {
 
-typedef term::Expr Term;
+typedef term::Tree Term;
 vector<pair<Expr*, uint>> queue;
 
 inline Rule* find_super(Type* type, Type* super) {
@@ -33,7 +33,7 @@ inline Action act(auto& n, auto& m, Symbols::iterator ch, Term& t, uint ind) {
 
 Symbols::iterator parse_LL(Term& t, Symbols::iterator x, Type* type, uint ind, bool initial = false) {
 	if (!initial && type->rules.map.size()) {
-		t.kind = term::Expr::NODE;
+		t.kind = term::Tree::NODE;
 		typedef Rules::Map::const_iterator MapIter;
 
 		stack<MapIter> n;

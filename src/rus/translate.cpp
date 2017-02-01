@@ -125,7 +125,7 @@ smm::Assertion* translate_rule(const Rule* rule, Maps& maps) {
 	for (auto v : rule->vars.v) {
 		uint i = 0;
 		for (auto ch : rule->term.term.children()) {
-			if (ch->kind == term::Expr::VAR && *ch->var() == v) {
+			if (ch->kind == term::Tree::VAR && *ch->var() == v) {
 				maps.rules_args[rule][v] = i;
 				break;
 			}
@@ -187,8 +187,8 @@ void translate_ref(Ref ref, const Assertion* thm, vector<smm::Ref>& smm_proof, M
 	}
 }
 
-void translate_term(const term::Expr& t, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps) {
-	if (t.kind == term::Expr::VAR) {
+void translate_term(const term::Tree& t, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps) {
+	if (t.kind == term::Tree::VAR) {
 		if (maps.floatings[thm].count(*t.var()))
 			smm_proof.push_back(maps.floatings[thm][*t.var()]);
 		else if (maps.inners[thm].count(*t.var()))
@@ -199,7 +199,7 @@ void translate_term(const term::Expr& t, const Assertion* thm, vector<smm::Ref>&
 		for (auto v : t.rule()->vars.v)
 			translate_term(*t.children()[maps.rules_args[t.rule()][v]], thm, smm_proof, maps);
 	}
-	if (t.kind == term::Expr::NODE) {
+	if (t.kind == term::Tree::NODE) {
 		if (!maps.rules.count(t.rule()))
 			throw Error("undefined reference to rule");
 		smm_proof.push_back(smm::Ref(maps.rules[t.rule()], true));

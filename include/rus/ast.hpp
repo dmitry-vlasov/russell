@@ -47,8 +47,8 @@ struct Rule {
 	Expr  term;
 };
 
-inline Type* term::Expr::type() { return kind == VAR ? val.var->type : val.node->rule->type; }
-inline const Type* term::Expr::type() const { return kind == VAR ? val.var->type : val.node->rule->type; }
+inline Type* term::Tree::type() { return kind == VAR ? val.var->type : val.node->rule->type; }
+inline const Type* term::Tree::type() const { return kind == VAR ? val.var->type : val.node->rule->type; }
 
 inline Type::~Type() {
 	for (auto p : supers) delete p.second;

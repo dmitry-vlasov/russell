@@ -27,8 +27,8 @@ size_t memvol(const Expr& ex) {
 	return s;
 }
 
-string show_ast(const term::Expr& t, bool full) {
-	if (t.kind == term::Expr::VAR)
+string show_ast(const term::Tree& t, bool full) {
+	if (t.kind == term::Tree::VAR)
 		return t.var() ? show(*t.var(), full) : "<null>";
 	else {
 		string s = (t.rule() ? show_id(t.rule()->id) : "?") + " (";
@@ -41,8 +41,8 @@ string show_ast(const term::Expr& t, bool full) {
 	}
 }
 
-string show(const term::Expr& t, bool full) {
-	if (t.kind == term::Expr::VAR)
+string show(const term::Tree& t, bool full) {
+	if (t.kind == term::Tree::VAR)
 		return t.var() ? show(*t.var(), full) : "<null>";
 	else {
 		string str(" ");
@@ -59,9 +59,9 @@ string show(const term::Expr& t, bool full) {
 }
 
 void parse_term(Expr& ex, Rule* rule) {
-	ex.term = term::Expr(rule);
+	ex.term = term::Tree(rule);
 	for (auto& s : ex.symbols) {
-		if (s.type)	ex.term.children().push_back(new term::Expr(s));
+		if (s.type)	ex.term.children().push_back(new term::Tree(s));
 	}
 }
 
@@ -73,7 +73,7 @@ bool Substitution::join(Substitution* s) {
 				return false;
 			}
 		} else {
-			sub[p.first] = new term::Expr(*p.second);
+			sub[p.first] = new term::Tree(*p.second);
 		}
 	}
 	return true;
@@ -142,8 +142,8 @@ size_t memvol(const Rules& rt) {
 void dump(const Symbol& s) { cout << show(s) << endl; }
 void dump(const Expr& ex) { cout << show(ex) << endl; }
 void dump_ast(const Expr& ex) { cout << show_ast(ex) << endl; }
-void dump(const term::Expr* tm) { cout << show(*tm) << endl; }
-void dump_ast(const term::Expr& tm) { cout << show_ast(tm) << endl; }
+void dump(const term::Tree* tm) { cout << show(*tm) << endl; }
+void dump_ast(const term::Tree& tm) { cout << show_ast(tm) << endl; }
 void dump(const Substitution& sb) { cout << show(sb) << endl; }
 
 }} // mdl::rus

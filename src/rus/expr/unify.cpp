@@ -11,23 +11,23 @@ inline Rule* find_super(const Type* type, const Type* super) {
 		return nullptr;
 }
 
-Substitution* unify(const term::Expr* p, const term::Expr* q) {
+Substitution* unify(const term::Tree* p, const term::Tree* q) {
 	switch (p->kind) {
-	case term::Expr::VAR: {
+	case term::Tree::VAR: {
 		Symbol var = *p->var();
 		if (var.type == q->type()) {
 			Substitution* s = new Substitution();
-			s->sub[var] = new term::Expr(*q);
+			s->sub[var] = new term::Tree(*q);
 			return s;
 		} else if (Rule* super = find_super(q->type(), var.type)) {
 			Substitution* s = new Substitution();
-			s->sub[var] = new term::Expr(super);
-			s->sub[var]->children().push_back(new term::Expr(*q));
+			s->sub[var] = new term::Tree(super);
+			s->sub[var]->children().push_back(new term::Tree(*q));
 			return s;
 		}
 		return nullptr;
 	}
-	case term::Expr::NODE: {
+	case term::Tree::NODE: {
 		if (p->rule() != q->rule()) return nullptr;
 		Substitution* sub = new Substitution();
 		auto p_ch = p->children().begin();

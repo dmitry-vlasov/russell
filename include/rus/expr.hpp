@@ -55,8 +55,8 @@ struct Rule;
 
 namespace term {
 
-struct Expr {
-	typedef vector<Expr*> Children;
+struct Tree {
+	typedef vector<Tree*> Children;
 	enum Kind { NODE, VAR};
 
 private:
@@ -64,7 +64,7 @@ private:
 		Node(Rule* r = nullptr) : rule(r), children() { }
 		Node(Rule* r, const Children& ch) : rule(r), children(ch) { }
 		Node(const Node& n) : rule(n.rule), children() {
-			for (auto ch : n.children) children.push_back(new Expr(*ch));
+			for (auto ch : n.children) children.push_back(new Tree(*ch));
 		}
 		~Node() { for (auto ch : children) delete ch; }
 		Rule*    rule;
@@ -79,26 +79,26 @@ private:
 	};
 
 public :
-	Expr() : kind(NODE), val(new Node()) { }
-	Expr(Rule* r) : kind(NODE), val(new Node(r))  { }
-	Expr(const Symbol& v) : kind(VAR), val(new Symbol(v)) { }
-	Expr(Rule* r, const Children& ch) : kind(NODE), val(new Node(r, ch)) { }
-	~Expr() { delete_val(); }
-	Expr(const Expr& ex) : kind(ex.kind), val() {
+	Tree() : kind(NODE), val(new Node()) { }
+	Tree(Rule* r) : kind(NODE), val(new Node(r))  { }
+	Tree(const Symbol& v) : kind(VAR), val(new Symbol(v)) { }
+	Tree(Rule* r, const Children& ch) : kind(NODE), val(new Node(r, ch)) { }
+	~Tree() { delete_val(); }
+	Tree(const Tree& ex) : kind(ex.kind), val() {
 		switch (kind) {
 		case NODE: val.node = new Node(*ex.val.node);  break;
 		case VAR:  val.var  = new Symbol(*ex.val.var); break;
 		}
 	}
-	Expr(Expr&& ex) : kind(ex.kind), val(ex.val) { ex.val.var = nullptr; }
+	Tree(Tree&& ex) : kind(ex.kind), val(ex.val) { ex.val.var = nullptr; }
 
-	void operator = (Expr&& ex) {
+	void operator = (Tree&& ex) {
 		delete_val();
 		kind = ex.kind;
 		val = ex.val;
 		ex.val.var = nullptr;
 	}
-	void operator = (const Expr& ex) {
+	void operator = (const Tree& ex) {
 		delete_val();
 		kind = ex.kind;
 		switch (kind) {
@@ -106,7 +106,7 @@ public :
 		case VAR:  val.var  = new Symbol(*ex.val.var); break;
 		}
 	}
-	bool operator == (const Expr& e) const {
+	bool operator == (const Tree& e) const {
 		if (kind != e.kind) return false;
 		switch (kind) {
 		case NODE:
@@ -120,7 +120,7 @@ public :
 		}
 		return true;
 	}
-	bool operator != (const Expr& e) const {
+	bool operator != (const Tree& e) const {
 		return !operator == (e);
 	}
 
@@ -152,11 +152,11 @@ private:
 struct Substitution {
 	~Substitution() { for (auto p : sub) delete p.second; }
 	bool join(Substitution* s);
-	map<Symbol, term::Expr*> sub;
+	map<Symbol, term::Tree*> sub;
 };
 
 struct Expr {
-	typedef term::Expr Term;
+	typedef term::Tree Term;
 
 	Expr() : type(nullptr), term(), symbols() { }
 	Expr(Symbol s) : type(s.type), term(), symbols() {
@@ -204,12 +204,12 @@ string show(const Rules& tr);
 
 
 
-Substitution* unify(const term::Expr* p, const term::Expr* q);
+Substitution* unify(const term::Tree* p, const term::Tree* q);
 inline Substitution* unify(const Expr& ex1, const Expr& ex2) {
 	return unify(&ex1.term, &ex2.term);
 }
 Expr assemble(const Expr& ex);
-Expr assemble(const term::Expr* t);
+Expr assemble(const term::Tree* t);
 
 namespace expr {
 	void enqueue(Expr& ex);
@@ -217,12 +217,12 @@ namespace expr {
 }
 
 string show(const Expr&);
-string show_ast(const term::Expr&, bool full = false);
+string show_ast(const term::Tree&, bool full = false);
 inline string show_ast(const Expr& ex, bool full = false) {
 	return show_ast(ex.term, full);
 }
 
-string show(const term::Expr& t, bool full = false);
+string show(const term::Tree& t, bool full = false);
 
 
 inline string show(const Substitution& s) {
@@ -241,19 +241,19 @@ inline ostream& operator << (ostream& os, const Expr& ex) {
 void dump(const Symbol& s);
 void dump(const Expr& ex);
 void dump_ast(const Expr& ex);
-void dump(const term::Expr* tm);
-void dump_ast(const term::Expr* tm);
+void dump(const term::Tree* tm);
+void dump_ast(const term::Tree* tm);
 void dump(const Substitution& sb);
 
 
 inline size_t memvol(const Symbol& s) {
 	return 0;
 }
-inline size_t memvol(const term::Expr& t) {
-	if (t.kind != term::Expr::NODE) return 0;
+inline size_t memvol(const term::Tree& t) {
+	if (t.kind != term::Tree::NODE) return 0;
 	size_t vol = 0;
 	vol += t.children().capacity();
-	for (const term::Expr* ch : t.children())
+	for (const term::Tree* ch : t.children())
 		vol += memvol(*ch);
 	return vol;
 }
