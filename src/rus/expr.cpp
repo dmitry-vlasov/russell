@@ -59,24 +59,11 @@ string show(const Tree& t, bool full) {
 }
 
 void parse_term(Expr& ex, Rule* rule) {
-	ex.tree = new Tree(rule);
+	Tree::Children children;
 	for (auto& s : ex.symbols) {
-		if (s.type)	ex.tree->children().push_back(new Tree(s));
+		if (s.type)	children.push_back(new Tree(s));
 	}
-}
-
-bool Substitution::join(Substitution* s) {
-	for (auto& p : s->sub) {
-		auto it = sub.find(p.first);
-		if (it != sub.end()) {
-			if (*(*it).second != *p.second) {
-				return false;
-			}
-		} else {
-			sub[p.first] = new Tree(*p.second);
-		}
-	}
-	return true;
+	ex.tree = new Tree(rule, children);
 }
 
 vector<string> show_lines(const Rules& tr) {
@@ -101,32 +88,6 @@ string show(const Rules& tr) {
 		str += s + "\n";
 	}
 	return str;
-}
-
-
-Rule*& Rules::add(const Expr& ex) {
-	assert(ex.symbols.size());
-	Rules* m = this;
-	Node* n = nullptr;
-	for (const Symbol& s : ex.symbols) {
-		bool new_symb = true;
-		for (Node& p : m->map) {
-			if (p.symb == s) {
-				n = &p;
-				m = &p.tree;
-				new_symb = false;
-				break;
-			}
-		}
-		if (new_symb) {
-			if (m->map.size()) m->map.back().symb.fin = false;
-			m->map.push_back(Node(s));
-			n = &m->map.back();
-			n->symb.fin = true;
-			m = &n->tree;
-		}
-	}
-	return n->rule;
 }
 
 size_t memvol(const Rules& rt) {

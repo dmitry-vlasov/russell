@@ -5,11 +5,7 @@ namespace mdl { namespace rus { namespace expr { namespace {
 vector<pair<Expr*, uint>> queue;
 
 inline Rule* find_super(const Type* type, const Type* super) {
-	auto it =type->supers.find(super);
-	if (it != type->supers.end())
-		return it->second;
-	else
-		return nullptr;
+	return type->supers.count(super) ? type->supers.at(super) : nullptr;
 }
 
 struct Action {

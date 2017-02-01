@@ -77,8 +77,6 @@ private:
 	};
 
 public :
-	Tree() : kind(NODE), val(new Node()) { }
-	Tree(Rule* r) : kind(NODE), val(new Node(r))  { }
 	Tree(const Symbol& v) : kind(VAR), val(new Symbol(v)) { }
 	Tree(Rule* r, const Children& ch) : kind(NODE), val(new Node(r, ch)) { }
 	Tree(const Tree& ex) : kind(ex.kind), val() {
@@ -145,12 +143,6 @@ private:
 	}
 };
 
-struct Substitution {
-	~Substitution() { for (auto p : sub) delete p.second; }
-	bool join(Substitution* s);
-	map<Symbol, Tree*> sub;
-};
-
 struct Expr {
 	Expr() : type(nullptr), tree(nullptr), symbols() { }
 	Expr(Symbol s) : type(s.type), tree(nullptr), symbols() { symbols.push_back(s);	}
@@ -211,7 +203,52 @@ struct Rules::Node {
 	Rule*  rule;
 };
 
+inline Rule*& Rules::add(const Expr& ex) {
+	assert(ex.symbols.size());
+	Rules* m = this;
+	Node* n = nullptr;
+	for (const Symbol& s : ex.symbols) {
+		bool new_symb = true;
+		for (Node& p : m->map) {
+			if (p.symb == s) {
+				n = &p;
+				m = &p.tree;
+				new_symb = false;
+				break;
+			}
+		}
+		if (new_symb) {
+			if (m->map.size()) m->map.back().symb.fin = false;
+			m->map.push_back(Node(s));
+			n = &m->map.back();
+			n->symb.fin = true;
+			m = &n->tree;
+		}
+	}
+	return n->rule;
+}
+
+
 string show(const Rules& tr);
+
+struct Substitution {
+	Substitution() : sub() { }
+	Substitution(Symbol v, Tree* t) : sub() { sub[v] = t; }
+	~Substitution() { for (auto p : sub) delete p.second; }
+	bool join(Substitution* s) {
+		for (auto& p : s->sub) {
+			auto it = sub.find(p.first);
+			if (it != sub.end()) {
+				if (*(*it).second != *p.second) return false;
+			} else {
+				sub[p.first] = new Tree(*p.second);
+			}
+		}
+		return true;
+	}
+	map<Symbol, Tree*> sub;
+};
+
 
 Substitution* unify(const Tree* p, const Tree* q);
 inline Substitution* unify(const Expr& ex1, const Expr& ex2) {

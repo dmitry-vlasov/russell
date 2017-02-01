@@ -16,14 +16,9 @@ Substitution* unify(const Tree* p, const Tree* q) {
 	case Tree::VAR: {
 		Symbol var = *p->var();
 		if (var.type == q->type()) {
-			Substitution* s = new Substitution();
-			s->sub[var] = new Tree(*q);
-			return s;
+			return new Substitution(var, new Tree(*q));
 		} else if (Rule* super = find_super(q->type(), var.type)) {
-			Substitution* s = new Substitution();
-			s->sub[var] = new Tree(super);
-			s->sub[var]->children().push_back(new Tree(*q));
-			return s;
+			return new Substitution(var, new Tree(super, {new Tree(*q)}));
 		}
 		return nullptr;
 	}
