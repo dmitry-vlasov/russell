@@ -29,12 +29,12 @@ size_t memvol(const Expr& ex) {
 
 string show_ast(const term::Expr& t, bool full) {
 	if (t.kind == term::Expr::VAR)
-		return t.val.var ? show(*t.val.var, full) : "<null>";
+		return t.var() ? show(*t.var(), full) : "<null>";
 	else {
-		string s = (t.val.rule ? show_id(t.val.rule->id) : "?") + " (";
-		for (uint i = 0; i < t.children.size(); ++ i) {
-			s += show_ast(t.children[i], full);
-			if (i + 1 < t.children.size()) s += ", ";
+		string s = (t.rule() ? show_id(t.rule()->id) : "?") + " (";
+		for (uint i = 0; i < t.children().size(); ++ i) {
+			s += show_ast(t.children()[i], full);
+			if (i + 1 < t.children().size()) s += ", ";
 		}
 		s += ")";
 		return s;
@@ -43,13 +43,13 @@ string show_ast(const term::Expr& t, bool full) {
 
 string show(const term::Expr& t, bool full) {
 	if (t.kind == term::Expr::VAR)
-		return t.val.var ? show(*t.val.var, full) : "<null>";
+		return t.var() ? show(*t.var(), full) : "<null>";
 	else {
 		string str(" ");
 		uint i = 0;
-		for (auto s : t.val.rule->term.symbols) {
+		for (auto s : t.rule()->term.symbols) {
 			if (s.type) {
-				str += show(t.children[i++], full) + ' ';
+				str += show(t.children()[i++], full) + ' ';
 			} else {
 				str += show(s) + ' ';
 			}
@@ -64,10 +64,10 @@ namespace term {
 		switch (kind) {
 		case VAR:  return *val.var == *t.val.var;
 		case NODE: {
-			if (val.rule != t.val.rule) return false;
-			auto i_p = children.begin();
-			auto i_q = t.children.begin();
-			while (i_p != children.end()) {
+			if (val.node->rule != t.val.node->rule) return false;
+			auto i_p = val.node->children.begin();
+			auto i_q = t.val.node->children.begin();
+			while (i_p != val.node->children.end()) {
 				if (*i_p != *i_q) return false;
 				++ i_p; ++ i_q;
 			}
@@ -82,8 +82,7 @@ namespace term {
 void parse_term(Expr& ex, Rule* rule) {
 	ex.term = term::Expr(rule);
 	for (auto& s : ex.symbols) {
-		if (s.type)
-			ex.term.children.push_back(term::Expr(s));
+		if (s.type)	ex.term.children().push_back(term::Expr(s));
 	}
 }
 

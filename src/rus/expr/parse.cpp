@@ -18,7 +18,7 @@ enum class Action { RET, BREAK, CONT };
 inline Action act(auto& n, auto& m, Symbols::iterator ch, Term& t, uint ind) {
 	if (Rule* r = n.top()->rule) {
 		if (r->ind <= ind) {
-			t.val.rule = r;
+			t.rule() = r;
 			return Action::RET;
 		} else
 			return Action::BREAK;
@@ -43,9 +43,9 @@ Symbols::iterator parse_LL(Term& t, Symbols::iterator x, Type* type, uint ind, b
 		m.push(x);
 		while (!n.empty() && !m.empty()) {
 			if (Type* tp = n.top()->symb.type) {
-				t.children.push_back(Term());
+				t.children().push_back(Term(Term::NODE));
 				childnodes.push(n.top());
-				Term& child = t.children.back();
+				Term& child = t.children().back();
 				auto ch = parse_LL(child, m.top(), tp, ind, n.top() == type->rules.map.begin());
 				if (ch != Symbols::iterator()) {
 					switch (act(n, m, ch, t, ind)) {
@@ -54,7 +54,7 @@ Symbols::iterator parse_LL(Term& t, Symbols::iterator x, Type* type, uint ind, b
 					case Action::CONT : continue;
 					}
 				} else {
-					t.children.pop_back();
+					t.children().pop_back();
 					childnodes.pop();
 				}
 			} else if (n.top()->symb == *m.top()) {
@@ -68,7 +68,7 @@ Symbols::iterator parse_LL(Term& t, Symbols::iterator x, Type* type, uint ind, b
 				n.pop();
 				m.pop();
 				if (!childnodes.empty() && childnodes.top() == n.top()) {
-					t.children.pop_back();
+					t.children().pop_back();
 					childnodes.pop();
 				}
 				if (n.empty() || m.empty()) goto out;
@@ -83,7 +83,7 @@ Symbols::iterator parse_LL(Term& t, Symbols::iterator x, Type* type, uint ind, b
 			return x;
 		} else if (Rule* super = find_super(x->type, type)) {
 			t = Term(super);
-			t.children.push_back(Term(*x));
+			t.children().push_back(Term(*x));
 			return x;
 		}
 	}

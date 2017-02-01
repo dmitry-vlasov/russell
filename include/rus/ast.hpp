@@ -35,7 +35,7 @@ struct Type {
 	uint ind;
 	uint id;
 	vector<Type*>     sup;
-	map<Type*, Rule*> supers;
+	map<const Type*, Rule*> supers;
 	Rules             rules;
 };
 
@@ -46,6 +46,9 @@ struct Rule {
 	Vars  vars;
 	Expr  term;
 };
+
+inline Type* term::Expr::type() { return kind == VAR ? val.var->type : val.node->rule->type; }
+inline const Type* term::Expr::type() const { return kind == VAR ? val.var->type : val.node->rule->type; }
 
 inline Type::~Type() {
 	for (auto p : supers) delete p.second;
