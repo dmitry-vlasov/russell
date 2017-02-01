@@ -4,7 +4,7 @@ namespace mdl { namespace rus { namespace expr { namespace {
 
 vector<pair<Expr*, uint>> queue;
 
-inline Rule* find_super(Type* type, Type* super) {
+inline Rule* find_super(const Type* type, const Type* super) {
 	auto it =type->supers.find(super);
 	if (it != type->supers.end())
 		return it->second;
@@ -12,15 +12,17 @@ inline Rule* find_super(Type* type, Type* super) {
 		return nullptr;
 }
 
-enum class Action { RET, BREAK, CONT };
+struct Action {
+	enum Kind { RET, BREAK, CONT };
+	Kind  kind;
+	Rule* rule;
+	Action(Kind k, Rule* r = nullptr) : kind(k), rule(r) { }
+};
 
-inline Action act(auto& n, auto& m, Symbols::iterator ch, uint ind, Rule*& rule) {
+inline Action act(auto& n, auto& m, Symbols::iterator ch, uint ind) {
 	if (Rule* r = n.top()->rule) {
-		if (r->ind <= ind) {
-			rule = r;
-			return Action::RET;
-		} else
-			return Action::BREAK;
+		if (r->ind <= ind) return Action(Action::RET, r);
+		else return Action::BREAK;
 	} else if (ch->end)
 		return Action::BREAK;
 	else {
@@ -30,13 +32,10 @@ inline Action act(auto& n, auto& m, Symbols::iterator ch, uint ind, Rule*& rule)
 	return Action::CONT;
 }
 
-Tree* parse_LL(Symbols::iterator& x, Type* type, uint ind) {
+Tree* parse_LL(Symbols::iterator& x, const Type* type, uint ind) {
 	if (type->rules.map.size()) {
 		typedef Rules::Map::const_iterator MapIter;
-
 		Tree::Children children;
-		Rule* rule = nullptr;
-
 		stack<MapIter> n;
 		stack<Symbols::iterator> m;
 		stack<MapIter> childnodes;
@@ -44,12 +43,13 @@ Tree* parse_LL(Symbols::iterator& x, Type* type, uint ind) {
 		m.push(x);
 		while (!n.empty() && !m.empty()) {
 			auto ch = m.top();
-			if (Type* tp = n.top()->symb.type) {
+			if (const Type* tp = n.top()->symb.type) {
 				childnodes.push(n.top());
 				if (Tree* child = parse_LL(ch, tp, ind)) {
 					children.push_back(child);
-					switch (act(n, m, ch, ind, rule)) {
-					case Action::RET  : x = ch; return new Tree(rule, children);
+					Action a = act(n, m, ch, ind);
+					switch (a.kind) {
+					case Action::RET  : x = ch; return new Tree(a.rule, children);
 					case Action::BREAK: goto out;
 					case Action::CONT : continue;
 					}
@@ -57,8 +57,9 @@ Tree* parse_LL(Symbols::iterator& x, Type* type, uint ind) {
 					childnodes.pop();
 				}
 			} else if (n.top()->symb == *m.top()) {
-				switch (act(n, m, ch, ind, rule)) {
-				case Action::RET  : x = ch; return new Tree(rule, children);
+				Action a = act(n, m, ch, ind);
+				switch (a.kind) {
+				case Action::RET  : x = ch; return new Tree(a.rule, children);
 				case Action::BREAK: goto out;
 				case Action::CONT : continue;
 				}
