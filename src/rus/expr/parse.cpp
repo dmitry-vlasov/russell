@@ -136,6 +136,8 @@ bool parse_LL() {
 		thds[i] = new std::thread(parse_LL_concurrent, i);
 	for (uint i = 0; i < THREADS; ++ i)
 		thds[i]->join();
+	for (uint i = 0; i < THREADS; ++ i)
+		delete thds[i];
 	for (auto& ex : exceptions) {
 		if (ex) std::rethrow_exception(ex);
 	}

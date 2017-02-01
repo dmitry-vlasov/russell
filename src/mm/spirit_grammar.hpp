@@ -15,6 +15,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	using phoenix::at_c;
 	using phoenix::push_back;
 	using phoenix::new_;
+	using phoenix::delete_;
 
 	const phoenix::function<CreateLabel>    createLabel;
 	const phoenix::function<CreateSymb>     createSymb;
@@ -35,7 +36,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	label  = lexeme[+(ascii::char_ - '$' - ascii::space)] [_val = createLabel(_1)];
 	path   = lexeme[+(ascii::char_ - '$' - ascii::space)];
 
-	expr  = + (symbol [push_back(_val, _1)] | comment);
+	expr  = + (symbol [push_back(_val, _1)] | comment [delete_(_1)]);
 
 	ref   = label   [_val = createRef(_1)];
 	proof =
