@@ -14,8 +14,9 @@ struct Symbol : public mdl::Symbol {
 	Symbol(uint l): mdl::Symbol(l), type(nullptr) { }
 	Symbol(const mdl::Symbol s, bool v = false) :
 	mdl::Symbol(s.lit, v), type(nullptr) { }
-	Symbol(const mdl::Symbol s, Type* tp, bool v = false) :
+	Symbol(mdl::Symbol s, Type* tp, bool v = false) :
 	mdl::Symbol(s.lit, v), type(tp) { }
+	Symbol(const Symbol& s) : mdl::Symbol(s), type(s.type) { }
 
 	bool operator == (const Symbol& s) const {
 		return mdl::Symbol::operator == (s) && type == s.type;
@@ -62,17 +63,18 @@ namespace term {
 
 struct Expr {
 	typedef vector<Expr> Children;
-	enum Kind { NODE, VAR };
+	enum Kind { NODE, VAR};
 
 private:
 	struct Node {
-		Node(Rule* r) : rule(r), children() { }
+		Node(Rule* r = nullptr) : rule(r), children() { }
 		Node(Rule* r, const Children& ch) : rule(r), children(ch) { }
+		Node(const Node& n) : rule(n.rule), children(n.children) { }
 		Rule*    rule;
 		Children children;
 	};
 	union Value {
-		Value() : node(nullptr) { }
+		Value() : var(nullptr) { }
 		Value(Node* n) : node(n) { }
 		Value(Symbol* v) : var(v) { }
 		Node*   node;
@@ -80,11 +82,37 @@ private:
 	};
 
 public :
-	Expr(Kind k = NODE) : kind(k), val(k == NODE ? new Node(nullptr) : nullptr) { }
+	//Expr(Kind k = NODE) : kind(k), val(k == NODE ? new Node() : new Symbol()) { }
+	Expr() : kind(NODE), val(new Node()) { }
 	Expr(Rule* r) : kind(NODE), val(new Node(r))  { }
-	Expr(Symbol& v) : kind(VAR), val(&v) { }
-	Expr(Rule* r, const Children& ch) : kind(NODE), val(new Node(r, ch)) {
+	Expr(const Symbol& v) : kind(VAR), val(new Symbol(v)) { }
+	Expr(Rule* r, const Children& ch) : kind(NODE), val(new Node(r, ch)) { }
+	//static Expr make_node() { return Expr((Rule*)nullptr); }
+	//static Expr make_var() { return Expr(Symbol()); }
+	~Expr() { delete_val(); }
+	Expr(const Expr& ex) : kind(ex.kind), val() {
+		switch (kind) {
+		case NODE: val.node = new Node(*ex.val.node);  break;
+		case VAR:  val.var  = new Symbol(*ex.val.var); break;
+		}
 	}
+	Expr(Expr&& ex) : kind(ex.kind), val(ex.val) { ex.val.var = nullptr; }
+
+	void operator = (Expr&& ex) {
+		delete_val();
+		kind = ex.kind;
+		val = ex.val;
+		ex.val.var = nullptr;
+	}
+	void operator = (const Expr& ex) {
+		delete_val();
+		kind = ex.kind;
+		switch (kind) {
+		case NODE: val.node = new Node(*ex.val.node);  break;
+		case VAR:  val.var  = new Symbol(*ex.val.var); break;
+		}
+	}
+
 	bool operator == (const Expr& t) const;
 	bool operator != (const Expr& t) const {
 		return !operator == (t);
@@ -104,6 +132,13 @@ public :
 
 private:
 	Value val;
+	void delete_val() {
+		if (!val.var) return;
+		switch (kind) {
+		case NODE: delete val.node; break;
+		case VAR:  delete val.var;  break;
+		}
+	}
 };
 
 template<class T>
