@@ -184,7 +184,7 @@ struct AddVars {
     template <typename T1, typename T2>
     struct result { typedef void type; };
     void operator()(Stack& vc, const Vect& vars) const {
-    	for (Symbol v : vars.symbols)
+    	for (Symbol v : vars)
 			vc.back().vars.insert(v);
     }
 };
@@ -193,7 +193,7 @@ struct AddConsts {
     template <typename T1, typename T2>
     struct result { typedef void type; };
     void operator()(Stack& vc, const Vect& consts) const {
-    	for (Symbol c : consts.symbols)
+    	for (Symbol c : consts)
 			vc.back().consts.insert(c);
     }
 };
@@ -202,7 +202,7 @@ struct MarkVars {
     template <typename T1, typename T2>
     struct result { typedef void type; };
     void operator()(Vect& expr, const Stack& stack) const {
-    	for (Symbol& s : expr.symbols) {
+    	for (Symbol& s : expr) {
     		bool is_var   = false;
     		bool is_const = false;
 			for (const VarConst& vc : stack) {

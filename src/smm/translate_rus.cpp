@@ -60,9 +60,9 @@ inline rus::Symbol translate_symb(Symbol s, rus::Type* t = nullptr) {
 
 rus::Expr translate_expr(const Vect& ex, const State& state, const Assertion* ass) {
 	rus::Expr e;
-	for (auto it = ex.symbols.begin(); it != ex.symbols.end(); ++ it) {
+	for (auto it = ex.begin(); it != ex.end(); ++ it) {
 		// pass the first symbol
-		if (it == ex.symbols.begin())
+		if (it == ex.begin())
 			continue;
 		rus::Type* t = nullptr;
 		for (auto f : ass->floating)
@@ -85,7 +85,7 @@ rus::Expr translate_expr(const Vect& ex, const State& state, const Assertion* as
 }
 
 void translate_constants(const Constants* consts, State& state) {
-	for (auto s : consts->expr.symbols) {
+	for (auto s : consts->expr) {
 		if (state.redundant_consts.count(s))
 			continue;
 		rus::Const* c = nullptr;
@@ -127,7 +127,7 @@ rus::Disj translate_disj(const Assertion* ass, State& state) {
 	for (auto dis : ass->disjointed) {
 		rus_disj.d.push_back(vector<rus::Symbol>());
 		vector<rus::Symbol>& rus_dis = rus_disj.d.back();
-		for (auto v : dis->expr.symbols) {
+		for (auto v : dis->expr) {
 			rus::Type* type = nullptr;
 			for (auto flo : ass->floating) {
 				if (flo->var() == v) type = translate_type(flo->type(), state);
@@ -211,7 +211,7 @@ bool less_general(const rus::Rule* r1, const rus::Rule* r2) {
 }
 
 inline bool rule_term_is_super(const Vect& term) {
-	return term.symbols.size() == 2 && !term.symbols[0].var && term.symbols[1].var;
+	return term.size() == 2 && !term[0].var && term[1].var;
 }
 
 void translate_rule(const Assertion* ass, State& state) {
@@ -293,17 +293,17 @@ inline bool low_depth(uint brack_depth, uint brace_depth) {
 vector<Symbol>::const_iterator eq_position(const Vect& ex) {
 	uint brack_depth = 0;
 	uint brace_depth = 0;
-	for (auto it = ex.symbols.begin() + 1; it != ex.symbols.end(); ++ it) {
+	for (auto it = ex.begin() + 1; it != ex.end(); ++ it) {
 		count_br(*it, brack_depth, brace_depth);
 		if (*it == eqiv() && low_depth(brack_depth, brace_depth)) return it;
 	}
 	brack_depth = 0;
 	brace_depth = 0;
-	for (auto it = ex.symbols.begin() + 1; it != ex.symbols.end(); ++ it) {
+	for (auto it = ex.begin() + 1; it != ex.end(); ++ it) {
 		count_br(*it, brack_depth, brace_depth);
 		if (*it == eqty() && low_depth(brack_depth, brace_depth)) return it;
 	}
-	return ex.symbols.end();
+	return ex.end();
 }
 
 void translate_def(const Assertion* ass, State& state) {
@@ -313,10 +313,10 @@ void translate_def(const Assertion* ass, State& state) {
 	const Vect& ex = ass->prop.expr;
 	auto eq_pos = eq_position(ex);
 
-	auto dfm_beg = ex.symbols.begin() + 1;
+	auto dfm_beg = ex.begin() + 1;
 	auto dfm_end = eq_pos;
 	auto dfs_beg = eq_pos + 1;
-	auto dfs_end = ex.symbols.end();
+	auto dfs_end = ex.end();
 
 	if (*eq_pos == eqiv()) {
 		++ dfm_beg;
@@ -328,7 +328,7 @@ void translate_def(const Assertion* ass, State& state) {
 		def->dfs.type = state.type_class;
 	}
 	def->prop.type = state.type_wff;
-	for (auto it = ex.symbols.begin() + 1; it != ex.symbols.end(); ++ it) {
+	for (auto it = ex.begin() + 1; it != ex.end(); ++ it) {
 		if ((dfm_beg <= it) && (it < dfm_end)) {
 			if (dfm_beg == it)
 				def->prop.push_back(dfm());
@@ -349,11 +349,11 @@ bool is_def(const Assertion* ass) {
 	if (Smm::get().lex.labels.toStr(ass->prop.label).substr(0,3) != "df-") return false;
 	const Vect& ex = ass->prop.expr;
 	auto eq_pos = eq_position(ex);
-	return eq_pos != ex.symbols.end();
+	return eq_pos != ex.end();
 }
 
 rus::Node::Kind ass_kind(const Assertion* ass) {
-	if (!is_turnstile(ass->prop.expr.symbols.front())) {
+	if (!is_turnstile(ass->prop.expr.front())) {
 		return rus::Node::RULE;
 	} else if (is_def(ass)) {
 		return rus::Node::DEF;

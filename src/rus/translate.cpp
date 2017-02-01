@@ -28,16 +28,14 @@ inline uint translate_symb(uint s) {
 mdl::Vect translate_expr(const Expr& ex, Maps& maps) {
 	mdl::Vect expr;
 	expr += maps.turnstile;
-	for (auto s : ex.symbols)
-		expr += mdl::Symbol(translate_symb(s.lit), s.type);
+	for (auto s : ex.symbols) expr += mdl::Symbol(translate_symb(s.lit), s.type);
 	return expr;
 }
 
 mdl::Vect translate_term(const Expr& ex, const Type* tp, Maps& maps) {
 	mdl::Vect expr;
 	expr += mdl::Symbol(maps.types[tp]);
-	for (auto s : ex.symbols)
-		expr += mdl::Symbol(translate_symb(s.lit), s.type);
+	for (auto s : ex.symbols) expr += mdl::Symbol(translate_symb(s.lit), s.type);
 	return expr;
 }
 

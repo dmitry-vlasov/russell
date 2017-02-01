@@ -35,7 +35,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	label  = lexeme[+(ascii::char_ - '$' - ascii::space)] [_val = createLabel(_1)];
 	path   = lexeme[+(ascii::char_ - '$' - ascii::space)];
 
-	expr  = + (symbol [push_back(at_c<0>(_val), _1)] | comment);
+	expr  = + (symbol [push_back(_val, _1)] | comment);
 
 	ref   = label   [_val = createRef(_1)];
 	proof =

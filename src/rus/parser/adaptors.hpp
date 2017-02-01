@@ -7,11 +7,6 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
-	mdl::Vect,
-	(std::vector<mdl::Symbol>, symbols)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Expr,
 	(mdl::rus::Type*, type)
 	(mdl::rus::term::Expr*, term)

@@ -55,7 +55,7 @@ public:
 		};
 		parser["EXPR"] = [](const peg::SemanticValues& sv) {
 			Vect expr;
-			expr.symbols.reserve(sv.size());
+			expr.reserve(sv.size());
 			for (auto& s : sv) {
 				if (s.is<Symbol>()) expr += s.get<Symbol>();
 				else delete s.get<Comment*>();
@@ -64,19 +64,19 @@ public:
 		};
 		parser["CONST"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Constants* consts = new Constants { sv[0].get<Vect>() };
-			for (Symbol c : consts->expr.symbols)
+			for (Symbol c : consts->expr)
 				context.get<std::shared_ptr<Context>>()->stack.back().consts.insert(c);
 			return consts;
 		};
 		parser["VAR"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Variables* vars = new Variables { sv[0].get<Vect>() };
-			for (Symbol c : vars->expr.symbols)
+			for (Symbol c : vars->expr)
 				context.get<std::shared_ptr<Context>>()->stack.back().vars.insert(c);
 			return vars;
 		};
 		parser["DISJ"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Disjointed* disj = new Disjointed { sv[0].get<Vect>() };
-			for (Symbol v : disj->expr.symbols)
+			for (Symbol v : disj->expr)
 				context.get<std::shared_ptr<Context>>()->stack.back().vars.insert(v);
 			return disj;
 		};
@@ -220,7 +220,7 @@ private:
 		return src;
 	}
 	static void markVars(Vect& expr, const Stack& stack) {
-    	for (Symbol& s : expr.symbols) {
+    	for (Symbol& s : expr) {
     		bool is_var   = false;
     		bool is_const = false;
 			for (const Scope& vc : stack) {

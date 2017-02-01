@@ -54,68 +54,33 @@ namespace std {
 
 namespace mdl {
 
-struct Vect {
-	Vect() : symbols() { }
-	Vect(const Vect& ex) : symbols(ex.symbols) { }
-	Vect(Vect&& ex) : symbols(ex.symbols) { }
-	Vect(const vector<Symbol>& s) : symbols(s) { }
+typedef vector<Symbol> Vect;
 
-	Vect& operator = (const Vect& ex) {
-		symbols = ex.symbols;
-		return *this;
+inline bool contains(const Vect& vect, uint lit) {
+	for (auto it = vect.cbegin(); it != vect.cend(); ++ it) {
+		if (it->lit == lit) return true;
 	}
-	Vect& operator = (Vect&& ex) {
-		symbols = ex.symbols;
-		return *this;
-	}
+	return false;
+}
 
-	void push_back(Symbol s) {
-		symbols.push_back(s);
-	}
-	bool contains(Symbol s) const {
-		return contains(s.lit);
-	}
-	bool contains(uint lit) const {
-		for (auto it = symbols.cbegin(); it != symbols.cend(); ++ it) {
-			if (it->lit == lit)
-				return true;
-		}
-		return false;
-	}
-	Vect& operator += (Symbol s) {
-		symbols.push_back(s);
-		return *this;
-	}
-	Vect& operator += (const Vect& ex) {
-		for (auto s : ex.symbols)
-			symbols.push_back(s);
-		return *this;
-	}
-	bool operator == (const Vect& ex) const {
-		return symbols == ex.symbols;
-	}
-	bool operator != (const Vect& ex) const {
-		return !operator ==(ex);
-	}
-	bool undef() const {
-		return symbols.size() == 0;
-	}
-	Symbol& operator [] (uint i) {
-		return symbols[i];
-	}
-	Symbol operator [] (uint i) const {
-		return symbols[i];
-	}
-	vector<Symbol> symbols;
-};
+inline bool contains(const Vect& vect, Symbol s) {
+	return contains(vect, s.lit);
+}
+
+inline void operator += (Vect& vect, Symbol s) {
+	vect.push_back(s);
+}
+
+inline void operator += (Vect& vect_1, const Vect& vect_2) {
+	for (auto s : vect_2) vect_1.push_back(s);
+}
 
 string show_sy(Symbol);
 string show_id(uint);
 
-inline string show_ex(const Vect& expr) {
+inline string show_ex(const Vect& vect) {
 	string s;
-	for (auto symb : expr.symbols)
-		s += show_sy(symb) + " ";
+	for (auto sy : vect) s += show_sy(sy) + " ";
 	return s;
 }
 

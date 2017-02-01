@@ -24,15 +24,15 @@ struct Essential {
 };
 
 struct Floating  {
-	Symbol type() const { return expr.symbols[0]; }
-	Symbol var() const { return expr.symbols[1]; }
+	Symbol type() const { return expr[0]; }
+	Symbol var() const { return expr[1]; }
 	uint index;
 	Vect expr;
 };
 
 struct Inner {
-	Symbol type() const { return expr.symbols[0]; }
-	Symbol var() const { return expr.symbols[1]; }
+	Symbol type() const { return expr[0]; }
+	Symbol var() const { return expr[1]; }
 	uint index;
 	Vect expr;
 };

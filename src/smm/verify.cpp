@@ -6,15 +6,15 @@ namespace mdl { namespace smm {
 
 bool areDisjointed(const Assertion* ass, Symbol s1, Symbol s2) {
 	for (auto it = ass->disjointed.cbegin(); it != ass->disjointed.cend(); ++ it) {
-		if ((*it)->expr.contains(s1) && (*it)->expr.contains(s2))
+		if (contains((*it)->expr, s1) && contains((*it)->expr, s2))
 			return true;
 	}
 	return false;
 }
 
 static void checkDisjPair(const Vect& ex1, const Vect& ex2, const Assertion* th, const Assertion* ass) {
-	for (auto s_1 : ex1.symbols) {
-		for (auto s_2 : ex2.symbols) {
+	for (auto s_1 : ex1) {
+		for (auto s_2 : ex2) {
 			if (s_1.var && s_1 == s_2) {
 				string msg = "disjointed violation, ";
 				msg += "variable " + show_sy(s_1) + " is common for " + show_ex(ex1) + " and " + show_ex(ex2);
@@ -43,19 +43,19 @@ static void checkDisj(const Subst& sub, const Assertion* ass, const Assertion* t
 }
 
 inline void append_expr(Vect& ex_1, const Vect& ex_2) {
-	auto it = ex_2.symbols.cbegin();
+	auto it = ex_2.cbegin();
 	++ it;
-	for (; it != ex_2.symbols.cend(); ++ it)
-		ex_1.symbols.push_back(*it);
+	for (; it != ex_2.cend(); ++ it)
+		ex_1.push_back(*it);
 }
 
 Vect apply(const Subst& sub, const Vect& expr) {
 	Vect ret;
-	for (auto s : expr.symbols) {
+	for (auto s : expr) {
 		if (s.var) {
 			auto ex = sub.find(s);
 			if (ex == sub.cend())
-				ret.symbols.push_back(s);
+				ret.push_back(s);
 			else
 				append_expr(ret, ex->second);
 		} else
@@ -65,11 +65,11 @@ Vect apply(const Subst& sub, const Vect& expr) {
 }
 
 static void checkSymbols(const Assertion* ass, const Vect& expr) {
-	for (auto s : expr.symbols) {
+	for (auto s : expr) {
 		bool is_const = (Smm::get().math.constants.find(s) != Smm::get().math.constants.end());
 		bool is_var = false;
 		for (auto& v : ass->variables) {
-			if (v->expr.contains(s)) {
+			if (contains(v->expr, s)) {
 				is_var = true;
 				break;
 			}
@@ -90,11 +90,11 @@ static void checkSymbols(const Assertion* ass, const vector<T*>& lines) {
 template<typename T>
 static void checkFloating(const Assertion* ass, const vector<T>& floatings) {
 	for (auto flo : floatings) {
-		if (flo->expr.symbols.size() != 2)
+		if (flo->expr.size() != 2)
 			throw Error("floating declaration must have exactly 2 symbols", &ass->loc);
-		if (flo->expr.symbols[0].var)
+		if (flo->expr[0].var)
 			throw Error("floating first symbol must be type (constant)", &ass->loc);
-		if (!flo->expr.symbols[1].var) {
+		if (!flo->expr[1].var) {
 			throw Error("floating second symbol must be type variable ", show_ex(flo->expr), &ass->loc);
 		}
 	}
@@ -102,7 +102,7 @@ static void checkFloating(const Assertion* ass, const vector<T>& floatings) {
 
 static void checkDisjointed(const Assertion* ass, Symbol var) {
 	for (auto vars : ass->variables)
-		if (vars->expr.contains(var))
+		if (contains(vars->expr, var))
 			return;
 	throw Error("disjointed symbols must be variables", &ass->loc);
 }
@@ -110,7 +110,7 @@ static void checkDisjointed(const Assertion* ass, Symbol var) {
 
 static void checkDisjointed(const Assertion* ass, const vector<Disjointed*>& disjointeds) {
 	for (auto disj : disjointeds)
-		for (auto s : disj->expr.symbols)
+		for (auto s : disj->expr)
 			checkDisjointed(ass, s);
 }
 

@@ -23,7 +23,7 @@ struct MakeString {
 };
 
 inline void makeVars(Vect& expr) {
-	for (auto& symb : expr.symbols)
+	for (auto& symb : expr)
 		symb.var = true;
 }
 
@@ -34,8 +34,8 @@ inline void makeVars(vector<T*>& vars) {
 }
 
 inline void markVars(Vect& ex, const Vect& vars) {
-	for (auto& s : ex.symbols) {
-		if (vars.contains(s.lit))
+	for (auto& s : ex) {
+		if (contains(vars, s.lit))
 			s.var = true;
 	}
 }
@@ -66,7 +66,7 @@ struct AddToMath {
 		Smm::mod().math.assertions.push_back(ass);
 	}
 	void operator()(Constants* c) const {
-		for (auto symb : c->expr.symbols)
+		for (auto symb : c->expr)
 			Smm::mod().math.constants.insert(symb);
 	}
 };

@@ -27,7 +27,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell") {
 	symbol = lexeme[+(ascii::char_ - '$' - ascii::space)] [_val = createSymb(_1)];
 	label  = lexeme[+(ascii::char_ - '$' - ascii::space)] [_val = createLabel(_1)];
 	path   = lexeme[+(ascii::char_ - '$' - ascii::space)];
-	expr   = + (symbol [push_back(at_c<0>(_val), _1)] | comment);
+	expr   = + (symbol [push_back(_val, _1)] | comment);
 
 	ref = (
 		(hyp_refs  [_a = _1] > uint_ [_val = createRef(_a, _1, _r1)]) |

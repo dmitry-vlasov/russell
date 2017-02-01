@@ -8,7 +8,7 @@
 namespace mdl { namespace mm { namespace {
 
 void gather_expr_vars(set<Symbol>& vars, const Vect& expr) {
-	for (Symbol s : expr.symbols)
+	for (Symbol s : expr)
 		if (s.var) vars.insert(s);
 }
 
@@ -40,14 +40,14 @@ struct Maps {
 void reduce_variables(smm::Assertion* ass, const set<Symbol>& all_vars) {
 	Vect rvars;
 	for (const smm::Variables* vars : ass->variables) {
-		for (Symbol v : vars->expr.symbols) {
+		for (Symbol v : vars->expr) {
 			if (all_vars.find(v) != all_vars.end())
 				rvars += v;
 		}
 		delete vars;
 	}
 	ass->variables.clear();
-	if (!rvars.symbols.empty())
+	if (!rvars.empty())
 		ass->variables.push_back(new smm::Variables { rvars });
 }
 
@@ -57,11 +57,11 @@ void reduce_disjointed(smm::Assertion* ass, const set<Symbol>& all_vars) {
 	vector<smm::Disjointed*> red_disjs;
 	for (auto disj : ass->disjointed) {
 		smm::Disjointed* red_disj = new smm::Disjointed();
-		for (Symbol s : disj->expr.symbols) {
+		for (Symbol s : disj->expr) {
 			if (all_vars.find(s) != all_vars.end())
 				red_disj->expr.push_back(s);
 		}
-		if (red_disj->expr.symbols.size() > 1)
+		if (red_disj->expr.size() > 1)
 			red_disjs.push_back(red_disj);
 		else {
 			delete red_disj;

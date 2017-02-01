@@ -65,7 +65,7 @@ void transform(Proof* tree, const Transform& trans, bool forward) {
 Vect eval(Proof* proof);
 
 Vect eval(Ref& ref) {
-	if (!ref.expr.undef()) return ref.expr;
+	if (ref.expr.size()) return ref.expr;
 	switch (ref.type) {
 	case Ref::ESSENTIAL: ref.expr = ref.val.ess->expr; break;
 	case Ref::FLOATING:  ref.expr = ref.val.flo->expr; break;
@@ -79,7 +79,7 @@ Vect eval(Ref& ref) {
 Vect eval(Proof* proof) {
 	assert(proof->type == Proof::TREE);
 	Ref& ref = proof->refs.back();
-	if (!ref.expr.undef())
+	if (ref.expr.size())
 		return ref.expr;
 
 	const Assertion* ass = ref.val.ass;
