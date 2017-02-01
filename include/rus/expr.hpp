@@ -52,24 +52,21 @@ inline ostream& operator << (ostream& os, Symbol s) {
 }
 
 struct Rule;
-struct Expr;
-
-namespace node {
-	template<class>
-	struct PTree;
-}
 
 namespace term {
 
 struct Expr {
-	typedef vector<Expr> Children;
+	typedef vector<Expr*> Children;
 	enum Kind { NODE, VAR};
 
 private:
 	struct Node {
 		Node(Rule* r = nullptr) : rule(r), children() { }
 		Node(Rule* r, const Children& ch) : rule(r), children(ch) { }
-		Node(const Node& n) : rule(n.rule), children(n.children) { }
+		Node(const Node& n) : rule(n.rule), children() {
+			for (auto ch : n.children) children.push_back(new Expr(*ch));
+		}
+		~Node() { for (auto ch : children) delete ch; }
 		Rule*    rule;
 		Children children;
 	};
@@ -82,13 +79,10 @@ private:
 	};
 
 public :
-	//Expr(Kind k = NODE) : kind(k), val(k == NODE ? new Node() : new Symbol()) { }
 	Expr() : kind(NODE), val(new Node()) { }
 	Expr(Rule* r) : kind(NODE), val(new Node(r))  { }
 	Expr(const Symbol& v) : kind(VAR), val(new Symbol(v)) { }
 	Expr(Rule* r, const Children& ch) : kind(NODE), val(new Node(r, ch)) { }
-	//static Expr make_node() { return Expr((Rule*)nullptr); }
-	//static Expr make_var() { return Expr(Symbol()); }
 	~Expr() { delete_val(); }
 	Expr(const Expr& ex) : kind(ex.kind), val() {
 		switch (kind) {
@@ -112,10 +106,22 @@ public :
 		case VAR:  val.var  = new Symbol(*ex.val.var); break;
 		}
 	}
-
-	bool operator == (const Expr& t) const;
-	bool operator != (const Expr& t) const {
-		return !operator == (t);
+	bool operator == (const Expr& e) const {
+		if (kind != e.kind) return false;
+		switch (kind) {
+		case NODE:
+			if (val.node->rule != e.val.node->rule) return false;
+			return std::equal(
+				val.node->children.begin(),val.node->children.end(),
+				e.val.node->children.begin(), e.val.node->children.end(),
+				[] (auto const& c1, auto const& c2) -> bool { return *c1 == *c2; }
+			);
+		case VAR: return *val.var == *e.val.var;
+		}
+		return true;
+	}
+	bool operator != (const Expr& e) const {
+		return !operator == (e);
 	}
 
 	Kind kind;
@@ -141,36 +147,13 @@ private:
 	}
 };
 
-template<class T>
-struct Tree {
-	map<Rule*, vector<Tree<T>>> rules;
-	map<const rus::Expr*, const Symbol*> entries;
-};
-
 }
 
 struct Substitution {
+	~Substitution() { for (auto p : sub) delete p.second; }
 	bool join(Substitution* s);
-	map<Symbol, term::Expr> sub;
+	map<Symbol, term::Expr*> sub;
 };
-
-struct Rules {
-	struct Node;
-	typedef vector<Node> Map;
-	Rule*& add(const Expr& ex);
-	Map map;
-};
-
-struct Rules::Node {
-	Node(Symbol s) : symb(s), tree(), level(), rule(nullptr) { }
-	Symbol   symb;
-	Rules tree;
-	uint     level;
-	Rule*    rule;
-};
-
-string show(const Rules& tr);
-
 
 struct Expr {
 	typedef term::Expr Term;
@@ -202,9 +185,28 @@ struct Expr {
 	Symbols symbols;
 };
 
-Substitution* unify(const term::Expr& p, const term::Expr& q);
+struct Rules {
+	struct Node;
+	typedef vector<Node> Map;
+	Rule*& add(const Expr& ex);
+	Map map;
+};
+
+struct Rules::Node {
+	Node(Symbol s) : symb(s), tree(), level(), rule(nullptr) { }
+	Symbol   symb;
+	Rules tree;
+	uint     level;
+	Rule*    rule;
+};
+
+string show(const Rules& tr);
+
+
+
+Substitution* unify(const term::Expr* p, const term::Expr* q);
 inline Substitution* unify(const Expr& ex1, const Expr& ex2) {
-	return unify(ex1.term, ex2.term);
+	return unify(&ex1.term, &ex2.term);
 }
 Expr assemble(const Expr& ex);
 Expr assemble(const term::Expr* t);
@@ -226,7 +228,7 @@ string show(const term::Expr& t, bool full = false);
 inline string show(const Substitution& s) {
 	string str;
 	for (auto p : s.sub) {
-		str += show(p.first, true) + " --> " + show_ast(p.second) + "\t ==\t"  + show(p.second) + "\n";
+		str += show(p.first, true) + " --> " + show_ast(*p.second) + "\t ==\t"  + show(*p.second) + "\n";
 	}
 	return str;
 }
@@ -251,8 +253,8 @@ inline size_t memvol(const term::Expr& t) {
 	if (t.kind != term::Expr::NODE) return 0;
 	size_t vol = 0;
 	vol += t.children().capacity();
-	for (const term::Expr ch : t.children())
-		vol += memvol(ch);
+	for (const term::Expr* ch : t.children())
+		vol += memvol(*ch);
 	return vol;
 }
 

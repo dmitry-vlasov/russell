@@ -124,8 +124,8 @@ smm::Assertion* translate_rule(const Rule* rule, Maps& maps) {
 	maps.rules[rule] = ra;
 	for (auto v : rule->vars.v) {
 		uint i = 0;
-		for (auto& ch : rule->term.term.children()) {
-			if (ch.kind == term::Expr::VAR && *ch.var() == v) {
+		for (auto ch : rule->term.term.children()) {
+			if (ch->kind == term::Expr::VAR && *ch->var() == v) {
 				maps.rules_args[rule][v] = i;
 				break;
 			}
@@ -197,7 +197,7 @@ void translate_term(const term::Expr& t, const Assertion* thm, vector<smm::Ref>&
 			throw Error("undeclared variable", show(*t.var()));
 	} else {
 		for (auto v : t.rule()->vars.v)
-			translate_term(t.children()[maps.rules_args[t.rule()][v]], thm, smm_proof, maps);
+			translate_term(*t.children()[maps.rules_args[t.rule()][v]], thm, smm_proof, maps);
 	}
 	if (t.kind == term::Expr::NODE) {
 		if (!maps.rules.count(t.rule()))
@@ -225,7 +225,7 @@ void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref>& smm_
 		delete hs;
 	}
 	for (auto v : st->assertion()->vars.v)
-		translate_term(ps->sub[v], thm, smm_proof, maps);
+		translate_term(*ps->sub[v], thm, smm_proof, maps);
 	delete ps;
 	if (!maps.assertions.count(ass))
 		throw Error("undefined reference to assertion");

@@ -43,9 +43,9 @@ Symbols::iterator parse_LL(Term& t, Symbols::iterator x, Type* type, uint ind, b
 		m.push(x);
 		while (!n.empty() && !m.empty()) {
 			if (Type* tp = n.top()->symb.type) {
-				t.children().push_back(Term());
+				t.children().push_back(new Term());
 				childnodes.push(n.top());
-				Term& child = t.children().back();
+				Term& child = *t.children().back();
 				auto ch = parse_LL(child, m.top(), tp, ind, n.top() == type->rules.map.begin());
 				if (ch != Symbols::iterator()) {
 					switch (act(n, m, ch, t, ind)) {
@@ -83,7 +83,7 @@ Symbols::iterator parse_LL(Term& t, Symbols::iterator x, Type* type, uint ind, b
 			return x;
 		} else if (Rule* super = find_super(x->type, type)) {
 			t = Term(super);
-			t.children().push_back(Term(*x));
+			t.children().push_back(new Term(*x));
 			return x;
 		}
 	}

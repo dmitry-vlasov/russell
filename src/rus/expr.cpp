@@ -33,7 +33,7 @@ string show_ast(const term::Expr& t, bool full) {
 	else {
 		string s = (t.rule() ? show_id(t.rule()->id) : "?") + " (";
 		for (uint i = 0; i < t.children().size(); ++ i) {
-			s += show_ast(t.children()[i], full);
+			s += show_ast(*t.children()[i], full);
 			if (i + 1 < t.children().size()) s += ", ";
 		}
 		s += ")";
@@ -49,7 +49,7 @@ string show(const term::Expr& t, bool full) {
 		uint i = 0;
 		for (auto s : t.rule()->term.symbols) {
 			if (s.type) {
-				str += show(t.children()[i++], full) + ' ';
+				str += show(*t.children()[i++], full) + ' ';
 			} else {
 				str += show(s) + ' ';
 			}
@@ -58,31 +58,10 @@ string show(const term::Expr& t, bool full) {
 	}
 }
 
-namespace term {
-	bool Expr :: operator == (const Expr& t) const {
-		if (kind != t.kind) return false;
-		switch (kind) {
-		case VAR:  return *val.var == *t.val.var;
-		case NODE: {
-			if (val.node->rule != t.val.node->rule) return false;
-			auto i_p = val.node->children.begin();
-			auto i_q = t.val.node->children.begin();
-			while (i_p != val.node->children.end()) {
-				if (*i_p != *i_q) return false;
-				++ i_p; ++ i_q;
-			}
-			return true;
-		}
-		default : break;
-		}
-		return true;
-	}
-}
-
 void parse_term(Expr& ex, Rule* rule) {
 	ex.term = term::Expr(rule);
 	for (auto& s : ex.symbols) {
-		if (s.type)	ex.term.children().push_back(term::Expr(s));
+		if (s.type)	ex.term.children().push_back(new term::Expr(s));
 	}
 }
 
@@ -90,11 +69,11 @@ bool Substitution::join(Substitution* s) {
 	for (auto& p : s->sub) {
 		auto it = sub.find(p.first);
 		if (it != sub.end()) {
-			if ((*it).second != p.second) {
+			if (*(*it).second != *p.second) {
 				return false;
 			}
 		} else {
-			sub[p.first] = p.second;
+			sub[p.first] = new term::Expr(*p.second);
 		}
 	}
 	return true;
