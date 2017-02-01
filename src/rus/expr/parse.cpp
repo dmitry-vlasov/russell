@@ -30,8 +30,8 @@ inline Action act(auto& n, auto& m, Symbols::iterator ch, Tree& t, uint ind) {
 	return Action::CONT;
 }
 
-bool parse_LL(Tree& t, Symbols::iterator& x, Type* type, uint ind, bool initial = false) {
-	if (!initial && type->rules.map.size()) {
+bool parse_LL(Tree& t, Symbols::iterator& x, Type* type, uint ind) {
+	if (type->rules.map.size()) {
 		t.kind = Tree::NODE;
 		typedef Rules::Map::const_iterator MapIter;
 
@@ -46,7 +46,7 @@ bool parse_LL(Tree& t, Symbols::iterator& x, Type* type, uint ind, bool initial 
 				t.children().push_back(new Tree());
 				childnodes.push(n.top());
 				Tree& child = *t.children().back();
-				if (parse_LL(child, ch, tp, ind, n.top() == type->rules.map.begin())) {
+				if (parse_LL(child, ch, tp, ind)) {
 					switch (act(n, m, ch, t, ind)) {
 					case Action::RET  : x = ch; return true;
 					case Action::BREAK: goto out;
@@ -103,7 +103,7 @@ void parse_LL(Expr* ex, uint ind) {
 
 
 
-const uint THREADS = 1; //thread::hardware_concurrency() ? thread::hardware_concurrency() : 1;
+const uint THREADS = thread::hardware_concurrency() ? thread::hardware_concurrency() : 1;
 vector<std::exception_ptr> exceptions;
 mutex exc_mutex;
 
