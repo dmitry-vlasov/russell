@@ -30,7 +30,7 @@ inline Action act(auto& n, auto& m, Symbols::iterator ch, Tree& t, uint ind) {
 	return Action::CONT;
 }
 
-Symbols::iterator parse_LL(Tree& t, Symbols::iterator x, Type* type, uint ind, bool initial = false) {
+bool parse_LL(Tree& t, Symbols::iterator& x, Type* type, uint ind, bool initial = false) {
 	if (!initial && type->rules.map.size()) {
 		t.kind = Tree::NODE;
 		typedef Rules::Map::const_iterator MapIter;
@@ -41,14 +41,14 @@ Symbols::iterator parse_LL(Tree& t, Symbols::iterator x, Type* type, uint ind, b
 		n.push(type->rules.map.begin());
 		m.push(x);
 		while (!n.empty() && !m.empty()) {
+			auto ch = m.top();
 			if (Type* tp = n.top()->symb.type) {
 				t.children().push_back(new Tree());
 				childnodes.push(n.top());
 				Tree& child = *t.children().back();
-				auto ch = parse_LL(child, m.top(), tp, ind, n.top() == type->rules.map.begin());
-				if (ch != Symbols::iterator()) {
+				if (parse_LL(child, ch, tp, ind, n.top() == type->rules.map.begin())) {
 					switch (act(n, m, ch, t, ind)) {
-					case Action::RET  : return ch;
+					case Action::RET  : x = ch; return true;
 					case Action::BREAK: goto out;
 					case Action::CONT : continue;
 					}
@@ -57,8 +57,8 @@ Symbols::iterator parse_LL(Tree& t, Symbols::iterator x, Type* type, uint ind, b
 					childnodes.pop();
 				}
 			} else if (n.top()->symb == *m.top()) {
-				switch (act(n, m, m.top(), t, ind)) {
-				case Action::RET  : return m.top();
+				switch (act(n, m, ch, t, ind)) {
+				case Action::RET  : x = ch; return true;
 				case Action::BREAK: goto out;
 				case Action::CONT : continue;
 				}
@@ -79,14 +79,14 @@ Symbols::iterator parse_LL(Tree& t, Symbols::iterator x, Type* type, uint ind, b
 	if (x->type) {
 		if (x->type == type) {
 			t = Tree(*x);
-			return x;
+			return true;
 		} else if (Rule* super = find_super(x->type, type)) {
 			t = Tree(super);
 			t.children().push_back(new Tree(*x));
-			return x;
+			return true;
 		}
 	}
-	return Symbols::iterator();
+	return false;
 }
 
 
@@ -94,7 +94,8 @@ void parse_LL(Expr* ex, uint ind) {
 	(--ex->symbols.end())->end = true;
 	//cout << "parsing: " << ind << " -- " << show(*ex) << flush;
 	ex->tree = new Tree();
-	if (parse_LL(*ex->tree, ex->symbols.begin(), ex->type, ind) == Symbols::iterator()) {
+	auto it = ex->symbols.begin();
+	if (!parse_LL(*ex->tree, it, ex->type, ind)) {
 		throw Error("parsing error", string("expression: ") + show(*ex));
 	}
 	//cout << "done" << endl;
@@ -102,7 +103,7 @@ void parse_LL(Expr* ex, uint ind) {
 
 
 
-const uint THREADS = thread::hardware_concurrency() ? thread::hardware_concurrency() : 1;
+const uint THREADS = 1; //thread::hardware_concurrency() ? thread::hardware_concurrency() : 1;
 vector<std::exception_ptr> exceptions;
 mutex exc_mutex;
 
