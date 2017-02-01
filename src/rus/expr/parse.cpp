@@ -93,7 +93,7 @@ Symbols::iterator parse_LL(Tree& t, Symbols::iterator x, Type* type, uint ind, b
 void parse_LL(Expr* ex, uint ind) {
 	(--ex->symbols.end())->end = true;
 	//cout << "parsing: " << ind << " -- " << show(*ex) << flush;
-	if (parse_LL(ex->term, ex->symbols.begin(), ex->type, ind) == Symbols::iterator()) {
+	if (parse_LL(ex->tree, ex->symbols.begin(), ex->type, ind) == Symbols::iterator()) {
 		throw Error("parsing error", string("expression: ") + show(*ex));
 	}
 	//cout << "done" << endl;

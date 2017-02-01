@@ -152,8 +152,8 @@ struct Substitution {
 };
 
 struct Expr {
-	Expr() : type(nullptr), term(), symbols() { }
-	Expr(Symbol s) : type(s.type), term(), symbols() {
+	Expr() : type(nullptr), tree(), symbols() { }
+	Expr(Symbol s) : type(s.type), tree(), symbols() {
 		symbols.push_back(s);
 	}
 	void push_back(Symbol s) {
@@ -175,7 +175,7 @@ struct Expr {
 	}
 
 	Type*   type;
-	Tree    term;
+	Tree    tree;
 	Symbols symbols;
 };
 
@@ -196,11 +196,9 @@ struct Rules::Node {
 
 string show(const Rules& tr);
 
-
-
 Substitution* unify(const Tree* p, const Tree* q);
 inline Substitution* unify(const Expr& ex1, const Expr& ex2) {
-	return unify(&ex1.term, &ex2.term);
+	return unify(&ex1.tree, &ex2.tree);
 }
 Expr assemble(const Expr& ex);
 Expr assemble(const Tree* t);
@@ -213,7 +211,7 @@ namespace expr {
 string show(const Expr&);
 string show_ast(const Tree&, bool full = false);
 inline string show_ast(const Expr& ex, bool full = false) {
-	return show_ast(ex.term, full);
+	return show_ast(ex.tree, full);
 }
 
 string show(const Tree& t, bool full = false);

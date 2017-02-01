@@ -23,7 +23,7 @@ string show(const Expr& ex) {
 size_t memvol(const Expr& ex) {
 	size_t s = 0;
 	s += ex.symbols.capacity() * sizeof (Symbols);
-	s += memvol(ex.term);
+	s += memvol(ex.tree);
 	return s;
 }
 
@@ -59,9 +59,9 @@ string show(const Tree& t, bool full) {
 }
 
 void parse_term(Expr& ex, Rule* rule) {
-	ex.term = Tree(rule);
+	ex.tree = Tree(rule);
 	for (auto& s : ex.symbols) {
-		if (s.type)	ex.term.children().push_back(new Tree(s));
+		if (s.type)	ex.tree.children().push_back(new Tree(s));
 	}
 }
 
