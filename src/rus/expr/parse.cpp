@@ -2,7 +2,6 @@
 
 namespace mdl { namespace rus { namespace expr { namespace {
 
-typedef term::Tree Term;
 vector<pair<Expr*, uint>> queue;
 
 inline Rule* find_super(Type* type, Type* super) {
@@ -15,7 +14,7 @@ inline Rule* find_super(Type* type, Type* super) {
 
 enum class Action { RET, BREAK, CONT };
 
-inline Action act(auto& n, auto& m, Symbols::iterator ch, Term& t, uint ind) {
+inline Action act(auto& n, auto& m, Symbols::iterator ch, Tree& t, uint ind) {
 	if (Rule* r = n.top()->rule) {
 		if (r->ind <= ind) {
 			t.rule() = r;
@@ -31,9 +30,9 @@ inline Action act(auto& n, auto& m, Symbols::iterator ch, Term& t, uint ind) {
 	return Action::CONT;
 }
 
-Symbols::iterator parse_LL(Term& t, Symbols::iterator x, Type* type, uint ind, bool initial = false) {
+Symbols::iterator parse_LL(Tree& t, Symbols::iterator x, Type* type, uint ind, bool initial = false) {
 	if (!initial && type->rules.map.size()) {
-		t.kind = term::Tree::NODE;
+		t.kind = Tree::NODE;
 		typedef Rules::Map::const_iterator MapIter;
 
 		stack<MapIter> n;
@@ -43,9 +42,9 @@ Symbols::iterator parse_LL(Term& t, Symbols::iterator x, Type* type, uint ind, b
 		m.push(x);
 		while (!n.empty() && !m.empty()) {
 			if (Type* tp = n.top()->symb.type) {
-				t.children().push_back(new Term());
+				t.children().push_back(new Tree());
 				childnodes.push(n.top());
-				Term& child = *t.children().back();
+				Tree& child = *t.children().back();
 				auto ch = parse_LL(child, m.top(), tp, ind, n.top() == type->rules.map.begin());
 				if (ch != Symbols::iterator()) {
 					switch (act(n, m, ch, t, ind)) {
@@ -79,11 +78,11 @@ Symbols::iterator parse_LL(Term& t, Symbols::iterator x, Type* type, uint ind, b
 	}
 	if (x->type) {
 		if (x->type == type) {
-			t = Term(*x);
+			t = Tree(*x);
 			return x;
 		} else if (Rule* super = find_super(x->type, type)) {
-			t = Term(super);
-			t.children().push_back(new Term(*x));
+			t = Tree(super);
+			t.children().push_back(new Tree(*x));
 			return x;
 		}
 	}
