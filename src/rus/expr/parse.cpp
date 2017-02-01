@@ -14,10 +14,10 @@ inline Rule* find_super(Type* type, Type* super) {
 
 enum class Action { RET, BREAK, CONT };
 
-inline Action act(auto& n, auto& m, Symbols::iterator ch, Tree& t, uint ind) {
+inline Action act(auto& n, auto& m, Symbols::iterator ch, uint ind, Rule*& rule) {
 	if (Rule* r = n.top()->rule) {
 		if (r->ind <= ind) {
-			t.rule() = r;
+			rule = r;
 			return Action::RET;
 		} else
 			return Action::BREAK;
@@ -30,10 +30,12 @@ inline Action act(auto& n, auto& m, Symbols::iterator ch, Tree& t, uint ind) {
 	return Action::CONT;
 }
 
-bool parse_LL(Tree& t, Symbols::iterator& x, Type* type, uint ind) {
+Tree* parse_LL(Symbols::iterator& x, Type* type, uint ind) {
 	if (type->rules.map.size()) {
-		t.kind = Tree::NODE;
 		typedef Rules::Map::const_iterator MapIter;
+
+		Tree::Children children;
+		Rule* rule = nullptr;
 
 		stack<MapIter> n;
 		stack<Symbols::iterator> m;
@@ -43,22 +45,20 @@ bool parse_LL(Tree& t, Symbols::iterator& x, Type* type, uint ind) {
 		while (!n.empty() && !m.empty()) {
 			auto ch = m.top();
 			if (Type* tp = n.top()->symb.type) {
-				t.children().push_back(new Tree());
 				childnodes.push(n.top());
-				Tree& child = *t.children().back();
-				if (parse_LL(child, ch, tp, ind)) {
-					switch (act(n, m, ch, t, ind)) {
-					case Action::RET  : x = ch; return true;
+				if (Tree* child = parse_LL(ch, tp, ind)) {
+					children.push_back(child);
+					switch (act(n, m, ch, ind, rule)) {
+					case Action::RET  : x = ch; return new Tree(rule, children);
 					case Action::BREAK: goto out;
 					case Action::CONT : continue;
 					}
 				} else {
-					t.children().pop_back();
 					childnodes.pop();
 				}
 			} else if (n.top()->symb == *m.top()) {
-				switch (act(n, m, ch, t, ind)) {
-				case Action::RET  : x = ch; return true;
+				switch (act(n, m, ch, ind, rule)) {
+				case Action::RET  : x = ch; return new Tree(rule, children);
 				case Action::BREAK: goto out;
 				case Action::CONT : continue;
 				}
@@ -67,7 +67,8 @@ bool parse_LL(Tree& t, Symbols::iterator& x, Type* type, uint ind) {
 				n.pop();
 				m.pop();
 				if (!childnodes.empty() && childnodes.top() == n.top()) {
-					t.children().pop_back();
+					delete children.back();
+					children.pop_back();
 					childnodes.pop();
 				}
 				if (n.empty() || m.empty()) goto out;
@@ -78,24 +79,22 @@ bool parse_LL(Tree& t, Symbols::iterator& x, Type* type, uint ind) {
 	}
 	if (x->type) {
 		if (x->type == type) {
-			t = Tree(*x);
-			return true;
+			return new Tree(*x);
 		} else if (Rule* super = find_super(x->type, type)) {
-			t = Tree(super);
-			t.children().push_back(new Tree(*x));
-			return true;
+			return new Tree(super, {new Tree(*x)});
 		}
 	}
-	return false;
+	return nullptr;
 }
 
 
 void parse_LL(Expr* ex, uint ind) {
 	(--ex->symbols.end())->end = true;
 	//cout << "parsing: " << ind << " -- " << show(*ex) << flush;
-	ex->tree = new Tree();
 	auto it = ex->symbols.begin();
-	if (!parse_LL(*ex->tree, it, ex->type, ind)) {
+	if (Tree* tree = parse_LL(it, ex->type, ind)) {
+		ex->tree = tree;
+	} else {
 		throw Error("parsing error", string("expression: ") + show(*ex));
 	}
 	//cout << "done" << endl;
