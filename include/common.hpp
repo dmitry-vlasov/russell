@@ -2,8 +2,8 @@
 
 #include "std.hpp"
 #include "location.hpp"
+#include "symbol.hpp"
 #include "timer.hpp"
-#include "expr.hpp"
 
 namespace mdl {
 

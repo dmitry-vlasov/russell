@@ -62,9 +62,9 @@ void transform(Proof* tree, const Transform& trans, bool forward) {
 	tree->refs = new_refs;
 }
 
-Expr eval(Proof* proof);
+Vect eval(Proof* proof);
 
-Expr eval(Ref& ref) {
+Vect eval(Ref& ref) {
 	if (!ref.expr.undef()) return ref.expr;
 	switch (ref.type) {
 	case Ref::ESSENTIAL: ref.expr = ref.val.ess->expr; break;
@@ -76,7 +76,7 @@ Expr eval(Ref& ref) {
 	return ref.expr;
 }
 
-Expr eval(Proof* proof) {
+Vect eval(Proof* proof) {
 	assert(proof->type == Proof::TREE);
 	Ref& ref = proof->refs.back();
 	if (!ref.expr.undef())

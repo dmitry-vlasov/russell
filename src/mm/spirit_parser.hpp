@@ -183,7 +183,7 @@ struct PopVC {
 struct AddVars {
     template <typename T1, typename T2>
     struct result { typedef void type; };
-    void operator()(Stack& vc, const Expr& vars) const {
+    void operator()(Stack& vc, const Vect& vars) const {
     	for (Symbol v : vars.symbols)
 			vc.back().vars.insert(v);
     }
@@ -192,7 +192,7 @@ struct AddVars {
 struct AddConsts {
     template <typename T1, typename T2>
     struct result { typedef void type; };
-    void operator()(Stack& vc, const Expr& consts) const {
+    void operator()(Stack& vc, const Vect& consts) const {
     	for (Symbol c : consts.symbols)
 			vc.back().consts.insert(c);
     }
@@ -201,7 +201,7 @@ struct AddConsts {
 struct MarkVars {
     template <typename T1, typename T2>
     struct result { typedef void type; };
-    void operator()(Expr& expr, const Stack& stack) const {
+    void operator()(Vect& expr, const Stack& stack) const {
     	for (Symbol& s : expr.symbols) {
     		bool is_var   = false;
     		bool is_const = false;
@@ -223,7 +223,7 @@ struct Grammar : qi::grammar<Iterator, Source(), ascii::space_type> {
 	Grammar();
 	void initNames();
 
-	qi::rule<Iterator, Expr(), ascii::space_type> expr;
+	qi::rule<Iterator, Vect(), ascii::space_type> expr;
 	qi::rule<Iterator, Symbol(), ascii::space_type> symbol;
 	qi::rule<Iterator, uint(),        ascii::space_type> label;
 	qi::rule<Iterator, std::string(), ascii::space_type> path;

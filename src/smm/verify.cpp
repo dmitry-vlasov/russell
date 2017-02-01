@@ -12,7 +12,7 @@ bool areDisjointed(const Assertion* ass, Symbol s1, Symbol s2) {
 	return false;
 }
 
-static void checkDisjPair(const Expr& ex1, const Expr& ex2, const Assertion* th, const Assertion* ass) {
+static void checkDisjPair(const Vect& ex1, const Vect& ex2, const Assertion* th, const Assertion* ass) {
 	for (auto s_1 : ex1.symbols) {
 		for (auto s_2 : ex2.symbols) {
 			if (s_1.var && s_1 == s_2) {
@@ -42,15 +42,15 @@ static void checkDisj(const Subst& sub, const Assertion* ass, const Assertion* t
 	}
 }
 
-inline void append_expr(Expr& ex_1, const Expr& ex_2) {
+inline void append_expr(Vect& ex_1, const Vect& ex_2) {
 	auto it = ex_2.symbols.cbegin();
 	++ it;
 	for (; it != ex_2.symbols.cend(); ++ it)
 		ex_1.symbols.push_back(*it);
 }
 
-Expr apply(const Subst& sub, const Expr& expr) {
-	Expr ret;
+Vect apply(const Subst& sub, const Vect& expr) {
+	Vect ret;
 	for (auto s : expr.symbols) {
 		if (s.var) {
 			auto ex = sub.find(s);
@@ -64,7 +64,7 @@ Expr apply(const Subst& sub, const Expr& expr) {
 	return  ret;
 }
 
-static void checkSymbols(const Assertion* ass, const Expr& expr) {
+static void checkSymbols(const Assertion* ass, const Vect& expr) {
 	for (auto s : expr.symbols) {
 		bool is_const = (Smm::get().math.constants.find(s) != Smm::get().math.constants.end());
 		bool is_var = false;
@@ -123,7 +123,7 @@ static void checkSymbols(const Assertion* ass) {
 	checkDisjointed(ass, ass->disjointed);
 }
 
-static void apply(const Assertion* ass, const Assertion* th, stack<Expr>& expr_stack) {
+static void apply(const Assertion* ass, const Assertion* th, stack<Vect>& expr_stack) {
 	Subst sub;
 	for (auto flo : boost::adaptors::reverse(ass->floating)) {
 		if (expr_stack.empty()) {
@@ -159,7 +159,7 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Expr>& expr_s
 
 static void assertion(const Assertion* ass, const vector<Assertion*>& theory) {
 	checkSymbols(ass);
-	stack<Expr> expr_stack;
+	stack<Vect> expr_stack;
 	const Proof* proof = ass->proof;
 	if (!proof) return;
 	for (auto& ref : proof->refs) {

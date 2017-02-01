@@ -7,40 +7,40 @@
 namespace mdl { namespace smm {
 
 struct Constants {
-	Expr expr;
+	Vect expr;
 };
 
 struct Variables {
-	Expr expr;
+	Vect expr;
 };
 
 struct Disjointed {
-	Expr expr;
+	Vect expr;
 };
 
 struct Essential {
 	uint index;
-	Expr expr;
+	Vect expr;
 };
 
 struct Floating  {
 	Symbol type() const { return expr.symbols[0]; }
 	Symbol var() const { return expr.symbols[1]; }
 	uint index;
-	Expr expr;
+	Vect expr;
 };
 
 struct Inner {
 	Symbol type() const { return expr.symbols[0]; }
 	Symbol var() const { return expr.symbols[1]; }
 	uint index;
-	Expr expr;
+	Vect expr;
 };
 
 struct Proposition {
 	bool axiom;
 	uint label;
-	Expr expr;
+	Vect expr;
 };
 
 struct Proof;
@@ -107,7 +107,7 @@ struct Ref {
 
 	Type type;
 	Value val;
-	Expr expr;
+	Vect expr;
 };
 
 struct Proof {

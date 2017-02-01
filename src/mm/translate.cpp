@@ -7,7 +7,7 @@
 
 namespace mdl { namespace mm { namespace {
 
-void gather_expr_vars(set<Symbol>& vars, const Expr& expr) {
+void gather_expr_vars(set<Symbol>& vars, const Vect& expr) {
 	for (Symbol s : expr.symbols)
 		if (s.var) vars.insert(s);
 }
@@ -38,7 +38,7 @@ struct Maps {
 // Replace variable sets with single set, which contains only needed variables.
 //
 void reduce_variables(smm::Assertion* ass, const set<Symbol>& all_vars) {
-	Expr rvars;
+	Vect rvars;
 	for (const smm::Variables* vars : ass->variables) {
 		for (Symbol v : vars->expr.symbols) {
 			if (all_vars.find(v) != all_vars.end())

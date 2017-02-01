@@ -22,7 +22,7 @@ struct MakeString {
 	}
 };
 
-inline void makeVars(Expr& expr) {
+inline void makeVars(Vect& expr) {
 	for (auto& symb : expr.symbols)
 		symb.var = true;
 }
@@ -33,14 +33,14 @@ inline void makeVars(vector<T*>& vars) {
 		makeVars(v_it->expr);
 }
 
-inline void markVars(Expr& ex, const Expr& vars) {
+inline void markVars(Vect& ex, const Vect& vars) {
 	for (auto& s : ex.symbols) {
 		if (vars.contains(s.lit))
 			s.var = true;
 	}
 }
 
-inline void markVars(const vector<Variables*>& vars, Expr& expr) {
+inline void markVars(const vector<Variables*>& vars, Vect& expr) {
 	for (auto& v_it : vars) {
 		markVars(expr, v_it->expr);
 	}
@@ -155,7 +155,7 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 
 	PropRefs prop_refs;
 	HypRefs  hyp_refs;
-	qi::rule<Iterator, Expr(), ascii::space_type> expr;
+	qi::rule<Iterator, Vect(), ascii::space_type> expr;
 	qi::rule<Iterator, Symbol(), ascii::space_type> symbol;
 	qi::rule<Iterator, uint(),        ascii::space_type> label;
 	qi::rule<Iterator, std::string(), ascii::space_type> path;

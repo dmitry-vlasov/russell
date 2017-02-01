@@ -7,13 +7,13 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
-	mdl::Expr,
+	mdl::Vect,
 	(std::vector<mdl::Symbol>, symbols)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Constants,
-	(mdl::Expr, expr)
+	(mdl::Vect, expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -40,37 +40,37 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Variables,
-	(mdl::Expr, expr)
+	(mdl::Vect, expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Disjointed,
-	(mdl::Expr, expr)
+	(mdl::Vect, expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Essential,
 	(mdl::uint, label)
-	(mdl::Expr, expr)
+	(mdl::Vect, expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Floating,
 	(mdl::uint, label)
-	(mdl::Expr, expr)
+	(mdl::Vect, expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Axiom,
 	(mdl::uint, label)
-	(mdl::Expr, expr)
+	(mdl::Vect, expr)
 	(mdl::uint, arity)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::mm::Theorem,
 	(mdl::uint, label)
-	(mdl::Expr, expr)
+	(mdl::Vect, expr)
 	(mdl::uint, arity)
 	(mdl::mm::Proof*, proof)
 )

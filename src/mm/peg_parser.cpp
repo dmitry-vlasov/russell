@@ -54,7 +54,7 @@ public:
 			return Mm::mod().lex.labels.toInt(sv.token());
 		};
 		parser["EXPR"] = [](const peg::SemanticValues& sv) {
-			Expr expr;
+			Vect expr;
 			expr.symbols.reserve(sv.size());
 			for (auto& s : sv) {
 				if (s.is<Symbol>()) expr += s.get<Symbol>();
@@ -63,37 +63,37 @@ public:
 			return expr;
 		};
 		parser["CONST"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Constants* consts = new Constants { sv[0].get<Expr>() };
+			Constants* consts = new Constants { sv[0].get<Vect>() };
 			for (Symbol c : consts->expr.symbols)
 				context.get<std::shared_ptr<Context>>()->stack.back().consts.insert(c);
 			return consts;
 		};
 		parser["VAR"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Variables* vars = new Variables { sv[0].get<Expr>() };
+			Variables* vars = new Variables { sv[0].get<Vect>() };
 			for (Symbol c : vars->expr.symbols)
 				context.get<std::shared_ptr<Context>>()->stack.back().vars.insert(c);
 			return vars;
 		};
 		parser["DISJ"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Disjointed* disj = new Disjointed { sv[0].get<Expr>() };
+			Disjointed* disj = new Disjointed { sv[0].get<Vect>() };
 			for (Symbol v : disj->expr.symbols)
 				context.get<std::shared_ptr<Context>>()->stack.back().vars.insert(v);
 			return disj;
 		};
 		parser["ESS"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Essential* ess = new Essential { sv[0].get<uint>(), sv[1].get<Expr>() };
+			Essential* ess = new Essential { sv[0].get<uint>(), sv[1].get<Vect>() };
 			markVars(ess->expr, context.get<std::shared_ptr<Context>>()->stack);
 			Mm::mod().math.essentials[ess->label] = ess;
 			return ess;
 		};
 		parser["FLO"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Floating* flo = new Floating { sv[0].get<uint>(), sv[1].get<Expr>() };
+			Floating* flo = new Floating { sv[0].get<uint>(), sv[1].get<Vect>() };
 			markVars(flo->expr, context.get<std::shared_ptr<Context>>()->stack);
 			Mm::mod().math.floatings[flo->label] = flo;
 			return flo;
 		};
 		parser["AX"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Axiom* ax = new Axiom { sv[0].get<uint>(), sv[1].get<Expr>(), (uint) -1 };
+			Axiom* ax = new Axiom { sv[0].get<uint>(), sv[1].get<Vect>(), (uint) -1 };
 			markVars(ax->expr, context.get<std::shared_ptr<Context>>()->stack);
 			Mm::mod().math.axioms[ax->label] = ax;
 			return ax;
@@ -101,7 +101,7 @@ public:
 		parser["TH"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Theorem* th = new Theorem();
 			th->label = sv[0].get<uint>();
-			th->expr  = sv[1].get<Expr>();
+			th->expr  = sv[1].get<Vect>();
 			th->proof = sv[2].get<Proof*>();
 			markVars(th->expr, context.get<std::shared_ptr<Context>>()->stack);
 			Mm::mod().math.theorems[th->label] = th;
@@ -219,7 +219,7 @@ private:
 		std::swap(data, src->data);
 		return src;
 	}
-	static void markVars(Expr& expr, const Stack& stack) {
+	static void markVars(Vect& expr, const Stack& stack) {
     	for (Symbol& s : expr.symbols) {
     		bool is_var   = false;
     		bool is_const = false;

@@ -7,13 +7,13 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
-	mdl::Expr,
+	mdl::Vect,
 	(std::vector<mdl::Symbol>, symbols)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::smm::Constants,
-	(mdl::Expr, expr)
+	(mdl::Vect, expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -30,7 +30,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	mdl::smm::Ref,
 	(mdl::smm::Ref::Type, type)
 	(mdl::smm::Ref::Value, val)
-	(mdl::Expr,           expr)
+	(mdl::Vect,           expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -41,37 +41,37 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::smm::Variables,
-	(mdl::Expr, expr)
+	(mdl::Vect, expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::smm::Disjointed,
-	(mdl::Expr, expr)
+	(mdl::Vect, expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::smm::Essential,
 	(uint, index)
-	(mdl::Expr, expr)
+	(mdl::Vect, expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::smm::Floating,
 	(uint, index)
-	(mdl::Expr, expr)
+	(mdl::Vect, expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::smm::Inner,
 	(uint, index)
-	(mdl::Expr, expr)
+	(mdl::Vect, expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::smm::Proposition,
 	(bool, axiom)
 	(uint, label)
-	(mdl::Expr, expr)
+	(mdl::Vect, expr)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(

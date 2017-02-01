@@ -54,17 +54,17 @@ namespace std {
 
 namespace mdl {
 
-struct Expr {
-	Expr() : symbols() { }
-	Expr(const Expr& ex) : symbols(ex.symbols) { }
-	Expr(Expr&& ex) : symbols(ex.symbols) { }
-	Expr(const vector<Symbol>& s) : symbols(s) { }
+struct Vect {
+	Vect() : symbols() { }
+	Vect(const Vect& ex) : symbols(ex.symbols) { }
+	Vect(Vect&& ex) : symbols(ex.symbols) { }
+	Vect(const vector<Symbol>& s) : symbols(s) { }
 
-	Expr& operator = (const Expr& ex) {
+	Vect& operator = (const Vect& ex) {
 		symbols = ex.symbols;
 		return *this;
 	}
-	Expr& operator = (Expr&& ex) {
+	Vect& operator = (Vect&& ex) {
 		symbols = ex.symbols;
 		return *this;
 	}
@@ -82,19 +82,19 @@ struct Expr {
 		}
 		return false;
 	}
-	Expr& operator += (Symbol s) {
+	Vect& operator += (Symbol s) {
 		symbols.push_back(s);
 		return *this;
 	}
-	Expr& operator += (const Expr& ex) {
+	Vect& operator += (const Vect& ex) {
 		for (auto s : ex.symbols)
 			symbols.push_back(s);
 		return *this;
 	}
-	bool operator == (const Expr& ex) const {
+	bool operator == (const Vect& ex) const {
 		return symbols == ex.symbols;
 	}
-	bool operator != (const Expr& ex) const {
+	bool operator != (const Vect& ex) const {
 		return !operator ==(ex);
 	}
 	bool undef() const {
@@ -112,7 +112,7 @@ struct Expr {
 string show_sy(Symbol);
 string show_id(uint);
 
-inline string show_ex(const Expr& expr) {
+inline string show_ex(const Vect& expr) {
 	string s;
 	for (auto symb : expr.symbols)
 		s += show_sy(symb) + " ";
@@ -124,7 +124,7 @@ inline ostream& operator << (ostream& os, Symbol s) {
 	return os;
 }
 
-inline ostream& operator << (ostream& os, const Expr& ex) {
+inline ostream& operator << (ostream& os, const Vect& ex) {
 	os << show_ex(ex);
 	return os;
 }

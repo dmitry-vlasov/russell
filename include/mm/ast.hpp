@@ -7,32 +7,32 @@
 namespace mdl { namespace mm {
 
 struct Constants {
-	Expr expr;
+	Vect expr;
 };
 
 struct Variables {
-	Expr expr;
+	Vect expr;
 };
 
 struct Disjointed {
-	Expr expr;
+	Vect expr;
 };
 
 struct Essential {
 	uint label;
-	Expr expr;
+	Vect expr;
 };
 
 struct Floating  {
 	Symbol type() const { return expr.symbols[0]; }
 	Symbol var() const { return expr.symbols[1]; }
 	uint label;
-	Expr expr;
+	Vect expr;
 };
 
 struct Axiom {
 	uint label;
-	Expr expr;
+	Vect expr;
 	uint arity;
 };
 
@@ -42,7 +42,7 @@ struct Theorem {
 	Theorem() : label(-1), expr(), arity(0), proof(nullptr) { }
 	~Theorem();
 	uint   label;
-	Expr   expr;
+	Vect   expr;
 	uint   arity;
 	Proof* proof;
 };
@@ -170,7 +170,7 @@ struct Node {
 		}
 		return -1; // Pacifying compiler
 	}
-	Expr& expr() const {
+	Vect& expr() const {
 		switch (type) {
 		case FLOATING:   return val.flo->expr;
 		case ESSENTIAL:  return val.ess->expr;
@@ -178,7 +178,7 @@ struct Node {
 		case THEOREM:    return val.th->expr;
 		default : assert(false && "impossible"); break;
 		}
-		static Expr ex; return ex; // Pacifying compiler
+		static Vect ex; return ex; // Pacifying compiler
 	}
 	const Proof* proof() const {
 		assert(type == AXIOM || type == THEOREM);

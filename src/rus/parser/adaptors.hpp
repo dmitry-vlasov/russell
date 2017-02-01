@@ -7,7 +7,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
-	mdl::Expr,
+	mdl::Vect,
 	(std::vector<mdl::Symbol>, symbols)
 )
 
