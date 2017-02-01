@@ -81,7 +81,6 @@ public :
 	Tree(Rule* r) : kind(NODE), val(new Node(r))  { }
 	Tree(const Symbol& v) : kind(VAR), val(new Symbol(v)) { }
 	Tree(Rule* r, const Children& ch) : kind(NODE), val(new Node(r, ch)) { }
-	~Tree() { delete_val(); }
 	Tree(const Tree& ex) : kind(ex.kind), val() {
 		switch (kind) {
 		case NODE: val.node = new Node(*ex.val.node);  break;
@@ -89,6 +88,7 @@ public :
 		}
 	}
 	Tree(Tree&& ex) : kind(ex.kind), val(ex.val) { ex.val.var = nullptr; }
+	~Tree() { delete_val(); }
 
 	void operator = (Tree&& ex) {
 		delete_val();
@@ -152,10 +152,27 @@ struct Substitution {
 };
 
 struct Expr {
-	Expr() : type(nullptr), tree(), symbols() { }
-	Expr(Symbol s) : type(s.type), tree(), symbols() {
-		symbols.push_back(s);
+	Expr() : type(nullptr), tree(nullptr), symbols() { }
+	Expr(Symbol s) : type(s.type), tree(nullptr), symbols() { symbols.push_back(s);	}
+	Expr(const Expr& ex) : type(ex.type), tree(ex.tree ? new Tree(*ex.tree) : nullptr), symbols (ex.symbols) { }
+	Expr(Expr&& ex) : type(ex.type), tree(ex.tree), symbols (ex.symbols) { ex.tree = nullptr; }
+	~Expr() { if (tree) delete tree; }
+
+	void operator = (const Expr& ex) {
+		if (tree) delete tree;
+		type = ex.type;
+		tree = ex.tree ? new Tree(*ex.tree) : nullptr;
+		symbols = ex.symbols;
 	}
+
+	void operator = (Expr&& ex) {
+		if (tree) delete tree;
+		type = ex.type;
+		tree = ex.tree;
+		symbols = ex.symbols;
+		ex.tree = nullptr;
+	}
+
 	void push_back(Symbol s) {
 		symbols.push_back(s);
 	}
@@ -175,7 +192,7 @@ struct Expr {
 	}
 
 	Type*   type;
-	Tree    tree;
+	Tree*   tree;
 	Symbols symbols;
 };
 
@@ -188,17 +205,17 @@ struct Rules {
 
 struct Rules::Node {
 	Node(Symbol s) : symb(s), tree(), level(), rule(nullptr) { }
-	Symbol   symb;
-	Rules tree;
-	uint     level;
-	Rule*    rule;
+	Symbol symb;
+	Rules  tree;
+	uint   level;
+	Rule*  rule;
 };
 
 string show(const Rules& tr);
 
 Substitution* unify(const Tree* p, const Tree* q);
 inline Substitution* unify(const Expr& ex1, const Expr& ex2) {
-	return unify(&ex1.tree, &ex2.tree);
+	return unify(ex1.tree, ex2.tree);
 }
 Expr assemble(const Expr& ex);
 Expr assemble(const Tree* t);
@@ -211,7 +228,7 @@ namespace expr {
 string show(const Expr&);
 string show_ast(const Tree&, bool full = false);
 inline string show_ast(const Expr& ex, bool full = false) {
-	return show_ast(ex.tree, full);
+	return show_ast(*ex.tree, full);
 }
 
 string show(const Tree& t, bool full = false);

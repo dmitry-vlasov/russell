@@ -124,7 +124,7 @@ smm::Assertion* translate_rule(const Rule* rule, Maps& maps) {
 	maps.rules[rule] = ra;
 	for (auto v : rule->vars.v) {
 		uint i = 0;
-		for (auto ch : rule->term.tree.children()) {
+		for (auto ch : rule->term.tree->children()) {
 			if (ch->kind == Tree::VAR && *ch->var() == v) {
 				maps.rules_args[rule][v] = i;
 				break;
