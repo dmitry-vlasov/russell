@@ -162,7 +162,8 @@ struct Expr {
 
 	void operator = (const Expr& ex) {
 		type = ex.type;
-		tree = make_unique<Tree>(*ex.tree.get());
+		if (ex.tree) tree.reset(new Tree(*ex.tree));
+		else tree.reset();
 		symbols = ex.symbols;
 	}
 
