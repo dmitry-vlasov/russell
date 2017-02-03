@@ -154,25 +154,23 @@ private:
 };
 
 struct Expr {
-	Expr() : type(nullptr), tree(nullptr), symbols() { }
-	Expr(Symbol s) : type(s.type), tree(nullptr), symbols() { symbols.push_back(s);	}
-	Expr(const Expr& ex) : type(ex.type), tree(ex.tree ? new Tree(*ex.tree) : nullptr), symbols (ex.symbols) { }
-	Expr(Expr&& ex) : type(ex.type), tree(ex.tree), symbols (ex.symbols) { ex.tree = nullptr; }
-	~Expr() { if (tree) delete tree; }
+	Expr() : type(nullptr), tree(), symbols() { }
+	Expr(Symbol s) : type(s.type), tree(), symbols() { symbols.push_back(s); }
+	Expr(const Expr& ex) : type(ex.type), tree(), symbols (ex.symbols) {
+		if (ex.tree) tree.reset(new Tree(*ex.tree));
+	}
+	Expr(Expr&& ex) : type(ex.type), tree(std::move(ex.tree)), symbols (std::move(ex.symbols)) { }
 
 	void operator = (const Expr& ex) {
-		if (tree) delete tree;
 		type = ex.type;
-		tree = ex.tree ? new Tree(*ex.tree) : nullptr;
+		tree = make_unique<Tree>(*ex.tree.get());
 		symbols = ex.symbols;
 	}
 
 	void operator = (Expr&& ex) {
-		if (tree) delete tree;
 		type = ex.type;
-		tree = ex.tree;
-		symbols = ex.symbols;
-		ex.tree = nullptr;
+		tree = std::move(ex.tree);
+		symbols = std::move(ex.symbols);
 	}
 
 	void push_back(Symbol s) {
@@ -193,9 +191,9 @@ struct Expr {
 		return !operator == (ex);
 	}
 
-	Type*   type;
-	Tree*   tree;
-	Symbols symbols;
+	Type*            type;
+	unique_ptr<Tree> tree;
+	Symbols          symbols;
 };
 
 struct Rules {
@@ -262,7 +260,7 @@ struct Substitution {
 
 Substitution* unify(const Tree* p, const Tree* q);
 inline Substitution* unify(const Expr& ex1, const Expr& ex2) {
-	return unify(ex1.tree, ex2.tree);
+	return unify(ex1.tree.get(), ex2.tree.get());
 }
 Expr assemble(const Expr& ex);
 Expr assemble(const Tree* t);

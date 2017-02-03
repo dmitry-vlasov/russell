@@ -63,7 +63,7 @@ void parse_term(Expr& ex, Rule* rule) {
 	for (auto& s : ex.symbols) {
 		if (s.type) children.push_back(make_unique<Tree>(s));
 	}
-	ex.tree = new Tree(rule, children);
+	ex.tree.reset(new Tree(rule, children));
 }
 
 vector<string> show_lines(const Rules& tr) {

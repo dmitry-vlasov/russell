@@ -89,7 +89,7 @@ void parse_LL(Expr* ex, uint ind) {
 	//cout << "parsing: " << ind << " -- " << show(*ex) << flush;
 	auto it = ex->symbols.begin();
 	if (Tree* tree = parse_LL(it, ex->type, ind)) {
-		ex->tree = tree;
+		ex->tree.reset(tree);
 	} else {
 		throw Error("parsing error", string("expression: ") + show(*ex));
 	}

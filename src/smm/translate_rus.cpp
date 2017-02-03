@@ -253,10 +253,10 @@ void translate_assertion(const Assertion* ass, T* a, State& state) {
 	a->ass.disj = translate_disj(ass, state);
 	uint hc = 0;
 	for (auto ess : ass->essential) {
-		rus::Expr ex = translate_expr(ess->expr, state, ass);
+		rus::Expr&& ex = translate_expr(ess->expr, state, ass);
 		a->ass.hyps.push_back(new rus::Hyp{hc++, ex});
 	}
-	rus::Expr ex = translate_expr(ass->prop.expr, state, ass);
+	rus::Expr&& ex = translate_expr(ass->prop.expr, state, ass);
 	a->ass.props.push_back(new rus::Prop{0, ex});
 }
 
