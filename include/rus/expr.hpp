@@ -240,20 +240,19 @@ string show(const Rules& tr);
 
 struct Substitution {
 	Substitution() : sub() { }
-	Substitution(Symbol v, Tree* t) : sub() { sub[v] = t; }
-	~Substitution() { for (auto p : sub) delete p.second; }
+	Substitution(Symbol v, Tree* t) : sub() { sub[v].reset(t); }
 	bool join(Substitution* s) {
 		for (auto& p : s->sub) {
 			auto it = sub.find(p.first);
 			if (it != sub.end()) {
 				if (*(*it).second != *p.second) return false;
 			} else {
-				sub[p.first] = new Tree(*p.second);
+				sub[p.first].reset(new Tree(*p.second));
 			}
 		}
 		return true;
 	}
-	map<Symbol, Tree*> sub;
+	map<Symbol, unique_ptr<Tree>> sub;
 };
 
 
@@ -280,7 +279,7 @@ string show(const Tree& t, bool full = false);
 
 inline string show(const Substitution& s) {
 	string str;
-	for (auto p : s.sub) {
+	for (auto& p : s.sub) {
 		str += show(p.first, true) + " --> " + show_ast(*p.second) + "\t ==\t"  + show(*p.second) + "\n";
 	}
 	return str;
