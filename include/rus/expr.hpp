@@ -85,7 +85,6 @@ private:
 	};
 
 public :
-	Tree(Symbol& v) : kind(VAR), val(new Symbol(v)) { }
 	Tree(const Symbol& v) : kind(VAR), val(new Symbol(v)) { }
 	Tree(Rule* r, const Children& ch) : kind(NODE), val(new Node(r, ch)) { }
 	Tree(Rule* r, Tree* ch) : kind(NODE), val(new Node(r, ch)) { }
