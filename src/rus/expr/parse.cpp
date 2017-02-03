@@ -42,7 +42,7 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, uint ind) {
 			if (const Type* tp = n.top()->symb.type) {
 				childnodes.push(n.top());
 				if (Tree* child = parse_LL(ch, tp, ind)) {
-					children.push_back(child);
+					children.push_back(unique_ptr<Tree>(child));
 					Action a = act(n, m, ch, ind);
 					switch (a.kind) {
 					case Action::RET  : x = ch; return new Tree(a.rule, children);
@@ -64,7 +64,6 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, uint ind) {
 				n.pop();
 				m.pop();
 				if (!childnodes.empty() && childnodes.top() == n.top()) {
-					delete children.back();
 					children.pop_back();
 					childnodes.pop();
 				}

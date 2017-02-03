@@ -28,7 +28,7 @@ Substitution* unify(const Tree* p, const Tree* q) {
 		auto p_ch = p->children().begin();
 		auto q_ch = q->children().begin();
 		while (p_ch != p->children().end()) {
-			if (Substitution* s = unify(*p_ch, *q_ch)) {
+			if (Substitution* s = unify(p_ch->get(), q_ch->get())) {
 				if (!sub->join(s)) {
 					delete sub;
 					return nullptr;

@@ -61,7 +61,7 @@ string show(const Tree& t, bool full) {
 void parse_term(Expr& ex, Rule* rule) {
 	Tree::Children children;
 	for (auto& s : ex.symbols) {
-		if (s.type)	children.push_back(new Tree(s));
+		if (s.type) children.push_back(make_unique<Tree>(s));
 	}
 	ex.tree = new Tree(rule, children);
 }

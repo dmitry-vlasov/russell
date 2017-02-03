@@ -54,17 +54,25 @@ inline ostream& operator << (ostream& os, Symbol s) {
 struct Rule;
 
 struct Tree {
-	typedef vector<Tree*> Children;
+	typedef vector<unique_ptr<Tree>> Children;
 	enum Kind { NODE, VAR};
 
 private:
 	struct Node {
 		Node(Rule* r = nullptr) : rule(r), children() { }
-		Node(Rule* r, const Children& ch) : rule(r), children(ch) { }
-		Node(const Node& n) : rule(n.rule), children() {
-			for (auto ch : n.children) children.push_back(new Tree(*ch));
+		Node(Rule* r, const Children& ch) : rule(r), children() {
+			children.reserve(ch.size());
+			for (auto& c : ch) children.push_back(make_unique<Tree>(*c.get()));
 		}
-		~Node() { for (auto ch : children) delete ch; }
+		Node(const Node& n) : rule(n.rule), children() {
+			children.reserve(n.children.size());
+			for (auto& c : n.children) children.push_back(make_unique<Tree>(*c.get()));
+		}
+		Node(Node&& n) : rule(n.rule), children(std::move(n.children)) { }
+		Node(Rule* r, Children&& ch) : rule(r), children(std::move(ch)) { }
+		Node(Rule* r, Tree* ch) : rule(r), children() {
+			children.push_back(unique_ptr<Tree>(ch));
+		}
 		Rule*    rule;
 		Children children;
 	};
@@ -77,8 +85,10 @@ private:
 	};
 
 public :
+	Tree(Symbol& v) : kind(VAR), val(new Symbol(v)) { }
 	Tree(const Symbol& v) : kind(VAR), val(new Symbol(v)) { }
 	Tree(Rule* r, const Children& ch) : kind(NODE), val(new Node(r, ch)) { }
+	Tree(Rule* r, Tree* ch) : kind(NODE), val(new Node(r, ch)) { }
 	Tree(const Tree& ex) : kind(ex.kind), val() {
 		switch (kind) {
 		case NODE: val.node = new Node(*ex.val.node);  break;
@@ -299,8 +309,8 @@ inline size_t memvol(const Tree& t) {
 	if (t.kind != Tree::NODE) return 0;
 	size_t vol = 0;
 	vol += t.children().capacity();
-	for (const Tree* ch : t.children())
-		vol += memvol(*ch);
+	for (auto& ch : t.children())
+		vol += memvol(*ch.get());
 	return vol;
 }
 
