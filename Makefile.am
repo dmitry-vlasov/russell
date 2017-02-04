@@ -7,4 +7,5 @@ EXTRA_DIST = \
 SUBDIRS = \
 	peglib \
 	include \
-	src
+	src \
+	metamath
