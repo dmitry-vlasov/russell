@@ -1,23 +1,56 @@
 AM_CPPFLAGS = \
-	-I$(top_srcdir)/include
+	-I$(top_srcdir)/include \
+	-I$(top_srcdir)/peglib \
+	-I$(top_srcdir)/src \
+	$(BOOST_CPPFLAGS) \
+	$(PTHREAD_CFLAGS)
+
+AM_LDFLAGS = \
+    $(BOOST_LDFLAGS) \
+    $(PTHREAD_CFLAGS)
 
 bin_PROGRAMS = \
-	mm
+	mdl
+	
+noinst_LTLIBRARIES = \
+	libmdl.la
 
 noinst_HEADERS = \
-	adaptors.hpp \
-	grammar.hpp \
-	parser.hpp \
-	tree.hpp 
+	parser/adaptors.hpp \
+	parser/grammar.hpp \
+	parser/parse.hpp  
 
-mm_SOURCES = \
+libmdl_la_SOURCES = \
 	../location.cpp \
-	../memusage.cpp \
 	../timer.cpp \
+	../memusage.cpp \
+	../smm/show.cpp \
 	\
+	expr/parse.cpp \
+	expr/unify.cpp \
+	\
+	parser/parse.cpp \
+	\
+	daemon.cpp \
+	expr.cpp \
 	globals.cpp \
-	parser.cpp \
+	memvol.cpp \
 	show.cpp \
 	translate.cpp \
-	tree.cpp \
+	verify.cpp
+
+mdl_SOURCES = \
 	main.cpp
+
+libmdl_la_LIBADD = \
+	$(BOOST_FILESYSTEM_LIB) \
+    $(BOOST_SYSTEM_LIB) \
+    $(BOOST_PROGRAM_OPTIONS_LIB) \
+    $(PTHREAD_CFLAGS)
+
+mdl_LDADD = \
+	libmdl.la \
+	$(BOOST_FILESYSTEM_LIB) \
+    $(BOOST_SYSTEM_LIB) \
+    $(BOOST_PROGRAM_OPTIONS_LIB) \
+    $(PTHREAD_CFLAGS)

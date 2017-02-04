@@ -41,8 +41,7 @@ dist_pkgdata_DATA = \
 	demo0.mm \
 	miu.mm \
 	peano.mm \
-	ql.mm \
-	set.mm
+	ql.mm 
 
 
 EXTRA_DIST = \

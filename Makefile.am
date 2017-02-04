@@ -1,7 +1,7 @@
-SUBDIRS = \
-	include \
-	src/mm \
-	src/rus \
-	src/smm
- 
+ACLOCAL_AMFLAGS = -I m4
+EXTRA_DIST = bootstrap
 
+SUBDIRS = \
+	peglib \
+	include \
+	src

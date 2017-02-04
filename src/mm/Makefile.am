@@ -1,34 +1,61 @@
 AM_CPPFLAGS = \
-	-I$(top_srcdir)/include
+	-I$(top_srcdir)/include \
+	-I$(top_srcdir)/peglib \
+	-I$(top_srcdir)/src \
+	$(BOOST_CPPFLAGS)
+
+AM_LDFLAGS = \
+    $(BOOST_LDFLAGS)
 
 bin_PROGRAMS = \
-	mdl
+	mm
+	
+noinst_LTLIBRARIES = \
+	libmm.la
 
 noinst_HEADERS = \
-	expr/GLR.hpp \
-	expr/table.hpp \
+	cut/adaptors.hpp \
+	cut/ast.hpp \
+	cut/grammar.hpp \
+	cut/parser.hpp \
 	\
-	parser/adaptors.hpp \
-	parser/grammar.hpp \
-	parser/ind.hpp \
-	parser/parser.hpp 
+	merge/ast.hpp \
+	merge/grammar.hpp \
+	merge/parser.hpp \
+	\
+	adaptors.hpp \
+	spirit_grammar.hpp \
+	spirit_parser.hpp \
+	tree.hpp 
 
-mdl_SOURCES = \
+libmm_la_SOURCES = \
 	../location.cpp \
-	../memusage.cpp \
 	../timer.cpp \
+	../smm/show.cpp \
 	\
-	expr/GLR.cpp \
-	expr/parser.cpp \
-	expr/show.cpp \
+	cut/parser.cpp \
+	cut/globals.cpp \
+	cut/show.cpp \
 	\
-	parser/parser.cpp \
+	merge/parser.cpp \
 	\
-	expr.cpp \
 	globals.cpp \
-	memvol.cpp \
-	modify_grammar.cpp \
+	peg_parser.cpp \
 	show.cpp \
+	spirit_parser.cpp \
 	translate.cpp \
-	verify.cpp \
+	tree.cpp
+
+mm_SOURCES = \
 	main.cpp
+
+libmm_la_LIBADD = \
+	$(BOOST_FILESYSTEM_LIB) \
+    $(BOOST_SYSTEM_LIB) \
+    $(BOOST_PROGRAM_OPTIONS_LIB)
+
+mm_LDADD = \
+	libmm.la \
+	$(BOOST_FILESYSTEM_LIB) \
+    $(BOOST_SYSTEM_LIB) \
+    $(BOOST_PROGRAM_OPTIONS_LIB)

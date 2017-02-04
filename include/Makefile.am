@@ -1,10 +1,8 @@
-HEADERS = \
+noinst_HEADERS = \
 	common.hpp \
-	error.hpp \
-	expr.hpp \
 	location.hpp \
 	std.hpp \
-	table.hpp \
+	symbol.hpp \
 	timer.hpp \
 	\
 	mm/ast.hpp \
@@ -16,5 +14,3 @@ HEADERS = \
 	\
 	smm/ast.hpp \
 	smm/globals.hpp
-
-	
