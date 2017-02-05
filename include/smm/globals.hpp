@@ -11,42 +11,17 @@ enum class Mode { TRANSL, DEFAULT = TRANSL };
 enum class Target { TARGET_NONE, TARGET_MM, TARGET_RUS, DEFAULT = TARGET_NONE };
 typedef mdl::Config<Mode, Target> Config;
 
-struct System {
-	~ System() {
-		if (source) delete source;
-	}
-
-	struct Lex {
-		Table labels;
-		Table symbols;
-	};
-	struct Timers {
-		Timer read;
-		Timer verify;
-		Timer translate;
-		Timer total;
-	};
-	struct Math {
-		set<Symbol>        constants;
-		vector<Assertion*> assertions;
-	};
-
-	Config  config;
-	Timers  timers;
-	Lex     lex;
-	Math    math;
-	Source* source;
-	string  status;
-	bool    failed;
-
-	void run();
-	bool parse();
-	bool verify();
-	bool translate();
-
-	static const System& get() { return mod();}
-	static System& mod() { return Lib<System>::mod().sys();  }
+struct Math {
+	set<Symbol>        constants;
+	vector<Assertion*> assertions;
 };
+
+typedef mdl::System<Source, Math, Config> System;
+
+void run(System&);
+bool parse(System&);
+bool verify(System&);
+bool translate(System&);
 
 ostream& operator << (ostream& os, const System& s);
 Source* parse(string path);

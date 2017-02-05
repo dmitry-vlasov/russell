@@ -25,11 +25,11 @@ namespace {
 
 bool parse_mm(System& mm) {
 	try {
-		mm.timers.read.start();
+		mm.timers["read"].start();
 		mm.source = parse(mm.config.in);
 		if (!mm.source) throw Error("parsing of " + mm.config.in + " failed");
 		//cout << endl << *source;
-		mm.timers.read.stop();
+		mm.timers["read"].stop();
 		return true;
 	} catch (Error& err) {
 		mm.error += '\n';
@@ -40,12 +40,12 @@ bool parse_mm(System& mm) {
 
 bool cut_mm(System& mm) {
 	try {
-		mm.timers.work.start();
+		mm.timers["work"].start();
 		cut::Section* source = cut::parse(mm.config.root, mm.config.in, mm.config.out);
 		cut::split(source);
 		cut::save(source);
 		delete source;
-		mm.timers.work.stop();
+		mm.timers["work"].stop();
 		return true;
 	} catch (Error& err) {
 		mm.error += '\n';
@@ -56,12 +56,12 @@ bool cut_mm(System& mm) {
 
 bool merge_mm(System& mm) {
 	try {
-		mm.timers.work.start();
+		mm.timers["work"].start();
 		merge::parse(mm.config.in);
 		ofstream out(mm.config.out);
 		out << merge::Source::get().contents.str();
 		out.close();
-		mm.timers.work.stop();
+		mm.timers["work"].stop();
 		return true;
 	} catch (Error& err) {
 		mm.error += '\n';
@@ -76,7 +76,7 @@ bool translate_mm(System& mm) {
 			mm.error += "output file is not specified";
 			return false;
 		}
-		mm.timers.work.start();
+		mm.timers["work"].start();
 		smm::Source* target = translate(mm.source);
 		if (mm.config.deep) {
 			deep_write(
@@ -91,7 +91,7 @@ bool translate_mm(System& mm) {
 			out.close();
 		}
 		delete target;
-		mm.timers.work.stop();
+		mm.timers["work"].stop();
 		return true;
 	} catch (Error& err) {
 		mm.error += '\n';
@@ -102,23 +102,23 @@ bool translate_mm(System& mm) {
 
 }
 
-void System::run() {
-	timers.total.start();
-	if (config.verbose)
-		cout << "processing file " << config.in << " ... " << flush;
-	if (config.mode == Config::Mode::TRANSL)
-		if (!parse_mm(*this))
+void run(System& sys) {
+	sys.timers["total"].start();
+	if (sys.config.verbose)
+		cout << "processing file " << sys.config.in << " ... " << flush;
+	if (sys.config.mode == Config::Mode::TRANSL)
+		if (!parse_mm(sys))
 			return;
 	//cout << *source << endl;
-	switch (config.mode) {
-	case Config::Mode::CUT:    cut_mm(*this);       break;
-	case Config::Mode::MERGE:  merge_mm(*this);     break;
-	case Config::Mode::TRANSL: translate_mm(*this); break;
+	switch (sys.config.mode) {
+	case Config::Mode::CUT:    cut_mm(sys);       break;
+	case Config::Mode::MERGE:  merge_mm(sys);     break;
+	case Config::Mode::TRANSL: translate_mm(sys); break;
 	default : break;
 	}
-	timers.total.stop();
-	if (config.verbose)
-		cout << "done in " << timers.total << endl;
+	sys.timers["total"].stop();
+	if (sys.config.verbose)
+		cout << "done in " << sys.timers["total"] << endl;
 }
 	
 }} // mdl::mm

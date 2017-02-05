@@ -11,7 +11,7 @@ string show(Symbol s, bool full) {
 	}
 }
 
-Symbol::Symbol(string s, Type* t) : mdl::Symbol(System::mod().lex.symbs.toInt(s)), type(t) {
+Symbol::Symbol(string s, Type* t) : mdl::Symbol(System::mod().lex.symbols.toInt(s)), type(t) {
 }
 
 string show(const Expr& ex) {

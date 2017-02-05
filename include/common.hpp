@@ -267,6 +267,35 @@ struct Config {
 	Target target;
 };
 
+// Template for a deductive system
+template<class S, class M, class C>
+struct System {
+	typedef S Source;
+	typedef M Math;
+	typedef C Config;
+	typedef map<string, Timer> Timers;
+
+	~ System() {
+		if (source) delete source;
+	}
+
+	struct Lex {
+		Table labels;
+		Table symbols;
+	};
+
+	Config  config;
+	Timers  timers;
+	Lex     lex;
+	Math    math;
+	Source* source;
+	string  error;
+
+	static const System& get() { return mod(); }
+	static System& mod() { return Lib<System>::mod().sys();  }
+};
+
+
 } // mdl
 
   

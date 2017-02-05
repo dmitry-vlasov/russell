@@ -57,16 +57,16 @@ int main (int argc, const char* argv[])
             cout << desc << endl;
             return 0;
         }
-        smm::System& smm = smm::System::mod();
-        smm::Config& conf = smm.config;
+        smm::System& sys = smm::System::mod();
+        smm::Config& conf = sys.config;
         if (!initConf(vm, conf)) {
         	cout << desc << endl;
             return 1;
         }
 
-		smm.run();
-		if (conf.verbose || smm.failed)
-			cout << smm.status;
+		run(sys);
+		if (conf.verbose || sys.error.size())
+			cout << sys.error;
 	} catch (const Error& err) {
 		cerr << err.what();
 		return 1;

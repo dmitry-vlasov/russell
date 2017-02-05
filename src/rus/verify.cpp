@@ -22,7 +22,7 @@ void verify_step(Step* st) {
 		msg += "step:\n";
 		msg += show(*st) + "\n";
 		msg += show_ast(st->expr, true) + "\n\n";
-		msg += "theorem " + System::get().lex.ids.toStr(st->proof->thm->ass.id) + "\n";
+		msg += "theorem " + System::get().lex.labels.toStr(st->proof->thm->ass.id) + "\n";
 		throw Error("proposition unification failed", msg);
 	}
 	for (uint i = 0; i < ass->arity(); ++ i) {
@@ -34,7 +34,7 @@ void verify_step(Step* st) {
 			msg += show(st->refs[i].expr()) + "\n\n";
 			msg += "step:\n";
 			msg += show(*st) + "\n\n";
-			msg += "theorem " + System::get().lex.ids.toStr(st->proof->thm->ass.id) + "\n";
+			msg += "theorem " + System::get().lex.labels.toStr(st->proof->thm->ass.id) + "\n";
 			msg += "substitution:\n" + show(*ps) + "\n";
 			delete ps;
 			throw Error("hypothesis unification failed", msg);
@@ -46,7 +46,7 @@ void verify_step(Step* st) {
 			msg += show(st->refs[i].expr()) + "\n\n";
 			msg += "step:\n";
 			msg += show(*st) + "\n\n";
-			msg += "theorem " + System::get().lex.ids.toStr(st->proof->thm->ass.id) + "\n";
+			msg += "theorem " + System::get().lex.labels.toStr(st->proof->thm->ass.id) + "\n";
 			msg += "prop substitution:\n" + show(*ps) + "\n";
 			msg += "hyp substitution:\n" + show(*hs) + "\n";
 			delete hs;

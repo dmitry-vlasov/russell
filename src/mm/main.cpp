@@ -60,13 +60,13 @@ int main (int argc, const char* argv[])
             cout << desc << endl;
             return 0;
         }
-        mm::System& mm = mm::System::mod();
-        if (!initConf(vm, mm.config)) {
+        mm::System& sys = mm::System::mod();
+        if (!initConf(vm, sys.config)) {
         	cout << desc << endl;
             return 1;
         }
-		mm.run();
-		if (mm.error.size()) cerr << mm.error;
+		mm::run(sys);
+		if (sys.error.size()) cerr << sys.error;
 	} catch (const Error& err) {
 		cerr << err.what();
 		return 1;

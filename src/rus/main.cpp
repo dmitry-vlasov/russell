@@ -52,15 +52,15 @@ int main (int argc, const char* argv[])
             cout << desc << endl;
             return 0;
         }
-        rus::System& rus = rus::System::mod();
-		rus::Config& conf = rus.config;
+        rus::System& sys = rus::System::mod();
+		rus::Config& conf = sys.config;
 		if (!initConf(vm, conf)) {
 			cout << desc << endl;
             return 1;
 		}
-		rus.run();
-		if (rus.error.size()) cerr << rus.error;
-		else if (conf.info)   cout << show(rus);
+		run(sys);
+		if (sys.error.size()) cerr << sys.error;
+		else if (conf.info)   cout << show(sys);
 	} catch (const Error& err) {
 		cerr << err.what();
 		return 1;

@@ -12,64 +12,56 @@ string show_id(uint lab) {
 
 namespace smm {
 
-void System::run() {
-	timers.total.start();
-	if (config.verbose)
-		cout << "verifying file " << config.in << " ... " << endl;
-	if (!parse()) {
-		failed = true; return;
-	}
-	if (!verify()) {
-		failed = true; return;
-	}
-	if (!translate()) {
-		failed = true; return;
-	}
-	timers.total.stop();
-	if (config.verbose)
-		cout << "all done in " << timers.total << endl;
+void run(System& sys) {
+	sys.timers["total"].start();
+	if (sys.config.verbose)
+		cout << "verifying file " << sys.config.in << " ... " << endl;
+	if (!parse(sys))     return;
+	if (!verify(sys))    return;
+	if (!translate(sys)) return;
+	sys.timers["total"].stop();
+	if (sys.config.verbose)
+		cout << "all done in " << sys.timers["total"] << endl;
 }
 
-bool System::parse() {
+bool parse(System& sys) {
 	try {
-		timers.read.start();
-		source = smm::parse(config.in);
+		sys.timers["read"].start();
+		sys.source = smm::parse(sys.config.in);
 		//cout << *source << endl;
-		timers.read.stop();
+		sys.timers["read"].stop();
 		return true;
 	} catch (Error& err) {
-		status += '\n';
-		status += err.what();
-		failed = true;
+		sys.error += '\n';
+		sys.error += err.what();
 		return false;
 	}
 }
 
-bool System::verify() {
+bool verify(System& sys) {
 	try {
-		timers.verify.start();
-		smm::verify(math.assertions);
-		timers.verify.stop();
+		sys.timers["verify"].start();
+		smm::verify(sys.math.assertions);
+		sys.timers["verify"].stop();
 		return true;
 	} catch (Error& err) {
-		status += '\n';
-		status += err.what();
-		failed = true;
+		sys.error += '\n';
+		sys.error += err.what();
 		return false;
 	}
 }
 
-bool System::translate() {
+bool translate(System& sys) {
 	try {
-		if (config.out.empty()) return true;
-		if (config.verbose)
-			cout << "translating file " << config.in << " ... " << flush;
-		timers.translate.start();
-		switch (config.target) {
+		if (sys.config.out.empty()) return true;
+		if (sys.config.verbose)
+			cout << "translating file " << sys.config.in << " ... " << flush;
+		sys.timers["translate"].start();
+		switch (sys.config.target) {
 		case Config::Target::TARGET_NONE: break;
 		case Config::Target::TARGET_MM: {
-			mm::Source* target = smm::translate_to_mm(source);
-			if (config.deep) {
+			mm::Source* target = smm::translate_to_mm(sys.source);
+			if (sys.config.deep) {
 				deep_write(
 					target,
 					[](mm::Source* src) -> vector<mm::Node>& { return src->block->contents; },
@@ -77,15 +69,15 @@ bool System::translate() {
 					[](mm::Node n) -> bool { return n.type == mm::Node::INCLUSION; }
 				);
 			} else {
-				ofstream out(config.out);
+				ofstream out(sys.config.out);
 				out << *target << endl;
 				out.close();
 			}
 			delete target;
 		}	break;
 		case Config::Target::TARGET_RUS: {
-			rus::Source* target = smm::translate_to_rus(source);
-			if (config.deep) {
+			rus::Source* target = smm::translate_to_rus(sys.source);
+			if (sys.config.deep) {
 				deep_write(
 					target,
 					[](rus::Source* src) -> vector<rus::Node>& { return src->theory->nodes; },
@@ -93,27 +85,26 @@ bool System::translate() {
 					[](rus::Node n) -> bool { return n.kind == rus::Node::IMPORT; }
 				);
 			} else {
-				ofstream out(config.out);
+				ofstream out(sys.config.out);
 				out << *target << endl;
 				out.close();
 			}
 			delete target;
 		}	break;
 		}
-		timers.translate.stop();
-		if (config.verbose)
-			cout << "done in " << timers.translate << endl;
+		sys.timers["translate"].stop();
+		if (sys.config.verbose)
+			cout << "done in " << sys.timers["translate"] << endl;
 		return true;
 	} catch (Error& err) {
-		status += '\n';
-		status += err.what();
-		failed = true;
+		sys.error += '\n';
+		sys.error += err.what();
 		return false;
 	}
 }
 
 ostream& operator << (ostream& os, const System& s) {
-	os << s.status;
+	os << s.error;
 	return os;
 }
 	

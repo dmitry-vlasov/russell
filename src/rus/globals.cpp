@@ -3,10 +3,10 @@
 namespace mdl {
 
 string show_sy(Symbol symb) {
-	return rus::System::get().lex.symbs.toStr(symb.lit);
+	return rus::System::get().lex.symbols.toStr(symb.lit);
 }
 string show_id(uint lab) {
-	return rus::System::get().lex.ids.toStr(lab);
+	return rus::System::get().lex.labels.toStr(lab);
 }
 
 namespace rus { namespace {
@@ -14,10 +14,10 @@ namespace rus { namespace {
 bool parse_rus(System& rus) {
 	try {
 		if (rus.config.verbose) cout << "parsing russell source ... " << flush;
-		rus.timers.parse_rus.start();
+		rus.timers["parse_rus"].start();
 		rus.source = parse(rus.config.in);
-		rus.timers.parse_rus.stop();
-		if (rus.config.verbose) cout << "done in " << rus.timers.parse_rus << endl;
+		rus.timers["parse_rus"].stop();
+		if (rus.config.verbose) cout << "done in " << rus.timers["parse_rus"] << endl;
 		return true;
 	} catch (Error& err) {
 		rus.error += '\n';
@@ -29,10 +29,10 @@ bool parse_rus(System& rus) {
 bool parse_exp(System& rus) {
 	try {
 		if (rus.config.verbose) cout << "parsing expressions ... " << flush;
-		rus.timers.parse_expr.start();
+		rus.timers["parse_expr"].start();
 		expr::parse();
-		rus.timers.parse_expr.stop();
-		if (rus.config.verbose) cout << "done in " << rus.timers.parse_expr << endl;
+		rus.timers["parse_expr"].stop();
+		if (rus.config.verbose) cout << "done in " << rus.timers["parse_expr"] << endl;
 		return true;
 	} catch (Error& err) {
 		rus.error += '\n';
@@ -45,10 +45,10 @@ bool parse_exp(System& rus) {
 bool unify_rus(System& rus) {
 	try {
 		if (rus.config.verbose) cout << "verifying russell source ... " << flush;
-		rus.timers.unify.start();
+		rus.timers["unify"].start();
 		verify(rus.source);
-		rus.timers.unify.stop();
-		if (rus.config.verbose) cout << "done in " << rus.timers.unify << endl;
+		rus.timers["unify"].stop();
+		if (rus.config.verbose) cout << "done in " << rus.timers["unify"] << endl;
 		return true;
 	} catch (Error& err) {
 		rus.error += '\n';
@@ -61,7 +61,7 @@ bool translate_rus(System& rus) {
 	try {
 		if (rus.config.out.empty()) return true;
 		if (rus.config.verbose) cout << "translating file " << rus.config.in << " ... " << flush;
-		rus.timers.translate.start();
+		rus.timers["translate"].start();
 		smm::Source* target = translate(rus.source);
 		if (rus.config.deep) {
 			deep_write(
@@ -76,8 +76,8 @@ bool translate_rus(System& rus) {
 			out.close();
 		}
 		delete target;
-		rus.timers.translate.stop();
-		if (rus.config.verbose) cout << "done in " << rus.timers.translate << endl;
+		rus.timers["translate"].stop();
+		if (rus.config.verbose) cout << "done in " << rus.timers["translate"] << endl;
 		return true;
 	} catch (Error& err) {
 		rus.error += '\n';
@@ -90,12 +90,12 @@ bool write_rus(System& rus) {
 	try {
 		if (rus.config.out.empty()) return true;
 		if (rus.config.verbose) cout << "replicating file " << rus.config.in << " ... " << flush;
-		rus.timers.translate.start();
+		rus.timers["write"].start();
 		ofstream out(rus.config.out);
 		out << *rus.source << endl;
 		out.close();
-		rus.timers.translate.stop();
-		if (rus.config.verbose) cout << "done in " << rus.timers.translate << endl;
+		rus.timers["write"].stop();
+		if (rus.config.verbose) cout << "done in " << rus.timers["write"] << endl;
 		return true;
 	} catch (Error& err) {
 		rus.error += '\n';
@@ -106,38 +106,40 @@ bool write_rus(System& rus) {
 
 }
 
-void System::run() {
-	timers.total.start();
-	if (config.verbose)
-		cout << "processing file " << config.in << " ... " << endl;
-	if (!parse_rus(*this)) return;
-	if (!parse_exp(*this)) return;
-	if (!unify_rus(*this)) return;
-	switch (config.mode) {
+void run(System& sys) {
+	sys.timers["total"].start();
+	if (sys.config.verbose)
+		cout << "processing file " << sys.config.in << " ... " << endl;
+	if (!parse_rus(sys)) return;
+	if (!parse_exp(sys)) return;
+	if (!unify_rus(sys)) return;
+	switch (sys.config.mode) {
 	case Config::Mode::PROVE:   break;
 	case Config::Mode::TRANSL:  break;
 	case Config::Mode::MONITOR: break;
 	default : break;
 	}
-	switch (config.target) {
-	case Config::Target::RUS: write_rus(*this); break;
-	case Config::Target::SMM: translate_rus(*this); break;
+	switch (sys.config.target) {
+	case Config::Target::RUS: write_rus(sys); break;
+	case Config::Target::SMM: translate_rus(sys); break;
 	default : break;
 	}
-	timers.total.stop();
-	if (config.verbose)
-		cout << "all done in " << timers.total << endl;
+	sys.timers["total"].stop();
+	if (sys.config.verbose)
+		cout << "all done in " << sys.timers["total"] << endl;
 }
 
 string show(const System& rus) {
 	string stats;
 	stats += "Timings\n";
-	stats += "\tparse rus:  " + show(rus.timers.parse_rus) + "\n";
-	stats += "\tparse expr: " + show(rus.timers.parse_expr) + "\n";
-	stats += "\tunify:      " + show(rus.timers.unify) + "\n";
-	stats += "\ttranslate:  " + show(rus.timers.translate) + "\n";
+	stats += "\tread:       " + show(rus.timers.at("read")) + "\n";
+	stats += "\tparse rus:  " + show(rus.timers.at("parse_rus")) + "\n";
+	stats += "\tparse expr: " + show(rus.timers.at("parse_expr")) + "\n";
+	stats += "\tunify:      " + show(rus.timers.at("unify")) + "\n";
+	stats += "\ttranslate:  " + show(rus.timers.at("translate")) + "\n";
+	stats += "\twrite:      " + show(rus.timers.at("write")) + "\n";
 	stats += "\n";
-	stats += "\ttotal: " + show(rus.timers.total) + "\n";
+	stats += "\ttotal: " + show(rus.timers.at("total")) + "\n";
 	stats += "\n";
 
 	const size_t const_vol = mdl::memvol(rus.math.consts);
