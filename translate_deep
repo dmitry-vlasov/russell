@@ -1,11 +1,5 @@
 #!/bin/bash
 
-source ./config
-
-binpath=`pwd`/$binpath
-
-cd $mathpath
-
 if [ -z $1 ]; then
     echo "usage: "
     echo "  translate_deep <file> [memcheck]"
@@ -16,11 +10,23 @@ if [ -z $1 ]; then
     exit 0
 fi
 
+if [ -z $2 ]; then 
+	config=./config
+else
+	config=$2
+fi
+
+source ${config}
+
+binpath=`pwd`/$binpath
+
+cd $mathpath
 
 file=$1
 
 if [ ! -f ${file}.mm ]; then
-    echo "source file desn't exist"
+    echo "source file ${file}.mm desn't exist"
+	echo "current dir: " `pwd`
     exit 1
 fi
 

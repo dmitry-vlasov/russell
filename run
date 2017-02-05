@@ -1,0 +1,52 @@
+#!/bin/bash
+
+if [ -z $1 ]; then
+    distrib=release
+	cxxflags="-g -O3"
+elif [ "$1" == "debug" ]; then
+	distrib=debug
+	cxxflags="-ggdb3 -O0"
+elif [[ "$1" == "help" ]] || [[ "$1" == "-help" ]] || [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]] || [[ "$1" == "-?" ]]; then
+	echo "usage: "
+    echo "  do_all_job [debug]"
+    echo "where: "
+    echo "  [debug] is an option for compilation with debug flags "
+    echo
+    exit 0
+fi
+
+config="
+#!/bin/bash \n
+\n
+# The relative path to the directory, containing binary executables: \n
+binpath='./build/${distrib}/bin'\n
+\n
+# The relative path to the directory, containing math sources:\n
+mathpath='./math'\n
+"
+echo -e ${config} > config 
+
+echo "--------------------------"
+echo "COMPILING THE PROJECT ... "
+echo "--------------------------"
+
+if [ ! -d build ]; then
+	mkdir build
+fi
+cd build
+if [ ! -d $distrib ]; then
+	mkdir $distrib
+fi
+cd $distrib
+
+../../configure CXXFLAGS="${cxxflags}" --exec-prefix=`pwd`
+make -j `nproc` && make install
+cd .. && cd ..
+
+echo "-----------------------------"
+echo "compiling the project - DONE "
+echo "-----------------------------"
+
+# Test translations of first 100 000 lines from set.mm
+./translate_deep uset-100000
+
