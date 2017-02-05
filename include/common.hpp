@@ -1,5 +1,7 @@
 #pragma once
 
+#include <boost/program_options.hpp>
+
 #include "std.hpp"
 #include "location.hpp"
 #include "symbol.hpp"
@@ -295,6 +297,29 @@ struct System {
 	static System& mod() { return Lib<System>::mod().sys();  }
 };
 
+template<typename M, typename T>
+inline void initConf(const boost::program_options::variables_map& vm, Config<M, T>& conf) {
+	if (vm.count("in"))      conf.in   = vm["in"].as<string>();
+	if (vm.count("out"))     conf.out  = vm["out"].as<string>();
+	if (vm.count("root"))    conf.root = vm["root"].as<string>();
+	if (vm.count("verbose")) conf.verbose = true;
+	if (vm.count("deep"))    conf.deep = true;
+	if (vm.count("info"))    conf.info = true;
+	if (vm.count("help"))    conf.help = true;
+}
+
+inline void initOptions(boost::program_options::options_description& desc) {
+	namespace po = boost::program_options;
+	desc.add_options()
+		("help,h",      "print help message")
+		("in,i", po::value<string>(),   "input file")
+		("out,o", po::value<string>(),  "output file")
+		("root,r", po::value<string>(), "root directory (for inclusions)")
+		("deep,d",      "deep translation")
+		("verbose,v",   "not be silent")
+		("info",        "info about math: timings, memory, stats")
+	;
+}
 
 } // mdl
 

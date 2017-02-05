@@ -1,5 +1,3 @@
-#include <boost/program_options.hpp>
-
 #include "smm/globals.hpp"
 
 namespace po = boost::program_options;
@@ -7,9 +5,7 @@ namespace po = boost::program_options;
 using namespace mdl;
 
 static bool initConf(const po::variables_map& vm, smm::Config& conf) {
-	if (vm.count("in"))   conf.in = vm["in"].as<string>();
-	if (vm.count("out"))  conf.out = vm["out"].as<string>();
-	if (vm.count("root")) conf.root = vm["root"].as<string>();
+	mdl::initConf(vm, conf);
 	if (vm.count("lang")) {
 		if (vm["lang"].as<string>() == "rus") {
 			if (conf.target != smm::Config::Target::TARGET_NONE) return false;
@@ -20,9 +16,6 @@ static bool initConf(const po::variables_map& vm, smm::Config& conf) {
 			conf.target = smm::Config::Target::TARGET_MM;
 		}
 	}
-	if (vm.count("verbose")) conf.verbose = true;
-	if (vm.count("deep"))    conf.deep = true;
-	if (vm.count("info"))    conf.info = true;
 	if (!conf.deep) {
 		if (boost::ends_with(conf.out, ".mm"))  conf.target = smm::Config::Target::TARGET_MM;
 		if (boost::ends_with(conf.out, ".rus")) conf.target = smm::Config::Target::TARGET_RUS;
@@ -38,16 +31,11 @@ int main (int argc, const char* argv[])
 			string("smm verifier for simplified Metatmath\n") +
 			"Version: " + VERSION + "\n" +
 			"Usage: mdl [options]\n"
+
 		);
+		mdl::initOptions(desc);
 		desc.add_options()
-			("in,i",   po::value<string>(), "input file")
-			("out,o",  po::value<string>(), "output file")
-			("root,r", po::value<string>(), "root directory (for inclusions)")
 			("lang,l", po::value<string>(), "target language: rus for Russell or mm for Metamath")
-			("deep,d",      "deep translation")
-			("verbose,v",   "not be silent")
-			("info",        "info about math: timings, memory, stats")
-			("help,h",      "print help message")
 		;
 		po::variables_map vm;
         po::store(po::parse_command_line(argc, argv, desc), vm);
