@@ -5,28 +5,27 @@
 namespace po = boost::program_options;
 
 using namespace mdl;
-using namespace smm;
 
-static bool initConf(const po::variables_map& vm, Config& conf) {
+static bool initConf(const po::variables_map& vm, smm::Config& conf) {
 	if (vm.count("in"))   conf.in = vm["in"].as<string>();
 	if (vm.count("out"))  conf.out = vm["out"].as<string>();
 	if (vm.count("root")) conf.root = vm["root"].as<string>();
 	if (vm.count("lang")) {
 		if (vm["lang"].as<string>() == "rus") {
-			if (conf.target != Config::TARGET_NONE) return false;
-			conf.target = Config::TARGET_RUS;
+			if (conf.target != smm::Config::Target::TARGET_NONE) return false;
+			conf.target = smm::Config::Target::TARGET_RUS;
 		}
 		if (vm["lang"].as<string>() == "mm")  {
-			if (conf.target != Config::TARGET_NONE) return false;
-			conf.target = Config::TARGET_MM;
+			if (conf.target != smm::Config::Target::TARGET_NONE) return false;
+			conf.target = smm::Config::Target::TARGET_MM;
 		}
 	}
 	if (vm.count("verbose")) conf.verbose = true;
 	if (vm.count("deep"))    conf.deep = true;
 	if (vm.count("info"))    conf.info = true;
 	if (!conf.deep) {
-		if (boost::ends_with(conf.out, ".mm"))  conf.target = Config::TARGET_MM;
-		if (boost::ends_with(conf.out, ".rus")) conf.target = Config::TARGET_RUS;
+		if (boost::ends_with(conf.out, ".mm"))  conf.target = smm::Config::Target::TARGET_MM;
+		if (boost::ends_with(conf.out, ".rus")) conf.target = smm::Config::Target::TARGET_RUS;
 	}
 	if (conf.in == "") return false;
 	return true;
@@ -58,8 +57,8 @@ int main (int argc, const char* argv[])
             cout << desc << endl;
             return 0;
         }
-        System& smm = System::mod();
-        Config& conf = smm.config;
+        smm::System& smm = smm::System::mod();
+        smm::Config& conf = smm.config;
         if (!initConf(vm, conf)) {
         	cout << desc << endl;
             return 1;

@@ -6,23 +6,9 @@
 
 namespace mdl { namespace mm {
 
-struct Config {
-	enum class Mode   { NONE, TRANSL, CUT, MERGE };
-	Config() :
-	verbose(false), info(false), help(false), deep(false),
-	mode(Mode::NONE), in(), root() { }
-
-	bool verbose;
-	bool info;
-	bool help;
-	bool deep;
-
-	Mode   mode;
-
-	string in;
-	string out;
-	string root;
-};
+enum class Mode { NONE, TRANSL, CUT, MERGE, DEFAULT = NONE };
+enum class Target { SMM, DEFAULT = SMM };
+typedef mdl::Config<Mode, Target> Config;
 
 struct System {
 	~ System() {

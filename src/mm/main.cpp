@@ -5,27 +5,26 @@
 namespace po = boost::program_options;
 
 using namespace mdl;
-using namespace mm;
 
-static bool initConf(const po::variables_map& vm, Config& conf) {
-	if (vm.count("in"))   conf.in = vm["in"].as<string>();
-	if (vm.count("out"))  conf.out = vm["out"].as<string>();
-	if (vm.count("root")) conf.root = vm["root"].as<string>();
-	if (vm.count("verbose")) conf.verbose = true;
-	if (vm.count("deep"))    conf.deep = true;
-	if (vm.count("info"))    conf.info = true;
-	if (vm.count("cut"))   conf.mode = Config::Mode::CUT;
-	if (vm.count("merge")) conf.mode = Config::Mode::MERGE;
-	if (vm.count("translate")) conf.mode = Config::Mode::TRANSL;
+static bool initConf(const po::variables_map& vm, mm::Config& conf) {
+	if (vm.count("in"))        conf.in = vm["in"].as<string>();
+	if (vm.count("out"))       conf.out = vm["out"].as<string>();
+	if (vm.count("root"))      conf.root = vm["root"].as<string>();
+	if (vm.count("verbose"))   conf.verbose = true;
+	if (vm.count("deep"))      conf.deep = true;
+	if (vm.count("info"))      conf.info = true;
+	if (vm.count("cut"))       conf.mode = mm::Config::Mode::CUT;
+	if (vm.count("merge"))     conf.mode = mm::Config::Mode::MERGE;
+	if (vm.count("translate")) conf.mode = mm::Config::Mode::TRANSL;
 	if (!conf.deep) {
 		if (boost::ends_with(conf.out, ".smm") &&
-			conf.mode != Config::Mode::TRANSL) {
+			conf.mode != mm::Config::Mode::TRANSL) {
 			return false;
 		} else if (boost::ends_with(conf.out, ".mm") &&
-			conf.mode == Config::Mode::TRANSL) {
+			conf.mode == mm::Config::Mode::TRANSL) {
 			return false;
 		}
-		if (conf.mode == Config::Mode::CUT) {
+		if (conf.mode == mm::Config::Mode::CUT) {
 			cout << "makes no sense cutting without --deep option" << endl;
 			return false;
 		}
@@ -61,7 +60,7 @@ int main (int argc, const char* argv[])
             cout << desc << endl;
             return 0;
         }
-        System& mm = System::mod();
+        mm::System& mm = mm::System::mod();
         if (!initConf(vm, mm.config)) {
         	cout << desc << endl;
             return 1;

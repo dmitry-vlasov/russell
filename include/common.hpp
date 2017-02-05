@@ -245,6 +245,28 @@ private:
 	Lib() : systems(), current() { }
 };
 
+// Configuration for a deductive system
+template<typename M, typename T>
+struct Config {
+	typedef M Mode;
+	typedef T Target;
+	Config() :
+	verbose(false), info(false), help(false), deep(false),
+	mode(Mode::DEFAULT), in(), root(), target(Target::DEFAULT) { }
+
+	bool verbose;
+	bool info;
+	bool help;
+	bool deep;
+
+	Mode mode;
+
+	string in;
+	string out;
+	string root;
+	Target target;
+};
+
 } // mdl
 
   

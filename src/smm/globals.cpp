@@ -66,8 +66,8 @@ bool System::translate() {
 			cout << "translating file " << config.in << " ... " << flush;
 		timers.translate.start();
 		switch (config.target) {
-		case Config::TARGET_NONE: break;
-		case Config::TARGET_MM: {
+		case Config::Target::TARGET_NONE: break;
+		case Config::Target::TARGET_MM: {
 			mm::Source* target = smm::translate_to_mm(source);
 			if (config.deep) {
 				deep_write(
@@ -83,7 +83,7 @@ bool System::translate() {
 			}
 			delete target;
 		}	break;
-		case Config::TARGET_RUS: {
+		case Config::Target::TARGET_RUS: {
 			rus::Source* target = smm::translate_to_rus(source);
 			if (config.deep) {
 				deep_write(

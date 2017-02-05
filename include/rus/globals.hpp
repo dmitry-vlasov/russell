@@ -6,27 +6,9 @@
 
 namespace mdl { namespace rus {
 
-// Configuration for a deductive system
-struct Config {
-	enum class Mode   { NONE, TRANSL, PROVE, MONITOR };
-	enum class Target { NONE, SMM, RUS };
-	Config() :
-	verbose(false), info(false), help(false), deep(false),
-	mode(Mode::NONE),
-	in(), root(), target(Target::NONE) { }
-
-	bool verbose;
-	bool info;
-	bool help;
-	bool deep;
-
-	Mode mode;
-
-	string in;
-	string out;
-	string root;
-	Target target;
-};
+enum class Mode { NONE, TRANSL, PROVE, MONITOR, DEFAULT = NONE };
+enum class Target { NONE, SMM, RUS, DEFAULT = NONE };
+typedef mdl::Config<Mode, Target> Config;
 
 // Deductive system
 struct System {
