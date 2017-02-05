@@ -2,6 +2,8 @@
 
 source ./config
 
+binpath=`pwd`/$binpath
+
 cd $mathpath
 
 if [ -z $1 ]; then
@@ -50,7 +52,7 @@ echo "MM <-> SMM TRANSLATION"
 echo "----------------------"
 
 echo "cut: mm -> mm"
-check "${binpath}${distrib}/mm -d -c -v -i ${file}.mm  -o mm"
+check "${binpath}/mm -d -c -v -i ${file}.mm  -o mm"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -58,7 +60,7 @@ if [ $? != 0 ]; then
 fi;
 
 echo "mm -> smm"
-check "${binpath}${distrib}/mm -t -d -v -r mm -i ${file}.mm  -o smm"
+check "${binpath}/mm -t -d -v -r mm -i ${file}.mm  -o smm"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -67,7 +69,7 @@ fi;
 
 
 echo "smm -> mm"
-check "${binpath}${distrib}/smm -l mm -d -v -r smm -i ${file}.smm -o mm-0"
+check "${binpath}/smm -l mm -d -v -r smm -i ${file}.smm -o mm-0"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then
@@ -75,7 +77,7 @@ if [ $? != 0 ]; then
 fi;
 
 echo "merge: mm -> mm"
-check "${binpath}${distrib}/mm -m -v -r mm-0 -i ${file}.mm -o ${file}-0.mm"
+check "${binpath}/mm -m -v -r mm-0 -i ${file}.mm -o ${file}-0.mm"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then
@@ -83,7 +85,7 @@ if [ $? != 0 ]; then
 fi;
 
 echo "verify mm"
-${binpath}${distrib}/metamath "read ${file}-0.mm" 'verify proof *' exit
+${binpath}/metamath "read ${file}-0.mm" 'verify proof *' exit
 echo -e 'done\n'
 
 if [ $? != 0 ]; then 
@@ -99,7 +101,7 @@ echo "MM <-> RUS TRANSLATION"
 echo "----------------------"
 
 echo "smm -> rus"
-check "${binpath}${distrib}/smm -l rus -d -v -r smm -i ${file}.smm -o rus"
+check "${binpath}/smm -l rus -d -v -r smm -i ${file}.smm -o rus"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -108,7 +110,7 @@ fi;
 
 
 echo "rus -> smm"
-check "${binpath}${distrib}/mdl -t -d --info -v -r rus -i ${file}.rus -o smm-1"
+check "${binpath}/mdl -t -d --info -v -r rus -i ${file}.rus -o smm-1"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -117,7 +119,7 @@ fi;
 
 
 echo "verify smm"
-check "${binpath}${distrib}/smm -v -r smm-1 -i ${file}.smm"
+check "${binpath}/smm -v -r smm-1 -i ${file}.smm"
 echo -e 'done\n'
 
 if [ $? != 0 ]; then 
@@ -126,7 +128,7 @@ fi;
 
 
 echo "smm -> mm"
-check "${binpath}${distrib}/smm -d -l mm -v -r smm-1 -i ${file}.smm -o mm-1"
+check "${binpath}/smm -d -l mm -v -r smm-1 -i ${file}.smm -o mm-1"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -135,7 +137,7 @@ fi;
 
 
 echo "mm -> smm"
-check "${binpath}${distrib}/mm -d -t -v -r mm-1 -i ${file}.mm -o smm-2"
+check "${binpath}/mm -d -t -v -r mm-1 -i ${file}.mm -o smm-2"
 echo -e 'done\n'
 
 if [ $? != 0 ]; then 
@@ -144,7 +146,7 @@ fi;
 
 
 echo "verify smm"
-check "${binpath}${distrib}/smm -v -r smm-2 -i ${file}.smm"
+check "${binpath}/smm -v -r smm-2 -i ${file}.smm"
 echo -e 'done\n'
 
 if [ $? != 0 ]; then 
@@ -153,7 +155,7 @@ fi;
 
 
 echo "merge: mm -> mm"
-check "${binpath}${distrib}/mm -d -m -v -r mm-1 -i ${file}.mm -o ${file}-1.mm"
+check "${binpath}/mm -d -m -v -r mm-1 -i ${file}.mm -o ${file}-1.mm"
 echo -e 'done\n'
 
 if [ $? != 0 ]; then 
@@ -161,7 +163,7 @@ if [ $? != 0 ]; then
 fi;
 
 echo "verify mm"
-${binpath}${distrib}/metamath "read ${file}-1.mm" 'verify proof *' exit
+${binpath}/metamath "read ${file}-1.mm" 'verify proof *' exit
 echo -e 'done\n'
 
 if [ $? != 0 ]; then 

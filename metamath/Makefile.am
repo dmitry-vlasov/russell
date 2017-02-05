@@ -36,12 +36,12 @@ metamath_SOURCES = \
 	mmwtex.c \
 	$(noinst_HEADERS)
 
-dist_pkgdata_DATA = \
-	big-unifier.mm \
-	demo0.mm \
-	miu.mm \
-	peano.mm \
-	ql.mm 
+#dist_pkgdata_DATA = \
+#	big-unifier.mm \
+#	demo0.mm \
+#	miu.mm \
+#	peano.mm \
+#	ql.mm 
 
 
 EXTRA_DIST = \

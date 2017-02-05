@@ -1,6 +1,7 @@
 #!/bin/bash
 
-binpath='../../russell/bin/'
+# The relative path to the directory, containing binary executables: 
+binpath='./release/bin'
+
+# The relative path to the directory, containing math sources:
 mathpath='../../math'
-#distrib=debug
-distrib=release
