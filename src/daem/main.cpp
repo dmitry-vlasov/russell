@@ -1,12 +1,11 @@
 #include <boost/program_options.hpp>
 
-#include "rus/globals.hpp"
+#include "daem/globals.hpp"
 
 namespace po = boost::program_options;
 
 using namespace std;
 using namespace mdl;
-using namespace rus;
 
 int main (int argc, const char* argv[])
 {

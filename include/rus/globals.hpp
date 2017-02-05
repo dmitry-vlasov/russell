@@ -75,27 +75,6 @@ Source* parse(string path);
 void verify(Source*);
 smm::Source* translate(const Source* source);
 
-namespace daemon {
-
-#define DEFAULT_DAEMON_LOGS "/var/tmp/mdld.log"
-
-struct Config {
-	enum {
-		DEFAULT_PORT = 808011
-	};
-	static const Config& get() { return mod(); }
-	static Config& mod() { static Config d; return d; }
-	uint   port;
-	string logs;
-
-private:
-	Config() : port(DEFAULT_PORT), logs(DEFAULT_DAEMON_LOGS) { }
-};
-
-}
-
-void execute(const string& command);
-
 namespace parser {
 	uint get_ind();
 	uint inc_ind();

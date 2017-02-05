@@ -4,7 +4,7 @@
 #include "smm/ast.hpp"
 #include "timer.hpp"
 
-namespace mdl { namespace rus { namespace daemon {
+namespace mdl { namespace daemon {
 
 #define DEFAULT_DAEMON_LOGS "/var/tmp/mdld.log"
 
@@ -21,5 +21,5 @@ private:
 	Config() : port(DEFAULT_PORT), logs(DEFAULT_DAEMON_LOGS) { }
 };
 
-}}} // mdl::rus::daemon
+}} // mdl::daemon
 
