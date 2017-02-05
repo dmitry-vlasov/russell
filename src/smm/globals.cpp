@@ -12,19 +12,7 @@ string show_id(uint lab) {
 
 namespace smm {
 
-void run(System& sys) {
-	sys.timers["total"].start();
-	if (sys.config.verbose)
-		cout << "verifying file " << sys.config.in << " ... " << endl;
-	if (!parse(sys))     return;
-	if (!verify(sys))    return;
-	if (!translate(sys)) return;
-	sys.timers["total"].stop();
-	if (sys.config.verbose)
-		cout << "all done in " << sys.timers["total"] << endl;
-}
-
-bool parse(System& sys) {
+static bool parse(System& sys) {
 	try {
 		sys.timers["read"].start();
 		sys.source = smm::parse(sys.config.in);
@@ -38,7 +26,7 @@ bool parse(System& sys) {
 	}
 }
 
-bool verify(System& sys) {
+static bool verify(System& sys) {
 	try {
 		sys.timers["verify"].start();
 		smm::verify(sys.math.assertions);
@@ -51,7 +39,7 @@ bool verify(System& sys) {
 	}
 }
 
-bool translate(System& sys) {
+static bool translate(System& sys) {
 	try {
 		if (sys.config.out.empty()) return true;
 		if (sys.config.verbose)
@@ -102,6 +90,19 @@ bool translate(System& sys) {
 		return false;
 	}
 }
+
+void run(System& sys) {
+	sys.timers["total"].start();
+	if (sys.config.verbose)
+		cout << "verifying file " << sys.config.in << " ... " << endl;
+	if (!parse(sys))     return;
+	if (!verify(sys))    return;
+	if (!translate(sys)) return;
+	sys.timers["total"].stop();
+	if (sys.config.verbose)
+		cout << "all done in " << sys.timers["total"] << endl;
+}
+
 
 ostream& operator << (ostream& os, const System& s) {
 	os << s.error;

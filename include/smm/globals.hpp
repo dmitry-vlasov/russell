@@ -19,10 +19,6 @@ struct Math {
 typedef mdl::System<Source, Math, Config> System;
 
 void run(System&);
-bool parse(System&);
-bool verify(System&);
-bool translate(System&);
-
 ostream& operator << (ostream& os, const System& s);
 Source* parse(string path);
 void verify(const vector<Assertion*>& theory);

@@ -17,7 +17,7 @@ bool parse_rus(System& rus) {
 		rus.timers["read"].start();
 		rus.source = parse(rus.config.in);
 		rus.timers["read"].stop();
-		if (rus.config.verbose) cout << "done in " << rus.timers["parse_rus"] << endl;
+		if (rus.config.verbose) cout << "done in " << rus.timers["read"] << endl;
 		return true;
 	} catch (Error& err) {
 		rus.error += '\n';
@@ -32,7 +32,7 @@ bool parse_exp(System& rus) {
 		rus.timers["expr"].start();
 		expr::parse();
 		rus.timers["expr"].stop();
-		if (rus.config.verbose) cout << "done in " << rus.timers["parse_expr"] << endl;
+		if (rus.config.verbose) cout << "done in " << rus.timers["expr"] << endl;
 		return true;
 	} catch (Error& err) {
 		rus.error += '\n';
