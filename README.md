@@ -22,27 +22,11 @@ Dependencies
 mdl uses some boost libraries: spirit, string algos, filesystem. To be sure all of these
 are avaliable, install libboost-all-dev (linux).
 
-Building
---------
-To build russell environment the boost jam builder is required.
-Run:
- 1. to build optimized version:  `bjam release -j 4 toolset=gcc`
- 2. to build the debug version:  `bjam debug -j 4 toolset=gcc`
- 
-CAUTION: compilation demandas A LOT of memory, on a system with less
-then 8 gb of RAM it most likely will not be built. 
+Building and translation tests
+------------------------------
+To make a complete local build and run translation test just execute ./run script.
+Math libraries, transleted to smm and Russell will be inside math/tmp directory
 
-
-Translation tests
------------------
-Scripts 'translate' and 'translate_deep', runs some chains of translations and verifications.
- 1. First, checkout the original Metamath source from [math](https://github.com/dmitry-vlasov/math)
-repository. 
- 2. Then write the correct paths to the binary dir and to the mathematics source dir in
-the `config` file. 
- 3. Finally, to run test do: `translate uset-100000` or `translate_deep uset-100000`
- (attention: the metamath file `uset-100000.mm` has extension, but to translation script it is passed without extension!).
- 4. To add valgrind memcheck add the `memcheck` option to the command (as the last parameter).
 
  
 
