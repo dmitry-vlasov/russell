@@ -5,6 +5,7 @@ AM_CPPFLAGS = \
 	$(BOOST_CPPFLAGS)
 
 AM_LDFLAGS = \
+	-L$(top_builddir)/src/com -lcom \
     $(BOOST_LDFLAGS)
 
 bin_PROGRAMS = \
@@ -28,9 +29,8 @@ noinst_HEADERS = \
 	spirit_parser.hpp \
 	tree.hpp 
 
+if SPLIT_COMPILE
 libmm_la_SOURCES = \
-	../location.cpp \
-	../timer.cpp \
 	../smm/show.cpp \
 	\
 	cut/parser.cpp \
@@ -45,6 +45,11 @@ libmm_la_SOURCES = \
 	spirit_parser.cpp \
 	translate.cpp \
 	tree.cpp
+else
+libmm_la_SOURCES = \
+	../smm/show.cpp \
+	all.cpp
+endif
 
 mm_SOURCES = \
 	main.cpp

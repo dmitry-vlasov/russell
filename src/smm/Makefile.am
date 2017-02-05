@@ -5,6 +5,7 @@ AM_CPPFLAGS = \
 	$(BOOST_CPPFLAGS)
 
 AM_LDFLAGS = \
+	-L$(top_builddir)/src/com -lcom \
     $(BOOST_LDFLAGS)
 
 bin_PROGRAMS = \
@@ -19,9 +20,8 @@ noinst_HEADERS = \
 	parser.hpp \
 	tree.hpp 
 
+if SPLIT_COMPILE
 libsmm_la_SOURCES = \
-	../location.cpp \
-	../timer.cpp \
 	../mm/show.cpp \
 	../rus/show.cpp \
 	../rus/expr.cpp \
@@ -35,6 +35,13 @@ libsmm_la_SOURCES = \
 	translate_rus.cpp \
 	tree.cpp \
 	verify.cpp
+else
+libsmm_la_SOURCES = \
+	../mm/show.cpp \
+	../rus/show.cpp \
+	../rus/expr.cpp \
+	all.cpp
+endif
 
 smm_SOURCES = \
 	main.cpp

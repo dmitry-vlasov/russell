@@ -1,4 +1,5 @@
 SUBDIRS = \
-	mm \
+	com \
+	mm  \
 	smm \
 	rus

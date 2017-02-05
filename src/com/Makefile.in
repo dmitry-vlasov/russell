@@ -14,8 +14,6 @@
 
 @SET_MAKE@
 
-
-
 VPATH = @srcdir@
 am__is_gnu_make = { \
   if test -z '$(MAKELEVEL)'; then \
@@ -90,8 +88,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = smm$(EXEEXT)
-subdir = src/smm
+subdir = src/com
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ax_boost_base.m4 \
 	$(top_srcdir)/m4/ax_boost_filesystem.m4 \
@@ -104,39 +101,25 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/ax_boost_base.m4 \
 	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-DIST_COMMON = $(srcdir)/Makefile.am $(noinst_HEADERS) \
-	$(am__DIST_COMMON)
+DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 am__DEPENDENCIES_1 =
-libsmm_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+libcom_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
-am__libsmm_la_SOURCES_DIST = ../mm/show.cpp ../rus/show.cpp \
-	../rus/expr.cpp all.cpp globals.cpp math_symb.cpp parser.cpp \
-	show.cpp translate_mm.cpp translate_rus.cpp tree.cpp \
-	verify.cpp
-am__dirstamp = $(am__leading_dot)dirstamp
-@SPLIT_COMPILE_FALSE@am_libsmm_la_OBJECTS = ../mm/show.lo \
-@SPLIT_COMPILE_FALSE@	../rus/show.lo ../rus/expr.lo all.lo
-@SPLIT_COMPILE_TRUE@am_libsmm_la_OBJECTS = ../mm/show.lo \
-@SPLIT_COMPILE_TRUE@	../rus/show.lo ../rus/expr.lo globals.lo \
-@SPLIT_COMPILE_TRUE@	math_symb.lo parser.lo show.lo parser.lo \
-@SPLIT_COMPILE_TRUE@	translate_mm.lo translate_rus.lo tree.lo \
-@SPLIT_COMPILE_TRUE@	verify.lo
-libsmm_la_OBJECTS = $(am_libsmm_la_OBJECTS)
+am__libcom_la_SOURCES_DIST = all.cpp location.cpp timer.cpp \
+	memusage.cpp
+@SPLIT_COMPILE_FALSE@am_libcom_la_OBJECTS = all.lo
+@SPLIT_COMPILE_TRUE@am_libcom_la_OBJECTS = location.lo timer.lo \
+@SPLIT_COMPILE_TRUE@	memusage.lo
+libcom_la_OBJECTS = $(am_libcom_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
-am__installdirs = "$(DESTDIR)$(bindir)"
-PROGRAMS = $(bin_PROGRAMS)
-am_smm_OBJECTS = main.$(OBJEXT)
-smm_OBJECTS = $(am_smm_OBJECTS)
-smm_DEPENDENCIES = libsmm.la $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -171,14 +154,13 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(libsmm_la_SOURCES) $(smm_SOURCES)
-DIST_SOURCES = $(am__libsmm_la_SOURCES_DIST) $(smm_SOURCES)
+SOURCES = $(libcom_la_SOURCES)
+DIST_SOURCES = $(am__libcom_la_SOURCES_DIST)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
-HEADERS = $(noinst_HEADERS)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 # Read a list of newline-separated strings from the standard input,
 # and print each of them once, without duplicates.  Input order is
@@ -338,49 +320,20 @@ AM_CPPFLAGS = \
 	$(BOOST_CPPFLAGS)
 
 AM_LDFLAGS = \
-	-L$(top_builddir)/src/com -lcom \
     $(BOOST_LDFLAGS)
 
 noinst_LTLIBRARIES = \
-	libsmm.la
+	libcom.la
 
-noinst_HEADERS = \
-	adaptors.hpp \
-	grammar.hpp \
-	parser.hpp \
-	tree.hpp 
-
-@SPLIT_COMPILE_FALSE@libsmm_la_SOURCES = \
-@SPLIT_COMPILE_FALSE@	../mm/show.cpp \
-@SPLIT_COMPILE_FALSE@	../rus/show.cpp \
-@SPLIT_COMPILE_FALSE@	../rus/expr.cpp \
+@SPLIT_COMPILE_FALSE@libcom_la_SOURCES = \
 @SPLIT_COMPILE_FALSE@	all.cpp
 
-@SPLIT_COMPILE_TRUE@libsmm_la_SOURCES = \
-@SPLIT_COMPILE_TRUE@	../mm/show.cpp \
-@SPLIT_COMPILE_TRUE@	../rus/show.cpp \
-@SPLIT_COMPILE_TRUE@	../rus/expr.cpp \
-@SPLIT_COMPILE_TRUE@	\
-@SPLIT_COMPILE_TRUE@	globals.cpp \
-@SPLIT_COMPILE_TRUE@	math_symb.cpp \
-@SPLIT_COMPILE_TRUE@	parser.cpp \
-@SPLIT_COMPILE_TRUE@	show.cpp \
-@SPLIT_COMPILE_TRUE@	parser.cpp \
-@SPLIT_COMPILE_TRUE@	translate_mm.cpp \
-@SPLIT_COMPILE_TRUE@	translate_rus.cpp \
-@SPLIT_COMPILE_TRUE@	tree.cpp \
-@SPLIT_COMPILE_TRUE@	verify.cpp
+@SPLIT_COMPILE_TRUE@libcom_la_SOURCES = \
+@SPLIT_COMPILE_TRUE@	location.cpp \
+@SPLIT_COMPILE_TRUE@	timer.cpp \
+@SPLIT_COMPILE_TRUE@	memusage.cpp 
 
-smm_SOURCES = \
-	main.cpp
-
-libsmm_la_LIBADD = \
-	$(BOOST_FILESYSTEM_LIB) \
-    $(BOOST_SYSTEM_LIB) \
-    $(BOOST_PROGRAM_OPTIONS_LIB)
-
-smm_LDADD = \
-	libsmm.la \
+libcom_la_LIBADD = \
 	$(BOOST_FILESYSTEM_LIB) \
     $(BOOST_SYSTEM_LIB) \
     $(BOOST_PROGRAM_OPTIONS_LIB)
@@ -398,9 +351,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/smm/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/com/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu src/smm/Makefile
+	  $(AUTOMAKE) --gnu src/com/Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \
@@ -429,103 +382,20 @@ clean-noinstLTLIBRARIES:
 	  echo rm -f $${locs}; \
 	  rm -f $${locs}; \
 	}
-../mm/$(am__dirstamp):
-	@$(MKDIR_P) ../mm
-	@: > ../mm/$(am__dirstamp)
-../mm/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) ../mm/$(DEPDIR)
-	@: > ../mm/$(DEPDIR)/$(am__dirstamp)
-../mm/show.lo: ../mm/$(am__dirstamp) ../mm/$(DEPDIR)/$(am__dirstamp)
-../rus/$(am__dirstamp):
-	@$(MKDIR_P) ../rus
-	@: > ../rus/$(am__dirstamp)
-../rus/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) ../rus/$(DEPDIR)
-	@: > ../rus/$(DEPDIR)/$(am__dirstamp)
-../rus/show.lo: ../rus/$(am__dirstamp) \
-	../rus/$(DEPDIR)/$(am__dirstamp)
-../rus/expr.lo: ../rus/$(am__dirstamp) \
-	../rus/$(DEPDIR)/$(am__dirstamp)
 
-libsmm.la: $(libsmm_la_OBJECTS) $(libsmm_la_DEPENDENCIES) $(EXTRA_libsmm_la_DEPENDENCIES) 
-	$(AM_V_CXXLD)$(CXXLINK)  $(libsmm_la_OBJECTS) $(libsmm_la_LIBADD) $(LIBS)
-install-binPROGRAMS: $(bin_PROGRAMS)
-	@$(NORMAL_INSTALL)
-	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(bindir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(bindir)" || exit 1; \
-	fi; \
-	for p in $$list; do echo "$$p $$p"; done | \
-	sed 's/$(EXEEXT)$$//' | \
-	while read p p1; do if test -f $$p \
-	 || test -f $$p1 \
-	  ; then echo "$$p"; echo "$$p"; else :; fi; \
-	done | \
-	sed -e 'p;s,.*/,,;n;h' \
-	    -e 's|.*|.|' \
-	    -e 'p;x;s,.*/,,;s/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/' | \
-	sed 'N;N;N;s,\n, ,g' | \
-	$(AWK) 'BEGIN { files["."] = ""; dirs["."] = 1 } \
-	  { d=$$3; if (dirs[d] != 1) { print "d", d; dirs[d] = 1 } \
-	    if ($$2 == $$4) files[d] = files[d] " " $$1; \
-	    else { print "f", $$3 "/" $$4, $$1; } } \
-	  END { for (d in files) print "f", d, files[d] }' | \
-	while read type dir files; do \
-	    if test "$$dir" = .; then dir=; else dir=/$$dir; fi; \
-	    test -z "$$files" || { \
-	    echo " $(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL_PROGRAM) $$files '$(DESTDIR)$(bindir)$$dir'"; \
-	    $(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL_PROGRAM) $$files "$(DESTDIR)$(bindir)$$dir" || exit $$?; \
-	    } \
-	; done
-
-uninstall-binPROGRAMS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
-	files=`for p in $$list; do echo "$$p"; done | \
-	  sed -e 'h;s,^.*/,,;s/$(EXEEXT)$$//;$(transform)' \
-	      -e 's/$$/$(EXEEXT)/' \
-	`; \
-	test -n "$$list" || exit 0; \
-	echo " ( cd '$(DESTDIR)$(bindir)' && rm -f" $$files ")"; \
-	cd "$(DESTDIR)$(bindir)" && rm -f $$files
-
-clean-binPROGRAMS:
-	@list='$(bin_PROGRAMS)'; test -n "$$list" || exit 0; \
-	echo " rm -f" $$list; \
-	rm -f $$list || exit $$?; \
-	test -n "$(EXEEXT)" || exit 0; \
-	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
-	echo " rm -f" $$list; \
-	rm -f $$list
-
-smm$(EXEEXT): $(smm_OBJECTS) $(smm_DEPENDENCIES) $(EXTRA_smm_DEPENDENCIES) 
-	@rm -f smm$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(smm_OBJECTS) $(smm_LDADD) $(LIBS)
+libcom.la: $(libcom_la_OBJECTS) $(libcom_la_DEPENDENCIES) $(EXTRA_libcom_la_DEPENDENCIES) 
+	$(AM_V_CXXLD)$(CXXLINK)  $(libcom_la_OBJECTS) $(libcom_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
-	-rm -f ../mm/*.$(OBJEXT)
-	-rm -f ../mm/*.lo
-	-rm -f ../rus/*.$(OBJEXT)
-	-rm -f ../rus/*.lo
 
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@../mm/$(DEPDIR)/show.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../rus/$(DEPDIR)/expr.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../rus/$(DEPDIR)/show.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/all.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/globals.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/math_symb.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/parser.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/show.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/translate_mm.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/translate_rus.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tree.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/verify.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/location.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/memusage.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/timer.Plo@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -556,8 +426,6 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
-	-rm -rf ../mm/.libs ../mm/_libs
-	-rm -rf ../rus/.libs ../rus/_libs
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -643,11 +511,8 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(HEADERS)
+all-am: Makefile $(LTLIBRARIES)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)"; do \
-	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
-	done
 install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
@@ -674,21 +539,17 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
-	-rm -f ../mm/$(DEPDIR)/$(am__dirstamp)
-	-rm -f ../mm/$(am__dirstamp)
-	-rm -f ../rus/$(DEPDIR)/$(am__dirstamp)
-	-rm -f ../rus/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-binPROGRAMS clean-generic clean-libtool \
-	clean-noinstLTLIBRARIES mostlyclean-am
+clean-am: clean-generic clean-libtool clean-noinstLTLIBRARIES \
+	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ../mm/$(DEPDIR) ../rus/$(DEPDIR) ./$(DEPDIR)
+	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -711,7 +572,7 @@ install-dvi: install-dvi-am
 
 install-dvi-am:
 
-install-exec-am: install-binPROGRAMS
+install-exec-am:
 
 install-html: install-html-am
 
@@ -734,7 +595,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ../mm/$(DEPDIR) ../rus/$(DEPDIR) ./$(DEPDIR)
+	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -751,16 +612,15 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-binPROGRAMS
+uninstall-am:
 
 .MAKE: install-am install-strip
 
-.PHONY: CTAGS GTAGS TAGS all all-am check check-am clean \
-	clean-binPROGRAMS clean-generic clean-libtool \
-	clean-noinstLTLIBRARIES cscopelist-am ctags ctags-am distclean \
-	distclean-compile distclean-generic distclean-libtool \
-	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-binPROGRAMS install-data \
+.PHONY: CTAGS GTAGS TAGS all all-am check check-am clean clean-generic \
+	clean-libtool clean-noinstLTLIBRARIES cscopelist-am ctags \
+	ctags-am distclean distclean-compile distclean-generic \
+	distclean-libtool distclean-tags distdir dvi dvi-am html \
+	html-am info info-am install install-am install-data \
 	install-data-am install-dvi install-dvi-am install-exec \
 	install-exec-am install-html install-html-am install-info \
 	install-info-am install-man install-pdf install-pdf-am \
@@ -768,7 +628,7 @@ uninstall-am: uninstall-binPROGRAMS
 	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags tags-am uninstall uninstall-am uninstall-binPROGRAMS
+	tags tags-am uninstall uninstall-am
 
 .PRECIOUS: Makefile
 

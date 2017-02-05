@@ -6,6 +6,7 @@ AM_CPPFLAGS = \
 	$(PTHREAD_CFLAGS)
 
 AM_LDFLAGS = \
+	-L$(top_builddir)/src/com -lcom \
     $(BOOST_LDFLAGS) \
     $(PTHREAD_CFLAGS)
 
@@ -20,10 +21,8 @@ noinst_HEADERS = \
 	parser/grammar.hpp \
 	parser/parse.hpp  
 
+if SPLIT_COMPILE
 libmdl_la_SOURCES = \
-	../location.cpp \
-	../timer.cpp \
-	../memusage.cpp \
 	../smm/show.cpp \
 	\
 	expr/parse.cpp \
@@ -38,6 +37,11 @@ libmdl_la_SOURCES = \
 	show.cpp \
 	translate.cpp \
 	verify.cpp
+else
+libmdl_la_SOURCES = \
+	../smm/show.cpp \
+	all.cpp
+endif
 
 mdl_SOURCES = \
 	main.cpp

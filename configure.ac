@@ -39,14 +39,29 @@ AX_BOOST_BASE([1.48], AC_MSG_ERROR([libfoo needs Boost, but it was not found in 
 AX_BOOST_SYSTEM
 AX_BOOST_FILESYSTEM
 AX_BOOST_PROGRAM_OPTIONS
-
 AX_PTHREAD
+
+AC_ARG_ENABLE(
+	[split-compile],
+	[  --enable-split-compile  compile all *.cpp files separately],
+	[case "${enableval}" in
+		yes) split_compile=yes ;;
+		no)  split_compile=no ;;
+		*) AC_MSG_ERROR([bad value ${enableval} for --enable-split-compile]) ;;
+	esac],
+	[split_compile=no]
+)
+AC_MSG_NOTICE([checking split-compile ... $split_compile])
+
+AM_CONDITIONAL([SPLIT_COMPILE], [test $split_compile = yes])
+
 
 AC_CONFIG_FILES([
 	Makefile
 	include/Makefile
 	peglib/Makefile
 	src/Makefile
+	src/com/Makefile
 	src/mm/Makefile
 	src/smm/Makefile
 	src/rus/Makefile

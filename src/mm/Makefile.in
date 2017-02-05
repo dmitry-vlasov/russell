@@ -114,11 +114,16 @@ LTLIBRARIES = $(noinst_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 libmm_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
+am__libmm_la_SOURCES_DIST = ../smm/show.cpp all.cpp cut/parser.cpp \
+	cut/globals.cpp cut/show.cpp merge/parser.cpp globals.cpp \
+	peg_parser.cpp show.cpp spirit_parser.cpp translate.cpp \
+	tree.cpp
 am__dirstamp = $(am__leading_dot)dirstamp
-am_libmm_la_OBJECTS = ../location.lo ../timer.lo ../smm/show.lo \
-	cut/parser.lo cut/globals.lo cut/show.lo merge/parser.lo \
-	globals.lo peg_parser.lo show.lo spirit_parser.lo translate.lo \
-	tree.lo
+@SPLIT_COMPILE_FALSE@am_libmm_la_OBJECTS = ../smm/show.lo all.lo
+@SPLIT_COMPILE_TRUE@am_libmm_la_OBJECTS = ../smm/show.lo cut/parser.lo \
+@SPLIT_COMPILE_TRUE@	cut/globals.lo cut/show.lo merge/parser.lo \
+@SPLIT_COMPILE_TRUE@	globals.lo peg_parser.lo show.lo \
+@SPLIT_COMPILE_TRUE@	spirit_parser.lo translate.lo tree.lo
 libmm_la_OBJECTS = $(am_libmm_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -165,7 +170,7 @@ am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
 SOURCES = $(libmm_la_SOURCES) $(mm_SOURCES)
-DIST_SOURCES = $(libmm_la_SOURCES) $(mm_SOURCES)
+DIST_SOURCES = $(am__libmm_la_SOURCES_DIST) $(mm_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -331,6 +336,7 @@ AM_CPPFLAGS = \
 	$(BOOST_CPPFLAGS)
 
 AM_LDFLAGS = \
+	-L$(top_builddir)/src/com -lcom \
     $(BOOST_LDFLAGS)
 
 noinst_LTLIBRARIES = \
@@ -351,23 +357,25 @@ noinst_HEADERS = \
 	spirit_parser.hpp \
 	tree.hpp 
 
-libmm_la_SOURCES = \
-	../location.cpp \
-	../timer.cpp \
-	../smm/show.cpp \
-	\
-	cut/parser.cpp \
-	cut/globals.cpp \
-	cut/show.cpp \
-	\
-	merge/parser.cpp \
-	\
-	globals.cpp \
-	peg_parser.cpp \
-	show.cpp \
-	spirit_parser.cpp \
-	translate.cpp \
-	tree.cpp
+@SPLIT_COMPILE_FALSE@libmm_la_SOURCES = \
+@SPLIT_COMPILE_FALSE@	../smm/show.cpp \
+@SPLIT_COMPILE_FALSE@	all.cpp
+
+@SPLIT_COMPILE_TRUE@libmm_la_SOURCES = \
+@SPLIT_COMPILE_TRUE@	../smm/show.cpp \
+@SPLIT_COMPILE_TRUE@	\
+@SPLIT_COMPILE_TRUE@	cut/parser.cpp \
+@SPLIT_COMPILE_TRUE@	cut/globals.cpp \
+@SPLIT_COMPILE_TRUE@	cut/show.cpp \
+@SPLIT_COMPILE_TRUE@	\
+@SPLIT_COMPILE_TRUE@	merge/parser.cpp \
+@SPLIT_COMPILE_TRUE@	\
+@SPLIT_COMPILE_TRUE@	globals.cpp \
+@SPLIT_COMPILE_TRUE@	peg_parser.cpp \
+@SPLIT_COMPILE_TRUE@	show.cpp \
+@SPLIT_COMPILE_TRUE@	spirit_parser.cpp \
+@SPLIT_COMPILE_TRUE@	translate.cpp \
+@SPLIT_COMPILE_TRUE@	tree.cpp
 
 mm_SOURCES = \
 	main.cpp
@@ -427,14 +435,6 @@ clean-noinstLTLIBRARIES:
 	  echo rm -f $${locs}; \
 	  rm -f $${locs}; \
 	}
-../$(am__dirstamp):
-	@$(MKDIR_P) ..
-	@: > ../$(am__dirstamp)
-../$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) ../$(DEPDIR)
-	@: > ../$(DEPDIR)/$(am__dirstamp)
-../location.lo: ../$(am__dirstamp) ../$(DEPDIR)/$(am__dirstamp)
-../timer.lo: ../$(am__dirstamp) ../$(DEPDIR)/$(am__dirstamp)
 ../smm/$(am__dirstamp):
 	@$(MKDIR_P) ../smm
 	@: > ../smm/$(am__dirstamp)
@@ -518,8 +518,6 @@ mm$(EXEEXT): $(mm_OBJECTS) $(mm_DEPENDENCIES) $(EXTRA_mm_DEPENDENCIES)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
-	-rm -f ../*.$(OBJEXT)
-	-rm -f ../*.lo
 	-rm -f ../smm/*.$(OBJEXT)
 	-rm -f ../smm/*.lo
 	-rm -f cut/*.$(OBJEXT)
@@ -530,9 +528,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@../$(DEPDIR)/location.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../$(DEPDIR)/timer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@../smm/$(DEPDIR)/show.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/all.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/globals.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/peg_parser.Plo@am__quote@
@@ -574,7 +571,6 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
-	-rm -rf ../.libs ../_libs
 	-rm -rf ../smm/.libs ../smm/_libs
 	-rm -rf cut/.libs cut/_libs
 	-rm -rf merge/.libs merge/_libs
@@ -694,8 +690,6 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
-	-rm -f ../$(DEPDIR)/$(am__dirstamp)
-	-rm -f ../$(am__dirstamp)
 	-rm -f ../smm/$(DEPDIR)/$(am__dirstamp)
 	-rm -f ../smm/$(am__dirstamp)
 	-rm -f cut/$(DEPDIR)/$(am__dirstamp)
@@ -712,7 +706,7 @@ clean-am: clean-binPROGRAMS clean-generic clean-libtool \
 	clean-noinstLTLIBRARIES mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ../$(DEPDIR) ../smm/$(DEPDIR) ./$(DEPDIR) cut/$(DEPDIR) merge/$(DEPDIR)
+	-rm -rf ../smm/$(DEPDIR) ./$(DEPDIR) cut/$(DEPDIR) merge/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -758,7 +752,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ../$(DEPDIR) ../smm/$(DEPDIR) ./$(DEPDIR) cut/$(DEPDIR) merge/$(DEPDIR)
+	-rm -rf ../smm/$(DEPDIR) ./$(DEPDIR) cut/$(DEPDIR) merge/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

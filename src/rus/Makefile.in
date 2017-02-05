@@ -114,11 +114,16 @@ LTLIBRARIES = $(noinst_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 libmdl_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+am__libmdl_la_SOURCES_DIST = ../smm/show.cpp all.cpp expr/parse.cpp \
+	expr/unify.cpp parser/parse.cpp daemon.cpp expr.cpp \
+	globals.cpp memvol.cpp show.cpp translate.cpp verify.cpp
 am__dirstamp = $(am__leading_dot)dirstamp
-am_libmdl_la_OBJECTS = ../location.lo ../timer.lo ../memusage.lo \
-	../smm/show.lo expr/parse.lo expr/unify.lo parser/parse.lo \
-	daemon.lo expr.lo globals.lo memvol.lo show.lo translate.lo \
-	verify.lo
+@SPLIT_COMPILE_FALSE@am_libmdl_la_OBJECTS = ../smm/show.lo all.lo
+@SPLIT_COMPILE_TRUE@am_libmdl_la_OBJECTS = ../smm/show.lo \
+@SPLIT_COMPILE_TRUE@	expr/parse.lo expr/unify.lo \
+@SPLIT_COMPILE_TRUE@	parser/parse.lo daemon.lo expr.lo \
+@SPLIT_COMPILE_TRUE@	globals.lo memvol.lo show.lo translate.lo \
+@SPLIT_COMPILE_TRUE@	verify.lo
 libmdl_la_OBJECTS = $(am_libmdl_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -166,7 +171,7 @@ am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
 SOURCES = $(libmdl_la_SOURCES) $(mdl_SOURCES)
-DIST_SOURCES = $(libmdl_la_SOURCES) $(mdl_SOURCES)
+DIST_SOURCES = $(am__libmdl_la_SOURCES_DIST) $(mdl_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -333,6 +338,7 @@ AM_CPPFLAGS = \
 	$(PTHREAD_CFLAGS)
 
 AM_LDFLAGS = \
+	-L$(top_builddir)/src/com -lcom \
     $(BOOST_LDFLAGS) \
     $(PTHREAD_CFLAGS)
 
@@ -344,24 +350,25 @@ noinst_HEADERS = \
 	parser/grammar.hpp \
 	parser/parse.hpp  
 
-libmdl_la_SOURCES = \
-	../location.cpp \
-	../timer.cpp \
-	../memusage.cpp \
-	../smm/show.cpp \
-	\
-	expr/parse.cpp \
-	expr/unify.cpp \
-	\
-	parser/parse.cpp \
-	\
-	daemon.cpp \
-	expr.cpp \
-	globals.cpp \
-	memvol.cpp \
-	show.cpp \
-	translate.cpp \
-	verify.cpp
+@SPLIT_COMPILE_FALSE@libmdl_la_SOURCES = \
+@SPLIT_COMPILE_FALSE@	../smm/show.cpp \
+@SPLIT_COMPILE_FALSE@	all.cpp
+
+@SPLIT_COMPILE_TRUE@libmdl_la_SOURCES = \
+@SPLIT_COMPILE_TRUE@	../smm/show.cpp \
+@SPLIT_COMPILE_TRUE@	\
+@SPLIT_COMPILE_TRUE@	expr/parse.cpp \
+@SPLIT_COMPILE_TRUE@	expr/unify.cpp \
+@SPLIT_COMPILE_TRUE@	\
+@SPLIT_COMPILE_TRUE@	parser/parse.cpp \
+@SPLIT_COMPILE_TRUE@	\
+@SPLIT_COMPILE_TRUE@	daemon.cpp \
+@SPLIT_COMPILE_TRUE@	expr.cpp \
+@SPLIT_COMPILE_TRUE@	globals.cpp \
+@SPLIT_COMPILE_TRUE@	memvol.cpp \
+@SPLIT_COMPILE_TRUE@	show.cpp \
+@SPLIT_COMPILE_TRUE@	translate.cpp \
+@SPLIT_COMPILE_TRUE@	verify.cpp
 
 mdl_SOURCES = \
 	main.cpp
@@ -423,15 +430,6 @@ clean-noinstLTLIBRARIES:
 	  echo rm -f $${locs}; \
 	  rm -f $${locs}; \
 	}
-../$(am__dirstamp):
-	@$(MKDIR_P) ..
-	@: > ../$(am__dirstamp)
-../$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) ../$(DEPDIR)
-	@: > ../$(DEPDIR)/$(am__dirstamp)
-../location.lo: ../$(am__dirstamp) ../$(DEPDIR)/$(am__dirstamp)
-../timer.lo: ../$(am__dirstamp) ../$(DEPDIR)/$(am__dirstamp)
-../memusage.lo: ../$(am__dirstamp) ../$(DEPDIR)/$(am__dirstamp)
 ../smm/$(am__dirstamp):
 	@$(MKDIR_P) ../smm
 	@: > ../smm/$(am__dirstamp)
@@ -515,8 +513,6 @@ mdl$(EXEEXT): $(mdl_OBJECTS) $(mdl_DEPENDENCIES) $(EXTRA_mdl_DEPENDENCIES)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
-	-rm -f ../*.$(OBJEXT)
-	-rm -f ../*.lo
 	-rm -f ../smm/*.$(OBJEXT)
 	-rm -f ../smm/*.lo
 	-rm -f expr/*.$(OBJEXT)
@@ -527,10 +523,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@../$(DEPDIR)/location.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../$(DEPDIR)/memusage.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../$(DEPDIR)/timer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@../smm/$(DEPDIR)/show.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/all.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/daemon.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/expr.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/globals.Plo@am__quote@
@@ -572,7 +566,6 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
-	-rm -rf ../.libs ../_libs
 	-rm -rf ../smm/.libs ../smm/_libs
 	-rm -rf expr/.libs expr/_libs
 	-rm -rf parser/.libs parser/_libs
@@ -692,8 +685,6 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
-	-rm -f ../$(DEPDIR)/$(am__dirstamp)
-	-rm -f ../$(am__dirstamp)
 	-rm -f ../smm/$(DEPDIR)/$(am__dirstamp)
 	-rm -f ../smm/$(am__dirstamp)
 	-rm -f expr/$(DEPDIR)/$(am__dirstamp)
@@ -710,7 +701,7 @@ clean-am: clean-binPROGRAMS clean-generic clean-libtool \
 	clean-noinstLTLIBRARIES mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ../$(DEPDIR) ../smm/$(DEPDIR) ./$(DEPDIR) expr/$(DEPDIR) parser/$(DEPDIR)
+	-rm -rf ../smm/$(DEPDIR) ./$(DEPDIR) expr/$(DEPDIR) parser/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -756,7 +747,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ../$(DEPDIR) ../smm/$(DEPDIR) ./$(DEPDIR) expr/$(DEPDIR) parser/$(DEPDIR)
+	-rm -rf ../smm/$(DEPDIR) ./$(DEPDIR) expr/$(DEPDIR) parser/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

@@ -636,6 +636,8 @@ ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
 LTLIBOBJS
 LIBOBJS
+SPLIT_COMPILE_FALSE
+SPLIT_COMPILE_TRUE
 PTHREAD_CFLAGS
 PTHREAD_LIBS
 PTHREAD_CC
@@ -785,6 +787,7 @@ with_boost_libdir
 with_boost_system
 with_boost_filesystem
 with_boost_program_options
+enable_split_compile
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1441,6 +1444,7 @@ Optional Features:
   --enable-fast-install[=PKGS]
                           optimize for fast installation [default=yes]
   --disable-libtool-lock  avoid locking (might break parallel builds)
+  --enable-split-compile  compile all *.cpp files separately
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -17554,7 +17558,6 @@ fi
 
 
 
-
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -18193,7 +18196,32 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-ac_config_files="$ac_config_files Makefile include/Makefile peglib/Makefile src/Makefile src/mm/Makefile src/smm/Makefile src/rus/Makefile metamath/Makefile"
+# Check whether --enable-split-compile was given.
+if test "${enable_split_compile+set}" = set; then :
+  enableval=$enable_split_compile; case "${enableval}" in
+		yes) split_compile=yes ;;
+		no)  split_compile=no ;;
+		*) as_fn_error $? "bad value ${enableval} for --enable-split-compile" "$LINENO" 5 ;;
+	esac
+else
+  split_compile=no
+
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking split-compile ... $split_compile" >&5
+$as_echo "$as_me: checking split-compile ... $split_compile" >&6;}
+
+ if test $split_compile = yes; then
+  SPLIT_COMPILE_TRUE=
+  SPLIT_COMPILE_FALSE='#'
+else
+  SPLIT_COMPILE_TRUE='#'
+  SPLIT_COMPILE_FALSE=
+fi
+
+
+
+ac_config_files="$ac_config_files Makefile include/Makefile peglib/Makefile src/Makefile src/com/Makefile src/mm/Makefile src/smm/Makefile src/rus/Makefile metamath/Makefile"
 
 
 cat >confcache <<\_ACEOF
@@ -18349,6 +18377,10 @@ else
   am__EXEEXT_FALSE=
 fi
 
+if test -z "${SPLIT_COMPILE_TRUE}" && test -z "${SPLIT_COMPILE_FALSE}"; then
+  as_fn_error $? "conditional \"SPLIT_COMPILE\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
 
 : "${CONFIG_STATUS=./config.status}"
 ac_write_fail=0
@@ -19329,6 +19361,7 @@ do
     "include/Makefile") CONFIG_FILES="$CONFIG_FILES include/Makefile" ;;
     "peglib/Makefile") CONFIG_FILES="$CONFIG_FILES peglib/Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
+    "src/com/Makefile") CONFIG_FILES="$CONFIG_FILES src/com/Makefile" ;;
     "src/mm/Makefile") CONFIG_FILES="$CONFIG_FILES src/mm/Makefile" ;;
     "src/smm/Makefile") CONFIG_FILES="$CONFIG_FILES src/smm/Makefile" ;;
     "src/rus/Makefile") CONFIG_FILES="$CONFIG_FILES src/rus/Makefile" ;;
