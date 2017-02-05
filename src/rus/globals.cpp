@@ -14,9 +14,9 @@ namespace rus { namespace {
 bool parse_rus(System& rus) {
 	try {
 		if (rus.config.verbose) cout << "parsing russell source ... " << flush;
-		rus.timers["parse_rus"].start();
+		rus.timers["read"].start();
 		rus.source = parse(rus.config.in);
-		rus.timers["parse_rus"].stop();
+		rus.timers["read"].stop();
 		if (rus.config.verbose) cout << "done in " << rus.timers["parse_rus"] << endl;
 		return true;
 	} catch (Error& err) {
@@ -29,9 +29,9 @@ bool parse_rus(System& rus) {
 bool parse_exp(System& rus) {
 	try {
 		if (rus.config.verbose) cout << "parsing expressions ... " << flush;
-		rus.timers["parse_expr"].start();
+		rus.timers["expr"].start();
 		expr::parse();
-		rus.timers["parse_expr"].stop();
+		rus.timers["expr"].stop();
 		if (rus.config.verbose) cout << "done in " << rus.timers["parse_expr"] << endl;
 		return true;
 	} catch (Error& err) {
@@ -129,17 +129,22 @@ void run(System& sys) {
 		cout << "all done in " << sys.timers["total"] << endl;
 }
 
+inline void show_timer(string& str, const char* message, const string& name, const System::Timers& timers) {
+	if (timers.count(name)) {
+		str += "\t" + string(message) + show(timers.at(name)) + "\n";
+	}
+}
+
 string show(const System& rus) {
 	string stats;
 	stats += "Timings\n";
-	stats += "\tread:       " + show(rus.timers.at("read")) + "\n";
-	stats += "\tparse rus:  " + show(rus.timers.at("parse_rus")) + "\n";
-	stats += "\tparse expr: " + show(rus.timers.at("parse_expr")) + "\n";
-	stats += "\tunify:      " + show(rus.timers.at("unify")) + "\n";
-	stats += "\ttranslate:  " + show(rus.timers.at("translate")) + "\n";
-	stats += "\twrite:      " + show(rus.timers.at("write")) + "\n";
+	show_timer(stats, "\tread:       ", "read", rus.timers);
+	show_timer(stats, "\texpression: ", "expr", rus.timers);
+	show_timer(stats, "\tunify:      ", "unify", rus.timers);
+	show_timer(stats, "\ttranslate:  ", "translate", rus.timers);
+	show_timer(stats, "\twrite:      ", "write", rus.timers);
 	stats += "\n";
-	stats += "\ttotal: " + show(rus.timers.at("total")) + "\n";
+	show_timer(stats, "\ttotal: ", "total", rus.timers);
 	stats += "\n";
 
 	const size_t const_vol = mdl::memvol(rus.math.consts);
