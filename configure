@@ -18221,7 +18221,7 @@ fi
 
 
 
-ac_config_files="$ac_config_files Makefile include/Makefile peglib/Makefile src/Makefile src/com/Makefile src/mm/Makefile src/smm/Makefile src/rus/Makefile metamath/Makefile"
+ac_config_files="$ac_config_files Makefile include/Makefile peglib/Makefile src/Makefile src/com/Makefile src/mm/Makefile src/smm/Makefile src/rus/Makefile src/daem/Makefile metamath/Makefile"
 
 
 cat >confcache <<\_ACEOF
@@ -19365,6 +19365,7 @@ do
     "src/mm/Makefile") CONFIG_FILES="$CONFIG_FILES src/mm/Makefile" ;;
     "src/smm/Makefile") CONFIG_FILES="$CONFIG_FILES src/smm/Makefile" ;;
     "src/rus/Makefile") CONFIG_FILES="$CONFIG_FILES src/rus/Makefile" ;;
+    "src/daem/Makefile") CONFIG_FILES="$CONFIG_FILES src/daem/Makefile" ;;
     "metamath/Makefile") CONFIG_FILES="$CONFIG_FILES metamath/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;

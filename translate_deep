@@ -116,7 +116,7 @@ fi;
 
 
 echo "rus -> smm"
-check "${binpath}/mdl -t -d --info -v -r rus -i ${file}.rus -o smm-1"
+check "${binpath}/rus -t -d --info -v -r rus -i ${file}.rus -o smm-1"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 

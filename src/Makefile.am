@@ -2,4 +2,5 @@ SUBDIRS = \
 	com \
 	mm  \
 	smm \
-	rus
+	rus \
+	daem

@@ -65,6 +65,7 @@ AC_CONFIG_FILES([
 	src/mm/Makefile
 	src/smm/Makefile
 	src/rus/Makefile
+	src/daem/Makefile
 	metamath/Makefile
 ])
 

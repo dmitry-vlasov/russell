@@ -322,7 +322,8 @@ SUBDIRS = \
 	com \
 	mm  \
 	smm \
-	rus
+	rus \
+	daem
 
 all: all-recursive
 

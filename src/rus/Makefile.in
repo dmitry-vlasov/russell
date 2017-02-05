@@ -90,7 +90,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = mdl$(EXEEXT)
+bin_PROGRAMS = rus$(EXEEXT)
 subdir = src/rus
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ax_boost_base.m4 \
@@ -112,28 +112,27 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 am__DEPENDENCIES_1 =
-libmdl_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+librus_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
-am__libmdl_la_SOURCES_DIST = ../smm/show.cpp all.cpp expr/parse.cpp \
-	expr/unify.cpp parser/parse.cpp daemon.cpp expr.cpp \
-	globals.cpp memvol.cpp show.cpp translate.cpp verify.cpp
+am__librus_la_SOURCES_DIST = ../smm/show.cpp all.cpp expr/parse.cpp \
+	expr/unify.cpp parser/parse.cpp expr.cpp globals.cpp \
+	memvol.cpp show.cpp translate.cpp verify.cpp
 am__dirstamp = $(am__leading_dot)dirstamp
-@SPLIT_COMPILE_FALSE@am_libmdl_la_OBJECTS = ../smm/show.lo all.lo
-@SPLIT_COMPILE_TRUE@am_libmdl_la_OBJECTS = ../smm/show.lo \
+@SPLIT_COMPILE_FALSE@am_librus_la_OBJECTS = ../smm/show.lo all.lo
+@SPLIT_COMPILE_TRUE@am_librus_la_OBJECTS = ../smm/show.lo \
 @SPLIT_COMPILE_TRUE@	expr/parse.lo expr/unify.lo \
-@SPLIT_COMPILE_TRUE@	parser/parse.lo daemon.lo expr.lo \
-@SPLIT_COMPILE_TRUE@	globals.lo memvol.lo show.lo translate.lo \
-@SPLIT_COMPILE_TRUE@	verify.lo
-libmdl_la_OBJECTS = $(am_libmdl_la_OBJECTS)
+@SPLIT_COMPILE_TRUE@	parser/parse.lo expr.lo globals.lo \
+@SPLIT_COMPILE_TRUE@	memvol.lo show.lo translate.lo verify.lo
+librus_la_OBJECTS = $(am_librus_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_mdl_OBJECTS = main.$(OBJEXT)
-mdl_OBJECTS = $(am_mdl_OBJECTS)
-mdl_DEPENDENCIES = libmdl.la $(am__DEPENDENCIES_1) \
+am_rus_OBJECTS = main.$(OBJEXT)
+rus_OBJECTS = $(am_rus_OBJECTS)
+rus_DEPENDENCIES = librus.la $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -170,8 +169,8 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(libmdl_la_SOURCES) $(mdl_SOURCES)
-DIST_SOURCES = $(am__libmdl_la_SOURCES_DIST) $(mdl_SOURCES)
+SOURCES = $(librus_la_SOURCES) $(rus_SOURCES)
+DIST_SOURCES = $(am__librus_la_SOURCES_DIST) $(rus_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -343,18 +342,18 @@ AM_LDFLAGS = \
     $(PTHREAD_CFLAGS)
 
 noinst_LTLIBRARIES = \
-	libmdl.la
+	librus.la
 
 noinst_HEADERS = \
 	parser/adaptors.hpp \
 	parser/grammar.hpp \
 	parser/parse.hpp  
 
-@SPLIT_COMPILE_FALSE@libmdl_la_SOURCES = \
+@SPLIT_COMPILE_FALSE@librus_la_SOURCES = \
 @SPLIT_COMPILE_FALSE@	../smm/show.cpp \
 @SPLIT_COMPILE_FALSE@	all.cpp
 
-@SPLIT_COMPILE_TRUE@libmdl_la_SOURCES = \
+@SPLIT_COMPILE_TRUE@librus_la_SOURCES = \
 @SPLIT_COMPILE_TRUE@	../smm/show.cpp \
 @SPLIT_COMPILE_TRUE@	\
 @SPLIT_COMPILE_TRUE@	expr/parse.cpp \
@@ -362,7 +361,6 @@ noinst_HEADERS = \
 @SPLIT_COMPILE_TRUE@	\
 @SPLIT_COMPILE_TRUE@	parser/parse.cpp \
 @SPLIT_COMPILE_TRUE@	\
-@SPLIT_COMPILE_TRUE@	daemon.cpp \
 @SPLIT_COMPILE_TRUE@	expr.cpp \
 @SPLIT_COMPILE_TRUE@	globals.cpp \
 @SPLIT_COMPILE_TRUE@	memvol.cpp \
@@ -370,17 +368,17 @@ noinst_HEADERS = \
 @SPLIT_COMPILE_TRUE@	translate.cpp \
 @SPLIT_COMPILE_TRUE@	verify.cpp
 
-mdl_SOURCES = \
+rus_SOURCES = \
 	main.cpp
 
-libmdl_la_LIBADD = \
+librus_la_LIBADD = \
 	$(BOOST_FILESYSTEM_LIB) \
     $(BOOST_SYSTEM_LIB) \
     $(BOOST_PROGRAM_OPTIONS_LIB) \
     $(PTHREAD_CFLAGS)
 
-mdl_LDADD = \
-	libmdl.la \
+rus_LDADD = \
+	librus.la \
 	$(BOOST_FILESYSTEM_LIB) \
     $(BOOST_SYSTEM_LIB) \
     $(BOOST_PROGRAM_OPTIONS_LIB) \
@@ -455,8 +453,8 @@ parser/$(DEPDIR)/$(am__dirstamp):
 parser/parse.lo: parser/$(am__dirstamp) \
 	parser/$(DEPDIR)/$(am__dirstamp)
 
-libmdl.la: $(libmdl_la_OBJECTS) $(libmdl_la_DEPENDENCIES) $(EXTRA_libmdl_la_DEPENDENCIES) 
-	$(AM_V_CXXLD)$(CXXLINK)  $(libmdl_la_OBJECTS) $(libmdl_la_LIBADD) $(LIBS)
+librus.la: $(librus_la_OBJECTS) $(librus_la_DEPENDENCIES) $(EXTRA_librus_la_DEPENDENCIES) 
+	$(AM_V_CXXLD)$(CXXLINK)  $(librus_la_OBJECTS) $(librus_la_LIBADD) $(LIBS)
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
 	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
@@ -507,9 +505,9 @@ clean-binPROGRAMS:
 	echo " rm -f" $$list; \
 	rm -f $$list
 
-mdl$(EXEEXT): $(mdl_OBJECTS) $(mdl_DEPENDENCIES) $(EXTRA_mdl_DEPENDENCIES) 
-	@rm -f mdl$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(mdl_OBJECTS) $(mdl_LDADD) $(LIBS)
+rus$(EXEEXT): $(rus_OBJECTS) $(rus_DEPENDENCIES) $(EXTRA_rus_DEPENDENCIES) 
+	@rm -f rus$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(rus_OBJECTS) $(rus_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -525,7 +523,6 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@../smm/$(DEPDIR)/show.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/all.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/daemon.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/expr.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/globals.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@

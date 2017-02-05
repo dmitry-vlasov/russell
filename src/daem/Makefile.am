@@ -7,52 +7,37 @@ AM_CPPFLAGS = \
 
 AM_LDFLAGS = \
 	-L$(top_builddir)/src/com -lcom \
+	-L$(top_builddir)/src/mm  -lmm  \
+	-L$(top_builddir)/src/smm -lsmm \
+	-L$(top_builddir)/src/rus -lrus \
     $(BOOST_LDFLAGS) \
     $(PTHREAD_CFLAGS)
 
 bin_PROGRAMS = \
-	rus
-	
-noinst_LTLIBRARIES = \
-	librus.la
+	mdld
 
-noinst_HEADERS = \
-	parser/adaptors.hpp \
-	parser/grammar.hpp \
-	parser/parse.hpp  
+noinst_LTLIBRARIES = \
+	libmdld.la
 
 if SPLIT_COMPILE
-librus_la_SOURCES = \
-	../smm/show.cpp \
-	\
-	expr/parse.cpp \
-	expr/unify.cpp \
-	\
-	parser/parse.cpp \
-	\
-	expr.cpp \
-	globals.cpp \
-	memvol.cpp \
-	show.cpp \
-	translate.cpp \
-	verify.cpp
+libmdld_la_SOURCES = \
+	daemon.cpp
 else
-librus_la_SOURCES = \
-	../smm/show.cpp \
+libmdld_la_SOURCES = \
 	all.cpp
 endif
 
-rus_SOURCES = \
+mdld_SOURCES = \
 	main.cpp
 
-librus_la_LIBADD = \
+libmdld_la_LIBADD = \
 	$(BOOST_FILESYSTEM_LIB) \
     $(BOOST_SYSTEM_LIB) \
     $(BOOST_PROGRAM_OPTIONS_LIB) \
     $(PTHREAD_CFLAGS)
 
-rus_LDADD = \
-	librus.la \
+mdld_LDADD = \
+	libmdld.la \
 	$(BOOST_FILESYSTEM_LIB) \
     $(BOOST_SYSTEM_LIB) \
     $(BOOST_PROGRAM_OPTIONS_LIB) \
