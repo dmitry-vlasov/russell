@@ -48,10 +48,10 @@ public:
 	Parser(string name, string root) : parser(mm_syntax()) {
 
 		parser["SYMB"] = [](const peg::SemanticValues& sv) {
-			return Symbol(Mm::mod().lex.symbols.toInt(sv.token()));
+			return Symbol(System::mod().lex.symbols.toInt(sv.token()));
 		};
 		parser["LAB"] = [](const peg::SemanticValues& sv) {
-			return Mm::mod().lex.labels.toInt(sv.token());
+			return System::mod().lex.labels.toInt(sv.token());
 		};
 		parser["EXPR"] = [](const peg::SemanticValues& sv) {
 			Vect expr;
@@ -83,19 +83,19 @@ public:
 		parser["ESS"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Essential* ess = new Essential { sv[0].get<uint>(), sv[1].get<Vect>() };
 			markVars(ess->expr, context.get<std::shared_ptr<Context>>()->stack);
-			Mm::mod().math.essentials[ess->label] = ess;
+			System::mod().math.essentials[ess->label] = ess;
 			return ess;
 		};
 		parser["FLO"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Floating* flo = new Floating { sv[0].get<uint>(), sv[1].get<Vect>() };
 			markVars(flo->expr, context.get<std::shared_ptr<Context>>()->stack);
-			Mm::mod().math.floatings[flo->label] = flo;
+			System::mod().math.floatings[flo->label] = flo;
 			return flo;
 		};
 		parser["AX"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Axiom* ax = new Axiom { sv[0].get<uint>(), sv[1].get<Vect>(), (uint) -1 };
 			markVars(ax->expr, context.get<std::shared_ptr<Context>>()->stack);
-			Mm::mod().math.axioms[ax->label] = ax;
+			System::mod().math.axioms[ax->label] = ax;
 			return ax;
 		};
 		parser["TH"] = [](const peg::SemanticValues& sv, peg::any& context) {
@@ -104,7 +104,7 @@ public:
 			th->expr  = sv[1].get<Vect>();
 			th->proof = sv[2].get<Proof*>();
 			markVars(th->expr, context.get<std::shared_ptr<Context>>()->stack);
-			Mm::mod().math.theorems[th->label] = th;
+			System::mod().math.theorems[th->label] = th;
 			return th;
 		};
 		parser["PROOF"] = [](const peg::SemanticValues& sv) {
@@ -114,7 +114,7 @@ public:
 		};
 		parser["REF"] = [](const peg::SemanticValues& sv) {
 			uint lab = sv[0].get<uint>();
-			Mm::Math& math = Mm::mod().math;
+			System::Math& math = System::mod().math;
 			if (math.floatings.count(lab))
 				return Ref(math.floatings[lab]);
 			else if (math.essentials.count(lab))
@@ -124,7 +124,7 @@ public:
 			else if (math.theorems.count(lab))
 				return Ref(math.theorems[lab]);
 			else
-				throw Error("unknown label in proof", Mm::get().lex.labels.toStr(lab));
+				throw Error("unknown label in proof", System::get().lex.labels.toStr(lab));
 		};
 		parser["COMMENT"] = [](const peg::SemanticValues& sv) {
 			string text = sv.token();
@@ -240,7 +240,7 @@ private:
 };
 
 Source* parse_peg(string name) {
-	return Parser::parse(name, Mm::get().config.root);
+	return Parser::parse(name, System::get().config.root);
 }
 
 }} // mdl::mm

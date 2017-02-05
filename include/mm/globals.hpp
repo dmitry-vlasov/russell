@@ -24,8 +24,8 @@ struct Config {
 	string root;
 };
 
-struct Mm {
-	~ Mm() {
+struct System {
+	~ System() {
 		if (source) delete source;
 	}
 
@@ -58,8 +58,8 @@ struct Mm {
 
 	void run();
 
-	static const Mm& get() { return mod(); }
-	static Mm& mod() { static Mm mm; return mm; }
+	static const System& get() { return mod(); }
+	static System& mod() { return Lib<System>::mod().sys();  }
 };
 
 Source* parse_spirit(string path);

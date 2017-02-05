@@ -28,7 +28,7 @@ static string show(const Ref& ref) {
 static string show(const Proof& tree) {
 	const Assertion* ass = tree.refs.back().val.ass;
 	string space = length(tree) > 16 ? "\n" : " ";
-	string str = Smm::get().lex.labels.toStr(ass->prop.label);
+	string str = System::get().lex.labels.toStr(ass->prop.label);
 	str += "(";
 	for (uint i = 0; i + 1 <tree.refs.size(); ++ i)
 		str += indent::paragraph(space + show(tree.refs[i]), "  ");

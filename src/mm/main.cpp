@@ -61,7 +61,7 @@ int main (int argc, const char* argv[])
             cout << desc << endl;
             return 0;
         }
-        Mm& mm = Mm::mod();
+        System& mm = System::mod();
         if (!initConf(vm, mm.config)) {
         	cout << desc << endl;
             return 1;

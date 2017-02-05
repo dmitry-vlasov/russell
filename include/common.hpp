@@ -229,6 +229,22 @@ Inclusion* include(string path, string root, auto space, Source* (get_src)(Inclu
 	}
 }
 
+// Library, singleton, which contains a variety of deductive systems
+template<typename T>
+struct Lib {
+	typedef T System;
+	static const Lib& get() { return mod(); }
+	static Lib& mod() { static Lib lib; return lib; }
+
+	System& sys() { return systems[current]; }
+
+	map<string, System> systems;
+	string current;
+
+private:
+	Lib() : systems(), current() { }
+};
+
 } // mdl
 
   

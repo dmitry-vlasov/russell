@@ -58,7 +58,7 @@ int main (int argc, const char* argv[])
             cout << desc << endl;
             return 0;
         }
-        Smm& smm = Smm::mod();
+        System& smm = System::mod();
         Config& conf = smm.config;
         if (!initConf(vm, conf)) {
         	cout << desc << endl;

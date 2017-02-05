@@ -63,11 +63,11 @@ struct AddToMath {
 		markVars(ass->variables, ass->inner);
 		markVars(ass->variables, ass->essential);
 		markVars(ass->variables, ass->prop.expr);
-		Smm::mod().math.assertions.push_back(ass);
+		System::mod().math.assertions.push_back(ass);
 	}
 	void operator()(Constants* c) const {
 		for (auto symb : c->expr)
-			Smm::mod().math.constants.insert(symb);
+			System::mod().math.constants.insert(symb);
 	}
 };
 
@@ -76,7 +76,7 @@ struct CreateLabel {
 	struct result { typedef uint type; };
 	uint operator()(const std::vector<char>& lab) const {
 		string label(lab.begin(), lab.end());
-		return Smm::mod().lex.labels.toInt(label);
+		return System::mod().lex.labels.toInt(label);
 	}
 };
 
@@ -85,7 +85,7 @@ struct CreateSymb {
 	struct result { typedef Symbol type; };
 	Symbol operator()(const std::vector<char>& s) const {
 		string symb(s.begin(), s.end());
-		return Symbol(Smm::mod().lex.symbols.toInt(symb));
+		return Symbol(System::mod().lex.symbols.toInt(symb));
 	}
 };
 
@@ -99,7 +99,7 @@ struct ParseInclusion {
 		return
 			mdl::include<Source, Parser, Inclusion>(
 				name,
-				Smm::get().config.root,
+				System::get().config.root,
 				ascii::space,
 				[] (Inclusion* inc) -> Source* { return inc->source; }
 			);
@@ -140,8 +140,8 @@ struct CreateRef {
     	case Ref::ESSENTIAL: return Ref(ass->essential[ind]);
     	case Ref::FLOATING:  return Ref(ass->floating[ind]);
     	case Ref::INNER:     return Ref(ass->inner[ind]);
-    	case Ref::AXIOM:     return Ref(Smm::get().math.assertions[ind], true);
-    	case Ref::THEOREM:   return Ref(Smm::get().math.assertions[ind], false);
+    	case Ref::AXIOM:     return Ref(System::get().math.assertions[ind], true);
+    	case Ref::THEOREM:   return Ref(System::get().math.assertions[ind], false);
     	default : assert(false && "impossible");
     	}
     	return Ref(); // pacifying compiler

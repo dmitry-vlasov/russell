@@ -5,14 +5,14 @@ namespace mdl { namespace smm {
 
 inline rus::Const make_const(const char* ascii, const char* unicode, const char* latex) {
 	return rus::Const { 0,
-		Smm::mod().lex.symbols.toInt(unicode),
-		Smm::mod().lex.symbols.toInt(ascii),
-		Smm::mod().lex.symbols.toInt(latex)
+		System::mod().lex.symbols.toInt(unicode),
+		System::mod().lex.symbols.toInt(ascii),
+		System::mod().lex.symbols.toInt(latex)
 	};
 }
 
 inline uint make_key(const char* key) {
-	return Smm::mod().lex.symbols.toInt(key);
+	return System::mod().lex.symbols.toInt(key);
 }
 
 map<uint, rus::Const> math_consts = {
@@ -143,9 +143,9 @@ map<uint, rus::Const> math_consts = {
 
 // Weird variables
 map<uint, rus::Symbol> math_vars = {
-		{make_key(".,"),   rus::Symbol(Smm::mod().lex.symbols.toInt(".cm"))},
-		{make_key(".(x)"), rus::Symbol(Smm::mod().lex.symbols.toInt(".[x]"))},
-		{make_key(".(+)"), rus::Symbol(Smm::mod().lex.symbols.toInt(".[+]"))}
+		{make_key(".,"),   rus::Symbol(System::mod().lex.symbols.toInt(".cm"))},
+		{make_key(".(x)"), rus::Symbol(System::mod().lex.symbols.toInt(".[x]"))},
+		{make_key(".(+)"), rus::Symbol(System::mod().lex.symbols.toInt(".[+]"))}
 };
 
 }} // mdl::smm

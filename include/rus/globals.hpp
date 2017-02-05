@@ -66,24 +66,8 @@ struct System {
 	void run();
 
 	static const System& get() { return mod(); }
-	static System& mod();
+	static System& mod() { return Lib<System>::mod().sys(); }
 };
-
-// Library, singleton, which contains a variety of deductive systems
-struct Lib {
-	static const Lib& get() { return mod(); }
-	static Lib& mod() { static Lib lib; return lib; }
-
-	System& sys() { return systems[current]; }
-
-	map<string, System> systems;
-	string current;
-
-private:
-	Lib() : systems(), current() { }
-};
-
-inline System& System::mod() { return Lib::mod().sys(); }
 
 string show(const System&);
 inline ostream& operator << (ostream& os, const System& r) { os << show(r); return os; }

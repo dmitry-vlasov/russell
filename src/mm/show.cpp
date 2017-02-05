@@ -23,12 +23,12 @@ string show(const Ref& r) {
 	if (r.type == Ref::PROOF)
 		return show(*r.val.prf);
 	else
-		return Mm::get().lex.labels.toStr(r.label());
+		return System::get().lex.labels.toStr(r.label());
 }
 
 string show(const Proof& tree) {
 	string space = length(tree) > 16 ? "\n" : " ";
-	string str = Mm::get().lex.labels.toStr(tree.refs.back().label());
+	string str = System::get().lex.labels.toStr(tree.refs.back().label());
 	str += "(";
 	for (uint i = 0; i + 1 <tree.refs.size(); ++ i)
 		str += indent::paragraph(space + show(tree.refs[i]), "  ");

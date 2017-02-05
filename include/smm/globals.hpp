@@ -24,8 +24,8 @@ struct Config {
 	Target target;
 };
 
-struct Smm {
-	~ Smm() {
+struct System {
+	~ System() {
 		if (source) delete source;
 	}
 
@@ -57,11 +57,11 @@ struct Smm {
 	bool verify();
 	bool translate();
 
-	static const Smm& get() { return mod();}
-	static Smm& mod() { static Smm smm; return smm; }
+	static const System& get() { return mod();}
+	static System& mod() { return Lib<System>::mod().sys();  }
 };
 
-ostream& operator << (ostream& os, const Smm& s);
+ostream& operator << (ostream& os, const System& s);
 Source* parse(string path);
 void verify(const vector<Assertion*>& theory);
 mm::Source*  translate_to_mm(const Source* source);

@@ -9,10 +9,10 @@
 namespace mdl {
 
 string show_sy(Symbol symb) {
-	return mm::Mm::get().lex.symbols.toStr(symb.lit);
+	return mm::System::get().lex.symbols.toStr(symb.lit);
 }
 string show_id(uint lab) {
-	return mm::Mm::get().lex.labels.toStr(lab);
+	return mm::System::get().lex.labels.toStr(lab);
 }
 
 namespace mm {
@@ -23,7 +23,7 @@ Source* parse(string path) {
 
 namespace {
 
-bool parse_mm(Mm& mm) {
+bool parse_mm(System& mm) {
 	try {
 		mm.timers.read.start();
 		mm.source = parse(mm.config.in);
@@ -38,7 +38,7 @@ bool parse_mm(Mm& mm) {
 	}
 }
 
-bool cut_mm(Mm& mm) {
+bool cut_mm(System& mm) {
 	try {
 		mm.timers.work.start();
 		cut::Section* source = cut::parse(mm.config.root, mm.config.in, mm.config.out);
@@ -54,7 +54,7 @@ bool cut_mm(Mm& mm) {
 	}
 }
 
-bool merge_mm(Mm& mm) {
+bool merge_mm(System& mm) {
 	try {
 		mm.timers.work.start();
 		merge::parse(mm.config.in);
@@ -70,7 +70,7 @@ bool merge_mm(Mm& mm) {
 	}
 }
 
-bool translate_mm(Mm& mm) {
+bool translate_mm(System& mm) {
 	try {
 		if (mm.config.out.empty()) {
 			mm.error += "output file is not specified";
@@ -102,7 +102,7 @@ bool translate_mm(Mm& mm) {
 
 }
 
-void Mm::run() {
+void System::run() {
 	timers.total.start();
 	if (config.verbose)
 		cout << "processing file " << config.in << " ... " << flush;

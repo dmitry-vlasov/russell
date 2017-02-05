@@ -372,7 +372,7 @@ smm::Source* translate_source(Maps& maps, const Source* src, smm::Source* target
 	if (maps.sources.count(src)) {
 		return maps.sources[src];
 	} else {
-		Config conf = Mm::get().config;
+		Config conf = System::get().config;
 		if (!target)
 			target = new smm::Source(
 				conf.deep ? conf.out : conf.root,
@@ -387,7 +387,7 @@ smm::Source* translate_source(Maps& maps, const Source* src, smm::Source* target
 }
 
 smm::Source* translate(const Source* source) {
-	Config conf = Mm::get().config;
+	Config conf = System::get().config;
 	smm::Source* target = new smm::Source(
 		conf.deep ? conf.out : conf.root,
 		conf.deep ? conf.in  : conf.out

@@ -95,7 +95,7 @@ Vect eval(Proof* proof) {
 			msg += show_ex(apply(sub, ess->expr)) + "\n";
 			msg += "and\n";
 			msg += show_ex(eval(proof->refs[ess_ind])) + "\n";
-			msg += "assertion " + Smm::get().lex.labels.toStr(ass->prop.label) + "\n";
+			msg += "assertion " + System::get().lex.labels.toStr(ass->prop.label) + "\n";
 			throw Error("verification", msg);
 		}
 	}

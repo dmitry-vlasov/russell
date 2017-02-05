@@ -61,19 +61,19 @@ struct AddToMath {
 	struct result { typedef void type; };
 	void operator()(Floating* flo) const {
 		//cout << "flo: " << show_id(flo->label) << endl;
-		Mm::mod().math.floatings[flo->label] = flo;
+		System::mod().math.floatings[flo->label] = flo;
 	}
 	void operator()(Essential* ess) const {
 		//cout << "ess: " << show_id(ess->label) << endl;
-		Mm::mod().math.essentials[ess->label] = ess;
+		System::mod().math.essentials[ess->label] = ess;
 	}
 	void operator()(Axiom* ax) const {
 		//cout << "ax: " << show_id(ax->label) << endl;
-		Mm::mod().math.axioms[ax->label] = ax;
+		System::mod().math.axioms[ax->label] = ax;
 	}
 	void operator()(Theorem* th) const {
 		//cout << "thm: " << show_id(th->label) << endl;
-		Mm::mod().math.theorems[th->label] = th;
+		System::mod().math.theorems[th->label] = th;
 	}
 };
 
@@ -83,7 +83,7 @@ struct CreateLabel {
 	uint operator()(const std::vector<char>& lab) const {
 		string label(lab.begin(), lab.end());
 		for (char& ch : label) ch = (ch == '.') ? '_' : ch;
-		return Mm::mod().lex.labels.toInt(label);
+		return System::mod().lex.labels.toInt(label);
 	}
 };
 
@@ -92,7 +92,7 @@ struct CreateSymb {
 	struct result { typedef Symbol type; };
 	Symbol operator()(const std::vector<char>& s) const {
 		string symb(s.begin(), s.end());
-		return Symbol(Mm::mod().lex.symbols.toInt(symb));
+		return Symbol(System::mod().lex.symbols.toInt(symb));
 	}
 };
 
@@ -106,7 +106,7 @@ struct ParseInclusion {
 		return
 			mdl::include<Source, Parser, Inclusion>(
 				path,
-				Mm::get().config.root,
+				System::get().config.root,
 				ascii::space,
 				[] (Inclusion* inc) -> Source* { return inc->source; }
 			);
@@ -117,7 +117,7 @@ struct CreateRef {
 	template <typename T>
 	struct result { typedef Ref type; };
 	Ref operator()(uint lab) const {
-		Mm::Math& math = Mm::mod().math;
+		System::Math& math = System::mod().math;
 		if (math.floatings.count(lab))
 			return Ref(math.floatings[lab]);
 		else if (math.essentials.count(lab))
@@ -127,7 +127,7 @@ struct CreateRef {
 		else if (math.theorems.count(lab))
 			return Ref(math.theorems[lab]);
 		else
-			throw Error("unknown label in proof", Mm::get().lex.labels.toStr(lab));
+			throw Error("unknown label in proof", System::get().lex.labels.toStr(lab));
 	}
 };
 

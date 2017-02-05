@@ -4,15 +4,15 @@
 namespace mdl {
 
 string show_sy(Symbol symb) {
-	return smm::Smm::get().lex.symbols.toStr(symb.lit);
+	return smm::System::get().lex.symbols.toStr(symb.lit);
 }
 string show_id(uint lab) {
-	return smm::Smm::get().lex.labels.toStr(lab);
+	return smm::System::get().lex.labels.toStr(lab);
 }
 
 namespace smm {
 
-void Smm::run() {
+void System::run() {
 	timers.total.start();
 	if (config.verbose)
 		cout << "verifying file " << config.in << " ... " << endl;
@@ -30,7 +30,7 @@ void Smm::run() {
 		cout << "all done in " << timers.total << endl;
 }
 
-bool Smm::parse() {
+bool System::parse() {
 	try {
 		timers.read.start();
 		source = smm::parse(config.in);
@@ -45,7 +45,7 @@ bool Smm::parse() {
 	}
 }
 
-bool Smm::verify() {
+bool System::verify() {
 	try {
 		timers.verify.start();
 		smm::verify(math.assertions);
@@ -59,7 +59,7 @@ bool Smm::verify() {
 	}
 }
 
-bool Smm::translate() {
+bool System::translate() {
 	try {
 		if (config.out.empty()) return true;
 		if (config.verbose)
@@ -112,7 +112,7 @@ bool Smm::translate() {
 	}
 }
 
-ostream& operator << (ostream& os, const Smm& s) {
+ostream& operator << (ostream& os, const System& s) {
 	os << s.status;
 	return os;
 }
