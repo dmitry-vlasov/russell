@@ -123,5 +123,26 @@ void run(System& sys) {
 	if (sys.config.verbose)
 		cout << "done in " << sys.timers["total"] << endl;
 }
-	
+
+string show(const System& rus) {
+	return info(rus);
+}
+
+string info(const System& sys) {
+	string stats;
+	stats += "Timings:";
+	stats += show_timer("\n\tread:  ", "read", sys.timers);
+	stats += show_timer("\n\twork:  ", "work", sys.timers);
+	stats += show_timer("\n\ttotal: ", "total", sys.timers);
+	stats += "\n\n";
+	stats += "Size:\n";
+	stats += "\taxioms:     " + to_string(sys.math.axioms.size()) + "\n";
+	stats += "\ttheorems:   " + to_string(sys.math.theorems.size()) + "\n";
+	stats += "\tessentials: " + to_string(sys.math.essentials.size()) + "\n";
+	stats += "\tfloatings:  " + to_string(sys.math.floatings.size()) + "\n";
+	stats += "\n";
+	return stats;
+}
+
+
 }} // mdl::mm

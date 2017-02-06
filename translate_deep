@@ -66,7 +66,7 @@ if [ $? != 0 ]; then
 fi;
 
 echo "mm -> smm"
-check "${binpath}/mm -t -d -v -r mm -i ${file}.mm  -o smm"
+check "${binpath}/mm -t -d --info -v -r mm -i ${file}.mm  -o smm"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -107,7 +107,7 @@ echo "MM <-> RUS TRANSLATION"
 echo "----------------------"
 
 echo "smm -> rus"
-check "${binpath}/smm -l rus -d -v -r smm -i ${file}.smm -o rus"
+check "${binpath}/smm -l rus -d --info -v -r smm -i ${file}.smm -o rus"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 

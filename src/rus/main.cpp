@@ -45,9 +45,9 @@ int main (int argc, const char* argv[])
 			cout << desc << endl;
             return 1;
 		}
-		run(sys);
+		rus::run(sys);
 		if (sys.error.size()) cerr << sys.error;
-		else if (conf.info)   cout << show(sys);
+		if (conf.info) cout << info(sys);
 	} catch (const Error& err) {
 		cerr << err.what();
 		return 1;

@@ -133,31 +133,31 @@ string show(const System& rus) {
 	return info(rus);
 }
 
-string info(const System& rus) {
+string info(const System& sys) {
 	string stats;
 	stats += "Timings:";
-	stats += show_timer("\n\tread:       ", "read", rus.timers);
-	stats += show_timer("\n\texpression: ", "expr", rus.timers);
-	stats += show_timer("\n\tunify:      ", "unify", rus.timers);
-	stats += show_timer("\n\ttranslate:  ", "translate", rus.timers);
-	stats += show_timer("\n\twrite:      ", "write", rus.timers);
+	stats += show_timer("\n\tread:       ", "read", sys.timers);
+	stats += show_timer("\n\texpression: ", "expr", sys.timers);
+	stats += show_timer("\n\tunify:      ", "unify", sys.timers);
+	stats += show_timer("\n\ttranslate:  ", "translate", sys.timers);
+	stats += show_timer("\n\twrite:      ", "write", sys.timers);
 	stats += stats += "\n";
-	stats += show_timer("\n\ttotal: ", "total", rus.timers);
-	stats += "\n";
+	stats += show_timer("\n\ttotal: ", "total", sys.timers);
+	stats += "\n\n";
 
-	const size_t const_vol = mdl::memvol(rus.math.consts);
-	const size_t types_vol = mdl::memvol(rus.math.types);
-	const size_t rules_vol = mdl::memvol(rus.math.rules);
-	const size_t axiom_vol = mdl::memvol(rus.math.axioms);
-	const size_t defs_vol  = mdl::memvol(rus.math.defs);
-	const size_t thems_vol = mdl::memvol(rus.math.theorems);
-	const size_t proof_vol = mdl::memvol(rus.math.proofs);
-	const size_t source_vol = memvol(*rus.source);
+	const size_t const_vol = mdl::memvol(sys.math.consts);
+	const size_t types_vol = mdl::memvol(sys.math.types);
+	const size_t rules_vol = mdl::memvol(sys.math.rules);
+	const size_t axiom_vol = mdl::memvol(sys.math.axioms);
+	const size_t defs_vol  = mdl::memvol(sys.math.defs);
+	const size_t thems_vol = mdl::memvol(sys.math.theorems);
+	const size_t proof_vol = mdl::memvol(sys.math.proofs);
+	const size_t source_vol = memvol(*sys.source);
 	const size_t total_vol =
 		const_vol + types_vol + rules_vol +
 		axiom_vol + defs_vol + thems_vol + proof_vol;
 
-	stats += "Volume\n";
+	stats += "Volume:\n";
 	stats += "\tconsts:   " + showmem(const_vol) + "\n";
 	stats += "\ttypes:    " + showmem(types_vol) + "\n";
 	stats += "\trules:    " + showmem(rules_vol) + "\n";
@@ -170,14 +170,14 @@ string info(const System& rus) {
 	stats += "\tsource: " + showmem(source_vol) + "\n";
 	stats += "\n";
 
-	stats += "Size\n";
-	stats += "\tconsts:   " + to_string(rus.math.consts.size()) + "\n";
-	stats += "\ttypes:    " + to_string(rus.math.types.size()) + "\n";
-	stats += "\trules:    " + to_string(rus.math.rules.size()) + "\n";
-	stats += "\taxioms:   " + to_string(rus.math.axioms.size()) + "\n";
-	stats += "\tdefs:     " + to_string(rus.math.defs.size()) + "\n";
-	stats += "\ttheorems: " + to_string(rus.math.theorems.size()) + "\n";
-	stats += "\tproofs:   " + to_string(rus.math.proofs.size()) + "\n";
+	stats += "Size:\n";
+	stats += "\tconsts:   " + to_string(sys.math.consts.size()) + "\n";
+	stats += "\ttypes:    " + to_string(sys.math.types.size()) + "\n";
+	stats += "\trules:    " + to_string(sys.math.rules.size()) + "\n";
+	stats += "\taxioms:   " + to_string(sys.math.axioms.size()) + "\n";
+	stats += "\tdefs:     " + to_string(sys.math.defs.size()) + "\n";
+	stats += "\ttheorems: " + to_string(sys.math.theorems.size()) + "\n";
+	stats += "\tproofs:   " + to_string(sys.math.proofs.size()) + "\n";
 	stats += "\n";
 
 	return stats;

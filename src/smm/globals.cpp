@@ -103,9 +103,25 @@ void run(System& sys) {
 		cout << "all done in " << sys.timers["total"] << endl;
 }
 
-
-string show (const System& s) {
-	return s.error;
+string show(const System& sys) {
+	return info(sys);
 }
+
+string info(const System& sys) {
+	string stats;
+	if (sys.error.size()) stats += "error:\n" + sys.error + "\n\n";
+	stats += "Timings:";
+	stats += show_timer("\n\tread:      ", "read", sys.timers);
+	stats += show_timer("\n\tverify:    ", "verify", sys.timers);
+	stats += show_timer("\n\ttranslate: ", "translate", sys.timers);
+	stats += show_timer("\n\ttotal:     ", "total", sys.timers);
+	stats += "\n\n";
+	stats += "Size:\n";
+	stats += "\tconstants:  " + to_string(sys.math.constants.size()) + "\n";
+	stats += "\tassertions: " + to_string(sys.math.assertions.size()) + "\n";
+	stats += "\n";
+	return stats;
+}
+
 	
 }} // mdl::smm

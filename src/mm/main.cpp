@@ -48,12 +48,14 @@ int main (int argc, const char* argv[])
             return 0;
         }
         mm::System& sys = mm::System::mod();
-        if (!initConf(vm, sys.config)) {
+        mm::Config& conf = sys.config;
+        if (!initConf(vm, conf)) {
         	cout << desc << endl;
             return 1;
         }
 		mm::run(sys);
 		if (sys.error.size()) cerr << sys.error;
+		if (conf.info) cout << info(sys);
 	} catch (const Error& err) {
 		cerr << err.what();
 		return 1;
