@@ -27,7 +27,6 @@ typedef mdl::System<Source, Math, Config> System;
 
 void run(System&);
 string show(const System&);
-inline ostream& operator << (ostream& os, const System& r) { os << show(r); return os; }
 Source* parse(string path);
 void verify(Source*);
 smm::Source* translate(const Source* source);

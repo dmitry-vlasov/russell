@@ -321,6 +321,9 @@ inline void initOptions(boost::program_options::options_description& desc) {
 	;
 }
 
+template<class T>
+void dump(const T& val) { cout << val; }
+
 } // mdl
 
   

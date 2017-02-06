@@ -104,9 +104,8 @@ void run(System& sys) {
 }
 
 
-ostream& operator << (ostream& os, const System& s) {
-	os << s.error;
-	return os;
+string show (const System& s) {
+	return s.error;
 }
 	
 }} // mdl::smm
