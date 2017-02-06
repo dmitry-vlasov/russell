@@ -19,7 +19,8 @@ struct Math {
 typedef mdl::System<Source, Math, Config> System;
 
 void run(System&);
-string show(System&);
+string show(const System&);
+string info(const System&);
 Source* parse(string path);
 void verify(const vector<Assertion*>& theory);
 mm::Source*  translate_to_mm(const Source* source);

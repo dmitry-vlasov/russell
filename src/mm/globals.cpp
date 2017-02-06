@@ -17,6 +17,9 @@ string show_id(uint lab) {
 
 namespace mm {
 
+Source* parse_spirit(string path);
+Source* parse_peg(string path);
+
 Source* parse(string path) {
 	return parse_peg(path);
 }

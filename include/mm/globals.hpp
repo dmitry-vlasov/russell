@@ -23,10 +23,9 @@ struct Math {
 typedef mdl::System<Source, Math, Config> System;
 
 void run(System&);
-Source* parse_spirit(string path);
-Source* parse_peg(string path);
+string show(const System&);
+string info(const System&);
 Source* parse(string path);
-
 smm::Source* translate(const Source* source);
 
 }} // mdl::mm

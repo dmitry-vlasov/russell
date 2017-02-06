@@ -27,6 +27,7 @@ typedef mdl::System<Source, Math, Config> System;
 
 void run(System&);
 string show(const System&);
+string info(const System&);
 Source* parse(string path);
 void verify(Source*);
 smm::Source* translate(const Source* source);

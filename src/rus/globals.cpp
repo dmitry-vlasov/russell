@@ -129,22 +129,20 @@ void run(System& sys) {
 		cout << "all done in " << sys.timers["total"] << endl;
 }
 
-inline void show_timer(string& str, const char* message, const string& name, const System::Timers& timers) {
-	if (timers.count(name)) {
-		str += "\t" + string(message) + show(timers.at(name)) + "\n";
-	}
+string show(const System& rus) {
+	return info(rus);
 }
 
-string show(const System& rus) {
+string info(const System& rus) {
 	string stats;
-	stats += "Timings\n";
-	show_timer(stats, "\tread:       ", "read", rus.timers);
-	show_timer(stats, "\texpression: ", "expr", rus.timers);
-	show_timer(stats, "\tunify:      ", "unify", rus.timers);
-	show_timer(stats, "\ttranslate:  ", "translate", rus.timers);
-	show_timer(stats, "\twrite:      ", "write", rus.timers);
-	stats += "\n";
-	show_timer(stats, "\ttotal: ", "total", rus.timers);
+	stats += "Timings:";
+	stats += show_timer("\n\tread:       ", "read", rus.timers);
+	stats += show_timer("\n\texpression: ", "expr", rus.timers);
+	stats += show_timer("\n\tunify:      ", "unify", rus.timers);
+	stats += show_timer("\n\ttranslate:  ", "translate", rus.timers);
+	stats += show_timer("\n\twrite:      ", "write", rus.timers);
+	stats += stats += "\n";
+	stats += show_timer("\n\ttotal: ", "total", rus.timers);
 	stats += "\n";
 
 	const size_t const_vol = mdl::memvol(rus.math.consts);

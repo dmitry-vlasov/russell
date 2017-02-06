@@ -320,6 +320,10 @@ inline void initOptions(boost::program_options::options_description& desc) {
 		("info",        "info about math: timings, memory, stats")
 	;
 }
+template<class T>
+string show_timer(const char* message, const string& name, const T& timers) {
+	return timers.count(name) ? string(message) + show(timers.at(name)) : "";
+}
 
 template<class T>
 void dump(const T& val) { cout << val; }
