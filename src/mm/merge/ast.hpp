@@ -4,16 +4,15 @@
 
 namespace mdl { namespace mm { namespace merge {
 
-struct Source {
-	//Source(string r, string n) : contents(), root(r), name(n) { }
-	static Source& mod() { static Source src; return src; }
-	static const Source& get() { return mod(); }
-	stringstream contents;
-	//string root;
-	//string name;
+struct Merger {
+	void read(Path in);
+	void merge();
+	void save(Path out);
+
+	ostringstream source;
 };
 
-void parse(string path);
+//void parse(string path);
 
 }}} // mdl::mm::merge
 

@@ -1,12 +1,12 @@
+#include "../../include/mm/sys.hpp"
 #include "mm/ast.hpp"
-#include "mm/globals.hpp"
 #include "mm/tree.hpp"
 
 namespace mdl { namespace mm {
 
 uint length(const Proof& p);
-uint length(const Ref& r) {
-	if (r.type == Ref::PROOF) return length(*r.val.prf);
+uint length(const Ref* r) {
+	if (r->type == Ref::PROOF) return length(*r->val.prf);
 	else return 1;
 }
 uint length(const Proof& p) {
@@ -19,16 +19,16 @@ uint length(const Proof& p) {
 }
 
 string show(const Proof& tree);
-string show(const Ref& r) {
-	if (r.type == Ref::PROOF)
-		return show(*r.val.prf);
+string show(const Ref* r) {
+	if (r->type == Ref::PROOF)
+		return show(*r->val.prf);
 	else
-		return System::get().lex.labels.toStr(r.label());
+		return Sys::get().lex.labels.toStr(r->label());
 }
 
 string show(const Proof& tree) {
 	string space = length(tree) > 16 ? "\n" : " ";
-	string str = System::get().lex.labels.toStr(tree.refs.back().label());
+	string str = Sys::get().lex.labels.toStr(tree.refs.back()->label());
 	str += "(";
 	for (uint i = 0; i + 1 <tree.refs.size(); ++ i)
 		str += indent::paragraph(space + show(tree.refs[i]), "  ");
@@ -48,11 +48,11 @@ ostream& operator << (ostream& os, const Ref& ref) {
 }
 
 
-void write_proof_ref(ostream& os, const Ref& r) {
-	if (r.type == Ref::PROOF)
-		os << *r.val.prf << ' ';
+void write_proof_ref(ostream& os, const Ref* r) {
+	if (r->type == Ref::PROOF)
+		os << *r->val.prf << ' ';
 	else
-		os << r << ' ';
+		os << *r << ' ';
 }
 
 ostream& operator << (ostream& os, const Proof& proof) {
@@ -136,7 +136,7 @@ ostream& operator << (ostream& os, const Source& source) {
 }
 
 ostream& operator << (ostream& os, const Inclusion& inc) {
-	os << "$[ " << inc.source->name << ".mm $]";
+	os << "$[ " << inc.source->name() << ".mm $]";
 	return os;
 }
 

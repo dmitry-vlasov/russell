@@ -1,6 +1,7 @@
 #include <boost/range/adaptor/reversed.hpp>
+
+#include "../../include/smm/sys.hpp"
 #include "smm/tree.hpp"
-#include "smm/globals.hpp"
 
 namespace mdl { namespace smm {
 
@@ -23,8 +24,8 @@ static void checkDisjPair(const Vect& ex1, const Vect& ex2, const Assertion* th,
 			if (s_1.var && s_2.var && !areDisjointed(th, s_1.lit, s_2.lit)) {
 				string msg = "inherited disjointed violation, vars: ";
 				msg += show_sy(s_1) + " and " + show_sy(s_2) + " ";
-				msg += "are not disjointed in " + System::get().lex.labels.toStr(th->prop.label) + ", ";
-				msg += "while claimed to be disjointed in " + System::get().lex.labels.toStr(ass->prop.label);
+				msg += "are not disjointed in " + Sys::get().lex.labels.toStr(th->prop->label) + ", ";
+				msg += "while claimed to be disjointed in " + Sys::get().lex.labels.toStr(ass->prop->label);
 				throw Error("verification", msg, &th->loc);
 			}
 		}
@@ -66,7 +67,7 @@ Vect apply(const Subst& sub, const Vect& expr) {
 
 static void checkSymbols(const Assertion* ass, const Vect& expr) {
 	for (auto s : expr) {
-		bool is_const = (System::get().math.constants.find(s) != System::get().math.constants.end());
+		bool is_const = (Sys::get().math.constants.find(s) != Sys::get().math.constants.end());
 		bool is_var = false;
 		for (auto& v : ass->variables) {
 			if (contains(v->expr, s)) {
@@ -117,7 +118,7 @@ static void checkDisjointed(const Assertion* ass, const vector<Disjointed*>& dis
 static void checkSymbols(const Assertion* ass) {
 	checkSymbols(ass, ass->essential);
 	checkSymbols(ass, ass->floating);
-	checkSymbols(ass, ass->prop.expr);
+	checkSymbols(ass, ass->prop->expr);
 	checkFloating(ass, ass->floating);
 	checkFloating(ass, ass->inner);
 	checkDisjointed(ass, ass->disjointed);
@@ -128,8 +129,8 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Vect>& expr_s
 	for (auto flo : boost::adaptors::reverse(ass->floating)) {
 		if (expr_stack.empty()) {
 			string msg = "empty stack (floating):\n";
-			msg += "theorem " + System::get().lex.labels.toStr(th->prop.label) + "\n";
-			msg += "assertion " + System::get().lex.labels.toStr(ass->prop.label) + "\n";
+			msg += "theorem " + Sys::get().lex.labels.toStr(th->prop->label) + "\n";
+			msg += "assertion " + Sys::get().lex.labels.toStr(ass->prop->label) + "\n";
 			throw Error("verification", msg, &th->loc);
 		}
 		sub[flo->var()] = expr_stack.top();
@@ -138,8 +139,8 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Vect>& expr_s
 	for (auto ess : boost::adaptors::reverse(ass->essential)) {
 		if (expr_stack.empty()) {
 			string msg = "empty stack (essential):\n";
-			msg += "theorem " + System::get().lex.labels.toStr(th->prop.label) + "\n";
-			msg += "assertion " + System::get().lex.labels.toStr(ass->prop.label) + "\n";
+			msg += "theorem " + Sys::get().lex.labels.toStr(th->prop->label) + "\n";
+			msg += "assertion " + Sys::get().lex.labels.toStr(ass->prop->label) + "\n";
 			throw Error("verification", msg, &th->loc);
 		}
 		if (apply(sub, ess->expr) != expr_stack.top()) {
@@ -147,14 +148,14 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Vect>& expr_s
 			msg += show_ex(apply(sub, ess->expr)) + "\n";
 			msg += "and\n";
 			msg += show_ex(expr_stack.top()) + "\n";
-			msg += "theorem " + System::get().lex.labels.toStr(th->prop.label) + "\n";
-			msg += "assertion " + System::get().lex.labels.toStr(ass->prop.label) + "\n";
+			msg += "theorem " + Sys::get().lex.labels.toStr(th->prop->label) + "\n";
+			msg += "assertion " + Sys::get().lex.labels.toStr(ass->prop->label) + "\n";
 			throw Error("verification", msg, &th->loc);
 		}
 		expr_stack.pop();
 	}
 	checkDisj(sub, ass, th);
-	expr_stack.push(apply(sub, ass->prop.expr));
+	expr_stack.push(apply(sub, ass->prop->expr));
 }
 
 static void assertion(const Assertion* ass, const vector<Assertion*>& theory) {
@@ -162,17 +163,17 @@ static void assertion(const Assertion* ass, const vector<Assertion*>& theory) {
 	stack<Vect> expr_stack;
 	const Proof* proof = ass->proof;
 	if (!proof) return;
-	for (auto& ref : proof->refs) {
-		switch (ref.type) {
-		case Ref::ESSENTIAL : expr_stack.push(ref.val.ess->expr); break;
-		case Ref::FLOATING  : expr_stack.push(ref.val.flo->expr); break;
-		case Ref::INNER     : expr_stack.push(ref.val.inn->expr); break;
-		case Ref::AXIOM: // intentionally left blank
-		case Ref::THEOREM   : apply(ref.val.ass, ass, expr_stack); break;
+	for (auto ref : proof->refs) {
+		switch (ref->type) {
+		case Ref::ESSENTIAL : expr_stack.push(ref->val.ess->expr); break;
+		case Ref::FLOATING  : expr_stack.push(ref->val.flo->expr); break;
+		case Ref::INNER     : expr_stack.push(ref->val.inn->expr); break;
+		case Ref::AXIOM:    // intentionally left blank
+		case Ref::THEOREM   : apply(ref->val.ass, ass, expr_stack); break;
 		default : assert(false && "impossible"); break;
 		}
 	}
-	if (expr_stack.top() != ass->prop.expr) {
+	if (expr_stack.top() != ass->prop->expr) {
 		throw Error("verification", "propositions mismatch", &ass->loc);
 	}
 	expr_stack.pop();
@@ -181,14 +182,10 @@ static void assertion(const Assertion* ass, const vector<Assertion*>& theory) {
 	}
 }
 
-static void math(const vector<Assertion*>& theory) {
+void verify(const vector<Assertion*>& theory) {
 	for (auto ass : theory) {
 		assertion(ass, theory);
 	}
-}
-
-void verify(const vector<Assertion*>& theory) {
-	math(theory);
 }
 
 }} // mdl::smm::verify

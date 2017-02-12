@@ -11,7 +11,10 @@ struct Comment {
 };
 
 struct Const {
+	Const(uint ind, uint id, Symbol s, Symbol a, Symbol l);
+	~Const();
 	uint   ind;
+	uint   id;
 	Symbol symb;
 	Symbol ascii;
 	Symbol latex;
@@ -31,6 +34,7 @@ void parse_expr(Expr& ex);
 void parse_term(Expr& ex, Rule* rule);
 
 struct Type {
+	Type(uint id);
 	~Type();
 	uint ind;
 	uint id;
@@ -40,6 +44,8 @@ struct Type {
 };
 
 struct Rule {
+	Rule(uint id);
+	~Rule();
 	uint  ind;
 	uint  id;
 	Type* type;
@@ -49,10 +55,6 @@ struct Rule {
 
 inline Type* Tree::type() { return kind == VAR ? val.var->type : val.node->rule->type; }
 inline const Type* Tree::type() const { return kind == VAR ? val.var->type : val.node->rule->type; }
-
-inline Type::~Type() {
-	for (auto p : supers) delete p.second;
-}
 
 struct Hyp {
 	uint ind;
@@ -67,6 +69,7 @@ struct Prop {
 struct Proof;
 
 struct Assertion {
+	Assertion(uint id);
 	~ Assertion() {
 		for (auto h : hyps) delete h;
 		for (auto p : props) delete p;
@@ -82,10 +85,14 @@ struct Assertion {
 };
 
 struct Axiom {
+	Axiom(uint id) : ass(id) { }
+	~Axiom();
 	Assertion ass;
 };
 
 struct Def {
+	Def(uint id) : ass(id), dfm(), dfs(), prop() { }
+	~Def();
 	Assertion ass;
 	Expr dfm;
 	Expr dfs;
@@ -95,6 +102,8 @@ struct Def {
 struct Proof;
 
 struct Theorem {
+	Theorem(uint id) : ass(id), proofs() { }
+	~Theorem();
 	Assertion      ass;
 	vector<Proof*> proofs;
 };
@@ -142,8 +151,9 @@ struct Step {
 		Proof*   prf;
 	};
 
-	Step(Proof* pr) : ind(-1), expr(), kind(NONE), val(),
-	refs(), proof(pr) { val.non = nullptr; }
+	Step(uint i, Kind k, uint id, vector<Ref*> r, const Expr& e, Proof* p);
+	Step(Proof* p);
+	~Step();
 
 	Assertion* assertion() {
 		switch(kind) {
@@ -164,12 +174,12 @@ struct Step {
 		return nullptr;
 	}
 
-	uint        ind;
-	Expr        expr;
-	Kind        kind;
-	Value       val;
-	vector<Ref> refs;
-	Proof*      proof;
+	uint         ind;
+	Expr         expr;
+	Kind         kind;
+	Value        val;
+	vector<Ref*> refs;
+	Proof*       proof;
 };
 
 inline Expr& Ref::expr() {
@@ -223,7 +233,7 @@ struct Proof {
 		Value val;
 	};
 
-	Proof() : ind(-1), id(-1), vars(), elems(), thm(nullptr), par(nullptr), has_id(false) { }
+	Proof(uint id = -1);
 	~ Proof() { for (auto& e : elems) e.destroy(); }
 
 	uint         ind;
@@ -289,10 +299,9 @@ struct Node {
 struct Source;
 
 struct Import {
-	Import(Source* src, bool prim) : source(src), primary(prim) { }
+	Import(uint label);
 	~Import();
 	Source* source;
-	bool    primary;
 };
 
 struct Theory {
@@ -306,21 +315,17 @@ struct Theory {
 };
 
 struct Source {
-	Source(const string& r, const string& n) :
-	top(false), root(r), name(n), data(), theory(nullptr) {
-		static bool t = true; top = t; t = false;
-		boost::erase_last(name, ".smm");
-		boost::erase_last(name, ".mm");
-		boost::erase_last(name, ".rus");
-	}
-	~Source() { if (theory) delete theory; }
-	bool    top;
-	string  root;
-	string  name;
+	Source(uint label);
+	~Source();
+
+	uint    label;
 	string  data;
-	string  path() { return (root.size() ? root + "/" + name : name) + ".rus"; }
-	string  dir() { string p = path(); return p.substr(0, p.find_last_of("/")) + "/"; }
 	Theory* theory;
+
+	Path path();
+	string name();
+	void read();
+	void write();
 };
 
 inline void Node::destroy() {
@@ -352,7 +357,6 @@ inline void Proof::Elem::destroy() {
 }
 
 inline Import::~Import() {
-	if (primary && source) delete source;
 }
 
 string show(const Const&);

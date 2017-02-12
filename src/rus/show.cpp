@@ -1,4 +1,4 @@
-#include "rus/globals.hpp"
+#include "../../include/rus/sys.hpp"
 
 namespace mdl { namespace rus {
 
@@ -145,10 +145,10 @@ string show(const Ref& ref) {
 	}
 }
 
-static string show_refs(const vector<Ref>& refs) {
+static string show_refs(const vector<Ref*>& refs) {
 	string s = "(";
 	for (uint i = 0; i < refs.size(); ++ i) {
-		s += show(refs[i]);
+		s += show(*refs[i]);
 		if (i + 1 < refs.size()) s += ", ";
 	}
 	s += ")";
@@ -207,7 +207,7 @@ string show(const Proof& p) {
 }
 
 string show(const Import& imp) {
-	return string("import ") + imp.source->name + ".rus" + END_MARKER;
+	return string("import ") + imp.source->name() + ".rus" + END_MARKER;
 }
 
 string show(const Node& n) {

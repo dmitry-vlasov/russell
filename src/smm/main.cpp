@@ -1,4 +1,4 @@
-#include "smm/globals.hpp"
+#include "smm/sys.hpp"
 
 namespace po = boost::program_options;
 
@@ -17,10 +17,10 @@ static bool initConf(const po::variables_map& vm, smm::Config& conf) {
 		}
 	}
 	if (!conf.deep) {
-		if (boost::ends_with(conf.out, ".mm"))  conf.target = smm::Config::Target::TARGET_MM;
-		if (boost::ends_with(conf.out, ".rus")) conf.target = smm::Config::Target::TARGET_RUS;
+		if (conf.out.ext == "mm")  conf.target = smm::Config::Target::TARGET_MM;
+		if (conf.out.ext == "rus") conf.target = smm::Config::Target::TARGET_RUS;
 	}
-	if (conf.in == "") return false;
+	if (conf.in.name == "") return false;
 	return true;
 }
 
@@ -45,15 +45,13 @@ int main (int argc, const char* argv[])
             cout << desc << endl;
             return 0;
         }
-        smm::System& sys = smm::System::mod();
-        smm::Config& conf = sys.config;
-        if (!initConf(vm, conf)) {
+        smm::Sys& sys = smm::Sys::mod();
+        if (!initConf(vm, smm::Sys::conf())) {
         	cout << desc << endl;
             return 1;
         }
-		smm::run(sys);
-		if (sys.error.size()) cerr << sys.error;
-		if (conf.info) cout << info(sys);
+		sys.action["run"]({});
+		if (smm::Sys::conf().info) cout << sys.action["info"]({}).text;
 	} catch (const Error& err) {
 		cerr << err.what();
 		return 1;

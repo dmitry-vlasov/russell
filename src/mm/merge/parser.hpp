@@ -15,30 +15,32 @@ namespace phoenix = boost::phoenix;
 struct Add {
 	template<typename T>
 	struct result { typedef void type; };
-	void operator()(const string& str) const {
-		Source::mod().contents << str;
+	void operator()(const string& str, Merger* merger) const {
+		merger->source << str;
 	}
 };
 
 struct Include {
 	template <typename T>
 	struct result { typedef string type; };
-	void operator()(const string& path) const {
+	void operator()(const string& path, Merger* merger) const {
 		static set<string> included;
 		if (included.count(path)) return;
 		included.insert(path);
-		parse(path);
+		merger->read(Path(path));
 	}
 };
 
 template <typename Iterator>
 struct Grammar : qi::grammar<Iterator, void(), ascii::space_type> {
-	Grammar();
+	Grammar(Merger* m);
 	void initNames();
 
 	qi::rule<Iterator, string(), qi::unused_type> contents;
 	qi::rule<Iterator, string(), qi::unused_type> inclusion;
 	qi::rule<Iterator, void(), ascii::space_type> source;
+
+	Merger* merger;
 };
 
 template <typename Iterator>

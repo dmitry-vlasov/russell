@@ -6,7 +6,7 @@
 namespace mdl { namespace mm { namespace merge {
 
 template <typename Iterator>
-Grammar<Iterator>::Grammar() : Grammar::base_type(source, "merge") {
+Grammar<Iterator>::Grammar(Merger* merger) : Grammar::base_type(source, "merge") {
 		using qi::lit;
 		using qi::lexeme;
 		using namespace qi::labels;
@@ -16,7 +16,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "merge") {
 
 		contents  %= lexeme[+(ascii::char_ - "$[")];
 		inclusion %= lit("$[") > lexeme[+(ascii::char_ - "$]")] > "$]";
-		source = + (inclusion [include(_1)] | contents  [add(_1)] );
+		source = + (inclusion [include(_1, phoenix::val(merger))] | contents  [add(_1, phoenix::val(merger))] );
 
 		qi::on_error<qi::fail>(
 			source,

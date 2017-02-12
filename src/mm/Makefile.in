@@ -114,16 +114,17 @@ LTLIBRARIES = $(noinst_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 libmm_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
-am__libmm_la_SOURCES_DIST = ../smm/show.cpp all.cpp cut/parser.cpp \
-	cut/globals.cpp cut/show.cpp merge/parser.cpp globals.cpp \
+am__libmm_la_SOURCES_DIST = ../smm/show.cpp all.cpp cut/patches.cpp \
+	cut/sys.cpp cut/show.cpp merge/parser.cpp ast.cpp sys.cpp \
 	peg_parser.cpp show.cpp spirit_parser.cpp translate.cpp \
 	tree.cpp
 am__dirstamp = $(am__leading_dot)dirstamp
 @SPLIT_COMPILE_FALSE@am_libmm_la_OBJECTS = ../smm/show.lo all.lo
-@SPLIT_COMPILE_TRUE@am_libmm_la_OBJECTS = ../smm/show.lo cut/parser.lo \
-@SPLIT_COMPILE_TRUE@	cut/globals.lo cut/show.lo merge/parser.lo \
-@SPLIT_COMPILE_TRUE@	globals.lo peg_parser.lo show.lo \
-@SPLIT_COMPILE_TRUE@	spirit_parser.lo translate.lo tree.lo
+@SPLIT_COMPILE_TRUE@am_libmm_la_OBJECTS = ../smm/show.lo \
+@SPLIT_COMPILE_TRUE@	cut/patches.lo cut/sys.lo cut/show.lo \
+@SPLIT_COMPILE_TRUE@	merge/parser.lo ast.lo sys.lo \
+@SPLIT_COMPILE_TRUE@	peg_parser.lo show.lo spirit_parser.lo \
+@SPLIT_COMPILE_TRUE@	translate.lo tree.lo
 libmm_la_OBJECTS = $(am_libmm_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -353,7 +354,6 @@ noinst_HEADERS = \
 	merge/parser.hpp \
 	\
 	adaptors.hpp \
-	spirit_grammar.hpp \
 	spirit_parser.hpp \
 	tree.hpp 
 
@@ -364,13 +364,14 @@ noinst_HEADERS = \
 @SPLIT_COMPILE_TRUE@libmm_la_SOURCES = \
 @SPLIT_COMPILE_TRUE@	../smm/show.cpp \
 @SPLIT_COMPILE_TRUE@	\
-@SPLIT_COMPILE_TRUE@	cut/parser.cpp \
-@SPLIT_COMPILE_TRUE@	cut/globals.cpp \
+@SPLIT_COMPILE_TRUE@	cut/patches.cpp \
+@SPLIT_COMPILE_TRUE@	cut/sys.cpp \
 @SPLIT_COMPILE_TRUE@	cut/show.cpp \
 @SPLIT_COMPILE_TRUE@	\
 @SPLIT_COMPILE_TRUE@	merge/parser.cpp \
 @SPLIT_COMPILE_TRUE@	\
-@SPLIT_COMPILE_TRUE@	globals.cpp \
+@SPLIT_COMPILE_TRUE@	ast.cpp \
+@SPLIT_COMPILE_TRUE@	sys.cpp \
 @SPLIT_COMPILE_TRUE@	peg_parser.cpp \
 @SPLIT_COMPILE_TRUE@	show.cpp \
 @SPLIT_COMPILE_TRUE@	spirit_parser.cpp \
@@ -449,8 +450,8 @@ cut/$(am__dirstamp):
 cut/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) cut/$(DEPDIR)
 	@: > cut/$(DEPDIR)/$(am__dirstamp)
-cut/parser.lo: cut/$(am__dirstamp) cut/$(DEPDIR)/$(am__dirstamp)
-cut/globals.lo: cut/$(am__dirstamp) cut/$(DEPDIR)/$(am__dirstamp)
+cut/patches.lo: cut/$(am__dirstamp) cut/$(DEPDIR)/$(am__dirstamp)
+cut/sys.lo: cut/$(am__dirstamp) cut/$(DEPDIR)/$(am__dirstamp)
 cut/show.lo: cut/$(am__dirstamp) cut/$(DEPDIR)/$(am__dirstamp)
 merge/$(am__dirstamp):
 	@$(MKDIR_P) merge
@@ -530,16 +531,17 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@../smm/$(DEPDIR)/show.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/all.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/globals.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ast.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/peg_parser.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/show.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/spirit_parser.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sys.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/translate.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tree.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cut/$(DEPDIR)/globals.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cut/$(DEPDIR)/parser.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@cut/$(DEPDIR)/patches.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cut/$(DEPDIR)/show.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@cut/$(DEPDIR)/sys.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@merge/$(DEPDIR)/parser.Plo@am__quote@
 
 .cpp.o:

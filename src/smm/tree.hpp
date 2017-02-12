@@ -1,6 +1,6 @@
 #pragma once
 
-#include "smm/globals.hpp"
+#include "../../include/smm/sys.hpp"
 
 namespace mdl { namespace smm {
 
@@ -20,6 +20,6 @@ Proof* to_tree(const Proof* pr);
 Proof* to_rpn(const Proof* pr);
 void transform(Proof* proof, const Transform& trans, bool forward = true);
 Vect eval(Proof* proof);
-Vect eval(Ref&);
+Vect eval(Ref*);
 
 }} // mdl::smm

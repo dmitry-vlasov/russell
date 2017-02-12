@@ -1,6 +1,6 @@
 #include <boost/algorithm/string.hpp>
 
-#include "mm/cut/grammar.hpp"
+#include "std.hpp"
 
 namespace mdl { namespace mm { namespace cut {
 
@@ -444,33 +444,6 @@ void patch(string& data) {
 			data.replace(pos, to_replace.length(), replacement);
 		}
 	}
-}
-
-Section* parse(const string& root, string in, const string& out) {
-	string data;
-	ifstream ifn = open_smart(in, root);
-	read_smart(data, ifn);
-	patch(data);
-
-	LocationIter iter(data.begin(), in);
-	LocationIter end(data.end(), in);
-	Section* source = new Section;
-
-	size_t slash_pos = in.find_last_of("/");
-	size_t dot_pos = in.find_last_of(".");
-	size_t len = in.size();
-	if (slash_pos != string::npos) len -= slash_pos;
-	if (dot_pos != string::npos)   len -= len - dot_pos;
-
-	source->file = in.substr(slash_pos == string::npos ? 0 : slash_pos, len);
-	source->dir = out + "/";
-	source->path = source->dir + "/" + source->file + ".mm";
-	source->type = Type::SOURCE;
-	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, source);
-	if (!r || iter != end) {
-		throw Error("parsing failed", in);
-	}
-	return source;
 }
 
 }}} // mdl::mm::cut

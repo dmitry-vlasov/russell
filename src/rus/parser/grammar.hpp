@@ -7,8 +7,7 @@
 
 namespace mdl { namespace rus { namespace parser {
 
-template<typename Iterator>
-Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack() {
+Grammar::Grammar() : Grammar::base_type(source, "russell"), var_stack() {
 	using qi::lit;
 	using qi::uint_;
 	using qi::lexeme;
@@ -46,10 +45,8 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 	const phoenix::function<AddToMath>   addToMath;
 	const phoenix::function<ParseImport> parseImport;
 	const phoenix::function<AssembleDef> assembleDef;
-	const phoenix::function<SetLocation<Iterator>> setLocation;
 	const phoenix::function<IncInd>      incInd;
 	const phoenix::function<MakeString>  makeString;
-	const phoenix::function<DeleteComment> deleteComment;
 	const phoenix::function<AppendComment> appendComment;
 
 	bar  = lexeme[lit("-----")] >> * unicode::char_('-');
@@ -58,9 +55,9 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 	id   = lexeme[+ unicode::char_("a-zA-Z0-9_.\\-")]            [_val = idToInt(_1)];
 	path = lexeme[+(unicode::char_ - END_MARKER - unicode::space)];
 
-	term  = + (symb [addSymbol(_r1, _1)] | comment [deleteComment(_1)]) > eps [parseTerm(_r1, _r2, phoenix::ref(var_stack))];
-	expr  = + (symb [addSymbol(_r1, _1)] | comment [deleteComment(_1)]) > eps [parseExpr(_r1, _r2, phoenix::ref(var_stack))];
-	plain = + (symb [addSymbol(_r1, _1)] | comment [deleteComment(_1)]) > eps [phoenix::at_c<0>(_r1) = _r2];
+	term  = + (symb [addSymbol(_r1, _1)] | comment [delete_(_1)]) > eps [parseTerm(_r1, _r2, phoenix::ref(var_stack))];
+	expr  = + (symb [addSymbol(_r1, _1)] | comment [delete_(_1)]) > eps [parseExpr(_r1, _r2, phoenix::ref(var_stack))];
+	plain = + (symb [addSymbol(_r1, _1)] | comment [delete_(_1)]) > eps [phoenix::at_c<0>(_r1) = _r2];
 
 	disj =
 		lit("disjointed") > "("
@@ -118,35 +115,21 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 		> ")";
 
 	step =
-		eps     [_val = new_<Step>(_r1)]
-		> uint_ [phoenix::at_c<0>(*_val) = _1 - 1]
+		  uint_ [_a = _1 - 1]
 		> ":"
-		> id    [_a = _1]
+		> id    [_b = _1]
 		> "="
 		> (
-			(lit("axm") [phoenix::at_c<2>(*_val) = val(Step::AXM)]
-			//> eps       [_b = val(Step::AXM)]
-			> id        [phoenix::at_c<1>(phoenix::at_c<3>(*_val)) = findAxiom(_1)]
-			) |
-			(lit("thm") [phoenix::at_c<2>(*_val) = val(Step::THM)]
-			> id        [phoenix::at_c<3>(phoenix::at_c<3>(*_val)) = findTheorem(_1)]
-			//> eps       [_b = val(Step::THM)]
-			) |
-			(lit("def") [phoenix::at_c<2>(*_val) = val(Step::DEF)]
-			> id        [phoenix::at_c<2>(phoenix::at_c<3>(*_val)) = findDef(_1)]
-			//> eps       [_b = val(Step::DEF)]
-			) |
-			(lit("claim") [phoenix::at_c<2>(*_val) = val(Step::CLAIM)]
-			//> eps       [_b = val(Step::CLAIM)]
-			) |
-			(lit("?")   [phoenix::at_c<2>(*_val) = val(Step::NONE)]
-			//> eps       [_b = val(Step::NONE)]
-			)
+			(lit("axm")   [_c = val(Step::AXM)] > id [_d = _1]) |
+			(lit("thm")   [_c = val(Step::THM)] > id [_d = _1]) |
+			(lit("def")   [_c = val(Step::DEF)] > id [_d = _1]) |
+			(lit("claim") [_c = val(Step::CLAIM)]) |
+			(lit("?")     [_c = val(Step::NONE)])
 		)
-		> refs(_r1) [phoenix::at_c<4>(*_val) = _1]
+		> refs(_r1)       [_e = _1]
 		> "|-"
-		> expr(phoenix::at_c<1>(*_val), findType(_a))
-		> lit(END_MARKER);
+		> expr(_f, findType(_b))
+		> lit(END_MARKER) [_val = new_<Step>(_a, _c, _d, _e, _f, _r1)];
 
 	qed =
 		lit("prop") [_val = new_<Qed>()]

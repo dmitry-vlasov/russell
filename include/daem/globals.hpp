@@ -1,25 +1,58 @@
 #pragma once
 
-#include "rus/ast.hpp"
-#include "smm/ast.hpp"
-#include "timer.hpp"
+#include "common.hpp"
 
 namespace mdl { namespace daemon {
 
 #define DEFAULT_DAEMON_LOGS "/var/tmp/mdld.log"
+#define DEFAULT_DAEMON_HOST "localhost"
+#define DEFAULT_DAEMON_PORT 808011
 
 struct Config {
-	enum {
-		DEFAULT_PORT = 808011
-	};
-	static const Config& get() { return mod(); }
-	static Config& mod() { static Config d; return d; }
+	Config() : port(DEFAULT_DAEMON_PORT), host(DEFAULT_DAEMON_HOST), logs(DEFAULT_DAEMON_LOGS) { }
 	uint   port;
+	string host;
 	string logs;
 
-private:
-	Config() : port(DEFAULT_PORT), logs(DEFAULT_DAEMON_LOGS) { }
 };
+
+struct State {
+	enum class Work { WORK, ERROR, EXIT, DEFAULT = WORK };
+	enum class Lang { MM, SMM, RUS, DEFAULT = RUS };
+	State(Work w = Work::DEFAULT, Lang l = Lang::DEFAULT) : work(w), lang(l) { }
+	Work work;
+	Lang lang;
+};
+
+struct Response {
+	Response() : state(), ret() { }
+	Response(State s, const string& r = "") : state(s), ret(r) { }
+	State  state;
+	string ret;
+};
+
+struct Request {
+	Request(State s) : state(s), args() { }
+	typedef vector<string> Args;
+	State state;
+	Args  args;
+};
+
+typedef Response (*Command) (Request);
+
+struct Daemon {
+	Config config;
+	State  state;
+	void run();
+
+	static const Daemon& get() { return mod(); }
+	static Daemon& mod() { static Daemon d; return d; }
+private:
+	Daemon() : config(), state() { }
+};
+
+
+
 
 }} // mdl::daemon
 

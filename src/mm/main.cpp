@@ -1,4 +1,4 @@
-#include "mm/globals.hpp"
+#include "../../include/mm/sys.hpp"
 
 namespace po = boost::program_options;
 
@@ -10,11 +10,9 @@ static bool initConf(const po::variables_map& vm, mm::Config& conf) {
 	if (vm.count("merge"))     conf.mode = mm::Config::Mode::MERGE;
 	if (vm.count("translate")) conf.mode = mm::Config::Mode::TRANSL;
 	if (!conf.deep) {
-		if (boost::ends_with(conf.out, ".smm") &&
-			conf.mode != mm::Config::Mode::TRANSL) {
+		if (conf.out.ext == "smm" && conf.mode != mm::Config::Mode::TRANSL) {
 			return false;
-		} else if (boost::ends_with(conf.out, ".mm") &&
-			conf.mode == mm::Config::Mode::TRANSL) {
+		} else if (conf.out.ext == "mm" && conf.mode == mm::Config::Mode::TRANSL) {
 			return false;
 		}
 		if (conf.mode == mm::Config::Mode::CUT) {
@@ -47,15 +45,14 @@ int main (int argc, const char* argv[])
             cout << desc << endl;
             return 0;
         }
-        mm::System& sys = mm::System::mod();
-        mm::Config& conf = sys.config;
-        if (!initConf(vm, conf)) {
+        mm::Sys& sys = mm::Sys::mod();
+        if (!initConf(vm, mm::Sys::conf())) {
         	cout << desc << endl;
             return 1;
         }
-		mm::run(sys);
-		if (sys.error.size()) cerr << sys.error;
-		if (conf.info) cout << info(sys);
+		//mm::run(sys);
+        sys.action["run"]({});
+		if (mm::Sys::conf().info) cout << sys.action["info"]({}).text;
 	} catch (const Error& err) {
 		cerr << err.what();
 		return 1;

@@ -19,11 +19,13 @@ struct Disjointed {
 };
 
 struct Essential {
+	Essential(uint i, const Vect& e) : index(i), expr(e) { }
 	uint index;
 	Vect expr;
 };
 
 struct Floating  {
+	Floating(uint i, const Vect& e) : index(i), expr(e) { }
 	Symbol type() const { return expr[0]; }
 	Symbol var() const { return expr[1]; }
 	uint index;
@@ -31,6 +33,7 @@ struct Floating  {
 };
 
 struct Inner {
+	Inner(uint i, const Vect& e) : index(i), expr(e) { }
 	Symbol type() const { return expr[0]; }
 	Symbol var() const { return expr[1]; }
 	uint index;
@@ -38,6 +41,7 @@ struct Inner {
 };
 
 struct Proposition {
+	Proposition(bool a, uint l, const Vect& e) : axiom(a), label(l), expr(e) { }
 	bool axiom;
 	uint label;
 	Vect expr;
@@ -46,11 +50,14 @@ struct Proposition {
 struct Proof;
 
 struct Assertion {
-	Assertion ();
+	Assertion();
 	~Assertion();
 
 	uint arity() const {
 		return essential.size() + floating.size();
+	}
+	uint label() const {
+		return prop->label;
 	}
 
 	vector<Variables*>  variables;
@@ -58,9 +65,9 @@ struct Assertion {
 	vector<Essential*>  essential;
 	vector<Floating*>   floating;
 	vector<Inner*>      inner;
-	Proposition prop;
-	Proof*      proof;
-	Location    loc;
+	Proposition* prop;
+	Proof*       proof;
+	Location     loc;
 };
 
 struct Proof;
@@ -76,6 +83,7 @@ struct Ref {
 		PROOF
 	};
 	union Value {
+		Value() : non(nullptr) { }
 		void*       non;
 		Floating*   flo;
 		Essential*  ess;
@@ -87,13 +95,14 @@ struct Ref {
 	Ref(Floating* f)  : type(FLOATING),  val() { val.flo = f; }
 	Ref(Essential* e) : type(ESSENTIAL), val() { val.ess = e; }
 	Ref(Inner* i)     : type(INNER),     val() { val.inn = i; }
-	Ref(Assertion* a, bool ax) : type(ax ? AXIOM : THEOREM), val() { val.ass = a; }
 	Ref(Proof* p)     : type(PROOF),     val() { val.prf = p; }
-	void destroy();
+	Ref(uint label, bool ax);
+	Ref(const Ref&);
+	~Ref();
 
 	uint label() const {
 		assert(type == THEOREM || type == AXIOM);
-		return val.ass->prop.label;
+		return val.ass->prop->label;
 	}
 	uint index() const {
 		switch (type) {
@@ -117,9 +126,9 @@ struct Proof {
 	};
 	Proof(Type tp = RPN) : refs(), theorem(nullptr), type(tp) { }
 	~ Proof();
-	vector<Ref> refs;
-	Assertion*  theorem;
-	Type        type;
+	vector<Ref*> refs;
+	Assertion*   theorem;
+	Type         type;
 };
 
 struct Comment {
@@ -130,10 +139,9 @@ struct Comment {
 class Source;
 
 struct Inclusion {
-	Inclusion(Source* s, bool p) : source(s), primary(p) { }
+	Inclusion(uint label);
 	~Inclusion();
 	Source* source;
-	bool    primary;
 };
 
 struct Node {
@@ -163,60 +171,18 @@ struct Node {
 };
 
 struct Source {
-	Source(const string& r, const string& n) : root(r), name(n), data(), contents() {
-		boost::erase_last(name, ".smm");
-		boost::erase_last(name, ".mm");
-		boost::erase_last(name, ".rus");
-	}
-	~ Source() {
-		for (auto& node : contents)
-			node.destroy();
-	}
-	string root;
-	string name;
+	Source(uint label);
+	~ Source();
+
+	uint   label;
 	string data;
-	string path() { return (root.size() ? root + "/" + name : name) + ".smm"; }
-	string dir() { string p = path(); return p.substr(0, p.find_last_of("/")) + "/"; }
 	vector<Node> contents;
+
+	Path path();
+	string name();
+	void read();
+	void write();
 };
-
-inline Inclusion::~Inclusion() { if (primary && source) delete source; }
-
-inline Assertion::Assertion() :
-	variables(), disjointed(), essential(),
-	floating(), inner(),
-	prop(), proof(), loc() {
-}
-inline Assertion::~Assertion() {
-	for (Variables* v : variables)   delete v;
-	for (Disjointed* d : disjointed) delete d;
-	for (Essential* e : essential)   delete e;
-	for (Floating* f : floating)     delete f;
-	for (Inner* i : inner)           delete i;
-	if (proof) delete proof;
-}
-
-inline void Node::destroy() {
-	switch(type) {
-	case NONE: break;
-	case ASSERTION: delete val.ass; break;
-	case CONSTANTS: delete val.cst; break;
-	case INCLUSION: delete val.inc; break;
-	case COMMENT:   delete val.com; break;
-	default : assert(false && "impossible");  break;
-	}
-	type = NONE;
-}
-
-inline void Ref::destroy() {
-	if (type == PROOF)
-		delete val.prf;
-}
-
-inline Proof::~ Proof() {
-	for (auto& r : refs)
-		r.destroy();
-}
 
 ostream& operator << (ostream& os, const Constants& cst);
 ostream& operator << (ostream& os, const Ref& ref);

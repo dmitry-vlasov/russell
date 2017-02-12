@@ -12,17 +12,18 @@ enum class Target { TARGET_NONE, TARGET_MM, TARGET_RUS, DEFAULT = TARGET_NONE };
 typedef mdl::Config<Mode, Target> Config;
 
 struct Math {
-	set<Symbol>        constants;
-	vector<Assertion*> assertions;
+	set<Symbol>      constants;
+	Table<Assertion> assertions;
+	Table<Source>    sources;
 };
 
-typedef mdl::System<Source, Math, Config> System;
+struct Sys : public  mdl::Sys<Sys, Source, Math, Config> {
+	Sys(const string& name = "default");
+};
 
-void run(System&);
-string show(const System&);
-string info(const System&);
-Source* parse(string path);
-void verify(const vector<Assertion*>& theory);
+uint validate(const string& name);
+
+void run(Sys&);
 mm::Source*  translate_to_mm(const Source* source);
 rus::Source* translate_to_rus(const Source* source);
 

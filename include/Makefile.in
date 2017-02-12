@@ -287,14 +287,14 @@ noinst_HEADERS = \
 	timer.hpp \
 	\
 	mm/ast.hpp \
-	mm/globals.hpp \
+	mm/sys.hpp \
 	\
 	rus/ast.hpp \
 	rus/expr.hpp \
-	rus/globals.hpp \
+	rus/sys.hpp \
 	\
 	smm/ast.hpp \
-	smm/globals.hpp
+	smm/sys.hpp
 
 all: all-am
 

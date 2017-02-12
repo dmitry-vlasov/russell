@@ -1,5 +1,5 @@
+#include "../../include/rus/sys.hpp"
 #include "smm/ast.hpp"
-#include "rus/globals.hpp"
 
 namespace mdl { namespace rus { namespace {
 
@@ -17,10 +17,10 @@ struct Maps {
 };
 
 inline uint translate_symb(uint s) {
-	if (!System::get().math.consts.count(s))
+	if (!Sys::get().math.consts.count(s))
 		return s;
 	else {
-		Const* c = System::mod().math.consts[s];
+		Const* c = Sys::mod().math.consts[s];
 		return mdl::Symbol::is_undef(c->ascii.lit) ? s : c->ascii.lit;
 	}
 }
@@ -43,7 +43,7 @@ smm::Constants* translate_const(const Const* c, Maps& maps) {
 	smm::Constants* consts = new smm::Constants;
 	static bool first_time = true;
 	if (first_time) {
-		uint ts = System::mod().lex.symbols.toInt("|-");
+		uint ts = Sys::mod().lex.symbols.toInt("|-");
 		maps.turnstile = mdl::Symbol(ts);
 		consts->expr += maps.turnstile;
 		first_time = false;
@@ -73,8 +73,8 @@ vector<smm::Disjointed*> translate_disj(const Disj& rdisj) {
 smm::Assertion* translate_rule(const Rule* rule, Maps& maps);
 
 vector<smm::Node> translate_type(const Type* type, Maps& maps) {
-	string type_str = System::get().lex.labels.toStr(type->id);
-	uint type_sy = System::mod().lex.symbols.toInt(type_str);
+	string type_str = Sys::get().lex.labels.toStr(type->id);
+	uint type_sy = Sys::mod().lex.symbols.toInt(type_str);
 	maps.types[type] = type_sy;
 	smm::Constants* consts = new smm::Constants;
 	consts->expr += type_sy;
@@ -118,8 +118,8 @@ smm::Assertion* translate_rule(const Rule* rule, Maps& maps) {
 	ra->floating = translate_floatings(rule->vars, maps);
 	ra->prop.axiom = true;
 	ra->prop.expr  = translate_term(rule->term, rule->type, maps);
-	string rule_str = System::get().lex.labels.toStr(rule->id);
-	uint rule_lab = System::mod().lex.labels.toInt(rule_str);
+	string rule_str = Sys::get().lex.labels.toStr(rule->id);
+	uint rule_lab = Sys::mod().lex.labels.toInt(rule_str);
 	ra->prop.label = rule_lab;
 	maps.rules[rule] = ra;
 	for (auto v : rule->vars.v) {
@@ -146,10 +146,10 @@ vector<smm::Node> translate_assertion(const Assertion* ass, Maps& maps) {
 		ra->floating = translate_floatings(ass->vars, maps, ass);
 		ra->essential= translate_essentials(ass, maps);
 		ra->prop.expr  = translate_expr(prop->expr, maps);
-		string ass_str = System::get().lex.labels.toStr(ass->id);
+		string ass_str = Sys::get().lex.labels.toStr(ass->id);
 		if (prop->ind)
 			ass_str += "_" + to_string(prop->ind);
-		uint ass_lab = System::mod().lex.labels.toInt(ass_str);
+		uint ass_lab = Sys::mod().lex.labels.toInt(ass_str);
 		ra->prop.label = ass_lab;
 		ra_vect.push_back(ra);
 		maps.assertions[ass] = ra;
@@ -309,7 +309,7 @@ smm::Source* translate_source(const Source* src, Maps& maps, smm::Source* target
 	if (maps.sources.count(src)) {
 		return maps.sources[src];
 	} else {
-		Config conf = System::get().config;
+		Config& conf = Sys::conf();
 		if (!target)
 			target = new smm::Source(
 				conf.deep ? conf.out : conf.root,
@@ -324,7 +324,7 @@ smm::Source* translate_source(const Source* src, Maps& maps, smm::Source* target
 }
 
 smm::Source* translate(const Source* src) {
-	Config conf = System::get().config;
+	Config& conf = Sys::conf();
 	smm::Source* target = new smm::Source(
 		conf.deep ? conf.out : conf.root,
 		conf.deep ? conf.in  : conf.out

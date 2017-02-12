@@ -1,5 +1,5 @@
+#include "../../../include/rus/sys.hpp"
 #include "rus/parser/grammar.hpp"
-#include "rus/globals.hpp"
 
 namespace mdl { namespace rus { namespace parser {
 
@@ -14,7 +14,7 @@ uint inc_ind() { return ind ++; }
 
 Source* parse(string name) {
 	typedef parser::Grammar<LocationIter> Parser;
-	return mdl::parse<Source, Parser>(name, System::get().config.root, parser::unicode::space);
+	return mdl::parse<Source, Parser>(name, Sys::conf().root, parser::unicode::space);
 }
 
 }} // mdl::rus

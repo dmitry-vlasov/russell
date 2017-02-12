@@ -1,5 +1,5 @@
 
-#include "mm/globals.hpp"
+#include "../../../include/mm/sys.hpp"
 #include "mm/merge/grammar.hpp"
 
 namespace mdl { namespace mm { namespace merge {
@@ -31,16 +31,15 @@ namespace {
 	}
 }
 
-void parse(string path) {
+void Merger::read(Path in) {
 	string data;
-	ifstream in = open_smart(path, System::get().config.root);
-	read_smart(data, in);
+	in.read(data);
 	remove_commented_imports(data);
-	LocationIter iter(data.begin(), path);
-	LocationIter end(data.end(), path);
-	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space);
+	LocationIter iter(data.begin(), in.name);
+	LocationIter end(data.end(), in.name);
+	bool r = phrase_parse(iter, end, Grammar<LocationIter>(this), ascii::space);
 	if (!r || iter != end) {
-		throw Error("parsing failed", path);
+		throw Error("parsing failed", in.name);
 	}
 }
 

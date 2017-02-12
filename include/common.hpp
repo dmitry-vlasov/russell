@@ -1,6 +1,8 @@
 #pragma once
 
 #include <boost/program_options.hpp>
+#include <boost/any.hpp>
+#include <boost/variant.hpp>
 
 #include "std.hpp"
 #include "location.hpp"
@@ -20,35 +22,6 @@ template<class T> struct Undef<T*> {
 	static T*   get()      { return nullptr; }
 	static bool is(T* x)   { return x == nullptr; }
 	static void set(T*& x) { x = nullptr;  }
-};
-
-struct Table {
-	typedef map<string, uint> Table_;
-	typedef vector<string> Strings_;
-	Table() : strings(), table() { }
-	uint getInt(const string& str) const {
-		if (table.find(str) == table.end())
-			return -1;
-		else
-			return table.find(str)->second;
-	}
-	uint toInt(const string& str) {
-		if (table.find(str) == table.end()) {
-			int ind = table.size();
-			table[str] = ind;
-			strings.push_back(str);
-		}
-		return table[str];
-	}
-	const string& toStr (uint i) const {
-		if (i >= strings.size()) {
-			static string str = "<UNDEF>";
-			return str;
-		}
-		return strings[i];
-	}
-	Strings_ strings;
-	Table_   table;
 };
 
 class indent {
@@ -154,16 +127,8 @@ public :
 	virtual const char* what() const throw() {
 		return msg.c_str();
 	}
-	string   msg;
+	string msg;
 };
-
-inline string cut_outer_directory(string path) {
-	size_t slash_pos = path.find_first_of("/");
-	return path.substr(slash_pos == string::npos ? 0 : slash_pos + 1);
-}
-
-ifstream open_smart(string& path, string root);
-void read_smart(string& data, ifstream&);
 
 template<class T>
 void deep_write(T* target, auto get_cont, auto get_inc, auto is_inc) {
@@ -174,9 +139,9 @@ void deep_write(T* target, auto get_cont, auto get_inc, auto is_inc) {
 	to_write.push(target);
 	while (!to_write.empty()) {
 		Source* src = to_write.top();
-		if (!fs::exists(src->dir()))
-			fs::create_directories(src->dir());
-		ofstream out(src->path());
+		if (!fs::exists(src->path.dir()))
+			fs::create_directories(src->path.dir());
+		ofstream out(src->path.path());
 		out << *src << endl;
 		out.close();
 		written.insert(src);
@@ -192,6 +157,54 @@ void deep_write(T* target, auto get_cont, auto get_inc, auto is_inc) {
 	}
 }
 
+template<class T>
+void shallow_write(T* target) {
+	typedef T Source;
+	namespace fs = boost::filesystem;
+	if (!fs::exists(target->path.dir()))
+		fs::create_directories(target->path.dir());
+	ofstream out(target->path.path());
+	out << *target << endl;
+	out.close();
+}
+
+struct Path {
+	Path() : root(), name(), ext() { }
+	Path(const string& n, const string& r, const string& e) : root(r), name(n), ext(e) { }
+	Path(const string& n, const string& r = "") : root(r), name(), ext() {
+		boost::trim(root);
+		boost::trim(name);
+		boost::erase_last(root, "/");
+		name_ext(n);
+	}
+	Path(const Path& p) : root(p.root), name(p.name), ext(p.ext) { }
+	Path& operator = (const Path& p) {
+		root = p.root;
+		name = p.name;
+		ext = p.ext;
+		return *this;
+	}
+	string path() {
+		return (root.size() ? root + "/" : "") + name + (ext.size() ? "." + ext : "");
+	}
+	string dir() { string p = path(); return p.substr(0, p.find_last_of("/")) + "/"; }
+	void name_ext(const string& ne) {
+		int i = ne.find_last_of(".");
+		name = ne.substr(0, i);
+		ext.clear();
+		if (i != string::npos) ext = ne.substr(i + 1);
+	}
+	Path open();
+	void read(string& data);
+	void write(const string& data);
+	Path relative(const string& n) const {
+		return Path(n, root, ext);
+	}
+	string root;
+	string name;
+	string ext;
+};
+/*
 template<class Source, class Parser>
 void parse(Source*& src, string& data, auto space) {
 	LocationIter iter(data.begin(), src->name);
@@ -202,50 +215,29 @@ void parse(Source*& src, string& data, auto space) {
 }
 
 template<class Source, class Parser>
-Source* parse(string name, string root, auto space) {
-	ifstream in = open_smart(name, root);
-	Source* src = new Source(root, name);
-	read_smart(src->data, in);
+Source* parse(Path path, auto space) {
+	Source* src = new Source(path.open());
+	src->path.read(src->data);
 	parse<Source, Parser>(src, src->data, space);
 	return src;
 }
 
 template<class Source, class Parser, class Inclusion>
-Inclusion* include(string path, string root, auto space, Source* (get_src)(Inclusion*)) {
+Inclusion* include(Path path, auto space, Source* (get_src)(Inclusion*)) {
 	static map<string, Inclusion*> included;
-	if (included.count(path)) {
-		Inclusion* inc = included[path];
+	if (included.count(path.name)) {
+		Inclusion* inc = included[path.name];
 		return new Inclusion(get_src(inc), false);
 	} else {
-		//cout << "parsing src: " << path << endl;
-		string data;
-		string orig_path(path);
-		ifstream in = open_smart(path, root);
-		Source* src = new Source(root, path);
-		read_smart(src->data, in);
-
+		Source* src = new Source(path.open());
+		src->path.read(src->data);
 		Inclusion* inc = new Inclusion(src, true);
-		included[orig_path] = inc;
+		included[path.name] = inc;
 		parse<Source, Parser>(src, src->data, space);
 		return inc;
 	}
 }
-
-// Library, singleton, which contains a variety of deductive systems
-template<typename T>
-struct Lib {
-	typedef T System;
-	static const Lib& get() { return mod(); }
-	static Lib& mod() { static Lib lib; return lib; }
-
-	System& sys() { return systems[current]; }
-
-	map<string, System> systems;
-	string current;
-
-private:
-	Lib() : systems(), current() { }
-};
+*/
 
 // Configuration for a deductive system
 template<typename M, typename T>
@@ -254,58 +246,172 @@ struct Config {
 	typedef T Target;
 	Config() :
 	verbose(false), info(false), help(false), deep(false),
-	mode(Mode::DEFAULT), in(), root(), target(Target::DEFAULT) { }
+	in(), out(), mode(Mode::DEFAULT), target(Target::DEFAULT) { }
 
 	bool verbose;
 	bool info;
 	bool help;
 	bool deep;
 
-	Mode mode;
+	Path in;
+	Path out;
 
-	string in;
-	string out;
-	string root;
+	Mode   mode;
 	Target target;
 };
 
+struct Io {
+	virtual ~Io() { };
+	virtual ostream& out() = 0;
+	virtual ostream& err() = 0;
+	struct Std;
+};
+
+struct Io::Std : public Io {
+	virtual ~Std() { };
+	ostream& out() override { return cout; }
+	ostream& err() override { return cerr; }
+};
+
+struct Return {
+	Return(const string& t = "", any d = any()) : text(t), data(d) { }
+	string text;
+	any    data;
+};
+
+typedef vector<string> Args;
+typedef map<string, Timer> Timers;
+typedef function<Return (const Args&)> Action;
+
 // Template for a deductive system
-template<class S, class M, class C>
-struct System {
-	typedef S Source;
-	typedef M Math;
-	typedef C Config;
-	typedef map<string, Timer> Timers;
+template<class S, class Src, class Mth, class Cfg>
+struct Sys {
+	typedef Src Source;
+	typedef Mth Math;
+	typedef Cfg Config;
 
-	~ System() {
-		if (source) delete source;
-	}
+	template<class IO = Io::Std>
+	Sys(const string& n = "default") : name(n), lex(), math() { init<IO>(name); }
 
-	struct Lex {
+	class Lex {
+	struct Table;
+	public:
 		Table labels;
 		Table symbols;
 	};
 
-	Config  config;
-	Timers  timers;
+	string  name;
 	Lex     lex;
 	Math    math;
-	Source* source;
-	string  error;
 
-	static const System& get() { return mod(); }
-	static System& mod() { return Lib<System>::mod().sys();  }
+	map<string, Action> action;
+
+private:
+	// Library, singleton, which chooses one of the stored objects
+	template<typename T>
+	struct Lib;
+
+public:
+	static const S& get() { return mod(); }
+	static S& mod() { return Lib<S>::mod().access();  }
+	static Io& io() { return Lib<Io>::mod().access();  }
+	static Timers& timer() { return Lib<Timers>::mod().access();  }
+	static Config& conf() { return Lib<Config>::mod().access();  }
+
+	static void change(const string& name) {
+		if (!instances().count(name)) throw Error("no such sys instance");
+		Lib<S>::mod().current = name;
+		Lib<Io>::mod().current = name;
+		Lib<Timers>::mod().current = name;
+		Lib<Config>::mod().current = name;
+	}
+	template<class IO = Io::Std>
+	void init(const string& n = "default") {
+		name = n;
+		if (instances().count(name)) throw Error("sys instance already initialized");
+		instances().insert(name);
+		Lib<Io>::mod().init<IO>(name);
+		Lib<S>::mod().init(name);
+		Lib<Timers>::mod().init(name);
+		Lib<Config>::mod().init(name);
+	}
+
+private:
+	static set<string> instances() { static set<string> inst; return inst; }
+};
+
+template<class S, class Src, class Mth, class Cfg>
+struct Sys<S, Src, Mth, Cfg>::Lex::Table {
+	typedef map<string, uint> Table_;
+	typedef vector<string> Strings_;
+	Table() : strings(), table() { }
+	uint getInt(const string& str) const {
+		if (table.find(str) == table.end())
+			return -1;
+		else
+			return table.find(str)->second;
+	}
+	uint toInt(const string& str) {
+		if (table.find(str) == table.end()) {
+			int ind = table.size();
+			table[str] = ind;
+			strings.push_back(str);
+		}
+		return table[str];
+	}
+	const string& toStr (uint i) const {
+		if (i >= strings.size()) {
+			static string str = "<UNDEF>";
+			return str;
+		}
+		return strings[i];
+	}
+	Strings_ strings;
+	Table_   table;
+};
+
+template<class S, class Src, class Mth, class Cfg>
+template<typename T>
+struct Sys<S, Src, Mth, Cfg>::Lib {
+	static const Lib& get() { return mod(); }
+	static Lib& mod() { static Lib lib; return lib; }
+
+	void init(const string& curr) {
+		current = curr;
+		contents[current].reset(new T());
+	}
+	template<class TR>
+	void init(const string& curr) {
+		current = curr;
+		contents[current].reset(new TR());
+	}
+
+	T& access() {
+		assert(contents.count(current));
+		return *contents[current];
+	}
+	template<class TR>
+	T& access() {
+		assert(contents.count(current));
+		return *contents[current];
+	}
+	string current;
+
+private:
+	map<string, unique_ptr<T>> contents;
+	Lib() : contents(), current("default") { }
 };
 
 template<typename M, typename T>
 inline void initConf(const boost::program_options::variables_map& vm, Config<M, T>& conf) {
-	if (vm.count("in"))      conf.in   = vm["in"].as<string>();
-	if (vm.count("out"))     conf.out  = vm["out"].as<string>();
-	if (vm.count("root"))    conf.root = vm["root"].as<string>();
-	if (vm.count("verbose")) conf.verbose = true;
-	if (vm.count("deep"))    conf.deep = true;
-	if (vm.count("info"))    conf.info = true;
-	if (vm.count("help"))    conf.help = true;
+	if (vm.count("in"))       conf.in.name_ext(vm["in"].as<string>());
+	if (vm.count("out"))      conf.out.name_ext(vm["out"].as<string>());
+	if (vm.count("root-in"))  conf.in.root  = vm["root-in"].as<string>();
+	if (vm.count("root-out")) conf.out.root = vm["root-out"].as<string>();
+	if (vm.count("verbose"))  conf.verbose = true;
+	if (vm.count("deep"))     conf.deep = true;
+	if (vm.count("info"))     conf.info = true;
+	if (vm.count("help"))     conf.help = true;
 }
 
 inline void initOptions(boost::program_options::options_description& desc) {
@@ -314,7 +420,8 @@ inline void initOptions(boost::program_options::options_description& desc) {
 		("help,h",      "print help message")
 		("in,i", po::value<string>(),   "input file")
 		("out,o", po::value<string>(),  "output file")
-		("root,r", po::value<string>(), "root directory (for inclusions)")
+		("root-in", po::value<string>(), "input root directory (for inclusions)")
+		("root-out", po::value<string>(), "output root directory (for inclusions)")
 		("deep,d",      "deep translation")
 		("verbose,v",   "not be silent")
 		("info",        "info about math: timings, memory, stats")
@@ -327,6 +434,53 @@ string show_timer(const char* message, const string& name, const T& timers) {
 
 template<class T>
 void dump(const T& val) { cout << val; }
+
+template<class T>
+struct Table {
+	typedef T Type;
+	void add(uint n, Type* p = nullptr) {
+		if (!refs.count(n)) {
+			refs[n].data = p;
+		} else {
+			Data& d = refs[n];
+			if (d.data) throw Error("attempt to reuse live pointer");
+			d.data = p;
+			for (Type** u : d.users) *u = p;
+		}
+	}
+	void del(uint n) {
+		if (!refs.count(n)) throw Error("attempt to delete unknown label");
+		Data& d = refs[n];
+		if (!d.data) throw Error("attempt to delete null pointer");
+		d.data = nullptr;
+		for (Type** u : d.users) *u = nullptr;
+	}
+	void use(uint n, Type*& u) {
+		if (!refs.count(n)) throw Error("attempt to use unknown label");
+		Data& d = refs[n];
+		if (!d.data) throw Error("attempt to use null pointer");
+		d.users.insert(&u);
+		u = d.data;
+	}
+	void unuse(uint n, Type*& u) {
+		if (!refs.count(n)) throw Error("attempt to unuse unknown label");
+		Data& d = refs[n];
+		d.users.erase(&u);
+	}
+	Type* access(uint n) {
+		return refs.count(n) ? refs[n].data : nullptr;
+	}
+	bool has(uint n) const {
+		return refs.count(n);
+	}
+
+private :
+	struct Data {
+		Type* data;
+		set<Type**> users;
+	};
+	map<uint, Data> refs;
+};
 
 } // mdl
 

@@ -35,6 +35,7 @@ struct Section {
 		for (auto* i : incs)  delete i;
 	}
 	void save() const;
+
 	Type   type;
 	string header;
 	string name;
@@ -52,6 +53,16 @@ struct Section {
 	vector<Section*> parts;
 };
 
+struct Cutter {
+	void read(Path in);
+	void split();
+	void save(Path out);
+
+private:
+	unique_ptr<Section> source;
+};
+
+/*
 string show_all(const Section&);
 string show_contents(const Section&);
 inline ostream& operator << (ostream& os, const Section& sect) {
@@ -59,10 +70,15 @@ inline ostream& operator << (ostream& os, const Section& sect) {
 	return os;
 }
 
-Section* parse(const string& root, string in, const string& out);
+Section* parse(const Path& in, const Path& out);
 void split(Section* src);
 void save(Section* src);
+*/
 
-}}} // mdl::mm::cut
+} // namespace cut
+
+using cut::Cutter;
+
+}} // mdl::mm::cut
 
 

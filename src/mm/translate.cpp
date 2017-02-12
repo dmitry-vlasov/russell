@@ -1,9 +1,9 @@
 #include <boost/algorithm/string.hpp>
 
+#include "mm/sys.hpp"
 #include "smm/ast.hpp"
 #include "mm/ast.hpp"
 #include "mm/tree.hpp"
-#include "mm/globals.hpp"
 
 namespace mdl { namespace mm { namespace {
 
@@ -15,15 +15,25 @@ void gather_expr_vars(set<Symbol>& vars, const Vect& expr) {
 void gather_inner_vars(const set<Symbol>& fvars,
 	set<Symbol>& ivars, set<Symbol>& avars, const Proof* proof) {
 	if (!proof) return;
-	for (Ref n : proof->refs) {
-		if (n.type == Ref::FLOATING) {
-			Symbol v = n.val.flo->var();
+	for (Ref* n : proof->refs) {
+		if (n->type == Ref::FLOATING) {
+			Symbol v = n->val.flo->var();
 			avars.insert(v);
 			if (fvars.find(v) == fvars.end())
 				ivars.insert(v);
 		}
 	}
 }
+
+struct Scope {
+	deque<Variables*>  vars;
+	deque<Disjointed*> disj;
+	deque<Floating*>   flos;
+	deque<Essential*>  esss;
+	deque<Node>        args;
+};
+
+vector<Scope> scope_stack;
 
 struct Maps {
 	map<const mm::Theorem*,   smm::Assertion*> theorems;
@@ -34,6 +44,24 @@ struct Maps {
 	map<const mm::Source*,    smm::Source*>    sources;
 	Transform transform;
 };
+
+struct Context {
+	Maps maps;
+	vector<Scope> scope_stack;
+};
+
+Scope gather_scope(const vector<Scope>& scope_stack) {
+	Scope scope;
+	for (auto& s : scope_stack) {
+		for (auto v : s.vars) scope.vars.push_back(v);
+		for (auto d : s.disj) scope.disj.push_back(d);
+		for (auto f : s.flos) scope.flos.push_back(f);
+		for (auto e : s.esss) scope.esss.push_back(e);
+		for (auto a : s.args) scope.args.push_back(a);
+	}
+	return scope;
+}
+
 
 // Replace variable sets with single set, which contains only needed variables.
 //
@@ -74,8 +102,7 @@ void reduce_disjointed(smm::Assertion* ass, const set<Symbol>& all_vars) {
 // Remove floatings, which variable is not needed, and switch those flos,
 // which are used only in proof to inner.
 //
-void reduce_floatings(smm::Assertion* ass, const set<Symbol>& flo_vars,
-	const set<Symbol>& inn_vars, Maps& maps) {
+void reduce_floatings(smm::Assertion* ass, const set<Symbol>& flo_vars, const set<Symbol>& inn_vars, Context& ctx) {
 	vector<smm::Floating*> red_flos;
 	vector<smm::Inner*>    red_inns;
 	uint flo_ind = 0;
@@ -91,12 +118,12 @@ void reduce_floatings(smm::Assertion* ass, const set<Symbol>& flo_vars,
 			red_inns.push_back(new smm::Inner {flo->index, flo->expr});
 			const Floating* mm_flo =
 				std::find_if(
-				maps.floatings.begin(),
-				maps.floatings.end(),
+				ctx.maps.floatings.begin(),
+				ctx.maps.floatings.end(),
 				[flo](std::pair<const Floating*, smm::Floating*> p) { return p.second == flo; }
 				)->first;
-			maps.floatings.erase(mm_flo);
-			maps.inners[mm_flo] = red_inns.back();
+			ctx.maps.floatings.erase(mm_flo);
+			ctx.maps.inners[mm_flo] = red_inns.back();
 		}
 		delete flo;
 	}
@@ -174,36 +201,36 @@ void reduce_permutation(smm::Assertion* ass, const set<Symbol>& needed, ArgMap& 
 	}
 }
 
-smm::Proof* translate_proof(Maps& maps, const Proof* mproof) {
+smm::Proof* translate_proof(Context& ctx, const Proof* mproof) {
 	smm::Proof* sproof = new smm::Proof();
-	for (auto& node : mproof->refs) {
-		Ref::Value val = node.val;
-		switch (node.type) {
+	for (auto ref : mproof->refs) {
+		Ref::Value val = ref->val;
+		switch (ref->type) {
 		case Ref::FLOATING:
-			if (maps.floatings.count(val.flo))
-				sproof->refs.push_back(smm::Ref(maps.floatings[val.flo]));
+			if (ctx.maps.floatings.count(val.flo))
+				sproof->refs.push_back(new smm::Ref(ctx.maps.floatings[val.flo]));
 			else
-				sproof->refs.push_back(smm::Ref(maps.inners[val.flo]));
+				sproof->refs.push_back(new smm::Ref(ctx.maps.inners[val.flo]));
 			break;
 		case Ref::ESSENTIAL:
-			sproof->refs.push_back(smm::Ref(maps.essentials[val.ess])); break;
+			sproof->refs.push_back(new smm::Ref(ctx.maps.essentials[val.ess])); break;
 		case Ref::AXIOM:
-			sproof->refs.push_back(smm::Ref(maps.axioms[val.ax], true)); break;
+			sproof->refs.push_back(new smm::Ref(val.ax->label, true)); break;
 		case Ref::THEOREM:
-			sproof->refs.push_back(smm::Ref(maps.theorems[val.th], false)); break;
+			sproof->refs.push_back(new smm::Ref(val.th->label, false)); break;
 		default : assert(false && "impossible"); break;
 		}
 	}
 	return sproof;
 }
 
-void reduce(Maps& maps, smm::Assertion* ass, ArgMap& args, const Proof* proof) {
+void reduce(Context& ctx, smm::Assertion* ass, ArgMap& args, const Proof* proof) {
 	// Gather the variables, used in assertion hypotheses and statement (header).
 	set<Symbol> flo_vars;
 	for (auto ess : ass->essential) {
 		gather_expr_vars(flo_vars, ess->expr);
 	}
-	gather_expr_vars(flo_vars, ass->prop.expr);
+	gather_expr_vars(flo_vars, ass->prop->expr);
 
 	// Gather the variables, used in proof but not in header, and collect all vars.
 	set<Symbol> inn_vars;
@@ -213,59 +240,37 @@ void reduce(Maps& maps, smm::Assertion* ass, ArgMap& args, const Proof* proof) {
 	reduce_variables(ass, all_vars);
 	reduce_disjointed(ass, all_vars);
 	reduce_permutation(ass, flo_vars, args);
-	reduce_floatings(ass, flo_vars, inn_vars, maps);
+	reduce_floatings(ass, flo_vars, inn_vars, ctx);
 	reindex_essentials(ass);
 
-	maps.transform[ass->prop.label] = args.create_permutation();
+	ctx.maps.transform[ass->prop->label] = args.create_permutation();
 }
 
-smm::Proof* transform_proof(Maps& maps, set<uint>& red, const Proof* proof) {
+smm::Proof* transform_proof(Context& ctx, set<uint>& red, const Proof* proof) {
 	Proof* tree = to_tree(proof);
 	if (tree == nullptr)
 		return nullptr;
 	reduce(tree, red);
-	transform(tree, maps.transform);
+	transform(tree, ctx.maps.transform);
 	Proof* rpn = to_rpn(tree);
-	smm::Proof* pr = translate_proof(maps, rpn);
+	smm::Proof* pr = translate_proof(ctx, rpn);
 	delete tree;
 	delete rpn;
 	return pr;
 }
 
-struct Scope {
-	deque<Variables*>  vars;
-	deque<Disjointed*> disj;
-	deque<Floating*>   flos;
-	deque<Essential*>  esss;
-	deque<Node>        args;
-};
-
-vector<Scope> scope_stack;
-
-Scope gather_scope() {
-	Scope scope;
-	for (auto& s : scope_stack) {
-		for (auto v : s.vars) scope.vars.push_back(v);
-		for (auto d : s.disj) scope.disj.push_back(d);
-		for (auto f : s.flos) scope.flos.push_back(f);
-		for (auto e : s.esss) scope.esss.push_back(e);
-		for (auto a : s.args) scope.args.push_back(a);
-	}
-	return scope;
-}
-
-void add(Maps& maps, const Scope& scope, smm::Assertion* ass) {
+void add(Context& ctx, const Scope& scope, smm::Assertion* ass) {
 	for (auto var : scope.vars)
 		ass->variables.push_back(new smm::Variables { var->expr });
 	for (auto dis : scope.disj)
 		ass->disjointed.push_back(new smm::Disjointed { dis->expr });
 	for (auto ess : scope.esss) {
 		ass->essential.push_back(new smm::Essential {ess->label, ess->expr });
-		maps.essentials[ess] = ass->essential.back();
+		ctx.maps.essentials[ess] = ass->essential.back();
 	}
 	for (auto flo : scope.flos) {
 		ass->floating.push_back(new smm::Floating {flo->label, flo->expr });
-		maps.floatings[flo] = ass->floating.back();
+		ctx.maps.floatings[flo] = ass->floating.back();
 	}
 }
 
@@ -290,37 +295,37 @@ ArgMap arg_map(const deque<Node>& ar_orig) {
 	return a_map;
 }
 
-smm::Assertion* translate_ass(Maps& maps, const Node& n, const Block* block)  {
+smm::Assertion* translate_ass(Context& ctx, const Node& n, const Block* block)  {
 	smm::Assertion* ass = new smm::Assertion();
 	static set<uint> red;
-	ass->prop = smm::Proposition {n.type == Node::AXIOM, n.label(), n.expr()};
+	ass->prop = new smm::Proposition(n.type == Node::AXIOM, n.label(), n.expr());
 
-	Scope scope = gather_scope();
-	add(maps, scope, ass);
+	Scope scope = gather_scope(ctx.scope_stack);
+	add(ctx, scope, ass);
 	ArgMap args = arg_map(scope.args);
 
-	reduce(maps, ass, args, n.proof());
+	reduce(ctx, ass, args, n.proof());
 	n.arity() = ass->essential.size() + ass->floating.size();
 	if (n.type == Node::THEOREM) {
-		ass->proof = transform_proof(maps, red, n.val.th->proof);
+		ass->proof = transform_proof(ctx, red, n.val.th->proof);
 		if (!ass->proof) {
 			// Dummy (redundant) theorem
 			red.insert(n.label());
 			delete ass;
 			ass = nullptr;
 		} else {
-			maps.theorems[n.val.th] = ass;
+			ctx.maps.theorems[n.val.th] = ass;
 		}
 	} else {
-		maps.axioms[n.val.ax] = ass;
+		ctx.maps.axioms[n.val.ax] = ass;
 	}
 	return ass;
 }
 
-void translate_block(Maps& maps, const Block* source, smm::Source* target);
-smm::Source* translate_source(Maps& maps, const Source* src, smm::Source* target = nullptr);
+void translate_block(Context& ctx, const Block* source, smm::Source* target);
+smm::Source* translate_source(Context& ctx, const Source* src);
 
-void translate_node(Maps& maps, const Node& node, const Block* block, smm::Source* target) {
+void translate_node(Context& ctx, const Node& node, const Block* block, smm::Source* target) {
 	switch(node.type) {
 	case Node::COMMENT: {
 		smm::Comment* c = new smm::Comment(node.val.com->text);
@@ -332,18 +337,18 @@ void translate_node(Maps& maps, const Node& node, const Block* block, smm::Sourc
 	} break;
 	case Node::THEOREM:
 	case Node::AXIOM: {
-		smm::Assertion* ass = translate_ass(maps, node, block);
+		smm::Assertion* ass = translate_ass(ctx, node, block);
 		if (ass) target->contents.push_back(smm::Node(ass));
 	} break;
 	case Node::BLOCK:
 		node.val.blk->ind = node.ind;
 		scope_stack.push_back(Scope());
-		translate_block(maps, node.val.blk, target);
+		translate_block(ctx, node.val.blk, target);
 		scope_stack.pop_back();
 		break;
 	case Node::INCLUSION: {
-		smm::Source* s = translate_source(maps, node.val.inc->source);
-		smm::Inclusion* i = new smm::Inclusion(s, node.val.inc->primary);
+		smm::Source* s = translate_source(ctx, node.val.inc->source);
+		smm::Inclusion* i = new smm::Inclusion(s->label);
 		target->contents.push_back(smm::Node(i));
 	} break;
 	case Node::VARIABLES:
@@ -362,39 +367,34 @@ void translate_node(Maps& maps, const Node& node, const Block* block, smm::Sourc
 	}
 }
 
-void translate_block(Maps& maps, const Block* source, smm::Source* target) {
+void translate_block(Context& ctx, const Block* source, smm::Source* target) {
 	for (auto& node : source->contents) {
-		translate_node(maps, node, source, target);
+		translate_node(ctx, node, source, target);
 	}
 }
 
-smm::Source* translate_source(Maps& maps, const Source* src, smm::Source* target) {
-	if (maps.sources.count(src)) {
-		return maps.sources[src];
+Path translate_path(Path path, bool deep = false) {
+	return Path(deep ? path.name : Sys::conf().in);
+}
+
+
+smm::Source* translate_source(Context& ctx, const Source* src) {
+	if (ctx.maps.sources.count(src)) {
+		return ctx.maps.sources[src];
 	} else {
-		Config conf = System::get().config;
-		if (!target)
-			target = new smm::Source(
-				conf.deep ? conf.out : conf.root,
-				src->name
-			);
-		maps.sources[src] = target;
-		translate_block(maps, src->block, target);
+		smm::Source* target = new smm::Source(src->label);
+		ctx.maps.sources[src] = target;
+		translate_block(ctx, src->block, target);
 		return target;
 	}
 }
 
-}
+} // anonymous
 
 smm::Source* translate(const Source* source) {
-	Config conf = System::get().config;
-	smm::Source* target = new smm::Source(
-		conf.deep ? conf.out : conf.root,
-		conf.deep ? conf.in  : conf.out
-	);
-	Maps maps;
+	Context context;
 	scope_stack.push_back(Scope());
-	translate_block(maps, source->block, target);
+	smm::Source* target = translate_source(context, source);
 	scope_stack.pop_back();
 	return target;
 }

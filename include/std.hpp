@@ -34,6 +34,7 @@
 #include <memory>
 #include <unordered_map>
 #include <unordered_set>
+#include <functional>
 
 #include <cstdlib>
 #include <cstring>
@@ -60,6 +61,8 @@
 
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/any.hpp>
+#include <boost/variant.hpp>
 
 size_t get_total_mem();
 size_t get_peak_RSS();
@@ -103,6 +106,10 @@ namespace mdl {
 	using std::make_unique;
 
 	using std::for_each;
+	using std::function;
+
+	using boost::any;
+	typedef vector<any> many;
 }
 
 #define UNDEF_UINT 0xFFFFFFFF

@@ -19,11 +19,15 @@ struct Disjointed {
 };
 
 struct Essential {
+	Essential(uint l, const Vect& e);
+	~Essential();
 	uint label;
 	Vect expr;
 };
 
 struct Floating  {
+	Floating(uint l, const Vect& e);
+	~Floating();
 	Symbol type() const { return expr[0]; }
 	Symbol var() const { return expr[1]; }
 	uint label;
@@ -31,6 +35,8 @@ struct Floating  {
 };
 
 struct Axiom {
+	Axiom(uint l, const Vect& e);
+	~Axiom();
 	uint label;
 	Vect expr;
 	uint arity;
@@ -39,7 +45,7 @@ struct Axiom {
 class Proof;
 
 struct Theorem {
-	Theorem() : label(-1), expr(), arity(0), proof(nullptr) { }
+	Theorem(uint l, const Vect& e, Proof* p = nullptr);
 	~Theorem();
 	uint   label;
 	Vect   expr;
@@ -58,21 +64,19 @@ struct Ref {
 		PROOF
 	};
 	union Value {
-		void*       non;
-		Floating*   flo;
-		Essential*  ess;
-		Axiom*      ax;
-		Theorem*    th;
-		Proof*      prf;
+		Value() : non(nullptr) { }
+		void*      non;
+		Floating*  flo;
+		Essential* ess;
+		Axiom*     ax;
+		Theorem*   th;
+		Proof*     prf;
 	};
 
-	Ref()              : type(NONE),       val() { val.non = nullptr; }
-	Ref(Floating* f)   : type(FLOATING),   val() { val.flo = f; }
-	Ref(Essential* e)  : type(ESSENTIAL),  val() { val.ess = e; }
-	Ref(Axiom* a)      : type(AXIOM),      val() { val.ax  = a; }
-	Ref(Theorem* t)    : type(THEOREM),    val() { val.th  = t; }
-	Ref(Proof* p)      : type(PROOF),      val() { val.prf = p; }
-	void destroy();
+	Ref(uint label);
+	Ref(const Ref&);
+	Ref(Proof* p) : type(PROOF), val() { val.prf = p; }
+	~Ref();
 
 	uint label() const {
 		switch (type) {
@@ -99,9 +103,11 @@ struct Proof {
 		TREE,
 		RPN
 	};
+	Proof(const vector<Ref*>&);
+	Proof(vector<Ref*>&&);
 	Proof(Type t = RPN) : refs(), type(t) { }
 	~Proof();
-	vector<Ref> refs;
+	vector<Ref*> refs;
 	Type        type;
 };
 
@@ -209,31 +215,24 @@ struct Block {
 };
 
 struct Source {
-	Source(const string& r, const string& n) : root(r), name(n), data(), block(nullptr) {
-		boost::erase_last(name, ".smm");
-		boost::erase_last(name, ".mm");
-		boost::erase_last(name, ".rus");
-	}
-	~Source() { if (block) delete block; }
-	string root;
-	string name;
+	Source(uint label);
+	~Source();
+
+	uint   label;
 	string data;
-	string path() { return (root.size() ? root + "/" + name : name) + ".mm"; }
-	string dir() { string p = path(); return p.substr(0, p.find_last_of("/")) + "/"; }
 	Block* block;
+
+	Path path();
+	string name();
+	void read();
+	void write();
 };
 
 struct Inclusion {
-	Inclusion(Source* src, bool prim) : source(src), primary(prim) { }
-	~ Inclusion() { if (primary && source) delete source; }
+	Inclusion(uint label);
+	~Inclusion();
 	Source* source;
-	bool primary;
 };
-
-inline Theorem::~Theorem() {
-	if (proof)
-		delete proof;
-}
 
 inline void Node::destroy() {
 	switch(type) {
@@ -253,16 +252,21 @@ inline void Node::destroy() {
 	}
 	type = NONE;
 }
-
-inline Proof::~Proof() {
-	if (type == TREE) {
-		for (auto& r : refs) {
-			if (r.type == Ref::PROOF) {
-				delete r.val.prf;
-			}
-		}
+/*
+inline Ref::~Ref() {
+	switch(type) {
+	case NONE: break;
+	case FLOATING:   delete val.flo; break;
+	case ESSENTIAL:  delete val.ess; break;
+	case AXIOM:      delete val.ax;  break;
+	case THEOREM:    delete val.th;  break;
+	case PROOF:      delete val.prf; break;
+	default : assert(false && "impossible"); break;
 	}
+	type = NONE;
 }
+*/
+
 
 ostream& operator << (ostream& os, const Node& node);
 ostream& operator << (ostream& os, const Constants& cst);
