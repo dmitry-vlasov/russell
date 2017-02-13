@@ -78,7 +78,7 @@ static void mark_vars(Expr& ex, VarStack& var_stack) {
 		if (is_const && is_var)
 			throw Error("constant symbol is marked as variable");
 		if (!is_const && !is_var) {
-			string msg = "symbol " + System::get().lex.symbols.toStr(s.lit) + " ";
+			string msg = "symbol " + Lex::toStr(s.lit) + " ";
 			msg += " neither constant nor variable";
 			throw Error(msg);
 		}
@@ -93,11 +93,11 @@ inline Type* find_type(uint id, Location* loc = nullptr) {
 }
 
 inline uint create_id(string pref, string s1, string s2) {
-	return System::mod().lex.labels.toInt(pref + "_" + s1 + "_" + s2);
+	return Lex::toInt(pref + "_" + s1 + "_" + s2);
 }
 
 inline Symbol create_symbol(string str, Type* tp) {
-	return Symbol(System::mod().lex.symbols.toInt(str), tp, tp);
+	return Symbol(Lex::toInt(str), tp, tp);
 }
 
 Rule* create_super(Type* inf, Type* sup) {
@@ -183,7 +183,7 @@ struct AddToMath {
 	void operator()(Proof* p) const {
 		//cout << "pr: " << show_id(p->thm->ass.id) << endl;
 		p->has_id = !Undef<uint>::is(p->id);
-		if (!p->has_id) p->id = System::mod().lex.labels.toInt(to_string(p->ind));
+		if (!p->has_id) p->id = Lex::toInt(to_string(p->ind));
 		System::mod().math.proofs[p->id] = p;
 		enqueue_expressions(p);
 	}
@@ -194,7 +194,7 @@ struct SymbToInt {
 	struct result { typedef uint type; };
 	uint operator()(const std::vector<uint>& s) const {
 		string symb(s.begin(), s.end());
-		return System::mod().lex.symbols.toInt(symb);
+		return Lex::toInt(symb);
 	}
 };
 
@@ -203,7 +203,7 @@ struct IdToInt {
 	struct result { typedef uint type; };
 	uint operator()(const std::vector<uint>& id) const {
 		string id_str(id.begin(), id.end());
-		return System::mod().lex.labels.toInt(id_str);
+		return Lex::toInt(id_str);
 	}
 };
 
@@ -220,7 +220,7 @@ struct CreateSymb {
 	struct result { typedef Symbol type; };
 	Symbol operator()(const std::vector<uint>& s) const {
 		string symb(s.begin(), s.end());
-		return Symbol(System::mod().lex.symbols.toInt(symb));
+		return Symbol(Lex::toInt(symb));
 	}
 };
 
@@ -358,8 +358,8 @@ struct AssembleDef {
 	template <typename T1, typename T2>
 	struct result { typedef void type; };
 	void operator()(Def* d, VarStack& varsStack) const {
-		static Symbol dfm(System::mod().lex.symbols.toInt("defiendum"));
-		static Symbol dfs(System::mod().lex.symbols.toInt("definiens"));
+		static Symbol dfm(Lex::toInt("defiendum"));
+		static Symbol dfs(Lex::toInt("definiens"));
 		Prop* prop = new Prop;
 		for (auto s : d->prop.symbols) {
 			if (s == dfm) {

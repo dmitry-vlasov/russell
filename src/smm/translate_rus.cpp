@@ -106,7 +106,7 @@ void translate_constants(const Constants* consts, State& state) {
 }
 
 inline bool is_turnstile(Symbol s) {
-	Symbol t(System::mod().lex.symbols.toInt("|-"));
+	Symbol t(Lex::toInt("|-"));
 	return s == t;
 }
 
@@ -149,8 +149,8 @@ rus::Type* translate_type(Symbol type_sy, State& state) {
 	if (state.types.count(type_sy))
 		return state.types.find(type_sy)->second;
 	else {
-		string type_str = System::get().lex.symbols.toStr(type_sy.lit);
-		uint type_id = System::mod().lex.labels.toInt(type_str);
+		string type_str = Lex::toStr(type_sy.lit);
+		uint type_id = Lex::toInt(type_str);
 		rus::Type* type = new rus::Type { state.ind ++, type_id };
 		state.types[type_sy] = type;
 		state.theory.top()->nodes.push_back(type);
@@ -269,14 +269,14 @@ void translate_axiom(const Assertion* ass, State& state) {
 }
 
 
-inline Symbol open_brace() { Symbol s(System::mod().lex.symbols.toInt("{")); return s; }
-inline Symbol close_brace() {Symbol s(System::mod().lex.symbols.toInt("}")); return s; }
-inline Symbol open_brack() { Symbol s(System::mod().lex.symbols.toInt("(")); return s; }
-inline Symbol close_brack() { Symbol s(System::mod().lex.symbols.toInt(")")); return s; }
-inline Symbol eqty() { Symbol s(System::mod().lex.symbols.toInt("=")); return s; }
-inline Symbol eqiv() { Symbol s(System::mod().lex.symbols.toInt("<->")); return s; }
-inline Symbol dfm() { Symbol s(System::mod().lex.symbols.toInt("defiendum")); return s; }
-inline Symbol dfs() { Symbol s(System::mod().lex.symbols.toInt("definiens")); return s; }
+inline Symbol open_brace() { Symbol s(Lex::toInt("{")); return s; }
+inline Symbol close_brace() {Symbol s(Lex::toInt("}")); return s; }
+inline Symbol open_brack() { Symbol s(Lex::toInt("(")); return s; }
+inline Symbol close_brack() { Symbol s(Lex::toInt(")")); return s; }
+inline Symbol eqty() { Symbol s(Lex::toInt("=")); return s; }
+inline Symbol eqiv() { Symbol s(Lex::toInt("<->")); return s; }
+inline Symbol dfm() { Symbol s(Lex::toInt("defiendum")); return s; }
+inline Symbol dfs() { Symbol s(Lex::toInt("definiens")); return s; }
 
 inline void count_br(Symbol s, uint& brack_depth, uint& brace_depth) {
 	if (s == open_brace())  ++ brace_depth;
@@ -346,7 +346,7 @@ void translate_def(const Assertion* ass, State& state) {
 }
 
 bool is_def(const Assertion* ass) {
-	if (System::get().lex.labels.toStr(ass->prop.label).substr(0,3) != "df-") return false;
+	if (Lex::toStr(ass->prop.label).substr(0,3) != "df-") return false;
 	const Vect& ex = ass->prop.expr;
 	auto eq_pos = eq_position(ex);
 	return eq_pos != ex.end();
@@ -496,10 +496,10 @@ rus::Source* translate_to_rus(const Source* source) {
 	state.type_wff = nullptr;
 	state.type_set = nullptr;
 	state.type_class = nullptr;
-	state.redundant_consts.insert(System::get().lex.symbols.getInt("wff"));
-	state.redundant_consts.insert(System::get().lex.symbols.getInt("set"));
-	state.redundant_consts.insert(System::get().lex.symbols.getInt("class"));
-	state.redundant_consts.insert(System::get().lex.symbols.getInt("|-"));
+	state.redundant_consts.insert(Lex::getInt("wff"));
+	state.redundant_consts.insert(Lex::getInt("set"));
+	state.redundant_consts.insert(Lex::getInt("class"));
+	state.redundant_consts.insert(Lex::getInt("|-"));
 	translate_source(source, state, target);
 	return target;
 }

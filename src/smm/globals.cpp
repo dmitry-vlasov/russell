@@ -4,10 +4,10 @@
 namespace mdl {
 
 string show_sy(Symbol symb) {
-	return smm::System::get().lex.symbols.toStr(symb.lit);
+	return Lex::toStr(symb.lit);
 }
 string show_id(uint lab) {
-	return smm::System::get().lex.labels.toStr(lab);
+	return Lex::toStr(lab);
 }
 
 namespace smm {
@@ -29,7 +29,7 @@ static bool parse(System& sys) {
 static bool verify(System& sys) {
 	try {
 		sys.timers["verify"].start();
-		smm::verify(sys.math.assertions);
+		smm::verify();
 		sys.timers["verify"].stop();
 		return true;
 	} catch (Error& err) {

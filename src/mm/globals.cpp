@@ -9,10 +9,10 @@
 namespace mdl {
 
 string show_sy(Symbol symb) {
-	return mm::System::get().lex.symbols.toStr(symb.lit);
+	return Lex::toStr(symb.lit);
 }
 string show_id(uint lab) {
-	return mm::System::get().lex.labels.toStr(lab);
+	return Lex::toStr(lab);
 }
 
 namespace mm {
@@ -21,7 +21,7 @@ Source* parse_spirit(string path);
 Source* parse_peg(string path);
 
 Source* parse(string path) {
-	return parse_peg(path);
+	return parse_spirit(path);
 }
 
 namespace {

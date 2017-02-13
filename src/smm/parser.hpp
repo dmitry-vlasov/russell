@@ -63,7 +63,7 @@ struct AddToMath {
 		markVars(ass->variables, ass->inner);
 		markVars(ass->variables, ass->essential);
 		markVars(ass->variables, ass->prop.expr);
-		System::mod().math.assertions.push_back(ass);
+		System::mod().math.assertions[ass->prop.label] = ass;
 	}
 	void operator()(Constants* c) const {
 		for (auto symb : c->expr)
@@ -76,7 +76,7 @@ struct CreateLabel {
 	struct result { typedef uint type; };
 	uint operator()(const std::vector<char>& lab) const {
 		string label(lab.begin(), lab.end());
-		return System::mod().lex.labels.toInt(label);
+		return Lex::toInt(label);
 	}
 };
 
@@ -85,7 +85,7 @@ struct CreateSymb {
 	struct result { typedef Symbol type; };
 	Symbol operator()(const std::vector<char>& s) const {
 		string symb(s.begin(), s.end());
-		return Symbol(System::mod().lex.symbols.toInt(symb));
+		return Lex::toInt(symb);
 	}
 };
 
@@ -140,8 +140,14 @@ struct CreateRef {
     	case Ref::ESSENTIAL: return Ref(ass->essential[ind]);
     	case Ref::FLOATING:  return Ref(ass->floating[ind]);
     	case Ref::INNER:     return Ref(ass->inner[ind]);
-    	case Ref::AXIOM:     return Ref(System::get().math.assertions[ind], true);
-    	case Ref::THEOREM:   return Ref(System::get().math.assertions[ind], false);
+    	case Ref::AXIOM:
+    		if (!System::mod().math.assertions.count(ind))
+    			throw Error("cannot find assertion", Lex::toStr(ind));
+    		return Ref(System::mod().math.assertions[ind], true);
+    	case Ref::THEOREM:
+    		if (!System::mod().math.assertions.count(ind))
+    			throw Error("cannot find assertion", Lex::toStr(ind));
+    		return Ref(System::mod().math.assertions[ind], false);
     	default : assert(false && "impossible");
     	}
     	return Ref(); // pacifying compiler

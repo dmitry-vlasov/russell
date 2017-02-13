@@ -83,7 +83,7 @@ struct CreateLabel {
 	uint operator()(const std::vector<char>& lab) const {
 		string label(lab.begin(), lab.end());
 		for (char& ch : label) ch = (ch == '.') ? '_' : ch;
-		return System::mod().lex.labels.toInt(label);
+		return Lex::toInt(label);
 	}
 };
 
@@ -92,7 +92,7 @@ struct CreateSymb {
 	struct result { typedef Symbol type; };
 	Symbol operator()(const std::vector<char>& s) const {
 		string symb(s.begin(), s.end());
-		return Symbol(System::mod().lex.symbols.toInt(symb));
+		return Lex::toInt(symb);
 	}
 };
 
@@ -127,7 +127,7 @@ struct CreateRef {
 		else if (math.theorems.count(lab))
 			return Ref(math.theorems[lab]);
 		else
-			throw Error("unknown label in proof", System::get().lex.labels.toStr(lab));
+			throw Error("unknown label in proof", Lex::toStr(lab));
 	}
 };
 

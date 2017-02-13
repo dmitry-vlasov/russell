@@ -23,8 +23,8 @@ static void checkDisjPair(const Vect& ex1, const Vect& ex2, const Assertion* th,
 			if (s_1.var && s_2.var && !areDisjointed(th, s_1.lit, s_2.lit)) {
 				string msg = "inherited disjointed violation, vars: ";
 				msg += show_sy(s_1) + " and " + show_sy(s_2) + " ";
-				msg += "are not disjointed in " + System::get().lex.labels.toStr(th->prop.label) + ", ";
-				msg += "while claimed to be disjointed in " + System::get().lex.labels.toStr(ass->prop.label);
+				msg += "are not disjointed in " + Lex::toStr(th->prop.label) + ", ";
+				msg += "while claimed to be disjointed in " + Lex::toStr(ass->prop.label);
 				throw Error("verification", msg, &th->loc);
 			}
 		}
@@ -128,8 +128,8 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Vect>& expr_s
 	for (auto flo : boost::adaptors::reverse(ass->floating)) {
 		if (expr_stack.empty()) {
 			string msg = "empty stack (floating):\n";
-			msg += "theorem " + System::get().lex.labels.toStr(th->prop.label) + "\n";
-			msg += "assertion " + System::get().lex.labels.toStr(ass->prop.label) + "\n";
+			msg += "theorem " + Lex::toStr(th->prop.label) + "\n";
+			msg += "assertion " + Lex::toStr(ass->prop.label) + "\n";
 			throw Error("verification", msg, &th->loc);
 		}
 		sub[flo->var()] = expr_stack.top();
@@ -138,8 +138,8 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Vect>& expr_s
 	for (auto ess : boost::adaptors::reverse(ass->essential)) {
 		if (expr_stack.empty()) {
 			string msg = "empty stack (essential):\n";
-			msg += "theorem " + System::get().lex.labels.toStr(th->prop.label) + "\n";
-			msg += "assertion " + System::get().lex.labels.toStr(ass->prop.label) + "\n";
+			msg += "theorem " + Lex::toStr(th->prop.label) + "\n";
+			msg += "assertion " + Lex::toStr(ass->prop.label) + "\n";
 			throw Error("verification", msg, &th->loc);
 		}
 		if (apply(sub, ess->expr) != expr_stack.top()) {
@@ -147,8 +147,8 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Vect>& expr_s
 			msg += show_ex(apply(sub, ess->expr)) + "\n";
 			msg += "and\n";
 			msg += show_ex(expr_stack.top()) + "\n";
-			msg += "theorem " + System::get().lex.labels.toStr(th->prop.label) + "\n";
-			msg += "assertion " + System::get().lex.labels.toStr(ass->prop.label) + "\n";
+			msg += "theorem " + Lex::toStr(th->prop.label) + "\n";
+			msg += "assertion " + Lex::toStr(ass->prop.label) + "\n";
 			throw Error("verification", msg, &th->loc);
 		}
 		expr_stack.pop();
@@ -157,7 +157,7 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Vect>& expr_s
 	expr_stack.push(apply(sub, ass->prop.expr));
 }
 
-static void assertion(const Assertion* ass, const vector<Assertion*>& theory) {
+static void assertion(const Assertion* ass) {
 	checkSymbols(ass);
 	stack<Vect> expr_stack;
 	const Proof* proof = ass->proof;
@@ -181,14 +181,14 @@ static void assertion(const Assertion* ass, const vector<Assertion*>& theory) {
 	}
 }
 
-static void math(const vector<Assertion*>& theory) {
-	for (auto ass : theory) {
-		assertion(ass, theory);
+static void math() {
+	for (auto p : System::mod().math.assertions) {
+		assertion(p.second);
 	}
 }
 
-void verify(const vector<Assertion*>& theory) {
-	math(theory);
+void verify() {
+	math();
 }
 
 }} // mdl::smm::verify

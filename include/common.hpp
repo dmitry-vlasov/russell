@@ -22,17 +22,21 @@ template<class T> struct Undef<T*> {
 	static void set(T*& x) { x = nullptr;  }
 };
 
-struct Table {
-	typedef map<string, uint> Table_;
-	typedef vector<string> Strings_;
-	Table() : strings(), table() { }
-	uint getInt(const string& str) const {
+struct Lex {
+	static uint getInt(const string& str) { return get().getIndex(str); }
+	static uint toInt(const string& str) { return get().toIndex(str); }
+	static const string& toStr (uint i) { return get().toString(i); }
+
+private:
+	Lex() : strings(), table() { }
+	static Lex& get() { static Lex lex; return lex; }
+	uint getIndex(const string& str) const {
 		if (table.find(str) == table.end())
 			return -1;
 		else
 			return table.find(str)->second;
 	}
-	uint toInt(const string& str) {
+	uint toIndex(const string& str) {
 		if (table.find(str) == table.end()) {
 			int ind = table.size();
 			table[str] = ind;
@@ -40,15 +44,15 @@ struct Table {
 		}
 		return table[str];
 	}
-	const string& toStr (uint i) const {
+	const string& toString(uint i) const {
 		if (i >= strings.size()) {
 			static string str = "<UNDEF>";
 			return str;
 		}
 		return strings[i];
 	}
-	Strings_ strings;
-	Table_   table;
+	vector<string>    strings;
+	map<string, uint> table;
 };
 
 class indent {
@@ -281,14 +285,8 @@ struct System {
 		if (source) delete source;
 	}
 
-	struct Lex {
-		Table labels;
-		Table symbols;
-	};
-
 	Config  config;
 	Timers  timers;
-	Lex     lex;
 	Math    math;
 	Source* source;
 	string  error;

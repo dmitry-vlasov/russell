@@ -4,15 +4,11 @@
 namespace mdl { namespace smm {
 
 inline rus::Const make_const(const char* ascii, const char* unicode, const char* latex) {
-	return rus::Const { 0,
-		System::mod().lex.symbols.toInt(unicode),
-		System::mod().lex.symbols.toInt(ascii),
-		System::mod().lex.symbols.toInt(latex)
-	};
+	return rus::Const { 0, Lex::toInt(unicode), Lex::toInt(ascii), Lex::toInt(latex)};
 }
 
 inline uint make_key(const char* key) {
-	return System::mod().lex.symbols.toInt(key);
+	return Lex::toInt(key);
 }
 
 map<uint, rus::Const> math_consts = {
@@ -143,9 +139,9 @@ map<uint, rus::Const> math_consts = {
 
 // Weird variables
 map<uint, rus::Symbol> math_vars = {
-		{make_key(".,"),   rus::Symbol(System::mod().lex.symbols.toInt(".cm"))},
-		{make_key(".(x)"), rus::Symbol(System::mod().lex.symbols.toInt(".[x]"))},
-		{make_key(".(+)"), rus::Symbol(System::mod().lex.symbols.toInt(".[+]"))}
+		{make_key(".,"),   rus::Symbol(Lex::toInt(".cm"))},
+		{make_key(".(x)"), rus::Symbol(Lex::toInt(".[x]"))},
+		{make_key(".(+)"), rus::Symbol(Lex::toInt(".[+]"))}
 };
 
 }} // mdl::smm

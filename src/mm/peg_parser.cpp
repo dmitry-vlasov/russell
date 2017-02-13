@@ -48,10 +48,10 @@ public:
 	Parser(string name, string root) : parser(mm_syntax()) {
 
 		parser["SYMB"] = [](const peg::SemanticValues& sv) {
-			return Symbol(System::mod().lex.symbols.toInt(sv.token()));
+			return Lex::toInt(sv.token());
 		};
 		parser["LAB"] = [](const peg::SemanticValues& sv) {
-			return System::mod().lex.labels.toInt(sv.token());
+			return Lex::toInt(sv.token());
 		};
 		parser["EXPR"] = [](const peg::SemanticValues& sv) {
 			Vect expr;
@@ -124,7 +124,7 @@ public:
 			else if (math.theorems.count(lab))
 				return Ref(math.theorems[lab]);
 			else
-				throw Error("unknown label in proof", System::get().lex.labels.toStr(lab));
+				throw Error("unknown label in proof", Lex::toStr(lab));
 		};
 		parser["COMMENT"] = [](const peg::SemanticValues& sv) {
 			string text = sv.token();

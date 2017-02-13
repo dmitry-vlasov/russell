@@ -3,10 +3,10 @@
 namespace mdl {
 
 string show_sy(Symbol symb) {
-	return rus::System::get().lex.symbols.toStr(symb.lit);
+	return Lex::toStr(symb.lit);
 }
 string show_id(uint lab) {
-	return rus::System::get().lex.labels.toStr(lab);
+	return Lex::toStr(lab);
 }
 
 namespace rus { namespace {

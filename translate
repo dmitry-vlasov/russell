@@ -40,13 +40,10 @@ cp ${file}.mm ./tmp/${file}.mm
 cd tmp
 
 VALGRIND="valgrind --tool=memcheck"
-if [ "$2" == "memcheck" ]; then
-    MEMCHECK="yes"
-fi
 
 function check() {
     echo $1
-    if [ "$MEMCHECK" == "yes" ]; then
+    if [ "$memcheck" == "yes" ]; then
 	$VALGRIND $1
     else
 	$1

@@ -12,8 +12,10 @@ enum class Target { TARGET_NONE, TARGET_MM, TARGET_RUS, DEFAULT = TARGET_NONE };
 typedef mdl::Config<Mode, Target> Config;
 
 struct Math {
+	template<typename T>
+	using Table = map<uint, T>;
 	set<Symbol>        constants;
-	vector<Assertion*> assertions;
+	Table<Assertion*> assertions;
 };
 
 typedef mdl::System<Source, Math, Config> System;
@@ -22,7 +24,7 @@ void run(System&);
 string show(const System&);
 string info(const System&);
 Source* parse(string path);
-void verify(const vector<Assertion*>& theory);
+void verify();
 mm::Source*  translate_to_mm(const Source* source);
 rus::Source* translate_to_rus(const Source* source);
 
