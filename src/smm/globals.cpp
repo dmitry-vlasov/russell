@@ -1,16 +1,7 @@
 #include <boost/filesystem.hpp>
 #include "smm/globals.hpp"
 
-namespace mdl {
-
-string show_sy(Symbol symb) {
-	return Lex::toStr(symb.lit);
-}
-string show_id(uint lab) {
-	return Lex::toStr(lab);
-}
-
-namespace smm {
+namespace mdl { namespace smm {
 
 static bool parse(System& sys) {
 	try {

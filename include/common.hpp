@@ -55,6 +55,13 @@ private:
 	map<string, uint> table;
 };
 
+inline string show_sy(Symbol symb) {
+	return Lex::toStr(symb.lit);
+}
+inline string show_id(uint lab) {
+	return Lex::toStr(lab);
+}
+
 class indent {
 	int  num;
 	char del;

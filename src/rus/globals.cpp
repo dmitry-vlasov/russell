@@ -1,15 +1,6 @@
 #include "rus/globals.hpp"
 
-namespace mdl {
-
-string show_sy(Symbol symb) {
-	return Lex::toStr(symb.lit);
-}
-string show_id(uint lab) {
-	return Lex::toStr(lab);
-}
-
-namespace rus { namespace {
+namespace mdl { namespace rus { namespace {
 
 bool parse_rus(System& rus) {
 	try {

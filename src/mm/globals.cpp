@@ -6,16 +6,7 @@
 #include "merge/ast.hpp"
 #include "mm/globals.hpp"
 
-namespace mdl {
-
-string show_sy(Symbol symb) {
-	return Lex::toStr(symb.lit);
-}
-string show_id(uint lab) {
-	return Lex::toStr(lab);
-}
-
-namespace mm {
+namespace mdl { namespace mm {
 
 Source* parse_spirit(string path);
 Source* parse_peg(string path);
