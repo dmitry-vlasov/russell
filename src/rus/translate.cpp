@@ -176,23 +176,23 @@ vector<smm::Node> translate_def(const Def* ax, Maps& maps) {
 }
 
 
-void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps);
+void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps);
 
-void translate_ref(Ref ref, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps) {
+void translate_ref(Ref ref, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps) {
 	switch (ref.kind) {
-	case Ref::HYP:  smm_proof.push_back(smm::Ref(maps.essentials[thm][ref.val.hyp])); break;
+	case Ref::HYP:  smm_proof.push_back(new smm::Ref(maps.essentials[thm][ref.val.hyp])); break;
 	case Ref::PROP: break;
 	case Ref::STEP: translate_step(ref.val.step, thm, smm_proof, maps); break;
 	default : assert(false); break;
 	}
 }
 
-void translate_term(const Tree& t, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps) {
+void translate_term(const Tree& t, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps) {
 	if (t.kind == Tree::VAR) {
 		if (maps.floatings[thm].count(*t.var()))
-			smm_proof.push_back(maps.floatings[thm][*t.var()]);
+			smm_proof.push_back(new smm::Ref(maps.floatings[thm][*t.var()]));
 		else if (maps.inners[thm].count(*t.var()))
-			smm_proof.push_back(maps.inners[thm][*t.var()]);
+			smm_proof.push_back(new smm::Ref(maps.inners[thm][*t.var()]));
 		else
 			throw Error("undeclared variable", show(*t.var()));
 	} else {
@@ -202,13 +202,13 @@ void translate_term(const Tree& t, const Assertion* thm, vector<smm::Ref>& smm_p
 	if (t.kind == Tree::NODE) {
 		if (!maps.rules.count(t.rule()))
 			throw Error("undefined reference to rule");
-		smm_proof.push_back(smm::Ref(maps.rules[t.rule()], true));
+		smm_proof.push_back(new smm::Ref(maps.rules[t.rule()], true));
 	}
 }
 
-void translate_proof(const Proof* proof, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps, uint ind = 0);
+void translate_proof(const Proof* proof, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps, uint ind = 0);
 
-void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps) {
+void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps) {
 	if (st->kind == Step::CLAIM) {
 		translate_proof(st->val.prf, thm, smm_proof, maps);
 		return;
@@ -230,7 +230,7 @@ void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref>& smm_
 	if (!maps.assertions.count(ass))
 		throw Error("undefined reference to assertion");
 	assert(maps.assertions.count(ass));
-	smm_proof.push_back(smm::Ref(maps.assertions[ass], st->kind != Step::THM));
+	smm_proof.push_back(new smm::Ref(maps.assertions[ass], st->kind != Step::THM));
 }
 
 vector<smm::Inner*> translate_inners(const Vars& vars, Maps& maps, const Assertion* thm, uint ind_0) {
@@ -253,7 +253,7 @@ vector<smm::Inner*> translate_inners(const Vars& vars, Maps& maps, const Asserti
 	return inn_vect;
 }
 
-void translate_proof(const Proof* proof, const Assertion* thm, vector<smm::Ref>& smm_proof, Maps& maps, uint ind) {
+void translate_proof(const Proof* proof, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps, uint ind) {
 	join(maps.thm->inner, translate_inners(proof->vars, maps, thm, maps.thm->inner.size()));
 	for (auto el : proof->elems) {
 		if (el.kind == Proof::Elem::QED && el.val.qed->prop->ind == ind) {

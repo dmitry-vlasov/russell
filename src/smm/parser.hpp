@@ -134,23 +134,23 @@ struct PropRefs : qi::symbols<char, Ref::Type> {
 
 struct CreateRef {
     template <typename T1, typename T2, typename T3>
-    struct result { typedef Ref type; };
-    Ref operator()(Ref::Type tp, uint ind, Assertion* ass) const {
+    struct result { typedef Ref* type; };
+    Ref* operator()(Ref::Type tp, uint ind, Assertion* ass) const {
     	switch (tp) {
-    	case Ref::ESSENTIAL: return Ref(ass->essential[ind]);
-    	case Ref::FLOATING:  return Ref(ass->floating[ind]);
-    	case Ref::INNER:     return Ref(ass->inner[ind]);
+    	case Ref::ESSENTIAL: return new Ref(ass->essential[ind]);
+    	case Ref::FLOATING:  return new Ref(ass->floating[ind]);
+    	case Ref::INNER:     return new Ref(ass->inner[ind]);
     	case Ref::AXIOM:
     		if (!System::mod().math.assertions.count(ind))
     			throw Error("cannot find assertion", Lex::toStr(ind));
-    		return Ref(System::mod().math.assertions[ind], true);
+    		return new Ref(System::mod().math.assertions[ind], true);
     	case Ref::THEOREM:
     		if (!System::mod().math.assertions.count(ind))
     			throw Error("cannot find assertion", Lex::toStr(ind));
-    		return Ref(System::mod().math.assertions[ind], false);
+    		return new Ref(System::mod().math.assertions[ind], false);
     	default : assert(false && "impossible");
     	}
-    	return Ref(); // pacifying compiler
+    	return nullptr; // pacifying compiler
     }
 };
 
@@ -165,7 +165,7 @@ struct Grammar : qi::grammar<Iterator, smm::Source(), ascii::space_type> {
 	qi::rule<Iterator, Symbol(), ascii::space_type> symbol;
 	qi::rule<Iterator, uint(),        ascii::space_type> label;
 	qi::rule<Iterator, std::string(), ascii::space_type> path;
-	qi::rule<Iterator, Ref(Assertion*), qi::locals<Ref::Type>, ascii::space_type> ref;
+	qi::rule<Iterator, Ref*(Assertion*), qi::locals<Ref::Type>, ascii::space_type> ref;
 	qi::rule<Iterator, Proof*(Assertion*), ascii::space_type> proof;
 	qi::rule<Iterator, Proposition(), ascii::space_type> provable;
 	qi::rule<Iterator, Proposition(), ascii::space_type> axiomatic;

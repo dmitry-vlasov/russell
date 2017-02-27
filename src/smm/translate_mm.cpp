@@ -18,15 +18,17 @@ mm::Proof* translate(Maps& maps, const Proof* proof) {
 	transform(tree, maps.transform);
 	Proof* rpn = to_rpn(tree);
 	mm::Proof* pr = new mm::Proof();
-	for (auto& r : rpn->refs) {
+	for (auto r : rpn->refs) {
 		mm::Ref ref;
-		switch (r.type) {
-		case Ref::AXIOM:     ref = mm::Ref(maps.axioms[r.val.ass]);     break;
-		case Ref::THEOREM:   ref = mm::Ref(maps.theorems[r.val.ass]);   break;
-		case Ref::FLOATING:  ref = mm::Ref(maps.floatings[r.val.flo]);  break;
-		case Ref::INNER:     ref = mm::Ref(maps.inners[r.val.inn]);     break;
-		case Ref::ESSENTIAL: ref = mm::Ref(maps.essentials[r.val.ess]); break;
-		default : assert(false && "impossible"); break;
+		switch (r->type) {
+		case Ref::AXIOM:     ref = mm::Ref(maps.axioms[r->val.ass]);     break;
+		case Ref::THEOREM:   ref = mm::Ref(maps.theorems[r->val.ass]);   break;
+		case Ref::FLOATING:  ref = mm::Ref(maps.floatings[r->val.flo]);  break;
+		case Ref::INNER:     ref = mm::Ref(maps.inners[r->val.inn]);     break;
+		case Ref::ESSENTIAL: ref = mm::Ref(maps.essentials[r->val.ess]); break;
+		default :
+			cout << endl << r->type << endl;
+			assert(false && "impossible"); break;
 		}
 		pr->refs.push_back(ref);
 	}

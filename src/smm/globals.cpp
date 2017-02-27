@@ -7,7 +7,7 @@ static bool parse(System& sys) {
 	try {
 		sys.timers["read"].start();
 		sys.source = smm::parse(sys.config.in);
-		//cout << *source << endl;
+		//cout << *sys.source << endl;
 		sys.timers["read"].stop();
 		return true;
 	} catch (Error& err) {

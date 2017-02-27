@@ -364,24 +364,24 @@ rus::Node::Kind ass_kind(const Assertion* ass) {
 	}
 }
 
-rus::Proof::Elem translate_step(Ref ref, rus::Proof* proof, rus::Theorem* thm, State& state, const Assertion* a) {
-	assert(ref.type == Ref::PROOF);
+rus::Proof::Elem translate_step(Ref* ref, rus::Proof* proof, rus::Theorem* thm, State& state, const Assertion* a) {
+	assert(ref->type == Ref::PROOF);
 	vector<rus::Proof::Elem>& elems = proof->elems;
 	rus::Proof::Elem el(new rus::Step(proof));
-	Assertion* ass = ref.val.prf->refs.back().val.ass;
+	Assertion* ass = ref->val.prf->refs.back()->val.ass;
 	for (uint i = 0; i < ass->essential.size(); ++ i) {
-		Ref r = ref.val.prf->refs[i];
-		assert(r.type == Ref::ESSENTIAL || r.type == Ref::PROOF);
+		Ref* r = ref->val.prf->refs[i];
+		assert(r->type == Ref::ESSENTIAL || r->type == Ref::PROOF);
 		rus::Ref hr;
-		if (r.type == Ref::ESSENTIAL) {
-			hr = rus::Ref(thm->ass.hyps[r.index()]);
+		if (r->type == Ref::ESSENTIAL) {
+			hr = rus::Ref(thm->ass.hyps[r->index()]);
 		} else {
 			hr = rus::Ref(translate_step(r, proof, thm, state, a).val.step);
 		}
 		el.val.step->refs.push_back(hr);
 	}
 	el.val.step->ind = elems.size();
-	el.val.step->expr = translate_expr(ref.expr, state, a);
+	el.val.step->expr = translate_expr(ref->expr, state, a);
 	switch (ass_kind(ass)) {
 	case rus::Node::AXIOM:
 		el.val.step->val.axm = state.axioms.find(ass)->second;
@@ -399,7 +399,7 @@ rus::Proof::Elem translate_step(Ref ref, rus::Proof* proof, rus::Theorem* thm, S
 }
 
 void translate_proof(const Assertion* ass, rus::Theorem* thm, State& state) {
-	Ref tree = Ref(to_tree(ass->proof));
+	Ref* tree = new Ref(to_tree(ass->proof));
 	eval(tree);
 	rus::Proof* p = new rus::Proof();
 	p->ind = state.ind ++;
@@ -410,7 +410,6 @@ void translate_proof(const Assertion* ass, rus::Theorem* thm, State& state) {
 	rus::Step* st = p->elems.back().val.step;
 	p->elems.push_back(new rus::Qed{pr, st});
 	state.theory.top()->nodes.push_back(p);
-	tree.destroy();
 }
 
 void translate_theorem(const Assertion* ass, State& state) {

@@ -76,20 +76,22 @@ struct Ref {
 		PROOF
 	};
 	union Value {
-		void*       non;
+		void*       ptr;
 		Floating*   flo;
 		Essential*  ess;
 		Inner*      inn;
 		Assertion*  ass;
 		Proof*      prf;
 	};
-	Ref() : type(NONE), val() { val.non = nullptr; }
-	Ref(Floating* f)  : type(FLOATING),  val() { val.flo = f; }
-	Ref(Essential* e) : type(ESSENTIAL), val() { val.ess = e; }
-	Ref(Inner* i)     : type(INNER),     val() { val.inn = i; }
+	Ref(Floating* f)  : type(FLOATING),   val() { val.flo = f; }
+	Ref(Essential* e) : type(ESSENTIAL),  val() { val.ess = e; }
+	Ref(Inner* i)     : type(INNER),      val() { val.inn = i; }
 	Ref(Assertion* a, bool ax) : type(ax ? AXIOM : THEOREM), val() { val.ass = a; }
-	Ref(Proof* p)     : type(PROOF),     val() { val.prf = p; }
-	void destroy();
+	Ref(Proof* p)     : type(PROOF),      val() { val.prf = p; }
+	Ref(const Ref& ref);
+	~Ref();
+
+	void operator=(const Ref&) = delete;
 
 	uint label() const {
 		assert(type == THEOREM || type == AXIOM);
@@ -116,10 +118,13 @@ struct Proof {
 		RPN
 	};
 	Proof(Type tp = RPN) : refs(), theorem(nullptr), type(tp) { }
+	Proof(const Proof& p) : refs(), theorem(p.theorem), type(p.type) {
+		for (auto r : p.refs) refs.push_back(new Ref(*r));
+	}
 	~ Proof();
-	vector<Ref> refs;
-	Assertion*  theorem;
-	Type        type;
+	vector<Ref*> refs;
+	Assertion*   theorem;
+	Type         type;
 };
 
 struct Comment {
@@ -208,14 +213,16 @@ inline void Node::destroy() {
 	type = NONE;
 }
 
-inline void Ref::destroy() {
-	if (type == PROOF)
-		delete val.prf;
+inline Ref::~Ref() {
+	if (type == PROOF && val.prf) delete val.prf;
 }
 
 inline Proof::~ Proof() {
-	for (auto& r : refs)
-		r.destroy();
+	for (auto r : refs) delete r;
+}
+
+inline Ref::Ref(const Ref& ref) : type(ref.type), val() {
+	val.ptr = (type == PROOF) ? new Proof(*ref.val.prf) : ref.val.ptr;
 }
 
 ostream& operator << (ostream& os, const Constants& cst);

@@ -162,13 +162,13 @@ static void assertion(const Assertion* ass) {
 	stack<Vect> expr_stack;
 	const Proof* proof = ass->proof;
 	if (!proof) return;
-	for (auto& ref : proof->refs) {
-		switch (ref.type) {
-		case Ref::ESSENTIAL : expr_stack.push(ref.val.ess->expr); break;
-		case Ref::FLOATING  : expr_stack.push(ref.val.flo->expr); break;
-		case Ref::INNER     : expr_stack.push(ref.val.inn->expr); break;
-		case Ref::AXIOM: // intentionally left blank
-		case Ref::THEOREM   : apply(ref.val.ass, ass, expr_stack); break;
+	for (auto ref : proof->refs) {
+		switch (ref->type) {
+		case Ref::ESSENTIAL : expr_stack.push(ref->val.ess->expr); break;
+		case Ref::FLOATING  : expr_stack.push(ref->val.flo->expr); break;
+		case Ref::INNER     : expr_stack.push(ref->val.inn->expr); break;
+		case Ref::AXIOM:    // intentionally left blank
+		case Ref::THEOREM   : apply(ref->val.ass, ass, expr_stack); break;
 		default : assert(false && "impossible"); break;
 		}
 	}

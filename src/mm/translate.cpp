@@ -181,16 +181,16 @@ smm::Proof* translate_proof(Maps& maps, const Proof* mproof) {
 		switch (node.type) {
 		case Ref::FLOATING:
 			if (maps.floatings.count(val.flo))
-				sproof->refs.push_back(smm::Ref(maps.floatings[val.flo]));
+				sproof->refs.push_back(new smm::Ref(maps.floatings[val.flo]));
 			else
-				sproof->refs.push_back(smm::Ref(maps.inners[val.flo]));
+				sproof->refs.push_back(new smm::Ref(maps.inners[val.flo]));
 			break;
 		case Ref::ESSENTIAL:
-			sproof->refs.push_back(smm::Ref(maps.essentials[val.ess])); break;
+			sproof->refs.push_back(new smm::Ref(maps.essentials[val.ess])); break;
 		case Ref::AXIOM:
-			sproof->refs.push_back(smm::Ref(maps.axioms[val.ax], true)); break;
+			sproof->refs.push_back(new smm::Ref(maps.axioms[val.ax], true)); break;
 		case Ref::THEOREM:
-			sproof->refs.push_back(smm::Ref(maps.theorems[val.th], false)); break;
+			sproof->refs.push_back(new smm::Ref(maps.theorems[val.th], false)); break;
 		default : assert(false && "impossible"); break;
 		}
 	}

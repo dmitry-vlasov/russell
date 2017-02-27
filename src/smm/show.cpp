@@ -12,7 +12,7 @@ static uint length(const Ref& r) {
 static uint length(const Proof& tree) {
 	uint len = 1;
 	for (uint i = 0; i + 1 < tree.refs.size(); ++ i) {
-		len += length(tree.refs[i]);
+		len += length(*tree.refs[i]);
 	}
 	return len;
 }
@@ -26,12 +26,12 @@ static string show(const Ref& ref) {
 }
 
 static string show(const Proof& tree) {
-	const Assertion* ass = tree.refs.back().val.ass;
+	const Assertion* ass = tree.refs.back()->val.ass;
 	string space = length(tree) > 16 ? "\n" : " ";
 	string str = Lex::toStr(ass->prop.label);
 	str += "(";
 	for (uint i = 0; i + 1 <tree.refs.size(); ++ i)
-		str += indent::paragraph(space + show(tree.refs[i]), "  ");
+		str += indent::paragraph(space + show(*tree.refs[i]), "  ");
 	str += space + ")";
 	//str += "= " + show_ex(tree.refs.back().expr);
 	return str;
@@ -62,8 +62,8 @@ ostream& operator << (ostream& os, const Ref& ref) {
 
 ostream& operator << (ostream& os, const Proof& proof) {
 	if (proof.type == Proof::RPN) {
-		for (auto& ref : proof.refs)
-			os << ref << ' ';
+		for (Ref* ref : proof.refs)
+			os << *ref << ' ';
 		os << "$.";
 		return os;
 	} else {
