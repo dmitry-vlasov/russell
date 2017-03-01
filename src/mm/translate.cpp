@@ -15,9 +15,9 @@ void gather_expr_vars(set<Symbol>& vars, const Vect& expr) {
 void gather_inner_vars(const set<Symbol>& fvars,
 	set<Symbol>& ivars, set<Symbol>& avars, const Proof* proof) {
 	if (!proof) return;
-	for (Ref n : proof->refs) {
-		if (n.type == Ref::FLOATING) {
-			Symbol v = n.val.flo->var();
+	for (Ref* r : proof->refs) {
+		if (r->type == Ref::FLOATING) {
+			Symbol v = r->val.flo->var();
 			avars.insert(v);
 			if (fvars.find(v) == fvars.end())
 				ivars.insert(v);
@@ -176,9 +176,9 @@ void reduce_permutation(smm::Assertion* ass, const set<Symbol>& needed, ArgMap& 
 
 smm::Proof* translate_proof(Maps& maps, const Proof* mproof) {
 	smm::Proof* sproof = new smm::Proof();
-	for (auto& node : mproof->refs) {
-		Ref::Value val = node.val;
-		switch (node.type) {
+	for (auto r : mproof->refs) {
+		Ref::Value val = r->val;
+		switch (r->type) {
 		case Ref::FLOATING:
 			if (maps.floatings.count(val.flo))
 				sproof->refs.push_back(new smm::Ref(maps.floatings[val.flo]));

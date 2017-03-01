@@ -13,7 +13,7 @@ uint length(const Proof& p) {
 	assert(p.type == Proof::TREE);
 	uint len = 1;
 	for (uint i = 0; i + 1 < p.refs.size(); ++ i) {
-		len += length(p.refs[i]);
+		len += length(*p.refs[i]);
 	}
 	return len;
 }
@@ -28,10 +28,10 @@ string show(const Ref& r) {
 
 string show(const Proof& tree) {
 	string space = length(tree) > 16 ? "\n" : " ";
-	string str = Lex::toStr(tree.refs.back().label());
+	string str = Lex::toStr(tree.refs.back()->label());
 	str += "(";
 	for (uint i = 0; i + 1 <tree.refs.size(); ++ i)
-		str += indent::paragraph(space + show(tree.refs[i]), "  ");
+		str += indent::paragraph(space + show(*tree.refs[i]), "  ");
 	str += space + ") ";
 	return str;
 }
@@ -60,8 +60,8 @@ ostream& operator << (ostream& os, const Proof& proof) {
 		os << show(proof);
 		return os;
 	}
-	for (auto& node : proof.refs)
-		write_proof_ref(os, node);
+	for (auto r : proof.refs)
+		write_proof_ref(os, *r);
 	os << "$.";
 	return os;
 }

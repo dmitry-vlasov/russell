@@ -115,17 +115,17 @@ struct ParseInclusion {
 
 struct CreateRef {
 	template <typename T>
-	struct result { typedef Ref type; };
-	Ref operator()(uint lab) const {
+	struct result { typedef Ref* type; };
+	Ref* operator()(uint lab) const {
 		System::Math& math = System::mod().math;
 		if (math.floatings.count(lab))
-			return Ref(math.floatings[lab]);
+			return new Ref(math.floatings[lab]);
 		else if (math.essentials.count(lab))
-			return Ref(math.essentials[lab]);
+			return new Ref(math.essentials[lab]);
 		else if (math.axioms.count(lab))
-			return Ref(math.axioms[lab]);
+			return new Ref(math.axioms[lab]);
 		else if (math.theorems.count(lab))
-			return Ref(math.theorems[lab]);
+			return new Ref(math.theorems[lab]);
 		else
 			throw Error("unknown label in proof", Lex::toStr(lab));
 	}
@@ -227,7 +227,7 @@ struct Grammar : qi::grammar<Iterator, Source(), ascii::space_type> {
 	qi::rule<Iterator, Symbol(), ascii::space_type> symbol;
 	qi::rule<Iterator, uint(),        ascii::space_type> label;
 	qi::rule<Iterator, std::string(), ascii::space_type> path;
-	qi::rule<Iterator, Ref(), ascii::space_type> ref;
+	qi::rule<Iterator, Ref*(), ascii::space_type> ref;
 	qi::rule<Iterator, Proof*(), ascii::space_type> proof;
 	qi::rule<Iterator, Essential*(), qi::locals<uint>, ascii::space_type> essential;
 	qi::rule<Iterator, Floating*(), qi::locals<uint>, ascii::space_type> floating;

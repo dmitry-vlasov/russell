@@ -76,6 +76,7 @@ struct Ref {
 		PROOF
 	};
 	union Value {
+		Value() : ptr(nullptr) { }
 		void*       ptr;
 		Floating*   flo;
 		Essential*  ess;
@@ -142,7 +143,7 @@ struct Inclusion {
 };
 
 struct Node {
-	Node() : type(NONE), val() { val.non = nullptr; }
+	Node() : type(NONE), val() { }
 	Node(Assertion* a) : type (ASSERTION), val() { val.ass = a; }
 	Node(Constants* c) : type (CONSTANTS), val() { val.cst = c; }
 	Node(Inclusion* i) : type (INCLUSION), val() { val.inc = i; }
@@ -158,7 +159,8 @@ struct Node {
 	};
 	Type type;
 	union Value {
-		void*      non;
+		Value() : ptr(nullptr) { }
+		void*      ptr;
 		Assertion* ass;
 		Constants* cst;
 		Inclusion* inc;

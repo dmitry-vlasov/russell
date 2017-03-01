@@ -109,20 +109,20 @@ public:
 		};
 		parser["PROOF"] = [](const peg::SemanticValues& sv) {
 			Proof* pr = new Proof();
-			pr->refs = sv.transform<Ref>();
+			pr->refs = sv.transform<Ref*>();
 			return pr;
 		};
 		parser["REF"] = [](const peg::SemanticValues& sv) {
 			uint lab = sv[0].get<uint>();
 			System::Math& math = System::mod().math;
 			if (math.floatings.count(lab))
-				return Ref(math.floatings[lab]);
+				return new Ref(math.floatings[lab]);
 			else if (math.essentials.count(lab))
-				return Ref(math.essentials[lab]);
+				return new Ref(math.essentials[lab]);
 			else if (math.axioms.count(lab))
-				return Ref(math.axioms[lab]);
+				return new Ref(math.axioms[lab]);
 			else if (math.theorems.count(lab))
-				return Ref(math.theorems[lab]);
+				return new Ref(math.theorems[lab]);
 			else
 				throw Error("unknown label in proof", Lex::toStr(lab));
 		};

@@ -58,7 +58,8 @@ struct Ref {
 		PROOF
 	};
 	union Value {
-		void*       non;
+		Value() : ptr(nullptr) { }
+		void*       ptr;
 		Floating*   flo;
 		Essential*  ess;
 		Axiom*      ax;
@@ -66,13 +67,14 @@ struct Ref {
 		Proof*      prf;
 	};
 
-	Ref()              : type(NONE),       val() { val.non = nullptr; }
+	Ref()              : type(NONE),       val() { val.ptr = nullptr; }
 	Ref(Floating* f)   : type(FLOATING),   val() { val.flo = f; }
 	Ref(Essential* e)  : type(ESSENTIAL),  val() { val.ess = e; }
 	Ref(Axiom* a)      : type(AXIOM),      val() { val.ax  = a; }
 	Ref(Theorem* t)    : type(THEOREM),    val() { val.th  = t; }
 	Ref(Proof* p)      : type(PROOF),      val() { val.prf = p; }
-	void destroy();
+	Ref(const Ref& ref);
+	~Ref();
 
 	uint label() const {
 		switch (type) {
@@ -100,9 +102,12 @@ struct Proof {
 		RPN
 	};
 	Proof(Type t = RPN) : refs(), type(t) { }
+	Proof(const Proof& p) : refs(), type(p.type) {
+		for (auto r : p.refs) refs.push_back(new Ref(*r));
+	}
 	~Proof();
-	vector<Ref> refs;
-	Type        type;
+	vector<Ref*> refs;
+	Type         type;
 };
 
 
@@ -131,7 +136,8 @@ struct Node {
 		COMMENT
 	};
 	union Value {
-		void*       non;
+		Value() : ptr(nullptr) { }
+		void*       ptr;
 		Constants*  cst;
 		Variables*  var;
 		Disjointed* dis;
@@ -145,7 +151,7 @@ struct Node {
 		Comment*    com;
 	};
 
-	Node()              : ind(-1), type(NONE),       val() { val.non = nullptr; }
+	Node()              : ind(-1), type(NONE),       val() { }
 	Node(Constants* c)  : ind(-1), type(CONSTANTS),  val() { val.cst = c; }
 	Node(Variables* v)  : ind(-1), type(VARIABLES),  val() { val.var = v; }
 	Node(Disjointed* d) : ind(-1), type(DISJOINTED), val() { val.dis = d; }
@@ -254,14 +260,16 @@ inline void Node::destroy() {
 	type = NONE;
 }
 
+inline Ref::~Ref() {
+	if (type == PROOF && val.prf) delete val.prf;
+}
+
 inline Proof::~Proof() {
-	if (type == TREE) {
-		for (auto& r : refs) {
-			if (r.type == Ref::PROOF) {
-				delete r.val.prf;
-			}
-		}
-	}
+	for (auto r : refs) delete r;
+}
+
+inline Ref::Ref(const Ref& ref) : type(ref.type), val() {
+	val.ptr = (type == PROOF) ? new Proof(*ref.val.prf) : ref.val.ptr;
 }
 
 ostream& operator << (ostream& os, const Node& node);
