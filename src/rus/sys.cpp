@@ -62,6 +62,7 @@ bool translate_rus(System& rus) {
 				[](smm::Node n) -> bool { return n.type == smm::Node::INCLUSION; }
 			);
 		} else {
+			//shallow_write(target);
 			ofstream out(rus.config.out);
 			out << *target << endl;
 			out.close();

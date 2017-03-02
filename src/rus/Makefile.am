@@ -31,7 +31,7 @@ librus_la_SOURCES = \
 	parser/parse.cpp \
 	\
 	expr.cpp \
-	globals.cpp \
+	sys.cpp \
 	memvol.cpp \
 	show.cpp \
 	translate.cpp \

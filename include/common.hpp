@@ -167,12 +167,12 @@ public :
 	}
 	string   msg;
 };
-
+/*
 inline string cut_outer_directory(string path) {
 	size_t slash_pos = path.find_first_of("/");
 	return path.substr(slash_pos == string::npos ? 0 : slash_pos + 1);
 }
-
+*/
 ifstream open_smart(string& path, string root);
 void read_smart(string& data, ifstream&);
 
@@ -202,6 +202,54 @@ void deep_write(T* target, auto get_cont, auto get_inc, auto is_inc) {
 		}
 	}
 }
+/*
+template<class T>
+void shallow_write(T* target) {
+	typedef T Source;
+	namespace fs = boost::filesystem;
+	if (!fs::exists(target->path.dir()))
+		fs::create_directories(target->path.dir());
+	ofstream out(target->path.path());
+	out << *target << endl;
+	out.close();
+}
+*/
+struct Path {
+	Path() : root(), name(), ext() { }
+	Path(const string& n, const string& r, const string& e) : root(r), name(n), ext(e) { }
+	Path(const string& n, const string& r = "") : root(r), name(), ext() {
+		boost::trim(root);
+		boost::trim(name);
+		boost::erase_last(root, "/");
+		name_ext(n);
+	}
+	Path(const Path& p) : root(p.root), name(p.name), ext(p.ext) { }
+	Path& operator = (const Path& p) {
+		root = p.root;
+		name = p.name;
+		ext = p.ext;
+		return *this;
+	}
+	string path() {
+		return (root.size() ? root + "/" : "") + name + (ext.size() ? "." + ext : "");
+	}
+	string dir() { string p = path(); return p.substr(0, p.find_last_of("/")) + "/"; }
+	void name_ext(const string& ne) {
+		int i = ne.find_last_of(".");
+		name = ne.substr(0, i);
+		ext.clear();
+		if (i != string::npos) ext = ne.substr(i + 1);
+	}
+	Path open();
+	void read(string& data);
+	void write(const string& data);
+	Path relative(const string& n) const {
+		return Path(n, root, ext);
+	}
+	string root;
+	string name;
+	string ext;
+};
 
 template<class Source, class Parser>
 void parse(Source*& src, string& data, auto space) {

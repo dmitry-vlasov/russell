@@ -39,7 +39,7 @@ libmm_la_SOURCES = \
 	\
 	merge/parser.cpp \
 	\
-	globals.cpp \
+	sys.cpp \
 	peg_parser.cpp \
 	show.cpp \
 	spirit_parser.cpp \

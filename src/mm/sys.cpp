@@ -80,6 +80,7 @@ bool translate_mm(System& mm) {
 				[](smm::Node n) -> bool { return n.type == smm::Node::INCLUSION; }
 			);
 		} else {
+			//shallow_write(target);
 			ofstream out(mm.config.out);
 			out << *target << endl;
 			out.close();
