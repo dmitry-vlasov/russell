@@ -330,13 +330,13 @@ struct Config {
 
 // Template for a deductive system
 template<class S, class M, class C>
-struct System {
+struct Sys {
 	typedef S Source;
 	typedef M Math;
 	typedef C Config;
 	typedef map<string, Timer> Timers;
 
-	~ System() {
+	~ Sys() {
 		if (source) delete source;
 	}
 
@@ -346,8 +346,8 @@ struct System {
 	Source* source;
 	string  error;
 
-	static const System& get() { return mod(); }
-	static System& mod() { return Lib<System>::mod().sys();  }
+	static const Sys& get() { return mod(); }
+	static Sys& mod() { return Lib<Sys>::mod().sys();  }
 };
 
 template<typename M, typename T>

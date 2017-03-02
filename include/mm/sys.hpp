@@ -20,7 +20,7 @@ struct Math {
 	vector<Theorem*>  theory;
 };
 
-typedef mdl::System<Source, Math, Config> System;
+typedef mdl::Sys<Source, Math, Config> System;
 
 void run(System&);
 string show(const System&);
