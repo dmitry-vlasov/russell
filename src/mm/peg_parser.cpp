@@ -1,5 +1,5 @@
+#include "mm/sys.hpp"
 #include "peglib.h"
-#include "mm/globals.hpp"
 
 namespace mdl { namespace mm {
 

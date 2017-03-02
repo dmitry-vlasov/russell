@@ -39,7 +39,7 @@ fi
 cp ${file}.mm ./tmp/${file}.mm
 cd tmp
 
-VALGRIND="valgrind --tool=memcheck"
+VALGRIND="valgrind --tool=memcheck --leak-check=full"
 
 function check() {
     echo $1

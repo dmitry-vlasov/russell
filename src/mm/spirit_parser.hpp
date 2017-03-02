@@ -5,8 +5,8 @@
 #include <boost/spirit/include/phoenix_stl.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
 
+#include "mm/sys.hpp"
 #include "mm/ast.hpp"
-#include "mm/globals.hpp"
 #include "mm/adaptors.hpp"
 
 namespace mdl {

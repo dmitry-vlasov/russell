@@ -5,7 +5,7 @@
 #include <boost/spirit/include/phoenix_stl.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
 
-#include "smm/globals.hpp"
+#include "smm/sys.hpp"
 #include "smm/adaptors.hpp"
 
 namespace mdl { namespace smm { namespace parser {

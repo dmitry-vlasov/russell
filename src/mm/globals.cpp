@@ -1,10 +1,10 @@
 #include <boost/filesystem.hpp>
 
+#include "mm/sys.hpp"
 #include "mm/ast.hpp"
 #include "smm/ast.hpp"
 #include "cut/ast.hpp"
 #include "merge/ast.hpp"
-#include "mm/globals.hpp"
 
 namespace mdl { namespace mm {
 

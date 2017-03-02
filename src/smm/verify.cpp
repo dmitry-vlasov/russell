@@ -1,6 +1,7 @@
 #include <boost/range/adaptor/reversed.hpp>
+
+#include "smm/sys.hpp"
 #include "smm/tree.hpp"
-#include "smm/globals.hpp"
 
 namespace mdl { namespace smm {
 

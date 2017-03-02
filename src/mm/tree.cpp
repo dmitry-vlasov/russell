@@ -1,6 +1,7 @@
 #include "mm/ast.hpp"
 #include "mm/tree.hpp"
-#include "mm/globals.hpp"
+
+#include "mm/sys.hpp"
 
 namespace mdl { namespace mm {
 

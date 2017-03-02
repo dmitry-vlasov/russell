@@ -1,5 +1,5 @@
+#include "rus/sys.hpp"
 #include "smm/ast.hpp"
-#include "rus/globals.hpp"
 
 namespace mdl { namespace rus { namespace {
 

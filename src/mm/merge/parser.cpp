@@ -1,5 +1,5 @@
 
-#include "mm/globals.hpp"
+#include "mm/sys.hpp"
 #include "mm/merge/grammar.hpp"
 
 namespace mdl { namespace mm { namespace merge {

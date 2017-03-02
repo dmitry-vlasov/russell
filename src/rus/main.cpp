@@ -1,4 +1,4 @@
-#include "rus/globals.hpp"
+#include "rus/sys.hpp"
 
 namespace po = boost::program_options;
 

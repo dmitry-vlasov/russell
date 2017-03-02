@@ -5,7 +5,7 @@
 #include <boost/spirit/include/phoenix_stl.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
 
-#include "rus/globals.hpp"
+#include "rus/sys.hpp"
 #include "rus/parser/adaptors.hpp"
 
 namespace mdl { namespace rus { namespace parser {

@@ -1,4 +1,4 @@
-#include "smm/globals.hpp"
+#include "smm/sys.hpp"
 
 namespace po = boost::program_options;
 

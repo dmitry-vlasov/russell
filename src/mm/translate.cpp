@@ -1,9 +1,9 @@
 #include <boost/algorithm/string.hpp>
 
+#include "mm/sys.hpp"
 #include "smm/ast.hpp"
 #include "mm/ast.hpp"
 #include "mm/tree.hpp"
-#include "mm/globals.hpp"
 
 namespace mdl { namespace mm { namespace {
 

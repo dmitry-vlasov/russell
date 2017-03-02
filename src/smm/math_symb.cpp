@@ -1,4 +1,4 @@
-#include "smm/globals.hpp"
+#include "smm/sys.hpp"
 #include "rus/ast.hpp"
 
 namespace mdl { namespace smm {

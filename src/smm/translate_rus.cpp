@@ -1,6 +1,6 @@
+#include "smm/sys.hpp"
 #include "smm/tree.hpp"
 #include "rus/ast.hpp"
-#include "smm/globals.hpp"
 
 namespace mdl { namespace smm {
 
