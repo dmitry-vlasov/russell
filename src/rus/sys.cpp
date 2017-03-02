@@ -6,7 +6,9 @@ bool parse_rus(System& rus) {
 	try {
 		if (rus.config.verbose) cout << "parsing russell source ... " << flush;
 		rus.timers["read"].start();
-		rus.source = parse(rus.config.in);
+		uint lab = Lex::toInt(rus.config.in);
+		Source* src = parse(rus.config.in);
+		rus.math.sources[lab] = src;
 		rus.timers["read"].stop();
 		if (rus.config.verbose) cout << "done in " << rus.timers["read"] << endl;
 		return true;
@@ -37,7 +39,8 @@ bool unify_rus(System& rus) {
 	try {
 		if (rus.config.verbose) cout << "verifying russell source ... " << flush;
 		rus.timers["unify"].start();
-		verify(rus.source);
+		uint lab = Lex::toInt(rus.config.in);
+		verify(rus.math.sources[lab]);
 		rus.timers["unify"].stop();
 		if (rus.config.verbose) cout << "done in " << rus.timers["unify"] << endl;
 		return true;
@@ -53,7 +56,8 @@ bool translate_rus(System& rus) {
 		if (rus.config.out.empty()) return true;
 		if (rus.config.verbose) cout << "translating file " << rus.config.in << " ... " << flush;
 		rus.timers["translate"].start();
-		smm::Source* target = translate(rus.source);
+		uint lab = Lex::toInt(rus.config.in);
+		smm::Source* target = translate(rus.math.sources[lab]);
 		if (rus.config.deep) {
 			deep_write(
 				target,
@@ -84,7 +88,8 @@ bool write_rus(System& rus) {
 		if (rus.config.verbose) cout << "replicating file " << rus.config.in << " ... " << flush;
 		rus.timers["write"].start();
 		ofstream out(rus.config.out);
-		out << *rus.source << endl;
+		uint lab = Lex::toInt(rus.config.in);
+		out << *rus.math.sources[lab] << endl;
 		out.close();
 		rus.timers["write"].stop();
 		if (rus.config.verbose) cout << "done in " << rus.timers["write"] << endl;
@@ -144,7 +149,8 @@ string info(const System& sys) {
 	const size_t defs_vol  = mdl::memvol(sys.math.defs);
 	const size_t thems_vol = mdl::memvol(sys.math.theorems);
 	const size_t proof_vol = mdl::memvol(sys.math.proofs);
-	const size_t source_vol = memvol(*sys.source);
+	uint lab = Lex::toInt(sys.config.in);
+	const size_t source_vol = memvol(*sys.math.sources.at(lab));
 	const size_t total_vol =
 		const_vol + types_vol + rules_vol +
 		axiom_vol + defs_vol + thems_vol + proof_vol;

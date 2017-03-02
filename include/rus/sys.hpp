@@ -21,6 +21,9 @@ struct Math {
 	Table<Def*>     defs;
 	Table<Theorem*> theorems;
 	Table<Proof*>   proofs;
+	Table<Source*>  sources;
+
+	~Math() { for (auto s : sources) delete s.second; }
 };
 
 typedef mdl::Sys<Source, Math, Config> System;

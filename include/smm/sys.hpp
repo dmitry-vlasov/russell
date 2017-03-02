@@ -14,8 +14,12 @@ typedef mdl::Config<Mode, Target> Config;
 struct Math {
 	template<typename T>
 	using Table = map<uint, T>;
+
 	set<Symbol>        constants;
 	Table<Assertion*> assertions;
+	Table<Source*>    sources;
+
+	~Math() { for (auto s : sources) delete s.second; }
 };
 
 typedef mdl::Sys<Source, Math, Config> System;

@@ -20,8 +20,10 @@ namespace {
 bool parse_mm(System& mm) {
 	try {
 		mm.timers["read"].start();
-		mm.source = parse(mm.config.in);
-		if (!mm.source) throw Error("parsing of " + mm.config.in + " failed");
+		Source* source = parse(mm.config.in);
+		if (!source) throw Error("parsing of " + mm.config.in + " failed");
+		uint lab = Lex::toInt(mm.config.in);
+		mm.math.sources[lab] = source;
 		//cout << endl << *source;
 		mm.timers["read"].stop();
 		return true;
@@ -71,7 +73,8 @@ bool translate_mm(System& mm) {
 			return false;
 		}
 		mm.timers["work"].start();
-		smm::Source* target = translate(mm.source);
+		uint lab = Lex::getInt(mm.config.in);
+		smm::Source* target = translate(mm.math.sources[lab]);
 		if (mm.config.deep) {
 			deep_write(
 				target,

@@ -7,8 +7,10 @@ namespace mdl { namespace smm {
 static bool parse(System& sys) {
 	try {
 		sys.timers["read"].start();
-		sys.source = smm::parse(sys.config.in);
+		uint lab = Lex::toInt(sys.config.in);
+		Source* src = smm::parse(sys.config.in);
 		//cout << *sys.source << endl;
+		sys.math.sources[lab] = src;
 		sys.timers["read"].stop();
 		return true;
 	} catch (Error& err) {
@@ -37,10 +39,11 @@ static bool translate(System& sys) {
 		if (sys.config.verbose)
 			cout << "translating file " << sys.config.in << " ... " << flush;
 		sys.timers["translate"].start();
+		uint lab = Lex::toInt(sys.config.in);
 		switch (sys.config.target) {
 		case Config::Target::TARGET_NONE: break;
 		case Config::Target::TARGET_MM: {
-			mm::Source* target = smm::translate_to_mm(sys.source);
+			mm::Source* target = smm::translate_to_mm(sys.math.sources[lab]);
 			if (sys.config.deep) {
 				deep_write(
 					target,
@@ -57,7 +60,7 @@ static bool translate(System& sys) {
 			delete target;
 		}	break;
 		case Config::Target::TARGET_RUS: {
-			rus::Source* target = smm::translate_to_rus(sys.source);
+			rus::Source* target = smm::translate_to_rus(sys.math.sources[lab]);
 			if (sys.config.deep) {
 				deep_write(
 					target,

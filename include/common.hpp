@@ -336,14 +336,9 @@ struct Sys {
 	typedef C Config;
 	typedef map<string, Timer> Timers;
 
-	~ Sys() {
-		if (source) delete source;
-	}
-
 	Config  config;
 	Timers  timers;
 	Math    math;
-	Source* source;
 	string  error;
 
 	static const Sys& get() { return mod(); }
@@ -380,6 +375,54 @@ string show_timer(const char* message, const string& name, const T& timers) {
 
 template<class T>
 void dump(const T& val) { cout << val; }
+
+template<class T>
+struct Table {
+	typedef T Type;
+	void add(uint n, Type* p = nullptr) {
+		if (!refs.count(n)) {
+			refs[n].data = p;
+		} else {
+			Data& d = refs[n];
+			if (d.data) throw Error("attempt to reuse live pointer");
+			d.data = p;
+			for (Type** u : d.users) *u = p;
+		}
+	}
+	void del(uint n) {
+		if (!refs.count(n)) throw Error("attempt to delete unknown label");
+		Data& d = refs[n];
+		if (!d.data) throw Error("attempt to delete null pointer");
+		d.data = nullptr;
+		for (Type** u : d.users) *u = nullptr;
+	}
+	void use(uint n, Type*& u) {
+		if (!refs.count(n)) throw Error("attempt to use unknown label");
+		Data& d = refs[n];
+		if (!d.data) throw Error("attempt to use null pointer");
+		d.users.insert(&u);
+		u = d.data;
+	}
+	void unuse(uint n, Type*& u) {
+		if (!refs.count(n)) throw Error("attempt to unuse unknown label");
+		Data& d = refs[n];
+		d.users.erase(&u);
+	}
+	Type* access(uint n) {
+		return refs.count(n) ? refs[n].data : nullptr;
+	}
+	bool has(uint n) const {
+		return refs.count(n);
+	}
+
+private :
+	struct Data {
+		Type* data;
+		set<Type**> users;
+	};
+	map<uint, Data> refs;
+};
+
 
 } // mdl
 
