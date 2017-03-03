@@ -6,8 +6,8 @@ bool parse_rus(System& rus) {
 	try {
 		if (rus.config.verbose) cout << "parsing russell source ... " << flush;
 		rus.timers["read"].start();
-		uint lab = Lex::toInt(rus.config.in);
-		Source* src = parse(rus.config.in);
+		uint lab = Lex::toInt(rus.config.in.name);
+		Source* src = parse(rus.config.in.path());
 		rus.math.sources[lab] = src;
 		rus.timers["read"].stop();
 		if (rus.config.verbose) cout << "done in " << rus.timers["read"] << endl;
@@ -39,7 +39,7 @@ bool unify_rus(System& rus) {
 	try {
 		if (rus.config.verbose) cout << "verifying russell source ... " << flush;
 		rus.timers["unify"].start();
-		uint lab = Lex::toInt(rus.config.in);
+		uint lab = Lex::toInt(rus.config.in.name);
 		verify(rus.math.sources[lab]);
 		rus.timers["unify"].stop();
 		if (rus.config.verbose) cout << "done in " << rus.timers["unify"] << endl;
@@ -53,10 +53,10 @@ bool unify_rus(System& rus) {
 
 bool translate_rus(System& rus) {
 	try {
-		if (rus.config.out.empty()) return true;
-		if (rus.config.verbose) cout << "translating file " << rus.config.in << " ... " << flush;
+		if (rus.config.out.name.empty()) return true;
+		if (rus.config.verbose) cout << "translating file " << rus.config.in.name << " ... " << flush;
 		rus.timers["translate"].start();
-		uint lab = Lex::toInt(rus.config.in);
+		uint lab = Lex::toInt(rus.config.in.name);
 		smm::Source* target = translate(rus.math.sources[lab]);
 		if (rus.config.deep) {
 			deep_write(
@@ -67,7 +67,7 @@ bool translate_rus(System& rus) {
 			);
 		} else {
 			//shallow_write(target);
-			ofstream out(rus.config.out);
+			ofstream out(rus.config.out.path());
 			out << *target << endl;
 			out.close();
 		}
@@ -84,11 +84,11 @@ bool translate_rus(System& rus) {
 
 bool write_rus(System& rus) {
 	try {
-		if (rus.config.out.empty()) return true;
-		if (rus.config.verbose) cout << "replicating file " << rus.config.in << " ... " << flush;
+		if (rus.config.out.name.empty()) return true;
+		if (rus.config.verbose) cout << "replicating file " << rus.config.out.name << " ... " << flush;
 		rus.timers["write"].start();
-		ofstream out(rus.config.out);
-		uint lab = Lex::toInt(rus.config.in);
+		ofstream out(rus.config.out.path());
+		uint lab = Lex::toInt(rus.config.out.name);
 		out << *rus.math.sources[lab] << endl;
 		out.close();
 		rus.timers["write"].stop();
@@ -106,7 +106,7 @@ bool write_rus(System& rus) {
 void run(System& sys) {
 	sys.timers["total"].start();
 	if (sys.config.verbose)
-		cout << "processing file " << sys.config.in << " ... " << endl;
+		cout << "processing file " << sys.config.in.name << " ... " << endl;
 	if (!parse_rus(sys)) return;
 	if (!parse_exp(sys)) return;
 	if (!unify_rus(sys)) return;
@@ -149,7 +149,7 @@ string info(const System& sys) {
 	const size_t defs_vol  = mdl::memvol(sys.math.defs);
 	const size_t thems_vol = mdl::memvol(sys.math.theorems);
 	const size_t proof_vol = mdl::memvol(sys.math.proofs);
-	uint lab = Lex::toInt(sys.config.in);
+	uint lab = Lex::toInt(sys.config.in.name);
 	const size_t source_vol = memvol(*sys.math.sources.at(lab));
 	const size_t total_vol =
 		const_vol + types_vol + rules_vol +

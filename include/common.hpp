@@ -313,18 +313,17 @@ struct Config {
 	typedef T Target;
 	Config() :
 	verbose(false), info(false), help(false), deep(false),
-	mode(Mode::DEFAULT), in(), root(), target(Target::DEFAULT) { }
+	in(), out(), mode(Mode::DEFAULT), target(Target::DEFAULT) { }
 
 	bool verbose;
 	bool info;
 	bool help;
 	bool deep;
 
-	Mode mode;
+	Path in;
+	Path out;
 
-	string in;
-	string out;
-	string root;
+	Mode   mode;
 	Target target;
 };
 
@@ -347,9 +346,10 @@ struct Sys {
 
 template<typename M, typename T>
 inline void initConf(const boost::program_options::variables_map& vm, Config<M, T>& conf) {
-	if (vm.count("in"))      conf.in   = vm["in"].as<string>();
-	if (vm.count("out"))     conf.out  = vm["out"].as<string>();
-	if (vm.count("root"))    conf.root = vm["root"].as<string>();
+	if (vm.count("in"))       conf.in.name_ext(vm["in"].as<string>());
+	if (vm.count("out"))      conf.out.name_ext(vm["out"].as<string>());
+	if (vm.count("root-in"))  conf.in.root  = vm["root-in"].as<string>();
+	if (vm.count("root-out")) conf.out.root = vm["root-out"].as<string>();
 	if (vm.count("verbose")) conf.verbose = true;
 	if (vm.count("deep"))    conf.deep = true;
 	if (vm.count("info"))    conf.info = true;
@@ -362,7 +362,8 @@ inline void initOptions(boost::program_options::options_description& desc) {
 		("help,h",      "print help message")
 		("in,i", po::value<string>(),   "input file")
 		("out,o", po::value<string>(),  "output file")
-		("root,r", po::value<string>(), "root directory (for inclusions)")
+		("root-in", po::value<string>(), "input root directory (for inclusions)")
+		("root-out", po::value<string>(), "output root directory (for inclusions)")
 		("deep,d",      "deep translation")
 		("verbose,v",   "not be silent")
 		("info",        "info about math: timings, memory, stats")

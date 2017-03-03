@@ -468,10 +468,7 @@ rus::Source* translate_source(const Source* src, State& state, rus::Source* targ
 	} else {
 		Config conf = System::get().config;
 		if (!target) {
-			target = new rus::Source(
-				conf.deep ? conf.out : conf.root,
-				src->name
-			);
+			target = new rus::Source(conf.out.root, src->name);
 			target->theory = new rus::Theory();
 		}
 		state.sources[src] = target;
@@ -486,10 +483,7 @@ rus::Source* translate_source(const Source* src, State& state, rus::Source* targ
 
 rus::Source* translate_to_rus(const Source* source) {
 	Config conf = System::get().config;
-	rus::Source* target = new rus::Source(
-		conf.deep ? conf.out : conf.root,
-		conf.deep ? conf.in  : conf.out
-	);
+	rus::Source* target = new rus::Source(conf.out.root, conf.out.name);
 	target->theory = new rus::Theory();
 	State state;
 	state.ind = 0;

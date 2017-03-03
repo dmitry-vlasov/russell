@@ -16,11 +16,11 @@ static bool initConf(const po::variables_map& vm, smm::Config& conf) {
 			conf.target = smm::Config::Target::TARGET_MM;
 		}
 	}
-	if (!conf.deep) {
-		if (boost::ends_with(conf.out, ".mm"))  conf.target = smm::Config::Target::TARGET_MM;
-		if (boost::ends_with(conf.out, ".rus")) conf.target = smm::Config::Target::TARGET_RUS;
+	if (!conf.deep && conf.target == smm::Config::Target::TARGET_NONE) {
+		if (conf.out.ext == "mm") conf.target = smm::Config::Target::TARGET_MM;
+		if (conf.out.ext == "rus") conf.target = smm::Config::Target::TARGET_RUS;
 	}
-	if (conf.in == "") return false;
+	if (conf.in.name.empty()) return false;
 	return true;
 }
 

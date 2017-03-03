@@ -10,11 +10,11 @@ static bool initConf(const po::variables_map& vm, mm::Config& conf) {
 	if (vm.count("merge"))     conf.mode = mm::Config::Mode::MERGE;
 	if (vm.count("translate")) conf.mode = mm::Config::Mode::TRANSL;
 	if (!conf.deep) {
-		if (boost::ends_with(conf.out, ".smm") &&
-			conf.mode != mm::Config::Mode::TRANSL) {
-			return false;
-		} else if (boost::ends_with(conf.out, ".mm") &&
-			conf.mode == mm::Config::Mode::TRANSL) {
+		if (conf.out.ext == "smm") {
+			if (conf.mode != mm::Config::Mode::TRANSL) return false;
+			conf.target = mm::Config::Target::SMM;
+
+		} else if (conf.out.ext == "mm" && conf.mode == mm::Config::Mode::TRANSL) {
 			return false;
 		}
 		if (conf.mode == mm::Config::Mode::CUT) {

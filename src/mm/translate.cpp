@@ -373,11 +373,7 @@ smm::Source* translate_source(Maps& maps, const Source* src, smm::Source* target
 		return maps.sources[src];
 	} else {
 		Config conf = System::get().config;
-		if (!target)
-			target = new smm::Source(
-				conf.deep ? conf.out : conf.root,
-				src->name
-			);
+		if (!target) target = new smm::Source(conf.out.root, src->name);
 		maps.sources[src] = target;
 		translate_block(maps, src->block, target);
 		return target;
@@ -388,10 +384,7 @@ smm::Source* translate_source(Maps& maps, const Source* src, smm::Source* target
 
 smm::Source* translate(const Source* source) {
 	Config conf = System::get().config;
-	smm::Source* target = new smm::Source(
-		conf.deep ? conf.out : conf.root,
-		conf.deep ? conf.in  : conf.out
-	);
+	smm::Source* target = new smm::Source(conf.out.root, conf.out.name);
 	Maps maps;
 	scope_stack.push_back(Scope());
 	translate_block(maps, source->block, target);

@@ -7,8 +7,8 @@ namespace mdl { namespace smm {
 static bool parse(System& sys) {
 	try {
 		sys.timers["read"].start();
-		uint lab = Lex::toInt(sys.config.in);
-		Source* src = smm::parse(sys.config.in);
+		uint lab = Lex::toInt(sys.config.in.name);
+		Source* src = smm::parse(sys.config.in.path());
 		//cout << *sys.source << endl;
 		sys.math.sources[lab] = src;
 		sys.timers["read"].stop();
@@ -35,11 +35,11 @@ static bool verify(System& sys) {
 
 static bool translate(System& sys) {
 	try {
-		if (sys.config.out.empty()) return true;
+		if (sys.config.out.name.empty()) return true;
 		if (sys.config.verbose)
-			cout << "translating file " << sys.config.in << " ... " << flush;
+			cout << "translating file " << sys.config.in.name << " ... " << flush;
 		sys.timers["translate"].start();
-		uint lab = Lex::toInt(sys.config.in);
+		uint lab = Lex::toInt(sys.config.in.name);
 		switch (sys.config.target) {
 		case Config::Target::TARGET_NONE: break;
 		case Config::Target::TARGET_MM: {
@@ -53,7 +53,7 @@ static bool translate(System& sys) {
 				);
 			} else {
 				//shallow_write(target);
-				ofstream out(sys.config.out);
+				ofstream out(sys.config.out.path());
 				out << *target << endl;
 				out.close();
 			}
@@ -70,7 +70,7 @@ static bool translate(System& sys) {
 				);
 			} else {
 				//shallow_write(target);
-				ofstream out(sys.config.out);
+				ofstream out(sys.config.out.path());
 				out << *target << endl;
 				out.close();
 			}
@@ -91,7 +91,7 @@ static bool translate(System& sys) {
 void run(System& sys) {
 	sys.timers["total"].start();
 	if (sys.config.verbose)
-		cout << "verifying file " << sys.config.in << " ... " << endl;
+		cout << "verifying file " << sys.config.in.name << " ... " << endl;
 	if (!parse(sys))     return;
 	if (!verify(sys))    return;
 	if (!translate(sys)) return;

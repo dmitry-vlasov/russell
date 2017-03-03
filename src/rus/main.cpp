@@ -14,7 +14,7 @@ static bool initConf(const po::variables_map& vm, rus::Config& conf) {
 		conf.mode = rus::Config::Mode::PROVE;
 		conf.target = rus::Config::Target::RUS;
 	}
-	if (conf.in == "") return false;
+	if (conf.in.name.empty()) return false;
 	return true;
 }
 

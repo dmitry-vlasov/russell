@@ -20,9 +20,9 @@ namespace {
 bool parse_mm(System& mm) {
 	try {
 		mm.timers["read"].start();
-		Source* source = parse(mm.config.in);
-		if (!source) throw Error("parsing of " + mm.config.in + " failed");
-		uint lab = Lex::toInt(mm.config.in);
+		Source* source = parse(mm.config.in.path());
+		if (!source) throw Error("parsing of " + mm.config.in.name + " failed");
+		uint lab = Lex::toInt(mm.config.in.name);
 		mm.math.sources[lab] = source;
 		//cout << endl << *source;
 		mm.timers["read"].stop();
@@ -37,7 +37,7 @@ bool parse_mm(System& mm) {
 bool cut_mm(System& mm) {
 	try {
 		mm.timers["work"].start();
-		cut::Section* source = cut::parse(mm.config.root, mm.config.in, mm.config.out);
+		cut::Section* source = cut::parse(mm.config.in.root, mm.config.in.path(), mm.config.out.root);
 		cut::split(source);
 		cut::save(source);
 		delete source;
@@ -53,8 +53,8 @@ bool cut_mm(System& mm) {
 bool merge_mm(System& mm) {
 	try {
 		mm.timers["work"].start();
-		merge::parse(mm.config.in);
-		ofstream out(mm.config.out);
+		merge::parse(mm.config.in.name);
+		ofstream out(mm.config.out.name);
 		out << merge::Source::get().contents.str();
 		out.close();
 		mm.timers["work"].stop();
@@ -68,12 +68,12 @@ bool merge_mm(System& mm) {
 
 bool translate_mm(System& mm) {
 	try {
-		if (mm.config.out.empty()) {
+		if (mm.config.out.name.empty()) {
 			mm.error += "output file is not specified";
 			return false;
 		}
 		mm.timers["work"].start();
-		uint lab = Lex::getInt(mm.config.in);
+		uint lab = Lex::getInt(mm.config.in.name);
 		smm::Source* target = translate(mm.math.sources[lab]);
 		if (mm.config.deep) {
 			deep_write(
@@ -84,7 +84,7 @@ bool translate_mm(System& mm) {
 			);
 		} else {
 			//shallow_write(target);
-			ofstream out(mm.config.out);
+			ofstream out(mm.config.out.path());
 			out << *target << endl;
 			out.close();
 		}
@@ -103,7 +103,7 @@ bool translate_mm(System& mm) {
 void run(System& sys) {
 	sys.timers["total"].start();
 	if (sys.config.verbose)
-		cout << "processing file " << sys.config.in << " ... " << flush;
+		cout << "processing file " << sys.config.in.name << " ... " << flush;
 	if (sys.config.mode == Config::Mode::TRANSL)
 		if (!parse_mm(sys))
 			return;

@@ -240,7 +240,7 @@ private:
 };
 
 Source* parse_peg(string name) {
-	return Parser::parse(name, System::get().config.root);
+	return Parser::parse(name, System::get().config.in.root);
 }
 
 }} // mdl::mm

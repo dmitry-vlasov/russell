@@ -253,7 +253,7 @@ struct ParseImport {
 		return
 			mdl::include<Source, Parser, Import>(
 				path,
-				System::get().config.root,
+				System::get().config.in.root,
 				unicode::space,
 				[] (Import* inc) -> Source* { return inc->source; }
 			);
