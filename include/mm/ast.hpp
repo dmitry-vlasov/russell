@@ -215,18 +215,20 @@ struct Block {
 };
 
 struct Source {
-	Source(const string& r, const string& n) : root(r), name(n), data(), block(nullptr) {
-		boost::erase_last(name, ".smm");
-		boost::erase_last(name, ".mm");
-		boost::erase_last(name, ".rus");
-	}
+	Source(uint l);
 	~Source() { if (block) delete block; }
-	string root;
-	string name;
+	uint   label;
 	string data;
-	string path() { return (root.size() ? root + "/" + name : name) + ".mm"; }
-	string dir() { string p = path(); return p.substr(0, p.find_last_of("/")) + "/"; }
 	Block* block;
+
+	Path rich_path() const;
+
+	string name() const { return Lex::toStr(label); }
+	string dir() const { return rich_path().dir(); }
+	string path() const { return rich_path().path(); }
+
+	void read();
+	void write();
 };
 
 struct Inclusion {

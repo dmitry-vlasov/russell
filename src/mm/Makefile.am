@@ -25,8 +25,6 @@ noinst_HEADERS = \
 	merge/parser.hpp \
 	\
 	adaptors.hpp \
-	spirit_grammar.hpp \
-	spirit_parser.hpp \
 	tree.hpp 
 
 if SPLIT_COMPILE
@@ -39,10 +37,10 @@ libmm_la_SOURCES = \
 	\
 	merge/parser.cpp \
 	\
+	ast.cpp \
 	sys.cpp \
-	peg_parser.cpp \
+	parser.cpp \
 	show.cpp \
-	spirit_parser.cpp \
 	translate.cpp \
 	tree.cpp
 else

@@ -114,14 +114,14 @@ LTLIBRARIES = $(noinst_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 libsmm_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
-am__libsmm_la_SOURCES_DIST = ../mm/show.cpp ../rus/show.cpp \
-	../rus/expr.cpp all.cpp sys.cpp math_symb.cpp parser.cpp \
-	show.cpp translate_mm.cpp translate_rus.cpp tree.cpp \
-	verify.cpp
+am__libsmm_la_SOURCES_DIST = ../mm/show.cpp ../mm/ast.cpp \
+	../rus/show.cpp ../rus/expr.cpp all.cpp sys.cpp math_symb.cpp \
+	parser.cpp show.cpp translate_mm.cpp translate_rus.cpp \
+	tree.cpp verify.cpp
 am__dirstamp = $(am__leading_dot)dirstamp
-@SPLIT_COMPILE_FALSE@am_libsmm_la_OBJECTS = ../mm/show.lo \
+@SPLIT_COMPILE_FALSE@am_libsmm_la_OBJECTS = ../mm/show.lo ../mm/ast.lo \
 @SPLIT_COMPILE_FALSE@	../rus/show.lo ../rus/expr.lo all.lo
-@SPLIT_COMPILE_TRUE@am_libsmm_la_OBJECTS = ../mm/show.lo \
+@SPLIT_COMPILE_TRUE@am_libsmm_la_OBJECTS = ../mm/show.lo ../mm/ast.lo \
 @SPLIT_COMPILE_TRUE@	../rus/show.lo ../rus/expr.lo sys.lo \
 @SPLIT_COMPILE_TRUE@	math_symb.lo parser.lo show.lo parser.lo \
 @SPLIT_COMPILE_TRUE@	translate_mm.lo translate_rus.lo tree.lo \
@@ -352,12 +352,14 @@ noinst_HEADERS = \
 
 @SPLIT_COMPILE_FALSE@libsmm_la_SOURCES = \
 @SPLIT_COMPILE_FALSE@	../mm/show.cpp \
+@SPLIT_COMPILE_FALSE@	../mm/ast.cpp \
 @SPLIT_COMPILE_FALSE@	../rus/show.cpp \
 @SPLIT_COMPILE_FALSE@	../rus/expr.cpp \
 @SPLIT_COMPILE_FALSE@	all.cpp
 
 @SPLIT_COMPILE_TRUE@libsmm_la_SOURCES = \
 @SPLIT_COMPILE_TRUE@	../mm/show.cpp \
+@SPLIT_COMPILE_TRUE@	../mm/ast.cpp \
 @SPLIT_COMPILE_TRUE@	../rus/show.cpp \
 @SPLIT_COMPILE_TRUE@	../rus/expr.cpp \
 @SPLIT_COMPILE_TRUE@	\
@@ -436,6 +438,7 @@ clean-noinstLTLIBRARIES:
 	@$(MKDIR_P) ../mm/$(DEPDIR)
 	@: > ../mm/$(DEPDIR)/$(am__dirstamp)
 ../mm/show.lo: ../mm/$(am__dirstamp) ../mm/$(DEPDIR)/$(am__dirstamp)
+../mm/ast.lo: ../mm/$(am__dirstamp) ../mm/$(DEPDIR)/$(am__dirstamp)
 ../rus/$(am__dirstamp):
 	@$(MKDIR_P) ../rus
 	@: > ../rus/$(am__dirstamp)
@@ -513,6 +516,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@../mm/$(DEPDIR)/ast.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@../mm/$(DEPDIR)/show.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@../rus/$(DEPDIR)/expr.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@../rus/$(DEPDIR)/show.Plo@am__quote@

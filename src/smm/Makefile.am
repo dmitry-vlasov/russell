@@ -23,6 +23,7 @@ noinst_HEADERS = \
 if SPLIT_COMPILE
 libsmm_la_SOURCES = \
 	../mm/show.cpp \
+	../mm/ast.cpp \
 	../rus/show.cpp \
 	../rus/expr.cpp \
 	\
@@ -38,6 +39,7 @@ libsmm_la_SOURCES = \
 else
 libsmm_la_SOURCES = \
 	../mm/show.cpp \
+	../mm/ast.cpp \
 	../rus/show.cpp \
 	../rus/expr.cpp \
 	all.cpp

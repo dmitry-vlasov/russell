@@ -6,16 +6,7 @@
 #include "cut/ast.hpp"
 #include "merge/ast.hpp"
 
-namespace mdl { namespace mm {
-
-Source* parse_spirit(string path);
-Source* parse_peg(string path);
-
-Source* parse(string path) {
-	return parse_spirit(path);
-}
-
-namespace {
+namespace mdl { namespace mm  { namespace {
 
 bool parse_mm(System& mm) {
 	try {

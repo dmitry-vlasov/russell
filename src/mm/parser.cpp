@@ -174,7 +174,8 @@ public:
 			context->block = context->block->parent;
 		};
 		parser["SOURCE"] = [name, root](const peg::SemanticValues& sv, peg::any& context) {
-			Source* src = new Source(root, name);
+			uint label = Lex::toInt(name);
+			Source* src = new Source(label);
 			src->block = sv[0].get<Block*>();
 			return src;
 		};
@@ -239,7 +240,7 @@ private:
 	}
 };
 
-Source* parse_peg(string name) {
+Source* parse(string name) {
 	return Parser::parse(name, System::get().config.in.root);
 }
 
