@@ -352,7 +352,6 @@ noinst_HEADERS = \
 	merge/grammar.hpp \
 	merge/parser.hpp \
 	\
-	adaptors.hpp \
 	tree.hpp 
 
 @SPLIT_COMPILE_FALSE@libmm_la_SOURCES = \

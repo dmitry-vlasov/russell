@@ -15,9 +15,6 @@ noinst_LTLIBRARIES = \
 	libsmm.la
 
 noinst_HEADERS = \
-	adaptors.hpp \
-	grammar.hpp \
-	parser.hpp \
 	tree.hpp 
 
 if SPLIT_COMPILE
@@ -31,7 +28,6 @@ libsmm_la_SOURCES = \
 	sys.cpp \
 	math_symb.cpp \
 	parser.cpp \
-	peg_parser.cpp \
 	show.cpp \
 	parser.cpp \
 	translate_mm.cpp \

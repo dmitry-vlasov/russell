@@ -116,17 +116,16 @@ libsmm_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
 am__libsmm_la_SOURCES_DIST = ../mm/show.cpp ../mm/ast.cpp \
 	../rus/show.cpp ../rus/expr.cpp all.cpp ast.cpp sys.cpp \
-	math_symb.cpp parser.cpp peg_parser.cpp show.cpp \
-	translate_mm.cpp translate_rus.cpp tree.cpp verify.cpp
+	math_symb.cpp parser.cpp show.cpp translate_mm.cpp \
+	translate_rus.cpp tree.cpp verify.cpp
 am__dirstamp = $(am__leading_dot)dirstamp
 @SPLIT_COMPILE_FALSE@am_libsmm_la_OBJECTS = ../mm/show.lo ../mm/ast.lo \
 @SPLIT_COMPILE_FALSE@	../rus/show.lo ../rus/expr.lo all.lo
 @SPLIT_COMPILE_TRUE@am_libsmm_la_OBJECTS = ../mm/show.lo ../mm/ast.lo \
 @SPLIT_COMPILE_TRUE@	../rus/show.lo ../rus/expr.lo ast.lo \
-@SPLIT_COMPILE_TRUE@	sys.lo math_symb.lo parser.lo \
-@SPLIT_COMPILE_TRUE@	peg_parser.lo show.lo parser.lo \
-@SPLIT_COMPILE_TRUE@	translate_mm.lo translate_rus.lo tree.lo \
-@SPLIT_COMPILE_TRUE@	verify.lo
+@SPLIT_COMPILE_TRUE@	sys.lo math_symb.lo parser.lo show.lo \
+@SPLIT_COMPILE_TRUE@	parser.lo translate_mm.lo translate_rus.lo \
+@SPLIT_COMPILE_TRUE@	tree.lo verify.lo
 libsmm_la_OBJECTS = $(am_libsmm_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -346,9 +345,6 @@ noinst_LTLIBRARIES = \
 	libsmm.la
 
 noinst_HEADERS = \
-	adaptors.hpp \
-	grammar.hpp \
-	parser.hpp \
 	tree.hpp 
 
 @SPLIT_COMPILE_FALSE@libsmm_la_SOURCES = \
@@ -368,7 +364,6 @@ noinst_HEADERS = \
 @SPLIT_COMPILE_TRUE@	sys.cpp \
 @SPLIT_COMPILE_TRUE@	math_symb.cpp \
 @SPLIT_COMPILE_TRUE@	parser.cpp \
-@SPLIT_COMPILE_TRUE@	peg_parser.cpp \
 @SPLIT_COMPILE_TRUE@	show.cpp \
 @SPLIT_COMPILE_TRUE@	parser.cpp \
 @SPLIT_COMPILE_TRUE@	translate_mm.cpp \
@@ -528,7 +523,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/math_symb.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/parser.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/peg_parser.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/show.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sys.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/translate_mm.Plo@am__quote@

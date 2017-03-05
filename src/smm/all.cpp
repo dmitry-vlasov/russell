@@ -1,6 +1,5 @@
 #include "math_symb.cpp"
 #include "parser.cpp"
-#include "peg_parser.cpp"
 #include "show.cpp"
 #include "sys.cpp"
 #include "ast.cpp"

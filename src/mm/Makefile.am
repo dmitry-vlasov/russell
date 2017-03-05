@@ -24,7 +24,6 @@ noinst_HEADERS = \
 	merge/grammar.hpp \
 	merge/parser.hpp \
 	\
-	adaptors.hpp \
 	tree.hpp 
 
 if SPLIT_COMPILE
