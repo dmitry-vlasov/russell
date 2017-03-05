@@ -137,7 +137,6 @@ class Source;
 
 struct Inclusion {
 	Inclusion(Source* s, bool p) : source(s), primary(p) { }
-	~Inclusion();
 	Source* source;
 	bool    primary;
 };
@@ -187,7 +186,6 @@ struct Source {
 	vector<Node> contents;
 };
 
-inline Inclusion::~Inclusion() { if (primary && source) delete source; }
 
 inline Assertion::Assertion() :
 	variables(), disjointed(), essential(),

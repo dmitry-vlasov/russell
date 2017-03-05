@@ -1,4 +1,5 @@
 #include "mm/sys.hpp"
+#include "smm/sys.hpp"
 
 namespace po = boost::program_options;
 
@@ -22,6 +23,8 @@ static bool initConf(const po::variables_map& vm, mm::Config& conf) {
 			return false;
 		}
 	}
+	smm::System::mod().config.in = conf.out;
+	smm::System::mod().config.in.ext = "smm";
 	return true;
 }
 

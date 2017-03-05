@@ -8,9 +8,7 @@ static bool parse(System& sys) {
 	try {
 		sys.timers["read"].start();
 		uint lab = Lex::toInt(sys.config.in.name);
-		Source* src = smm::parse(sys.config.in.path());
-		//cout << *sys.source << endl;
-		sys.math.sources[lab] = src;
+		smm::parse(sys.config.in);
 		sys.timers["read"].stop();
 		return true;
 	} catch (Error& err) {

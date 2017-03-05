@@ -1,4 +1,5 @@
 #include "rus/sys.hpp"
+#include "smm/sys.hpp"
 
 namespace po = boost::program_options;
 
@@ -9,6 +10,8 @@ static bool initConf(const po::variables_map& vm, rus::Config& conf) {
 	if (vm.count("translate")) {
 		conf.mode = rus::Config::Mode::TRANSL;
 		conf.target = rus::Config::Target::SMM;
+		smm::System::mod().config.in = conf.out;
+		smm::System::mod().config.in.ext = "smm";
 	}
 	if (vm.count("prove")) {
 		conf.mode = rus::Config::Mode::PROVE;

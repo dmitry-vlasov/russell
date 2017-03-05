@@ -193,6 +193,7 @@ public:
 			case 1: node = Node(sv[0].get<Assertion*>());break;
 			case 2: node = Node(sv[0].get<Constants*>()); break;
 			case 3: node = Node(sv[0].get<Inclusion*>()); break;
+			default : throw Error("unknown smm syntax construction", sv.token());
 			}
 			return node;
 		};

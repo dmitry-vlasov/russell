@@ -12,19 +12,25 @@ static bool initConf(const po::variables_map& vm, smm::Config& conf) {
 		if (vm["lang"].as<string>() == "rus") {
 			if (conf.target != smm::Config::Target::TARGET_NONE) return false;
 			conf.target = smm::Config::Target::TARGET_RUS;
-			rus::System::mod().config.in = conf.out;
-			rus::System::mod().config.in.ext = "rus";
 		}
 		if (vm["lang"].as<string>() == "mm")  {
 			if (conf.target != smm::Config::Target::TARGET_NONE) return false;
 			conf.target = smm::Config::Target::TARGET_MM;
-			mm::System::mod().config.in = conf.out;
-			mm::System::mod().config.in.ext = "mm";
 		}
 	}
 	if (!conf.deep && conf.target == smm::Config::Target::TARGET_NONE) {
 		if (conf.out.ext == "mm") conf.target = smm::Config::Target::TARGET_MM;
 		if (conf.out.ext == "rus") conf.target = smm::Config::Target::TARGET_RUS;
+	}
+	switch (conf.target) {
+	case smm::Config::Target::TARGET_MM :
+		mm::System::mod().config.in = conf.out;
+		mm::System::mod().config.in.ext = "mm";
+		break;
+	case smm::Config::Target::TARGET_RUS :
+		rus::System::mod().config.in = conf.out;
+		rus::System::mod().config.in.ext = "rus";
+		break;
 	}
 	if (conf.in.name.empty()) return false;
 	return true;

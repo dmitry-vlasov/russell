@@ -373,8 +373,6 @@ smm::Source* translate_source(Maps& maps, const Source* src, smm::Source* target
 		return maps.sources[src];
 	} else {
 		Config conf = System::get().config;
-		//uint label = Lex::toInt(src->name());
-		//Source* src = new Source(label);
 		if (!target) target = new smm::Source(src->label);
 		maps.sources[src] = target;
 		translate_block(maps, src->block, target);
