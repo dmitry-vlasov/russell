@@ -30,6 +30,7 @@ noinst_HEADERS = \
 if SPLIT_COMPILE
 libmm_la_SOURCES = \
 	../smm/show.cpp \
+	../smm/ast.cpp \
 	\
 	cut/parser.cpp \
 	cut/globals.cpp \
@@ -46,6 +47,7 @@ libmm_la_SOURCES = \
 else
 libmm_la_SOURCES = \
 	../smm/show.cpp \
+	../smm/ast.cpp \
 	all.cpp
 endif
 

@@ -124,7 +124,7 @@ mm::Source* translate_source(const Source* src, Maps& maps, mm::Source* target) 
 	} else {
 		Config conf = System::get().config;
 		if (!target) {
-			target = new mm::Source(Lex::toInt(src->name));
+			target = new mm::Source(src->label);
 			target->block = new mm::Block;
 		}
 		maps.sources[src] = target;

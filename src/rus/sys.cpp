@@ -71,7 +71,6 @@ bool translate_rus(System& rus) {
 			out << *target << endl;
 			out.close();
 		}
-		delete target;
 		rus.timers["translate"].stop();
 		if (rus.config.verbose) cout << "done in " << rus.timers["translate"] << endl;
 		return true;

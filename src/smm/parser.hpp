@@ -96,13 +96,15 @@ struct ParseInclusion {
 	struct result { typedef Inclusion* type; };
 	Inclusion* operator()(string name) const {
 		typedef Grammar<LocationIter> Parser;
-		return
+		return nullptr;
+		/*
 			mdl::include<Source, Parser, Inclusion>(
 				name,
 				System::get().config.in.root,
 				ascii::space,
 				[] (Inclusion* inc) -> Source* { return inc->source; }
 			);
+		*/
 	}
 };
 

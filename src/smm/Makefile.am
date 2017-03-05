@@ -27,9 +27,11 @@ libsmm_la_SOURCES = \
 	../rus/show.cpp \
 	../rus/expr.cpp \
 	\
+	ast.cpp \
 	sys.cpp \
 	math_symb.cpp \
 	parser.cpp \
+	peg_parser.cpp \
 	show.cpp \
 	parser.cpp \
 	translate_mm.cpp \

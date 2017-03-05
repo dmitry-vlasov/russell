@@ -76,7 +76,6 @@ bool translate_mm(System& mm) {
 			out << *target << endl;
 			out.close();
 		}
-		delete target;
 		mm.timers["work"].stop();
 		return true;
 	} catch (Error& err) {

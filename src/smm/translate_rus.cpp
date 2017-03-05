@@ -468,7 +468,7 @@ rus::Source* translate_source(const Source* src, State& state, rus::Source* targ
 	} else {
 		Config conf = System::get().config;
 		if (!target) {
-			target = new rus::Source(conf.out.root, src->name);
+			target = new rus::Source(conf.out.root, src->name());
 			target->theory = new rus::Theory();
 		}
 		state.sources[src] = target;

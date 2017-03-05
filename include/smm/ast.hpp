@@ -170,20 +170,20 @@ struct Node {
 };
 
 struct Source {
-	Source(const string& r, const string& n) : root(r), name(n), data(), contents() {
-		boost::erase_last(name, ".smm");
-		boost::erase_last(name, ".mm");
-		boost::erase_last(name, ".rus");
-	}
-	~ Source() {
-		for (auto& node : contents)
-			node.destroy();
-	}
-	string root;
-	string name;
+	Source(uint l);
+	~ Source() { for (auto& node : contents) node.destroy(); }
+	uint   label;
 	string data;
-	string path() { return (root.size() ? root + "/" + name : name) + ".smm"; }
-	string dir() { string p = path(); return p.substr(0, p.find_last_of("/")) + "/"; }
+
+	Path rich_path() const;
+
+	string name() const { return Lex::toStr(label); }
+	string dir() const { return rich_path().dir(); }
+	string path() const { return rich_path().path(); }
+
+	void read();
+	void write();
+
 	vector<Node> contents;
 };
 

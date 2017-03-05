@@ -15,7 +15,7 @@ struct Math {
 	template<typename T>
 	using Table = map<uint, T>;
 
-	set<Symbol>        constants;
+	set<Symbol>       constants;
 	Table<Assertion*> assertions;
 	Table<Source*>    sources;
 
@@ -27,7 +27,8 @@ typedef mdl::Sys<Source, Math, Config> System;
 void run(System&);
 string show(const System&);
 string info(const System&);
-Source* parse(string path);
+//Source* parse(string path);
+Source* parse(const Path& path);
 void verify();
 mm::Source*  translate_to_mm(const Source* source);
 rus::Source* translate_to_rus(const Source* source);

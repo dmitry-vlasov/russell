@@ -24,6 +24,7 @@ noinst_HEADERS = \
 if SPLIT_COMPILE
 librus_la_SOURCES = \
 	../smm/show.cpp \
+	../smm/ast.cpp \
 	\
 	expr/parse.cpp \
 	expr/unify.cpp \
@@ -39,6 +40,7 @@ librus_la_SOURCES = \
 else
 librus_la_SOURCES = \
 	../smm/show.cpp \
+	../smm/ast.cpp \
 	all.cpp
 endif
 

@@ -114,13 +114,14 @@ LTLIBRARIES = $(noinst_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 librus_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
-am__librus_la_SOURCES_DIST = ../smm/show.cpp all.cpp expr/parse.cpp \
-	expr/unify.cpp parser/parse.cpp expr.cpp sys.cpp memvol.cpp \
-	show.cpp translate.cpp verify.cpp
+am__librus_la_SOURCES_DIST = ../smm/show.cpp ../smm/ast.cpp all.cpp \
+	expr/parse.cpp expr/unify.cpp parser/parse.cpp expr.cpp \
+	sys.cpp memvol.cpp show.cpp translate.cpp verify.cpp
 am__dirstamp = $(am__leading_dot)dirstamp
-@SPLIT_COMPILE_FALSE@am_librus_la_OBJECTS = ../smm/show.lo all.lo
+@SPLIT_COMPILE_FALSE@am_librus_la_OBJECTS = ../smm/show.lo \
+@SPLIT_COMPILE_FALSE@	../smm/ast.lo all.lo
 @SPLIT_COMPILE_TRUE@am_librus_la_OBJECTS = ../smm/show.lo \
-@SPLIT_COMPILE_TRUE@	expr/parse.lo expr/unify.lo \
+@SPLIT_COMPILE_TRUE@	../smm/ast.lo expr/parse.lo expr/unify.lo \
 @SPLIT_COMPILE_TRUE@	parser/parse.lo expr.lo sys.lo memvol.lo \
 @SPLIT_COMPILE_TRUE@	show.lo translate.lo verify.lo
 librus_la_OBJECTS = $(am_librus_la_OBJECTS)
@@ -351,10 +352,12 @@ noinst_HEADERS = \
 
 @SPLIT_COMPILE_FALSE@librus_la_SOURCES = \
 @SPLIT_COMPILE_FALSE@	../smm/show.cpp \
+@SPLIT_COMPILE_FALSE@	../smm/ast.cpp \
 @SPLIT_COMPILE_FALSE@	all.cpp
 
 @SPLIT_COMPILE_TRUE@librus_la_SOURCES = \
 @SPLIT_COMPILE_TRUE@	../smm/show.cpp \
+@SPLIT_COMPILE_TRUE@	../smm/ast.cpp \
 @SPLIT_COMPILE_TRUE@	\
 @SPLIT_COMPILE_TRUE@	expr/parse.cpp \
 @SPLIT_COMPILE_TRUE@	expr/unify.cpp \
@@ -436,6 +439,7 @@ clean-noinstLTLIBRARIES:
 	@: > ../smm/$(DEPDIR)/$(am__dirstamp)
 ../smm/show.lo: ../smm/$(am__dirstamp) \
 	../smm/$(DEPDIR)/$(am__dirstamp)
+../smm/ast.lo: ../smm/$(am__dirstamp) ../smm/$(DEPDIR)/$(am__dirstamp)
 expr/$(am__dirstamp):
 	@$(MKDIR_P) expr
 	@: > expr/$(am__dirstamp)
@@ -521,6 +525,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@../smm/$(DEPDIR)/ast.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@../smm/$(DEPDIR)/show.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/all.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/expr.Plo@am__quote@
