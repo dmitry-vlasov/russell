@@ -58,7 +58,7 @@ void read_smart(string& data, ifstream& in) {
 	in.close();
 }
 
-Path Path::open() {
+Path Path::verify() {
 	Path p(*this);
 	ifstream in;
 	while (true) {

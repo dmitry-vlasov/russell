@@ -216,7 +216,12 @@ void shallow_write(T* target) {
 */
 struct Path {
 	Path() : root(), name(), ext() { }
-	Path(const string& n, const string& r, const string& e) : root(r), name(n), ext(e) { }
+	Path(const string& n, const string& r, const string& e) : root(r), name(n), ext(e) {
+		boost::trim(root);
+		boost::trim(name);
+		boost::erase_last(root, "/");
+		boost::trim(ext);
+	}
 	Path(const string& n, const string& r = "") : root(r), name(), ext() {
 		boost::trim(root);
 		boost::trim(name);
@@ -230,17 +235,18 @@ struct Path {
 		ext = p.ext;
 		return *this;
 	}
-	string path() {
+	string path() const {
 		return (root.size() ? root + "/" : "") + name + (ext.size() ? "." + ext : "");
 	}
-	string dir() { string p = path(); return p.substr(0, p.find_last_of("/")) + "/"; }
-	void name_ext(const string& ne) {
+	string dir() const { string p = path(); return p.substr(0, p.find_last_of("/")) + "/"; }
+	void name_ext(string ne) {
+		boost::trim(ne);
 		int i = ne.find_last_of(".");
 		name = ne.substr(0, i);
 		ext.clear();
 		if (i != string::npos) ext = ne.substr(i + 1);
 	}
-	Path open();
+	Path verify();
 	void read(string& data);
 	void write(const string& data);
 	Path relative(const string& n) const {

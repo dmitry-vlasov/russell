@@ -1,4 +1,6 @@
 #include "smm/sys.hpp"
+#include "mm/sys.hpp"
+#include "rus/sys.hpp"
 
 namespace po = boost::program_options;
 
@@ -10,10 +12,14 @@ static bool initConf(const po::variables_map& vm, smm::Config& conf) {
 		if (vm["lang"].as<string>() == "rus") {
 			if (conf.target != smm::Config::Target::TARGET_NONE) return false;
 			conf.target = smm::Config::Target::TARGET_RUS;
+			rus::System::mod().config.in = conf.out;
+			rus::System::mod().config.in.ext = "rus";
 		}
 		if (vm["lang"].as<string>() == "mm")  {
 			if (conf.target != smm::Config::Target::TARGET_NONE) return false;
 			conf.target = smm::Config::Target::TARGET_MM;
+			mm::System::mod().config.in = conf.out;
+			mm::System::mod().config.in.ext = "mm";
 		}
 	}
 	if (!conf.deep && conf.target == smm::Config::Target::TARGET_NONE) {

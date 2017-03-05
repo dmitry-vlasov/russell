@@ -11,10 +11,7 @@ namespace mdl { namespace mm  { namespace {
 bool parse_mm(System& mm) {
 	try {
 		mm.timers["read"].start();
-		Source* source = parse(mm.config.in.path());
-		if (!source) throw Error("parsing of " + mm.config.in.name + " failed");
-		uint lab = Lex::toInt(mm.config.in.name);
-		mm.math.sources[lab] = source;
+		if (!parse(mm.config.in)) throw Error("parsing of " + mm.config.in.name + " failed");
 		//cout << endl << *source;
 		mm.timers["read"].stop();
 		return true;
@@ -44,8 +41,8 @@ bool cut_mm(System& mm) {
 bool merge_mm(System& mm) {
 	try {
 		mm.timers["work"].start();
-		merge::parse(mm.config.in.name);
-		ofstream out(mm.config.out.name);
+		merge::parse(mm.config.in.path());
+		ofstream out(mm.config.out.path());
 		out << merge::Source::get().contents.str();
 		out.close();
 		mm.timers["work"].stop();

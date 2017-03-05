@@ -233,7 +233,6 @@ struct Source {
 
 struct Inclusion {
 	Inclusion(Source* src, bool prim) : source(src), primary(prim) { }
-	~ Inclusion() { if (primary && source) delete source; }
 	Source* source;
 	bool primary;
 };

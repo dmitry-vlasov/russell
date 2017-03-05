@@ -57,7 +57,7 @@ static bool translate(System& sys) {
 				out << *target << endl;
 				out.close();
 			}
-			delete target;
+			//delete target;
 		}	break;
 		case Config::Target::TARGET_RUS: {
 			rus::Source* target = smm::translate_to_rus(sys.math.sources[lab]);

@@ -45,10 +45,10 @@ public:
 			%whitespace <- [ \t\r\n]*
 		)";
 	}
-	Parser(string name, string root) : parser(mm_syntax()) {
+	Parser(const Path& path) : parser(mm_syntax()) {
 
 		parser["SYMB"] = [](const peg::SemanticValues& sv) {
-			return Lex::toInt(sv.token());
+			return Symbol(Lex::toInt(sv.token()));
 		};
 		parser["LAB"] = [](const peg::SemanticValues& sv) {
 			return Lex::toInt(sv.token());
@@ -173,34 +173,35 @@ public:
 			}
 			context->block = context->block->parent;
 		};
-		parser["SOURCE"] = [name, root](const peg::SemanticValues& sv, peg::any& context) {
-			uint label = Lex::toInt(name);
-			Source* src = new Source(label);
+		parser["SOURCE"] = [path](const peg::SemanticValues& sv, peg::any& context) {
+			Source* src = new Source(Lex::toInt(path.name));
 			src->block = sv[0].get<Block*>();
 			return src;
 		};
 		parser["SOURCE"].enter = [](peg::any& context) {
 			context.get<std::shared_ptr<Context>>()->source = true;
 		};
-		parser["INCLUDE"] = [root](const peg::SemanticValues& sv, peg::any& context) {
-			string path = sv.token();
+		parser["INCLUDE"] = [path](const peg::SemanticValues& sv, peg::any& context) {
+			string name = sv.token();
 			static map<string, mm::Inclusion*> included;
-			if (included.count(path)) {
-				mm::Inclusion* inc = included[path];
+			if (included.count(name)) {
+				mm::Inclusion* inc = included[name];
 				return new mm::Inclusion(inc->source, false);
 			} else {
+				Path new_path(path);
+				new_path.name_ext(name);
 				mm::Inclusion* inc = new mm::Inclusion(nullptr, true);
-				included[path] = inc;
-				inc->source = parse(path, root, context.get<std::shared_ptr<Context>>());
+				included[name] = inc;
+				inc->source = parse(new_path, context.get<std::shared_ptr<Context>>());
 				return inc;
 			}
 		};
 	}
 
-	static Source* parse(string name, string root) {
+	static Source* parse(const Path& path) {
 		auto context = std::make_shared<Context>();
 		context->stack.push_back(Scope());
-		Source* src = parse(name, root, context);
+		Source* src = parse(path, context);
 		assert(!context->stack.empty());
 		context->stack.pop_back();
 		assert(context->stack.empty());
@@ -208,12 +209,11 @@ public:
 	}
 
 private:
-	static Source* parse(string name, string root, std::shared_ptr<Context>& context) {
-		ifstream in = open_smart(name, root);
+	static Source* parse(Path path, std::shared_ptr<Context>& context) {
+		path = path.verify();
 		string data;
-		read_smart(data, in);
-
-		Parser p(name, root);
+		path.read(data);
+		Parser p(path);
 		mdl::mm::Source* src = nullptr;
 		peg::any c(context);
 		if (!p.parser.parse<mdl::mm::Source*>(data.c_str(), c, src)) return nullptr;
@@ -240,8 +240,8 @@ private:
 	}
 };
 
-Source* parse(string name) {
-	return Parser::parse(name, System::get().config.in.root);
+Source* parse(const Path& path) {
+	return Parser::parse(path);
 }
 
 }} // mdl::mm
