@@ -5,29 +5,39 @@ namespace mdl { namespace rus {
 
 struct Parser {
 private:
-	struct Stack {
-		vector<Vars>       vars;
-		vector<Proof*>     proofs;
-		map<Symbol, Type*> typing;
+	struct Stacks {
+		vector<Vars>     vars;
+		vector<Proof*>   proofs;
+		map<uint, Type*> typing;
+		void pushVars() {
+			vars.push_back(Vars());
+		}
 		void popVars() {
 			Vars& vs = vars.back();
 			for (auto v : vs.v) typing.erase(v.lit);
 			vs.pop_back();
 		}
-		void pushVars(const Vars& var) {
-			for (auto v : var.v) {
-				vars.back().v.push_back(v);
-				typing[v.lit] = v.type;
-			}
+		void addVar(Symbol v) {
+			vars.back().v.push_back(v);
+			typing[v.lit] = v.type;
 		}
-		void pushVars(const Theorem* thm) {
-			for (auto v : thm->ass.vars.v) {
-				vars.back().v.push_back(v);
-				typing[v.lit] = v.type;
-			}
+		Type* type(uint v) const {
+			if (!typing.count(v)) throw Error("unknown type", Lex::getStr(v));
+			return typing.at(v);
+		}
+		void markType(Symbol& s) const {
+			if (typing.count(s.lit)) s.type = typing.at(s.lit);
 		}
 	};
-	typedef Stack Context;
+	struct Context {
+		Context() : ind(0), stacks(), expr(nullptr), type(nullptr), vars(nullptr), disj(nullptr) { }
+		uint  ind;
+		Stacks stacks;
+		Expr* expr;
+		Type* type;
+		Vars* vars;
+		Disj* disj;
+	};
 	peg::parser parser;
 
 public:
@@ -90,48 +100,65 @@ public:
 		parser["PATH"] = [](const peg::SemanticValues& sv) {
 			return sv.token();
 		};
-		parser["EXPR"] = [](const peg::SemanticValues& sv) {
-			Expr expr;
-			expr.symbols.reserve(sv.size());
+		parser["EXPR"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* context = ctx.get<Context*>();
+			Expr* expr = context->expr;
+			expr->type = context->type;
+			expr->symbols.reserve(sv.size());
 			for (auto& s : sv) {
-				if (s.is<Symbol>()) expr.symbols.push_back(s);
+				if (s.is<Symbol>()) expr->symbols.push_back(s);
 				else delete s.get<Comment*>();
 			}
-			return expr;
+			mark_vars(expr, context->stacks);
 		};
-		parser["VAR"] = [](const peg::SemanticValues& sv) {
-			Symbol s = sv[0].get<Symbol>();
-			unit t = sv[1].get<uint>();
-			s.type = System::get().math.types[t];
-			return s;
+		parser["VAR"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* context = ctx.get<Context*>();
+			Symbol v = sv[0].get<Symbol>();
+			v.type = System::get().math.types[sv[1].get<uint>()];
+			context->vars->addVar(v);
 		};
-		parser["VARS"] = [](const peg::SemanticValues& sv) {
-			Vars vars;
-			vars.v = sv.transform<Symbol>();
-			return vars;
+		parser["DISJ_SET"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* context = ctx.get<Context*>();
+			context->disj->d.push_back(vector<Symbol>());
+			vector<Symbol>& set = context->disj->d.back();
+			for (auto& v : sv) {
+				context->stacks.markType(v);
+				set.push_back(v);
+			}
 		};
-		parser["QED"] = [](const peg::SemanticValues& sv) {
-			Vars vars;
-			vars.v = sv.transform<Symbol>();
-			return vars;
+		parser["CONST"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Const* c = nullptr;
+			switch (sv.size()) {
+			case 1 : c = new Const { sv[0].get<Vect>() }; break;
+			case 2 : c = new Const { sv[0].get<Vect>() }; break;
+			case 3 : c = new Const { sv[0].get<Vect>() }; break;
+			default : throw Error("syntax error");
+			}
+			System::mod().math.consts[c->symb.lit] = c;
+			return c;
 		};
-		parser["CONST"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Constants* consts = new Constants { sv[0].get<Vect>() };
-			for (Symbol c : consts->expr)
-				context.get<std::shared_ptr<Context>>()->vars.back().consts.insert(c);
-			return consts;
+		parser["TYPE"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* context = ctx.get<Context*>();
+			Type* t = new Type();
+			t->ind = context->ind++;
+			t->id = sv[0].get<uint>();
+			collect_supers(t, t);
+			System::mod().math.types[t->id] = t;
+			return t;
 		};
-		parser["VAR"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Variables* vars = new Variables { sv[0].get<Vect>() };
-			for (Symbol c : vars->expr)
-				context.get<std::shared_ptr<Context>>()->vars.back().vars.insert(c);
-			return vars;
+		parser["RULE"].enter = [](peg::any& ctx) {
+			Context* context = ctx.get<Context*>();
+			///context->vars =
 		};
-		parser["DISJ"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Disjointed* disj = new Disjointed { sv[0].get<Vect>() };
-			for (Symbol v : disj->expr)
-				context.get<std::shared_ptr<Context>>()->vars.back().vars.insert(v);
-			return disj;
+		parser["RULE"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* context = ctx.get<Context*>();
+			Rule* r = new Rule();
+			r->ind = context->ind++;
+			r->id = sv[0].get<uint>();
+			r->type = System::mod().math.types[sv[1].get<uint>()];
+			r->vars =
+			System::mod().math.rules[r->id] = r;
+			return t;
 		};
 		parser["ESS"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Essential* ess = new Essential { sv[0].get<uint>(), sv[1].get<Vect>() };
@@ -257,16 +284,17 @@ public:
 		path.read(data);
 		Parser p(path);
 		mdl::mm::Source* src = nullptr;
-		peg::any context(std::make_shared<Context>());
-		if (!p.parser.parse<mdl::mm::Source*>(data.c_str(), context, src)) return nullptr;
+		peg::any ctx(new Context());
+		p.parser.parse<mdl::mm::Source*>(data.c_str(), ctx, src);
+		delete ctx.get<Context*>();
 		std::swap(data, src->data);
 		return src;
 	}
 
 private:
-	static void mark_vars(Expr& ex, VarStack& var_stack) {
-		for (auto& s : ex.symbols) {
-			bool is_var = var_stack.typing.count(s.lit);
+	static void mark_vars(Expr* ex, Stacks& stacks) {
+		for (auto& s : ex->symbols) {
+			bool is_var = stacks.typing.count(s.lit);
 			bool is_const = System::get().math.consts.count(s.lit);
 			if (is_const && is_var)
 				throw Error("constant symbol is marked as variable");
@@ -275,9 +303,33 @@ private:
 				msg += " neither constant nor variable";
 				throw Error(msg);
 			}
-			if (is_var) s.type = var_stack.typing[s.lit];
+			if (is_var) s.type = stacks.typing[s.lit];
 		}
 	}
+	static Rule* create_super(Type* inf, Type* sup) {
+		Rule* rule = new Rule;
+		rule->id = create_id("sup", show_id(inf->id), show_id(sup->id));
+		rule->vars.v.push_back(create_symbol("x", inf));
+		rule->term.push_back(create_symbol("x", inf));
+		rule->type = sup;
+
+		VarStack var_stack;
+		AddVars add_vars;
+		PushVars push_vars;
+		push_vars(var_stack);
+		add_vars(var_stack, rule->vars);
+		mark_vars(rule->term, var_stack);
+		parse_term(rule->term, rule);
+		return rule;
+	}
+	static void collect_supers(Type* inf, Type* s) {
+		for (auto sup : s->sup) {
+			Rule* super = create_super(inf, sup);
+			inf->supers[sup] = super;
+			collect_supers(inf, sup);
+		}
+	}
+
 };
 
 Source* parse(const Path& path) {

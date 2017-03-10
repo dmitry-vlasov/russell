@@ -34,9 +34,9 @@ struct Type {
 	~Type();
 	uint ind;
 	uint id;
-	vector<Type*>     sup;
+	vector<Type*> sup;
 	map<const Type*, Rule*> supers;
-	Rules             rules;
+	Rules rules;
 };
 
 struct Rule {

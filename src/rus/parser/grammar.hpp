@@ -106,7 +106,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 		> "{"
 		> - ( + (hyp [push_back(phoenix::at_c<4>(*_r1), _1)]) > bar )
 		> + (prop    [push_back(phoenix::at_c<5>(*_r1), _1)])
-		> lit("}")   [pushVars(phoenix::ref(var_stack))];
+		> lit("}")   [popVars(phoenix::ref(var_stack))];
 
 	refs =
 		lit("(")
