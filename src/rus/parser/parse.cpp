@@ -12,9 +12,18 @@ uint inc_ind() { return ind ++; }
 
 } // parser
 
-Source* parse(string name) {
-	typedef parser::Grammar<LocationIter> Parser;
-	return mdl::parse<Source, Parser>(name, System::get().config.in.root, parser::unicode::space);
+Source* parse(Path path) {
+	path = path.verify();
+	string data;
+	path.read(data);
+	Source* src = new Source(path.root, path.name);
+	LocationIter iter(data.begin(), path.name);
+	LocationIter end(data.end(), path.name);
+	if (!parser::Grammar<LocationIter>::parse(iter, end, parser::unicode::space, *src) || iter != end) {
+		throw Error("parsing failed", path.name);
+	}
+	std::swap(data, src->data);
+	return src;
 }
 
 }} // mdl::rus

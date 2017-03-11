@@ -7,7 +7,7 @@ bool parse_rus(System& rus) {
 		if (rus.config.verbose) cout << "parsing russell source ... " << flush;
 		rus.timers["read"].start();
 		uint lab = Lex::toInt(rus.config.in.name);
-		Source* src = parse(rus.config.in.path());
+		Source* src = parse(rus.config.in);
 		rus.math.sources[lab] = src;
 		rus.timers["read"].stop();
 		if (rus.config.verbose) cout << "done in " << rus.timers["read"] << endl;

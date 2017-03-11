@@ -173,6 +173,7 @@ inline string cut_outer_directory(string path) {
 	return path.substr(slash_pos == string::npos ? 0 : slash_pos + 1);
 }
 */
+
 ifstream open_smart(string& path, string root);
 void read_smart(string& data, ifstream&);
 
@@ -256,7 +257,7 @@ struct Path {
 	string name;
 	string ext;
 };
-
+/*
 template<class Source, class Parser>
 void parse(Source*& src, string& data, auto space) {
 	LocationIter iter(data.begin(), src->name);
@@ -295,7 +296,7 @@ Inclusion* include(string path, string root, auto space, Source* (get_src)(Inclu
 		return inc;
 	}
 }
-
+*/
 // Library, singleton, which contains a variety of deductive systems
 template<typename T>
 struct Lib {

@@ -248,15 +248,20 @@ template<class> class Grammar;
 struct ParseImport {
 	template <typename T>
 	struct result { typedef Import* type; };
-	Import* operator()(string path) const {
-		typedef Grammar<LocationIter> Parser;
-		return
-			mdl::include<Source, Parser, Import>(
-				path,
-				System::get().config.in.root,
-				unicode::space,
-				[] (Import* inc) -> Source* { return inc->source; }
-			);
+	Import* operator()(string name) const {
+		static map<string, Import*> imported;
+		if (imported.count(name)) {
+			Import* imp = imported[name];
+			return new Import(imp->source, false);
+		} else {
+			Path path(System::get().config.in);
+			path.name_ext(name);
+			path.ext = "rus";
+			Import* imp = new Import(nullptr, true);
+			imported[name] = imp;
+			imp->source = parse(path);
+			return imp;
+		}
 	}
 };
 
