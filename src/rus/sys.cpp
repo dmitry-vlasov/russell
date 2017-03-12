@@ -64,10 +64,7 @@ bool translate_rus(System& rus) {
 				[](smm::Node n) -> bool { return n.type == smm::Node::INCLUSION; }
 			);
 		} else {
-			//shallow_write(target);
-			ofstream out(rus.config.out.path());
-			out << *target << endl;
-			out.close();
+			shallow_write(target);
 		}
 		rus.timers["translate"].stop();
 		if (rus.config.verbose) cout << "done in " << rus.timers["translate"] << endl;

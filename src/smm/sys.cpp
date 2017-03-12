@@ -66,10 +66,7 @@ static bool translate(System& sys) {
 					[](rus::Node n) -> bool { return n.kind == rus::Node::IMPORT; }
 				);
 			} else {
-				//shallow_write(target);
-				ofstream out(sys.config.out.path());
-				out << *target << endl;
-				out.close();
+				shallow_write(target);
 			}
 		}	break;
 		}

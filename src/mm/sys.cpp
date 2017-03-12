@@ -71,10 +71,7 @@ bool translate_mm(System& mm) {
 				[](smm::Node n) -> bool { return n.type == smm::Node::INCLUSION; }
 			);
 		} else {
-			//shallow_write(target);
-			ofstream out(mm.config.out.path());
-			out << *target << endl;
-			out.close();
+			shallow_write(target);
 		}
 		mm.timers["work"].stop();
 		return true;

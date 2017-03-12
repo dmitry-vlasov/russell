@@ -202,9 +202,9 @@ template<class T>
 void shallow_write(T* target) {
 	typedef T Source;
 	namespace fs = boost::filesystem;
-	if (!fs::exists(target->path.dir()))
-		fs::create_directories(target->path.dir());
-	ofstream out(target->path.path());
+	if (!fs::exists(target->dir()))
+		fs::create_directories(target->dir());
+	ofstream out(target->path());
 	out << *target << endl;
 	out.close();
 }
