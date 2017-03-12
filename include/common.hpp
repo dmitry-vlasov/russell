@@ -202,8 +202,9 @@ template<class T>
 void shallow_write(T* target) {
 	typedef T Source;
 	namespace fs = boost::filesystem;
-	if (!fs::exists(target->dir()))
-		fs::create_directories(target->dir());
+	string dir = target->dir();
+	if (!dir.empty() && !fs::exists(dir))
+		fs::create_directories(dir);
 	ofstream out(target->path());
 	out << *target << endl;
 	out.close();
@@ -233,7 +234,11 @@ struct Path {
 	string path() const {
 		return (root.size() ? root + "/" : "") + name + (ext.size() ? "." + ext : "");
 	}
-	string dir() const { string p = path(); return p.substr(0, p.find_last_of("/")) + "/"; }
+	string dir() const {
+		string p = path();
+		int i = p.find_last_of("/");
+		return (i == string::npos) ? "" : p.substr(0, i) + "/";
+	}
 	void name_ext(string ne) {
 		boost::trim(ne);
 		int i = ne.find_last_of(".");
@@ -255,17 +260,33 @@ struct Path {
 // Library, singleton, which contains a variety of deductive systems
 template<typename T>
 struct Lib {
-	typedef T System;
 	static const Lib& get() { return mod(); }
 	static Lib& mod() { static Lib lib; return lib; }
 
-	System& sys() { return systems[current]; }
+	void init(const string& curr) {
+		current = curr;
+		contents[current].reset(new T());
+	}
+	template<class TR>
+	void init(const string& curr) {
+		current = curr;
+		contents[current].reset(new TR());
+	}
 
-	map<string, System> systems;
+	T& access() {
+		assert(contents.count(current));
+		return *contents[current];
+	}
+	template<class TR>
+	T& access() {
+		assert(contents.count(current));
+		return *contents[current];
+	}
 	string current;
 
 private:
-	Lib() : systems(), current() { }
+	map<string, unique_ptr<T>> contents;
+	Lib() : contents(), current("default") { }
 };
 
 // Configuration for a deductive system
@@ -289,21 +310,68 @@ struct Config {
 	Target target;
 };
 
+struct Io {
+	virtual ~Io() { };
+	virtual ostream& out() = 0;
+	virtual ostream& err() = 0;
+	struct Std;
+};
+
+struct Io::Std : public Io {
+	virtual ~Std() { };
+	ostream& out() override { return cout; }
+	ostream& err() override { return cerr; }
+};
+
+struct Return {
+	Return(const string& t = "", any d = any()) : text(t), data(d) { }
+	string text;
+	any    data;
+};
+
+typedef vector<string> Args;
+typedef map<string, Timer> Timers;
+typedef function<Return (const Args&)> Action;
+
 // Template for a deductive system
 template<class S, class M, class C>
 struct Sys {
-	typedef S Source;
+	typedef S System;
 	typedef M Math;
 	typedef C Config;
-	typedef map<string, Timer> Timers;
 
 	Config  config;
 	Timers  timers;
 	Math    math;
-	string  error;
+	string  name;
 
-	static const Sys& get() { return mod(); }
-	static Sys& mod() { return Lib<Sys>::mod().sys();  }
+	map<string, Action> action;
+
+	static const System& get() { return mod(); }
+	static System& mod() { return Lib<System>::mod().access();  }
+	static Io& io() { return Lib<Io>::mod().access();  }
+	static Timers& timer() { return Lib<Timers>::mod().access();  }
+	static Config& conf() { return Lib<Config>::mod().access();  }
+
+	static void change(const string& name) {
+		if (!instances().count(name)) throw Error("no such sys instance");
+		Lib<System>::mod().current = name;
+		Lib<Io>::mod().current = name;
+		Lib<Timers>::mod().current = name;
+		Lib<Config>::mod().current = name;
+	}
+	template<class IO = Io::Std>
+	static void init(const string& name = "default") {
+		if (instances().count(name)) throw Error("sys instance already initialized");
+		instances().insert(name);
+		Lib<Io>::mod().init<IO>(name);
+		Lib<System>::mod().init(name);
+		Lib<Timers>::mod().init(name);
+		Lib<Config>::mod().init(name);
+	}
+
+private:
+	static set<string> instances() { static set<string> inst; return inst; }
 };
 
 template<typename M, typename T>

@@ -11,8 +11,7 @@ bool parse_rus(System& rus) {
 		if (rus.config.verbose) cout << "done in " << rus.timers["read"] << endl;
 		return true;
 	} catch (Error& err) {
-		rus.error += '\n';
-		rus.error += err.what();
+		System::io().err() << err.what() << endl;
 		return false;
 	}
 }
@@ -26,8 +25,7 @@ bool parse_exp(System& rus) {
 		if (rus.config.verbose) cout << "done in " << rus.timers["expr"] << endl;
 		return true;
 	} catch (Error& err) {
-		rus.error += '\n';
-		rus.error += err.what();
+		System::io().err() << err.what() << endl;
 		return false;
 	}
 }
@@ -43,8 +41,7 @@ bool unify_rus(System& rus) {
 		if (rus.config.verbose) cout << "done in " << rus.timers["unify"] << endl;
 		return true;
 	} catch (Error& err) {
-		rus.error += '\n';
-		rus.error += err.what();
+		System::io().err() << err.what() << endl;
 		return false;
 	}
 }
@@ -70,8 +67,7 @@ bool translate_rus(System& rus) {
 		if (rus.config.verbose) cout << "done in " << rus.timers["translate"] << endl;
 		return true;
 	} catch (Error& err) {
-		rus.error += '\n';
-		rus.error += err.what();
+		System::io().err() << err.what() << endl;
 		return false;
 	}
 }
@@ -89,8 +85,7 @@ bool write_rus(System& rus) {
 		if (rus.config.verbose) cout << "done in " << rus.timers["write"] << endl;
 		return true;
 	} catch (Error& err) {
-		rus.error += '\n';
-		rus.error += err.what();
+		System::io().err() << err.what() << endl;
 		return false;
 	}
 }

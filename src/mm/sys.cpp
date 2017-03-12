@@ -16,8 +16,7 @@ bool parse_mm(System& mm) {
 		mm.timers["read"].stop();
 		return true;
 	} catch (Error& err) {
-		mm.error += '\n';
-		mm.error += err.what();
+		System::io().err() << err.what() << endl;
 		return false;
 	}
 }
@@ -32,8 +31,7 @@ bool cut_mm(System& mm) {
 		mm.timers["work"].stop();
 		return true;
 	} catch (Error& err) {
-		mm.error += '\n';
-		mm.error += err.what();
+		System::io().err() << err.what() << endl;
 		return false;
 	}
 }
@@ -48,8 +46,7 @@ bool merge_mm(System& mm) {
 		mm.timers["work"].stop();
 		return true;
 	} catch (Error& err) {
-		mm.error += '\n';
-		mm.error += err.what();
+		System::io().err() << err.what() << endl;
 		return false;
 	}
 }
@@ -57,7 +54,7 @@ bool merge_mm(System& mm) {
 bool translate_mm(System& mm) {
 	try {
 		if (mm.config.out.name.empty()) {
-			mm.error += "output file is not specified";
+			System::io().err() << "output file is not specified" << endl;
 			return false;
 		}
 		mm.timers["work"].start();
@@ -76,8 +73,7 @@ bool translate_mm(System& mm) {
 		mm.timers["work"].stop();
 		return true;
 	} catch (Error& err) {
-		mm.error += '\n';
-		mm.error += err.what();
+		System::io().err() << err.what() << endl;
 		return false;
 	}
 }

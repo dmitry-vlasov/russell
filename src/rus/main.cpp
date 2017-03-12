@@ -42,6 +42,8 @@ int main (int argc, const char* argv[])
             cout << desc << endl;
             return 0;
         }
+        rus::System::init<>();
+        smm::System::init<>();
         rus::System& sys = rus::System::mod();
 		rus::Config& conf = sys.config;
 		if (!initConf(vm, conf)) {
@@ -49,7 +51,6 @@ int main (int argc, const char* argv[])
             return 1;
 		}
 		rus::run(sys);
-		if (sys.error.size()) cerr << sys.error;
 		if (conf.info) cout << info(sys);
 	} catch (const Error& err) {
 		cerr << err.what();

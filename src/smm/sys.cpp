@@ -4,6 +4,10 @@
 
 namespace mdl { namespace smm {
 
+//System::System(const string& n) {
+//	name = n;
+//}
+
 static bool parse(System& sys) {
 	try {
 		sys.timers["read"].start();
@@ -12,8 +16,7 @@ static bool parse(System& sys) {
 		sys.timers["read"].stop();
 		return true;
 	} catch (Error& err) {
-		sys.error += '\n';
-		sys.error += err.what();
+		System::io().err() << err.what() << endl;
 		return false;
 	}
 }
@@ -25,8 +28,7 @@ static bool verify(System& sys) {
 		sys.timers["verify"].stop();
 		return true;
 	} catch (Error& err) {
-		sys.error += '\n';
-		sys.error += err.what();
+		System::io().err() << err.what() << endl;
 		return false;
 	}
 }
@@ -75,8 +77,7 @@ static bool translate(System& sys) {
 			cout << "done in " << sys.timers["translate"] << endl;
 		return true;
 	} catch (Error& err) {
-		sys.error += '\n';
-		sys.error += err.what();
+		System::io().err() << err.what() << endl;
 		return false;
 	}
 }
@@ -99,7 +100,6 @@ string show(const System& sys) {
 
 string info(const System& sys) {
 	string stats;
-	if (sys.error.size()) stats += "error:\n" + sys.error + "\n\n";
 	stats += "Timings:";
 	stats += show_timer("\n\tread:      ", "read", sys.timers);
 	stats += show_timer("\n\tverify:    ", "verify", sys.timers);
