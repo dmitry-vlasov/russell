@@ -16,7 +16,7 @@ Source* parse(Path path) {
 	path = path.verify();
 	string data;
 	path.read(data);
-	Source* src = new Source(path.root, path.name);
+	Source* src = new Source(Lex::toInt(path.name));
 	LocationIter iter(data.begin(), path.name);
 	LocationIter end(data.end(), path.name);
 	if (!parser::Grammar<LocationIter>::parse(iter, end, parser::unicode::space, *src) || iter != end) {

@@ -33,6 +33,7 @@ librus_la_SOURCES = \
 	\
 	expr.cpp \
 	sys.cpp \
+	ast.cpp \
 	memvol.cpp \
 	show.cpp \
 	translate.cpp \

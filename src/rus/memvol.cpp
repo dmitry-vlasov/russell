@@ -89,7 +89,7 @@ size_t memvol(const Theorem& th) {
 	return memvol(th.ass) + th.proofs.capacity() * sizeof(Proof*);
 }
 size_t memvol(const Import& imp) {
-	return imp.primary ? memsize(*imp.source) : 0;
+	return 0;
 }
 size_t memvol(const Node& n) {
 	switch (n.kind) {
@@ -115,7 +115,7 @@ size_t memvol(const Theory& th) {
 }
 size_t memvol(const Source& src) {
 	size_t s = 0;
-	s += src.name.capacity() * sizeof(char);
+	s += src.data.capacity() * sizeof(char);
 	if (src.theory)
 		s += memsize(*src.theory);
 	return s;

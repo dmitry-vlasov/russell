@@ -5,5 +5,6 @@
 #include "memvol.cpp"
 #include "show.cpp"
 #include "sys.cpp"
+#include "ast.cpp"
 #include "translate.cpp"
 #include "verify.cpp"

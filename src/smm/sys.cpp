@@ -7,7 +7,7 @@ namespace mdl { namespace smm {
 static bool parse(System& sys) {
 	try {
 		sys.timers["read"].start();
-		uint lab = Lex::toInt(sys.config.in.name);
+		//uint lab = Lex::toInt(sys.config.in.name);
 		smm::parse(sys.config.in);
 		sys.timers["read"].stop();
 		return true;
@@ -55,7 +55,6 @@ static bool translate(System& sys) {
 				out << *target << endl;
 				out.close();
 			}
-			//delete target;
 		}	break;
 		case Config::Target::TARGET_RUS: {
 			rus::Source* target = smm::translate_to_rus(sys.math.sources[lab]);
@@ -72,7 +71,6 @@ static bool translate(System& sys) {
 				out << *target << endl;
 				out.close();
 			}
-			delete target;
 		}	break;
 		}
 		sys.timers["translate"].stop();

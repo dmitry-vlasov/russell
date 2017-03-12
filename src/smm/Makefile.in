@@ -115,17 +115,18 @@ am__DEPENDENCIES_1 =
 libsmm_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
 am__libsmm_la_SOURCES_DIST = ../mm/show.cpp ../mm/ast.cpp \
-	../rus/show.cpp ../rus/expr.cpp all.cpp ast.cpp sys.cpp \
-	math_symb.cpp parser.cpp show.cpp translate_mm.cpp \
+	../rus/show.cpp ../rus/expr.cpp all.cpp ../rus/ast.cpp ast.cpp \
+	sys.cpp math_symb.cpp parser.cpp show.cpp translate_mm.cpp \
 	translate_rus.cpp tree.cpp verify.cpp
 am__dirstamp = $(am__leading_dot)dirstamp
 @SPLIT_COMPILE_FALSE@am_libsmm_la_OBJECTS = ../mm/show.lo ../mm/ast.lo \
 @SPLIT_COMPILE_FALSE@	../rus/show.lo ../rus/expr.lo all.lo
 @SPLIT_COMPILE_TRUE@am_libsmm_la_OBJECTS = ../mm/show.lo ../mm/ast.lo \
-@SPLIT_COMPILE_TRUE@	../rus/show.lo ../rus/expr.lo ast.lo \
-@SPLIT_COMPILE_TRUE@	sys.lo math_symb.lo parser.lo show.lo \
-@SPLIT_COMPILE_TRUE@	parser.lo translate_mm.lo translate_rus.lo \
-@SPLIT_COMPILE_TRUE@	tree.lo verify.lo
+@SPLIT_COMPILE_TRUE@	../rus/show.lo ../rus/expr.lo \
+@SPLIT_COMPILE_TRUE@	../rus/ast.lo ast.lo sys.lo math_symb.lo \
+@SPLIT_COMPILE_TRUE@	parser.lo show.lo parser.lo \
+@SPLIT_COMPILE_TRUE@	translate_mm.lo translate_rus.lo tree.lo \
+@SPLIT_COMPILE_TRUE@	verify.lo
 libsmm_la_OBJECTS = $(am_libsmm_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -359,6 +360,7 @@ noinst_HEADERS = \
 @SPLIT_COMPILE_TRUE@	../mm/ast.cpp \
 @SPLIT_COMPILE_TRUE@	../rus/show.cpp \
 @SPLIT_COMPILE_TRUE@	../rus/expr.cpp \
+@SPLIT_COMPILE_TRUE@	../rus/ast.cpp \
 @SPLIT_COMPILE_TRUE@	\
 @SPLIT_COMPILE_TRUE@	ast.cpp \
 @SPLIT_COMPILE_TRUE@	sys.cpp \
@@ -447,6 +449,7 @@ clean-noinstLTLIBRARIES:
 	../rus/$(DEPDIR)/$(am__dirstamp)
 ../rus/expr.lo: ../rus/$(am__dirstamp) \
 	../rus/$(DEPDIR)/$(am__dirstamp)
+../rus/ast.lo: ../rus/$(am__dirstamp) ../rus/$(DEPDIR)/$(am__dirstamp)
 
 libsmm.la: $(libsmm_la_OBJECTS) $(libsmm_la_DEPENDENCIES) $(EXTRA_libsmm_la_DEPENDENCIES) 
 	$(AM_V_CXXLD)$(CXXLINK)  $(libsmm_la_OBJECTS) $(libsmm_la_LIBADD) $(LIBS)
@@ -516,6 +519,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@../mm/$(DEPDIR)/ast.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@../mm/$(DEPDIR)/show.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@../rus/$(DEPDIR)/ast.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@../rus/$(DEPDIR)/expr.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@../rus/$(DEPDIR)/show.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/all.Plo@am__quote@

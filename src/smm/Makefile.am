@@ -23,6 +23,7 @@ libsmm_la_SOURCES = \
 	../mm/ast.cpp \
 	../rus/show.cpp \
 	../rus/expr.cpp \
+	../rus/ast.cpp \
 	\
 	ast.cpp \
 	sys.cpp \

@@ -116,14 +116,14 @@ librus_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 am__librus_la_SOURCES_DIST = ../smm/show.cpp ../smm/ast.cpp all.cpp \
 	expr/parse.cpp expr/unify.cpp parser/parse.cpp expr.cpp \
-	sys.cpp memvol.cpp show.cpp translate.cpp verify.cpp
+	sys.cpp ast.cpp memvol.cpp show.cpp translate.cpp verify.cpp
 am__dirstamp = $(am__leading_dot)dirstamp
 @SPLIT_COMPILE_FALSE@am_librus_la_OBJECTS = ../smm/show.lo \
 @SPLIT_COMPILE_FALSE@	../smm/ast.lo all.lo
 @SPLIT_COMPILE_TRUE@am_librus_la_OBJECTS = ../smm/show.lo \
 @SPLIT_COMPILE_TRUE@	../smm/ast.lo expr/parse.lo expr/unify.lo \
-@SPLIT_COMPILE_TRUE@	parser/parse.lo expr.lo sys.lo memvol.lo \
-@SPLIT_COMPILE_TRUE@	show.lo translate.lo verify.lo
+@SPLIT_COMPILE_TRUE@	parser/parse.lo expr.lo sys.lo ast.lo \
+@SPLIT_COMPILE_TRUE@	memvol.lo show.lo translate.lo verify.lo
 librus_la_OBJECTS = $(am_librus_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -366,6 +366,7 @@ noinst_HEADERS = \
 @SPLIT_COMPILE_TRUE@	\
 @SPLIT_COMPILE_TRUE@	expr.cpp \
 @SPLIT_COMPILE_TRUE@	sys.cpp \
+@SPLIT_COMPILE_TRUE@	ast.cpp \
 @SPLIT_COMPILE_TRUE@	memvol.cpp \
 @SPLIT_COMPILE_TRUE@	show.cpp \
 @SPLIT_COMPILE_TRUE@	translate.cpp \
@@ -528,6 +529,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@../smm/$(DEPDIR)/ast.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@../smm/$(DEPDIR)/show.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/all.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ast.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/expr.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/memvol.Plo@am__quote@

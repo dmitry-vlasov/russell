@@ -167,12 +167,6 @@ public :
 	}
 	string   msg;
 };
-/*
-inline string cut_outer_directory(string path) {
-	size_t slash_pos = path.find_first_of("/");
-	return path.substr(slash_pos == string::npos ? 0 : slash_pos + 1);
-}
-*/
 
 ifstream open_smart(string& path, string root);
 void read_smart(string& data, ifstream&);
@@ -203,7 +197,7 @@ void deep_write(T* target, auto get_cont, auto get_inc, auto is_inc) {
 		}
 	}
 }
-/*
+
 template<class T>
 void shallow_write(T* target) {
 	typedef T Source;
@@ -214,7 +208,7 @@ void shallow_write(T* target) {
 	out << *target << endl;
 	out.close();
 }
-*/
+
 struct Path {
 	Path() : root(), name(), ext() { }
 	Path(const string& n, const string& r, const string& e) : root(r), name(n), ext(e) {
@@ -257,46 +251,7 @@ struct Path {
 	string name;
 	string ext;
 };
-/*
-template<class Source, class Parser>
-void parse(Source*& src, string& data, auto space) {
-	LocationIter iter(data.begin(), src->name);
-	LocationIter end(data.end(), src->name);
-	if (!Parser::parse(iter, end, space, *src) || iter != end) {
-		throw Error("parsing failed", src->name);
-	}
-}
 
-template<class Source, class Parser>
-Source* parse(string name, string root, auto space) {
-	ifstream in = open_smart(name, root);
-	Source* src = new Source(root, name);
-	read_smart(src->data, in);
-	parse<Source, Parser>(src, src->data, space);
-	return src;
-}
-
-template<class Source, class Parser, class Inclusion>
-Inclusion* include(string path, string root, auto space, Source* (get_src)(Inclusion*)) {
-	static map<string, Inclusion*> included;
-	if (included.count(path)) {
-		Inclusion* inc = included[path];
-		return new Inclusion(get_src(inc), false);
-	} else {
-		//cout << "parsing src: " << path << endl;
-		string data;
-		string orig_path(path);
-		ifstream in = open_smart(path, root);
-		Source* src = new Source(root, path);
-		read_smart(src->data, in);
-
-		Inclusion* inc = new Inclusion(src, true);
-		included[orig_path] = inc;
-		parse<Source, Parser>(src, src->data, space);
-		return inc;
-	}
-}
-*/
 // Library, singleton, which contains a variety of deductive systems
 template<typename T>
 struct Lib {
