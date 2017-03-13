@@ -5,20 +5,20 @@ namespace po = boost::program_options;
 
 using namespace mdl;
 
-static bool initConf(const po::variables_map& vm, mm::Config& conf) {
+static bool initConf(const po::variables_map& vm, mm::Conf& conf) {
 	mdl::initConf(vm, conf);
-	if (vm.count("cut"))       conf.mode = mm::Config::Mode::CUT;
-	if (vm.count("merge"))     conf.mode = mm::Config::Mode::MERGE;
-	if (vm.count("translate")) conf.mode = mm::Config::Mode::TRANSL;
+	if (vm.count("cut"))       conf.mode = mm::Conf::Mode::CUT;
+	if (vm.count("merge"))     conf.mode = mm::Conf::Mode::MERGE;
+	if (vm.count("translate")) conf.mode = mm::Conf::Mode::TRANSL;
 	if (!conf.deep) {
 		if (conf.out.ext == "smm") {
-			if (conf.mode != mm::Config::Mode::TRANSL) return false;
-			conf.target = mm::Config::Target::SMM;
+			if (conf.mode != mm::Conf::Mode::TRANSL) return false;
+			conf.target = mm::Conf::Target::SMM;
 
-		} else if (conf.out.ext == "mm" && conf.mode == mm::Config::Mode::TRANSL) {
+		} else if (conf.out.ext == "mm" && conf.mode == mm::Conf::Mode::TRANSL) {
 			return false;
 		}
-		if (conf.mode == mm::Config::Mode::CUT) {
+		if (conf.mode == mm::Conf::Mode::CUT) {
 			cout << "makes no sense cutting without --deep option" << endl;
 			return false;
 		}

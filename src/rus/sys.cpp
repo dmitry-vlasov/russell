@@ -100,14 +100,14 @@ void run() {
 	if (!parse_exp()) return;
 	if (!unify_rus()) return;
 	switch (Sys::conf().mode) {
-	case Config::Mode::PROVE:   break;
-	case Config::Mode::TRANSL:  break;
-	case Config::Mode::MONITOR: break;
+	case Conf::Mode::PROVE:   break;
+	case Conf::Mode::TRANSL:  break;
+	case Conf::Mode::MONITOR: break;
 	default : break;
 	}
 	switch (Sys::conf().target) {
-	case Config::Target::RUS: write_rus(); break;
-	case Config::Target::SMM: translate_rus(); break;
+	case Conf::Target::RUS: write_rus(); break;
+	case Conf::Target::SMM: translate_rus(); break;
 	default : break;
 	}
 	Sys::timer()["total"].stop();

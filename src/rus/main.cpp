@@ -5,17 +5,17 @@ namespace po = boost::program_options;
 
 using namespace mdl;
 
-static bool initConf(const po::variables_map& vm, rus::Config& conf) {
+static bool initConf(const po::variables_map& vm, rus::Conf& conf) {
 	mdl::initConf(vm, conf);
 	if (vm.count("translate")) {
-		conf.mode = rus::Config::Mode::TRANSL;
-		conf.target = rus::Config::Target::SMM;
+		conf.mode = rus::Conf::Mode::TRANSL;
+		conf.target = rus::Conf::Target::SMM;
 		smm::Sys::conf().in = conf.out;
 		smm::Sys::conf().in.ext = "smm";
 	}
 	if (vm.count("prove")) {
-		conf.mode = rus::Config::Mode::PROVE;
-		conf.target = rus::Config::Target::RUS;
+		conf.mode = rus::Conf::Mode::PROVE;
+		conf.target = rus::Conf::Target::RUS;
 	}
 	if (conf.in.name.empty()) return false;
 	return true;

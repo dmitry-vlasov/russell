@@ -85,14 +85,14 @@ void run() {
 	Sys::timer()["total"].start();
 	if (Sys::conf().verbose)
 		cout << "processing file " << Sys::conf().in.name << " ... " << flush;
-	if (Sys::conf().mode == Config::Mode::TRANSL)
+	if (Sys::conf().mode == Conf::Mode::TRANSL)
 		if (!do_parse())
 			return;
 	//cout << *source << endl;
 	switch (Sys::conf().mode) {
-	case Config::Mode::CUT:    do_cut();       break;
-	case Config::Mode::MERGE:  do_merge();     break;
-	case Config::Mode::TRANSL: do_translate(); break;
+	case Conf::Mode::CUT:    do_cut();       break;
+	case Conf::Mode::MERGE:  do_merge();     break;
+	case Conf::Mode::TRANSL: do_translate(); break;
 	default : break;
 	}
 	Sys::timer()["total"].stop();

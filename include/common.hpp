@@ -291,10 +291,10 @@ private:
 
 // Configuration for a deductive system
 template<typename M, typename T>
-struct Config {
+struct Conf {
 	typedef M Mode;
 	typedef T Target;
-	Config() :
+	Conf() :
 	verbose(false), info(false), help(false), deep(false),
 	in(), out(), mode(Mode::DEFAULT), target(Target::DEFAULT) { }
 
@@ -338,7 +338,7 @@ template<class S, class M, class C>
 struct Sys {
 	typedef S System;
 	typedef M Math;
-	typedef C Config;
+	typedef C Conf;
 
 	Math   math;
 	string name;
@@ -349,14 +349,14 @@ struct Sys {
 	static System& mod() { return Lib<System>::mod().access();  }
 	static Io& io() { return Lib<Io>::mod().access();  }
 	static Timers& timer() { return Lib<Timers>::mod().access();  }
-	static Config& conf() { return Lib<Config>::mod().access();  }
+	static Conf& conf() { return Lib<Conf>::mod().access();  }
 
 	static void change(const string& name) {
 		if (!instances().count(name)) throw Error("no such sys instance");
 		Lib<System>::mod().current = name;
 		Lib<Io>::mod().current = name;
 		Lib<Timers>::mod().current = name;
-		Lib<Config>::mod().current = name;
+		Lib<Conf>::mod().current = name;
 	}
 	template<class IO = Io::Std>
 	static void init(const string& name = "default") {
@@ -365,7 +365,7 @@ struct Sys {
 		Lib<Io>::mod().init<IO>(name);
 		Lib<System>::mod().init(name);
 		Lib<Timers>::mod().init(name);
-		Lib<Config>::mod().init(name);
+		Lib<Conf>::mod().init(name);
 	}
 
 private:
@@ -373,7 +373,7 @@ private:
 };
 
 template<typename M, typename T>
-inline void initConf(const boost::program_options::variables_map& vm, Config<M, T>& conf) {
+inline void initConf(const boost::program_options::variables_map& vm, Conf<M, T>& conf) {
 	if (vm.count("in"))       conf.in.name_ext(vm["in"].as<string>());
 	if (vm.count("out"))      conf.out.name_ext(vm["out"].as<string>());
 	if (vm.count("root-in"))  conf.in.root  = vm["root-in"].as<string>();

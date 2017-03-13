@@ -6,28 +6,28 @@ namespace po = boost::program_options;
 
 using namespace mdl;
 
-static bool initConf(const po::variables_map& vm, smm::Config& conf) {
+static bool initConf(const po::variables_map& vm, smm::Conf& conf) {
 	mdl::initConf(vm, conf);
 	if (vm.count("lang")) {
 		if (vm["lang"].as<string>() == "rus") {
-			if (conf.target != smm::Config::Target::TARGET_NONE) return false;
-			conf.target = smm::Config::Target::TARGET_RUS;
+			if (conf.target != smm::Conf::Target::TARGET_NONE) return false;
+			conf.target = smm::Conf::Target::TARGET_RUS;
 		}
 		if (vm["lang"].as<string>() == "mm")  {
-			if (conf.target != smm::Config::Target::TARGET_NONE) return false;
-			conf.target = smm::Config::Target::TARGET_MM;
+			if (conf.target != smm::Conf::Target::TARGET_NONE) return false;
+			conf.target = smm::Conf::Target::TARGET_MM;
 		}
 	}
-	if (!conf.deep && conf.target == smm::Config::Target::TARGET_NONE) {
-		if (conf.out.ext == "mm") conf.target = smm::Config::Target::TARGET_MM;
-		if (conf.out.ext == "rus") conf.target = smm::Config::Target::TARGET_RUS;
+	if (!conf.deep && conf.target == smm::Conf::Target::TARGET_NONE) {
+		if (conf.out.ext == "mm") conf.target = smm::Conf::Target::TARGET_MM;
+		if (conf.out.ext == "rus") conf.target = smm::Conf::Target::TARGET_RUS;
 	}
 	switch (conf.target) {
-	case smm::Config::Target::TARGET_MM :
+	case smm::Conf::Target::TARGET_MM :
 		mm::Sys::conf().in = conf.out;
 		mm::Sys::conf().in.ext = "mm";
 		break;
-	case smm::Config::Target::TARGET_RUS :
+	case smm::Conf::Target::TARGET_RUS :
 		rus::Sys::conf().in = conf.out;
 		rus::Sys::conf().in.ext = "rus";
 		break;

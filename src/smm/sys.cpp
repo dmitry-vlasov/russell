@@ -40,8 +40,8 @@ static bool do_translate() {
 		Sys::timer()["translate"].start();
 		uint lab = Lex::toInt(Sys::conf().in.name);
 		switch (Sys::conf().target) {
-		case Config::Target::TARGET_NONE: break;
-		case Config::Target::TARGET_MM: {
+		case Conf::Target::TARGET_NONE: break;
+		case Conf::Target::TARGET_MM: {
 			mm::Source* target = smm::translate_to_mm(Sys::get().math.sources.at(lab));
 			if (Sys::conf().deep) {
 				deep_write(
@@ -57,7 +57,7 @@ static bool do_translate() {
 				out.close();
 			}
 		}	break;
-		case Config::Target::TARGET_RUS: {
+		case Conf::Target::TARGET_RUS: {
 			rus::Source* target = smm::translate_to_rus(Sys::get().math.sources.at(lab));
 			if (Sys::conf().deep) {
 				deep_write(

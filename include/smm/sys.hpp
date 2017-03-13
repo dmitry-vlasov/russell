@@ -9,7 +9,7 @@ namespace mdl { namespace smm {
 
 enum class Mode { TRANSL, DEFAULT = TRANSL };
 enum class Target { TARGET_NONE, TARGET_MM, TARGET_RUS, DEFAULT = TARGET_NONE };
-typedef mdl::Config<Mode, Target> Config;
+typedef mdl::Conf<Mode, Target> Conf;
 
 struct Math {
 	template<typename T>
@@ -22,7 +22,7 @@ struct Math {
 	~Math() { for (auto s : sources) delete s.second; }
 };
 
-struct Sys : public mdl::Sys<Sys, Math, Config> {
+struct Sys : public mdl::Sys<Sys, Math, Conf> {
 	Sys(const string& n = "default") { name = n; }
 };
 
