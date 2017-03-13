@@ -481,7 +481,7 @@ rus::Source* translate_source(const Source* src, State& state, rus::Source* targ
 } // anonymous namespace
 
 rus::Source* translate_to_rus(const Source* source) {
-	rus::Source* target = new rus::Source(Lex::toInt(System::conf().out.name));
+	rus::Source* target = new rus::Source(Lex::toInt(Sys::conf().out.name));
 	target->theory = new rus::Theory();
 	State state;
 	state.ind = 0;

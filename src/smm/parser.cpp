@@ -88,7 +88,7 @@ public:
 		parser["CONST"] = [](const peg::SemanticValues& sv) {
 			Constants* consts = new Constants { sv[0].get<Vect>() };
 			for (Symbol c : consts->expr)
-				System::mod().math.constants.insert(c);
+				Sys::mod().math.constants.insert(c);
 			return consts;
 		};
 		parser["VAR"] = [](const peg::SemanticValues& sv, peg::any& context) {
@@ -157,7 +157,7 @@ public:
 			Assertion& ass = context.get<std::shared_ptr<Context>>()->ass;
 			Ref::Type type = sv[0].get<Ref::Type>();
 			uint lab = sv[1].get<uint>();
-			System::Math& math = System::mod().math;
+			Sys::Math& math = Sys::mod().math;
 			switch (type) {
 			case Ref::Type::ESSENTIAL : check_vector(ass.essential, lab); return new Ref(ass.essential[lab]);
 			case Ref::Type::FLOATING  : check_vector(ass.floating, lab);  return new Ref(ass.floating[lab]);
@@ -178,7 +178,7 @@ public:
 			markVars(ass->variables, ass->inner);
 			markVars(ass->variables, ass->essential);
 			markVars(ass->variables, ass->prop.expr);
-			System::mod().math.assertions[ass->prop.label] = ass;
+			Sys::mod().math.assertions[ass->prop.label] = ass;
 			return ass;
 		};
 		parser["COMMENT"] = [](const peg::SemanticValues& sv) {

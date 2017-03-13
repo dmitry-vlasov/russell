@@ -4,13 +4,13 @@
 namespace mdl { namespace rus {
 
 Source::Source(uint l) : label(l), data(), theory(nullptr) {
-	System::mod().math.sources[label] = this;
+	Sys::mod().math.sources[label] = this;
 }
 Source::~Source() {
 	if (theory) delete theory;
 }
 Path Source::rich_path() const {
-	return System::conf().in.relative(name());
+	return Sys::conf().in.relative(name());
 }
 void Source::read() {
 	rich_path().read(data);

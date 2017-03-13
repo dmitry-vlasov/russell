@@ -10,40 +10,40 @@ namespace mdl { namespace smm {
 
 static bool do_parse() {
 	try {
-		System::timer()["read"].start();
-		parse(System::conf().in);
-		System::timer()["read"].stop();
+		Sys::timer()["read"].start();
+		parse(Sys::conf().in);
+		Sys::timer()["read"].stop();
 		return true;
 	} catch (Error& err) {
-		System::io().err() << err.what() << endl;
+		Sys::io().err() << err.what() << endl;
 		return false;
 	}
 }
 
 static bool do_verify() {
 	try {
-		System::timer()["verify"].start();
+		Sys::timer()["verify"].start();
 		smm::verify();
-		System::timer()["verify"].stop();
+		Sys::timer()["verify"].stop();
 		return true;
 	} catch (Error& err) {
-		System::io().err() << err.what() << endl;
+		Sys::io().err() << err.what() << endl;
 		return false;
 	}
 }
 
 static bool do_translate() {
 	try {
-		if (System::conf().out.name.empty()) return true;
-		if (System::conf().verbose)
-			cout << "translating file " << System::conf().in.name << " ... " << flush;
-		System::timer()["translate"].start();
-		uint lab = Lex::toInt(System::conf().in.name);
-		switch (System::conf().target) {
+		if (Sys::conf().out.name.empty()) return true;
+		if (Sys::conf().verbose)
+			cout << "translating file " << Sys::conf().in.name << " ... " << flush;
+		Sys::timer()["translate"].start();
+		uint lab = Lex::toInt(Sys::conf().in.name);
+		switch (Sys::conf().target) {
 		case Config::Target::TARGET_NONE: break;
 		case Config::Target::TARGET_MM: {
-			mm::Source* target = smm::translate_to_mm(System::get().math.sources.at(lab));
-			if (System::conf().deep) {
+			mm::Source* target = smm::translate_to_mm(Sys::get().math.sources.at(lab));
+			if (Sys::conf().deep) {
 				deep_write(
 					target,
 					[](mm::Source* src) -> vector<mm::Node>& { return src->block->contents; },
@@ -52,14 +52,14 @@ static bool do_translate() {
 				);
 			} else {
 				//shallow_write(target);
-				ofstream out(System::conf().out.path());
+				ofstream out(Sys::conf().out.path());
 				out << *target << endl;
 				out.close();
 			}
 		}	break;
 		case Config::Target::TARGET_RUS: {
-			rus::Source* target = smm::translate_to_rus(System::get().math.sources.at(lab));
-			if (System::conf().deep) {
+			rus::Source* target = smm::translate_to_rus(Sys::get().math.sources.at(lab));
+			if (Sys::conf().deep) {
 				deep_write(
 					target,
 					[](rus::Source* src) -> vector<rus::Node>& { return src->theory->nodes; },
@@ -71,26 +71,26 @@ static bool do_translate() {
 			}
 		}	break;
 		}
-		System::timer()["translate"].stop();
-		if (System::conf().verbose)
-			cout << "done in " << System::timer()["translate"] << endl;
+		Sys::timer()["translate"].stop();
+		if (Sys::conf().verbose)
+			cout << "done in " << Sys::timer()["translate"] << endl;
 		return true;
 	} catch (Error& err) {
-		System::io().err() << err.what() << endl;
+		Sys::io().err() << err.what() << endl;
 		return false;
 	}
 }
 
 void run() {
-	System::timer()["total"].start();
-	if (System::conf().verbose)
-		cout << "verifying file " << System::conf().in.name << " ... " << endl;
+	Sys::timer()["total"].start();
+	if (Sys::conf().verbose)
+		cout << "verifying file " << Sys::conf().in.name << " ... " << endl;
 	if (!do_parse())     return;
 	if (!do_verify())    return;
 	if (!do_translate()) return;
-	System::timer()["total"].stop();
-	if (System::conf().verbose)
-		cout << "all done in " << System::timer()["total"] << endl;
+	Sys::timer()["total"].stop();
+	if (Sys::conf().verbose)
+		cout << "all done in " << Sys::timer()["total"] << endl;
 }
 
 string show() {
@@ -100,14 +100,14 @@ string show() {
 string info() {
 	string stats;
 	stats += "Timings:";
-	stats += show_timer("\n\tread:      ", "read", System::timer());
-	stats += show_timer("\n\tverify:    ", "verify", System::timer());
-	stats += show_timer("\n\ttranslate: ", "translate", System::timer());
-	stats += show_timer("\n\ttotal:     ", "total", System::timer());
+	stats += show_timer("\n\tread:      ", "read", Sys::timer());
+	stats += show_timer("\n\tverify:    ", "verify", Sys::timer());
+	stats += show_timer("\n\ttranslate: ", "translate", Sys::timer());
+	stats += show_timer("\n\ttotal:     ", "total", Sys::timer());
 	stats += "\n\n";
 	stats += "Size:\n";
-	stats += "\tconstants:  " + to_string(System::get().math.constants.size()) + "\n";
-	stats += "\tassertions: " + to_string(System::get().math.assertions.size()) + "\n";
+	stats += "\tconstants:  " + to_string(Sys::get().math.constants.size()) + "\n";
+	stats += "\tassertions: " + to_string(Sys::get().math.assertions.size()) + "\n";
 	stats += "\n";
 	return stats;
 }

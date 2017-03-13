@@ -10,8 +10,8 @@ static bool initConf(const po::variables_map& vm, rus::Config& conf) {
 	if (vm.count("translate")) {
 		conf.mode = rus::Config::Mode::TRANSL;
 		conf.target = rus::Config::Target::SMM;
-		smm::System::conf().in = conf.out;
-		smm::System::conf().in.ext = "smm";
+		smm::Sys::conf().in = conf.out;
+		smm::Sys::conf().in.ext = "smm";
 	}
 	if (vm.count("prove")) {
 		conf.mode = rus::Config::Mode::PROVE;
@@ -42,14 +42,14 @@ int main (int argc, const char* argv[])
             cout << desc << endl;
             return 0;
         }
-        rus::System::init<>();
-        smm::System::init<>();
-		if (!initConf(vm, rus::System::conf())) {
+        rus::Sys::init<>();
+        smm::Sys::init<>();
+		if (!initConf(vm, rus::Sys::conf())) {
 			cout << desc << endl;
             return 1;
 		}
 		rus::run();
-		if (rus::System::conf().info) cout << rus::info() << endl;
+		if (rus::Sys::conf().info) cout << rus::info() << endl;
 	} catch (const Error& err) {
 		cerr << err.what();
 		return 1;

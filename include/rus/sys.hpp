@@ -26,8 +26,8 @@ struct Math {
 	~Math() { for (auto s : sources) delete s.second; }
 };
 
-struct System : public mdl::Sys<System, Math, Config> {
-	System(const string& n = "default") { name = n; }
+struct Sys : public mdl::Sys<Sys, Math, Config> {
+	Sys(const string& n = "default") { name = n; }
 };
 
 void run();

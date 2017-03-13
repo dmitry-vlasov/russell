@@ -83,19 +83,19 @@ public:
 		parser["ESS"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Essential* ess = new Essential { sv[0].get<uint>(), sv[1].get<Vect>() };
 			markVars(ess->expr, context.get<std::shared_ptr<Context>>()->stack);
-			System::mod().math.essentials[ess->label] = ess;
+			Sys::mod().math.essentials[ess->label] = ess;
 			return ess;
 		};
 		parser["FLO"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Floating* flo = new Floating { sv[0].get<uint>(), sv[1].get<Vect>() };
 			markVars(flo->expr, context.get<std::shared_ptr<Context>>()->stack);
-			System::mod().math.floatings[flo->label] = flo;
+			Sys::mod().math.floatings[flo->label] = flo;
 			return flo;
 		};
 		parser["AX"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Axiom* ax = new Axiom { sv[0].get<uint>(), sv[1].get<Vect>(), (uint) -1 };
 			markVars(ax->expr, context.get<std::shared_ptr<Context>>()->stack);
-			System::mod().math.axioms[ax->label] = ax;
+			Sys::mod().math.axioms[ax->label] = ax;
 			return ax;
 		};
 		parser["TH"] = [](const peg::SemanticValues& sv, peg::any& context) {
@@ -104,7 +104,7 @@ public:
 			th->expr  = sv[1].get<Vect>();
 			th->proof = sv[2].get<Proof*>();
 			markVars(th->expr, context.get<std::shared_ptr<Context>>()->stack);
-			System::mod().math.theorems[th->label] = th;
+			Sys::mod().math.theorems[th->label] = th;
 			return th;
 		};
 		parser["PROOF"] = [](const peg::SemanticValues& sv) {
@@ -114,7 +114,7 @@ public:
 		};
 		parser["REF"] = [](const peg::SemanticValues& sv) {
 			uint lab = sv[0].get<uint>();
-			System::Math& math = System::mod().math;
+			Sys::Math& math = Sys::mod().math;
 			if (math.floatings.count(lab))
 				return new Ref(math.floatings[lab]);
 			else if (math.essentials.count(lab))

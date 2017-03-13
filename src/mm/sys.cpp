@@ -10,58 +10,58 @@ namespace mdl { namespace mm  { namespace {
 
 bool do_parse() {
 	try {
-		System::timer()["read"].start();
-		if (!parse(System::conf().in))
-			throw Error("parsing of " + System::conf().in.name + " failed");
+		Sys::timer()["read"].start();
+		if (!parse(Sys::conf().in))
+			throw Error("parsing of " + Sys::conf().in.name + " failed");
 		//cout << endl << *source;
-		System::timer()["read"].stop();
+		Sys::timer()["read"].stop();
 		return true;
 	} catch (Error& err) {
-		System::io().err() << err.what() << endl;
+		Sys::io().err() << err.what() << endl;
 		return false;
 	}
 }
 
 bool do_cut() {
 	try {
-		System::timer()["work"].start();
-		cut::Section* source = cut::parse(System::conf().in.root, System::conf().in.path(), System::conf().out.root);
+		Sys::timer()["work"].start();
+		cut::Section* source = cut::parse(Sys::conf().in.root, Sys::conf().in.path(), Sys::conf().out.root);
 		cut::split(source);
 		cut::save(source);
 		delete source;
-		System::timer()["work"].stop();
+		Sys::timer()["work"].stop();
 		return true;
 	} catch (Error& err) {
-		System::io().err() << err.what() << endl;
+		Sys::io().err() << err.what() << endl;
 		return false;
 	}
 }
 
 bool do_merge() {
 	try {
-		System::timer()["work"].start();
-		merge::parse(System::conf().in.path());
-		ofstream out(System::conf().out.path());
+		Sys::timer()["work"].start();
+		merge::parse(Sys::conf().in.path());
+		ofstream out(Sys::conf().out.path());
 		out << merge::Source::get().contents.str();
 		out.close();
-		System::timer()["work"].stop();
+		Sys::timer()["work"].stop();
 		return true;
 	} catch (Error& err) {
-		System::io().err() << err.what() << endl;
+		Sys::io().err() << err.what() << endl;
 		return false;
 	}
 }
 
 bool do_translate() {
 	try {
-		if (System::conf().out.name.empty()) {
-			System::io().err() << "output file is not specified" << endl;
+		if (Sys::conf().out.name.empty()) {
+			Sys::io().err() << "output file is not specified" << endl;
 			return false;
 		}
-		System::timer()["work"].start();
-		uint lab = Lex::getInt(System::conf().in.name);
-		smm::Source* target = translate(System::get().math.sources.at(lab));
-		if (System::conf().deep) {
+		Sys::timer()["work"].start();
+		uint lab = Lex::getInt(Sys::conf().in.name);
+		smm::Source* target = translate(Sys::get().math.sources.at(lab));
+		if (Sys::conf().deep) {
 			deep_write(
 				target,
 				[](smm::Source* src) -> vector<smm::Node>& { return src->contents; },
@@ -71,10 +71,10 @@ bool do_translate() {
 		} else {
 			shallow_write(target);
 		}
-		System::timer()["work"].stop();
+		Sys::timer()["work"].stop();
 		return true;
 	} catch (Error& err) {
-		System::io().err() << err.what() << endl;
+		Sys::io().err() << err.what() << endl;
 		return false;
 	}
 }
@@ -82,22 +82,22 @@ bool do_translate() {
 }
 
 void run() {
-	System::timer()["total"].start();
-	if (System::conf().verbose)
-		cout << "processing file " << System::conf().in.name << " ... " << flush;
-	if (System::conf().mode == Config::Mode::TRANSL)
+	Sys::timer()["total"].start();
+	if (Sys::conf().verbose)
+		cout << "processing file " << Sys::conf().in.name << " ... " << flush;
+	if (Sys::conf().mode == Config::Mode::TRANSL)
 		if (!do_parse())
 			return;
 	//cout << *source << endl;
-	switch (System::conf().mode) {
+	switch (Sys::conf().mode) {
 	case Config::Mode::CUT:    do_cut();       break;
 	case Config::Mode::MERGE:  do_merge();     break;
 	case Config::Mode::TRANSL: do_translate(); break;
 	default : break;
 	}
-	System::timer()["total"].stop();
-	if (System::conf().verbose)
-		cout << "done in " << System::timer()["total"] << endl;
+	Sys::timer()["total"].stop();
+	if (Sys::conf().verbose)
+		cout << "done in " << Sys::timer()["total"] << endl;
 }
 
 string show() {
@@ -107,15 +107,15 @@ string show() {
 string info() {
 	string stats;
 	stats += "Timings:";
-	stats += show_timer("\n\tread:  ", "read", System::timer());
-	stats += show_timer("\n\twork:  ", "work", System::timer());
-	stats += show_timer("\n\ttotal: ", "total", System::timer());
+	stats += show_timer("\n\tread:  ", "read", Sys::timer());
+	stats += show_timer("\n\twork:  ", "work", Sys::timer());
+	stats += show_timer("\n\ttotal: ", "total", Sys::timer());
 	stats += "\n\n";
 	stats += "Size:\n";
-	stats += "\taxioms:     " + to_string(System::get().math.axioms.size()) + "\n";
-	stats += "\ttheorems:   " + to_string(System::get().math.theorems.size()) + "\n";
-	stats += "\tessentials: " + to_string(System::get().math.essentials.size()) + "\n";
-	stats += "\tfloatings:  " + to_string(System::get().math.floatings.size()) + "\n";
+	stats += "\taxioms:     " + to_string(Sys::get().math.axioms.size()) + "\n";
+	stats += "\ttheorems:   " + to_string(Sys::get().math.theorems.size()) + "\n";
+	stats += "\tessentials: " + to_string(Sys::get().math.essentials.size()) + "\n";
+	stats += "\tfloatings:  " + to_string(Sys::get().math.floatings.size()) + "\n";
 	stats += "\n";
 	return stats;
 }

@@ -136,7 +136,7 @@ mm::Source* translate_source(const Source* src, Maps& maps, mm::Source* target) 
 }
 
 mm::Source* translate_to_mm(const Source* source) {
-	mm::Source* target = new mm::Source(Lex::toInt(System::conf().out.name));
+	mm::Source* target = new mm::Source(Lex::toInt(Sys::conf().out.name));
 	target->block = new mm::Block;
 	Maps maps;
 	return translate_source(source, maps, target);

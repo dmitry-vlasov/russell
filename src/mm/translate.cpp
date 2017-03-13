@@ -382,7 +382,7 @@ smm::Source* translate_source(Maps& maps, const Source* src, smm::Source* target
 }
 
 smm::Source* translate(const Source* source) {
-	smm::Source* target = new smm::Source(Lex::toInt(System::conf().out.name));
+	smm::Source* target = new smm::Source(Lex::toInt(Sys::conf().out.name));
 	Maps maps;
 	scope_stack.push_back(Scope());
 	translate_block(maps, source->block, target);

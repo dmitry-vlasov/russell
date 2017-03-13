@@ -17,10 +17,10 @@ struct Maps {
 };
 
 inline uint translate_symb(uint s) {
-	if (!System::get().math.consts.count(s))
+	if (!Sys::get().math.consts.count(s))
 		return s;
 	else {
-		Const* c = System::mod().math.consts[s];
+		Const* c = Sys::mod().math.consts[s];
 		return mdl::Symbol::is_undef(c->ascii.lit) ? s : c->ascii.lit;
 	}
 }
@@ -319,7 +319,7 @@ smm::Source* translate_source(const Source* src, Maps& maps, smm::Source* target
 }
 
 smm::Source* translate(const Source* src) {
-	smm::Source* target = new smm::Source(Lex::toInt(System::conf().out.name));
+	smm::Source* target = new smm::Source(Lex::toInt(Sys::conf().out.name));
 	Maps maps;
 	maps.thm = nullptr;
 	return translate_source(src, maps, target);

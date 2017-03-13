@@ -74,7 +74,7 @@ struct PopVars {
 static void mark_vars(Expr& ex, VarStack& var_stack) {
 	for (auto& s : ex.symbols) {
 		bool is_var = var_stack.mapping.count(s.lit);
-		bool is_const = System::get().math.consts.count(s.lit);
+		bool is_const = Sys::get().math.consts.count(s.lit);
 		if (is_const && is_var)
 			throw Error("constant symbol is marked as variable");
 		if (!is_const && !is_var) {
@@ -87,9 +87,9 @@ static void mark_vars(Expr& ex, VarStack& var_stack) {
 }
 
 inline Type* find_type(uint id, Location* loc = nullptr) {
-	if (!System::get().math.types.count(id))
+	if (!Sys::get().math.types.count(id))
 		throw Error("unknown type", show_id(id), loc);
-	return System::mod().math.types[id];
+	return Sys::mod().math.types[id];
 }
 
 inline uint create_id(string pref, string s1, string s2) {
@@ -152,39 +152,39 @@ void enqueue_expressions(Def* def) {
 struct AddToMath {
 	void operator()(Const* c) const {
 		//cout << "c: " << show(c->symb) << endl;
-		System::mod().math.consts[c->symb.lit] = c;
+		Sys::mod().math.consts[c->symb.lit] = c;
 	}
 	void operator()(Type* t) const {
 		//cout << "tp: " << show_id(t->id) << endl;
 		collect_supers(t, t);
-		System::mod().math.types[t->id] = t;
+		Sys::mod().math.types[t->id] = t;
 	}
 	void operator()(Rule* r) const {
 		//cout << "ru: " << show_id(r->id) << endl;
 		r->type->rules.add(r->term) = r;
 		//cout << show(r->type->rules) << endl;
-		System::mod().math.rules[r->id] = r;
+		Sys::mod().math.rules[r->id] = r;
 	}
 	void operator()(Axiom* a) const {
 		//cout << "ax: " << show_id(a->ass.id) << endl;
-		System::mod().math.axioms[a->ass.id] = a;
+		Sys::mod().math.axioms[a->ass.id] = a;
 		enqueue_expressions(a->ass);
 	}
 	void operator()(Def* d) const {
 		//cout << "def: " << show_id(d->ass.id) << endl;
-		System::mod().math.defs[d->ass.id] = d;
+		Sys::mod().math.defs[d->ass.id] = d;
 		enqueue_expressions(d);
 	}
 	void operator()(Theorem* th) const {
 		//cout << "th: " << show_id(th->ass.id) << endl;
-		System::mod().math.theorems[th->ass.id] = th;
+		Sys::mod().math.theorems[th->ass.id] = th;
 		enqueue_expressions(th->ass);
 	}
 	void operator()(Proof* p) const {
 		//cout << "pr: " << show_id(p->thm->ass.id) << endl;
 		p->has_id = !Undef<uint>::is(p->id);
 		if (!p->has_id) p->id = Lex::toInt(to_string(p->ind));
-		System::mod().math.proofs[p->id] = p;
+		Sys::mod().math.proofs[p->id] = p;
 		enqueue_expressions(p);
 	}
 };
@@ -254,7 +254,7 @@ struct ParseImport {
 			Import* imp = imported[name];
 			return new Import(imp->source, false);
 		} else {
-			Path path(System::conf().in);
+			Path path(Sys::conf().in);
 			path.name_ext(name);
 			path.ext = "rus";
 			Import* imp = new Import(nullptr, true);
@@ -277,9 +277,9 @@ struct FindTheorem {
 	template <typename T>
 	struct result { typedef Theorem* type; };
 	Theorem* operator()(uint id) const {
-		if (!System::get().math.theorems.count(id))
+		if (!Sys::get().math.theorems.count(id))
 			throw Error("unknown theorem", show_id(id));
-		return System::mod().math.theorems[id];
+		return Sys::mod().math.theorems[id];
 	}
 };
 
@@ -287,9 +287,9 @@ struct FindAxiom {
 	template <typename T1>
 	struct result { typedef Axiom* type; };
 	Axiom* operator()(uint id) const {
-		if (!System::get().math.axioms.count(id))
+		if (!Sys::get().math.axioms.count(id))
 			throw Error("unknown axiom", show_id(id));
-		return System::mod().math.axioms[id];
+		return Sys::mod().math.axioms[id];
 	}
 };
 
@@ -297,9 +297,9 @@ struct FindDef {
 	template <typename T1>
 	struct result { typedef Def* type; };
 	Def* operator()(uint id) const {
-		if (!System::get().math.defs.count(id))
+		if (!Sys::get().math.defs.count(id))
 			throw Error("unknown definition", show_id(id));
-		return System::mod().math.defs[id];
+		return Sys::mod().math.defs[id];
 	}
 };
 
