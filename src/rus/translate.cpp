@@ -309,7 +309,6 @@ smm::Source* translate_source(const Source* src, Maps& maps, smm::Source* target
 	if (maps.sources.count(src)) {
 		return maps.sources[src];
 	} else {
-		Config conf = System::get().config;
 		if (!target) target = new smm::Source(src->label);
 		maps.sources[src] = target;
 		target->contents = translate_theory(src->theory, maps);
@@ -320,8 +319,7 @@ smm::Source* translate_source(const Source* src, Maps& maps, smm::Source* target
 }
 
 smm::Source* translate(const Source* src) {
-	Config conf = System::get().config;
-	smm::Source* target = new smm::Source(Lex::toInt(conf.out.name));
+	smm::Source* target = new smm::Source(Lex::toInt(System::conf().out.name));
 	Maps maps;
 	maps.thm = nullptr;
 	return translate_source(src, maps, target);

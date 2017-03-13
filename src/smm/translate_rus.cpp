@@ -466,7 +466,6 @@ rus::Source* translate_source(const Source* src, State& state, rus::Source* targ
 	if (state.sources.count(src)) {
 		return state.sources[src];
 	} else {
-		Config conf = System::get().config;
 		if (!target) {
 			target = new rus::Source(src->label);
 			target->theory = new rus::Theory();
@@ -482,8 +481,7 @@ rus::Source* translate_source(const Source* src, State& state, rus::Source* targ
 } // anonymous namespace
 
 rus::Source* translate_to_rus(const Source* source) {
-	Config conf = System::get().config;
-	rus::Source* target = new rus::Source(Lex::toInt(conf.out.name));
+	rus::Source* target = new rus::Source(Lex::toInt(System::conf().out.name));
 	target->theory = new rus::Theory();
 	State state;
 	state.ind = 0;

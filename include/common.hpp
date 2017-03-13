@@ -340,10 +340,8 @@ struct Sys {
 	typedef M Math;
 	typedef C Config;
 
-	Config  config;
-	Timers  timers;
-	Math    math;
-	string  name;
+	Math   math;
+	string name;
 
 	map<string, Action> action;
 

@@ -24,12 +24,12 @@ static bool initConf(const po::variables_map& vm, smm::Config& conf) {
 	}
 	switch (conf.target) {
 	case smm::Config::Target::TARGET_MM :
-		mm::System::mod().config.in = conf.out;
-		mm::System::mod().config.in.ext = "mm";
+		mm::System::conf().in = conf.out;
+		mm::System::conf().in.ext = "mm";
 		break;
 	case smm::Config::Target::TARGET_RUS :
-		rus::System::mod().config.in = conf.out;
-		rus::System::mod().config.in.ext = "rus";
+		rus::System::conf().in = conf.out;
+		rus::System::conf().in.ext = "rus";
 		break;
 	}
 	if (conf.in.name.empty()) return false;
@@ -60,14 +60,12 @@ int main (int argc, const char* argv[])
         smm::System::init<>();
         rus::System::init<>();
         mm::System::init<>();
-        smm::System& sys = smm::System::mod();
-        smm::Config& conf = sys.config;
-        if (!initConf(vm, conf)) {
+        if (!initConf(vm, smm::System::conf())) {
         	cout << desc << endl;
             return 1;
         }
-		smm::run(sys);
-		if (conf.info) cout << info(sys);
+		smm::run();
+		if (smm::System::conf().info) cout << smm::info() << endl;
 	} catch (const Error& err) {
 		cerr << err.what();
 		return 1;

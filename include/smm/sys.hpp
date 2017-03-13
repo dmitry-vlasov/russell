@@ -26,10 +26,9 @@ struct System : public mdl::Sys<System, Math, Config> {
 	System(const string& n = "default") { name = n; }
 };
 
-void run(System&);
-string show(const System&);
-string info(const System&);
-//Source* parse(string path);
+void run();
+string show();
+string info();
 Source* parse(const Path& path);
 void verify();
 mm::Source*  translate_to_mm(const Source* source);

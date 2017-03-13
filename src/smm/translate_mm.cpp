@@ -122,7 +122,6 @@ mm::Source* translate_source(const Source* src, Maps& maps, mm::Source* target) 
 	if (maps.sources.count(src)) {
 		return maps.sources[src];
 	} else {
-		Config conf = System::get().config;
 		if (!target) {
 			target = new mm::Source(src->label);
 			target->block = new mm::Block;
@@ -137,8 +136,7 @@ mm::Source* translate_source(const Source* src, Maps& maps, mm::Source* target) 
 }
 
 mm::Source* translate_to_mm(const Source* source) {
-	Config conf = System::get().config;
-	mm::Source* target = new mm::Source(Lex::toInt(conf.out.name));
+	mm::Source* target = new mm::Source(Lex::toInt(System::conf().out.name));
 	target->block = new mm::Block;
 	Maps maps;
 	return translate_source(source, maps, target);

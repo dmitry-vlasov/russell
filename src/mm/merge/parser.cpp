@@ -33,7 +33,7 @@ namespace {
 
 void parse(string path) {
 	string data;
-	ifstream in = open_smart(path, System::get().config.in.root);
+	ifstream in = open_smart(path, System::conf().in.root);
 	read_smart(data, in);
 	remove_commented_imports(data);
 	LocationIter iter(data.begin(), path);

@@ -30,9 +30,9 @@ struct System : public mdl::Sys<System, Math, Config> {
 	System(const string& n = "default") { name = n; }
 };
 
-void run(System&);
-string show(const System&);
-string info(const System&);
+void run();
+string show();
+string info();
 Source* parse(Path path);
 void verify(Source*);
 smm::Source* translate(const Source* source);

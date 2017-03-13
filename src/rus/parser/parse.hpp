@@ -254,7 +254,7 @@ struct ParseImport {
 			Import* imp = imported[name];
 			return new Import(imp->source, false);
 		} else {
-			Path path(System::get().config.in);
+			Path path(System::conf().in);
 			path.name_ext(name);
 			path.ext = "rus";
 			Import* imp = new Import(nullptr, true);

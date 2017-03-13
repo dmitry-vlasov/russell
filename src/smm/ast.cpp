@@ -7,7 +7,7 @@ Source::Source(uint l) : label(l), data(), contents() {
 	System::mod().math.sources[label] = this;
 }
 Path Source::rich_path() const {
-	return System::mod().config.in.relative(name());
+	return System::conf().in.relative(name());
 }
 void Source::read() {
 	rich_path().read(data);

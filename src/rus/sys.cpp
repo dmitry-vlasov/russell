@@ -2,13 +2,13 @@
 
 namespace mdl { namespace rus { namespace {
 
-bool parse_rus(System& rus) {
+bool parse_rus() {
 	try {
-		if (rus.config.verbose) cout << "parsing russell source ... " << flush;
-		rus.timers["read"].start();
-		parse(rus.config.in);
-		rus.timers["read"].stop();
-		if (rus.config.verbose) cout << "done in " << rus.timers["read"] << endl;
+		if (System::conf().verbose) cout << "parsing russell source ... " << flush;
+		System::timer()["read"].start();
+		parse(System::conf().in);
+		System::timer()["read"].stop();
+		if (System::conf().verbose) cout << "done in " << System::timer()["read"] << endl;
 		return true;
 	} catch (Error& err) {
 		System::io().err() << err.what() << endl;
@@ -16,13 +16,13 @@ bool parse_rus(System& rus) {
 	}
 }
 
-bool parse_exp(System& rus) {
+bool parse_exp() {
 	try {
-		if (rus.config.verbose) cout << "parsing expressions ... " << flush;
-		rus.timers["expr"].start();
+		if (System::conf().verbose) cout << "parsing expressions ... " << flush;
+		System::timer()["expr"].start();
 		expr::parse();
-		rus.timers["expr"].stop();
-		if (rus.config.verbose) cout << "done in " << rus.timers["expr"] << endl;
+		System::timer()["expr"].stop();
+		if (System::conf().verbose) cout << "done in " << System::timer()["expr"] << endl;
 		return true;
 	} catch (Error& err) {
 		System::io().err() << err.what() << endl;
@@ -31,14 +31,14 @@ bool parse_exp(System& rus) {
 }
 
 
-bool unify_rus(System& rus) {
+bool unify_rus() {
 	try {
-		if (rus.config.verbose) cout << "verifying russell source ... " << flush;
-		rus.timers["unify"].start();
-		uint lab = Lex::toInt(rus.config.in.name);
-		verify(rus.math.sources[lab]);
-		rus.timers["unify"].stop();
-		if (rus.config.verbose) cout << "done in " << rus.timers["unify"] << endl;
+		if (System::conf().verbose) cout << "verifying russell source ... " << flush;
+		System::timer()["unify"].start();
+		uint lab = Lex::toInt(System::conf().in.name);
+		verify(System::get().math.sources.at(lab));
+		System::timer()["unify"].stop();
+		if (System::conf().verbose) cout << "done in " << System::timer()["unify"] << endl;
 		return true;
 	} catch (Error& err) {
 		System::io().err() << err.what() << endl;
@@ -46,14 +46,14 @@ bool unify_rus(System& rus) {
 	}
 }
 
-bool translate_rus(System& rus) {
+bool translate_rus() {
 	try {
-		if (rus.config.out.name.empty()) return true;
-		if (rus.config.verbose) cout << "translating file " << rus.config.in.name << " ... " << flush;
-		rus.timers["translate"].start();
-		uint lab = Lex::toInt(rus.config.in.name);
-		smm::Source* target = translate(rus.math.sources[lab]);
-		if (rus.config.deep) {
+		if (System::conf().out.name.empty()) return true;
+		if (System::conf().verbose) cout << "translating file " << System::conf().in.name << " ... " << flush;
+		System::timer()["translate"].start();
+		uint lab = Lex::toInt(System::conf().in.name);
+		smm::Source* target = translate(System::get().math.sources.at(lab));
+		if (System::conf().deep) {
 			deep_write(
 				target,
 				[](smm::Source* src) -> vector<smm::Node>& { return src->contents; },
@@ -63,8 +63,8 @@ bool translate_rus(System& rus) {
 		} else {
 			shallow_write(target);
 		}
-		rus.timers["translate"].stop();
-		if (rus.config.verbose) cout << "done in " << rus.timers["translate"] << endl;
+		System::timer()["translate"].stop();
+		if (System::conf().verbose) cout << "done in " << System::timer()["translate"] << endl;
 		return true;
 	} catch (Error& err) {
 		System::io().err() << err.what() << endl;
@@ -72,17 +72,17 @@ bool translate_rus(System& rus) {
 	}
 }
 
-bool write_rus(System& rus) {
+bool write_rus() {
 	try {
-		if (rus.config.out.name.empty()) return true;
-		if (rus.config.verbose) cout << "replicating file " << rus.config.out.name << " ... " << flush;
-		rus.timers["write"].start();
-		ofstream out(rus.config.out.path());
-		uint lab = Lex::toInt(rus.config.out.name);
-		out << *rus.math.sources[lab] << endl;
+		if (System::conf().out.name.empty()) return true;
+		if (System::conf().verbose) cout << "replicating file " << System::conf().out.name << " ... " << flush;
+		System::timer()["write"].start();
+		ofstream out(System::conf().out.path());
+		uint lab = Lex::toInt(System::conf().out.name);
+		out << *System::get().math.sources.at(lab) << endl;
 		out.close();
-		rus.timers["write"].stop();
-		if (rus.config.verbose) cout << "done in " << rus.timers["write"] << endl;
+		System::timer()["write"].stop();
+		if (System::conf().verbose) cout << "done in " << System::timer()["write"] << endl;
 		return true;
 	} catch (Error& err) {
 		System::io().err() << err.what() << endl;
@@ -92,54 +92,54 @@ bool write_rus(System& rus) {
 
 }
 
-void run(System& sys) {
-	sys.timers["total"].start();
-	if (sys.config.verbose)
-		cout << "processing file " << sys.config.in.name << " ... " << endl;
-	if (!parse_rus(sys)) return;
-	if (!parse_exp(sys)) return;
-	if (!unify_rus(sys)) return;
-	switch (sys.config.mode) {
+void run() {
+	System::timer()["total"].start();
+	if (System::conf().verbose)
+		cout << "processing file " << System::conf().in.name << " ... " << endl;
+	if (!parse_rus()) return;
+	if (!parse_exp()) return;
+	if (!unify_rus()) return;
+	switch (System::conf().mode) {
 	case Config::Mode::PROVE:   break;
 	case Config::Mode::TRANSL:  break;
 	case Config::Mode::MONITOR: break;
 	default : break;
 	}
-	switch (sys.config.target) {
-	case Config::Target::RUS: write_rus(sys); break;
-	case Config::Target::SMM: translate_rus(sys); break;
+	switch (System::conf().target) {
+	case Config::Target::RUS: write_rus(); break;
+	case Config::Target::SMM: translate_rus(); break;
 	default : break;
 	}
-	sys.timers["total"].stop();
-	if (sys.config.verbose)
-		cout << "all done in " << sys.timers["total"] << endl;
+	System::timer()["total"].stop();
+	if (System::conf().verbose)
+		cout << "all done in " << System::timer()["total"] << endl;
 }
 
-string show(const System& rus) {
-	return info(rus);
+string show() {
+	return info();
 }
 
-string info(const System& sys) {
+string info() {
 	string stats;
 	stats += "Timings:";
-	stats += show_timer("\n\tread:       ", "read", sys.timers);
-	stats += show_timer("\n\texpression: ", "expr", sys.timers);
-	stats += show_timer("\n\tunify:      ", "unify", sys.timers);
-	stats += show_timer("\n\ttranslate:  ", "translate", sys.timers);
-	stats += show_timer("\n\twrite:      ", "write", sys.timers);
+	stats += show_timer("\n\tread:       ", "read", System::timer());
+	stats += show_timer("\n\texpression: ", "expr", System::timer());
+	stats += show_timer("\n\tunify:      ", "unify", System::timer());
+	stats += show_timer("\n\ttranslate:  ", "translate", System::timer());
+	stats += show_timer("\n\twrite:      ", "write", System::timer());
 	stats += stats += "\n";
-	stats += show_timer("\n\ttotal: ", "total", sys.timers);
+	stats += show_timer("\n\ttotal: ", "total", System::timer());
 	stats += "\n\n";
 
-	const size_t const_vol = mdl::memvol(sys.math.consts);
-	const size_t types_vol = mdl::memvol(sys.math.types);
-	const size_t rules_vol = mdl::memvol(sys.math.rules);
-	const size_t axiom_vol = mdl::memvol(sys.math.axioms);
-	const size_t defs_vol  = mdl::memvol(sys.math.defs);
-	const size_t thems_vol = mdl::memvol(sys.math.theorems);
-	const size_t proof_vol = mdl::memvol(sys.math.proofs);
-	uint lab = Lex::toInt(sys.config.in.name);
-	const size_t source_vol = memvol(*sys.math.sources.at(lab));
+	const size_t const_vol = mdl::memvol(System::get().math.consts);
+	const size_t types_vol = mdl::memvol(System::get().math.types);
+	const size_t rules_vol = mdl::memvol(System::get().math.rules);
+	const size_t axiom_vol = mdl::memvol(System::get().math.axioms);
+	const size_t defs_vol  = mdl::memvol(System::get().math.defs);
+	const size_t thems_vol = mdl::memvol(System::get().math.theorems);
+	const size_t proof_vol = mdl::memvol(System::get().math.proofs);
+	uint lab = Lex::toInt(System::conf().in.name);
+	const size_t source_vol = memvol(*System::get().math.sources.at(lab));
 	const size_t total_vol =
 		const_vol + types_vol + rules_vol +
 		axiom_vol + defs_vol + thems_vol + proof_vol;
@@ -158,13 +158,13 @@ string info(const System& sys) {
 	stats += "\n";
 
 	stats += "Size:\n";
-	stats += "\tconsts:   " + to_string(sys.math.consts.size()) + "\n";
-	stats += "\ttypes:    " + to_string(sys.math.types.size()) + "\n";
-	stats += "\trules:    " + to_string(sys.math.rules.size()) + "\n";
-	stats += "\taxioms:   " + to_string(sys.math.axioms.size()) + "\n";
-	stats += "\tdefs:     " + to_string(sys.math.defs.size()) + "\n";
-	stats += "\ttheorems: " + to_string(sys.math.theorems.size()) + "\n";
-	stats += "\tproofs:   " + to_string(sys.math.proofs.size()) + "\n";
+	stats += "\tconsts:   " + to_string(System::get().math.consts.size()) + "\n";
+	stats += "\ttypes:    " + to_string(System::get().math.types.size()) + "\n";
+	stats += "\trules:    " + to_string(System::get().math.rules.size()) + "\n";
+	stats += "\taxioms:   " + to_string(System::get().math.axioms.size()) + "\n";
+	stats += "\tdefs:     " + to_string(System::get().math.defs.size()) + "\n";
+	stats += "\ttheorems: " + to_string(System::get().math.theorems.size()) + "\n";
+	stats += "\tproofs:   " + to_string(System::get().math.proofs.size()) + "\n";
 	stats += "\n";
 
 	return stats;

@@ -23,8 +23,8 @@ static bool initConf(const po::variables_map& vm, mm::Config& conf) {
 			return false;
 		}
 	}
-	smm::System::mod().config.in = conf.out;
-	smm::System::mod().config.in.ext = "smm";
+	smm::System::conf().in = conf.out;
+	smm::System::conf().in.ext = "smm";
 	return true;
 }
 
@@ -52,14 +52,12 @@ int main (int argc, const char* argv[])
         }
         mm::System::init<>();
         smm::System::init<>();
-        mm::System& sys = mm::System::mod();
-        mm::Config& conf = sys.config;
-        if (!initConf(vm, conf)) {
+        if (!initConf(vm, mm::System::conf())) {
         	cout << desc << endl;
             return 1;
         }
-		mm::run(sys);
-		if (conf.info) cout << info(sys);
+		mm::run();
+		if (mm::System::conf().info) cout << mm::info() << endl;
 	} catch (const Error& err) {
 		cerr << err.what();
 		return 1;
