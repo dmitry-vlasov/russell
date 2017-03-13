@@ -8,10 +8,10 @@ AM_LDFLAGS = \
 	-L$(top_builddir)/src/com -lcom \
     $(BOOST_LDFLAGS)
 
-bin_PROGRAMS = \
-	mm
+#bin_PROGRAMS = \
+#	mm
 	
-noinst_LTLIBRARIES = \
+lib_LTLIBRARIES = \
 	libmm.la
 
 noinst_HEADERS = \
@@ -28,9 +28,6 @@ noinst_HEADERS = \
 
 if SPLIT_COMPILE
 libmm_la_SOURCES = \
-	../smm/show.cpp \
-	../smm/ast.cpp \
-	\
 	cut/parser.cpp \
 	cut/globals.cpp \
 	cut/show.cpp \
@@ -45,21 +42,20 @@ libmm_la_SOURCES = \
 	tree.cpp
 else
 libmm_la_SOURCES = \
-	../smm/show.cpp \
-	../smm/ast.cpp \
 	all.cpp
 endif
 
-mm_SOURCES = \
-	main.cpp
+#mm_SOURCES = \
+#	main.cpp
 
 libmm_la_LIBADD = \
 	$(BOOST_FILESYSTEM_LIB) \
     $(BOOST_SYSTEM_LIB) \
     $(BOOST_PROGRAM_OPTIONS_LIB)
 
-mm_LDADD = \
-	libmm.la \
-	$(BOOST_FILESYSTEM_LIB) \
-    $(BOOST_SYSTEM_LIB) \
-    $(BOOST_PROGRAM_OPTIONS_LIB)
+#mm_LDADD = \
+#	libsmm.la \
+#	libmm.la \
+#	$(BOOST_FILESYSTEM_LIB) \
+#   $(BOOST_SYSTEM_LIB) \
+#   $(BOOST_PROGRAM_OPTIONS_LIB)

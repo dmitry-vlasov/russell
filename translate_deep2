@@ -1,0 +1,178 @@
+#!/bin/bash
+
+if [ -z $1 ]; then
+    echo "usage: "
+    echo "  translate_deep <file> [memcheck]"
+    echo "where: "
+    echo "  <file>     is a mm source without .mm extension"
+    echo "  [memcheck] is an option for memory leaks tests (slows down the script)"
+    echo
+    exit 0
+fi
+
+if [ -z $2 ]; then 
+	config=./config
+else
+	config=$2
+fi
+
+source ${config}
+
+binpath=`pwd`/$binpath
+
+cd $mathpath
+
+file=$1
+
+if [ ! -f ${file}.mm ]; then
+    echo "source file ${file}.mm desn't exist"
+	echo "current dir: " `pwd`
+    exit 1
+fi
+
+if [ -d tmp-deep ]; then
+    rm -fr tmp-deep
+fi
+
+mkdir tmp-deep
+
+cp ${file}.mm ./tmp-deep/${file}.mm
+cd tmp-deep
+
+VALGRIND="valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all "
+
+function check() {
+    #echo $1
+    if [ "$memcheck" == "yes" ]; then
+	$VALGRIND $1
+    else
+	$1
+    fi
+}
+
+echo "----------------------"
+echo "MM <-> SMM TRANSLATION"
+echo "----------------------"
+
+echo "cut: mm -> mm"
+check "${binpath}/mdl --lang-src mm -d -c -v -i ${file}.mm --root-out mm -o mm"
+echo -e 'done\n\n'
+
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
+echo "mm -> smm"
+check "${binpath}/mdl --lang-src mm -t -d --info -v --root-in mm -i ${file}.mm  --root-out smm -o ${file}.smm"
+echo -e 'done\n\n'
+
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
+
+echo "smm -> mm"
+check "${binpath}/mdl --lang-src smm --lang-tgt mm -d -v --root-in smm -i ${file}.smm --root-out mm-0 -o ${file}.mm"
+echo -e 'done\n\n'
+
+if [ $? != 0 ]; then
+    echo "TEST FAILED."; exit
+fi;
+
+echo "merge: mm -> mm"
+check "${binpath}/mdl --lang-src mm -m -v --root-in mm-0 -i ${file}.mm -o ${file}-0.mm"
+echo -e 'done\n\n'
+
+if [ $? != 0 ]; then
+    echo "TEST FAILED."; exit
+fi;
+
+echo "verify mm"
+${binpath}/metamath "read ${file}-0.mm" 'verify proof *' exit
+echo -e 'done\n'
+
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
+
+echo
+echo
+
+echo "----------------------"
+echo "MM <-> RUS TRANSLATION"
+echo "----------------------"
+
+echo "smm -> rus"
+check "${binpath}/mdl --lang-src smm --lang-tgt rus -d --info -v --root-in smm -i ${file}.smm --root-out rus -o ${file}.rus"
+echo -e 'done\n\n'
+
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
+
+echo "rus -> smm"
+check "${binpath}/mdl --lang-src rus -t -d --info -v --root-in rus -i ${file}.rus --root-out smm-1 -o ${file}.smm"
+echo -e 'done\n\n'
+
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
+
+echo "verify smm"
+check "${binpath}/mdl --lang-src smm -v --root-in smm-1 -i ${file}.smm"
+echo -e 'done\n'
+
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
+
+echo "smm -> mm"
+check "${binpath}/mdl --lang-src smm -d --lang-tgt mm -v --root-in smm-1 -i ${file}.smm --root-out mm-1 -o ${file}.mm"
+echo -e 'done\n\n'
+
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
+
+echo "mm -> smm"
+check "${binpath}/mdl --lang-src mm -d -t -v --root-in mm-1 -i ${file}.mm --root-out smm-2 -o ${file}.smm"
+echo -e 'done\n'
+
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
+
+echo "verify smm"
+check "${binpath}/mdl --lang-src smm -v --root-in smm-2 -i ${file}.smm"
+echo -e 'done\n'
+
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
+
+echo "merge: mm -> mm"
+check "${binpath}/mdl --lang-src mm -d -m -v --root-in mm-1 -i ${file}.mm -o ${file}-1.mm"
+echo -e 'done\n'
+
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
+echo "verify mm"
+${binpath}/metamath "read ${file}-1.mm" 'verify proof *' exit
+echo -e 'done\n'
+
+if [ $? != 0 ]; then 
+    echo "TEST FAILED."; exit
+fi;
+
+
+echo -e 'translation tests passed =)\n'
+

@@ -100,14 +100,13 @@ void run() {
 	if (!parse_exp()) return;
 	if (!unify_rus()) return;
 	switch (Sys::conf().mode) {
-	case Conf::Mode::PROVE:   break;
-	case Conf::Mode::TRANSL:  break;
-	case Conf::Mode::MONITOR: break;
+	case Mode::PROVE:   break;
+	case Mode::TRANSL:  break;
 	default : break;
 	}
 	switch (Sys::conf().target) {
-	case Conf::Target::RUS: write_rus(); break;
-	case Conf::Target::SMM: translate_rus(); break;
+	case Lang::RUS: write_rus(); break;
+	case Lang::SMM: translate_rus(); break;
 	default : break;
 	}
 	Sys::timer()["total"].stop();
@@ -168,6 +167,10 @@ string info() {
 	stats += "\n";
 
 	return stats;
+}
+
+Sys::Sys() {
+
 }
 
 }} // mdl::rus

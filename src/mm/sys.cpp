@@ -85,14 +85,14 @@ void run() {
 	Sys::timer()["total"].start();
 	if (Sys::conf().verbose)
 		cout << "processing file " << Sys::conf().in.name << " ... " << flush;
-	if (Sys::conf().mode == Conf::Mode::TRANSL)
+	if (Sys::conf().mode == Mode::TRANSL)
 		if (!do_parse())
 			return;
 	//cout << *source << endl;
 	switch (Sys::conf().mode) {
-	case Conf::Mode::CUT:    do_cut();       break;
-	case Conf::Mode::MERGE:  do_merge();     break;
-	case Conf::Mode::TRANSL: do_translate(); break;
+	case Mode::CUT:    do_cut();       break;
+	case Mode::MERGE:  do_merge();     break;
+	case Mode::TRANSL: do_translate(); break;
 	default : break;
 	}
 	Sys::timer()["total"].stop();
@@ -120,5 +120,24 @@ string info() {
 	return stats;
 }
 
+Sys::Sys() {
+	/*action["read"] =
+		[](const Args& args) {
+			try {
+				string name = args[0];
+				uint label = validate(name);
+				if (!Sys::get().math.sources.has(label)) {
+					Sys::timer()["read"].start();
+					spirit_parse(label);
+					Sys::timer()["read"].stop();
+					return Return("success", Sys::mod().math.sources.access(label));
+				} else {
+					return Return("failure: " + name + " already is read");
+				}
+			} catch (Error& err) {
+				return Return(string("failure: ") + err.what());
+			}
+		};*/
+}
 
 }} // mdl::mm

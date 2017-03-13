@@ -8,10 +8,10 @@ AM_LDFLAGS = \
 	-L$(top_builddir)/src/com -lcom \
     $(BOOST_LDFLAGS)
 
-bin_PROGRAMS = \
-	smm
+#bin_PROGRAMS = \
+#	smm
 	
-noinst_LTLIBRARIES = \
+lib_LTLIBRARIES = \
 	libsmm.la
 
 noinst_HEADERS = \
@@ -19,41 +19,32 @@ noinst_HEADERS = \
 
 if SPLIT_COMPILE
 libsmm_la_SOURCES = \
-	../mm/show.cpp \
-	../mm/ast.cpp \
-	../rus/show.cpp \
-	../rus/expr.cpp \
-	../rus/ast.cpp \
-	\
 	ast.cpp \
 	sys.cpp \
 	math_symb.cpp \
 	parser.cpp \
 	show.cpp \
-	parser.cpp \
 	translate_mm.cpp \
 	translate_rus.cpp \
 	tree.cpp \
 	verify.cpp
 else
 libsmm_la_SOURCES = \
-	../mm/show.cpp \
-	../mm/ast.cpp \
-	../rus/show.cpp \
-	../rus/expr.cpp \
 	all.cpp
 endif
 
-smm_SOURCES = \
-	main.cpp
+#smm_SOURCES = \
+#	main.cpp
 
 libsmm_la_LIBADD = \
 	$(BOOST_FILESYSTEM_LIB) \
     $(BOOST_SYSTEM_LIB) \
     $(BOOST_PROGRAM_OPTIONS_LIB)
 
-smm_LDADD = \
-	libsmm.la \
-	$(BOOST_FILESYSTEM_LIB) \
-    $(BOOST_SYSTEM_LIB) \
-    $(BOOST_PROGRAM_OPTIONS_LIB)
+#smm_LDADD = \
+#	libmm.la \
+#	librus.la \
+#	libsmm.la \
+#	$(BOOST_FILESYSTEM_LIB) \
+#    $(BOOST_SYSTEM_LIB) \
+#    $(BOOST_PROGRAM_OPTIONS_LIB)

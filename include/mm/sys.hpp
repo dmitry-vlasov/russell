@@ -6,10 +6,6 @@
 
 namespace mdl { namespace mm {
 
-enum class Mode { NONE, TRANSL, CUT, MERGE, DEFAULT = NONE };
-enum class Target { SMM, DEFAULT = SMM };
-typedef mdl::Conf<Mode, Target> Conf;
-
 struct Math {
 	template<typename T>
 	using Table = map<uint, T>;
@@ -23,8 +19,8 @@ struct Math {
 	~Math() { for (auto s : sources) delete s.second; }
 };
 
-struct Sys : public mdl::Sys<Sys, Math, Conf> {
-	Sys(const string& n = "default") { name = n; }
+struct Sys : public mdl::Sys<Sys, Math> {
+	Sys();
 };
 
 void run();

@@ -289,14 +289,15 @@ private:
 	Lib() : contents(), current("default") { }
 };
 
+enum class Lang { NONE, MM, SMM, RUS, DEFAULT = NONE };
+enum class Mode { NONE, TRANSL, CUT, MERGE, PROVE, DEFAULT = NONE };
+
 // Configuration for a deductive system
-template<typename M, typename T>
 struct Conf {
-	typedef M Mode;
-	typedef T Target;
 	Conf() :
 	verbose(false), info(false), help(false), deep(false),
-	in(), out(), mode(Mode::DEFAULT), target(Target::DEFAULT) { }
+	in(), out(),
+	mode(Mode::DEFAULT), target(Lang::DEFAULT) { }
 
 	bool verbose;
 	bool info;
@@ -306,8 +307,8 @@ struct Conf {
 	Path in;
 	Path out;
 
-	Mode   mode;
-	Target target;
+	Mode mode;
+	Lang target;
 };
 
 struct Io {
@@ -324,9 +325,10 @@ struct Io::Std : public Io {
 };
 
 struct Return {
-	Return(const string& t = "", any d = any()) : text(t), data(d) { }
+	Return(const string& t = "", bool s = true, any d = any()) : text(t), data(d), success(s) { }
 	string text;
 	any    data;
+	bool   success;
 };
 
 typedef vector<string> Args;
@@ -334,29 +336,26 @@ typedef map<string, Timer> Timers;
 typedef function<Return (const Args&)> Action;
 
 // Template for a deductive system
-template<class S, class M, class C>
+template<class S, class M>
 struct Sys {
 	typedef S System;
 	typedef M Math;
-	typedef C Conf;
 
+	Timers timers;
+	Conf   config;
 	Math   math;
-	string name;
-
 	map<string, Action> action;
 
 	static const System& get() { return mod(); }
-	static System& mod() { return Lib<System>::mod().access();  }
-	static Io& io() { return Lib<Io>::mod().access();  }
-	static Timers& timer() { return Lib<Timers>::mod().access();  }
-	static Conf& conf() { return Lib<Conf>::mod().access();  }
+	static System& mod()   { return Lib<System>::mod().access();  }
+	static Io& io()        { return Lib<Io>::mod().access();  }
+	static Timers& timer() { return mod().timers;  }
+	static Conf& conf()    { return mod().config;  }
 
 	static void change(const string& name) {
 		if (!instances().count(name)) throw Error("no such sys instance");
 		Lib<System>::mod().current = name;
 		Lib<Io>::mod().current = name;
-		Lib<Timers>::mod().current = name;
-		Lib<Conf>::mod().current = name;
 	}
 	template<class IO = Io::Std>
 	static void init(const string& name = "default") {
@@ -364,39 +363,12 @@ struct Sys {
 		instances().insert(name);
 		Lib<Io>::mod().init<IO>(name);
 		Lib<System>::mod().init(name);
-		Lib<Timers>::mod().init(name);
-		Lib<Conf>::mod().init(name);
 	}
 
 private:
 	static set<string> instances() { static set<string> inst; return inst; }
 };
 
-template<typename M, typename T>
-inline void initConf(const boost::program_options::variables_map& vm, Conf<M, T>& conf) {
-	if (vm.count("in"))       conf.in.name_ext(vm["in"].as<string>());
-	if (vm.count("out"))      conf.out.name_ext(vm["out"].as<string>());
-	if (vm.count("root-in"))  conf.in.root  = vm["root-in"].as<string>();
-	if (vm.count("root-out")) conf.out.root = vm["root-out"].as<string>();
-	if (vm.count("verbose")) conf.verbose = true;
-	if (vm.count("deep"))    conf.deep = true;
-	if (vm.count("info"))    conf.info = true;
-	if (vm.count("help"))    conf.help = true;
-}
-
-inline void initOptions(boost::program_options::options_description& desc) {
-	namespace po = boost::program_options;
-	desc.add_options()
-		("help,h",      "print help message")
-		("in,i", po::value<string>(),   "input file")
-		("out,o", po::value<string>(),  "output file")
-		("root-in", po::value<string>(), "input root directory (for inclusions)")
-		("root-out", po::value<string>(), "output root directory (for inclusions)")
-		("deep,d",      "deep translation")
-		("verbose,v",   "not be silent")
-		("info",        "info about math: timings, memory, stats")
-	;
-}
 template<class T>
 string show_timer(const char* message, const string& name, const T& timers) {
 	return timers.count(name) ? string(message) + show(timers.at(name)) : "";

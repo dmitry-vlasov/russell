@@ -7,7 +7,7 @@ AM_CPPFLAGS = \
 AM_LDFLAGS = \
     $(BOOST_LDFLAGS)
 
-noinst_LTLIBRARIES = \
+lib_LTLIBRARIES = \
 	libcom.la
 
 if SPLIT_COMPILE
