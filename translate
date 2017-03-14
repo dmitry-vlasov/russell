@@ -55,7 +55,7 @@ echo "MM <-> SMM TRANSLATION"
 echo "----------------------"
 
 echo "mm -> smm"
-check "${binpath}/mm -t -v -i ${file}.mm  -o $file.smm"
+check "${binpath}/mdl --lang-src mm -t -v -i ${file}.mm  -o $file.smm"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -64,7 +64,7 @@ fi;
 
 
 echo "smm -> mm"
-check "${binpath}/smm -v -i ${file}.smm -o ${file}-0.mm"
+check "${binpath}/mdl --lang-src smm -v -i ${file}.smm -o ${file}-0.mm"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then
@@ -88,7 +88,7 @@ echo "MM <-> RUS TRANSLATION"
 echo "----------------------"
 
 echo "smm -> rus"
-check "${binpath}/smm -v -i ${file}.smm -o ${file}.rus"
+check "${binpath}/mdl --lang-src smm -v -i ${file}.smm -o ${file}.rus"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -97,7 +97,7 @@ fi;
 
 
 echo "rus -> smm"
-check "${binpath}/rus -t --info -v -i ${file}.rus -o ${file}-1.smm"
+check "${binpath}/mdl --lang-src rus -t --info -v -i ${file}.rus -o ${file}-1.smm"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -106,7 +106,7 @@ fi;
 
 
 echo "verify smm"
-check "${binpath}/smm -v -i ${file}-1.smm"
+check "${binpath}/mdl --lang-src smm -v -i ${file}-1.smm"
 echo -e 'done\n'
 
 if [ $? != 0 ]; then 
@@ -115,7 +115,7 @@ fi;
 
 
 echo "smm -> mm"
-check "${binpath}/smm -v -i ${file}-1.smm -o ${file}-1.mm"
+check "${binpath}/mdl --lang-src smm -v -i ${file}-1.smm -o ${file}-1.mm"
 echo -e 'done\n\n'
 
 if [ $? != 0 ]; then 
@@ -124,7 +124,7 @@ fi;
 
 
 echo "mm -> smm"
-check "${binpath}/mm -t -v -i ${file}-1.mm -o ${file}-3.smm"
+check "${binpath}/mdl --lang-src mm -t -v -i ${file}-1.mm -o ${file}-3.smm"
 echo -e 'done\n'
 
 if [ $? != 0 ]; then 
@@ -133,7 +133,7 @@ fi;
 
 
 echo "verify smm"
-check "${binpath}/smm -v -i ${file}-3.smm"
+check "${binpath}/mdl --lang-src smm -v -i ${file}-3.smm"
 echo -e 'done\n'
 
 if [ $? != 0 ]; then 

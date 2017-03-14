@@ -8,9 +8,6 @@ AM_LDFLAGS = \
 	-L$(top_builddir)/src/com -lcom \
     $(BOOST_LDFLAGS)
 
-#bin_PROGRAMS = \
-#	smm
-	
 lib_LTLIBRARIES = \
 	libsmm.la
 
@@ -33,18 +30,7 @@ libsmm_la_SOURCES = \
 	all.cpp
 endif
 
-#smm_SOURCES = \
-#	main.cpp
-
 libsmm_la_LIBADD = \
 	$(BOOST_FILESYSTEM_LIB) \
     $(BOOST_SYSTEM_LIB) \
     $(BOOST_PROGRAM_OPTIONS_LIB)
-
-#smm_LDADD = \
-#	libmm.la \
-#	librus.la \
-#	libsmm.la \
-#	$(BOOST_FILESYSTEM_LIB) \
-#    $(BOOST_SYSTEM_LIB) \
-#    $(BOOST_PROGRAM_OPTIONS_LIB)

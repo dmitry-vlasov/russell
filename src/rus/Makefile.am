@@ -9,9 +9,6 @@ AM_LDFLAGS = \
 	-L$(top_builddir)/src/com -lcom \
     $(BOOST_LDFLAGS) \
     $(PTHREAD_CFLAGS)
-
-#bin_PROGRAMS = \
-#	rus
 	
 lib_LTLIBRARIES = \
 	librus.la
@@ -40,19 +37,8 @@ librus_la_SOURCES = \
 	all.cpp
 endif
 
-#rus_SOURCES = \
-#	main.cpp
-
 librus_la_LIBADD = \
 	$(BOOST_FILESYSTEM_LIB) \
     $(BOOST_SYSTEM_LIB) \
     $(BOOST_PROGRAM_OPTIONS_LIB) \
     $(PTHREAD_CFLAGS)
-
-#rus_LDADD = \
-#	libsmm.la \
-#	librus.la \
-#	$(BOOST_FILESYSTEM_LIB) \
-#    $(BOOST_SYSTEM_LIB) \
-#    $(BOOST_PROGRAM_OPTIONS_LIB) \
-#    $(PTHREAD_CFLAGS)
