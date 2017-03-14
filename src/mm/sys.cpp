@@ -60,7 +60,7 @@ bool do_translate() {
 		}
 		Sys::timer()["work"].start();
 		uint lab = Lex::getInt(Sys::conf().in.name);
-		smm::Source* target = translate(Sys::get().math.sources.at(lab));
+		smm::Source* target = translate(Sys::get().math.sources.access(lab));
 		if (Sys::conf().deep) {
 			deep_write(
 				target,
@@ -121,23 +121,22 @@ string info() {
 }
 
 Sys::Sys() {
-	/*action["read"] =
+	action["read"] =
 		[](const Args& args) {
+			string name = args[0];
 			try {
-				string name = args[0];
-				uint label = validate(name);
-				if (!Sys::get().math.sources.has(label)) {
-					Sys::timer()["read"].start();
-					spirit_parse(label);
-					Sys::timer()["read"].stop();
-					return Return("success", Sys::mod().math.sources.access(label));
-				} else {
-					return Return("failure: " + name + " already is read");
-				}
+				Sys::timer()["read"].start();
+				Path path = Sys::conf().in;
+				path.name = name;
+				if (!parse(path))
+					throw Error("parsing of " + name + " failed");
+				//cout << endl << *source;
+				Sys::timer()["read"].stop();
+				return Return("success", true);
 			} catch (Error& err) {
-				return Return(string("failure: ") + err.what());
+				return Return("failure: " + name, false);
 			}
-		};*/
+		};
 }
 
 }} // mdl::mm

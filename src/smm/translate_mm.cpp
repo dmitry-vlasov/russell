@@ -21,11 +21,11 @@ mm::Proof* translate(Maps& maps, const Proof* proof) {
 	for (auto r : rpn->refs) {
 		mm::Ref* ref = nullptr;
 		switch (r->type) {
-		case Ref::AXIOM:     ref = new mm::Ref(maps.axioms[r->val.ass]);     break;
-		case Ref::THEOREM:   ref = new mm::Ref(maps.theorems[r->val.ass]);   break;
-		case Ref::FLOATING:  ref = new mm::Ref(maps.floatings[r->val.flo]);  break;
-		case Ref::INNER:     ref = new mm::Ref(maps.inners[r->val.inn]);     break;
-		case Ref::ESSENTIAL: ref = new mm::Ref(maps.essentials[r->val.ess]); break;
+		case Ref::AXIOM:     ref = new mm::Ref(maps.axioms[r->val.ass]->label);     break;
+		case Ref::THEOREM:   ref = new mm::Ref(maps.theorems[r->val.ass]->label);   break;
+		case Ref::FLOATING:  ref = new mm::Ref(maps.floatings[r->val.flo]->label);  break;
+		case Ref::INNER:     ref = new mm::Ref(maps.inners[r->val.inn]->label);     break;
+		case Ref::ESSENTIAL: ref = new mm::Ref(maps.essentials[r->val.ess]->label); break;
 		default : assert(false && "impossible"); break;
 		}
 		pr->refs.push_back(ref);
@@ -83,10 +83,7 @@ void translate(const Node& node, mm::Block* target, Maps& maps) {
 		}
 		if (ass->proof) {
 			mm::Proof* pr = translate(maps, ass->proof);
-			mm::Theorem* th = new mm::Theorem();
-			th->label = ass->prop.label;
-			th->expr = ass->prop.expr;
-			th->proof = pr;
+			mm::Theorem* th = new mm::Theorem(ass->prop.label, ass->prop.expr, pr);
 			block->contents.push_back(mm::Node(th));
 			assert(!maps.theorems.count(ass));
 			maps.theorems[ass] = th;

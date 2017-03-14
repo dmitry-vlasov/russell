@@ -7,16 +7,13 @@
 namespace mdl { namespace mm {
 
 struct Math {
-	template<typename T>
-	using Table = map<uint, T>;
+	Table<Theorem>   theorems;
+	Table<Axiom>     axioms;
+	Table<Essential> essentials;
+	Table<Floating>  floatings;
+	Table<Source>    sources;
 
-	Table<Theorem*>   theorems;
-	Table<Axiom*>     axioms;
-	Table<Essential*> essentials;
-	Table<Floating*>  floatings;
-	Table<Source*>    sources;
-
-	~Math() { for (auto s : sources) delete s.second; }
+	~Math() { sources.destroy(); }
 };
 
 struct Sys : public mdl::Sys<Sys, Math> {

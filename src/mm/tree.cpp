@@ -27,11 +27,12 @@ Proof* to_tree(const Proof* proof) {
 		default : assert(false && "impossible"); break;
 		}
 	}
-	Proof* tree =
-		 stack.top()->type == Ref::PROOF ?
-		 stack.top()->val.prf :
-		 nullptr;
-	stack.top()->val.prf = nullptr;
+	Proof* tree = nullptr;
+	Ref* top = stack.top();
+	if (top->type == Ref::PROOF) {
+		 tree = stack.top()->val.prf;
+		 stack.top()->val.prf = nullptr;
+	}
 	delete stack.top();
 	stack.pop();
 	if (!stack.empty())

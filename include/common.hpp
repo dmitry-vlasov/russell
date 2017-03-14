@@ -377,51 +377,58 @@ string show_timer(const char* message, const string& name, const T& timers) {
 template<class T>
 void dump(const T& val) { cout << val; }
 
-template<class T>
+template<class D>
 struct Table {
-	typedef T Type;
-	void add(uint n, Type* p = nullptr) {
+	typedef D Data;
+	void add(uint n, Data* p = nullptr) {
 		if (!refs.count(n)) {
 			refs[n].data = p;
 		} else {
-			Data& d = refs[n];
+			Storage& d = refs[n];
 			if (d.data) throw Error("attempt to reuse live pointer");
 			d.data = p;
-			for (Type** u : d.users) *u = p;
+			for (Data** u : d.users) *u = p;
 		}
 	}
 	void del(uint n) {
 		if (!refs.count(n)) throw Error("attempt to delete unknown label");
-		Data& d = refs[n];
+		Storage& d = refs[n];
 		if (!d.data) throw Error("attempt to delete null pointer");
 		d.data = nullptr;
-		for (Type** u : d.users) *u = nullptr;
+		for (Data** u : d.users) *u = nullptr;
 	}
-	void use(uint n, Type*& u) {
+	void use(uint n, Data*& u) {
 		if (!refs.count(n)) throw Error("attempt to use unknown label");
-		Data& d = refs[n];
+		Storage& d = refs[n];
 		if (!d.data) throw Error("attempt to use null pointer");
 		d.users.insert(&u);
 		u = d.data;
 	}
-	void unuse(uint n, Type*& u) {
+	void unuse(uint n, Data*& u) {
 		if (!refs.count(n)) throw Error("attempt to unuse unknown label");
-		Data& d = refs[n];
+		Storage& d = refs[n];
 		d.users.erase(&u);
 	}
-	Type* access(uint n) {
-		return refs.count(n) ? refs[n].data : nullptr;
+	Data* access(uint n) {
+		return refs.count(n) ? refs.at(n).data : nullptr;
+	}
+	const Data* access(uint n) const {
+		return refs.count(n) ? refs.at(n).data : nullptr;
 	}
 	bool has(uint n) const {
 		return refs.count(n);
 	}
+	void destroy() {
+		for (auto p : refs) delete p.second.data;
+	}
+	int size() const { return refs.size(); }
 
 private :
-	struct Data {
-		Type* data;
-		set<Type**> users;
+	struct Storage {
+		Data* data;
+		set<Data**> users;
 	};
-	map<uint, Data> refs;
+	map<uint, Storage> refs;
 };
 
 

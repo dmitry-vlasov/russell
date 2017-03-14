@@ -47,10 +47,7 @@ static bool do_translate() {
 					[](mm::Node n) -> bool { return n.type == mm::Node::INCLUSION; }
 				);
 			} else {
-				//shallow_write(target);
-				ofstream out(Sys::conf().out.path());
-				out << *target << endl;
-				out.close();
+				shallow_write(target);
 			}
 		}	break;
 		case Lang::RUS: {

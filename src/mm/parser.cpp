@@ -81,50 +81,30 @@ public:
 			return disj;
 		};
 		parser["ESS"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Essential* ess = new Essential { sv[0].get<uint>(), sv[1].get<Vect>() };
+			Essential* ess = new Essential(sv[0].get<uint>(), sv[1].get<Vect>());
 			markVars(ess->expr, context.get<std::shared_ptr<Context>>()->stack);
-			Sys::mod().math.essentials[ess->label] = ess;
 			return ess;
 		};
 		parser["FLO"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Floating* flo = new Floating { sv[0].get<uint>(), sv[1].get<Vect>() };
+			Floating* flo = new Floating(sv[0].get<uint>(), sv[1].get<Vect>());
 			markVars(flo->expr, context.get<std::shared_ptr<Context>>()->stack);
-			Sys::mod().math.floatings[flo->label] = flo;
 			return flo;
 		};
 		parser["AX"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Axiom* ax = new Axiom { sv[0].get<uint>(), sv[1].get<Vect>(), (uint) -1 };
+			Axiom* ax = new Axiom(sv[0].get<uint>(), sv[1].get<Vect>());
 			markVars(ax->expr, context.get<std::shared_ptr<Context>>()->stack);
-			Sys::mod().math.axioms[ax->label] = ax;
 			return ax;
 		};
 		parser["TH"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Theorem* th = new Theorem();
-			th->label = sv[0].get<uint>();
-			th->expr  = sv[1].get<Vect>();
-			th->proof = sv[2].get<Proof*>();
+			Theorem* th = new Theorem(sv[0].get<uint>(), sv[1].get<Vect>(), sv[2].get<Proof*>());
 			markVars(th->expr, context.get<std::shared_ptr<Context>>()->stack);
-			Sys::mod().math.theorems[th->label] = th;
 			return th;
 		};
 		parser["PROOF"] = [](const peg::SemanticValues& sv) {
-			Proof* pr = new Proof();
-			pr->refs = sv.transform<Ref*>();
-			return pr;
+			return new Proof(std::move(sv.transform<Ref*>()));
 		};
 		parser["REF"] = [](const peg::SemanticValues& sv) {
-			uint lab = sv[0].get<uint>();
-			Sys::Math& math = Sys::mod().math;
-			if (math.floatings.count(lab))
-				return new Ref(math.floatings[lab]);
-			else if (math.essentials.count(lab))
-				return new Ref(math.essentials[lab]);
-			else if (math.axioms.count(lab))
-				return new Ref(math.axioms[lab]);
-			else if (math.theorems.count(lab))
-				return new Ref(math.theorems[lab]);
-			else
-				throw Error("unknown label in proof", Lex::toStr(lab));
+			return new Ref(sv[0].get<uint>());
 		};
 		parser["COMMENT"] = [](const peg::SemanticValues& sv) {
 			string text = sv.token();
@@ -186,13 +166,14 @@ public:
 			static map<string, mm::Inclusion*> included;
 			if (included.count(name)) {
 				mm::Inclusion* inc = included[name];
-				return new mm::Inclusion(inc->source, false);
+				return new mm::Inclusion(inc->source);
 			} else {
 				Path new_path(path);
 				new_path.name_ext(name);
-				mm::Inclusion* inc = new mm::Inclusion(nullptr, true);
+				mm::Inclusion* inc = new mm::Inclusion();
 				included[name] = inc;
-				inc->source = parse(new_path, context.get<std::shared_ptr<Context>>());
+				Source* src = parse(new_path, context.get<std::shared_ptr<Context>>());
+				Sys::mod().math.sources.use(src->label, inc->source);
 				return inc;
 			}
 		};

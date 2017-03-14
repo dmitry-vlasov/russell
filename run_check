@@ -1,0 +1,19 @@
+#!/bin/bash 
+
+function run() {
+    $1
+	if [ $? != 0 ]; then 
+		echo -e '\n\nTEST FAILED.'; exit
+	fi;
+}
+
+VALGRIND="valgrind --tool=memcheck --leak-check=full"
+
+function check() {
+    echo "COMMAND: " $1
+    if [ "$memcheck" == "yes" ]; then
+		run "$VALGRIND $@"
+    else
+		run "$@"
+    fi
+}

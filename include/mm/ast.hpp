@@ -19,11 +19,15 @@ struct Disjointed {
 };
 
 struct Essential {
+	Essential(uint l, const Vect& e);
+	~Essential();
 	uint label;
 	Vect expr;
 };
 
 struct Floating  {
+	Floating(uint l, const Vect& e);
+	~Floating();
 	Symbol type() const { return expr[0]; }
 	Symbol var() const { return expr[1]; }
 	uint label;
@@ -31,6 +35,8 @@ struct Floating  {
 };
 
 struct Axiom {
+	Axiom(uint l, const Vect& e);
+	~Axiom();
 	uint label;
 	Vect expr;
 	uint arity;
@@ -39,7 +45,7 @@ struct Axiom {
 class Proof;
 
 struct Theorem {
-	Theorem() : label(-1), expr(), arity(0), proof(nullptr) { }
+	Theorem(uint l, const Vect& e, Proof* p = nullptr);
 	~Theorem();
 	uint   label;
 	Vect   expr;
@@ -67,13 +73,9 @@ struct Ref {
 		Proof*      prf;
 	};
 
-	Ref()              : type(NONE),       val() { val.ptr = nullptr; }
-	Ref(Floating* f)   : type(FLOATING),   val() { val.flo = f; }
-	Ref(Essential* e)  : type(ESSENTIAL),  val() { val.ess = e; }
-	Ref(Axiom* a)      : type(AXIOM),      val() { val.ax  = a; }
-	Ref(Theorem* t)    : type(THEOREM),    val() { val.th  = t; }
-	Ref(Proof* p)      : type(PROOF),      val() { val.prf = p; }
-	Ref(const Ref& ref);
+	Ref(uint label);
+	Ref(const Ref&);
+	Ref(Proof* p) : type(PROOF), val() { val.prf = p; }
 	~Ref();
 
 	uint label() const {
@@ -101,6 +103,8 @@ struct Proof {
 		TREE,
 		RPN
 	};
+	Proof(const vector<Ref*>&);
+	Proof(vector<Ref*>&&);
 	Proof(Type t = RPN) : refs(), type(t) { }
 	Proof(const Proof& p) : refs(), type(p.type) {
 		for (auto r : p.refs) refs.push_back(new Ref(*r));
@@ -216,7 +220,8 @@ struct Block {
 
 struct Source {
 	Source(uint l);
-	~Source() { if (block) delete block; }
+	~Source();
+
 	uint   label;
 	string data;
 	Block* block;
@@ -232,15 +237,11 @@ struct Source {
 };
 
 struct Inclusion {
-	Inclusion(Source* src, bool prim) : source(src), primary(prim) { }
+	Inclusion(Source* src = nullptr, bool prim = true);
+	~Inclusion();
 	Source* source;
 	bool primary;
 };
-
-inline Theorem::~Theorem() {
-	if (proof)
-		delete proof;
-}
 
 inline void Node::destroy() {
 	switch(type) {
@@ -259,18 +260,6 @@ inline void Node::destroy() {
 	default : assert(false && "impossible"); break;
 	}
 	type = NONE;
-}
-
-inline Ref::~Ref() {
-	if (type == PROOF && val.prf) delete val.prf;
-}
-
-inline Proof::~Proof() {
-	for (auto r : refs) delete r;
-}
-
-inline Ref::Ref(const Ref& ref) : type(ref.type), val() {
-	val.ptr = (type == PROOF) ? new Proof(*ref.val.prf) : ref.val.ptr;
 }
 
 ostream& operator << (ostream& os, const Node& node);

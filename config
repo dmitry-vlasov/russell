@@ -7,3 +7,5 @@
  mathpath='./math'
 
 #memcheck='yes'
+
+source run_check
