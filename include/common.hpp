@@ -246,7 +246,6 @@ struct Path {
 		ext.clear();
 		if (i != string::npos) ext = ne.substr(i + 1);
 	}
-	Path verify();
 	void read(string& data);
 	void write(const string& data);
 	Path relative(const string& n) const {

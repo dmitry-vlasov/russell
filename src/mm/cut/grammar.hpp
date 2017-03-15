@@ -6,7 +6,7 @@
 namespace mdl { namespace mm { namespace cut {
 
 template <typename Iterator>
-Grammar<Iterator>::Grammar() : Grammar::base_type(source, "cut") {
+Grammar<Iterator>::Grammar(string r) : Grammar::base_type(source, "cut"), root(r) {
 		using qi::lit;
 		using qi::uint_;
 		using qi::lexeme;
@@ -32,13 +32,13 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "cut") {
 			>> lexeme[+(ascii::char_ - "##" - "#*" - "=-")] [at_c<2>(*_val) = makeString(_1)]
 			>> border
 			>> lexeme[*(ascii::char_ - "$)")]      [at_c<3>(*_val) = makeString(_1)]
-			>> lit("$)\n")                         [add(_val)];
+			>> lit("$)\n")                         [add(_val, phoenix::ref(root))];
 
 		contents =
 			lexeme[+(ascii::char_ - FULL_PARAGRAPH_STR - FULL_CHAPTER_STR - FULL_PART_STR)] [_val = makeString(_1)];
 
 		source =
-			  eps         [add(_val)]
+			  eps         [add(_val, phoenix::ref(root))]
 			>> header     //[add(_1)]
 			>> + (
 				section |

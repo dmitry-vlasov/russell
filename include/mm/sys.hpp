@@ -23,7 +23,7 @@ struct Sys : public mdl::Sys<Sys, Math> {
 void run();
 string show();
 string info();
-Source* parse(const Path& path);
+Source* parse(uint label);
 smm::Source* translate(const Source* source);
 
 }} // mdl::mm

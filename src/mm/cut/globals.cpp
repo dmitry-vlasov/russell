@@ -17,9 +17,12 @@ void split_section(Section* sect) {
 	header->name = sect->name;
 	header->footer = sect->footer;
 	header->contents = sect->contents;
+
+	header->root = sect->root;
 	header->file = sect->file;
 	header->dir = sect->dir + sect->file + "/";
 	header->path = header->dir + header->file + ".mm";
+
 	switch (sect->type) {
 	case Type::PARAGRAPH: assert(false && "impossible"); break;
 	case Type::CHAPTER:   header->type = Type::PARAGRAPH; break;
@@ -60,9 +63,10 @@ void save(Section* src) {
 namespace fs = boost::filesystem;
 
 void Section::save() const {
-	if (dir.size() && !fs::exists(dir))
-		fs::create_directories(dir);
-	ofstream out(path);
+	string fd = full_dir();
+	if (fd.size() && !fs::exists(fd))
+		fs::create_directories(fd);
+	ofstream out(full_path());
 	out << show_contents(*this) << endl;
 	for (Section* s : parts) {
 		out << "$[ " << s->path << " $]\n";

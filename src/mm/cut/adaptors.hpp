@@ -7,6 +7,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::string, name)
 	(mdl::string, footer)
 	(mdl::string, contents)
+	(mdl::string, root)
 	(mdl::string, dir)
 	(mdl::string, file)
 	(mdl::string, path)

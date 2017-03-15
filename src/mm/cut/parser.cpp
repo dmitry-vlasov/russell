@@ -446,9 +446,19 @@ void patch(string& data) {
 	}
 }
 
-Section* parse(const string& root, string in, const string& out) {
+Section* parse(string root_in, string in, string root_out) {
 	string data;
-	ifstream ifn = open_smart(in, root);
+	//ifstream ifn = open_smart(in, root);
+
+	boost::trim(in);
+	boost::trim(root_in);
+	if (root_in.size() && root_in.back() != '/') root_in += '/';
+	if (root_out.size() && root_out.back() != '/') root_out += '/';
+	string path = (root_in.size() ? root_in : ".") + "/" + in + ".mm";
+	ifstream ifn;
+	ifn.open(path, std::ios_base::in);
+	if (ifn.fail()) throw Error("failed to open", path);
+
 	read_smart(data, ifn);
 	patch(data);
 
@@ -462,11 +472,12 @@ Section* parse(const string& root, string in, const string& out) {
 	if (slash_pos != string::npos) len -= slash_pos;
 	if (dot_pos != string::npos)   len -= len - dot_pos;
 
+	source->root = root_out;
 	source->file = in.substr(slash_pos == string::npos ? 0 : slash_pos, len);
-	source->dir = out + "/";
+	source->dir = "";
 	source->path = source->dir + "/" + source->file + ".mm";
 	source->type = Type::SOURCE;
-	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space, source);
+	bool r = phrase_parse(iter, end, Grammar<LocationIter>(root_out), ascii::space, source);
 	if (!r || iter != end) {
 		throw Error("parsing failed", in);
 	}

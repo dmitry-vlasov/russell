@@ -26,7 +26,7 @@ inline string border(const Type tp) {
 
 struct Section {
 	Section() : type(Type::SOURCE), header(), name(), footer(),
-	contents(), dir(), file(), path(),
+	contents(), root(), dir(), file(), path(),
 	prev_sect(nullptr), next_sect(nullptr),
 	prev_sibling(nullptr), next_sibling(nullptr),
 	parent(nullptr), parts() { }
@@ -40,9 +40,15 @@ struct Section {
 	string name;
 	string footer;
 	string contents;
+
+	string root;
 	string dir;
 	string file;
 	string path;
+
+	string full_dir() const { return root + dir; }
+	string full_path() const { return root + path; }
+
 	Section* prev_sect;
 	Section* next_sect;
 	Section* prev_sibling;
@@ -59,7 +65,7 @@ inline ostream& operator << (ostream& os, const Section& sect) {
 	return os;
 }
 
-Section* parse(const string& root, string in, const string& out);
+Section* parse(string root, string in, string out);
 void split(Section* src);
 void save(Section* src);
 

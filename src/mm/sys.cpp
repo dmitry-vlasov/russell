@@ -8,75 +8,48 @@
 
 namespace mdl { namespace mm  { namespace {
 
-bool do_parse() {
-	try {
-		Sys::timer()["read"].start();
-		if (!parse(Sys::conf().in))
-			throw Error("parsing of " + Sys::conf().in.name + " failed");
-		//cout << endl << *source;
-		Sys::timer()["read"].stop();
-		return true;
-	} catch (Error& err) {
-		Sys::io().err() << err.what() << endl;
-		return false;
-	}
+void do_parse() {
+	Sys::timer()["read"].start();
+	if (!parse(Lex::toInt(Sys::conf().in.name)))
+		throw Error("parsing of " + Sys::conf().in.name + " failed");
+	//cout << endl << *source;
+	Sys::timer()["read"].stop();
 }
 
-bool do_cut() {
-	try {
-		Sys::timer()["work"].start();
-		cut::Section* source = cut::parse(Sys::conf().in.root, Sys::conf().in.path(), Sys::conf().out.root);
-		cut::split(source);
-		cut::save(source);
-		delete source;
-		Sys::timer()["work"].stop();
-		return true;
-	} catch (Error& err) {
-		Sys::io().err() << err.what() << endl;
-		return false;
-	}
+void do_cut() {
+	Sys::timer()["work"].start();
+	cut::Section* source = cut::parse(Sys::conf().in.root, Sys::conf().in.name, Sys::conf().out.root);
+	cut::split(source);
+	cut::save(source);
+	delete source;
+	Sys::timer()["work"].stop();
 }
 
-bool do_merge() {
-	try {
-		Sys::timer()["work"].start();
-		merge::parse(Sys::conf().in.path());
-		ofstream out(Sys::conf().out.path());
-		out << merge::Source::get().contents.str();
-		out.close();
-		Sys::timer()["work"].stop();
-		return true;
-	} catch (Error& err) {
-		Sys::io().err() << err.what() << endl;
-		return false;
-	}
+void do_merge() {
+	Sys::timer()["work"].start();
+	merge::parse(Sys::conf().in.path());
+	ofstream out(Sys::conf().out.path());
+	out << merge::Source::get().contents.str();
+	out.close();
+	Sys::timer()["work"].stop();
 }
 
-bool do_translate() {
-	try {
-		if (Sys::conf().out.name.empty()) {
-			Sys::io().err() << "output file is not specified" << endl;
-			return false;
-		}
-		Sys::timer()["work"].start();
-		uint lab = Lex::getInt(Sys::conf().in.name);
-		smm::Source* target = translate(Sys::get().math.sources.access(lab));
-		if (Sys::conf().deep) {
-			deep_write(
-				target,
-				[](smm::Source* src) -> vector<smm::Node>& { return src->contents; },
-				[](smm::Node n) -> smm::Source* { return n.val.inc->source; },
-				[](smm::Node n) -> bool { return n.type == smm::Node::INCLUSION; }
-			);
-		} else {
-			shallow_write(target);
-		}
-		Sys::timer()["work"].stop();
-		return true;
-	} catch (Error& err) {
-		Sys::io().err() << err.what() << endl;
-		return false;
+void do_translate() {
+	if (Sys::conf().out.name.empty()) throw Error("output file is not specified");
+	Sys::timer()["work"].start();
+	uint lab = Lex::getInt(Sys::conf().in.name);
+	smm::Source* target = translate(Sys::get().math.sources.access(lab));
+	if (Sys::conf().deep) {
+		deep_write(
+			target,
+			[](smm::Source* src) -> vector<smm::Node>& { return src->contents; },
+			[](smm::Node n) -> smm::Source* { return n.val.inc->source; },
+			[](smm::Node n) -> bool { return n.type == smm::Node::INCLUSION; }
+		);
+	} else {
+		shallow_write(target);
 	}
+	Sys::timer()["work"].stop();
 }
 
 }
@@ -85,9 +58,7 @@ void run() {
 	Sys::timer()["total"].start();
 	if (Sys::conf().verbose)
 		cout << "processing file " << Sys::conf().in.name << " ... " << flush;
-	if (Sys::conf().mode == Mode::TRANSL)
-		if (!do_parse())
-			return;
+	if (Sys::conf().mode == Mode::TRANSL) do_parse();
 	//cout << *source << endl;
 	switch (Sys::conf().mode) {
 	case Mode::CUT:    do_cut();       break;
@@ -124,18 +95,12 @@ Sys::Sys() {
 	action["read"] =
 		[](const Args& args) {
 			string name = args[0];
-			try {
-				Sys::timer()["read"].start();
-				Path path = Sys::conf().in;
-				path.name = name;
-				if (!parse(path))
-					throw Error("parsing of " + name + " failed");
-				//cout << endl << *source;
-				Sys::timer()["read"].stop();
-				return Return("success", true);
-			} catch (Error& err) {
-				return Return("failure: " + name, false);
-			}
+			Sys::timer()["read"].start();
+			if (!parse(Lex::toInt(Sys::conf().in.name)))
+				throw Error("parsing of " + name + " failed");
+			//cout << endl << *source;
+			Sys::timer()["read"].stop();
+			return Return("success", true);
 		};
 }
 

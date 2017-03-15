@@ -76,9 +76,10 @@ struct Stack {
 static Stack stack;
 
 struct Add {
-	template<typename T>
+	template<typename T1, typename T2>
 	struct result { typedef void type; };
-	void operator()(Section* sect) const {
+	void operator()(Section* sect, string root) const {
+		sect->root = root;
 		sect->prev_sect = stack.last;
 		if (stack.last)
 			stack.last->next_sect = sect;
@@ -146,8 +147,10 @@ struct MakeString {
 
 template <typename Iterator>
 struct Grammar : qi::grammar<Iterator, Section*(), qi::unused_type> {
-	Grammar();
+	Grammar(string root);
 	void initNames();
+
+	string root;
 
 	qi::rule<Iterator, Type(), qi::unused_type> border;
 	qi::rule<Iterator, string(), qi::unused_type> header;

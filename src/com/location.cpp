@@ -58,22 +58,6 @@ void read_smart(string& data, ifstream& in) {
 	in.close();
 }
 
-Path Path::verify() {
-	Path p(*this);
-	ifstream in;
-	while (true) {
-		in.open(p.path(), std::ios_base::in);
-		if (!in.fail()) break;
-		string shorter = cut_outer_directory(p.name);
-		if (p.name == shorter) {
-			throw Error("Could not open input file", path());
-		} else
-			p.name = shorter;
-	}
-	in.close();
-	return p;
-}
-
 void Path::read(string& data) {
 	ifstream in(path());
 	in.unsetf(std::ios::skipws);

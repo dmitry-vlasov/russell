@@ -13,7 +13,6 @@ uint inc_ind() { return ind ++; }
 } // parser
 
 Source* parse(Path path) {
-	path = path.verify();
 	string data;
 	path.read(data);
 	Source* src = new Source(Lex::toInt(path.name));

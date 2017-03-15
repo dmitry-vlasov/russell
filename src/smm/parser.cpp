@@ -220,7 +220,6 @@ public:
 	}
 
 	static Source* parse(Path path) {
-		path = path.verify();
 		string data;
 		path.read(data);
 		Parser p(path);
