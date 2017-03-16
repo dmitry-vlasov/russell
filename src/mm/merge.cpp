@@ -43,25 +43,22 @@ struct Include {
 	}
 };
 
-template <typename Iterator>
-struct Grammar : qi::grammar<Iterator, void(), ascii::space_type> {
+struct Grammar : qi::grammar<LocationIter, void(), ascii::space_type> {
 	Grammar();
 	void initNames();
 
-	qi::rule<Iterator, string(), qi::unused_type> contents;
-	qi::rule<Iterator, string(), qi::unused_type> inclusion;
-	qi::rule<Iterator, void(), ascii::space_type> source;
+	qi::rule<LocationIter, string(), qi::unused_type> contents;
+	qi::rule<LocationIter, string(), qi::unused_type> inclusion;
+	qi::rule<LocationIter, void(), ascii::space_type> source;
 };
 
-template <typename Iterator>
-void Grammar<Iterator>::initNames() {
+void Grammar::initNames() {
 	inclusion.name("include");
 	contents.name("contents");
 	source.name("source");
 }
 
-template <typename Iterator>
-Grammar<Iterator>::Grammar() : Grammar::base_type(source, "merge") {
+Grammar::Grammar() : Grammar::base_type(source, "merge") {
 	using qi::lit;
 	using qi::lexeme;
 	using namespace qi::labels;
@@ -113,7 +110,7 @@ void parse(const Path& path) {
 	remove_commented_imports(data);
 	LocationIter iter(data.begin(), path.name);
 	LocationIter end(data.end(), path.name);
-	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space);
+	bool r = phrase_parse(iter, end, Grammar(), ascii::space);
 	if (!r || iter != end) {
 		throw Error("parsing failed", path.name);
 	}
