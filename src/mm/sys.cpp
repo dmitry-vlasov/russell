@@ -8,16 +8,9 @@ namespace mdl { namespace mm  {
 
 void merge();
 void cut();
+void parse();
 
 namespace {
-
-void do_parse() {
-	Sys::timer()["read"].start();
-	if (!parse(Lex::toInt(Sys::conf().in.name)))
-		throw Error("parsing of " + Sys::conf().in.name + " failed");
-	//cout << endl << *source;
-	Sys::timer()["read"].stop();
-}
 
 void do_translate() {
 	if (Sys::conf().out.name.empty()) throw Error("output file is not specified");
@@ -43,7 +36,7 @@ void run() {
 	Sys::timer()["total"].start();
 	if (Sys::conf().verbose)
 		cout << "processing file " << Sys::conf().in.name << " ... " << flush;
-	if (Sys::conf().mode == Mode::TRANSL) do_parse();
+	if (Sys::conf().mode == Mode::TRANSL) parse();
 	//cout << *source << endl;
 	switch (Sys::conf().mode) {
 	case Mode::CUT:    cut();       break;
@@ -76,16 +69,21 @@ string info() {
 	return stats;
 }
 
+
+
 Sys::Sys() {
 	action["read"] =
 		[](const Args& args) {
-			string name = args[0];
-			Sys::timer()["read"].start();
-			if (!parse(Lex::toInt(Sys::conf().in.name)))
-				throw Error("parsing of " + name + " failed");
-			//cout << endl << *source;
-			Sys::timer()["read"].stop();
-			return Return("success", true);
+			try {
+				parse();
+				return Return("success");
+			} catch (const Error& err) {
+				return Return("failre", err.what());
+			} catch (std::exception& ex) {
+				return Return("failre", ex.what());
+			} catch (...) {
+
+			}
 		};
 }
 

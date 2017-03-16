@@ -1,7 +1,7 @@
 #include "mm/sys.hpp"
 #include "peglib.h"
 
-namespace mdl { namespace mm {
+namespace mdl { namespace mm { namespace {
 
 struct Parser {
 private:
@@ -225,6 +225,16 @@ private:
 
 Source* parse(uint label) {
 	return Parser::parse(label);
+}
+
+}
+
+void parse() {
+	Sys::timer()["read"].start();
+	if (!parse(Lex::toInt(Sys::conf().in.name)))
+		throw Error("parsing of " + Sys::conf().in.name + " failed");
+	//cout << endl << *source;
+	Sys::timer()["read"].stop();
 }
 
 }} // mdl::mm
