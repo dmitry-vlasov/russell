@@ -17,10 +17,6 @@ noinst_HEADERS = \
 	cut/grammar.hpp \
 	cut/parser.hpp \
 	\
-	merge/ast.hpp \
-	merge/grammar.hpp \
-	merge/parser.hpp \
-	\
 	tree.hpp 
 
 if SPLIT_COMPILE
@@ -29,10 +25,9 @@ libmm_la_SOURCES = \
 	cut/globals.cpp \
 	cut/show.cpp \
 	\
-	merge/parser.cpp \
-	\
 	ast.cpp \
 	sys.cpp \
+	merge.cpp \
 	parser.cpp \
 	show.cpp \
 	translate.cpp \

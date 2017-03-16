@@ -4,9 +4,12 @@
 #include "mm/ast.hpp"
 #include "smm/ast.hpp"
 #include "cut/ast.hpp"
-#include "merge/ast.hpp"
 
-namespace mdl { namespace mm  { namespace {
+namespace mdl { namespace mm  {
+
+void merge(const Path&, const Path&);
+
+namespace {
 
 void do_parse() {
 	Sys::timer()["read"].start();
@@ -27,10 +30,7 @@ void do_cut() {
 
 void do_merge() {
 	Sys::timer()["work"].start();
-	merge::parse(Sys::conf().in);
-	ofstream out(Sys::conf().out.path());
-	out << merge::Source::get().contents.str();
-	out.close();
+	merge(Sys::conf().in, Sys::conf().out);
 	Sys::timer()["work"].stop();
 }
 
