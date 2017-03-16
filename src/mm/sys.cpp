@@ -1,22 +1,33 @@
 #include <boost/filesystem.hpp>
 
 #include "mm/sys.hpp"
-#include "mm/ast.hpp"
-#include "smm/ast.hpp"
+#include "smm/sys.hpp"
 
 namespace mdl { namespace mm  {
 
 void merge();
 void cut();
-void parse();
+void parse(uint src);
+void translate(uint src, uint tgt);
 
-namespace {
+string Math::info() const {
+	string stats;
+	stats += "Size:\n";
+	stats += "\taxioms:     " + to_string(axioms.size()) + "\n";
+	stats += "\ttheorems:   " + to_string(theorems.size()) + "\n";
+	stats += "\tessentials: " + to_string(essentials.size()) + "\n";
+	stats += "\tfloatings:  " + to_string(floatings.size()) + "\n";
+	stats += "\n";
+	return stats;
+}
 
-void do_translate() {
-	if (Sys::conf().out.name.empty()) throw Error("output file is not specified");
-	Sys::timer()["work"].start();
-	uint lab = Lex::getInt(Sys::conf().in.name);
-	smm::Source* target = translate(Sys::get().math.sources.access(lab));
+string Math::show() const {
+	return info();
+}
+
+void write(uint tgt) {
+	Sys::timer()["write"].start();
+	smm::Source* target = smm::Sys::get().math.sources.at(tgt);
 	if (Sys::conf().deep) {
 		deep_write(
 			target,
@@ -27,64 +38,52 @@ void do_translate() {
 	} else {
 		shallow_write(target);
 	}
-	Sys::timer()["work"].stop();
+	Sys::timer()["write"].stop();
 }
 
-}
-
-void run() {
-	Sys::timer()["total"].start();
-	if (Sys::conf().verbose)
-		cout << "processing file " << Sys::conf().in.name << " ... " << flush;
-	if (Sys::conf().mode == Mode::TRANSL) parse();
-	//cout << *source << endl;
-	switch (Sys::conf().mode) {
-	case Mode::CUT:    cut();       break;
-	case Mode::MERGE:  merge();     break;
-	case Mode::TRANSL: do_translate(); break;
-	default : break;
-	}
-	Sys::timer()["total"].stop();
-	if (Sys::conf().verbose)
-		cout << "done in " << Sys::timer()["total"] << endl;
+string info() {
+	string stats;
+	stats += Sys::get().timers.show();
+	stats += "\n\n";
+	stats += Sys::get().math.show();
+	stats += "\n";
+	return stats;
 }
 
 string show() {
 	return info();
 }
 
-string info() {
-	string stats;
-	stats += "Timings:";
-	stats += show_timer("\n\tread:  ", "read", Sys::timer());
-	stats += show_timer("\n\twork:  ", "work", Sys::timer());
-	stats += show_timer("\n\ttotal: ", "total", Sys::timer());
-	stats += "\n\n";
-	stats += "Size:\n";
-	stats += "\taxioms:     " + to_string(Sys::get().math.axioms.size()) + "\n";
-	stats += "\ttheorems:   " + to_string(Sys::get().math.theorems.size()) + "\n";
-	stats += "\tessentials: " + to_string(Sys::get().math.essentials.size()) + "\n";
-	stats += "\tfloatings:  " + to_string(Sys::get().math.floatings.size()) + "\n";
-	stats += "\n";
-	return stats;
+Sys::Sys() {
+	action["read"]   = unary_proc(parse);
+	action["transl"] = binary_proc(translate);
+	action["write"]  = unary_proc(write);
+	action["info"]   = zeroary_func(info);
+	action["show"]   = zeroary_func(show);
 }
 
-
-
-Sys::Sys() {
-	action["read"] =
-		[](const Args& args) {
-			try {
-				parse();
-				return Return("success");
-			} catch (const Error& err) {
-				return Return("failre", err.what());
-			} catch (std::exception& ex) {
-				return Return("failre", ex.what());
-			} catch (...) {
-
-			}
-		};
+void run() {
+	Sys::timer()["total"].start();
+	uint src = Lex::toInt(Sys::conf().in.name);
+	uint tgt = Lex::toInt(Sys::conf().out.name);
+	if (Sys::conf().verbose)
+		cout << "processing file " << Sys::conf().in.name << " ... " << flush;
+	if (Sys::conf().mode == Mode::TRANSL)
+		parse(src);
+	//cout << *source << endl;
+	switch (Sys::conf().mode) {
+	case Mode::CUT:    cut();              break;
+	case Mode::MERGE:  merge();            break;
+	case Mode::TRANSL: translate(src, tgt); break;
+	default : break;
+	}
+	if (Sys::conf().mode == Mode::TRANSL)
+		write(tgt);
+	Sys::timer()["total"].stop();
+	if (Sys::conf().verbose)
+		cout << "done in " << Sys::timer()["total"] << endl;
+	if (Sys::conf().info)
+		cout << info() << endl;
 }
 
 }} // mdl::mm

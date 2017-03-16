@@ -14,16 +14,13 @@ struct Math {
 	Table<Source>    sources;
 
 	~Math() { sources.destroy(); }
+	string show() const;
+	string info() const;
 };
 
-struct Sys : public mdl::Sys<Sys, Math> {
-	Sys();
-};
+struct Sys : public mdl::Sys<Sys, Math> { Sys(); };
 
 void run();
-string show();
-string info();
-smm::Source* translate(const Source* source);
 
 }} // mdl::mm
 

@@ -13,7 +13,8 @@ lib_LTLIBRARIES = \
 if SPLIT_COMPILE
 libcom_la_SOURCES = \
 	timer.cpp \
-	memusage.cpp
+	memusage.cpp \
+	common.cpp
 else
 libcom_la_SOURCES = \
 	all.cpp

@@ -381,13 +381,13 @@ smm::Source* translate_source(Maps& maps, const Source* src, smm::Source* target
 
 }
 
-smm::Source* translate(const Source* source) {
-	smm::Source* target = new smm::Source(Lex::toInt(Sys::conf().out.name));
+void translate(uint src, uint tgt) {
+	Sys::timer()["translate"].start();
 	Maps maps;
 	scope_stack.push_back(Scope());
-	translate_block(maps, source->block, target);
+	translate_block(maps, Sys::get().math.sources.access(src)->block, new smm::Source(tgt));
 	scope_stack.pop_back();
-	return target;
+	Sys::timer()["translate"].stop();
 }
 
 }} // mdl::mm

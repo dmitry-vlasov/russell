@@ -223,15 +223,11 @@ private:
 	}
 };
 
-Source* parse(uint label) {
-	return Parser::parse(label);
 }
 
-}
-
-void parse() {
+void parse(uint label) {
 	Sys::timer()["read"].start();
-	if (!parse(Lex::toInt(Sys::conf().in.name)))
+	if (!Parser::parse(label))
 		throw Error("parsing of " + Sys::conf().in.name + " failed");
 	//cout << endl << *source;
 	Sys::timer()["read"].stop();

@@ -155,7 +155,6 @@ int main (int argc, const char* argv[])
         case Lang::MM  : mm::run();  break;
         case Lang::NONE: cout << desc << endl; return 1;
         }
-		if (rus::Sys::conf().info) cout << rus::info() << endl;
 	} catch (const Error& err) {
 		cerr << err.what();
 		return 1;

@@ -4,6 +4,9 @@ noinst_HEADERS = \
 	std.hpp \
 	symbol.hpp \
 	timer.hpp \
+	actions.hpp \
+	error.hpp \
+	lex.hpp \
 	\
 	mm/ast.hpp \
 	mm/sys.hpp \

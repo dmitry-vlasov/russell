@@ -4,6 +4,10 @@
 
 namespace mdl {
 
+class Timer;
+
+ostream& operator << (ostream& os, const Timer& t);
+
 class Timer {
 public :
 	Timer (const bool brief = false);
@@ -50,6 +54,12 @@ public :
 
 	void showTime(string&, const timeval&) const;
 
+	string show() const {
+		ostringstream os;
+		os << *this;
+		return os.str();
+	}
+
 	bool isOn_;
 	bool isUsed_;
 	bool brief_;
@@ -64,13 +74,7 @@ public :
 	mutable bool showCumulativeTime_;
 };
 
-ostream& operator << (ostream& os, const Timer& t);
-
-inline string show(const Timer& tm) {
-	ostringstream os;
-	os << tm;
-	return os.str();
-}
+inline string show(const Timer& tm) { return tm.show(); }
 
 }
 

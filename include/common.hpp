@@ -6,6 +6,9 @@
 #include "location.hpp"
 #include "symbol.hpp"
 #include "timer.hpp"
+#include "actions.hpp"
+#include "lex.hpp"
+#include "error.hpp"
 
 namespace mdl {
 
@@ -21,46 +24,6 @@ template<class T> struct Undef<T*> {
 	static bool is(T* x)   { return x == nullptr; }
 	static void set(T*& x) { x = nullptr;  }
 };
-
-struct Lex {
-	static uint getInt(const string& str) { return get().getIndex(str); }
-	static uint toInt(const string& str) { return get().toIndex(str); }
-	static const string& toStr (uint i) { return get().toString(i); }
-
-private:
-	Lex() : strings(), table() { }
-	static Lex& get() { static Lex lex; return lex; }
-	uint getIndex(const string& str) const {
-		if (table.find(str) == table.end())
-			return -1;
-		else
-			return table.find(str)->second;
-	}
-	uint toIndex(const string& str) {
-		if (table.find(str) == table.end()) {
-			int ind = table.size();
-			table[str] = ind;
-			strings.push_back(str);
-		}
-		return table[str];
-	}
-	const string& toString(uint i) const {
-		if (i >= strings.size()) {
-			static string str = "<UNDEF>";
-			return str;
-		}
-		return strings[i];
-	}
-	vector<string>    strings;
-	map<string, uint> table;
-};
-
-inline string show_sy(Symbol symb) {
-	return Lex::toStr(symb.lit);
-}
-inline string show_id(uint lab) {
-	return Lex::toStr(lab);
-}
 
 class indent {
 	int  num;
@@ -142,31 +105,6 @@ inline string showmem(size_t s) {
 	else if (kb) return to_string(kb) + " kb " + to_string(b)  + " b";
 	else         return to_string(b)  + " b";
 }
-
-class Error : public std::exception {
-public :
-	virtual ~Error() { }
-
-	void location(const Location& loc) {
-		msg += "\nat: " + show(loc);
-	}
-	Error (const string& str, const Location* loc = nullptr) throw() :
-	msg() {
-		msg += "error: " + str;
-		if (loc) location(*loc);
-		msg += "\n";
-	}
-	Error (const string& str, const string& s, const Location* loc = nullptr) throw() :
-	msg() {
-		msg += "error: " + str + " : " + s;
-		if (loc) location(*loc);
-		msg += "\n";
-	}
-	virtual const char* what() const throw() {
-		return msg.c_str();
-	}
-	string   msg;
-};
 
 template<class T>
 void deep_write(T* target, auto get_cont, auto get_inc, auto is_inc) {
@@ -335,16 +273,12 @@ struct Io::Std : public Io {
 	ostream& err() override { return cerr; }
 };
 
-struct Return {
-	Return(const string& t = "", bool s = true, any d = any()) : text(t), data(d), success(s) { }
-	string text;
-	any    data;
-	bool   success;
+struct Timers {
+	Timer& operator[] (const string& s) { return timers[s]; }
+	const Timer& operator[] (const string& s) const { return timers.at(s); }
+	string show() const;
+	map<string, Timer> timers;
 };
-
-typedef vector<string> Args;
-typedef map<string, Timer> Timers;
-typedef function<Return (const Args&)> Action;
 
 // Template for a deductive system
 template<class S, class M>
@@ -381,8 +315,8 @@ private:
 };
 
 template<class T>
-string show_timer(const char* message, const string& name, const T& timers) {
-	return timers.count(name) ? string(message) + show(timers.at(name)) : "";
+string show_timer(const char* message, const string& name, const T& t) {
+	return t.timers.count(name) ? string(message) + show(t.timers.at(name)) : "";
 }
 
 template<class T>
