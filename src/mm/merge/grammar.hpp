@@ -22,7 +22,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "merge") {
 			source,
 			std::cout << phoenix::val("Syntax error. Expecting ") << _4
 			<< phoenix::val(" here: \n") << _3 << phoenix::val("\n")
-			<< phoenix::val("code: \n") <<phoenix::construct<wrapper<>>(_3));
+			<< phoenix::val("code: \n") << phoenix::construct<wrapper<>>(_3));
 		initNames();
 	}
 

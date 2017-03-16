@@ -168,9 +168,6 @@ public :
 	string   msg;
 };
 
-ifstream open_smart(string& path, string root);
-void read_smart(string& data, ifstream&);
-
 template<class T>
 void deep_write(T* target, auto get_cont, auto get_inc, auto is_inc) {
 	typedef T Source;
@@ -246,8 +243,8 @@ struct Path {
 		ext.clear();
 		if (i != string::npos) ext = ne.substr(i + 1);
 	}
-	void read(string& data);
-	void write(const string& data);
+	void read(string& data) const;
+	void write(const string& data) const;
 	Path relative(const string& n) const {
 		return Path(n, root, ext);
 	}

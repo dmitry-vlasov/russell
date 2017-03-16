@@ -18,7 +18,7 @@ void do_parse() {
 
 void do_cut() {
 	Sys::timer()["work"].start();
-	cut::Section* source = cut::parse(Sys::conf().in.root, Sys::conf().in.name, Sys::conf().out.root);
+	cut::Section* source = cut::parse(Sys::conf().in, Sys::conf().out);
 	cut::split(source);
 	cut::save(source);
 	delete source;
@@ -27,7 +27,7 @@ void do_cut() {
 
 void do_merge() {
 	Sys::timer()["work"].start();
-	merge::parse(Sys::conf().in.path());
+	merge::parse(Sys::conf().in);
 	ofstream out(Sys::conf().out.path());
 	out << merge::Source::get().contents.str();
 	out.close();

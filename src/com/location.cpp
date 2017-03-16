@@ -58,7 +58,7 @@ void read_smart(string& data, ifstream& in) {
 	in.close();
 }
 
-void Path::read(string& data) {
+void Path::read(string& data) const {
 	ifstream in(path());
 	in.unsetf(std::ios::skipws);
 	std::copy(
@@ -68,7 +68,7 @@ void Path::read(string& data) {
 	in.close();
 }
 
-void Path::write(const string& data) {
+void Path::write(const string& data) const {
 	ofstream out(path());
 	std::copy(
 		data.begin(),

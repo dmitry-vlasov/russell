@@ -31,16 +31,15 @@ namespace {
 	}
 }
 
-void parse(string path) {
+void parse(const Path& path) {
 	string data;
-	ifstream in = open_smart(path, Sys::conf().in.root);
-	read_smart(data, in);
+	path.read(data);
 	remove_commented_imports(data);
-	LocationIter iter(data.begin(), path);
-	LocationIter end(data.end(), path);
+	LocationIter iter(data.begin(), path.name);
+	LocationIter end(data.end(), path.name);
 	bool r = phrase_parse(iter, end, Grammar<LocationIter>(), ascii::space);
 	if (!r || iter != end) {
-		throw Error("parsing failed", path);
+		throw Error("parsing failed", path.name);
 	}
 }
 

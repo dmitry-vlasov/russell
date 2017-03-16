@@ -23,10 +23,12 @@ struct Add {
 struct Include {
 	template <typename T>
 	struct result { typedef string type; };
-	void operator()(const string& path) const {
+	void operator()(const string& p) const {
 		static set<string> included;
-		if (included.count(path)) return;
-		included.insert(path);
+		if (included.count(p)) return;
+		included.insert(p);
+		Path path(Sys::conf().in);
+		path.name_ext(p);
 		parse(path);
 	}
 };

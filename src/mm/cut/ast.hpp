@@ -65,7 +65,7 @@ inline ostream& operator << (ostream& os, const Section& sect) {
 	return os;
 }
 
-Section* parse(string root, string in, string out);
+Section* parse(const Path& in, const Path& out);
 void split(Section* src);
 void save(Section* src);
 
