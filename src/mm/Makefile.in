@@ -140,14 +140,12 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 libmm_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
-am__libmm_la_SOURCES_DIST = all.cpp cut/parser.cpp cut/globals.cpp \
-	cut/show.cpp ast.cpp sys.cpp merge.cpp parser.cpp show.cpp \
-	translate.cpp tree.cpp
-am__dirstamp = $(am__leading_dot)dirstamp
+am__libmm_la_SOURCES_DIST = all.cpp cut.cpp ast.cpp sys.cpp merge.cpp \
+	parser.cpp show.cpp translate.cpp tree.cpp
 @SPLIT_COMPILE_FALSE@am_libmm_la_OBJECTS = all.lo
-@SPLIT_COMPILE_TRUE@am_libmm_la_OBJECTS = cut/parser.lo cut/globals.lo \
-@SPLIT_COMPILE_TRUE@	cut/show.lo ast.lo sys.lo merge.lo \
-@SPLIT_COMPILE_TRUE@	parser.lo show.lo translate.lo tree.lo
+@SPLIT_COMPILE_TRUE@am_libmm_la_OBJECTS = cut.lo ast.lo sys.lo \
+@SPLIT_COMPILE_TRUE@	merge.lo parser.lo show.lo translate.lo \
+@SPLIT_COMPILE_TRUE@	tree.lo
 libmm_la_OBJECTS = $(am_libmm_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -361,21 +359,14 @@ lib_LTLIBRARIES = \
 	libmm.la
 
 noinst_HEADERS = \
-	cut/adaptors.hpp \
-	cut/ast.hpp \
-	cut/grammar.hpp \
-	cut/parser.hpp \
-	\
+	cut_adaptor.hpp \
 	tree.hpp 
 
 @SPLIT_COMPILE_FALSE@libmm_la_SOURCES = \
 @SPLIT_COMPILE_FALSE@	all.cpp
 
 @SPLIT_COMPILE_TRUE@libmm_la_SOURCES = \
-@SPLIT_COMPILE_TRUE@	cut/parser.cpp \
-@SPLIT_COMPILE_TRUE@	cut/globals.cpp \
-@SPLIT_COMPILE_TRUE@	cut/show.cpp \
-@SPLIT_COMPILE_TRUE@	\
+@SPLIT_COMPILE_TRUE@	cut.cpp \
 @SPLIT_COMPILE_TRUE@	ast.cpp \
 @SPLIT_COMPILE_TRUE@	sys.cpp \
 @SPLIT_COMPILE_TRUE@	merge.cpp \
@@ -457,38 +448,25 @@ clean-libLTLIBRARIES:
 	  echo rm -f $${locs}; \
 	  rm -f $${locs}; \
 	}
-cut/$(am__dirstamp):
-	@$(MKDIR_P) cut
-	@: > cut/$(am__dirstamp)
-cut/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) cut/$(DEPDIR)
-	@: > cut/$(DEPDIR)/$(am__dirstamp)
-cut/parser.lo: cut/$(am__dirstamp) cut/$(DEPDIR)/$(am__dirstamp)
-cut/globals.lo: cut/$(am__dirstamp) cut/$(DEPDIR)/$(am__dirstamp)
-cut/show.lo: cut/$(am__dirstamp) cut/$(DEPDIR)/$(am__dirstamp)
 
 libmm.la: $(libmm_la_OBJECTS) $(libmm_la_DEPENDENCIES) $(EXTRA_libmm_la_DEPENDENCIES) 
 	$(AM_V_CXXLD)$(CXXLINK) -rpath $(libdir) $(libmm_la_OBJECTS) $(libmm_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
-	-rm -f cut/*.$(OBJEXT)
-	-rm -f cut/*.lo
 
 distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/all.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ast.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cut.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/merge.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/parser.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/show.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sys.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/translate.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tree.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cut/$(DEPDIR)/globals.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cut/$(DEPDIR)/parser.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@cut/$(DEPDIR)/show.Plo@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -519,7 +497,6 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
-	-rm -rf cut/.libs cut/_libs
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -636,8 +613,6 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
-	-rm -f cut/$(DEPDIR)/$(am__dirstamp)
-	-rm -f cut/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -648,7 +623,7 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ./$(DEPDIR) cut/$(DEPDIR)
+	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -694,7 +669,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ./$(DEPDIR) cut/$(DEPDIR)
+	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

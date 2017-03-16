@@ -3,11 +3,11 @@
 #include "mm/sys.hpp"
 #include "mm/ast.hpp"
 #include "smm/ast.hpp"
-#include "cut/ast.hpp"
 
 namespace mdl { namespace mm  {
 
 void merge();
+void cut();
 
 namespace {
 
@@ -17,15 +17,6 @@ void do_parse() {
 		throw Error("parsing of " + Sys::conf().in.name + " failed");
 	//cout << endl << *source;
 	Sys::timer()["read"].stop();
-}
-
-void do_cut() {
-	Sys::timer()["work"].start();
-	cut::Section* source = cut::parse(Sys::conf().in, Sys::conf().out);
-	cut::split(source);
-	cut::save(source);
-	delete source;
-	Sys::timer()["work"].stop();
 }
 
 void do_translate() {
@@ -55,7 +46,7 @@ void run() {
 	if (Sys::conf().mode == Mode::TRANSL) do_parse();
 	//cout << *source << endl;
 	switch (Sys::conf().mode) {
-	case Mode::CUT:    do_cut();       break;
+	case Mode::CUT:    cut();       break;
 	case Mode::MERGE:  merge();     break;
 	case Mode::TRANSL: do_translate(); break;
 	default : break;

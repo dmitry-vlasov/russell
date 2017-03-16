@@ -12,19 +12,12 @@ lib_LTLIBRARIES = \
 	libmm.la
 
 noinst_HEADERS = \
-	cut/adaptors.hpp \
-	cut/ast.hpp \
-	cut/grammar.hpp \
-	cut/parser.hpp \
-	\
+	cut_adaptor.hpp \
 	tree.hpp 
 
 if SPLIT_COMPILE
 libmm_la_SOURCES = \
-	cut/parser.cpp \
-	cut/globals.cpp \
-	cut/show.cpp \
-	\
+	cut.cpp \
 	ast.cpp \
 	sys.cpp \
 	merge.cpp \
