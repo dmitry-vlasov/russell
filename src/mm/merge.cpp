@@ -118,11 +118,13 @@ void parse(const Path& path) {
 
 }
 
-void merge(const Path& in, const Path& out) {
-	parse(in);
-	ofstream os(out.path());
+void merge() {
+	Sys::timer()["merge"].start();
+	parse(Sys::conf().in);
+	ofstream os(Sys::conf().out.path());
 	os << Merged::get().contents.str();
 	os.close();
+	Sys::timer()["merge"].stop();
 }
 
 

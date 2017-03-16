@@ -7,7 +7,7 @@
 
 namespace mdl { namespace mm  {
 
-void merge(const Path&, const Path&);
+void merge();
 
 namespace {
 
@@ -25,12 +25,6 @@ void do_cut() {
 	cut::split(source);
 	cut::save(source);
 	delete source;
-	Sys::timer()["work"].stop();
-}
-
-void do_merge() {
-	Sys::timer()["work"].start();
-	merge(Sys::conf().in, Sys::conf().out);
 	Sys::timer()["work"].stop();
 }
 
@@ -62,7 +56,7 @@ void run() {
 	//cout << *source << endl;
 	switch (Sys::conf().mode) {
 	case Mode::CUT:    do_cut();       break;
-	case Mode::MERGE:  do_merge();     break;
+	case Mode::MERGE:  merge();     break;
 	case Mode::TRANSL: do_translate(); break;
 	default : break;
 	}
