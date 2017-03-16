@@ -33,9 +33,23 @@ struct LocationIter : public string::const_iterator {
 	LocationIter(string::const_iterator it, const string& file) :
 	string::const_iterator(it), loc(file) { }
 
-	LocationIter& operator ++();
-	LocationIter operator ++(int);
+	LocationIter& operator ++() {
+		inc(loc, *string::const_iterator::operator++());
+		return *this;
+	}
+	LocationIter operator ++(int) {
+		LocationIter curr(*this);
+		inc(loc, *string::const_iterator::operator++());
+		return curr;
+	}
 	Location loc;
+
+private :
+	void inc(Location&loc, char ch) {
+		++ loc.pos;
+		if (ch == '\n') { loc.col = 0; ++ loc.line; }
+		else ++ loc.col;
+	}
 };
 
 inline ostream& operator << (ostream& os, const Location& loc) {

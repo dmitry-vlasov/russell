@@ -243,8 +243,23 @@ struct Path {
 		ext.clear();
 		if (i != string::npos) ext = ne.substr(i + 1);
 	}
-	void read(string& data) const;
-	void write(const string& data) const;
+	void read(string& data) const {
+		ifstream in(path());
+		in.unsetf(std::ios::skipws);
+		std::copy(
+			std::istream_iterator<char>(in),
+			std::istream_iterator<char>(),
+			std::back_inserter(data));
+		in.close();
+	}
+	void write(const string& data) const {
+		ofstream out(path());
+		std::copy(
+			data.begin(),
+			data.end(),
+			std::ostream_iterator<char>(out));
+		out.close();
+	}
 	Path relative(const string& n) const {
 		return Path(n, root, ext);
 	}

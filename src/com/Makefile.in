@@ -138,11 +138,9 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 libcom_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
-am__libcom_la_SOURCES_DIST = all.cpp location.cpp timer.cpp \
-	memusage.cpp
+am__libcom_la_SOURCES_DIST = all.cpp timer.cpp memusage.cpp
 @SPLIT_COMPILE_FALSE@am_libcom_la_OBJECTS = all.lo
-@SPLIT_COMPILE_TRUE@am_libcom_la_OBJECTS = location.lo timer.lo \
-@SPLIT_COMPILE_TRUE@	memusage.lo
+@SPLIT_COMPILE_TRUE@am_libcom_la_OBJECTS = timer.lo memusage.lo
 libcom_la_OBJECTS = $(am_libcom_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -357,7 +355,6 @@ lib_LTLIBRARIES = \
 @SPLIT_COMPILE_FALSE@	all.cpp
 
 @SPLIT_COMPILE_TRUE@libcom_la_SOURCES = \
-@SPLIT_COMPILE_TRUE@	location.cpp \
 @SPLIT_COMPILE_TRUE@	timer.cpp \
 @SPLIT_COMPILE_TRUE@	memusage.cpp
 
@@ -445,7 +442,6 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/all.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/location.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/memusage.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/timer.Plo@am__quote@
 

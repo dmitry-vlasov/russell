@@ -12,7 +12,6 @@ lib_LTLIBRARIES = \
 
 if SPLIT_COMPILE
 libcom_la_SOURCES = \
-	location.cpp \
 	timer.cpp \
 	memusage.cpp
 else
