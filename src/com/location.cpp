@@ -24,40 +24,6 @@ LocationIter LocationIter::operator ++(int) {
 	return curr;
 }
 
-inline string cut_outer_directory(string path) {
-	size_t slash_pos = path.find_first_of("/");
-	return path.substr(slash_pos == string::npos ? 0 : slash_pos + 1);
-}
-
-ifstream open_smart(string& path, string root) {
-	string orig_path = path;
-	boost::trim(path);
-	boost::trim(root);
-	if (root.size() && root.back() != '/')
-		root += '/';
-	ifstream is;
-	while (true) {
-		string full_path = root + path;
-		is.open(full_path, std::ios_base::in);
-		if (!is.fail())
-			return is;
-		string shorter = cut_outer_directory(path);
-		if (path == shorter) {
-			throw Error("Could not open input file", orig_path);
-		} else
-			path = shorter;
-	}
-}
-
-void read_smart(string& data, ifstream& in) {
-	in.unsetf(std::ios::skipws);
-	std::copy(
-		std::istream_iterator<char>(in),
-		std::istream_iterator<char>(),
-		std::back_inserter(data));
-	in.close();
-}
-
 void Path::read(string& data) const {
 	ifstream in(path());
 	in.unsetf(std::ios::skipws);
