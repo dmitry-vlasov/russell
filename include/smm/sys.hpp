@@ -8,19 +8,14 @@
 namespace mdl { namespace smm {
 
 struct Math {
-	template<typename T>
-	using Table = map<uint, T>;
+	set<Symbol>      constants;
+	Table<Assertion> assertions;
+	Table<Source>    sources;
 
-	set<Symbol>       constants;
-	Table<Assertion*> assertions;
-	Table<Source*>    sources;
-
-	~Math() { for (auto s : sources) delete s.second; }
+	~Math() { sources.destroy(); }
 };
 
-struct Sys : public mdl::Sys<Sys, Math> {
-	Sys();
-};
+struct Sys : public mdl::Sys<Sys, Math> { Sys(); };
 
 void run();
 string show();

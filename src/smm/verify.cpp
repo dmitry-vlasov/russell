@@ -184,7 +184,7 @@ static void assertion(const Assertion* ass) {
 
 static void math() {
 	for (auto p : Sys::mod().math.assertions) {
-		assertion(p.second);
+		assertion(p.second.data);
 	}
 }
 

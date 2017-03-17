@@ -46,7 +46,7 @@ struct Proposition {
 struct Proof;
 
 struct Assertion {
-	Assertion ();
+	Assertion (uint label);
 	~Assertion();
 
 	uint arity() const {
@@ -87,7 +87,7 @@ struct Ref {
 	Ref(Floating* f)  : type(FLOATING),   val() { val.flo = f; }
 	Ref(Essential* e) : type(ESSENTIAL),  val() { val.ess = e; }
 	Ref(Inner* i)     : type(INNER),      val() { val.inn = i; }
-	Ref(Assertion* a, bool ax) : type(ax ? AXIOM : THEOREM), val() { val.ass = a; }
+	Ref(uint label, bool ax);
 	Ref(Proof* p)     : type(PROOF),      val() { val.prf = p; }
 	Ref(const Ref& ref);
 	~Ref();
@@ -170,7 +170,7 @@ struct Node {
 
 struct Source {
 	Source(uint l);
-	~ Source() { for (auto& node : contents) node.destroy(); }
+	~ Source();
 	uint   label;
 	string data;
 
@@ -186,21 +186,6 @@ struct Source {
 	vector<Node> contents;
 };
 
-
-inline Assertion::Assertion() :
-	variables(), disjointed(), essential(),
-	floating(), inner(),
-	prop(), proof(), loc() {
-}
-inline Assertion::~Assertion() {
-	for (Variables* v : variables)   delete v;
-	for (Disjointed* d : disjointed) delete d;
-	for (Essential* e : essential)   delete e;
-	for (Floating* f : floating)     delete f;
-	for (Inner* i : inner)           delete i;
-	if (proof) delete proof;
-}
-
 inline void Node::destroy() {
 	switch(type) {
 	case NONE: break;
@@ -211,10 +196,6 @@ inline void Node::destroy() {
 	default : assert(false && "impossible");  break;
 	}
 	type = NONE;
-}
-
-inline Ref::~Ref() {
-	if (type == PROOF && val.prf) delete val.prf;
 }
 
 inline Proof::~ Proof() {

@@ -107,14 +107,14 @@ inline string showmem(size_t s) {
 }
 
 template<class T>
-void deep_write(T* target, auto get_cont, auto get_inc, auto is_inc) {
+void deep_write(const T* target, auto get_cont, auto get_inc, auto is_inc) {
 	typedef T Source;
 	namespace fs = boost::filesystem;
-	set<Source*> written;
-	stack<Source*> to_write;
+	set<const Source*> written;
+	stack<const Source*> to_write;
 	to_write.push(target);
 	while (!to_write.empty()) {
-		Source* src = to_write.top();
+		const Source* src = to_write.top();
 		if (!fs::exists(src->dir()))
 			fs::create_directories(src->dir());
 		ofstream out(src->path());
@@ -325,6 +325,15 @@ void dump(const T& val) { cout << val; }
 template<class D>
 struct Table {
 	typedef D Data;
+
+private:
+	struct Storage {
+		Data* data;
+		set<Data**> users;
+	};
+	map<uint, Storage> refs;
+
+public:
 	void add(uint n, Data* p = nullptr) {
 		if (!refs.count(n)) {
 			refs[n].data = p;
@@ -368,12 +377,14 @@ struct Table {
 	}
 	int size() const { return refs.size(); }
 
-private :
-	struct Storage {
-		Data* data;
-		set<Data**> users;
-	};
-	map<uint, Storage> refs;
+	typedef typename map<uint, Storage>::iterator iterator;
+	typedef typename map<uint, Storage>::const_iterator const_iterator;
+
+	iterator begin() { return refs.begin(); }
+	iterator end() { return refs.end(); }
+
+	const_iterator cbegin() const { return refs.cbegin(); }
+	const_iterator cend() const { return refs.cend(); }
 };
 
 

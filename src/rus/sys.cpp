@@ -52,11 +52,11 @@ bool translate_rus() {
 		if (Sys::conf().verbose) cout << "translating file " << Sys::conf().in.name << " ... " << flush;
 		Sys::timer()["translate"].start();
 		uint lab = Lex::toInt(Sys::conf().in.name);
-		smm::Source* target = translate(Sys::get().math.sources.at(lab));
+		const smm::Source* target = translate(Sys::get().math.sources.at(lab));
 		if (Sys::conf().deep) {
 			deep_write(
 				target,
-				[](smm::Source* src) -> vector<smm::Node>& { return src->contents; },
+				[](const smm::Source* src) -> const vector<smm::Node>& { return src->contents; },
 				[](smm::Node n) -> smm::Source* { return n.val.inc->source; },
 				[](smm::Node n) -> bool { return n.type == smm::Node::INCLUSION; }
 			);

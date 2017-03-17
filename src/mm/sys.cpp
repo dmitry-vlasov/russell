@@ -27,11 +27,11 @@ string Math::show() const {
 
 void write(uint tgt) {
 	Sys::timer()["write"].start();
-	smm::Source* target = smm::Sys::get().math.sources.at(tgt);
+	const smm::Source* target = smm::Sys::get().math.sources.access(tgt);
 	if (Sys::conf().deep) {
 		deep_write(
 			target,
-			[](smm::Source* src) -> vector<smm::Node>& { return src->contents; },
+			[](const smm::Source* src) -> const vector<smm::Node>& { return src->contents; },
 			[](smm::Node n) -> smm::Source* { return n.val.inc->source; },
 			[](smm::Node n) -> bool { return n.type == smm::Node::INCLUSION; }
 		);

@@ -38,11 +38,11 @@ static bool do_translate() {
 		switch (Sys::conf().target) {
 		case Lang::NONE: break;
 		case Lang::MM: {
-			mm::Source* target = smm::translate_to_mm(Sys::get().math.sources.at(lab));
+			const mm::Source* target = smm::translate_to_mm(Sys::get().math.sources.access(lab));
 			if (Sys::conf().deep) {
 				deep_write(
 					target,
-					[](mm::Source* src) -> vector<mm::Node>& { return src->block->contents; },
+					[](const mm::Source* src) -> const vector<mm::Node>& { return src->block->contents; },
 					[](mm::Node n) -> mm::Source* { return n.val.inc->source; },
 					[](mm::Node n) -> bool { return n.type == mm::Node::INCLUSION; }
 				);
@@ -51,11 +51,11 @@ static bool do_translate() {
 			}
 		}	break;
 		case Lang::RUS: {
-			rus::Source* target = smm::translate_to_rus(Sys::get().math.sources.at(lab));
+			const rus::Source* target = smm::translate_to_rus(Sys::get().math.sources.access(lab));
 			if (Sys::conf().deep) {
 				deep_write(
 					target,
-					[](rus::Source* src) -> vector<rus::Node>& { return src->theory->nodes; },
+					[](const rus::Source* src) -> const vector<rus::Node>& { return src->theory->nodes; },
 					[](rus::Node n) -> rus::Source* { return n.val.imp->source; },
 					[](rus::Node n) -> bool { return n.kind == rus::Node::IMPORT; }
 				);

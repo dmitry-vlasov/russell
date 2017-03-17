@@ -6,17 +6,22 @@ namespace mdl { namespace smm {
 struct Parser {
 private:
 	struct Context {
-		~Context() { clear(); }
 		void clear() {
-			ass.variables.clear();
-			ass.disjointed.clear();
-			ass.essential.clear();
-			ass.floating.clear();
-			ass.inner.clear();
-			ass.proof = nullptr;
+			variables.clear();
+			disjointed.clear();
+			essential.clear();
+			floating.clear();
+			inner.clear();
+			proof = nullptr;
 		}
-		Assertion ass;
-		Ref::Type ref;
+		vector<Variables*>  variables;
+		vector<Disjointed*> disjointed;
+		vector<Essential*>  essential;
+		vector<Floating*>   floating;
+		vector<Inner*>      inner;
+		Proposition prop;
+		Proof*      proof;
+		Ref::Type   ref;
 	};
 	peg::parser parser;
 
@@ -26,9 +31,9 @@ private:
 			throw Error("array index out of boundaries", to_string(ind) + " >= " + to_string(container.size()));
 	}
 	template<class T>
-	static void check_map(const map<uint, T*>& container, uint lab) {
-		if (!container.count(lab))
-			throw Error("map doesn't have key", to_string(lab));
+	static void check_table(const Table<T>& table, uint lab) {
+		if (!table.has(lab))
+			throw Error("table doesn't have key", to_string(lab));
 	}
 
 public:
@@ -93,36 +98,36 @@ public:
 		};
 		parser["VAR"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Variables* vars = new Variables { sv[0].get<Vect>() };
-			context.get<std::shared_ptr<Context>>()->ass.variables.push_back(vars);
+			context.get<std::shared_ptr<Context>>()->variables.push_back(vars);
 			return vars;
 		};
 		parser["DISJ"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Disjointed* disj = new Disjointed { sv[0].get<Vect>() };
-			context.get<std::shared_ptr<Context>>()->ass.disjointed.push_back(disj);
+			context.get<std::shared_ptr<Context>>()->disjointed.push_back(disj);
 			return disj;
 		};
 		parser["ESS"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Essential* ess = new Essential { sv[0].get<uint>(), sv[1].get<Vect>() };
-			context.get<std::shared_ptr<Context>>()->ass.essential.push_back(ess);
+			context.get<std::shared_ptr<Context>>()->essential.push_back(ess);
 			return ess;
 		};
 		parser["FLO"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Floating* flo = new Floating { sv[0].get<uint>(), sv[1].get<Vect>() };
-			context.get<std::shared_ptr<Context>>()->ass.floating.push_back(flo);
+			context.get<std::shared_ptr<Context>>()->floating.push_back(flo);
 			return flo;
 		};
 		parser["INNER"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Inner* inn = new Inner { sv[0].get<uint>(), sv[1].get<Vect>() };
-			context.get<std::shared_ptr<Context>>()->ass.inner.push_back(inn);
+			context.get<std::shared_ptr<Context>>()->inner.push_back(inn);
 			return inn;
 		};
 		parser["AX"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			context.get<std::shared_ptr<Context>>()->ass.prop = { true, sv[0].get<uint>(), sv[1].get<Vect>() };
+			context.get<std::shared_ptr<Context>>()->prop = { true, sv[0].get<uint>(), sv[1].get<Vect>() };
 		};
 		parser["TH"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Assertion& a = context.get<std::shared_ptr<Context>>()->ass;
-			a.prop = { false, sv[0].get<uint>(), sv[1].get<Vect>() };
-			a.proof = sv[2].get<Proof*>();
+			Context& c = *context.get<std::shared_ptr<Context>>();
+			c.prop = { false, sv[0].get<uint>(), sv[1].get<Vect>() };
+			c.proof = sv[2].get<Proof*>();
 		};
 		parser["PROOF"] = [](const peg::SemanticValues& sv) {
 			Proof* pr = new Proof();
@@ -154,31 +159,36 @@ public:
 			}
 		};
 		parser["REF"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Assertion& ass = context.get<std::shared_ptr<Context>>()->ass;
+			Context& c = *context.get<std::shared_ptr<Context>>();
 			Ref::Type type = sv[0].get<Ref::Type>();
 			uint lab = sv[1].get<uint>();
 			Sys::Math& math = Sys::mod().math;
 			switch (type) {
-			case Ref::Type::ESSENTIAL : check_vector(ass.essential, lab); return new Ref(ass.essential[lab]);
-			case Ref::Type::FLOATING  : check_vector(ass.floating, lab);  return new Ref(ass.floating[lab]);
-			case Ref::Type::INNER     : check_vector(ass.inner, lab);     return new Ref(ass.inner[lab]);
-			case Ref::Type::AXIOM     : check_map(math.assertions, lab);  return new Ref(math.assertions[lab], true);
-			case Ref::Type::THEOREM   : check_map(math.assertions, lab);  return new Ref(math.assertions[lab], false);
+			case Ref::Type::ESSENTIAL : check_vector(c.essential, lab); return new Ref(c.essential[lab]);
+			case Ref::Type::FLOATING  : check_vector(c.floating, lab);  return new Ref(c.floating[lab]);
+			case Ref::Type::INNER     : check_vector(c.inner, lab);     return new Ref(c.inner[lab]);
+			case Ref::Type::AXIOM     : check_table(math.assertions, lab);  return new Ref(lab, true);
+			case Ref::Type::THEOREM   : check_table(math.assertions, lab);  return new Ref(lab, false);
 			default  : throw Error("unknown reference type in proof", sv.token());
 			}
 		};
-		parser["ASSERTION"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Assertion& a = context.get<std::shared_ptr<Context>>()->ass;
-			Assertion* ass = new Assertion();
-			*ass = a;
-			context.get<std::shared_ptr<Context>>()->clear();
+		parser["ASSERTION"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context& c = *ctx.get<std::shared_ptr<Context>>();
+			Assertion* ass = new Assertion(c.prop.label);
+			ass->variables  = c.variables;
+			ass->disjointed = c.disjointed;
+			ass->floating   = c.floating;
+			ass->inner      = c.inner;
+			ass->essential  = c.essential;
+			ass->proof      = c.proof;
+			ass->prop       = c.prop;
+			c.clear();
 			makeVars(ass->variables);
 			makeVars(ass->disjointed);
 			markVars(ass->variables, ass->floating);
 			markVars(ass->variables, ass->inner);
 			markVars(ass->variables, ass->essential);
 			markVars(ass->variables, ass->prop.expr);
-			Sys::mod().math.assertions[ass->prop.label] = ass;
 			return ass;
 		};
 		parser["COMMENT"] = [](const peg::SemanticValues& sv) {

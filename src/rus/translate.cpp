@@ -112,14 +112,14 @@ vector<smm::Floating*> translate_floatings(const Vars& vars, Maps& maps, const A
 }
 
 smm::Assertion* translate_rule(const Rule* rule, Maps& maps) {
-	smm::Assertion* ra = new smm::Assertion();
+	string rule_str = Lex::toStr(rule->id);
+	uint rule_lab = Lex::toInt(rule_str);
+	smm::Assertion* ra = new smm::Assertion(rule_lab);
 	if (rule->vars.v.size())
 		ra->variables.push_back(translate_vars(rule->vars));
 	ra->floating = translate_floatings(rule->vars, maps);
 	ra->prop.axiom = true;
 	ra->prop.expr  = translate_term(rule->term, rule->type, maps);
-	string rule_str = Lex::toStr(rule->id);
-	uint rule_lab = Lex::toInt(rule_str);
 	ra->prop.label = rule_lab;
 	maps.rules[rule] = ra;
 	for (auto v : rule->vars.v) {
@@ -138,7 +138,11 @@ smm::Assertion* translate_rule(const Rule* rule, Maps& maps) {
 vector<smm::Node> translate_assertion(const Assertion* ass, Maps& maps) {
 	vector<smm::Node> ra_vect;
 	for (auto prop : ass->props) {
-		smm::Assertion* ra = new smm::Assertion();
+		string ass_str = Lex::toStr(ass->id);
+		if (prop->ind)
+			ass_str += "_" + to_string(prop->ind);
+		uint ass_lab = Lex::toInt(ass_str);
+		smm::Assertion* ra = new smm::Assertion(ass_lab);
 		if (ass->vars.v.size())
 			ra->variables.push_back(translate_vars(ass->vars));
 		if (ass->disj.d.size())
@@ -146,10 +150,6 @@ vector<smm::Node> translate_assertion(const Assertion* ass, Maps& maps) {
 		ra->floating = translate_floatings(ass->vars, maps, ass);
 		ra->essential= translate_essentials(ass, maps);
 		ra->prop.expr  = translate_expr(prop->expr, maps);
-		string ass_str = Lex::toStr(ass->id);
-		if (prop->ind)
-			ass_str += "_" + to_string(prop->ind);
-		uint ass_lab = Lex::toInt(ass_str);
 		ra->prop.label = ass_lab;
 		ra_vect.push_back(ra);
 		maps.assertions[ass] = ra;
@@ -202,7 +202,7 @@ void translate_term(const Tree& t, const Assertion* thm, vector<smm::Ref*>& smm_
 	if (t.kind == Tree::NODE) {
 		if (!maps.rules.count(t.rule()))
 			throw Error("undefined reference to rule");
-		smm_proof.push_back(new smm::Ref(maps.rules[t.rule()], true));
+		smm_proof.push_back(new smm::Ref(maps.rules[t.rule()]->prop.label, true));
 	}
 }
 
@@ -230,7 +230,7 @@ void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref*>& smm
 	if (!maps.assertions.count(ass))
 		throw Error("undefined reference to assertion");
 	assert(maps.assertions.count(ass));
-	smm_proof.push_back(new smm::Ref(maps.assertions[ass], st->kind != Step::THM));
+	smm_proof.push_back(new smm::Ref(maps.assertions[ass]->prop.label, st->kind != Step::THM));
 }
 
 vector<smm::Inner*> translate_inners(const Vars& vars, Maps& maps, const Assertion* thm, uint ind_0) {
