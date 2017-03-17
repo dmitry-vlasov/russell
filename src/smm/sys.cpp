@@ -4,10 +4,12 @@
 
 namespace mdl { namespace smm {
 
+void parse(uint);
+
 static bool do_parse() {
 	try {
 		Sys::timer()["read"].start();
-		parse(Sys::conf().in);
+		parse(Lex::toInt(Sys::conf().in.name));
 		Sys::timer()["read"].stop();
 		return true;
 	} catch (Error& err) {

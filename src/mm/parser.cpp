@@ -166,11 +166,11 @@ public:
 			static map<string, mm::Inclusion*> included;
 			if (included.count(name)) {
 				mm::Inclusion* inc = included[name];
-				return new mm::Inclusion(inc->source);
+				return new mm::Inclusion(inc->source, false);
 			} else {
 				Path path = Sys::conf().in;
 				path.name_ext(name);
-				mm::Inclusion* inc = new mm::Inclusion();
+				mm::Inclusion* inc = new mm::Inclusion(nullptr, true);
 				included[name] = inc;
 				Source* src = parse(Lex::toInt(path.name), context.get<std::shared_ptr<Context>>());
 				Sys::mod().math.sources.use(src->label, inc->source);

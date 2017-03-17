@@ -237,7 +237,7 @@ struct Source {
 };
 
 struct Inclusion {
-	Inclusion(Source* src = nullptr, bool prim = true);
+	Inclusion(Source* src, bool prim);
 	~Inclusion();
 	Source* source;
 	bool primary;

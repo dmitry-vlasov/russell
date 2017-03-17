@@ -70,7 +70,7 @@ public:
 			%whitespace <- [ \t\r\n]*
 		)";
 	}
-	Parser(const Path& path) : parser(smm_syntax()) {
+	Parser(uint label) : parser(smm_syntax()) {
 
 		parser["SYMB"] = [](const peg::SemanticValues& sv) {
 			return Symbol(Lex::toInt(sv.token()));
@@ -207,33 +207,35 @@ public:
 			}
 			return node;
 		};
-		parser["SOURCE"] = [path](const peg::SemanticValues& sv) {
-			Source* src = new Source(Lex::toInt(path.name));
+		parser["SOURCE"] = [label](const peg::SemanticValues& sv) {
+			Source* src = new Source(label);
 			src->contents = sv.transform<Node>();
 			return src;
 		};
-		parser["INCLUDE"] = [path](const peg::SemanticValues& sv, peg::any& context) {
+		parser["INCLUDE"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			string name = sv.token();
 			static map<string, Inclusion*> included;
 			if (included.count(name)) {
 				Inclusion* inc = included[name];
 				return new Inclusion(inc->source, false);
 			} else {
-				Path new_path(path);
-				new_path.name_ext(name);
+				Path path = Sys::conf().in;
+				path.name_ext(name);
 				Inclusion* inc = new Inclusion(nullptr, true);
 				included[name] = inc;
-				inc->source = parse(new_path);
+				inc->source = parse(Lex::toInt(path.name));
 				return inc;
 			}
 		};
 	}
 
-	static Source* parse(Path path) {
+	static Source* parse(uint label) {
+		Path path = Sys::conf().in;
+		path.name = Lex::toStr(label);
 		string data;
 		path.read(data);
-		Parser p(path);
 		Source* src = nullptr;
+		Parser p(label);
 		peg::any context(std::make_shared<Context>());
 		if (!p.parser.parse<Source*>(data.c_str(), context, src)) return nullptr;
 		std::swap(data, src->data);
@@ -262,8 +264,11 @@ private:
 	}
 };
 
-Source* parse(const Path& path) {
-	return Parser::parse(path);
+void parse(uint label) {
+	Sys::timer()["read"].start();
+	if (!Parser::parse(label))
+		throw Error("parsing of " + Sys::conf().in.name + " failed");
+	Sys::timer()["read"].stop();
 }
 
 }} // mdl::smm

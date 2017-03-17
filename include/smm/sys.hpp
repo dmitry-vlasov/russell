@@ -20,7 +20,6 @@ struct Sys : public mdl::Sys<Sys, Math> { Sys(); };
 void run();
 string show();
 string info();
-Source* parse(const Path& path);
 void verify();
 mm::Source*  translate_to_mm(const Source* source);
 rus::Source* translate_to_rus(const Source* source);
