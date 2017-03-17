@@ -13,16 +13,13 @@ struct Math {
 	Table<Source>    sources;
 
 	~Math() { sources.destroy(); }
+	string show() const;
+	string info() const;
 };
 
 struct Sys : public mdl::Sys<Sys, Math> { Sys(); };
 
 void run();
-string show();
-string info();
-void verify();
-mm::Source*  translate_to_mm(const Source* source);
-rus::Source* translate_to_rus(const Source* source);
 
 }} // mdl::smm
 

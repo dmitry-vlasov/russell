@@ -158,7 +158,7 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Vect>& expr_s
 	expr_stack.push(apply(sub, ass->prop.expr));
 }
 
-static void assertion(const Assertion* ass) {
+static void verify_assertion(const Assertion* ass) {
 	checkSymbols(ass);
 	stack<Vect> expr_stack;
 	const Proof* proof = ass->proof;
@@ -182,14 +182,12 @@ static void assertion(const Assertion* ass) {
 	}
 }
 
-static void math() {
-	for (auto p : Sys::mod().math.assertions) {
-		assertion(p.second.data);
-	}
-}
-
 void verify() {
-	math();
+	Sys::timer()["verify"].start();
+	for (auto p : Sys::mod().math.assertions) {
+		verify_assertion(p.second.data);
+	}
+	Sys::timer()["verify"].stop();
 }
 
 }} // mdl::smm::verify

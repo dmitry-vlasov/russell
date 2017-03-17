@@ -480,8 +480,9 @@ rus::Source* translate_source(const Source* src, State& state, rus::Source* targ
 
 } // anonymous namespace
 
-rus::Source* translate_to_rus(const Source* source) {
-	rus::Source* target = new rus::Source(Lex::toInt(Sys::conf().out.name));
+void translate_to_rus(uint src, uint tgt) {
+	const Source* source = Sys::get().math.sources.access(src);
+	rus::Source* target = new rus::Source(tgt);
 	target->theory = new rus::Theory();
 	State state;
 	state.ind = 0;
@@ -493,7 +494,6 @@ rus::Source* translate_to_rus(const Source* source) {
 	state.redundant_consts.insert(Lex::getInt("class"));
 	state.redundant_consts.insert(Lex::getInt("|-"));
 	translate_source(source, state, target);
-	return target;
 }
 
 }} // mdl::smm

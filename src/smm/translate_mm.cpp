@@ -132,11 +132,12 @@ mm::Source* translate_source(const Source* src, Maps& maps, mm::Source* target) 
 
 }
 
-mm::Source* translate_to_mm(const Source* source) {
-	mm::Source* target = new mm::Source(Lex::toInt(Sys::conf().out.name));
+void translate_to_mm(uint src, uint tgt) {
+	const Source* source = Sys::get().math.sources.access(src);
+	mm::Source* target = new mm::Source(tgt);
 	target->block = new mm::Block;
 	Maps maps;
-	return translate_source(source, maps, target);
+	translate_source(source, maps, target);
 }
 
 }} // mdl::smm
