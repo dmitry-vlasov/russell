@@ -1,4 +1,5 @@
-#include "smm/sys.hpp"
+#include "smm/ast.hpp"
+#include "mm/ast.hpp"
 #include "smm/tree.hpp"
 
 namespace mdl { namespace smm { namespace {

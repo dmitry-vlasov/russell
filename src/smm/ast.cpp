@@ -1,5 +1,4 @@
 #include "smm/ast.hpp"
-#include "smm/sys.hpp"
 
 namespace mdl { namespace smm {
 
@@ -29,21 +28,12 @@ Assertion::~Assertion() {
 	if (proof) delete proof;
 }
 
-Source::Source(uint l) : label(l), data(), contents() {
+Source::Source(uint l) : mdl::Source<Source, Sys>(l) {
 	Sys::mod().math.sources.add(label, this);
 }
 Source::~Source() {
 	Sys::mod().math.sources.del(label);
 	for (auto& node : contents) node.destroy();
-}
-Path Source::path() const {
-	return Sys::conf().in.relative(name());
-}
-void Source::read() {
-	path().read(data);
-}
-void Source::write() {
-	path().write(data);
 }
 
 }} // mdl::smm

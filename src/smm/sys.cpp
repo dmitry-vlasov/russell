@@ -1,6 +1,6 @@
-#include "smm/sys.hpp"
+#include "smm/ast.hpp"
 #include "rus/sys.hpp"
-#include "mm/sys.hpp"
+#include "mm/ast.hpp"
 
 namespace mdl { namespace smm {
 
@@ -8,6 +8,8 @@ void verify();
 void parse(uint);
 void translate_to_rus(uint src, uint tgt);
 void translate_to_mm(uint src, uint tgt);
+
+Math::~Math() { sources.destroy(); }
 
 string Math::info() const {
 	string stats;

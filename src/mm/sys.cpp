@@ -1,5 +1,5 @@
-#include "mm/sys.hpp"
-#include "smm/sys.hpp"
+#include "mm/ast.hpp"
+#include "smm/ast.hpp"
 
 namespace mdl { namespace mm  {
 
@@ -7,6 +7,8 @@ void merge();
 void cut();
 void parse(uint src);
 void translate(uint src, uint tgt);
+
+Math::~Math() { sources.destroy(); }
 
 string Math::info() const {
 	string stats;

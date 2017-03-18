@@ -1,8 +1,6 @@
 #pragma once
 
-#include <boost/algorithm/string.hpp>
-
-#include "common.hpp"
+#include "smm/sys.hpp"
 
 namespace mdl { namespace smm {
 
@@ -168,19 +166,9 @@ struct Node {
 	Value val;
 };
 
-struct Source {
+struct Source : public mdl::Source<Source, Sys> {
 	Source(uint l);
 	~ Source();
-	uint   label;
-	string data;
-
-	Path path() const;
-
-	string name() const { return Lex::toStr(label); }
-	string dir() const { return path().dir(); }
-
-	void read();
-	void write();
 
 	vector<Node> contents;
 };

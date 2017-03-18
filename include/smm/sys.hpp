@@ -1,18 +1,18 @@
 #pragma once
 
-#include "smm/ast.hpp"
-#include "mm/ast.hpp"
-#include "rus/ast.hpp"
-#include "timer.hpp"
+#include "common.hpp"
 
 namespace mdl { namespace smm {
+
+class Assertion;
+class Source;
 
 struct Math {
 	set<Symbol>      constants;
 	Table<Assertion> assertions;
 	Table<Source>    sources;
 
-	~Math() { sources.destroy(); }
+	~Math();
 	string show() const;
 	string info() const;
 };

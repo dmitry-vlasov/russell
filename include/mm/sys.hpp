@@ -17,7 +17,7 @@ struct Math {
 	Table<Floating>  floatings;
 	Table<Source>    sources;
 
-	~Math() { sources.destroy(); }
+	~Math();
 	string show() const;
 	string info() const;
 };
