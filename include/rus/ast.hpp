@@ -311,10 +311,10 @@ struct Source {
 	string  data;
 	Theory* theory;
 
-	Path rich_path() const;
+	Path path() const;
 
 	string name() const { return Lex::toStr(label); }
-	string dir() const { return rich_path().dir(); }
+	string dir() const { return path().dir(); }
 
 	void read();
 	void write();

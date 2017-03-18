@@ -78,7 +78,7 @@ void deep_write(const T* target, auto get_cont, auto get_inc, auto is_inc) {
 		const Source* src = to_write.top();
 		if (!fs::exists(src->dir()))
 			fs::create_directories(src->dir());
-		ofstream out(src->rich_path().path());
+		ofstream out(src->path().path());
 		out << *src << endl;
 		out.close();
 		written.insert(src);
@@ -101,7 +101,7 @@ void shallow_write(T* target) {
 	string dir = target->dir();
 	if (!dir.empty() && !fs::exists(dir))
 		fs::create_directories(dir);
-	ofstream out(target->rich_path().path());
+	ofstream out(target->path().path());
 	out << *target << endl;
 	out.close();
 }
@@ -348,8 +348,21 @@ public:
 	const_iterator cend() const { return refs.cend(); }
 };
 
+template<class Src, class Sys>
+struct Source {
+	Source(uint l) : label(l) { }
 
+	uint      label;
+	string    data;
+	set<Src*> deps;
 
+	Path path() const { return Sys::conf().in.relative(name()); }
+	string name() const { return Lex::toStr(label); }
+	string dir() const { return path().dir(); }
+
+	void read() { path().read(data); }
+	void write() const { path().write(data); }
+};
 
 } // mdl
 

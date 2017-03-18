@@ -28,14 +28,14 @@ Source::Source(uint l) : label(l), data(), theory(nullptr) {
 Source::~Source() {
 	if (theory) delete theory;
 }
-Path Source::rich_path() const {
+Path Source::path() const {
 	return Sys::conf().in.relative(name());
 }
 void Source::read() {
-	rich_path().read(data);
+	path().read(data);
 }
 void Source::write() {
-	rich_path().write(data);
+	path().write(data);
 }
 
 }} // mdl::rus

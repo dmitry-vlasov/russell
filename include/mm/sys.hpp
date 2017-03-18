@@ -1,10 +1,14 @@
 #pragma once
 
-#include "mm/ast.hpp"
-#include "smm/ast.hpp"
-#include "timer.hpp"
+#include "common.hpp"
 
 namespace mdl { namespace mm {
+
+class Theorem;
+class Axiom;
+class Essential;
+class Floating;
+class Source;
 
 struct Math {
 	Table<Theorem>   theorems;

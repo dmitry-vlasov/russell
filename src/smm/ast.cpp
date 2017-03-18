@@ -36,14 +36,14 @@ Source::~Source() {
 	Sys::mod().math.sources.del(label);
 	for (auto& node : contents) node.destroy();
 }
-Path Source::rich_path() const {
+Path Source::path() const {
 	return Sys::conf().in.relative(name());
 }
 void Source::read() {
-	rich_path().read(data);
+	path().read(data);
 }
 void Source::write() {
-	rich_path().write(data);
+	path().write(data);
 }
 
 }} // mdl::smm

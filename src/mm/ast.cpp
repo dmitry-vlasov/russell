@@ -81,21 +81,12 @@ Inclusion::~Inclusion() {
 	if (source) Sys::mod().math.sources.unuse(source->label, source);
 }
 
-Source::Source(uint l) : label(l), data(), block(nullptr) {
+Source::Source(uint label) : mdl::Source<Source, Sys>(label), block(nullptr) {
 	Sys::mod().math.sources.add(label, this);
 }
 Source::~Source() {
 	if (block) delete block;
 	Sys::mod().math.sources.del(label);
-}
-Path Source::rich_path() const {
-	return Sys::conf().in.relative(name());
-}
-void Source::read() {
-	rich_path().read(data);
-}
-void Source::write() {
-	rich_path().write(data);
 }
 
 }} // mdl::mm

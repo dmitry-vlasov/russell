@@ -2,7 +2,7 @@
 
 #include <boost/algorithm/string.hpp>
 
-#include "common.hpp"
+#include "sys.hpp"
 
 namespace mdl { namespace mm {
 
@@ -218,21 +218,11 @@ struct Block {
 	vector<Node> contents;
 };
 
-struct Source {
+struct Source : public mdl::Source<Source, Sys> {
 	Source(uint l);
 	~Source();
 
-	uint   label;
-	string data;
 	Block* block;
-
-	Path rich_path() const;
-
-	string name() const { return Lex::toStr(label); }
-	string dir() const { return rich_path().dir(); }
-
-	void read();
-	void write();
 };
 
 struct Inclusion {
