@@ -31,7 +31,7 @@ static string show(const Proof& tree) {
 	string str = Lex::toStr(ass->prop.label);
 	str += "(";
 	for (uint i = 0; i + 1 <tree.refs.size(); ++ i)
-		str += indent::paragraph(space + show(*tree.refs[i]), "  ");
+		str += Indent::paragraph(space + show(*tree.refs[i]), "  ");
 	str += space + ")";
 	//str += "= " + show_ex(tree.refs.back().expr);
 	return str;
@@ -108,7 +108,7 @@ ostream& operator << (ostream& os, const Proposition& prop) {
 template<class T>
 void showComponents(ostream& os, const vector<T*>& components) {
 	for (auto comp : components)
-		os << indent() << *comp << "\n";
+		os << Indent() << *comp << "\n";
 }
 
 ostream& operator << (ostream& os, const Assertion& ass) {
@@ -118,9 +118,9 @@ ostream& operator << (ostream& os, const Assertion& ass) {
 	showComponents<Essential>(os, ass.essential);
 	showComponents<Floating>(os, ass.floating);
 	showComponents<Inner>(os, ass.inner);
-	os << indent() << ass.prop << "\n";
+	os << Indent() << ass.prop << "\n";
 	if (ass.proof) {
-		os << indent() << *ass.proof << "\n";
+		os << Indent() << *ass.proof << "\n";
 	}
 	os << "$}";
 	return os;

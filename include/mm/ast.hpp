@@ -4,8 +4,12 @@
 
 namespace mdl { namespace mm {
 
+typedef mdl::Synt<Source> Synt;
+
 struct Constants {
+	Constants(const Vect&);
 	Vect expr;
+	Synt info;
 };
 
 struct Variables {
@@ -49,6 +53,7 @@ struct Theorem {
 	Vect   expr;
 	uint   arity;
 	Proof* proof;
+	Synt   info;
 };
 
 

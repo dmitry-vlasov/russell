@@ -10,7 +10,7 @@ string Timers::show() const {
 	str += "Timings:";
 	for (auto& p : timers) {
 		int s = p.first.size();
-		str += "\n\t" + p.first + indent(ms - s, ' ').str() + ": " + p.second.show();
+		str += "\n\t" + p.first + Indent(ms - s, ' ').str() + ": " + p.second.show();
 	}
 	return str;
 }

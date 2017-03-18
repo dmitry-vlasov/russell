@@ -4,11 +4,11 @@
 
 namespace mdl { 
 
-class indent {
+struct Indent {
 	int  num;
 	char del;
-public:
-	indent(int n = 1, char d = '\t') : num(n), del(d) {
+
+	Indent(int n = 1, char d = '\t') : num(n), del(d) {
 	}
 	void write(ostream& os) const {
 		int n = num;
@@ -31,7 +31,7 @@ public:
 };
 
 
-inline ostream& operator << (ostream& os, indent ind) {
+inline ostream& operator << (ostream& os, Indent ind) {
 	ind.write(os);
 	return os;
 }

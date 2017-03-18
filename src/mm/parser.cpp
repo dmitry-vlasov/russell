@@ -9,12 +9,12 @@ private:
 		set<Symbol> vars;
 		set<Symbol> consts;
 	};
-	typedef vector<Scope> Stack;
 	struct Context {
-		Stack  stack;
-		bool   source;
-		Block* block;
-		set<Block*> src_blocks;
+		bool    src_enter;
+		Block*  block;
+		vector<Scope>  scope_stack;
+		stack<Source*> source_stack;
+		set<Block*>    src_blocks;
 	};
 	peg::parser parser;
 
@@ -63,41 +63,45 @@ public:
 			return expr;
 		};
 		parser["CONST"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Constants* consts = new Constants { sv[0].get<Vect>() };
-			for (Symbol c : consts->expr)
-				context.get<std::shared_ptr<Context>>()->stack.back().consts.insert(c);
+			Context& c = *context.get<std::shared_ptr<Context>>();
+			Constants* consts = new Constants(sv[0].get<Vect>());
+			consts->info = Synt(c.source_stack.top(), sv.c_str(), sv.c_str() + sv.length());
+			for (Symbol cs : consts->expr)
+				c.scope_stack.back().consts.insert(cs);
 			return consts;
 		};
 		parser["VAR"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Variables* vars = new Variables { sv[0].get<Vect>() };
 			for (Symbol c : vars->expr)
-				context.get<std::shared_ptr<Context>>()->stack.back().vars.insert(c);
+				context.get<std::shared_ptr<Context>>()->scope_stack.back().vars.insert(c);
 			return vars;
 		};
 		parser["DISJ"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Disjointed* disj = new Disjointed { sv[0].get<Vect>() };
 			for (Symbol v : disj->expr)
-				context.get<std::shared_ptr<Context>>()->stack.back().vars.insert(v);
+				context.get<std::shared_ptr<Context>>()->scope_stack.back().vars.insert(v);
 			return disj;
 		};
 		parser["ESS"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Essential* ess = new Essential(sv[0].get<uint>(), sv[1].get<Vect>());
-			markVars(ess->expr, context.get<std::shared_ptr<Context>>()->stack);
+			markVars(ess->expr, context.get<std::shared_ptr<Context>>()->scope_stack);
 			return ess;
 		};
 		parser["FLO"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Floating* flo = new Floating(sv[0].get<uint>(), sv[1].get<Vect>());
-			markVars(flo->expr, context.get<std::shared_ptr<Context>>()->stack);
+			markVars(flo->expr, context.get<std::shared_ptr<Context>>()->scope_stack);
 			return flo;
 		};
 		parser["AX"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Axiom* ax = new Axiom(sv[0].get<uint>(), sv[1].get<Vect>());
-			markVars(ax->expr, context.get<std::shared_ptr<Context>>()->stack);
+			markVars(ax->expr, context.get<std::shared_ptr<Context>>()->scope_stack);
 			return ax;
 		};
 		parser["TH"] = [](const peg::SemanticValues& sv, peg::any& context) {
+			Context& c = *context.get<std::shared_ptr<Context>>();
 			Theorem* th = new Theorem(sv[0].get<uint>(), sv[1].get<Vect>(), sv[2].get<Proof*>());
-			markVars(th->expr, context.get<std::shared_ptr<Context>>()->stack);
+			markVars(th->expr, c.scope_stack);
+			th->info = Synt(c.source_stack.top(), sv.c_str(), sv.c_str() + sv.length());
 			return th;
 		};
 		parser["PROOF"] = [](const peg::SemanticValues& sv) {
@@ -137,29 +141,33 @@ public:
 		parser["BLOCK"].enter = [](peg::any& c) {
 			Context* context = c.get<std::shared_ptr<Context>>().get();
 			context->block = new Block(context->block);
-			if (!context->source) {
-				context->stack.push_back(Scope());
+			if (!context->src_enter) {
+				context->scope_stack.push_back(Scope());
 			} else {
 				context->src_blocks.insert(context->block);
 			}
-			context->source = false;
+			context->src_enter = false;
 		};
 		parser["BLOCK"].leave = [](peg::any& c) {
 			Context* context = c.get<std::shared_ptr<Context>>().get();
 			if (!context->src_blocks.count(context->block)) {
-				context->stack.pop_back();
+				context->scope_stack.pop_back();
 			} else {
 				context->src_blocks.erase(context->block);
 			}
 			context->block = context->block->parent;
 		};
 		parser["SOURCE"] = [label](const peg::SemanticValues& sv, peg::any& context) {
-			Source* src = new Source(label);
-			src->block = sv[0].get<Block*>();
-			return src;
+			Context& c = *context.get<std::shared_ptr<Context>>();
+			c.source_stack.top()->block = sv[0].get<Block*>();
+			Source* s = c.source_stack.top();
+			c.source_stack.pop();
+			return s;
 		};
-		parser["SOURCE"].enter = [](peg::any& context) {
-			context.get<std::shared_ptr<Context>>()->source = true;
+		parser["SOURCE"].enter = [label](peg::any& context) {
+			Context& c = *context.get<std::shared_ptr<Context>>();
+			c.src_enter = true;
+			c.source_stack.push(new Source(label));
 		};
 		parser["INCLUDE"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			string name = sv.token();
@@ -181,11 +189,11 @@ public:
 
 	static Source* parse(uint label) {
 		auto context = std::make_shared<Context>();
-		context->stack.push_back(Scope());
+		context->scope_stack.push_back(Scope());
 		Source* src = parse(label, context);
-		assert(!context->stack.empty());
-		context->stack.pop_back();
-		assert(context->stack.empty());
+		assert(!context->scope_stack.empty());
+		context->scope_stack.pop_back();
+		assert(context->scope_stack.empty());
 		return src;
 	}
 
@@ -203,7 +211,7 @@ private:
 		std::swap(data, src->data);
 		return src;
 	}
-	static void markVars(Vect& expr, const Stack& stack) {
+	static void markVars(Vect& expr, const vector<Scope>& stack) {
     	for (Symbol& s : expr) {
     		bool is_var   = false;
     		bool is_const = false;
@@ -229,7 +237,7 @@ void parse(uint label) {
 	Sys::timer()["read"].start();
 	if (!Parser::parse(label))
 		throw Error("parsing of " + Sys::conf().in.name + " failed");
-	//cout << endl << *source;
+	//cout << endl << *src_enter;
 	Sys::timer()["read"].stop();
 }
 

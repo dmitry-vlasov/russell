@@ -31,7 +31,7 @@ string show(const Proof& tree) {
 	string str = Lex::toStr(tree.refs.back()->label());
 	str += "(";
 	for (uint i = 0; i + 1 <tree.refs.size(); ++ i)
-		str += indent::paragraph(space + show(*tree.refs[i]), "  ");
+		str += Indent::paragraph(space + show(*tree.refs[i]), "  ");
 	str += space + ") ";
 	return str;
 }
@@ -123,10 +123,10 @@ static int depth(const Block& block) {
 
 ostream& operator << (ostream& os, const Block& block) {
 	int d = depth(block);
-	if (block.parent) os << indent(d - 1) << "${\n";
+	if (block.parent) os << Indent(d - 1) << "${\n";
 	for (auto& node : block.contents)
-		os << indent(d) << node << '\n';
-	if (block.parent) os << indent(d - 1) << "$}";
+		os << Indent(d) << node << '\n';
+	if (block.parent) os << Indent(d - 1) << "$}";
 	return os;
 }
 

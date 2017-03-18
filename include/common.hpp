@@ -364,6 +364,19 @@ struct Source {
 	void write() const { path().write(data); }
 };
 
+template<class S>
+struct Synt {
+	typedef S Source;
+
+	Synt() : src(nullptr), beg(nullptr), end(nullptr) { }
+	Synt(Source* s) : src(s), beg(nullptr), end(nullptr) { }
+	Synt(Source* s, const char* b, const char* e) :
+	src(s), beg(b), end(e) { }
+	Source*     src;
+	const char* beg;
+	const char* end;
+};
+
 } // mdl
 
   

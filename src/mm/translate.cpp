@@ -385,7 +385,8 @@ void translate(uint src, uint tgt) {
 	Sys::timer()["translate"].start();
 	Maps maps;
 	scope_stack.push_back(Scope());
-	translate_block(maps, Sys::get().math.sources.access(src)->block, new smm::Source(tgt));
+	const Source* s = Sys::get().math.sources.access(src);
+	translate_block(maps, s->block, new smm::Source(tgt));
 	scope_stack.pop_back();
 	Sys::timer()["translate"].stop();
 }

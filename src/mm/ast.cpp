@@ -3,6 +3,8 @@
 
 namespace mdl { namespace mm {
 
+Constants::Constants(const Vect& ex) : expr(ex) { }
+
 Essential::Essential(uint l, const Vect& e) : label(l), expr(e)  {
 	Sys::mod().math.essentials.add(label, this);
 }
