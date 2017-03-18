@@ -309,19 +309,15 @@ struct Source {
 	~Source();
 	uint    label;
 	string  data;
-	bool    top;
 	Theory* theory;
 
 	Path rich_path() const;
 
 	string name() const { return Lex::toStr(label); }
 	string dir() const { return rich_path().dir(); }
-	string path() const { return rich_path().path(); }
 
 	void read();
 	void write();
-
-
 };
 
 inline void Node::destroy() {

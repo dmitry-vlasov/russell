@@ -230,7 +230,6 @@ struct Source {
 
 	string name() const { return Lex::toStr(label); }
 	string dir() const { return rich_path().dir(); }
-	string path() const { return rich_path().path(); }
 
 	void read();
 	void write();

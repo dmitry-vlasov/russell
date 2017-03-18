@@ -78,7 +78,7 @@ void deep_write(const T* target, auto get_cont, auto get_inc, auto is_inc) {
 		const Source* src = to_write.top();
 		if (!fs::exists(src->dir()))
 			fs::create_directories(src->dir());
-		ofstream out(src->path());
+		ofstream out(src->rich_path().path());
 		out << *src << endl;
 		out.close();
 		written.insert(src);
@@ -101,7 +101,7 @@ void shallow_write(T* target) {
 	string dir = target->dir();
 	if (!dir.empty() && !fs::exists(dir))
 		fs::create_directories(dir);
-	ofstream out(target->path());
+	ofstream out(target->rich_path().path());
 	out << *target << endl;
 	out.close();
 }
