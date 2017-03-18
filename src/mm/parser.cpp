@@ -10,11 +10,16 @@ private:
 		set<Symbol> consts;
 	};
 	struct Context {
+		Context() : src_enter(false), block(nullptr) { }
 		bool    src_enter;
 		Block*  block;
 		vector<Scope>  scope_stack;
 		stack<Source*> source_stack;
 		set<Block*>    src_blocks;
+
+		Synt make_info(const peg::SemanticValues& sv) const {
+			return Synt(source_stack.top(), sv.c_str(), sv.c_str() + sv.length());
+		}
 	};
 	peg::parser parser;
 
@@ -63,45 +68,52 @@ public:
 			return expr;
 		};
 		parser["CONST"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Context& c = *context.get<std::shared_ptr<Context>>();
-			Constants* consts = new Constants(sv[0].get<Vect>());
-			consts->info = Synt(c.source_stack.top(), sv.c_str(), sv.c_str() + sv.length());
+			Context& c = *context.get<Context*>();
+			Constants* consts = new Constants{sv[0].get<Vect>(), c.make_info(sv)};
 			for (Symbol cs : consts->expr)
 				c.scope_stack.back().consts.insert(cs);
 			return consts;
 		};
 		parser["VAR"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Variables* vars = new Variables { sv[0].get<Vect>() };
-			for (Symbol c : vars->expr)
-				context.get<std::shared_ptr<Context>>()->scope_stack.back().vars.insert(c);
+			Context& c = *context.get<Context*>();
+			Variables* vars = new Variables {sv[0].get<Vect>(), c.make_info(sv)};
+			for (Symbol v : vars->expr)
+				c.scope_stack.back().vars.insert(v);
 			return vars;
 		};
 		parser["DISJ"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Disjointed* disj = new Disjointed { sv[0].get<Vect>() };
+			Context& c = *context.get<Context*>();
+			Disjointed* disj = new Disjointed {sv[0].get<Vect>(), c.make_info(sv)};
 			for (Symbol v : disj->expr)
-				context.get<std::shared_ptr<Context>>()->scope_stack.back().vars.insert(v);
+				c.scope_stack.back().vars.insert(v);
 			return disj;
 		};
 		parser["ESS"] = [](const peg::SemanticValues& sv, peg::any& context) {
+			Context& c = *context.get<Context*>();
 			Essential* ess = new Essential(sv[0].get<uint>(), sv[1].get<Vect>());
-			markVars(ess->expr, context.get<std::shared_ptr<Context>>()->scope_stack);
+			ess->info = c.make_info(sv);
+			markVars(ess->expr, c.scope_stack);
 			return ess;
 		};
 		parser["FLO"] = [](const peg::SemanticValues& sv, peg::any& context) {
+			Context& c = *context.get<Context*>();
 			Floating* flo = new Floating(sv[0].get<uint>(), sv[1].get<Vect>());
-			markVars(flo->expr, context.get<std::shared_ptr<Context>>()->scope_stack);
+			flo->info = c.make_info(sv);
+			markVars(flo->expr, c.scope_stack);
 			return flo;
 		};
 		parser["AX"] = [](const peg::SemanticValues& sv, peg::any& context) {
+			Context& c = *context.get<Context*>();
 			Axiom* ax = new Axiom(sv[0].get<uint>(), sv[1].get<Vect>());
-			markVars(ax->expr, context.get<std::shared_ptr<Context>>()->scope_stack);
+			ax->info = c.make_info(sv);
+			markVars(ax->expr, c.scope_stack);
 			return ax;
 		};
 		parser["TH"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Context& c = *context.get<std::shared_ptr<Context>>();
+			Context& c = *context.get<Context*>();
 			Theorem* th = new Theorem(sv[0].get<uint>(), sv[1].get<Vect>(), sv[2].get<Proof*>());
 			markVars(th->expr, c.scope_stack);
-			th->info = Synt(c.source_stack.top(), sv.c_str(), sv.c_str() + sv.length());
+			th->info = c.make_info(sv);
 			return th;
 		};
 		parser["PROOF"] = [](const peg::SemanticValues& sv) {
@@ -129,17 +141,19 @@ public:
 			case 8: node = Node(sv[0].get<Floating*>());  break;
 			case 9: node = Node(sv[0].get<Inclusion*>()); break;
 			}
-			context.get<std::shared_ptr<Context>>()->block->contents.push_back(node);
+			context.get<Context*>()->block->contents.push_back(node);
 			return node;
 		};
 		parser["BLOCK"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Block* b = context.get<std::shared_ptr<Context>>()->block;
+			Context& c = *context.get<Context*>();
+			Block* b = c.block;
 			b->contents = sv.transform<Node>();
+			b->info = c.make_info(sv);
 			init_indexes(b->contents);
 			return b;
 		};
 		parser["BLOCK"].enter = [](peg::any& c) {
-			Context* context = c.get<std::shared_ptr<Context>>().get();
+			Context* context = c.get<Context*>();
 			context->block = new Block(context->block);
 			if (!context->src_enter) {
 				context->scope_stack.push_back(Scope());
@@ -149,7 +163,7 @@ public:
 			context->src_enter = false;
 		};
 		parser["BLOCK"].leave = [](peg::any& c) {
-			Context* context = c.get<std::shared_ptr<Context>>().get();
+			Context* context = c.get<Context*>();
 			if (!context->src_blocks.count(context->block)) {
 				context->scope_stack.pop_back();
 			} else {
@@ -158,14 +172,14 @@ public:
 			context->block = context->block->parent;
 		};
 		parser["SOURCE"] = [label](const peg::SemanticValues& sv, peg::any& context) {
-			Context& c = *context.get<std::shared_ptr<Context>>();
+			Context& c = *context.get<Context*>();
 			c.source_stack.top()->block = sv[0].get<Block*>();
 			Source* s = c.source_stack.top();
 			c.source_stack.pop();
 			return s;
 		};
 		parser["SOURCE"].enter = [label](peg::any& context) {
-			Context& c = *context.get<std::shared_ptr<Context>>();
+			Context& c = *context.get<Context*>();
 			c.src_enter = true;
 			c.source_stack.push(new Source(label));
 		};
@@ -180,7 +194,7 @@ public:
 				path.name_ext(name);
 				mm::Inclusion* inc = new mm::Inclusion(nullptr, true);
 				included[name] = inc;
-				Source* src = parse(Lex::toInt(path.name), context.get<std::shared_ptr<Context>>());
+				Source* src = parse(Lex::toInt(path.name), context.get<Context*>());
 				Sys::mod().math.sources.use(src->label, inc->source);
 				return inc;
 			}
@@ -188,17 +202,18 @@ public:
 	}
 
 	static Source* parse(uint label) {
-		auto context = std::make_shared<Context>();
+		Context* context = new Context();
 		context->scope_stack.push_back(Scope());
 		Source* src = parse(label, context);
 		assert(!context->scope_stack.empty());
 		context->scope_stack.pop_back();
 		assert(context->scope_stack.empty());
+		delete context;
 		return src;
 	}
 
 private:
-	static Source* parse(uint label, std::shared_ptr<Context>& context) {
+	static Source* parse(uint label, Context* context) {
 		Path path = Sys::conf().in;
 		path.name = Lex::toStr(label);
 		string data;

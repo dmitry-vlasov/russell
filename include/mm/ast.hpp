@@ -7,17 +7,18 @@ namespace mdl { namespace mm {
 typedef mdl::Synt<Source> Synt;
 
 struct Constants {
-	Constants(const Vect&);
 	Vect expr;
 	Synt info;
 };
 
 struct Variables {
 	Vect expr;
+	Synt info;
 };
 
 struct Disjointed {
 	Vect expr;
+	Synt info;
 };
 
 struct Essential {
@@ -25,6 +26,7 @@ struct Essential {
 	~Essential();
 	uint label;
 	Vect expr;
+	Synt info;
 };
 
 struct Floating  {
@@ -34,6 +36,7 @@ struct Floating  {
 	Symbol var() const { return expr[1]; }
 	uint label;
 	Vect expr;
+	Synt info;
 };
 
 struct Axiom {
@@ -42,6 +45,7 @@ struct Axiom {
 	uint label;
 	Vect expr;
 	uint arity;
+	Synt info;
 };
 
 class Proof;
@@ -115,6 +119,7 @@ struct Proof {
 	~Proof();
 	vector<Ref*> refs;
 	Type         type;
+	Synt         info;
 };
 
 
@@ -219,6 +224,7 @@ struct Block {
 	Block* parent;
 	Block* sibling;
 	vector<Node> contents;
+	Synt info;
 };
 
 struct Source : public mdl::Source<Source, Sys> {
