@@ -87,12 +87,12 @@ string show() {
 }
 
 Sys::Sys() {
-	action["read"]   = unary_proc(parse);
-	action["verify"] = zeroary_proc(verify);
-	action["transl"] = binary_proc(translate);
-	action["write"]  = unary_proc(write);
-	action["info"]   = zeroary_func(info);
-	action["show"]   = zeroary_func(show);
+	action["read"]   = wrap_action([](const Args& args) { parse(Lex::getInt(args[0])); return Return(); }, 1);
+	action["verify"] = wrap_action([](const Args&) { verify(); return Return(); }, 0);
+	action["transl"] = wrap_action([](const Args& args) { translate(Lex::getInt(args[0]), Lex::getInt(args[1])); return Return(); }, 2);
+	action["write"]  = wrap_action([](const Args& args) { write(Lex::getInt(args[0])); return Return(); }, 1);
+	action["info"]   = wrap_action([](const Args&) { info(); return Return(); }, 0);
+	action["show"]   = wrap_action([](const Args&) { info(); return Return(); }, 0);
 }
 
 void run() {

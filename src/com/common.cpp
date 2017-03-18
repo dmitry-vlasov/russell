@@ -1,14 +1,6 @@
 #include "common.hpp"
 
-namespace mdl { namespace {
-
-string n_spaces(uint n) {
-	string s;
-	while (n--) s += ' ';
-	return s;
-}
-
-}
+namespace mdl {
 
 string Timers::show() const {
 	string str;
@@ -18,7 +10,7 @@ string Timers::show() const {
 	str += "Timings:";
 	for (auto& p : timers) {
 		int s = p.first.size();
-		str += "\n\t" + p.first + n_spaces(ms - s) + ": " + p.second.show();
+		str += "\n\t" + p.first + indent(ms - s, ' ').str() + ": " + p.second.show();
 	}
 	return str;
 }

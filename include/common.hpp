@@ -31,8 +31,9 @@ class indent {
 public:
 	indent(int n = 1, char d = '\t') : num(n), del(d) {
 	}
-	void write(ostream& os) {
-		while (num --) os << del;
+	void write(ostream& os) const {
+		int n = num;
+		while (n --) os << del;
 	}
 	static string paragraph(const string& str, string d = "\t") {
 		string indented;
@@ -41,6 +42,12 @@ public:
 			else            indented += ch;
 		}
 		return indented;
+	}
+	string str() const {
+		string s;
+		int n = num;
+		while (n--) s += del;
+		return s;
 	}
 };
 
@@ -289,7 +296,7 @@ struct Sys {
 	Timers timers;
 	Conf   config;
 	Math   math;
-	map<string, Action> action;
+	map<string, Function> action;
 
 	static const System& get() { return mod(); }
 	static System& mod()   { return Lib<System>::mod().access();  }
