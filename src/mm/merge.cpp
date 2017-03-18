@@ -108,8 +108,8 @@ void parse(const Path& path) {
 	string data;
 	path.read(data);
 	remove_commented_imports(data);
-	LocationIter iter(data.begin(), path.name);
-	LocationIter end(data.end(), path.name);
+	LocationIter iter(data.begin(), Lex::toInt(path.name));
+	LocationIter end(data.end(), Lex::toInt(path.name));
 	bool r = phrase_parse(iter, end, Grammar(), ascii::space);
 	if (!r || iter != end) {
 		throw Error("parsing failed", path.name);

@@ -15,9 +15,10 @@ uint inc_ind() { return ind ++; }
 Source* parse(Path path) {
 	string data;
 	path.read(data);
-	Source* src = new Source(Lex::toInt(path.name));
-	LocationIter iter(data.begin(), path.name);
-	LocationIter end(data.end(), path.name);
+	uint label = Lex::toInt(path.name);
+	Source* src = new Source(label);
+	LocationIter iter(data.begin(), label);
+	LocationIter end(data.end(), label);
 	if (!parser::Grammar<LocationIter>::parse(iter, end, parser::unicode::space, *src) || iter != end) {
 		throw Error("parsing failed", path.name);
 	}

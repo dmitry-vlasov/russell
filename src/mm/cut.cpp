@@ -778,8 +778,8 @@ Section* parse(const Path& in, const Path& out) {
 	string data;
 	in.read(data);
 	patch(data);
-	LocationIter iter(data.begin(), in.name);
-	LocationIter end(data.end(), in.name);
+	LocationIter iter(data.begin(), Lex::toInt(in.name));
+	LocationIter end(data.end(), Lex::toInt(in.name));
 	Section* source = new Section;
 	source->root = (out.root.size() && out.root.back() != '/') ? (out.root + "/") : out.root;
 	source->file = in.name;
