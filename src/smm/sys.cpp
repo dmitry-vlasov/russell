@@ -1,5 +1,5 @@
 #include "smm/ast.hpp"
-#include "rus/sys.hpp"
+#include "rus/ast.hpp"
 #include "mm/ast.hpp"
 
 namespace mdl { namespace smm {

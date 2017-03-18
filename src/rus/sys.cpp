@@ -1,6 +1,11 @@
-#include "rus/sys.hpp"
+#include "rus/ast.hpp"
+#include "smm/ast.hpp"
 
-namespace mdl { namespace rus { namespace {
+namespace mdl { namespace rus {
+
+Math::~Math() { for (auto s : sources) delete s.second; }
+
+namespace {
 
 bool parse_rus() {
 	try {

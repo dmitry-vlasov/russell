@@ -1,5 +1,4 @@
 #include "rus/ast.hpp"
-#include "rus/sys.hpp"
 
 namespace mdl { namespace rus {
 
@@ -22,20 +21,11 @@ Type::~Type() {
  */
 
 
-Source::Source(uint l) : label(l), data(), theory(nullptr) {
+Source::Source(uint label) : mdl::Source<Source, Sys>(label), theory(nullptr) {
 	Sys::mod().math.sources[label] = this;
 }
 Source::~Source() {
 	if (theory) delete theory;
-}
-Path Source::path() const {
-	return Sys::conf().in.relative(name());
-}
-void Source::read() {
-	path().read(data);
-}
-void Source::write() {
-	path().write(data);
 }
 
 }} // mdl::rus

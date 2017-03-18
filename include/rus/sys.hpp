@@ -1,10 +1,12 @@
 #pragma once
 
-#include "rus/ast.hpp"
-#include "smm/ast.hpp"
-#include "timer.hpp"
+#include "common.hpp"
 
-namespace mdl { namespace rus {
+namespace mdl {
+
+namespace smm { class Source; }
+
+namespace rus {
 
 /*
 struct Math {
@@ -31,6 +33,15 @@ struct Math {
 
  */
 
+class Const;
+class Type;
+class Rule;
+class Axiom;
+class Def;
+class Theorem;
+class Proof;
+class Source;
+
 struct Math {
 	template<typename T>
 	using Table = map<uint, T>;
@@ -44,7 +55,7 @@ struct Math {
 	Table<Proof*>   proofs;
 	Table<Source*>  sources;
 
-	~Math() { for (auto s : sources) delete s.second; }
+	~Math();
 };
 
 struct Sys : public mdl::Sys<Sys, Math> {

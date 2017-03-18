@@ -1,4 +1,3 @@
-#include "rus/sys.hpp"
 #include "rus/parser/grammar.hpp"
 
 namespace mdl { namespace rus { namespace parser {

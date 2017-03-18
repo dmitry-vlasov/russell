@@ -1,7 +1,5 @@
 #pragma once
 
-#include <boost/algorithm/string.hpp>
-
 #include "sys.hpp"
 
 namespace mdl { namespace mm {

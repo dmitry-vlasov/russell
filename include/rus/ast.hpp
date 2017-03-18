@@ -1,7 +1,6 @@
 #pragma once
-#include <boost/algorithm/string.hpp>
-//#include <boost/variant/recursive_variant.hpp>
-#include "common.hpp"
+
+#include "sys.hpp"
 #include "expr.hpp"
 
 namespace mdl { namespace rus {
@@ -304,20 +303,11 @@ struct Theory {
 	Theory*      parent;
 };
 
-struct Source {
+struct Source : public mdl::Source<Source, Sys> {
 	Source(uint l);
 	~Source();
-	uint    label;
-	string  data;
+
 	Theory* theory;
-
-	Path path() const;
-
-	string name() const { return Lex::toStr(label); }
-	string dir() const { return path().dir(); }
-
-	void read();
-	void write();
 };
 
 inline void Node::destroy() {
