@@ -6,6 +6,31 @@
 
 namespace mdl { namespace rus {
 
+/*
+struct Math {
+	struct Counter {
+		Counter() : c(0) { }
+		uint get() { return c; }
+		uint inc() { return c++; }
+	private:
+		uint c;
+	};
+
+	Table<Const>   consts;
+	Table<Type>    types;
+	Table<Rule>    rules;
+	Table<Axiom>   axioms;
+	Table<Def>     defs;
+	Table<Theorem> theorems;
+	Table<Proof>   proofs;
+	Table<Source>  sources;
+	Counter        ind;
+
+	~Math() { sources.destroy(); }
+};
+
+ */
+
 struct Math {
 	template<typename T>
 	using Table = map<uint, T>;
