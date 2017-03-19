@@ -168,12 +168,14 @@ struct Expr {
 		if (ex.tree) tree.reset(new Tree(*ex.tree));
 		else tree.reset();
 		symbols = ex.symbols;
+		token = ex.token;
 	}
 
 	void operator = (Expr&& ex) {
 		type = ex.type;
 		tree = std::move(ex.tree);
 		symbols = std::move(ex.symbols);
+		token = ex.token;
 	}
 
 	void push_back(Symbol s) {

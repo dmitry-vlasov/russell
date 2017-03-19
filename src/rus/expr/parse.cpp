@@ -2,7 +2,7 @@
 
 namespace mdl { namespace rus { namespace expr { namespace {
 
-vector<pair<Expr*, uint>> queue;
+vector<Expr*> queue;
 
 inline Rule* find_super(const Type* type, const Type* super) {
 	return type->supers.count(super) ? type->supers.at(super) : nullptr;
@@ -15,9 +15,18 @@ struct Action {
 	Action(Kind k, Rule* r = nullptr) : kind(k), rule(r) { }
 };
 
-inline Action act(auto& n, auto& m, Symbols::iterator ch, uint ind) {
+inline bool check_preceeding(const Rule* r, const Expr *e) {
+	Source* r_src = r->token.src;
+	Source* e_src = e->token.src;
+	if (e_src->deps.count(r_src)) return true;
+	if (e_src == r_src) return r->token.end < e->token.beg;
+	return false;
+}
+
+inline Action act(auto& n, auto& m, Symbols::iterator ch, const Expr* e) {
 	if (Rule* r = n.top()->rule) {
-		if (r->ind <= ind) return Action(Action::RET, r);
+		if (check_preceeding(r, e))
+			return Action(Action::RET, r);
 		else return Action::BREAK;
 	} else if (ch->end)
 		return Action::BREAK;
@@ -28,7 +37,7 @@ inline Action act(auto& n, auto& m, Symbols::iterator ch, uint ind) {
 	return Action::CONT;
 }
 
-Tree* parse_LL(Symbols::iterator& x, const Type* type, uint ind) {
+Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e) {
 	if (type->rules.map.size()) {
 		typedef Rules::Map::const_iterator MapIter;
 		Tree::Children children;
@@ -41,9 +50,9 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, uint ind) {
 			auto ch = m.top();
 			if (const Type* tp = n.top()->symb.type) {
 				childnodes.push(n.top());
-				if (Tree* child = parse_LL(ch, tp, ind)) {
+				if (Tree* child = parse_LL(ch, tp, e)) {
 					children.push_back(unique_ptr<Tree>(child));
-					Action a = act(n, m, ch, ind);
+					Action a = act(n, m, ch, e);
 					switch (a.kind) {
 					case Action::RET  : x = ch; return new Tree(a.rule, children);
 					case Action::BREAK: goto out;
@@ -53,7 +62,7 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, uint ind) {
 					childnodes.pop();
 				}
 			} else if (n.top()->symb == *m.top()) {
-				Action a = act(n, m, ch, ind);
+				Action a = act(n, m, ch, e);
 				switch (a.kind) {
 				case Action::RET  : x = ch; return new Tree(a.rule, children);
 				case Action::BREAK: goto out;
@@ -84,11 +93,11 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, uint ind) {
 }
 
 
-void parse_LL(Expr* ex, uint ind) {
+void parse_LL(Expr* ex) {
 	(--ex->symbols.end())->end = true;
 	//cout << "parsing: " << ind << " -- " << show(*ex) << flush;
 	auto it = ex->symbols.begin();
-	if (Tree* tree = parse_LL(it, ex->type, ind)) {
+	if (Tree* tree = parse_LL(it, ex->type, ex)) {
 		ex->tree.reset(tree);
 	} else {
 		throw Error("parsing error", string("expression: ") + show(*ex));
@@ -103,20 +112,20 @@ vector<std::exception_ptr> exceptions;
 mutex exc_mutex;
 
 void parse_LL_sequent() {
-	for (auto p : queue) {
-		parse_LL(p.first, p.second);
+	for (auto e : queue) {
+		parse_LL(e);
 	}
 }
 
 void parse_LL_concurrent(uint s) {
 	int c = 0;
-	for (auto p : queue) {
+	for (auto e : queue) {
 		if (c++ % THREADS != s)
 			continue;
 		if (exceptions.size())
 			break;
 		try {
-			parse_LL(p.first, p.second);
+			parse_LL(e);
 		} catch (...) {
 			exc_mutex.lock();
 			exceptions.push_back(std::current_exception());
@@ -146,7 +155,7 @@ bool parse_LL() {
 } // anonymous namespace
 
 void enqueue(Expr& ex) {
-	queue.push_back(pair<Expr*, uint>(&ex, parser::get_ind()));
+	queue.push_back(&ex);
 }
 
 bool parse() {

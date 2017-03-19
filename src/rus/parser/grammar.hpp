@@ -8,7 +8,7 @@
 namespace mdl { namespace rus { namespace parser {
 
 template<typename Iterator>
-Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack() {
+Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"), var_stack() {
 	using qi::lit;
 	using qi::uint_;
 	using qi::lexeme;
@@ -296,28 +296,25 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 			comment  [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(_1))]
 		);
 
-	const phoenix::function<ShowFuck> fuck;
+	qi::on_success(term,      setToken(phoenix::at_c<3>(_val), _1, _3, phoenix::val(src)));
+	qi::on_success(expr,      setToken(phoenix::at_c<3>(_val), _1, _3, phoenix::val(src)));
+	qi::on_success(plain,     setToken(phoenix::at_c<3>(_val), _1, _3, phoenix::val(src)));
+	qi::on_success(comment,   setToken(phoenix::at_c<1>(*_val), _1, _3, phoenix::val(src)));
+	qi::on_success(import,    setToken(phoenix::at_c<2>(*_val), _1, _3, phoenix::val(src)));
+	qi::on_success(constant,  setToken(phoenix::at_c<4>(*_val), _1, _3, phoenix::val(src)));
+	qi::on_success(vars,      setToken(phoenix::at_c<1>(_val), _1, _3, phoenix::val(src)));
+	qi::on_success(disj,      setToken(phoenix::at_c<1>(_val), _1, _3, phoenix::val(src)));
+	qi::on_success(type,      setToken(phoenix::at_c<5>(*_val), _1, _3, phoenix::val(src)));
+	qi::on_success(rule,      setToken(phoenix::at_c<5>(*_val), _1, _3, phoenix::val(src)));
+	qi::on_success(hyp,       setToken(phoenix::at_c<2>(*_val), _1, _3, phoenix::val(src)));
+	qi::on_success(prop,      setToken(phoenix::at_c<2>(*_val), _1, _3, phoenix::val(src)));
+	qi::on_success(step,      setToken(phoenix::at_c<6>(*_val), _1, _3, phoenix::val(src)));
+	qi::on_success(qed,       setToken(phoenix::at_c<2>(*_val), _1, _3, phoenix::val(src)));
+	qi::on_success(proof,     setToken(phoenix::at_c<7>(*_val), _1, _3, phoenix::val(src)));
 
-	//qi::on_success(assertion, fuck(_1));
-	//qi::on_success(assertion, fuck(_3));
-
-	qi::on_success(expr,      setToken(phoenix::at_c<3>(_val), _1, _3));
-	qi::on_success(comment,   setToken(phoenix::at_c<1>(*_val), _1, _3));
-	qi::on_success(import,    setToken(phoenix::at_c<2>(*_val), _1, _3));
-	qi::on_success(constant,  setToken(phoenix::at_c<4>(*_val), _1, _3));
-	qi::on_success(vars,      setToken(phoenix::at_c<1>(_val), _1, _3));
-	qi::on_success(disj,      setToken(phoenix::at_c<1>(_val), _1, _3));
-	qi::on_success(type,      setToken(phoenix::at_c<5>(*_val), _1, _3));
-	qi::on_success(rule,      setToken(phoenix::at_c<5>(*_val), _1, _3));
-	qi::on_success(hyp,       setToken(phoenix::at_c<2>(*_val), _1, _3));
-	qi::on_success(prop,      setToken(phoenix::at_c<2>(*_val), _1, _3));
-	qi::on_success(step,      setToken(phoenix::at_c<6>(*_val), _1, _3));
-	qi::on_success(qed,       setToken(phoenix::at_c<2>(*_val), _1, _3));
-	qi::on_success(proof,     setToken(phoenix::at_c<7>(*_val), _1, _3));
-
-	qi::on_success(axiom,   setToken(phoenix::at_c<6>(phoenix::at_c<0>(*_val)), _1, _3));
-	qi::on_success(theorem, setToken(phoenix::at_c<6>(phoenix::at_c<0>(*_val)), _1, _3));
-	qi::on_success(def,     setToken(phoenix::at_c<6>(phoenix::at_c<0>(*_val)), _1, _3));
+	qi::on_success(axiom,   setToken(phoenix::at_c<6>(phoenix::at_c<0>(*_val)), _1, _3, phoenix::val(src)));
+	qi::on_success(theorem, setToken(phoenix::at_c<6>(phoenix::at_c<0>(*_val)), _1, _3, phoenix::val(src)));
+	qi::on_success(def,     setToken(phoenix::at_c<6>(phoenix::at_c<0>(*_val)), _1, _3, phoenix::val(src)));
 
 	//qi::on_success(theory, setToken(phoenix::at_c<2>(*_val), _1, _3));
 

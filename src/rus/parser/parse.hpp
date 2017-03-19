@@ -352,22 +352,12 @@ struct GetStep {
 
 template<typename Iterator>
 struct SetToken {
-    template <typename T1, typename T2, typename T3>
+    template <typename T1, typename T2, typename T3, typename T4>
     struct result { typedef void type; };
-    void operator()(Token& token, Iterator beg, Iterator end) const {
+    void operator()(Token& token, Iterator beg, Iterator end, Source* src) const {
     	token.beg = &*beg;
     	token.end = &*end;
-    	//cout << wrapper<>(it) << endl;
-    }
-};
-
-
-struct ShowFuck {
-    template <typename T>
-    struct result { typedef void type; };
-    void operator()(auto& a) const {
-    	//token = it.loc;
-    	cout << a << endl;
+    	token.src = src;
     }
 };
 
@@ -415,7 +405,7 @@ struct AppendComment {
 
 template <typename Iterator>
 struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
-	Grammar();
+	Grammar(Source*);
 	void initNames();
 
 	VarStack var_stack;
@@ -453,7 +443,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, Source(), unicode::space_type> source;
 
 	static bool parse(Iterator& beg, Iterator& end, auto space, Source& src) {
-		return qi::phrase_parse(beg, end, Grammar(), space, src);
+		return qi::phrase_parse(beg, end, Grammar(&src), space, src);
 	}
 };
 
