@@ -22,7 +22,8 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Comment,
-	(mdl::string, text)
+	(mdl::string,     text)
+	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -31,16 +32,19 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::rus::Symbol, symb)
 	(mdl::rus::Symbol, ascii)
 	(mdl::rus::Symbol, latex)
+	(mdl::rus::Token,  token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Vars,
 	(mdl::vector<mdl::rus::Symbol>, v)
+	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Disj,
 	(mdl::vector<mdl::vector<mdl::rus::Symbol>>, d)
+	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -48,6 +52,9 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::uint, ind)
 	(mdl::uint, id)
 	(mdl::vector<mdl::rus::Type*>, sup)
+	(mdl::rus::Type::Supers, supers)
+	(mdl::rus::Rules, rules)
+	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -57,18 +64,21 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::rus::Type*, type)
 	(mdl::rus::Vars, vars)
 	(mdl::rus::Expr, term)
+	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Hyp,
 	(mdl::uint, ind)
 	(mdl::rus::Expr, expr)
+	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Prop,
 	(mdl::uint, ind)
 	(mdl::rus::Expr, expr)
+	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -79,7 +89,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::rus::Disj, disj)
 	(mdl::vector<mdl::rus::Hyp*>,  hyps)
 	(mdl::vector<mdl::rus::Prop*>, props)
-	(mdl::Location,  loc)
+	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -132,12 +142,14 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::rus::Step::Value, val)
 	(mdl::vector<mdl::rus::Ref>, refs)
 	(mdl::rus::Proof*, proof)
+	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Qed,
 	(mdl::rus::Prop*, prop)
 	(mdl::rus::Step*, step)
+	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -162,7 +174,9 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::rus::Vars, vars)
 	(mdl::vector<mdl::rus::Proof::Elem>, elems)
 	(mdl::rus::Theorem*, thm)
+	(mdl::rus::Proof*, par)
 	(bool, has_id)
+	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -188,9 +202,9 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Import,
-	(mdl::string, root)
-	(mdl::string, name)
 	(mdl::rus::Source*, source)
+	(bool, primary)
+	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -198,13 +212,11 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::uint, id)
 	(mdl::vector<mdl::rus::Node>, nodes)
 	(mdl::rus::Theory*, parent)
+	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Source,
-	(bool, top)
-	(mdl::string, root)
-	(mdl::string, name)
 	(mdl::rus::Theory*, theory)
 )
 

@@ -46,7 +46,7 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 	const phoenix::function<AddToMath>   addToMath;
 	const phoenix::function<ParseImport> parseImport;
 	const phoenix::function<AssembleDef> assembleDef;
-	const phoenix::function<SetLocation<Iterator>> setLocation;
+	const phoenix::function<SetToken<Iterator>> setToken;
 	const phoenix::function<IncInd>      incInd;
 	const phoenix::function<MakeString>  makeString;
 	const phoenix::function<DeleteComment> deleteComment;
@@ -277,20 +277,43 @@ Grammar<Iterator>::Grammar() : Grammar::base_type(source, "russell"), var_stack(
 	comment %= comment_ml | comment_sl;
 
 	source =
-		eps [at_c<3>(_val) = new_<Theory>()]
+		eps [at_c<0>(_val) = new_<Theory>()]
 		> +(
-			import   [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
-			constant [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
-			type     [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
-			rule     [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
-			axiom    [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
-			def      [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
-			theorem  [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
-			proof    [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))] |
-			comment  [push_back(at_c<1>(*at_c<3>(_val)), phoenix::construct<Node>(_1))]
+			import   [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(_1))] |
+			constant [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(_1))] |
+			type     [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(_1))] |
+			rule     [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(_1))] |
+			axiom    [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(_1))] |
+			def      [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(_1))] |
+			theorem  [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(_1))] |
+			proof    [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(_1))] |
+			comment  [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(_1))]
 		);
 
-	//qi::on_success(assertion, setLocation(_val, _1));
+	const phoenix::function<ShowFuck> fuck;
+
+	//qi::on_success(assertion, fuck(_1));
+	//qi::on_success(assertion, fuck(_3));
+
+	qi::on_success(comment,   setToken(phoenix::at_c<1>(*_val), _1, _3));
+	qi::on_success(import,    setToken(phoenix::at_c<2>(*_val), _1, _3));
+	qi::on_success(constant,  setToken(phoenix::at_c<4>(*_val), _1, _3));
+	qi::on_success(vars,      setToken(phoenix::at_c<1>(_val), _1, _3));
+	qi::on_success(disj,      setToken(phoenix::at_c<1>(_val), _1, _3));
+	qi::on_success(type,      setToken(phoenix::at_c<5>(*_val), _1, _3));
+	qi::on_success(rule,      setToken(phoenix::at_c<5>(*_val), _1, _3));
+	qi::on_success(hyp,       setToken(phoenix::at_c<2>(*_val), _1, _3));
+	qi::on_success(prop,      setToken(phoenix::at_c<2>(*_val), _1, _3));
+	qi::on_success(step,      setToken(phoenix::at_c<6>(*_val), _1, _3));
+	qi::on_success(qed,       setToken(phoenix::at_c<2>(*_val), _1, _3));
+	qi::on_success(proof,     setToken(phoenix::at_c<7>(*_val), _1, _3));
+
+	qi::on_success(axiom,   setToken(phoenix::at_c<6>(phoenix::at_c<0>(*_val)), _1, _3));
+	qi::on_success(theorem, setToken(phoenix::at_c<6>(phoenix::at_c<0>(*_val)), _1, _3));
+	qi::on_success(def,     setToken(phoenix::at_c<6>(phoenix::at_c<0>(*_val)), _1, _3));
+
+	//qi::on_success(theory, setToken(phoenix::at_c<2>(*_val), _1, _3));
+
 	qi::on_error<qi::fail>(
 		source,
 		std::cout << phoenix::val("Syntax error. Expecting ") << _4

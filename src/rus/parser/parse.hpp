@@ -351,11 +351,23 @@ struct GetStep {
 
 
 template<typename Iterator>
-struct SetLocation {
-    template <typename T1, typename T2>
+struct SetToken {
+    template <typename T1, typename T2, typename T3>
     struct result { typedef void type; };
-    void operator()(Assertion* ass, Iterator it) const {
-    	ass->loc = it.loc;
+    void operator()(Token& token, Iterator beg, Iterator end) const {
+    	token.beg = &*beg;
+    	token.end = &*end;
+    	//cout << wrapper<>(it) << endl;
+    }
+};
+
+
+struct ShowFuck {
+    template <typename T>
+    struct result { typedef void type; };
+    void operator()(auto& a) const {
+    	//token = it.loc;
+    	cout << a << endl;
     }
 };
 

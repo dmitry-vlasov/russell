@@ -364,27 +364,6 @@ struct Source {
 	void write() const { path().write(data); }
 };
 
-template<class S>
-struct Token {
-	typedef S Source;
-
-	Token() : src(nullptr), beg(nullptr), end(nullptr) { }
-	Token(Source* s) : src(s), beg(nullptr), end(nullptr) { }
-	Token(Source* s, const char* b, const char* e) :
-	src(s), beg(b), end(e) { }
-	Source*     src;
-	const char* beg;
-	const char* end;
-
-	string show() const {
-		LocationIter b (src->data.begin(), src->label);
-		LocationIter e (string::const_iterator(beg), src->label);
-		LocationIter x = b;
-		while (x != e) ++x;
-		return x.loc.show();
-	}
-};
-
 } // mdl
 
   

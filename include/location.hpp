@@ -105,8 +105,70 @@ private :
 	}
 };
 
+template<class S>
+struct Token {
+	typedef S Source;
+
+	Token() : src(nullptr), beg(nullptr), end(nullptr) { }
+	Token(Source* s) : src(s), beg(nullptr), end(nullptr) { }
+	Token(Source* s, const char* b, const char* e) :
+	src(s), beg(b), end(e) { }
+	Source*     src;
+	const char* beg;
+	const char* end;
+
+	string show() const {
+		LocationIter b (src->data.begin(), src->label);
+		LocationIter e (string::const_iterator(beg), src->label);
+		LocationIter x = b;
+		while (x != e) ++x;
+		return x.loc.show();
+	}
+};
+
+template<class S>
+struct TokenIter : public string::const_iterator {
+	typedef S Source;
+	TokenIter(const TokenIter& it) :
+	string::const_iterator(it) { }
+	TokenIter(string::const_iterator it, Source* src) :
+	string::const_iterator(it), token_(src) { }
+
+	TokenIter& operator ++() {
+		inc(loc, *string::const_iterator::operator++());
+		return *this;
+	}
+	TokenIter operator ++(int) {
+		TokenIter curr(*this);
+		inc(loc, *string::const_iterator::operator++());
+		return curr;
+	}
+
+	void start() {
+		token.beg = &string::const_iterator::operator*();
+	}
+	void end() {
+		token.end = &string::const_iterator::operator*();
+	}
+	Token<Source> token() const {
+		return token_;
+	}
+
+private :
+	Token<Source> token_;
+	Location loc;
+
+	void inc(Location&loc, char ch) {
+		++ loc.pos;
+		if (ch == '\n') { loc.col = 0; ++ loc.line; }
+		else ++ loc.col;
+	}
+};
+
+
+
 inline ostream& operator << (ostream& os, const Location& loc) {
-	os << "file: " << loc.file << " ";
+	os << "file: " << Lex::toStr(loc.file) << " ";
 	os << "line: " << to_string(loc.line + 1) << " ";
 	os << "col: " << to_string(loc.col + 1);
 	return os;

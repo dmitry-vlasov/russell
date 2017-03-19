@@ -5,8 +5,11 @@
 
 namespace mdl { namespace rus {
 
+typedef mdl::Token<Source> Token;
+
 struct Comment {
 	string text;
+	Token  token;
 };
 
 struct Const {
@@ -14,14 +17,17 @@ struct Const {
 	Symbol symb;
 	Symbol ascii;
 	Symbol latex;
+	Token  token;
 };
 
 struct Vars {
 	vector<Symbol> v;
+	Token token;
 };
 
 struct Disj {
 	vector<vector<Symbol>> d;
+	Token token;
 };
 
 struct Rule;
@@ -30,12 +36,14 @@ void parse_expr(Expr& ex);
 void parse_term(Expr& ex, Rule* rule);
 
 struct Type {
+	typedef map<const Type*, Rule*> Supers;
 	~Type();
 	uint ind;
 	uint id;
 	vector<Type*> sup;
-	map<const Type*, Rule*> supers;
+	Supers supers;
 	Rules rules;
+	Token token;
 };
 
 struct Rule {
@@ -44,6 +52,7 @@ struct Rule {
 	Type* type;
 	Vars  vars;
 	Expr  term;
+	Token token;
 };
 
 inline Type* Tree::type() { return kind == VAR ? val.var->type : val.node->rule->type; }
@@ -54,13 +63,15 @@ inline Type::~Type() {
 }
 
 struct Hyp {
-	uint ind;
-	Expr expr;
+	uint  ind;
+	Expr  expr;
+	Token token;
 };
 
 struct Prop {
-	uint ind;
-	Expr expr;
+	uint  ind;
+	Expr  expr;
+	Token token;
 };
 
 struct Proof;
@@ -77,7 +88,7 @@ struct Assertion {
 	Disj disj;
 	vector<Hyp*>  hyps;
 	vector<Prop*> props;
-	Location      loc;
+	Token         token;
 };
 
 struct Axiom {
@@ -169,6 +180,7 @@ struct Step {
 	Value       val;
 	vector<Ref> refs;
 	Proof*      proof;
+	Token       token;
 };
 
 inline Expr& Ref::expr() {
@@ -194,6 +206,7 @@ inline const Expr& Ref::expr() const {
 struct Qed {
 	Prop* prop;
 	Step* step;
+	Token token;
 };
 
 struct Proof {
@@ -232,6 +245,7 @@ struct Proof {
 	Theorem*     thm;
 	Proof*       par;
 	bool         has_id;
+	Token        token;
 };
 
 
@@ -291,6 +305,7 @@ struct Import {
 	Import(Source* src, bool prim) : source(src), primary(prim) { }
 	Source* source;
 	bool    primary;
+	Token   token;
 };
 
 struct Theory {
@@ -301,6 +316,7 @@ struct Theory {
 	uint         id;
 	vector<Node> nodes;
 	Theory*      parent;
+	Token        token;
 };
 
 struct Source : public mdl::Source<Source, Sys> {
