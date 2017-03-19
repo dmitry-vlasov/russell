@@ -1,3 +1,5 @@
+#include <boost/program_options.hpp>
+
 #include "rus/sys.hpp"
 #include "smm/sys.hpp"
 #include "mm/sys.hpp"

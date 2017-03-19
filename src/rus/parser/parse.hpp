@@ -86,7 +86,7 @@ static void mark_vars(Expr& ex, VarStack& var_stack) {
 	}
 }
 
-inline Type* find_type(uint id, Location* loc = nullptr) {
+inline Type* find_type(uint id, const Location* loc = nullptr) {
 	if (!Sys::get().math.types.count(id))
 		throw Error("unknown type", show_id(id), loc);
 	return Sys::mod().math.types[id];

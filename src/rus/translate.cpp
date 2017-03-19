@@ -151,6 +151,7 @@ vector<smm::Node> translate_assertion(const Assertion* ass, Maps& maps) {
 		ra->essential= translate_essentials(ass, maps);
 		ra->prop.expr  = translate_expr(prop->expr, maps);
 		ra->prop.label = ass_lab;
+		ra->prop.axiom = false;
 		ra_vect.push_back(ra);
 		maps.assertions[ass] = ra;
 	}

@@ -4,41 +4,50 @@
 
 namespace mdl { namespace smm {
 
+typedef mdl::Token<Source> Token;
+
 struct Constants {
-	Vect expr;
+	Vect  expr;
+	Token token;
 };
 
 struct Variables {
-	Vect expr;
+	Vect  expr;
+	Token token;
 };
 
 struct Disjointed {
-	Vect expr;
+	Vect  expr;
+	Token token;
 };
 
 struct Essential {
-	uint index;
-	Vect expr;
+	uint  index;
+	Vect  expr;
+	Token token;
 };
 
 struct Floating  {
 	Symbol type() const { return expr[0]; }
 	Symbol var() const { return expr[1]; }
-	uint index;
-	Vect expr;
+	uint  index;
+	Vect  expr;
+	Token token;
 };
 
 struct Inner {
 	Symbol type() const { return expr[0]; }
 	Symbol var() const { return expr[1]; }
-	uint index;
-	Vect expr;
+	uint  index;
+	Vect  expr;
+	Token token;
 };
 
 struct Proposition {
-	bool axiom;
-	uint label;
-	Vect expr;
+	bool  axiom;
+	uint  label;
+	Vect  expr;
+	Token token;
 };
 
 struct Proof;
@@ -58,7 +67,7 @@ struct Assertion {
 	vector<Inner*>      inner;
 	Proposition prop;
 	Proof*      proof;
-	Location    loc;
+	Token       token;
 };
 
 struct Proof;
@@ -124,6 +133,7 @@ struct Proof {
 	vector<Ref*> refs;
 	Assertion*   theorem;
 	Type         type;
+	Token        token;
 };
 
 struct Comment {
@@ -137,6 +147,7 @@ struct Inclusion {
 	Inclusion(Source* s, bool p) : source(s), primary(p) { }
 	Source* source;
 	bool    primary;
+	Token   token;
 };
 
 struct Node {

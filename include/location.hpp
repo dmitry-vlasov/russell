@@ -1,6 +1,7 @@
 #pragma once
 
 #include "std.hpp"
+#include "lex.hpp"
 
 namespace mdl { 
 
@@ -69,6 +70,14 @@ struct Location {
 	uint col;
 	uint pos;
 	uint file;
+
+	string show() const {
+		string s;
+		s += "file: " + Lex::toStr(file) + " ";
+		s += "line: " + to_string(line + 1) + " ";
+		s += "col: "  + to_string(col + 1);
+		return s;
+	}
 };
 
 struct LocationIter : public string::const_iterator {

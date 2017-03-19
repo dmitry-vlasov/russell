@@ -19,9 +19,15 @@ private:
 		vector<Essential*>  essential;
 		vector<Floating*>   floating;
 		vector<Inner*>      inner;
+
 		Proposition prop;
 		Proof*      proof;
 		Ref::Type   ref;
+		Source*     source;
+
+		Token token(const peg::SemanticValues& sv) const {
+			return Token(source, sv.c_str(), sv.c_str() + sv.length());
+		}
 	};
 	peg::parser parser;
 
@@ -90,48 +96,57 @@ public:
 			}
 			return expr;
 		};
-		parser["CONST"] = [](const peg::SemanticValues& sv) {
-			Constants* consts = new Constants { sv[0].get<Vect>() };
+		parser["CONST"] = [](const peg::SemanticValues& sv, peg::any& context) {
+			Context& c = *context.get<Context*>();
+			Constants* consts = new Constants{sv[0].get<Vect>(), c.token(sv)};
 			for (Symbol c : consts->expr)
 				Sys::mod().math.constants.insert(c);
 			return consts;
 		};
 		parser["VAR"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Variables* vars = new Variables { sv[0].get<Vect>() };
-			context.get<std::shared_ptr<Context>>()->variables.push_back(vars);
+			Context& c = *context.get<Context*>();
+			Variables* vars = new Variables{sv[0].get<Vect>(), c.token(sv)};
+			c.variables.push_back(vars);
 			return vars;
 		};
 		parser["DISJ"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Disjointed* disj = new Disjointed { sv[0].get<Vect>() };
-			context.get<std::shared_ptr<Context>>()->disjointed.push_back(disj);
+			Context& c = *context.get<Context*>();
+			Disjointed* disj = new Disjointed{sv[0].get<Vect>(), c.token(sv)};
+			c.disjointed.push_back(disj);
 			return disj;
 		};
 		parser["ESS"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Essential* ess = new Essential { sv[0].get<uint>(), sv[1].get<Vect>() };
-			context.get<std::shared_ptr<Context>>()->essential.push_back(ess);
+			Context& c = *context.get<Context*>();
+			Essential* ess = new Essential{sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv)};
+			c.essential.push_back(ess);
 			return ess;
 		};
 		parser["FLO"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Floating* flo = new Floating { sv[0].get<uint>(), sv[1].get<Vect>() };
-			context.get<std::shared_ptr<Context>>()->floating.push_back(flo);
+			Context& c = *context.get<Context*>();
+			Floating* flo = new Floating{sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv)};
+			c.floating.push_back(flo);
 			return flo;
 		};
 		parser["INNER"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Inner* inn = new Inner { sv[0].get<uint>(), sv[1].get<Vect>() };
-			context.get<std::shared_ptr<Context>>()->inner.push_back(inn);
+			Context& c = *context.get<Context*>();
+			Inner* inn = new Inner{sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv)};
+			c.inner.push_back(inn);
 			return inn;
 		};
 		parser["AX"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			context.get<std::shared_ptr<Context>>()->prop = { true, sv[0].get<uint>(), sv[1].get<Vect>() };
+			Context& c = *context.get<Context*>();
+			c.prop = {true, sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv)};
 		};
 		parser["TH"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Context& c = *context.get<std::shared_ptr<Context>>();
-			c.prop = { false, sv[0].get<uint>(), sv[1].get<Vect>() };
+			Context& c = *context.get<Context*>();
+			c.prop = {false, sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv) };
 			c.proof = sv[2].get<Proof*>();
 		};
-		parser["PROOF"] = [](const peg::SemanticValues& sv) {
+		parser["PROOF"] = [](const peg::SemanticValues& sv, peg::any& context) {
+			Context& c = *context.get<Context*>();
 			Proof* pr = new Proof();
 			pr->refs = sv.transform<Ref*>();
+			pr->token = c.token(sv);
 			return pr;
 		};
 		parser["REF_TYPE"] = [](const peg::SemanticValues& sv, peg::any& context) {
@@ -145,11 +160,11 @@ public:
 			case 'p' : ref = Ref::Type::THEOREM;   break;
 			default  : throw Error("unknown reference type in proof", sv.token());
 			}
-			context.get<std::shared_ptr<Context>>()->ref = ref;
+			context.get<Context*>()->ref = ref;
 			return ref;
 		};
 		parser["REF_VAL"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			switch (context.get<std::shared_ptr<Context>>()->ref) {
+			switch (context.get<Context*>()->ref) {
 			case Ref::Type::ESSENTIAL : return (uint)std::stoul(sv.token());
 			case Ref::Type::FLOATING  : return (uint)std::stoul(sv.token());
 			case Ref::Type::INNER     : return (uint)std::stoul(sv.token());
@@ -159,7 +174,7 @@ public:
 			}
 		};
 		parser["REF"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Context& c = *context.get<std::shared_ptr<Context>>();
+			Context& c = *context.get<Context*>();
 			Ref::Type type = sv[0].get<Ref::Type>();
 			uint lab = sv[1].get<uint>();
 			Sys::Math& math = Sys::mod().math;
@@ -172,8 +187,8 @@ public:
 			default  : throw Error("unknown reference type in proof", sv.token());
 			}
 		};
-		parser["ASSERTION"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
-			Context& c = *ctx.get<std::shared_ptr<Context>>();
+		parser["ASSERTION"] = [](const peg::SemanticValues& sv, peg::any& context) {
+			Context& c = *context.get<Context*>();
 			Assertion* ass = new Assertion(c.prop.label);
 			ass->variables  = c.variables;
 			ass->disjointed = c.disjointed;
@@ -182,6 +197,7 @@ public:
 			ass->essential  = c.essential;
 			ass->proof      = c.proof;
 			ass->prop       = c.prop;
+			ass->token      = c.token(sv);
 			c.clear();
 			makeVars(ass->variables);
 			makeVars(ass->disjointed);
@@ -207,10 +223,14 @@ public:
 			}
 			return node;
 		};
-		parser["SOURCE"] = [label](const peg::SemanticValues& sv) {
-			Source* src = new Source(label);
-			src->contents = sv.transform<Node>();
-			return src;
+		parser["SOURCE"].enter = [label](peg::any& context) {
+			Context& c = *context.get<Context*>();
+			c.source = new Source(label);
+		};
+		parser["SOURCE"] = [](const peg::SemanticValues& sv, peg::any& context) {
+			Context& c = *context.get<Context*>();
+			c.source->contents = sv.transform<Node>();
+			return c.source;
 		};
 		parser["INCLUDE"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			string name = sv.token();
@@ -227,6 +247,11 @@ public:
 				return inc;
 			}
 		};
+		parser.log = [label](size_t ln, size_t col, const std::string& err_msg) {
+			std::stringstream ss;
+			ss << "file: " << Lex::toStr(label) << ", line: " << ln << ", col: " << col << ": " << err_msg << std::endl;
+			throw Error(ss.str());
+		};
 	}
 
 	static Source* parse(uint label) {
@@ -236,9 +261,11 @@ public:
 		path.read(data);
 		Source* src = nullptr;
 		Parser p(label);
-		peg::any context(std::make_shared<Context>());
-		if (!p.parser.parse<Source*>(data.c_str(), context, src)) return nullptr;
+		Context* context = new Context();
+		peg::any c(context);
+		if (!p.parser.parse<Source*>(data.c_str(), c, src)) return nullptr;
 		std::swap(data, src->data);
+		delete context;
 		return src;
 	}
 

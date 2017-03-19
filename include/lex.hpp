@@ -1,6 +1,7 @@
 #pragma once
 
 #include "std.hpp"
+#include "symbol.hpp"
 
 namespace mdl {
 

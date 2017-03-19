@@ -17,8 +17,8 @@ private:
 		stack<Source*> source_stack;
 		set<Block*>    src_blocks;
 
-		Synt make_info(const peg::SemanticValues& sv) const {
-			return Synt(source_stack.top(), sv.c_str(), sv.c_str() + sv.length());
+		Token token(const peg::SemanticValues& sv) const {
+			return Token(source_stack.top(), sv.c_str(), sv.c_str() + sv.length());
 		}
 	};
 	peg::parser parser;
@@ -69,21 +69,21 @@ public:
 		};
 		parser["CONST"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Constants* consts = new Constants{sv[0].get<Vect>(), c.make_info(sv)};
+			Constants* consts = new Constants{sv[0].get<Vect>(), c.token(sv)};
 			for (Symbol cs : consts->expr)
 				c.scope_stack.back().consts.insert(cs);
 			return consts;
 		};
 		parser["VAR"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Variables* vars = new Variables {sv[0].get<Vect>(), c.make_info(sv)};
+			Variables* vars = new Variables {sv[0].get<Vect>(), c.token(sv)};
 			for (Symbol v : vars->expr)
 				c.scope_stack.back().vars.insert(v);
 			return vars;
 		};
 		parser["DISJ"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Disjointed* disj = new Disjointed {sv[0].get<Vect>(), c.make_info(sv)};
+			Disjointed* disj = new Disjointed {sv[0].get<Vect>(), c.token(sv)};
 			for (Symbol v : disj->expr)
 				c.scope_stack.back().vars.insert(v);
 			return disj;
@@ -91,21 +91,21 @@ public:
 		parser["ESS"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
 			Essential* ess = new Essential(sv[0].get<uint>(), sv[1].get<Vect>());
-			ess->info = c.make_info(sv);
+			ess->token = c.token(sv);
 			markVars(ess->expr, c.scope_stack);
 			return ess;
 		};
 		parser["FLO"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
 			Floating* flo = new Floating(sv[0].get<uint>(), sv[1].get<Vect>());
-			flo->info = c.make_info(sv);
+			flo->token = c.token(sv);
 			markVars(flo->expr, c.scope_stack);
 			return flo;
 		};
 		parser["AX"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
 			Axiom* ax = new Axiom(sv[0].get<uint>(), sv[1].get<Vect>());
-			ax->info = c.make_info(sv);
+			ax->token = c.token(sv);
 			markVars(ax->expr, c.scope_stack);
 			return ax;
 		};
@@ -113,7 +113,7 @@ public:
 			Context& c = *context.get<Context*>();
 			Theorem* th = new Theorem(sv[0].get<uint>(), sv[1].get<Vect>(), sv[2].get<Proof*>());
 			markVars(th->expr, c.scope_stack);
-			th->info = c.make_info(sv);
+			th->token = c.token(sv);
 			return th;
 		};
 		parser["PROOF"] = [](const peg::SemanticValues& sv) {
@@ -148,7 +148,7 @@ public:
 			Context& c = *context.get<Context*>();
 			Block* b = c.block;
 			b->contents = sv.transform<Node>();
-			b->info = c.make_info(sv);
+			b->token = c.token(sv);
 			init_indexes(b->contents);
 			return b;
 		};
@@ -198,6 +198,11 @@ public:
 				Sys::mod().math.sources.use(src->label, inc->source);
 				return inc;
 			}
+		};
+		parser.log = [label](size_t ln, size_t col, const std::string& err_msg) {
+			std::stringstream ss;
+			ss << "file: " << Lex::toStr(label) << ", line: " << ln << ", col: " << col << ": " << err_msg << std::endl;
+			throw Error(ss.str());
 		};
 	}
 

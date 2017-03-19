@@ -19,14 +19,14 @@ static void checkDisjPair(const Vect& ex1, const Vect& ex2, const Assertion* th,
 			if (s_1.var && s_1 == s_2) {
 				string msg = "disjointed violation, ";
 				msg += "variable " + show_sy(s_1) + " is common for " + show_ex(ex1) + " and " + show_ex(ex2);
-				throw Error("verification", msg, &th->loc);
+				throw Error("verification", msg, th->token);
 			}
 			if (s_1.var && s_2.var && !areDisjointed(th, s_1.lit, s_2.lit)) {
 				string msg = "inherited disjointed violation, vars: ";
 				msg += show_sy(s_1) + " and " + show_sy(s_2) + " ";
 				msg += "are not disjointed in " + Lex::toStr(th->prop.label) + ", ";
 				msg += "while claimed to be disjointed in " + Lex::toStr(ass->prop.label);
-				throw Error("verification", msg, &th->loc);
+				throw Error("verification", msg, th->token);
 			}
 		}
 	}
@@ -76,9 +76,9 @@ static void checkSymbols(const Assertion* ass, const Vect& expr) {
 			}
 		}
 		if (is_const && is_var)
-			throw Error("constant symbol is marked as variable", &ass->loc);
+			throw Error("constant symbol is marked as variable", ass->token);
 		if (!is_const && !is_var)
-			throw Error("symbol neither constant nor variable", &ass->loc);
+			throw Error("symbol neither constant nor variable", ass->token);
 	}
 }
 
@@ -92,11 +92,11 @@ template<typename T>
 static void checkFloating(const Assertion* ass, const vector<T>& floatings) {
 	for (auto flo : floatings) {
 		if (flo->expr.size() != 2)
-			throw Error("floating declaration must have exactly 2 symbols", &ass->loc);
+			throw Error("floating declaration must have exactly 2 symbols", ass->token);
 		if (flo->expr[0].var)
-			throw Error("floating first symbol must be type (constant)", &ass->loc);
+			throw Error("floating first symbol must be type (constant)", ass->token);
 		if (!flo->expr[1].var) {
-			throw Error("floating second symbol must be type variable ", show_ex(flo->expr), &ass->loc);
+			throw Error("floating second symbol must be type variable ", show_ex(flo->expr), ass->token);
 		}
 	}
 }
@@ -105,7 +105,7 @@ static void checkDisjointed(const Assertion* ass, Symbol var) {
 	for (auto vars : ass->variables)
 		if (contains(vars->expr, var))
 			return;
-	throw Error("disjointed symbols must be variables", &ass->loc);
+	throw Error("disjointed symbols must be variables", ass->token);
 }
 
 
@@ -131,7 +131,7 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Vect>& expr_s
 			string msg = "empty stack (floating):\n";
 			msg += "theorem " + Lex::toStr(th->prop.label) + "\n";
 			msg += "assertion " + Lex::toStr(ass->prop.label) + "\n";
-			throw Error("verification", msg, &th->loc);
+			throw Error("verification", msg, th->token);
 		}
 		sub[flo->var()] = expr_stack.top();
 		expr_stack.pop();
@@ -141,7 +141,7 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Vect>& expr_s
 			string msg = "empty stack (essential):\n";
 			msg += "theorem " + Lex::toStr(th->prop.label) + "\n";
 			msg += "assertion " + Lex::toStr(ass->prop.label) + "\n";
-			throw Error("verification", msg, &th->loc);
+			throw Error("verification", msg, th->token);
 		}
 		if (apply(sub, ess->expr) != expr_stack.top()) {
 			string msg = "hypothesis mismatch:\n";
@@ -150,7 +150,7 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Vect>& expr_s
 			msg += show_ex(expr_stack.top()) + "\n";
 			msg += "theorem " + Lex::toStr(th->prop.label) + "\n";
 			msg += "assertion " + Lex::toStr(ass->prop.label) + "\n";
-			throw Error("verification", msg, &th->loc);
+			throw Error("verification", msg, th->token);
 		}
 		expr_stack.pop();
 	}
@@ -174,11 +174,11 @@ static void verify_assertion(const Assertion* ass) {
 		}
 	}
 	if (expr_stack.top() != ass->prop.expr) {
-		throw Error("verification", "propositions mismatch", &ass->loc);
+		throw Error("verification", "propositions mismatch", ass->token);
 	}
 	expr_stack.pop();
 	if (!expr_stack.empty()) {
-		throw Error("verification: non-empty stack at the end", &ass->loc);
+		throw Error("verification: non-empty stack at the end", ass->token);
 	}
 }
 

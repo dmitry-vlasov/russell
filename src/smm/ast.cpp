@@ -12,10 +12,7 @@ Ref::~Ref() {
 		delete val.prf;
 }
 
-Assertion::Assertion(uint label) :
-	variables(), disjointed(), essential(),
-	floating(), inner(),
-	prop(), proof(), loc() {
+Assertion::Assertion(uint label) : proof(nullptr) {
 	Sys::mod().math.assertions.add(label, this);
 }
 Assertion::~Assertion() {

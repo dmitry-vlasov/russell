@@ -365,16 +365,24 @@ struct Source {
 };
 
 template<class S>
-struct Synt {
+struct Token {
 	typedef S Source;
 
-	Synt() : src(nullptr), beg(nullptr), end(nullptr) { }
-	Synt(Source* s) : src(s), beg(nullptr), end(nullptr) { }
-	Synt(Source* s, const char* b, const char* e) :
+	Token() : src(nullptr), beg(nullptr), end(nullptr) { }
+	Token(Source* s) : src(s), beg(nullptr), end(nullptr) { }
+	Token(Source* s, const char* b, const char* e) :
 	src(s), beg(b), end(e) { }
 	Source*     src;
 	const char* beg;
 	const char* end;
+
+	string show() const {
+		LocationIter b (src->data.begin(), src->label);
+		LocationIter e (string::const_iterator(beg), src->label);
+		LocationIter x = b;
+		while (x != e) ++x;
+		return x.loc.show();
+	}
 };
 
 } // mdl

@@ -1,32 +1,32 @@
 #pragma once
 
-#include "sys.hpp"
+#include "mm/sys.hpp"
 
 namespace mdl { namespace mm {
 
-typedef mdl::Synt<Source> Synt;
+typedef mdl::Token<Source> Token;
 
 struct Constants {
-	Vect expr;
-	Synt info;
+	Vect  expr;
+	Token token;
 };
 
 struct Variables {
-	Vect expr;
-	Synt info;
+	Vect  expr;
+	Token token;
 };
 
 struct Disjointed {
-	Vect expr;
-	Synt info;
+	Vect  expr;
+	Token token;
 };
 
 struct Essential {
 	Essential(uint l, const Vect& e);
 	~Essential();
-	uint label;
-	Vect expr;
-	Synt info;
+	uint  label;
+	Vect  expr;
+	Token token;
 };
 
 struct Floating  {
@@ -34,18 +34,18 @@ struct Floating  {
 	~Floating();
 	Symbol type() const { return expr[0]; }
 	Symbol var() const { return expr[1]; }
-	uint label;
-	Vect expr;
-	Synt info;
+	uint  label;
+	Vect  expr;
+	Token token;
 };
 
 struct Axiom {
 	Axiom(uint l, const Vect& e);
 	~Axiom();
-	uint label;
-	Vect expr;
-	uint arity;
-	Synt info;
+	uint  label;
+	Vect  expr;
+	uint  arity;
+	Token token;
 };
 
 class Proof;
@@ -57,7 +57,7 @@ struct Theorem {
 	Vect   expr;
 	uint   arity;
 	Proof* proof;
-	Synt   info;
+	Token  token;
 };
 
 
@@ -119,7 +119,7 @@ struct Proof {
 	~Proof();
 	vector<Ref*> refs;
 	Type         type;
-	Synt         info;
+	Token        token;
 };
 
 
@@ -224,7 +224,7 @@ struct Block {
 	Block* parent;
 	Block* sibling;
 	vector<Node> contents;
-	Synt info;
+	Token token;
 };
 
 struct Source : public mdl::Source<Source, Sys> {
@@ -238,7 +238,8 @@ struct Inclusion {
 	Inclusion(Source* src, bool prim);
 	~Inclusion();
 	Source* source;
-	bool primary;
+	bool    primary;
+	Token   token;
 };
 
 inline void Node::destroy() {
