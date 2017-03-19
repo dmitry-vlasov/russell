@@ -246,22 +246,23 @@ struct ParseTerm {
 template<class> class Grammar;
 
 struct ParseImport {
-	template <typename T>
+	template <typename T1, typename T2>
 	struct result { typedef Import* type; };
-	Import* operator()(string name) const {
+	Import* operator()(string name, Source* src) const {
 		static map<string, Import*> imported;
+		Import* imp = nullptr;
 		if (imported.count(name)) {
-			Import* imp = imported[name];
-			return new Import(imp->source, false);
+			imp = new Import(imported[name]->source, false);
 		} else {
 			Path path(Sys::conf().in);
 			path.name_ext(name);
 			path.ext = "rus";
-			Import* imp = new Import(nullptr, true);
+			imp = new Import(nullptr, true);
 			imported[name] = imp;
 			imp->source = parse(path);
-			return imp;
 		}
+		src->include(imp->source);
+		return imp;
 	}
 };
 
@@ -380,6 +381,7 @@ struct AssembleDef {
 		}
 		prop->ind = 0;
 		prop->expr.type = d->prop.type;
+		prop->expr.token = d->prop.token;
 		mark_vars(prop->expr, varsStack);
 		d->ass.props.push_back(prop);
 	}

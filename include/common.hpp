@@ -351,10 +351,10 @@ public:
 template<class Src, class Sys>
 struct Source {
 	Source(uint l) : label(l) { }
+	virtual ~Source() { }
 
-	uint      label;
-	string    data;
-	set<Src*> deps;
+	uint   label;
+	string data;
 
 	Path path() const { return Sys::conf().in.relative(name()); }
 	string name() const { return Lex::toStr(label); }
@@ -362,6 +362,17 @@ struct Source {
 
 	void read() { path().read(data); }
 	void write() const { path().write(data); }
+
+	// Transitively closed inclusion relation:
+	set<Src*> includes;
+	set<Src*> included;
+
+	void include(Src* src) {
+		includes.insert(src);
+		for (Src* s : src->includes) includes.insert(s);
+		src->included.insert(dynamic_cast<Src*>(this));
+		for (Src* s : src->included) s->included.insert(dynamic_cast<Src*>(this));
+	}
 };
 
 } // mdl

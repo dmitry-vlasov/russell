@@ -18,7 +18,7 @@ struct Action {
 inline bool check_preceeding(const Rule* r, const Expr *e) {
 	Source* r_src = r->token.src;
 	Source* e_src = e->token.src;
-	if (e_src->deps.count(r_src)) return true;
+	if (e_src->includes.count(r_src)) return true;
 	if (e_src == r_src) return r->token.end < e->token.beg;
 	return false;
 }
@@ -100,7 +100,10 @@ void parse_LL(Expr* ex) {
 	if (Tree* tree = parse_LL(it, ex->type, ex)) {
 		ex->tree.reset(tree);
 	} else {
-		throw Error("parsing error", string("expression: ") + show(*ex));
+		for (Source* s : ex->token.src->includes) {
+			cout << Lex::toStr(s->label) << endl;
+		}
+		throw Error("parsing error", string("expression: ") + show(*ex) + " at: " + ex->token.show());
 	}
 	//cout << "done" << endl;
 }

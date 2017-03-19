@@ -265,7 +265,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 		)
 		> lit("}")      [addToMath(_val)];
 
-	import = lit("import") > path [_val = parseImport(_1)] > END_MARKER;
+	import = lit("import") > path [_val = parseImport(_1, phoenix::val(src))] > END_MARKER;
 
 	comment_text %= lexeme[+(unicode::char_ - "*/" - "/*")];
 	comment_ml =
