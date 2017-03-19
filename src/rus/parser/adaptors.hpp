@@ -11,6 +11,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::rus::Type*, type)
 	(mdl::rus::Tree*, tree)
 	(mdl::vector<mdl::rus::Symbol>, symbols)
+	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(

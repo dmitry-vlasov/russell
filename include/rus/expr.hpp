@@ -6,6 +6,8 @@ namespace mdl { namespace rus {
 
 #define END_MARKER ";;"
 
+typedef mdl::Token<Source> Token;
+
 struct Type;
 
 struct Symbol : public mdl::Symbol {
@@ -195,6 +197,7 @@ struct Expr {
 	Type*            type;
 	unique_ptr<Tree> tree;
 	Symbols          symbols;
+	Token            token;
 };
 
 struct Rules {

@@ -424,9 +424,9 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, Symbol(), unicode::space_type> symb;
 	qi::rule<Iterator, uint(), unicode::space_type> id;
 	qi::rule<Iterator, string(), unicode::space_type> path;
-	qi::rule<Iterator, void(Expr&, Rule*), unicode::space_type> term;
-	qi::rule<Iterator, void(Expr&, Type*), unicode::space_type> expr;
-	qi::rule<Iterator, void(Expr&, Type*), unicode::space_type> plain;
+	qi::rule<Iterator, Expr(Rule*), unicode::space_type> term;
+	qi::rule<Iterator, Expr(Type*), unicode::space_type> expr;
+	qi::rule<Iterator, Expr(Type*), unicode::space_type> plain;
 	qi::rule<Iterator, Disj(), unicode::space_type> disj;
 	qi::rule<Iterator, Vars(), qi::locals<Symbol>, unicode::space_type> vars;
 	qi::rule<Iterator, Hyp*(), qi::locals<uint>, unicode::space_type> hyp;

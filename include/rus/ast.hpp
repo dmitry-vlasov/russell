@@ -5,8 +5,6 @@
 
 namespace mdl { namespace rus {
 
-typedef mdl::Token<Source> Token;
-
 struct Comment {
 	string text;
 	Token  token;
