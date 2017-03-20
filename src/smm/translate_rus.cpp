@@ -225,7 +225,6 @@ void translate_rule(const Assertion* ass, State& state) {
 		return;
 	}
 	rus::Rule* rule = new rus::Rule {
-		state.ind ++,
 		ass->prop.label,
 		translate_type(ass->prop.expr[0], state),
 		translate_vars(ass->floating, state),

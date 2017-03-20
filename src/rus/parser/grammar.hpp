@@ -227,14 +227,13 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 
 	rule =
 		lit("rule")  [_val = new_<Rule>()]
-		> eps        [phoenix::at_c<0>(*_val) = incInd()]
-		> - id       [phoenix::at_c<1>(*_val) = _1]
+		> - id       [phoenix::at_c<0>(*_val) = _1]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
-		> - vars     [phoenix::at_c<3>(*_val) = _1]
+		> - vars     [phoenix::at_c<2>(*_val) = _1]
 		> ")" > "{" > "term" > ":"
-		> id         [phoenix::at_c<2>(*_val) = findType(_1)]
+		> id         [phoenix::at_c<1>(*_val) = findType(_1)]
 		> "=" > "#"
-		> term(_val) [phoenix::at_c<4>(*_val) = _1]
+		> term(_val) [phoenix::at_c<3>(*_val) = _1]
 		> END_MARKER
 		> lit("}")   [addToMath(_val)]
 		> eps        [popVars(phoenix::ref(var_stack))];
@@ -304,7 +303,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 	qi::on_success(vars,      setToken(phoenix::at_c<1>(_val), _1, _3, phoenix::val(src)));
 	qi::on_success(disj,      setToken(phoenix::at_c<1>(_val), _1, _3, phoenix::val(src)));
 	qi::on_success(type,      setToken(phoenix::at_c<4>(*_val), _1, _3, phoenix::val(src)));
-	qi::on_success(rule,      setToken(phoenix::at_c<5>(*_val), _1, _3, phoenix::val(src)));
+	qi::on_success(rule,      setToken(phoenix::at_c<4>(*_val), _1, _3, phoenix::val(src)));
 	qi::on_success(hyp,       setToken(phoenix::at_c<2>(*_val), _1, _3, phoenix::val(src)));
 	qi::on_success(prop,      setToken(phoenix::at_c<2>(*_val), _1, _3, phoenix::val(src)));
 	qi::on_success(step,      setToken(phoenix::at_c<6>(*_val), _1, _3, phoenix::val(src)));

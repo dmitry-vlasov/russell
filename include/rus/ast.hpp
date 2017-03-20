@@ -43,7 +43,6 @@ struct Type {
 };
 
 struct Rule {
-	uint  ind;
 	uint  id;
 	Type* type;
 	Vars  vars;
