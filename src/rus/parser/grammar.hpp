@@ -47,7 +47,6 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 	const phoenix::function<ParseImport> parseImport;
 	const phoenix::function<AssembleDef> assembleDef;
 	const phoenix::function<SetToken<Iterator>> setToken;
-	const phoenix::function<IncInd>      incInd;
 	const phoenix::function<MakeString>  makeString;
 	const phoenix::function<DeleteComment> deleteComment;
 	const phoenix::function<AppendComment> appendComment;

@@ -1,15 +1,6 @@
 #include "rus/parser/grammar.hpp"
 
-namespace mdl { namespace rus { namespace parser {
-
-namespace {
-	uint ind = 0;
-}
-
-uint get_ind() { return ind; }
-uint inc_ind() { return ind ++; }
-
-} // parser
+namespace mdl { namespace rus {
 
 Source* parse(Path path) {
 	string data;

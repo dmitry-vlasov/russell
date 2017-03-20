@@ -22,14 +22,6 @@ struct MakeString {
 	}
 };
 
-struct IncInd {
-	template <typename T>
-	struct result { typedef uint type; };
-	uint operator()() const {
-		return inc_ind();
-	}
-};
-
 struct VarStack {
 	vector<Vars> stack;
 	map<Symbol, Type*> mapping;
