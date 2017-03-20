@@ -44,16 +44,16 @@ class Source;
 
 struct Math {
 	template<typename T>
-	using Table = map<uint, T>;
+	using Table1 = map<uint, T>;
 
-	Table<Const*>   consts;
-	Table<Type*>    types;
-	Table<Rule*>    rules;
-	Table<Axiom*>   axioms;
-	Table<Def*>     defs;
-	Table<Theorem*> theorems;
-	Table<Proof*>   proofs;
-	Table<Source*>  sources;
+	Table1<Const*>   consts;
+	Table1<Type*>    types;
+	Table1<Rule*>    rules;
+	Table1<Axiom*>   axioms;
+	Table1<Def*>     defs;
+	Table1<Theorem*> theorems;
+	Table1<Proof*>   proofs;
+	Table1<Source*>  sources;
 
 	~Math();
 };
