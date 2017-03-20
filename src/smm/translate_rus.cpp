@@ -20,7 +20,6 @@ struct State {
 	map<const Source*,    rus::Source*>  sources;
 	map<Symbol, rus::Type*>              types;
 	set<rus::Rule*>                      rules;
-
 	map<const void*, uint>               inds;
 
 	rus::Type*    type_wff;
@@ -29,7 +28,6 @@ struct State {
 	set<Symbol>   redundant_consts;
 	set<rus::Symbol> constants;
 	stack<rus::Theory*>  theory;
-	uint ind;
 };
 
 inline rus::Symbol translate_const(Symbol s) {
@@ -154,7 +152,8 @@ rus::Type* translate_type(Symbol type_sy, State& state) {
 		string type_str = Lex::toStr(type_sy.lit);
 		uint type_id = Lex::toInt(type_str);
 		rus::Type* type = new rus::Type{type_id};
-		state.inds[type] = state.ind ++;
+		static uint ind = 0;
+		state.inds[type] = ind ++;
 		state.types[type_sy] = type;
 		state.theory.top()->nodes.push_back(type);
 		state.type_theory[type] = state.theory.top();
@@ -485,7 +484,6 @@ void translate_to_rus(uint src, uint tgt) {
 	rus::Source* target = new rus::Source(tgt);
 	target->theory = new rus::Theory();
 	State state;
-	state.ind = 0;
 	state.type_wff = nullptr;
 	state.type_set = nullptr;
 	state.type_class = nullptr;
