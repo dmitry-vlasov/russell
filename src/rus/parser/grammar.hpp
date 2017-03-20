@@ -99,15 +99,14 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 		> lit(END_MARKER);
 
 	assertion =
-		  eps        [phoenix::at_c<0>(*_r1) = incInd()]
-		> id         [phoenix::at_c<1>(*_r1) = _1]
+		id           [phoenix::at_c<0>(*_r1) = _1]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
-		> - vars     [phoenix::at_c<2>(*_r1) = _1]
+		> - vars     [phoenix::at_c<1>(*_r1) = _1]
 		> ")"
-		> - disj     [phoenix::at_c<3>(*_r1) = _1]
+		> - disj     [phoenix::at_c<2>(*_r1) = _1]
 		> "{"
-		> - ( + (hyp [push_back(phoenix::at_c<4>(*_r1), _1)]) > bar )
-		> + (prop    [push_back(phoenix::at_c<5>(*_r1), _1)])
+		> - ( + (hyp [push_back(phoenix::at_c<3>(*_r1), _1)]) > bar )
+		> + (prop    [push_back(phoenix::at_c<4>(*_r1), _1)])
 		> lit("}")   [popVars(phoenix::ref(var_stack))];
 
 	refs =
@@ -196,14 +195,13 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 
 	def = lit("definition") [_val = new_<Def>()]
 		> eps        [_a = &phoenix::at_c<0>(*_val)]
-		> eps        [phoenix::at_c<0>(*_a) = incInd()]
-		> id         [phoenix::at_c<1>(*_a) = _1]
+		> id         [phoenix::at_c<0>(*_a) = _1]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
-		> - vars     [phoenix::at_c<2>(*_a) = _1]
+		> - vars     [phoenix::at_c<1>(*_a) = _1]
 		> ")"
-		> - disj     [phoenix::at_c<3>(*_a) = _1]
+		> - disj     [phoenix::at_c<2>(*_a) = _1]
 		> "{"
-		> - ( + (hyp [push_back(phoenix::at_c<4>(*_a), _1)]) )
+		> - ( + (hyp [push_back(phoenix::at_c<3>(*_a), _1)]) )
 		> "defiendum" > ":"
 		> id         [_b = findType(_1)]
 		> "=" > "#"
@@ -310,9 +308,9 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 	qi::on_success(qed,       setToken(phoenix::at_c<2>(*_val), _1, _3, phoenix::val(src)));
 	qi::on_success(proof,     setToken(phoenix::at_c<7>(*_val), _1, _3, phoenix::val(src)));
 
-	qi::on_success(axiom,   setToken(phoenix::at_c<6>(phoenix::at_c<0>(*_val)), _1, _3, phoenix::val(src)));
-	qi::on_success(theorem, setToken(phoenix::at_c<6>(phoenix::at_c<0>(*_val)), _1, _3, phoenix::val(src)));
-	qi::on_success(def,     setToken(phoenix::at_c<6>(phoenix::at_c<0>(*_val)), _1, _3, phoenix::val(src)));
+	qi::on_success(axiom,   setToken(phoenix::at_c<5>(phoenix::at_c<0>(*_val)), _1, _3, phoenix::val(src)));
+	qi::on_success(theorem, setToken(phoenix::at_c<5>(phoenix::at_c<0>(*_val)), _1, _3, phoenix::val(src)));
+	qi::on_success(def,     setToken(phoenix::at_c<5>(phoenix::at_c<0>(*_val)), _1, _3, phoenix::val(src)));
 
 	//qi::on_success(theory, setToken(phoenix::at_c<2>(*_val), _1, _3));
 

@@ -81,7 +81,6 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Assertion,
-	(mdl::uint, ind)
 	(mdl::uint, id)
 	(mdl::rus::Vars, vars)
 	(mdl::rus::Disj, disj)
