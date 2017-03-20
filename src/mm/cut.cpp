@@ -1,5 +1,7 @@
 #define BOOST_SPIRIT_USE_PHOENIX_V3
 
+#include <cctype>
+
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
@@ -72,10 +74,9 @@ struct Section {
 		header->path = header->dir + header->file + ".mm";
 
 		switch (type) {
-		case Type::PARAGRAPH: assert(false && "impossible"); break;
-		case Type::CHAPTER:   header->type = Type::PARAGRAPH; break;
-		case Type::PART:      header->type = Type::CHAPTER;   break;
-		case Type::SOURCE:    header->type = Type::PART;      break;
+		case Type::CHAPTER: header->type = Type::PARAGRAPH; break;
+		case Type::PART:    header->type = Type::CHAPTER;   break;
+		case Type::SOURCE:  header->type = Type::PART;      break;
 		}
 		contents.clear();
 
@@ -758,6 +759,29 @@ $)
        23-Jul-2006.)  (New usage is discouraged.) $)
     leopg $p |- ( ( T e. A /\ U e. B ) -> ( T <_op U <-> ( ( U -op T ) e.
                 HrmOp /\ A. x e. ~H 0 <_ ( ( ( U -op T ) ` x ) .ih x ) ) ) ) $=)"
+},
+{
+R"($(
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+                    Zermelo-Fraenkel Set Theory
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+$)
+
+$(
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+             ZF Set Theory - start with the Axiom of Extensionality
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+$)
+
+$( Logic is a prerequisite. $)
+$( $[ logic.mm $] $) $( Use this if logic is separated out of set.mm. $)
+)",
+R"($(
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+             ZF Set Theory - start with the Axiom of Extensionality
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+$)
+)"
 }
 };
 
