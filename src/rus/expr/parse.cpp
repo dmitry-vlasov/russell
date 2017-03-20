@@ -15,18 +15,9 @@ struct Action {
 	Action(Kind k, Rule* r = nullptr) : kind(k), rule(r) { }
 };
 
-inline bool check_preceeding(const Rule* r, const Expr *e) {
-	Source* r_src = r->token.src;
-	Source* e_src = e->token.src;
-	if (e_src->includes.count(r_src)) return true;
-	if (e_src == r_src) return r->token.end < e->token.beg;
-	return false;
-}
-
 inline Action act(auto& n, auto& m, Symbols::iterator ch, const Expr* e) {
 	if (Rule* r = n.top()->rule) {
-		if (check_preceeding(r, e))
-			return Action(Action::RET, r);
+		if (r->token < e->token) return Action(Action::RET, r);
 		else return Action::BREAK;
 	} else if (ch->end)
 		return Action::BREAK;

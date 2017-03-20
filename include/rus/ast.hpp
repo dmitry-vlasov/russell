@@ -35,7 +35,6 @@ void parse_term(Expr& ex, Rule* rule);
 struct Type {
 	typedef map<const Type*, Rule*> Supers;
 	~Type();
-	uint ind;
 	uint id;
 	vector<Type*> sup;
 	Supers supers;

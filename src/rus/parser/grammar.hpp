@@ -241,10 +241,9 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 
 	type =
 		lit("type") [_val = new_<Type>()]
-		> eps       [phoenix::at_c<0>(*_val) = incInd()]
-		> id        [phoenix::at_c<1>(*_val) = _1]
+		> id        [phoenix::at_c<0>(*_val) = _1]
 		> - (lit(":")
-			>  id [push_back(phoenix::at_c<2>(*_val), findType(_1))] % ","
+			>  id [push_back(phoenix::at_c<1>(*_val), findType(_1))] % ","
 		)
 		> lit(END_MARKER)  [addToMath(_val)];
 
@@ -304,7 +303,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 	qi::on_success(constant,  setToken(phoenix::at_c<3>(*_val), _1, _3, phoenix::val(src)));
 	qi::on_success(vars,      setToken(phoenix::at_c<1>(_val), _1, _3, phoenix::val(src)));
 	qi::on_success(disj,      setToken(phoenix::at_c<1>(_val), _1, _3, phoenix::val(src)));
-	qi::on_success(type,      setToken(phoenix::at_c<5>(*_val), _1, _3, phoenix::val(src)));
+	qi::on_success(type,      setToken(phoenix::at_c<4>(*_val), _1, _3, phoenix::val(src)));
 	qi::on_success(rule,      setToken(phoenix::at_c<5>(*_val), _1, _3, phoenix::val(src)));
 	qi::on_success(hyp,       setToken(phoenix::at_c<2>(*_val), _1, _3, phoenix::val(src)));
 	qi::on_success(prop,      setToken(phoenix::at_c<2>(*_val), _1, _3, phoenix::val(src)));

@@ -21,6 +21,8 @@ struct State {
 	map<Symbol, rus::Type*>              types;
 	set<rus::Rule*>                      rules;
 
+	map<const void*, uint>               inds;
+
 	rus::Type*    type_wff;
 	rus::Type*    type_set;
 	rus::Type*    type_class;
@@ -151,7 +153,8 @@ rus::Type* translate_type(Symbol type_sy, State& state) {
 	else {
 		string type_str = Lex::toStr(type_sy.lit);
 		uint type_id = Lex::toInt(type_str);
-		rus::Type* type = new rus::Type { state.ind ++, type_id };
+		rus::Type* type = new rus::Type{type_id};
+		state.inds[type] = state.ind ++;
 		state.types[type_sy] = type;
 		state.theory.top()->nodes.push_back(type);
 		state.type_theory[type] = state.theory.top();
@@ -162,6 +165,8 @@ rus::Type* translate_type(Symbol type_sy, State& state) {
 	}
 }
 
+inline
+
 void translate_super(const Assertion* ass, State& state) {
 	Symbol super_sy = ass->prop.expr[0];
 	Symbol infer_sy = ass->floating[0]->type();
@@ -169,7 +174,7 @@ void translate_super(const Assertion* ass, State& state) {
 	rus::Type* super = translate_type(super_sy, state);
 	rus::Type* infer = translate_type(infer_sy, state);
 	infer->sup.push_back(super);
-	if (super->ind > infer->ind) {
+	if (state.inds[infer] < state.inds[super]) {
 		rus::Theory* sup_th = state.type_theory[super];
 		rus::Theory* inf_th = state.type_theory[infer];
 		NodeIter sup = find(sup_th->nodes.begin(), sup_th->nodes.end(), rus::Node(super));

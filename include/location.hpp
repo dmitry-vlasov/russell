@@ -127,6 +127,15 @@ struct Token {
 };
 
 template<class S>
+inline bool operator < (const Token<S>& r, const Token<S>& e) {
+	S* r_src = r.src;
+	S* e_src = e.src;
+	if (e_src->includes.count(r_src)) return true;
+	if (e_src == r_src) return r.end < e.beg;
+	return false;
+}
+
+template<class S>
 struct TokenIter : public string::const_iterator {
 	typedef S Source;
 	TokenIter(const TokenIter& it) :
@@ -164,8 +173,6 @@ private :
 		else ++ loc.col;
 	}
 };
-
-
 
 inline ostream& operator << (ostream& os, const Location& loc) {
 	os << "file: " << Lex::toStr(loc.file) << " ";
