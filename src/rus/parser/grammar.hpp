@@ -250,19 +250,19 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 
 	constant =
 		lit("constant") [_val = new_<Const>()] > "{"
-		> lit("symbol") [phoenix::at_c<0>(*_val) = incInd()]
-		> symb          [phoenix::at_c<1>(*_val) = _1]
+		> lit("symbol")
+		> symb          [phoenix::at_c<0>(*_val) = _1]
 		> lit(END_MARKER)
 		> -(
 			lit("ascii")
-			> symb          [phoenix::at_c<2>(*_val) = _1]
+			> symb          [phoenix::at_c<1>(*_val) = _1]
 			> lit(END_MARKER)
-			> -(
+			)
+		> -(
 				lit("latex")
-				> symb      [phoenix::at_c<3>(*_val) = _1]
+				> symb      [phoenix::at_c<2>(*_val) = _1]
 				> lit(END_MARKER)
 			)
-		)
 		> lit("}")      [addToMath(_val)];
 
 	import = lit("import") > path [_val = parseImport(_1, phoenix::val(src))] > END_MARKER;
@@ -301,7 +301,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 	qi::on_success(plain,     setToken(phoenix::at_c<3>(_val), _1, _3, phoenix::val(src)));
 	qi::on_success(comment,   setToken(phoenix::at_c<1>(*_val), _1, _3, phoenix::val(src)));
 	qi::on_success(import,    setToken(phoenix::at_c<2>(*_val), _1, _3, phoenix::val(src)));
-	qi::on_success(constant,  setToken(phoenix::at_c<4>(*_val), _1, _3, phoenix::val(src)));
+	qi::on_success(constant,  setToken(phoenix::at_c<3>(*_val), _1, _3, phoenix::val(src)));
 	qi::on_success(vars,      setToken(phoenix::at_c<1>(_val), _1, _3, phoenix::val(src)));
 	qi::on_success(disj,      setToken(phoenix::at_c<1>(_val), _1, _3, phoenix::val(src)));
 	qi::on_success(type,      setToken(phoenix::at_c<5>(*_val), _1, _3, phoenix::val(src)));

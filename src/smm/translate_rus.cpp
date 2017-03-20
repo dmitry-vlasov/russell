@@ -91,10 +91,10 @@ void translate_constants(const Constants* consts, State& state) {
 		rus::Const* c = nullptr;
 		auto p = math_consts.find(s.lit);
 		if (p == math_consts.end())
-			c = new rus::Const{state.ind ++, rus::Symbol(s), rus::Symbol(), rus::Symbol()};
+			c = new rus::Const{rus::Symbol(s), rus::Symbol(), rus::Symbol()};
 		else {
 			rus::Const& rc = (*p).second;
-			c = new rus::Const{state.ind ++ , rc.symb, rc.ascii, rc.latex};
+			c = new rus::Const{rc.symb, rc.ascii, rc.latex};
 		}
 		if (state.constants.count(c->symb))
 			delete c;

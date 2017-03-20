@@ -11,7 +11,6 @@ struct Comment {
 };
 
 struct Const {
-	uint   ind;
 	Symbol symb;
 	Symbol ascii;
 	Symbol latex;

@@ -4,7 +4,7 @@
 namespace mdl { namespace smm {
 
 inline rus::Const make_const(const char* ascii, const char* unicode, const char* latex) {
-	return rus::Const { 0, Lex::toInt(unicode), Lex::toInt(ascii), Lex::toInt(latex)};
+	return rus::Const{Lex::toInt(unicode), Lex::toInt(ascii), Lex::toInt(latex)};
 }
 
 inline uint make_key(const char* key) {
