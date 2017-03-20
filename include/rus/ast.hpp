@@ -229,10 +229,9 @@ struct Proof {
 		Value val;
 	};
 
-	Proof() : ind(-1), id(-1), vars(), elems(), thm(nullptr), par(nullptr), has_id(false) { }
+	Proof() : id(-1), thm(nullptr), par(nullptr), has_id(false) { }
 	~ Proof() { for (auto& e : elems) e.destroy(); }
 
-	uint         ind;
 	uint         id;
 	Vars         vars;
 	vector<Elem> elems;

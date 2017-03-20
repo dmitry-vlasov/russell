@@ -165,18 +165,17 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 
 	proof_body =
 		lit("{")   [pushVars(phoenix::ref(var_stack))]
-		> - ("var" > vars [phoenix::at_c<2>(*_r1) = _1] > lit(END_MARKER))
-		> + proof_elem(_r1)[push_back(phoenix::at_c<3>(*_r1), _1)]
+		> - ("var" > vars [phoenix::at_c<1>(*_r1) = _1] > lit(END_MARKER))
+		> + proof_elem(_r1)[push_back(phoenix::at_c<2>(*_r1), _1)]
 		> lit("}") [popVars(phoenix::ref(var_stack))];
 
 	proof =
 		lit("proof") [_val = new_<Proof>()]
-		> eps        [phoenix::at_c<0>(*_val) = incInd()]
-		> - (!lit("of") > - id [phoenix::at_c<1>(*_val) = _1])
+		> - (!lit("of") > - id [phoenix::at_c<0>(*_val) = _1])
 		> "of"
-		> id         [phoenix::at_c<4>(*_val) = findTheorem(_1)]
+		> id         [phoenix::at_c<3>(*_val) = findTheorem(_1)]
 		> eps        [pushVars(phoenix::ref(var_stack))]
-		> eps        [addVars(phoenix::ref(var_stack), phoenix::at_c<4>(*_val))]
+		> eps        [addVars(phoenix::ref(var_stack), phoenix::at_c<3>(*_val))]
 		> proof_body(_val)
 		> eps        [popVars(phoenix::ref(var_stack))]
 		> eps        [addToMath(_val)];
@@ -306,7 +305,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 	qi::on_success(prop,      setToken(phoenix::at_c<2>(*_val), _1, _3, phoenix::val(src)));
 	qi::on_success(step,      setToken(phoenix::at_c<6>(*_val), _1, _3, phoenix::val(src)));
 	qi::on_success(qed,       setToken(phoenix::at_c<2>(*_val), _1, _3, phoenix::val(src)));
-	qi::on_success(proof,     setToken(phoenix::at_c<7>(*_val), _1, _3, phoenix::val(src)));
+	qi::on_success(proof,     setToken(phoenix::at_c<6>(*_val), _1, _3, phoenix::val(src)));
 
 	qi::on_success(axiom,   setToken(phoenix::at_c<5>(phoenix::at_c<0>(*_val)), _1, _3, phoenix::val(src)));
 	qi::on_success(theorem, setToken(phoenix::at_c<5>(phoenix::at_c<0>(*_val)), _1, _3, phoenix::val(src)));

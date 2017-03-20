@@ -182,8 +182,9 @@ struct AddToMath {
 	}
 	void operator()(Proof* p) const {
 		//cout << "pr: " << show_id(p->thm->ass.id) << endl;
+		static uint fresh = 0;
 		p->has_id = !Undef<uint>::is(p->id);
-		if (!p->has_id) p->id = Lex::toInt(to_string(p->ind));
+		if (!p->has_id) p->id = Lex::toInt(string("proof_") + to_string(fresh++));
 		Sys::mod().math.proofs[p->id] = p;
 		enqueue_expressions(p);
 	}

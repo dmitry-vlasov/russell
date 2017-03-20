@@ -404,7 +404,6 @@ void translate_proof(const Assertion* ass, rus::Theorem* thm, State& state) {
 	Ref* tree = new Ref(to_tree(ass->proof));
 	eval(tree);
 	rus::Proof* p = new rus::Proof();
-	p->ind = state.ind ++;
 	p->vars = translate_vars(ass->inner, state);
 	p->thm = thm;
 	translate_step(tree, p, thm, state, ass);

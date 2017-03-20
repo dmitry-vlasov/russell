@@ -166,7 +166,6 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Proof,
-	(mdl::uint, ind)
 	(mdl::uint, id)
 	(mdl::rus::Vars, vars)
 	(mdl::vector<mdl::rus::Proof::Elem>, elems)
