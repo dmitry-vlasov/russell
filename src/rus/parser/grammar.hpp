@@ -243,21 +243,21 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 		> lit(END_MARKER)  [addToMath(_val)];
 
 	constant =
-		lit("constant") [_val = new_<Const>()] > "{"
+		lit("constant") > "{"
 		> lit("symbol")
-		> symb          [phoenix::at_c<0>(*_val) = _1]
+		> symb          [_a = _1]
 		> lit(END_MARKER)
 		> -(
 			lit("ascii")
-			> symb          [phoenix::at_c<1>(*_val) = _1]
+			> symb          [_b = _1]
 			> lit(END_MARKER)
-			)
+		)
 		> -(
-				lit("latex")
-				> symb      [phoenix::at_c<2>(*_val) = _1]
-				> lit(END_MARKER)
-			)
-		> lit("}")      [addToMath(_val)];
+			lit("latex")
+			> symb      [_c = _1]
+			> lit(END_MARKER)
+		)
+		> lit("}")      [_val = new_<Const>(_a, _b, _c)];
 
 	import = lit("import") > path [_val = parseImport(_1, phoenix::val(src))] > END_MARKER;
 

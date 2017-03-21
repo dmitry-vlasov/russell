@@ -4,8 +4,8 @@
 
 namespace mdl { namespace smm {
 
-extern map<uint, rus::Const>  math_consts;
-extern map<uint, rus::Symbol> math_vars;
+map<uint, rus::Const*>&  math_consts();
+map<uint, rus::Symbol>& math_vars();
 
 namespace {
 
@@ -31,17 +31,17 @@ struct State {
 };
 
 inline rus::Symbol translate_const(Symbol s) {
-	auto p = math_consts.find(s.lit);
-	if (p == math_consts.end())
+	auto p = math_consts().find(s.lit);
+	if (p == math_consts().end())
 		return rus::Symbol(s);
 	else {
-		return (*p).second.symb;
+		return (*p).second->symb;
 	}
 }
 
 inline rus::Symbol translate_var(Symbol s, rus::Type* t) {
-	auto p = math_vars.find(s.lit);
-	if (p == math_vars.end())
+	auto p = math_vars().find(s.lit);
+	if (p == math_vars().end())
 		return rus::Symbol(s, t);
 	else {
 		rus::Symbol rs = (*p).second;
@@ -89,13 +89,11 @@ void translate_constants(const Constants* consts, State& state) {
 		if (state.redundant_consts.count(s))
 			continue;
 		rus::Const* c = nullptr;
-		auto p = math_consts.find(s.lit);
-		if (p == math_consts.end())
-			c = new rus::Const{rus::Symbol(s), rus::Symbol(), rus::Symbol()};
-		else {
-			rus::Const& rc = (*p).second;
-			c = new rus::Const{rc.symb, rc.ascii, rc.latex};
-		}
+		auto p = math_consts().find(s.lit);
+		if (p == math_consts().end())
+			c = new rus::Const(rus::Symbol(s), rus::Symbol(), rus::Symbol());
+		else
+			c = (*p).second;
 		if (state.constants.count(c->symb))
 			delete c;
 		else {

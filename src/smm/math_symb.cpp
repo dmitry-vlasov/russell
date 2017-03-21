@@ -3,15 +3,16 @@
 
 namespace mdl { namespace smm {
 
-inline rus::Const make_const(const char* ascii, const char* unicode, const char* latex) {
-	return rus::Const{Lex::toInt(unicode), Lex::toInt(ascii), Lex::toInt(latex)};
+inline rus::Const* make_const(const char* ascii, const char* unicode, const char* latex) {
+	return new rus::Const(Lex::toInt(unicode), Lex::toInt(ascii), Lex::toInt(latex));
 }
 
 inline uint make_key(const char* key) {
 	return Lex::toInt(key);
 }
 
-map<uint, rus::Const> math_consts = {
+map<uint, rus::Const*>& math_consts() {
+	static map<uint, rus::Const*> table = {
 		{make_key("|-"), make_const("|-", "⊢", "vdash")},
 		{make_key("->"), make_const("->", "→", "\\rightarrow")},
 		{make_key("-."), make_const("-.", "¬", "\\lnot")},
@@ -135,14 +136,18 @@ map<uint, rus::Const> math_consts = {
 		{make_key("~~>t"), make_const("~~>t", "⇝t", "\\rightsquigarrow_{\\rm{t}}")},
 		{make_key("=~ph"), make_const("=~ph", "=~φ", "\\mbox{$=$\\~{}ph}")},
 		{make_key("->.."), make_const("->..", "⇒", "\\Longrightarrow")},
-};
-
+	};
+	return table;
+}
 // Weird variables
-map<uint, rus::Symbol> math_vars = {
-		{make_key(".,"),   rus::Symbol(Lex::toInt(".cm"))},
-		{make_key(".(x)"), rus::Symbol(Lex::toInt(".[x]"))},
-		{make_key(".(+)"), rus::Symbol(Lex::toInt(".[+]"))}
-};
+map<uint, rus::Symbol>& math_vars() {
+	static map<uint, rus::Symbol> table = {
+			{make_key(".,"),   rus::Symbol(Lex::toInt(".cm"))},
+			{make_key(".(x)"), rus::Symbol(Lex::toInt(".[x]"))},
+			{make_key(".(+)"), rus::Symbol(Lex::toInt(".[+]"))}
+	};
+	return table;
+}
 
 }} // mdl::smm
 

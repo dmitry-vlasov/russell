@@ -17,10 +17,10 @@ struct Maps {
 };
 
 inline uint translate_symb(uint s) {
-	if (!Sys::get().math.consts.count(s))
+	if (!Sys::get().math.consts.has(s))
 		return s;
 	else {
-		Const* c = Sys::mod().math.consts[s];
+		const Const* c = Sys::mod().math.consts.access(s);
 		return mdl::Symbol::is_undef(c->ascii.lit) ? s : c->ascii.lit;
 	}
 }

@@ -2,14 +2,14 @@
 
 namespace mdl { namespace rus {
 
-/*
-Const::Const(uint i, Symbol s, Symbol a, Symbol l) : ind(i), symb(s), ascii(a), latex(l) {
+
+Const::Const(Symbol s, Symbol a, Symbol l) : symb(s), ascii(a), latex(l) {
 	Sys::mod().math.consts.add(symb.lit, this);
 }
 Const::~Const() {
 	Sys::mod().math.consts.del(symb.lit);
 }
-
+/*
 Type::Type(uint i) : ind(Sys::mod().math.ind.inc()), id(i), sup(), supers(), rules() {
 	Sys::mod().math.types.add(id, this);
 }

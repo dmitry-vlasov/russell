@@ -11,6 +11,8 @@ struct Comment {
 };
 
 struct Const {
+	Const(Symbol s, Symbol a, Symbol l);
+	~Const();
 	Symbol symb;
 	Symbol ascii;
 	Symbol latex;

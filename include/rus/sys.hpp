@@ -46,7 +46,7 @@ struct Math {
 	template<typename T>
 	using Table1 = map<uint, T>;
 
-	Table1<Const*>   consts;
+	Table<Const>    consts;
 	Table1<Type*>    types;
 	Table1<Rule*>    rules;
 	Table1<Axiom*>   axioms;

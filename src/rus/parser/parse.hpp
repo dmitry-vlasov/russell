@@ -66,7 +66,7 @@ struct PopVars {
 static void mark_vars(Expr& ex, VarStack& var_stack) {
 	for (auto& s : ex.symbols) {
 		bool is_var = var_stack.mapping.count(s.lit);
-		bool is_const = Sys::get().math.consts.count(s.lit);
+		bool is_const = Sys::get().math.consts.has(s.lit);
 		if (is_const && is_var)
 			throw Error("constant symbol is marked as variable");
 		if (!is_const && !is_var) {
@@ -144,7 +144,7 @@ void enqueue_expressions(Def* def) {
 struct AddToMath {
 	void operator()(Const* c) const {
 		//cout << "c: " << show(c->symb) << endl;
-		Sys::mod().math.consts[c->symb.lit] = c;
+		//Sys::mod().math.consts[c->symb.lit] = c;
 	}
 	void operator()(Type* t) const {
 		//cout << "tp: " << show_id(t->id) << endl;
@@ -429,7 +429,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, void(Assertion*), unicode::space_type> assertion;
 	qi::rule<Iterator, Rule*(), unicode::space_type> rule;
 	qi::rule<Iterator, Type*(), unicode::space_type> type;
-	qi::rule<Iterator, Const*(), unicode::space_type> constant;
+	qi::rule<Iterator, Const*(), qi::locals<Symbol, Symbol, Symbol>, unicode::space_type> constant;
 	qi::rule<Iterator, Import*(), unicode::space_type> import;
 	qi::rule<Iterator, string(), qi::unused_type> comment_text;
 	qi::rule<Iterator, Comment*(), qi::unused_type> comment_ml;
