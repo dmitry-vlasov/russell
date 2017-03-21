@@ -36,6 +36,8 @@ void parse_term(Expr& ex, Rule* rule);
 
 struct Type {
 	typedef map<const Type*, Rule*> Supers;
+	Type(uint id);
+	Type(uint id, const vector<Type*>& sup);
 	~Type();
 	uint id;
 	vector<Type*> sup;
@@ -54,10 +56,6 @@ struct Rule {
 
 inline Type* Tree::type() { return kind == VAR ? val.var->type : val.node->rule->type; }
 inline const Type* Tree::type() const { return kind == VAR ? val.var->type : val.node->rule->type; }
-
-inline Type::~Type() {
-	for (auto p : supers) delete p.second;
-}
 
 struct Hyp {
 	uint  ind;

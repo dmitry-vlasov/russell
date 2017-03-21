@@ -235,12 +235,13 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 		> eps        [popVars(phoenix::ref(var_stack))];
 
 	type =
-		lit("type") [_val = new_<Type>()]
-		> id        [phoenix::at_c<0>(*_val) = _1]
+		lit("type")
+		> id        [_a = _1]
 		> - (lit(":")
-			>  id [push_back(phoenix::at_c<1>(*_val), findType(_1))] % ","
+			>  id [push_back(_b, findType(_1))] % ","
 		)
-		> lit(END_MARKER)  [addToMath(_val)];
+		> lit(END_MARKER)  [_val = new_<Type>(_a, _b)]
+		> eps [addToMath(_val)];
 
 	constant =
 		lit("constant") > "{"

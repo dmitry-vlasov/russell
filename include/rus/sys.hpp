@@ -47,7 +47,7 @@ struct Math {
 	using Table1 = map<uint, T>;
 
 	Table<Const>    consts;
-	Table1<Type*>    types;
+	Table<Type>     types;
 	Table1<Rule*>    rules;
 	Table1<Axiom*>   axioms;
 	Table1<Def*>     defs;

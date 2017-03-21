@@ -79,9 +79,9 @@ static void mark_vars(Expr& ex, VarStack& var_stack) {
 }
 
 inline Type* find_type(uint id, const Location* loc = nullptr) {
-	if (!Sys::get().math.types.count(id))
+	if (!Sys::get().math.types.has(id))
 		throw Error("unknown type", show_id(id), loc);
-	return Sys::mod().math.types[id];
+	return Sys::mod().math.types.access(id);
 }
 
 inline uint create_id(string pref, string s1, string s2) {
@@ -149,7 +149,7 @@ struct AddToMath {
 	void operator()(Type* t) const {
 		//cout << "tp: " << show_id(t->id) << endl;
 		collect_supers(t, t);
-		Sys::mod().math.types[t->id] = t;
+		//Sys::mod().math.types[t->id] = t;
 	}
 	void operator()(Rule* r) const {
 		//cout << "ru: " << show_id(r->id) << endl;
@@ -428,7 +428,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, Axiom*(), qi::locals<Assertion*>, unicode::space_type> axiom;
 	qi::rule<Iterator, void(Assertion*), unicode::space_type> assertion;
 	qi::rule<Iterator, Rule*(), unicode::space_type> rule;
-	qi::rule<Iterator, Type*(), unicode::space_type> type;
+	qi::rule<Iterator, Type*(), qi::locals<uint, vector<Type*>>, unicode::space_type> type;
 	qi::rule<Iterator, Const*(), qi::locals<Symbol, Symbol, Symbol>, unicode::space_type> constant;
 	qi::rule<Iterator, Import*(), unicode::space_type> import;
 	qi::rule<Iterator, string(), qi::unused_type> comment_text;

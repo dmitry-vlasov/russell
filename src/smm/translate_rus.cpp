@@ -149,7 +149,7 @@ rus::Type* translate_type(Symbol type_sy, State& state) {
 	else {
 		string type_str = Lex::toStr(type_sy.lit);
 		uint type_id = Lex::toInt(type_str);
-		rus::Type* type = new rus::Type{type_id};
+		rus::Type* type = new rus::Type(type_id);
 		static uint ind = 0;
 		state.inds[type] = ind ++;
 		state.types[type_sy] = type;
