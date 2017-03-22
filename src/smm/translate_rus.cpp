@@ -399,9 +399,8 @@ rus::Proof::Elem translate_step(Ref* ref, rus::Proof* proof, rus::Theorem* thm, 
 void translate_proof(const Assertion* ass, rus::Theorem* thm, State& state) {
 	Ref* tree = new Ref(to_tree(ass->proof));
 	eval(tree);
-	rus::Proof* p = new rus::Proof();
+	rus::Proof* p = new rus::Proof(thm);
 	p->vars = translate_vars(ass->inner, state);
-	p->thm = thm;
 	translate_step(tree, p, thm, state, ass);
 	rus::Prop* pr = thm->ass.props.front();
 	rus::Step* st = p->elems.back().val.step;

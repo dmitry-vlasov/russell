@@ -231,8 +231,8 @@ struct Proof {
 		Value val;
 	};
 
-	Proof() : id(-1), thm(nullptr), par(nullptr), has_id(false) { }
-	~ Proof() { for (auto& e : elems) e.destroy(); }
+	Proof(Theorem* thm, uint id = -1);
+	~ Proof();
 
 	uint         id;
 	Vars         vars;

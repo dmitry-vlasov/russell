@@ -49,10 +49,12 @@ struct Math {
 	Table<Const>    consts;
 	Table<Type>     types;
 	Table<Rule>     rules;
+
 	Table1<Axiom*>   axioms;
 	Table1<Def*>     defs;
 	Table1<Theorem*> theorems;
-	Table1<Proof*>   proofs;
+
+	Table<Proof>   proofs;
 	Table1<Source*>  sources;
 
 	~Math();

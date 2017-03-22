@@ -174,10 +174,12 @@ struct AddToMath {
 	}
 	void operator()(Proof* p) const {
 		//cout << "pr: " << show_id(p->thm->ass.id) << endl;
-		static uint fresh = 0;
-		p->has_id = !Undef<uint>::is(p->id);
-		if (!p->has_id) p->id = Lex::toInt(string("proof_") + to_string(fresh++));
-		Sys::mod().math.proofs[p->id] = p;
+
+		//static uint fresh = 0;
+		//p->has_id = !Undef<uint>::is(p->id);
+		//if (!p->has_id) p->id = Lex::toInt(string("proof_") + to_string(fresh++));
+
+		//Sys::mod().math.proofs[p->id] = p;
 		enqueue_expressions(p);
 	}
 };
@@ -422,7 +424,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, Qed*(Proof*), qi::locals<uint>, unicode::space_type> qed;
 	qi::rule<Iterator, Proof::Elem(Proof*), unicode::space_type> proof_elem;
 	qi::rule<Iterator, void(Proof*), unicode::space_type> proof_body;
-	qi::rule<Iterator, Proof*(), unicode::space_type> proof;
+	qi::rule<Iterator, Proof*(), qi::locals<uint>, unicode::space_type> proof;
 	qi::rule<Iterator, Theorem*(), qi::locals<Assertion*>, unicode::space_type> theorem;
 	qi::rule<Iterator, Def*(), qi::locals<Assertion*, Type*>, unicode::space_type> def;
 	qi::rule<Iterator, Axiom*(), qi::locals<Assertion*>, unicode::space_type> axiom;

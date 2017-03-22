@@ -169,10 +169,10 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 		> lit("}") [popVars(phoenix::ref(var_stack))];
 
 	proof =
-		lit("proof") [_val = new_<Proof>()]
-		> - (!lit("of") > - id [phoenix::at_c<0>(*_val) = _1])
+		lit("proof") [_a = phoenix::val(-1)]
+		> - (!lit("of") > - id [_a = _1])
 		> "of"
-		> id         [phoenix::at_c<3>(*_val) = findTheorem(_1)]
+		> id         [_val = new_<Proof>(findTheorem(_1), _a)]
 		> eps        [pushVars(phoenix::ref(var_stack))]
 		> eps        [addVars(phoenix::ref(var_stack), phoenix::at_c<3>(*_val))]
 		> proof_body(_val)

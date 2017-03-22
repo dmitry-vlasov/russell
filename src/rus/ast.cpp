@@ -28,6 +28,16 @@ Rule::~Rule() {
 	Sys::mod().math.rules.del(id);
 }
 
+Proof::Proof(Theorem* t, uint i) : id(i), thm(t), par(nullptr), has_id(!Undef<uint>::is(id)) {
+	static uint fresh = 0;
+	if (!has_id) id = Lex::toInt(string("__proof_") + to_string(fresh++));
+	Sys::mod().math.proofs.add(id, this);
+}
+Proof::~Proof() {
+	Sys::mod().math.proofs.del(id);
+	for (auto& e : elems) e.destroy();
+}
+
 Source::Source(uint label) : mdl::Source<Source, Sys>(label), theory(nullptr) {
 	Sys::mod().math.sources[label] = this;
 }
