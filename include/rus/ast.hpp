@@ -83,16 +83,16 @@ struct Assertion {
 	vector<Hyp*>  hyps;
 	vector<Prop*> props;
 	Token         token;
+
+	Assertion& ass = *this;
 };
 
-struct Axiom {
-	Axiom(uint id) : ass(id) { }
-	Assertion ass;
+struct Axiom : public Assertion {
+	Axiom(uint id) : Assertion(id) { }
 };
 
-struct Def {
-	Def(uint id) : ass(id) { }
-	Assertion ass;
+struct Def : public Assertion {
+	Def(uint id) : Assertion(id) { }
 	Expr dfm;
 	Expr dfs;
 	Expr prop;
@@ -100,9 +100,8 @@ struct Def {
 
 struct Proof;
 
-struct Theorem {
-	Theorem(uint id) : ass(id) { }
-	Assertion      ass;
+struct Theorem : public Assertion {
+	Theorem(uint id) : Assertion(id) { }
 	vector<Proof*> proofs;
 };
 
