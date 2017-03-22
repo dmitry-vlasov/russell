@@ -113,16 +113,16 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 		> id    [_a = _1]
 		> "="
 		> (
-			(lit("axm") [phoenix::at_c<2>(*_val) = val(Step::AXM)]
+			(lit("axm") [phoenix::at_c<2>(*_val) = val(Step::ASS)]
 			//> eps       [_b = val(Step::AXM)]
 			> id        [phoenix::at_c<1>(phoenix::at_c<3>(*_val)) = findAxiom(_1)]
 			) |
-			(lit("thm") [phoenix::at_c<2>(*_val) = val(Step::THM)]
-			> id        [phoenix::at_c<3>(phoenix::at_c<3>(*_val)) = findTheorem(_1)]
+			(lit("thm") [phoenix::at_c<2>(*_val) = val(Step::ASS)]
+			> id        [phoenix::at_c<1>(phoenix::at_c<3>(*_val)) = findTheorem(_1)]
 			//> eps       [_b = val(Step::THM)]
 			) |
-			(lit("def") [phoenix::at_c<2>(*_val) = val(Step::DEF)]
-			> id        [phoenix::at_c<2>(phoenix::at_c<3>(*_val)) = findDef(_1)]
+			(lit("def") [phoenix::at_c<2>(*_val) = val(Step::ASS)]
+			> id        [phoenix::at_c<1>(phoenix::at_c<3>(*_val)) = findDef(_1)]
 			//> eps       [_b = val(Step::DEF)]
 			) |
 			(lit("claim") [phoenix::at_c<2>(*_val) = val(Step::CLAIM)]

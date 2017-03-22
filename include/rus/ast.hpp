@@ -74,25 +74,33 @@ struct Prop {
 struct Proof;
 
 struct Assertion {
+	enum Kind {
+		AXM,
+		THM,
+		DEF
+	};
 	Assertion(uint id);
 	virtual ~ Assertion();
 	uint arity() const { return hyps.size(); }
-	uint id;
+	virtual Kind kind() const = 0;
+
+	const uint id;
 	Vars vars;
 	Disj disj;
 	vector<Hyp*>  hyps;
 	vector<Prop*> props;
 	Token         token;
-
-	Assertion& ass = *this;
+	Assertion&    ass = *this;
 };
 
 struct Axiom : public Assertion {
 	Axiom(uint id) : Assertion(id) { }
+	Kind kind() const { return AXM; }
 };
 
 struct Def : public Assertion {
 	Def(uint id) : Assertion(id) { }
+	Kind kind() const { return DEF; }
 	Expr dfm;
 	Expr dfs;
 	Expr prop;
@@ -102,6 +110,7 @@ struct Proof;
 
 struct Theorem : public Assertion {
 	Theorem(uint id) : Assertion(id) { }
+	Kind kind() const { return THM; }
 	vector<Proof*> proofs;
 };
 
@@ -139,39 +148,24 @@ struct Ref {
 struct Step {
 	enum Kind {
 		NONE,
-		AXM,
-		THM,
-		DEF,
+		ASS,
 		CLAIM
 	};
 	union Value {
-		void*    non;
-		Axiom*   axm;
-		Def*     def;
-		Theorem* thm;
-		Proof*   prf;
+		void*      non;
+		Assertion* ass;
+		Proof*     prf;
 	};
 
-	Step(Proof* pr) : ind(-1), expr(), kind(NONE), val(),
-	refs(), proof(pr) { val.non = nullptr; }
+	Step(Proof* pr) : ind(-1), kind(NONE), proof(pr) { val.non = nullptr; }
 
 	Assertion* assertion() {
-		switch(kind) {
-		case Step::AXM: return &val.axm->ass;
-		case Step::THM: return &val.thm->ass;
-		case Step::DEF: return &val.def->ass;
-		default : assert(false && "impossible");
-		}
-		return nullptr;
+		if (kind != ASS) return nullptr;
+		return val.ass;
 	}
 	const Assertion* assertion() const {
-		switch(kind) {
-		case Step::AXM: return &val.axm->ass;
-		case Step::THM: return &val.thm->ass;
-		case Step::DEF: return &val.def->ass;
-		default : assert(false && "impossible");
-		}
-		return nullptr;
+		if (kind != ASS) return nullptr;
+		return val.ass;
 	}
 
 	uint        ind;

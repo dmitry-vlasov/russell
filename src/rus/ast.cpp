@@ -29,9 +29,10 @@ Rule::~Rule() {
 }
 
 Assertion::Assertion(uint i) : id(i) {
-
+	//Sys::mod().math.assertions.add(id, this);
 }
-Assertion::~ Assertion() {
+Assertion::~Assertion() {
+	//Sys::mod().math.assertions.del(id);
 	for (auto h : hyps) delete h;
 	for (auto p : props) delete p;
 }

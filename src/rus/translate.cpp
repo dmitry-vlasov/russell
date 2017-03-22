@@ -231,7 +231,7 @@ void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref*>& smm
 	if (!maps.assertions.count(ass))
 		throw Error("undefined reference to assertion");
 	assert(maps.assertions.count(ass));
-	smm_proof.push_back(new smm::Ref(maps.assertions[ass]->prop.label, st->kind != Step::THM));
+	smm_proof.push_back(new smm::Ref(maps.assertions[ass]->prop.label, st->val.ass->kind() != Assertion::THM));
 }
 
 vector<smm::Inner*> translate_inners(const Vars& vars, Maps& maps, const Assertion* thm, uint ind_0) {

@@ -248,7 +248,6 @@ void translate_rule(const Assertion* ass, State& state) {
 
 template<class T>
 void translate_assertion(const Assertion* ass, T* a, State& state) {
-	a->ass.id = ass->prop.label;
 	a->ass.vars = translate_vars(ass->floating, state);
 	a->ass.disj = translate_disj(ass, state);
 	uint hc = 0;
@@ -380,16 +379,14 @@ rus::Proof::Elem translate_step(Ref* ref, rus::Proof* proof, rus::Theorem* thm, 
 	}
 	el.val.step->ind = elems.size();
 	el.val.step->expr = translate_expr(ref->expr, state, a);
+	el.val.step->kind = rus::Step::ASS;
 	switch (ass_kind(ass)) {
 	case rus::Node::AXIOM:
-		el.val.step->val.axm = state.axioms.find(ass)->second;
-		el.val.step->kind = rus::Step::AXM; break;
+		el.val.step->val.ass = state.axioms.find(ass)->second; break;
 	case rus::Node::DEF:
-		el.val.step->val.def = state.defs.find(ass)->second;
-		el.val.step->kind = rus::Step::DEF; break;
+		el.val.step->val.ass = state.defs.find(ass)->second; break;
 	case rus::Node::THEOREM:
-		el.val.step->val.thm = state.theorems.find(ass)->second;
-		el.val.step->kind = rus::Step::THM; break;
+		el.val.step->val.ass = state.theorems.find(ass)->second; break;
 	default : assert(false && "impossible"); break;
 	}
 	elems.push_back(el);

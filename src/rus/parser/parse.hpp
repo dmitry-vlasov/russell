@@ -288,6 +288,17 @@ struct FindAxiom {
 		return Sys::mod().math.axioms[id];
 	}
 };
+/*
+struct FindAssertion {
+	template <typename T>
+	struct result { typedef Assertion* type; };
+	Assertion* operator()(uint id) const {
+		if (!Sys::get().math.assertions.has(id))
+			throw Error("unknown theorem", show_id(id));
+		return Sys::mod().math.assertions[id];
+	}
+};
+*/
 
 struct FindDef {
 	template <typename T1>

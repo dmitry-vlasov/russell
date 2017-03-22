@@ -170,9 +170,14 @@ string show(const Step& st) {
 	s += show_type(st.expr) + " = ";
 	switch (st.kind) {
 	case Step::NONE: s += "? "; break;
-	case Step::AXM:  s += "axm " + show_id(st.val.axm->ass.id) + " "; break;
-	case Step::THM:  s += "thm " + show_id(st.val.thm->ass.id)+ " "; break;
-	case Step::DEF:  s += "def " + show_id(st.val.def->ass.id)+ " "; break;
+	case Step::ASS: {
+		switch (st.val.ass->kind()) {
+		case Assertion::AXM: s += "axm "; break;
+		case Assertion::THM: s += "thm "; break;
+		case Assertion::DEF: s += "def "; break;
+		}
+		s += show_id(st.val.ass->id) + " "; break;
+	}
 	case Step::CLAIM:s += "claim "; break;
 	}
 	if (st.kind != Step::NONE)
