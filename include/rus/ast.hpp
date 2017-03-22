@@ -47,6 +47,8 @@ struct Type {
 };
 
 struct Rule {
+	Rule(uint id);
+	~Rule();
 	uint  id;
 	Type* type;
 	Vars  vars;

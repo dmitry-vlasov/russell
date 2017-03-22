@@ -21,6 +21,13 @@ Type::~Type() {
 	for (auto p : supers) delete p.second;
 }
 
+Rule::Rule(uint i) : id(i), type(nullptr) {
+	Sys::mod().math.rules.add(id, this);
+}
+Rule::~Rule() {
+	Sys::mod().math.rules.del(id);
+}
+
 Source::Source(uint label) : mdl::Source<Source, Sys>(label), theory(nullptr) {
 	Sys::mod().math.sources[label] = this;
 }

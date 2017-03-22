@@ -222,8 +222,8 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 
 
 	rule =
-		lit("rule")  [_val = new_<Rule>()]
-		> - id       [phoenix::at_c<0>(*_val) = _1]
+		lit("rule")
+		> - id       [_val = new_<Rule>(_1)]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
 		> - vars     [phoenix::at_c<2>(*_val) = _1]
 		> ")" > "{" > "term" > ":"

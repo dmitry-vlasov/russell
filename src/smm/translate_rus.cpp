@@ -221,12 +221,11 @@ void translate_rule(const Assertion* ass, State& state) {
 		translate_super(ass, state);
 		return;
 	}
-	rus::Rule* rule = new rus::Rule {
-		ass->prop.label,
-		translate_type(ass->prop.expr[0], state),
-		translate_vars(ass->floating, state),
-		translate_expr(ass->prop.expr, state, ass)
-	};
+	rus::Rule* rule = new rus::Rule(ass->prop.label);
+	rule->type = translate_type(ass->prop.expr[0], state);
+	rule->vars = translate_vars(ass->floating, state);
+	rule->term = translate_expr(ass->prop.expr, state, ass);
+
 	for (rus::Rule* r : state.rules) {
 		bool less_gen = less_general(r, rule);
 		bool more_gen = less_general(rule, r);

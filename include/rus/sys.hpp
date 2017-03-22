@@ -48,7 +48,7 @@ struct Math {
 
 	Table<Const>    consts;
 	Table<Type>     types;
-	Table1<Rule*>    rules;
+	Table<Rule>     rules;
 	Table1<Axiom*>   axioms;
 	Table1<Def*>     defs;
 	Table1<Theorem*> theorems;

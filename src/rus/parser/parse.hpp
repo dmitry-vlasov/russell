@@ -93,8 +93,8 @@ inline Symbol create_symbol(string str, Type* tp) {
 }
 
 Rule* create_super(Type* inf, Type* sup) {
-	Rule* rule = new Rule;
-	rule->id = create_id("sup", show_id(inf->id), show_id(sup->id));
+	uint id = create_id("sup", show_id(inf->id), show_id(sup->id));
+	Rule* rule = new Rule(id);
 	rule->vars.v.push_back(create_symbol("x", inf));
 	rule->term.push_back(create_symbol("x", inf));
 	rule->type = sup;
@@ -155,7 +155,7 @@ struct AddToMath {
 		//cout << "ru: " << show_id(r->id) << endl;
 		r->type->rules.add(r->term) = r;
 		//cout << show(r->type->rules) << endl;
-		Sys::mod().math.rules[r->id] = r;
+		//Sys::mod().math.rules[r->id] = r;
 	}
 	void operator()(Axiom* a) const {
 		//cout << "ax: " << show_id(a->ass.id) << endl;
