@@ -420,7 +420,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, Prop*(), qi::locals<uint>, unicode::space_type> prop;
 	qi::rule<Iterator, Ref(Proof*), unicode::space_type> ref;
 	qi::rule<Iterator, vector<Ref>(Proof*), unicode::space_type> refs;
-	qi::rule<Iterator, Step*(Proof*), qi::locals<uint, Step::Kind>, unicode::space_type> step;
+	qi::rule<Iterator, Step*(Proof*), qi::locals<uint, uint, Step::Kind>, unicode::space_type> step;
 	qi::rule<Iterator, Qed*(Proof*), qi::locals<uint>, unicode::space_type> qed;
 	qi::rule<Iterator, Proof::Elem(Proof*), unicode::space_type> proof_elem;
 	qi::rule<Iterator, void(Proof*), unicode::space_type> proof_body;

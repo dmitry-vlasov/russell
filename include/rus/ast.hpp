@@ -115,15 +115,19 @@ struct Ref {
 		STEP
 	};
 	union Value {
+		Value() : non(nullptr) { }
+		Value(Hyp* h) : hyp(h) { }
+		Value(Prop* p) : prop(p) { }
+		Value(Step* s) : step(s) { }
 		void*  non;
 		Hyp*   hyp;
 		Prop*  prop;
 		Step*  step;
 	};
-	Ref() : kind(NONE), val() { val.non = nullptr; }
-	Ref(Hyp* h)   : kind(HYP),  val()  { val.hyp = h; }
-	Ref(Prop* p)  : kind(PROP), val()  { val.prop = p; }
-	Ref(Step* s)  : kind(STEP), val()  { val.step = s; }
+	Ref() : kind(NONE), val() { }
+	Ref(Hyp* h)   : kind(HYP),  val(h)  { }
+	Ref(Prop* p)  : kind(PROP), val(p)  { }
+	Ref(Step* s)  : kind(STEP), val(s)  { }
 	Expr& expr();
 	const Expr& expr() const;
 
