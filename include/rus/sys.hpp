@@ -55,7 +55,7 @@ struct Math {
 	Table1<Theorem*> theorems;
 
 	Table<Proof>   proofs;
-	Table1<Source*>  sources;
+	Table<Source>  sources;
 
 	~Math();
 };
@@ -68,7 +68,7 @@ void run();
 string show();
 string info();
 Source* parse(Path path);
-void verify(Source*);
+void verify(const Source*);
 smm::Source* translate(const Source* source);
 
 }} // mdl::rus

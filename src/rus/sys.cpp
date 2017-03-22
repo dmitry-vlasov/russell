@@ -3,7 +3,7 @@
 
 namespace mdl { namespace rus {
 
-Math::~Math() { for (auto s : sources) delete s.second; }
+Math::~Math() { sources.destroy(); }
 
 namespace {
 
@@ -41,7 +41,7 @@ bool unify_rus() {
 		if (Sys::conf().verbose) cout << "verifying russell source ... " << flush;
 		Sys::timer()["unify"].start();
 		uint lab = Lex::toInt(Sys::conf().in.name);
-		verify(Sys::get().math.sources.at(lab));
+		verify(Sys::get().math.sources.access(lab));
 		Sys::timer()["unify"].stop();
 		if (Sys::conf().verbose) cout << "done in " << Sys::timer()["unify"] << endl;
 		return true;
@@ -57,7 +57,7 @@ bool translate_rus() {
 		if (Sys::conf().verbose) cout << "translating file " << Sys::conf().in.name << " ... " << flush;
 		Sys::timer()["translate"].start();
 		uint lab = Lex::toInt(Sys::conf().in.name);
-		const smm::Source* target = translate(Sys::get().math.sources.at(lab));
+		const smm::Source* target = translate(Sys::get().math.sources.access(lab));
 		if (Sys::conf().deep) {
 			deep_write(
 				target,
@@ -84,7 +84,7 @@ bool write_rus() {
 		Sys::timer()["write"].start();
 		ofstream out(Sys::conf().out.path());
 		uint lab = Lex::toInt(Sys::conf().out.name);
-		out << *Sys::get().math.sources.at(lab) << endl;
+		out << *Sys::get().math.sources.access(lab) << endl;
 		out.close();
 		Sys::timer()["write"].stop();
 		if (Sys::conf().verbose) cout << "done in " << Sys::timer()["write"] << endl;
@@ -145,7 +145,7 @@ string info() {
 	const size_t thems_vol = mdl::memvol(Sys::get().math.theorems);
 	const size_t proof_vol = mdl::memvol(Sys::get().math.proofs);
 	uint lab = Lex::toInt(Sys::conf().in.name);
-	const size_t source_vol = memvol(*Sys::get().math.sources.at(lab));
+	const size_t source_vol = memvol(*Sys::get().math.sources.access(lab));
 	const size_t total_vol =
 		const_vol + types_vol + rules_vol +
 		axiom_vol + defs_vol + thems_vol + proof_vol;

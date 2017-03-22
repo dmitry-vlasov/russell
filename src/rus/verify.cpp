@@ -2,14 +2,14 @@
 
 namespace mdl { namespace rus { namespace {
 
-void verify_proof(Proof* pf);
+void verify_proof(const Proof* pf);
 
-void verify_step(Step* st) {
+void verify_step(const Step* st) {
 	if (st->kind == Step::CLAIM) {
 		verify_proof(st->val.prf);
 		return;
 	}
-	Assertion* ass = st->assertion();
+	const Assertion* ass = st->assertion();
 	//static int c = 0;
 	//cout << "\tverifying step: " << c++ << " = " << show_id(ass->id) << endl;
 	Substitution* ps = unify(ass->props[0]->expr, st->expr);
@@ -58,12 +58,12 @@ void verify_step(Step* st) {
 	delete ps;
 }
 
-void verify_qed(Qed* qed) {
+void verify_qed(const Qed* qed) {
 	if (qed->prop->expr != qed->step->expr)
 		throw Error("qed prop doesn't match qed step");
 }
 
-void verify_proof(Proof* proof) {
+void verify_proof(const Proof* proof) {
 	for (auto el : proof->elems) {
 		switch (el.kind){
 		case Proof::Elem::STEP: verify_step(el.val.step); break;
@@ -73,13 +73,13 @@ void verify_proof(Proof* proof) {
 	}
 }
 
-void verify_theory(Theory* theory) {
+void verify_theory(const Theory* theory) {
 	for (auto n : theory->nodes) {
 		switch (n.kind) {
 		case Node::PROOF:  verify_proof(n.val.prf); break;
 		case Node::THEORY: verify_theory(n.val.thy); break;
 		case Node::IMPORT: {
-			Import* imp = n.val.imp;
+			const Import* imp = n.val.imp;
 			if (imp->primary) verify_theory(imp->source->theory);
 			break;
 		}
@@ -90,7 +90,7 @@ void verify_theory(Theory* theory) {
 
 } // anonympus namespace
 
-void verify(Source* source) {
+void verify(const Source* source) {
 	verify_theory(source->theory);
 }
 
