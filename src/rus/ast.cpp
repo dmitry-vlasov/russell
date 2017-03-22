@@ -28,6 +28,14 @@ Rule::~Rule() {
 	Sys::mod().math.rules.del(id);
 }
 
+Assertion::Assertion(uint i) : id(i) {
+
+}
+Assertion::~ Assertion() {
+	for (auto h : hyps) delete h;
+	for (auto p : props) delete p;
+}
+
 Proof::Proof(Theorem* t, uint i) : id(i), thm(t), par(nullptr), has_id(!Undef<uint>::is(id)) {
 	static uint fresh = 0;
 	if (!has_id) id = Lex::toInt(string("__proof_") + to_string(fresh++));

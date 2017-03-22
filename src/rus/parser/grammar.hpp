@@ -97,17 +97,6 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 		             [phoenix::at_c<1>(*_val) = _1]
 		> lit(END_MARKER);
 
-	assertion =
-		id           [phoenix::at_c<0>(*_r1) = _1]
-		> lit("(")   [pushVars(phoenix::ref(var_stack))]
-		> - vars     [phoenix::at_c<1>(*_r1) = _1]
-		> ")"
-		> - disj     [phoenix::at_c<2>(*_r1) = _1]
-		> "{"
-		> - ( + (hyp [push_back(phoenix::at_c<3>(*_r1), _1)]) > bar )
-		> + (prop    [push_back(phoenix::at_c<4>(*_r1), _1)])
-		> lit("}")   [popVars(phoenix::ref(var_stack))];
-
 	refs =
 		lit("(")
 		> - ((
@@ -180,20 +169,34 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 		> eps        [addToMath(_val)];
 
 	theorem =
-		lit("theorem") [_val = new_<Theorem>()]
-		> eps          [_a = &phoenix::at_c<0>(*_val)]
-		> assertion(_a)
-		> eps          [addToMath(_val)];
-
-	axiom =
-		lit("axiom") [_val = new_<Axiom>()]
-		> eps        [_a = &phoenix::at_c<0>(*_val)]
-		> assertion(_a)
+		lit("theorem")
+		> id         [_val = new_<Theorem>(_1)]
+		> lit("(")   [pushVars(phoenix::ref(var_stack))]
+		> - vars     [phoenix::at_c<1>(phoenix::at_c<0>(*_val)) = _1]
+		> ")"
+		> - disj     [phoenix::at_c<2>(phoenix::at_c<0>(*_val)) = _1]
+		> "{"
+		> - ( + (hyp [push_back(phoenix::at_c<3>(phoenix::at_c<0>(*_val)), _1)]) > bar )
+		> + (prop    [push_back(phoenix::at_c<4>(phoenix::at_c<0>(*_val)), _1)])
+		> lit("}")   [popVars(phoenix::ref(var_stack))]
 		> eps        [addToMath(_val)];
 
-	def = lit("definition") [_val = new_<Def>()]
+	axiom =
+		lit("axiom")
+		> id         [_val = new_<Axiom>(_1)]
+		> lit("(")   [pushVars(phoenix::ref(var_stack))]
+		> - vars     [phoenix::at_c<1>(phoenix::at_c<0>(*_val)) = _1]
+		> ")"
+		> - disj     [phoenix::at_c<2>(phoenix::at_c<0>(*_val)) = _1]
+		> "{"
+		> - ( + (hyp [push_back(phoenix::at_c<3>(phoenix::at_c<0>(*_val)), _1)]) > bar )
+		> + (prop    [push_back(phoenix::at_c<4>(phoenix::at_c<0>(*_val)), _1)])
+		> lit("}")   [popVars(phoenix::ref(var_stack))]
+		> eps        [addToMath(_val)];
+
+	def = lit("definition")
+		> id         [_val = new_<Def>(_1)]
 		> eps        [_a = &phoenix::at_c<0>(*_val)]
-		> id         [phoenix::at_c<0>(*_a) = _1]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
 		> - vars     [phoenix::at_c<1>(*_a) = _1]
 		> ")"

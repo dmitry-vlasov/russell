@@ -428,7 +428,6 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, Theorem*(), qi::locals<Assertion*>, unicode::space_type> theorem;
 	qi::rule<Iterator, Def*(), qi::locals<Assertion*, Type*>, unicode::space_type> def;
 	qi::rule<Iterator, Axiom*(), qi::locals<Assertion*>, unicode::space_type> axiom;
-	qi::rule<Iterator, void(Assertion*), unicode::space_type> assertion;
 	qi::rule<Iterator, Rule*(), unicode::space_type> rule;
 	qi::rule<Iterator, Type*(), qi::locals<uint, vector<Type*>>, unicode::space_type> type;
 	qi::rule<Iterator, Const*(), qi::locals<Symbol, Symbol, Symbol>, unicode::space_type> constant;
@@ -468,7 +467,6 @@ void Grammar<Iterator>::initNames() {
 	theorem.name("theorem");
 	def.name("def");
 	axiom.name("axiom");
-	assertion.name("assertion");
 	rule.name("rule");
 	type.name("type");
 	constant.name("constant");

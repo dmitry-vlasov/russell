@@ -74,10 +74,8 @@ struct Prop {
 struct Proof;
 
 struct Assertion {
-	~ Assertion() {
-		for (auto h : hyps) delete h;
-		for (auto p : props) delete p;
-	}
+	Assertion(uint id);
+	virtual ~ Assertion();
 	uint arity() const { return hyps.size(); }
 	uint id;
 	Vars vars;
@@ -88,10 +86,12 @@ struct Assertion {
 };
 
 struct Axiom {
+	Axiom(uint id) : ass(id) { }
 	Assertion ass;
 };
 
 struct Def {
+	Def(uint id) : ass(id) { }
 	Assertion ass;
 	Expr dfm;
 	Expr dfs;
@@ -101,6 +101,7 @@ struct Def {
 struct Proof;
 
 struct Theorem {
+	Theorem(uint id) : ass(id) { }
 	Assertion      ass;
 	vector<Proof*> proofs;
 };
