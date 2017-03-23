@@ -5,6 +5,13 @@
 
 namespace mdl { namespace rus {
 
+struct Rule;
+struct Proof;
+struct Step;
+struct Theory;
+struct Import;
+struct Source;
+
 struct Comment {
 	string text;
 	Token  token;
@@ -28,8 +35,6 @@ struct Disj {
 	vector<vector<Symbol>> d;
 	Token token;
 };
-
-struct Rule;
 
 void parse_expr(Expr& ex);
 void parse_term(Expr& ex, Rule* rule);
@@ -71,8 +76,6 @@ struct Prop {
 	Token token;
 };
 
-struct Proof;
-
 struct Assertion {
 	enum Kind {
 		AXM,
@@ -94,27 +97,23 @@ struct Assertion {
 };
 
 struct Axiom : public Assertion {
-	Axiom(uint id) : Assertion(id) { }
+	Axiom(uint id);
 	Kind kind() const { return AXM; }
 };
 
 struct Def : public Assertion {
-	Def(uint id) : Assertion(id) { }
+	Def(uint id);
 	Kind kind() const { return DEF; }
 	Expr dfm;
 	Expr dfs;
 	Expr prop;
 };
 
-struct Proof;
-
 struct Theorem : public Assertion {
-	Theorem(uint id) : Assertion(id) { }
+	Theorem(uint id);
 	Kind kind() const { return THM; }
 	vector<Proof*> proofs;
 };
-
-struct Step;
 
 struct Ref {
 	enum Kind {
@@ -144,7 +143,6 @@ struct Ref {
 	Value val;
 };
 
-
 struct Step {
 	enum Kind {
 		NONE,
@@ -157,7 +155,8 @@ struct Step {
 		Proof*     prf;
 	};
 
-	Step(Proof* pr) : ind(-1), kind(NONE), proof(pr) { val.non = nullptr; }
+	Step(uint ind, Step::Kind, Assertion::Kind, uint id, Proof* proof);
+	~Step();
 
 	Assertion* assertion() {
 		if (kind != ASS) return nullptr;
@@ -241,10 +240,6 @@ struct Proof {
 	Token        token;
 };
 
-
-class Theory;
-class Import;
-
 struct Node {
 	enum Kind {
 		NONE,
@@ -291,8 +286,6 @@ struct Node {
 	Kind kind;
 	Value val;
 };
-
-struct Source;
 
 struct Import {
 	Import(Source* src, bool prim) : source(src), primary(prim) { }

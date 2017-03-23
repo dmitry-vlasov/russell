@@ -107,34 +107,18 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 		> ")";
 
 	step =
-		eps     [_val = new_<Step>(_r1)]
-		> uint_ [phoenix::at_c<0>(*_val) = _1 - 1]
-		> ":"
-		> id    [_a = _1]
-		> "="
+		uint_ [_a = _1 - 1] > ":" > id [_b = _1] > "="
 		> (
-			(lit("axm") [phoenix::at_c<2>(*_val) = val(Step::ASS)]
-			//> eps       [_b = val(Step::AXM)]
-			> id        [phoenix::at_c<1>(phoenix::at_c<3>(*_val)) = findAxiom(_1)]
-			) |
-			(lit("thm") [phoenix::at_c<2>(*_val) = val(Step::ASS)]
-			> id        [phoenix::at_c<1>(phoenix::at_c<3>(*_val)) = findTheorem(_1)]
-			//> eps       [_b = val(Step::THM)]
-			) |
-			(lit("def") [phoenix::at_c<2>(*_val) = val(Step::ASS)]
-			> id        [phoenix::at_c<1>(phoenix::at_c<3>(*_val)) = findDef(_1)]
-			//> eps       [_b = val(Step::DEF)]
-			) |
-			(lit("claim") [phoenix::at_c<2>(*_val) = val(Step::CLAIM)]
-			//> eps       [_b = val(Step::CLAIM)]
-			) |
-			(lit("?")   [phoenix::at_c<2>(*_val) = val(Step::NONE)]
-			//> eps       [_b = val(Step::NONE)]
-			)
+			(lit("axm") [_c = val(Step::ASS), _d = val(Assertion::AXM)] > id [_e = _1]) |
+			(lit("thm") [_c = val(Step::ASS), _d = val(Assertion::THM)] > id [_e = _1]) |
+			(lit("def") [_c = val(Step::ASS), _d = val(Assertion::DEF)] > id [_e = _1]) |
+			(lit("claim") [_c = val(Step::CLAIM)]) |
+			(lit("?")     [_c = val(Step::NONE)])
 		)
+		> eps [_val = new_<Step>(_a, _c, _d, _e, _r1)]
 		> refs(_r1) [phoenix::at_c<4>(*_val) = _1]
 		> "|-"
-		> expr(findType(_a)) [phoenix::at_c<1>(*_val) = _1]
+		> expr(findType(_b)) [phoenix::at_c<1>(*_val) = _1]
 		> lit(END_MARKER);
 
 	qed =

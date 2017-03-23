@@ -349,7 +349,7 @@ bool is_def(const Assertion* ass) {
 	return eq_pos != ex.end();
 }
 
-rus::Node::Kind ass_kind(const Assertion* ass) {
+rus::Node::Kind node_kind(const Assertion* ass) {
 	if (!is_turnstile(ass->prop.expr.front())) {
 		return rus::Node::RULE;
 	} else if (is_def(ass)) {
@@ -361,11 +361,23 @@ rus::Node::Kind ass_kind(const Assertion* ass) {
 	}
 }
 
+rus::Assertion::Kind ass_kind(const Assertion* ass) {
+	rus::Node::Kind kind = node_kind(ass);
+	switch (kind) {
+	case rus::Node::AXIOM:   return rus::Assertion::AXM;
+	case rus::Node::DEF:     return rus::Assertion::DEF;
+	case rus::Node::THEOREM: return rus::Assertion::THM;
+	default: assert(0 && "impossible");
+	}
+	return rus::Assertion::AXM;
+}
+
 rus::Proof::Elem translate_step(Ref* ref, rus::Proof* proof, rus::Theorem* thm, State& state, const Assertion* a) {
 	assert(ref->type == Ref::PROOF);
 	vector<rus::Proof::Elem>& elems = proof->elems;
-	rus::Proof::Elem el(new rus::Step(proof));
 	Assertion* ass = ref->val.prf->refs.back()->val.ass;
+	rus::Proof::Elem el(new rus::Step(elems.size(), rus::Step::ASS, ass_kind(ass), ass->prop.label, proof));
+
 	for (uint i = 0; i < ass->essential.size(); ++ i) {
 		Ref* r = ref->val.prf->refs[i];
 		assert(r->type == Ref::ESSENTIAL || r->type == Ref::PROOF);
@@ -379,16 +391,6 @@ rus::Proof::Elem translate_step(Ref* ref, rus::Proof* proof, rus::Theorem* thm, 
 	}
 	el.val.step->ind = elems.size();
 	el.val.step->expr = translate_expr(ref->expr, state, a);
-	el.val.step->kind = rus::Step::ASS;
-	switch (ass_kind(ass)) {
-	case rus::Node::AXIOM:
-		el.val.step->val.ass = state.axioms.find(ass)->second; break;
-	case rus::Node::DEF:
-		el.val.step->val.ass = state.defs.find(ass)->second; break;
-	case rus::Node::THEOREM:
-		el.val.step->val.ass = state.theorems.find(ass)->second; break;
-	default : assert(false && "impossible"); break;
-	}
 	elems.push_back(el);
 	return el;
 }
@@ -415,7 +417,7 @@ void translate_theorem(const Assertion* ass, State& state) {
 }
 
 void translate_assertion(const Assertion* ass, State& state) {
-	switch (ass_kind(ass)) {
+	switch (node_kind(ass)) {
 	case rus::Node::RULE    : translate_rule(ass, state);    break;
 	case rus::Node::DEF     : translate_def(ass, state);     break;
 	case rus::Node::AXIOM   : translate_axiom(ass, state);   break;

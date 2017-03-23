@@ -37,6 +37,47 @@ Assertion::~Assertion() {
 	for (auto p : props) delete p;
 }
 
+Axiom::Axiom(uint id) : Assertion(id) {
+	Sys::mod().math.axioms[id] = this;
+}
+
+Theorem::Theorem(uint id) : Assertion(id) {
+	Sys::mod().math.theorems[id] = this;
+}
+
+Def::Def(uint id) : Assertion(id) {
+	Sys::mod().math.defs[id] = this;
+}
+
+Step::Step(uint i, Step::Kind sk, Assertion::Kind ak, uint id, Proof* p) :
+	ind(i), kind(sk), proof(p) {
+	const Math& math = Sys::get().math;
+	switch (ak) {
+	case Assertion::AXM :
+		if (!math.axioms.count(id))
+			throw Error("unknown axiom", Lex::toStr(id));
+		val.ass = math.axioms.at(id); break;
+	case Assertion::THM :
+		if (!math.theorems.count(id))
+			throw Error("unknown axiom", Lex::toStr(id));
+		val.ass = math.theorems.at(id); break;
+	case Assertion::DEF :
+		if (!math.defs.count(id))
+			throw Error("unknown axiom", Lex::toStr(id));
+		val.ass = math.defs.at(id); break;
+	default: assert(0 && "impossible");
+	}
+
+	/*if (kind == ASS) {
+		Sys::mod().math.assertions.use(id, val.ass);
+	}*/
+}
+Step::~Step() {
+	/*if (kind == ASS) {
+		Sys::mod().math.assertions.unuse(id, val.ass);
+	}*/
+}
+
 Proof::Proof(Theorem* t, uint i) : id(i), thm(t), par(nullptr), has_id(!Undef<uint>::is(id)) {
 	static uint fresh = 0;
 	if (!has_id) id = Lex::toInt(string("__proof_") + to_string(fresh++));
