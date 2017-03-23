@@ -153,7 +153,12 @@ struct AddToMath {
 	}
 	void operator()(Rule* r) const {
 		//cout << "ru: " << show_id(r->id) << endl;
+
+
 		r->type->rules.add(r->term) = r;
+
+		//Sys::mod().math.rules.use(r->id, r->type->rules.add(r->term));
+
 		//cout << show(r->type->rules) << endl;
 		//Sys::mod().math.rules[r->id] = r;
 	}

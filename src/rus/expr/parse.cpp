@@ -16,13 +16,13 @@ struct Action {
 };
 
 inline Action act(auto& n, auto& m, Symbols::iterator ch, const Expr* e) {
-	if (Rule* r = n.top()->rule) {
+	if (Rule* r = (*n.top())->rule) {
 		if (r->token < e->token) return Action(Action::RET, r);
 		else return Action::BREAK;
 	} else if (ch->end)
 		return Action::BREAK;
 	else {
-		n.push(n.top()->tree.map.begin());
+		n.push((*n.top())->tree.map.begin());
 		m.push(++ch);
 	}
 	return Action::CONT;
@@ -39,7 +39,7 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e) {
 		m.push(x);
 		while (!n.empty() && !m.empty()) {
 			auto ch = m.top();
-			if (const Type* tp = n.top()->symb.type) {
+			if (const Type* tp = (*n.top())->symb.type) {
 				childnodes.push(n.top());
 				if (Tree* child = parse_LL(ch, tp, e)) {
 					children.push_back(unique_ptr<Tree>(child));
@@ -52,7 +52,7 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e) {
 				} else {
 					childnodes.pop();
 				}
-			} else if (n.top()->symb == *m.top()) {
+			} else if ((*n.top())->symb == *m.top()) {
 				Action a = act(n, m, ch, e);
 				switch (a.kind) {
 				case Action::RET  : x = ch; return new Tree(a.rule, children);
@@ -60,7 +60,7 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e) {
 				case Action::CONT : continue;
 				}
 			}
-			while (n.top()->symb.fin) {
+			while ((*n.top())->symb.fin) {
 				n.pop();
 				m.pop();
 				if (!childnodes.empty() && childnodes.top() == n.top()) {

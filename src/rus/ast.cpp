@@ -23,8 +23,10 @@ Type::~Type() {
 
 Rule::Rule(uint i) : id(i), type(nullptr) {
 	Sys::mod().math.rules.add(id, this);
+	//Sys::mod().math.rules.use(id, type->rules.add(term));
 }
 Rule::~Rule() {
+	//Sys::mod().math.rules.unuse(id, type->rules.add(term));
 	Sys::mod().math.rules.del(id);
 }
 

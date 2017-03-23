@@ -68,14 +68,14 @@ void parse_term(Expr& ex, Rule* rule) {
 
 vector<string> show_lines(const Rules& tr) {
 	vector<string> vect;
-	for (const Rules::Node& p : tr.map) {
-		vector<string> v = show_lines(p.tree);
-		if (p.tree.map.size()) {
+	for (const Rules::Node* p : tr.map) {
+		vector<string> v = show_lines(p->tree);
+		if (p->tree.map.size()) {
 			for (string& s : v)
-				vect.push_back(show(p.symb) + ' ' + s);
+				vect.push_back(show(p->symb) + ' ' + s);
 		} else {
-			vect.push_back(show(p.symb) + " --> " +
-				(p.rule ? show(*p.rule) : "null")
+			vect.push_back(show(p->symb) + " --> " +
+				(p->rule ? show(*p->rule) : "null")
 			);
 		}
 	}
@@ -93,8 +93,8 @@ string show(const Rules& tr) {
 size_t memvol(const Rules& rt) {
 	size_t vol = 0;
 	vol += rt.map.capacity() * sizeof (Rules::Node);
-	for (auto& p : rt.map) {
-		vol += memvol(p.tree);
+	for (auto p : rt.map) {
+		vol += memvol(p->tree);
 	}
 	return vol;
 }

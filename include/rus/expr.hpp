@@ -204,8 +204,9 @@ struct Expr {
 
 struct Rules {
 	struct Node;
-	typedef vector<Node> Map;
+	typedef vector<Node*> Map;
 	Rule*& add(const Expr& ex);
+	~Rules();
 	Map map;
 };
 
@@ -217,24 +218,26 @@ struct Rules::Node {
 	Rule*  rule;
 };
 
+inline Rules::~Rules() { for (auto n : map) delete n; }
+
 inline Rule*& Rules::add(const Expr& ex) {
 	assert(ex.symbols.size());
 	Rules* m = this;
 	Node* n = nullptr;
 	for (const Symbol& s : ex.symbols) {
 		bool new_symb = true;
-		for (Node& p : m->map) {
-			if (p.symb == s) {
-				n = &p;
-				m = &p.tree;
+		for (Node* p : m->map) {
+			if (p->symb == s) {
+				n = p;
+				m = &p->tree;
 				new_symb = false;
 				break;
 			}
 		}
 		if (new_symb) {
-			if (m->map.size()) m->map.back().symb.fin = false;
-			m->map.push_back(Node(s));
-			n = &m->map.back();
+			if (m->map.size()) m->map.back()->symb.fin = false;
+			m->map.push_back(new Node(s));
+			n = m->map.back();
 			n->symb.fin = true;
 			m = &n->tree;
 		}
