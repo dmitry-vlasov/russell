@@ -72,6 +72,9 @@ struct Sys : public mdl::Sys<Sys, Math> {
 	Sys();
 };
 
+template<class T>
+using User = mdl::User<T, Sys>;
+
 void run();
 string show();
 string info();
