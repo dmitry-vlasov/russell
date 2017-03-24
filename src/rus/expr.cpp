@@ -35,7 +35,7 @@ void Rules::add(const Expr& ex, uint id) {
 }
 
 Rules::Node::~Node() {
-	Sys::mod().math.rules.unuse(rule->id, rule);
+	if (rule) Sys::mod().math.rules.unuse(rule->id, rule);
 }
 
 Tree::Node::Node(Rule* r) : rule(r), children() { }
