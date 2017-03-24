@@ -3,6 +3,75 @@
 namespace mdl {
 namespace rus {
 
+
+
+Rules::~Rules() {
+	for (auto n : map) delete n;
+}
+
+void Rules::add(const Expr& ex, uint id) {
+	assert(ex.symbols.size());
+	Rules* m = this;
+	Node* n = nullptr;
+	for (const Symbol& s : ex.symbols) {
+		bool new_symb = true;
+		for (Node* p : m->map) {
+			if (p->symb == s) {
+				n = p;
+				m = &p->tree;
+				new_symb = false;
+				break;
+			}
+		}
+		if (new_symb) {
+			if (m->map.size()) m->map.back()->symb.fin = false;
+			m->map.push_back(new Node(s));
+			n = m->map.back();
+			n->symb.fin = true;
+			m = &n->tree;
+		}
+	}
+	Sys::mod().math.rules.use(id, n->rule);
+}
+
+Rules::Node::~Node() {
+	Sys::mod().math.rules.unuse(rule->id, rule);
+}
+
+Tree::Node::Node(Rule* r) : rule(r), children() { }
+Tree::Node::Node(Rule* r, const Tree::Children& ch) : rule(r), children() {
+	children.reserve(ch.size());
+	for (auto& c : ch) children.push_back(make_unique<Tree>(*c.get()));
+}
+Tree::Node::Node(const Node& n) : rule(n.rule), children() {
+	children.reserve(n.children.size());
+	for (auto& c : n.children) children.push_back(make_unique<Tree>(*c.get()));
+}
+Tree::Node::Node(Node&& n) : rule(n.rule), children(std::move(n.children)) { }
+Tree::Node::Node(Rule* r, Tree::Children&& ch) : rule(r), children(std::move(ch)) { }
+Tree::Node::Node(Rule* r, Tree* ch) : rule(r), children() {
+	children.push_back(unique_ptr<Tree>(ch));
+}
+Tree::Node::~Node() {
+
+}
+
+
+
+Tree::Tree(const Symbol& v) : kind(VAR), val(new Symbol(v)) { }
+Tree::Tree(Rule* r, const Tree::Children& ch) : kind(NODE), val(new Node(r, ch)) { }
+Tree::Tree(Rule* r, Tree* ch) : kind(NODE), val(new Node(r, ch)) { }
+Tree::Tree(const Tree& ex) : kind(ex.kind), val() {
+	switch (kind) {
+	case NODE: val.node = new Node(*ex.val.node);  break;
+	case VAR:  val.var  = new Symbol(*ex.val.var); break;
+	}
+}
+Tree::Tree(Tree&& ex) : kind(ex.kind), val(ex.val) { ex.val.var = nullptr; }
+Tree::~Tree() { delete_val(); }
+
+
+
 string show(Symbol s, bool full) {
 	if (!full || !s.type)
 		return show_sy(s.lit);

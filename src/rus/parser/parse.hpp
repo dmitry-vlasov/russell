@@ -155,7 +155,8 @@ struct AddToMath {
 		//cout << "ru: " << show_id(r->id) << endl;
 
 
-		r->type->rules.add(r->term) = r;
+		//r->type->rules.add(r->term) = r;
+		r->type->rules.add(r->term, r->id);
 
 		//Sys::mod().math.rules.use(r->id, r->type->rules.add(r->term));
 

@@ -9,6 +9,7 @@ namespace mdl { namespace rus {
 typedef mdl::Token<Source> Token;
 
 struct Type;
+struct Rule;
 
 struct Symbol : public mdl::Symbol {
 	Symbol(string s, Type* t = nullptr);
@@ -53,28 +54,18 @@ inline ostream& operator << (ostream& os, Symbol s) {
 	return os;
 }
 
-struct Rule;
-
 struct Tree {
 	typedef vector<unique_ptr<Tree>> Children;
 	enum Kind { NODE, VAR};
 
-private:
 	struct Node {
-		Node(Rule* r = nullptr) : rule(r), children() { }
-		Node(Rule* r, const Children& ch) : rule(r), children() {
-			children.reserve(ch.size());
-			for (auto& c : ch) children.push_back(make_unique<Tree>(*c.get()));
-		}
-		Node(const Node& n) : rule(n.rule), children() {
-			children.reserve(n.children.size());
-			for (auto& c : n.children) children.push_back(make_unique<Tree>(*c.get()));
-		}
-		Node(Node&& n) : rule(n.rule), children(std::move(n.children)) { }
-		Node(Rule* r, Children&& ch) : rule(r), children(std::move(ch)) { }
-		Node(Rule* r, Tree* ch) : rule(r), children() {
-			children.push_back(unique_ptr<Tree>(ch));
-		}
+		Node(Rule* r = nullptr);
+		Node(const Node& n);
+		Node(Node&& n);
+		Node(Rule* r, const Children& ch);
+		Node(Rule* r, Children&& ch);
+		Node(Rule* r, Tree* ch);
+		~Node();
 		Rule*    rule;
 		Children children;
 	};
@@ -86,18 +77,12 @@ private:
 		Symbol* var;
 	};
 
-public :
-	Tree(const Symbol& v) : kind(VAR), val(new Symbol(v)) { }
-	Tree(Rule* r, const Children& ch) : kind(NODE), val(new Node(r, ch)) { }
-	Tree(Rule* r, Tree* ch) : kind(NODE), val(new Node(r, ch)) { }
-	Tree(const Tree& ex) : kind(ex.kind), val() {
-		switch (kind) {
-		case NODE: val.node = new Node(*ex.val.node);  break;
-		case VAR:  val.var  = new Symbol(*ex.val.var); break;
-		}
-	}
-	Tree(Tree&& ex) : kind(ex.kind), val(ex.val) { ex.val.var = nullptr; }
-	~Tree() { delete_val(); }
+	Tree(const Symbol& v);
+	Tree(Rule* r, const Children& ch);
+	Tree(Rule* r, Tree* ch);
+	Tree(const Tree& ex);
+	Tree(Tree&& ex);
+	~Tree();
 
 	void operator = (Tree&& ex) {
 		delete_val();
@@ -205,45 +190,19 @@ struct Expr {
 struct Rules {
 	struct Node;
 	typedef vector<Node*> Map;
-	Rule*& add(const Expr& ex);
+	void add(const Expr& ex, uint id);
 	~Rules();
 	Map map;
 };
 
 struct Rules::Node {
 	Node(Symbol s) : symb(s), tree(), level(), rule(nullptr) { }
+	~Node();
 	Symbol symb;
 	Rules  tree;
 	uint   level;
 	Rule*  rule;
 };
-
-inline Rules::~Rules() { for (auto n : map) delete n; }
-
-inline Rule*& Rules::add(const Expr& ex) {
-	assert(ex.symbols.size());
-	Rules* m = this;
-	Node* n = nullptr;
-	for (const Symbol& s : ex.symbols) {
-		bool new_symb = true;
-		for (Node* p : m->map) {
-			if (p->symb == s) {
-				n = p;
-				m = &p->tree;
-				new_symb = false;
-				break;
-			}
-		}
-		if (new_symb) {
-			if (m->map.size()) m->map.back()->symb.fin = false;
-			m->map.push_back(new Node(s));
-			n = m->map.back();
-			n->symb.fin = true;
-			m = &n->tree;
-		}
-	}
-	return n->rule;
-}
 
 
 string show(const Rules& tr);
