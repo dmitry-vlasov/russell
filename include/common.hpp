@@ -375,6 +375,17 @@ struct Source {
 	}
 };
 
+template<class T, class S>
+class User {
+	T* ptr;
+public:
+	typedef S Sys;
+	User(uint id) { Sys::mod().math.template get<T>().use(id, ptr); }
+	~User() { if (ptr) Sys::mod().math.template get<T>().unuse(ptr->id, ptr); }
+	T* get() { return ptr; }
+	const T* get() const { return ptr; }
+};
+
 } // mdl
 
   

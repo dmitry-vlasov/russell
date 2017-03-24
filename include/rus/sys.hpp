@@ -58,7 +58,15 @@ struct Math {
 	Table<Source>  sources;
 
 	~Math();
+
+	template<class T>
+	Table<T>& get();
 };
+
+template<>
+inline Table<Const>& Math::get<Const>() { return consts; }
+template<>
+inline Table<Type>& Math::get<Type>() { return types; }
 
 struct Sys : public mdl::Sys<Sys, Math> {
 	Sys();
