@@ -376,6 +376,14 @@ struct Source {
 };
 
 template<class T, class S>
+struct Owner {
+	uint id;
+	typedef S Sys;
+	Owner(uint i) : id(i) { Sys::mod().math.template get<T>().add(id, dynamic_cast<T*>(this)); }
+	~Owner() { Sys::mod().math.template get<T>().del(id); }
+};
+
+template<class T, class S>
 class User {
 	T* ptr;
 public:

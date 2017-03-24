@@ -61,12 +61,23 @@ struct Math {
 
 	template<class T>
 	Table<T>& get();
+	template<class T>
+	const Table<T>& get() const;
 };
 
 template<>
 inline Table<Const>& Math::get<Const>() { return consts; }
 template<>
 inline Table<Type>& Math::get<Type>() { return types; }
+template<>
+inline Table<Rule>& Math::get<Rule>() { return rules; }
+
+template<>
+inline const Table<Const>& Math::get<Const>() const { return consts; }
+template<>
+inline const Table<Type>& Math::get<Type>() const { return types; }
+template<>
+inline const Table<Rule>& Math::get<Rule>() const { return rules; }
 
 struct Sys : public mdl::Sys<Sys, Math> {
 	Sys();
@@ -74,6 +85,9 @@ struct Sys : public mdl::Sys<Sys, Math> {
 
 template<class T>
 using User = mdl::User<T, Sys>;
+
+template<class T>
+using Owner = mdl::Owner<T, Sys>;
 
 void run();
 string show();
