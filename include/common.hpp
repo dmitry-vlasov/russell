@@ -296,31 +296,32 @@ private:
 
 public:
 	void add(uint n, Data* p = nullptr) {
+		if (!p) throw Error("adding null pointer, label", Lex::toStr(n));
 		if (!refs.count(n)) {
 			refs[n].data = p;
 		} else {
 			Storage& d = refs[n];
-			if (d.data) throw Error("attempt to reuse live pointer");
+			if (d.data) throw Error("reusing live pointer, label", Lex::toStr(n));
 			d.data = p;
 			for (Data** u : d.users) *u = p;
 		}
 	}
 	void del(uint n) {
-		if (!refs.count(n)) throw Error("attempt to delete unknown label");
+		if (!refs.count(n)) throw Error("deleting unknown label", Lex::toStr(n));
 		Storage& d = refs[n];
-		if (!d.data) throw Error("attempt to delete null pointer");
+		if (!d.data) throw Error("deleting null pointer, label", Lex::toStr(n));
 		d.data = nullptr;
 		for (Data** u : d.users) *u = nullptr;
 	}
 	void use(uint n, Data*& u) {
-		if (!refs.count(n)) throw Error("attempt to use unknown label");
+		if (!refs.count(n)) throw Error("using unknown label", Lex::toStr(n));
 		Storage& d = refs[n];
-		if (!d.data) throw Error("attempt to use null pointer");
+		if (!d.data) throw Error("using null pointer, label", Lex::toStr(n));
 		d.users.insert(&u);
 		u = d.data;
 	}
 	void unuse(uint n, Data*& u) {
-		if (!refs.count(n)) throw Error("attempt to unuse unknown label");
+		if (!refs.count(n)) throw Error("unusing unknown label", Lex::toStr(n));
 		Storage& d = refs[n];
 		d.users.erase(&u);
 	}
@@ -376,11 +377,13 @@ struct Source {
 };
 
 template<class T, class S>
-struct Owner {
-	uint id;
+class Owner {
+	uint id_;
+public:
 	typedef S Sys;
-	Owner(uint i) : id(i) { Sys::mod().math.template get<T>().add(id, dynamic_cast<T*>(this)); }
-	~Owner() { Sys::mod().math.template get<T>().del(id); }
+	Owner(uint i) : id_(i) { Sys::mod().math.template get<T>().add(id_, dynamic_cast<T*>(this)); }
+	~Owner() { Sys::mod().math.template get<T>().del(id_); }
+	uint id() const { return id_; }
 };
 
 template<class T, class S>
