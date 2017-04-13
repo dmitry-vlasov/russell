@@ -21,28 +21,22 @@ struct Disjointed {
 	Token token;
 };
 
-struct Essential {
-	Essential(uint l, const Vect& e);
-	~Essential();
-	uint  label;
+struct Essential : public Ower<Essential, Sys> {
+	Essential(uint l, const Vect& e) : Owner<Essential, Sys>(l), expr(e) { }
 	Vect  expr;
 	Token token;
 };
 
-struct Floating  {
-	Floating(uint l, const Vect& e);
-	~Floating();
+struct Floating : public Ower<Floating, Sys> {
+	Floating(uint l, const Vect& e) : Owner<Essential, Sys>(l), expr(e) { }
 	Symbol type() const { return expr[0]; }
 	Symbol var() const { return expr[1]; }
-	uint  label;
 	Vect  expr;
 	Token token;
 };
 
-struct Axiom {
-	Axiom(uint l, const Vect& e);
-	~Axiom();
-	uint  label;
+struct Axiom : public Ower<Axiom, Sys> {
+	Axiom(uint l, const Vect& e) : Owner<Axiom, Sys>(l), expr(e) { }
 	Vect  expr;
 	uint  arity;
 	Token token;
@@ -50,10 +44,10 @@ struct Axiom {
 
 class Proof;
 
-struct Theorem {
-	Theorem(uint l, const Vect& e, Proof* p = nullptr);
+struct Theorem : public Ower<Theorem, Sys> {
+	Theorem(uint l, const Vect& e, Proof* p = nullptr) :
+		Owner<Theorem, Sys>(l), expr(e), arity(Undef<uint>::get()), proof(p) { }
 	~Theorem();
-	uint   label;
 	Vect   expr;
 	uint   arity;
 	Proof* proof;
@@ -73,11 +67,11 @@ struct Ref {
 	union Value {
 		Value() : ptr(nullptr) { }
 		void*       ptr;
-		Floating*   flo;
-		Essential*  ess;
-		Axiom*      ax;
-		Theorem*    th;
-		Proof*      prf;
+		User<Floating, Sys>   flo;
+		User<Essential, Sys>  ess;
+		User<Axiom, Sys>      ax;
+		User<Theorem, Sys>    th;
+		User<Proof, Sys>      prf;
 	};
 
 	Ref(uint label);
@@ -122,6 +116,9 @@ struct Proof {
 	Token        token;
 };
 
+inline Theorem::~Theorem() {
+	if (proof) delete proof;
+}
 
 struct Comment {
 	Comment(string t) : text(t) { }
@@ -228,8 +225,8 @@ struct Block {
 };
 
 struct Source : public mdl::Source<Source, Sys> {
-	Source(uint l);
-	~Source();
+	Source(uint l) : mdl::Source<Source, Sys>(l), block(nullptr) { }
+	~Source() override { if (block) delete block; }
 
 	Block* block;
 };

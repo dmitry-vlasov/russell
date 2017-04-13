@@ -349,33 +349,6 @@ public:
 	const_iterator cend() const { return refs.cend(); }
 };
 
-template<class Src, class Sys>
-struct Source {
-	Source(uint l) : label(l) { }
-	virtual ~Source() { }
-
-	uint   label;
-	string data;
-
-	Path path() const { return Sys::conf().in.relative(name()); }
-	string name() const { return Lex::toStr(label); }
-	string dir() const { return path().dir(); }
-
-	void read() { path().read(data); }
-	void write() const { path().write(data); }
-
-	// Transitively closed inclusion relation:
-	set<Src*> includes;
-	set<Src*> included;
-
-	void include(Src* src) {
-		includes.insert(src);
-		for (Src* s : src->includes) includes.insert(s);
-		src->included.insert(dynamic_cast<Src*>(this));
-		for (Src* s : src->included) s->included.insert(dynamic_cast<Src*>(this));
-	}
-};
-
 template<class T, class S>
 class Owner {
 	uint id_;
@@ -395,6 +368,32 @@ public:
 	~User() { if (ptr) Sys::mod().math.template get<T>().unuse(ptr->id, ptr); }
 	T* get() { return ptr; }
 	const T* get() const { return ptr; }
+};
+
+template<class Src, class Sys>
+struct Source : public Owner<Source, Sys> {
+	Source(uint l) : Owner<Source, sys>(l) { }
+	virtual ~Source() { }
+
+	string data;
+
+	Path path() const { return Sys::conf().in.relative(name()); }
+	string name() const { return Lex::toStr(id()); }
+	string dir() const { return path().dir(); }
+
+	void read() { path().read(data); }
+	void write() const { path().write(data); }
+
+	// Transitively closed inclusion relation:
+	set<Src*> includes;
+	set<Src*> included;
+
+	void include(Src* src) {
+		includes.insert(src);
+		for (Src* s : src->includes) includes.insert(s);
+		src->included.insert(dynamic_cast<Src*>(this));
+		for (Src* s : src->included) s->included.insert(dynamic_cast<Src*>(this));
+	}
 };
 
 } // mdl

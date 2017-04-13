@@ -5,32 +5,6 @@ namespace mdl { namespace mm {
 
 //Constants::Constants(const Vect& ex) : expr(ex) { }
 
-Essential::Essential(uint l, const Vect& e) : label(l), expr(e)  {
-	Sys::mod().math.essentials.add(label, this);
-}
-Essential::~Essential() {
-	Sys::mod().math.essentials.del(label);
-}
-Floating::Floating(uint l, const Vect& e) : label(l), expr(e)  {
-	Sys::mod().math.floatings.add(label, this);
-}
-Floating::~Floating() {
-	Sys::mod().math.floatings.del(label);
-}
-Axiom::Axiom(uint l, const Vect& e) : label(l), expr(e), arity(Undef<uint>::get())  {
-	Sys::mod().math.axioms.add(label, this);
-}
-Axiom::~Axiom() {
-	Sys::mod().math.axioms.del(label);
-}
-Theorem::Theorem(uint l, const Vect& e, Proof* p) : label(l), expr(e), arity(Undef<uint>::get()), proof(p)  {
-	Sys::mod().math.theorems.add(label, this);
-}
-Theorem::~Theorem() {
-	if (proof) delete proof;
-	Sys::mod().math.theorems.del(label);
-}
-
 Ref::Ref(uint label) : type(NONE), val() {
 	Sys::Math& math = Sys::mod().math;
 	if (math.floatings.has(label)) {
@@ -81,14 +55,6 @@ Inclusion::Inclusion(Source* src, bool prim) : source(nullptr), primary(prim) {
 }
 Inclusion::~Inclusion() {
 	if (source) Sys::mod().math.sources.unuse(source->label, source);
-}
-
-Source::Source(uint label) : mdl::Source<Source, Sys>(label), block(nullptr) {
-	Sys::mod().math.sources.add(label, this);
-}
-Source::~Source() {
-	if (block) delete block;
-	Sys::mod().math.sources.del(label);
 }
 
 }} // mdl::mm
