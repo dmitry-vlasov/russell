@@ -220,12 +220,12 @@ void reduce(Maps& maps, smm::Assertion* ass, ArgMap& args, const Proof* proof) {
 }
 
 smm::Proof* transform_proof(Maps& maps, set<uint>& red, const Proof* proof) {
-	Proof* tree = to_tree(proof);
-	if (tree == nullptr)
+	Tree* tree = to_tree(proof);
+	if (tree->nodes.front().type == Tree::Node::REF)
 		return nullptr;
-	reduce(tree, red);
+	tree = reduce(tree, red);
 	transform(tree, maps.transform);
-	Proof* rpn = to_rpn(tree);
+	Proof* rpn = to_proof(tree);
 	smm::Proof* pr = translate_proof(maps, rpn);
 	delete tree;
 	delete rpn;
@@ -301,6 +301,7 @@ smm::Assertion* translate_ass(Maps& maps, const Node& n, const Block* block)  {
 
 	reduce(maps, ass, args, n.proof());
 	n.arity() = ass->essential.size() + ass->floating.size();
+
 	if (n.type == Node::THEOREM) {
 		ass->proof = transform_proof(maps, red, n.val.th->proof);
 		if (!ass->proof) {
