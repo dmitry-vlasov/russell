@@ -29,7 +29,7 @@ AC_CHECK_TYPES([ptrdiff_t])
 LT_INIT
 
 #m4_include([m4/ax_check_compile_flag.m4])
-AX_CHECK_COMPILE_FLAG([-std=gnu++14], [CXXFLAGS="$CXXFLAGS -std=gnu++14"])
+AX_CHECK_COMPILE_FLAG([-std=gnu++1z], [CXXFLAGS="$CXXFLAGS -std=gnu++14"])
 
 AM_INIT_AUTOMAKE([subdir-objects])
 

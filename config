@@ -1,11 +1,12 @@
 #!/bin/bash 
  
  # The relative path to the directory, containing binary executables: 
- binpath='./build/release/bin'
+binpath='./build/release/bin'
+#binpath='./build/debug/bin'
  
  # The relative path to the directory, containing math sources:
  mathpath='./math'
 
-#memcheck='yes'
+memcheck='yes'
 
 source run_check

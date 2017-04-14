@@ -57,26 +57,25 @@ struct Theorem : public Ower<Theorem, Sys> {
 
 struct Ref {
 	enum Type {
-		NONE,
 		FLOATING,
 		ESSENTIAL,
 		AXIOM,
-		THEOREM,
-		PROOF
+		THEOREM
 	};
 	union Value {
-		Value() : ptr(nullptr) { }
-		void*       ptr;
+		Value() : flo(nullptr) { }
+		Value(Floating* f) : flo(f) { }
+		Value(Essential* e) : ess(e) { }
+		Value(Axiom* a) : ax(a) { }
+		Value(Theorem* t) : th(t) { }
 		User<Floating, Sys>   flo;
 		User<Essential, Sys>  ess;
 		User<Axiom, Sys>      ax;
 		User<Theorem, Sys>    th;
-		User<Proof, Sys>      prf;
 	};
 
 	Ref(uint label);
 	Ref(const Ref&);
-	Ref(Proof* p) : type(PROOF), val() { val.prf = p; }
 	~Ref();
 
 	uint label() const {
@@ -85,7 +84,6 @@ struct Ref {
 		case ESSENTIAL:  return val.ess->label;
 		case AXIOM:      return val.ax->label;
 		case THEOREM:    return val.th->label;
-		default : assert(false && "impossible"); break;
 		}
 		return -1; // Pacifying compiler
 	}
@@ -98,27 +96,43 @@ struct Ref {
 	Value val;
 };
 
+struct Tree {
+	struct Node {
+		enum Type {
+			REF,
+			TREE
+		};
+		union Value {
+			Value(Ref* r) : ref(r) { }
+			Value(Tree* t) : tree(t) { }
+			Value(const Value& v) : ref(v.ref) { }
+			Ref*  ref;
+			Tree* tree;
+		};
+		Node(Ref* r) : type(REF), val(r) { }
+		Node(Tree* t) : type(TREE), val(t) { }
+		void destroy() { if (type == TREE) delete val.tree; }
+		Type type;
+		Value val;
+	};
+	Tree() = default;
+	Tree(Ref* r) { nodes.push_back(r); }
+	~Tree() { for (auto& n : nodes) n.destroy(); }
+	vector<Node> nodes;
+};
 
 struct Proof {
-	enum Type {
-		TREE,
-		RPN
-	};
+	Proof() = default;
 	Proof(const vector<Ref*>&);
 	Proof(vector<Ref*>&&);
-	Proof(Type t = RPN) : refs(), type(t) { }
-	Proof(const Proof& p) : refs(), type(p.type) {
+	Proof(const Proof& p) {
 		for (auto r : p.refs) refs.push_back(new Ref(*r));
 	}
 	~Proof();
 	vector<Ref*> refs;
-	Type         type;
 	Token        token;
 };
 
-inline Theorem::~Theorem() {
-	if (proof) delete proof;
-}
 
 struct Comment {
 	Comment(string t) : text(t) { }

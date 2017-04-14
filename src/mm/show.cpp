@@ -4,38 +4,40 @@
 
 namespace mdl { namespace mm {
 
-uint length(const Proof& p);
-uint length(const Ref& r) {
-	if (r.type == Ref::PROOF) return length(*r.val.prf);
-	else return 1;
+uint length(const Tree& t);
+uint length(const Tree::Node& n) {
+	return (n.type == Tree::Node::TREE) ? length(*n.val.tree) : 1;
 }
-uint length(const Proof& p) {
-	assert(p.type == Proof::TREE);
-	uint len = 1;
-	for (uint i = 0; i + 1 < p.refs.size(); ++ i) {
-		len += length(*p.refs[i]);
-	}
+uint length(const Tree& t) {
+	uint len = 0;
+	for (auto n : t.nodes) len += length(n);
 	return len;
 }
-
-string show(const Proof& tree);
-string show(const Ref& r) {
-	if (r.type == Ref::PROOF)
-		return show(*r.val.prf);
-	else
-		return Lex::toStr(r.label());
+uint length(const Proof& p) {
+	return p.refs.size();
 }
 
-string show(const Proof& tree) {
+string show(const Ref& r) {
+	return Lex::toStr(r.label());
+}
+string show(const Tree& tree);
+string show(const Tree::Node& n) {
+	if (n.type == Tree::Node::TREE)
+		return show(*n.val.tree);
+	else
+		return show(*n.val.ref);
+}
+
+string show(const Tree& tree) {
 	string space = length(tree) > 16 ? "\n" : " ";
-	string str = Lex::toStr(tree.refs.back()->label());
+	assert(tree.nodes.back().type == Tree::Node::REF);
+	string str = Lex::toStr(tree.nodes.back().val.ref->label());
 	str += "(";
-	for (uint i = 0; i + 1 <tree.refs.size(); ++ i)
-		str += Indent::paragraph(space + show(*tree.refs[i]), "  ");
+	for (uint i = 0; i + 1 <tree.nodes.size(); ++ i)
+		str += Indent::paragraph(space + show(tree.nodes[i]), "  ");
 	str += space + ") ";
 	return str;
 }
-
 
 ostream& operator << (ostream& os, const Constants& cst) {
 	os << "$c " << cst.expr << "$.";
@@ -47,21 +49,8 @@ ostream& operator << (ostream& os, const Ref& ref) {
 	return os;
 }
 
-
-void write_proof_ref(ostream& os, const Ref& r) {
-	if (r.type == Ref::PROOF)
-		os << *r.val.prf << ' ';
-	else
-		os << r << ' ';
-}
-
 ostream& operator << (ostream& os, const Proof& proof) {
-	if (proof.type == Proof::TREE) {
-		os << show(proof);
-		return os;
-	}
-	for (auto r : proof.refs)
-		write_proof_ref(os, *r);
+	for (auto r : proof.refs) os << *r << " ";
 	os << "$.";
 	return os;
 }
