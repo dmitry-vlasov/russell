@@ -35,10 +35,6 @@ Tree* to_tree(const Proof* proof) {
 }
 
 static void to_proof(const Tree* t, vector<Ref*>& proof) {
-	if (!t) {
-		cout << "AAAA" << endl;
-		return;
-	}
 	for (auto n : t->nodes) {
 		switch(n.type) {
 		case Tree::Node::REF:
@@ -59,10 +55,6 @@ Proof* to_proof(const Tree* tree) {
 }
 
 void transform(Tree* tree, Transform& trans, bool forward) {
-	if (!tree) {
-		cout << "NULL TREE!!!" << endl;
-		return;
-	}
 	for (uint i = 0; i < tree->nodes.size() - 1; ++ i) {
 		if (tree->nodes[i].type == Tree::Node::TREE)
 			transform(tree->nodes[i].val.tree, trans);

@@ -221,8 +221,10 @@ void reduce(Maps& maps, smm::Assertion* ass, ArgMap& args, const Proof* proof) {
 
 smm::Proof* transform_proof(Maps& maps, set<uint>& red, const Proof* proof) {
 	Tree* tree = to_tree(proof);
-	if (tree->nodes.front().type == Tree::Node::REF)
+	if (tree->nodes.front().type == Tree::Node::REF) {
+		delete tree;
 		return nullptr;
+	}
 	tree = reduce(tree, red);
 	transform(tree, maps.transform);
 	Proof* rpn = to_proof(tree);

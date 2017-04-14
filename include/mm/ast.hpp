@@ -123,7 +123,7 @@ struct Tree {
 	};
 	Tree() = default;
 	Tree(Ref* r) { nodes.push_back(r); }
-	~Tree() { for (auto n : nodes) n.destroy(); }
+	~Tree() { for (auto& n : nodes) n.destroy(); }
 	vector<Node> nodes;
 };
 

@@ -7,6 +7,6 @@ binpath='./build/release/bin'
  # The relative path to the directory, containing math sources:
  mathpath='./math'
 
-#memcheck='yes'
+memcheck='yes'
 
 source run_check
