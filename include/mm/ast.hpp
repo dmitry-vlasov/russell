@@ -102,31 +102,6 @@ struct Ref {
 	Value val;
 };
 
-struct Tree {
-	struct Node {
-		enum Type {
-			REF,
-			TREE
-		};
-		union Value {
-			Value(Ref* r) : ref(r) { }
-			Value(Tree* t) : tree(t) { }
-			Value(const Value& v) : ref(v.ref) { }
-			Ref*  ref;
-			Tree* tree;
-		};
-		Node(Ref* r) : type(REF), val(r) { }
-		Node(Tree* t) : type(TREE), val(t) { }
-		void destroy() { if (type == TREE) delete val.tree; }
-		Type type;
-		Value val;
-	};
-	Tree() = default;
-	Tree(Ref* r) { nodes.push_back(r); }
-	~Tree() { for (auto& n : nodes) n.destroy(); }
-	vector<Node> nodes;
-};
-
 struct Proof {
 	Proof() = default;
 	Proof(const vector<Ref*>&);

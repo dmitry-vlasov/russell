@@ -12,8 +12,7 @@ lib_LTLIBRARIES = \
 	libmm.la
 
 noinst_HEADERS = \
-	cut_adaptor.hpp \
-	tree.hpp 
+	cut_adaptor.hpp
 
 if SPLIT_COMPILE
 libmm_la_SOURCES = \
@@ -23,8 +22,7 @@ libmm_la_SOURCES = \
 	merge.cpp \
 	parser.cpp \
 	show.cpp \
-	translate.cpp \
-	tree.cpp
+	translate.cpp
 else
 libmm_la_SOURCES = \
 	all.cpp
