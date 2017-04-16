@@ -1,11 +1,143 @@
-#include <boost/algorithm/string.hpp>
+//#include <boost/algorithm/string.hpp>
 
 #include "mm/sys.hpp"
 #include "smm/ast.hpp"
 #include "mm/ast.hpp"
-#include "mm/tree.hpp"
 
 namespace mdl { namespace mm { namespace {
+
+typedef map<uint, uint> Perm;
+typedef map<uint, Perm> Transform;
+
+struct Tree {
+	struct Node {
+		enum Type {
+			REF,
+			TREE
+		};
+		union Value {
+			Value(Ref* r) : ref(r) { }
+			Value(Tree* t) : tree(t) { }
+			Value(const Value& v) : ref(v.ref) { }
+			Ref*  ref;
+			Tree* tree;
+		};
+		Node(Ref* r) : type(REF), val(r) { }
+		Node(Tree* t) : type(TREE), val(t) { }
+		void destroy() { if (type == TREE) delete val.tree; }
+		uint length() const {
+			return (type == Tree::Node::TREE) ? val.tree->length() : 1;
+		}
+		string show() const {
+			return (type == Tree::Node::TREE) ? val.tree->show() : Lex::toStr(val.ref->label());
+		}
+		Type type;
+		Value val;
+	};
+	Tree() = default;
+	Tree(Ref* r) { nodes.push_back(r); }
+	~Tree() { for (auto& n : nodes) n.destroy(); }
+	uint length() const {
+		uint len = 0;
+		for (auto& n : nodes) len += n.length();
+		return len;
+	}
+	string show() const {
+		string space = length() > 16 ? "\n" : " ";
+		assert(nodes.back().type == Tree::Node::REF);
+		string str = Lex::toStr(nodes.back().val.ref->label());
+		str += "(";
+		for (uint i = 0; i + 1 < nodes.size(); ++ i)
+			str += Indent::paragraph(space + nodes[i].show(), "  ");
+		str += space + ") ";
+		return str;
+	}
+	vector<Node> nodes;
+};
+
+Tree* to_tree(const Proof* proof) {
+	stack<Tree*> stack;
+	for (auto r : proof->refs) {
+		switch(r->type) {
+		case Ref::ESSENTIAL:
+		case Ref::FLOATING:
+			stack.push(new Tree(r));
+			break;
+		case Ref::AXIOM:
+		case Ref::THEOREM: {
+			Tree* t = new Tree();
+			t->nodes.push_back(r);
+			for (uint i = 0; i < r->arity(); ++ i) {
+				t->nodes.push_back(stack.top());
+				stack.pop();
+			}
+			std::reverse(t->nodes.begin(), t->nodes.end());
+			stack.push(t);
+		}	break;
+		default : assert(false && "impossible"); break;
+		}
+	}
+	Tree* tree = stack.top();
+	stack.pop();
+	if (!stack.empty())
+		throw Error("non-empty stack at the end of the proof");
+	return tree;
+}
+
+static void to_proof(const Tree* t, vector<Ref*>& proof) {
+	for (auto n : t->nodes) {
+		switch(n.type) {
+		case Tree::Node::REF:
+			proof.push_back(new Ref(*n.val.ref));
+			break;
+		case Tree::Node::TREE:
+			to_proof(n.val.tree, proof);
+			break;
+		default : assert(false && "impossible"); break;
+		}
+	}
+}
+
+Proof* to_proof(const Tree* tree) {
+	Proof* proof = new Proof();
+	to_proof(tree, proof->refs);
+	return proof;
+}
+
+void transform(Tree* tree, const Transform& trans, bool forward = true) {
+	for (uint i = 0; i < tree->nodes.size() - 1; ++ i) {
+		if (tree->nodes[i].type == Tree::Node::TREE)
+			transform(tree->nodes[i].val.tree, trans, forward);
+	}
+	assert(tree->nodes.back().type == Tree::Node::REF);
+	Ref* op = tree->nodes.back().val.ref;
+	if (op->type == Ref::AXIOM || op->type == Ref::THEOREM) {
+		Perm perm = trans.at(op->label());
+		assert(perm.size() + 1 == tree->nodes.size());
+		vector<Tree::Node> new_nodes = tree->nodes;
+		for (uint i = 0; i < new_nodes.size() - 1; ++ i) {
+			if (forward) new_nodes[perm[i]] = tree->nodes[i];
+			else         new_nodes[i] = tree->nodes[perm[i]];
+		}
+		tree->nodes = new_nodes;
+	}
+}
+
+Tree* reduce(Tree* tree, const set<uint>& red) {
+	assert(tree->nodes.back().type == Tree::Node::REF);
+	if (red.count(tree->nodes.back().val.ref->label())) {
+		assert(tree->nodes[tree->nodes.size() - 2].type == Tree::Node::TREE);
+		Tree* t = nullptr;
+		std::swap(tree->nodes[tree->nodes.size() - 2].val.tree, t);
+		delete tree;
+		return reduce(t, red);
+	} else {
+		for (auto& n : tree->nodes)
+			if (n.type == Tree::Node::TREE)
+				n.val.tree = reduce(n.val.tree, red);
+		return tree;
+	}
+}
 
 void gather_expr_vars(set<Symbol>& vars, const Vect& expr) {
 	for (Symbol s : expr)

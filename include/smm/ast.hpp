@@ -74,65 +74,58 @@ struct Proof;
 
 struct Ref {
 	enum Type {
-		NONE,
 		ESSENTIAL,
 		FLOATING,
 		INNER,
 		AXIOM,
-		THEOREM,
-		PROOF
+		THEOREM
 	};
 	union Value {
-		Value() : ptr(nullptr) { }
-		void*       ptr;
+		Value() : flo(nullptr) { }
 		Floating*   flo;
 		Essential*  ess;
 		Inner*      inn;
 		Assertion*  ass;
-		Proof*      prf;
 	};
-	Ref(Floating* f)  : type(FLOATING),   val() { val.flo = f; }
-	Ref(Essential* e) : type(ESSENTIAL),  val() { val.ess = e; }
-	Ref(Inner* i)     : type(INNER),      val() { val.inn = i; }
+	Ref(Floating* f)  : type(FLOATING)  { val.flo = f; }
+	Ref(Essential* e) : type(ESSENTIAL) { val.ess = e; }
+	Ref(Inner* i)     : type(INNER)     { val.inn = i; }
 	Ref(uint label, bool ax);
-	Ref(Proof* p)     : type(PROOF),      val() { val.prf = p; }
 	Ref(const Ref& ref);
 	~Ref();
 
 	void operator=(const Ref&) = delete;
 
+	bool is_assertion() const {
+		return type == THEOREM || type == AXIOM;
+	}
+
 	uint label() const {
-		assert(type == THEOREM || type == AXIOM);
+		assert(is_assertion() && "must be assertion");
 		return val.ass->prop.label;
 	}
 	uint index() const {
+		assert(!is_assertion() && "must not be assertion");
 		switch (type) {
 		case ESSENTIAL : return val.ess->index;
 		case FLOATING  : return val.flo->index;
 		case INNER     : return val.inn->index;
-		default : assert(false && "impossible");
 		}
 		return -1; // pacify compiler
 	}
 
 	Type type;
 	Value val;
-	Vect expr;
 };
 
 struct Proof {
-	enum Type {
-		TREE,
-		RPN
-	};
-	Proof(Type tp = RPN) : refs(), theorem(nullptr), type(tp) { }
-	Proof(const Proof& p) : refs(), theorem(p.theorem), type(p.type) {
+	Proof() : theorem(nullptr) { }
+	Proof(const Proof& p) : theorem(p.theorem) {
 		for (auto r : p.refs) refs.push_back(new Ref(*r));
 	}
 	~ Proof();
 	vector<Ref*> refs;
 	Assertion*   theorem;
-	Type         type;
 	Token        token;
 };
 
@@ -200,9 +193,8 @@ inline Proof::~ Proof() {
 	for (auto r : refs) delete r;
 }
 
-inline Ref::Ref(const Ref& ref) : type(ref.type), val() {
-	val.ptr = (type == PROOF) ? new Proof(*ref.val.prf) : ref.val.ptr;
-}
+typedef map<Symbol, Vect> Subst;
+Vect apply(const Subst& sub, const Vect& expr);
 
 ostream& operator << (ostream& os, const Constants& cst);
 ostream& operator << (ostream& os, const Ref& ref);

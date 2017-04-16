@@ -12,13 +12,13 @@ lib_LTLIBRARIES = \
 	libsmm.la
 
 noinst_HEADERS = \
-	tree.hpp 
+	tree.hpp \
+	math_symb.hpp 
 
 if SPLIT_COMPILE
 libsmm_la_SOURCES = \
 	ast.cpp \
 	sys.cpp \
-	math_symb.cpp \
 	parser.cpp \
 	show.cpp \
 	translate_mm.cpp \

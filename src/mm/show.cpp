@@ -1,43 +1,7 @@
 #include "mm/sys.hpp"
 #include "mm/ast.hpp"
-#include "mm/tree.hpp"
 
 namespace mdl { namespace mm {
-
-uint length(const Tree& t);
-uint length(const Tree::Node& n) {
-	return (n.type == Tree::Node::TREE) ? length(*n.val.tree) : 1;
-}
-uint length(const Tree& t) {
-	uint len = 0;
-	for (auto n : t.nodes) len += length(n);
-	return len;
-}
-uint length(const Proof& p) {
-	return p.refs.size();
-}
-
-string show(const Ref& r) {
-	return Lex::toStr(r.label());
-}
-string show(const Tree& tree);
-string show(const Tree::Node& n) {
-	if (n.type == Tree::Node::TREE)
-		return show(*n.val.tree);
-	else
-		return show(*n.val.ref);
-}
-
-string show(const Tree& tree) {
-	string space = length(tree) > 16 ? "\n" : " ";
-	assert(tree.nodes.back().type == Tree::Node::REF);
-	string str = Lex::toStr(tree.nodes.back().val.ref->label());
-	str += "(";
-	for (uint i = 0; i + 1 <tree.nodes.size(); ++ i)
-		str += Indent::paragraph(space + show(tree.nodes[i]), "  ");
-	str += space + ") ";
-	return str;
-}
 
 ostream& operator << (ostream& os, const Constants& cst) {
 	os << "$c " << cst.expr << "$.";

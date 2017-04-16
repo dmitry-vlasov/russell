@@ -140,13 +140,13 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 libsmm_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
-am__libsmm_la_SOURCES_DIST = all.cpp ast.cpp sys.cpp math_symb.cpp \
-	parser.cpp show.cpp translate_mm.cpp translate_rus.cpp \
-	tree.cpp verify.cpp
+am__libsmm_la_SOURCES_DIST = all.cpp ast.cpp sys.cpp parser.cpp \
+	show.cpp translate_mm.cpp translate_rus.cpp tree.cpp \
+	verify.cpp
 @SPLIT_COMPILE_FALSE@am_libsmm_la_OBJECTS = all.lo
-@SPLIT_COMPILE_TRUE@am_libsmm_la_OBJECTS = ast.lo sys.lo math_symb.lo \
-@SPLIT_COMPILE_TRUE@	parser.lo show.lo translate_mm.lo \
-@SPLIT_COMPILE_TRUE@	translate_rus.lo tree.lo verify.lo
+@SPLIT_COMPILE_TRUE@am_libsmm_la_OBJECTS = ast.lo sys.lo parser.lo \
+@SPLIT_COMPILE_TRUE@	show.lo translate_mm.lo translate_rus.lo \
+@SPLIT_COMPILE_TRUE@	tree.lo verify.lo
 libsmm_la_OBJECTS = $(am_libsmm_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -360,7 +360,8 @@ lib_LTLIBRARIES = \
 	libsmm.la
 
 noinst_HEADERS = \
-	tree.hpp 
+	tree.hpp \
+	math_symb.hpp 
 
 @SPLIT_COMPILE_FALSE@libsmm_la_SOURCES = \
 @SPLIT_COMPILE_FALSE@	all.cpp
@@ -368,7 +369,6 @@ noinst_HEADERS = \
 @SPLIT_COMPILE_TRUE@libsmm_la_SOURCES = \
 @SPLIT_COMPILE_TRUE@	ast.cpp \
 @SPLIT_COMPILE_TRUE@	sys.cpp \
-@SPLIT_COMPILE_TRUE@	math_symb.cpp \
 @SPLIT_COMPILE_TRUE@	parser.cpp \
 @SPLIT_COMPILE_TRUE@	show.cpp \
 @SPLIT_COMPILE_TRUE@	translate_mm.cpp \
@@ -461,7 +461,6 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/all.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ast.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/math_symb.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/parser.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/show.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sys.Plo@am__quote@

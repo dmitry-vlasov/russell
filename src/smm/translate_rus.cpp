@@ -1,13 +1,9 @@
 #include "smm/sys.hpp"
 #include "smm/tree.hpp"
 #include "rus/ast.hpp"
+#include "math_symb.hpp"
 
-namespace mdl { namespace smm {
-
-map<uint, rus::Const*>&  math_consts();
-map<uint, rus::Symbol>& math_vars();
-
-namespace {
+namespace mdl { namespace smm { namespace {
 
 typedef vector<rus::Node>::iterator NodeIter;
 
@@ -35,7 +31,7 @@ inline rus::Symbol translate_const(Symbol s) {
 	if (p == math_consts().end())
 		return rus::Symbol(s);
 	else {
-		return (*p).second->symb;
+		return (*p).second.symb;
 	}
 }
 
@@ -93,7 +89,7 @@ void translate_constants(const Constants* consts, State& state) {
 		if (p == math_consts().end())
 			c = new rus::Const(rus::Symbol(s), rus::Symbol(), rus::Symbol());
 		else
-			c = (*p).second;
+			c = new rus::Const(p->second.symb, p->second.ascii, p->second.latex);
 		if (state.constants.count(c->symb))
 			delete c;
 		else {
@@ -372,31 +368,33 @@ rus::Assertion::Kind ass_kind(const Assertion* ass) {
 	return rus::Assertion::AXM;
 }
 
-rus::Proof::Elem translate_step(Ref* ref, rus::Proof* proof, rus::Theorem* thm, State& state, const Assertion* a) {
-	assert(ref->type == Ref::PROOF);
+rus::Proof::Elem translate_step(Tree* tree, rus::Proof* proof, rus::Theorem* thm, State& state, const Assertion* a) {
 	vector<rus::Proof::Elem>& elems = proof->elems;
-	Assertion* ass = ref->val.prf->refs.back()->val.ass;
+	assert(tree->nodes.back().type == Tree::Node::REF);
+	Tree::Node& node = tree->nodes.back();
+	Assertion* ass = node.val.ref->val.ass;
 	rus::Proof::Elem el(new rus::Step(elems.size(), rus::Step::ASS, ass_kind(ass), ass->prop.label, proof));
 
 	for (uint i = 0; i < ass->essential.size(); ++ i) {
-		Ref* r = ref->val.prf->refs[i];
-		assert(r->type == Ref::ESSENTIAL || r->type == Ref::PROOF);
-		rus::Ref hr;
-		if (r->type == Ref::ESSENTIAL) {
-			hr = rus::Ref(thm->ass.hyps[r->index()]);
-		} else {
-			hr = rus::Ref(translate_step(r, proof, thm, state, a).val.step);
-		}
+		Tree::Node& n = tree->nodes[i];
+		assert(n.type == Tree::Node::TREE);
+		Tree* t = n.val.tree;
+		Tree::Node& h = t->nodes.back();
+		assert(h.type == Tree::Node::REF);
+		rus::Ref hr =
+			h.val.ref->is_assertion() ?
+			rus::Ref(translate_step(t, proof, thm, state, a).val.step) :
+			rus::Ref(thm->ass.hyps[h.val.ref->index()]);
 		el.val.step->refs.push_back(hr);
 	}
 	el.val.step->ind = elems.size();
-	el.val.step->expr = translate_expr(ref->expr, state, a);
+	el.val.step->expr = translate_expr(node.expr, state, a);
 	elems.push_back(el);
 	return el;
 }
 
 void translate_proof(const Assertion* ass, rus::Theorem* thm, State& state) {
-	Ref* tree = new Ref(to_tree(ass->proof));
+	Tree* tree = to_tree(ass->proof);
 	eval(tree);
 	rus::Proof* p = new rus::Proof(thm);
 	p->vars = translate_vars(ass->inner, state);

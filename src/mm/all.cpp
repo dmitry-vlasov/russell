@@ -6,4 +6,3 @@
 #include "merge.cpp"
 #include "parser.cpp"
 #include "translate.cpp"
-#include "tree.cpp"
