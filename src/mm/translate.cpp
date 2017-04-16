@@ -104,21 +104,23 @@ Proof* to_proof(const Tree* tree) {
 	return proof;
 }
 
-void transform(Tree* tree, Transform& trans, bool forward = true) {
+void transform(Tree* tree, const Transform& trans, bool forward = true) {
 	for (uint i = 0; i < tree->nodes.size() - 1; ++ i) {
 		if (tree->nodes[i].type == Tree::Node::TREE)
 			transform(tree->nodes[i].val.tree, trans, forward);
 	}
 	assert(tree->nodes.back().type == Tree::Node::REF);
 	Ref* op = tree->nodes.back().val.ref;
-	Perm perm = trans[op->label()];
-	assert(perm.size() + 1 == tree->nodes.size());
-	vector<Tree::Node> new_nodes = tree->nodes;
-	for (uint i = 0; i < new_nodes.size() - 1; ++ i) {
-		if (forward) new_nodes[perm[i]] = tree->nodes[i];
-		else         new_nodes[i] = tree->nodes[perm[i]];
+	if (op->type == Ref::AXIOM || op->type == Ref::THEOREM) {
+		Perm perm = trans.at(op->label());
+		assert(perm.size() + 1 == tree->nodes.size());
+		vector<Tree::Node> new_nodes = tree->nodes;
+		for (uint i = 0; i < new_nodes.size() - 1; ++ i) {
+			if (forward) new_nodes[perm[i]] = tree->nodes[i];
+			else         new_nodes[i] = tree->nodes[perm[i]];
+		}
+		tree->nodes = new_nodes;
 	}
-	tree->nodes = new_nodes;
 }
 
 Tree* reduce(Tree* tree, const set<uint>& red) {

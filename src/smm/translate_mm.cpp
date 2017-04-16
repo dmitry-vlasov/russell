@@ -4,6 +4,8 @@
 
 namespace mdl { namespace smm { namespace {
 
+
+
 struct Maps {
 	map<const smm::Assertion*, mm::Theorem*>   theorems;
 	map<const smm::Assertion*, mm::Axiom*>     axioms;
@@ -15,9 +17,9 @@ struct Maps {
 };
 
 mm::Proof* translate(Maps& maps, const Proof* proof) {
-	Proof* tree = to_tree(proof);
+	Tree* tree = to_tree(proof);
 	transform(tree, maps.transform);
-	Proof* rpn = to_rpn(tree);
+	Proof* rpn = to_proof(tree);
 	mm::Proof* pr = new mm::Proof();
 	for (auto r : rpn->refs) {
 		mm::Ref* ref = nullptr;

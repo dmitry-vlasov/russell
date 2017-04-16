@@ -151,7 +151,7 @@ public:
 		};
 		parser["REF_TYPE"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			// REF_TYPE <- 'e' / 'f' / 'i' / 'a' / 'p'
-			Ref::Type ref = Ref::Type::NONE;
+			Ref::Type ref = Ref::Type::ESSENTIAL;
 			switch (sv.token()[0]) {
 			case 'e' : ref = Ref::Type::ESSENTIAL; break;
 			case 'f' : ref = Ref::Type::FLOATING;  break;

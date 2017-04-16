@@ -2,42 +2,6 @@
 
 namespace mdl { namespace smm {
 
-static uint length(const Proof& tree);
-static uint length(const Ref& r) {
-	if (r.type == Ref::PROOF)
-		return length(*r.val.prf);
-	else
-		return 1;
-}
-static uint length(const Proof& tree) {
-	uint len = 1;
-	for (uint i = 0; i + 1 < tree.refs.size(); ++ i) {
-		len += length(*tree.refs[i]);
-	}
-	return len;
-}
-
-static string show(const Proof& tree);
-
-static string show(const Ref& ref) {
-	ostringstream os;
-	os << ref;
-	return os.str();
-}
-
-static string show(const Proof& tree) {
-	const Assertion* ass = tree.refs.back()->val.ass;
-	string space = length(tree) > 16 ? "\n" : " ";
-	string str = Lex::toStr(ass->prop.label);
-	str += "(";
-	for (uint i = 0; i + 1 <tree.refs.size(); ++ i)
-		str += Indent::paragraph(space + show(*tree.refs[i]), "  ");
-	str += space + ")";
-	//str += "= " + show_ex(tree.refs.back().expr);
-	return str;
-}
-
-
 ostream& operator << (ostream& os, const Constants& cst) {
 	os << "$c " << cst.expr << "$.";
 	return os;
@@ -50,26 +14,19 @@ ostream& operator << (ostream& os, const Ref& ref) {
 	case Ref::INNER    : os << "i"; break;
 	case Ref::AXIOM    : os << "a"; break;
 	case Ref::THEOREM  : os << "p"; break;
-	case Ref::PROOF    : os << *ref.val.prf; break;
 	default : assert(false && "impossible"); break;
 	}
 	if (ref.type == Ref::AXIOM || ref.type == Ref::THEOREM)
 		os << show_id(ref.label());
-	else if (ref.type != Ref::PROOF)
+	else
 		os << to_string(ref.index());
 	return os;
 }
 
 ostream& operator << (ostream& os, const Proof& proof) {
-	if (proof.type == Proof::RPN) {
-		for (Ref* ref : proof.refs)
-			os << *ref << ' ';
-		os << "$.";
-		return os;
-	} else {
-		os << show(proof);
-		return os;
-	}
+	for (Ref* ref : proof.refs) os << *ref << ' ';
+	os << "$.";
+	return os;
 }
 
 ostream& operator << (ostream& os, const Variables& vars) {

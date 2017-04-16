@@ -5,11 +5,18 @@ namespace mdl { namespace smm {
 Ref::Ref(uint label, bool ax) : type(ax ? AXIOM : THEOREM), val() {
 	Sys::mod().math.assertions.use(label, val.ass);
 }
+Ref::Ref(const Ref& ref) : type(ref.type) {
+	switch (type) {
+	case INNER:     val.inn = ref.val.inn; break;
+	case FLOATING:  val.flo = ref.val.flo; break;
+	case ESSENTIAL: val.ess = ref.val.ess; break;
+	case AXIOM:     // intentionally left blank
+	case THEOREM:   Sys::mod().math.assertions.use(ref.label(), val.ass);
+	}
+}
 Ref::~Ref() {
 	if ((type == AXIOM || type == THEOREM) && val.ass)
 		Sys::mod().math.assertions.unuse(val.ass->prop.label, val.ass);
-	if (type == PROOF && val.prf)
-		delete val.prf;
 }
 
 Assertion::Assertion(uint label) : proof(nullptr) {
