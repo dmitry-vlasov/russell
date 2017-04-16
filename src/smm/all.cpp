@@ -1,4 +1,3 @@
-#include "math_symb.cpp"
 #include "parser.cpp"
 #include "show.cpp"
 #include "sys.cpp"

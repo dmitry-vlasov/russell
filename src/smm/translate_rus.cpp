@@ -1,13 +1,9 @@
 #include "smm/sys.hpp"
 #include "smm/tree.hpp"
 #include "rus/ast.hpp"
+#include "math_symb.hpp"
 
-namespace mdl { namespace smm {
-
-map<uint, rus::Const*>&  math_consts();
-map<uint, rus::Symbol>& math_vars();
-
-namespace {
+namespace mdl { namespace smm { namespace {
 
 typedef vector<rus::Node>::iterator NodeIter;
 
@@ -35,7 +31,7 @@ inline rus::Symbol translate_const(Symbol s) {
 	if (p == math_consts().end())
 		return rus::Symbol(s);
 	else {
-		return (*p).second->symb;
+		return (*p).second.symb;
 	}
 }
 
@@ -93,7 +89,7 @@ void translate_constants(const Constants* consts, State& state) {
 		if (p == math_consts().end())
 			c = new rus::Const(rus::Symbol(s), rus::Symbol(), rus::Symbol());
 		else
-			c = (*p).second;
+			c = new rus::Const(p->second.symb, p->second.ascii, p->second.latex);
 		if (state.constants.count(c->symb))
 			delete c;
 		else {

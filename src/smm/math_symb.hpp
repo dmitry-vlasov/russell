@@ -1,18 +1,28 @@
+#pragma once
+
 #include "smm/sys.hpp"
 #include "rus/ast.hpp"
 
 namespace mdl { namespace smm {
 
-inline rus::Const* make_const(const char* ascii, const char* unicode, const char* latex) {
-	return new rus::Const(Lex::toInt(unicode), Lex::toInt(ascii), Lex::toInt(latex));
+struct Const {
+	Const(uint s, uint a, uint l) :
+		symb(s), ascii(a), latex(l) { }
+	const uint symb;
+	const uint ascii;
+	const uint latex;
+};
+
+inline Const make_const(const char* ascii, const char* unicode, const char* latex) {
+	return Const(Lex::toInt(unicode), Lex::toInt(ascii), Lex::toInt(latex));
 }
 
 inline uint make_key(const char* key) {
 	return Lex::toInt(key);
 }
 
-map<uint, rus::Const*>& math_consts() {
-	static map<uint, rus::Const*> table = {
+inline map<uint, Const>& math_consts() {
+	static map<uint, Const> table = {
 		{make_key("|-"), make_const("|-", "⊢", "vdash")},
 		{make_key("->"), make_const("->", "→", "\\rightarrow")},
 		{make_key("-."), make_const("-.", "¬", "\\lnot")},
@@ -140,7 +150,7 @@ map<uint, rus::Const*>& math_consts() {
 	return table;
 }
 // Weird variables
-map<uint, rus::Symbol>& math_vars() {
+inline map<uint, rus::Symbol>& math_vars() {
 	static map<uint, rus::Symbol> table = {
 			{make_key(".,"),   rus::Symbol(Lex::toInt(".cm"))},
 			{make_key(".(x)"), rus::Symbol(Lex::toInt(".[x]"))},
@@ -149,5 +159,5 @@ map<uint, rus::Symbol>& math_vars() {
 	return table;
 }
 
-}} // mdl::smm
 
+}}
