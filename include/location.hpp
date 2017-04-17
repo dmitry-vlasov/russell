@@ -118,8 +118,8 @@ struct Token {
 	const char* end;
 
 	string show() const {
-		LocationIter b (src->data.begin(), src->label);
-		LocationIter e (string::const_iterator(beg), src->label);
+		LocationIter b (src->data.begin(), src->id());
+		LocationIter e (string::const_iterator(beg), src->id());
 		LocationIter x = b;
 		while (x != e) ++x;
 		return x.loc.show();

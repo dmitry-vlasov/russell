@@ -16178,7 +16178,7 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_check_cflags___std_gnupp1z" >&5
 $as_echo "$ax_cv_check_cflags___std_gnupp1z" >&6; }
 if test "x$ax_cv_check_cflags___std_gnupp1z" = xyes; then :
-  CXXFLAGS="$CXXFLAGS -std=gnu++14"
+  CXXFLAGS="$CXXFLAGS -std=gnu++1z"
 else
   :
 fi

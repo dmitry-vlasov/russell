@@ -92,7 +92,7 @@ void parse_LL(Expr* ex) {
 		ex->tree.reset(tree);
 	} else {
 		for (Source* s : ex->token.src->includes) {
-			cout << Lex::toStr(s->label) << endl;
+			cout << Lex::toStr(s->id()) << endl;
 		}
 		throw Error("parsing error", string("expression: ") + show(*ex) + " at: " + ex->token.show());
 	}

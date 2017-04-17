@@ -44,7 +44,7 @@ void write(uint tgt) {
 	switch (Sys::conf().target) {
 	case Lang::NONE: break;
 	case Lang::MM: {
-		const mm::Source* target = mm::Sys::get().math.sources.access(tgt);
+		const mm::Source* target = mm::Sys::get().math.get<mm::Source>().access(tgt);
 		if (Sys::conf().deep) {
 			deep_write(
 				target,

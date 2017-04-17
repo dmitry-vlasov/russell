@@ -14,7 +14,29 @@ inline string show (const Subst& subst) {
 		str += show_sy(it.first) + " = > " + show_ex(it.second) + "\n";
 	return str;
 }
-Vect apply(const Subst& sub, const Vect& expr);
+Vect apply_subst(const Subst& sub, const Vect& expr);
+/*
+inline void append_expr(Vect& ex_1, const Vect& ex_2) {
+	auto it = ex_2.cbegin();
+	++ it;
+	for (; it != ex_2.cend(); ++ it)
+		ex_1.push_back(*it);
+}
+inline Vect apply_sub(const Subst& sub, const Vect& expr) {
+	Vect ret;
+	for (auto s : expr) {
+		if (s.var) {
+			auto ex = sub.find(s);
+			if (ex == sub.cend())
+				ret.push_back(s);
+			else
+				append_expr(ret, ex->second);
+		} else
+			ret += s;
+	}
+	return  ret;
+}
+*/
 
 struct Tree {
 	struct Node {

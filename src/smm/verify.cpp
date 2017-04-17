@@ -50,7 +50,7 @@ inline void append_expr(Vect& ex_1, const Vect& ex_2) {
 		ex_1.push_back(*it);
 }
 
-Vect apply(const Subst& sub, const Vect& expr) {
+Vect apply_subst(const Subst& sub, const Vect& expr) {
 	Vect ret;
 	for (auto s : expr) {
 		if (s.var) {
@@ -143,9 +143,9 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Vect>& expr_s
 			msg += "assertion " + Lex::toStr(ass->prop.label) + "\n";
 			throw Error("verification", msg, th->token);
 		}
-		if (apply(sub, ess->expr) != expr_stack.top()) {
+		if (apply_subst(sub, ess->expr) != expr_stack.top()) {
 			string msg = "hypothesis mismatch:\n";
-			msg += show_ex(apply(sub, ess->expr)) + "\n";
+			msg += show_ex(apply_subst(sub, ess->expr)) + "\n";
 			msg += "and\n";
 			msg += show_ex(expr_stack.top()) + "\n";
 			msg += "theorem " + Lex::toStr(th->prop.label) + "\n";
@@ -155,7 +155,7 @@ static void apply(const Assertion* ass, const Assertion* th, stack<Vect>& expr_s
 		expr_stack.pop();
 	}
 	checkDisj(sub, ass, th);
-	expr_stack.push(apply(sub, ass->prop.expr));
+	expr_stack.push(apply_subst(sub, ass->prop.expr));
 }
 
 static void verify_assertion(const Assertion* ass) {

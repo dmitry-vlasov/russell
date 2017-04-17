@@ -91,10 +91,10 @@ Proof::~Proof() {
 }
 
 Source::Source(uint label) : mdl::Source<Source, Sys>(label), theory(nullptr) {
-	Sys::mod().math.sources.add(label, this);
+	//Sys::mod().math.sources.add(label, this);
 }
 Source::~Source() {
-	Sys::mod().math.sources.del(label);
+	//Sys::mod().math.sources.del(label);
 	if (theory) delete theory;
 }
 

@@ -32,11 +32,8 @@ Assertion::~Assertion() {
 	if (proof) delete proof;
 }
 
-Source::Source(uint l) : mdl::Source<Source, Sys>(l) {
-	Sys::mod().math.sources.add(label, this);
-}
+Source::Source(uint l) : mdl::Source<Source, Sys>(l) { }
 Source::~Source() {
-	Sys::mod().math.sources.del(label);
 	for (auto& node : contents) node.destroy();
 }
 

@@ -30,22 +30,22 @@ ostream& operator << (ostream& os, const Disjointed& disj) {
 }
 
 ostream& operator << (ostream& os, const Essential& ess) {
-	os << show_id(ess.label) << " $e " << ess.expr << "$.";
+	os << show_id(ess.id()) << " $e " << ess.expr << "$.";
 	return os;
 }
 
 ostream& operator << (ostream& os, const Floating& flo) {
-	os << show_id(flo.label) << " $f " << flo.expr << "$.";
+	os << show_id(flo.id()) << " $f " << flo.expr << "$.";
 	return os;
 }
 
 ostream& operator << (ostream& os, const Axiom& ax) {
-	os << show_id(ax.label) << " $a " << ax.expr << "$.";
+	os << show_id(ax.id()) << " $a " << ax.expr << "$.";
 	return os;
 }
 
 ostream& operator << (ostream& os, const Theorem& th) {
-	os << show_id(th.label) << " $p " << th.expr << "$= ";
+	os << show_id(th.id()) << " $p " << th.expr << "$= ";
 	if (th.proof) os << *th.proof;
 	return os;
 }

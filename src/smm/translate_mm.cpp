@@ -24,11 +24,11 @@ mm::Proof* translate(Maps& maps, const Proof* proof) {
 	for (auto r : rpn->refs) {
 		mm::Ref* ref = nullptr;
 		switch (r->type) {
-		case Ref::AXIOM:     ref = new mm::Ref(maps.axioms[r->val.ass]->label);     break;
-		case Ref::THEOREM:   ref = new mm::Ref(maps.theorems[r->val.ass]->label);   break;
-		case Ref::FLOATING:  ref = new mm::Ref(maps.floatings[r->val.flo]->label);  break;
-		case Ref::INNER:     ref = new mm::Ref(maps.inners[r->val.inn]->label);     break;
-		case Ref::ESSENTIAL: ref = new mm::Ref(maps.essentials[r->val.ess]->label); break;
+		case Ref::AXIOM:     ref = new mm::Ref(maps.axioms[r->val.ass]->id());     break;
+		case Ref::THEOREM:   ref = new mm::Ref(maps.theorems[r->val.ass]->id());   break;
+		case Ref::FLOATING:  ref = new mm::Ref(maps.floatings[r->val.flo]->id());  break;
+		case Ref::INNER:     ref = new mm::Ref(maps.inners[r->val.inn]->id());     break;
+		case Ref::ESSENTIAL: ref = new mm::Ref(maps.essentials[r->val.ess]->id()); break;
 		default : assert(false && "impossible"); break;
 		}
 		pr->refs.push_back(ref);
@@ -123,7 +123,7 @@ mm::Source* translate_source(const Source* src, Maps& maps, mm::Source* target) 
 		return maps.sources[src];
 	} else {
 		if (!target) {
-			target = new mm::Source(src->label);
+			target = new mm::Source(src->id());
 			target->block = new mm::Block;
 		}
 		maps.sources[src] = target;

@@ -355,7 +355,7 @@ class Owner {
 public:
 	typedef S Sys;
 	Owner(uint i) : id_(i) { Sys::mod().math.template get<T>().add(id_, dynamic_cast<T*>(this)); }
-	~Owner() { Sys::mod().math.template get<T>().del(id_); }
+	virtual ~Owner() { Sys::mod().math.template get<T>().del(id_); }
 	uint id() const { return id_; }
 };
 
@@ -365,20 +365,21 @@ class User {
 public:
 	typedef S Sys;
 	User(uint id) { Sys::mod().math.template get<T>().use(id, ptr); }
-	~User() { if (ptr) Sys::mod().math.template get<T>().unuse(ptr->id, ptr); }
+	~User() { if (ptr) Sys::mod().math.template get<T>().unuse(ptr->id(), ptr); }
 	T* get() { return ptr; }
 	const T* get() const { return ptr; }
 };
 
 template<class Src, class Sys>
-struct Source : public Owner<Source, Sys> {
-	Source(uint l) : Owner<Source, sys>(l) { }
+struct Source : public Owner<Source<Src, Sys>, Sys> {
+	typedef Owner<Source, Sys> Owner_;
+	Source(uint l) : Owner<Source, Sys>(l) { }
 	virtual ~Source() { }
 
 	string data;
 
 	Path path() const { return Sys::conf().in.relative(name()); }
-	string name() const { return Lex::toStr(id()); }
+	string name() const { return Lex::toStr(Owner_::id()); }
 	string dir() const { return path().dir(); }
 
 	void read() { path().read(data); }

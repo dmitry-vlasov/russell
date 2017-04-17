@@ -111,16 +111,16 @@ Vect eval(Tree* tree) {
 	}
 	uint ess_ind = 0;
 	for (auto ess : ass->essential) {
-		if (apply(sub, ess->expr) != eval(tree->nodes[ess_ind ++])) {
+		if (apply_subst(sub, ess->expr) != eval(tree->nodes[ess_ind ++])) {
 			string msg = "hypothesis mismatch:\n";
-			msg += show_ex(apply(sub, ess->expr)) + "\n";
+			msg += show_ex(apply_subst(sub, ess->expr)) + "\n";
 			msg += "and\n";
 			msg += show_ex(eval(tree->nodes[ess_ind])) + "\n";
 			msg += "assertion " + Lex::toStr(ass->prop.label) + "\n";
 			throw Error("verification", msg);
 		}
 	}
-	n.expr = apply(sub, ass->prop.expr);
+	n.expr = apply_subst(sub, ass->prop.expr);
 	return n.expr;
 }
 

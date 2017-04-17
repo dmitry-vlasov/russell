@@ -310,7 +310,7 @@ smm::Source* translate_source(const Source* src, Maps& maps, smm::Source* target
 	if (maps.sources.count(src)) {
 		return maps.sources[src];
 	} else {
-		if (!target) target = new smm::Source(src->label);
+		if (!target) target = new smm::Source(src->id());
 		maps.sources[src] = target;
 		target->contents = translate_theory(src->theory, maps);
 		return target;

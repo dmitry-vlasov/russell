@@ -21,22 +21,22 @@ struct Disjointed {
 	Token token;
 };
 
-struct Essential : public Ower<Essential, Sys> {
-	Essential(uint l, const Vect& e) : Owner<Essential, Sys>(l), expr(e) { }
+struct Essential : public Owner<Essential> {
+	Essential(uint l, const Vect& e) : Owner(l), expr(e) { }
 	Vect  expr;
 	Token token;
 };
 
-struct Floating : public Ower<Floating, Sys> {
-	Floating(uint l, const Vect& e) : Owner<Essential, Sys>(l), expr(e) { }
+struct Floating : public Owner<Floating> {
+	Floating(uint l, const Vect& e) : Owner(l), expr(e) { }
 	Symbol type() const { return expr[0]; }
 	Symbol var() const { return expr[1]; }
 	Vect  expr;
 	Token token;
 };
 
-struct Axiom : public Ower<Axiom, Sys> {
-	Axiom(uint l, const Vect& e) : Owner<Axiom, Sys>(l), expr(e) { }
+struct Axiom : public Owner<Axiom> {
+	Axiom(uint l, const Vect& e) : Owner(l), expr(e) { }
 	Vect  expr;
 	uint  arity;
 	Token token;
@@ -44,10 +44,10 @@ struct Axiom : public Ower<Axiom, Sys> {
 
 class Proof;
 
-struct Theorem : public Ower<Theorem, Sys> {
+struct Theorem : public Owner<Theorem> {
 	Theorem(uint l, const Vect& e, Proof* p = nullptr) :
-		Owner<Theorem, Sys>(l), expr(e), arity(Undef<uint>::get()), proof(p) { }
-	~Theorem();
+		Owner(l), expr(e), arity(Undef<uint>::get()), proof(p) { }
+	virtual ~Theorem();
 	Vect   expr;
 	uint   arity;
 	Proof* proof;
@@ -62,38 +62,32 @@ struct Ref {
 		AXIOM,
 		THEOREM
 	};
-	union Value {
-		Value() : flo(nullptr) { }
-		Value(Floating* f) : flo(f) { }
-		Value(Essential* e) : ess(e) { }
-		Value(Axiom* a) : ax(a) { }
-		Value(Theorem* t) : th(t) { }
-		User<Floating, Sys>   flo;
-		User<Essential, Sys>  ess;
-		User<Axiom, Sys>      ax;
-		User<Theorem, Sys>    th;
-	};
+	typedef variant<
+		User<Floating>*,
+		User<Essential>*,
+		User<Axiom>*,
+		User<Theorem>*
+	> Variant;
 
 	Ref(uint label);
 	Ref(const Ref&);
 	~Ref();
 
-	uint label() const {
-		switch (type) {
-		case FLOATING:   return val.flo->label;
-		case ESSENTIAL:  return val.ess->label;
-		case AXIOM:      return val.ax->label;
-		case THEOREM:    return val.th->label;
-		}
-		return -1; // Pacifying compiler
-	}
+	uint label() const { return label_; }
 	uint arity() const {
-		assert(type == AXIOM || type == THEOREM);
-		return type == AXIOM ? val.ax->arity : val.th->arity;
+		assert(type() == AXIOM || type() == THEOREM);
+		return type() == AXIOM ?
+			std::get<User<Axiom>*>(val)->get()->arity :
+			std::get<User<Theorem>*>(val)->get()->arity;
 	}
 
-	Type type;
-	Value val;
+	Type type() const {
+		return static_cast<Type>(val.index());
+	}
+	static Type type(uint l);
+	Variant val;
+private:
+	uint label_;
 };
 
 struct Proof {
@@ -166,10 +160,10 @@ struct Node {
 
 	uint label() const {
 		switch (type) {
-		case FLOATING:   return val.flo->label;
-		case ESSENTIAL:  return val.ess->label;
-		case AXIOM:      return val.ax->label;
-		case THEOREM:    return val.th->label;
+		case FLOATING:   return val.flo->id();
+		case ESSENTIAL:  return val.ess->id();
+		case AXIOM:      return val.ax->id();
+		case THEOREM:    return val.th->id();
 		default : assert(false && "impossible"); break;
 		}
 		return -1; // Pacifying compiler
@@ -214,7 +208,7 @@ struct Block {
 };
 
 struct Source : public mdl::Source<Source, Sys> {
-	Source(uint l) : mdl::Source<Source, Sys>(l), block(nullptr) { }
+	Source(uint l);
 	~Source() override { if (block) delete block; }
 
 	Block* block;

@@ -459,7 +459,7 @@ rus::Source* translate_source(const Source* src, State& state, rus::Source* targ
 		return state.sources[src];
 	} else {
 		if (!target) {
-			target = new rus::Source(src->label);
+			target = new rus::Source(src->id());
 			target->theory = new rus::Theory();
 		}
 		state.sources[src] = target;

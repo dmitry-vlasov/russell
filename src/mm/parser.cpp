@@ -195,7 +195,7 @@ public:
 				mm::Inclusion* inc = new mm::Inclusion(nullptr, true);
 				included[name] = inc;
 				Source* src = parse(Lex::toInt(path.name), context.get<Context*>());
-				Sys::mod().math.sources.use(src->label, inc->source);
+				Sys::mod().math.get<Source>().use(src->id(), inc->source);
 				return inc;
 			}
 		};
