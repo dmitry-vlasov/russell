@@ -65,24 +65,6 @@ struct Math {
 	const Table<T>& get() const;
 };
 
-template<>
-inline Table<Const>& Math::get<Const>() { return consts; }
-template<>
-inline Table<Type>& Math::get<Type>() { return types; }
-template<>
-inline Table<Rule>& Math::get<Rule>() { return rules; }
-template<>
-inline Table<Source>& Math::get<Source>() { return sources; }
-
-template<>
-inline const Table<Const>& Math::get<Const>() const { return consts; }
-template<>
-inline const Table<Type>& Math::get<Type>() const { return types; }
-template<>
-inline const Table<Rule>& Math::get<Rule>() const { return rules; }
-template<>
-inline const Table<Source>& Math::get<Source>() const { return sources; }
-
 struct Sys : public mdl::Sys<Sys, Math> {
 	Sys();
 };

@@ -10,6 +10,28 @@ void translate(uint src, uint tgt);
 
 Math::~Math() { sources.destroy(); }
 
+template<> Table<Theorem>& Math::get<Theorem>() { return theorems; }
+template<> Table<Axiom>& Math::get<Axiom>() { return axioms; }
+template<> Table<Essential>& Math::get<Essential>() { return essentials; }
+template<> Table<Source>& Math::get<Source>() { return sources; }
+template<> Table<Floating>& Math::get<Floating>() { return floatings; }
+template<> const Table<Theorem>& Math::get<Theorem>() const { return theorems; }
+template<> const Table<Axiom>& Math::get<Axiom>() const { return axioms; }
+template<> const Table<Essential>& Math::get<Essential>() const { return essentials; }
+template<> const Table<Source>& Math::get<Source>() const { return sources; }
+template<> const Table<Floating>& Math::get<Floating>() const { return floatings; }
+
+template Table<Source>& Math::get<Source>();
+template Table<Floating>& Math::get<Floating>();
+template Table<Theorem>& Math::get<Theorem>();
+template Table<Axiom>& Math::get<Axiom>();
+template Table<Essential>& Math::get<Essential>();
+template const Table<Theorem>& Math::get<Theorem>() const;
+template const Table<Axiom>& Math::get<Axiom>() const;
+template const Table<Essential>& Math::get<Essential>() const;
+template const Table<Floating>& Math::get<Floating>() const;
+template const Table<Source>& Math::get<Source>() const;
+
 string Math::info() const {
 	string stats;
 	stats += "Size:\n";

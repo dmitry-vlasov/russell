@@ -22,12 +22,6 @@ struct Math {
 	const Table<T>& get() const;
 };
 
-template<>
-inline Table<Source>& Math::get<Source>() { return sources; }
-
-template<>
-inline const Table<Source>& Math::get<Source>() const { return sources; }
-
 struct Sys : public mdl::Sys<Sys, Math> { Sys(); };
 
 void run();

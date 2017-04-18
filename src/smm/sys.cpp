@@ -9,6 +9,16 @@ void parse(uint);
 void translate_to_rus(uint src, uint tgt);
 void translate_to_mm(uint src, uint tgt);
 
+template<> Table<Source>& Math::get<Source>() { return sources; }
+template<> Table<Assertion>& Math::get<Assertion>() { return assertions; }
+template<> const Table<Source>& Math::get<Source>() const { return sources; }
+template<> const Table<Assertion>& Math::get<Assertion>() const { return assertions; }
+
+template Table<Source>& Math::get<Source>();
+template Table<Assertion>& Math::get<Assertion>();
+template const Table<Source>& Math::get<Source>() const;
+template const Table<Assertion>& Math::get<Assertion>() const;
+
 Math::~Math() { sources.destroy(); }
 
 string Math::info() const {

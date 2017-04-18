@@ -5,6 +5,24 @@ namespace mdl { namespace rus {
 
 Math::~Math() { sources.destroy(); }
 
+template<> Table<Const>& Math::get<Const>() { return consts; }
+template<> Table<Type>& Math::get<Type>() { return types; }
+template<> Table<Rule>& Math::get<Rule>() { return rules; }
+template<> Table<Source>& Math::get<Source>() { return sources; }
+template<> const Table<Const>& Math::get<Const>() const { return consts; }
+template<> const Table<Type>& Math::get<Type>() const { return types; }
+template<> const Table<Rule>& Math::get<Rule>() const { return rules; }
+template<> const Table<Source>& Math::get<Source>() const { return sources; }
+
+template Table<Const>& Math::get<Const>();
+template Table<Type>& Math::get<Type>();
+template Table<Rule>& Math::get<Rule>();
+template Table<Source>& Math::get<Source>();
+template const Table<Const>& Math::get<Const>() const;
+template const Table<Type>& Math::get<Type>() const;
+template const Table<Rule>& Math::get<Rule>() const;
+template const Table<Source>& Math::get<Source>() const;
+
 namespace {
 
 bool parse_rus() {

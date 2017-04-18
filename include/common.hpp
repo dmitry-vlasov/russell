@@ -144,6 +144,7 @@ struct Path {
 	}
 	void read(string& data) const {
 		ifstream in(path());
+		if (!in) throw Error("cannot read", path());
 		in.unsetf(std::ios::skipws);
 		std::copy(
 			std::istream_iterator<char>(in),
@@ -153,6 +154,7 @@ struct Path {
 	}
 	void write(const string& data) const {
 		ofstream out(path());
+		if (!out) throw Error("cannot write", path());
 		std::copy(
 			data.begin(),
 			data.end(),
@@ -354,7 +356,7 @@ class Owner {
 	uint id_;
 public:
 	typedef S Sys;
-	Owner(uint i) : id_(i) { Sys::mod().math.template get<T>().add(id_, dynamic_cast<T*>(this)); }
+	Owner(uint i) : id_(i) { Sys::mod().math.template get<T>().add(id_, static_cast<T*>(this)); }
 	virtual ~Owner() { Sys::mod().math.template get<T>().del(id_); }
 	uint id() const { return id_; }
 };
@@ -371,9 +373,9 @@ public:
 };
 
 template<class Src, class Sys>
-struct Source : public Owner<Source<Src, Sys>, Sys> {
-	typedef Owner<Source, Sys> Owner_;
-	Source(uint l) : Owner<Source, Sys>(l) { }
+struct Source : public Owner<Src, Sys> {
+	typedef Owner<Src, Sys> Owner_;
+	Source(uint l) : Owner<Src, Sys>(l) { }
 	virtual ~Source() { }
 
 	string data;
