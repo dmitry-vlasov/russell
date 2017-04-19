@@ -24,6 +24,12 @@ struct Math {
 
 struct Sys : public mdl::Sys<Sys, Math> { Sys(); };
 
+template<class T>
+using User = mdl::User<T, Sys>;
+
+template<class T>
+using Owner = mdl::Owner<T, Sys>;
+
 void run();
 
 }} // mdl::smm

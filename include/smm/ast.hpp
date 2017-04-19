@@ -52,9 +52,9 @@ struct Proposition {
 
 struct Proof;
 
-struct Assertion {
-	Assertion (uint label);
-	~Assertion();
+struct Assertion : public Owner<Assertion> {
+	Assertion (uint label) : Owner(label), proof(nullptr) { }
+	~Assertion() override;
 
 	uint arity() const {
 		return essential.size() + floating.size();

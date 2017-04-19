@@ -19,11 +19,7 @@ Ref::~Ref() {
 		Sys::mod().math.assertions.unuse(val.ass->prop.label, val.ass);
 }
 
-Assertion::Assertion(uint label) : proof(nullptr) {
-	Sys::mod().math.assertions.add(label, this);
-}
 Assertion::~Assertion() {
-	Sys::mod().math.assertions.del(prop.label);
 	for (Variables* v : variables)   delete v;
 	for (Disjointed* d : disjointed) delete d;
 	for (Essential* e : essential)   delete e;

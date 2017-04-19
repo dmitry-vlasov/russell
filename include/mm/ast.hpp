@@ -47,7 +47,7 @@ class Proof;
 struct Theorem : public Owner<Theorem> {
 	Theorem(uint l, const Vect& e, Proof* p = nullptr) :
 		Owner(l), expr(e), arity(Undef<uint>::get()), proof(p) { }
-	virtual ~Theorem();
+	~Theorem() override;
 	Vect   expr;
 	uint   arity;
 	Proof* proof;
