@@ -460,8 +460,8 @@ void translate_node(Maps& maps, const Node& node, const Block* block, smm::Sourc
 		smm::Comment* c = new smm::Comment(node.val.com->text);
 		target->contents.push_back(smm::Node(c));
 	} break;
-	case Node::CONSTANTS: {
-		smm::Constants* c = new smm::Constants { node.val.cst->expr };
+	case Node::CONSTANT: {
+		smm::Constant* c = new smm::Constant { node.val.cst->symb };
 		target->contents.push_back(smm::Node(c));
 	} break;
 	case Node::THEOREM:

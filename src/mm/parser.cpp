@@ -23,6 +23,8 @@ private:
 	};
 	peg::parser parser;
 
+	static vector<Patch> const_patches;
+
 public:
 	static const char* mm_syntax() {
 		return R"(
@@ -32,7 +34,7 @@ public:
 			BLOCK   <- ELEMENT*
 			ELEMENT <- COMMENT / DISJ / ESS / TH / '${' BLOCK '$}'/ AX / CONST / VAR / FLO / INCLUDE 
 			EXPR    <- (SYMB / COMMENT)+
-			CONST   <-      '$c' EXPR '$.'
+			CONST   <-      '$c' SYMB '$.'
 			VAR     <-      '$v' EXPR '$.'
 			DISJ    <-      '$d' EXPR '$.'
 			FLO     <- LAB  '$f' EXPR '$.'
@@ -69,10 +71,10 @@ public:
 		};
 		parser["CONST"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Constants* consts = new Constants{sv[0].get<Vect>(), c.token(sv)};
-			for (Symbol cs : consts->expr)
-				c.scope_stack.back().consts.insert(cs);
-			return consts;
+			Symbol s = sv[0].get<Symbol>();
+			Constant* constant = new Constant{s, c.token(sv)};
+			c.scope_stack.back().consts.insert(s);
+			return constant;
 		};
 		parser["VAR"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
@@ -136,7 +138,7 @@ public:
 			case 3: node = Node(sv[0].get<Theorem*>());   break;
 			case 4: node = Node(sv[0].get<Block*>());     break;
 			case 5: node = Node(sv[0].get<Axiom*>());     break;
-			case 6: node = Node(sv[0].get<Constants*>()); break;
+			case 6: node = Node(sv[0].get<Constant*>()); break;
 			case 7: node = Node(sv[0].get<Variables*>()); break;
 			case 8: node = Node(sv[0].get<Floating*>());  break;
 			case 9: node = Node(sv[0].get<Inclusion*>()); break;
@@ -222,7 +224,7 @@ private:
 		Path path = Sys::conf().in;
 		path.name = Lex::toStr(label);
 		string data;
-		path.read(data);
+		path.read(data, &const_patches);
 		Parser p(label);
 		mdl::mm::Source* src = nullptr;
 		peg::any c(context);
@@ -249,6 +251,276 @@ private:
 	static void init_indexes(vector<Node>& nodes) {
 		for (uint i = 0; i < nodes.size(); ++ i) nodes[i].ind = i;
 	}
+};
+
+vector<Patch> Parser::const_patches = {
+{
+R"(
+  $c har ~<_* $.
+)",
+R"(
+  $c har $.
+  $c ~<_* $.
+)"
+},
+{
+R"(
+  $c Fin1a Fin2 Fin3 Fin4 Fin5 Fin6 Fin7 $.
+)",
+R"(
+  $c Fin1a $.
+  $c Fin2 $.
+  $c Fin3 $.
+  $c Fin4 $.
+  $c Fin5 $.
+  $c Fin6 $.
+  $c Fin7 $.
+)"
+},
+{
+R"(
+  $c numer denom $.
+)",
+R"(
+  $c numer $.
+  $c denom $.
+)"
+},
+{
+R"(
+  $c Xs_ ^s $.
+)",
+R"(
+  $c Xs_ $.
+  $c ^s $.
+)"
+},
+{
+R"(
+  $c Moore mrCls ACS $.
+)",
+R"(
+  $c Moore $.
+  $c mrCls $.
+  $c ACS $.
+)"
+},
+{
+R"(
+  $c Preset Dirset $.
+)",
+R"(
+  $c Preset $.
+  $c Dirset $.
+)"
+},
+{
+R"(
+  $c <" "> $.
+)",
+R"(
+  $c <" $.
+  $c "> $.
+)"
+},
+{
+R"(
+  $c No <s bday $.
+)",
+R"(
+  $c No $.
+  $c <s $.
+  $c bday $.
+)"
+},
+{
+R"(
+  $c (x) Bigcup SSet Trans Limits Fix Funs Singleton Singletons Image Cart $.
+  $c Img Domain Range pprod Apply Cup Cap Succ Funpart FullFun Restrict $.
+)",
+R"(
+  $c (x) $.
+  $c Bigcup $.
+  $c SSet $.
+  $c Trans $.
+  $c Limits $.
+  $c Fix $.
+  $c Funs $.
+  $c Singleton $.
+  $c Singletons $.
+  $c Image $.
+  $c Cart $.
+
+  $c Img $.
+  $c Domain $.
+  $c Range $.
+  $c pprod $.
+  $c Apply $.
+  $c Cup $.
+  $c Cap $.
+  $c Succ $.
+  $c Funpart $.
+  $c FullFun $.
+  $c Restrict $.
+)"
+},
+{
+R"(
+  $c << >> XX. $.
+)",
+R"(
+  $c << $.
+  $c >> $.
+  $c XX. $.
+)"
+},
+{
+R"(
+  $c EE Btwn Cgr $.
+)",
+R"(
+  $c EE $.
+  $c Btwn $.
+  $c Cgr $.
+)"
+},
+{
+R"(
+  $c InnerFiveSeg Cgr3 Colinear FiveSeg $.
+)",
+R"(
+  $c InnerFiveSeg $.
+  $c Cgr3 $.
+  $c Colinear $.
+  $c FiveSeg $.
+)"
+},
+{
+R"(
+  $c Line LinesEE Ray $.
+)",
+R"(
+  $c Line $.
+  $c LinesEE $.
+  $c Ray $.
+)"
+},
+{
+R"(
+  $c Pell1QR Pell14QR Pell1234QR PellFund []NN $.
+)",
+R"(
+  $c Pell1QR $.
+  $c Pell14QR $.
+  $c Pell1234QR $.
+  $c PellFund $.
+  $c []NN $.
+)"
+},
+{
+R"(
+  $c rmX rmY $.
+)",
+R"(
+  $c rmX $.
+  $c rmY $.
+)"
+},
+{
+R"(
+  $c freeLMod unitVec $.
+)",
+R"(
+  $c freeLMod $.
+  $c unitVec $.
+)"
+},
+{
+R"(
+  $c LIndF LIndS $.
+)",
+R"(
+  $c LIndF $.
+  $c LIndS $.
+)"
+},
+{
+R"(
+  $c Monic Poly< $.
+)",
+R"(
+  $c Monic $.
+  $c Poly< $.
+)"
+},
+{
+R"(
+  $c degAA minPolyAA $.
+)",
+R"(
+  $c degAA $.
+  $c minPolyAA $.
+)"
+},
+{
+R"(
+  $c _ZZ IntgOver $.
+)",
+R"(
+  $c _ZZ $.
+  $c IntgOver $.
+)"
+},
+{
+R"(
+  $c maMul Mat $.
+)",
+R"(
+  $c maMul $.
+  $c Mat $.
+)"
+},
+{
+R"(
+  $c maDet maAdju $.
+)",
+R"(
+  $c maDet $.
+  $c maAdju $.
+)"
+},
+{
+R"(
+  $c TopSep TopLnd $.
+)",
+R"(
+  $c TopSep $.
+  $c TopLnd $.
+)"
+},
+{
+R"(
+  $c +r -r .v PtDf RR3 plane3 line3 $.
+)",
+R"(
+  $c +r $.
+  $c -r $.
+  $c .v $.
+  $c PtDf $.
+  $c RR3 $.
+  $c plane3 $.
+  $c line3 $.
+)"
+},
+{
+R"(
+  $c LPIdeal LPIR $.
+)",
+R"(
+  $c LPIdeal $.
+  $c LPIR $.
+)"
+}
 };
 
 }

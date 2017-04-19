@@ -6,9 +6,9 @@ namespace mdl { namespace smm {
 
 typedef mdl::Token<Source> Token;
 
-struct Constants {
-	Vect  expr;
-	Token token;
+struct Constant {
+	Symbol symb;
+	Token  token;
 };
 
 struct Variables {
@@ -73,13 +73,8 @@ struct Assertion : public Owner<Assertion> {
 struct Proof;
 
 struct Ref {
-	enum Type {
-		ESSENTIAL,
-		FLOATING,
-		INNER,
-		AXIOM,
-		THEOREM
-	};
+	enum Type { ESSENTIAL, FLOATING, INNER, AXIOM, THEOREM };
+
 	union Value {
 		Value() : flo(nullptr) { }
 		Floating*   flo;
@@ -146,7 +141,7 @@ struct Inclusion {
 struct Node {
 	Node() : type(NONE), val() { }
 	Node(Assertion* a) : type (ASSERTION), val() { val.ass = a; }
-	Node(Constants* c) : type (CONSTANTS), val() { val.cst = c; }
+	Node(Constant* c)  : type (CONSTANT), val() { val.cst = c; }
 	Node(Inclusion* i) : type (INCLUSION), val() { val.inc = i; }
 	Node(Comment* c)   : type (COMMENT),   val() { val.com = c; }
 	void destroy();
@@ -154,7 +149,7 @@ struct Node {
 	enum Type {
 		NONE,
 		ASSERTION,
-		CONSTANTS,
+		CONSTANT,
 		INCLUSION,
 		COMMENT
 	};
@@ -163,7 +158,7 @@ struct Node {
 		Value() : ptr(nullptr) { }
 		void*      ptr;
 		Assertion* ass;
-		Constants* cst;
+		Constant*  cst;
 		Inclusion* inc;
 		Comment*   com;
 	};
@@ -181,7 +176,7 @@ inline void Node::destroy() {
 	switch(type) {
 	case NONE: break;
 	case ASSERTION: delete val.ass; break;
-	case CONSTANTS: delete val.cst; break;
+	case CONSTANT:  delete val.cst; break;
 	case INCLUSION: delete val.inc; break;
 	case COMMENT:   delete val.com; break;
 	default : assert(false && "impossible");  break;
@@ -196,7 +191,7 @@ inline Proof::~ Proof() {
 typedef map<Symbol, Vect> Subst;
 Vect apply(const Subst& sub, const Vect& expr);
 
-ostream& operator << (ostream& os, const Constants& cst);
+ostream& operator << (ostream& os, const Constant& cst);
 ostream& operator << (ostream& os, const Ref& ref);
 ostream& operator << (ostream& os, const Proof& proof);
 ostream& operator << (ostream& os, const Variables& vars);

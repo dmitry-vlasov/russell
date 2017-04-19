@@ -106,6 +106,8 @@ void shallow_write(T* target) {
 	out.close();
 }
 
+typedef pair<string, string> Patch;
+
 struct Path {
 	Path() : root(), name(), ext() { }
 	Path(const string& n, const string& r, const string& e) : root(r), name(n), ext(e) {
@@ -142,7 +144,7 @@ struct Path {
 		ext.clear();
 		if (i != string::npos) ext = ne.substr(i + 1);
 	}
-	void read(string& data) const {
+	void read(string& data, const vector<Patch>* patches = nullptr) const {
 		ifstream in(path());
 		if (!in) throw Error("cannot read", path());
 		in.unsetf(std::ios::skipws);
@@ -151,6 +153,7 @@ struct Path {
 			std::istream_iterator<char>(),
 			std::back_inserter(data));
 		in.close();
+		if (patches) patch(data, *patches);
 	}
 	void write(const string& data) const {
 		ofstream out(path());
@@ -167,6 +170,18 @@ struct Path {
 	string root;
 	string name;
 	string ext;
+
+private:
+	static void patch(string& data, const vector<Patch>& patches) {
+		for (const Patch& patch : patches) {
+			const string& to_replace = patch.first;
+			const string& replacement = patch.second;
+			size_t pos = data.find(to_replace);
+			if (pos != string::npos) {
+				data.replace(pos, to_replace.length(), replacement);
+			}
+		}
+	}
 };
 
 // Library, singleton, which contains a variety of deductive systems

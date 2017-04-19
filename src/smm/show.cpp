@@ -2,8 +2,8 @@
 
 namespace mdl { namespace smm {
 
-ostream& operator << (ostream& os, const Constants& cst) {
-	os << "$c " << cst.expr << "$.";
+ostream& operator << (ostream& os, const Constant& cst) {
+	os << "$c " << cst.symb << " $.";
 	return os;
 }
 
@@ -87,7 +87,7 @@ ostream& operator << (ostream& os, const Node& node) {
 	switch(node.type) {
 	case Node::NONE: return os;
 	case Node::ASSERTION: os << *(node.val.ass); break;
-	case Node::CONSTANTS: os << *(node.val.cst); break;
+	case Node::CONSTANT:  os << *(node.val.cst); break;
 	case Node::INCLUSION: os << *(node.val.inc); break;
 	case Node::COMMENT:   os << *(node.val.com); break;
 	default : assert(false && "impossible"); break;

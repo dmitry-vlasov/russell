@@ -80,22 +80,20 @@ rus::Expr translate_expr(const Vect& ex, const State& state, const Assertion* as
 	return e;
 }
 
-void translate_constants(const Constants* consts, State& state) {
-	for (auto s : consts->expr) {
-		if (state.redundant_consts.count(s))
-			continue;
-		rus::Const* c = nullptr;
-		auto p = math_consts().find(s.lit);
-		if (p == math_consts().end())
-			c = new rus::Const(rus::Symbol(s), rus::Symbol(), rus::Symbol());
-		else
-			c = new rus::Const(p->second.symb, p->second.ascii, p->second.latex);
-		if (state.constants.count(c->symb))
-			delete c;
-		else {
-			state.constants.insert(c->symb);
-			state.theory.top()->nodes.push_back(rus::Node(c));
-		}
+void translate_constant(const Constant* constant, State& state) {
+	Symbol s = constant->symb;
+	if (state.redundant_consts.count(s)) return;
+	rus::Const* c = nullptr;
+	auto p = math_consts().find(s.lit);
+	if (p == math_consts().end())
+		c = new rus::Const(rus::Symbol(s), rus::Symbol(), rus::Symbol());
+	else
+		c = new rus::Const(p->second.symb, p->second.ascii, p->second.latex);
+	if (state.constants.count(c->symb))
+		delete c;
+	else {
+		state.constants.insert(c->symb);
+		state.theory.top()->nodes.push_back(rus::Node(c));
 	}
 }
 
@@ -445,7 +443,7 @@ void translate_theory(const Source* source, State& state) {
 	}
 	for (auto node : source->contents) {
 		switch (node.type) {
-		case Node::CONSTANTS: translate_constants(node.val.cst, state); break;
+		case Node::CONSTANT:  translate_constant(node.val.cst, state);  break;
 		case Node::ASSERTION: translate_assertion(node.val.ass, state); break;
 		case Node::COMMENT:   translate_comment(node.val.com, state);   break;
 		case Node::INCLUSION: continue;

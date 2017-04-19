@@ -51,8 +51,8 @@ mm::Source* translate_source(const Source* src, Maps& maps, mm::Source* target =
 
 void translate(const Node& node, mm::Block* target, Maps& maps) {
 	switch(node.type) {
-	case Node::CONSTANTS: {
-		mm::Constants* c = new mm::Constants { node.val.cst->expr };
+	case Node::CONSTANT: {
+		mm::Constant* c = new mm::Constant { node.val.cst->symb };
 		target->contents.push_back(mm::Node(c));
 	} break;
 	case Node::ASSERTION: {

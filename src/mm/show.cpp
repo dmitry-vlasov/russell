@@ -3,8 +3,8 @@
 
 namespace mdl { namespace mm {
 
-ostream& operator << (ostream& os, const Constants& cst) {
-	os << "$c " << cst.expr << "$.";
+ostream& operator << (ostream& os, const Constant& cst) {
+	os << "$c " << cst.symb << " $.";
 	return os;
 }
 
@@ -52,7 +52,7 @@ ostream& operator << (ostream& os, const Theorem& th) {
 
 ostream& operator << (ostream& os, const Node& node) {
 	switch(node.type) {
-	case Node::CONSTANTS:  os << *(node.val.cst); break;
+	case Node::CONSTANT:   os << *(node.val.cst); break;
 	case Node::VARIABLES:  os << *(node.val.var); break;
 	case Node::DISJOINTED: os << *(node.val.dis); break;
 	case Node::FLOATING:   os << *(node.val.flo); break;

@@ -333,7 +333,7 @@ struct Grammar : qi::grammar<LocationIter, Section*(), qi::unused_type> {
 	qi::rule<LocationIter, Section*(), qi::unused_type> source;
 };
 
-static pair<string, string> patches[] = {
+static vector<Patch> cut_patches = {
 {R"($( [18-Mar-2007] $)
 
 $(
@@ -785,23 +785,9 @@ $)
 }
 };
 
-void patch(string& data) {
-	for (auto patch : patches) {
-		string& to_replace = patch.first;
-		string& replacement = patch.second;
-		size_t pos = data.find(to_replace);
-		if (pos != string::npos) {
-			//cout << "PATCH: " << endl;
-			//cout << to_replace << endl;
-			data.replace(pos, to_replace.length(), replacement);
-		}
-	}
-}
-
 Section* parse(const Path& in, const Path& out) {
 	string data;
-	in.read(data);
-	patch(data);
+	in.read(data, &cut_patches);
 	LocationIter iter(data.begin(), Lex::toInt(in.name));
 	LocationIter end(data.end(), Lex::toInt(in.name));
 	Section* source = new Section;

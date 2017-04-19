@@ -53,7 +53,7 @@ public:
 
 			PROP    <- AX / TH
 			EXPR    <- (SYMB / COMMENT)+
-			CONST   <- '$c' EXPR '$.'
+			CONST   <- '$c' SYMB '$.'
 			VAR     <- '$v' EXPR '$.'
 			DISJ    <- '$d' EXPR '$.'
 			FLO     <- 'f' IND  '$f' EXPR '$.'
@@ -98,10 +98,10 @@ public:
 		};
 		parser["CONST"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Constants* consts = new Constants{sv[0].get<Vect>(), c.token(sv)};
-			for (Symbol c : consts->expr)
-				Sys::mod().math.constants.insert(c);
-			return consts;
+			Symbol s = sv[0].get<Symbol>();
+			Constant* constant = new Constant{s, c.token(sv)};
+			Sys::mod().math.constants.insert(s);
+			return constant;
 		};
 		parser["VAR"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
@@ -217,7 +217,7 @@ public:
 			switch (sv.choice()) {
 			case 0: node = Node(sv[0].get<Comment*>());   break;
 			case 1: node = Node(sv[0].get<Assertion*>());break;
-			case 2: node = Node(sv[0].get<Constants*>()); break;
+			case 2: node = Node(sv[0].get<Constant*>()); break;
 			case 3: node = Node(sv[0].get<Inclusion*>()); break;
 			default : throw Error("unknown smm syntax construction", sv.token());
 			}

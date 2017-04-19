@@ -39,17 +39,18 @@ mdl::Vect translate_term(const Expr& ex, const Type* tp, Maps& maps) {
 	return expr;
 }
 
-smm::Constants* translate_const(const Const* c, Maps& maps) {
-	smm::Constants* consts = new smm::Constants;
-	static bool first_time = true;
-	if (first_time) {
-		uint ts = Lex::toInt("|-");
-		maps.turnstile = mdl::Symbol(ts);
-		consts->expr += maps.turnstile;
-		first_time = false;
-	}
-	consts->expr += mdl::Symbol(translate_symb(c->symb.lit));
-	return consts;
+smm::Constant* translate_turnstile(Maps& maps) {
+	smm::Constant* constant = new smm::Constant;
+	uint ts = Lex::toInt("|-");
+	maps.turnstile = mdl::Symbol(ts);
+	constant->symb = maps.turnstile;
+	return constant;
+}
+
+smm::Constant* translate_const(const Const* c, Maps& maps) {
+	smm::Constant* constant = new smm::Constant;
+	constant->symb = mdl::Symbol(translate_symb(c->symb.lit));
+	return constant;
 }
 
 smm::Variables* translate_vars(const Vars& rvars) {
@@ -76,10 +77,10 @@ vector<smm::Node> translate_type(const Type* type, Maps& maps) {
 	string type_str = Lex::toStr(type->id);
 	uint type_sy = Lex::toInt(type_str);
 	maps.types[type] = type_sy;
-	smm::Constants* consts = new smm::Constants;
-	consts->expr += type_sy;
+	smm::Constant* constant = new smm::Constant;
+	constant->symb = type_sy;
 	vector<smm::Node> ret;
-	ret.push_back(consts);
+	ret.push_back(constant);
 	for (auto p : type->supers)
 		ret.push_back(translate_rule(p.second, maps));
 	return ret;
@@ -288,6 +289,11 @@ inline smm::Inclusion* translate_import(const Import* imp, Maps& maps) {
 
 vector<smm::Node> translate_theory(const Theory* thy, Maps& maps) {
 	vector<smm::Node> nodes;
+	static bool first_time = true;
+	if (first_time) {
+		nodes.push_back(translate_turnstile(maps));
+		first_time = false;
+	}
 	for (auto n : thy->nodes) {
 		switch (n.kind) {
 		case Node::CONST:   nodes.push_back(translate_const(n.val.cst, maps));  break;

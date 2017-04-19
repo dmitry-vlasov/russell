@@ -6,9 +6,9 @@ namespace mdl { namespace mm {
 
 typedef mdl::Token<Source> Token;
 
-struct Constants {
-	Vect  expr;
-	Token token;
+struct Constant {
+	Symbol symb;
+	Token  token;
 };
 
 struct Variables {
@@ -112,7 +112,7 @@ class Inclusion;
 struct Node {
 	enum Type {
 		NONE,
-		CONSTANTS,
+		CONSTANT,
 		VARIABLES,
 		DISJOINTED,
 		FLOATING,
@@ -127,7 +127,7 @@ struct Node {
 	union Value {
 		Value() : ptr(nullptr) { }
 		void*       ptr;
-		Constants*  cst;
+		Constant*   cst;
 		Variables*  var;
 		Disjointed* dis;
 		Floating*   flo;
@@ -141,7 +141,7 @@ struct Node {
 	};
 
 	Node()              : ind(-1), type(NONE),       val() { }
-	Node(Constants* c)  : ind(-1), type(CONSTANTS),  val() { val.cst = c; }
+	Node(Constant* c)   : ind(-1), type(CONSTANT),  val() { val.cst = c; }
 	Node(Variables* v)  : ind(-1), type(VARIABLES),  val() { val.var = v; }
 	Node(Disjointed* d) : ind(-1), type(DISJOINTED), val() { val.dis = d; }
 	Node(Floating* f)   : ind(-1), type(FLOATING),   val() { val.flo = f; }
@@ -222,7 +222,7 @@ struct Inclusion {
 inline void Node::destroy() {
 	switch(type) {
 	case NONE: break;
-	case CONSTANTS:  delete val.cst; break;
+	case CONSTANT:   delete val.cst; break;
 	case VARIABLES:  delete val.var; break;
 	case DISJOINTED: delete val.dis; break;
 	case FLOATING:   delete val.flo; break;
@@ -239,7 +239,7 @@ inline void Node::destroy() {
 }
 
 ostream& operator << (ostream& os, const Node& node);
-ostream& operator << (ostream& os, const Constants& cst);
+ostream& operator << (ostream& os, const Constant& cst);
 ostream& operator << (ostream& os, const Ref& ref);
 ostream& operator << (ostream& os, const Proof& proof);
 ostream& operator << (ostream& os, const Variables& vars);
