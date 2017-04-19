@@ -5,23 +5,23 @@ namespace mdl { namespace mm {
 
 //Constants::Constants(const Vect& ex) : expr(ex) { }
 
-Ref::Type Ref::type(uint label) {
+inline Ref::Type find_type(uint label) {
 	Sys::Math& math = Sys::mod().math;
 	if (math.get<Floating>().has(label)) {
-		return FLOATING;
+		return Ref::FLOATING;
 	} else if (math.get<Essential>().has(label)) {
-		return ESSENTIAL;
+		return Ref::ESSENTIAL;
 	} else if (math.get<Axiom>().has(label)) {
-		return AXIOM;
+		return Ref::AXIOM;
 	} else if (math.get<Theorem>().has(label)) {
-		return THEOREM;
+		return Ref::THEOREM;
 	} else {
 		throw Error("unknown label", Lex::toStr(label));
 	}
 }
 
 Ref::Ref(uint l) : label_(l) {
-	switch (type(label_)) {
+	switch (find_type(label_)) {
 	case FLOATING:  val = new User<Floating>(label_);  break;
 	case ESSENTIAL: val = new User<Essential>(label_); break;
 	case AXIOM:     val = new User<Axiom>(label_);     break;

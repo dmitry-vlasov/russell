@@ -56,18 +56,7 @@ struct Theorem : public Owner<Theorem> {
 
 
 struct Ref {
-	enum Type {
-		FLOATING,
-		ESSENTIAL,
-		AXIOM,
-		THEOREM
-	};
-	typedef variant<
-		User<Floating>*,
-		User<Essential>*,
-		User<Axiom>*,
-		User<Theorem>*
-	> Variant;
+	enum Type { FLOATING, ESSENTIAL, AXIOM, THEOREM };
 
 	Ref(uint label);
 	Ref(const Ref&);
@@ -80,13 +69,21 @@ struct Ref {
 			std::get<User<Axiom>*>(val)->get()->arity :
 			std::get<User<Theorem>*>(val)->get()->arity;
 	}
-
 	Type type() const {
 		return static_cast<Type>(val.index());
 	}
-	static Type type(uint l);
-	Variant val;
+	Floating*  flo() { return std::get<User<Floating>*>(val)->get(); }
+	Essential* ess() { return std::get<User<Essential>*>(val)->get(); }
+	Axiom*     axm() { return std::get<User<Axiom>*>(val)->get(); }
+	Theorem*   thm() { return std::get<User<Theorem>*>(val)->get(); }
+
 private:
+	variant<
+		User<Floating>*,
+		User<Essential>*,
+		User<Axiom>*,
+		User<Theorem>*
+	> val;
 	uint label_;
 };
 

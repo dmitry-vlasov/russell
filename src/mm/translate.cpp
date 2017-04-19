@@ -149,7 +149,7 @@ void gather_inner_vars(const set<Symbol>& fvars,
 	if (!proof) return;
 	for (Ref* r : proof->refs) {
 		if (r->type() == Ref::FLOATING) {
-			Symbol v = std::get<User<Floating>*>(r->val)->get()->var();
+			Symbol v = r->flo()->var();
 			avars.insert(v);
 			if (fvars.find(v) == fvars.end())
 				ivars.insert(v);
@@ -310,26 +310,18 @@ smm::Proof* translate_proof(Maps& maps, const Proof* mproof) {
 	smm::Proof* sproof = new smm::Proof();
 	for (auto r : mproof->refs) {
 		switch (r->type()) {
-		case Ref::FLOATING: {
-			Floating* flo = std::get<User<Floating>*>(r->val)->get();
-			if (maps.floatings.count(flo))
-				sproof->refs.push_back(new smm::Ref(maps.floatings[flo]));
+		case Ref::FLOATING:
+			if (maps.floatings.count(r->flo()))
+				sproof->refs.push_back(new smm::Ref(maps.floatings[r->flo()]));
 			else
-				sproof->refs.push_back(new smm::Ref(maps.inners[flo]));
+				sproof->refs.push_back(new smm::Ref(maps.inners[r->flo()]));
 			break;
-		}
-		case Ref::ESSENTIAL: {
-			Essential* ess = std::get<User<Essential>*>(r->val)->get();
-			sproof->refs.push_back(new smm::Ref(maps.essentials[ess])); break;
-		}
-		case Ref::AXIOM: {
-			Axiom* ax = std::get<User<Axiom>*>(r->val)->get();
-			sproof->refs.push_back(new smm::Ref(maps.axioms[ax]->prop.label, true)); break;
-		}
-		case Ref::THEOREM: {
-			Theorem* th = std::get<User<Theorem>*>(r->val)->get();
-			sproof->refs.push_back(new smm::Ref(maps.theorems[th]->prop.label, false)); break;
-		}
+		case Ref::ESSENTIAL:
+			sproof->refs.push_back(new smm::Ref(maps.essentials[r->ess()])); break;
+		case Ref::AXIOM:
+			sproof->refs.push_back(new smm::Ref(maps.axioms[r->axm()]->prop.label, true)); break;
+		case Ref::THEOREM:
+			sproof->refs.push_back(new smm::Ref(maps.theorems[r->thm()]->prop.label, false)); break;
 		default : assert(false && "impossible"); break;
 		}
 	}
