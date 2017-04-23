@@ -8,31 +8,6 @@ namespace smm { class Source; }
 
 namespace rus {
 
-/*
-struct Math {
-	struct Counter {
-		Counter() : c(0) { }
-		uint get() { return c; }
-		uint inc() { return c++; }
-	private:
-		uint c;
-	};
-
-	Table<Const>   consts;
-	Table<Type>    types;
-	Table<Rule>    rules;
-	Table<Axiom>   axioms;
-	Table<Def>     defs;
-	Table<Theorem> theorems;
-	Table<Proof>   proofs;
-	Table<Source>  sources;
-	Counter        ind;
-
-	~Math() { sources.destroy(); }
-};
-
- */
-
 class Const;
 class Type;
 class Rule;
@@ -43,19 +18,14 @@ class Proof;
 class Source;
 class Assertion;
 
-struct Math {
-	template<typename T>
-	using Table1 = map<uint, T>;
-
-	Table<Const>    consts;
-	Table<Type>     types;
-	Table<Rule>     rules;
-
-	Table<Assertion>   assertions;
-
-	Table<Proof>   proofs;
-	Table<Source>  sources;
-
+class Math {
+	Table<Const>     consts;
+	Table<Type>      types;
+	Table<Rule>      rules;
+	Table<Assertion> assertions;
+	Table<Proof>     proofs;
+	Table<Source>    sources;
+public:
 	~Math();
 
 	template<class T>

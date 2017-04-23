@@ -66,7 +66,7 @@ struct PopVars {
 static void mark_vars(Expr& ex, VarStack& var_stack) {
 	for (auto& s : ex.symbols) {
 		bool is_var = var_stack.mapping.count(s.lit);
-		bool is_const = Sys::get().math.consts.has(s.lit);
+		bool is_const = Sys::get().math.get<Const>().has(s.lit);
 		if (is_const && is_var)
 			throw Error("constant symbol is marked as variable");
 		if (!is_const && !is_var) {
@@ -79,9 +79,9 @@ static void mark_vars(Expr& ex, VarStack& var_stack) {
 }
 
 inline Type* find_type(uint id, const Location* loc = nullptr) {
-	if (!Sys::get().math.types.has(id))
+	if (!Sys::get().math.get<Type>().has(id))
 		throw Error("unknown type", show_id(id), loc);
-	return Sys::mod().math.types.access(id);
+	return Sys::mod().math.get<Type>().access(id);
 }
 
 inline uint create_id(string pref, string s1, string s2) {
@@ -129,8 +129,8 @@ void enqueue_expressions(Proof* proof) {
 		if (el.kind == Proof::Elem::STEP) {
 			Step* step = el.val.step;
 			expr::enqueue(step->expr);
-			if (step->kind == Step::CLAIM)
-				enqueue_expressions(step->proof);
+			if (step->kind() == Step::CLAIM)
+				enqueue_expressions(step->proof());
 		}
 	}
 }
@@ -279,9 +279,9 @@ struct FindTheorem {
 	template <typename T>
 	struct result { typedef Theorem* type; };
 	Theorem* operator()(uint id) const {
-		if (!Sys::get().math.assertions.has(id))
+		if (!Sys::get().math.get<Assertion>().has(id))
 			throw Error("unknown theorem", show_id(id));
-		Theorem* ret = dynamic_cast<Theorem*>(Sys::mod().math.assertions.access(id));
+		Theorem* ret = dynamic_cast<Theorem*>(Sys::mod().math.get<Assertion>().access(id));
 		if (!ret)
 			throw Error("not a theorem", show_id(id));
 		return ret;

@@ -91,7 +91,7 @@ string show(const Prop& p) {
 
 string show(const Assertion& a) {
 	string s;
-	s += show_id(a.id) + " ";
+	s += show_id(a.id()) + " ";
 	s += "(" + show(a.vars) + ") " + show(a.disj) + " {\n";
 	if (a.hyps.size() > 0) {
 		for (Hyp* h : a.hyps)
@@ -119,7 +119,7 @@ string show(const Theorem& thm) {
 string show(const Def& def) {
 	string s;
 	s += "definition ";
-	s += show_id(def.ass.id) + " ";
+	s += show_id(def.ass.id()) + " ";
 	s += "(" + show(def.ass.vars) + ") " + show(def.ass.disj) + " {\n";
 	if (def.ass.hyps.size() > 0) {
 		for (Hyp* h : def.ass.hyps)
@@ -140,7 +140,7 @@ string show(const Ref& ref) {
 	switch (ref.kind) {
 	case Ref::HYP:  return "hyp "  + to_string(ref.val.hyp->ind + 1);
 	case Ref::PROP: return "prop " + to_string(ref.val.prop->ind + 1);
-	case Ref::STEP: return "step " + to_string(ref.val.step->ind + 1);
+	case Ref::STEP: return "step " + to_string(ref.val.step->ind() + 1);
 	default : assert(false && "impossible"); return string();
 	}
 }
@@ -166,26 +166,26 @@ string show(const Proof::Elem& el) {
 }
 
 string show(const Step& st) {
-	string s = "step " + to_string(st.ind + 1) + " : ";
+	string s = "step " + to_string(st.ind() + 1) + " : ";
 	s += show_type(st.expr) + " = ";
-	switch (st.kind) {
+	switch (st.kind()) {
 	case Step::NONE: s += "? "; break;
 	case Step::ASS: {
-		switch (st.val.ass->kind()) {
+		switch (st.ass()->kind()) {
 		case Assertion::AXM: s += "axm "; break;
 		case Assertion::THM: s += "thm "; break;
 		case Assertion::DEF: s += "def "; break;
 		}
-		s += show_id(st.val.ass->id) + " "; break;
+		s += show_id(st.ass()->id()) + " "; break;
 	}
 	case Step::CLAIM:s += "claim "; break;
 	}
-	if (st.kind != Step::NONE)
+	if (st.kind() != Step::NONE)
 		s += show_refs(st.refs) + " ";
 	s += "|- " + show(st.expr) + END_MARKER;
-	if (st.kind == Step::CLAIM) {
+	if (st.kind() == Step::CLAIM) {
 		s += " {\n";
-		for (auto& el : st.val.prf->elems)
+		for (auto& el : st.proof()->elems)
 			s += "\t" + show(el) + "\n";
 		s += "}";
 	}
@@ -195,14 +195,14 @@ string show(const Step& st) {
 string show(const Qed& q) {
 	string s = "qed ";
 	s += "prop " + to_string(q.prop->ind + 1) + " = ";
-	s += "step " + to_string(q.step->ind + 1) + " " + END_MARKER;
+	s += "step " + to_string(q.step->ind() + 1) + " " + END_MARKER;
 	return s;
 }
 
 string show(const Proof& p) {
 	string s = "proof ";
 	if (p.has_id) s += show_id(p.id) + " ";
-	s += "of " + show_id(p.thm->ass.id) + " {\n";
+	s += "of " + show_id(p.thm->ass.id()) + " {\n";
 	if (p.vars.v.size())
 		s += "\tvar " + show(p.vars) + END_MARKER + "\n";
 	for (auto& st : p.elems)

@@ -63,8 +63,8 @@ size_t memvol(const Step& step) {
 	size_t s = 0;
 	s += memvol(step.expr);
 	s += step.refs.capacity() * sizeof(Ref);
-	if (step.kind == Step::CLAIM)
-		s += memsize(*step.val.prf);
+	if (step.kind() == Step::CLAIM)
+		s += memsize(*step.proof());
 	return s;
 }
 size_t memvol(const Proof& proof) {

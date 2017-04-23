@@ -31,11 +31,11 @@ void Rules::add(const Expr& ex, uint id) {
 			m = &n->tree;
 		}
 	}
-	Sys::mod().math.rules.use(id, n->rule);
+	Sys::mod().math.get<Rule>().use(id, n->rule);
 }
 
 Rules::Node::~Node() {
-	if (rule) Sys::mod().math.rules.unuse(rule->id, rule);
+	if (rule) Sys::mod().math.get<Rule>().unuse(rule->id, rule);
 }
 
 Tree::Node::Node(Rule* r) : rule(r), children() { }

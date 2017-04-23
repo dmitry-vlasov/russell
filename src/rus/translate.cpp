@@ -17,10 +17,10 @@ struct Maps {
 };
 
 inline uint translate_symb(uint s) {
-	if (!Sys::get().math.consts.has(s))
+	if (!Sys::get().math.get<Const>().has(s))
 		return s;
 	else {
-		const Const* c = Sys::mod().math.consts.access(s);
+		const Const* c = Sys::mod().math.get<Const>().access(s);
 		return mdl::Symbol::is_undef(c->ascii.lit) ? s : c->ascii.lit;
 	}
 }
@@ -139,7 +139,7 @@ smm::Assertion* translate_rule(const Rule* rule, Maps& maps) {
 vector<smm::Node> translate_assertion(const Assertion* ass, Maps& maps) {
 	vector<smm::Node> ra_vect;
 	for (auto prop : ass->props) {
-		string ass_str = Lex::toStr(ass->id);
+		string ass_str = Lex::toStr(ass->id());
 		if (prop->ind)
 			ass_str += "_" + to_string(prop->ind);
 		uint ass_lab = Lex::toInt(ass_str);
@@ -211,13 +211,13 @@ void translate_term(const Tree& t, const Assertion* thm, vector<smm::Ref*>& smm_
 void translate_proof(const Proof* proof, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps, uint ind = 0);
 
 void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps) {
-	if (st->kind == Step::CLAIM) {
-		translate_proof(st->val.prf, thm, smm_proof, maps);
+	if (st->kind() == Step::CLAIM) {
+		translate_proof(st->proof(), thm, smm_proof, maps);
 		return;
 	}
 	for (auto ref : st->refs)
 		translate_ref(ref, thm, smm_proof, maps);
-	const Assertion* ass = st->assertion();
+	const Assertion* ass = st->ass();
 	Substitution* ps = unify(ass->props[0]->expr, st->expr);
 	if (!ps) throw Error("proposition unification failed");
 	for (uint i = 0; i < ass->arity(); ++ i) {
@@ -226,13 +226,13 @@ void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref*>& smm
 		if (!ps->join(hs)) throw Error("substitution join failed");
 		delete hs;
 	}
-	for (auto v : st->assertion()->vars.v)
+	for (auto v : st->ass()->vars.v)
 		translate_term(*ps->sub[v], thm, smm_proof, maps);
 	delete ps;
 	if (!maps.assertions.count(ass))
 		throw Error("undefined reference to assertion");
 	assert(maps.assertions.count(ass));
-	smm_proof.push_back(new smm::Ref(maps.assertions[ass]->prop.label, st->val.ass->kind() != Assertion::THM));
+	smm_proof.push_back(new smm::Ref(maps.assertions[ass]->prop.label, st->ass()->kind() != Assertion::THM));
 }
 
 vector<smm::Inner*> translate_inners(const Vars& vars, Maps& maps, const Assertion* thm, uint ind_0) {

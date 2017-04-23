@@ -385,7 +385,7 @@ rus::Proof::Elem translate_step(Tree* tree, rus::Proof* proof, rus::Theorem* thm
 			rus::Ref(thm->ass.hyps[h.val.ref->index()]);
 		el.val.step->refs.push_back(hr);
 	}
-	el.val.step->ind = elems.size();
+	el.val.step->set_ind(elems.size());
 	el.val.step->expr = translate_expr(node.expr, state, a);
 	elems.push_back(el);
 	return el;

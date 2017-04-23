@@ -8,20 +8,28 @@ Math::~Math() { sources.destroy(); }
 template<> Table<Const>& Math::get<Const>() { return consts; }
 template<> Table<Type>& Math::get<Type>() { return types; }
 template<> Table<Rule>& Math::get<Rule>() { return rules; }
+template<> Table<Proof>& Math::get<Proof>() { return proofs; }
 template<> Table<Source>& Math::get<Source>() { return sources; }
+template<> Table<Assertion>& Math::get<Assertion>() { return assertions; }
 template<> const Table<Const>& Math::get<Const>() const { return consts; }
 template<> const Table<Type>& Math::get<Type>() const { return types; }
 template<> const Table<Rule>& Math::get<Rule>() const { return rules; }
+template<> const Table<Proof>& Math::get<Proof>() const { return proofs; }
 template<> const Table<Source>& Math::get<Source>() const { return sources; }
+template<> const Table<Assertion>& Math::get<Assertion>() const { return assertions; }
 
 template Table<Const>& Math::get<Const>();
 template Table<Type>& Math::get<Type>();
 template Table<Rule>& Math::get<Rule>();
+template Table<Proof>& Math::get<Proof>();
 template Table<Source>& Math::get<Source>();
+template Table<Assertion>& Math::get<Assertion>();
 template const Table<Const>& Math::get<Const>() const;
 template const Table<Type>& Math::get<Type>() const;
 template const Table<Rule>& Math::get<Rule>() const;
+template const Table<Proof>& Math::get<Proof>() const;
 template const Table<Source>& Math::get<Source>() const;
+template const Table<Assertion>& Math::get<Assertion>() const;
 
 namespace {
 
@@ -59,7 +67,7 @@ bool unify_rus() {
 		if (Sys::conf().verbose) cout << "verifying russell source ... " << flush;
 		Sys::timer()["unify"].start();
 		uint lab = Lex::toInt(Sys::conf().in.name);
-		verify(Sys::get().math.sources.access(lab));
+		verify(Sys::get().math.get<Source>().access(lab));
 		Sys::timer()["unify"].stop();
 		if (Sys::conf().verbose) cout << "done in " << Sys::timer()["unify"] << endl;
 		return true;
@@ -75,7 +83,7 @@ bool translate_rus() {
 		if (Sys::conf().verbose) cout << "translating file " << Sys::conf().in.name << " ... " << flush;
 		Sys::timer()["translate"].start();
 		uint lab = Lex::toInt(Sys::conf().in.name);
-		const smm::Source* target = translate(Sys::get().math.sources.access(lab));
+		const smm::Source* target = translate(Sys::get().math.get<Source>().access(lab));
 		if (Sys::conf().deep) {
 			deep_write(
 				target,
@@ -102,7 +110,7 @@ bool write_rus() {
 		Sys::timer()["write"].start();
 		ofstream out(Sys::conf().out.path());
 		uint lab = Lex::toInt(Sys::conf().out.name);
-		out << *Sys::get().math.sources.access(lab) << endl;
+		out << *Sys::get().math.get<Source>().access(lab) << endl;
 		out.close();
 		Sys::timer()["write"].stop();
 		if (Sys::conf().verbose) cout << "done in " << Sys::timer()["write"] << endl;
@@ -155,15 +163,15 @@ string info() {
 	stats += show_timer("\n\ttotal: ", "total", Sys::timer());
 	stats += "\n\n";
 
-	const size_t const_vol = mdl::memvol(Sys::get().math.consts);
-	const size_t types_vol = mdl::memvol(Sys::get().math.types);
-	const size_t rules_vol = mdl::memvol(Sys::get().math.rules);
+	const size_t const_vol = mdl::memvol(Sys::get().math.get<Const>());
+	const size_t types_vol = mdl::memvol(Sys::get().math.get<Type>());
+	const size_t rules_vol = mdl::memvol(Sys::get().math.get<Rule>());
 	//const size_t axiom_vol = mdl::memvol(Sys::get().math.axioms);
 	//const size_t defs_vol  = mdl::memvol(Sys::get().math.defs);
 	//const size_t thems_vol = mdl::memvol(Sys::get().math.theorems);
-	const size_t proof_vol = mdl::memvol(Sys::get().math.proofs);
+	const size_t proof_vol = mdl::memvol(Sys::get().math.get<Proof>());
 	uint lab = Lex::toInt(Sys::conf().in.name);
-	const size_t source_vol = memvol(*Sys::get().math.sources.access(lab));
+	const size_t source_vol = memvol(*Sys::get().math.get<Source>().access(lab));
 	const size_t total_vol =
 		const_vol + types_vol + rules_vol +
 		//axiom_vol + defs_vol + thems_vol +
@@ -183,13 +191,13 @@ string info() {
 	stats += "\n";
 
 	stats += "Size:\n";
-	stats += "\tconsts:   " + to_string(Sys::get().math.consts.size()) + "\n";
-	stats += "\ttypes:    " + to_string(Sys::get().math.types.size()) + "\n";
-	stats += "\trules:    " + to_string(Sys::get().math.rules.size()) + "\n";
+	stats += "\tconsts:   " + to_string(Sys::get().math.get<Const>().size()) + "\n";
+	stats += "\ttypes:    " + to_string(Sys::get().math.get<Type>().size()) + "\n";
+	stats += "\trules:    " + to_string(Sys::get().math.get<Rule>().size()) + "\n";
 	//stats += "\taxioms:   " + to_string(Sys::get().math.axioms.size()) + "\n";
 	//stats += "\tdefs:     " + to_string(Sys::get().math.defs.size()) + "\n";
 	//stats += "\ttheorems: " + to_string(Sys::get().math.theorems.size()) + "\n";
-	stats += "\tproofs:   " + to_string(Sys::get().math.proofs.size()) + "\n";
+	stats += "\tproofs:   " + to_string(Sys::get().math.get<Proof>().size()) + "\n";
 	stats += "\n";
 
 	return stats;

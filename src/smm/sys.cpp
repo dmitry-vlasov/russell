@@ -67,7 +67,7 @@ void write(uint tgt) {
 		}
 	}	break;
 	case Lang::RUS: {
-		const rus::Source* target = rus::Sys::get().math.sources.access(tgt);
+		const rus::Source* target = rus::Sys::get().math.get<rus::Source>().access(tgt);
 		if (Sys::conf().deep) {
 			deep_write(
 				target,

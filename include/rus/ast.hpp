@@ -87,7 +87,9 @@ struct Assertion {
 	uint arity() const { return hyps.size(); }
 	virtual Kind kind() const = 0;
 
-	const uint id;
+	uint id() const { return id_; }
+
+	uint id_;
 	Vars vars;
 	Disj disj;
 	vector<Hyp*>  hyps;
@@ -150,30 +152,43 @@ struct Step {
 		CLAIM
 	};
 	union Value {
-		void*      non;
-		Assertion* ass;
-		Proof*     prf;
+		void*            non;
+		User<Assertion>* ass;
+		Proof*           prf;
 	};
 
 	Step(uint ind, Step::Kind, Assertion::Kind, uint id, Proof* proof);
 	~Step();
 
-	Assertion* assertion() {
-		if (kind != ASS) return nullptr;
-		return val.ass;
+	Assertion* ass() {
+		if (kind_ != ASS) return nullptr;
+		return val_.ass->get();
 	}
-	const Assertion* assertion() const {
-		if (kind != ASS) return nullptr;
-		return val.ass;
+	const Assertion* ass() const {
+		if (kind_ != ASS) return nullptr;
+		return val_.ass->get();
 	}
+	Proof* proof() {
+		if (kind_ != CLAIM) return nullptr;
+		return val_.prf;
+	}
+	const Proof* proof() const {
+		if (kind_ != CLAIM) return nullptr;
+		return val_.prf;
+	}
+	Kind kind() const { return kind_; }
+	uint ind() const { return ind_; }
+	void set_ind(uint ind) { ind_ = ind; }
 
-	uint        ind;
 	Expr        expr;
-	Kind        kind;
-	Value       val;
 	vector<Ref> refs;
-	Proof*      proof;
 	Token       token;
+
+private:
+	uint   ind_;
+	Kind   kind_;
+	Value  val_;
+	Proof* proof_;
 };
 
 inline Expr& Ref::expr() {
