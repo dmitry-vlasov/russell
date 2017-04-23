@@ -30,29 +30,15 @@ Rule::~Rule() {
 	Sys::mod().math.get<Rule>().del(id);
 }
 
-Assertion::Assertion(uint i) : id_(i) {
-	//Sys::mod().math.assertions.add(id, this);
-}
+Assertion::Assertion(uint i) : Owner(i) { }
 Assertion::~Assertion() {
-	//Sys::mod().math.assertions.del(id);
 	for (auto h : hyps) delete h;
 	for (auto p : props) delete p;
 }
 
-Axiom::Axiom(uint id) : Assertion(id) {
-	//Sys::mod().math.axioms[id] = this;
-	Sys::mod().math.get<Assertion>().add(id, this);
-}
-
-Theorem::Theorem(uint id) : Assertion(id) {
-	//Sys::mod().math.theorems[id] = this;
-	Sys::mod().math.get<Assertion>().add(id, this);
-}
-
-Def::Def(uint id) : Assertion(id) {
-	//Sys::mod().math.defs[id] = this;
-	Sys::mod().math.get<Assertion>().add(id, this);
-}
+Axiom::Axiom(uint id) : Assertion(id) { }
+Theorem::Theorem(uint id) : Assertion(id) { }
+Def::Def(uint id) : Assertion(id) { }
 
 Step::Step(uint i, Step::Kind sk, Assertion::Kind ak, uint id, Proof* p) :
 	ind_(i), kind_(sk), proof_(p) {

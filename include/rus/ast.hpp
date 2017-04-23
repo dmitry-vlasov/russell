@@ -76,20 +76,17 @@ struct Prop {
 	Token token;
 };
 
-struct Assertion {
+struct Assertion : public Owner<Assertion> {
 	enum Kind {
 		AXM,
 		THM,
 		DEF
 	};
 	Assertion(uint id);
-	virtual ~ Assertion();
+	~ Assertion() override;
 	uint arity() const { return hyps.size(); }
 	virtual Kind kind() const = 0;
 
-	uint id() const { return id_; }
-
-	uint id_;
 	Vars vars;
 	Disj disj;
 	vector<Hyp*>  hyps;
