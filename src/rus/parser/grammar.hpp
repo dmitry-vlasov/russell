@@ -33,8 +33,8 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 
 	const phoenix::function<FindType>    findType;
 	const phoenix::function<FindTheorem> findTheorem;
-	const phoenix::function<FindAxiom>   findAxiom;
-	const phoenix::function<FindDef>     findDef;
+	//const phoenix::function<FindAxiom>   findAxiom;
+	//const phoenix::function<FindDef>     findDef;
 
 	const phoenix::function<CreateStepRef> createStepRef;
 	const phoenix::function<GetProp>     getProp;

@@ -41,6 +41,7 @@ class Def;
 class Theorem;
 class Proof;
 class Source;
+class Assertion;
 
 struct Math {
 	template<typename T>
@@ -50,9 +51,7 @@ struct Math {
 	Table<Type>     types;
 	Table<Rule>     rules;
 
-	Table1<Axiom*>   axioms;
-	Table1<Def*>     defs;
-	Table1<Theorem*> theorems;
+	Table<Assertion>   assertions;
 
 	Table<Proof>   proofs;
 	Table<Source>  sources;

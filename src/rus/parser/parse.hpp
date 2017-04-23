@@ -279,12 +279,16 @@ struct FindTheorem {
 	template <typename T>
 	struct result { typedef Theorem* type; };
 	Theorem* operator()(uint id) const {
-		if (!Sys::get().math.theorems.count(id))
+		if (!Sys::get().math.assertions.has(id))
 			throw Error("unknown theorem", show_id(id));
-		return Sys::mod().math.theorems[id];
+		Theorem* ret = dynamic_cast<Theorem*>(Sys::mod().math.assertions.access(id));
+		if (!ret)
+			throw Error("not a theorem", show_id(id));
+		return ret;
 	}
 };
 
+/*
 struct FindAxiom {
 	template <typename T1>
 	struct result { typedef Axiom* type; };
@@ -294,6 +298,8 @@ struct FindAxiom {
 		return Sys::mod().math.axioms[id];
 	}
 };
+*/
+
 /*
 struct FindAssertion {
 	template <typename T>
@@ -306,6 +312,7 @@ struct FindAssertion {
 };
 */
 
+/*
 struct FindDef {
 	template <typename T1>
 	struct result { typedef Def* type; };
@@ -315,6 +322,7 @@ struct FindDef {
 		return Sys::mod().math.defs[id];
 	}
 };
+*/
 
 struct AddDisjVar {
 	template <typename T1, typename T2>

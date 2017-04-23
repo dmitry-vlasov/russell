@@ -158,23 +158,24 @@ string info() {
 	const size_t const_vol = mdl::memvol(Sys::get().math.consts);
 	const size_t types_vol = mdl::memvol(Sys::get().math.types);
 	const size_t rules_vol = mdl::memvol(Sys::get().math.rules);
-	const size_t axiom_vol = mdl::memvol(Sys::get().math.axioms);
-	const size_t defs_vol  = mdl::memvol(Sys::get().math.defs);
-	const size_t thems_vol = mdl::memvol(Sys::get().math.theorems);
+	//const size_t axiom_vol = mdl::memvol(Sys::get().math.axioms);
+	//const size_t defs_vol  = mdl::memvol(Sys::get().math.defs);
+	//const size_t thems_vol = mdl::memvol(Sys::get().math.theorems);
 	const size_t proof_vol = mdl::memvol(Sys::get().math.proofs);
 	uint lab = Lex::toInt(Sys::conf().in.name);
 	const size_t source_vol = memvol(*Sys::get().math.sources.access(lab));
 	const size_t total_vol =
 		const_vol + types_vol + rules_vol +
-		axiom_vol + defs_vol + thems_vol + proof_vol;
+		//axiom_vol + defs_vol + thems_vol +
+		proof_vol;
 
 	stats += "Volume:\n";
 	stats += "\tconsts:   " + showmem(const_vol) + "\n";
 	stats += "\ttypes:    " + showmem(types_vol) + "\n";
 	stats += "\trules:    " + showmem(rules_vol) + "\n";
-	stats += "\taxioms:   " + showmem(axiom_vol) + "\n";
-	stats += "\tdefs:     " + showmem(defs_vol) + "\n";
-	stats += "\ttheorems: " + showmem(thems_vol) + "\n";
+	//stats += "\taxioms:   " + showmem(axiom_vol) + "\n";
+	//stats += "\tdefs:     " + showmem(defs_vol) + "\n";
+	//stats += "\ttheorems: " + showmem(thems_vol) + "\n";
 	stats += "\tproofs:   " + showmem(proof_vol) + "\n";
 	stats += "\n";
 	stats += "\ttotal:  " + showmem(total_vol) + "\n";
@@ -185,9 +186,9 @@ string info() {
 	stats += "\tconsts:   " + to_string(Sys::get().math.consts.size()) + "\n";
 	stats += "\ttypes:    " + to_string(Sys::get().math.types.size()) + "\n";
 	stats += "\trules:    " + to_string(Sys::get().math.rules.size()) + "\n";
-	stats += "\taxioms:   " + to_string(Sys::get().math.axioms.size()) + "\n";
-	stats += "\tdefs:     " + to_string(Sys::get().math.defs.size()) + "\n";
-	stats += "\ttheorems: " + to_string(Sys::get().math.theorems.size()) + "\n";
+	//stats += "\taxioms:   " + to_string(Sys::get().math.axioms.size()) + "\n";
+	//stats += "\tdefs:     " + to_string(Sys::get().math.defs.size()) + "\n";
+	//stats += "\ttheorems: " + to_string(Sys::get().math.theorems.size()) + "\n";
 	stats += "\tproofs:   " + to_string(Sys::get().math.proofs.size()) + "\n";
 	stats += "\n";
 
