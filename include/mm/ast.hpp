@@ -69,9 +69,8 @@ struct Ref {
 			std::get<User<Axiom>*>(val)->get()->arity :
 			std::get<User<Theorem>*>(val)->get()->arity;
 	}
-	Type type() const {
-		return static_cast<Type>(val.index());
-	}
+	Type type() const { return static_cast<Type>(val.index()); }
+	bool is_assertion() const { return type() == AXIOM || type() == THEOREM; }
 	Floating*  flo() { return std::get<User<Floating>*>(val)->get(); }
 	Essential* ess() { return std::get<User<Essential>*>(val)->get(); }
 	Axiom*     axm() { return std::get<User<Axiom>*>(val)->get(); }

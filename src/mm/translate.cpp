@@ -123,12 +123,19 @@ void transform(Tree* tree, const Transform& trans, bool forward = true) {
 	}
 }
 
-Tree* reduce(Tree* tree, const set<uint>& red) {
+Tree* reduce(Tree* tree, const map<uint, Ref*>& red) {
 	assert(tree->nodes.back().type == Tree::Node::REF);
-	if (red.count(tree->nodes.back().val.ref->label())) {
-		assert(tree->nodes[tree->nodes.size() - 2].type == Tree::Node::TREE);
+	uint l = tree->nodes.back().val.ref->label();
+	if (red.count(l)) {
+		Ref* ref = red.at(l);
 		Tree* t = nullptr;
-		std::swap(tree->nodes[tree->nodes.size() - 2].val.tree, t);
+		if (ref->is_assertion()) {
+			t = new Tree(ref);
+		} else {
+			const uint arg = tree->nodes.size() - 2;
+			assert(tree->nodes[arg].type == Tree::Node::TREE);
+			std::swap(tree->nodes[arg].val.tree, t);
+		}
 		delete tree;
 		return reduce(t, red);
 	} else {
@@ -164,6 +171,7 @@ struct Maps {
 	map<const mm::Floating*,  smm::Floating*>  floatings;
 	map<const mm::Floating*,  smm::Inner*>     inners;
 	map<const mm::Source*,    smm::Source*>    sources;
+	map<uint, Ref*> redundant;
 	Transform transform;
 };
 
@@ -350,13 +358,13 @@ void reduce(Maps& maps, smm::Assertion* ass, ArgMap& args, const Proof* proof) {
 	maps.transform[ass->prop.label] = args.create_permutation();
 }
 
-smm::Proof* transform_proof(Maps& maps, set<uint>& red, const Proof* proof) {
+smm::Proof* transform_proof(Maps& maps, const Proof* proof) {
 	Tree* tree = to_tree(proof);
 	if (tree->nodes.front().type == Tree::Node::REF) {
 		delete tree;
 		return nullptr;
 	}
-	tree = reduce(tree, red);
+	tree = reduce(tree, maps.redundant);
 	transform(tree, maps.transform);
 	Proof* rpn = to_proof(tree);
 	smm::Proof* pr = translate_proof(maps, rpn);
@@ -425,7 +433,6 @@ ArgMap arg_map(const deque<Node>& ar_orig) {
 
 smm::Assertion* translate_ass(Maps& maps, const Node& n, const Block* block)  {
 	smm::Assertion* ass = new smm::Assertion(n.label());
-	static set<uint> red;
 	ass->prop = smm::Proposition {n.type == Node::AXIOM, n.label(), n.expr()};
 
 	Scope scope = gather_scope();
@@ -436,10 +443,11 @@ smm::Assertion* translate_ass(Maps& maps, const Node& n, const Block* block)  {
 	n.arity() = ass->essential.size() + ass->floating.size();
 
 	if (n.type == Node::THEOREM) {
-		ass->proof = transform_proof(maps, red, n.val.th->proof);
+		ass->proof = transform_proof(maps, n.val.th->proof);
 		if (!ass->proof) {
 			// Dummy (redundant) theorem
-			red.insert(n.label());
+			assert(n.proof()->refs.size() == 1);
+			maps.redundant[n.label()] = n.proof()->refs[0];
 			delete ass;
 			ass = nullptr;
 		} else {
