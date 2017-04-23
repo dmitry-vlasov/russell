@@ -20,28 +20,28 @@ inline Ref::Type find_type(uint label) {
 	}
 }
 
-Ref::Ref(uint l) : label_(l) {
-	switch (find_type(label_)) {
-	case FLOATING:  val = new User<Floating>(label_);  break;
-	case ESSENTIAL: val = new User<Essential>(label_); break;
-	case AXIOM:     val = new User<Axiom>(label_);     break;
-	case THEOREM:   val = new User<Theorem>(label_);   break;
+Ref::Ref(uint l) : type_(find_type(l)), label_(l) {
+	switch (type_) {
+	case FLOATING:  val_.flo = new User<Floating>(label_);  break;
+	case ESSENTIAL: val_.ess = new User<Essential>(label_); break;
+	case AXIOM:     val_.axm = new User<Axiom>(label_);     break;
+	case THEOREM:   val_.thm = new User<Theorem>(label_);   break;
 	}
 }
-Ref::Ref(const Ref& ref) : label_(ref.label_) {
-	switch (ref.type()) {
-	case FLOATING:  val = new User<Floating>(label_);  break;
-	case ESSENTIAL: val = new User<Essential>(label_); break;
-	case AXIOM:     val = new User<Axiom>(label_);     break;
-	case THEOREM:   val = new User<Theorem>(label_);   break;
+Ref::Ref(const Ref& ref) : type_(ref.type_), label_(ref.label_) {
+	switch (type_) {
+	case FLOATING:  val_.flo = new User<Floating>(label_);  break;
+	case ESSENTIAL: val_.ess = new User<Essential>(label_); break;
+	case AXIOM:     val_.axm = new User<Axiom>(label_);     break;
+	case THEOREM:   val_.thm = new User<Theorem>(label_);   break;
 	}
 }
 Ref::~Ref() {
 	switch (type()) {
-	case FLOATING:  delete std::get<User<Floating>*>(val);  break;
-	case ESSENTIAL: delete std::get<User<Essential>*>(val); break;
-	case AXIOM:     delete std::get<User<Axiom>*>(val);     break;
-	case THEOREM:   delete std::get<User<Theorem>*>(val);   break;
+	case FLOATING:  delete val_.flo; break;
+	case ESSENTIAL: delete val_.ess; break;
+	case AXIOM:     delete val_.axm; break;
+	case THEOREM:   delete val_.thm; break;
 	}
 }
 

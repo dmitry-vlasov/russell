@@ -66,23 +66,26 @@ struct Ref {
 	uint arity() const {
 		assert(type() == AXIOM || type() == THEOREM);
 		return type() == AXIOM ?
-			std::get<User<Axiom>*>(val)->get()->arity :
-			std::get<User<Theorem>*>(val)->get()->arity;
+			val_.axm->get()->arity :
+			val_.thm->get()->arity;
 	}
-	Type type() const { return static_cast<Type>(val.index()); }
-	bool is_assertion() const { return type() == AXIOM || type() == THEOREM; }
-	Floating*  flo() { return std::get<User<Floating>*>(val)->get(); }
-	Essential* ess() { return std::get<User<Essential>*>(val)->get(); }
-	Axiom*     axm() { return std::get<User<Axiom>*>(val)->get(); }
-	Theorem*   thm() { return std::get<User<Theorem>*>(val)->get(); }
+	Type type() const { return type_; }
+	bool is_assertion() const { return type_ == AXIOM || type_ == THEOREM; }
+	Floating*  flo() { return val_.flo->get(); }
+	Essential* ess() { return val_.ess->get(); }
+	Axiom*     axm() { return val_.axm->get(); }
+	Theorem*   thm() { return val_.thm->get(); }
 
 private:
-	variant<
-		User<Floating>*,
-		User<Essential>*,
-		User<Axiom>*,
-		User<Theorem>*
-	> val;
+	union Value {
+		Value() : flo(nullptr) { }
+		User<Floating>*  flo;
+		User<Essential>* ess;
+		User<Axiom>*     axm;
+		User<Theorem>*   thm;
+	};
+	Value val_;
+	Type type_;
 	uint label_;
 };
 
