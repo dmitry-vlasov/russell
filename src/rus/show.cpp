@@ -21,7 +21,7 @@ string show(const Vars& vars) {
 	string s;
 	for (uint i = 0; i < vars.v.size(); ++ i) {
 		Symbol var = vars.v[i];
-		s += show(var) + " : " + show_id(var.type->id);
+		s += show(var) + " : " + show_id(var.type->id());
 		if (i + 1 < vars.v.size())
 			s += ", ";
 	}
@@ -47,11 +47,11 @@ string show(const Disj& disj) {
 
 string show(const Type& type) {
 	string s;
-	s += "type " + show_id(type.id);
+	s += "type " + show_id(type.id());
 	if (type.sup.size() > 0) {
 		s += " : ";
 		for (uint i = 0; i < type.sup.size(); ++ i) {
-			s += show_id(type.sup[i]->id);
+			s += show_id(type.sup[i]->id());
 			if (i + 1 < type.sup.size()) s += ", ";
 		}
 	}
@@ -61,16 +61,16 @@ string show(const Type& type) {
 
 string show(const Rule& r) {
 	string s;
-	s += "rule " + show_id(r.id) + " ";
+	s += "rule " + show_id(r.id()) + " ";
 	s += "(" + show(r.vars) + ") {\n";
-	s += "\tterm : " + show_id(r.type->id) + " = ";
+	s += "\tterm : " + show_id(r.type->id()) + " = ";
 	s += "# " + show(r.term) + END_MARKER + "\n";
 	s += "}";
 	return s;
 }
 
 inline string show_type(const Expr& ex) {
-	return show_id(ex.type->id);
+	return show_id(ex.type->id());
 }
 
 string show(const Hyp& h) {
@@ -125,12 +125,12 @@ string show(const Def& def) {
 		for (Hyp* h : def.ass.hyps)
 			s += "\t" + show(*h) + "\n";
 	}
-	s += "\tdefiendum : " + show_id(def.dfm.type->id) + " ";
+	s += "\tdefiendum : " + show_id(def.dfm.type->id()) + " ";
 	s += "= # " + show(def.dfm) + END_MARKER + "\n";
-	s += "\tdefiniens : " + show_id(def.dfs.type->id) + " ";
+	s += "\tdefiniens : " + show_id(def.dfs.type->id()) + " ";
 	s += "= # " + show(def.dfs) + END_MARKER + "\n";
 	s += "\t-----------------------\n";
-	s += "\tprop : " + show_id(def.prop.type->id) + " ";
+	s += "\tprop : " + show_id(def.prop.type->id()) + " ";
 	s += "= |- " + show(def.prop) + END_MARKER + "\n";
 	s += "}";
 	return s;

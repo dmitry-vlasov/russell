@@ -93,7 +93,7 @@ inline Symbol create_symbol(string str, Type* tp) {
 }
 
 Rule* create_super(Type* inf, Type* sup) {
-	uint id = create_id("sup", show_id(inf->id), show_id(sup->id));
+	uint id = create_id("sup", show_id(inf->id()), show_id(sup->id()));
 	Rule* rule = new Rule(id);
 	rule->vars.v.push_back(create_symbol("x", inf));
 	rule->term.push_back(create_symbol("x", inf));
@@ -156,7 +156,7 @@ struct AddToMath {
 
 
 		//r->type->rules.add(r->term) = r;
-		r->type->rules.add(r->term, r->id);
+		r->type->rules.add(r->term, r->id());
 
 		//Sys::mod().math.rules.use(r->id, r->type->rules.add(r->term));
 

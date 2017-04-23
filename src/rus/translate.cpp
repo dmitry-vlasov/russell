@@ -74,7 +74,7 @@ vector<smm::Disjointed*> translate_disj(const Disj& rdisj) {
 smm::Assertion* translate_rule(const Rule* rule, Maps& maps);
 
 vector<smm::Node> translate_type(const Type* type, Maps& maps) {
-	string type_str = Lex::toStr(type->id);
+	string type_str = Lex::toStr(type->id());
 	uint type_sy = Lex::toInt(type_str);
 	maps.types[type] = type_sy;
 	smm::Constant* constant = new smm::Constant;
@@ -113,7 +113,7 @@ vector<smm::Floating*> translate_floatings(const Vars& vars, Maps& maps, const A
 }
 
 smm::Assertion* translate_rule(const Rule* rule, Maps& maps) {
-	string rule_str = Lex::toStr(rule->id);
+	string rule_str = Lex::toStr(rule->id());
 	uint rule_lab = Lex::toInt(rule_str);
 	smm::Assertion* ra = new smm::Assertion(rule_lab);
 	if (rule->vars.v.size())

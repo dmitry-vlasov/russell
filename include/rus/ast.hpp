@@ -17,9 +17,8 @@ struct Comment {
 	Token  token;
 };
 
-struct Const {
+struct Const : public Owner<Const> {
 	Const(Symbol s, Symbol a, Symbol l);
-	~Const();
 	Symbol symb;
 	Symbol ascii;
 	Symbol latex;
@@ -39,22 +38,19 @@ struct Disj {
 void parse_expr(Expr& ex);
 void parse_term(Expr& ex, Rule* rule);
 
-struct Type {
+struct Type : public Owner<Type> {
 	typedef map<const Type*, Rule*> Supers;
 	Type(uint id);
 	Type(uint id, const vector<Type*>& sup);
-	~Type();
-	uint id;
+	~Type() override;
 	vector<Type*> sup;
 	Supers supers;
 	Rules rules;
 	Token token;
 };
 
-struct Rule {
+struct Rule : public Owner<Rule> {
 	Rule(uint id);
-	~Rule();
-	uint  id;
 	Type* type;
 	Vars  vars;
 	Expr  term;

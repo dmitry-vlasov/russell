@@ -3,32 +3,15 @@
 namespace mdl { namespace rus {
 
 
-Const::Const(Symbol s, Symbol a, Symbol l) : symb(s), ascii(a), latex(l) {
-	Sys::mod().math.get<Const>().add(symb.lit, this);
-}
-Const::~Const() {
-	Sys::mod().math.get<Const>().del(symb.lit);
-}
+Const::Const(Symbol s, Symbol a, Symbol l) : Owner(s.lit), symb(s), ascii(a), latex(l) { }
 
-Type::Type(uint i) : id(i) {
-	Sys::mod().math.get<Type>().add(id, this);
-}
-Type::Type(uint i, const vector<Type*>& s) : id(i), sup(s) {
-	Sys::mod().math.get<Type>().add(id, this);
-}
+Type::Type(uint i) : Owner(i) { }
+Type::Type(uint i, const vector<Type*>& s) : Owner(i), sup(s) { }
 Type::~Type() {
-	Sys::mod().math.get<Type>().del(id);
 	for (auto p : supers) delete p.second;
 }
 
-Rule::Rule(uint i) : id(i), type(nullptr) {
-	Sys::mod().math.get<Rule>().add(id, this);
-	//Sys::mod().math.rules.use(id, type->rules.add(term));
-}
-Rule::~Rule() {
-	//Sys::mod().math.rules.unuse(id, type->rules.add(term));
-	Sys::mod().math.get<Rule>().del(id);
-}
+Rule::Rule(uint i) : Owner(i), type(nullptr) { }
 
 Assertion::Assertion(uint i) : Owner(i) { }
 Assertion::~Assertion() {

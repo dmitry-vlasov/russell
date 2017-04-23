@@ -35,7 +35,7 @@ void Rules::add(const Expr& ex, uint id) {
 }
 
 Rules::Node::~Node() {
-	if (rule) Sys::mod().math.get<Rule>().unuse(rule->id, rule);
+	if (rule) Sys::mod().math.get<Rule>().unuse(rule->id(), rule);
 }
 
 Tree::Node::Node(Rule* r) : rule(r), children() { }
@@ -76,7 +76,7 @@ string show(Symbol s, bool full) {
 	if (!full || !s.type)
 		return show_sy(s.lit);
 	else {
-		return string("<") + show_sy(s.lit) + ":" + show_id(s.type->id) + ">";
+		return string("<") + show_sy(s.lit) + ":" + show_id(s.type->id()) + ">";
 	}
 }
 
@@ -100,7 +100,7 @@ string show_ast(const Tree& t, bool full) {
 	if (t.kind == Tree::VAR)
 		return t.var() ? show(*t.var(), full) : "<null>";
 	else {
-		string s = (t.rule() ? show_id(t.rule()->id) : "?") + " (";
+		string s = (t.rule() ? show_id(t.rule()->id()) : "?") + " (";
 		for (uint i = 0; i < t.children().size(); ++ i) {
 			s += show_ast(*t.children()[i], full);
 			if (i + 1 < t.children().size()) s += ", ";
