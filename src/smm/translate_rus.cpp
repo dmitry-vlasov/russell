@@ -370,7 +370,7 @@ rus::Proof::Elem translate_step(Tree* tree, rus::Proof* proof, rus::Theorem* thm
 	vector<rus::Proof::Elem>& elems = proof->elems;
 	assert(tree->nodes.back().type == Tree::Node::REF);
 	Tree::Node& node = tree->nodes.back();
-	Assertion* ass = node.val.ref->val.ass;
+	Assertion* ass = node.val.ref->ass();
 	rus::Proof::Elem el(new rus::Step(elems.size(), rus::Step::ASS, ass_kind(ass), ass->prop.label, proof));
 
 	for (uint i = 0; i < ass->essential.size(); ++ i) {

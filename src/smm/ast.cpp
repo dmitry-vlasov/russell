@@ -3,7 +3,7 @@
 namespace mdl { namespace smm {
 
 Ref::Ref(uint label, bool ax) : type(ax ? AXIOM : THEOREM), val() {
-	Sys::mod().math.assertions.use(label, val.ass);
+	val.ass = new User<Assertion>(label);
 }
 Ref::Ref(const Ref& ref) : type(ref.type) {
 	switch (type) {
@@ -11,13 +11,10 @@ Ref::Ref(const Ref& ref) : type(ref.type) {
 	case FLOATING:  val.flo = ref.val.flo; break;
 	case ESSENTIAL: val.ess = ref.val.ess; break;
 	case AXIOM:     // intentionally left blank
-	case THEOREM:   Sys::mod().math.assertions.use(ref.label(), val.ass);
+	case THEOREM:   val.ass = new User<Assertion>(ref.label());
 	}
 }
-Ref::~Ref() {
-	if ((type == AXIOM || type == THEOREM) && val.ass)
-		Sys::mod().math.assertions.unuse(val.ass->prop.label, val.ass);
-}
+Ref::~Ref() { if (is_assertion()) delete val.ass; }
 
 Assertion::~Assertion() {
 	for (Variables* v : variables)   delete v;

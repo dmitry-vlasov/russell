@@ -169,7 +169,7 @@ static void verify_assertion(const Assertion* ass) {
 		case Ref::FLOATING  : expr_stack.push(ref->val.flo->expr); break;
 		case Ref::INNER     : expr_stack.push(ref->val.inn->expr); break;
 		case Ref::AXIOM:    // intentionally left blank
-		case Ref::THEOREM   : apply(ref->val.ass, ass, expr_stack); break;
+		case Ref::THEOREM   : apply(ref->ass(), ass, expr_stack); break;
 		default : assert(false && "impossible"); break;
 		}
 	}

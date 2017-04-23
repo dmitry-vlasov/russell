@@ -77,10 +77,10 @@ struct Ref {
 
 	union Value {
 		Value() : flo(nullptr) { }
-		Floating*   flo;
-		Essential*  ess;
-		Inner*      inn;
-		Assertion*  ass;
+		Floating*        flo;
+		Essential*       ess;
+		Inner*           inn;
+		User<Assertion>* ass;
 	};
 	Ref(Floating* f)  : type(FLOATING)  { val.flo = f; }
 	Ref(Essential* e) : type(ESSENTIAL) { val.ess = e; }
@@ -94,10 +94,13 @@ struct Ref {
 	bool is_assertion() const {
 		return type == THEOREM || type == AXIOM;
 	}
+	Assertion* ass() {
+		return val.ass->get();
+	}
 
 	uint label() const {
 		assert(is_assertion() && "must be assertion");
-		return val.ass->prop.label;
+		return val.ass->get()->prop.label;
 	}
 	uint index() const {
 		assert(!is_assertion() && "must not be assertion");

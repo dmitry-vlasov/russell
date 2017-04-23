@@ -21,7 +21,7 @@ Tree* to_tree(const Proof* proof) {
 		case Ref::THEOREM: {
 			Tree* t = new Tree();
 			t->nodes.push_back(r);
-			for (uint i = 0; i < r->val.ass->arity(); ++ i) {
+			for (uint i = 0; i < r->ass()->arity(); ++ i) {
 				t->nodes.push_back(stack.top());
 				stack.pop();
 			}
@@ -102,7 +102,7 @@ Vect eval(Tree* tree) {
 	assert(n.type == Tree::Node::REF);
 	Ref* ref = n.val.ref;
 	if (ref->type != Ref::THEOREM && ref->type != Ref::AXIOM) return eval(n);
-	const Assertion* ass = ref->val.ass;
+	const Assertion* ass = ref->ass();
 	Subst sub;
 	uint flo_ind = 0, esss = ass->essential.size();
 	for (auto flo : ass->floating) {
