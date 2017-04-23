@@ -8,7 +8,7 @@ ostream& operator << (ostream& os, const Constant& cst) {
 }
 
 ostream& operator << (ostream& os, const Ref& ref) {
-	switch (ref.type) {
+	switch (ref.type()) {
 	case Ref::ESSENTIAL: os << "e"; break;
 	case Ref::FLOATING : os << "f"; break;
 	case Ref::INNER    : os << "i"; break;
@@ -16,7 +16,7 @@ ostream& operator << (ostream& os, const Ref& ref) {
 	case Ref::THEOREM  : os << "p"; break;
 	default : assert(false && "impossible"); break;
 	}
-	if (ref.type == Ref::AXIOM || ref.type == Ref::THEOREM)
+	if (ref.is_assertion())
 		os << show_id(ref.label());
 	else
 		os << to_string(ref.index());

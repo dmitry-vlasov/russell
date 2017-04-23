@@ -2,19 +2,19 @@
 
 namespace mdl { namespace smm {
 
-Ref::Ref(uint label, bool ax) : type(ax ? AXIOM : THEOREM), val() {
-	val.ass = new User<Assertion>(label);
+Ref::Ref(uint label, bool ax) : type_(ax ? AXIOM : THEOREM) {
+	val_.ass = new User<Assertion>(label);
 }
-Ref::Ref(const Ref& ref) : type(ref.type) {
-	switch (type) {
-	case INNER:     val.inn = ref.val.inn; break;
-	case FLOATING:  val.flo = ref.val.flo; break;
-	case ESSENTIAL: val.ess = ref.val.ess; break;
+Ref::Ref(const Ref& ref) : type_(ref.type_) {
+	switch (type_) {
+	case INNER:     val_.inn = ref.val_.inn; break;
+	case FLOATING:  val_.flo = ref.val_.flo; break;
+	case ESSENTIAL: val_.ess = ref.val_.ess; break;
 	case AXIOM:     // intentionally left blank
-	case THEOREM:   val.ass = new User<Assertion>(ref.label());
+	case THEOREM:   val_.ass = new User<Assertion>(ref.label());
 	}
 }
-Ref::~Ref() { if (is_assertion()) delete val.ass; }
+Ref::~Ref() { if (is_assertion()) delete val_.ass; }
 
 Assertion::~Assertion() {
 	for (Variables* v : variables)   delete v;

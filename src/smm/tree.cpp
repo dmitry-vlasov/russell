@@ -11,7 +11,7 @@ typedef map<Symbol, Vect> Subst;
 Tree* to_tree(const Proof* proof) {
 	stack<Tree*> stack;
 	for (Ref* r : proof->refs) {
-		switch(r->type) {
+		switch(r->type()) {
 		case Ref::ESSENTIAL:
 		case Ref::FLOATING:
 		case Ref::INNER:
@@ -65,7 +65,7 @@ void transform(Tree* tree, const Transform& trans, bool forward) {
 	}
 	assert(tree->nodes.back().type == Tree::Node::REF);
 	Ref* op = tree->nodes.back().val.ref;
-	if (op->type == Ref::AXIOM || op->type == Ref::THEOREM) {
+	if (op->is_assertion()) {
 		Perm perm = trans.at(op->label());
 		assert(perm.size() + 1 == tree->nodes.size());
 		vector<Tree::Node> new_nodes = tree->nodes;
@@ -85,10 +85,10 @@ Vect eval(Tree::Node& n) {
 		case Tree::Node::TREE: n.expr = eval(n.val.tree); break;
 		case Tree::Node::REF: {
 			Ref* ref = n.val.ref;
-			switch (ref->type) {
-			case Ref::ESSENTIAL: n.expr = ref->val.ess->expr; break;
-			case Ref::FLOATING:  n.expr = ref->val.flo->expr; break;
-			case Ref::INNER:	 n.expr = ref->val.inn->expr; break;
+			switch (ref->type()) {
+			case Ref::ESSENTIAL: n.expr = ref->ess()->expr; break;
+			case Ref::FLOATING:  n.expr = ref->flo()->expr; break;
+			case Ref::INNER:	 n.expr = ref->inn()->expr; break;
 			default : assert(false && "impossible");
 			}
 		}}
@@ -101,7 +101,7 @@ Vect eval(Tree* tree) {
 	if (n.expr.size()) return n.expr;
 	assert(n.type == Tree::Node::REF);
 	Ref* ref = n.val.ref;
-	if (ref->type != Ref::THEOREM && ref->type != Ref::AXIOM) return eval(n);
+	if (!ref->is_assertion()) return eval(n);
 	const Assertion* ass = ref->ass();
 	Subst sub;
 	uint flo_ind = 0, esss = ass->essential.size();

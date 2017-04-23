@@ -164,10 +164,10 @@ static void verify_assertion(const Assertion* ass) {
 	const Proof* proof = ass->proof;
 	if (!proof) return;
 	for (auto ref : proof->refs) {
-		switch (ref->type) {
-		case Ref::ESSENTIAL : expr_stack.push(ref->val.ess->expr); break;
-		case Ref::FLOATING  : expr_stack.push(ref->val.flo->expr); break;
-		case Ref::INNER     : expr_stack.push(ref->val.inn->expr); break;
+		switch (ref->type()) {
+		case Ref::ESSENTIAL : expr_stack.push(ref->ess()->expr); break;
+		case Ref::FLOATING  : expr_stack.push(ref->flo()->expr); break;
+		case Ref::INNER     : expr_stack.push(ref->inn()->expr); break;
 		case Ref::AXIOM:    // intentionally left blank
 		case Ref::THEOREM   : apply(ref->ass(), ass, expr_stack); break;
 		default : assert(false && "impossible"); break;

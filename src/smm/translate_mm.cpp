@@ -23,12 +23,12 @@ mm::Proof* translate(Maps& maps, const Proof* proof) {
 	mm::Proof* pr = new mm::Proof();
 	for (auto r : rpn->refs) {
 		mm::Ref* ref = nullptr;
-		switch (r->type) {
+		switch (r->type()) {
 		case Ref::AXIOM:     ref = new mm::Ref(maps.axioms[r->ass()]->id());     break;
 		case Ref::THEOREM:   ref = new mm::Ref(maps.theorems[r->ass()]->id());   break;
-		case Ref::FLOATING:  ref = new mm::Ref(maps.floatings[r->val.flo]->id());  break;
-		case Ref::INNER:     ref = new mm::Ref(maps.inners[r->val.inn]->id());     break;
-		case Ref::ESSENTIAL: ref = new mm::Ref(maps.essentials[r->val.ess]->id()); break;
+		case Ref::FLOATING:  ref = new mm::Ref(maps.floatings[r->flo()]->id());  break;
+		case Ref::INNER:     ref = new mm::Ref(maps.inners[r->inn()]->id());     break;
+		case Ref::ESSENTIAL: ref = new mm::Ref(maps.essentials[r->ess()]->id()); break;
 		default : assert(false && "impossible"); break;
 		}
 		pr->refs.push_back(ref);

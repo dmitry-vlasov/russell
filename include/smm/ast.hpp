@@ -75,6 +75,37 @@ struct Proof;
 struct Ref {
 	enum Type { ESSENTIAL, FLOATING, INNER, AXIOM, THEOREM };
 
+	Ref(Floating* f)  : type_(FLOATING)  { val_.flo = f; }
+	Ref(Essential* e) : type_(ESSENTIAL) { val_.ess = e; }
+	Ref(Inner* i)     : type_(INNER)     { val_.inn = i; }
+	Ref(uint label, bool ax);
+	Ref(const Ref& ref);
+	~Ref();
+
+	void operator=(const Ref&) = delete;
+
+	Type type() const { return type_; }
+	bool is_assertion() const { return type_ == THEOREM || type_ == AXIOM; }
+	Floating*  flo() { return val_.flo; }
+	Essential* ess() { return val_.ess; }
+	Inner*     inn() { return val_.inn; }
+	Assertion* ass() { return val_.ass->get(); }
+
+	uint label() const {
+		assert(is_assertion() && "must be assertion");
+		return val_.ass->get()->prop.label;
+	}
+	uint index() const {
+		assert(!is_assertion() && "must not be assertion");
+		switch (type_) {
+		case ESSENTIAL : return val_.ess->index;
+		case FLOATING  : return val_.flo->index;
+		case INNER     : return val_.inn->index;
+		default : assert(false && "must not be assertion"); return -1;
+		}
+	}
+
+private:
 	union Value {
 		Value() : flo(nullptr) { }
 		Floating*        flo;
@@ -82,38 +113,8 @@ struct Ref {
 		Inner*           inn;
 		User<Assertion>* ass;
 	};
-	Ref(Floating* f)  : type(FLOATING)  { val.flo = f; }
-	Ref(Essential* e) : type(ESSENTIAL) { val.ess = e; }
-	Ref(Inner* i)     : type(INNER)     { val.inn = i; }
-	Ref(uint label, bool ax);
-	Ref(const Ref& ref);
-	~Ref();
-
-	void operator=(const Ref&) = delete;
-
-	bool is_assertion() const {
-		return type == THEOREM || type == AXIOM;
-	}
-	Assertion* ass() {
-		return val.ass->get();
-	}
-
-	uint label() const {
-		assert(is_assertion() && "must be assertion");
-		return val.ass->get()->prop.label;
-	}
-	uint index() const {
-		assert(!is_assertion() && "must not be assertion");
-		switch (type) {
-		case ESSENTIAL : return val.ess->index;
-		case FLOATING  : return val.flo->index;
-		case INNER     : return val.inn->index;
-		}
-		return -1; // pacify compiler
-	}
-
-	Type type;
-	Value val;
+	Type type_;
+	Value val_;
 };
 
 struct Proof {

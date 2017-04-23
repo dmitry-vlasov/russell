@@ -60,7 +60,7 @@ struct Tree {
 		string show() const {
 			if (type == Tree::Node::TREE) return val.tree->show();
 			string str;
-			switch (val.ref->type) {
+			switch (val.ref->type()) {
 			case Ref::ESSENTIAL: str += "e"; break;
 			case Ref::FLOATING : str += "f"; break;
 			case Ref::INNER    : str += "i"; break;
@@ -68,7 +68,7 @@ struct Tree {
 			case Ref::THEOREM  : str += "p"; break;
 			default : assert(false && "impossible"); break;
 			}
-			if (val.ref->type == Ref::AXIOM || val.ref->type == Ref::THEOREM)
+			if (val.ref->is_assertion())
 				str += show_id(val.ref->label());
 			else
 				str += to_string(val.ref->index());
