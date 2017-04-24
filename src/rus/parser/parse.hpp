@@ -94,10 +94,9 @@ inline Symbol create_symbol(string str, Type* tp) {
 
 Rule* create_super(Type* inf, Type* sup) {
 	uint id = create_id("sup", show_id(inf->id()), show_id(sup->id()));
-	Rule* rule = new Rule(id);
+	Rule* rule = new Rule(id, sup->id());
 	rule->vars.v.push_back(create_symbol("x", inf));
 	rule->term.push_back(create_symbol("x", inf));
-	rule->type = sup;
 
 	VarStack var_stack;
 	AddVars add_vars;
@@ -156,7 +155,7 @@ struct AddToMath {
 
 
 		//r->type->rules.add(r->term) = r;
-		r->type->rules.add(r->term, r->id());
+		r->type.get()->rules.add(r->term, r->id());
 
 		//Sys::mod().math.rules.use(r->id, r->type->rules.add(r->term));
 
@@ -238,7 +237,7 @@ struct ParseTerm {
 	template <typename T1, typename T2, typename T3, typename T4>
 	struct result { typedef void type; };
 	void operator()(Expr& ex, Rule* r, VarStack& var_stack) const {
-		ex.type = r->type;
+		ex.type = r->type.get();
 		mark_vars(ex, var_stack);
 		parse_term(ex, r);
 	}
@@ -453,7 +452,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, Theorem*(), qi::locals<Assertion*>, unicode::space_type> theorem;
 	qi::rule<Iterator, Def*(), qi::locals<Assertion*, Type*>, unicode::space_type> def;
 	qi::rule<Iterator, Axiom*(), qi::locals<Assertion*>, unicode::space_type> axiom;
-	qi::rule<Iterator, Rule*(), unicode::space_type> rule;
+	qi::rule<Iterator, Rule*(), qi::locals<uint, Vars, uint>, unicode::space_type> rule;
 	qi::rule<Iterator, Type*(), qi::locals<uint, vector<Type*>>, unicode::space_type> type;
 	qi::rule<Iterator, Const*(), qi::locals<Symbol, Symbol, Symbol>, unicode::space_type> constant;
 	qi::rule<Iterator, Import*(), unicode::space_type> import;

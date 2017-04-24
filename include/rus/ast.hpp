@@ -50,15 +50,16 @@ struct Type : public Owner<Type> {
 };
 
 struct Rule : public Owner<Rule> {
-	Rule(uint id);
-	Type* type;
-	Vars  vars;
-	Expr  term;
-	Token token;
+	Rule(uint id, uint tp);
+	Rule(uint id, uint tp, const Vars& v);
+	User<Type> type;
+	Vars       vars;
+	Expr       term;
+	Token      token;
 };
 
-inline Type* Tree::type() { return kind == VAR ? val.var->type : val.node->rule->type; }
-inline const Type* Tree::type() const { return kind == VAR ? val.var->type : val.node->rule->type; }
+inline Type* Tree::type() { return kind == VAR ? val.var->type : val.node->rule->type.get(); }
+inline const Type* Tree::type() const { return kind == VAR ? val.var->type : val.node->rule->type.get(); }
 
 struct Hyp {
 	uint  ind;

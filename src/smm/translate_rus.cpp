@@ -185,7 +185,7 @@ inline bool super_type(const rus::Type* t1, const rus::Type* t2) {
 }
 
 bool less_general(const rus::Rule* r1, const rus::Rule* r2) {
-	if (!super_type(r2->type, r1->type))
+	if (!super_type(r2->type.get(), r1->type.get()))
 		return false;
 	auto n = r1->term.symbols.begin();
 	auto n_end = r1->term.symbols.end();
@@ -215,8 +215,8 @@ void translate_rule(const Assertion* ass, State& state) {
 		translate_super(ass, state);
 		return;
 	}
-	rus::Rule* rule = new rus::Rule(ass->prop.label);
-	rule->type = translate_type(ass->prop.expr[0], state);
+	rus::Type* type = translate_type(ass->prop.expr[0], state);
+	rus::Rule* rule = new rus::Rule(ass->prop.label, type->id());
 	rule->vars = translate_vars(ass->floating, state);
 	rule->term = translate_expr(ass->prop.expr, state, ass);
 

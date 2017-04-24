@@ -120,7 +120,7 @@ smm::Assertion* translate_rule(const Rule* rule, Maps& maps) {
 		ra->variables.push_back(translate_vars(rule->vars));
 	ra->floating = translate_floatings(rule->vars, maps);
 	ra->prop.axiom = true;
-	ra->prop.expr  = translate_term(rule->term, rule->type, maps);
+	ra->prop.expr  = translate_term(rule->term, rule->type.get(), maps);
 	ra->prop.label = rule_lab;
 	maps.rules[rule] = ra;
 	for (auto v : rule->vars.v) {

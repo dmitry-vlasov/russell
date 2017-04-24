@@ -11,7 +11,9 @@ Type::~Type() {
 	for (auto p : supers) delete p.second;
 }
 
-Rule::Rule(uint i) : Owner(i), type(nullptr) { }
+Rule::Rule(uint id, uint tp) : Owner(id), type(tp) { }
+Rule::Rule(uint id, uint tp, const Vars& v) :
+	Owner(id), type(tp), vars(v) { }
 
 Assertion::Assertion(uint i) : Owner(i) { }
 Assertion::~Assertion() {
