@@ -102,63 +102,61 @@ public:
 		};
 		parser["EXPR"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* context = ctx.get<Context*>();
-			Expr* expr = context->expr;
-			expr->type = context->type;
-			expr->symbols.reserve(sv.size());
+			Expr expr;
+			expr.type = context->type;
+			expr.symbols.reserve(sv.size());
 			for (auto& s : sv) {
-				if (s.is<Symbol>()) expr->symbols.push_back(s);
+				if (s.is<Symbol>()) expr.symbols.push_back(s);
 				else delete s.get<Comment*>();
 			}
 			mark_vars(expr, context->stacks);
+			return expr;
 		};
 		parser["VAR"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* context = ctx.get<Context*>();
 			Symbol v = sv[0].get<Symbol>();
-			v.type = System::get().math.types[sv[1].get<uint>()];
-			context->vars->addVar(v);
+			v.type = Sys::get().math.get<Type>().access(sv[1].get<uint>());
+			return v;
+		};
+		parser["VARS"] = [](const peg::SemanticValues& sv) {
+			return sv.transform<Symbol>();
 		};
 		parser["DISJ_SET"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* context = ctx.get<Context*>();
-			context->disj->d.push_back(vector<Symbol>());
-			vector<Symbol>& set = context->disj->d.back();
+			Disj disj;
+			disj.d.push_back(vector<Symbol>());
+			vector<Symbol>& set = disj.d.back();
 			for (auto& v : sv) {
 				context->stacks.markType(v);
 				set.push_back(v);
 			}
+			return disj;
 		};
 		parser["CONST"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Const* c = nullptr;
 			switch (sv.size()) {
-			case 1 : c = new Const { sv[0].get<Vect>() }; break;
-			case 2 : c = new Const { sv[0].get<Vect>() }; break;
-			case 3 : c = new Const { sv[0].get<Vect>() }; break;
+			case 1 : c = new Const{sv[0].get<Vect>()}; break;
+			case 2 : c = new Const{sv[0].get<Vect>(), sv[1].get<Vect>()}; break;
+			case 3 : c = new Const{sv[0].get<Vect>(), sv[1].get<Vect>(), sv[2].get<Vect>()}; break;
 			default : throw Error("syntax error");
 			}
-			System::mod().math.consts[c->symb.lit] = c;
 			return c;
 		};
 		parser["TYPE"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* context = ctx.get<Context*>();
-			Type* t = new Type();
-			t->ind = context->ind++;
-			t->id = sv[0].get<uint>();
+			Type* t = new Type(sv[0].get<uint>());
 			collect_supers(t, t);
-			System::mod().math.types[t->id] = t;
 			return t;
-		};
-		parser["RULE"].enter = [](peg::any& ctx) {
-			Context* context = ctx.get<Context*>();
-			///context->vars =
 		};
 		parser["RULE"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* context = ctx.get<Context*>();
-			Rule* r = new Rule();
-			r->ind = context->ind++;
-			r->id = sv[0].get<uint>();
-			r->type = System::mod().math.types[sv[1].get<uint>()];
-			r->vars =
-			System::mod().math.rules[r->id] = r;
-			return t;
+			uint id   = sv[0].get<uint>();
+			Vars vars = sv[1].get<Vars>();
+			Expr term = sv[2].get<Expr>();
+			Rule* r = new Rule(id, term.type->id());
+			r->vars = vars;
+			r->term = term;
+			return r;
 		};
 		parser["ESS"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Essential* ess = new Essential { sv[0].get<uint>(), sv[1].get<Vect>() };
