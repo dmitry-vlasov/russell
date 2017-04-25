@@ -53,7 +53,7 @@ Step::Step(uint i, Step::Kind sk, Assertion::Kind ak, uint id, Proof* p) :
 	}*/
 }
 Step::~Step() {
-	//if (kind_ == ASS) delete val_.ass;
+	if (kind_ == ASS) delete val_.ass;
 }
 
 Proof::Proof(Theorem* t, uint i) : id(i), thm(t), par(nullptr), has_id(!Undef<uint>::is(id)) {
