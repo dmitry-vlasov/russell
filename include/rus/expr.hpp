@@ -201,7 +201,7 @@ struct Rules::Node {
 	Symbol symb;
 	Rules  tree;
 	uint   level;
-	Rule*  rule;
+	User<Rule>* rule;
 };
 
 

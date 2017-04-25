@@ -16,8 +16,8 @@ struct Action {
 };
 
 inline Action act(auto& n, auto& m, Symbols::iterator ch, const Expr* e) {
-	if (Rule* r = (*n.top())->rule) {
-		if (r->token < e->token) return Action(Action::RET, r);
+	if (User<Rule>* r = (*n.top())->rule) {
+		if (r->get()->token < e->token) return Action(Action::RET, r->get());
 		else return Action::BREAK;
 	} else if (ch->end)
 		return Action::BREAK;

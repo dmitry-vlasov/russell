@@ -31,11 +31,11 @@ void Rules::add(const Expr& ex, uint id) {
 			m = &n->tree;
 		}
 	}
-	Sys::mod().math.get<Rule>().use(id, n->rule);
+	n->rule = new User<Rule>(id);
 }
 
 Rules::Node::~Node() {
-	if (rule) Sys::mod().math.get<Rule>().unuse(rule->id(), rule);
+	if (rule) delete rule;
 }
 
 Tree::Node::Node(Rule* r) : rule(r), children() { }
@@ -144,7 +144,7 @@ vector<string> show_lines(const Rules& tr) {
 				vect.push_back(show(p->symb) + ' ' + s);
 		} else {
 			vect.push_back(show(p->symb) + " --> " +
-				(p->rule ? show(*p->rule) : "null")
+				(p->rule ? show(*p->rule->get()) : "null")
 			);
 		}
 	}
