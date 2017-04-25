@@ -381,10 +381,21 @@ class User {
 	T* ptr;
 public:
 	typedef S Sys;
-	User(uint id) { Sys::mod().math.template get<T>().use(id, ptr); }
-	~User() { if (ptr) Sys::mod().math.template get<T>().unuse(ptr->id(), ptr); }
+	User(uint id) : ptr(nullptr) { use(id); }
+	User(const User& u) : User(u.id()) { }
+	User(User&& u) : User(u.id()) { u.unuse(); }
+	~User() { unuse(); }
+	void operator = (const User& u) { use(u.id()); }
+	void operator = (User&& u) { use(u.id()); u.unuse(); }
+	bool operator == (const User& u) const { return ptr == u.ptr; }
+	bool operator != (const User& u) const { return ptr != u.ptr; }
+
 	T* get() { return ptr; }
 	const T* get() const { return ptr; }
+	uint id() const { return ptr ? ptr->id() : -1; }
+
+	void use(uint id) { unuse(); Sys::mod().math.template get<T>().use(id, ptr); }
+	void unuse() { if (ptr) Sys::mod().math.template get<T>().unuse(ptr->id(), ptr); ptr = nullptr; }
 };
 
 template<class Src, class Sys>
