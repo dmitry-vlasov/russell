@@ -426,6 +426,21 @@ public:
 	bool operator <= (const User& u) const { return ptr <= u.ptr; }
 	bool operator > (const User& u) const { return ptr > u.ptr; }
 	bool operator >= (const User& u) const { return ptr >= u.ptr; }
+
+	bool operator == (const T* p) const { return ptr == p; }
+	bool operator != (const T* p) const { return ptr != p; }
+	bool operator < (const T* p) const { return ptr < p; }
+	bool operator <= (const T* p) const { return ptr <= p; }
+	bool operator > (const T* p) const { return ptr > p; }
+	bool operator >= (const T* p) const { return ptr >= p; }
+
+	friend bool operator == (const T* p, const User<T, S>& u) { return p == u.ptr; }
+	friend bool operator != (const T* p, const User<T, S>& u) { return p != u.ptr; }
+	friend bool operator < (const T* p, const User<T, S>& u) { return p < u.ptr; }
+	friend bool operator <= (const T* p, const User<T, S>& u) { return p <= u.ptr; }
+	friend bool operator > (const T* p, const User<T, S>& u) { return p > u.ptr; }
+	friend bool operator >= (const T* p, const User<T, S>& u) { return p >= u.ptr; }
+
 	operator bool() const { return ptr; }
 
 	T* get() { return ptr; }

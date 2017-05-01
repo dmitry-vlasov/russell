@@ -6,7 +6,9 @@ namespace mdl { namespace rus {
 Const::Const(Symbol s, Symbol a, Symbol l) : Owner(s.lit), symb(s), ascii(a), latex(l) { }
 
 Type::Type(uint i) : Owner(i) { }
-Type::Type(uint i, const vector<Type*>& s) : Owner(i), sup(s) { }
+Type::Type(uint i, const vector<Type*>& s) : Owner(i) {
+	for (auto t : s) sup.push_back(t);
+}
 Type::~Type() {
 	for (auto p : supers) delete p.second;
 }

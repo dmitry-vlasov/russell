@@ -109,10 +109,10 @@ Rule* create_super(Type* inf, Type* sup) {
 }
 
 void collect_supers(Type* inf, Type* s) {
-	for (auto sup : s->sup) {
-		Rule* super = create_super(inf, sup);
-		inf->supers[sup] = super;
-		collect_supers(inf, sup);
+	for (auto& sup : s->sup) {
+		Rule* super = create_super(inf, sup.get());
+		inf->supers[sup.get()] = super;
+		collect_supers(inf, sup.get());
 	}
 }
 

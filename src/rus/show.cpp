@@ -51,7 +51,7 @@ string show(const Type& type) {
 	if (type.sup.size() > 0) {
 		s += " : ";
 		for (uint i = 0; i < type.sup.size(); ++ i) {
-			s += show_id(type.sup[i]->id());
+			s += show_id(type.sup[i].id());
 			if (i + 1 < type.sup.size()) s += ", ";
 		}
 	}

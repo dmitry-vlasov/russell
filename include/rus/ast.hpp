@@ -43,7 +43,7 @@ struct Type : public Owner<Type> {
 	Type(uint id);
 	Type(uint id, const vector<Type*>& sup);
 	~Type() override;
-	vector<Type*> sup;
+	vector<User<Type>> sup;
 	Supers supers;
 	Rules rules;
 	Token token;
