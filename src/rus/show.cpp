@@ -21,7 +21,7 @@ string show(const Vars& vars) {
 	string s;
 	for (uint i = 0; i < vars.v.size(); ++ i) {
 		Symbol var = vars.v[i];
-		s += show(var) + " : " + show_id(var.type->id());
+		s += show(var) + " : " + show_id(var.type.id());
 		if (i + 1 < vars.v.size())
 			s += ", ";
 	}

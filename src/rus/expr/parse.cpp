@@ -39,7 +39,7 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e) {
 		m.push(x);
 		while (!n.empty() && !m.empty()) {
 			auto ch = m.top();
-			if (const Type* tp = (*n.top())->symb.type) {
+			if (const Type* tp = (*n.top())->symb.type.get()) {
 				childnodes.push(n.top());
 				if (Tree* child = parse_LL(ch, tp, e)) {
 					children.push_back(unique_ptr<Tree>(child));
@@ -76,7 +76,7 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e) {
 	if (x->type) {
 		if (x->type == type) {
 			return new Tree(*x);
-		} else if (Rule* super = find_super(x->type, type)) {
+		} else if (Rule* super = find_super(x->type.get(), type)) {
 			return new Tree(super, {new Tree(*x)});
 		}
 	}

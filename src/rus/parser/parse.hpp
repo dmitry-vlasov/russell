@@ -41,13 +41,13 @@ struct AddVars {
 	void operator()(VarStack& var_stack, Vars vars) const {
 		for (auto v : vars.v) {
 			var_stack.stack.back().v.push_back(v);
-			var_stack.mapping[v.lit] = v.type;
+			var_stack.mapping[v.lit] = v.type.get();
 		}
 	}
 	void operator()(VarStack& var_stack, Theorem* thm) const {
 		for (auto v : thm->ass.vars.v) {
 			var_stack.stack.back().v.push_back(v);
-			var_stack.mapping[v.lit] = v.type;
+			var_stack.mapping[v.lit] = v.type.get();
 		}
 	}
 };

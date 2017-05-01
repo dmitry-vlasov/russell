@@ -18,7 +18,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Symbol,
 	(mdl::uint, lit)
 	(bool, rep)
-	(mdl::rus::Type*, type)
+	(mdl::rus::User<mdl::rus::Type>, type)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(

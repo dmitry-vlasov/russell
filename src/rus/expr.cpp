@@ -76,7 +76,7 @@ string show(Symbol s, bool full) {
 	if (!full || !s.type)
 		return show_sy(s.lit);
 	else {
-		return string("<") + show_sy(s.lit) + ":" + show_id(s.type->id()) + ">";
+		return string("<") + show_sy(s.lit) + ":" + show_id(s.type.id()) + ">";
 	}
 }
 

@@ -17,7 +17,7 @@ Substitution* unify(const Tree* p, const Tree* q) {
 		Symbol var = *p->var();
 		if (var.type == q->type()) {
 			return new Substitution(var, new Tree(*q));
-		} else if (Rule* super = find_super(q->type(), var.type)) {
+		} else if (Rule* super = find_super(q->type(), var.type.get())) {
 			return new Substitution(var, new Tree(super, {new Tree(*q)}));
 		}
 		return nullptr;

@@ -13,10 +13,10 @@ struct Rule;
 
 struct Symbol : public mdl::Symbol {
 	Symbol(string s, Type* t = nullptr);
-	Symbol() : mdl::Symbol(), type(nullptr) { }
-	Symbol(uint l): mdl::Symbol(l), type(nullptr) { }
+	Symbol() { }
+	Symbol(uint l): mdl::Symbol(l) { }
 	Symbol(const mdl::Symbol s, bool v = false) :
-	mdl::Symbol(s.lit, v), type(nullptr) { }
+	mdl::Symbol(s.lit, v) { }
 	Symbol(mdl::Symbol s, Type* tp, bool v = false) :
 	mdl::Symbol(s.lit, v), type(tp) { }
 	Symbol(const Symbol& s) : mdl::Symbol(s), type(s.type) { }
@@ -33,7 +33,7 @@ struct Symbol : public mdl::Symbol {
 			mdl::Symbol::operator < (s.lit) :
 			type < s.type;
 	}
-	Type* type;
+	User<Type> type;
 	struct Hash {
 		typedef size_t result_type;
 		typedef Symbol argument_type;
@@ -141,7 +141,7 @@ private:
 
 struct Expr {
 	Expr() : type(nullptr), tree(), symbols() { }
-	Expr(Symbol s) : type(s.type), tree(), symbols() { symbols.push_back(s); }
+	Expr(Symbol s) : type(s.type.get()), tree(), symbols() { symbols.push_back(s); }
 	Expr(const Symbols& ss) : type(nullptr), tree(), symbols(ss) { }
 	Expr(const Expr& ex) : type(ex.type), tree(), symbols (ex.symbols) {
 		if (ex.tree) tree.reset(new Tree(*ex.tree));

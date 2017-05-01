@@ -310,10 +310,15 @@ private:
 		set<Data**> users;
 	};
 	map<uint, Storage> refs;
+	mutex m;
 
 public:
 	void add(uint n, Data* p = nullptr) {
-		if (!p) throw Error("adding null pointer, label", Lex::toStr(n));
+		m.lock();
+		if (!p) {
+			m.unlock();
+			throw Error("adding null pointer, label", Lex::toStr(n));
+		}
 		if (!refs.count(n)) {
 			refs[n].data = p;
 		} else {
@@ -322,25 +327,47 @@ public:
 			d.data = p;
 			for (Data** u : d.users) *u = p;
 		}
+		m.unlock();
 	}
 	void del(uint n) {
-		if (!refs.count(n)) throw Error("deleting unknown label", Lex::toStr(n));
+		m.lock();
+		if (!refs.count(n)) {
+			m.unlock();
+			throw Error("deleting unknown label", Lex::toStr(n));
+		}
 		Storage& d = refs[n];
-		if (!d.data) throw Error("deleting null pointer, label", Lex::toStr(n));
+		if (!d.data) {
+			m.unlock();
+			throw Error("deleting null pointer, label", Lex::toStr(n));
+		}
 		d.data = nullptr;
 		for (Data** u : d.users) *u = nullptr;
+		m.unlock();
 	}
 	void use(uint n, Data*& u) {
-		if (!refs.count(n)) throw Error("using unknown label", Lex::toStr(n));
+		m.lock();
+		if (!refs.count(n)) {
+			m.unlock();
+			throw Error("using unknown label", Lex::toStr(n));
+		}
 		Storage& d = refs[n];
-		if (!d.data) throw Error("using null pointer, label", Lex::toStr(n));
+		if (!d.data) {
+			m.unlock();
+			throw Error("using null pointer, label", Lex::toStr(n));
+		}
 		d.users.insert(&u);
 		u = d.data;
+		m.unlock();
 	}
 	void unuse(uint n, Data*& u) {
-		if (!refs.count(n)) throw Error("unusing unknown label", Lex::toStr(n));
+		m.lock();
+		if (!refs.count(n)) {
+			m.unlock();
+			throw Error("unusing unknown label", Lex::toStr(n));
+		}
 		Storage& d = refs[n];
 		d.users.erase(&u);
+		m.unlock();
 	}
 	Data* access(uint n) {
 		return refs.count(n) ? refs.at(n).data : nullptr;
@@ -352,7 +379,10 @@ public:
 		return refs.count(n);
 	}
 	void destroy() {
+		static mutex m;
+		m.lock();
 		for (auto p : refs) delete p.second.data;
+		m.unlock();
 	}
 	int size() const { return refs.size(); }
 
@@ -381,20 +411,28 @@ class User {
 	T* ptr;
 public:
 	typedef S Sys;
+	User() : ptr(nullptr) { }
 	User(uint id) : ptr(nullptr) { use(id); }
+	User(const T* p) : ptr(nullptr) { use(p->id()); }
 	User(const User& u) : User(u.id()) { }
 	User(User&& u) : User(u.id()) { u.unuse(); }
 	~User() { unuse(); }
+	void operator = (const T* p) { if (p) use(p->id()); }
 	void operator = (const User& u) { use(u.id()); }
 	void operator = (User&& u) { use(u.id()); u.unuse(); }
 	bool operator == (const User& u) const { return ptr == u.ptr; }
 	bool operator != (const User& u) const { return ptr != u.ptr; }
+	bool operator < (const User& u) const { return ptr < u.ptr; }
+	bool operator <= (const User& u) const { return ptr <= u.ptr; }
+	bool operator > (const User& u) const { return ptr > u.ptr; }
+	bool operator >= (const User& u) const { return ptr >= u.ptr; }
+	operator bool() const { return ptr; }
 
 	T* get() { return ptr; }
 	const T* get() const { return ptr; }
 	uint id() const { return ptr ? ptr->id() : -1; }
 
-	void use(uint id) { unuse(); Sys::mod().math.template get<T>().use(id, ptr); }
+	void use(uint id) { unuse(); if (id != -1) Sys::mod().math.template get<T>().use(id, ptr); }
 	void unuse() { if (ptr) Sys::mod().math.template get<T>().unuse(ptr->id(), ptr); ptr = nullptr; }
 };
 

@@ -104,7 +104,7 @@ vector<smm::Floating*> translate_floatings(const Vars& vars, Maps& maps, const A
 		Symbol v = vars.v[i];
 		smm::Floating* flo = new smm::Floating;
 		flo->index = i;
-		flo->expr += mdl::Symbol(maps.types[v.type]);
+		flo->expr += mdl::Symbol(maps.types[v.type.get()]);
 		flo->expr += mdl::Symbol(v.lit, true);
 		flo_vect.push_back(flo);
 		if (ass) maps.floatings[ass][v] = flo;
@@ -246,7 +246,7 @@ vector<smm::Inner*> translate_inners(const Vars& vars, Maps& maps, const Asserti
 		Symbol v = vars.v[i];
 		smm::Inner* inn = new smm::Inner;
 		inn->index = i + ind_0;
-		inn->expr += mdl::Symbol(maps.types[v.type]);
+		inn->expr += mdl::Symbol(maps.types[v.type.get()]);
 		inn->expr += mdl::Symbol(v.lit, true);
 		inn_vect.push_back(inn);
 		smm_vars->expr.push_back(mdl::Symbol(v.lit, true));

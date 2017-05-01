@@ -196,7 +196,7 @@ bool less_general(const rus::Rule* r1, const rus::Rule* r2) {
 			if (*n != *m)
 				return false;
 		} else if (n->type && m->type) {
-			if (!super_type(n->type, m->type))
+			if (!super_type(n->type.get(), m->type.get()))
 				return false;
 		} else {
 			return false;
