@@ -196,12 +196,10 @@ struct Rules {
 };
 
 struct Rules::Node {
-	Node(Symbol s) : symb(s), tree(), level(), rule(nullptr) { }
-	~Node();
-	Symbol symb;
-	Rules  tree;
-	uint   level;
-	User<Rule>* rule;
+	Node(Symbol s) : symb(s) { }
+	Symbol     symb;
+	Rules      tree;
+	User<Rule> rule;
 };
 
 
