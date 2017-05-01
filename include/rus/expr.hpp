@@ -66,8 +66,8 @@ struct Tree {
 		Node(Rule* r, Children&& ch);
 		Node(Rule* r, Tree* ch);
 		~Node();
-		Rule*    rule;
-		Children children;
+		User<Rule> rule;
+		Children   children;
 	};
 	union Value {
 		Value() : var(nullptr) { }
@@ -119,12 +119,11 @@ struct Tree {
 	Kind kind;
 
 	Symbol*& var() { assert(kind == VAR); return val.var; }
-	Rule*& rule() { assert(kind == NODE); return val.node->rule; }
 	Children& children() { assert(kind == NODE); return val.node->children; }
 	Type* type();
 
 	const Symbol* var() const { assert(kind == VAR); return val.var; }
-	const Rule* rule() const { assert(kind == NODE); return val.node->rule; }
+	const Rule* rule() const { assert(kind == NODE); return val.node->rule.get(); }
 	const Children& children() const { assert(kind == NODE); return val.node->children; }
 	const Type* type() const;
 

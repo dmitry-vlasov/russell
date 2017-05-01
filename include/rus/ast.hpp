@@ -58,8 +58,8 @@ struct Rule : public Owner<Rule> {
 	Token      token;
 };
 
-inline Type* Tree::type() { return kind == VAR ? val.var->type.get() : val.node->rule->type.get(); }
-inline const Type* Tree::type() const { return kind == VAR ? val.var->type.get() : val.node->rule->type.get(); }
+inline Type* Tree::type() { return kind == VAR ? val.var->type.get() : val.node->rule.get()->type.get(); }
+inline const Type* Tree::type() const { return kind == VAR ? val.var->type.get() : val.node->rule.get()->type.get(); }
 
 struct Hyp {
 	uint  ind;
