@@ -181,7 +181,7 @@ struct Expr {
 		return !operator == (ex);
 	}
 
-	Type*            type;
+	User<Type>       type;
 	unique_ptr<Tree> tree;
 	Symbols          symbols;
 	Token            token;

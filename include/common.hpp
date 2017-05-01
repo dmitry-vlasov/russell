@@ -413,7 +413,7 @@ public:
 	typedef S Sys;
 	User() : ptr(nullptr) { }
 	User(uint id) : ptr(nullptr) { use(id); }
-	User(const T* p) : ptr(nullptr) { use(p->id()); }
+	User(const T* p) : ptr(nullptr) { if (p) use(p->id()); }
 	User(const User& u) : User(u.id()) { }
 	User(User&& u) : User(u.id()) { u.unuse(); }
 	~User() { unuse(); }

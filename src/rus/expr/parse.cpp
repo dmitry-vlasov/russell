@@ -88,7 +88,7 @@ void parse_LL(Expr* ex) {
 	(--ex->symbols.end())->end = true;
 	//cout << "parsing: " << ind << " -- " << show(*ex) << flush;
 	auto it = ex->symbols.begin();
-	if (Tree* tree = parse_LL(it, ex->type, ex)) {
+	if (Tree* tree = parse_LL(it, ex->type.get(), ex)) {
 		ex->tree.reset(tree);
 	} else {
 		for (Source* s : ex->token.src->includes) {

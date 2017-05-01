@@ -70,7 +70,7 @@ string show(const Rule& r) {
 }
 
 inline string show_type(const Expr& ex) {
-	return show_id(ex.type->id());
+	return show_id(ex.type.id());
 }
 
 string show(const Hyp& h) {
@@ -125,12 +125,12 @@ string show(const Def& def) {
 		for (Hyp* h : def.ass.hyps)
 			s += "\t" + show(*h) + "\n";
 	}
-	s += "\tdefiendum : " + show_id(def.dfm.type->id()) + " ";
+	s += "\tdefiendum : " + show_id(def.dfm.type.id()) + " ";
 	s += "= # " + show(def.dfm) + END_MARKER + "\n";
-	s += "\tdefiniens : " + show_id(def.dfs.type->id()) + " ";
+	s += "\tdefiniens : " + show_id(def.dfs.type.id()) + " ";
 	s += "= # " + show(def.dfs) + END_MARKER + "\n";
 	s += "\t-----------------------\n";
-	s += "\tprop : " + show_id(def.prop.type->id()) + " ";
+	s += "\tprop : " + show_id(def.prop.type.id()) + " ";
 	s += "= |- " + show(def.prop) + END_MARKER + "\n";
 	s += "}";
 	return s;

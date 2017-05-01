@@ -8,7 +8,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Expr,
-	(mdl::rus::Type*, type)
+	(mdl::rus::User<mdl::rus::Type>, type)
 	(mdl::rus::Tree*, tree)
 	(mdl::vector<mdl::rus::Symbol>, symbols)
 	(mdl::rus::Token, token)
