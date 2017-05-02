@@ -27,6 +27,8 @@ class Math {
 	Table<Source>    sources;
 public:
 	~Math();
+	string show() const;
+	string info() const;
 
 	template<class T>
 	Table<T>& get();

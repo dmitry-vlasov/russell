@@ -5,6 +5,22 @@ namespace mdl { namespace rus {
 
 Math::~Math() { sources.destroy(); }
 
+string Math::info() const {
+	string stats;
+	stats += "Size:\n";
+	stats += "\tconstants:  " + to_string(consts.size()) + "\n";
+	stats += "\ttypes:      " + to_string(types.size()) + "\n";
+	stats += "\trules:      " + to_string(rules.size()) + "\n";
+	stats += "\tassertions: " + to_string(assertions.size()) + "\n";
+	stats += "\tproofs:     " + to_string(proofs.size()) + "\n";
+	stats += "\tsources:    " + to_string(sources.size()) + "\n";
+	return stats;
+}
+
+string Math::show() const {
+	return info();
+}
+
 template<> Table<Const>& Math::get<Const>() { return consts; }
 template<> Table<Type>& Math::get<Type>() { return types; }
 template<> Table<Rule>& Math::get<Rule>() { return rules; }
