@@ -325,11 +325,12 @@ smm::Source* translate_source(const Source* src, Maps& maps, smm::Source* target
 
 }
 
-smm::Source* translate(const Source* src) {
-	smm::Source* target = new smm::Source(Lex::toInt(Sys::conf().out.name));
+smm::Source* translate(uint src, uint tgt) {
+	const Source* source = Sys::get().math.get<Source>().access(src);
+	smm::Source* target = new smm::Source(tgt);
 	Maps maps;
 	maps.thm = nullptr;
-	return translate_source(src, maps, target);
+	return translate_source(source, maps, target);
 }
 
 }} // mdl::rus

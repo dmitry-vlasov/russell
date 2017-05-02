@@ -47,59 +47,52 @@ template const Table<Proof>& Math::get<Proof>() const;
 template const Table<Source>& Math::get<Source>() const;
 template const Table<Assertion>& Math::get<Assertion>() const;
 
+Source* parse(uint);
+void verify(uint src);
+smm::Source* translate(uint src, uint tgt);
+
 namespace {
 
-bool parse_rus(uint src) {
-	try {
-		if (Sys::conf().verbose) cout << "parsing russell source ... " << flush;
-		Sys::timer()["read"].start();
-		parse(src);
-		Sys::timer()["read"].stop();
-		if (Sys::conf().verbose) cout << "done in " << Sys::timer()["read"] << endl;
-		return true;
-	} catch (Error& err) {
-		Sys::io().err() << err.what() << endl;
-		return false;
-	}
+void read(uint src) {
+	if (Sys::conf().verbose) cout << "reading " << Lex::toStr(src) << " ... " << flush;
+	Sys::timer()["read"].start();
+	rus::parse(src);
+	Sys::timer()["read"].stop();
+	if (Sys::conf().verbose) cout << "done in " << Sys::timer()["read"] << endl;
 }
 
-bool parse_exp() {
-	try {
-		if (Sys::conf().verbose) cout << "parsing expressions ... " << flush;
-		Sys::timer()["expr"].start();
-		expr::parse();
-		Sys::timer()["expr"].stop();
-		if (Sys::conf().verbose) cout << "done in " << Sys::timer()["expr"] << endl;
-		return true;
-	} catch (Error& err) {
-		Sys::io().err() << err.what() << endl;
-		return false;
-	}
+void parse() {
+	if (Sys::conf().verbose) cout << "parsing expressions ... " << flush;
+	Sys::timer()["parse"].start();
+	expr::parse();
+	Sys::timer()["parse"].stop();
+	if (Sys::conf().verbose) cout << "done in " << Sys::timer()["parse"] << endl;
 }
 
 
-bool unify_rus() {
-	try {
-		if (Sys::conf().verbose) cout << "verifying russell source ... " << flush;
-		Sys::timer()["unify"].start();
-		uint lab = Lex::toInt(Sys::conf().in.name);
-		verify(Sys::get().math.get<Source>().access(lab));
-		Sys::timer()["unify"].stop();
-		if (Sys::conf().verbose) cout << "done in " << Sys::timer()["unify"] << endl;
-		return true;
-	} catch (Error& err) {
-		Sys::io().err() << err.what() << endl;
-		return false;
-	}
+void verify_(uint src) {
+	if (Sys::conf().verbose) cout << "verifying ... " << flush;
+	Sys::timer()["unify"].start();
+	rus::verify(src);
+	Sys::timer()["unify"].stop();
+	if (Sys::conf().verbose) cout << "done in " << Sys::timer()["unify"] << endl;
 }
 
-bool translate_rus() {
-	try {
-		if (Sys::conf().out.name.empty()) return true;
-		if (Sys::conf().verbose) cout << "translating file " << Sys::conf().in.name << " ... " << flush;
-		Sys::timer()["translate"].start();
-		uint lab = Lex::toInt(Sys::conf().in.name);
-		const smm::Source* target = translate(Sys::get().math.get<Source>().access(lab));
+void translate_(uint src, uint tgt) {
+	if (Sys::conf().verbose) cout << "translating ... " << flush;
+	Sys::timer()["translate"].start();
+	rus::translate(src, tgt);
+	Sys::timer()["translate"].stop();
+	if (Sys::conf().verbose) cout << "done in " << Sys::timer()["translate"] << endl;
+}
+
+void write(uint tgt) {
+	if (Sys::conf().verbose) cout << "writing " << Lex::toStr(tgt) << " ... " << flush;
+	Sys::timer()["write"].start();
+	switch (Sys::conf().target) {
+	case Lang::NONE: break;
+	case Lang::SMM: {
+		const smm::Source* target = smm::Sys::get().math.get<smm::Source>().access(tgt);
 		if (Sys::conf().deep) {
 			deep_write(
 				target,
@@ -107,67 +100,26 @@ bool translate_rus() {
 				[](smm::Node n) -> smm::Source* { return n.val.inc->source; },
 				[](smm::Node n) -> bool { return n.type == smm::Node::INCLUSION; }
 			);
-		} else {
-			shallow_write(target);
-		}
-		Sys::timer()["translate"].stop();
-		if (Sys::conf().verbose) cout << "done in " << Sys::timer()["translate"] << endl;
-		return true;
-	} catch (Error& err) {
-		Sys::io().err() << err.what() << endl;
-		return false;
+		} else shallow_write(target);
+		break;
 	}
+	case Lang::RUS: {
+		const Source* source = Sys::get().math.get<Source>().access(tgt);
+		if (Sys::conf().deep) {
+			deep_write(
+				source,
+				[](const Source* src) -> const vector<Node>& { return src->theory->nodes; },
+				[](Node n) -> Source* { return n.val.imp->source; },
+				[](Node n) -> bool { return n.kind == Node::IMPORT; }
+			);
+		} else shallow_write(source);
+		break;
+	}
+	}
+	Sys::timer()["write"].stop();
+	if (Sys::conf().verbose) cout << "done in " << Sys::timer()["write"] << endl;
 }
 
-bool write_rus() {
-	try {
-		if (Sys::conf().out.name.empty()) return true;
-		if (Sys::conf().verbose) cout << "replicating file " << Sys::conf().out.name << " ... " << flush;
-		Sys::timer()["write"].start();
-		ofstream out(Sys::conf().out.path());
-		uint lab = Lex::toInt(Sys::conf().out.name);
-		out << *Sys::get().math.get<Source>().access(lab) << endl;
-		out.close();
-		Sys::timer()["write"].stop();
-		if (Sys::conf().verbose) cout << "done in " << Sys::timer()["write"] << endl;
-		return true;
-	} catch (Error& err) {
-		Sys::io().err() << err.what() << endl;
-		return false;
-	}
-}
-
-}
-
-void run() {
-	Sys::timer()["total"].start();
-	uint src = Lex::toInt(Sys::conf().in.name);
-	uint tgt = Lex::toInt(Sys::conf().out.name);
-
-	if (Sys::conf().verbose)
-		cout << "processing file " << Sys::conf().in.name << " ... " << endl;
-	if (!parse_rus(src)) return;
-	if (!parse_exp()) return;
-	if (!unify_rus()) return;
-	switch (Sys::conf().mode) {
-	case Mode::PROVE:   break;
-	case Mode::TRANSL:  break;
-	default : break;
-	}
-	switch (Sys::conf().target) {
-	case Lang::RUS: write_rus(); break;
-	case Lang::SMM: translate_rus(); break;
-	default : break;
-	}
-	Sys::timer()["total"].stop();
-	if (Sys::conf().verbose)
-		cout << "all done in " << Sys::timer()["total"] << endl;
-	if (Sys::conf().info)
-		cout << info() << endl;
-}
-
-string show() {
-	return info();
 }
 
 string info() {
@@ -222,8 +174,45 @@ string info() {
 	return stats;
 }
 
-Sys::Sys() {
-
+string show() {
+	return info();
 }
+
+Sys::Sys() {
+	action["read"]   = wrap_action([](const Args& args) { read(Lex::getInt(args[0])); return Return(); }, 1);
+	action["verify"] = wrap_action([](const Args& args) { verify_(Lex::getInt(args[0])); return Return(); }, 1);
+	action["transl"] = wrap_action([](const Args& args) { translate_(Lex::getInt(args[0]), Lex::getInt(args[1])); return Return(); }, 2);
+	action["write"]  = wrap_action([](const Args& args) { write(Lex::getInt(args[0])); return Return(); }, 1);
+	action["info"]   = wrap_action([](const Args&) { info(); return Return(); }, 0);
+	action["show"]   = wrap_action([](const Args&) { info(); return Return(); }, 0);
+}
+
+void run() {
+	Sys::timer()["total"].start();
+	uint src = Lex::toInt(Sys::conf().in.name);
+	uint tgt = Lex::toInt(Sys::conf().out.name);
+
+	if (Sys::conf().verbose)
+		cout << "processing file " << Lex::toStr(src) << " ... " << endl;
+
+	read(src);
+	parse();
+	verify_(src);
+
+	switch (Sys::conf().mode) {
+	case Mode::PROVE:   break;
+	case Mode::TRANSL:  translate_(src, tgt); break;
+	default : break;
+	}
+
+	write(tgt);
+
+	Sys::timer()["total"].stop();
+	if (Sys::conf().verbose)
+		cout << "all done in " << Sys::timer()["total"] << endl;
+	if (Sys::conf().info)
+		cout << info() << endl;
+}
+
 
 }} // mdl::rus

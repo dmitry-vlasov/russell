@@ -8,7 +8,11 @@
 #include "rus/ast.hpp"
 #include "rus/parser/adaptors.hpp"
 
-namespace mdl { namespace rus { namespace parser {
+namespace mdl { namespace rus {
+
+Source* parse(uint);
+
+namespace parser {
 
 namespace qi      = boost::spirit::qi;
 namespace unicode = boost::spirit::unicode;
@@ -242,8 +246,6 @@ struct ParseTerm {
 		parse_term(ex, r);
 	}
 };
-
-template<class> class Grammar;
 
 struct ParseImport {
 	template <typename T1, typename T2>

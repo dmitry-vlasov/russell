@@ -90,7 +90,8 @@ void verify_theory(const Theory* theory) {
 
 } // anonympus namespace
 
-void verify(const Source* source) {
+void verify(uint src) {
+	const Source* source = Sys::get().math.get<Source>().access(src);
 	verify_theory(source->theory);
 }
 

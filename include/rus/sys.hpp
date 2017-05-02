@@ -47,11 +47,6 @@ template<class T>
 using Owner = mdl::Owner<T, Sys>;
 
 void run();
-string show();
-string info();
-Source* parse(uint);
-void verify(const Source*);
-smm::Source* translate(const Source* source);
 
 }} // mdl::rus
 

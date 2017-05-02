@@ -50,7 +50,6 @@ void write(uint tgt) {
 	if (Sys::conf().verbose)
 		cout << "writing file " << Lex::toStr(tgt) << " ... " << flush;
 	Sys::timer()["write"].start();
-	uint lab = Lex::toInt(Sys::conf().in.name);
 	switch (Sys::conf().target) {
 	case Lang::NONE: break;
 	case Lang::MM: {
