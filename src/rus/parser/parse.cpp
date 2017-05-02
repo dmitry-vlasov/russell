@@ -2,17 +2,14 @@
 
 namespace mdl { namespace rus {
 
-Source* parse(Path path) {
-	string data;
-	path.read(data);
-	uint label = Lex::toInt(path.name);
+Source* parse(uint label) {
 	Source* src = new Source(label);
-	LocationIter iter(data.begin(), label);
-	LocationIter end(data.end(), label);
+	src->read();
+	LocationIter iter(src->data.begin(), label);
+	LocationIter end(src->data.end(), label);
 	if (!parser::Grammar<LocationIter>::parse(iter, end, parser::unicode::space, *src) || iter != end) {
-		throw Error("parsing failed", path.name);
+		throw Error("parsing failed", Lex::toStr(label));
 	}
-	std::swap(data, src->data);
 	return src;
 }
 

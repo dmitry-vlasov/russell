@@ -276,8 +276,8 @@ public:
 		};
 	}
 
-	static Source* parse(Path path) {
-		path = path.verify();
+	static Source* parse(uint label) {
+		Path path;
 		string data;
 		path.read(data);
 		Parser p(path);
@@ -330,8 +330,8 @@ private:
 
 };
 
-Source* parse(const Path& path) {
-	return Parser::parse(path);
+Source* parse(uint label) {
+	return Parser::parse(label);
 }
 
 }} // mdl::mm

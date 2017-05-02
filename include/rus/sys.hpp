@@ -49,7 +49,7 @@ using Owner = mdl::Owner<T, Sys>;
 void run();
 string show();
 string info();
-Source* parse(Path path);
+Source* parse(uint);
 void verify(const Source*);
 smm::Source* translate(const Source* source);
 

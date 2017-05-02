@@ -49,11 +49,11 @@ template const Table<Assertion>& Math::get<Assertion>() const;
 
 namespace {
 
-bool parse_rus() {
+bool parse_rus(uint src) {
 	try {
 		if (Sys::conf().verbose) cout << "parsing russell source ... " << flush;
 		Sys::timer()["read"].start();
-		parse(Sys::conf().in);
+		parse(src);
 		Sys::timer()["read"].stop();
 		if (Sys::conf().verbose) cout << "done in " << Sys::timer()["read"] << endl;
 		return true;
@@ -141,9 +141,12 @@ bool write_rus() {
 
 void run() {
 	Sys::timer()["total"].start();
+	uint src = Lex::toInt(Sys::conf().in.name);
+	uint tgt = Lex::toInt(Sys::conf().out.name);
+
 	if (Sys::conf().verbose)
 		cout << "processing file " << Sys::conf().in.name << " ... " << endl;
-	if (!parse_rus()) return;
+	if (!parse_rus(src)) return;
 	if (!parse_exp()) return;
 	if (!unify_rus()) return;
 	switch (Sys::conf().mode) {

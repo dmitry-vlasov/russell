@@ -259,7 +259,7 @@ struct ParseImport {
 			path.ext = "rus";
 			imp = new Import(nullptr, true);
 			imported[name] = imp;
-			imp->source = parse(path);
+			imp->source = parse(Lex::toInt(path.name));
 		}
 		src->include(imp->source);
 		return imp;
@@ -286,42 +286,6 @@ struct FindTheorem {
 		return ret;
 	}
 };
-
-/*
-struct FindAxiom {
-	template <typename T1>
-	struct result { typedef Axiom* type; };
-	Axiom* operator()(uint id) const {
-		if (!Sys::get().math.axioms.count(id))
-			throw Error("unknown axiom", show_id(id));
-		return Sys::mod().math.axioms[id];
-	}
-};
-*/
-
-/*
-struct FindAssertion {
-	template <typename T>
-	struct result { typedef Assertion* type; };
-	Assertion* operator()(uint id) const {
-		if (!Sys::get().math.assertions.has(id))
-			throw Error("unknown theorem", show_id(id));
-		return Sys::mod().math.assertions[id];
-	}
-};
-*/
-
-/*
-struct FindDef {
-	template <typename T1>
-	struct result { typedef Def* type; };
-	Def* operator()(uint id) const {
-		if (!Sys::get().math.defs.count(id))
-			throw Error("unknown definition", show_id(id));
-		return Sys::mod().math.defs[id];
-	}
-};
-*/
 
 struct AddDisjVar {
 	template <typename T1, typename T2>
