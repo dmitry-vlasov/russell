@@ -268,8 +268,8 @@ void translate_proof(const Proof* proof, const Assertion* thm, vector<smm::Ref*>
 vector<smm::Node> translate_proof(const Proof* proof, Maps& maps) {
 	vector<smm::Node> nodes;
 	vector<smm::Node> asss = translate_assertion(&proof->thm->ass, maps);
-	if (proof->id != static_cast<uint>(-1)) {
-		// TODO
+	if (proof->id() != static_cast<uint>(-1)) {
+		// TODO ? WTF??
 	}
 	for (uint i = 0; i < asss.size(); ++ i) {
 		maps.thm = asss[i].val.ass;

@@ -201,7 +201,8 @@ string show(const Qed& q) {
 
 string show(const Proof& p) {
 	string s = "proof ";
-	if (p.has_id) s += show_id(p.id) + " ";
+	const string& name = Lex::toStr(p.id());
+	if (name.size() > 1 && name[0] != '_') s += name + " ";
 	s += "of " + show_id(p.thm->ass.id()) + " {\n";
 	if (p.vars.v.size())
 		s += "\tvar " + show(p.vars) + END_MARKER + "\n";

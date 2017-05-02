@@ -105,7 +105,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Theorem,
 	(mdl::rus::Assertion, ass)
-	(std::vector<mdl::rus::Proof*>, proofs)
+	(std::vector<mdl::rus::User<mdl::rus::Proof>>, proofs)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(

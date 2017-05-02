@@ -108,7 +108,7 @@ struct Def : public Assertion {
 struct Theorem : public Assertion {
 	Theorem(uint id);
 	Kind kind() const { return THM; }
-	vector<Proof*> proofs;
+	vector<User<Proof>> proofs;
 };
 
 struct Ref {
@@ -211,7 +211,7 @@ struct Qed {
 	Token token;
 };
 
-struct Proof {
+struct Proof : public Owner<Proof> {
 	//typedef boost::variant<Step, Qed> Elem;
 
 	struct Elem {
@@ -240,12 +240,10 @@ struct Proof {
 	Proof(Theorem* thm, uint id = -1);
 	~ Proof();
 
-	uint         id;
 	Vars         vars;
 	vector<Elem> elems;
 	Theorem*     thm;
 	Proof*       par;
-	bool         has_id;
 	Token        token;
 };
 

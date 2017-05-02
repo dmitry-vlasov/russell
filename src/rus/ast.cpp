@@ -58,13 +58,16 @@ Step::~Step() {
 	if (kind_ == ASS) delete val_.ass;
 }
 
-Proof::Proof(Theorem* t, uint i) : id(i), thm(t), par(nullptr), has_id(!Undef<uint>::is(id)) {
-	static uint fresh = 0;
-	if (!has_id) id = Lex::toInt(string("__proof_") + to_string(fresh++));
-	Sys::mod().math.get<Proof>().add(id, this);
+inline uint make_proof_id(uint id, const Theorem* th) {
+	if (Undef<uint>::is(id)) {
+		const string& th_name = Lex::toStr(th->id());
+		return Lex::toInt(string("_proof_of_") + th_name + "_" + to_string(th->proofs.size()));
+	} else return id;
+}
+
+Proof::Proof(Theorem* th, uint id) : Owner(make_proof_id(id, th)), thm(th), par(nullptr) {
 }
 Proof::~Proof() {
-	Sys::mod().math.get<Proof>().del(id);
 	for (auto& e : elems) e.destroy();
 }
 
