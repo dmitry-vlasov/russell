@@ -21,21 +21,21 @@ inline uint translate_symb(uint s) {
 		return s;
 	else {
 		const Const* c = Sys::mod().math.get<Const>().access(s);
-		return mdl::Symbol::is_undef(c->ascii.lit) ? s : c->ascii.lit;
+		return mdl::Symbol::is_undef(c->ascii) ? s : c->ascii;
 	}
 }
 
 mdl::Vect translate_expr(const Expr& ex, Maps& maps) {
 	mdl::Vect expr;
 	expr += maps.turnstile;
-	for (auto s : ex.symbols) expr += mdl::Symbol(translate_symb(s.lit), s.type);
+	for (auto s : ex.symbols) expr += mdl::Symbol(translate_symb(s.lit), s.type());
 	return expr;
 }
 
 mdl::Vect translate_term(const Expr& ex, const Type* tp, Maps& maps) {
 	mdl::Vect expr;
 	expr += mdl::Symbol(maps.types[tp]);
-	for (auto s : ex.symbols) expr += mdl::Symbol(translate_symb(s.lit), s.type);
+	for (auto s : ex.symbols) expr += mdl::Symbol(translate_symb(s.lit), s.type());
 	return expr;
 }
 
@@ -49,7 +49,7 @@ smm::Constant* translate_turnstile(Maps& maps) {
 
 smm::Constant* translate_const(const Const* c, Maps& maps) {
 	smm::Constant* constant = new smm::Constant;
-	constant->symb = mdl::Symbol(translate_symb(c->symb.lit));
+	constant->symb = mdl::Symbol(translate_symb(c->symb));
 	return constant;
 }
 
@@ -104,7 +104,7 @@ vector<smm::Floating*> translate_floatings(const Vars& vars, Maps& maps, const A
 		Symbol v = vars.v[i];
 		smm::Floating* flo = new smm::Floating;
 		flo->index = i;
-		flo->expr += mdl::Symbol(maps.types[v.type.get()]);
+		flo->expr += mdl::Symbol(maps.types[v.type()]);
 		flo->expr += mdl::Symbol(v.lit, true);
 		flo_vect.push_back(flo);
 		if (ass) maps.floatings[ass][v] = flo;
@@ -246,7 +246,7 @@ vector<smm::Inner*> translate_inners(const Vars& vars, Maps& maps, const Asserti
 		Symbol v = vars.v[i];
 		smm::Inner* inn = new smm::Inner;
 		inn->index = i + ind_0;
-		inn->expr += mdl::Symbol(maps.types[v.type.get()]);
+		inn->expr += mdl::Symbol(maps.types[v.type()]);
 		inn->expr += mdl::Symbol(v.lit, true);
 		inn_vect.push_back(inn);
 		smm_vars->expr.push_back(mdl::Symbol(v.lit, true));

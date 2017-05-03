@@ -420,6 +420,7 @@ public:
 	void operator = (const T* p) { if (p) use(p->id()); }
 	void operator = (const User& u) { use(u.id()); }
 	void operator = (User&& u) { use(u.id()); u.unuse(); }
+
 	bool operator == (const User& u) const { return ptr == u.ptr; }
 	bool operator != (const User& u) const { return ptr != u.ptr; }
 	bool operator < (const User& u) const { return ptr < u.ptr; }

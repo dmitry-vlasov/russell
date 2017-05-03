@@ -45,13 +45,13 @@ struct AddVars {
 	void operator()(VarStack& var_stack, Vars vars) const {
 		for (auto v : vars.v) {
 			var_stack.stack.back().v.push_back(v);
-			var_stack.mapping[v.lit] = v.type.get();
+			var_stack.mapping[v.lit] = v.type();
 		}
 	}
 	void operator()(VarStack& var_stack, Theorem* thm) const {
 		for (auto v : thm->ass.vars.v) {
 			var_stack.stack.back().v.push_back(v);
-			var_stack.mapping[v.lit] = v.type.get();
+			var_stack.mapping[v.lit] = v.type();
 		}
 	}
 };
@@ -78,7 +78,8 @@ static void mark_vars(Expr& ex, VarStack& var_stack) {
 			msg += " neither constant nor variable";
 			throw Error(msg);
 		}
-		if (is_var) s.type = var_stack.mapping[s.lit];
+		if (is_var) s.set_type(var_stack.mapping[s.lit]);
+		else s.set_const(Sys::mod().math.get<Const>().access(s.lit));
 	}
 }
 
@@ -92,15 +93,19 @@ inline uint create_id(string pref, string s1, string s2) {
 	return Lex::toInt(pref + "_" + s1 + "_" + s2);
 }
 
-inline Symbol create_symbol(string str, Type* tp) {
-	return Symbol(Lex::toInt(str), tp, tp);
+inline Symbol create_var(string str, Type* tp) {
+	return Symbol(Lex::toInt(str), tp);
+}
+
+inline Symbol create_const(string str, Const* c) {
+	return Symbol(Lex::toInt(str), c);
 }
 
 Rule* create_super(Type* inf, Type* sup) {
 	uint id = create_id("sup", show_id(inf->id()), show_id(sup->id()));
 	Rule* rule = new Rule(id, sup->id());
-	rule->vars.v.push_back(create_symbol("x", inf));
-	rule->term.push_back(create_symbol("x", inf));
+	rule->vars.v.push_back(create_var("x", inf));
+	rule->term.push_back(create_var("x", inf));
 
 	VarStack var_stack;
 	AddVars add_vars;

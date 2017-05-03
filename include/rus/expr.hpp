@@ -12,28 +12,54 @@ struct Type;
 struct Rule;
 
 struct Symbol : public mdl::Symbol {
-	Symbol(string s, Type* t = nullptr);
 	Symbol() { }
-	Symbol(uint l): mdl::Symbol(l) { }
-	Symbol(const mdl::Symbol s, bool v = false) :
-	mdl::Symbol(s.lit, v) { }
-	Symbol(mdl::Symbol s, Type* tp, bool v = false) :
-	mdl::Symbol(s.lit, v), type(tp) { }
-	Symbol(const Symbol& s) : mdl::Symbol(s), type(s.type) { }
+	//Symbol(string s, Type* t = nullptr);
+	//Symbol(uint l): mdl::Symbol(l) { }
+	//Symbol(mdl::Symbol s, bool v = false) :
+	//mdl::Symbol(s.lit, v) { }
+	//Symbol(mdl::Symbol s, Type* tp, bool v = false) :
+	//mdl::Symbol(s.lit, v), val(tp) { }
 
-	bool operator == (const Symbol& s) const {
-		return mdl::Symbol::operator == (s) && type == s.type;
+
+	Symbol(uint l) : mdl::Symbol(l) { }
+	Symbol(uint l, Type* t) : mdl::Symbol(l), val(t) { var = true; }
+	Symbol(uint l, Const* c): mdl::Symbol(l), val(c) { cst = true; }
+	Symbol(const Symbol& s) : mdl::Symbol(s), val(s.val) { }
+	~Symbol() { clear_type_const(); }
+
+	void clear_type_const() {
+		if (var) delete val.type;
+		else if (cst) delete val.constant;
+		var = false; cst = false;
 	}
-	bool operator != (const Symbol& s) const {
-		return !operator ==(s);
+
+	union Value {
+		Value() : constant(nullptr) { }
+		Value(Type* t) : type(new User<Type>(t)) { }
+		Value(Const* c) : constant(new User<Const>(c)) { }
+		Value(const Value& v) : type(v.type) { }
+		User<Const>* constant;
+		User<Type>*  type;
+	};
+	Value val;
+
+	Type* type() { return val.type ? val.type->get() : nullptr; }
+	Const* constant() { return val.constant ? val.constant->get() : nullptr; }
+	const Type* type() const { return val.type ? val.type->get() : nullptr; }
+	const Const* constant() const { return val.constant ? val.constant->get() : nullptr; }
+
+	void set_type(Type* t) {
+		clear_type_const();
+		val.type = new User<Type>(t);
+		var = true;
 	}
-	bool operator < (const Symbol& s) const {
-		return
-			type == s.type ?
-			mdl::Symbol::operator < (s.lit) :
-			type < s.type;
+
+	void set_const(Const* c) {
+		clear_type_const();
+		val.constant = new User<Const>(c);
+		cst = true;
 	}
-	User<Type> type;
+
 	struct Hash {
 		typedef size_t result_type;
 		typedef Symbol argument_type;
@@ -140,7 +166,7 @@ private:
 
 struct Expr {
 	Expr() : type(nullptr), tree(), symbols() { }
-	Expr(Symbol s) : type(s.type.get()), tree(), symbols() { symbols.push_back(s); }
+	Expr(Symbol s) : type(s.type()), tree(), symbols() { symbols.push_back(s); }
 	Expr(const Symbols& ss) : type(nullptr), tree(), symbols(ss) { }
 	Expr(const Expr& ex) : type(ex.type), tree(), symbols (ex.symbols) {
 		if (ex.tree) tree.reset(new Tree(*ex.tree));

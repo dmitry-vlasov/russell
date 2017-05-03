@@ -8,11 +8,11 @@ string show(const Comment& c) {
 
 string show(const Const& c) {
 	string s = "constant {\n";
-	s += "\tsymbol " + show(c.symb) + " " + END_MARKER + "\n";
-	if (!c.ascii.is_undef())
-		s += "\tascii " + show(c.ascii) + " " + END_MARKER + "\n";
-	if (!c.latex.is_undef())
-		s += "\tlatex " + show(c.latex) + " " + END_MARKER + "\n";
+	s += "\tsymbol " + Lex::toStr(c.symb) + " " + END_MARKER + "\n";
+	if (!mdl::Symbol::is_undef(c.ascii))
+		s += "\tascii " + Lex::toStr(c.ascii) + " " + END_MARKER + "\n";
+	if (!mdl::Symbol::is_undef(c.latex))
+		s += "\tlatex " + Lex::toStr(c.latex) + " " + END_MARKER + "\n";
 	s += "}";
 	return s;
 }
@@ -21,7 +21,7 @@ string show(const Vars& vars) {
 	string s;
 	for (uint i = 0; i < vars.v.size(); ++ i) {
 		Symbol var = vars.v[i];
-		s += show(var) + " : " + show_id(var.type.id());
+		s += show(var) + " : " + show_id(var.type()->id());
 		if (i + 1 < vars.v.size())
 			s += ", ";
 	}

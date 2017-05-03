@@ -15,6 +15,7 @@ struct State {
 	map<const rus::Type*, rus::Theory*>  type_theory;
 	map<const Source*,    rus::Source*>  sources;
 	map<Symbol, rus::Type*>              types;
+	map<Symbol, rus::Const*>             constants;
 	set<rus::Rule*>                      rules;
 	map<const void*, uint>               inds;
 
@@ -22,58 +23,55 @@ struct State {
 	rus::Type*    type_set;
 	rus::Type*    type_class;
 	set<Symbol>   redundant_consts;
-	set<rus::Symbol> constants;
 	stack<rus::Theory*>  theory;
 };
 
-inline rus::Symbol translate_const(Symbol s) {
-	auto p = math_consts().find(s.lit);
+inline rus::Symbol translate_const(uint s, const State& state) {
+	rus::Const* c = state.constants.at(s);
+	auto p = math_consts().find(s);
 	if (p == math_consts().end())
-		return rus::Symbol(s);
-	else {
-		return (*p).second.symb;
-	}
+		return rus::Symbol(s, c);
+	else
+		return rus::Symbol((*p).second.symb, c);
 }
 
-inline rus::Symbol translate_var(Symbol s, rus::Type* t) {
-	auto p = math_vars().find(s.lit);
+inline rus::Symbol translate_var(uint s, rus::Type* t) {
+	auto p = math_vars().find(s);
 	if (p == math_vars().end())
 		return rus::Symbol(s, t);
-	else {
-		rus::Symbol rs = (*p).second;
-		rs.type = t;
-		return rs;
-	}
+	else
+		return rus::Symbol((*p).second.var, t);
 }
 
-inline rus::Symbol translate_symb(Symbol s, rus::Type* t = nullptr) {
-	if (t) {
+inline rus::Type* translate_var_type(uint v, const State& state, const Assertion* ass) {
+	for (auto f : ass->floating)
+		if (f->var().lit == v) {
+			assert(state.types.count(f->type()));
+			return state.types.find(f->type())->second;
+		}
+	for (auto i : ass->inner)
+		if (i->var().lit == v) {
+			assert(state.types.count(i->type()));
+			return state.types.find(i->type())->second;
+		}
+	return nullptr;
+}
+
+inline rus::Symbol translate_symb(uint s, const State& state, const Assertion* ass) {
+	if (state.constants.count(s))
+		return translate_const(s, state);
+	else if (rus::Type* t = translate_var_type(s, state, ass))
 		return translate_var(s, t);
-	} else {
-		return translate_const(s);
-	}
+	else
+		throw Error("symbol not constant nor variable", show_sy(s));
 }
 
 rus::Expr translate_expr(const Vect& ex, const State& state, const Assertion* ass) {
 	rus::Expr e;
 	for (auto it = ex.begin(); it != ex.end(); ++ it) {
 		// pass the first symbol
-		if (it == ex.begin())
-			continue;
-		rus::Type* t = nullptr;
-		for (auto f : ass->floating)
-			if (f->var() == *it) {
-				assert(state.types.count(f->type()));
-				t = state.types.find(f->type())->second;
-				break;
-			}
-		for (auto i : ass->inner)
-			if (i->var() == *it) {
-				assert(state.types.count(i->type()));
-				t = state.types.find(i->type())->second;
-				break;
-			}
-		e.push_back(translate_symb(*it, t));
+		if (it == ex.begin()) continue;
+		e.push_back(translate_symb(it->lit, state, ass));
 	}
 	// it's the best what we can do here ...
 	e.type = state.type_wff;
@@ -86,13 +84,13 @@ void translate_constant(const Constant* constant, State& state) {
 	rus::Const* c = nullptr;
 	auto p = math_consts().find(s.lit);
 	if (p == math_consts().end())
-		c = new rus::Const(rus::Symbol(s), rus::Symbol(), rus::Symbol());
+		c = new rus::Const(s.lit, -1, -1);
 	else
 		c = new rus::Const(p->second.symb, p->second.ascii, p->second.latex);
 	if (state.constants.count(c->symb))
 		delete c;
 	else {
-		state.constants.insert(c->symb);
+		state.constants[c->symb] = c;
 		state.theory.top()->nodes.push_back(rus::Node(c));
 	}
 }
@@ -109,7 +107,7 @@ rus::Vars translate_vars(vector<T*> decls, State& state) {
 	rus::Vars rus_vars;
 	for (auto flo : decls) {
 		rus::Type* type = translate_type(flo->type(), state);
-		rus_vars.v.push_back(translate_var(flo->var(), type));
+		rus_vars.v.push_back(translate_var(flo->var().lit, type));
 	}
 	return rus_vars;
 }
@@ -130,7 +128,7 @@ rus::Disj translate_disj(const Assertion* ass, State& state) {
 			if (!type) {
 				throw Error("untyped var", show_sy(v));
 			}
-			rus::Symbol rv = translate_var(v, type);
+			rus::Symbol rv = translate_var(v.lit, type);
 			rus_dis.push_back(rv);
 		}
 	}
@@ -192,11 +190,11 @@ bool less_general(const rus::Rule* r1, const rus::Rule* r2) {
 	auto m = r2->term.symbols.begin();
 	auto m_end = r2->term.symbols.end();
 	while (n != n_end && m != m_end) {
-		if (!n->type && !m->type) {
+		if (!n->type() && !m->type()) {
 			if (*n != *m)
 				return false;
-		} else if (n->type && m->type) {
-			if (!super_type(n->type.get(), m->type.get()))
+		} else if (n->type() && m->type()) {
+			if (!super_type(n->type(), m->type()))
 				return false;
 		} else {
 			return false;
@@ -322,14 +320,14 @@ void translate_def(const Assertion* ass, State& state) {
 	for (auto it = ex.begin() + 1; it != ex.end(); ++ it) {
 		if ((dfm_beg <= it) && (it < dfm_end)) {
 			if (dfm_beg == it)
-				def->prop.push_back(dfm());
-			def->dfm.push_back(translate_symb(*it));
+				def->prop.push_back(rus::Symbol(dfm().lit));
+			def->dfm.push_back(translate_symb(it->lit, state, ass));
 		} else if ((dfs_beg <= it) && (it < dfs_end)) {
 			if (dfs_beg == it)
-				def->prop.push_back(dfs());
-			def->dfs.push_back(translate_symb(*it));
+				def->prop.push_back(rus::Symbol(dfs().lit));
+			def->dfs.push_back(translate_symb(it->lit, state, ass));
 		} else {
-			def->prop.push_back(translate_symb(*it));
+			def->prop.push_back(translate_symb(it->lit, state, ass));
 		}
 	}
 	state.theory.top()->nodes.push_back(def);

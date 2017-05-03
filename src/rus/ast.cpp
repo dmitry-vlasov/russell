@@ -3,7 +3,7 @@
 namespace mdl { namespace rus {
 
 
-Const::Const(Symbol s, Symbol a, Symbol l) : Owner(s.lit), symb(s), ascii(a), latex(l) { }
+//Const::Const(Symbol s, Symbol a, Symbol l) : Owner(s.lit), symb(s), ascii(a), latex(l) { }
 
 Type::Type(uint i) : Owner(i) { }
 Type::Type(uint i, const vector<Type*>& s) : Owner(i) {

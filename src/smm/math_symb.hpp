@@ -13,6 +13,11 @@ struct Const {
 	const uint latex;
 };
 
+struct Var {
+	Var(uint v) : var(v) { }
+	const uint var;
+};
+
 inline Const make_const(const char* ascii, const char* unicode, const char* latex) {
 	return Const(Lex::toInt(unicode), Lex::toInt(ascii), Lex::toInt(latex));
 }
@@ -150,11 +155,11 @@ inline map<uint, Const>& math_consts() {
 	return table;
 }
 // Weird variables
-inline map<uint, rus::Symbol>& math_vars() {
-	static map<uint, rus::Symbol> table = {
-			{make_key(".,"),   rus::Symbol(Lex::toInt(".cm"))},
-			{make_key(".(x)"), rus::Symbol(Lex::toInt(".[x]"))},
-			{make_key(".(+)"), rus::Symbol(Lex::toInt(".[+]"))}
+inline map<uint, Var>& math_vars() {
+	static map<uint, Var> table = {
+			{make_key(".,"),   Var(Lex::toInt(".cm"))},
+			{make_key(".(x)"), Var(Lex::toInt(".[x]"))},
+			{make_key(".(+)"), Var(Lex::toInt(".[+]"))}
 	};
 	return table;
 }

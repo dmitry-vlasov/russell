@@ -3,8 +3,6 @@
 namespace mdl {
 namespace rus {
 
-
-
 Rules::~Rules() {
 	for (auto n : map) delete n;
 }
@@ -69,14 +67,11 @@ Tree::~Tree() { delete_val(); }
 
 
 string show(Symbol s, bool full) {
-	if (!full || !s.type)
+	if (!full || !s.type())
 		return show_sy(s.lit);
 	else {
-		return string("<") + show_sy(s.lit) + ":" + show_id(s.type.id()) + ">";
+		return string("<") + show_sy(s.lit) + ":" + show_id(s.type()->id()) + ">";
 	}
-}
-
-Symbol::Symbol(string s, Type* t) : mdl::Symbol(Lex::toInt(s)), type(t) {
 }
 
 string show(const Expr& ex) {
@@ -113,7 +108,7 @@ string show(const Tree& t, bool full) {
 		string str(" ");
 		uint i = 0;
 		for (auto s : t.rule()->term.symbols) {
-			if (s.type) {
+			if (s.type()) {
 				str += show(*t.children()[i++], full) + ' ';
 			} else {
 				str += show(s) + ' ';
@@ -126,7 +121,7 @@ string show(const Tree& t, bool full) {
 void parse_term(Expr& ex, Rule* rule) {
 	Tree::Children children;
 	for (auto& s : ex.symbols) {
-		if (s.type) children.push_back(make_unique<Tree>(s));
+		if (s.type()) children.push_back(make_unique<Tree>(s));
 	}
 	ex.tree.reset(new Tree(rule, children));
 }

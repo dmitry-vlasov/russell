@@ -18,10 +18,12 @@ struct Comment {
 };
 
 struct Const : public Owner<Const> {
-	Const(Symbol s, Symbol a, Symbol l);
-	Symbol symb;
-	Symbol ascii;
-	Symbol latex;
+	Const(uint s, uint a, uint l) : Owner(s), symb(s), ascii(s), latex(l) { }
+	//Const(Symbol s, Symbol a, Symbol l);
+	Const(const Const& c) : Owner(c.id()), symb(c.symb), ascii(c.ascii), latex(c.latex), token(c.token) { }
+	uint symb;
+	uint ascii;
+	uint latex;
 	Token  token;
 };
 
@@ -58,8 +60,8 @@ struct Rule : public Owner<Rule> {
 	Token      token;
 };
 
-inline Type* Tree::type() { return kind == VAR ? val.var->type.get() : val.node->rule.get()->type.get(); }
-inline const Type* Tree::type() const { return kind == VAR ? val.var->type.get() : val.node->rule.get()->type.get(); }
+inline Type* Tree::type() { return kind == VAR ? val.var->type() : val.node->rule.get()->type.get(); }
+inline const Type* Tree::type() const { return kind == VAR ? val.var->type() : val.node->rule.get()->type.get(); }
 
 struct Hyp {
 	uint  ind;
