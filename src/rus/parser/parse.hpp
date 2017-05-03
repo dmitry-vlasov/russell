@@ -4,6 +4,7 @@
 #include <boost/spirit/include/phoenix_fusion.hpp>
 #include <boost/spirit/include/phoenix_stl.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
+#include <boost/spirit/include/qi_uint.hpp>
 
 #include "rus/ast.hpp"
 #include "rus/parser/adaptors.hpp"
@@ -151,49 +152,23 @@ void enqueue_expressions(Def* def) {
 
 struct AddToMath {
 	void operator()(Const* c) const {
-		//cout << "c: " << show(c->symb) << endl;
-		//Sys::mod().math.consts[c->symb.lit] = c;
 	}
 	void operator()(Type* t) const {
-		//cout << "tp: " << show_id(t->id) << endl;
 		collect_supers(t, t);
-		//Sys::mod().math.types[t->id] = t;
 	}
 	void operator()(Rule* r) const {
-		//cout << "ru: " << show_id(r->id) << endl;
-
-
-		//r->type->rules.add(r->term) = r;
 		r->type.get()->rules.add(r->term, r->id());
-
-		//Sys::mod().math.rules.use(r->id, r->type->rules.add(r->term));
-
-		//cout << show(r->type->rules) << endl;
-		//Sys::mod().math.rules[r->id] = r;
 	}
 	void operator()(Axiom* a) const {
-		//cout << "ax: " << show_id(a->ass.id) << endl;
-		//Sys::mod().math.axioms[a->ass.id] = a;
 		enqueue_expressions(a->ass);
 	}
 	void operator()(Def* d) const {
-		//cout << "def: " << show_id(d->ass.id) << endl;
-		//Sys::mod().math.defs[d->ass.id] = d;
 		enqueue_expressions(d);
 	}
 	void operator()(Theorem* th) const {
-		//cout << "th: " << show_id(th->ass.id) << endl;
-		//Sys::mod().math.theorems[th->ass.id] = th;
 		enqueue_expressions(th->ass);
 	}
 	void operator()(Proof* p) const {
-		//cout << "pr: " << show_id(p->thm->ass.id) << endl;
-
-		//static uint fresh = 0;
-		//p->has_id = !Undef<uint>::is(p->id);
-		//if (!p->has_id) p->id = Lex::toInt(string("proof_") + to_string(fresh++));
-
-		//Sys::mod().math.proofs[p->id] = p;
 		enqueue_expressions(p);
 	}
 };
@@ -278,6 +253,14 @@ struct FindType {
 	struct result { typedef Type* type; };
 	Type* operator()(uint id) const {
 		return Undef<uint>::is(id) ? nullptr : find_type(id);
+	}
+};
+
+struct SetType {
+	template <typename T1, typename T2>
+	struct result { typedef void type; };
+	void operator()(Symbol& s, Type* t) const {
+		s.set_type(t);
 	}
 };
 
@@ -425,7 +408,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, Axiom*(), qi::locals<Assertion*>, unicode::space_type> axiom;
 	qi::rule<Iterator, Rule*(), qi::locals<uint, Vars, uint>, unicode::space_type> rule;
 	qi::rule<Iterator, Type*(), qi::locals<uint, vector<Type*>>, unicode::space_type> type;
-	qi::rule<Iterator, Const*(), qi::locals<Symbol, Symbol, Symbol>, unicode::space_type> constant;
+	qi::rule<Iterator, Const*(), qi::locals<uint, uint, uint>, unicode::space_type> constant;
 	qi::rule<Iterator, Import*(), unicode::space_type> import;
 	qi::rule<Iterator, string(), qi::unused_type> comment_text;
 	qi::rule<Iterator, Comment*(), qi::unused_type> comment_ml;

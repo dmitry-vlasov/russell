@@ -19,7 +19,6 @@ struct Comment {
 
 struct Const : public Owner<Const> {
 	Const(uint s, uint a, uint l) : Owner(s), symb(s), ascii(s), latex(l) { }
-	//Const(Symbol s, Symbol a, Symbol l);
 	Const(const Const& c) : Owner(c.id()), symb(c.symb), ascii(c.ascii), latex(c.latex), token(c.token) { }
 	uint symb;
 	uint ascii;

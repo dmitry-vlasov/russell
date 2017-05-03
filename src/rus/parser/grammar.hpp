@@ -33,8 +33,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 
 	const phoenix::function<FindType>    findType;
 	const phoenix::function<FindTheorem> findTheorem;
-	//const phoenix::function<FindAxiom>   findAxiom;
-	//const phoenix::function<FindDef>     findDef;
+	const phoenix::function<SetType>     setType;
 
 	const phoenix::function<CreateStepRef> createStepRef;
 	const phoenix::function<GetProp>     getProp;
@@ -72,7 +71,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 	vars =
 		( !lit(")")
 		> var        [_a =_1]
-		> ":" > id   [phoenix::at_c<2>(_a) = findType(_1)]
+		> ":" > id   [setType(_a,findType(_1))]
 		> eps        [push_back(phoenix::at_c<0>(_val), _a)]
 		) % ","
 		> eps        [addVars(phoenix::ref(var_stack), _val)];
@@ -233,16 +232,16 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 	constant =
 		lit("constant") > "{"
 		> lit("symbol")
-		> symb          [_a = _1]
+		> uint_          [_a = _1]
 		> lit(END_MARKER)
 		> -(
 			lit("ascii")
-			> symb          [_b = _1]
+			> uint_          [_b = _1]
 			> lit(END_MARKER)
 		)
 		> -(
 			lit("latex")
-			> symb      [_c = _1]
+			> uint_      [_c = _1]
 			> lit(END_MARKER)
 		)
 		> lit("}")      [_val = new_<Const>(_a, _b, _c)];

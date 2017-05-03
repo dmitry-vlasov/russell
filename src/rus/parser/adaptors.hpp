@@ -3,7 +3,6 @@
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::Symbol,
 	(mdl::uint, lit)
-//	(bool, var)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -13,13 +12,12 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::vector<mdl::rus::Symbol>, symbols)
 	(mdl::rus::Token, token)
 )
-/*
+
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Symbol,
 	(mdl::uint, lit)
-	(mdl::rus::User<mdl::rus::Type>, type)
 )
-*/
+
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Comment,
 	(mdl::string,     text)
