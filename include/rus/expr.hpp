@@ -13,18 +13,15 @@ struct Rule;
 
 struct Symbol : public mdl::Symbol {
 	Symbol() { }
-	//Symbol(string s, Type* t = nullptr);
-	//Symbol(uint l): mdl::Symbol(l) { }
-	//Symbol(mdl::Symbol s, bool v = false) :
-	//mdl::Symbol(s.lit, v) { }
-	//Symbol(mdl::Symbol s, Type* tp, bool v = false) :
-	//mdl::Symbol(s.lit, v), val(tp) { }
-
-
 	Symbol(uint l) : mdl::Symbol(l) { }
 	Symbol(uint l, Type* t) : mdl::Symbol(l), val(t) { var = true; }
 	Symbol(uint l, Const* c): mdl::Symbol(l), val(c) { cst = true; }
-	Symbol(const Symbol& s) : mdl::Symbol(s), val(s.val) { }
+	Symbol(const Symbol& s) : mdl::Symbol(s) {
+		if (s.var)
+			val.type = new User<Type>(s.type());
+		else if (s.cst)
+			val.constant = new User<Const>(s.constant());
+	}
 	~Symbol() { clear_type_const(); }
 
 	void clear_type_const() {
@@ -34,19 +31,18 @@ struct Symbol : public mdl::Symbol {
 	}
 
 	union Value {
-		Value() : constant(nullptr) { }
+		Value(): constant(nullptr) { }
 		Value(Type* t) : type(new User<Type>(t)) { }
 		Value(Const* c) : constant(new User<Const>(c)) { }
-		Value(const Value& v) : type(v.type) { }
 		User<Const>* constant;
 		User<Type>*  type;
 	};
 	Value val;
 
-	Type* type() { return val.type ? val.type->get() : nullptr; }
-	Const* constant() { return val.constant ? val.constant->get() : nullptr; }
-	const Type* type() const { return val.type ? val.type->get() : nullptr; }
-	const Const* constant() const { return val.constant ? val.constant->get() : nullptr; }
+	Type* type() { return var ? val.type->get() : nullptr; }
+	Const* constant() { return cst ? val.constant->get() : nullptr; }
+	const Type* type() const { return var ? val.type->get() : nullptr; }
+	const Const* constant() const { return cst ? val.constant->get() : nullptr; }
 
 	void set_type(Type* t) {
 		clear_type_const();

@@ -175,7 +175,7 @@ void translate_super(const Assertion* ass, State& state) {
 
 inline bool super_type(const rus::Type* t1, const rus::Type* t2) {
 	if (t1 == t2) return true;
-	for (auto s : t1->sup)
+	for (auto& s : t1->sup)
 		if (t2 == s)
 			return true;
 	return false;

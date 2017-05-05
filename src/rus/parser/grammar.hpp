@@ -232,16 +232,16 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 	constant =
 		lit("constant") > "{"
 		> lit("symbol")
-		> uint_          [_a = _1]
+		> uint_          [_a = symbToInt(_1)]
 		> lit(END_MARKER)
 		> -(
 			lit("ascii")
-			> uint_          [_b = _1]
+			> uint_          [_b = symbToInt(_1)]
 			> lit(END_MARKER)
 		)
 		> -(
 			lit("latex")
-			> uint_      [_c = _1]
+			> uint_      [_c = symbToInt(_1)]
 			> lit(END_MARKER)
 		)
 		> lit("}")      [_val = new_<Const>(_a, _b, _c)];
