@@ -17,10 +17,8 @@ struct Symbol : public mdl::Symbol {
 	Symbol(uint l, Type* t) : mdl::Symbol(l), val(t) { var = true; }
 	Symbol(uint l, Const* c): mdl::Symbol(l), val(c) { cst = true; }
 	Symbol(const Symbol& s) : mdl::Symbol(s) {
-		if (s.var)
-			val.type = new User<Type>(s.type());
-		else if (s.cst)
-			val.constant = new User<Const>(s.constant());
+		if (s.var) val.type = new User<Type>(s.type());
+		else if (s.cst) val.constant = new User<Const>(s.constant());
 	}
 	~Symbol() { clear_type_const(); }
 

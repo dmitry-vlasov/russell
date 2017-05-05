@@ -16,26 +16,25 @@ struct Maps {
 	mdl::Symbol turnstile;
 };
 
-inline uint translate_symb(uint s) {
-	if (!Sys::get().math.get<Const>().has(s))
-		return s;
-	else {
-		const Const* c = Sys::mod().math.get<Const>().access(s);
-		return mdl::Symbol::is_undef(c->ascii) ? s : c->ascii;
-	}
+inline uint translate_symb(const Symbol& s) {
+	if (s.cst) {
+		const Const* c = s.val.constant->get();
+		return mdl::Symbol::is_undef(c->ascii) ? s.lit : c->ascii;
+	} else
+		return s.lit;
 }
 
 mdl::Vect translate_expr(const Expr& ex, Maps& maps) {
 	mdl::Vect expr;
 	expr += maps.turnstile;
-	for (auto s : ex.symbols) expr += mdl::Symbol(translate_symb(s.lit), s.type());
+	for (auto& s : ex.symbols) expr += mdl::Symbol(translate_symb(s), s.type());
 	return expr;
 }
 
 mdl::Vect translate_term(const Expr& ex, const Type* tp, Maps& maps) {
 	mdl::Vect expr;
 	expr += mdl::Symbol(maps.types[tp]);
-	for (auto s : ex.symbols) expr += mdl::Symbol(translate_symb(s.lit), s.type());
+	for (auto& s : ex.symbols) expr += mdl::Symbol(translate_symb(s), s.type());
 	return expr;
 }
 
@@ -49,7 +48,7 @@ smm::Constant* translate_turnstile(Maps& maps) {
 
 smm::Constant* translate_const(const Const* c, Maps& maps) {
 	smm::Constant* constant = new smm::Constant;
-	constant->symb = mdl::Symbol(translate_symb(c->symb));
+	constant->symb = mdl::Symbol(mdl::Symbol::is_undef(c->ascii) ? c->id() : c->ascii);
 	return constant;
 }
 

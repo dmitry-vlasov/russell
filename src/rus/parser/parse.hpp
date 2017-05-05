@@ -385,6 +385,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 
 	VarStack var_stack;
 	qi::rule<Iterator, qi::unused_type> bar;
+	qi::rule<Iterator, uint(), unicode::space_type> liter;
 	qi::rule<Iterator, Symbol(), unicode::space_type> var;
 	qi::rule<Iterator, Symbol(), unicode::space_type> symb;
 	qi::rule<Iterator, uint(), unicode::space_type> id;

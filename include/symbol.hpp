@@ -20,7 +20,7 @@ namespace mdl {
 struct Symbol {
 	Symbol(): lit(UNDEF_LIT), var(false), cst(false), end(false), rep(false), fin(false) { }
 	Symbol(uint l, bool v = false) : lit(l), var(v), cst(false), end(false), rep(false), fin(false) { }
-	Symbol(const Symbol&) = default;
+	Symbol(const Symbol& s) : lit(s.lit), var(s.var), cst(s.cst), end(s.end), rep(s.rep), fin(s.fin) { }
 
 	bool operator == (const Symbol& s) const { return lit == s.lit; }
 	bool operator != (const Symbol& s) const { return !operator ==(s); }

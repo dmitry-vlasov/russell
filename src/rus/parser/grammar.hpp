@@ -50,11 +50,12 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 	const phoenix::function<DeleteComment> deleteComment;
 	const phoenix::function<AppendComment> appendComment;
 
-	bar  = lexeme[lit("-----")] >> * unicode::char_('-');
-	var  = lexeme[+(unicode::char_ - END_MARKER - unicode::space - unicode::char_("),"))] [_val = createSymb(_1)];
-	symb = lexeme[+(unicode::char_ - END_MARKER - unicode::space)] [_val = createSymb(_1)];
-	id   = lexeme[+ unicode::char_("a-zA-Z0-9_.\\-")]            [_val = idToInt(_1)];
-	path = lexeme[+(unicode::char_ - END_MARKER - unicode::space)];
+	bar   = lexeme[lit("-----")] >> * unicode::char_('-');
+	liter = lexeme[+(unicode::char_ - END_MARKER - unicode::space)] [_val = symbToInt(_1)];
+	var   = lexeme[+(unicode::char_ - END_MARKER - unicode::space - unicode::char_("),"))] [_val = createSymb(_1)];
+	symb  = lexeme[+(unicode::char_ - END_MARKER - unicode::space)] [_val = createSymb(_1)];
+	id    = lexeme[+ unicode::char_("a-zA-Z0-9_.\\-")]            [_val = idToInt(_1)];
+	path  = lexeme[+(unicode::char_ - END_MARKER - unicode::space)];
 
 	term  = + (symb [addSymbol(_val, _1)] | comment [deleteComment(_1)]) > eps [parseTerm(_val, _r1, phoenix::ref(var_stack))];
 	expr  = + (symb [addSymbol(_val, _1)] | comment [deleteComment(_1)]) > eps [parseExpr(_val, _r1, phoenix::ref(var_stack))];
@@ -231,17 +232,17 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"),
 
 	constant =
 		lit("constant") > "{"
-		> lit("symbol")
-		> uint_          [_a = symbToInt(_1)]
+		> lit("symbol")  [_b = phoenix::val(UNDEF_LIT), _c = phoenix::val(UNDEF_LIT)]
+		> liter          [_a = _1]
 		> lit(END_MARKER)
 		> -(
 			lit("ascii")
-			> uint_          [_b = symbToInt(_1)]
+			> liter          [_b = _1]
 			> lit(END_MARKER)
 		)
 		> -(
 			lit("latex")
-			> uint_      [_c = symbToInt(_1)]
+			> liter      [_c = _1]
 			> lit(END_MARKER)
 		)
 		> lit("}")      [_val = new_<Const>(_a, _b, _c)];

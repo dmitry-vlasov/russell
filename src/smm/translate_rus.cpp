@@ -84,7 +84,7 @@ void translate_constant(const Constant* constant, State& state) {
 	rus::Const* c = nullptr;
 	auto p = math_consts().find(s.lit);
 	if (p == math_consts().end())
-		c = new rus::Const(s.lit, -1, -1);
+		c = new rus::Const(s.lit, UNDEF_LIT, UNDEF_LIT);
 	else
 		c = new rus::Const(p->second.symb, p->second.ascii, p->second.latex);
 	if (state.constants.count(c->symb))

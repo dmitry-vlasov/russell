@@ -18,12 +18,12 @@ struct Comment {
 };
 
 struct Const : public Owner<Const> {
-	Const(uint s, uint a, uint l) : Owner(s), symb(s), ascii(s), latex(l) { }
+	Const(uint s, uint a, uint l) : Owner(s), symb(s), ascii(a), latex(l) { }
 	Const(const Const& c) : Owner(c.id()), symb(c.symb), ascii(c.ascii), latex(c.latex), token(c.token) { }
-	uint symb;
-	uint ascii;
-	uint latex;
-	Token  token;
+	uint  symb;
+	uint  ascii;
+	uint  latex;
+	Token token;
 };
 
 struct Vars {
