@@ -12,30 +12,46 @@ struct Type;
 struct Rule;
 
 struct Symbol : public mdl::Symbol {
-	Symbol() { }
+	Symbol() : mdl::Symbol() { }
 	Symbol(uint l) : mdl::Symbol(l) { }
 	Symbol(uint l, Type* t) : mdl::Symbol(l), val(t) { var = true; }
 	Symbol(uint l, Const* c): mdl::Symbol(l), val(c) { cst = true; }
 	Symbol(const Symbol& s) : mdl::Symbol(s) {
-		if (s.var) val.type = new User<Type>(s.type());
-		else if (s.cst) val.constant = new User<Const>(s.constant());
+		if (s.var)
+			val.type = new User<Type>(s.type());
+		else if (s.cst)
+			val.constant = new User<Const>(s.constant());
 	}
-	~Symbol() { clear_type_const(); }
-
-	void clear_type_const() {
-		if (var) delete val.type;
-		else if (cst) delete val.constant;
-		var = false; cst = false;
+	Symbol(Symbol&& s) : mdl::Symbol(s) {
+		if (s.var)
+			val.type = s.val.type;
+		else if (s.cst)
+			val.constant = s.val.constant;
+		s.var = false;
+		s.cst = false;
+		s.val.type = nullptr;
 	}
+	~Symbol() { clear(); }
 
-	union Value {
-		Value(): constant(nullptr) { }
-		Value(Type* t) : type(new User<Type>(t)) { }
-		Value(Const* c) : constant(new User<Const>(c)) { }
-		User<Const>* constant;
-		User<Type>*  type;
-	};
-	Value val;
+	void operator = (const Symbol& s) {
+		clear();
+		mdl::Symbol::operator=(s);
+		if (s.var)
+			val.type = new User<Type>(s.type());
+		else if (s.cst)
+			val.constant = new User<Const>(s.constant());
+	}
+	void operator = (Symbol&& s) {
+		clear();
+		mdl::Symbol::operator=(s);
+		if (s.var)
+			val.type = s.val.type;
+		else if (s.cst)
+			val.constant = s.val.constant;
+		s.var = false;
+		s.cst = false;
+		s.val.type = nullptr;
+	}
 
 	Type* type() { return var ? val.type->get() : nullptr; }
 	Const* constant() { return cst ? val.constant->get() : nullptr; }
@@ -43,13 +59,13 @@ struct Symbol : public mdl::Symbol {
 	const Const* constant() const { return cst ? val.constant->get() : nullptr; }
 
 	void set_type(Type* t) {
-		clear_type_const();
+		clear();
 		val.type = new User<Type>(t);
 		var = true;
 	}
 
 	void set_const(Const* c) {
-		clear_type_const();
+		clear();
 		val.constant = new User<Const>(c);
 		cst = true;
 	}
@@ -63,6 +79,25 @@ struct Symbol : public mdl::Symbol {
 	private:
 		static std::hash<uint> hash;
 	};
+
+private:
+	union Value {
+		Value(): constant(nullptr) { }
+		Value(Type* t) : type(new User<Type>(t)) { }
+		Value(Const* c) : constant(new User<Const>(c)) { }
+		User<Const>* constant;
+		User<Type>*  type;
+	};
+	Value val;
+
+	void clear() {
+		if (var)
+			delete val.type;
+		else if (cst)
+			delete val.constant;
+		var = false;
+		cst = false;
+	}
 };
 
 typedef vector<Symbol> Symbols;

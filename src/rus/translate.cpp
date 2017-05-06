@@ -18,7 +18,7 @@ struct Maps {
 
 inline uint translate_symb(const Symbol& s) {
 	if (s.cst) {
-		const Const* c = s.val.constant->get();
+		const Const* c = s.constant();
 		return mdl::Symbol::is_undef(c->ascii) ? s.lit : c->ascii;
 	} else
 		return s.lit;

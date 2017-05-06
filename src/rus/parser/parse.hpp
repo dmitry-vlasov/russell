@@ -28,30 +28,30 @@ struct MakeString {
 };
 
 struct VarStack {
-	vector<Vars> stack;
-	map<Symbol, Type*> mapping;
+	stack<vector<uint>> vstack;
+	map<uint, Type*> mapping;
 };
 
 struct PushVars {
 	template <typename T1>
 	struct result { typedef void type; };
 	void operator()(VarStack& var_stack) const {
-		var_stack.stack.push_back(Vars());
+		var_stack.vstack.push(vector<uint>());
 	}
 };
 
 struct AddVars {
 	template <typename T1, typename T2>
 	struct result { typedef void type; };
-	void operator()(VarStack& var_stack, Vars vars) const {
-		for (auto v : vars.v) {
-			var_stack.stack.back().v.push_back(v);
+	void operator()(VarStack& var_stack, Vars& vars) const {
+		for (auto& v : vars.v) {
+			var_stack.vstack.top().push_back(v.lit);
 			var_stack.mapping[v.lit] = v.type();
 		}
 	}
 	void operator()(VarStack& var_stack, Theorem* thm) const {
-		for (auto v : thm->ass.vars.v) {
-			var_stack.stack.back().v.push_back(v);
+		for (auto& v : thm->ass.vars.v) {
+			var_stack.vstack.top().push_back(v.lit);
 			var_stack.mapping[v.lit] = v.type();
 		}
 	}
@@ -61,10 +61,10 @@ struct PopVars {
 	template <typename T1>
 	struct result { typedef void type; };
 	void operator()(VarStack& var_stack) const {
-		Vars& vars = var_stack.stack.back();
-		for (auto v : vars.v)
-			var_stack.mapping.erase(v.lit);
-		var_stack.stack.pop_back();
+		vector<uint>& vars = var_stack.vstack.top();
+		for (uint v : vars)
+			var_stack.mapping.erase(v);
+		var_stack.vstack.pop();
 	}
 };
 
