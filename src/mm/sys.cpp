@@ -76,12 +76,39 @@ string show() {
 	return info();
 }
 
+Return options(const vector<string>& args) {
+	po::variables_map vm;
+	Return ret = mdl::options(args, vm);
+	if (!ret) return ret;
+	Conf& conf = Sys::conf();
+	init_common_options(vm, conf);
+	if (vm.count("cut"))       conf.mode = Mode::CUT;
+	if (vm.count("merge"))     conf.mode = Mode::MERGE;
+	if (vm.count("translate")) conf.mode = Mode::TRANSL;
+	if (!conf.deep) {
+		if (conf.out.ext == "smm") {
+			if (conf.mode != Mode::TRANSL) return Return("translation target already chosen", false);
+			conf.target = Lang::SMM;
+
+		} else if (conf.out.ext == "mm" && conf.mode == Mode::TRANSL) {
+			return Return("makes no sense traslating from a language to itself", false);
+		}
+		if (conf.mode == Mode::CUT) {
+			return Return("makes no sense cutting without --deep option", false);
+		}
+	}
+	smm::Sys::conf().in = conf.out;
+	smm::Sys::conf().in.ext = "smm";
+	return Return();
+}
+
 Sys::Sys() {
 	action["read"]   = wrap_action([](const Args& args) { parse(Lex::getInt(args[0])); return Return(); }, 1);
 	action["transl"] = wrap_action([](const Args& args) { translate(Lex::getInt(args[0]), Lex::getInt(args[1])); return Return(); }, 2);
 	action["write"]  = wrap_action([](const Args& args) { write(Lex::getInt(args[0])); return Return(); }, 1);
 	action["info"]   = wrap_action([](const Args&) { info(); return Return(); }, 0);
 	action["show"]   = wrap_action([](const Args&) { show(); return Return(); }, 0);
+	action["opts"]   = wrap_action([](const Args& args) { return options(args); }, -1);
 }
 
 void run() {

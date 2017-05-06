@@ -97,6 +97,31 @@ string show() {
 	return info();
 }
 
+Return options(const vector<string>& args) {
+	po::variables_map vm;
+	Return ret = mdl::options(args, vm);
+	if (!ret) return ret;
+	Conf& conf = Sys::conf();
+	init_common_options(vm, conf);
+	conf.target = chooseTgtLang(vm);
+	if (!conf.deep && conf.target == Lang::NONE) {
+		if (conf.out.ext == "mm") conf.target = Lang::MM;
+		if (conf.out.ext == "rus") conf.target = Lang::RUS;
+	}
+	switch (conf.target) {
+	case Lang::MM :
+		mm::Sys::conf().in = conf.out;
+		mm::Sys::conf().in.ext = "mm";
+		break;
+	case Lang::RUS :
+		rus::Sys::conf().in = conf.out;
+		rus::Sys::conf().in.ext = "rus";
+		break;
+	}
+	if (conf.in.name.empty()) return Return("no input file name", false);
+	return Return();
+}
+
 Sys::Sys() {
 	action["read"]   = wrap_action([](const Args& args) { parse(Lex::getInt(args[0])); return Return(); }, 1);
 	action["verify"] = wrap_action([](const Args&) { verify(); return Return(); }, 0);
@@ -104,6 +129,7 @@ Sys::Sys() {
 	action["write"]  = wrap_action([](const Args& args) { write(Lex::getInt(args[0])); return Return(); }, 1);
 	action["info"]   = wrap_action([](const Args&) { info(); return Return(); }, 0);
 	action["show"]   = wrap_action([](const Args&) { info(); return Return(); }, 0);
+	action["opts"]   = wrap_action([](const Args& args) { return options(args); }, -1);
 }
 
 void run() {

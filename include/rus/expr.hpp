@@ -124,13 +124,6 @@ struct Tree {
 		User<Rule> rule;
 		Children   children;
 	};
-	union Value {
-		Value() : var(nullptr) { }
-		Value(Node* n) : node(n) { }
-		Value(Symbol* v) : var(v) { }
-		Node*   node;
-		Symbol* var;
-	};
 
 	Tree(const Symbol& v);
 	Tree(Rule* r, const Children& ch);
@@ -183,6 +176,14 @@ struct Tree {
 	const Type* type() const;
 
 private:
+	union Value {
+		Value() : var(nullptr) { }
+		Value(Node* n) : node(n) { }
+		Value(Symbol* v) : var(v) { }
+		Node*   node;
+		Symbol* var;
+	};
+
 	Value val;
 	void delete_val() {
 		if (!val.var) return;

@@ -1,8 +1,6 @@
 #include <boost/program_options.hpp>
 
-#include "daem/globals.hpp"
-
-namespace po = boost::program_options;
+#include "daem/sys.hpp"
 
 using namespace std;
 using namespace mdl;

@@ -178,6 +178,26 @@ string show() {
 	return info();
 }
 
+Return options(const vector<string>& args) {
+	po::variables_map vm;
+	Return ret = mdl::options(args, vm);
+	if (!ret) return ret;
+	Conf& conf = Sys::conf();
+	init_common_options(vm, conf);
+	if (vm.count("translate")) {
+		conf.mode = Mode::TRANSL;
+		conf.target = Lang::SMM;
+		smm::Sys::conf().in = conf.out;
+		smm::Sys::conf().in.ext = "smm";
+	}
+	if (vm.count("prove")) {
+		conf.mode = Mode::PROVE;
+		conf.target = Lang::RUS;
+	}
+	if (conf.in.name.empty()) return Return("no input file name", false);
+	return Return();
+}
+
 Sys::Sys() {
 	action["read"]   = wrap_action([](const Args& args) { read(Lex::getInt(args[0])); return Return(); }, 1);
 	action["verify"] = wrap_action([](const Args& args) { verify_(Lex::getInt(args[0])); return Return(); }, 1);
@@ -185,6 +205,7 @@ Sys::Sys() {
 	action["write"]  = wrap_action([](const Args& args) { write(Lex::getInt(args[0])); return Return(); }, 1);
 	action["info"]   = wrap_action([](const Args&) { info(); return Return(); }, 0);
 	action["show"]   = wrap_action([](const Args&) { info(); return Return(); }, 0);
+	action["opts"]   = wrap_action([](const Args& args) { return options(args); }, -1);
 }
 
 void run() {

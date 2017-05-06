@@ -47,6 +47,7 @@ template<class T>
 using Owner = mdl::Owner<T, Sys>;
 
 void run();
+bool conf(const po::variables_map& vm);
 
 }} // mdl::rus
 
