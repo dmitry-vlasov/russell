@@ -19,6 +19,7 @@ mdl_SOURCES = \
 
 mdl_LDADD = \
 	$(top_builddir)/lib/libmm.la \
+	$(top_builddir)/lib/libmdld.la \
 	$(top_builddir)/lib/librus.la \
 	$(top_builddir)/lib/libsmm.la \
 	$(top_builddir)/lib/libcom.la \

@@ -113,9 +113,10 @@ am_mdl_OBJECTS = main.$(OBJEXT)
 mdl_OBJECTS = $(am_mdl_OBJECTS)
 am__DEPENDENCIES_1 =
 mdl_DEPENDENCIES = $(top_builddir)/lib/libmm.la \
-	$(top_builddir)/lib/librus.la $(top_builddir)/lib/libsmm.la \
-	$(top_builddir)/lib/libcom.la $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+	$(top_builddir)/lib/libmdld.la $(top_builddir)/lib/librus.la \
+	$(top_builddir)/lib/libsmm.la $(top_builddir)/lib/libcom.la \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
@@ -373,6 +374,7 @@ mdl_SOURCES = \
 
 mdl_LDADD = \
 	$(top_builddir)/lib/libmm.la \
+	$(top_builddir)/lib/libmdld.la \
 	$(top_builddir)/lib/librus.la \
 	$(top_builddir)/lib/libsmm.la \
 	$(top_builddir)/lib/libcom.la \

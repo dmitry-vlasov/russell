@@ -13,10 +13,7 @@ AM_LDFLAGS = \
     $(BOOST_LDFLAGS) \
     $(PTHREAD_CFLAGS)
 
-bin_PROGRAMS = \
-	mdld
-
-noinst_LTLIBRARIES = \
+lib_LTLIBRARIES = \
 	libmdld.la
 
 if SPLIT_COMPILE
@@ -27,17 +24,7 @@ libmdld_la_SOURCES = \
 	all.cpp
 endif
 
-mdld_SOURCES = \
-	main.cpp
-
 libmdld_la_LIBADD = \
-	$(BOOST_FILESYSTEM_LIB) \
-    $(BOOST_SYSTEM_LIB) \
-    $(BOOST_PROGRAM_OPTIONS_LIB) \
-    $(PTHREAD_CFLAGS)
-
-mdld_LDADD = \
-	libmdld.la \
 	$(BOOST_FILESYSTEM_LIB) \
     $(BOOST_SYSTEM_LIB) \
     $(BOOST_PROGRAM_OPTIONS_LIB) \
