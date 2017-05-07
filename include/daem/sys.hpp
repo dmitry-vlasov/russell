@@ -2,6 +2,7 @@
 
 #include "rus/ast.hpp"
 #include "smm/ast.hpp"
+#include "mm/ast.hpp"
 #include "timer.hpp"
 
 namespace mdl { namespace daemon {
@@ -15,42 +16,16 @@ struct Config {
 	uint   port;
 	string host;
 	string logs;
-
 };
-
-struct State {
-	enum class Work { WORK, ERROR, EXIT, DEFAULT = WORK };
-	enum class Lang { MM, SMM, RUS, DEFAULT = RUS };
-	State(Work w = Work::DEFAULT, Lang l = Lang::DEFAULT) : work(w), lang(l) { }
-	Work work;
-	Lang lang;
-};
-
-struct Response {
-	Response() : state(), ret() { }
-	Response(State s, const string& r = "") : state(s), ret(r) { }
-	State  state;
-	string ret;
-};
-
-struct Request {
-	Request(State s) : state(s), args() { }
-	typedef vector<string> Args;
-	State state;
-	Args  args;
-};
-
-typedef Response (*Command) (Request);
 
 struct Daemon {
 	Config config;
-	State  state;
 	void run();
 
 	static const Daemon& get() { return mod(); }
 	static Daemon& mod() { static Daemon d; return d; }
 private:
-	Daemon() : config(), state() { }
+	Daemon() : config() { }
 };
 }} // mdl::daemon
 

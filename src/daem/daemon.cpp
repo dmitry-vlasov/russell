@@ -2,49 +2,13 @@
 
 namespace mdl { namespace daemon {
 
-Command create_command(const string& c) {
+Lang make_args(const string& c, Args& args) {
 	std::istringstream command(c);
-	string name;
-	getline(command, name, ' ');
-	if (name == "lang") return [](Request req) {
-		if (req.args[1] == "mm")  return Response(State(req.state.work, State::Lang::MM));
-		if (req.args[1] == "smm") return Response(State(req.state.work, State::Lang::SMM));
-		if (req.args[1] == "rus") return Response(State(req.state.work, State::Lang::RUS));
-		return Response(State(State::Work::ERROR));
-	};
-	/*
-	if (name == "source") return [](Request req) {
-		switch (req.state.lang) {
-		case State::Lang::MM:  Lib<mm::Source>::get().current  = req.args[1]; break;
-		case State::Lang::SMM: Lib<smm::Source>::get().current = req.args[1]; break;
-		case State::Lang::RUS: Lib<rus::Source>::get().current = req.args[1]; break;
-		}
-		return Response(req.state);
-	};
-	if (name == "read") {
-		switch (req.state.lang) {
-		case State::Lang::MM:  Lib<mm::Source>::get().sys().read(); break;
-		case State::Lang::SMM: Lib<smm::Source>::get().sys().read(); break;
-		case State::Lang::RUS: Lib<rus::Source>::get().sys().read(); break;
-		}
-		return Response(req.state);
-	};
-	*/
-/*	if (name == "write")   return new Write(d, c);
-	if (name == "outline") return new Outline(d, c);
-	if (name == "struct")  return new Struct(d, c);
-	if (name == "def")     return new Def(d, c);
-	if (name == "info") return new Info(d, c);*/
-	if (name == "exit") return [](Request req) { return Response(State(State::Work::EXIT), "exiting"); };
-	return [](Request) { return Response(); };
-}
-
-Request create_request(const string& c, State s) {
-	Request req(s);
-	std::istringstream command(c);
+	string lang;
+	if (!getline(command, lang, ' ')) return Lang::NONE;
 	string arg;
-	while (getline(command, arg, ' ')) req.args.push_back(arg);
-	return req;
+	while (getline(command, arg, ' ')) args.push_back(arg);
+	return chooseLang(lang);
 }
 
 string get_request() {
@@ -55,12 +19,19 @@ void send_response(const string& response) {
 }
 
 void Daemon::run() {
-	while (state.work != State::Work::EXIT) {
-		Request request = create_request(get_request(), state);
-		Command command = create_command(request.args[0]);
-		Response response = command(request);
-		state = response.state;
-		send_response(response.ret);
+	while (true) {
+		string request = get_request();
+		if (request == "exit" || request == "cancel" || request == "quit") return;
+		Args args;
+		Return ret;
+		Lang lang = make_args(request, args);
+		switch (lang) {
+		case Lang::RUS : ret = rus::Sys::mod().execute(args); break;
+		case Lang::SMM : ret = smm::Sys::mod().execute(args); break;
+		case Lang::MM  : ret = mm::Sys::mod().execute(args);  break;
+		case Lang::NONE: cout << "no language is chosen" << endl; return;
+		}
+		send_response(ret.to_string());
 	}
 }
 

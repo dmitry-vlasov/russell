@@ -173,6 +173,15 @@ struct Sys {
 	Math   math;
 	map<string, Function> action;
 
+	Return execute(const Args& all) {
+		if (all.empty()) return Return("no action is chosen", false);
+		Args args(all);
+		string act = args[0];
+		if (!action.count(act)) return Return("action " + act +" is unknown", false);
+		args.erase(args.begin());
+		return action.at(act)(args);
+	}
+
 	static const System& get() { return mod(); }
 	static System& mod()   { return Lib<System>::mod().access();  }
 	static Io& io()        { return Lib<Io>::mod().access();  }

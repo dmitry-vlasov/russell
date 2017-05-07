@@ -11,6 +11,13 @@ struct Return {
 	string text;
 	any    data;
 	bool   success;
+
+	string to_string() const {
+		return (success ? string("0") : string("1")) + text;
+	}
+	static Return from_string(const string& s) {
+		return Return(s.substr(1), s[0] == '0');
+	}
 };
 
 typedef vector<string> Args;
