@@ -44,22 +44,22 @@ echo "MM <-> SMM TRANSLATION"
 echo "----------------------"
 
 echo "cut: mm -> mm"
-check "${binpath}/mdl --lang-src mm -d -c -v -i ${file}.mm --root-out mm -o mm"
+check "${binpath}/mdl --lang-src mm --deep --cut -v -i ${file}.mm --root-out mm -o mm"
 echo -e 'done\n\n'
 
 
 echo "mm -> smm"
-check "${binpath}/mdl --lang-src mm -t -d --info -v --root-in mm -i ${file}.mm  --root-out smm -o ${file}.smm"
+check "${binpath}/mdl --lang-src mm -t --deep --info -v --root-in mm -i ${file}.mm  --root-out smm -o ${file}.smm"
 echo -e 'done\n\n'
 
 
 echo "smm -> mm"
-check "${binpath}/mdl --lang-src smm --lang-tgt mm -d -v --root-in smm -i ${file}.smm --root-out mm-0 -o ${file}.mm"
+check "${binpath}/mdl --lang-src smm --lang-tgt mm --deep -v --root-in smm -i ${file}.smm --root-out mm-0 -o ${file}.mm"
 echo -e 'done\n\n'
 
 
 echo "merge: mm -> mm"
-check "${binpath}/mdl --lang-src mm -m -v --root-in mm-0 -i ${file}.mm -o ${file}-0.mm"
+check "${binpath}/mdl --lang-src mm --merge -v --root-in mm-0 -i ${file}.mm -o ${file}-0.mm"
 echo -e 'done\n\n'
 
 echo "verify mm"
@@ -74,12 +74,12 @@ echo "MM <-> RUS TRANSLATION"
 echo "----------------------"
 
 echo "smm -> rus"
-check "${binpath}/mdl --lang-src smm --lang-tgt rus -d --info -v --root-in smm -i ${file}.smm --root-out rus -o ${file}.rus"
+check "${binpath}/mdl --lang-src smm --lang-tgt rus --deep --info -v --root-in smm -i ${file}.smm --root-out rus -o ${file}.rus"
 echo -e 'done\n\n'
 
 
 echo "rus -> smm"
-check "${binpath}/mdl --lang-src rus -t -d --info -v --root-in rus -i ${file}.rus --root-out smm-1 -o ${file}.smm"
+check "${binpath}/mdl --lang-src rus -t --deep --info -v --root-in rus -i ${file}.rus --root-out smm-1 -o ${file}.smm"
 echo -e 'done\n\n'
 
 
@@ -89,12 +89,12 @@ echo -e 'done\n'
 
 
 echo "smm -> mm"
-check "${binpath}/mdl --lang-src smm -d --lang-tgt mm -v --root-in smm-1 -i ${file}.smm --root-out mm-1 -o ${file}.mm"
+check "${binpath}/mdl --lang-src smm --deep --lang-tgt mm -v --root-in smm-1 -i ${file}.smm --root-out mm-1 -o ${file}.mm"
 echo -e 'done\n\n'
 
 
 echo "mm -> smm"
-check "${binpath}/mdl --lang-src mm -d -t -v --root-in mm-1 -i ${file}.mm --root-out smm-2 -o ${file}.smm"
+check "${binpath}/mdl --lang-src mm --deep -t -v --root-in mm-1 -i ${file}.mm --root-out smm-2 -o ${file}.smm"
 echo -e 'done\n'
 
 
@@ -104,7 +104,7 @@ echo -e 'done\n'
 
 
 echo "merge: mm -> mm"
-check "${binpath}/mdl --lang-src mm -d -m -v --root-in mm-1 -i ${file}.mm -o ${file}-1.mm"
+check "${binpath}/mdl --lang-src mm --deep --merge -v --root-in mm-1 -i ${file}.mm -o ${file}-1.mm"
 echo -e 'done\n'
 
 echo "verify mm"

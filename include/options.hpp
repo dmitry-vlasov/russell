@@ -18,15 +18,15 @@ inline po::options_description init_option_descr() {
 		("out,o", po::value<string>(),  "output file")
 		("root-in", po::value<string>(), "input root directory (for inclusions)")
 		("root-out", po::value<string>(), "output root directory (for inclusions)")
-		("deep,d",      "deep translation")
+		("deep",        "deep translation")
 		("verbose,v",   "not be silent")
 		("info",        "info about math: timings, memory, stats")
 		("lang-tgt", po::value<string>(), "target language: rus, mm or smm")
 		("lang-src", po::value<string>(), "source language: rus, mm or smm")
 		("translate,t", "translate to target language")
 		("prove,p",     "prove as a Russell source")
-		("cut,c",       "cut source into pieces")
-		("merge,m",     "merge source from pieces")
+		("cut",         "cut source into pieces")
+		("merge",       "merge source from pieces")
 	;
 	return descr;
 }
