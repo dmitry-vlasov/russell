@@ -14,9 +14,9 @@ inline po::options_description init_option_descr() {
 	);
 	descr.add_options()
 		("help,h",      "print help message")
-		("in,i", po::value<string>(),   "input file")
-		("out,o", po::value<string>(),  "output file")
-		("root-in", po::value<string>(), "input root directory (for inclusions)")
+		("in,i",     po::value<string>(), "input file")
+		("out,o",    po::value<string>(), "output file")
+		("root-in",  po::value<string>(), "input root directory (for inclusions)")
 		("root-out", po::value<string>(), "output root directory (for inclusions)")
 		("deep",        "deep translation")
 		("verbose,v",   "not be silent")
@@ -27,6 +27,8 @@ inline po::options_description init_option_descr() {
 		("prove,p",     "prove as a Russell source")
 		("cut",         "cut source into pieces")
 		("merge",       "merge source from pieces")
+		("daemon,d",    "start a Russell daemon")
+		("console,c",   "start a Russell console")
 	;
 	return descr;
 }
@@ -36,10 +38,10 @@ inline void init_common_options(const po::variables_map& vm, Conf& conf) {
 	if (vm.count("out"))      conf.out.name_ext(vm["out"].as<string>());
 	if (vm.count("root-in"))  conf.in.root  = vm["root-in"].as<string>();
 	if (vm.count("root-out")) conf.out.root = vm["root-out"].as<string>();
-	if (vm.count("verbose")) conf.verbose = true;
-	if (vm.count("deep"))    conf.deep = true;
-	if (vm.count("info"))    conf.info = true;
-	if (vm.count("help"))    conf.help = true;
+	if (vm.count("verbose"))  conf.verbose = true;
+	if (vm.count("deep"))     conf.deep = true;
+	if (vm.count("info"))     conf.info = true;
+	if (vm.count("help"))     conf.help = true;
 }
 
 inline Lang chooseLang(const string& lang) {

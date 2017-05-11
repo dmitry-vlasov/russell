@@ -38,10 +38,10 @@ void Daemon::session() {
 
 Daemon::Daemon() : config(), endpoint(ip::tcp::v4(), config.port),
 acceptor(service, endpoint), socket(service), state(RUN) {
-	 while (!exit) {
+	while (state != EXIT) {
 		acceptor.accept(socket);
 		std::thread(Daemon::session).detach();
-	  }
+	}
 }
 
 string Daemon::get_request() {
