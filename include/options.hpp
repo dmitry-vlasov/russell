@@ -41,7 +41,6 @@ inline void init_common_options(const po::variables_map& vm, Conf& conf) {
 	if (vm.count("verbose"))  conf.verbose = true;
 	if (vm.count("deep"))     conf.deep = true;
 	if (vm.count("info"))     conf.info = true;
-	if (vm.count("help"))     conf.help = true;
 }
 
 inline Lang chooseLang(const string& lang) {
