@@ -6,7 +6,6 @@
 namespace mdl {
 
 enum class Lang { NONE, MM, SMM, RUS, DEFAULT = NONE };
-enum class Mode { NONE, TRANSL, CUT, MERGE, PROVE, DEFAULT = NONE };
 
 // Configuration for a deductive system
 struct Conf {
@@ -14,8 +13,7 @@ struct Conf {
 
 	Conf() :
 	verbose(false), deep(false),
-	in(), out(),
-	mode(Mode::DEFAULT), target(Lang::DEFAULT) { }
+	in(), out(), target(Lang::DEFAULT) { }
 
 	bool verbose;
 	bool deep;
@@ -23,8 +21,8 @@ struct Conf {
 	Path in;
 	Path out;
 
-	Mode mode;
-	Lang target;
+	string mode;
+	Lang   target;
 
 	Opts opts;
 };

@@ -178,6 +178,14 @@ string show() {
 	return info();
 }
 
+enum class Mode { TRANSL, PROVE, NONE };
+
+inline Mode choose(const string& s) {
+	if (s == "transl") return Mode::TRANSL;
+	if (s == "prove")  return Mode::PROVE;
+	return Mode::NONE;
+}
+
 Return options(const vector<string>& args) {
 	po::variables_map vm;
 	Return ret = mdl::options(args, vm);
@@ -185,13 +193,13 @@ Return options(const vector<string>& args) {
 	Conf& conf = Sys::conf();
 	init_common_options(vm, conf);
 	if (vm.count("translate")) {
-		conf.mode = Mode::TRANSL;
+		conf.mode = "transl";
 		conf.target = Lang::SMM;
 		smm::Sys::conf().in = conf.out;
 		smm::Sys::conf().in.ext = "smm";
 	}
 	if (vm.count("prove")) {
-		conf.mode = Mode::PROVE;
+		conf.mode = "prove";
 		conf.target = Lang::RUS;
 	}
 	if (conf.in.name.empty()) return Return("no input file name", false);
@@ -220,7 +228,7 @@ void run() {
 	parse();
 	verify_(src);
 
-	switch (Sys::conf().mode) {
+	switch (choose(Sys::conf().mode)) {
 	case Mode::PROVE:   break;
 	case Mode::TRANSL:  translate_(src, tgt); break;
 	default : break;

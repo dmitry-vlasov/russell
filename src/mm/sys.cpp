@@ -76,31 +76,7 @@ string show() {
 	return info();
 }
 
-Return options(const vector<string>& args) {
-	po::variables_map vm;
-	Return ret = mdl::options(args, vm);
-	if (!ret) return ret;
-	Conf& conf = Sys::conf();
-	init_common_options(vm, conf);
-	if (vm.count("cut"))       conf.mode = Mode::CUT;
-	if (vm.count("merge"))     conf.mode = Mode::MERGE;
-	if (vm.count("translate")) conf.mode = Mode::TRANSL;
-	if (!conf.deep) {
-		if (conf.out.ext == "smm") {
-			if (conf.mode != Mode::TRANSL) return Return("translation target already chosen", false);
-			conf.target = Lang::SMM;
-
-		} else if (conf.out.ext == "mm" && conf.mode == Mode::TRANSL) {
-			return Return("makes no sense traslating from a language to itself", false);
-		}
-		if (conf.mode == Mode::CUT) {
-			return Return("makes no sense cutting without --deep option", false);
-		}
-	}
-	smm::Sys::conf().in = conf.out;
-	smm::Sys::conf().in.ext = "smm";
-	return Return();
-}
+Return options(const vector<string>& args);
 
 Sys::Sys() {
 	action["read"]   = wrap_action([](const Args& args) { parse(Lex::getInt(args[0])); return Return(); }, 1);
@@ -111,22 +87,57 @@ Sys::Sys() {
 	action["opts"]   = wrap_action([](const Args& args) { return options(args); }, -1);
 }
 
+enum class Mode { CUT, MERGE, TRANSL, NONE };
+
+inline Mode choose(const string& s) {
+	if (s == "cut")    return Mode::CUT;
+	if (s == "transl") return Mode::TRANSL;
+	if (s == "merge")  return Mode::MERGE;
+	return Mode::NONE;
+}
+
+Return options(const vector<string>& args) {
+	po::variables_map vm;
+	Return ret = mdl::options(args, vm);
+	if (!ret) return ret;
+	Conf& conf = Sys::conf();
+	init_common_options(vm, conf);
+	if (vm.count("cut"))       conf.mode = "cut";
+	if (vm.count("merge"))     conf.mode = "merge";
+	if (vm.count("translate")) conf.mode = "transl";
+	if (!conf.deep) {
+		if (conf.out.ext == "smm") {
+			if (conf.mode != "transl") return Return("translation target already chosen", false);
+			conf.target = Lang::SMM;
+
+		} else if (conf.out.ext == "mm" && conf.mode == "transl") {
+			return Return("makes no sense traslating from a language to itself", false);
+		}
+		if (conf.mode == "cut") {
+			return Return("makes no sense cutting without --deep option", false);
+		}
+	}
+	smm::Sys::conf().in = conf.out;
+	smm::Sys::conf().in.ext = "smm";
+	return Return();
+}
+
 void run() {
 	Sys::timer()["total"].start();
 	uint src = Lex::toInt(Sys::conf().in.name);
 	uint tgt = Lex::toInt(Sys::conf().out.name);
 	if (Sys::conf().verbose)
 		cout << "processing file " << Sys::conf().in.name << " ... " << flush;
-	if (Sys::conf().mode == Mode::TRANSL)
+	if (Sys::conf().mode == "transl")
 		parse(src);
 	//cout << *source << endl;
-	switch (Sys::conf().mode) {
-	case Mode::CUT:    cut();              break;
-	case Mode::MERGE:  merge();            break;
+	switch (choose(Sys::conf().mode)) {
+	case Mode::CUT:    cut();               break;
+	case Mode::MERGE:  merge();             break;
 	case Mode::TRANSL: translate(src, tgt); break;
 	default : break;
 	}
-	if (Sys::conf().mode == Mode::TRANSL)
+	if (Sys::conf().mode == "transl")
 		write(tgt);
 	Sys::timer()["total"].stop();
 	if (Sys::conf().verbose)
