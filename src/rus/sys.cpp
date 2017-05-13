@@ -231,7 +231,7 @@ void run() {
 	Sys::timer()["total"].stop();
 	if (Sys::conf().verbose)
 		cout << "all done in " << Sys::timer()["total"] << endl;
-	if (Sys::conf().info)
+	if (Sys::conf().opts.count("info"))
 		cout << info() << endl;
 }
 

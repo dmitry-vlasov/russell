@@ -18,6 +18,7 @@ inline po::options_description init_option_descr() {
 		("out,o",    po::value<string>(), "output file")
 		("root-in",  po::value<string>(), "input root directory (for inclusions)")
 		("root-out", po::value<string>(), "output root directory (for inclusions)")
+		("opt",      po::value<string>(), "option in the form: opt_name=opt_value")
 		("deep",        "deep translation")
 		("verbose,v",   "not be silent")
 		("info",        "info about math: timings, memory, stats")
@@ -40,7 +41,14 @@ inline void init_common_options(const po::variables_map& vm, Conf& conf) {
 	if (vm.count("root-out")) conf.out.root = vm["root-out"].as<string>();
 	if (vm.count("verbose"))  conf.verbose = true;
 	if (vm.count("deep"))     conf.deep = true;
-	if (vm.count("info"))     conf.info = true;
+	if (vm.count("info"))     if (!conf.opts.count("info")) conf.opts["info"];
+	if (vm.count("opt")) {
+		string opt = vm["opt"].as<string>();
+		int i = opt.find_last_of("=");
+		string name = opt.substr(0, i);
+		string value = (i == string::npos) ? "" : opt.substr(i + 1);
+		conf.opts[name] = value;
+	}
 }
 
 inline Lang chooseLang(const string& lang) {

@@ -10,13 +10,14 @@ enum class Mode { NONE, TRANSL, CUT, MERGE, PROVE, DEFAULT = NONE };
 
 // Configuration for a deductive system
 struct Conf {
+	typedef map<string, string> Opts;
+
 	Conf() :
-	verbose(false), info(false), deep(false),
+	verbose(false), deep(false),
 	in(), out(),
 	mode(Mode::DEFAULT), target(Lang::DEFAULT) { }
 
 	bool verbose;
-	bool info;
 	bool deep;
 
 	Path in;
@@ -24,6 +25,8 @@ struct Conf {
 
 	Mode mode;
 	Lang target;
+
+	Opts opts;
 };
 
 }
