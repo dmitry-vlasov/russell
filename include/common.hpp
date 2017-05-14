@@ -131,9 +131,9 @@ struct Lib {
 		return *contents[current];
 	}
 	template<class TR>
-	T& access() {
+	TR& access() {
 		assert(contents.count(current));
-		return *contents[current];
+		return static_cast<TR&>(*contents[current]);
 	}
 	string current;
 

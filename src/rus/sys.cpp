@@ -86,14 +86,14 @@ void translate_(uint src, uint tgt) {
 	if (Sys::conf().verbose) cout << "done in " << Sys::timer()["translate"] << endl;
 }
 
-void write(uint tgt) {
+void write(uint tgt, bool deep) {
 	if (Sys::conf().verbose) cout << "writing " << Lex::toStr(tgt) << " ... " << flush;
 	Sys::timer()["write"].start();
 	switch (Sys::conf().target) {
 	case Lang::NONE: break;
 	case Lang::SMM: {
 		const smm::Source* target = smm::Sys::get().math.get<smm::Source>().access(tgt);
-		if (Sys::conf().deep) {
+		if (deep) {
 			deep_write(
 				target,
 				[](const smm::Source* src) -> const vector<smm::Node>& { return src->contents; },
@@ -105,7 +105,7 @@ void write(uint tgt) {
 	}
 	case Lang::RUS: {
 		const Source* source = Sys::get().math.get<Source>().access(tgt);
-		if (Sys::conf().deep) {
+		if (deep) {
 			deep_write(
 				source,
 				[](const Source* src) -> const vector<Node>& { return src->theory->nodes; },
@@ -210,7 +210,7 @@ Sys::Sys() {
 	action["read"]   = wrap_action([](const Args& args) { read(Lex::getInt(args[0])); return Return(); }, 1);
 	action["verify"] = wrap_action([](const Args& args) { verify_(Lex::getInt(args[0])); return Return(); }, 1);
 	action["transl"] = wrap_action([](const Args& args) { translate_(Lex::getInt(args[0]), Lex::getInt(args[1])); return Return(); }, 2);
-	action["write"]  = wrap_action([](const Args& args) { write(Lex::getInt(args[0])); return Return(); }, 1);
+	action["write"]  = wrap_action([](const Args& args) { write(Lex::getInt(args[0]), arg<bool>(args, "deep", false)); return Return(); }, 1);
 	action["info"]   = wrap_action([](const Args&) { info(); return Return(); }, 0);
 	action["show"]   = wrap_action([](const Args&) { info(); return Return(); }, 0);
 	action["opts"]   = wrap_action([](const Args& args) { return options(args); }, -1);
@@ -234,7 +234,7 @@ void run() {
 	default : break;
 	}
 
-	write(tgt);
+	write(tgt, Sys::get().conf().has_opt("deep"));
 
 	Sys::timer()["total"].stop();
 	if (Sys::conf().verbose)

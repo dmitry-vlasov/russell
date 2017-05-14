@@ -11,12 +11,9 @@ enum class Lang { NONE, MM, SMM, RUS, DEFAULT = NONE };
 struct Conf {
 	typedef map<string, string> Opts;
 
-	Conf() :
-	verbose(false), deep(false),
-	in(), out(), target(Lang::DEFAULT) { }
+	Conf() : verbose(false), in(), out(), target(Lang::DEFAULT) { }
 
 	bool verbose;
-	bool deep;
 
 	Path in;
 	Path out;
@@ -25,6 +22,8 @@ struct Conf {
 	Lang   target;
 
 	Opts opts;
+
+	bool has_opt(const string& name) const { return opts.count(name); }
 };
 
 }

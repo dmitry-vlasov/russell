@@ -46,7 +46,7 @@ void translate(uint src, uint tgt) {
 		cout << "done in " << Sys::timer()["translate"] << endl;
 }
 
-void write(uint tgt) {
+void write(uint tgt, bool deep) {
 	if (Sys::conf().verbose)
 		cout << "writing file " << Lex::toStr(tgt) << " ... " << flush;
 	Sys::timer()["write"].start();
@@ -54,7 +54,7 @@ void write(uint tgt) {
 	case Lang::NONE: break;
 	case Lang::MM: {
 		const mm::Source* target = mm::Sys::get().math.get<mm::Source>().access(tgt);
-		if (Sys::conf().deep) {
+		if (deep) {
 			deep_write(
 				target,
 				[](const mm::Source* src) -> const vector<mm::Node>& { return src->block->contents; },
@@ -67,7 +67,7 @@ void write(uint tgt) {
 	}	break;
 	case Lang::RUS: {
 		const rus::Source* target = rus::Sys::get().math.get<rus::Source>().access(tgt);
-		if (Sys::conf().deep) {
+		if (deep) {
 			deep_write(
 				target,
 				[](const rus::Source* src) -> const vector<rus::Node>& { return src->theory->nodes; },
@@ -104,7 +104,7 @@ Return options(const vector<string>& args) {
 	Conf& conf = Sys::conf();
 	init_common_options(vm, conf);
 	conf.target = chooseTgtLang(vm);
-	if (!conf.deep && conf.target == Lang::NONE) {
+	if (!vm.count("deep") && conf.target == Lang::NONE) {
 		if (conf.out.ext == "mm") conf.target = Lang::MM;
 		if (conf.out.ext == "rus") conf.target = Lang::RUS;
 	}
@@ -126,7 +126,7 @@ Sys::Sys() {
 	action["read"]   = wrap_action([](const Args& args) { parse(Lex::getInt(args[0])); return Return(); }, 1);
 	action["verify"] = wrap_action([](const Args&) { verify(); return Return(); }, 0);
 	action["transl"] = wrap_action([](const Args& args) { translate(Lex::getInt(args[0]), Lex::getInt(args[1])); return Return(); }, 2);
-	action["write"]  = wrap_action([](const Args& args) { write(Lex::getInt(args[0])); return Return(); }, 1);
+	action["write"]  = wrap_action([](const Args& args) { write(Lex::getInt(args[0]), arg<bool>(args, "deep", false)); return Return(); }, 1);
 	action["info"]   = wrap_action([](const Args&) { info(); return Return(); }, 0);
 	action["show"]   = wrap_action([](const Args&) { info(); return Return(); }, 0);
 	action["opts"]   = wrap_action([](const Args& args) { return options(args); }, -1);
@@ -143,7 +143,7 @@ void run() {
 	parse(src);
 	verify();
 	translate(src, tgt);
-	write(tgt);
+	write(tgt, Sys::get().conf().has_opt("deep"));
 
 	Sys::timer()["total"].stop();
 	if (Sys::conf().verbose)

@@ -40,7 +40,7 @@ inline void init_common_options(const po::variables_map& vm, Conf& conf) {
 	if (vm.count("root-in"))  conf.in.root  = vm["root-in"].as<string>();
 	if (vm.count("root-out")) conf.out.root = vm["root-out"].as<string>();
 	if (vm.count("verbose"))  conf.verbose = true;
-	if (vm.count("deep"))     conf.deep = true;
+	if (vm.count("deep"))     if (!conf.opts.count("deep")) conf.opts["deep"];
 	if (vm.count("info"))     if (!conf.opts.count("info")) conf.opts["info"];
 	if (vm.count("opt")) {
 		string opt = vm["opt"].as<string>();
@@ -68,6 +68,15 @@ inline Lang chooseTgtLang(const po::variables_map& vm) {
 
 inline void convert_to_argv(const vector<string>& args, const char* argv[]) {
 	for (auto& s : args) *(argv ++) = s.c_str();
+}
+
+template<class T> T arg(const Args& args, const string& name, T def);
+
+
+template<>
+inline bool arg<bool>(const Args& args, const string& name, bool def) {
+	for (auto& arg : args) if (arg == name) return true;
+	return false;
 }
 
 inline Return options(int argc, const char* argv[], po::variables_map& vm) {

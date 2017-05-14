@@ -47,10 +47,10 @@ string Math::show() const {
 	return info();
 }
 
-void write(uint tgt) {
+void write(uint tgt, bool deep) {
 	Sys::timer()["write"].start();
 	const smm::Source* target = smm::Sys::get().math.sources.access(tgt);
-	if (Sys::conf().deep) {
+	if (deep) {
 		deep_write(
 			target,
 			[](const smm::Source* src) -> const vector<smm::Node>& { return src->contents; },
@@ -81,7 +81,7 @@ Return options(const vector<string>& args);
 Sys::Sys() {
 	action["read"]   = wrap_action([](const Args& args) { parse(Lex::getInt(args[0])); return Return(); }, 1);
 	action["transl"] = wrap_action([](const Args& args) { translate(Lex::getInt(args[0]), Lex::getInt(args[1])); return Return(); }, 2);
-	action["write"]  = wrap_action([](const Args& args) { write(Lex::getInt(args[0])); return Return(); }, 1);
+	action["write"]  = wrap_action([](const Args& args) { write(Lex::getInt(args[0]), arg<bool>(args, "deep", false)); return Return(); }, 1);
 	action["info"]   = wrap_action([](const Args&) { info(); return Return(); }, 0);
 	action["show"]   = wrap_action([](const Args&) { show(); return Return(); }, 0);
 	action["opts"]   = wrap_action([](const Args& args) { return options(args); }, -1);
@@ -105,7 +105,7 @@ Return options(const vector<string>& args) {
 	if (vm.count("cut"))       conf.mode = "cut";
 	if (vm.count("merge"))     conf.mode = "merge";
 	if (vm.count("translate")) conf.mode = "transl";
-	if (!conf.deep) {
+	if (!vm.count("deep")) {
 		if (conf.out.ext == "smm") {
 			if (conf.mode != "transl") return Return("translation target already chosen", false);
 			conf.target = Lang::SMM;
@@ -138,7 +138,7 @@ void run() {
 	default : break;
 	}
 	if (Sys::conf().mode == "transl")
-		write(tgt);
+		write(tgt, Sys::get().conf().has_opt("deep"));
 	Sys::timer()["total"].stop();
 	if (Sys::conf().verbose)
 		cout << "done in " << Sys::timer()["total"] << endl;
