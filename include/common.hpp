@@ -31,6 +31,11 @@ void join(vector<T>& v1, const vector<T>& v2) {
 	for (auto p : v2) v1.push_back(p);
 }
 
+inline ostream& operator << (ostream& os, const Args& args) {
+	for (auto& arg : args) os << arg << " ";
+	return os;
+}
+
 template<class T>
 size_t memvol(const T& x) {
 	return 0;
@@ -116,50 +121,50 @@ struct Lib {
 	static const Lib& get() { return mod(); }
 	static Lib& mod() { static Lib lib; return lib; }
 
-	void init(const string& curr) {
-		current = curr;
-		contents[current].reset(new T());
+	void init(const string& s) {
+		contents[s].reset(new T(s));
 	}
 	template<class TR>
-	void init(const string& curr) {
-		current = curr;
-		contents[current].reset(new TR());
+	void init(const string& s) {
+		contents[s].reset(new TR(s));
 	}
 
-	T& access() {
-		assert(contents.count(current));
-		return *contents[current];
+	bool has(const string& s) const {
+		return contents.count(s);
 	}
+
+	T& access(const string& s) {
+		if (!has(s)) init(s);
+		return *contents[s];
+	}
+
 	template<class TR>
-	TR& access() {
-		assert(contents.count(current));
-		return static_cast<TR&>(*contents[current]);
+	TR& access(const string& s) {
+		if (!has(s)) init<TR>(s);
+		return static_cast<TR&>(*contents[s]);
 	}
-	string current;
 
 private:
 	map<string, unique_ptr<T>> contents;
-	Lib() : contents(), current("default") { }
+	Lib() : contents() { }
 };
 
 struct Io {
+	Io(const string& n) :  name(n) { }
 	virtual ~Io() { };
-	virtual ostream& out() = 0;
-	virtual ostream& err() = 0;
+	virtual ostream& out() { return cout; }
+	virtual ostream& err() { return cerr; }
 	struct Std;
-};
-
-struct Io::Std : public Io {
-	virtual ~Std() { };
-	ostream& out() override { return cout; }
-	ostream& err() override { return cerr; }
+	const string name;
 };
 
 struct Timers {
+	Timers(const string& n) : name(n) { }
 	Timer& operator[] (const string& s) { return timers[s]; }
 	const Timer& operator[] (const string& s) const { return timers.at(s); }
 	string show() const;
 	map<string, Timer> timers;
+	const string name;
 };
 
 // Template for a deductive system
@@ -167,42 +172,53 @@ template<class S, class M>
 struct Sys {
 	typedef S System;
 	typedef M Math;
+	typedef map<string, Action> Actions;
 
-	Timers timers;
-	Conf   config;
-	Math   math;
-	map<string, Function> action;
+	Sys(const string& n) : name(n), timers(n) { }
 
-	Return execute(const Args& all) {
+	const string name;
+	Timers  timers;
+	Conf    config;
+	Math    math;
+	Actions actions;
+
+	Return exec(const Args& all) {
 		if (all.empty()) return Return("no action is chosen", false);
 		Args args(all);
-		string act = args[0];
-		if (!action.count(act)) return Return("action " + act +" is unknown", false);
+		string action = args[0];
+		if (!actions.count(action)) return Return("action " + action +" is unknown", false);
 		args.erase(args.begin());
-		return action.at(act)(args);
+		timers[action].start();
+		Return ret = actions.at(action)(args);
+		timers[action].stop();
+		return ret;
 	}
 
-	static const System& get() { return mod(); }
-	static System& mod()   { return Lib<System>::mod().access();  }
-	static Io& io()        { return Lib<Io>::mod().access();  }
-	static Timers& timer() { return mod().timers;  }
-	static Conf& conf()    { return mod().config;  }
+	Return exec_and_show(const Args& args) {
+		if (conf(name).verbose())
+			io(name).out() << "doing: " << args << " ... " << flush;
+		Return ret = exec(args);
+		if (conf(name).verbose())
+			io(name).out() << "done in " << timers[args[0]] << endl;
+		if (!ret)
+			io(name).err() << ret.text << endl;
+		else if (conf(name).verbose())
+			io(name).out() << ret.text << endl;
+		return ret;
+	}
 
-	static void change(const string& name) {
-		if (!instances().count(name)) throw Error("no such sys instance");
-		Lib<System>::mod().current = name;
-		Lib<Io>::mod().current = name;
-	}
-	template<class IO = Io::Std>
-	static void init(const string& name = "default") {
-		if (instances().count(name)) throw Error("sys instance already initialized");
-		instances().insert(name);
-		Lib<Io>::mod().init<IO>(name);
-		Lib<System>::mod().init(name);
-	}
+	static const System& get(const string& s = "") { return mod(s); }
+	static System& mod(const string& s = "")       { return Lib<System>::mod().access(choose(s));  }
+	static Io& io(const string& s = "")            { return Lib<Io>::mod().access(choose(s));  }
+	static Timers& timer(const string& s = "")     { return mod(choose(s)).timers;  }
+	static Conf& conf(const string& s = "")        { return mod(choose(s)).config;  }
+
+	void set_current() { current() = name; }
 
 private:
+	static string choose(const string& s) { return s.size() ? s : current(); }
 	static set<string> instances() { static set<string> inst; return inst; }
+	static string& current() { static string curr; return curr; }
 };
 
 template<class T>
@@ -373,7 +389,7 @@ struct Source : public Owner<Src, Sys> {
 
 	string data;
 
-	Path path() const { return Sys::conf().in.relative(name()); }
+	Path path() const { return Path(name(), Sys::conf().get("root")); }
 	string name() const { return Lex::toStr(Owner_::id()); }
 	string dir() const { return path().dir(); }
 
@@ -391,6 +407,8 @@ struct Source : public Owner<Src, Sys> {
 		for (Src* s : src->included) s->included.insert(dynamic_cast<Src*>(this));
 	}
 };
+
+Return execute(const string& command);
 
 } // mdl
 

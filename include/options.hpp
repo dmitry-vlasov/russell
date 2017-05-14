@@ -14,16 +14,16 @@ inline po::options_description init_option_descr() {
 	);
 	descr.add_options()
 		("help,h",      "print help message")
-		("in,i",     po::value<string>(), "input file")
-		("out,o",    po::value<string>(), "output file")
-		("root-in",  po::value<string>(), "input root directory (for inclusions)")
-		("root-out", po::value<string>(), "output root directory (for inclusions)")
-		("opt",      po::value<string>(), "option in the form: opt_name=opt_value")
+		("in,i",        po::value<string>(), "input file")
+		("out,o",       po::value<string>(), "output file")
+		("root-in",     po::value<string>(), "input root directory (for inclusions)")
+		("root-out",    po::value<string>(), "output root directory (for inclusions)")
+		("opt",         po::value<string>(), "option in the form: opt_name=opt_value")
+		("lang-tgt",    po::value<string>(), "target language: rus, mm or smm")
+		("lang-src",    po::value<string>(), "source language: rus, mm or smm")
 		("deep",        "deep translation")
 		("verbose,v",   "not be silent")
 		("info",        "info about math: timings, memory, stats")
-		("lang-tgt", po::value<string>(), "target language: rus, mm or smm")
-		("lang-src", po::value<string>(), "source language: rus, mm or smm")
 		("translate,t", "translate to target language")
 		("prove,p",     "prove as a Russell source")
 		("cut",         "cut source into pieces")
@@ -35,19 +35,19 @@ inline po::options_description init_option_descr() {
 }
 
 inline void init_common_options(const po::variables_map& vm, Conf& conf) {
-	if (vm.count("in"))       conf.in.name_ext(vm["in"].as<string>());
-	if (vm.count("out"))      conf.out.name_ext(vm["out"].as<string>());
-	if (vm.count("root-in"))  conf.in.root  = vm["root-in"].as<string>();
-	if (vm.count("root-out")) conf.out.root = vm["root-out"].as<string>();
-	if (vm.count("verbose"))  conf.verbose = true;
-	if (vm.count("deep"))     if (!conf.opts.count("deep")) conf.opts["deep"];
-	if (vm.count("info"))     if (!conf.opts.count("info")) conf.opts["info"];
+	if (vm.count("in"))       conf.set("in", vm["in"].as<string>());
+	if (vm.count("out"))      conf.set("out", vm["out"].as<string>());
+	if (vm.count("root"))  conf.set("root",vm["root-in"].as<string>());
+	//if (vm.count("root-out")) conf.out.root = vm["root-out"].as<string>();
+	if (vm.count("verbose"))  if (!conf.has("verbose")) conf.set("verbose");
+	if (vm.count("deep"))     if (!conf.has("deep")) conf.set("deep");
+	if (vm.count("info"))     if (!conf.has("info")) conf.set("info");
 	if (vm.count("opt")) {
 		string opt = vm["opt"].as<string>();
 		int i = opt.find_last_of("=");
 		string name = opt.substr(0, i);
 		string value = (i == string::npos) ? "" : opt.substr(i + 1);
-		conf.opts[name] = value;
+		conf.set(name, value);
 	}
 }
 
@@ -102,6 +102,16 @@ inline Return options(const vector<string>& args, po::variables_map& vm) {
 	const char* argv[argc];
 	convert_to_argv(args, argv);
 	return options(argc, argv, vm);
+}
+
+inline Return options(const Args& args, Conf& conf) {
+	for (auto& arg : args) {
+		int i = arg.find_last_of("=");
+		string name = arg.substr(0, i);
+		string value = (i == string::npos) ? "" : arg.substr(i + 1);
+		conf.set(name, value);
+	}
+	return Return();
 }
 
 }

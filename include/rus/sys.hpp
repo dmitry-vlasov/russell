@@ -37,7 +37,7 @@ public:
 };
 
 struct Sys : public mdl::Sys<Sys, Math> {
-	Sys();
+	Sys(const string& n);
 };
 
 template<class T>

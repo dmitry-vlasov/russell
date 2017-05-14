@@ -3,8 +3,8 @@
 
 namespace mdl { namespace mm  {
 
-void merge();
-void cut();
+void merge(uint src, uint tgt, const string& tgt_sys);
+void cut(uint src, uint tgt, const string& tgt_sys);
 void parse(uint src);
 void translate(uint src, uint tgt);
 
@@ -48,7 +48,6 @@ string Math::show() const {
 }
 
 void write(uint tgt, bool deep) {
-	Sys::timer()["write"].start();
 	const smm::Source* target = smm::Sys::get().math.sources.access(tgt);
 	if (deep) {
 		deep_write(
@@ -60,7 +59,6 @@ void write(uint tgt, bool deep) {
 	} else {
 		shallow_write(target);
 	}
-	Sys::timer()["write"].stop();
 }
 
 string info() {
@@ -76,15 +74,19 @@ string show() {
 	return info();
 }
 
-Return options(const vector<string>& args);
+Return options(const vector<string>& args) {
+	return mdl::options(args, Sys::conf());
+}
 
-Sys::Sys() {
-	action["read"]   = wrap_action([](const Args& args) { parse(Lex::getInt(args[0])); return Return(); }, 1);
-	action["transl"] = wrap_action([](const Args& args) { translate(Lex::getInt(args[0]), Lex::getInt(args[1])); return Return(); }, 2);
-	action["write"]  = wrap_action([](const Args& args) { write(Lex::getInt(args[0]), arg<bool>(args, "deep", false)); return Return(); }, 1);
-	action["info"]   = wrap_action([](const Args&) { info(); return Return(); }, 0);
-	action["show"]   = wrap_action([](const Args&) { show(); return Return(); }, 0);
-	action["opts"]   = wrap_action([](const Args& args) { return options(args); }, -1);
+Sys::Sys(const string& n) : mdl::Sys<Sys, Math>(n) {
+	actions["read"]   = Action([](const Args& args) { parse(Lex::getInt(args[0])); return Return(); }, 1, "read");
+	actions["transl"] = Action([](const Args& args) { translate(Lex::getInt(args[0]), Lex::getInt(args[1])); return Return(); }, 2, "translate");
+	actions["write"]  = Action([](const Args& args) { write(Lex::getInt(args[0]), arg<bool>(args, "deep", false)); return Return(); }, 1, "write");
+	actions["info"]   = Action([](const Args&) { info(); return Return(); }, 0, "info");
+	actions["show"]   = Action([](const Args&) { show(); return Return(); }, 0, "show");
+	actions["opts"]   = Action([](const Args& args) { return options(args); }, -1, "options");
+	actions["cut"]    = Action([](const Args& args) { cut(Lex::getInt(args[0]), Lex::getInt(args[1]), args[2]); return Return(); }, -1, "cut");
+	actions["merge"]  = Action([](const Args& args) { merge(Lex::getInt(args[0]), Lex::getInt(args[1]), args[2]); return Return(); }, -1, "merge");
 }
 
 enum class Mode { CUT, MERGE, TRANSL, NONE };
@@ -95,25 +97,25 @@ inline Mode choose(const string& s) {
 	if (s == "merge")  return Mode::MERGE;
 	return Mode::NONE;
 }
-
+/*
 Return options(const vector<string>& args) {
 	po::variables_map vm;
 	Return ret = mdl::options(args, vm);
 	if (!ret) return ret;
 	Conf& conf = Sys::conf();
 	init_common_options(vm, conf);
-	if (vm.count("cut"))       conf.mode = "cut";
-	if (vm.count("merge"))     conf.mode = "merge";
-	if (vm.count("translate")) conf.mode = "transl";
+	if (vm.count("cut"))       conf.opts["mode"] = "cut";
+	if (vm.count("merge"))     conf.opts["mode"] = "merge";
+	if (vm.count("translate")) conf.opts["mode"] = "transl";
 	if (!vm.count("deep")) {
 		if (conf.out.ext == "smm") {
-			if (conf.mode != "transl") return Return("translation target already chosen", false);
+			if (conf.opts.at("mode") != "transl") return Return("translation target already chosen", false);
 			conf.target = Lang::SMM;
 
-		} else if (conf.out.ext == "mm" && conf.mode == "transl") {
+		} else if (conf.out.ext == "mm" && conf.opts.at("mode") == "transl") {
 			return Return("makes no sense traslating from a language to itself", false);
 		}
-		if (conf.mode == "cut") {
+		if (conf.opts.at("mode") == "cut") {
 			return Return("makes no sense cutting without --deep option", false);
 		}
 	}
@@ -126,24 +128,24 @@ void run() {
 	Sys::timer()["total"].start();
 	uint src = Lex::toInt(Sys::conf().in.name);
 	uint tgt = Lex::toInt(Sys::conf().out.name);
-	if (Sys::conf().verbose)
+	if (Sys::conf().has_opt("verbose"))
 		cout << "processing file " << Sys::conf().in.name << " ... " << flush;
-	if (Sys::conf().mode == "transl")
+	if (Sys::conf().opts.at("mode") == "transl")
 		parse(src);
 	//cout << *source << endl;
-	switch (choose(Sys::conf().mode)) {
+	switch (choose(Sys::conf().opts.at("mode"))) {
 	case Mode::CUT:    cut();               break;
 	case Mode::MERGE:  merge();             break;
 	case Mode::TRANSL: translate(src, tgt); break;
 	default : break;
 	}
-	if (Sys::conf().mode == "transl")
+	if (Sys::conf().opts.at("mode") == "transl")
 		write(tgt, Sys::get().conf().has_opt("deep"));
 	Sys::timer()["total"].stop();
-	if (Sys::conf().verbose)
+	if (Sys::conf().has_opt("verbose"))
 		cout << "done in " << Sys::timer()["total"] << endl;
 	if (Sys::conf().opts.count("info"))
 		cout << info() << endl;
 }
-
+*/
 }} // mdl::mm

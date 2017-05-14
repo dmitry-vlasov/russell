@@ -37,8 +37,7 @@ struct Include {
 		static set<string> included;
 		if (included.count(p)) return;
 		included.insert(p);
-		Path path(Sys::conf().in);
-		path.name_ext(p);
+		Path path(p, Sys::conf().get("root"));
 		parse(path);
 	}
 };
@@ -118,10 +117,12 @@ void parse(const Path& path) {
 
 }
 
-void merge() {
+void merge(uint src, uint tgt, const string& tgt_sys) {
 	Sys::timer()["merge"].start();
-	parse(Sys::conf().in);
-	ofstream os(Sys::conf().out.path());
+	Path in(Lex::toStr(src), Sys::conf().get("root"));
+	parse(in);
+	Path out(Lex::toStr(tgt), Sys::conf(tgt_sys).get("root"));
+	ofstream os(out.path());
 	os << Merged::get().contents.str();
 	os.close();
 	Sys::timer()["merge"].stop();

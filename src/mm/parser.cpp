@@ -192,8 +192,7 @@ public:
 				mm::Inclusion* inc = included[name];
 				return new mm::Inclusion(inc->source, false);
 			} else {
-				Path path = Sys::conf().in;
-				path.name_ext(name);
+				Path path(name, Sys::conf().get("root"));
 				mm::Inclusion* inc = new mm::Inclusion(nullptr, true);
 				included[name] = inc;
 				Source* src = parse(Lex::toInt(path.name), context.get<Context*>());
@@ -221,8 +220,7 @@ public:
 
 private:
 	static Source* parse(uint label, Context* context) {
-		Path path = Sys::conf().in;
-		path.name = Lex::toStr(label);
+		Path path(Lex::toStr(label), Sys::conf().get("root"));
 		string data;
 		path.read(data, &const_patches);
 		Parser p(label);
@@ -528,7 +526,7 @@ R"(
 void parse(uint label) {
 	Sys::timer()["read"].start();
 	if (!Parser::parse(label))
-		throw Error("parsing of " + Sys::conf().in.name + " failed");
+		throw Error("parsing of " + Lex::toStr(label) + " failed");
 	//cout << endl << *src_enter;
 	Sys::timer()["read"].stop();
 }

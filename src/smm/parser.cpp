@@ -239,8 +239,7 @@ public:
 				Inclusion* inc = included[name];
 				return new Inclusion(inc->source, false);
 			} else {
-				Path path = Sys::conf().in;
-				path.name_ext(name);
+				Path path(name, Sys::conf().get("root"));
 				Inclusion* inc = new Inclusion(nullptr, true);
 				included[name] = inc;
 				inc->source = parse(Lex::toInt(path.name));
@@ -255,8 +254,7 @@ public:
 	}
 
 	static Source* parse(uint label) {
-		Path path = Sys::conf().in;
-		path.name = Lex::toStr(label);
+		Path path(Lex::toStr(label), Sys::conf().get("root"));
 		string data;
 		path.read(data);
 		Source* src = nullptr;
@@ -294,7 +292,7 @@ private:
 void parse(uint label) {
 	Sys::timer()["read"].start();
 	if (!Parser::parse(label))
-		throw Error("parsing of " + Sys::conf().in.name + " failed");
+		throw Error("parsing of " + Lex::toStr(label) + " failed");
 	Sys::timer()["read"].stop();
 }
 

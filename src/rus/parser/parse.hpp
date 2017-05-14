@@ -236,9 +236,7 @@ struct ParseImport {
 		if (imported.count(name)) {
 			imp = new Import(imported[name]->source, false);
 		} else {
-			Path path(Sys::conf().in);
-			path.name_ext(name);
-			path.ext = "rus";
+			Path path(name, Sys::conf().get("root"), "rus");
 			imp = new Import(nullptr, true);
 			imported[name] = imp;
 			imp->source = parse(Lex::toInt(path.name));

@@ -39,4 +39,18 @@ inline Function wrap_action(Function f, int arity) {
 	};
 }
 
+class Action {
+public:
+	Action() : arity(0) { }
+	Action(Function a, int n, const string& d = "") : action(wrap_action(a, n)), arity(n), descr(d) { }
+	Return operator() (const Args& args) const { return action(args); }
+	const string& show() const { return descr; }
+
+private:
+	Function action;
+	int      arity;
+	string   descr;
+};
+
+
 } // mdl

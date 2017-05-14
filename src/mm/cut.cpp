@@ -805,9 +805,11 @@ Section* parse(const Path& in, const Path& out) {
 
 }
 
-void cut() {
+void cut(uint src, uint tgt, const string& tgt_sys) {
 	Sys::timer()["cut"].start();
-	Section* root = parse(Sys::conf().in, Sys::conf().out);
+	Path in(Lex::toStr(src), Sys::conf().get("root"));
+	Path out(Lex::toStr(tgt), Sys::conf(tgt_sys).get("root"));
+	Section* root = parse(in, out);
 	for (Section* sect = root; sect; sect = sect->next_sect) sect->split();
 	for (const Section* sect = root; sect; sect = sect->next_sect) sect->save();
 	delete root;

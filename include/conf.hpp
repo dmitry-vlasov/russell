@@ -5,25 +5,30 @@
 
 namespace mdl {
 
-enum class Lang { NONE, MM, SMM, RUS, DEFAULT = NONE };
+enum class Lang { NONE, MM, SMM, RUS };
 
 // Configuration for a deductive system
-struct Conf {
-	typedef map<string, string> Opts;
+class Conf {
+public :
+	bool   has(const string& name) const { return opts.count(name); }
+	string get(const string& name) const { return has(name) ? opts.at(name) : ""; }
+	void   set(const string& name, const string& value = "") { opts[name] = value; }
 
-	Conf() : verbose(false), in(), out(), target(Lang::DEFAULT) { }
+	bool verbose() const { return has("verbose"); }
+	bool deep()    const { return has("deep"); }
+	bool info()    const { return has("info"); }
 
-	bool verbose;
+	Lang target() const {
+		if (!has("target")) return Lang::NONE;
+		const string& l = opts.at("target");
+		if (l == "rus") return Lang::RUS;
+		if (l == "mm")  return Lang::MM;
+		if (l == "smm") return Lang::SMM;
+		return Lang::NONE;
+	}
 
-	Path in;
-	Path out;
-
-	string mode;
-	Lang   target;
-
-	Opts opts;
-
-	bool has_opt(const string& name) const { return opts.count(name); }
+private:
+	map<string, string> opts;
 };
 
 }

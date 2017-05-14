@@ -28,7 +28,9 @@ public:
 	const Table<T>& get() const;
 };
 
-struct Sys : public mdl::Sys<Sys, Math> { Sys(); };
+struct Sys : public mdl::Sys<Sys, Math> {
+	Sys(const string& n);
+};
 
 template<class T>
 using User = mdl::User<T, Sys>;

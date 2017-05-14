@@ -1,15 +1,29 @@
 #include "daem/sys.hpp"
 
-namespace mdl { namespace daemon {
+namespace mdl {
 
-inline Lang make_args(const string& c, Args& args) {
-	std::istringstream command(c);
+Return execute(const string& command) {
 	string lang;
-	if (!getline(command, lang, ' ')) return Lang::NONE;
-	string arg;
-	while (getline(command, arg, ' ')) args.push_back(arg);
-	return chooseLang(lang);
+	string sys;
+	Args args;
+	{
+		stringstream str(command);
+		if (!getline(str, lang, ' ')) return Return("no language is chosen", false);
+		if (!getline(str, sys, ' '))  return Return("no system is chosen",   false);
+		string arg;
+		while (getline(str, arg, ' ')) args.push_back(arg);
+	}
+	Return ret;
+	switch (chooseLang(lang)) {
+	case Lang::RUS : ret = rus::Sys::mod(sys).exec_and_show(args); break;
+	case Lang::SMM : ret = smm::Sys::mod(sys).exec_and_show(args); break;
+	case Lang::MM  : ret =  mm::Sys::mod(sys).exec_and_show(args); break;
+	case Lang::NONE: return Return("unknown language", false);
+	}
+	return ret;
 }
+
+namespace daemon {
 
 void Daemon::session() {
 	Daemon& daemon = mod();
@@ -20,15 +34,7 @@ void Daemon::session() {
 				daemon.state = EXIT;
 				return;
 			}
-			Args args;
-			Return ret;
-			Lang lang = make_args(request, args);
-			switch (lang) {
-			case Lang::RUS : ret = rus::Sys::mod().execute(args); break;
-			case Lang::SMM : ret = smm::Sys::mod().execute(args); break;
-			case Lang::MM  : ret = mm::Sys::mod().execute(args);  break;
-			case Lang::NONE: cout << "no language is chosen" << endl; return;
-			}
+			Return ret = execute(request);
 			daemon.send_response(ret.to_string());
 		}
 	} catch (std::exception& e) {
