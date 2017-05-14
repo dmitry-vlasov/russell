@@ -524,13 +524,12 @@ smm::Source* translate_source(Maps& maps, const Source* src, smm::Source* target
 }
 
 void translate(uint src, uint tgt) {
-	Sys::timer()["translate"].start();
 	Maps maps;
 	scope_stack.push_back(Scope());
 	const Source* s = Sys::get().math.get<Source>().access(src);
+	if (!s) throw Error("no source", Lex::toStr(src));
 	translate_block(maps, s->block, new smm::Source(tgt));
 	scope_stack.pop_back();
-	Sys::timer()["translate"].stop();
 }
 
 }} // mdl::mm

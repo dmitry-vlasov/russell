@@ -10,11 +10,15 @@ enum class Lang { NONE, MM, SMM, RUS };
 // Configuration for a deductive system
 class Conf {
 public :
+	Conf() { }
+	Conf(const Conf&) = delete;
+	void operator = (const Conf&) = delete;
+
 	bool   has(const string& name) const { return opts.count(name); }
 	string get(const string& name) const { return has(name) ? opts.at(name) : ""; }
 	void   set(const string& name, const string& value = "") { opts[name] = value; }
 
-	bool verbose() const { return has("verbose"); }
+ 	bool verbose() const { return has("verbose"); }
 	bool deep()    const { return has("deep"); }
 	bool info()    const { return has("info"); }
 

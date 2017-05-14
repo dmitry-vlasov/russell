@@ -191,10 +191,10 @@ Return options(const vector<string>& args) {
 }
 */
 Sys::Sys(const string& n) : mdl::Sys<Sys, Math>(n) {
-	actions["read"]   = Action([](const Args& args) { read(Lex::getInt(args[0])); return Return(); }, 1);
-	actions["verify"] = Action([](const Args& args) { verify_(Lex::getInt(args[0])); return Return(); }, 1);
-	actions["transl"] = Action([](const Args& args) { translate_(Lex::getInt(args[0]), Lex::getInt(args[1])); return Return(); }, 2);
-	actions["write"]  = Action([](const Args& args) { write(Lex::getInt(args[0]), arg<bool>(args, "deep", false)); return Return(); }, 1);
+	actions["read"]   = Action([](const Args& args) { read(Lex::toInt(args[0])); return Return(); }, 1);
+	actions["verify"] = Action([](const Args& args) { verify_(Lex::toInt(args[0])); return Return(); }, 1);
+	actions["transl"] = Action([](const Args& args) { translate_(Lex::toInt(args[0]), Lex::toInt(args[1])); return Return(); }, 2);
+	actions["write"]  = Action([](const Args& args) { write(Lex::toInt(args[0]), arg<bool>(args, "deep", false)); return Return(); }, 1);
 	actions["info"]   = Action([](const Args&) { info(); return Return(); }, 0);
 	actions["show"]   = Action([](const Args&) { info(); return Return(); }, 0);
 	actions["opts"]   = Action([](const Args& args) { return options(args); }, -1);

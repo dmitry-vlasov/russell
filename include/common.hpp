@@ -174,7 +174,9 @@ struct Sys {
 	typedef M Math;
 	typedef map<string, Action> Actions;
 
-	Sys(const string& n) : name(n), timers(n) { }
+	Sys(const string& n) : name(n), timers(n) {
+		actions["sys"] = Action([](const Args& args) { set_current(args[0]); return Return(); }, 1, "sys");
+	}
 
 	const string name;
 	Timers  timers;
@@ -195,14 +197,15 @@ struct Sys {
 	}
 
 	Return exec_and_show(const Args& args) {
-		if (conf(name).verbose())
+		bool verbose = conf(name).verbose();
+		if (verbose)
 			io(name).out() << "doing: " << args << " ... " << flush;
 		Return ret = exec(args);
-		if (conf(name).verbose())
+		if (verbose)
 			io(name).out() << "done in " << timers[args[0]] << endl;
 		if (!ret)
 			io(name).err() << ret.text << endl;
-		else if (conf(name).verbose())
+		else if (verbose)
 			io(name).out() << ret.text << endl;
 		return ret;
 	}
@@ -213,9 +216,8 @@ struct Sys {
 	static Timers& timer(const string& s = "")     { return mod(choose(s)).timers;  }
 	static Conf& conf(const string& s = "")        { return mod(choose(s)).config;  }
 
-	void set_current() { current() = name; }
-
 private:
+	static void set_current(const string& curr) { current() = curr; }
 	static string choose(const string& s) { return s.size() ? s : current(); }
 	static set<string> instances() { static set<string> inst; return inst; }
 	static string& current() { static string curr; return curr; }

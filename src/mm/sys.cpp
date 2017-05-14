@@ -79,14 +79,14 @@ Return options(const vector<string>& args) {
 }
 
 Sys::Sys(const string& n) : mdl::Sys<Sys, Math>(n) {
-	actions["read"]   = Action([](const Args& args) { parse(Lex::getInt(args[0])); return Return(); }, 1, "read");
-	actions["transl"] = Action([](const Args& args) { translate(Lex::getInt(args[0]), Lex::getInt(args[1])); return Return(); }, 2, "translate");
-	actions["write"]  = Action([](const Args& args) { write(Lex::getInt(args[0]), arg<bool>(args, "deep", false)); return Return(); }, 1, "write");
+	actions["read"]   = Action([](const Args& args) { parse(Lex::toInt(args[0])); return Return(); }, 1, "read");
+	actions["transl"] = Action([](const Args& args) { translate(Lex::toInt(args[0]), Lex::toInt(args[1])); return Return(); }, 2, "translate");
+	actions["write"]  = Action([](const Args& args) { write(Lex::toInt(args[0]), arg<bool>(args, "deep", false)); return Return(); }, 1, "write");
 	actions["info"]   = Action([](const Args&) { info(); return Return(); }, 0, "info");
 	actions["show"]   = Action([](const Args&) { show(); return Return(); }, 0, "show");
 	actions["opts"]   = Action([](const Args& args) { return options(args); }, -1, "options");
-	actions["cut"]    = Action([](const Args& args) { cut(Lex::getInt(args[0]), Lex::getInt(args[1]), args[2]); return Return(); }, -1, "cut");
-	actions["merge"]  = Action([](const Args& args) { merge(Lex::getInt(args[0]), Lex::getInt(args[1]), args[2]); return Return(); }, -1, "merge");
+	actions["cut"]    = Action([](const Args& args) { cut(Lex::toInt(args[0]), Lex::toInt(args[1]), args[2]); return Return(); }, -1, "cut");
+	actions["merge"]  = Action([](const Args& args) { merge(Lex::toInt(args[0]), Lex::toInt(args[1]), args[2]); return Return(); }, -1, "merge");
 }
 
 enum class Mode { CUT, MERGE, TRANSL, NONE };
