@@ -174,9 +174,7 @@ struct Sys {
 	typedef M Math;
 	typedef map<string, Action> Actions;
 
-	Sys(const string& n) : name(n), timers(n) {
-		actions["sys"] = Action([](const Args& args) { set_current(args[0]); return Return(); }, 1, "sys");
-	}
+	Sys(const string& n) : name(n), timers(n) { }
 
 	const string name;
 	Timers  timers;
@@ -189,6 +187,7 @@ struct Sys {
 		Args args(all);
 		string action = args[0];
 		if (!actions.count(action)) return Return("action " + action +" is unknown", false);
+		current() = name;
 		args.erase(args.begin());
 		timers[action].start();
 		Return ret = actions.at(action)(args);
@@ -217,7 +216,6 @@ struct Sys {
 	static Conf& conf(const string& s = "")        { return mod(choose(s)).config;  }
 
 private:
-	static void set_current(const string& curr) { current() = curr; }
 	static string choose(const string& s) { return s.size() ? s : current(); }
 	static set<string> instances() { static set<string> inst; return inst; }
 	static string& current() { static string curr; return curr; }
