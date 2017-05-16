@@ -174,7 +174,7 @@ struct Sys {
 	typedef M Math;
 	typedef map<string, Action> Actions;
 
-	Sys(const string& n) : name(n), timers(n) { }
+	Sys(const string& n) : name(n.size() ? n : "default"), timers(n) { }
 
 	const string name;
 	Timers  timers;
@@ -186,7 +186,7 @@ struct Sys {
 		if (all.empty()) return Return("no action is chosen", false);
 		Args args(all);
 		string action = args[0];
-		if (!actions.count(action)) return Return("action " + action +" is unknown", false);
+		if (!actions.count(action)) return Return("action \"" + action +"\" is unknown", false);
 		current() = name;
 		args.erase(args.begin());
 		timers[action].start();
@@ -202,9 +202,9 @@ struct Sys {
 		Return ret = exec(args);
 		if (verbose)
 			io(name).out() << "done in " << timers[args[0]] << endl;
-		if (!ret)
+		if (!ret && ret.text.size())
 			io(name).err() << ret.text << endl;
-		else if (verbose)
+		else if (verbose && ret.text.size())
 			io(name).out() << ret.text << endl;
 		return ret;
 	}

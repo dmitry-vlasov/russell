@@ -8,9 +8,11 @@ Return execute(const string& command) {
 	Args args;
 	{
 		stringstream str(command);
-		if (!getline(str, lang, ' ')) return Return("no language is chosen", false);
-		if (!getline(str, sys, ' '))  return Return("no system is chosen",   false);
 		string arg;
+		if (!getline(str, arg, ' ')) return Return("no language is chosen", false);
+		int i = arg.find_last_of(":");
+		lang = arg.substr(0, i);
+		sys  = (i == string::npos) ? "" : arg.substr(i + 1);
 		while (getline(str, arg, ' ')) args.push_back(arg);
 	}
 	Return ret;
