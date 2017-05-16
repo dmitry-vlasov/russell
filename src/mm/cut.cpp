@@ -805,7 +805,7 @@ Section* parse(const Path& in, const Path& out) {
 
 }
 
-void cut(uint src, uint tgt, const string& tgt_sys) {
+void cut(uint src, uint tgt, uint tgt_sys) {
 	Sys::timer()["cut"].start();
 	Path in(Lex::toStr(src), Sys::conf().get("root"));
 	Path out(Lex::toStr(tgt), Sys::conf(tgt_sys).get("root"));

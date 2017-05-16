@@ -190,7 +190,7 @@ Return options(const vector<string>& args) {
 	return Return();
 }
 */
-Sys::Sys(const string& n) : mdl::Sys<Sys, Math>(n) {
+Sys::Sys(uint id) : mdl::Sys<Sys, Math>(id) {
 	actions["read"]   = Action([](const Args& args) { read(Lex::toInt(args[0])); return Return(); }, 1);
 	actions["verify"] = Action([](const Args& args) { verify_(Lex::toInt(args[0])); return Return(); }, 1);
 	actions["transl"] = Action([](const Args& args) { translate_(Lex::toInt(args[0]), Lex::toInt(args[1])); return Return(); }, 2);

@@ -3,20 +3,20 @@
 namespace mdl {
 
 Return execute(const string& command) {
-	string lang;
-	string sys;
+	Lang lang = Lang::NONE;
+	uint sys = -1;
 	Args args;
 	{
 		stringstream str(command);
 		string arg;
 		if (!getline(str, arg, ' ')) return Return("no language is chosen", false);
 		int i = arg.find_last_of(":");
-		lang = arg.substr(0, i);
-		sys  = (i == string::npos) ? "" : arg.substr(i + 1);
+		lang = chooseLang(arg.substr(0, i));
+		sys  = (i == string::npos) ? Lex::toInt("default") : Lex::toInt(arg.substr(i + 1));
 		while (getline(str, arg, ' ')) args.push_back(arg);
 	}
 	Return ret;
-	switch (chooseLang(lang)) {
+	switch (lang) {
 	case Lang::RUS : ret = rus::Sys::mod(sys).exec_and_show(args); break;
 	case Lang::SMM : ret = smm::Sys::mod(sys).exec_and_show(args); break;
 	case Lang::MM  : ret =  mm::Sys::mod(sys).exec_and_show(args); break;

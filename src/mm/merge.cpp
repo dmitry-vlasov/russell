@@ -117,7 +117,7 @@ void parse(const Path& path) {
 
 }
 
-void merge(uint src, uint tgt, const string& tgt_sys) {
+void merge(uint src, uint tgt, uint tgt_sys) {
 	Sys::timer()["merge"].start();
 	Path in(Lex::toStr(src), Sys::conf().get("root"));
 	parse(in);

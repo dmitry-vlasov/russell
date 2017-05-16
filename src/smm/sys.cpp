@@ -119,7 +119,7 @@ Return options(const vector<string>& args) {
 	return mdl::options(args, Sys::conf());
 }
 
-Sys::Sys(const string& n) : mdl::Sys<Sys, Math>(n) {
+Sys::Sys(uint id) : mdl::Sys<Sys, Math>(id) {
 	actions["read"]   = Action([](const Args& args) { parse(Lex::toInt(args[0])); return Return(); }, 1, "read");
 	actions["verify"] = Action([](const Args& args) { verify(); return Return(); }, 0, "verify");
 	actions["transl"] = Action([](const Args& args) { translate(Lex::toInt(args[0]), Lex::toInt(args[1])); return Return(); }, 2, "translate");
