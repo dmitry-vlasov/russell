@@ -48,16 +48,19 @@ string Math::show() const {
 }
 
 void write(uint s, bool deep) {
-	const Source* src = Sys::get().math.get<Source>().access(s);
-	if (deep) {
-		deep_write(
-			src,
-			[](const Source* src) -> const vector<Node>& { return src->block->contents; },
-			[](Node n) -> Source* { return n.val.inc->source; },
-			[](Node n) -> bool { return n.type == Node::INCLUSION; }
-		);
+	if (const Source* src = Sys::get().math.get<Source>().access(s)) {
+		if (deep) {
+			deep_write(
+				src,
+				[](const Source* src) -> const vector<Node>& { return src->block->contents; },
+				[](Node n) -> Source* { return n.val.inc->source; },
+				[](Node n) -> bool { return n.type == Node::INCLUSION; }
+			);
+		} else {
+			shallow_write(src);
+		}
 	} else {
-		shallow_write(src);
+		throw Error("unknown source", Lex::toStr(s));
 	}
 }
 

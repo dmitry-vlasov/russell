@@ -33,64 +33,30 @@ string Math::show() const {
 	return info();
 }
 
-void translate(uint src, uint tgt) {
-	if (Sys::conf().verbose())
-		cout << "translating file " << Lex::toStr(src) << " ... " << flush;
-	switch (Sys::conf().target()) {
+void translate(uint src, uint tgt, Lang lang) {
+	switch (lang) {
 	case Lang::MM:  translate_to_mm(src, tgt);  break;
 	case Lang::RUS: translate_to_rus(src, tgt); break;
 	}
-	if (Sys::conf().verbose())
-		cout << "done in " << Sys::timer()["translate"] << endl;
 }
 
 void write(uint s, bool deep) {
-	const Source* src = Sys::get().math.get<Source>().access(s);
-	if (deep) {
-		deep_write(
-			src,
-			[](const Source* src) -> const vector<Node>& { return src->contents; },
-			[](Node n) -> Source* { return n.val.inc->source; },
-			[](Node n) -> bool { return n.type == Node::INCLUSION; }
-		);
+	if (const Source* src = Sys::get().math.get<Source>().access(s)) {
+		if (deep) {
+			deep_write(
+				src,
+				[](const Source* src) -> const vector<Node>& { return src->contents; },
+				[](Node n) -> Source* { return n.val.inc->source; },
+				[](Node n) -> bool { return n.type == Node::INCLUSION; }
+			);
+		} else {
+			shallow_write(src);
+		}
 	} else {
-		shallow_write(src);
+		throw Error("unknown source", Lex::toStr(s));
 	}
 }
 
-/*
-void write(uint tgt, bool deep) {
-	switch (Sys::conf().target()) {
-	case Lang::NONE: break;
-	case Lang::MM: {
-		const mm::Source* target = mm::Sys::get().math.get<mm::Source>().access(tgt);
-		if (deep) {
-			deep_write(
-				target,
-				[](const mm::Source* src) -> const vector<mm::Node>& { return src->block->contents; },
-				[](mm::Node n) -> mm::Source* { return n.val.inc->source; },
-				[](mm::Node n) -> bool { return n.type == mm::Node::INCLUSION; }
-			);
-		} else {
-			shallow_write(target);
-		}
-	}	break;
-	case Lang::RUS: {
-		const rus::Source* target = rus::Sys::get().math.get<rus::Source>().access(tgt);
-		if (deep) {
-			deep_write(
-				target,
-				[](const rus::Source* src) -> const vector<rus::Node>& { return src->theory->nodes; },
-				[](rus::Node n) -> rus::Source* { return n.val.imp->source; },
-				[](rus::Node n) -> bool { return n.kind == rus::Node::IMPORT; }
-			);
-		} else {
-			shallow_write(target);
-		}
-	}	break;
-	}
-}
-*/
 string info() {
 	string stats;
 	stats += Sys::get().timers.show();
@@ -137,7 +103,7 @@ Return options(const vector<string>& args) {
 Sys::Sys(uint id) : mdl::Sys<Sys, Math>(id) {
 	actions["read"]   = Action([](const Args& args) { parse(Lex::toInt(args[0])); return Return(); }, 1, "read");
 	actions["verify"] = Action([](const Args& args) { verify(); return Return(); }, 0, "verify");
-	actions["transl"] = Action([](const Args& args) { translate(Lex::toInt(args[0]), Lex::toInt(args[1])); return Return(); }, 2, "translate");
+	actions["transl"] = Action([](const Args& args) { translate(Lex::toInt(args[1]), Lex::toInt(args[2]), chooseLang(args[0])); return Return(); }, 2, "translate");
 	actions["write"]  = Action([](const Args& args) { write(Lex::toInt(args[0]), arg<bool>(args, "deep", false)); return Return(); }, 1, "write");
 	actions["info"]   = Action([](const Args&) { info(); return Return(); }, 0);
 	actions["show"]   = Action([](const Args&) { info(); return Return(); }, 0);

@@ -71,15 +71,18 @@ void translate_(uint src, uint tgt) {
 }
 
 void write(uint s, bool deep) {
-	const Source* src = Sys::get().math.get<Source>().access(s);
-	if (deep) {
-		deep_write(
-			src,
-			[](const Source* src) -> const vector<Node>& { return src->theory->nodes; },
-			[](Node n) -> Source* { return n.val.imp->source; },
-			[](Node n) -> bool { return n.kind == Node::IMPORT; }
-		);
-	} else shallow_write(src);
+	if (const Source* src = Sys::get().math.get<Source>().access(s)) {
+		if (deep) {
+			deep_write(
+				src,
+				[](const Source* src) -> const vector<Node>& { return src->theory->nodes; },
+				[](Node n) -> Source* { return n.val.imp->source; },
+				[](Node n) -> bool { return n.kind == Node::IMPORT; }
+			);
+		} else shallow_write(src);
+	} else {
+		throw Error("unknown source", Lex::toStr(s));
+	}
 }
 
 }

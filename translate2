@@ -47,14 +47,19 @@ echo "mm -> smm"
 check "${binpath}/mdl 
     \"mm opts verbose\" 
     \"smm opts verbose\"  
-    \"mm read ${file}.mm \"  
-    \"mm transl ${file}.mm $file.smm\" 
-    \"smm write $file.smm\""
+    \"mm read ${file}.mm\"  
+    \"mm transl ${file}.mm ${file}.smm\" 
+    \"smm write ${file}.smm\""
 echo -e 'done\n\n'
 
 
 echo "smm -> mm"
-check "${binpath}/mdl --lang-src smm -v -i ${file}.smm -o ${file}-0.mm"
+check "${binpath}/mdl
+    \"mm opts verbose\" 
+    \"smm opts verbose\"  
+    \"smm read ${file}.smm \"  
+    \"smm transl mm ${file}.smm ${file}-0.mm\" 
+    \"mm write ${file}-0.mm\""
 echo -e 'done\n\n'
 
 echo "verify mm"
@@ -70,32 +75,58 @@ echo "MM <-> RUS TRANSLATION"
 echo "----------------------"
 
 echo "smm -> rus"
-check "${binpath}/mdl --lang-src smm -v -i ${file}.smm -o ${file}.rus"
+check "${binpath}/mdl
+	\"smm opts verbose\" 
+    \"rus opts verbose\"  
+    \"smm read ${file}.smm \"  
+    \"smm transl rus ${file}.smm ${file}.rus\" 
+    \"rus write ${file}.rus\""
 echo -e 'done\n\n'
 
 
 echo "rus -> smm"
-check "${binpath}/mdl --lang-src rus -t --info -v -i ${file}.rus -o ${file}-1.smm"
+check "${binpath}/mdl 
+	\"rus opts verbose\" 
+    \"smm opts verbose\"  
+    \"rus read ${file}.rus \"  
+    \"rus transl ${file}.rus ${file}-1.smm\" 
+    \"smm write ${file}-1.smm\""
 echo -e 'done\n\n'
 
 
 echo "verify smm"
-check "${binpath}/mdl --lang-src smm -v -i ${file}-1.smm"
+check "${binpath}/mdl
+    \"smm opts verbose\"  
+    \"smm read ${file}-1.smm \" 
+    \"smm verify ${file}-1.smm\""
 echo -e 'done\n'
 
 
 echo "smm -> mm"
-check "${binpath}/mdl --lang-src smm -v -i ${file}-1.smm -o ${file}-1.mm"
+check "${binpath}/mdl
+	\"mm opts verbose\" 
+    \"smm opts verbose\"  
+    \"smm read ${file}-1.smm \"  
+    \"smm transl mm ${file}-1.smm ${file}-1.mm\" 
+    \"mm write ${file}-1.smm\""
 echo -e 'done\n\n'
 
 
 echo "mm -> smm"
-check "${binpath}/mdl --lang-src mm -t -v -i ${file}-1.mm -o ${file}-3.smm"
+check "${binpath}/mdl
+	\"mm opts verbose\" 
+    \"smm opts verbose\"  
+    \"mm read ${file}-1.mm \"  
+    \"mm transl ${file}-1.mm $file-2.smm\" 
+    \"smm write $file-2.smm\""
 echo -e 'done\n'
 
 
 echo "verify smm"
-check "${binpath}/mdl --lang-src smm -v -i ${file}-3.smm"
+check "${binpath}/mdl
+	\"smm opts verbose\"  
+    \"smm read ${file}-2.smm \" 
+    \"smm verify ${file}-2.smm\""
 echo -e 'done\n'
 
 
