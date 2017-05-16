@@ -45,10 +45,11 @@ echo "----------------------"
 
 echo "mm -> smm"
 check "${binpath}/mdl 
-    \"mm def opts verbose\" 
-    \"mm def read ${file}.mm \" 
-    \"mm def transl ${file}.mm $file.smm\"
-    \"smm def write $file.smm\""
+    \"mm opts verbose\" 
+    \"smm opts verbose\"  
+    \"mm read ${file}.mm \"  
+    \"mm transl ${file}.mm $file.smm\" 
+    \"smm write $file.smm\""
 echo -e 'done\n\n'
 
 

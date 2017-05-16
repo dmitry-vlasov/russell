@@ -30,9 +30,9 @@ inline Function wrap_action(Function f, int arity) {
 		try {
 			return f(args);
 		} catch (const Error& err) {
-			return Return("failure", false, err.what());
+			return Return(string("failure: ") + err.what(), false);
 		} catch (std::exception& ex) {
-			return Return("failure", false, ex.what());
+			return Return(string("failure: ") + ex.what(), false);
 		} catch (...) {
 			return Return("failure", false);
 		}

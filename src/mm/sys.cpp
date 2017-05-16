@@ -47,17 +47,17 @@ string Math::show() const {
 	return info();
 }
 
-void write(uint tgt, bool deep) {
-	const smm::Source* target = smm::Sys::get().math.sources.access(tgt);
+void write(uint s, bool deep) {
+	const Source* src = Sys::get().math.get<Source>().access(s);
 	if (deep) {
 		deep_write(
-			target,
-			[](const smm::Source* src) -> const vector<smm::Node>& { return src->contents; },
-			[](smm::Node n) -> smm::Source* { return n.val.inc->source; },
-			[](smm::Node n) -> bool { return n.type == smm::Node::INCLUSION; }
+			src,
+			[](const Source* src) -> const vector<Node>& { return src->block->contents; },
+			[](Node n) -> Source* { return n.val.inc->source; },
+			[](Node n) -> bool { return n.type == Node::INCLUSION; }
 		);
 	} else {
-		shallow_write(target);
+		shallow_write(src);
 	}
 }
 

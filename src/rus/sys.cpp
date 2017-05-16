@@ -70,34 +70,16 @@ void translate_(uint src, uint tgt) {
 	rus::translate(src, tgt);
 }
 
-void write(uint tgt, bool deep) {
-	switch (Sys::conf().target()) {
-	case Lang::NONE: break;
-	case Lang::SMM: {
-		const smm::Source* target = smm::Sys::get().math.get<smm::Source>().access(tgt);
-		if (deep) {
-			deep_write(
-				target,
-				[](const smm::Source* src) -> const vector<smm::Node>& { return src->contents; },
-				[](smm::Node n) -> smm::Source* { return n.val.inc->source; },
-				[](smm::Node n) -> bool { return n.type == smm::Node::INCLUSION; }
-			);
-		} else shallow_write(target);
-		break;
-	}
-	case Lang::RUS: {
-		const Source* source = Sys::get().math.get<Source>().access(tgt);
-		if (deep) {
-			deep_write(
-				source,
-				[](const Source* src) -> const vector<Node>& { return src->theory->nodes; },
-				[](Node n) -> Source* { return n.val.imp->source; },
-				[](Node n) -> bool { return n.kind == Node::IMPORT; }
-			);
-		} else shallow_write(source);
-		break;
-	}
-	}
+void write(uint s, bool deep) {
+	const Source* src = Sys::get().math.get<Source>().access(s);
+	if (deep) {
+		deep_write(
+			src,
+			[](const Source* src) -> const vector<Node>& { return src->theory->nodes; },
+			[](Node n) -> Source* { return n.val.imp->source; },
+			[](Node n) -> bool { return n.kind == Node::IMPORT; }
+		);
+	} else shallow_write(src);
 }
 
 }

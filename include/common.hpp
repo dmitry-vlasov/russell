@@ -176,11 +176,11 @@ struct Sys {
 
 	Sys(uint i) : id(i), timers(i) { }
 
-	uint    id;
-	Timers  timers;
-	Conf    config;
-	Math    math;
-	Actions actions;
+	const uint id;
+	Timers     timers;
+	Conf       config;
+	Math       math;
+	Actions    actions;
 
 	Return exec(const Args& all) {
 		if (all.empty()) return Return("no action is chosen", false);
@@ -327,12 +327,14 @@ public:
 
 template<class T, class S>
 class Owner {
-	uint id_;
+	const uint sys_;
+	const uint id_;
 public:
 	typedef S Sys;
-	Owner(uint i) : id_(i) { Sys::mod().math.template get<T>().add(id_, static_cast<T*>(this)); }
-	virtual ~Owner() { Sys::mod().math.template get<T>().del(id_); }
+	Owner(uint i) : sys_(Sys::get().id), id_(i) { Sys::mod().math.template get<T>().add(id_, static_cast<T*>(this)); }
+	virtual ~Owner() { Sys::mod(sys_).math.template get<T>().del(id_); }
 	uint id() const { return id_; }
+	uint sys() const { return sys_; }
 };
 
 template<class T, class S>

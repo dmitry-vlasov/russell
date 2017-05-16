@@ -44,6 +44,21 @@ void translate(uint src, uint tgt) {
 		cout << "done in " << Sys::timer()["translate"] << endl;
 }
 
+void write(uint s, bool deep) {
+	const Source* src = Sys::get().math.get<Source>().access(s);
+	if (deep) {
+		deep_write(
+			src,
+			[](const Source* src) -> const vector<Node>& { return src->contents; },
+			[](Node n) -> Source* { return n.val.inc->source; },
+			[](Node n) -> bool { return n.type == Node::INCLUSION; }
+		);
+	} else {
+		shallow_write(src);
+	}
+}
+
+/*
 void write(uint tgt, bool deep) {
 	switch (Sys::conf().target()) {
 	case Lang::NONE: break;
@@ -75,7 +90,7 @@ void write(uint tgt, bool deep) {
 	}	break;
 	}
 }
-
+*/
 string info() {
 	string stats;
 	stats += Sys::get().timers.show();
