@@ -39,17 +39,102 @@ inline Function wrap_action(Function f, int arity) {
 	};
 }
 
+struct Descr {
+	struct Arg {
+		Arg() : opt(false) { }
+		Arg(const string& n, const string& v, bool o = false) : name(n), value(v), opt(o) { }
+		string name;
+		string value;
+		bool   opt;
+		string show() const { return name + (value.size() ? "=<" + value + ">" : ""); }
+		bool fits(const string& arg) const {
+			return (arg.substr(0, arg.find_last_of("=")) == name);
+		}
+		bool parse(const string& arg, string& value) const {
+			int i = arg.find_last_of("=");
+			if (arg.substr(0, i) != name) return false;
+			value = (i == string::npos) ? "" : arg.substr(i + 1);
+			return true;
+		}
+	};
+	Descr() : arity(0), keep_args(false) { }
+	Descr(const string& d) : descr(d), arity(0), keep_args(false) { }
+	Descr(const string& d, const Arg& a1, bool k = false) : descr(d), arity(0), keep_args(k) {
+		args.push_back(a1);
+		calculate_arity();
+	}
+	Descr(const string& d, const Arg& a1, const Arg& a2, bool k = false) : descr(d), arity(0), keep_args(k) {
+		args.push_back(a1);
+		args.push_back(a2);
+		calculate_arity();
+	}
+	Descr(const string& d, const Arg& a1, const Arg& a2, const Arg& a3, bool k = false) : descr(d), arity(3), keep_args(k) {
+		args.push_back(a1);
+		args.push_back(a2);
+		args.push_back(a3);
+		calculate_arity();
+	}
+	Descr(const string& d, int a, bool k = false) : descr(d), arity(a), keep_args(k) { }
+
+	string      descr;
+	int         arity;
+	vector<Arg> args;
+	bool        keep_args;
+
+	string show() const {
+		string s;
+		for (const Arg& arg : args) if (!arg.opt) s += arg.show() + " ";
+		if (has_optional()) {
+			s += "optional: ";
+			for (const Arg& arg : args) if (arg.opt) s += arg.show() + " ";
+		}
+		if (descr.size()) s += " - " + descr;
+		return s;
+	}
+
+	Args prepare(const Args& args_orig) const {
+		if (keep_args) return args_orig;
+		Args args_reord;
+		for (auto& arg: args) {
+			string value;
+			if (!arg.opt && find_arg(arg, value, args_orig))
+				args_reord.push_back(value);
+		}
+		for (auto& arg: args) {
+			string value;
+			if (arg.opt && find_arg(arg, value, args_orig))
+				args_reord.push_back(value);
+		}
+		return args_reord;
+	}
+
+private:
+	bool find_arg(const Arg& arg, string& value, const Args& args_orig) const {
+		for (auto& s : args_orig) {
+			if (arg.parse(s, value)) return true;
+		}
+		if (!arg.opt) throw Error("mandatory argument is missed", arg.show());
+		return false;
+	}
+	void calculate_arity() {
+		arity = 0;
+		for (const Arg& a : args) if (!a.opt) ++ arity;
+	}
+	bool has_optional() const {
+		for (const Arg& a : args) if (a.opt) return true; return false;
+	}
+};
+
 class Action {
 public:
-	Action() : arity(0) { }
-	Action(Function a, int n, const string& d = "") : action(wrap_action(a, n)), arity(n), descr(d) { }
-	Return operator() (const Args& args) const { return action(args); }
-	const string& show() const { return descr; }
+	Action() { }
+	Action(Function a, const Descr& d) : action(wrap_action(a, d.arity)), descr(d) { }
+	Return operator() (const Args& args) const { return action(descr.prepare(args)); }
+	string show() const { return descr.show(); }
 
 private:
 	Function action;
-	int      arity;
-	string   descr;
+	Descr    descr;
 };
 
 

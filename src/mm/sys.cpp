@@ -78,18 +78,31 @@ string show() {
 }
 
 Return options(const vector<string>& args) {
-	return mdl::options(args, Sys::conf());
+	return Sys::conf().read(args);
+}
+
+static Descr description(string name) {
+	static const map<string, Descr> m = {
+		{"read",   Descr("read the source",      Descr::Arg("in", "file"))},
+		{"transl", Descr("translate the source", Descr::Arg("in", "file"), Descr::Arg("out", "file"))},
+		{"write",  Descr("write the source",     Descr::Arg("in", "file"), Descr::Arg("deep", "", true))},
+		{"info",   Descr("info about math")},
+		{"show",   Descr("show entity")},
+		{"cut",    Descr("cut the source",       Descr::Arg("in", "file"), Descr::Arg("out", "file"), Descr::Arg("sys", "name"))},
+		{"merge",  Descr("merge the source",     Descr::Arg("in", "file"), Descr::Arg("out", "file"), Descr::Arg("sys", "name"))}
+	};
+	return m.count(name) ? m.at(name) : Descr();
 }
 
 Sys::Sys(uint id) : mdl::Sys<Sys, Math>(id) {
-	actions["read"]   = Action([](const Args& args) { parse(Lex::toInt(args[0])); return Return(); }, 1, "read");
-	actions["transl"] = Action([](const Args& args) { translate(Lex::toInt(args[0]), Lex::toInt(args[1])); return Return(); }, 2, "translate");
-	actions["write"]  = Action([](const Args& args) { write(Lex::toInt(args[0]), arg<bool>(args, "deep", false)); return Return(); }, 1, "write");
-	actions["info"]   = Action([](const Args&) { info(); return Return(); }, 0, "info");
-	actions["show"]   = Action([](const Args&) { show(); return Return(); }, 0, "show");
-	actions["opts"]   = Action([](const Args& args) { return options(args); }, -1, "options");
-	actions["cut"]    = Action([](const Args& args) { cut(Lex::toInt(args[0]), Lex::toInt(args[1]), Lex::toInt(args[2])); return Return(); }, -1, "cut");
-	actions["merge"]  = Action([](const Args& args) { merge(Lex::toInt(args[0]), Lex::toInt(args[1]), Lex::toInt(args[2])); return Return(); }, -1, "merge");
+	actions["read"]   = Action([](const Args& args) { parse(Lex::toInt(args[0])); return Return(); }, description("read"));
+	actions["transl"] = Action([](const Args& args) { translate(Lex::toInt(args[0]), Lex::toInt(args[1])); return Return(); }, description("transl"));
+	actions["write"]  = Action([](const Args& args) { write(Lex::toInt(args[0]), arg<bool>(args, "deep", false)); return Return(); }, description("write"));
+	actions["info"]   = Action([](const Args& args) { info(); return Return(); }, description("info"));
+	actions["show"]   = Action([](const Args& args) { show(); return Return(); }, description("show"));
+	actions["opts"]   = Action([](const Args& args) { Sys::conf().read(args); return Return(); }, Sys::conf().descr());
+	actions["cut"]    = Action([](const Args& args) { cut(Lex::toInt(args[0]), Lex::toInt(args[1]), Lex::toInt(args[2])); return Return(); }, description("cut"));
+	actions["merge"]  = Action([](const Args& args) { merge(Lex::toInt(args[0]), Lex::toInt(args[1]), Lex::toInt(args[2])); return Return(); }, description("merge"));
 }
 
 enum class Mode { CUT, MERGE, TRANSL, NONE };

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "std.hpp"
+#include "actions.hpp"
 #include "path.hpp"
 
 namespace mdl {
@@ -29,6 +30,28 @@ public :
 		if (l == "mm")  return Lang::MM;
 		if (l == "smm") return Lang::SMM;
 		return Lang::NONE;
+	}
+
+	Return read(const Args& args) {
+		for (auto& arg : args) {
+			int i = arg.find_last_of("=");
+			string name = arg.substr(0, i);
+			string value = (i == string::npos) ? "" : arg.substr(i + 1);
+			opts[name] = value;
+		}
+		return Return();
+	}
+
+	Descr descr() const {
+		static Descr d("options", -1, true);
+		if (d.args.empty()) {
+			d.args.push_back(Descr::Arg("verbose", "", true));
+			d.args.push_back(Descr::Arg("deep", "", true));
+			d.args.push_back(Descr::Arg("info", "", true));
+			d.args.push_back(Descr::Arg("root", "dir", true));
+			d.args.push_back(Descr::Arg("target", "rus|mm|smm", true));
+		}
+		return d;
 	}
 
 private:

@@ -190,7 +190,13 @@ struct Sys {
 				Io::io().out() << Lex::toStr(s) << " ";
 			Io::io().out() << endl;
 			return Return();
-		}, 0, "show available systems");
+		}, Descr("show available systems"));
+		actions["help"] = Action([this](const Args&) {
+			Io::io().out() << endl << lang() << " actions:" << endl;
+			for (auto& a : actions)
+				Io::io().out() << "\t" << a.first << ": " << a.second.show() << endl;
+			return Return();
+		}, Descr("show available actions"));
 	}
 	virtual ~Sys() { }
 

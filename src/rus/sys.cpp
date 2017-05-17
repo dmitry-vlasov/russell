@@ -152,18 +152,31 @@ inline Mode choose(const string& s) {
 }
 
 Return options(const Args& args) {
-	return mdl::options(args, Sys::conf());
+	return Sys::conf().read(args);
+}
+
+static Descr description(string name) {
+	static map<string, Descr> m = {
+		{"read",   Descr("read the source",      Descr::Arg("in", "file"))},
+		{"transl", Descr("translate the source", Descr::Arg("in", "file"), Descr::Arg("out", "file"))},
+		{"write",  Descr("write the source",     Descr::Arg("in", "file"), Descr::Arg("deep", "", true))},
+		{"parse",  Descr("parse all expressions")},
+		{"verify", Descr("verify all theorems",  Descr::Arg("in", "file"))},
+		{"info",   Descr("info about math")},
+		{"show",   Descr("show entity")},
+	};
+	return m.count(name) ? m.at(name) : Descr();
 }
 
 Sys::Sys(uint id) : mdl::Sys<Sys, Math>(id) {
-	actions["read"]   = Action([](const Args& args) { read(Lex::toInt(args[0])); return Return(); }, 1);
-	actions["parse"]  = Action([](const Args& args) { parse(); return Return(); }, 0);
-	actions["verify"] = Action([](const Args& args) { verify_(Lex::toInt(args[0])); return Return(); }, 1);
-	actions["transl"] = Action([](const Args& args) { translate_(Lex::toInt(args[0]), Lex::toInt(args[1])); return Return(); }, 2);
-	actions["write"]  = Action([](const Args& args) { write(Lex::toInt(args[0]), arg<bool>(args, "deep", false)); return Return(); }, 1);
-	actions["info"]   = Action([](const Args&) { info(); return Return(); }, 0);
-	actions["show"]   = Action([](const Args&) { info(); return Return(); }, 0);
-	actions["opts"]   = Action([](const Args& args) { return options(args); }, -1);
+	actions["read"]   = Action([](const Args& args) { read(Lex::toInt(args[0])); return Return(); }, description("read"));
+	actions["parse"]  = Action([](const Args& args) { parse(); return Return(); }, description("parse"));
+	actions["verify"] = Action([](const Args& args) { verify_(Lex::toInt(args[0])); return Return(); }, description("verify"));
+	actions["transl"] = Action([](const Args& args) { translate_(Lex::toInt(args[0]), Lex::toInt(args[1])); return Return(); }, description("transl"));
+	actions["write"]  = Action([](const Args& args) { write(Lex::toInt(args[0]), arg<bool>(args, "deep", false)); return Return(); }, description("write"));
+	actions["info"]   = Action([](const Args& args) { info(); return Return(); }, description("info"));
+	actions["show"]   = Action([](const Args& args) { info(); return Return(); }, description("show"));
+	actions["opts"]   = Action([](const Args& args) { Sys::conf().read(args); return Return(); }, Sys::conf().descr());
 }
 
 }} // mdl::rus
