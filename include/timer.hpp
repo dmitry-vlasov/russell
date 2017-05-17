@@ -29,6 +29,7 @@ public :
 	bool isUsed() const;
 	bool isOn() const;
 	bool isOff() const;
+	bool isNegligible() const;
 
 	void setShowCumulativeTime (const bool = true) const;
 	bool getShowCumulativeTime() const;

@@ -122,31 +122,37 @@ struct Lib {
 	static Lib& mod() { static Lib lib; return lib; }
 
 	void init(uint s) {
-		contents[s].reset(new T(s));
+		contents_[s].reset(new T(s));
 	}
 	template<class TR>
 	void init(uint s) {
-		contents[s].reset(new TR(s));
+		contents_[s].reset(new TR(s));
 	}
 
 	bool has(uint s) const {
-		return contents.count(s);
+		return contents_.count(s);
 	}
 
 	T& access(uint s) {
 		if (!has(s)) init(s);
-		return *contents[s];
+		return *contents_[s];
 	}
 
 	template<class TR>
 	TR& access(uint s) {
 		if (!has(s)) init<TR>(s);
-		return static_cast<TR&>(*contents[s]);
+		return static_cast<TR&>(*contents_[s]);
+	}
+
+	vector<uint> contents() const {
+		vector<uint> ret;
+		for (auto& p : contents_) ret.push_back(p.first);
+		return ret;
 	}
 
 private:
-	map<uint, unique_ptr<T>> contents;
-	Lib() : contents() { }
+	map<uint, unique_ptr<T>> contents_;
+	Lib() : contents_() { }
 };
 
 struct Io {
@@ -155,16 +161,20 @@ struct Io {
 	virtual ostream& out() { return cout; }
 	virtual ostream& err() { return cerr; }
 	struct Std;
-	uint id;
+	const uint id;
+
+	static Io& io(uint s = -1) { return Lib<Io>::mod().access(choose(s));  }
+
+private:
+	static uint choose(uint s) { if (s != -1) current() = s; return current(); }
+	static uint& current() { static uint curr; return curr; }
 };
 
 struct Timers {
-	Timers(uint i) : id(i) { }
 	Timer& operator[] (const string& s) { return timers[s]; }
 	const Timer& operator[] (const string& s) const { return timers.at(s); }
 	string show() const;
 	map<string, Timer> timers;
-	uint id;
 };
 
 // Template for a deductive system
@@ -174,7 +184,15 @@ struct Sys {
 	typedef M Math;
 	typedef map<string, Action> Actions;
 
-	Sys(uint i) : id(i), timers(i) { }
+	Sys(uint i) : id(i) {
+		actions["systems"] = Action([](const Args&) {
+			for (uint s : Lib<System>::get().contents())
+				Io::io().out() << Lex::toStr(s) << " ";
+			Io::io().out() << endl;
+			return Return();
+		}, 0, "show available systems");
+	}
+	virtual ~Sys() { }
 
 	const uint id;
 	Timers     timers;
@@ -198,26 +216,26 @@ struct Sys {
 	Return exec_and_show(const Args& args) {
 		bool verbose = conf(id).verbose();
 		if (verbose)
-			io(id).out() << "doing: " << args << " ... " << flush;
+			Io::io().out() << lang() << " doing: " << args << " ... " << flush;
 		Return ret = exec(args);
-		if (verbose)
-			io(id).out() << "done in " << timers[args[0]] << endl;
+		if (verbose && !timers[args[0]].isNegligible())
+			Io::io().out() << "done in " << timers[args[0]] << endl;
 		if (!ret && ret.text.size())
-			io(id).err() << ret.text << endl;
+			Io::io().err() << ret.text << endl;
 		else if (verbose && ret.text.size())
-			io(id).out() << ret.text << endl;
+			Io::io().out() << ret.text << endl;
 		return ret;
 	}
 
 	static const System& get(uint s = -1) { return mod(s); }
 	static System& mod(uint s = -1)       { return Lib<System>::mod().access(choose(s));  }
-	static Io& io(uint s = -1)            { return Lib<Io>::mod().access(choose(s));  }
 	static Timers& timer(uint s = -1)     { return mod(choose(s)).timers;  }
 	static Conf& conf(uint s = -1)        { return mod(choose(s)).config;  }
 
+	virtual string lang() const = 0;
+
 private:
-	static uint choose(uint s) { return s == -1 ? current() : s; }
-	static set<uint> instances() { static set<uint> inst; return inst; }
+	static uint choose(uint s) { if (s != -1) current() = s; return current(); }
 	static uint& current() { static uint curr; return curr; }
 };
 

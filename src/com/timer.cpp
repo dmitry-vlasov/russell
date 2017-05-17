@@ -179,6 +179,10 @@ bool
 Timer :: isOff() const {
 	return !isOn_;
 }
+bool
+Timer::isNegligible() const {
+	return getMilliseconds() < 1;
+}
 
 void
 Timer :: setShowCumulativeTime (const bool value) const {
