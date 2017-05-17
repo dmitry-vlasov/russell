@@ -100,55 +100,5 @@ inline Mode choose(const string& s) {
 	if (s == "merge")  return Mode::MERGE;
 	return Mode::NONE;
 }
-/*
-Return options(const vector<string>& args) {
-	po::variables_map vm;
-	Return ret = mdl::options(args, vm);
-	if (!ret) return ret;
-	Conf& conf = Sys::conf();
-	init_common_options(vm, conf);
-	if (vm.count("cut"))       conf.opts["mode"] = "cut";
-	if (vm.count("merge"))     conf.opts["mode"] = "merge";
-	if (vm.count("translate")) conf.opts["mode"] = "transl";
-	if (!vm.count("deep")) {
-		if (conf.out.ext == "smm") {
-			if (conf.opts.at("mode") != "transl") return Return("translation target already chosen", false);
-			conf.target = Lang::SMM;
 
-		} else if (conf.out.ext == "mm" && conf.opts.at("mode") == "transl") {
-			return Return("makes no sense traslating from a language to itself", false);
-		}
-		if (conf.opts.at("mode") == "cut") {
-			return Return("makes no sense cutting without --deep option", false);
-		}
-	}
-	smm::Sys::conf().in = conf.out;
-	smm::Sys::conf().in.ext = "smm";
-	return Return();
-}
-
-void run() {
-	Sys::timer()["total"].start();
-	uint src = Lex::toInt(Sys::conf().in.name);
-	uint tgt = Lex::toInt(Sys::conf().out.name);
-	if (Sys::conf().has_opt("verbose"))
-		cout << "processing file " << Sys::conf().in.name << " ... " << flush;
-	if (Sys::conf().opts.at("mode") == "transl")
-		parse(src);
-	//cout << *source << endl;
-	switch (choose(Sys::conf().opts.at("mode"))) {
-	case Mode::CUT:    cut();               break;
-	case Mode::MERGE:  merge();             break;
-	case Mode::TRANSL: translate(src, tgt); break;
-	default : break;
-	}
-	if (Sys::conf().opts.at("mode") == "transl")
-		write(tgt, Sys::get().conf().has_opt("deep"));
-	Sys::timer()["total"].stop();
-	if (Sys::conf().has_opt("verbose"))
-		cout << "done in " << Sys::timer()["total"] << endl;
-	if (Sys::conf().opts.count("info"))
-		cout << info() << endl;
-}
-*/
 }} // mdl::mm

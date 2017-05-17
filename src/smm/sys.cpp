@@ -69,32 +69,6 @@ string info() {
 string show() {
 	return info();
 }
-/*
-Return options(const vector<string>& args) {
-	po::variables_map vm;
-	Return ret = mdl::options(args, vm);
-	if (!ret) return ret;
-	Conf& conf = Sys::conf();
-	init_common_options(vm, conf);
-	conf.target = chooseTgtLang(vm);
-	if (!vm.count("deep") && conf.target == Lang::NONE) {
-		if (conf.out.ext == "mm") conf.target = Lang::MM;
-		if (conf.out.ext == "rus") conf.target = Lang::RUS;
-	}
-	switch (conf.target) {
-	case Lang::MM :
-		mm::Sys::conf().in = conf.out;
-		mm::Sys::conf().in.ext = "mm";
-		break;
-	case Lang::RUS :
-		rus::Sys::conf().in = conf.out;
-		rus::Sys::conf().in.ext = "rus";
-		break;
-	}
-	if (conf.in.name.empty()) return Return("no input file name", false);
-	return Return();
-}
-*/
 
 Return options(const vector<string>& args) {
 	return mdl::options(args, Sys::conf());
@@ -109,26 +83,5 @@ Sys::Sys(uint id) : mdl::Sys<Sys, Math>(id) {
 	actions["show"]   = Action([](const Args&) { info(); return Return(); }, 0);
 	actions["opts"]   = Action([](const Args& args) { return options(args); }, -1);
 }
-/*
-void run() {
-	Sys::timer()["total"].start();
-	uint src = Lex::toInt(Sys::conf().in.name);
-	uint tgt = Lex::toInt(Sys::conf().out.name);
-
-	if (Sys::conf().verbose)
-		cout << "processing file " << Sys::conf().in.name << " ... " << endl;
-
-	parse(src);
-	verify();
-	translate(src, tgt);
-	write(tgt, Sys::get().conf().has_opt("deep"));
-
-	Sys::timer()["total"].stop();
-	if (Sys::conf().verbose)
-		cout << "all done in " << Sys::timer()["total"] << endl;
-	if (Sys::conf().opts.count("info"))
-		cout << info() << endl;
-}
-*/
 
 }} // mdl::smm

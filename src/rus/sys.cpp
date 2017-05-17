@@ -154,27 +154,7 @@ inline Mode choose(const string& s) {
 Return options(const Args& args) {
 	return mdl::options(args, Sys::conf());
 }
-/*
-Return options(const vector<string>& args) {
-	po::variables_map vm;
-	Return ret = mdl::options(args, vm);
-	if (!ret) return ret;
-	Conf& conf = Sys::conf();
-	init_common_options(vm, conf);
-	if (vm.count("translate")) {
-		conf.mode = "transl";
-		conf.target = Lang::SMM;
-		smm::Sys::conf().in = conf.out;
-		smm::Sys::conf().in.ext = "smm";
-	}
-	if (vm.count("prove")) {
-		conf.mode = "prove";
-		conf.target = Lang::RUS;
-	}
-	if (conf.in.name.empty()) return Return("no input file name", false);
-	return Return();
-}
-*/
+
 Sys::Sys(uint id) : mdl::Sys<Sys, Math>(id) {
 	actions["read"]   = Action([](const Args& args) { read(Lex::toInt(args[0])); return Return(); }, 1);
 	actions["parse"]  = Action([](const Args& args) { parse(); return Return(); }, 0);
@@ -185,33 +165,5 @@ Sys::Sys(uint id) : mdl::Sys<Sys, Math>(id) {
 	actions["show"]   = Action([](const Args&) { info(); return Return(); }, 0);
 	actions["opts"]   = Action([](const Args& args) { return options(args); }, -1);
 }
-/*
-void run() {
-	Sys::timer()["total"].start();
-	uint src = Lex::toInt(Sys::conf().in.name);
-	uint tgt = Lex::toInt(Sys::conf().out.name);
-
-	if (Sys::conf().verbose)
-		cout << "processing file " << Lex::toStr(src) << " ... " << endl;
-
-	read(src);
-	parse();
-	verify_(src);
-
-	switch (choose(Sys::conf().mode)) {
-	case Mode::PROVE:   break;
-	case Mode::TRANSL:  translate_(src, tgt); break;
-	default : break;
-	}
-
-	write(tgt, Sys::get().conf().has_opt("deep"));
-
-	Sys::timer()["total"].stop();
-	if (Sys::conf().verbose)
-		cout << "all done in " << Sys::timer()["total"] << endl;
-	if (Sys::conf().opts.count("info"))
-		cout << info() << endl;
-}
-*/
 
 }} // mdl::rus
