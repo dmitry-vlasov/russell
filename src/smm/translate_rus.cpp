@@ -423,8 +423,8 @@ void translate_assertion(const Assertion* ass, State& state) {
 rus::Source* translate_source(const Source* source, State& state, rus::Source* target = nullptr);
 
 inline rus::Import* translate_import(const Inclusion* inc, State& s) {
-	rus::Source* src = translate_source(inc->source, s);
-	return new rus::Import(src, inc->primary);
+	const rus::Source* src = translate_source(inc->source.get(), s);
+	return new rus::Import(src->id(), inc->primary);
 }
 
 inline void translate_comment(const Comment* com, State& s) {
@@ -470,6 +470,7 @@ rus::Source* translate_source(const Source* src, State& state, rus::Source* targ
 
 void translate_to_rus(uint src, uint tgt) {
 	const Source* source = Sys::get().math.sources.access(src);
+	if (!source) throw Error("no source", Lex::toStr(src));
 	rus::Source* target = new rus::Source(tgt);
 	target->theory = new rus::Theory();
 	State state;

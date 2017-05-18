@@ -484,8 +484,8 @@ void translate_node(Maps& maps, const Node& node, const Block* block, smm::Sourc
 		scope_stack.pop_back();
 		break;
 	case Node::INCLUSION: {
-		smm::Source* s = translate_source(maps, node.val.inc->source);
-		smm::Inclusion* i = new smm::Inclusion(s, node.val.inc->primary);
+		smm::Source* s = translate_source(maps, node.val.inc->source.get());
+		smm::Inclusion* i = new smm::Inclusion(s->id(), node.val.inc->primary);
 		target->contents.push_back(smm::Node(i));
 	} break;
 	case Node::VARIABLES:

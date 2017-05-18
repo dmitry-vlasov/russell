@@ -214,11 +214,11 @@ struct Source : public mdl::Source<Source, Sys> {
 };
 
 struct Inclusion {
-	Inclusion(Source* src, bool prim);
-	~Inclusion();
-	Source* source;
-	bool    primary;
-	Token   token;
+	Inclusion(bool prim);
+	Inclusion(uint src, bool prim);
+	User<Source> source;
+	bool         primary;
+	Token        token;
 };
 
 inline void Node::destroy() {

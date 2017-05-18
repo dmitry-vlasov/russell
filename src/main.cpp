@@ -22,7 +22,11 @@ int main (int argc, const char* argv[])
 		if (vm.count("daemon"))  { daemon::Daemon::get(); return 0; }
 		if (vm.count("console")) { daemon::Console::get(); return 0; }
 		for (int i = 1; i < argc; ++ i) {
-			if (!execute(argv[i])) return 1;
+			Return ret = execute(argv[i]);
+			if (!ret) {
+				cerr << ret.text << endl;
+				return 1;
+			}
 		}
 	} catch (const Error& err) {
 		cerr << err.what();

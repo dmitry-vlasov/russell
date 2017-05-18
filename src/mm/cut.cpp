@@ -788,27 +788,27 @@ $)
 Section* parse(const Path& in, const Path& out) {
 	string data;
 	in.read(data, &cut_patches);
-	LocationIter iter(data.begin(), Lex::toInt(in.name));
-	LocationIter end(data.end(), Lex::toInt(in.name));
+	LocationIter iter(data.begin(), Lex::toInt(in.name()));
+	LocationIter end(data.end(), Lex::toInt(in.name()));
 	Section* source = new Section;
-	source->root = (out.root.size() && out.root.back() != '/') ? (out.root + "/") : out.root;
-	source->file = in.name;
+	source->root = (out.root().size() && out.root().back() != '/') ? (out.root() + "/") : out.root();
+	source->file = in.name();
 	source->dir = "";
 	source->path = source->dir + "/" + source->file + ".mm";
 	source->type = Type::SOURCE;
 	bool r = phrase_parse(iter, end, Grammar(source->root), ascii::space, source);
 	if (!r || iter != end) {
-		throw Error("parsing failed", in.name);
+		throw Error("parsing failed", in.name());
 	}
 	return source;
 }
 
 }
 
-void cut(uint src, uint tgt, uint tgt_sys) {
+void cut(uint src, uint tgt, uint tgt_root) {
 	Sys::timer()["cut"].start();
-	Path in(Lex::toStr(src), Sys::conf().get("root"));
-	Path out(Lex::toStr(tgt), Sys::conf(tgt_sys).get("root"));
+	Path in(Lex::toStr(src), Sys::conf().get("root"), "mm");
+	Path out(Lex::toStr(tgt), Lex::toStr(tgt_root), "mm");
 	Section* root = parse(in, out);
 	for (Section* sect = root; sect; sect = sect->next_sect) sect->split();
 	for (const Section* sect = root; sect; sect = sect->next_sect) sect->save();

@@ -98,7 +98,7 @@ echo -e 'done\n\n'
 
 echo "rus -> smm"
 check "${binpath}/mdl 
-	\"rus opts verbose\" 
+    \"rus opts verbose\" 
     \"smm opts verbose\"  
     \"rus read in=${file}.rus \" 
     \"rus parse \" 

@@ -53,13 +53,8 @@ Proof::~Proof() {
 	for (auto r : refs) delete r;
 }
 
-Inclusion::Inclusion(Source* src, bool prim) : source(nullptr), primary(prim) {
-	if (src) Sys::mod().math.get<Source>().use(src->id(), source);
-}
-Inclusion::~Inclusion() {
-	if (source) Sys::mod().math.get<Source>().unuse(source->id(), source);
-}
-
+Inclusion::Inclusion(bool prim) : primary(prim) { }
+Inclusion::Inclusion(uint src, bool prim) : source(src), primary(prim) { }
 
 Source::Source(uint l) : mdl::Source<Source, Sys>(l), block(nullptr) { }
 

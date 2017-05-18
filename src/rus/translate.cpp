@@ -282,8 +282,8 @@ vector<smm::Node> translate_proof(const Proof* proof, Maps& maps) {
 smm::Source* translate_source(const Source* src, Maps& maps, smm::Source* target = nullptr);
 
 inline smm::Inclusion* translate_import(const Import* imp, Maps& maps) {
-	smm::Source* src = translate_source(imp->source, maps);
-	return new smm::Inclusion(src, imp->primary);
+	const smm::Source* src = translate_source(imp->source.get(), maps);
+	return new smm::Inclusion(src->id(), imp->primary);
 }
 
 vector<smm::Node> translate_theory(const Theory* thy, Maps& maps) {
@@ -326,6 +326,7 @@ smm::Source* translate_source(const Source* src, Maps& maps, smm::Source* target
 
 smm::Source* translate(uint src, uint tgt) {
 	const Source* source = Sys::get().math.get<Source>().access(src);
+	if (!source) throw Error("no source", Lex::toStr(src));
 	smm::Source* target = new smm::Source(tgt);
 	Maps maps;
 	maps.thm = nullptr;

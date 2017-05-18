@@ -42,10 +42,11 @@ inline Function wrap_action(Function f, int arity) {
 struct Descr {
 	struct Arg {
 		Arg() : opt(false) { }
-		Arg(const string& n, const string& v, bool o = false) : name(n), value(v), opt(o) { }
+		Arg(const string& n, const string& v, bool o = false, const string& d = "") : name(n), value(v), opt(o), def(d) { }
 		string name;
 		string value;
 		bool   opt;
+		string def;
 		string show() const { return name + (value.size() ? "=<" + value + ">" : ""); }
 		bool fits(const string& arg) const {
 			return (arg.substr(0, arg.find_last_of("=")) == name);
@@ -102,8 +103,12 @@ struct Descr {
 		}
 		for (auto& arg: args) {
 			string value;
-			if (arg.opt && find_arg(arg, value, args_orig))
-				args_reord.push_back(value);
+			if (arg.opt) {
+				if (find_arg(arg, value, args_orig))
+					args_reord.push_back(value);
+				else
+					args_reord.push_back(arg.def);
+			}
 		}
 		return args_reord;
 	}

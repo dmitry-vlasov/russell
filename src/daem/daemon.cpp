@@ -20,7 +20,7 @@ Return execute(const string& command) {
 	case Lang::RUS : ret = rus::Sys::mod(sys).exec_and_show(args); break;
 	case Lang::SMM : ret = smm::Sys::mod(sys).exec_and_show(args); break;
 	case Lang::MM  : ret =  mm::Sys::mod(sys).exec_and_show(args); break;
-	case Lang::NONE: return Return("unknown language", false);
+	case Lang::NONE: return Return("unknown language, command: " + command, false);
 	}
 	return ret;
 }

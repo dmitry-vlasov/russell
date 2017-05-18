@@ -192,7 +192,7 @@ struct Sys {
 			return Return();
 		}, Descr("show available systems"));
 		actions["help"] = Action([this](const Args&) {
-			Io::io().out() << endl << lang() << " actions:" << endl;
+			Io::io().out() << endl << System::lang() << " actions:" << endl;
 			for (auto& a : actions)
 				Io::io().out() << "\t" << a.first << ": " << a.second.show() << endl;
 			return Return();
@@ -222,10 +222,14 @@ struct Sys {
 	Return exec_and_show(const Args& args) {
 		bool verbose = conf(id).verbose();
 		if (verbose)
-			Io::io().out() << lang() << " doing: " << args << " ... " << flush;
+			Io::io().out() << System::lang() << " doing: " << args << " ... " << flush;
 		Return ret = exec(args);
-		if (verbose && !timers[args[0]].isNegligible())
-			Io::io().out() << "done in " << timers[args[0]] << endl;
+		if (verbose) {
+			if (timers[args[0]].isNegligible())
+				Io::io().out() << endl;
+			else
+				Io::io().out() << "done in " << timers[args[0]] << endl;
+		}
 		if (!ret && ret.text.size())
 			Io::io().err() << ret.text << endl;
 		else if (verbose && ret.text.size())
@@ -237,8 +241,6 @@ struct Sys {
 	static System& mod(uint s = -1)       { return Lib<System>::mod().access(choose(s));  }
 	static Timers& timer(uint s = -1)     { return mod(choose(s)).timers;  }
 	static Conf& conf(uint s = -1)        { return mod(choose(s)).config;  }
-
-	virtual string lang() const = 0;
 
 private:
 	static uint choose(uint s) { if (s != -1) current() = s; return current(); }
@@ -254,10 +256,9 @@ template<class T>
 void dump(const T& val) { cout << val; }
 
 template<class D>
-struct Table {
+class Table {
 	typedef D Data;
 
-private:
 	struct Storage {
 		Data* data;
 		set<Data**> users;
@@ -265,7 +266,6 @@ private:
 	map<uint, Storage> refs;
 	mutex m;
 
-public:
 	void add(uint n, Data* p = nullptr) {
 		m.lock();
 		if (!p) {
@@ -322,6 +322,8 @@ public:
 		d.users.erase(&u);
 		m.unlock();
 	}
+
+public:
 	Data* access(uint n) {
 		return refs.count(n) ? refs.at(n).data : nullptr;
 	}
@@ -347,6 +349,9 @@ public:
 
 	const_iterator cbegin() const { return refs.cbegin(); }
 	const_iterator cend() const { return refs.cend(); }
+
+	template<class, class> friend class Owner;
+	template<class, class> friend class User;
 };
 
 template<class T, class S>
@@ -415,7 +420,7 @@ struct Source : public Owner<Src, Sys> {
 
 	string data;
 
-	Path path() const { return Path(name(), Sys::conf().get("root")); }
+	Path path() const { return Path(name(), Sys::conf().get("root"), Sys::ext()); }
 	string name() const { return Lex::toStr(Owner_::id()); }
 	string dir() const { return path().dir(); }
 

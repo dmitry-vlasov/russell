@@ -232,16 +232,16 @@ struct ParseImport {
 	struct result { typedef Import* type; };
 	Import* operator()(string name, Source* src) const {
 		static map<string, Import*> imported;
+		Path::remove_ext(name);
 		Import* imp = nullptr;
 		if (imported.count(name)) {
-			imp = new Import(imported[name]->source, false);
+			imp = new Import(imported[name]->source.id(), false);
 		} else {
-			Path path(name, Sys::conf().get("root"), "rus");
-			imp = new Import(nullptr, true);
+			imp = new Import(true);
 			imported[name] = imp;
-			imp->source = parse(Lex::toInt(path.name));
+			imp->source = parse(Lex::toInt(name));
 		}
-		src->include(imp->source);
+		src->include(imp->source.get());
 		return imp;
 	}
 };

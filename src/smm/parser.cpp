@@ -234,15 +234,15 @@ public:
 		};
 		parser["INCLUDE"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			string name = sv.token();
+			Path::remove_ext(name);
 			static map<string, Inclusion*> included;
 			if (included.count(name)) {
 				Inclusion* inc = included[name];
-				return new Inclusion(inc->source, false);
+				return new Inclusion(inc->source.id(), false);
 			} else {
-				Path path(name, Sys::conf().get("root"));
-				Inclusion* inc = new Inclusion(nullptr, true);
+				Inclusion* inc = new Inclusion(true);
 				included[name] = inc;
-				inc->source = parse(Lex::toInt(path.name));
+				inc->source = parse(Lex::toInt(name));
 				return inc;
 			}
 		};
@@ -254,7 +254,7 @@ public:
 	}
 
 	static Source* parse(uint label) {
-		Path path(Lex::toStr(label), Sys::conf().get("root"));
+		Path path(Lex::toStr(label), Sys::conf().get("root"), "smm");
 		string data;
 		path.read(data);
 		Source* src = nullptr;
@@ -290,10 +290,8 @@ private:
 };
 
 void parse(uint label) {
-	Sys::timer()["read"].start();
 	if (!Parser::parse(label))
 		throw Error("parsing of " + Lex::toStr(label) + " failed");
-	Sys::timer()["read"].stop();
 }
 
 }} // mdl::smm

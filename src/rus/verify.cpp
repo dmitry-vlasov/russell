@@ -60,7 +60,7 @@ void verify_step(const Step* st) {
 
 void verify_qed(const Qed* qed) {
 	if (qed->prop->expr != qed->step->expr)
-		throw Error("qed prop doesn't match qed step", show(qed->prop) + " != " + show(qed->step));
+		throw Error("qed prop doesn't match qed step", show(qed->prop->expr) + " != " + show(qed->step->expr));
 }
 
 void verify_proof(const Proof* proof) {
@@ -80,7 +80,7 @@ void verify_theory(const Theory* theory) {
 		case Node::THEORY: verify_theory(n.val.thy); break;
 		case Node::IMPORT: {
 			const Import* imp = n.val.imp;
-			if (imp->primary) verify_theory(imp->source->theory);
+			if (imp->primary) verify_theory(imp->source.get()->theory);
 			break;
 		}
 		default: break;

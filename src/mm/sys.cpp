@@ -3,8 +3,8 @@
 
 namespace mdl { namespace mm  {
 
-void merge(uint src, uint tgt, uint tgt_sys);
-void cut(uint src, uint tgt, uint tgt_sys);
+void merge(uint src, uint tgt, uint tgt_root);
+void cut(uint src, uint tgt, uint tgt_root);
 void parse(uint src);
 void translate(uint src, uint tgt);
 
@@ -53,7 +53,7 @@ void write(uint s, bool deep) {
 			deep_write(
 				src,
 				[](const Source* src) -> const vector<Node>& { return src->block->contents; },
-				[](Node n) -> Source* { return n.val.inc->source; },
+				[](Node n) -> Source* { return n.val.inc->source.get(); },
 				[](Node n) -> bool { return n.type == Node::INCLUSION; }
 			);
 		} else {
@@ -85,24 +85,24 @@ static Descr description(string name) {
 	static const map<string, Descr> m = {
 		{"read",   Descr("read the source",      Descr::Arg("in", "file"))},
 		{"transl", Descr("translate the source", Descr::Arg("in", "file"), Descr::Arg("out", "file"))},
-		{"write",  Descr("write the source",     Descr::Arg("in", "file"), Descr::Arg("deep", "", true))},
+		{"write",  Descr("write the source",     Descr::Arg("in", "file"), Descr::Arg("deep", "true|false", true, "false"))},
 		{"info",   Descr("info about math")},
 		{"show",   Descr("show entity")},
-		{"cut",    Descr("cut the source",       Descr::Arg("in", "file"), Descr::Arg("out", "file"), Descr::Arg("sys", "name"))},
-		{"merge",  Descr("merge the source",     Descr::Arg("in", "file"), Descr::Arg("out", "file"), Descr::Arg("sys", "name"))}
+		{"cut",    Descr("cut the source",       Descr::Arg("in", "file"), Descr::Arg("out", "file"), Descr::Arg("out-root", "dir"))},
+		{"merge",  Descr("merge the source",     Descr::Arg("in", "file"), Descr::Arg("out", "file"), Descr::Arg("out-root", "dir"))}
 	};
 	return m.count(name) ? m.at(name) : Descr();
 }
 
 Sys::Sys(uint id) : mdl::Sys<Sys, Math>(id) {
-	actions["read"]   = Action([](const Args& args) { parse(Lex::toInt(args[0])); return Return(); }, description("read"));
-	actions["transl"] = Action([](const Args& args) { translate(Lex::toInt(args[0]), Lex::toInt(args[1])); return Return(); }, description("transl"));
-	actions["write"]  = Action([](const Args& args) { write(Lex::toInt(args[0]), arg<bool>(args, "deep", false)); return Return(); }, description("write"));
+	actions["read"]   = Action([](const Args& args) { parse(Path::make_name(args[0])); return Return(); }, description("read"));
+	actions["transl"] = Action([](const Args& args) { translate(Path::make_name(args[0]), Path::make_name(args[1])); return Return(); }, description("transl"));
+	actions["write"]  = Action([](const Args& args) { write(Path::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"));
 	actions["info"]   = Action([](const Args& args) { info(); return Return(); }, description("info"));
 	actions["show"]   = Action([](const Args& args) { show(); return Return(); }, description("show"));
 	actions["opts"]   = Action([](const Args& args) { Sys::conf().read(args); return Return(); }, Sys::conf().descr());
-	actions["cut"]    = Action([](const Args& args) { cut(Lex::toInt(args[0]), Lex::toInt(args[1]), Lex::toInt(args[2])); return Return(); }, description("cut"));
-	actions["merge"]  = Action([](const Args& args) { merge(Lex::toInt(args[0]), Lex::toInt(args[1]), Lex::toInt(args[2])); return Return(); }, description("merge"));
+	actions["cut"]    = Action([](const Args& args) { cut(Path::make_name(args[0]), Path::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("cut"));
+	actions["merge"]  = Action([](const Args& args) { merge(Path::make_name(args[0]), Path::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("merge"));
 }
 
 enum class Mode { CUT, MERGE, TRANSL, NONE };

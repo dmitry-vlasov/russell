@@ -105,8 +105,8 @@ void translate(const Node& node, mm::Block* target, Maps& maps) {
 		maps.transform[ass->prop.label] = perm;
 	}	break;
 	case Node::INCLUSION: {
-		mm::Source* s = translate_source(node.val.inc->source, maps);
-		mm::Inclusion* i = new mm::Inclusion(s, node.val.inc->primary);
+		mm::Source* s = translate_source(node.val.inc->source.get(), maps);
+		mm::Inclusion* i = new mm::Inclusion(s->id(), node.val.inc->primary);
 		target->contents.push_back(mm::Node(i));
 	} 	break;
 	case Node::COMMENT: {
@@ -137,6 +137,7 @@ mm::Source* translate_source(const Source* src, Maps& maps, mm::Source* target) 
 
 void translate_to_mm(uint src, uint tgt) {
 	const Source* source = Sys::get().math.sources.access(src);
+	if (!source) throw Error("no source", Lex::toStr(src));
 	mm::Source* target = new mm::Source(tgt);
 	target->block = new mm::Block;
 	Maps maps;

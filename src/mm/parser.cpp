@@ -187,16 +187,15 @@ public:
 		};
 		parser["INCLUDE"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			string name = sv.token();
+			Path::remove_ext(name);
 			static map<string, mm::Inclusion*> included;
 			if (included.count(name)) {
 				mm::Inclusion* inc = included[name];
-				return new mm::Inclusion(inc->source, false);
+				return new mm::Inclusion(inc->source.id(), false);
 			} else {
-				Path path(name, Sys::conf().get("root"));
-				mm::Inclusion* inc = new mm::Inclusion(nullptr, true);
+				mm::Inclusion* inc = new mm::Inclusion(true);
 				included[name] = inc;
-				Source* src = parse(Lex::toInt(path.name), context.get<Context*>());
-				Sys::mod().math.get<Source>().use(src->id(), inc->source);
+				inc->source = parse(Lex::toInt(name), context.get<Context*>());
 				return inc;
 			}
 		};
@@ -220,7 +219,7 @@ public:
 
 private:
 	static Source* parse(uint label, Context* context) {
-		Path path(Lex::toStr(label), Sys::conf().get("root"));
+		Path path(Lex::toStr(label), Sys::conf().get("root"), "mm");
 		string data;
 		path.read(data, &const_patches);
 		Parser p(label);
@@ -524,11 +523,9 @@ R"(
 }
 
 void parse(uint label) {
-	Sys::timer()["read"].start();
 	if (!Parser::parse(label))
 		throw Error("parsing of " + Lex::toStr(label) + " failed");
 	//cout << endl << *src_enter;
-	Sys::timer()["read"].stop();
 }
 
 }} // mdl::mm

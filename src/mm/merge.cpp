@@ -37,7 +37,7 @@ struct Include {
 		static set<string> included;
 		if (included.count(p)) return;
 		included.insert(p);
-		Path path(p, Sys::conf().get("root"));
+		Path path(p, Sys::conf().get("root"), "mm");
 		parse(path);
 	}
 };
@@ -107,21 +107,21 @@ void parse(const Path& path) {
 	string data;
 	path.read(data);
 	remove_commented_imports(data);
-	LocationIter iter(data.begin(), Lex::toInt(path.name));
-	LocationIter end(data.end(), Lex::toInt(path.name));
+	LocationIter iter(data.begin(), Lex::toInt(path.name()));
+	LocationIter end(data.end(), Lex::toInt(path.name()));
 	bool r = phrase_parse(iter, end, Grammar(), ascii::space);
 	if (!r || iter != end) {
-		throw Error("parsing failed", path.name);
+		throw Error("parsing failed", path.name());
 	}
 }
 
 }
 
-void merge(uint src, uint tgt, uint tgt_sys) {
+void merge(uint src, uint tgt, uint tgt_root) {
 	Sys::timer()["merge"].start();
-	Path in(Lex::toStr(src), Sys::conf().get("root"));
+	Path in(Lex::toStr(src), Sys::conf().get("root"), "mm");
 	parse(in);
-	Path out(Lex::toStr(tgt), Sys::conf(tgt_sys).get("root"));
+	Path out(Lex::toStr(tgt), Lex::toStr(tgt_root), "mm");
 	ofstream os(out.path());
 	os << Merged::get().contents.str();
 	os.close();

@@ -24,7 +24,8 @@ struct Math {
 
 struct Sys : public mdl::Sys<Sys, Math> {
 	Sys(uint);
-	string lang() const override { return  "smm"; }
+	static string lang() { return  "smm"; }
+	static string ext() { return "smm"; }
 };
 
 template<class T>

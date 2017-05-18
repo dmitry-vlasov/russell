@@ -68,11 +68,8 @@ Proof::~Proof() {
 	for (auto& e : elems) e.destroy();
 }
 
-Source::Source(uint label) : mdl::Source<Source, Sys>(label), theory(nullptr) {
-	//Sys::mod().math.sources.add(label, this);
-}
+Source::Source(uint label) : mdl::Source<Source, Sys>(label), theory(nullptr) { }
 Source::~Source() {
-	//Sys::mod().math.sources.del(label);
 	if (theory) delete theory;
 }
 

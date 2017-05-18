@@ -38,7 +38,8 @@ public:
 
 struct Sys : public mdl::Sys<Sys, Math> {
 	Sys(uint);
-	string lang() const override { return  "rus"; }
+	static string lang() { return  "rus"; }
+	static string ext() { return "rus"; }
 };
 
 template<class T>

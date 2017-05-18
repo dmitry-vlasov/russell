@@ -46,7 +46,7 @@ void write(uint s, bool deep) {
 			deep_write(
 				src,
 				[](const Source* src) -> const vector<Node>& { return src->contents; },
-				[](Node n) -> Source* { return n.val.inc->source; },
+				[](Node n) -> Source* { return n.val.inc->source.get(); },
 				[](Node n) -> bool { return n.type == Node::INCLUSION; }
 			);
 		} else {
@@ -78,7 +78,7 @@ static Descr description(string name) {
 	static const map<string, Descr> m = {
 		{"read",   Descr("read the source",      Descr::Arg("in", "file"))},
 		{"transl", Descr("translate the source", Descr::Arg("in", "file"), Descr::Arg("out", "file"), Descr::Arg("lang", "mm|rus"))},
-		{"write",  Descr("write the source",     Descr::Arg("in", "file"), Descr::Arg("deep", "", true))},
+		{"write",  Descr("write the source",     Descr::Arg("in", "file"), Descr::Arg("deep", "true|false", true, "false"))},
 		{"verify", Descr("verify all theorems",  Descr::Arg("in", "file"))},
 		{"info",   Descr("info about math")},
 		{"show",   Descr("show entity")},
@@ -87,10 +87,10 @@ static Descr description(string name) {
 }
 
 Sys::Sys(uint id) : mdl::Sys<Sys, Math>(id) {
-	actions["read"]   = Action([](const Args& args) { parse(Lex::toInt(args[0])); return Return(); }, description("read"));
+	actions["read"]   = Action([](const Args& args) { parse(Path::make_name(args[0])); return Return(); }, description("read"));
 	actions["verify"] = Action([](const Args& args) { verify(); return Return(); }, description("verify"));
-	actions["transl"] = Action([](const Args& args) { translate(Lex::toInt(args[0]), Lex::toInt(args[1]), chooseLang(args[2])); return Return(); }, description("transl"));
-	actions["write"]  = Action([](const Args& args) { write(Lex::toInt(args[0]), arg<bool>(args, "deep", false)); return Return(); }, description("write"));
+	actions["transl"] = Action([](const Args& args) { translate(Path::make_name(args[0]), Path::make_name(args[1]), chooseLang(args[2])); return Return(); }, description("transl"));
+	actions["write"]  = Action([](const Args& args) { write(Path::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"));
 	actions["info"]   = Action([](const Args& args) { info(); return Return(); }, description("info"));
 	actions["show"]   = Action([](const Args& args) { info(); return Return(); }, description("show"));
 	actions["opts"]   = Action([](const Args& args) { Sys::conf().read(args); return Return(); }, Sys::conf().descr());
