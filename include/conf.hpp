@@ -8,6 +8,13 @@ namespace mdl {
 
 enum class Lang { NONE, MM, SMM, RUS };
 
+inline Lang chooseLang(const string& lang) {
+	if (lang == "rus") return Lang::RUS;
+	if (lang == "smm") return Lang::SMM;
+	if (lang == "mm")  return Lang::MM;
+	return Lang::NONE;
+}
+
 // Configuration for a deductive system
 class Conf {
 public :

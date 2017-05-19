@@ -5,20 +5,23 @@
 
 using namespace mdl;
 
-vector<string> make_args(int argc, const char* argv[]) {
-	vector<string> args(argc);
-	for (int i = 0; i < argc; ++ i)	args[i] = *argv++;
-	return args;
-}
-
 int main (int argc, const char* argv[])
 {
-	vector<string> args = make_args(argc, argv);
 	try {
+		po::options_description descr(
+			string("Russell language implementation - mdl\n") +
+			"Version: " + VERSION + "\n" +
+			"Usage: mdl [options] | \"command_1\" ... \"command_n\" \n"
+		);
+		descr.add_options()
+			("help,h",      "print help message")
+			("daemon,d",    "start a Russell daemon")
+			("console,c",   "start a Russell console")
+		;
 		po::variables_map vm;
-		if (!options(argc, argv, vm)) return 1;
+		po::store(po::parse_command_line(argc, argv, descr), vm);
+		po::notify(vm);
 		if (vm.count("help") || argc == 1) return 0;
-
 		if (vm.count("daemon"))  { daemon::Daemon::get(); return 0; }
 		if (vm.count("console")) { daemon::Console::get(); return 0; }
 		for (int i = 1; i < argc; ++ i) {

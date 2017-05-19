@@ -280,14 +280,16 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 noinst_HEADERS = \
+	actions.hpp \
 	common.hpp \
+	conf.hpp \
+	error.hpp \
+	lex.hpp \
 	location.hpp \
+	path.hpp \
 	std.hpp \
 	symbol.hpp \
 	timer.hpp \
-	actions.hpp \
-	error.hpp \
-	lex.hpp \
 	\
 	mm/ast.hpp \
 	mm/sys.hpp \

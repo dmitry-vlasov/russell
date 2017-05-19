@@ -5,7 +5,6 @@
 #include "symbol.hpp"
 #include "timer.hpp"
 #include "actions.hpp"
-#include "options.hpp"
 #include "lex.hpp"
 #include "path.hpp"
 #include "conf.hpp"
