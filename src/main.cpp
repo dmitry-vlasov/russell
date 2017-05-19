@@ -27,24 +27,19 @@ int main (int argc, const char* argv[])
 		if (vm.count("help") || argc == 1) return 0;
 		if (vm.count("daem")) mode = Mode::DAEM;
 		if (vm.count("cons")) mode = Mode::CONS;
+		queue<string> commands;
 		for (int i = 1; i < argc; ++ i) {
 			if (argv[i][0] == '-') continue;
 			switch (mode) {
 			case Mode::DAEM: Daemon::mod().enqueue(argv[i]);  break;
 			case Mode::CONS: Console::mod().enqueue(argv[i]); break;
-			case Mode::EXEC: {
-					Return ret = execute(argv[i]);
-					if (!ret) {
-						cerr << ret.text << endl;
-						return 1;
-					}
-				}
-			};
+			case Mode::EXEC: commands.push(argv[i]); break;
+			}
 		}
 		switch (mode) {
 		case Mode::DAEM: Daemon::mod().start();  break;
 		case Mode::CONS: Console::mod().start(); break;
-		case Mode::EXEC: break;
+		case Mode::EXEC: execute(commands); break;
 		}
 	} catch (const Error& err) {
 		cerr << err.what();

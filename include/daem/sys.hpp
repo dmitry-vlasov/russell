@@ -36,7 +36,7 @@ private:
 	boost::asio::ip::tcp::acceptor acceptor;
 	boost::asio::ip::tcp::socket   socket;
 	char buffer[MAX_MESSAGE_SIZE];
-	enum State { RUN, EXIT, CLOSE };
+	enum State { RUN_QUEUE, RUN_REQUEST, EXIT, CLOSE };
 	State state;
 	queue<string> commands;
 

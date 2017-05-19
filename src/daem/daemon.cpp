@@ -45,10 +45,11 @@ void Daemon::session() {
 }
 
 Daemon::Daemon() : endpoint(ip::tcp::v4(), conn.port),
-acceptor(service, endpoint), socket(service), state(RUN) {
+acceptor(service, endpoint), socket(service), state(RUN_QUEUE) {
 }
 
 void Daemon::start() {
+	execute(commands);
 	while (state != EXIT) {
 		acceptor.accept(socket);
 		std::thread(Daemon::session).detach();
@@ -59,6 +60,7 @@ string Daemon::get_request() {
 	if (!commands.empty()) {
 		string command = commands.front();
 		commands.pop();
+		state = RUN_QUEUE;
 		return command;
 	}
 	boost::system::error_code error;
@@ -69,12 +71,16 @@ string Daemon::get_request() {
 	} else if (error) {
 		throw boost::system::system_error(error); // Some other error.
 	}
+	state = RUN_REQUEST;
 	return string(buffer, length);
 }
 
 
 void Daemon::send_response(const string& response) {
-	boost::asio::write(socket, boost::asio::buffer(response.c_str(), response.size()));
+	if (RUN_QUEUE)
+		cout << response << endl;
+	else if (RUN_REQUEST)
+		boost::asio::write(socket, boost::asio::buffer(response.c_str(), response.size()));
 }
 
 void Console::session() {

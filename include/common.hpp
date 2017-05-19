@@ -440,6 +440,18 @@ struct Source : public Owner<Src, Sys> {
 
 Return execute(const string& command);
 
+inline void execute(queue<string>& commands) {
+	while (!commands.empty()) {
+		string command = commands.front(); commands.pop();
+		if (command == "exit" || command == "cancel" || command == "quit") break;
+		Return ret = execute(command);
+		if (!ret) {
+			cerr << ret.text << endl;
+			break;
+		}
+	}
+}
+
 } // mdl
 
   
