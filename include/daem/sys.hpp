@@ -8,37 +8,37 @@
 #include "mm/ast.hpp"
 #include "timer.hpp"
 
-namespace mdl { namespace daemon {
+namespace mdl {
 
-using namespace boost::asio;
+constexpr const char* default_logs() { return  "/var/tmp/mdld.log"; }
+constexpr const char* default_host() { return "localhost"; }
+constexpr uint default_port() { return 808011; }
 
-#define DEFAULT_DAEMON_LOGS "/var/tmp/mdld.log"
-#define DEFAULT_DAEMON_HOST "localhost"
-#define DEFAULT_DAEMON_PORT 808011
-
-struct Config {
-	Config() : port(DEFAULT_DAEMON_PORT), host(DEFAULT_DAEMON_HOST), logs(DEFAULT_DAEMON_LOGS) { }
+struct Conn {
+	Conn() : port(default_port()), host(default_host()), logs(default_logs()) { }
 	uint   port;
 	string host;
 	string logs;
 };
 
 struct Daemon {
-	Config config;
-	void run();
+	Conn conn;
+	void start();
+	void enqueue(const string& com) { commands.push(com); }
 
 	static const Daemon& get() { return mod(); }
 	static Daemon& mod() { static Daemon d; return d; }
 
 private:
 	enum { MAX_MESSAGE_SIZE = 1024 };
-	io_service service;
-	ip::tcp::endpoint endpoint;
-	ip::tcp::acceptor acceptor;
-	ip::tcp::socket   socket;
+	boost::asio::io_service service;
+	boost::asio::ip::tcp::endpoint endpoint;
+	boost::asio::ip::tcp::acceptor acceptor;
+	boost::asio::ip::tcp::socket   socket;
 	char buffer[MAX_MESSAGE_SIZE];
 	enum State { RUN, EXIT, CLOSE };
 	State state;
+	queue<string> commands;
 
 	static void session();
 
@@ -49,26 +49,31 @@ private:
 };
 
 struct Console {
-	Config config;
+	Conn conn;
+
+	void start();
+	void enqueue(const string& com) { commands.push(com); }
 
 	static const Console& get() { return mod(); }
 	static Console& mod() { static Console c; return c; }
 
 private:
 	enum { MAX_MESSAGE_SIZE = 1024 };
-	io_service service;
-	ip::tcp::resolver resolver;
-	ip::tcp::socket   socket;
-	ip::tcp::endpoint endpoint;
+	boost::asio::io_service service;
+	boost::asio::ip::tcp::resolver resolver;
+	boost::asio::ip::tcp::socket   socket;
+	boost::asio::ip::tcp::endpoint endpoint;
 	int  message_size;
 	char buff[MAX_MESSAGE_SIZE];
+	queue<string> commands;
 
 	static void session();
 	Console();
+	string get_command();
 	string get_response();
 	size_t read_complete(const boost::system::error_code& err, size_t bytes) const;
 	void send_request(const string& request);
 };
 
-}} // mdl::daemon
+} // mdl::daemon
 

@@ -2,6 +2,8 @@
 
 namespace mdl {
 
+using namespace boost::asio;
+
 Return execute(const string& command) {
 	Lang lang = Lang::NONE;
 	uint sys = -1;
@@ -25,8 +27,6 @@ Return execute(const string& command) {
 	return ret;
 }
 
-namespace daemon {
-
 void Daemon::session() {
 	Daemon& daemon = mod();
 	try {
@@ -44,8 +44,11 @@ void Daemon::session() {
 	}
 }
 
-Daemon::Daemon() : config(), endpoint(ip::tcp::v4(), config.port),
+Daemon::Daemon() : endpoint(ip::tcp::v4(), conn.port),
 acceptor(service, endpoint), socket(service), state(RUN) {
+}
+
+void Daemon::start() {
 	while (state != EXIT) {
 		acceptor.accept(socket);
 		std::thread(Daemon::session).detach();
@@ -53,14 +56,19 @@ acceptor(service, endpoint), socket(service), state(RUN) {
 }
 
 string Daemon::get_request() {
+	if (!commands.empty()) {
+		string command = commands.front();
+		commands.pop();
+		return command;
+	}
 	boost::system::error_code error;
-	  size_t length = socket.read_some(boost::asio::buffer(buffer), error);
-	  if (error == boost::asio::error::eof) {
+	size_t length = socket.read_some(boost::asio::buffer(buffer), error);
+	if (error == boost::asio::error::eof) {
 		state = CLOSE; // Connection closed cleanly by peer.
 		return "";
-	  } else if (error) {
+	} else if (error) {
 		throw boost::system::system_error(error); // Some other error.
-	  }
+	}
 	return string(buffer, length);
 }
 
@@ -71,7 +79,8 @@ void Daemon::send_response(const string& response) {
 
 void Console::session() {
 	Console& console = mod();
-	for (std::string request; std::getline(std::cin, request);) {
+	while (true) {
+		string request = console.get_command();
 		if (request == "exit" || request == "cancel" || request == "quit") return;
 		console.send_request(request);
 		string response = console.get_response();
@@ -80,10 +89,13 @@ void Console::session() {
 	}
 }
 
-Console::Console() : config(), resolver(service), socket(service),
-endpoint(*resolver.resolve({config.host, to_string(config.port)})), message_size(-1) {
+Console::Console() : resolver(service), socket(service),
+endpoint(*resolver.resolve({conn.host, to_string(conn.port)})), message_size(-1) {
+}
+
+void Console::start() {
 	socket.connect(endpoint);
-	std::thread(&Console::session).detach();
+	std::thread(Console::session).detach();
 }
 
 size_t Console::read_complete(const boost::system::error_code& err, size_t bytes) const {
@@ -91,6 +103,17 @@ size_t Console::read_complete(const boost::system::error_code& err, size_t bytes
 	bool found = std::find(buff, buff + bytes, '\n') < buff + bytes;
 	// we read one-by-one until we get to enter, no buffering
 	return found ? 0 : 1;
+}
+
+string Console::get_command() {
+	string command;
+	if (!commands.empty()) {
+		command = commands.front();
+		commands.pop();
+		return command;
+	}
+	std::getline(std::cin, command);
+	return command;
 }
 
 string Console::get_response() {
@@ -103,4 +126,4 @@ void Console::send_request(const string& request) {
 	socket.write_some(boost::asio::buffer(request));
 }
 
-}}
+}
