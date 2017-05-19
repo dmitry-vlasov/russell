@@ -290,6 +290,7 @@ private:
 };
 
 void parse(uint label) {
+	delete Sys::get().math.get<Source>().access(label);
 	if (!Parser::parse(label))
 		throw Error("parsing of " + Lex::toStr(label) + " failed");
 }

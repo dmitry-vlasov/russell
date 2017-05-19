@@ -7,7 +7,8 @@ function run() {
 	fi;
 }
 
-VALGRIND="valgrind --tool=memcheck --leak-check=full"
+VALGRIND="valgrind --tool=exp-sgcheck"
+#VALGRIND="valgrind --tool=memcheck --leak-check=full"
 
 function check() {
     echo "COMMAND: " $1

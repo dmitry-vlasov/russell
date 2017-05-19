@@ -3,6 +3,7 @@
 namespace mdl { namespace rus {
 
 Source* parse(uint label) {
+	delete Sys::get().math.get<Source>().access(label);
 	Source* src = new Source(label);
 	src->read();
 	LocationIter iter(src->data.begin(), label);
