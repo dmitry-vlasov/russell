@@ -327,6 +327,7 @@ smm::Source* translate_source(const Source* src, Maps& maps, smm::Source* target
 smm::Source* translate(uint src, uint tgt) {
 	const Source* source = Sys::get().math.get<Source>().access(src);
 	if (!source) throw Error("no source", Lex::toStr(src));
+	delete smm::Sys::get().math.get<smm::Source>().access(tgt);
 	smm::Source* target = new smm::Source(tgt);
 	Maps maps;
 	maps.thm = nullptr;

@@ -138,6 +138,7 @@ mm::Source* translate_source(const Source* src, Maps& maps, mm::Source* target) 
 void translate_to_mm(uint src, uint tgt) {
 	const Source* source = Sys::get().math.sources.access(src);
 	if (!source) throw Error("no source", Lex::toStr(src));
+	delete mm::Sys::get().math.get<mm::Source>().access(tgt);
 	mm::Source* target = new mm::Source(tgt);
 	target->block = new mm::Block;
 	Maps maps;

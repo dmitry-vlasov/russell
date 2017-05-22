@@ -528,6 +528,7 @@ void translate(uint src, uint tgt) {
 	scope_stack.push_back(Scope());
 	const Source* s = Sys::get().math.get<Source>().access(src);
 	if (!s) throw Error("no source", Lex::toStr(src));
+	delete smm::Sys::get().math.get<smm::Source>().access(tgt);
 	translate_block(maps, s->block, new smm::Source(tgt));
 	scope_stack.pop_back();
 }

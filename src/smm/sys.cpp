@@ -96,7 +96,7 @@ Sys::Sys(uint id) : mdl::Sys<Sys, Math>(id) {
 	actions["write"]  = Action([](const Args& args) { write(Path::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"));
 	actions["info"]   = Action([](const Args& args) { return Return(info()); }, description("info"));
 	actions["show"]   = Action([](const Args& args) { return Return(show()); }, description("show"));
-	actions["opts"]   = Action([](const Args& args) { Sys::conf().read(args); return Return(); }, Sys::conf().descr());
+	actions["opts"]   = Action([&](const Args& args) { config.read(args); return Return(); }, config.descr());
 }
 
 }} // mdl::smm

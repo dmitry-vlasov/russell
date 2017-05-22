@@ -102,9 +102,9 @@ Sys::Sys(uint id) : mdl::Sys<Sys, Math>(id) {
 	actions["write"]  = Action([](const Args& args) { write(Path::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"));
 	actions["info"]   = Action([](const Args& args) { return Return(info()); }, description("info"));
 	actions["show"]   = Action([](const Args& args) { return Return(show()); }, description("show"));
-	actions["opts"]   = Action([](const Args& args) { Sys::conf().read(args); return Return(); }, Sys::conf().descr());
 	actions["cut"]    = Action([](const Args& args) { cut(Path::make_name(args[0]), Path::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("cut"));
 	actions["merge"]  = Action([](const Args& args) { merge(Path::make_name(args[0]), Path::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("merge"));
+	actions["opts"]   = Action([&](const Args& args) { config.read(args); return Return(); }, config.descr());
 }
 
 enum class Mode { CUT, MERGE, TRANSL, NONE };

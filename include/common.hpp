@@ -380,7 +380,7 @@ class User {
 public:
 	typedef S Sys;
 	User(uint id = -1)  : id_(id),      ptr(nullptr) { use(id_); }
-	User(const T* p)    : id_(p->id()), ptr(nullptr) { use(id_); }
+	User(const T* p)    : id_(p ? p->id() : -1), ptr(nullptr) { use(id_); }
 	User(const User& u) : User(u.id()) { }
 	User(User&& u)      : User(u.id()) { u.unuse(); }
 	~User() { unuse(); }
