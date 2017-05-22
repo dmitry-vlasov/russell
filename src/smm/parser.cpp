@@ -240,9 +240,10 @@ public:
 				Inclusion* inc = included[name];
 				return new Inclusion(inc->source.id(), false);
 			} else {
-				Inclusion* inc = new Inclusion(true);
+				Inclusion* inc = new Inclusion(Lex::toInt(name), true);
 				included[name] = inc;
-				inc->source = parse(Lex::toInt(name));
+				parse(Lex::toInt(name));
+				//inc->source = parse(Lex::toInt(name));
 				return inc;
 			}
 		};

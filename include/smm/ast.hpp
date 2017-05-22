@@ -136,7 +136,6 @@ struct Comment {
 class Source;
 
 struct Inclusion {
-	Inclusion(bool p) : primary(p) { }
 	Inclusion(uint s, bool p) : source(s), primary(p) { }
 	User<Source> source;
 	bool         primary;

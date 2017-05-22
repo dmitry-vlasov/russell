@@ -237,9 +237,10 @@ struct ParseImport {
 		if (imported.count(name)) {
 			imp = new Import(imported[name]->source.id(), false);
 		} else {
-			imp = new Import(true);
+			imp = new Import(Lex::toInt(name), true);
 			imported[name] = imp;
-			imp->source = parse(Lex::toInt(name));
+			parse(Lex::toInt(name));
+			//imp->source = parse(Lex::toInt(name));
 		}
 		src->include(imp->source.get());
 		return imp;

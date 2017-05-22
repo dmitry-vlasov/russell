@@ -214,7 +214,6 @@ struct Source : public mdl::Source<Source, Sys> {
 };
 
 struct Inclusion {
-	Inclusion(bool prim);
 	Inclusion(uint src, bool prim);
 	User<Source> source;
 	bool         primary;

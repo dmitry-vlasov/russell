@@ -53,7 +53,6 @@ Proof::~Proof() {
 	for (auto r : refs) delete r;
 }
 
-Inclusion::Inclusion(bool prim) : primary(prim) { }
 Inclusion::Inclusion(uint src, bool prim) : source(src), primary(prim) { }
 
 Source::Source(uint l) : mdl::Source<Source, Sys>(l), block(nullptr) { }

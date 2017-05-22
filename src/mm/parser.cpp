@@ -193,9 +193,10 @@ public:
 				mm::Inclusion* inc = included[name];
 				return new mm::Inclusion(inc->source.id(), false);
 			} else {
-				mm::Inclusion* inc = new mm::Inclusion(true);
+				mm::Inclusion* inc = new mm::Inclusion(Lex::toInt(name), true);
 				included[name] = inc;
-				inc->source = parse(Lex::toInt(name), context.get<Context*>());
+				parse(Lex::toInt(name), context.get<Context*>());
+				//inc->source = parse(Lex::toInt(name), context.get<Context*>());
 				return inc;
 			}
 		};

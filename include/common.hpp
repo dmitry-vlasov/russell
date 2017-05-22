@@ -375,18 +375,18 @@ public:
 
 template<class T, class S>
 class User {
+	uint id_;
 	T* ptr;
 public:
 	typedef S Sys;
-	User() : ptr(nullptr) { }
-	User(uint id) : ptr(nullptr) { use(id); }
-	User(const T* p) : ptr(nullptr) { if (p) use(p->id()); }
+	User(uint id = -1)  : id_(id),      ptr(nullptr) { use(id_); }
+	User(const T* p)    : id_(p->id()), ptr(nullptr) { use(id_); }
 	User(const User& u) : User(u.id()) { }
-	User(User&& u) : User(u.id()) { u.unuse(); }
+	User(User&& u)      : User(u.id()) { u.unuse(); }
 	~User() { unuse(); }
-	void operator = (const T* p) { if (p) use(p->id()); else unuse(); }
+	void operator = (const T* p)    { use(p->id()); }
 	void operator = (const User& u) { use(u.id()); }
-	void operator = (User&& u) { use(u.id()); u.unuse(); }
+	void operator = (User&& u)      { use(u.id()); u.unuse(); }
 
 	bool operator == (const User& u) const { return ptr == u.ptr; }
 	bool operator != (const User& u) const { return ptr != u.ptr; }
@@ -413,10 +413,10 @@ public:
 
 	T* get() { return ptr; }
 	const T* get() const { return ptr; }
-	uint id() const { return ptr ? ptr->id() : -1; }
+	uint id() const { return id_; }
 
-	void use(uint id) { unuse(); if (id != -1) Sys::mod().math.template get<T>().use(id, ptr); }
-	void unuse() { if (ptr) Sys::mod().math.template get<T>().unuse(ptr->id(), ptr); ptr = nullptr; }
+	void use(uint id) { unuse(); id_ = id; if (id_ != -1) Sys::mod().math.template get<T>().use(id_, ptr); }
+	void unuse() { if (id_ != -1) Sys::mod().math.template get<T>().unuse(id_, ptr); ptr = nullptr; }
 };
 
 template<class Src, class Sys>

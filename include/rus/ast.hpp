@@ -296,7 +296,6 @@ struct Node {
 };
 
 struct Import {
-	Import(bool prim) : primary(prim) { }
 	Import(uint src, bool prim) : source(src), primary(prim) { }
 	User<Source> source;
 	bool         primary;
