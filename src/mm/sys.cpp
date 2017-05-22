@@ -84,6 +84,7 @@ Return options(const vector<string>& args) {
 static Descr description(string name) {
 	static const map<string, Descr> m = {
 		{"read",   Descr("read the source",      Descr::Arg("in", "file"))},
+		{"clear",  Descr("clear the source",     Descr::Arg("in", "file"))},
 		{"transl", Descr("translate the source", Descr::Arg("in", "file"), Descr::Arg("out", "file"))},
 		{"write",  Descr("write the source",     Descr::Arg("in", "file"), Descr::Arg("deep", "true|false", true, "false"))},
 		{"info",   Descr("info about math")},
@@ -96,10 +97,11 @@ static Descr description(string name) {
 
 Sys::Sys(uint id) : mdl::Sys<Sys, Math>(id) {
 	actions["read"]   = Action([](const Args& args) { parse(Path::make_name(args[0])); return Return(); }, description("read"));
+	actions["clear"]  = Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Path::make_name(args[0])); return Return(); }, description("clear"));
 	actions["transl"] = Action([](const Args& args) { translate(Path::make_name(args[0]), Path::make_name(args[1])); return Return(); }, description("transl"));
 	actions["write"]  = Action([](const Args& args) { write(Path::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"));
-	actions["info"]   = Action([](const Args& args) { info(); return Return(); }, description("info"));
-	actions["show"]   = Action([](const Args& args) { show(); return Return(); }, description("show"));
+	actions["info"]   = Action([](const Args& args) { return Return(info()); }, description("info"));
+	actions["show"]   = Action([](const Args& args) { return Return(show()); }, description("show"));
 	actions["opts"]   = Action([](const Args& args) { Sys::conf().read(args); return Return(); }, Sys::conf().descr());
 	actions["cut"]    = Action([](const Args& args) { cut(Path::make_name(args[0]), Path::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("cut"));
 	actions["merge"]  = Action([](const Args& args) { merge(Path::make_name(args[0]), Path::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("merge"));

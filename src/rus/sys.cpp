@@ -158,6 +158,7 @@ Return options(const Args& args) {
 static Descr description(string name) {
 	static map<string, Descr> m = {
 		{"read",   Descr("read the source",      Descr::Arg("in", "file"))},
+		{"clear",  Descr("clear the source",     Descr::Arg("in", "file"))},
 		{"transl", Descr("translate the source", Descr::Arg("in", "file"), Descr::Arg("out", "file"))},
 		{"write",  Descr("write the source",     Descr::Arg("in", "file"), Descr::Arg("deep", "true|false", true, "false"))},
 		{"parse",  Descr("parse all expressions")},
@@ -170,6 +171,7 @@ static Descr description(string name) {
 
 Sys::Sys(uint id) : mdl::Sys<Sys, Math>(id) {
 	actions["read"]   = Action([](const Args& args) { read(Path::make_name(args[0])); return Return(); }, description("read"));
+	actions["clear"]  = Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Path::make_name(args[0])); return Return(); }, description("clear"));
 	actions["parse"]  = Action([](const Args& args) { parse(); return Return(); }, description("parse"));
 	actions["verify"] = Action([](const Args& args) { verify_(Path::make_name(args[0])); return Return(); }, description("verify"));
 	actions["transl"] = Action([](const Args& args) { translate_(Path::make_name(args[0]), Path::make_name(args[1])); return Return(); }, description("transl"));

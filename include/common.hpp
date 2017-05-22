@@ -323,6 +323,14 @@ class Table {
 	}
 
 public:
+	string show() const {
+		ostringstream os;
+		os << "size: " << to_string(refs.size()) << endl;
+		for (auto& s : refs) {
+			os << "\tref: " << Lex::toStr(s.first) << ", users: " << s.second.users.size() << endl;
+		}
+		return os.str();
+	}
 	Data* access(uint n) {
 		return refs.count(n) ? refs.at(n).data : nullptr;
 	}
@@ -376,7 +384,7 @@ public:
 	User(const User& u) : User(u.id()) { }
 	User(User&& u) : User(u.id()) { u.unuse(); }
 	~User() { unuse(); }
-	void operator = (const T* p) { if (p) use(p->id()); }
+	void operator = (const T* p) { if (p) use(p->id()); else unuse(); }
 	void operator = (const User& u) { use(u.id()); }
 	void operator = (User&& u) { use(u.id()); u.unuse(); }
 
