@@ -37,9 +37,10 @@ public:
 };
 
 struct Sys : public mdl::Sys<Sys, Math> {
-	Sys(uint);
+	Sys(uint id) : mdl::Sys<Sys, Math>(id) { }
 	static string lang() { return  "rus"; }
 	static string ext() { return "rus"; }
+	static const Actions& actions();
 };
 
 template<class T>

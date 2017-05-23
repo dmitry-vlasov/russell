@@ -23,9 +23,10 @@ struct Math {
 };
 
 struct Sys : public mdl::Sys<Sys, Math> {
-	Sys(uint);
+	Sys(uint id) : mdl::Sys<Sys, Math>(id) { }
 	static string lang() { return  "smm"; }
 	static string ext() { return "smm"; }
+	static const Actions& actions();
 };
 
 template<class T>

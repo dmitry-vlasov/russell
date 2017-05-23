@@ -183,43 +183,46 @@ struct Sys {
 	typedef M Math;
 	typedef map<string, Action> Actions;
 
-	Sys(uint i) : id(i) {
-		actions["systems"] = Action([](const Args&) {
+	Sys(uint i) : id(i) { }
+	virtual ~Sys() { }
+
+	static Action help() {
+		return Action([](const Args&) {
 			for (uint s : Lib<System>::get().contents())
 				Io::io().out() << Lex::toStr(s) << " ";
 			Io::io().out() << endl;
 			return Return();
 		}, Descr("show available systems"));
-		actions["help"] = Action([this](const Args&) {
+	}
+	static Action systems() {
+		return Action([](const Args&) {
 			Io::io().out() << endl << System::lang() << " actions:" << endl;
-			for (auto& a : actions)
+			for (auto& a : System::actions())
 				Io::io().out() << "\t" << a.first << ": " << a.second.show() << endl;
 			return Return();
 		}, Descr("show available actions"));
 	}
-	virtual ~Sys() { }
 
 	const uint id;
 	Timers     timers;
 	Conf       config;
 	Math       math;
-	Actions    actions;
 
 	Return exec(const Args& all) {
 		if (all.empty()) return Return("no action is chosen", false);
 		Args args(all);
 		string action = args[0];
-		if (!actions.count(action)) return Return("action \"" + action +"\" is unknown", false);
+		if (!System::actions().count(action)) return Return("action \"" + action +"\" is unknown", false);
 		current() = id;
 		args.erase(args.begin());
 		timers[action].start();
-		Return ret = actions.at(action)(args);
+		Return ret = System::actions().at(action)(args);
 		timers[action].stop();
 		return ret;
 	}
 
 	Return exec_and_show(const Args& args) {
-		bool verbose = conf(id).verbose();
+		bool verbose = config.verbose();
 		if (verbose)
 			Io::io().out() << System::lang() << " doing: " << args << " ... " << flush;
 		Return ret = exec(args);

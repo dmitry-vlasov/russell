@@ -95,16 +95,21 @@ static Descr description(string name) {
 	return m.count(name) ? m.at(name) : Descr();
 }
 
-Sys::Sys(uint id) : mdl::Sys<Sys, Math>(id) {
-	actions["read"]   = Action([](const Args& args) { parse(Path::make_name(args[0])); return Return(); }, description("read"));
-	actions["clear"]  = Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Path::make_name(args[0])); return Return(); }, description("clear"));
-	actions["transl"] = Action([](const Args& args) { translate(Path::make_name(args[0]), Path::make_name(args[1])); return Return(); }, description("transl"));
-	actions["write"]  = Action([](const Args& args) { write(Path::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"));
-	actions["info"]   = Action([](const Args& args) { return Return(info()); }, description("info"));
-	actions["show"]   = Action([](const Args& args) { return Return(show()); }, description("show"));
-	actions["cut"]    = Action([](const Args& args) { cut(Path::make_name(args[0]), Path::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("cut"));
-	actions["merge"]  = Action([](const Args& args) { merge(Path::make_name(args[0]), Path::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("merge"));
-	actions["opts"]   = Action([&](const Args& args) { config.read(args); return Return(); }, config.descr());
+const Sys::Actions& Sys::actions() {
+	static Actions actions = {
+		{"systems", systems()},
+		{"help",   help()},
+		{"read",   Action([](const Args& args) { parse(Path::make_name(args[0])); return Return(); }, description("read"))},
+		{"clear",  Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Path::make_name(args[0])); return Return(); }, description("clear"))},
+		{"transl", Action([](const Args& args) { translate(Path::make_name(args[0]), Path::make_name(args[1])); return Return(); }, description("transl"))},
+		{"write",  Action([](const Args& args) { write(Path::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
+		{"info",   Action([](const Args& args) { return Return(info()); }, description("info"))},
+		{"show",   Action([](const Args& args) { return Return(show()); }, description("show"))},
+		{"cut",    Action([](const Args& args) { cut(Path::make_name(args[0]), Path::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("cut"))},
+		{"merge",  Action([](const Args& args) { merge(Path::make_name(args[0]), Path::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("merge"))},
+		{"opts",   Action([](const Args& args) { conf().read(args); return Return(); }, conf().descr())}
+	};
+	return actions;
 }
 
 enum class Mode { CUT, MERGE, TRANSL, NONE };
