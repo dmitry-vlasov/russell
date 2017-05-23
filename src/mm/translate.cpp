@@ -514,7 +514,10 @@ smm::Source* translate_source(Maps& maps, const Source* src, smm::Source* target
 	if (maps.sources.count(src)) {
 		return maps.sources[src];
 	} else {
-		if (!target) target = new smm::Source(src->id());
+		if (!target) {
+			delete smm::Sys::get().math.get<smm::Source>().access(src->id());
+			target = new smm::Source(src->id());
+		}
 		maps.sources[src] = target;
 		translate_block(maps, src->block, target);
 		return target;

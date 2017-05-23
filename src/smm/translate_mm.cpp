@@ -123,6 +123,7 @@ mm::Source* translate_source(const Source* src, Maps& maps, mm::Source* target) 
 		return maps.sources[src];
 	} else {
 		if (!target) {
+			delete mm::Sys::get().math.get<mm::Source>().access(src->id());
 			target = new mm::Source(src->id());
 			target->block = new mm::Block;
 		}
