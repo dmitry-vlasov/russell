@@ -27,8 +27,6 @@ public :
 	void   set(const string& name, const string& value = "") { opts[name] = value; }
 
  	bool verbose() const { return has("verbose"); }
-	bool deep()    const { return has("deep"); }
-	bool info()    const { return has("info"); }
 
 	Lang target() const {
 		if (!has("target")) return Lang::NONE;
