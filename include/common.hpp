@@ -259,13 +259,14 @@ class Table {
 	typedef D Data;
 
 	struct Storage {
+		Storage() : data(nullptr) { }
 		Data* data;
 		set<Data**> users;
 	};
 	map<uint, Storage> refs;
 	mutex m;
 
-	void add(uint n, Data* p = nullptr) {
+	void add(uint n, Data* p) {
 		m.lock();
 		if (!p) {
 			m.unlock();
@@ -298,15 +299,7 @@ class Table {
 	}
 	void use(uint n, Data*& u) {
 		m.lock();
-		if (!refs.count(n)) {
-			m.unlock();
-			throw Error("using unknown label", Lex::toStr(n));
-		}
 		Storage& d = refs[n];
-		if (!d.data) {
-			m.unlock();
-			throw Error("using null pointer, label", Lex::toStr(n));
-		}
 		d.users.insert(&u);
 		u = d.data;
 		m.unlock();
@@ -379,8 +372,8 @@ class User {
 	T* ptr;
 public:
 	typedef S Sys;
-	User(uint id = -1)  : id_(id),      ptr(nullptr) { use(id_); }
-	User(const T* p)    : id_(p ? p->id() : -1), ptr(nullptr) { use(id_); }
+	User(uint id = -1)  : id_(-1), ptr(nullptr) { use(id); }
+	User(const T* p)    : id_(-1), ptr(nullptr) { if (p) use(p->id()); }
 	User(const User& u) : User(u.id()) { }
 	User(User&& u)      : User(u.id()) { u.unuse(); }
 	~User() { unuse(); }
@@ -423,7 +416,9 @@ template<class Src, class Sys>
 struct Source : public Owner<Src, Sys> {
 	typedef Owner<Src, Sys> Owner_;
 	Source(uint l) : Owner<Src, Sys>(l) { }
-	virtual ~Source() { }
+	virtual ~Source() {
+		for (Src* s : included) s->includes.erase(dynamic_cast<Src*>(this));
+	}
 
 	string data;
 
