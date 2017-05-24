@@ -35,7 +35,5 @@ using User = mdl::User<T, Sys>;
 template<class T>
 using Owner = mdl::Owner<T, Sys>;
 
-void run();
-
 }} // mdl::smm
 
