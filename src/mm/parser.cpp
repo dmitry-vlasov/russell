@@ -186,17 +186,15 @@ public:
 			c.source_stack.push(new Source(label));
 		};
 		parser["INCLUDE"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			string name = sv.token();
-			Path::remove_ext(name);
-			static map<string, mm::Inclusion*> included;
-			if (included.count(name)) {
-				mm::Inclusion* inc = included[name];
+			uint id = Sys::make_name(sv.token());
+			static map<uint, mm::Inclusion*> included;
+			if (included.count(id)) {
+				mm::Inclusion* inc = included[id];
 				return new mm::Inclusion(inc->source.id(), false);
 			} else {
-				mm::Inclusion* inc = new mm::Inclusion(Lex::toInt(name), true);
-				included[name] = inc;
-				parse(Lex::toInt(name), context.get<Context*>());
-				//inc->source = parse(Lex::toInt(name), context.get<Context*>());
+				mm::Inclusion* inc = new mm::Inclusion(id, true);
+				included[id] = inc;
+				parse(id, context.get<Context*>());
 				return inc;
 			}
 		};

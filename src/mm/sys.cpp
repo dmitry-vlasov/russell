@@ -100,14 +100,14 @@ const Sys::Actions& Sys::actions() {
 		{"systems", systems()},
 		{"help",   help()},
 		{"curr",   current()},
-		{"read",   Action([](const Args& args) { parse(Path::make_name(args[0])); return Return(); }, description("read"))},
-		{"clear",  Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Path::make_name(args[0])); return Return(); }, description("clear"))},
-		{"transl", Action([](const Args& args) { translate(Path::make_name(args[0]), Path::make_name(args[1])); return Return(); }, description("transl"))},
-		{"write",  Action([](const Args& args) { write(Path::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
+		{"read",   Action([](const Args& args) { parse(Sys::make_name(args[0])); return Return(); }, description("read"))},
+		{"clear",  Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Sys::make_name(args[0])); return Return(); }, description("clear"))},
+		{"transl", Action([](const Args& args) { translate(Sys::make_name(args[0]), Sys::make_name(args[1])); return Return(); }, description("transl"))},
+		{"write",  Action([](const Args& args) { write(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
 		{"info",   Action([](const Args& args) { return Return(info()); }, description("info"))},
 		{"show",   Action([](const Args& args) { return Return(show()); }, description("show"))},
-		{"cut",    Action([](const Args& args) { cut(Path::make_name(args[0]), Path::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("cut"))},
-		{"merge",  Action([](const Args& args) { merge(Path::make_name(args[0]), Path::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("merge"))},
+		{"cut",    Action([](const Args& args) { cut(Sys::make_name(args[0]), Sys::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("cut"))},
+		{"merge",  Action([](const Args& args) { merge(Sys::make_name(args[0]), Sys::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("merge"))},
 		{"opts",   Action([](const Args& args) { conf().read(args); return Return(); }, conf().descr())}
 	};
 	return actions;

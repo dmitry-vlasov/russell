@@ -204,7 +204,7 @@ struct Sys {
 	}
 	static Action current() {
 		return Action([](const Args& args) {
-			curr() = Lex::toInt(args[0]);
+			curr_() = Lex::toInt(args[0]);
 			return Return();
 		}, Descr("change current project", Descr::Arg("proj", "name")));
 	}
@@ -248,10 +248,24 @@ struct Sys {
 	static System& mod(uint s = -1)       { return Lib<System>::mod().access(choose(s));  }
 	static Timers& timer(uint s = -1)     { return mod(choose(s)).timers;  }
 	static Conf& conf(uint s = -1)        { return mod(choose(s)).config;  }
+	static uint curr() { return curr_(); }
+
+	static uint make_name(string n) {
+		boost::trim(n);
+		n = n.substr(0, n.find_last_of('.'));
+		n = n.substr(n.find(':') + 1);
+		return Lex::toInt(n);
+	}
+
+	static uint make_sys(string n) {
+		boost::trim(n);
+		const int i = n.find(':');
+		return i == string::npos ? curr() : Lex::toInt(n.substr(0, i));
+	}
 
 private:
-	static uint choose(uint s) { if (s != -1) return s; else return curr(); }
-	static uint& curr() { static uint curr; return curr; }
+	static uint choose(uint s) { if (s != -1) return s; else return curr_(); }
+	static uint& curr_() { static uint curr; return curr; }
 };
 
 template<class T>

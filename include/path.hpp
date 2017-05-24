@@ -39,16 +39,6 @@ struct Path {
 	string name() const { return name_; }
 	string ext()  const { return ext_; }
 
-	static void remove_ext(string& s) {
-		boost::trim(s);
-		s = s.substr(0, s.find_last_of("."));
-	}
-
-	static uint make_name(string n) {
-		remove_ext(n);
-		return Lex::toInt(n);
-	}
-
 private:
 	static void patch(string& data, const vector<Patch>& patches) {
 		for (const Patch& patch : patches) {

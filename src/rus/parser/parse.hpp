@@ -231,16 +231,15 @@ struct ParseImport {
 	template <typename T1, typename T2>
 	struct result { typedef Import* type; };
 	Import* operator()(string name, Source* src) const {
-		static map<string, Import*> imported;
-		Path::remove_ext(name);
+		static map<uint, Import*> imported;
+		uint id = Sys::make_name(name);
 		Import* imp = nullptr;
-		if (imported.count(name)) {
-			imp = new Import(imported[name]->source.id(), false);
+		if (imported.count(id)) {
+			imp = new Import(imported[id]->source.id(), false);
 		} else {
-			imp = new Import(Lex::toInt(name), true);
-			imported[name] = imp;
-			parse(Lex::toInt(name));
-			//imp->source = parse(Lex::toInt(name));
+			imp = new Import(id, true);
+			imported[id] = imp;
+			parse(id);
 		}
 		src->include(imp->source.get());
 		return imp;
