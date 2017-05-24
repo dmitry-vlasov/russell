@@ -187,16 +187,9 @@ public:
 		};
 		parser["INCLUDE"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			uint id = Sys::make_name(sv.token());
-			static map<uint, mm::Inclusion*> included;
-			if (included.count(id)) {
-				mm::Inclusion* inc = included[id];
-				return new mm::Inclusion(inc->source.id(), false);
-			} else {
-				mm::Inclusion* inc = new mm::Inclusion(id, true);
-				included[id] = inc;
-				parse(id, context.get<Context*>());
-				return inc;
-			}
+			const bool primary = !Sys::get().math.get<Source>().has(id);
+			if (primary) parse(id, context.get<Context*>());
+			return new Inclusion(id, primary);
 		};
 		parser.log = [label](size_t ln, size_t col, const std::string& err_msg) {
 			std::stringstream ss;

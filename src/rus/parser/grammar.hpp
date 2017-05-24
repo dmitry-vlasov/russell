@@ -8,7 +8,7 @@
 namespace mdl { namespace rus { namespace parser {
 
 template<typename Iterator>
-Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell"), var_stack() {
+Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") {
 	using qi::lit;
 	using qi::uint_;
 	using qi::lexeme;

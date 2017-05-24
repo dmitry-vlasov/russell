@@ -232,18 +232,11 @@ public:
 			c.source->contents = sv.transform<Node>();
 			return c.source;
 		};
-		parser["INCLUDE"] = [](const peg::SemanticValues& sv, peg::any& context) {
+		parser["INCLUDE"] = [](const peg::SemanticValues& sv) {
 			uint id = Sys::make_name(sv.token());
-			static map<uint, Inclusion*> included;
-			if (included.count(id)) {
-				Inclusion* inc = included[id];
-				return new Inclusion(inc->source.id(), false);
-			} else {
-				Inclusion* inc = new Inclusion(id, true);
-				included[id] = inc;
-				parse(id);
-				return inc;
-			}
+			const bool primary = !Sys::get().math.get<Source>().has(id);
+			if (primary) parse(id);
+			return new Inclusion(id, primary);
 		};
 		parser.log = [label](size_t ln, size_t col, const std::string& err_msg) {
 			std::stringstream ss;
