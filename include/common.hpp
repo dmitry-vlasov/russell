@@ -390,12 +390,13 @@ public:
 
 template<class T, class S>
 class User {
+	uint sys_;
 	uint id_;
 	T* ptr;
 public:
 	typedef S Sys;
-	User(uint id = -1)  : id_(-1), ptr(nullptr) { use(id); }
-	User(const T* p)    : id_(-1), ptr(nullptr) { if (p) use(p->id()); }
+	User(uint id = -1)  : sys_(-1), id_(-1), ptr(nullptr) { use(id); }
+	User(const T* p)    : sys_(-1), id_(-1), ptr(nullptr) { if (p) use(p->id()); }
 	User(const User& u) : User(u.id()) { }
 	User(User&& u)      : User(u.id()) { u.unuse(); }
 	~User() { unuse(); }
@@ -430,8 +431,8 @@ public:
 	const T* get() const { return ptr; }
 	uint id() const { return id_; }
 
-	void use(uint id) { unuse(); id_ = id; if (id_ != -1) Sys::mod().math.template get<T>().use(id_, ptr); }
-	void unuse() { if (id_ != -1) Sys::mod().math.template get<T>().unuse(id_, ptr); ptr = nullptr; }
+	void use(uint id) { unuse(); sys_ = Sys::get().id; id_ = id; if (id_ != -1) Sys::mod().math.template get<T>().use(id_, ptr); }
+	void unuse() { if (id_ != -1) Sys::mod(sys_).math.template get<T>().unuse(id_, ptr); ptr = nullptr; }
 };
 
 template<class Src, class Sys>

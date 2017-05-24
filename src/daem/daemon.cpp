@@ -4,6 +4,11 @@ namespace mdl {
 
 using namespace boost::asio;
 
+inline bool get_nonempty_line(stringstream& ss, string& arg) {
+	while (getline(ss, arg, ' ')) if (!arg.empty()) return true;
+	return false;
+}
+
 Return execute(const string& command) {
 	Lang lang = Lang::NONE;
 	uint sys = -1;
@@ -11,11 +16,11 @@ Return execute(const string& command) {
 	{
 		stringstream str(command);
 		string arg;
-		if (!getline(str, arg, ' ')) return Return("no language is chosen", false);
+		if (!get_nonempty_line(str, arg)) return Return("no language is chosen", false);
 		int i = arg.find_last_of(":");
 		lang = chooseLang(arg.substr(0, i));
 		sys  = (i == string::npos) ? Lex::toInt("default") : Lex::toInt(arg.substr(i + 1));
-		while (getline(str, arg, ' ')) args.push_back(arg);
+		while (get_nonempty_line(str, arg)) args.push_back(arg);
 	}
 	Return ret;
 	switch (lang) {
