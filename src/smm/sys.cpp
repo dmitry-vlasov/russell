@@ -92,6 +92,7 @@ const Sys::Actions& Sys::actions() {
 	static Actions actions = {
 		{"systems", systems()},
 		{"help",   help()},
+		{"curr",   current()},
 		{"read",   Action([](const Args& args) { parse(Path::make_name(args[0])); return Return(); }, description("read"))},
 		{"clear",  Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Path::make_name(args[0])); return Return(); }, description("clear"))},
 		{"verify", Action([](const Args& args) { verify(); return Return(); }, description("verify"))},

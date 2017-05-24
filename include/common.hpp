@@ -202,35 +202,40 @@ struct Sys {
 			return Return();
 		}, Descr("show available actions"));
 	}
+	static Action current() {
+		return Action([](const Args& args) {
+			curr() = Lex::toInt(args[0]);
+			return Return();
+		}, Descr("change current project", Descr::Arg("proj", "name")));
+	}
 
 	const uint id;
 	Timers     timers;
 	Conf       config;
 	Math       math;
 
-	Return exec(const Args& all) {
+	static Return exec(const Args& all) {
 		if (all.empty()) return Return("no action is chosen", false);
 		Args args(all);
 		string action = args[0];
 		if (!System::actions().count(action)) return Return("action \"" + action +"\" is unknown", false);
-		current() = id;
 		args.erase(args.begin());
-		timers[action].start();
+		timer()[action].start();
 		Return ret = System::actions().at(action)(args);
-		timers[action].stop();
+		timer()[action].stop();
 		return ret;
 	}
 
-	Return exec_and_show(const Args& args) {
-		bool verbose = config.verbose();
+	static Return exec_and_show(const Args& args) {
+		bool verbose = conf().verbose();
 		if (verbose)
 			Io::io().out() << System::lang() << " doing: " << args << " ... " << flush;
 		Return ret = exec(args);
 		if (verbose) {
-			if (timers[args[0]].isNegligible())
+			if (timer()[args[0]].isNegligible())
 				Io::io().out() << endl;
 			else
-				Io::io().out() << "done in " << timers[args[0]] << endl;
+				Io::io().out() << "done in " << timer()[args[0]] << endl;
 		}
 		if (!ret && ret.text.size())
 			Io::io().err() << ret.text << endl;
@@ -245,8 +250,8 @@ struct Sys {
 	static Conf& conf(uint s = -1)        { return mod(choose(s)).config;  }
 
 private:
-	static uint choose(uint s) { if (s != -1) current() = s; return current(); }
-	static uint& current() { static uint curr; return curr; }
+	static uint choose(uint s) { if (s != -1) return s; else return curr(); }
+	static uint& curr() { static uint curr; return curr; }
 };
 
 template<class T>
