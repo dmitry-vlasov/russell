@@ -73,12 +73,18 @@ check "${binpath}/mdl
 
     \"smm transl lang=rus in=${file}.mm out=${file}.rus\" 
     \"rus write in=${file}.rus deep=true\"
+    \"rus curr proj=B\"
+    \"rus opts verbose root=rus\" 
     \"rus read in=${file}.rus\"
     \"rus parse \"
-    \"smm curr proj=D\"
-    \"smm opts verbose root=smm-1\"
+    \"smm curr proj=C\"
+    \"smm opts verbose root=smm\"
     \"rus transl in=${file}.rus out=${file}.smm\" 
     \"smm write in=${file}.smm deep=true\"
+    
+    \"smm curr proj=D\"
+    \"smm opts verbose root=smm\" 
+    
     \"smm read in=${file}.smm\"
     \"smm verify in=${file}.smm\"
     
@@ -87,11 +93,14 @@ check "${binpath}/mdl
     \"smm transl lang=mm in=${file}.smm out=${file}.mm\" 
     \"mm write in=${file}.mm deep=true\"
     
-    \"smm curr proj=F\"
+    \"smm curr proj=E\"
     \"smm opts verbose root=smm-2\"
     \"mm read in=${file}.mm\"
     \"mm transl in=${file}.mm out=${file}.smm\" 
     \"smm write in=${file}.smm deep=true\"
+    
+    \"smm curr proj=А\"
+    \"smm opts verbose root=smm-2\" 
     \"smm read in=${file}.smm\"
     \"smm verify in=${file}.smm\"
     \"mm merge in=${file}.mm out=${file}-1.mm out-root=\""
