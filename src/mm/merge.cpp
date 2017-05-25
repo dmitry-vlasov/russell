@@ -11,12 +11,11 @@
 namespace mdl { namespace mm { namespace {
 
 struct Merged {
-	static Merged& mod() { static Merged mrg; return mrg; }
-	static const Merged& get() { return mod(); }
 	stringstream contents;
+	set<string>  included;
 };
 
-void parse(const Path& path);
+void parse(const Path& path, Merged&);
 
 namespace qi      = boost::spirit::qi;
 namespace ascii   = boost::spirit::ascii;
@@ -25,58 +24,53 @@ namespace phoenix = boost::phoenix;
 struct Add {
 	template<typename T>
 	struct result { typedef void type; };
-	void operator()(const string& str) const {
-		Merged::mod().contents << str;
+	void operator()(const string& str, Merged& merged) const {
+		merged.contents << str;
 	}
 };
 
 struct Include {
 	template <typename T>
 	struct result { typedef string type; };
-	void operator()(const string& p) const {
-		static set<string> included;
-		if (included.count(p)) return;
-		included.insert(p);
+	void operator()(const string& p, Merged& merged) const {
+		if (merged.included.count(p)) return;
+		merged.included.insert(p);
 		Path path(p, Sys::conf().get("root"), "mm");
-		parse(path);
+		parse(path, merged);
 	}
 };
 
 struct Grammar : qi::grammar<LocationIter, void(), ascii::space_type> {
-	Grammar();
-	void initNames();
+	Grammar(Merged& m) : Grammar::base_type(source, "merge"), merged(m)  {
+		using qi::lit;
+		using qi::lexeme;
+		using namespace qi::labels;
 
+		const phoenix::function<Add> add;
+		const phoenix::function<Include> include;
+
+		contents  %= lexeme[+(ascii::char_ - "$[")];
+		inclusion %= lit("$[") > lexeme[+(ascii::char_ - "$]")] > "$]";
+		source = + (inclusion [include(_1, phoenix::ref(merged))] | contents  [add(_1, phoenix::ref(merged))] );
+
+		qi::on_error<qi::fail>(
+			source,
+			std::cout << phoenix::val("Syntax error. Expecting ") << _4
+			<< phoenix::val(" here: \n") << _3 << phoenix::val("\n")
+			<< phoenix::val("code: \n") << phoenix::construct<wrapper<>>(_3));
+		initNames();
+	}
+	void initNames() {
+		inclusion.name("include");
+		contents.name("contents");
+		source.name("source");
+	}
+
+	Merged& merged;
 	qi::rule<LocationIter, string(), qi::unused_type> contents;
 	qi::rule<LocationIter, string(), qi::unused_type> inclusion;
 	qi::rule<LocationIter, void(), ascii::space_type> source;
 };
-
-void Grammar::initNames() {
-	inclusion.name("include");
-	contents.name("contents");
-	source.name("source");
-}
-
-Grammar::Grammar() : Grammar::base_type(source, "merge") {
-	using qi::lit;
-	using qi::lexeme;
-	using namespace qi::labels;
-
-	const phoenix::function<Add> add;
-	const phoenix::function<Include> include;
-
-	contents  %= lexeme[+(ascii::char_ - "$[")];
-	inclusion %= lit("$[") > lexeme[+(ascii::char_ - "$]")] > "$]";
-	source = + (inclusion [include(_1)] | contents  [add(_1)] );
-
-	qi::on_error<qi::fail>(
-		source,
-		std::cout << phoenix::val("Syntax error. Expecting ") << _4
-		<< phoenix::val(" here: \n") << _3 << phoenix::val("\n")
-		<< phoenix::val("code: \n") << phoenix::construct<wrapper<>>(_3));
-	initNames();
-}
-
 
 void remove_commented_imports(string& src) {
 	stringstream ss;
@@ -103,13 +97,13 @@ void remove_commented_imports(string& src) {
 	src = ss.str();
 }
 
-void parse(const Path& path) {
+void parse(const Path& path, Merged& merged) {
 	string data;
 	path.read(data);
 	remove_commented_imports(data);
 	LocationIter iter(data.begin(), Lex::toInt(path.name()));
 	LocationIter end(data.end(), Lex::toInt(path.name()));
-	bool r = phrase_parse(iter, end, Grammar(), ascii::space);
+	bool r = phrase_parse(iter, end, Grammar(merged), ascii::space);
 	if (!r || iter != end) {
 		throw Error("parsing failed", path.name());
 	}
@@ -120,10 +114,11 @@ void parse(const Path& path) {
 void merge(uint src, uint tgt, uint tgt_root) {
 	Sys::timer()["merge"].start();
 	Path in(Lex::toStr(src), Sys::conf().get("root"), "mm");
-	parse(in);
+	Merged merged;
+	parse(in, merged);
 	Path out(Lex::toStr(tgt), Lex::toStr(tgt_root), "mm");
 	ofstream os(out.path());
-	os << Merged::get().contents.str();
+	os << merged.contents.str();
 	os.close();
 	Sys::timer()["merge"].stop();
 }

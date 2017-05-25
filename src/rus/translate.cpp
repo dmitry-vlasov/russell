@@ -4,6 +4,7 @@
 namespace mdl { namespace rus { namespace {
 
 struct Maps {
+	Maps() : thm(nullptr), first_time(true) { }
 	map<const Assertion*, map<const Hyp*, smm::Essential*>> essentials;
 	map<const Assertion*, map<Symbol, smm::Floating*>> floatings;
 	map<const Assertion*, map<Symbol, smm::Inner*>> inners;
@@ -14,6 +15,7 @@ struct Maps {
 	map<const Source*, smm::Source*> sources;
 	smm::Assertion* thm;
 	mdl::Symbol turnstile;
+	bool first_time;
 };
 
 inline uint translate_symb(const Symbol& s) {
@@ -288,10 +290,9 @@ inline smm::Inclusion* translate_import(const Import* imp, Maps& maps) {
 
 vector<smm::Node> translate_theory(const Theory* thy, Maps& maps) {
 	vector<smm::Node> nodes;
-	static bool first_time = true;
-	if (first_time) {
+	if (maps.first_time) {
 		nodes.push_back(translate_turnstile(maps));
-		first_time = false;
+		maps.first_time = false;
 	}
 	for (auto n : thy->nodes) {
 		switch (n.kind) {
