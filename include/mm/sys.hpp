@@ -18,9 +18,9 @@ class Math {
 	Table<Source>    sources;
 public:
 
-	~Math();
 	string show() const;
 	string info() const;
+	void destroy();
 
 	template<class T>
 	Table<T>& get();
@@ -30,6 +30,7 @@ public:
 
 struct Sys : public mdl::Sys<Sys, Math> {
 	Sys(uint id) : mdl::Sys<Sys, Math>(id) { }
+	static string descr() { return "mm"; }
 	static string lang() { return "mm"; }
 	static string ext() { return "mm"; }
 	static const Actions& actions();

@@ -3,7 +3,7 @@
 
 namespace mdl { namespace rus {
 
-Math::~Math() { sources.destroy(); }
+void Math::destroy() { sources.destroy(); }
 
 string Math::info() const {
 	string stats;
@@ -174,6 +174,7 @@ const Sys::Actions& Sys::actions() {
 		{"systems", systems()},
 		{"help",   help()},
 		{"curr",   current()},
+		{"destroy", destroy()},
 		{"read",   Action([](const Args& args) { read(Sys::make_name(args[0])); return Return(); }, description("read"))},
 		{"clear",  Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Sys::make_name(args[0])); return Return(); }, description("clear"))},
 		{"parse",  Action([](const Args& args) { parse(); return Return(); }, description("parse"))},

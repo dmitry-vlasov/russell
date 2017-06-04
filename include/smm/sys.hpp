@@ -12,9 +12,9 @@ struct Math {
 	Table<Assertion> assertions;
 	Table<Source>    sources;
 
-	~Math();
 	string show() const;
 	string info() const;
+	void destroy();
 
 	template<class T>
 	Table<T>& get();
@@ -24,7 +24,8 @@ struct Math {
 
 struct Sys : public mdl::Sys<Sys, Math> {
 	Sys(uint id) : mdl::Sys<Sys, Math>(id) { }
-	static string lang() { return  "smm"; }
+	static string descr() { return "smm"; }
+	static string lang() { return "smm"; }
 	static string ext() { return "smm"; }
 	static const Actions& actions();
 };

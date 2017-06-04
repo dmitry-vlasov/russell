@@ -130,6 +130,9 @@ struct Lib {
 	void init(uint s) {
 		contents_[s].reset(new TR(s));
 	}
+	void destroy(uint s) {
+		contents_[s].reset();
+	}
 
 	bool has(uint s) const {
 		return contents_.count(s);
@@ -155,6 +158,11 @@ struct Lib {
 private:
 	map<uint, unique_ptr<T>> contents_;
 	Lib() : contents_() { }
+	~Lib() {
+		cout << "deleting lib: " << T::descr() << ":" << endl;
+		for (auto& p : contents_)
+			cout << "\t" << Lex::toStr(p.first) << endl;
+	}
 };
 
 struct Io {
@@ -166,6 +174,7 @@ struct Io {
 	const uint id;
 
 	static Io& io(uint s = -1) { return Lib<Io>::mod().access(choose(s));  }
+	static string descr() { return "io"; }
 
 private:
 	static uint choose(uint s) { if (s != -1) current() = s; return current(); }
@@ -210,6 +219,21 @@ struct Sys {
 			curr_() = Lex::toInt(args[0]);
 			return Return();
 		}, Descr("change current project", Descr::Arg("proj", "name")));
+	}
+	static Action destroy() {
+		return Action([](const Args& args) {
+			if (args[0].size()) {
+				cout << "destroying current: lang=" << System::lang() << ", sys="  << args[0] << endl;
+				mod(Lex::toInt(args[0])).math.destroy();
+			} else {
+				cout << "destroying: lang=" << System::lang() << ", sys="  << Lex::toStr(curr()) << endl;
+				for (auto s : Lib<System>::get().contents()) {
+					cout << "\tdestroying: " << Lex::toStr(s) << endl;
+					mod(s).math.destroy();
+				}
+			}
+			return Return();
+		}, Descr("destroy current project", Descr::Arg("proj", "name", true)));
 	}
 
 	const uint id;
@@ -264,6 +288,14 @@ struct Sys {
 		boost::trim(n);
 		const int i = n.find(':');
 		return i == string::npos ? curr() : Lex::toInt(n.substr(0, i));
+	}
+
+	static void destroy_all() {
+		cout << "destroying: lang=" << System::lang() << ", sys="  << Lex::toStr(curr()) << endl;
+		for (auto s : Lib<System>::get().contents()) {
+			cout << "\tdestroying: " << Lex::toStr(s) << endl;
+			mod(s).math.destroy();
+		}
 	}
 
 private:
@@ -362,6 +394,7 @@ public:
 		static mutex m;
 		m.lock();
 		for (auto p : refs) delete p.second.data;
+		refs.clear();
 		m.unlock();
 	}
 	int size() const { return refs.size(); }
@@ -433,6 +466,7 @@ public:
 	T* get() { return ptr; }
 	const T* get() const { return ptr; }
 	uint id() const { return id_; }
+	uint sys() const { return sys_; }
 
 	void use(uint id) { unuse(); sys_ = Sys::get().id; id_ = id; if (id_ != -1) Sys::mod().math.template get<T>().use(id_, ptr); }
 	void unuse() { if (id_ != -1) Sys::mod(sys_).math.template get<T>().unuse(id_, ptr); ptr = nullptr; }
@@ -443,7 +477,15 @@ struct Source : public Owner<Src, Sys> {
 	typedef Owner<Src, Sys> Owner_;
 	Source(uint l) : Owner<Src, Sys>(l) { }
 	virtual ~Source() {
-		for (Src* s : included) s->includes.erase(dynamic_cast<Src*>(this));
+		cout << "deleting " << Sys::lang() << " source: " << (void*)this << " sys: " << Lex::toStr(Owner_::sys()) << " -- " << name() << endl;
+		for (Src* s : included) {
+			s->includes.erase(dynamic_cast<Src*>(this));
+			s->included.erase(dynamic_cast<Src*>(this));
+		}
+		for (Src* s : includes) {
+			s->includes.erase(dynamic_cast<Src*>(this));
+			s->included.erase(dynamic_cast<Src*>(this));
+		}
 	}
 
 	string data;

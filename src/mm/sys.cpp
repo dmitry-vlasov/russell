@@ -8,7 +8,7 @@ void cut(uint src, uint tgt, uint tgt_root);
 void parse(uint src);
 void translate(uint src, uint tgt);
 
-Math::~Math() { sources.destroy(); }
+void Math::destroy() { sources.destroy(); }
 
 template<> Table<Theorem>& Math::get<Theorem>() { return theorems; }
 template<> Table<Axiom>& Math::get<Axiom>() { return axioms; }
@@ -100,6 +100,7 @@ const Sys::Actions& Sys::actions() {
 		{"systems", systems()},
 		{"help",   help()},
 		{"curr",   current()},
+		{"destroy", destroy()},
 		{"read",   Action([](const Args& args) { parse(Sys::make_name(args[0])); return Return(); }, description("read"))},
 		{"clear",  Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Sys::make_name(args[0])); return Return(); }, description("clear"))},
 		{"transl", Action([](const Args& args) { translate(Sys::make_name(args[0]), Sys::make_name(args[1])); return Return(); }, description("transl"))},

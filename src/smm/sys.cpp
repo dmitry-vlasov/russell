@@ -19,7 +19,7 @@ template Table<Assertion>& Math::get<Assertion>();
 template const Table<Source>& Math::get<Source>() const;
 template const Table<Assertion>& Math::get<Assertion>() const;
 
-Math::~Math() { sources.destroy(); }
+void Math::destroy() { sources.destroy(); }
 
 string Math::info() const {
 	string stats;
@@ -93,6 +93,7 @@ const Sys::Actions& Sys::actions() {
 		{"systems", systems()},
 		{"help",   help()},
 		{"curr",   current()},
+		{"destroy", destroy()},
 		{"read",   Action([](const Args& args) { parse(Sys::make_name(args[0])); return Return(); }, description("read"))},
 		{"clear",  Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Sys::make_name(args[0])); return Return(); }, description("clear"))},
 		{"verify", Action([](const Args& args) { verify(); return Return(); }, description("verify"))},

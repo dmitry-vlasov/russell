@@ -46,6 +46,10 @@ echo "------------------------------"
 
 echo "cut: mm -> mm"
 check "${binpath}/mdl
+    \"mm  opts verbose\" 
+    \"smm opts verbose\" 
+    \"rus opts verbose\" 
+    
     \"mm  curr proj=A\" 
     \"smm curr proj=A\" 
     \"rus curr proj=A\"
@@ -103,8 +107,14 @@ check "${binpath}/mdl
     \"smm opts verbose root=smm-2\" 
     \"smm read in=${file}.smm\"
     \"smm verify in=${file}.smm\"
-    \"mm merge in=${file}.mm out=${file}-1.mm out-root=\""
+    \"mm merge in=${file}.mm out=${file}-1.mm out-root=\"
+    
+    "
 echo -e 'done\n'
+
+#    \"mm destroy\"
+#    \"smm destroy\"
+#    \"rus destroy\"
 
 echo "verify mm"
 ${binpath}/metamath "read ${file}-0.mm" 'verify proof *' exit

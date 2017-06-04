@@ -26,9 +26,10 @@ class Math {
 	Table<Proof>     proofs;
 	Table<Source>    sources;
 public:
-	~Math();
+
 	string show() const;
 	string info() const;
+	void destroy();
 
 	template<class T>
 	Table<T>& get();
@@ -38,7 +39,8 @@ public:
 
 struct Sys : public mdl::Sys<Sys, Math> {
 	Sys(uint id) : mdl::Sys<Sys, Math>(id) { }
-	static string lang() { return  "rus"; }
+	static string descr() { return "rus"; }
+	static string lang() { return "rus"; }
 	static string ext() { return "rus"; }
 	static const Actions& actions();
 };
