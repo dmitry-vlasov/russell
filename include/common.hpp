@@ -158,11 +158,6 @@ struct Lib {
 private:
 	map<uint, unique_ptr<T>> contents_;
 	Lib() : contents_() { }
-	~Lib() {
-		cout << "deleting lib: " << T::descr() << ":" << endl;
-		for (auto& p : contents_)
-			cout << "\t" << Lex::toStr(p.first) << endl;
-	}
 };
 
 struct Io {
@@ -222,15 +217,12 @@ struct Sys {
 	}
 	static Action destroy() {
 		return Action([](const Args& args) {
-			if (args[0].size()) {
-				cout << "destroying current: lang=" << System::lang() << ", sys="  << args[0] << endl;
+			if (args[0] == "all") {
+				for (auto s : Lib<System>::get().contents()) mod(s).math.destroy();
+			} else if (args[0].size()) {
 				mod(Lex::toInt(args[0])).math.destroy();
 			} else {
-				cout << "destroying: lang=" << System::lang() << ", sys="  << Lex::toStr(curr()) << endl;
-				for (auto s : Lib<System>::get().contents()) {
-					cout << "\tdestroying: " << Lex::toStr(s) << endl;
-					mod(s).math.destroy();
-				}
+				mod().math.destroy();
 			}
 			return Return();
 		}, Descr("destroy current project", Descr::Arg("proj", "name", true)));
@@ -290,12 +282,8 @@ struct Sys {
 		return i == string::npos ? curr() : Lex::toInt(n.substr(0, i));
 	}
 
-	static void destroy_all() {
-		cout << "destroying: lang=" << System::lang() << ", sys="  << Lex::toStr(curr()) << endl;
-		for (auto s : Lib<System>::get().contents()) {
-			cout << "\tdestroying: " << Lex::toStr(s) << endl;
-			mod(s).math.destroy();
-		}
+	static void release() {
+		for (auto s : Lib<System>::get().contents()) mod(s).math.destroy();
 	}
 
 private:
@@ -431,7 +419,7 @@ class User {
 	T* ptr;
 public:
 	typedef S Sys;
-	User(uint id = -1)  : sys_(-1), id_(-1), ptr(nullptr) { use(id); }
+	explicit User(uint id = -1)  : sys_(-1), id_(-1), ptr(nullptr) { use(id); }
 	User(const T* p)    : sys_(-1), id_(-1), ptr(nullptr) { if (p) use(p->id()); }
 	User(const User& u) : User(u.id()) { }
 	User(User&& u)      : User(u.id()) { u.unuse(); }
@@ -475,18 +463,9 @@ public:
 template<class Src, class Sys>
 struct Source : public Owner<Src, Sys> {
 	typedef Owner<Src, Sys> Owner_;
+	typedef User<Src, Sys> User_;
 	Source(uint l) : Owner<Src, Sys>(l) { }
-	virtual ~Source() {
-		cout << "deleting " << Sys::lang() << " source: " << (void*)this << " sys: " << Lex::toStr(Owner_::sys()) << " -- " << name() << endl;
-		for (Src* s : included) {
-			s->includes.erase(dynamic_cast<Src*>(this));
-			s->included.erase(dynamic_cast<Src*>(this));
-		}
-		for (Src* s : includes) {
-			s->includes.erase(dynamic_cast<Src*>(this));
-			s->included.erase(dynamic_cast<Src*>(this));
-		}
-	}
+	virtual ~Source() { }
 
 	string data;
 
@@ -498,14 +477,14 @@ struct Source : public Owner<Src, Sys> {
 	void write() const { path().write(data); }
 
 	// Transitively closed inclusion relation:
-	set<Src*> includes;
-	set<Src*> included;
+	set<User_> includes;
+	set<User_> included;
 
 	void include(Src* src) {
 		includes.insert(src);
-		for (Src* s : src->includes) includes.insert(s);
+		for (auto& s : src->includes) includes.insert(s);
 		src->included.insert(dynamic_cast<Src*>(this));
-		for (Src* s : src->included) s->included.insert(dynamic_cast<Src*>(this));
+		for (auto s : src->included) s.get()->included.insert(dynamic_cast<Src*>(this));
 	}
 };
 

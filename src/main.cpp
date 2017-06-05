@@ -41,9 +41,9 @@ int main (int argc, const char* argv[])
 		case Mode::CONS: Console::mod().start(); break;
 		case Mode::EXEC: execute(commands); break;
 		}
-		rus::Sys::destroy_all();
-		smm::Sys::destroy_all();
-		mm::Sys::destroy_all();
+		rus::Sys::release();
+		smm::Sys::release();
+		mm::Sys::release();
 	} catch (const Error& err) {
 		cerr << err.what();
 		return 1;
