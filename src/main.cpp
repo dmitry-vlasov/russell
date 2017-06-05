@@ -19,6 +19,7 @@ int main (int argc, const char* argv[])
 			("help,h", "print help message")
 			("daem,d", "start a Russell daemon")
 			("cons,c", "start a Russell console")
+			("verb,v", "verbose daemon/console")
 		;
 		po::variables_map vm;
 		po::store(po::parse_command_line(argc, argv, descr), vm);
@@ -27,6 +28,7 @@ int main (int argc, const char* argv[])
 		if (vm.count("help") || argc == 1) return 0;
 		if (vm.count("daem")) mode = Mode::DAEM;
 		if (vm.count("cons")) mode = Mode::CONS;
+		bool verb = vm.count("verb");
 		queue<string> commands;
 		for (int i = 1; i < argc; ++ i) {
 			if (argv[i][0] == '-') continue;
@@ -37,8 +39,8 @@ int main (int argc, const char* argv[])
 			}
 		}
 		switch (mode) {
-		case Mode::DAEM: Daemon::mod().start();  break;
-		case Mode::CONS: Console::mod().start(); break;
+		case Mode::DAEM: Daemon::mod().start(verb);  break;
+		case Mode::CONS: Console::mod().start(verb); break;
 		case Mode::EXEC: execute(commands); break;
 		}
 		rus::Sys::release();

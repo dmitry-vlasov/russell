@@ -44,7 +44,7 @@ echo "------------------------------"
 echo "Starting a daemon...."
 echo "------------------------------"
 
-(${binpath}/mdl -d 1>&1)&
+(${binpath}/mdl -d -v 1>&1)&
 
 
 echo "------------------------------"
@@ -53,7 +53,7 @@ echo "------------------------------"
 
 
 echo "cut: mm -> mm"
-check "${binpath}/mdl -c
+check "${binpath}/mdl -c -v
     \"mm  opts verbose\" 
     \"smm opts verbose\" 
     \"rus opts verbose\" 

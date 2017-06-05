@@ -43,7 +43,7 @@ echo "------------------------------"
 echo "Starting a daemon...."
 echo "------------------------------"
 
-(${binpath}/mdl -d 1>&1)&
+(${binpath}/mdl -d -v 1>&1)&
 
 
 
@@ -52,7 +52,7 @@ echo "MM <-> SMM <-> RUS TRANSLATION"
 echo "------------------------------"
 
 echo "mm <-> smm <-> rus"
-check "${binpath}/mdl -c
+check "${binpath}/mdl -c -v
     \"mm  curr proj=A\" 
     \"smm curr proj=A\" 
     \"rus curr proj=A\"

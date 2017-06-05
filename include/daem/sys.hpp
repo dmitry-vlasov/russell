@@ -23,7 +23,7 @@ struct Conn {
 
 struct Daemon {
 	Conn conn;
-	void start();
+	void start(bool verb);
 	void enqueue(const string& com) { commands.push(com); }
 
 	static const Daemon& get() { return mod(); }
@@ -39,6 +39,7 @@ private:
 	enum State { RUN_QUEUE, RUN_REQUEST, EXIT, CLOSE };
 	State state;
 	queue<string> commands;
+	bool verbose = false;
 
 	static void session();
 
@@ -46,12 +47,13 @@ private:
 
 	string get_request();
 	void send_response(const string& response);
+	ostream& out();
 };
 
 struct Console {
 	Conn conn;
 
-	void start();
+	void start(bool verb);
 	void enqueue(const string& com) { commands.push(com); }
 
 	static const Console& get() { return mod(); }
@@ -66,6 +68,7 @@ private:
 	int  message_size;
 	char buff[MAX_MESSAGE_SIZE];
 	queue<string> commands;
+	bool verbose = false;
 
 	static void session();
 	Console();
@@ -75,6 +78,7 @@ private:
 	void send_request(const string& request);
 	void connect();
 	void disconnect();
+	ostream& out();
 };
 
 } // mdl::daemon

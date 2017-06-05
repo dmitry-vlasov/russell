@@ -1,3 +1,6 @@
+#include "boost/iostreams/stream.hpp"
+#include "boost/iostreams/device/null.hpp"
+
 #include "daem/sys.hpp"
 
 namespace mdl {
@@ -36,20 +39,20 @@ void Daemon::session() {
 	Daemon& daemon = mod();
 	try {
 		while (daemon.state != EXIT) {
-			cout << "Waiting for request ... " << endl;
+			daemon.out() << "Daemon waiting for request ... " << endl;
 			string request = daemon.get_request();
-			cout << "Got a request: " << request << endl;
+			daemon.out() << "Daemon got a request: " << request << endl;
 			if ("daemon" == request.substr(0, strlen("daemon")))
 				request = request.substr(strlen("daemon"));
 			boost::trim(request);
 			if (request == "exit" || request == "cancel" || request == "quit") {
-				cout << "Exiting" << endl;
+				daemon.out() << "Daemon exiting" << endl;
 				daemon.state = EXIT;
 			}
 			Return ret = daemon.state == EXIT ? Return() : execute(request);
-			cout << "Making a response: " << ret.to_string() << endl;
+			daemon.out() << "Daemon making a response: " << ret.to_string() << endl;
 			daemon.send_response(ret.to_string() + "\n");
-			cout << "Response is sent" << endl;
+			daemon.out() << "Daemon response is sent" << endl;
 		}
 	} catch (std::exception& e) {
 		std::cerr << "Exception in thread: " << e.what() << endl;
@@ -60,16 +63,20 @@ Daemon::Daemon() : endpoint(ip::tcp::v4(), conn.port),
 acceptor(service, endpoint), socket(service), state(RUN_QUEUE) {
 }
 
-void Daemon::start() {
-	cout << "Daemon executing commands..." << endl;
+void Daemon::start(bool verb) {
+	verbose = verb;
+	out() << "Daemon executing commands..." << endl;
 	execute(commands);
-	cout << "done" << endl;
+	out() << "done" << endl;
 	while (state != EXIT) {
-		cout << "Daemon is waiting for connection ..." << endl;
-		acceptor.accept(socket);
-		cout << "Daemon accepted connection" << endl;
-		session();
-		//std::thread(Daemon::session).detach();
+		if (!socket.is_open()) {
+			out() << "Daemon is waiting for connection ..." << endl;
+			acceptor.accept(socket);
+			out() << "Daemon accepted connection" << endl;
+			std::thread(Daemon::session).detach();
+		} else {
+			std::this_thread::sleep_for(std::chrono::seconds(1));
+		}
 	}
 }
 
@@ -95,26 +102,31 @@ string Daemon::get_request() {
 
 void Daemon::send_response(const string& response) {
 	if (RUN_QUEUE)
-		cout << response << endl;
+		out() << response << endl;
 	else if (RUN_REQUEST)
 		boost::asio::write(socket, boost::asio::buffer(response.c_str(), response.size()));
+}
+
+ostream& Daemon::out() {
+	static boost::iostreams::stream<boost::iostreams::null_sink> nowhere((boost::iostreams::null_sink()));
+	return verbose ? cout : nowhere;
 }
 
 void Console::session() {
 	Console& console = mod();
 	console.connect();
 	while (true) {
-		cout << "Console waiting for request...." << endl;
+		console.out() << "Console waiting for request...." << endl;
 		string request = console.get_command();
-		cout << "Console got a request: " << request << endl;
+		console.out() << "Console got a request: " << request << endl;
 		if (request == "exit" || request == "cancel" || request == "quit") return;
-		cout << "Console sending a request...." << endl;
+		console.out() << "Console sending a request...." << endl;
 		console.send_request(request);
-		cout << "Console is waiting for response...." << endl;
+		console.out() << "Console is waiting for response...." << endl;
 		string response = console.get_response();
-		cout << "Console got a response:" << response << endl;
+		console.out() << "Console got a response:" << response << endl;
 		Return ret = Return::from_string(response);
-		cout << (ret ? "success" : "fail") << ": " << ret.text << endl;
+		console.out() << (ret ? "success" : "fail") << ": " << ret.text << endl;
 	}
 	console.disconnect();
 }
@@ -123,14 +135,15 @@ Console::Console() : resolver(service), socket(service),
 endpoint(*resolver.resolve({conn.host, to_string(conn.port)})), message_size(-1) {
 }
 
-void Console::start() {
-	cout << "Console started" << endl;
+void Console::start(bool verb) {
+	verbose = verb;
+	out() << "Console started" << endl;
 	session();
 	//std::thread(Console::session).detach();
 }
 
 void Console::connect() {
-	cout << "Console connecting...." << endl;
+	out() << "Console connecting...." << endl;
 	boost::system::error_code error;
 	socket.connect(endpoint, error);
 	string err;
@@ -140,9 +153,9 @@ void Console::connect() {
 		err = e.what();
 	}
 	if (error) {
-		cout << "Console connection EEROR: " << err << endl;
+		out() << "Console connection EEROR: " << err << endl;
 	} else {
-		cout << "Console connected" << endl;
+		out() << "Console connected" << endl;
 	}
 }
 
@@ -176,5 +189,11 @@ string Console::get_response() {
 void Console::send_request(const string& request) {
 	socket.write_some(boost::asio::buffer(request));
 }
+
+ostream& Console::out() {
+	static boost::iostreams::stream<boost::iostreams::null_sink> nowhere((boost::iostreams::null_sink()));
+	return verbose ? cout : nowhere;
+}
+
 
 }
