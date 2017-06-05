@@ -41,16 +41,15 @@ mdl::Vect translate_term(const Expr& ex, const Type* tp, Maps& maps) {
 }
 
 smm::Constant* translate_turnstile(Maps& maps) {
-	smm::Constant* constant = new smm::Constant;
 	uint ts = Lex::toInt("|-");
 	maps.turnstile = mdl::Symbol(ts);
-	constant->symb = maps.turnstile;
+	smm::Constant* constant = new smm::Constant(maps.turnstile);
 	return constant;
 }
 
 smm::Constant* translate_const(const Const* c, Maps& maps) {
-	smm::Constant* constant = new smm::Constant;
-	constant->symb = mdl::Symbol(mdl::Symbol::is_undef(c->ascii) ? c->id() : c->ascii);
+	uint symb = mdl::Symbol::is_undef(c->ascii) ? c->id() : c->ascii;
+	smm::Constant* constant = new smm::Constant(symb);
 	return constant;
 }
 
@@ -78,8 +77,7 @@ vector<smm::Node> translate_type(const Type* type, Maps& maps) {
 	string type_str = Lex::toStr(type->id());
 	uint type_sy = Lex::toInt(type_str);
 	maps.types[type] = type_sy;
-	smm::Constant* constant = new smm::Constant;
-	constant->symb = type_sy;
+	smm::Constant* constant = new smm::Constant(type_sy);
 	vector<smm::Node> ret;
 	ret.push_back(constant);
 	for (auto p : type->supers)

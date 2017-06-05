@@ -6,7 +6,8 @@ namespace mdl { namespace smm {
 
 typedef mdl::Token<Source> Token;
 
-struct Constant {
+struct Constant : public Owner<Constant> {
+	Constant (Symbol s) : Owner(s.lit), symb(s) { }
 	Symbol symb;
 	Token  token;
 };

@@ -470,7 +470,7 @@ rus::Source* translate_source(const Source* src, State& state, rus::Source* targ
 } // anonymous namespace
 
 void translate_to_rus(uint src, uint tgt) {
-	const Source* source = Sys::get().math.sources.access(src);
+	const Source* source = Sys::get().math.get<Source>().access(src);
 	if (!source) throw Error("no source", Lex::toStr(src));
 	delete rus::Sys::get().math.get<rus::Source>().access(tgt);
 	rus::Source* target = new rus::Source(tgt);

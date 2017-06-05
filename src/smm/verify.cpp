@@ -67,7 +67,7 @@ Vect apply_subst(const Subst& sub, const Vect& expr) {
 
 static void checkSymbols(const Assertion* ass, const Vect& expr) {
 	for (auto s : expr) {
-		bool is_const = (Sys::get().math.constants.find(s) != Sys::get().math.constants.end());
+		bool is_const = Sys::get().math.get<Constant>().has(s.lit);
 		bool is_var = false;
 		for (auto& v : ass->variables) {
 			if (contains(v->expr, s)) {
@@ -184,7 +184,7 @@ static void verify_assertion(const Assertion* ass) {
 
 void verify() {
 	Sys::timer()["verify"].start();
-	for (auto p : Sys::mod().math.assertions) {
+	for (auto& p : Sys::get().math.get<Assertion>()) {
 		verify_assertion(p.second.data);
 	}
 	Sys::timer()["verify"].stop();

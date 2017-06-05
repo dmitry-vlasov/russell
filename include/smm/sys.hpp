@@ -4,13 +4,15 @@
 
 namespace mdl { namespace smm {
 
+class Constant;
 class Assertion;
 class Source;
 
-struct Math {
-	set<Symbol>      constants;
+class Math {
+	Table<Constant>  constants;
 	Table<Assertion> assertions;
 	Table<Source>    sources;
+public :
 
 	string show() const;
 	string info() const;

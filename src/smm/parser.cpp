@@ -99,8 +99,9 @@ public:
 		parser["CONST"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
 			Symbol s = sv[0].get<Symbol>();
-			Constant* constant = new Constant{s, c.token(sv)};
-			Sys::mod().math.constants.insert(s);
+			Constant* constant = new Constant(s);
+			constant->token = c.token(sv);
+			//Sys::mod().math.constants.insert(s);
 			return constant;
 		};
 		parser["VAR"] = [](const peg::SemanticValues& sv, peg::any& context) {
@@ -182,8 +183,8 @@ public:
 			case Ref::Type::ESSENTIAL : check_vector(c.essential, lab); return new Ref(c.essential[lab]);
 			case Ref::Type::FLOATING  : check_vector(c.floating, lab);  return new Ref(c.floating[lab]);
 			case Ref::Type::INNER     : check_vector(c.inner, lab);     return new Ref(c.inner[lab]);
-			case Ref::Type::AXIOM     : check_table(math.assertions, lab);  return new Ref(lab, true);
-			case Ref::Type::THEOREM   : check_table(math.assertions, lab);  return new Ref(lab, false);
+			case Ref::Type::AXIOM     : check_table(math.get<Assertion>(), lab);  return new Ref(lab, true);
+			case Ref::Type::THEOREM   : check_table(math.get<Assertion>(), lab);  return new Ref(lab, false);
 			default  : throw Error("unknown reference type in proof", sv.token());
 			}
 		};
