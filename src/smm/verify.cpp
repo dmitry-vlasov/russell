@@ -184,7 +184,7 @@ static void verify_assertion(const Assertion* ass) {
 
 void verify() {
 	Sys::timer()["verify"].start();
-	for (auto& p : Sys::get().math.get<Assertion>()) {
+	for (auto& p : Sys::mod().math.get<Assertion>()) {
 		verify_assertion(p.second.data);
 	}
 	Sys::timer()["verify"].stop();
