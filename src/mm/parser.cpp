@@ -186,9 +186,11 @@ public:
 			c.source_stack.push(new Source(label));
 		};
 		parser["INCLUDE"] = [](const peg::SemanticValues& sv, peg::any& context) {
+			Context& c = *context.get<Context*>();
 			uint id = Sys::make_name(sv.token());
 			const bool primary = !Sys::get().math.get<Source>().has(id);
-			if (primary) parse(id, context.get<Context*>());
+			Source* src = primary ? parse(id, &c) : Sys::mod().math.get<Source>().access(id);
+			c.source_stack.top()->include(src);
 			return new Inclusion(id, primary);
 		};
 		parser.log = [label](size_t ln, size_t col, const std::string& err_msg) {
