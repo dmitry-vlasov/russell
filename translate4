@@ -1,0 +1,114 @@
+#!/bin/bash
+
+if [ -z $1 ]; then
+    echo "usage: "
+    echo "  translate <file> [config]"
+    echo "where: "
+    echo "  <file>     is a mm source without .mm extension"
+    echo "  [config]   is a config of test launching"
+    echo
+    exit 0
+fi
+
+if [ -z $2 ]; then 
+	config=./config
+else
+	config=$2
+fi
+
+source ${config}
+
+binpath=`pwd`/$binpath
+
+cd $mathpath
+
+file=$1
+
+if [ -d tmp ]; then
+    rm -fr tmp
+fi
+
+mkdir tmp
+
+if [ ! -f ${file}.mm ]; then
+    echo "source file ${file}.mm desn't exist"
+    echo "current dir: " `pwd`
+    exit 1
+fi
+
+cp ${file}.mm ./tmp/${file}.mm
+cd tmp
+
+echo "------------------------------"
+echo "Starting a daemon...."
+echo "------------------------------"
+
+(${binpath}/mdl -d 1>&1)&
+
+
+
+echo "------------------------------"
+echo "MM <-> SMM <-> RUS TRANSLATION"
+echo "------------------------------"
+
+echo "mm <-> smm <-> rus"
+check "${binpath}/mdl -c
+    \"mm  curr proj=A\" 
+    \"smm curr proj=A\" 
+    \"rus curr proj=A\"
+    \"mm  opts verbose\" 
+    \"smm opts verbose\" 
+    \"rus opts verbose\" 
+    
+    \"mm  read in=${file}.mm\"  
+    \"mm  transl in=${file}.mm out=${file}.smm\" 
+    \"smm write in=${file}.smm\"
+    
+    \"mm  curr proj=B\"
+    \"mm  opts verbose\" 
+    
+    \"smm transl lang=mm in=${file}.smm out=${file}-0.mm\" 
+    \"mm  write in=${file}-0.mm\"
+    \"smm transl lang=rus in=${file}.smm out=${file}.rus\" 
+    \"rus write in=${file}.rus\"
+    \"rus read in=${file}.rus \" 
+    \"rus parse \" 
+    
+    \"smm curr proj=B\"
+    \"smm opts verbose\" 
+    
+    \"rus transl in=${file}.rus out=${file}-1.smm\" 
+    \"smm write  in=${file}-1.smm\"
+    \"smm read   in=${file}-1.smm\"
+    \"smm verify in=${file}-1.smm\"
+    
+    \"mm  curr proj=C\" 
+    \"mm  opts verbose\" 
+    
+    \"smm transl lang=mm in=${file}-1.smm out=${file}-1.mm\" 
+    \"mm  write in=${file}-1.mm\"
+    \"mm  read in=${file}-1.mm \"  
+    
+    \"smm curr proj=C\"
+    \"smm opts verbose\"
+    
+    \"mm  transl in=${file}-1.mm out=$file-2.smm\" 
+    \"smm write in=$file-2.smm\"
+    \"smm read in=${file}-2.smm \" 
+    \"smm verify in=${file}-2.smm\"
+    \"daemon exit\" 
+    exit
+    "
+echo -e 'done\n\n'
+
+echo "verify mm"
+${binpath}/metamath "read ${file}-0.mm" 'verify proof *' exit
+echo -e 'done\n'
+
+echo "verify mm"
+${binpath}/metamath "read ${file}-1.mm" 'verify proof *' exit
+echo -e 'done\n'
+
+echo -e 'translation tests passed =)\n'
+
+

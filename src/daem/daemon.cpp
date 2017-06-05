@@ -35,14 +35,21 @@ Return execute(const string& command) {
 void Daemon::session() {
 	Daemon& daemon = mod();
 	try {
-		while (true) {
+		while (daemon.state != EXIT) {
+			cout << "Waiting for request ... " << endl;
 			string request = daemon.get_request();
+			cout << "Got a request: " << request << endl;
+			if ("daemon" == request.substr(0, strlen("daemon")))
+				request = request.substr(strlen("daemon"));
+			boost::trim(request);
 			if (request == "exit" || request == "cancel" || request == "quit") {
+				cout << "Exiting" << endl;
 				daemon.state = EXIT;
-				return;
 			}
-			Return ret = execute(request);
-			daemon.send_response(ret.to_string());
+			Return ret = daemon.state == EXIT ? Return() : execute(request);
+			cout << "Making a response: " << ret.to_string() << endl;
+			daemon.send_response(ret.to_string() + "\n");
+			cout << "Response is sent" << endl;
 		}
 	} catch (std::exception& e) {
 		std::cerr << "Exception in thread: " << e.what() << endl;
@@ -54,10 +61,15 @@ acceptor(service, endpoint), socket(service), state(RUN_QUEUE) {
 }
 
 void Daemon::start() {
+	cout << "Daemon executing commands..." << endl;
 	execute(commands);
+	cout << "done" << endl;
 	while (state != EXIT) {
+		cout << "Daemon is waiting for connection ..." << endl;
 		acceptor.accept(socket);
-		std::thread(Daemon::session).detach();
+		cout << "Daemon accepted connection" << endl;
+		session();
+		//std::thread(Daemon::session).detach();
 	}
 }
 
@@ -90,14 +102,21 @@ void Daemon::send_response(const string& response) {
 
 void Console::session() {
 	Console& console = mod();
+	console.connect();
 	while (true) {
+		cout << "Console waiting for request...." << endl;
 		string request = console.get_command();
+		cout << "Console got a request: " << request << endl;
 		if (request == "exit" || request == "cancel" || request == "quit") return;
+		cout << "Console sending a request...." << endl;
 		console.send_request(request);
+		cout << "Console is waiting for response...." << endl;
 		string response = console.get_response();
+		cout << "Console got a response:" << response << endl;
 		Return ret = Return::from_string(response);
 		cout << (ret ? "success" : "fail") << ": " << ret.text << endl;
 	}
+	console.disconnect();
 }
 
 Console::Console() : resolver(service), socket(service),
@@ -105,8 +124,30 @@ endpoint(*resolver.resolve({conn.host, to_string(conn.port)})), message_size(-1)
 }
 
 void Console::start() {
-	socket.connect(endpoint);
-	std::thread(Console::session).detach();
+	cout << "Console started" << endl;
+	session();
+	//std::thread(Console::session).detach();
+}
+
+void Console::connect() {
+	cout << "Console connecting...." << endl;
+	boost::system::error_code error;
+	socket.connect(endpoint, error);
+	string err;
+	try {
+		throw boost::system::system_error(error);
+	} catch(boost::system::system_error& e) {
+		err = e.what();
+	}
+	if (error) {
+		cout << "Console connection EEROR: " << err << endl;
+	} else {
+		cout << "Console connected" << endl;
+	}
+}
+
+void Console::disconnect() {
+	socket.close();
 }
 
 size_t Console::read_complete(const boost::system::error_code& err, size_t bytes) const {
@@ -128,9 +169,8 @@ string Console::get_command() {
 }
 
 string Console::get_response() {
-	message_size = 0;
-	read(socket, boost::asio::buffer(buff), boost::bind(&Console::read_complete, this, _1, _2));
-	return std::string(buff, message_size);
+	message_size = read(socket, boost::asio::buffer(buff), boost::bind(&Console::read_complete, this, _1, _2));
+	return message_size ? std::string(buff, message_size - 1) : "";
 }
 
 void Console::send_request(const string& request) {
