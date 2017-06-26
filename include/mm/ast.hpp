@@ -36,7 +36,7 @@ struct Floating : public Owner<Floating> {
 };
 
 struct Axiom : public Owner<Axiom> {
-	Axiom(uint l, const Vect& e) : Owner(l), expr(e) { }
+	Axiom(uint l, const Vect& e) : Owner(l), expr(e), arity(-1) { }
 	Vect  expr;
 	uint  arity;
 	Token token;

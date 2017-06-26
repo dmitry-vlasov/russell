@@ -44,8 +44,9 @@ echo "------------------------------"
 echo "Starting a daemon...."
 echo "------------------------------"
 
-(${binpath}/mdl -d -v 1>&1)&
+(check "${binpath}/mdl -d -v 1>&1 2>&2")&
 
+sleep 5
 
 echo "------------------------------"
 echo "MM <-> SMM <-> RUS TRANSLATION"
@@ -53,7 +54,7 @@ echo "------------------------------"
 
 
 echo "cut: mm -> mm"
-check "${binpath}/mdl -c -v
+run "${binpath}/mdl -c -v
     \"mm  opts verbose\" 
     \"smm opts verbose\" 
     \"rus opts verbose\" 
