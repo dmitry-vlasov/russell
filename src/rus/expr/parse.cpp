@@ -1,4 +1,4 @@
-#include "rus/ast.hpp"
+#include <rus_ast.hpp>
 
 namespace mdl { namespace rus { namespace expr { namespace {
 

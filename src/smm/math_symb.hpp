@@ -1,7 +1,7 @@
 #pragma once
 
-#include "smm/sys.hpp"
-#include "rus/ast.hpp"
+#include <rus_ast.hpp>
+#include <smm_sys.hpp>
 
 namespace mdl { namespace smm {
 

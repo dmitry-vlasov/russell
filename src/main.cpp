@@ -1,7 +1,7 @@
-#include "../include/daem.hpp"
-#include "rus/sys.hpp"
-#include "smm/sys.hpp"
-#include "mm/sys.hpp"
+#include <daem.hpp>
+#include <mm_sys.hpp>
+#include <rus_sys.hpp>
+#include <smm_sys.hpp>
 
 using namespace mdl;
 

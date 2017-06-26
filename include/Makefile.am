@@ -7,15 +7,16 @@ noinst_HEADERS = \
 	location.hpp \
 	path.hpp \
 	std.hpp \
+	boost.hpp \
 	symbol.hpp \
 	timer.hpp \
 	\
-	mm/ast.hpp \
-	mm/sys.hpp \
+	mm_ast.hpp \
+	mm_sys.hpp \
 	\
-	rus/ast.hpp \
-	rus/expr.hpp \
-	rus/sys.hpp \
+	rus_ast.hpp \
+	rus_expr.hpp \
+	rus_sys.hpp \
 	\
-	smm/ast.hpp \
-	smm/sys.hpp
+	smm_ast.hpp \
+	smm_sys.hpp

@@ -1,6 +1,6 @@
-#include "smm/ast.hpp"
-#include "rus/ast.hpp"
-#include "mm/ast.hpp"
+#include <mm_ast.hpp>
+#include <rus_ast.hpp>
+#include <smm_ast.hpp>
 
 namespace mdl { namespace smm {
 

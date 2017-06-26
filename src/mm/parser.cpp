@@ -1,4 +1,4 @@
-#include "mm/ast.hpp"
+#include <mm_ast.hpp>
 #include "peglib.h"
 
 namespace mdl { namespace mm { namespace {

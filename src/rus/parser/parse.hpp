@@ -1,5 +1,5 @@
+#include <rus_ast.hpp>
 #include "boost.hpp"
-#include "rus/ast.hpp"
 #include "rus/parser/adaptors.hpp"
 
 namespace mdl { namespace rus {
@@ -188,7 +188,7 @@ struct AddSymbol {
 	template <typename T1, typename T2>
 	struct result { typedef void type; };
 	void operator()(Expr& ex, Symbol s) const {
-		return ex.push_back(s);
+		ex.push_back(s);
 	}
 };
 

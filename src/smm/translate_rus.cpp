@@ -1,6 +1,6 @@
-#include "smm/sys.hpp"
+#include <rus_ast.hpp>
+#include <smm_sys.hpp>
 #include "smm/tree.hpp"
-#include "rus/ast.hpp"
 #include "math_symb.hpp"
 
 namespace mdl { namespace smm { namespace {

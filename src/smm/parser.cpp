@@ -1,4 +1,4 @@
-#include "smm/ast.hpp"
+#include <smm_ast.hpp>
 #include "peglib.h"
 
 namespace mdl { namespace smm {

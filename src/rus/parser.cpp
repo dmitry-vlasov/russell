@@ -1,4 +1,4 @@
-#include "rus/sys.hpp"
+#include <rus_sys.hpp>
 #include "peglib.h"
 
 namespace mdl { namespace rus {

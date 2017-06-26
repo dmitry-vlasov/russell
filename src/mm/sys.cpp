@@ -1,5 +1,5 @@
-#include "mm/ast.hpp"
-#include "smm/ast.hpp"
+#include <mm_ast.hpp>
+#include <smm_ast.hpp>
 
 namespace mdl { namespace mm  {
 
