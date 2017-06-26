@@ -5,6 +5,7 @@ EXTRA_DIST = \
 	translate_deep
 
 SUBDIRS = \
+	scripts \
 	peglib \
 	include \
 	src \

@@ -2,7 +2,7 @@
 
 if [ -z $1 ]; then
     echo "usage: "
-    echo "  translate <file> [config]"
+    echo "  test_deep_one_by_one <file> [config]"
     echo "where: "
     echo "  <file>     is a mm source without .mm extension"
     echo "  [config]   is a config of test launching"
@@ -45,35 +45,41 @@ echo "----------------------"
 
 echo "cut: mm -> mm"
 check "${binpath}/mdl 
-    \"mm opts verbose\" 
-    \"mm cut in=${file}.mm out=${file}.smm out-root=mm\""
+    \"mm  opts verbose\"
+    \"mm cut in=${file}.mm out=${file}.smm out-root=mm\"
+    exit"
+
 echo -e 'done\n\n'
 
 
 echo "mm -> smm"
 check "${binpath}/mdl 
-    \"mm opts verbose root=mm\" 
-    \"smm opts verbose root=smm\"
+    \"mm  opts verbose root=mm\" 
+    \"smm opts verbose root=smm\" 
     \"mm read in=${file}.mm\"
     \"mm transl in=${file}.mm out=${file}.smm\" 
-    \"smm write in=${file}.smm deep=true\""
+    \"smm write in=${file}.smm deep=true\"
+    exit"
 echo -e 'done\n\n'
 
 
 echo "smm -> mm"
 check "${binpath}/mdl 
-    \"mm opts verbose root=mm-0\" 
+    \"mm  opts verbose root=mm-0\" 
     \"smm opts verbose root=smm\" 
     \"smm read in=${file}.smm\"
     \"smm transl lang=mm in=${file}.smm out=${file}.mm\" 
-    \"mm write in=${file}.mm deep=true\""
+    \"mm write in=${file}.mm deep=true\"
+    exit"
 echo -e 'done\n\n'
 
 
 echo "merge: mm -> mm"
 check "${binpath}/mdl 
-    \"mm opts verbose root=mm-0\" 
-    \"mm merge in=${file}.mm out=${file}-0.mm out-root=\""
+    \"mm  opts verbose root=mm-0\" 
+    \"mm read in=${file}.mm\"
+    \"mm merge in=${file}.mm out=${file}-0.mm out-root=\"
+    exit"
 echo -e 'done\n\n'
 
 echo "verify mm"
@@ -90,21 +96,23 @@ echo "----------------------"
 echo "smm -> rus"
 check "${binpath}/mdl 
     \"smm opts verbose root=smm\" 
-    \"rus opts verbose root=rus\"
+    \"rus opts verbose root=rus\" 
     \"smm read in=${file}.smm\"
-    \"smm transl lang=rus in=${file}.mm out=${file}.rus\" 
-    \"rus write in=${file}.rus deep=true\""
+    \"smm transl lang=rus in=${file}.mm out=${file}.rus\"
+    \"rus write in=${file}.rus deep=true\"
+    exit"
 echo -e 'done\n\n'
 
 
 echo "rus -> smm"
 check "${binpath}/mdl 
     \"smm opts verbose root=smm-1\" 
-    \"rus opts verbose root=rus\"
+    \"rus opts verbose root=rus\" 
     \"rus read in=${file}.rus\"
     \"rus parse \"
     \"rus transl in=${file}.rus out=${file}.smm\" 
-    \"smm write in=${file}.smm deep=true\""
+    \"smm write in=${file}.smm deep=true\"
+    exit"
 echo -e 'done\n\n'
 
 
@@ -112,27 +120,30 @@ echo "verify smm"
 check "${binpath}/mdl 
     \"smm opts verbose root=smm-1\" 
     \"smm read in=${file}.smm\"
-    \"smm verify in=${file}.smm\""
+    \"smm verify in=${file}.smm\"
+    exit"
 echo -e 'done\n'
 
 
 echo "smm -> mm"
 check "${binpath}/mdl 
-    \"mm opts verbose root=mm-1\" 
     \"smm opts verbose root=smm-1\" 
+    \"mm  opts verbose root=mm-1\" 
     \"smm read in=${file}.smm\"
     \"smm transl lang=mm in=${file}.smm out=${file}.mm\" 
-    \"mm write in=${file}.mm deep=true\""
+    \"mm  write in=${file}.mm deep=true\"
+    exit"
 echo -e 'done\n\n'
 
 
 echo "mm -> smm"
 check "${binpath}/mdl 
-    \"mm opts verbose root=mm-1\" 
-    \"smm opts verbose root=smm-2\"
-    \"mm read in=${file}.mm\"
-    \"mm transl in=${file}.mm out=${file}.smm\" 
-    \"smm write in=${file}.smm deep=true\""
+    \"smm opts verbose root=smm-2\" 
+    \"mm  opts verbose root=mm-1\" 
+    \"mm  read in=${file}.mm\"
+    \"mm  transl in=${file}.mm out=${file}.smm\" 
+    \"smm write in=${file}.smm deep=true\"
+    exit"
 echo -e 'done\n'
 
 
@@ -140,14 +151,18 @@ echo "verify smm"
 check "${binpath}/mdl 
     \"smm opts verbose root=smm-2\" 
     \"smm read in=${file}.smm\"
-    \"smm verify in=${file}.smm\""
+    \"smm verify in=${file}.smm\"
+    exit"
+echo -e 'done\n'
 echo -e 'done\n'
 
 
 echo "merge: mm -> mm"
 check "${binpath}/mdl 
-    \"mm opts verbose root=mm-1\" 
-    \"mm merge in=${file}.mm out=${file}-1.mm out-root=\""
+    \"mm  opts verbose root=mm-1\" 
+    \"mm read in=${file}.mm\"
+    \"mm merge in=${file}.mm out=${file}-1.mm out-root=\"
+    exit"
 echo -e 'done\n'
 
 echo "verify mm"

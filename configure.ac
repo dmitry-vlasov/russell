@@ -58,6 +58,7 @@ AM_CONDITIONAL([SPLIT_COMPILE], [test $split_compile = yes])
 
 AC_CONFIG_FILES([
 	Makefile
+	scripts/Makefile
 	include/Makefile
 	peglib/Makefile
 	src/Makefile

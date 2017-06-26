@@ -2,7 +2,7 @@
 
 if [ -z $1 ]; then
     echo "usage: "
-    echo "  translate <file> [config]"
+    echo "  test_shallow_altogether <file> [config]"
     echo "where: "
     echo "  <file>     is a mm source without .mm extension"
     echo "  [config]   is a config of test launching"
@@ -40,11 +40,19 @@ cp ${file}.mm ./tmp/${file}.mm
 cd tmp
 
 echo "------------------------------"
+echo "Starting a daemon...."
+echo "------------------------------"
+
+(check "${binpath}/mdl -d -v 1>&1 2>&2")&
+
+
+
+echo "------------------------------"
 echo "MM <-> SMM <-> RUS TRANSLATION"
 echo "------------------------------"
 
 echo "mm <-> smm <-> rus"
-check "${binpath}/mdl
+run "${binpath}/mdl -c -v
     \"mm  curr proj=A\" 
     \"smm curr proj=A\" 
     \"rus curr proj=A\"
@@ -87,7 +95,10 @@ check "${binpath}/mdl
     \"mm  transl in=${file}-1.mm out=$file-2.smm\" 
     \"smm write in=$file-2.smm\"
     \"smm read in=${file}-2.smm \" 
-    \"smm verify in=${file}-2.smm\""
+    \"smm verify in=${file}-2.smm\"
+    \"daemon exit\" 
+    exit
+    "
 echo -e 'done\n\n'
 
 echo "verify mm"

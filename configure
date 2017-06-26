@@ -18221,7 +18221,7 @@ fi
 
 
 
-ac_config_files="$ac_config_files Makefile include/Makefile peglib/Makefile src/Makefile src/com/Makefile src/mm/Makefile src/smm/Makefile src/rus/Makefile src/daem/Makefile metamath/Makefile"
+ac_config_files="$ac_config_files Makefile scripts/Makefile include/Makefile peglib/Makefile src/Makefile src/com/Makefile src/mm/Makefile src/smm/Makefile src/rus/Makefile src/daem/Makefile metamath/Makefile"
 
 
 cat >confcache <<\_ACEOF
@@ -19358,6 +19358,7 @@ do
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "libtool") CONFIG_COMMANDS="$CONFIG_COMMANDS libtool" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
+    "scripts/Makefile") CONFIG_FILES="$CONFIG_FILES scripts/Makefile" ;;
     "include/Makefile") CONFIG_FILES="$CONFIG_FILES include/Makefile" ;;
     "peglib/Makefile") CONFIG_FILES="$CONFIG_FILES peglib/Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;

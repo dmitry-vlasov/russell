@@ -2,7 +2,7 @@
 
 if [ -z $1 ]; then
     echo "usage: "
-    echo "  translate <file> [config]"
+    echo "  test_deep_altogether <file> [config]"
     echo "where: "
     echo "  <file>     is a mm source without .mm extension"
     echo "  [config]   is a config of test launching"
@@ -39,13 +39,22 @@ mkdir tmp-deep
 cp ${file}.mm ./tmp-deep/${file}.mm
 cd tmp-deep
 
+
+echo "------------------------------"
+echo "Starting a daemon...."
+echo "------------------------------"
+
+(check "${binpath}/mdl -d -v 1>&1 2>&2")&
+
+sleep 5
+
 echo "------------------------------"
 echo "MM <-> SMM <-> RUS TRANSLATION"
 echo "------------------------------"
 
 
 echo "cut: mm -> mm"
-check "${binpath}/mdl
+run "${binpath}/mdl -c -v
     \"mm  opts verbose\" 
     \"smm opts verbose\" 
     \"rus opts verbose\" 
@@ -82,12 +91,12 @@ check "${binpath}/mdl
     \"rus read in=${file}.rus\"
     \"rus parse \"
     \"smm curr proj=C\"
-    \"smm opts verbose root=smm\"
+    \"smm opts verbose root=smm-1\"
     \"rus transl in=${file}.rus out=${file}.smm\" 
     \"smm write in=${file}.smm deep=true\"
     
     \"smm curr proj=D\"
-    \"smm opts verbose root=smm\" 
+    \"smm opts verbose root=smm-1\" 
     
     \"smm read in=${file}.smm\"
     \"smm verify in=${file}.smm\"
@@ -109,6 +118,8 @@ check "${binpath}/mdl
     \"smm verify in=${file}.smm\"
     \"mm merge in=${file}.mm out=${file}-1.mm out-root=\"
     
+    \"daemon exit\" 
+    exit
     "
 echo -e 'done\n'
 
