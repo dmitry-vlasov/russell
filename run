@@ -53,5 +53,5 @@ echo "-----------------------------"
 
 # Test translations of first 100 000 lines from set.mm
 cd scripts
-./test_deep_one_by_one uset-100000
+./translate_deep uset-100000
 

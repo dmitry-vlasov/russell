@@ -5,7 +5,7 @@ AM_CPPFLAGS = \
 	$(BOOST_CPPFLAGS)
 
 AM_LDFLAGS = \
-	-all-static \
+	-static \
     $(BOOST_LDFLAGS) \
     $(PTHREAD_CFLAGS)	
 
