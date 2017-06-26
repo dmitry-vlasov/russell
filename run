@@ -30,6 +30,10 @@ echo "--------------------------"
 echo "COMPILING THE PROJECT ... "
 echo "--------------------------"
 
+aclocal
+autoconf 
+automake
+
 if [ ! -d build ]; then
 	mkdir build
 fi
@@ -39,7 +43,7 @@ if [ ! -d $distrib ]; then
 fi
 cd $distrib
 
-../../configure CXXFLAGS="${cxxflags}" --exec-prefix=`pwd`
+../../configure --disable-shared CXXFLAGS="${cxxflags}" --exec-prefix=`pwd`
 make -j `nproc` && make install
 cd .. && cd ..
 

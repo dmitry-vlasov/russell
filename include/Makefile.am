@@ -10,6 +10,7 @@ noinst_HEADERS = \
 	boost.hpp \
 	symbol.hpp \
 	timer.hpp \
+	daem.hpp \
 	\
 	mm_ast.hpp \
 	mm_sys.hpp \

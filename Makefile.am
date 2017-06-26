@@ -1,12 +1,20 @@
 ACLOCAL_AMFLAGS = -I m4
 EXTRA_DIST = \
+	AUTHORS \
 	bootstrap \
-	translate \
-	translate_deep
+	ChangeLog \
+	configure.ac \
+	COPYING \
+	INSTALL \
+	NEWS \
+	README \
+	README.md \
+	run
 
 SUBDIRS = \
 	scripts \
 	peglib \
 	include \
 	src \
-	metamath
+	metamath \
+	math

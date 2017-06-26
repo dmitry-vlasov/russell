@@ -7133,7 +7133,7 @@ fi
 
 
 
-ac_config_files="$ac_config_files Makefile scripts/Makefile include/Makefile peglib/Makefile src/Makefile metamath/Makefile"
+ac_config_files="$ac_config_files Makefile scripts/Makefile include/Makefile peglib/Makefile src/Makefile metamath/Makefile math/Makefile"
 
 
 cat >confcache <<\_ACEOF
@@ -7893,6 +7893,7 @@ do
     "peglib/Makefile") CONFIG_FILES="$CONFIG_FILES peglib/Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
     "metamath/Makefile") CONFIG_FILES="$CONFIG_FILES metamath/Makefile" ;;
+    "math/Makefile") CONFIG_FILES="$CONFIG_FILES math/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac
