@@ -9,6 +9,5 @@
 #include "memvol.cpp"
 //#include "parser.cpp"
 #include "show.cpp"
-#include "sys.cpp"
 #include "translate.cpp"
 #include "verify.cpp"

@@ -116,4 +116,4 @@ namespace mdl {
 }
 
 #define UNDEF_UINT 0xFFFFFFFF
-#define VERSION "0.3"
+#define VERSION "0.4"

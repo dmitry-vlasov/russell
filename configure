@@ -4338,10 +4338,6 @@ fi
 
 
 
-# Checks for libraries.
-#AC_PROG_LIBTOOL
-#AC_SUBST(LIBTOOL_DEPS)
-
 # Checks for header files.
 #AC_CHECK_HEADERS([stddef.h stdint.h sys/time.h unistd.h])
 
@@ -4921,8 +4917,6 @@ _ACEOF
 
 fi
 
-
-#LT_INIT
 
 #m4_include([m4/ax_check_compile_flag.m4])
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether C compiler accepts -std=gnu++1z" >&5

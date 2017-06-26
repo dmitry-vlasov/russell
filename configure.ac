@@ -11,10 +11,6 @@ AM_INIT_AUTOMAKE
 AC_PROG_CXX
 AC_PROG_CC
 
-# Checks for libraries.
-#AC_PROG_LIBTOOL
-#AC_SUBST(LIBTOOL_DEPS)
-
 # Checks for header files.
 #AC_CHECK_HEADERS([stddef.h stdint.h sys/time.h unistd.h])
 AC_CHECK_HEADERS
@@ -25,8 +21,6 @@ AC_C_INLINE
 AC_TYPE_SIZE_T
 AC_TYPE_UINT32_T
 AC_CHECK_TYPES([ptrdiff_t])
-
-#LT_INIT
 
 #m4_include([m4/ax_check_compile_flag.m4])
 AX_CHECK_COMPILE_FLAG([-std=gnu++1z], [CXXFLAGS="$CXXFLAGS -std=gnu++1z"])

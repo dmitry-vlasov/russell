@@ -1,5 +1,8 @@
 #include "com/all.cpp"
 #include "daem/all.cpp"
+#include "mm/sys.cpp"
+#include "rus/sys.cpp"
+#include "smm/sys.cpp"
 #include "mm/all.cpp"
 #include "rus/all.cpp"
 #include "smm/all.cpp"

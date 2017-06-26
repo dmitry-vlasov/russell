@@ -1,11 +1,6 @@
 #define BOOST_SPIRIT_USE_PHOENIX_V3
 
-#include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_fusion.hpp>
-#include <boost/spirit/include/phoenix_object.hpp>
-
+#include "boost.hpp"
 #include "mm/sys.hpp"
 
 namespace mdl { namespace mm { namespace {
@@ -21,7 +16,7 @@ namespace qi      = boost::spirit::qi;
 namespace ascii   = boost::spirit::ascii;
 namespace phoenix = boost::phoenix;
 
-struct Add {
+struct AddContents {
 	template<typename T>
 	struct result { typedef void type; };
 	void operator()(const string& str, Merged& merged) const {
@@ -44,20 +39,19 @@ struct Grammar : qi::grammar<LocationIter, void(), ascii::space_type> {
 	Grammar(Merged& m) : Grammar::base_type(source, "merge"), merged(m)  {
 		using qi::lit;
 		using qi::lexeme;
-		using namespace qi::labels;
 
-		const phoenix::function<Add> add;
+		const phoenix::function<AddContents> add;
 		const phoenix::function<Include> include;
 
 		contents  %= lexeme[+(ascii::char_ - "$[")];
 		inclusion %= lit("$[") > lexeme[+(ascii::char_ - "$]")] > "$]";
-		source = + (inclusion [include(_1, phoenix::ref(merged))] | contents  [add(_1, phoenix::ref(merged))] );
+		source = + (inclusion [include(qi::labels::_1, phoenix::ref(merged))] | contents [add(qi::labels::_1, phoenix::ref(merged))] );
 
 		qi::on_error<qi::fail>(
 			source,
-			std::cout << phoenix::val("Syntax error. Expecting ") << _4
-			<< phoenix::val(" here: \n") << _3 << phoenix::val("\n")
-			<< phoenix::val("code: \n") << phoenix::construct<wrapper<>>(_3));
+			std::cout << phoenix::val("Syntax error. Expecting ") << qi::labels::_4
+			<< phoenix::val(" here: \n") << qi::labels::_3 << phoenix::val("\n")
+			<< phoenix::val("code: \n") << phoenix::construct<wrapper<>>(qi::labels::_3));
 		initNames();
 	}
 	void initNames() {

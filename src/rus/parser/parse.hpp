@@ -1,11 +1,4 @@
-#include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_fusion.hpp>
-#include <boost/spirit/include/phoenix_stl.hpp>
-#include <boost/spirit/include/phoenix_object.hpp>
-#include <boost/spirit/include/qi_uint.hpp>
-
+#include "boost.hpp"
 #include "rus/ast.hpp"
 #include "rus/parser/adaptors.hpp"
 

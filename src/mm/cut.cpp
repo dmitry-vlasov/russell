@@ -1,15 +1,6 @@
 #define BOOST_SPIRIT_USE_PHOENIX_V3
 
-#include <cctype>
-
-#include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_fusion.hpp>
-#include <boost/spirit/include/phoenix_object.hpp>
-#include <boost/algorithm/string.hpp>
-#include <boost/filesystem.hpp>
-
+#include "boost.hpp"
 #include "mm/sys.hpp"
 
 namespace mdl { namespace mm {
@@ -130,7 +121,7 @@ struct Section {
 	vector<Section*> parts;
 };
 
-}} // mdl::mm
+}} // mdl::mm::cut
 
 #include "cut_adaptor.hpp"
 
@@ -140,7 +131,7 @@ namespace qi      = boost::spirit::qi;
 namespace ascii   = boost::spirit::ascii;
 namespace phoenix = boost::phoenix;
 
-namespace {
+namespace cut_ {
 
 string init_dir (Section* sect) {
 	string dir;
@@ -274,7 +265,7 @@ struct Grammar : qi::grammar<LocationIter, Section*(), qi::unused_type> {
 		using qi::uint_;
 		using qi::lexeme;
 		using qi::eps;
-		using namespace qi::labels;
+		using qi::labels::_val;
 		using phoenix::at_c;
 		using phoenix::new_;
 
@@ -290,29 +281,29 @@ struct Grammar : qi::grammar<LocationIter, Section*(), qi::unused_type> {
 
 		section =
 			   lit("$(\n")                         [_val = new_<Section>()]
-			>> lexeme[*(ascii::char_ - "##" - "#*" - "=-")] [at_c<1>(*_val) = makeString(_1)]
-			>> border                              [at_c<0>(*_val) = _1]
-			>> lexeme[+(ascii::char_ - "##" - "#*" - "=-")] [at_c<2>(*_val) = makeString(_1)]
+			>> lexeme[*(ascii::char_ - "##" - "#*" - "=-")] [at_c<1>(*_val) = makeString(qi::labels::_1)]
+			>> border                              [at_c<0>(*_val) = qi::labels::_1]
+			>> lexeme[+(ascii::char_ - "##" - "#*" - "=-")] [at_c<2>(*_val) = makeString(qi::labels::_1)]
 			>> border
-			>> lexeme[*(ascii::char_ - "$)")]      [at_c<3>(*_val) = makeString(_1)]
+			>> lexeme[*(ascii::char_ - "$)")]      [at_c<3>(*_val) = makeString(qi::labels::_1)]
 			>> lit("$)\n")                         [add(_val, phoenix::ref(root))];
 
 		contents =
-			lexeme[+(ascii::char_ - FULL_PARAGRAPH_STR - FULL_CHAPTER_STR - FULL_PART_STR)] [_val = makeString(_1)];
+			lexeme[+(ascii::char_ - FULL_PARAGRAPH_STR - FULL_CHAPTER_STR - FULL_PART_STR)] [_val = makeString(qi::labels::_1)];
 
 		source =
 			  eps         [add(_val, phoenix::ref(root))]
 			>> header
 			>> + (
 				section |
-				contents  [add(_1)]
+				contents  [add(qi::labels::_1)]
 			);
 
 		qi::on_error<qi::fail>(
 			source,
-			std::cout << phoenix::val("Syntax error. Expecting ") << _4
-			<< phoenix::val(" here: \n") << _3 << phoenix::val("\n")
-			<< phoenix::val("code: \n") <<phoenix::construct<wrapper<>>(_3));
+			std::cout << phoenix::val("Syntax error. Expecting ") << qi::labels::_4
+			<< phoenix::val(" here: \n") << qi::labels::_3 << phoenix::val("\n")
+			<< phoenix::val("code: \n") <<phoenix::construct<wrapper<>>(qi::labels::_3));
 		initNames();
 	}
 
@@ -803,17 +794,17 @@ Section* parse(const Path& in, const Path& out) {
 	return source;
 }
 
-}
+} // cut_
 
 void cut(uint src, uint tgt, uint tgt_root) {
 	Sys::timer()["cut"].start();
 	Path in(Lex::toStr(src), Sys::conf().get("root"), "mm");
 	Path out(Lex::toStr(tgt), Lex::toStr(tgt_root), "mm");
-	Section* root = parse(in, out);
+	Section* root = cut_::parse(in, out);
 	for (Section* sect = root; sect; sect = sect->next_sect) sect->split();
 	for (const Section* sect = root; sect; sect = sect->next_sect) sect->save();
 	delete root;
 	Sys::timer()["cut"].stop();
 }
 
-}} // mdl::mm::cut
+}} // mdl::mm
