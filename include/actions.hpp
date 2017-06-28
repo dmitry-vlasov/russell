@@ -6,17 +6,18 @@
 namespace mdl {
 
 struct Return {
-	Return(const string& t = "", bool s = true, any d = any()) : msg(t), data(d), success(s) { }
+	Return(const string& t = "", bool s = true) : msg(t), success(s) { }
+	Return(const string& t, const string& d, bool s = true) : msg(t), data(d), success(s) { }
 	operator bool() const { return success; }
 	string msg;
-	any    data;
+	string data;
 	bool   success;
 
 	string to_string() const {
-		return (success ? string("0") : string("1")) + msg;
+		return (success ? string("0") : string("1")) + msg + '\0' + data;
 	}
 	static Return from_string(const string& s) {
-		return Return(s.substr(1), s[0] == '0');
+		return Return(s.substr(1, s.find('\0')), s.substr(s.find('\0') + 1), s[0] == '0');
 	}
 };
 
