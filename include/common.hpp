@@ -6,6 +6,7 @@
 #include "timer.hpp"
 #include "actions.hpp"
 #include "lex.hpp"
+#include "io.hpp"
 #include "path.hpp"
 #include "conf.hpp"
 #include "error.hpp"
@@ -160,22 +161,6 @@ private:
 	Lib() : contents_() { }
 };
 
-struct Io {
-	Io(uint i) :  id(i) { }
-	virtual ~Io() { };
-	virtual ostream& out() { return cout; }
-	virtual ostream& err() { return cerr; }
-	struct Std;
-	const uint id;
-
-	static Io& io(uint s = -1) { return Lib<Io>::mod().access(choose(s));  }
-	static string descr() { return "io"; }
-
-private:
-	static uint choose(uint s) { if (s != -1) current() = s; return current(); }
-	static uint& current() { static uint curr; return curr; }
-};
-
 struct Timers {
 	Timer& operator[] (const string& s) { return timers[s]; }
 	const Timer& operator[] (const string& s) const { return timers.at(s); }
@@ -242,6 +227,7 @@ struct Sys {
 		timer()[action].start();
 		Return ret = System::actions().at(action)(args);
 		timer()[action].stop();
+		Io::io().data() << ret.data;
 		return ret;
 	}
 
