@@ -129,7 +129,7 @@ void Console::session() {
 		string response = console.get_response();
 		console.out() << "Console got a response:" << response << endl;
 		Return ret = Return::from_string(response);
-		console.out() << (ret ? "success" : "fail") << ": " << ret.text << endl;
+		console.out() << (ret ? "success" : "fail") << ": " << ret.msg << endl;
 	}
 	console.disconnect();
 }

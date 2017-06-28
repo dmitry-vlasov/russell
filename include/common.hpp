@@ -256,10 +256,10 @@ struct Sys {
 			else
 				Io::io().out() << "done in " << timer()[args[0]] << endl;
 		}
-		if (!ret && ret.text.size())
-			Io::io().err() << ret.text << endl;
-		else if (verbose && ret.text.size())
-			Io::io().out() << ret.text << endl;
+		if (!ret && ret.msg.size())
+			Io::io().err() << ret.msg << endl;
+		else if (verbose && ret.msg.size())
+			Io::io().out() << ret.msg << endl;
 		return ret;
 	}
 
@@ -496,7 +496,7 @@ inline void execute(queue<string>& commands) {
 		if (command == "exit" || command == "cancel" || command == "quit") break;
 		Return ret = execute(command);
 		if (!ret) {
-			cerr << ret.text << endl;
+			cerr << ret.msg << endl;
 			break;
 		}
 	}
