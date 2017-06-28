@@ -831,7 +831,7 @@ void command(int argc, char *argv[])
           }
         }
         /* Do the operating system command */
-        (void)system(str1);
+        int ret = system(str1);
 #ifdef VAXC
         printf("\n"); /* Last line from VAX doesn't have new line */
 #endif

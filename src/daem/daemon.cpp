@@ -1,4 +1,5 @@
 #include <daem.hpp>
+
 #include "boost/iostreams/stream.hpp"
 #include "boost/iostreams/device/null.hpp"
 
@@ -12,6 +13,9 @@ inline bool get_nonempty_line(stringstream& ss, string& arg) {
 }
 
 Return execute(const string& command) {
+	if (command == "status") {
+		return Return("russell daemon is running ...");
+	}
 	Lang lang = Lang::NONE;
 	uint sys = -1;
 	Args args;

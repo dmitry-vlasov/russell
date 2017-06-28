@@ -39,9 +39,9 @@ fi
 cp ${file}.mm ./tmp/${file}.mm
 cd tmp
 
-echo "----------------------"
-echo "MM -> SMM TRANSLATION"
-echo "----------------------"
+echo "-----------------------"
+echo " MM -> SMM TRANSLATION "
+echo "-----------------------"
 
 echo "mm -> smm"
 check "${binpath}/mdl 
@@ -53,12 +53,9 @@ check "${binpath}/mdl
     exit"
 echo -e 'done\n\n'
 
-echo
-echo
-
-echo "----------------------"
-echo "MM -> RUS TRANSLATION"
-echo "----------------------"
+echo "------------------------"
+echo " SMM -> RUS TRANSLATION "
+echo "------------------------"
 
 echo "smm -> rus"
 check "${binpath}/mdl 

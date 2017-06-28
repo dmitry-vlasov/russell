@@ -1,13 +1,17 @@
 #!/bin/bash 
  
-# The relative path to the directory, containing binary executables: 
+## The relative path to the directory, containing binary executables: 
 binpath='../build/release/bin'
 # binpath='../build/debug/bin'
  
-# The relative path to the directory, containing math sources:
+## The relative path to the directory, containing math sources:
 mathpath='../math'
 #mathpath='../../../math'
 
+## Run executables with valgrind memcheck
 #memcheck='yes'
+
+## Print command with arguments before execution
+#output_command='yes'
 
 source run_check

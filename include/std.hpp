@@ -65,6 +65,8 @@
 #include <boost/variant.hpp>
 #include <boost/program_options.hpp>
 
+#include "config.h"
+
 size_t get_total_mem();
 size_t get_peak_RSS();
 size_t get_current_RSS();
@@ -116,4 +118,4 @@ namespace mdl {
 }
 
 #define UNDEF_UINT 0xFFFFFFFF
-#define VERSION "0.4"
+

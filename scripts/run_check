@@ -11,7 +11,9 @@ function run() {
 VALGRIND="valgrind --tool=memcheck "
 
 function check() {
-    echo "COMMAND: " $1
+	if [ "$output_command" == 'yes' ]; then
+		echo "COMMAND: " $1
+	fi
     if [ "$memcheck" == "yes" ]; then
 		run "$VALGRIND $@"
     else

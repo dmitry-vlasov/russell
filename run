@@ -1,57 +1,78 @@
 #!/bin/bash
 
-if [ -z $1 ]; then
-    distrib=release
-	cxxflags="-g -O3"
-elif [ "$1" == "debug" ]; then
-	distrib=debug
-	cxxflags="-ggdb3 -O0"
-elif [[ "$1" == "help" ]] || [[ "$1" == "-help" ]] || [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]] || [[ "$1" == "-?" ]]; then
+function show_usage {
 	echo "usage: "
-    echo "  do_all_job [debug]"
+    echo "  run [debug] [test] [solid]"
     echo "where: "
     echo "  [debug] is an option for compilation with debug flags "
+    echo "  [test]  is an option to make a set of back-forth translations and verifications "
+    echo "  [solid] build all sources in one *.cpp file "
     echo
     exit 0
-fi
+}
+
+debug='no'
+test='no'
+solid='OFF'
+cmake_build_dir='release'
+cmake_build_type='Release'
+
+function check_arg {
+	if [[ $1 ]]; then
+		if [[ "$1" == "debug" ]]; then
+			debug='yes'
+			cmake_build_dir='debug'
+			cmake_build_type='Debug'
+		elif [[ "$1" == "test" ]]; then
+			test='yes'
+		elif [[ "$1" == "solid" ]]; then
+			solid='ON'
+		else 
+			show_usage
+		fi
+	fi
+}
+
+check_arg $1
+check_arg $2
 
 config="
 #!/bin/bash \n
 \n
 # The relative path to the directory, containing binary executables: \n
-binpath='../build/${distrib}/bin'\n
+binpath='../build/${cmake_build_dir}/bin'\n
 \n
 # The relative path to the directory, containing math sources:\n
 mathpath='../math'\n
 "
 echo -e ${config} > config 
 
-echo "--------------------------"
-echo "COMPILING THE PROJECT ... "
-echo "--------------------------"
-
-aclocal
-autoconf 
-automake
+echo "---------------------------"
+echo "  BUILDING THE PROJECT ... "
+echo "---------------------------"
 
 if [ ! -d build ]; then
 	mkdir build
 fi
 cd build
-if [ ! -d $distrib ]; then
-	mkdir $distrib
+if [ ! -d $cmake_build_dir ]; then
+	mkdir $cmake_build_dir
 fi
-cd $distrib
+cd $cmake_build_dir
 
-../../configure --disable-shared CXXFLAGS="${cxxflags}" --exec-prefix=`pwd`
+cmake ../.. -DCMAKE_BUILD_TYPE=${cmake_build_type} -DCMAKE_INSTALL_PREFIX=./ -DBUILD_SOLID=${solid}
 make -j `nproc` && make install
 cd .. && cd ..
 
-echo "-----------------------------"
-echo "compiling the project - DONE "
-echo "-----------------------------"
+echo "-------------------------------"
+echo "  building the project - DONE  "
+echo "-------------------------------"
 
 # Test translations of first 100 000 lines from set.mm
 cd scripts
-./translate_deep uset-100000
+if [ "$test" == 'no' ]; then
+	./translate_deep uset-100000
+else
+	./test_deep_one_by_one uset-100000
+fi
 

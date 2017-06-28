@@ -3,16 +3,20 @@
 #include <rus_sys.hpp>
 #include <smm_sys.hpp>
 
+#ifdef BUILD_SOLID
+	#include "all.cpp"
+#endif
+
 using namespace mdl;
 
-enum class Mode { DAEM, CONS, EXEC };
+enum class Mode { DAEM, CONS, EXEC, HELP };
 
 int main (int argc, const char* argv[])
 {
 	try {
 		po::options_description descr(
 			string("Russell language implementation - mdl\n") +
-			"Version: " + VERSION + "\n" +
+			"Version: " + RUSSELL_VERSION_MAJOR + "." + RUSSELL_VERSION_MINOR + "\n" +
 			"Usage: mdl [options] | \"command_1\" ... \"command_n\" \n"
 		);
 		descr.add_options()
@@ -25,7 +29,7 @@ int main (int argc, const char* argv[])
 		po::store(po::parse_command_line(argc, argv, descr), vm);
 		po::notify(vm);
 		Mode mode = Mode::EXEC;
-		if (vm.count("help") || argc == 1) return 0;
+		if (vm.count("help") || argc == 1) mode = Mode::HELP;
 		if (vm.count("daem")) mode = Mode::DAEM;
 		if (vm.count("cons")) mode = Mode::CONS;
 		bool verb = vm.count("verb");
@@ -41,7 +45,8 @@ int main (int argc, const char* argv[])
 		switch (mode) {
 		case Mode::DAEM: Daemon::mod().start(verb);  break;
 		case Mode::CONS: Console::mod().start(verb); break;
-		case Mode::EXEC: execute(commands); break;
+		case Mode::EXEC: execute(commands);          break;
+		case Mode::HELP: cout << descr << endl;      break;
 		}
 		rus::Sys::release();
 		smm::Sys::release();
