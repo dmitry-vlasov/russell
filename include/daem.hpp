@@ -74,7 +74,6 @@ private:
 	Console();
 	string get_command();
 	string get_response();
-	size_t read_complete(const boost::system::error_code& err, size_t bytes) const;
 	void send_request(const string& request);
 	void connect();
 	void disconnect();

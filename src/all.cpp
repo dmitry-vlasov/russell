@@ -1,3 +1,4 @@
+#include "com/log.cpp"
 #include "com/common.cpp"
 #include "com/memusage.cpp"
 #include "com/timer.cpp"

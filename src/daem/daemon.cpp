@@ -2,6 +2,7 @@
 
 #include "boost/iostreams/stream.hpp"
 #include "boost/iostreams/device/null.hpp"
+#include "boost/asio.hpp"
 
 namespace mdl {
 
@@ -11,6 +12,33 @@ inline bool get_nonempty_line(stringstream& ss, string& arg) {
 	while (getline(ss, arg, ' ')) if (!arg.empty()) return true;
 	return false;
 }
+
+static string receive_string(boost::asio::ip::tcp::socket& socket, bool& close) {
+	close = true;
+	boost::system::error_code error;
+	uint msg_len;
+	boost::asio::read(socket, boost::asio::buffer(&msg_len, sizeof(uint)));
+	char buffer[msg_len];
+	size_t read_len = boost::asio::read(socket, boost::asio::buffer(buffer, msg_len), error);
+	if (read_len != msg_len) {
+		throw Error("corrupted received corrupted message");
+	}
+	if (error == boost::asio::error::eof) {
+		// Connection closed cleanly by peer.
+		return "";
+	} else if (error) {
+		throw boost::system::system_error(error); // Some other error.
+	}
+	close = false;
+	return string(buffer, msg_len);
+}
+
+static void send_string(boost::asio::ip::tcp::socket& socket, const string& str) {
+	uint msg_len = str.size();
+	boost::asio::write(socket, boost::asio::buffer(&msg_len, sizeof(uint)));
+	boost::asio::write(socket, boost::asio::buffer(str));
+}
+
 
 Return execute(const string& command) {
 	if (command == "status") {
@@ -53,8 +81,7 @@ void Daemon::session() {
 				daemon.state = EXIT;
 			}
 			Return ret = daemon.state == EXIT ? Return() : execute(request);
-			daemon.out() << "Daemon making a response: " << ret.to_string() << endl;
-			daemon.send_response(ret.to_string() + "\n");
+			daemon.send_response(ret.to_string());
 			daemon.out() << "Daemon response is sent" << endl;
 		}
 	} catch (std::exception& e) {
@@ -90,24 +117,21 @@ string Daemon::get_request() {
 		state = RUN_QUEUE;
 		return command;
 	}
-	boost::system::error_code error;
-	size_t length = socket.read_some(boost::asio::buffer(buffer), error);
-	if (error == boost::asio::error::eof) {
+	state = RUN_REQUEST;
+	bool close = false;
+	string ret = receive_string(socket, close);
+	if (close) {
 		state = CLOSE; // Connection closed cleanly by peer.
 		return "";
-	} else if (error) {
-		throw boost::system::system_error(error); // Some other error.
 	}
-	state = RUN_REQUEST;
-	return string(buffer, length);
+	return ret;
 }
-
 
 void Daemon::send_response(const string& response) {
 	if (RUN_QUEUE)
 		out() << response << endl;
 	else if (RUN_REQUEST)
-		boost::asio::write(socket, boost::asio::buffer(response.c_str(), response.size()));
+		send_string(socket, response);
 }
 
 ostream& Daemon::out() {
@@ -121,13 +145,12 @@ void Console::session() {
 	while (true) {
 		console.out() << "Console waiting for request...." << endl;
 		string request = console.get_command();
-		console.out() << "Console got a request: " << request << endl;
 		if (request == "exit" || request == "cancel" || request == "quit") return;
 		console.out() << "Console sending a request...." << endl;
 		console.send_request(request);
 		console.out() << "Console is waiting for response...." << endl;
 		string response = console.get_response();
-		console.out() << "Console got a response:" << response << endl;
+		console.out() << "Console got a response: ";
 		Return ret = Return::from_string(response);
 		console.out() << (ret ? "success" : "fail") << ": " << ret.msg << endl;
 	}
@@ -166,13 +189,6 @@ void Console::disconnect() {
 	socket.close();
 }
 
-size_t Console::read_complete(const boost::system::error_code& err, size_t bytes) const {
-	if (err) return 0;
-	bool found = std::find(buff, buff + bytes, '\n') < buff + bytes;
-	// we read one-by-one until we get to enter, no buffering
-	return found ? 0 : 1;
-}
-
 string Console::get_command() {
 	string command;
 	if (!commands.empty()) {
@@ -185,12 +201,17 @@ string Console::get_command() {
 }
 
 string Console::get_response() {
-	message_size = read(socket, boost::asio::buffer(buff), boost::bind(&Console::read_complete, this, _1, _2));
-	return message_size ? std::string(buff, message_size - 1) : "";
+	bool close = false;
+	string ret = receive_string(socket, close);
+	if (close) {
+		disconnect(); // Connection closed cleanly by peer.
+		return "";
+	}
+	return ret;
 }
 
 void Console::send_request(const string& request) {
-	socket.write_some(boost::asio::buffer(request));
+	send_string(socket, request);
 }
 
 ostream& Console::out() {

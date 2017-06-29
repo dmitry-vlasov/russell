@@ -7,6 +7,7 @@
 #include "actions.hpp"
 #include "lex.hpp"
 #include "io.hpp"
+#include "log.hpp"
 #include "path.hpp"
 #include "conf.hpp"
 #include "error.hpp"

@@ -20,11 +20,18 @@ find_package(Boost ${BOOST_MIN_VERSION} COMPONENTS
 	program_options
 	filesystem
 	system 
+	log 
+	log_setup
 	REQUIRED 
 )
 find_package (Threads)
 
-include_directories( ${Boost_INCLUDE_DIR} )
+include_directories(${Boost_INCLUDE_DIR})
+link_directories(${Boost_LIBRARY_DIRS})
+
+message(status "** Boost Include: ${Boost_INCLUDE_DIR}")
+message(status "** Boost Libraries: ${Boost_LIBRARY_DIRS}")
+message(status "** Boost Libraries: ${Boost_LIBRARIES}")
 
 # config.h
 configure_file (

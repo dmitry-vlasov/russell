@@ -13,6 +13,7 @@ if (BUILD_SOLID)
 	set(RUSSELL_SRC main.cpp)
 else() 
 	set(RUSSELL_SRC
+		com/log.cpp 
 		com/timer.cpp 
 		com/memusage.cpp 
 		com/common.cpp 
@@ -56,6 +57,8 @@ add_executable(mdl ${RUSSELL_SRC})
 target_link_libraries(mdl 
 	${Boost_LIBRARIES}
 	${Boost_PROGRAM_OPTIONS_LIBRARY}
+	${Boost_LOG}
+	${Boost_LOG_SETUP}
 	${CMAKE_THREAD_LIBS_INIT}
 )
 
