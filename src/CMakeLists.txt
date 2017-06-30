@@ -13,6 +13,7 @@ if (BUILD_SOLID)
 	set(RUSSELL_SRC main.cpp)
 else() 
 	set(RUSSELL_SRC
+		com/actions.cpp 
 		com/log.cpp 
 		com/timer.cpp 
 		com/memusage.cpp 

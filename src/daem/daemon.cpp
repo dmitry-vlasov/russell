@@ -17,17 +17,17 @@ static string receive_string(boost::asio::ip::tcp::socket& socket, bool& close) 
 	close = true;
 	boost::system::error_code error;
 	uint msg_len;
-	boost::asio::read(socket, boost::asio::buffer(&msg_len, sizeof(uint)));
+	size_t read_len = socket.read_some(boost::asio::buffer(&msg_len, sizeof(uint)), error);
 	char buffer[msg_len];
-	size_t read_len = boost::asio::read(socket, boost::asio::buffer(buffer, msg_len), error);
-	if (read_len != msg_len) {
-		throw Error("corrupted received corrupted message");
-	}
+	read_len = socket.read_some(boost::asio::buffer(buffer, msg_len), error);
 	if (error == boost::asio::error::eof) {
 		// Connection closed cleanly by peer.
 		return "";
 	} else if (error) {
 		throw boost::system::system_error(error); // Some other error.
+	}
+	if (read_len != msg_len) {
+		throw Error("received corrupted message", to_string(read_len) + "!=" + to_string(msg_len));
 	}
 	close = false;
 	return string(buffer, msg_len);

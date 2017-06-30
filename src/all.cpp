@@ -1,3 +1,4 @@
+#include "com/actions.cpp"
 #include "com/log.cpp"
 #include "com/common.cpp"
 #include "com/memusage.cpp"

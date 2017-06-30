@@ -6,19 +6,17 @@
 namespace mdl {
 
 struct Return {
-	Return(const string& t = "", bool s = true) : msg(t), success(s) { }
-	Return(const string& t, const string& d, bool s = true) : msg(t), data(d), success(s) { }
-	operator bool() const { return success; }
+	Return(const string& m = "", bool s = true) : msg(m), code(s ? 0 : -1) { }
+	Return(const string& m, const string& d, bool s = true) : msg(m), data(d), code(s ? 0 : -1) { }
+	operator bool() const { return success(); }
 	string msg;
 	string data;
-	bool   success;
+	uint   code;
 
-	string to_string() const {
-		return (success ? string("0") : string("1")) + msg + '\0' + data;
-	}
-	static Return from_string(const string& s) {
-		return Return(s.substr(1, s.find('\0')), s.substr(s.find('\0') + 1), s[0] == '0');
-	}
+	bool success() const { return !code; }
+
+	string to_string() const;
+	static Return from_string(const string&);
 };
 
 typedef vector<string> Args;
