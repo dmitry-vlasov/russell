@@ -75,7 +75,7 @@ ostream& operator << (ostream& os, const Assertion& ass) {
 	showComponents<Essential>(os, ass.essential);
 	showComponents<Floating>(os, ass.floating);
 	showComponents<Inner>(os, ass.inner);
-	os << Indent() << ass.prop << "\n";
+	os << Indent() << *ass.prop << "\n";
 	if (ass.proof) {
 		os << Indent() << *ass.proof << "\n";
 	}

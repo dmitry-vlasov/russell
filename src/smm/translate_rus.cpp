@@ -157,7 +157,7 @@ rus::Type* translate_type(Symbol type_sy, State& state) {
 inline
 
 void translate_super(const Assertion* ass, State& state) {
-	Symbol super_sy = ass->prop.expr[0];
+	Symbol super_sy = ass->prop->expr[0];
 	Symbol infer_sy = ass->floating[0]->type();
 	assert(ass->prop.expr[1] == ass->floating[0]->var());
 	rus::Type* super = translate_type(super_sy, state);
@@ -209,14 +209,14 @@ inline bool rule_term_is_super(const Vect& term) {
 }
 
 void translate_rule(const Assertion* ass, State& state) {
-	if (rule_term_is_super(ass->prop.expr)) {
+	if (rule_term_is_super(ass->prop->expr)) {
 		translate_super(ass, state);
 		return;
 	}
-	rus::Type* type = translate_type(ass->prop.expr[0], state);
-	rus::Rule* rule = new rus::Rule(ass->prop.label, type->id());
+	rus::Type* type = translate_type(ass->prop->expr[0], state);
+	rus::Rule* rule = new rus::Rule(ass->prop->label, type->id());
 	rule->vars = translate_vars(ass->floating, state);
-	rule->term = translate_expr(ass->prop.expr, state, ass);
+	rule->term = translate_expr(ass->prop->expr, state, ass);
 
 	for (rus::Rule* r : state.rules) {
 		bool less_gen = less_general(r, rule);
@@ -247,12 +247,12 @@ void translate_assertion(const Assertion* ass, T* a, State& state) {
 		rus::Expr&& ex = translate_expr(ess->expr, state, ass);
 		a->ass.hyps.push_back(new rus::Hyp{hc++, ex});
 	}
-	rus::Expr&& ex = translate_expr(ass->prop.expr, state, ass);
+	rus::Expr&& ex = translate_expr(ass->prop->expr, state, ass);
 	a->ass.props.push_back(new rus::Prop{0, ex});
 }
 
 void translate_axiom(const Assertion* ass, State& state) {
-	rus::Axiom* ax = new rus::Axiom(ass->prop.label);
+	rus::Axiom* ax = new rus::Axiom(ass->prop->label);
 	translate_assertion<rus::Axiom>(ass, ax, state);
 	state.theory.top()->nodes.push_back(ax);
 	state.axioms[ass] = ax;
@@ -297,9 +297,9 @@ vector<Symbol>::const_iterator eq_position(const Vect& ex) {
 }
 
 void translate_def(const Assertion* ass, State& state) {
-	rus::Def* def = new rus::Def(ass->prop.label);
+	rus::Def* def = new rus::Def(ass->prop->label);
 	translate_assertion<rus::Def>(ass, def, state);
-	const Vect& ex = ass->prop.expr;
+	const Vect& ex = ass->prop->expr;
 	auto eq_pos = eq_position(ex);
 
 	auto dfm_beg = ex.begin() + 1;
@@ -335,14 +335,14 @@ void translate_def(const Assertion* ass, State& state) {
 }
 
 bool is_def(const Assertion* ass) {
-	if (Lex::toStr(ass->prop.label).substr(0,3) != "df-") return false;
-	const Vect& ex = ass->prop.expr;
+	if (Lex::toStr(ass->prop->label).substr(0,3) != "df-") return false;
+	const Vect& ex = ass->prop->expr;
 	auto eq_pos = eq_position(ex);
 	return eq_pos != ex.end();
 }
 
 rus::Node::Kind node_kind(const Assertion* ass) {
-	if (!is_turnstile(ass->prop.expr.front())) {
+	if (!is_turnstile(ass->prop->expr.front())) {
 		return rus::Node::RULE;
 	} else if (is_def(ass)) {
 		return rus::Node::DEF;
@@ -369,7 +369,7 @@ rus::Proof::Elem translate_step(Tree* tree, rus::Proof* proof, rus::Theorem* thm
 	assert(tree->nodes.back().type == Tree::Node::REF);
 	Tree::Node& node = tree->nodes.back();
 	Assertion* ass = node.val.ref->ass();
-	rus::Proof::Elem el(new rus::Step(elems.size(), rus::Step::ASS, ass_kind(ass), ass->prop.label, proof));
+	rus::Proof::Elem el(new rus::Step(elems.size(), rus::Step::ASS, ass_kind(ass), ass->prop->label, proof));
 
 	for (uint i = 0; i < ass->essential.size(); ++ i) {
 		Tree::Node& n = tree->nodes[i];
@@ -403,7 +403,7 @@ void translate_proof(const Assertion* ass, rus::Theorem* thm, State& state) {
 }
 
 void translate_theorem(const Assertion* ass, State& state) {
-	rus::Theorem* thm = new rus::Theorem(ass->prop.label);
+	rus::Theorem* thm = new rus::Theorem(ass->prop->label);
 	translate_assertion<rus::Theorem>(ass, thm, state);
 	state.theory.top()->nodes.push_back(thm);
 	translate_proof(ass, thm, state);

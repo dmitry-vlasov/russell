@@ -6,55 +6,62 @@ namespace mdl { namespace smm {
 
 typedef mdl::Token<Source> Token;
 
-struct Constant : public Owner<Constant> {
-	Constant (Symbol s) : Owner(s.lit), symb(s) { }
+struct Tokenable {
+	Tokenable(const Token& t) : token(t) { }
+	virtual ~Tokenable() { }
+	Token token;
+};
+
+struct Constant : public Tokenable, Owner<Constant> {
+	Constant (Symbol s, const Token& t = Token()) : Tokenable(t), Owner(s.lit), symb(s) { }
 	Symbol symb;
-	Token  token;
 };
 
-struct Variables {
+struct Variables : public Tokenable {
+	Variables(const Vect& e = Vect(), const Token& t = Token()) : Tokenable(t), expr(e) { }
 	Vect  expr;
-	Token token;
 };
 
-struct Disjointed {
+struct Disjointed : public Tokenable {
+	Disjointed(const Vect& e = Vect(), const Token& t = Token()) : Tokenable(t), expr(e) { }
 	Vect  expr;
-	Token token;
 };
 
-struct Essential {
+struct Essential : public Tokenable {
+	Essential(uint i, const Vect& e, const Token& t = Token()) : Tokenable(t), index(i), expr(e) { }
 	uint  index;
 	Vect  expr;
-	Token token;
 };
 
-struct Floating  {
+struct Floating : public Tokenable {
+	Floating(uint i, const Vect& e = Vect(), const Token& t = Token()) : Tokenable(t), index(i), expr(e) { }
 	Symbol type() const { return expr[0]; }
 	Symbol var() const { return expr[1]; }
 	uint  index;
 	Vect  expr;
-	Token token;
 };
 
-struct Inner {
+struct Inner : public Tokenable {
+	Inner(uint i, const Vect& e = Vect(), const Token& t = Token()) : Tokenable(t), index(i), expr(e) { }
 	Symbol type() const { return expr[0]; }
 	Symbol var() const { return expr[1]; }
 	uint  index;
 	Vect  expr;
-	Token token;
 };
 
-struct Proposition {
+struct Proposition : public Tokenable {
+	Proposition(bool ax, uint l, const Vect& e, const Token& t = Token()) :
+		Tokenable(t), axiom(ax), label(l), expr(e) { }
 	bool  axiom;
 	uint  label;
 	Vect  expr;
-	Token token;
 };
 
 struct Proof;
 
-struct Assertion : public Owner<Assertion> {
-	Assertion (uint label) : Owner(label), proof(nullptr) { }
+struct Assertion : public Tokenable, public Owner<Assertion> {
+	Assertion (uint label, const Token& t = Token()) :
+		Tokenable(t), Owner(label), prop(nullptr), proof(nullptr) { }
 	~Assertion() override;
 
 	uint arity() const {
@@ -66,9 +73,8 @@ struct Assertion : public Owner<Assertion> {
 	vector<Essential*>  essential;
 	vector<Floating*>   floating;
 	vector<Inner*>      inner;
-	Proposition prop;
-	Proof*      proof;
-	Token       token;
+	Proposition* prop;
+	Proof*       proof;
 };
 
 struct Proof;
@@ -94,7 +100,7 @@ struct Ref {
 
 	uint label() const {
 		assert(is_assertion() && "must be assertion");
-		return val_.ass->get()->prop.label;
+		return val_.ass->get()->prop->label;
 	}
 	uint index() const {
 		assert(!is_assertion() && "must not be assertion");

@@ -54,7 +54,7 @@ smm::Constant* translate_const(const Const* c, Maps& maps) {
 }
 
 smm::Variables* translate_vars(const Vars& rvars) {
-	smm::Variables* svars = new smm::Variables;
+	smm::Variables* svars = new smm::Variables();
 	for (auto s : rvars.v)
 		svars->expr += mdl::Symbol(s.lit, true);
 	return svars;
@@ -88,9 +88,7 @@ vector<smm::Node> translate_type(const Type* type, Maps& maps) {
 vector<smm::Essential*> translate_essentials(const Assertion* ass, Maps& maps) {
 	vector<smm::Essential*> ess_vect;
 	for (auto hyp : ass->hyps) {
-		smm::Essential* ess = new smm::Essential;
-		ess->index = hyp->ind;
-		ess->expr = translate_expr(hyp->expr, maps);
+		smm::Essential* ess = new smm::Essential(hyp->ind, translate_expr(hyp->expr, maps));
 		ess_vect.push_back(ess);
 		maps.essentials[ass][hyp] = ess;
 	}
@@ -101,8 +99,7 @@ vector<smm::Floating*> translate_floatings(const Vars& vars, Maps& maps, const A
 	vector<smm::Floating*> flo_vect;
 	for (uint i = 0; i < vars.v.size(); ++ i) {
 		Symbol v = vars.v[i];
-		smm::Floating* flo = new smm::Floating;
-		flo->index = i;
+		smm::Floating* flo = new smm::Floating(i);
 		flo->expr += mdl::Symbol(maps.types[v.type()]);
 		flo->expr += mdl::Symbol(v.lit, true);
 		flo_vect.push_back(flo);
@@ -118,9 +115,10 @@ smm::Assertion* translate_rule(const Rule* rule, Maps& maps) {
 	if (rule->vars.v.size())
 		ra->variables.push_back(translate_vars(rule->vars));
 	ra->floating = translate_floatings(rule->vars, maps);
-	ra->prop.axiom = true;
-	ra->prop.expr  = translate_term(rule->term, rule->type.get(), maps);
-	ra->prop.label = rule_lab;
+	ra->prop = new smm::Proposition(true, rule_lab, translate_term(rule->term, rule->type.get(), maps));
+	//ra->prop.axiom = true;
+	//ra->prop.expr  = translate_term(rule->term, rule->type.get(), maps);
+	//ra->prop.label = rule_lab;
 	maps.rules[rule] = ra;
 	for (auto v : rule->vars.v) {
 		uint i = 0;
@@ -149,9 +147,10 @@ vector<smm::Node> translate_assertion(const Assertion* ass, Maps& maps) {
 			ra->disjointed = translate_disj(ass->disj);
 		ra->floating = translate_floatings(ass->vars, maps, ass);
 		ra->essential= translate_essentials(ass, maps);
-		ra->prop.expr  = translate_expr(prop->expr, maps);
-		ra->prop.label = ass_lab;
-		ra->prop.axiom = false;
+		ra->prop = new smm::Proposition(false, ass_lab, translate_expr(prop->expr, maps));
+		//ra->prop.expr  = translate_expr(prop->expr, maps);
+		//ra->prop.label = ass_lab;
+		//ra->prop.axiom = false;
 		ra_vect.push_back(ra);
 		maps.assertions[ass] = ra;
 	}
@@ -162,7 +161,7 @@ vector<smm::Node> translate_axiom(const Axiom* ax, Maps& maps) {
 	vector<smm::Node> asss = translate_assertion(&ax->ass, maps);
 	for (auto n : asss) {
 		assert(n.type == smm::Node::ASSERTION);
-		n.val.ass->prop.axiom = true;
+		n.val.ass->prop->axiom = true;
 	}
 	return asss;
 }
@@ -171,7 +170,7 @@ vector<smm::Node> translate_def(const Def* ax, Maps& maps) {
 	vector<smm::Node> asss = translate_assertion(&ax->ass, maps);
 	for (auto n : asss) {
 		assert(n.type == smm::Node::ASSERTION);
-		n.val.ass->prop.axiom = true;
+		n.val.ass->prop->axiom = true;
 	}
 	return asss;
 }
@@ -203,7 +202,7 @@ void translate_term(const Tree& t, const Assertion* thm, vector<smm::Ref*>& smm_
 	if (t.kind == Tree::NODE) {
 		if (!maps.rules.count(t.rule()))
 			throw Error("undefined reference to rule");
-		smm_proof.push_back(new smm::Ref(maps.rules[t.rule()]->prop.label, true));
+		smm_proof.push_back(new smm::Ref(maps.rules[t.rule()]->prop->label, true));
 	}
 }
 
@@ -231,7 +230,7 @@ void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref*>& smm
 	if (!maps.assertions.count(ass))
 		throw Error("undefined reference to assertion");
 	assert(maps.assertions.count(ass));
-	smm_proof.push_back(new smm::Ref(maps.assertions[ass]->prop.label, st->ass()->kind() != Assertion::THM));
+	smm_proof.push_back(new smm::Ref(maps.assertions[ass]->prop->label, st->ass()->kind() != Assertion::THM));
 }
 
 vector<smm::Inner*> translate_inners(const Vars& vars, Maps& maps, const Assertion* thm, uint ind_0) {
@@ -243,7 +242,7 @@ vector<smm::Inner*> translate_inners(const Vars& vars, Maps& maps, const Asserti
 	}
 	for (uint i = 0; i < vars.v.size(); ++ i) {
 		Symbol v = vars.v[i];
-		smm::Inner* inn = new smm::Inner;
+		smm::Inner* inn = new smm::Inner(i + ind_0);
 		inn->index = i + ind_0;
 		inn->expr += mdl::Symbol(maps.types[v.type()]);
 		inn->expr += mdl::Symbol(v.lit, true);

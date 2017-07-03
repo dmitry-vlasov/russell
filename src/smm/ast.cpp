@@ -22,7 +22,8 @@ Assertion::~Assertion() {
 	for (Essential* e : essential)   delete e;
 	for (Floating* f : floating)     delete f;
 	for (Inner* i : inner)           delete i;
-	if (proof) delete proof;
+	delete prop;
+	delete proof;
 }
 
 Source::Source(uint l) : mdl::Source<Source, Sys>(l) { }

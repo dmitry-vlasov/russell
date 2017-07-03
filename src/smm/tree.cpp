@@ -116,11 +116,11 @@ Vect eval(Tree* tree) {
 			msg += show_ex(apply_subst(sub, ess->expr)) + "\n";
 			msg += "and\n";
 			msg += show_ex(eval(tree->nodes[ess_ind])) + "\n";
-			msg += "assertion " + Lex::toStr(ass->prop.label) + "\n";
+			msg += "assertion " + Lex::toStr(ass->prop->label) + "\n";
 			throw Error("verification", msg);
 		}
 	}
-	n.expr = apply_subst(sub, ass->prop.expr);
+	n.expr = apply_subst(sub, ass->prop->expr);
 	return n.expr;
 }
 

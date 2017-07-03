@@ -327,9 +327,9 @@ smm::Proof* translate_proof(Maps& maps, const Proof* mproof) {
 		case Ref::ESSENTIAL:
 			sproof->refs.push_back(new smm::Ref(maps.essentials[r->ess()])); break;
 		case Ref::AXIOM:
-			sproof->refs.push_back(new smm::Ref(maps.axioms[r->axm()]->prop.label, true)); break;
+			sproof->refs.push_back(new smm::Ref(maps.axioms[r->axm()]->prop->label, true)); break;
 		case Ref::THEOREM:
-			sproof->refs.push_back(new smm::Ref(maps.theorems[r->thm()]->prop.label, false)); break;
+			sproof->refs.push_back(new smm::Ref(maps.theorems[r->thm()]->prop->label, false)); break;
 		default : assert(false && "impossible"); break;
 		}
 	}
@@ -342,7 +342,7 @@ void reduce(Maps& maps, smm::Assertion* ass, ArgMap& args, const Proof* proof) {
 	for (auto ess : ass->essential) {
 		gather_expr_vars(flo_vars, ess->expr);
 	}
-	gather_expr_vars(flo_vars, ass->prop.expr);
+	gather_expr_vars(flo_vars, ass->prop->expr);
 
 	// Gather the variables, used in proof but not in header, and collect all vars.
 	set<Symbol> inn_vars;
@@ -355,7 +355,7 @@ void reduce(Maps& maps, smm::Assertion* ass, ArgMap& args, const Proof* proof) {
 	reduce_floatings(ass, flo_vars, inn_vars, maps);
 	reindex_essentials(ass);
 
-	maps.transform[ass->prop.label] = args.create_permutation();
+	maps.transform[ass->prop->label] = args.create_permutation();
 }
 
 smm::Proof* transform_proof(Maps& maps, const Proof* proof) {
@@ -433,7 +433,7 @@ ArgMap arg_map(const deque<Node>& ar_orig) {
 
 smm::Assertion* translate_ass(Maps& maps, const Node& n, const Block* block)  {
 	smm::Assertion* ass = new smm::Assertion(n.label());
-	ass->prop = smm::Proposition {n.type == Node::AXIOM, n.label(), n.expr()};
+	ass->prop = new smm::Proposition(n.type == Node::AXIOM, n.label(), n.expr());
 
 	Scope scope = gather_scope();
 	add(maps, scope, ass);

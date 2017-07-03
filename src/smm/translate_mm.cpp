@@ -58,7 +58,7 @@ void translate(const Node& node, mm::Block* target, Maps& maps) {
 	case Node::ASSERTION: {
 		mm::Block* block = new mm::Block();
 		const Assertion* ass = node.val.ass;
-		string name = Lex::toStr(ass->prop.label);
+		string name = Lex::toStr(ass->prop->label);
 		for (auto& vars : ass->variables)
 			block->contents.push_back(mm::Node(new mm::Variables(vars->expr)));
 		for (auto& disj : ass->disjointed)
@@ -86,12 +86,12 @@ void translate(const Node& node, mm::Block* target, Maps& maps) {
 		}
 		if (ass->proof) {
 			mm::Proof* pr = translate(maps, ass->proof);
-			mm::Theorem* th = new mm::Theorem(ass->prop.label, ass->prop.expr, pr);
+			mm::Theorem* th = new mm::Theorem(ass->prop->label, ass->prop->expr, pr);
 			block->contents.push_back(mm::Node(th));
 			assert(!maps.theorems.count(ass));
 			maps.theorems[ass] = th;
 		} else {
-			mm::Axiom* ax = new mm::Axiom(ass->prop.label, ass->prop.expr);
+			mm::Axiom* ax = new mm::Axiom(ass->prop->label, ass->prop->expr);
 			block->contents.push_back(mm::Node(ax));
 			assert(!maps.axioms.count(ass));
 			maps.axioms[ass] = ax;
@@ -102,7 +102,7 @@ void translate(const Node& node, mm::Block* target, Maps& maps) {
 			ass->floating.size(),
 			ass->essential.size()
 		);
-		maps.transform[ass->prop.label] = perm;
+		maps.transform[ass->prop->label] = perm;
 	}	break;
 	case Node::INCLUSION: {
 		mm::Source* s = translate_source(node.val.inc->source.get(), maps);

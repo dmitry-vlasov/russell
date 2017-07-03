@@ -12,6 +12,7 @@ private:
 			essential.clear();
 			floating.clear();
 			inner.clear();
+			prop = nullptr;
 			proof = nullptr;
 		}
 		vector<Variables*>  variables;
@@ -20,10 +21,10 @@ private:
 		vector<Floating*>   floating;
 		vector<Inner*>      inner;
 
-		Proposition prop;
-		Proof*      proof;
-		Ref::Type   ref;
-		Source*     source;
+		Proposition* prop;
+		Proof*       proof;
+		Ref::Type    ref;
+		Source*      source;
 
 		Token token(const peg::SemanticValues& sv) const {
 			return Token(source, sv.c_str(), sv.c_str() + sv.length());
@@ -136,11 +137,11 @@ public:
 		};
 		parser["AX"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			c.prop = {true, sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv)};
+			c.prop = new Proposition(true, sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv));
 		};
 		parser["TH"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			c.prop = {false, sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv) };
+			c.prop = new Proposition(false, sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv));
 			c.proof = sv[2].get<Proof*>();
 		};
 		parser["PROOF"] = [](const peg::SemanticValues& sv, peg::any& context) {
@@ -190,7 +191,7 @@ public:
 		};
 		parser["ASSERTION"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Assertion* ass = new Assertion(c.prop.label);
+			Assertion* ass = new Assertion(c.prop->label);
 			ass->variables  = c.variables;
 			ass->disjointed = c.disjointed;
 			ass->floating   = c.floating;
@@ -205,7 +206,7 @@ public:
 			markVars(ass->variables, ass->floating);
 			markVars(ass->variables, ass->inner);
 			markVars(ass->variables, ass->essential);
-			markVars(ass->variables, ass->prop.expr);
+			markVars(ass->variables, ass->prop->expr);
 			return ass;
 		};
 		parser["COMMENT"] = [](const peg::SemanticValues& sv) {
