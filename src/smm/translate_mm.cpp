@@ -52,7 +52,7 @@ mm::Source* translate_source(const Source* src, Maps& maps, mm::Source* target =
 void translate(const Node& node, mm::Block* target, Maps& maps) {
 	switch(node.type) {
 	case Node::CONSTANT: {
-		mm::Constant* c = new mm::Constant { node.val.cst->symb };
+		mm::Constant* c = new mm::Constant(node.val.cst->symb);
 		target->contents.push_back(mm::Node(c));
 	} break;
 	case Node::ASSERTION: {
@@ -60,27 +60,27 @@ void translate(const Node& node, mm::Block* target, Maps& maps) {
 		const Assertion* ass = node.val.ass;
 		string name = Lex::toStr(ass->prop.label);
 		for (auto& vars : ass->variables)
-			block->contents.push_back(mm::Node(new mm::Variables { vars->expr }));
+			block->contents.push_back(mm::Node(new mm::Variables(vars->expr)));
 		for (auto& disj : ass->disjointed)
-			block->contents.push_back(mm::Node(new mm::Disjointed { disj->expr }));
+			block->contents.push_back(mm::Node(new mm::Disjointed(disj->expr)));
 		for (auto& inn : ass->inner) {
 			string label = "i" + name + "_" + to_string(inn->index);
 			uint new_index = Lex::toInt(label);
-			mm::Floating* mm_flo = new mm::Floating { new_index, inn->expr };
+			mm::Floating* mm_flo = new mm::Floating(new_index, inn->expr);
 			block->contents.push_back(mm::Node(mm_flo));
 			maps.inners[inn] = mm_flo;
 		}
 		for (auto& flo : ass->floating) {
 			string label = "f" + name + "_" + to_string(flo->index);
 			uint new_index = Lex::toInt(label);
-			mm::Floating* mm_flo = new mm::Floating { new_index, flo->expr };
+			mm::Floating* mm_flo = new mm::Floating(new_index, flo->expr);
 			block->contents.push_back(mm::Node(mm_flo));
 			maps.floatings[flo] = mm_flo;
 		}
 		for (auto& ess : ass->essential) {
 			string label = "e" + name + "_" + to_string(ess->index);
 			uint new_index = Lex::toInt(label);
-			mm::Essential* mm_ess = new mm::Essential { new_index, ess->expr };
+			mm::Essential* mm_ess = new mm::Essential(new_index, ess->expr);
 			block->contents.push_back(mm::Node(mm_ess));
 			maps.essentials[ess] = mm_ess;
 		}
@@ -91,7 +91,7 @@ void translate(const Node& node, mm::Block* target, Maps& maps) {
 			assert(!maps.theorems.count(ass));
 			maps.theorems[ass] = th;
 		} else {
-			mm::Axiom* ax = new mm::Axiom { ass->prop.label, ass->prop.expr };
+			mm::Axiom* ax = new mm::Axiom(ass->prop.label, ass->prop.expr);
 			block->contents.push_back(mm::Node(ax));
 			assert(!maps.axioms.count(ass));
 			maps.axioms[ass] = ax;

@@ -6,52 +6,55 @@ namespace mdl { namespace mm {
 
 typedef mdl::Token<Source> Token;
 
-struct Constant {
+struct Tokenable {
+	Tokenable() { }
+	Tokenable(const Token& t) : token(t) { }
+	virtual ~Tokenable() { }
+	Token token;
+};
+
+struct Constant : public Tokenable {
+	Constant(Symbol s, const Token& t = Token()) : Tokenable(t), symb(s) { }
 	Symbol symb;
-	Token  token;
 };
 
-struct Variables {
+struct Variables : public Tokenable {
+	Variables(const Vect& e, const Token& t = Token()) : Tokenable(t), expr(e) { }
 	Vect  expr;
-	Token token;
 };
 
-struct Disjointed {
+struct Disjointed : public Tokenable {
+	Disjointed(const Vect& e, const Token& t = Token()) : Tokenable(t), expr(e) { }
 	Vect  expr;
-	Token token;
 };
 
-struct Essential : public Owner<Essential> {
-	Essential(uint l, const Vect& e) : Owner(l), expr(e) { }
+struct Essential : public Tokenable, public Owner<Essential> {
+	Essential(uint l, const Vect& e, const Token& t = Token()) : Tokenable(t), Owner(l), expr(e) { }
 	Vect  expr;
-	Token token;
 };
 
-struct Floating : public Owner<Floating> {
-	Floating(uint l, const Vect& e) : Owner(l), expr(e) { }
+struct Floating : public Tokenable, public Owner<Floating> {
+	Floating(uint l, const Vect& e, const Token& t = Token()) : Tokenable(t), Owner(l), expr(e) { }
 	Symbol type() const { return expr[0]; }
 	Symbol var() const { return expr[1]; }
 	Vect  expr;
-	Token token;
 };
 
-struct Axiom : public Owner<Axiom> {
-	Axiom(uint l, const Vect& e) : Owner(l), expr(e), arity(-1) { }
+struct Axiom : public Tokenable, public Owner<Axiom> {
+	Axiom(uint l, const Vect& e, const Token& t = Token()) : Tokenable(t), Owner(l), expr(e), arity(-1) { }
 	Vect  expr;
 	uint  arity;
-	Token token;
 };
 
 class Proof;
 
-struct Theorem : public Owner<Theorem> {
-	Theorem(uint l, const Vect& e, Proof* p = nullptr) :
-		Owner(l), expr(e), arity(Undef<uint>::get()), proof(p) { }
+struct Theorem : public Tokenable, public Owner<Theorem> {
+	Theorem(uint l, const Vect& e, Proof* p = nullptr, const Token& t = Token()) :
+		Tokenable(t), Owner(l), expr(e), arity(Undef<uint>::get()), proof(p) { }
 	~Theorem() override;
 	Vect   expr;
 	uint   arity;
 	Proof* proof;
-	Token  token;
 };
 
 

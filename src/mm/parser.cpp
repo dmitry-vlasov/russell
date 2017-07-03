@@ -72,48 +72,48 @@ public:
 		parser["CONST"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
 			Symbol s = sv[0].get<Symbol>();
-			Constant* constant = new Constant{s, c.token(sv)};
+			Constant* constant = new Constant(s, c.token(sv));
 			c.scope_stack.back().consts.insert(s);
 			return constant;
 		};
 		parser["VAR"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Variables* vars = new Variables {sv[0].get<Vect>(), c.token(sv)};
+			Variables* vars = new Variables(sv[0].get<Vect>(), c.token(sv));
 			for (Symbol v : vars->expr)
 				c.scope_stack.back().vars.insert(v);
 			return vars;
 		};
 		parser["DISJ"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Disjointed* disj = new Disjointed {sv[0].get<Vect>(), c.token(sv)};
+			Disjointed* disj = new Disjointed(sv[0].get<Vect>(), c.token(sv));
 			for (Symbol v : disj->expr)
 				c.scope_stack.back().vars.insert(v);
 			return disj;
 		};
 		parser["ESS"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Essential* ess = new Essential(sv[0].get<uint>(), sv[1].get<Vect>());
+			Essential* ess = new Essential(sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv));
 			ess->token = c.token(sv);
 			markVars(ess->expr, c.scope_stack);
 			return ess;
 		};
 		parser["FLO"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Floating* flo = new Floating(sv[0].get<uint>(), sv[1].get<Vect>());
+			Floating* flo = new Floating(sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv));
 			flo->token = c.token(sv);
 			markVars(flo->expr, c.scope_stack);
 			return flo;
 		};
 		parser["AX"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Axiom* ax = new Axiom(sv[0].get<uint>(), sv[1].get<Vect>());
+			Axiom* ax = new Axiom(sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv));
 			ax->token = c.token(sv);
 			markVars(ax->expr, c.scope_stack);
 			return ax;
 		};
 		parser["TH"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Theorem* th = new Theorem(sv[0].get<uint>(), sv[1].get<Vect>(), sv[2].get<Proof*>());
+			Theorem* th = new Theorem(sv[0].get<uint>(), sv[1].get<Vect>(), sv[2].get<Proof*>(), c.token(sv));
 			markVars(th->expr, c.scope_stack);
 			th->token = c.token(sv);
 			return th;
