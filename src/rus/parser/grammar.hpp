@@ -84,8 +84,8 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		> eps        [addVars(phoenix::ref(var_stack), _val)];
 
 	prop =
-		lit("prop")  [_val = new_<Prop>()]
-		> - uint_    [phoenix::at_c<0>(*_val) = qi::labels::_1 - 1]
+		lit("prop")
+		> - uint_    [_val = new_<Prop>(qi::labels::_1 - 1)]
 		> ":"
 		> id         [_a = qi::labels::_1]
 		> "=" > "|-"
@@ -94,8 +94,8 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		> lit(END_MARKER);
 
 	hyp =
-		lit("hyp")   [_val = new_<Hyp>()]
-		> - uint_    [phoenix::at_c<0>(*_val) = qi::labels::_1 - 1]
+		lit("hyp")
+		> - uint_    [_val = new_<Hyp>(qi::labels::_1 - 1)]
 		> ":"
 		> id         [_a = qi::labels::_1]
 		> "=" > "|-"
@@ -291,18 +291,18 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	qi::on_success(import,    setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(constant,  setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(vars,      setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
-	qi::on_success(disj,      setToken(phoenix::at_c<1>(_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
-	qi::on_success(type,      setToken(phoenix::at_c<4>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
-	qi::on_success(rule,      setToken(phoenix::at_c<4>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
-	qi::on_success(hyp,       setToken(phoenix::at_c<2>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
-	qi::on_success(prop,      setToken(phoenix::at_c<2>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(disj,      setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(type,      setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(rule,      setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(hyp,       setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(prop,      setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(step,      setToken(phoenix::at_c<6>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(qed,       setToken(phoenix::at_c<2>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(proof,     setToken(phoenix::at_c<6>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 
-	qi::on_success(axiom,   setToken(phoenix::at_c<5>(phoenix::at_c<0>(*_val)), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
-	qi::on_success(theorem, setToken(phoenix::at_c<5>(phoenix::at_c<0>(*_val)), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
-	qi::on_success(def,     setToken(phoenix::at_c<5>(phoenix::at_c<0>(*_val)), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(axiom,   setToken(phoenix::at_c<0>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(theorem, setToken(phoenix::at_c<0>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(def,     setToken(phoenix::at_c<0>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 
 	//qi::on_success(theory, setToken(phoenix::at_c<2>(*_val), qi::labels::_1, qi::labels::_3));
 

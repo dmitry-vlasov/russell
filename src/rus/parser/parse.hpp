@@ -330,7 +330,7 @@ struct AssembleDef {
 	void operator()(Def* d, VarStack& varsStack) const {
 		static Symbol dfm(Lex::toInt("defiendum"));
 		static Symbol dfs(Lex::toInt("definiens"));
-		Prop* prop = new Prop;
+		Prop* prop = new Prop(0);
 		for (auto s : d->prop.symbols) {
 			if (s == dfm) {
 				for (auto s_dfm : d->dfm.symbols)
@@ -341,7 +341,6 @@ struct AssembleDef {
 			} else
 				prop->expr.push_back(s);
 		}
-		prop->ind = 0;
 		prop->expr.type = d->prop.type;
 		prop->expr.token = d->prop.token;
 		mark_vars(prop->expr, varsStack);

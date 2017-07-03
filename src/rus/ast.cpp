@@ -2,27 +2,28 @@
 
 namespace mdl { namespace rus {
 
-Type::Type(uint i) : Owner(i) { }
-Type::Type(uint i, const vector<Type*>& s) : Owner(i) {
+Type::Type(uint i, const Token& t) : Tokenable(t), Owner(i) { }
+Type::Type(uint i, const vector<Type*>& s, const Token& t) : Tokenable(t), Owner(i) {
 	for (auto t : s) sup.push_back(t);
 }
 Type::~Type() {
 	for (auto p : supers) delete p.second;
 }
 
-Rule::Rule(uint id, uint tp) : Owner(id), type(tp) { }
-Rule::Rule(uint id, uint tp, const Vars& v) :
-	Owner(id), type(tp), vars(v) { }
+Rule::Rule(uint id, uint tp, const Token& t) :
+	Tokenable(t), Owner(id), type(tp) { }
+Rule::Rule(uint id, uint tp, const Vars& v, const Token& t) :
+	Tokenable(t), Owner(id), type(tp), vars(v) { }
 
-Assertion::Assertion(uint i) : Owner(i) { }
+Assertion::Assertion(uint i, const Token& t) : Tokenable(t), Owner(i) { }
 Assertion::~Assertion() {
 	for (auto h : hyps) delete h;
 	for (auto p : props) delete p;
 }
 
-Axiom::Axiom(uint id) : Assertion(id) { }
-Theorem::Theorem(uint id) : Assertion(id) { }
-Def::Def(uint id) : Assertion(id) { }
+Axiom::Axiom(uint id, const Token& t) : Assertion(id, t) { }
+Theorem::Theorem(uint id, const Token& t) : Assertion(id, t) { }
+Def::Def(uint id, const Token& t) : Assertion(id, t) { }
 
 Step::Step(uint i, Step::Kind sk, Assertion::Kind ak, uint id, Proof* p) :
 	ind_(i), kind_(sk), proof_(p) {

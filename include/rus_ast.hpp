@@ -33,56 +33,58 @@ struct Vars : public Tokenable {
 	vector<Symbol> v;
 };
 
-struct Disj {
+struct Disj : public Tokenable {
+	Disj(const vector<vector<Symbol>>& disj = vector<vector<Symbol>>(), const Token& t = Token()) :
+		Tokenable(t), d(disj) { }
+	Disj(const Disj& disj) : Tokenable(disj), d(disj.d) { }
 	vector<vector<Symbol>> d;
-	Token token;
 };
 
 void parse_expr(Expr& ex);
 void parse_term(Expr& ex, Rule* rule);
 
-struct Type : public Owner<Type> {
+struct Type : public Tokenable, public Owner<Type> {
 	typedef map<const Type*, Rule*> Supers;
-	Type(uint id);
-	Type(uint id, const vector<Type*>& sup);
+	Type(uint id, const Token& t = Token());
+	Type(uint id, const vector<Type*>& sup, const Token& t = Token());
 	~Type() override;
 	vector<User<Type>> sup;
 	Supers supers;
 	Rules rules;
-	Token token;
 };
 
-struct Rule : public Owner<Rule> {
-	Rule(uint id, uint tp);
-	Rule(uint id, uint tp, const Vars& v);
+struct Rule : public Tokenable, public Owner<Rule> {
+	Rule(uint id, uint tp, const Token& t = Token());
+	Rule(uint id, uint tp, const Vars& v, const Token& t = Token());
 	User<Type> type;
 	Vars       vars;
 	Expr       term;
-	Token      token;
 };
 
 inline Type* Tree::type() { return kind == VAR ? val.var->type() : val.node->rule.get()->type.get(); }
 inline const Type* Tree::type() const { return kind == VAR ? val.var->type() : val.node->rule.get()->type.get(); }
 
-struct Hyp {
+struct Hyp : public Tokenable {
+	Hyp(uint i, const Expr& e = Expr(), const Token& t = Token()) :
+		Tokenable(t), ind(i), expr(e) { }
 	uint  ind;
 	Expr  expr;
-	Token token;
 };
 
-struct Prop {
+struct Prop : public Tokenable {
+	Prop(uint i, const Expr& e = Expr(), const Token& t = Token()) :
+		Tokenable(t), ind(i), expr(e) { }
 	uint  ind;
 	Expr  expr;
-	Token token;
 };
 
-struct Assertion : public Owner<Assertion> {
+struct Assertion : public Tokenable, public Owner<Assertion> {
 	enum Kind {
 		AXM,
 		THM,
 		DEF
 	};
-	Assertion(uint id);
+	Assertion(uint id, const Token& t = Token());
 	~ Assertion() override;
 	uint arity() const { return hyps.size(); }
 	virtual Kind kind() const = 0;
@@ -91,17 +93,16 @@ struct Assertion : public Owner<Assertion> {
 	Disj disj;
 	vector<Hyp*>  hyps;
 	vector<Prop*> props;
-	Token         token;
 	Assertion&    ass = *this;
 };
 
 struct Axiom : public Assertion {
-	Axiom(uint id);
+	Axiom(uint id, const Token& t = Token());
 	Kind kind() const { return AXM; }
 };
 
 struct Def : public Assertion {
-	Def(uint id);
+	Def(uint id, const Token& t = Token());
 	Kind kind() const { return DEF; }
 	Expr dfm;
 	Expr dfs;
@@ -109,7 +110,7 @@ struct Def : public Assertion {
 };
 
 struct Theorem : public Assertion {
-	Theorem(uint id);
+	Theorem(uint id, const Token& t = Token());
 	Kind kind() const { return THM; }
 	vector<User<Proof>> proofs;
 };
