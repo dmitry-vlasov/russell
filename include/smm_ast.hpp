@@ -19,42 +19,42 @@ struct Constant : public Tokenable, Owner<Constant> {
 
 struct Variables : public Tokenable {
 	Variables(const Vect& e = Vect(), const Token& t = Token()) : Tokenable(t), expr(e) { }
-	Vect  expr;
+	Vect expr;
 };
 
 struct Disjointed : public Tokenable {
 	Disjointed(const Vect& e = Vect(), const Token& t = Token()) : Tokenable(t), expr(e) { }
-	Vect  expr;
+	Vect expr;
 };
 
 struct Essential : public Tokenable {
 	Essential(uint i, const Vect& e, const Token& t = Token()) : Tokenable(t), index(i), expr(e) { }
-	uint  index;
-	Vect  expr;
+	uint index;
+	Vect expr;
 };
 
 struct Floating : public Tokenable {
 	Floating(uint i, const Vect& e = Vect(), const Token& t = Token()) : Tokenable(t), index(i), expr(e) { }
 	Symbol type() const { return expr[0]; }
 	Symbol var() const { return expr[1]; }
-	uint  index;
-	Vect  expr;
+	uint index;
+	Vect expr;
 };
 
 struct Inner : public Tokenable {
 	Inner(uint i, const Vect& e = Vect(), const Token& t = Token()) : Tokenable(t), index(i), expr(e) { }
 	Symbol type() const { return expr[0]; }
 	Symbol var() const { return expr[1]; }
-	uint  index;
-	Vect  expr;
+	uint index;
+	Vect expr;
 };
 
 struct Proposition : public Tokenable {
 	Proposition(bool ax, uint l, const Vect& e, const Token& t = Token()) :
 		Tokenable(t), axiom(ax), label(l), expr(e) { }
-	bool  axiom;
-	uint  label;
-	Vect  expr;
+	bool axiom;
+	uint label;
+	Vect expr;
 };
 
 struct Proof;

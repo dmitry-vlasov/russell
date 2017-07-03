@@ -9,7 +9,6 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::rus::User<mdl::rus::Type>, type)
 	(mdl::rus::Tree*, tree)
 	(mdl::vector<mdl::rus::Symbol>, symbols)
-	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -20,7 +19,6 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Comment,
 	(mdl::string,     text)
-	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -28,13 +26,11 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::rus::Symbol, symb)
 	(mdl::rus::Symbol, ascii)
 	(mdl::rus::Symbol, latex)
-	(mdl::rus::Token,  token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Vars,
 	(mdl::vector<mdl::rus::Symbol>, v)
-	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -194,7 +190,6 @@ BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Import,
 	(mdl::rus::Source*, source)
 	(bool, primary)
-	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(

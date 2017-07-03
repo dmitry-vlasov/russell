@@ -12,23 +12,25 @@ struct Theory;
 struct Import;
 struct Source;
 
-struct Comment {
+struct Comment : public Tokenable {
+	Comment(const string& txt, const Token& t = Token()) : Tokenable(t), text(txt) { }
 	string text;
-	Token  token;
 };
 
-struct Const : public Owner<Const> {
-	Const(uint s, uint a, uint l) : Owner(s), symb(s), ascii(a), latex(l) { }
-	Const(const Const& c) : Owner(c.id()), symb(c.symb), ascii(c.ascii), latex(c.latex), token(c.token) { }
+struct Const : public Tokenable, Owner<Const> {
+	Const(uint s, uint a, uint l, const Token& t = Token()) :
+		Tokenable(t), Owner(s), symb(s), ascii(a), latex(l) { }
+	Const(const Const& c) :
+		Tokenable(c), Owner(c.id()), symb(c.symb), ascii(c.ascii), latex(c.latex) { }
 	uint  symb;
 	uint  ascii;
 	uint  latex;
-	Token token;
 };
 
-struct Vars {
+struct Vars : public Tokenable {
+	Vars(const vector<Symbol>& vars = vector<Symbol>(), const Token& t = Token()) : Tokenable(t), v(vars) { }
+	Vars(const Vars& vars) : Tokenable(vars), v(vars.v) { }
 	vector<Symbol> v;
-	Token token;
 };
 
 struct Disj {
@@ -295,11 +297,10 @@ struct Node {
 	Value val;
 };
 
-struct Import {
-	Import(uint src, bool prim) : source(src), primary(prim) { }
+struct Import : public Tokenable {
+	Import(uint src, bool prim, const Token& t = Token()) : Tokenable(t), source(src), primary(prim) { }
 	User<Source> source;
 	bool         primary;
-	Token        token;
 };
 
 struct Theory {

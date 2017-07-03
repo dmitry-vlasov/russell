@@ -317,6 +317,11 @@ struct SetToken {
     	token.end = &*end;
     	token.src = src;
     }
+    void operator()(Tokenable& tokenable, Iterator beg, Iterator end, Source* src) const {
+    	tokenable.token.beg = &*beg;
+    	tokenable.token.end = &*end;
+    	tokenable.token.src = src;
+    }
 };
 
 struct AssembleDef {

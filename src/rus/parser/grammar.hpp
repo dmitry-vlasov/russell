@@ -77,7 +77,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 
 	vars =
 		( !lit(")")
-		> var        [_a =qi::labels::_1]
+		> var        [_a = qi::labels::_1]
 		> ":" > id   [setType(_a, findType(qi::labels::_1))]
 		> eps        [push_back(phoenix::at_c<0>(_val), _a)]
 		) % ","
@@ -257,16 +257,16 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 
 	comment_text %= lexeme[+(unicode::char_ - "*/" - "/*")];
 	comment_ml =
-		   lit("/*")                        [_val = new_<Comment>()]
+		   lit("/*")
 		>> *(
-			comment_text [phoenix::at_c<0>(*_val) = qi::labels::_1] |
+			comment_text [_val = new_<Comment>(qi::labels::_1)] |
 			comment_ml [appendComment(_val, qi::labels::_1)]
 		)
 		>> lit("*/");
 
 	comment_sl =
-		   lit("//")                        [_val = new_<Comment>()]
-		>> lexeme[+(unicode::char_ - "\n")] [phoenix::at_c<0>(*_val) = makeString(qi::labels::_1)];
+		   lit("//")
+		>> lexeme[+(unicode::char_ - "\n")] [_val = new_<Comment>(makeString(qi::labels::_1))];
 
 	comment %= comment_ml | comment_sl;
 
@@ -284,13 +284,13 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 			comment  [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(qi::labels::_1))]
 		);
 
-	qi::on_success(term,      setToken(phoenix::at_c<3>(_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
-	qi::on_success(expr,      setToken(phoenix::at_c<3>(_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
-	qi::on_success(plain,     setToken(phoenix::at_c<3>(_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
-	qi::on_success(comment,   setToken(phoenix::at_c<1>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
-	qi::on_success(import,    setToken(phoenix::at_c<2>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
-	qi::on_success(constant,  setToken(phoenix::at_c<3>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
-	qi::on_success(vars,      setToken(phoenix::at_c<1>(_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(term,      setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(expr,      setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(plain,     setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(comment,   setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(import,    setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(constant,  setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(vars,      setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(disj,      setToken(phoenix::at_c<1>(_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(type,      setToken(phoenix::at_c<4>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(rule,      setToken(phoenix::at_c<4>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
