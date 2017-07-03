@@ -12,7 +12,7 @@ struct Path {
 		boost::trim(root_);
 		boost::trim(name_);
 		boost::trim(ext_);
-		boost::erase_last(root_, "/");
+		if (*root_.crend() == '/') boost::erase_last(root_, "/");
 		name_ext(name_);
 	}
 	Path(const Path& p) : root_(p.root_), name_(p.name_), ext_(p.ext_) { }
