@@ -8,6 +8,15 @@ namespace mdl { namespace rus {
 
 typedef mdl::Token<Source> Token;
 
+struct Tokenable {
+	Tokenable() { }
+	Tokenable(const Token& t) : token(t) { }
+	Tokenable(const Tokenable& t) : token(t.token) { }
+	virtual ~Tokenable() { }
+	void operator = (const Tokenable& t) { token = t.token; }
+	Token token;
+};
+
 struct Type;
 struct Rule;
 
@@ -194,14 +203,14 @@ private:
 	}
 };
 
-struct Expr {
-	Expr() : tree(), symbols() { }
-	Expr(Symbol s) : type(s.type()), tree(), symbols() { symbols.push_back(s); }
-	Expr(const Symbols& ss) : tree(), symbols(ss) { }
-	Expr(const Expr& ex) : type(ex.type), tree(), symbols (ex.symbols) {
+struct Expr : public Tokenable {
+	Expr(const Token& t = Token()) : Tokenable(t), tree(), symbols() { }
+	Expr(Symbol s, const Token& t = Token()) : Tokenable(t), type(s.type()), tree(), symbols() { symbols.push_back(s); }
+	Expr(const Symbols& ss, const Token& t = Token()) : Tokenable(t), tree(), symbols(ss) { }
+	Expr(const Expr& ex) : Tokenable(ex), type(ex.type), tree(), symbols (ex.symbols) {
 		if (ex.tree) tree.reset(new Tree(*ex.tree));
 	}
-	Expr(Expr&& ex) : type(ex.type), tree(std::move(ex.tree)), symbols (std::move(ex.symbols)) { }
+	Expr(Expr&& ex) : Tokenable(ex.token), type(ex.type), tree(std::move(ex.tree)), symbols (std::move(ex.symbols)) { }
 
 	void operator = (const Expr& ex) {
 		type = ex.type;
@@ -239,7 +248,6 @@ struct Expr {
 	User<Type>       type;
 	unique_ptr<Tree> tree;
 	Symbols          symbols;
-	Token            token;
 };
 
 struct Rules {

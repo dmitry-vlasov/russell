@@ -7,7 +7,6 @@ namespace mdl { namespace mm {
 typedef mdl::Token<Source> Token;
 
 struct Tokenable {
-	Tokenable() { }
 	Tokenable(const Token& t) : token(t) { }
 	virtual ~Tokenable() { }
 	Token token;
