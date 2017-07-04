@@ -64,7 +64,8 @@ inline uint make_proof_id(uint id, const Theorem* th) {
 	} else return id;
 }
 
-Proof::Proof(Theorem* th, uint id) : Owner(make_proof_id(id, th)), thm(th), par(nullptr) {
+Proof::Proof(Theorem* th, uint id, const Token& t) :
+	Tokenable(t), Owner(make_proof_id(id, th)), thm(th), par(nullptr) {
 }
 Proof::~Proof() {
 	for (auto& e : elems) e.destroy();

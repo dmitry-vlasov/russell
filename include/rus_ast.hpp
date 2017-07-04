@@ -215,7 +215,7 @@ struct Qed : public Tokenable {
 	Step* step;
 };
 
-struct Proof : public Owner<Proof> {
+struct Proof : public Tokenable, public Owner<Proof> {
 	//typedef boost::variant<Step, Qed> Elem;
 
 	struct Elem {
@@ -241,14 +241,13 @@ struct Proof : public Owner<Proof> {
 		Value val;
 	};
 
-	Proof(Theorem* thm, uint id = -1);
+	Proof(Theorem* thm, uint id = -1, const Token& t = Token());
 	~ Proof();
 
 	Vars         vars;
 	vector<Elem> elems;
 	Theorem*     thm;
 	Proof*       par;
-	Token        token;
 };
 
 struct Node {

@@ -154,7 +154,6 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::rus::Theorem*, thm)
 	(mdl::rus::Proof*, par)
 	(bool, has_id)
-	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(

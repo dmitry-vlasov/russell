@@ -298,7 +298,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	qi::on_success(ref,       setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(step,      setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(qed,       setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
-	qi::on_success(proof,     setToken(phoenix::at_c<6>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(proof,     setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 
 	qi::on_success(axiom,   setToken(phoenix::at_c<0>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(theorem, setToken(phoenix::at_c<0>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
