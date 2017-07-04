@@ -26,12 +26,12 @@ void verify_step(const Step* st) {
 		throw Error("proposition unification failed", msg);
 	}
 	for (uint i = 0; i < ass->arity(); ++ i) {
-		Substitution* hs = unify(ass->hyps[i]->expr, st->refs[i].expr());
+		Substitution* hs = unify(ass->hyps[i]->expr, st->refs[i]->expr());
 		if (!hs) {
 			string msg = "\nhypothesis:\n";
 			msg += show(*ass->hyps[i]) + "\n";
 			msg += "ref expr:\n";
-			msg += show(st->refs[i].expr()) + "\n\n";
+			msg += show(st->refs[i]->expr()) + "\n\n";
 			msg += "step:\n";
 			msg += show(*st) + "\n\n";
 			msg += "theorem " + Lex::toStr(st->proof()->thm->ass.id()) + "\n";
@@ -43,7 +43,7 @@ void verify_step(const Step* st) {
 			string msg = "\nhypothesis:\n";
 			msg += show(*ass->hyps[i]) + "\n";
 			msg += "ref expr:\n";
-			msg += show(st->refs[i].expr()) + "\n\n";
+			msg += show(st->refs[i]->expr()) + "\n\n";
 			msg += "step:\n";
 			msg += show(*st) + "\n\n";
 			msg += "theorem " + Lex::toStr(st->proof()->thm->ass.id()) + "\n";

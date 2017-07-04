@@ -115,7 +115,7 @@ struct Theorem : public Assertion {
 	vector<User<Proof>> proofs;
 };
 
-struct Ref {
+struct Ref : public Tokenable {
 	enum Kind {
 		NONE,
 		HYP,
@@ -132,10 +132,10 @@ struct Ref {
 		Prop*  prop;
 		Step*  step;
 	};
-	Ref() : kind(NONE), val() { }
-	Ref(Hyp* h)   : kind(HYP),  val(h)  { }
-	Ref(Prop* p)  : kind(PROP), val(p)  { }
-	Ref(Step* s)  : kind(STEP), val(s)  { }
+	Ref(const Token& t = Token()) : Tokenable(t), kind(NONE), val() { }
+	Ref(Hyp* h, const Token& t = Token())  : Tokenable(t), kind(HYP),  val(h)  { }
+	Ref(Prop* p, const Token& t = Token()) : Tokenable(t), kind(PROP), val(p)  { }
+	Ref(Step* s, const Token& t = Token()) : Tokenable(t), kind(STEP), val(s)  { }
 	Expr& expr();
 	const Expr& expr() const;
 
@@ -178,9 +178,9 @@ struct Step {
 	uint ind() const { return ind_; }
 	void set_ind(uint ind) { ind_ = ind; }
 
-	Expr        expr;
-	vector<Ref> refs;
-	Token       token;
+	Expr         expr;
+	vector<Ref*> refs;
+	Token        token;
 
 private:
 	uint   ind_;

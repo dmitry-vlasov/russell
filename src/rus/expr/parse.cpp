@@ -17,8 +17,10 @@ struct Action {
 
 inline Action act(auto& n, auto& m, Symbols::iterator ch, const Expr* e) {
 	if (User<Rule>& r = (*n.top())->rule) {
-		if (r.get()->token < e->token) return Action(Action::RET, r.get());
-		else return Action::BREAK;
+		if (r.get()->token < e->token)
+			return Action(Action::RET, r.get());
+		else
+			return Action::BREAK;
 	} else if (ch->end)
 		return Action::BREAK;
 	else {
@@ -91,9 +93,16 @@ void parse_LL(Expr* ex) {
 	if (Tree* tree = parse_LL(it, ex->type.get(), ex)) {
 		ex->tree.reset(tree);
 	} else {
+		cout << "Source: " << Lex::toStr(ex->token.src->id()) << endl;
+		cout << endl << "includes: " << endl;
 		for (auto& s : ex->token.src->includes) {
 			cout << Lex::toStr(s.get()->id()) << endl;
 		}
+		cout << endl << endl << "included: " << endl;
+		for (auto& s : ex->token.src->included) {
+			cout << Lex::toStr(s.get()->id()) << endl;
+		}
+		parse_LL(it, ex->type.get(), ex);
 		throw Error("parsing error", string("expression: ") + show(*ex) + " at: " + ex->token.show());
 	}
 	//cout << "done" << endl;

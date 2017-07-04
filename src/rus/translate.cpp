@@ -178,11 +178,11 @@ vector<smm::Node> translate_def(const Def* ax, Maps& maps) {
 
 void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps);
 
-void translate_ref(Ref ref, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps) {
-	switch (ref.kind) {
-	case Ref::HYP:  smm_proof.push_back(new smm::Ref(maps.essentials[thm][ref.val.hyp])); break;
+void translate_ref(Ref* ref, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps) {
+	switch (ref->kind) {
+	case Ref::HYP:  smm_proof.push_back(new smm::Ref(maps.essentials[thm][ref->val.hyp])); break;
 	case Ref::PROP: break;
-	case Ref::STEP: translate_step(ref.val.step, thm, smm_proof, maps); break;
+	case Ref::STEP: translate_step(ref->val.step, thm, smm_proof, maps); break;
 	default : assert(false); break;
 	}
 }
@@ -219,7 +219,7 @@ void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref*>& smm
 	Substitution* ps = unify(ass->props[0]->expr, st->expr);
 	if (!ps) throw Error("proposition unification failed");
 	for (uint i = 0; i < ass->arity(); ++ i) {
-		Substitution* hs = unify(ass->hyps[i]->expr, st->refs[i].expr());
+		Substitution* hs = unify(ass->hyps[i]->expr, st->refs[i]->expr());
 		if (!hs) throw Error("hypothesis unification failed");
 		if (!ps->join(hs)) throw Error("substitution join failed");
 		delete hs;

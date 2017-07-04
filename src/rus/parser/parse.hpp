@@ -280,14 +280,14 @@ struct NewDisjSet {
 struct CreateStepRef {
 	template <typename T1, typename T2, typename T3>
 	struct result { typedef void Ref; };
-	Ref operator()(uint ind, Proof* p, Ref::Kind k) const {
+	Ref* operator()(uint ind, Proof* p, Ref::Kind k) const {
 		switch (k) {
-		case Ref::HYP:  return Ref(p->thm->ass.hyps[ind]);
-		case Ref::PROP: return Ref(p->thm->ass.props[ind]);
-		case Ref::STEP: return Ref(p->elems[ind].val.step);
+		case Ref::HYP:  return new Ref(p->thm->ass.hyps[ind]);
+		case Ref::PROP: return new Ref(p->thm->ass.props[ind]);
+		case Ref::STEP: return new Ref(p->elems[ind].val.step);
 		default : assert(false && "impossible"); break;
 		}
-		return Ref();
+		return nullptr;
 	}
 };
 
@@ -385,9 +385,9 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, Vars(), qi::locals<Symbol>, unicode::space_type> vars;
 	qi::rule<Iterator, Hyp*(), qi::locals<uint>, unicode::space_type> hyp;
 	qi::rule<Iterator, Prop*(), qi::locals<uint>, unicode::space_type> prop;
-	qi::rule<Iterator, Ref(Proof*), unicode::space_type> ref;
-	qi::rule<Iterator, vector<Ref>(Proof*), unicode::space_type> refs;
-	qi::rule<Iterator, Step*(Proof*), qi::locals<uint, uint, Step::Kind, Assertion::Kind, uint, vector<Ref>>, unicode::space_type> step;
+	qi::rule<Iterator, Ref*(Proof*), unicode::space_type> ref;
+	qi::rule<Iterator, vector<Ref*>(Proof*), unicode::space_type> refs;
+	qi::rule<Iterator, Step*(Proof*), qi::locals<uint, uint, Step::Kind, Assertion::Kind, uint, vector<Ref*>>, unicode::space_type> step;
 	qi::rule<Iterator, Qed*(Proof*), qi::locals<uint>, unicode::space_type> qed;
 	qi::rule<Iterator, Proof::Elem(Proof*), unicode::space_type> proof_elem;
 	qi::rule<Iterator, void(Proof*), unicode::space_type> proof_body;

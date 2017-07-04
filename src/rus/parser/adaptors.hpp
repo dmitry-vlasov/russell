@@ -121,7 +121,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::rus::Expr, expr)
 	(mdl::rus::Step::Kind, kind)
 	(mdl::rus::Step::Value, val)
-	(mdl::vector<mdl::rus::Ref>, refs)
+	(mdl::vector<mdl::rus::Ref*>, refs)
 	(mdl::rus::Proof*, proof)
 	(mdl::rus::Token, token)
 )

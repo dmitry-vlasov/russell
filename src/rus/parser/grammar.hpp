@@ -103,14 +103,13 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		             [phoenix::at_c<1>(*_val) = qi::labels::_1]
 		> lit(END_MARKER);
 
+	ref =
+		("hyp"  > uint_ [_val = createStepRef(qi::labels::_1 - 1, _r1, val(Ref::HYP))])  |
+		("prop" > uint_ [_val = createStepRef(qi::labels::_1 - 1, _r1, val(Ref::PROP))]) |
+		("step" > uint_ [_val = createStepRef(qi::labels::_1 - 1, _r1, val(Ref::STEP))]);
+
 	refs =
-		lit("(")
-		> - ((
-			("hyp"  > uint_ [push_back(_val, createStepRef(qi::labels::_1 - 1, _r1, val(Ref::HYP)))])  |
-			("prop" > uint_ [push_back(_val, createStepRef(qi::labels::_1 - 1, _r1, val(Ref::PROP)))]) |
-			("step" > uint_ [push_back(_val, createStepRef(qi::labels::_1 - 1, _r1, val(Ref::STEP)))])
-		) % ",")
-		> ")";
+		lit("(") > - (ref(_r1) [push_back(_val, qi::labels::_1)] % ",") > ")";
 
 	step =
 		uint_ [_a = qi::labels::_1 - 1] > ":" > id [_b = qi::labels::_1] > "="
@@ -296,6 +295,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	qi::on_success(rule,      setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(hyp,       setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(prop,      setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
+	qi::on_success(ref,       setToken(*_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(step,      setToken(phoenix::at_c<6>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(qed,       setToken(phoenix::at_c<2>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(proof,     setToken(phoenix::at_c<6>(*_val), qi::labels::_1, qi::labels::_3, phoenix::val(src)));

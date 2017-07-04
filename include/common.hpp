@@ -481,6 +481,14 @@ struct Source : public Owner<Src, Sys> {
 		for (auto& s : src->includes) includes.insert(s);
 		src->included.insert(dynamic_cast<Src*>(this));
 		for (auto s : src->included) s.get()->included.insert(dynamic_cast<Src*>(this));
+		for (auto& s : included) {
+			Src* des = const_cast<Src*>(s.get());
+			for (auto& d : src->includes) {
+				Src* ded = const_cast<Src*>(d.get());
+				des->included.insert(ded);
+				ded->includes.insert(des);
+			}
+		}
 	}
 };
 

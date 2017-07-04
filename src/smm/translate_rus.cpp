@@ -159,7 +159,7 @@ inline
 void translate_super(const Assertion* ass, State& state) {
 	Symbol super_sy = ass->prop->expr[0];
 	Symbol infer_sy = ass->floating[0]->type();
-	assert(ass->prop.expr[1] == ass->floating[0]->var());
+	assert(ass->prop->expr[1] == ass->floating[0]->var());
 	rus::Type* super = translate_type(super_sy, state);
 	rus::Type* infer = translate_type(infer_sy, state);
 	infer->sup.push_back(super);
@@ -377,10 +377,10 @@ rus::Proof::Elem translate_step(Tree* tree, rus::Proof* proof, rus::Theorem* thm
 		Tree* t = n.val.tree;
 		Tree::Node& h = t->nodes.back();
 		assert(h.type == Tree::Node::REF);
-		rus::Ref hr =
+		rus::Ref* hr =
 			h.val.ref->is_assertion() ?
-			rus::Ref(translate_step(t, proof, thm, state, a).val.step) :
-			rus::Ref(thm->ass.hyps[h.val.ref->index()]);
+			new rus::Ref(translate_step(t, proof, thm, state, a).val.step) :
+			new rus::Ref(thm->ass.hyps[h.val.ref->index()]);
 		el.val.step->refs.push_back(hr);
 	}
 	el.val.step->set_ind(elems.size());

@@ -54,6 +54,7 @@ Step::Step(uint i, Step::Kind sk, Assertion::Kind ak, uint id, Proof* p) :
 }
 Step::~Step() {
 	if (kind_ == ASS) delete val_.ass;
+	for (Ref* ref : refs) delete ref;
 }
 
 inline uint make_proof_id(uint id, const Theorem* th) {
