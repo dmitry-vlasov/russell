@@ -143,7 +143,7 @@ struct Ref : public Tokenable {
 	Value val;
 };
 
-struct Step {
+struct Step : public Tokenable {
 	enum Kind {
 		NONE,
 		ASS,
@@ -155,7 +155,7 @@ struct Step {
 		Proof*           prf;
 	};
 
-	Step(uint ind, Step::Kind, Assertion::Kind, uint id, Proof* proof);
+	Step(uint ind, Step::Kind, Assertion::Kind, uint id, Proof* proof, const Token& t = Token());
 	~Step();
 
 	Assertion* ass() {
@@ -180,7 +180,6 @@ struct Step {
 
 	Expr         expr;
 	vector<Ref*> refs;
-	Token        token;
 
 private:
 	uint   ind_;
@@ -209,10 +208,11 @@ inline const Expr& Ref::expr() const {
 	return val.step->expr;
 }
 
-struct Qed {
+struct Qed : public Tokenable {
+	Qed(Prop* p = nullptr, Step* s = nullptr, const Token& t = Token()) :
+		Tokenable(t), prop(p), step(s) { }
 	Prop* prop;
 	Step* step;
-	Token token;
 };
 
 struct Proof : public Owner<Proof> {

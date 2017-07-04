@@ -397,7 +397,7 @@ void translate_proof(const Assertion* ass, rus::Theorem* thm, State& state) {
 	translate_step(tree, p, thm, state, ass);
 	rus::Prop* pr = thm->ass.props.front();
 	rus::Step* st = p->elems.back().val.step;
-	p->elems.push_back(new rus::Qed{pr, st});
+	p->elems.push_back(new rus::Qed(pr, st));
 	state.theory.top()->nodes.push_back(p);
 	delete tree;
 }

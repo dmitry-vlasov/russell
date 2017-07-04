@@ -123,14 +123,12 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::rus::Step::Value, val)
 	(mdl::vector<mdl::rus::Ref*>, refs)
 	(mdl::rus::Proof*, proof)
-	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
 	mdl::rus::Qed,
 	(mdl::rus::Prop*, prop)
 	(mdl::rus::Step*, step)
-	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(

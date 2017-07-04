@@ -25,8 +25,8 @@ Axiom::Axiom(uint id, const Token& t) : Assertion(id, t) { }
 Theorem::Theorem(uint id, const Token& t) : Assertion(id, t) { }
 Def::Def(uint id, const Token& t) : Assertion(id, t) { }
 
-Step::Step(uint i, Step::Kind sk, Assertion::Kind ak, uint id, Proof* p) :
-	ind_(i), kind_(sk), proof_(p) {
+Step::Step(uint i, Step::Kind sk, Assertion::Kind ak, uint id, Proof* p, const Token& t) :
+	Tokenable(t), ind_(i), kind_(sk), proof_(p) {
 	Math& math = Sys::mod().math;
 	if (!math.get<Assertion>().has(id)) {
 		throw Error("unknown assertion", Lex::toStr(id));
