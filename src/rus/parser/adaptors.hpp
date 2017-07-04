@@ -188,7 +188,6 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(mdl::uint, id)
 	(mdl::vector<mdl::rus::Node>, nodes)
 	(mdl::rus::Theory*, parent)
-	(mdl::rus::Token, token)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(

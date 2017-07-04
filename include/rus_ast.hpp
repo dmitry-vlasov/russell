@@ -298,20 +298,22 @@ struct Node {
 };
 
 struct Import : public Tokenable {
-	Import(uint src, bool prim, const Token& t = Token()) : Tokenable(t), source(src), primary(prim) { }
+	Import(uint src, bool prim, const Token& t = Token()) :
+		Tokenable(t), source(src), primary(prim) { }
 	User<Source> source;
 	bool         primary;
 };
 
-struct Theory {
-	Theory() : id(-1), nodes(), parent(nullptr) { }
-	Theory(uint n, Theory* p) : id(n), nodes(), parent(p) { }
+struct Theory : public Tokenable {
+	Theory(const Token& t = Token()) :
+		Tokenable(t), id(-1), nodes(), parent(nullptr) { }
+	Theory(uint n, Theory* p, const Token& t = Token()) :
+		Tokenable(t), id(n), nodes(), parent(p) { }
 	~ Theory() { for (auto& n : nodes) n.destroy(); }
 
 	uint         id;
 	vector<Node> nodes;
 	Theory*      parent;
-	Token        token;
 };
 
 struct Source : public mdl::Source<Source, Sys> {
