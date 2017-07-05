@@ -2,8 +2,8 @@
 
 namespace mdl { namespace smm {
 
-Ref::Ref(uint label, bool ax) : type_(ax ? AXIOM : THEOREM) {
-	val_.ass = new User<Assertion>(label);
+Ref::Ref(uint label, bool ax, const Token& t) : type_(ax ? AXIOM : THEOREM) {
+	val_.ass = new User<Assertion>(label, t);
 }
 Ref::Ref(const Ref& ref) : type_(ref.type_) {
 	switch (type_) {

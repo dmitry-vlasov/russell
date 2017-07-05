@@ -184,8 +184,8 @@ public:
 			case Ref::Type::ESSENTIAL : check_vector(c.essential, lab); return new Ref(c.essential[lab]);
 			case Ref::Type::FLOATING  : check_vector(c.floating, lab);  return new Ref(c.floating[lab]);
 			case Ref::Type::INNER     : check_vector(c.inner, lab);     return new Ref(c.inner[lab]);
-			case Ref::Type::AXIOM     : check_table(math.get<Assertion>(), lab);  return new Ref(lab, true);
-			case Ref::Type::THEOREM   : check_table(math.get<Assertion>(), lab);  return new Ref(lab, false);
+			case Ref::Type::AXIOM     : check_table(math.get<Assertion>(), lab);  return new Ref(lab, true, c.token(sv));
+			case Ref::Type::THEOREM   : check_table(math.get<Assertion>(), lab);  return new Ref(lab, false, c.token(sv));
 			default  : throw Error("unknown reference type in proof", sv.token());
 			}
 		};
@@ -240,7 +240,7 @@ public:
 			const bool primary = !Sys::get().math.get<Source>().has(id);
 			Source* src = primary ? parse(id) : Sys::mod().math.get<Source>().access(id);
 			c.source->include(src);
-			return new Inclusion(id, primary);
+			return new Inclusion(id, primary, c.token(sv));
 		};
 		parser.log = [label](size_t ln, size_t col, const std::string& err_msg) {
 			std::stringstream ss;

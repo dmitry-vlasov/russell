@@ -80,7 +80,7 @@ struct Ref {
 	Ref(Floating* f)  : type_(FLOATING)  { val_.flo = f; }
 	Ref(Essential* e) : type_(ESSENTIAL) { val_.ess = e; }
 	Ref(Inner* i)     : type_(INNER)     { val_.inn = i; }
-	Ref(uint label, bool ax);
+	Ref(uint label, bool ax, const Token& t = Token());
 	Ref(const Ref& ref);
 	~Ref();
 
@@ -138,7 +138,7 @@ struct Comment {
 class Source;
 
 struct Inclusion {
-	Inclusion(uint s, bool p) : source(s), primary(p) { }
+	Inclusion(uint s, bool p, const Token& t = Token()) : source(s, t), primary(p) { }
 	User<Source> source;
 	bool         primary;
 	Token        token;
