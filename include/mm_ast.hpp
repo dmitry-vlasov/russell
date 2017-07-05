@@ -55,7 +55,7 @@ struct Theorem : public Owner<Theorem> {
 struct Ref {
 	enum Type { FLOATING, ESSENTIAL, AXIOM, THEOREM };
 
-	Ref(uint label);
+	Ref(uint label, const Token& t = Token());
 	Ref(const Ref&);
 	~Ref();
 
@@ -211,7 +211,7 @@ struct Source : public mdl::Source<Source, Sys> {
 };
 
 struct Inclusion {
-	Inclusion(uint src, bool prim);
+	Inclusion(uint src, bool prim, const Token& t = Token());
 	User<Source> source;
 	bool         primary;
 	Token        token;

@@ -121,8 +121,9 @@ public:
 		parser["PROOF"] = [](const peg::SemanticValues& sv) {
 			return new Proof(std::move(sv.transform<Ref*>()));
 		};
-		parser["REF"] = [](const peg::SemanticValues& sv) {
-			return new Ref(sv[0].get<uint>());
+		parser["REF"] = [](const peg::SemanticValues& sv, peg::any& context) {
+			Context& c = *context.get<Context*>();
+			return new Ref(sv[0].get<uint>(), c.token(sv));
 		};
 		parser["COMMENT"] = [](const peg::SemanticValues& sv) {
 			string text = sv.token();
@@ -191,7 +192,7 @@ public:
 			const bool primary = !Sys::get().math.get<Source>().has(id);
 			Source* src = primary ? parse(id, &c) : Sys::mod().math.get<Source>().access(id);
 			c.source_stack.top()->include(src);
-			return new Inclusion(id, primary);
+			return new Inclusion(id, primary, c.token(sv));
 		};
 		parser.log = [label](size_t ln, size_t col, const std::string& err_msg) {
 			std::stringstream ss;
