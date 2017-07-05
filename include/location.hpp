@@ -132,6 +132,7 @@ struct Token {
 	}
 
 	bool is_defined() const { return src && beg && end; }
+	string str() const { return string(beg, end); }
 };
 
 template<class S>

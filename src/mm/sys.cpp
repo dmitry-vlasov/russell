@@ -81,6 +81,11 @@ Return options(const vector<string>& args) {
 	return Sys::conf().read(args);
 }
 
+Return lookup(uint src, uint line, uint col) {
+	Tokenable* def = Refs<Sys>::find(src, line, col);
+	return def ? Return("definition found", def->token.str()) : Return("definition not found", false);
+}
+
 static Descr description(string name) {
 	static const map<string, Descr> m = {
 		{"read",   Descr("read the source",      Descr::Arg("in", "file"))},
@@ -90,7 +95,8 @@ static Descr description(string name) {
 		{"info",   Descr("info about math")},
 		{"show",   Descr("show entity")},
 		{"cut",    Descr("cut the source",       Descr::Arg("in", "file"), Descr::Arg("out", "file"), Descr::Arg("out-root", "dir"))},
-		{"merge",  Descr("merge the source",     Descr::Arg("in", "file"), Descr::Arg("out", "file"), Descr::Arg("out-root", "dir"))}
+		{"merge",  Descr("merge the source",     Descr::Arg("in", "file"), Descr::Arg("out", "file"), Descr::Arg("out-root", "dir"))},
+		{"lookup", Descr("lookup a symbol def",  Descr::Arg("in", "file"), Descr::Arg("line", "row"), Descr::Arg("col", "column"))}
 	};
 	return m.count(name) ? m.at(name) : Descr();
 }
@@ -109,7 +115,8 @@ const Sys::Actions& Sys::actions() {
 		{"show",   Action([](const Args& args) { return Return(show()); }, description("show"))},
 		{"cut",    Action([](const Args& args) { cut(Sys::make_name(args[0]), Sys::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("cut"))},
 		{"merge",  Action([](const Args& args) { merge(Sys::make_name(args[0]), Sys::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("merge"))},
-		{"opts",   Action([](const Args& args) { conf().read(args); return Return(); }, conf().descr())}
+		{"opts",   Action([](const Args& args) { conf().read(args); return Return(); }, conf().descr())},
+		{"lookup", Action([](const Args& args) { Return ret = lookup(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2])); return ret; }, description("lookup"))},
 	};
 	return actions;
 }

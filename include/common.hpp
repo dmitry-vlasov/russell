@@ -437,9 +437,11 @@ public:
 	static void del(const Token_& t) {
 		refs().erase(t);
 	}
-	static Tokenable_* find(Src* s, const char* c) {
+	static Tokenable_* find(uint src, const uint line, const uint col) {
+		Src* s = Sys::mod().math.template get<Src>().access(src);
+		const char* c = locate_position(line, col, s->data.c_str());
 		Token_ t(s, c, c);
-		return refs().count(t) ? refs.at(t).ptr : nullptr;
+		return refs().count(t) ? refs().at(t)->ptr : nullptr;
 	}
 
 private:

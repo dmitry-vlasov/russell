@@ -79,6 +79,11 @@ Return options(const vector<string>& args) {
 	return Sys::conf().read(args);
 }
 
+Return lookup(uint src, uint line, uint col) {
+	Tokenable* def = Refs<Sys>::find(src, line, col);
+	return def ? Return("definition found", def->token.str()) : Return("definition not found", false);
+}
+
 static Descr description(string name) {
 	static const map<string, Descr> m = {
 		{"read",   Descr("read the source",      Descr::Arg("in", "file"))},
@@ -88,6 +93,7 @@ static Descr description(string name) {
 		{"verify", Descr("verify all theorems",  Descr::Arg("in", "file"))},
 		{"info",   Descr("info about math")},
 		{"show",   Descr("show entity")},
+		{"lookup", Descr("lookup a symbol def",  Descr::Arg("in", "file"), Descr::Arg("line", "row"), Descr::Arg("col", "column"))},
 	};
 	return m.count(name) ? m.at(name) : Descr();
 }
@@ -105,7 +111,8 @@ const Sys::Actions& Sys::actions() {
 		{"write",  Action([](const Args& args) { write(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
 		{"info",   Action([](const Args& args) { return Return(info()); }, description("info"))},
 		{"show",   Action([](const Args& args) { return Return(show()); }, description("show"))},
-		{"opts",   Action([](const Args& args) { conf().read(args); return Return(); }, conf().descr())}
+		{"opts",   Action([](const Args& args) { conf().read(args); return Return(); }, conf().descr())},
+		{"lookup", Action([](const Args& args) { Return ret = lookup(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2])); return ret; }, description("lookup"))}
 	};
 	return actions;
 }
