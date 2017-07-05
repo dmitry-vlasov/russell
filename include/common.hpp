@@ -403,16 +403,21 @@ public:
 };
 
 template<class T, class S>
-class User {
+class User : public Tokenable<typename S::Src> {
 	uint sys_;
 	uint id_;
-	T* ptr;
+	T*   ptr;
 public:
 	typedef S Sys;
-	explicit User(uint id = -1)  : sys_(-1), id_(-1), ptr(nullptr) { use(id); }
-	User(const T* p)    : sys_(-1), id_(-1), ptr(nullptr) { if (p) use(p->id()); }
-	User(const User& u) : User(u.id()) { }
-	User(User&& u)      : User(u.id()) { u.unuse(); }
+	typedef typename S::Src Src;
+	explicit User() :
+		Tokenable<Src>(Token<Src>()), sys_(-1), id_(-1), ptr(nullptr) { }
+	explicit User(uint id, const Token<Src>& t = Token<Src>()) :
+		Tokenable<Src>(t), sys_(-1), id_(-1), ptr(nullptr) { use(id); }
+	User(const T* p, const Token<Src>& t = Token<Src>()) :
+		Tokenable<Src>(t), sys_(-1), id_(-1), ptr(nullptr) { if (p) use(p->id()); }
+	User(const User& u) : User(u.id(), u.token) { }
+	User(User&& u)      : User(u.id(), u.token) { u.unuse(); }
 	~User() { unuse(); }
 	void operator = (const T* p)    { use(p->id()); }
 	void operator = (const User& u) { use(u.id()); }
