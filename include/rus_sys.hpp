@@ -38,6 +38,7 @@ public:
 };
 
 struct Sys : public mdl::Sys<Sys, Math> {
+	typedef Source Src;
 	Sys(uint id) : mdl::Sys<Sys, Math>(id) { }
 	static string descr() { return "rus"; }
 	static string lang() { return "rus"; }

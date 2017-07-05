@@ -7,8 +7,8 @@ namespace mdl { namespace smm {
 typedef mdl::Token<Source> Token;
 typedef mdl::Tokenable<Source> Tokenable;
 
-struct Constant : public Tokenable, Owner<Constant> {
-	Constant (Symbol s, const Token& t = Token()) : Tokenable(t), Owner(s.lit), symb(s) { }
+struct Constant : public Owner<Constant> {
+	Constant (Symbol s, const Token& t = Token()) : Owner(s.lit, t), symb(s) { }
 	Symbol symb;
 };
 
@@ -54,9 +54,9 @@ struct Proposition : public Tokenable {
 
 struct Proof;
 
-struct Assertion : public Tokenable, public Owner<Assertion> {
+struct Assertion : public Owner<Assertion> {
 	Assertion (uint label, const Token& t = Token()) :
-		Tokenable(t), Owner(label), prop(nullptr), proof(nullptr) { }
+		Owner(label, t), prop(nullptr), proof(nullptr) { }
 	~Assertion() override;
 
 	uint arity() const {

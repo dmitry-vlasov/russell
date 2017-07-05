@@ -22,29 +22,29 @@ struct Disjointed : public Tokenable {
 	Vect  expr;
 };
 
-struct Essential : public Tokenable, public Owner<Essential> {
-	Essential(uint l, const Vect& e, const Token& t = Token()) : Tokenable(t), Owner(l), expr(e) { }
+struct Essential : public Owner<Essential> {
+	Essential(uint l, const Vect& e, const Token& t = Token()) : Owner(l, t), expr(e) { }
 	Vect  expr;
 };
 
-struct Floating : public Tokenable, public Owner<Floating> {
-	Floating(uint l, const Vect& e, const Token& t = Token()) : Tokenable(t), Owner(l), expr(e) { }
+struct Floating : public Owner<Floating> {
+	Floating(uint l, const Vect& e, const Token& t = Token()) : Owner(l, t), expr(e) { }
 	Symbol type() const { return expr[0]; }
 	Symbol var() const { return expr[1]; }
 	Vect  expr;
 };
 
-struct Axiom : public Tokenable, public Owner<Axiom> {
-	Axiom(uint l, const Vect& e, const Token& t = Token()) : Tokenable(t), Owner(l), expr(e), arity(-1) { }
+struct Axiom : public Owner<Axiom> {
+	Axiom(uint l, const Vect& e, const Token& t = Token()) : Owner(l, t), expr(e), arity(-1) { }
 	Vect  expr;
 	uint  arity;
 };
 
 class Proof;
 
-struct Theorem : public Tokenable, public Owner<Theorem> {
+struct Theorem : public Owner<Theorem> {
 	Theorem(uint l, const Vect& e, Proof* p = nullptr, const Token& t = Token()) :
-		Tokenable(t), Owner(l), expr(e), arity(Undef<uint>::get()), proof(p) { }
+		Owner(l, t), expr(e), arity(Undef<uint>::get()), proof(p) { }
 	~Theorem() override;
 	Vect   expr;
 	uint   arity;

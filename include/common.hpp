@@ -388,12 +388,15 @@ public:
 };
 
 template<class T, class S>
-class Owner {
+class Owner : public Tokenable<typename S::Src> {
 	const uint sys_;
 	const uint id_;
 public:
 	typedef S Sys;
-	Owner(uint i) : sys_(Sys::get().id), id_(i) { Sys::mod().math.template get<T>().add(id_, static_cast<T*>(this)); }
+	typedef typename S::Src Src;
+	Owner(uint i, const Token<Src>& t) : Tokenable<Src>(t), sys_(Sys::get().id), id_(i) {
+		Sys::mod().math.template get<T>().add(id_, static_cast<T*>(this));
+	}
 	virtual ~Owner() { Sys::mod(sys_).math.template get<T>().del(id_); }
 	uint id() const { return id_; }
 	uint sys() const { return sys_; }
@@ -451,7 +454,7 @@ template<class Src, class Sys>
 struct Source : public Owner<Src, Sys> {
 	typedef Owner<Src, Sys> Owner_;
 	typedef User<Src, Sys> User_;
-	Source(uint l) : Owner<Src, Sys>(l) { }
+	Source(uint l) : Owner<Src, Sys>(l, Token<Src>()) { }
 	virtual ~Source() { }
 
 	string data;

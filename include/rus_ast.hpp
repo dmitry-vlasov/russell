@@ -17,11 +17,11 @@ struct Comment : public Tokenable {
 	string text;
 };
 
-struct Const : public Tokenable, Owner<Const> {
+struct Const : Owner<Const> {
 	Const(uint s, uint a, uint l, const Token& t = Token()) :
-		Tokenable(t), Owner(s), symb(s), ascii(a), latex(l) { }
+		Owner(s, t), symb(s), ascii(a), latex(l) { }
 	Const(const Const& c) :
-		Tokenable(c), Owner(c.id()), symb(c.symb), ascii(c.ascii), latex(c.latex) { }
+		Owner(c.id(), c.token), symb(c.symb), ascii(c.ascii), latex(c.latex) { }
 	uint  symb;
 	uint  ascii;
 	uint  latex;
@@ -43,7 +43,7 @@ struct Disj : public Tokenable {
 void parse_expr(Expr& ex);
 void parse_term(Expr& ex, Rule* rule);
 
-struct Type : public Tokenable, public Owner<Type> {
+struct Type : public Owner<Type> {
 	typedef map<const Type*, Rule*> Supers;
 	Type(uint id, const Token& t = Token());
 	Type(uint id, const vector<Type*>& sup, const Token& t = Token());
@@ -53,7 +53,7 @@ struct Type : public Tokenable, public Owner<Type> {
 	Rules rules;
 };
 
-struct Rule : public Tokenable, public Owner<Rule> {
+struct Rule : public Owner<Rule> {
 	Rule(uint id, uint tp, const Token& t = Token());
 	Rule(uint id, uint tp, const Vars& v, const Token& t = Token());
 	User<Type> type;
@@ -78,7 +78,7 @@ struct Prop : public Tokenable {
 	Expr  expr;
 };
 
-struct Assertion : public Tokenable, public Owner<Assertion> {
+struct Assertion : public Owner<Assertion> {
 	enum Kind {
 		AXM,
 		THM,
@@ -215,7 +215,7 @@ struct Qed : public Tokenable {
 	Step* step;
 };
 
-struct Proof : public Tokenable, public Owner<Proof> {
+struct Proof : public Owner<Proof> {
 	//typedef boost::variant<Step, Qed> Elem;
 
 	struct Elem {

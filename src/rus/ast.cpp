@@ -2,8 +2,8 @@
 
 namespace mdl { namespace rus {
 
-Type::Type(uint i, const Token& t) : Tokenable(t), Owner(i) { }
-Type::Type(uint i, const vector<Type*>& s, const Token& t) : Tokenable(t), Owner(i) {
+Type::Type(uint i, const Token& t) : Owner(i, t) { }
+Type::Type(uint i, const vector<Type*>& s, const Token& t) : Owner(i, t) {
 	for (auto t : s) sup.push_back(t);
 }
 Type::~Type() {
@@ -11,11 +11,11 @@ Type::~Type() {
 }
 
 Rule::Rule(uint id, uint tp, const Token& t) :
-	Tokenable(t), Owner(id), type(tp) { }
+	Owner(id, t), type(tp) { }
 Rule::Rule(uint id, uint tp, const Vars& v, const Token& t) :
-	Tokenable(t), Owner(id), type(tp), vars(v) { }
+	Owner(id, t), type(tp), vars(v) { }
 
-Assertion::Assertion(uint i, const Token& t) : Tokenable(t), Owner(i) { }
+Assertion::Assertion(uint i, const Token& t) : Owner(i, t) { }
 Assertion::~Assertion() {
 	for (auto h : hyps) delete h;
 	for (auto p : props) delete p;
@@ -65,7 +65,7 @@ inline uint make_proof_id(uint id, const Theorem* th) {
 }
 
 Proof::Proof(Theorem* th, uint id, const Token& t) :
-	Tokenable(t), Owner(make_proof_id(id, th)), thm(th), par(nullptr) {
+	Owner(make_proof_id(id, th), t), thm(th), par(nullptr) {
 }
 Proof::~Proof() {
 	for (auto& e : elems) e.destroy();
