@@ -17,7 +17,7 @@ struct Action {
 
 inline Action act(auto& n, auto& m, Symbols::iterator ch, const Expr* e) {
 	if (User<Rule>& r = (*n.top())->rule) {
-		if (r.get()->token < e->token)
+		if (r.get()->token.preceeds(e->token))
 			return Action(Action::RET, r.get());
 		else
 			return Action::BREAK;

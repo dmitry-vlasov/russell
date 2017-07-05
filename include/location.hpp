@@ -117,13 +117,11 @@ struct Token {
 	const char* beg;
 	const char* end;
 
-	bool operator < (const char* c) const { return c < beg; }
-	bool operator <= (const char* c) const { return c <= end; }
-	bool operator > (const char* c) const { return c > end; }
-	bool operator >= (const char* c) const { return c >= beg; }
-	bool operator == (const char* c) const { return beg <= c && c <= end; }
-	bool operator != (const char* c) const { return !operator == (c); }
-
+	bool preceeds (const Token<S>& t) {
+		if (t.src->includes.count(src)) return true;
+		if (t.src == src) return end < t.beg;
+		return false;
+	}
 
 	string show() const {
 		LocationIter b (src->data.begin(), src->id());
@@ -132,15 +130,13 @@ struct Token {
 		while (x != e) ++x;
 		return x.loc.show();
 	}
+
+	bool is_defined() const { return src && beg && end; }
 };
 
 template<class S>
-inline bool operator < (const Token<S>& r, const Token<S>& e) {
-	S* r_src = r.src;
-	S* e_src = e.src;
-	if (e_src->includes.count(r_src)) return true;
-	if (e_src == r_src) return r.end < e.beg;
-	return false;
+inline bool operator < (const Token<S>& l, const Token<S>& r) {
+	return l.end < r.beg;
 }
 
 template<class S>
