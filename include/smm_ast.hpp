@@ -5,12 +5,7 @@
 namespace mdl { namespace smm {
 
 typedef mdl::Token<Source> Token;
-
-struct Tokenable {
-	Tokenable(const Token& t) : token(t) { }
-	virtual ~Tokenable() { }
-	Token token;
-};
+typedef mdl::Tokenable<Source> Tokenable;
 
 struct Constant : public Tokenable, Owner<Constant> {
 	Constant (Symbol s, const Token& t = Token()) : Tokenable(t), Owner(s.lit), symb(s) { }

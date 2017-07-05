@@ -7,15 +7,7 @@ namespace mdl { namespace rus {
 #define END_MARKER ";;"
 
 typedef mdl::Token<Source> Token;
-
-struct Tokenable {
-	Tokenable() { }
-	Tokenable(const Token& t) : token(t) { }
-	Tokenable(const Tokenable& t) : token(t.token) { }
-	virtual ~Tokenable() { }
-	void operator = (const Tokenable& t) { token = t.token; }
-	Token token;
-};
+typedef mdl::Tokenable<Source> Tokenable;
 
 struct Type;
 struct Rule;

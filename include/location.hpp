@@ -144,6 +144,15 @@ inline bool operator < (const Token<S>& r, const Token<S>& e) {
 }
 
 template<class S>
+struct Tokenable {
+	Tokenable(const Token<S>& t) : token(t) { }
+	Tokenable(const Tokenable& t) : token(t.token) { }
+	virtual ~Tokenable() { }
+	void operator = (const Tokenable& t) { token = t.token; }
+	Token<S> token;
+};
+
+template<class S>
 struct TokenIter : public string::const_iterator {
 	typedef S Source;
 	TokenIter(const TokenIter& it) :
