@@ -117,6 +117,14 @@ struct Token {
 	const char* beg;
 	const char* end;
 
+	bool operator < (const char* c) const { return c < beg; }
+	bool operator <= (const char* c) const { return c <= end; }
+	bool operator > (const char* c) const { return c > end; }
+	bool operator >= (const char* c) const { return c >= beg; }
+	bool operator == (const char* c) const { return beg <= c && c <= end; }
+	bool operator != (const char* c) const { return !operator == (c); }
+
+
 	string show() const {
 		LocationIter b (src->data.begin(), src->id());
 		LocationIter e (string::const_iterator(beg), src->id());
@@ -173,6 +181,15 @@ private :
 		else ++ loc.col;
 	}
 };
+
+inline const char* locate_position(const uint line, const uint col, const char* src) {
+	uint l = 0, c = 0;
+	while (src) {
+		if (*src++ == '\n') { ++l; c = 0; } else ++c;
+		if (l == line && c == col) return src;
+	}
+	return nullptr;
+}
 
 inline ostream& operator << (ostream& os, const Location& loc) {
 	os << "file: " << Lex::toStr(loc.file) << " ";

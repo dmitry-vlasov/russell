@@ -76,15 +76,6 @@ inline string showmem(size_t s) {
 	else         return to_string(b)  + " b";
 }
 
-inline const char* locate_position(const uint line, const uint col, const char* src) {
-	uint l = 0, c = 0;
-	while (src) {
-		if (*src++ == '\n') { ++l; c = 0; } else ++c;
-		if (l == line && c == col) return src;
-	}
-	return nullptr;
-}
-
 template<class T>
 void deep_write(const T* target, auto get_cont, auto get_inc, auto is_inc) {
 	typedef T Source;
