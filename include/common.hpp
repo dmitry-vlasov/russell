@@ -456,9 +456,13 @@ public:
 	typedef S Sys;
 	typedef typename S::Src Src;
 	typedef Refs<Sys> Refs_;
-	typedef Tokenable<typename S::Src> Tokenable_;
+	typedef Tokenable<Src> Tokenable_;
+	typedef Id<Src> Id_;
 	explicit User() : Tokenable_(Token<Src>()) { }
+
 	explicit User(uint id, const Token<Src>& t = Token<Src>()) : Tokenable_(t) { use(id); }
+	explicit User(Id_ i) : Tokenable_(i.token) { use(i.id); }
+
 	User(const T* p, const Token<Src>& t = Token<Src>()) : Tokenable_(t) { if (p) use(p->id()); }
 	User(const User& u) : User(u.id(), u.token) { }
 	User(User&& u)      : User(u.id(), u.token) { u.unuse(); }

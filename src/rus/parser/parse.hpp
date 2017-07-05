@@ -177,8 +177,8 @@ struct SymbToInt {
 
 struct IdToInt {
 	template <typename T>
-	struct result { typedef uint type; };
-	uint operator()(const std::vector<uint>& id) const {
+	struct result { typedef Id type; };
+	Id operator()(const std::vector<uint>& id) const {
 		string id_str(id.begin(), id.end());
 		return Lex::toInt(id_str);
 	}
@@ -235,8 +235,8 @@ struct ParseImport {
 struct FindType {
 	template <typename T>
 	struct result { typedef Type* type; };
-	Type* operator()(uint id) const {
-		return Undef<uint>::is(id) ? nullptr : find_type(id);
+	Type* operator()(Id i) const {
+		return Undef<uint>::is(i.id) ? nullptr : find_type(i.id);
 	}
 };
 
@@ -251,12 +251,12 @@ struct SetType {
 struct FindTheorem {
 	template <typename T>
 	struct result { typedef Theorem* type; };
-	Theorem* operator()(uint id) const {
-		if (!Sys::get().math.get<Assertion>().has(id))
-			throw Error("unknown theorem", show_id(id));
-		Theorem* ret = dynamic_cast<Theorem*>(Sys::mod().math.get<Assertion>().access(id));
+	Theorem* operator()(Id i) const {
+		if (!Sys::get().math.get<Assertion>().has(i.id))
+			throw Error("unknown theorem", show_id(i.id));
+		Theorem* ret = dynamic_cast<Theorem*>(Sys::mod().math.get<Assertion>().access(i.id));
 		if (!ret)
-			throw Error("not a theorem", show_id(id));
+			throw Error("not a theorem", show_id(i.id));
 		return ret;
 	}
 };
@@ -371,27 +371,27 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, uint(), unicode::space_type> liter;
 	qi::rule<Iterator, Symbol(), unicode::space_type> var;
 	qi::rule<Iterator, Symbol(), unicode::space_type> symb;
-	qi::rule<Iterator, uint(), unicode::space_type> id;
+	qi::rule<Iterator, Id(), unicode::space_type> id;
 	qi::rule<Iterator, string(), unicode::space_type> path;
 	qi::rule<Iterator, Expr(Rule*), unicode::space_type> term;
 	qi::rule<Iterator, Expr(Type*), unicode::space_type> expr;
 	qi::rule<Iterator, Expr(Type*), unicode::space_type> plain;
 	qi::rule<Iterator, Disj(), unicode::space_type> disj;
 	qi::rule<Iterator, Vars(), qi::locals<Symbol>, unicode::space_type> vars;
-	qi::rule<Iterator, Hyp*(), qi::locals<uint>, unicode::space_type> hyp;
-	qi::rule<Iterator, Prop*(), qi::locals<uint>, unicode::space_type> prop;
+	qi::rule<Iterator, Hyp*(), qi::locals<Id>, unicode::space_type> hyp;
+	qi::rule<Iterator, Prop*(), qi::locals<Id>, unicode::space_type> prop;
 	qi::rule<Iterator, Ref*(Proof*), unicode::space_type> ref;
 	qi::rule<Iterator, vector<Ref*>(Proof*), unicode::space_type> refs;
-	qi::rule<Iterator, Step*(Proof*), qi::locals<uint, uint, Step::Kind, Assertion::Kind, uint, vector<Ref*>>, unicode::space_type> step;
+	qi::rule<Iterator, Step*(Proof*), qi::locals<uint, Id, Step::Kind, Assertion::Kind, Id, vector<Ref*>>, unicode::space_type> step;
 	qi::rule<Iterator, Qed*(Proof*), qi::locals<uint>, unicode::space_type> qed;
 	qi::rule<Iterator, Proof::Elem(Proof*), unicode::space_type> proof_elem;
 	qi::rule<Iterator, void(Proof*), unicode::space_type> proof_body;
-	qi::rule<Iterator, Proof*(), qi::locals<uint>, unicode::space_type> proof;
+	qi::rule<Iterator, Proof*(), qi::locals<Id>, unicode::space_type> proof;
 	qi::rule<Iterator, Theorem*(), qi::locals<Assertion*>, unicode::space_type> theorem;
 	qi::rule<Iterator, Def*(), qi::locals<Assertion*, Type*>, unicode::space_type> def;
 	qi::rule<Iterator, Axiom*(), qi::locals<Assertion*>, unicode::space_type> axiom;
-	qi::rule<Iterator, Rule*(), qi::locals<uint, Vars, uint>, unicode::space_type> rule;
-	qi::rule<Iterator, Type*(), qi::locals<uint, vector<Type*>>, unicode::space_type> type;
+	qi::rule<Iterator, Rule*(), qi::locals<Id, Vars, Id>, unicode::space_type> rule;
+	qi::rule<Iterator, Type*(), qi::locals<Id, vector<Id>>, unicode::space_type> type;
 	qi::rule<Iterator, Const*(), qi::locals<uint, uint, uint>, unicode::space_type> constant;
 	qi::rule<Iterator, Import*(), unicode::space_type> import;
 	qi::rule<Iterator, string(), qi::unused_type> comment_text;

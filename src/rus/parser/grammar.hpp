@@ -230,7 +230,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		lit("type")
 		> id        [_a = qi::labels::_1]
 		> - (lit(":")
-			>  id [push_back(_b, findType(qi::labels::_1))] % ","
+			>  id [push_back(_b, qi::labels::_1)] % ","
 		)
 		> lit(END_MARKER)  [_val = new_<Type>(_a, _b)]
 		> eps [addToMath(_val)];
@@ -283,6 +283,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 			comment  [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(qi::labels::_1))]
 		);
 
+	qi::on_success(id,        setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(term,      setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(expr,      setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));
 	qi::on_success(plain,     setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));

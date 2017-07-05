@@ -149,6 +149,13 @@ struct Tokenable {
 };
 
 template<class S>
+struct Id : public Tokenable<S> {
+	Id(uint i = -1, const Token<S>& t = Token<S>()) : Tokenable<S>(t), id(i) { }
+	uint id;
+	string toStr() const { return Lex::toStr(id); }
+};
+
+template<class S>
 struct TokenIter : public string::const_iterator {
 	typedef S Source;
 	TokenIter(const TokenIter& it) :

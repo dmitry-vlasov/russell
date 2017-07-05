@@ -12,6 +12,8 @@ struct Theory;
 struct Import;
 struct Source;
 
+typedef mdl::Id<Source> Id;
+
 struct Comment : public Tokenable {
 	Comment(const string& txt, const Token& t = Token()) : Tokenable(t), text(txt) { }
 	string text;
@@ -45,8 +47,8 @@ void parse_term(Expr& ex, Rule* rule);
 
 struct Type : public Owner<Type> {
 	typedef map<const Type*, Rule*> Supers;
-	Type(uint id, const Token& t = Token());
-	Type(uint id, const vector<Type*>& sup, const Token& t = Token());
+	Type(Id id, const Token& t = Token());
+	Type(Id id, const vector<Id>& sup, const Token& t = Token());
 	~Type() override;
 	vector<User<Type>> sup;
 	Supers supers;
@@ -54,8 +56,8 @@ struct Type : public Owner<Type> {
 };
 
 struct Rule : public Owner<Rule> {
-	Rule(uint id, uint tp, const Token& t = Token());
-	Rule(uint id, uint tp, const Vars& v, const Token& t = Token());
+	Rule(Id id, Id tp, const Token& t = Token());
+	Rule(Id id, Id tp, const Vars& v, const Token& t = Token());
 	User<Type> type;
 	Vars       vars;
 	Expr       term;
@@ -84,7 +86,7 @@ struct Assertion : public Owner<Assertion> {
 		THM,
 		DEF
 	};
-	Assertion(uint id, const Token& t = Token());
+	Assertion(Id id, const Token& t = Token());
 	~ Assertion() override;
 	uint arity() const { return hyps.size(); }
 	virtual Kind kind() const = 0;
@@ -97,12 +99,12 @@ struct Assertion : public Owner<Assertion> {
 };
 
 struct Axiom : public Assertion {
-	Axiom(uint id, const Token& t = Token());
+	Axiom(Id id, const Token& t = Token());
 	Kind kind() const { return AXM; }
 };
 
 struct Def : public Assertion {
-	Def(uint id, const Token& t = Token());
+	Def(Id id, const Token& t = Token());
 	Kind kind() const { return DEF; }
 	Expr dfm;
 	Expr dfs;
@@ -110,7 +112,7 @@ struct Def : public Assertion {
 };
 
 struct Theorem : public Assertion {
-	Theorem(uint id, const Token& t = Token());
+	Theorem(Id id, const Token& t = Token());
 	Kind kind() const { return THM; }
 	vector<User<Proof>> proofs;
 };
@@ -155,7 +157,7 @@ struct Step : public Tokenable {
 		Proof*           prf;
 	};
 
-	Step(uint ind, Step::Kind, Assertion::Kind, uint id, Proof* proof, const Token& t = Token());
+	Step(uint ind, Step::Kind, Assertion::Kind, Id id, Proof* proof, const Token& t = Token());
 	~Step();
 
 	Assertion* ass() {
@@ -241,7 +243,7 @@ struct Proof : public Owner<Proof> {
 		Value val;
 	};
 
-	Proof(Theorem* thm, uint id = -1, const Token& t = Token());
+	Proof(Theorem* thm, Id id = Id(), const Token& t = Token());
 	~ Proof();
 
 	Vars         vars;

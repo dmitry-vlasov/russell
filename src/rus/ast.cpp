@@ -2,48 +2,48 @@
 
 namespace mdl { namespace rus {
 
-Type::Type(uint i, const Token& t) : Owner(i, t) { }
-Type::Type(uint i, const vector<Type*>& s, const Token& t) : Owner(i, t) {
-	for (auto t : s) sup.push_back(t);
+Type::Type(Id i, const Token& t) : Owner(i.id, t) { }
+Type::Type(Id i, const vector<Id>& s, const Token& t) : Owner(i.id, t) {
+	for (auto t : s) sup.push_back(User<Type>(t));
 }
 Type::~Type() {
 	for (auto p : supers) delete p.second;
 }
 
-Rule::Rule(uint id, uint tp, const Token& t) :
-	Owner(id, t), type(tp) { }
-Rule::Rule(uint id, uint tp, const Vars& v, const Token& t) :
-	Owner(id, t), type(tp), vars(v) { }
+Rule::Rule(Id i, Id tp, const Token& t) :
+	Owner(i.id, t), type(tp) { }
+Rule::Rule(Id i, Id tp, const Vars& v, const Token& t) :
+	Owner(i.id, t), type(tp), vars(v) { }
 
-Assertion::Assertion(uint i, const Token& t) : Owner(i, t) { }
+Assertion::Assertion(Id i, const Token& t) : Owner(i.id, t) { }
 Assertion::~Assertion() {
 	for (auto h : hyps) delete h;
 	for (auto p : props) delete p;
 }
 
-Axiom::Axiom(uint id, const Token& t) : Assertion(id, t) { }
-Theorem::Theorem(uint id, const Token& t) : Assertion(id, t) { }
-Def::Def(uint id, const Token& t) : Assertion(id, t) { }
+Axiom::Axiom(Id id, const Token& t) : Assertion(id, t) { }
+Theorem::Theorem(Id id, const Token& t) : Assertion(id, t) { }
+Def::Def(Id id, const Token& t) : Assertion(id, t) { }
 
-Step::Step(uint i, Step::Kind sk, Assertion::Kind ak, uint id, Proof* p, const Token& t) :
+Step::Step(uint i, Step::Kind sk, Assertion::Kind ak, Id id, Proof* p, const Token& t) :
 	Tokenable(t), ind_(i), kind_(sk), proof_(p) {
 	Math& math = Sys::mod().math;
-	if (!math.get<Assertion>().has(id)) {
-		throw Error("unknown assertion", Lex::toStr(id));
+	if (!math.get<Assertion>().has(id.id)) {
+		throw Error("unknown assertion", id.toStr());
 	}
 	val_.ass = new User<Assertion>(id);
 	switch (ak) {
 	case Assertion::AXM :
 		if (!dynamic_cast<Axiom*>(val_.ass->get()))
-			throw Error("not an axiom", Lex::toStr(id));
+			throw Error("not an axiom", id.toStr());
 		break;
 	case Assertion::THM :
 		if (!dynamic_cast<Theorem*>(val_.ass->get()))
-			throw Error("not a theorem", Lex::toStr(id));
+			throw Error("not a theorem", id.toStr());
 		break;
 	case Assertion::DEF :
 		if (!dynamic_cast<Def*>(val_.ass->get()))
-			throw Error("not a definition", Lex::toStr(id));
+			throw Error("not a definition", id.toStr());
 		break;
 	default: assert(false && "impossible");
 	}
@@ -64,8 +64,8 @@ inline uint make_proof_id(uint id, const Theorem* th) {
 	} else return id;
 }
 
-Proof::Proof(Theorem* th, uint id, const Token& t) :
-	Owner(make_proof_id(id, th), t), thm(th), par(nullptr) {
+Proof::Proof(Theorem* th, Id i, const Token& t) :
+	Owner(make_proof_id(i.id, th), t), thm(th), par(nullptr) {
 }
 Proof::~Proof() {
 	for (auto& e : elems) e.destroy();
