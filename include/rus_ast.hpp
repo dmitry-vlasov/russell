@@ -12,8 +12,6 @@ struct Theory;
 struct Import;
 struct Source;
 
-typedef mdl::Id<Source> Id;
-
 struct Comment : public Tokenable {
 	Comment(const string& txt, const Token& t = Token()) : Tokenable(t), text(txt) { }
 	string text;

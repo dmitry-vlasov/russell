@@ -252,7 +252,7 @@ struct FindType {
 struct SetType {
 	template <typename T1, typename T2>
 	struct result { typedef void type; };
-	void operator()(Symbol& s, Type* t) const {
+	void operator()(Symbol& s, Id t) const {
 		s.set_type(t);
 	}
 };

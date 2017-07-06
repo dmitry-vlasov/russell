@@ -8,6 +8,7 @@ namespace mdl { namespace rus {
 
 typedef mdl::Token<Source> Token;
 typedef mdl::Tokenable<Source> Tokenable;
+typedef mdl::Id<Source> Id;
 
 struct Type;
 struct Rule;
@@ -58,6 +59,12 @@ struct Symbol : public mdl::Symbol {
 	Const* constant() { return cst ? val.constant->get() : nullptr; }
 	const Type* type() const { return var ? val.type->get() : nullptr; }
 	const Const* constant() const { return cst ? val.constant->get() : nullptr; }
+
+	void set_type(Id i) {
+		clear();
+		val.type = new User<Type>(i);
+		var = true;
+	}
 
 	void set_type(Type* t) {
 		clear();

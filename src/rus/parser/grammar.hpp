@@ -80,7 +80,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	vars =
 		( !lit(")")
 		> var        [_a = qi::labels::_1]
-		> ":" > id   [setType(_a, findType(qi::labels::_1))]
+		> ":" > id   [setType(_a, qi::labels::_1)]
 		> eps        [push_back(phoenix::at_c<0>(_val), _a)]
 		) % ","
 		> eps        [addVars(phoenix::ref(var_stack), _val)];
