@@ -10,10 +10,10 @@ Type::~Type() {
 	for (auto p : supers) delete p.second;
 }
 
-Rule::Rule(Id i, Id tp, const Token& t) :
-	Owner(i.id, t), type(tp) { }
-Rule::Rule(Id i, Id tp, const Vars& v, const Token& t) :
-	Owner(i.id, t), type(tp), vars(v) { }
+Rule::Rule(Id i, const Token& t) :
+	Owner(i.id, t) { }
+Rule::Rule(Id i, const Vars& v, const Token& t) :
+	Owner(i.id, t), vars(v) { }
 
 Assertion::Assertion(Id i, const Token& t) : Owner(i.id, t) { }
 Assertion::~Assertion() {

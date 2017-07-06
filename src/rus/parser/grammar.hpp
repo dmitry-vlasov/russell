@@ -15,6 +15,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	using qi::eps;
 	using qi::labels::_val;
 	using qi::labels::_r1;
+	using qi::labels::_r2;
 	using qi::labels::_a;
 	using qi::labels::_b;
 	using qi::labels::_c;
@@ -64,7 +65,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	id    = lexeme[+ unicode::char_("a-zA-Z0-9_.\\-")]              [_val = idToInt(qi::labels::_1)];
 	path  = lexeme[+(unicode::char_ - END_MARKER - unicode::space)];
 
-	term  = + (symb [addSymbol(_val, qi::labels::_1)] | comment [deleteComment(qi::labels::_1)]) > eps [parseTerm(_val, _r1, phoenix::ref(var_stack))];
+	term  = + (symb [addSymbol(_val, qi::labels::_1)] | comment [deleteComment(qi::labels::_1)]) > eps [parseTerm(_val, _r1, _r2, phoenix::ref(var_stack))];
 	expr  = + (symb [addSymbol(_val, qi::labels::_1)] | comment [deleteComment(qi::labels::_1)]) > eps [parseExpr(_val, _r1, phoenix::ref(var_stack))];
 	plain = + (symb [addSymbol(_val, qi::labels::_1)] | comment [deleteComment(qi::labels::_1)]) > eps [parsePlain(_val, _r1)];
 
@@ -221,8 +222,8 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		> - vars     [_b = qi::labels::_1]
 		> ")" > "{" > "term" > ":"
 		> id         [_c = qi::labels::_1]
-		> "=" > lit("#")  [_val = new_<Rule>(_a, _c, _b)]
-		> term(_val) [phoenix::at_c<3>(*_val) = qi::labels::_1]
+		> "=" > lit("#")  [_val = new_<Rule>(_a, _b)]
+		> term(_c, _val) [phoenix::at_c<2>(*_val) = qi::labels::_1]
 		> END_MARKER
 		> lit("}")   [addToMath(_val)]
 		> eps        [popVars(phoenix::ref(var_stack))];

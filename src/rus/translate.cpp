@@ -115,7 +115,7 @@ smm::Assertion* translate_rule(const Rule* rule, Maps& maps) {
 	if (rule->vars.v.size())
 		ra->variables.push_back(translate_vars(rule->vars));
 	ra->floating = translate_floatings(rule->vars, maps);
-	ra->prop = new smm::Proposition(true, rule_lab, translate_term(rule->term, rule->type.get(), maps));
+	ra->prop = new smm::Proposition(true, rule_lab, translate_term(rule->term, rule->term.type.get(), maps));
 	//ra->prop.axiom = true;
 	//ra->prop.expr  = translate_term(rule->term, rule->type.get(), maps);
 	//ra->prop.label = rule_lab;

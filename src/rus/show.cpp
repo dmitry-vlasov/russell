@@ -63,7 +63,7 @@ string show(const Rule& r) {
 	string s;
 	s += "rule " + show_id(r.id()) + " ";
 	s += "(" + show(r.vars) + ") {\n";
-	s += "\tterm : " + show_id(r.type.get()->id()) + " = ";
+	s += "\tterm : " + show_id(r.term.type.get()->id()) + " = ";
 	s += "# " + show(r.term) + END_MARKER + "\n";
 	s += "}";
 	return s;

@@ -56,15 +56,14 @@ struct Type : public Owner<Type> {
 };
 
 struct Rule : public Owner<Rule> {
-	Rule(Id id, Id tp, const Token& t = Token());
-	Rule(Id id, Id tp, const Vars& v, const Token& t = Token());
-	User<Type> type;
+	Rule(Id id, const Token& t = Token());
+	Rule(Id id, const Vars& v, const Token& t = Token());
 	Vars       vars;
 	Expr       term;
 };
 
-inline Type* Tree::type() { return kind == VAR ? val.var->type() : val.node->rule.get()->type.get(); }
-inline const Type* Tree::type() const { return kind == VAR ? val.var->type() : val.node->rule.get()->type.get(); }
+inline Type* Tree::type() { return kind == VAR ? val.var->type() : val.node->rule.get()->term.type.get(); }
+inline const Type* Tree::type() const { return kind == VAR ? val.var->type() : val.node->rule.get()->term.type.get(); }
 
 struct Hyp : public Tokenable {
 	Hyp(uint i, const Expr& e = Expr(), const Token& t = Token()) :
