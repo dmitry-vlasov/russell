@@ -500,6 +500,7 @@ public:
 	const T* get() const { return ref.template get<T>(); }
 	uint id() const { return ref.id; }
 	uint sys() const { return ref.sys; }
+	void set(Id_ i) { Tokenable_::token = i.token; use(i.id); }
 
 	void use(uint id) {
 		unuse();

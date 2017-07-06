@@ -204,19 +204,27 @@ struct CreateSymb {
 struct ParseExpr {
 	template <typename T1, typename T2, typename T3>
 	struct result { typedef void type; };
-	void operator()(Expr& ex, Type* tp, VarStack& var_stack) const {
-		ex.type = tp;
+	void operator()(Expr& ex, Id tp, VarStack& var_stack) const {
+		ex.type.set(tp);
 		mark_vars(ex, var_stack);
 	}
 };
 
 struct ParseTerm {
-	template <typename T1, typename T2, typename T3, typename T4>
+	template <typename T1, typename T2, typename T3>
 	struct result { typedef void type; };
 	void operator()(Expr& ex, Rule* r, VarStack& var_stack) const {
 		ex.type = r->type.get();
 		mark_vars(ex, var_stack);
 		parse_term(ex, r);
+	}
+};
+
+struct ParsePlain {
+	template <typename T1, typename T2>
+	struct result { typedef void type; };
+	void operator()(Expr& ex, Id tp) const {
+		ex.type.set(tp);
 	}
 };
 
@@ -374,8 +382,8 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, Id(), unicode::space_type> id;
 	qi::rule<Iterator, string(), unicode::space_type> path;
 	qi::rule<Iterator, Expr(Rule*), unicode::space_type> term;
-	qi::rule<Iterator, Expr(Type*), unicode::space_type> expr;
-	qi::rule<Iterator, Expr(Type*), unicode::space_type> plain;
+	qi::rule<Iterator, Expr(Id), unicode::space_type> expr;
+	qi::rule<Iterator, Expr(Id), unicode::space_type> plain;
 	qi::rule<Iterator, Disj(), unicode::space_type> disj;
 	qi::rule<Iterator, Vars(), qi::locals<Symbol>, unicode::space_type> vars;
 	qi::rule<Iterator, Hyp*(), qi::locals<Id>, unicode::space_type> hyp;
@@ -388,7 +396,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, void(Proof*), unicode::space_type> proof_body;
 	qi::rule<Iterator, Proof*(), qi::locals<Id>, unicode::space_type> proof;
 	qi::rule<Iterator, Theorem*(), qi::locals<Assertion*>, unicode::space_type> theorem;
-	qi::rule<Iterator, Def*(), qi::locals<Assertion*, Type*>, unicode::space_type> def;
+	qi::rule<Iterator, Def*(), qi::locals<Assertion*, Id>, unicode::space_type> def;
 	qi::rule<Iterator, Axiom*(), qi::locals<Assertion*>, unicode::space_type> axiom;
 	qi::rule<Iterator, Rule*(), qi::locals<Id, Vars, Id>, unicode::space_type> rule;
 	qi::rule<Iterator, Type*(), qi::locals<Id, vector<Id>>, unicode::space_type> type;
