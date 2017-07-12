@@ -206,6 +206,7 @@ struct Expr : public Tokenable {
 	Expr(const Token& t = Token()) : Tokenable(t), tree(), symbols() { }
 	Expr(Symbol s, const Token& t = Token()) : Tokenable(t), type(s.type()), tree(), symbols() { symbols.push_back(s); }
 	Expr(const Symbols& ss, const Token& t = Token()) : Tokenable(t), tree(), symbols(ss) { }
+	Expr(Id tp, Symbols&& ex, const Token& t = Token()) : Tokenable(t), type(tp), symbols(std::move(ex)) { }
 	Expr(const Expr& ex) : Tokenable(ex), type(ex.type), tree(), symbols (ex.symbols) {
 		if (ex.tree) tree.reset(new Tree(*ex.tree));
 	}

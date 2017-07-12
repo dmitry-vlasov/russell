@@ -118,14 +118,6 @@ string show(const Tree& t, bool full) {
 	}
 }
 
-void parse_term(Expr& ex, Rule* rule) {
-	Tree::Children children;
-	for (auto& s : ex.symbols) {
-		if (s.type()) children.push_back(make_unique<Tree>(s));
-	}
-	ex.tree.reset(new Tree(rule, children));
-}
-
 vector<string> show_lines(const Rules& tr) {
 	vector<string> vect;
 	for (const Rules::Node* p : tr.map) {

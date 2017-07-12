@@ -1,4 +1,4 @@
-#include <rus_sys.hpp>
+#include <rus_ast.hpp>
 #include "peglib.h"
 
 namespace mdl { namespace rus {
@@ -30,13 +30,14 @@ private:
 		}
 	};
 	struct Context {
-		Context() : ind(0), stacks(), expr(nullptr), type(nullptr), vars(nullptr), disj(nullptr) { }
-		uint  ind;
-		Stacks stacks;
-		Expr* expr;
-		Type* type;
-		Vars* vars;
-		Disj* disj;
+		Context() : ind(0), stacks(), source(nullptr) { }
+		uint    ind;
+		Stacks  stacks;
+		Id      type;
+		Source* source;
+		Token token(const peg::SemanticValues& sv) const {
+			return Token(source, sv.c_str(), sv.c_str() + sv.length());
+		}
 	};
 	peg::parser parser;
 
@@ -50,33 +51,38 @@ public:
  
 			IMPORT   <- 'import' PATH ';;'
 			CONST    <- 'constant' '{' 'symbol' SYMB ';;' ('ascii' SYMB ';;')? ('latex' SYMB ';;')? '}'
-			TYPE     <- 'type' LAB (':' LAB (',' LAB)*) ';;' 
-			RULE     <- 'rule' LAB '(' VARS ')' '{' TERM '}'
-			TERM     <- 'term' ':' LAB '=' '#' EXPR_TR ';;' 
-			DEF      <- 'definition' LAB '(' VARS ')' DISJ '{' HYP* DEF_M DEF_S BAR PROP '}'
-			DEF_M    <- 'defiendum' ':' LAB '=' '#' EXPR ';;' 
-			DEF_S    <- 'definiens' ':' LAB '=' '#' EXPR ';;' 
-			HYP      <- 'hyp' IND ':' LAB '=' '|-' EXPR ';;' 
-			PROP     <- 'prop' IND ':' LAB '=' '|-' EXPR ';;'
-			TERM     <- 'term' ':' LAB '=' '#' EXPR_TR ';;' 
-			AXIOM    <- 'axiom' LAB '(' VARS ')' DISJ '{' (HYP+ BAR)? PROP '}'
-			THEOREM  <- 'theorem' LAB '(' VARS ')' DISJ '{' (HYP+ BAR)? PROP '}'
-			PROOF    <- 'proof' LAB? 'of' LAB '{' PROOF_EL+ '}'
+			SUPERS   <- ':' ID_REF (',' ID_REF)*
+
+			TYPE     <- 'type'       ID_NAME SUPERS ';;' 
+			RULE     <- 'rule'       ID_NAME '(' VARS ')'      '{' TERM '}'
+			AXIOM    <- 'axiom'      ID_NAME '(' VARS ')' DISJ '{' (HYP+ BAR)? PROP '}'
+			THEOREM  <- 'theorem'    ID_NAME '(' VARS ')'      '{' (HYP+ BAR)? PROP '}'
+			DEF      <- 'definition' ID_NAME '(' VARS ')' DISJ '{' HYP* DEF_M DEF_S BAR PROP '}'
+			PROOF    <- 'proof'      ID_NAME? 'of' ID_REF '{' PROOF_EL+ '}'
+
+			TERM_    <- 'term'      ':' ID_REF '=' '#'  EXPR ';;' 
+			DEF_M    <- 'defiendum' ':' ID_REF '=' '#'  EXPR ';;' 
+			DEF_S    <- 'definiens' ':' ID_REF '=' '#'  EXPR ';;' 
+			HYP      <- 'hyp'  IND  ':' ID_REF '=' '|-' EXPR ';;' 
+			PROP     <- 'prop' IND  ':' ID_REF '=' '|-' EXPR ';;' 
+
 			PROOF_EL <- 'var' VARS ';;' / STEP / QED
 			DISJ     <- 'disjointed' '(' DISJ_SET (',' DISJ_SET)* ')'
-			DISJ_SET <- LAB+
+			DISJ_SET <- ID_REF+
 
-			STEP     <- 'step' IND ':' LAB '=' STEP_TP LAB ('(' REFS ')')? '|-' EXPR ';;'
-			STEP_TP  <- 'thm' / 'def' / 'axm' / 'claim' / '?'
-			QED      <- 'qed' 'prop' LAB '=' 'step' LAB ';;'
+			STEP     <- 'step' IND ':' ID_REF '=' (ID_REF ('(' REFS ')')? | '?') '|-' EXPR ';;'
+			REFS     <- ID_REF (',' ID_REF)*
+			QED      <- 'qed' 'prop' ID_REF '=' 'step' ID_REF ';;'
 
 			VARS     <- (VAR (',' VAR)*)?
-			VAR      <- SYMB : LAB
+			VAR      <- SYMB : ID_REF
             BAR      <- '-----' '-'*
 
-			EXPR     <- (SYMB / COMMENT)+
+			EXPR <- (SYMB / COMMENT)+
+
 			SYMB     <- < (![ \t\r\n$] .)+ >
-			LAB      <- < (![,(=;:{ \t\r\n$] .)+ >
+			ID_REF   <- < (![,(=;:{ \t\r\n$] .)+ >
+			ID_NAME  <- < (![,(=;:{ \t\r\n$] .)+ >
 			PATH     <- < (![ \t\r\n$] .)+ >
 			IND      <- < [0-9]+ >
 			COMMENT    <- COMMENT_ML / COMMENT_SL 
@@ -91,35 +97,30 @@ public:
 		parser["SYMB"] = [](const peg::SemanticValues& sv) {
 			return Symbol(Lex::toInt(sv.token()));
 		};
-		parser["LAB"] = [](const peg::SemanticValues& sv) {
+		parser["ID_NAME"] = [](const peg::SemanticValues& sv) {
 			return Lex::toInt(sv.token());
+		};
+		parser["ID_REF"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			return Id(Lex::toInt(sv.token()), c->token(sv));
 		};
 		parser["IND"] = [](const peg::SemanticValues& sv) {
 			return (uint)std::stoul(sv.token());
 		};
 		parser["PATH"] = [](const peg::SemanticValues& sv) {
-			return sv.token();
+			return Lex::toInt(sv.token());
 		};
 		parser["EXPR"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
-			Context* context = ctx.get<Context*>();
-			Expr expr;
-			expr.type = context->type;
-			expr.symbols.reserve(sv.size());
+			Context* c = ctx.get<Context*>();
+			vector<Symbol> vect(sv.size());
 			for (auto& s : sv) {
-				if (s.is<Symbol>()) expr.symbols.push_back(s);
+				if (s.is<Symbol>()) vect.push_back(s);
 				else delete s.get<Comment*>();
 			}
-			mark_vars(expr, context->stacks);
-			return expr;
-		};
-		parser["VAR"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
-			Context* context = ctx.get<Context*>();
-			Symbol v = sv[0].get<Symbol>();
-			v.type = Sys::get().math.get<Type>().access(sv[1].get<uint>());
-			return v;
+			return vect;
 		};
 		parser["VARS"] = [](const peg::SemanticValues& sv) {
-			return sv.transform<Symbol>();
+			return Vars(sv.transform<Symbol>());
 		};
 		parser["DISJ_SET"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* context = ctx.get<Context*>();
@@ -135,29 +136,84 @@ public:
 		parser["CONST"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Const* c = nullptr;
 			switch (sv.size()) {
-			case 1 : c = new Const{sv[0].get<Vect>()}; break;
-			case 2 : c = new Const{sv[0].get<Vect>(), sv[1].get<Vect>()}; break;
-			case 3 : c = new Const{sv[0].get<Vect>(), sv[1].get<Vect>(), sv[2].get<Vect>()}; break;
+			case 1 : c = new Const(sv[0].get<Vect>()); break;
+			case 2 : c = new Const(sv[0].get<Vect>(), sv[1].get<Vect>()); break;
+			case 3 : c = new Const(sv[0].get<Vect>(), sv[1].get<Vect>(), sv[2].get<Vect>()); break;
 			default : throw Error("syntax error");
 			}
 			return c;
 		};
+		parser["SUPERS"] = [](const peg::SemanticValues& sv) {
+			return sv.transform<Id>();
+		};
 		parser["TYPE"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
-			Context* context = ctx.get<Context*>();
-			Type* t = new Type(sv[0].get<uint>());
-			collect_supers(t, t);
-			return t;
+			Context* c = ctx.get<Context*>();
+			return new Type(sv[0].get<uint>(), sv[1].get<vector<Id>>());
+		};
+		parser["TERM"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			return Expr(sv[0].get<Id>(), sv[1].get<vector<Symbol>>());
 		};
 		parser["RULE"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
-			Context* context = ctx.get<Context*>();
-			uint id   = sv[0].get<uint>();
+			Context* c = ctx.get<Context*>();
+			uint id     = sv[0].get<uint>();
 			Vars vars = sv[1].get<Vars>();
 			Expr term = sv[2].get<Expr>();
-			Rule* r = new Rule(id, term.type->id());
-			r->vars = vars;
-			r->term = term;
+			Rule* r = new Rule(Id(id));
+			r->vars = std::move(vars);
+			r->term = std::move(term);
 			return r;
 		};
+		parser["AXIOM"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			uint id   = sv[0].get<uint>();
+			Vars vars = sv[1].get<Vars>();
+			Disj disj = sv[2].get<Disj>();
+			vector<Hyp*>  hyps  = sv[3].get<vector<Hyp>>();
+			vector<Prop*> props = sv[4].get<vector<Prop>>();
+			Axiom* a = new Axiom(Id(id));
+			a->vars  = std::move(vars);
+			a->disj  = std::move(fisj);
+			a->hyps  = std::move(hyps);
+			a->props = std::move(props);
+			return a;
+		};
+		parser["THEOREM"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			uint id   = sv[0].get<uint>();
+			Vars vars = sv[1].get<Vars>();
+			vector<Hyp*>  hyps  = sv[2].get<vector<Hyp>>();
+			vector<Prop*> props = sv[3].get<vector<Prop>>();
+			Theorem* t = new Theorem(Id(id));
+			t->vars  = std::move(vars);
+			t->hyps  = std::move(hyps);
+			t->props = std::move(props);
+			return t;
+		};
+		parser["DEF"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			uint id   = sv[0].get<uint>();
+			Vars vars = sv[1].get<Vars>();
+			Disj disj = sv[2].get<Disj>();
+			vector<Hyp*> hyps  = sv[3].get<vector<Hyp>>();
+			Expr defiendum = sv[4].get<Expr>();
+			Expr definiens = sv[5].get<Expr>();
+			Prop* Prop = sv[4].get<Expr>();
+			Def* a = new Def(Id(id));
+			a->vars  = std::move(vars);
+			a->disj  = std::move(fisj);
+			a->hyps  = std::move(hyps);
+			//a->props = std::move(props);
+			return a;
+		};
+
+
+
+
+
+
+
+
 		parser["ESS"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Essential* ess = new Essential { sv[0].get<uint>(), sv[1].get<Vect>() };
 			markVars(ess->expr, context.get<std::shared_ptr<Context>>()->vars);

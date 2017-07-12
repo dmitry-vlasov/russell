@@ -83,43 +83,6 @@ inline Type* find_type(uint id, const Location* loc = nullptr) {
 	return Sys::mod().math.get<Type>().access(id);
 }
 
-inline uint create_id(string pref, string s1, string s2) {
-	return Lex::toInt(pref + "_" + s1 + "_" + s2);
-}
-
-inline Symbol create_var(string str, Type* tp) {
-	return Symbol(Lex::toInt(str), tp);
-}
-
-inline Symbol create_const(string str, Const* c) {
-	return Symbol(Lex::toInt(str), c);
-}
-
-Rule* create_super(Type* inf, Type* sup) {
-	uint id = create_id("sup", show_id(inf->id()), show_id(sup->id()));
-	Rule* rule = new Rule(id);
-	rule->term.type = User<Type>(sup->id());
-	rule->vars.v.push_back(create_var("x", inf));
-	rule->term.push_back(create_var("x", inf));
-
-	VarStack var_stack;
-	AddVars add_vars;
-	PushVars push_vars;
-	push_vars(var_stack);
-	add_vars(var_stack, rule->vars);
-	mark_vars(rule->term, var_stack);
-	parse_term(rule->term, rule);
-	return rule;
-}
-
-void collect_supers(Type* inf, Type* s) {
-	for (auto& sup : s->sup) {
-		Rule* super = create_super(inf, sup.get());
-		inf->supers[sup.get()] = super;
-		collect_supers(inf, sup.get());
-	}
-}
-
 void enqueue_expressions(Assertion& ass) {
 	for (Hyp* hyp : ass.hyps)
 		expr::enqueue(hyp->expr);
@@ -148,10 +111,8 @@ struct AddToMath {
 	void operator()(Const* c) const {
 	}
 	void operator()(Type* t) const {
-		collect_supers(t, t);
 	}
 	void operator()(Rule* r) const {
-		r->term.type.get()->rules.add(r->term, r->id());
 	}
 	void operator()(Axiom* a) const {
 		enqueue_expressions(a->ass);
@@ -208,16 +169,6 @@ struct ParseExpr {
 	void operator()(Expr& ex, Id tp, VarStack& var_stack) const {
 		ex.type.set(tp);
 		mark_vars(ex, var_stack);
-	}
-};
-
-struct ParseTerm {
-	template <typename T1, typename T2, typename T3>
-	struct result { typedef void type; };
-	void operator()(Expr& ex, Id tp, Rule* r, VarStack& var_stack) const {
-		ex.type.set(tp);
-		mark_vars(ex, var_stack);
-		parse_term(ex, r);
 	}
 };
 
@@ -382,7 +333,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, Symbol(), unicode::space_type> symb;
 	qi::rule<Iterator, Id(), unicode::space_type> id;
 	qi::rule<Iterator, string(), unicode::space_type> path;
-	qi::rule<Iterator, Expr(Id, Rule*), unicode::space_type> term;
+	qi::rule<Iterator, Expr(Id), unicode::space_type> term;
 	qi::rule<Iterator, Expr(Id), unicode::space_type> expr;
 	qi::rule<Iterator, Expr(Id), unicode::space_type> plain;
 	qi::rule<Iterator, Disj(), unicode::space_type> disj;
@@ -399,7 +350,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, Theorem*(), qi::locals<Assertion*>, unicode::space_type> theorem;
 	qi::rule<Iterator, Def*(), qi::locals<Assertion*, Id>, unicode::space_type> def;
 	qi::rule<Iterator, Axiom*(), qi::locals<Assertion*>, unicode::space_type> axiom;
-	qi::rule<Iterator, Rule*(), qi::locals<Id, Vars, Id>, unicode::space_type> rule;
+	qi::rule<Iterator, Rule*(), qi::locals<Id, Vars, Id, Expr>, unicode::space_type> rule;
 	qi::rule<Iterator, Type*(), qi::locals<Id, vector<Id>>, unicode::space_type> type;
 	qi::rule<Iterator, Const*(), qi::locals<uint, uint, uint>, unicode::space_type> constant;
 	qi::rule<Iterator, Import*(), unicode::space_type> import;

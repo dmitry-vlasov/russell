@@ -214,9 +214,12 @@ void translate_rule(const Assertion* ass, State& state) {
 		return;
 	}
 	rus::Type* type = translate_type(ass->prop->expr[0], state);
-	rus::Rule* rule = new rus::Rule(ass->prop->label);
-	rule->vars = translate_vars(ass->floating, state);
-	rule->term = translate_expr(ass->prop->expr, state, ass);
+
+	rus::Rule* rule = new rus::Rule(
+		ass->prop->label,
+		translate_vars(ass->floating, state),
+		translate_expr(ass->prop->expr, state, ass)
+	);
 	rule->term.type = rus::User<rus::Type>(type->id());
 
 	for (rus::Rule* r : state.rules) {

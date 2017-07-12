@@ -2,18 +2,48 @@
 
 namespace mdl { namespace rus {
 
-Type::Type(Id i, const Token& t) : Owner(i.id, t) { }
+inline uint create_id(string pref, string s1, string s2) {
+	return Lex::toInt(pref + "_" + s1 + "_" + s2);
+}
+
+inline Symbol create_var(string str, Type* tp) {
+	return Symbol(Lex::toInt(str), tp);
+}
+
+inline Symbol create_const(string str, Const* c) {
+	return Symbol(Lex::toInt(str), c);
+}
+
+static Rule* create_super(Type* inf, Type* sup) {
+	uint id = create_id("sup", show_id(inf->id()), show_id(sup->id()));
+	return new Rule(id, Vars({create_var("x", inf)}), Expr(sup->id(), {create_var("x", inf)}));
+}
+
+static void collect_super_rules(Type* inf, Type* s) {
+	for (auto& sup : s->sup) {
+		Rule* super = create_super(inf, sup.get());
+		inf->supers[sup.get()] = super;
+		collect_super_rules(inf, sup.get());
+	}
+}
+
 Type::Type(Id i, const vector<Id>& s, const Token& t) : Owner(i.id, t) {
 	for (auto t : s) sup.push_back(User<Type>(t));
+	collect_super_rules(this, this);
 }
 Type::~Type() {
 	for (auto p : supers) delete p.second;
 }
 
-Rule::Rule(Id i, const Token& t) :
-	Owner(i.id, t) { }
-Rule::Rule(Id i, const Vars& v, const Token& t) :
-	Owner(i.id, t), vars(v) { }
+Rule::Rule(Id i, const Vars& v, const Expr& e, const Token& t) :
+	Owner(i.id, t), vars(v), term(e) {
+	Tree::Children children;
+	for (auto& s : term.symbols) {
+		if (s.type()) children.push_back(make_unique<Tree>(s));
+	}
+	term.tree.reset(new Tree(this, children));
+	term.type.get()->rules.add(term, i.id);
+}
 
 Assertion::Assertion(Id i, const Token& t) : Owner(i.id, t) { }
 Assertion::~Assertion() {

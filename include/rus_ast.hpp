@@ -41,23 +41,20 @@ struct Disj : public Tokenable {
 };
 
 void parse_expr(Expr& ex);
-void parse_term(Expr& ex, Rule* rule);
 
 struct Type : public Owner<Type> {
 	typedef map<const Type*, Rule*> Supers;
-	Type(Id id, const Token& t = Token());
-	Type(Id id, const vector<Id>& sup, const Token& t = Token());
+	Type(Id id, const vector<Id>& sup = vector<Id>(), const Token& t = Token());
 	~Type() override;
 	vector<User<Type>> sup;
 	Supers supers;
-	Rules rules;
+	Rules  rules;
 };
 
 struct Rule : public Owner<Rule> {
-	Rule(Id id, const Token& t = Token());
-	Rule(Id id, const Vars& v, const Token& t = Token());
-	Vars       vars;
-	Expr       term;
+	Rule(Id id, const Vars& v, const Expr& e, const Token& t = Token());
+	Vars vars;
+	Expr term;
 };
 
 inline Type* Tree::type() { return kind == VAR ? val.var->type() : val.node->rule.get()->term.type.get(); }
@@ -66,23 +63,19 @@ inline const Type* Tree::type() const { return kind == VAR ? val.var->type() : v
 struct Hyp : public Tokenable {
 	Hyp(uint i, const Expr& e = Expr(), const Token& t = Token()) :
 		Tokenable(t), ind(i), expr(e) { }
-	uint  ind;
-	Expr  expr;
+	uint ind;
+	Expr expr;
 };
 
 struct Prop : public Tokenable {
 	Prop(uint i, const Expr& e = Expr(), const Token& t = Token()) :
 		Tokenable(t), ind(i), expr(e) { }
-	uint  ind;
-	Expr  expr;
+	uint ind;
+	Expr expr;
 };
 
 struct Assertion : public Owner<Assertion> {
-	enum Kind {
-		AXM,
-		THM,
-		DEF
-	};
+	enum Kind { AXM, THM, DEF };
 	Assertion(Id id, const Token& t = Token());
 	~ Assertion() override;
 	uint arity() const { return hyps.size(); }
