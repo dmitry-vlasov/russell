@@ -20,9 +20,9 @@ struct Symbol : public mdl::Symbol {
 	Symbol(uint l, Const* c): mdl::Symbol(l), val(c) { cst = true; }
 	Symbol(const Symbol& s) : mdl::Symbol(s) {
 		if (s.var)
-			val.type = new User<Type>(s.type());
+			val.type = new User<Type>(*s.val.type);
 		else if (s.cst)
-			val.constant = new User<Const>(s.constant());
+			val.constant = new User<Const>(*s.val.constant);
 	}
 	Symbol(Symbol&& s) : mdl::Symbol(s) {
 		if (s.var)
@@ -39,9 +39,9 @@ struct Symbol : public mdl::Symbol {
 		clear();
 		mdl::Symbol::operator=(s);
 		if (s.var)
-			val.type = new User<Type>(s.type());
+			val.type = new User<Type>(*s.val.type);
 		else if (s.cst)
-			val.constant = new User<Const>(s.constant());
+			val.constant = new User<Const>(*s.val.constant);
 	}
 	void operator = (Symbol&& s) {
 		clear();

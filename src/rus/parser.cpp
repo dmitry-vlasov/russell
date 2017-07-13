@@ -58,7 +58,7 @@ public:
 			AXIOM    <- 'axiom'      ID_NAME '(' VARS ')' DISJ '{' (HYP+ BAR)? PROP '}'
 			THEOREM  <- 'theorem'    ID_NAME '(' VARS ')'      '{' (HYP+ BAR)? PROP '}'
 			DEF      <- 'definition' ID_NAME '(' VARS ')' DISJ '{' HYP* DEF_M DEF_S BAR PROP '}'
-			PROOF    <- 'proof'      ID_NAME? 'of' ID_REF '{' PROOF_EL+ '}'
+			PROOF    <- 'proof'      ID_NAME? 'of' ID_REF '{' PROOF_BD '}'
 
 			TERM_    <- 'term'      ':' ID_REF '=' '#'  EXPR ';;' 
 			DEF_M    <- 'defiendum' ':' ID_REF '=' '#'  EXPR ';;' 
@@ -66,14 +66,17 @@ public:
 			HYP      <- 'hyp'  IND  ':' ID_REF '=' '|-' EXPR ';;' 
 			PROP     <- 'prop' IND  ':' ID_REF '=' '|-' EXPR ';;' 
 
-			PROOF_EL <- 'var' VARS ';;' / STEP / QED
+			PROOF_BD <- PROOF_EL+
+			PROOF_EL <- VAR_DECL / STEP / QED
 			DISJ     <- 'disjointed' '(' DISJ_SET (',' DISJ_SET)* ')'
 			DISJ_SET <- ID_REF+
 
-			STEP     <- 'step' IND ':' ID_REF '=' (ID_REF ('(' REFS ')')? | '?') '|-' EXPR ';;'
+			STEP     <- 'step' IND ':' ID_REF '=' (APPLY | '?') '|-' EXPR ';;'
+			APPLY    <- ID_REF ('(' REFS ')')?
 			REFS     <- ID_REF (',' ID_REF)*
 			QED      <- 'qed' 'prop' ID_REF '=' 'step' ID_REF ';;'
 
+			VAR_DECL <- 'var' VARS ';;'
 			VARS     <- (VAR (',' VAR)*)?
 			VAR      <- SYMB : ID_REF
             BAR      <- '-----' '-'*
@@ -121,6 +124,10 @@ public:
 		};
 		parser["VARS"] = [](const peg::SemanticValues& sv) {
 			return Vars(sv.transform<Symbol>());
+		};
+		// VAR_DECL <- 'var' VARS ';;'
+		parser["VAR_DECL"] = [](const peg::SemanticValues& sv) {
+			return new Vars(sv[0].get<Vars>());
 		};
 		parser["DISJ_SET"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* context = ctx.get<Context*>();
@@ -204,6 +211,39 @@ public:
 			a->disj  = std::move(fisj);
 			a->hyps  = std::move(hyps);
 			//a->props = std::move(props);
+			return a;
+		};
+
+		//	APPLY <- ID_REF ('(' REFS ')')?
+		//	REFS  <- ID_REF (',' ID_REF)*
+		//	QED <- 'qed' 'prop' ID_REF '=' 'step' ID_REF ';;'
+
+		//  STEP  <- 'step' IND ':' ID_REF '=' (APPLY | '?') '|-' EXPR ';;'
+		parser["STEP"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			uint ind = sv[0].get<uint>();
+			Id  type = sv[1].get<Id>();
+
+		};
+
+		// PROOF_EL <- VAR_DECL / STEP / QED
+		parser["PROOF_EL"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Proof::Elem el;
+			switch (sv.choice()) {
+			case 0: el = Proof::Elem(sv[0].get<Vars*>()); break;
+			case 1: el = Proof::Elem(sv[0].get<Step*>()); break;
+			case 2: el = Proof::Elem(sv[0].get<Qed*>());  break;
+			}
+			return el;
+		};
+		parser["PROOF_BD"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			return sv.transform<Proof::Elem>();
+		};
+		// PROOF <- 'proof' ID_NAME? 'of' ID_REF '{' PROOF_BD '}'
+		parser["PROOF"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			uint id   = sv[0].is_undefined() ? UNDEF : sv[0].get<uint>();
+			Id   ref  = sv[1].get<Id>();
+			vector<Proof::Elem> body = sv[2].get<vector<Proof::Elem>>();
 			return a;
 		};
 

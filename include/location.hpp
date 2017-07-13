@@ -119,7 +119,7 @@ struct Token {
 
 	bool preceeds (const Token<S>& t) {
 		if (t.src->includes.count(src)) return true;
-		if (t.src == src) return end < t.beg;
+		if (t.src == src) return end <= t.beg;
 		return false;
 	}
 
@@ -132,12 +132,14 @@ struct Token {
 	}
 
 	bool is_defined() const { return src && beg && end; }
+	operator bool() const { return is_defined(); }
 	string str() const { return string(beg, end); }
+	uint length() const { return beg <= end ? end - beg : 0; }
 };
 
 template<class S>
 inline bool operator < (const Token<S>& l, const Token<S>& r) {
-	return l.end < r.beg;
+	return l.end <= r.beg;
 }
 
 template<class S>

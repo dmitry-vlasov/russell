@@ -408,17 +408,24 @@ struct Ref {
 	typedef typename S::Src Src;
 	typedef Token<Src> Token_;
 	typedef Tokenable<Src> Tokenable_;
-	Ref() : sys(-1), id(-1), ptr(nullptr) { }
-	uint sys;
-	uint id;
-	Tokenable_* ptr;
-	template<class T>
-	T* get() { return dynamic_cast<T*>(ptr); }
-	template<class T>
-	const T* get() const { return dynamic_cast<const T*>(ptr); }
 
-	template<class T>
-	T*& get_ref() { return reinterpret_cast<T*&>(ptr); }
+	Ref() : count_(0), ptr(nullptr) { }
+	void add_ref (Tokenable_* p) {
+		if (count_ && p != ptr) throw Error("incorrect ref assignment");
+		ptr = p;
+		++ count_;
+	}
+	bool del_ref() {
+		if (!count_) throw Error("incorrect ref deletion");
+		return --count_ == 0;
+	}
+	Tokenable_* get() { return ptr; }
+	uint count() const { return count_; }
+	string str() const { return to_string(count_) + ": " + (ptr ? ptr->token.str() : "<none>"); }
+private:
+	uint count_;
+	Tokenable_* ptr;
+
 };
 
 template<class S>
@@ -431,92 +438,94 @@ class Refs {
 
 public:
 
-	static void add(const Token_& t, Ref_* r) {
-		refs()[t] = r;
+	static void add(const Token_& t, Tokenable_* r) {
+		if (t.is_defined()) refs()[t].add_ref(r);
 	}
 	static void del(const Token_& t) {
-		refs().erase(t);
+		if (t.is_defined() && refs()[t].del_ref()) refs().erase(t);
 	}
 	static Tokenable_* find(uint src, const uint line, const uint col) {
 		Src* s = Sys::mod().math.template get<Src>().access(src);
 		const char* c = locate_position(line, col, s->data.c_str());
 		Token_ t(s, c, c);
-		return refs().count(t) ? refs().at(t)->ptr : nullptr;
+		return refs().count(t) ? refs().at(t).get() : nullptr;
 	}
 
 private:
 	Refs() { }
-	static map<Token_, Ref_*>& refs() {
-		static map<Token_, Ref_*> r; return r;
+	static map<Token_, Ref_>& refs() {
+		static map<Token_, Ref_> r; return r;
 	}
 };
 
 template<class T, class S>
 class User : public Tokenable<typename S::Src> {
-	Ref<S> ref;
+	uint sys_;
+	uint id_;
+	T*   ptr;
 public:
 	typedef S Sys;
 	typedef typename S::Src Src;
 	typedef Refs<Sys> Refs_;
 	typedef Tokenable<Src> Tokenable_;
 	typedef Id<Src> Id_;
-	explicit User() : Tokenable_(Token<Src>()) { }
 
-	explicit User(uint id, const Token<Src>& t = Token<Src>()) : Tokenable_(t) { use(id); }
-	explicit User(Id_ i) : Tokenable_(i.token) { use(i.id); }
+	explicit User(uint id = -1, const Token<Src>& t = Token<Src>()) : Tokenable_(t), sys_(-1), id_(-1), ptr(nullptr) { use(id); }
+	explicit User(Id_ i) : Tokenable_(i.token), sys_(-1), id_(-1), ptr(nullptr) { use(i.id); }
 
-	User(const T* p, const Token<Src>& t = Token<Src>()) : Tokenable_(t) { if (p) use(p->id()); }
+	User(const T* p, const Token<Src>& t = Token<Src>()) : Tokenable_(t), sys_(-1), id_(-1), ptr(nullptr) { if (p) use(p->id()); }
 	User(const User& u) : User(u.id(), u.token) { }
 	User(User&& u)      : User(u.id(), u.token) { u.unuse(); }
 	~User() { unuse(); }
 	void operator = (const T* p)    { use(p->id()); }
-	void operator = (const User& u) { use(u.id()); }
-	void operator = (User&& u)      { use(u.id()); u.unuse(); }
+	void operator = (const User& u) { Tokenable_::token = u.token; use(u.id()); }
+	void operator = (User&& u)      { Tokenable_::token = u.token; use(u.id()); u.unuse(); }
 
-	bool operator == (const User& u) const { return ref.ptr == u.ref.ptr; }
-	bool operator != (const User& u) const { return ref.ptr != u.ref.ptr; }
-	bool operator < (const User& u) const  { return ref.ptr <  u.ref.ptr; }
-	bool operator <= (const User& u) const { return ref.ptr <= u.ref.ptr; }
-	bool operator > (const User& u) const  { return ref.ptr >  u.ref.ptr; }
-	bool operator >= (const User& u) const { return ref.ptr >= u.ref.ptr; }
+	bool operator == (const User& u) const { return ptr == u.ptr; }
+	bool operator != (const User& u) const { return ptr != u.ptr; }
+	bool operator < (const User& u) const  { return ptr <  u.ptr; }
+	bool operator <= (const User& u) const { return ptr <= u.ptr; }
+	bool operator > (const User& u) const  { return ptr >  u.ptr; }
+	bool operator >= (const User& u) const { return ptr >= u.ptr; }
 
-	bool operator == (const T* p) const { return ref.ptr == p; }
-	bool operator != (const T* p) const { return ref.ptr != p; }
-	bool operator < (const T* p) const  { return ref.ptr < p; }
-	bool operator <= (const T* p) const { return ref.ptr <= p; }
-	bool operator > (const T* p) const  { return ref.ptr > p; }
-	bool operator >= (const T* p) const { return ref.ptr >= p; }
+	bool operator == (const T* p) const { return ptr == p; }
+	bool operator != (const T* p) const { return ptr != p; }
+	bool operator < (const T* p) const  { return ptr < p; }
+	bool operator <= (const T* p) const { return ptr <= p; }
+	bool operator > (const T* p) const  { return ptr > p; }
+	bool operator >= (const T* p) const { return ptr >= p; }
 
-	friend bool operator == (const T* p, const User<T, S>& u) { return p == u.ref.ptr; }
-	friend bool operator != (const T* p, const User<T, S>& u) { return p != u.ref.ptr; }
-	friend bool operator < (const T* p, const User<T, S>& u)  { return p <  u.ref.ptr; }
-	friend bool operator <= (const T* p, const User<T, S>& u) { return p <= u.ref.ptr; }
-	friend bool operator > (const T* p, const User<T, S>& u)  { return p >  u.ref.ptr; }
-	friend bool operator >= (const T* p, const User<T, S>& u) { return p >= u.ref.ptr; }
+	friend bool operator == (const T* p, const User<T, S>& u) { return p == u.ptr; }
+	friend bool operator != (const T* p, const User<T, S>& u) { return p != u.ptr; }
+	friend bool operator < (const T* p, const User<T, S>& u)  { return p <  u.ptr; }
+	friend bool operator <= (const T* p, const User<T, S>& u) { return p <= u.ptr; }
+	friend bool operator > (const T* p, const User<T, S>& u)  { return p >  u.ptr; }
+	friend bool operator >= (const T* p, const User<T, S>& u) { return p >= u.ptr; }
 
-	operator bool() const { return ref.ptr; }
+	operator bool() const { return ptr; }
 
-	T* get() { return ref.template get<T>(); }
-	const T* get() const { return ref.template get<T>(); }
-	uint id() const { return ref.id; }
-	uint sys() const { return ref.sys; }
+	T* get() { return ptr; }
+	const T* get() const { return ptr; }
+	uint id() const { return id_; }
+	uint sys() const { return sys_; }
 	void set(Id_ i) { Tokenable_::token = i.token; use(i.id); }
 
 	void use(uint id) {
 		unuse();
-		ref.sys = Sys::get().id;
-		ref.id = id;
-		if (ref.id != -1) {
-			Sys::mod(ref.sys).math.template get<T>().use(ref.id, ref.template get_ref<T>());
-			if (Tokenable_::token.is_defined()) Refs_::add(Tokenable_::token, &ref);
+		sys_ = Sys::get().id;
+		id_ = id;
+		if (id_ != -1) {
+			Sys::mod(sys_).math.template get<T>().use(id_, ptr);
+			Refs_::add(Tokenable_::token, ptr);
 		}
 	}
 	void unuse() {
-		if (ref.id != -1) {
-			Sys::mod(ref.sys).math.template get<T>().unuse(ref.id, ref.template get_ref<T>());
-			if (Tokenable_::token.is_defined()) Refs_::del(Tokenable_::token);
+		if (id_ != -1) {
+			Sys::mod(sys_).math.template get<T>().unuse(id_, ptr);
+			Refs_::del(Tokenable_::token);
+			id_ = -1;
 		}
-		ref.ptr = nullptr;
+		ptr = nullptr;
 	}
 };
 
