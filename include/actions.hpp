@@ -74,6 +74,13 @@ struct Descr {
 		args.push_back(a3);
 		calculate_arity();
 	}
+	Descr(const string& d, const Arg& a1, const Arg& a2, const Arg& a3, const Arg& a4, bool k = false) : descr(d), arity(3), keep_args(k) {
+		args.push_back(a1);
+		args.push_back(a2);
+		args.push_back(a3);
+		args.push_back(a4);
+		calculate_arity();
+	}
 	Descr(const string& d, int a, bool k = false) : descr(d), arity(a), keep_args(k) { }
 
 	string      descr;

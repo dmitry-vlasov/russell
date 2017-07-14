@@ -81,9 +81,14 @@ Return options(const vector<string>& args) {
 	return Sys::conf().read(args);
 }
 
-Return lookup(uint src, uint line, uint col) {
-	Tokenable* def = Refs<Sys>::find(src, line, col);
-	return def ? Return("definition found", def->token.str()) : Return("definition not found", false);
+Return lookup(uint src, uint line, uint col, string what) {
+	Tokenable* tok = Refs<Sys>::find(src, line, col);
+	if (what == "def")
+		return tok ? Return("definition found", tok->token.str()) : Return("definition not found", false);
+	else if (what == "loc")
+		return tok ? Return("location found", tok->token.locate().show()) : Return("definition not found", false);
+	else
+		return Return("incorrect lookup mode: " + what, false);
 }
 
 static Descr description(string name) {
@@ -96,7 +101,7 @@ static Descr description(string name) {
 		{"show",   Descr("show entity")},
 		{"cut",    Descr("cut the source",       Descr::Arg("in", "file"), Descr::Arg("out", "file"), Descr::Arg("out-root", "dir"))},
 		{"merge",  Descr("merge the source",     Descr::Arg("in", "file"), Descr::Arg("out", "file"), Descr::Arg("out-root", "dir"))},
-		{"lookup", Descr("lookup a symbol def",  Descr::Arg("in", "file"), Descr::Arg("line", "row"), Descr::Arg("col", "column"))}
+		{"lookup", Descr("lookup a symbol def",  Descr::Arg("in", "file"), Descr::Arg("line", "row"), Descr::Arg("col", "column"), Descr::Arg("what", "loc|def"))}
 	};
 	return m.count(name) ? m.at(name) : Descr();
 }
@@ -116,7 +121,7 @@ const Sys::Actions& Sys::actions() {
 		{"cut",    Action([](const Args& args) { cut(Sys::make_name(args[0]), Sys::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("cut"))},
 		{"merge",  Action([](const Args& args) { merge(Sys::make_name(args[0]), Sys::make_name(args[1]), Lex::toInt(args[2])); return Return(); }, description("merge"))},
 		{"opts",   Action([](const Args& args) { conf().read(args); return Return(); }, conf().descr())},
-		{"lookup", Action([](const Args& args) { Return ret = lookup(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2])); return ret; }, description("lookup"))},
+		{"lookup", Action([](const Args& args) { Return ret = lookup(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3]); return ret; }, description("lookup"))},
 	};
 	return actions;
 }

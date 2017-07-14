@@ -85,9 +85,14 @@ void write(uint s, bool deep) {
 	}
 }
 
-Return lookup(uint src, uint line, uint col) {
-	Tokenable* def = Refs<Sys>::find(src, line, col);
-	return def ? Return("definition found", def->token.str()) : Return("definition not found", false);
+Return lookup(uint src, uint line, uint col, string what) {
+	Tokenable* tok = Refs<Sys>::find(src, line, col);
+	if (what == "def")
+		return tok ? Return("definition found", tok->token.str()) : Return("definition not found", false);
+	else if (what == "loc")
+		return tok ? Return("location found", tok->token.locate().show()) : Return("definition not found", false);
+	else
+		return Return("incorrect lookup mode: " + what, false);
 }
 
 }
@@ -170,7 +175,7 @@ static Descr description(string name) {
 		{"verify", Descr("verify all theorems",  Descr::Arg("in", "file"))},
 		{"info",   Descr("info about math")},
 		{"show",   Descr("show entity")},
-		{"lookup", Descr("lookup a symbol def",  Descr::Arg("in", "file"), Descr::Arg("line", "row"), Descr::Arg("col", "column"))},
+		{"lookup", Descr("lookup a symbol",      Descr::Arg("in", "file"), Descr::Arg("line", "row"), Descr::Arg("col", "column"), Descr::Arg("what", "loc|def"))},
 	};
 	return m.count(name) ? m.at(name) : Descr();
 }
@@ -190,7 +195,7 @@ const Sys::Actions& Sys::actions() {
 		{"info",   Action([](const Args& args) { info(); return Return(); }, description("info"))},
 		{"show",   Action([](const Args& args) { info(); return Return(); }, description("show"))},
 		{"opts",   Action([](const Args& args) { conf().read(args); return Return(); }, conf().descr())},
-		{"lookup", Action([](const Args& args) { Return ret = lookup(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2])); return ret; }, description("lookup"))}
+		{"lookup", Action([](const Args& args) { Return ret = lookup(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3]); return ret; }, description("lookup"))}
 	};
 	return actions;
 }

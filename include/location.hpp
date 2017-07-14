@@ -53,16 +53,18 @@ ostream& operator << (ostream& os, const wrapper<len_f, len_b>& wr){
 struct Location {
 	Location() :
 	line(0), col(0), pos(0), file(-1) { }
-	Location(uint f) :
-	line(0), col(0), pos(0), file(f) { }
+	Location(uint f, const string& e = "", const string& r = "") :
+	line(0), col(0), pos(0), file(f), ext(e), root(r) { }
 	Location(const Location& loc) :
-	line(loc.line), col(loc.col), pos(loc.pos), file(loc.file) { }
+	line(loc.line), col(loc.col), pos(loc.pos), file(loc.file), ext(loc.ext), root(loc.root) { }
 
 	Location& operator = (const Location& loc) {
 		line = loc.line;
 		col  = loc.col;
 		pos  = loc.pos;
 		file = loc.file;
+		ext  = loc.ext;
+		root = loc.root;
 		return *this;
 	}
 
@@ -70,12 +72,16 @@ struct Location {
 	uint col;
 	uint pos;
 	uint file;
+	string ext;
+	string root;
 
 	string show() const {
 		string s;
-		s += "file: " + Lex::toStr(file) + " ";
-		s += "line: " + to_string(line + 1) + " ";
-		s += "col: "  + to_string(col + 1);
+		s += "file: " + Lex::toStr(file) + "\n";
+		s += "ext: "  + ext + "\n";
+		s += "root: " + root + "\n";
+		s += "line: " + to_string(line + 1) + "\n";
+		s += "col: "  + to_string(col + 1) + "\n";
 		return s;
 	}
 };
@@ -129,6 +135,20 @@ struct Token {
 		LocationIter x = b;
 		while (x != e) ++x;
 		return x.loc.show();
+	}
+	Location locate() const {
+		Location loc(
+			src->id(),
+			Source::Sys::ext(),
+			Source::Sys::conf(src->sys()).get("root")
+		);
+		const char* mid = beg + length() / 2;
+		const char* s = src->data.c_str();
+		while (s) {
+			if (*s++ == '\n') { ++loc.line; loc.col = 0; } else ++loc.col;
+			if (s == mid) return loc;
+		}
+		return Location();
 	}
 
 	bool is_defined() const { return src && beg && end; }
