@@ -80,6 +80,14 @@ struct Assertion : public Owner<Assertion> {
 	~ Assertion() override;
 	uint arity() const { return hyps.size(); }
 	virtual Kind kind() const = 0;
+	string kindStr() const {
+		switch (kind()) {
+		case AXM : return "axiom";
+		case THM : return "theorem";
+		case DEF : return "definition";
+		default  : return "<none>";
+		}
+	}
 
 	Vars vars;
 	Disj disj;
@@ -363,6 +371,27 @@ string show(const Import&);
 string show(const Theory&);
 string show(const Source&);
 string show(const Comment&);
+
+string xml(const Const&, uint);
+//string xml(const Vars&, uint);
+//string xml(const Disj&, uint);
+string xml(const Type&, uint);
+string xml(const Rule&, uint);
+//string xml(const Axiom&, uint);
+//string xml(const Def&, uint);
+string xml(const Assertion&, uint);
+//string xml(const Theorem&, uint);
+string xml(const Proof&, uint);
+//string xml(const Step&, uint);
+//string xml(const Ref&, uint);
+//string xml(const Qed&, uint);
+//string xml(const Hyp&, uint);
+//string xml(const Prop&, uint);
+string xml(const Node&, uint);
+string xml(const Import&, uint);
+string xml(const Theory&, uint);
+string xml(const Source&, uint);
+//string xml(const Comment&, uint);
 
 inline ostream& operator << (ostream& os, const Const& c)   { os << show(c); return os; }
 inline ostream& operator << (ostream& os, const Vars& v)    { os << show(v); return os; }

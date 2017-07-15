@@ -11,6 +11,7 @@
 #include "path.hpp"
 #include "conf.hpp"
 #include "error.hpp"
+#include "xml.hpp"
 
 namespace mdl {
 
@@ -387,6 +388,13 @@ public:
 	template<class, class> friend class User;
 };
 
+inline string xml_sys_id(uint sys, uint id) {
+	string ret;
+	ret += "sys=\"" + Lex::toStr(sys) + "\" ";
+	ret += "id=\"" + Lex::toStr(id) + "\" ";
+	return ret;
+}
+
 template<class T, class S>
 class Owner : public Tokenable<typename S::Src> {
 	const uint sys_;
@@ -400,6 +408,13 @@ public:
 	virtual ~Owner() { Sys::mod(sys_).math.template get<T>().del(id_); }
 	uint id() const { return id_; }
 	uint sys() const { return sys_; }
+	string xml_id() const {
+		return xml_sys_id(sys_, id_);
+		/*string ret;
+		ret += "sys=\"" + Lex::toStr(sys_) + "\" ";
+		ret += "id=\"" + Lex::toStr(id_) + "\" ";
+		return ret;*/
+	}
 };
 
 template<class S>

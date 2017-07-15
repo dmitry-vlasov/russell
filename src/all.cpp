@@ -3,6 +3,7 @@
 #include "com/common.cpp"
 #include "com/memusage.cpp"
 #include "com/timer.cpp"
+#include "com/xml.cpp"
 
 #include "daem/daemon.cpp"
 
@@ -27,6 +28,7 @@
 #include "rus/show.cpp"
 #include "rus/translate.cpp"
 #include "rus/verify.cpp"
+#include "rus/xml.cpp"
 
 #include "smm/ast.cpp"
 #include "smm/parser.cpp"

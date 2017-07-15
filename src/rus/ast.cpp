@@ -101,7 +101,8 @@ Proof::~Proof() {
 	for (auto& e : elems) e.destroy();
 }
 
-Source::Source(uint label) : mdl::Source<Source, Sys>(label), theory(nullptr) { }
+Source::Source(uint label) :
+	mdl::Source<Source, Sys>(label), theory() { }
 Source::~Source() {
 	if (theory) delete theory;
 }

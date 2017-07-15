@@ -18,6 +18,7 @@ else()
 		com/timer.cpp 
 		com/memusage.cpp 
 		com/common.cpp 
+		com/xml.cpp 
 		
 		daem/daemon.cpp 
 		
@@ -39,6 +40,7 @@ else()
 		rus/show.cpp 
 		rus/translate.cpp 
 		rus/verify.cpp 
+		rus/xml.cpp 
 		
 		smm/ast.cpp 
 		smm/sys.cpp 
