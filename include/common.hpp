@@ -392,6 +392,7 @@ inline string xml_sys_id(uint sys, uint id) {
 	string ret;
 	ret += "sys=\"" + Lex::toStr(sys) + "\" ";
 	ret += "id=\"" + Lex::toStr(id) + "\" ";
+	ret += "name=\"" + Lex::toStr(id) + "\" ";
 	return ret;
 }
 

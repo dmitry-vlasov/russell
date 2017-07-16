@@ -16,10 +16,11 @@ struct Indent {
 		while (n --) os << del;
 	}
 	static string paragraph(const string& str, string d = "\t") {
-		string indented;
-		for (char ch : str) {
-			if (ch == '\n') indented += "\n" + d;
-			else            indented += ch;
+		if (!str.size()) return "";
+		string indented(d);
+		for (auto i = str.begin(); i != str.end(); ++ i) {
+			if (*i == '\n' && i + 1 != str.end()) indented += "\n" + d;
+			else indented += *i;
 		}
 		return indented;
 	}
