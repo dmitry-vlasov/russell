@@ -31,7 +31,7 @@ string xml(const Type& t, uint bits) {
 }
 
 string xml(const Rule& r, uint bits) {
-	if (!xml_bit(bits, XmlNode::RULE)) return "";
+	if (!(xml_bit(bits, XmlNode::RULE) && r.token.is_defined())) return "";
 	string ret = "<rule ";
 	ret += r.xml_id();
 	ret += r.token.locate().xml();
