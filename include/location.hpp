@@ -2,6 +2,7 @@
 
 #include "std.hpp"
 #include "lex.hpp"
+#include "xml.hpp"
 
 namespace mdl { 
 
@@ -85,7 +86,7 @@ struct Location {
 	}
 	string xml() const {
 		string s;
-		s += "path=\"" + root + "/" + Lex::toStr(file) + "." + ext + "\" ";
+		s += "path=\"" + root + "/" + escape_xml(Lex::toStr(file)) + "." + ext + "\" ";
 		s += "line=\"" + to_string(line + 1) + "\" ";
 		s += "col=\""  + to_string(col + 1) + "\" ";
 		return s;

@@ -409,13 +409,7 @@ public:
 	virtual ~Owner() { Sys::mod(sys_).math.template get<T>().del(id_); }
 	uint id() const { return id_; }
 	uint sys() const { return sys_; }
-	string xml_id() const {
-		return xml_sys_id(sys_, id_);
-		/*string ret;
-		ret += "sys=\"" + Lex::toStr(sys_) + "\" ";
-		ret += "id=\"" + Lex::toStr(id_) + "\" ";
-		return ret;*/
-	}
+	string xml_id() const { return xml_sys_id(sys_, id_); }
 };
 
 template<class S>

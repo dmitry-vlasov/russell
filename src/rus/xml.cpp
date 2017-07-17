@@ -2,26 +2,16 @@
 
 namespace mdl { namespace rus {
 
-void writeXMLSafe (string& str, const string& s) {
-	for (char c : s) {
-		switch (c) {
-		case '\"': str += "&quot;"; break;
-		case '\'': str += "&apos;"; break;
-		case '&' : str += "&amp;";  break;
-		case '<' : str += "&lt;";   break;
-		case '>' : str += "&gt;";   break;
-		default  : str += c;       break;
-		}
-	}
-}
-
 string xml(const Const& c, uint bits) {
 	if (!xml_bit(bits, XmlNode::CONST)) return "";
 	string ret = "<constant ";
-	ret += "name=\""; writeXMLSafe (ret, Lex::toStr(c.symb)); ret += "\" ";
-	ret += c.xml_id();
+	ret += "sys=\"" + Lex::toStr(c.sys()) + "\" ";
+	ret += "id=\"" + escape_xml(Lex::toStr(c.ascii)) + "\" ";
+	ret += "name=\"" + escape_xml(Lex::toStr(c.ascii)) + "\" ";
 	ret += c.token.locate().xml();
-	ret += "/>\n";
+	ret += ">\n";
+	ret += "\t" + Lex::toStr(c.symb) + "\n";
+	ret += "</constant>\n";
 	return ret;
 }
 
@@ -119,7 +109,7 @@ string xml(const Theory& t, uint bits) {
 	return ret;
 }
 
-string xml(const Source& s, uint bits) {
+string xml_outline(const Source& s, uint bits) {
 	string ret;
 	ret += "<!DOCTYPE russell_mining_output>\n";
 	ret += "<outline>\n";
@@ -129,5 +119,31 @@ string xml(const Source& s, uint bits) {
 	return ret;
 }
 //string xml(const Comment&, uint bits);
+
+
+template<class T>
+string xml_struct(uint bits) {
+	string  ret;
+	for (auto& p : Sys::mod().math.get<T>())
+		ret += xml(*p.second.data, bits);
+	return ret;
+}
+
+string xml_structure(uint bits) {
+	string ret;
+	ret += "<!DOCTYPE russell_mining_output>\n";
+	ret += "<structure>\n";
+	if (xml_bit(bits, XmlNode::CONST))
+		ret += Indent::paragraph(xml_struct<Const>(bits));
+	if (xml_bit(bits, XmlNode::TYPE))
+		ret += Indent::paragraph(xml_struct<Type>(bits));
+	if (xml_bit(bits, XmlNode::RULE))
+		ret += Indent::paragraph(xml_struct<Rule>(bits));
+	if (xml_bit(bits, XmlNode::AXIOM) || xml_bit(bits, XmlNode::DEF))
+		ret += Indent::paragraph(xml_struct<Assertion>(bits));
+	ret += "</structure>\n";
+	return ret;
+}
+
 
 }}

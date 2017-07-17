@@ -390,7 +390,7 @@ string xml(const Proof&, uint);
 string xml(const Node&, uint);
 string xml(const Import&, uint);
 string xml(const Theory&, uint);
-string xml(const Source&, uint);
+string xml_outline(const Source&, uint);
 //string xml(const Comment&, uint);
 
 inline ostream& operator << (ostream& os, const Const& c)   { os << show(c); return os; }

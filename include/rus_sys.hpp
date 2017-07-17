@@ -37,6 +37,8 @@ public:
 	const Table<T>& get() const;
 };
 
+string xml_structure(uint bits);
+
 struct Sys : public mdl::Sys<Sys, Math> {
 	typedef Source Src;
 	Sys(uint id) : mdl::Sys<Sys, Math>(id) { }

@@ -97,8 +97,12 @@ Return lookup(uint src, uint line, uint col, string what) {
 
 Return outline(uint s, uint bits) {
 	const Source* src = Sys::get().math.get<Source>().access(s);
-	string outline = xml(*src, bits);
+	string outline = xml_outline(*src, bits);
 	return Return("source outline", outline);
+}
+
+Return structure(uint bits) {
+	return Return("structure", xml_structure(bits));
 }
 
 }
@@ -183,7 +187,7 @@ static Descr description(string name) {
 		{"show",   Descr("show entity")},
 		{"lookup", Descr("lookup a symbol",      Descr::Arg("in", "file"), Descr::Arg("line", "row"), Descr::Arg("col", "column"), Descr::Arg("what", "loc|def"))},
 		{"outline", Descr("make an xml outline", Descr::Arg("in", "file"), Descr::Arg("what", "import,const,type,rule,axiom,def,theorem,proof,theory,problem"))},
-		{"struct",  Descr("global xml structure", Descr::Arg("what", "import,const,type,rule,axiom,def,theorem,proof,theory,problem"))},
+		{"struct",  Descr("global xml structure", Descr::Arg("what", "import,const,type,rule,axiom,def,theory"))},
 	};
 	return m.count(name) ? m.at(name) : Descr();
 }
@@ -204,7 +208,8 @@ const Sys::Actions& Sys::actions() {
 		{"show",   Action([](const Args& args) { info(); return Return(); }, description("show"))},
 		{"opts",   Action([](const Args& args) { conf().read(args); return Return(); }, conf().descr())},
 		{"lookup", Action([](const Args& args) { Return ret = lookup(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3]); return ret; }, description("lookup"))},
-		{"outline", Action([](const Args& args) { Return ret = outline(Sys::make_name(args[0]), xml_bits(args[1])); return ret; }, description("outline"))}
+		{"outline", Action([](const Args& args) { Return ret = outline(Sys::make_name(args[0]), xml_bits(args[1])); return ret; }, description("outline"))},
+		{"struct",  Action([](const Args& args) { Return ret = structure(xml_bits(args[0])); return ret; }, description("struct"))}
 	};
 	return actions;
 }
