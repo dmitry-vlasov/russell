@@ -1,3 +1,5 @@
+#include <cctype>
+
 #include <daem.hpp>
 
 #include "boost/iostreams/stream.hpp"
@@ -8,9 +10,14 @@ namespace mdl {
 
 using namespace boost::asio;
 
-inline bool get_nonempty_line(stringstream& ss, string& arg) {
-	while (getline(ss, arg, ' ')) if (!arg.empty()) return true;
-	return false;
+inline bool get_nonempty_line(string& ss, string& arg) {
+	arg.clear();
+	int ws = 0;
+	auto i = ss.cbegin();
+	for (; i != ss.cend() && isspace(*i);  ++i) ++ws;
+	for (; i != ss.cend() && !isspace(*i); ++i) arg += *i;
+	ss = ss.substr(arg.size() + ws);
+	return !arg.empty();
 }
 
 static string receive_string(boost::asio::ip::tcp::socket& socket, bool& close) {
@@ -36,11 +43,13 @@ static string receive_string(boost::asio::ip::tcp::socket& socket, bool& close) 
 static void send_string(boost::asio::ip::tcp::socket& socket, const string& str) {
 	uint msg_len = str.size();
 	boost::asio::write(socket, boost::asio::buffer(&msg_len, sizeof(uint)));
-	boost::asio::write(socket, boost::asio::buffer(str));
+	size_t written = boost::asio::write(socket, boost::asio::buffer(str));
+	if (written != msg_len) {
+		throw Error("incorrect transfer");
+	}
 }
 
-
-Return execute(const string& command) {
+Return execute_command(const string& command) {
 	if (command == "status") {
 		return Return("russell daemon is running ...");
 	}
@@ -48,7 +57,7 @@ Return execute(const string& command) {
 	uint sys = -1;
 	Args args;
 	{
-		stringstream str(command);
+		string str = command;
 		string arg;
 		if (!get_nonempty_line(str, arg)) return Return("no language is chosen", false);
 		int i = arg.find_last_of(":");
@@ -62,6 +71,21 @@ Return execute(const string& command) {
 	case Lang::SMM : ret = smm::Sys::exec_and_show(args); break;
 	case Lang::MM  : ret =  mm::Sys::exec_and_show(args); break;
 	case Lang::NONE: return Return("unknown language, command: " + command, false);
+	}
+	return ret;
+}
+
+Return execute(const string& coms) {
+	string com_list(coms);
+	Return ret;
+	while (com_list.size()) {
+		string::size_type sep = com_list.find(';');
+		string com = com_list.substr(0, sep);
+		com_list = sep == string::npos ? "" : com_list.substr(sep + 1);
+		Return r = execute_command(com);
+		if (!r) return r;
+		ret.data += com_list.size() && r.data.size() ? '\n' + r.data : r.data;
+		ret.msg  += com_list.size() && r.msg.size()  ? '\n' + r.msg  : r.msg;
 	}
 	return ret;
 }
@@ -158,7 +182,7 @@ void Console::session() {
 }
 
 Console::Console() : resolver(service), socket(service),
-endpoint(*resolver.resolve({conn.host, to_string(conn.port)})), message_size(-1) {
+endpoint(*resolver.resolve({conn.host, to_string(conn.port)})) {
 }
 
 void Console::start(bool verb) {

@@ -575,13 +575,14 @@ struct Source : public Owner<Src, Sys> {
 	}
 };
 
-Return execute(const string& command);
+Return execute_command(const string& command);
+Return execute(const string& commands);
 
 inline void execute(queue<string>& commands) {
 	while (!commands.empty()) {
 		string command = commands.front(); commands.pop();
 		if (command == "exit" || command == "cancel" || command == "quit") break;
-		Return ret = execute(command);
+		Return ret = execute_command(command);
 		if (!ret) {
 			cerr << ret.msg << endl;
 			break;

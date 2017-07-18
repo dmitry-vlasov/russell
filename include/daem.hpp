@@ -30,12 +30,10 @@ struct Daemon {
 	static Daemon& mod() { static Daemon d; return d; }
 
 private:
-	enum { MAX_MESSAGE_SIZE = 1024 };
-	boost::asio::io_service service;
+	boost::asio::io_service        service;
 	boost::asio::ip::tcp::endpoint endpoint;
 	boost::asio::ip::tcp::acceptor acceptor;
 	boost::asio::ip::tcp::socket   socket;
-	char buffer[MAX_MESSAGE_SIZE];
 	enum State { RUN_QUEUE, RUN_REQUEST, EXIT, CLOSE };
 	State state;
 	queue<string> commands;
@@ -60,13 +58,10 @@ struct Console {
 	static Console& mod() { static Console c; return c; }
 
 private:
-	enum { MAX_MESSAGE_SIZE = 1024 };
-	boost::asio::io_service service;
+	boost::asio::io_service        service;
 	boost::asio::ip::tcp::resolver resolver;
 	boost::asio::ip::tcp::socket   socket;
 	boost::asio::ip::tcp::endpoint endpoint;
-	int  message_size;
-	char buff[MAX_MESSAGE_SIZE];
 	queue<string> commands;
 	bool verbose = false;
 
