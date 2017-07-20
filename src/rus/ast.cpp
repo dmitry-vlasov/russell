@@ -96,6 +96,8 @@ inline uint make_proof_id(uint id, const Theorem* th) {
 
 Proof::Proof(Theorem* th, Id i, const Token& t) :
 	Owner(make_proof_id(i.id, th), t), thm(th), par(nullptr) {
+	th->proofs.push_back(User<Proof>(id()));
+	assert(this == th->proofs.back().get());
 }
 Proof::~Proof() {
 	for (auto& e : elems) e.destroy();

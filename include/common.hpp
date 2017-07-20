@@ -258,6 +258,7 @@ struct Sys {
 	static uint curr() { return curr_(); }
 
 	static uint make_name(string n) {
+		if (!n.size()) return -1;
 		boost::trim(n);
 		n = n.substr(0, n.find_last_of('.'));
 		n = n.substr(n.find(':') + 1);

@@ -93,6 +93,7 @@ check "${binpath}/mdl
     \"smm opts verbose\"     
     \"rus read in=${file}.rus\" 
     \"rus parse \" 
+    \"rus verify \"
     \"rus transl in=${file}.rus out=${file}-1.smm\" 
     \"smm write in=${file}-1.smm\"
     exit"

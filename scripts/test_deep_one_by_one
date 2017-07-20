@@ -110,6 +110,7 @@ check "${binpath}/mdl
     \"rus opts verbose root=rus\" 
     \"rus read in=${file}.rus\"
     \"rus parse \"
+    \"rus verify \"
     \"rus transl in=${file}.rus out=${file}.smm\" 
     \"smm write in=${file}.smm deep=true\"
     exit"

@@ -73,6 +73,7 @@ run "${binpath}/mdl -c -v
     \"rus write in=${file}.rus\"
     \"rus read in=${file}.rus \" 
     \"rus parse \" 
+    \"rus verify \"
     
     \"smm curr proj=B\"
     \"smm opts verbose\" 

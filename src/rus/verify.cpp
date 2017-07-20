@@ -76,11 +76,16 @@ void verify_proof(const Proof* proof) {
 void verify_theory(const Theory* theory) {
 	for (auto n : theory->nodes) {
 		switch (n.kind) {
-		case Node::PROOF:  verify_proof(n.val.prf); break;
 		case Node::THEORY: verify_theory(n.val.thy); break;
 		case Node::IMPORT: {
 			const Import* imp = n.val.imp;
 			if (imp->primary) verify_theory(imp->source.get()->theory);
+			break;
+		}
+		case Node::THEOREM: {
+			const Theorem* t = n.val.thm;
+			if (!t->proofs.size()) throw Error("Theorem has no proof", show_id(t->id()));
+			for (const User<Proof>& p : t->proofs) verify_proof(p.get());
 			break;
 		}
 		default: break;
@@ -93,6 +98,15 @@ void verify_theory(const Theory* theory) {
 void verify(uint src) {
 	const Source* source = Sys::get().math.get<Source>().access(src);
 	verify_theory(source->theory);
+}
+
+void verify() {
+	for (const auto& a : Sys::mod().math.get<Assertion>()) {
+		if (const Theorem* t = dynamic_cast<const Theorem*>(a.second.data)) {
+			if (!t->proofs.size()) throw Error("Theorem is not proved", show_id(t->id()));
+			for (const User<Proof>& p : t->proofs) verify_proof(p.get());
+		}
+	}
 }
 
 }} // mdl::rus

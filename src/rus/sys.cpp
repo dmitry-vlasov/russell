@@ -49,6 +49,7 @@ template const Table<Assertion>& Math::get<Assertion>() const;
 
 Source* parse(uint);
 void verify(uint src);
+void verify();
 smm::Source* translate(uint src, uint tgt);
 
 namespace {
@@ -62,8 +63,13 @@ void parse() {
 }
 
 
-void verify_(uint src) {
-	rus::verify(src);
+Return verify_(uint src) {
+	try {
+		if (src == -1) rus::verify(); else rus::verify(src);
+		return Return("verification passed");
+	} catch (Error& err) {
+		return Return(string("verification failed: ") + err.msg, false);
+	}
 }
 
 void translate_(uint src, uint tgt) {
@@ -182,7 +188,7 @@ static Descr description(string name) {
 		{"transl", Descr("translate the source", Descr::Arg("in", "file"), Descr::Arg("out", "file"))},
 		{"write",  Descr("write the source",     Descr::Arg("in", "file"), Descr::Arg("deep", "true|false", true, "false"))},
 		{"parse",  Descr("parse all expressions")},
-		{"verify", Descr("verify all theorems",  Descr::Arg("in", "file"))},
+		{"verify", Descr("verify all theorems",  Descr::Arg("in", "file", true, ""))},
 		{"info",   Descr("info about math")},
 		{"show",   Descr("show entity")},
 		{"lookup", Descr("lookup a symbol",      Descr::Arg("in", "file"), Descr::Arg("line", "row"), Descr::Arg("col", "column"), Descr::Arg("what", "loc|def"))},
@@ -201,7 +207,7 @@ const Sys::Actions& Sys::actions() {
 		{"read",   Action([](const Args& args) { read(Sys::make_name(args[0])); return Return(); }, description("read"))},
 		{"clear",  Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Sys::make_name(args[0])); return Return(); }, description("clear"))},
 		{"parse",  Action([](const Args& args) { parse(); return Return(); }, description("parse"))},
-		{"verify", Action([](const Args& args) { verify_(Sys::make_name(args[0])); return Return(); }, description("verify"))},
+		{"verify", Action([](const Args& args) { Return ret = verify_(Sys::make_name(args[0])); return ret; }, description("verify"))},
 		{"transl", Action([](const Args& args) { translate_(Sys::make_name(args[0]), Sys::make_name(args[1])); return Return(); }, description("transl"))},
 		{"write",  Action([](const Args& args) { write(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
 		{"info",   Action([](const Args& args) { info(); return Return(); }, description("info"))},
