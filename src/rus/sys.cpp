@@ -56,20 +56,15 @@ namespace {
 
 void read(uint src) {
 	rus::parse(src);
-}
-
-void parse() {
 	expr::parse();
 }
 
+void parse_() {
+	//expr::parse();
+}
 
-Return verify_(uint src) {
-	try {
-		if (src == -1) rus::verify(); else rus::verify(src);
-		return Return("verification passed");
-	} catch (Error& err) {
-		return Return(string("verification failed: ") + err.msg, false);
-	}
+void verify_(uint src) {
+	if (src == -1) rus::verify(); else rus::verify(src);
 }
 
 void translate_(uint src, uint tgt) {
@@ -206,8 +201,8 @@ const Sys::Actions& Sys::actions() {
 		{"destroy", destroy()},
 		{"read",   Action([](const Args& args) { read(Sys::make_name(args[0])); return Return(); }, description("read"))},
 		{"clear",  Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Sys::make_name(args[0])); return Return(); }, description("clear"))},
-		{"parse",  Action([](const Args& args) { parse(); return Return(); }, description("parse"))},
-		{"verify", Action([](const Args& args) { Return ret = verify_(Sys::make_name(args[0])); return ret; }, description("verify"))},
+		{"parse",  Action([](const Args& args) { parse_(); return Return(); }, description("parse"))},
+		{"verify", Action([](const Args& args) { verify_(Sys::make_name(args[0])); return Return(); }, description("verify"))},
 		{"transl", Action([](const Args& args) { translate_(Sys::make_name(args[0]), Sys::make_name(args[1])); return Return(); }, description("transl"))},
 		{"write",  Action([](const Args& args) { write(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
 		{"info",   Action([](const Args& args) { info(); return Return(); }, description("info"))},

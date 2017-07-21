@@ -158,7 +158,7 @@ vector<smm::Node> translate_assertion(const Assertion* ass, Maps& maps) {
 }
 
 vector<smm::Node> translate_axiom(const Axiom* ax, Maps& maps) {
-	vector<smm::Node> asss = translate_assertion(&ax->ass, maps);
+	vector<smm::Node> asss = translate_assertion(ax, maps);
 	for (auto n : asss) {
 		assert(n.type == smm::Node::ASSERTION);
 		n.val.ass->prop->axiom = true;
@@ -166,8 +166,8 @@ vector<smm::Node> translate_axiom(const Axiom* ax, Maps& maps) {
 	return asss;
 }
 
-vector<smm::Node> translate_def(const Def* ax, Maps& maps) {
-	vector<smm::Node> asss = translate_assertion(&ax->ass, maps);
+vector<smm::Node> translate_def(const Def* def, Maps& maps) {
+	vector<smm::Node> asss = translate_assertion(def, maps);
 	for (auto n : asss) {
 		assert(n.type == smm::Node::ASSERTION);
 		n.val.ass->prop->axiom = true;
@@ -265,14 +265,14 @@ void translate_proof(const Proof* proof, const Assertion* thm, vector<smm::Ref*>
 
 vector<smm::Node> translate_proof(const Proof* proof, Maps& maps) {
 	vector<smm::Node> nodes;
-	vector<smm::Node> asss = translate_assertion(&proof->thm->ass, maps);
+	vector<smm::Node> asss = translate_assertion(proof->thm, maps);
 	if (proof->id() != static_cast<uint>(-1)) {
 		// TODO ? WTF??
 	}
 	for (uint i = 0; i < asss.size(); ++ i) {
 		maps.thm = asss[i].val.ass;
 		maps.thm->proof = new smm::Proof();
-		translate_proof(proof, &proof->thm->ass, maps.thm->proof->refs, maps, i);
+		translate_proof(proof, proof->thm, maps.thm->proof->refs, maps, i);
 	}
 	join(nodes, asss);
 	return nodes;

@@ -22,7 +22,7 @@ void verify_step(const Step* st) {
 		msg += "step:\n";
 		msg += show(*st) + "\n";
 		msg += show_ast(st->expr, true) + "\n\n";
-		msg += "theorem " + Lex::toStr(st->proof()->thm->ass.id()) + "\n";
+		msg += "theorem " + Lex::toStr(st->proof()->thm->id()) + "\n";
 		throw Error("proposition unification failed", msg);
 	}
 	for (uint i = 0; i < ass->arity(); ++ i) {
@@ -34,7 +34,7 @@ void verify_step(const Step* st) {
 			msg += show(st->refs[i]->expr()) + "\n\n";
 			msg += "step:\n";
 			msg += show(*st) + "\n\n";
-			msg += "theorem " + Lex::toStr(st->proof()->thm->ass.id()) + "\n";
+			msg += "theorem " + Lex::toStr(st->proof()->thm->id()) + "\n";
 			msg += "substitution:\n" + show(*ps) + "\n";
 			delete ps;
 			throw Error("hypothesis unification failed", msg);
@@ -46,7 +46,7 @@ void verify_step(const Step* st) {
 			msg += show(st->refs[i]->expr()) + "\n\n";
 			msg += "step:\n";
 			msg += show(*st) + "\n\n";
-			msg += "theorem " + Lex::toStr(st->proof()->thm->ass.id()) + "\n";
+			msg += "theorem " + Lex::toStr(st->proof()->thm->id()) + "\n";
 			msg += "prop substitution:\n" + show(*ps) + "\n";
 			msg += "hyp substitution:\n" + show(*hs) + "\n";
 			delete hs;
@@ -93,7 +93,7 @@ void verify_theory(const Theory* theory) {
 	}
 }
 
-} // anonympus namespace
+} // anonymous namespace
 
 void verify(uint src) {
 	const Source* source = Sys::get().math.get<Source>().access(src);

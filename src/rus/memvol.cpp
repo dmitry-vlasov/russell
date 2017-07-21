@@ -36,10 +36,10 @@ size_t memvol(const Prop& prop) {
 	return memvol(prop.expr);
 }
 size_t memvol(const Axiom& ax) {
-	return memvol(ax.ass);
+	return memvol(ax);
 }
 size_t memvol(const Def& df) {
-	return memvol(df.ass) + memvol(df.dfm) + memvol(df.dfs) + memvol(df.prop);
+	return memvol(static_cast<const Assertion&>(df)) + memvol(df.dfm) + memvol(df.dfs) + memvol(df.prop);
 }
 size_t memvol(const Assertion& ass) {
 	size_t s = 0;
@@ -86,7 +86,7 @@ size_t memvol(const Proof& proof) {
 }
 
 size_t memvol(const Theorem& th) {
-	return memvol(th.ass) + th.proofs.capacity() * sizeof(Proof*);
+	return memvol(static_cast<const Assertion&>(th)) + th.proofs.capacity() * sizeof(Proof*);
 }
 size_t memvol(const Import& imp) {
 	return 0;

@@ -162,12 +162,12 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		lit("theorem")
 		> id         [_val = new_<Theorem>(qi::labels::_1)]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
-		> - vars     [phoenix::at_c<1>(phoenix::at_c<0>(*_val)) = qi::labels::_1]
+		> - vars     [phoenix::at_c<0>(*_val) = qi::labels::_1]
 		> ")"
-		> - disj     [phoenix::at_c<2>(phoenix::at_c<0>(*_val)) = qi::labels::_1]
+		> - disj     [phoenix::at_c<1>(*_val) = qi::labels::_1]
 		> "{"
-		> - ( + (hyp [push_back(phoenix::at_c<3>(phoenix::at_c<0>(*_val)), qi::labels::_1)]) > bar )
-		> + (prop    [push_back(phoenix::at_c<4>(phoenix::at_c<0>(*_val)), qi::labels::_1)])
+		> - ( + (hyp [push_back(phoenix::at_c<2>(*_val), qi::labels::_1)]) > bar )
+		> + (prop    [push_back(phoenix::at_c<3>(*_val), qi::labels::_1)])
 		> lit("}")   [popVars(phoenix::ref(var_stack))]
 		> eps        [addToMath(_val)];
 
@@ -175,39 +175,38 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		lit("axiom")
 		> id         [_val = new_<Axiom>(qi::labels::_1)]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
-		> - vars     [phoenix::at_c<1>(phoenix::at_c<0>(*_val)) = qi::labels::_1]
+		> - vars     [phoenix::at_c<0>(*_val) = qi::labels::_1]
 		> ")"
-		> - disj     [phoenix::at_c<2>(phoenix::at_c<0>(*_val)) = qi::labels::_1]
+		> - disj     [phoenix::at_c<1>(*_val) = qi::labels::_1]
 		> "{"
-		> - ( + (hyp [push_back(phoenix::at_c<3>(phoenix::at_c<0>(*_val)), qi::labels::_1)]) > bar )
-		> + (prop    [push_back(phoenix::at_c<4>(phoenix::at_c<0>(*_val)), qi::labels::_1)])
+		> - ( + (hyp [push_back(phoenix::at_c<2>(*_val), qi::labels::_1)]) > bar )
+		> + (prop    [push_back(phoenix::at_c<3>(*_val), qi::labels::_1)])
 		> lit("}")   [popVars(phoenix::ref(var_stack))]
 		> eps        [addToMath(_val)];
 
 	def = lit("definition")
 		> id         [_val = new_<Def>(qi::labels::_1)]
-		> eps        [_a = &phoenix::at_c<0>(*_val)]
 		> lit("(")   [pushVars(phoenix::ref(var_stack))]
-		> - vars     [phoenix::at_c<1>(*_a) = qi::labels::_1]
+		> - vars     [phoenix::at_c<0>(*_val) = qi::labels::_1]
 		> ")"
-		> - disj     [phoenix::at_c<2>(*_a) = qi::labels::_1]
+		> - disj     [phoenix::at_c<1>(*_val) = qi::labels::_1]
 		> "{"
-		> - ( + (hyp [push_back(phoenix::at_c<3>(*_a), qi::labels::_1)]) )
+		> - ( + (hyp [push_back(phoenix::at_c<2>(*_val), qi::labels::_1)]) )
 		> "defiendum" > ":"
-		> id         [_b = qi::labels::_1]
+		> id         [_a = qi::labels::_1]
 		> "=" > "#"
-		> expr(_b)    [phoenix::at_c<1>(*_val) = qi::labels::_1]
+		> expr(_a)   [phoenix::at_c<3>(*_val) = qi::labels::_1]
 		> END_MARKER
 		> "definiens" > ":"
-		> id         [_b = qi::labels::_1]
+		> id         [_a = qi::labels::_1]
 		> "=" > "#"
-		> expr(_b)   [phoenix::at_c<2>(*_val) = qi::labels::_1]
+		> expr(_a)   [phoenix::at_c<4>(*_val) = qi::labels::_1]
 		> END_MARKER
 		> bar
 		> "prop" > ":"
-		> id         [_b = qi::labels::_1]
+		> id         [_a = qi::labels::_1]
 		> "=" > "|-"
-		> plain(_b)  [phoenix::at_c<3>(*_val) = qi::labels::_1]
+		> plain(_a)  [phoenix::at_c<5>(*_val) = qi::labels::_1]
 		> END_MARKER
 		> eps        [assembleDef(_val, phoenix::ref(var_stack))]
 		> lit("}")   [pushVars(phoenix::ref(var_stack))]

@@ -244,15 +244,15 @@ void translate_rule(const Assertion* ass, State& state) {
 
 template<class T>
 void translate_assertion(const Assertion* ass, T* a, State& state) {
-	a->ass.vars = translate_vars(ass->floating, state);
-	a->ass.disj = translate_disj(ass, state);
+	a->vars = translate_vars(ass->floating, state);
+	a->disj = translate_disj(ass, state);
 	uint hc = 0;
 	for (auto ess : ass->essential) {
 		rus::Expr&& ex = translate_expr(ess->expr, state, ass);
-		a->ass.hyps.push_back(new rus::Hyp{hc++, ex});
+		a->hyps.push_back(new rus::Hyp{hc++, ex});
 	}
 	rus::Expr&& ex = translate_expr(ass->prop->expr, state, ass);
-	a->ass.props.push_back(new rus::Prop{0, ex});
+	a->props.push_back(new rus::Prop{0, ex});
 }
 
 void translate_axiom(const Assertion* ass, State& state) {
@@ -384,7 +384,7 @@ rus::Proof::Elem translate_step(Tree* tree, rus::Proof* proof, rus::Theorem* thm
 		rus::Ref* hr =
 			h.val.ref->is_assertion() ?
 			new rus::Ref(translate_step(t, proof, thm, state, a).val.step) :
-			new rus::Ref(thm->ass.hyps[h.val.ref->index()]);
+			new rus::Ref(thm->hyps[h.val.ref->index()]);
 		el.val.step->refs.push_back(hr);
 	}
 	el.val.step->set_ind(elems.size());
@@ -399,7 +399,7 @@ void translate_proof(const Assertion* ass, rus::Theorem* thm, State& state) {
 	rus::Proof* p = new rus::Proof(thm);
 	p->vars = translate_vars(ass->inner, state);
 	translate_step(tree, p, thm, state, ass);
-	rus::Prop* pr = thm->ass.props.front();
+	rus::Prop* pr = thm->props.front();
 	rus::Step* st = p->elems.back().val.step;
 	p->elems.push_back(new rus::Qed(pr, st));
 	state.theory.top()->nodes.push_back(p);

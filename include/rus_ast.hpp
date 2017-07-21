@@ -93,7 +93,6 @@ struct Assertion : public Owner<Assertion> {
 	Disj disj;
 	vector<Hyp*>  hyps;
 	vector<Prop*> props;
-	Assertion&    ass = *this;
 };
 
 struct Axiom : public Assertion {

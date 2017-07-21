@@ -106,23 +106,23 @@ string show(const Assertion& a) {
 
 string show(const Axiom& ax) {
 	string s;
-	s += "axiom " + show(ax.ass);
+	s += "axiom " + show(static_cast<const Assertion&>(ax));
 	return s;
 }
 
 string show(const Theorem& thm) {
 	string s;
-	s += "theorem " + show(thm.ass);
+	s += "theorem " + show(static_cast<const Assertion&>(thm));
 	return s;
 }
 
 string show(const Def& def) {
 	string s;
 	s += "definition ";
-	s += show_id(def.ass.id()) + " ";
-	s += "(" + show(def.ass.vars) + ") " + show(def.ass.disj) + " {\n";
-	if (def.ass.hyps.size() > 0) {
-		for (Hyp* h : def.ass.hyps)
+	s += show_id(def.id()) + " ";
+	s += "(" + show(def.vars) + ") " + show(def.disj) + " {\n";
+	if (def.hyps.size() > 0) {
+		for (Hyp* h : def.hyps)
 			s += "\t" + show(*h) + "\n";
 	}
 	s += "\tdefiendum : " + show_id(def.dfm.type.id()) + " ";
@@ -203,7 +203,7 @@ string show(const Proof& p) {
 	string s = "proof ";
 	const string& name = Lex::toStr(p.id());
 	if (name.size() > 1 && name[0] != '_') s += name + " ";
-	s += "of " + show_id(p.thm->ass.id()) + " {\n";
+	s += "of " + show_id(p.thm->id()) + " {\n";
 	if (p.vars.v.size())
 		s += "\tvar " + show(p.vars) + END_MARKER + "\n";
 	for (auto& st : p.elems)

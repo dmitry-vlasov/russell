@@ -43,7 +43,7 @@ struct AddVars {
 		}
 	}
 	void operator()(VarStack& var_stack, Theorem* thm) const {
-		for (auto& v : thm->ass.vars.v) {
+		for (auto& v : thm->vars.v) {
 			var_stack.vstack.top().push_back(v.lit);
 			var_stack.mapping[v.lit] = v.type();
 		}
@@ -83,10 +83,10 @@ inline Type* find_type(uint id, const Location* loc = nullptr) {
 	return Sys::mod().math.get<Type>().access(id);
 }
 
-void enqueue_expressions(Assertion& ass) {
-	for (Hyp* hyp : ass.hyps)
+void enqueue_expressions(Assertion* ass) {
+	for (Hyp* hyp : ass->hyps)
 		expr::enqueue(hyp->expr);
-	for (Prop* prop : ass.props)
+	for (Prop* prop : ass->props)
 		expr::enqueue(prop->expr);
 }
 
@@ -104,7 +104,7 @@ void enqueue_expressions(Proof* proof) {
 void enqueue_expressions(Def* def) {
 	expr::enqueue(def->dfm);
 	expr::enqueue(def->dfs);
-	enqueue_expressions(def->ass);
+	enqueue_expressions(static_cast<Assertion*>(def));
 }
 
 struct AddToMath {
@@ -115,13 +115,13 @@ struct AddToMath {
 	void operator()(Rule* r) const {
 	}
 	void operator()(Axiom* a) const {
-		enqueue_expressions(a->ass);
+		enqueue_expressions(a);
 	}
 	void operator()(Def* d) const {
 		enqueue_expressions(d);
 	}
 	void operator()(Theorem* th) const {
-		enqueue_expressions(th->ass);
+		enqueue_expressions(th);
 	}
 	void operator()(Proof* p) const {
 		enqueue_expressions(p);
@@ -242,8 +242,8 @@ struct CreateStepRef {
 	struct result { typedef void Ref; };
 	Ref* operator()(uint ind, Proof* p, Ref::Kind k) const {
 		switch (k) {
-		case Ref::HYP:  return new Ref(p->thm->ass.hyps[ind]);
-		case Ref::PROP: return new Ref(p->thm->ass.props[ind]);
+		case Ref::HYP:  return new Ref(p->thm->hyps[ind]);
+		case Ref::PROP: return new Ref(p->thm->props[ind]);
 		case Ref::STEP: return new Ref(p->elems[ind].val.step);
 		default : assert(false && "impossible"); break;
 		}
@@ -255,7 +255,7 @@ struct GetProp {
 	template <typename T1, typename T2>
 	struct result { typedef Prop* type; };
 	Prop* operator()(uint ind, Proof* p) const {
-		return p->thm->ass.props[ind];
+		return p->thm->props[ind];
 	}
 };
 
@@ -299,7 +299,7 @@ struct AssembleDef {
 		prop->expr.type = d->prop.type;
 		prop->expr.token = d->prop.token;
 		mark_vars(prop->expr, varsStack);
-		d->ass.props.push_back(prop);
+		d->props.push_back(prop);
 	}
 };
 
@@ -347,9 +347,9 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, Proof::Elem(Proof*), unicode::space_type> proof_elem;
 	qi::rule<Iterator, void(Proof*), unicode::space_type> proof_body;
 	qi::rule<Iterator, Proof*(), qi::locals<Id>, unicode::space_type> proof;
-	qi::rule<Iterator, Theorem*(), qi::locals<Assertion*>, unicode::space_type> theorem;
-	qi::rule<Iterator, Def*(), qi::locals<Assertion*, Id>, unicode::space_type> def;
-	qi::rule<Iterator, Axiom*(), qi::locals<Assertion*>, unicode::space_type> axiom;
+	qi::rule<Iterator, Theorem*(), unicode::space_type> theorem;
+	qi::rule<Iterator, Def*(), qi::locals<Id>, unicode::space_type> def;
+	qi::rule<Iterator, Axiom*(), unicode::space_type> axiom;
 	qi::rule<Iterator, Rule*(), qi::locals<Id, Vars, Id, Expr>, unicode::space_type> rule;
 	qi::rule<Iterator, Type*(), qi::locals<Id, vector<Id>>, unicode::space_type> type;
 	qi::rule<Iterator, Const*(), qi::locals<uint, uint, uint>, unicode::space_type> constant;
