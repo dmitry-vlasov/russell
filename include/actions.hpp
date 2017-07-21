@@ -22,30 +22,16 @@ struct Return {
 typedef vector<string> Args;
 typedef function<Return (const Args&)> Function;
 
-inline Function wrap_action(Function f, int arity) {
-	return [f, arity](const Args& args) {
-		if (arity > 0 && args.size() < arity)
-			return Return("wrong number of arguments, should be not less then " + to_string(arity), false);
-		try {
-			return f(args);
-		} catch (const Error& err) {
-			return Return(string("failure: ") + err.what(), false);
-		} catch (std::exception& ex) {
-			return Return(string("failure: ") + ex.what(), false);
-		} catch (...) {
-			return Return("failure", false);
-		}
-	};
-}
-
 struct Descr {
 	struct Arg {
 		Arg() : opt(false) { }
 		Arg(const string& n, const string& v, bool o = false, const string& d = "") : name(n), value(v), opt(o), def(d) { }
+
 		string name;
 		string value;
 		bool   opt;
 		string def;
+
 		string show() const { return name + (value.size() ? "=<" + value + ">" : ""); }
 		bool fits(const string& arg) const {
 			return (arg.substr(0, arg.find_last_of("=")) == name);
@@ -136,16 +122,38 @@ private:
 	}
 };
 
+inline Function catch_exceptions(Function f) {
+	return [f](const Args& args) {
+		try {
+			return f(args);
+		} catch (const Error& err) {
+			return Return(string("failure: ") + err.what(), false);
+		} catch (std::exception& ex) {
+			return Return(string("failure: ") + ex.what(), false);
+		} catch (...) {
+			return Return("failure", false);
+		}
+	};
+}
+
+inline Function reorder_args(Function f, Descr descr) {
+	return [f, descr](const Args& args) {
+		if (descr.arity > 0 && args.size() < descr.arity)
+			return Return("wrong number of arguments, should be not less then " + to_string(descr.arity), false);
+		return f(descr.prepare(args));
+	};
+}
+
 class Action {
 public:
 	Action() { }
-	Action(Function a, const Descr& d) : action(wrap_action(a, d.arity)), descr(d) { }
-	Return operator() (const Args& args) const { return action(descr.prepare(args)); }
+	Action(Function a, const Descr& d) : descr(d), action(catch_exceptions(reorder_args(a, descr))) { }
+	Return operator() (const Args& args) const { return action(args); }
 	string show() const { return descr.show(); }
 
 private:
-	Function action;
 	Descr    descr;
+	Function action;
 };
 
 
