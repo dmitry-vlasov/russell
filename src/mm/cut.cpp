@@ -170,7 +170,9 @@ void init_paths(Section* sect) {
 		boost::replace_all(sect->file, ".", "_");
 		boost::replace_all(sect->file, "?", "_");
 		boost::replace_all(sect->file, "!", "_");
+		boost::replace_all(sect->file, ";", "_");
 		boost::replace_all(sect->file, "$", "_");
+		boost::replace_all(sect->file, "\"", "_");
 		boost::replace_all(sect->file, "\\", "_");
 		boost::replace_all(sect->file, "'", "_");
 		sect->dir = dir;
