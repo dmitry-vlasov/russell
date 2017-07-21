@@ -165,14 +165,16 @@ struct Step : public Tokenable {
 		if (kind_ != ASS) return nullptr;
 		return val_.ass->get();
 	}
-	Proof* proof() {
+	Proof* claim() {
 		if (kind_ != CLAIM) return nullptr;
 		return val_.prf;
 	}
-	const Proof* proof() const {
+	const Proof* claim() const {
 		if (kind_ != CLAIM) return nullptr;
 		return val_.prf;
 	}
+	Proof* proof() { return proof_; }
+	const Proof* proof() const { return proof_; }
 	Kind kind() const { return kind_; }
 	uint ind() const { return ind_; }
 	void set_ind(uint ind) { ind_ = ind; }
