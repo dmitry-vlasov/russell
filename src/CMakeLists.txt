@@ -42,14 +42,14 @@ else()
 		rus/verify.cpp 
 		rus/xml.cpp 
 		
-		smm/ast.cpp 
-		smm/sys.cpp 
-		smm/parser.cpp 
-		smm/show.cpp 
-		smm/translate_mm.cpp 
-		smm/translate_rus.cpp 
-		smm/tree.cpp 
-		smm/verify.cpp 
+		smm/smm_ast.cpp 
+		smm/smm_sys.cpp 
+		smm/smm_parser.cpp 
+		smm/smm_show.cpp 
+		smm/smm_translate_mm.cpp 
+		smm/smm_translate_rus.cpp 
+		smm/smm_tree.cpp 
+		smm/smm_verify.cpp 
 		
 		main.cpp
 	)

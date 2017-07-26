@@ -1,6 +1,6 @@
 #include <mm_ast.hpp>
 #include <smm_ast.hpp>
-#include "smm/tree.hpp"
+#include "smm_tree.hpp"
 
 namespace mdl { namespace smm { namespace {
 

@@ -8,8 +8,8 @@
 #include "daem.cpp"
 
 #include "rus/sys.cpp"
-#include "smm/sys.cpp"
 #include "mm/mm_sys.cpp"
+#include "smm/smm_sys.cpp"
 
 #include "mm/mm_ast.cpp"
 #include "mm/mm_cut.cpp"
@@ -30,10 +30,10 @@
 #include "rus/verify.cpp"
 #include "rus/xml.cpp"
 
-#include "smm/ast.cpp"
-#include "smm/parser.cpp"
-#include "smm/show.cpp"
-#include "smm/translate_mm.cpp"
-#include "smm/translate_rus.cpp"
-#include "smm/tree.cpp"
-#include "smm/verify.cpp"
+#include "smm/smm_ast.cpp"
+#include "smm/smm_parser.cpp"
+#include "smm/smm_show.cpp"
+#include "smm/smm_translate_mm.cpp"
+#include "smm/smm_translate_rus.cpp"
+#include "smm/smm_tree.cpp"
+#include "smm/smm_verify.cpp"

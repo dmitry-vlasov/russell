@@ -124,7 +124,7 @@ struct Section {
 
 }} // mdl::mm::cut
 
-#include <mm/mm_cut_adaptor.hpp>
+#include "mm_cut_adaptor.hpp"
 
 namespace mdl { namespace mm {
 

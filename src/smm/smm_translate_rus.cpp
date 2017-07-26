@@ -1,7 +1,7 @@
 #include <rus_ast.hpp>
 #include <smm_sys.hpp>
-#include "smm/tree.hpp"
-#include "math_symb.hpp"
+#include "smm_math_symb.hpp"
+#include "smm_tree.hpp"
 
 namespace mdl { namespace smm { namespace {
 
