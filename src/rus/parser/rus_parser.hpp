@@ -1,6 +1,6 @@
 #include <rus_ast.hpp>
 #include "boost.hpp"
-#include "rus/parser/adaptors.hpp"
+#include "rus_parser_adaptors.hpp"
 
 namespace mdl { namespace rus {
 

@@ -3,7 +3,7 @@
 #define BOOST_SPIRIT_USE_PHOENIX_V3
 #define BOOST_SPIRIT_UNICODE
 
-#include "parse.hpp"
+#include "rus_parser.hpp"
 
 namespace mdl { namespace rus { namespace parser {
 

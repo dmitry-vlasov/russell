@@ -30,17 +30,17 @@ else()
 		mm/mm_show.cpp  
 		mm/mm_translate.cpp 
 		
-		rus/expr/parse.cpp 
-		rus/expr/unify.cpp 
-		rus/parser/parse.cpp 
-		rus/expr.cpp 
-		rus/sys.cpp 
-		rus/ast.cpp 
-		rus/memvol.cpp 
-		rus/show.cpp 
-		rus/translate.cpp 
-		rus/verify.cpp 
-		rus/xml.cpp 
+		rus/expr/rus_expr_parse.cpp 
+		rus/expr/rus_expr_unify.cpp 
+		rus/parser/rus_parser.cpp 
+		rus/rus_expr.cpp 
+		rus/rus_sys.cpp 
+		rus/rus_ast.cpp 
+		rus/rus_memvol.cpp 
+		rus/rus_show.cpp 
+		rus/rus_translate.cpp 
+		rus/rus_verify.cpp 
+		rus/rus_xml.cpp 
 		
 		smm/smm_ast.cpp 
 		smm/smm_sys.cpp 
