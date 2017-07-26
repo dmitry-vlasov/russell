@@ -5,7 +5,7 @@
 #include "com/timer.cpp"
 #include "com/xml.cpp"
 
-#include "daem/daemon.cpp"
+#include "daem.cpp"
 
 #include "mm/sys.cpp"
 #include "rus/sys.cpp"

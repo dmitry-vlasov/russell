@@ -20,7 +20,7 @@ else()
 		com/common.cpp 
 		com/xml.cpp 
 		
-		daem/daemon.cpp 
+		daem.cpp 
 		
 		mm/cut.cpp 
 		mm/ast.cpp 
