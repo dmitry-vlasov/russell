@@ -22,13 +22,13 @@ else()
 		
 		daem.cpp 
 		
-		mm/cut.cpp 
-		mm/ast.cpp 
-		mm/sys.cpp 
-		mm/merge.cpp 
-		mm/parser.cpp 
-		mm/show.cpp  
-		mm/translate.cpp 
+		mm/mm_cut.cpp 
+		mm/mm_ast.cpp 
+		mm/mm_sys.cpp 
+		mm/mm_merge.cpp 
+		mm/mm_parser.cpp 
+		mm/mm_show.cpp  
+		mm/mm_translate.cpp 
 		
 		rus/expr/parse.cpp 
 		rus/expr/unify.cpp 

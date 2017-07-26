@@ -7,16 +7,16 @@
 
 #include "daem.cpp"
 
-#include "mm/sys.cpp"
 #include "rus/sys.cpp"
 #include "smm/sys.cpp"
+#include "mm/mm_sys.cpp"
 
-#include "mm/ast.cpp"
-#include "mm/cut.cpp"
-#include "mm/merge.cpp"
-#include "mm/parser.cpp"
-#include "mm/show.cpp"
-#include "mm/translate.cpp"
+#include "mm/mm_ast.cpp"
+#include "mm/mm_cut.cpp"
+#include "mm/mm_merge.cpp"
+#include "mm/mm_parser.cpp"
+#include "mm/mm_show.cpp"
+#include "mm/mm_translate.cpp"
 
 #include "rus/expr/parse.cpp"
 #include "rus/expr/unify.cpp"
