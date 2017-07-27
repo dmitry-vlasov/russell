@@ -299,8 +299,10 @@ Substitution* unify(const Tree* p, const Tree* q);
 inline Substitution* unify(const Expr& ex1, const Expr& ex2) {
 	return unify(ex1.tree.get(), ex2.tree.get());
 }
-Expr assemble(const Expr& ex);
-Expr assemble(const Tree* t);
+//Expr assemble(const Expr& ex);
+//Expr assemble(const Tree* t);
+
+Expr apply(const Substitution*, const Expr&);
 
 namespace expr {
 	void enqueue(Expr& ex);

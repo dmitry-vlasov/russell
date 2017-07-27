@@ -51,7 +51,40 @@ Tree::Node::~Node() {
 
 }
 
+static void assemble(Tree* t, Symbols& s) {
+	if (t->kind == Tree::NODE) {
+		auto i = t->children().begin();
+		for (auto x : t->rule()->term)
+			if (x.cst) s.push_back(x);
+			else assemble((*i++).get(), s);
+	} else
+		s.push_back(*t->var());
+}
 
+static Expr assemble(Tree* t) {
+	Symbols s;
+	assemble(t, s);
+	Expr e(t->type()->id(), std::move(s));
+	e.tree.reset(t);
+	return e;
+}
+
+static void apply(const Substitution* s, unique_ptr<Tree>& t) {
+	if (t.get()->kind == Tree::NODE)
+		for (auto& n : t.get()->children())
+			apply(s, n);
+	else {
+		Symbol v = *t.get()->var();
+		if (s->sub.count(v))
+			t.reset(new Tree(*s->sub.at(v).get()));
+	}
+}
+
+Expr apply(const Substitution* s, const Expr& e) {
+	unique_ptr<Tree> t(new Tree(*e.tree.get()));
+	apply(s, t);
+	return assemble(t.release());
+}
 
 Tree::Tree(const Symbol& v) : kind(VAR), val(new Symbol(v)) { }
 Tree::Tree(Rule* r, const Tree::Children& ch) : kind(NODE), val(new Node(r, ch)) { }

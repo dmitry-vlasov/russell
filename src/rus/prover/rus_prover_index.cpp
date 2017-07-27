@@ -3,24 +3,25 @@
 namespace mdl { namespace rus { namespace prover {
 
 template<class D>
-struct Index {
+struct IndexImpl : public Index<D> {
 	typedef D Data;
 	struct Node;
 	map<Symbol, Node*> map_;
 	void add(const Expr& e, uint i);
-	~Index() { for (auto p : map_) delete p.second; }
+	vector<Unified<Data>> unify(const Expr& e) const override;
+	~IndexImpl() { for (auto p : map_) delete p.second; }
 };
 
 template<class D>
-struct Index<D>::Node {
+struct IndexImpl<D>::Node {
 	typedef D Data;
-	Index<Data>        next;
+	IndexImpl<Data>        next;
 	vector<User<Data>> data;
 };
 
 template<class D>
-void Index<D>::add(const Expr& e, uint id) {
-	Index* i = this;
+void IndexImpl<D>::add(const Expr& e, uint id) {
+	IndexImpl* i = this;
 	Node* n = nullptr;
 	for (const auto& s : e) {
 		if (!i->map_.count(s)) i->map_[s] = new Node;
@@ -30,14 +31,20 @@ void Index<D>::add(const Expr& e, uint id) {
 	n->data.push_back(User<Data>(id));
 }
 
+template<class D>
+vector<Unified<D>> IndexImpl<D>::unify(const Expr& e) const {
+	return vector<Unified<Data>>();
+}
+
+static IndexImpl<Assertion> index;
+
 Index<Assertion>& assertion_index() {
-	static Index<Assertion> index;
 	return index;
 }
 
 void add_to_index(Assertion* a) {
 	for (rus::Prop* p : a->props) {
-		assertion_index().add(p->expr, a->id());
+		index.add(p->expr, a->id());
 	}
 }
 
