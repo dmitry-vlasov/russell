@@ -456,4 +456,8 @@ size_t memvol(const Theory&);
 size_t memvol(const Source&);
 size_t memvol(const Comment&);
 
+void add_to_index(Assertion*);
+void add_to_index(Proof*);
+Proof* prove(Assertion*);
+
 }} // mdl::rus

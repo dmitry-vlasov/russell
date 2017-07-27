@@ -245,6 +245,15 @@ struct Expr : public Tokenable {
 		return !operator == (ex);
 	}
 
+	typedef Symbols::iterator iterator;
+	typedef Symbols::const_iterator const_iterator;
+
+	iterator begin() { return symbols.begin(); }
+	iterator end() { return symbols.end(); }
+
+	const_iterator begin() const { return symbols.cbegin(); }
+	const_iterator end() const { return symbols.cend(); }
+
 	User<Type>       type;
 	unique_ptr<Tree> tree;
 	Symbols          symbols;

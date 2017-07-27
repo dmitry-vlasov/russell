@@ -32,7 +32,10 @@ else()
 		
 		rus/expr/rus_expr_parse.cpp 
 		rus/expr/rus_expr_unify.cpp 
-		rus/parser/rus_parser.cpp 
+		rus/parser/rus_parser.cpp
+		rus/prover/rus_prover_index.cpp
+		rus/prover/rus_prover_node.cpp
+		rus/prover/rus_prover_proof.cpp   
 		rus/rus_expr.cpp 
 		rus/rus_sys.cpp 
 		rus/rus_ast.cpp 

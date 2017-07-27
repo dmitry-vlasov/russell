@@ -421,7 +421,7 @@ struct Ref {
 	typedef Tokenable<Src> Tokenable_;
 
 	Ref() : count_(0), ptr(nullptr) { }
-	void add_ref (Tokenable_* p) {
+	void add_ref (const Tokenable_* p) {
 		if (count_ && p != ptr) throw Error("incorrect ref assignment");
 		ptr = p;
 		++ count_;
@@ -430,12 +430,12 @@ struct Ref {
 		if (!count_) throw Error("incorrect ref deletion");
 		return --count_ == 0;
 	}
-	Tokenable_* get() { return ptr; }
+	const Tokenable_* get() { return ptr; }
 	uint count() const { return count_; }
 	string str() const { return to_string(count_) + ": " + (ptr ? ptr->token.str() : "<none>"); }
 private:
 	uint count_;
-	Tokenable_* ptr;
+	const Tokenable_* ptr;
 
 };
 
@@ -449,13 +449,13 @@ class Refs {
 
 public:
 
-	static void add(const Token_& t, Tokenable_* r) {
+	static void add(const Token_& t, const Tokenable_* r) {
 		if (t.is_defined()) refs()[t].add_ref(r);
 	}
 	static void del(const Token_& t) {
 		if (t.is_defined() && refs()[t].del_ref()) refs().erase(t);
 	}
-	static Tokenable_* find(uint src, const uint line, const uint col) {
+	static const Tokenable_* find(uint src, const uint line, const uint col) {
 		Src* s = Sys::mod().math.template get<Src>().access(src);
 		const char* c = locate_position(line, col, s->data.c_str());
 		Token_ t(s, c, c);
