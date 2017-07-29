@@ -171,6 +171,9 @@ struct Tree {
 	bool operator != (const Tree& e) const {
 		return !operator == (e);
 	}
+	bool leaf() const {
+		return kind == VAR || !children().size();
+	}
 
 	Kind kind;
 
@@ -278,20 +281,55 @@ struct Rules::Node {
 string show(const Rules& tr);
 
 struct Substitution {
-	Substitution() : sub() { }
-	Substitution(Symbol v, Tree* t) : sub() { sub[v].reset(t); }
-	bool join(Substitution* s) {
-		for (auto& p : s->sub) {
-			auto it = sub.find(p.first);
-			if (it != sub.end()) {
-				if (*(*it).second != *p.second) return false;
-			} else {
-				sub[p.first].reset(new Tree(*p.second));
-			}
-		}
-		return true;
+	Substitution() : sub_(), ok_(true) { }
+	Substitution(Symbol v, const Tree* t) : sub_(), ok_(true) {
+		sub_[v].reset(new Tree(*t));
 	}
-	map<Symbol, unique_ptr<Tree>> sub;
+	Substitution(const Substitution& s) : sub_(), ok_(s.ok_) {
+		operator =(s);
+	}
+	Substitution(Substitution&& s) : sub_(), ok_(s.ok_) {
+		operator =(s);
+	}
+	void operator = (const Substitution& s) {
+		ok_ = s.ok_;
+		if (ok_) for (const auto& p : s.sub_)
+			sub_[p.first].reset(new Tree(*p.second));
+	}
+	void operator = (Substitution&& s) {
+		ok_ = s.ok_;
+		if (ok_) for (auto& p : s.sub_)
+			sub_[p.first].reset(p.second.release());
+		s.sub_.clear();
+		s.ok_ = true;
+	}
+	bool join(Symbol v, const Tree* t) {
+		if (!ok_) return false;
+		auto it = sub_.find(v);
+		if (it != sub_.end()) {
+			if (*(*it).second != *t) ok_ = false;
+		} else {
+			sub_[v].reset(new Tree(*t));
+		}
+		return ok_;
+	}
+	bool join(const Substitution* s) {
+		return join(*s);
+	}
+	bool join(const Substitution& s) {
+		for (const auto& p : s.sub_) {
+			if (!ok_) return false;
+			join(p.first, p.second.get());
+		}
+		return ok_;
+	}
+	const map<Symbol, unique_ptr<Tree>>& sub() const { return sub_; }
+	bool ok() const { return ok_; }
+	operator bool() const { return ok_; }
+
+private:
+	map<Symbol, unique_ptr<Tree>> sub_;
+	bool ok_;
 };
 
 
@@ -303,6 +341,10 @@ inline Substitution* unify(const Expr& ex1, const Expr& ex2) {
 //Expr assemble(const Tree* t);
 
 Expr apply(const Substitution*, const Expr&);
+inline Expr apply(const Substitution& s, const Expr& e) {
+	return apply(&s, e);
+}
+
 
 namespace expr {
 	void enqueue(Expr& ex);
@@ -320,7 +362,7 @@ string show(const Tree& t, bool full = false);
 
 inline string show(const Substitution& s) {
 	string str;
-	for (auto& p : s.sub) {
+	for (const auto& p : s.sub()) {
 		str += show(p.first, true) + " --> " + show_ast(*p.second) + "\t ==\t"  + show(*p.second) + "\n";
 	}
 	return str;

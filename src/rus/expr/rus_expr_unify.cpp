@@ -3,7 +3,7 @@
 namespace mdl {
 namespace rus {
 
-inline Rule* find_super(const Type* type, const Type* super) {
+Rule* find_super(const Type* type, const Type* super) {
 	auto it =type->supers.find(super);
 	if (it != type->supers.end())
 		return it->second;
@@ -16,9 +16,10 @@ Substitution* unify(const Tree* p, const Tree* q) {
 	case Tree::VAR: {
 		Symbol var = *p->var();
 		if (var.type() == q->type()) {
-			return new Substitution(var, new Tree(*q));
+			return new Substitution(var, q);
 		} else if (Rule* super = find_super(q->type(), var.type())) {
-			return new Substitution(var, new Tree(super, {new Tree(*q)}));
+			Tree t(super, {new Tree(*q)});
+			return new Substitution(var, &t);
 		}
 		return nullptr;
 	}

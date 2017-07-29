@@ -225,7 +225,7 @@ void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref*>& smm
 		delete hs;
 	}
 	for (auto v : st->ass()->vars.v)
-		translate_term(*ps->sub[v], thm, smm_proof, maps);
+		translate_term(*ps->sub().at(v), thm, smm_proof, maps);
 	delete ps;
 	if (!maps.assertions.count(ass))
 		throw Error("undefined reference to assertion");

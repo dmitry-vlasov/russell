@@ -75,8 +75,8 @@ static void apply(const Substitution* s, unique_ptr<Tree>& t) {
 			apply(s, n);
 	else {
 		Symbol v = *t.get()->var();
-		if (s->sub.count(v))
-			t.reset(new Tree(*s->sub.at(v).get()));
+		if (s->sub().count(v))
+			t.reset(new Tree(*s->sub().at(v).get()));
 	}
 }
 
