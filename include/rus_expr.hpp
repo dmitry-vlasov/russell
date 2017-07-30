@@ -134,7 +134,7 @@ struct Tree {
 	};
 
 	Tree(const Symbol& v);
-	Tree(Rule* r, const Children& ch);
+	Tree(Rule* r, const Children& ch = Children());
 	Tree(Rule* r, Tree* ch);
 	Tree(const Tree& ex);
 	Tree(Tree&& ex);
@@ -302,6 +302,9 @@ struct Substitution {
 			sub_[p.first].reset(p.second.release());
 		s.sub_.clear();
 		s.ok_ = true;
+	}
+	bool join(Symbol v, Symbol t) {
+		return join(v, new Tree(t));
 	}
 	bool join(Symbol v, const Tree* t) {
 		if (!ok_) return false;

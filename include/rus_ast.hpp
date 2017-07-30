@@ -55,6 +55,8 @@ struct Rule : public Owner<Rule> {
 	Rule(Id id, const Vars& v, const Expr& e, const Token& t = Token());
 	Vars vars;
 	Expr term;
+	Type* type() { return term.type.get(); }
+	const Type* type() const { return term.type.get(); }
 };
 
 inline Type* Tree::type() { return kind == VAR ? val.var->type() : val.node->rule.get()->term.type.get(); }

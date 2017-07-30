@@ -1,4 +1,4 @@
-#include "rus_prover.hpp"
+#include "rus_prover_index.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
@@ -7,7 +7,7 @@ vector<Node*> build_up(Node* n) {
 	switch (n->kind()) {
 	case Node::REF: break;
 	case Node::HYP: {
-		for (const auto& p : assertion_index().unify(hyp(n)->expr.tree.get()))
+		for (const auto& p : assertion_index().unify_forth(hyp(n)->expr.tree.get()))
 			ret.push_back(new Prop(p.first, p.second, n));
 		break;
 	}
