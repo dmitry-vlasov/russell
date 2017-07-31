@@ -133,11 +133,14 @@ struct MultySub {
 };
 
 struct MultyTree {
-	void add(const Substitution& s) {
-		for (const auto& p : s.sub())
-			msub_[p.first].push_back(&p.second);
+	MultyTree(const Substitution& s1, const Substitution& s2) {
+		add(s1);
+		add(s2);
 	}
-	MultySub makeSubs() {
+	MultyTree(const vector<Proof*>& ch) {
+		for (auto p : ch) add(p->sub);
+	}
+	MultySub makeSubs() const {
 		MultySub ret;
 		for (const auto& p : msub_) {
 			if (UnifSym s = unify_both(p.second)) {
@@ -149,15 +152,44 @@ struct MultyTree {
 		}
 		return ret;
 	}
+
 private:
+	void add(const Substitution& s) {
+		for (const auto& p : s.sub())
+			msub_[p.first].push_back(&p.second);
+	}
 	map<Symbol, vector<const Tree*>> msub_;
 };
 
-Node* unify_subs(vector<Proof*> ch) {
-	MultyTree t;
-	for (auto p : ch) t.add(p->sub);
+bool intersects(const Substitution& s1, const Substitution& s2) {
+	for (const auto& p : s1.sub())
+		if (s2.sub().count(p.first)) return true;
+	return false;
+}
+
+Substitution unify_subs(const MultyTree& t) {
 	MultySub m = t.makeSubs();
-	return nullptr;
+	Substitution com;
+	Substitution gen;
+	for (auto& p : m.msub_) {
+		if (!com.join(p.second.sub)) return Substitution(false);
+		if (!gen.join(p.first, p.second.term)) Substitution(false);
+	}
+	if (!intersects(com, gen)) {
+		com.join(gen);
+		return com;
+	} else {
+		MultyTree t1(com, gen);
+		return unify_subs(t1);
+	}
+}
+
+Proof* unify_subs(Node* pr, Proof* p, vector<Proof*> ch) {
+	MultyTree t(ch);
+	Substitution sub = unify_subs(t);
+	Proof* ret = new Proof{pr, nullptr, ch, true, sub};
+	p->parent = ret;
+	return ret;
 }
 
 inline uint find_index(const vector<Proof*> pv, const Proof* p) {
@@ -165,7 +197,7 @@ inline uint find_index(const vector<Proof*> pv, const Proof* p) {
 }
 
 vector<Node*> unify_subs(Node* n, Proof* p) {
-	vector<Node*> ret;
+	vector<Proof*> proofs;
 	assert(n->kind() == Node::HYP);
 	Prop* pr = prop(n->parent);
 	Ind ind;
@@ -177,11 +209,11 @@ vector<Node*> unify_subs(Node* n, Proof* p) {
 		vector<Proof*> ch;
 		for (uint i = 0; i < ind.size(); ++ i)
 			ch.push_back(pr->child[i]->proof[ind[i]]);
-		ret.push_back(unify_subs(ch));
+		pr->proof.push_back(unify_subs(pr, p, ch));
 		if (!ind.hasNext()) break;
 		ind.makeNext();
 	}
-	return ret;
+	return {pr};
 }
 
 vector<Node*> build_down(Node* n) {
