@@ -7,7 +7,7 @@ vector<Node*> build_up(Node* n) {
 	switch (n->kind()) {
 	case Node::REF: break;
 	case Node::HYP: {
-		for (const auto& p : assertion_index().unify_forth(hyp(n)->expr.tree.get()))
+		for (const auto& p : assertion_index().unify_forth(hyp(n)->expr.tree))
 			ret.push_back(new Prop(p.first, p.second, n));
 		break;
 	}
@@ -62,7 +62,7 @@ private:
 	bool         hasNext_;
 };
 
-Substitution unify_both(const vector<unique_ptr<Tree>>& ex) {
+Substitution unify_both(const vector<Tree>& ex) {
 	return Substitution();
 }
 
@@ -75,7 +75,7 @@ struct MultySub {
 struct MultyTree {
 	void add(const Substitution& s) {
 		for (const auto& p : s.sub())
-			msub_[p.first].emplace_back(new Tree(*p.second));
+			msub_[p.first].push_back(p.second);
 	}
 	MultySub makeSubs() {
 		MultySub ret;
@@ -90,7 +90,7 @@ struct MultyTree {
 		return ret;
 	}
 private:
-	map<Symbol, vector<unique_ptr<Tree>>> msub_;
+	map<Symbol, vector<Tree>> msub_;
 };
 
 Node* unify_subs(vector<Proof*> ch) {

@@ -122,7 +122,7 @@ smm::Assertion* translate_rule(const Rule* rule, Maps& maps) {
 	maps.rules[rule] = ra;
 	for (auto v : rule->vars.v) {
 		uint i = 0;
-		for (auto& ch : rule->term.tree->children()) {
+		for (auto& ch : rule->term.tree.children()) {
 			if (ch->kind == Tree::VAR && *ch->var() == v) {
 				maps.rules_args[rule][v] = i;
 				break;
@@ -225,7 +225,7 @@ void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref*>& smm
 		delete hs;
 	}
 	for (auto v : st->ass()->vars.v)
-		translate_term(*ps->sub().at(v), thm, smm_proof, maps);
+		translate_term(ps->sub().at(v), thm, smm_proof, maps);
 	delete ps;
 	if (!maps.assertions.count(ass))
 		throw Error("undefined reference to assertion");

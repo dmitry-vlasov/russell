@@ -91,7 +91,8 @@ void parse_LL(Expr* ex) {
 	//cout << "parsing: " << ind << " -- " << show(*ex) << flush;
 	auto it = ex->symbols.begin();
 	if (Tree* tree = parse_LL(it, ex->type.get(), ex)) {
-		ex->tree.reset(tree);
+		ex->tree = std::move(*tree);
+		delete tree;
 	} else {
 		cout << "Source: " << Lex::toStr(ex->token.src->id()) << endl;
 		cout << endl << "includes: " << endl;

@@ -41,7 +41,7 @@ Rule::Rule(Id i, const Vars& v, const Expr& e, const Token& t) :
 	for (auto& s : term.symbols) {
 		if (s.type()) children.push_back(make_unique<Tree>(s));
 	}
-	term.tree.reset(new Tree(this, children));
+	term.tree = std::move(Tree(this, children));
 	term.type.get()->rules.add(term, i.id);
 }
 

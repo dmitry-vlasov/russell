@@ -119,7 +119,7 @@ inline ostream& operator << (ostream& os, Symbol s) {
 
 struct Tree {
 	typedef vector<unique_ptr<Tree>> Children;
-	enum Kind { NODE, VAR};
+	enum Kind { NODE, VAR, NONE};
 
 	struct Node {
 		Node(Rule* r = nullptr);
@@ -133,6 +133,7 @@ struct Tree {
 		Children   children;
 	};
 
+	Tree();
 	Tree(const Symbol& v);
 	Tree(Rule* r, const Children& ch = Children());
 	Tree(Rule* r, Tree* ch);
@@ -145,6 +146,7 @@ struct Tree {
 		kind = ex.kind;
 		val = ex.val;
 		ex.val.var = nullptr;
+		ex.kind = NONE;
 	}
 	void operator = (const Tree& ex) {
 		delete_val();
@@ -210,15 +212,13 @@ struct Expr : public Tokenable {
 	Expr(Symbol s, const Token& t = Token()) : Tokenable(t), type(s.type()), tree(), symbols() { symbols.push_back(s); }
 	Expr(const Symbols& ss, const Token& t = Token()) : Tokenable(t), tree(), symbols(ss) { }
 	Expr(Id tp, Symbols&& ex, const Token& t = Token()) : Tokenable(t), type(tp), symbols(std::move(ex)) { }
-	Expr(const Expr& ex) : Tokenable(ex), type(ex.type), tree(), symbols (ex.symbols) {
-		if (ex.tree) tree.reset(new Tree(*ex.tree));
-	}
+	Expr(Id tp, Symbols&& ex, Tree&& tr, const Token& t = Token()) : Tokenable(t), type(tp), tree(std::move(tr)), symbols(std::move(ex)) { }
+	Expr(const Expr& ex) : Tokenable(ex), type(ex.type), tree(ex.tree), symbols (ex.symbols) { }
 	Expr(Expr&& ex) : Tokenable(ex.token), type(ex.type), tree(std::move(ex.tree)), symbols (std::move(ex.symbols)) { }
 
 	void operator = (const Expr& ex) {
 		type = ex.type;
-		if (ex.tree) tree.reset(new Tree(*ex.tree));
-		else tree.reset();
+		tree = ex.tree;
 		symbols = ex.symbols;
 		token = ex.token;
 	}
@@ -257,9 +257,9 @@ struct Expr : public Tokenable {
 	const_iterator begin() const { return symbols.cbegin(); }
 	const_iterator end() const { return symbols.cend(); }
 
-	User<Type>       type;
-	unique_ptr<Tree> tree;
-	Symbols          symbols;
+	User<Type> type;
+	Tree       tree;
+	Symbols    symbols;
 };
 
 struct Rules {
@@ -282,8 +282,8 @@ string show(const Rules& tr);
 
 struct Substitution {
 	Substitution() : sub_(), ok_(true) { }
-	Substitution(Symbol v, const Tree* t) : sub_(), ok_(true) {
-		sub_[v].reset(new Tree(*t));
+	Substitution(Symbol v, const Tree& t) : sub_(), ok_(true) {
+		sub_[v] = t;
 	}
 	Substitution(const Substitution& s) : sub_(), ok_(s.ok_) {
 		operator =(s);
@@ -294,25 +294,25 @@ struct Substitution {
 	void operator = (const Substitution& s) {
 		ok_ = s.ok_;
 		if (ok_) for (const auto& p : s.sub_)
-			sub_[p.first].reset(new Tree(*p.second));
+			sub_[p.first] = p.second;
 	}
 	void operator = (Substitution&& s) {
 		ok_ = s.ok_;
 		if (ok_) for (auto& p : s.sub_)
-			sub_[p.first].reset(p.second.release());
+			sub_[p.first] = std::move(p.second);
 		s.sub_.clear();
 		s.ok_ = true;
 	}
 	bool join(Symbol v, Symbol t) {
-		return join(v, new Tree(t));
+		return join(v, Tree(t));
 	}
-	bool join(Symbol v, const Tree* t) {
+	bool join(Symbol v, const Tree& t) {
 		if (!ok_) return false;
 		auto it = sub_.find(v);
 		if (it != sub_.end()) {
-			if (*(*it).second != *t) ok_ = false;
+			if ((*it).second != t) ok_ = false;
 		} else {
-			sub_[v].reset(new Tree(*t));
+			sub_[v] = t;
 		}
 		return ok_;
 	}
@@ -322,23 +322,23 @@ struct Substitution {
 	bool join(const Substitution& s) {
 		for (const auto& p : s.sub_) {
 			if (!ok_) return false;
-			join(p.first, p.second.get());
+			join(p.first, p.second);
 		}
 		return ok_;
 	}
-	const map<Symbol, unique_ptr<Tree>>& sub() const { return sub_; }
+	const map<Symbol, Tree>& sub() const { return sub_; }
 	bool ok() const { return ok_; }
 	operator bool() const { return ok_; }
 
 private:
-	map<Symbol, unique_ptr<Tree>> sub_;
+	map<Symbol, Tree> sub_;
 	bool ok_;
 };
 
 
-Substitution* unify_forth(const Tree* p, const Tree* q);
+Substitution* unify_forth(const Tree& p, const Tree& q);
 inline Substitution* unify_forth(const Expr& ex1, const Expr& ex2) {
-	return unify_forth(ex1.tree.get(), ex2.tree.get());
+	return unify_forth(ex1.tree, ex2.tree);
 }
 //Expr assemble(const Expr& ex);
 //Expr assemble(const Tree* t);
@@ -357,7 +357,7 @@ namespace expr {
 string show(const Expr&);
 string show_ast(const Tree&, bool full = false);
 inline string show_ast(const Expr& ex, bool full = false) {
-	return show_ast(*ex.tree, full);
+	return show_ast(ex.tree, full);
 }
 
 string show(const Tree& t, bool full = false);
@@ -366,7 +366,7 @@ string show(const Tree& t, bool full = false);
 inline string show(const Substitution& s) {
 	string str;
 	for (const auto& p : s.sub()) {
-		str += show(p.first, true) + " --> " + show_ast(*p.second) + "\t ==\t"  + show(*p.second) + "\n";
+		str += show(p.first, true) + " --> " + show_ast(p.second) + "\t ==\t"  + show(p.second) + "\n";
 	}
 	return str;
 }

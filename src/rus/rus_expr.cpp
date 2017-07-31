@@ -51,51 +51,50 @@ Tree::Node::~Node() {
 
 }
 
-static void assemble(Tree* t, Symbols& s) {
-	if (t->kind == Tree::NODE) {
-		auto i = t->children().begin();
-		for (auto x : t->rule()->term)
+static void assemble(const Tree& t, Symbols& s) {
+	if (t.kind == Tree::NODE) {
+		auto i = t.children().begin();
+		for (auto x : t.rule()->term)
 			if (x.cst) s.push_back(x);
-			else assemble((*i++).get(), s);
-	} else
-		s.push_back(*t->var());
+			else assemble(*(*i++).get(), s);
+	} else if (t.kind == Tree::VAR)
+		s.push_back(*t.var());
 }
 
-static Expr assemble(Tree* t) {
+inline Expr assemble(Tree& t) {
 	Symbols s;
 	assemble(t, s);
-	Expr e(t->type()->id(), std::move(s));
-	e.tree.reset(t);
-	return e;
+	return Expr(Id(t.type()->id()), std::move(s), std::move(t));
 }
 
-static void apply(const Substitution* s, unique_ptr<Tree>& t) {
-	if (t.get()->kind == Tree::NODE)
-		for (auto& n : t.get()->children())
-			apply(s, n);
+static void apply(const Substitution* s, Tree& t) {
+	if (t.kind == Tree::NODE)
+		for (auto& n : t.children())
+			apply(s, *n.get());
 	else {
-		Symbol v = *t.get()->var();
+		Symbol v = *t.var();
 		if (s->sub().count(v))
-			t.reset(new Tree(*s->sub().at(v).get()));
+			t = s->sub().at(v);
 	}
 }
 
 Expr apply(const Substitution* s, const Expr& e) {
-	unique_ptr<Tree> t(new Tree(*e.tree.get()));
+	Tree t(e.tree);
 	apply(s, t);
-	return assemble(t.release());
+	return assemble(t);
 }
 
+Tree::Tree() : kind(NONE) { }
 Tree::Tree(const Symbol& v) : kind(VAR), val(new Symbol(v)) { }
 Tree::Tree(Rule* r, const Tree::Children& ch) : kind(NODE), val(new Node(r, ch)) { }
 Tree::Tree(Rule* r, Tree* ch) : kind(NODE), val(new Node(r, ch)) { }
-Tree::Tree(const Tree& ex) : kind(ex.kind), val() {
+Tree::Tree(const Tree& ex) : kind(ex.kind) {
 	switch (kind) {
 	case NODE: val.node = new Node(*ex.val.node);  break;
 	case VAR:  val.var  = new Symbol(*ex.val.var); break;
 	}
 }
-Tree::Tree(Tree&& ex) : kind(ex.kind), val(ex.val) { ex.val.var = nullptr; }
+Tree::Tree(Tree&& ex) : kind(ex.kind), val(ex.val) { ex.val.var = nullptr; ex.kind = NONE; }
 Tree::~Tree() { delete_val(); }
 
 
@@ -117,7 +116,7 @@ string show(const Expr& ex) {
 size_t memvol(const Expr& ex) {
 	size_t s = 0;
 	s += ex.symbols.capacity() * sizeof (Symbols);
-	if (ex.tree) s += memvol(*ex.tree);
+	s += memvol(ex.tree);
 	return s;
 }
 
