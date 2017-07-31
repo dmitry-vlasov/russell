@@ -281,7 +281,7 @@ struct Rules::Node {
 string show(const Rules& tr);
 
 struct Substitution {
-	Substitution() : sub_(), ok_(true) { }
+	Substitution(bool ok = true) : sub_(), ok_(ok) { }
 	Substitution(Symbol v, const Tree& t) : sub_(), ok_(true) {
 		sub_[v] = t;
 	}
@@ -336,8 +336,8 @@ private:
 };
 
 
-Substitution* unify_forth(const Tree& p, const Tree& q);
-inline Substitution* unify_forth(const Expr& ex1, const Expr& ex2) {
+Substitution unify_forth(const Tree& p, const Tree& q);
+inline Substitution unify_forth(const Expr& ex1, const Expr& ex2) {
 	return unify_forth(ex1.tree, ex2.tree);
 }
 //Expr assemble(const Expr& ex);

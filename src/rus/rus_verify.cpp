@@ -12,7 +12,7 @@ void verify_step(const Step* st) {
 	const Assertion* ass = st->ass();
 	//static int c = 0;
 	//cout << "\tverifying step: " << c++ << " = " << show_id(ass->id) << endl;
-	Substitution* ps = unify_forth(ass->props[0]->expr, st->expr);
+	Substitution ps = unify_forth(ass->props[0]->expr, st->expr);
 	if (!ps) {
 		string msg = "proposition:\n";
 		msg += show(*ass->props[0]) + "\n";
@@ -26,7 +26,7 @@ void verify_step(const Step* st) {
 		throw Error("proposition unification failed", msg);
 	}
 	for (uint i = 0; i < ass->arity(); ++ i) {
-		Substitution* hs = unify_forth(ass->hyps[i]->expr, st->refs[i]->expr());
+		Substitution hs = unify_forth(ass->hyps[i]->expr, st->refs[i]->expr());
 		if (!hs) {
 			string msg = "\nhypothesis:\n";
 			msg += show(*ass->hyps[i]) + "\n";
@@ -35,11 +35,10 @@ void verify_step(const Step* st) {
 			msg += "step:\n";
 			msg += show(*st) + "\n\n";
 			msg += "theorem " + Lex::toStr(st->proof()->thm->id()) + "\n";
-			msg += "substitution:\n" + show(*ps) + "\n";
-			delete ps;
+			msg += "substitution:\n" + show(ps) + "\n";
 			throw Error("hypothesis unification failed", msg);
 		}
-		if (!ps->join(hs)) {
+		if (!ps.join(hs)) {
 			string msg = "\nhypothesis:\n";
 			msg += show(*ass->hyps[i]) + "\n";
 			msg += "ref expr:\n";
@@ -47,15 +46,11 @@ void verify_step(const Step* st) {
 			msg += "step:\n";
 			msg += show(*st) + "\n\n";
 			msg += "theorem " + Lex::toStr(st->proof()->thm->id()) + "\n";
-			msg += "prop substitution:\n" + show(*ps) + "\n";
-			msg += "hyp substitution:\n" + show(*hs) + "\n";
-			delete hs;
-			delete ps;
+			msg += "prop substitution:\n" + show(ps) + "\n";
+			msg += "hyp substitution:\n" + show(hs) + "\n";
 			throw Error("substitution join failed", msg);
 		}
-		delete hs;
 	}
-	delete ps;
 }
 
 void verify_qed(const Qed* qed) {
