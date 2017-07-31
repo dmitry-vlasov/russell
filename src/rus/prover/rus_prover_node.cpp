@@ -62,17 +62,41 @@ private:
 	bool         hasNext_;
 };
 
+Substitution unify_both(const vector<unique_ptr<Tree>>& ex) {
+	return Substitution();
+}
+
 struct MultySub {
+	MultySub() : ok(true) { }
+	map<Symbol, Substitution> msub_;
+	bool ok;
+};
+
+struct MultyTree {
 	void add(const Substitution& s) {
 		for (const auto& p : s.sub())
 			msub_[p.first].emplace_back(new Tree(*p.second));
 	}
+	MultySub makeSubs() {
+		MultySub ret;
+		for (const auto& p : msub_) {
+			if (Substitution s = unify_both(p.second)) {
+				ret.msub_[p.first] = s;
+			} else {
+				ret.ok = false;
+				break;
+			}
+		}
+		return ret;
+	}
+private:
 	map<Symbol, vector<unique_ptr<Tree>>> msub_;
 };
 
 Node* unify_subs(vector<Proof*> ch) {
-	MultySub msub;
-	for (auto p : ch) msub.add(p->sub);
+	MultyTree t;
+	for (auto p : ch) t.add(p->sub);
+	MultySub m = t.makeSubs();
 	return nullptr;
 }
 
