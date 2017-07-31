@@ -67,7 +67,7 @@ inline Expr assemble(Tree& t) {
 	return Expr(Id(t.type()->id()), std::move(s), std::move(t));
 }
 
-static void apply(const Substitution* s, Tree& t) {
+void apply(const Substitution* s, Tree& t) {
 	if (t.kind == Tree::NODE)
 		for (auto& n : t.children())
 			apply(s, *n.get());
@@ -75,6 +75,21 @@ static void apply(const Substitution* s, Tree& t) {
 		Symbol v = *t.var();
 		if (s->sub().count(v))
 			t = s->sub().at(v);
+	}
+}
+
+Tree apply_(const Substitution* s, const Tree& t) {
+	if (t.kind == Tree::NODE) {
+		Tree::Children ch;
+		for (const auto& n : t.children())
+			ch.emplace_back(new Tree(apply_(s, *n.get())));
+		return Tree(const_cast<Rule*>(t.rule()), ch);
+	} else {
+		Symbol v = *t.var();
+		if (s->sub().count(v))
+			return s->sub().at(v);
+		else
+			return Tree(v);
 	}
 }
 

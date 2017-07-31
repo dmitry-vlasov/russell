@@ -187,6 +187,13 @@ struct Tree {
 	const Rule* rule() const { assert(kind == NODE); return val.node->rule.get(); }
 	const Children& children() const { assert(kind == NODE); return val.node->children; }
 	const Type* type() const;
+	uint arity() const {
+		switch (kind) {
+		case NODE: return val.node->children.size();
+		case VAR:  return 0;
+		default:   return -1;
+		}
+	}
 
 private:
 	union Value {
@@ -282,6 +289,9 @@ string show(const Rules& tr);
 
 struct Substitution {
 	Substitution(bool ok = true) : sub_(), ok_(ok) { }
+	Substitution(Symbol v, Symbol t) : sub_(), ok_(true) {
+		sub_[v] = t;
+	}
 	Substitution(Symbol v, const Tree& t) : sub_(), ok_(true) {
 		sub_[v] = t;
 	}
@@ -343,6 +353,7 @@ inline Substitution unify_forth(const Expr& ex1, const Expr& ex2) {
 //Expr assemble(const Expr& ex);
 //Expr assemble(const Tree* t);
 
+Tree apply_(const Substitution*, const Tree&);
 Expr apply(const Substitution*, const Expr&);
 inline Expr apply(const Substitution& s, const Expr& e) {
 	return apply(&s, e);

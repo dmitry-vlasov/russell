@@ -2,11 +2,7 @@
 
 #include "rus_prover.hpp"
 
-namespace mdl { namespace rus {
-
-Rule* find_super(const Type* type, const Type* super);
-
-namespace prover {
+namespace mdl { namespace rus { namespace prover {
 
 template<class D>
 using Unified = map<D, Substitution>;

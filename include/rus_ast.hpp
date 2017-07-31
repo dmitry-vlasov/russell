@@ -51,13 +51,21 @@ struct Type : public Owner<Type> {
 	Rules  rules;
 };
 
+inline bool operator < (const Type& t1, const Type& t2) {
+	for (const auto& t : t1.sup) if (t.get() == &t2) return true;
+	return false;
+}
+
 struct Rule : public Owner<Rule> {
 	Rule(Id id, const Vars& v, const Expr& e, const Token& t = Token());
 	Vars vars;
 	Expr term;
 	Type* type() { return term.type.get(); }
 	const Type* type() const { return term.type.get(); }
+	uint arity() const { return term.tree.arity(); }
 };
+
+Rule* find_super(const Type* type, const Type* super);
 
 inline Type* Tree::type() { return kind == VAR ? val.var->type() : val.node->rule.get()->term.type.get(); }
 inline const Type* Tree::type() const { return kind == VAR ? val.var->type() : val.node->rule.get()->term.type.get(); }

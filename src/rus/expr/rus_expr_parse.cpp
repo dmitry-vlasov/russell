@@ -4,10 +4,6 @@ namespace mdl { namespace rus { namespace expr { namespace {
 
 vector<Expr*> queue;
 
-inline Rule* find_super(const Type* type, const Type* super) {
-	return type->supers.count(super) ? type->supers.at(super) : nullptr;
-}
-
 struct Action {
 	enum Kind { RET, BREAK, CONT };
 	Kind  kind;

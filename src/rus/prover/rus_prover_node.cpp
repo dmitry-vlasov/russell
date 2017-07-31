@@ -62,25 +62,85 @@ private:
 	bool         hasNext_;
 };
 
-Substitution unify_both(const vector<Tree>& ex) {
-	return Substitution();
+struct UnifSym {
+	UnifSym() : sub(false) { }
+	operator bool() const{
+		return sub;
+	}
+	Substitution sub;
+	Tree term;
+};
+
+UnifSym unify_both(const vector<const Tree*>& ex) {
+	const Rule* r = nullptr;
+	vector<const Symbol*> vars;
+	vector<const Tree::Children*> rules;
+	for (const auto& t : ex) {
+		switch (t->kind) {
+		case Tree::VAR: vars.push_back(t->var()); break;
+		case Tree::NODE:
+			if (!r) r = t->rule();
+			else if (r != t->rule()) return UnifSym();
+			rules.push_back(&t->children());
+			break;
+		default: assert(false && "no term in unify_both");
+		}
+	}
+	UnifSym ret;
+	if (r) {
+		Tree::Children ch;
+		for (uint i = 0; i < r->arity(); ++ i) {
+			vector<const Tree*> x;
+			for (const auto t : rules) {
+				x.push_back((*t)[i].get());
+			}
+			UnifSym s = unify_both(x);
+			if (!ret.sub.join(s.sub)) return UnifSym();
+			ch.emplace_back(new Tree(ret.term));
+		}
+		ret.term = Tree(const_cast<Rule*>(r), ch);
+		for (auto s : vars) {
+			if (r->type() == s->type()) {
+				ret.sub.join(Substitution(*s, ret.term));
+			} else if (Rule* sup = find_super(r->type(), s->type())) {
+				ret.sub.join(Substitution(*s, Tree(sup, {new Tree(ret.term)})));
+			} else return UnifSym();
+		}
+	} else {
+		std::sort(
+			vars.begin(),
+			vars.end(),
+			[](const Symbol* v1, const Symbol* v2) {
+				return *v1->type() < *v2->type();
+			}
+		);
+		const Symbol* lv = *vars.begin();
+		for (auto s : vars) {
+			if (lv->type() == s->type()) {
+				ret.sub.join(Substitution(*s, *lv));
+			} else if (Rule* sup = find_super(lv->type(), s->type())) {
+				ret.sub.join(Substitution(*s, Tree(sup, {new Tree(*lv)})));
+			} else return UnifSym();
+		}
+	}
+	return ret;
 }
 
 struct MultySub {
 	MultySub() : ok(true) { }
-	map<Symbol, Substitution> msub_;
+	map<Symbol, UnifSym> msub_;
 	bool ok;
 };
 
 struct MultyTree {
 	void add(const Substitution& s) {
 		for (const auto& p : s.sub())
-			msub_[p.first].push_back(p.second);
+			msub_[p.first].push_back(&p.second);
 	}
 	MultySub makeSubs() {
 		MultySub ret;
 		for (const auto& p : msub_) {
-			if (Substitution s = unify_both(p.second)) {
+			if (UnifSym s = unify_both(p.second)) {
 				ret.msub_[p.first] = s;
 			} else {
 				ret.ok = false;
@@ -90,7 +150,7 @@ struct MultyTree {
 		return ret;
 	}
 private:
-	map<Symbol, vector<Tree>> msub_;
+	map<Symbol, vector<const Tree*>> msub_;
 };
 
 Node* unify_subs(vector<Proof*> ch) {
