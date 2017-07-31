@@ -216,10 +216,10 @@ void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref*>& smm
 	for (auto ref : st->refs)
 		translate_ref(ref, thm, smm_proof, maps);
 	const Assertion* ass = st->ass();
-	Substitution* ps = unify(ass->props[0]->expr, st->expr);
+	Substitution* ps = unify_forth(ass->props[0]->expr, st->expr);
 	if (!ps) throw Error("proposition unification failed");
 	for (uint i = 0; i < ass->arity(); ++ i) {
-		Substitution* hs = unify(ass->hyps[i]->expr, st->refs[i]->expr());
+		Substitution* hs = unify_forth(ass->hyps[i]->expr, st->refs[i]->expr());
 		if (!hs) throw Error("hypothesis unification failed");
 		if (!ps->join(hs)) throw Error("substitution join failed");
 		delete hs;

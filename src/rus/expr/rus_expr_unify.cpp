@@ -11,7 +11,7 @@ Rule* find_super(const Type* type, const Type* super) {
 		return nullptr;
 }
 
-Substitution* unify(const Tree* p, const Tree* q) {
+Substitution* unify_forth(const Tree* p, const Tree* q) {
 	switch (p->kind) {
 	case Tree::VAR: {
 		Symbol var = *p->var();
@@ -29,7 +29,7 @@ Substitution* unify(const Tree* p, const Tree* q) {
 		auto p_ch = p->children().begin();
 		auto q_ch = q->children().begin();
 		while (p_ch != p->children().end()) {
-			if (Substitution* s = unify(p_ch->get(), q_ch->get())) {
+			if (Substitution* s = unify_forth(p_ch->get(), q_ch->get())) {
 				if (!sub->join(s)) {
 					delete sub;
 					return nullptr;

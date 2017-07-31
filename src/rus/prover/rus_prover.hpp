@@ -59,12 +59,9 @@ struct Proof {
 	Node*          node;
 	Proof*         parent;
 	vector<Proof*> child;
-	Substitution*  sub;
 	bool           new_;
-	~Proof() {
-		delete sub;
-		for (auto n : child) delete n;
-	}
+	Substitution   sub;
+	~Proof() { for (auto n : child) delete n; }
 };
 
 inline Node::~Node()  {
@@ -77,7 +74,7 @@ inline Hyp*  hyp (Node* n) { return dynamic_cast<Hyp*>(n); }
 inline Ref*  ref (Node* n) { return dynamic_cast<Ref*>(n); }
 
 vector<Node*> build_up(Node*);
-void build_down(vector<Node*>);
+vector<Node*> build_down(Node*);
 
 }}}
 
