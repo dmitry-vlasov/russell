@@ -48,7 +48,7 @@ struct Index {
 					unif[d].join(v, t);
 			} else if (Rule* super = find_super(t.type(), v.type())) {
 				for (const Data& d : p.second)
-					unif[d].join(v, Tree(super, {new Tree(t)}));
+					unif[d].join(v, Tree(super->id(), {new Tree(t)}));
 			}
 		}
 		if (rules.count(t.rule())) {
@@ -115,7 +115,7 @@ private:
 	UnifiedTerms<Data> gather_terms(Rule* r, const Node& n) {
 		UnifiedTerms<Data> ret;
 		UnifiedTerms<Data> un[n.child.size()];
-		for (const Data& d : n.data) ret[d] = new Tree(r);
+		for (const Data& d : n.data) ret[d] = new Tree(r->id(), Tree::Children());
 		int c = 0;
 		for (const auto i : n.child) {
 			un[c++] = gather_terms(i);
@@ -144,7 +144,7 @@ private:
 				assert(w[i].count(d));
 				ch.push_back(w[i][d]);
 			}
-			u[d] = new Tree(r, ch);
+			u[d] = new Tree(r->id(), ch);
 		}
 	}
 	static void intersect(Unified<D>& u, Unified<D> w[], uint sz) {

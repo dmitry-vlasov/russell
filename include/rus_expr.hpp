@@ -125,12 +125,12 @@ struct Tree {
 	enum Kind { NODE, VAR, NONE};
 
 	struct Node {
-		Node(Rule* r = nullptr);
+		Node(Id = Id());
 		Node(const Node& n);
 		Node(Node&& n);
-		Node(Rule* r, const Children& ch);
-		Node(Rule* r, Children&& ch);
-		Node(Rule* r, Tree* ch);
+		Node(Id i, const Children& ch);
+		Node(Id i, Children&& ch);
+		Node(Id i, Tree* ch);
 		~Node();
 		User<Rule> rule;
 		Children   children;
@@ -138,8 +138,8 @@ struct Tree {
 
 	Tree();
 	Tree(const Symbol& v);
-	Tree(Rule* r, const Children& ch = Children());
-	Tree(Rule* r, Tree* ch);
+	Tree(Id i, const Children& ch);
+	Tree(Id i, Tree* ch);
 	Tree(const Tree& ex);
 	Tree(Tree&& ex);
 	~Tree();

@@ -98,12 +98,12 @@ UnifSym unify_both(const vector<const Tree*>& ex) {
 			if (!ret.sub.join(s.sub)) return UnifSym();
 			ch.emplace_back(new Tree(ret.term));
 		}
-		ret.term = Tree(const_cast<Rule*>(r), ch);
+		ret.term = Tree(r->id(), ch);
 		for (auto s : vars) {
 			if (r->type() == s->type()) {
 				ret.sub.join(Substitution(*s, ret.term));
 			} else if (Rule* sup = find_super(r->type(), s->type())) {
-				ret.sub.join(Substitution(*s, Tree(sup, {new Tree(ret.term)})));
+				ret.sub.join(Substitution(*s, Tree(sup->id(), {new Tree(ret.term)})));
 			} else return UnifSym();
 		}
 	} else {
@@ -119,7 +119,7 @@ UnifSym unify_both(const vector<const Tree*>& ex) {
 			if (lv->type() == s->type()) {
 				ret.sub.join(Substitution(*s, *lv));
 			} else if (Rule* sup = find_super(lv->type(), s->type())) {
-				ret.sub.join(Substitution(*s, Tree(sup, {new Tree(*lv)})));
+				ret.sub.join(Substitution(*s, Tree(sup->id(), {new Tree(*lv)})));
 			} else return UnifSym();
 		}
 	}

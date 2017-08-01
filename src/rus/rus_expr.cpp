@@ -33,8 +33,8 @@ void Rules::add(const Expr& ex, uint id) {
 	n->rule.use(id);
 }
 
-Tree::Node::Node(Rule* r) : rule(r), children() { }
-Tree::Node::Node(Rule* r, const Tree::Children& ch) : rule(r), children() {
+Tree::Node::Node(Id i) : rule(i), children() { }
+Tree::Node::Node(Id i, const Tree::Children& ch) : rule(i), children() {
 	children.reserve(ch.size());
 	for (auto& c : ch) children.push_back(make_unique<Tree>(*c.get()));
 }
@@ -43,8 +43,8 @@ Tree::Node::Node(const Node& n) : rule(n.rule), children() {
 	for (auto& c : n.children) children.push_back(make_unique<Tree>(*c.get()));
 }
 Tree::Node::Node(Node&& n) : rule(n.rule), children(std::move(n.children)) { }
-Tree::Node::Node(Rule* r, Tree::Children&& ch) : rule(r), children(std::move(ch)) { }
-Tree::Node::Node(Rule* r, Tree* ch) : rule(r), children() {
+Tree::Node::Node(Id i, Tree::Children&& ch) : rule(i), children(std::move(ch)) { }
+Tree::Node::Node(Id i, Tree* ch) : rule(i), children() {
 	children.push_back(unique_ptr<Tree>(ch));
 }
 Tree::Node::~Node() {
@@ -83,7 +83,7 @@ Tree apply_(const Substitution* s, const Tree& t) {
 		Tree::Children ch;
 		for (const auto& n : t.children())
 			ch.emplace_back(new Tree(apply_(s, *n.get())));
-		return Tree(const_cast<Rule*>(t.rule()), ch);
+		return Tree(t.rule()->id(), ch);
 	} else {
 		Symbol v = *t.var();
 		if (s->sub().count(v))
@@ -101,8 +101,8 @@ Expr apply(const Substitution* s, const Expr& e) {
 
 Tree::Tree() : kind(NONE) { }
 Tree::Tree(const Symbol& v) : kind(VAR), val(new Symbol(v)) { }
-Tree::Tree(Rule* r, const Tree::Children& ch) : kind(NODE), val(new Node(r, ch)) { }
-Tree::Tree(Rule* r, Tree* ch) : kind(NODE), val(new Node(r, ch)) { }
+Tree::Tree(Id i, const Tree::Children& ch) : kind(NODE), val(new Node(i, ch)) { }
+Tree::Tree(Id i, Tree* ch) : kind(NODE), val(new Node(i, ch)) { }
 Tree::Tree(const Tree& ex) : kind(ex.kind) {
 	switch (kind) {
 	case NODE: val.node = new Node(*ex.val.node);  break;

@@ -43,7 +43,7 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e) {
 					children.push_back(unique_ptr<Tree>(child));
 					Action a = act(n, m, ch, e);
 					switch (a.kind) {
-					case Action::RET  : x = ch; return new Tree(a.rule, children);
+					case Action::RET  : x = ch; return new Tree(a.rule->id(), children);
 					case Action::BREAK: goto out;
 					case Action::CONT : continue;
 					}
@@ -53,7 +53,7 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e) {
 			} else if ((*n.top())->symb == *m.top()) {
 				Action a = act(n, m, ch, e);
 				switch (a.kind) {
-				case Action::RET  : x = ch; return new Tree(a.rule, children);
+				case Action::RET  : x = ch; return new Tree(a.rule->id(), children);
 				case Action::BREAK: goto out;
 				case Action::CONT : continue;
 				}
@@ -75,7 +75,7 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e) {
 		if (x->type() == type) {
 			return new Tree(*x);
 		} else if (Rule* super = find_super(x->type(), type)) {
-			return new Tree(super, {new Tree(*x)});
+			return new Tree(super->id(), {new Tree(*x)});
 		}
 	}
 	return nullptr;
