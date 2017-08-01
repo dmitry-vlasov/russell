@@ -7,11 +7,11 @@ inline uint create_id(string pref, string s1, string s2) {
 }
 
 inline Symbol create_var(string str, Type* tp) {
-	return Symbol(Lex::toInt(str), tp);
+	return Symbol(Lex::toInt(str), tp->id(), Symbol::VAR);
 }
 
 inline Symbol create_const(string str, Const* c) {
-	return Symbol(Lex::toInt(str), c);
+	return Symbol(Lex::toInt(str), c->id(), Symbol::CONST);
 }
 
 static Rule* create_super(Type* inf, Type* sup) {

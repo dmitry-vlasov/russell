@@ -238,7 +238,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 
 	constant =
 		lit("constant") > "{"
-		> lit("symbol")  [_b = phoenix::val(UNDEF_LIT), _c = phoenix::val(UNDEF_LIT)]
+		> lit("symbol")  [_b = phoenix::val(Symbol::undef()), _c = phoenix::val(Symbol::undef())]
 		> liter          [_a = qi::labels::_1]
 		> lit(END_MARKER)
 		> -(

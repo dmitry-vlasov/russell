@@ -16,8 +16,7 @@ struct Rule;
 struct Symbol : public mdl::Symbol {
 	Symbol() : mdl::Symbol() { }
 	Symbol(uint l) : mdl::Symbol(l) { }
-	Symbol(uint l, Type* t) : mdl::Symbol(l), val(t) { var = true; }
-	Symbol(uint l, Const* c): mdl::Symbol(l), val(c) { cst = true; }
+	Symbol(uint l, Id i, Kind k) : mdl::Symbol(l), val(i, k) { set_kind(k); }
 	Symbol(const Symbol& s) : mdl::Symbol(s) {
 		if (s.var)
 			val.type = new User<Type>(*s.val.type);
@@ -38,20 +37,19 @@ struct Symbol : public mdl::Symbol {
 	void operator = (const Symbol& s) {
 		clear();
 		mdl::Symbol::operator=(s);
-		if (s.var)
-			val.type = new User<Type>(*s.val.type);
-		else if (s.cst)
-			val.constant = new User<Const>(*s.val.constant);
+		switch (s.kind()) {
+		case VAR:   val.type = new User<Type>(*s.val.type);          break;
+		case CONST: val.constant = new User<Const>(*s.val.constant); break;
+		}
 	}
 	void operator = (Symbol&& s) {
 		clear();
 		mdl::Symbol::operator=(s);
-		if (s.var)
-			val.type = s.val.type;
-		else if (s.cst)
-			val.constant = s.val.constant;
-		s.var = false;
-		s.cst = false;
+		switch (s.kind()) {
+		case VAR:   val.type = s.val.type;         break;
+		case CONST: val.constant = s.val.constant; break;
+		}
+		s.set_kind(NONE);
 		s.val.type = nullptr;
 	}
 
@@ -91,20 +89,25 @@ struct Symbol : public mdl::Symbol {
 private:
 	union Value {
 		Value(): constant(nullptr) { }
-		Value(Type* t) : type(new User<Type>(t)) { }
-		Value(Const* c) : constant(new User<Const>(c)) { }
+		Value(Id i, Kind k) {
+			switch (k) {
+			case VAR:   type = new User<Type>(i);      break;
+			case CONST: constant = new User<Const>(i); break;
+			default: break;
+			};
+		}
 		User<Const>* constant;
 		User<Type>*  type;
 	};
 	Value val;
 
 	void clear() {
-		if (var)
-			delete val.type;
-		else if (cst)
-			delete val.constant;
-		var = false;
-		cst = false;
+		switch (kind()) {
+		case VAR:   delete val.type;     break;
+		case CONST: delete val.constant; break;
+		}
+		val.type = nullptr;
+		set_kind(NONE);
 	}
 };
 

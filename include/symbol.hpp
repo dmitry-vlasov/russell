@@ -13,20 +13,33 @@
 #pragma once
 
 #include "std.hpp"
-#define UNDEF_LIT 0x07FFFFFF
 
 namespace mdl {
 
 struct Symbol {
-	Symbol(): lit(UNDEF_LIT), var(false), cst(false), end(false), rep(false), fin(false) { }
+	enum Kind { VAR, CONST, NONE };
+	Symbol(): lit(undef()), var(false), cst(false), end(false), rep(false), fin(false) { }
 	Symbol(uint l, bool v = false) : lit(l), var(v), cst(false), end(false), rep(false), fin(false) { }
 	Symbol(const Symbol& s) : lit(s.lit), var(s.var), cst(s.cst), end(s.end), rep(s.rep), fin(s.fin) { }
 
 	bool operator == (const Symbol& s) const { return lit == s.lit; }
 	bool operator != (const Symbol& s) const { return !operator ==(s); }
 	bool operator < (const Symbol& s) const { return lit < s.lit; }
-	bool is_undef() const { return lit == UNDEF_LIT; }
-	static bool is_undef(uint lit) { return lit == UNDEF_LIT; }
+	bool is_undef() const { return lit == undef(); }
+	static bool is_undef(uint lit) { return lit == undef(); }
+	static uint undef() { return 0x07FFFFFF; }
+	Kind kind() const {
+		if (var && !cst) return VAR;
+		if (cst && !var) return CONST;
+		return NONE;
+	}
+	void set_kind(Kind k) {
+		switch (k) {
+		case VAR:   var = true; cst = false;  break;
+		case CONST: var = false; cst = true;  break;
+		default:    var = false; cst = false; break;
+		}
+	}
 
 	uint lit:27;
 
