@@ -35,7 +35,8 @@ else()
 		rus/parser/rus_parser.cpp
 		rus/prover/rus_prover_index.cpp
 		rus/prover/rus_prover_node.cpp
-		rus/prover/rus_prover_proof.cpp   
+		rus/prover/rus_prover_proof.cpp
+		rus/prover/rus_prover_space.cpp
 		rus/rus_expr.cpp 
 		rus/rus_sys.cpp 
 		rus/rus_ast.cpp 

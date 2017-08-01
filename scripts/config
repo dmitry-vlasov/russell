@@ -12,6 +12,6 @@ mathpath='../math'
 #memcheck='yes'
 
 ## Print command with arguments before execution
-#output_command='yes'
+output_command='yes'
 
 source run_check

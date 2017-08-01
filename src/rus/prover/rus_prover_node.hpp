@@ -4,6 +4,7 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+class Space;
 class Proof;
 class Prop;
 class Hyp;
@@ -14,7 +15,11 @@ struct Node {
 	Node*          parent;
 	vector<Node*>  child;
 	vector<Proof*> proof;
-	Node(Node* p) : parent(p) { if (p) p->child.push_back(this); }
+	Space*         space;
+	Node(Space* s) : parent(nullptr), space(s) { }
+	Node(Node* p) : parent(p), space(p->space) {
+		if (p) p->child.push_back(this);
+	}
 	virtual Kind kind() const = 0;
 	virtual ~Node();
 };
@@ -42,7 +47,9 @@ struct Prop : public Node {
 
 struct Hyp : public Node {
 	Expr expr;
-	Hyp(const Expr& e, Node* p = nullptr) :
+	Hyp(const Expr& e, Space* s) :
+		Node(s), expr(e) { }
+	Hyp(const Expr& e, Node* p) :
 		Node(p), expr(p ? apply(prop(p)->sub, e) : e) { }
 	Kind kind() const { return HYP; }
 };
