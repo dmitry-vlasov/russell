@@ -10,6 +10,7 @@ struct Space {
 	Hyp           root;
 	PropRef       prop;
 	Index<HypRef> hyps;
+	map<uint, uint> vars;
 
 	Space(rus::Qed*);
 	Space(rus::Assertion*, rus::Prop* p);
