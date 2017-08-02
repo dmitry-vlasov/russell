@@ -13,8 +13,12 @@ rus::Ref* ProofHyp::ref() {
 
 rus::Step* ProofStep::step() {
 	if (!step_) {
-		Prop* p = prop(node_) ? prop(node_) : prop(node_->parent);
-		step_ = new rus::Step(-1, rus::Step::ASS, Assertion::THM, p->prop.assertion()->id(), nullptr);
+		vector<rus::Ref*> refs;
+		for (auto ch : child_) refs.push_back(ch->ref());
+		const PropRef* p = node_->prop();
+		step_ = new rus::Step(-1, rus::Step::ASS, p->id(), nullptr);
+		step_->refs = std::move(refs);
+		step_->expr = *node_->expr();
 	}
 	return step_;
 }

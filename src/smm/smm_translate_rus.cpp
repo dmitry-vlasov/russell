@@ -357,23 +357,12 @@ rus::Node::Kind node_kind(const Assertion* ass) {
 	}
 }
 
-rus::Assertion::Kind ass_kind(const Assertion* ass) {
-	rus::Node::Kind kind = node_kind(ass);
-	switch (kind) {
-	case rus::Node::AXIOM:   return rus::Assertion::AXM;
-	case rus::Node::DEF:     return rus::Assertion::DEF;
-	case rus::Node::THEOREM: return rus::Assertion::THM;
-	default: assert(0 && "impossible");
-	}
-	return rus::Assertion::AXM;
-}
-
 rus::Proof::Elem translate_step(Tree* tree, rus::Proof* proof, rus::Theorem* thm, State& state, const Assertion* a) {
 	vector<rus::Proof::Elem>& elems = proof->elems;
 	assert(tree->nodes.back().type == Tree::Node::REF);
 	Tree::Node& node = tree->nodes.back();
 	Assertion* ass = node.val.ref->ass();
-	rus::Proof::Elem el(new rus::Step(elems.size(), rus::Step::ASS, ass_kind(ass), ass->prop->label, proof));
+	rus::Proof::Elem el(new rus::Step(elems.size(), rus::Step::ASS, ass->prop->label, proof));
 
 	for (uint i = 0; i < ass->essential.size(); ++ i) {
 		Tree::Node& n = tree->nodes[i];

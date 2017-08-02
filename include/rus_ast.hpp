@@ -164,7 +164,7 @@ struct Step : public Tokenable {
 		Proof*           prf;
 	};
 
-	Step(uint ind, Step::Kind, Assertion::Kind, Id id, Proof* proof, const Token& t = Token());
+	Step(uint ind, Step::Kind, Id id, Proof* proof, const Token& t = Token());
 	~Step();
 
 	Assertion* ass() {

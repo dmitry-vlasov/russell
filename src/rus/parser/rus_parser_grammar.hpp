@@ -115,13 +115,11 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	step =
 		uint_ [_a = qi::labels::_1 - 1] > ":" > id [_b = qi::labels::_1] > "="
 		> (
-			(lit("axm") [_c = val(Step::ASS), _d = val(Assertion::AXM)] > id [_e = qi::labels::_1]) |
-			(lit("thm") [_c = val(Step::ASS), _d = val(Assertion::THM)] > id [_e = qi::labels::_1]) |
-			(lit("def") [_c = val(Step::ASS), _d = val(Assertion::DEF)] > id [_e = qi::labels::_1]) |
-			(lit("claim") [_c = val(Step::CLAIM)]) |
-			(lit("?")     [_c = val(Step::NONE)])
+			(lit("claim") [_c = val(Step::CLAIM), _d = val(Id())]) |
+			(lit("?")     [_c = val(Step::NONE) , _d = val(Id())]) |
+			(id           [_c = val(Step::ASS),   _d = qi::labels::_1])
 		)
-		> eps [_val = new_<Step>(_a, _c, _d, _e, _r1)]
+		> eps [_val = new_<Step>(_a, _c, _d, _r1)]
 		> refs(_r1) [phoenix::at_c<4>(*_val) = qi::labels::_1]
 		> "|-"
 		> expr(_b) [phoenix::at_c<1>(*_val) = qi::labels::_1]

@@ -169,16 +169,9 @@ string show(const Step& st) {
 	string s = "step " + to_string(st.ind() + 1) + " : ";
 	s += show_type(st.expr) + " = ";
 	switch (st.kind()) {
-	case Step::NONE: s += "? "; break;
-	case Step::ASS: {
-		switch (st.ass()->kind()) {
-		case Assertion::AXM: s += "axm "; break;
-		case Assertion::THM: s += "thm "; break;
-		case Assertion::DEF: s += "def "; break;
-		}
-		s += show_id(st.ass()->id()) + " "; break;
-	}
-	case Step::CLAIM:s += "claim "; break;
+	case Step::NONE:  s += "? "; break;
+	case Step::CLAIM: s += "claim "; break;
+	case Step::ASS:   s += show_id(st.ass()->id()) + " "; break;
 	}
 	if (st.kind() != Step::NONE)
 		s += show_refs(st.refs) + " ";

@@ -55,32 +55,13 @@ Axiom::Axiom(Id id, const Token& t) : Assertion(id, t) { }
 Theorem::Theorem(Id id, const Token& t) : Assertion(id, t) { }
 Def::Def(Id id, const Token& t) : Assertion(id, t) { }
 
-Step::Step(uint i, Step::Kind sk, Assertion::Kind ak, Id id, Proof* p, const Token& t) :
+Step::Step(uint i, Step::Kind sk, Id id, Proof* p, const Token& t) :
 	Tokenable(t), ind_(i), kind_(sk), proof_(p) {
 	Math& math = Sys::mod().math;
 	if (!math.get<Assertion>().has(id.id)) {
 		throw Error("unknown assertion", id.toStr());
 	}
 	val_.ass = new User<Assertion>(id);
-	switch (ak) {
-	case Assertion::AXM :
-		if (!dynamic_cast<Axiom*>(val_.ass->get()))
-			throw Error("not an axiom", id.toStr());
-		break;
-	case Assertion::THM :
-		if (!dynamic_cast<Theorem*>(val_.ass->get()))
-			throw Error("not a theorem", id.toStr());
-		break;
-	case Assertion::DEF :
-		if (!dynamic_cast<Def*>(val_.ass->get()))
-			throw Error("not a definition", id.toStr());
-		break;
-	default: assert(false && "impossible");
-	}
-
-	/*if (kind == ASS) {
-		Sys::mod().math.assertions.use(id, val.ass);
-	}*/
 }
 Step::~Step() {
 	if (kind_ == ASS) delete val_.ass;
