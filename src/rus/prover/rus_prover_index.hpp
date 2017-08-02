@@ -75,8 +75,8 @@ struct Index {
 						unif[d].join(tv, iv);
 				} else if (Rule* super = find_super(iv.type(), tv.type())) {
 					for (const Data& d : p.second) {
-						Tree tr(super, {new Tree(iv)});
-						unif[d].join(tv, &tr);
+						Tree tr(super->id(), {new Tree(iv)});
+						unif[d].join(tv, tr);
 					}
 				}
 			}
@@ -85,11 +85,11 @@ struct Index {
 				const Node& n = p.second;
 				if (tv.type() == r->type()) {
 					for (const auto& q : gather_terms(r, n))
-						unif[q.fisrt].join(tv, q.second);
+						unif[q.first].join(tv, *q.second);
 				} else if (Rule* super = find_super(r->type(), tv.type())) {
 					for (const auto& q : gather_terms(r, n)) {
-						Tree tr(super, {new Tree(q.second)});
-						unif[q.first].join(tv, &tr);
+						Tree tr(super->id(), {new Tree(*q.second)});
+						unif[q.first].join(tv, tr);
 					}
 				}
 			}
@@ -100,7 +100,7 @@ struct Index {
 			Unified<Data> un[n.child.size()];
 			int c = 0;
 			for (const Index* i : n.child) {
-				un[c++] = i->unify_back((ch++)->get());
+				un[c++] = i->unify_back(*(ch++)->get());
 			}
 			if (c > 0) intersect(unif, un, c);
 		}
@@ -112,7 +112,7 @@ struct Index {
 				delete i;
 	}
 private:
-	UnifiedTerms<Data> gather_terms(Rule* r, const Node& n) {
+	static UnifiedTerms<Data> gather_terms(const Rule* r, const Node& n) {
 		UnifiedTerms<Data> ret;
 		UnifiedTerms<Data> un[n.child.size()];
 		for (const Data& d : n.data) ret[d] = new Tree(r->id(), Tree::Children());
@@ -123,26 +123,26 @@ private:
 		if (c > 0) gather(r, ret, un, c);
 		return ret;
 	}
-	UnifiedTerms<Data> gather_terms(const Index* i) {
+	static UnifiedTerms<Data> gather_terms(const Index* i) {
 		UnifiedTerms<Data> ret;
 		for (const auto& p : i->vars)
 			for (const auto& d : p.second)
 			ret[d] = new Tree(p.first);
 		for (const auto& p : i->rules) {
-			for (auto q : gather_terms(p.first, p.second))
+			for (const auto& q : gather_terms(p.first.get(), p.second))
 				ret[q.first] = q.second;
 		}
 		return ret;
 	}
-	static void gather(Rule* r, UnifiedTerms<D>& u, UnifiedTerms<D> w[], uint sz) {
+	static void gather(const Rule* r, UnifiedTerms<D>& u, UnifiedTerms<D> w[], uint sz) {
 		for (auto p : w[0]) {
 			D d = p.first;
 			Tree::Children ch;
-			ch.push_back(p.second);
+			ch.emplace_back(p.second);
 			int i = 1;
 			for (; i < sz; ++ i) {
 				assert(w[i].count(d));
-				ch.push_back(w[i][d]);
+				ch.emplace_back(w[i][d]);
 			}
 			u[d] = new Tree(r->id(), ch);
 		}

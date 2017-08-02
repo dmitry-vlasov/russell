@@ -44,10 +44,14 @@ inline bool operator < (const PropRef& a1, const PropRef& a2) {
 	return a1.ass == a2.ass ? a1.prop  < a2.prop : a1.ass < a2.ass;
 }
 
+inline bool operator < (const HypRef& a1, const HypRef& a2) {
+	return a1.ass == a2.ass ? a1.hyp  < a2.hyp : a1.ass < a2.ass;
+}
+
 struct Prop : public Node {
 	PropRef      prop;
 	Substitution sub;
-	Prop(PropRef r, const Substitution& s, Node* p);
+	Prop(const PropRef& r, const Substitution& s, Node* p);
 	Kind kind() const override { return PROP; }
 	vector<Node*> buildUp() override;
 	vector<Node*> buildDown() override;
@@ -82,13 +86,14 @@ struct Proof {
 	Expr         expr;
 	Proof*       parent;
 	bool         new_;
-	Proof(const Substitution& s = Substitution()) :
+	Proof(const Substitution& s) :
 		sub(s), parent(nullptr), new_(true) { }
 	virtual ~Proof() { }
 };
 
 struct ProofHyp : public Proof {
 	HypRef hyp;
+	ProofHyp(const HypRef& h, const Substitution& s) : Proof(s), hyp(h) { }
 };
 
 struct ProofStep : public Proof {

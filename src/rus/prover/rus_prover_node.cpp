@@ -7,7 +7,7 @@ Node::~Node() {
 	for (auto p : proof) delete p;
 }
 
-Prop::Prop(PropRef r, const Substitution& s, Node* p) :
+Prop::Prop(const PropRef& r, const Substitution& s, Node* p) :
 	Node(p), prop(r), sub(s) {
 	space->leaf_props.insert(this);
 	if (parent && parent->parent) {
@@ -20,7 +20,8 @@ void Hyp::addToLeafs() {
 	if (parent && parent->parent) {
 		space->leaf_hyps.erase(dynamic_cast<Hyp*>(parent->parent));
 	}
-
+	for (const auto& p : space->hyps.unify_back(expr.tree))
+		proof.push_back(new ProofHyp(p.first, p.second));
 }
 
 vector<Node*> Hyp::buildUp() {
