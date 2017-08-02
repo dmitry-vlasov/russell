@@ -60,15 +60,15 @@ struct Prop : public Node {
 struct Hyp : public Node {
 	Expr expr;
 	Hyp(const Expr& e, Space* s) :
-		Node(s), expr(e) { addToLeafs(); }
+		Node(s), expr(e) { complete(); }
 	Hyp(const Expr& e, Node* p) :
-		Node(p), expr(p ? apply(prop(p)->sub, e) : e) { addToLeafs(); }
+		Node(p), expr(p ? apply(prop(p)->sub, e) : e) { complete(); }
 	Kind kind() const override{ return HYP; }
 	vector<Node*> buildUp() override;
 	vector<Node*> buildDown() override;
 
 private:
-	void addToLeafs();
+	void complete();
 };
 
 struct Ref : public Node {

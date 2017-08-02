@@ -15,13 +15,20 @@ Prop::Prop(const PropRef& r, const Substitution& s, Node* p) :
 	}
 }
 
-void Hyp::addToLeafs() {
+void Hyp::complete() {
 	space->leaf_hyps.insert(this);
 	if (parent && parent->parent) {
 		space->leaf_hyps.erase(dynamic_cast<Hyp*>(parent->parent));
 	}
 	for (const auto& p : space->hyps.unify_back(expr.tree))
 		proof.push_back(new ProofHyp(p.first, p.second));
+	queue<Node*> downs;
+	downs.push(this);
+	while (true) {
+		Node* n = downs.front(); downs.pop();
+		for (auto x: n->buildDown()) downs.push(x);
+		if (downs.empty()) break;
+	}
 }
 
 vector<Node*> Hyp::buildUp() {
