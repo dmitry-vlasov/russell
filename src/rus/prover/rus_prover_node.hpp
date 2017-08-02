@@ -35,6 +35,11 @@ struct PropRef {
 	uint prop;
 };
 
+struct HypRef {
+	User<Assertion> ass;
+	uint hyp;
+};
+
 inline bool operator < (const PropRef& a1, const PropRef& a2) {
 	return a1.ass == a2.ass ? a1.prop  < a2.prop : a1.ass < a2.ass;
 }
@@ -73,12 +78,25 @@ struct Ref : public Node {
 };
 
 struct Proof {
+	Substitution sub;
+	Expr         expr;
+	Proof*       parent;
+	bool         new_;
+	Proof(const Substitution& s = Substitution()) :
+		sub(s), parent(nullptr), new_(true) { }
+	virtual ~Proof() { }
+};
+
+struct ProofHyp : public Proof {
+	HypRef hyp;
+};
+
+struct ProofStep : public Proof {
 	Node*          node;
-	Proof*         parent;
 	vector<Proof*> child;
-	bool           new_;
-	Substitution   sub;
-	~Proof() { for (auto n : child) delete n; }
+	ProofStep(Node* n, vector<Proof*>&& c, const Substitution& s = Substitution()) :
+		Proof(s), node(n), child(std::move(c)) { }
+	~ProofStep() override { for (auto n : child) delete n; }
 };
 
 inline Prop* prop(Node* n) { return dynamic_cast<Prop*>(n); }

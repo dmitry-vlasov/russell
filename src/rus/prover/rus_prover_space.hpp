@@ -4,11 +4,6 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-struct HypRef {
-	User<Assertion> ass;
-	uint hyp;
-};
-
 struct Space {
 	set<Prop*>    leaf_props;
 	set<Hyp*>     leaf_hyps;

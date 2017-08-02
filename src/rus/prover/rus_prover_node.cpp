@@ -20,6 +20,7 @@ void Hyp::addToLeafs() {
 	if (parent && parent->parent) {
 		space->leaf_hyps.erase(dynamic_cast<Hyp*>(parent->parent));
 	}
+
 }
 
 vector<Node*> Hyp::buildUp() {
@@ -209,7 +210,7 @@ Substitution unify_subs(const MultyTree& t) {
 Proof* unify_subs(Node* pr, Proof* p, vector<Proof*> ch) {
 	MultyTree t(ch);
 	Substitution sub = unify_subs(t);
-	Proof* ret = new Proof{pr, nullptr, ch, true, sub};
+	Proof* ret = new ProofStep(pr, std::move(ch), sub);
 	p->parent = ret;
 	return ret;
 }
@@ -269,7 +270,7 @@ vector<Node*> Prop::buildDown() {
 	for (auto p : proof)
 		if (p->new_) {
 			p->new_ = false;
-			p->parent = new Proof{this, nullptr, {p}, true};
+			p->parent = new ProofStep(this, {p});
 			parent->proof.push_back(p->parent);
 			ret.push_back(parent);
 		}
