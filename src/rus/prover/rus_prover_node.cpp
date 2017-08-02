@@ -218,9 +218,7 @@ Substitution unify_subs(const MultyTree& t) {
 Proof* unify_subs(Node* pr, Proof* p, vector<Proof*> ch) {
 	MultyTree t(ch);
 	Substitution sub = unify_subs(t);
-	Proof* ret = new ProofStep(pr, std::move(ch), sub);
-	p->setParent(ret);
-	return ret;
+	return new ProofStep(pr, std::move(ch), sub);
 }
 
 inline uint find_index(const vector<Proof*> pv, const Proof* p) {
@@ -248,14 +246,11 @@ vector<Node*> unify_subs(Node* n, Proof* p) {
 }
 
 vector<Node*> Prop::buildDown() {
-	vector<Node*> ret;
 	for (auto p : proof)
 		if (p->isNew()) {
-			p->setParent(new ProofStep(this, {p}));
-			parent->proof.push_back(p->parent());
-			ret.push_back(parent);
+			parent->proof.push_back(new ProofStep(this, {p}));
 		}
-	return ret;
+	return {parent};
 }
 
 vector<Node*> Hyp::buildDown() {

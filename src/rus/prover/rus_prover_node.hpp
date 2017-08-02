@@ -99,7 +99,7 @@ struct Ref : public Node {
 
 struct Proof {
 	Proof(const Substitution& s) :
-		sub_(s), parent_(nullptr), new_(true) { }
+		sub_(s), new_(true) { }
 
 	virtual ~Proof() { }
 	virtual rus::Step* step() = 0;
@@ -108,17 +108,17 @@ struct Proof {
 	const Substitution& sub() { return sub_; }
 	const Expr& expr() const { return expr_; }
 	bool isNew() const { return new_; }
-	Proof* parent() { return parent_; }
-	void setParent(Proof* p) {
-		parent_ = p;
+	const vector<Proof*>& parents() { return parents_; }
+	void addParent(Proof* p) {
+		parents_.push_back(p);
 		new_ = false;
 	}
 
 protected:
-	Substitution sub_;
-	Expr         expr_;
-	Proof*       parent_;
-	bool         new_;
+	Substitution   sub_;
+	Expr           expr_;
+	vector<Proof*> parents_;
+	bool           new_;
 };
 
 struct ProofHyp : public Proof {
@@ -133,8 +133,10 @@ private:
 
 struct ProofStep : public Proof {
 	ProofStep(Node* n, vector<Proof*>&& c, const Substitution& s = Substitution()) :
-		Proof(s), step_(nullptr), ref_(nullptr), node_(n), child_(std::move(c)) { }
-	~ProofStep() override { for (auto n : child_) delete n; }
+		Proof(s), step_(nullptr), ref_(nullptr), node_(n), child_(std::move(c)) {
+		for (auto ch : child_) ch->addParent(this);
+	}
+	~ProofStep() override { }
 	rus::Step* step() override;
 	rus::Ref* ref() override;
 private:
