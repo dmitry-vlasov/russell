@@ -1,21 +1,43 @@
-#include "rus_prover_index.hpp"
+#include "rus_prover_space.hpp"
 
 namespace mdl { namespace rus { namespace prover {
 
-vector<Node*> build_up(Node* n) {
+Node::~Node() {
+	for (auto n : child) delete n;
+	for (auto p : proof) delete p;
+}
+
+Prop::Prop(PropRef r, const Substitution& s, Node* p) :
+	Node(p), prop(r), sub(s) {
+	space->leaf_props.insert(this);
+	if (parent && parent->parent) {
+		space->leaf_props.erase(dynamic_cast<Prop*>(parent->parent));
+	}
+}
+
+void Hyp::addToLeafs() {
+	space->leaf_hyps.insert(this);
+	if (parent && parent->parent) {
+		space->leaf_hyps.erase(dynamic_cast<Hyp*>(parent->parent));
+	}
+}
+
+vector<Node*> Hyp::buildUp() {
 	vector<Node*> ret;
-	switch (n->kind()) {
-	case Node::REF: break;
-	case Node::HYP: {
-		for (const auto& p : assertion_index().unify_forth(hyp(n)->expr.tree))
-			ret.push_back(new Prop(p.first, p.second, n));
-		break;
-	}
-	case Node::PROP:
-		for (rus::Hyp* h : prop(n)->prop.ass.get()->hyps)
-			ret.push_back(new Hyp(h->expr, n));
-		break;
-	}
+	for (const auto& p : assertion_index().unify_forth(expr.tree))
+		ret.push_back(new Prop(p.first, p.second, this));
+	return ret;
+}
+
+vector<Node*> Prop::buildUp() {
+	vector<Node*> ret;
+	for (rus::Hyp* h : prop.ass.get()->hyps)
+		ret.push_back(new Hyp(h->expr, this));
+	return ret;
+}
+
+vector<Node*> Ref::buildUp() {
+	vector<Node*> ret;
 	return ret;
 }
 
@@ -215,7 +237,7 @@ vector<Node*> unify_subs(Node* n, Proof* p) {
 	}
 	return {pr};
 }
-
+/*
 vector<Node*> build_down(Node* n) {
 	vector<Node*> ret;
 	switch (n->kind()) {
@@ -238,6 +260,35 @@ vector<Node*> build_down(Node* n) {
 			}
 		break;
 	}
+	return ret;
+}
+*/
+
+vector<Node*> Prop::buildDown() {
+	vector<Node*> ret;
+	for (auto p : proof)
+		if (p->new_) {
+			p->new_ = false;
+			p->parent = new Proof{this, nullptr, {p}, true};
+			parent->proof.push_back(p->parent);
+			ret.push_back(parent);
+		}
+	return ret;
+}
+
+vector<Node*> Hyp::buildDown() {
+	vector<Node*> ret;
+	for (auto p : proof)
+		if (p->new_) {
+			p->new_ = false;
+			for (auto q : unify_subs(this, p))
+				ret.push_back(q);
+		}
+	return ret;
+}
+
+vector<Node*> Ref::buildDown() {
+	vector<Node*> ret;
 	return ret;
 }
 

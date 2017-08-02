@@ -21,6 +21,8 @@ struct Node {
 		if (p) p->child.push_back(this);
 	}
 	virtual Kind kind() const = 0;
+	virtual vector<Node*> buildUp() = 0;
+	virtual vector<Node*> buildDown() = 0;
 	virtual ~Node();
 };
 
@@ -40,18 +42,24 @@ inline bool operator < (const PropRef& a1, const PropRef& a2) {
 struct Prop : public Node {
 	PropRef      prop;
 	Substitution sub;
-	Prop(PropRef r, const Substitution& s, Node* p) :
-		Node(p), prop(r), sub(s) { }
-	Kind kind() const { return PROP; }
+	Prop(PropRef r, const Substitution& s, Node* p);
+	Kind kind() const override { return PROP; }
+	vector<Node*> buildUp() override;
+	vector<Node*> buildDown() override;
 };
 
 struct Hyp : public Node {
 	Expr expr;
 	Hyp(const Expr& e, Space* s) :
-		Node(s), expr(e) { }
+		Node(s), expr(e) { addToLeafs(); }
 	Hyp(const Expr& e, Node* p) :
-		Node(p), expr(p ? apply(prop(p)->sub, e) : e) { }
-	Kind kind() const { return HYP; }
+		Node(p), expr(p ? apply(prop(p)->sub, e) : e) { addToLeafs(); }
+	Kind kind() const override{ return HYP; }
+	vector<Node*> buildUp() override;
+	vector<Node*> buildDown() override;
+
+private:
+	void addToLeafs();
 };
 
 struct Ref : public Node {
@@ -59,7 +67,9 @@ struct Ref : public Node {
 	Substitution sub;
 	Ref(Node* n, const Substitution& s, Node* p) :
 		Node(p), node(n), sub(s) { }
-	Kind kind() const { return REF; }
+	Kind kind() const override { return REF; }
+	vector<Node*> buildUp() override;
+	vector<Node*> buildDown() override;
 };
 
 struct Proof {
@@ -71,17 +81,9 @@ struct Proof {
 	~Proof() { for (auto n : child) delete n; }
 };
 
-inline Node::~Node()  {
-	for (auto n : child) delete n;
-	for (auto p : proof) delete p;
-}
-
 inline Prop* prop(Node* n) { return dynamic_cast<Prop*>(n); }
 inline Hyp*  hyp (Node* n) { return dynamic_cast<Hyp*>(n); }
 inline Ref*  ref (Node* n) { return dynamic_cast<Ref*>(n); }
-
-vector<Node*> build_up(Node*);
-vector<Node*> build_down(Node*);
 
 }}}
 
