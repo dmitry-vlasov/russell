@@ -40,7 +40,7 @@ vector<Node*> Hyp::buildUp() {
 
 vector<Node*> Prop::buildUp() {
 	vector<Node*> ret;
-	for (rus::Hyp* h : prop.ass.get()->hyps)
+	for (rus::Hyp* h : prop.assertion()->hyps)
 		ret.push_back(new Hyp(h->expr, this));
 	return ret;
 }
@@ -169,7 +169,7 @@ struct MultyTree {
 		add(s2);
 	}
 	MultyTree(const vector<Proof*>& ch) {
-		for (auto p : ch) add(p->sub);
+		for (auto p : ch) add(p->sub());
 	}
 	MultySub makeSubs() const {
 		MultySub ret;
@@ -219,7 +219,7 @@ Proof* unify_subs(Node* pr, Proof* p, vector<Proof*> ch) {
 	MultyTree t(ch);
 	Substitution sub = unify_subs(t);
 	Proof* ret = new ProofStep(pr, std::move(ch), sub);
-	p->parent = ret;
+	p->setParent(ret);
 	return ret;
 }
 
@@ -246,40 +246,13 @@ vector<Node*> unify_subs(Node* n, Proof* p) {
 	}
 	return {pr};
 }
-/*
-vector<Node*> build_down(Node* n) {
-	vector<Node*> ret;
-	switch (n->kind()) {
-	case Node::REF: break;
-	case Node::HYP:
-		for (auto p : n->proof)
-			if (p->new_) {
-				p->new_ = false;
-				for (auto q : unify_subs(n, p))
-					ret.push_back(q);
-			}
-		break;
-	case Node::PROP:
-		for (auto p : n->proof)
-			if (p->new_) {
-				p->new_ = false;
-				p->parent = new Proof{n, nullptr, {p}, true};
-				n->parent->proof.push_back(p->parent);
-				ret.push_back(n->parent);
-			}
-		break;
-	}
-	return ret;
-}
-*/
 
 vector<Node*> Prop::buildDown() {
 	vector<Node*> ret;
 	for (auto p : proof)
-		if (p->new_) {
-			p->new_ = false;
-			p->parent = new ProofStep(this, {p});
-			parent->proof.push_back(p->parent);
+		if (p->isNew()) {
+			p->setParent(new ProofStep(this, {p}));
+			parent->proof.push_back(p->parent());
 			ret.push_back(parent);
 		}
 	return ret;
@@ -288,8 +261,7 @@ vector<Node*> Prop::buildDown() {
 vector<Node*> Hyp::buildDown() {
 	vector<Node*> ret;
 	for (auto p : proof)
-		if (p->new_) {
-			p->new_ = false;
+		if (p->isNew()) {
 			for (auto q : unify_subs(this, p))
 				ret.push_back(q);
 		}

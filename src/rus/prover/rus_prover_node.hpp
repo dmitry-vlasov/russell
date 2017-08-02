@@ -31,22 +31,28 @@ Hyp*  hyp (Node* n);
 Ref*  ref (Node* n);
 
 struct PropRef {
+	PropRef(const Assertion* a, uint i) : ass(a->id()), ind(i) { }
+	Assertion* assertion() { return ass.get(); }
+	rus::Prop* get() { return ass.get()->props[ind]; }
+	friend bool operator < (const PropRef& a1, const PropRef& a2) {
+		return a1.ass == a2.ass ? a1.ind  < a2.ind : a1.ass < a2.ass;
+	}
+private:
 	User<Assertion> ass;
-	uint prop;
+	uint ind;
 };
 
 struct HypRef {
+	HypRef(const Assertion* a, uint i) : ass(a->id()), ind(i) { }
+	Assertion* assertion() { return ass.get(); }
+	rus::Hyp* get() { return ass.get()->hyps[ind]; }
+	friend bool operator < (const HypRef& a1, const HypRef& a2) {
+		return a1.ass == a2.ass ? a1.ind  < a2.ind : a1.ass < a2.ass;
+	}
+private:
 	User<Assertion> ass;
-	uint hyp;
+	uint ind;
 };
-
-inline bool operator < (const PropRef& a1, const PropRef& a2) {
-	return a1.ass == a2.ass ? a1.prop  < a2.prop : a1.ass < a2.ass;
-}
-
-inline bool operator < (const HypRef& a1, const HypRef& a2) {
-	return a1.ass == a2.ass ? a1.hyp  < a2.hyp : a1.ass < a2.ass;
-}
 
 struct Prop : public Node {
 	PropRef      prop;
@@ -82,26 +88,50 @@ struct Ref : public Node {
 };
 
 struct Proof {
-	Substitution sub;
-	Expr         expr;
-	Proof*       parent;
-	bool         new_;
 	Proof(const Substitution& s) :
-		sub(s), parent(nullptr), new_(true) { }
+		sub_(s), parent_(nullptr), new_(true) { }
+
 	virtual ~Proof() { }
+	virtual rus::Step* step() = 0;
+	virtual rus::Ref* ref() = 0;
+
+	const Substitution& sub() { return sub_; }
+	const Expr& expr() const { return expr_; }
+	bool isNew() const { return new_; }
+	Proof* parent() { return parent_; }
+	void setParent(Proof* p) {
+		parent_ = p;
+		new_ = false;
+	}
+
+protected:
+	Substitution sub_;
+	Expr         expr_;
+	Proof*       parent_;
+	bool         new_;
 };
 
 struct ProofHyp : public Proof {
-	HypRef hyp;
-	ProofHyp(const HypRef& h, const Substitution& s) : Proof(s), hyp(h) { }
+	ProofHyp(const HypRef& h, const Substitution& s) :
+		Proof(s), ref_(nullptr), hyp_(h) { }
+	rus::Step* step() override;
+	rus::Ref* ref() override;
+private:
+	rus::Ref* ref_;
+	HypRef hyp_;
 };
 
 struct ProofStep : public Proof {
-	Node*          node;
-	vector<Proof*> child;
 	ProofStep(Node* n, vector<Proof*>&& c, const Substitution& s = Substitution()) :
-		Proof(s), node(n), child(std::move(c)) { }
-	~ProofStep() override { for (auto n : child) delete n; }
+		Proof(s), step_(nullptr), ref_(nullptr), node_(n), child_(std::move(c)) { }
+	~ProofStep() override { for (auto n : child_) delete n; }
+	rus::Step* step() override;
+	rus::Ref* ref() override;
+private:
+	rus::Step*     step_;
+	rus::Ref*      ref_;
+	Node*          node_;
+	vector<Proof*> child_;
 };
 
 inline Prop* prop(Node* n) { return dynamic_cast<Prop*>(n); }

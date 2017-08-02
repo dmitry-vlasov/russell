@@ -2,16 +2,20 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-Space::Space(rus::Qed* q) : root(q->prop->expr, this) {
-	Assertion* a = q->step->proof()->thm;
+inline uint find_index(const rus::Assertion* a, const rus::Prop* p) {
 	uint c = 0;
-	for (;c < a->props.size(); ++ c)
-		if (a->props[c] == q->prop) break;
-	assert(c < ass->props.size());
-	prop = PropRef {a, c};
-	c = 0;
-	for (rus::Prop* p : a->props) {
-		hyps.add(p->expr.tree, HypRef{a, c++});
+	for (auto x : a->props) if (x == p) return c; else ++c;
+	throw Error("prop is not found");
+}
+
+Space::Space(rus::Qed* q) :	Space(q->step->proof()->thm, q->prop) {
+}
+
+Space::Space(rus::Assertion* a, rus::Prop* p) :
+	root(p->expr, this), prop(a, find_index(a, p)) {
+	uint c = 0;
+	for (rus::Prop* p : prop.assertion()->props) {
+		hyps.add(p->expr.tree, HypRef(a, c++));
 	}
 }
 

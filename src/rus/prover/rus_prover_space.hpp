@@ -12,6 +12,7 @@ struct Space {
 	Index<HypRef> hyps;
 
 	Space(rus::Qed*);
+	Space(rus::Assertion*, rus::Prop* p);
 	void buildUp(Prop*);
 	void buildUp(Hyp*);
 };
