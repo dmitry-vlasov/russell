@@ -356,6 +356,9 @@ inline Substitution unify_forth(const Expr& ex1, const Expr& ex2) {
 //Expr assemble(const Expr& ex);
 //Expr assemble(const Tree* t);
 
+void apply(const Substitution* s, Tree& t);
+void apply(const Substitution* s, Expr& e);
+
 Tree apply_(const Substitution*, const Tree&);
 Expr apply(const Substitution*, const Expr&);
 inline Expr apply(const Substitution& s, const Expr& e) {

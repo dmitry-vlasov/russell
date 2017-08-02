@@ -2,30 +2,29 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-rus::Step* ProofHyp::step() {
-	return nullptr;
+void apply_recursively(const Substitution& sub, rus::Step* step) {
+	apply(sub, step->expr);
+	for (auto r : step->refs)
+		if (r->kind == rus::Ref::STEP) apply_recursively(sub, r->val.step);
 }
 
 rus::Ref* ProofHyp::ref() {
-	if (!ref_) ref_ = new rus::Ref(hyp_.get());
-	return ref_;
+	return new rus::Ref(hyp_.get());
 }
 
 rus::Step* ProofStep::step() {
-	if (!step_) {
-		vector<rus::Ref*> refs;
-		for (auto ch : child_) refs.push_back(ch->ref());
-		const PropRef* p = node_->prop();
-		step_ = new rus::Step(-1, rus::Step::ASS, p->id(), nullptr);
-		step_->refs = std::move(refs);
-		step_->expr = *node_->expr();
-	}
-	return step_;
+	vector<rus::Ref*> refs;
+	for (auto ch : child_) refs.push_back(ch->ref());
+	const PropRef* p = node_->prop();
+	rus::Step* step = new rus::Step(-1, rus::Step::ASS, p->id(), nullptr);
+	step->refs = std::move(refs);
+	step->expr = *node_->expr();
+	apply_recursively(sub_, step);
+	return step;
 }
 
 rus::Ref* ProofStep::ref() {
-	if (!ref_) ref_ = new rus::Ref(step());
-	return ref_;
+	return new rus::Ref(step());
 }
 
 }}}

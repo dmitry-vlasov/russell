@@ -78,6 +78,13 @@ void apply(const Substitution* s, Tree& t) {
 	}
 }
 
+void apply(const Substitution* sub, Expr& e) {
+	apply(sub, e.tree);
+	Symbols sym;
+	assemble(e.tree, sym);
+	e.symbols = std::move(sym);
+}
+
 Tree apply_(const Substitution* s, const Tree& t) {
 	if (t.kind == Tree::NODE) {
 		Tree::Children ch;

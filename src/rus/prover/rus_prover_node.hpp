@@ -98,11 +98,9 @@ struct Ref : public Node {
 };
 
 struct Proof {
-	Proof(const Substitution& s) :
-		sub_(s), new_(true) { }
+	Proof(const Substitution& s) : sub_(s), new_(true) { }
 
 	virtual ~Proof() { }
-	virtual rus::Step* step() = 0;
 	virtual rus::Ref* ref() = 0;
 
 	const Substitution& sub() { return sub_; }
@@ -123,25 +121,21 @@ protected:
 
 struct ProofHyp : public Proof {
 	ProofHyp(const HypRef& h, const Substitution& s) :
-		Proof(s), ref_(nullptr), hyp_(h) { }
-	rus::Step* step() override;
+		Proof(s), hyp_(h) { }
 	rus::Ref* ref() override;
 private:
-	rus::Ref* ref_;
 	HypRef hyp_;
 };
 
 struct ProofStep : public Proof {
 	ProofStep(Node* n, vector<Proof*>&& c, const Substitution& s = Substitution()) :
-		Proof(s), step_(nullptr), ref_(nullptr), node_(n), child_(std::move(c)) {
+		Proof(s), node_(n), child_(std::move(c)) {
 		for (auto ch : child_) ch->addParent(this);
 	}
 	~ProofStep() override { }
-	rus::Step* step() override;
+	rus::Step* step();
 	rus::Ref* ref() override;
 private:
-	rus::Step*     step_;
-	rus::Ref*      ref_;
 	Node*          node_;
 	vector<Proof*> child_;
 };
