@@ -1,0 +1,53 @@
+#!/bin/bash
+
+if [ -z $1 ]; then
+    echo "usage: "
+    echo "  test_deep_prover <file> [config]"
+    echo "where: "
+    echo "  <file>     is a mm source without .mm extension"
+    echo "  [config]   is a config of test launching"
+    echo
+    exit 0
+fi
+
+if [ -z $2 ]; then 
+	config=./config
+else
+	config=$2
+fi
+
+source ${config}
+
+binpath=`pwd`/$binpath
+
+cd $mathpath
+
+file=$1
+
+if [ ! -f ${file}.mm ]; then
+    echo "source file ${file}.mm desn't exist"
+	echo "current dir: " `pwd`
+    exit 1
+fi
+
+if [ ! -d tmp-deep ]; then
+    echo "tmp-deep diectory doesn't exist"
+    exit 1
+fi
+
+cd tmp-deep
+
+echo "------------------------"
+echo " RUS -> RUS REPROVING   "
+echo "------------------------"
+
+echo "rus -> rus"
+check "${binpath}/mdl 
+    \"rus opts verbose root=rus\" 
+    \"rus read in=${file}.rus\"
+    \"rus test oracle\"
+    exit"
+echo -e 'done\n\n'
+
+echo -e 'reproving test passed =)\n'
+
