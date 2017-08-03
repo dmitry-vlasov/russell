@@ -7,12 +7,31 @@ Node::~Node() {
 	for (auto p : proof) delete p;
 }
 
+inline Symbol fresh_var(Symbol v, uint n) {
+	return Symbol(
+		Lex::toInt(show_sy(v) + "_" + to_string(n)),
+		v.type()->id(),
+		Symbol::VAR
+	);
+}
+
+void make_free_vars_fresh(const Assertion* a, Substitution& s, map<uint, uint>& vars) {
+	for (auto& v : a->vars.v) {
+		if (!s.sub().count(v)) {
+			uint n = vars.count(v.lit) ? vars[v.lit] + 1 : 0;
+			vars[v.lit] = n;
+			s.join(v, fresh_var(v, n));
+		}
+	}
+}
+
 Prop::Prop(const PropRef& r, const Substitution& s, Node* p) :
 	Node(p), prop_(r), sub_(s) {
 	space->leaf_props.insert(this);
 	if (parent && parent->parent) {
 		space->leaf_props.erase(dynamic_cast<Prop*>(parent->parent));
 	}
+	make_free_vars_fresh(r.assertion(), sub_, space->vars);
 }
 
 void Hyp::complete() {

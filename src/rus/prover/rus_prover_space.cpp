@@ -17,6 +17,7 @@ Space::Space(rus::Assertion* a, rus::Prop* p) :
 	for (rus::Prop* p : prop.assertion()->props) {
 		hyps.add(p->expr.tree, HypRef(a, c++));
 	}
+	make_non_replaceable(root.expr_);
 }
 
 void Space::buildUp(Hyp* h) {

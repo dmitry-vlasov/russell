@@ -7,6 +7,7 @@ namespace mdl { namespace rus { namespace prover {
 struct PropRef {
 	PropRef(const Assertion* a, uint i) : ass(a->id()), ind(i) { }
 	Assertion* assertion() { return ass.get(); }
+	const Assertion* assertion() const { return ass.get(); }
 	uint id() const { return ass.id(); }
 	rus::Prop* get() { return ass.get()->props[ind]; }
 	friend bool operator < (const PropRef& a1, const PropRef& a2) {

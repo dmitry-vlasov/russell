@@ -35,9 +35,9 @@ struct Symbol {
 	}
 	void set_kind(Kind k) {
 		switch (k) {
-		case VAR:   var = true; cst = false;  break;
-		case CONST: var = false; cst = true;  break;
-		default:    var = false; cst = false; break;
+		case VAR:   var = true; cst = false;  rep = true;  break;
+		case CONST: var = false; cst = true;  rep = false; break;
+		default:    var = false; cst = false; rep = false; break;
 		}
 	}
 

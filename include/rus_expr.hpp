@@ -62,18 +62,21 @@ struct Symbol : public mdl::Symbol {
 		clear();
 		val.type = new User<Type>(i);
 		var = true;
+		rep = true;
 	}
 
 	void set_type(Type* t) {
 		clear();
 		val.type = new User<Type>(t);
 		var = true;
+		rep = true;
 	}
 
 	void set_const(Const* c) {
 		clear();
 		val.constant = new User<Const>(c);
 		cst = true;
+		rep = false;
 	}
 
 	struct Hash {
@@ -365,6 +368,19 @@ inline Expr apply(const Substitution& s, const Expr& e) {
 	return apply(&s, e);
 }
 
+inline void make_non_replaceable(Tree& t) {
+	if (t.kind == Tree::VAR)
+		t.var()->rep = false;
+	else if (t.kind == Tree::NODE)
+		for (auto& c : t.children())
+			make_non_replaceable(*c.get());
+}
+
+inline void make_non_replaceable(Expr& e) {
+	for (auto& s : e.symbols)
+		s.rep = false;
+	make_non_replaceable(e.tree);
+}
 
 namespace expr {
 	void enqueue(Expr& ex);
