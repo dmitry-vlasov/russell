@@ -27,18 +27,12 @@ static void make_free_vars_fresh(const Assertion* a, Substitution& s, map<uint, 
 
 Prop::Prop(const PropRef& r, const Substitution& s, Node* p) :
 	Node(p), prop_(r), sub_(s) {
-	space->leaf_props.insert(this);
-	if (parent && parent->parent) {
-		space->leaf_props.erase(dynamic_cast<Prop*>(parent->parent));
-	}
+	space->tactic->add(this);
 	make_free_vars_fresh(r.assertion(), sub_, space->vars);
 }
 
 void Hyp::complete() {
-	space->leaf_hyps.insert(this);
-	if (parent && parent->parent) {
-		space->leaf_hyps.erase(dynamic_cast<Hyp*>(parent->parent));
-	}
+	space->tactic->add(this);
 	for (const auto& p : space->hyps.unify_back(expr_.tree))
 		proof.push_back(new ProofHyp(p.first, p.second));
 	queue<Node*> downs;

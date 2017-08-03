@@ -18,6 +18,7 @@ Space::Space(rus::Assertion* a, rus::Prop* p) :
 		hyps.add(p->expr.tree, HypRef(a, c++));
 	}
 	make_non_replaceable(root.expr_);
+	buildUp(&root);
 }
 
 void Space::buildUp(Hyp* h) {
@@ -29,7 +30,38 @@ void Space::buildUp(Prop* p) {
 }
 
 rus::Proof* Space::prove() {
+	while (Prop* n = tactic->next()) {
+		buildUp(n);
+		if (rus::Proof* ret = checkProved()) {
+			return ret;
+		}
+	}
+	return nullptr;
+}
 
+void delete_steps_recursively(rus::Step* s) {
+	for (auto r : s->refs) {
+		if (r->kind == rus::Ref::STEP) {
+			delete_steps_recursively(r->val.step);
+		}
+	}
+	delete s;
+}
+
+rus::Proof* Space::checkProved() {
+	if (!root.proof.size()) return nullptr;
+	for (auto& p : root.proof) {
+		if (ProofStep* ps = dynamic_cast<ProofStep*>(p)) {
+			rus::Step* s = ps->step();
+			if (rus::Proof* pr = make_proof(s, prop.assertion()->id(), prop.get())) {
+				if (pr->check()) return pr;
+			}
+			delete_steps_recursively(s);
+		}
+		delete p;
+	}
+	root.proof.clear();
+	return nullptr;
 }
 
 }}}

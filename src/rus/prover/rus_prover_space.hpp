@@ -4,9 +4,31 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+class Space;
+
+struct Tactic {
+	virtual ~Tactic() { }
+	virtual void add(Node*) = 0;
+	virtual Prop* next() = 0;
+};
+
+struct BreadthSearch : public Tactic {
+	void add(Node* n) override {
+		if (Prop* p = dynamic_cast<Prop*>(n))
+			leafs.push(p);
+	}
+	Prop* next() override {
+		Prop* n = leafs.front();
+		leafs.pop();
+		return n;
+	}
+private:
+	queue<Prop*> leafs;
+
+};
+
 struct Space {
-	set<Prop*>    leaf_props;
-	set<Hyp*>     leaf_hyps;
+	Tactic*       tactic;
 	Hyp           root;
 	PropRef       prop;
 	Index<HypRef> hyps;
@@ -14,10 +36,12 @@ struct Space {
 
 	Space(rus::Qed*);
 	Space(rus::Assertion*, rus::Prop* p);
+	rus::Proof* prove();
+
+private:
 	void buildUp(Prop*);
 	void buildUp(Hyp*);
-
-	rus::Proof* prove();
+	rus::Proof* checkProved();
 };
 
 }}}
