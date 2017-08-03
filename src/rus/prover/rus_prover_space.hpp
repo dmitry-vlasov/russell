@@ -13,38 +13,6 @@ struct Tactic {
 	virtual Node* next() = 0;
 };
 
-struct BreadthSearch : public Tactic {
-	void add(Node* n) override {
-		if (Prop* p = dynamic_cast<Prop*>(n))
-			leafs.push_back(p);
-	}
-	void del(Node* n) override {
-		if (n) leafs.erase(std::find(leafs.begin(), leafs.end(), n));
-	}
-	Node* next() override {
-		Prop* n = leafs.front();
-		leafs.erase(leafs.begin());
-		return n;
-	}
-private:
-	vector<Prop*> leafs;
-};
-
-struct MetaTactic : public Tactic {
-	void add(Node* n) override {
-		for (auto t : tactics) t->add(n);
-	}
-	void del(Node* n) override {
-		if (n) for (auto t : tactics) t->del(n);
-	}
-	Node* next() override {
-		return tactics[tactic()]->next();
-	}
-	virtual uint tactic() = 0;
-private:
-	vector<Tactic*> tactics;
-};
-
 struct Space {
 	Tactic*       tactic;
 	Hyp           root;
