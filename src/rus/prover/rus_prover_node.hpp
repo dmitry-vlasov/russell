@@ -43,9 +43,7 @@ struct Node {
 	vector<ProofElem*> proof;
 	Space*         space;
 	Node(Space* s) : parent(nullptr), space(s) { }
-	Node(Node* p) : parent(p), space(p->space) {
-		if (p) p->child.push_back(this);
-	}
+	Node(Node* p);
 	virtual Kind kind() const = 0;
 	virtual vector<Node*> buildUp() = 0;
 	virtual vector<Node*> buildDown() = 0;

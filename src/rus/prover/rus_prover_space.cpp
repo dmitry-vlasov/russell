@@ -21,16 +21,12 @@ Space::Space(rus::Assertion* a, rus::Prop* p) :
 	buildUp(&root);
 }
 
-void Space::buildUp(Hyp* h) {
-	for (auto p : h->buildUp()) p->buildUp();
-}
-
-void Space::buildUp(Prop* p) {
-	for (auto h : p->buildUp()) h->buildUp();
+void Space::buildUp(Node* n) {
+	for (auto m : n->buildUp()) m->buildUp();
 }
 
 rus::Proof* Space::prove() {
-	while (Prop* n = tactic->next()) {
+	while (Node* n = tactic->next()) {
 		buildUp(n);
 		if (rus::Proof* ret = checkProved()) {
 			return ret;

@@ -2,6 +2,12 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+Node::Node(Node* p) : parent(p), space(p->space) {
+	if (p) p->child.push_back(this);
+	space->tactic->add(this);
+	space->tactic->del(parent);
+}
+
 Node::~Node() {
 	for (auto n : child) delete n;
 	for (auto p : proof) delete p;
@@ -27,12 +33,10 @@ static void make_free_vars_fresh(const Assertion* a, Substitution& s, map<uint, 
 
 Prop::Prop(const PropRef& r, const Substitution& s, Node* p) :
 	Node(p), prop_(r), sub_(s) {
-	space->tactic->add(this);
 	make_free_vars_fresh(r.assertion(), sub_, space->vars);
 }
 
 void Hyp::complete() {
-	space->tactic->add(this);
 	for (const auto& p : space->hyps.unify_back(expr_.tree))
 		proof.push_back(new ProofHyp(p.first, p.second));
 	queue<Node*> downs;
