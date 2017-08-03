@@ -28,5 +28,9 @@ void Space::buildUp(Prop* p) {
 	for (auto h : p->buildUp()) h->buildUp();
 }
 
+rus::Proof* Space::prove() {
+
+}
+
 }}}
 

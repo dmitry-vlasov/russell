@@ -42,9 +42,10 @@ static void fill_in_proof(rus::Step* step, rus::Proof* proof) {
 	proof->elems.push_back(step);
 }
 
-rus::Proof* make_proof(rus::Step* step, uint th) {
+rus::Proof* make_proof(rus::Step* step, uint th, rus::Prop* prop) {
 	rus::Proof* ret = new rus::Proof(th);
 	fill_in_proof(step, ret);
+	ret->elems.push_back(new Qed(prop, step));
 	return ret;
 }
 

@@ -155,7 +155,19 @@ struct Ref : public Tokenable {
 	Value val;
 };
 
-struct Step : public Tokenable {
+struct Verifiable {
+	virtual void verify() const = 0;
+	bool check() const {
+		try {
+			verify();
+			return true;
+		} catch (Error&) {
+			return false;
+		}
+	}
+};
+
+struct Step : public Tokenable, public Verifiable {
 	enum Kind {
 		NONE,
 		ASS,
@@ -191,6 +203,7 @@ struct Step : public Tokenable {
 	Kind kind() const { return kind_; }
 	uint ind() const { return ind_; }
 	void set_ind(uint ind) { ind_ = ind; }
+	void verify() const override;
 
 	Expr         expr;
 	vector<Ref*> refs;
@@ -222,14 +235,15 @@ inline const Expr& Ref::expr() const {
 	return val.step->expr;
 }
 
-struct Qed : public Tokenable {
+struct Qed : public Tokenable, public Verifiable {
 	Qed(Prop* p = nullptr, Step* s = nullptr, const Token& t = Token()) :
 		Tokenable(t), prop(p), step(s) { }
+	void verify() const override;
 	Prop* prop;
 	Step* step;
 };
 
-struct Proof : public Owner<Proof> {
+struct Proof : public Owner<Proof>, public Verifiable {
 	//typedef boost::variant<Step, Qed> Elem;
 
 	struct Elem {
@@ -259,6 +273,7 @@ struct Proof : public Owner<Proof> {
 	~ Proof();
 	Theorem* theorem() { return dynamic_cast<Theorem*>(thm.get()); }
 	const Theorem* theorem() const { return dynamic_cast<const Theorem*>(thm.get()); }
+	void verify() const override;
 
 	Vars            vars;
 	vector<Elem>    elems;
@@ -320,12 +335,13 @@ struct Import : public Tokenable {
 	bool         primary;
 };
 
-struct Theory : public Tokenable {
+struct Theory : public Tokenable, public Verifiable {
 	Theory(const Token& t = Token()) :
 		Tokenable(t), id(-1), nodes(), parent(nullptr) { }
 	Theory(uint n, Theory* p, const Token& t = Token()) :
 		Tokenable(t), id(n), nodes(), parent(p) { }
 	~ Theory() { for (auto& n : nodes) n.destroy(); }
+	void verify() const override;
 
 	uint         id;
 	vector<Node> nodes;

@@ -16,6 +16,8 @@ struct Space {
 	Space(rus::Assertion*, rus::Prop* p);
 	void buildUp(Prop*);
 	void buildUp(Hyp*);
+
+	rus::Proof* prove();
 };
 
 }}}
