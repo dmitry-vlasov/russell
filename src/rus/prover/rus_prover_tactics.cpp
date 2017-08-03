@@ -2,6 +2,7 @@
 
 namespace mdl { namespace rus { namespace prover {
 
+/*
 static rus::Step* root_step(rus::Proof* p) {
 	for (auto e : p->elems) {
 		if (e.kind == Proof::Elem::QED) {
@@ -10,8 +11,8 @@ static rus::Step* root_step(rus::Proof* p) {
 	}
 	return nullptr;
 }
-
-Oracle::Oracle(rus::Proof* p) : proof(p), root(root_step(p)) { }
+*/
+Oracle::Oracle(rus::Proof* p) : proof(p), root((*p->qeds().begin())->step) { }
 
 void Oracle::add(Node* n) {
 	if (Prop* p = dynamic_cast<Prop*>(n)) {

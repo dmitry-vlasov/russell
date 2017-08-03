@@ -6,7 +6,8 @@
 namespace mdl {
 
 struct Return {
-	Return(const string& m = "", bool s = true) : msg(m), code(s ? 0 : -1) { }
+	Return(bool s = true) : code(s ? 0 : -1) { }
+	Return(const string& m, bool s = true) : msg(m), code(s ? 0 : -1) { }
 	Return(const string& m, const string& d, bool s = true) : msg(m), data(d), code(s ? 0 : -1) { }
 	operator bool() const { return success(); }
 	string msg;

@@ -274,6 +274,11 @@ struct Proof : public Owner<Proof>, public Verifiable {
 	Theorem* theorem() { return dynamic_cast<Theorem*>(thm.get()); }
 	const Theorem* theorem() const { return dynamic_cast<const Theorem*>(thm.get()); }
 	void verify() const override;
+	vector<Qed*> qeds() const {
+		vector<Qed*> ret;
+		for (auto& e : elems) if (e.kind == Elem::QED) ret.push_back(e.val.qed);
+		return ret;
+	}
 
 	Vars            vars;
 	vector<Elem>    elems;
@@ -490,5 +495,6 @@ size_t memvol(const Comment&);
 void add_to_index(Assertion*);
 void add_to_index(Proof*);
 Proof* prove(Assertion*);
+bool test_with_oracle();
 
 }} // mdl::rus
