@@ -27,5 +27,9 @@ rus::Ref* ProofStep::ref() {
 	return new rus::Ref(step());
 }
 
+rus::Proof* make_proof(rus::Step* step) {
+
+}
+
 }}}
 

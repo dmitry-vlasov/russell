@@ -31,7 +31,7 @@ private:
 };
 
 class Space;
-class Proof;
+class ProofElem;
 class Prop;
 class Hyp;
 class Ref;
@@ -40,7 +40,7 @@ struct Node {
 	enum Kind { PROP, HYP, REF };
 	Node*          parent;
 	vector<Node*>  child;
-	vector<Proof*> proof;
+	vector<ProofElem*> proof;
 	Space*         space;
 	Node(Space* s) : parent(nullptr), space(s) { }
 	Node(Node* p) : parent(p), space(p->space) {
@@ -98,17 +98,17 @@ struct Ref : public Node {
 	const PropRef* prop() const override { return parent->prop(); }
 };
 
-struct Proof {
-	Proof(const Substitution& s) : sub_(s), new_(true) { }
+struct ProofElem {
+	ProofElem(const Substitution& s) : sub_(s), new_(true) { }
 
-	virtual ~Proof() { }
+	virtual ~ProofElem() { }
 	virtual rus::Ref* ref() = 0;
 
 	const Substitution& sub() { return sub_; }
 	const Expr& expr() const { return expr_; }
 	bool isNew() const { return new_; }
-	const vector<Proof*>& parents() { return parents_; }
-	void addParent(Proof* p) {
+	const vector<ProofElem*>& parents() { return parents_; }
+	void addParent(ProofElem* p) {
 		parents_.push_back(p);
 		new_ = false;
 	}
@@ -116,21 +116,21 @@ struct Proof {
 protected:
 	Substitution   sub_;
 	Expr           expr_;
-	vector<Proof*> parents_;
+	vector<ProofElem*> parents_;
 	bool           new_;
 };
 
-struct ProofHyp : public Proof {
+struct ProofHyp : public ProofElem {
 	ProofHyp(const HypRef& h, const Substitution& s) :
-		Proof(s), hyp_(h) { }
+		ProofElem(s), hyp_(h) { }
 	rus::Ref* ref() override;
 private:
 	HypRef hyp_;
 };
 
-struct ProofStep : public Proof {
-	ProofStep(Node* n, vector<Proof*>&& c, const Substitution& s = Substitution()) :
-		Proof(s), node_(n), child_(std::move(c)) {
+struct ProofStep : public ProofElem {
+	ProofStep(Node* n, vector<ProofElem*>&& c, const Substitution& s = Substitution()) :
+		ProofElem(s), node_(n), child_(std::move(c)) {
 		for (auto ch : child_) ch->addParent(this);
 	}
 	~ProofStep() override { }
@@ -138,8 +138,10 @@ struct ProofStep : public Proof {
 	rus::Ref* ref() override;
 private:
 	Node*          node_;
-	vector<Proof*> child_;
+	vector<ProofElem*> child_;
 };
+
+rus::Proof* make_proof(rus::Step*);
 
 inline Prop* prop(Node* n) { return dynamic_cast<Prop*>(n); }
 inline Hyp*  hyp (Node* n) { return dynamic_cast<Hyp*>(n); }

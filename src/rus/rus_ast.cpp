@@ -68,17 +68,18 @@ Step::~Step() {
 	for (Ref* ref : refs) delete ref;
 }
 
-inline uint make_proof_id(uint id, const Theorem* th) {
+inline uint make_proof_id(uint id, Id th) {
 	if (Undef<uint>::is(id)) {
-		const string& th_name = Lex::toStr(th->id());
-		return Lex::toInt(string("_proof_of_") + th_name + "_" + to_string(th->proofs.size()));
+		const string& th_name = Lex::toStr(th.id);
+		const Theorem* thm = dynamic_cast<const Theorem*>(Sys::get().math.get<Assertion>().access(th.id));
+		return Lex::toInt(string("_proof_of_") + th_name + "_" + to_string(thm->proofs.size()));
 	} else return id;
 }
 
-Proof::Proof(Theorem* th, Id i, const Token& t) :
+Proof::Proof(Id th, Id i, const Token& t) :
 	Owner(make_proof_id(i.id, th), t), thm(th), par(nullptr) {
-	th->proofs.push_back(User<Proof>(id()));
-	assert(this == th->proofs.back().get());
+	theorem()->proofs.emplace_back(User<Proof>(id()));
+	assert(this == theorem()->proofs.back().get());
 }
 Proof::~Proof() {
 	for (auto& e : elems) e.destroy();

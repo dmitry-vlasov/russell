@@ -8,7 +8,7 @@ inline uint find_index(const rus::Assertion* a, const rus::Prop* p) {
 	throw Error("prop is not found");
 }
 
-Space::Space(rus::Qed* q) :	Space(q->step->proof()->thm, q->prop) {
+Space::Space(rus::Qed* q) :	Space(q->step->proof()->thm.get(), q->prop) {
 }
 
 Space::Space(rus::Assertion* a, rus::Prop* p) :

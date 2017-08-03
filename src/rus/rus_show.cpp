@@ -196,7 +196,7 @@ string show(const Proof& p) {
 	string s = "proof ";
 	const string& name = Lex::toStr(p.id());
 	if (name.size() > 1 && name[0] != '_') s += name + " ";
-	s += "of " + show_id(p.thm->id()) + " {\n";
+	s += "of " + show_id(p.thm.id()) + " {\n";
 	if (p.vars.v.size())
 		s += "\tvar " + show(p.vars) + END_MARKER + "\n";
 	for (auto& st : p.elems)

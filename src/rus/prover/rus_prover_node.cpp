@@ -15,7 +15,7 @@ inline Symbol fresh_var(Symbol v, uint n) {
 	);
 }
 
-void make_free_vars_fresh(const Assertion* a, Substitution& s, map<uint, uint>& vars) {
+static void make_free_vars_fresh(const Assertion* a, Substitution& s, map<uint, uint>& vars) {
 	for (auto& v : a->vars.v) {
 		if (!s.sub().count(v)) {
 			uint n = vars.count(v.lit) ? vars[v.lit] + 1 : 0;
@@ -187,7 +187,7 @@ struct MultyTree {
 		add(s1);
 		add(s2);
 	}
-	MultyTree(const vector<Proof*>& ch) {
+	MultyTree(const vector<ProofElem*>& ch) {
 		for (auto p : ch) add(p->sub());
 	}
 	MultySub makeSubs() const {
@@ -211,7 +211,7 @@ private:
 	map<Symbol, vector<const Tree*>> msub_;
 };
 
-bool intersects(const Substitution& s1, const Substitution& s2) {
+inline bool intersects(const Substitution& s1, const Substitution& s2) {
 	for (const auto& p : s1.sub())
 		if (s2.sub().count(p.first)) return true;
 	return false;
@@ -234,18 +234,18 @@ Substitution unify_subs(const MultyTree& t) {
 	}
 }
 
-Proof* unify_subs(Node* pr, Proof* p, vector<Proof*> ch) {
+ProofElem* unify_subs(Node* pr, ProofElem* p, vector<ProofElem*> ch) {
 	MultyTree t(ch);
 	Substitution sub = unify_subs(t);
 	return new ProofStep(pr, std::move(ch), sub);
 }
 
-inline uint find_index(const vector<Proof*> pv, const Proof* p) {
+inline uint find_index(const vector<ProofElem*> pv, const ProofElem* p) {
 	return std::find(pv.begin(), pv.end(), p) - pv.begin();
 }
 
-vector<Node*> unify_subs(Node* n, Proof* p) {
-	vector<Proof*> proofs;
+vector<Node*> unify_subs(Node* n, ProofElem* p) {
+	vector<ProofElem*> proofs;
 	assert(n->kind() == Node::HYP);
 	Prop* pr = prop(n->parent);
 	Ind ind;
@@ -254,7 +254,7 @@ vector<Node*> unify_subs(Node* n, Proof* p) {
 		else ind.addFixed(find_index(x->proof, p));
 	}
 	while (true) {
-		vector<Proof*> ch;
+		vector<ProofElem*> ch;
 		for (uint i = 0; i < ind.size(); ++ i)
 			ch.push_back(pr->child[i]->proof[ind[i]]);
 		pr->proof.push_back(unify_subs(pr, p, ch));

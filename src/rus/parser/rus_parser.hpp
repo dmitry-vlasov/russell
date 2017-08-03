@@ -42,8 +42,8 @@ struct AddVars {
 			var_stack.mapping[v.lit] = v.type();
 		}
 	}
-	void operator()(VarStack& var_stack, Theorem* thm) const {
-		for (auto& v : thm->vars.v) {
+	void operator()(VarStack& var_stack, User<Assertion>& thm) const {
+		for (auto& v : thm.get()->vars.v) {
 			var_stack.vstack.top().push_back(v.lit);
 			var_stack.mapping[v.lit] = v.type();
 		}
@@ -242,8 +242,8 @@ struct CreateStepRef {
 	struct result { typedef void Ref; };
 	Ref* operator()(uint ind, Proof* p, Ref::Kind k) const {
 		switch (k) {
-		case Ref::HYP:  return new Ref(p->thm->hyps[ind]);
-		case Ref::PROP: return new Ref(p->thm->props[ind]);
+		case Ref::HYP:  return new Ref(p->thm.get()->hyps[ind]);
+		case Ref::PROP: return new Ref(p->thm.get()->props[ind]);
 		case Ref::STEP: return new Ref(p->elems[ind].val.step);
 		default : assert(false && "impossible"); break;
 		}
@@ -255,7 +255,7 @@ struct GetProp {
 	template <typename T1, typename T2>
 	struct result { typedef Prop* type; };
 	Prop* operator()(uint ind, Proof* p) const {
-		return p->thm->props[ind];
+		return p->thm.get()->props[ind];
 	}
 };
 

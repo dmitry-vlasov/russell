@@ -149,7 +149,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		lit("proof") [_a = phoenix::val(-1)]
 		> - (!lit("of") > - id [_a = qi::labels::_1])
 		> "of"
-		> id         [_val = new_<Proof>(findTheorem(qi::labels::_1), _a)]
+		> id         [_val = new_<Proof>(qi::labels::_1, _a)]
 		> eps        [pushVars(phoenix::ref(var_stack))]
 		> eps        [addVars(phoenix::ref(var_stack), phoenix::at_c<3>(*_val))]
 		> proof_body(_val)

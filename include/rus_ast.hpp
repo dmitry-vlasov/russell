@@ -252,13 +252,15 @@ struct Proof : public Owner<Proof> {
 		Value val;
 	};
 
-	Proof(Theorem* thm, Id id = Id(), const Token& t = Token());
+	Proof(Id thm, Id id = Id(), const Token& t = Token());
 	~ Proof();
+	Theorem* theorem() { return dynamic_cast<Theorem*>(thm.get()); }
+	const Theorem* theorem() const { return dynamic_cast<const Theorem*>(thm.get()); }
 
-	Vars         vars;
-	vector<Elem> elems;
-	Theorem*     thm;
-	Proof*       par;
+	Vars            vars;
+	vector<Elem>    elems;
+	User<Assertion> thm;
+	Proof*          par;
 };
 
 struct Node {
