@@ -4,8 +4,8 @@ namespace mdl { namespace rus { namespace prover {
 
 Node::Node(Node* p) : parent(p), space(p->space) {
 	if (p) p->child.push_back(this);
-	space->tactic->add(this);
-	space->tactic->del(parent);
+	space->tactic()->add(this);
+	space->tactic()->del(parent);
 }
 
 Node::~Node() {

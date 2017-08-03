@@ -9,7 +9,7 @@ mathpath='../math'
 #mathpath='../../../math'
 
 ## Run executables with valgrind memcheck
-#memcheck='yes'
+memcheck='yes'
 
 ## Print command with arguments before execution
 output_command='yes'

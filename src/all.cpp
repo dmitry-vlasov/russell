@@ -25,6 +25,7 @@
 #include "rus/prover/rus_prover_node.cpp"
 #include "rus/prover/rus_prover_proof.cpp"
 #include "rus/prover/rus_prover_space.cpp"
+#include "rus/prover/rus_prover_tactics.cpp"
 #include "rus/rus_ast.cpp"
 #include "rus/rus_expr.cpp"
 #include "rus/rus_memvol.cpp"

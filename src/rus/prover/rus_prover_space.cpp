@@ -8,11 +8,12 @@ inline uint find_index(const rus::Assertion* a, const rus::Prop* p) {
 	throw Error("prop is not found");
 }
 
-Space::Space(rus::Qed* q) :	Space(q->step->proof()->thm.get(), q->prop) {
+Space::Space(rus::Qed* q, Tactic* t) :
+	Space(q->step->proof()->thm.get(), q->prop, t) {
 }
 
-Space::Space(rus::Assertion* a, rus::Prop* p) :
-	root(p->expr, this), prop(a, find_index(a, p)) {
+Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
+	root(p->expr, this), prop(a, find_index(a, p)), tactic_(t) {
 	uint c = 0;
 	for (rus::Prop* p : prop.assertion()->props) {
 		hyps.add(p->expr.tree, HypRef(a, c++));
@@ -26,7 +27,7 @@ void Space::buildUp(Node* n) {
 }
 
 rus::Proof* Space::prove() {
-	while (Node* n = tactic->next()) {
+	while (Node* n = tactic_->next()) {
 		buildUp(n);
 		if (rus::Proof* ret = checkProved()) {
 			return ret;
