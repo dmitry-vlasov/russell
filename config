@@ -1,0 +1,8 @@
+#!/bin/bash 
+ 
+ # The relative path to the directory, containing binary executables: 
+ binpath='../build/release/bin'
+ 
+ # The relative path to the directory, containing math sources:
+ mathpath='../math'
+
