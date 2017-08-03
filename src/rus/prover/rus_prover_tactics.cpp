@@ -17,6 +17,7 @@ Oracle::Oracle(rus::Proof* p) : proof(p), root((*p->qeds().begin())->step) { }
 void Oracle::add(Node* n) {
 	if (Prop* p = dynamic_cast<Prop*>(n)) {
 		const Assertion* ass = p->prop()->assertion();
+		cout << endl << "orcale observing: " << show_id(ass->id()) << " ";
 		if (props.empty()) {
 			if (ass == root->ass()) {
 				leafs.push_back(p);

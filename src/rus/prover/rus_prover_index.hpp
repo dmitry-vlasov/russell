@@ -51,7 +51,7 @@ struct Index {
 					unif[d].join(v, Tree(super->id(), {new Tree(t)}));
 			}
 		}
-		if (rules.count(t.rule())) {
+		if (t.kind == Tree::NODE && rules.count(t.rule())) {
 			const Node& n = rules.at(t.rule());
 			for (const Data& d : n.data) unif[d];
 			auto ch = t.children().begin();

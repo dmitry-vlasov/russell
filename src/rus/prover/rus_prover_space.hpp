@@ -14,14 +14,14 @@ struct Tactic {
 };
 
 struct Space {
-	Hyp             root;
+	Hyp*            root;
 	PropRef         prop;
 	Index<HypRef>   hyps;
 	map<uint, uint> vars;
 
 	Space(rus::Qed*, Tactic*);
 	Space(rus::Assertion*, rus::Prop*, Tactic*);
-	~Space() { delete tactic_; }
+	~Space() { delete root; delete tactic_; }
 	rus::Proof* prove();
 	Tactic* tactic() { return tactic_; }
 

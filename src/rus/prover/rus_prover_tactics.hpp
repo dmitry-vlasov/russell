@@ -13,6 +13,7 @@ struct BreadthSearch : public Tactic {
 		if (n) leafs.erase(std::find(leafs.begin(), leafs.end(), n));
 	}
 	Node* next() override {
+		if (leafs.empty()) return nullptr;
 		Prop* n = leafs.front();
 		leafs.erase(leafs.begin());
 		return n;
@@ -28,6 +29,7 @@ struct Oracle : public Tactic {
 		if (n) leafs.erase(std::find(leafs.begin(), leafs.end(), n));
 	}
 	Node* next() override {
+		if (leafs.empty()) return nullptr;
 		Prop* n = leafs.front();
 		leafs.erase(leafs.begin());
 		return n;

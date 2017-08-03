@@ -382,6 +382,12 @@ inline void make_non_replaceable(Expr& e) {
 	make_non_replaceable(e.tree);
 }
 
+inline Expr create_non_replaceable(const Expr& e) {
+	Expr ex(e);
+	make_non_replaceable(ex);
+	return ex;
+}
+
 namespace expr {
 	void enqueue(Expr& ex);
 	bool parse();

@@ -13,13 +13,13 @@ Space::Space(rus::Qed* q, Tactic* t) :
 }
 
 Space::Space(rus::Assertion* a, rus::Prop* p, Tactic* t) :
-	root(p->expr, this), prop(a, find_index(a, p)), tactic_(t) {
+	root(nullptr), prop(a, find_index(a, p)), tactic_(t) {
 	uint c = 0;
 	for (rus::Prop* p : prop.assertion()->props) {
 		hyps.add(p->expr.tree, HypRef(a, c++));
 	}
-	make_non_replaceable(root.expr_);
-	buildUp(&root);
+	root = new Hyp(std::move(create_non_replaceable(p->expr)), this);
+	buildUp(root);
 }
 
 void Space::buildUp(Node* n) {
@@ -46,8 +46,8 @@ void delete_steps_recursively(rus::Step* s) {
 }
 
 rus::Proof* Space::checkProved() {
-	if (!root.proof.size()) return nullptr;
-	for (auto& p : root.proof) {
+	if (!root->proof.size()) return nullptr;
+	for (auto& p : root->proof) {
 		if (ProofStep* ps = dynamic_cast<ProofStep*>(p)) {
 			rus::Step* s = ps->step();
 			if (rus::Proof* pr = make_proof(s, prop.assertion()->id(), prop.get())) {
@@ -57,7 +57,7 @@ rus::Proof* Space::checkProved() {
 		}
 		delete p;
 	}
-	root.proof.clear();
+	root->proof.clear();
 	return nullptr;
 }
 

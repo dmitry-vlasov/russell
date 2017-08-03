@@ -37,8 +37,9 @@ Prop::Prop(const PropRef& r, const Substitution& s, Node* p) :
 }
 
 void Hyp::complete() {
-	for (const auto& p : space->hyps.unify_back(expr_.tree))
+	for (const auto& p : space->hyps.unify_back(expr_.tree)) {
 		proof.push_back(new ProofHyp(p.first, p.second));
+	}
 	queue<Node*> downs;
 	downs.push(this);
 	while (true) {
@@ -50,8 +51,10 @@ void Hyp::complete() {
 
 vector<Node*> Hyp::buildUp() {
 	vector<Node*> ret;
-	for (const auto& p : assertion_index().unify_forth(expr_.tree))
+	for (const auto& p : assertion_index().unify_forth(expr_.tree)) {
+		cout << "unified assertion " << p.first.assertion()->id() << endl;
 		ret.push_back(new Prop(p.first, p.second, this));
+	}
 	return ret;
 }
 
@@ -243,6 +246,7 @@ inline uint find_index(const vector<ProofElem*> pv, const ProofElem* p) {
 }
 
 vector<Node*> unify_subs(Node* n, ProofElem* p) {
+	if (!n->parent) return vector<Node*>();
 	vector<ProofElem*> proofs;
 	assert(n->kind() == Node::HYP);
 	Prop* pr = prop(n->parent);
