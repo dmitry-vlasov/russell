@@ -27,8 +27,25 @@ rus::Ref* ProofStep::ref() {
 	return new rus::Ref(step());
 }
 
-rus::Proof* make_proof(rus::Step* step) {
+static void fill_in_proof(rus::Step* step, rus::Proof* proof) {
+	for (auto r : step->refs) {
+		if (r->kind == rus::Ref::STEP)
+			fill_in_proof(r->val.step, proof);
+	}
+	for (auto& s : step->expr.symbols) {
+		if (s.kind() != Symbol::VAR) continue;
+		if (proof->vars.isDeclared(s)) continue;
+		if (proof->theorem()->vars.isDeclared(s)) continue;
+		proof->vars.v.push_back(s);
+	}
+	step->set_ind(proof->elems.size());
+	proof->elems.push_back(step);
+}
 
+rus::Proof* make_proof(rus::Step* step, uint th) {
+	rus::Proof* ret = new rus::Proof(th);
+	fill_in_proof(step, ret);
+	return ret;
 }
 
 }}}

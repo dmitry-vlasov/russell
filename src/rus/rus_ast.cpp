@@ -71,8 +71,10 @@ Step::~Step() {
 inline uint make_proof_id(uint id, Id th) {
 	if (Undef<uint>::is(id)) {
 		const string& th_name = Lex::toStr(th.id);
-		const Theorem* thm = dynamic_cast<const Theorem*>(Sys::get().math.get<Assertion>().access(th.id));
-		return Lex::toInt(string("_proof_of_") + th_name + "_" + to_string(thm->proofs.size()));
+		if (const Theorem* thm = dynamic_cast<const Theorem*>(Sys::get().math.get<Assertion>().access(th.id)))
+			return Lex::toInt(string("_proof_of_") + th_name + "_" + to_string(thm->proofs.size()));
+		else
+			throw Error("not a theorem", th_name);
 	} else return id;
 }
 

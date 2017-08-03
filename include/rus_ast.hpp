@@ -31,6 +31,9 @@ struct Vars : public Tokenable {
 	Vars(const vector<Symbol>& vars = vector<Symbol>(), const Token& t = Token()) : Tokenable(t), v(vars) { }
 	Vars(const Vars& vars) : Tokenable(vars), v(vars.v) { }
 	vector<Symbol> v;
+	bool isDeclared(Symbol w) const {
+		return std::find(v.begin(), v.end(), w) != v.end();
+	}
 };
 
 struct Disj : public Tokenable {

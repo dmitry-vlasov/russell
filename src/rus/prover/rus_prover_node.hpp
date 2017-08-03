@@ -141,7 +141,7 @@ private:
 	vector<ProofElem*> child_;
 };
 
-rus::Proof* make_proof(rus::Step*);
+rus::Proof* make_proof(rus::Step*, uint th);
 
 inline Prop* prop(Node* n) { return dynamic_cast<Prop*>(n); }
 inline Hyp*  hyp (Node* n) { return dynamic_cast<Hyp*>(n); }
