@@ -14,4 +14,8 @@ void add_to_index(Assertion* a) {
 	}
 }
 
+void add_to_index(Proof* a) {
+	// TODO: implement
+}
+
 }}}

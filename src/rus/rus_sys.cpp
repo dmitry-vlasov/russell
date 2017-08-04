@@ -57,6 +57,10 @@ namespace {
 void read(uint src) {
 	rus::parse(src);
 	expr::parse();
+	for (auto& p : Sys::mod().math.get<Assertion>())
+		prover::add_to_index(p.second.data);
+	for (auto& p : Sys::mod().math.get<Proof>())
+		prover::add_to_index(p.second.data);
 }
 
 void parse_() {

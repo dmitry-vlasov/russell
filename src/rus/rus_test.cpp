@@ -4,7 +4,13 @@ namespace mdl { namespace rus {
 
 bool test_proof_with_oracle(Proof* p) {
 	cout << "testing proof of " << show_id(p->theorem()->id()) << " ... " << std::flush;
-	prover::Space sp(*p->qeds().begin(), new prover::Oracle(p));
+	prover::Space sp(
+		*p->qeds().begin(),
+		new prover::ProxyTactic(
+			new prover::Oracle(p),
+			prover::show_bits("idx,ch_idx,recurs,ass,expr")
+		)
+	);
 	Proof* reproved = sp.prove();
 	bool ret = reproved && reproved->check();
 	delete reproved;

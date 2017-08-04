@@ -24,9 +24,17 @@ struct Space {
 	~Space() { delete root; delete tactic_; }
 	rus::Proof* prove();
 	Tactic* tactic() { return tactic_; }
+	void registerNode(Node* n) {
+		n->ind = nodes_.size();
+		nodes_.push_back(n);
+		tactic_->add(n);
+	}
+	uint count() const { return nodes_.size(); }
+	Node* getNode(uint i) { return nodes_[i]; }
 
 private:
-	Tactic* tactic_;
+	vector<Node*> nodes_;
+	Tactic*       tactic_;
 	void buildUp(Node*);
 	rus::Proof* checkProved();
 };

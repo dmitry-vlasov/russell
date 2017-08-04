@@ -4,41 +4,59 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-struct BreadthSearch : public Tactic {
+struct QueueTactic : public Tactic {
+	void del(Node* n) override {
+		if (n) {
+			auto it = std::find(leafs.begin(), leafs.end(), n);
+			if (it != leafs.end()) leafs.erase(it);
+		}
+	}
+	Node* next() override {
+		if (leafs.empty()) return nullptr;
+		Prop* n = leafs.front();
+		leafs.erase(leafs.begin());
+		return n;
+	}
+protected:
+	vector<Prop*> leafs;
+};
+
+struct BreadthSearch : public QueueTactic {
 	void add(Node* n) override {
 		if (Prop* p = dynamic_cast<Prop*>(n))
 			leafs.push_back(p);
 	}
-	void del(Node* n) override {
-		if (n) leafs.erase(std::find(leafs.begin(), leafs.end(), n));
-	}
-	Node* next() override {
-		if (leafs.empty()) return nullptr;
-		Prop* n = leafs.front();
-		leafs.erase(leafs.begin());
-		return n;
-	}
-private:
-	vector<Prop*> leafs;
 };
 
-struct Oracle : public Tactic {
+struct Oracle : public QueueTactic {
 	Oracle(rus::Proof*);
 	void add(Node* n) override;
-	void del(Node* n) override {
-		if (n) leafs.erase(std::find(leafs.begin(), leafs.end(), n));
-	}
-	Node* next() override {
-		if (leafs.empty()) return nullptr;
-		Prop* n = leafs.front();
-		leafs.erase(leafs.begin());
-		return n;
-	}
+
 private:
 	rus::Proof*   proof;
 	rus::Step*    root;
-	vector<Prop*> leafs;
 	map<Prop*, rus::Step*> props;
+};
+
+struct ProxyTactic : public Tactic {
+	ProxyTactic(Tactic* t, uint m) : tactic(t), mode(m) { }
+	~ProxyTactic() { delete tactic; }
+	void add(Node* n) override {
+		tactic->add(n);
+	}
+	void del(Node* n) override {
+		tactic->del(n);
+	}
+	Node* next() override {
+		Node* n = tactic->next();
+		del(n);
+		if (n) cout << n->space->root->show(mode) << endl;
+		return n;
+	}
+
+protected:
+	Tactic* tactic;
+	uint    mode;
 };
 
 struct MetaTactic : public Tactic {

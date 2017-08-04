@@ -38,11 +38,12 @@ class Ref;
 
 struct Node {
 	enum Kind { PROP, HYP, REF };
-	Node*          parent;
-	vector<Node*>  child;
+	Node*              parent;
+	vector<Node*>      child;
 	vector<ProofElem*> proof;
-	Space*         space;
-	Node(Space* s) : parent(nullptr), space(s) { }
+	Space*             space;
+	uint               ind;
+	Node(Space* s);
 	Node(Node* p);
 	virtual Kind kind() const = 0;
 	virtual vector<Node*> buildUp() = 0;
@@ -50,6 +51,7 @@ struct Node {
 	virtual const Expr* expr() const = 0;
 	virtual const PropRef* prop() const = 0;
 	virtual ~Node();
+	virtual string show(uint) const;
 };
 
 Prop* prop(Node* n);
@@ -66,6 +68,7 @@ struct Prop : public Node {
 	vector<Node*> buildDown() override;
 	const Expr* expr() const override { return parent->expr(); }
 	const PropRef* prop() const override { return &prop_; }
+	string show(uint) const override;
 };
 
 struct Hyp : public Node {
@@ -79,6 +82,7 @@ struct Hyp : public Node {
 	vector<Node*> buildDown() override;
 	const Expr* expr() const override { return &expr_; }
 	const PropRef* prop() const override { return parent ? parent->prop() : nullptr; }
+	string show(uint) const override;
 
 private:
 	void complete();
@@ -94,6 +98,7 @@ struct Ref : public Node {
 	vector<Node*> buildDown() override;
 	const Expr* expr() const override { return parent->expr(); }
 	const PropRef* prop() const override { return parent->prop(); }
+	string show(uint) const override;
 };
 
 struct ProofElem {
@@ -101,6 +106,7 @@ struct ProofElem {
 
 	virtual ~ProofElem() { }
 	virtual rus::Ref* ref() = 0;
+	virtual string show(uint) const;
 
 	const Substitution& sub() { return sub_; }
 	const Expr& expr() const { return expr_; }
@@ -122,6 +128,8 @@ struct ProofHyp : public ProofElem {
 	ProofHyp(const HypRef& h, const Substitution& s) :
 		ProofElem(s), hyp_(h) { }
 	rus::Ref* ref() override;
+	string show(uint) const override;
+
 private:
 	HypRef hyp_;
 };
@@ -134,6 +142,8 @@ struct ProofStep : public ProofElem {
 	~ProofStep() override { }
 	rus::Step* step();
 	rus::Ref* ref() override;
+	string show(uint) const override;
+
 private:
 	Node*          node_;
 	vector<ProofElem*> child_;
@@ -144,6 +154,14 @@ rus::Proof* make_proof(rus::Step*, uint th, rus::Prop* prop);
 inline Prop* prop(Node* n) { return dynamic_cast<Prop*>(n); }
 inline Hyp*  hyp (Node* n) { return dynamic_cast<Hyp*>(n); }
 inline Ref*  ref (Node* n) { return dynamic_cast<Ref*>(n); }
+
+enum class ShowMode {
+	THIS_IDX, CHILD_IDX, PARNT_IDX, RECURS, ASS, EXPR, SUB, PRF_SZ
+};
+
+uint   show_bits(string);
+string show_bits(uint);
+bool   show_bit(uint, ShowMode);
 
 }}}
 

@@ -54,5 +54,12 @@ using User = mdl::User<T, Sys>;
 template<class T>
 using Owner = mdl::Owner<T, Sys>;
 
+namespace prover {
+
+void add_to_index(Assertion*);
+void add_to_index(Proof*);
+
+}
+
 }} // mdl::rus
 

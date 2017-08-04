@@ -2,10 +2,12 @@
 
 namespace mdl { namespace rus { namespace prover {
 
-Node::Node(Node* p) : parent(p), space(p->space) {
+Node::Node(Space* s) :
+	parent(nullptr), space(s), ind(-1) {
+}
+Node::Node(Node* p) :
+	parent(p), space(p->space), ind(-1) {
 	if (p) p->child.push_back(this);
-	space->tactic()->add(this);
-	space->tactic()->del(parent);
 }
 
 Node::~Node() {
@@ -34,6 +36,7 @@ static void make_free_vars_fresh(const Assertion* a, Substitution& s, map<uint, 
 Prop::Prop(const PropRef& r, const Substitution& s, Node* p) :
 	Node(p), prop_(r), sub_(s) {
 	make_free_vars_fresh(r.assertion(), sub_, space->vars);
+	space->registerNode(this);
 }
 
 void Hyp::complete() {
@@ -47,12 +50,13 @@ void Hyp::complete() {
 		for (auto x: n->buildDown()) downs.push(x);
 		if (downs.empty()) break;
 	}
+	space->registerNode(this);
 }
 
 vector<Node*> Hyp::buildUp() {
 	vector<Node*> ret;
 	for (const auto& p : assertion_index().unify_forth(expr_.tree)) {
-		cout << "unified assertion " << p.first.assertion()->id() << endl;
+		cout << "unified assertion " << show_id(p.first.assertion()->id()) << endl;
 		ret.push_back(new Prop(p.first, p.second, this));
 	}
 	return ret;
@@ -71,15 +75,13 @@ vector<Node*> Ref::buildUp() {
 }
 
 struct Ind {
-	Ind() : size_(0), hasNext_(true) { }
+	Ind() : size_(0), hasNext_(true), isEmpty_(false) { }
 
 	void addDim(uint d) {
 		++size_;
-		if (d == 0) hasNext_ = false;
-		else {
-			dims_.push_back(d);
-			ind_.push_back(0);
-		}
+		if (d == 0) isEmpty_ = true;
+		dims_.push_back(d);
+		ind_.push_back(0);
 	}
 	void addFixed(uint i) {
 		++size_;
@@ -99,6 +101,9 @@ struct Ind {
 	bool hasNext() const {
 		return size_ && hasNext_;
 	}
+	bool empty() const {
+		return size_ && isEmpty_;
+	}
 	uint size() const {
 		return size_;
 	}
@@ -111,6 +116,7 @@ private:
 	vector<uint> dims_;
 	vector<uint> ind_;
 	bool         hasNext_;
+	bool         isEmpty_;
 };
 
 struct UnifSym {
@@ -255,6 +261,7 @@ vector<Node*> unify_subs(Node* n, ProofElem* p) {
 		if (x != n) ind.addDim(x->proof.size());
 		else ind.addFixed(find_index(x->proof, p));
 	}
+	if (ind.empty()) return vector<Node*>();
 	while (true) {
 		vector<ProofElem*> ch;
 		for (uint i = 0; i < ind.size(); ++ i)
