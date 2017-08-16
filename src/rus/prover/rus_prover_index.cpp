@@ -3,8 +3,8 @@
 namespace mdl { namespace rus { namespace prover {
 
 Index<PropRef>& assertion_index() {
-	static Index<PropRef> index;
-	return index;
+	static map<uint, Index<PropRef>> index;
+	return index[Sys::get().id];
 }
 
 void add_to_index(Assertion* a) {
