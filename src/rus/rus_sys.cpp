@@ -1,5 +1,6 @@
 #include <rus_ast.hpp>
 #include <smm_ast.hpp>
+#include "prover/rus_prover_space.hpp"
 
 namespace mdl { namespace rus {
 
@@ -117,6 +118,21 @@ Return test(string mode) {
 	return Return();
 }
 
+Return prove_start(uint src, uint line, uint col, string mode, string tact) {
+	Source* s = Sys::mod().math.get<Source>().access(src);
+	const char* c = locate_position(line, col, s->data.c_str());
+	Tokenable* t = s->find(Token(s, c, c));
+	if (Qed* qed = dynamic_cast<Qed*>(t)) {
+		prover::Tactic* tactic = prover::make_tactic(tact);
+		return Return(prover::Space::create(qed, tactic));
+	} else if (Step* step = dynamic_cast<Step*>(t)) {
+		return Return();
+	} else if (Proof* proof = dynamic_cast<Proof*>(t)) {
+		return Return();
+	}
+	return Return(false);
+}
+
 }
 
 string info() {
@@ -201,6 +217,33 @@ static Descr description(string name) {
 		{"lookup", Descr("lookup a symbol",      Descr::Arg("in", "file"), Descr::Arg("line", "row"), Descr::Arg("col", "column"), Descr::Arg("what", "loc|def"))},
 		{"outline", Descr("make an xml outline", Descr::Arg("in", "file"), Descr::Arg("what", "import,const,type,rule,axiom,def,theorem,proof,theory,problem"))},
 		{"struct",  Descr("global xml structure", Descr::Arg("what", "import,const,type,rule,axiom,def,theory"))},
+		{"prove_start",  Descr(
+			"start proving theorem",
+			Descr::Arg("in", "file"),
+			Descr::Arg("line", "row"),
+			Descr::Arg("col", "column"),
+			Descr::Arg("mode", "auto,inter,comb,test", true, "inter"),
+			Descr::Arg("tact", "alter({tact})|proxy[bits](tact)|breadth|oracle", true, "breadth")
+		)},
+		{"prove_step",  Descr(
+			"make a step in proving",
+			Descr::Arg("what", "index")
+		)},
+		{"prove_tactic",  Descr(
+			"switch to some tactic",
+			Descr::Arg("tact", "alter({tact})|proxy[bits](tact)|breadth|oracle", true, "breadth")
+		)},
+		{"prove_confirm",  Descr(
+			"confirm a proof",
+			Descr::Arg("what", "index")
+		)},
+		{"prove_stop",  Descr(
+			"stop proving theorem"
+		)},
+		{"prove_info",  Descr(
+			"show an info about proof node",
+			Descr::Arg("what", "index")
+		)},
 	};
 	return m.count(name) ? m.at(name) : Descr();
 }
@@ -223,7 +266,13 @@ const Sys::Actions& Sys::actions() {
 		{"opts",   Action([](const Args& args) { conf().read(args); return Return(); }, conf().descr())},
 		{"lookup", Action([](const Args& args) { Return ret = lookup(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3]); return ret; }, description("lookup"))},
 		{"outline", Action([](const Args& args) { Return ret = outline(Sys::make_name(args[0]), xml_bits(args[1])); return ret; }, description("outline"))},
-		{"struct",  Action([](const Args& args) { Return ret = structure(xml_bits(args[0])); return ret; }, description("struct"))}
+		{"struct",  Action([](const Args& args) { Return ret = structure(xml_bits(args[0])); return ret; }, description("struct"))},
+
+		{"prove_start", Action([](const Args& args) { Return ret = prove_start(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3], args[4]); return ret; }, description("prove_start"))},
+		/*{"prove_step",  Action([](const Args& args) { Return ret = prove_step(stoul(args[0])); return ret; }, description("prove_step"))},
+		{"prove_confirm",  Action([](const Args& args) { Return ret = prove_confirm(stoul(args[0])); return ret; }, description("prove_confirm"))},
+		{"prove_stop",  Action([](const Args& args) { Return ret = prove_stop(); return ret; }, description("prove_stop"))},
+		{"prove_info",  Action([](const Args& args) { Return ret = prove_info(stoul(args[0])); return ret; }, description("prove_info"))},*/
 	};
 	return actions;
 }

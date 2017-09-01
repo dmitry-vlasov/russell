@@ -21,6 +21,7 @@
 #include <iomanip>
 #include <string>
 #include <vector>
+#include <array>
 #include <map>
 #include <set>
 #include <stack>
@@ -91,6 +92,7 @@ namespace mdl {
 
 	//using std::variant;
 	using std::vector;
+	using std::array;
 	using std::set;
 	using std::deque;
 	using std::queue;

@@ -135,6 +135,10 @@ struct Token {
 		if (t.src == src) return end <= t.beg;
 		return false;
 	}
+	bool includes (const Token<S>& t) {
+		if (!src || !t.src || t.src != src) return false;
+		return beg <= t.beg && t.end <= end;
+	}
 
 	string show() const {
 		LocationIter b (src->data.begin(), src->id());

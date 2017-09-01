@@ -1,5 +1,7 @@
 #pragma once
 
+#include <boost/algorithm/string/predicate.hpp>
+#include "peglib.h"
 #include "rus_prover_space.hpp"
 
 namespace mdl { namespace rus { namespace prover {
@@ -40,6 +42,7 @@ private:
 
 struct ProxyTactic : public Tactic {
 	ProxyTactic(Tactic* t, uint m) : tactic(t), mode(m) { }
+	ProxyTactic(Tactic* t, string m) : tactic(t), mode(show_bits(m)) { }
 	~ProxyTactic() { delete tactic; }
 	void add(Node* n) override {
 		tactic->add(n);
@@ -60,6 +63,7 @@ protected:
 };
 
 struct MetaTactic : public Tactic {
+	MetaTactic(vector<Tactic*>&& t) : tactics(std::move(t)) { }
 	~MetaTactic() override {
 		for (auto t : tactics) delete t;
 	}
@@ -75,6 +79,17 @@ struct MetaTactic : public Tactic {
 	virtual uint tactic() = 0;
 protected:
 	vector<Tactic*> tactics;
+};
+
+struct AlterTactic : public MetaTactic {
+	AlterTactic(vector<Tactic*>&& t) : MetaTactic(std::move(t)) { }
+	uint tactic() override {
+		if (index + 1 == tactics.size()) index = 0;
+		else ++ index;
+		return index;
+	}
+private:
+	uint index = 0;
 };
 
 }}}

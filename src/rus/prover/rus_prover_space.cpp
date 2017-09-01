@@ -61,5 +61,7 @@ rus::Proof* Space::checkProved() {
 	return nullptr;
 }
 
+Space* Space::instance = nullptr;
+
 }}}
 

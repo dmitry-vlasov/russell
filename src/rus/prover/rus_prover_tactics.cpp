@@ -40,6 +40,53 @@ void Oracle::add(Node* n) {
 	}
 }
 
+struct TacticsParser {
+	static const char* tactics_syntax() {
+		return R"(
+			# Tactics grammar
+		
+            TACTIC  <- BREADTH / ALTER / PROXY / ORACLE
+			BREADTH <- 'breadth'
+			ALTER   <- 'alter(' (TACTIC {',' TACTIC})? ')'
+            PROXY   <- 'proxy[' BITS '](' TACTIC ')'
+            ORACLE  <- 'oracle'
+            BITS    <- < (![ \]] .)+ >
+		)";
+	}
+	TacticsParser() : parser(tactics_syntax()) {
+
+		parser["BREADTH"] = [](const peg::SemanticValues& sv) {
+			return new BreadthSearch;
+		};
+		parser["ALTER"] = [](const peg::SemanticValues& sv) {
+			return new AlterTactic(std::move(sv.transform<Tactic*>()));
+		};
+		parser["PROXY"] = [](const peg::SemanticValues& sv) {
+			return new ProxyTactic(sv[1].get<Tactic*>(), sv[0].get<string>());
+		};
+		parser["TACTIC"] = [](const peg::SemanticValues& sv, peg::any& context) {
+			return sv[0].get<Tactic*>();
+		};
+		parser.log = [](size_t ln, size_t col, const std::string& err_msg) {
+			std::stringstream ss;
+			ss << "line: " << ln << ": " << err_msg << std::endl;
+			throw Error(ss.str());
+		};
+	}
+	Tactic* parse(string descr) {
+		Tactic* t = nullptr;
+		if (!parser.parse<Tactic*>(descr.c_str(), t))
+			throw Error("tactic parsing failed", descr);
+		return t;
+	}
+private:
+	peg::parser parser;
+};
+
+Tactic* make_tactic(string descr) {
+	static TacticsParser p;
+	return p.parse(descr);
+}
 
 }}}
 

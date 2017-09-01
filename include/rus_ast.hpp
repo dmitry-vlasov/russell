@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ast.hpp"
 #include "rus_expr.hpp"
 #include "rus_sys.hpp"
 
@@ -356,6 +357,7 @@ struct Theory : public Tokenable, public Verifiable {
 struct Source : public mdl::Source<Source, Sys> {
 	Source(uint l);
 	~Source();
+	Tokenable* find(const Token& t);
 
 	Theory* theory;
 };
