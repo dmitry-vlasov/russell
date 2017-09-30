@@ -14,6 +14,7 @@ private:
 			inner.clear();
 			prop = nullptr;
 			proof = nullptr;
+			theorem = -1;
 		}
 		vector<Variables*>  variables;
 		vector<Disjointed*> disjointed;
@@ -25,6 +26,7 @@ private:
 		Proof*       proof;
 		Ref::Type    ref;
 		Source*      source;
+		uint         theorem;
 
 		Token token(const peg::SemanticValues& sv) const {
 			return Token(source, sv.c_str(), sv.c_str() + sv.length());
@@ -34,8 +36,9 @@ private:
 
 	template<class T>
 	static void check_vector(const vector<T*>& container, uint ind) {
-		if (ind >= container.size())
+		if (ind >= container.size()) {
 			throw Error("array index out of boundaries", to_string(ind) + " >= " + to_string(container.size()));
+		}
 	}
 	template<class T>
 	static void check_table(const Table<T>& table, uint lab) {
@@ -141,6 +144,7 @@ public:
 		};
 		parser["TH"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
+			c.theorem = sv[0].get<uint>();
 			c.prop = new Proposition(false, sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv));
 			c.proof = sv[2].get<Proof*>();
 		};
@@ -180,13 +184,22 @@ public:
 			Ref::Type type = sv[0].get<Ref::Type>();
 			uint lab = sv[1].get<uint>();
 			Sys::Math& math = Sys::mod().math;
-			switch (type) {
-			case Ref::Type::ESSENTIAL : check_vector(c.essential, lab); return new Ref(c.essential[lab]);
-			case Ref::Type::FLOATING  : check_vector(c.floating, lab);  return new Ref(c.floating[lab]);
-			case Ref::Type::INNER     : check_vector(c.inner, lab);     return new Ref(c.inner[lab]);
-			case Ref::Type::AXIOM     : check_table(math.get<Assertion>(), lab);  return new Ref(lab, true, c.token(sv));
-			case Ref::Type::THEOREM   : check_table(math.get<Assertion>(), lab);  return new Ref(lab, false, c.token(sv));
-			default  : throw Error("unknown reference type in proof", sv.token());
+			try {
+				switch (type) {
+				case Ref::Type::ESSENTIAL : check_vector(c.essential, lab); return new Ref(c.essential[lab]);
+				case Ref::Type::FLOATING  : check_vector(c.floating, lab);  return new Ref(c.floating[lab]);
+				case Ref::Type::INNER     : check_vector(c.inner, lab);     return new Ref(c.inner[lab]);
+				case Ref::Type::AXIOM     : check_table(math.get<Assertion>(), lab);  return new Ref(lab, true, c.token(sv));
+				case Ref::Type::THEOREM   : check_table(math.get<Assertion>(), lab);  return new Ref(lab, false, c.token(sv));
+				default  : throw Error("unknown reference type in proof", sv.token());
+				}
+			} catch (Error& err) {
+				string msg = err.msg + "\n";
+				msg += "type: " + Ref::showType(type) + "\n";
+				msg += "label: " + Lex::toStr(lab) + " - " + to_string(lab) + "\n";
+				msg += "at theorem: " + Lex::toStr(c.theorem) + " - " + to_string(c.theorem) + "\n";
+				msg += "source: " + Lex::toStr(c.source->id()) + "\n";
+				throw Error(msg);
 			}
 		};
 		parser["ASSERTION"] = [](const peg::SemanticValues& sv, peg::any& context) {

@@ -3,7 +3,7 @@
 function run() {
     eval $1
 	if [ $? != 0 ]; then 
-		echo -e '\n\nTEST FAILED.'; exit
+		echo -e '\n\nTEST FAILED.'; exit 1
 	fi;
 }
 

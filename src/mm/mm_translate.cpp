@@ -68,6 +68,7 @@ Tree* to_tree(const Proof* proof) {
 			Tree* t = new Tree();
 			t->nodes.push_back(r);
 			for (uint i = 0; i < r->arity(); ++ i) {
+				if (stack.empty()) throw Error("empty stack in the proof");
 				t->nodes.push_back(stack.top());
 				stack.pop();
 			}
@@ -79,8 +80,15 @@ Tree* to_tree(const Proof* proof) {
 	}
 	Tree* tree = stack.top();
 	stack.pop();
-	if (!stack.empty())
-		throw Error("non-empty stack at the end of the proof");
+	if (!stack.empty()) {
+		string err = "non-empty stack at the end of the proof:\n";
+		while (!stack.empty()) {
+			err += stack.top()->show() + '\n';
+			stack.pop();
+		}
+		//cerr << err << endl;
+		throw Error(err);
+	}
 	return tree;
 }
 
@@ -443,7 +451,11 @@ smm::Assertion* translate_ass(Maps& maps, const Node& n, const Block* block)  {
 	n.arity() = ass->essential.size() + ass->floating.size();
 
 	if (n.type == Node::THEOREM) {
-		ass->proof = transform_proof(maps, n.val.th->proof);
+		try {
+			ass->proof = transform_proof(maps, n.val.th->proof);
+		} catch (Error& err) {
+			throw Error(err.msg, n.val.th->token);
+		}
 		if (!ass->proof) {
 			// Dummy (redundant) theorem
 			assert(n.proof()->refs.size() == 1);

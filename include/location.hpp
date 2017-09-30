@@ -118,43 +118,177 @@ private :
 	}
 };
 
+enum class TokenType { FULL, SEMI, NONE, DEFAULT = FULL };
+template<class S, TokenType T = TokenType::DEFAULT> class TokenStorage;
+
+template<class S>
+struct TokenStorage<S, TokenType::FULL> {
+	typedef S Source;
+	TokenStorage() : src_(nullptr), beg_(nullptr), end_(nullptr) { }
+	TokenStorage(Source* s) : src_(s), beg_(nullptr), end_(nullptr) { }
+	TokenStorage(Source* s, const char* b, const char* e) :
+	src_(s), beg_(b), end_(e) { }
+
+	Source* src() { return src_; }
+	const Source* src() const { return src_; }
+	const char* beg() const { return beg_; }
+	const char* end() const { return end_; }
+	void set(Source* s, const char* b, const char* e) {
+		src_ = s; beg_ = b; end_ = e;
+	}
+
+private:
+	Source*     src_;
+	const char* beg_;
+	const char* end_;
+};
+
+template<class S>
+struct TokenStorage<S, TokenType::NONE> {
+	typedef S Source;
+	TokenStorage() { }
+	TokenStorage(Source* s) { }
+	TokenStorage(Source* s, const char* b, const char* e) { }
+
+	Source* src() { return nullptr; }
+	const Source* src() const { return nullptr; }
+	const char* beg() const { return nullptr; }
+	const char* end() const { return nullptr; }
+	void set(Source* s, const char* b, const char* e) { }
+};
+
+template<class S>
+struct TokenStorage<S, TokenType::SEMI> {
+	typedef S Source;
+	TokenStorage() {
+		sys_ = UNDEF_SRC;
+		src_ = UNDEF_SRC;
+		beg_ = UNDEF_PTR;
+		end_ = UNDEF_PTR;
+	}
+	TokenStorage(Source* s) {
+		set_src(s);
+		beg_ = UNDEF_PTR;
+		end_ = UNDEF_PTR;
+	}
+	TokenStorage(Source* s, const char* b, const char* e) : TokenStorage(s) {
+		set(s, b, e);
+	}
+
+	Source* src() {
+		return
+			src_ == UNDEF_SRC ?
+			nullptr :
+			Source::Sys::mod(sys_).math.template get<Source>().access(get_src());
+	}
+	const Source* src() const {
+		return
+			src_ == UNDEF_SRC ?
+			nullptr :
+			Source::Sys::get(sys_).math.template get<Source>().access(get_src());
+	}
+	const char* beg() const {
+		return
+			src() ?
+			(beg_ == UNDEF_PTR ? nullptr : src()->data.c_str() + beg_) :
+			nullptr;
+	}
+	const char* end() const {
+		return
+			src() ?
+			(end_ == UNDEF_PTR ? nullptr : src()->data.c_str() + end_) :
+			nullptr;
+	}
+	void set(Source* s, const char* b, const char* e) {
+		set_src(s);
+		beg_ = b - s->data.c_str();
+		end_ = e - s->data.c_str();
+		if (!(s == src() && b == beg() && e == end())) {
+			cerr << "DON'T MATCH: " << endl;
+			exit(1);
+		}
+		cout << string(beg(), end_ - beg_) << endl;
+	}
+
+private:
+	enum {
+		//UNDEF_SRC = 0xFFFF,
+		//UNDEF_PTR = 0xFFFFFF
+		UNDEF_SRC = -1, //0xFFFFFFFF,
+		UNDEF_PTR = -1 //0xFFFFFFFF
+	};
+	uint get_src() const {
+		return src_;
+		//assert(inds().count(src_));
+		//return inds()[src_];
+	}
+	void set_src(Source* s) {
+		if (s->id() > 0xFFFF) {
+			cerr << " FUUUUCK! " << s->id() << endl;
+			throw std::exception();
+		}
+		src_ = s->id();
+		sys_ = s->sys();
+		/*if (srcs().count(id)) {
+			src_ = srcs().at(id);
+		} else {
+			src_ = srcs().size();
+			inds().push_back(id);
+			srcs()[id] = src_;
+		}*/
+	}
+	//static map<uint, uint>& srcs() { static map<uint, uint> m; return m; }
+	//static vector<uint>& inds() { static vector<uint> m; return m; }
+	//uint src_:16;
+	//uint beg_:24;
+	//uint end_:24;
+
+
+	int sys_;
+	int src_;
+	int beg_;
+	int end_;
+};
+
+
 template<class S>
 struct Token {
 	typedef S Source;
 
-	Token() : src(nullptr), beg(nullptr), end(nullptr) { }
-	Token(Source* s) : src(s), beg(nullptr), end(nullptr) { }
+	Token() { }
+	Token(Source* s) : storage(s) { }
 	Token(Source* s, const char* b, const char* e) :
-	src(s), beg(b), end(e) { }
-	Source*     src;
-	const char* beg;
-	const char* end;
+	storage(s, b, e) { }
 
 	bool preceeds (const Token<S>& t) {
-		if (t.src->includes.count(src)) return true;
-		if (t.src == src) return end <= t.beg;
+		if (!src() || !t.src() || t.src() != src()) return false;
+		if (t.src()->includes.count(src())) return true;
+		if (t.src() == src()) return end() <= t.beg();
 		return false;
 	}
 	bool includes (const Token<S>& t) {
-		if (!src || !t.src || t.src != src) return false;
-		return beg <= t.beg && t.end <= end;
+		if (!src() || !t.src() || t.src() != src()) return false;
+		return beg() <= t.beg() && t.end() <= end();
 	}
 
-	string show() const {
-		LocationIter b (src->data.begin(), src->id());
-		LocationIter e (string::const_iterator(beg), src->id());
+	string show(bool full = false) const {
+		if (!src()) return "unknown source";
+		if (!beg()) return "unknown begin";
+		if (!end()) return "unknown end_";
+		LocationIter b (src()->data.begin(), src()->id());
+		LocationIter e (string::const_iterator(beg()), src()->id());
 		LocationIter x = b;
 		while (x != e) ++x;
-		return x.loc.show();
+		return full ? "token: " + str() + "\n" + x.loc.show() + "\n" : x.loc.show();
 	}
 	Location locate() const {
 		Location loc(
-			src->id(),
+			src()->id(),
 			Source::Sys::ext(),
-			Source::Sys::conf(src->sys()).get("root")
+			Source::Sys::conf(src()->sys()).get("root")
 		);
-		const char* mid = beg + length() / 2;
-		const char* s = src->data.c_str();
+		const char* mid = beg() + length() / 2;
+		const char* s = src()->data.c_str();
 		while (s) {
 			if (*s++ == '\n') { ++loc.line; loc.col = 0; } else ++loc.col;
 			if (s == mid) return loc;
@@ -162,16 +296,22 @@ struct Token {
 		return Location();
 	}
 
-	bool is_defined() const { return src && beg && end; }
+	bool is_defined() const { return src() && beg() && end(); }
 	operator bool() const { return is_defined(); }
-	string str() const { return string(beg, end); }
-	uint length() const { return beg <= end ? end - beg : 0; }
+	string str() const { return string(beg(), length()); }
+	uint length() const { return beg() <= end() ? end() - beg() : 0; }
+	bool operator < (const Token<S>& r) const { return end() <= r.beg(); }
+
+	void set(Source* s, const char* b, const char* e) { storage.set(s, b, e); }
+	Source* src() { return storage.src(); }
+	const Source* src() const { return storage.src(); }
+	const char* beg() const { return storage.beg(); }
+	const char* end() const { return storage.end(); }
+
+private:
+	TokenStorage<Source> storage;
 };
 
-template<class S>
-inline bool operator < (const Token<S>& l, const Token<S>& r) {
-	return l.end <= r.beg;
-}
 
 template<class S>
 struct Tokenable {
@@ -208,10 +348,10 @@ struct TokenIter : public string::const_iterator {
 	}
 
 	void start() {
-		token.beg = &string::const_iterator::operator*();
+		token.beg_ = &string::const_iterator::operator*();
 	}
 	void end() {
-		token.end = &string::const_iterator::operator*();
+		token.end_ = &string::const_iterator::operator*();
 	}
 	Token<Source> token() const {
 		return token_;

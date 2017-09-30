@@ -273,9 +273,7 @@ struct SetToken {
     template <typename T1, typename T2, typename T3, typename T4>
     struct result { typedef void type; };
     void operator()(Tokenable& tokenable, Iterator beg, Iterator end, Source* src) const {
-    	tokenable.token.beg = &*beg;
-    	tokenable.token.end = &*end;
-    	tokenable.token.src = src;
+    	tokenable.token.set(src, &*beg, &*end);
     }
 };
 

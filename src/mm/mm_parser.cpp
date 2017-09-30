@@ -289,11 +289,12 @@ R"(
 },
 {
 R"(
-  $c Moore mrCls ACS $.
+  $c Moore mrCls mrInd ACS $.
 )",
 R"(
   $c Moore $.
   $c mrCls $.
+  $c mrInd $.
   $c ACS $.
 )"
 },
@@ -511,6 +512,28 @@ R"(
 R"(
   $c LPIdeal $.
   $c LPIR $.
+)"
+},
+{
+R"(
+  $c hadd cadd $.
+)",
+R"(
+  $c hadd $.
+  $c cadd $.
+)"
+},
+{
+R"(
+  $c +r -r .v PtDf RR3 $( plane3 $) line3 $.
+)",
+R"(
+  $c +r $.
+  $c -r $.
+  $c .v $.
+  $c PtDf $.
+  $c RR3 $.
+  $c line3 $. $( plane3 $)
 )"
 }
 };

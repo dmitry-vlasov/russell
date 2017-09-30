@@ -90,14 +90,16 @@ void parse_LL(Expr* ex) {
 		ex->tree = std::move(*tree);
 		delete tree;
 	} else {
-		cout << "Source: " << Lex::toStr(ex->token.src->id()) << endl;
-		cout << endl << "includes: " << endl;
-		for (auto& s : ex->token.src->includes) {
-			cout << Lex::toStr(s.get()->id()) << endl;
-		}
-		cout << endl << endl << "included: " << endl;
-		for (auto& s : ex->token.src->included) {
-			cout << Lex::toStr(s.get()->id()) << endl;
+		if (Source* src = ex->token.src()) {
+			cout << "Source: " << Lex::toStr(src->id()) << endl;
+			cout << endl << "includes: " << endl;
+			for (auto& s : src->includes) {
+				cout << Lex::toStr(s.get()->id()) << endl;
+			}
+			cout << endl << endl << "included: " << endl;
+			for (auto& s : src->included) {
+				cout << Lex::toStr(s.get()->id()) << endl;
+			}
 		}
 		parse_LL(it, ex->type.get(), ex);
 		throw Error("parsing error", string("expression: ") + show(*ex) + " at: " + ex->token.show());

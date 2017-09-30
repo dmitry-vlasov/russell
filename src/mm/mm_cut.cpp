@@ -776,7 +776,764 @@ R"($(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 )"
+},
+{
+R"($( Alternate version of the Tarski-Grothendieck Axiom.  (Contributed by NM,
+       18-Mar-2007.) $)
+    axgroth2 $p |- E. y ( x e. y /\ A. z e. y ( A. w ( w C_ z -> w e. y ) /\
+                       E. w e. y A. v ( v C_ z -> v e. w ) ) /\
+                     A. z ( z C_ y -> ( y ~<_ z \/ z e. y ) ) ) $=
+      vx cv vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv cv vz cv
+      wss vv cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz cv vy cv
+      wss vy cv vz cv cdom wbr vz cv vy cv wcel wo wi vz wal w3a vy wex vx cv
+      vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv cv vz cv wss vv
+      cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz cv vy cv wss vz
+      cv vy cv cen wbr vz cv vy cv wcel wo wi vz wal w3a vy wex vx vy vz vw vv
+      ax-groth vx cv vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv
+      cv vz cv wss vv cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz
+      cv vy cv wss vy cv vz cv cdom wbr vz cv vy cv wcel wo wi vz wal w3a vx cv
+      vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv cv vz cv wss vv
+      cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz cv vy cv wss vz
+      cv vy cv cen wbr vz cv vy cv wcel wo wi vz wal w3a vy vz cv vy cv wss vy
+      cv vz cv cdom wbr vz cv vy cv wcel wo wi vz wal vz cv vy cv wss vz cv vy
+      cv cen wbr vz cv vy cv wcel wo wi vz wal vx cv vy cv wcel vw cv vz cv wss
+      vw cv vy cv wcel wi vw wal vv cv vz cv wss vv cv vw cv wcel wi vv wal vw
+      vy cv wrex wa vz vy cv wral vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy
+      cv wcel wo wi vz cv vy cv wss vz cv vy cv cen wbr vz cv vy cv wcel wo wi
+      vz vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy cv wcel wo vz cv vy cv
+      cen wbr vz cv vy cv wcel wo vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy
+      cv cen wbr vz cv vy cv wcel vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy
+      cv cdom wbr vy cv vz cv cdom wbr wa vz cv vy cv cen wbr vz cv vy cv wss
+      vz cv vy cv cdom wbr vy cv vz cv cdom wbr vy cv cvv wcel vz cv vy cv wss
+      vz cv vy cv cdom wbr wi vy vex vz cv vy cv cvv ssdomg ax-mp biantrurd vz
+      cv vy cv sbthb syl6bb orbi1d pm5.74i albii 3anbi3i exbii mpbir $.
+      $( [10-Sep-2017] $)
+)",
+R"($( Alternate version of the Tarski-Grothendieck Axiom.  (Contributed by NM,
+       18-Mar-2007.) $)
+    axgroth2 $p |- E. y ( x e. y /\ A. z e. y ( A. w ( w C_ z -> w e. y ) /\
+                       E. w e. y A. v ( v C_ z -> v e. w ) ) /\
+                     A. z ( z C_ y -> ( y ~<_ z \/ z e. y ) ) ) $=
+      vx cv vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv cv vz cv
+      wss vv cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz cv vy cv
+      wss vy cv vz cv cdom wbr vz cv vy cv wcel wo wi vz wal w3a vy wex vx cv
+      vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv cv vz cv wss vv
+      cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz cv vy cv wss vz
+      cv vy cv cen wbr vz cv vy cv wcel wo wi vz wal w3a vy wex vx vy vz vw vv
+      ax-groth vx cv vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv
+      cv vz cv wss vv cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz
+      cv vy cv wss vy cv vz cv cdom wbr vz cv vy cv wcel wo wi vz wal w3a vx cv
+      vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv cv vz cv wss vv
+      cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz cv vy cv wss vz
+      cv vy cv cen wbr vz cv vy cv wcel wo wi vz wal w3a vy vz cv vy cv wss vy
+      cv vz cv cdom wbr vz cv vy cv wcel wo wi vz wal vz cv vy cv wss vz cv vy
+      cv cen wbr vz cv vy cv wcel wo wi vz wal vx cv vy cv wcel vw cv vz cv wss
+      vw cv vy cv wcel wi vw wal vv cv vz cv wss vv cv vw cv wcel wi vv wal vw
+      vy cv wrex wa vz vy cv wral vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy
+      cv wcel wo wi vz cv vy cv wss vz cv vy cv cen wbr vz cv vy cv wcel wo wi
+      vz vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy cv wcel wo vz cv vy cv
+      cen wbr vz cv vy cv wcel wo vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy
+      cv cen wbr vz cv vy cv wcel vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy
+      cv cdom wbr vy cv vz cv cdom wbr wa vz cv vy cv cen wbr vz cv vy cv wss
+      vz cv vy cv cdom wbr vy cv vz cv cdom wbr vy cv cvv wcel vz cv vy cv wss
+      vz cv vy cv cdom wbr wi vy vex vz cv vy cv cvv ssdomg ax-mp biantrurd vz
+      cv vy cv sbthb syl6bb orbi1d pm5.74i albii 3anbi3i exbii mpbir $.
+      $( [10-Sep-2017] $)
+  $}
+)"
+},
+{
+R"(
+    $( Derive the Axiom of Power Sets ~ ax-pow from the Tarski-Grothendieck
+       axiom ~ ax-groth .  That it follows is mentioned by Bob Solovay at
+       ~ http://www.cs.nyu.edu/pipermail/fom/2008-March/012783.html .  Note
+       that ~ ax-pow is not used by the proof.  (Contributed by G&eacute;rard
+       Lang, 22-Jun-2009.) $))",
+R"(
+  ${
+    $d x y z w v u f $.
+    $( Derive the Axiom of Power Sets ~ ax-pow from the Tarski-Grothendieck
+       axiom ~ ax-groth .  That it follows is mentioned by Bob Solovay at
+       ~ http://www.cs.nyu.edu/pipermail/fom/2008-March/012783.html .  Note
+       that ~ ax-pow is not used by the proof.  (Contributed by G&eacute;rard
+       Lang, 22-Jun-2009.) $))"
+},
+{
+R"(cfv chil wss cn chil vf cv wf cn cT cnl cfv vf cv wf vf cv vx cv chli wbr
+      simpl cT cnl cfv cT nlelch.1 nlelshi shssii cn cT cnl cfv chil vf cv fss
+      sylancl chil cn cT vf cv fnfco sylancr cn cc0 csn cn cc0 csn cxp wf cn
+      cc0 csn cxp cn wfn cn cc0 c0ex fconst cn cc0 csn cn cc0 csn cxp ffn ax-mp
+      vn cn cT vf cv ccom cn cc0 csn cxp eqfnfv sylancl mpbird cn cT cnl cfv vf
+      cv wf vf cv vx cv chli wbr wa ccnfld ctopn cfv cc ctopon cfv wcel cc0 cc
+      wcel c1 cz wcel cn cc0 csn cxp cc0 ccnfld ctopn cfv clm cfv wbr ccnfld
+      ctopn cfv cc ctopon cfv wcel cn cT cnl cfv vf cv wf vf cv vx cv chli wbr
+      wa ccnfld ctopn cfv ccnfld ctopn cfv eqid cnfldtopon a1i cc0 cc wcel cn
+      cT cnl cfv vf cv wf vf cv vx cv chli wbr wa 0cn a1i c1 cz wcel cn cT cnl
+      cfv vf cv wf vf cv vx cv chli wbr wa 1z a1i cc0 ccnfld ctopn cfv c1 cc cn
+      nnuz lmconst syl3anc eqbrtrd lmmo chil cc cT wf vx cv cT cnl cfv wcel vx
+      cv chil wcel vx cv cT cfv cc0 wceq wa wb cT nlelch.1 lnfnfi vx cv cT
+      elnlfn ax-mp sylanbrc gen2 vx vf cT cnl cfv isch2 mpbir2an $.
+      $( [10-Sep-2017] $))",
+R"(cfv chil wss cn chil vf cv wf cn cT cnl cfv vf cv wf vf cv vx cv chli wbr
+      simpl cT cnl cfv cT nlelch.1 nlelshi shssii cn cT cnl cfv chil vf cv fss
+      sylancl chil cn cT vf cv fnfco sylancr cn cc0 csn cn cc0 csn cxp wf cn
+      cc0 csn cxp cn wfn cn cc0 c0ex fconst cn cc0 csn cn cc0 csn cxp ffn ax-mp
+      vn cn cT vf cv ccom cn cc0 csn cxp eqfnfv sylancl mpbird cn cT cnl cfv vf
+      cv wf vf cv vx cv chli wbr wa ccnfld ctopn cfv cc ctopon cfv wcel cc0 cc
+      wcel c1 cz wcel cn cc0 csn cxp cc0 ccnfld ctopn cfv clm cfv wbr ccnfld
+      ctopn cfv cc ctopon cfv wcel cn cT cnl cfv vf cv wf vf cv vx cv chli wbr
+      wa ccnfld ctopn cfv ccnfld ctopn cfv eqid cnfldtopon a1i cc0 cc wcel cn
+      cT cnl cfv vf cv wf vf cv vx cv chli wbr wa 0cn a1i c1 cz wcel cn cT cnl
+      cfv vf cv wf vf cv vx cv chli wbr wa 1z a1i cc0 ccnfld ctopn cfv c1 cc cn
+      nnuz lmconst syl3anc eqbrtrd lmmo chil cc cT wf vx cv cT cnl cfv wcel vx
+      cv chil wcel vx cv cT cfv cc0 wceq wa wb cT nlelch.1 lnfnfi vx cv cT
+      elnlfn ax-mp sylanbrc gen2 vx vf cT cnl cfv isch2 mpbir2an $.
+      $( [10-Sep-2017] $)
+  $}
+)"
+},
+{
+R"($( A continuous linear functional can be expressed as an inner product.
+       Existence part of Theorem 3.9 of [Beran] p. 104.  (Contributed by NM,
+       13-Feb-2006.)  (New usage is discouraged.) $))",
+R"(
+  ${
+    $d f n u v w x T $.
+    riesz3.1 $e |- T e. LinFn $.
+    riesz3.2 $e |- T e. ConFn $.
+    $( A continuous linear functional can be expressed as an inner product.
+       Existence part of Theorem 3.9 of [Beran] p. 104.  (Contributed by NM,
+       13-Feb-2006.)  (New usage is discouraged.) $))"
+},
+
+{
+R"(vv cv cT cfv vv cv vw cv csp co wceq vv chil wral vw chil wrex cT cnl cfv
+      cort cfv c0h cT cnl cfv cort cfv c0h wceq c0v chil wcel vv cv cT cfv vv
+      cv c0v csp co wceq vv chil wral vv cv cT cfv vv cv vw cv csp co wceq vv
+      chil wral vw chil wrex ax-hv0cl cT cnl cfv cort cfv c0h wceq vv cv cT cfv
+      vv cv c0v csp co wceq vv chil cT cnl cfv cort cfv c0h wceq vv cv chil
+      wcel wa vv cv cT cfv cc0 vv cv c0v csp co cT cnl cfv cort cfv c0h wceq vv
+      cv chil wcel wa chil cc cT wf vv cv cT cnl cfv wcel vv cv cT cfv cc0 wceq
+      cT nlelch.1 lnfnfi cT cnl cfv cort cfv c0h wceq vv cv cT cnl cfv wcel vv
+      cv chil wcel cT cnl cfv cort cfv c0h wceq cT cnl cfv chil vv cv cT cnl
+      cfv cort cfv c0h wceq cT cnl cfv cort cfv cort cfv c0h cort cfv cT cnl
+      cfv chil cT cnl cfv cort cfv c0h cort fveq2 cT cnl cfv cT nlelch.1
+      nlelch.2 nlelchi ococi choc0 3eqtr3g eleq2d biimpar vv cv cT elnlfn2
+      sylancr vv cv chil wcel vv cv c0v csp co cc0 wceq cT cnl cfv cort cfv c0h
+      wceq vv cv hi02 adantl eqtr4d ralrimiva vv cv cT cfv vv cv vw cv csp co
+      wceq vv chil wral vv cv cT cfv vv cv c0v csp co wceq vv chil wral vw c0v
+      chil vw cv c0v wceq vv cv cT cfv vv cv vw cv csp co wceq vv cv cT cfv vv
+      cv c0v csp co wceq vv chil vw cv c0v wceq vv cv vw cv csp co vv cv c0v
+      csp co vv cv cT cfv vw cv c0v vv cv csp oveq2 eqeq2d ralbidv rspcev
+      sylancr cT cnl cfv cort cfv c0h wne vu cv c0v wne vu cT cnl cfv cort cfv
+      wrex vv cv cT cfv vv cv vw cv csp co wceq vv chil wral vw chil wrex vu cT
+      cnl cfv cort cfv cT cnl cfv cT nlelch.1 nlelch.2 nlelchi choccli chne0i
+      vu cv c0v wne vv cv cT cfv vv cv vw cv csp co wceq vv chil wral vw chil
+      wrex vu cT cnl cfv cort cfv vu cv cT cnl cfv cort cfv wcel vu cv chil
+      wcel vu cv c0v wne vv cv cT cfv vv cv vw cv csp co wceq vv chil wral vw
+      chil wrex wi vu cv cT cnl cfv cort cfv cT cnl cfv cT nlelch.1 nlelch.2
+      nlelchi choccli cheli vu cv cT cnl cfv cort cfv wcel vu cv chil wcel wa
+      vu cv c0v wne vv cv cT cfv vv cv vw cv csp co wceq vv chil wral vw chil
+      wrex vu cv cT cnl cfv cort cfv wcel vu cv chil wcel wa vu cv c0v wne wa
+      vu cv cT cfv vu cv vu cv csp co cdiv co ccj cfv vu cv csm co chil wcel vv
+      cv cT cfv vv cv vu cv cT cfv vu cv vu cv csp co cdiv co ccj cfv vu cv csm
+      co csp co wceq vv chil wral vv cv cT cfv vv cv vw cv csp co wceq vv chil
+      wral vw chil wrex vu cv chil wcel vu cv c0v wne vu cv cT cfv vu cv vu cv
+      csp co cdiv co ccj cfv vu cv csm co chil wcel vu cv cT cnl cfv cort cfv
+      wcel vu cv chil wcel vu cv c0v wne wa vu cv cT cfv vu cv vu cv csp co
+      cdiv co ccj cfv cc wcel vu cv chil wcel vu cv cT cfv vu cv vu cv csp co
+      cdiv co ccj cfv vu cv csm co chil wcel vu cv chil wcel vu cv c0v wne wa
+      vu cv cT cfv vu cv vu cv csp co cdiv co vu cv chil wcel vu cv c0v wne wa
+      vu cv cT cfv vu cv vu cv csp co vu cv chil wcel vu cv cT cfv cc wcel vu
+      cv c0v wne chil cc vu cv cT cT nlelch.1 lnfnfi ffvelrni adantr vu cv chil
+      wcel vu cv vu cv csp co cc wcel vu cv c0v wne vu cv chil wcel vu cv vu cv
+      csp co cc wcel vu cv vu cv hicl anidms adantr vu cv chil wcel vu cv vu cv
+      csp co cc0 wne vu cv c0v wne vu cv chil wcel vu cv vu cv csp co cc0 vu cv
+      c0v vu cv his6 necon3bid biimpar divcld cjcld vu cv chil wcel vu cv c0v
+      wne simpl vu cv cT cfv vu cv vu cv csp co cdiv co ccj cfv vu cv hvmulcl
+      syl2anc adantll vu cv cT cnl cfv cort cfv wcel vu cv chil wcel wa vu cv
+      c0v wne wa vv cv cT cfv vv cv vu cv cT cfv vu cv vu cv csp co cdiv co ccj
+      cfv vu cv csm co csp co wceq vv chil vu cv cT cnl cfv cort cfv wcel vu cv
+      chil wcel wa vu cv c0v wne wa vv cv chil wcel wa vu cv cT cfv vv cv vu cv
+      csp co cmul co vu cv vu cv csp co cdiv co vv cv cT cfv vv cv vu cv cT cfv
+      vu cv vu cv csp co cdiv co ccj cfv vu cv csm co csp co vu cv cT cnl cfv
+      cort cfv wcel vu cv chil wcel wa vu cv c0v wne wa vv cv chil wcel wa vu
+      cv cT cfv vv cv vu cv csp co cmul co vu cv vu cv csp co cdiv co vv cv cT
+      cfv wceq vu cv cT cfv vv cv vu cv csp co cmul co vv cv cT cfv vu cv vu cv
+      csp co cmul co wceq vu cv cT cnl cfv cort cfv wcel vu cv chil wcel wa vv
+      cv chil wcel vu cv cT cfv vv cv vu cv csp co cmul co vv cv cT cfv vu cv
+      vu cv csp co cmul co wceq vu cv c0v wne vu cv cT cnl cfv cort cfv wcel vu
+      cv chil wcel wa vv cv chil wcel wa vu cv cT cfv vv cv vu cv csp co cmul
+      co vv cv cT cfv vu cv vu cv csp co cmul co cmin co cc0 wceq vu cv cT cfv
+      vv cv vu cv csp co cmul co vv cv cT cfv vu cv vu cv csp co cmul co wceq
+      vu cv cT cnl cfv cort cfv wcel vu cv chil wcel wa vv cv chil wcel wa vu
+      cv cT cfv vv cv vu cv csp co cmul co vv cv cT cfv vu cv vu cv csp co cmul
+      co cmin co vu cv cT cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co vu
+      cv csp co cc0 vu cv chil wcel vv cv chil wcel vu cv cT cfv vv cv vu cv
+      csp co cmul co vv cv cT cfv vu cv vu cv csp co cmul co cmin co vu cv cT
+      cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co vu cv csp co wceq vu cv
+      cT cnl cfv cort cfv wcel vu cv chil wcel vv cv chil wcel wa vu cv cT cfv
+      vv cv csm co vv cv cT cfv vu cv csm co cmv co vu cv csp co vu cv cT cfv
+      vv cv csm co vu cv csp co vv cv cT cfv vu cv csm co vu cv csp co cmin co
+      vu cv cT cfv vv cv vu cv csp co cmul co vv cv cT cfv vu cv vu cv csp co
+      cmul co cmin co vu cv chil wcel vv cv chil wcel wa vu cv cT cfv vv cv csm
+      co chil wcel vv cv cT cfv vu cv csm co chil wcel vu cv chil wcel vu cv cT
+      cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co vu cv csp co vu cv cT
+      cfv vv cv csm co vu cv csp co vv cv cT cfv vu cv csm co vu cv csp co cmin
+      co wceq vu cv chil wcel vu cv cT cfv cc wcel vv cv chil wcel vu cv cT cfv
+      vv cv csm co chil wcel chil cc vu cv cT cT nlelch.1 lnfnfi ffvelrni vu cv
+      cT cfv vv cv hvmulcl sylan vv cv chil wcel vu cv chil wcel vv cv cT cfv
+      vu cv csm co chil wcel vv cv chil wcel vv cv cT cfv cc wcel vu cv chil
+      wcel vv cv cT cfv vu cv csm co chil wcel chil cc vv cv cT cT nlelch.1
+      lnfnfi ffvelrni vv cv cT cfv vu cv hvmulcl sylan ancoms vu cv chil wcel
+      vv cv chil wcel simpl vu cv cT cfv vv cv csm co vv cv cT cfv vu cv csm co
+      vu cv his2sub syl3anc vu cv chil wcel vv cv chil wcel wa vu cv cT cfv vv
+      cv csm co vu cv csp co vu cv cT cfv vv cv vu cv csp co cmul co vv cv cT
+      cfv vu cv csm co vu cv csp co vv cv cT cfv vu cv vu cv csp co cmul co
+      cmin vu cv chil wcel vv cv chil wcel wa vu cv cT cfv cc wcel vv cv chil
+      wcel vu cv chil wcel vu cv cT cfv vv cv csm co vu cv csp co vu cv cT cfv
+      vv cv vu cv csp co cmul co wceq vu cv chil wcel vu cv cT cfv cc wcel vv
+      cv chil wcel chil cc vu cv cT cT nlelch.1 lnfnfi ffvelrni adantr vu cv
+      chil wcel vv cv chil wcel simpr vu cv chil wcel vv cv chil wcel simpl vu
+      cv cT cfv vv cv vu cv ax-his3 syl3anc vu cv chil wcel vv cv chil wcel wa
+      vv cv cT cfv cc wcel vu cv chil wcel vu cv chil wcel vv cv cT cfv vu cv
+      csm co vu cv csp co vv cv cT cfv vu cv vu cv csp co cmul co wceq vv cv
+      chil wcel vv cv cT cfv cc wcel vu cv chil wcel chil cc vv cv cT cT
+      nlelch.1 lnfnfi ffvelrni adantl vu cv chil wcel vv cv chil wcel simpl vu
+      cv chil wcel vv cv chil wcel simpl vv cv cT cfv vu cv vu cv ax-his3
+      syl3anc oveq12d eqtr2d adantll vu cv cT cnl cfv cort cfv wcel vu cv chil
+      wcel vv cv chil wcel vu cv cT cfv vv cv csm co vv cv cT cfv vu cv csm co
+      cmv co vu cv csp co cc0 wceq vu cv chil wcel vv cv chil wcel wa vu cv cT
+      cnl cfv cort cfv wcel vu cv cT cfv vv cv csm co vv cv cT cfv vu cv csm co
+      cmv co vu cv csp co cc0 wceq vu cv chil wcel vv cv chil wcel wa vu cv cT
+      cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co cT cnl cfv wcel vu cv
+      cT cnl cfv cort cfv wcel vu cv cT cfv vv cv csm co vv cv cT cfv vu cv csm
+      co cmv co vu cv csp co cc0 wceq vu cv chil wcel vv cv chil wcel wa vu cv
+      cT cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co chil wcel vu cv cT
+      cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co cT cfv cc0 wceq vu cv
+      cT cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co cT cnl cfv wcel vu
+      cv chil wcel vv cv chil wcel wa vu cv cT cfv vv cv csm co chil wcel vv cv
+      cT cfv vu cv csm co chil wcel vu cv cT cfv vv cv csm co vv cv cT cfv vu
+      cv csm co cmv co chil wcel vu cv chil wcel vu cv cT cfv cc wcel vv cv
+      chil wcel vu cv cT cfv vv cv csm co chil wcel chil cc vu cv cT cT
+      nlelch.1 lnfnfi ffvelrni vu cv cT cfv vv cv hvmulcl sylan vv cv chil wcel
+      vu cv chil wcel vv cv cT cfv vu cv csm co chil wcel vv cv chil wcel vv cv
+      cT cfv cc wcel vu cv chil wcel vv cv cT cfv vu cv csm co chil wcel chil
+      cc vv cv cT cT nlelch.1 lnfnfi ffvelrni vv cv cT cfv vu cv hvmulcl sylan
+      ancoms vu cv cT cfv vv cv csm co vv cv cT cfv vu cv csm co hvsubcl
+      syl2anc vu cv chil wcel vv cv chil wcel wa vu cv cT cfv vv cv csm co vv
+      cv cT cfv vu cv csm co cmv co cT cfv vu cv cT cfv vv cv csm co cT cfv vv
+      cv cT cfv vu cv csm co cT cfv cmin co vu cv cT cfv vv cv cT cfv cmul co
+      vu cv cT cfv vv cv cT cfv cmul co cmin co cc0 vu cv chil wcel vv cv chil
+      wcel wa vu cv cT cfv vv cv csm co chil wcel vv cv cT cfv vu cv csm co
+      chil wcel vu cv cT cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co cT
+      cfv vu cv cT cfv vv cv csm co cT cfv vv cv cT cfv vu cv csm co cT cfv
+      cmin co wceq vu cv chil wcel vu cv cT cfv cc wcel vv cv chil wcel vu cv
+      cT cfv vv cv csm co chil wcel chil cc vu cv cT cT nlelch.1 lnfnfi
+      ffvelrni vu cv cT cfv vv cv hvmulcl sylan vv cv chil wcel vu cv chil wcel
+      vv cv cT cfv vu cv csm co chil wcel vv cv chil wcel vv cv cT cfv cc wcel
+      vu cv chil wcel vv cv cT cfv vu cv csm co chil wcel chil cc vv cv cT cT
+      nlelch.1 lnfnfi ffvelrni vv cv cT cfv vu cv hvmulcl sylan ancoms vu cv cT
+      cfv vv cv csm co vv cv cT cfv vu cv csm co cT nlelch.1 lnfnsubi syl2anc
+      vu cv chil wcel vv cv chil wcel wa vu cv cT cfv vv cv csm co cT cfv vu cv
+      cT cfv vv cv cT cfv cmul co vv cv cT cfv vu cv csm co cT cfv vu cv cT cfv
+      vv cv cT cfv cmul co cmin vu cv chil wcel vu cv cT cfv cc wcel vv cv chil
+      wcel vu cv cT cfv vv cv csm co cT cfv vu cv cT cfv vv cv cT cfv cmul co
+      wceq chil cc vu cv cT cT nlelch.1 lnfnfi ffvelrni vu cv cT cfv vv cv cT
+      nlelch.1 lnfnmuli sylan vv cv chil wcel vu cv chil wcel vv cv cT cfv vu
+      cv csm co cT cfv vu cv cT cfv vv cv cT cfv cmul co wceq vv cv chil wcel
+      vv cv cT cfv cc wcel vu cv chil wcel vv cv cT cfv vu cv csm co cT cfv vu
+      cv cT cfv vv cv cT cfv cmul co wceq chil cc vv cv cT cT nlelch.1 lnfnfi
+      ffvelrni vv cv cT cfv cc wcel vu cv chil wcel wa vv cv cT cfv vu cv csm
+      co cT cfv vv cv cT cfv vu cv cT cfv cmul co vu cv cT cfv vv cv cT cfv
+      cmul co vv cv cT cfv vu cv cT nlelch.1 lnfnmuli vu cv chil wcel vv cv cT
+      cfv cc wcel vu cv cT cfv cc wcel vv cv cT cfv vu cv cT cfv cmul co vu cv
+      cT cfv vv cv cT cfv cmul co wceq chil cc vu cv cT cT nlelch.1 lnfnfi
+      ffvelrni vv cv cT cfv vu cv cT cfv mulcom sylan2 eqtrd sylan ancoms
+      oveq12d vu cv chil wcel vv cv chil wcel wa vu cv cT cfv vv cv cT cfv cmul
+      co vu cv chil wcel vu cv cT cfv cc wcel vv cv cT cfv cc wcel vu cv cT cfv
+      vv cv cT cfv cmul co cc wcel vv cv chil wcel chil cc vu cv cT cT nlelch.1
+      lnfnfi ffvelrni chil cc vv cv cT cT nlelch.1 lnfnfi ffvelrni vu cv cT cfv
+      vv cv cT cfv mulcl syl2an subidd 3eqtrd chil cc cT wf vu cv cT cfv vv cv
+      csm co vv cv cT cfv vu cv csm co cmv co cT cnl cfv wcel vu cv cT cfv vv
+      cv csm co vv cv cT cfv vu cv csm co cmv co chil wcel vu cv cT cfv vv cv
+      csm co vv cv cT cfv vu cv csm co cmv co cT cfv cc0 wceq wa wb cT nlelch.1
+      lnfnfi vu cv cT cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co cT
+      elnlfn ax-mp sylanbrc cT cnl cfv chil wss vu cv cT cfv vv cv csm co vv cv
+      cT cfv vu cv csm co cmv co cT cnl cfv wcel vu cv cT cnl cfv cort cfv wcel
+      wa vu cv cT cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co vu cv csp
+      co cc0 wceq wi cT cnl cfv cT nlelch.1 nlelch.2 nlelchi chssii vu cv cT
+      cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co vu cv cT cnl cfv ocorth
+      ax-mp sylan ancoms anassrs eqtrd vu cv chil wcel vv cv chil wcel vu cv cT
+      cfv vv cv vu cv csp co cmul co vv cv cT cfv vu cv vu cv csp co cmul co
+      cmin co cc0 wceq vu cv cT cfv vv cv vu cv csp co cmul co vv cv cT cfv vu
+      cv vu cv csp co cmul co wceq wb vu cv cT cnl cfv cort cfv wcel vu cv chil
+      wcel vv cv chil wcel wa vu cv cT cfv vv cv vu cv csp co cmul co cc wcel
+      vv cv cT cfv vu cv vu cv csp co cmul co cc wcel vu cv cT cfv vv cv vu cv
+      csp co cmul co vv cv cT cfv vu cv vu cv csp co cmul co cmin co cc0 wceq
+      vu cv cT cfv vv cv vu cv csp co cmul co vv cv cT cfv vu cv vu cv csp co
+      cmul co wceq wb vu cv chil wcel vv cv chil wcel wa vu cv cT cfv vv cv vu
+      cv csp co vu cv chil wcel vu cv cT cfv cc wcel vv cv chil wcel chil cc vu
+      cv cT cT nlelch.1 lnfnfi ffvelrni adantr vv cv chil wcel vu cv chil wcel
+      vv cv vu cv csp co cc wcel vv cv vu cv hicl ancoms mulcld vv cv chil wcel
+      vv cv cT cfv cc wcel vu cv vu cv csp co cc wcel vv cv cT cfv vu cv vu cv
+      csp co cmul co cc wcel vu cv chil wcel chil cc vv cv cT cT nlelch.1
+      lnfnfi ffvelrni vu cv chil wcel vu cv vu cv csp co cc wcel vu cv vu cv
+      hicl anidms vv cv cT cfv vu cv vu cv csp co mulcl syl2anr vu cv cT cfv vv
+      cv vu cv csp co cmul co vv cv cT cfv vu cv vu cv csp co cmul co subeq0
+      syl2anc adantll mpbid adantlr vu cv chil wcel vu cv c0v wne vv cv chil
+      wcel vu cv cT cfv vv cv vu cv csp co cmul co vu cv vu cv csp co cdiv co
+      vv cv cT cfv wceq vu cv cT cfv vv cv vu cv csp co cmul co vv cv cT cfv vu
+      cv vu cv csp co cmul co wceq wb vu cv cT cnl cfv cort cfv wcel vu cv chil
+      wcel vu cv c0v wne wa vv cv chil wcel wa vu cv cT cfv vv cv vu cv csp co
+      cmul co cc wcel vv cv cT cfv cc wcel vu cv vu cv csp co cc wcel vu cv vu
+      cv csp co cc0 wne wa vu cv cT cfv vv cv vu cv csp co cmul co vu cv vu cv
+      csp co cdiv co vv cv cT cfv wceq vu cv cT cfv vv cv vu cv csp co cmul co
+      vv cv cT cfv vu cv vu cv csp co cmul co wceq wb vu cv chil wcel vv cv
+      chil wcel vu cv cT cfv vv cv vu cv csp co cmul co cc wcel vu cv c0v wne
+      vu cv chil wcel vv cv chil wcel wa vu cv cT cfv vv cv vu cv csp co vu cv
+      chil wcel vu cv cT cfv cc wcel vv cv chil wcel chil cc vu cv cT cT
+      nlelch.1 lnfnfi ffvelrni adantr vv cv chil wcel vu cv chil wcel vv cv vu
+      cv csp co cc wcel vv cv vu cv hicl ancoms mulcld adantlr vv cv chil wcel
+      vv cv cT cfv cc wcel vu cv chil wcel vu cv c0v wne wa chil cc vv cv cT cT
+      nlelch.1 lnfnfi ffvelrni adantl vu cv chil wcel vu cv c0v wne wa vu cv vu
+      cv csp co cc wcel vu cv vu cv csp co cc0 wne wa vv cv chil wcel vu cv
+      chil wcel vu cv c0v wne wa vu cv vu cv csp co cc wcel vu cv vu cv csp co
+      cc0 wne vu cv chil wcel vu cv vu cv csp co cc wcel vu cv c0v wne vu cv
+      chil wcel vu cv vu cv csp co cc wcel vu cv vu cv hicl anidms adantr vu cv
+      chil wcel vu cv vu cv csp co cc0 wne vu cv c0v wne vu cv chil wcel vu cv
+      vu cv csp co cc0 vu cv c0v vu cv his6 necon3bid biimpar jca adantr vu cv
+      cT cfv vv cv vu cv csp co cmul co vv cv cT cfv vu cv vu cv csp co divmul3
+      syl3anc adantlll mpbird vu cv chil wcel vu cv c0v wne vv cv chil wcel vu
+      cv cT cfv vv cv vu cv csp co cmul co vu cv vu cv csp co cdiv co vv cv vu
+      cv cT cfv vu cv vu cv csp co cdiv co ccj cfv vu cv csm co csp co wceq vu
+      cv cT cnl cfv cort cfv wcel vu cv chil wcel vu cv c0v wne wa vv cv chil
+      wcel wa vu cv cT cfv vv cv vu cv csp co cmul co vu cv vu cv csp co cdiv
+      co vu cv cT cfv vu cv vu cv csp co cdiv co vv cv vu cv csp co cmul co vv
+      cv vu cv cT cfv vu cv vu cv csp co cdiv co ccj cfv vu cv csm co csp co vu
+      cv chil wcel vu cv c0v wne wa vv cv chil wcel wa vu cv cT cfv cc wcel vv
+      cv vu cv csp co cc wcel vu cv vu cv csp co cc wcel vu cv vu cv csp co cc0
+      wne wa vu cv cT cfv vv cv vu cv csp co cmul co vu cv vu cv csp co cdiv co
+      vu cv cT cfv vu cv vu cv csp co cdiv co vv cv vu cv csp co cmul co wceq
+      vu cv chil wcel vu cv c0v wne wa vu cv cT cfv cc wcel vv cv chil wcel vu
+      cv chil wcel vu cv cT cfv cc wcel vu cv c0v wne chil cc vu cv cT cT
+      nlelch.1 lnfnfi ffvelrni adantr adantr vu cv chil wcel vv cv chil wcel vv
+      cv vu cv csp co cc wcel vu cv c0v wne vv cv chil wcel vu cv chil wcel vv
+      cv vu cv csp co cc wcel vv cv vu cv hicl ancoms adantlr vu cv chil wcel
+      vu cv c0v wne wa vu cv vu cv csp co cc wcel vu cv vu cv csp co cc0 wne wa
+      vv cv chil wcel vu cv chil wcel vu cv c0v wne wa vu cv vu cv csp co cc
+      wcel vu cv vu cv csp co cc0 wne vu cv chil wcel vu cv vu cv csp co cc
+      wcel vu cv c0v wne vu cv chil wcel vu cv vu cv csp co cc wcel vu cv vu cv
+      hicl anidms adantr vu cv chil wcel vu cv vu cv csp co cc0 wne vu cv c0v
+      wne vu cv chil wcel vu cv vu cv csp co cc0 vu cv c0v vu cv his6 necon3bid
+      biimpar jca adantr vu cv cT cfv vv cv vu cv csp co vu cv vu cv csp co
+      div23 syl3anc vu cv chil wcel vu cv c0v wne wa vv cv chil wcel wa vu cv
+      cT cfv vu cv vu cv csp co cdiv co cc wcel vv cv chil wcel vu cv chil wcel
+      vv cv vu cv cT cfv vu cv vu cv csp co cdiv co ccj cfv vu cv csm co csp co
+      vu cv cT cfv vu cv vu cv csp co cdiv co vv cv vu cv csp co cmul co wceq
+      vu cv chil wcel vu cv c0v wne wa vu cv cT cfv vu cv vu cv csp co cdiv co
+      cc wcel vv cv chil wcel vu cv chil wcel vu cv c0v wne wa vu cv cT cfv vu
+      cv vu cv csp co vu cv chil wcel vu cv cT cfv cc wcel vu cv c0v wne chil
+      cc vu cv cT cT nlelch.1 lnfnfi ffvelrni adantr vu cv chil wcel vu cv vu
+      cv csp co cc wcel vu cv c0v wne vu cv chil wcel vu cv vu cv csp co cc
+      wcel vu cv vu cv hicl anidms adantr vu cv chil wcel vu cv vu cv csp co
+      cc0 wne vu cv c0v wne vu cv chil wcel vu cv vu cv csp co cc0 vu cv c0v vu
+      cv his6 necon3bid biimpar divcld adantr vu cv chil wcel vu cv c0v wne wa
+      vv cv chil wcel simpr vu cv chil wcel vu cv c0v wne vv cv chil wcel
+      simpll vu cv cT cfv vu cv vu cv csp co cdiv co vv cv vu cv his52 syl3anc
+      eqtr4d adantlll eqtr3d ralrimiva vv cv cT cfv vv cv vw cv csp co wceq vv
+      chil wral vv cv cT cfv vv cv vu cv cT cfv vu cv vu cv csp co cdiv co ccj
+      cfv vu cv csm co csp co wceq vv chil wral vw vu cv cT cfv vu cv vu cv csp
+      co cdiv co ccj cfv vu cv csm co chil vw cv vu cv cT cfv vu cv vu cv csp
+      co cdiv co ccj cfv vu cv csm co wceq vv cv cT cfv vv cv vw cv csp co wceq
+      vv cv cT cfv vv cv vu cv cT cfv vu cv vu cv csp co cdiv co ccj cfv vu cv
+      csm co csp co wceq vv chil vw cv vu cv cT cfv vu cv vu cv csp co cdiv co
+      ccj cfv vu cv csm co wceq vv cv vw cv csp co vv cv vu cv cT cfv vu cv vu
+      cv csp co cdiv co ccj cfv vu cv csm co csp co vv cv cT cfv vw cv vu cv cT
+      cfv vu cv vu cv csp co cdiv co ccj cfv vu cv csm co vv cv csp oveq2
+      eqeq2d ralbidv rspcev syl2anc ex mpdan rexlimiv sylbi pm2.61ine $.)",
+R"(vv cv cT cfv vv cv vw cv csp co wceq vv chil wral vw chil wrex cT cnl cfv
+      cort cfv c0h cT cnl cfv cort cfv c0h wceq c0v chil wcel vv cv cT cfv vv
+      cv c0v csp co wceq vv chil wral vv cv cT cfv vv cv vw cv csp co wceq vv
+      chil wral vw chil wrex ax-hv0cl cT cnl cfv cort cfv c0h wceq vv cv cT cfv
+      vv cv c0v csp co wceq vv chil cT cnl cfv cort cfv c0h wceq vv cv chil
+      wcel wa vv cv cT cfv cc0 vv cv c0v csp co cT cnl cfv cort cfv c0h wceq vv
+      cv chil wcel wa chil cc cT wf vv cv cT cnl cfv wcel vv cv cT cfv cc0 wceq
+      cT nlelch.1 lnfnfi cT cnl cfv cort cfv c0h wceq vv cv cT cnl cfv wcel vv
+      cv chil wcel cT cnl cfv cort cfv c0h wceq cT cnl cfv chil vv cv cT cnl
+      cfv cort cfv c0h wceq cT cnl cfv cort cfv cort cfv c0h cort cfv cT cnl
+      cfv chil cT cnl cfv cort cfv c0h cort fveq2 cT cnl cfv cT nlelch.1
+      nlelch.2 nlelchi ococi choc0 3eqtr3g eleq2d biimpar vv cv cT elnlfn2
+      sylancr vv cv chil wcel vv cv c0v csp co cc0 wceq cT cnl cfv cort cfv c0h
+      wceq vv cv hi02 adantl eqtr4d ralrimiva vv cv cT cfv vv cv vw cv csp co
+      wceq vv chil wral vv cv cT cfv vv cv c0v csp co wceq vv chil wral vw c0v
+      chil vw cv c0v wceq vv cv cT cfv vv cv vw cv csp co wceq vv cv cT cfv vv
+      cv c0v csp co wceq vv chil vw cv c0v wceq vv cv vw cv csp co vv cv c0v
+      csp co vv cv cT cfv vw cv c0v vv cv csp oveq2 eqeq2d ralbidv rspcev
+      sylancr cT cnl cfv cort cfv c0h wne vu cv c0v wne vu cT cnl cfv cort cfv
+      wrex vv cv cT cfv vv cv vw cv csp co wceq vv chil wral vw chil wrex vu cT
+      cnl cfv cort cfv cT cnl cfv cT nlelch.1 nlelch.2 nlelchi choccli chne0i
+      vu cv c0v wne vv cv cT cfv vv cv vw cv csp co wceq vv chil wral vw chil
+      wrex vu cT cnl cfv cort cfv vu cv cT cnl cfv cort cfv wcel vu cv chil
+      wcel vu cv c0v wne vv cv cT cfv vv cv vw cv csp co wceq vv chil wral vw
+      chil wrex wi vu cv cT cnl cfv cort cfv cT cnl cfv cT nlelch.1 nlelch.2
+      nlelchi choccli cheli vu cv cT cnl cfv cort cfv wcel vu cv chil wcel wa
+      vu cv c0v wne vv cv cT cfv vv cv vw cv csp co wceq vv chil wral vw chil
+      wrex vu cv cT cnl cfv cort cfv wcel vu cv chil wcel wa vu cv c0v wne wa
+      vu cv cT cfv vu cv vu cv csp co cdiv co ccj cfv vu cv csm co chil wcel vv
+      cv cT cfv vv cv vu cv cT cfv vu cv vu cv csp co cdiv co ccj cfv vu cv csm
+      co csp co wceq vv chil wral vv cv cT cfv vv cv vw cv csp co wceq vv chil
+      wral vw chil wrex vu cv chil wcel vu cv c0v wne vu cv cT cfv vu cv vu cv
+      csp co cdiv co ccj cfv vu cv csm co chil wcel vu cv cT cnl cfv cort cfv
+      wcel vu cv chil wcel vu cv c0v wne wa vu cv cT cfv vu cv vu cv csp co
+      cdiv co ccj cfv cc wcel vu cv chil wcel vu cv cT cfv vu cv vu cv csp co
+      cdiv co ccj cfv vu cv csm co chil wcel vu cv chil wcel vu cv c0v wne wa
+      vu cv cT cfv vu cv vu cv csp co cdiv co vu cv chil wcel vu cv c0v wne wa
+      vu cv cT cfv vu cv vu cv csp co vu cv chil wcel vu cv cT cfv cc wcel vu
+      cv c0v wne chil cc vu cv cT cT nlelch.1 lnfnfi ffvelrni adantr vu cv chil
+      wcel vu cv vu cv csp co cc wcel vu cv c0v wne vu cv chil wcel vu cv vu cv
+      csp co cc wcel vu cv vu cv hicl anidms adantr vu cv chil wcel vu cv vu cv
+      csp co cc0 wne vu cv c0v wne vu cv chil wcel vu cv vu cv csp co cc0 vu cv
+      c0v vu cv his6 necon3bid biimpar divcld cjcld vu cv chil wcel vu cv c0v
+      wne simpl vu cv cT cfv vu cv vu cv csp co cdiv co ccj cfv vu cv hvmulcl
+      syl2anc adantll vu cv cT cnl cfv cort cfv wcel vu cv chil wcel wa vu cv
+      c0v wne wa vv cv cT cfv vv cv vu cv cT cfv vu cv vu cv csp co cdiv co ccj
+      cfv vu cv csm co csp co wceq vv chil vu cv cT cnl cfv cort cfv wcel vu cv
+      chil wcel wa vu cv c0v wne wa vv cv chil wcel wa vu cv cT cfv vv cv vu cv
+      csp co cmul co vu cv vu cv csp co cdiv co vv cv cT cfv vv cv vu cv cT cfv
+      vu cv vu cv csp co cdiv co ccj cfv vu cv csm co csp co vu cv cT cnl cfv
+      cort cfv wcel vu cv chil wcel wa vu cv c0v wne wa vv cv chil wcel wa vu
+      cv cT cfv vv cv vu cv csp co cmul co vu cv vu cv csp co cdiv co vv cv cT
+      cfv wceq vu cv cT cfv vv cv vu cv csp co cmul co vv cv cT cfv vu cv vu cv
+      csp co cmul co wceq vu cv cT cnl cfv cort cfv wcel vu cv chil wcel wa vv
+      cv chil wcel vu cv cT cfv vv cv vu cv csp co cmul co vv cv cT cfv vu cv
+      vu cv csp co cmul co wceq vu cv c0v wne vu cv cT cnl cfv cort cfv wcel vu
+      cv chil wcel wa vv cv chil wcel wa vu cv cT cfv vv cv vu cv csp co cmul
+      co vv cv cT cfv vu cv vu cv csp co cmul co cmin co cc0 wceq vu cv cT cfv
+      vv cv vu cv csp co cmul co vv cv cT cfv vu cv vu cv csp co cmul co wceq
+      vu cv cT cnl cfv cort cfv wcel vu cv chil wcel wa vv cv chil wcel wa vu
+      cv cT cfv vv cv vu cv csp co cmul co vv cv cT cfv vu cv vu cv csp co cmul
+      co cmin co vu cv cT cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co vu
+      cv csp co cc0 vu cv chil wcel vv cv chil wcel vu cv cT cfv vv cv vu cv
+      csp co cmul co vv cv cT cfv vu cv vu cv csp co cmul co cmin co vu cv cT
+      cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co vu cv csp co wceq vu cv
+      cT cnl cfv cort cfv wcel vu cv chil wcel vv cv chil wcel wa vu cv cT cfv
+      vv cv csm co vv cv cT cfv vu cv csm co cmv co vu cv csp co vu cv cT cfv
+      vv cv csm co vu cv csp co vv cv cT cfv vu cv csm co vu cv csp co cmin co
+      vu cv cT cfv vv cv vu cv csp co cmul co vv cv cT cfv vu cv vu cv csp co
+      cmul co cmin co vu cv chil wcel vv cv chil wcel wa vu cv cT cfv vv cv csm
+      co chil wcel vv cv cT cfv vu cv csm co chil wcel vu cv chil wcel vu cv cT
+      cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co vu cv csp co vu cv cT
+      cfv vv cv csm co vu cv csp co vv cv cT cfv vu cv csm co vu cv csp co cmin
+      co wceq vu cv chil wcel vu cv cT cfv cc wcel vv cv chil wcel vu cv cT cfv
+      vv cv csm co chil wcel chil cc vu cv cT cT nlelch.1 lnfnfi ffvelrni vu cv
+      cT cfv vv cv hvmulcl sylan vv cv chil wcel vu cv chil wcel vv cv cT cfv
+      vu cv csm co chil wcel vv cv chil wcel vv cv cT cfv cc wcel vu cv chil
+      wcel vv cv cT cfv vu cv csm co chil wcel chil cc vv cv cT cT nlelch.1
+      lnfnfi ffvelrni vv cv cT cfv vu cv hvmulcl sylan ancoms vu cv chil wcel
+      vv cv chil wcel simpl vu cv cT cfv vv cv csm co vv cv cT cfv vu cv csm co
+      vu cv his2sub syl3anc vu cv chil wcel vv cv chil wcel wa vu cv cT cfv vv
+      cv csm co vu cv csp co vu cv cT cfv vv cv vu cv csp co cmul co vv cv cT
+      cfv vu cv csm co vu cv csp co vv cv cT cfv vu cv vu cv csp co cmul co
+      cmin vu cv chil wcel vv cv chil wcel wa vu cv cT cfv cc wcel vv cv chil
+      wcel vu cv chil wcel vu cv cT cfv vv cv csm co vu cv csp co vu cv cT cfv
+      vv cv vu cv csp co cmul co wceq vu cv chil wcel vu cv cT cfv cc wcel vv
+      cv chil wcel chil cc vu cv cT cT nlelch.1 lnfnfi ffvelrni adantr vu cv
+      chil wcel vv cv chil wcel simpr vu cv chil wcel vv cv chil wcel simpl vu
+      cv cT cfv vv cv vu cv ax-his3 syl3anc vu cv chil wcel vv cv chil wcel wa
+      vv cv cT cfv cc wcel vu cv chil wcel vu cv chil wcel vv cv cT cfv vu cv
+      csm co vu cv csp co vv cv cT cfv vu cv vu cv csp co cmul co wceq vv cv
+      chil wcel vv cv cT cfv cc wcel vu cv chil wcel chil cc vv cv cT cT
+      nlelch.1 lnfnfi ffvelrni adantl vu cv chil wcel vv cv chil wcel simpl vu
+      cv chil wcel vv cv chil wcel simpl vv cv cT cfv vu cv vu cv ax-his3
+      syl3anc oveq12d eqtr2d adantll vu cv cT cnl cfv cort cfv wcel vu cv chil
+      wcel vv cv chil wcel vu cv cT cfv vv cv csm co vv cv cT cfv vu cv csm co
+      cmv co vu cv csp co cc0 wceq vu cv chil wcel vv cv chil wcel wa vu cv cT
+      cnl cfv cort cfv wcel vu cv cT cfv vv cv csm co vv cv cT cfv vu cv csm co
+      cmv co vu cv csp co cc0 wceq vu cv chil wcel vv cv chil wcel wa vu cv cT
+      cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co cT cnl cfv wcel vu cv
+      cT cnl cfv cort cfv wcel vu cv cT cfv vv cv csm co vv cv cT cfv vu cv csm
+      co cmv co vu cv csp co cc0 wceq vu cv chil wcel vv cv chil wcel wa vu cv
+      cT cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co chil wcel vu cv cT
+      cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co cT cfv cc0 wceq vu cv
+      cT cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co cT cnl cfv wcel vu
+      cv chil wcel vv cv chil wcel wa vu cv cT cfv vv cv csm co chil wcel vv cv
+      cT cfv vu cv csm co chil wcel vu cv cT cfv vv cv csm co vv cv cT cfv vu
+      cv csm co cmv co chil wcel vu cv chil wcel vu cv cT cfv cc wcel vv cv
+      chil wcel vu cv cT cfv vv cv csm co chil wcel chil cc vu cv cT cT
+      nlelch.1 lnfnfi ffvelrni vu cv cT cfv vv cv hvmulcl sylan vv cv chil wcel
+      vu cv chil wcel vv cv cT cfv vu cv csm co chil wcel vv cv chil wcel vv cv
+      cT cfv cc wcel vu cv chil wcel vv cv cT cfv vu cv csm co chil wcel chil
+      cc vv cv cT cT nlelch.1 lnfnfi ffvelrni vv cv cT cfv vu cv hvmulcl sylan
+      ancoms vu cv cT cfv vv cv csm co vv cv cT cfv vu cv csm co hvsubcl
+      syl2anc vu cv chil wcel vv cv chil wcel wa vu cv cT cfv vv cv csm co vv
+      cv cT cfv vu cv csm co cmv co cT cfv vu cv cT cfv vv cv csm co cT cfv vv
+      cv cT cfv vu cv csm co cT cfv cmin co vu cv cT cfv vv cv cT cfv cmul co
+      vu cv cT cfv vv cv cT cfv cmul co cmin co cc0 vu cv chil wcel vv cv chil
+      wcel wa vu cv cT cfv vv cv csm co chil wcel vv cv cT cfv vu cv csm co
+      chil wcel vu cv cT cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co cT
+      cfv vu cv cT cfv vv cv csm co cT cfv vv cv cT cfv vu cv csm co cT cfv
+      cmin co wceq vu cv chil wcel vu cv cT cfv cc wcel vv cv chil wcel vu cv
+      cT cfv vv cv csm co chil wcel chil cc vu cv cT cT nlelch.1 lnfnfi
+      ffvelrni vu cv cT cfv vv cv hvmulcl sylan vv cv chil wcel vu cv chil wcel
+      vv cv cT cfv vu cv csm co chil wcel vv cv chil wcel vv cv cT cfv cc wcel
+      vu cv chil wcel vv cv cT cfv vu cv csm co chil wcel chil cc vv cv cT cT
+      nlelch.1 lnfnfi ffvelrni vv cv cT cfv vu cv hvmulcl sylan ancoms vu cv cT
+      cfv vv cv csm co vv cv cT cfv vu cv csm co cT nlelch.1 lnfnsubi syl2anc
+      vu cv chil wcel vv cv chil wcel wa vu cv cT cfv vv cv csm co cT cfv vu cv
+      cT cfv vv cv cT cfv cmul co vv cv cT cfv vu cv csm co cT cfv vu cv cT cfv
+      vv cv cT cfv cmul co cmin vu cv chil wcel vu cv cT cfv cc wcel vv cv chil
+      wcel vu cv cT cfv vv cv csm co cT cfv vu cv cT cfv vv cv cT cfv cmul co
+      wceq chil cc vu cv cT cT nlelch.1 lnfnfi ffvelrni vu cv cT cfv vv cv cT
+      nlelch.1 lnfnmuli sylan vv cv chil wcel vu cv chil wcel vv cv cT cfv vu
+      cv csm co cT cfv vu cv cT cfv vv cv cT cfv cmul co wceq vv cv chil wcel
+      vv cv cT cfv cc wcel vu cv chil wcel vv cv cT cfv vu cv csm co cT cfv vu
+      cv cT cfv vv cv cT cfv cmul co wceq chil cc vv cv cT cT nlelch.1 lnfnfi
+      ffvelrni vv cv cT cfv cc wcel vu cv chil wcel wa vv cv cT cfv vu cv csm
+      co cT cfv vv cv cT cfv vu cv cT cfv cmul co vu cv cT cfv vv cv cT cfv
+      cmul co vv cv cT cfv vu cv cT nlelch.1 lnfnmuli vu cv chil wcel vv cv cT
+      cfv cc wcel vu cv cT cfv cc wcel vv cv cT cfv vu cv cT cfv cmul co vu cv
+      cT cfv vv cv cT cfv cmul co wceq chil cc vu cv cT cT nlelch.1 lnfnfi
+      ffvelrni vv cv cT cfv vu cv cT cfv mulcom sylan2 eqtrd sylan ancoms
+      oveq12d vu cv chil wcel vv cv chil wcel wa vu cv cT cfv vv cv cT cfv cmul
+      co vu cv chil wcel vu cv cT cfv cc wcel vv cv cT cfv cc wcel vu cv cT cfv
+      vv cv cT cfv cmul co cc wcel vv cv chil wcel chil cc vu cv cT cT nlelch.1
+      lnfnfi ffvelrni chil cc vv cv cT cT nlelch.1 lnfnfi ffvelrni vu cv cT cfv
+      vv cv cT cfv mulcl syl2an subidd 3eqtrd chil cc cT wf vu cv cT cfv vv cv
+      csm co vv cv cT cfv vu cv csm co cmv co cT cnl cfv wcel vu cv cT cfv vv
+      cv csm co vv cv cT cfv vu cv csm co cmv co chil wcel vu cv cT cfv vv cv
+      csm co vv cv cT cfv vu cv csm co cmv co cT cfv cc0 wceq wa wb cT nlelch.1
+      lnfnfi vu cv cT cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co cT
+      elnlfn ax-mp sylanbrc cT cnl cfv chil wss vu cv cT cfv vv cv csm co vv cv
+      cT cfv vu cv csm co cmv co cT cnl cfv wcel vu cv cT cnl cfv cort cfv wcel
+      wa vu cv cT cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co vu cv csp
+      co cc0 wceq wi cT cnl cfv cT nlelch.1 nlelch.2 nlelchi chssii vu cv cT
+      cfv vv cv csm co vv cv cT cfv vu cv csm co cmv co vu cv cT cnl cfv ocorth
+      ax-mp sylan ancoms anassrs eqtrd vu cv chil wcel vv cv chil wcel vu cv cT
+      cfv vv cv vu cv csp co cmul co vv cv cT cfv vu cv vu cv csp co cmul co
+      cmin co cc0 wceq vu cv cT cfv vv cv vu cv csp co cmul co vv cv cT cfv vu
+      cv vu cv csp co cmul co wceq wb vu cv cT cnl cfv cort cfv wcel vu cv chil
+      wcel vv cv chil wcel wa vu cv cT cfv vv cv vu cv csp co cmul co cc wcel
+      vv cv cT cfv vu cv vu cv csp co cmul co cc wcel vu cv cT cfv vv cv vu cv
+      csp co cmul co vv cv cT cfv vu cv vu cv csp co cmul co cmin co cc0 wceq
+      vu cv cT cfv vv cv vu cv csp co cmul co vv cv cT cfv vu cv vu cv csp co
+      cmul co wceq wb vu cv chil wcel vv cv chil wcel wa vu cv cT cfv vv cv vu
+      cv csp co vu cv chil wcel vu cv cT cfv cc wcel vv cv chil wcel chil cc vu
+      cv cT cT nlelch.1 lnfnfi ffvelrni adantr vv cv chil wcel vu cv chil wcel
+      vv cv vu cv csp co cc wcel vv cv vu cv hicl ancoms mulcld vv cv chil wcel
+      vv cv cT cfv cc wcel vu cv vu cv csp co cc wcel vv cv cT cfv vu cv vu cv
+      csp co cmul co cc wcel vu cv chil wcel chil cc vv cv cT cT nlelch.1
+      lnfnfi ffvelrni vu cv chil wcel vu cv vu cv csp co cc wcel vu cv vu cv
+      hicl anidms vv cv cT cfv vu cv vu cv csp co mulcl syl2anr vu cv cT cfv vv
+      cv vu cv csp co cmul co vv cv cT cfv vu cv vu cv csp co cmul co subeq0
+      syl2anc adantll mpbid adantlr vu cv chil wcel vu cv c0v wne vv cv chil
+      wcel vu cv cT cfv vv cv vu cv csp co cmul co vu cv vu cv csp co cdiv co
+      vv cv cT cfv wceq vu cv cT cfv vv cv vu cv csp co cmul co vv cv cT cfv vu
+      cv vu cv csp co cmul co wceq wb vu cv cT cnl cfv cort cfv wcel vu cv chil
+      wcel vu cv c0v wne wa vv cv chil wcel wa vu cv cT cfv vv cv vu cv csp co
+      cmul co cc wcel vv cv cT cfv cc wcel vu cv vu cv csp co cc wcel vu cv vu
+      cv csp co cc0 wne wa vu cv cT cfv vv cv vu cv csp co cmul co vu cv vu cv
+      csp co cdiv co vv cv cT cfv wceq vu cv cT cfv vv cv vu cv csp co cmul co
+      vv cv cT cfv vu cv vu cv csp co cmul co wceq wb vu cv chil wcel vv cv
+      chil wcel vu cv cT cfv vv cv vu cv csp co cmul co cc wcel vu cv c0v wne
+      vu cv chil wcel vv cv chil wcel wa vu cv cT cfv vv cv vu cv csp co vu cv
+      chil wcel vu cv cT cfv cc wcel vv cv chil wcel chil cc vu cv cT cT
+      nlelch.1 lnfnfi ffvelrni adantr vv cv chil wcel vu cv chil wcel vv cv vu
+      cv csp co cc wcel vv cv vu cv hicl ancoms mulcld adantlr vv cv chil wcel
+      vv cv cT cfv cc wcel vu cv chil wcel vu cv c0v wne wa chil cc vv cv cT cT
+      nlelch.1 lnfnfi ffvelrni adantl vu cv chil wcel vu cv c0v wne wa vu cv vu
+      cv csp co cc wcel vu cv vu cv csp co cc0 wne wa vv cv chil wcel vu cv
+      chil wcel vu cv c0v wne wa vu cv vu cv csp co cc wcel vu cv vu cv csp co
+      cc0 wne vu cv chil wcel vu cv vu cv csp co cc wcel vu cv c0v wne vu cv
+      chil wcel vu cv vu cv csp co cc wcel vu cv vu cv hicl anidms adantr vu cv
+      chil wcel vu cv vu cv csp co cc0 wne vu cv c0v wne vu cv chil wcel vu cv
+      vu cv csp co cc0 vu cv c0v vu cv his6 necon3bid biimpar jca adantr vu cv
+      cT cfv vv cv vu cv csp co cmul co vv cv cT cfv vu cv vu cv csp co divmul3
+      syl3anc adantlll mpbird vu cv chil wcel vu cv c0v wne vv cv chil wcel vu
+      cv cT cfv vv cv vu cv csp co cmul co vu cv vu cv csp co cdiv co vv cv vu
+      cv cT cfv vu cv vu cv csp co cdiv co ccj cfv vu cv csm co csp co wceq vu
+      cv cT cnl cfv cort cfv wcel vu cv chil wcel vu cv c0v wne wa vv cv chil
+      wcel wa vu cv cT cfv vv cv vu cv csp co cmul co vu cv vu cv csp co cdiv
+      co vu cv cT cfv vu cv vu cv csp co cdiv co vv cv vu cv csp co cmul co vv
+      cv vu cv cT cfv vu cv vu cv csp co cdiv co ccj cfv vu cv csm co csp co vu
+      cv chil wcel vu cv c0v wne wa vv cv chil wcel wa vu cv cT cfv cc wcel vv
+      cv vu cv csp co cc wcel vu cv vu cv csp co cc wcel vu cv vu cv csp co cc0
+      wne wa vu cv cT cfv vv cv vu cv csp co cmul co vu cv vu cv csp co cdiv co
+      vu cv cT cfv vu cv vu cv csp co cdiv co vv cv vu cv csp co cmul co wceq
+      vu cv chil wcel vu cv c0v wne wa vu cv cT cfv cc wcel vv cv chil wcel vu
+      cv chil wcel vu cv cT cfv cc wcel vu cv c0v wne chil cc vu cv cT cT
+      nlelch.1 lnfnfi ffvelrni adantr adantr vu cv chil wcel vv cv chil wcel vv
+      cv vu cv csp co cc wcel vu cv c0v wne vv cv chil wcel vu cv chil wcel vv
+      cv vu cv csp co cc wcel vv cv vu cv hicl ancoms adantlr vu cv chil wcel
+      vu cv c0v wne wa vu cv vu cv csp co cc wcel vu cv vu cv csp co cc0 wne wa
+      vv cv chil wcel vu cv chil wcel vu cv c0v wne wa vu cv vu cv csp co cc
+      wcel vu cv vu cv csp co cc0 wne vu cv chil wcel vu cv vu cv csp co cc
+      wcel vu cv c0v wne vu cv chil wcel vu cv vu cv csp co cc wcel vu cv vu cv
+      hicl anidms adantr vu cv chil wcel vu cv vu cv csp co cc0 wne vu cv c0v
+      wne vu cv chil wcel vu cv vu cv csp co cc0 vu cv c0v vu cv his6 necon3bid
+      biimpar jca adantr vu cv cT cfv vv cv vu cv csp co vu cv vu cv csp co
+      div23 syl3anc vu cv chil wcel vu cv c0v wne wa vv cv chil wcel wa vu cv
+      cT cfv vu cv vu cv csp co cdiv co cc wcel vv cv chil wcel vu cv chil wcel
+      vv cv vu cv cT cfv vu cv vu cv csp co cdiv co ccj cfv vu cv csm co csp co
+      vu cv cT cfv vu cv vu cv csp co cdiv co vv cv vu cv csp co cmul co wceq
+      vu cv chil wcel vu cv c0v wne wa vu cv cT cfv vu cv vu cv csp co cdiv co
+      cc wcel vv cv chil wcel vu cv chil wcel vu cv c0v wne wa vu cv cT cfv vu
+      cv vu cv csp co vu cv chil wcel vu cv cT cfv cc wcel vu cv c0v wne chil
+      cc vu cv cT cT nlelch.1 lnfnfi ffvelrni adantr vu cv chil wcel vu cv vu
+      cv csp co cc wcel vu cv c0v wne vu cv chil wcel vu cv vu cv csp co cc
+      wcel vu cv vu cv hicl anidms adantr vu cv chil wcel vu cv vu cv csp co
+      cc0 wne vu cv c0v wne vu cv chil wcel vu cv vu cv csp co cc0 vu cv c0v vu
+      cv his6 necon3bid biimpar divcld adantr vu cv chil wcel vu cv c0v wne wa
+      vv cv chil wcel simpr vu cv chil wcel vu cv c0v wne vv cv chil wcel
+      simpll vu cv cT cfv vu cv vu cv csp co cdiv co vv cv vu cv his52 syl3anc
+      eqtr4d adantlll eqtr3d ralrimiva vv cv cT cfv vv cv vw cv csp co wceq vv
+      chil wral vv cv cT cfv vv cv vu cv cT cfv vu cv vu cv csp co cdiv co ccj
+      cfv vu cv csm co csp co wceq vv chil wral vw vu cv cT cfv vu cv vu cv csp
+      co cdiv co ccj cfv vu cv csm co chil vw cv vu cv cT cfv vu cv vu cv csp
+      co cdiv co ccj cfv vu cv csm co wceq vv cv cT cfv vv cv vw cv csp co wceq
+      vv cv cT cfv vv cv vu cv cT cfv vu cv vu cv csp co cdiv co ccj cfv vu cv
+      csm co csp co wceq vv chil vw cv vu cv cT cfv vu cv vu cv csp co cdiv co
+      ccj cfv vu cv csm co wceq vv cv vw cv csp co vv cv vu cv cT cfv vu cv vu
+      cv csp co cdiv co ccj cfv vu cv csm co csp co vv cv cT cfv vw cv vu cv cT
+      cfv vu cv vu cv csp co cdiv co ccj cfv vu cv csm co vv cv csp oveq2
+      eqeq2d ralbidv rspcev syl2anc ex mpdan rexlimiv sylbi pm2.61ine $.)"
+},
+
+{
+R"(nlelch.1 nlelch.2 riesz3i vv cv cT cfv vv cv vw cv csp co wceq vv chil
+      wral vv cv cT cfv vv cv vu cv csp co wceq vv chil wral wa vw cv vu cv
+      wceq wi vw vu chil vv cv cT cfv vv cv vw cv csp co wceq vv chil wral vv
+      cv cT cfv vv cv vu cv csp co wceq vv chil wral wa vv cv vw cv csp co vv
+      cv vu cv csp co cmin co cc0 wceq vv chil wral vw cv chil wcel vu cv chil
+      wcel wa vw cv vu cv wceq vv cv cT cfv vv cv vw cv csp co wceq vv chil
+      wral vv cv cT cfv vv cv vu cv csp co wceq vv chil wral wa vv cv cT cfv vv
+      cv vw cv csp co wceq vv cv cT cfv vv cv vu cv csp co wceq wa vv chil wral
+      vv cv vw cv csp co vv cv vu cv csp co cmin co cc0 wceq vv chil wral vv cv
+      cT cfv vv cv vw cv csp co wceq vv cv cT cfv vv cv vu cv csp co wceq vv
+      chil r19.26 vv cv cT cfv vv cv vw cv csp co wceq vv cv cT cfv vv cv vu cv
+      csp co wceq wa vv cv vw cv csp co vv cv vu cv csp co cmin co cc0 wceq vv
+      chil vv cv chil wcel vv cv cT cfv vv cv vw cv csp co wceq vv cv cT cfv vv
+      cv vu cv csp co wceq wa wa vv cv cT cfv vv cv cT cfv cmin co vv cv vw cv
+      csp co vv cv vu cv csp co cmin co cc0 vv cv cT cfv vv cv vw cv csp co
+      wceq vv cv cT cfv vv cv vu cv csp co wceq wa vv cv cT cfv vv cv cT cfv
+      cmin co vv cv vw cv csp co vv cv vu cv csp co cmin co wceq vv cv chil
+      wcel vv cv cT cfv vv cv vw cv csp co vv cv cT cfv vv cv vu cv csp co cmin
+      oveq12 adantl vv cv chil wcel vv cv cT cfv vv cv cT cfv cmin co cc0 wceq
+      vv cv cT cfv vv cv vw cv csp co wceq vv cv cT cfv vv cv vu cv csp co wceq
+      wa vv cv chil wcel vv cv cT cfv chil cc vv cv cT cT nlelch.1 lnfnfi)",
+R"(riesz3.1 riesz3.2 riesz3i vv cv cT cfv vv cv vw cv csp co wceq vv chil
+      wral vv cv cT cfv vv cv vu cv csp co wceq vv chil wral wa vw cv vu cv
+      wceq wi vw vu chil vv cv cT cfv vv cv vw cv csp co wceq vv chil wral vv
+      cv cT cfv vv cv vu cv csp co wceq vv chil wral wa vv cv vw cv csp co vv
+      cv vu cv csp co cmin co cc0 wceq vv chil wral vw cv chil wcel vu cv chil
+      wcel wa vw cv vu cv wceq vv cv cT cfv vv cv vw cv csp co wceq vv chil
+      wral vv cv cT cfv vv cv vu cv csp co wceq vv chil wral wa vv cv cT cfv vv
+      cv vw cv csp co wceq vv cv cT cfv vv cv vu cv csp co wceq wa vv chil wral
+      vv cv vw cv csp co vv cv vu cv csp co cmin co cc0 wceq vv chil wral vv cv
+      cT cfv vv cv vw cv csp co wceq vv cv cT cfv vv cv vu cv csp co wceq vv
+      chil r19.26 vv cv cT cfv vv cv vw cv csp co wceq vv cv cT cfv vv cv vu cv
+      csp co wceq wa vv cv vw cv csp co vv cv vu cv csp co cmin co cc0 wceq vv
+      chil vv cv chil wcel vv cv cT cfv vv cv vw cv csp co wceq vv cv cT cfv vv
+      cv vu cv csp co wceq wa wa vv cv cT cfv vv cv cT cfv cmin co vv cv vw cv
+      csp co vv cv vu cv csp co cmin co cc0 vv cv cT cfv vv cv vw cv csp co
+      wceq vv cv cT cfv vv cv vu cv csp co wceq wa vv cv cT cfv vv cv cT cfv
+      cmin co vv cv vw cv csp co vv cv vu cv csp co cmin co wceq vv cv chil
+      wcel vv cv cT cfv vv cv vw cv csp co vv cv cT cfv vv cv vu cv csp co cmin
+      oveq12 adantl vv cv chil wcel vv cv cT cfv vv cv cT cfv cmin co cc0 wceq
+      vv cv cT cfv vv cv vw cv csp co wceq vv cv cT cfv vv cv vu cv csp co wceq
+      wa vv cv chil wcel vv cv cT cfv chil cc vv cv cT cT riesz3.1 lnfnfi)"
+},
+
+{
+R"(wa cC cB cbr cfv cfv cc wcel cD cbr cfv clf ccnfn cin wcel cC cB cbr cfv
+      cfv cD cbr cfv chft co cbr ccnv cfv cC cB cbr cfv cfv ccj cfv cD cbr cfv
+      cbr ccnv cfv csm co wceq cD chil wcel cB cC bracl cD bracnln cC cB cbr
+      cfv cfv cD cbr cfv cnvbramul syl2an cB chil wcel cC chil wcel wa cD chil
+      wcel cC cB cbr cfv cfv ccj cfv cC cB csp co ccj cfv cD cbr cfv cbr ccnv
+      cfv cD csm cB chil wcel cC chil wcel wa cC cB cbr cfv cfv cC cB csp co
+      ccj cB cC braval fveq2d cD cnvbrabra oveqan12d eqtr2d anasss cB chil wcel
+      cC chil wcel cD chil wcel wa wa cC cB cbr cfv cfv cD cbr cfv chft co cB
+      cbr cfv cC cD ck co ccom cbr ccnv cB chil wcel cC chil wcel cD chil wcel
+      cC cB cbr cfv cfv cD cbr cfv chft co cB cbr cfv cC cD ck co ccom wceq cB
+      cC cD kbass2 3expb fveq2d eqtr2d adantll oveq2d eqtr4d 3eqtrd $.
+      $( [10-Sep-2017] $))",
+R"(wa cC cB cbr cfv cfv cc wcel cD cbr cfv clf ccnfn cin wcel cC cB cbr cfv
+      cfv cD cbr cfv chft co cbr ccnv cfv cC cB cbr cfv cfv ccj cfv cD cbr cfv
+      cbr ccnv cfv csm co wceq cD chil wcel cB cC bracl cD bracnln cC cB cbr
+      cfv cfv cD cbr cfv cnvbramul syl2an cB chil wcel cC chil wcel wa cD chil
+      wcel cC cB cbr cfv cfv ccj cfv cC cB csp co ccj cfv cD cbr cfv cbr ccnv
+      cfv cD csm cB chil wcel cC chil wcel wa cC cB cbr cfv cfv cC cB csp co
+      ccj cB cC braval fveq2d cD cnvbrabra oveqan12d eqtr2d anasss cB chil wcel
+      cC chil wcel cD chil wcel wa wa cC cB cbr cfv cfv cD cbr cfv chft co cB
+      cbr cfv cC cD ck co ccom cbr ccnv cB chil wcel cC chil wcel cD chil wcel
+      cC cB cbr cfv cfv cD cbr cfv chft co cB cbr cfv cC cD ck co ccom wceq cB
+      cC cD kbass2 3expb fveq2d eqtr2d adantll oveq2d eqtr4d 3eqtrd $.
+      $( [10-Sep-2017] $)
+  $}
+)"
+},
+{
+R"($( Ordering relation for positive operators.  Definition of positive
+       operator ordering in [Kreyszig] p. 470.  (Contributed by NM,
+       23-Jul-2006.)  (New usage is discouraged.) $))",
+R"(
+  ${
+    $d x y z w A $.  $d x y B $.  $d x y C $.  $d x y D $.  $d x S $.
+    $d t u x y T $.  $d t u x U $.  $d t x y z $.
+    $( Ordering relation for positive operators.  Definition of positive
+       operator ordering in [Kreyszig] p. 470.  (Contributed by NM,
+       23-Jul-2006.)  (New usage is discouraged.) $))"
+},
+/*
+{
+R"(riesz4i $p |- E! w e. ~H A. v e. ~H ( T ` v ) = ( v .ih w ) $=
+      vv cv cT cfv vv cv vw cv csp co wceq vv chil wral vw chil wreu vv cv cT
+      cfv vv cv vw cv csp co wceq vv chil wral vw chil wrex vv cv cT cfv vv cv
+      vw cv csp co wceq vv chil wral vv cv cT cfv vv cv vu cv csp co wceq vv
+      chil wral wa vw cv vu cv wceq wi vu chil wral vw chil wral vw vv cT)",
+R"(riesz4i $p |- E! w e. ~H A. v e. ~H ( T ` v ) = ( v .ih w ) $=
+      vv cv cT cfv vv cv vw cv csp co wceq vv chil wral vw chil wreu vv cv cT
+      cfv vv cv vw cv csp co wceq vv chil wral vw chil wrex vv cv cT cfv vv cv
+      vw cv csp co wceq vv chil wral vv cv cT cfv vv cv vu cv csp co wceq vv
+      chil wral wa vw cv vu cv wceq wi vu chil wral vw chil wral vw vv cT)"
+},
+{
+R"(riesz4 $p |- ( T e. ( LinFn i^i ConFn ) ->
+                   E! w e. ~H A. v e. ~H ( T ` v ) = ( v .ih w ) ) $=
+      cT clf ccnfn cin wcel vv cv cT cfv vv cv vw cv csp co wceq vv chil wral
+      vw chil wreu vv cv cT clf ccnfn cin wcel cT chil cc0 csn cxp cif cfv vv
+      cv vw cv csp co wceq vv chil wral vw chil wreu cT chil cc0 csn cxp cT cT
+      clf ccnfn cin wcel cT chil cc0 csn cxp cif wceq vv cv cT cfv vv cv vw cv
+      csp co wceq vv chil wral vv cv cT clf ccnfn cin wcel cT chil cc0 csn cxp)",
+R"(riesz4 $p |- ( T e. ( LinFn i^i ConFn ) ->
+                   E! w e. ~H A. v e. ~H ( T ` v ) = ( v .ih w ) ) $=
+      vv cv cT clf ccnfn cin wcel cT chil cc0 csn cxp cif cfv vv
+      cv vw cv csp co wceq vv chil wral vw chil wreu cT chil cc0 csn cxp cT cT
+      clf ccnfn cin wcel cT chil cc0 csn cxp cif wceq vv cv cT cfv vv cv vw cv
+      csp co wceq vv chil wral vv cv cT clf ccnfn cin wcel cT chil cc0 csn cxp)"
+},
+*/
+{
+R"(riesz1 $p |- ( T e. LinFn -> ( ( normfn ` T ) e. RR <->
+                  E. y e. ~H A. x e. ~H ( T ` x ) = ( x .ih y ) ) ) $=
+      cT clf wcel cT ccnfn wcel cT cnmf cfv cr wcel vx cv cT cfv vx cv vy cv
+      csp co wceq vx chil wral vy chil wrex cT lnfncnbd cT clf wcel cT ccnfn
+      wcel vx cv cT cfv vx cv vy cv csp co wceq vx chil wral vy chil wrex cT
+      clf wcel cT ccnfn wcel vx cv cT cfv vx cv vy cv csp co wceq vx chil wral
+      vy chil wrex cT clf wcel cT ccnfn wcel wa cT clf ccnfn cin wcel vx cv cT
+      cfv vx cv vy cv csp co wceq vx chil wral vy chil wrex cT clf ccnfn elin
+      cT clf ccnfn cin wcel vx cv cT cfv vx cv vy cv csp co wceq vx chil wral)",
+R"(riesz1 $p |- ( T e. LinFn -> ( ( normfn ` T ) e. RR <->
+                  E. y e. ~H A. x e. ~H ( T ` x ) = ( x .ih y ) ) ) $=
+      cT clf wcel cT ccnfn wcel cT cnmf cfv cr wcel vx cv cT cfv vx cv vy cv
+      csp co wceq vx chil wral vy chil wrex cT lnfncnbd cT clf wcel cT ccnfn
+      wcel vx cv cT cfv vx cv vy cv csp co wceq vx chil wral vy chil wrex cT
+      clf wcel cT ccnfn wcel vx cv cT cfv vx cv vy cv csp co wceq vx chil wral
+      vy chil wrex cT clf wcel cT ccnfn wcel wa cT clf ccnfn cin wcel vx cv cT
+      cfv vx cv vy cv csp co wceq vx chil wral vy chil wrex cT clf ccnfn elin
+      cT clf ccnfn cin wcel vx cv cT cfv vx cv vy cv csp co wceq vx chil wral)"
 }
+
 };
 
 Section* parse(const Path& in, const Path& out) {

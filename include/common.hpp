@@ -422,12 +422,29 @@ struct Ref {
 
 	Ref() : count_(0), ptr(nullptr) { }
 	void add_ref (const Tokenable_* p) {
-		if (count_ && p != ptr) throw Error("incorrect ref assignment");
+		if (count_ && p != ptr) {
+			cout << p->token.str() << endl;
+			cout << p->token.beg() << endl;
+			cout << (int)(p->token.end() - p->token.beg()) << endl;
+			cout << p->token.src()->data<< endl;
+
+			string err = "incorrect ref assignment:\n";
+			err += "count: " + to_string(count_) + "\n";
+			err += "p: " + p->token.show(true) + "\n";
+			err += "ptr: " + ptr->token.show(true) + "\n";
+			throw Error(err);
+		}
 		ptr = p;
 		++ count_;
 	}
 	bool del_ref() {
-		if (!count_) throw Error("incorrect ref deletion");
+		if (!count_) {
+			string err;
+			err += "incorrect ref deletion: \n";
+			err += "count: " + to_string(count_) + "\n";
+			err += "ptr: " + (ptr ? ptr->token.show(true) : "null") + "\n";
+			throw Error(err);
+		}
 		return --count_ == 0;
 	}
 	const Tokenable_* get() { return ptr; }
@@ -450,10 +467,20 @@ class Refs {
 public:
 
 	static void add(const Token_& t, const Tokenable_* r) {
-		if (t.is_defined()) refs()[t].add_ref(r);
+		try {
+			if (t.is_defined()) refs()[t].add_ref(r);
+		} catch (Error& err) {
+			err.msg += "token: " + t.show(true) + "\n";
+			throw err;
+		}
 	}
 	static void del(const Token_& t) {
-		if (t.is_defined() && refs()[t].del_ref()) refs().erase(t);
+		try {
+			if (t.is_defined() && refs()[t].del_ref()) refs().erase(t);
+		} catch (Error& err) {
+			err.msg += "token: " + t.show(true) + "\n";
+			throw err;
+		}
 	}
 	static const Tokenable_* find(uint src, const uint line, const uint col) {
 		Src* s = Sys::mod().math.template get<Src>().access(src);

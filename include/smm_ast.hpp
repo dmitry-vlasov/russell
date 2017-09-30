@@ -87,6 +87,16 @@ struct Ref {
 	void operator=(const Ref&) = delete;
 
 	Type type() const { return type_; }
+	static string showType(Type t) {
+		switch (t) {
+		case Ref::ESSENTIAL: return "e";
+		case Ref::FLOATING : return "f";
+		case Ref::INNER    : return "i";
+		case Ref::AXIOM    : return "a";
+		case Ref::THEOREM  : return "p";
+		default : assert(false && "impossible"); return "";
+		}
+	}
 	bool is_assertion() const { return type_ == THEOREM || type_ == AXIOM; }
 	Floating*  flo() { return val_.flo; }
 	Essential* ess() { return val_.ess; }
