@@ -118,7 +118,7 @@ private :
 	}
 };
 
-enum class TokenType { FULL, SEMI, NONE, DEFAULT = FULL };
+enum class TokenType { FULL, SEMI, NONE, DEFAULT = SEMI };
 template<class S, TokenType T = TokenType::DEFAULT> class TokenStorage;
 
 template<class S>
@@ -160,94 +160,100 @@ struct TokenStorage<S, TokenType::NONE> {
 template<class S>
 struct TokenStorage<S, TokenType::SEMI> {
 	typedef S Source;
-	TokenStorage() {
-		sys_ = UNDEF_SRC;
-		src_ = UNDEF_SRC;
-		beg_ = UNDEF_PTR;
-		end_ = UNDEF_PTR;
-	}
-	TokenStorage(Source* s) {
-		set_src(s);
-		beg_ = UNDEF_PTR;
-		end_ = UNDEF_PTR;
-	}
-	TokenStorage(Source* s, const char* b, const char* e) : TokenStorage(s) {
-		set(s, b, e);
-	}
+	TokenStorage() { }
+	TokenStorage(Source* s) { bits.setSrc(set_src(s)); }
+	TokenStorage(Source* s, const char* b, const char* e) { set(s, b, e); }
 
 	Source* src() {
-		return
-			src_ == UNDEF_SRC ?
-			nullptr :
-			Source::Sys::mod(sys_).math.template get<Source>().access(get_src());
+		if (!bits.srcIsDef()) return nullptr;
+		Src src = get_src();
+		return Source::Sys::mod(src.sys_).math.template get<Source>().access(src.src_);
 	}
 	const Source* src() const {
-		return
-			src_ == UNDEF_SRC ?
-			nullptr :
-			Source::Sys::get(sys_).math.template get<Source>().access(get_src());
+		if (!bits.srcIsDef()) return nullptr;
+		Src src = get_src();
+		return Source::Sys::get(src.sys_).math.template get<Source>().access(src.src_);
 	}
 	const char* beg() const {
-		return
-			src() ?
-			(beg_ == UNDEF_PTR ? nullptr : src()->data.c_str() + beg_) :
-			nullptr;
+		return src() ? (bits.begIsDef() ? src()->data().c_str() + bits.beg() : nullptr) : nullptr;
 	}
 	const char* end() const {
-		return
-			src() ?
-			(end_ == UNDEF_PTR ? nullptr : src()->data.c_str() + end_) :
-			nullptr;
+		return src() ? (bits.endIsDef() ? src()->data().c_str() + bits.end() : nullptr) : nullptr;
 	}
 	void set(Source* s, const char* b, const char* e) {
-		set_src(s);
-		beg_ = b - s->data.c_str();
-		end_ = e - s->data.c_str();
-		if (!(s == src() && b == beg() && e == end())) {
-			cerr << "DON'T MATCH: " << endl;
-			exit(1);
+		uint src = set_src(s);
+		assert(b > s->data().c_str());
+		assert(e > s->data().c_str());
+		ptrdiff_t beg = b - s->data().c_str();
+		ptrdiff_t end = e - s->data().c_str();
+		if (beg < 0 || end < 0) {
+			throw std::length_error("source position can't be less then zero");
 		}
-		cout << string(beg(), end_ - beg_) << endl;
+		bits.set(src, beg, end);
 	}
 
 private:
-	enum {
-		//UNDEF_SRC = 0xFFFF,
-		//UNDEF_PTR = 0xFFFFFF
-		UNDEF_SRC = -1, //0xFFFFFFFF,
-		UNDEF_PTR = -1 //0xFFFFFFFF
-	};
-	uint get_src() const {
-		return src_;
-		//assert(inds().count(src_));
-		//return inds()[src_];
-	}
-	void set_src(Source* s) {
-		if (s->id() > 0xFFFF) {
-			cerr << " FUUUUCK! " << s->id() << endl;
-			throw std::exception();
+	struct Src {
+		uint src_;
+		uint sys_;
+		bool operator < (const Src& ss) const {
+			if (sys_ < ss.sys_) return true;
+			else if (sys_ == ss.sys_) return src_ < ss.src_;
+			else return false;
 		}
-		src_ = s->id();
-		sys_ = s->sys();
-		/*if (srcs().count(id)) {
-			src_ = srcs().at(id);
-		} else {
-			src_ = srcs().size();
-			inds().push_back(id);
-			srcs()[id] = src_;
-		}*/
+	};
+
+	Src get_src() const {
+		assert(src_ind(bits.src()));
+		return src_ind()[bits.src()];
 	}
-	//static map<uint, uint>& srcs() { static map<uint, uint> m; return m; }
-	//static vector<uint>& inds() { static vector<uint> m; return m; }
-	//uint src_:16;
-	//uint beg_:24;
-	//uint end_:24;
+	uint set_src(Source* s) {
+		Src src = Src{s->id(), s->sys()};
+		if (src_map().count(src)) {
+			return src_map().at(src);
+		} else {
+			uint ret = src_map().size();
+			src_ind().push_back(src);
+			src_map()[src] = ret;
+			return ret;
+		}
+	}
+	static map<Src, uint>& src_map() { static map<Src, uint> m; return m; }
+	static vector<Src>& src_ind() { static vector<Src> v; return v; }
 
+	struct Bits {
+		Bits() : bits(UNDEF_ALL) {}
+		uint src() const { return bits & SRC_MASK; }
+		uint beg() const { return (bits & BEG_MASK) >> 16; }
+		uint end() const { return (bits & END_MASK) >> (16 + 24) ; }
 
-	int sys_;
-	int src_;
-	int beg_;
-	int end_;
+		uint srcIsDef() const { return bits & SRC_MASK != UNDEF_SRC; }
+		uint begIsDef() const { return (bits & BEG_MASK) >> 16 != UNDEF_PTR; }
+		uint endIsDef() const { return (bits & END_MASK) >> (16 + 24) != UNDEF_PTR; }
+
+		void set(uint s, uint b, uint e) {
+			if (s >= UNDEF_SRC)
+				throw std::overflow_error("number of sources overflow: don't fit into 16 bit unsigned integer");
+			if (b >= UNDEF_PTR)
+				throw std::overflow_error("source position don't fit into 24 bit unsigned integer");
+			bits = s + ((uint64_t)b << 16) + ((uint64_t)e << (16 + 24));
+		}
+		void setSrc(uint s) {
+			set(s, UNDEF_PTR, UNDEF_PTR);
+		}
+	private:
+		enum {
+			UNDEF_ALL = (uint64_t)0xFFFFFFFFFFFFFFFF,    // 64 bits
+			UNDEF_SRC = (uint64_t)0xFFFF,                // 16 bits
+			UNDEF_PTR = (uint64_t)0xFFFFFF,              // 24 bits
+			SRC_MASK  = (uint64_t)0xFFFF,                // first 16 bits
+			BEG_MASK  = (uint64_t)0xFFFFFF << 16,        // following 24 bits
+			END_MASK  = (uint64_t)0xFFFFFF << (16 + 24), // following 24 bits
+		};
+		std::uint64_t bits;
+	};
+
+	Bits bits;
 };
 
 
@@ -275,7 +281,7 @@ struct Token {
 		if (!src()) return "unknown source";
 		if (!beg()) return "unknown begin";
 		if (!end()) return "unknown end_";
-		LocationIter b (src()->data.begin(), src()->id());
+		LocationIter b (src()->data().begin(), src()->id());
 		LocationIter e (string::const_iterator(beg()), src()->id());
 		LocationIter x = b;
 		while (x != e) ++x;
@@ -288,7 +294,7 @@ struct Token {
 			Source::Sys::conf(src()->sys()).get("root")
 		);
 		const char* mid = beg() + length() / 2;
-		const char* s = src()->data.c_str();
+		const char* s = src()->data().c_str();
 		while (s) {
 			if (*s++ == '\n') { ++loc.line; loc.col = 0; } else ++loc.col;
 			if (s == mid) return loc;

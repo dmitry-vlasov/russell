@@ -423,11 +423,6 @@ struct Ref {
 	Ref() : count_(0), ptr(nullptr) { }
 	void add_ref (const Tokenable_* p) {
 		if (count_ && p != ptr) {
-			cout << p->token.str() << endl;
-			cout << p->token.beg() << endl;
-			cout << (int)(p->token.end() - p->token.beg()) << endl;
-			cout << p->token.src()->data<< endl;
-
 			string err = "incorrect ref assignment:\n";
 			err += "count: " + to_string(count_) + "\n";
 			err += "p: " + p->token.show(true) + "\n";
@@ -484,7 +479,7 @@ public:
 	}
 	static const Tokenable_* find(uint src, const uint line, const uint col) {
 		Src* s = Sys::mod().math.template get<Src>().access(src);
-		const char* c = locate_position(line, col, s->data.c_str());
+		const char* c = locate_position(line, col, s->data().c_str());
 		Token_ t(s, c, c);
 		return refs().count(t) ? refs().at(t).get() : nullptr;
 	}
@@ -574,14 +569,15 @@ struct Source : public Owner<Src, Sys> {
 	Source(uint l) : Owner<Src, Sys>(l, Token<Src>()) { }
 	virtual ~Source() { }
 
-	string data;
+	const string& data() { return data_; }
+	const string& data() const { return data_; }
 
 	Path path() const { return Path(name(), Sys::conf().get("root"), Sys::ext()); }
 	string name() const { return Lex::toStr(Owner_::id()); }
 	string dir() const { return path().dir(); }
 
-	void read() { path().read(data); }
-	void write() const { path().write(data); }
+	void read(const vector<Patch>* patches = nullptr) { path().read(data_, patches); }
+	void write() const { path().write(data_); }
 
 	// Transitively closed inclusion relation:
 	set<User_> includes;
@@ -601,6 +597,9 @@ struct Source : public Owner<Src, Sys> {
 			}
 		}
 	}
+
+private:
+	string data_;
 };
 
 Return execute_command(const string& command);

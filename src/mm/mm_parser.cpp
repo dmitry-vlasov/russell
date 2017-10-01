@@ -184,7 +184,6 @@ public:
 		parser["SOURCE"].enter = [label](peg::any& context) {
 			Context& c = *context.get<Context*>();
 			c.src_enter = true;
-			c.source_stack.push(new Source(label));
 		};
 		parser["INCLUDE"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
@@ -215,14 +214,13 @@ public:
 private:
 	static Source* parse(uint label, Context* context) {
 		Path path(Lex::toStr(label), Sys::conf().get("root"), "mm");
-		string data;
-		path.read(data, &const_patches);
+		Source* src = new Source(label);
+		context->source_stack.push(src);
+		src->read(&const_patches);
 		Parser p(label);
-		mdl::mm::Source* src = nullptr;
 		peg::any c(context);
-		if (!p.parser.parse<mdl::mm::Source*>(data.c_str(), c, src))
+		if (!p.parser.parse<mdl::mm::Source*>(src->data().c_str(), c, src))
 			throw Error("parsing failed", path.path());
-		std::swap(data, src->data);
 		return src;
 	}
 	static void markVars(Vect& expr, const vector<Scope>& stack) {

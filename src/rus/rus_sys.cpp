@@ -120,7 +120,7 @@ Return test(string mode) {
 
 Return prove_start(uint src, uint line, uint col, string mode, string tact) {
 	Source* s = Sys::mod().math.get<Source>().access(src);
-	const char* c = locate_position(line, col, s->data.c_str());
+	const char* c = locate_position(line, col, s->data().c_str());
 	Tokenable* t = s->find(Token(s, c, c));
 	if (Qed* qed = dynamic_cast<Qed*>(t)) {
 		prover::Tactic* tactic = prover::make_tactic(tact);

@@ -238,10 +238,12 @@ public:
 			}
 			return node;
 		};
+		/*
 		parser["SOURCE"].enter = [label](peg::any& context) {
 			Context& c = *context.get<Context*>();
 			c.source = new Source(label);
 		};
+		*/
 		parser["SOURCE"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
 			c.source->contents = sv.transform<Node>();
@@ -264,16 +266,14 @@ public:
 
 	static Source* parse(uint label) {
 		Path path(Lex::toStr(label), Sys::conf().get("root"), "smm");
-		string data;
-		path.read(data);
-		Source* src = nullptr;
-		Parser p(label);
 		Context* context = new Context();
+		context->source = new Source(label);
+		context->source->read();
+		Parser p(label);
 		peg::any c(context);
-		if (!p.parser.parse<Source*>(data.c_str(), c, src)) return nullptr;
-		std::swap(data, src->data);
+		if (!p.parser.parse<Source*>(context->source->data().c_str(), c, context->source)) return nullptr;;
 		delete context;
-		return src;
+		return context->source;
 	}
 
 private:

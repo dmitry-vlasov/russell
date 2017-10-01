@@ -115,7 +115,7 @@ size_t memvol(const Theory& th) {
 }
 size_t memvol(const Source& src) {
 	size_t s = 0;
-	s += src.data.capacity() * sizeof(char);
+	s += src.data().capacity() * sizeof(char);
 	if (src.theory)
 		s += memsize(*src.theory);
 	return s;

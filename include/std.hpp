@@ -16,6 +16,7 @@
 //#include <variant>
 #include <algorithm>
 #include <exception>
+#include <stdexcept>
 #include <ostream>
 #include <iostream>
 #include <iomanip>
