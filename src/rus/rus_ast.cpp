@@ -176,7 +176,7 @@ Tokenable* find(Node& n, const Token& t) {
 }
 
 Source::Source(uint label) :
-	mdl::Source<Source, Sys>(label), theory() { }
+	mdl::Source<Source, Sys>(label), theory(nullptr) { }
 Source::~Source() {
 	if (theory) delete theory;
 }

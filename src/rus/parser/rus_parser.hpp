@@ -4,7 +4,7 @@
 
 namespace mdl { namespace rus {
 
-Source* parse(uint);
+void parse(uint);
 
 namespace parser {
 

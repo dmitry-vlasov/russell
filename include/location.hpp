@@ -163,6 +163,7 @@ struct TokenStorage<S, TokenType::SEMI> {
 	TokenStorage() { }
 	TokenStorage(Source* s) { bits.setSrc(set_src(s)); }
 	TokenStorage(Source* s, const char* b, const char* e) { set(s, b, e); }
+	TokenStorage(const TokenStorage& s) : bits(s.bits) { }
 
 	Source* src() {
 		if (!bits.srcIsDef()) return nullptr;
@@ -181,15 +182,33 @@ struct TokenStorage<S, TokenType::SEMI> {
 		return src() ? (bits.endIsDef() ? src()->data().c_str() + bits.end() : nullptr) : nullptr;
 	}
 	void set(Source* s, const char* b, const char* e) {
-		uint src = set_src(s);
-		assert(b > s->data().c_str());
+		uint src_ = set_src(s);
+		assert(b >= s->data().c_str());
 		assert(e > s->data().c_str());
-		ptrdiff_t beg = b - s->data().c_str();
-		ptrdiff_t end = e - s->data().c_str();
-		if (beg < 0 || end < 0) {
+		ptrdiff_t beg_ = b - s->data().c_str();
+		ptrdiff_t end_ = e - s->data().c_str();
+		if (beg_ < 0 || end_ < 0) {
 			throw std::length_error("source position can't be less then zero");
 		}
-		bits.set(src, beg, end);
+		bits.set(src_, beg_, end_);
+		if (s != src()) {
+			cerr << "wrong src: " << (void*)s << " != " << (void*)src() << endl;
+			throw std::exception();
+		}
+		if (b != beg()) {
+			cerr << "wrong beg: " << b << " != " << beg() << endl;
+			throw std::exception();
+		}
+		if (e != end()) {
+			cerr << "wrong end: " << e << " != " << end() << endl;
+			throw std::exception();
+		}
+	}
+	void operator = (const TokenStorage& s) {
+		bits = s.bits;
+	}
+	bool operator < (const TokenStorage<S>& t) const {
+		return bits < t.bits;
 	}
 
 private:
@@ -204,7 +223,7 @@ private:
 	};
 
 	Src get_src() const {
-		assert(src_ind(bits.src()));
+		assert(src_ind()[bits.src()].src_ != -1);
 		return src_ind()[bits.src()];
 	}
 	uint set_src(Source* s) {
@@ -223,13 +242,15 @@ private:
 
 	struct Bits {
 		Bits() : bits(UNDEF_ALL) {}
+		Bits(const Bits& b) : bits(b.bits) { }
+
 		uint src() const { return bits & SRC_MASK; }
 		uint beg() const { return (bits & BEG_MASK) >> 16; }
 		uint end() const { return (bits & END_MASK) >> (16 + 24) ; }
 
-		uint srcIsDef() const { return bits & SRC_MASK != UNDEF_SRC; }
-		uint begIsDef() const { return (bits & BEG_MASK) >> 16 != UNDEF_PTR; }
-		uint endIsDef() const { return (bits & END_MASK) >> (16 + 24) != UNDEF_PTR; }
+		bool srcIsDef() const { return (bits & SRC_MASK) != UNDEF_SRC; }
+		bool begIsDef() const { return ((bits & BEG_MASK) >> 16) != UNDEF_PTR; }
+		bool endIsDef() const { return ((bits & END_MASK) >> (16 + 24)) != UNDEF_PTR; }
 
 		void set(uint s, uint b, uint e) {
 			if (s >= UNDEF_SRC)
@@ -241,6 +262,13 @@ private:
 		void setSrc(uint s) {
 			set(s, UNDEF_PTR, UNDEF_PTR);
 		}
+		void operator = (const Bits& b) {
+			bits = b.bits;
+		}
+		bool operator < (const Bits& b) const {
+			return bits < b.bits;
+		}
+
 	private:
 		enum {
 			UNDEF_ALL = (uint64_t)0xFFFFFFFFFFFFFFFF,    // 64 bits
@@ -263,12 +291,12 @@ struct Token {
 
 	Token() { }
 	Token(Source* s) : storage(s) { }
-	Token(Source* s, const char* b, const char* e) :
-	storage(s, b, e) { }
+	Token(Source* s, const char* b, const char* e) : storage(s, b, e) { }
+	Token(const Token& t) : storage(t.storage) { }
 
 	bool preceeds (const Token<S>& t) {
-		if (!src() || !t.src() || t.src() != src()) return false;
-		if (t.src()->includes.count(src())) return true;
+		if (!src() || !t.src()) return false;
+		if (t.src()->includes().count(src())) return true;
 		if (t.src() == src()) return end() <= t.beg();
 		return false;
 	}
@@ -306,7 +334,12 @@ struct Token {
 	operator bool() const { return is_defined(); }
 	string str() const { return string(beg(), length()); }
 	uint length() const { return beg() <= end() ? end() - beg() : 0; }
-	bool operator < (const Token<S>& r) const { return end() <= r.beg(); }
+	bool operator < (const Token<S>& r) const {
+		return storage < r.storage;
+	}
+	void operator = (const Token& t) {
+		storage = t.storage;
+	}
 
 	void set(Source* s, const char* b, const char* e) { storage.set(s, b, e); }
 	Source* src() { return storage.src(); }

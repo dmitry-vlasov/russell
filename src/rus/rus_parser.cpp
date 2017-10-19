@@ -6,68 +6,90 @@ namespace mdl { namespace rus {
 struct Parser {
 private:
 	struct Stacks {
-		vector<Vars>     vars;
-		vector<Proof*>   proofs;
-		map<uint, Type*> typing;
 		void pushVars() {
 			vars.push_back(Vars());
 		}
 		void popVars() {
 			Vars& vs = vars.back();
 			for (auto v : vs.v) typing.erase(v.lit);
-			vs.pop_back();
+			vars.pop_back();
 		}
 		void addVar(Symbol v) {
 			vars.back().v.push_back(v);
-			typing[v.lit] = v.type;
+			typing[v.lit] = v.type();
 		}
 		Type* type(uint v) const {
-			if (!typing.count(v)) throw Error("unknown type", Lex::getStr(v));
+			if (!typing.count(v)) throw Error("unknown type", Lex::toStr(v));
 			return typing.at(v);
 		}
 		void markType(Symbol& s) const {
-			if (typing.count(s.lit)) s.type = typing.at(s.lit);
+			if (typing.count(s.lit)) s.set_type(typing.at(s.lit));
+			else s.set_const(Sys::mod().math.get<Const>().access(s.lit));
 		}
+		Symbol makeSymb(uint lit, bool strict, const Token& token) const {
+			Symbol s(lit);
+			if (typing.count(lit)) {
+				s.set_type(typing.at(s.lit));
+			} else if (Sys::mod().math.get<Const>().access(s.lit)) {
+				s.set_const(Sys::mod().math.get<Const>().access(s.lit));
+			} else if (strict) {
+				throw Error("symbol is not a constant nor variable", Lex::toStr(lit));
+			}
+			return s;
+		}
+	private:
+		vector<Vars>     vars;
+		vector<Proof*>   proofs;
+		map<uint, Type*> typing;
 	};
 	struct Context {
-		Context() : ind(0), stacks(), source(nullptr) { }
+		Context() : ind(0), stacks(), theory(nullptr), source(nullptr) { }
 		uint    ind;
 		Stacks  stacks;
 		Id      type;
+		Theory* theory;
 		Source* source;
 		Token token(const peg::SemanticValues& sv) const {
 			return Token(source, sv.c_str(), sv.c_str() + sv.length());
 		}
 	};
-	peg::parser parser;
+	static peg::parser& parser() { static peg::parser p(rus_syntax()); return p; }
 
 public:
-	static const char* run_syntax() {
+	static const char* rus_syntax() {
 		return R"(
 			# Russell grammar
 		
             SOURCE   <- ELEMENT*
-			ELEMENT  <- COMMENT / IMPORT / CONST / TYPE / RULE / AXIOM / DEF / THEOREM / PROOF
+            THEORY   <- TH_DECL '{' ELEMENT* '}'
+            TH_DECL  <- 'theory' ID_NAME 
+			ELEMENT  <- COMMENT / IMPORT / CONST / TYPE / RULE / AXIOM / DEF / THEOREM / PROOF / THEORY
  
 			IMPORT   <- 'import' PATH ';;'
-			CONST    <- 'constant' '{' 'symbol' SYMB ';;' ('ascii' SYMB ';;')? ('latex' SYMB ';;')? '}'
+			CONST    <- 'constant' '{' 'symbol' ID_NAME ';;' ('ascii' ID_NAME ';;' ('latex' ID_NAME ';;')?)? '}'
 			SUPERS   <- ':' ID_REF (',' ID_REF)*
 
 			TYPE     <- 'type'       ID_NAME SUPERS ';;' 
-			RULE     <- 'rule'       ID_NAME '(' VARS ')'      '{' TERM '}'
+			RULE     <- 'rule'       ID_NAME '(' VARS ')'      '{' 'term' TERM '}'
 			AXIOM    <- 'axiom'      ID_NAME '(' VARS ')' DISJ '{' (HYP+ BAR)? PROP '}'
 			THEOREM  <- 'theorem'    ID_NAME '(' VARS ')'      '{' (HYP+ BAR)? PROP '}'
-			DEF      <- 'definition' ID_NAME '(' VARS ')' DISJ '{' HYP* DEF_M DEF_S BAR PROP '}'
-			PROOF    <- 'proof'      ID_NAME? 'of' ID_REF '{' PROOF_BD '}'
+			DEF      <- 'definition' ID_NAME '(' VARS ')' DISJ '{'  HYP* DEF_M DEF_S BAR DEF_P '}'
+			PROOF    <- 'proof'      ID_NAME? 'of' ID_REF '{' PROOF_BODY '}'
 
-			TERM_    <- 'term'      ':' ID_REF '=' '#'  EXPR ';;' 
-			DEF_M    <- 'defiendum' ':' ID_REF '=' '#'  EXPR ';;' 
-			DEF_S    <- 'definiens' ':' ID_REF '=' '#'  EXPR ';;' 
-			HYP      <- 'hyp'  IND  ':' ID_REF '=' '|-' EXPR ';;' 
-			PROP     <- 'prop' IND  ':' ID_REF '=' '|-' EXPR ';;' 
+            TERM     <- 'term'      EX_TERM
+			DEF_M    <- 'defiendum' EX_TERM 
+			DEF_S    <- 'definiens' EX_TERM
+            DEF_P    <- 'prop'      EX_PLAIN 
+			HYP      <- 'hyp'  IND  EX_STAT
+			PROP     <- 'prop' IND  EX_STAT 
 
-			PROOF_BD <- PROOF_EL+
-			PROOF_EL <- VAR_DECL / STEP / QED
+            EX_TERM  <- ':' ID_REF '=' '#'  SYMBS_TYPED ';;'
+            EX_STAT  <- ':' ID_REF '=' '|-' SYMBS_TYPED ';;'
+            EX_PLAIN <- ':' ID_REF '=' '|-' SYMBS_PLAIN ';;' 
+
+			PROOF_BODY <- PROOF_ELEM+
+			PROOF_ELEM <- VAR_DECL / STEP / QED
+
 			DISJ     <- 'disjointed' '(' DISJ_SET (',' DISJ_SET)* ')'
 			DISJ_SET <- ID_REF+
 
@@ -81,13 +103,15 @@ public:
 			VAR      <- SYMB : ID_REF
             BAR      <- '-----' '-'*
 
-			EXPR <- (SYMB / COMMENT)+
+			SYMBS_TYPED <- (SYMB_TYPED / COMMENT)+
+            SYMBS_PLAIN <- (SYMB_PLAIN / COMMENT)+
 
-			SYMB     <- < (![ \t\r\n$] .)+ >
-			ID_REF   <- < (![,(=;:{ \t\r\n$] .)+ >
-			ID_NAME  <- < (![,(=;:{ \t\r\n$] .)+ >
-			PATH     <- < (![ \t\r\n$] .)+ >
-			IND      <- < [0-9]+ >
+			SYMB_TYPED <- < (![ \t\r\n$] .)+ >
+            SYMB_PLAIN <- < (![ \t\r\n$] .)+ >
+			ID_REF     <- < (![,(=;:{ \t\r\n$] .)+ >
+			ID_NAME    <- < (![,(=;:{ \t\r\n$] .)+ >
+			PATH       <- < (![ \t\r\n$] .)+ >
+			IND        <- < [0-9]+ >
 			COMMENT    <- COMMENT_ML / COMMENT_SL 
 			COMMENT_ML <- '/*' < (!'*/' .)* > '*/'
 			COMMENT_SL <- '//' < (![\n$] .)+ >
@@ -95,122 +119,137 @@ public:
 			%whitespace <- [ \t\r\n]*
 		)";
 	}
-	Parser(const Path& path) : parser(mm_syntax()) {
+	Parser(uint src) {
 
-		parser["SYMB"] = [](const peg::SemanticValues& sv) {
-			return Symbol(Lex::toInt(sv.token()));
+		parser()["SYMB_TYPED"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			return c->stacks.makeSymb(Lex::toInt(sv.token()), true, c->token(sv));
 		};
-		parser["ID_NAME"] = [](const peg::SemanticValues& sv) {
+		parser()["SYMB_PLAIN"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			return c->stacks.makeSymb(Lex::toInt(sv.token()), false, c->token(sv));
+		};
+		parser()["ID_NAME"] = [](const peg::SemanticValues& sv) {
 			return Lex::toInt(sv.token());
 		};
-		parser["ID_REF"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+		parser()["ID_REF"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
 			return Id(Lex::toInt(sv.token()), c->token(sv));
 		};
-		parser["IND"] = [](const peg::SemanticValues& sv) {
+		parser()["IND"] = [](const peg::SemanticValues& sv) {
 			return (uint)std::stoul(sv.token());
 		};
-		parser["PATH"] = [](const peg::SemanticValues& sv) {
-			return Lex::toInt(sv.token());
+		parser()["PATH"] = [](const peg::SemanticValues& sv) {
+			return Sys::make_name(sv.token());
 		};
-		parser["EXPR"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+		parser()["SYMBS_TYPED"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
 			vector<Symbol> vect(sv.size());
 			for (auto& s : sv) {
-				if (s.is<Symbol>()) vect.push_back(s);
+				if (s.is<Symbol>()) vect.emplace_back(s.get<Symbol>());
 				else delete s.get<Comment*>();
 			}
 			return vect;
 		};
-		parser["VARS"] = [](const peg::SemanticValues& sv) {
+		parser()["SYMBS_PLAIN"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			vector<Symbol> vect(sv.size());
+			for (auto& s : sv) {
+				if (s.is<Symbol>()) vect.emplace_back(s.get<Symbol>());
+				else delete s.get<Comment*>();
+			}
+			return vect;
+		};
+		parser()["EX_TERM"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			return Expr(sv[0].get<Id>(), std::move(sv[1].get<vector<Symbol>&>()));
+		};
+		parser()["EX_STAT"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			Expr e(sv[0].get<Id>(), std::move(sv[1].get<vector<Symbol>&>()));
+			e.parse();
+			return e;
+		};
+		parser()["EX_PLAIN"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			Expr e(sv[0].get<Id>(), std::move(sv[1].get<vector<Symbol>&>()));
+			return e;
+		};
+		parser()["VARS"] = [](const peg::SemanticValues& sv) {
 			return Vars(sv.transform<Symbol>());
 		};
 		// VAR_DECL <- 'var' VARS ';;'
-		parser["VAR_DECL"] = [](const peg::SemanticValues& sv) {
+		parser()["VAR_DECL"] = [](const peg::SemanticValues& sv) {
 			return new Vars(sv[0].get<Vars>());
 		};
-		parser["DISJ_SET"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+		parser()["DISJ_SET"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* context = ctx.get<Context*>();
 			Disj disj;
 			disj.d.push_back(vector<Symbol>());
 			vector<Symbol>& set = disj.d.back();
 			for (auto& v : sv) {
-				context->stacks.markType(v);
-				set.push_back(v);
+				Symbol s = v.get<Symbol>();
+				context->stacks.markType(s);
+				set.emplace_back(s);
 			}
 			return disj;
 		};
-		parser["CONST"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+		parser()["CONST"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Const* c = nullptr;
 			switch (sv.size()) {
-			case 1 : c = new Const(sv[0].get<Vect>()); break;
-			case 2 : c = new Const(sv[0].get<Vect>(), sv[1].get<Vect>()); break;
-			case 3 : c = new Const(sv[0].get<Vect>(), sv[1].get<Vect>(), sv[2].get<Vect>()); break;
+			case 1 : c = new Const(sv[0].get<uint>(), -1, -1); break;
+			case 2 : c = new Const(sv[0].get<uint>(), sv[1].get<uint>(), -1); break;
+			case 3 : c = new Const(sv[0].get<uint>(), sv[1].get<uint>(), sv[2].get<uint>()); break;
 			default : throw Error("syntax error");
 			}
 			return c;
 		};
-		parser["SUPERS"] = [](const peg::SemanticValues& sv) {
+		parser()["SUPERS"] = [](const peg::SemanticValues& sv) {
 			return sv.transform<Id>();
 		};
-		parser["TYPE"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+		parser()["TYPE"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
-			return new Type(sv[0].get<uint>(), sv[1].get<vector<Id>>());
+			return new Type(sv[0].get<uint>(), std::move(sv[1].get<vector<Id>>()), c->token(sv));
 		};
-		parser["TERM"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+		parser()["RULE"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
-			return Expr(sv[0].get<Id>(), sv[1].get<vector<Symbol>>());
+			return new Rule(
+				Id(sv[0].get<uint>()),
+				std::move(sv[1].get<Vars>()),
+				std::move(sv[2].get<Expr>()),
+				c->token(sv)
+			);
 		};
-		parser["RULE"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+		parser()["AXIOM"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
-			uint id     = sv[0].get<uint>();
-			Vars vars = sv[1].get<Vars>();
-			Expr term = sv[2].get<Expr>();
-			Rule* r = new Rule(Id(id));
-			r->vars = std::move(vars);
-			r->term = std::move(term);
-			return r;
-		};
-		parser["AXIOM"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
-			Context* c = ctx.get<Context*>();
-			uint id   = sv[0].get<uint>();
-			Vars vars = sv[1].get<Vars>();
-			Disj disj = sv[2].get<Disj>();
-			vector<Hyp*>  hyps  = sv[3].get<vector<Hyp>>();
-			vector<Prop*> props = sv[4].get<vector<Prop>>();
-			Axiom* a = new Axiom(Id(id));
-			a->vars  = std::move(vars);
-			a->disj  = std::move(fisj);
-			a->hyps  = std::move(hyps);
-			a->props = std::move(props);
+			Axiom* a = new Axiom(Id(sv[0].get<uint>()), c->token(sv));
+			a->vars  = std::move(sv[1].get<Vars&>());
+			a->disj  = std::move(sv[2].get<Disj&>());
+			a->hyps  = std::move(sv[3].get<vector<Hyp*>&>());
+			a->props = std::move(sv[4].get<vector<Prop*>&>());
 			return a;
 		};
-		parser["THEOREM"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+		parser()["THEOREM"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
-			uint id   = sv[0].get<uint>();
-			Vars vars = sv[1].get<Vars>();
-			vector<Hyp*>  hyps  = sv[2].get<vector<Hyp>>();
-			vector<Prop*> props = sv[3].get<vector<Prop>>();
-			Theorem* t = new Theorem(Id(id));
-			t->vars  = std::move(vars);
-			t->hyps  = std::move(hyps);
-			t->props = std::move(props);
+			Theorem* t = new Theorem(Id(sv[0].get<uint>()), c->token(sv));
+			t->vars  = std::move(sv[1].get<Vars&>());
+			t->hyps  = std::move(sv[2].get<vector<Hyp*>&>());
+			t->props = std::move(sv[3].get<vector<Prop*>&>());
 			return t;
 		};
-		parser["DEF"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+		parser()["DEF_M"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
-			uint id   = sv[0].get<uint>();
-			Vars vars = sv[1].get<Vars>();
-			Disj disj = sv[2].get<Disj>();
-			vector<Hyp*> hyps  = sv[3].get<vector<Hyp>>();
-			Expr defiendum = sv[4].get<Expr>();
-			Expr definiens = sv[5].get<Expr>();
-			Prop* Prop = sv[4].get<Expr>();
-			Def* a = new Def(Id(id));
-			a->vars  = std::move(vars);
-			a->disj  = std::move(fisj);
-			a->hyps  = std::move(hyps);
-			//a->props = std::move(props);
+			return Expr(sv[0].get<Id>(), std::move(sv[1].get<vector<Symbol>&>()), c->token(sv));
+		};
+		parser()["DEF"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			Def* a = new Def(Id(sv[0].get<uint>()), c->token(sv));
+			a->vars = std::move(sv[1].get<Vars&>());
+			a->disj = std::move(sv[2].get<Disj&>());
+			a->hyps = std::move(sv[3].get<vector<Hyp*>&>());
+			a->dfm  = std::move(sv[4].get<Expr&>());
+			a->dfs  = std::move(sv[5].get<Expr&>());
+			a->prop = std::move(sv[6].get<Expr&>());
 			return a;
 		};
 
@@ -219,14 +258,14 @@ public:
 		//	QED <- 'qed' 'prop' ID_REF '=' 'step' ID_REF ';;'
 
 		//  STEP  <- 'step' IND ':' ID_REF '=' (APPLY | '?') '|-' EXPR ';;'
-		parser["STEP"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+		parser()["STEP"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			uint ind = sv[0].get<uint>();
 			Id  type = sv[1].get<Id>();
 
 		};
 
 		// PROOF_EL <- VAR_DECL / STEP / QED
-		parser["PROOF_EL"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+		parser()["PROOF_EL"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Proof::Elem el;
 			switch (sv.choice()) {
 			case 0: el = Proof::Elem(sv[0].get<Vars*>()); break;
@@ -235,60 +274,22 @@ public:
 			}
 			return el;
 		};
-		parser["PROOF_BD"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+		parser()["PROOF_BD"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			return sv.transform<Proof::Elem>();
 		};
 		// PROOF <- 'proof' ID_NAME? 'of' ID_REF '{' PROOF_BD '}'
-		parser["PROOF"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+		parser()["PROOF"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
-			uint id   = sv[0].is_undefined() ? UNDEF : sv[0].get<uint>();
+			uint id   = sv[0].is_undefined() ? -1 : sv[0].get<uint>();
 			Id   ref  = sv[1].get<Id>();
-			vector<Proof::Elem> body = sv[2].get<vector<Proof::Elem>>();
-			return a;
+			Proof* proof = new Proof(ref, id, c->token(sv));
+			proof->elems = std::move(sv[2].get<vector<Proof::Elem>&>());
+			return proof;
 		};
-
-
-
-
-
-
-
-
-		parser["ESS"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Essential* ess = new Essential { sv[0].get<uint>(), sv[1].get<Vect>() };
-			markVars(ess->expr, context.get<std::shared_ptr<Context>>()->vars);
-			System::mod().math.essentials[ess->label] = ess;
-			return ess;
-		};
-		parser["FLO"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Floating* flo = new Floating { sv[0].get<uint>(), sv[1].get<Vect>() };
-			markVars(flo->expr, context.get<std::shared_ptr<Context>>()->vars);
-			System::mod().math.floatings[flo->label] = flo;
-			return flo;
-		};
-		parser["AX"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Axiom* ax = new Axiom { sv[0].get<uint>(), sv[1].get<Vect>(), (uint) -1 };
-			markVars(ax->expr, context.get<std::shared_ptr<Context>>()->vars);
-			System::mod().math.axioms[ax->label] = ax;
-			return ax;
-		};
-		parser["TH"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Theorem* th = new Theorem();
-			th->label = sv[0].get<uint>();
-			th->expr  = sv[1].get<Vect>();
-			th->proof = sv[2].get<Proof*>();
-			markVars(th->expr, context.get<std::shared_ptr<Context>>()->vars);
-			System::mod().math.theorems[th->label] = th;
-			return th;
-		};
-		parser["PROOF"] = [](const peg::SemanticValues& sv) {
-			Proof* pr = new Proof();
-			pr->refs = sv.transform<Ref*>();
-			return pr;
-		};
-		parser["REF"] = [](const peg::SemanticValues& sv) {
+/*
+		parser()["REF"] = [](const peg::SemanticValues& sv) {
 			uint lab = sv[0].get<uint>();
-			System::Math& math = System::mod().math;
+			Sys::Math& math = Sys::mod().math;
 			if (math.floatings.count(lab))
 				return new Ref(math.floatings[lab]);
 			else if (math.essentials.count(lab))
@@ -300,96 +301,72 @@ public:
 			else
 				throw Error("unknown label in proof", Lex::toStr(lab));
 		};
-		parser["COMMENT"] = [](const peg::SemanticValues& sv) {
+*/
+		parser()["COMMENT"] = [](const peg::SemanticValues& sv) {
 			string text = sv.token();
 			return new Comment(text.front() == ' ' ? text : " " + text);
 		};
-		parser["ELEMENT"] = [&](const peg::SemanticValues& sv, peg::any& context) {
-			// COMMENT / DISJ / ESS / TH / '${' BLOCK '$}'/ AX / CONST / VAR / FLO / INCLUDE
+		parser()["ELEMENT"] = [&](const peg::SemanticValues& sv, peg::any& context) {
+			// COMMENT / IMPORT / CONST / TYPE / RULE / AXIOM / DEF / THEOREM / PROOF / THEORY
 			Node node;
 			switch (sv.choice()) {
-			case 0: node = Node(sv[0].get<Comment*>());   break;
-			case 1: node = Node(sv[0].get<Disjointed*>());break;
-			case 2: node = Node(sv[0].get<Essential*>()); break;
-			case 3: node = Node(sv[0].get<Theorem*>());   break;
-			case 4: node = Node(sv[0].get<Block*>());     break;
-			case 5: node = Node(sv[0].get<Axiom*>());     break;
-			case 6: node = Node(sv[0].get<Constants*>()); break;
-			case 7: node = Node(sv[0].get<Variables*>()); break;
-			case 8: node = Node(sv[0].get<Floating*>());  break;
-			case 9: node = Node(sv[0].get<Inclusion*>()); break;
+			case 0: node = Node(sv[0].get<Comment*>()); break;
+			case 1: node = Node(sv[0].get<Import*>());  break;
+			case 2: node = Node(sv[0].get<Const*>());   break;
+			case 3: node = Node(sv[0].get<Type*>());    break;
+			case 4: node = Node(sv[0].get<Rule*>());    break;
+			case 5: node = Node(sv[0].get<Axiom*>());   break;
+			case 6: node = Node(sv[0].get<Def*>());     break;
+			case 7: node = Node(sv[0].get<Theorem*>()); break;
+			case 8: node = Node(sv[0].get<Proof*>());   break;
+			case 9: node = Node(sv[0].get<Theory*>());  break;
 			}
-			context.get<std::shared_ptr<Context>>()->block->contents.push_back(node);
 			return node;
 		};
-		parser["BLOCK"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			Block* b = context.get<std::shared_ptr<Context>>()->block;
-			b->contents = sv.transform<Node>();
-			init_indexes(b->contents);
-			return b;
+		parser()["TH_DECL"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			c->theory = new Theory(sv[0].get<uint>(), c->theory);
 		};
-		parser["BLOCK"].enter = [](peg::any& c) {
-			Context* context = c.get<std::shared_ptr<Context>>().get();
-			context->block = new Block(context->block);
-			if (!context->source) {
-				context->vars.push_back(Scope());
-			} else {
-				context->src_blocks.insert(context->block);
-			}
-			context->source = false;
+		parser()["THEORY"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			Theory* th = c->theory;
+			th->nodes = std::move(sv[1].get<vector<Node>&>());
+			c->theory = th->parent;
+			return th;
 		};
-		parser["BLOCK"].leave = [](peg::any& c) {
-			Context* context = c.get<std::shared_ptr<Context>>().get();
-			if (!context->src_blocks.count(context->block)) {
-				context->vars.pop_back();
-			} else {
-				context->src_blocks.erase(context->block);
-			}
-			context->block = context->block->parent;
+		parser()["SOURCE"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			c->source->theory->nodes = std::move(sv[0].get<vector<Node>&>());
+			return c->source;
 		};
-		parser["SOURCE"] = [path](const peg::SemanticValues& sv, peg::any& context) {
-			Source* src = new Source(Lex::toInt(path.name));
-			src->block = sv[0].get<Block*>();
-			return src;
-		};
-		parser["SOURCE"].enter = [](peg::any& context) {
-			context.get<std::shared_ptr<Context>>()->source = true;
-		};
-		parser["INCLUDE"] = [path](const peg::SemanticValues& sv, peg::any& context) {
-			string name = sv.token();
-			static map<string, mm::Inclusion*> included;
-			if (included.count(name)) {
-				mm::Inclusion* inc = included[name];
-				return new mm::Inclusion(inc->source, false);
-			} else {
-				Path new_path(path);
-				new_path.name_ext(name);
-				mm::Inclusion* inc = new mm::Inclusion(nullptr, true);
-				included[name] = inc;
-				inc->source = parse(new_path, context.get<std::shared_ptr<Context>>());
-				return inc;
-			}
+		parser()["IMPORT"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+
+			uint id = sv[0].get<uint>();
+			const bool primary = !Sys::get().math.get<Source>().has(id);
+			if (primary) parse(id);
+			c->source->include(Sys::mod().math.get<Source>().access(id));
+			return new Import(id, primary);
 		};
 	}
 
 	static Source* parse(uint label) {
-		Path path;
-		string data;
-		path.read(data);
-		Parser p(path);
-		mdl::mm::Source* src = nullptr;
-		peg::any ctx(new Context());
-		p.parser.parse<mdl::mm::Source*>(data.c_str(), ctx, src);
-		delete ctx.get<Context*>();
-		std::swap(data, src->data);
-		return src;
+		Context* ctx = new Context();
+		ctx->source = new Source(label);
+		ctx->source->read();
+		Parser p(label);
+		peg::any c(ctx);
+		p.parser().parse<Source*>(ctx->source->data().c_str(), c, ctx->source);
+		delete ctx;
+		return ctx->source;
 	}
 
 private:
+	/*
 	static void mark_vars(Expr* ex, Stacks& stacks) {
 		for (auto& s : ex->symbols) {
 			bool is_var = stacks.typing.count(s.lit);
-			bool is_const = System::get().math.consts.count(s.lit);
+			bool is_const = Sys::get().math.get<Const>().has(s.lit);
 			if (is_const && is_var)
 				throw Error("constant symbol is marked as variable");
 			if (!is_const && !is_var) {
@@ -397,16 +374,27 @@ private:
 				msg += " neither constant nor variable";
 				throw Error(msg);
 			}
-			if (is_var) s.type = stacks.typing[s.lit];
+			if (is_var) s.set_type(stacks.typing[s.lit]);
+			else s.set_const(Sys::mod().math.get<Const>().access(s.lit));
 		}
 	}
-	static Rule* create_super(Type* inf, Type* sup) {
-		Rule* rule = new Rule;
-		rule->id = create_id("sup", show_id(inf->id), show_id(sup->id));
-		rule->vars.v.push_back(create_symbol("x", inf));
-		rule->term.push_back(create_symbol("x", inf));
-		rule->type = sup;
+	*/
 
+	static Rule* create_super(Type* inf, Type* sup) {
+		return nullptr;
+		/*Rule* rule = new Rule(
+			create_id("sup", show_id(inf->id()), show_id(sup->id())),
+			Vars(vector<Symbol>({create_symbol("x", inf)})),
+			Expr({create_symbol("x", inf)}, sup)
+		);
+		*/
+
+		//rule->id = create_id("sup", show_id(inf->id), show_id(sup->id));
+		//rule->vars.v.push_back(create_symbol("x", inf));
+		//rule->term.push_back(create_symbol("x", inf));
+		//rule->type = sup;
+
+		/*
 		VarStack var_stack;
 		AddVars add_vars;
 		PushVars push_vars;
@@ -414,8 +402,10 @@ private:
 		add_vars(var_stack, rule->vars);
 		mark_vars(rule->term, var_stack);
 		parse_term(rule->term, rule);
-		return rule;
+		*/
+		//return rule;
 	}
+	/*
 	static void collect_supers(Type* inf, Type* s) {
 		for (auto sup : s->sup) {
 			Rule* super = create_super(inf, sup);
@@ -423,10 +413,10 @@ private:
 			collect_supers(inf, sup);
 		}
 	}
-
+*/
 };
 
-Source* parse(uint label) {
+Source* parse_peg(uint label) {
 	return Parser::parse(label);
 }
 

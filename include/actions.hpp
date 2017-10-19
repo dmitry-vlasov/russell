@@ -136,9 +136,9 @@ inline Function catch_exceptions(Function f) {
 		try {
 			return f(args);
 		} catch (const Error& err) {
-			return Return(string("failure: ") + err.what(), false);
+			return Return(err.what(), false);
 		} catch (std::exception& ex) {
-			return Return(string("failure: ") + ex.what(), false);
+			return Return(ex.what(), false);
 		} catch (...) {
 			return Return("failure", false);
 		}

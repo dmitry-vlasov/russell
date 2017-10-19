@@ -2,6 +2,44 @@
 
 namespace mdl { namespace rus {
 
+static vector<string> show_lines(const Rules& tr) {
+	vector<string> vect;
+	for (const Rules::Node* p : tr.map) {
+		vector<string> v = show_lines(p->tree);
+		if (p->tree.map.size()) {
+			for (string& s : v)
+				vect.push_back(show(p->symb) + ' ' + s);
+		} else {
+			vect.push_back(show(p->symb) + " --> " +
+				(p->rule ? show(*p->rule.get()) : "null")
+			);
+		}
+	}
+	return vect;
+}
+
+string show(const Rules& tr) {
+	string str;
+	for (string& s : show_lines(tr)) {
+		str += s + "\n";
+	}
+	return str;
+}
+
+string show(Symbol s, bool full) {
+	if (!full || !s.type())
+		return show_sy(s.lit);
+	else {
+		return string("<") + show_sy(s.lit) + ":" + show_id(s.type()->id()) + ">";
+	}
+}
+
+string show(const Expr& ex) {
+	string str;
+	for (auto s : ex.symbols) str += show(s) + " ";
+	return str;
+}
+
 string show(const Comment& c) {
 	return string("/*") + c.text + "*/";
 }

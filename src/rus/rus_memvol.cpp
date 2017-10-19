@@ -2,8 +2,38 @@
 
 namespace mdl { namespace rus {
 
+size_t memvol(const Symbol& s) {
+	return 0;
+}
+size_t memvol(const Tree& t) {
+	if (t.kind != Tree::NODE) return 0;
+	size_t vol = 0;
+	vol += t.children().capacity();
+	for (auto& ch : t.children())
+		vol += memvol(*ch.get());
+	return vol;
+}
+
+size_t memvol(const Rules& rt) {
+	size_t vol = 0;
+	vol += rt.map.capacity() * sizeof (Rules::Node);
+	for (auto p : rt.map) {
+		vol += memvol(p->tree);
+	}
+	return vol;
+}
+
+size_t memvol(const Expr& ex) {
+	size_t s = 0;
+	s += ex.symbols.capacity() * sizeof(Symbols);
+	s += memvol(ex.tree);
+	return s;
+}
+
+
+
 size_t memvol(const Comment& c) {
-	return c.text.size();
+	return c.text.capacity();
 }
 size_t memvol(const Const& c) {
 	return 0;

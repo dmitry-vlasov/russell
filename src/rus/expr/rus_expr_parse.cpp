@@ -1,6 +1,6 @@
 #include <rus_ast.hpp>
 
-namespace mdl { namespace rus { namespace expr { namespace {
+namespace mdl { namespace rus { namespace expr {
 
 vector<Expr*> queue;
 
@@ -90,26 +90,20 @@ void parse_LL(Expr* ex) {
 		ex->tree = std::move(*tree);
 		delete tree;
 	} else {
-		if (Source* src = ex->token.src()) {
-			cout << "Source: " << Lex::toStr(src->id()) << endl;
-			cout << endl << "includes: " << endl;
-			for (auto& s : src->includes) {
-				cout << Lex::toStr(s.get()->id()) << endl;
-			}
-			cout << endl << endl << "included: " << endl;
-			for (auto& s : src->included) {
-				cout << Lex::toStr(s.get()->id()) << endl;
-			}
+		if (const Source* src = ex->token.src()) {
+			cout << src->showInclusionInfo() << endl;
+		} else {
+			cout << "Source: " << (void*)(ex->token.src()) << endl;
 		}
 		parse_LL(it, ex->type.get(), ex);
-		throw Error("parsing error", string("expression: ") + show(*ex) + " at: " + ex->token.show());
+		throw Error("parsing", string("expression: ") + show(*ex) + " at: " + ex->token.show());
 	}
 	//cout << "done" << endl;
 }
 
 
 
-const uint THREADS = thread::hardware_concurrency() ? thread::hardware_concurrency() : 1;
+const uint THREADS = 1; //thread::hardware_concurrency() ? thread::hardware_concurrency() : 1;
 vector<std::exception_ptr> exceptions;
 mutex exc_mutex;
 
@@ -153,8 +147,6 @@ bool parse_LL() {
 	}
 	return true;
 }
-
-} // anonymous namespace
 
 void enqueue(Expr& ex) {
 	queue.push_back(&ex);

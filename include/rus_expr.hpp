@@ -67,6 +67,7 @@ struct Symbol : public mdl::Symbol {
 
 	void set_type(Type* t) {
 		clear();
+		if (!t) return;
 		val.type = new User<Type>(t);
 		var = true;
 		rep = true;
@@ -74,6 +75,7 @@ struct Symbol : public mdl::Symbol {
 
 	void set_const(Const* c) {
 		clear();
+		if (!c) return;
 		val.constant = new User<Const>(c);
 		cst = true;
 		rep = false;
@@ -220,6 +222,10 @@ private:
 	}
 };
 
+class Expr;
+
+namespace expr { void parse_LL(Expr*); }
+
 struct Expr : public Tokenable {
 	Expr(const Token& t = Token()) : Tokenable(t), tree(), symbols() { }
 	Expr(Symbol s, const Token& t = Token()) : Tokenable(t), type(s.type()), tree(), symbols() { symbols.push_back(s); }
@@ -259,6 +265,9 @@ struct Expr : public Tokenable {
 	}
 	bool operator != (const Expr& ex) const {
 		return !operator == (ex);
+	}
+	void parse() {
+		expr::parse_LL(this);
 	}
 
 	typedef Symbols::iterator iterator;
@@ -423,18 +432,8 @@ void dump_ast(const Tree* tm);
 void dump(const Substitution& sb);
 
 
-inline size_t memvol(const Symbol& s) {
-	return 0;
-}
-inline size_t memvol(const Tree& t) {
-	if (t.kind != Tree::NODE) return 0;
-	size_t vol = 0;
-	vol += t.children().capacity();
-	for (auto& ch : t.children())
-		vol += memvol(*ch.get());
-	return vol;
-}
-
+size_t memvol(const Symbol& s);
+size_t memvol(const Tree& t);
 size_t memvol(const Expr& ex);
 size_t memvol(const Rules&);
 
