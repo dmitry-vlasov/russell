@@ -157,6 +157,7 @@ struct Ref : public Tokenable {
 };
 
 struct Verifiable {
+	virtual ~Verifiable() { }
 	virtual void verify() const = 0;
 	bool check() const {
 		try {

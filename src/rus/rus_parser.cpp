@@ -178,7 +178,6 @@ public:
 		parser()["VARS"] = [](const peg::SemanticValues& sv) {
 			return Vars(sv.transform<Symbol>());
 		};
-		// VAR_DECL <- 'var' VARS ';;'
 		parser()["VAR_DECL"] = [](const peg::SemanticValues& sv) {
 			return new Vars(sv[0].get<Vars>());
 		};
@@ -286,22 +285,7 @@ public:
 			proof->elems = std::move(sv[2].get<vector<Proof::Elem>&>());
 			return proof;
 		};
-/*
-		parser()["REF"] = [](const peg::SemanticValues& sv) {
-			uint lab = sv[0].get<uint>();
-			Sys::Math& math = Sys::mod().math;
-			if (math.floatings.count(lab))
-				return new Ref(math.floatings[lab]);
-			else if (math.essentials.count(lab))
-				return new Ref(math.essentials[lab]);
-			else if (math.axioms.count(lab))
-				return new Ref(math.axioms[lab]);
-			else if (math.theorems.count(lab))
-				return new Ref(math.theorems[lab]);
-			else
-				throw Error("unknown label in proof", Lex::toStr(lab));
-		};
-*/
+
 		parser()["COMMENT"] = [](const peg::SemanticValues& sv) {
 			string text = sv.token();
 			return new Comment(text.front() == ' ' ? text : " " + text);
@@ -341,7 +325,6 @@ public:
 		};
 		parser()["IMPORT"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
-
 			uint id = sv[0].get<uint>();
 			const bool primary = !Sys::get().math.get<Source>().has(id);
 			if (primary) parse(id);
@@ -350,7 +333,7 @@ public:
 		};
 	}
 
-	static Source* parse(uint label) {
+	static void parse(uint label) {
 		Context* ctx = new Context();
 		ctx->source = new Source(label);
 		ctx->source->read();
@@ -358,28 +341,9 @@ public:
 		peg::any c(ctx);
 		p.parser().parse<Source*>(ctx->source->data().c_str(), c, ctx->source);
 		delete ctx;
-		return ctx->source;
 	}
 
 private:
-	/*
-	static void mark_vars(Expr* ex, Stacks& stacks) {
-		for (auto& s : ex->symbols) {
-			bool is_var = stacks.typing.count(s.lit);
-			bool is_const = Sys::get().math.get<Const>().has(s.lit);
-			if (is_const && is_var)
-				throw Error("constant symbol is marked as variable");
-			if (!is_const && !is_var) {
-				string msg = "symbol " + Lex::toStr(s.lit) + " ";
-				msg += " neither constant nor variable";
-				throw Error(msg);
-			}
-			if (is_var) s.set_type(stacks.typing[s.lit]);
-			else s.set_const(Sys::mod().math.get<Const>().access(s.lit));
-		}
-	}
-	*/
-
 	static Rule* create_super(Type* inf, Type* sup) {
 		return nullptr;
 		/*Rule* rule = new Rule(
@@ -416,8 +380,8 @@ private:
 */
 };
 
-Source* parse_peg(uint label) {
-	return Parser::parse(label);
+void parse_peg(uint label) {
+	Parser::parse(label);
 }
 
 }} // mdl::mm
