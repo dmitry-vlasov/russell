@@ -266,14 +266,31 @@ public:
 		};
 		parser()["DEF"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
-			Def* a = new Def(Id(sv[0].get<uint>()), c->token(sv));
-			a->vars = std::move(sv[1].get<Vars&>());
-			a->disj = std::move(sv[2].get<Disj&>());
-			a->hyps = std::move(sv[3].get<vector<Hyp*>&>());
-			a->dfm  = std::move(sv[4].get<Expr&>());
-			a->dfs  = std::move(sv[5].get<Expr&>());
-			a->prop = std::move(sv[6].get<Expr&>());
-			return a;
+			Def* d = new Def(Id(sv[0].get<uint>()), c->token(sv));
+			d->vars = std::move(sv[1].get<Vars&>());
+			d->disj = std::move(sv[2].get<Disj&>());
+			d->hyps = std::move(sv[3].get<vector<Hyp*>&>());
+			d->dfm  = std::move(sv[4].get<Expr&>());
+			d->dfs  = std::move(sv[5].get<Expr&>());
+			d->prop = std::move(sv[6].get<Expr&>());
+			static Symbol dfm(Lex::toInt("defiendum"));
+			static Symbol dfs(Lex::toInt("definiens"));
+			Prop* prop = new Prop(0);
+			for (auto s : d->prop.symbols) {
+				if (s == dfm) {
+					for (auto s_dfm : d->dfm.symbols)
+						prop->expr.push_back(s_dfm);
+				} else if (s == dfs) {
+					for (auto s_dfs : d->dfs.symbols)
+						prop->expr.push_back(s_dfs);
+				} else
+					prop->expr.push_back(s);
+			}
+			prop->expr.type = d->prop.type;
+			prop->expr.token = d->prop.token;
+			//mark_vars(prop->expr, varsStack);
+			d->props.push_back(prop);
+			return d;
 		};
 
 		// STEP <- STEP_ASS / STEP_CLAIM / STEP_QST
@@ -435,42 +452,6 @@ public:
 		p.parser().parse<Source*>(ctx->source->data().c_str(), c, ctx->source);
 		delete ctx;
 	}
-
-private:
-	static Rule* create_super(Type* inf, Type* sup) {
-		return nullptr;
-		/*Rule* rule = new Rule(
-			create_id("sup", show_id(inf->id()), show_id(sup->id())),
-			Vars(vector<Symbol>({create_symbol("x", inf)})),
-			Expr({create_symbol("x", inf)}, sup)
-		);
-		*/
-
-		//rule->id = create_id("sup", show_id(inf->id), show_id(sup->id));
-		//rule->vars.v.push_back(create_symbol("x", inf));
-		//rule->term.push_back(create_symbol("x", inf));
-		//rule->type = sup;
-
-		/*
-		VarStack var_stack;
-		AddVars add_vars;
-		PushVars push_vars;
-		push_vars(var_stack);
-		add_vars(var_stack, rule->vars);
-		mark_vars(rule->term, var_stack);
-		parse_term(rule->term, rule);
-		*/
-		//return rule;
-	}
-	/*
-	static void collect_supers(Type* inf, Type* s) {
-		for (auto sup : s->sup) {
-			Rule* super = create_super(inf, sup);
-			inf->supers[sup] = super;
-			collect_supers(inf, sup);
-		}
-	}
-*/
 };
 
 void parse_peg(uint label) {
