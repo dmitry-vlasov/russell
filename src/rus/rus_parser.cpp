@@ -37,6 +37,18 @@ private:
 			}
 			return s;
 		}
+		void pushProof(Proof* p) {
+			proofs.push_back(p);
+		}
+		Proof* popProof() {
+			Proof* p = proofs.back();
+			proofs.pop_back();
+			return p;
+		}
+		Proof* proof() {
+			return proofs.back();
+		}
+
 	private:
 		vector<Vars>     vars;
 		vector<Proof*>   proofs;
@@ -74,7 +86,11 @@ public:
 			AXIOM    <- 'axiom'      ID_NAME '(' VARS ')' DISJ '{' (HYP+ BAR)? PROP '}'
 			THEOREM  <- 'theorem'    ID_NAME '(' VARS ')'      '{' (HYP+ BAR)? PROP '}'
 			DEF      <- 'definition' ID_NAME '(' VARS ')' DISJ '{'  HYP* DEF_M DEF_S BAR DEF_P '}'
-			PROOF    <- 'proof'      ID_NAME? 'of' ID_REF '{' PROOF_BODY '}'
+
+			PROOF    <- PROOF_DECL '{' PROOF_BODY '}'
+			PROOF_DECL <- 'proof' ID_NAME? 'of' ID_REF '{' PROOF_BODY '}'
+			PROOF_BODY <- PROOF_ELEM+
+			PROOF_ELEM <- VAR_DECL / STEP / QED
 
             TERM     <- 'term'      EX_TERM
 			DEF_M    <- 'defiendum' EX_TERM 
@@ -87,21 +103,25 @@ public:
             EX_STAT  <- ':' ID_REF '=' '|-' SYMBS_TYPED ';;'
             EX_PLAIN <- ':' ID_REF '=' '|-' SYMBS_PLAIN ';;' 
 
-			PROOF_BODY <- PROOF_ELEM+
-			PROOF_ELEM <- VAR_DECL / STEP / QED
+			DISJ       <- 'disjointed' '(' DISJ_SET (',' DISJ_SET)* ')'
+			DISJ_SET   <- ID_REF+
 
-			DISJ     <- 'disjointed' '(' DISJ_SET (',' DISJ_SET)* ')'
-			DISJ_SET <- ID_REF+
+			STEP       <- STEP_ASS / STEP_QST / STEP_CLAIM
+			STEP_ASS   <- 'step' IND ':' ID_REF '=' ID_REF  '(' REFS ')' '|-' EX_STAT ';;'
+			# CLAIM_DECL <- 'step' IND ':' ID_REF '=' 'claim' '(' REFS ')' '|-' EX_STAT ';;'
+			# STEP_CLM   <- CLAIM_DECL '{' PROOF_BODY '}'
+			STEP_QST   <- 'step' IND ':' ID_REF '=' ? '|-' EX_STAT ';;'
+			REFS       <- (REF (',' REF)*)?
+			REF        <- REF_HYP / REF_PROP / REF_STEP
+			REF_HYP    <- 'hyp' IND
+			REF_PROP   <- 'prop' IND
+			REF_STEP   <- 'step' IND
+			QED        <- 'qed' 'prop' IND '=' 'step' IND ';;'
 
-			STEP     <- 'step' IND ':' ID_REF '=' (APPLY | '?') '|-' EXPR ';;'
-			APPLY    <- ID_REF ('(' REFS ')')?
-			REFS     <- ID_REF (',' ID_REF)*
-			QED      <- 'qed' 'prop' ID_REF '=' 'step' ID_REF ';;'
-
-			VAR_DECL <- 'var' VARS ';;'
-			VARS     <- (VAR (',' VAR)*)?
-			VAR      <- SYMB : ID_REF
-            BAR      <- '-----' '-'*
+			VAR_DECL   <- 'var' VARS ';;'
+			VARS       <- (VAR (',' VAR)*)?
+			VAR        <- SYMB : ID_REF
+            BAR        <- '-----' '-'*
 
 			SYMBS_TYPED <- (SYMB_TYPED / COMMENT)+
             SYMBS_PLAIN <- (SYMB_PLAIN / COMMENT)+
@@ -240,6 +260,10 @@ public:
 			Context* c = ctx.get<Context*>();
 			return Expr(sv[0].get<Id>(), std::move(sv[1].get<vector<Symbol>&>()), c->token(sv));
 		};
+		parser()["DEF_S"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			return Expr(sv[0].get<Id>(), std::move(sv[1].get<vector<Symbol>&>()), c->token(sv));
+		};
 		parser()["DEF"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
 			Def* a = new Def(Id(sv[0].get<uint>()), c->token(sv));
@@ -252,15 +276,74 @@ public:
 			return a;
 		};
 
-		//	APPLY <- ID_REF ('(' REFS ')')?
-		//	REFS  <- ID_REF (',' ID_REF)*
-		//	QED <- 'qed' 'prop' ID_REF '=' 'step' ID_REF ';;'
-
-		//  STEP  <- 'step' IND ':' ID_REF '=' (APPLY | '?') '|-' EXPR ';;'
+		// STEP <- STEP_ASS / STEP_CLAIM / STEP_QST
 		parser()["STEP"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			return sv[0].get<Step*>();
+		};
+		// STEP_ASS <- 'step' IND ':' ID_REF '=' ID_REF  '(' REFS ')' '|-' EXPR ';;'
+		parser()["STEP_ASS"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
 			uint ind = sv[0].get<uint>();
 			Id  type = sv[1].get<Id>();
-
+			Id  ass  = sv[2].get<uint>();
+			vector<Ref*> refs = sv[3].get<vector<Ref*>>();
+			Expr expr = sv[4].get<Expr>();
+			return new Step(ind, Step::ASS, ass, c->stacks.proof(), c->token(sv));
+		};
+		// STEP_CLM <- 'step' IND ':' ID_REF '=' 'claim' '(' REFS ')' '|-' EXPR ';;' '{' PROOF_BODY '}'
+		/*parser()["STEP_CLM"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			uint ind = sv[0].get<uint>();
+			Id  type = sv[1].get<Id>();
+			Id  ass  = sv[2].get<uint>();
+			vector<Ref*> refs = sv[3].get<vector<Ref*>>();
+			Expr expr = sv[4].get<Expr>();
+			return new Step(ind, Step::ASS, ass, c->stacks.proof(), c->token(sv));
+		}*/
+		// STEP_QST <- 'step' IND ':' ID_REF '=' ? '|-' EXPR ';;'
+		parser()["STEP_QST"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			uint ind = sv[0].get<uint>();
+			Id  type = sv[1].get<Id>();
+			Expr expr = sv[4].get<Expr>();
+			return new Step(ind, Step::NONE, Id(), c->stacks.proof(), c->token(sv));
+		};
+		// REF_HYP <- 'hyp' IND
+		parser()["REF_HYP"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			uint ind = sv[0].get<uint>();
+			Proof* p = c->stacks.proof();
+			return new Ref(p->theorem()->hyps[ind - 1]);
+		};
+		// REF_PROP <- 'prop' IND
+		parser()["REF_PROP"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			uint ind = sv[0].get<uint>();
+			Proof* p = c->stacks.proof();
+			return new Ref(p->theorem()->props[ind - 1]);
+		};
+		// REF_STEP <- 'step' IND
+		parser()["REF_STEP"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			uint ind = sv[0].get<uint>();
+			Proof* p = c->stacks.proof();
+			return new Ref(p->elems[ind - 1].val.step);
+		};
+		// REF <- REF_HYP / REF_PROP / REF_STEP
+		parser()["REF"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			return sv[0].get<Ref*>();
+		};
+		// REFS <- (ID_REF (',' ID_REF)*)?
+		parser()["REFS"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			return sv.transform<Ref*>();
+		};
+		// QED <- 'qed' 'prop' ID_REF '=' 'step' ID_REF ';;'
+		parser()["QED"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			uint prop = sv[0].get<uint>();
+			uint step = sv[1].get<uint>();
+			Proof* p = c->stacks.proof();
+			return new Qed(p->theorem()->props[prop - 1], p->elems[step - 1].val.step);
 		};
 
 		// PROOF_EL <- VAR_DECL / STEP / QED
@@ -273,17 +356,27 @@ public:
 			}
 			return el;
 		};
+		// PROOF_BODY <- PROOF_ELEM+
 		parser()["PROOF_BD"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			return sv.transform<Proof::Elem>();
 		};
-		// PROOF <- 'proof' ID_NAME? 'of' ID_REF '{' PROOF_BD '}'
-		parser()["PROOF"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+		// PROOF_DECL <- 'proof' ID_NAME? 'of' ID_REF
+		parser()["PROOF_DECL"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
 			uint id   = sv[0].is_undefined() ? -1 : sv[0].get<uint>();
 			Id   ref  = sv[1].get<Id>();
 			Proof* proof = new Proof(ref, id, c->token(sv));
 			proof->elems = std::move(sv[2].get<vector<Proof::Elem>&>());
 			return proof;
+		};
+		// PROOF <- PROOF_DECL '{' PROOF_BODY '}'
+		parser()["PROOF"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			return sv[1].get<Proof*>();
+		};
+		// PROOF_BODY <- PROOF_ELEM+
+		parser()["PROOF_BODY"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
+			Context* c = ctx.get<Context*>();
+			return c->stacks.popProof();
 		};
 
 		parser()["COMMENT"] = [](const peg::SemanticValues& sv) {
