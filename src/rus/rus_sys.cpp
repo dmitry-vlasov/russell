@@ -48,19 +48,18 @@ template const Table<Proof>& Math::get<Proof>() const;
 template const Table<Source>& Math::get<Source>() const;
 template const Table<Assertion>& Math::get<Assertion>() const;
 
-Source* parse(uint);
 void verify(uint src);
 void verify();
 smm::Source* translate(uint src, uint tgt);
 void parse_peg(uint label);
+void parse_spirit(uint label);
 
 namespace {
 
 void read(uint src) {
-	//rus::parse(src);
-	//expr::parse();
-
+	//parse_spirit(src);
 	parse_peg(src);
+
 	expr::parse();
 
 	for (auto& p : Sys::mod().math.get<Assertion>())

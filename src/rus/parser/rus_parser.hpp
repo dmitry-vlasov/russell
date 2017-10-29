@@ -77,54 +77,27 @@ static void mark_vars(Expr& ex, VarStack& var_stack) {
 	}
 }
 
-inline Type* find_type(uint id, const Location* loc = nullptr) {
-	if (!Sys::get().math.get<Type>().has(id))
-		throw Error("unknown type", show_id(id), loc);
-	return Sys::mod().math.get<Type>().access(id);
-}
-
-void enqueue_expressions(Assertion* ass) {
-	for (Hyp* hyp : ass->hyps)
-		expr::enqueue(hyp->expr);
-	for (Prop* prop : ass->props)
-		expr::enqueue(prop->expr);
-}
-
-void enqueue_expressions(Proof* proof) {
-	for (auto& el : proof->elems) {
-		if (el.kind == Proof::Elem::STEP) {
-			Step* step = el.val.step;
-			expr::enqueue(step->expr);
-			if (step->kind() == Step::CLAIM)
-				enqueue_expressions(step->proof());
+struct Enqueue {
+	void operator()(Assertion* ass) const {
+		for (Hyp* hyp : ass->hyps)
+			expr::enqueue(hyp->expr);
+		for (Prop* prop : ass->props)
+			expr::enqueue(prop->expr);
+	}
+	void operator()(Def* def) const {
+		expr::enqueue(def->dfm);
+		expr::enqueue(def->dfs);
+		operator()(static_cast<Assertion*>(def));
+	}
+	void operator()(Proof* proof) const {
+		for (auto& el : proof->elems) {
+			if (el.kind == Proof::Elem::STEP) {
+				Step* step = el.val.step;
+				expr::enqueue(step->expr);
+				if (step->kind() == Step::CLAIM)
+					operator()(step->proof());
+			}
 		}
-	}
-}
-
-void enqueue_expressions(Def* def) {
-	expr::enqueue(def->dfm);
-	expr::enqueue(def->dfs);
-	enqueue_expressions(static_cast<Assertion*>(def));
-}
-
-struct AddToMath {
-	void operator()(Const* c) const {
-	}
-	void operator()(Type* t) const {
-	}
-	void operator()(Rule* r) const {
-	}
-	void operator()(Axiom* a) const {
-		enqueue_expressions(a);
-	}
-	void operator()(Def* d) const {
-		enqueue_expressions(d);
-	}
-	void operator()(Theorem* th) const {
-		enqueue_expressions(th);
-	}
-	void operator()(Proof* p) const {
-		enqueue_expressions(p);
 	}
 };
 
@@ -192,32 +165,11 @@ struct ParseImport {
 	}
 };
 
-struct FindType {
-	template <typename T>
-	struct result { typedef Type* type; };
-	Type* operator()(Id i) const {
-		return Undef<uint>::is(i.id) ? nullptr : find_type(i.id);
-	}
-};
-
 struct SetType {
 	template <typename T1, typename T2>
 	struct result { typedef void type; };
 	void operator()(Symbol& s, Id t) const {
 		s.set_type(t);
-	}
-};
-
-struct FindTheorem {
-	template <typename T>
-	struct result { typedef Theorem* type; };
-	Theorem* operator()(Id i) const {
-		if (!Sys::get().math.get<Assertion>().has(i.id))
-			throw Error("unknown theorem", show_id(i.id));
-		Theorem* ret = dynamic_cast<Theorem*>(Sys::mod().math.get<Assertion>().access(i.id));
-		if (!ret)
-			throw Error("not a theorem", show_id(i.id));
-		return ret;
 	}
 };
 
@@ -298,15 +250,6 @@ struct AssembleDef {
 		prop->expr.token = d->prop.token;
 		mark_vars(prop->expr, varsStack);
 		d->props.push_back(prop);
-	}
-};
-
-
-struct DeleteComment {
-	template <typename T>
-	struct result { typedef void type; };
-	void operator()(Comment* c) const {
-		delete c;
 	}
 };
 

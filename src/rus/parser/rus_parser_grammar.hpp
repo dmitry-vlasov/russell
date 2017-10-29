@@ -38,8 +38,6 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	const phoenix::function<PopVars>     popVars;
 	const phoenix::function<AddVars>     addVars;
 
-	const phoenix::function<FindType>    findType;
-	const phoenix::function<FindTheorem> findTheorem;
 	const phoenix::function<SetType>     setType;
 
 	const phoenix::function<CreateStepRef> createStepRef;
@@ -49,12 +47,11 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	const phoenix::function<AddDisjVar>  addDisjVar;
 	const phoenix::function<NewDisjSet>  newDisjSet;
 
-	const phoenix::function<AddToMath>   addToMath;
+	const phoenix::function<Enqueue>   enqueue;
 	const phoenix::function<ParseImport> parseImport;
 	const phoenix::function<AssembleDef> assembleDef;
 	const phoenix::function<SetToken<Iterator>> setToken;
 	const phoenix::function<MakeString>  makeString;
-	const phoenix::function<DeleteComment> deleteComment;
 	const phoenix::function<AppendComment> appendComment;
 
 	bar   = lexeme[lit("-----")] >> * unicode::char_('-');
@@ -64,9 +61,9 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	id    = lexeme[+ unicode::char_("a-zA-Z0-9_.\\-")]              [_val = idToInt(qi::labels::_1)];
 	path  = lexeme[+(unicode::char_ - END_MARKER - unicode::space)];
 
-	term  = + (symb [addSymbol(_val, qi::labels::_1)] | comment [deleteComment(qi::labels::_1)]) > eps [parseExpr(_val, _r1, phoenix::ref(var_stack))];
-	expr  = + (symb [addSymbol(_val, qi::labels::_1)] | comment [deleteComment(qi::labels::_1)]) > eps [parseExpr(_val, _r1, phoenix::ref(var_stack))];
-	plain = + (symb [addSymbol(_val, qi::labels::_1)] | comment [deleteComment(qi::labels::_1)]) > eps [parsePlain(_val, _r1)];
+	term  = + (symb [addSymbol(_val, qi::labels::_1)] | comment [delete_(qi::labels::_1)]) > eps [parseExpr(_val, _r1, phoenix::ref(var_stack))];
+	expr  = + (symb [addSymbol(_val, qi::labels::_1)] | comment [delete_(qi::labels::_1)]) > eps [parseExpr(_val, _r1, phoenix::ref(var_stack))];
+	plain = + (symb [addSymbol(_val, qi::labels::_1)] | comment [delete_(qi::labels::_1)]) > eps [parsePlain(_val, _r1)];
 
 	disj =
 		lit("disjointed") > "("
@@ -154,7 +151,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		> eps        [addVars(phoenix::ref(var_stack), phoenix::at_c<3>(*_val))]
 		> proof_body(_val)
 		> eps        [popVars(phoenix::ref(var_stack))]
-		> eps        [addToMath(_val)];
+		> eps        [enqueue(_val)];
 
 	theorem =
 		lit("theorem")
@@ -167,7 +164,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		> - ( + (hyp [push_back(phoenix::at_c<2>(*_val), qi::labels::_1)]) > bar )
 		> + (prop    [push_back(phoenix::at_c<3>(*_val), qi::labels::_1)])
 		> lit("}")   [popVars(phoenix::ref(var_stack))]
-		> eps        [addToMath(_val)];
+		> eps        [enqueue(_val)];
 
 	axiom =
 		lit("axiom")
@@ -180,7 +177,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		> - ( + (hyp [push_back(phoenix::at_c<2>(*_val), qi::labels::_1)]) > bar )
 		> + (prop    [push_back(phoenix::at_c<3>(*_val), qi::labels::_1)])
 		> lit("}")   [popVars(phoenix::ref(var_stack))]
-		> eps        [addToMath(_val)];
+		> eps        [enqueue(_val)];
 
 	def = lit("definition")
 		> id         [_val = new_<Def>(qi::labels::_1)]
@@ -208,7 +205,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		> END_MARKER
 		> eps        [assembleDef(_val, phoenix::ref(var_stack))]
 		> lit("}")   [pushVars(phoenix::ref(var_stack))]
-		> eps        [addToMath(_val)];
+		> eps        [enqueue(_val)];
 
 
 	rule =
@@ -222,7 +219,6 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		> term(_c)   [_d = qi::labels::_1]
 		> END_MARKER
 		> lit("}")   [_val = new_<Rule>(_a, _b, _d)]
-		> eps        [addToMath(_val)]
 		> eps        [popVars(phoenix::ref(var_stack))];
 
 	type =
@@ -231,8 +227,7 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 		> - (lit(":")
 			>  id [push_back(_b, qi::labels::_1)] % ","
 		)
-		> lit(END_MARKER)  [_val = new_<Type>(_a, _b)]
-		> eps [addToMath(_val)];
+		> lit(END_MARKER)  [_val = new_<Type>(_a, _b)];
 
 	constant =
 		lit("constant") > "{"
