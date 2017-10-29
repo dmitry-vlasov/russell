@@ -57,9 +57,8 @@ void parse_spirit(uint label);
 namespace {
 
 void read(uint src) {
-	//parse_spirit(src);
-	parse_peg(src);
-
+	if (Sys::get().config.has("peg-parser")) parse_peg(src);
+	else parse_spirit(src);
 	expr::parse();
 
 	for (auto& p : Sys::mod().math.get<Assertion>())
