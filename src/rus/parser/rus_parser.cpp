@@ -2,7 +2,7 @@
 
 namespace mdl { namespace rus {
 
-void parse(uint label) {
+void parse_spirit(uint label) {
 	delete Sys::get().math.get<Source>().access(label);
 	Source* src = new Source(label);
 	src->read();

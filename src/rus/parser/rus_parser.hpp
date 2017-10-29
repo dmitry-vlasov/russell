@@ -4,7 +4,7 @@
 
 namespace mdl { namespace rus {
 
-void parse(uint);
+void parse_spirit(uint);
 
 namespace parser {
 
@@ -186,7 +186,7 @@ struct ParseImport {
 	Import* operator()(string name, Source* src) const {
 		uint id = Sys::make_name(name);
 		const bool primary = !Sys::get().math.get<Source>().has(id);
-		if (primary) parse(id);
+		if (primary) parse_spirit(id);
 		src->include(Sys::mod().math.get<Source>().access(id));
 		return new Import(id, primary);
 	}
