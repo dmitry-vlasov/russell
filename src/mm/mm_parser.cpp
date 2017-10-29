@@ -189,8 +189,8 @@ public:
 			Context& c = *context.get<Context*>();
 			uint id = Sys::make_name(sv.token());
 			const bool primary = !Sys::get().math.get<Source>().has(id);
-			Source* src = primary ? parse(id, &c) : Sys::mod().math.get<Source>().access(id);
-			c.source_stack.top()->include(src);
+			if (primary) parse(id, &c);
+			c.source_stack.top()->include(Sys::mod().math.get<Source>().access(id));
 			return new Inclusion(id, primary, c.token(sv));
 		};
 		parser.log = [label](size_t ln, size_t col, const std::string& err_msg) {
@@ -200,28 +200,32 @@ public:
 		};
 	}
 
-	static Source* parse(uint label) {
+	static void parse(uint label) {
 		Context* context = new Context();
 		context->scope_stack.push_back(Scope());
-		Source* src = parse(label, context);
+		try {
+			parse(label, context);
+		} catch(Error& e) {
+			delete context;
+			throw e;
+		}
 		assert(!context->scope_stack.empty());
 		context->scope_stack.pop_back();
 		assert(context->scope_stack.empty());
 		delete context;
-		return src;
 	}
 
 private:
-	static Source* parse(uint label, Context* context) {
+	static void parse(uint label, Context* context) {
 		Path path(Lex::toStr(label), Sys::conf().get("root"), "mm");
 		Source* src = new Source(label);
 		context->source_stack.push(src);
 		src->read(&const_patches);
 		Parser p(label);
 		peg::any c(context);
-		if (!p.parser.parse<mdl::mm::Source*>(src->data().c_str(), c, src))
-			throw Error("parsing failed", path.path());
-		return src;
+		if (!p.parser.parse<mdl::mm::Source*>(src->data().c_str(), c, src)) {
+			throw Error("parsing of " + Lex::toStr(label) + " failed");
+		}
 	}
 	static void markVars(Vect& expr, const vector<Scope>& stack) {
     	for (Symbol& s : expr) {
@@ -540,9 +544,7 @@ R"(
 
 void parse(uint label) {
 	delete Sys::get().math.get<Source>().access(label);
-	if (!Parser::parse(label))
-		throw Error("parsing of " + Lex::toStr(label) + " failed");
-	//cout << endl << *src_enter;
+	Parser::parse(label);
 }
 
 }} // mdl::mm

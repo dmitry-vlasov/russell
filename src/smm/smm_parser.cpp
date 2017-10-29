@@ -253,8 +253,8 @@ public:
 			Context& c = *context.get<Context*>();
 			uint id = Sys::make_name(sv.token());
 			const bool primary = !Sys::get().math.get<Source>().has(id);
-			Source* src = primary ? parse(id) : Sys::mod().math.get<Source>().access(id);
-			c.source->include(src);
+			if (primary) parse(id);
+			c.source->include(Sys::mod().math.get<Source>().access(id));
 			return new Inclusion(id, primary, c.token(sv));
 		};
 		parser.log = [label](size_t ln, size_t col, const std::string& err_msg) {
@@ -264,16 +264,18 @@ public:
 		};
 	}
 
-	static Source* parse(uint label) {
+	static void parse(uint label) {
 		Path path(Lex::toStr(label), Sys::conf().get("root"), "smm");
 		Context* context = new Context();
 		context->source = new Source(label);
 		context->source->read();
 		Parser p(label);
 		peg::any c(context);
-		if (!p.parser.parse<Source*>(context->source->data().c_str(), c, context->source)) return nullptr;;
+		if (!p.parser.parse<Source*>(context->source->data().c_str(), c, context->source)) {
+			delete context;
+			throw Error("parsing of " + Lex::toStr(label) + " failed");
+		}
 		delete context;
-		return context->source;
 	}
 
 private:
@@ -300,8 +302,7 @@ private:
 
 void parse(uint label) {
 	delete Sys::get().math.get<Source>().access(label);
-	if (!Parser::parse(label))
-		throw Error("parsing of " + Lex::toStr(label) + " failed");
+	Parser::parse(label);
 }
 
 }} // mdl::smm

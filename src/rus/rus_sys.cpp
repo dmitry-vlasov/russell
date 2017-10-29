@@ -52,12 +52,17 @@ Source* parse(uint);
 void verify(uint src);
 void verify();
 smm::Source* translate(uint src, uint tgt);
+void parse_peg(uint label);
 
 namespace {
 
 void read(uint src) {
-	rus::parse(src);
+	//rus::parse(src);
+	//expr::parse();
+
+	parse_peg(src);
 	expr::parse();
+
 	for (auto& p : Sys::mod().math.get<Assertion>())
 		prover::add_to_index(p.second.data);
 	for (auto& p : Sys::mod().math.get<Proof>())
