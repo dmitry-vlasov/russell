@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ast.hpp"
+//#include "ast.hpp"
 #include "rus_expr.hpp"
 #include "rus_sys.hpp"
 
