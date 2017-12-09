@@ -29,11 +29,14 @@ inline string border(const Type tp) {
 namespace fs = boost::filesystem;
 
 struct Section {
-	Section() : type(Type::SOURCE), header(), name(), footer(),
-	contents(), root(), dir(), file(), path(),
-	prev_sect(nullptr), next_sect(nullptr),
-	prev_sibling(nullptr), next_sibling(nullptr),
-	parent(nullptr), parts() { }
+	Section() :
+	type(Type::SOURCE),
+	prev_sect(nullptr),
+	next_sect(nullptr),
+	prev_sibling(nullptr),
+	next_sibling(nullptr),
+	parent(nullptr) { }
+
 	~ Section() {
 		for (auto* p : parts) delete p;
 		for (auto* i : incs)  delete i;
@@ -50,7 +53,7 @@ struct Section {
 		out.close();
 	}
 	void split() {
-		if (type == Type::PARAGRAPH) return;
+		if (type == Type::PARAGRAPH || (next_sect && type == next_sect->type)) return;
 		string cont = contents;
 		boost::trim(cont);
 		if (!cont.size()) return;
@@ -72,6 +75,7 @@ struct Section {
 		}
 		contents.clear();
 
+		header->parent = parent;
 		header->prev_sect = prev_sect;
 		header->next_sect = this;
 		header->prev_sect->next_sect = header;
@@ -84,11 +88,10 @@ struct Section {
 	}
 	string show() const {
 		string str;
-		const Section* imp = this;
-		while (imp && !imp->prev_sibling)
-			imp = imp->parent;
-		if (imp)
+		const Section* imp = prev();
+		if (imp) {
 			str += "\n$[ " + imp->prev_sibling->path + " $]\n\n";
+		}
 		if (type != Type::SOURCE) {
 			str += "$(\n";
 			str += header;
@@ -100,6 +103,12 @@ struct Section {
 		}
 		str += contents;
 		return str;
+	}
+
+	const Section* prev() const {
+		const Section* s = this;
+		while (s && !s->prev_sibling) s = s->parent;
+		return s;
 	}
 
 	Type   type;
@@ -1532,8 +1541,11 @@ R"(riesz1 $p |- ( T e. LinFn -> ( ( normfn ` T ) e. RR <->
       vy chil wrex cT clf wcel cT ccnfn wcel wa cT clf ccnfn cin wcel vx cv cT
       cfv vx cv vy cv csp co wceq vx chil wral vy chil wrex cT clf ccnfn elin
       cT clf ccnfn cin wcel vx cv cT cfv vx cv vy cv csp co wceq vx chil wral)"
+},
+{
+	R"(metamath 'read set.mm' 'save proof */c/f' 'write source set.mm/rewrap')",
+	R"(metamath 'read set.mm' 'save proof * /c/f' 'write source set.mm/rewrap')"
 }
-
 };
 
 Section* parse(const Path& in, const Path& out) {
