@@ -328,32 +328,29 @@ struct Grammar : qi::grammar<LocationIter, Section*(), qi::unused_type> {
 };
 
 static vector<Patch> cut_patches = {
-{R"($( [18-Mar-2007] $)
-
+{R"(
 $(
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
             Derive the Power Set, Infinity and Choice Axioms
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
 
-    $( Derive the Axiom of Power Sets ~ ax-pow from the Tarksi-Grothendieck
+    $( Derive the Axiom of Power Sets ~ ax-pow from the Tarski-Grothendieck
        axiom ~ ax-groth .  That it follows is mentioned by Bob Solovay at
        ~ http://www.cs.nyu.edu/pipermail/fom/2008-March/012783.html .  Note
        that ~ ax-pow is not used by the proof.  (Contributed by G&eacute;rard
        Lang, 22-Jun-2009.) $)
     grothpw $p |- E. y A. z ( A. w ( w e. z -> w e. x ) -> z e. y ) $=)",
-R"($( [18-Mar-2007] $)
+R"(
   $}
-
 $(
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
             Derive the Power Set, Infinity and Choice Axioms
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
-
   ${
     $d x y z w v u f $.
-    $( Derive the Axiom of Power Sets ~ ax-pow from the Tarksi-Grothendieck
+    $( Derive the Axiom of Power Sets ~ ax-pow from the Tarski-Grothendieck
        axiom ~ ax-groth .  That it follows is mentioned by Bob Solovay at
        ~ http://www.cs.nyu.edu/pipermail/fom/2008-March/012783.html .  Note
        that ~ ax-pow is not used by the proof.  (Contributed by G&eacute;rard
@@ -375,7 +372,7 @@ $)
               RR* , < ) ) $.
 
     $( Define the set of continuous operators on Hilbert space.  For every
-       "epsilon" ( ` y ` ) there is an "delta" ( ` z ` ) such that...
+       "epsilon" ( ` y ` ) there is a "delta" ( ` z ` ) such that...
        (Contributed by NM, 28-Jan-2006.)  (New usage is discouraged.) $)
     df-cnop $a |- ConOp = { t e. ( ~H ^m ~H ) | A. x e. ~H A. y e. RR+
                 E. z e. RR+ A. w e. ~H ( ( normh ` ( w -h x ) ) < z ->
@@ -422,7 +419,7 @@ $)
     df-nlfn $a |- null = ( t e. ( CC ^m ~H ) |-> ( `' t " { 0 } ) ) $.
 
     $( Define the set of continuous functionals on Hilbert space.  For every
-       "epsilon" ( ` y ` ) there is an "delta" ( ` z ` ) such that...
+       "epsilon" ( ` y ` ) there is a "delta" ( ` z ` ) such that...
        (Contributed by NM, 11-Feb-2006.)  (New usage is discouraged.) $)
     df-cnfn $a |- ConFn = { t e. ( CC ^m ~H ) | A. x e. ~H A. y e. RR+
       E. z e. RR+ A. w e. ~H ( ( normh ` ( w -h x ) ) < z ->
@@ -477,7 +474,7 @@ $)
 
        _For an extensive discussion about how our notation maps to the bra-ket
        notation in physics textbooks, see
-       ~ http://us.metamath.org/mpegif/mmnotes.txt , under the 17-May-2006
+       ~ http://us.metamath.org/mpeuni/mmnotes.txt , under the 17-May-2006
        entry_.  (Contributed by NM, 15-May-2006.)
        (New usage is discouraged.) $)
     df-bra $a |- bra = ( x e. ~H |-> ( y e. ~H |-> ( y .ih x ) ) ) $.
@@ -518,6 +515,23 @@ $)
        (New usage is discouraged.) $)
     df-eigvec $a |- eigvec = ( t e. ( ~H ^m ~H ) |->
          { x e. ( ~H \ 0H ) | E. z e. CC ( t ` x ) = ( z .h x ) } ) $.
+
+    $( Define the eigenvalue function.  The range of ` eigval `` T ` is the set
+       of eigenvalues of Hilbert space operator ` T ` .  Theorem ~ eigvalcl
+       shows that ` ( eigval `` T ) `` A ` , the eigenvalue associated with
+       eigenvector ` A ` , is a complex number.  (Contributed by NM,
+       11-Mar-2006.)  (New usage is discouraged.) $)
+    df-eigval $a |- eigval = ( t e. ( ~H ^m ~H ) |->
+                     ( x e. ( eigvec ` t ) |->
+                   ( ( ( t ` x ) .ih x ) / ( ( normh ` x ) ^ 2 ) ) ) ) $.
+
+    $( Define the spectrum of an operator.  Definition of spectrum in [Halmos]
+       p. 50.  (Contributed by NM, 11-Apr-2006.)
+       (New usage is discouraged.) $)
+    df-spec $a |- Lambda = ( t e. ( ~H ^m ~H ) |->
+        { x e. CC | -. ( t -op ( x .op ( _I |` ~H ) ) ) : ~H -1-1-> ~H } ) $.
+  $}
+
 )",
 R"($(
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -534,7 +548,7 @@ $)
               RR* , < ) ) $.
 
     $( Define the set of continuous operators on Hilbert space.  For every
-       "epsilon" ( ` y ` ) there is an "delta" ( ` z ` ) such that...
+       "epsilon" ( ` y ` ) there is a "delta" ( ` z ` ) such that...
        (Contributed by NM, 28-Jan-2006.)  (New usage is discouraged.) $)
     df-cnop $a |- ConOp = { t e. ( ~H ^m ~H ) | A. x e. ~H A. y e. RR+
                 E. z e. RR+ A. w e. ~H ( ( normh ` ( w -h x ) ) < z ->
@@ -584,7 +598,7 @@ $)
     df-nlfn $a |- null = ( t e. ( CC ^m ~H ) |-> ( `' t " { 0 } ) ) $.
 
     $( Define the set of continuous functionals on Hilbert space.  For every
-       "epsilon" ( ` y ` ) there is an "delta" ( ` z ` ) such that...
+       "epsilon" ( ` y ` ) there is a "delta" ( ` z ` ) such that...
        (Contributed by NM, 11-Feb-2006.)  (New usage is discouraged.) $)
     df-cnfn $a |- ConFn = { t e. ( CC ^m ~H ) | A. x e. ~H A. y e. RR+
       E. z e. RR+ A. w e. ~H ( ( normh ` ( w -h x ) ) < z ->
@@ -645,7 +659,7 @@ $)
 
        _For an extensive discussion about how our notation maps to the bra-ket
        notation in physics textbooks, see
-       ~ http://us.metamath.org/mpegif/mmnotes.txt , under the 17-May-2006
+       ~ http://us.metamath.org/mpeuni/mmnotes.txt , under the 17-May-2006
        entry_.  (Contributed by NM, 15-May-2006.)
        (New usage is discouraged.) $)
     df-bra $a |- bra = ( x e. ~H |-> ( y e. ~H |-> ( y .ih x ) ) ) $.
@@ -692,9 +706,25 @@ $)
        (New usage is discouraged.) $)
     df-eigvec $a |- eigvec = ( t e. ( ~H ^m ~H ) |->
          { x e. ( ~H \ 0H ) | E. z e. CC ( t ` x ) = ( z .h x ) } ) $.
-)"},
-{R"($( [19-May-2014] $) $( [11-Feb-2006] $)
 
+    $( Define the eigenvalue function.  The range of ` eigval `` T ` is the set
+       of eigenvalues of Hilbert space operator ` T ` .  Theorem ~ eigvalcl
+       shows that ` ( eigval `` T ) `` A ` , the eigenvalue associated with
+       eigenvector ` A ` , is a complex number.  (Contributed by NM,
+       11-Mar-2006.)  (New usage is discouraged.) $)
+    df-eigval $a |- eigval = ( t e. ( ~H ^m ~H ) |->
+                     ( x e. ( eigvec ` t ) |->
+                   ( ( ( t ` x ) .ih x ) / ( ( normh ` x ) ^ 2 ) ) ) ) $.
+
+    $( Define the spectrum of an operator.  Definition of spectrum in [Halmos]
+       p. 50.  (Contributed by NM, 11-Apr-2006.)
+       (New usage is discouraged.) $)
+    df-spec $a |- Lambda = ( t e. ( ~H ^m ~H ) |->
+        { x e. CC | -. ( t -op ( x .op ( _I |` ~H ) ) ) : ~H -1-1-> ~H } ) $.
+  $}
+
+)"},
+{R"(
 $(
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                       Riesz lemma
@@ -705,7 +735,7 @@ $)
        Existence part of Theorem 3.9 of [Beran] p. 104.  (Contributed by NM,
        13-Feb-2006.)  (New usage is discouraged.) $)
     riesz3i $p |- E. w e. ~H A. v e. ~H ( T ` v ) = ( v .ih w ) $=)",
-R"($( [19-May-2014] $) $( [11-Feb-2006] $)
+R"(
   $}
 
 $(
@@ -716,194 +746,12 @@ $)
 
   ${
     $d f n u v w x T $.
-    nlelch.1 $e |- T e. LinFn $.
-    nlelch.2 $e |- T e. ConFn $.
-    $( A continuous linear functional can be expressed as an inner product.
-       Existence part of Theorem 3.9 of [Beran] p. 104.  (Contributed by NM,
-       13-Feb-2006.)  (New usage is discouraged.) $)
-    riesz3i $p |- E. w e. ~H A. v e. ~H ( T ` v ) = ( v .ih w ) $=)"
-},
-{R"($( [30-May-2006] $)
-
-$(
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                      Positive operators (cont.)
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-$)
-
-    $( Ordering relation for positive operators.  Definition of positive
-       operator ordering in [Kreyszig] p. 470.  (Contributed by NM,
-       23-Jul-2006.)  (New usage is discouraged.) $)
-    leopg $p |- ( ( T e. A /\ U e. B ) -> ( T <_op U <-> ( ( U -op T ) e.
-                HrmOp /\ A. x e. ~H 0 <_ ( ( ( U -op T ) ` x ) .ih x ) ) ) ) $=)",
-R"($( [30-May-2006] $)
-  $}
-
-$(
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                      Positive operators (cont.)
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-$)
-
-  ${
-    $d x y z w A $.  $d x y B $.  $d x y C $.  $d x y D $.  $d x S $.
-    $d t u x y T $.  $d t u x U $.  $d t x y z $.
-    $( Ordering relation for positive operators.  Definition of positive
-       operator ordering in [Kreyszig] p. 470.  (Contributed by NM,
-       23-Jul-2006.)  (New usage is discouraged.) $)
-    leopg $p |- ( ( T e. A /\ U e. B ) -> ( T <_op U <-> ( ( U -op T ) e.
-                HrmOp /\ A. x e. ~H 0 <_ ( ( ( U -op T ) ` x ) .ih x ) ) ) ) $=)"
-},
-{
-R"($(
-#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-                    Zermelo-Fraenkel Set Theory
-#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-$)
-
-$(
-#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-             ZF Set Theory - start with the Axiom of Extensionality
-#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-$)
-
-$( Logic is a prerequisite. $)
-$( $[ logic.mm $] $) $( Use this if logic is separated out of set.mm. $)
-)",
-R"($(
-#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-             ZF Set Theory - start with the Axiom of Extensionality
-#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-$)
-)"
-},
-{
-R"($( Alternate version of the Tarski-Grothendieck Axiom.  (Contributed by NM,
-       18-Mar-2007.) $)
-    axgroth2 $p |- E. y ( x e. y /\ A. z e. y ( A. w ( w C_ z -> w e. y ) /\
-                       E. w e. y A. v ( v C_ z -> v e. w ) ) /\
-                     A. z ( z C_ y -> ( y ~<_ z \/ z e. y ) ) ) $=
-      vx cv vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv cv vz cv
-      wss vv cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz cv vy cv
-      wss vy cv vz cv cdom wbr vz cv vy cv wcel wo wi vz wal w3a vy wex vx cv
-      vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv cv vz cv wss vv
-      cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz cv vy cv wss vz
-      cv vy cv cen wbr vz cv vy cv wcel wo wi vz wal w3a vy wex vx vy vz vw vv
-      ax-groth vx cv vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv
-      cv vz cv wss vv cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz
-      cv vy cv wss vy cv vz cv cdom wbr vz cv vy cv wcel wo wi vz wal w3a vx cv
-      vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv cv vz cv wss vv
-      cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz cv vy cv wss vz
-      cv vy cv cen wbr vz cv vy cv wcel wo wi vz wal w3a vy vz cv vy cv wss vy
-      cv vz cv cdom wbr vz cv vy cv wcel wo wi vz wal vz cv vy cv wss vz cv vy
-      cv cen wbr vz cv vy cv wcel wo wi vz wal vx cv vy cv wcel vw cv vz cv wss
-      vw cv vy cv wcel wi vw wal vv cv vz cv wss vv cv vw cv wcel wi vv wal vw
-      vy cv wrex wa vz vy cv wral vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy
-      cv wcel wo wi vz cv vy cv wss vz cv vy cv cen wbr vz cv vy cv wcel wo wi
-      vz vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy cv wcel wo vz cv vy cv
-      cen wbr vz cv vy cv wcel wo vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy
-      cv cen wbr vz cv vy cv wcel vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy
-      cv cdom wbr vy cv vz cv cdom wbr wa vz cv vy cv cen wbr vz cv vy cv wss
-      vz cv vy cv cdom wbr vy cv vz cv cdom wbr vy cv cvv wcel vz cv vy cv wss
-      vz cv vy cv cdom wbr wi vy vex vz cv vy cv cvv ssdomg ax-mp biantrurd vz
-      cv vy cv sbthb syl6bb orbi1d pm5.74i albii 3anbi3i exbii mpbir $.
-      $( [10-Sep-2017] $)
-)",
-R"($( Alternate version of the Tarski-Grothendieck Axiom.  (Contributed by NM,
-       18-Mar-2007.) $)
-    axgroth2 $p |- E. y ( x e. y /\ A. z e. y ( A. w ( w C_ z -> w e. y ) /\
-                       E. w e. y A. v ( v C_ z -> v e. w ) ) /\
-                     A. z ( z C_ y -> ( y ~<_ z \/ z e. y ) ) ) $=
-      vx cv vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv cv vz cv
-      wss vv cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz cv vy cv
-      wss vy cv vz cv cdom wbr vz cv vy cv wcel wo wi vz wal w3a vy wex vx cv
-      vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv cv vz cv wss vv
-      cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz cv vy cv wss vz
-      cv vy cv cen wbr vz cv vy cv wcel wo wi vz wal w3a vy wex vx vy vz vw vv
-      ax-groth vx cv vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv
-      cv vz cv wss vv cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz
-      cv vy cv wss vy cv vz cv cdom wbr vz cv vy cv wcel wo wi vz wal w3a vx cv
-      vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv cv vz cv wss vv
-      cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz cv vy cv wss vz
-      cv vy cv cen wbr vz cv vy cv wcel wo wi vz wal w3a vy vz cv vy cv wss vy
-      cv vz cv cdom wbr vz cv vy cv wcel wo wi vz wal vz cv vy cv wss vz cv vy
-      cv cen wbr vz cv vy cv wcel wo wi vz wal vx cv vy cv wcel vw cv vz cv wss
-      vw cv vy cv wcel wi vw wal vv cv vz cv wss vv cv vw cv wcel wi vv wal vw
-      vy cv wrex wa vz vy cv wral vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy
-      cv wcel wo wi vz cv vy cv wss vz cv vy cv cen wbr vz cv vy cv wcel wo wi
-      vz vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy cv wcel wo vz cv vy cv
-      cen wbr vz cv vy cv wcel wo vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy
-      cv cen wbr vz cv vy cv wcel vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy
-      cv cdom wbr vy cv vz cv cdom wbr wa vz cv vy cv cen wbr vz cv vy cv wss
-      vz cv vy cv cdom wbr vy cv vz cv cdom wbr vy cv cvv wcel vz cv vy cv wss
-      vz cv vy cv cdom wbr wi vy vex vz cv vy cv cvv ssdomg ax-mp biantrurd vz
-      cv vy cv sbthb syl6bb orbi1d pm5.74i albii 3anbi3i exbii mpbir $.
-      $( [10-Sep-2017] $)
-  $}
-)"
-},
-{
-R"(
-    $( Derive the Axiom of Power Sets ~ ax-pow from the Tarski-Grothendieck
-       axiom ~ ax-groth .  That it follows is mentioned by Bob Solovay at
-       ~ http://www.cs.nyu.edu/pipermail/fom/2008-March/012783.html .  Note
-       that ~ ax-pow is not used by the proof.  (Contributed by G&eacute;rard
-       Lang, 22-Jun-2009.) $))",
-R"(
-  ${
-    $d x y z w v u f $.
-    $( Derive the Axiom of Power Sets ~ ax-pow from the Tarski-Grothendieck
-       axiom ~ ax-groth .  That it follows is mentioned by Bob Solovay at
-       ~ http://www.cs.nyu.edu/pipermail/fom/2008-March/012783.html .  Note
-       that ~ ax-pow is not used by the proof.  (Contributed by G&eacute;rard
-       Lang, 22-Jun-2009.) $))"
-},
-{
-R"(cfv chil wss cn chil vf cv wf cn cT cnl cfv vf cv wf vf cv vx cv chli wbr
-      simpl cT cnl cfv cT nlelch.1 nlelshi shssii cn cT cnl cfv chil vf cv fss
-      sylancl chil cn cT vf cv fnfco sylancr cn cc0 csn cn cc0 csn cxp wf cn
-      cc0 csn cxp cn wfn cn cc0 c0ex fconst cn cc0 csn cn cc0 csn cxp ffn ax-mp
-      vn cn cT vf cv ccom cn cc0 csn cxp eqfnfv sylancl mpbird cn cT cnl cfv vf
-      cv wf vf cv vx cv chli wbr wa ccnfld ctopn cfv cc ctopon cfv wcel cc0 cc
-      wcel c1 cz wcel cn cc0 csn cxp cc0 ccnfld ctopn cfv clm cfv wbr ccnfld
-      ctopn cfv cc ctopon cfv wcel cn cT cnl cfv vf cv wf vf cv vx cv chli wbr
-      wa ccnfld ctopn cfv ccnfld ctopn cfv eqid cnfldtopon a1i cc0 cc wcel cn
-      cT cnl cfv vf cv wf vf cv vx cv chli wbr wa 0cn a1i c1 cz wcel cn cT cnl
-      cfv vf cv wf vf cv vx cv chli wbr wa 1z a1i cc0 ccnfld ctopn cfv c1 cc cn
-      nnuz lmconst syl3anc eqbrtrd lmmo chil cc cT wf vx cv cT cnl cfv wcel vx
-      cv chil wcel vx cv cT cfv cc0 wceq wa wb cT nlelch.1 lnfnfi vx cv cT
-      elnlfn ax-mp sylanbrc gen2 vx vf cT cnl cfv isch2 mpbir2an $.
-      $( [10-Sep-2017] $))",
-R"(cfv chil wss cn chil vf cv wf cn cT cnl cfv vf cv wf vf cv vx cv chli wbr
-      simpl cT cnl cfv cT nlelch.1 nlelshi shssii cn cT cnl cfv chil vf cv fss
-      sylancl chil cn cT vf cv fnfco sylancr cn cc0 csn cn cc0 csn cxp wf cn
-      cc0 csn cxp cn wfn cn cc0 c0ex fconst cn cc0 csn cn cc0 csn cxp ffn ax-mp
-      vn cn cT vf cv ccom cn cc0 csn cxp eqfnfv sylancl mpbird cn cT cnl cfv vf
-      cv wf vf cv vx cv chli wbr wa ccnfld ctopn cfv cc ctopon cfv wcel cc0 cc
-      wcel c1 cz wcel cn cc0 csn cxp cc0 ccnfld ctopn cfv clm cfv wbr ccnfld
-      ctopn cfv cc ctopon cfv wcel cn cT cnl cfv vf cv wf vf cv vx cv chli wbr
-      wa ccnfld ctopn cfv ccnfld ctopn cfv eqid cnfldtopon a1i cc0 cc wcel cn
-      cT cnl cfv vf cv wf vf cv vx cv chli wbr wa 0cn a1i c1 cz wcel cn cT cnl
-      cfv vf cv wf vf cv vx cv chli wbr wa 1z a1i cc0 ccnfld ctopn cfv c1 cc cn
-      nnuz lmconst syl3anc eqbrtrd lmmo chil cc cT wf vx cv cT cnl cfv wcel vx
-      cv chil wcel vx cv cT cfv cc0 wceq wa wb cT nlelch.1 lnfnfi vx cv cT
-      elnlfn ax-mp sylanbrc gen2 vx vf cT cnl cfv isch2 mpbir2an $.
-      $( [10-Sep-2017] $)
-  $}
-)"
-},
-{
-R"($( A continuous linear functional can be expressed as an inner product.
-       Existence part of Theorem 3.9 of [Beran] p. 104.  (Contributed by NM,
-       13-Feb-2006.)  (New usage is discouraged.) $))",
-R"(
-  ${
-    $d f n u v w x T $.
     riesz3.1 $e |- T e. LinFn $.
     riesz3.2 $e |- T e. ConFn $.
     $( A continuous linear functional can be expressed as an inner product.
        Existence part of Theorem 3.9 of [Beran] p. 104.  (Contributed by NM,
-       13-Feb-2006.)  (New usage is discouraged.) $))"
+       13-Feb-2006.)  (New usage is discouraged.) $)
+    riesz3i $p |- E. w e. ~H A. v e. ~H ( T ` v ) = ( v .ih w ) $=)"
 },
 
 {
@@ -1399,6 +1247,159 @@ R"(vv cv cT cfv vv cv vw cv csp co wceq vv chil wral vw chil wrex cT cnl cfv
       eqeq2d ralbidv rspcev syl2anc ex mpdan rexlimiv sylbi pm2.61ine $.)"
 },
 
+
+
+{R"($(
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                      Positive operators (cont.)
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+
+    $( Ordering relation for positive operators.  Definition of positive
+       operator ordering in [Kreyszig] p. 470.  (Contributed by NM,
+       23-Jul-2006.)  (New usage is discouraged.) $)
+    leopg $p |- ( ( T e. A /\ U e. B ) -> ( T <_op U <-> ( ( U -op T ) e.
+                HrmOp /\ A. x e. ~H 0 <_ ( ( ( U -op T ) ` x ) .ih x ) ) ) ) $=)",
+R"(
+  $}
+
+$(
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                      Positive operators (cont.)
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+
+  ${
+    $d x y z w A $.  $d x y B $.  $d x y C $.  $d x y D $.  $d x S $.
+    $d t u x y T $.  $d t u x U $.  $d t x y z $.
+    $( Ordering relation for positive operators.  Definition of positive
+       operator ordering in [Kreyszig] p. 470.  (Contributed by NM,
+       23-Jul-2006.)  (New usage is discouraged.) $)
+    leopg $p |- ( ( T e. A /\ U e. B ) -> ( T <_op U <-> ( ( U -op T ) e.
+                HrmOp /\ A. x e. ~H 0 <_ ( ( ( U -op T ) ` x ) .ih x ) ) ) ) $=)"
+},
+{
+R"($(
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+                    Zermelo-Fraenkel Set Theory
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+$)
+
+$(
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+             ZF Set Theory - start with the Axiom of Extensionality
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+$)
+
+$( Logic is a prerequisite. $)
+$( $[ logic.mm $] $) $( Use this if logic is separated out of set.mm. $)
+)",
+R"($(
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+             ZF Set Theory - start with the Axiom of Extensionality
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+$)
+)"
+},
+{
+R"($( Alternate version of the Tarski-Grothendieck Axiom.  (Contributed by NM,
+       18-Mar-2007.) $)
+    axgroth2 $p |- E. y ( x e. y /\ A. z e. y ( A. w ( w C_ z -> w e. y ) /\
+                       E. w e. y A. v ( v C_ z -> v e. w ) ) /\
+                     A. z ( z C_ y -> ( y ~<_ z \/ z e. y ) ) ) $=
+      vx cv vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv cv vz cv
+      wss vv cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz cv vy cv
+      wss vy cv vz cv cdom wbr vz cv vy cv wcel wo wi vz wal w3a vy wex vx cv
+      vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv cv vz cv wss vv
+      cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz cv vy cv wss vz
+      cv vy cv cen wbr vz cv vy cv wcel wo wi vz wal w3a vy wex vx vy vz vw vv
+      ax-groth vx cv vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv
+      cv vz cv wss vv cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz
+      cv vy cv wss vy cv vz cv cdom wbr vz cv vy cv wcel wo wi vz wal w3a vx cv
+      vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv cv vz cv wss vv
+      cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz cv vy cv wss vz
+      cv vy cv cen wbr vz cv vy cv wcel wo wi vz wal w3a vy vz cv vy cv wss vy
+      cv vz cv cdom wbr vz cv vy cv wcel wo wi vz wal vz cv vy cv wss vz cv vy
+      cv cen wbr vz cv vy cv wcel wo wi vz wal vx cv vy cv wcel vw cv vz cv wss
+      vw cv vy cv wcel wi vw wal vv cv vz cv wss vv cv vw cv wcel wi vv wal vw
+      vy cv wrex wa vz vy cv wral vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy
+      cv wcel wo wi vz cv vy cv wss vz cv vy cv cen wbr vz cv vy cv wcel wo wi
+      vz vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy cv wcel wo vz cv vy cv
+      cen wbr vz cv vy cv wcel wo vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy
+      cv cen wbr vz cv vy cv wcel vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy
+      cv cdom wbr vy cv vz cv cdom wbr wa vz cv vy cv cen wbr vz cv vy cv wss
+      vz cv vy cv cdom wbr vy cv vz cv cdom wbr vy cv cvv wcel vz cv vy cv wss
+      vz cv vy cv cdom wbr wi vy vex vz cv vy cv cvv ssdomg ax-mp biantrurd vz
+      cv vy cv sbthb syl6bb orbi1d pm5.74i albii 3anbi3i exbii mpbir $.
+      $( [10-Sep-2017] $)
+)",
+R"($( Alternate version of the Tarski-Grothendieck Axiom.  (Contributed by NM,
+       18-Mar-2007.) $)
+    axgroth2 $p |- E. y ( x e. y /\ A. z e. y ( A. w ( w C_ z -> w e. y ) /\
+                       E. w e. y A. v ( v C_ z -> v e. w ) ) /\
+                     A. z ( z C_ y -> ( y ~<_ z \/ z e. y ) ) ) $=
+      vx cv vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv cv vz cv
+      wss vv cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz cv vy cv
+      wss vy cv vz cv cdom wbr vz cv vy cv wcel wo wi vz wal w3a vy wex vx cv
+      vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv cv vz cv wss vv
+      cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz cv vy cv wss vz
+      cv vy cv cen wbr vz cv vy cv wcel wo wi vz wal w3a vy wex vx vy vz vw vv
+      ax-groth vx cv vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv
+      cv vz cv wss vv cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz
+      cv vy cv wss vy cv vz cv cdom wbr vz cv vy cv wcel wo wi vz wal w3a vx cv
+      vy cv wcel vw cv vz cv wss vw cv vy cv wcel wi vw wal vv cv vz cv wss vv
+      cv vw cv wcel wi vv wal vw vy cv wrex wa vz vy cv wral vz cv vy cv wss vz
+      cv vy cv cen wbr vz cv vy cv wcel wo wi vz wal w3a vy vz cv vy cv wss vy
+      cv vz cv cdom wbr vz cv vy cv wcel wo wi vz wal vz cv vy cv wss vz cv vy
+      cv cen wbr vz cv vy cv wcel wo wi vz wal vx cv vy cv wcel vw cv vz cv wss
+      vw cv vy cv wcel wi vw wal vv cv vz cv wss vv cv vw cv wcel wi vv wal vw
+      vy cv wrex wa vz vy cv wral vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy
+      cv wcel wo wi vz cv vy cv wss vz cv vy cv cen wbr vz cv vy cv wcel wo wi
+      vz vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy cv wcel wo vz cv vy cv
+      cen wbr vz cv vy cv wcel wo vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy
+      cv cen wbr vz cv vy cv wcel vz cv vy cv wss vy cv vz cv cdom wbr vz cv vy
+      cv cdom wbr vy cv vz cv cdom wbr wa vz cv vy cv cen wbr vz cv vy cv wss
+      vz cv vy cv cdom wbr vy cv vz cv cdom wbr vy cv cvv wcel vz cv vy cv wss
+      vz cv vy cv cdom wbr wi vy vex vz cv vy cv cvv ssdomg ax-mp biantrurd vz
+      cv vy cv sbthb syl6bb orbi1d pm5.74i albii 3anbi3i exbii mpbir $.
+      $( [10-Sep-2017] $)
+  $}
+)"
+},
+{
+R"(cfv chil wss cn chil vf cv wf cn cT cnl cfv vf cv wf vf cv vx cv chli wbr
+      simpl cT cnl cfv cT nlelch.1 nlelshi shssii cn cT cnl cfv chil vf cv fss
+      sylancl chil cn cT vf cv fnfco sylancr cn cc0 csn cn cc0 csn cxp wf cn
+      cc0 csn cxp cn wfn cn cc0 c0ex fconst cn cc0 csn cn cc0 csn cxp ffn ax-mp
+      vn cn cT vf cv ccom cn cc0 csn cxp eqfnfv sylancl mpbird cn cT cnl cfv vf
+      cv wf vf cv vx cv chli wbr wa ccnfld ctopn cfv cc ctopon cfv wcel cc0 cc
+      wcel c1 cz wcel cn cc0 csn cxp cc0 ccnfld ctopn cfv clm cfv wbr ccnfld
+      ctopn cfv cc ctopon cfv wcel cn cT cnl cfv vf cv wf vf cv vx cv chli wbr
+      wa ccnfld ctopn cfv ccnfld ctopn cfv eqid cnfldtopon a1i cc0 cc wcel cn
+      cT cnl cfv vf cv wf vf cv vx cv chli wbr wa 0cn a1i c1 cz wcel cn cT cnl
+      cfv vf cv wf vf cv vx cv chli wbr wa 1z a1i cc0 ccnfld ctopn cfv c1 cc cn
+      nnuz lmconst syl3anc eqbrtrd lmmo chil cc cT wf vx cv cT cnl cfv wcel vx
+      cv chil wcel vx cv cT cfv cc0 wceq wa wb cT nlelch.1 lnfnfi vx cv cT
+      elnlfn ax-mp sylanbrc gen2 vx vf cT cnl cfv isch2 mpbir2an $.
+      $( [10-Sep-2017] $))",
+R"(cfv chil wss cn chil vf cv wf cn cT cnl cfv vf cv wf vf cv vx cv chli wbr
+      simpl cT cnl cfv cT nlelch.1 nlelshi shssii cn cT cnl cfv chil vf cv fss
+      sylancl chil cn cT vf cv fnfco sylancr cn cc0 csn cn cc0 csn cxp wf cn
+      cc0 csn cxp cn wfn cn cc0 c0ex fconst cn cc0 csn cn cc0 csn cxp ffn ax-mp
+      vn cn cT vf cv ccom cn cc0 csn cxp eqfnfv sylancl mpbird cn cT cnl cfv vf
+      cv wf vf cv vx cv chli wbr wa ccnfld ctopn cfv cc ctopon cfv wcel cc0 cc
+      wcel c1 cz wcel cn cc0 csn cxp cc0 ccnfld ctopn cfv clm cfv wbr ccnfld
+      ctopn cfv cc ctopon cfv wcel cn cT cnl cfv vf cv wf vf cv vx cv chli wbr
+      wa ccnfld ctopn cfv ccnfld ctopn cfv eqid cnfldtopon a1i cc0 cc wcel cn
+      cT cnl cfv vf cv wf vf cv vx cv chli wbr wa 0cn a1i c1 cz wcel cn cT cnl
+      cfv vf cv wf vf cv vx cv chli wbr wa 1z a1i cc0 ccnfld ctopn cfv c1 cc cn
+      nnuz lmconst syl3anc eqbrtrd lmmo chil cc cT wf vx cv cT cnl cfv wcel vx
+      cv chil wcel vx cv cT cfv cc0 wceq wa wb cT nlelch.1 lnfnfi vx cv cT
+      elnlfn ax-mp sylanbrc gen2 vx vf cT cnl cfv isch2 mpbir2an $.
+      $( [10-Sep-2017] $)
+  $}
+)"
+},
 {
 R"(nlelch.1 nlelch.2 riesz3i vv cv cT cfv vv cv vw cv csp co wceq vv chil
       wral vv cv cT cfv vv cv vu cv csp co wceq vv chil wral wa vw cv vu cv
@@ -1472,47 +1473,6 @@ R"(wa cC cB cbr cfv cfv cc wcel cD cbr cfv clf ccnfn cin wcel cC cB cbr cfv
   $}
 )"
 },
-{
-R"($( Ordering relation for positive operators.  Definition of positive
-       operator ordering in [Kreyszig] p. 470.  (Contributed by NM,
-       23-Jul-2006.)  (New usage is discouraged.) $))",
-R"(
-  ${
-    $d x y z w A $.  $d x y B $.  $d x y C $.  $d x y D $.  $d x S $.
-    $d t u x y T $.  $d t u x U $.  $d t x y z $.
-    $( Ordering relation for positive operators.  Definition of positive
-       operator ordering in [Kreyszig] p. 470.  (Contributed by NM,
-       23-Jul-2006.)  (New usage is discouraged.) $))"
-},
-/*
-{
-R"(riesz4i $p |- E! w e. ~H A. v e. ~H ( T ` v ) = ( v .ih w ) $=
-      vv cv cT cfv vv cv vw cv csp co wceq vv chil wral vw chil wreu vv cv cT
-      cfv vv cv vw cv csp co wceq vv chil wral vw chil wrex vv cv cT cfv vv cv
-      vw cv csp co wceq vv chil wral vv cv cT cfv vv cv vu cv csp co wceq vv
-      chil wral wa vw cv vu cv wceq wi vu chil wral vw chil wral vw vv cT)",
-R"(riesz4i $p |- E! w e. ~H A. v e. ~H ( T ` v ) = ( v .ih w ) $=
-      vv cv cT cfv vv cv vw cv csp co wceq vv chil wral vw chil wreu vv cv cT
-      cfv vv cv vw cv csp co wceq vv chil wral vw chil wrex vv cv cT cfv vv cv
-      vw cv csp co wceq vv chil wral vv cv cT cfv vv cv vu cv csp co wceq vv
-      chil wral wa vw cv vu cv wceq wi vu chil wral vw chil wral vw vv cT)"
-},
-{
-R"(riesz4 $p |- ( T e. ( LinFn i^i ConFn ) ->
-                   E! w e. ~H A. v e. ~H ( T ` v ) = ( v .ih w ) ) $=
-      cT clf ccnfn cin wcel vv cv cT cfv vv cv vw cv csp co wceq vv chil wral
-      vw chil wreu vv cv cT clf ccnfn cin wcel cT chil cc0 csn cxp cif cfv vv
-      cv vw cv csp co wceq vv chil wral vw chil wreu cT chil cc0 csn cxp cT cT
-      clf ccnfn cin wcel cT chil cc0 csn cxp cif wceq vv cv cT cfv vv cv vw cv
-      csp co wceq vv chil wral vv cv cT clf ccnfn cin wcel cT chil cc0 csn cxp)",
-R"(riesz4 $p |- ( T e. ( LinFn i^i ConFn ) ->
-                   E! w e. ~H A. v e. ~H ( T ` v ) = ( v .ih w ) ) $=
-      vv cv cT clf ccnfn cin wcel cT chil cc0 csn cxp cif cfv vv
-      cv vw cv csp co wceq vv chil wral vw chil wreu cT chil cc0 csn cxp cT cT
-      clf ccnfn cin wcel cT chil cc0 csn cxp cif wceq vv cv cT cfv vv cv vw cv
-      csp co wceq vv chil wral vv cv cT clf ccnfn cin wcel cT chil cc0 csn cxp)"
-},
-*/
 {
 R"(riesz1 $p |- ( T e. LinFn -> ( ( normfn ` T ) e. RR <->
                   E. y e. ~H A. x e. ~H ( T ` x ) = ( x .ih y ) ) ) $=
