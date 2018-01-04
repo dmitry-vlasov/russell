@@ -29,18 +29,34 @@ inline string border(const Type tp) {
 namespace fs = boost::filesystem;
 
 struct Section {
-	Section() :
+	Section(const string& r) :
 	type(Type::SOURCE),
+	root(r),
 	prev_sect(nullptr),
 	next_sect(nullptr),
 	prev_sibling(nullptr),
 	next_sibling(nullptr),
-	parent(nullptr) { }
+	parent(nullptr),
+	is_appendix(false) { }
+
+	Section(Type t, const string& r, const string& h, const string& n, const string& f) :
+	type(t),
+	header(h),
+	name(n),
+	footer(f),
+	root(r),
+	prev_sect(nullptr),
+	next_sect(nullptr),
+	prev_sibling(nullptr),
+	next_sibling(nullptr),
+	parent(nullptr),
+	is_appendix(false) { }
 
 	~ Section() {
 		for (auto* p : parts) delete p;
 		for (auto* i : incs)  delete i;
 	}
+
 	void save() const {
 		string fd = root + dir;
 		if (fd.size() && !fs::exists(fd))
@@ -52,27 +68,20 @@ struct Section {
 		}
 		out.close();
 	}
+
 	void split() {
 		if (type == Type::PARAGRAPH || (next_sect && type == next_sect->type)) return;
 		string cont = contents;
 		boost::trim(cont);
 		if (!cont.size()) return;
 
-		Section* header = new Section;
-		header->name = name;
-		header->footer = footer;
+		Section* header = new Section(sub_type(), root, "", name, footer);
 		header->contents = contents;
 
-		header->root = root;
 		header->file = file;
-		header->dir = dir + file + "/";
+		header->dir  = dir + file + "/";
 		header->path = header->dir + header->file + ".mm";
 
-		switch (type) {
-		case Type::CHAPTER: header->type = Type::PARAGRAPH; break;
-		case Type::PART:    header->type = Type::CHAPTER;   break;
-		case Type::SOURCE:  header->type = Type::PART;      break;
-		}
 		contents.clear();
 
 		header->parent = parent;
@@ -81,17 +90,16 @@ struct Section {
 		header->prev_sect->next_sect = header;
 		header->next_sect->prev_sect = header;
 
-		header->prev_sibling = nullptr;
+		header->prev_sibling = prev_sibling;
 		header->next_sibling = header->next_sect;
 		header->next_sibling->prev_sibling = header;
 		incs.push_back(header);
 	}
+
 	string show() const {
 		string str;
 		const Section* imp = prev();
-		if (imp) {
-			str += "\n$[ " + imp->prev_sibling->path + " $]\n\n";
-		}
+		if (imp) str += "\n$[ " + imp->prev_sibling->path + " $]\n\n";
 		if (type != Type::SOURCE) {
 			str += "$(\n";
 			str += header;
@@ -105,10 +113,37 @@ struct Section {
 		return str;
 	}
 
-	const Section* prev() const {
-		const Section* s = this;
-		while (s && !s->prev_sibling) s = s->parent;
-		return s;
+	void init_paths() {
+		static set<string> names;
+		dir = init_dir();
+		bool has_endline = (*name.rbegin() == '\n');
+
+		string orig_name = name;
+		boost::trim_right(orig_name);
+		for (int i = 0; names.count(dir + name); ++i) {
+			name = orig_name + "_" + to_string(i);
+			//cout << "making new name: " << sect->name << endl;
+		}
+		names.insert(dir + name);
+		if (has_endline) name += '\n';
+
+		if (!file.size()) {
+			file = name;
+			boost::trim(file);
+			boost::replace_all(file, " ", "_");
+			boost::replace_all(file, "/", "_");
+			boost::replace_all(file, ":", "_");
+			boost::replace_all(file, ".", "_");
+			boost::replace_all(file, "?", "_");
+			boost::replace_all(file, "!", "_");
+			boost::replace_all(file, ";", "_");
+			boost::replace_all(file, "$", "_");
+			boost::replace_all(file, "\"", "_");
+			boost::replace_all(file, "\\", "_");
+			boost::replace_all(file, "'", "_");
+			path = dir + file + ".mm";
+		}
+		is_appendix = name.find("Appendix:  Typesetting definitions for the tokens in this file") != string::npos;
 	}
 
 	Type   type;
@@ -129,6 +164,38 @@ struct Section {
 	Section* parent;
 	vector<Section*> incs;
 	vector<Section*> parts;
+	bool is_appendix;
+
+private:
+	Type sub_type() const {
+		switch (type) {
+			case Type::SOURCE:  return Type::PART;
+			case Type::PART:    return Type::CHAPTER;
+			case Type::CHAPTER: return Type::PARAGRAPH;
+			default: {
+				cerr << "Something is going wrong, making sub paragraph" << endl;
+				return Type::PARAGRAPH;
+			}
+		}
+	}
+	const Section* prev() const {
+		const Section* s = this;
+		while (s && !s->prev_sibling) s = s->parent;
+		return s;
+	}
+
+	string init_dir() const {
+		string dir;
+		const Section* par = parent;
+		while (par && par->file.size()) {
+			if (par->parent)
+				dir = par->file + "/" + dir;
+			else
+				dir = par->dir + par->file + "/" + dir;
+			par = par->parent;
+		}
+		return dir;
+	}
 };
 
 }} // mdl::mm::cut
@@ -143,61 +210,17 @@ namespace phoenix = boost::phoenix;
 
 namespace cut_ {
 
-string init_dir (Section* sect) {
-	string dir;
-	const Section* par = sect->parent;
-	while (par && par->file.size()) {
-		if (par->parent)
-			dir = par->file + "/" + dir;
-		else
-			dir = par->dir + par->file + "/" + dir;
-		par = par->parent;
-	}
-	return dir;
-}
-
-void init_paths(Section* sect) {
-	static set<string> names;
-	string dir = init_dir(sect);
-	bool has_endline = (*sect->name.rbegin() == '\n');
-
-	string orig_name = sect->name;
-	boost::trim_right(orig_name);
-	for (int i = 0; names.count(dir + sect->name); ++i) {
-		sect->name = orig_name + "_" + to_string(i);
-		//cout << "making new name: " << sect->name << endl;
-	}
-	names.insert(dir + sect->name);
-	if (has_endline) sect->name += '\n';
-
-	if (!sect->file.size()) {
-		sect->file = sect->name;
-		boost::trim(sect->file);
-		boost::replace_all(sect->file, " ", "_");
-		boost::replace_all(sect->file, "/", "_");
-		boost::replace_all(sect->file, ":", "_");
-		boost::replace_all(sect->file, ".", "_");
-		boost::replace_all(sect->file, "?", "_");
-		boost::replace_all(sect->file, "!", "_");
-		boost::replace_all(sect->file, ";", "_");
-		boost::replace_all(sect->file, "$", "_");
-		boost::replace_all(sect->file, "\"", "_");
-		boost::replace_all(sect->file, "\\", "_");
-		boost::replace_all(sect->file, "'", "_");
-		sect->dir = dir;
-		sect->path = sect->dir + sect->file + ".mm";
-	}
-}
-
 struct Stack {
 	Stack() :
 	source(nullptr), part(nullptr), chapter(nullptr),
-	paragraph(nullptr), last(nullptr) { }
+	paragraph(nullptr), last(nullptr), appendix(false), appendix_contents(false) { }
 	Section* source;
 	Section* part;
 	Section* chapter;
 	Section* paragraph;
 	Section* last;
+	bool     appendix;
+	bool     appendix_contents;
 };
 
 static Stack stack;
@@ -205,8 +228,16 @@ static Stack stack;
 struct Add {
 	template<typename T1, typename T2>
 	struct result { typedef void type; };
-	void operator()(Section* sect, string root) const {
-		sect->root = root;
+	void operator()(Section* sect) const {
+		if (sect->is_appendix) {
+			stack.appendix = true;
+			delete sect;
+			return;
+		}
+		if (stack.appendix_contents) {
+			stack.appendix = false;
+			stack.appendix_contents = false;
+		}
 		sect->prev_sect = stack.last;
 		if (stack.last)
 			stack.last->next_sect = sect;
@@ -256,10 +287,14 @@ struct Add {
 			break;
 		default: throw Error("impossible");
 		}
-		init_paths(sect);
+		sect->init_paths();
 	}
 	void operator()(string& str) const {
-		stack.last->contents += str;
+		if (stack.appendix) {
+			stack.appendix_contents = true;
+		} else {
+			stack.last->contents += str;
+		}
 	}
 };
 
@@ -278,8 +313,13 @@ struct Grammar : qi::grammar<LocationIter, Section*(), qi::unused_type> {
 		using qi::lexeme;
 		using qi::eps;
 		using qi::labels::_val;
+		using qi::labels::_1;
 		using phoenix::at_c;
 		using phoenix::new_;
+		using qi::labels::_a;
+		using qi::labels::_b;
+		using qi::labels::_c;
+		using qi::labels::_d;
 
 		const phoenix::function<Add> add;
 		const phoenix::function<MakeString> makeString;
@@ -292,23 +332,23 @@ struct Grammar : qi::grammar<LocationIter, Section*(), qi::unused_type> {
 		header %= lexeme[+(ascii::char_ - FULL_PART_STR)];
 
 		section =
-			   lit("$(\n")                         [_val = new_<Section>()]
-			>> lexeme[*(ascii::char_ - "##" - "#*" - "=-")] [at_c<1>(*_val) = makeString(qi::labels::_1)]
-			>> border                              [at_c<0>(*_val) = qi::labels::_1]
-			>> lexeme[+(ascii::char_ - "##" - "#*" - "=-")] [at_c<2>(*_val) = makeString(qi::labels::_1)]
+			   lit("$(\n")
+			>> lexeme[*(ascii::char_ - "##" - "#*" - "=-")] [_b = makeString(_1)]
+			>> border                                       [_a = _1]
+			>> lexeme[+(ascii::char_ - "##" - "#*" - "=-")] [_c = makeString(_1)]
 			>> border
-			>> lexeme[*(ascii::char_ - "$)")]      [at_c<3>(*_val) = makeString(qi::labels::_1)]
-			>> lit("$)\n")                         [add(_val, phoenix::ref(root))];
+			>> lexeme[*(ascii::char_ - "$)")]               [_d = makeString(_1)]
+			>> lit("$)\n")                                  [_val = new_<Section>(_a, phoenix::ref(root), _b, _c, _d)];
 
 		contents =
-			lexeme[+(ascii::char_ - FULL_PARAGRAPH_STR - FULL_CHAPTER_STR - FULL_PART_STR)] [_val = makeString(qi::labels::_1)];
+			lexeme[+(ascii::char_ - FULL_PARAGRAPH_STR - FULL_CHAPTER_STR - FULL_PART_STR)] [_val = makeString(_1)];
 
 		source =
-			  eps         [add(_val, phoenix::ref(root))]
+			  eps        [add(_val)]
 			>> header
 			>> + (
-				section |
-				contents  [add(qi::labels::_1)]
+				section  [add(_1)]|
+				contents [add(_1)]
 			);
 
 		qi::on_error<qi::fail>(
@@ -331,7 +371,7 @@ struct Grammar : qi::grammar<LocationIter, Section*(), qi::unused_type> {
 
 	qi::rule<LocationIter, Type(), qi::unused_type> border;
 	qi::rule<LocationIter, string(), qi::unused_type> header;
-	qi::rule<LocationIter, Section*(), qi::unused_type> section;
+	qi::rule<LocationIter, Section*(), qi::locals<Type, string, string, string, string>, qi::unused_type> section;
 	qi::rule<LocationIter, string(), qi::unused_type> contents;
 	qi::rule<LocationIter, Section*(), qi::unused_type> source;
 };
@@ -1513,8 +1553,8 @@ Section* parse(const Path& in, const Path& out) {
 	in.read(data, &cut_patches);
 	LocationIter iter(data.begin(), Lex::toInt(in.name()));
 	LocationIter end(data.end(), Lex::toInt(in.name()));
-	Section* source = new Section;
-	source->root = (out.root().size() && out.root().back() != '/') ? (out.root() + "/") : out.root();
+	string root = (out.root().size() && out.root().back() != '/') ? (out.root() + "/") : out.root();
+	Section* source = new Section(root);
 	source->file = in.name();
 	source->dir = "";
 	source->path = source->dir + "/" + source->file + ".mm";

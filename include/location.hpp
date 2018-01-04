@@ -118,7 +118,7 @@ private :
 	}
 };
 
-enum class TokenType { FULL, SEMI, NONE, DEFAULT = SEMI };
+enum class TokenType { FULL, SEMI, NONE, DEFAULT = FULL };
 template<class S, TokenType T = TokenType::DEFAULT> class TokenStorage;
 
 template<class S>
@@ -135,6 +135,13 @@ struct TokenStorage<S, TokenType::FULL> {
 	const char* end() const { return end_; }
 	void set(Source* s, const char* b, const char* e) {
 		src_ = s; beg_ = b; end_ = e;
+	}
+	bool operator < (const TokenStorage& t) const {
+		if (src_ < t.src_) return true;
+		else if (src_ > t.src_) return false;
+		else if (end_ < t.end_) return true;
+		else if (end_ > t.end_) return false;
+		else return beg_ < t.beg_;
 	}
 
 private:
@@ -190,19 +197,29 @@ struct TokenStorage<S, TokenType::SEMI> {
 		if (beg_ < 0 || end_ < 0) {
 			throw std::length_error("source position can't be less then zero");
 		}
-		bits.set(src_, beg_, end_);
+		try {
+			bits.set(src_, beg_, end_);
+		} catch (std::overflow_error& e) {
+			throw std::overflow_error(string(e.what()) + "source: " + Lex::toStr(s->id()));
+		}
+#ifdef DEBUG_LOCATION
 		if (s != src()) {
 			cerr << "wrong src: " << (void*)s << " != " << (void*)src() << endl;
 			throw std::exception();
 		}
 		if (b != beg()) {
-			cerr << "wrong beg: " << b << " != " << beg() << endl;
+			cerr << "wrong beg: " << (void*)b << " != " << (void*)beg() << endl;
+			cerr << "wrong beg: " << string(b, 100) << " != " << string(beg(), 100) << endl;
+			cerr << bits.show() << endl;
 			throw std::exception();
 		}
 		if (e != end()) {
-			cerr << "wrong end: " << e << " != " << end() << endl;
+			cerr << "wrong end: " << (void*)e << " != " << (void*)end() << endl;
+			cerr << "wrong end: " << string(e, 100) << " != " << string(end(), 100) << endl;
+			cerr << bits.show() << endl;
 			throw std::exception();
 		}
+#endif
 	}
 	void operator = (const TokenStorage& s) {
 		bits = s.bits;
@@ -254,9 +271,11 @@ private:
 
 		void set(uint s, uint b, uint e) {
 			if (s >= UNDEF_SRC)
-				throw std::overflow_error("number of sources overflow: don't fit into 16 bit unsigned integer");
+				throw std::overflow_error("number of sources overflow: don't fit into 16 bit unsigned integer\n");
 			if (b >= UNDEF_PTR)
-				throw std::overflow_error("source position don't fit into 24 bit unsigned integer");
+				throw std::overflow_error(string("source position ") + to_string(b) + " don't fit into 24 bit unsigned integer\n");
+			if (e >= UNDEF_PTR)
+				throw std::overflow_error(string("source position ") + to_string(e) + " don't fit into 24 bit unsigned integer\n");
 			bits = s + ((uint64_t)b << 16) + ((uint64_t)e << (16 + 24));
 		}
 		void setSrc(uint s) {
