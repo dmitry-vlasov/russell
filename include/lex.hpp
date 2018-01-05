@@ -11,21 +11,22 @@ struct Lex {
 	static const string& toStr (uint i) { return get().toString(i); }
 
 private:
+	typedef cmap<string, uint> Table;
+	typedef cvector<string> Strings;
+
 	Lex() : strings(), table() { }
 	static Lex& get() { static Lex lex; return lex; }
 	uint getIndex(const string& str) const {
-		if (table.find(str) == table.end())
-			return -1;
-		else
-			return table.find(str)->second;
+		Table::const_accessor accessor;
+		return table.find(accessor, str) ? accessor->second : -1;
 	}
 	uint toIndex(const string& str) {
-		if (table.find(str) == table.end()) {
-			int ind = table.size();
-			table[str] = ind;
+		Table::accessor accessor;
+		if (table.insert(accessor, str)) {
+			accessor->second = strings.size();
 			strings.push_back(str);
 		}
-		return table[str];
+		return accessor->second;
 	}
 	const string& toString(uint i) const {
 		if (i >= strings.size()) {
@@ -34,8 +35,8 @@ private:
 		}
 		return strings[i];
 	}
-	vector<string>    strings;
-	map<string, uint> table;
+	Strings strings;
+	Table   table;
 };
 
 inline string show_sy(Symbol symb) {

@@ -69,6 +69,12 @@
 
 #include "config.h"
 
+// TBB headers
+#include "tbb/concurrent_vector.h"
+#include "tbb/concurrent_hash_map.h"
+#include "tbb/blocked_range.h"
+#include "tbb/parallel_for.h"
+
 size_t get_total_mem();
 size_t get_peak_RSS();
 size_t get_current_RSS();
@@ -118,6 +124,11 @@ namespace mdl {
 	using boost::any;
 
 	namespace po = boost::program_options;
+
+	template<typename K, typename T, typename H = tbb::tbb_hash_compare<K>, typename A = tbb::tbb_allocator<std::pair<K, T>>>
+	using cmap = tbb::interface5::concurrent_hash_map<K, T, H, A>;
+	template<typename T, typename A = tbb::cache_aligned_allocator<T>>
+	using cvector = tbb::concurrent_vector<T, A>;
 }
 
 #define UNDEF_UINT 0xFFFFFFFF
