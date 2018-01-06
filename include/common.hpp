@@ -297,56 +297,47 @@ class Table {
 		Data* data;
 		set<Data**> users;
 	};
-	map<uint, Storage> refs;
-	mutex m;
+	typedef cmap<uint, Storage> Refs;
+	Refs refs;
 
 	void add(uint n, Data* p) {
-		m.lock();
 		if (!p) {
-			m.unlock();
 			throw Error("adding null pointer, label", Lex::toStr(n));
 		}
-		if (!refs.count(n)) {
-			refs[n].data = p;
+		typename Refs::accessor a;
+		if (refs.insert(a, n)) {
+			a->second.data = p;
 		} else {
-			Storage& d = refs[n];
-			if (d.data) throw Error("reusing live pointer, label", Lex::toStr(n));
-			d.data = p;
-			for (Data** u : d.users) *u = p;
+			if (a->second.data) throw Error("reusing live pointer, label", Lex::toStr(n));
+			a->second.data = p;
+			for (Data** u : a->second.users) *u = p;
 		}
-		m.unlock();
 	}
 	void del(uint n) {
-		m.lock();
-		if (!refs.count(n)) {
-			m.unlock();
+		typename Refs::accessor a;
+		if (refs.find(a, n)) {
+			if (!a->second.data) {
+				throw Error("deleting null pointer, label", Lex::toStr(n));
+			}
+			a->second.data = nullptr;
+			for (Data** u : a->second.users) *u = nullptr;
+		} else {
 			throw Error("deleting unknown label", Lex::toStr(n));
 		}
-		Storage& d = refs[n];
-		if (!d.data) {
-			m.unlock();
-			throw Error("deleting null pointer, label", Lex::toStr(n));
-		}
-		d.data = nullptr;
-		for (Data** u : d.users) *u = nullptr;
-		m.unlock();
 	}
 	void use(uint n, Data*& u) {
-		m.lock();
-		Storage& d = refs[n];
-		d.users.insert(&u);
-		u = d.data;
-		m.unlock();
+		typename Refs::accessor a;
+		refs.insert(a, n);
+		a->second.users.insert(&u);
+		u = a->second.data;
 	}
 	void unuse(uint n, Data*& u) {
-		m.lock();
-		if (!refs.count(n)) {
-			m.unlock();
+		typename Refs::accessor a;
+		if (refs.find(a, n)) {
+			a->second.users.erase(&u);
+		} else {
 			throw Error("unusing unknown label", Lex::toStr(n));
 		}
-		Storage& d = refs[n];
-		d.users.erase(&u);
-		m.unlock();
 	}
 
 public:
@@ -359,10 +350,12 @@ public:
 		return os.str();
 	}
 	Data* access(uint n) {
-		return refs.count(n) ? refs.at(n).data : nullptr;
+		typename Refs::accessor a;
+		return refs.find(a, n) ? a->second.data : nullptr;
 	}
 	const Data* access(uint n) const {
-		return refs.count(n) ? refs.at(n).data : nullptr;
+		typename Refs::accessor a;
+		return refs.find(a, n) ? a->second.data : nullptr;
 	}
 	bool has(uint n) const {
 		return refs.count(n);
@@ -376,8 +369,8 @@ public:
 	}
 	int size() const { return refs.size(); }
 
-	typedef typename map<uint, Storage>::iterator iterator;
-	typedef typename map<uint, Storage>::const_iterator const_iterator;
+	typedef typename Refs::iterator iterator;
+	typedef typename Refs::const_iterator const_iterator;
 
 	iterator begin() { return refs.begin(); }
 	iterator end() { return refs.end(); }

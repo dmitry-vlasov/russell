@@ -75,6 +75,8 @@
 #include "tbb/blocked_range.h"
 #include "tbb/parallel_for.h"
 
+#define iterate(N, B) for (int i = 0; i < (N); ++ i) { (B); }
+
 size_t get_total_mem();
 size_t get_peak_RSS();
 size_t get_current_RSS();

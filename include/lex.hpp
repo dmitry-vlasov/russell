@@ -12,9 +12,7 @@ struct Lex {
 
 private:
 	typedef cmap<string, uint> Table;
-	typedef cvector<string> Strings;
 
-	Lex() : strings(), table() { }
 	static Lex& get() { static Lex lex; return lex; }
 	uint getIndex(const string& str) const {
 		Table::const_accessor accessor;
@@ -23,20 +21,29 @@ private:
 	uint toIndex(const string& str) {
 		Table::accessor accessor;
 		if (table.insert(accessor, str)) {
-			accessor->second = strings.size();
-			strings.push_back(str);
+			accessor->second = table.size() - 1;
 		}
 		return accessor->second;
 	}
 	const string& toString(uint i) const {
-		if (i >= strings.size()) {
+		if (i >= table.size()) {
 			static string str = "<UNDEF>";
 			return str;
 		}
+		static map<int, string> strings;
+		int n = table.size() - strings.size();
+		if (n > 0) {
+			static mutex m;
+			m.lock();
+			for (auto p : table) {
+				strings[p.second] = p.first;
+			}
+			m.unlock();
+		}
 		return strings[i];
 	}
-	Strings strings;
-	Table   table;
+
+	Table table;
 };
 
 inline string show_sy(Symbol symb) {

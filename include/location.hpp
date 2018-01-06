@@ -230,32 +230,40 @@ struct TokenStorage<S, TokenType::SEMI> {
 
 private:
 	struct Src {
-		uint src_;
-		uint sys_;
-		bool operator < (const Src& ss) const {
-			if (sys_ < ss.sys_) return true;
-			else if (sys_ == ss.sys_) return src_ < ss.src_;
-			else return false;
-		}
+		Src(uint src, uint sys) : src_ (src), sys_(sys) { }
+		const uint src_;
+		const uint sys_;
+
+		struct HashCompare {
+			static size_t hash(const Src& s) {
+		        return s.sys_ + s.src_ * (1 << 8);
+		    }
+		    //! True if strings are equal
+		    static bool equal(const Src& x, const Src& y) {
+		        return x.src_ == y.src_ && x.sys_ == y.sys_;
+		    }
+		};
 	};
+
+	typedef cmap<Src, uint, typename Src::HashCompare> SrcMap;
+	typedef cvector<Src> SrcVector;
 
 	Src get_src() const {
 		assert(src_ind()[bits.src()].src_ != -1);
 		return src_ind()[bits.src()];
 	}
 	uint set_src(Source* s) {
-		Src src = Src{s->id(), s->sys()};
-		if (src_map().count(src)) {
-			return src_map().at(src);
-		} else {
+		Src src = Src(s->id(), s->sys());
+		typename SrcMap::accessor a;
+		if (src_map().insert(a, src)) {
 			uint ret = src_map().size();
 			src_ind().push_back(src);
-			src_map()[src] = ret;
-			return ret;
+			a->second = ret;
 		}
+		return a->second;
 	}
-	static map<Src, uint>& src_map() { static map<Src, uint> m; return m; }
-	static vector<Src>& src_ind() { static vector<Src> v; return v; }
+	static SrcMap& src_map() { static SrcMap m; return m; }
+	static SrcVector& src_ind() { static SrcVector v; return v; }
 
 	struct Bits {
 		Bits() : bits(UNDEF_ALL) {}
