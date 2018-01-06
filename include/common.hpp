@@ -472,8 +472,9 @@ public:
 		try {
 			if (t.is_defined()) {
 				Accessor a;
-				refs().insert(a, t);
-				a->second.del_ref();
+				if (!refs().insert(a, t)) {
+					a->second.del_ref();
+				}
 				refs().erase(a);
 			}
 		} catch (Error& err) {
