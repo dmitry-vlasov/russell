@@ -5,6 +5,7 @@ namespace mdl { namespace mm  {
 
 void merge(uint src, uint tgt, uint tgt_root);
 void cut(uint src, uint tgt, uint tgt_root);
+void read(uint src);
 void parse(uint src);
 void translate(uint src, uint tgt);
 
@@ -112,7 +113,7 @@ const Sys::Actions& Sys::actions() {
 		{"help",   help()},
 		{"curr",   current()},
 		{"destroy", destroy()},
-		{"read",   Action([](const Args& args) { parse(Sys::make_name(args[0])); return Return(); }, description("read"))},
+		{"read",   Action([](const Args& args) { read(Sys::make_name(args[0])); parse(Sys::make_name(args[0])); return Return(); }, description("read"))},
 		{"clear",  Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Sys::make_name(args[0])); return Return(); }, description("clear"))},
 		{"transl", Action([](const Args& args) { translate(Sys::make_name(args[0]), Sys::make_name(args[1])); return Return(); }, description("transl"))},
 		{"write",  Action([](const Args& args) { write(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},

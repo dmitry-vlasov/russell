@@ -27,6 +27,7 @@ else()
 		mm/mm_sys.cpp 
 		mm/mm_merge.cpp 
 		mm/mm_parser.cpp 
+		mm/mm_read.cpp 
 		mm/mm_show.cpp  
 		mm/mm_translate.cpp 
 		

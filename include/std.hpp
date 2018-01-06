@@ -72,6 +72,7 @@
 // TBB headers
 #include "tbb/concurrent_vector.h"
 #include "tbb/concurrent_hash_map.h"
+#include "tbb/concurrent_queue.h"
 #include "tbb/blocked_range.h"
 #include "tbb/parallel_for.h"
 

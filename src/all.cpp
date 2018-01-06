@@ -15,6 +15,7 @@
 #include "mm/mm_cut.cpp"
 #include "mm/mm_merge.cpp"
 #include "mm/mm_parser.cpp"
+#include "mm/mm_read.cpp"
 #include "mm/mm_show.cpp"
 #include "mm/mm_translate.cpp"
 

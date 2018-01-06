@@ -574,7 +574,7 @@ struct Source : public Owner<Src, Sys> {
 	typedef User<Src, Sys> User_;
 	typedef cmap<User_, uint> Map;
 
-	Source(uint l) : Owner<Src, Sys>(l, Token<Src>()) { }
+	Source(uint l) : Owner<Src, Sys>(l, Token<Src>()), parsed(false) { }
 	virtual ~Source() { }
 
 	const string& data() { return data_; }
@@ -614,6 +614,8 @@ struct Source : public Owner<Src, Sys> {
 		for (auto s : included_) str += Lex::toStr(s.second) + "\n";
 		return str;
 	}
+
+	bool parsed;
 
 private:
 	void includesAdd(uint s) {

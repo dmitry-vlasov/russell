@@ -23,8 +23,6 @@ private:
 	};
 	peg::parser parser;
 
-	static vector<Patch> const_patches;
-
 public:
 	static const char* mm_syntax() {
 		return R"(
@@ -174,23 +172,24 @@ public:
 			}
 			context->block = context->block->parent;
 		};
-		parser["SOURCE"] = [label](const peg::SemanticValues& sv, peg::any& context) {
+		parser["SOURCE"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
 			c.source_stack.top()->block = sv[0].get<Block*>();
 			Source* s = c.source_stack.top();
 			c.source_stack.pop();
 			return s;
 		};
-		parser["SOURCE"].enter = [label](peg::any& context) {
+		parser["SOURCE"].enter = [](peg::any& context) {
 			Context& c = *context.get<Context*>();
 			c.src_enter = true;
 		};
 		parser["INCLUDE"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			uint id = Sys::make_name(sv.token());
-			const bool primary = !Sys::get().math.get<Source>().has(id);
+			uint id = Sys::make_name(Path::trim_ext(sv.token()));
+			Source* s = Sys::mod().math.get<Source>().access(id);
+			const bool primary = !s->parsed;
 			if (primary) parse(id, &c);
-			c.source_stack.top()->include(Sys::mod().math.get<Source>().access(id));
+			c.source_stack.top()->include(s);
 			return new Inclusion(id, primary, c.token(sv));
 		};
 		parser.log = [label](size_t ln, size_t col, const std::string& err_msg) {
@@ -217,15 +216,14 @@ public:
 
 private:
 	static void parse(uint label, Context* context) {
-		Path path(Lex::toStr(label), Sys::conf().get("root"), "mm");
-		Source* src = new Source(label);
+		Source* src = Sys::mod().math.get<Source>().access(label);
 		context->source_stack.push(src);
-		src->read(&const_patches);
 		Parser p(label);
 		peg::any c(context);
 		if (!p.parser.parse<mdl::mm::Source*>(src->data().c_str(), c, src)) {
 			throw Error("parsing of " + Lex::toStr(label) + " failed");
 		}
+		src->parsed = true;
 	}
 	static void markVars(Vect& expr, const vector<Scope>& stack) {
     	for (Symbol& s : expr) {
@@ -247,303 +245,10 @@ private:
 	}
 };
 
-vector<Patch> Parser::const_patches = {
-{
-R"(
-  $c har ~<_* $.
-)",
-R"(
-  $c har $.
-  $c ~<_* $.
-)"
-},
-{
-R"(
-  $c Fin1a Fin2 Fin3 Fin4 Fin5 Fin6 Fin7 $.
-)",
-R"(
-  $c Fin1a $.
-  $c Fin2 $.
-  $c Fin3 $.
-  $c Fin4 $.
-  $c Fin5 $.
-  $c Fin6 $.
-  $c Fin7 $.
-)"
-},
-{
-R"(
-  $c numer denom $.
-)",
-R"(
-  $c numer $.
-  $c denom $.
-)"
-},
-{
-R"(
-  $c Xs_ ^s $.
-)",
-R"(
-  $c Xs_ $.
-  $c ^s $.
-)"
-},
-{
-R"(
-  $c Moore mrCls mrInd ACS $.
-)",
-R"(
-  $c Moore $.
-  $c mrCls $.
-  $c mrInd $.
-  $c ACS $.
-)"
-},
-{
-R"(
-  $c Preset Dirset $.
-)",
-R"(
-  $c Preset $.
-  $c Dirset $.
-)"
-},
-{
-R"(
-  $c <" "> $.
-)",
-R"(
-  $c <" $.
-  $c "> $.
-)"
-},
-{
-R"(
-  $c No <s bday $.
-)",
-R"(
-  $c No $.
-  $c <s $.
-  $c bday $.
-)"
-},
-{
-R"(
-  $c (x) Bigcup SSet Trans Limits Fix Funs Singleton Singletons Image Cart $.
-  $c Img Domain Range pprod Apply Cup Cap Succ Funpart FullFun Restrict $.
-)",
-R"(
-  $c (x) $.
-  $c Bigcup $.
-  $c SSet $.
-  $c Trans $.
-  $c Limits $.
-  $c Fix $.
-  $c Funs $.
-  $c Singleton $.
-  $c Singletons $.
-  $c Image $.
-  $c Cart $.
-
-  $c Img $.
-  $c Domain $.
-  $c Range $.
-  $c pprod $.
-  $c Apply $.
-  $c Cup $.
-  $c Cap $.
-  $c Succ $.
-  $c Funpart $.
-  $c FullFun $.
-  $c Restrict $.
-)"
-},
-{
-R"(
-  $c << >> XX. $.
-)",
-R"(
-  $c << $.
-  $c >> $.
-  $c XX. $.
-)"
-},
-{
-R"(
-  $c EE Btwn Cgr $.
-)",
-R"(
-  $c EE $.
-  $c Btwn $.
-  $c Cgr $.
-)"
-},
-{
-R"(
-  $c InnerFiveSeg Cgr3 Colinear FiveSeg $.
-)",
-R"(
-  $c InnerFiveSeg $.
-  $c Cgr3 $.
-  $c Colinear $.
-  $c FiveSeg $.
-)"
-},
-{
-R"(
-  $c Line LinesEE Ray $.
-)",
-R"(
-  $c Line $.
-  $c LinesEE $.
-  $c Ray $.
-)"
-},
-{
-R"(
-  $c Pell1QR Pell14QR Pell1234QR PellFund []NN $.
-)",
-R"(
-  $c Pell1QR $.
-  $c Pell14QR $.
-  $c Pell1234QR $.
-  $c PellFund $.
-  $c []NN $.
-)"
-},
-{
-R"(
-  $c rmX rmY $.
-)",
-R"(
-  $c rmX $.
-  $c rmY $.
-)"
-},
-{
-R"(
-  $c freeLMod unitVec $.
-)",
-R"(
-  $c freeLMod $.
-  $c unitVec $.
-)"
-},
-{
-R"(
-  $c LIndF LIndS $.
-)",
-R"(
-  $c LIndF $.
-  $c LIndS $.
-)"
-},
-{
-R"(
-  $c Monic Poly< $.
-)",
-R"(
-  $c Monic $.
-  $c Poly< $.
-)"
-},
-{
-R"(
-  $c degAA minPolyAA $.
-)",
-R"(
-  $c degAA $.
-  $c minPolyAA $.
-)"
-},
-{
-R"(
-  $c _ZZ IntgOver $.
-)",
-R"(
-  $c _ZZ $.
-  $c IntgOver $.
-)"
-},
-{
-R"(
-  $c maMul Mat $.
-)",
-R"(
-  $c maMul $.
-  $c Mat $.
-)"
-},
-{
-R"(
-  $c maDet maAdju $.
-)",
-R"(
-  $c maDet $.
-  $c maAdju $.
-)"
-},
-{
-R"(
-  $c TopSep TopLnd $.
-)",
-R"(
-  $c TopSep $.
-  $c TopLnd $.
-)"
-},
-{
-R"(
-  $c +r -r .v PtDf RR3 plane3 line3 $.
-)",
-R"(
-  $c +r $.
-  $c -r $.
-  $c .v $.
-  $c PtDf $.
-  $c RR3 $.
-  $c plane3 $.
-  $c line3 $.
-)"
-},
-{
-R"(
-  $c LPIdeal LPIR $.
-)",
-R"(
-  $c LPIdeal $.
-  $c LPIR $.
-)"
-},
-{
-R"(
-  $c hadd cadd $.
-)",
-R"(
-  $c hadd $.
-  $c cadd $.
-)"
-},
-{
-R"(
-  $c +r -r .v PtDf RR3 $( plane3 $) line3 $.
-)",
-R"(
-  $c +r $.
-  $c -r $.
-  $c .v $.
-  $c PtDf $.
-  $c RR3 $.
-  $c line3 $. $( plane3 $)
-)"
-}
-};
-
 }
 
 void parse(uint label) {
-	delete Sys::get().math.get<Source>().access(label);
+
 	Parser::parse(label);
 }
 
