@@ -143,6 +143,14 @@ struct TokenStorage<S, TokenType::FULL> {
 		else if (end_ > t.end_) return false;
 		else return beg_ < t.beg_;
 	}
+	struct HashCompare {
+		static size_t hash(const TokenStorage& s) {
+			return reinterpret_cast<size_t>(s.src_) + reinterpret_cast<size_t>(s.beg_) + reinterpret_cast<size_t>(s.end_);
+		}
+		static bool equal(const TokenStorage& x, const TokenStorage& y) {
+			return x.src_ == y.src_ && x.beg_ == y.beg_ && x.end_ == y.end_;
+		}
+	};
 
 private:
 	Source*     src_;
@@ -162,6 +170,15 @@ struct TokenStorage<S, TokenType::NONE> {
 	const char* beg() const { return nullptr; }
 	const char* end() const { return nullptr; }
 	void set(Source* s, const char* b, const char* e) { }
+
+	struct HashCompare {
+		static size_t hash(const TokenStorage& s) {
+			return 0;
+		}
+		static bool equal(const TokenStorage& x, const TokenStorage& y) {
+			return true;
+		}
+	};
 };
 
 template<class S>
@@ -227,6 +244,14 @@ struct TokenStorage<S, TokenType::SEMI> {
 	bool operator < (const TokenStorage<S>& t) const {
 		return bits < t.bits;
 	}
+	struct HashCompare {
+		static size_t hash(const TokenStorage& s) {
+			return s.bits.bits();
+		}
+		static bool equal(const TokenStorage& x, const TokenStorage& y) {
+			return x.bits == y.bits;
+		}
+	};
 
 private:
 	struct Src {
@@ -266,16 +291,17 @@ private:
 	static SrcVector& src_ind() { static SrcVector v; return v; }
 
 	struct Bits {
-		Bits() : bits(UNDEF_ALL) {}
-		Bits(const Bits& b) : bits(b.bits) { }
+		Bits() : bits_(UNDEF_ALL) {}
+		Bits(const Bits& b) : bits_(b.bits_) { }
 
-		uint src() const { return bits & SRC_MASK; }
-		uint beg() const { return (bits & BEG_MASK) >> 16; }
-		uint end() const { return (bits & END_MASK) >> (16 + 24) ; }
+		uint src() const { return bits_ & SRC_MASK; }
+		uint beg() const { return (bits_ & BEG_MASK) >> 16; }
+		uint end() const { return (bits_ & END_MASK) >> (16 + 24) ; }
+		std::uint64_t bits() const { return bits_; };
 
-		bool srcIsDef() const { return (bits & SRC_MASK) != UNDEF_SRC; }
-		bool begIsDef() const { return ((bits & BEG_MASK) >> 16) != UNDEF_PTR; }
-		bool endIsDef() const { return ((bits & END_MASK) >> (16 + 24)) != UNDEF_PTR; }
+		bool srcIsDef() const { return (bits_ & SRC_MASK) != UNDEF_SRC; }
+		bool begIsDef() const { return ((bits_ & BEG_MASK) >> 16) != UNDEF_PTR; }
+		bool endIsDef() const { return ((bits_ & END_MASK) >> (16 + 24)) != UNDEF_PTR; }
 
 		void set(uint s, uint b, uint e) {
 			if (s >= UNDEF_SRC)
@@ -284,16 +310,16 @@ private:
 				throw std::overflow_error(string("source position ") + to_string(b) + " don't fit into 24 bit unsigned integer\n");
 			if (e >= UNDEF_PTR)
 				throw std::overflow_error(string("source position ") + to_string(e) + " don't fit into 24 bit unsigned integer\n");
-			bits = s + ((uint64_t)b << 16) + ((uint64_t)e << (16 + 24));
+			bits_ = s + ((uint64_t)b << 16) + ((uint64_t)e << (16 + 24));
 		}
 		void setSrc(uint s) {
 			set(s, UNDEF_PTR, UNDEF_PTR);
 		}
 		void operator = (const Bits& b) {
-			bits = b.bits;
+			bits_ = b.bits_;
 		}
 		bool operator < (const Bits& b) const {
-			return bits < b.bits;
+			return bits_ < b.bits_;
 		}
 
 	private:
@@ -305,16 +331,16 @@ private:
 			BEG_MASK  = (uint64_t)0xFFFFFF << 16,        // following 24 bits
 			END_MASK  = (uint64_t)0xFFFFFF << (16 + 24), // following 24 bits
 		};
-		std::uint64_t bits;
+		std::uint64_t bits_;
 	};
 
 	Bits bits;
 };
 
-
 template<class S>
 struct Token {
 	typedef S Source;
+	typedef TokenStorage<Source> Storage;
 
 	Token() { }
 	Token(Source* s) : storage(s) { }
@@ -373,6 +399,15 @@ struct Token {
 	const Source* src() const { return storage.src(); }
 	const char* beg() const { return storage.beg(); }
 	const char* end() const { return storage.end(); }
+
+	struct HashCompare {
+		static size_t hash(const Token& t) {
+			return Storage::HashCompare::hash(t.storage);
+		}
+		static bool equal(const Token& x, const Token& y) {
+			return Storage::HashCompare::equal(x.storage, y.storage);
+		}
+	};
 
 private:
 	TokenStorage<Source> storage;

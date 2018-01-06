@@ -451,12 +451,18 @@ class Refs {
 	typedef Token<Src> Token_;
 	typedef Tokenable<Src> Tokenable_;
 	typedef Ref<Sys> Ref_;
+	typedef cmap<Token_, Ref_, typename Token_::HashCompare> Refs_;
+	typedef typename Refs_::accessor Accessor;
 
 public:
 
 	static void add(const Token_& t, const Tokenable_* r) {
 		try {
-			if (t.is_defined()) refs()[t].add_ref(r);
+			if (t.is_defined()) {
+				Accessor a;
+				refs().insert(a, t);
+				a->second.add_ref(r);
+			}
 		} catch (Error& err) {
 			err.msg += "token: " + t.show(true) + "\n";
 			throw err;
@@ -464,7 +470,12 @@ public:
 	}
 	static void del(const Token_& t) {
 		try {
-			if (t.is_defined() && refs()[t].del_ref()) refs().erase(t);
+			if (t.is_defined()) {
+				Accessor a;
+				refs().insert(a, t);
+				a->second.del_ref();
+				refs().erase(a);
+			}
 		} catch (Error& err) {
 			err.msg += "token: " + t.show(true) + "\n";
 			throw err;
@@ -474,13 +485,14 @@ public:
 		Src* s = Sys::mod().math.template get<Src>().access(src);
 		const char* c = locate_position(line, col, s->data().c_str());
 		Token_ t(s, c, c);
-		return refs().count(t) ? refs().at(t).get() : nullptr;
+		Accessor a;
+		return refs().find(a, t) ? a->second.get() : nullptr;
 	}
 
 private:
 	Refs() { }
-	static map<Token_, Ref_>& refs() {
-		static map<Token_, Ref_> r; return r;
+	static Refs_& refs() {
+		static Refs_ r; return r;
 	}
 };
 
