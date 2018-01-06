@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common.hpp"
+#include "symbol.hpp"
 
 namespace mdl { namespace mm {
 
@@ -11,6 +12,7 @@ class Floating;
 class Source;
 
 class Math {
+	Table<Symbol>    symbols;
 	Table<Theorem>   theorems;
 	Table<Axiom>     axioms;
 	Table<Essential> essentials;

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "std.hpp"
-#include "symbol.hpp"
 
 namespace mdl {
 
@@ -45,13 +44,6 @@ private:
 
 	Table table;
 };
-
-inline string show_sy(Symbol symb) {
-	return Lex::toStr(symb.lit);
-}
-inline string show_id(uint lab) {
-	return Lex::toStr(lab);
-}
 
 } // mdl
 

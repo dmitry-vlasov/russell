@@ -2,7 +2,6 @@
 
 #include "std.hpp"
 #include "location.hpp"
-#include "symbol.hpp"
 #include "timer.hpp"
 #include "actions.hpp"
 #include "lex.hpp"

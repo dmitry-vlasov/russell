@@ -3,8 +3,6 @@
 
 namespace mdl { namespace mm {
 
-//Constants::Constants(const Vect& ex) : expr(ex) { }
-
 inline Ref::Type find_type(uint label) {
 	Sys::Math& math = Sys::mod().math;
 	if (math.get<Floating>().has(label)) {

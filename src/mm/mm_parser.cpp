@@ -189,6 +189,7 @@ public:
 			Source* s = Sys::mod().math.get<Source>().access(id);
 			const bool primary = !s->parsed;
 			if (primary) parse(id, &c);
+			//if (primary) parse(id);
 			c.source_stack.top()->include(s);
 			return new Inclusion(id, primary, c.token(sv));
 		};

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "rus_sys.hpp"
+#include "symbol.hpp"
 
 namespace mdl { namespace rus {
 

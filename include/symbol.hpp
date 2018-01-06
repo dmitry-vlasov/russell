@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "std.hpp"
+#include "common.hpp"
 
 namespace mdl {
 
@@ -85,8 +85,12 @@ inline void operator += (Vect& vect_1, const Vect& vect_2) {
 	for (auto s : vect_2) vect_1.push_back(s);
 }
 
-string show_sy(Symbol);
-string show_id(uint);
+inline string show_sy(Symbol symb) {
+	return Lex::toStr(symb.lit);
+}
+inline string show_id(uint lab) {
+	return Lex::toStr(lab);
+}
 
 inline string show_ex(const Vect& vect) {
 	string s;
