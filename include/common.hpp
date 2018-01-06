@@ -572,6 +572,7 @@ template<class Src, class Sys>
 struct Source : public Owner<Src, Sys> {
 	typedef Owner<Src, Sys> Owner_;
 	typedef User<Src, Sys> User_;
+	typedef cmap<User_, uint> Map;
 
 	Source(uint l) : Owner<Src, Sys>(l, Token<Src>()) { }
 	virtual ~Source() { }
@@ -587,18 +588,20 @@ struct Source : public Owner<Src, Sys> {
 	void write() const { path().write(data_); }
 
 	// Transitively closed inclusion relation:
-	const set<User_>& includes() const { return includes_; }
-	const set<User_>& included() const { return included_; }
+	bool includes(Src* s) const {
+		typename Map::const_accessor a;
+		return includes_.find(a, User_(s));
+	}
 
 	void include(Src* src) {
 		this->includesAdd(src->id());
 		src->includedAdd(Owner_::id());
 		for (auto& des : src->includes_) {
-			this->includesAdd(des.id());
-			const_cast<Src*>(des.get())->includedAdd(Owner_::id());
+			this->includesAdd(des.second);
+			const_cast<Src*>(des.first.get())->includedAdd(Owner_::id());
 			for (auto& ded : included_) {
-				const_cast<Src*>(ded.get())->includesAdd(des.id());
-				const_cast<Src*>(des.get())->includedAdd(ded.id());
+				const_cast<Src*>(ded.first.get())->includesAdd(des.second);
+				const_cast<Src*>(des.first.get())->includedAdd(ded.second);
 			}
 		}
 	}
@@ -606,23 +609,27 @@ struct Source : public Owner<Src, Sys> {
 		string str;
 		str += string("Source: ") + Lex::toStr(Owner_::id()) + "\n\n";
 		str += "includeS:\n";
-		for (auto s : includes_) str += Lex::toStr(s.get()->id()) + "\n";
+		for (auto s : includes_) str += Lex::toStr(s.second) + "\n";
 		str += "\nincludeD:\n";
-		for (auto s : included_) str += Lex::toStr(s.get()->id()) + "\n";
+		for (auto s : included_) str += Lex::toStr(s.second) + "\n";
 		return str;
 	}
 
 private:
 	void includesAdd(uint s) {
-		includes_.insert(User_(s));
+		typename Map::accessor a;
+		includes_.insert(a, User_(s));
+		a->second = s;
 	}
 	void includedAdd(uint s) {
-		included_.insert(User_(s));
+		typename Map::accessor a;
+		included_.insert(a, User_(s));
+		a->second = s;
 	}
 	template<class, class> friend struct Source;
 
-	set<User_> includes_;
-	set<User_> included_;
+	Map includes_;
+	Map included_;
 	string data_;
 };
 
