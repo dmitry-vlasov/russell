@@ -10,6 +10,7 @@ class Axiom;
 class Essential;
 class Floating;
 class Source;
+class Symbol;
 
 class Math {
 	Table<Symbol>    symbols;
@@ -28,6 +29,8 @@ public:
 	Table<T>& get();
 	template<class T>
 	const Table<T>& get() const;
+
+	Math(): symbols(false) { }
 };
 
 struct Sys : public mdl::Sys<Sys, Math> {

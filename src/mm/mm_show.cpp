@@ -19,8 +19,8 @@ ostream& operator << (ostream& os, const Proof& proof) {
 	return os;
 }
 
-ostream& operator << (ostream& os, const Variables& vars) {
-	os << "$v " << vars.expr << "$.";
+ostream& operator << (ostream& os, const Variable& var) {
+	os << "$v " << var.symb << "$.";
 	return os;
 }
 
@@ -51,9 +51,10 @@ ostream& operator << (ostream& os, const Theorem& th) {
 }
 
 ostream& operator << (ostream& os, const Node& node) {
+	if (!node.val.ptr) return os;
 	switch(node.type) {
 	case Node::CONSTANT:   os << *(node.val.cst); break;
-	case Node::VARIABLES:  os << *(node.val.var); break;
+	case Node::VARIABLE:   os << *(node.val.var); break;
 	case Node::DISJOINTED: os << *(node.val.dis); break;
 	case Node::FLOATING:   os << *(node.val.flo); break;
 	case Node::ESSENTIAL:  os << *(node.val.ess); break;

@@ -1,52 +1,49 @@
 #pragma once
 
-#include "mm_sys.hpp"
+#include "mm_expr.hpp"
 
 namespace mdl { namespace mm {
 
-typedef mdl::Token<Source> Token;
-typedef mdl::Tokenable<Source> Tokenable;
-
 struct Constant : public Tokenable {
-	Constant(Symbol s, const Token& t = Token()) : Tokenable(t), symb(s) { }
+	Constant(uint c, const Token& t = Token()) : Tokenable(t), symb(c, false, t) { }
 	Symbol symb;
 };
 
-struct Variables : public Tokenable {
-	Variables(const Vect& e, const Token& t = Token()) : Tokenable(t), expr(e) { }
-	Vect  expr;
+struct Variable : public Tokenable {
+	Variable(uint v, const Token& t = Token()) : Tokenable(t), symb(v, true, t) { }
+	Symbol symb;
 };
 
 struct Disjointed : public Tokenable {
-	Disjointed(const Vect& e, const Token& t = Token()) : Tokenable(t), expr(e) { }
-	Vect  expr;
+	Disjointed(Expr&& e, const Token& t = Token()) : Tokenable(t), expr(std::move(e)) { }
+	Expr expr;
 };
 
 struct Essential : public Owner<Essential> {
-	Essential(uint l, const Vect& e, const Token& t = Token()) : Owner(l, t), expr(e) { }
-	Vect  expr;
+	Essential(uint l, Expr&& e, const Token& t = Token()) : Owner(l, t), expr(std::move(e)) { }
+	Expr expr;
 };
 
 struct Floating : public Owner<Floating> {
-	Floating(uint l, const Vect& e, const Token& t = Token()) : Owner(l, t), expr(e) { }
-	Symbol type() const { return expr[0]; }
-	Symbol var() const { return expr[1]; }
-	Vect  expr;
+	Floating(uint l, Expr&& e, const Token& t = Token()) : Owner(l, t), expr(std::move(e)) { }
+	uint type() const { return expr[0].id(); }
+	uint var() const { return expr[1].id(); }
+	Expr expr;
 };
 
 struct Axiom : public Owner<Axiom> {
-	Axiom(uint l, const Vect& e, const Token& t = Token()) : Owner(l, t), expr(e), arity(-1) { }
-	Vect  expr;
-	uint  arity;
+	Axiom(uint l, Expr&& e, const Token& t = Token()) : Owner(l, t), expr(std::move(e)), arity(-1) { }
+	Expr expr;
+	uint arity;
 };
 
 class Proof;
 
 struct Theorem : public Owner<Theorem> {
-	Theorem(uint l, const Vect& e, Proof* p = nullptr, const Token& t = Token()) :
-		Owner(l, t), expr(e), arity(Undef<uint>::get()), proof(p) { }
+	Theorem(uint l, Expr&& e, Proof* p = nullptr, const Token& t = Token()) :
+		Owner(l, t), expr(std::move(e)), arity(Undef<uint>::get()), proof(p) { }
 	~Theorem() override;
-	Vect   expr;
+	Expr   expr;
 	uint   arity;
 	Proof* proof;
 };
@@ -112,7 +109,7 @@ struct Node {
 	enum Type {
 		NONE,
 		CONSTANT,
-		VARIABLES,
+		VARIABLE,
 		DISJOINTED,
 		FLOATING,
 		ESSENTIAL,
@@ -127,7 +124,7 @@ struct Node {
 		Value() : ptr(nullptr) { }
 		void*       ptr;
 		Constant*   cst;
-		Variables*  var;
+		Variable*   var;
 		Disjointed* dis;
 		Floating*   flo;
 		Essential*  ess;
@@ -140,8 +137,8 @@ struct Node {
 	};
 
 	Node()              : ind(-1), type(NONE),       val() { }
-	Node(Constant* c)   : ind(-1), type(CONSTANT),  val() { val.cst = c; }
-	Node(Variables* v)  : ind(-1), type(VARIABLES),  val() { val.var = v; }
+	Node(Constant* c)   : ind(-1), type(CONSTANT),   val() { val.cst = c; }
+	Node(Variable* v)   : ind(-1), type(VARIABLE),   val() { val.var = v; }
 	Node(Disjointed* d) : ind(-1), type(DISJOINTED), val() { val.dis = d; }
 	Node(Floating* f)   : ind(-1), type(FLOATING),   val() { val.flo = f; }
 	Node(Essential* e)  : ind(-1), type(ESSENTIAL),  val() { val.ess = e; }
@@ -164,7 +161,7 @@ struct Node {
 		}
 		return -1; // Pacifying compiler
 	}
-	Vect& expr() const {
+	Expr& expr() const {
 		switch (type) {
 		case FLOATING:   return val.flo->expr;
 		case ESSENTIAL:  return val.ess->expr;
@@ -172,7 +169,7 @@ struct Node {
 		case THEOREM:    return val.th->expr;
 		default : assert(false && "impossible"); break;
 		}
-		static Vect ex; return ex; // Pacifying compiler
+		static Expr ex; return ex; // Pacifying compiler
 	}
 	const Proof* proof() const {
 		assert(type == AXIOM || type == THEOREM);
@@ -221,7 +218,7 @@ inline void Node::destroy() {
 	switch(type) {
 	case NONE: break;
 	case CONSTANT:   delete val.cst; break;
-	case VARIABLES:  delete val.var; break;
+	case VARIABLE:   delete val.var; break;
 	case DISJOINTED: delete val.dis; break;
 	case FLOATING:   delete val.flo; break;
 	case ESSENTIAL:  delete val.ess; break;
@@ -240,8 +237,8 @@ ostream& operator << (ostream& os, const Node& node);
 ostream& operator << (ostream& os, const Constant& cst);
 ostream& operator << (ostream& os, const Ref& ref);
 ostream& operator << (ostream& os, const Proof& proof);
-ostream& operator << (ostream& os, const Variables& vars);
-ostream& operator << (ostream& os, const Variables& disj);
+ostream& operator << (ostream& os, const Variable& vars);
+ostream& operator << (ostream& os, const Disjointed& disj);
 ostream& operator << (ostream& os, const Essential& ess);
 ostream& operator << (ostream& os, const Floating& flo);
 ostream& operator << (ostream& os, const Axiom& ax);

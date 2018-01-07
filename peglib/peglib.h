@@ -135,6 +135,20 @@ public:
     }
 
     template <
+		typename T,
+		typename std::enable_if<!std::is_same<T, any>::value>::type*& = enabler
+	>
+	T get_val() const {
+		assert(content_);
+		auto p = dynamic_cast<holder<T>*>(content_);
+		assert(p);
+		if (!p) {
+			throw std::bad_cast();
+		}
+		return p->value_;
+	}
+
+    template <
         typename T,
         typename std::enable_if<std::is_same<T, any>::value>::type*& = enabler
     >

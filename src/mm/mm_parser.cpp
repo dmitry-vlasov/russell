@@ -5,15 +5,10 @@ namespace mdl { namespace mm { namespace {
 
 struct Parser {
 private:
-	struct Scope {
-		set<Symbol> vars;
-		set<Symbol> consts;
-	};
 	struct Context {
 		Context() : src_enter(false), block(nullptr) { }
 		bool    src_enter;
 		Block*  block;
-		vector<Scope>  scope_stack;
 		stack<Source*> source_stack;
 		set<Block*>    src_blocks;
 
@@ -33,7 +28,7 @@ public:
 			ELEMENT <- COMMENT / DISJ / ESS / TH / '${' BLOCK '$}'/ AX / CONST / VAR / FLO / INCLUDE 
 			EXPR    <- (SYMB / COMMENT)+
 			CONST   <-      '$c' SYMB '$.'
-			VAR     <-      '$v' EXPR '$.'
+			VAR     <-      '$v' SYMB '$.'
 			DISJ    <-      '$d' EXPR '$.'
 			FLO     <- LAB  '$f' EXPR '$.'
 			ESS     <- LAB  '$e' EXPR '$.'
@@ -53,68 +48,49 @@ public:
 	Parser(uint label) : parser(mm_syntax()) {
 
 		parser["SYMB"] = [](const peg::SemanticValues& sv) {
-			return Symbol(Lex::toInt(sv.token()));
+			return Lex::toInt(sv.token());
 		};
 		parser["LAB"] = [](const peg::SemanticValues& sv) {
 			return Lex::toInt(sv.token());
 		};
 		parser["EXPR"] = [](const peg::SemanticValues& sv) {
-			Vect expr;
+			Expr expr;
 			expr.reserve(sv.size());
 			for (auto& s : sv) {
-				if (s.is<Symbol>()) expr += s.get<Symbol>();
+				if (s.is<uint>()) expr.emplace_back(s.get<uint>());
 				else delete s.get<Comment*>();
 			}
 			return expr;
 		};
 		parser["CONST"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Symbol s = sv[0].get<Symbol>();
-			Constant* constant = new Constant(s, c.token(sv));
-			c.scope_stack.back().consts.insert(s);
-			return constant;
+			uint s = sv[0].get<uint>();
+			return new Constant(s, c.token(sv));
 		};
 		parser["VAR"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Variables* vars = new Variables(sv[0].get<Vect>(), c.token(sv));
-			for (Symbol v : vars->expr)
-				c.scope_stack.back().vars.insert(v);
-			return vars;
+			uint v = sv[0].get<uint>();
+			return new Variable(v, c.token(sv));
 		};
 		parser["DISJ"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Disjointed* disj = new Disjointed(sv[0].get<Vect>(), c.token(sv));
-			for (Symbol v : disj->expr)
-				c.scope_stack.back().vars.insert(v);
-			return disj;
+			return new Disjointed(sv[0].get_val<Expr>(), c.token(sv));
 		};
 		parser["ESS"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Essential* ess = new Essential(sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv));
-			ess->token = c.token(sv);
-			markVars(ess->expr, c.scope_stack);
-			return ess;
+			return new Essential(sv[0].get<uint>(), sv[1].get_val<Expr>(), c.token(sv));
 		};
 		parser["FLO"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Floating* flo = new Floating(sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv));
-			flo->token = c.token(sv);
-			markVars(flo->expr, c.scope_stack);
-			return flo;
+			return new Floating(sv[0].get<uint>(), sv[1].get_val<Expr>(), c.token(sv));
 		};
 		parser["AX"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Axiom* ax = new Axiom(sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv));
-			ax->token = c.token(sv);
-			markVars(ax->expr, c.scope_stack);
-			return ax;
+			return new Axiom(sv[0].get<uint>(), sv[1].get_val<Expr>(), c.token(sv));
 		};
 		parser["TH"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Theorem* th = new Theorem(sv[0].get<uint>(), sv[1].get<Vect>(), sv[2].get<Proof*>(), c.token(sv));
-			markVars(th->expr, c.scope_stack);
-			th->token = c.token(sv);
-			return th;
+			return new Theorem(sv[0].get<uint>(), sv[1].get_val<Expr>(), sv[2].get<Proof*>(), c.token(sv));
 		};
 		parser["PROOF"] = [](const peg::SemanticValues& sv) {
 			return new Proof(std::move(sv.transform<Ref*>()));
@@ -138,7 +114,7 @@ public:
 			case 4: node = Node(sv[0].get<Block*>());     break;
 			case 5: node = Node(sv[0].get<Axiom*>());     break;
 			case 6: node = Node(sv[0].get<Constant*>()); break;
-			case 7: node = Node(sv[0].get<Variables*>()); break;
+			case 7: node = Node(sv[0].get<Variable*>()); break;
 			case 8: node = Node(sv[0].get<Floating*>());  break;
 			case 9: node = Node(sv[0].get<Inclusion*>()); break;
 			}
@@ -156,18 +132,14 @@ public:
 		parser["BLOCK"].enter = [](peg::any& c) {
 			Context* context = c.get<Context*>();
 			context->block = new Block(context->block);
-			if (!context->src_enter) {
-				context->scope_stack.push_back(Scope());
-			} else {
+			if (context->src_enter) {
 				context->src_blocks.insert(context->block);
 			}
 			context->src_enter = false;
 		};
 		parser["BLOCK"].leave = [](peg::any& c) {
 			Context* context = c.get<Context*>();
-			if (!context->src_blocks.count(context->block)) {
-				context->scope_stack.pop_back();
-			} else {
+			if (context->src_blocks.count(context->block)) {
 				context->src_blocks.erase(context->block);
 			}
 			context->block = context->block->parent;
@@ -188,8 +160,7 @@ public:
 			uint id = Sys::make_name(Path::trim_ext(sv.token()));
 			Source* s = Sys::mod().math.get<Source>().access(id);
 			const bool primary = !s->parsed;
-			if (primary) parse(id, &c);
-			//if (primary) parse(id);
+			if (primary) parse(id);
 			c.source_stack.top()->include(s);
 			return new Inclusion(id, primary, c.token(sv));
 		};
@@ -202,16 +173,12 @@ public:
 
 	static void parse(uint label) {
 		Context* context = new Context();
-		context->scope_stack.push_back(Scope());
 		try {
 			parse(label, context);
 		} catch(Error& e) {
 			delete context;
 			throw e;
 		}
-		assert(!context->scope_stack.empty());
-		context->scope_stack.pop_back();
-		assert(context->scope_stack.empty());
 		delete context;
 	}
 
@@ -226,21 +193,6 @@ private:
 		}
 		src->parsed = true;
 	}
-	static void markVars(Vect& expr, const vector<Scope>& stack) {
-    	for (Symbol& s : expr) {
-    		bool is_var   = false;
-    		bool is_const = false;
-			for (const Scope& vc : stack) {
-				if (vc.vars.count(s)) is_var = true;
-				if (vc.consts.count(s)) is_const = true;
-			}
-			if (is_var && is_const)
-				throw Error("constant symbol is marked as variable", show_sy(s));
-			if (!is_var && !is_const)
-				throw Error("symbol is neither constant nor variable", show_sy(s));
-			s.var = is_var;
-		}
-    }
 	static void init_indexes(vector<Node>& nodes) {
 		for (uint i = 0; i < nodes.size(); ++ i) nodes[i].ind = i;
 	}

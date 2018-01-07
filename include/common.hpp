@@ -4,6 +4,7 @@
 #include "location.hpp"
 #include "timer.hpp"
 #include "actions.hpp"
+#include "symbol.hpp"
 #include "lex.hpp"
 #include "io.hpp"
 #include "log.hpp"
@@ -298,6 +299,7 @@ class Table {
 	};
 	typedef cmap<uint, Storage> Refs;
 	Refs refs;
+	bool strict;
 
 	void add(uint n, Data* p) {
 		if (!p) {
@@ -307,19 +309,23 @@ class Table {
 		if (refs.insert(a, n)) {
 			a->second.data = p;
 		} else {
-			if (a->second.data) throw Error("reusing live pointer, label", Lex::toStr(n));
-			a->second.data = p;
-			for (Data** u : a->second.users) *u = p;
+			if (a->second.data) {
+				if (strict) throw Error("reusing live pointer, label", Lex::toStr(n));
+			} else {
+				a->second.data = p;
+				for (Data** u : a->second.users) *u = p;
+			}
 		}
 	}
 	void del(uint n) {
 		typename Refs::accessor a;
 		if (refs.find(a, n)) {
 			if (!a->second.data) {
-				throw Error("deleting null pointer, label", Lex::toStr(n));
+				if (strict) throw Error("deleting null pointer, label", Lex::toStr(n));
+			} else {
+				a->second.data = nullptr;
+				for (Data** u : a->second.users) *u = nullptr;
 			}
-			a->second.data = nullptr;
-			for (Data** u : a->second.users) *u = nullptr;
 		} else {
 			throw Error("deleting unknown label", Lex::toStr(n));
 		}
@@ -340,6 +346,8 @@ class Table {
 	}
 
 public:
+	Table(bool s = true) : strict(s) { }
+
 	string show() const {
 		ostringstream os;
 		os << "size: " << to_string(refs.size()) << endl;

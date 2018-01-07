@@ -12,8 +12,6 @@
 
 #pragma once
 
-#include "common.hpp"
-
 namespace mdl {
 
 struct Symbol {

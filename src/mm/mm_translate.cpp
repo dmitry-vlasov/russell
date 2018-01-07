@@ -154,17 +154,17 @@ Tree* reduce(Tree* tree, const map<uint, Ref*>& red) {
 	}
 }
 
-void gather_expr_vars(set<Symbol>& vars, const Vect& expr) {
-	for (Symbol s : expr)
-		if (s.var) vars.insert(s);
+void gather_expr_vars(set<uint>& vars, const Vect& expr) {
+	for (auto s : expr)
+		if (s.var) vars.insert(uint(s.lit));
 }
 
-void gather_inner_vars(const set<Symbol>& fvars,
-	set<Symbol>& ivars, set<Symbol>& avars, const Proof* proof) {
+void gather_inner_vars(const set<uint>& fvars,
+	set<uint>& ivars, set<uint>& avars, const Proof* proof) {
 	if (!proof) return;
 	for (Ref* r : proof->refs) {
 		if (r->type() == Ref::FLOATING) {
-			Symbol v = r->flo()->var();
+			uint v = r->flo()->var();
 			avars.insert(v);
 			if (fvars.find(v) == fvars.end())
 				ivars.insert(v);
@@ -185,11 +185,11 @@ struct Maps {
 
 // Replace variable sets with single set, which contains only needed variables.
 //
-void reduce_variables(smm::Assertion* ass, const set<Symbol>& all_vars) {
+void reduce_variables(smm::Assertion* ass, const set<uint>& all_vars) {
 	Vect rvars;
 	for (const smm::Variables* vars : ass->variables) {
-		for (Symbol v : vars->expr) {
-			if (all_vars.find(v) != all_vars.end())
+		for (auto v : vars->expr) {
+			if (all_vars.find(v.lit) != all_vars.end())
 				rvars += v;
 		}
 		delete vars;
@@ -201,12 +201,12 @@ void reduce_variables(smm::Assertion* ass, const set<Symbol>& all_vars) {
 
 // Replace variable sets with single set, which contains only needed variables.
 //
-void reduce_disjointed(smm::Assertion* ass, const set<Symbol>& all_vars) {
+void reduce_disjointed(smm::Assertion* ass, const set<uint>& all_vars) {
 	vector<smm::Disjointed*> red_disjs;
 	for (auto disj : ass->disjointed) {
 		smm::Disjointed* red_disj = new smm::Disjointed();
-		for (Symbol s : disj->expr) {
-			if (all_vars.find(s) != all_vars.end())
+		for (auto s : disj->expr) {
+			if (all_vars.find(uint(s.lit)) != all_vars.end())
 				red_disj->expr.push_back(s);
 		}
 		if (red_disj->expr.size() > 1)
@@ -222,19 +222,18 @@ void reduce_disjointed(smm::Assertion* ass, const set<Symbol>& all_vars) {
 // Remove floatings, which variable is not needed, and switch those flos,
 // which are used only in proof to inner.
 //
-void reduce_floatings(smm::Assertion* ass, const set<Symbol>& flo_vars,
-	const set<Symbol>& inn_vars, Maps& maps) {
+void reduce_floatings(smm::Assertion* ass, const set<uint>& flo_vars, const set<uint>& inn_vars, Maps& maps) {
 	vector<smm::Floating*> red_flos;
 	vector<smm::Inner*>    red_inns;
 	uint flo_ind = 0;
 	uint inn_ind = 0;
 	for (auto flo : ass->floating) {
-		if (flo_vars.find(flo->var()) != flo_vars.end()) {
+		if (flo_vars.find(uint(flo->var().lit)) != flo_vars.end()) {
 			flo->index = flo_ind ++;
 			red_flos.push_back(flo);
 			continue;
 		}
-		if (inn_vars.find(flo->var()) != inn_vars.end()) {
+		if (inn_vars.find(uint(flo->var().lit)) != inn_vars.end()) {
 			flo->index = inn_ind ++;
 			red_inns.push_back(new smm::Inner {flo->index, flo->expr});
 			const Floating* mm_flo =
@@ -314,9 +313,9 @@ ostream& operator << (ostream& os, const ArgMap& amap) {
 */
 // Reduce permutation, remove variable which are not needed.
 //
-void reduce_permutation(smm::Assertion* ass, const set<Symbol>& needed, ArgMap& args) {
+void reduce_permutation(smm::Assertion* ass, const set<uint>& needed, ArgMap& args) {
 	for (auto flo : ass->floating) {
-		if (needed.find(flo->var()) == needed.end()) {
+		if (needed.find(uint(flo->var().lit)) == needed.end()) {
 			args.remove(flo->index);
 		}
 	}
@@ -346,15 +345,15 @@ smm::Proof* translate_proof(Maps& maps, const Proof* mproof) {
 
 void reduce(Maps& maps, smm::Assertion* ass, ArgMap& args, const Proof* proof) {
 	// Gather the variables, used in assertion hypotheses and statement (header).
-	set<Symbol> flo_vars;
+	set<uint> flo_vars;
 	for (auto ess : ass->essential) {
 		gather_expr_vars(flo_vars, ess->expr);
 	}
 	gather_expr_vars(flo_vars, ass->prop->expr);
 
 	// Gather the variables, used in proof but not in header, and collect all vars.
-	set<Symbol> inn_vars;
-	set<Symbol> all_vars(flo_vars);
+	set<uint> inn_vars;
+	set<uint> all_vars(flo_vars);
 	gather_inner_vars(flo_vars, inn_vars, all_vars, proof);
 
 	reduce_variables(ass, all_vars);
@@ -382,7 +381,7 @@ smm::Proof* transform_proof(Maps& maps, const Proof* proof) {
 }
 
 struct Scope {
-	deque<Variables*>  vars;
+	deque<Variable*>   vars;
 	deque<Disjointed*> disj;
 	deque<Floating*>   flos;
 	deque<Essential*>  esss;
@@ -403,17 +402,23 @@ Scope gather_scope() {
 	return scope;
 }
 
+Vect translate_expr(const Expr& e) {
+	Vect ex; ex.reserve(e.size());
+	for (auto s : e) ex.push_back(mdl::Symbol(s.id(), s.get()->is_var));
+	return ex;
+}
+
 void add(Maps& maps, const Scope& scope, smm::Assertion* ass) {
 	for (auto var : scope.vars)
-		ass->variables.push_back(new smm::Variables { var->expr });
+		ass->variables.push_back(new smm::Variables{ Vect{mdl::Symbol(var->symb.id(), true)} });
 	for (auto dis : scope.disj)
-		ass->disjointed.push_back(new smm::Disjointed { dis->expr });
+		ass->disjointed.push_back(new smm::Disjointed{ translate_expr(dis->expr) });
 	for (auto ess : scope.esss) {
-		ass->essential.push_back(new smm::Essential {ess->id(), ess->expr });
+		ass->essential.push_back(new smm::Essential{ess->id(), translate_expr(ess->expr) });
 		maps.essentials[ess] = ass->essential.back();
 	}
 	for (auto flo : scope.flos) {
-		ass->floating.push_back(new smm::Floating {flo->id(), flo->expr });
+		ass->floating.push_back(new smm::Floating{flo->id(), translate_expr(flo->expr) });
 		maps.floatings[flo] = ass->floating.back();
 	}
 }
@@ -441,7 +446,7 @@ ArgMap arg_map(const deque<Node>& ar_orig) {
 
 smm::Assertion* translate_ass(Maps& maps, const Node& n, const Block* block)  {
 	smm::Assertion* ass = new smm::Assertion(n.label());
-	ass->prop = new smm::Proposition(n.type == Node::AXIOM, n.label(), n.expr());
+	ass->prop = new smm::Proposition(n.type == Node::AXIOM, n.label(), translate_expr(n.expr()));
 
 	Scope scope = gather_scope();
 	add(maps, scope, ass);
@@ -481,7 +486,7 @@ void translate_node(Maps& maps, const Node& node, const Block* block, smm::Sourc
 		target->contents.push_back(smm::Node(c));
 	} break;
 	case Node::CONSTANT: {
-		smm::Constant* c = new smm::Constant { node.val.cst->symb };
+		smm::Constant* c = new smm::Constant { mdl::Symbol(node.val.cst->symb.id(), false) };
 		target->contents.push_back(smm::Node(c));
 	} break;
 	case Node::THEOREM:
@@ -500,7 +505,7 @@ void translate_node(Maps& maps, const Node& node, const Block* block, smm::Sourc
 		smm::Inclusion* i = new smm::Inclusion(s->id(), node.val.inc->primary);
 		target->contents.push_back(smm::Node(i));
 	} break;
-	case Node::VARIABLES:
+	case Node::VARIABLE:
 		scope_stack.back().vars.push_back(node.val.var); break;
 	case Node::DISJOINTED:
 		scope_stack.back().disj.push_back(node.val.dis); break;

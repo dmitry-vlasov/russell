@@ -13,7 +13,8 @@ struct Maps {
 	map<const smm::Floating*,  mm::Floating*>  floatings;
 	map<const smm::Inner*,     mm::Floating*>  inners;
 	map<const smm::Source*,    mm::Source*>    sources;
-	Transform                            transform;
+	set<uint>                                  variables;
+	Transform                                  transform;
 };
 
 mm::Proof* translate(Maps& maps, const Proof* proof) {
@@ -47,57 +48,70 @@ Perm create_permutation(uint flos, uint esss) {
 	return perm;
 }
 
+mm::Expr translate_expr(const Vect& e) {
+	mm::Expr ex; ex.reserve(e.size());
+	for (auto s : e) ex.emplace_back(uint(s.lit));
+	return ex;
+}
+
 mm::Source* translate_source(const Source* src, Maps& maps, mm::Source* target = nullptr);
 
 void translate(const Node& node, mm::Block* target, Maps& maps) {
 	switch(node.type) {
 	case Node::CONSTANT: {
-		mm::Constant* c = new mm::Constant(node.val.cst->symb);
-		target->contents.push_back(mm::Node(c));
+		mm::Constant* c = new mm::Constant(uint(node.val.cst->symb.lit));
+		target->contents.emplace_back(c);
 	} break;
 	case Node::ASSERTION: {
 		mm::Block* block = new mm::Block();
 		const Assertion* ass = node.val.ass;
 		string name = Lex::toStr(ass->prop->label);
-		for (auto& vars : ass->variables)
-			block->contents.push_back(mm::Node(new mm::Variables(vars->expr)));
+		for (const auto& vars : ass->variables) {
+			for (const auto& var : vars->expr) {
+				if (maps.variables.find(var.lit) == maps.variables.end()) {
+					auto smm_var = new mm::Variable(var.lit);
+					target->contents.emplace_back(smm_var);
+					maps.variables.insert(var.lit);
+				}
+			}
+		}
 		for (auto& disj : ass->disjointed)
-			block->contents.push_back(mm::Node(new mm::Disjointed(disj->expr)));
+			block->contents.emplace_back(new mm::Disjointed(std::move(translate_expr(disj->expr))));
 		for (auto& inn : ass->inner) {
 			string label = "i" + name + "_" + to_string(inn->index);
 			uint new_index = Lex::toInt(label);
-			mm::Floating* mm_flo = new mm::Floating(new_index, inn->expr);
-			block->contents.push_back(mm::Node(mm_flo));
+			mm::Floating* mm_flo = new mm::Floating(new_index, std::move(translate_expr(inn->expr)));
+			block->contents.emplace_back(mm_flo);
 			maps.inners[inn] = mm_flo;
 		}
 		for (auto& flo : ass->floating) {
 			string label = "f" + name + "_" + to_string(flo->index);
 			uint new_index = Lex::toInt(label);
-			mm::Floating* mm_flo = new mm::Floating(new_index, flo->expr);
-			block->contents.push_back(mm::Node(mm_flo));
+			mm::Floating* mm_flo = new mm::Floating(new_index, std::move(translate_expr(flo->expr)));
+			block->contents.emplace_back(mm_flo);
 			maps.floatings[flo] = mm_flo;
 		}
 		for (auto& ess : ass->essential) {
 			string label = "e" + name + "_" + to_string(ess->index);
 			uint new_index = Lex::toInt(label);
-			mm::Essential* mm_ess = new mm::Essential(new_index, ess->expr);
-			block->contents.push_back(mm::Node(mm_ess));
+			mm::Essential* mm_ess = new mm::Essential(new_index, std::move(translate_expr(ess->expr)));
+			block->contents.emplace_back(mm_ess);
 			maps.essentials[ess] = mm_ess;
 		}
 		if (ass->proof) {
 			mm::Proof* pr = translate(maps, ass->proof);
-			mm::Theorem* th = new mm::Theorem(ass->prop->label, ass->prop->expr, pr);
-			block->contents.push_back(mm::Node(th));
+			mm::Theorem* th = new mm::Theorem(ass->prop->label, std::move(translate_expr(ass->prop->expr)), pr);
+			block->contents.emplace_back(th);
 			assert(!maps.theorems.count(ass));
 			maps.theorems[ass] = th;
 		} else {
-			mm::Axiom* ax = new mm::Axiom(ass->prop->label, ass->prop->expr);
-			block->contents.push_back(mm::Node(ax));
+			mm::Axiom* ax = new mm::Axiom(ass->prop->label, std::move(translate_expr(ass->prop->expr)));
+			block->contents.emplace_back(ax);
 			assert(!maps.axioms.count(ass));
 			maps.axioms[ass] = ax;
 		}
 		block->parent = target;
-		target->contents.push_back(mm::Node(block));
+		target->contents.emplace_back(block);
 		Perm perm = create_permutation(
 			ass->floating.size(),
 			ass->essential.size()
@@ -107,11 +121,11 @@ void translate(const Node& node, mm::Block* target, Maps& maps) {
 	case Node::INCLUSION: {
 		mm::Source* s = translate_source(node.val.inc->source.get(), maps);
 		mm::Inclusion* i = new mm::Inclusion(s->id(), node.val.inc->primary);
-		target->contents.push_back(mm::Node(i));
+		target->contents.emplace_back(i);
 	} 	break;
 	case Node::COMMENT: {
 		mm::Comment* c = new mm::Comment(node.val.com->text);
-		target->contents.push_back(mm::Node(c));
+		target->contents.emplace_back(c);
 	} 	break;
 	default : assert(false && "impossible"); break;
 	}

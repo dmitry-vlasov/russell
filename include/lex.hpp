@@ -7,42 +7,36 @@ namespace mdl {
 struct Lex {
 	static uint getInt(const string& str) { return get().getIndex(str); }
 	static uint toInt(const string& str) { return get().toIndex(str); }
-	static const string& toStr (uint i) { return get().toString(i); }
+	static string toStr (uint i) { return get().toString(i); }
 
 private:
-	typedef cmap<string, uint> Table;
+	typedef cmap<string, uint> There;
+	typedef cmap<uint, string> Back;
 
 	static Lex& get() { static Lex lex; return lex; }
 	uint getIndex(const string& str) const {
-		Table::const_accessor accessor;
-		return table.find(accessor, str) ? accessor->second : -1;
+		There::const_accessor a;
+		return there.find(a, str) ? a->second : -1;
 	}
 	uint toIndex(const string& str) {
-		Table::accessor accessor;
-		if (table.insert(accessor, str)) {
-			accessor->second = table.size() - 1;
+		There::accessor a;
+		if (there.insert(a, str)) {
+			uint i = there.size() - 1;
+			a->second = i;
+			Back::accessor b;
+			back.insert(b, i);
+			b->second = str;
+			return i;
 		}
-		return accessor->second;
+		return a->second;
 	}
-	const string& toString(uint i) const {
-		if (i >= table.size()) {
-			static string str = "<UNDEF>";
-			return str;
-		}
-		static map<int, string> strings;
-		int n = table.size() - strings.size();
-		if (n > 0) {
-			static mutex m;
-			m.lock();
-			for (auto p : table) {
-				strings[p.second] = p.first;
-			}
-			m.unlock();
-		}
-		return strings[i];
+	string toString(uint i) const {
+		Back::const_accessor b;
+		return back.find(b, i) ? b->second : "<UNDEF>";
 	}
 
-	Table table;
+	There there;
+	Back  back;
 };
 
 } // mdl
