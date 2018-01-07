@@ -30,7 +30,7 @@ string Math::info() const {
 	stats += "Size:\n";
 	stats += "\tconstants:  " + to_string(constants.size()) + "\n";
 	stats += "\tassertions: " + to_string(assertions.size()) + "\n\n";
-	stats += "assertion table:\n" + assertions.show() + "\n";
+	stats += "assertion table:\n" + assertions.show_table() + "\n";
 	return stats;
 }
 

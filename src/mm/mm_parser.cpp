@@ -159,10 +159,8 @@ public:
 			Context& c = *context.get<Context*>();
 			uint id = Sys::make_name(Path::trim_ext(sv.token()));
 			Source* s = Sys::mod().math.get<Source>().access(id);
-			const bool primary = !s->parsed;
-			if (primary) parse(id);
 			c.source_stack.top()->include(s);
-			return new Inclusion(id, primary, c.token(sv));
+			return new Inclusion(id, !s->parsed, c.token(sv));
 		};
 		parser.log = [label](size_t ln, size_t col, const std::string& err_msg) {
 			std::stringstream ss;
@@ -174,7 +172,14 @@ public:
 	static void parse(uint label) {
 		Context* context = new Context();
 		try {
-			parse(label, context);
+			Source* src = Sys::mod().math.get<Source>().access(label);
+			context->source_stack.push(src);
+			Parser p(label);
+			peg::any c(context);
+			if (!p.parser.parse<mdl::mm::Source*>(src->data().c_str(), c, src)) {
+				throw Error("parsing of " + Lex::toStr(label) + " failed");
+			}
+			src->parsed = true;
 		} catch(Error& e) {
 			delete context;
 			throw e;
@@ -183,16 +188,6 @@ public:
 	}
 
 private:
-	static void parse(uint label, Context* context) {
-		Source* src = Sys::mod().math.get<Source>().access(label);
-		context->source_stack.push(src);
-		Parser p(label);
-		peg::any c(context);
-		if (!p.parser.parse<mdl::mm::Source*>(src->data().c_str(), c, src)) {
-			throw Error("parsing of " + Lex::toStr(label) + " failed");
-		}
-		src->parsed = true;
-	}
 	static void init_indexes(vector<Node>& nodes) {
 		for (uint i = 0; i < nodes.size(); ++ i) nodes[i].ind = i;
 	}
@@ -201,8 +196,15 @@ private:
 }
 
 void parse(uint label) {
-
-	Parser::parse(label);
+	vector<uint> labels;
+	for (auto p : Sys::mod().math.get<Source>())
+		labels.push_back(p.first);
+	tbb::parallel_for (tbb::blocked_range<size_t>(0, labels.size()),
+		[labels] (const tbb::blocked_range<size_t>& r) {
+			for (size_t i = r.begin(); i != r.end(); ++i)
+				Parser::parse(labels[i]);
+		}
+	);
 }
 
 }} // mdl::mm

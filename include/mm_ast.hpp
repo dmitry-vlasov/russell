@@ -50,7 +50,7 @@ struct Theorem : public Owner<Theorem> {
 
 
 struct Ref {
-	enum Type { FLOATING, ESSENTIAL, AXIOM, THEOREM };
+	enum Type { UNRESOLVED, FLOATING, ESSENTIAL, AXIOM, THEOREM };
 
 	Ref(uint label, const Token& t = Token());
 	Ref(const Ref&);
@@ -63,6 +63,7 @@ struct Ref {
 			val_.axm->get()->arity :
 			val_.thm->get()->arity;
 	}
+	void resolve();
 	Type type() const { return type_; }
 	bool is_assertion() const { return type_ == AXIOM || type_ == THEOREM; }
 	Floating*  flo() { return val_.flo->get(); }
@@ -79,8 +80,9 @@ private:
 		User<Theorem>*   thm;
 	};
 	Value val_;
-	Type type_;
-	uint label_;
+	Type  type_;
+	uint  label_;
+	Token token_;
 };
 
 struct Proof {

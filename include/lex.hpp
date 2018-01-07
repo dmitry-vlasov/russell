@@ -12,6 +12,7 @@ struct Lex {
 private:
 	typedef cmap<string, uint> There;
 	typedef cmap<uint, string> Back;
+	Lex() : counter(0) { }
 
 	static Lex& get() { static Lex lex; return lex; }
 	uint getIndex(const string& str) const {
@@ -21,12 +22,11 @@ private:
 	uint toIndex(const string& str) {
 		There::accessor a;
 		if (there.insert(a, str)) {
-			uint i = there.size() - 1;
+			uint i = counter++;
 			a->second = i;
 			Back::accessor b;
 			back.insert(b, i);
 			b->second = str;
-			return i;
 		}
 		return a->second;
 	}
@@ -37,6 +37,7 @@ private:
 
 	There there;
 	Back  back;
+	atomic<uint> counter;
 };
 
 } // mdl

@@ -14,24 +14,19 @@ inline Ref::Type find_type(uint label) {
 	} else if (math.get<Theorem>().has(label)) {
 		return Ref::THEOREM;
 	} else {
-		throw Error("unknown label", Lex::toStr(label));
+		return Ref::UNRESOLVED;
 	}
 }
 
-Ref::Ref(uint l, const Token& t) : type_(find_type(l)), label_(l) {
-	switch (type_) {
-	case FLOATING:  val_.flo = new User<Floating>(label_, t);  break;
-	case ESSENTIAL: val_.ess = new User<Essential>(label_, t); break;
-	case AXIOM:     val_.axm = new User<Axiom>(label_, t);     break;
-	case THEOREM:   val_.thm = new User<Theorem>(label_, t);   break;
-	}
+Ref::Ref(uint l, const Token& t) : type_(UNRESOLVED), label_(l), token_(t) {
 }
-Ref::Ref(const Ref& ref) : type_(ref.type_), label_(ref.label_) {
+Ref::Ref(const Ref& ref) : type_(ref.type_), label_(ref.label_), token_(ref.token_) {
 	switch (type_) {
 	case FLOATING:  val_.flo = new User<Floating>(label_);  break;
 	case ESSENTIAL: val_.ess = new User<Essential>(label_); break;
 	case AXIOM:     val_.axm = new User<Axiom>(label_);     break;
 	case THEOREM:   val_.thm = new User<Theorem>(label_);   break;
+	case UNRESOLVED: break;
 	}
 }
 Ref::~Ref() {
@@ -40,6 +35,18 @@ Ref::~Ref() {
 	case ESSENTIAL: delete val_.ess; break;
 	case AXIOM:     delete val_.axm; break;
 	case THEOREM:   delete val_.thm; break;
+	case UNRESOLVED: break;
+	}
+}
+void Ref::resolve() {
+	if (type_ != UNRESOLVED) return;
+	type_ = find_type(label_);
+	switch (type_) {
+	case FLOATING:  val_.flo = new User<Floating>(label_, token_);  break;
+	case ESSENTIAL: val_.ess = new User<Essential>(label_, token_); break;
+	case AXIOM:     val_.axm = new User<Axiom>(label_, token_);     break;
+	case THEOREM:   val_.thm = new User<Theorem>(label_, token_);   break;
+	case UNRESOLVED: throw Error("unknown label", Lex::toStr(label_));
 	}
 }
 

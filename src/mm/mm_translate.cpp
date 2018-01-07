@@ -58,6 +58,7 @@ struct Tree {
 Tree* to_tree(const Proof* proof) {
 	stack<Tree*> stack;
 	for (auto r : proof->refs) {
+		r->resolve();
 		switch(r->type()) {
 		case Ref::ESSENTIAL:
 		case Ref::FLOATING:
@@ -159,10 +160,10 @@ void gather_expr_vars(set<uint>& vars, const Vect& expr) {
 		if (s.var) vars.insert(uint(s.lit));
 }
 
-void gather_inner_vars(const set<uint>& fvars,
-	set<uint>& ivars, set<uint>& avars, const Proof* proof) {
+void gather_inner_vars(const set<uint>& fvars, set<uint>& ivars, set<uint>& avars, const Proof* proof) {
 	if (!proof) return;
 	for (Ref* r : proof->refs) {
+		r->resolve();
 		if (r->type() == Ref::FLOATING) {
 			uint v = r->flo()->var();
 			avars.insert(v);

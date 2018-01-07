@@ -35,6 +35,7 @@
 #include <thread>
 #include <mutex>
 #include <memory>
+#include <atomic>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -112,6 +113,7 @@ namespace mdl {
 	using std::bitset;
 	using std::thread;
 	using std::mutex;
+	using std::atomic;
 	using std::unordered_map;
 	using std::unordered_set;
 

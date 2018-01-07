@@ -39,6 +39,12 @@ inline ostream& operator << (ostream& os, const Args& args) {
 }
 
 template<class T>
+void dump(const T& val) { cout << val; }
+
+template<class D>
+inline string shower(const D&) { return ""; }
+
+template<class T>
 size_t memvol(const T& x) {
 	return 0;
 }
@@ -285,9 +291,6 @@ string show_timer(const char* message, const string& name, const T& t) {
 	return t.timers.count(name) ? string(message) + show(t.timers.at(name)) : "";
 }
 
-template<class T>
-void dump(const T& val) { cout << val; }
-
 template<class D>
 class Table {
 	typedef D Data;
@@ -348,7 +351,7 @@ class Table {
 public:
 	Table(bool s = true) : strict(s) { }
 
-	string show() const {
+	string show_table() const {
 		ostringstream os;
 		os << "size: " << to_string(refs.size()) << endl;
 		for (auto& s : refs) {
