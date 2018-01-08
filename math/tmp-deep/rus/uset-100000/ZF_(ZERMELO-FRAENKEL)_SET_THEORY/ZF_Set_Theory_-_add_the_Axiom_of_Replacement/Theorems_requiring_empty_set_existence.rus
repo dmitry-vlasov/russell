@@ -1,0 +1,224 @@
+import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Replacement/Theorems_requiring_subset_and_intersection_existence.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                 Theorems requiring empty set existence
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* Construct, from any class ` A ` , a set equal to it when the class
+       exists and equal to the empty set when the class is proper.  This
+       theorem shows that the constructed set always exists.  (Contributed by
+       NM, 16-Oct-2003.) */
+
+theorem class2set (x : set, A : class) disjointed(x A) {
+	prop 1 : wff = |- { x ∈ A | A ∈ _V } ∈ _V ;;
+}
+
+proof of class2set {
+	step 1 : wff = rabexg () |- ( A ∈ _V → { x ∈ A | A ∈ _V } ∈ _V ) ;;
+	step 2 : wff = simpl () |- ( ( ¬ A ∈ _V ∧ x ∈ A ) → ¬ A ∈ _V ) ;;
+	step 3 : wff = nrexdv (step 2) |- ( ¬ A ∈ _V → ¬ ∃ x ∈ A A ∈ _V ) ;;
+	step 4 : wff = rabn0 () |- ( { x ∈ A | A ∈ _V } ≠ ∅ ↔ ∃ x ∈ A A ∈ _V ) ;;
+	step 5 : wff = necon1bbii (step 4) |- ( ¬ ∃ x ∈ A A ∈ _V ↔ { x ∈ A | A ∈ _V } = ∅ ) ;;
+	step 6 : wff = sylib (step 3, step 5) |- ( ¬ A ∈ _V → { x ∈ A | A ∈ _V } = ∅ ) ;;
+	step 7 : wff = 0ex () |- ∅ ∈ _V ;;
+	step 8 : wff = syl6eqel (step 6, step 7) |- ( ¬ A ∈ _V → { x ∈ A | A ∈ _V } ∈ _V ) ;;
+	step 9 : wff = pm2.61i (step 1, step 8) |- { x ∈ A | A ∈ _V } ∈ _V ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Equality theorem based on ~ class2set .  (Contributed by NM,
+       13-Dec-2005.)  (Proof shortened by Raph Levien, 30-Jun-2006.) */
+
+theorem class2seteq (x : set, A : class, V : class) disjointed(x A) {
+	prop 1 : wff = |- ( A ∈ V → { x ∈ A | A ∈ _V } = A ) ;;
+}
+
+proof of class2seteq {
+	step 1 : wff = elex () |- ( A ∈ V → A ∈ _V ) ;;
+	step 2 : wff = ax-1 () |- ( A ∈ _V → ( x ∈ A → A ∈ _V ) ) ;;
+	step 3 : wff = ralrimiv (step 2) |- ( A ∈ _V → ∀ x ∈ A A ∈ _V ) ;;
+	step 4 : wff = rabid2 () |- ( A = { x ∈ A | A ∈ _V } ↔ ∀ x ∈ A A ∈ _V ) ;;
+	step 5 : wff = sylibr (step 3, step 4) |- ( A ∈ _V → A = { x ∈ A | A ∈ _V } ) ;;
+	step 6 : wff = eqcomd (step 5) |- ( A ∈ _V → { x ∈ A | A ∈ _V } = A ) ;;
+	step 7 : wff = syl (step 1, step 6) |- ( A ∈ V → { x ∈ A | A ∈ _V } = A ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Every power class contains the empty set.  (Contributed by NM,
+     25-Oct-2007.) */
+
+theorem 0elpw (A : class)  {
+	prop 1 : wff = |- ∅ ∈ Pow A ;;
+}
+
+proof of 0elpw {
+	step 1 : wff = 0ss () |- ∅ ⊆ A ;;
+	step 2 : wff = 0ex () |- ∅ ∈ _V ;;
+	step 3 : wff = elpw (step 2) |- ( ∅ ∈ Pow A ↔ ∅ ⊆ A ) ;;
+	step 4 : wff = mpbir (step 1, step 3) |- ∅ ∈ Pow A ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* The empty set and its power set are not equal.  (Contributed by NM,
+     23-Dec-1993.) */
+
+theorem 0nep0 ()  {
+	prop 1 : wff = |- ∅ ≠ { ∅ } ;;
+}
+
+proof of 0nep0 {
+	step 1 : wff = 0ex () |- ∅ ∈ _V ;;
+	step 2 : wff = snnz (step 1) |- { ∅ } ≠ ∅ ;;
+	step 3 : wff = necomi (step 2) |- ∅ ≠ { ∅ } ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Something cannot be equal to both the null set and the power set of the
+     null set.  (Contributed by NM, 30-Sep-2003.) */
+
+theorem 0inp0 (A : class)  {
+	prop 1 : wff = |- ( A = ∅ → ¬ A = { ∅ } ) ;;
+}
+
+proof of 0inp0 {
+	step 1 : wff = 0nep0 () |- ∅ ≠ { ∅ } ;;
+	step 2 : wff = neeq1 () |- ( A = ∅ → ( A ≠ { ∅ } ↔ ∅ ≠ { ∅ } ) ) ;;
+	step 3 : wff = mpbiri (step 1, step 2) |- ( A = ∅ → A ≠ { ∅ } ) ;;
+	step 4 : wff = neneqd (step 3) |- ( A = ∅ → ¬ A = { ∅ } ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* The removal of the empty set from a class does not affect its union.
+     (Contributed by NM, 22-Mar-2004.) */
+
+theorem unidif0 (A : class)  {
+	prop 1 : wff = |- ⋃ ( A ∖ { ∅ } ) = ⋃ A ;;
+}
+
+proof of unidif0 {
+	step 1 : wff = uniun () |- ⋃ ( ( A ∖ { ∅ } ) ∪ { ∅ } ) = ( ⋃ ( A ∖ { ∅ } ) ∪ ⋃ { ∅ } ) ;;
+	step 2 : wff = undif1 () |- ( ( A ∖ { ∅ } ) ∪ { ∅ } ) = ( A ∪ { ∅ } ) ;;
+	step 3 : wff = uncom () |- ( A ∪ { ∅ } ) = ( { ∅ } ∪ A ) ;;
+	step 4 : wff = eqtr2i (step 2, step 3) |- ( { ∅ } ∪ A ) = ( ( A ∖ { ∅ } ) ∪ { ∅ } ) ;;
+	step 5 : wff = unieqi (step 4) |- ⋃ ( { ∅ } ∪ A ) = ⋃ ( ( A ∖ { ∅ } ) ∪ { ∅ } ) ;;
+	step 6 : wff = 0ex () |- ∅ ∈ _V ;;
+	step 7 : wff = unisn (step 6) |- ⋃ { ∅ } = ∅ ;;
+	step 8 : wff = uneq2i (step 7) |- ( ⋃ ( A ∖ { ∅ } ) ∪ ⋃ { ∅ } ) = ( ⋃ ( A ∖ { ∅ } ) ∪ ∅ ) ;;
+	step 9 : wff = un0 () |- ( ⋃ ( A ∖ { ∅ } ) ∪ ∅ ) = ⋃ ( A ∖ { ∅ } ) ;;
+	step 10 : wff = eqtr2i (step 8, step 9) |- ⋃ ( A ∖ { ∅ } ) = ( ⋃ ( A ∖ { ∅ } ) ∪ ⋃ { ∅ } ) ;;
+	step 11 : wff = 3eqtr4ri (step 1, step 5, step 10) |- ⋃ ( A ∖ { ∅ } ) = ⋃ ( { ∅ } ∪ A ) ;;
+	step 12 : wff = uniun () |- ⋃ ( { ∅ } ∪ A ) = ( ⋃ { ∅ } ∪ ⋃ A ) ;;
+	step 13 : wff = 0ex () |- ∅ ∈ _V ;;
+	step 14 : wff = unisn (step 13) |- ⋃ { ∅ } = ∅ ;;
+	step 15 : wff = uneq1i (step 14) |- ( ⋃ { ∅ } ∪ ⋃ A ) = ( ∅ ∪ ⋃ A ) ;;
+	step 16 : wff = 3eqtri (step 11, step 12, step 15) |- ⋃ ( A ∖ { ∅ } ) = ( ∅ ∪ ⋃ A ) ;;
+	step 17 : wff = uncom () |- ( ∅ ∪ ⋃ A ) = ( ⋃ A ∪ ∅ ) ;;
+	step 18 : wff = un0 () |- ( ⋃ A ∪ ∅ ) = ⋃ A ;;
+	step 19 : wff = 3eqtri (step 16, step 17, step 18) |- ⋃ ( A ∖ { ∅ } ) = ⋃ A ;;
+	qed prop 1 = step 19 ;;
+}
+
+/* An indexed intersection of the empty set, with a non-empty index set, is
+       empty.  (Contributed by NM, 20-Oct-2005.) */
+
+theorem iin0 (x : set, A : class) disjointed(x A) {
+	prop 1 : wff = |- ( A ≠ ∅ ↔ ⋂_ x ∈ A ∅ = ∅ ) ;;
+}
+
+proof of iin0 {
+	step 1 : wff = iinconst () |- ( A ≠ ∅ → ⋂_ x ∈ A ∅ = ∅ ) ;;
+	step 2 : wff = 0ex () |- ∅ ∈ _V ;;
+	step 3 : wff = n0i () |- ( ∅ ∈ _V → ¬ _V = ∅ ) ;;
+	step 4 : wff = ax-mp (step 2, step 3) |- ¬ _V = ∅ ;;
+	step 5 : wff = 0iin () |- ⋂_ x ∈ ∅ ∅ = _V ;;
+	step 6 : wff = eqeq1i (step 5) |- ( ⋂_ x ∈ ∅ ∅ = ∅ ↔ _V = ∅ ) ;;
+	step 7 : wff = mtbir (step 4, step 6) |- ¬ ⋂_ x ∈ ∅ ∅ = ∅ ;;
+	step 8 : wff = iineq1 () |- ( A = ∅ → ⋂_ x ∈ A ∅ = ⋂_ x ∈ ∅ ∅ ) ;;
+	step 9 : wff = eqeq1d (step 8) |- ( A = ∅ → ( ⋂_ x ∈ A ∅ = ∅ ↔ ⋂_ x ∈ ∅ ∅ = ∅ ) ) ;;
+	step 10 : wff = mtbiri (step 7, step 9) |- ( A = ∅ → ¬ ⋂_ x ∈ A ∅ = ∅ ) ;;
+	step 11 : wff = necon2ai (step 10) |- ( ⋂_ x ∈ A ∅ = ∅ → A ≠ ∅ ) ;;
+	step 12 : wff = impbii (step 1, step 11) |- ( A ≠ ∅ ↔ ⋂_ x ∈ A ∅ = ∅ ) ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* In the Separation Scheme ~ zfauscl , we require that ` y ` not occur in
+       ` ph ` (which can be generalized to "not be free in").  Here we show
+       special cases of ` A ` and ` ph ` that result in a contradiction by
+       violating this requirement.  (Contributed by NM, 8-Feb-2006.) */
+
+theorem notzfaus (ph : wff, x : set, y : set, A : class) disjointed(x A) {
+	hyp 1 : wff = |- A = { ∅ } ;;
+	hyp 2 : wff = |- ( ph ↔ ¬ x ∈ y ) ;;
+	-----------------------
+	prop 1 : wff = |- ¬ ∃ y ∀ x ( x ∈ y ↔ ( x ∈ A ∧ ph ) ) ;;
+}
+
+proof of notzfaus {
+	step 1 : wff = 0ex () |- ∅ ∈ _V ;;
+	step 2 : wff = snnz (step 1) |- { ∅ } ≠ ∅ ;;
+	step 3 : wff = eqnetri (hyp 1, step 2) |- A ≠ ∅ ;;
+	step 4 : wff = n0 () |- ( A ≠ ∅ ↔ ∃ x x ∈ A ) ;;
+	step 5 : wff = mpbi (step 3, step 4) |- ∃ x x ∈ A ;;
+	step 6 : wff = biimt () |- ( x ∈ A → ( x ∈ y ↔ ( x ∈ A → x ∈ y ) ) ) ;;
+	step 7 : wff = iman () |- ( ( x ∈ A → x ∈ y ) ↔ ¬ ( x ∈ A ∧ ¬ x ∈ y ) ) ;;
+	step 8 : wff = anbi2i (hyp 2) |- ( ( x ∈ A ∧ ph ) ↔ ( x ∈ A ∧ ¬ x ∈ y ) ) ;;
+	step 9 : wff = xchbinxr (step 7, step 8) |- ( ( x ∈ A → x ∈ y ) ↔ ¬ ( x ∈ A ∧ ph ) ) ;;
+	step 10 : wff = syl6bb (step 6, step 9) |- ( x ∈ A → ( x ∈ y ↔ ¬ ( x ∈ A ∧ ph ) ) ) ;;
+	step 11 : wff = xor3 () |- ( ¬ ( x ∈ y ↔ ( x ∈ A ∧ ph ) ) ↔ ( x ∈ y ↔ ¬ ( x ∈ A ∧ ph ) ) ) ;;
+	step 12 : wff = sylibr (step 10, step 11) |- ( x ∈ A → ¬ ( x ∈ y ↔ ( x ∈ A ∧ ph ) ) ) ;;
+	step 13 : wff = eximi (step 12) |- ( ∃ x x ∈ A → ∃ x ¬ ( x ∈ y ↔ ( x ∈ A ∧ ph ) ) ) ;;
+	step 14 : wff = ax-mp (step 5, step 13) |- ∃ x ¬ ( x ∈ y ↔ ( x ∈ A ∧ ph ) ) ;;
+	step 15 : wff = exnal () |- ( ∃ x ¬ ( x ∈ y ↔ ( x ∈ A ∧ ph ) ) ↔ ¬ ∀ x ( x ∈ y ↔ ( x ∈ A ∧ ph ) ) ) ;;
+	step 16 : wff = mpbi (step 14, step 15) |- ¬ ∀ x ( x ∈ y ↔ ( x ∈ A ∧ ph ) ) ;;
+	step 17 : wff = nex (step 16) |- ¬ ∃ y ∀ x ( x ∈ y ↔ ( x ∈ A ∧ ph ) ) ;;
+	qed prop 1 = step 17 ;;
+}
+
+/* The intersection of the universal class is empty.  (Contributed by NM,
+     11-Sep-2008.) */
+
+theorem intv ()  {
+	prop 1 : wff = |- ⋂ _V = ∅ ;;
+}
+
+proof of intv {
+	step 1 : wff = 0ex () |- ∅ ∈ _V ;;
+	step 2 : wff = int0el () |- ( ∅ ∈ _V → ⋂ _V = ∅ ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ⋂ _V = ∅ ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Two equivalent ways to express the Power Set Axiom.  Note that ~ ax-pow
+       is not used by the proof.  (Contributed by NM, 22-Jun-2009.) */
+
+theorem axpweq (x : set, y : set, z : set, A : class) disjointed(x y z A) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( Pow A ∈ _V ↔ ∃ x ∀ y ( ∀ z ( z ∈ y → z ∈ A ) → y ∈ x ) ) ;;
+}
+
+proof of axpweq {
+	step 1 : wff = pwidg () |- ( Pow A ∈ _V → Pow A ∈ Pow Pow A ) ;;
+	step 2 : wff = pweq () |- ( x = Pow A → Pow x = Pow Pow A ) ;;
+	step 3 : wff = eleq2d (step 2) |- ( x = Pow A → ( Pow A ∈ Pow x ↔ Pow A ∈ Pow Pow A ) ) ;;
+	step 4 : wff = spcegv (step 3) |- ( Pow A ∈ _V → ( Pow A ∈ Pow Pow A → ∃ x Pow A ∈ Pow x ) ) ;;
+	step 5 : wff = mpd (step 1, step 4) |- ( Pow A ∈ _V → ∃ x Pow A ∈ Pow x ) ;;
+	step 6 : wff = elex () |- ( Pow A ∈ Pow x → Pow A ∈ _V ) ;;
+	step 7 : wff = exlimiv (step 6) |- ( ∃ x Pow A ∈ Pow x → Pow A ∈ _V ) ;;
+	step 8 : wff = impbii (step 5, step 7) |- ( Pow A ∈ _V ↔ ∃ x Pow A ∈ Pow x ) ;;
+	step 9 : wff = vex () |- x ∈ _V ;;
+	step 10 : wff = elpw2 (step 9) |- ( Pow A ∈ Pow x ↔ Pow A ⊆ x ) ;;
+	step 11 : wff = pwss () |- ( Pow A ⊆ x ↔ ∀ y ( y ⊆ A → y ∈ x ) ) ;;
+	step 12 : wff = dfss2 () |- ( y ⊆ A ↔ ∀ z ( z ∈ y → z ∈ A ) ) ;;
+	step 13 : wff = imbi1i (step 12) |- ( ( y ⊆ A → y ∈ x ) ↔ ( ∀ z ( z ∈ y → z ∈ A ) → y ∈ x ) ) ;;
+	step 14 : wff = albii (step 13) |- ( ∀ y ( y ⊆ A → y ∈ x ) ↔ ∀ y ( ∀ z ( z ∈ y → z ∈ A ) → y ∈ x ) ) ;;
+	step 15 : wff = bitri (step 11, step 14) |- ( Pow A ⊆ x ↔ ∀ y ( ∀ z ( z ∈ y → z ∈ A ) → y ∈ x ) ) ;;
+	step 16 : wff = bitri (step 10, step 15) |- ( Pow A ∈ Pow x ↔ ∀ y ( ∀ z ( z ∈ y → z ∈ A ) → y ∈ x ) ) ;;
+	step 17 : wff = exbii (step 16) |- ( ∃ x Pow A ∈ Pow x ↔ ∃ x ∀ y ( ∀ z ( z ∈ y → z ∈ A ) → y ∈ x ) ) ;;
+	step 18 : wff = bitri (step 8, step 17) |- ( Pow A ∈ _V ↔ ∃ x ∀ y ( ∀ z ( z ∈ y → z ∈ A ) → y ∈ x ) ) ;;
+	qed prop 1 = step 18 ;;
+}
+
+

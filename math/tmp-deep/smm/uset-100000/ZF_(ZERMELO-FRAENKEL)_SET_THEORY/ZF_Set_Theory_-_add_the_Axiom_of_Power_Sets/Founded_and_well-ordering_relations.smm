@@ -1,0 +1,567 @@
+$[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets/Partial_and_complete_ordering.smm $]
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                Founded and well-ordering relations
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+$( Declare new constant symbols. $)
+$c Fr $.
+$( Well-founded predicate symbol (read: 'well-founded'). $)
+$c Se $.
+$( Set-like predicate symbol (read: 'set-like'). $)
+$c We $.
+$( Well-ordering predicate symbol (read: 'well-orders') $)
+$( Extend wff notation to include the well-founded predicate.  Read:  ' ` R `
+     is a well-founded relation on ` A ` .' $)
+${
+	$v A R $.
+	f0 $f class A $.
+	f1 $f class R $.
+	awfr $a wff R Fr A $.
+$}
+$( Extend wff notation to include the set-like predicate.  Read:  ' ` R ` is
+     set-like on ` A ` .' $)
+${
+	$v A R $.
+	f0 $f class A $.
+	f1 $f class R $.
+	awse $a wff R Se A $.
+$}
+$( Extend wff notation to include the well-ordering predicate.
+     Read:  ' ` R ` well-orders ` A ` .' $)
+${
+	$v A R $.
+	f0 $f class A $.
+	f1 $f class R $.
+	awwe $a wff R We A $.
+$}
+$( Define the well-founded relation predicate.  Definition 6.24(1) of
+       [TakeutiZaring] p. 30.  For alternate definitions, see ~ dffr2 and
+       ~ dffr3 .  (Contributed by NM, 3-Apr-1994.) $)
+${
+	$v x y z A R $.
+	$d x y z R $.
+	$d x y z A $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	f3 $f class A $.
+	f4 $f class R $.
+	adf-fr $a |- ( R Fr A <-> A. x ( ( x C_ A /\ x =/= (/) ) -> E. y e. x A. z e. x -. z R y ) ) $.
+$}
+$( Define the set-like predicate.  (Contributed by Mario Carneiro,
+       19-Nov-2014.) $)
+${
+	$v x y A R $.
+	$d x y R $.
+	$d x y A $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class R $.
+	adf-se $a |- ( R Se A <-> A. x e. A { y e. A | y R x } e. _V ) $.
+$}
+$( Define the well-ordering predicate.  For an alternate definition, see
+     ~ dfwe2 .  (Contributed by NM, 3-Apr-1994.) $)
+${
+	$v A R $.
+	f0 $f class A $.
+	f1 $f class R $.
+	adf-we $a |- ( R We A <-> ( R Fr A /\ R Or A ) ) $.
+$}
+$( Property of well-founded relation (one direction of definition).
+       (Contributed by NM, 18-Mar-1997.) $)
+${
+	$v x y z A B C R $.
+	$d x y z A $.
+	$d x y z B $.
+	$d x y z R $.
+	$d x y $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	f5 $f class R $.
+	i0 $f set z $.
+	pfri $p |- ( ( ( B e. C /\ R Fr A ) /\ ( B C_ A /\ B =/= (/) ) ) -> E. x e. B A. y e. B -. y R x ) $=
+	i0 f0 f1 f2 f5 adf-fr i0 acv f3 f2 psseq1 i0 acv f3 ac0 pneeq1 i0 acv f3 awceq i0 acv f2 awss f3 f2 awss i0 acv ac0 awne f3 ac0 awne panbi12d f1 acv f0 acv f5 awbr awn f1 i0 acv f3 praleq f1 acv f0 acv f5 awbr awn f1 i0 acv awral f1 acv f0 acv f5 awbr awn f1 f3 awral f0 i0 acv f3 prexeqbi1dv i0 acv f3 awceq i0 acv f2 awss i0 acv ac0 awne awa f3 f2 awss f3 ac0 awne awa f1 acv f0 acv f5 awbr awn f1 i0 acv awral f0 i0 acv awrex f1 acv f0 acv f5 awbr awn f1 f3 awral f0 f3 awrex pimbi12d i0 acv f2 awss i0 acv ac0 awne awa f1 acv f0 acv f5 awbr awn f1 i0 acv awral f0 i0 acv awrex awi f3 f2 awss f3 ac0 awne awa f1 acv f0 acv f5 awbr awn f1 f3 awral f0 f3 awrex awi i0 f3 f4 pspcgv f2 f5 awfr i0 acv f2 awss i0 acv ac0 awne awa f1 acv f0 acv f5 awbr awn f1 i0 acv awral f0 i0 acv awrex awi i0 awal f3 f4 awcel f3 f2 awss f3 ac0 awne awa f1 acv f0 acv f5 awbr awn f1 f3 awral f0 f3 awrex awi psyl5bi f3 f4 awcel f2 f5 awfr f3 f2 awss f3 ac0 awne awa f1 acv f0 acv f5 awbr awn f1 f3 awral f0 f3 awrex pimp31 $.
+$}
+$( The ` R ` -preimage of an element of the base set in a set-like relation
+       is a set.  (Contributed by Mario Carneiro, 19-Nov-2014.) $)
+${
+	$v x y A B R $.
+	$d x y A $.
+	$d x y B $.
+	$d x y R $.
+	$d x y $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class R $.
+	i0 $f set y $.
+	pseex $p |- ( ( R Se A /\ B e. A ) -> { x e. A | x R B } e. _V ) $=
+	i0 f0 f1 f3 adf-se i0 acv f2 f0 acv f3 pbreq2 i0 acv f2 awceq f0 acv i0 acv f3 awbr f0 acv f2 f3 awbr f0 f1 prabbidv i0 acv f2 awceq f0 acv i0 acv f3 awbr f0 f1 acrab f0 acv f2 f3 awbr f0 f1 acrab acvv peleq1d f0 acv i0 acv f3 awbr f0 f1 acrab acvv awcel f0 acv f2 f3 awbr f0 f1 acrab acvv awcel i0 f2 f1 prspccva f1 f3 awse f0 acv i0 acv f3 awbr f0 f1 acrab acvv awcel i0 f1 awral f2 f1 awcel f0 acv f2 f3 awbr f0 f1 acrab acvv awcel psylanb $.
+$}
+$( Any relation on a set is set-like on it.  (Contributed by Mario
+       Carneiro, 22-Jun-2015.) $)
+${
+	$v x y A R V $.
+	$d x y A $.
+	$d x y $.
+	$d x y R $.
+	$d x y V $.
+	f0 $f class A $.
+	f1 $f class R $.
+	f2 $f class V $.
+	i0 $f set x $.
+	i1 $f set y $.
+	pexse $p |- ( A e. V -> R Se A ) $=
+	i1 acv i0 acv f1 awbr i1 f0 f2 prabexg f0 f2 awcel i1 acv i0 acv f1 awbr i1 f0 acrab acvv awcel i0 f0 pralrimivw i0 i1 f0 f1 adf-se f0 f2 awcel i1 acv i0 acv f1 awbr i1 f0 acrab acvv awcel i0 f0 awral f0 f1 awse psylibr $.
+$}
+$( Alternate definition of well-founded relation.  Similar to Definition
+       6.21 of [TakeutiZaring] p. 30.  (Contributed by NM, 17-Feb-2004.)
+       (Proof shortened by Andrew Salmon, 27-Aug-2011.)  (Proof shortened by
+       Mario Carneiro, 23-Jun-2015.) $)
+${
+	$v x y z A R $.
+	$d x y z A $.
+	$d x y z R $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	f3 $f class A $.
+	f4 $f class R $.
+	pdffr2 $p |- ( R Fr A <-> A. x ( ( x C_ A /\ x =/= (/) ) -> E. y e. x { z e. x | z R y } = (/) ) ) $=
+	f0 f1 f2 f3 f4 adf-fr f2 acv f1 acv f4 awbr f2 f0 acv prabeq0 f2 acv f1 acv f4 awbr f2 f0 acv acrab ac0 awceq f2 acv f1 acv f4 awbr awn f2 f0 acv awral f1 f0 acv prexbii f2 acv f1 acv f4 awbr f2 f0 acv acrab ac0 awceq f1 f0 acv awrex f2 acv f1 acv f4 awbr awn f2 f0 acv awral f1 f0 acv awrex f0 acv f3 awss f0 acv ac0 awne awa pimbi2i f0 acv f3 awss f0 acv ac0 awne awa f2 acv f1 acv f4 awbr f2 f0 acv acrab ac0 awceq f1 f0 acv awrex awi f0 acv f3 awss f0 acv ac0 awne awa f2 acv f1 acv f4 awbr awn f2 f0 acv awral f1 f0 acv awrex awi f0 palbii f3 f4 awfr f0 acv f3 awss f0 acv ac0 awne awa f2 acv f1 acv f4 awbr awn f2 f0 acv awral f1 f0 acv awrex awi f0 awal f0 acv f3 awss f0 acv ac0 awne awa f2 acv f1 acv f4 awbr f2 f0 acv acrab ac0 awceq f1 f0 acv awrex awi f0 awal pbitr4i $.
+$}
+$( Property of well-founded relation (one direction of definition using
+       class variables).  (Contributed by NM, 17-Feb-2004.)  (Revised by Mario
+       Carneiro, 19-Nov-2014.) $)
+${
+	$v x y A B R $.
+	$d x y A $.
+	$d x y B $.
+	$d x y R $.
+	e0 $e |- B e. _V $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class R $.
+	pfrc $p |- ( ( R Fr A /\ B C_ A /\ B =/= (/) ) -> E. x e. B { y e. B | y R x } = (/) ) $=
+	e0 f0 f1 f2 f3 acvv f4 pfri f3 acvv awcel f2 f4 awfr f3 f2 awss f3 ac0 awne awa f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrex pmpanl1 f2 f4 awfr f3 f2 awss f3 ac0 awne f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrex p3impb f1 acv f0 acv f4 awbr f1 f3 prabeq0 f1 acv f0 acv f4 awbr f1 f3 acrab ac0 awceq f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 prexbii f2 f4 awfr f3 f2 awss f3 ac0 awne aw3a f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrex f1 acv f0 acv f4 awbr f1 f3 acrab ac0 awceq f0 f3 awrex psylibr $.
+$}
+$( Subset theorem for the well-founded predicate.  Exercise 1 of
+       [TakeutiZaring] p. 31.  (Contributed by NM, 3-Apr-1994.)  (Proof
+       shortened by Andrew Salmon, 25-Jul-2011.) $)
+${
+	$v x y z A B R $.
+	$d x y z A $.
+	$d x y z B $.
+	$d x y z R $.
+	$d x y $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class R $.
+	i0 $f set x $.
+	i1 $f set y $.
+	i2 $f set z $.
+	pfrss $p |- ( A C_ B -> ( R Fr B -> R Fr A ) ) $=
+	i0 acv f0 f1 psstr2 i0 acv f0 awss f0 f1 awss i0 acv f1 awss pcom12 f0 f1 awss i0 acv f0 awss i0 acv f1 awss i0 acv ac0 awne panim1d f0 f1 awss i0 acv f0 awss i0 acv ac0 awne awa i0 acv f1 awss i0 acv ac0 awne awa i2 acv i1 acv f2 awbr awn i2 i0 acv awral i1 i0 acv awrex pimim1d f0 f1 awss i0 acv f1 awss i0 acv ac0 awne awa i2 acv i1 acv f2 awbr awn i2 i0 acv awral i1 i0 acv awrex awi i0 acv f0 awss i0 acv ac0 awne awa i2 acv i1 acv f2 awbr awn i2 i0 acv awral i1 i0 acv awrex awi i0 palimdv i0 i1 i2 f1 f2 adf-fr i0 i1 i2 f0 f2 adf-fr f0 f1 awss i0 acv f1 awss i0 acv ac0 awne awa i2 acv i1 acv f2 awbr awn i2 i0 acv awral i1 i0 acv awrex awi i0 awal i0 acv f0 awss i0 acv ac0 awne awa i2 acv i1 acv f2 awbr awn i2 i0 acv awral i1 i0 acv awrex awi i0 awal f1 f2 awfr f0 f2 awfr p3imtr4g $.
+$}
+$( Subset theorem for the set-like predicate.  (Contributed by Mario
+       Carneiro, 24-Jun-2015.) $)
+${
+	$v x y A R S $.
+	$d x y A $.
+	$d x y $.
+	$d x y R $.
+	$d x y S $.
+	f0 $f class A $.
+	f1 $f class R $.
+	f2 $f class S $.
+	i0 $f set x $.
+	i1 $f set y $.
+	psess1 $p |- ( R C_ S -> ( S Se A -> R Se A ) ) $=
+	f1 f2 awss i1 acv f0 awcel psimpl f1 f2 awss i1 acv f0 awcel awa f1 f2 i1 acv i0 acv pssbrd f1 f2 awss i1 acv i0 acv f1 awbr i1 acv i0 acv f2 awbr i1 f0 pss2rabdv i1 acv i0 acv f1 awbr i1 f0 acrab i1 acv i0 acv f2 awbr i1 f0 acrab acvv pssexg i1 acv i0 acv f1 awbr i1 f0 acrab i1 acv i0 acv f2 awbr i1 f0 acrab awss i1 acv i0 acv f2 awbr i1 f0 acrab acvv awcel i1 acv i0 acv f1 awbr i1 f0 acrab acvv awcel pex f1 f2 awss i1 acv i0 acv f1 awbr i1 f0 acrab i1 acv i0 acv f2 awbr i1 f0 acrab awss i1 acv i0 acv f2 awbr i1 f0 acrab acvv awcel i1 acv i0 acv f1 awbr i1 f0 acrab acvv awcel awi psyl f1 f2 awss i1 acv i0 acv f2 awbr i1 f0 acrab acvv awcel i1 acv i0 acv f1 awbr i1 f0 acrab acvv awcel i0 f0 pralimdv i0 i1 f0 f2 adf-se i0 i1 f0 f1 adf-se f1 f2 awss i1 acv i0 acv f2 awbr i1 f0 acrab acvv awcel i0 f0 awral i1 acv i0 acv f1 awbr i1 f0 acrab acvv awcel i0 f0 awral f0 f2 awse f0 f1 awse p3imtr4g $.
+$}
+$( Subset theorem for the set-like predicate.  (Contributed by Mario
+       Carneiro, 24-Jun-2015.) $)
+${
+	$v x y A B R $.
+	$d x y A $.
+	$d x y B $.
+	$d x y R $.
+	$d x y $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class R $.
+	i0 $f set x $.
+	i1 $f set y $.
+	psess2 $p |- ( A C_ B -> ( R Se B -> R Se A ) ) $=
+	i1 acv i0 acv f2 awbr i1 f1 acrab acvv awcel i0 f0 f1 pssralv i1 acv i0 acv f2 awbr i1 f0 f1 prabss2 i1 acv i0 acv f2 awbr i1 f0 acrab i1 acv i0 acv f2 awbr i1 f1 acrab acvv pssexg i1 acv i0 acv f2 awbr i1 f0 acrab i1 acv i0 acv f2 awbr i1 f1 acrab awss i1 acv i0 acv f2 awbr i1 f1 acrab acvv awcel i1 acv i0 acv f2 awbr i1 f0 acrab acvv awcel pex f0 f1 awss i1 acv i0 acv f2 awbr i1 f0 acrab i1 acv i0 acv f2 awbr i1 f1 acrab awss i1 acv i0 acv f2 awbr i1 f1 acrab acvv awcel i1 acv i0 acv f2 awbr i1 f0 acrab acvv awcel awi psyl f0 f1 awss i1 acv i0 acv f2 awbr i1 f1 acrab acvv awcel i1 acv i0 acv f2 awbr i1 f0 acrab acvv awcel i0 f0 pralimdv f0 f1 awss i1 acv i0 acv f2 awbr i1 f1 acrab acvv awcel i0 f1 awral i1 acv i0 acv f2 awbr i1 f1 acrab acvv awcel i0 f0 awral i1 acv i0 acv f2 awbr i1 f0 acrab acvv awcel i0 f0 awral psyld i0 i1 f1 f2 adf-se i0 i1 f0 f2 adf-se f0 f1 awss i1 acv i0 acv f2 awbr i1 f1 acrab acvv awcel i0 f1 awral i1 acv i0 acv f2 awbr i1 f0 acrab acvv awcel i0 f0 awral f1 f2 awse f0 f2 awse p3imtr4g $.
+$}
+$( Equality theorem for the well-founded predicate.  (Contributed by NM,
+       9-Mar-1997.) $)
+${
+	$v x y z A R S $.
+	$d x y z R $.
+	$d x y z S $.
+	$d x y z A $.
+	f0 $f class A $.
+	f1 $f class R $.
+	f2 $f class S $.
+	i0 $f set x $.
+	i1 $f set y $.
+	i2 $f set z $.
+	pfreq1 $p |- ( R = S -> ( R Fr A <-> S Fr A ) ) $=
+	i2 acv i1 acv f1 f2 pbreq f1 f2 awceq i2 acv i1 acv f1 awbr i2 acv i1 acv f2 awbr pnotbid f1 f2 awceq i2 acv i1 acv f1 awbr awn i2 acv i1 acv f2 awbr awn i1 i2 i0 acv i0 acv prexralbidv f1 f2 awceq i2 acv i1 acv f1 awbr awn i2 i0 acv awral i1 i0 acv awrex i2 acv i1 acv f2 awbr awn i2 i0 acv awral i1 i0 acv awrex i0 acv f0 awss i0 acv ac0 awne awa pimbi2d f1 f2 awceq i0 acv f0 awss i0 acv ac0 awne awa i2 acv i1 acv f1 awbr awn i2 i0 acv awral i1 i0 acv awrex awi i0 acv f0 awss i0 acv ac0 awne awa i2 acv i1 acv f2 awbr awn i2 i0 acv awral i1 i0 acv awrex awi i0 palbidv i0 i1 i2 f0 f1 adf-fr i0 i1 i2 f0 f2 adf-fr f1 f2 awceq i0 acv f0 awss i0 acv ac0 awne awa i2 acv i1 acv f1 awbr awn i2 i0 acv awral i1 i0 acv awrex awi i0 awal i0 acv f0 awss i0 acv ac0 awne awa i2 acv i1 acv f2 awbr awn i2 i0 acv awral i1 i0 acv awrex awi i0 awal f0 f1 awfr f0 f2 awfr p3bitr4g $.
+$}
+$( Equality theorem for the well-founded predicate.  (Contributed by NM,
+     3-Apr-1994.) $)
+${
+	$v A B R $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class R $.
+	pfreq2 $p |- ( A = B -> ( R Fr A <-> R Fr B ) ) $=
+	f1 f0 peqimss2 f1 f0 f2 pfrss f0 f1 awceq f1 f0 awss f0 f2 awfr f1 f2 awfr awi psyl f0 f1 peqimss f0 f1 f2 pfrss f0 f1 awceq f0 f1 awss f1 f2 awfr f0 f2 awfr awi psyl f0 f1 awceq f0 f2 awfr f1 f2 awfr pimpbid $.
+$}
+$( Equality theorem for the set-like predicate.  (Contributed by Mario
+     Carneiro, 24-Jun-2015.) $)
+${
+	$v A R S $.
+	f0 $f class A $.
+	f1 $f class R $.
+	f2 $f class S $.
+	pseeq1 $p |- ( R = S -> ( R Se A <-> S Se A ) ) $=
+	f2 f1 peqimss2 f0 f2 f1 psess1 f1 f2 awceq f2 f1 awss f0 f1 awse f0 f2 awse awi psyl f1 f2 peqimss f0 f1 f2 psess1 f1 f2 awceq f1 f2 awss f0 f2 awse f0 f1 awse awi psyl f1 f2 awceq f0 f1 awse f0 f2 awse pimpbid $.
+$}
+$( Equality theorem for the set-like predicate.  (Contributed by Mario
+     Carneiro, 24-Jun-2015.) $)
+${
+	$v A B R $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class R $.
+	pseeq2 $p |- ( A = B -> ( R Se A <-> R Se B ) ) $=
+	f1 f0 peqimss2 f1 f0 f2 psess2 f0 f1 awceq f1 f0 awss f0 f2 awse f1 f2 awse awi psyl f0 f1 peqimss f0 f1 f2 psess2 f0 f1 awceq f0 f1 awss f1 f2 awse f0 f2 awse awi psyl f0 f1 awceq f0 f2 awse f1 f2 awse pimpbid $.
+$}
+$( Bound-variable hypothesis builder for well-founded relations.
+       (Contributed by Stefan O'Rear, 20-Jan-2015.)  (Revised by Mario
+       Carneiro, 14-Oct-2016.) $)
+${
+	$v x A R a b c $.
+	$d R a b c $.
+	$d A a b c $.
+	$d x a b c $.
+	e0 $e |- F/_ x R $.
+	e1 $e |- F/_ x A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class R $.
+	i0 $f set a $.
+	i1 $f set b $.
+	i2 $f set c $.
+	pnffr $p |- F/ x R Fr A $=
+	i0 i1 i2 f1 f2 adf-fr f0 i0 acv pnfcv e1 f0 i0 acv f1 pnfss i0 acv ac0 awne f0 pnfv i0 acv f1 awss i0 acv ac0 awne f0 pnfan f0 i0 acv pnfcv f0 i0 acv pnfcv f0 i2 acv pnfcv e0 f0 i1 acv pnfcv f0 i2 acv i1 acv f2 pnfbr i2 acv i1 acv f2 awbr f0 pnfn i2 acv i1 acv f2 awbr awn f0 i2 i0 acv pnfral i2 acv i1 acv f2 awbr awn i2 i0 acv awral f0 i1 i0 acv pnfrex i0 acv f1 awss i0 acv ac0 awne awa i2 acv i1 acv f2 awbr awn i2 i0 acv awral i1 i0 acv awrex f0 pnfim i0 acv f1 awss i0 acv ac0 awne awa i2 acv i1 acv f2 awbr awn i2 i0 acv awral i1 i0 acv awrex awi f0 i0 pnfal f1 f2 awfr i0 acv f1 awss i0 acv ac0 awne awa i2 acv i1 acv f2 awbr awn i2 i0 acv awral i1 i0 acv awrex awi i0 awal f0 pnfxfr $.
+$}
+$( Bound-variable hypothesis builder for set-like relations.  (Contributed
+       by Mario Carneiro, 24-Jun-2015.)  (Revised by Mario Carneiro,
+       14-Oct-2016.) $)
+${
+	$v x A R a b $.
+	$d R a b $.
+	$d A a b $.
+	$d x a b $.
+	e0 $e |- F/_ x R $.
+	e1 $e |- F/_ x A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class R $.
+	i0 $f set a $.
+	i1 $f set b $.
+	pnfse $p |- F/ x R Se A $=
+	i1 i0 f1 f2 adf-se e1 f0 i0 acv pnfcv e0 f0 i1 acv pnfcv f0 i0 acv i1 acv f2 pnfbr e1 i0 acv i1 acv f2 awbr f0 i0 f1 pnfrab f0 i0 acv i1 acv f2 awbr i0 f1 acrab acvv pnfel1 i0 acv i1 acv f2 awbr i0 f1 acrab acvv awcel f0 i1 f1 pnfral f1 f2 awse i0 acv i1 acv f2 awbr i0 f1 acrab acvv awcel i1 f1 awral f0 pnfxfr $.
+$}
+$( Bound-variable hypothesis builder for well-orderings.  (Contributed by
+       Stefan O'Rear, 20-Jan-2015.)  (Revised by Mario Carneiro,
+       14-Oct-2016.) $)
+${
+	$v x A R $.
+	e0 $e |- F/_ x R $.
+	e1 $e |- F/_ x A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class R $.
+	pnfwe $p |- F/ x R We A $=
+	f1 f2 adf-we e0 e1 f0 f1 f2 pnffr e0 e1 f0 f1 f2 pnfso f1 f2 awfr f1 f2 awor f0 pnfan f1 f2 awwe f1 f2 awfr f1 f2 awor awa f0 pnfxfr $.
+$}
+$( A well-founded relation is irreflexive.  Special case of Proposition
+       6.23 of [TakeutiZaring] p. 30.  (Contributed by NM, 2-Jan-1994.)
+       (Revised by Mario Carneiro, 22-Jun-2015.) $)
+${
+	$v x y A B R $.
+	$d x y A $.
+	$d x y B $.
+	$d x y R $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class R $.
+	i0 $f set x $.
+	i1 $f set y $.
+	pfrirr $p |- ( ( R Fr A /\ B e. A ) -> -. B R B ) $=
+	f0 f2 awfr f1 f0 awcel psimpl f0 f2 awfr f1 f0 awcel psimpr f0 f2 awfr f1 f0 awcel awa f1 f0 psnssd f1 f0 psnnzg f1 f0 awcel f1 acsn ac0 awne f0 f2 awfr padantl f1 psnex i1 i0 f0 f1 acsn f2 pfrc f0 f2 awfr f1 f0 awcel awa f0 f2 awfr f1 acsn f0 awss f1 acsn ac0 awne i0 acv i1 acv f2 awbr i0 f1 acsn acrab ac0 awceq i1 f1 acsn awrex psyl3anc i0 acv i1 acv f2 awbr i0 f1 acsn prabeq0 i1 acv f1 i0 acv f2 pbreq2 i1 acv f1 awceq i0 acv i1 acv f2 awbr i0 acv f1 f2 awbr pnotbid i1 acv f1 awceq i0 acv i1 acv f2 awbr awn i0 acv f1 f2 awbr awn i0 f1 acsn pralbidv i0 acv i1 acv f2 awbr i0 f1 acsn acrab ac0 awceq i0 acv i1 acv f2 awbr awn i0 f1 acsn awral i1 acv f1 awceq i0 acv f1 f2 awbr awn i0 f1 acsn awral psyl5bb i0 acv i1 acv f2 awbr i0 f1 acsn acrab ac0 awceq i0 acv f1 f2 awbr awn i0 f1 acsn awral i1 f1 f0 prexsng i0 acv f1 f1 f2 pbreq1 i0 acv f1 awceq i0 acv f1 f2 awbr f1 f1 f2 awbr pnotbid i0 acv f1 f2 awbr awn f1 f1 f2 awbr awn i0 f1 f0 pralsng f1 f0 awcel i0 acv i1 acv f2 awbr i0 f1 acsn acrab ac0 awceq i1 f1 acsn awrex i0 acv f1 f2 awbr awn i0 f1 acsn awral f1 f1 f2 awbr awn pbitrd f1 f0 awcel i0 acv i1 acv f2 awbr i0 f1 acsn acrab ac0 awceq i1 f1 acsn awrex f1 f1 f2 awbr awn awb f0 f2 awfr padantl f0 f2 awfr f1 f0 awcel awa i0 acv i1 acv f2 awbr i0 f1 acsn acrab ac0 awceq i1 f1 acsn awrex f1 f1 f2 awbr awn pmpbid $.
+$}
+$( A well-founded relation has no 2-cycle loops.  Special case of
+       Proposition 6.23 of [TakeutiZaring] p. 30.  (Contributed by NM,
+       30-May-1994.)  (Revised by Mario Carneiro, 22-Jun-2015.) $)
+${
+	$v x y A B C R $.
+	$d x y A $.
+	$d x y B $.
+	$d x y C $.
+	$d x y R $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class R $.
+	i0 $f set x $.
+	i1 $f set y $.
+	pfr2nr $p |- ( ( R Fr A /\ ( B e. A /\ C e. A ) ) -> -. ( B R C /\ C R B ) ) $=
+	f1 f2 pprex f1 f2 acpr acvv awcel f0 f3 awfr f1 f0 awcel f2 f0 awcel awa awa pa1i f0 f3 awfr f1 f0 awcel f2 f0 awcel awa psimpl f1 f2 f0 pprssi f1 f0 awcel f2 f0 awcel awa f1 f2 acpr f0 awss f0 f3 awfr padantl f1 f2 f0 pprnzg f1 f0 awcel f1 f2 acpr ac0 awne f0 f3 awfr f2 f0 awcel pad2antrl i1 i0 f0 f1 f2 acpr acvv f3 pfri f0 f3 awfr f1 f0 awcel f2 f0 awcel awa awa f1 f2 acpr acvv awcel f0 f3 awfr f1 f2 acpr f0 awss f1 f2 acpr ac0 awne i0 acv i1 acv f3 awbr awn i0 f1 f2 acpr awral i1 f1 f2 acpr awrex psyl22anc i1 acv f1 i0 acv f3 pbreq2 i1 acv f1 awceq i0 acv i1 acv f3 awbr i0 acv f1 f3 awbr pnotbid i1 acv f1 awceq i0 acv i1 acv f3 awbr awn i0 acv f1 f3 awbr awn i0 f1 f2 acpr pralbidv i1 acv f2 i0 acv f3 pbreq2 i1 acv f2 awceq i0 acv i1 acv f3 awbr i0 acv f2 f3 awbr pnotbid i1 acv f2 awceq i0 acv i1 acv f3 awbr awn i0 acv f2 f3 awbr awn i0 f1 f2 acpr pralbidv i0 acv i1 acv f3 awbr awn i0 f1 f2 acpr awral i0 acv f1 f3 awbr awn i0 f1 f2 acpr awral i0 acv f2 f3 awbr awn i0 f1 f2 acpr awral i1 f1 f2 f0 f0 prexprg f1 f0 awcel f2 f0 awcel awa i0 acv i1 acv f3 awbr awn i0 f1 f2 acpr awral i1 f1 f2 acpr awrex i0 acv f1 f3 awbr awn i0 f1 f2 acpr awral i0 acv f2 f3 awbr awn i0 f1 f2 acpr awral awo awb f0 f3 awfr padantl f0 f3 awfr f1 f0 awcel f2 f0 awcel awa awa i0 acv i1 acv f3 awbr awn i0 f1 f2 acpr awral i1 f1 f2 acpr awrex i0 acv f1 f3 awbr awn i0 f1 f2 acpr awral i0 acv f2 f3 awbr awn i0 f1 f2 acpr awral awo pmpbid f1 f2 f0 pprid2g f2 f0 awcel f2 f1 f2 acpr awcel f0 f3 awfr f1 f0 awcel pad2antll i0 acv f2 f1 f3 pbreq1 i0 acv f2 awceq i0 acv f1 f3 awbr f2 f1 f3 awbr pnotbid i0 acv f1 f3 awbr awn f2 f1 f3 awbr awn i0 f2 f1 f2 acpr prspcv f0 f3 awfr f1 f0 awcel f2 f0 awcel awa awa f2 f1 f2 acpr awcel i0 acv f1 f3 awbr awn i0 f1 f2 acpr awral f2 f1 f3 awbr awn awi psyl f1 f2 f0 pprid1g f1 f0 awcel f1 f1 f2 acpr awcel f0 f3 awfr f2 f0 awcel pad2antrl i0 acv f1 f2 f3 pbreq1 i0 acv f1 awceq i0 acv f2 f3 awbr f1 f2 f3 awbr pnotbid i0 acv f2 f3 awbr awn f1 f2 f3 awbr awn i0 f1 f1 f2 acpr prspcv f0 f3 awfr f1 f0 awcel f2 f0 awcel awa awa f1 f1 f2 acpr awcel i0 acv f2 f3 awbr awn i0 f1 f2 acpr awral f1 f2 f3 awbr awn awi psyl f0 f3 awfr f1 f0 awcel f2 f0 awcel awa awa i0 acv f1 f3 awbr awn i0 f1 f2 acpr awral f2 f1 f3 awbr awn i0 acv f2 f3 awbr awn i0 f1 f2 acpr awral f1 f2 f3 awbr awn porim12d f0 f3 awfr f1 f0 awcel f2 f0 awcel awa awa i0 acv f1 f3 awbr awn i0 f1 f2 acpr awral i0 acv f2 f3 awbr awn i0 f1 f2 acpr awral awo f2 f1 f3 awbr awn f1 f2 f3 awbr awn awo pmpd f0 f3 awfr f1 f0 awcel f2 f0 awcel awa awa f2 f1 f3 awbr awn f1 f2 f3 awbr awn porcomd f1 f2 f3 awbr f2 f1 f3 awbr pianor f0 f3 awfr f1 f0 awcel f2 f0 awcel awa awa f1 f2 f3 awbr awn f2 f1 f3 awbr awn awo f1 f2 f3 awbr f2 f1 f3 awbr awa awn psylibr $.
+$}
+$( Any relation is well-founded on the empty set.  (Contributed by NM,
+       17-Sep-1993.) $)
+${
+	$v x y z R $.
+	$d x y z R $.
+	f0 $f class R $.
+	i0 $f set x $.
+	i1 $f set y $.
+	i2 $f set z $.
+	pfr0 $p |- R Fr (/) $=
+	i0 i1 i2 ac0 f0 pdffr2 i0 acv pss0 i0 acv ac0 awss i0 acv ac0 awceq i2 acv i1 acv f0 awbr i2 i0 acv acrab ac0 awceq i1 i0 acv awrex awn pa1d i0 acv ac0 awss i2 acv i1 acv f0 awbr i2 i0 acv acrab ac0 awceq i1 i0 acv awrex i0 acv ac0 pnecon1ad i0 acv ac0 awss i0 acv ac0 awne i2 acv i1 acv f0 awbr i2 i0 acv acrab ac0 awceq i1 i0 acv awrex pimp ac0 f0 awfr i0 acv ac0 awss i0 acv ac0 awne awa i2 acv i1 acv f0 awbr i2 i0 acv acrab ac0 awceq i1 i0 acv awrex awi i0 pmpgbir $.
+$}
+$( If an element of a well-founded set satisfies a property ` ph ` , then
+       there is a minimal element that satisfies ` ph ` .  (Contributed by Jeff
+       Madsen, 18-Jun-2010.)  (Proof shortened by Mario Carneiro,
+       18-Nov-2016.) $)
+${
+	$v ph ps x y z A R $.
+	$d A x y z $.
+	$d R x y z $.
+	$d ph y z $.
+	$d ps x z $.
+	e0 $e |- A e. _V $.
+	e1 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class R $.
+	i0 $f set z $.
+	pfrminex $p |- ( R Fr A -> ( E. x e. A ph -> E. x e. A ( ph /\ A. y e. A ( ps -> -. y R x ) ) ) ) $=
+	f0 f2 f4 prabn0 e0 f0 f2 f4 prabex f0 f2 f4 pssrab2 i0 f3 f4 f0 f2 f4 acrab acvv f5 pfri e1 f0 f1 f3 acv i0 acv f5 awbr awn f3 f2 f4 pralrab f3 acv i0 acv f5 awbr awn f3 f0 f2 f4 acrab awral f1 f3 acv i0 acv f5 awbr awn awi f3 f4 awral i0 f0 f2 f4 acrab prexbii i0 acv f2 acv f3 acv f5 pbreq2 i0 acv f2 acv awceq f3 acv i0 acv f5 awbr f3 acv f2 acv f5 awbr pnotbid i0 acv f2 acv awceq f3 acv i0 acv f5 awbr awn f3 acv f2 acv f5 awbr awn f1 pimbi2d i0 acv f2 acv awceq f1 f3 acv i0 acv f5 awbr awn awi f1 f3 acv f2 acv f5 awbr awn awi f3 f4 pralbidv f0 f1 f3 acv i0 acv f5 awbr awn awi f3 f4 awral f1 f3 acv f2 acv f5 awbr awn awi f3 f4 awral i0 f2 f4 prexrab2 f3 acv i0 acv f5 awbr awn f3 f0 f2 f4 acrab awral i0 f0 f2 f4 acrab awrex f1 f3 acv i0 acv f5 awbr awn awi f3 f4 awral i0 f0 f2 f4 acrab awrex f0 f1 f3 acv f2 acv f5 awbr awn awi f3 f4 awral awa f2 f4 awrex pbitri f0 f2 f4 acrab acvv awcel f4 f5 awfr awa f0 f2 f4 acrab f4 awss f0 f2 f4 acrab ac0 awne awa awa f3 acv i0 acv f5 awbr awn f3 f0 f2 f4 acrab awral i0 f0 f2 f4 acrab awrex f0 f1 f3 acv f2 acv f5 awbr awn awi f3 f4 awral awa f2 f4 awrex psylib f0 f2 f4 acrab acvv awcel f4 f5 awfr f0 f2 f4 acrab f4 awss f0 f2 f4 acrab ac0 awne f0 f1 f3 acv f2 acv f5 awbr awn awi f3 f4 awral awa f2 f4 awrex pan4s f0 f2 f4 acrab acvv awcel f0 f2 f4 acrab f4 awss f4 f5 awfr f0 f2 f4 acrab ac0 awne awa f0 f1 f3 acv f2 acv f5 awbr awn awi f3 f4 awral awa f2 f4 awrex pmpanl12 f4 f5 awfr f0 f2 f4 acrab ac0 awne f0 f1 f3 acv f2 acv f5 awbr awn awi f3 f4 awral awa f2 f4 awrex pex f0 f2 f4 awrex f0 f2 f4 acrab ac0 awne f4 f5 awfr f0 f1 f3 acv f2 acv f5 awbr awn awi f3 f4 awral awa f2 f4 awrex psyl5bir $.
+$}
+$( Irreflexivity of the epsilon relation: a class founded by epsilon is not
+       a member of itself.  (Contributed by NM, 18-Apr-1994.)  (Revised by
+       Mario Carneiro, 22-Jun-2015.) $)
+${
+	$v A $.
+	f0 $f class A $.
+	pefrirr $p |- ( _E Fr A -> -. A e. A ) $=
+	f0 f0 acep pfrirr f0 f0 f0 pepelg f0 f0 awcel f0 f0 acep awbr f0 f0 awcel awb f0 acep awfr padantl f0 acep awfr f0 f0 awcel awa f0 f0 acep awbr f0 f0 awcel pmtbid f0 acep awfr f0 f0 awcel f0 f0 awcel awn pex f0 acep awfr f0 f0 awcel ppm2.01d $.
+$}
+$( A set founded by epsilon contains no 2-cycle loops.  (Contributed by NM,
+     19-Apr-1994.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pefrn2lp $p |- ( ( _E Fr A /\ ( B e. A /\ C e. A ) ) -> -. ( B e. C /\ C e. B ) ) $=
+	f0 f1 f2 acep pfr2nr f1 f2 f0 pepelg f2 f1 f0 pepelg f2 f0 awcel f1 f2 acep awbr f1 f2 awcel f1 f0 awcel f2 f1 acep awbr f2 f1 awcel pbi2anan9r f1 f0 awcel f2 f0 awcel awa f1 f2 acep awbr f2 f1 acep awbr awa f1 f2 awcel f2 f1 awcel awa awb f0 acep awfr padantl f0 acep awfr f1 f0 awcel f2 f0 awcel awa awa f1 f2 acep awbr f2 f1 acep awbr awa f1 f2 awcel f2 f1 awcel awa pmtbid $.
+$}
+$( The epsilon relation is set-like on any class.  (This is the origin of
+       the term "set-like": a set-like relation "acts like" the epsilon
+       relation of sets and their elements.)  (Contributed by Mario Carneiro,
+       22-Jun-2015.) $)
+${
+	$v x y A $.
+	$d x y A $.
+	f0 $f class A $.
+	i0 $f set x $.
+	i1 $f set y $.
+	pepse $p |- _E Se A $=
+	i1 i0 pepel i1 acv i0 acv acep awbr i1 acv i0 acv awcel pbicomi i1 acv i0 acv acep awbr i1 i0 acv pabbi2i i0 pvex i0 acv i1 acv i0 acv acep awbr i1 acab acvv peqeltrri i1 acv i0 acv acep awbr i1 f0 pdfrab2 i1 acv i0 acv acep awbr i1 acab f0 pinss1 i1 acv i0 acv acep awbr i1 f0 acrab i1 acv i0 acv acep awbr i1 acab f0 acin i1 acv i0 acv acep awbr i1 acab peqsstri i1 acv i0 acv acep awbr i1 f0 acrab i1 acv i0 acv acep awbr i1 acab pssexi i1 acv i0 acv acep awbr i1 f0 acrab acvv awcel i0 f0 prgenw i0 i1 f0 acep adf-se f0 acep awse i1 acv i0 acv acep awbr i1 f0 acrab acvv awcel i0 f0 awral pmpbir $.
+$}
+$( Similar to Theorem 7.2 of [TakeutiZaring] p. 35, of except that the Axiom
+     of Regularity is not required due to antecedent ` _E Fr A ` .
+     (Contributed by NM, 4-May-1994.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	ptz7.2 $p |- ( ( Tr A /\ _E Fr A /\ B e. A ) -> ( B C_ A /\ B =/= A ) ) $=
+	f0 f1 ptrss f0 pefrirr f1 f0 f0 peleq1 f1 f0 awceq f1 f0 awcel f0 f0 awcel pnotbid f0 acep awfr f1 f0 awcel awn f1 f0 awceq f0 f0 awcel awn psyl5ibrcom f0 acep awfr f1 f0 awcel f1 f0 pnecon2ad f0 awtr f1 f0 awcel f1 f0 awss f0 acep awfr f1 f0 awne panim12ii f0 awtr f0 acep awfr f1 f0 awcel f1 f0 awss f1 f0 awne awa p3impia $.
+$}
+$( An alternate way of saying that the epsilon relation is well-founded.
+       (Contributed by NM, 17-Feb-2004.)  (Revised by Mario Carneiro,
+       23-Jun-2015.) $)
+${
+	$v x y z A $.
+	$d x y z A $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	i0 $f set z $.
+	pdfepfr $p |- ( _E Fr A <-> A. x ( ( x C_ A /\ x =/= (/) ) -> E. y e. x ( x i^i y ) = (/) ) ) $=
+	f0 f1 i0 f2 acep pdffr2 i0 f1 pepel i0 acv f1 acv acep awbr i0 acv f1 acv awcel awb i0 acv f0 acv awcel pa1i i0 acv f1 acv acep awbr i0 acv f1 acv awcel i0 f0 acv prabbiia i0 f0 acv f1 acv pdfin5 i0 acv f1 acv acep awbr i0 f0 acv acrab i0 acv f1 acv awcel i0 f0 acv acrab f0 acv f1 acv acin peqtr4i i0 acv f1 acv acep awbr i0 f0 acv acrab f0 acv f1 acv acin ac0 peqeq1i i0 acv f1 acv acep awbr i0 f0 acv acrab ac0 awceq f0 acv f1 acv acin ac0 awceq f1 f0 acv prexbii i0 acv f1 acv acep awbr i0 f0 acv acrab ac0 awceq f1 f0 acv awrex f0 acv f1 acv acin ac0 awceq f1 f0 acv awrex f0 acv f2 awss f0 acv ac0 awne awa pimbi2i f0 acv f2 awss f0 acv ac0 awne awa i0 acv f1 acv acep awbr i0 f0 acv acrab ac0 awceq f1 f0 acv awrex awi f0 acv f2 awss f0 acv ac0 awne awa f0 acv f1 acv acin ac0 awceq f1 f0 acv awrex awi f0 palbii f2 acep awfr f0 acv f2 awss f0 acv ac0 awne awa i0 acv f1 acv acep awbr i0 f0 acv acrab ac0 awceq f1 f0 acv awrex awi f0 awal f0 acv f2 awss f0 acv ac0 awne awa f0 acv f1 acv acin ac0 awceq f1 f0 acv awrex awi f0 awal pbitri $.
+$}
+$( A subset of an epsilon-founded class has a minimal element.
+       (Contributed by NM, 17-Feb-2004.)  (Revised by David Abernethy,
+       22-Feb-2011.) $)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x y B $.
+	e0 $e |- B e. _V $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	i0 $f set y $.
+	pepfrc $p |- ( ( _E Fr A /\ B C_ A /\ B =/= (/) ) -> E. x e. B ( B i^i x ) = (/) ) $=
+	e0 f0 i0 f1 f2 acep pfrc i0 f2 f0 acv pdfin5 i0 f0 pepel i0 acv f0 acv acep awbr i0 acv f0 acv awcel awb i0 acv f2 awcel pa1i i0 acv f0 acv acep awbr i0 acv f0 acv awcel i0 f2 prabbiia f2 f0 acv acin i0 acv f0 acv awcel i0 f2 acrab i0 acv f0 acv acep awbr i0 f2 acrab peqtr4i f2 f0 acv acin i0 acv f0 acv acep awbr i0 f2 acrab ac0 peqeq1i f2 f0 acv acin ac0 awceq i0 acv f0 acv acep awbr i0 f2 acrab ac0 awceq f0 f2 prexbii f1 acep awfr f2 f1 awss f2 ac0 awne aw3a i0 acv f0 acv acep awbr i0 f2 acrab ac0 awceq f0 f2 awrex f2 f0 acv acin ac0 awceq f0 f2 awrex psylibr $.
+$}
+$( Subset theorem for the well-ordering predicate.  Exercise 4 of
+     [TakeutiZaring] p. 31.  (Contributed by NM, 19-Apr-1994.) $)
+${
+	$v A B R $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class R $.
+	pwess $p |- ( A C_ B -> ( R We B -> R We A ) ) $=
+	f0 f1 f2 pfrss f0 f1 f2 psoss f0 f1 awss f1 f2 awfr f0 f2 awfr f1 f2 awor f0 f2 awor panim12d f1 f2 adf-we f0 f2 adf-we f0 f1 awss f1 f2 awfr f1 f2 awor awa f0 f2 awfr f0 f2 awor awa f1 f2 awwe f0 f2 awwe p3imtr4g $.
+$}
+$( Equality theorem for the well-ordering predicate.  (Contributed by NM,
+     9-Mar-1997.) $)
+${
+	$v A R S $.
+	f0 $f class A $.
+	f1 $f class R $.
+	f2 $f class S $.
+	pweeq1 $p |- ( R = S -> ( R We A <-> S We A ) ) $=
+	f0 f1 f2 pfreq1 f0 f1 f2 psoeq1 f1 f2 awceq f0 f1 awfr f0 f2 awfr f0 f1 awor f0 f2 awor panbi12d f0 f1 adf-we f0 f2 adf-we f1 f2 awceq f0 f1 awfr f0 f1 awor awa f0 f2 awfr f0 f2 awor awa f0 f1 awwe f0 f2 awwe p3bitr4g $.
+$}
+$( Equality theorem for the well-ordering predicate.  (Contributed by NM,
+     3-Apr-1994.) $)
+${
+	$v A B R $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class R $.
+	pweeq2 $p |- ( A = B -> ( R We A <-> R We B ) ) $=
+	f0 f1 f2 pfreq2 f0 f1 f2 psoeq2 f0 f1 awceq f0 f2 awfr f1 f2 awfr f0 f2 awor f1 f2 awor panbi12d f0 f2 adf-we f1 f2 adf-we f0 f1 awceq f0 f2 awfr f0 f2 awor awa f1 f2 awfr f1 f2 awor awa f0 f2 awwe f1 f2 awwe p3bitr4g $.
+$}
+$( A well-ordering is well-founded.  (Contributed by NM, 22-Apr-1994.) $)
+${
+	$v A R $.
+	f0 $f class A $.
+	f1 $f class R $.
+	pwefr $p |- ( R We A -> R Fr A ) $=
+	f0 f1 adf-we f0 f1 awwe f0 f1 awfr f0 f1 awor psimplbi $.
+$}
+$( A well-ordering is a strict ordering.  (Contributed by NM,
+     16-Mar-1997.) $)
+${
+	$v A R $.
+	f0 $f class A $.
+	f1 $f class R $.
+	pweso $p |- ( R We A -> R Or A ) $=
+	f0 f1 adf-we f0 f1 awwe f0 f1 awfr f0 f1 awor psimprbi $.
+$}
+$( The elements of an epsilon well-ordering are comparable.  (Contributed by
+     NM, 17-May-1994.) $)
+${
+	$v x y A $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	pwecmpep $p |- ( ( _E We A /\ ( x e. A /\ y e. A ) ) -> ( x e. y \/ x = y \/ y e. x ) ) $=
+	f2 acep pweso f2 f0 acv f1 acv acep psolin f0 f1 pepel f0 acv f1 acv awceq pbiid f1 f0 pepel f0 acv f1 acv acep awbr f0 acv f1 acv awcel f0 acv f1 acv awceq f0 acv f1 acv awceq f1 acv f0 acv acep awbr f1 acv f0 acv awcel p3orbi123i f2 acep awor f0 acv f2 awcel f1 acv f2 awcel awa awa f0 acv f1 acv acep awbr f0 acv f1 acv awceq f1 acv f0 acv acep awbr aw3o f0 acv f1 acv awcel f0 acv f1 acv awceq f1 acv f0 acv awcel aw3o psylib f2 acep awwe f2 acep awor f0 acv f2 awcel f1 acv f2 awcel awa f0 acv f1 acv awcel f0 acv f1 acv awceq f1 acv f0 acv awcel aw3o psylan $.
+$}
+$( An epsilon well-ordering is a transitive relation.  (Contributed by NM,
+     22-Apr-1994.) $)
+${
+	$v x y z A $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	f3 $f class A $.
+	pwetrep $p |- ( ( _E We A /\ ( x e. A /\ y e. A /\ z e. A ) ) -> ( ( x e. y /\ y e. z ) -> x e. z ) ) $=
+	f3 acep pweso f3 f0 acv f1 acv f2 acv acep psotr f3 acep awwe f3 acep awor f0 acv f3 awcel f1 acv f3 awcel f2 acv f3 awcel aw3a f0 acv f1 acv acep awbr f1 acv f2 acv acep awbr awa f0 acv f2 acv acep awbr awi psylan f0 f1 pepel f1 f2 pepel f0 acv f1 acv acep awbr f0 acv f1 acv awcel f1 acv f2 acv acep awbr f1 acv f2 acv awcel panbi12i f0 f2 pepel f3 acep awwe f0 acv f3 awcel f1 acv f3 awcel f2 acv f3 awcel aw3a awa f0 acv f1 acv acep awbr f1 acv f2 acv acep awbr awa f0 acv f2 acv acep awbr f0 acv f1 acv awcel f1 acv f2 acv awcel awa f0 acv f2 acv awcel p3imtr3g $.
+$}
+$( A non-empty (possibly proper) subclass of a class well-ordered by ` _E `
+       has a minimal element.  Special case of Proposition 6.26 of
+       [TakeutiZaring] p. 31.  (Contributed by NM, 17-Feb-2004.) $)
+${
+	$v x y z A B $.
+	$d x y z $.
+	$d y z A $.
+	$d x y z B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	i0 $f set y $.
+	i1 $f set z $.
+	pwefrc $p |- ( ( _E We A /\ B C_ A /\ B =/= (/) ) -> E. x e. B ( B i^i x ) = (/) ) $=
+	f2 f1 acep pwess i0 f2 pn0 f0 acv i0 acv f2 pineq2 f0 acv i0 acv awceq f2 f0 acv acin f2 i0 acv acin ac0 peqeq1d f2 f0 acv acin ac0 awceq f2 i0 acv acin ac0 awceq f0 i0 acv f2 prspcev i0 acv f2 awcel f2 i0 acv acin ac0 awceq f2 f0 acv acin ac0 awceq f0 f2 awrex pex i0 acv f2 awcel f2 i0 acv acin ac0 awceq f2 f0 acv acin ac0 awceq f0 f2 awrex awi f2 acep awwe padantl f2 i0 acv pinss1 f2 acep pwefr i0 pvex i0 acv f2 pinex2 f0 f2 f2 i0 acv acin pepfrc f2 acep awwe f2 acep awfr f2 i0 acv acin f2 awss f2 i0 acv acin ac0 awne f2 i0 acv acin f0 acv acin ac0 awceq f0 f2 i0 acv acin awrex psyl3an1 f2 acep awwe f2 i0 acv acin f2 awss f2 i0 acv acin ac0 awne f2 i0 acv acin f0 acv acin ac0 awceq f0 f2 i0 acv acin awrex p3exp f2 acep awwe f2 i0 acv acin f2 awss f2 i0 acv acin ac0 awne f2 i0 acv acin f0 acv acin ac0 awceq f0 f2 i0 acv acin awrex awi pmpi f0 acv f2 i0 acv pelin f0 acv f2 i0 acv acin awcel f0 acv f2 awcel f0 acv i0 acv awcel awa f2 i0 acv acin f0 acv acin ac0 awceq panbi1i f0 acv f2 awcel f0 acv i0 acv awcel f2 i0 acv acin f0 acv acin ac0 awceq panass f0 acv f2 i0 acv acin awcel f2 i0 acv acin f0 acv acin ac0 awceq awa f0 acv f2 awcel f0 acv i0 acv awcel awa f2 i0 acv acin f0 acv acin ac0 awceq awa f0 acv f2 awcel f0 acv i0 acv awcel f2 i0 acv acin f0 acv acin ac0 awceq awa awa pbitri f2 i0 acv acin f0 acv acin ac0 awceq f0 acv i0 acv awcel f2 i0 acv acin f0 acv acin ac0 awceq awa f0 f2 i0 acv acin f2 prexbii2 f2 acep awwe f2 i0 acv acin ac0 awne f2 i0 acv acin f0 acv acin ac0 awceq f0 f2 i0 acv acin awrex f0 acv i0 acv awcel f2 i0 acv acin f0 acv acin ac0 awceq awa f0 f2 awrex psyl6ib f2 acep awwe f2 i0 acv acin ac0 awne f0 acv i0 acv awcel f2 i0 acv acin f0 acv acin ac0 awceq awa f0 f2 awrex awi i0 acv f2 awcel padantr i1 acv f2 f0 acv pelin i0 acv f2 awcel i1 acv f2 awcel f0 acv f2 awcel adf-3an i0 acv f2 awcel i1 acv f2 awcel f0 acv f2 awcel p3anrot i0 acv f2 awcel i1 acv f2 awcel awa f0 acv f2 awcel awa i0 acv f2 awcel i1 acv f2 awcel f0 acv f2 awcel aw3a i1 acv f2 awcel f0 acv f2 awcel i0 acv f2 awcel aw3a pbitr3i i1 f0 i0 f2 pwetrep f2 acep awwe i1 acv f2 awcel f0 acv f2 awcel i0 acv f2 awcel aw3a awa i1 acv f0 acv awcel f0 acv i0 acv awcel i1 acv i0 acv awcel pexp3a i0 acv f2 awcel i1 acv f2 awcel awa f0 acv f2 awcel awa f2 acep awwe i1 acv f2 awcel f0 acv f2 awcel i0 acv f2 awcel aw3a i1 acv f0 acv awcel f0 acv i0 acv awcel i1 acv i0 acv awcel awi awi psylan2b f2 acep awwe i0 acv f2 awcel i1 acv f2 awcel f0 acv f2 awcel i1 acv f0 acv awcel f0 acv i0 acv awcel i1 acv i0 acv awcel awi awi pexp44 f2 acep awwe i0 acv f2 awcel i1 acv f2 awcel f0 acv f2 awcel i1 acv f0 acv awcel f0 acv i0 acv awcel i1 acv i0 acv awcel awi awi awi awi pimp f2 acep awwe i0 acv f2 awcel awa i1 acv f2 awcel f0 acv f2 awcel i1 acv f0 acv awcel f0 acv i0 acv awcel i1 acv i0 acv awcel awi pcom34 f2 acep awwe i0 acv f2 awcel awa i1 acv f2 awcel i1 acv f0 acv awcel f0 acv f2 awcel f0 acv i0 acv awcel i1 acv i0 acv awcel awi awi pimp3a i1 acv f2 f0 acv acin awcel i1 acv f2 awcel i1 acv f0 acv awcel awa f2 acep awwe i0 acv f2 awcel awa f0 acv f2 awcel f0 acv i0 acv awcel i1 acv i0 acv awcel awi awi psyl5bi f2 acep awwe i0 acv f2 awcel awa i1 acv f2 f0 acv acin awcel f0 acv f2 awcel f0 acv i0 acv awcel i1 acv i0 acv awcel pimp4a f2 acep awwe i0 acv f2 awcel awa i1 acv f2 f0 acv acin awcel f0 acv f2 awcel f0 acv i0 acv awcel awa i1 acv i0 acv awcel pcom23 f2 acep awwe i0 acv f2 awcel awa f0 acv f2 awcel f0 acv i0 acv awcel awa i1 acv i0 acv awcel i1 f2 f0 acv acin pralrimdv i1 f2 f0 acv acin i0 acv pdfss3 f2 acep awwe i0 acv f2 awcel awa f0 acv f2 awcel f0 acv i0 acv awcel awa i1 acv i0 acv awcel i1 f2 f0 acv acin awral f2 f0 acv acin i0 acv awss psyl6ibr f2 f0 acv acin i0 acv pdfss f2 f0 acv i0 acv pin32 f2 f0 acv acin i0 acv acin f2 i0 acv acin f0 acv acin f2 f0 acv acin peqeq2i f2 f0 acv acin i0 acv awss f2 f0 acv acin f2 f0 acv acin i0 acv acin awceq f2 f0 acv acin f2 i0 acv acin f0 acv acin awceq pbitri f2 f0 acv acin i0 acv awss f2 f0 acv acin f2 i0 acv acin f0 acv acin awceq pbiimpi f2 f0 acv acin i0 acv awss f2 f0 acv acin f2 i0 acv acin f0 acv acin ac0 peqeq1d f2 f0 acv acin i0 acv awss f2 f0 acv acin ac0 awceq f2 i0 acv acin f0 acv acin ac0 awceq pbiimprd f2 acep awwe i0 acv f2 awcel awa f0 acv f2 awcel f0 acv i0 acv awcel awa f2 f0 acv acin i0 acv awss f2 i0 acv acin f0 acv acin ac0 awceq f2 f0 acv acin ac0 awceq awi psyl6 f2 acep awwe i0 acv f2 awcel awa f0 acv f2 awcel f0 acv i0 acv awcel f2 i0 acv acin f0 acv acin ac0 awceq f2 f0 acv acin ac0 awceq awi pexp3a f2 acep awwe i0 acv f2 awcel awa f0 acv f2 awcel f0 acv i0 acv awcel f2 i0 acv acin f0 acv acin ac0 awceq f2 f0 acv acin ac0 awceq pimp4a f2 acep awwe i0 acv f2 awcel awa f0 acv i0 acv awcel f2 i0 acv acin f0 acv acin ac0 awceq awa f2 f0 acv acin ac0 awceq f0 f2 preximdvai f2 acep awwe i0 acv f2 awcel awa f2 i0 acv acin ac0 awne f0 acv i0 acv awcel f2 i0 acv acin f0 acv acin ac0 awceq awa f0 f2 awrex f2 f0 acv acin ac0 awceq f0 f2 awrex psyld f2 acep awwe i0 acv f2 awcel awa f2 f0 acv acin ac0 awceq f0 f2 awrex f2 i0 acv acin ac0 ppm2.61dne f2 acep awwe i0 acv f2 awcel f2 f0 acv acin ac0 awceq f0 f2 awrex pex f2 acep awwe i0 acv f2 awcel f2 f0 acv acin ac0 awceq f0 f2 awrex i0 pexlimdv f2 ac0 awne i0 acv f2 awcel i0 awex f2 acep awwe f2 f0 acv acin ac0 awceq f0 f2 awrex psyl5bi f2 f1 awss f1 acep awwe f2 acep awwe f2 ac0 awne f2 f0 acv acin ac0 awceq f0 f2 awrex awi psyl6com f1 acep awwe f2 f1 awss f2 ac0 awne f2 f0 acv acin ac0 awceq f0 f2 awrex p3imp $.
+$}
+$( Any relation is a well-ordering of the empty set.  (Contributed by NM,
+     16-Mar-1997.) $)
+${
+	$v R $.
+	f0 $f class R $.
+	pwe0 $p |- R We (/) $=
+	f0 pfr0 f0 pso0 ac0 f0 adf-we ac0 f0 awwe ac0 f0 awfr ac0 f0 awor pmpbir2an $.
+$}
+$( A subset of a well-ordered set has a unique minimal element.
+       (Contributed by NM, 18-Mar-1997.)  (Revised by Mario Carneiro,
+       28-Apr-2015.) $)
+${
+	$v x y A B R V $.
+	$d x y A $.
+	$d x y B $.
+	$d x y R $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class R $.
+	f5 $f class V $.
+	pwereu $p |- ( ( R We A /\ ( B e. V /\ B C_ A /\ B =/= (/) ) ) -> E! x e. B A. y e. B -. y R x ) $=
+	f2 f4 pwefr f0 f1 f2 f3 f5 f4 pfri f3 f5 awcel f2 f4 awfr awa f3 f2 awss f3 ac0 awne f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrex pexp32 f3 f5 awcel f2 f4 awfr f3 f2 awss f3 ac0 awne f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrex awi awi pexpcom f2 f4 awfr f3 f5 awcel f3 f2 awss f3 ac0 awne f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrex p3imp2 f2 f4 awwe f2 f4 awfr f3 f5 awcel f3 f2 awss f3 ac0 awne aw3a f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrex psylan f2 f4 awwe f3 f5 awcel f3 f2 awss f3 ac0 awne psimpr2 f2 f4 pweso f2 f4 awwe f2 f4 awor f3 f5 awcel f3 f2 awss f3 ac0 awne aw3a padantr f3 f2 f4 psoss f2 f4 awwe f3 f5 awcel f3 f2 awss f3 ac0 awne aw3a awa f3 f2 awss f2 f4 awor f3 f4 awor psylc f0 f1 f3 f4 psomo f2 f4 awwe f3 f5 awcel f3 f2 awss f3 ac0 awne aw3a awa f3 f4 awor f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrmo psyl f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 preu5 f2 f4 awwe f3 f5 awcel f3 f2 awss f3 ac0 awne aw3a awa f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrex f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrmo f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awreu psylanbrc $.
+$}
+$( All nonempty (possibly proper) subclasses of ` A ` , which has a
+       well-founded relation ` R ` , have ` R `-minimal elements.  Proposition
+       6.26 of [TakeutiZaring] p. 31.  (Contributed by Scott Fenton,
+       29-Jan-2011.)  (Revised by Mario Carneiro, 24-Jun-2015.) $)
+${
+	$v x y z w A B R $.
+	$d x y z A $.
+	$d w x y z B $.
+	$d w x y z R $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class R $.
+	i0 $f set z $.
+	i1 $f set w $.
+	pwereu2 $p |- ( ( ( R We A /\ R Se A ) /\ ( B C_ A /\ B =/= (/) ) ) -> E! x e. B A. y e. B -. y R x ) $=
+	i0 f3 pn0 i1 acv i0 acv f4 awbr i1 f3 prabeq0 f1 acv i1 acv f0 acv f4 pbreq1 f1 i1 pweq f1 acv f0 acv f4 awbr i1 acv f0 acv f4 awbr pnotbid f1 acv f0 acv f4 awbr awn i1 acv f0 acv f4 awbr awn f1 i1 f3 pcbvralv f0 acv i0 acv i1 acv f4 pbreq2 f0 i0 pweq i1 acv f0 acv f4 awbr i1 acv i0 acv f4 awbr pnotbid f0 i0 pweq i1 acv f0 acv f4 awbr awn i1 acv i0 acv f4 awbr awn i1 f3 pralbidv f1 acv f0 acv f4 awbr awn f1 f3 awral i1 acv f0 acv f4 awbr awn i1 f3 awral f0 i0 pweq i1 acv i0 acv f4 awbr awn i1 f3 awral psyl5bb f1 acv f0 acv f4 awbr awn f1 f3 awral i1 acv i0 acv f4 awbr awn i1 f3 awral f0 i0 acv f3 prspcev i0 acv f3 awcel i1 acv i0 acv f4 awbr awn i1 f3 awral f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrex pex i0 acv f3 awcel i1 acv i0 acv f4 awbr awn i1 f3 awral f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrex awi f2 f4 awwe f2 f4 awse awa f3 f2 awss pad2antll i1 acv i0 acv f4 awbr i1 f3 acrab ac0 awceq i1 acv i0 acv f4 awbr awn i1 f3 awral f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrex psyl5bi f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel psimprl f2 f4 awwe f2 f4 awse f3 f2 awss i0 acv f3 awcel awa psimplr f3 f2 f4 psess2 f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa f3 f2 awss f2 f4 awse f3 f4 awse psylc f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel psimprr i1 f3 i0 acv f4 pseex f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa f3 f4 awse i0 acv f3 awcel i1 acv i0 acv f4 awbr i1 f3 acrab acvv awcel psyl2anc f2 f4 pwefr f2 f4 awwe f2 f4 awfr f2 f4 awse f3 f2 awss i0 acv f3 awcel awa pad2antrr i1 acv i0 acv f4 awbr i1 f3 pssrab2 f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel psimprl f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa i1 acv i0 acv f4 awbr i1 f3 acrab f3 f2 psyl5ss f0 f1 f2 i1 acv i0 acv f4 awbr i1 f3 acrab acvv f4 pfri i1 acv i0 acv f4 awbr i1 f3 acrab acvv awcel f2 f4 awfr awa i1 acv i0 acv f4 awbr i1 f3 acrab f2 awss i1 acv i0 acv f4 awbr i1 f3 acrab ac0 awne f1 acv f0 acv f4 awbr awn f1 i1 acv i0 acv f4 awbr i1 f3 acrab awral f0 i1 acv i0 acv f4 awbr i1 f3 acrab awrex pexpr f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa i1 acv i0 acv f4 awbr i1 f3 acrab acvv awcel f2 f4 awfr i1 acv i0 acv f4 awbr i1 f3 acrab f2 awss i1 acv i0 acv f4 awbr i1 f3 acrab ac0 awne f1 acv f0 acv f4 awbr awn f1 i1 acv i0 acv f4 awbr i1 f3 acrab awral f0 i1 acv i0 acv f4 awbr i1 f3 acrab awrex awi psyl21anc i1 acv f0 acv i0 acv f4 pbreq1 i1 acv i0 acv f4 awbr f0 acv i0 acv f4 awbr f1 acv f0 acv f4 awbr awn f1 i1 acv i0 acv f4 awbr i1 f3 acrab awral f0 i1 f3 prexrab i1 acv f1 acv i0 acv f4 pbreq1 i1 acv i0 acv f4 awbr f1 acv i0 acv f4 awbr f1 acv f0 acv f4 awbr awn f1 i1 f3 pralrab f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel psimprl f2 f4 pweso f2 f4 awwe f2 f4 awor f2 f4 awse f3 f2 awss i0 acv f3 awcel awa pad2antrr f3 f2 f4 psoss f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa f3 f2 awss f2 f4 awor f3 f4 awor psylc f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa f3 f4 awor f0 acv f3 awcel f1 acv f3 awcel pad2antrr f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa f0 acv f3 awcel awa f1 acv f3 awcel psimpr f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa f0 acv f3 awcel f1 acv f3 awcel psimplr f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel psimprr f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa i0 acv f3 awcel f0 acv f3 awcel f1 acv f3 awcel pad2antrr f3 f1 acv f0 acv i0 acv f4 psotr f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa f0 acv f3 awcel awa f1 acv f3 awcel awa f3 f4 awor f1 acv f3 awcel f0 acv f3 awcel i0 acv f3 awcel f1 acv f0 acv f4 awbr f0 acv i0 acv f4 awbr awa f1 acv i0 acv f4 awbr awi psyl13anc f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa f0 acv f3 awcel awa f1 acv f3 awcel awa f1 acv f0 acv f4 awbr f0 acv i0 acv f4 awbr f1 acv i0 acv f4 awbr pancomsd f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa f0 acv f3 awcel awa f1 acv f3 awcel awa f0 acv i0 acv f4 awbr f1 acv f0 acv f4 awbr f1 acv i0 acv f4 awbr pexpdimp f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa f0 acv f3 awcel awa f1 acv f3 awcel f0 acv i0 acv f4 awbr f1 acv f0 acv f4 awbr f1 acv i0 acv f4 awbr awi pan32s f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa f0 acv f3 awcel awa f0 acv i0 acv f4 awbr awa f1 acv f3 awcel awa f1 acv f0 acv f4 awbr f1 acv i0 acv f4 awbr pcon3d f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa f0 acv f3 awcel awa f0 acv i0 acv f4 awbr awa f1 acv f3 awcel awa f1 acv f0 acv f4 awbr awn pidd f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa f0 acv f3 awcel awa f0 acv i0 acv f4 awbr awa f1 acv f3 awcel awa f1 acv i0 acv f4 awbr f1 acv f0 acv f4 awbr awn f1 acv f0 acv f4 awbr awn pjad f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa f0 acv f3 awcel awa f0 acv i0 acv f4 awbr awa f1 acv i0 acv f4 awbr f1 acv f0 acv f4 awbr awn awi f1 acv f0 acv f4 awbr awn f1 f3 pralimdva f1 acv f0 acv f4 awbr awn f1 i1 acv i0 acv f4 awbr i1 f3 acrab awral f1 acv i0 acv f4 awbr f1 acv f0 acv f4 awbr awn awi f1 f3 awral f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa f0 acv f3 awcel awa f0 acv i0 acv f4 awbr awa f1 acv f0 acv f4 awbr awn f1 f3 awral psyl5bi f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa f0 acv f3 awcel awa f0 acv i0 acv f4 awbr f1 acv f0 acv f4 awbr awn f1 i1 acv i0 acv f4 awbr i1 f3 acrab awral f1 acv f0 acv f4 awbr awn f1 f3 awral pexpimpd f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa f0 acv i0 acv f4 awbr f1 acv f0 acv f4 awbr awn f1 i1 acv i0 acv f4 awbr i1 f3 acrab awral awa f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 preximdva f1 acv f0 acv f4 awbr awn f1 i1 acv i0 acv f4 awbr i1 f3 acrab awral f0 i1 acv i0 acv f4 awbr i1 f3 acrab awrex f0 acv i0 acv f4 awbr f1 acv f0 acv f4 awbr awn f1 i1 acv i0 acv f4 awbr i1 f3 acrab awral awa f0 f3 awrex f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrex psyl5bi f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa i1 acv i0 acv f4 awbr i1 f3 acrab ac0 awne f1 acv f0 acv f4 awbr awn f1 i1 acv i0 acv f4 awbr i1 f3 acrab awral f0 i1 acv i0 acv f4 awbr i1 f3 acrab awrex f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrex psyld f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel awa awa f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrex i1 acv i0 acv f4 awbr i1 f3 acrab ac0 ppm2.61dne f2 f4 awwe f2 f4 awse awa f3 f2 awss i0 acv f3 awcel f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrex pexpr f2 f4 awwe f2 f4 awse awa f3 f2 awss awa i0 acv f3 awcel f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrex i0 pexlimdv f3 ac0 awne i0 acv f3 awcel i0 awex f2 f4 awwe f2 f4 awse awa f3 f2 awss awa f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrex psyl5bi f2 f4 awwe f2 f4 awse awa f3 f2 awss f3 ac0 awne f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrex pimpr f2 f4 awwe f2 f4 awse awa f3 f2 awss f3 ac0 awne psimprl f2 f4 pweso f2 f4 awwe f2 f4 awor f2 f4 awse f3 f2 awss f3 ac0 awne awa pad2antrr f3 f2 f4 psoss f2 f4 awwe f2 f4 awse awa f3 f2 awss f3 ac0 awne awa awa f3 f2 awss f2 f4 awor f3 f4 awor psylc f0 f1 f3 f4 psomo f2 f4 awwe f2 f4 awse awa f3 f2 awss f3 ac0 awne awa awa f3 f4 awor f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrmo psyl f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 preu5 f2 f4 awwe f2 f4 awse awa f3 f2 awss f3 ac0 awne awa awa f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrex f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awrmo f1 acv f0 acv f4 awbr awn f1 f3 awral f0 f3 awreu psylanbrc $.
+$}
+

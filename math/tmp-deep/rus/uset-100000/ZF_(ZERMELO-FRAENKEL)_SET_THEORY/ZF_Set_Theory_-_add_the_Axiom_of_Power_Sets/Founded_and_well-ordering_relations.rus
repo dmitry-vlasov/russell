@@ -1,0 +1,963 @@
+import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets/Partial_and_complete_ordering.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                Founded and well-ordering relations
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* Declare new constant symbols. */
+
+constant {
+	symbol Fr ;;
+}
+
+/* Well-founded predicate symbol (read: 'well-founded'). */
+
+constant {
+	symbol Se ;;
+}
+
+/* Set-like predicate symbol (read: 'set-like'). */
+
+constant {
+	symbol We ;;
+}
+
+/* Well-ordering predicate symbol (read: 'well-orders') */
+
+/* Extend wff notation to include the well-founded predicate.  Read:  ' ` R `
+     is a well-founded relation on ` A ` .' */
+
+rule wfr (A : class, R : class) {
+	term : wff = # R Fr A ;;
+}
+
+/* Extend wff notation to include the set-like predicate.  Read:  ' ` R ` is
+     set-like on ` A ` .' */
+
+rule wse (A : class, R : class) {
+	term : wff = # R Se A ;;
+}
+
+/* Extend wff notation to include the well-ordering predicate.
+     Read:  ' ` R ` well-orders ` A ` .' */
+
+rule wwe (A : class, R : class) {
+	term : wff = # R We A ;;
+}
+
+/* Define the well-founded relation predicate.  Definition 6.24(1) of
+       [TakeutiZaring] p. 30.  For alternate definitions, see ~ dffr2 and
+       ~ dffr3 .  (Contributed by NM, 3-Apr-1994.) */
+
+definition df-fr (x : set, y : set, z : set, A : class, R : class) disjointed(x y z R, x y z A) {
+	defiendum : wff = # R Fr A ;;
+	definiens : wff = # ∀ x ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x ∀ z ∈ x ¬ z R y ) ;;
+	-----------------------
+	prop : wff = |- ( defiendum ↔ definiens ) ;;
+}
+
+/* Define the set-like predicate.  (Contributed by Mario Carneiro,
+       19-Nov-2014.) */
+
+definition df-se (x : set, y : set, A : class, R : class) disjointed(x y R, x y A) {
+	defiendum : wff = # R Se A ;;
+	definiens : wff = # ∀ x ∈ A { y ∈ A | y R x } ∈ _V ;;
+	-----------------------
+	prop : wff = |- ( defiendum ↔ definiens ) ;;
+}
+
+/* Define the well-ordering predicate.  For an alternate definition, see
+     ~ dfwe2 .  (Contributed by NM, 3-Apr-1994.) */
+
+definition df-we (A : class, R : class)  {
+	defiendum : wff = # R We A ;;
+	definiens : wff = # ( R Fr A ∧ R Or A ) ;;
+	-----------------------
+	prop : wff = |- ( defiendum ↔ definiens ) ;;
+}
+
+/* Property of well-founded relation (one direction of definition).
+       (Contributed by NM, 18-Mar-1997.) */
+
+theorem fri (x : set, y : set, A : class, B : class, C : class, R : class) disjointed(x y z A, x y z B, x y z R, x y) {
+	prop 1 : wff = |- ( ( ( B ∈ C ∧ R Fr A ) ∧ ( B ⊆ A ∧ B ≠ ∅ ) ) → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ;;
+}
+
+proof of fri {
+	var z : set;;
+	step 1 : wff = df-fr () |- ( R Fr A ↔ ∀ z ( ( z ⊆ A ∧ z ≠ ∅ ) → ∃ x ∈ z ∀ y ∈ z ¬ y R x ) ) ;;
+	step 2 : wff = sseq1 () |- ( z = B → ( z ⊆ A ↔ B ⊆ A ) ) ;;
+	step 3 : wff = neeq1 () |- ( z = B → ( z ≠ ∅ ↔ B ≠ ∅ ) ) ;;
+	step 4 : wff = anbi12d (step 2, step 3) |- ( z = B → ( ( z ⊆ A ∧ z ≠ ∅ ) ↔ ( B ⊆ A ∧ B ≠ ∅ ) ) ) ;;
+	step 5 : wff = raleq () |- ( z = B → ( ∀ y ∈ z ¬ y R x ↔ ∀ y ∈ B ¬ y R x ) ) ;;
+	step 6 : wff = rexeqbi1dv (step 5) |- ( z = B → ( ∃ x ∈ z ∀ y ∈ z ¬ y R x ↔ ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ) ;;
+	step 7 : wff = imbi12d (step 4, step 6) |- ( z = B → ( ( ( z ⊆ A ∧ z ≠ ∅ ) → ∃ x ∈ z ∀ y ∈ z ¬ y R x ) ↔ ( ( B ⊆ A ∧ B ≠ ∅ ) → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ) ) ;;
+	step 8 : wff = spcgv (step 7) |- ( B ∈ C → ( ∀ z ( ( z ⊆ A ∧ z ≠ ∅ ) → ∃ x ∈ z ∀ y ∈ z ¬ y R x ) → ( ( B ⊆ A ∧ B ≠ ∅ ) → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ) ) ;;
+	step 9 : wff = syl5bi (step 1, step 8) |- ( B ∈ C → ( R Fr A → ( ( B ⊆ A ∧ B ≠ ∅ ) → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ) ) ;;
+	step 10 : wff = imp31 (step 9) |- ( ( ( B ∈ C ∧ R Fr A ) ∧ ( B ⊆ A ∧ B ≠ ∅ ) ) → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* The ` R ` -preimage of an element of the base set in a set-like relation
+       is a set.  (Contributed by Mario Carneiro, 19-Nov-2014.) */
+
+theorem seex (x : set, A : class, B : class, R : class) disjointed(x y A, x y B, x y R, x y) {
+	prop 1 : wff = |- ( ( R Se A ∧ B ∈ A ) → { x ∈ A | x R B } ∈ _V ) ;;
+}
+
+proof of seex {
+	var y : set;;
+	step 1 : wff = df-se () |- ( R Se A ↔ ∀ y ∈ A { x ∈ A | x R y } ∈ _V ) ;;
+	step 2 : wff = breq2 () |- ( y = B → ( x R y ↔ x R B ) ) ;;
+	step 3 : wff = rabbidv (step 2) |- ( y = B → { x ∈ A | x R y } = { x ∈ A | x R B } ) ;;
+	step 4 : wff = eleq1d (step 3) |- ( y = B → ( { x ∈ A | x R y } ∈ _V ↔ { x ∈ A | x R B } ∈ _V ) ) ;;
+	step 5 : wff = rspccva (step 4) |- ( ( ∀ y ∈ A { x ∈ A | x R y } ∈ _V ∧ B ∈ A ) → { x ∈ A | x R B } ∈ _V ) ;;
+	step 6 : wff = sylanb (step 1, step 5) |- ( ( R Se A ∧ B ∈ A ) → { x ∈ A | x R B } ∈ _V ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Any relation on a set is set-like on it.  (Contributed by Mario
+       Carneiro, 22-Jun-2015.) */
+
+theorem exse (A : class, R : class, V : class) disjointed(x y A, x y, x y R, x y V) {
+	prop 1 : wff = |- ( A ∈ V → R Se A ) ;;
+}
+
+proof of exse {
+	var x : set, y : set;;
+	step 1 : wff = rabexg () |- ( A ∈ V → { y ∈ A | y R x } ∈ _V ) ;;
+	step 2 : wff = ralrimivw (step 1) |- ( A ∈ V → ∀ x ∈ A { y ∈ A | y R x } ∈ _V ) ;;
+	step 3 : wff = df-se () |- ( R Se A ↔ ∀ x ∈ A { y ∈ A | y R x } ∈ _V ) ;;
+	step 4 : wff = sylibr (step 2, step 3) |- ( A ∈ V → R Se A ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Alternate definition of well-founded relation.  Similar to Definition
+       6.21 of [TakeutiZaring] p. 30.  (Contributed by NM, 17-Feb-2004.)
+       (Proof shortened by Andrew Salmon, 27-Aug-2011.)  (Proof shortened by
+       Mario Carneiro, 23-Jun-2015.) */
+
+theorem dffr2 (x : set, y : set, z : set, A : class, R : class) disjointed(x y z A, x y z R) {
+	prop 1 : wff = |- ( R Fr A ↔ ∀ x ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x { z ∈ x | z R y } = ∅ ) ) ;;
+}
+
+proof of dffr2 {
+	step 1 : wff = df-fr () |- ( R Fr A ↔ ∀ x ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x ∀ z ∈ x ¬ z R y ) ) ;;
+	step 2 : wff = rabeq0 () |- ( { z ∈ x | z R y } = ∅ ↔ ∀ z ∈ x ¬ z R y ) ;;
+	step 3 : wff = rexbii (step 2) |- ( ∃ y ∈ x { z ∈ x | z R y } = ∅ ↔ ∃ y ∈ x ∀ z ∈ x ¬ z R y ) ;;
+	step 4 : wff = imbi2i (step 3) |- ( ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x { z ∈ x | z R y } = ∅ ) ↔ ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x ∀ z ∈ x ¬ z R y ) ) ;;
+	step 5 : wff = albii (step 4) |- ( ∀ x ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x { z ∈ x | z R y } = ∅ ) ↔ ∀ x ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x ∀ z ∈ x ¬ z R y ) ) ;;
+	step 6 : wff = bitr4i (step 1, step 5) |- ( R Fr A ↔ ∀ x ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x { z ∈ x | z R y } = ∅ ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Property of well-founded relation (one direction of definition using
+       class variables).  (Contributed by NM, 17-Feb-2004.)  (Revised by Mario
+       Carneiro, 19-Nov-2014.) */
+
+theorem frc (x : set, y : set, A : class, B : class, R : class) disjointed(x y A, x y B, x y R) {
+	hyp 1 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( ( R Fr A ∧ B ⊆ A ∧ B ≠ ∅ ) → ∃ x ∈ B { y ∈ B | y R x } = ∅ ) ;;
+}
+
+proof of frc {
+	step 1 : wff = fri () |- ( ( ( B ∈ _V ∧ R Fr A ) ∧ ( B ⊆ A ∧ B ≠ ∅ ) ) → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ;;
+	step 2 : wff = mpanl1 (hyp 1, step 1) |- ( ( R Fr A ∧ ( B ⊆ A ∧ B ≠ ∅ ) ) → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ;;
+	step 3 : wff = 3impb (step 2) |- ( ( R Fr A ∧ B ⊆ A ∧ B ≠ ∅ ) → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ;;
+	step 4 : wff = rabeq0 () |- ( { y ∈ B | y R x } = ∅ ↔ ∀ y ∈ B ¬ y R x ) ;;
+	step 5 : wff = rexbii (step 4) |- ( ∃ x ∈ B { y ∈ B | y R x } = ∅ ↔ ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ;;
+	step 6 : wff = sylibr (step 3, step 5) |- ( ( R Fr A ∧ B ⊆ A ∧ B ≠ ∅ ) → ∃ x ∈ B { y ∈ B | y R x } = ∅ ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Subset theorem for the well-founded predicate.  Exercise 1 of
+       [TakeutiZaring] p. 31.  (Contributed by NM, 3-Apr-1994.)  (Proof
+       shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem frss (A : class, B : class, R : class) disjointed(x y z A, x y z B, x y z R, x y) {
+	prop 1 : wff = |- ( A ⊆ B → ( R Fr B → R Fr A ) ) ;;
+}
+
+proof of frss {
+	var x : set, y : set, z : set;;
+	step 1 : wff = sstr2 () |- ( x ⊆ A → ( A ⊆ B → x ⊆ B ) ) ;;
+	step 2 : wff = com12 (step 1) |- ( A ⊆ B → ( x ⊆ A → x ⊆ B ) ) ;;
+	step 3 : wff = anim1d (step 2) |- ( A ⊆ B → ( ( x ⊆ A ∧ x ≠ ∅ ) → ( x ⊆ B ∧ x ≠ ∅ ) ) ) ;;
+	step 4 : wff = imim1d (step 3) |- ( A ⊆ B → ( ( ( x ⊆ B ∧ x ≠ ∅ ) → ∃ y ∈ x ∀ z ∈ x ¬ z R y ) → ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x ∀ z ∈ x ¬ z R y ) ) ) ;;
+	step 5 : wff = alimdv (step 4) |- ( A ⊆ B → ( ∀ x ( ( x ⊆ B ∧ x ≠ ∅ ) → ∃ y ∈ x ∀ z ∈ x ¬ z R y ) → ∀ x ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x ∀ z ∈ x ¬ z R y ) ) ) ;;
+	step 6 : wff = df-fr () |- ( R Fr B ↔ ∀ x ( ( x ⊆ B ∧ x ≠ ∅ ) → ∃ y ∈ x ∀ z ∈ x ¬ z R y ) ) ;;
+	step 7 : wff = df-fr () |- ( R Fr A ↔ ∀ x ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x ∀ z ∈ x ¬ z R y ) ) ;;
+	step 8 : wff = 3imtr4g (step 5, step 6, step 7) |- ( A ⊆ B → ( R Fr B → R Fr A ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Subset theorem for the set-like predicate.  (Contributed by Mario
+       Carneiro, 24-Jun-2015.) */
+
+theorem sess1 (A : class, R : class, S : class) disjointed(x y A, x y, x y R, x y S) {
+	prop 1 : wff = |- ( R ⊆ S → ( S Se A → R Se A ) ) ;;
+}
+
+proof of sess1 {
+	var x : set, y : set;;
+	step 1 : wff = simpl () |- ( ( R ⊆ S ∧ y ∈ A ) → R ⊆ S ) ;;
+	step 2 : wff = ssbrd (step 1) |- ( ( R ⊆ S ∧ y ∈ A ) → ( y R x → y S x ) ) ;;
+	step 3 : wff = ss2rabdv (step 2) |- ( R ⊆ S → { y ∈ A | y R x } ⊆ { y ∈ A | y S x } ) ;;
+	step 4 : wff = ssexg () |- ( ( { y ∈ A | y R x } ⊆ { y ∈ A | y S x } ∧ { y ∈ A | y S x } ∈ _V ) → { y ∈ A | y R x } ∈ _V ) ;;
+	step 5 : wff = ex (step 4) |- ( { y ∈ A | y R x } ⊆ { y ∈ A | y S x } → ( { y ∈ A | y S x } ∈ _V → { y ∈ A | y R x } ∈ _V ) ) ;;
+	step 6 : wff = syl (step 3, step 5) |- ( R ⊆ S → ( { y ∈ A | y S x } ∈ _V → { y ∈ A | y R x } ∈ _V ) ) ;;
+	step 7 : wff = ralimdv (step 6) |- ( R ⊆ S → ( ∀ x ∈ A { y ∈ A | y S x } ∈ _V → ∀ x ∈ A { y ∈ A | y R x } ∈ _V ) ) ;;
+	step 8 : wff = df-se () |- ( S Se A ↔ ∀ x ∈ A { y ∈ A | y S x } ∈ _V ) ;;
+	step 9 : wff = df-se () |- ( R Se A ↔ ∀ x ∈ A { y ∈ A | y R x } ∈ _V ) ;;
+	step 10 : wff = 3imtr4g (step 7, step 8, step 9) |- ( R ⊆ S → ( S Se A → R Se A ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Subset theorem for the set-like predicate.  (Contributed by Mario
+       Carneiro, 24-Jun-2015.) */
+
+theorem sess2 (A : class, B : class, R : class) disjointed(x y A, x y B, x y R, x y) {
+	prop 1 : wff = |- ( A ⊆ B → ( R Se B → R Se A ) ) ;;
+}
+
+proof of sess2 {
+	var x : set, y : set;;
+	step 1 : wff = ssralv () |- ( A ⊆ B → ( ∀ x ∈ B { y ∈ B | y R x } ∈ _V → ∀ x ∈ A { y ∈ B | y R x } ∈ _V ) ) ;;
+	step 2 : wff = rabss2 () |- ( A ⊆ B → { y ∈ A | y R x } ⊆ { y ∈ B | y R x } ) ;;
+	step 3 : wff = ssexg () |- ( ( { y ∈ A | y R x } ⊆ { y ∈ B | y R x } ∧ { y ∈ B | y R x } ∈ _V ) → { y ∈ A | y R x } ∈ _V ) ;;
+	step 4 : wff = ex (step 3) |- ( { y ∈ A | y R x } ⊆ { y ∈ B | y R x } → ( { y ∈ B | y R x } ∈ _V → { y ∈ A | y R x } ∈ _V ) ) ;;
+	step 5 : wff = syl (step 2, step 4) |- ( A ⊆ B → ( { y ∈ B | y R x } ∈ _V → { y ∈ A | y R x } ∈ _V ) ) ;;
+	step 6 : wff = ralimdv (step 5) |- ( A ⊆ B → ( ∀ x ∈ A { y ∈ B | y R x } ∈ _V → ∀ x ∈ A { y ∈ A | y R x } ∈ _V ) ) ;;
+	step 7 : wff = syld (step 1, step 6) |- ( A ⊆ B → ( ∀ x ∈ B { y ∈ B | y R x } ∈ _V → ∀ x ∈ A { y ∈ A | y R x } ∈ _V ) ) ;;
+	step 8 : wff = df-se () |- ( R Se B ↔ ∀ x ∈ B { y ∈ B | y R x } ∈ _V ) ;;
+	step 9 : wff = df-se () |- ( R Se A ↔ ∀ x ∈ A { y ∈ A | y R x } ∈ _V ) ;;
+	step 10 : wff = 3imtr4g (step 7, step 8, step 9) |- ( A ⊆ B → ( R Se B → R Se A ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Equality theorem for the well-founded predicate.  (Contributed by NM,
+       9-Mar-1997.) */
+
+theorem freq1 (A : class, R : class, S : class) disjointed(x y z R, x y z S, x y z A) {
+	prop 1 : wff = |- ( R = S → ( R Fr A ↔ S Fr A ) ) ;;
+}
+
+proof of freq1 {
+	var x : set, y : set, z : set;;
+	step 1 : wff = breq () |- ( R = S → ( z R y ↔ z S y ) ) ;;
+	step 2 : wff = notbid (step 1) |- ( R = S → ( ¬ z R y ↔ ¬ z S y ) ) ;;
+	step 3 : wff = rexralbidv (step 2) |- ( R = S → ( ∃ y ∈ x ∀ z ∈ x ¬ z R y ↔ ∃ y ∈ x ∀ z ∈ x ¬ z S y ) ) ;;
+	step 4 : wff = imbi2d (step 3) |- ( R = S → ( ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x ∀ z ∈ x ¬ z R y ) ↔ ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x ∀ z ∈ x ¬ z S y ) ) ) ;;
+	step 5 : wff = albidv (step 4) |- ( R = S → ( ∀ x ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x ∀ z ∈ x ¬ z R y ) ↔ ∀ x ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x ∀ z ∈ x ¬ z S y ) ) ) ;;
+	step 6 : wff = df-fr () |- ( R Fr A ↔ ∀ x ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x ∀ z ∈ x ¬ z R y ) ) ;;
+	step 7 : wff = df-fr () |- ( S Fr A ↔ ∀ x ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x ∀ z ∈ x ¬ z S y ) ) ;;
+	step 8 : wff = 3bitr4g (step 5, step 6, step 7) |- ( R = S → ( R Fr A ↔ S Fr A ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Equality theorem for the well-founded predicate.  (Contributed by NM,
+     3-Apr-1994.) */
+
+theorem freq2 (A : class, B : class, R : class)  {
+	prop 1 : wff = |- ( A = B → ( R Fr A ↔ R Fr B ) ) ;;
+}
+
+proof of freq2 {
+	step 1 : wff = eqimss2 () |- ( A = B → B ⊆ A ) ;;
+	step 2 : wff = frss () |- ( B ⊆ A → ( R Fr A → R Fr B ) ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( A = B → ( R Fr A → R Fr B ) ) ;;
+	step 4 : wff = eqimss () |- ( A = B → A ⊆ B ) ;;
+	step 5 : wff = frss () |- ( A ⊆ B → ( R Fr B → R Fr A ) ) ;;
+	step 6 : wff = syl (step 4, step 5) |- ( A = B → ( R Fr B → R Fr A ) ) ;;
+	step 7 : wff = impbid (step 3, step 6) |- ( A = B → ( R Fr A ↔ R Fr B ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Equality theorem for the set-like predicate.  (Contributed by Mario
+     Carneiro, 24-Jun-2015.) */
+
+theorem seeq1 (A : class, R : class, S : class)  {
+	prop 1 : wff = |- ( R = S → ( R Se A ↔ S Se A ) ) ;;
+}
+
+proof of seeq1 {
+	step 1 : wff = eqimss2 () |- ( R = S → S ⊆ R ) ;;
+	step 2 : wff = sess1 () |- ( S ⊆ R → ( R Se A → S Se A ) ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( R = S → ( R Se A → S Se A ) ) ;;
+	step 4 : wff = eqimss () |- ( R = S → R ⊆ S ) ;;
+	step 5 : wff = sess1 () |- ( R ⊆ S → ( S Se A → R Se A ) ) ;;
+	step 6 : wff = syl (step 4, step 5) |- ( R = S → ( S Se A → R Se A ) ) ;;
+	step 7 : wff = impbid (step 3, step 6) |- ( R = S → ( R Se A ↔ S Se A ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Equality theorem for the set-like predicate.  (Contributed by Mario
+     Carneiro, 24-Jun-2015.) */
+
+theorem seeq2 (A : class, B : class, R : class)  {
+	prop 1 : wff = |- ( A = B → ( R Se A ↔ R Se B ) ) ;;
+}
+
+proof of seeq2 {
+	step 1 : wff = eqimss2 () |- ( A = B → B ⊆ A ) ;;
+	step 2 : wff = sess2 () |- ( B ⊆ A → ( R Se A → R Se B ) ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( A = B → ( R Se A → R Se B ) ) ;;
+	step 4 : wff = eqimss () |- ( A = B → A ⊆ B ) ;;
+	step 5 : wff = sess2 () |- ( A ⊆ B → ( R Se B → R Se A ) ) ;;
+	step 6 : wff = syl (step 4, step 5) |- ( A = B → ( R Se B → R Se A ) ) ;;
+	step 7 : wff = impbid (step 3, step 6) |- ( A = B → ( R Se A ↔ R Se B ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Bound-variable hypothesis builder for well-founded relations.
+       (Contributed by Stefan O'Rear, 20-Jan-2015.)  (Revised by Mario
+       Carneiro, 14-Oct-2016.) */
+
+theorem nffr (x : set, A : class, R : class) disjointed(R a b c, A a b c, x a b c) {
+	hyp 1 : wff = |- F/_ x R ;;
+	hyp 2 : wff = |- F/_ x A ;;
+	-----------------------
+	prop 1 : wff = |- F/ x R Fr A ;;
+}
+
+proof of nffr {
+	var a : set, b : set, c : set;;
+	step 1 : wff = df-fr () |- ( R Fr A ↔ ∀ a ( ( a ⊆ A ∧ a ≠ ∅ ) → ∃ b ∈ a ∀ c ∈ a ¬ c R b ) ) ;;
+	step 2 : wff = nfcv () |- F/_ x a ;;
+	step 3 : wff = nfss (step 2, hyp 2) |- F/ x a ⊆ A ;;
+	step 4 : wff = nfv () |- F/ x a ≠ ∅ ;;
+	step 5 : wff = nfan (step 3, step 4) |- F/ x ( a ⊆ A ∧ a ≠ ∅ ) ;;
+	step 6 : wff = nfcv () |- F/_ x a ;;
+	step 7 : wff = nfcv () |- F/_ x a ;;
+	step 8 : wff = nfcv () |- F/_ x c ;;
+	step 9 : wff = nfcv () |- F/_ x b ;;
+	step 10 : wff = nfbr (step 8, hyp 1, step 9) |- F/ x c R b ;;
+	step 11 : wff = nfn (step 10) |- F/ x ¬ c R b ;;
+	step 12 : wff = nfral (step 7, step 11) |- F/ x ∀ c ∈ a ¬ c R b ;;
+	step 13 : wff = nfrex (step 6, step 12) |- F/ x ∃ b ∈ a ∀ c ∈ a ¬ c R b ;;
+	step 14 : wff = nfim (step 5, step 13) |- F/ x ( ( a ⊆ A ∧ a ≠ ∅ ) → ∃ b ∈ a ∀ c ∈ a ¬ c R b ) ;;
+	step 15 : wff = nfal (step 14) |- F/ x ∀ a ( ( a ⊆ A ∧ a ≠ ∅ ) → ∃ b ∈ a ∀ c ∈ a ¬ c R b ) ;;
+	step 16 : wff = nfxfr (step 1, step 15) |- F/ x R Fr A ;;
+	qed prop 1 = step 16 ;;
+}
+
+/* Bound-variable hypothesis builder for set-like relations.  (Contributed
+       by Mario Carneiro, 24-Jun-2015.)  (Revised by Mario Carneiro,
+       14-Oct-2016.) */
+
+theorem nfse (x : set, A : class, R : class) disjointed(R a b, A a b, x a b) {
+	hyp 1 : wff = |- F/_ x R ;;
+	hyp 2 : wff = |- F/_ x A ;;
+	-----------------------
+	prop 1 : wff = |- F/ x R Se A ;;
+}
+
+proof of nfse {
+	var a : set, b : set;;
+	step 1 : wff = df-se () |- ( R Se A ↔ ∀ b ∈ A { a ∈ A | a R b } ∈ _V ) ;;
+	step 2 : wff = nfcv () |- F/_ x a ;;
+	step 3 : wff = nfcv () |- F/_ x b ;;
+	step 4 : wff = nfbr (step 2, hyp 1, step 3) |- F/ x a R b ;;
+	step 5 : wff = nfrab (step 4, hyp 2) |- F/_ x { a ∈ A | a R b } ;;
+	step 6 : wff = nfel1 (step 5) |- F/ x { a ∈ A | a R b } ∈ _V ;;
+	step 7 : wff = nfral (hyp 2, step 6) |- F/ x ∀ b ∈ A { a ∈ A | a R b } ∈ _V ;;
+	step 8 : wff = nfxfr (step 1, step 7) |- F/ x R Se A ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Bound-variable hypothesis builder for well-orderings.  (Contributed by
+       Stefan O'Rear, 20-Jan-2015.)  (Revised by Mario Carneiro,
+       14-Oct-2016.) */
+
+theorem nfwe (x : set, A : class, R : class)  {
+	hyp 1 : wff = |- F/_ x R ;;
+	hyp 2 : wff = |- F/_ x A ;;
+	-----------------------
+	prop 1 : wff = |- F/ x R We A ;;
+}
+
+proof of nfwe {
+	step 1 : wff = df-we () |- ( R We A ↔ ( R Fr A ∧ R Or A ) ) ;;
+	step 2 : wff = nffr (hyp 1, hyp 2) |- F/ x R Fr A ;;
+	step 3 : wff = nfso (hyp 1, hyp 2) |- F/ x R Or A ;;
+	step 4 : wff = nfan (step 2, step 3) |- F/ x ( R Fr A ∧ R Or A ) ;;
+	step 5 : wff = nfxfr (step 1, step 4) |- F/ x R We A ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* A well-founded relation is irreflexive.  Special case of Proposition
+       6.23 of [TakeutiZaring] p. 30.  (Contributed by NM, 2-Jan-1994.)
+       (Revised by Mario Carneiro, 22-Jun-2015.) */
+
+theorem frirr (A : class, B : class, R : class) disjointed(x y A, x y B, x y R) {
+	prop 1 : wff = |- ( ( R Fr A ∧ B ∈ A ) → ¬ B R B ) ;;
+}
+
+proof of frirr {
+	var x : set, y : set;;
+	step 1 : wff = simpl () |- ( ( R Fr A ∧ B ∈ A ) → R Fr A ) ;;
+	step 2 : wff = simpr () |- ( ( R Fr A ∧ B ∈ A ) → B ∈ A ) ;;
+	step 3 : wff = snssd (step 2) |- ( ( R Fr A ∧ B ∈ A ) → { B } ⊆ A ) ;;
+	step 4 : wff = snnzg () |- ( B ∈ A → { B } ≠ ∅ ) ;;
+	step 5 : wff = adantl (step 4) |- ( ( R Fr A ∧ B ∈ A ) → { B } ≠ ∅ ) ;;
+	step 6 : wff = snex () |- { B } ∈ _V ;;
+	step 7 : wff = frc (step 6) |- ( ( R Fr A ∧ { B } ⊆ A ∧ { B } ≠ ∅ ) → ∃ y ∈ { B } { x ∈ { B } | x R y } = ∅ ) ;;
+	step 8 : wff = syl3anc (step 1, step 3, step 5, step 7) |- ( ( R Fr A ∧ B ∈ A ) → ∃ y ∈ { B } { x ∈ { B } | x R y } = ∅ ) ;;
+	step 9 : wff = rabeq0 () |- ( { x ∈ { B } | x R y } = ∅ ↔ ∀ x ∈ { B } ¬ x R y ) ;;
+	step 10 : wff = breq2 () |- ( y = B → ( x R y ↔ x R B ) ) ;;
+	step 11 : wff = notbid (step 10) |- ( y = B → ( ¬ x R y ↔ ¬ x R B ) ) ;;
+	step 12 : wff = ralbidv (step 11) |- ( y = B → ( ∀ x ∈ { B } ¬ x R y ↔ ∀ x ∈ { B } ¬ x R B ) ) ;;
+	step 13 : wff = syl5bb (step 9, step 12) |- ( y = B → ( { x ∈ { B } | x R y } = ∅ ↔ ∀ x ∈ { B } ¬ x R B ) ) ;;
+	step 14 : wff = rexsng (step 13) |- ( B ∈ A → ( ∃ y ∈ { B } { x ∈ { B } | x R y } = ∅ ↔ ∀ x ∈ { B } ¬ x R B ) ) ;;
+	step 15 : wff = breq1 () |- ( x = B → ( x R B ↔ B R B ) ) ;;
+	step 16 : wff = notbid (step 15) |- ( x = B → ( ¬ x R B ↔ ¬ B R B ) ) ;;
+	step 17 : wff = ralsng (step 16) |- ( B ∈ A → ( ∀ x ∈ { B } ¬ x R B ↔ ¬ B R B ) ) ;;
+	step 18 : wff = bitrd (step 14, step 17) |- ( B ∈ A → ( ∃ y ∈ { B } { x ∈ { B } | x R y } = ∅ ↔ ¬ B R B ) ) ;;
+	step 19 : wff = adantl (step 18) |- ( ( R Fr A ∧ B ∈ A ) → ( ∃ y ∈ { B } { x ∈ { B } | x R y } = ∅ ↔ ¬ B R B ) ) ;;
+	step 20 : wff = mpbid (step 8, step 19) |- ( ( R Fr A ∧ B ∈ A ) → ¬ B R B ) ;;
+	qed prop 1 = step 20 ;;
+}
+
+/* A well-founded relation has no 2-cycle loops.  Special case of
+       Proposition 6.23 of [TakeutiZaring] p. 30.  (Contributed by NM,
+       30-May-1994.)  (Revised by Mario Carneiro, 22-Jun-2015.) */
+
+theorem fr2nr (A : class, B : class, C : class, R : class) disjointed(x y A, x y B, x y C, x y R) {
+	prop 1 : wff = |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ) ) → ¬ ( B R C ∧ C R B ) ) ;;
+}
+
+proof of fr2nr {
+	var x : set, y : set;;
+	step 1 : wff = prex () |- { B , C } ∈ _V ;;
+	step 2 : wff = a1i (step 1) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ) ) → { B , C } ∈ _V ) ;;
+	step 3 : wff = simpl () |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ) ) → R Fr A ) ;;
+	step 4 : wff = prssi () |- ( ( B ∈ A ∧ C ∈ A ) → { B , C } ⊆ A ) ;;
+	step 5 : wff = adantl (step 4) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ) ) → { B , C } ⊆ A ) ;;
+	step 6 : wff = prnzg () |- ( B ∈ A → { B , C } ≠ ∅ ) ;;
+	step 7 : wff = ad2antrl (step 6) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ) ) → { B , C } ≠ ∅ ) ;;
+	step 8 : wff = fri () |- ( ( ( { B , C } ∈ _V ∧ R Fr A ) ∧ ( { B , C } ⊆ A ∧ { B , C } ≠ ∅ ) ) → ∃ y ∈ { B , C } ∀ x ∈ { B , C } ¬ x R y ) ;;
+	step 9 : wff = syl22anc (step 2, step 3, step 5, step 7, step 8) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ) ) → ∃ y ∈ { B , C } ∀ x ∈ { B , C } ¬ x R y ) ;;
+	step 10 : wff = breq2 () |- ( y = B → ( x R y ↔ x R B ) ) ;;
+	step 11 : wff = notbid (step 10) |- ( y = B → ( ¬ x R y ↔ ¬ x R B ) ) ;;
+	step 12 : wff = ralbidv (step 11) |- ( y = B → ( ∀ x ∈ { B , C } ¬ x R y ↔ ∀ x ∈ { B , C } ¬ x R B ) ) ;;
+	step 13 : wff = breq2 () |- ( y = C → ( x R y ↔ x R C ) ) ;;
+	step 14 : wff = notbid (step 13) |- ( y = C → ( ¬ x R y ↔ ¬ x R C ) ) ;;
+	step 15 : wff = ralbidv (step 14) |- ( y = C → ( ∀ x ∈ { B , C } ¬ x R y ↔ ∀ x ∈ { B , C } ¬ x R C ) ) ;;
+	step 16 : wff = rexprg (step 12, step 15) |- ( ( B ∈ A ∧ C ∈ A ) → ( ∃ y ∈ { B , C } ∀ x ∈ { B , C } ¬ x R y ↔ ( ∀ x ∈ { B , C } ¬ x R B ∨ ∀ x ∈ { B , C } ¬ x R C ) ) ) ;;
+	step 17 : wff = adantl (step 16) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( ∃ y ∈ { B , C } ∀ x ∈ { B , C } ¬ x R y ↔ ( ∀ x ∈ { B , C } ¬ x R B ∨ ∀ x ∈ { B , C } ¬ x R C ) ) ) ;;
+	step 18 : wff = mpbid (step 9, step 17) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( ∀ x ∈ { B , C } ¬ x R B ∨ ∀ x ∈ { B , C } ¬ x R C ) ) ;;
+	step 19 : wff = prid2g () |- ( C ∈ A → C ∈ { B , C } ) ;;
+	step 20 : wff = ad2antll (step 19) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ) ) → C ∈ { B , C } ) ;;
+	step 21 : wff = breq1 () |- ( x = C → ( x R B ↔ C R B ) ) ;;
+	step 22 : wff = notbid (step 21) |- ( x = C → ( ¬ x R B ↔ ¬ C R B ) ) ;;
+	step 23 : wff = rspcv (step 22) |- ( C ∈ { B , C } → ( ∀ x ∈ { B , C } ¬ x R B → ¬ C R B ) ) ;;
+	step 24 : wff = syl (step 20, step 23) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( ∀ x ∈ { B , C } ¬ x R B → ¬ C R B ) ) ;;
+	step 25 : wff = prid1g () |- ( B ∈ A → B ∈ { B , C } ) ;;
+	step 26 : wff = ad2antrl (step 25) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ) ) → B ∈ { B , C } ) ;;
+	step 27 : wff = breq1 () |- ( x = B → ( x R C ↔ B R C ) ) ;;
+	step 28 : wff = notbid (step 27) |- ( x = B → ( ¬ x R C ↔ ¬ B R C ) ) ;;
+	step 29 : wff = rspcv (step 28) |- ( B ∈ { B , C } → ( ∀ x ∈ { B , C } ¬ x R C → ¬ B R C ) ) ;;
+	step 30 : wff = syl (step 26, step 29) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( ∀ x ∈ { B , C } ¬ x R C → ¬ B R C ) ) ;;
+	step 31 : wff = orim12d (step 24, step 30) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( ( ∀ x ∈ { B , C } ¬ x R B ∨ ∀ x ∈ { B , C } ¬ x R C ) → ( ¬ C R B ∨ ¬ B R C ) ) ) ;;
+	step 32 : wff = mpd (step 18, step 31) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( ¬ C R B ∨ ¬ B R C ) ) ;;
+	step 33 : wff = orcomd (step 32) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( ¬ B R C ∨ ¬ C R B ) ) ;;
+	step 34 : wff = ianor () |- ( ¬ ( B R C ∧ C R B ) ↔ ( ¬ B R C ∨ ¬ C R B ) ) ;;
+	step 35 : wff = sylibr (step 33, step 34) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ) ) → ¬ ( B R C ∧ C R B ) ) ;;
+	qed prop 1 = step 35 ;;
+}
+
+/* Any relation is well-founded on the empty set.  (Contributed by NM,
+       17-Sep-1993.) */
+
+theorem fr0 (R : class) disjointed(x y z R) {
+	prop 1 : wff = |- R Fr ∅ ;;
+}
+
+proof of fr0 {
+	var x : set, y : set, z : set;;
+	step 1 : wff = dffr2 () |- ( R Fr ∅ ↔ ∀ x ( ( x ⊆ ∅ ∧ x ≠ ∅ ) → ∃ y ∈ x { z ∈ x | z R y } = ∅ ) ) ;;
+	step 2 : wff = ss0 () |- ( x ⊆ ∅ → x = ∅ ) ;;
+	step 3 : wff = a1d (step 2) |- ( x ⊆ ∅ → ( ¬ ∃ y ∈ x { z ∈ x | z R y } = ∅ → x = ∅ ) ) ;;
+	step 4 : wff = necon1ad (step 3) |- ( x ⊆ ∅ → ( x ≠ ∅ → ∃ y ∈ x { z ∈ x | z R y } = ∅ ) ) ;;
+	step 5 : wff = imp (step 4) |- ( ( x ⊆ ∅ ∧ x ≠ ∅ ) → ∃ y ∈ x { z ∈ x | z R y } = ∅ ) ;;
+	step 6 : wff = mpgbir (step 1, step 5) |- R Fr ∅ ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* If an element of a well-founded set satisfies a property ` ph ` , then
+       there is a minimal element that satisfies ` ph ` .  (Contributed by Jeff
+       Madsen, 18-Jun-2010.)  (Proof shortened by Mario Carneiro,
+       18-Nov-2016.) */
+
+theorem frminex (ph : wff, ps : wff, x : set, y : set, A : class, R : class) disjointed(A x y z, R x y z, ph y z, ps x z) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( R Fr A → ( ∃ x ∈ A ph → ∃ x ∈ A ( ph ∧ ∀ y ∈ A ( ps → ¬ y R x ) ) ) ) ;;
+}
+
+proof of frminex {
+	var z : set;;
+	step 1 : wff = rabn0 () |- ( { x ∈ A | ph } ≠ ∅ ↔ ∃ x ∈ A ph ) ;;
+	step 2 : wff = rabex (hyp 1) |- { x ∈ A | ph } ∈ _V ;;
+	step 3 : wff = ssrab2 () |- { x ∈ A | ph } ⊆ A ;;
+	step 4 : wff = fri () |- ( ( ( { x ∈ A | ph } ∈ _V ∧ R Fr A ) ∧ ( { x ∈ A | ph } ⊆ A ∧ { x ∈ A | ph } ≠ ∅ ) ) → ∃ z ∈ { x ∈ A | ph } ∀ y ∈ { x ∈ A | ph } ¬ y R z ) ;;
+	step 5 : wff = ralrab (hyp 2) |- ( ∀ y ∈ { x ∈ A | ph } ¬ y R z ↔ ∀ y ∈ A ( ps → ¬ y R z ) ) ;;
+	step 6 : wff = rexbii (step 5) |- ( ∃ z ∈ { x ∈ A | ph } ∀ y ∈ { x ∈ A | ph } ¬ y R z ↔ ∃ z ∈ { x ∈ A | ph } ∀ y ∈ A ( ps → ¬ y R z ) ) ;;
+	step 7 : wff = breq2 () |- ( z = x → ( y R z ↔ y R x ) ) ;;
+	step 8 : wff = notbid (step 7) |- ( z = x → ( ¬ y R z ↔ ¬ y R x ) ) ;;
+	step 9 : wff = imbi2d (step 8) |- ( z = x → ( ( ps → ¬ y R z ) ↔ ( ps → ¬ y R x ) ) ) ;;
+	step 10 : wff = ralbidv (step 9) |- ( z = x → ( ∀ y ∈ A ( ps → ¬ y R z ) ↔ ∀ y ∈ A ( ps → ¬ y R x ) ) ) ;;
+	step 11 : wff = rexrab2 (step 10) |- ( ∃ z ∈ { x ∈ A | ph } ∀ y ∈ A ( ps → ¬ y R z ) ↔ ∃ x ∈ A ( ph ∧ ∀ y ∈ A ( ps → ¬ y R x ) ) ) ;;
+	step 12 : wff = bitri (step 6, step 11) |- ( ∃ z ∈ { x ∈ A | ph } ∀ y ∈ { x ∈ A | ph } ¬ y R z ↔ ∃ x ∈ A ( ph ∧ ∀ y ∈ A ( ps → ¬ y R x ) ) ) ;;
+	step 13 : wff = sylib (step 4, step 12) |- ( ( ( { x ∈ A | ph } ∈ _V ∧ R Fr A ) ∧ ( { x ∈ A | ph } ⊆ A ∧ { x ∈ A | ph } ≠ ∅ ) ) → ∃ x ∈ A ( ph ∧ ∀ y ∈ A ( ps → ¬ y R x ) ) ) ;;
+	step 14 : wff = an4s (step 13) |- ( ( ( { x ∈ A | ph } ∈ _V ∧ { x ∈ A | ph } ⊆ A ) ∧ ( R Fr A ∧ { x ∈ A | ph } ≠ ∅ ) ) → ∃ x ∈ A ( ph ∧ ∀ y ∈ A ( ps → ¬ y R x ) ) ) ;;
+	step 15 : wff = mpanl12 (step 2, step 3, step 14) |- ( ( R Fr A ∧ { x ∈ A | ph } ≠ ∅ ) → ∃ x ∈ A ( ph ∧ ∀ y ∈ A ( ps → ¬ y R x ) ) ) ;;
+	step 16 : wff = ex (step 15) |- ( R Fr A → ( { x ∈ A | ph } ≠ ∅ → ∃ x ∈ A ( ph ∧ ∀ y ∈ A ( ps → ¬ y R x ) ) ) ) ;;
+	step 17 : wff = syl5bir (step 1, step 16) |- ( R Fr A → ( ∃ x ∈ A ph → ∃ x ∈ A ( ph ∧ ∀ y ∈ A ( ps → ¬ y R x ) ) ) ) ;;
+	qed prop 1 = step 17 ;;
+}
+
+/* Irreflexivity of the epsilon relation: a class founded by epsilon is not
+       a member of itself.  (Contributed by NM, 18-Apr-1994.)  (Revised by
+       Mario Carneiro, 22-Jun-2015.) */
+
+theorem efrirr (A : class)  {
+	prop 1 : wff = |- ( 𝛜 Fr A → ¬ A ∈ A ) ;;
+}
+
+proof of efrirr {
+	step 1 : wff = frirr () |- ( ( 𝛜 Fr A ∧ A ∈ A ) → ¬ A 𝛜 A ) ;;
+	step 2 : wff = epelg () |- ( A ∈ A → ( A 𝛜 A ↔ A ∈ A ) ) ;;
+	step 3 : wff = adantl (step 2) |- ( ( 𝛜 Fr A ∧ A ∈ A ) → ( A 𝛜 A ↔ A ∈ A ) ) ;;
+	step 4 : wff = mtbid (step 1, step 3) |- ( ( 𝛜 Fr A ∧ A ∈ A ) → ¬ A ∈ A ) ;;
+	step 5 : wff = ex (step 4) |- ( 𝛜 Fr A → ( A ∈ A → ¬ A ∈ A ) ) ;;
+	step 6 : wff = pm2.01d (step 5) |- ( 𝛜 Fr A → ¬ A ∈ A ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* A set founded by epsilon contains no 2-cycle loops.  (Contributed by NM,
+     19-Apr-1994.) */
+
+theorem efrn2lp (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( 𝛜 Fr A ∧ ( B ∈ A ∧ C ∈ A ) ) → ¬ ( B ∈ C ∧ C ∈ B ) ) ;;
+}
+
+proof of efrn2lp {
+	step 1 : wff = fr2nr () |- ( ( 𝛜 Fr A ∧ ( B ∈ A ∧ C ∈ A ) ) → ¬ ( B 𝛜 C ∧ C 𝛜 B ) ) ;;
+	step 2 : wff = epelg () |- ( C ∈ A → ( B 𝛜 C ↔ B ∈ C ) ) ;;
+	step 3 : wff = epelg () |- ( B ∈ A → ( C 𝛜 B ↔ C ∈ B ) ) ;;
+	step 4 : wff = bi2anan9r (step 2, step 3) |- ( ( B ∈ A ∧ C ∈ A ) → ( ( B 𝛜 C ∧ C 𝛜 B ) ↔ ( B ∈ C ∧ C ∈ B ) ) ) ;;
+	step 5 : wff = adantl (step 4) |- ( ( 𝛜 Fr A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( ( B 𝛜 C ∧ C 𝛜 B ) ↔ ( B ∈ C ∧ C ∈ B ) ) ) ;;
+	step 6 : wff = mtbid (step 1, step 5) |- ( ( 𝛜 Fr A ∧ ( B ∈ A ∧ C ∈ A ) ) → ¬ ( B ∈ C ∧ C ∈ B ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* The epsilon relation is set-like on any class.  (This is the origin of
+       the term "set-like": a set-like relation "acts like" the epsilon
+       relation of sets and their elements.)  (Contributed by Mario Carneiro,
+       22-Jun-2015.) */
+
+theorem epse (A : class) disjointed(x y A) {
+	prop 1 : wff = |- 𝛜 Se A ;;
+}
+
+proof of epse {
+	var x : set, y : set;;
+	step 1 : wff = epel () |- ( y 𝛜 x ↔ y ∈ x ) ;;
+	step 2 : wff = bicomi (step 1) |- ( y ∈ x ↔ y 𝛜 x ) ;;
+	step 3 : wff = abbi2i (step 2) |- x = { y | y 𝛜 x } ;;
+	step 4 : wff = vex () |- x ∈ _V ;;
+	step 5 : wff = eqeltrri (step 3, step 4) |- { y | y 𝛜 x } ∈ _V ;;
+	step 6 : wff = dfrab2 () |- { y ∈ A | y 𝛜 x } = ( { y | y 𝛜 x } ∩ A ) ;;
+	step 7 : wff = inss1 () |- ( { y | y 𝛜 x } ∩ A ) ⊆ { y | y 𝛜 x } ;;
+	step 8 : wff = eqsstri (step 6, step 7) |- { y ∈ A | y 𝛜 x } ⊆ { y | y 𝛜 x } ;;
+	step 9 : wff = ssexi (step 5, step 8) |- { y ∈ A | y 𝛜 x } ∈ _V ;;
+	step 10 : wff = rgenw (step 9) |- ∀ x ∈ A { y ∈ A | y 𝛜 x } ∈ _V ;;
+	step 11 : wff = df-se () |- ( 𝛜 Se A ↔ ∀ x ∈ A { y ∈ A | y 𝛜 x } ∈ _V ) ;;
+	step 12 : wff = mpbir (step 10, step 11) |- 𝛜 Se A ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* Similar to Theorem 7.2 of [TakeutiZaring] p. 35, of except that the Axiom
+     of Regularity is not required due to antecedent ` _E Fr A ` .
+     (Contributed by NM, 4-May-1994.) */
+
+theorem tz7.2 (A : class, B : class)  {
+	prop 1 : wff = |- ( ( Tr A ∧ 𝛜 Fr A ∧ B ∈ A ) → ( B ⊆ A ∧ B ≠ A ) ) ;;
+}
+
+proof of tz7.2 {
+	step 1 : wff = trss () |- ( Tr A → ( B ∈ A → B ⊆ A ) ) ;;
+	step 2 : wff = efrirr () |- ( 𝛜 Fr A → ¬ A ∈ A ) ;;
+	step 3 : wff = eleq1 () |- ( B = A → ( B ∈ A ↔ A ∈ A ) ) ;;
+	step 4 : wff = notbid (step 3) |- ( B = A → ( ¬ B ∈ A ↔ ¬ A ∈ A ) ) ;;
+	step 5 : wff = syl5ibrcom (step 2, step 4) |- ( 𝛜 Fr A → ( B = A → ¬ B ∈ A ) ) ;;
+	step 6 : wff = necon2ad (step 5) |- ( 𝛜 Fr A → ( B ∈ A → B ≠ A ) ) ;;
+	step 7 : wff = anim12ii (step 1, step 6) |- ( ( Tr A ∧ 𝛜 Fr A ) → ( B ∈ A → ( B ⊆ A ∧ B ≠ A ) ) ) ;;
+	step 8 : wff = 3impia (step 7) |- ( ( Tr A ∧ 𝛜 Fr A ∧ B ∈ A ) → ( B ⊆ A ∧ B ≠ A ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* An alternate way of saying that the epsilon relation is well-founded.
+       (Contributed by NM, 17-Feb-2004.)  (Revised by Mario Carneiro,
+       23-Jun-2015.) */
+
+theorem dfepfr (x : set, y : set, A : class) disjointed(x y z A) {
+	prop 1 : wff = |- ( 𝛜 Fr A ↔ ∀ x ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x ( x ∩ y ) = ∅ ) ) ;;
+}
+
+proof of dfepfr {
+	var z : set;;
+	step 1 : wff = dffr2 () |- ( 𝛜 Fr A ↔ ∀ x ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x { z ∈ x | z 𝛜 y } = ∅ ) ) ;;
+	step 2 : wff = epel () |- ( z 𝛜 y ↔ z ∈ y ) ;;
+	step 3 : wff = a1i (step 2) |- ( z ∈ x → ( z 𝛜 y ↔ z ∈ y ) ) ;;
+	step 4 : wff = rabbiia (step 3) |- { z ∈ x | z 𝛜 y } = { z ∈ x | z ∈ y } ;;
+	step 5 : wff = dfin5 () |- ( x ∩ y ) = { z ∈ x | z ∈ y } ;;
+	step 6 : wff = eqtr4i (step 4, step 5) |- { z ∈ x | z 𝛜 y } = ( x ∩ y ) ;;
+	step 7 : wff = eqeq1i (step 6) |- ( { z ∈ x | z 𝛜 y } = ∅ ↔ ( x ∩ y ) = ∅ ) ;;
+	step 8 : wff = rexbii (step 7) |- ( ∃ y ∈ x { z ∈ x | z 𝛜 y } = ∅ ↔ ∃ y ∈ x ( x ∩ y ) = ∅ ) ;;
+	step 9 : wff = imbi2i (step 8) |- ( ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x { z ∈ x | z 𝛜 y } = ∅ ) ↔ ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x ( x ∩ y ) = ∅ ) ) ;;
+	step 10 : wff = albii (step 9) |- ( ∀ x ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x { z ∈ x | z 𝛜 y } = ∅ ) ↔ ∀ x ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x ( x ∩ y ) = ∅ ) ) ;;
+	step 11 : wff = bitri (step 1, step 10) |- ( 𝛜 Fr A ↔ ∀ x ( ( x ⊆ A ∧ x ≠ ∅ ) → ∃ y ∈ x ( x ∩ y ) = ∅ ) ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* A subset of an epsilon-founded class has a minimal element.
+       (Contributed by NM, 17-Feb-2004.)  (Revised by David Abernethy,
+       22-Feb-2011.) */
+
+theorem epfrc (x : set, A : class, B : class) disjointed(x y A, x y B) {
+	hyp 1 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( ( 𝛜 Fr A ∧ B ⊆ A ∧ B ≠ ∅ ) → ∃ x ∈ B ( B ∩ x ) = ∅ ) ;;
+}
+
+proof of epfrc {
+	var y : set;;
+	step 1 : wff = frc (hyp 1) |- ( ( 𝛜 Fr A ∧ B ⊆ A ∧ B ≠ ∅ ) → ∃ x ∈ B { y ∈ B | y 𝛜 x } = ∅ ) ;;
+	step 2 : wff = dfin5 () |- ( B ∩ x ) = { y ∈ B | y ∈ x } ;;
+	step 3 : wff = epel () |- ( y 𝛜 x ↔ y ∈ x ) ;;
+	step 4 : wff = a1i (step 3) |- ( y ∈ B → ( y 𝛜 x ↔ y ∈ x ) ) ;;
+	step 5 : wff = rabbiia (step 4) |- { y ∈ B | y 𝛜 x } = { y ∈ B | y ∈ x } ;;
+	step 6 : wff = eqtr4i (step 2, step 5) |- ( B ∩ x ) = { y ∈ B | y 𝛜 x } ;;
+	step 7 : wff = eqeq1i (step 6) |- ( ( B ∩ x ) = ∅ ↔ { y ∈ B | y 𝛜 x } = ∅ ) ;;
+	step 8 : wff = rexbii (step 7) |- ( ∃ x ∈ B ( B ∩ x ) = ∅ ↔ ∃ x ∈ B { y ∈ B | y 𝛜 x } = ∅ ) ;;
+	step 9 : wff = sylibr (step 1, step 8) |- ( ( 𝛜 Fr A ∧ B ⊆ A ∧ B ≠ ∅ ) → ∃ x ∈ B ( B ∩ x ) = ∅ ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Subset theorem for the well-ordering predicate.  Exercise 4 of
+     [TakeutiZaring] p. 31.  (Contributed by NM, 19-Apr-1994.) */
+
+theorem wess (A : class, B : class, R : class)  {
+	prop 1 : wff = |- ( A ⊆ B → ( R We B → R We A ) ) ;;
+}
+
+proof of wess {
+	step 1 : wff = frss () |- ( A ⊆ B → ( R Fr B → R Fr A ) ) ;;
+	step 2 : wff = soss () |- ( A ⊆ B → ( R Or B → R Or A ) ) ;;
+	step 3 : wff = anim12d (step 1, step 2) |- ( A ⊆ B → ( ( R Fr B ∧ R Or B ) → ( R Fr A ∧ R Or A ) ) ) ;;
+	step 4 : wff = df-we () |- ( R We B ↔ ( R Fr B ∧ R Or B ) ) ;;
+	step 5 : wff = df-we () |- ( R We A ↔ ( R Fr A ∧ R Or A ) ) ;;
+	step 6 : wff = 3imtr4g (step 3, step 4, step 5) |- ( A ⊆ B → ( R We B → R We A ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Equality theorem for the well-ordering predicate.  (Contributed by NM,
+     9-Mar-1997.) */
+
+theorem weeq1 (A : class, R : class, S : class)  {
+	prop 1 : wff = |- ( R = S → ( R We A ↔ S We A ) ) ;;
+}
+
+proof of weeq1 {
+	step 1 : wff = freq1 () |- ( R = S → ( R Fr A ↔ S Fr A ) ) ;;
+	step 2 : wff = soeq1 () |- ( R = S → ( R Or A ↔ S Or A ) ) ;;
+	step 3 : wff = anbi12d (step 1, step 2) |- ( R = S → ( ( R Fr A ∧ R Or A ) ↔ ( S Fr A ∧ S Or A ) ) ) ;;
+	step 4 : wff = df-we () |- ( R We A ↔ ( R Fr A ∧ R Or A ) ) ;;
+	step 5 : wff = df-we () |- ( S We A ↔ ( S Fr A ∧ S Or A ) ) ;;
+	step 6 : wff = 3bitr4g (step 3, step 4, step 5) |- ( R = S → ( R We A ↔ S We A ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Equality theorem for the well-ordering predicate.  (Contributed by NM,
+     3-Apr-1994.) */
+
+theorem weeq2 (A : class, B : class, R : class)  {
+	prop 1 : wff = |- ( A = B → ( R We A ↔ R We B ) ) ;;
+}
+
+proof of weeq2 {
+	step 1 : wff = freq2 () |- ( A = B → ( R Fr A ↔ R Fr B ) ) ;;
+	step 2 : wff = soeq2 () |- ( A = B → ( R Or A ↔ R Or B ) ) ;;
+	step 3 : wff = anbi12d (step 1, step 2) |- ( A = B → ( ( R Fr A ∧ R Or A ) ↔ ( R Fr B ∧ R Or B ) ) ) ;;
+	step 4 : wff = df-we () |- ( R We A ↔ ( R Fr A ∧ R Or A ) ) ;;
+	step 5 : wff = df-we () |- ( R We B ↔ ( R Fr B ∧ R Or B ) ) ;;
+	step 6 : wff = 3bitr4g (step 3, step 4, step 5) |- ( A = B → ( R We A ↔ R We B ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* A well-ordering is well-founded.  (Contributed by NM, 22-Apr-1994.) */
+
+theorem wefr (A : class, R : class)  {
+	prop 1 : wff = |- ( R We A → R Fr A ) ;;
+}
+
+proof of wefr {
+	step 1 : wff = df-we () |- ( R We A ↔ ( R Fr A ∧ R Or A ) ) ;;
+	step 2 : wff = simplbi (step 1) |- ( R We A → R Fr A ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A well-ordering is a strict ordering.  (Contributed by NM,
+     16-Mar-1997.) */
+
+theorem weso (A : class, R : class)  {
+	prop 1 : wff = |- ( R We A → R Or A ) ;;
+}
+
+proof of weso {
+	step 1 : wff = df-we () |- ( R We A ↔ ( R Fr A ∧ R Or A ) ) ;;
+	step 2 : wff = simprbi (step 1) |- ( R We A → R Or A ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* The elements of an epsilon well-ordering are comparable.  (Contributed by
+     NM, 17-May-1994.) */
+
+theorem wecmpep (x : set, y : set, A : class)  {
+	prop 1 : wff = |- ( ( 𝛜 We A ∧ ( x ∈ A ∧ y ∈ A ) ) → ( x ∈ y ∨ x = y ∨ y ∈ x ) ) ;;
+}
+
+proof of wecmpep {
+	step 1 : wff = weso () |- ( 𝛜 We A → 𝛜 Or A ) ;;
+	step 2 : wff = solin () |- ( ( 𝛜 Or A ∧ ( x ∈ A ∧ y ∈ A ) ) → ( x 𝛜 y ∨ x = y ∨ y 𝛜 x ) ) ;;
+	step 3 : wff = epel () |- ( x 𝛜 y ↔ x ∈ y ) ;;
+	step 4 : wff = biid () |- ( x = y ↔ x = y ) ;;
+	step 5 : wff = epel () |- ( y 𝛜 x ↔ y ∈ x ) ;;
+	step 6 : wff = 3orbi123i (step 3, step 4, step 5) |- ( ( x 𝛜 y ∨ x = y ∨ y 𝛜 x ) ↔ ( x ∈ y ∨ x = y ∨ y ∈ x ) ) ;;
+	step 7 : wff = sylib (step 2, step 6) |- ( ( 𝛜 Or A ∧ ( x ∈ A ∧ y ∈ A ) ) → ( x ∈ y ∨ x = y ∨ y ∈ x ) ) ;;
+	step 8 : wff = sylan (step 1, step 7) |- ( ( 𝛜 We A ∧ ( x ∈ A ∧ y ∈ A ) ) → ( x ∈ y ∨ x = y ∨ y ∈ x ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* An epsilon well-ordering is a transitive relation.  (Contributed by NM,
+     22-Apr-1994.) */
+
+theorem wetrep (x : set, y : set, z : set, A : class)  {
+	prop 1 : wff = |- ( ( 𝛜 We A ∧ ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) ) → ( ( x ∈ y ∧ y ∈ z ) → x ∈ z ) ) ;;
+}
+
+proof of wetrep {
+	step 1 : wff = weso () |- ( 𝛜 We A → 𝛜 Or A ) ;;
+	step 2 : wff = sotr () |- ( ( 𝛜 Or A ∧ ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) ) → ( ( x 𝛜 y ∧ y 𝛜 z ) → x 𝛜 z ) ) ;;
+	step 3 : wff = sylan (step 1, step 2) |- ( ( 𝛜 We A ∧ ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) ) → ( ( x 𝛜 y ∧ y 𝛜 z ) → x 𝛜 z ) ) ;;
+	step 4 : wff = epel () |- ( x 𝛜 y ↔ x ∈ y ) ;;
+	step 5 : wff = epel () |- ( y 𝛜 z ↔ y ∈ z ) ;;
+	step 6 : wff = anbi12i (step 4, step 5) |- ( ( x 𝛜 y ∧ y 𝛜 z ) ↔ ( x ∈ y ∧ y ∈ z ) ) ;;
+	step 7 : wff = epel () |- ( x 𝛜 z ↔ x ∈ z ) ;;
+	step 8 : wff = 3imtr3g (step 3, step 6, step 7) |- ( ( 𝛜 We A ∧ ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) ) → ( ( x ∈ y ∧ y ∈ z ) → x ∈ z ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* A non-empty (possibly proper) subclass of a class well-ordered by ` _E `
+       has a minimal element.  Special case of Proposition 6.26 of
+       [TakeutiZaring] p. 31.  (Contributed by NM, 17-Feb-2004.) */
+
+theorem wefrc (x : set, A : class, B : class) disjointed(x y z, y z A, x y z B) {
+	prop 1 : wff = |- ( ( 𝛜 We A ∧ B ⊆ A ∧ B ≠ ∅ ) → ∃ x ∈ B ( B ∩ x ) = ∅ ) ;;
+}
+
+proof of wefrc {
+	var y : set, z : set;;
+	step 1 : wff = wess () |- ( B ⊆ A → ( 𝛜 We A → 𝛜 We B ) ) ;;
+	step 2 : wff = n0 () |- ( B ≠ ∅ ↔ ∃ y y ∈ B ) ;;
+	step 3 : wff = ineq2 () |- ( x = y → ( B ∩ x ) = ( B ∩ y ) ) ;;
+	step 4 : wff = eqeq1d (step 3) |- ( x = y → ( ( B ∩ x ) = ∅ ↔ ( B ∩ y ) = ∅ ) ) ;;
+	step 5 : wff = rspcev (step 4) |- ( ( y ∈ B ∧ ( B ∩ y ) = ∅ ) → ∃ x ∈ B ( B ∩ x ) = ∅ ) ;;
+	step 6 : wff = ex (step 5) |- ( y ∈ B → ( ( B ∩ y ) = ∅ → ∃ x ∈ B ( B ∩ x ) = ∅ ) ) ;;
+	step 7 : wff = adantl (step 6) |- ( ( 𝛜 We B ∧ y ∈ B ) → ( ( B ∩ y ) = ∅ → ∃ x ∈ B ( B ∩ x ) = ∅ ) ) ;;
+	step 8 : wff = inss1 () |- ( B ∩ y ) ⊆ B ;;
+	step 9 : wff = wefr () |- ( 𝛜 We B → 𝛜 Fr B ) ;;
+	step 10 : wff = vex () |- y ∈ _V ;;
+	step 11 : wff = inex2 (step 10) |- ( B ∩ y ) ∈ _V ;;
+	step 12 : wff = epfrc (step 11) |- ( ( 𝛜 Fr B ∧ ( B ∩ y ) ⊆ B ∧ ( B ∩ y ) ≠ ∅ ) → ∃ x ∈ ( B ∩ y ) ( ( B ∩ y ) ∩ x ) = ∅ ) ;;
+	step 13 : wff = syl3an1 (step 9, step 12) |- ( ( 𝛜 We B ∧ ( B ∩ y ) ⊆ B ∧ ( B ∩ y ) ≠ ∅ ) → ∃ x ∈ ( B ∩ y ) ( ( B ∩ y ) ∩ x ) = ∅ ) ;;
+	step 14 : wff = 3exp (step 13) |- ( 𝛜 We B → ( ( B ∩ y ) ⊆ B → ( ( B ∩ y ) ≠ ∅ → ∃ x ∈ ( B ∩ y ) ( ( B ∩ y ) ∩ x ) = ∅ ) ) ) ;;
+	step 15 : wff = mpi (step 8, step 14) |- ( 𝛜 We B → ( ( B ∩ y ) ≠ ∅ → ∃ x ∈ ( B ∩ y ) ( ( B ∩ y ) ∩ x ) = ∅ ) ) ;;
+	step 16 : wff = elin () |- ( x ∈ ( B ∩ y ) ↔ ( x ∈ B ∧ x ∈ y ) ) ;;
+	step 17 : wff = anbi1i (step 16) |- ( ( x ∈ ( B ∩ y ) ∧ ( ( B ∩ y ) ∩ x ) = ∅ ) ↔ ( ( x ∈ B ∧ x ∈ y ) ∧ ( ( B ∩ y ) ∩ x ) = ∅ ) ) ;;
+	step 18 : wff = anass () |- ( ( ( x ∈ B ∧ x ∈ y ) ∧ ( ( B ∩ y ) ∩ x ) = ∅ ) ↔ ( x ∈ B ∧ ( x ∈ y ∧ ( ( B ∩ y ) ∩ x ) = ∅ ) ) ) ;;
+	step 19 : wff = bitri (step 17, step 18) |- ( ( x ∈ ( B ∩ y ) ∧ ( ( B ∩ y ) ∩ x ) = ∅ ) ↔ ( x ∈ B ∧ ( x ∈ y ∧ ( ( B ∩ y ) ∩ x ) = ∅ ) ) ) ;;
+	step 20 : wff = rexbii2 (step 19) |- ( ∃ x ∈ ( B ∩ y ) ( ( B ∩ y ) ∩ x ) = ∅ ↔ ∃ x ∈ B ( x ∈ y ∧ ( ( B ∩ y ) ∩ x ) = ∅ ) ) ;;
+	step 21 : wff = syl6ib (step 15, step 20) |- ( 𝛜 We B → ( ( B ∩ y ) ≠ ∅ → ∃ x ∈ B ( x ∈ y ∧ ( ( B ∩ y ) ∩ x ) = ∅ ) ) ) ;;
+	step 22 : wff = adantr (step 21) |- ( ( 𝛜 We B ∧ y ∈ B ) → ( ( B ∩ y ) ≠ ∅ → ∃ x ∈ B ( x ∈ y ∧ ( ( B ∩ y ) ∩ x ) = ∅ ) ) ) ;;
+	step 23 : wff = elin () |- ( z ∈ ( B ∩ x ) ↔ ( z ∈ B ∧ z ∈ x ) ) ;;
+	step 24 : wff = df-3an () |- ( ( y ∈ B ∧ z ∈ B ∧ x ∈ B ) ↔ ( ( y ∈ B ∧ z ∈ B ) ∧ x ∈ B ) ) ;;
+	step 25 : wff = 3anrot () |- ( ( y ∈ B ∧ z ∈ B ∧ x ∈ B ) ↔ ( z ∈ B ∧ x ∈ B ∧ y ∈ B ) ) ;;
+	step 26 : wff = bitr3i (step 24, step 25) |- ( ( ( y ∈ B ∧ z ∈ B ) ∧ x ∈ B ) ↔ ( z ∈ B ∧ x ∈ B ∧ y ∈ B ) ) ;;
+	step 27 : wff = wetrep () |- ( ( 𝛜 We B ∧ ( z ∈ B ∧ x ∈ B ∧ y ∈ B ) ) → ( ( z ∈ x ∧ x ∈ y ) → z ∈ y ) ) ;;
+	step 28 : wff = exp3a (step 27) |- ( ( 𝛜 We B ∧ ( z ∈ B ∧ x ∈ B ∧ y ∈ B ) ) → ( z ∈ x → ( x ∈ y → z ∈ y ) ) ) ;;
+	step 29 : wff = sylan2b (step 26, step 28) |- ( ( 𝛜 We B ∧ ( ( y ∈ B ∧ z ∈ B ) ∧ x ∈ B ) ) → ( z ∈ x → ( x ∈ y → z ∈ y ) ) ) ;;
+	step 30 : wff = exp44 (step 29) |- ( 𝛜 We B → ( y ∈ B → ( z ∈ B → ( x ∈ B → ( z ∈ x → ( x ∈ y → z ∈ y ) ) ) ) ) ) ;;
+	step 31 : wff = imp (step 30) |- ( ( 𝛜 We B ∧ y ∈ B ) → ( z ∈ B → ( x ∈ B → ( z ∈ x → ( x ∈ y → z ∈ y ) ) ) ) ) ;;
+	step 32 : wff = com34 (step 31) |- ( ( 𝛜 We B ∧ y ∈ B ) → ( z ∈ B → ( z ∈ x → ( x ∈ B → ( x ∈ y → z ∈ y ) ) ) ) ) ;;
+	step 33 : wff = imp3a (step 32) |- ( ( 𝛜 We B ∧ y ∈ B ) → ( ( z ∈ B ∧ z ∈ x ) → ( x ∈ B → ( x ∈ y → z ∈ y ) ) ) ) ;;
+	step 34 : wff = syl5bi (step 23, step 33) |- ( ( 𝛜 We B ∧ y ∈ B ) → ( z ∈ ( B ∩ x ) → ( x ∈ B → ( x ∈ y → z ∈ y ) ) ) ) ;;
+	step 35 : wff = imp4a (step 34) |- ( ( 𝛜 We B ∧ y ∈ B ) → ( z ∈ ( B ∩ x ) → ( ( x ∈ B ∧ x ∈ y ) → z ∈ y ) ) ) ;;
+	step 36 : wff = com23 (step 35) |- ( ( 𝛜 We B ∧ y ∈ B ) → ( ( x ∈ B ∧ x ∈ y ) → ( z ∈ ( B ∩ x ) → z ∈ y ) ) ) ;;
+	step 37 : wff = ralrimdv (step 36) |- ( ( 𝛜 We B ∧ y ∈ B ) → ( ( x ∈ B ∧ x ∈ y ) → ∀ z ∈ ( B ∩ x ) z ∈ y ) ) ;;
+	step 38 : wff = dfss3 () |- ( ( B ∩ x ) ⊆ y ↔ ∀ z ∈ ( B ∩ x ) z ∈ y ) ;;
+	step 39 : wff = syl6ibr (step 37, step 38) |- ( ( 𝛜 We B ∧ y ∈ B ) → ( ( x ∈ B ∧ x ∈ y ) → ( B ∩ x ) ⊆ y ) ) ;;
+	step 40 : wff = dfss () |- ( ( B ∩ x ) ⊆ y ↔ ( B ∩ x ) = ( ( B ∩ x ) ∩ y ) ) ;;
+	step 41 : wff = in32 () |- ( ( B ∩ x ) ∩ y ) = ( ( B ∩ y ) ∩ x ) ;;
+	step 42 : wff = eqeq2i (step 41) |- ( ( B ∩ x ) = ( ( B ∩ x ) ∩ y ) ↔ ( B ∩ x ) = ( ( B ∩ y ) ∩ x ) ) ;;
+	step 43 : wff = bitri (step 40, step 42) |- ( ( B ∩ x ) ⊆ y ↔ ( B ∩ x ) = ( ( B ∩ y ) ∩ x ) ) ;;
+	step 44 : wff = biimpi (step 43) |- ( ( B ∩ x ) ⊆ y → ( B ∩ x ) = ( ( B ∩ y ) ∩ x ) ) ;;
+	step 45 : wff = eqeq1d (step 44) |- ( ( B ∩ x ) ⊆ y → ( ( B ∩ x ) = ∅ ↔ ( ( B ∩ y ) ∩ x ) = ∅ ) ) ;;
+	step 46 : wff = biimprd (step 45) |- ( ( B ∩ x ) ⊆ y → ( ( ( B ∩ y ) ∩ x ) = ∅ → ( B ∩ x ) = ∅ ) ) ;;
+	step 47 : wff = syl6 (step 39, step 46) |- ( ( 𝛜 We B ∧ y ∈ B ) → ( ( x ∈ B ∧ x ∈ y ) → ( ( ( B ∩ y ) ∩ x ) = ∅ → ( B ∩ x ) = ∅ ) ) ) ;;
+	step 48 : wff = exp3a (step 47) |- ( ( 𝛜 We B ∧ y ∈ B ) → ( x ∈ B → ( x ∈ y → ( ( ( B ∩ y ) ∩ x ) = ∅ → ( B ∩ x ) = ∅ ) ) ) ) ;;
+	step 49 : wff = imp4a (step 48) |- ( ( 𝛜 We B ∧ y ∈ B ) → ( x ∈ B → ( ( x ∈ y ∧ ( ( B ∩ y ) ∩ x ) = ∅ ) → ( B ∩ x ) = ∅ ) ) ) ;;
+	step 50 : wff = reximdvai (step 49) |- ( ( 𝛜 We B ∧ y ∈ B ) → ( ∃ x ∈ B ( x ∈ y ∧ ( ( B ∩ y ) ∩ x ) = ∅ ) → ∃ x ∈ B ( B ∩ x ) = ∅ ) ) ;;
+	step 51 : wff = syld (step 22, step 50) |- ( ( 𝛜 We B ∧ y ∈ B ) → ( ( B ∩ y ) ≠ ∅ → ∃ x ∈ B ( B ∩ x ) = ∅ ) ) ;;
+	step 52 : wff = pm2.61dne (step 7, step 51) |- ( ( 𝛜 We B ∧ y ∈ B ) → ∃ x ∈ B ( B ∩ x ) = ∅ ) ;;
+	step 53 : wff = ex (step 52) |- ( 𝛜 We B → ( y ∈ B → ∃ x ∈ B ( B ∩ x ) = ∅ ) ) ;;
+	step 54 : wff = exlimdv (step 53) |- ( 𝛜 We B → ( ∃ y y ∈ B → ∃ x ∈ B ( B ∩ x ) = ∅ ) ) ;;
+	step 55 : wff = syl5bi (step 2, step 54) |- ( 𝛜 We B → ( B ≠ ∅ → ∃ x ∈ B ( B ∩ x ) = ∅ ) ) ;;
+	step 56 : wff = syl6com (step 1, step 55) |- ( 𝛜 We A → ( B ⊆ A → ( B ≠ ∅ → ∃ x ∈ B ( B ∩ x ) = ∅ ) ) ) ;;
+	step 57 : wff = 3imp (step 56) |- ( ( 𝛜 We A ∧ B ⊆ A ∧ B ≠ ∅ ) → ∃ x ∈ B ( B ∩ x ) = ∅ ) ;;
+	qed prop 1 = step 57 ;;
+}
+
+/* Any relation is a well-ordering of the empty set.  (Contributed by NM,
+     16-Mar-1997.) */
+
+theorem we0 (R : class)  {
+	prop 1 : wff = |- R We ∅ ;;
+}
+
+proof of we0 {
+	step 1 : wff = fr0 () |- R Fr ∅ ;;
+	step 2 : wff = so0 () |- R Or ∅ ;;
+	step 3 : wff = df-we () |- ( R We ∅ ↔ ( R Fr ∅ ∧ R Or ∅ ) ) ;;
+	step 4 : wff = mpbir2an (step 1, step 2, step 3) |- R We ∅ ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A subset of a well-ordered set has a unique minimal element.
+       (Contributed by NM, 18-Mar-1997.)  (Revised by Mario Carneiro,
+       28-Apr-2015.) */
+
+theorem wereu (x : set, y : set, A : class, B : class, R : class, V : class) disjointed(x y A, x y B, x y R) {
+	prop 1 : wff = |- ( ( R We A ∧ ( B ∈ V ∧ B ⊆ A ∧ B ≠ ∅ ) ) → ∃! x ∈ B ∀ y ∈ B ¬ y R x ) ;;
+}
+
+proof of wereu {
+	step 1 : wff = wefr () |- ( R We A → R Fr A ) ;;
+	step 2 : wff = fri () |- ( ( ( B ∈ V ∧ R Fr A ) ∧ ( B ⊆ A ∧ B ≠ ∅ ) ) → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ;;
+	step 3 : wff = exp32 (step 2) |- ( ( B ∈ V ∧ R Fr A ) → ( B ⊆ A → ( B ≠ ∅ → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ) ) ;;
+	step 4 : wff = expcom (step 3) |- ( R Fr A → ( B ∈ V → ( B ⊆ A → ( B ≠ ∅ → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ) ) ) ;;
+	step 5 : wff = 3imp2 (step 4) |- ( ( R Fr A ∧ ( B ∈ V ∧ B ⊆ A ∧ B ≠ ∅ ) ) → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ;;
+	step 6 : wff = sylan (step 1, step 5) |- ( ( R We A ∧ ( B ∈ V ∧ B ⊆ A ∧ B ≠ ∅ ) ) → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ;;
+	step 7 : wff = simpr2 () |- ( ( R We A ∧ ( B ∈ V ∧ B ⊆ A ∧ B ≠ ∅ ) ) → B ⊆ A ) ;;
+	step 8 : wff = weso () |- ( R We A → R Or A ) ;;
+	step 9 : wff = adantr (step 8) |- ( ( R We A ∧ ( B ∈ V ∧ B ⊆ A ∧ B ≠ ∅ ) ) → R Or A ) ;;
+	step 10 : wff = soss () |- ( B ⊆ A → ( R Or A → R Or B ) ) ;;
+	step 11 : wff = sylc (step 7, step 9, step 10) |- ( ( R We A ∧ ( B ∈ V ∧ B ⊆ A ∧ B ≠ ∅ ) ) → R Or B ) ;;
+	step 12 : wff = somo () |- ( R Or B → ∃* x ∈ B ∀ y ∈ B ¬ y R x ) ;;
+	step 13 : wff = syl (step 11, step 12) |- ( ( R We A ∧ ( B ∈ V ∧ B ⊆ A ∧ B ≠ ∅ ) ) → ∃* x ∈ B ∀ y ∈ B ¬ y R x ) ;;
+	step 14 : wff = reu5 () |- ( ∃! x ∈ B ∀ y ∈ B ¬ y R x ↔ ( ∃ x ∈ B ∀ y ∈ B ¬ y R x ∧ ∃* x ∈ B ∀ y ∈ B ¬ y R x ) ) ;;
+	step 15 : wff = sylanbrc (step 6, step 13, step 14) |- ( ( R We A ∧ ( B ∈ V ∧ B ⊆ A ∧ B ≠ ∅ ) ) → ∃! x ∈ B ∀ y ∈ B ¬ y R x ) ;;
+	qed prop 1 = step 15 ;;
+}
+
+/* All nonempty (possibly proper) subclasses of ` A ` , which has a
+       well-founded relation ` R ` , have ` R `-minimal elements.  Proposition
+       6.26 of [TakeutiZaring] p. 31.  (Contributed by Scott Fenton,
+       29-Jan-2011.)  (Revised by Mario Carneiro, 24-Jun-2015.) */
+
+theorem wereu2 (x : set, y : set, A : class, B : class, R : class) disjointed(x y z A, w x y z B, w x y z R) {
+	prop 1 : wff = |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ B ≠ ∅ ) ) → ∃! x ∈ B ∀ y ∈ B ¬ y R x ) ;;
+}
+
+proof of wereu2 {
+	var z : set, w : set;;
+	step 1 : wff = n0 () |- ( B ≠ ∅ ↔ ∃ z z ∈ B ) ;;
+	step 2 : wff = rabeq0 () |- ( { w ∈ B | w R z } = ∅ ↔ ∀ w ∈ B ¬ w R z ) ;;
+	step 3 : wff = breq1 () |- ( y = w → ( y R x ↔ w R x ) ) ;;
+	step 4 : wff = notbid (step 3) |- ( y = w → ( ¬ y R x ↔ ¬ w R x ) ) ;;
+	step 5 : wff = cbvralv (step 4) |- ( ∀ y ∈ B ¬ y R x ↔ ∀ w ∈ B ¬ w R x ) ;;
+	step 6 : wff = breq2 () |- ( x = z → ( w R x ↔ w R z ) ) ;;
+	step 7 : wff = notbid (step 6) |- ( x = z → ( ¬ w R x ↔ ¬ w R z ) ) ;;
+	step 8 : wff = ralbidv (step 7) |- ( x = z → ( ∀ w ∈ B ¬ w R x ↔ ∀ w ∈ B ¬ w R z ) ) ;;
+	step 9 : wff = syl5bb (step 5, step 8) |- ( x = z → ( ∀ y ∈ B ¬ y R x ↔ ∀ w ∈ B ¬ w R z ) ) ;;
+	step 10 : wff = rspcev (step 9) |- ( ( z ∈ B ∧ ∀ w ∈ B ¬ w R z ) → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ;;
+	step 11 : wff = ex (step 10) |- ( z ∈ B → ( ∀ w ∈ B ¬ w R z → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ) ;;
+	step 12 : wff = ad2antll (step 11) |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) → ( ∀ w ∈ B ¬ w R z → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ) ;;
+	step 13 : wff = syl5bi (step 2, step 12) |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) → ( { w ∈ B | w R z } = ∅ → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ) ;;
+	step 14 : wff = simprl () |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) → B ⊆ A ) ;;
+	step 15 : wff = simplr () |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) → R Se A ) ;;
+	step 16 : wff = sess2 () |- ( B ⊆ A → ( R Se A → R Se B ) ) ;;
+	step 17 : wff = sylc (step 14, step 15, step 16) |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) → R Se B ) ;;
+	step 18 : wff = simprr () |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) → z ∈ B ) ;;
+	step 19 : wff = seex () |- ( ( R Se B ∧ z ∈ B ) → { w ∈ B | w R z } ∈ _V ) ;;
+	step 20 : wff = syl2anc (step 17, step 18, step 19) |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) → { w ∈ B | w R z } ∈ _V ) ;;
+	step 21 : wff = wefr () |- ( R We A → R Fr A ) ;;
+	step 22 : wff = ad2antrr (step 21) |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) → R Fr A ) ;;
+	step 23 : wff = ssrab2 () |- { w ∈ B | w R z } ⊆ B ;;
+	step 24 : wff = simprl () |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) → B ⊆ A ) ;;
+	step 25 : wff = syl5ss (step 23, step 24) |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) → { w ∈ B | w R z } ⊆ A ) ;;
+	step 26 : wff = fri () |- ( ( ( { w ∈ B | w R z } ∈ _V ∧ R Fr A ) ∧ ( { w ∈ B | w R z } ⊆ A ∧ { w ∈ B | w R z } ≠ ∅ ) ) → ∃ x ∈ { w ∈ B | w R z } ∀ y ∈ { w ∈ B | w R z } ¬ y R x ) ;;
+	step 27 : wff = expr (step 26) |- ( ( ( { w ∈ B | w R z } ∈ _V ∧ R Fr A ) ∧ { w ∈ B | w R z } ⊆ A ) → ( { w ∈ B | w R z } ≠ ∅ → ∃ x ∈ { w ∈ B | w R z } ∀ y ∈ { w ∈ B | w R z } ¬ y R x ) ) ;;
+	step 28 : wff = syl21anc (step 20, step 22, step 25, step 27) |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) → ( { w ∈ B | w R z } ≠ ∅ → ∃ x ∈ { w ∈ B | w R z } ∀ y ∈ { w ∈ B | w R z } ¬ y R x ) ) ;;
+	step 29 : wff = breq1 () |- ( w = x → ( w R z ↔ x R z ) ) ;;
+	step 30 : wff = rexrab (step 29) |- ( ∃ x ∈ { w ∈ B | w R z } ∀ y ∈ { w ∈ B | w R z } ¬ y R x ↔ ∃ x ∈ B ( x R z ∧ ∀ y ∈ { w ∈ B | w R z } ¬ y R x ) ) ;;
+	step 31 : wff = breq1 () |- ( w = y → ( w R z ↔ y R z ) ) ;;
+	step 32 : wff = ralrab (step 31) |- ( ∀ y ∈ { w ∈ B | w R z } ¬ y R x ↔ ∀ y ∈ B ( y R z → ¬ y R x ) ) ;;
+	step 33 : wff = simprl () |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) → B ⊆ A ) ;;
+	step 34 : wff = weso () |- ( R We A → R Or A ) ;;
+	step 35 : wff = ad2antrr (step 34) |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) → R Or A ) ;;
+	step 36 : wff = soss () |- ( B ⊆ A → ( R Or A → R Or B ) ) ;;
+	step 37 : wff = sylc (step 33, step 35, step 36) |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) → R Or B ) ;;
+	step 38 : wff = ad2antrr (step 37) |- ( ( ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) ∧ x ∈ B ) ∧ y ∈ B ) → R Or B ) ;;
+	step 39 : wff = simpr () |- ( ( ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) ∧ x ∈ B ) ∧ y ∈ B ) → y ∈ B ) ;;
+	step 40 : wff = simplr () |- ( ( ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) ∧ x ∈ B ) ∧ y ∈ B ) → x ∈ B ) ;;
+	step 41 : wff = simprr () |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) → z ∈ B ) ;;
+	step 42 : wff = ad2antrr (step 41) |- ( ( ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) ∧ x ∈ B ) ∧ y ∈ B ) → z ∈ B ) ;;
+	step 43 : wff = sotr () |- ( ( R Or B ∧ ( y ∈ B ∧ x ∈ B ∧ z ∈ B ) ) → ( ( y R x ∧ x R z ) → y R z ) ) ;;
+	step 44 : wff = syl13anc (step 38, step 39, step 40, step 42, step 43) |- ( ( ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) ∧ x ∈ B ) ∧ y ∈ B ) → ( ( y R x ∧ x R z ) → y R z ) ) ;;
+	step 45 : wff = ancomsd (step 44) |- ( ( ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) ∧ x ∈ B ) ∧ y ∈ B ) → ( ( x R z ∧ y R x ) → y R z ) ) ;;
+	step 46 : wff = expdimp (step 45) |- ( ( ( ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) ∧ x ∈ B ) ∧ y ∈ B ) ∧ x R z ) → ( y R x → y R z ) ) ;;
+	step 47 : wff = an32s (step 46) |- ( ( ( ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) ∧ x ∈ B ) ∧ x R z ) ∧ y ∈ B ) → ( y R x → y R z ) ) ;;
+	step 48 : wff = con3d (step 47) |- ( ( ( ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) ∧ x ∈ B ) ∧ x R z ) ∧ y ∈ B ) → ( ¬ y R z → ¬ y R x ) ) ;;
+	step 49 : wff = idd () |- ( ( ( ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) ∧ x ∈ B ) ∧ x R z ) ∧ y ∈ B ) → ( ¬ y R x → ¬ y R x ) ) ;;
+	step 50 : wff = jad (step 48, step 49) |- ( ( ( ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) ∧ x ∈ B ) ∧ x R z ) ∧ y ∈ B ) → ( ( y R z → ¬ y R x ) → ¬ y R x ) ) ;;
+	step 51 : wff = ralimdva (step 50) |- ( ( ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) ∧ x ∈ B ) ∧ x R z ) → ( ∀ y ∈ B ( y R z → ¬ y R x ) → ∀ y ∈ B ¬ y R x ) ) ;;
+	step 52 : wff = syl5bi (step 32, step 51) |- ( ( ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) ∧ x ∈ B ) ∧ x R z ) → ( ∀ y ∈ { w ∈ B | w R z } ¬ y R x → ∀ y ∈ B ¬ y R x ) ) ;;
+	step 53 : wff = expimpd (step 52) |- ( ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) ∧ x ∈ B ) → ( ( x R z ∧ ∀ y ∈ { w ∈ B | w R z } ¬ y R x ) → ∀ y ∈ B ¬ y R x ) ) ;;
+	step 54 : wff = reximdva (step 53) |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) → ( ∃ x ∈ B ( x R z ∧ ∀ y ∈ { w ∈ B | w R z } ¬ y R x ) → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ) ;;
+	step 55 : wff = syl5bi (step 30, step 54) |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) → ( ∃ x ∈ { w ∈ B | w R z } ∀ y ∈ { w ∈ B | w R z } ¬ y R x → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ) ;;
+	step 56 : wff = syld (step 28, step 55) |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) → ( { w ∈ B | w R z } ≠ ∅ → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ) ;;
+	step 57 : wff = pm2.61dne (step 13, step 56) |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ z ∈ B ) ) → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ;;
+	step 58 : wff = expr (step 57) |- ( ( ( R We A ∧ R Se A ) ∧ B ⊆ A ) → ( z ∈ B → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ) ;;
+	step 59 : wff = exlimdv (step 58) |- ( ( ( R We A ∧ R Se A ) ∧ B ⊆ A ) → ( ∃ z z ∈ B → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ) ;;
+	step 60 : wff = syl5bi (step 1, step 59) |- ( ( ( R We A ∧ R Se A ) ∧ B ⊆ A ) → ( B ≠ ∅ → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ) ;;
+	step 61 : wff = impr (step 60) |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ B ≠ ∅ ) ) → ∃ x ∈ B ∀ y ∈ B ¬ y R x ) ;;
+	step 62 : wff = simprl () |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ B ≠ ∅ ) ) → B ⊆ A ) ;;
+	step 63 : wff = weso () |- ( R We A → R Or A ) ;;
+	step 64 : wff = ad2antrr (step 63) |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ B ≠ ∅ ) ) → R Or A ) ;;
+	step 65 : wff = soss () |- ( B ⊆ A → ( R Or A → R Or B ) ) ;;
+	step 66 : wff = sylc (step 62, step 64, step 65) |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ B ≠ ∅ ) ) → R Or B ) ;;
+	step 67 : wff = somo () |- ( R Or B → ∃* x ∈ B ∀ y ∈ B ¬ y R x ) ;;
+	step 68 : wff = syl (step 66, step 67) |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ B ≠ ∅ ) ) → ∃* x ∈ B ∀ y ∈ B ¬ y R x ) ;;
+	step 69 : wff = reu5 () |- ( ∃! x ∈ B ∀ y ∈ B ¬ y R x ↔ ( ∃ x ∈ B ∀ y ∈ B ¬ y R x ∧ ∃* x ∈ B ∀ y ∈ B ¬ y R x ) ) ;;
+	step 70 : wff = sylanbrc (step 61, step 68, step 69) |- ( ( ( R We A ∧ R Se A ) ∧ ( B ⊆ A ∧ B ≠ ∅ ) ) → ∃! x ∈ B ∀ y ∈ B ¬ y R x ) ;;
+	qed prop 1 = step 70 ;;
+}
+
+

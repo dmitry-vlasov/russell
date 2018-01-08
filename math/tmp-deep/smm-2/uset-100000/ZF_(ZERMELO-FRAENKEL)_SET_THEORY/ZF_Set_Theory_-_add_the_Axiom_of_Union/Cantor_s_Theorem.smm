@@ -1,0 +1,43 @@
+$[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Iota_properties.smm $]
+$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Cantor's Theorem
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+$)
+$( /* No set ` A ` is equinumerous to its power set (Cantor's theorem), i.e.
+       no function can map ` A ` it onto its power set.  Compare Theorem 6B(b)
+       of [Enderton] p. 132.  For the equinumerosity version, see ~ canth2 .
+       Note that ` A ` must be a set: this theorem does not hold when ` A ` is
+       too large to be a set; see ~ ncanth for a counterexample.  (Use ~ nex if
+       you want the form ` -. E. f f : A -onto-> ~P A ` .)  (Contributed by NM,
+       7-Aug-1994.)  (Proof shortened by Mario Carneiro, 7-Jun-2016.) */
+
+$)
+${
+	$v x y A F $.
+	$d x y A $.
+	$d x y F $.
+	e0 $e |- A e. _V $.
+	f0 $f class A $.
+	f1 $f class F $.
+	i0 $f set x $.
+	i1 $f set y $.
+	pcanth $p |- -. F : A -onto-> ~P A $=
+	i0 asup_set_class i0 asup_set_class f1 acfv awcel awn i0 f0 pssrab2 e0 i0 asup_set_class i0 asup_set_class f1 acfv awcel awn i0 f0 acrab f0 pelpw2 i0 asup_set_class i0 asup_set_class f1 acfv awcel awn i0 f0 acrab f0 acpw awcel i0 asup_set_class i0 asup_set_class f1 acfv awcel awn i0 f0 acrab f0 awss pmpbir f0 f0 acpw f1 pforn f0 f0 acpw f1 awfo i0 asup_set_class i0 asup_set_class f1 acfv awcel awn i0 f0 acrab f0 acpw f1 acrn psyl5eleqr i0 asup_set_class i1 asup_set_class awceq pid i0 asup_set_class i1 asup_set_class f1 pfveq2 i0 asup_set_class i1 asup_set_class awceq i0 asup_set_class i1 asup_set_class i0 asup_set_class f1 acfv i1 asup_set_class f1 acfv peleq12d i0 asup_set_class i1 asup_set_class awceq i0 asup_set_class i0 asup_set_class f1 acfv awcel i1 asup_set_class i1 asup_set_class f1 acfv awcel pnotbid i0 asup_set_class i0 asup_set_class f1 acfv awcel awn i1 asup_set_class i1 asup_set_class f1 acfv awcel awn i0 i1 asup_set_class f0 pelrab i1 asup_set_class i0 asup_set_class i0 asup_set_class f1 acfv awcel awn i0 f0 acrab awcel i1 asup_set_class f0 awcel i1 asup_set_class i1 asup_set_class f1 acfv awcel awn pbaibr i1 asup_set_class i1 asup_set_class f1 acfv awcel i1 asup_set_class i0 asup_set_class i0 asup_set_class f1 acfv awcel awn i0 f0 acrab awcel pnbbn i1 asup_set_class f0 awcel i1 asup_set_class i1 asup_set_class f1 acfv awcel awn i1 asup_set_class i0 asup_set_class i0 asup_set_class f1 acfv awcel awn i0 f0 acrab awcel awb i1 asup_set_class i1 asup_set_class f1 acfv awcel i1 asup_set_class i0 asup_set_class i0 asup_set_class f1 acfv awcel awn i0 f0 acrab awcel awb awn psylib i1 asup_set_class f1 acfv i0 asup_set_class i0 asup_set_class f1 acfv awcel awn i0 f0 acrab i1 asup_set_class peleq2 i1 asup_set_class f0 awcel i1 asup_set_class i1 asup_set_class f1 acfv awcel i1 asup_set_class i0 asup_set_class i0 asup_set_class f1 acfv awcel awn i0 f0 acrab awcel awb i1 asup_set_class f1 acfv i0 asup_set_class i0 asup_set_class f1 acfv awcel awn i0 f0 acrab awceq pnsyl i1 asup_set_class f1 acfv i0 asup_set_class i0 asup_set_class f1 acfv awcel awn i0 f0 acrab awceq i1 f0 pnrex f0 f0 acpw f1 pfofn i1 f0 i0 asup_set_class i0 asup_set_class f1 acfv awcel awn i0 f0 acrab f1 pfvelrnb f0 f0 acpw f1 awfo f1 f0 awfn i0 asup_set_class i0 asup_set_class f1 acfv awcel awn i0 f0 acrab f1 acrn awcel i1 asup_set_class f1 acfv i0 asup_set_class i0 asup_set_class f1 acfv awcel awn i0 f0 acrab awceq i1 f0 awrex awb psyl f0 f0 acpw f1 awfo i0 asup_set_class i0 asup_set_class f1 acfv awcel awn i0 f0 acrab f1 acrn awcel i1 asup_set_class f1 acfv i0 asup_set_class i0 asup_set_class f1 acfv awcel awn i0 f0 acrab awceq i1 f0 awrex pmtbiri f0 f0 acpw f1 awfo i0 asup_set_class i0 asup_set_class f1 acfv awcel awn i0 f0 acrab f1 acrn awcel ppm2.65i $.
+$}
+$( /* Cantor's theorem fails for the universal class (which is not a set but a
+     proper class by ~ vprc ).  Specifically, the identity function maps the
+     universe onto its power class.  Compare ~ canth that works for sets.  See
+     also the remark in ~ ru about NF, in which Cantor's theorem fails for sets
+     that are "too large."  This theorem gives some intuition behind that
+     failure: in NF the universal class is a set, and it equals its own power
+     set.  (Contributed by NM, 29-Jun-2004.) */
+
+$)
+${
+	pncanth $p |- _I : _V -onto-> ~P _V $=
+	pf1ovi ppwv acvv acpw acvv acvv acid pf1oeq3 acvv acpw acvv awceq acvv acvv acpw acid awf1o acvv acvv acid awf1o awb aax-mp acvv acvv acpw acid awf1o acvv acvv acid awf1o pmpbir acvv acvv acpw acid pf1ofo acvv acvv acpw acid awf1o acvv acvv acpw acid awfo aax-mp $.
+$}
+

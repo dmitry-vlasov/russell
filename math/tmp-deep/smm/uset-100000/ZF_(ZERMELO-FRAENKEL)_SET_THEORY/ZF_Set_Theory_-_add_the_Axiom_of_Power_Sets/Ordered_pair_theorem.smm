@@ -1,0 +1,446 @@
+$[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets/Derive_the_Axiom_of_Pairing.smm $]
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                   Ordered pair theorem
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+$( An ordered pair is nonempty iff the arguments are sets.  (Contributed by
+       NM, 24-Jan-2004.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	popnz $p |- ( <. A , B >. =/= (/) <-> ( A e. _V /\ B e. _V ) ) $=
+	f0 f1 popprc f0 acvv awcel f1 acvv awcel awa f0 f1 acop ac0 pnecon1ai f0 f1 acvv acvv pdfopg f0 psnex f0 acsn f0 f1 acpr pprnz f0 acsn f0 f1 acpr acpr ac0 awne f0 acvv awcel f1 acvv awcel awa pa1i f0 acvv awcel f1 acvv awcel awa f0 f1 acop f0 acsn f0 f1 acpr acpr ac0 peqnetrd f0 f1 acop ac0 awne f0 acvv awcel f1 acvv awcel awa pimpbii $.
+$}
+$( An ordered pair is nonempty if the arguments are sets.  (Contributed by
+       Mario Carneiro, 26-Apr-2015.) $)
+${
+	$v A B $.
+	e0 $e |- A e. _V $.
+	e1 $e |- B e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	popnzi $p |- <. A , B >. =/= (/) $=
+	e0 e1 f0 f1 popnz f0 f1 acop ac0 awne f0 acvv awcel f1 acvv awcel pmpbir2an $.
+$}
+$( Equality of the first members of equal ordered pairs.  (Contributed by
+       NM, 28-May-2008.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
+${
+	$v A B C D $.
+	e0 $e |- A e. _V $.
+	e1 $e |- B e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	popth1 $p |- ( <. A , B >. = <. C , D >. -> A = C ) $=
+	e0 f0 f2 psneqr f0 acsn f2 acsn awceq f0 f2 awceq awi f0 f1 acop f2 f3 acop awceq pa1i e0 e1 f0 f1 popi1 f0 f1 acop f2 f3 acop awceq pid f0 f1 acop f2 f3 acop awceq f0 acsn f0 f1 acop f2 f3 acop psyl5eleq f2 f3 f0 acsn poprcl f0 f1 acop f2 f3 acop awceq f0 acsn f2 f3 acop awcel f2 acvv awcel f3 acvv awcel awa psyl f0 f1 acop f2 f3 acop awceq f2 acvv awcel f3 acvv awcel psimpld f2 f3 acvv pprid1g f0 f1 acop f2 f3 acop awceq f2 acvv awcel f2 f2 f3 acpr awcel psyl f0 acsn f2 f3 acpr f2 peleq2 f0 f1 acop f2 f3 acop awceq f2 f0 acsn awcel f0 acsn f2 f3 acpr awceq f2 f2 f3 acpr awcel psyl5ibrcom f2 f0 pelsni f2 f0 acsn awcel f2 f0 peqcomd f0 f1 acop f2 f3 acop awceq f0 acsn f2 f3 acpr awceq f2 f0 acsn awcel f0 f2 awceq psyl6 e0 e1 f0 f1 popi1 f0 f1 acop f2 f3 acop awceq pid f0 f1 acop f2 f3 acop awceq f0 acsn f0 f1 acop f2 f3 acop psyl5eleq e0 e1 f0 f1 popi1 f0 f1 acop f2 f3 acop awceq pid f0 f1 acop f2 f3 acop awceq f0 acsn f0 f1 acop f2 f3 acop psyl5eleq f2 f3 f0 acsn poprcl f2 f3 acvv acvv pdfopg f0 f1 acop f2 f3 acop awceq f0 acsn f2 f3 acop awcel f2 acvv awcel f3 acvv awcel awa f2 f3 acop f2 acsn f2 f3 acpr acpr awceq p3syl f0 f1 acop f2 f3 acop awceq f0 acsn f2 f3 acop f2 acsn f2 f3 acpr acpr peleqtrd f0 acsn f2 acsn f2 f3 acpr pelpri f0 f1 acop f2 f3 acop awceq f0 acsn f2 acsn f2 f3 acpr acpr awcel f0 acsn f2 acsn awceq f0 acsn f2 f3 acpr awceq awo psyl f0 f1 acop f2 f3 acop awceq f0 acsn f2 acsn awceq f0 f2 awceq f0 acsn f2 f3 acpr awceq pmpjaod $.
+$}
+$( The ordered pair theorem.  If two ordered pairs are equal, their first
+       elements are equal and their second elements are equal.  Exercise 6 of
+       [TakeutiZaring] p. 16.  Note that ` C ` and ` D ` are not required to be
+       sets due our specific ordered pair definition.  (Contributed by NM,
+       28-May-1995.) $)
+${
+	$v x A B C D $.
+	$d x B $.
+	$d x C $.
+	$d x D $.
+	e0 $e |- A e. _V $.
+	e1 $e |- B e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	i0 $f set x $.
+	popth $p |- ( <. A , B >. = <. C , D >. <-> ( A = C /\ B = D ) ) $=
+	e0 e1 f0 f1 f2 f3 popth1 e0 e1 f0 f1 popi1 f0 f1 acop f2 f3 acop awceq pid f0 f1 acop f2 f3 acop awceq f0 acsn f0 f1 acop f2 f3 acop psyl5eleq f2 f3 f0 acsn poprcl f0 f1 acop f2 f3 acop awceq f0 acsn f2 f3 acop awcel f2 acvv awcel f3 acvv awcel awa psyl f0 f1 acop f2 f3 acop awceq f2 acvv awcel f3 acvv awcel psimprd e0 e1 f0 f1 f2 f3 popth1 f0 f1 acop f2 f3 acop awceq f0 f2 f1 popeq1d f0 f1 acop f2 f3 acop awceq pid f0 f1 acop f2 f3 acop awceq f0 f1 acop f2 f1 acop f2 f3 acop peqtr3d e0 e1 f0 f1 popi1 f0 f1 acop f2 f3 acop awceq pid f0 f1 acop f2 f3 acop awceq f0 acsn f0 f1 acop f2 f3 acop psyl5eleq f2 f3 f0 acsn poprcl f0 f1 acop f2 f3 acop awceq f0 acsn f2 f3 acop awcel f2 acvv awcel f3 acvv awcel awa psyl f0 f1 acop f2 f3 acop awceq f2 acvv awcel f3 acvv awcel psimpld e1 f2 f1 acvv acvv pdfopg f0 f1 acop f2 f3 acop awceq f2 acvv awcel f1 acvv awcel f2 f1 acop f2 acsn f2 f1 acpr acpr awceq psylancl f0 f1 acop f2 f3 acop awceq f2 f1 acop f2 f3 acop f2 acsn f2 f1 acpr acpr peqtr3d e0 e1 f0 f1 popi1 f0 f1 acop f2 f3 acop awceq pid f0 f1 acop f2 f3 acop awceq f0 acsn f0 f1 acop f2 f3 acop psyl5eleq f2 f3 f0 acsn poprcl f0 f1 acop f2 f3 acop awceq f0 acsn f2 f3 acop awcel f2 acvv awcel f3 acvv awcel awa psyl f2 f3 acvv acvv pdfopg f0 f1 acop f2 f3 acop awceq f2 acvv awcel f3 acvv awcel awa f2 f3 acop f2 acsn f2 f3 acpr acpr awceq psyl f0 f1 acop f2 f3 acop awceq f2 f3 acop f2 acsn f2 f1 acpr acpr f2 acsn f2 f3 acpr acpr peqtr3d f2 f1 pprex f2 f3 pprex f2 f1 acpr f2 f3 acpr f2 acsn ppreqr2 f0 f1 acop f2 f3 acop awceq f2 acsn f2 f1 acpr acpr f2 acsn f2 f3 acpr acpr awceq f2 f1 acpr f2 f3 acpr awceq psyl i0 acv f3 f2 ppreq2 i0 acv f3 awceq f2 i0 acv acpr f2 f3 acpr f2 f1 acpr peqeq2d i0 acv f3 f1 peqeq2 i0 acv f3 awceq f2 f1 acpr f2 i0 acv acpr awceq f2 f1 acpr f2 f3 acpr awceq f1 i0 acv awceq f1 f3 awceq pimbi12d e1 i0 pvex f1 i0 acv f2 ppreqr2 f2 f1 acpr f2 i0 acv acpr awceq f1 i0 acv awceq awi f2 f1 acpr f2 f3 acpr awceq f1 f3 awceq awi i0 f3 acvv pvtoclg f0 f1 acop f2 f3 acop awceq f3 acvv awcel f2 f1 acpr f2 f3 acpr awceq f1 f3 awceq psylc f0 f1 acop f2 f3 acop awceq f0 f2 awceq f1 f3 awceq pjca f0 f1 f2 f3 popeq12 f0 f1 acop f2 f3 acop awceq f0 f2 awceq f1 f3 awceq awa pimpbii $.
+$}
+$( Ordered pair theorem. ` C ` and ` D ` are not required to be sets under
+       our specific ordered pair definition.  (Contributed by NM,
+       14-Oct-2005.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
+${
+	$v x y A B C D V W $.
+	$d x y A $.
+	$d y B $.
+	$d x y C $.
+	$d x y D $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	f4 $f class V $.
+	f5 $f class W $.
+	i0 $f set x $.
+	i1 $f set y $.
+	popthg $p |- ( ( A e. V /\ B e. W ) -> ( <. A , B >. = <. C , D >. <-> ( A = C /\ B = D ) ) ) $=
+	i0 acv f0 i1 acv popeq1 i0 acv f0 awceq i0 acv i1 acv acop f0 i1 acv acop f2 f3 acop peqeq1d i0 acv f0 f2 peqeq1 i0 acv f0 awceq i0 acv f2 awceq f0 f2 awceq i1 acv f3 awceq panbi1d i0 acv f0 awceq i0 acv i1 acv acop f2 f3 acop awceq f0 i1 acv acop f2 f3 acop awceq i0 acv f2 awceq i1 acv f3 awceq awa f0 f2 awceq i1 acv f3 awceq awa pbibi12d i1 acv f1 f0 popeq2 i1 acv f1 awceq f0 i1 acv acop f0 f1 acop f2 f3 acop peqeq1d i1 acv f1 f3 peqeq1 i1 acv f1 awceq i1 acv f3 awceq f1 f3 awceq f0 f2 awceq panbi2d i1 acv f1 awceq f0 i1 acv acop f2 f3 acop awceq f0 f1 acop f2 f3 acop awceq f0 f2 awceq i1 acv f3 awceq awa f0 f2 awceq f1 f3 awceq awa pbibi12d i0 pvex i1 pvex i0 acv i1 acv f2 f3 popth i0 acv i1 acv acop f2 f3 acop awceq i0 acv f2 awceq i1 acv f3 awceq awa awb f0 i1 acv acop f2 f3 acop awceq f0 f2 awceq i1 acv f3 awceq awa awb f0 f1 acop f2 f3 acop awceq f0 f2 awceq f1 f3 awceq awa awb i0 i1 f0 f1 f4 f5 pvtocl2g $.
+$}
+$( Ordered pair theorem.  (Contributed by NM, 14-Oct-2005.)  (Revised by
+       Mario Carneiro, 26-Apr-2015.) $)
+${
+	$v A B C D V W $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	f4 $f class V $.
+	f5 $f class W $.
+	popthg2 $p |- ( ( C e. V /\ D e. W ) -> ( <. A , B >. = <. C , D >. <-> ( A = C /\ B = D ) ) ) $=
+	f2 f3 f0 f1 f4 f5 popthg f0 f1 acop f2 f3 acop peqcom f0 f2 peqcom f1 f3 peqcom f0 f2 awceq f2 f0 awceq f1 f3 awceq f3 f1 awceq panbi12i f2 f4 awcel f3 f5 awcel awa f2 f3 acop f0 f1 acop awceq f2 f0 awceq f3 f1 awceq awa f0 f1 acop f2 f3 acop awceq f0 f2 awceq f1 f3 awceq awa p3bitr4g $.
+$}
+$( Ordered pair theorem.  (Contributed by NM, 21-Sep-2014.) $)
+${
+	$v A B C D $.
+	e0 $e |- C e. _V $.
+	e1 $e |- D e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	popth2 $p |- ( <. A , B >. = <. C , D >. <-> ( A = C /\ B = D ) ) $=
+	e0 e1 f0 f1 f2 f3 acvv acvv popthg2 f2 acvv awcel f3 acvv awcel f0 f1 acop f2 f3 acop awceq f0 f2 awceq f1 f3 awceq awa awb pmp2an $.
+$}
+$( Ordered triple theorem, with triple express with ordered pairs.
+       (Contributed by NM, 1-May-1995.)  (Revised by Mario Carneiro,
+       26-Apr-2015.) $)
+${
+	$v A B C D R S $.
+	e0 $e |- A e. _V $.
+	e1 $e |- B e. _V $.
+	e2 $e |- R e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	f4 $f class R $.
+	f5 $f class S $.
+	potth2 $p |- ( <. <. A , B >. , R >. = <. <. C , D >. , S >. <-> ( A = C /\ B = D /\ R = S ) ) $=
+	e0 e1 f0 f1 f2 f3 popth f0 f1 acop f2 f3 acop awceq f0 f2 awceq f1 f3 awceq awa f4 f5 awceq panbi1i f0 f1 popex e2 f0 f1 acop f4 f2 f3 acop f5 popth f0 f2 awceq f1 f3 awceq f4 f5 awceq adf-3an f0 f1 acop f2 f3 acop awceq f4 f5 awceq awa f0 f2 awceq f1 f3 awceq awa f4 f5 awceq awa f0 f1 acop f4 acop f2 f3 acop f5 acop awceq f0 f2 awceq f1 f3 awceq f4 f5 awceq aw3a p3bitr4i $.
+$}
+$( Ordered triple theorem.  (Contributed by NM, 25-Sep-2014.)  (Revised by
+       Mario Carneiro, 26-Apr-2015.) $)
+${
+	$v A B C D R S $.
+	e0 $e |- A e. _V $.
+	e1 $e |- B e. _V $.
+	e2 $e |- R e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	f4 $f class R $.
+	f5 $f class S $.
+	potth $p |- ( <. A , B , R >. = <. C , D , S >. <-> ( A = C /\ B = D /\ R = S ) ) $=
+	f0 f1 f4 adf-ot f2 f3 f5 adf-ot f0 f1 f4 acotp f0 f1 acop f4 acop f2 f3 f5 acotp f2 f3 acop f5 acop peqeq12i e0 e1 e2 f0 f1 f2 f3 f4 f5 potth2 f0 f1 f4 acotp f2 f3 f5 acotp awceq f0 f1 acop f4 acop f2 f3 acop f5 acop awceq f0 f2 awceq f1 f3 awceq f4 f5 awceq aw3a pbitri $.
+$}
+$( A variable introduction law for ordered pairs.  Analog of Lemma 15 of
+       [Monk2] p. 109.  (Contributed by NM, 28-May-1995.) $)
+${
+	$v x y A B C $.
+	$d x y A $.
+	$d x y B $.
+	$d x y C $.
+	e0 $e |- B e. _V $.
+	e1 $e |- C e. _V $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	peqvinop $p |- ( A = <. B , C >. <-> E. x E. y ( A = <. x , y >. /\ <. x , y >. = <. B , C >. ) ) $=
+	e0 e1 f0 acv f1 acv f3 f4 popth2 f0 acv f1 acv acop f3 f4 acop awceq f0 acv f3 awceq f1 acv f4 awceq awa f2 f0 acv f1 acv acop awceq panbi2i f2 f0 acv f1 acv acop awceq f0 acv f3 awceq f1 acv f4 awceq awa pancom f0 acv f3 awceq f1 acv f4 awceq f2 f0 acv f1 acv acop awceq panass f2 f0 acv f1 acv acop awceq f0 acv f1 acv acop f3 f4 acop awceq awa f2 f0 acv f1 acv acop awceq f0 acv f3 awceq f1 acv f4 awceq awa awa f0 acv f3 awceq f1 acv f4 awceq awa f2 f0 acv f1 acv acop awceq awa f0 acv f3 awceq f1 acv f4 awceq f2 f0 acv f1 acv acop awceq awa awa p3bitri f2 f0 acv f1 acv acop awceq f0 acv f1 acv acop f3 f4 acop awceq awa f0 acv f3 awceq f1 acv f4 awceq f2 f0 acv f1 acv acop awceq awa awa f1 pexbii f0 acv f3 awceq f1 acv f4 awceq f2 f0 acv f1 acv acop awceq awa f1 p19.42v e1 f1 acv f4 f0 acv popeq2 f1 acv f4 awceq f0 acv f1 acv acop f0 acv f4 acop f2 peqeq2d f2 f0 acv f1 acv acop awceq f2 f0 acv f4 acop awceq f1 f4 pceqsexv f1 acv f4 awceq f2 f0 acv f1 acv acop awceq awa f1 awex f2 f0 acv f4 acop awceq f0 acv f3 awceq panbi2i f2 f0 acv f1 acv acop awceq f0 acv f1 acv acop f3 f4 acop awceq awa f1 awex f0 acv f3 awceq f1 acv f4 awceq f2 f0 acv f1 acv acop awceq awa awa f1 awex f0 acv f3 awceq f1 acv f4 awceq f2 f0 acv f1 acv acop awceq awa f1 awex awa f0 acv f3 awceq f2 f0 acv f4 acop awceq awa p3bitri f2 f0 acv f1 acv acop awceq f0 acv f1 acv acop f3 f4 acop awceq awa f1 awex f0 acv f3 awceq f2 f0 acv f4 acop awceq awa f0 pexbii e0 f0 acv f3 f4 popeq1 f0 acv f3 awceq f0 acv f4 acop f3 f4 acop f2 peqeq2d f2 f0 acv f4 acop awceq f2 f3 f4 acop awceq f0 f3 pceqsexv f2 f0 acv f1 acv acop awceq f0 acv f1 acv acop f3 f4 acop awceq awa f1 awex f0 awex f0 acv f3 awceq f2 f0 acv f4 acop awceq awa f0 awex f2 f3 f4 acop awceq pbitr2i $.
+$}
+$( Substitution of class ` A ` for ordered pair ` <. x , y >. ` .
+       (Contributed by NM, 27-Dec-1996.)  (Revised by Andrew Salmon,
+       11-Jul-2011.) $)
+${
+	$v ph x y z w A $.
+	$d x z w A $.
+	$d y z w A $.
+	$d z w ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	i0 $f set z $.
+	i1 $f set w $.
+	pcopsexg $p |- ( A = <. x , y >. -> ( ph <-> E. x E. y ( A = <. x , y >. /\ ph ) ) ) $=
+	f1 pvex f2 pvex i0 i1 f3 f1 acv f2 acv peqvinop i0 acv i1 acv acop f1 acv f2 acv acop awceq f0 awa f2 awex f1 p19.8a i0 acv i1 acv acop f1 acv f2 acv acop awceq f0 awa i0 acv i1 acv acop f1 acv f2 acv acop awceq f0 awa f2 awex f1 awex f2 p19.23bi i0 acv i1 acv acop f1 acv f2 acv acop awceq f0 i0 acv i1 acv acop f1 acv f2 acv acop awceq f0 awa f2 awex f1 awex pex i0 pvex i1 pvex i0 acv i1 acv f1 acv f2 acv popth i0 pvex i1 pvex i0 acv i1 acv f1 acv f2 acv popth i0 acv i1 acv acop f1 acv f2 acv acop awceq i0 acv f1 acv awceq i1 acv f2 acv awceq awa f0 panbi1i i0 acv i1 acv acop f1 acv f2 acv acop awceq f0 awa i0 acv f1 acv awceq i1 acv f2 acv awceq awa f0 awa f1 f2 p2exbii i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex awa f1 pnfe1 f2 acv f1 acv awceq f2 pnfa1 i0 acv f1 acv awceq i1 acv f2 acv awceq f0 panass i1 acv f2 acv awceq f0 awa f2 p19.8a i1 acv f2 acv awceq f0 awa i1 acv f2 acv awceq f0 awa f2 awex awi f2 acv f1 acv awceq f2 awal pa1i f2 acv f1 acv awceq f2 awal i1 acv f2 acv awceq f0 awa i1 acv f2 acv awceq f0 awa f2 awex i0 acv f1 acv awceq panim2d i0 acv f1 acv awceq i1 acv f2 acv awceq awa f0 awa i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa awa f2 acv f1 acv awceq f2 awal i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex awa psyl5bi f2 acv f1 acv awceq f2 awal i0 acv f1 acv awceq i1 acv f2 acv awceq awa f0 awa i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex awa f2 peximd f2 acv f1 acv awceq f2 awal i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex awa pbiidd i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex awa i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex awa f2 f1 pdrex1 f2 acv f1 acv awceq f2 awal i0 acv f1 acv awceq i1 acv f2 acv awceq awa f0 awa f2 awex i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex awa f2 awex i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex awa f1 awex psylibd i0 acv f1 acv awceq i1 acv f2 acv awceq f0 panass i0 acv f1 acv awceq i1 acv f2 acv awceq awa f0 awa i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa awa f2 pexbii i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 p19.40 f2 f1 f2 pnfnae f2 f1 i0 pdveeq2 f2 acv f1 acv awceq f2 awal awn i0 acv f1 acv awceq f2 pnfd i0 acv f1 acv awceq f2 acv f1 acv awceq f2 awal awn f2 p19.9d f2 acv f1 acv awceq f2 awal awn i0 acv f1 acv awceq f2 awex i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex panim1d i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa awa f2 awex i0 acv f1 acv awceq f2 awex i1 acv f2 acv awceq f0 awa f2 awex awa f2 acv f1 acv awceq f2 awal awn i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex awa psyl5 i0 acv f1 acv awceq i1 acv f2 acv awceq awa f0 awa f2 awex i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa awa f2 awex f2 acv f1 acv awceq f2 awal awn i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex awa psyl5bi i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex awa f1 p19.8a f2 acv f1 acv awceq f2 awal awn i0 acv f1 acv awceq i1 acv f2 acv awceq awa f0 awa f2 awex i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex awa i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex awa f1 awex psyl6 f2 acv f1 acv awceq f2 awal i0 acv f1 acv awceq i1 acv f2 acv awceq awa f0 awa f2 awex i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex awa f1 awex awi ppm2.61i i0 acv f1 acv awceq i1 acv f2 acv awceq awa f0 awa f2 awex i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex awa f1 awex f1 pexlimi f1 i0 peuequ1 f1 i0 pequcom f1 acv i0 acv awceq i0 acv f1 acv awceq f1 peubii f1 acv i0 acv awceq f1 aweu i0 acv f1 acv awceq f1 aweu pmpbi i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex f1 peupick i0 acv f1 acv awceq f1 aweu i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex awa f1 awex i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex awi pmpan i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex awa f1 awex i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex pcom12 f2 i1 peuequ1 f2 acv i1 acv peqcom f2 acv i1 acv awceq i1 acv f2 acv awceq f2 peubii f2 acv i1 acv awceq f2 aweu i1 acv f2 acv awceq f2 aweu pmpbi i1 acv f2 acv awceq f0 f2 peupick i1 acv f2 acv awceq f2 aweu i1 acv f2 acv awceq f0 awa f2 awex i1 acv f2 acv awceq f0 awi pmpan i1 acv f2 acv awceq f0 awa f2 awex i1 acv f2 acv awceq f0 pcom12 i0 acv f1 acv awceq i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex awa f1 awex i1 acv f2 acv awceq f0 awa f2 awex i1 acv f2 acv awceq f0 psylan9 i0 acv f1 acv awceq i1 acv f2 acv awceq awa f0 awa f2 awex f1 awex i0 acv f1 acv awceq i1 acv f2 acv awceq f0 awa f2 awex awa f1 awex i0 acv f1 acv awceq i1 acv f2 acv awceq awa f0 psyl5 i0 acv i1 acv acop f1 acv f2 acv acop awceq f0 awa f2 awex f1 awex i0 acv f1 acv awceq i1 acv f2 acv awceq awa f0 awa f2 awex f1 awex i0 acv f1 acv awceq i1 acv f2 acv awceq awa f0 psyl5bi i0 acv i1 acv acop f1 acv f2 acv acop awceq i0 acv f1 acv awceq i1 acv f2 acv awceq awa i0 acv i1 acv acop f1 acv f2 acv acop awceq f0 awa f2 awex f1 awex f0 awi psylbi i0 acv i1 acv acop f1 acv f2 acv acop awceq f0 i0 acv i1 acv acop f1 acv f2 acv acop awceq f0 awa f2 awex f1 awex pimpbid f3 i0 acv i1 acv acop f1 acv f2 acv acop peqeq1 f3 i0 acv i1 acv acop f1 acv f2 acv acop peqeq1 f3 i0 acv i1 acv acop awceq f3 f1 acv f2 acv acop awceq i0 acv i1 acv acop f1 acv f2 acv acop awceq f0 panbi1d f3 i0 acv i1 acv acop awceq f3 f1 acv f2 acv acop awceq f0 awa i0 acv i1 acv acop f1 acv f2 acv acop awceq f0 awa f1 f2 p2exbidv f3 i0 acv i1 acv acop awceq f3 f1 acv f2 acv acop awceq f0 awa f2 awex f1 awex i0 acv i1 acv acop f1 acv f2 acv acop awceq f0 awa f2 awex f1 awex f0 pbibi2d f3 i0 acv i1 acv acop awceq f3 f1 acv f2 acv acop awceq i0 acv i1 acv acop f1 acv f2 acv acop awceq f0 f3 f1 acv f2 acv acop awceq f0 awa f2 awex f1 awex awb f0 i0 acv i1 acv acop f1 acv f2 acv acop awceq f0 awa f2 awex f1 awex awb pimbi12d f3 i0 acv i1 acv acop awceq f3 f1 acv f2 acv acop awceq f0 f3 f1 acv f2 acv acop awceq f0 awa f2 awex f1 awex awb awi i0 acv i1 acv acop f1 acv f2 acv acop awceq f0 i0 acv i1 acv acop f1 acv f2 acv acop awceq f0 awa f2 awex f1 awex awb awi pmpbiri f3 i0 acv i1 acv acop awceq f3 f1 acv f2 acv acop awceq f0 f3 f1 acv f2 acv acop awceq f0 awa f2 awex f1 awex awb awi i0 acv i1 acv acop f1 acv f2 acv acop awceq padantr f3 i0 acv i1 acv acop awceq i0 acv i1 acv acop f1 acv f2 acv acop awceq awa f3 f1 acv f2 acv acop awceq f0 f3 f1 acv f2 acv acop awceq f0 awa f2 awex f1 awex awb awi i0 i1 pexlimivv f3 f1 acv f2 acv acop awceq f3 i0 acv i1 acv acop awceq i0 acv i1 acv acop f1 acv f2 acv acop awceq awa i1 awex i0 awex f3 f1 acv f2 acv acop awceq f0 f3 f1 acv f2 acv acop awceq f0 awa f2 awex f1 awex awb awi psylbi f3 f1 acv f2 acv acop awceq f0 f3 f1 acv f2 acv acop awceq f0 awa f2 awex f1 awex awb ppm2.43i $.
+$}
+$( Closed theorem form of ~ copsex2g .  (Contributed by NM,
+       17-Feb-2013.) $)
+${
+	$v ph ps x y A B V W $.
+	$d x y ps $.
+	$d x y A $.
+	$d x y B $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	f6 $f class V $.
+	f7 $f class W $.
+	pcopsex2t $p |- ( ( A. x A. y ( ( x = A /\ y = B ) -> ( ph <-> ps ) ) /\ ( A e. V /\ B e. W ) ) -> ( E. x E. y ( <. A , B >. = <. x , y >. /\ ph ) <-> ps ) ) $=
+	f2 f4 f6 pelisset f3 f5 f7 pelisset f4 f6 awcel f2 acv f4 awceq f2 awex f5 f7 awcel f3 acv f5 awceq f3 awex panim12i f2 acv f4 awceq f3 acv f5 awceq f2 f3 peeanv f4 f6 awcel f5 f7 awcel awa f2 acv f4 awceq f2 awex f3 acv f5 awceq f3 awex awa f2 acv f4 awceq f3 acv f5 awceq awa f3 awex f2 awex psylibr f2 acv f4 awceq f3 acv f5 awceq awa f0 f1 awb awi f3 awal f2 pnfa1 f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 pnfe1 f1 f2 pnfv f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 f2 pnfbi f2 acv f4 awceq f3 acv f5 awceq awa f0 f1 awb awi f3 f2 pnfa2 f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 pnfe1 f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f3 f2 pnfex f1 f3 pnfv f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 f3 pnfbi f2 acv f3 acv f4 f5 popeq12 f0 f2 f3 f4 f5 acop pcopsexg f0 f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex awb f4 f5 acop f2 acv f3 acv acop peqcoms f2 acv f4 awceq f3 acv f5 awceq awa f2 acv f3 acv acop f4 f5 acop awceq f0 f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex awb psyl f2 acv f4 awceq f3 acv f5 awceq awa f0 f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex awb f2 acv f4 awceq f3 acv f5 awceq awa f0 f1 awb awi f3 awal f2 awal padantl f2 acv f4 awceq f3 acv f5 awceq awa f0 f1 awb awi f3 awal f2 psp f2 acv f4 awceq f3 acv f5 awceq awa f0 f1 awb awi f3 awal f2 awal f2 acv f4 awceq f3 acv f5 awceq awa f0 f1 awb awi f3 p19.21bi f2 acv f4 awceq f3 acv f5 awceq awa f0 f1 awb awi f3 awal f2 awal f2 acv f4 awceq f3 acv f5 awceq awa f0 f1 awb pimp f2 acv f4 awceq f3 acv f5 awceq awa f0 f1 awb awi f3 awal f2 awal f2 acv f4 awceq f3 acv f5 awceq awa awa f0 f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 pbitr3d f2 acv f4 awceq f3 acv f5 awceq awa f0 f1 awb awi f3 awal f2 awal f2 acv f4 awceq f3 acv f5 awceq awa f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awb pex f2 acv f4 awceq f3 acv f5 awceq awa f0 f1 awb awi f3 awal f2 awal f2 acv f4 awceq f3 acv f5 awceq awa f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awb f3 pexlimd f2 acv f4 awceq f3 acv f5 awceq awa f0 f1 awb awi f3 awal f2 awal f2 acv f4 awceq f3 acv f5 awceq awa f3 awex f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awb f2 pexlimd f2 acv f4 awceq f3 acv f5 awceq awa f0 f1 awb awi f3 awal f2 awal f2 acv f4 awceq f3 acv f5 awceq awa f3 awex f2 awex f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awb pimp f4 f6 awcel f5 f7 awcel awa f2 acv f4 awceq f3 acv f5 awceq awa f0 f1 awb awi f3 awal f2 awal f2 acv f4 awceq f3 acv f5 awceq awa f3 awex f2 awex f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awb psylan2 $.
+$}
+$( Implicit substitution inference for ordered pairs.  (Contributed by NM,
+       28-May-1995.) $)
+${
+	$v ph ps x y A B V W $.
+	$d x y ps $.
+	$d x y A $.
+	$d x y B $.
+	e0 $e |- ( ( x = A /\ y = B ) -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	f6 $f class V $.
+	f7 $f class W $.
+	pcopsex2g $p |- ( ( A e. V /\ B e. W ) -> ( E. x E. y ( <. A , B >. = <. x , y >. /\ ph ) <-> ps ) ) $=
+	f2 f4 f6 pelisset f3 f5 f7 pelisset f2 acv f4 awceq f3 acv f5 awceq f2 f3 peeanv f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 pnfe1 f1 f2 pnfv f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 f2 pnfbi f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 pnfe1 f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f3 f2 pnfex f1 f3 pnfv f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 f3 pnfbi f2 acv f3 acv f4 f5 popeq12 f0 f2 f3 f4 f5 acop pcopsexg f0 f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex awb f4 f5 acop f2 acv f3 acv acop peqcoms f2 acv f4 awceq f3 acv f5 awceq awa f2 acv f3 acv acop f4 f5 acop awceq f0 f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex awb psyl e0 f2 acv f4 awceq f3 acv f5 awceq awa f0 f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 pbitr3d f2 acv f4 awceq f3 acv f5 awceq awa f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awb f3 pexlimi f2 acv f4 awceq f3 acv f5 awceq awa f3 awex f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awb f2 pexlimi f2 acv f4 awceq f2 awex f3 acv f5 awceq f3 awex awa f2 acv f4 awceq f3 acv f5 awceq awa f3 awex f2 awex f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awb psylbir f4 f6 awcel f2 acv f4 awceq f2 awex f3 acv f5 awceq f3 awex f4 f5 acop f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awb f5 f7 awcel psyl2an $.
+$}
+$( An implicit substitution inference for 2 ordered pairs.  (Contributed by
+       NM, 5-Aug-1995.) $)
+${
+	$v ph ps x y z w A B C D R S $.
+	$d x y z w A $.
+	$d x y z w B $.
+	$d x y z w C $.
+	$d x y z w D $.
+	$d x y z w ps $.
+	$d x y z w R $.
+	$d x y z w S $.
+	e0 $e |- ( ( ( x = A /\ y = B ) /\ ( z = C /\ w = D ) ) -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f set z $.
+	f5 $f set w $.
+	f6 $f class A $.
+	f7 $f class B $.
+	f8 $f class C $.
+	f9 $f class D $.
+	f10 $f class R $.
+	f11 $f class S $.
+	pcopsex4g $p |- ( ( ( A e. R /\ B e. S ) /\ ( C e. R /\ D e. S ) ) -> ( E. x E. y E. z E. w ( ( <. A , B >. = <. x , y >. /\ <. C , D >. = <. z , w >. ) /\ ph ) <-> ps ) ) $=
+	f6 f7 acop f2 acv f3 acv acop peqcom f2 pvex f3 pvex f2 acv f3 acv f6 f7 popth f6 f7 acop f2 acv f3 acv acop awceq f2 acv f3 acv acop f6 f7 acop awceq f2 acv f6 awceq f3 acv f7 awceq awa pbitri f8 f9 acop f4 acv f5 acv acop peqcom f4 pvex f5 pvex f4 acv f5 acv f8 f9 popth f8 f9 acop f4 acv f5 acv acop awceq f4 acv f5 acv acop f8 f9 acop awceq f4 acv f8 awceq f5 acv f9 awceq awa pbitri f6 f7 acop f2 acv f3 acv acop awceq f2 acv f6 awceq f3 acv f7 awceq awa f8 f9 acop f4 acv f5 acv acop awceq f4 acv f8 awceq f5 acv f9 awceq awa panbi12i f6 f7 acop f2 acv f3 acv acop awceq f8 f9 acop f4 acv f5 acv acop awceq awa f2 acv f6 awceq f3 acv f7 awceq awa f4 acv f8 awceq f5 acv f9 awceq awa awa f0 panbi1i f6 f7 acop f2 acv f3 acv acop awceq f8 f9 acop f4 acv f5 acv acop awceq awa f0 awa f2 acv f6 awceq f3 acv f7 awceq awa f4 acv f8 awceq f5 acv f9 awceq awa awa f0 awa awb f6 f10 awcel f7 f11 awcel awa f8 f10 awcel f9 f11 awcel awa awa pa1i f6 f10 awcel f7 f11 awcel awa f8 f10 awcel f9 f11 awcel awa awa f6 f7 acop f2 acv f3 acv acop awceq f8 f9 acop f4 acv f5 acv acop awceq awa f0 awa f2 acv f6 awceq f3 acv f7 awceq awa f4 acv f8 awceq f5 acv f9 awceq awa awa f0 awa f2 f3 f4 f5 p4exbidv f2 acv f6 awceq f3 acv f7 awceq awa f4 acv f8 awceq f5 acv f9 awceq awa awa pid e0 f0 f1 f2 acv f6 awceq f3 acv f7 awceq awa f4 acv f8 awceq f5 acv f9 awceq awa awa f2 f3 f4 f5 f6 f7 f8 f9 f10 f11 pcgsex4g f6 f10 awcel f7 f11 awcel awa f8 f10 awcel f9 f11 awcel awa awa f6 f7 acop f2 acv f3 acv acop awceq f8 f9 acop f4 acv f5 acv acop awceq awa f0 awa f5 awex f4 awex f3 awex f2 awex f2 acv f6 awceq f3 acv f7 awceq awa f4 acv f8 awceq f5 acv f9 awceq awa awa f0 awa f5 awex f4 awex f3 awex f2 awex f1 pbitrd $.
+$}
+$( A property of ordered pairs.  (Contributed by Mario Carneiro,
+     26-Apr-2015.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	p0nelop $p |- -. (/) e. <. A , B >. $=
+	ac0 f0 f1 acop awcel pid f0 f1 ac0 poprcl f0 f1 acvv acvv pdfopg ac0 f0 f1 acop awcel f0 acvv awcel f1 acvv awcel awa f0 f1 acop f0 acsn f0 f1 acpr acpr awceq psyl ac0 f0 f1 acop awcel ac0 f0 f1 acop f0 acsn f0 f1 acpr acpr peleqtrd ac0 f0 acsn f0 f1 acpr pelpri ac0 f0 f1 acop awcel ac0 f0 acsn f0 f1 acpr acpr awcel ac0 f0 acsn awceq ac0 f0 f1 acpr awceq awo psyl f0 f1 ac0 poprcl ac0 f0 f1 acop awcel f0 acvv awcel f1 acvv awcel psimpld f0 acvv psnnzg ac0 f0 f1 acop awcel f0 acvv awcel f0 acsn ac0 awne psyl ac0 f0 f1 acop awcel f0 acsn ac0 pnecomd f0 f1 ac0 poprcl ac0 f0 f1 acop awcel f0 acvv awcel f1 acvv awcel psimpld f0 f1 acvv pprnzg ac0 f0 f1 acop awcel f0 acvv awcel f0 f1 acpr ac0 awne psyl ac0 f0 f1 acop awcel f0 f1 acpr ac0 pnecomd ac0 f0 f1 acop awcel ac0 f0 acsn awne ac0 f0 f1 acpr awne pjca ac0 f0 acsn ac0 f0 f1 acpr pneanior ac0 f0 f1 acop awcel ac0 f0 acsn awne ac0 f0 f1 acpr awne awa ac0 f0 acsn awceq ac0 f0 f1 acpr awceq awo awn psylib ac0 f0 f1 acop awcel ac0 f0 acsn awceq ac0 f0 f1 acpr awceq awo ppm2.65i $.
+$}
+$( Equivalence of existence implied by equality of ordered pairs.
+     (Contributed by NM, 28-May-2008.) $)
+${
+	$v A B C D $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	popeqex $p |- ( <. A , B >. = <. C , D >. -> ( ( A e. _V /\ B e. _V ) <-> ( C e. _V /\ D e. _V ) ) ) $=
+	f0 f1 acop f2 f3 acop ac0 pneeq1 f0 f1 popnz f2 f3 popnz f0 f1 acop f2 f3 acop awceq f0 f1 acop ac0 awne f2 f3 acop ac0 awne f0 acvv awcel f1 acvv awcel awa f2 acvv awcel f3 acvv awcel awa p3bitr3g $.
+$}
+$( Equivalence of existence implied by equality of ordered triples.
+     (Contributed by NM, 26-Apr-2015.) $)
+${
+	$v A B C R S T $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class R $.
+	f4 $f class S $.
+	f5 $f class T $.
+	poteqex2 $p |- ( <. <. A , B >. , C >. = <. <. R , S >. , T >. -> ( C e. _V <-> T e. _V ) ) $=
+	f0 f1 acop f2 f3 f4 acop f5 popeqex f0 f1 popex f0 f1 acop acvv awcel f2 acvv awcel pbiantrur f3 f4 popex f3 f4 acop acvv awcel f5 acvv awcel pbiantrur f0 f1 acop f2 acop f3 f4 acop f5 acop awceq f0 f1 acop acvv awcel f2 acvv awcel awa f3 f4 acop acvv awcel f5 acvv awcel awa f2 acvv awcel f5 acvv awcel p3bitr4g $.
+$}
+$( Equivalence of existence implied by equality of ordered triples.
+     (Contributed by NM, 28-May-2008.)  (Revised by Mario Carneiro,
+     26-Apr-2015.) $)
+${
+	$v A B C R S T $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class R $.
+	f4 $f class S $.
+	f5 $f class T $.
+	poteqex $p |- ( <. <. A , B >. , C >. = <. <. R , S >. , T >. -> ( ( A e. _V /\ B e. _V /\ C e. _V ) <-> ( R e. _V /\ S e. _V /\ T e. _V ) ) ) $=
+	f0 acvv awcel f1 acvv awcel f2 acvv awcel psimp3 f0 acvv awcel f1 acvv awcel f2 acvv awcel aw3a f2 acvv awcel awi f0 f1 acop f2 acop f3 f4 acop f5 acop awceq pa1i f3 acvv awcel f4 acvv awcel f5 acvv awcel psimp3 f0 f1 f2 f3 f4 f5 poteqex2 f3 acvv awcel f4 acvv awcel f5 acvv awcel aw3a f2 acvv awcel f0 f1 acop f2 acop f3 f4 acop f5 acop awceq f5 acvv awcel psyl5ibr f0 f1 popex f0 f1 acop f2 f3 f4 acop f5 acvv acvv popthg f0 f1 acop acvv awcel f2 acvv awcel f0 f1 acop f2 acop f3 f4 acop f5 acop awceq f0 f1 acop f3 f4 acop awceq f2 f5 awceq awa awb pmpan f2 acvv awcel f0 f1 acop f2 acop f3 f4 acop f5 acop awceq f0 f1 acop f3 f4 acop awceq f2 f5 awceq psimprbda f0 f1 f3 f4 popeqex f2 acvv awcel f0 f1 acop f2 acop f3 f4 acop f5 acop awceq awa f0 f1 acop f3 f4 acop awceq f0 acvv awcel f1 acvv awcel awa f3 acvv awcel f4 acvv awcel awa awb psyl f0 f1 f2 f3 f4 f5 poteqex2 f0 f1 acop f2 acop f3 f4 acop f5 acop awceq f2 acvv awcel f5 acvv awcel awb f2 acvv awcel padantl f2 acvv awcel f0 f1 acop f2 acop f3 f4 acop f5 acop awceq awa f0 acvv awcel f1 acvv awcel awa f3 acvv awcel f4 acvv awcel awa f2 acvv awcel f5 acvv awcel panbi12d f0 acvv awcel f1 acvv awcel f2 acvv awcel adf-3an f3 acvv awcel f4 acvv awcel f5 acvv awcel adf-3an f2 acvv awcel f0 f1 acop f2 acop f3 f4 acop f5 acop awceq awa f0 acvv awcel f1 acvv awcel awa f2 acvv awcel awa f3 acvv awcel f4 acvv awcel awa f5 acvv awcel awa f0 acvv awcel f1 acvv awcel f2 acvv awcel aw3a f3 acvv awcel f4 acvv awcel f5 acvv awcel aw3a p3bitr4g f2 acvv awcel f0 f1 acop f2 acop f3 f4 acop f5 acop awceq f0 acvv awcel f1 acvv awcel f2 acvv awcel aw3a f3 acvv awcel f4 acvv awcel f5 acvv awcel aw3a awb pexpcom f0 f1 acop f2 acop f3 f4 acop f5 acop awceq f2 acvv awcel f0 acvv awcel f1 acvv awcel f2 acvv awcel aw3a f3 acvv awcel f4 acvv awcel f5 acvv awcel aw3a ppm5.21ndd $.
+$}
+$( An ordered pair commutes iff its members are equal.  (Contributed by NM,
+       28-May-2009.) $)
+${
+	$v A B $.
+	e0 $e |- A e. _V $.
+	e1 $e |- B e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	popcom $p |- ( <. A , B >. = <. B , A >. <-> A = B ) $=
+	e0 e1 f0 f1 f1 f0 popth f1 f0 peqcom f1 f0 awceq f0 f1 awceq f0 f1 awceq panbi2i f0 f1 awceq panidm f0 f1 acop f1 f0 acop awceq f0 f1 awceq f1 f0 awceq awa f0 f1 awceq f0 f1 awceq awa f0 f1 awceq p3bitri $.
+$}
+$( "At most one" property of an ordered pair.  (Contributed by NM,
+       11-Apr-2004.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d y B $.
+	e0 $e |- B e. _V $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	i0 $f set y $.
+	pmoop2 $p |- E* x A = <. B , x >. $=
+	f1 f2 f0 acv acop f0 i0 acv f2 acsb i0 acv acop peqtr2 e0 f0 pvex f2 f0 acv f0 i0 acv f2 acsb i0 acv popth f2 f0 acv acop f0 i0 acv f2 acsb i0 acv acop awceq f2 f0 i0 acv f2 acsb awceq f0 acv i0 acv awceq psimprbi f1 f2 f0 acv acop awceq f1 f0 i0 acv f2 acsb i0 acv acop awceq awa f2 f0 acv acop f0 i0 acv f2 acsb i0 acv acop awceq f0 acv i0 acv awceq psyl f1 f2 f0 acv acop awceq f1 f0 i0 acv f2 acsb i0 acv acop awceq awa f0 acv i0 acv awceq awi f0 i0 pgen2 f0 i0 acv f2 pnfcsb1v f0 i0 acv pnfcv f0 f0 i0 acv f2 acsb i0 acv pnfop f0 f1 f0 i0 acv f2 acsb i0 acv acop pnfeq2 f0 i0 acv f2 pcsbeq1a f0 acv i0 acv awceq pid f0 acv i0 acv awceq f2 f0 i0 acv f2 acsb f0 acv i0 acv popeq12d f0 acv i0 acv awceq f2 f0 acv acop f0 i0 acv f2 acsb i0 acv acop f1 peqeq2d f1 f2 f0 acv acop awceq f1 f0 i0 acv f2 acsb i0 acv acop awceq f0 i0 pmo4f f1 f2 f0 acv acop awceq f0 awmo f1 f2 f0 acv acop awceq f1 f0 i0 acv f2 acsb i0 acv acop awceq awa f0 acv i0 acv awceq awi i0 awal f0 awal pmpbir $.
+$}
+$( Equivalence for an ordered pair equal to a singleton.  (Contributed by
+       NM, 3-Jun-2008.) $)
+${
+	$v A B C $.
+	e0 $e |- A e. _V $.
+	e1 $e |- B e. _V $.
+	e2 $e |- C e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	popeqsn $p |- ( <. A , B >. = { C } <-> ( A = B /\ C = { A } ) ) $=
+	e0 e1 f0 f1 pdfop f0 f1 acop f0 acsn f0 f1 acpr acpr f2 acsn peqeq1i f0 psnex f0 f1 pprex e2 f0 acsn f0 f1 acpr f2 ppreqsn f0 acsn f0 f1 acpr peqcom e0 e1 e0 f0 f1 f0 ppreqsn f1 f0 peqcom f1 f0 awceq f0 f1 awceq f0 f1 awceq panbi2i f0 f1 awceq panidm f0 f1 awceq f1 f0 awceq awa f0 f1 awceq f0 f1 awceq awa f0 f1 awceq pbitri f0 acsn f0 f1 acpr awceq f0 f1 acpr f0 acsn awceq f0 f1 awceq f1 f0 awceq awa f0 f1 awceq p3bitri f0 acsn f0 f1 acpr awceq f0 f1 awceq f0 f1 acpr f2 awceq panbi1i f0 pdfsn2 f0 f1 f0 ppreq2 f0 f1 awceq f0 acsn f0 f0 acpr f0 f1 acpr psyl5req f0 f1 awceq f0 f1 acpr f0 acsn f2 peqeq1d f0 acsn f2 peqcom f0 f1 awceq f0 f1 acpr f2 awceq f0 acsn f2 awceq f2 f0 acsn awceq psyl6bb f0 f1 awceq f0 f1 acpr f2 awceq f2 f0 acsn awceq ppm5.32i f0 acsn f0 f1 acpr awceq f0 f1 acpr f2 awceq awa f0 f1 awceq f0 f1 acpr f2 awceq awa f0 f1 awceq f2 f0 acsn awceq awa pbitri f0 f1 acop f2 acsn awceq f0 acsn f0 f1 acpr acpr f2 acsn awceq f0 acsn f0 f1 acpr awceq f0 f1 acpr f2 awceq awa f0 f1 awceq f2 f0 acsn awceq awa p3bitri $.
+$}
+$( Equivalence for an ordered pair equal to an unordered pair.
+       (Contributed by NM, 3-Jun-2008.) $)
+${
+	$v A B C D $.
+	e0 $e |- A e. _V $.
+	e1 $e |- B e. _V $.
+	e2 $e |- C e. _V $.
+	e3 $e |- D e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	popeqpr $p |- ( <. A , B >. = { C , D } <-> ( ( C = { A } /\ D = { A , B } ) \/ ( C = { A , B } /\ D = { A } ) ) ) $=
+	f0 f1 acop f2 f3 acpr peqcom e0 e1 f0 f1 pdfop f0 f1 acop f0 acsn f0 f1 acpr acpr f2 f3 acpr peqeq2i e2 e3 f0 psnex f0 f1 pprex f2 f3 f0 acsn f0 f1 acpr ppreq12b f0 f1 acop f2 f3 acpr awceq f2 f3 acpr f0 f1 acop awceq f2 f3 acpr f0 acsn f0 f1 acpr acpr awceq f2 f0 acsn awceq f3 f0 f1 acpr awceq awa f2 f0 f1 acpr awceq f3 f0 acsn awceq awa awo p3bitri $.
+$}
+$( "At most one" remains true inside ordered pair quantification.
+       (Contributed by NM, 28-Aug-2007.) $)
+${
+	$v ph x y z A $.
+	$d x y z A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	f4 $f class A $.
+	pmosubopt $p |- ( A. y A. z E* x ph -> E* x E. y E. z ( A = <. y , z >. /\ ph ) ) $=
+	f0 f1 awmo f3 awal f2 pnfa1 f4 f2 acv f3 acv acop awceq f0 awa f3 awex f2 pnfe1 f4 f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f2 f1 pnfmo f0 f1 awmo f3 pnfa1 f4 f2 acv f3 acv acop awceq f0 awa f3 pnfe1 f4 f2 acv f3 acv acop awceq f0 awa f3 awex f3 f2 pnfex f4 f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f3 f1 pnfmo f0 f2 f3 f4 pcopsexg f4 f2 acv f3 acv acop awceq f0 f4 f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 pmobidv f4 f2 acv f3 acv acop awceq f0 f1 awmo f4 f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awmo pbiimpcd f0 f1 awmo f4 f2 acv f3 acv acop awceq f4 f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awmo awi f3 psps f0 f1 awmo f3 awal f4 f2 acv f3 acv acop awceq f4 f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awmo f3 pexlimd f0 f1 awmo f3 awal f4 f2 acv f3 acv acop awceq f3 awex f4 f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awmo awi f2 psps f0 f1 awmo f3 awal f2 awal f4 f2 acv f3 acv acop awceq f3 awex f4 f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awmo f2 pexlimd f4 f2 acv f3 acv acop awceq f0 psimpl f4 f2 acv f3 acv acop awceq f0 awa f4 f2 acv f3 acv acop awceq f2 f3 p2eximi f4 f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f4 f2 acv f3 acv acop awceq f3 awex f2 awex f1 pexlimiv f4 f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awex f4 f2 acv f3 acv acop awceq f3 awex f2 awex pcon3i f4 f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 pexmo f4 f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awex f4 f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awmo pori f4 f2 acv f3 acv acop awceq f3 awex f2 awex awn f4 f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awex awn f4 f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awmo psyl f0 f1 awmo f3 awal f2 awal f4 f2 acv f3 acv acop awceq f3 awex f2 awex f4 f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awmo ppm2.61d1 $.
+$}
+$( "At most one" remains true inside ordered pair quantification.
+       (Contributed by NM, 28-May-1995.) $)
+${
+	$v ph x y z A $.
+	$d x y z A $.
+	e0 $e |- E* x ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	f4 $f class A $.
+	pmosubop $p |- E* x E. y E. z ( A = <. y , z >. /\ ph ) $=
+	e0 f0 f1 awmo f2 f3 pgen2 f0 f1 f2 f3 f4 pmosubopt f0 f1 awmo f3 awal f2 awal f4 f2 acv f3 acv acop awceq f0 awa f3 awex f2 awex f1 awmo aax-mp $.
+$}
+$( Transfer existential uniqueness to second member of an ordered pair.
+       (Contributed by NM, 10-Apr-2004.) $)
+${
+	$v ph x y A $.
+	$d x ph $.
+	$d x A $.
+	$d x y $.
+	e0 $e |- A e. _V $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	peuop2 $p |- ( E! x E. y ( x = <. A , y >. /\ ph ) <-> E! y ph ) $=
+	f3 f2 acv popex e0 f2 f1 acv f3 pmoop2 f0 f1 f2 f3 f2 acv acop peuxfr2 $.
+$}
+$( Prove existential uniqueness for an ordered triple.  (Contributed by
+       Mario Carneiro, 20-May-2015.) $)
+${
+	$v ph ps x y A B C a b c $.
+	$d a b c x y A $.
+	$d a b c x y B $.
+	$d a b c x y C $.
+	$d a b c x ph $.
+	$d y ps $.
+	e0 $e |- ( ph -> A e. _V ) $.
+	e1 $e |- ( ph -> B e. _V ) $.
+	e2 $e |- ( ph -> C e. _V ) $.
+	e3 $e |- ( ph -> ( ps <-> ( a = A /\ b = B /\ c = C ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class B $.
+	f5 $f class C $.
+	f6 $f set a $.
+	f7 $f set b $.
+	f8 $f set c $.
+	i0 $f set y $.
+	peuotd $p |- ( ph -> E! x E. a E. b E. c ( x = <. a , b , c >. /\ ps ) ) $=
+	e3 f0 f1 f6 acv f3 awceq f7 acv f4 awceq f8 acv f5 awceq aw3a pbiimpa f6 pvex f7 pvex f8 pvex f6 acv f7 acv f3 f4 f8 acv f5 potth f0 f1 awa f6 acv f3 awceq f7 acv f4 awceq f8 acv f5 awceq aw3a f6 acv f7 acv f8 acv acotp f3 f4 f5 acotp awceq psylibr f0 f1 awa f6 acv f7 acv f8 acv acotp f3 f4 f5 acotp f2 acv peqeq2d f0 f1 awa f2 acv f6 acv f7 acv f8 acv acotp awceq f2 acv f3 f4 f5 acotp awceq pbiimpd f0 f1 f2 acv f6 acv f7 acv f8 acv acotp awceq f2 acv f3 f4 f5 acotp awceq pimpancom f0 f2 acv f6 acv f7 acv f8 acv acotp awceq f1 f2 acv f3 f4 f5 acotp awceq pexpimpd f0 f2 acv f6 acv f7 acv f8 acv acotp awceq f1 awa f2 acv f3 f4 f5 acotp awceq f8 pexlimdv f0 f2 acv f6 acv f7 acv f8 acv acotp awceq f1 awa f8 awex f2 acv f3 f4 f5 acotp awceq f6 f7 pexlimdvv e2 e1 e0 ptru e0 e1 f0 f4 acvv awcel f6 acv f3 awceq padantr e2 f0 f5 acvv awcel f6 acv f3 awceq f7 acv f4 awceq pad2antrr f0 f6 acv f3 awceq f7 acv f4 awceq f8 acv f5 awceq aw3a psimpr f6 pvex f7 pvex f8 pvex f6 acv f7 acv f3 f4 f8 acv f5 potth f0 f6 acv f3 awceq f7 acv f4 awceq f8 acv f5 awceq aw3a awa f6 acv f3 awceq f7 acv f4 awceq f8 acv f5 awceq aw3a f6 acv f7 acv f8 acv acotp f3 f4 f5 acotp awceq psylibr f0 f6 acv f3 awceq f7 acv f4 awceq f8 acv f5 awceq aw3a awa f6 acv f7 acv f8 acv acotp f3 f4 f5 acotp peqcomd e3 f0 f1 f6 acv f3 awceq f7 acv f4 awceq f8 acv f5 awceq aw3a pbiimpar f0 f6 acv f3 awceq f7 acv f4 awceq f8 acv f5 awceq aw3a awa f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 pjca f0 f6 acv f3 awceq f7 acv f4 awceq f8 acv f5 awceq aw3a awa pa1tru f0 f6 acv f3 awceq f7 acv f4 awceq f8 acv f5 awceq aw3a awa f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa awtru p2thd f0 f6 acv f3 awceq f7 acv f4 awceq f8 acv f5 awceq f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa awtru awb p3exp2 f0 f6 acv f3 awceq f7 acv f4 awceq f8 acv f5 awceq f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa awtru awb pimp41 f0 f6 acv f3 awceq awa f7 acv f4 awceq awa f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa awtru f8 f5 acvv psbcied f0 f6 acv f3 awceq awa f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc awtru f7 f4 acvv psbcied f0 f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f7 f4 awsbc awtru f6 f3 acvv psbcied f0 f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f7 f4 awsbc f6 f3 awsbc awtru pmpbiri f6 f3 pnfcv f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f7 f4 awsbc f6 f3 pnfsbc1v f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f7 f4 awsbc f6 f3 psbceq1a f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f7 f4 awsbc f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f7 f4 awsbc f6 f3 awsbc f6 f3 acvv pspcegf f0 f3 acvv awcel f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f7 f4 awsbc f6 f3 awsbc f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f7 f4 awsbc f6 awex psylc f7 f4 pnfcv f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f7 f4 pnfsbc1v f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f7 f4 awsbc f7 f6 pnfex f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f7 f4 psbceq1a f7 acv f4 awceq f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f7 f4 awsbc f6 pexbidv f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f6 awex f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f7 f4 awsbc f6 awex f7 f4 acvv pspcegf f0 f4 acvv awcel f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f7 f4 awsbc f6 awex f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f6 awex f7 awex psylc f8 f5 pnfcv f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 pnfsbc1v f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f8 f6 pnfex f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f6 awex f8 f7 pnfex f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 psbceq1a f8 acv f5 awceq f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f7 f6 p2exbidv f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f6 awex f7 awex f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f6 awex f7 awex f8 f5 acvv pspcegf f0 f5 acvv awcel f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f5 awsbc f6 awex f7 awex f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f6 awex f7 awex f8 awex psylc f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 f7 f6 pexcom13 f0 f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f6 awex f7 awex f8 awex f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 awex f7 awex f6 awex psylib f2 acv f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp peqeq1 f2 acv f3 f4 f5 acotp awceq f2 acv f6 acv f7 acv f8 acv acotp awceq f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 panbi1d f2 acv f3 f4 f5 acotp awceq f2 acv f6 acv f7 acv f8 acv acotp awceq f1 awa f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f6 f7 f8 p3exbidv f0 f2 acv f6 acv f7 acv f8 acv acotp awceq f1 awa f8 awex f7 awex f6 awex f2 acv f3 f4 f5 acotp awceq f3 f4 f5 acotp f6 acv f7 acv f8 acv acotp awceq f1 awa f8 awex f7 awex f6 awex psyl5ibrcom f0 f2 acv f6 acv f7 acv f8 acv acotp awceq f1 awa f8 awex f7 awex f6 awex f2 acv f3 f4 f5 acotp awceq pimpbid f0 f2 acv f6 acv f7 acv f8 acv acotp awceq f1 awa f8 awex f7 awex f6 awex f2 acv f3 f4 f5 acotp awceq awb f2 palrimiv f3 f4 f5 potex i0 acv f3 f4 f5 acotp f2 acv peqeq2 i0 acv f3 f4 f5 acotp awceq f2 acv i0 acv awceq f2 acv f3 f4 f5 acotp awceq f2 acv f6 acv f7 acv f8 acv acotp awceq f1 awa f8 awex f7 awex f6 awex pbibi2d i0 acv f3 f4 f5 acotp awceq f2 acv f6 acv f7 acv f8 acv acotp awceq f1 awa f8 awex f7 awex f6 awex f2 acv i0 acv awceq awb f2 acv f6 acv f7 acv f8 acv acotp awceq f1 awa f8 awex f7 awex f6 awex f2 acv f3 f4 f5 acotp awceq awb f2 palbidv f2 acv f6 acv f7 acv f8 acv acotp awceq f1 awa f8 awex f7 awex f6 awex f2 acv i0 acv awceq awb f2 awal f2 acv f6 acv f7 acv f8 acv acotp awceq f1 awa f8 awex f7 awex f6 awex f2 acv f3 f4 f5 acotp awceq awb f2 awal i0 f3 f4 f5 acotp pspcev f0 f2 acv f6 acv f7 acv f8 acv acotp awceq f1 awa f8 awex f7 awex f6 awex f2 acv f3 f4 f5 acotp awceq awb f2 awal f2 acv f6 acv f7 acv f8 acv acotp awceq f1 awa f8 awex f7 awex f6 awex f2 acv i0 acv awceq awb f2 awal i0 awex psyl f2 acv f6 acv f7 acv f8 acv acotp awceq f1 awa f8 awex f7 awex f6 awex f2 i0 adf-eu f0 f2 acv f6 acv f7 acv f8 acv acotp awceq f1 awa f8 awex f7 awex f6 awex f2 acv i0 acv awceq awb f2 awal i0 awex f2 acv f6 acv f7 acv f8 acv acotp awceq f1 awa f8 awex f7 awex f6 awex f2 aweu psylibr $.
+$}
+$( Justification theorem for the ordered pair definition in Norbert Wiener,
+       "A simplification of the logic of relations," _Proc. of the Cambridge
+       Philos.  Soc_., 1914, vol. 17, pp.387-390.  It is also shown as a
+       definition in [Enderton] p. 36 and as Exercise 4.8(b) of [Mendelson]
+       p. 230.  It is meaningful only for classes that exist as sets (i.e. are
+       not proper classes).  See ~ df-op for other ordered pair definitions.
+       (Contributed by NM, 28-Sep-2003.) $)
+${
+	$v A B C D $.
+	e0 $e |- A e. _V $.
+	e1 $e |- B e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	popthwiener $p |- ( { { { A } , (/) } , { { B } } } = { { { C } , (/) } , { { D } } } <-> ( A = C /\ B = D ) ) $=
+	f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f3 acsn acsn acpr awceq pid f1 acsn psnex f0 acsn ac0 acpr f1 acsn acsn pprid2 f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f3 acsn acsn acpr f1 acsn acsn peleq2 f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f3 acsn acsn acpr awceq f1 acsn acsn f0 acsn ac0 acpr f1 acsn acsn acpr awcel f1 acsn acsn f2 acsn ac0 acpr f3 acsn acsn acpr awcel pmpbii f1 acsn psnex f1 acsn acsn f2 acsn ac0 acpr f3 acsn acsn pelpr f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f3 acsn acsn acpr awceq f1 acsn acsn f2 acsn ac0 acpr f3 acsn acsn acpr awcel f1 acsn acsn f2 acsn ac0 acpr awceq f1 acsn acsn f3 acsn acsn awceq awo psylib p0ex f2 acsn ac0 pprid2 e1 f1 psnnz p0ex ac0 f1 acsn pelsnc ac0 f1 acsn peqcom ac0 f1 acsn acsn awcel ac0 f1 acsn awceq f1 acsn ac0 awceq pbitri ac0 f1 acsn acsn awcel f1 acsn ac0 pnemtbir ac0 f2 acsn ac0 acpr f1 acsn acsn pnelneq2 ac0 f2 acsn ac0 acpr awcel ac0 f1 acsn acsn awcel awn f2 acsn ac0 acpr f1 acsn acsn awceq awn pmp2an f2 acsn ac0 acpr f1 acsn acsn peqcom f2 acsn ac0 acpr f1 acsn acsn awceq f1 acsn acsn f2 acsn ac0 acpr awceq pmtbi f1 acsn acsn f2 acsn ac0 acpr awceq f1 acsn acsn f3 acsn acsn awceq pbiorf f1 acsn acsn f2 acsn ac0 acpr awceq awn f1 acsn acsn f3 acsn acsn awceq f1 acsn acsn f2 acsn ac0 acpr awceq f1 acsn acsn f3 acsn acsn awceq awo awb aax-mp f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f3 acsn acsn acpr awceq f1 acsn acsn f2 acsn ac0 acpr awceq f1 acsn acsn f3 acsn acsn awceq awo f1 acsn acsn f3 acsn acsn awceq psylibr f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f3 acsn acsn acpr awceq f1 acsn acsn f3 acsn acsn f2 acsn ac0 acpr ppreq2d f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f3 acsn acsn acpr awceq f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f3 acsn acsn acpr f2 acsn ac0 acpr f1 acsn acsn acpr peqtr4d f0 acsn ac0 pprex f2 acsn ac0 pprex f0 acsn ac0 acpr f2 acsn ac0 acpr f1 acsn acsn ppreqr1 f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f3 acsn acsn acpr awceq f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f1 acsn acsn acpr awceq f0 acsn ac0 acpr f2 acsn ac0 acpr awceq psyl f0 psnex f2 psnex f0 acsn f2 acsn ac0 ppreqr1 f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f3 acsn acsn acpr awceq f0 acsn ac0 acpr f2 acsn ac0 acpr awceq f0 acsn f2 acsn awceq psyl e0 f0 f2 psneqr f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f3 acsn acsn acpr awceq f0 acsn f2 acsn awceq f0 f2 awceq psyl f1 acsn psnex f0 acsn ac0 acpr f1 acsn acsn pprid2 f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f3 acsn acsn acpr f1 acsn acsn peleq2 f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f3 acsn acsn acpr awceq f1 acsn acsn f0 acsn ac0 acpr f1 acsn acsn acpr awcel f1 acsn acsn f2 acsn ac0 acpr f3 acsn acsn acpr awcel pmpbii f1 acsn psnex f1 acsn acsn f2 acsn ac0 acpr f3 acsn acsn pelpr f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f3 acsn acsn acpr awceq f1 acsn acsn f2 acsn ac0 acpr f3 acsn acsn acpr awcel f1 acsn acsn f2 acsn ac0 acpr awceq f1 acsn acsn f3 acsn acsn awceq awo psylib p0ex f2 acsn ac0 pprid2 e1 f1 psnnz p0ex ac0 f1 acsn pelsnc ac0 f1 acsn peqcom ac0 f1 acsn acsn awcel ac0 f1 acsn awceq f1 acsn ac0 awceq pbitri ac0 f1 acsn acsn awcel f1 acsn ac0 pnemtbir ac0 f2 acsn ac0 acpr f1 acsn acsn pnelneq2 ac0 f2 acsn ac0 acpr awcel ac0 f1 acsn acsn awcel awn f2 acsn ac0 acpr f1 acsn acsn awceq awn pmp2an f2 acsn ac0 acpr f1 acsn acsn peqcom f2 acsn ac0 acpr f1 acsn acsn awceq f1 acsn acsn f2 acsn ac0 acpr awceq pmtbi f1 acsn acsn f2 acsn ac0 acpr awceq f1 acsn acsn f3 acsn acsn awceq pbiorf f1 acsn acsn f2 acsn ac0 acpr awceq awn f1 acsn acsn f3 acsn acsn awceq f1 acsn acsn f2 acsn ac0 acpr awceq f1 acsn acsn f3 acsn acsn awceq awo awb aax-mp f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f3 acsn acsn acpr awceq f1 acsn acsn f2 acsn ac0 acpr awceq f1 acsn acsn f3 acsn acsn awceq awo f1 acsn acsn f3 acsn acsn awceq psylibr f1 psnex f1 acsn f3 acsn psneqr f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f3 acsn acsn acpr awceq f1 acsn acsn f3 acsn acsn awceq f1 acsn f3 acsn awceq psyl e1 f1 f3 psneqr f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f3 acsn acsn acpr awceq f1 acsn f3 acsn awceq f1 f3 awceq psyl f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f3 acsn acsn acpr awceq f0 f2 awceq f1 f3 awceq pjca f0 f2 psneq f0 f2 awceq f0 acsn f2 acsn ac0 ppreq1d f0 f2 awceq f0 acsn ac0 acpr f2 acsn ac0 acpr f1 acsn acsn ppreq1d f1 f3 psneq f1 acsn f3 acsn psneq f1 f3 awceq f1 acsn f3 acsn awceq f1 acsn acsn f3 acsn acsn awceq psyl f1 f3 awceq f1 acsn acsn f3 acsn acsn f2 acsn ac0 acpr ppreq2d f0 f2 awceq f1 f3 awceq f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f3 acsn acsn acpr psylan9eq f0 acsn ac0 acpr f1 acsn acsn acpr f2 acsn ac0 acpr f3 acsn acsn acpr awceq f0 f2 awceq f1 f3 awceq awa pimpbii $.
+$}
+$( The union of an ordered pair.  Theorem 65 of [Suppes] p. 39.
+       (Contributed by NM, 17-Aug-2004.)  (Revised by Mario Carneiro,
+       26-Apr-2015.) $)
+${
+	$v A B $.
+	e0 $e |- A e. _V $.
+	e1 $e |- B e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	puniop $p |- U. <. A , B >. = { A , B } $=
+	e0 e1 f0 f1 pdfop f0 f1 acop f0 acsn f0 f1 acpr acpr punieqi f0 psnex f0 f1 pprex f0 acsn f0 f1 acpr punipr f0 f1 psnsspr1 f0 acsn f0 f1 acpr pssequn1 f0 acsn f0 f1 acpr awss f0 acsn f0 f1 acpr acun f0 f1 acpr awceq pmpbi f0 f1 acop acuni f0 acsn f0 f1 acpr acpr acuni f0 acsn f0 f1 acpr acun f0 f1 acpr p3eqtri $.
+$}
+$( Ordered pair membership is inherited by class union.  (Contributed by
+       NM, 13-May-2008.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
+${
+	$v A B C $.
+	e0 $e |- A e. _V $.
+	e1 $e |- B e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	puniopel $p |- ( <. A , B >. e. C -> U. <. A , B >. e. U. C ) $=
+	e0 e1 f0 f1 puniop e0 e1 f0 f1 popi2 f0 f1 acop acuni f0 f1 acpr f0 f1 acop peqeltri f0 f1 acop f2 pelssuni f0 f1 acop f2 awcel f0 f1 acop f2 acuni f0 f1 acop acuni psseld f0 f1 acop f2 awcel f0 f1 acop acuni f0 f1 acop awcel f0 f1 acop acuni f2 acuni awcel pmpi $.
+$}
+

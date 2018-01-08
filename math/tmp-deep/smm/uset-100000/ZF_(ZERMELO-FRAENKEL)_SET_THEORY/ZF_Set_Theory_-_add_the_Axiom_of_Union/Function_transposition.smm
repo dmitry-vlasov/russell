@@ -1,0 +1,464 @@
+$[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/First_and_second_members_of_an_ordered_pair.smm $]
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Function transposition
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+$c tpos $.
+$( Function transposition $)
+$( The transposition of a function. $)
+${
+	$v F $.
+	f0 $f class F $.
+	actpos $a class tpos F $.
+$}
+$( Define the transposition of a function, which is a function
+       ` G = tpos F ` satisfying ` G ( x , y ) = F ( y , x ) ` .  (Contributed
+       by Mario Carneiro, 10-Sep-2015.) $)
+${
+	$v x F $.
+	$d F x $.
+	f0 $f set x $.
+	f1 $f class F $.
+	adf-tpos $a |- tpos F = ( F o. ( x e. ( `' dom F u. { (/) } ) |-> U. `' { x } ) ) $.
+$}
+$( Subset theorem for transposition.  (Contributed by Mario Carneiro,
+       10-Sep-2015.) $)
+${
+	$v x F G $.
+	$d x F $.
+	$d x G $.
+	f0 $f class F $.
+	f1 $f class G $.
+	i0 $f set x $.
+	ptposss $p |- ( F C_ G -> tpos F C_ tpos G ) $=
+	f0 f1 i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt pcoss1 i0 f1 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt f0 acdm accnv ac0 acsn acun presss f0 f1 pdmss f0 acdm f1 acdm pcnvss f0 f1 awss f0 acdm f1 acdm awss f0 acdm accnv f1 acdm accnv awss psyl f0 acdm accnv f1 acdm accnv ac0 acsn punss1 i0 f1 acdm accnv ac0 acsn acun f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni presmpt f0 f1 awss f0 acdm accnv f1 acdm accnv awss f0 acdm accnv ac0 acsn acun f1 acdm accnv ac0 acsn acun awss i0 f1 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt f0 acdm accnv ac0 acsn acun acres i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt awceq p3syl f0 f1 awss i0 f1 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt f0 acdm accnv ac0 acsn acun acres i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt i0 f1 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt psseq1d f0 f1 awss i0 f1 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt f0 acdm accnv ac0 acsn acun acres i0 f1 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt awss i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt i0 f1 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt awss pmpbii i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt i0 f1 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt f1 pcoss2 f0 f1 awss i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt i0 f1 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt awss f1 i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt accom f1 i0 f1 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt accom awss psyl f0 f1 awss f0 i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt accom f1 i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt accom f1 i0 f1 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt accom psstrd i0 f0 adf-tpos i0 f1 adf-tpos f0 f1 awss f0 i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt accom f1 i0 f1 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt accom f0 actpos f1 actpos p3sstr4g $.
+$}
+$( Equality theorem for transposition.  (Contributed by Mario Carneiro,
+       10-Sep-2015.) $)
+${
+	$v F G $.
+	f0 $f class F $.
+	f1 $f class G $.
+	ptposeq $p |- ( F = G -> tpos F = tpos G ) $=
+	f0 f1 peqimss f0 f1 ptposss f0 f1 awceq f0 f1 awss f0 actpos f1 actpos awss psyl f1 f0 peqimss2 f1 f0 ptposss f0 f1 awceq f1 f0 awss f1 actpos f0 actpos awss psyl f0 f1 awceq f0 actpos f1 actpos peqssd $.
+$}
+$( Equality theorem for transposition.  (Contributed by Mario Carneiro,
+         7-Jan-2017.) $)
+${
+	$v ph F G $.
+	e0 $e |- ( ph -> F = G ) $.
+	f0 $f wff ph $.
+	f1 $f class F $.
+	f2 $f class G $.
+	ptposeqd $p |- ( ph -> tpos F = tpos G ) $=
+	e0 f1 f2 ptposeq f0 f1 f2 awceq f1 actpos f2 actpos awceq psyl $.
+$}
+$( The transposition is a subset of a cross product.  (Contributed by Mario
+       Carneiro, 12-Jan-2017.) $)
+${
+	$v x F $.
+	$d x F $.
+	f0 $f class F $.
+	i0 $f set x $.
+	ptposssxp $p |- tpos F C_ ( ( `' dom F u. { (/) } ) X. ran F ) $=
+	i0 f0 adf-tpos f0 i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt pcossxp f0 actpos f0 i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt accom i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt acdm f0 acrn acxp peqsstri i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt peqid i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt pdmmptss i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt acdm f0 acdm accnv ac0 acsn acun f0 acrn pxpss1 i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt acdm f0 acdm accnv ac0 acsn acun awss i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt acdm f0 acrn acxp f0 acdm accnv ac0 acsn acun f0 acrn acxp awss aax-mp f0 actpos i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt acdm f0 acrn acxp f0 acdm accnv ac0 acsn acun f0 acrn acxp psstri $.
+$}
+$( The transposition is a relation.  (Contributed by Mario Carneiro,
+       10-Sep-2015.) $)
+${
+	$v F $.
+	f0 $f class F $.
+	preltpos $p |- Rel tpos F $=
+	f0 ptposssxp f0 acdm accnv ac0 acsn acun f0 acrn prelxp f0 actpos f0 acdm accnv ac0 acsn acun f0 acrn acxp prelss f0 actpos f0 acdm accnv ac0 acsn acun f0 acrn acxp awss f0 acdm accnv ac0 acsn acun f0 acrn acxp awrel f0 actpos awrel pmp2 $.
+$}
+$( Value of the transposition at a pair ` <. A , B >. ` .  (Contributed by
+       Mario Carneiro, 10-Sep-2015.) $)
+${
+	$v x y A B F V $.
+	$d x y A $.
+	$d x y B $.
+	$d x y F $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class F $.
+	f3 $f class V $.
+	i0 $f set x $.
+	i1 $f set y $.
+	pbrtpos2 $p |- ( B e. V -> ( A tpos F B <-> ( A e. ( `' dom F u. { (/) } ) /\ U. `' { A } F B ) ) ) $=
+	f2 preltpos f0 f1 f2 actpos pbrrelexi f0 f1 f2 actpos awbr f0 acvv awcel awi f1 f3 awcel pa1i f0 f2 acdm accnv ac0 acsn acun pelex f0 f2 acdm accnv ac0 acsn acun awcel f0 acvv awcel f0 acsn accnv acuni f1 f2 awbr padantr f0 f2 acdm accnv ac0 acsn acun awcel f0 acsn accnv acuni f1 f2 awbr awa f0 acvv awcel awi f1 f3 awcel pa1i i0 f2 adf-tpos f0 f1 f2 actpos f2 i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt accom pbreqi i1 f0 f1 f2 i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt acvv f3 pbrcog f0 f1 f2 actpos awbr f0 f1 f2 i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt accom awbr f0 acvv awcel f1 f3 awcel awa f0 i1 acv i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt awbr i1 acv f1 f2 awbr awa i1 awex psyl5bb i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni pfunmpt f0 i1 acv i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt pfunbrfv2b i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt awfun f0 i1 acv i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt awbr f0 i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt acdm awcel f0 i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt acfv i1 acv awceq awa awb aax-mp i0 acv psnex i0 acv acsn pcnvex i0 acv acsn accnv puniex i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt peqid i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt pdmmpti i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt acdm f2 acdm accnv ac0 acsn acun f0 peleq2i f0 i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt acfv i1 acv peqcom f0 i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt acdm awcel f0 f2 acdm accnv ac0 acsn acun awcel f0 i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt acfv i1 acv awceq i1 acv f0 i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt acfv awceq panbi12i i0 acv f0 psneq i0 acv f0 awceq i0 acv acsn f0 acsn pcnveqd i0 acv f0 awceq i0 acv acsn accnv f0 acsn accnv punieqd i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt peqid f0 psnex f0 acsn pcnvex f0 acsn accnv puniex i0 f0 i0 acv acsn accnv acuni f0 acsn accnv acuni f2 acdm accnv ac0 acsn acun i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt pfvmpt f0 f2 acdm accnv ac0 acsn acun awcel f0 i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt acfv f0 acsn accnv acuni i1 acv peqeq2d f0 f2 acdm accnv ac0 acsn acun awcel i1 acv f0 i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt acfv awceq i1 acv f0 acsn accnv acuni awceq ppm5.32i f0 i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt acdm awcel f0 i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt acfv i1 acv awceq awa f0 f2 acdm accnv ac0 acsn acun awcel i1 acv f0 i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt acfv awceq awa f0 f2 acdm accnv ac0 acsn acun awcel i1 acv f0 acsn accnv acuni awceq awa pbitri f0 i1 acv i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt awbr f0 i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt acdm awcel f0 i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt acfv i1 acv awceq awa f0 f2 acdm accnv ac0 acsn acun awcel i1 acv f0 acsn accnv acuni awceq awa pbitri f0 f2 acdm accnv ac0 acsn acun awcel i1 acv f0 acsn accnv acuni awceq pancom f0 i1 acv i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt awbr f0 f2 acdm accnv ac0 acsn acun awcel i1 acv f0 acsn accnv acuni awceq awa i1 acv f0 acsn accnv acuni awceq f0 f2 acdm accnv ac0 acsn acun awcel awa pbitri f0 i1 acv i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt awbr i1 acv f0 acsn accnv acuni awceq f0 f2 acdm accnv ac0 acsn acun awcel awa i1 acv f1 f2 awbr panbi1i i1 acv f0 acsn accnv acuni awceq f0 f2 acdm accnv ac0 acsn acun awcel i1 acv f1 f2 awbr panass f0 i1 acv i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt awbr i1 acv f1 f2 awbr awa i1 acv f0 acsn accnv acuni awceq f0 f2 acdm accnv ac0 acsn acun awcel awa i1 acv f1 f2 awbr awa i1 acv f0 acsn accnv acuni awceq f0 f2 acdm accnv ac0 acsn acun awcel i1 acv f1 f2 awbr awa awa pbitri f0 i1 acv i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt awbr i1 acv f1 f2 awbr awa i1 acv f0 acsn accnv acuni awceq f0 f2 acdm accnv ac0 acsn acun awcel i1 acv f1 f2 awbr awa awa i1 pexbii f0 psnex f0 acsn pcnvex f0 acsn accnv puniex i1 acv f0 acsn accnv acuni f1 f2 pbreq1 i1 acv f0 acsn accnv acuni awceq i1 acv f1 f2 awbr f0 acsn accnv acuni f1 f2 awbr f0 f2 acdm accnv ac0 acsn acun awcel panbi2d f0 f2 acdm accnv ac0 acsn acun awcel i1 acv f1 f2 awbr awa f0 f2 acdm accnv ac0 acsn acun awcel f0 acsn accnv acuni f1 f2 awbr awa i1 f0 acsn accnv acuni pceqsexv f0 i1 acv i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt awbr i1 acv f1 f2 awbr awa i1 awex i1 acv f0 acsn accnv acuni awceq f0 f2 acdm accnv ac0 acsn acun awcel i1 acv f1 f2 awbr awa awa i1 awex f0 f2 acdm accnv ac0 acsn acun awcel f0 acsn accnv acuni f1 f2 awbr awa pbitri f0 acvv awcel f1 f3 awcel awa f0 f1 f2 actpos awbr f0 i1 acv i0 f2 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt awbr i1 acv f1 f2 awbr awa i1 awex f0 f2 acdm accnv ac0 acsn acun awcel f0 acsn accnv acuni f1 f2 awbr awa psyl6bb f0 acvv awcel f1 f3 awcel f0 f1 f2 actpos awbr f0 f2 acdm accnv ac0 acsn acun awcel f0 acsn accnv acuni f1 f2 awbr awa awb pexpcom f1 f3 awcel f0 acvv awcel f0 f1 f2 actpos awbr f0 f2 acdm accnv ac0 acsn acun awcel f0 acsn accnv acuni f1 f2 awbr awa ppm5.21ndd $.
+$}
+$( The behavior of ` tpos ` when the left argument is the empty set (which
+       is not an ordered pair but is the "default" value of an ordered pair
+       when the arguments are proper classes).  This allows us to eliminate
+       sethood hypotheses on ` A , B ` in ~ brtpos .  (Contributed by Mario
+       Carneiro, 10-Sep-2015.) $)
+${
+	$v A F V $.
+	f0 $f class A $.
+	f1 $f class F $.
+	f2 $f class V $.
+	pbrtpos0 $p |- ( A e. V -> ( (/) tpos F A <-> (/) F A ) ) $=
+	ac0 f0 f1 f2 pbrtpos2 ac0 acsn f1 acdm accnv pssun2 p0ex ac0 psnid ac0 acsn f1 acdm accnv ac0 acsn acun ac0 psselii ac0 f1 acdm accnv ac0 acsn acun awcel ac0 acsn accnv acuni f0 f1 awbr pbiantrur pcnvsn0 ac0 acsn accnv ac0 punieqi puni0 ac0 acsn accnv acuni ac0 acuni ac0 peqtri ac0 acsn accnv acuni ac0 f0 f1 pbreq1i ac0 f1 acdm accnv ac0 acsn acun awcel ac0 acsn accnv acuni f0 f1 awbr awa ac0 acsn accnv acuni f0 f1 awbr ac0 f0 f1 awbr pbitr3i f0 f2 awcel ac0 f0 f1 actpos awbr ac0 f1 acdm accnv ac0 acsn acun awcel ac0 acsn accnv acuni f0 f1 awbr awa ac0 f0 f1 awbr psyl6bb $.
+$}
+$( Necessary and sufficient condition for ` dom tpos F ` to be a relation.
+       (Contributed by Mario Carneiro, 10-Sep-2015.) $)
+${
+	$v x y F $.
+	$d x y $.
+	$d x y $.
+	$d x y F $.
+	f0 $f class F $.
+	i0 $f set x $.
+	i1 $f set y $.
+	preldmtpos $p |- ( Rel dom tpos F <-> -. (/) e. dom F ) $=
+	p0ex i1 ac0 f0 peldm i1 pvex i1 acv f0 acvv pbrtpos0 i1 acv acvv awcel ac0 i1 acv f0 actpos awbr ac0 i1 acv f0 awbr awb aax-mp acvv acvv p0nelxp f0 actpos acdm adf-rel f0 actpos acdm acvv acvv acxp ac0 pssel f0 actpos acdm awrel f0 actpos acdm acvv acvv acxp awss ac0 f0 actpos acdm awcel ac0 acvv acvv acxp awcel awi psylbi f0 actpos acdm awrel ac0 f0 actpos acdm awcel ac0 acvv acvv acxp awcel pmtoi p0ex i1 pvex ac0 i1 acv f0 actpos pbreldm f0 actpos acdm awrel ac0 f0 actpos acdm awcel ac0 i1 acv f0 actpos awbr pnsyl3 ac0 i1 acv f0 awbr ac0 i1 acv f0 actpos awbr f0 actpos acdm awrel awn psylbir ac0 i1 acv f0 awbr f0 actpos acdm awrel awn i1 pexlimiv ac0 f0 acdm awcel ac0 i1 acv f0 awbr i1 awex f0 actpos acdm awrel awn psylbi ac0 f0 acdm awcel f0 actpos acdm awrel pcon2i i0 pvex i1 i0 acv f0 actpos peldm f0 acdm prelcnv f0 acdm accnv adf-rel f0 acdm accnv awrel f0 acdm accnv acvv acvv acxp awss pmpbi f0 acdm accnv acvv acvv acxp i0 acv psseli i0 acv f0 acdm accnv awcel i0 acv acvv acvv acxp awcel awi ac0 f0 acdm awcel awn i0 acv i1 acv f0 actpos awbr awa pa1i i0 acv ac0 pelsni i0 acv ac0 acsn awcel i0 acv ac0 i1 acv f0 actpos pbreq1d i1 pvex i1 acv f0 acvv pbrtpos0 i1 acv acvv awcel ac0 i1 acv f0 actpos awbr ac0 i1 acv f0 awbr awb aax-mp p0ex i1 pvex ac0 i1 acv f0 pbreldm ac0 i1 acv f0 awbr ac0 f0 acdm awcel i0 acv acvv acvv acxp awcel ppm2.24d ac0 i1 acv f0 actpos awbr ac0 i1 acv f0 awbr ac0 f0 acdm awcel awn i0 acv acvv acvv acxp awcel awi psylbi i0 acv ac0 acsn awcel i0 acv i1 acv f0 actpos awbr ac0 i1 acv f0 actpos awbr ac0 f0 acdm awcel awn i0 acv acvv acvv acxp awcel awi psyl6bi i0 acv ac0 acsn awcel i0 acv i1 acv f0 actpos awbr ac0 f0 acdm awcel awn i0 acv acvv acvv acxp awcel pcom3l i0 acv i1 acv f0 actpos awbr ac0 f0 acdm awcel awn i0 acv ac0 acsn awcel i0 acv acvv acvv acxp awcel awi pimpcom i1 pvex i0 acv i1 acv f0 acvv pbrtpos2 i1 acv acvv awcel i0 acv i1 acv f0 actpos awbr i0 acv f0 acdm accnv ac0 acsn acun awcel i0 acv acsn accnv acuni i1 acv f0 awbr awa awb aax-mp i0 acv i1 acv f0 actpos awbr i0 acv f0 acdm accnv ac0 acsn acun awcel i0 acv acsn accnv acuni i1 acv f0 awbr psimplbi i0 acv f0 acdm accnv ac0 acsn pelun i0 acv i1 acv f0 actpos awbr i0 acv f0 acdm accnv ac0 acsn acun awcel i0 acv f0 acdm accnv awcel i0 acv ac0 acsn awcel awo psylib i0 acv i1 acv f0 actpos awbr i0 acv f0 acdm accnv awcel i0 acv ac0 acsn awcel awo ac0 f0 acdm awcel awn padantl ac0 f0 acdm awcel awn i0 acv i1 acv f0 actpos awbr awa i0 acv f0 acdm accnv awcel i0 acv acvv acvv acxp awcel i0 acv ac0 acsn awcel pmpjaod ac0 f0 acdm awcel awn i0 acv i1 acv f0 actpos awbr i0 acv acvv acvv acxp awcel pex ac0 f0 acdm awcel awn i0 acv i1 acv f0 actpos awbr i0 acv acvv acvv acxp awcel i1 pexlimdv i0 acv f0 actpos acdm awcel i0 acv i1 acv f0 actpos awbr i1 awex ac0 f0 acdm awcel awn i0 acv acvv acvv acxp awcel psyl5bi ac0 f0 acdm awcel awn i0 f0 actpos acdm acvv acvv acxp pssrdv f0 actpos acdm adf-rel ac0 f0 acdm awcel awn f0 actpos acdm acvv acvv acxp awss f0 actpos acdm awrel psylibr f0 actpos acdm awrel ac0 f0 acdm awcel awn pimpbii $.
+$}
+$( The transposition swaps arguments of a three-parameter relation.
+       (Contributed by Mario Carneiro, 10-Sep-2015.) $)
+${
+	$v A B C F V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class F $.
+	f4 $f class V $.
+	pbrtpos $p |- ( C e. V -> ( <. A , B >. tpos F C <-> <. B , A >. F C ) ) $=
+	f0 f1 acop f2 f3 f4 pbrtpos2 f2 f4 awcel f0 f1 acop f2 f3 actpos awbr f0 f1 acop f3 acdm accnv ac0 acsn acun awcel f0 f1 acop acsn accnv acuni f2 f3 awbr awa awb f0 acvv awcel f1 acvv awcel awa padantr f1 f0 popex f1 f0 acop f2 acvv f4 f3 pbreldmg f1 f0 acop acvv awcel f2 f4 awcel f1 f0 acop f2 f3 awbr f1 f0 acop f3 acdm awcel p3expia f1 f0 acop acvv awcel f2 f4 awcel f1 f0 acop f2 f3 awbr f1 f0 acop f3 acdm awcel awi pmpan f2 f4 awcel f1 f0 acop f2 f3 awbr f1 f0 acop f3 acdm awcel awi f0 acvv awcel f1 acvv awcel awa padantr f0 f1 acvv acvv f3 acdm popelcnvg f0 acvv awcel f1 acvv awcel awa f0 f1 acop f3 acdm accnv awcel f1 f0 acop f3 acdm awcel awb f2 f4 awcel padantl f2 f4 awcel f0 acvv awcel f1 acvv awcel awa awa f1 f0 acop f2 f3 awbr f1 f0 acop f3 acdm awcel f0 f1 acop f3 acdm accnv awcel psylibrd f0 f1 acop f3 acdm accnv ac0 acsn pelun1 f2 f4 awcel f0 acvv awcel f1 acvv awcel awa awa f1 f0 acop f2 f3 awbr f0 f1 acop f3 acdm accnv awcel f0 f1 acop f3 acdm accnv ac0 acsn acun awcel psyl6 f2 f4 awcel f0 acvv awcel f1 acvv awcel awa awa f1 f0 acop f2 f3 awbr f0 f1 acop f3 acdm accnv ac0 acsn acun awcel ppm4.71rd f0 f1 popswap f0 f1 acop acsn accnv acuni f1 f0 acop f2 f3 pbreq1i f0 f1 acop acsn accnv acuni f2 f3 awbr f1 f0 acop f2 f3 awbr f0 f1 acop f3 acdm accnv ac0 acsn acun awcel panbi2i f2 f4 awcel f0 acvv awcel f1 acvv awcel awa awa f1 f0 acop f2 f3 awbr f0 f1 acop f3 acdm accnv ac0 acsn acun awcel f1 f0 acop f2 f3 awbr awa f0 f1 acop f3 acdm accnv ac0 acsn acun awcel f0 f1 acop acsn accnv acuni f2 f3 awbr awa psyl6bbr f2 f4 awcel f0 acvv awcel f1 acvv awcel awa awa f0 f1 acop f2 f3 actpos awbr f0 f1 acop f3 acdm accnv ac0 acsn acun awcel f0 f1 acop acsn accnv acuni f2 f3 awbr awa f1 f0 acop f2 f3 awbr pbitr4d f2 f4 awcel f0 acvv awcel f1 acvv awcel awa f0 f1 acop f2 f3 actpos awbr f1 f0 acop f2 f3 awbr awb pex f2 f3 f4 pbrtpos0 f0 f1 popprc f0 acvv awcel f1 acvv awcel awa awn f0 f1 acop ac0 f2 f3 actpos pbreq1d f0 acvv awcel f1 acvv awcel pancom f1 f0 popprc f1 acvv awcel f0 acvv awcel awa awn f1 f0 acop ac0 f2 f3 pbreq1d f0 acvv awcel f1 acvv awcel awa f1 acvv awcel f0 acvv awcel awa f1 f0 acop f2 f3 awbr ac0 f2 f3 awbr awb psylnbi f0 acvv awcel f1 acvv awcel awa awn f0 f1 acop f2 f3 actpos awbr ac0 f2 f3 actpos awbr f1 f0 acop f2 f3 awbr ac0 f2 f3 awbr pbibi12d f2 f4 awcel f0 f1 acop f2 f3 actpos awbr f1 f0 acop f2 f3 awbr awb f0 acvv awcel f1 acvv awcel awa awn ac0 f2 f3 actpos awbr ac0 f2 f3 awbr awb psyl5ibrcom f2 f4 awcel f0 acvv awcel f1 acvv awcel awa f0 f1 acop f2 f3 actpos awbr f1 f0 acop f2 f3 awbr awb ppm2.61d $.
+$}
+$( The transposition swaps the first two elements in a collection of
+       ordered triples.  (Contributed by Mario Carneiro, 1-Dec-2014.) $)
+${
+	$v A B C F V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class F $.
+	f4 $f class V $.
+	pottpos $p |- ( C e. V -> ( <. A , B , C >. e. tpos F <-> <. B , A , C >. e. F ) ) $=
+	f0 f1 f2 f3 f4 pbrtpos f0 f1 acop f2 f3 actpos adf-br f1 f0 acop f2 f3 adf-br f2 f4 awcel f0 f1 acop f2 f3 actpos awbr f1 f0 acop f2 f3 awbr f0 f1 acop f2 acop f3 actpos awcel f1 f0 acop f2 acop f3 awcel p3bitr3g f0 f1 f2 adf-ot f0 f1 f2 acotp f0 f1 acop f2 acop f3 actpos peleq1i f1 f0 f2 adf-ot f1 f0 f2 acotp f1 f0 acop f2 acop f3 peleq1i f2 f4 awcel f0 f1 acop f2 acop f3 actpos awcel f1 f0 acop f2 acop f3 awcel f0 f1 f2 acotp f3 actpos awcel f1 f0 f2 acotp f3 awcel p3bitr4g $.
+$}
+$( The transposition swaps arguments of a three-parameter relation.
+       (Contributed by Mario Carneiro, 3-Nov-2015.) $)
+${
+	$v A B C F $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class F $.
+	prelbrtpos $p |- ( Rel F -> ( <. A , B >. tpos F C <-> <. B , A >. F C ) ) $=
+	f3 preltpos f3 actpos awrel f3 awrel pa1i f0 f1 acop f2 f3 actpos pbrrelex2 f3 awrel f3 actpos awrel f0 f1 acop f2 f3 actpos awbr f2 acvv awcel psylan f1 f0 acop f2 f3 pbrrelex2 f0 f1 f2 f3 acvv pbrtpos f3 awrel f0 f1 acop f2 f3 actpos awbr f1 f0 acop f2 f3 awbr f2 acvv awcel ppm5.21nd $.
+$}
+$( The domain of ` tpos F ` when ` dom F ` is a relation.  (Contributed by
+       Mario Carneiro, 10-Sep-2015.) $)
+${
+	$v x y z F $.
+	$d x y $.
+	$d x y $.
+	$d x y z F $.
+	f0 $f class F $.
+	i0 $f set x $.
+	i1 $f set y $.
+	i2 $f set z $.
+	pdmtpos $p |- ( Rel dom F -> dom tpos F = `' dom F ) $=
+	acvv acvv p0nelxp f0 acdm acvv acvv acxp ac0 pssel f0 acdm acvv acvv acxp awss ac0 f0 acdm awcel ac0 acvv acvv acxp awcel pmtoi f0 acdm adf-rel f0 preldmtpos f0 acdm acvv acvv acxp awss ac0 f0 acdm awcel awn f0 acdm awrel f0 actpos acdm awrel p3imtr4i f0 acdm prelcnv f0 acdm awrel f0 actpos acdm awrel f0 acdm accnv awrel pjctir i2 pvex i0 acv i1 acv i2 acv f0 acvv pbrtpos i2 acv acvv awcel i0 acv i1 acv acop i2 acv f0 actpos awbr i1 acv i0 acv acop i2 acv f0 awbr awb f0 acdm awrel pmp1i f0 acdm awrel i0 acv i1 acv acop i2 acv f0 actpos awbr i1 acv i0 acv acop i2 acv f0 awbr i2 pexbidv i0 acv i1 acv popex i2 i0 acv i1 acv acop f0 actpos peldm i0 pvex i1 pvex i0 acv i1 acv f0 acdm popelcnv i1 acv i0 acv popex i2 i1 acv i0 acv acop f0 peldm i0 acv i1 acv acop f0 acdm accnv awcel i1 acv i0 acv acop f0 acdm awcel i1 acv i0 acv acop i2 acv f0 awbr i2 awex pbitri f0 acdm awrel i0 acv i1 acv acop i2 acv f0 actpos awbr i2 awex i1 acv i0 acv acop i2 acv f0 awbr i2 awex i0 acv i1 acv acop f0 actpos acdm awcel i0 acv i1 acv acop f0 acdm accnv awcel p3bitr4g f0 acdm awrel i0 i1 f0 actpos acdm f0 acdm accnv peqrelrdv2 f0 actpos acdm awrel f0 acdm accnv awrel awa f0 acdm awrel f0 actpos acdm f0 acdm accnv awceq pmpancom $.
+$}
+$( The range of ` tpos F ` when ` dom F ` is a relation.  (Contributed by
+       Mario Carneiro, 10-Sep-2015.) $)
+${
+	$v x y z w F $.
+	$d x y $.
+	$d x y $.
+	$d w x y z F $.
+	f0 $f class F $.
+	i0 $f set x $.
+	i1 $f set y $.
+	i2 $f set z $.
+	i3 $f set w $.
+	prntpos $p |- ( Rel dom F -> ran tpos F = ran F ) $=
+	i2 pvex i3 i2 acv f0 actpos pelrn i3 pvex i2 pvex i3 acv i2 acv f0 actpos pbreldm f0 pdmtpos f0 acdm awrel f0 actpos acdm f0 acdm accnv i3 acv peleq2d i3 acv i2 acv f0 actpos awbr i3 acv f0 actpos acdm awcel f0 acdm awrel i3 acv f0 acdm accnv awcel psyl5ib f0 acdm prelcnv i0 i1 i3 acv f0 acdm accnv pelrel f0 acdm accnv awrel i3 acv f0 acdm accnv awcel i3 acv i0 acv i1 acv acop awceq i1 awex i0 awex pmpan f0 acdm awrel i3 acv i2 acv f0 actpos awbr i3 acv f0 acdm accnv awcel i3 acv i0 acv i1 acv acop awceq i1 awex i0 awex psyl6 i3 acv i0 acv i1 acv acop i2 acv f0 actpos pbreq1 i2 pvex i0 acv i1 acv i2 acv f0 acvv pbrtpos i2 acv acvv awcel i0 acv i1 acv acop i2 acv f0 actpos awbr i1 acv i0 acv acop i2 acv f0 awbr awb aax-mp i3 acv i0 acv i1 acv acop awceq i3 acv i2 acv f0 actpos awbr i0 acv i1 acv acop i2 acv f0 actpos awbr i1 acv i0 acv acop i2 acv f0 awbr psyl6bb i1 acv i0 acv popex i2 pvex i1 acv i0 acv acop i2 acv f0 pbrelrn i3 acv i0 acv i1 acv acop awceq i3 acv i2 acv f0 actpos awbr i1 acv i0 acv acop i2 acv f0 awbr i2 acv f0 acrn awcel psyl6bi i3 acv i0 acv i1 acv acop awceq i3 acv i2 acv f0 actpos awbr i2 acv f0 acrn awcel awi i0 i1 pexlimivv i3 acv i2 acv f0 actpos awbr f0 acdm awrel i3 acv i0 acv i1 acv acop awceq i1 awex i0 awex i2 acv f0 acrn awcel psyli f0 acdm awrel i3 acv i2 acv f0 actpos awbr i2 acv f0 acrn awcel i3 pexlimdv i2 acv f0 actpos acrn awcel i3 acv i2 acv f0 actpos awbr i3 awex f0 acdm awrel i2 acv f0 acrn awcel psyl5bi i2 pvex i3 i2 acv f0 pelrn i3 pvex i2 pvex i3 acv i2 acv f0 pbreldm i1 i0 i3 acv f0 acdm pelrel f0 acdm awrel i3 acv f0 acdm awcel i3 acv i1 acv i0 acv acop awceq i0 awex i1 awex pex i3 acv i2 acv f0 awbr i3 acv f0 acdm awcel f0 acdm awrel i3 acv i1 acv i0 acv acop awceq i0 awex i1 awex psyl5 i3 acv i1 acv i0 acv acop i2 acv f0 pbreq1 i2 pvex i0 acv i1 acv i2 acv f0 acvv pbrtpos i2 acv acvv awcel i0 acv i1 acv acop i2 acv f0 actpos awbr i1 acv i0 acv acop i2 acv f0 awbr awb aax-mp i3 acv i1 acv i0 acv acop awceq i3 acv i2 acv f0 awbr i1 acv i0 acv acop i2 acv f0 awbr i0 acv i1 acv acop i2 acv f0 actpos awbr psyl6bbr i0 acv i1 acv popex i2 pvex i0 acv i1 acv acop i2 acv f0 actpos pbrelrn i3 acv i1 acv i0 acv acop awceq i3 acv i2 acv f0 awbr i0 acv i1 acv acop i2 acv f0 actpos awbr i2 acv f0 actpos acrn awcel psyl6bi i3 acv i1 acv i0 acv acop awceq i3 acv i2 acv f0 awbr i2 acv f0 actpos acrn awcel awi i1 i0 pexlimivv i3 acv i2 acv f0 awbr f0 acdm awrel i3 acv i1 acv i0 acv acop awceq i0 awex i1 awex i2 acv f0 actpos acrn awcel psyli f0 acdm awrel i3 acv i2 acv f0 awbr i2 acv f0 actpos acrn awcel i3 pexlimdv i2 acv f0 acrn awcel i3 acv i2 acv f0 awbr i3 awex f0 acdm awrel i2 acv f0 actpos acrn awcel psyl5bi f0 acdm awrel i2 acv f0 actpos acrn awcel i2 acv f0 acrn awcel pimpbid f0 acdm awrel i2 f0 actpos acrn f0 acrn peqrdv $.
+$}
+$( The transposition of a set is a set.  (Contributed by Mario Carneiro,
+       10-Sep-2015.) $)
+${
+	$v F V $.
+	f0 $f class F $.
+	f1 $f class V $.
+	ptposexg $p |- ( F e. V -> tpos F e. _V ) $=
+	f0 ptposssxp f0 f1 pdmexg f0 acdm acvv pcnvexg f0 f1 awcel f0 acdm acvv awcel f0 acdm accnv acvv awcel psyl ac0 psnex f0 acdm accnv ac0 acsn acvv acvv punexg f0 f1 awcel f0 acdm accnv acvv awcel ac0 acsn acvv awcel f0 acdm accnv ac0 acsn acun acvv awcel psylancl f0 f1 prnexg f0 acdm accnv ac0 acsn acun f0 acrn acvv acvv pxpexg f0 f1 awcel f0 acdm accnv ac0 acsn acun acvv awcel f0 acrn acvv awcel f0 acdm accnv ac0 acsn acun f0 acrn acxp acvv awcel psyl2anc f0 actpos f0 acdm accnv ac0 acsn acun f0 acrn acxp acvv pssexg f0 f1 awcel f0 actpos f0 acdm accnv ac0 acsn acun f0 acrn acxp awss f0 acdm accnv ac0 acsn acun f0 acrn acxp acvv awcel f0 actpos acvv awcel psylancr $.
+$}
+$( The transposition swaps the arguments in a two-argument function.  When
+       ` F ` is a matrix, which is to say a function from
+       ` ( 1 ... m ) X. ( 1 ... n ) ` to ` RR ` or some ring, ` tpos F ` is the
+       transposition of ` F ` , which is where the name comes from.
+       (Contributed by Mario Carneiro, 10-Sep-2015.) $)
+${
+	$v y A B F $.
+	$d y A $.
+	$d y B $.
+	$d y F $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class F $.
+	i0 $f set y $.
+	povtpos $p |- ( A tpos F B ) = ( B F A ) $=
+	i0 pvex f0 f1 i0 acv f2 acvv pbrtpos i0 acv acvv awcel f0 f1 acop i0 acv f2 actpos awbr f1 f0 acop i0 acv f2 awbr awb aax-mp f0 f1 acop i0 acv f2 actpos awbr f1 f0 acop i0 acv f2 awbr i0 piotabii i0 f0 f1 acop f2 actpos adf-fv i0 f1 f0 acop f2 adf-fv f0 f1 acop i0 acv f2 actpos awbr i0 acio f1 f0 acop i0 acv f2 awbr i0 acio f0 f1 acop f2 actpos acfv f1 f0 acop f2 acfv p3eqtr4i f0 f1 f2 actpos adf-ov f1 f0 f2 adf-ov f0 f1 acop f2 actpos acfv f1 f0 acop f2 acfv f0 f1 f2 actpos aco f1 f0 f2 aco p3eqtr4i $.
+$}
+$( The transposition of a function is a function.  (Contributed by Mario
+       Carneiro, 10-Sep-2015.) $)
+${
+	$v x F $.
+	$d x F $.
+	f0 $f class F $.
+	i0 $f set x $.
+	ptposfun $p |- ( Fun F -> Fun tpos F ) $=
+	i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni pfunmpt f0 i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt pfunco f0 awfun i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt awfun f0 i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt accom awfun pmpan2 i0 f0 adf-tpos f0 actpos f0 i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt accom pfuneqi f0 awfun f0 i0 f0 acdm accnv ac0 acsn acun i0 acv acsn accnv acuni acmpt accom awfun f0 actpos awfun psylibr $.
+$}
+$( Alternate definition of ` tpos ` when ` F ` has relational domain.
+       (Contributed by Mario Carneiro, 10-Sep-2015.) $)
+${
+	$v x F $.
+	$d x F $.
+	f0 $f set x $.
+	f1 $f class F $.
+	pdftpos2 $p |- ( Rel dom F -> tpos F = ( F o. ( x e. `' dom F |-> U. `' { x } ) ) ) $=
+	f1 pdmtpos f1 acdm awrel f1 actpos acdm f1 acdm accnv f1 actpos preseq2d f1 preltpos f1 actpos presdm f1 actpos awrel f1 actpos f1 actpos acdm acres f1 actpos awceq aax-mp f0 f1 adf-tpos f1 actpos f1 f0 f1 acdm accnv ac0 acsn acun f0 acv acsn accnv acuni acmpt accom f1 acdm accnv preseq1i f1 f0 f1 acdm accnv ac0 acsn acun f0 acv acsn accnv acuni acmpt f1 acdm accnv presco f1 acdm accnv ac0 acsn pssun1 f0 f1 acdm accnv ac0 acsn acun f1 acdm accnv f0 acv acsn accnv acuni presmpt f1 acdm accnv f1 acdm accnv ac0 acsn acun awss f0 f1 acdm accnv ac0 acsn acun f0 acv acsn accnv acuni acmpt f1 acdm accnv acres f0 f1 acdm accnv f0 acv acsn accnv acuni acmpt awceq aax-mp f0 f1 acdm accnv ac0 acsn acun f0 acv acsn accnv acuni acmpt f1 acdm accnv acres f0 f1 acdm accnv f0 acv acsn accnv acuni acmpt f1 pcoeq2i f1 actpos f1 acdm accnv acres f1 f0 f1 acdm accnv ac0 acsn acun f0 acv acsn accnv acuni acmpt accom f1 acdm accnv acres f1 f0 f1 acdm accnv ac0 acsn acun f0 acv acsn accnv acuni acmpt f1 acdm accnv acres accom f1 f0 f1 acdm accnv f0 acv acsn accnv acuni acmpt accom p3eqtri f1 acdm awrel f1 actpos f1 actpos acdm acres f1 actpos f1 acdm accnv acres f1 actpos f1 f0 f1 acdm accnv f0 acv acsn accnv acuni acmpt accom p3eqtr3g $.
+$}
+$( Alternate definition of ` tpos ` when ` F ` has relational domain.
+       Compare ~ df-cnv .  (Contributed by Mario Carneiro, 10-Sep-2015.) $)
+${
+	$v x y z w F $.
+	$d x y $.
+	$d x y $.
+	$d w x y z F $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	f3 $f class F $.
+	i0 $f set w $.
+	pdftpos3 $p |- ( Rel dom F -> tpos F = { <. <. x , y >. , z >. | <. y , x >. F z } ) $=
+	f3 acdm prelcnv f3 pdmtpos f3 acdm awrel f3 actpos acdm f3 acdm accnv preleqd f3 acdm awrel f3 actpos acdm awrel f3 acdm accnv awrel pmpbiri f3 preltpos f3 acdm awrel f3 actpos acdm awrel f3 actpos awrel pjctil f3 actpos prelrelss f3 acdm awrel f3 actpos awrel f3 actpos acdm awrel awa f3 actpos acvv acvv acxp acvv acxp awss psylib f3 acdm awrel f3 actpos acvv acvv acxp acvv acxp i0 acv psseld f0 f1 f2 i0 acv pelvvv f3 acdm awrel i0 acv f3 actpos awcel i0 acv acvv acvv acxp acvv acxp awcel i0 acv f0 acv f1 acv acop f2 acv acop awceq f2 awex f1 awex f0 awex psyl6ib f3 acdm awrel i0 acv f3 actpos awcel i0 acv f0 acv f1 acv acop f2 acv acop awceq f2 awex f1 awex f0 awex ppm4.71rd i0 acv f0 acv f1 acv acop f2 acv acop awceq i0 acv f3 actpos awcel f0 f1 f2 p19.41vvv i0 acv f0 acv f1 acv acop f2 acv acop f3 actpos peleq1 f0 acv f1 acv acop f2 acv f3 actpos adf-br f2 pvex f0 acv f1 acv f2 acv f3 acvv pbrtpos f2 acv acvv awcel f0 acv f1 acv acop f2 acv f3 actpos awbr f1 acv f0 acv acop f2 acv f3 awbr awb aax-mp f0 acv f1 acv acop f2 acv acop f3 actpos awcel f0 acv f1 acv acop f2 acv f3 actpos awbr f1 acv f0 acv acop f2 acv f3 awbr pbitr3i i0 acv f0 acv f1 acv acop f2 acv acop awceq i0 acv f3 actpos awcel f0 acv f1 acv acop f2 acv acop f3 actpos awcel f1 acv f0 acv acop f2 acv f3 awbr psyl6bb i0 acv f0 acv f1 acv acop f2 acv acop awceq i0 acv f3 actpos awcel f1 acv f0 acv acop f2 acv f3 awbr ppm5.32i i0 acv f0 acv f1 acv acop f2 acv acop awceq i0 acv f3 actpos awcel awa i0 acv f0 acv f1 acv acop f2 acv acop awceq f1 acv f0 acv acop f2 acv f3 awbr awa f0 f1 f2 p3exbii i0 acv f0 acv f1 acv acop f2 acv acop awceq f2 awex f1 awex f0 awex i0 acv f3 actpos awcel awa i0 acv f0 acv f1 acv acop f2 acv acop awceq i0 acv f3 actpos awcel awa f2 awex f1 awex f0 awex i0 acv f0 acv f1 acv acop f2 acv acop awceq f1 acv f0 acv acop f2 acv f3 awbr awa f2 awex f1 awex f0 awex pbitr3i f3 acdm awrel i0 acv f3 actpos awcel i0 acv f0 acv f1 acv acop f2 acv acop awceq f2 awex f1 awex f0 awex i0 acv f3 actpos awcel awa i0 acv f0 acv f1 acv acop f2 acv acop awceq f1 acv f0 acv acop f2 acv f3 awbr awa f2 awex f1 awex f0 awex psyl6bb f3 acdm awrel i0 acv f0 acv f1 acv acop f2 acv acop awceq f1 acv f0 acv acop f2 acv f3 awbr awa f2 awex f1 awex f0 awex i0 f3 actpos pabbi2dv f1 acv f0 acv acop f2 acv f3 awbr f0 f1 f2 i0 adf-oprab f3 acdm awrel f3 actpos i0 acv f0 acv f1 acv acop f2 acv acop awceq f1 acv f0 acv acop f2 acv f3 awbr awa f2 awex f1 awex f0 awex i0 acab f1 acv f0 acv acop f2 acv f3 awbr f0 f1 f2 acoprab psyl6eqr $.
+$}
+$( Alternate definition of ` tpos ` .  (Contributed by Mario Carneiro,
+       4-Oct-2015.) $)
+${
+	$v x y z w F $.
+	$d x y $.
+	$d x y $.
+	$d w x y z F $.
+	f0 $f set x $.
+	f1 $f class F $.
+	i0 $f set y $.
+	i1 $f set z $.
+	i2 $f set w $.
+	pdftpos4 $p |- tpos F = ( F o. ( x e. ( ( _V X. _V ) u. { (/) } ) |-> U. `' { x } ) ) $=
+	f0 f1 adf-tpos f1 acdm prelcnv f1 acdm accnv adf-rel f1 acdm accnv awrel f1 acdm accnv acvv acvv acxp awss pmpbi f1 acdm accnv acvv acvv acxp ac0 acsn punss1 f0 acvv acvv acxp ac0 acsn acun f1 acdm accnv ac0 acsn acun f0 acv acsn accnv acuni presmpt f1 acdm accnv acvv acvv acxp awss f1 acdm accnv ac0 acsn acun acvv acvv acxp ac0 acsn acun awss f0 acvv acvv acxp ac0 acsn acun f0 acv acsn accnv acuni acmpt f1 acdm accnv ac0 acsn acun acres f0 f1 acdm accnv ac0 acsn acun f0 acv acsn accnv acuni acmpt awceq pmp2b f0 acvv acvv acxp ac0 acsn acun f0 acv acsn accnv acuni acmpt f1 acdm accnv ac0 acsn acun presss f0 f1 acdm accnv ac0 acsn acun f0 acv acsn accnv acuni acmpt f0 acvv acvv acxp ac0 acsn acun f0 acv acsn accnv acuni acmpt f1 acdm accnv ac0 acsn acun acres f0 acvv acvv acxp ac0 acsn acun f0 acv acsn accnv acuni acmpt peqsstr3i f0 f1 acdm accnv ac0 acsn acun f0 acv acsn accnv acuni acmpt f0 acvv acvv acxp ac0 acsn acun f0 acv acsn accnv acuni acmpt f1 pcoss2 f0 f1 acdm accnv ac0 acsn acun f0 acv acsn accnv acuni acmpt f0 acvv acvv acxp ac0 acsn acun f0 acv acsn accnv acuni acmpt awss f1 f0 f1 acdm accnv ac0 acsn acun f0 acv acsn accnv acuni acmpt accom f1 f0 acvv acvv acxp ac0 acsn acun f0 acv acsn accnv acuni acmpt accom awss aax-mp f1 actpos f1 f0 f1 acdm accnv ac0 acsn acun f0 acv acsn accnv acuni acmpt accom f1 f0 acvv acvv acxp ac0 acsn acun f0 acv acsn accnv acuni acmpt accom peqsstri f1 f0 acvv acvv acxp ac0 acsn acun f0 acv acsn accnv acuni acmpt prelco i0 pvex i1 pvex i2 i0 acv i1 acv f1 f0 acvv acvv acxp ac0 acsn acun f0 acv acsn accnv acuni acmpt popelco i0 pvex i2 pvex f0 acv i0 acv acvv acvv acxp ac0 acsn acun peleq1 f0 acv i0 acv psneq f0 acv i0 acv awceq f0 acv acsn i0 acv acsn pcnveqd f0 acv i0 acv awceq f0 acv acsn accnv i0 acv acsn accnv punieqd f0 acv i0 acv awceq f0 acv acsn accnv acuni i0 acv acsn accnv acuni i1 acv peqeq2d f0 acv i0 acv awceq f0 acv acvv acvv acxp ac0 acsn acun awcel i0 acv acvv acvv acxp ac0 acsn acun awcel i1 acv f0 acv acsn accnv acuni awceq i1 acv i0 acv acsn accnv acuni awceq panbi12d i1 acv i2 acv i0 acv acsn accnv acuni peqeq1 i1 acv i2 acv awceq i1 acv i0 acv acsn accnv acuni awceq i2 acv i0 acv acsn accnv acuni awceq i0 acv acvv acvv acxp ac0 acsn acun awcel panbi2d f0 i1 acvv acvv acxp ac0 acsn acun f0 acv acsn accnv acuni adf-mpt f0 acv acvv acvv acxp ac0 acsn acun awcel i1 acv f0 acv acsn accnv acuni awceq awa i0 acv acvv acvv acxp ac0 acsn acun awcel i1 acv i0 acv acsn accnv acuni awceq awa i0 acv acvv acvv acxp ac0 acsn acun awcel i2 acv i0 acv acsn accnv acuni awceq awa f0 i1 i0 acv i2 acv f0 acvv acvv acxp ac0 acsn acun f0 acv acsn accnv acuni acmpt pbrab i0 acv acvv acvv acxp ac0 acsn acun awcel i2 acv i0 acv acsn accnv acuni awceq i2 acv i1 acv f1 awbr psimplr i2 pvex i1 pvex i2 acv i1 acv f1 pbreldm i2 acv i1 acv f1 awbr i2 acv f1 acdm awcel i0 acv acvv acvv acxp ac0 acsn acun awcel i2 acv i0 acv acsn accnv acuni awceq awa padantl i0 acv acvv acvv acxp ac0 acsn acun awcel i2 acv i0 acv acsn accnv acuni awceq awa i2 acv i1 acv f1 awbr awa i2 acv i0 acv acsn accnv acuni f1 acdm peqeltrrd i1 i2 i0 acv pelvv i1 acv i2 acv popswap i1 acv i2 acv acop acsn accnv acuni i2 acv i1 acv acop f1 acdm peleq1i i1 pvex i2 pvex i1 acv i2 acv f1 acdm popelcnv i1 acv i2 acv acop acsn accnv acuni f1 acdm awcel i2 acv i1 acv acop f1 acdm awcel i1 acv i2 acv acop f1 acdm accnv awcel pbitr4i i0 acv i1 acv i2 acv acop psneq i0 acv i1 acv i2 acv acop awceq i0 acv acsn i1 acv i2 acv acop acsn pcnveqd i0 acv i1 acv i2 acv acop awceq i0 acv acsn accnv i1 acv i2 acv acop acsn accnv punieqd i0 acv i1 acv i2 acv acop awceq i0 acv acsn accnv acuni i1 acv i2 acv acop acsn accnv acuni f1 acdm peleq1d i0 acv i1 acv i2 acv acop f1 acdm accnv peleq1 i0 acv i1 acv i2 acv acop awceq i0 acv acsn accnv acuni f1 acdm awcel i1 acv i2 acv acop acsn accnv acuni f1 acdm awcel i0 acv f1 acdm accnv awcel i1 acv i2 acv acop f1 acdm accnv awcel pbibi12d i0 acv i1 acv i2 acv acop awceq i0 acv acsn accnv acuni f1 acdm awcel i0 acv f1 acdm accnv awcel awb i1 acv i2 acv acop acsn accnv acuni f1 acdm awcel i1 acv i2 acv acop f1 acdm accnv awcel awb pmpbiri i0 acv i1 acv i2 acv acop awceq i0 acv acsn accnv acuni f1 acdm awcel i0 acv f1 acdm accnv awcel awb i1 i2 pexlimivv i0 acv acvv acvv acxp awcel i0 acv i1 acv i2 acv acop awceq i2 awex i1 awex i0 acv acsn accnv acuni f1 acdm awcel i0 acv f1 acdm accnv awcel awb psylbi i0 acv acvv acvv acxp awcel i0 acv acsn accnv acuni f1 acdm awcel i0 acv f1 acdm accnv awcel pbiimpcd i0 acv f1 acdm accnv ac0 acsn pelun1 i0 acv acsn accnv acuni f1 acdm awcel i0 acv acvv acvv acxp awcel i0 acv f1 acdm accnv awcel i0 acv f1 acdm accnv ac0 acsn acun awcel psyl6 i0 acv acvv acvv acxp ac0 acsn acun awcel i2 acv i0 acv acsn accnv acuni awceq awa i2 acv i1 acv f1 awbr awa i0 acv acsn accnv acuni f1 acdm awcel i0 acv acvv acvv acxp awcel i0 acv f1 acdm accnv ac0 acsn acun awcel awi psyl i0 acv ac0 acsn f1 acdm accnv pelun2 i0 acv ac0 acsn awcel i0 acv f1 acdm accnv ac0 acsn acun awcel awi i0 acv acvv acvv acxp ac0 acsn acun awcel i2 acv i0 acv acsn accnv acuni awceq awa i2 acv i1 acv f1 awbr awa pa1i i0 acv acvv acvv acxp ac0 acsn acun awcel i2 acv i0 acv acsn accnv acuni awceq i2 acv i1 acv f1 awbr psimpll i0 acv acvv acvv acxp ac0 acsn pelun i0 acv acvv acvv acxp ac0 acsn acun awcel i2 acv i0 acv acsn accnv acuni awceq awa i2 acv i1 acv f1 awbr awa i0 acv acvv acvv acxp ac0 acsn acun awcel i0 acv acvv acvv acxp awcel i0 acv ac0 acsn awcel awo psylib i0 acv acvv acvv acxp ac0 acsn acun awcel i2 acv i0 acv acsn accnv acuni awceq awa i2 acv i1 acv f1 awbr awa i0 acv acvv acvv acxp awcel i0 acv f1 acdm accnv ac0 acsn acun awcel i0 acv ac0 acsn awcel pmpjaod i0 acv acvv acvv acxp ac0 acsn acun awcel i2 acv i0 acv acsn accnv acuni awceq i2 acv i1 acv f1 awbr psimplr i0 acv acvv acvv acxp ac0 acsn acun awcel i2 acv i0 acv acsn accnv acuni awceq awa i2 acv i1 acv f1 awbr psimpr i0 acv acvv acvv acxp ac0 acsn acun awcel i2 acv i0 acv acsn accnv acuni awceq awa i2 acv i1 acv f1 awbr awa i2 acv i0 acv acsn accnv acuni i1 acv f1 peqbrtrrd i0 acv acvv acvv acxp ac0 acsn acun awcel i2 acv i0 acv acsn accnv acuni awceq awa i2 acv i1 acv f1 awbr awa i0 acv f1 acdm accnv ac0 acsn acun awcel i0 acv acsn accnv acuni i1 acv f1 awbr pjca i0 acv i2 acv f0 acvv acvv acxp ac0 acsn acun f0 acv acsn accnv acuni acmpt awbr i0 acv acvv acvv acxp ac0 acsn acun awcel i2 acv i0 acv acsn accnv acuni awceq awa i2 acv i1 acv f1 awbr i0 acv f1 acdm accnv ac0 acsn acun awcel i0 acv acsn accnv acuni i1 acv f1 awbr awa psylanb i1 pvex i0 acv i1 acv f1 acvv pbrtpos2 i1 acv acvv awcel i0 acv i1 acv f1 actpos awbr i0 acv f1 acdm accnv ac0 acsn acun awcel i0 acv acsn accnv acuni i1 acv f1 awbr awa awb aax-mp i0 acv i2 acv f0 acvv acvv acxp ac0 acsn acun f0 acv acsn accnv acuni acmpt awbr i2 acv i1 acv f1 awbr awa i0 acv f1 acdm accnv ac0 acsn acun awcel i0 acv acsn accnv acuni i1 acv f1 awbr awa i0 acv i1 acv f1 actpos awbr psylibr i0 acv i1 acv f1 actpos adf-br i0 acv i2 acv f0 acvv acvv acxp ac0 acsn acun f0 acv acsn accnv acuni acmpt awbr i2 acv i1 acv f1 awbr awa i0 acv i1 acv f1 actpos awbr i0 acv i1 acv acop f1 actpos awcel psylib i0 acv i2 acv f0 acvv acvv acxp ac0 acsn acun f0 acv acsn accnv acuni acmpt awbr i2 acv i1 acv f1 awbr awa i0 acv i1 acv acop f1 actpos awcel i2 pexlimiv i0 acv i1 acv acop f1 f0 acvv acvv acxp ac0 acsn acun f0 acv acsn accnv acuni acmpt accom awcel i0 acv i2 acv f0 acvv acvv acxp ac0 acsn acun f0 acv acsn accnv acuni acmpt awbr i2 acv i1 acv f1 awbr awa i2 awex i0 acv i1 acv acop f1 actpos awcel psylbi i0 i1 f1 f0 acvv acvv acxp ac0 acsn acun f0 acv acsn accnv acuni acmpt accom f1 actpos prelssi f1 actpos f1 f0 acvv acvv acxp ac0 acsn acun f0 acv acsn accnv acuni acmpt accom peqssi $.
+$}
+$( Value of the double transposition for a general class ` F ` .
+       (Contributed by Mario Carneiro, 16-Sep-2015.) $)
+${
+	$v x y z w F $.
+	$d x y $.
+	$d x y $.
+	$d w x y z F $.
+	f0 $f class F $.
+	i0 $f set x $.
+	i1 $f set y $.
+	i2 $f set z $.
+	i3 $f set w $.
+	ptpostpos $p |- tpos tpos F = ( F i^i ( ( ( _V X. _V ) u. { (/) } ) X. _V ) ) $=
+	f0 actpos preltpos f0 acvv acvv acxp ac0 acsn acun acvv acxp pinss2 acvv acvv acxp ac0 acsn acun acvv prelxp f0 acvv acvv acxp ac0 acsn acun acvv acxp acin acvv acvv acxp ac0 acsn acun acvv acxp prelss f0 acvv acvv acxp ac0 acsn acun acvv acxp acin acvv acvv acxp ac0 acsn acun acvv acxp awss acvv acvv acxp ac0 acsn acun acvv acxp awrel f0 acvv acvv acxp ac0 acsn acun acvv acxp acin awrel pmp2 f0 actpos acdm prelcnv f0 actpos acdm accnv adf-rel f0 actpos acdm accnv awrel f0 actpos acdm accnv acvv acvv acxp awss pmpbi i3 acv f0 actpos acdm accnv awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr psimpl i3 acv f0 actpos acdm accnv awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr awa f0 actpos acdm accnv acvv acvv acxp i3 acv psseldi i3 acv i2 acv f0 awbr i3 acv acvv acvv acxp awcel psimpr i0 i1 i3 acv pelvv i3 acv i0 acv i1 acv acop f0 actpos acdm accnv peleq1 i0 pvex i1 pvex i0 acv i1 acv f0 actpos acdm popelcnv i3 acv i0 acv i1 acv acop awceq i3 acv f0 actpos acdm accnv awcel i0 acv i1 acv acop f0 actpos acdm accnv awcel i1 acv i0 acv acop f0 actpos acdm awcel psyl6bb i3 acv i0 acv i1 acv acop psneq i3 acv i0 acv i1 acv acop awceq i3 acv acsn i0 acv i1 acv acop acsn pcnveqd i3 acv i0 acv i1 acv acop awceq i3 acv acsn accnv i0 acv i1 acv acop acsn accnv punieqd i0 acv i1 acv popswap i3 acv i0 acv i1 acv acop awceq i3 acv acsn accnv acuni i0 acv i1 acv acop acsn accnv acuni i1 acv i0 acv acop psyl6eq i3 acv i0 acv i1 acv acop awceq i3 acv acsn accnv acuni i1 acv i0 acv acop i2 acv f0 actpos pbreq1d i3 acv i0 acv i1 acv acop awceq i3 acv f0 actpos acdm accnv awcel i1 acv i0 acv acop f0 actpos acdm awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr i1 acv i0 acv acop i2 acv f0 actpos awbr panbi12d i1 acv i0 acv popex i2 pvex i1 acv i0 acv acop i2 acv f0 actpos pbreldm i1 acv i0 acv acop i2 acv f0 actpos awbr i1 acv i0 acv acop f0 actpos acdm awcel ppm4.71ri i2 pvex i1 acv i0 acv i2 acv f0 acvv pbrtpos i2 acv acvv awcel i1 acv i0 acv acop i2 acv f0 actpos awbr i0 acv i1 acv acop i2 acv f0 awbr awb aax-mp i1 acv i0 acv acop f0 actpos acdm awcel i1 acv i0 acv acop i2 acv f0 actpos awbr awa i1 acv i0 acv acop i2 acv f0 actpos awbr i0 acv i1 acv acop i2 acv f0 awbr pbitr3i i3 acv i0 acv i1 acv acop awceq i3 acv f0 actpos acdm accnv awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr awa i1 acv i0 acv acop f0 actpos acdm awcel i1 acv i0 acv acop i2 acv f0 actpos awbr awa i0 acv i1 acv acop i2 acv f0 awbr psyl6bb i3 acv i0 acv i1 acv acop i2 acv f0 pbreq1 i3 acv i0 acv i1 acv acop awceq i3 acv f0 actpos acdm accnv awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr awa i0 acv i1 acv acop i2 acv f0 awbr i3 acv i2 acv f0 awbr pbitr4d i3 acv i0 acv i1 acv acop awceq i3 acv f0 actpos acdm accnv awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr awa i3 acv i2 acv f0 awbr awb i0 i1 pexlimivv i3 acv acvv acvv acxp awcel i3 acv i0 acv i1 acv acop awceq i1 awex i0 awex i3 acv f0 actpos acdm accnv awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr awa i3 acv i2 acv f0 awbr awb psylbi i3 acv acvv acvv acxp awcel i3 acv i2 acv f0 awbr piba i3 acv acvv acvv acxp awcel i3 acv f0 actpos acdm accnv awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr awa i3 acv i2 acv f0 awbr i3 acv i2 acv f0 awbr i3 acv acvv acvv acxp awcel awa pbitrd i3 acv f0 actpos acdm accnv awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr awa i3 acv acvv acvv acxp awcel i3 acv i2 acv f0 awbr i3 acv acvv acvv acxp awcel awa ppm5.21nii i3 acv ac0 pelsni i3 acv ac0 acsn awcel i3 acv ac0 psneqd i3 acv ac0 acsn awcel i3 acv acsn ac0 acsn pcnveqd pcnvsn0 i3 acv ac0 acsn awcel i3 acv acsn accnv ac0 acsn accnv ac0 psyl6eq i3 acv ac0 acsn awcel i3 acv acsn accnv ac0 punieqd puni0 i3 acv ac0 acsn awcel i3 acv acsn accnv acuni ac0 acuni ac0 psyl6eq i3 acv ac0 acsn awcel i3 acv acsn accnv acuni ac0 i2 acv f0 actpos pbreq1d i2 pvex i2 acv f0 acvv pbrtpos0 i2 acv acvv awcel ac0 i2 acv f0 actpos awbr ac0 i2 acv f0 awbr awb aax-mp i3 acv ac0 acsn awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr ac0 i2 acv f0 actpos awbr ac0 i2 acv f0 awbr psyl6bb i3 acv ac0 pelsni i3 acv ac0 acsn awcel i3 acv ac0 i2 acv f0 pbreq1d i3 acv ac0 acsn awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr ac0 i2 acv f0 awbr i3 acv i2 acv f0 awbr pbitr4d i3 acv ac0 acsn awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr i3 acv i2 acv f0 awbr ppm5.32i i3 acv ac0 acsn awcel i3 acv i2 acv f0 awbr pancom i3 acv ac0 acsn awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr awa i3 acv ac0 acsn awcel i3 acv i2 acv f0 awbr awa i3 acv i2 acv f0 awbr i3 acv ac0 acsn awcel awa pbitri i3 acv f0 actpos acdm accnv awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr awa i3 acv i2 acv f0 awbr i3 acv acvv acvv acxp awcel awa i3 acv ac0 acsn awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr awa i3 acv i2 acv f0 awbr i3 acv ac0 acsn awcel awa porbi12i i3 acv f0 actpos acdm accnv awcel i3 acv ac0 acsn awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr pandir i3 acv i2 acv f0 awbr i3 acv acvv acvv acxp awcel i3 acv ac0 acsn awcel pandi i3 acv f0 actpos acdm accnv awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr awa i3 acv ac0 acsn awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr awa awo i3 acv i2 acv f0 awbr i3 acv acvv acvv acxp awcel awa i3 acv i2 acv f0 awbr i3 acv ac0 acsn awcel awa awo i3 acv f0 actpos acdm accnv awcel i3 acv ac0 acsn awcel awo i3 acv acsn accnv acuni i2 acv f0 actpos awbr awa i3 acv i2 acv f0 awbr i3 acv acvv acvv acxp awcel i3 acv ac0 acsn awcel awo awa p3bitr4i i3 acv f0 actpos acdm accnv ac0 acsn pelun i3 acv f0 actpos acdm accnv ac0 acsn acun awcel i3 acv f0 actpos acdm accnv awcel i3 acv ac0 acsn awcel awo i3 acv acsn accnv acuni i2 acv f0 actpos awbr panbi1i i2 pvex i3 acv i2 acv acvv acvv acxp ac0 acsn acun acvv pbrxp i3 acv i2 acv acvv acvv acxp ac0 acsn acun acvv acxp awbr i3 acv acvv acvv acxp ac0 acsn acun awcel i2 acv acvv awcel pmpbiran2 i3 acv acvv acvv acxp ac0 acsn pelun i3 acv i2 acv acvv acvv acxp ac0 acsn acun acvv acxp awbr i3 acv acvv acvv acxp ac0 acsn acun awcel i3 acv acvv acvv acxp awcel i3 acv ac0 acsn awcel awo pbitri i3 acv i2 acv acvv acvv acxp ac0 acsn acun acvv acxp awbr i3 acv acvv acvv acxp awcel i3 acv ac0 acsn awcel awo i3 acv i2 acv f0 awbr panbi2i i3 acv f0 actpos acdm accnv awcel i3 acv ac0 acsn awcel awo i3 acv acsn accnv acuni i2 acv f0 actpos awbr awa i3 acv i2 acv f0 awbr i3 acv acvv acvv acxp awcel i3 acv ac0 acsn awcel awo awa i3 acv f0 actpos acdm accnv ac0 acsn acun awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr awa i3 acv i2 acv f0 awbr i3 acv i2 acv acvv acvv acxp ac0 acsn acun acvv acxp awbr awa p3bitr4i i2 pvex i3 acv i2 acv f0 actpos acvv pbrtpos2 i2 acv acvv awcel i3 acv i2 acv f0 actpos actpos awbr i3 acv f0 actpos acdm accnv ac0 acsn acun awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr awa awb aax-mp i3 acv i2 acv f0 acvv acvv acxp ac0 acsn acun acvv acxp pbrin i3 acv f0 actpos acdm accnv ac0 acsn acun awcel i3 acv acsn accnv acuni i2 acv f0 actpos awbr awa i3 acv i2 acv f0 awbr i3 acv i2 acv acvv acvv acxp ac0 acsn acun acvv acxp awbr awa i3 acv i2 acv f0 actpos actpos awbr i3 acv i2 acv f0 acvv acvv acxp ac0 acsn acun acvv acxp acin awbr p3bitr4i i3 i2 f0 actpos actpos f0 acvv acvv acxp ac0 acsn acun acvv acxp acin peqbrriv $.
+$}
+$( Value of the double transposition for a relation on triples.
+       (Contributed by Mario Carneiro, 16-Sep-2015.) $)
+${
+	$v F $.
+	f0 $f class F $.
+	ptpostpos2 $p |- ( ( Rel F /\ Rel dom F ) -> tpos tpos F = F ) $=
+	f0 ptpostpos f0 prelrelss acvv acvv acxp ac0 acsn pssun1 acvv acvv acxp acvv acvv acxp ac0 acsn acun acvv pxpss1 acvv acvv acxp acvv acvv acxp ac0 acsn acun awss acvv acvv acxp acvv acxp acvv acvv acxp ac0 acsn acun acvv acxp awss aax-mp f0 acvv acvv acxp acvv acxp acvv acvv acxp ac0 acsn acun acvv acxp psstr f0 acvv acvv acxp acvv acxp awss acvv acvv acxp acvv acxp acvv acvv acxp ac0 acsn acun acvv acxp awss f0 acvv acvv acxp ac0 acsn acun acvv acxp awss pmpan2 f0 awrel f0 acdm awrel awa f0 acvv acvv acxp acvv acxp awss f0 acvv acvv acxp ac0 acsn acun acvv acxp awss psylbi f0 acvv acvv acxp ac0 acsn acun acvv acxp adf-ss f0 awrel f0 acdm awrel awa f0 acvv acvv acxp ac0 acsn acun acvv acxp awss f0 acvv acvv acxp ac0 acsn acun acvv acxp acin f0 awceq psylib f0 awrel f0 acdm awrel awa f0 actpos actpos f0 acvv acvv acxp ac0 acsn acun acvv acxp acin f0 psyl5eq $.
+$}
+$( The domain of a transposition.  (Contributed by NM, 10-Sep-2015.) $)
+${
+	$v A F $.
+	f0 $f class A $.
+	f1 $f class F $.
+	ptposfn2 $p |- ( Rel A -> ( F Fn A -> tpos F Fn `' A ) ) $=
+	f1 ptposfun f1 awfun f1 actpos awfun awi f0 awrel pa1i f1 pdmtpos f1 acdm awrel f1 actpos acdm f1 acdm accnv awceq awi f1 acdm f0 awceq pa1i f1 acdm f0 preleq f1 acdm f0 pcnveq f1 acdm f0 awceq f1 acdm accnv f0 accnv f1 actpos acdm peqeq2d f1 acdm f0 awceq f1 acdm awrel f1 actpos acdm f1 acdm accnv awceq f0 awrel f1 actpos acdm f0 accnv awceq p3imtr3d f1 acdm f0 awceq f0 awrel f1 actpos acdm f0 accnv awceq pcom12 f0 awrel f1 awfun f1 actpos awfun f1 acdm f0 awceq f1 actpos acdm f0 accnv awceq panim12d f1 f0 adf-fn f1 actpos f0 accnv adf-fn f0 awrel f1 awfun f1 acdm f0 awceq awa f1 actpos awfun f1 actpos acdm f0 accnv awceq awa f1 f0 awfn f1 actpos f0 accnv awfn p3imtr4g $.
+$}
+$( Condition for a surjective transposition.  (Contributed by NM,
+       10-Sep-2015.) $)
+${
+	$v A B F $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class F $.
+	ptposfo2 $p |- ( Rel A -> ( F : A -onto-> B -> tpos F : `' A -onto-> B ) ) $=
+	f0 f2 ptposfn2 f0 awrel f2 f0 awfn f2 actpos f0 accnv awfn f2 acrn f1 awceq padantrd f0 f2 pfndm f2 f0 awfn f2 acdm f0 preleqd f2 f0 awfn f2 acdm awrel f0 awrel pbiimparc f2 prntpos f0 awrel f2 f0 awfn awa f2 acdm awrel f2 actpos acrn f2 acrn awceq psyl f0 awrel f2 f0 awfn awa f2 actpos acrn f2 acrn f1 peqeq1d f0 awrel f2 f0 awfn awa f2 actpos acrn f1 awceq f2 acrn f1 awceq pbiimprd f0 awrel f2 f0 awfn f2 acrn f1 awceq f2 actpos acrn f1 awceq pexpimpd f0 awrel f2 f0 awfn f2 acrn f1 awceq awa f2 actpos f0 accnv awfn f2 actpos acrn f1 awceq pjcad f0 f1 f2 adf-fo f0 accnv f1 f2 actpos adf-fo f0 awrel f2 f0 awfn f2 acrn f1 awceq awa f2 actpos f0 accnv awfn f2 actpos acrn f1 awceq awa f0 f1 f2 awfo f0 accnv f1 f2 actpos awfo p3imtr4g $.
+$}
+$( The domain and range of a transposition.  (Contributed by NM,
+       10-Sep-2015.) $)
+${
+	$v A B F $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class F $.
+	ptposf2 $p |- ( Rel A -> ( F : A --> B -> tpos F : `' A --> B ) ) $=
+	f0 f1 f2 pffn f0 f2 pdffn4 f0 f1 f2 awf f2 f0 awfn f0 f2 acrn f2 awfo psylib f0 f2 acrn f2 ptposfo2 f0 f1 f2 awf f0 f2 acrn f2 awfo f0 awrel f0 accnv f2 acrn f2 actpos awfo psyl5 f0 awrel f0 f1 f2 awf f0 accnv f2 acrn f2 actpos awfo pimp f0 accnv f2 acrn f2 actpos pfof f0 awrel f0 f1 f2 awf awa f0 accnv f2 acrn f2 actpos awfo f0 accnv f2 acrn f2 actpos awf psyl f0 f1 f2 pfrn f0 f1 f2 awf f2 acrn f1 awss f0 awrel padantl f0 accnv f2 acrn f1 f2 actpos pfss f0 awrel f0 f1 f2 awf awa f0 accnv f2 acrn f2 actpos awf f2 acrn f1 awss f0 accnv f1 f2 actpos awf psyl2anc f0 awrel f0 f1 f2 awf f0 accnv f1 f2 actpos awf pex $.
+$}
+$( Condition for an injective transposition.  (Contributed by NM,
+       10-Sep-2015.) $)
+${
+	$v x A B F $.
+	$d x A $.
+	$d x B $.
+	$d x F $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class F $.
+	i0 $f set x $.
+	ptposf12 $p |- ( Rel A -> ( F : A -1-1-> B -> tpos F : `' A -1-1-> B ) ) $=
+	f0 awrel f0 f1 f2 awf1 psimpr f0 prelcnv i0 f0 accnv pcnvf1o f0 accnv f0 accnv accnv i0 f0 accnv i0 acv acsn accnv acuni acmpt pf1of1 f0 accnv awrel f0 accnv f0 accnv accnv i0 f0 accnv i0 acv acsn accnv acuni acmpt awf1o f0 accnv f0 accnv accnv i0 f0 accnv i0 acv acsn accnv acuni acmpt awf1 pmp2b f0 awrel f0 f1 f2 awf1 psimpl f0 pdfrel2 f0 awrel f0 f1 f2 awf1 awa f0 awrel f0 accnv accnv f0 awceq psylib f0 accnv accnv f0 f0 accnv i0 f0 accnv i0 acv acsn accnv acuni acmpt pf1eq3 f0 awrel f0 f1 f2 awf1 awa f0 accnv accnv f0 awceq f0 accnv f0 accnv accnv i0 f0 accnv i0 acv acsn accnv acuni acmpt awf1 f0 accnv f0 i0 f0 accnv i0 acv acsn accnv acuni acmpt awf1 awb psyl f0 awrel f0 f1 f2 awf1 awa f0 accnv f0 accnv accnv i0 f0 accnv i0 acv acsn accnv acuni acmpt awf1 f0 accnv f0 i0 f0 accnv i0 acv acsn accnv acuni acmpt awf1 pmpbii f0 awrel f0 f1 f2 awf1 psimpr f0 f1 f2 pf1dm f0 awrel f0 f1 f2 awf1 awa f0 f1 f2 awf1 f2 acdm f0 awceq psyl f0 awrel f0 f1 f2 awf1 awa f2 acdm f0 pcnveqd i0 f2 acdm accnv f0 accnv i0 acv acsn accnv acuni pmpteq1 f0 accnv f0 i0 f2 acdm accnv i0 acv acsn accnv acuni acmpt i0 f0 accnv i0 acv acsn accnv acuni acmpt pf1eq1 f0 awrel f0 f1 f2 awf1 awa f2 acdm accnv f0 accnv awceq i0 f2 acdm accnv i0 acv acsn accnv acuni acmpt i0 f0 accnv i0 acv acsn accnv acuni acmpt awceq f0 accnv f0 i0 f2 acdm accnv i0 acv acsn accnv acuni acmpt awf1 f0 accnv f0 i0 f0 accnv i0 acv acsn accnv acuni acmpt awf1 awb p3syl f0 awrel f0 f1 f2 awf1 awa f0 accnv f0 i0 f2 acdm accnv i0 acv acsn accnv acuni acmpt awf1 f0 accnv f0 i0 f0 accnv i0 acv acsn accnv acuni acmpt awf1 pmpbird f0 accnv f0 f1 f2 i0 f2 acdm accnv i0 acv acsn accnv acuni acmpt pf1co f0 awrel f0 f1 f2 awf1 awa f0 f1 f2 awf1 f0 accnv f0 i0 f2 acdm accnv i0 acv acsn accnv acuni acmpt awf1 f0 accnv f1 f2 i0 f2 acdm accnv i0 acv acsn accnv acuni acmpt accom awf1 psyl2anc f0 f1 f2 pf1dm f0 f1 f2 awf1 f2 acdm f0 preleqd f0 f1 f2 awf1 f2 acdm awrel f0 awrel pbiimparc i0 f2 pdftpos2 f0 accnv f1 f2 actpos f2 i0 f2 acdm accnv i0 acv acsn accnv acuni acmpt accom pf1eq1 f0 awrel f0 f1 f2 awf1 awa f2 acdm awrel f2 actpos f2 i0 f2 acdm accnv i0 acv acsn accnv acuni acmpt accom awceq f0 accnv f1 f2 actpos awf1 f0 accnv f1 f2 i0 f2 acdm accnv i0 acv acsn accnv acuni acmpt accom awf1 awb p3syl f0 awrel f0 f1 f2 awf1 awa f0 accnv f1 f2 actpos awf1 f0 accnv f1 f2 i0 f2 acdm accnv i0 acv acsn accnv acuni acmpt accom awf1 pmpbird f0 awrel f0 f1 f2 awf1 f0 accnv f1 f2 actpos awf1 pex $.
+$}
+$( Condition of a bijective transposition.  (Contributed by NM,
+       10-Sep-2015.) $)
+${
+	$v A B F $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class F $.
+	ptposf1o2 $p |- ( Rel A -> ( F : A -1-1-onto-> B -> tpos F : `' A -1-1-onto-> B ) ) $=
+	f0 f1 f2 ptposf12 f0 f1 f2 ptposfo2 f0 awrel f0 f1 f2 awf1 f0 accnv f1 f2 actpos awf1 f0 f1 f2 awfo f0 accnv f1 f2 actpos awfo panim12d f0 f1 f2 adf-f1o f0 accnv f1 f2 actpos adf-f1o f0 awrel f0 f1 f2 awf1 f0 f1 f2 awfo awa f0 accnv f1 f2 actpos awf1 f0 accnv f1 f2 actpos awfo awa f0 f1 f2 awf1o f0 accnv f1 f2 actpos awf1o p3imtr4g $.
+$}
+$( The domain and range of a transposition.  (Contributed by NM,
+       10-Sep-2015.) $)
+${
+	$v A B C F $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class F $.
+	ptposfo $p |- ( F : ( A X. B ) -onto-> C -> tpos F : ( B X. A ) -onto-> C ) $=
+	f0 f1 prelxp f0 f1 acxp f2 f3 ptposfo2 f0 f1 acxp awrel f0 f1 acxp f2 f3 awfo f0 f1 acxp accnv f2 f3 actpos awfo awi aax-mp f0 f1 pcnvxp f0 f1 acxp accnv f1 f0 acxp f2 f3 actpos pfoeq2 f0 f1 acxp accnv f1 f0 acxp awceq f0 f1 acxp accnv f2 f3 actpos awfo f1 f0 acxp f2 f3 actpos awfo awb aax-mp f0 f1 acxp f2 f3 awfo f0 f1 acxp accnv f2 f3 actpos awfo f1 f0 acxp f2 f3 actpos awfo psylib $.
+$}
+$( The domain and range of a transposition.  (Contributed by NM,
+       10-Sep-2015.) $)
+${
+	$v A B C F $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class F $.
+	ptposf $p |- ( F : ( A X. B ) --> C -> tpos F : ( B X. A ) --> C ) $=
+	f0 f1 prelxp f0 f1 acxp f2 f3 ptposf2 f0 f1 acxp awrel f0 f1 acxp f2 f3 awf f0 f1 acxp accnv f2 f3 actpos awf awi aax-mp f0 f1 pcnvxp f0 f1 acxp accnv f1 f0 acxp f2 f3 actpos pfeq2i f0 f1 acxp f2 f3 awf f0 f1 acxp accnv f2 f3 actpos awf f1 f0 acxp f2 f3 actpos awf psylib $.
+$}
+$( Functionality of a transposition.  (Contributed by Mario Carneiro,
+       4-Oct-2015.) $)
+${
+	$v A B F $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class F $.
+	ptposfn $p |- ( F Fn ( A X. B ) -> tpos F Fn ( B X. A ) ) $=
+	f0 f1 acvv f2 ptposf f0 f1 acxp f2 pdffn2 f1 f0 acxp f2 actpos pdffn2 f0 f1 acxp acvv f2 awf f1 f0 acxp acvv f2 actpos awf f2 f0 f1 acxp awfn f2 actpos f1 f0 acxp awfn p3imtr4i $.
+$}
+$( Transposition of the empty set.  (Contributed by NM, 10-Sep-2015.) $)
+${
+	ptpos0 $p |- tpos (/) = (/) $=
+	prel0 ac0 peqid ac0 pfn0 ac0 ac0 awfn ac0 ac0 awceq pmpbir ac0 ac0 ptposfn2 ac0 awrel ac0 ac0 awfn ac0 actpos ac0 accnv awfn pmp2 pcnv0 ac0 accnv ac0 ac0 actpos pfneq2i ac0 actpos ac0 accnv awfn ac0 actpos ac0 awfn pmpbi ac0 actpos pfn0 ac0 actpos ac0 awfn ac0 actpos ac0 awceq pmpbi $.
+$}
+$( Transposition of a composition.  (Contributed by Mario Carneiro,
+       4-Oct-2015.) $)
+${
+	$v x F G $.
+	$d x F $.
+	$d x G $.
+	f0 $f class F $.
+	f1 $f class G $.
+	i0 $f set x $.
+	ptposco $p |- tpos ( F o. G ) = ( F o. tpos G ) $=
+	f0 f1 i0 acvv acvv acxp ac0 acsn acun i0 acv acsn accnv acuni acmpt pcoass i0 f0 f1 accom pdftpos4 i0 f1 pdftpos4 f1 actpos f1 i0 acvv acvv acxp ac0 acsn acun i0 acv acsn accnv acuni acmpt accom f0 pcoeq2i f0 f1 accom i0 acvv acvv acxp ac0 acsn acun i0 acv acsn accnv acuni acmpt accom f0 f1 i0 acvv acvv acxp ac0 acsn acun i0 acv acsn accnv acuni acmpt accom accom f0 f1 accom actpos f0 f1 actpos accom p3eqtr4i $.
+$}
+$( Two ways to say a function is symmetric.  (Contributed by Mario
+       Carneiro, 4-Oct-2015.) $)
+${
+	$v x y A F $.
+	$d x y A $.
+	$d x y $.
+	$d x y F $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class F $.
+	ptpossym $p |- ( F Fn ( A X. A ) -> ( tpos F = F <-> A. x e. A A. y e. A ( x F y ) = ( y F x ) ) ) $=
+	f2 f2 f3 ptposfn f0 f1 f2 f2 f3 actpos f3 peqfnov2 f3 actpos f2 f2 acxp awfn f3 f2 f2 acxp awfn f3 actpos f3 awceq f0 acv f1 acv f3 actpos aco f0 acv f1 acv f3 aco awceq f1 f2 awral f0 f2 awral awb pmpancom f0 acv f1 acv f3 actpos aco f0 acv f1 acv f3 aco peqcom f0 acv f1 acv f3 povtpos f0 acv f1 acv f3 actpos aco f1 acv f0 acv f3 aco f0 acv f1 acv f3 aco peqeq2i f0 acv f1 acv f3 actpos aco f0 acv f1 acv f3 aco awceq f0 acv f1 acv f3 aco f0 acv f1 acv f3 actpos aco awceq f0 acv f1 acv f3 aco f1 acv f0 acv f3 aco awceq pbitri f0 acv f1 acv f3 actpos aco f0 acv f1 acv f3 aco awceq f0 acv f1 acv f3 aco f1 acv f0 acv f3 aco awceq f0 f1 f2 f2 p2ralbii f3 f2 f2 acxp awfn f3 actpos f3 awceq f0 acv f1 acv f3 actpos aco f0 acv f1 acv f3 aco awceq f1 f2 awral f0 f2 awral f0 acv f1 acv f3 aco f1 acv f0 acv f3 aco awceq f1 f2 awral f0 f2 awral psyl6bb $.
+$}
+$( Equality theorem for transposition.  (Contributed by Mario Carneiro,
+       10-Sep-2015.) $)
+${
+	$v F G $.
+	e0 $e |- F = G $.
+	f0 $f class F $.
+	f1 $f class G $.
+	ptposeqi $p |- tpos F = tpos G $=
+	e0 f0 f1 ptposeq f0 f1 awceq f0 actpos f1 actpos awceq aax-mp $.
+$}
+$( A transposition is a set.  (Contributed by Mario Carneiro,
+       10-Sep-2015.) $)
+${
+	$v F $.
+	e0 $e |- F e. _V $.
+	f0 $f class F $.
+	ptposex $p |- tpos F e. _V $=
+	e0 f0 acvv ptposexg f0 acvv awcel f0 actpos acvv awcel aax-mp $.
+$}
+$( Hypothesis builder for transposition.  (Contributed by Mario Carneiro,
+       10-Sep-2015.) $)
+${
+	$v x y F $.
+	$d x y $.
+	$d y F $.
+	e0 $e |- F/_ x F $.
+	f0 $f set x $.
+	f1 $f class F $.
+	i0 $f set y $.
+	pnftpos $p |- F/_ x tpos F $=
+	i0 f1 pdftpos4 e0 f0 i0 acvv acvv acxp ac0 acsn acun i0 acv acsn accnv acuni acmpt pnfcv f0 f1 i0 acvv acvv acxp ac0 acsn acun i0 acv acsn accnv acuni acmpt pnfco f0 f1 actpos f1 i0 acvv acvv acxp ac0 acsn acun i0 acv acsn accnv acuni acmpt accom pnfcxfr $.
+$}
+$( Transposition of a class of ordered triples.  (Contributed by Mario
+       Carneiro, 10-Sep-2015.) $)
+${
+	$v ph x y z F a b c $.
+	$d a b c x y z $.
+	$d a b c ph $.
+	e0 $e |- F = { <. <. x , y >. , z >. | ph } $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	f4 $f class F $.
+	i0 $f set a $.
+	i1 $f set b $.
+	i2 $f set c $.
+	ptposoprab $p |- tpos F = { <. <. y , x >. , z >. | ph } $=
+	e0 f4 f0 f1 f2 f3 acoprab ptposeqi f0 f1 f2 f3 preldmoprab i0 i1 i2 f0 f1 f2 f3 acoprab pdftpos3 f0 f1 f2 f3 acoprab acdm awrel f0 f1 f2 f3 acoprab actpos i1 acv i0 acv acop i2 acv f0 f1 f2 f3 acoprab awbr i0 i1 i2 acoprab awceq aax-mp f2 i1 acv i0 acv acop pnfcv f0 f1 f2 f3 pnfoprab2 f2 i2 acv pnfcv f2 i1 acv i0 acv acop i2 acv f0 f1 f2 f3 acoprab pnfbr f1 i1 acv i0 acv acop pnfcv f0 f1 f2 f3 pnfoprab1 f1 i2 acv pnfcv f1 i1 acv i0 acv acop i2 acv f0 f1 f2 f3 acoprab pnfbr f1 acv f2 acv acop i2 acv f0 f1 f2 f3 acoprab awbr i0 pnfv f1 acv f2 acv acop i2 acv f0 f1 f2 f3 acoprab awbr i1 pnfv i1 acv i0 acv f1 acv f2 acv popeq12 i1 acv f1 acv awceq i0 acv f2 acv awceq i1 acv i0 acv acop f1 acv f2 acv acop awceq pancoms i0 acv f2 acv awceq i1 acv f1 acv awceq awa i1 acv i0 acv acop f1 acv f2 acv acop i2 acv f0 f1 f2 f3 acoprab pbreq1d i1 acv i0 acv acop i2 acv f0 f1 f2 f3 acoprab awbr f1 acv f2 acv acop i2 acv f0 f1 f2 f3 acoprab awbr i0 i1 i2 f2 f1 pcbvoprab12 f3 f1 acv f2 acv acop pnfcv f0 f1 f2 f3 pnfoprab3 f3 i2 acv pnfcv f3 f1 acv f2 acv acop i2 acv f0 f1 f2 f3 acoprab pnfbr f0 i2 pnfv i2 acv f3 acv f1 acv f2 acv acop f0 f1 f2 f3 acoprab pbreq2 f1 acv f2 acv acop f3 acv f0 f1 f2 f3 acoprab adf-br f0 f1 f2 f3 poprabid f1 acv f2 acv acop f3 acv f0 f1 f2 f3 acoprab awbr f1 acv f2 acv acop f3 acv acop f0 f1 f2 f3 acoprab awcel f0 pbitri i2 acv f3 acv awceq f1 acv f2 acv acop i2 acv f0 f1 f2 f3 acoprab awbr f1 acv f2 acv acop f3 acv f0 f1 f2 f3 acoprab awbr f0 psyl6bb f1 acv f2 acv acop i2 acv f0 f1 f2 f3 acoprab awbr f0 f2 f1 i2 f3 pcbvoprab3 i1 acv i0 acv acop i2 acv f0 f1 f2 f3 acoprab awbr i0 i1 i2 acoprab f1 acv f2 acv acop i2 acv f0 f1 f2 f3 acoprab awbr f2 f1 i2 acoprab f0 f2 f1 f3 acoprab peqtri f4 actpos f0 f1 f2 f3 acoprab actpos i1 acv i0 acv acop i2 acv f0 f1 f2 f3 acoprab awbr i0 i1 i2 acoprab f0 f2 f1 f3 acoprab p3eqtri $.
+$}
+$( Transposition of a two-argument mapping.  (Contributed by Mario
+       Carneiro, 10-Sep-2015.) $)
+${
+	$v x y z A B C F $.
+	$d x y z $.
+	$d z A $.
+	$d z B $.
+	$d z C $.
+	e0 $e |- F = ( x e. A , y e. B |-> C ) $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	f5 $f class F $.
+	i0 $f set z $.
+	ptposmpt2 $p |- tpos F = ( y e. B , x e. A |-> C ) $=
+	e0 f0 f1 i0 f2 f3 f4 adf-mpt2 f0 acv f2 awcel f1 acv f3 awcel pancom f0 acv f2 awcel f1 acv f3 awcel awa f1 acv f3 awcel f0 acv f2 awcel awa i0 acv f4 awceq panbi1i f0 acv f2 awcel f1 acv f3 awcel awa i0 acv f4 awceq awa f1 acv f3 awcel f0 acv f2 awcel awa i0 acv f4 awceq awa f0 f1 i0 poprabbii f5 f0 f1 f2 f3 f4 acmpt2 f0 acv f2 awcel f1 acv f3 awcel awa i0 acv f4 awceq awa f0 f1 i0 acoprab f1 acv f3 awcel f0 acv f2 awcel awa i0 acv f4 awceq awa f0 f1 i0 acoprab p3eqtri f1 acv f3 awcel f0 acv f2 awcel awa i0 acv f4 awceq awa f0 f1 i0 f5 ptposoprab f1 f0 i0 f3 f2 f4 adf-mpt2 f5 actpos f1 acv f3 awcel f0 acv f2 awcel awa i0 acv f4 awceq awa f1 f0 i0 acoprab f1 f0 f3 f2 f4 acmpt2 peqtr4i $.
+$}
+

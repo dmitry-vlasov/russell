@@ -1,0 +1,3017 @@
+import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Subclasses_and_subsets.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        The difference, union, and intersection of two classes
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* Equality theorem for class difference.  (Contributed by NM,
+       10-Feb-1997.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
+
+theorem difeq1 (A : class, B : class, C : class) disjointed(x A, x B, x C) {
+	prop 1 : wff = |- ( A = B → ( A ∖ C ) = ( B ∖ C ) ) ;;
+}
+
+proof of difeq1 {
+	var x : set;;
+	step 1 : wff = rabeq () |- ( A = B → { x ∈ A | ¬ x ∈ C } = { x ∈ B | ¬ x ∈ C } ) ;;
+	step 2 : wff = dfdif2 () |- ( A ∖ C ) = { x ∈ A | ¬ x ∈ C } ;;
+	step 3 : wff = dfdif2 () |- ( B ∖ C ) = { x ∈ B | ¬ x ∈ C } ;;
+	step 4 : wff = 3eqtr4g (step 1, step 2, step 3) |- ( A = B → ( A ∖ C ) = ( B ∖ C ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Equality theorem for class difference.  (Contributed by NM,
+       10-Feb-1997.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
+
+theorem difeq2 (A : class, B : class, C : class) disjointed(x A, x B, x C) {
+	prop 1 : wff = |- ( A = B → ( C ∖ A ) = ( C ∖ B ) ) ;;
+}
+
+proof of difeq2 {
+	var x : set;;
+	step 1 : wff = eleq2 () |- ( A = B → ( x ∈ A ↔ x ∈ B ) ) ;;
+	step 2 : wff = notbid (step 1) |- ( A = B → ( ¬ x ∈ A ↔ ¬ x ∈ B ) ) ;;
+	step 3 : wff = rabbidv (step 2) |- ( A = B → { x ∈ C | ¬ x ∈ A } = { x ∈ C | ¬ x ∈ B } ) ;;
+	step 4 : wff = dfdif2 () |- ( C ∖ A ) = { x ∈ C | ¬ x ∈ A } ;;
+	step 5 : wff = dfdif2 () |- ( C ∖ B ) = { x ∈ C | ¬ x ∈ B } ;;
+	step 6 : wff = 3eqtr4g (step 3, step 4, step 5) |- ( A = B → ( C ∖ A ) = ( C ∖ B ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Equality theorem for class difference.  (Contributed by FL,
+     31-Aug-2009.) */
+
+theorem difeq12 (A : class, B : class, C : class, D : class)  {
+	prop 1 : wff = |- ( ( A = B ∧ C = D ) → ( A ∖ C ) = ( B ∖ D ) ) ;;
+}
+
+proof of difeq12 {
+	step 1 : wff = difeq1 () |- ( A = B → ( A ∖ C ) = ( B ∖ C ) ) ;;
+	step 2 : wff = difeq2 () |- ( C = D → ( B ∖ C ) = ( B ∖ D ) ) ;;
+	step 3 : wff = sylan9eq (step 1, step 2) |- ( ( A = B ∧ C = D ) → ( A ∖ C ) = ( B ∖ D ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Inference adding difference to the right in a class equality.
+       (Contributed by NM, 15-Nov-2002.) */
+
+theorem difeq1i (A : class, B : class, C : class)  {
+	hyp 1 : wff = |- A = B ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∖ C ) = ( B ∖ C ) ;;
+}
+
+proof of difeq1i {
+	step 1 : wff = difeq1 () |- ( A = B → ( A ∖ C ) = ( B ∖ C ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( A ∖ C ) = ( B ∖ C ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Inference adding difference to the left in a class equality.
+       (Contributed by NM, 15-Nov-2002.) */
+
+theorem difeq2i (A : class, B : class, C : class)  {
+	hyp 1 : wff = |- A = B ;;
+	-----------------------
+	prop 1 : wff = |- ( C ∖ A ) = ( C ∖ B ) ;;
+}
+
+proof of difeq2i {
+	step 1 : wff = difeq2 () |- ( A = B → ( C ∖ A ) = ( C ∖ B ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( C ∖ A ) = ( C ∖ B ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Equality inference for class difference.  (Contributed by NM,
+         29-Aug-2004.) */
+
+theorem difeq12i (A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- A = B ;;
+	hyp 2 : wff = |- C = D ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∖ C ) = ( B ∖ D ) ;;
+}
+
+proof of difeq12i {
+	step 1 : wff = difeq1i (hyp 1) |- ( A ∖ C ) = ( B ∖ C ) ;;
+	step 2 : wff = difeq2i (hyp 2) |- ( B ∖ C ) = ( B ∖ D ) ;;
+	step 3 : wff = eqtri (step 1, step 2) |- ( A ∖ C ) = ( B ∖ D ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Deduction adding difference to the right in a class equality.
+       (Contributed by NM, 15-Nov-2002.) */
+
+theorem difeq1d (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A ∖ C ) = ( B ∖ C ) ) ;;
+}
+
+proof of difeq1d {
+	step 1 : wff = difeq1 () |- ( A = B → ( A ∖ C ) = ( B ∖ C ) ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ph → ( A ∖ C ) = ( B ∖ C ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction adding difference to the left in a class equality.
+       (Contributed by NM, 15-Nov-2002.) */
+
+theorem difeq2d (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( C ∖ A ) = ( C ∖ B ) ) ;;
+}
+
+proof of difeq2d {
+	step 1 : wff = difeq2 () |- ( A = B → ( C ∖ A ) = ( C ∖ B ) ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ph → ( C ∖ A ) = ( C ∖ B ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Equality deduction for class difference.  (Contributed by FL,
+       29-May-2014.) */
+
+theorem difeq12d (ph : wff, A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	hyp 2 : wff = |- ( ph → C = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A ∖ C ) = ( B ∖ D ) ) ;;
+}
+
+proof of difeq12d {
+	step 1 : wff = difeq1d (hyp 1) |- ( ph → ( A ∖ C ) = ( B ∖ C ) ) ;;
+	step 2 : wff = difeq2d (hyp 2) |- ( ph → ( B ∖ C ) = ( B ∖ D ) ) ;;
+	step 3 : wff = eqtrd (step 1, step 2) |- ( ph → ( A ∖ C ) = ( B ∖ D ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Inference from membership to difference.  (Contributed by NM,
+       17-May-1998.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
+
+theorem difeqri (x : set, A : class, B : class, C : class) disjointed(x A, x B, x C) {
+	hyp 1 : wff = |- ( ( x ∈ A ∧ ¬ x ∈ B ) ↔ x ∈ C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∖ B ) = C ;;
+}
+
+proof of difeqri {
+	step 1 : wff = eldif () |- ( x ∈ ( A ∖ B ) ↔ ( x ∈ A ∧ ¬ x ∈ B ) ) ;;
+	step 2 : wff = bitri (step 1, hyp 1) |- ( x ∈ ( A ∖ B ) ↔ x ∈ C ) ;;
+	step 3 : wff = eqriv (step 2) |- ( A ∖ B ) = C ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Bound-variable hypothesis builder for class difference.  (Contributed by
+       NM, 3-Dec-2003.)  (Revised by Mario Carneiro, 13-Oct-2016.) */
+
+theorem nfdif (x : set, A : class, B : class) disjointed(x y, y A, y B) {
+	hyp 1 : wff = |- F/_ x A ;;
+	hyp 2 : wff = |- F/_ x B ;;
+	-----------------------
+	prop 1 : wff = |- F/_ x ( A ∖ B ) ;;
+}
+
+proof of nfdif {
+	var y : set;;
+	step 1 : wff = dfdif2 () |- ( A ∖ B ) = { y ∈ A | ¬ y ∈ B } ;;
+	step 2 : wff = nfcri (hyp 2) |- F/ x y ∈ B ;;
+	step 3 : wff = nfn (step 2) |- F/ x ¬ y ∈ B ;;
+	step 4 : wff = nfrab (step 3, hyp 1) |- F/_ x { y ∈ A | ¬ y ∈ B } ;;
+	step 5 : wff = nfcxfr (step 1, step 4) |- F/_ x ( A ∖ B ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Implication of membership in a class difference.  (Contributed by NM,
+     29-Apr-1994.) */
+
+theorem eldifi (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ∈ ( B ∖ C ) → A ∈ B ) ;;
+}
+
+proof of eldifi {
+	step 1 : wff = eldif () |- ( A ∈ ( B ∖ C ) ↔ ( A ∈ B ∧ ¬ A ∈ C ) ) ;;
+	step 2 : wff = simplbi (step 1) |- ( A ∈ ( B ∖ C ) → A ∈ B ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Implication of membership in a class difference.  (Contributed by NM,
+     3-May-1994.) */
+
+theorem eldifn (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ∈ ( B ∖ C ) → ¬ A ∈ C ) ;;
+}
+
+proof of eldifn {
+	step 1 : wff = eldif () |- ( A ∈ ( B ∖ C ) ↔ ( A ∈ B ∧ ¬ A ∈ C ) ) ;;
+	step 2 : wff = simprbi (step 1) |- ( A ∈ ( B ∖ C ) → ¬ A ∈ C ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A set does not belong to a class excluding it.  (Contributed by NM,
+     27-Jun-1994.) */
+
+theorem elndif (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ∈ B → ¬ A ∈ ( C ∖ B ) ) ;;
+}
+
+proof of elndif {
+	step 1 : wff = eldifn () |- ( A ∈ ( C ∖ B ) → ¬ A ∈ B ) ;;
+	step 2 : wff = con2i (step 1) |- ( A ∈ B → ¬ A ∈ ( C ∖ B ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Implication of membership in a class difference.  (Contributed by NM,
+     28-Jun-1994.) */
+
+theorem neldif (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( A ∈ B ∧ ¬ A ∈ ( B ∖ C ) ) → A ∈ C ) ;;
+}
+
+proof of neldif {
+	step 1 : wff = eldif () |- ( A ∈ ( B ∖ C ) ↔ ( A ∈ B ∧ ¬ A ∈ C ) ) ;;
+	step 2 : wff = simplbi2 (step 1) |- ( A ∈ B → ( ¬ A ∈ C → A ∈ ( B ∖ C ) ) ) ;;
+	step 3 : wff = con1d (step 2) |- ( A ∈ B → ( ¬ A ∈ ( B ∖ C ) → A ∈ C ) ) ;;
+	step 4 : wff = imp (step 3) |- ( ( A ∈ B ∧ ¬ A ∈ ( B ∖ C ) ) → A ∈ C ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Double class difference.  Exercise 11 of [TakeutiZaring] p. 22.
+       (Contributed by NM, 17-May-1998.) */
+
+theorem difdif (A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( A ∖ ( B ∖ A ) ) = A ;;
+}
+
+proof of difdif {
+	var x : set;;
+	step 1 : wff = pm4.45im () |- ( x ∈ A ↔ ( x ∈ A ∧ ( x ∈ B → x ∈ A ) ) ) ;;
+	step 2 : wff = iman () |- ( ( x ∈ B → x ∈ A ) ↔ ¬ ( x ∈ B ∧ ¬ x ∈ A ) ) ;;
+	step 3 : wff = eldif () |- ( x ∈ ( B ∖ A ) ↔ ( x ∈ B ∧ ¬ x ∈ A ) ) ;;
+	step 4 : wff = xchbinxr (step 2, step 3) |- ( ( x ∈ B → x ∈ A ) ↔ ¬ x ∈ ( B ∖ A ) ) ;;
+	step 5 : wff = anbi2i (step 4) |- ( ( x ∈ A ∧ ( x ∈ B → x ∈ A ) ) ↔ ( x ∈ A ∧ ¬ x ∈ ( B ∖ A ) ) ) ;;
+	step 6 : wff = bitr2i (step 1, step 5) |- ( ( x ∈ A ∧ ¬ x ∈ ( B ∖ A ) ) ↔ x ∈ A ) ;;
+	step 7 : wff = difeqri (step 6) |- ( A ∖ ( B ∖ A ) ) = A ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Subclass relationship for class difference.  Exercise 14 of
+       [TakeutiZaring] p. 22.  (Contributed by NM, 29-Apr-1994.) */
+
+theorem difss (A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( A ∖ B ) ⊆ A ;;
+}
+
+proof of difss {
+	var x : set;;
+	step 1 : wff = eldifi () |- ( x ∈ ( A ∖ B ) → x ∈ A ) ;;
+	step 2 : wff = ssriv (step 1) |- ( A ∖ B ) ⊆ A ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A difference of two classes is contained in the minuend.  Deduction form
+     of ~ difss .  (Contributed by David Moews, 1-May-2017.) */
+
+theorem difssd (ph : wff, A : class, B : class)  {
+	prop 1 : wff = |- ( ph → ( A ∖ B ) ⊆ A ) ;;
+}
+
+proof of difssd {
+	step 1 : wff = difss () |- ( A ∖ B ) ⊆ A ;;
+	step 2 : wff = a1i (step 1) |- ( ph → ( A ∖ B ) ⊆ A ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* If a class is contained in a difference, it is contained in the minuend.
+     (Contributed by David Moews, 1-May-2017.) */
+
+theorem difss2 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ⊆ ( B ∖ C ) → A ⊆ B ) ;;
+}
+
+proof of difss2 {
+	step 1 : wff = id () |- ( A ⊆ ( B ∖ C ) → A ⊆ ( B ∖ C ) ) ;;
+	step 2 : wff = difss () |- ( B ∖ C ) ⊆ B ;;
+	step 3 : wff = syl6ss (step 1, step 2) |- ( A ⊆ ( B ∖ C ) → A ⊆ B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* If a class is contained in a difference, it is contained in the
+       minuend.  Deduction form of ~ difss2 .  (Contributed by David Moews,
+       1-May-2017.) */
+
+theorem difss2d (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → A ⊆ ( B ∖ C ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → A ⊆ B ) ;;
+}
+
+proof of difss2d {
+	step 1 : wff = difss2 () |- ( A ⊆ ( B ∖ C ) → A ⊆ B ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ph → A ⊆ B ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Preservation of a subclass relationship by class difference.  (Contributed
+     by NM, 15-Feb-2007.) */
+
+theorem ssdifss (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ⊆ B → ( A ∖ C ) ⊆ B ) ;;
+}
+
+proof of ssdifss {
+	step 1 : wff = difss () |- ( A ∖ C ) ⊆ A ;;
+	step 2 : wff = sstr () |- ( ( ( A ∖ C ) ⊆ A ∧ A ⊆ B ) → ( A ∖ C ) ⊆ B ) ;;
+	step 3 : wff = mpan (step 1, step 2) |- ( A ⊆ B → ( A ∖ C ) ⊆ B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Double complement under universal class.  Exercise 4.10(s) of
+       [Mendelson] p. 231.  (Contributed by NM, 8-Jan-2002.) */
+
+theorem ddif (A : class) disjointed(x A) {
+	prop 1 : wff = |- ( _V ∖ ( _V ∖ A ) ) = A ;;
+}
+
+proof of ddif {
+	var x : set;;
+	step 1 : wff = vex () |- x ∈ _V ;;
+	step 2 : wff = eldif () |- ( x ∈ ( _V ∖ A ) ↔ ( x ∈ _V ∧ ¬ x ∈ A ) ) ;;
+	step 3 : wff = mpbiran (step 1, step 2) |- ( x ∈ ( _V ∖ A ) ↔ ¬ x ∈ A ) ;;
+	step 4 : wff = con2bii (step 3) |- ( x ∈ A ↔ ¬ x ∈ ( _V ∖ A ) ) ;;
+	step 5 : wff = vex () |- x ∈ _V ;;
+	step 6 : wff = biantrur (step 5) |- ( ¬ x ∈ ( _V ∖ A ) ↔ ( x ∈ _V ∧ ¬ x ∈ ( _V ∖ A ) ) ) ;;
+	step 7 : wff = bitr2i (step 4, step 6) |- ( ( x ∈ _V ∧ ¬ x ∈ ( _V ∖ A ) ) ↔ x ∈ A ) ;;
+	step 8 : wff = difeqri (step 7) |- ( _V ∖ ( _V ∖ A ) ) = A ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Contraposition law for subsets.  (Contributed by NM, 22-Mar-1998.) */
+
+theorem ssconb (A : class, B : class, C : class) disjointed(x A, x B, x C) {
+	prop 1 : wff = |- ( ( A ⊆ C ∧ B ⊆ C ) → ( A ⊆ ( C ∖ B ) ↔ B ⊆ ( C ∖ A ) ) ) ;;
+}
+
+proof of ssconb {
+	var x : set;;
+	step 1 : wff = ssel () |- ( A ⊆ C → ( x ∈ A → x ∈ C ) ) ;;
+	step 2 : wff = ssel () |- ( B ⊆ C → ( x ∈ B → x ∈ C ) ) ;;
+	step 3 : wff = pm5.1 () |- ( ( ( x ∈ A → x ∈ C ) ∧ ( x ∈ B → x ∈ C ) ) → ( ( x ∈ A → x ∈ C ) ↔ ( x ∈ B → x ∈ C ) ) ) ;;
+	step 4 : wff = syl2an (step 1, step 2, step 3) |- ( ( A ⊆ C ∧ B ⊆ C ) → ( ( x ∈ A → x ∈ C ) ↔ ( x ∈ B → x ∈ C ) ) ) ;;
+	step 5 : wff = con2b () |- ( ( x ∈ A → ¬ x ∈ B ) ↔ ( x ∈ B → ¬ x ∈ A ) ) ;;
+	step 6 : wff = a1i (step 5) |- ( ( A ⊆ C ∧ B ⊆ C ) → ( ( x ∈ A → ¬ x ∈ B ) ↔ ( x ∈ B → ¬ x ∈ A ) ) ) ;;
+	step 7 : wff = anbi12d (step 4, step 6) |- ( ( A ⊆ C ∧ B ⊆ C ) → ( ( ( x ∈ A → x ∈ C ) ∧ ( x ∈ A → ¬ x ∈ B ) ) ↔ ( ( x ∈ B → x ∈ C ) ∧ ( x ∈ B → ¬ x ∈ A ) ) ) ) ;;
+	step 8 : wff = jcab () |- ( ( x ∈ A → ( x ∈ C ∧ ¬ x ∈ B ) ) ↔ ( ( x ∈ A → x ∈ C ) ∧ ( x ∈ A → ¬ x ∈ B ) ) ) ;;
+	step 9 : wff = jcab () |- ( ( x ∈ B → ( x ∈ C ∧ ¬ x ∈ A ) ) ↔ ( ( x ∈ B → x ∈ C ) ∧ ( x ∈ B → ¬ x ∈ A ) ) ) ;;
+	step 10 : wff = 3bitr4g (step 7, step 8, step 9) |- ( ( A ⊆ C ∧ B ⊆ C ) → ( ( x ∈ A → ( x ∈ C ∧ ¬ x ∈ B ) ) ↔ ( x ∈ B → ( x ∈ C ∧ ¬ x ∈ A ) ) ) ) ;;
+	step 11 : wff = eldif () |- ( x ∈ ( C ∖ B ) ↔ ( x ∈ C ∧ ¬ x ∈ B ) ) ;;
+	step 12 : wff = imbi2i (step 11) |- ( ( x ∈ A → x ∈ ( C ∖ B ) ) ↔ ( x ∈ A → ( x ∈ C ∧ ¬ x ∈ B ) ) ) ;;
+	step 13 : wff = eldif () |- ( x ∈ ( C ∖ A ) ↔ ( x ∈ C ∧ ¬ x ∈ A ) ) ;;
+	step 14 : wff = imbi2i (step 13) |- ( ( x ∈ B → x ∈ ( C ∖ A ) ) ↔ ( x ∈ B → ( x ∈ C ∧ ¬ x ∈ A ) ) ) ;;
+	step 15 : wff = 3bitr4g (step 10, step 12, step 14) |- ( ( A ⊆ C ∧ B ⊆ C ) → ( ( x ∈ A → x ∈ ( C ∖ B ) ) ↔ ( x ∈ B → x ∈ ( C ∖ A ) ) ) ) ;;
+	step 16 : wff = albidv (step 15) |- ( ( A ⊆ C ∧ B ⊆ C ) → ( ∀ x ( x ∈ A → x ∈ ( C ∖ B ) ) ↔ ∀ x ( x ∈ B → x ∈ ( C ∖ A ) ) ) ) ;;
+	step 17 : wff = dfss2 () |- ( A ⊆ ( C ∖ B ) ↔ ∀ x ( x ∈ A → x ∈ ( C ∖ B ) ) ) ;;
+	step 18 : wff = dfss2 () |- ( B ⊆ ( C ∖ A ) ↔ ∀ x ( x ∈ B → x ∈ ( C ∖ A ) ) ) ;;
+	step 19 : wff = 3bitr4g (step 16, step 17, step 18) |- ( ( A ⊆ C ∧ B ⊆ C ) → ( A ⊆ ( C ∖ B ) ↔ B ⊆ ( C ∖ A ) ) ) ;;
+	qed prop 1 = step 19 ;;
+}
+
+/* Contraposition law for subsets.  Exercise 15 of [TakeutiZaring] p. 22.
+       (Contributed by NM, 22-Mar-1998.) */
+
+theorem sscon (A : class, B : class, C : class) disjointed(x A, x B, x C) {
+	prop 1 : wff = |- ( A ⊆ B → ( C ∖ B ) ⊆ ( C ∖ A ) ) ;;
+}
+
+proof of sscon {
+	var x : set;;
+	step 1 : wff = ssel () |- ( A ⊆ B → ( x ∈ A → x ∈ B ) ) ;;
+	step 2 : wff = con3d (step 1) |- ( A ⊆ B → ( ¬ x ∈ B → ¬ x ∈ A ) ) ;;
+	step 3 : wff = anim2d (step 2) |- ( A ⊆ B → ( ( x ∈ C ∧ ¬ x ∈ B ) → ( x ∈ C ∧ ¬ x ∈ A ) ) ) ;;
+	step 4 : wff = eldif () |- ( x ∈ ( C ∖ B ) ↔ ( x ∈ C ∧ ¬ x ∈ B ) ) ;;
+	step 5 : wff = eldif () |- ( x ∈ ( C ∖ A ) ↔ ( x ∈ C ∧ ¬ x ∈ A ) ) ;;
+	step 6 : wff = 3imtr4g (step 3, step 4, step 5) |- ( A ⊆ B → ( x ∈ ( C ∖ B ) → x ∈ ( C ∖ A ) ) ) ;;
+	step 7 : wff = ssrdv (step 6) |- ( A ⊆ B → ( C ∖ B ) ⊆ ( C ∖ A ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Difference law for subsets.  (Contributed by NM, 28-May-1998.) */
+
+theorem ssdif (A : class, B : class, C : class) disjointed(x A, x B, x C) {
+	prop 1 : wff = |- ( A ⊆ B → ( A ∖ C ) ⊆ ( B ∖ C ) ) ;;
+}
+
+proof of ssdif {
+	var x : set;;
+	step 1 : wff = ssel () |- ( A ⊆ B → ( x ∈ A → x ∈ B ) ) ;;
+	step 2 : wff = anim1d (step 1) |- ( A ⊆ B → ( ( x ∈ A ∧ ¬ x ∈ C ) → ( x ∈ B ∧ ¬ x ∈ C ) ) ) ;;
+	step 3 : wff = eldif () |- ( x ∈ ( A ∖ C ) ↔ ( x ∈ A ∧ ¬ x ∈ C ) ) ;;
+	step 4 : wff = eldif () |- ( x ∈ ( B ∖ C ) ↔ ( x ∈ B ∧ ¬ x ∈ C ) ) ;;
+	step 5 : wff = 3imtr4g (step 2, step 3, step 4) |- ( A ⊆ B → ( x ∈ ( A ∖ C ) → x ∈ ( B ∖ C ) ) ) ;;
+	step 6 : wff = ssrdv (step 5) |- ( A ⊆ B → ( A ∖ C ) ⊆ ( B ∖ C ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* If ` A ` is contained in ` B ` , then ` ( A \ C ) ` is contained in
+       ` ( B \ C ) ` .  Deduction form of ~ ssdif .  (Contributed by David
+       Moews, 1-May-2017.) */
+
+theorem ssdifd (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → A ⊆ B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A ∖ C ) ⊆ ( B ∖ C ) ) ;;
+}
+
+proof of ssdifd {
+	step 1 : wff = ssdif () |- ( A ⊆ B → ( A ∖ C ) ⊆ ( B ∖ C ) ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ph → ( A ∖ C ) ⊆ ( B ∖ C ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* If ` A ` is contained in ` B ` , then ` ( C \ B ) ` is contained in
+       ` ( C \ A ) ` .  Deduction form of ~ sscon .  (Contributed by David
+       Moews, 1-May-2017.) */
+
+theorem sscond (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → A ⊆ B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( C ∖ B ) ⊆ ( C ∖ A ) ) ;;
+}
+
+proof of sscond {
+	step 1 : wff = sscon () |- ( A ⊆ B → ( C ∖ B ) ⊆ ( C ∖ A ) ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ph → ( C ∖ B ) ⊆ ( C ∖ A ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* If ` A ` is contained in ` B ` , then ` ( A \ C ) ` is also contained in
+       ` B ` .  Deduction form of ~ ssdifss .  (Contributed by David Moews,
+       1-May-2017.) */
+
+theorem ssdifssd (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → A ⊆ B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A ∖ C ) ⊆ B ) ;;
+}
+
+proof of ssdifssd {
+	step 1 : wff = ssdifss () |- ( A ⊆ B → ( A ∖ C ) ⊆ B ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ph → ( A ∖ C ) ⊆ B ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* If ` A ` is contained in ` B ` and ` C ` is contained in ` D ` , then
+       ` ( A \ D ) ` is contained in ` ( B \ C ) ` .  Deduction form.
+       (Contributed by David Moews, 1-May-2017.) */
+
+theorem ssdif2d (ph : wff, A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( ph → A ⊆ B ) ;;
+	hyp 2 : wff = |- ( ph → C ⊆ D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A ∖ D ) ⊆ ( B ∖ C ) ) ;;
+}
+
+proof of ssdif2d {
+	step 1 : wff = sscond (hyp 2) |- ( ph → ( A ∖ D ) ⊆ ( A ∖ C ) ) ;;
+	step 2 : wff = ssdifd (hyp 1) |- ( ph → ( A ∖ C ) ⊆ ( B ∖ C ) ) ;;
+	step 3 : wff = sstrd (step 1, step 2) |- ( ph → ( A ∖ D ) ⊆ ( B ∖ C ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Expansion of membership in class union.  Theorem 12 of [Suppes] p. 25.
+       (Contributed by NM, 7-Aug-1994.) */
+
+theorem elun (A : class, B : class, C : class) disjointed(x A, x B, x C) {
+	prop 1 : wff = |- ( A ∈ ( B ∪ C ) ↔ ( A ∈ B ∨ A ∈ C ) ) ;;
+}
+
+proof of elun {
+	var x : set;;
+	step 1 : wff = elex () |- ( A ∈ ( B ∪ C ) → A ∈ _V ) ;;
+	step 2 : wff = elex () |- ( A ∈ B → A ∈ _V ) ;;
+	step 3 : wff = elex () |- ( A ∈ C → A ∈ _V ) ;;
+	step 4 : wff = jaoi (step 2, step 3) |- ( ( A ∈ B ∨ A ∈ C ) → A ∈ _V ) ;;
+	step 5 : wff = eleq1 () |- ( x = A → ( x ∈ B ↔ A ∈ B ) ) ;;
+	step 6 : wff = eleq1 () |- ( x = A → ( x ∈ C ↔ A ∈ C ) ) ;;
+	step 7 : wff = orbi12d (step 5, step 6) |- ( x = A → ( ( x ∈ B ∨ x ∈ C ) ↔ ( A ∈ B ∨ A ∈ C ) ) ) ;;
+	step 8 : wff = df-un () |- ( B ∪ C ) = { x | ( x ∈ B ∨ x ∈ C ) } ;;
+	step 9 : wff = elab2g (step 7, step 8) |- ( A ∈ _V → ( A ∈ ( B ∪ C ) ↔ ( A ∈ B ∨ A ∈ C ) ) ) ;;
+	step 10 : wff = pm5.21nii (step 1, step 4, step 9) |- ( A ∈ ( B ∪ C ) ↔ ( A ∈ B ∨ A ∈ C ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Inference from membership to union.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem uneqri (x : set, A : class, B : class, C : class) disjointed(x A, x B, x C) {
+	hyp 1 : wff = |- ( ( x ∈ A ∨ x ∈ B ) ↔ x ∈ C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∪ B ) = C ;;
+}
+
+proof of uneqri {
+	step 1 : wff = elun () |- ( x ∈ ( A ∪ B ) ↔ ( x ∈ A ∨ x ∈ B ) ) ;;
+	step 2 : wff = bitri (step 1, hyp 1) |- ( x ∈ ( A ∪ B ) ↔ x ∈ C ) ;;
+	step 3 : wff = eqriv (step 2) |- ( A ∪ B ) = C ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Idempotent law for union of classes.  Theorem 23 of [Suppes] p. 27.
+       (Contributed by NM, 5-Aug-1993.) */
+
+theorem unidm (A : class) disjointed(x A) {
+	prop 1 : wff = |- ( A ∪ A ) = A ;;
+}
+
+proof of unidm {
+	var x : set;;
+	step 1 : wff = oridm () |- ( ( x ∈ A ∨ x ∈ A ) ↔ x ∈ A ) ;;
+	step 2 : wff = uneqri (step 1) |- ( A ∪ A ) = A ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Commutative law for union of classes.  Exercise 6 of [TakeutiZaring]
+       p. 17.  (Contributed by NM, 25-Jun-1998.)  (Proof shortened by Andrew
+       Salmon, 26-Jun-2011.) */
+
+theorem uncom (A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( A ∪ B ) = ( B ∪ A ) ;;
+}
+
+proof of uncom {
+	var x : set;;
+	step 1 : wff = orcom () |- ( ( x ∈ A ∨ x ∈ B ) ↔ ( x ∈ B ∨ x ∈ A ) ) ;;
+	step 2 : wff = elun () |- ( x ∈ ( B ∪ A ) ↔ ( x ∈ B ∨ x ∈ A ) ) ;;
+	step 3 : wff = bitr4i (step 1, step 2) |- ( ( x ∈ A ∨ x ∈ B ) ↔ x ∈ ( B ∪ A ) ) ;;
+	step 4 : wff = uneqri (step 3) |- ( A ∪ B ) = ( B ∪ A ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* If a class equals the union of two other classes, then it equals the
+       union of those two classes commuted. ~ equncom was automatically derived
+       from ~ equncomVD using the tools program
+       translate_without_overwriting.cmd and minimizing.  (Contributed by Alan
+       Sare, 18-Feb-2012.) */
+
+theorem equncom (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A = ( B ∪ C ) ↔ A = ( C ∪ B ) ) ;;
+}
+
+proof of equncom {
+	step 1 : wff = uncom () |- ( B ∪ C ) = ( C ∪ B ) ;;
+	step 2 : wff = eqeq2i (step 1) |- ( A = ( B ∪ C ) ↔ A = ( C ∪ B ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Inference form of ~ equncom . ~ equncomi was automatically derived from
+       ~ equncomiVD using the tools program translate_without_overwriting.cmd
+       and minimizing.  (Contributed by Alan Sare, 18-Feb-2012.) */
+
+theorem equncomi (A : class, B : class, C : class)  {
+	hyp 1 : wff = |- A = ( B ∪ C ) ;;
+	-----------------------
+	prop 1 : wff = |- A = ( C ∪ B ) ;;
+}
+
+proof of equncomi {
+	step 1 : wff = equncom () |- ( A = ( B ∪ C ) ↔ A = ( C ∪ B ) ) ;;
+	step 2 : wff = mpbi (hyp 1, step 1) |- A = ( C ∪ B ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Equality theorem for union of two classes.  (Contributed by NM,
+       5-Aug-1993.) */
+
+theorem uneq1 (A : class, B : class, C : class) disjointed(x A, x B, x C) {
+	prop 1 : wff = |- ( A = B → ( A ∪ C ) = ( B ∪ C ) ) ;;
+}
+
+proof of uneq1 {
+	var x : set;;
+	step 1 : wff = eleq2 () |- ( A = B → ( x ∈ A ↔ x ∈ B ) ) ;;
+	step 2 : wff = orbi1d (step 1) |- ( A = B → ( ( x ∈ A ∨ x ∈ C ) ↔ ( x ∈ B ∨ x ∈ C ) ) ) ;;
+	step 3 : wff = elun () |- ( x ∈ ( A ∪ C ) ↔ ( x ∈ A ∨ x ∈ C ) ) ;;
+	step 4 : wff = elun () |- ( x ∈ ( B ∪ C ) ↔ ( x ∈ B ∨ x ∈ C ) ) ;;
+	step 5 : wff = 3bitr4g (step 2, step 3, step 4) |- ( A = B → ( x ∈ ( A ∪ C ) ↔ x ∈ ( B ∪ C ) ) ) ;;
+	step 6 : wff = eqrdv (step 5) |- ( A = B → ( A ∪ C ) = ( B ∪ C ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Equality theorem for the union of two classes.  (Contributed by NM,
+     5-Aug-1993.) */
+
+theorem uneq2 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A = B → ( C ∪ A ) = ( C ∪ B ) ) ;;
+}
+
+proof of uneq2 {
+	step 1 : wff = uneq1 () |- ( A = B → ( A ∪ C ) = ( B ∪ C ) ) ;;
+	step 2 : wff = uncom () |- ( C ∪ A ) = ( A ∪ C ) ;;
+	step 3 : wff = uncom () |- ( C ∪ B ) = ( B ∪ C ) ;;
+	step 4 : wff = 3eqtr4g (step 1, step 2, step 3) |- ( A = B → ( C ∪ A ) = ( C ∪ B ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Equality theorem for union of two classes.  (Contributed by NM,
+     29-Mar-1998.) */
+
+theorem uneq12 (A : class, B : class, C : class, D : class)  {
+	prop 1 : wff = |- ( ( A = B ∧ C = D ) → ( A ∪ C ) = ( B ∪ D ) ) ;;
+}
+
+proof of uneq12 {
+	step 1 : wff = uneq1 () |- ( A = B → ( A ∪ C ) = ( B ∪ C ) ) ;;
+	step 2 : wff = uneq2 () |- ( C = D → ( B ∪ C ) = ( B ∪ D ) ) ;;
+	step 3 : wff = sylan9eq (step 1, step 2) |- ( ( A = B ∧ C = D ) → ( A ∪ C ) = ( B ∪ D ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Inference adding union to the right in a class equality.  (Contributed
+       by NM, 30-Aug-1993.) */
+
+theorem uneq1i (A : class, B : class, C : class)  {
+	hyp 1 : wff = |- A = B ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∪ C ) = ( B ∪ C ) ;;
+}
+
+proof of uneq1i {
+	step 1 : wff = uneq1 () |- ( A = B → ( A ∪ C ) = ( B ∪ C ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( A ∪ C ) = ( B ∪ C ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Inference adding union to the left in a class equality.  (Contributed by
+       NM, 30-Aug-1993.) */
+
+theorem uneq2i (A : class, B : class, C : class)  {
+	hyp 1 : wff = |- A = B ;;
+	-----------------------
+	prop 1 : wff = |- ( C ∪ A ) = ( C ∪ B ) ;;
+}
+
+proof of uneq2i {
+	step 1 : wff = uneq2 () |- ( A = B → ( C ∪ A ) = ( C ∪ B ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( C ∪ A ) = ( C ∪ B ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Equality inference for union of two classes.  (Contributed by NM,
+         12-Aug-2004.)  (Proof shortened by Eric Schmidt, 26-Jan-2007.) */
+
+theorem uneq12i (A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- A = B ;;
+	hyp 2 : wff = |- C = D ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∪ C ) = ( B ∪ D ) ;;
+}
+
+proof of uneq12i {
+	step 1 : wff = uneq12 () |- ( ( A = B ∧ C = D ) → ( A ∪ C ) = ( B ∪ D ) ) ;;
+	step 2 : wff = mp2an (hyp 1, hyp 2, step 1) |- ( A ∪ C ) = ( B ∪ D ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction adding union to the right in a class equality.  (Contributed
+       by NM, 29-Mar-1998.) */
+
+theorem uneq1d (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A ∪ C ) = ( B ∪ C ) ) ;;
+}
+
+proof of uneq1d {
+	step 1 : wff = uneq1 () |- ( A = B → ( A ∪ C ) = ( B ∪ C ) ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ph → ( A ∪ C ) = ( B ∪ C ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction adding union to the left in a class equality.  (Contributed by
+       NM, 29-Mar-1998.) */
+
+theorem uneq2d (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( C ∪ A ) = ( C ∪ B ) ) ;;
+}
+
+proof of uneq2d {
+	step 1 : wff = uneq2 () |- ( A = B → ( C ∪ A ) = ( C ∪ B ) ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ph → ( C ∪ A ) = ( C ∪ B ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Equality deduction for union of two classes.  (Contributed by NM,
+         29-Sep-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
+
+theorem uneq12d (ph : wff, A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	hyp 2 : wff = |- ( ph → C = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A ∪ C ) = ( B ∪ D ) ) ;;
+}
+
+proof of uneq12d {
+	step 1 : wff = uneq12 () |- ( ( A = B ∧ C = D ) → ( A ∪ C ) = ( B ∪ D ) ) ;;
+	step 2 : wff = syl2anc (hyp 1, hyp 2, step 1) |- ( ph → ( A ∪ C ) = ( B ∪ D ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Bound-variable hypothesis builder for the union of classes.
+       (Contributed by NM, 15-Sep-2003.)  (Revised by Mario Carneiro,
+       14-Oct-2016.) */
+
+theorem nfun (x : set, A : class, B : class) disjointed(x y, y A, y B) {
+	hyp 1 : wff = |- F/_ x A ;;
+	hyp 2 : wff = |- F/_ x B ;;
+	-----------------------
+	prop 1 : wff = |- F/_ x ( A ∪ B ) ;;
+}
+
+proof of nfun {
+	var y : set;;
+	step 1 : wff = df-un () |- ( A ∪ B ) = { y | ( y ∈ A ∨ y ∈ B ) } ;;
+	step 2 : wff = nfcri (hyp 1) |- F/ x y ∈ A ;;
+	step 3 : wff = nfcri (hyp 2) |- F/ x y ∈ B ;;
+	step 4 : wff = nfor (step 2, step 3) |- F/ x ( y ∈ A ∨ y ∈ B ) ;;
+	step 5 : wff = nfab (step 4) |- F/_ x { y | ( y ∈ A ∨ y ∈ B ) } ;;
+	step 6 : wff = nfcxfr (step 1, step 5) |- F/_ x ( A ∪ B ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Associative law for union of classes.  Exercise 8 of [TakeutiZaring]
+       p. 17.  (Contributed by NM, 3-May-1994.)  (Proof shortened by Andrew
+       Salmon, 26-Jun-2011.) */
+
+theorem unass (A : class, B : class, C : class) disjointed(A x, B x, C x) {
+	prop 1 : wff = |- ( ( A ∪ B ) ∪ C ) = ( A ∪ ( B ∪ C ) ) ;;
+}
+
+proof of unass {
+	var x : set;;
+	step 1 : wff = elun () |- ( x ∈ ( A ∪ ( B ∪ C ) ) ↔ ( x ∈ A ∨ x ∈ ( B ∪ C ) ) ) ;;
+	step 2 : wff = elun () |- ( x ∈ ( B ∪ C ) ↔ ( x ∈ B ∨ x ∈ C ) ) ;;
+	step 3 : wff = orbi2i (step 2) |- ( ( x ∈ A ∨ x ∈ ( B ∪ C ) ) ↔ ( x ∈ A ∨ ( x ∈ B ∨ x ∈ C ) ) ) ;;
+	step 4 : wff = elun () |- ( x ∈ ( A ∪ B ) ↔ ( x ∈ A ∨ x ∈ B ) ) ;;
+	step 5 : wff = orbi1i (step 4) |- ( ( x ∈ ( A ∪ B ) ∨ x ∈ C ) ↔ ( ( x ∈ A ∨ x ∈ B ) ∨ x ∈ C ) ) ;;
+	step 6 : wff = orass () |- ( ( ( x ∈ A ∨ x ∈ B ) ∨ x ∈ C ) ↔ ( x ∈ A ∨ ( x ∈ B ∨ x ∈ C ) ) ) ;;
+	step 7 : wff = bitr2i (step 5, step 6) |- ( ( x ∈ A ∨ ( x ∈ B ∨ x ∈ C ) ) ↔ ( x ∈ ( A ∪ B ) ∨ x ∈ C ) ) ;;
+	step 8 : wff = 3bitrri (step 1, step 3, step 7) |- ( ( x ∈ ( A ∪ B ) ∨ x ∈ C ) ↔ x ∈ ( A ∪ ( B ∪ C ) ) ) ;;
+	step 9 : wff = uneqri (step 8) |- ( ( A ∪ B ) ∪ C ) = ( A ∪ ( B ∪ C ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* A rearrangement of union.  (Contributed by NM, 12-Aug-2004.) */
+
+theorem un12 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ∪ ( B ∪ C ) ) = ( B ∪ ( A ∪ C ) ) ;;
+}
+
+proof of un12 {
+	step 1 : wff = uncom () |- ( A ∪ B ) = ( B ∪ A ) ;;
+	step 2 : wff = uneq1i (step 1) |- ( ( A ∪ B ) ∪ C ) = ( ( B ∪ A ) ∪ C ) ;;
+	step 3 : wff = unass () |- ( ( A ∪ B ) ∪ C ) = ( A ∪ ( B ∪ C ) ) ;;
+	step 4 : wff = unass () |- ( ( B ∪ A ) ∪ C ) = ( B ∪ ( A ∪ C ) ) ;;
+	step 5 : wff = 3eqtr3i (step 2, step 3, step 4) |- ( A ∪ ( B ∪ C ) ) = ( B ∪ ( A ∪ C ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* A rearrangement of union.  (Contributed by NM, 12-Aug-2004.)  (Proof
+     shortened by Andrew Salmon, 26-Jun-2011.) */
+
+theorem un23 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( A ∪ B ) ∪ C ) = ( ( A ∪ C ) ∪ B ) ;;
+}
+
+proof of un23 {
+	step 1 : wff = unass () |- ( ( A ∪ B ) ∪ C ) = ( A ∪ ( B ∪ C ) ) ;;
+	step 2 : wff = un12 () |- ( A ∪ ( B ∪ C ) ) = ( B ∪ ( A ∪ C ) ) ;;
+	step 3 : wff = uncom () |- ( B ∪ ( A ∪ C ) ) = ( ( A ∪ C ) ∪ B ) ;;
+	step 4 : wff = 3eqtri (step 1, step 2, step 3) |- ( ( A ∪ B ) ∪ C ) = ( ( A ∪ C ) ∪ B ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A rearrangement of the union of 4 classes.  (Contributed by NM,
+     12-Aug-2004.) */
+
+theorem un4 (A : class, B : class, C : class, D : class)  {
+	prop 1 : wff = |- ( ( A ∪ B ) ∪ ( C ∪ D ) ) = ( ( A ∪ C ) ∪ ( B ∪ D ) ) ;;
+}
+
+proof of un4 {
+	step 1 : wff = un12 () |- ( B ∪ ( C ∪ D ) ) = ( C ∪ ( B ∪ D ) ) ;;
+	step 2 : wff = uneq2i (step 1) |- ( A ∪ ( B ∪ ( C ∪ D ) ) ) = ( A ∪ ( C ∪ ( B ∪ D ) ) ) ;;
+	step 3 : wff = unass () |- ( ( A ∪ B ) ∪ ( C ∪ D ) ) = ( A ∪ ( B ∪ ( C ∪ D ) ) ) ;;
+	step 4 : wff = unass () |- ( ( A ∪ C ) ∪ ( B ∪ D ) ) = ( A ∪ ( C ∪ ( B ∪ D ) ) ) ;;
+	step 5 : wff = 3eqtr4i (step 2, step 3, step 4) |- ( ( A ∪ B ) ∪ ( C ∪ D ) ) = ( ( A ∪ C ) ∪ ( B ∪ D ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Union distributes over itself.  (Contributed by NM, 17-Aug-2004.) */
+
+theorem unundi (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ∪ ( B ∪ C ) ) = ( ( A ∪ B ) ∪ ( A ∪ C ) ) ;;
+}
+
+proof of unundi {
+	step 1 : wff = unidm () |- ( A ∪ A ) = A ;;
+	step 2 : wff = uneq1i (step 1) |- ( ( A ∪ A ) ∪ ( B ∪ C ) ) = ( A ∪ ( B ∪ C ) ) ;;
+	step 3 : wff = un4 () |- ( ( A ∪ A ) ∪ ( B ∪ C ) ) = ( ( A ∪ B ) ∪ ( A ∪ C ) ) ;;
+	step 4 : wff = eqtr3i (step 2, step 3) |- ( A ∪ ( B ∪ C ) ) = ( ( A ∪ B ) ∪ ( A ∪ C ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Union distributes over itself.  (Contributed by NM, 17-Aug-2004.) */
+
+theorem unundir (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( A ∪ B ) ∪ C ) = ( ( A ∪ C ) ∪ ( B ∪ C ) ) ;;
+}
+
+proof of unundir {
+	step 1 : wff = unidm () |- ( C ∪ C ) = C ;;
+	step 2 : wff = uneq2i (step 1) |- ( ( A ∪ B ) ∪ ( C ∪ C ) ) = ( ( A ∪ B ) ∪ C ) ;;
+	step 3 : wff = un4 () |- ( ( A ∪ B ) ∪ ( C ∪ C ) ) = ( ( A ∪ C ) ∪ ( B ∪ C ) ) ;;
+	step 4 : wff = eqtr3i (step 2, step 3) |- ( ( A ∪ B ) ∪ C ) = ( ( A ∪ C ) ∪ ( B ∪ C ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Subclass relationship for union of classes.  Theorem 25 of [Suppes]
+       p. 27.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem ssun1 (A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- A ⊆ ( A ∪ B ) ;;
+}
+
+proof of ssun1 {
+	var x : set;;
+	step 1 : wff = orc () |- ( x ∈ A → ( x ∈ A ∨ x ∈ B ) ) ;;
+	step 2 : wff = elun () |- ( x ∈ ( A ∪ B ) ↔ ( x ∈ A ∨ x ∈ B ) ) ;;
+	step 3 : wff = sylibr (step 1, step 2) |- ( x ∈ A → x ∈ ( A ∪ B ) ) ;;
+	step 4 : wff = ssriv (step 3) |- A ⊆ ( A ∪ B ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Subclass relationship for union of classes.  (Contributed by NM,
+     30-Aug-1993.) */
+
+theorem ssun2 (A : class, B : class)  {
+	prop 1 : wff = |- A ⊆ ( B ∪ A ) ;;
+}
+
+proof of ssun2 {
+	step 1 : wff = ssun1 () |- A ⊆ ( A ∪ B ) ;;
+	step 2 : wff = uncom () |- ( A ∪ B ) = ( B ∪ A ) ;;
+	step 3 : wff = sseqtri (step 1, step 2) |- A ⊆ ( B ∪ A ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Subclass law for union of classes.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem ssun3 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ⊆ B → A ⊆ ( B ∪ C ) ) ;;
+}
+
+proof of ssun3 {
+	step 1 : wff = ssun1 () |- B ⊆ ( B ∪ C ) ;;
+	step 2 : wff = sstr2 () |- ( A ⊆ B → ( B ⊆ ( B ∪ C ) → A ⊆ ( B ∪ C ) ) ) ;;
+	step 3 : wff = mpi (step 1, step 2) |- ( A ⊆ B → A ⊆ ( B ∪ C ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Subclass law for union of classes.  (Contributed by NM, 14-Aug-1994.) */
+
+theorem ssun4 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ⊆ B → A ⊆ ( C ∪ B ) ) ;;
+}
+
+proof of ssun4 {
+	step 1 : wff = ssun2 () |- B ⊆ ( C ∪ B ) ;;
+	step 2 : wff = sstr2 () |- ( A ⊆ B → ( B ⊆ ( C ∪ B ) → A ⊆ ( C ∪ B ) ) ) ;;
+	step 3 : wff = mpi (step 1, step 2) |- ( A ⊆ B → A ⊆ ( C ∪ B ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Membership law for union of classes.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem elun1 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ∈ B → A ∈ ( B ∪ C ) ) ;;
+}
+
+proof of elun1 {
+	step 1 : wff = ssun1 () |- B ⊆ ( B ∪ C ) ;;
+	step 2 : wff = sseli (step 1) |- ( A ∈ B → A ∈ ( B ∪ C ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Membership law for union of classes.  (Contributed by NM, 30-Aug-1993.) */
+
+theorem elun2 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ∈ B → A ∈ ( C ∪ B ) ) ;;
+}
+
+proof of elun2 {
+	step 1 : wff = ssun2 () |- B ⊆ ( C ∪ B ) ;;
+	step 2 : wff = sseli (step 1) |- ( A ∈ B → A ∈ ( C ∪ B ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Subclass law for union of classes.  (Contributed by NM, 14-Oct-1999.)
+       (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
+
+theorem unss1 (A : class, B : class, C : class) disjointed(x A, x B, x C) {
+	prop 1 : wff = |- ( A ⊆ B → ( A ∪ C ) ⊆ ( B ∪ C ) ) ;;
+}
+
+proof of unss1 {
+	var x : set;;
+	step 1 : wff = ssel () |- ( A ⊆ B → ( x ∈ A → x ∈ B ) ) ;;
+	step 2 : wff = orim1d (step 1) |- ( A ⊆ B → ( ( x ∈ A ∨ x ∈ C ) → ( x ∈ B ∨ x ∈ C ) ) ) ;;
+	step 3 : wff = elun () |- ( x ∈ ( A ∪ C ) ↔ ( x ∈ A ∨ x ∈ C ) ) ;;
+	step 4 : wff = elun () |- ( x ∈ ( B ∪ C ) ↔ ( x ∈ B ∨ x ∈ C ) ) ;;
+	step 5 : wff = 3imtr4g (step 2, step 3, step 4) |- ( A ⊆ B → ( x ∈ ( A ∪ C ) → x ∈ ( B ∪ C ) ) ) ;;
+	step 6 : wff = ssrdv (step 5) |- ( A ⊆ B → ( A ∪ C ) ⊆ ( B ∪ C ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* A relationship between subclass and union.  Theorem 26 of [Suppes]
+       p. 27.  (Contributed by NM, 30-Aug-1993.)  (Proof shortened by Andrew
+       Salmon, 26-Jun-2011.) */
+
+theorem ssequn1 (A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( A ⊆ B ↔ ( A ∪ B ) = B ) ;;
+}
+
+proof of ssequn1 {
+	var x : set;;
+	step 1 : wff = bicom () |- ( ( x ∈ B ↔ ( x ∈ A ∨ x ∈ B ) ) ↔ ( ( x ∈ A ∨ x ∈ B ) ↔ x ∈ B ) ) ;;
+	step 2 : wff = pm4.72 () |- ( ( x ∈ A → x ∈ B ) ↔ ( x ∈ B ↔ ( x ∈ A ∨ x ∈ B ) ) ) ;;
+	step 3 : wff = elun () |- ( x ∈ ( A ∪ B ) ↔ ( x ∈ A ∨ x ∈ B ) ) ;;
+	step 4 : wff = bibi1i (step 3) |- ( ( x ∈ ( A ∪ B ) ↔ x ∈ B ) ↔ ( ( x ∈ A ∨ x ∈ B ) ↔ x ∈ B ) ) ;;
+	step 5 : wff = 3bitr4i (step 1, step 2, step 4) |- ( ( x ∈ A → x ∈ B ) ↔ ( x ∈ ( A ∪ B ) ↔ x ∈ B ) ) ;;
+	step 6 : wff = albii (step 5) |- ( ∀ x ( x ∈ A → x ∈ B ) ↔ ∀ x ( x ∈ ( A ∪ B ) ↔ x ∈ B ) ) ;;
+	step 7 : wff = dfss2 () |- ( A ⊆ B ↔ ∀ x ( x ∈ A → x ∈ B ) ) ;;
+	step 8 : wff = dfcleq () |- ( ( A ∪ B ) = B ↔ ∀ x ( x ∈ ( A ∪ B ) ↔ x ∈ B ) ) ;;
+	step 9 : wff = 3bitr4i (step 6, step 7, step 8) |- ( A ⊆ B ↔ ( A ∪ B ) = B ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Subclass law for union of classes.  Exercise 7 of [TakeutiZaring] p. 18.
+     (Contributed by NM, 14-Oct-1999.) */
+
+theorem unss2 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ⊆ B → ( C ∪ A ) ⊆ ( C ∪ B ) ) ;;
+}
+
+proof of unss2 {
+	step 1 : wff = unss1 () |- ( A ⊆ B → ( A ∪ C ) ⊆ ( B ∪ C ) ) ;;
+	step 2 : wff = uncom () |- ( C ∪ A ) = ( A ∪ C ) ;;
+	step 3 : wff = uncom () |- ( C ∪ B ) = ( B ∪ C ) ;;
+	step 4 : wff = 3sstr4g (step 1, step 2, step 3) |- ( A ⊆ B → ( C ∪ A ) ⊆ ( C ∪ B ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Subclass law for union of classes.  (Contributed by NM, 2-Jun-2004.) */
+
+theorem unss12 (A : class, B : class, C : class, D : class)  {
+	prop 1 : wff = |- ( ( A ⊆ B ∧ C ⊆ D ) → ( A ∪ C ) ⊆ ( B ∪ D ) ) ;;
+}
+
+proof of unss12 {
+	step 1 : wff = unss1 () |- ( A ⊆ B → ( A ∪ C ) ⊆ ( B ∪ C ) ) ;;
+	step 2 : wff = unss2 () |- ( C ⊆ D → ( B ∪ C ) ⊆ ( B ∪ D ) ) ;;
+	step 3 : wff = sylan9ss (step 1, step 2) |- ( ( A ⊆ B ∧ C ⊆ D ) → ( A ∪ C ) ⊆ ( B ∪ D ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A relationship between subclass and union.  (Contributed by NM,
+     13-Jun-1994.) */
+
+theorem ssequn2 (A : class, B : class)  {
+	prop 1 : wff = |- ( A ⊆ B ↔ ( B ∪ A ) = B ) ;;
+}
+
+proof of ssequn2 {
+	step 1 : wff = ssequn1 () |- ( A ⊆ B ↔ ( A ∪ B ) = B ) ;;
+	step 2 : wff = uncom () |- ( A ∪ B ) = ( B ∪ A ) ;;
+	step 3 : wff = eqeq1i (step 2) |- ( ( A ∪ B ) = B ↔ ( B ∪ A ) = B ) ;;
+	step 4 : wff = bitri (step 1, step 3) |- ( A ⊆ B ↔ ( B ∪ A ) = B ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* The union of two subclasses is a subclass.  Theorem 27 of [Suppes] p. 27
+       and its converse.  (Contributed by NM, 11-Jun-2004.) */
+
+theorem unss (A : class, B : class, C : class) disjointed(x A, x B, x C) {
+	prop 1 : wff = |- ( ( A ⊆ C ∧ B ⊆ C ) ↔ ( A ∪ B ) ⊆ C ) ;;
+}
+
+proof of unss {
+	var x : set;;
+	step 1 : wff = dfss2 () |- ( ( A ∪ B ) ⊆ C ↔ ∀ x ( x ∈ ( A ∪ B ) → x ∈ C ) ) ;;
+	step 2 : wff = 19.26 () |- ( ∀ x ( ( x ∈ A → x ∈ C ) ∧ ( x ∈ B → x ∈ C ) ) ↔ ( ∀ x ( x ∈ A → x ∈ C ) ∧ ∀ x ( x ∈ B → x ∈ C ) ) ) ;;
+	step 3 : wff = elun () |- ( x ∈ ( A ∪ B ) ↔ ( x ∈ A ∨ x ∈ B ) ) ;;
+	step 4 : wff = imbi1i (step 3) |- ( ( x ∈ ( A ∪ B ) → x ∈ C ) ↔ ( ( x ∈ A ∨ x ∈ B ) → x ∈ C ) ) ;;
+	step 5 : wff = jaob () |- ( ( ( x ∈ A ∨ x ∈ B ) → x ∈ C ) ↔ ( ( x ∈ A → x ∈ C ) ∧ ( x ∈ B → x ∈ C ) ) ) ;;
+	step 6 : wff = bitri (step 4, step 5) |- ( ( x ∈ ( A ∪ B ) → x ∈ C ) ↔ ( ( x ∈ A → x ∈ C ) ∧ ( x ∈ B → x ∈ C ) ) ) ;;
+	step 7 : wff = albii (step 6) |- ( ∀ x ( x ∈ ( A ∪ B ) → x ∈ C ) ↔ ∀ x ( ( x ∈ A → x ∈ C ) ∧ ( x ∈ B → x ∈ C ) ) ) ;;
+	step 8 : wff = dfss2 () |- ( A ⊆ C ↔ ∀ x ( x ∈ A → x ∈ C ) ) ;;
+	step 9 : wff = dfss2 () |- ( B ⊆ C ↔ ∀ x ( x ∈ B → x ∈ C ) ) ;;
+	step 10 : wff = anbi12i (step 8, step 9) |- ( ( A ⊆ C ∧ B ⊆ C ) ↔ ( ∀ x ( x ∈ A → x ∈ C ) ∧ ∀ x ( x ∈ B → x ∈ C ) ) ) ;;
+	step 11 : wff = 3bitr4i (step 2, step 7, step 10) |- ( ∀ x ( x ∈ ( A ∪ B ) → x ∈ C ) ↔ ( A ⊆ C ∧ B ⊆ C ) ) ;;
+	step 12 : wff = bitr2i (step 1, step 11) |- ( ( A ⊆ C ∧ B ⊆ C ) ↔ ( A ∪ B ) ⊆ C ) ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* An inference showing the union of two subclasses is a subclass.
+       (Contributed by Raph Levien, 10-Dec-2002.) */
+
+theorem unssi (A : class, B : class, C : class)  {
+	hyp 1 : wff = |- A ⊆ C ;;
+	hyp 2 : wff = |- B ⊆ C ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∪ B ) ⊆ C ;;
+}
+
+proof of unssi {
+	step 1 : wff = pm3.2i (hyp 1, hyp 2) |- ( A ⊆ C ∧ B ⊆ C ) ;;
+	step 2 : wff = unss () |- ( ( A ⊆ C ∧ B ⊆ C ) ↔ ( A ∪ B ) ⊆ C ) ;;
+	step 3 : wff = mpbi (step 1, step 2) |- ( A ∪ B ) ⊆ C ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A deduction showing the union of two subclasses is a subclass.
+       (Contributed by Jonathan Ben-Naim, 3-Jun-2011.) */
+
+theorem unssd (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → A ⊆ C ) ;;
+	hyp 2 : wff = |- ( ph → B ⊆ C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A ∪ B ) ⊆ C ) ;;
+}
+
+proof of unssd {
+	step 1 : wff = unss () |- ( ( A ⊆ C ∧ B ⊆ C ) ↔ ( A ∪ B ) ⊆ C ) ;;
+	step 2 : wff = biimpi (step 1) |- ( ( A ⊆ C ∧ B ⊆ C ) → ( A ∪ B ) ⊆ C ) ;;
+	step 3 : wff = syl2anc (hyp 1, hyp 2, step 2) |- ( ph → ( A ∪ B ) ⊆ C ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* If ` ( A u. B ) ` is contained in ` C ` , so is ` A ` .  One-way
+       deduction form of ~ unss .  Partial converse of ~ unssd .  (Contributed
+       by David Moews, 1-May-2017.) */
+
+theorem unssad (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → ( A ∪ B ) ⊆ C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → A ⊆ C ) ;;
+}
+
+proof of unssad {
+	step 1 : wff = unss () |- ( ( A ⊆ C ∧ B ⊆ C ) ↔ ( A ∪ B ) ⊆ C ) ;;
+	step 2 : wff = sylibr (hyp 1, step 1) |- ( ph → ( A ⊆ C ∧ B ⊆ C ) ) ;;
+	step 3 : wff = simpld (step 2) |- ( ph → A ⊆ C ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* If ` ( A u. B ) ` is contained in ` C ` , so is ` B ` .  One-way
+       deduction form of ~ unss .  Partial converse of ~ unssd .  (Contributed
+       by David Moews, 1-May-2017.) */
+
+theorem unssbd (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → ( A ∪ B ) ⊆ C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → B ⊆ C ) ;;
+}
+
+proof of unssbd {
+	step 1 : wff = unss () |- ( ( A ⊆ C ∧ B ⊆ C ) ↔ ( A ∪ B ) ⊆ C ) ;;
+	step 2 : wff = sylibr (hyp 1, step 1) |- ( ph → ( A ⊆ C ∧ B ⊆ C ) ) ;;
+	step 3 : wff = simprd (step 2) |- ( ph → B ⊆ C ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A condition that implies inclusion in the union of two classes.
+     (Contributed by NM, 23-Nov-2003.) */
+
+theorem ssun (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( A ⊆ B ∨ A ⊆ C ) → A ⊆ ( B ∪ C ) ) ;;
+}
+
+proof of ssun {
+	step 1 : wff = ssun3 () |- ( A ⊆ B → A ⊆ ( B ∪ C ) ) ;;
+	step 2 : wff = ssun4 () |- ( A ⊆ C → A ⊆ ( B ∪ C ) ) ;;
+	step 3 : wff = jaoi (step 1, step 2) |- ( ( A ⊆ B ∨ A ⊆ C ) → A ⊆ ( B ∪ C ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Restricted existential quantification over union.  (Contributed by Jeff
+     Madsen, 5-Jan-2011.) */
+
+theorem rexun (ph : wff, x : set, A : class, B : class)  {
+	prop 1 : wff = |- ( ∃ x ∈ ( A ∪ B ) ph ↔ ( ∃ x ∈ A ph ∨ ∃ x ∈ B ph ) ) ;;
+}
+
+proof of rexun {
+	step 1 : wff = df-rex () |- ( ∃ x ∈ ( A ∪ B ) ph ↔ ∃ x ( x ∈ ( A ∪ B ) ∧ ph ) ) ;;
+	step 2 : wff = 19.43 () |- ( ∃ x ( ( x ∈ A ∧ ph ) ∨ ( x ∈ B ∧ ph ) ) ↔ ( ∃ x ( x ∈ A ∧ ph ) ∨ ∃ x ( x ∈ B ∧ ph ) ) ) ;;
+	step 3 : wff = elun () |- ( x ∈ ( A ∪ B ) ↔ ( x ∈ A ∨ x ∈ B ) ) ;;
+	step 4 : wff = anbi1i (step 3) |- ( ( x ∈ ( A ∪ B ) ∧ ph ) ↔ ( ( x ∈ A ∨ x ∈ B ) ∧ ph ) ) ;;
+	step 5 : wff = andir () |- ( ( ( x ∈ A ∨ x ∈ B ) ∧ ph ) ↔ ( ( x ∈ A ∧ ph ) ∨ ( x ∈ B ∧ ph ) ) ) ;;
+	step 6 : wff = bitri (step 4, step 5) |- ( ( x ∈ ( A ∪ B ) ∧ ph ) ↔ ( ( x ∈ A ∧ ph ) ∨ ( x ∈ B ∧ ph ) ) ) ;;
+	step 7 : wff = exbii (step 6) |- ( ∃ x ( x ∈ ( A ∪ B ) ∧ ph ) ↔ ∃ x ( ( x ∈ A ∧ ph ) ∨ ( x ∈ B ∧ ph ) ) ) ;;
+	step 8 : wff = df-rex () |- ( ∃ x ∈ A ph ↔ ∃ x ( x ∈ A ∧ ph ) ) ;;
+	step 9 : wff = df-rex () |- ( ∃ x ∈ B ph ↔ ∃ x ( x ∈ B ∧ ph ) ) ;;
+	step 10 : wff = orbi12i (step 8, step 9) |- ( ( ∃ x ∈ A ph ∨ ∃ x ∈ B ph ) ↔ ( ∃ x ( x ∈ A ∧ ph ) ∨ ∃ x ( x ∈ B ∧ ph ) ) ) ;;
+	step 11 : wff = 3bitr4i (step 2, step 7, step 10) |- ( ∃ x ( x ∈ ( A ∪ B ) ∧ ph ) ↔ ( ∃ x ∈ A ph ∨ ∃ x ∈ B ph ) ) ;;
+	step 12 : wff = bitri (step 1, step 11) |- ( ∃ x ∈ ( A ∪ B ) ph ↔ ( ∃ x ∈ A ph ∨ ∃ x ∈ B ph ) ) ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* Restricted quantification over a union.  (Contributed by Scott Fenton,
+     12-Apr-2011.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) */
+
+theorem ralunb (ph : wff, x : set, A : class, B : class)  {
+	prop 1 : wff = |- ( ∀ x ∈ ( A ∪ B ) ph ↔ ( ∀ x ∈ A ph ∧ ∀ x ∈ B ph ) ) ;;
+}
+
+proof of ralunb {
+	step 1 : wff = elun () |- ( x ∈ ( A ∪ B ) ↔ ( x ∈ A ∨ x ∈ B ) ) ;;
+	step 2 : wff = imbi1i (step 1) |- ( ( x ∈ ( A ∪ B ) → ph ) ↔ ( ( x ∈ A ∨ x ∈ B ) → ph ) ) ;;
+	step 3 : wff = jaob () |- ( ( ( x ∈ A ∨ x ∈ B ) → ph ) ↔ ( ( x ∈ A → ph ) ∧ ( x ∈ B → ph ) ) ) ;;
+	step 4 : wff = bitri (step 2, step 3) |- ( ( x ∈ ( A ∪ B ) → ph ) ↔ ( ( x ∈ A → ph ) ∧ ( x ∈ B → ph ) ) ) ;;
+	step 5 : wff = albii (step 4) |- ( ∀ x ( x ∈ ( A ∪ B ) → ph ) ↔ ∀ x ( ( x ∈ A → ph ) ∧ ( x ∈ B → ph ) ) ) ;;
+	step 6 : wff = 19.26 () |- ( ∀ x ( ( x ∈ A → ph ) ∧ ( x ∈ B → ph ) ) ↔ ( ∀ x ( x ∈ A → ph ) ∧ ∀ x ( x ∈ B → ph ) ) ) ;;
+	step 7 : wff = bitri (step 5, step 6) |- ( ∀ x ( x ∈ ( A ∪ B ) → ph ) ↔ ( ∀ x ( x ∈ A → ph ) ∧ ∀ x ( x ∈ B → ph ) ) ) ;;
+	step 8 : wff = df-ral () |- ( ∀ x ∈ ( A ∪ B ) ph ↔ ∀ x ( x ∈ ( A ∪ B ) → ph ) ) ;;
+	step 9 : wff = df-ral () |- ( ∀ x ∈ A ph ↔ ∀ x ( x ∈ A → ph ) ) ;;
+	step 10 : wff = df-ral () |- ( ∀ x ∈ B ph ↔ ∀ x ( x ∈ B → ph ) ) ;;
+	step 11 : wff = anbi12i (step 9, step 10) |- ( ( ∀ x ∈ A ph ∧ ∀ x ∈ B ph ) ↔ ( ∀ x ( x ∈ A → ph ) ∧ ∀ x ( x ∈ B → ph ) ) ) ;;
+	step 12 : wff = 3bitr4i (step 7, step 8, step 11) |- ( ∀ x ∈ ( A ∪ B ) ph ↔ ( ∀ x ∈ A ph ∧ ∀ x ∈ B ph ) ) ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* Restricted quantification over union.  (Contributed by Jeff Madsen,
+     2-Sep-2009.) */
+
+theorem ralun (ph : wff, x : set, A : class, B : class)  {
+	prop 1 : wff = |- ( ( ∀ x ∈ A ph ∧ ∀ x ∈ B ph ) → ∀ x ∈ ( A ∪ B ) ph ) ;;
+}
+
+proof of ralun {
+	step 1 : wff = ralunb () |- ( ∀ x ∈ ( A ∪ B ) ph ↔ ( ∀ x ∈ A ph ∧ ∀ x ∈ B ph ) ) ;;
+	step 2 : wff = biimpri (step 1) |- ( ( ∀ x ∈ A ph ∧ ∀ x ∈ B ph ) → ∀ x ∈ ( A ∪ B ) ph ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Expansion of membership in an intersection of two classes.  Theorem 12
+       of [Suppes] p. 25.  (Contributed by NM, 29-Apr-1994.) */
+
+theorem elin (A : class, B : class, C : class) disjointed(x A, x B, x C) {
+	prop 1 : wff = |- ( A ∈ ( B ∩ C ) ↔ ( A ∈ B ∧ A ∈ C ) ) ;;
+}
+
+proof of elin {
+	var x : set;;
+	step 1 : wff = elex () |- ( A ∈ ( B ∩ C ) → A ∈ _V ) ;;
+	step 2 : wff = elex () |- ( A ∈ C → A ∈ _V ) ;;
+	step 3 : wff = adantl (step 2) |- ( ( A ∈ B ∧ A ∈ C ) → A ∈ _V ) ;;
+	step 4 : wff = eleq1 () |- ( x = A → ( x ∈ B ↔ A ∈ B ) ) ;;
+	step 5 : wff = eleq1 () |- ( x = A → ( x ∈ C ↔ A ∈ C ) ) ;;
+	step 6 : wff = anbi12d (step 4, step 5) |- ( x = A → ( ( x ∈ B ∧ x ∈ C ) ↔ ( A ∈ B ∧ A ∈ C ) ) ) ;;
+	step 7 : wff = df-in () |- ( B ∩ C ) = { x | ( x ∈ B ∧ x ∈ C ) } ;;
+	step 8 : wff = elab2g (step 6, step 7) |- ( A ∈ _V → ( A ∈ ( B ∩ C ) ↔ ( A ∈ B ∧ A ∈ C ) ) ) ;;
+	step 9 : wff = pm5.21nii (step 1, step 3, step 8) |- ( A ∈ ( B ∩ C ) ↔ ( A ∈ B ∧ A ∈ C ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Membership in a class defined as an intersection.  (Contributed by
+       Stefan O'Rear, 29-Mar-2015.) */
+
+theorem elin2 (A : class, B : class, C : class, X : class)  {
+	hyp 1 : wff = |- X = ( B ∩ C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ X ↔ ( A ∈ B ∧ A ∈ C ) ) ;;
+}
+
+proof of elin2 {
+	step 1 : wff = eleq2i (hyp 1) |- ( A ∈ X ↔ A ∈ ( B ∩ C ) ) ;;
+	step 2 : wff = elin () |- ( A ∈ ( B ∩ C ) ↔ ( A ∈ B ∧ A ∈ C ) ) ;;
+	step 3 : wff = bitri (step 1, step 2) |- ( A ∈ X ↔ ( A ∈ B ∧ A ∈ C ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Membership in a class defined as a ternary intersection.  (Contributed
+       by Stefan O'Rear, 29-Mar-2015.) */
+
+theorem elin3 (A : class, B : class, C : class, D : class, X : class)  {
+	hyp 1 : wff = |- X = ( ( B ∩ C ) ∩ D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ X ↔ ( A ∈ B ∧ A ∈ C ∧ A ∈ D ) ) ;;
+}
+
+proof of elin3 {
+	step 1 : wff = elin () |- ( A ∈ ( B ∩ C ) ↔ ( A ∈ B ∧ A ∈ C ) ) ;;
+	step 2 : wff = anbi1i (step 1) |- ( ( A ∈ ( B ∩ C ) ∧ A ∈ D ) ↔ ( ( A ∈ B ∧ A ∈ C ) ∧ A ∈ D ) ) ;;
+	step 3 : wff = elin2 (hyp 1) |- ( A ∈ X ↔ ( A ∈ ( B ∩ C ) ∧ A ∈ D ) ) ;;
+	step 4 : wff = df-3an () |- ( ( A ∈ B ∧ A ∈ C ∧ A ∈ D ) ↔ ( ( A ∈ B ∧ A ∈ C ) ∧ A ∈ D ) ) ;;
+	step 5 : wff = 3bitr4i (step 2, step 3, step 4) |- ( A ∈ X ↔ ( A ∈ B ∧ A ∈ C ∧ A ∈ D ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Commutative law for intersection of classes.  Exercise 7 of
+       [TakeutiZaring] p. 17.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem incom (A : class, B : class) disjointed(A x, B x) {
+	prop 1 : wff = |- ( A ∩ B ) = ( B ∩ A ) ;;
+}
+
+proof of incom {
+	var x : set;;
+	step 1 : wff = ancom () |- ( ( x ∈ A ∧ x ∈ B ) ↔ ( x ∈ B ∧ x ∈ A ) ) ;;
+	step 2 : wff = elin () |- ( x ∈ ( A ∩ B ) ↔ ( x ∈ A ∧ x ∈ B ) ) ;;
+	step 3 : wff = elin () |- ( x ∈ ( B ∩ A ) ↔ ( x ∈ B ∧ x ∈ A ) ) ;;
+	step 4 : wff = 3bitr4i (step 1, step 2, step 3) |- ( x ∈ ( A ∩ B ) ↔ x ∈ ( B ∩ A ) ) ;;
+	step 5 : wff = eqriv (step 4) |- ( A ∩ B ) = ( B ∩ A ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Inference from membership to intersection.  (Contributed by NM,
+       5-Aug-1993.) */
+
+theorem ineqri (x : set, A : class, B : class, C : class) disjointed(x A, x B, x C) {
+	hyp 1 : wff = |- ( ( x ∈ A ∧ x ∈ B ) ↔ x ∈ C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∩ B ) = C ;;
+}
+
+proof of ineqri {
+	step 1 : wff = elin () |- ( x ∈ ( A ∩ B ) ↔ ( x ∈ A ∧ x ∈ B ) ) ;;
+	step 2 : wff = bitri (step 1, hyp 1) |- ( x ∈ ( A ∩ B ) ↔ x ∈ C ) ;;
+	step 3 : wff = eqriv (step 2) |- ( A ∩ B ) = C ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Equality theorem for intersection of two classes.  (Contributed by NM,
+       14-Dec-1993.) */
+
+theorem ineq1 (A : class, B : class, C : class) disjointed(x A, x B, x C) {
+	prop 1 : wff = |- ( A = B → ( A ∩ C ) = ( B ∩ C ) ) ;;
+}
+
+proof of ineq1 {
+	var x : set;;
+	step 1 : wff = eleq2 () |- ( A = B → ( x ∈ A ↔ x ∈ B ) ) ;;
+	step 2 : wff = anbi1d (step 1) |- ( A = B → ( ( x ∈ A ∧ x ∈ C ) ↔ ( x ∈ B ∧ x ∈ C ) ) ) ;;
+	step 3 : wff = elin () |- ( x ∈ ( A ∩ C ) ↔ ( x ∈ A ∧ x ∈ C ) ) ;;
+	step 4 : wff = elin () |- ( x ∈ ( B ∩ C ) ↔ ( x ∈ B ∧ x ∈ C ) ) ;;
+	step 5 : wff = 3bitr4g (step 2, step 3, step 4) |- ( A = B → ( x ∈ ( A ∩ C ) ↔ x ∈ ( B ∩ C ) ) ) ;;
+	step 6 : wff = eqrdv (step 5) |- ( A = B → ( A ∩ C ) = ( B ∩ C ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Equality theorem for intersection of two classes.  (Contributed by NM,
+     26-Dec-1993.) */
+
+theorem ineq2 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A = B → ( C ∩ A ) = ( C ∩ B ) ) ;;
+}
+
+proof of ineq2 {
+	step 1 : wff = ineq1 () |- ( A = B → ( A ∩ C ) = ( B ∩ C ) ) ;;
+	step 2 : wff = incom () |- ( C ∩ A ) = ( A ∩ C ) ;;
+	step 3 : wff = incom () |- ( C ∩ B ) = ( B ∩ C ) ;;
+	step 4 : wff = 3eqtr4g (step 1, step 2, step 3) |- ( A = B → ( C ∩ A ) = ( C ∩ B ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Equality theorem for intersection of two classes.  (Contributed by NM,
+     8-May-1994.) */
+
+theorem ineq12 (A : class, B : class, C : class, D : class)  {
+	prop 1 : wff = |- ( ( A = B ∧ C = D ) → ( A ∩ C ) = ( B ∩ D ) ) ;;
+}
+
+proof of ineq12 {
+	step 1 : wff = ineq1 () |- ( A = B → ( A ∩ C ) = ( B ∩ C ) ) ;;
+	step 2 : wff = ineq2 () |- ( C = D → ( B ∩ C ) = ( B ∩ D ) ) ;;
+	step 3 : wff = sylan9eq (step 1, step 2) |- ( ( A = B ∧ C = D ) → ( A ∩ C ) = ( B ∩ D ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Equality inference for intersection of two classes.  (Contributed by NM,
+       26-Dec-1993.) */
+
+theorem ineq1i (A : class, B : class, C : class)  {
+	hyp 1 : wff = |- A = B ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∩ C ) = ( B ∩ C ) ;;
+}
+
+proof of ineq1i {
+	step 1 : wff = ineq1 () |- ( A = B → ( A ∩ C ) = ( B ∩ C ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( A ∩ C ) = ( B ∩ C ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Equality inference for intersection of two classes.  (Contributed by NM,
+       26-Dec-1993.) */
+
+theorem ineq2i (A : class, B : class, C : class)  {
+	hyp 1 : wff = |- A = B ;;
+	-----------------------
+	prop 1 : wff = |- ( C ∩ A ) = ( C ∩ B ) ;;
+}
+
+proof of ineq2i {
+	step 1 : wff = ineq2 () |- ( A = B → ( C ∩ A ) = ( C ∩ B ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( C ∩ A ) = ( C ∩ B ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Equality inference for intersection of two classes.  (Contributed by
+         NM, 24-Jun-2004.)  (Proof shortened by Eric Schmidt, 26-Jan-2007.) */
+
+theorem ineq12i (A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- A = B ;;
+	hyp 2 : wff = |- C = D ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∩ C ) = ( B ∩ D ) ;;
+}
+
+proof of ineq12i {
+	step 1 : wff = ineq12 () |- ( ( A = B ∧ C = D ) → ( A ∩ C ) = ( B ∩ D ) ) ;;
+	step 2 : wff = mp2an (hyp 1, hyp 2, step 1) |- ( A ∩ C ) = ( B ∩ D ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Equality deduction for intersection of two classes.  (Contributed by NM,
+       10-Apr-1994.) */
+
+theorem ineq1d (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A ∩ C ) = ( B ∩ C ) ) ;;
+}
+
+proof of ineq1d {
+	step 1 : wff = ineq1 () |- ( A = B → ( A ∩ C ) = ( B ∩ C ) ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ph → ( A ∩ C ) = ( B ∩ C ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Equality deduction for intersection of two classes.  (Contributed by NM,
+       10-Apr-1994.) */
+
+theorem ineq2d (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( C ∩ A ) = ( C ∩ B ) ) ;;
+}
+
+proof of ineq2d {
+	step 1 : wff = ineq2 () |- ( A = B → ( C ∩ A ) = ( C ∩ B ) ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ph → ( C ∩ A ) = ( C ∩ B ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Equality deduction for intersection of two classes.  (Contributed by
+         NM, 24-Jun-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
+
+theorem ineq12d (ph : wff, A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	hyp 2 : wff = |- ( ph → C = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A ∩ C ) = ( B ∩ D ) ) ;;
+}
+
+proof of ineq12d {
+	step 1 : wff = ineq12 () |- ( ( A = B ∧ C = D ) → ( A ∩ C ) = ( B ∩ D ) ) ;;
+	step 2 : wff = syl2anc (hyp 1, hyp 2, step 1) |- ( ph → ( A ∩ C ) = ( B ∩ D ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Equality deduction for intersection of two classes.  (Contributed by
+         NM, 7-Feb-2007.) */
+
+theorem ineqan12d (ph : wff, ps : wff, A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	hyp 2 : wff = |- ( ps → C = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ ps ) → ( A ∩ C ) = ( B ∩ D ) ) ;;
+}
+
+proof of ineqan12d {
+	step 1 : wff = ineq12 () |- ( ( A = B ∧ C = D ) → ( A ∩ C ) = ( B ∩ D ) ) ;;
+	step 2 : wff = syl2an (hyp 1, hyp 2, step 1) |- ( ( ph ∧ ps ) → ( A ∩ C ) = ( B ∩ D ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A frequently-used variant of subclass definition ~ df-ss .  (Contributed
+     by NM, 10-Jan-2015.) */
+
+theorem dfss1 (A : class, B : class)  {
+	prop 1 : wff = |- ( A ⊆ B ↔ ( B ∩ A ) = A ) ;;
+}
+
+proof of dfss1 {
+	step 1 : wff = df-ss () |- ( A ⊆ B ↔ ( A ∩ B ) = A ) ;;
+	step 2 : wff = incom () |- ( A ∩ B ) = ( B ∩ A ) ;;
+	step 3 : wff = eqeq1i (step 2) |- ( ( A ∩ B ) = A ↔ ( B ∩ A ) = A ) ;;
+	step 4 : wff = bitri (step 1, step 3) |- ( A ⊆ B ↔ ( B ∩ A ) = A ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Another definition of subclasshood.  Similar to ~ df-ss , ~ dfss , and
+     ~ dfss1 .  (Contributed by David Moews, 1-May-2017.) */
+
+theorem dfss5 (A : class, B : class)  {
+	prop 1 : wff = |- ( A ⊆ B ↔ A = ( B ∩ A ) ) ;;
+}
+
+proof of dfss5 {
+	step 1 : wff = dfss1 () |- ( A ⊆ B ↔ ( B ∩ A ) = A ) ;;
+	step 2 : wff = eqcom () |- ( ( B ∩ A ) = A ↔ A = ( B ∩ A ) ) ;;
+	step 3 : wff = bitri (step 1, step 2) |- ( A ⊆ B ↔ A = ( B ∩ A ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Bound-variable hypothesis builder for the intersection of classes.
+       (Contributed by NM, 15-Sep-2003.)  (Revised by Mario Carneiro,
+       14-Oct-2016.) */
+
+theorem nfin (x : set, A : class, B : class) disjointed(x y, y A, y B) {
+	hyp 1 : wff = |- F/_ x A ;;
+	hyp 2 : wff = |- F/_ x B ;;
+	-----------------------
+	prop 1 : wff = |- F/_ x ( A ∩ B ) ;;
+}
+
+proof of nfin {
+	var y : set;;
+	step 1 : wff = dfin5 () |- ( A ∩ B ) = { y ∈ A | y ∈ B } ;;
+	step 2 : wff = nfcri (hyp 2) |- F/ x y ∈ B ;;
+	step 3 : wff = nfrab (step 2, hyp 1) |- F/_ x { y ∈ A | y ∈ B } ;;
+	step 4 : wff = nfcxfr (step 1, step 3) |- F/_ x ( A ∩ B ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Distribute proper substitution through an intersection relation.
+       (Contributed by Alan Sare, 22-Jul-2012.) */
+
+theorem csbing (x : set, A : class, B : class, C : class, D : class) disjointed(A y, C y, D y, x y) {
+	prop 1 : wff = |- ( A ∈ B → [_ A / x ]_ ( C ∩ D ) = ( [_ A / x ]_ C ∩ [_ A / x ]_ D ) ) ;;
+}
+
+proof of csbing {
+	var y : set;;
+	step 1 : wff = csbeq1 () |- ( y = A → [_ y / x ]_ ( C ∩ D ) = [_ A / x ]_ ( C ∩ D ) ) ;;
+	step 2 : wff = csbeq1 () |- ( y = A → [_ y / x ]_ C = [_ A / x ]_ C ) ;;
+	step 3 : wff = csbeq1 () |- ( y = A → [_ y / x ]_ D = [_ A / x ]_ D ) ;;
+	step 4 : wff = ineq12d (step 2, step 3) |- ( y = A → ( [_ y / x ]_ C ∩ [_ y / x ]_ D ) = ( [_ A / x ]_ C ∩ [_ A / x ]_ D ) ) ;;
+	step 5 : wff = eqeq12d (step 1, step 4) |- ( y = A → ( [_ y / x ]_ ( C ∩ D ) = ( [_ y / x ]_ C ∩ [_ y / x ]_ D ) ↔ [_ A / x ]_ ( C ∩ D ) = ( [_ A / x ]_ C ∩ [_ A / x ]_ D ) ) ) ;;
+	step 6 : wff = vex () |- y ∈ _V ;;
+	step 7 : wff = nfcsb1v () |- F/_ x [_ y / x ]_ C ;;
+	step 8 : wff = nfcsb1v () |- F/_ x [_ y / x ]_ D ;;
+	step 9 : wff = nfin (step 7, step 8) |- F/_ x ( [_ y / x ]_ C ∩ [_ y / x ]_ D ) ;;
+	step 10 : wff = csbeq1a () |- ( x = y → C = [_ y / x ]_ C ) ;;
+	step 11 : wff = csbeq1a () |- ( x = y → D = [_ y / x ]_ D ) ;;
+	step 12 : wff = ineq12d (step 10, step 11) |- ( x = y → ( C ∩ D ) = ( [_ y / x ]_ C ∩ [_ y / x ]_ D ) ) ;;
+	step 13 : wff = csbief (step 6, step 9, step 12) |- [_ y / x ]_ ( C ∩ D ) = ( [_ y / x ]_ C ∩ [_ y / x ]_ D ) ;;
+	step 14 : wff = vtoclg (step 5, step 13) |- ( A ∈ B → [_ A / x ]_ ( C ∩ D ) = ( [_ A / x ]_ C ∩ [_ A / x ]_ D ) ) ;;
+	qed prop 1 = step 14 ;;
+}
+
+/* Deduction from a wff to a restricted class abstraction.  (Contributed by
+       NM, 14-Jan-2014.) */
+
+theorem rabbi2dva (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x ph, x A, x B) {
+	hyp 1 : wff = |- ( ( ph ∧ x ∈ A ) → ( x ∈ B ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A ∩ B ) = { x ∈ A | ps } ) ;;
+}
+
+proof of rabbi2dva {
+	step 1 : wff = dfin5 () |- ( A ∩ B ) = { x ∈ A | x ∈ B } ;;
+	step 2 : wff = rabbidva (hyp 1) |- ( ph → { x ∈ A | x ∈ B } = { x ∈ A | ps } ) ;;
+	step 3 : wff = syl5eq (step 1, step 2) |- ( ph → ( A ∩ B ) = { x ∈ A | ps } ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Idempotent law for intersection of classes.  Theorem 15 of [Suppes]
+       p. 26.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem inidm (A : class) disjointed(x A) {
+	prop 1 : wff = |- ( A ∩ A ) = A ;;
+}
+
+proof of inidm {
+	var x : set;;
+	step 1 : wff = anidm () |- ( ( x ∈ A ∧ x ∈ A ) ↔ x ∈ A ) ;;
+	step 2 : wff = ineqri (step 1) |- ( A ∩ A ) = A ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Associative law for intersection of classes.  Exercise 9 of
+       [TakeutiZaring] p. 17.  (Contributed by NM, 3-May-1994.) */
+
+theorem inass (A : class, B : class, C : class) disjointed(A x, B x, C x) {
+	prop 1 : wff = |- ( ( A ∩ B ) ∩ C ) = ( A ∩ ( B ∩ C ) ) ;;
+}
+
+proof of inass {
+	var x : set;;
+	step 1 : wff = anass () |- ( ( ( x ∈ A ∧ x ∈ B ) ∧ x ∈ C ) ↔ ( x ∈ A ∧ ( x ∈ B ∧ x ∈ C ) ) ) ;;
+	step 2 : wff = elin () |- ( x ∈ ( B ∩ C ) ↔ ( x ∈ B ∧ x ∈ C ) ) ;;
+	step 3 : wff = anbi2i (step 2) |- ( ( x ∈ A ∧ x ∈ ( B ∩ C ) ) ↔ ( x ∈ A ∧ ( x ∈ B ∧ x ∈ C ) ) ) ;;
+	step 4 : wff = bitr4i (step 1, step 3) |- ( ( ( x ∈ A ∧ x ∈ B ) ∧ x ∈ C ) ↔ ( x ∈ A ∧ x ∈ ( B ∩ C ) ) ) ;;
+	step 5 : wff = elin () |- ( x ∈ ( A ∩ B ) ↔ ( x ∈ A ∧ x ∈ B ) ) ;;
+	step 6 : wff = anbi1i (step 5) |- ( ( x ∈ ( A ∩ B ) ∧ x ∈ C ) ↔ ( ( x ∈ A ∧ x ∈ B ) ∧ x ∈ C ) ) ;;
+	step 7 : wff = elin () |- ( x ∈ ( A ∩ ( B ∩ C ) ) ↔ ( x ∈ A ∧ x ∈ ( B ∩ C ) ) ) ;;
+	step 8 : wff = 3bitr4i (step 4, step 6, step 7) |- ( ( x ∈ ( A ∩ B ) ∧ x ∈ C ) ↔ x ∈ ( A ∩ ( B ∩ C ) ) ) ;;
+	step 9 : wff = ineqri (step 8) |- ( ( A ∩ B ) ∩ C ) = ( A ∩ ( B ∩ C ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* A rearrangement of intersection.  (Contributed by NM, 21-Apr-2001.) */
+
+theorem in12 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ∩ ( B ∩ C ) ) = ( B ∩ ( A ∩ C ) ) ;;
+}
+
+proof of in12 {
+	step 1 : wff = incom () |- ( A ∩ B ) = ( B ∩ A ) ;;
+	step 2 : wff = ineq1i (step 1) |- ( ( A ∩ B ) ∩ C ) = ( ( B ∩ A ) ∩ C ) ;;
+	step 3 : wff = inass () |- ( ( A ∩ B ) ∩ C ) = ( A ∩ ( B ∩ C ) ) ;;
+	step 4 : wff = inass () |- ( ( B ∩ A ) ∩ C ) = ( B ∩ ( A ∩ C ) ) ;;
+	step 5 : wff = 3eqtr3i (step 2, step 3, step 4) |- ( A ∩ ( B ∩ C ) ) = ( B ∩ ( A ∩ C ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* A rearrangement of intersection.  (Contributed by NM, 21-Apr-2001.)
+     (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
+
+theorem in32 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( A ∩ B ) ∩ C ) = ( ( A ∩ C ) ∩ B ) ;;
+}
+
+proof of in32 {
+	step 1 : wff = inass () |- ( ( A ∩ B ) ∩ C ) = ( A ∩ ( B ∩ C ) ) ;;
+	step 2 : wff = in12 () |- ( A ∩ ( B ∩ C ) ) = ( B ∩ ( A ∩ C ) ) ;;
+	step 3 : wff = incom () |- ( B ∩ ( A ∩ C ) ) = ( ( A ∩ C ) ∩ B ) ;;
+	step 4 : wff = 3eqtri (step 1, step 2, step 3) |- ( ( A ∩ B ) ∩ C ) = ( ( A ∩ C ) ∩ B ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A rearrangement of intersection.  (Contributed by NM, 27-Aug-2012.) */
+
+theorem in13 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ∩ ( B ∩ C ) ) = ( C ∩ ( B ∩ A ) ) ;;
+}
+
+proof of in13 {
+	step 1 : wff = in32 () |- ( ( B ∩ C ) ∩ A ) = ( ( B ∩ A ) ∩ C ) ;;
+	step 2 : wff = incom () |- ( A ∩ ( B ∩ C ) ) = ( ( B ∩ C ) ∩ A ) ;;
+	step 3 : wff = incom () |- ( C ∩ ( B ∩ A ) ) = ( ( B ∩ A ) ∩ C ) ;;
+	step 4 : wff = 3eqtr4i (step 1, step 2, step 3) |- ( A ∩ ( B ∩ C ) ) = ( C ∩ ( B ∩ A ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A rearrangement of intersection.  (Contributed by NM, 27-Aug-2012.) */
+
+theorem in31 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( A ∩ B ) ∩ C ) = ( ( C ∩ B ) ∩ A ) ;;
+}
+
+proof of in31 {
+	step 1 : wff = in12 () |- ( C ∩ ( A ∩ B ) ) = ( A ∩ ( C ∩ B ) ) ;;
+	step 2 : wff = incom () |- ( ( A ∩ B ) ∩ C ) = ( C ∩ ( A ∩ B ) ) ;;
+	step 3 : wff = incom () |- ( ( C ∩ B ) ∩ A ) = ( A ∩ ( C ∩ B ) ) ;;
+	step 4 : wff = 3eqtr4i (step 1, step 2, step 3) |- ( ( A ∩ B ) ∩ C ) = ( ( C ∩ B ) ∩ A ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Rotate the intersection of 3 classes.  (Contributed by NM,
+     27-Aug-2012.) */
+
+theorem inrot (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( A ∩ B ) ∩ C ) = ( ( C ∩ A ) ∩ B ) ;;
+}
+
+proof of inrot {
+	step 1 : wff = in31 () |- ( ( A ∩ B ) ∩ C ) = ( ( C ∩ B ) ∩ A ) ;;
+	step 2 : wff = in32 () |- ( ( C ∩ B ) ∩ A ) = ( ( C ∩ A ) ∩ B ) ;;
+	step 3 : wff = eqtri (step 1, step 2) |- ( ( A ∩ B ) ∩ C ) = ( ( C ∩ A ) ∩ B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Rearrangement of intersection of 4 classes.  (Contributed by NM,
+     21-Apr-2001.) */
+
+theorem in4 (A : class, B : class, C : class, D : class)  {
+	prop 1 : wff = |- ( ( A ∩ B ) ∩ ( C ∩ D ) ) = ( ( A ∩ C ) ∩ ( B ∩ D ) ) ;;
+}
+
+proof of in4 {
+	step 1 : wff = in12 () |- ( B ∩ ( C ∩ D ) ) = ( C ∩ ( B ∩ D ) ) ;;
+	step 2 : wff = ineq2i (step 1) |- ( A ∩ ( B ∩ ( C ∩ D ) ) ) = ( A ∩ ( C ∩ ( B ∩ D ) ) ) ;;
+	step 3 : wff = inass () |- ( ( A ∩ B ) ∩ ( C ∩ D ) ) = ( A ∩ ( B ∩ ( C ∩ D ) ) ) ;;
+	step 4 : wff = inass () |- ( ( A ∩ C ) ∩ ( B ∩ D ) ) = ( A ∩ ( C ∩ ( B ∩ D ) ) ) ;;
+	step 5 : wff = 3eqtr4i (step 2, step 3, step 4) |- ( ( A ∩ B ) ∩ ( C ∩ D ) ) = ( ( A ∩ C ) ∩ ( B ∩ D ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Intersection distributes over itself.  (Contributed by NM, 6-May-1994.) */
+
+theorem inindi (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ∩ ( B ∩ C ) ) = ( ( A ∩ B ) ∩ ( A ∩ C ) ) ;;
+}
+
+proof of inindi {
+	step 1 : wff = inidm () |- ( A ∩ A ) = A ;;
+	step 2 : wff = ineq1i (step 1) |- ( ( A ∩ A ) ∩ ( B ∩ C ) ) = ( A ∩ ( B ∩ C ) ) ;;
+	step 3 : wff = in4 () |- ( ( A ∩ A ) ∩ ( B ∩ C ) ) = ( ( A ∩ B ) ∩ ( A ∩ C ) ) ;;
+	step 4 : wff = eqtr3i (step 2, step 3) |- ( A ∩ ( B ∩ C ) ) = ( ( A ∩ B ) ∩ ( A ∩ C ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Intersection distributes over itself.  (Contributed by NM,
+     17-Aug-2004.) */
+
+theorem inindir (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( A ∩ B ) ∩ C ) = ( ( A ∩ C ) ∩ ( B ∩ C ) ) ;;
+}
+
+proof of inindir {
+	step 1 : wff = inidm () |- ( C ∩ C ) = C ;;
+	step 2 : wff = ineq2i (step 1) |- ( ( A ∩ B ) ∩ ( C ∩ C ) ) = ( ( A ∩ B ) ∩ C ) ;;
+	step 3 : wff = in4 () |- ( ( A ∩ B ) ∩ ( C ∩ C ) ) = ( ( A ∩ C ) ∩ ( B ∩ C ) ) ;;
+	step 4 : wff = eqtr3i (step 2, step 3) |- ( ( A ∩ B ) ∩ C ) = ( ( A ∩ C ) ∩ ( B ∩ C ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A relationship between subclass and intersection.  Similar to Exercise 9
+     of [TakeutiZaring] p. 18.  (Contributed by NM, 17-May-1994.) */
+
+theorem sseqin2 (A : class, B : class)  {
+	prop 1 : wff = |- ( A ⊆ B ↔ ( B ∩ A ) = A ) ;;
+}
+
+proof of sseqin2 {
+	step 1 : wff = dfss1 () |- ( A ⊆ B ↔ ( B ∩ A ) = A ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+/* The intersection of two classes is a subset of one of them.  Part of
+       Exercise 12 of [TakeutiZaring] p. 18.  (Contributed by NM,
+       27-Apr-1994.) */
+
+theorem inss1 (A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( A ∩ B ) ⊆ A ;;
+}
+
+proof of inss1 {
+	var x : set;;
+	step 1 : wff = elin () |- ( x ∈ ( A ∩ B ) ↔ ( x ∈ A ∧ x ∈ B ) ) ;;
+	step 2 : wff = simplbi (step 1) |- ( x ∈ ( A ∩ B ) → x ∈ A ) ;;
+	step 3 : wff = ssriv (step 2) |- ( A ∩ B ) ⊆ A ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* The intersection of two classes is a subset of one of them.  Part of
+     Exercise 12 of [TakeutiZaring] p. 18.  (Contributed by NM,
+     27-Apr-1994.) */
+
+theorem inss2 (A : class, B : class)  {
+	prop 1 : wff = |- ( A ∩ B ) ⊆ B ;;
+}
+
+proof of inss2 {
+	step 1 : wff = incom () |- ( B ∩ A ) = ( A ∩ B ) ;;
+	step 2 : wff = inss1 () |- ( B ∩ A ) ⊆ B ;;
+	step 3 : wff = eqsstr3i (step 1, step 2) |- ( A ∩ B ) ⊆ B ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Subclass of intersection.  Theorem 2.8(vii) of [Monk1] p. 26.
+       (Contributed by NM, 15-Jun-2004.)  (Proof shortened by Andrew Salmon,
+       26-Jun-2011.) */
+
+theorem ssin (A : class, B : class, C : class) disjointed(x A, x B, x C) {
+	prop 1 : wff = |- ( ( A ⊆ B ∧ A ⊆ C ) ↔ A ⊆ ( B ∩ C ) ) ;;
+}
+
+proof of ssin {
+	var x : set;;
+	step 1 : wff = elin () |- ( x ∈ ( B ∩ C ) ↔ ( x ∈ B ∧ x ∈ C ) ) ;;
+	step 2 : wff = imbi2i (step 1) |- ( ( x ∈ A → x ∈ ( B ∩ C ) ) ↔ ( x ∈ A → ( x ∈ B ∧ x ∈ C ) ) ) ;;
+	step 3 : wff = albii (step 2) |- ( ∀ x ( x ∈ A → x ∈ ( B ∩ C ) ) ↔ ∀ x ( x ∈ A → ( x ∈ B ∧ x ∈ C ) ) ) ;;
+	step 4 : wff = jcab () |- ( ( x ∈ A → ( x ∈ B ∧ x ∈ C ) ) ↔ ( ( x ∈ A → x ∈ B ) ∧ ( x ∈ A → x ∈ C ) ) ) ;;
+	step 5 : wff = albii (step 4) |- ( ∀ x ( x ∈ A → ( x ∈ B ∧ x ∈ C ) ) ↔ ∀ x ( ( x ∈ A → x ∈ B ) ∧ ( x ∈ A → x ∈ C ) ) ) ;;
+	step 6 : wff = 19.26 () |- ( ∀ x ( ( x ∈ A → x ∈ B ) ∧ ( x ∈ A → x ∈ C ) ) ↔ ( ∀ x ( x ∈ A → x ∈ B ) ∧ ∀ x ( x ∈ A → x ∈ C ) ) ) ;;
+	step 7 : wff = 3bitrri (step 3, step 5, step 6) |- ( ( ∀ x ( x ∈ A → x ∈ B ) ∧ ∀ x ( x ∈ A → x ∈ C ) ) ↔ ∀ x ( x ∈ A → x ∈ ( B ∩ C ) ) ) ;;
+	step 8 : wff = dfss2 () |- ( A ⊆ B ↔ ∀ x ( x ∈ A → x ∈ B ) ) ;;
+	step 9 : wff = dfss2 () |- ( A ⊆ C ↔ ∀ x ( x ∈ A → x ∈ C ) ) ;;
+	step 10 : wff = anbi12i (step 8, step 9) |- ( ( A ⊆ B ∧ A ⊆ C ) ↔ ( ∀ x ( x ∈ A → x ∈ B ) ∧ ∀ x ( x ∈ A → x ∈ C ) ) ) ;;
+	step 11 : wff = dfss2 () |- ( A ⊆ ( B ∩ C ) ↔ ∀ x ( x ∈ A → x ∈ ( B ∩ C ) ) ) ;;
+	step 12 : wff = 3bitr4i (step 7, step 10, step 11) |- ( ( A ⊆ B ∧ A ⊆ C ) ↔ A ⊆ ( B ∩ C ) ) ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* An inference showing that a subclass of two classes is a subclass of
+       their intersection.  (Contributed by NM, 24-Nov-2003.) */
+
+theorem ssini (A : class, B : class, C : class)  {
+	hyp 1 : wff = |- A ⊆ B ;;
+	hyp 2 : wff = |- A ⊆ C ;;
+	-----------------------
+	prop 1 : wff = |- A ⊆ ( B ∩ C ) ;;
+}
+
+proof of ssini {
+	step 1 : wff = pm3.2i (hyp 1, hyp 2) |- ( A ⊆ B ∧ A ⊆ C ) ;;
+	step 2 : wff = ssin () |- ( ( A ⊆ B ∧ A ⊆ C ) ↔ A ⊆ ( B ∩ C ) ) ;;
+	step 3 : wff = mpbi (step 1, step 2) |- A ⊆ ( B ∩ C ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A deduction showing that a subclass of two classes is a subclass of
+       their intersection.  (Contributed by Jonathan Ben-Naim, 3-Jun-2011.) */
+
+theorem ssind (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → A ⊆ B ) ;;
+	hyp 2 : wff = |- ( ph → A ⊆ C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → A ⊆ ( B ∩ C ) ) ;;
+}
+
+proof of ssind {
+	step 1 : wff = ssin () |- ( ( A ⊆ B ∧ A ⊆ C ) ↔ A ⊆ ( B ∩ C ) ) ;;
+	step 2 : wff = biimpi (step 1) |- ( ( A ⊆ B ∧ A ⊆ C ) → A ⊆ ( B ∩ C ) ) ;;
+	step 3 : wff = syl2anc (hyp 1, hyp 2, step 2) |- ( ph → A ⊆ ( B ∩ C ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Add right intersection to subclass relation.  (Contributed by NM,
+       16-Aug-1994.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
+
+theorem ssrin (A : class, B : class, C : class) disjointed(x A, x B, x C) {
+	prop 1 : wff = |- ( A ⊆ B → ( A ∩ C ) ⊆ ( B ∩ C ) ) ;;
+}
+
+proof of ssrin {
+	var x : set;;
+	step 1 : wff = ssel () |- ( A ⊆ B → ( x ∈ A → x ∈ B ) ) ;;
+	step 2 : wff = anim1d (step 1) |- ( A ⊆ B → ( ( x ∈ A ∧ x ∈ C ) → ( x ∈ B ∧ x ∈ C ) ) ) ;;
+	step 3 : wff = elin () |- ( x ∈ ( A ∩ C ) ↔ ( x ∈ A ∧ x ∈ C ) ) ;;
+	step 4 : wff = elin () |- ( x ∈ ( B ∩ C ) ↔ ( x ∈ B ∧ x ∈ C ) ) ;;
+	step 5 : wff = 3imtr4g (step 2, step 3, step 4) |- ( A ⊆ B → ( x ∈ ( A ∩ C ) → x ∈ ( B ∩ C ) ) ) ;;
+	step 6 : wff = ssrdv (step 5) |- ( A ⊆ B → ( A ∩ C ) ⊆ ( B ∩ C ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Add left intersection to subclass relation.  (Contributed by NM,
+       19-Oct-1999.) */
+
+theorem sslin (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ⊆ B → ( C ∩ A ) ⊆ ( C ∩ B ) ) ;;
+}
+
+proof of sslin {
+	step 1 : wff = ssrin () |- ( A ⊆ B → ( A ∩ C ) ⊆ ( B ∩ C ) ) ;;
+	step 2 : wff = incom () |- ( C ∩ A ) = ( A ∩ C ) ;;
+	step 3 : wff = incom () |- ( C ∩ B ) = ( B ∩ C ) ;;
+	step 4 : wff = 3sstr4g (step 1, step 2, step 3) |- ( A ⊆ B → ( C ∩ A ) ⊆ ( C ∩ B ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Intersection of subclasses.  (Contributed by NM, 5-May-2000.) */
+
+theorem ss2in (A : class, B : class, C : class, D : class)  {
+	prop 1 : wff = |- ( ( A ⊆ B ∧ C ⊆ D ) → ( A ∩ C ) ⊆ ( B ∩ D ) ) ;;
+}
+
+proof of ss2in {
+	step 1 : wff = ssrin () |- ( A ⊆ B → ( A ∩ C ) ⊆ ( B ∩ C ) ) ;;
+	step 2 : wff = sslin () |- ( C ⊆ D → ( B ∩ C ) ⊆ ( B ∩ D ) ) ;;
+	step 3 : wff = sylan9ss (step 1, step 2) |- ( ( A ⊆ B ∧ C ⊆ D ) → ( A ∩ C ) ⊆ ( B ∩ D ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Intersection preserves subclass relationship.  (Contributed by NM,
+     14-Sep-1999.) */
+
+theorem ssinss1 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ⊆ C → ( A ∩ B ) ⊆ C ) ;;
+}
+
+proof of ssinss1 {
+	step 1 : wff = inss1 () |- ( A ∩ B ) ⊆ A ;;
+	step 2 : wff = sstr2 () |- ( ( A ∩ B ) ⊆ A → ( A ⊆ C → ( A ∩ B ) ⊆ C ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( A ⊆ C → ( A ∩ B ) ⊆ C ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Inclusion of an intersection of two classes.  (Contributed by NM,
+     30-Oct-2014.) */
+
+theorem inss (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( A ⊆ C ∨ B ⊆ C ) → ( A ∩ B ) ⊆ C ) ;;
+}
+
+proof of inss {
+	step 1 : wff = ssinss1 () |- ( A ⊆ C → ( A ∩ B ) ⊆ C ) ;;
+	step 2 : wff = incom () |- ( A ∩ B ) = ( B ∩ A ) ;;
+	step 3 : wff = ssinss1 () |- ( B ⊆ C → ( B ∩ A ) ⊆ C ) ;;
+	step 4 : wff = syl5eqss (step 2, step 3) |- ( B ⊆ C → ( A ∩ B ) ⊆ C ) ;;
+	step 5 : wff = jaoi (step 1, step 4) |- ( ( A ⊆ C ∨ B ⊆ C ) → ( A ∩ B ) ⊆ C ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Absorption law for union.  (Contributed by NM, 16-Apr-2006.) */
+
+theorem unabs (A : class, B : class)  {
+	prop 1 : wff = |- ( A ∪ ( A ∩ B ) ) = A ;;
+}
+
+proof of unabs {
+	step 1 : wff = inss1 () |- ( A ∩ B ) ⊆ A ;;
+	step 2 : wff = ssequn2 () |- ( ( A ∩ B ) ⊆ A ↔ ( A ∪ ( A ∩ B ) ) = A ) ;;
+	step 3 : wff = mpbi (step 1, step 2) |- ( A ∪ ( A ∩ B ) ) = A ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Absorption law for intersection.  (Contributed by NM, 16-Apr-2006.) */
+
+theorem inabs (A : class, B : class)  {
+	prop 1 : wff = |- ( A ∩ ( A ∪ B ) ) = A ;;
+}
+
+proof of inabs {
+	step 1 : wff = ssun1 () |- A ⊆ ( A ∪ B ) ;;
+	step 2 : wff = df-ss () |- ( A ⊆ ( A ∪ B ) ↔ ( A ∩ ( A ∪ B ) ) = A ) ;;
+	step 3 : wff = mpbi (step 1, step 2) |- ( A ∩ ( A ∪ B ) ) = A ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Negation of subclass expressed in terms of intersection and proper
+     subclass.  (Contributed by NM, 30-Jun-2004.)  (Proof shortened by Andrew
+     Salmon, 26-Jun-2011.) */
+
+theorem nssinpss (A : class, B : class)  {
+	prop 1 : wff = |- ( ¬ A ⊆ B ↔ ( A ∩ B ) ⊂ A ) ;;
+}
+
+proof of nssinpss {
+	step 1 : wff = inss1 () |- ( A ∩ B ) ⊆ A ;;
+	step 2 : wff = biantrur (step 1) |- ( ( A ∩ B ) ≠ A ↔ ( ( A ∩ B ) ⊆ A ∧ ( A ∩ B ) ≠ A ) ) ;;
+	step 3 : wff = df-ss () |- ( A ⊆ B ↔ ( A ∩ B ) = A ) ;;
+	step 4 : wff = necon3bbii (step 3) |- ( ¬ A ⊆ B ↔ ( A ∩ B ) ≠ A ) ;;
+	step 5 : wff = df-pss () |- ( ( A ∩ B ) ⊂ A ↔ ( ( A ∩ B ) ⊆ A ∧ ( A ∩ B ) ≠ A ) ) ;;
+	step 6 : wff = 3bitr4i (step 2, step 4, step 5) |- ( ¬ A ⊆ B ↔ ( A ∩ B ) ⊂ A ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Negation of subclass expressed in terms of proper subclass and union.
+     (Contributed by NM, 15-Sep-2004.) */
+
+theorem nsspssun (A : class, B : class)  {
+	prop 1 : wff = |- ( ¬ A ⊆ B ↔ B ⊂ ( A ∪ B ) ) ;;
+}
+
+proof of nsspssun {
+	step 1 : wff = ssun2 () |- B ⊆ ( A ∪ B ) ;;
+	step 2 : wff = biantrur (step 1) |- ( ¬ ( A ∪ B ) ⊆ B ↔ ( B ⊆ ( A ∪ B ) ∧ ¬ ( A ∪ B ) ⊆ B ) ) ;;
+	step 3 : wff = ssid () |- B ⊆ B ;;
+	step 4 : wff = biantru (step 3) |- ( A ⊆ B ↔ ( A ⊆ B ∧ B ⊆ B ) ) ;;
+	step 5 : wff = unss () |- ( ( A ⊆ B ∧ B ⊆ B ) ↔ ( A ∪ B ) ⊆ B ) ;;
+	step 6 : wff = bitri (step 4, step 5) |- ( A ⊆ B ↔ ( A ∪ B ) ⊆ B ) ;;
+	step 7 : wff = xchnxbir (step 2, step 6) |- ( ¬ A ⊆ B ↔ ( B ⊆ ( A ∪ B ) ∧ ¬ ( A ∪ B ) ⊆ B ) ) ;;
+	step 8 : wff = dfpss3 () |- ( B ⊂ ( A ∪ B ) ↔ ( B ⊆ ( A ∪ B ) ∧ ¬ ( A ∪ B ) ⊆ B ) ) ;;
+	step 9 : wff = bitr4i (step 7, step 8) |- ( ¬ A ⊆ B ↔ B ⊂ ( A ∪ B ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Subclass defined in terms of class difference.  See comments under
+       ~ dfun2 .  (Contributed by NM, 22-Mar-1998.)  (Proof shortened by Andrew
+       Salmon, 26-Jun-2011.) */
+
+theorem dfss4 (A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( A ⊆ B ↔ ( B ∖ ( B ∖ A ) ) = A ) ;;
+}
+
+proof of dfss4 {
+	var x : set;;
+	step 1 : wff = sseqin2 () |- ( A ⊆ B ↔ ( B ∩ A ) = A ) ;;
+	step 2 : wff = eldif () |- ( x ∈ ( B ∖ A ) ↔ ( x ∈ B ∧ ¬ x ∈ A ) ) ;;
+	step 3 : wff = notbii (step 2) |- ( ¬ x ∈ ( B ∖ A ) ↔ ¬ ( x ∈ B ∧ ¬ x ∈ A ) ) ;;
+	step 4 : wff = anbi2i (step 3) |- ( ( x ∈ B ∧ ¬ x ∈ ( B ∖ A ) ) ↔ ( x ∈ B ∧ ¬ ( x ∈ B ∧ ¬ x ∈ A ) ) ) ;;
+	step 5 : wff = elin () |- ( x ∈ ( B ∩ A ) ↔ ( x ∈ B ∧ x ∈ A ) ) ;;
+	step 6 : wff = abai () |- ( ( x ∈ B ∧ x ∈ A ) ↔ ( x ∈ B ∧ ( x ∈ B → x ∈ A ) ) ) ;;
+	step 7 : wff = iman () |- ( ( x ∈ B → x ∈ A ) ↔ ¬ ( x ∈ B ∧ ¬ x ∈ A ) ) ;;
+	step 8 : wff = anbi2i (step 7) |- ( ( x ∈ B ∧ ( x ∈ B → x ∈ A ) ) ↔ ( x ∈ B ∧ ¬ ( x ∈ B ∧ ¬ x ∈ A ) ) ) ;;
+	step 9 : wff = 3bitri (step 5, step 6, step 8) |- ( x ∈ ( B ∩ A ) ↔ ( x ∈ B ∧ ¬ ( x ∈ B ∧ ¬ x ∈ A ) ) ) ;;
+	step 10 : wff = bitr4i (step 4, step 9) |- ( ( x ∈ B ∧ ¬ x ∈ ( B ∖ A ) ) ↔ x ∈ ( B ∩ A ) ) ;;
+	step 11 : wff = difeqri (step 10) |- ( B ∖ ( B ∖ A ) ) = ( B ∩ A ) ;;
+	step 12 : wff = eqeq1i (step 11) |- ( ( B ∖ ( B ∖ A ) ) = A ↔ ( B ∩ A ) = A ) ;;
+	step 13 : wff = bitr4i (step 1, step 12) |- ( A ⊆ B ↔ ( B ∖ ( B ∖ A ) ) = A ) ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* An alternate definition of the union of two classes in terms of class
+       difference, requiring no dummy variables.  Along with ~ dfin2 and
+       ~ dfss4 it shows we can express union, intersection, and subset directly
+       in terms of the single "primitive" operation ` \ ` (class difference).
+       (Contributed by NM, 10-Jun-2004.) */
+
+theorem dfun2 (A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( A ∪ B ) = ( _V ∖ ( ( _V ∖ A ) ∖ B ) ) ;;
+}
+
+proof of dfun2 {
+	var x : set;;
+	step 1 : wff = vex () |- x ∈ _V ;;
+	step 2 : wff = eldif () |- ( x ∈ ( _V ∖ A ) ↔ ( x ∈ _V ∧ ¬ x ∈ A ) ) ;;
+	step 3 : wff = mpbiran (step 1, step 2) |- ( x ∈ ( _V ∖ A ) ↔ ¬ x ∈ A ) ;;
+	step 4 : wff = anbi1i (step 3) |- ( ( x ∈ ( _V ∖ A ) ∧ ¬ x ∈ B ) ↔ ( ¬ x ∈ A ∧ ¬ x ∈ B ) ) ;;
+	step 5 : wff = eldif () |- ( x ∈ ( ( _V ∖ A ) ∖ B ) ↔ ( x ∈ ( _V ∖ A ) ∧ ¬ x ∈ B ) ) ;;
+	step 6 : wff = ioran () |- ( ¬ ( x ∈ A ∨ x ∈ B ) ↔ ( ¬ x ∈ A ∧ ¬ x ∈ B ) ) ;;
+	step 7 : wff = 3bitr4i (step 4, step 5, step 6) |- ( x ∈ ( ( _V ∖ A ) ∖ B ) ↔ ¬ ( x ∈ A ∨ x ∈ B ) ) ;;
+	step 8 : wff = con2bii (step 7) |- ( ( x ∈ A ∨ x ∈ B ) ↔ ¬ x ∈ ( ( _V ∖ A ) ∖ B ) ) ;;
+	step 9 : wff = vex () |- x ∈ _V ;;
+	step 10 : wff = eldif () |- ( x ∈ ( _V ∖ ( ( _V ∖ A ) ∖ B ) ) ↔ ( x ∈ _V ∧ ¬ x ∈ ( ( _V ∖ A ) ∖ B ) ) ) ;;
+	step 11 : wff = mpbiran (step 9, step 10) |- ( x ∈ ( _V ∖ ( ( _V ∖ A ) ∖ B ) ) ↔ ¬ x ∈ ( ( _V ∖ A ) ∖ B ) ) ;;
+	step 12 : wff = bitr4i (step 8, step 11) |- ( ( x ∈ A ∨ x ∈ B ) ↔ x ∈ ( _V ∖ ( ( _V ∖ A ) ∖ B ) ) ) ;;
+	step 13 : wff = uneqri (step 12) |- ( A ∪ B ) = ( _V ∖ ( ( _V ∖ A ) ∖ B ) ) ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* An alternate definition of the intersection of two classes in terms of
+       class difference, requiring no dummy variables.  See comments under
+       ~ dfun2 .  Another version is given by ~ dfin4 .  (Contributed by NM,
+       10-Jun-2004.) */
+
+theorem dfin2 (A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( A ∩ B ) = ( A ∖ ( _V ∖ B ) ) ;;
+}
+
+proof of dfin2 {
+	var x : set;;
+	step 1 : wff = vex () |- x ∈ _V ;;
+	step 2 : wff = eldif () |- ( x ∈ ( _V ∖ B ) ↔ ( x ∈ _V ∧ ¬ x ∈ B ) ) ;;
+	step 3 : wff = mpbiran (step 1, step 2) |- ( x ∈ ( _V ∖ B ) ↔ ¬ x ∈ B ) ;;
+	step 4 : wff = con2bii (step 3) |- ( x ∈ B ↔ ¬ x ∈ ( _V ∖ B ) ) ;;
+	step 5 : wff = anbi2i (step 4) |- ( ( x ∈ A ∧ x ∈ B ) ↔ ( x ∈ A ∧ ¬ x ∈ ( _V ∖ B ) ) ) ;;
+	step 6 : wff = eldif () |- ( x ∈ ( A ∖ ( _V ∖ B ) ) ↔ ( x ∈ A ∧ ¬ x ∈ ( _V ∖ B ) ) ) ;;
+	step 7 : wff = bitr4i (step 5, step 6) |- ( ( x ∈ A ∧ x ∈ B ) ↔ x ∈ ( A ∖ ( _V ∖ B ) ) ) ;;
+	step 8 : wff = ineqri (step 7) |- ( A ∩ B ) = ( A ∖ ( _V ∖ B ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Difference with intersection.  Theorem 33 of [Suppes] p. 29.
+       (Contributed by NM, 31-Mar-1998.)  (Proof shortened by Andrew Salmon,
+       26-Jun-2011.) */
+
+theorem difin (A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( A ∖ ( A ∩ B ) ) = ( A ∖ B ) ;;
+}
+
+proof of difin {
+	var x : set;;
+	step 1 : wff = pm4.61 () |- ( ¬ ( x ∈ A → x ∈ B ) ↔ ( x ∈ A ∧ ¬ x ∈ B ) ) ;;
+	step 2 : wff = anclb () |- ( ( x ∈ A → x ∈ B ) ↔ ( x ∈ A → ( x ∈ A ∧ x ∈ B ) ) ) ;;
+	step 3 : wff = elin () |- ( x ∈ ( A ∩ B ) ↔ ( x ∈ A ∧ x ∈ B ) ) ;;
+	step 4 : wff = imbi2i (step 3) |- ( ( x ∈ A → x ∈ ( A ∩ B ) ) ↔ ( x ∈ A → ( x ∈ A ∧ x ∈ B ) ) ) ;;
+	step 5 : wff = iman () |- ( ( x ∈ A → x ∈ ( A ∩ B ) ) ↔ ¬ ( x ∈ A ∧ ¬ x ∈ ( A ∩ B ) ) ) ;;
+	step 6 : wff = 3bitr2i (step 2, step 4, step 5) |- ( ( x ∈ A → x ∈ B ) ↔ ¬ ( x ∈ A ∧ ¬ x ∈ ( A ∩ B ) ) ) ;;
+	step 7 : wff = con2bii (step 6) |- ( ( x ∈ A ∧ ¬ x ∈ ( A ∩ B ) ) ↔ ¬ ( x ∈ A → x ∈ B ) ) ;;
+	step 8 : wff = eldif () |- ( x ∈ ( A ∖ B ) ↔ ( x ∈ A ∧ ¬ x ∈ B ) ) ;;
+	step 9 : wff = 3bitr4i (step 1, step 7, step 8) |- ( ( x ∈ A ∧ ¬ x ∈ ( A ∩ B ) ) ↔ x ∈ ( A ∖ B ) ) ;;
+	step 10 : wff = difeqri (step 9) |- ( A ∖ ( A ∩ B ) ) = ( A ∖ B ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Union defined in terms of intersection (De Morgan's law).  Definition of
+     union in [Mendelson] p. 231.  (Contributed by NM, 8-Jan-2002.) */
+
+theorem dfun3 (A : class, B : class)  {
+	prop 1 : wff = |- ( A ∪ B ) = ( _V ∖ ( ( _V ∖ A ) ∩ ( _V ∖ B ) ) ) ;;
+}
+
+proof of dfun3 {
+	step 1 : wff = dfun2 () |- ( A ∪ B ) = ( _V ∖ ( ( _V ∖ A ) ∖ B ) ) ;;
+	step 2 : wff = dfin2 () |- ( ( _V ∖ A ) ∩ ( _V ∖ B ) ) = ( ( _V ∖ A ) ∖ ( _V ∖ ( _V ∖ B ) ) ) ;;
+	step 3 : wff = ddif () |- ( _V ∖ ( _V ∖ B ) ) = B ;;
+	step 4 : wff = difeq2i (step 3) |- ( ( _V ∖ A ) ∖ ( _V ∖ ( _V ∖ B ) ) ) = ( ( _V ∖ A ) ∖ B ) ;;
+	step 5 : wff = eqtr2i (step 2, step 4) |- ( ( _V ∖ A ) ∖ B ) = ( ( _V ∖ A ) ∩ ( _V ∖ B ) ) ;;
+	step 6 : wff = difeq2i (step 5) |- ( _V ∖ ( ( _V ∖ A ) ∖ B ) ) = ( _V ∖ ( ( _V ∖ A ) ∩ ( _V ∖ B ) ) ) ;;
+	step 7 : wff = eqtri (step 1, step 6) |- ( A ∪ B ) = ( _V ∖ ( ( _V ∖ A ) ∩ ( _V ∖ B ) ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Intersection defined in terms of union (De Morgan's law.  Similar to
+     Exercise 4.10(n) of [Mendelson] p. 231.  (Contributed by NM,
+     8-Jan-2002.) */
+
+theorem dfin3 (A : class, B : class)  {
+	prop 1 : wff = |- ( A ∩ B ) = ( _V ∖ ( ( _V ∖ A ) ∪ ( _V ∖ B ) ) ) ;;
+}
+
+proof of dfin3 {
+	step 1 : wff = ddif () |- ( _V ∖ ( _V ∖ ( A ∖ ( _V ∖ B ) ) ) ) = ( A ∖ ( _V ∖ B ) ) ;;
+	step 2 : wff = dfun2 () |- ( ( _V ∖ A ) ∪ ( _V ∖ B ) ) = ( _V ∖ ( ( _V ∖ ( _V ∖ A ) ) ∖ ( _V ∖ B ) ) ) ;;
+	step 3 : wff = ddif () |- ( _V ∖ ( _V ∖ A ) ) = A ;;
+	step 4 : wff = difeq1i (step 3) |- ( ( _V ∖ ( _V ∖ A ) ) ∖ ( _V ∖ B ) ) = ( A ∖ ( _V ∖ B ) ) ;;
+	step 5 : wff = difeq2i (step 4) |- ( _V ∖ ( ( _V ∖ ( _V ∖ A ) ) ∖ ( _V ∖ B ) ) ) = ( _V ∖ ( A ∖ ( _V ∖ B ) ) ) ;;
+	step 6 : wff = eqtri (step 2, step 5) |- ( ( _V ∖ A ) ∪ ( _V ∖ B ) ) = ( _V ∖ ( A ∖ ( _V ∖ B ) ) ) ;;
+	step 7 : wff = difeq2i (step 6) |- ( _V ∖ ( ( _V ∖ A ) ∪ ( _V ∖ B ) ) ) = ( _V ∖ ( _V ∖ ( A ∖ ( _V ∖ B ) ) ) ) ;;
+	step 8 : wff = dfin2 () |- ( A ∩ B ) = ( A ∖ ( _V ∖ B ) ) ;;
+	step 9 : wff = 3eqtr4ri (step 1, step 7, step 8) |- ( A ∩ B ) = ( _V ∖ ( ( _V ∖ A ) ∪ ( _V ∖ B ) ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Alternate definition of the intersection of two classes.  Exercise 4.10(q)
+     of [Mendelson] p. 231.  (Contributed by NM, 25-Nov-2003.) */
+
+theorem dfin4 (A : class, B : class)  {
+	prop 1 : wff = |- ( A ∩ B ) = ( A ∖ ( A ∖ B ) ) ;;
+}
+
+proof of dfin4 {
+	step 1 : wff = inss1 () |- ( A ∩ B ) ⊆ A ;;
+	step 2 : wff = dfss4 () |- ( ( A ∩ B ) ⊆ A ↔ ( A ∖ ( A ∖ ( A ∩ B ) ) ) = ( A ∩ B ) ) ;;
+	step 3 : wff = mpbi (step 1, step 2) |- ( A ∖ ( A ∖ ( A ∩ B ) ) ) = ( A ∩ B ) ;;
+	step 4 : wff = difin () |- ( A ∖ ( A ∩ B ) ) = ( A ∖ B ) ;;
+	step 5 : wff = difeq2i (step 4) |- ( A ∖ ( A ∖ ( A ∩ B ) ) ) = ( A ∖ ( A ∖ B ) ) ;;
+	step 6 : wff = eqtr3i (step 3, step 5) |- ( A ∩ B ) = ( A ∖ ( A ∖ B ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Intersection with universal complement.  Remark in [Stoll] p. 20.
+     (Contributed by NM, 17-Aug-2004.) */
+
+theorem invdif (A : class, B : class)  {
+	prop 1 : wff = |- ( A ∩ ( _V ∖ B ) ) = ( A ∖ B ) ;;
+}
+
+proof of invdif {
+	step 1 : wff = dfin2 () |- ( A ∩ ( _V ∖ B ) ) = ( A ∖ ( _V ∖ ( _V ∖ B ) ) ) ;;
+	step 2 : wff = ddif () |- ( _V ∖ ( _V ∖ B ) ) = B ;;
+	step 3 : wff = difeq2i (step 2) |- ( A ∖ ( _V ∖ ( _V ∖ B ) ) ) = ( A ∖ B ) ;;
+	step 4 : wff = eqtri (step 1, step 3) |- ( A ∩ ( _V ∖ B ) ) = ( A ∖ B ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Intersection with class difference.  Theorem 34 of [Suppes] p. 29.
+     (Contributed by NM, 17-Aug-2004.) */
+
+theorem indif (A : class, B : class)  {
+	prop 1 : wff = |- ( A ∩ ( A ∖ B ) ) = ( A ∖ B ) ;;
+}
+
+proof of indif {
+	step 1 : wff = dfin4 () |- ( A ∩ ( A ∖ B ) ) = ( A ∖ ( A ∖ ( A ∖ B ) ) ) ;;
+	step 2 : wff = dfin4 () |- ( A ∩ B ) = ( A ∖ ( A ∖ B ) ) ;;
+	step 3 : wff = difeq2i (step 2) |- ( A ∖ ( A ∩ B ) ) = ( A ∖ ( A ∖ ( A ∖ B ) ) ) ;;
+	step 4 : wff = difin () |- ( A ∖ ( A ∩ B ) ) = ( A ∖ B ) ;;
+	step 5 : wff = 3eqtr2i (step 1, step 3, step 4) |- ( A ∩ ( A ∖ B ) ) = ( A ∖ B ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Bring an intersection in and out of a class difference.  (Contributed by
+     Jeff Hankins, 15-Jul-2009.) */
+
+theorem indif2 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ∩ ( B ∖ C ) ) = ( ( A ∩ B ) ∖ C ) ;;
+}
+
+proof of indif2 {
+	step 1 : wff = inass () |- ( ( A ∩ B ) ∩ ( _V ∖ C ) ) = ( A ∩ ( B ∩ ( _V ∖ C ) ) ) ;;
+	step 2 : wff = invdif () |- ( ( A ∩ B ) ∩ ( _V ∖ C ) ) = ( ( A ∩ B ) ∖ C ) ;;
+	step 3 : wff = invdif () |- ( B ∩ ( _V ∖ C ) ) = ( B ∖ C ) ;;
+	step 4 : wff = ineq2i (step 3) |- ( A ∩ ( B ∩ ( _V ∖ C ) ) ) = ( A ∩ ( B ∖ C ) ) ;;
+	step 5 : wff = 3eqtr3ri (step 1, step 2, step 4) |- ( A ∩ ( B ∖ C ) ) = ( ( A ∩ B ) ∖ C ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Bring an intersection in and out of a class difference.  (Contributed by
+     Mario Carneiro, 15-May-2015.) */
+
+theorem indif1 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( A ∖ C ) ∩ B ) = ( ( A ∩ B ) ∖ C ) ;;
+}
+
+proof of indif1 {
+	step 1 : wff = indif2 () |- ( B ∩ ( A ∖ C ) ) = ( ( B ∩ A ) ∖ C ) ;;
+	step 2 : wff = incom () |- ( B ∩ ( A ∖ C ) ) = ( ( A ∖ C ) ∩ B ) ;;
+	step 3 : wff = incom () |- ( B ∩ A ) = ( A ∩ B ) ;;
+	step 4 : wff = difeq1i (step 3) |- ( ( B ∩ A ) ∖ C ) = ( ( A ∩ B ) ∖ C ) ;;
+	step 5 : wff = 3eqtr3i (step 1, step 2, step 4) |- ( ( A ∖ C ) ∩ B ) = ( ( A ∩ B ) ∖ C ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Commutation law for intersection and difference.  (Contributed by Scott
+     Fenton, 18-Feb-2013.) */
+
+theorem indifcom (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ∩ ( B ∖ C ) ) = ( B ∩ ( A ∖ C ) ) ;;
+}
+
+proof of indifcom {
+	step 1 : wff = incom () |- ( A ∩ B ) = ( B ∩ A ) ;;
+	step 2 : wff = difeq1i (step 1) |- ( ( A ∩ B ) ∖ C ) = ( ( B ∩ A ) ∖ C ) ;;
+	step 3 : wff = indif2 () |- ( A ∩ ( B ∖ C ) ) = ( ( A ∩ B ) ∖ C ) ;;
+	step 4 : wff = indif2 () |- ( B ∩ ( A ∖ C ) ) = ( ( B ∩ A ) ∖ C ) ;;
+	step 5 : wff = 3eqtr4i (step 2, step 3, step 4) |- ( A ∩ ( B ∖ C ) ) = ( B ∩ ( A ∖ C ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Distributive law for intersection over union.  Exercise 10 of
+       [TakeutiZaring] p. 17.  (Contributed by NM, 30-Sep-2002.)  (Proof
+       shortened by Andrew Salmon, 26-Jun-2011.) */
+
+theorem indi (A : class, B : class, C : class) disjointed(x A, x B, x C) {
+	prop 1 : wff = |- ( A ∩ ( B ∪ C ) ) = ( ( A ∩ B ) ∪ ( A ∩ C ) ) ;;
+}
+
+proof of indi {
+	var x : set;;
+	step 1 : wff = andi () |- ( ( x ∈ A ∧ ( x ∈ B ∨ x ∈ C ) ) ↔ ( ( x ∈ A ∧ x ∈ B ) ∨ ( x ∈ A ∧ x ∈ C ) ) ) ;;
+	step 2 : wff = elin () |- ( x ∈ ( A ∩ B ) ↔ ( x ∈ A ∧ x ∈ B ) ) ;;
+	step 3 : wff = elin () |- ( x ∈ ( A ∩ C ) ↔ ( x ∈ A ∧ x ∈ C ) ) ;;
+	step 4 : wff = orbi12i (step 2, step 3) |- ( ( x ∈ ( A ∩ B ) ∨ x ∈ ( A ∩ C ) ) ↔ ( ( x ∈ A ∧ x ∈ B ) ∨ ( x ∈ A ∧ x ∈ C ) ) ) ;;
+	step 5 : wff = bitr4i (step 1, step 4) |- ( ( x ∈ A ∧ ( x ∈ B ∨ x ∈ C ) ) ↔ ( x ∈ ( A ∩ B ) ∨ x ∈ ( A ∩ C ) ) ) ;;
+	step 6 : wff = elun () |- ( x ∈ ( B ∪ C ) ↔ ( x ∈ B ∨ x ∈ C ) ) ;;
+	step 7 : wff = anbi2i (step 6) |- ( ( x ∈ A ∧ x ∈ ( B ∪ C ) ) ↔ ( x ∈ A ∧ ( x ∈ B ∨ x ∈ C ) ) ) ;;
+	step 8 : wff = elun () |- ( x ∈ ( ( A ∩ B ) ∪ ( A ∩ C ) ) ↔ ( x ∈ ( A ∩ B ) ∨ x ∈ ( A ∩ C ) ) ) ;;
+	step 9 : wff = 3bitr4i (step 5, step 7, step 8) |- ( ( x ∈ A ∧ x ∈ ( B ∪ C ) ) ↔ x ∈ ( ( A ∩ B ) ∪ ( A ∩ C ) ) ) ;;
+	step 10 : wff = ineqri (step 9) |- ( A ∩ ( B ∪ C ) ) = ( ( A ∩ B ) ∪ ( A ∩ C ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Distributive law for union over intersection.  Exercise 11 of
+       [TakeutiZaring] p. 17.  (Contributed by NM, 30-Sep-2002.)  (Proof
+       shortened by Andrew Salmon, 26-Jun-2011.) */
+
+theorem undi (A : class, B : class, C : class) disjointed(x A, x B, x C) {
+	prop 1 : wff = |- ( A ∪ ( B ∩ C ) ) = ( ( A ∪ B ) ∩ ( A ∪ C ) ) ;;
+}
+
+proof of undi {
+	var x : set;;
+	step 1 : wff = elin () |- ( x ∈ ( B ∩ C ) ↔ ( x ∈ B ∧ x ∈ C ) ) ;;
+	step 2 : wff = orbi2i (step 1) |- ( ( x ∈ A ∨ x ∈ ( B ∩ C ) ) ↔ ( x ∈ A ∨ ( x ∈ B ∧ x ∈ C ) ) ) ;;
+	step 3 : wff = ordi () |- ( ( x ∈ A ∨ ( x ∈ B ∧ x ∈ C ) ) ↔ ( ( x ∈ A ∨ x ∈ B ) ∧ ( x ∈ A ∨ x ∈ C ) ) ) ;;
+	step 4 : wff = elin () |- ( x ∈ ( ( A ∪ B ) ∩ ( A ∪ C ) ) ↔ ( x ∈ ( A ∪ B ) ∧ x ∈ ( A ∪ C ) ) ) ;;
+	step 5 : wff = elun () |- ( x ∈ ( A ∪ B ) ↔ ( x ∈ A ∨ x ∈ B ) ) ;;
+	step 6 : wff = elun () |- ( x ∈ ( A ∪ C ) ↔ ( x ∈ A ∨ x ∈ C ) ) ;;
+	step 7 : wff = anbi12i (step 5, step 6) |- ( ( x ∈ ( A ∪ B ) ∧ x ∈ ( A ∪ C ) ) ↔ ( ( x ∈ A ∨ x ∈ B ) ∧ ( x ∈ A ∨ x ∈ C ) ) ) ;;
+	step 8 : wff = bitr2i (step 4, step 7) |- ( ( ( x ∈ A ∨ x ∈ B ) ∧ ( x ∈ A ∨ x ∈ C ) ) ↔ x ∈ ( ( A ∪ B ) ∩ ( A ∪ C ) ) ) ;;
+	step 9 : wff = 3bitri (step 2, step 3, step 8) |- ( ( x ∈ A ∨ x ∈ ( B ∩ C ) ) ↔ x ∈ ( ( A ∪ B ) ∩ ( A ∪ C ) ) ) ;;
+	step 10 : wff = uneqri (step 9) |- ( A ∪ ( B ∩ C ) ) = ( ( A ∪ B ) ∩ ( A ∪ C ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Distributive law for intersection over union.  Theorem 28 of [Suppes]
+     p. 27.  (Contributed by NM, 30-Sep-2002.) */
+
+theorem indir (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( A ∪ B ) ∩ C ) = ( ( A ∩ C ) ∪ ( B ∩ C ) ) ;;
+}
+
+proof of indir {
+	step 1 : wff = indi () |- ( C ∩ ( A ∪ B ) ) = ( ( C ∩ A ) ∪ ( C ∩ B ) ) ;;
+	step 2 : wff = incom () |- ( ( A ∪ B ) ∩ C ) = ( C ∩ ( A ∪ B ) ) ;;
+	step 3 : wff = incom () |- ( A ∩ C ) = ( C ∩ A ) ;;
+	step 4 : wff = incom () |- ( B ∩ C ) = ( C ∩ B ) ;;
+	step 5 : wff = uneq12i (step 3, step 4) |- ( ( A ∩ C ) ∪ ( B ∩ C ) ) = ( ( C ∩ A ) ∪ ( C ∩ B ) ) ;;
+	step 6 : wff = 3eqtr4i (step 1, step 2, step 5) |- ( ( A ∪ B ) ∩ C ) = ( ( A ∩ C ) ∪ ( B ∩ C ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Distributive law for union over intersection.  Theorem 29 of [Suppes]
+     p. 27.  (Contributed by NM, 30-Sep-2002.) */
+
+theorem undir (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( A ∩ B ) ∪ C ) = ( ( A ∪ C ) ∩ ( B ∪ C ) ) ;;
+}
+
+proof of undir {
+	step 1 : wff = undi () |- ( C ∪ ( A ∩ B ) ) = ( ( C ∪ A ) ∩ ( C ∪ B ) ) ;;
+	step 2 : wff = uncom () |- ( ( A ∩ B ) ∪ C ) = ( C ∪ ( A ∩ B ) ) ;;
+	step 3 : wff = uncom () |- ( A ∪ C ) = ( C ∪ A ) ;;
+	step 4 : wff = uncom () |- ( B ∪ C ) = ( C ∪ B ) ;;
+	step 5 : wff = ineq12i (step 3, step 4) |- ( ( A ∪ C ) ∩ ( B ∪ C ) ) = ( ( C ∪ A ) ∩ ( C ∪ B ) ) ;;
+	step 6 : wff = 3eqtr4i (step 1, step 2, step 5) |- ( ( A ∩ B ) ∪ C ) = ( ( A ∪ C ) ∩ ( B ∪ C ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Infer equality from equalities of union and intersection.  Exercise 20
+       of [Enderton] p. 32 and its converse.  (Contributed by NM,
+       10-Aug-2004.) */
+
+theorem unineq (A : class, B : class, C : class) disjointed(x A, x B, x C) {
+	prop 1 : wff = |- ( ( ( A ∪ C ) = ( B ∪ C ) ∧ ( A ∩ C ) = ( B ∩ C ) ) ↔ A = B ) ;;
+}
+
+proof of unineq {
+	var x : set;;
+	step 1 : wff = eleq2 () |- ( ( A ∩ C ) = ( B ∩ C ) → ( x ∈ ( A ∩ C ) ↔ x ∈ ( B ∩ C ) ) ) ;;
+	step 2 : wff = elin () |- ( x ∈ ( A ∩ C ) ↔ ( x ∈ A ∧ x ∈ C ) ) ;;
+	step 3 : wff = elin () |- ( x ∈ ( B ∩ C ) ↔ ( x ∈ B ∧ x ∈ C ) ) ;;
+	step 4 : wff = 3bitr3g (step 1, step 2, step 3) |- ( ( A ∩ C ) = ( B ∩ C ) → ( ( x ∈ A ∧ x ∈ C ) ↔ ( x ∈ B ∧ x ∈ C ) ) ) ;;
+	step 5 : wff = iba () |- ( x ∈ C → ( x ∈ A ↔ ( x ∈ A ∧ x ∈ C ) ) ) ;;
+	step 6 : wff = iba () |- ( x ∈ C → ( x ∈ B ↔ ( x ∈ B ∧ x ∈ C ) ) ) ;;
+	step 7 : wff = bibi12d (step 5, step 6) |- ( x ∈ C → ( ( x ∈ A ↔ x ∈ B ) ↔ ( ( x ∈ A ∧ x ∈ C ) ↔ ( x ∈ B ∧ x ∈ C ) ) ) ) ;;
+	step 8 : wff = syl5ibr (step 4, step 7) |- ( x ∈ C → ( ( A ∩ C ) = ( B ∩ C ) → ( x ∈ A ↔ x ∈ B ) ) ) ;;
+	step 9 : wff = adantld (step 8) |- ( x ∈ C → ( ( ( A ∪ C ) = ( B ∪ C ) ∧ ( A ∩ C ) = ( B ∩ C ) ) → ( x ∈ A ↔ x ∈ B ) ) ) ;;
+	step 10 : wff = uncom () |- ( A ∪ C ) = ( C ∪ A ) ;;
+	step 11 : wff = uncom () |- ( B ∪ C ) = ( C ∪ B ) ;;
+	step 12 : wff = eqeq12i (step 10, step 11) |- ( ( A ∪ C ) = ( B ∪ C ) ↔ ( C ∪ A ) = ( C ∪ B ) ) ;;
+	step 13 : wff = eleq2 () |- ( ( C ∪ A ) = ( C ∪ B ) → ( x ∈ ( C ∪ A ) ↔ x ∈ ( C ∪ B ) ) ) ;;
+	step 14 : wff = sylbi (step 12, step 13) |- ( ( A ∪ C ) = ( B ∪ C ) → ( x ∈ ( C ∪ A ) ↔ x ∈ ( C ∪ B ) ) ) ;;
+	step 15 : wff = elun () |- ( x ∈ ( C ∪ A ) ↔ ( x ∈ C ∨ x ∈ A ) ) ;;
+	step 16 : wff = elun () |- ( x ∈ ( C ∪ B ) ↔ ( x ∈ C ∨ x ∈ B ) ) ;;
+	step 17 : wff = 3bitr3g (step 14, step 15, step 16) |- ( ( A ∪ C ) = ( B ∪ C ) → ( ( x ∈ C ∨ x ∈ A ) ↔ ( x ∈ C ∨ x ∈ B ) ) ) ;;
+	step 18 : wff = biorf () |- ( ¬ x ∈ C → ( x ∈ A ↔ ( x ∈ C ∨ x ∈ A ) ) ) ;;
+	step 19 : wff = biorf () |- ( ¬ x ∈ C → ( x ∈ B ↔ ( x ∈ C ∨ x ∈ B ) ) ) ;;
+	step 20 : wff = bibi12d (step 18, step 19) |- ( ¬ x ∈ C → ( ( x ∈ A ↔ x ∈ B ) ↔ ( ( x ∈ C ∨ x ∈ A ) ↔ ( x ∈ C ∨ x ∈ B ) ) ) ) ;;
+	step 21 : wff = syl5ibr (step 17, step 20) |- ( ¬ x ∈ C → ( ( A ∪ C ) = ( B ∪ C ) → ( x ∈ A ↔ x ∈ B ) ) ) ;;
+	step 22 : wff = adantrd (step 21) |- ( ¬ x ∈ C → ( ( ( A ∪ C ) = ( B ∪ C ) ∧ ( A ∩ C ) = ( B ∩ C ) ) → ( x ∈ A ↔ x ∈ B ) ) ) ;;
+	step 23 : wff = pm2.61i (step 9, step 22) |- ( ( ( A ∪ C ) = ( B ∪ C ) ∧ ( A ∩ C ) = ( B ∩ C ) ) → ( x ∈ A ↔ x ∈ B ) ) ;;
+	step 24 : wff = eqrdv (step 23) |- ( ( ( A ∪ C ) = ( B ∪ C ) ∧ ( A ∩ C ) = ( B ∩ C ) ) → A = B ) ;;
+	step 25 : wff = uneq1 () |- ( A = B → ( A ∪ C ) = ( B ∪ C ) ) ;;
+	step 26 : wff = ineq1 () |- ( A = B → ( A ∩ C ) = ( B ∩ C ) ) ;;
+	step 27 : wff = jca (step 25, step 26) |- ( A = B → ( ( A ∪ C ) = ( B ∪ C ) ∧ ( A ∩ C ) = ( B ∩ C ) ) ) ;;
+	step 28 : wff = impbii (step 24, step 27) |- ( ( ( A ∪ C ) = ( B ∪ C ) ∧ ( A ∩ C ) = ( B ∩ C ) ) ↔ A = B ) ;;
+	qed prop 1 = step 28 ;;
+}
+
+/* Equality of union and intersection implies equality of their arguments.
+     (Contributed by NM, 16-Apr-2006.)  (Proof shortened by Andrew Salmon,
+     26-Jun-2011.) */
+
+theorem uneqin (A : class, B : class)  {
+	prop 1 : wff = |- ( ( A ∪ B ) = ( A ∩ B ) ↔ A = B ) ;;
+}
+
+proof of uneqin {
+	step 1 : wff = eqimss () |- ( ( A ∪ B ) = ( A ∩ B ) → ( A ∪ B ) ⊆ ( A ∩ B ) ) ;;
+	step 2 : wff = unss () |- ( ( A ⊆ ( A ∩ B ) ∧ B ⊆ ( A ∩ B ) ) ↔ ( A ∪ B ) ⊆ ( A ∩ B ) ) ;;
+	step 3 : wff = ssin () |- ( ( A ⊆ A ∧ A ⊆ B ) ↔ A ⊆ ( A ∩ B ) ) ;;
+	step 4 : wff = sstr () |- ( ( A ⊆ A ∧ A ⊆ B ) → A ⊆ B ) ;;
+	step 5 : wff = sylbir (step 3, step 4) |- ( A ⊆ ( A ∩ B ) → A ⊆ B ) ;;
+	step 6 : wff = ssin () |- ( ( B ⊆ A ∧ B ⊆ B ) ↔ B ⊆ ( A ∩ B ) ) ;;
+	step 7 : wff = simpl () |- ( ( B ⊆ A ∧ B ⊆ B ) → B ⊆ A ) ;;
+	step 8 : wff = sylbir (step 6, step 7) |- ( B ⊆ ( A ∩ B ) → B ⊆ A ) ;;
+	step 9 : wff = anim12i (step 5, step 8) |- ( ( A ⊆ ( A ∩ B ) ∧ B ⊆ ( A ∩ B ) ) → ( A ⊆ B ∧ B ⊆ A ) ) ;;
+	step 10 : wff = sylbir (step 2, step 9) |- ( ( A ∪ B ) ⊆ ( A ∩ B ) → ( A ⊆ B ∧ B ⊆ A ) ) ;;
+	step 11 : wff = syl (step 1, step 10) |- ( ( A ∪ B ) = ( A ∩ B ) → ( A ⊆ B ∧ B ⊆ A ) ) ;;
+	step 12 : wff = eqss () |- ( A = B ↔ ( A ⊆ B ∧ B ⊆ A ) ) ;;
+	step 13 : wff = sylibr (step 11, step 12) |- ( ( A ∪ B ) = ( A ∩ B ) → A = B ) ;;
+	step 14 : wff = unidm () |- ( A ∪ A ) = A ;;
+	step 15 : wff = inidm () |- ( A ∩ A ) = A ;;
+	step 16 : wff = eqtr4i (step 14, step 15) |- ( A ∪ A ) = ( A ∩ A ) ;;
+	step 17 : wff = uneq2 () |- ( A = B → ( A ∪ A ) = ( A ∪ B ) ) ;;
+	step 18 : wff = ineq2 () |- ( A = B → ( A ∩ A ) = ( A ∩ B ) ) ;;
+	step 19 : wff = 3eqtr3a (step 16, step 17, step 18) |- ( A = B → ( A ∪ B ) = ( A ∩ B ) ) ;;
+	step 20 : wff = impbii (step 13, step 19) |- ( ( A ∪ B ) = ( A ∩ B ) ↔ A = B ) ;;
+	qed prop 1 = step 20 ;;
+}
+
+/* Distributive law for class difference.  Theorem 39 of [Suppes] p. 29.
+     (Contributed by NM, 17-Aug-2004.) */
+
+theorem difundi (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ∖ ( B ∪ C ) ) = ( ( A ∖ B ) ∩ ( A ∖ C ) ) ;;
+}
+
+proof of difundi {
+	step 1 : wff = dfun3 () |- ( B ∪ C ) = ( _V ∖ ( ( _V ∖ B ) ∩ ( _V ∖ C ) ) ) ;;
+	step 2 : wff = difeq2i (step 1) |- ( A ∖ ( B ∪ C ) ) = ( A ∖ ( _V ∖ ( ( _V ∖ B ) ∩ ( _V ∖ C ) ) ) ) ;;
+	step 3 : wff = inindi () |- ( A ∩ ( ( _V ∖ B ) ∩ ( _V ∖ C ) ) ) = ( ( A ∩ ( _V ∖ B ) ) ∩ ( A ∩ ( _V ∖ C ) ) ) ;;
+	step 4 : wff = dfin2 () |- ( A ∩ ( ( _V ∖ B ) ∩ ( _V ∖ C ) ) ) = ( A ∖ ( _V ∖ ( ( _V ∖ B ) ∩ ( _V ∖ C ) ) ) ) ;;
+	step 5 : wff = invdif () |- ( A ∩ ( _V ∖ B ) ) = ( A ∖ B ) ;;
+	step 6 : wff = invdif () |- ( A ∩ ( _V ∖ C ) ) = ( A ∖ C ) ;;
+	step 7 : wff = ineq12i (step 5, step 6) |- ( ( A ∩ ( _V ∖ B ) ) ∩ ( A ∩ ( _V ∖ C ) ) ) = ( ( A ∖ B ) ∩ ( A ∖ C ) ) ;;
+	step 8 : wff = 3eqtr3i (step 3, step 4, step 7) |- ( A ∖ ( _V ∖ ( ( _V ∖ B ) ∩ ( _V ∖ C ) ) ) ) = ( ( A ∖ B ) ∩ ( A ∖ C ) ) ;;
+	step 9 : wff = eqtri (step 2, step 8) |- ( A ∖ ( B ∪ C ) ) = ( ( A ∖ B ) ∩ ( A ∖ C ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Distributive law for class difference.  (Contributed by NM,
+     17-Aug-2004.) */
+
+theorem difundir (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( A ∪ B ) ∖ C ) = ( ( A ∖ C ) ∪ ( B ∖ C ) ) ;;
+}
+
+proof of difundir {
+	step 1 : wff = indir () |- ( ( A ∪ B ) ∩ ( _V ∖ C ) ) = ( ( A ∩ ( _V ∖ C ) ) ∪ ( B ∩ ( _V ∖ C ) ) ) ;;
+	step 2 : wff = invdif () |- ( ( A ∪ B ) ∩ ( _V ∖ C ) ) = ( ( A ∪ B ) ∖ C ) ;;
+	step 3 : wff = invdif () |- ( A ∩ ( _V ∖ C ) ) = ( A ∖ C ) ;;
+	step 4 : wff = invdif () |- ( B ∩ ( _V ∖ C ) ) = ( B ∖ C ) ;;
+	step 5 : wff = uneq12i (step 3, step 4) |- ( ( A ∩ ( _V ∖ C ) ) ∪ ( B ∩ ( _V ∖ C ) ) ) = ( ( A ∖ C ) ∪ ( B ∖ C ) ) ;;
+	step 6 : wff = 3eqtr3i (step 1, step 2, step 5) |- ( ( A ∪ B ) ∖ C ) = ( ( A ∖ C ) ∪ ( B ∖ C ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Distributive law for class difference.  Theorem 40 of [Suppes] p. 29.
+     (Contributed by NM, 17-Aug-2004.) */
+
+theorem difindi (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ∖ ( B ∩ C ) ) = ( ( A ∖ B ) ∪ ( A ∖ C ) ) ;;
+}
+
+proof of difindi {
+	step 1 : wff = dfin3 () |- ( B ∩ C ) = ( _V ∖ ( ( _V ∖ B ) ∪ ( _V ∖ C ) ) ) ;;
+	step 2 : wff = difeq2i (step 1) |- ( A ∖ ( B ∩ C ) ) = ( A ∖ ( _V ∖ ( ( _V ∖ B ) ∪ ( _V ∖ C ) ) ) ) ;;
+	step 3 : wff = indi () |- ( A ∩ ( ( _V ∖ B ) ∪ ( _V ∖ C ) ) ) = ( ( A ∩ ( _V ∖ B ) ) ∪ ( A ∩ ( _V ∖ C ) ) ) ;;
+	step 4 : wff = dfin2 () |- ( A ∩ ( ( _V ∖ B ) ∪ ( _V ∖ C ) ) ) = ( A ∖ ( _V ∖ ( ( _V ∖ B ) ∪ ( _V ∖ C ) ) ) ) ;;
+	step 5 : wff = invdif () |- ( A ∩ ( _V ∖ B ) ) = ( A ∖ B ) ;;
+	step 6 : wff = invdif () |- ( A ∩ ( _V ∖ C ) ) = ( A ∖ C ) ;;
+	step 7 : wff = uneq12i (step 5, step 6) |- ( ( A ∩ ( _V ∖ B ) ) ∪ ( A ∩ ( _V ∖ C ) ) ) = ( ( A ∖ B ) ∪ ( A ∖ C ) ) ;;
+	step 8 : wff = 3eqtr3i (step 3, step 4, step 7) |- ( A ∖ ( _V ∖ ( ( _V ∖ B ) ∪ ( _V ∖ C ) ) ) ) = ( ( A ∖ B ) ∪ ( A ∖ C ) ) ;;
+	step 9 : wff = eqtri (step 2, step 8) |- ( A ∖ ( B ∩ C ) ) = ( ( A ∖ B ) ∪ ( A ∖ C ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Distributive law for class difference.  (Contributed by NM,
+     17-Aug-2004.) */
+
+theorem difindir (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( A ∩ B ) ∖ C ) = ( ( A ∖ C ) ∩ ( B ∖ C ) ) ;;
+}
+
+proof of difindir {
+	step 1 : wff = inindir () |- ( ( A ∩ B ) ∩ ( _V ∖ C ) ) = ( ( A ∩ ( _V ∖ C ) ) ∩ ( B ∩ ( _V ∖ C ) ) ) ;;
+	step 2 : wff = invdif () |- ( ( A ∩ B ) ∩ ( _V ∖ C ) ) = ( ( A ∩ B ) ∖ C ) ;;
+	step 3 : wff = invdif () |- ( A ∩ ( _V ∖ C ) ) = ( A ∖ C ) ;;
+	step 4 : wff = invdif () |- ( B ∩ ( _V ∖ C ) ) = ( B ∖ C ) ;;
+	step 5 : wff = ineq12i (step 3, step 4) |- ( ( A ∩ ( _V ∖ C ) ) ∩ ( B ∩ ( _V ∖ C ) ) ) = ( ( A ∖ C ) ∩ ( B ∖ C ) ) ;;
+	step 6 : wff = 3eqtr3i (step 1, step 2, step 5) |- ( ( A ∩ B ) ∖ C ) = ( ( A ∖ C ) ∩ ( B ∖ C ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Distribute intersection over difference.  (Contributed by Scott Fenton,
+       14-Apr-2011.) */
+
+theorem indifdir (A : class, B : class, C : class) disjointed(A x, B x, C x) {
+	prop 1 : wff = |- ( ( A ∖ B ) ∩ C ) = ( ( A ∩ C ) ∖ ( B ∩ C ) ) ;;
+}
+
+proof of indifdir {
+	var x : set;;
+	step 1 : wff = pm3.24 () |- ¬ ( x ∈ C ∧ ¬ x ∈ C ) ;;
+	step 2 : wff = intnan (step 1) |- ¬ ( x ∈ A ∧ ( x ∈ C ∧ ¬ x ∈ C ) ) ;;
+	step 3 : wff = anass () |- ( ( ( x ∈ A ∧ x ∈ C ) ∧ ¬ x ∈ C ) ↔ ( x ∈ A ∧ ( x ∈ C ∧ ¬ x ∈ C ) ) ) ;;
+	step 4 : wff = mtbir (step 2, step 3) |- ¬ ( ( x ∈ A ∧ x ∈ C ) ∧ ¬ x ∈ C ) ;;
+	step 5 : wff = biorfi (step 4) |- ( ( ( x ∈ A ∧ x ∈ C ) ∧ ¬ x ∈ B ) ↔ ( ( ( x ∈ A ∧ x ∈ C ) ∧ ¬ x ∈ B ) ∨ ( ( x ∈ A ∧ x ∈ C ) ∧ ¬ x ∈ C ) ) ) ;;
+	step 6 : wff = an32 () |- ( ( ( x ∈ A ∧ ¬ x ∈ B ) ∧ x ∈ C ) ↔ ( ( x ∈ A ∧ x ∈ C ) ∧ ¬ x ∈ B ) ) ;;
+	step 7 : wff = andi () |- ( ( ( x ∈ A ∧ x ∈ C ) ∧ ( ¬ x ∈ B ∨ ¬ x ∈ C ) ) ↔ ( ( ( x ∈ A ∧ x ∈ C ) ∧ ¬ x ∈ B ) ∨ ( ( x ∈ A ∧ x ∈ C ) ∧ ¬ x ∈ C ) ) ) ;;
+	step 8 : wff = 3bitr4i (step 5, step 6, step 7) |- ( ( ( x ∈ A ∧ ¬ x ∈ B ) ∧ x ∈ C ) ↔ ( ( x ∈ A ∧ x ∈ C ) ∧ ( ¬ x ∈ B ∨ ¬ x ∈ C ) ) ) ;;
+	step 9 : wff = ianor () |- ( ¬ ( x ∈ B ∧ x ∈ C ) ↔ ( ¬ x ∈ B ∨ ¬ x ∈ C ) ) ;;
+	step 10 : wff = anbi2i (step 9) |- ( ( ( x ∈ A ∧ x ∈ C ) ∧ ¬ ( x ∈ B ∧ x ∈ C ) ) ↔ ( ( x ∈ A ∧ x ∈ C ) ∧ ( ¬ x ∈ B ∨ ¬ x ∈ C ) ) ) ;;
+	step 11 : wff = bitr4i (step 8, step 10) |- ( ( ( x ∈ A ∧ ¬ x ∈ B ) ∧ x ∈ C ) ↔ ( ( x ∈ A ∧ x ∈ C ) ∧ ¬ ( x ∈ B ∧ x ∈ C ) ) ) ;;
+	step 12 : wff = elin () |- ( x ∈ ( ( A ∖ B ) ∩ C ) ↔ ( x ∈ ( A ∖ B ) ∧ x ∈ C ) ) ;;
+	step 13 : wff = eldif () |- ( x ∈ ( A ∖ B ) ↔ ( x ∈ A ∧ ¬ x ∈ B ) ) ;;
+	step 14 : wff = anbi1i (step 13) |- ( ( x ∈ ( A ∖ B ) ∧ x ∈ C ) ↔ ( ( x ∈ A ∧ ¬ x ∈ B ) ∧ x ∈ C ) ) ;;
+	step 15 : wff = bitri (step 12, step 14) |- ( x ∈ ( ( A ∖ B ) ∩ C ) ↔ ( ( x ∈ A ∧ ¬ x ∈ B ) ∧ x ∈ C ) ) ;;
+	step 16 : wff = eldif () |- ( x ∈ ( ( A ∩ C ) ∖ ( B ∩ C ) ) ↔ ( x ∈ ( A ∩ C ) ∧ ¬ x ∈ ( B ∩ C ) ) ) ;;
+	step 17 : wff = elin () |- ( x ∈ ( A ∩ C ) ↔ ( x ∈ A ∧ x ∈ C ) ) ;;
+	step 18 : wff = elin () |- ( x ∈ ( B ∩ C ) ↔ ( x ∈ B ∧ x ∈ C ) ) ;;
+	step 19 : wff = notbii (step 18) |- ( ¬ x ∈ ( B ∩ C ) ↔ ¬ ( x ∈ B ∧ x ∈ C ) ) ;;
+	step 20 : wff = anbi12i (step 17, step 19) |- ( ( x ∈ ( A ∩ C ) ∧ ¬ x ∈ ( B ∩ C ) ) ↔ ( ( x ∈ A ∧ x ∈ C ) ∧ ¬ ( x ∈ B ∧ x ∈ C ) ) ) ;;
+	step 21 : wff = bitri (step 16, step 20) |- ( x ∈ ( ( A ∩ C ) ∖ ( B ∩ C ) ) ↔ ( ( x ∈ A ∧ x ∈ C ) ∧ ¬ ( x ∈ B ∧ x ∈ C ) ) ) ;;
+	step 22 : wff = 3bitr4i (step 11, step 15, step 21) |- ( x ∈ ( ( A ∖ B ) ∩ C ) ↔ x ∈ ( ( A ∩ C ) ∖ ( B ∩ C ) ) ) ;;
+	step 23 : wff = eqriv (step 22) |- ( ( A ∖ B ) ∩ C ) = ( ( A ∩ C ) ∖ ( B ∩ C ) ) ;;
+	qed prop 1 = step 23 ;;
+}
+
+/* De Morgan's law for union.  Theorem 5.2(13) of [Stoll] p. 19.
+     (Contributed by NM, 18-Aug-2004.) */
+
+theorem undm (A : class, B : class)  {
+	prop 1 : wff = |- ( _V ∖ ( A ∪ B ) ) = ( ( _V ∖ A ) ∩ ( _V ∖ B ) ) ;;
+}
+
+proof of undm {
+	step 1 : wff = difundi () |- ( _V ∖ ( A ∪ B ) ) = ( ( _V ∖ A ) ∩ ( _V ∖ B ) ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+/* De Morgan's law for intersection.  Theorem 5.2(13') of [Stoll] p. 19.
+     (Contributed by NM, 18-Aug-2004.) */
+
+theorem indm (A : class, B : class)  {
+	prop 1 : wff = |- ( _V ∖ ( A ∩ B ) ) = ( ( _V ∖ A ) ∪ ( _V ∖ B ) ) ;;
+}
+
+proof of indm {
+	step 1 : wff = difindi () |- ( _V ∖ ( A ∩ B ) ) = ( ( _V ∖ A ) ∪ ( _V ∖ B ) ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+/* A relationship involving double difference and union.  (Contributed by NM,
+     29-Aug-2004.) */
+
+theorem difun1 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A ∖ ( B ∪ C ) ) = ( ( A ∖ B ) ∖ C ) ;;
+}
+
+proof of difun1 {
+	step 1 : wff = inass () |- ( ( A ∩ ( _V ∖ B ) ) ∩ ( _V ∖ C ) ) = ( A ∩ ( ( _V ∖ B ) ∩ ( _V ∖ C ) ) ) ;;
+	step 2 : wff = invdif () |- ( ( A ∩ ( _V ∖ B ) ) ∩ ( _V ∖ C ) ) = ( ( A ∩ ( _V ∖ B ) ) ∖ C ) ;;
+	step 3 : wff = eqtr3i (step 1, step 2) |- ( A ∩ ( ( _V ∖ B ) ∩ ( _V ∖ C ) ) ) = ( ( A ∩ ( _V ∖ B ) ) ∖ C ) ;;
+	step 4 : wff = undm () |- ( _V ∖ ( B ∪ C ) ) = ( ( _V ∖ B ) ∩ ( _V ∖ C ) ) ;;
+	step 5 : wff = ineq2i (step 4) |- ( A ∩ ( _V ∖ ( B ∪ C ) ) ) = ( A ∩ ( ( _V ∖ B ) ∩ ( _V ∖ C ) ) ) ;;
+	step 6 : wff = invdif () |- ( A ∩ ( _V ∖ ( B ∪ C ) ) ) = ( A ∖ ( B ∪ C ) ) ;;
+	step 7 : wff = eqtr3i (step 5, step 6) |- ( A ∩ ( ( _V ∖ B ) ∩ ( _V ∖ C ) ) ) = ( A ∖ ( B ∪ C ) ) ;;
+	step 8 : wff = eqtr3i (step 3, step 7) |- ( ( A ∩ ( _V ∖ B ) ) ∖ C ) = ( A ∖ ( B ∪ C ) ) ;;
+	step 9 : wff = invdif () |- ( A ∩ ( _V ∖ B ) ) = ( A ∖ B ) ;;
+	step 10 : wff = difeq1i (step 9) |- ( ( A ∩ ( _V ∖ B ) ) ∖ C ) = ( ( A ∖ B ) ∖ C ) ;;
+	step 11 : wff = eqtr3i (step 8, step 10) |- ( A ∖ ( B ∪ C ) ) = ( ( A ∖ B ) ∖ C ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* An equality involving class union and class difference.  The first
+       equality of Exercise 13 of [TakeutiZaring] p. 22.  (Contributed by Alan
+       Sare, 17-Apr-2012.) */
+
+theorem undif3 (A : class, B : class, C : class) disjointed(A x, B x, C x) {
+	prop 1 : wff = |- ( A ∪ ( B ∖ C ) ) = ( ( A ∪ B ) ∖ ( C ∖ A ) ) ;;
+}
+
+proof of undif3 {
+	var x : set;;
+	step 1 : wff = elun () |- ( x ∈ ( A ∪ B ) ↔ ( x ∈ A ∨ x ∈ B ) ) ;;
+	step 2 : wff = pm4.53 () |- ( ¬ ( x ∈ C ∧ ¬ x ∈ A ) ↔ ( ¬ x ∈ C ∨ x ∈ A ) ) ;;
+	step 3 : wff = eldif () |- ( x ∈ ( C ∖ A ) ↔ ( x ∈ C ∧ ¬ x ∈ A ) ) ;;
+	step 4 : wff = xchnxbir (step 2, step 3) |- ( ¬ x ∈ ( C ∖ A ) ↔ ( ¬ x ∈ C ∨ x ∈ A ) ) ;;
+	step 5 : wff = anbi12i (step 1, step 4) |- ( ( x ∈ ( A ∪ B ) ∧ ¬ x ∈ ( C ∖ A ) ) ↔ ( ( x ∈ A ∨ x ∈ B ) ∧ ( ¬ x ∈ C ∨ x ∈ A ) ) ) ;;
+	step 6 : wff = eldif () |- ( x ∈ ( ( A ∪ B ) ∖ ( C ∖ A ) ) ↔ ( x ∈ ( A ∪ B ) ∧ ¬ x ∈ ( C ∖ A ) ) ) ;;
+	step 7 : wff = elun () |- ( x ∈ ( A ∪ ( B ∖ C ) ) ↔ ( x ∈ A ∨ x ∈ ( B ∖ C ) ) ) ;;
+	step 8 : wff = eldif () |- ( x ∈ ( B ∖ C ) ↔ ( x ∈ B ∧ ¬ x ∈ C ) ) ;;
+	step 9 : wff = orbi2i (step 8) |- ( ( x ∈ A ∨ x ∈ ( B ∖ C ) ) ↔ ( x ∈ A ∨ ( x ∈ B ∧ ¬ x ∈ C ) ) ) ;;
+	step 10 : wff = orc () |- ( x ∈ A → ( x ∈ A ∨ x ∈ B ) ) ;;
+	step 11 : wff = olc () |- ( x ∈ A → ( ¬ x ∈ C ∨ x ∈ A ) ) ;;
+	step 12 : wff = jca (step 10, step 11) |- ( x ∈ A → ( ( x ∈ A ∨ x ∈ B ) ∧ ( ¬ x ∈ C ∨ x ∈ A ) ) ) ;;
+	step 13 : wff = olc () |- ( x ∈ B → ( x ∈ A ∨ x ∈ B ) ) ;;
+	step 14 : wff = orc () |- ( ¬ x ∈ C → ( ¬ x ∈ C ∨ x ∈ A ) ) ;;
+	step 15 : wff = anim12i (step 13, step 14) |- ( ( x ∈ B ∧ ¬ x ∈ C ) → ( ( x ∈ A ∨ x ∈ B ) ∧ ( ¬ x ∈ C ∨ x ∈ A ) ) ) ;;
+	step 16 : wff = jaoi (step 12, step 15) |- ( ( x ∈ A ∨ ( x ∈ B ∧ ¬ x ∈ C ) ) → ( ( x ∈ A ∨ x ∈ B ) ∧ ( ¬ x ∈ C ∨ x ∈ A ) ) ) ;;
+	step 17 : wff = simpl () |- ( ( x ∈ A ∧ ¬ x ∈ C ) → x ∈ A ) ;;
+	step 18 : wff = orcd (step 17) |- ( ( x ∈ A ∧ ¬ x ∈ C ) → ( x ∈ A ∨ ( x ∈ B ∧ ¬ x ∈ C ) ) ) ;;
+	step 19 : wff = olc () |- ( ( x ∈ B ∧ ¬ x ∈ C ) → ( x ∈ A ∨ ( x ∈ B ∧ ¬ x ∈ C ) ) ) ;;
+	step 20 : wff = orc () |- ( x ∈ A → ( x ∈ A ∨ ( x ∈ B ∧ ¬ x ∈ C ) ) ) ;;
+	step 21 : wff = adantr (step 20) |- ( ( x ∈ A ∧ x ∈ A ) → ( x ∈ A ∨ ( x ∈ B ∧ ¬ x ∈ C ) ) ) ;;
+	step 22 : wff = orc () |- ( x ∈ A → ( x ∈ A ∨ ( x ∈ B ∧ ¬ x ∈ C ) ) ) ;;
+	step 23 : wff = adantl (step 22) |- ( ( x ∈ B ∧ x ∈ A ) → ( x ∈ A ∨ ( x ∈ B ∧ ¬ x ∈ C ) ) ) ;;
+	step 24 : wff = ccase (step 18, step 19, step 21, step 23) |- ( ( ( x ∈ A ∨ x ∈ B ) ∧ ( ¬ x ∈ C ∨ x ∈ A ) ) → ( x ∈ A ∨ ( x ∈ B ∧ ¬ x ∈ C ) ) ) ;;
+	step 25 : wff = impbii (step 16, step 24) |- ( ( x ∈ A ∨ ( x ∈ B ∧ ¬ x ∈ C ) ) ↔ ( ( x ∈ A ∨ x ∈ B ) ∧ ( ¬ x ∈ C ∨ x ∈ A ) ) ) ;;
+	step 26 : wff = 3bitri (step 7, step 9, step 25) |- ( x ∈ ( A ∪ ( B ∖ C ) ) ↔ ( ( x ∈ A ∨ x ∈ B ) ∧ ( ¬ x ∈ C ∨ x ∈ A ) ) ) ;;
+	step 27 : wff = 3bitr4ri (step 5, step 6, step 26) |- ( x ∈ ( A ∪ ( B ∖ C ) ) ↔ x ∈ ( ( A ∪ B ) ∖ ( C ∖ A ) ) ) ;;
+	step 28 : wff = eqriv (step 27) |- ( A ∪ ( B ∖ C ) ) = ( ( A ∪ B ) ∖ ( C ∖ A ) ) ;;
+	qed prop 1 = step 28 ;;
+}
+
+/* Represent a set difference as an intersection with a larger difference.
+       (Contributed by Jeff Madsen, 2-Sep-2009.) */
+
+theorem difin2 (A : class, B : class, C : class) disjointed(A x, B x, C x) {
+	prop 1 : wff = |- ( A ⊆ C → ( A ∖ B ) = ( ( C ∖ B ) ∩ A ) ) ;;
+}
+
+proof of difin2 {
+	var x : set;;
+	step 1 : wff = ssel () |- ( A ⊆ C → ( x ∈ A → x ∈ C ) ) ;;
+	step 2 : wff = pm4.71d (step 1) |- ( A ⊆ C → ( x ∈ A ↔ ( x ∈ A ∧ x ∈ C ) ) ) ;;
+	step 3 : wff = anbi1d (step 2) |- ( A ⊆ C → ( ( x ∈ A ∧ ¬ x ∈ B ) ↔ ( ( x ∈ A ∧ x ∈ C ) ∧ ¬ x ∈ B ) ) ) ;;
+	step 4 : wff = eldif () |- ( x ∈ ( A ∖ B ) ↔ ( x ∈ A ∧ ¬ x ∈ B ) ) ;;
+	step 5 : wff = elin () |- ( x ∈ ( ( C ∖ B ) ∩ A ) ↔ ( x ∈ ( C ∖ B ) ∧ x ∈ A ) ) ;;
+	step 6 : wff = eldif () |- ( x ∈ ( C ∖ B ) ↔ ( x ∈ C ∧ ¬ x ∈ B ) ) ;;
+	step 7 : wff = anbi1i (step 6) |- ( ( x ∈ ( C ∖ B ) ∧ x ∈ A ) ↔ ( ( x ∈ C ∧ ¬ x ∈ B ) ∧ x ∈ A ) ) ;;
+	step 8 : wff = ancom () |- ( ( ( x ∈ C ∧ ¬ x ∈ B ) ∧ x ∈ A ) ↔ ( x ∈ A ∧ ( x ∈ C ∧ ¬ x ∈ B ) ) ) ;;
+	step 9 : wff = anass () |- ( ( ( x ∈ A ∧ x ∈ C ) ∧ ¬ x ∈ B ) ↔ ( x ∈ A ∧ ( x ∈ C ∧ ¬ x ∈ B ) ) ) ;;
+	step 10 : wff = bitr4i (step 8, step 9) |- ( ( ( x ∈ C ∧ ¬ x ∈ B ) ∧ x ∈ A ) ↔ ( ( x ∈ A ∧ x ∈ C ) ∧ ¬ x ∈ B ) ) ;;
+	step 11 : wff = 3bitri (step 5, step 7, step 10) |- ( x ∈ ( ( C ∖ B ) ∩ A ) ↔ ( ( x ∈ A ∧ x ∈ C ) ∧ ¬ x ∈ B ) ) ;;
+	step 12 : wff = 3bitr4g (step 3, step 4, step 11) |- ( A ⊆ C → ( x ∈ ( A ∖ B ) ↔ x ∈ ( ( C ∖ B ) ∩ A ) ) ) ;;
+	step 13 : wff = eqrdv (step 12) |- ( A ⊆ C → ( A ∖ B ) = ( ( C ∖ B ) ∩ A ) ) ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* Swap second and third argument of double difference.  (Contributed by NM,
+     18-Aug-2004.) */
+
+theorem dif32 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( A ∖ B ) ∖ C ) = ( ( A ∖ C ) ∖ B ) ;;
+}
+
+proof of dif32 {
+	step 1 : wff = uncom () |- ( B ∪ C ) = ( C ∪ B ) ;;
+	step 2 : wff = difeq2i (step 1) |- ( A ∖ ( B ∪ C ) ) = ( A ∖ ( C ∪ B ) ) ;;
+	step 3 : wff = difun1 () |- ( A ∖ ( B ∪ C ) ) = ( ( A ∖ B ) ∖ C ) ;;
+	step 4 : wff = difun1 () |- ( A ∖ ( C ∪ B ) ) = ( ( A ∖ C ) ∖ B ) ;;
+	step 5 : wff = 3eqtr3i (step 2, step 3, step 4) |- ( ( A ∖ B ) ∖ C ) = ( ( A ∖ C ) ∖ B ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Absorption-like law for class difference: you can remove a class only
+     once.  (Contributed by FL, 2-Aug-2009.) */
+
+theorem difabs (A : class, B : class)  {
+	prop 1 : wff = |- ( ( A ∖ B ) ∖ B ) = ( A ∖ B ) ;;
+}
+
+proof of difabs {
+	step 1 : wff = difun1 () |- ( A ∖ ( B ∪ B ) ) = ( ( A ∖ B ) ∖ B ) ;;
+	step 2 : wff = unidm () |- ( B ∪ B ) = B ;;
+	step 3 : wff = difeq2i (step 2) |- ( A ∖ ( B ∪ B ) ) = ( A ∖ B ) ;;
+	step 4 : wff = eqtr3i (step 1, step 3) |- ( ( A ∖ B ) ∖ B ) = ( A ∖ B ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Two ways to express symmetric difference.  This theorem shows the
+     equivalence of the definition of symmetric difference in [Stoll] p. 13 and
+     the restated definition in Example 4.1 of [Stoll] p. 262.  (Contributed by
+     NM, 17-Aug-2004.) */
+
+theorem symdif1 (A : class, B : class)  {
+	prop 1 : wff = |- ( ( A ∖ B ) ∪ ( B ∖ A ) ) = ( ( A ∪ B ) ∖ ( A ∩ B ) ) ;;
+}
+
+proof of symdif1 {
+	step 1 : wff = difundir () |- ( ( A ∪ B ) ∖ ( A ∩ B ) ) = ( ( A ∖ ( A ∩ B ) ) ∪ ( B ∖ ( A ∩ B ) ) ) ;;
+	step 2 : wff = difin () |- ( A ∖ ( A ∩ B ) ) = ( A ∖ B ) ;;
+	step 3 : wff = incom () |- ( A ∩ B ) = ( B ∩ A ) ;;
+	step 4 : wff = difeq2i (step 3) |- ( B ∖ ( A ∩ B ) ) = ( B ∖ ( B ∩ A ) ) ;;
+	step 5 : wff = difin () |- ( B ∖ ( B ∩ A ) ) = ( B ∖ A ) ;;
+	step 6 : wff = eqtri (step 4, step 5) |- ( B ∖ ( A ∩ B ) ) = ( B ∖ A ) ;;
+	step 7 : wff = uneq12i (step 2, step 6) |- ( ( A ∖ ( A ∩ B ) ) ∪ ( B ∖ ( A ∩ B ) ) ) = ( ( A ∖ B ) ∪ ( B ∖ A ) ) ;;
+	step 8 : wff = eqtr2i (step 1, step 7) |- ( ( A ∖ B ) ∪ ( B ∖ A ) ) = ( ( A ∪ B ) ∖ ( A ∩ B ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Two ways to express symmetric difference.  (Contributed by NM,
+       17-Aug-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
+
+theorem symdif2 (x : set, A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( ( A ∖ B ) ∪ ( B ∖ A ) ) = { x | ¬ ( x ∈ A ↔ x ∈ B ) } ;;
+}
+
+proof of symdif2 {
+	step 1 : wff = eldif () |- ( x ∈ ( A ∖ B ) ↔ ( x ∈ A ∧ ¬ x ∈ B ) ) ;;
+	step 2 : wff = eldif () |- ( x ∈ ( B ∖ A ) ↔ ( x ∈ B ∧ ¬ x ∈ A ) ) ;;
+	step 3 : wff = orbi12i (step 1, step 2) |- ( ( x ∈ ( A ∖ B ) ∨ x ∈ ( B ∖ A ) ) ↔ ( ( x ∈ A ∧ ¬ x ∈ B ) ∨ ( x ∈ B ∧ ¬ x ∈ A ) ) ) ;;
+	step 4 : wff = elun () |- ( x ∈ ( ( A ∖ B ) ∪ ( B ∖ A ) ) ↔ ( x ∈ ( A ∖ B ) ∨ x ∈ ( B ∖ A ) ) ) ;;
+	step 5 : wff = xor () |- ( ¬ ( x ∈ A ↔ x ∈ B ) ↔ ( ( x ∈ A ∧ ¬ x ∈ B ) ∨ ( x ∈ B ∧ ¬ x ∈ A ) ) ) ;;
+	step 6 : wff = 3bitr4i (step 3, step 4, step 5) |- ( x ∈ ( ( A ∖ B ) ∪ ( B ∖ A ) ) ↔ ¬ ( x ∈ A ↔ x ∈ B ) ) ;;
+	step 7 : wff = abbi2i (step 6) |- ( ( A ∖ B ) ∪ ( B ∖ A ) ) = { x | ¬ ( x ∈ A ↔ x ∈ B ) } ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Union of two class abstractions.  (Contributed by NM, 29-Sep-2002.)
+       (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
+
+theorem unab (ph : wff, ps : wff, x : set) disjointed(x y, ph y, ps y) {
+	prop 1 : wff = |- ( { x | ph } ∪ { x | ps } ) = { x | ( ph ∨ ps ) } ;;
+}
+
+proof of unab {
+	var y : set;;
+	step 1 : wff = sbor () |- ( [ y / x ] ( ph ∨ ps ) ↔ ( [ y / x ] ph ∨ [ y / x ] ps ) ) ;;
+	step 2 : wff = df-clab () |- ( y ∈ { x | ( ph ∨ ps ) } ↔ [ y / x ] ( ph ∨ ps ) ) ;;
+	step 3 : wff = df-clab () |- ( y ∈ { x | ph } ↔ [ y / x ] ph ) ;;
+	step 4 : wff = df-clab () |- ( y ∈ { x | ps } ↔ [ y / x ] ps ) ;;
+	step 5 : wff = orbi12i (step 3, step 4) |- ( ( y ∈ { x | ph } ∨ y ∈ { x | ps } ) ↔ ( [ y / x ] ph ∨ [ y / x ] ps ) ) ;;
+	step 6 : wff = 3bitr4ri (step 1, step 2, step 5) |- ( ( y ∈ { x | ph } ∨ y ∈ { x | ps } ) ↔ y ∈ { x | ( ph ∨ ps ) } ) ;;
+	step 7 : wff = uneqri (step 6) |- ( { x | ph } ∪ { x | ps } ) = { x | ( ph ∨ ps ) } ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Intersection of two class abstractions.  (Contributed by NM,
+       29-Sep-2002.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
+
+theorem inab (ph : wff, ps : wff, x : set) disjointed(x y, ph y, ps y) {
+	prop 1 : wff = |- ( { x | ph } ∩ { x | ps } ) = { x | ( ph ∧ ps ) } ;;
+}
+
+proof of inab {
+	var y : set;;
+	step 1 : wff = sban () |- ( [ y / x ] ( ph ∧ ps ) ↔ ( [ y / x ] ph ∧ [ y / x ] ps ) ) ;;
+	step 2 : wff = df-clab () |- ( y ∈ { x | ( ph ∧ ps ) } ↔ [ y / x ] ( ph ∧ ps ) ) ;;
+	step 3 : wff = df-clab () |- ( y ∈ { x | ph } ↔ [ y / x ] ph ) ;;
+	step 4 : wff = df-clab () |- ( y ∈ { x | ps } ↔ [ y / x ] ps ) ;;
+	step 5 : wff = anbi12i (step 3, step 4) |- ( ( y ∈ { x | ph } ∧ y ∈ { x | ps } ) ↔ ( [ y / x ] ph ∧ [ y / x ] ps ) ) ;;
+	step 6 : wff = 3bitr4ri (step 1, step 2, step 5) |- ( ( y ∈ { x | ph } ∧ y ∈ { x | ps } ) ↔ y ∈ { x | ( ph ∧ ps ) } ) ;;
+	step 7 : wff = ineqri (step 6) |- ( { x | ph } ∩ { x | ps } ) = { x | ( ph ∧ ps ) } ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Difference of two class abstractions.  (Contributed by NM,
+       23-Oct-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
+
+theorem difab (ph : wff, ps : wff, x : set) disjointed(x y, ph y, ps y) {
+	prop 1 : wff = |- ( { x | ph } ∖ { x | ps } ) = { x | ( ph ∧ ¬ ps ) } ;;
+}
+
+proof of difab {
+	var y : set;;
+	step 1 : wff = df-clab () |- ( y ∈ { x | ( ph ∧ ¬ ps ) } ↔ [ y / x ] ( ph ∧ ¬ ps ) ) ;;
+	step 2 : wff = sban () |- ( [ y / x ] ( ph ∧ ¬ ps ) ↔ ( [ y / x ] ph ∧ [ y / x ] ¬ ps ) ) ;;
+	step 3 : wff = df-clab () |- ( y ∈ { x | ph } ↔ [ y / x ] ph ) ;;
+	step 4 : wff = bicomi (step 3) |- ( [ y / x ] ph ↔ y ∈ { x | ph } ) ;;
+	step 5 : wff = sbn () |- ( [ y / x ] ¬ ps ↔ ¬ [ y / x ] ps ) ;;
+	step 6 : wff = df-clab () |- ( y ∈ { x | ps } ↔ [ y / x ] ps ) ;;
+	step 7 : wff = xchbinxr (step 5, step 6) |- ( [ y / x ] ¬ ps ↔ ¬ y ∈ { x | ps } ) ;;
+	step 8 : wff = anbi12i (step 4, step 7) |- ( ( [ y / x ] ph ∧ [ y / x ] ¬ ps ) ↔ ( y ∈ { x | ph } ∧ ¬ y ∈ { x | ps } ) ) ;;
+	step 9 : wff = 3bitrri (step 1, step 2, step 8) |- ( ( y ∈ { x | ph } ∧ ¬ y ∈ { x | ps } ) ↔ y ∈ { x | ( ph ∧ ¬ ps ) } ) ;;
+	step 10 : wff = difeqri (step 9) |- ( { x | ph } ∖ { x | ps } ) = { x | ( ph ∧ ¬ ps ) } ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* A class builder defined by a negation.  (Contributed by FL,
+     18-Sep-2010.) */
+
+theorem notab (ph : wff, x : set)  {
+	prop 1 : wff = |- { x | ¬ ph } = ( _V ∖ { x | ph } ) ;;
+}
+
+proof of notab {
+	step 1 : wff = df-rab () |- { x ∈ _V | ¬ ph } = { x | ( x ∈ _V ∧ ¬ ph ) } ;;
+	step 2 : wff = rabab () |- { x ∈ _V | ¬ ph } = { x | ¬ ph } ;;
+	step 3 : wff = eqtr3i (step 1, step 2) |- { x | ( x ∈ _V ∧ ¬ ph ) } = { x | ¬ ph } ;;
+	step 4 : wff = difab () |- ( { x | x ∈ _V } ∖ { x | ph } ) = { x | ( x ∈ _V ∧ ¬ ph ) } ;;
+	step 5 : wff = abid2 () |- { x | x ∈ _V } = _V ;;
+	step 6 : wff = difeq1i (step 5) |- ( { x | x ∈ _V } ∖ { x | ph } ) = ( _V ∖ { x | ph } ) ;;
+	step 7 : wff = eqtr3i (step 4, step 6) |- { x | ( x ∈ _V ∧ ¬ ph ) } = ( _V ∖ { x | ph } ) ;;
+	step 8 : wff = eqtr3i (step 3, step 7) |- { x | ¬ ph } = ( _V ∖ { x | ph } ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Union of two restricted class abstractions.  (Contributed by NM,
+     25-Mar-2004.) */
+
+theorem unrab (ph : wff, ps : wff, x : set, A : class)  {
+	prop 1 : wff = |- ( { x ∈ A | ph } ∪ { x ∈ A | ps } ) = { x ∈ A | ( ph ∨ ps ) } ;;
+}
+
+proof of unrab {
+	step 1 : wff = df-rab () |- { x ∈ A | ph } = { x | ( x ∈ A ∧ ph ) } ;;
+	step 2 : wff = df-rab () |- { x ∈ A | ps } = { x | ( x ∈ A ∧ ps ) } ;;
+	step 3 : wff = uneq12i (step 1, step 2) |- ( { x ∈ A | ph } ∪ { x ∈ A | ps } ) = ( { x | ( x ∈ A ∧ ph ) } ∪ { x | ( x ∈ A ∧ ps ) } ) ;;
+	step 4 : wff = df-rab () |- { x ∈ A | ( ph ∨ ps ) } = { x | ( x ∈ A ∧ ( ph ∨ ps ) ) } ;;
+	step 5 : wff = unab () |- ( { x | ( x ∈ A ∧ ph ) } ∪ { x | ( x ∈ A ∧ ps ) } ) = { x | ( ( x ∈ A ∧ ph ) ∨ ( x ∈ A ∧ ps ) ) } ;;
+	step 6 : wff = andi () |- ( ( x ∈ A ∧ ( ph ∨ ps ) ) ↔ ( ( x ∈ A ∧ ph ) ∨ ( x ∈ A ∧ ps ) ) ) ;;
+	step 7 : wff = abbii (step 6) |- { x | ( x ∈ A ∧ ( ph ∨ ps ) ) } = { x | ( ( x ∈ A ∧ ph ) ∨ ( x ∈ A ∧ ps ) ) } ;;
+	step 8 : wff = eqtr4i (step 5, step 7) |- ( { x | ( x ∈ A ∧ ph ) } ∪ { x | ( x ∈ A ∧ ps ) } ) = { x | ( x ∈ A ∧ ( ph ∨ ps ) ) } ;;
+	step 9 : wff = eqtr4i (step 4, step 8) |- { x ∈ A | ( ph ∨ ps ) } = ( { x | ( x ∈ A ∧ ph ) } ∪ { x | ( x ∈ A ∧ ps ) } ) ;;
+	step 10 : wff = eqtr4i (step 3, step 9) |- ( { x ∈ A | ph } ∪ { x ∈ A | ps } ) = { x ∈ A | ( ph ∨ ps ) } ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Intersection of two restricted class abstractions.  (Contributed by NM,
+     1-Sep-2006.) */
+
+theorem inrab (ph : wff, ps : wff, x : set, A : class)  {
+	prop 1 : wff = |- ( { x ∈ A | ph } ∩ { x ∈ A | ps } ) = { x ∈ A | ( ph ∧ ps ) } ;;
+}
+
+proof of inrab {
+	step 1 : wff = df-rab () |- { x ∈ A | ph } = { x | ( x ∈ A ∧ ph ) } ;;
+	step 2 : wff = df-rab () |- { x ∈ A | ps } = { x | ( x ∈ A ∧ ps ) } ;;
+	step 3 : wff = ineq12i (step 1, step 2) |- ( { x ∈ A | ph } ∩ { x ∈ A | ps } ) = ( { x | ( x ∈ A ∧ ph ) } ∩ { x | ( x ∈ A ∧ ps ) } ) ;;
+	step 4 : wff = df-rab () |- { x ∈ A | ( ph ∧ ps ) } = { x | ( x ∈ A ∧ ( ph ∧ ps ) ) } ;;
+	step 5 : wff = inab () |- ( { x | ( x ∈ A ∧ ph ) } ∩ { x | ( x ∈ A ∧ ps ) } ) = { x | ( ( x ∈ A ∧ ph ) ∧ ( x ∈ A ∧ ps ) ) } ;;
+	step 6 : wff = anandi () |- ( ( x ∈ A ∧ ( ph ∧ ps ) ) ↔ ( ( x ∈ A ∧ ph ) ∧ ( x ∈ A ∧ ps ) ) ) ;;
+	step 7 : wff = abbii (step 6) |- { x | ( x ∈ A ∧ ( ph ∧ ps ) ) } = { x | ( ( x ∈ A ∧ ph ) ∧ ( x ∈ A ∧ ps ) ) } ;;
+	step 8 : wff = eqtr4i (step 5, step 7) |- ( { x | ( x ∈ A ∧ ph ) } ∩ { x | ( x ∈ A ∧ ps ) } ) = { x | ( x ∈ A ∧ ( ph ∧ ps ) ) } ;;
+	step 9 : wff = eqtr4i (step 4, step 8) |- { x ∈ A | ( ph ∧ ps ) } = ( { x | ( x ∈ A ∧ ph ) } ∩ { x | ( x ∈ A ∧ ps ) } ) ;;
+	step 10 : wff = eqtr4i (step 3, step 9) |- ( { x ∈ A | ph } ∩ { x ∈ A | ps } ) = { x ∈ A | ( ph ∧ ps ) } ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Intersection with a restricted class abstraction.  (Contributed by NM,
+       19-Nov-2007.) */
+
+theorem inrab2 (ph : wff, x : set, A : class, B : class) disjointed(x B) {
+	prop 1 : wff = |- ( { x ∈ A | ph } ∩ B ) = { x ∈ ( A ∩ B ) | ph } ;;
+}
+
+proof of inrab2 {
+	step 1 : wff = df-rab () |- { x ∈ A | ph } = { x | ( x ∈ A ∧ ph ) } ;;
+	step 2 : wff = abid2 () |- { x | x ∈ B } = B ;;
+	step 3 : wff = eqcomi (step 2) |- B = { x | x ∈ B } ;;
+	step 4 : wff = ineq12i (step 1, step 3) |- ( { x ∈ A | ph } ∩ B ) = ( { x | ( x ∈ A ∧ ph ) } ∩ { x | x ∈ B } ) ;;
+	step 5 : wff = df-rab () |- { x ∈ ( A ∩ B ) | ph } = { x | ( x ∈ ( A ∩ B ) ∧ ph ) } ;;
+	step 6 : wff = inab () |- ( { x | ( x ∈ A ∧ ph ) } ∩ { x | x ∈ B } ) = { x | ( ( x ∈ A ∧ ph ) ∧ x ∈ B ) } ;;
+	step 7 : wff = elin () |- ( x ∈ ( A ∩ B ) ↔ ( x ∈ A ∧ x ∈ B ) ) ;;
+	step 8 : wff = anbi1i (step 7) |- ( ( x ∈ ( A ∩ B ) ∧ ph ) ↔ ( ( x ∈ A ∧ x ∈ B ) ∧ ph ) ) ;;
+	step 9 : wff = an32 () |- ( ( ( x ∈ A ∧ x ∈ B ) ∧ ph ) ↔ ( ( x ∈ A ∧ ph ) ∧ x ∈ B ) ) ;;
+	step 10 : wff = bitri (step 8, step 9) |- ( ( x ∈ ( A ∩ B ) ∧ ph ) ↔ ( ( x ∈ A ∧ ph ) ∧ x ∈ B ) ) ;;
+	step 11 : wff = abbii (step 10) |- { x | ( x ∈ ( A ∩ B ) ∧ ph ) } = { x | ( ( x ∈ A ∧ ph ) ∧ x ∈ B ) } ;;
+	step 12 : wff = eqtr4i (step 6, step 11) |- ( { x | ( x ∈ A ∧ ph ) } ∩ { x | x ∈ B } ) = { x | ( x ∈ ( A ∩ B ) ∧ ph ) } ;;
+	step 13 : wff = eqtr4i (step 5, step 12) |- { x ∈ ( A ∩ B ) | ph } = ( { x | ( x ∈ A ∧ ph ) } ∩ { x | x ∈ B } ) ;;
+	step 14 : wff = eqtr4i (step 4, step 13) |- ( { x ∈ A | ph } ∩ B ) = { x ∈ ( A ∩ B ) | ph } ;;
+	qed prop 1 = step 14 ;;
+}
+
+/* Difference of two restricted class abstractions.  (Contributed by NM,
+     23-Oct-2004.) */
+
+theorem difrab (ph : wff, ps : wff, x : set, A : class)  {
+	prop 1 : wff = |- ( { x ∈ A | ph } ∖ { x ∈ A | ps } ) = { x ∈ A | ( ph ∧ ¬ ps ) } ;;
+}
+
+proof of difrab {
+	step 1 : wff = df-rab () |- { x ∈ A | ph } = { x | ( x ∈ A ∧ ph ) } ;;
+	step 2 : wff = df-rab () |- { x ∈ A | ps } = { x | ( x ∈ A ∧ ps ) } ;;
+	step 3 : wff = difeq12i (step 1, step 2) |- ( { x ∈ A | ph } ∖ { x ∈ A | ps } ) = ( { x | ( x ∈ A ∧ ph ) } ∖ { x | ( x ∈ A ∧ ps ) } ) ;;
+	step 4 : wff = df-rab () |- { x ∈ A | ( ph ∧ ¬ ps ) } = { x | ( x ∈ A ∧ ( ph ∧ ¬ ps ) ) } ;;
+	step 5 : wff = difab () |- ( { x | ( x ∈ A ∧ ph ) } ∖ { x | ( x ∈ A ∧ ps ) } ) = { x | ( ( x ∈ A ∧ ph ) ∧ ¬ ( x ∈ A ∧ ps ) ) } ;;
+	step 6 : wff = anass () |- ( ( ( x ∈ A ∧ ph ) ∧ ¬ ps ) ↔ ( x ∈ A ∧ ( ph ∧ ¬ ps ) ) ) ;;
+	step 7 : wff = simpr () |- ( ( x ∈ A ∧ ps ) → ps ) ;;
+	step 8 : wff = con3i (step 7) |- ( ¬ ps → ¬ ( x ∈ A ∧ ps ) ) ;;
+	step 9 : wff = anim2i (step 8) |- ( ( ( x ∈ A ∧ ph ) ∧ ¬ ps ) → ( ( x ∈ A ∧ ph ) ∧ ¬ ( x ∈ A ∧ ps ) ) ) ;;
+	step 10 : wff = pm3.2 () |- ( x ∈ A → ( ps → ( x ∈ A ∧ ps ) ) ) ;;
+	step 11 : wff = adantr (step 10) |- ( ( x ∈ A ∧ ph ) → ( ps → ( x ∈ A ∧ ps ) ) ) ;;
+	step 12 : wff = con3d (step 11) |- ( ( x ∈ A ∧ ph ) → ( ¬ ( x ∈ A ∧ ps ) → ¬ ps ) ) ;;
+	step 13 : wff = imdistani (step 12) |- ( ( ( x ∈ A ∧ ph ) ∧ ¬ ( x ∈ A ∧ ps ) ) → ( ( x ∈ A ∧ ph ) ∧ ¬ ps ) ) ;;
+	step 14 : wff = impbii (step 9, step 13) |- ( ( ( x ∈ A ∧ ph ) ∧ ¬ ps ) ↔ ( ( x ∈ A ∧ ph ) ∧ ¬ ( x ∈ A ∧ ps ) ) ) ;;
+	step 15 : wff = bitr3i (step 6, step 14) |- ( ( x ∈ A ∧ ( ph ∧ ¬ ps ) ) ↔ ( ( x ∈ A ∧ ph ) ∧ ¬ ( x ∈ A ∧ ps ) ) ) ;;
+	step 16 : wff = abbii (step 15) |- { x | ( x ∈ A ∧ ( ph ∧ ¬ ps ) ) } = { x | ( ( x ∈ A ∧ ph ) ∧ ¬ ( x ∈ A ∧ ps ) ) } ;;
+	step 17 : wff = eqtr4i (step 5, step 16) |- ( { x | ( x ∈ A ∧ ph ) } ∖ { x | ( x ∈ A ∧ ps ) } ) = { x | ( x ∈ A ∧ ( ph ∧ ¬ ps ) ) } ;;
+	step 18 : wff = eqtr4i (step 4, step 17) |- { x ∈ A | ( ph ∧ ¬ ps ) } = ( { x | ( x ∈ A ∧ ph ) } ∖ { x | ( x ∈ A ∧ ps ) } ) ;;
+	step 19 : wff = eqtr4i (step 3, step 18) |- ( { x ∈ A | ph } ∖ { x ∈ A | ps } ) = { x ∈ A | ( ph ∧ ¬ ps ) } ;;
+	qed prop 1 = step 19 ;;
+}
+
+/* Alternate definition of restricted class abstraction.  (Contributed by
+       NM, 20-Sep-2003.) */
+
+theorem dfrab2 (ph : wff, x : set, A : class) disjointed(x A) {
+	prop 1 : wff = |- { x ∈ A | ph } = ( { x | ph } ∩ A ) ;;
+}
+
+proof of dfrab2 {
+	step 1 : wff = df-rab () |- { x ∈ A | ph } = { x | ( x ∈ A ∧ ph ) } ;;
+	step 2 : wff = inab () |- ( { x | x ∈ A } ∩ { x | ph } ) = { x | ( x ∈ A ∧ ph ) } ;;
+	step 3 : wff = abid2 () |- { x | x ∈ A } = A ;;
+	step 4 : wff = ineq1i (step 3) |- ( { x | x ∈ A } ∩ { x | ph } ) = ( A ∩ { x | ph } ) ;;
+	step 5 : wff = eqtr3i (step 2, step 4) |- { x | ( x ∈ A ∧ ph ) } = ( A ∩ { x | ph } ) ;;
+	step 6 : wff = incom () |- ( A ∩ { x | ph } ) = ( { x | ph } ∩ A ) ;;
+	step 7 : wff = 3eqtri (step 1, step 5, step 6) |- { x ∈ A | ph } = ( { x | ph } ∩ A ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Alternate definition of restricted class abstraction.  (Contributed by
+       Mario Carneiro, 8-Sep-2013.) */
+
+theorem dfrab3 (ph : wff, x : set, A : class) disjointed(x A) {
+	prop 1 : wff = |- { x ∈ A | ph } = ( A ∩ { x | ph } ) ;;
+}
+
+proof of dfrab3 {
+	step 1 : wff = df-rab () |- { x ∈ A | ph } = { x | ( x ∈ A ∧ ph ) } ;;
+	step 2 : wff = inab () |- ( { x | x ∈ A } ∩ { x | ph } ) = { x | ( x ∈ A ∧ ph ) } ;;
+	step 3 : wff = abid2 () |- { x | x ∈ A } = A ;;
+	step 4 : wff = ineq1i (step 3) |- ( { x | x ∈ A } ∩ { x | ph } ) = ( A ∩ { x | ph } ) ;;
+	step 5 : wff = 3eqtr2i (step 1, step 2, step 4) |- { x ∈ A | ph } = ( A ∩ { x | ph } ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Complementation of restricted class abstractions.  (Contributed by Mario
+       Carneiro, 3-Sep-2015.) */
+
+theorem notrab (ph : wff, x : set, A : class) disjointed(x A) {
+	prop 1 : wff = |- ( A ∖ { x ∈ A | ph } ) = { x ∈ A | ¬ ph } ;;
+}
+
+proof of notrab {
+	step 1 : wff = difab () |- ( { x | x ∈ A } ∖ { x | ph } ) = { x | ( x ∈ A ∧ ¬ ph ) } ;;
+	step 2 : wff = difin () |- ( A ∖ ( A ∩ { x | ph } ) ) = ( A ∖ { x | ph } ) ;;
+	step 3 : wff = dfrab3 () |- { x ∈ A | ph } = ( A ∩ { x | ph } ) ;;
+	step 4 : wff = difeq2i (step 3) |- ( A ∖ { x ∈ A | ph } ) = ( A ∖ ( A ∩ { x | ph } ) ) ;;
+	step 5 : wff = abid2 () |- { x | x ∈ A } = A ;;
+	step 6 : wff = difeq1i (step 5) |- ( { x | x ∈ A } ∖ { x | ph } ) = ( A ∖ { x | ph } ) ;;
+	step 7 : wff = 3eqtr4i (step 2, step 4, step 6) |- ( A ∖ { x ∈ A | ph } ) = ( { x | x ∈ A } ∖ { x | ph } ) ;;
+	step 8 : wff = df-rab () |- { x ∈ A | ¬ ph } = { x | ( x ∈ A ∧ ¬ ph ) } ;;
+	step 9 : wff = 3eqtr4i (step 1, step 7, step 8) |- ( A ∖ { x ∈ A | ph } ) = { x ∈ A | ¬ ph } ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Restricted class abstraction with a common superset.  (Contributed by
+       Stefan O'Rear, 12-Sep-2015.)  (Proof shortened by Mario Carneiro,
+       8-Nov-2015.) */
+
+theorem dfrab3ss (ph : wff, x : set, A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( A ⊆ B → { x ∈ A | ph } = ( A ∩ { x ∈ B | ph } ) ) ;;
+}
+
+proof of dfrab3ss {
+	step 1 : wff = df-ss () |- ( A ⊆ B ↔ ( A ∩ B ) = A ) ;;
+	step 2 : wff = ineq1 () |- ( ( A ∩ B ) = A → ( ( A ∩ B ) ∩ { x | ph } ) = ( A ∩ { x | ph } ) ) ;;
+	step 3 : wff = eqcomd (step 2) |- ( ( A ∩ B ) = A → ( A ∩ { x | ph } ) = ( ( A ∩ B ) ∩ { x | ph } ) ) ;;
+	step 4 : wff = sylbi (step 1, step 3) |- ( A ⊆ B → ( A ∩ { x | ph } ) = ( ( A ∩ B ) ∩ { x | ph } ) ) ;;
+	step 5 : wff = dfrab3 () |- { x ∈ A | ph } = ( A ∩ { x | ph } ) ;;
+	step 6 : wff = dfrab3 () |- { x ∈ B | ph } = ( B ∩ { x | ph } ) ;;
+	step 7 : wff = ineq2i (step 6) |- ( A ∩ { x ∈ B | ph } ) = ( A ∩ ( B ∩ { x | ph } ) ) ;;
+	step 8 : wff = inass () |- ( ( A ∩ B ) ∩ { x | ph } ) = ( A ∩ ( B ∩ { x | ph } ) ) ;;
+	step 9 : wff = eqtr4i (step 7, step 8) |- ( A ∩ { x ∈ B | ph } ) = ( ( A ∩ B ) ∩ { x | ph } ) ;;
+	step 10 : wff = 3eqtr4g (step 4, step 5, step 9) |- ( A ⊆ B → { x ∈ A | ph } = ( A ∩ { x ∈ B | ph } ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Abstraction restricted to a union.  (Contributed by Stefan O'Rear,
+     5-Feb-2015.) */
+
+theorem rabun2 (ph : wff, x : set, A : class, B : class)  {
+	prop 1 : wff = |- { x ∈ ( A ∪ B ) | ph } = ( { x ∈ A | ph } ∪ { x ∈ B | ph } ) ;;
+}
+
+proof of rabun2 {
+	step 1 : wff = df-rab () |- { x ∈ ( A ∪ B ) | ph } = { x | ( x ∈ ( A ∪ B ) ∧ ph ) } ;;
+	step 2 : wff = df-rab () |- { x ∈ A | ph } = { x | ( x ∈ A ∧ ph ) } ;;
+	step 3 : wff = df-rab () |- { x ∈ B | ph } = { x | ( x ∈ B ∧ ph ) } ;;
+	step 4 : wff = uneq12i (step 2, step 3) |- ( { x ∈ A | ph } ∪ { x ∈ B | ph } ) = ( { x | ( x ∈ A ∧ ph ) } ∪ { x | ( x ∈ B ∧ ph ) } ) ;;
+	step 5 : wff = elun () |- ( x ∈ ( A ∪ B ) ↔ ( x ∈ A ∨ x ∈ B ) ) ;;
+	step 6 : wff = anbi1i (step 5) |- ( ( x ∈ ( A ∪ B ) ∧ ph ) ↔ ( ( x ∈ A ∨ x ∈ B ) ∧ ph ) ) ;;
+	step 7 : wff = andir () |- ( ( ( x ∈ A ∨ x ∈ B ) ∧ ph ) ↔ ( ( x ∈ A ∧ ph ) ∨ ( x ∈ B ∧ ph ) ) ) ;;
+	step 8 : wff = bitri (step 6, step 7) |- ( ( x ∈ ( A ∪ B ) ∧ ph ) ↔ ( ( x ∈ A ∧ ph ) ∨ ( x ∈ B ∧ ph ) ) ) ;;
+	step 9 : wff = abbii (step 8) |- { x | ( x ∈ ( A ∪ B ) ∧ ph ) } = { x | ( ( x ∈ A ∧ ph ) ∨ ( x ∈ B ∧ ph ) ) } ;;
+	step 10 : wff = unab () |- ( { x | ( x ∈ A ∧ ph ) } ∪ { x | ( x ∈ B ∧ ph ) } ) = { x | ( ( x ∈ A ∧ ph ) ∨ ( x ∈ B ∧ ph ) ) } ;;
+	step 11 : wff = eqtr4i (step 9, step 10) |- { x | ( x ∈ ( A ∪ B ) ∧ ph ) } = ( { x | ( x ∈ A ∧ ph ) } ∪ { x | ( x ∈ B ∧ ph ) } ) ;;
+	step 12 : wff = eqtr4i (step 4, step 11) |- ( { x ∈ A | ph } ∪ { x ∈ B | ph } ) = { x | ( x ∈ ( A ∪ B ) ∧ ph ) } ;;
+	step 13 : wff = eqtr4i (step 1, step 12) |- { x ∈ ( A ∪ B ) | ph } = ( { x ∈ A | ph } ∪ { x ∈ B | ph } ) ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* Transfer uniqueness to a smaller subclass.  (Contributed by NM,
+       20-Oct-2005.) */
+
+theorem reuss2 (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( ( ( A ⊆ B ∧ ∀ x ∈ A ( ph → ps ) ) ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ps ) ) → ∃! x ∈ A ph ) ;;
+}
+
+proof of reuss2 {
+	step 1 : wff = df-rex () |- ( ∃ x ∈ A ph ↔ ∃ x ( x ∈ A ∧ ph ) ) ;;
+	step 2 : wff = df-reu () |- ( ∃! x ∈ B ps ↔ ∃! x ( x ∈ B ∧ ps ) ) ;;
+	step 3 : wff = anbi12i (step 1, step 2) |- ( ( ∃ x ∈ A ph ∧ ∃! x ∈ B ps ) ↔ ( ∃ x ( x ∈ A ∧ ph ) ∧ ∃! x ( x ∈ B ∧ ps ) ) ) ;;
+	step 4 : wff = df-ral () |- ( ∀ x ∈ A ( ph → ps ) ↔ ∀ x ( x ∈ A → ( ph → ps ) ) ) ;;
+	step 5 : wff = ssel () |- ( A ⊆ B → ( x ∈ A → x ∈ B ) ) ;;
+	step 6 : wff = prth () |- ( ( ( x ∈ A → x ∈ B ) ∧ ( ph → ps ) ) → ( ( x ∈ A ∧ ph ) → ( x ∈ B ∧ ps ) ) ) ;;
+	step 7 : wff = sylan (step 5, step 6) |- ( ( A ⊆ B ∧ ( ph → ps ) ) → ( ( x ∈ A ∧ ph ) → ( x ∈ B ∧ ps ) ) ) ;;
+	step 8 : wff = exp4b (step 7) |- ( A ⊆ B → ( ( ph → ps ) → ( x ∈ A → ( ph → ( x ∈ B ∧ ps ) ) ) ) ) ;;
+	step 9 : wff = com23 (step 8) |- ( A ⊆ B → ( x ∈ A → ( ( ph → ps ) → ( ph → ( x ∈ B ∧ ps ) ) ) ) ) ;;
+	step 10 : wff = a2d (step 9) |- ( A ⊆ B → ( ( x ∈ A → ( ph → ps ) ) → ( x ∈ A → ( ph → ( x ∈ B ∧ ps ) ) ) ) ) ;;
+	step 11 : wff = imp4a (step 10) |- ( A ⊆ B → ( ( x ∈ A → ( ph → ps ) ) → ( ( x ∈ A ∧ ph ) → ( x ∈ B ∧ ps ) ) ) ) ;;
+	step 12 : wff = alimdv (step 11) |- ( A ⊆ B → ( ∀ x ( x ∈ A → ( ph → ps ) ) → ∀ x ( ( x ∈ A ∧ ph ) → ( x ∈ B ∧ ps ) ) ) ) ;;
+	step 13 : wff = imp (step 12) |- ( ( A ⊆ B ∧ ∀ x ( x ∈ A → ( ph → ps ) ) ) → ∀ x ( ( x ∈ A ∧ ph ) → ( x ∈ B ∧ ps ) ) ) ;;
+	step 14 : wff = sylan2b (step 4, step 13) |- ( ( A ⊆ B ∧ ∀ x ∈ A ( ph → ps ) ) → ∀ x ( ( x ∈ A ∧ ph ) → ( x ∈ B ∧ ps ) ) ) ;;
+	step 15 : wff = euimmo () |- ( ∀ x ( ( x ∈ A ∧ ph ) → ( x ∈ B ∧ ps ) ) → ( ∃! x ( x ∈ B ∧ ps ) → ∃* x ( x ∈ A ∧ ph ) ) ) ;;
+	step 16 : wff = syl (step 14, step 15) |- ( ( A ⊆ B ∧ ∀ x ∈ A ( ph → ps ) ) → ( ∃! x ( x ∈ B ∧ ps ) → ∃* x ( x ∈ A ∧ ph ) ) ) ;;
+	step 17 : wff = eu5 () |- ( ∃! x ( x ∈ A ∧ ph ) ↔ ( ∃ x ( x ∈ A ∧ ph ) ∧ ∃* x ( x ∈ A ∧ ph ) ) ) ;;
+	step 18 : wff = simplbi2 (step 17) |- ( ∃ x ( x ∈ A ∧ ph ) → ( ∃* x ( x ∈ A ∧ ph ) → ∃! x ( x ∈ A ∧ ph ) ) ) ;;
+	step 19 : wff = syl9 (step 16, step 18) |- ( ( A ⊆ B ∧ ∀ x ∈ A ( ph → ps ) ) → ( ∃ x ( x ∈ A ∧ ph ) → ( ∃! x ( x ∈ B ∧ ps ) → ∃! x ( x ∈ A ∧ ph ) ) ) ) ;;
+	step 20 : wff = imp32 (step 19) |- ( ( ( A ⊆ B ∧ ∀ x ∈ A ( ph → ps ) ) ∧ ( ∃ x ( x ∈ A ∧ ph ) ∧ ∃! x ( x ∈ B ∧ ps ) ) ) → ∃! x ( x ∈ A ∧ ph ) ) ;;
+	step 21 : wff = df-reu () |- ( ∃! x ∈ A ph ↔ ∃! x ( x ∈ A ∧ ph ) ) ;;
+	step 22 : wff = sylibr (step 20, step 21) |- ( ( ( A ⊆ B ∧ ∀ x ∈ A ( ph → ps ) ) ∧ ( ∃ x ( x ∈ A ∧ ph ) ∧ ∃! x ( x ∈ B ∧ ps ) ) ) → ∃! x ∈ A ph ) ;;
+	step 23 : wff = sylan2b (step 3, step 22) |- ( ( ( A ⊆ B ∧ ∀ x ∈ A ( ph → ps ) ) ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ps ) ) → ∃! x ∈ A ph ) ;;
+	qed prop 1 = step 23 ;;
+}
+
+/* Transfer uniqueness to a smaller subclass.  (Contributed by NM,
+       21-Aug-1999.) */
+
+theorem reuss (ph : wff, x : set, A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) → ∃! x ∈ A ph ) ;;
+}
+
+proof of reuss {
+	step 1 : wff = idd () |- ( x ∈ A → ( ph → ph ) ) ;;
+	step 2 : wff = rgen (step 1) |- ∀ x ∈ A ( ph → ph ) ;;
+	step 3 : wff = reuss2 () |- ( ( ( A ⊆ B ∧ ∀ x ∈ A ( ph → ph ) ) ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) ) → ∃! x ∈ A ph ) ;;
+	step 4 : wff = mpanl2 (step 2, step 3) |- ( ( A ⊆ B ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) ) → ∃! x ∈ A ph ) ;;
+	step 5 : wff = 3impb (step 4) |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) → ∃! x ∈ A ph ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Transfer uniqueness to a smaller class.  (Contributed by NM,
+       21-Oct-2005.) */
+
+theorem reuun1 (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( ( ∃ x ∈ A ph ∧ ∃! x ∈ ( A ∪ B ) ( ph ∨ ps ) ) → ∃! x ∈ A ph ) ;;
+}
+
+proof of reuun1 {
+	step 1 : wff = ssun1 () |- A ⊆ ( A ∪ B ) ;;
+	step 2 : wff = orc () |- ( ph → ( ph ∨ ps ) ) ;;
+	step 3 : wff = rgenw (step 2) |- ∀ x ∈ A ( ph → ( ph ∨ ps ) ) ;;
+	step 4 : wff = reuss2 () |- ( ( ( A ⊆ ( A ∪ B ) ∧ ∀ x ∈ A ( ph → ( ph ∨ ps ) ) ) ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ ( A ∪ B ) ( ph ∨ ps ) ) ) → ∃! x ∈ A ph ) ;;
+	step 5 : wff = mpanl12 (step 1, step 3, step 4) |- ( ( ∃ x ∈ A ph ∧ ∃! x ∈ ( A ∪ B ) ( ph ∨ ps ) ) → ∃! x ∈ A ph ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Transfer uniqueness to a smaller or larger class.  (Contributed by NM,
+       21-Oct-2005.) */
+
+theorem reuun2 (ph : wff, x : set, A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( ¬ ∃ x ∈ B ph → ( ∃! x ∈ ( A ∪ B ) ph ↔ ∃! x ∈ A ph ) ) ;;
+}
+
+proof of reuun2 {
+	step 1 : wff = df-rex () |- ( ∃ x ∈ B ph ↔ ∃ x ( x ∈ B ∧ ph ) ) ;;
+	step 2 : wff = euor2 () |- ( ¬ ∃ x ( x ∈ B ∧ ph ) → ( ∃! x ( ( x ∈ B ∧ ph ) ∨ ( x ∈ A ∧ ph ) ) ↔ ∃! x ( x ∈ A ∧ ph ) ) ) ;;
+	step 3 : wff = sylnbi (step 1, step 2) |- ( ¬ ∃ x ∈ B ph → ( ∃! x ( ( x ∈ B ∧ ph ) ∨ ( x ∈ A ∧ ph ) ) ↔ ∃! x ( x ∈ A ∧ ph ) ) ) ;;
+	step 4 : wff = df-reu () |- ( ∃! x ∈ ( A ∪ B ) ph ↔ ∃! x ( x ∈ ( A ∪ B ) ∧ ph ) ) ;;
+	step 5 : wff = elun () |- ( x ∈ ( A ∪ B ) ↔ ( x ∈ A ∨ x ∈ B ) ) ;;
+	step 6 : wff = anbi1i (step 5) |- ( ( x ∈ ( A ∪ B ) ∧ ph ) ↔ ( ( x ∈ A ∨ x ∈ B ) ∧ ph ) ) ;;
+	step 7 : wff = andir () |- ( ( ( x ∈ A ∨ x ∈ B ) ∧ ph ) ↔ ( ( x ∈ A ∧ ph ) ∨ ( x ∈ B ∧ ph ) ) ) ;;
+	step 8 : wff = orcom () |- ( ( ( x ∈ A ∧ ph ) ∨ ( x ∈ B ∧ ph ) ) ↔ ( ( x ∈ B ∧ ph ) ∨ ( x ∈ A ∧ ph ) ) ) ;;
+	step 9 : wff = bitri (step 7, step 8) |- ( ( ( x ∈ A ∨ x ∈ B ) ∧ ph ) ↔ ( ( x ∈ B ∧ ph ) ∨ ( x ∈ A ∧ ph ) ) ) ;;
+	step 10 : wff = bitri (step 6, step 9) |- ( ( x ∈ ( A ∪ B ) ∧ ph ) ↔ ( ( x ∈ B ∧ ph ) ∨ ( x ∈ A ∧ ph ) ) ) ;;
+	step 11 : wff = eubii (step 10) |- ( ∃! x ( x ∈ ( A ∪ B ) ∧ ph ) ↔ ∃! x ( ( x ∈ B ∧ ph ) ∨ ( x ∈ A ∧ ph ) ) ) ;;
+	step 12 : wff = bitri (step 4, step 11) |- ( ∃! x ∈ ( A ∪ B ) ph ↔ ∃! x ( ( x ∈ B ∧ ph ) ∨ ( x ∈ A ∧ ph ) ) ) ;;
+	step 13 : wff = df-reu () |- ( ∃! x ∈ A ph ↔ ∃! x ( x ∈ A ∧ ph ) ) ;;
+	step 14 : wff = 3bitr4g (step 3, step 12, step 13) |- ( ¬ ∃ x ∈ B ph → ( ∃! x ∈ ( A ∪ B ) ph ↔ ∃! x ∈ A ph ) ) ;;
+	qed prop 1 = step 14 ;;
+}
+
+/* Restricted uniqueness "picks" a member of a subclass.  (Contributed by
+       NM, 21-Aug-1999.) */
+
+theorem reupick (ph : wff, x : set, A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( ( ( A ⊆ B ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) ) ∧ ph ) → ( x ∈ A ↔ x ∈ B ) ) ;;
+}
+
+proof of reupick {
+	step 1 : wff = ssel () |- ( A ⊆ B → ( x ∈ A → x ∈ B ) ) ;;
+	step 2 : wff = ad2antrr (step 1) |- ( ( ( A ⊆ B ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) ) ∧ ph ) → ( x ∈ A → x ∈ B ) ) ;;
+	step 3 : wff = df-rex () |- ( ∃ x ∈ A ph ↔ ∃ x ( x ∈ A ∧ ph ) ) ;;
+	step 4 : wff = df-reu () |- ( ∃! x ∈ B ph ↔ ∃! x ( x ∈ B ∧ ph ) ) ;;
+	step 5 : wff = anbi12i (step 3, step 4) |- ( ( ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) ↔ ( ∃ x ( x ∈ A ∧ ph ) ∧ ∃! x ( x ∈ B ∧ ph ) ) ) ;;
+	step 6 : wff = ssel () |- ( A ⊆ B → ( x ∈ A → x ∈ B ) ) ;;
+	step 7 : wff = ancrd (step 6) |- ( A ⊆ B → ( x ∈ A → ( x ∈ B ∧ x ∈ A ) ) ) ;;
+	step 8 : wff = anim1d (step 7) |- ( A ⊆ B → ( ( x ∈ A ∧ ph ) → ( ( x ∈ B ∧ x ∈ A ) ∧ ph ) ) ) ;;
+	step 9 : wff = an32 () |- ( ( ( x ∈ B ∧ x ∈ A ) ∧ ph ) ↔ ( ( x ∈ B ∧ ph ) ∧ x ∈ A ) ) ;;
+	step 10 : wff = syl6ib (step 8, step 9) |- ( A ⊆ B → ( ( x ∈ A ∧ ph ) → ( ( x ∈ B ∧ ph ) ∧ x ∈ A ) ) ) ;;
+	step 11 : wff = eximdv (step 10) |- ( A ⊆ B → ( ∃ x ( x ∈ A ∧ ph ) → ∃ x ( ( x ∈ B ∧ ph ) ∧ x ∈ A ) ) ) ;;
+	step 12 : wff = eupick () |- ( ( ∃! x ( x ∈ B ∧ ph ) ∧ ∃ x ( ( x ∈ B ∧ ph ) ∧ x ∈ A ) ) → ( ( x ∈ B ∧ ph ) → x ∈ A ) ) ;;
+	step 13 : wff = ex (step 12) |- ( ∃! x ( x ∈ B ∧ ph ) → ( ∃ x ( ( x ∈ B ∧ ph ) ∧ x ∈ A ) → ( ( x ∈ B ∧ ph ) → x ∈ A ) ) ) ;;
+	step 14 : wff = syl9 (step 11, step 13) |- ( A ⊆ B → ( ∃! x ( x ∈ B ∧ ph ) → ( ∃ x ( x ∈ A ∧ ph ) → ( ( x ∈ B ∧ ph ) → x ∈ A ) ) ) ) ;;
+	step 15 : wff = com23 (step 14) |- ( A ⊆ B → ( ∃ x ( x ∈ A ∧ ph ) → ( ∃! x ( x ∈ B ∧ ph ) → ( ( x ∈ B ∧ ph ) → x ∈ A ) ) ) ) ;;
+	step 16 : wff = imp32 (step 15) |- ( ( A ⊆ B ∧ ( ∃ x ( x ∈ A ∧ ph ) ∧ ∃! x ( x ∈ B ∧ ph ) ) ) → ( ( x ∈ B ∧ ph ) → x ∈ A ) ) ;;
+	step 17 : wff = sylan2b (step 5, step 16) |- ( ( A ⊆ B ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) ) → ( ( x ∈ B ∧ ph ) → x ∈ A ) ) ;;
+	step 18 : wff = exp3acom23 (step 17) |- ( ( A ⊆ B ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) ) → ( ph → ( x ∈ B → x ∈ A ) ) ) ;;
+	step 19 : wff = imp (step 18) |- ( ( ( A ⊆ B ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) ) ∧ ph ) → ( x ∈ B → x ∈ A ) ) ;;
+	step 20 : wff = impbid (step 2, step 19) |- ( ( ( A ⊆ B ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) ) ∧ ph ) → ( x ∈ A ↔ x ∈ B ) ) ;;
+	qed prop 1 = step 20 ;;
+}
+
+/* Restricted uniqueness "picks" a member of a subclass.  (Contributed by
+       Mario Carneiro, 19-Nov-2016.) */
+
+theorem reupick3 (ph : wff, ps : wff, x : set, A : class) disjointed(x A) {
+	prop 1 : wff = |- ( ( ∃! x ∈ A ph ∧ ∃ x ∈ A ( ph ∧ ps ) ∧ x ∈ A ) → ( ph → ps ) ) ;;
+}
+
+proof of reupick3 {
+	step 1 : wff = df-reu () |- ( ∃! x ∈ A ph ↔ ∃! x ( x ∈ A ∧ ph ) ) ;;
+	step 2 : wff = df-rex () |- ( ∃ x ∈ A ( ph ∧ ps ) ↔ ∃ x ( x ∈ A ∧ ( ph ∧ ps ) ) ) ;;
+	step 3 : wff = anass () |- ( ( ( x ∈ A ∧ ph ) ∧ ps ) ↔ ( x ∈ A ∧ ( ph ∧ ps ) ) ) ;;
+	step 4 : wff = exbii (step 3) |- ( ∃ x ( ( x ∈ A ∧ ph ) ∧ ps ) ↔ ∃ x ( x ∈ A ∧ ( ph ∧ ps ) ) ) ;;
+	step 5 : wff = bitr4i (step 2, step 4) |- ( ∃ x ∈ A ( ph ∧ ps ) ↔ ∃ x ( ( x ∈ A ∧ ph ) ∧ ps ) ) ;;
+	step 6 : wff = eupick () |- ( ( ∃! x ( x ∈ A ∧ ph ) ∧ ∃ x ( ( x ∈ A ∧ ph ) ∧ ps ) ) → ( ( x ∈ A ∧ ph ) → ps ) ) ;;
+	step 7 : wff = syl2anb (step 1, step 5, step 6) |- ( ( ∃! x ∈ A ph ∧ ∃ x ∈ A ( ph ∧ ps ) ) → ( ( x ∈ A ∧ ph ) → ps ) ) ;;
+	step 8 : wff = exp3a (step 7) |- ( ( ∃! x ∈ A ph ∧ ∃ x ∈ A ( ph ∧ ps ) ) → ( x ∈ A → ( ph → ps ) ) ) ;;
+	step 9 : wff = 3impia (step 8) |- ( ( ∃! x ∈ A ph ∧ ∃ x ∈ A ( ph ∧ ps ) ∧ x ∈ A ) → ( ph → ps ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Restricted uniqueness "picks" a member of a subclass.  (Contributed by
+       Mario Carneiro, 15-Dec-2013.)  (Proof shortened by Mario Carneiro,
+       19-Nov-2016.) */
+
+theorem reupick2 (ph : wff, ps : wff, x : set, A : class) disjointed(x A) {
+	prop 1 : wff = |- ( ( ( ∀ x ∈ A ( ps → ph ) ∧ ∃ x ∈ A ps ∧ ∃! x ∈ A ph ) ∧ x ∈ A ) → ( ph ↔ ps ) ) ;;
+}
+
+proof of reupick2 {
+	step 1 : wff = ancr () |- ( ( ps → ph ) → ( ps → ( ph ∧ ps ) ) ) ;;
+	step 2 : wff = ralimi (step 1) |- ( ∀ x ∈ A ( ps → ph ) → ∀ x ∈ A ( ps → ( ph ∧ ps ) ) ) ;;
+	step 3 : wff = rexim () |- ( ∀ x ∈ A ( ps → ( ph ∧ ps ) ) → ( ∃ x ∈ A ps → ∃ x ∈ A ( ph ∧ ps ) ) ) ;;
+	step 4 : wff = syl (step 2, step 3) |- ( ∀ x ∈ A ( ps → ph ) → ( ∃ x ∈ A ps → ∃ x ∈ A ( ph ∧ ps ) ) ) ;;
+	step 5 : wff = reupick3 () |- ( ( ∃! x ∈ A ph ∧ ∃ x ∈ A ( ph ∧ ps ) ∧ x ∈ A ) → ( ph → ps ) ) ;;
+	step 6 : wff = 3exp (step 5) |- ( ∃! x ∈ A ph → ( ∃ x ∈ A ( ph ∧ ps ) → ( x ∈ A → ( ph → ps ) ) ) ) ;;
+	step 7 : wff = com12 (step 6) |- ( ∃ x ∈ A ( ph ∧ ps ) → ( ∃! x ∈ A ph → ( x ∈ A → ( ph → ps ) ) ) ) ;;
+	step 8 : wff = syl6 (step 4, step 7) |- ( ∀ x ∈ A ( ps → ph ) → ( ∃ x ∈ A ps → ( ∃! x ∈ A ph → ( x ∈ A → ( ph → ps ) ) ) ) ) ;;
+	step 9 : wff = 3imp1 (step 8) |- ( ( ( ∀ x ∈ A ( ps → ph ) ∧ ∃ x ∈ A ps ∧ ∃! x ∈ A ph ) ∧ x ∈ A ) → ( ph → ps ) ) ;;
+	step 10 : wff = rsp () |- ( ∀ x ∈ A ( ps → ph ) → ( x ∈ A → ( ps → ph ) ) ) ;;
+	step 11 : wff = 3ad2ant1 (step 10) |- ( ( ∀ x ∈ A ( ps → ph ) ∧ ∃ x ∈ A ps ∧ ∃! x ∈ A ph ) → ( x ∈ A → ( ps → ph ) ) ) ;;
+	step 12 : wff = imp (step 11) |- ( ( ( ∀ x ∈ A ( ps → ph ) ∧ ∃ x ∈ A ps ∧ ∃! x ∈ A ph ) ∧ x ∈ A ) → ( ps → ph ) ) ;;
+	step 13 : wff = impbid (step 9, step 12) |- ( ( ( ∀ x ∈ A ( ps → ph ) ∧ ∃ x ∈ A ps ∧ ∃! x ∈ A ph ) ∧ x ∈ A ) → ( ph ↔ ps ) ) ;;
+	qed prop 1 = step 13 ;;
+}
+
+

@@ -1,0 +1,1583 @@
+import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Cantor_s_Theorem.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+      Undefined values and restricted iota (description binder)
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+constant {
+	symbol Undef ;;
+}
+
+constant {
+	symbol iota_ ;;
+}
+
+/* Extend class notation with undefined value function. */
+
+rule cund () {
+	term : class = # Undef ;;
+}
+
+/* Extend class notation with restricted description binder. */
+
+rule crio (ph : wff, x : set, A : class) {
+	term : class = # ( iota_ x ∈ A ph ) ;;
+}
+
+/* Define the undefined value function, whose value at set ` s ` is
+     guaranteed not to be a member of ` s ` (see ~ pwuninel ).  (Contributed by
+     NM, 15-Sep-2011.) */
+
+definition df-undef (s : set)  {
+	defiendum : class = # Undef ;;
+	definiens : class = # ( s ∈ _V ↦ Pow ⋃ s ) ;;
+	-----------------------
+	prop : wff = |- defiendum = definiens ;;
+}
+
+/* Direct proof of ~ pwuninel avoiding functions and thus several ZF axioms.
+     (Contributed by Stefan O'Rear, 22-Feb-2015.) */
+
+theorem pwuninel2 (A : class, V : class)  {
+	prop 1 : wff = |- ( ⋃ A ∈ V → ¬ Pow ⋃ A ∈ A ) ;;
+}
+
+proof of pwuninel2 {
+	step 1 : wff = pwnss () |- ( ⋃ A ∈ V → ¬ Pow ⋃ A ⊆ ⋃ A ) ;;
+	step 2 : wff = elssuni () |- ( Pow ⋃ A ∈ A → Pow ⋃ A ⊆ ⋃ A ) ;;
+	step 3 : wff = nsyl (step 1, step 2) |- ( ⋃ A ∈ V → ¬ Pow ⋃ A ∈ A ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* The power set of the union of a set does not belong to the set.  This
+     theorem provides a way of constructing a new set that doesn't belong to a
+     given set.  See also ~ pwuninel2 .  (Contributed by NM, 27-Jun-2008.)
+     (Proof shortened by Mario Carneiro, 23-Dec-2016.) */
+
+theorem pwuninel (A : class)  {
+	prop 1 : wff = |- ¬ Pow ⋃ A ∈ A ;;
+}
+
+proof of pwuninel {
+	step 1 : wff = elex () |- ( Pow ⋃ A ∈ A → Pow ⋃ A ∈ _V ) ;;
+	step 2 : wff = pwexb () |- ( ⋃ A ∈ _V ↔ Pow ⋃ A ∈ _V ) ;;
+	step 3 : wff = sylibr (step 1, step 2) |- ( Pow ⋃ A ∈ A → ⋃ A ∈ _V ) ;;
+	step 4 : wff = pwuninel2 () |- ( ⋃ A ∈ _V → ¬ Pow ⋃ A ∈ A ) ;;
+	step 5 : wff = syl (step 3, step 4) |- ( Pow ⋃ A ∈ A → ¬ Pow ⋃ A ∈ A ) ;;
+	step 6 : wff = id () |- ( ¬ Pow ⋃ A ∈ A → ¬ Pow ⋃ A ∈ A ) ;;
+	step 7 : wff = pm2.61i (step 5, step 6) |- ¬ Pow ⋃ A ∈ A ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Value of the undefined value function.  Normally we will not reference
+       the explicit value but will use ~ undefnel instead.  (Contributed by NM,
+       15-Sep-2011.)  (Revised by Mario Carneiro, 24-Dec-2016.) */
+
+theorem undefval (S : class, V : class) disjointed(s S) {
+	prop 1 : wff = |- ( S ∈ V → ( Undef ` S ) = Pow ⋃ S ) ;;
+}
+
+proof of undefval {
+	var s : set;;
+	step 1 : wff = elex () |- ( S ∈ V → S ∈ _V ) ;;
+	step 2 : wff = uniexg () |- ( S ∈ V → ⋃ S ∈ _V ) ;;
+	step 3 : wff = pwexg () |- ( ⋃ S ∈ _V → Pow ⋃ S ∈ _V ) ;;
+	step 4 : wff = syl (step 2, step 3) |- ( S ∈ V → Pow ⋃ S ∈ _V ) ;;
+	step 5 : wff = unieq () |- ( s = S → ⋃ s = ⋃ S ) ;;
+	step 6 : wff = pweqd (step 5) |- ( s = S → Pow ⋃ s = Pow ⋃ S ) ;;
+	step 7 : wff = df-undef () |- Undef = ( s ∈ _V ↦ Pow ⋃ s ) ;;
+	step 8 : wff = fvmptg (step 6, step 7) |- ( ( S ∈ _V ∧ Pow ⋃ S ∈ _V ) → ( Undef ` S ) = Pow ⋃ S ) ;;
+	step 9 : wff = syl2anc (step 1, step 4, step 8) |- ( S ∈ V → ( Undef ` S ) = Pow ⋃ S ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* The undefined value generated from a set is not a member of the set.
+     (Contributed by NM, 15-Sep-2011.) */
+
+theorem undefnel2 (S : class, V : class)  {
+	prop 1 : wff = |- ( S ∈ V → ¬ ( Undef ` S ) ∈ S ) ;;
+}
+
+proof of undefnel2 {
+	step 1 : wff = pwuninel () |- ¬ Pow ⋃ S ∈ S ;;
+	step 2 : wff = undefval () |- ( S ∈ V → ( Undef ` S ) = Pow ⋃ S ) ;;
+	step 3 : wff = eleq1d (step 2) |- ( S ∈ V → ( ( Undef ` S ) ∈ S ↔ Pow ⋃ S ∈ S ) ) ;;
+	step 4 : wff = mtbiri (step 1, step 3) |- ( S ∈ V → ¬ ( Undef ` S ) ∈ S ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* The undefined value generated from a set is not a member of the set.
+     (Contributed by NM, 15-Sep-2011.) */
+
+theorem undefnel (S : class, V : class)  {
+	prop 1 : wff = |- ( S ∈ V → ( Undef ` S ) ∉ S ) ;;
+}
+
+proof of undefnel {
+	step 1 : wff = undefnel2 () |- ( S ∈ V → ¬ ( Undef ` S ) ∈ S ) ;;
+	step 2 : wff = df-nel () |- ( ( Undef ` S ) ∉ S ↔ ¬ ( Undef ` S ) ∈ S ) ;;
+	step 3 : wff = sylibr (step 1, step 2) |- ( S ∈ V → ( Undef ` S ) ∉ S ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Define restricted description binder.  In case it doesn't exist, we
+       return a set which is not a member of the domain of discourse ` A ` .
+       See also comments for ~ df-iota .  (Contributed by NM, 15-Sep-2011.)
+       (Revised by Mario Carneiro, 15-Oct-2016.) */
+
+definition df-riota (ph : wff, x : set, A : class)  {
+	defiendum : class = # ( iota_ x ∈ A ph ) ;;
+	definiens : class = # if ( ∃! x ∈ A ph , ( iota x ( x ∈ A ∧ ph ) ) , ( Undef ` { x | x ∈ A } ) ) ;;
+	-----------------------
+	prop : wff = |- defiendum = definiens ;;
+}
+
+/* Formula-building deduction rule for iota.  (Contributed by NM,
+       15-Sep-2011.) */
+
+theorem riotaeqdv (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x ph) {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( iota_ x ∈ A ps ) = ( iota_ x ∈ B ps ) ) ;;
+}
+
+proof of riotaeqdv {
+	step 1 : wff = eleq2d (hyp 1) |- ( ph → ( x ∈ A ↔ x ∈ B ) ) ;;
+	step 2 : wff = anbi1d (step 1) |- ( ph → ( ( x ∈ A ∧ ps ) ↔ ( x ∈ B ∧ ps ) ) ) ;;
+	step 3 : wff = eubidv (step 2) |- ( ph → ( ∃! x ( x ∈ A ∧ ps ) ↔ ∃! x ( x ∈ B ∧ ps ) ) ) ;;
+	step 4 : wff = df-reu () |- ( ∃! x ∈ A ps ↔ ∃! x ( x ∈ A ∧ ps ) ) ;;
+	step 5 : wff = df-reu () |- ( ∃! x ∈ B ps ↔ ∃! x ( x ∈ B ∧ ps ) ) ;;
+	step 6 : wff = 3bitr4g (step 3, step 4, step 5) |- ( ph → ( ∃! x ∈ A ps ↔ ∃! x ∈ B ps ) ) ;;
+	step 7 : wff = eleq2d (hyp 1) |- ( ph → ( x ∈ A ↔ x ∈ B ) ) ;;
+	step 8 : wff = anbi1d (step 7) |- ( ph → ( ( x ∈ A ∧ ps ) ↔ ( x ∈ B ∧ ps ) ) ) ;;
+	step 9 : wff = iotabidv (step 8) |- ( ph → ( iota x ( x ∈ A ∧ ps ) ) = ( iota x ( x ∈ B ∧ ps ) ) ) ;;
+	step 10 : wff = eleq2d (hyp 1) |- ( ph → ( x ∈ A ↔ x ∈ B ) ) ;;
+	step 11 : wff = abbidv (step 10) |- ( ph → { x | x ∈ A } = { x | x ∈ B } ) ;;
+	step 12 : wff = fveq2d (step 11) |- ( ph → ( Undef ` { x | x ∈ A } ) = ( Undef ` { x | x ∈ B } ) ) ;;
+	step 13 : wff = ifbieq12d (step 6, step 9, step 12) |- ( ph → if ( ∃! x ∈ A ps , ( iota x ( x ∈ A ∧ ps ) ) , ( Undef ` { x | x ∈ A } ) ) = if ( ∃! x ∈ B ps , ( iota x ( x ∈ B ∧ ps ) ) , ( Undef ` { x | x ∈ B } ) ) ) ;;
+	step 14 : wff = df-riota () |- ( iota_ x ∈ A ps ) = if ( ∃! x ∈ A ps , ( iota x ( x ∈ A ∧ ps ) ) , ( Undef ` { x | x ∈ A } ) ) ;;
+	step 15 : wff = df-riota () |- ( iota_ x ∈ B ps ) = if ( ∃! x ∈ B ps , ( iota x ( x ∈ B ∧ ps ) ) , ( Undef ` { x | x ∈ B } ) ) ;;
+	step 16 : wff = 3eqtr4g (step 13, step 14, step 15) |- ( ph → ( iota_ x ∈ A ps ) = ( iota_ x ∈ B ps ) ) ;;
+	qed prop 1 = step 16 ;;
+}
+
+/* Formula-building deduction rule for restricted iota.  (Contributed by
+       NM, 15-Sep-2011.) */
+
+theorem riotabidv (ph : wff, ps : wff, ch : wff, x : set, A : class) disjointed(x ph) {
+	hyp 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( iota_ x ∈ A ps ) = ( iota_ x ∈ A ch ) ) ;;
+}
+
+proof of riotabidv {
+	step 1 : wff = reubidv (hyp 1) |- ( ph → ( ∃! x ∈ A ps ↔ ∃! x ∈ A ch ) ) ;;
+	step 2 : wff = anbi2d (hyp 1) |- ( ph → ( ( x ∈ A ∧ ps ) ↔ ( x ∈ A ∧ ch ) ) ) ;;
+	step 3 : wff = iotabidv (step 2) |- ( ph → ( iota x ( x ∈ A ∧ ps ) ) = ( iota x ( x ∈ A ∧ ch ) ) ) ;;
+	step 4 : wff = eqidd () |- ( ph → ( Undef ` { x | x ∈ A } ) = ( Undef ` { x | x ∈ A } ) ) ;;
+	step 5 : wff = ifbieq12d (step 1, step 3, step 4) |- ( ph → if ( ∃! x ∈ A ps , ( iota x ( x ∈ A ∧ ps ) ) , ( Undef ` { x | x ∈ A } ) ) = if ( ∃! x ∈ A ch , ( iota x ( x ∈ A ∧ ch ) ) , ( Undef ` { x | x ∈ A } ) ) ) ;;
+	step 6 : wff = df-riota () |- ( iota_ x ∈ A ps ) = if ( ∃! x ∈ A ps , ( iota x ( x ∈ A ∧ ps ) ) , ( Undef ` { x | x ∈ A } ) ) ;;
+	step 7 : wff = df-riota () |- ( iota_ x ∈ A ch ) = if ( ∃! x ∈ A ch , ( iota x ( x ∈ A ∧ ch ) ) , ( Undef ` { x | x ∈ A } ) ) ;;
+	step 8 : wff = 3eqtr4g (step 5, step 6, step 7) |- ( ph → ( iota_ x ∈ A ps ) = ( iota_ x ∈ A ch ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Equality deduction for restricted universal quantifier.  (Contributed by
+       NM, 15-Sep-2011.) */
+
+theorem riotaeqbidv (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class) disjointed(x ph) {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	hyp 2 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( iota_ x ∈ A ps ) = ( iota_ x ∈ B ch ) ) ;;
+}
+
+proof of riotaeqbidv {
+	step 1 : wff = riotabidv (hyp 2) |- ( ph → ( iota_ x ∈ A ps ) = ( iota_ x ∈ A ch ) ) ;;
+	step 2 : wff = riotaeqdv (hyp 1) |- ( ph → ( iota_ x ∈ A ch ) = ( iota_ x ∈ B ch ) ) ;;
+	step 3 : wff = eqtrd (step 1, step 2) |- ( ph → ( iota_ x ∈ A ps ) = ( iota_ x ∈ B ch ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Restricted iota is a set.  (Contributed by NM, 15-Sep-2011.) */
+
+theorem riotaex (ps : wff, x : set, A : class)  {
+	prop 1 : wff = |- ( iota_ x ∈ A ps ) ∈ _V ;;
+}
+
+proof of riotaex {
+	step 1 : wff = df-riota () |- ( iota_ x ∈ A ps ) = if ( ∃! x ∈ A ps , ( iota x ( x ∈ A ∧ ps ) ) , ( Undef ` { x | x ∈ A } ) ) ;;
+	step 2 : wff = iotaex () |- ( iota x ( x ∈ A ∧ ps ) ) ∈ _V ;;
+	step 3 : wff = fvex () |- ( Undef ` { x | x ∈ A } ) ∈ _V ;;
+	step 4 : wff = ifex (step 2, step 3) |- if ( ∃! x ∈ A ps , ( iota x ( x ∈ A ∧ ps ) ) , ( Undef ` { x | x ∈ A } ) ) ∈ _V ;;
+	step 5 : wff = eqeltri (step 1, step 4) |- ( iota_ x ∈ A ps ) ∈ _V ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* An iota restricted to the universe is unrestricted.  (Contributed by NM,
+     18-Sep-2011.) */
+
+theorem riotav (ph : wff, x : set)  {
+	prop 1 : wff = |- ( iota_ x ∈ _V ph ) = ( iota x ph ) ;;
+}
+
+proof of riotav {
+	step 1 : wff = df-riota () |- ( iota_ x ∈ _V ph ) = if ( ∃! x ∈ _V ph , ( iota x ( x ∈ _V ∧ ph ) ) , ( Undef ` { x | x ∈ _V } ) ) ;;
+	step 2 : wff = iftrue () |- ( ∃! x ∈ _V ph → if ( ∃! x ∈ _V ph , ( iota x ( x ∈ _V ∧ ph ) ) , ( Undef ` { x | x ∈ _V } ) ) = ( iota x ( x ∈ _V ∧ ph ) ) ) ;;
+	step 3 : wff = vex () |- x ∈ _V ;;
+	step 4 : wff = biantrur (step 3) |- ( ph ↔ ( x ∈ _V ∧ ph ) ) ;;
+	step 5 : wff = iotabii (step 4) |- ( iota x ph ) = ( iota x ( x ∈ _V ∧ ph ) ) ;;
+	step 6 : wff = syl6reqr (step 2, step 5) |- ( ∃! x ∈ _V ph → ( iota x ph ) = if ( ∃! x ∈ _V ph , ( iota x ( x ∈ _V ∧ ph ) ) , ( Undef ` { x | x ∈ _V } ) ) ) ;;
+	step 7 : wff = reuv () |- ( ∃! x ∈ _V ph ↔ ∃! x ph ) ;;
+	step 8 : wff = iotanul () |- ( ¬ ∃! x ph → ( iota x ph ) = ∅ ) ;;
+	step 9 : wff = sylnbi (step 7, step 8) |- ( ¬ ∃! x ∈ _V ph → ( iota x ph ) = ∅ ) ;;
+	step 10 : wff = abid2 () |- { x | x ∈ _V } = _V ;;
+	step 11 : wff = fveq2i (step 10) |- ( Undef ` { x | x ∈ _V } ) = ( Undef ` _V ) ;;
+	step 12 : wff = vprc () |- ¬ _V ∈ _V ;;
+	step 13 : wff = fvprc () |- ( ¬ _V ∈ _V → ( Undef ` _V ) = ∅ ) ;;
+	step 14 : wff = ax-mp (step 12, step 13) |- ( Undef ` _V ) = ∅ ;;
+	step 15 : wff = eqtri (step 11, step 14) |- ( Undef ` { x | x ∈ _V } ) = ∅ ;;
+	step 16 : wff = syl6eqr (step 9, step 15) |- ( ¬ ∃! x ∈ _V ph → ( iota x ph ) = ( Undef ` { x | x ∈ _V } ) ) ;;
+	step 17 : wff = iffalse () |- ( ¬ ∃! x ∈ _V ph → if ( ∃! x ∈ _V ph , ( iota x ( x ∈ _V ∧ ph ) ) , ( Undef ` { x | x ∈ _V } ) ) = ( Undef ` { x | x ∈ _V } ) ) ;;
+	step 18 : wff = eqtr4d (step 16, step 17) |- ( ¬ ∃! x ∈ _V ph → ( iota x ph ) = if ( ∃! x ∈ _V ph , ( iota x ( x ∈ _V ∧ ph ) ) , ( Undef ` { x | x ∈ _V } ) ) ) ;;
+	step 19 : wff = pm2.61i (step 6, step 18) |- ( iota x ph ) = if ( ∃! x ∈ _V ph , ( iota x ( x ∈ _V ∧ ph ) ) , ( Undef ` { x | x ∈ _V } ) ) ;;
+	step 20 : wff = eqtr4i (step 1, step 19) |- ( iota_ x ∈ _V ph ) = ( iota x ph ) ;;
+	qed prop 1 = step 20 ;;
+}
+
+/* Restricted iota in terms of iota.  (Contributed by NM, 15-Sep-2011.) */
+
+theorem riotaiota (ph : wff, x : set, A : class)  {
+	prop 1 : wff = |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) = ( iota x ( x ∈ A ∧ ph ) ) ) ;;
+}
+
+proof of riotaiota {
+	step 1 : wff = df-riota () |- ( iota_ x ∈ A ph ) = if ( ∃! x ∈ A ph , ( iota x ( x ∈ A ∧ ph ) ) , ( Undef ` { x | x ∈ A } ) ) ;;
+	step 2 : wff = iftrue () |- ( ∃! x ∈ A ph → if ( ∃! x ∈ A ph , ( iota x ( x ∈ A ∧ ph ) ) , ( Undef ` { x | x ∈ A } ) ) = ( iota x ( x ∈ A ∧ ph ) ) ) ;;
+	step 3 : wff = syl5eq (step 1, step 2) |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) = ( iota x ( x ∈ A ∧ ph ) ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Restricted iota in terms of class union.  (Contributed by NM,
+     11-Oct-2011.) */
+
+theorem riotauni (ph : wff, x : set, A : class)  {
+	prop 1 : wff = |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) = ⋃ { x ∈ A | ph } ) ;;
+}
+
+proof of riotauni {
+	step 1 : wff = riotaiota () |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) = ( iota x ( x ∈ A ∧ ph ) ) ) ;;
+	step 2 : wff = df-reu () |- ( ∃! x ∈ A ph ↔ ∃! x ( x ∈ A ∧ ph ) ) ;;
+	step 3 : wff = iotauni () |- ( ∃! x ( x ∈ A ∧ ph ) → ( iota x ( x ∈ A ∧ ph ) ) = ⋃ { x | ( x ∈ A ∧ ph ) } ) ;;
+	step 4 : wff = sylbi (step 2, step 3) |- ( ∃! x ∈ A ph → ( iota x ( x ∈ A ∧ ph ) ) = ⋃ { x | ( x ∈ A ∧ ph ) } ) ;;
+	step 5 : wff = df-rab () |- { x ∈ A | ph } = { x | ( x ∈ A ∧ ph ) } ;;
+	step 6 : wff = unieqi (step 5) |- ⋃ { x ∈ A | ph } = ⋃ { x | ( x ∈ A ∧ ph ) } ;;
+	step 7 : wff = syl6eqr (step 4, step 6) |- ( ∃! x ∈ A ph → ( iota x ( x ∈ A ∧ ph ) ) = ⋃ { x ∈ A | ph } ) ;;
+	step 8 : wff = eqtrd (step 1, step 7) |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) = ⋃ { x ∈ A | ph } ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* The abstraction variable in a restricted iota descriptor isn't free.
+       (Contributed by NM, 12-Oct-2011.)  (Revised by Mario Carneiro,
+       15-Oct-2016.) */
+
+theorem nfriota1 (ph : wff, x : set, A : class) disjointed(x A) {
+	prop 1 : wff = |- F/_ x ( iota_ x ∈ A ph ) ;;
+}
+
+proof of nfriota1 {
+	step 1 : wff = df-riota () |- ( iota_ x ∈ A ph ) = if ( ∃! x ∈ A ph , ( iota x ( x ∈ A ∧ ph ) ) , ( Undef ` { x | x ∈ A } ) ) ;;
+	step 2 : wff = nfreu1 () |- F/ x ∃! x ∈ A ph ;;
+	step 3 : wff = nfiota1 () |- F/_ x ( iota x ( x ∈ A ∧ ph ) ) ;;
+	step 4 : wff = nfcv () |- F/_ x Undef ;;
+	step 5 : wff = nfab1 () |- F/_ x { x | x ∈ A } ;;
+	step 6 : wff = nffv (step 4, step 5) |- F/_ x ( Undef ` { x | x ∈ A } ) ;;
+	step 7 : wff = nfif (step 2, step 3, step 6) |- F/_ x if ( ∃! x ∈ A ph , ( iota x ( x ∈ A ∧ ph ) ) , ( Undef ` { x | x ∈ A } ) ) ;;
+	step 8 : wff = nfcxfr (step 1, step 7) |- F/_ x ( iota_ x ∈ A ph ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Deduction version of ~ nfriota .  (Contributed by NM, 18-Feb-2013.)
+       (Revised by Mario Carneiro, 15-Oct-2016.) */
+
+theorem nfriotad (ph : wff, ps : wff, x : set, y : set, A : class)  {
+	hyp 1 : wff = |- F/ y ph ;;
+	hyp 2 : wff = |- ( ph → F/ x ps ) ;;
+	hyp 3 : wff = |- ( ph → F/_ x A ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → F/_ x ( iota_ y ∈ A ps ) ) ;;
+}
+
+proof of nfriotad {
+	step 1 : wff = df-riota () |- ( iota_ y ∈ A ps ) = if ( ∃! y ∈ A ps , ( iota y ( y ∈ A ∧ ps ) ) , ( Undef ` { y | y ∈ A } ) ) ;;
+	step 2 : wff = nfreud (hyp 1, hyp 3, hyp 2) |- ( ph → F/ x ∃! y ∈ A ps ) ;;
+	step 3 : wff = nfnae () |- F/ y ¬ ∀ x x = y ;;
+	step 4 : wff = nfan (hyp 1, step 3) |- F/ y ( ph ∧ ¬ ∀ x x = y ) ;;
+	step 5 : wff = nfcvf () |- ( ¬ ∀ x x = y → F/_ x y ) ;;
+	step 6 : wff = adantl (step 5) |- ( ( ph ∧ ¬ ∀ x x = y ) → F/_ x y ) ;;
+	step 7 : wff = adantr (hyp 3) |- ( ( ph ∧ ¬ ∀ x x = y ) → F/_ x A ) ;;
+	step 8 : wff = nfeld (step 6, step 7) |- ( ( ph ∧ ¬ ∀ x x = y ) → F/ x y ∈ A ) ;;
+	step 9 : wff = adantr (hyp 2) |- ( ( ph ∧ ¬ ∀ x x = y ) → F/ x ps ) ;;
+	step 10 : wff = nfand (step 8, step 9) |- ( ( ph ∧ ¬ ∀ x x = y ) → F/ x ( y ∈ A ∧ ps ) ) ;;
+	step 11 : wff = nfiotad (step 4, step 10) |- ( ( ph ∧ ¬ ∀ x x = y ) → F/_ x ( iota y ( y ∈ A ∧ ps ) ) ) ;;
+	step 12 : wff = ex (step 11) |- ( ph → ( ¬ ∀ x x = y → F/_ x ( iota y ( y ∈ A ∧ ps ) ) ) ) ;;
+	step 13 : wff = nfiota1 () |- F/_ y ( iota y ( y ∈ A ∧ ps ) ) ;;
+	step 14 : wff = eqidd () |- ( ∀ x x = y → ( iota y ( y ∈ A ∧ ps ) ) = ( iota y ( y ∈ A ∧ ps ) ) ) ;;
+	step 15 : wff = drnfc1 (step 14) |- ( ∀ x x = y → ( F/_ x ( iota y ( y ∈ A ∧ ps ) ) ↔ F/_ y ( iota y ( y ∈ A ∧ ps ) ) ) ) ;;
+	step 16 : wff = mpbiri (step 13, step 15) |- ( ∀ x x = y → F/_ x ( iota y ( y ∈ A ∧ ps ) ) ) ;;
+	step 17 : wff = pm2.61d2 (step 12, step 16) |- ( ph → F/_ x ( iota y ( y ∈ A ∧ ps ) ) ) ;;
+	step 18 : wff = nfcvd () |- ( ph → F/_ x Undef ) ;;
+	step 19 : wff = nfcvf () |- ( ¬ ∀ x x = y → F/_ x y ) ;;
+	step 20 : wff = adantl (step 19) |- ( ( ph ∧ ¬ ∀ x x = y ) → F/_ x y ) ;;
+	step 21 : wff = adantr (hyp 3) |- ( ( ph ∧ ¬ ∀ x x = y ) → F/_ x A ) ;;
+	step 22 : wff = nfeld (step 20, step 21) |- ( ( ph ∧ ¬ ∀ x x = y ) → F/ x y ∈ A ) ;;
+	step 23 : wff = nfabd2 (hyp 1, step 22) |- ( ph → F/_ x { y | y ∈ A } ) ;;
+	step 24 : wff = nffvd (step 18, step 23) |- ( ph → F/_ x ( Undef ` { y | y ∈ A } ) ) ;;
+	step 25 : wff = nfifd (step 2, step 17, step 24) |- ( ph → F/_ x if ( ∃! y ∈ A ps , ( iota y ( y ∈ A ∧ ps ) ) , ( Undef ` { y | y ∈ A } ) ) ) ;;
+	step 26 : wff = nfcxfrd (step 1, step 25) |- ( ph → F/_ x ( iota_ y ∈ A ps ) ) ;;
+	qed prop 1 = step 26 ;;
+}
+
+/* A variable not free in a wff remains so in a restricted iota
+       descriptor.  (Contributed by NM, 12-Oct-2011.) */
+
+theorem nfriota (ph : wff, x : set, y : set, A : class) disjointed(x y) {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- F/_ x A ;;
+	-----------------------
+	prop 1 : wff = |- F/_ x ( iota_ y ∈ A ph ) ;;
+}
+
+proof of nfriota {
+	step 1 : wff = nftru () |- F/ y T. ;;
+	step 2 : wff = a1i (hyp 1) |- ( T. → F/ x ph ) ;;
+	step 3 : wff = a1i (hyp 2) |- ( T. → F/_ x A ) ;;
+	step 4 : wff = nfriotad (step 1, step 2, step 3) |- ( T. → F/_ x ( iota_ y ∈ A ph ) ) ;;
+	step 5 : wff = trud (step 4) |- F/_ x ( iota_ y ∈ A ph ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Change bound variable in a restricted description binder.  (Contributed
+       by NM, 18-Mar-2013.)  (Revised by Mario Carneiro, 15-Oct-2016.) */
+
+theorem cbvriota (ph : wff, ps : wff, x : set, y : set, A : class) disjointed(x z A, y z A, z ph, z ps) {
+	hyp 1 : wff = |- F/ y ph ;;
+	hyp 2 : wff = |- F/ x ps ;;
+	hyp 3 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( iota_ x ∈ A ph ) = ( iota_ y ∈ A ps ) ;;
+}
+
+proof of cbvriota {
+	var z : set;;
+	step 1 : wff = cbvreu (hyp 1, hyp 2, hyp 3) |- ( ∃! x ∈ A ph ↔ ∃! y ∈ A ps ) ;;
+	step 2 : wff = eleq1 () |- ( x = z → ( x ∈ A ↔ z ∈ A ) ) ;;
+	step 3 : wff = sbequ12 () |- ( x = z → ( ph ↔ [ z / x ] ph ) ) ;;
+	step 4 : wff = anbi12d (step 2, step 3) |- ( x = z → ( ( x ∈ A ∧ ph ) ↔ ( z ∈ A ∧ [ z / x ] ph ) ) ) ;;
+	step 5 : wff = nfv () |- F/ z ( x ∈ A ∧ ph ) ;;
+	step 6 : wff = nfv () |- F/ x z ∈ A ;;
+	step 7 : wff = nfs1v () |- F/ x [ z / x ] ph ;;
+	step 8 : wff = nfan (step 6, step 7) |- F/ x ( z ∈ A ∧ [ z / x ] ph ) ;;
+	step 9 : wff = cbviota (step 4, step 5, step 8) |- ( iota x ( x ∈ A ∧ ph ) ) = ( iota z ( z ∈ A ∧ [ z / x ] ph ) ) ;;
+	step 10 : wff = eleq1 () |- ( z = y → ( z ∈ A ↔ y ∈ A ) ) ;;
+	step 11 : wff = sbequ () |- ( z = y → ( [ z / x ] ph ↔ [ y / x ] ph ) ) ;;
+	step 12 : wff = sbie (hyp 2, hyp 3) |- ( [ y / x ] ph ↔ ps ) ;;
+	step 13 : wff = syl6bb (step 11, step 12) |- ( z = y → ( [ z / x ] ph ↔ ps ) ) ;;
+	step 14 : wff = anbi12d (step 10, step 13) |- ( z = y → ( ( z ∈ A ∧ [ z / x ] ph ) ↔ ( y ∈ A ∧ ps ) ) ) ;;
+	step 15 : wff = nfv () |- F/ y z ∈ A ;;
+	step 16 : wff = nfsb (hyp 1) |- F/ y [ z / x ] ph ;;
+	step 17 : wff = nfan (step 15, step 16) |- F/ y ( z ∈ A ∧ [ z / x ] ph ) ;;
+	step 18 : wff = nfv () |- F/ z ( y ∈ A ∧ ps ) ;;
+	step 19 : wff = cbviota (step 14, step 17, step 18) |- ( iota z ( z ∈ A ∧ [ z / x ] ph ) ) = ( iota y ( y ∈ A ∧ ps ) ) ;;
+	step 20 : wff = eqtri (step 9, step 19) |- ( iota x ( x ∈ A ∧ ph ) ) = ( iota y ( y ∈ A ∧ ps ) ) ;;
+	step 21 : wff = abid2 () |- { x | x ∈ A } = A ;;
+	step 22 : wff = abid2 () |- { y | y ∈ A } = A ;;
+	step 23 : wff = eqtr4i (step 21, step 22) |- { x | x ∈ A } = { y | y ∈ A } ;;
+	step 24 : wff = fveq2i (step 23) |- ( Undef ` { x | x ∈ A } ) = ( Undef ` { y | y ∈ A } ) ;;
+	step 25 : wff = ifbieq12i (step 1, step 20, step 24) |- if ( ∃! x ∈ A ph , ( iota x ( x ∈ A ∧ ph ) ) , ( Undef ` { x | x ∈ A } ) ) = if ( ∃! y ∈ A ps , ( iota y ( y ∈ A ∧ ps ) ) , ( Undef ` { y | y ∈ A } ) ) ;;
+	step 26 : wff = df-riota () |- ( iota_ x ∈ A ph ) = if ( ∃! x ∈ A ph , ( iota x ( x ∈ A ∧ ph ) ) , ( Undef ` { x | x ∈ A } ) ) ;;
+	step 27 : wff = df-riota () |- ( iota_ y ∈ A ps ) = if ( ∃! y ∈ A ps , ( iota y ( y ∈ A ∧ ps ) ) , ( Undef ` { y | y ∈ A } ) ) ;;
+	step 28 : wff = 3eqtr4i (step 25, step 26, step 27) |- ( iota_ x ∈ A ph ) = ( iota_ y ∈ A ps ) ;;
+	qed prop 1 = step 28 ;;
+}
+
+/* Change bound variable in a restricted description binder.  (Contributed
+       by NM, 18-Mar-2013.)  (Revised by Mario Carneiro, 15-Oct-2016.) */
+
+theorem cbvriotav (ph : wff, ps : wff, x : set, y : set, A : class) disjointed(x A, y A, y ph, x ps) {
+	hyp 1 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( iota_ x ∈ A ph ) = ( iota_ y ∈ A ps ) ;;
+}
+
+proof of cbvriotav {
+	step 1 : wff = nfv () |- F/ y ph ;;
+	step 2 : wff = nfv () |- F/ x ps ;;
+	step 3 : wff = cbvriota (step 1, step 2, hyp 1) |- ( iota_ x ∈ A ph ) = ( iota_ y ∈ A ps ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Interchange class substitution and restricted description binder.
+       (Contributed by NM, 24-Feb-2013.) */
+
+theorem csbriotag (ph : wff, x : set, y : set, A : class, B : class, V : class) disjointed(y z A, x z B, z ph, x y) {
+	prop 1 : wff = |- ( A ∈ V → [_ A / x ]_ ( iota_ y ∈ B ph ) = ( iota_ y ∈ B [. A / x ]. ph ) ) ;;
+}
+
+proof of csbriotag {
+	var z : set;;
+	step 1 : wff = csbeq1 () |- ( z = A → [_ z / x ]_ ( iota_ y ∈ B ph ) = [_ A / x ]_ ( iota_ y ∈ B ph ) ) ;;
+	step 2 : wff = dfsbcq2 () |- ( z = A → ( [ z / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 3 : wff = riotabidv (step 2) |- ( z = A → ( iota_ y ∈ B [ z / x ] ph ) = ( iota_ y ∈ B [. A / x ]. ph ) ) ;;
+	step 4 : wff = eqeq12d (step 1, step 3) |- ( z = A → ( [_ z / x ]_ ( iota_ y ∈ B ph ) = ( iota_ y ∈ B [ z / x ] ph ) ↔ [_ A / x ]_ ( iota_ y ∈ B ph ) = ( iota_ y ∈ B [. A / x ]. ph ) ) ) ;;
+	step 5 : wff = vex () |- z ∈ _V ;;
+	step 6 : wff = nfs1v () |- F/ x [ z / x ] ph ;;
+	step 7 : wff = nfcv () |- F/_ x B ;;
+	step 8 : wff = nfriota (step 6, step 7) |- F/_ x ( iota_ y ∈ B [ z / x ] ph ) ;;
+	step 9 : wff = sbequ12 () |- ( x = z → ( ph ↔ [ z / x ] ph ) ) ;;
+	step 10 : wff = riotabidv (step 9) |- ( x = z → ( iota_ y ∈ B ph ) = ( iota_ y ∈ B [ z / x ] ph ) ) ;;
+	step 11 : wff = csbief (step 5, step 8, step 10) |- [_ z / x ]_ ( iota_ y ∈ B ph ) = ( iota_ y ∈ B [ z / x ] ph ) ;;
+	step 12 : wff = vtoclg (step 4, step 11) |- ( A ∈ V → [_ A / x ]_ ( iota_ y ∈ B ph ) = ( iota_ y ∈ B [. A / x ]. ph ) ) ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* Membership law for "the unique element in ` A ` such that ` ph ` ."
+
+     This can useful for expanding an iota-based definition (see ~ df-iota ).
+     If you have an unbounded iota, ~ iotacl may be useful.
+
+     (Contributed by NM, 21-Aug-2011.)  (Revised by Mario Carneiro,
+     23-Dec-2016.) */
+
+theorem riotacl2 (ph : wff, x : set, A : class)  {
+	prop 1 : wff = |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) ∈ { x ∈ A | ph } ) ;;
+}
+
+proof of riotacl2 {
+	step 1 : wff = riotaiota () |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) = ( iota x ( x ∈ A ∧ ph ) ) ) ;;
+	step 2 : wff = df-reu () |- ( ∃! x ∈ A ph ↔ ∃! x ( x ∈ A ∧ ph ) ) ;;
+	step 3 : wff = iotacl () |- ( ∃! x ( x ∈ A ∧ ph ) → ( iota x ( x ∈ A ∧ ph ) ) ∈ { x | ( x ∈ A ∧ ph ) } ) ;;
+	step 4 : wff = sylbi (step 2, step 3) |- ( ∃! x ∈ A ph → ( iota x ( x ∈ A ∧ ph ) ) ∈ { x | ( x ∈ A ∧ ph ) } ) ;;
+	step 5 : wff = df-rab () |- { x ∈ A | ph } = { x | ( x ∈ A ∧ ph ) } ;;
+	step 6 : wff = syl6eleqr (step 4, step 5) |- ( ∃! x ∈ A ph → ( iota x ( x ∈ A ∧ ph ) ) ∈ { x ∈ A | ph } ) ;;
+	step 7 : wff = eqeltrd (step 1, step 6) |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) ∈ { x ∈ A | ph } ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Closure of restricted iota.  (Contributed by NM, 21-Aug-2011.) */
+
+theorem riotacl (ph : wff, x : set, A : class) disjointed(x A) {
+	prop 1 : wff = |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) ∈ A ) ;;
+}
+
+proof of riotacl {
+	step 1 : wff = ssrab2 () |- { x ∈ A | ph } ⊆ A ;;
+	step 2 : wff = riotacl2 () |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) ∈ { x ∈ A | ph } ) ;;
+	step 3 : wff = sseldi (step 1, step 2) |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) ∈ A ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Substitution law for descriptions.  Compare ~ iotasbc .  (Contributed by
+     NM, 23-Aug-2011.)  (Proof shortened by Mario Carneiro, 24-Dec-2016.) */
+
+theorem riotasbc (ph : wff, x : set, A : class)  {
+	prop 1 : wff = |- ( ∃! x ∈ A ph → [. ( iota_ x ∈ A ph ) / x ]. ph ) ;;
+}
+
+proof of riotasbc {
+	step 1 : wff = rabssab () |- { x ∈ A | ph } ⊆ { x | ph } ;;
+	step 2 : wff = riotacl2 () |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) ∈ { x ∈ A | ph } ) ;;
+	step 3 : wff = sseldi (step 1, step 2) |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) ∈ { x | ph } ) ;;
+	step 4 : wff = df-sbc () |- ( [. ( iota_ x ∈ A ph ) / x ]. ph ↔ ( iota_ x ∈ A ph ) ∈ { x | ph } ) ;;
+	step 5 : wff = sylibr (step 3, step 4) |- ( ∃! x ∈ A ph → [. ( iota_ x ∈ A ph ) / x ]. ph ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Equivalent wff's yield equal restricted class abstractions (deduction
+       rule).  ( ~ rabbidva analog.)  (Contributed by NM, 17-Jan-2012.) */
+
+theorem riotabidva (ph : wff, ps : wff, ch : wff, x : set, A : class) disjointed(x ph) {
+	hyp 1 : wff = |- ( ( ph ∧ x ∈ A ) → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( iota_ x ∈ A ps ) = ( iota_ x ∈ A ch ) ) ;;
+}
+
+proof of riotabidva {
+	step 1 : wff = pm5.32da (hyp 1) |- ( ph → ( ( x ∈ A ∧ ps ) ↔ ( x ∈ A ∧ ch ) ) ) ;;
+	step 2 : wff = iotabidv (step 1) |- ( ph → ( iota x ( x ∈ A ∧ ps ) ) = ( iota x ( x ∈ A ∧ ch ) ) ) ;;
+	step 3 : wff = adantr (step 2) |- ( ( ph ∧ ∃! x ∈ A ps ) → ( iota x ( x ∈ A ∧ ps ) ) = ( iota x ( x ∈ A ∧ ch ) ) ) ;;
+	step 4 : wff = ifeq1da (step 3) |- ( ph → if ( ∃! x ∈ A ps , ( iota x ( x ∈ A ∧ ps ) ) , ( Undef ` { x | x ∈ A } ) ) = if ( ∃! x ∈ A ps , ( iota x ( x ∈ A ∧ ch ) ) , ( Undef ` { x | x ∈ A } ) ) ) ;;
+	step 5 : wff = reubidva (hyp 1) |- ( ph → ( ∃! x ∈ A ps ↔ ∃! x ∈ A ch ) ) ;;
+	step 6 : wff = ifbid (step 5) |- ( ph → if ( ∃! x ∈ A ps , ( iota x ( x ∈ A ∧ ch ) ) , ( Undef ` { x | x ∈ A } ) ) = if ( ∃! x ∈ A ch , ( iota x ( x ∈ A ∧ ch ) ) , ( Undef ` { x | x ∈ A } ) ) ) ;;
+	step 7 : wff = eqtrd (step 4, step 6) |- ( ph → if ( ∃! x ∈ A ps , ( iota x ( x ∈ A ∧ ps ) ) , ( Undef ` { x | x ∈ A } ) ) = if ( ∃! x ∈ A ch , ( iota x ( x ∈ A ∧ ch ) ) , ( Undef ` { x | x ∈ A } ) ) ) ;;
+	step 8 : wff = df-riota () |- ( iota_ x ∈ A ps ) = if ( ∃! x ∈ A ps , ( iota x ( x ∈ A ∧ ps ) ) , ( Undef ` { x | x ∈ A } ) ) ;;
+	step 9 : wff = df-riota () |- ( iota_ x ∈ A ch ) = if ( ∃! x ∈ A ch , ( iota x ( x ∈ A ∧ ch ) ) , ( Undef ` { x | x ∈ A } ) ) ;;
+	step 10 : wff = 3eqtr4g (step 7, step 8, step 9) |- ( ph → ( iota_ x ∈ A ps ) = ( iota_ x ∈ A ch ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Equivalent wff's yield equal restricted iotas (inference rule).
+       ( ~ rabbiia analog.)  (Contributed by NM, 16-Jan-2012.) */
+
+theorem riotabiia (ph : wff, ps : wff, x : set, A : class)  {
+	hyp 1 : wff = |- ( x ∈ A → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( iota_ x ∈ A ph ) = ( iota_ x ∈ A ps ) ;;
+}
+
+proof of riotabiia {
+	step 1 : wff = eqid () |- _V = _V ;;
+	step 2 : wff = adantl (hyp 1) |- ( ( _V = _V ∧ x ∈ A ) → ( ph ↔ ps ) ) ;;
+	step 3 : wff = riotabidva (step 2) |- ( _V = _V → ( iota_ x ∈ A ph ) = ( iota_ x ∈ A ps ) ) ;;
+	step 4 : wff = ax-mp (step 1, step 3) |- ( iota_ x ∈ A ph ) = ( iota_ x ∈ A ps ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Property of restricted iota.  Compare ~ iota1 .  (Contributed by Mario
+       Carneiro, 15-Oct-2016.) */
+
+theorem riota1 (ph : wff, x : set, A : class) disjointed(x A) {
+	prop 1 : wff = |- ( ∃! x ∈ A ph → ( ( x ∈ A ∧ ph ) ↔ ( iota_ x ∈ A ph ) = x ) ) ;;
+}
+
+proof of riota1 {
+	step 1 : wff = df-reu () |- ( ∃! x ∈ A ph ↔ ∃! x ( x ∈ A ∧ ph ) ) ;;
+	step 2 : wff = iota1 () |- ( ∃! x ( x ∈ A ∧ ph ) → ( ( x ∈ A ∧ ph ) ↔ ( iota x ( x ∈ A ∧ ph ) ) = x ) ) ;;
+	step 3 : wff = sylbi (step 1, step 2) |- ( ∃! x ∈ A ph → ( ( x ∈ A ∧ ph ) ↔ ( iota x ( x ∈ A ∧ ph ) ) = x ) ) ;;
+	step 4 : wff = riotaiota () |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) = ( iota x ( x ∈ A ∧ ph ) ) ) ;;
+	step 5 : wff = eqeq1d (step 4) |- ( ∃! x ∈ A ph → ( ( iota_ x ∈ A ph ) = x ↔ ( iota x ( x ∈ A ∧ ph ) ) = x ) ) ;;
+	step 6 : wff = bitr4d (step 3, step 5) |- ( ∃! x ∈ A ph → ( ( x ∈ A ∧ ph ) ↔ ( iota_ x ∈ A ph ) = x ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Property of iota.  (Contributed by NM, 23-Aug-2011.) */
+
+theorem riota1a (ph : wff, x : set, A : class)  {
+	prop 1 : wff = |- ( ( x ∈ A ∧ ∃! x ∈ A ph ) → ( ph ↔ ( iota x ( x ∈ A ∧ ph ) ) = x ) ) ;;
+}
+
+proof of riota1a {
+	step 1 : wff = ibar () |- ( x ∈ A → ( ph ↔ ( x ∈ A ∧ ph ) ) ) ;;
+	step 2 : wff = df-reu () |- ( ∃! x ∈ A ph ↔ ∃! x ( x ∈ A ∧ ph ) ) ;;
+	step 3 : wff = iota1 () |- ( ∃! x ( x ∈ A ∧ ph ) → ( ( x ∈ A ∧ ph ) ↔ ( iota x ( x ∈ A ∧ ph ) ) = x ) ) ;;
+	step 4 : wff = sylbi (step 2, step 3) |- ( ∃! x ∈ A ph → ( ( x ∈ A ∧ ph ) ↔ ( iota x ( x ∈ A ∧ ph ) ) = x ) ) ;;
+	step 5 : wff = sylan9bb (step 1, step 4) |- ( ( x ∈ A ∧ ∃! x ∈ A ph ) → ( ph ↔ ( iota x ( x ∈ A ∧ ph ) ) = x ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* A deduction version of ~ riota2f .  (Contributed by NM, 17-Feb-2013.)
+       (Revised by Mario Carneiro, 15-Oct-2016.) */
+
+theorem riota2df (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class) disjointed(x A) {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- ( ph → F/_ x B ) ;;
+	hyp 3 : wff = |- ( ph → F/ x ch ) ;;
+	hyp 4 : wff = |- ( ph → B ∈ A ) ;;
+	hyp 5 : wff = |- ( ( ph ∧ x = B ) → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ ∃! x ∈ A ps ) → ( ch ↔ ( iota_ x ∈ A ps ) = B ) ) ;;
+}
+
+proof of riota2df {
+	step 1 : wff = adantr (hyp 4) |- ( ( ph ∧ ∃! x ∈ A ps ) → B ∈ A ) ;;
+	step 2 : wff = simpr () |- ( ( ph ∧ ∃! x ∈ A ps ) → ∃! x ∈ A ps ) ;;
+	step 3 : wff = df-reu () |- ( ∃! x ∈ A ps ↔ ∃! x ( x ∈ A ∧ ps ) ) ;;
+	step 4 : wff = sylib (step 2, step 3) |- ( ( ph ∧ ∃! x ∈ A ps ) → ∃! x ( x ∈ A ∧ ps ) ) ;;
+	step 5 : wff = simpr () |- ( ( ( ph ∧ ∃! x ∈ A ps ) ∧ x = B ) → x = B ) ;;
+	step 6 : wff = adantr (hyp 4) |- ( ( ph ∧ ∃! x ∈ A ps ) → B ∈ A ) ;;
+	step 7 : wff = adantr (step 6) |- ( ( ( ph ∧ ∃! x ∈ A ps ) ∧ x = B ) → B ∈ A ) ;;
+	step 8 : wff = eqeltrd (step 5, step 7) |- ( ( ( ph ∧ ∃! x ∈ A ps ) ∧ x = B ) → x ∈ A ) ;;
+	step 9 : wff = biantrurd (step 8) |- ( ( ( ph ∧ ∃! x ∈ A ps ) ∧ x = B ) → ( ps ↔ ( x ∈ A ∧ ps ) ) ) ;;
+	step 10 : wff = adantlr (hyp 5) |- ( ( ( ph ∧ ∃! x ∈ A ps ) ∧ x = B ) → ( ps ↔ ch ) ) ;;
+	step 11 : wff = bitr3d (step 9, step 10) |- ( ( ( ph ∧ ∃! x ∈ A ps ) ∧ x = B ) → ( ( x ∈ A ∧ ps ) ↔ ch ) ) ;;
+	step 12 : wff = nfreu1 () |- F/ x ∃! x ∈ A ps ;;
+	step 13 : wff = nfan (hyp 1, step 12) |- F/ x ( ph ∧ ∃! x ∈ A ps ) ;;
+	step 14 : wff = adantr (hyp 3) |- ( ( ph ∧ ∃! x ∈ A ps ) → F/ x ch ) ;;
+	step 15 : wff = adantr (hyp 2) |- ( ( ph ∧ ∃! x ∈ A ps ) → F/_ x B ) ;;
+	step 16 : wff = iota2df (step 1, step 4, step 11, step 13, step 14, step 15) |- ( ( ph ∧ ∃! x ∈ A ps ) → ( ch ↔ ( iota x ( x ∈ A ∧ ps ) ) = B ) ) ;;
+	step 17 : wff = riotaiota () |- ( ∃! x ∈ A ps → ( iota_ x ∈ A ps ) = ( iota x ( x ∈ A ∧ ps ) ) ) ;;
+	step 18 : wff = adantl (step 17) |- ( ( ph ∧ ∃! x ∈ A ps ) → ( iota_ x ∈ A ps ) = ( iota x ( x ∈ A ∧ ps ) ) ) ;;
+	step 19 : wff = eqeq1d (step 18) |- ( ( ph ∧ ∃! x ∈ A ps ) → ( ( iota_ x ∈ A ps ) = B ↔ ( iota x ( x ∈ A ∧ ps ) ) = B ) ) ;;
+	step 20 : wff = bitr4d (step 16, step 19) |- ( ( ph ∧ ∃! x ∈ A ps ) → ( ch ↔ ( iota_ x ∈ A ps ) = B ) ) ;;
+	qed prop 1 = step 20 ;;
+}
+
+/* This theorem shows a condition that allows us to represent a descriptor
+       with a class expression ` B ` .  (Contributed by NM, 23-Aug-2011.)
+       (Revised by Mario Carneiro, 15-Oct-2016.) */
+
+theorem riota2f (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A) {
+	hyp 1 : wff = |- F/_ x B ;;
+	hyp 2 : wff = |- F/ x ps ;;
+	hyp 3 : wff = |- ( x = B → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( B ∈ A ∧ ∃! x ∈ A ph ) → ( ps ↔ ( iota_ x ∈ A ph ) = B ) ) ;;
+}
+
+proof of riota2f {
+	step 1 : wff = nfel1 (hyp 1) |- F/ x B ∈ A ;;
+	step 2 : wff = a1i (hyp 1) |- ( B ∈ A → F/_ x B ) ;;
+	step 3 : wff = a1i (hyp 2) |- ( B ∈ A → F/ x ps ) ;;
+	step 4 : wff = id () |- ( B ∈ A → B ∈ A ) ;;
+	step 5 : wff = adantl (hyp 3) |- ( ( B ∈ A ∧ x = B ) → ( ph ↔ ps ) ) ;;
+	step 6 : wff = riota2df (step 1, step 2, step 3, step 4, step 5) |- ( ( B ∈ A ∧ ∃! x ∈ A ph ) → ( ps ↔ ( iota_ x ∈ A ph ) = B ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* This theorem shows a condition that allows us to represent a descriptor
+       with a class expression ` B ` .  (Contributed by NM, 23-Aug-2011.)
+       (Revised by Mario Carneiro, 10-Dec-2016.) */
+
+theorem riota2 (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x ps, x A, x B) {
+	hyp 1 : wff = |- ( x = B → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( B ∈ A ∧ ∃! x ∈ A ph ) → ( ps ↔ ( iota_ x ∈ A ph ) = B ) ) ;;
+}
+
+proof of riota2 {
+	step 1 : wff = nfcv () |- F/_ x B ;;
+	step 2 : wff = nfv () |- F/ x ps ;;
+	step 3 : wff = riota2f (step 1, step 2, hyp 1) |- ( ( B ∈ A ∧ ∃! x ∈ A ph ) → ( ps ↔ ( iota_ x ∈ A ph ) = B ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Properties of a restricted definite description operator.  Todo: can
+       some uses of ~ riota2f be shortened with this?  (Contributed by NM,
+       23-Nov-2013.) */
+
+theorem riotaprop (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A) {
+	hyp 1 : wff = |- F/ x ps ;;
+	hyp 2 : wff = |- B = ( iota_ x ∈ A ph ) ;;
+	hyp 3 : wff = |- ( x = B → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃! x ∈ A ph → ( B ∈ A ∧ ps ) ) ;;
+}
+
+proof of riotaprop {
+	step 1 : wff = riotacl () |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) ∈ A ) ;;
+	step 2 : wff = syl5eqel (hyp 2, step 1) |- ( ∃! x ∈ A ph → B ∈ A ) ;;
+	step 3 : wff = riotacl () |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) ∈ A ) ;;
+	step 4 : wff = syl5eqel (hyp 2, step 3) |- ( ∃! x ∈ A ph → B ∈ A ) ;;
+	step 5 : wff = eqcomi (hyp 2) |- ( iota_ x ∈ A ph ) = B ;;
+	step 6 : wff = nfriota1 () |- F/_ x ( iota_ x ∈ A ph ) ;;
+	step 7 : wff = nfcxfr (hyp 2, step 6) |- F/_ x B ;;
+	step 8 : wff = riota2f (step 7, hyp 1, hyp 3) |- ( ( B ∈ A ∧ ∃! x ∈ A ph ) → ( ps ↔ ( iota_ x ∈ A ph ) = B ) ) ;;
+	step 9 : wff = mpbiri (step 5, step 8) |- ( ( B ∈ A ∧ ∃! x ∈ A ph ) → ps ) ;;
+	step 10 : wff = mpancom (step 4, step 9) |- ( ∃! x ∈ A ph → ps ) ;;
+	step 11 : wff = jca (step 2, step 10) |- ( ∃! x ∈ A ph → ( B ∈ A ∧ ps ) ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* A method for computing restricted iota.  (Contributed by NM,
+       16-Apr-2013.)  (Revised by Mario Carneiro, 15-Oct-2016.) */
+
+theorem riota5f (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x y A, y B, x y ph, y ps) {
+	hyp 1 : wff = |- ( ph → F/_ x B ) ;;
+	hyp 2 : wff = |- ( ph → B ∈ A ) ;;
+	hyp 3 : wff = |- ( ( ph ∧ x ∈ A ) → ( ps ↔ x = B ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( iota_ x ∈ A ps ) = B ) ;;
+}
+
+proof of riota5f {
+	var y : set;;
+	step 1 : wff = ralrimiva (hyp 3) |- ( ph → ∀ x ∈ A ( ps ↔ x = B ) ) ;;
+	step 2 : wff = a1tru () |- ( ( ph ∧ ( y ∈ A ∧ ∀ x ∈ A ( ps ↔ x = y ) ) ) → T. ) ;;
+	step 3 : wff = reu6i () |- ( ( y ∈ A ∧ ∀ x ∈ A ( ps ↔ x = y ) ) → ∃! x ∈ A ps ) ;;
+	step 4 : wff = adantl (step 3) |- ( ( ph ∧ ( y ∈ A ∧ ∀ x ∈ A ( ps ↔ x = y ) ) ) → ∃! x ∈ A ps ) ;;
+	step 5 : wff = nfv () |- F/ x ph ;;
+	step 6 : wff = nfv () |- F/ x y ∈ A ;;
+	step 7 : wff = nfra1 () |- F/ x ∀ x ∈ A ( ps ↔ x = y ) ;;
+	step 8 : wff = nfan (step 6, step 7) |- F/ x ( y ∈ A ∧ ∀ x ∈ A ( ps ↔ x = y ) ) ;;
+	step 9 : wff = nfan (step 5, step 8) |- F/ x ( ph ∧ ( y ∈ A ∧ ∀ x ∈ A ( ps ↔ x = y ) ) ) ;;
+	step 10 : wff = nfcvd () |- ( ( ph ∧ ( y ∈ A ∧ ∀ x ∈ A ( ps ↔ x = y ) ) ) → F/_ x y ) ;;
+	step 11 : wff = nfvd () |- ( ( ph ∧ ( y ∈ A ∧ ∀ x ∈ A ( ps ↔ x = y ) ) ) → F/ x T. ) ;;
+	step 12 : wff = simprl () |- ( ( ph ∧ ( y ∈ A ∧ ∀ x ∈ A ( ps ↔ x = y ) ) ) → y ∈ A ) ;;
+	step 13 : wff = simpr () |- ( ( ( ph ∧ ( y ∈ A ∧ ∀ x ∈ A ( ps ↔ x = y ) ) ) ∧ x = y ) → x = y ) ;;
+	step 14 : wff = simplrr () |- ( ( ( ph ∧ ( y ∈ A ∧ ∀ x ∈ A ( ps ↔ x = y ) ) ) ∧ x = y ) → ∀ x ∈ A ( ps ↔ x = y ) ) ;;
+	step 15 : wff = simpr () |- ( ( ( ph ∧ ( y ∈ A ∧ ∀ x ∈ A ( ps ↔ x = y ) ) ) ∧ x = y ) → x = y ) ;;
+	step 16 : wff = simplrl () |- ( ( ( ph ∧ ( y ∈ A ∧ ∀ x ∈ A ( ps ↔ x = y ) ) ) ∧ x = y ) → y ∈ A ) ;;
+	step 17 : wff = eqeltrd (step 15, step 16) |- ( ( ( ph ∧ ( y ∈ A ∧ ∀ x ∈ A ( ps ↔ x = y ) ) ) ∧ x = y ) → x ∈ A ) ;;
+	step 18 : wff = rsp () |- ( ∀ x ∈ A ( ps ↔ x = y ) → ( x ∈ A → ( ps ↔ x = y ) ) ) ;;
+	step 19 : wff = sylc (step 14, step 17, step 18) |- ( ( ( ph ∧ ( y ∈ A ∧ ∀ x ∈ A ( ps ↔ x = y ) ) ) ∧ x = y ) → ( ps ↔ x = y ) ) ;;
+	step 20 : wff = mpbird (step 13, step 19) |- ( ( ( ph ∧ ( y ∈ A ∧ ∀ x ∈ A ( ps ↔ x = y ) ) ) ∧ x = y ) → ps ) ;;
+	step 21 : wff = a1tru () |- ( ( ( ph ∧ ( y ∈ A ∧ ∀ x ∈ A ( ps ↔ x = y ) ) ) ∧ x = y ) → T. ) ;;
+	step 22 : wff = 2thd (step 20, step 21) |- ( ( ( ph ∧ ( y ∈ A ∧ ∀ x ∈ A ( ps ↔ x = y ) ) ) ∧ x = y ) → ( ps ↔ T. ) ) ;;
+	step 23 : wff = riota2df (step 9, step 10, step 11, step 12, step 22) |- ( ( ( ph ∧ ( y ∈ A ∧ ∀ x ∈ A ( ps ↔ x = y ) ) ) ∧ ∃! x ∈ A ps ) → ( T. ↔ ( iota_ x ∈ A ps ) = y ) ) ;;
+	step 24 : wff = mpdan (step 4, step 23) |- ( ( ph ∧ ( y ∈ A ∧ ∀ x ∈ A ( ps ↔ x = y ) ) ) → ( T. ↔ ( iota_ x ∈ A ps ) = y ) ) ;;
+	step 25 : wff = mpbid (step 2, step 24) |- ( ( ph ∧ ( y ∈ A ∧ ∀ x ∈ A ( ps ↔ x = y ) ) ) → ( iota_ x ∈ A ps ) = y ) ;;
+	step 26 : wff = expr (step 25) |- ( ( ph ∧ y ∈ A ) → ( ∀ x ∈ A ( ps ↔ x = y ) → ( iota_ x ∈ A ps ) = y ) ) ;;
+	step 27 : wff = ralrimiva (step 26) |- ( ph → ∀ y ∈ A ( ∀ x ∈ A ( ps ↔ x = y ) → ( iota_ x ∈ A ps ) = y ) ) ;;
+	step 28 : wff = rspsbc () |- ( B ∈ A → ( ∀ y ∈ A ( ∀ x ∈ A ( ps ↔ x = y ) → ( iota_ x ∈ A ps ) = y ) → [. B / y ]. ( ∀ x ∈ A ( ps ↔ x = y ) → ( iota_ x ∈ A ps ) = y ) ) ) ;;
+	step 29 : wff = sylc (hyp 2, step 27, step 28) |- ( ph → [. B / y ]. ( ∀ x ∈ A ( ps ↔ x = y ) → ( iota_ x ∈ A ps ) = y ) ) ;;
+	step 30 : wff = nfv () |- F/ x ph ;;
+	step 31 : wff = nfcvd () |- ( ph → F/_ x y ) ;;
+	step 32 : wff = nfeqd (step 31, hyp 1) |- ( ph → F/ x y = B ) ;;
+	step 33 : wff = nfan1 (step 30, step 32) |- F/ x ( ph ∧ y = B ) ;;
+	step 34 : wff = simpr () |- ( ( ph ∧ y = B ) → y = B ) ;;
+	step 35 : wff = eqeq2d (step 34) |- ( ( ph ∧ y = B ) → ( x = y ↔ x = B ) ) ;;
+	step 36 : wff = bibi2d (step 35) |- ( ( ph ∧ y = B ) → ( ( ps ↔ x = y ) ↔ ( ps ↔ x = B ) ) ) ;;
+	step 37 : wff = ralbid (step 33, step 36) |- ( ( ph ∧ y = B ) → ( ∀ x ∈ A ( ps ↔ x = y ) ↔ ∀ x ∈ A ( ps ↔ x = B ) ) ) ;;
+	step 38 : wff = simpr () |- ( ( ph ∧ y = B ) → y = B ) ;;
+	step 39 : wff = eqeq2d (step 38) |- ( ( ph ∧ y = B ) → ( ( iota_ x ∈ A ps ) = y ↔ ( iota_ x ∈ A ps ) = B ) ) ;;
+	step 40 : wff = imbi12d (step 37, step 39) |- ( ( ph ∧ y = B ) → ( ( ∀ x ∈ A ( ps ↔ x = y ) → ( iota_ x ∈ A ps ) = y ) ↔ ( ∀ x ∈ A ( ps ↔ x = B ) → ( iota_ x ∈ A ps ) = B ) ) ) ;;
+	step 41 : wff = sbcied (hyp 2, step 40) |- ( ph → ( [. B / y ]. ( ∀ x ∈ A ( ps ↔ x = y ) → ( iota_ x ∈ A ps ) = y ) ↔ ( ∀ x ∈ A ( ps ↔ x = B ) → ( iota_ x ∈ A ps ) = B ) ) ) ;;
+	step 42 : wff = mpbid (step 29, step 41) |- ( ph → ( ∀ x ∈ A ( ps ↔ x = B ) → ( iota_ x ∈ A ps ) = B ) ) ;;
+	step 43 : wff = mpd (step 1, step 42) |- ( ph → ( iota_ x ∈ A ps ) = B ) ;;
+	qed prop 1 = step 43 ;;
+}
+
+/* A method for computing restricted iota.  (Contributed by NM,
+       20-Oct-2011.)  (Revised by Mario Carneiro, 6-Dec-2016.) */
+
+theorem riota5 (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B, x ph) {
+	hyp 1 : wff = |- ( ph → B ∈ A ) ;;
+	hyp 2 : wff = |- ( ( ph ∧ x ∈ A ) → ( ps ↔ x = B ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( iota_ x ∈ A ps ) = B ) ;;
+}
+
+proof of riota5 {
+	step 1 : wff = nfcvd () |- ( ph → F/_ x B ) ;;
+	step 2 : wff = riota5f (step 1, hyp 1, hyp 2) |- ( ph → ( iota_ x ∈ A ps ) = B ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A method for computing restricted iota.  (Contributed by NM,
+       20-Oct-2011.)  (New usage is discouraged.) */
+
+theorem riota5OLD (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B, x ph) {
+	hyp 1 : wff = |- ( ( ph ∧ B ∈ A ∧ x ∈ A ) → ( ps ↔ x = B ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ B ∈ A ) → ( iota_ x ∈ A ps ) = B ) ;;
+}
+
+proof of riota5OLD {
+	step 1 : wff = simpr () |- ( ( ph ∧ B ∈ A ) → B ∈ A ) ;;
+	step 2 : wff = 3expa (hyp 1) |- ( ( ( ph ∧ B ∈ A ) ∧ x ∈ A ) → ( ps ↔ x = B ) ) ;;
+	step 3 : wff = riota5 (step 1, step 2) |- ( ( ph ∧ B ∈ A ) → ( iota_ x ∈ A ps ) = B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Restriction of a unique element to a smaller class.  (Contributed by NM,
+       21-Aug-2011.)  (Revised by NM, 22-Mar-2013.) */
+
+theorem riotass2 (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( ( ( A ⊆ B ∧ ∀ x ∈ A ( ph → ps ) ) ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ps ) ) → ( iota_ x ∈ A ph ) = ( iota_ x ∈ B ps ) ) ;;
+}
+
+proof of riotass2 {
+	step 1 : wff = reuss2 () |- ( ( ( A ⊆ B ∧ ∀ x ∈ A ( ph → ps ) ) ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ps ) ) → ∃! x ∈ A ph ) ;;
+	step 2 : wff = simplr () |- ( ( ( A ⊆ B ∧ ∀ x ∈ A ( ph → ps ) ) ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ps ) ) → ∀ x ∈ A ( ph → ps ) ) ;;
+	step 3 : wff = riotasbc () |- ( ∃! x ∈ A ph → [. ( iota_ x ∈ A ph ) / x ]. ph ) ;;
+	step 4 : wff = riotacl () |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) ∈ A ) ;;
+	step 5 : wff = rspsbc () |- ( ( iota_ x ∈ A ph ) ∈ A → ( ∀ x ∈ A ( ph → ps ) → [. ( iota_ x ∈ A ph ) / x ]. ( ph → ps ) ) ) ;;
+	step 6 : wff = sbcimg () |- ( ( iota_ x ∈ A ph ) ∈ A → ( [. ( iota_ x ∈ A ph ) / x ]. ( ph → ps ) ↔ ( [. ( iota_ x ∈ A ph ) / x ]. ph → [. ( iota_ x ∈ A ph ) / x ]. ps ) ) ) ;;
+	step 7 : wff = sylibd (step 5, step 6) |- ( ( iota_ x ∈ A ph ) ∈ A → ( ∀ x ∈ A ( ph → ps ) → ( [. ( iota_ x ∈ A ph ) / x ]. ph → [. ( iota_ x ∈ A ph ) / x ]. ps ) ) ) ;;
+	step 8 : wff = syl (step 4, step 7) |- ( ∃! x ∈ A ph → ( ∀ x ∈ A ( ph → ps ) → ( [. ( iota_ x ∈ A ph ) / x ]. ph → [. ( iota_ x ∈ A ph ) / x ]. ps ) ) ) ;;
+	step 9 : wff = mpid (step 3, step 8) |- ( ∃! x ∈ A ph → ( ∀ x ∈ A ( ph → ps ) → [. ( iota_ x ∈ A ph ) / x ]. ps ) ) ;;
+	step 10 : wff = sylc (step 1, step 2, step 9) |- ( ( ( A ⊆ B ∧ ∀ x ∈ A ( ph → ps ) ) ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ps ) ) → [. ( iota_ x ∈ A ph ) / x ]. ps ) ;;
+	step 11 : wff = reuss2 () |- ( ( ( A ⊆ B ∧ ∀ x ∈ A ( ph → ps ) ) ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ps ) ) → ∃! x ∈ A ph ) ;;
+	step 12 : wff = riotacl () |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) ∈ A ) ;;
+	step 13 : wff = syl (step 11, step 12) |- ( ( ( A ⊆ B ∧ ∀ x ∈ A ( ph → ps ) ) ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ps ) ) → ( iota_ x ∈ A ph ) ∈ A ) ;;
+	step 14 : wff = ssel () |- ( A ⊆ B → ( ( iota_ x ∈ A ph ) ∈ A → ( iota_ x ∈ A ph ) ∈ B ) ) ;;
+	step 15 : wff = ad2antrr (step 14) |- ( ( ( A ⊆ B ∧ ∀ x ∈ A ( ph → ps ) ) ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ps ) ) → ( ( iota_ x ∈ A ph ) ∈ A → ( iota_ x ∈ A ph ) ∈ B ) ) ;;
+	step 16 : wff = mpd (step 13, step 15) |- ( ( ( A ⊆ B ∧ ∀ x ∈ A ( ph → ps ) ) ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ps ) ) → ( iota_ x ∈ A ph ) ∈ B ) ;;
+	step 17 : wff = simprr () |- ( ( ( A ⊆ B ∧ ∀ x ∈ A ( ph → ps ) ) ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ps ) ) → ∃! x ∈ B ps ) ;;
+	step 18 : wff = nfriota1 () |- F/_ x ( iota_ x ∈ A ph ) ;;
+	step 19 : wff = nfriota1 () |- F/_ x ( iota_ x ∈ A ph ) ;;
+	step 20 : wff = nfsbc1 (step 19) |- F/ x [. ( iota_ x ∈ A ph ) / x ]. ps ;;
+	step 21 : wff = sbceq1a () |- ( x = ( iota_ x ∈ A ph ) → ( ps ↔ [. ( iota_ x ∈ A ph ) / x ]. ps ) ) ;;
+	step 22 : wff = riota2f (step 18, step 20, step 21) |- ( ( ( iota_ x ∈ A ph ) ∈ B ∧ ∃! x ∈ B ps ) → ( [. ( iota_ x ∈ A ph ) / x ]. ps ↔ ( iota_ x ∈ B ps ) = ( iota_ x ∈ A ph ) ) ) ;;
+	step 23 : wff = syl2anc (step 16, step 17, step 22) |- ( ( ( A ⊆ B ∧ ∀ x ∈ A ( ph → ps ) ) ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ps ) ) → ( [. ( iota_ x ∈ A ph ) / x ]. ps ↔ ( iota_ x ∈ B ps ) = ( iota_ x ∈ A ph ) ) ) ;;
+	step 24 : wff = mpbid (step 10, step 23) |- ( ( ( A ⊆ B ∧ ∀ x ∈ A ( ph → ps ) ) ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ps ) ) → ( iota_ x ∈ B ps ) = ( iota_ x ∈ A ph ) ) ;;
+	step 25 : wff = eqcomd (step 24) |- ( ( ( A ⊆ B ∧ ∀ x ∈ A ( ph → ps ) ) ∧ ( ∃ x ∈ A ph ∧ ∃! x ∈ B ps ) ) → ( iota_ x ∈ A ph ) = ( iota_ x ∈ B ps ) ) ;;
+	qed prop 1 = step 25 ;;
+}
+
+/* Restriction of a unique element to a smaller class.  (Contributed by NM,
+       19-Oct-2005.)  (Revised by Mario Carneiro, 24-Dec-2016.) */
+
+theorem riotass (ph : wff, x : set, A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) → ( iota_ x ∈ A ph ) = ( iota_ x ∈ B ph ) ) ;;
+}
+
+proof of riotass {
+	step 1 : wff = reuss () |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) → ∃! x ∈ A ph ) ;;
+	step 2 : wff = riotasbc () |- ( ∃! x ∈ A ph → [. ( iota_ x ∈ A ph ) / x ]. ph ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) → [. ( iota_ x ∈ A ph ) / x ]. ph ) ;;
+	step 4 : wff = simp1 () |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) → A ⊆ B ) ;;
+	step 5 : wff = reuss () |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) → ∃! x ∈ A ph ) ;;
+	step 6 : wff = riotacl () |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) ∈ A ) ;;
+	step 7 : wff = syl (step 5, step 6) |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) → ( iota_ x ∈ A ph ) ∈ A ) ;;
+	step 8 : wff = sseldd (step 4, step 7) |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) → ( iota_ x ∈ A ph ) ∈ B ) ;;
+	step 9 : wff = simp3 () |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) → ∃! x ∈ B ph ) ;;
+	step 10 : wff = nfriota1 () |- F/_ x ( iota_ x ∈ A ph ) ;;
+	step 11 : wff = nfriota1 () |- F/_ x ( iota_ x ∈ A ph ) ;;
+	step 12 : wff = nfsbc1 (step 11) |- F/ x [. ( iota_ x ∈ A ph ) / x ]. ph ;;
+	step 13 : wff = sbceq1a () |- ( x = ( iota_ x ∈ A ph ) → ( ph ↔ [. ( iota_ x ∈ A ph ) / x ]. ph ) ) ;;
+	step 14 : wff = riota2f (step 10, step 12, step 13) |- ( ( ( iota_ x ∈ A ph ) ∈ B ∧ ∃! x ∈ B ph ) → ( [. ( iota_ x ∈ A ph ) / x ]. ph ↔ ( iota_ x ∈ B ph ) = ( iota_ x ∈ A ph ) ) ) ;;
+	step 15 : wff = syl2anc (step 8, step 9, step 14) |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) → ( [. ( iota_ x ∈ A ph ) / x ]. ph ↔ ( iota_ x ∈ B ph ) = ( iota_ x ∈ A ph ) ) ) ;;
+	step 16 : wff = mpbid (step 3, step 15) |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) → ( iota_ x ∈ B ph ) = ( iota_ x ∈ A ph ) ) ;;
+	step 17 : wff = eqcomd (step 16) |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) → ( iota_ x ∈ A ph ) = ( iota_ x ∈ B ph ) ) ;;
+	qed prop 1 = step 17 ;;
+}
+
+/* Restriction of a unique element to a smaller class.  (Contributed by NM,
+       19-Feb-2006.)  (Revised by NM, 16-Jun-2017.) */
+
+theorem moriotass (ph : wff, x : set, A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃* x ∈ B ph ) → ( iota_ x ∈ A ph ) = ( iota_ x ∈ B ph ) ) ;;
+}
+
+proof of moriotass {
+	step 1 : wff = ssrexv () |- ( A ⊆ B → ( ∃ x ∈ A ph → ∃ x ∈ B ph ) ) ;;
+	step 2 : wff = imp (step 1) |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ) → ∃ x ∈ B ph ) ;;
+	step 3 : wff = 3adant3 (step 2) |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃* x ∈ B ph ) → ∃ x ∈ B ph ) ;;
+	step 4 : wff = simp3 () |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃* x ∈ B ph ) → ∃* x ∈ B ph ) ;;
+	step 5 : wff = reu5 () |- ( ∃! x ∈ B ph ↔ ( ∃ x ∈ B ph ∧ ∃* x ∈ B ph ) ) ;;
+	step 6 : wff = sylanbrc (step 3, step 4, step 5) |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃* x ∈ B ph ) → ∃! x ∈ B ph ) ;;
+	step 7 : wff = riotass () |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃! x ∈ B ph ) → ( iota_ x ∈ A ph ) = ( iota_ x ∈ B ph ) ) ;;
+	step 8 : wff = syld3an3 (step 6, step 7) |- ( ( A ⊆ B ∧ ∃ x ∈ A ph ∧ ∃* x ∈ B ph ) → ( iota_ x ∈ A ph ) = ( iota_ x ∈ B ph ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* A restricted class abstraction with a unique member can be expressed as
+       a singleton.  (Contributed by NM, 30-May-2006.) */
+
+theorem snriota (ph : wff, x : set, A : class)  {
+	prop 1 : wff = |- ( ∃! x ∈ A ph → { x ∈ A | ph } = { ( iota_ x ∈ A ph ) } ) ;;
+}
+
+proof of snriota {
+	step 1 : wff = df-rab () |- { x ∈ A | ph } = { x | ( x ∈ A ∧ ph ) } ;;
+	step 2 : wff = df-reu () |- ( ∃! x ∈ A ph ↔ ∃! x ( x ∈ A ∧ ph ) ) ;;
+	step 3 : wff = sniota () |- ( ∃! x ( x ∈ A ∧ ph ) → { x | ( x ∈ A ∧ ph ) } = { ( iota x ( x ∈ A ∧ ph ) ) } ) ;;
+	step 4 : wff = sylbi (step 2, step 3) |- ( ∃! x ∈ A ph → { x | ( x ∈ A ∧ ph ) } = { ( iota x ( x ∈ A ∧ ph ) ) } ) ;;
+	step 5 : wff = syl5eq (step 1, step 4) |- ( ∃! x ∈ A ph → { x ∈ A | ph } = { ( iota x ( x ∈ A ∧ ph ) ) } ) ;;
+	step 6 : wff = riotaiota () |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) = ( iota x ( x ∈ A ∧ ph ) ) ) ;;
+	step 7 : wff = sneqd (step 6) |- ( ∃! x ∈ A ph → { ( iota_ x ∈ A ph ) } = { ( iota x ( x ∈ A ∧ ph ) ) } ) ;;
+	step 8 : wff = eqtr4d (step 5, step 7) |- ( ∃! x ∈ A ph → { x ∈ A | ph } = { ( iota_ x ∈ A ph ) } ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Change the variable ` x ` in the expression for "the unique ` x ` such
+       that ` ps ` " to another variable ` y ` contained in expression ` B ` .
+       Use ~ reuhypd to eliminate the last hypothesis.  (Contributed by NM,
+       16-Jan-2012.)  (Revised by Mario Carneiro, 15-Oct-2016.) */
+
+theorem riotaxfrd (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, C : class) disjointed(x B, x C, x y A, x y ph, ps y, ch x) {
+	hyp 1 : wff = |- F/_ y C ;;
+	hyp 2 : wff = |- ( ( ph ∧ y ∈ A ) → B ∈ A ) ;;
+	hyp 3 : wff = |- ( ( ph ∧ ( iota_ y ∈ A ch ) ∈ A ) → C ∈ A ) ;;
+	hyp 4 : wff = |- ( x = B → ( ps ↔ ch ) ) ;;
+	hyp 5 : wff = |- ( y = ( iota_ y ∈ A ch ) → B = C ) ;;
+	hyp 6 : wff = |- ( ( ph ∧ x ∈ A ) → ∃! y ∈ A x = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ ∃! x ∈ A ps ) → ( iota_ x ∈ A ps ) = C ) ;;
+}
+
+proof of riotaxfrd {
+	step 1 : wff = rabid () |- ( x ∈ { x ∈ A | ps } ↔ ( x ∈ A ∧ ps ) ) ;;
+	step 2 : wff = baib (step 1) |- ( x ∈ A → ( x ∈ { x ∈ A | ps } ↔ ps ) ) ;;
+	step 3 : wff = riotabiia (step 2) |- ( iota_ x ∈ A x ∈ { x ∈ A | ps } ) = ( iota_ x ∈ A ps ) ;;
+	step 4 : wff = reuxfrd (hyp 2, hyp 6, hyp 4) |- ( ph → ( ∃! x ∈ A ps ↔ ∃! y ∈ A ch ) ) ;;
+	step 5 : wff = riotacl2 () |- ( ∃! y ∈ A ch → ( iota_ y ∈ A ch ) ∈ { y ∈ A | ch } ) ;;
+	step 6 : wff = adantl (step 5) |- ( ( ph ∧ ∃! y ∈ A ch ) → ( iota_ y ∈ A ch ) ∈ { y ∈ A | ch } ) ;;
+	step 7 : wff = riotacl () |- ( ∃! y ∈ A ch → ( iota_ y ∈ A ch ) ∈ A ) ;;
+	step 8 : wff = nfriota1 () |- F/_ y ( iota_ y ∈ A ch ) ;;
+	step 9 : wff = rabxfrd (step 8, hyp 1, hyp 2, hyp 4, hyp 5) |- ( ( ph ∧ ( iota_ y ∈ A ch ) ∈ A ) → ( C ∈ { x ∈ A | ps } ↔ ( iota_ y ∈ A ch ) ∈ { y ∈ A | ch } ) ) ;;
+	step 10 : wff = sylan2 (step 7, step 9) |- ( ( ph ∧ ∃! y ∈ A ch ) → ( C ∈ { x ∈ A | ps } ↔ ( iota_ y ∈ A ch ) ∈ { y ∈ A | ch } ) ) ;;
+	step 11 : wff = mpbird (step 6, step 10) |- ( ( ph ∧ ∃! y ∈ A ch ) → C ∈ { x ∈ A | ps } ) ;;
+	step 12 : wff = ex (step 11) |- ( ph → ( ∃! y ∈ A ch → C ∈ { x ∈ A | ps } ) ) ;;
+	step 13 : wff = sylbid (step 4, step 12) |- ( ph → ( ∃! x ∈ A ps → C ∈ { x ∈ A | ps } ) ) ;;
+	step 14 : wff = imp (step 13) |- ( ( ph ∧ ∃! x ∈ A ps ) → C ∈ { x ∈ A | ps } ) ;;
+	step 15 : wff = reuxfrd (hyp 2, hyp 6, hyp 4) |- ( ph → ( ∃! x ∈ A ps ↔ ∃! y ∈ A ch ) ) ;;
+	step 16 : wff = riotacl () |- ( ∃! y ∈ A ch → ( iota_ y ∈ A ch ) ∈ A ) ;;
+	step 17 : wff = ex (hyp 3) |- ( ph → ( ( iota_ y ∈ A ch ) ∈ A → C ∈ A ) ) ;;
+	step 18 : wff = syl5 (step 16, step 17) |- ( ph → ( ∃! y ∈ A ch → C ∈ A ) ) ;;
+	step 19 : wff = sylbid (step 15, step 18) |- ( ph → ( ∃! x ∈ A ps → C ∈ A ) ) ;;
+	step 20 : wff = imp (step 19) |- ( ( ph ∧ ∃! x ∈ A ps ) → C ∈ A ) ;;
+	step 21 : wff = rabid () |- ( x ∈ { x ∈ A | ps } ↔ ( x ∈ A ∧ ps ) ) ;;
+	step 22 : wff = baibr (step 21) |- ( x ∈ A → ( ps ↔ x ∈ { x ∈ A | ps } ) ) ;;
+	step 23 : wff = reubiia (step 22) |- ( ∃! x ∈ A ps ↔ ∃! x ∈ A x ∈ { x ∈ A | ps } ) ;;
+	step 24 : wff = biimpi (step 23) |- ( ∃! x ∈ A ps → ∃! x ∈ A x ∈ { x ∈ A | ps } ) ;;
+	step 25 : wff = adantl (step 24) |- ( ( ph ∧ ∃! x ∈ A ps ) → ∃! x ∈ A x ∈ { x ∈ A | ps } ) ;;
+	step 26 : wff = nfcv () |- F/_ x C ;;
+	step 27 : wff = nfrab1 () |- F/_ x { x ∈ A | ps } ;;
+	step 28 : wff = nfel2 (step 27) |- F/ x C ∈ { x ∈ A | ps } ;;
+	step 29 : wff = eleq1 () |- ( x = C → ( x ∈ { x ∈ A | ps } ↔ C ∈ { x ∈ A | ps } ) ) ;;
+	step 30 : wff = riota2f (step 26, step 28, step 29) |- ( ( C ∈ A ∧ ∃! x ∈ A x ∈ { x ∈ A | ps } ) → ( C ∈ { x ∈ A | ps } ↔ ( iota_ x ∈ A x ∈ { x ∈ A | ps } ) = C ) ) ;;
+	step 31 : wff = syl2anc (step 20, step 25, step 30) |- ( ( ph ∧ ∃! x ∈ A ps ) → ( C ∈ { x ∈ A | ps } ↔ ( iota_ x ∈ A x ∈ { x ∈ A | ps } ) = C ) ) ;;
+	step 32 : wff = mpbid (step 14, step 31) |- ( ( ph ∧ ∃! x ∈ A ps ) → ( iota_ x ∈ A x ∈ { x ∈ A | ps } ) = C ) ;;
+	step 33 : wff = syl5eqr (step 3, step 32) |- ( ( ph ∧ ∃! x ∈ A ps ) → ( iota_ x ∈ A ps ) = C ) ;;
+	qed prop 1 = step 33 ;;
+}
+
+/* Specify the same property in two ways when class ` B ( y ) ` is
+       single-valued.  (Contributed by NM, 1-Nov-2010.)  (Proof shortened by
+       Mario Carneiro, 24-Dec-2016.) */
+
+theorem eusvobj2 (x : set, y : set, A : class, B : class) disjointed(x y z A, x z B) {
+	hyp 1 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃! x ∃ y ∈ A x = B → ( ∃ y ∈ A x = B ↔ ∀ y ∈ A x = B ) ) ;;
+}
+
+proof of eusvobj2 {
+	var z : set;;
+	step 1 : wff = euabsn2 () |- ( ∃! x ∃ y ∈ A x = B ↔ ∃ z { x | ∃ y ∈ A x = B } = { z } ) ;;
+	step 2 : wff = eleq2 () |- ( { x | ∃ y ∈ A x = B } = { z } → ( x ∈ { x | ∃ y ∈ A x = B } ↔ x ∈ { z } ) ) ;;
+	step 3 : wff = abid () |- ( x ∈ { x | ∃ y ∈ A x = B } ↔ ∃ y ∈ A x = B ) ;;
+	step 4 : wff = elsn () |- ( x ∈ { z } ↔ x = z ) ;;
+	step 5 : wff = 3bitr3g (step 2, step 3, step 4) |- ( { x | ∃ y ∈ A x = B } = { z } → ( ∃ y ∈ A x = B ↔ x = z ) ) ;;
+	step 6 : wff = nfre1 () |- F/ y ∃ y ∈ A x = B ;;
+	step 7 : wff = nfab (step 6) |- F/_ y { x | ∃ y ∈ A x = B } ;;
+	step 8 : wff = nfeq1 (step 7) |- F/ y { x | ∃ y ∈ A x = B } = { z } ;;
+	step 9 : wff = elabrex (hyp 1) |- ( y ∈ A → B ∈ { x | ∃ y ∈ A x = B } ) ;;
+	step 10 : wff = eleq2 () |- ( { x | ∃ y ∈ A x = B } = { z } → ( B ∈ { x | ∃ y ∈ A x = B } ↔ B ∈ { z } ) ) ;;
+	step 11 : wff = elsnc (hyp 1) |- ( B ∈ { z } ↔ B = z ) ;;
+	step 12 : wff = eqcom () |- ( B = z ↔ z = B ) ;;
+	step 13 : wff = bitri (step 11, step 12) |- ( B ∈ { z } ↔ z = B ) ;;
+	step 14 : wff = syl6bb (step 10, step 13) |- ( { x | ∃ y ∈ A x = B } = { z } → ( B ∈ { x | ∃ y ∈ A x = B } ↔ z = B ) ) ;;
+	step 15 : wff = syl5ib (step 9, step 14) |- ( { x | ∃ y ∈ A x = B } = { z } → ( y ∈ A → z = B ) ) ;;
+	step 16 : wff = ralrimi (step 8, step 15) |- ( { x | ∃ y ∈ A x = B } = { z } → ∀ y ∈ A z = B ) ;;
+	step 17 : wff = eqeq1 () |- ( x = z → ( x = B ↔ z = B ) ) ;;
+	step 18 : wff = ralbidv (step 17) |- ( x = z → ( ∀ y ∈ A x = B ↔ ∀ y ∈ A z = B ) ) ;;
+	step 19 : wff = syl5ibrcom (step 16, step 18) |- ( { x | ∃ y ∈ A x = B } = { z } → ( x = z → ∀ y ∈ A x = B ) ) ;;
+	step 20 : wff = sylbid (step 5, step 19) |- ( { x | ∃ y ∈ A x = B } = { z } → ( ∃ y ∈ A x = B → ∀ y ∈ A x = B ) ) ;;
+	step 21 : wff = exlimiv (step 20) |- ( ∃ z { x | ∃ y ∈ A x = B } = { z } → ( ∃ y ∈ A x = B → ∀ y ∈ A x = B ) ) ;;
+	step 22 : wff = sylbi (step 1, step 21) |- ( ∃! x ∃ y ∈ A x = B → ( ∃ y ∈ A x = B → ∀ y ∈ A x = B ) ) ;;
+	step 23 : wff = euex () |- ( ∃! x ∃ y ∈ A x = B → ∃ x ∃ y ∈ A x = B ) ;;
+	step 24 : wff = rexn0 () |- ( ∃ y ∈ A x = B → A ≠ ∅ ) ;;
+	step 25 : wff = exlimiv (step 24) |- ( ∃ x ∃ y ∈ A x = B → A ≠ ∅ ) ;;
+	step 26 : wff = r19.2z () |- ( ( A ≠ ∅ ∧ ∀ y ∈ A x = B ) → ∃ y ∈ A x = B ) ;;
+	step 27 : wff = ex (step 26) |- ( A ≠ ∅ → ( ∀ y ∈ A x = B → ∃ y ∈ A x = B ) ) ;;
+	step 28 : wff = 3syl (step 23, step 25, step 27) |- ( ∃! x ∃ y ∈ A x = B → ( ∀ y ∈ A x = B → ∃ y ∈ A x = B ) ) ;;
+	step 29 : wff = impbid (step 22, step 28) |- ( ∃! x ∃ y ∈ A x = B → ( ∃ y ∈ A x = B ↔ ∀ y ∈ A x = B ) ) ;;
+	qed prop 1 = step 29 ;;
+}
+
+/* Specify the same object in two ways when class ` B ( y ) ` is
+       single-valued.  (Contributed by NM, 1-Nov-2010.)  (Proof shortened by
+       Mario Carneiro, 19-Nov-2016.) */
+
+theorem eusvobj1 (x : set, y : set, A : class, B : class) disjointed(x y A, x B) {
+	hyp 1 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃! x ∃ y ∈ A x = B → ( iota x ∃ y ∈ A x = B ) = ( iota x ∀ y ∈ A x = B ) ) ;;
+}
+
+proof of eusvobj1 {
+	step 1 : wff = nfeu1 () |- F/ x ∃! x ∃ y ∈ A x = B ;;
+	step 2 : wff = eusvobj2 (hyp 1) |- ( ∃! x ∃ y ∈ A x = B → ( ∃ y ∈ A x = B ↔ ∀ y ∈ A x = B ) ) ;;
+	step 3 : wff = alrimi (step 1, step 2) |- ( ∃! x ∃ y ∈ A x = B → ∀ x ( ∃ y ∈ A x = B ↔ ∀ y ∈ A x = B ) ) ;;
+	step 4 : wff = iotabi () |- ( ∀ x ( ∃ y ∈ A x = B ↔ ∀ y ∈ A x = B ) → ( iota x ∃ y ∈ A x = B ) = ( iota x ∀ y ∈ A x = B ) ) ;;
+	step 5 : wff = syl (step 3, step 4) |- ( ∃! x ∃ y ∈ A x = B → ( iota x ∃ y ∈ A x = B ) = ( iota x ∀ y ∈ A x = B ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* There is one domain element for each value of a one-to-one onto
+       function.  (Contributed by NM, 26-May-2006.) */
+
+theorem f1ofveu (x : set, A : class, B : class, C : class, F : class) disjointed(x A, x B, x C, x F) {
+	prop 1 : wff = |- ( ( F : A ⤖ B ∧ C ∈ B ) → ∃! x ∈ A ( F ` x ) = C ) ;;
+}
+
+proof of f1ofveu {
+	step 1 : wff = f1ocnv () |- ( F : A ⤖ B → ⁻¹ F : B ⤖ A ) ;;
+	step 2 : wff = f1of () |- ( ⁻¹ F : B ⤖ A → ⁻¹ F : B ⟶ A ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( F : A ⤖ B → ⁻¹ F : B ⟶ A ) ;;
+	step 4 : wff = feu () |- ( ( ⁻¹ F : B ⟶ A ∧ C ∈ B ) → ∃! x ∈ A 〈 C , x 〉 ∈ ⁻¹ F ) ;;
+	step 5 : wff = sylan (step 3, step 4) |- ( ( F : A ⤖ B ∧ C ∈ B ) → ∃! x ∈ A 〈 C , x 〉 ∈ ⁻¹ F ) ;;
+	step 6 : wff = f1ocnvfvb () |- ( ( F : A ⤖ B ∧ x ∈ A ∧ C ∈ B ) → ( ( F ` x ) = C ↔ ( ⁻¹ F ` C ) = x ) ) ;;
+	step 7 : wff = 3com23 (step 6) |- ( ( F : A ⤖ B ∧ C ∈ B ∧ x ∈ A ) → ( ( F ` x ) = C ↔ ( ⁻¹ F ` C ) = x ) ) ;;
+	step 8 : wff = dff1o4 () |- ( F : A ⤖ B ↔ ( F Fn A ∧ ⁻¹ F Fn B ) ) ;;
+	step 9 : wff = simprbi (step 8) |- ( F : A ⤖ B → ⁻¹ F Fn B ) ;;
+	step 10 : wff = fnopfvb () |- ( ( ⁻¹ F Fn B ∧ C ∈ B ) → ( ( ⁻¹ F ` C ) = x ↔ 〈 C , x 〉 ∈ ⁻¹ F ) ) ;;
+	step 11 : wff = 3adant3 (step 10) |- ( ( ⁻¹ F Fn B ∧ C ∈ B ∧ x ∈ A ) → ( ( ⁻¹ F ` C ) = x ↔ 〈 C , x 〉 ∈ ⁻¹ F ) ) ;;
+	step 12 : wff = syl3an1 (step 9, step 11) |- ( ( F : A ⤖ B ∧ C ∈ B ∧ x ∈ A ) → ( ( ⁻¹ F ` C ) = x ↔ 〈 C , x 〉 ∈ ⁻¹ F ) ) ;;
+	step 13 : wff = bitrd (step 7, step 12) |- ( ( F : A ⤖ B ∧ C ∈ B ∧ x ∈ A ) → ( ( F ` x ) = C ↔ 〈 C , x 〉 ∈ ⁻¹ F ) ) ;;
+	step 14 : wff = 3expa (step 13) |- ( ( ( F : A ⤖ B ∧ C ∈ B ) ∧ x ∈ A ) → ( ( F ` x ) = C ↔ 〈 C , x 〉 ∈ ⁻¹ F ) ) ;;
+	step 15 : wff = reubidva (step 14) |- ( ( F : A ⤖ B ∧ C ∈ B ) → ( ∃! x ∈ A ( F ` x ) = C ↔ ∃! x ∈ A 〈 C , x 〉 ∈ ⁻¹ F ) ) ;;
+	step 16 : wff = mpbird (step 5, step 15) |- ( ( F : A ⤖ B ∧ C ∈ B ) → ∃! x ∈ A ( F ` x ) = C ) ;;
+	qed prop 1 = step 16 ;;
+}
+
+/* Value of the converse of a one-to-one onto function.  (Contributed by
+       NM, 26-May-2006.)  (Proof shortened by Mario Carneiro, 24-Dec-2016.) */
+
+theorem f1ocnvfv3 (x : set, A : class, B : class, C : class, F : class) disjointed(x A, x B, x C, x F) {
+	prop 1 : wff = |- ( ( F : A ⤖ B ∧ C ∈ B ) → ( ⁻¹ F ` C ) = ( iota_ x ∈ A ( F ` x ) = C ) ) ;;
+}
+
+proof of f1ocnvfv3 {
+	step 1 : wff = f1ocnvdm () |- ( ( F : A ⤖ B ∧ C ∈ B ) → ( ⁻¹ F ` C ) ∈ A ) ;;
+	step 2 : wff = f1ocnvfvb () |- ( ( F : A ⤖ B ∧ x ∈ A ∧ C ∈ B ) → ( ( F ` x ) = C ↔ ( ⁻¹ F ` C ) = x ) ) ;;
+	step 3 : wff = 3expa (step 2) |- ( ( ( F : A ⤖ B ∧ x ∈ A ) ∧ C ∈ B ) → ( ( F ` x ) = C ↔ ( ⁻¹ F ` C ) = x ) ) ;;
+	step 4 : wff = an32s (step 3) |- ( ( ( F : A ⤖ B ∧ C ∈ B ) ∧ x ∈ A ) → ( ( F ` x ) = C ↔ ( ⁻¹ F ` C ) = x ) ) ;;
+	step 5 : wff = eqcom () |- ( x = ( ⁻¹ F ` C ) ↔ ( ⁻¹ F ` C ) = x ) ;;
+	step 6 : wff = syl6bbr (step 4, step 5) |- ( ( ( F : A ⤖ B ∧ C ∈ B ) ∧ x ∈ A ) → ( ( F ` x ) = C ↔ x = ( ⁻¹ F ` C ) ) ) ;;
+	step 7 : wff = riota5 (step 1, step 6) |- ( ( F : A ⤖ B ∧ C ∈ B ) → ( iota_ x ∈ A ( F ` x ) = C ) = ( ⁻¹ F ` C ) ) ;;
+	step 8 : wff = eqcomd (step 7) |- ( ( F : A ⤖ B ∧ C ∈ B ) → ( ⁻¹ F ` C ) = ( iota_ x ∈ A ( F ` x ) = C ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Restricted iota equals the undefined value of its domain of discourse
+       ` A ` when not meaningful.  (Contributed by NM, 16-Jan-2012.)  (Revised
+       by Mario Carneiro, 15-Oct-2016.) */
+
+theorem riotaund (ph : wff, x : set, A : class) disjointed(x A) {
+	prop 1 : wff = |- ( ¬ ∃! x ∈ A ph → ( iota_ x ∈ A ph ) = ( Undef ` A ) ) ;;
+}
+
+proof of riotaund {
+	step 1 : wff = iffalse () |- ( ¬ ∃! x ∈ A ph → if ( ∃! x ∈ A ph , ( iota x ( x ∈ A ∧ ph ) ) , ( Undef ` { x | x ∈ A } ) ) = ( Undef ` { x | x ∈ A } ) ) ;;
+	step 2 : wff = df-riota () |- ( iota_ x ∈ A ph ) = if ( ∃! x ∈ A ph , ( iota x ( x ∈ A ∧ ph ) ) , ( Undef ` { x | x ∈ A } ) ) ;;
+	step 3 : wff = abid2 () |- { x | x ∈ A } = A ;;
+	step 4 : wff = eqcomi (step 3) |- A = { x | x ∈ A } ;;
+	step 5 : wff = fveq2i (step 4) |- ( Undef ` A ) = ( Undef ` { x | x ∈ A } ) ;;
+	step 6 : wff = 3eqtr4g (step 1, step 2, step 5) |- ( ¬ ∃! x ∈ A ph → ( iota_ x ∈ A ph ) = ( Undef ` A ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* For proper classes, restricted and unrestricted iota are the same.
+       (Contributed by NM, 15-Sep-2011.) */
+
+theorem riotaprc (ph : wff, x : set, A : class) disjointed(x A) {
+	prop 1 : wff = |- ( ¬ A ∈ _V → ( iota_ x ∈ A ph ) = ( iota x ( x ∈ A ∧ ph ) ) ) ;;
+}
+
+proof of riotaprc {
+	step 1 : wff = fvprc () |- ( ¬ A ∈ _V → ( Undef ` A ) = ∅ ) ;;
+	step 2 : wff = adantr (step 1) |- ( ( ¬ A ∈ _V ∧ ¬ ∃! x ∈ A ph ) → ( Undef ` A ) = ∅ ) ;;
+	step 3 : wff = riotaund () |- ( ¬ ∃! x ∈ A ph → ( iota_ x ∈ A ph ) = ( Undef ` A ) ) ;;
+	step 4 : wff = adantl (step 3) |- ( ( ¬ A ∈ _V ∧ ¬ ∃! x ∈ A ph ) → ( iota_ x ∈ A ph ) = ( Undef ` A ) ) ;;
+	step 5 : wff = df-reu () |- ( ∃! x ∈ A ph ↔ ∃! x ( x ∈ A ∧ ph ) ) ;;
+	step 6 : wff = iotanul () |- ( ¬ ∃! x ( x ∈ A ∧ ph ) → ( iota x ( x ∈ A ∧ ph ) ) = ∅ ) ;;
+	step 7 : wff = sylnbi (step 5, step 6) |- ( ¬ ∃! x ∈ A ph → ( iota x ( x ∈ A ∧ ph ) ) = ∅ ) ;;
+	step 8 : wff = adantl (step 7) |- ( ( ¬ A ∈ _V ∧ ¬ ∃! x ∈ A ph ) → ( iota x ( x ∈ A ∧ ph ) ) = ∅ ) ;;
+	step 9 : wff = 3eqtr4d (step 2, step 4, step 8) |- ( ( ¬ A ∈ _V ∧ ¬ ∃! x ∈ A ph ) → ( iota_ x ∈ A ph ) = ( iota x ( x ∈ A ∧ ph ) ) ) ;;
+	step 10 : wff = ex (step 9) |- ( ¬ A ∈ _V → ( ¬ ∃! x ∈ A ph → ( iota_ x ∈ A ph ) = ( iota x ( x ∈ A ∧ ph ) ) ) ) ;;
+	step 11 : wff = riotaiota () |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) = ( iota x ( x ∈ A ∧ ph ) ) ) ;;
+	step 12 : wff = pm2.61d2 (step 10, step 11) |- ( ¬ A ∈ _V → ( iota_ x ∈ A ph ) = ( iota x ( x ∈ A ∧ ph ) ) ) ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* The restricted iota class is limited in size by the base set.
+       (Contributed by Mario Carneiro, 24-Dec-2016.) */
+
+theorem riotassuni (ph : wff, x : set, A : class) disjointed(x A) {
+	prop 1 : wff = |- ( iota_ x ∈ A ph ) ⊆ ( Pow ⋃ A ∪ ⋃ A ) ;;
+}
+
+proof of riotassuni {
+	step 1 : wff = riotauni () |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) = ⋃ { x ∈ A | ph } ) ;;
+	step 2 : wff = ssrab2 () |- { x ∈ A | ph } ⊆ A ;;
+	step 3 : wff = uniss () |- ( { x ∈ A | ph } ⊆ A → ⋃ { x ∈ A | ph } ⊆ ⋃ A ) ;;
+	step 4 : wff = ax-mp (step 2, step 3) |- ⋃ { x ∈ A | ph } ⊆ ⋃ A ;;
+	step 5 : wff = ssun2 () |- ⋃ A ⊆ ( Pow ⋃ A ∪ ⋃ A ) ;;
+	step 6 : wff = sstri (step 4, step 5) |- ⋃ { x ∈ A | ph } ⊆ ( Pow ⋃ A ∪ ⋃ A ) ;;
+	step 7 : wff = a1i (step 6) |- ( ∃! x ∈ A ph → ⋃ { x ∈ A | ph } ⊆ ( Pow ⋃ A ∪ ⋃ A ) ) ;;
+	step 8 : wff = eqsstrd (step 1, step 7) |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) ⊆ ( Pow ⋃ A ∪ ⋃ A ) ) ;;
+	step 9 : wff = riotaund () |- ( ¬ ∃! x ∈ A ph → ( iota_ x ∈ A ph ) = ( Undef ` A ) ) ;;
+	step 10 : wff = undefval () |- ( A ∈ _V → ( Undef ` A ) = Pow ⋃ A ) ;;
+	step 11 : wff = adantl (step 10) |- ( ( ¬ ∃! x ∈ A ph ∧ A ∈ _V ) → ( Undef ` A ) = Pow ⋃ A ) ;;
+	step 12 : wff = ssun1 () |- Pow ⋃ A ⊆ ( Pow ⋃ A ∪ ⋃ A ) ;;
+	step 13 : wff = a1i (step 12) |- ( ( ¬ ∃! x ∈ A ph ∧ A ∈ _V ) → Pow ⋃ A ⊆ ( Pow ⋃ A ∪ ⋃ A ) ) ;;
+	step 14 : wff = eqsstrd (step 11, step 13) |- ( ( ¬ ∃! x ∈ A ph ∧ A ∈ _V ) → ( Undef ` A ) ⊆ ( Pow ⋃ A ∪ ⋃ A ) ) ;;
+	step 15 : wff = fvprc () |- ( ¬ A ∈ _V → ( Undef ` A ) = ∅ ) ;;
+	step 16 : wff = adantl (step 15) |- ( ( ¬ ∃! x ∈ A ph ∧ ¬ A ∈ _V ) → ( Undef ` A ) = ∅ ) ;;
+	step 17 : wff = 0ss () |- ∅ ⊆ ( Pow ⋃ A ∪ ⋃ A ) ;;
+	step 18 : wff = a1i (step 17) |- ( ( ¬ ∃! x ∈ A ph ∧ ¬ A ∈ _V ) → ∅ ⊆ ( Pow ⋃ A ∪ ⋃ A ) ) ;;
+	step 19 : wff = eqsstrd (step 16, step 18) |- ( ( ¬ ∃! x ∈ A ph ∧ ¬ A ∈ _V ) → ( Undef ` A ) ⊆ ( Pow ⋃ A ∪ ⋃ A ) ) ;;
+	step 20 : wff = pm2.61dan (step 14, step 19) |- ( ¬ ∃! x ∈ A ph → ( Undef ` A ) ⊆ ( Pow ⋃ A ∪ ⋃ A ) ) ;;
+	step 21 : wff = eqsstrd (step 9, step 20) |- ( ¬ ∃! x ∈ A ph → ( iota_ x ∈ A ph ) ⊆ ( Pow ⋃ A ∪ ⋃ A ) ) ;;
+	step 22 : wff = pm2.61i (step 8, step 21) |- ( iota_ x ∈ A ph ) ⊆ ( Pow ⋃ A ∪ ⋃ A ) ;;
+	qed prop 1 = step 22 ;;
+}
+
+/* Closure of restricted iota.  (Contributed by NM, 28-Feb-2013.)  (Revised
+       by Mario Carneiro, 24-Dec-2016.) */
+
+theorem riotaclbg (ph : wff, x : set, A : class, V : class) disjointed(x A) {
+	prop 1 : wff = |- ( A ∈ V → ( ∃! x ∈ A ph ↔ ( iota_ x ∈ A ph ) ∈ A ) ) ;;
+}
+
+proof of riotaclbg {
+	step 1 : wff = riotacl () |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) ∈ A ) ;;
+	step 2 : wff = undefnel2 () |- ( A ∈ V → ¬ ( Undef ` A ) ∈ A ) ;;
+	step 3 : wff = riotaund () |- ( ¬ ∃! x ∈ A ph → ( iota_ x ∈ A ph ) = ( Undef ` A ) ) ;;
+	step 4 : wff = eleq1d (step 3) |- ( ¬ ∃! x ∈ A ph → ( ( iota_ x ∈ A ph ) ∈ A ↔ ( Undef ` A ) ∈ A ) ) ;;
+	step 5 : wff = notbid (step 4) |- ( ¬ ∃! x ∈ A ph → ( ¬ ( iota_ x ∈ A ph ) ∈ A ↔ ¬ ( Undef ` A ) ∈ A ) ) ;;
+	step 6 : wff = syl5ibrcom (step 2, step 5) |- ( A ∈ V → ( ¬ ∃! x ∈ A ph → ¬ ( iota_ x ∈ A ph ) ∈ A ) ) ;;
+	step 7 : wff = con4d (step 6) |- ( A ∈ V → ( ( iota_ x ∈ A ph ) ∈ A → ∃! x ∈ A ph ) ) ;;
+	step 8 : wff = impbid2 (step 1, step 7) |- ( A ∈ V → ( ∃! x ∈ A ph ↔ ( iota_ x ∈ A ph ) ∈ A ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Closure of restricted iota.  (Contributed by NM, 15-Sep-2011.) */
+
+theorem riotaclb (ph : wff, x : set, A : class) disjointed(x A) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃! x ∈ A ph ↔ ( iota_ x ∈ A ph ) ∈ A ) ;;
+}
+
+proof of riotaclb {
+	step 1 : wff = riotaclbg () |- ( A ∈ _V → ( ∃! x ∈ A ph ↔ ( iota_ x ∈ A ph ) ∈ A ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( ∃! x ∈ A ph ↔ ( iota_ x ∈ A ph ) ∈ A ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Restricted iota equals the undefined value of its domain of discourse
+       ` A ` when not meaningful.  (Contributed by NM, 26-Sep-2011.) */
+
+theorem riotaundb (ph : wff, x : set, A : class) disjointed(x A) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ∃! x ∈ A ph ↔ ( iota_ x ∈ A ph ) = ( Undef ` A ) ) ;;
+}
+
+proof of riotaundb {
+	step 1 : wff = riotaund () |- ( ¬ ∃! x ∈ A ph → ( iota_ x ∈ A ph ) = ( Undef ` A ) ) ;;
+	step 2 : wff = riotacl () |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) ∈ A ) ;;
+	step 3 : wff = undefnel2 () |- ( A ∈ _V → ¬ ( Undef ` A ) ∈ A ) ;;
+	step 4 : wff = ax-mp (hyp 1, step 3) |- ¬ ( Undef ` A ) ∈ A ;;
+	step 5 : wff = nelne2 () |- ( ( ( iota_ x ∈ A ph ) ∈ A ∧ ¬ ( Undef ` A ) ∈ A ) → ( iota_ x ∈ A ph ) ≠ ( Undef ` A ) ) ;;
+	step 6 : wff = sylancl (step 2, step 4, step 5) |- ( ∃! x ∈ A ph → ( iota_ x ∈ A ph ) ≠ ( Undef ` A ) ) ;;
+	step 7 : wff = necon2bi (step 6) |- ( ( iota_ x ∈ A ph ) = ( Undef ` A ) → ¬ ∃! x ∈ A ph ) ;;
+	step 8 : wff = impbii (step 1, step 7) |- ( ¬ ∃! x ∈ A ph ↔ ( iota_ x ∈ A ph ) = ( Undef ` A ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Deduction version of ~ riotasv .  (Contributed by NM, 4-Mar-2013.)
+       (Revised by Mario Carneiro, 15-Oct-2016.) */
+
+theorem riotasvd (ph : wff, ps : wff, x : set, y : set, A : class, B : class, C : class, D : class, V : class) disjointed(x y z A, x z B, x z C, z D, z ph, x z ps) {
+	hyp 1 : wff = |- ( ph → D = ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ;;
+	hyp 2 : wff = |- ( ph → D ∈ A ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ A ∈ V ) → ( ( y ∈ B ∧ ps ) → D = C ) ) ;;
+}
+
+proof of riotasvd {
+	var z : set;;
+	step 1 : wff = adantr (hyp 1) |- ( ( ph ∧ A ∈ V ) → D = ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ;;
+	step 2 : wff = adantr (hyp 2) |- ( ( ph ∧ A ∈ V ) → D ∈ A ) ;;
+	step 3 : wff = eqeltrrd (step 1, step 2) |- ( ( ph ∧ A ∈ V ) → ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ∈ A ) ;;
+	step 4 : wff = riotaclbg () |- ( A ∈ V → ( ∃! x ∈ A ∀ y ∈ B ( ps → x = C ) ↔ ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ∈ A ) ) ;;
+	step 5 : wff = adantl (step 4) |- ( ( ph ∧ A ∈ V ) → ( ∃! x ∈ A ∀ y ∈ B ( ps → x = C ) ↔ ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ∈ A ) ) ;;
+	step 6 : wff = mpbird (step 3, step 5) |- ( ( ph ∧ A ∈ V ) → ∃! x ∈ A ∀ y ∈ B ( ps → x = C ) ) ;;
+	step 7 : wff = riotasbc () |- ( ∃! x ∈ A ∀ y ∈ B ( ps → x = C ) → [. ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) / x ]. ∀ y ∈ B ( ps → x = C ) ) ;;
+	step 8 : wff = syl (step 6, step 7) |- ( ( ph ∧ A ∈ V ) → [. ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) / x ]. ∀ y ∈ B ( ps → x = C ) ) ;;
+	step 9 : wff = adantr (hyp 1) |- ( ( ph ∧ A ∈ V ) → D = ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ;;
+	step 10 : wff = adantr (hyp 2) |- ( ( ph ∧ A ∈ V ) → D ∈ A ) ;;
+	step 11 : wff = eqeltrrd (step 9, step 10) |- ( ( ph ∧ A ∈ V ) → ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ∈ A ) ;;
+	step 12 : wff = eqeq1 () |- ( x = z → ( x = C ↔ z = C ) ) ;;
+	step 13 : wff = imbi2d (step 12) |- ( x = z → ( ( ps → x = C ) ↔ ( ps → z = C ) ) ) ;;
+	step 14 : wff = ralbidv (step 13) |- ( x = z → ( ∀ y ∈ B ( ps → x = C ) ↔ ∀ y ∈ B ( ps → z = C ) ) ) ;;
+	step 15 : wff = nfra1 () |- F/ y ∀ y ∈ B ( ps → x = C ) ;;
+	step 16 : wff = nfcv () |- F/_ y A ;;
+	step 17 : wff = nfriota (step 15, step 16) |- F/_ y ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ;;
+	step 18 : wff = nfeq2 (step 17) |- F/ y z = ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ;;
+	step 19 : wff = eqeq1 () |- ( z = ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) → ( z = C ↔ ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) = C ) ) ;;
+	step 20 : wff = imbi2d (step 19) |- ( z = ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) → ( ( ps → z = C ) ↔ ( ps → ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) = C ) ) ) ;;
+	step 21 : wff = ralbid (step 18, step 20) |- ( z = ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) → ( ∀ y ∈ B ( ps → z = C ) ↔ ∀ y ∈ B ( ps → ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) = C ) ) ) ;;
+	step 22 : wff = sbcie2g (step 14, step 21) |- ( ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ∈ A → ( [. ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) / x ]. ∀ y ∈ B ( ps → x = C ) ↔ ∀ y ∈ B ( ps → ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) = C ) ) ) ;;
+	step 23 : wff = syl (step 11, step 22) |- ( ( ph ∧ A ∈ V ) → ( [. ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) / x ]. ∀ y ∈ B ( ps → x = C ) ↔ ∀ y ∈ B ( ps → ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) = C ) ) ) ;;
+	step 24 : wff = mpbid (step 8, step 23) |- ( ( ph ∧ A ∈ V ) → ∀ y ∈ B ( ps → ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) = C ) ) ;;
+	step 25 : wff = rsp () |- ( ∀ y ∈ B ( ps → ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) = C ) → ( y ∈ B → ( ps → ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) = C ) ) ) ;;
+	step 26 : wff = syl (step 24, step 25) |- ( ( ph ∧ A ∈ V ) → ( y ∈ B → ( ps → ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) = C ) ) ) ;;
+	step 27 : wff = imp3a (step 26) |- ( ( ph ∧ A ∈ V ) → ( ( y ∈ B ∧ ps ) → ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) = C ) ) ;;
+	step 28 : wff = adantr (hyp 1) |- ( ( ph ∧ A ∈ V ) → D = ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ;;
+	step 29 : wff = eqeq1d (step 28) |- ( ( ph ∧ A ∈ V ) → ( D = C ↔ ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) = C ) ) ;;
+	step 30 : wff = sylibrd (step 27, step 29) |- ( ( ph ∧ A ∈ V ) → ( ( y ∈ B ∧ ps ) → D = C ) ) ;;
+	qed prop 1 = step 30 ;;
+}
+
+/* Deduction version of ~ riotasv .  (Contributed by NM, 1-Feb-2013.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem riotasvdOLD (ph : wff, ps : wff, x : set, y : set, A : class, B : class, C : class, D : class, V : class) disjointed(x y A, x B, x C, x ps) {
+	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
+	hyp 2 : wff = |- ( ph → ∀ y ph ) ;;
+	hyp 3 : wff = |- ( ph → D = ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ( ph ∧ A ∈ V ) ∧ D ∈ A ∧ ( y ∈ B ∧ ps ) ) → D = C ) ;;
+}
+
+proof of riotasvdOLD {
+	step 1 : wff = eqcomd (hyp 3) |- ( ph → ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) = D ) ;;
+	step 2 : wff = ad2antrr (step 1) |- ( ( ( ph ∧ A ∈ V ) ∧ D ∈ A ) → ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) = D ) ;;
+	step 3 : wff = eleq1d (hyp 3) |- ( ph → ( D ∈ A ↔ ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ∈ A ) ) ;;
+	step 4 : wff = adantr (step 3) |- ( ( ph ∧ A ∈ V ) → ( D ∈ A ↔ ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ∈ A ) ) ;;
+	step 5 : wff = riotaclbg () |- ( A ∈ V → ( ∃! x ∈ A ∀ y ∈ B ( ps → x = C ) ↔ ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ∈ A ) ) ;;
+	step 6 : wff = adantl (step 5) |- ( ( ph ∧ A ∈ V ) → ( ∃! x ∈ A ∀ y ∈ B ( ps → x = C ) ↔ ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ∈ A ) ) ;;
+	step 7 : wff = bitr4d (step 4, step 6) |- ( ( ph ∧ A ∈ V ) → ( D ∈ A ↔ ∃! x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ;;
+	step 8 : wff = biimpa (step 7) |- ( ( ( ph ∧ A ∈ V ) ∧ D ∈ A ) → ∃! x ∈ A ∀ y ∈ B ( ps → x = C ) ) ;;
+	step 9 : wff = nfi (hyp 1) |- F/ x ph ;;
+	step 10 : wff = nfriota1 () |- F/_ x ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ;;
+	step 11 : wff = nfi (hyp 1) |- F/ x ph ;;
+	step 12 : wff = nfceqdf (step 11, hyp 3) |- ( ph → ( F/_ x D ↔ F/_ x ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ) ;;
+	step 13 : wff = mpbiri (step 10, step 12) |- ( ph → F/_ x D ) ;;
+	step 14 : wff = nfcvd () |- ( ph → F/_ x A ) ;;
+	step 15 : wff = nfeld (step 13, step 14) |- ( ph → F/ x D ∈ A ) ;;
+	step 16 : wff = nfan1 (step 9, step 15) |- F/ x ( ph ∧ D ∈ A ) ;;
+	step 17 : wff = nfriota1 () |- F/_ x ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ;;
+	step 18 : wff = nfi (hyp 1) |- F/ x ph ;;
+	step 19 : wff = nfceqdf (step 18, hyp 3) |- ( ph → ( F/_ x D ↔ F/_ x ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ) ;;
+	step 20 : wff = mpbiri (step 17, step 19) |- ( ph → F/_ x D ) ;;
+	step 21 : wff = adantr (step 20) |- ( ( ph ∧ D ∈ A ) → F/_ x D ) ;;
+	step 22 : wff = nfi (hyp 2) |- F/ y ph ;;
+	step 23 : wff = nfra1 () |- F/ y ∀ y ∈ B ( ps → x = C ) ;;
+	step 24 : wff = nfcv () |- F/_ y A ;;
+	step 25 : wff = nfriota (step 23, step 24) |- F/_ y ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ;;
+	step 26 : wff = nfi (hyp 2) |- F/ y ph ;;
+	step 27 : wff = nfceqdf (step 26, hyp 3) |- ( ph → ( F/_ y D ↔ F/_ y ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ) ;;
+	step 28 : wff = mpbiri (step 25, step 27) |- ( ph → F/_ y D ) ;;
+	step 29 : wff = nfcvd () |- ( ph → F/_ y A ) ;;
+	step 30 : wff = nfeld (step 28, step 29) |- ( ph → F/ y D ∈ A ) ;;
+	step 31 : wff = nfan1 (step 22, step 30) |- F/ y ( ph ∧ D ∈ A ) ;;
+	step 32 : wff = nfcvd () |- ( ( ph ∧ D ∈ A ) → F/_ x B ) ;;
+	step 33 : wff = nfvd () |- ( ( ph ∧ D ∈ A ) → F/ x ps ) ;;
+	step 34 : wff = nfriota1 () |- F/_ x ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ;;
+	step 35 : wff = nfi (hyp 1) |- F/ x ph ;;
+	step 36 : wff = nfceqdf (step 35, hyp 3) |- ( ph → ( F/_ x D ↔ F/_ x ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ) ;;
+	step 37 : wff = mpbiri (step 34, step 36) |- ( ph → F/_ x D ) ;;
+	step 38 : wff = adantr (step 37) |- ( ( ph ∧ D ∈ A ) → F/_ x D ) ;;
+	step 39 : wff = nfcvd () |- ( ( ph ∧ D ∈ A ) → F/_ x C ) ;;
+	step 40 : wff = nfeqd (step 38, step 39) |- ( ( ph ∧ D ∈ A ) → F/ x D = C ) ;;
+	step 41 : wff = nfimd (step 33, step 40) |- ( ( ph ∧ D ∈ A ) → F/ x ( ps → D = C ) ) ;;
+	step 42 : wff = nfrald (step 31, step 32, step 41) |- ( ( ph ∧ D ∈ A ) → F/ x ∀ y ∈ B ( ps → D = C ) ) ;;
+	step 43 : wff = simpr () |- ( ( ph ∧ D ∈ A ) → D ∈ A ) ;;
+	step 44 : wff = nfi (hyp 2) |- F/ y ph ;;
+	step 45 : wff = nfcvd () |- ( ph → F/_ y x ) ;;
+	step 46 : wff = nfra1 () |- F/ y ∀ y ∈ B ( ps → x = C ) ;;
+	step 47 : wff = nfcv () |- F/_ y A ;;
+	step 48 : wff = nfriota (step 46, step 47) |- F/_ y ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ;;
+	step 49 : wff = nfi (hyp 2) |- F/ y ph ;;
+	step 50 : wff = nfceqdf (step 49, hyp 3) |- ( ph → ( F/_ y D ↔ F/_ y ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ) ;;
+	step 51 : wff = mpbiri (step 48, step 50) |- ( ph → F/_ y D ) ;;
+	step 52 : wff = nfeqd (step 45, step 51) |- ( ph → F/ y x = D ) ;;
+	step 53 : wff = nfan1 (step 44, step 52) |- F/ y ( ph ∧ x = D ) ;;
+	step 54 : wff = eqeq1 () |- ( x = D → ( x = C ↔ D = C ) ) ;;
+	step 55 : wff = adantl (step 54) |- ( ( ph ∧ x = D ) → ( x = C ↔ D = C ) ) ;;
+	step 56 : wff = imbi2d (step 55) |- ( ( ph ∧ x = D ) → ( ( ps → x = C ) ↔ ( ps → D = C ) ) ) ;;
+	step 57 : wff = ralbid (step 53, step 56) |- ( ( ph ∧ x = D ) → ( ∀ y ∈ B ( ps → x = C ) ↔ ∀ y ∈ B ( ps → D = C ) ) ) ;;
+	step 58 : wff = adantlr (step 57) |- ( ( ( ph ∧ D ∈ A ) ∧ x = D ) → ( ∀ y ∈ B ( ps → x = C ) ↔ ∀ y ∈ B ( ps → D = C ) ) ) ;;
+	step 59 : wff = riota2df (step 16, step 21, step 42, step 43, step 58) |- ( ( ( ph ∧ D ∈ A ) ∧ ∃! x ∈ A ∀ y ∈ B ( ps → x = C ) ) → ( ∀ y ∈ B ( ps → D = C ) ↔ ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) = D ) ) ;;
+	step 60 : wff = adantllr (step 59) |- ( ( ( ( ph ∧ A ∈ V ) ∧ D ∈ A ) ∧ ∃! x ∈ A ∀ y ∈ B ( ps → x = C ) ) → ( ∀ y ∈ B ( ps → D = C ) ↔ ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) = D ) ) ;;
+	step 61 : wff = mpdan (step 8, step 60) |- ( ( ( ph ∧ A ∈ V ) ∧ D ∈ A ) → ( ∀ y ∈ B ( ps → D = C ) ↔ ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) = D ) ) ;;
+	step 62 : wff = mpbird (step 2, step 61) |- ( ( ( ph ∧ A ∈ V ) ∧ D ∈ A ) → ∀ y ∈ B ( ps → D = C ) ) ;;
+	step 63 : wff = ex (step 62) |- ( ( ph ∧ A ∈ V ) → ( D ∈ A → ∀ y ∈ B ( ps → D = C ) ) ) ;;
+	step 64 : wff = rsp () |- ( ∀ y ∈ B ( ps → D = C ) → ( y ∈ B → ( ps → D = C ) ) ) ;;
+	step 65 : wff = syl6 (step 63, step 64) |- ( ( ph ∧ A ∈ V ) → ( D ∈ A → ( y ∈ B → ( ps → D = C ) ) ) ) ;;
+	step 66 : wff = imp4a (step 65) |- ( ( ph ∧ A ∈ V ) → ( D ∈ A → ( ( y ∈ B ∧ ps ) → D = C ) ) ) ;;
+	step 67 : wff = 3imp (step 66) |- ( ( ( ph ∧ A ∈ V ) ∧ D ∈ A ∧ ( y ∈ B ∧ ps ) ) → D = C ) ;;
+	qed prop 1 = step 67 ;;
+}
+
+/* Value of description binder ` D ` for a single-valued class expression
+       ` C ( y ) ` (as in e.g. ~ reusv2 ).  Special case of ~ riota2f .
+       (Contributed by NM, 2-Mar-2013.) */
+
+theorem riotasv2d (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, C : class, D : class, E : class, F : class, V : class) disjointed(x y A, x y B, x C, y E, x ps) {
+	hyp 1 : wff = |- F/ y ph ;;
+	hyp 2 : wff = |- ( ph → F/_ y F ) ;;
+	hyp 3 : wff = |- ( ph → F/ y ch ) ;;
+	hyp 4 : wff = |- ( ph → D = ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ;;
+	hyp 5 : wff = |- ( ( ph ∧ y = E ) → ( ps ↔ ch ) ) ;;
+	hyp 6 : wff = |- ( ( ph ∧ y = E ) → C = F ) ;;
+	hyp 7 : wff = |- ( ph → D ∈ A ) ;;
+	hyp 8 : wff = |- ( ph → E ∈ B ) ;;
+	hyp 9 : wff = |- ( ph → ch ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ A ∈ V ) → D = F ) ;;
+}
+
+proof of riotasv2d {
+	step 1 : wff = elex () |- ( A ∈ V → A ∈ _V ) ;;
+	step 2 : wff = adantr (hyp 8) |- ( ( ph ∧ A ∈ _V ) → E ∈ B ) ;;
+	step 3 : wff = adantr (hyp 9) |- ( ( ph ∧ A ∈ _V ) → ch ) ;;
+	step 4 : wff = adantr (hyp 8) |- ( ( ph ∧ A ∈ _V ) → E ∈ B ) ;;
+	step 5 : wff = eleq1 () |- ( y = E → ( y ∈ B ↔ E ∈ B ) ) ;;
+	step 6 : wff = adantl (step 5) |- ( ( ph ∧ y = E ) → ( y ∈ B ↔ E ∈ B ) ) ;;
+	step 7 : wff = anbi12d (step 6, hyp 5) |- ( ( ph ∧ y = E ) → ( ( y ∈ B ∧ ps ) ↔ ( E ∈ B ∧ ch ) ) ) ;;
+	step 8 : wff = eqeq2d (hyp 6) |- ( ( ph ∧ y = E ) → ( D = C ↔ D = F ) ) ;;
+	step 9 : wff = imbi12d (step 7, step 8) |- ( ( ph ∧ y = E ) → ( ( ( y ∈ B ∧ ps ) → D = C ) ↔ ( ( E ∈ B ∧ ch ) → D = F ) ) ) ;;
+	step 10 : wff = adantlr (step 9) |- ( ( ( ph ∧ A ∈ _V ) ∧ y = E ) → ( ( ( y ∈ B ∧ ps ) → D = C ) ↔ ( ( E ∈ B ∧ ch ) → D = F ) ) ) ;;
+	step 11 : wff = riotasvd (hyp 4, hyp 7) |- ( ( ph ∧ A ∈ _V ) → ( ( y ∈ B ∧ ps ) → D = C ) ) ;;
+	step 12 : wff = nfv () |- F/ y A ∈ _V ;;
+	step 13 : wff = nfan (hyp 1, step 12) |- F/ y ( ph ∧ A ∈ _V ) ;;
+	step 14 : wff = nfcvd () |- ( ( ph ∧ A ∈ _V ) → F/_ y E ) ;;
+	step 15 : wff = nfvd () |- ( ph → F/ y E ∈ B ) ;;
+	step 16 : wff = nfand (step 15, hyp 3) |- ( ph → F/ y ( E ∈ B ∧ ch ) ) ;;
+	step 17 : wff = nfra1 () |- F/ y ∀ y ∈ B ( ps → x = C ) ;;
+	step 18 : wff = nfcv () |- F/_ y A ;;
+	step 19 : wff = nfriota (step 17, step 18) |- F/_ y ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ;;
+	step 20 : wff = nfceqdf (hyp 1, hyp 4) |- ( ph → ( F/_ y D ↔ F/_ y ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ) ;;
+	step 21 : wff = mpbiri (step 19, step 20) |- ( ph → F/_ y D ) ;;
+	step 22 : wff = nfeqd (step 21, hyp 2) |- ( ph → F/ y D = F ) ;;
+	step 23 : wff = nfimd (step 16, step 22) |- ( ph → F/ y ( ( E ∈ B ∧ ch ) → D = F ) ) ;;
+	step 24 : wff = adantr (step 23) |- ( ( ph ∧ A ∈ _V ) → F/ y ( ( E ∈ B ∧ ch ) → D = F ) ) ;;
+	step 25 : wff = vtocldf (step 4, step 10, step 11, step 13, step 14, step 24) |- ( ( ph ∧ A ∈ _V ) → ( ( E ∈ B ∧ ch ) → D = F ) ) ;;
+	step 26 : wff = mp2and (step 2, step 3, step 25) |- ( ( ph ∧ A ∈ _V ) → D = F ) ;;
+	step 27 : wff = sylan2 (step 1, step 26) |- ( ( ph ∧ A ∈ V ) → D = F ) ;;
+	qed prop 1 = step 27 ;;
+}
+
+/* Value of description binder ` D ` for a single-valued class expression
+       ` C ( y ) ` (as in e.g. ~ reusv2 ).  Special case of ~ riota2f .
+       (Contributed by NM, 1-Feb-2013.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem riotasv2dOLD (ph : wff, ps : wff, ch : wff, x : set, y : set, z : set, A : class, B : class, C : class, D : class, E : class, F : class, V : class) disjointed(x y z A, x y z B, x z C, z D, y z E, z F, z ph, x z ps) {
+	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
+	hyp 2 : wff = |- ( ph → ∀ y ph ) ;;
+	hyp 3 : wff = |- ( ph → ( z ∈ F → ∀ y z ∈ F ) ) ;;
+	hyp 4 : wff = |- ( ph → ( ch → ∀ y ch ) ) ;;
+	hyp 5 : wff = |- ( ph → D = ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ;;
+	hyp 6 : wff = |- ( ph → ( y = E → ( ps ↔ ch ) ) ) ;;
+	hyp 7 : wff = |- ( ph → ( y = E → C = F ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ( ph ∧ A ∈ V ) ∧ ( D ∈ A ∧ E ∈ B ∧ ch ) ) → D = F ) ;;
+}
+
+proof of riotasv2dOLD {
+	step 1 : wff = elex () |- ( A ∈ V → A ∈ _V ) ;;
+	step 2 : wff = nfcvd () |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → F/_ y E ) ;;
+	step 3 : wff = nfra1 () |- F/ y ∀ y ∈ B ( ps → x = C ) ;;
+	step 4 : wff = nfcv () |- F/_ y A ;;
+	step 5 : wff = nfriota (step 3, step 4) |- F/_ y ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ;;
+	step 6 : wff = nfi (hyp 2) |- F/ y ph ;;
+	step 7 : wff = nfv () |- F/ y A ∈ _V ;;
+	step 8 : wff = nfan (step 6, step 7) |- F/ y ( ph ∧ A ∈ _V ) ;;
+	step 9 : wff = nfv () |- F/ y E ∈ B ;;
+	step 10 : wff = nfan (step 8, step 9) |- F/ y ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) ;;
+	step 11 : wff = ad2antrr (hyp 5) |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → D = ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ;;
+	step 12 : wff = nfceqdf (step 10, step 11) |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → ( F/_ y D ↔ F/_ y ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ) ;;
+	step 13 : wff = mpbiri (step 5, step 12) |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → F/_ y D ) ;;
+	step 14 : wff = nfcvd () |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → F/_ y A ) ;;
+	step 15 : wff = nfeld (step 13, step 14) |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → F/ y D ∈ A ) ;;
+	step 16 : wff = nfvd () |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → F/ y E ∈ B ) ;;
+	step 17 : wff = nfi (hyp 2) |- F/ y ph ;;
+	step 18 : wff = nfd (step 17, hyp 4) |- ( ph → F/ y ch ) ;;
+	step 19 : wff = ad2antrr (step 18) |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → F/ y ch ) ;;
+	step 20 : wff = nf3and (step 15, step 16, step 19) |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → F/ y ( D ∈ A ∧ E ∈ B ∧ ch ) ) ;;
+	step 21 : wff = nfra1 () |- F/ y ∀ y ∈ B ( ps → x = C ) ;;
+	step 22 : wff = nfcv () |- F/_ y A ;;
+	step 23 : wff = nfriota (step 21, step 22) |- F/_ y ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ;;
+	step 24 : wff = nfi (hyp 2) |- F/ y ph ;;
+	step 25 : wff = nfv () |- F/ y A ∈ _V ;;
+	step 26 : wff = nfan (step 24, step 25) |- F/ y ( ph ∧ A ∈ _V ) ;;
+	step 27 : wff = nfv () |- F/ y E ∈ B ;;
+	step 28 : wff = nfan (step 26, step 27) |- F/ y ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) ;;
+	step 29 : wff = ad2antrr (hyp 5) |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → D = ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ;;
+	step 30 : wff = nfceqdf (step 28, step 29) |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → ( F/_ y D ↔ F/_ y ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ) ;;
+	step 31 : wff = mpbiri (step 23, step 30) |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → F/_ y D ) ;;
+	step 32 : wff = nfv () |- F/ z ph ;;
+	step 33 : wff = nfi (hyp 2) |- F/ y ph ;;
+	step 34 : wff = nfd (step 33, hyp 3) |- ( ph → F/ y z ∈ F ) ;;
+	step 35 : wff = nfcd (step 32, step 34) |- ( ph → F/_ y F ) ;;
+	step 36 : wff = ad2antrr (step 35) |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → F/_ y F ) ;;
+	step 37 : wff = nfeqd (step 31, step 36) |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → F/ y D = F ) ;;
+	step 38 : wff = nfimd (step 20, step 37) |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → F/ y ( ( D ∈ A ∧ E ∈ B ∧ ch ) → D = F ) ) ;;
+	step 39 : wff = nfi (hyp 2) |- F/ y ph ;;
+	step 40 : wff = nfv () |- F/ y A ∈ _V ;;
+	step 41 : wff = nfan (step 39, step 40) |- F/ y ( ph ∧ A ∈ _V ) ;;
+	step 42 : wff = nfv () |- F/ y E ∈ B ;;
+	step 43 : wff = nfan (step 41, step 42) |- F/ y ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) ;;
+	step 44 : wff = eleq1 () |- ( y = E → ( y ∈ B ↔ E ∈ B ) ) ;;
+	step 45 : wff = adantl (step 44) |- ( ( ph ∧ y = E ) → ( y ∈ B ↔ E ∈ B ) ) ;;
+	step 46 : wff = imp (hyp 6) |- ( ( ph ∧ y = E ) → ( ps ↔ ch ) ) ;;
+	step 47 : wff = 3anbi23d (step 45, step 46) |- ( ( ph ∧ y = E ) → ( ( D ∈ A ∧ y ∈ B ∧ ps ) ↔ ( D ∈ A ∧ E ∈ B ∧ ch ) ) ) ;;
+	step 48 : wff = imp (hyp 7) |- ( ( ph ∧ y = E ) → C = F ) ;;
+	step 49 : wff = eqeq2d (step 48) |- ( ( ph ∧ y = E ) → ( D = C ↔ D = F ) ) ;;
+	step 50 : wff = imbi12d (step 47, step 49) |- ( ( ph ∧ y = E ) → ( ( ( D ∈ A ∧ y ∈ B ∧ ps ) → D = C ) ↔ ( ( D ∈ A ∧ E ∈ B ∧ ch ) → D = F ) ) ) ;;
+	step 51 : wff = ex (step 50) |- ( ph → ( y = E → ( ( ( D ∈ A ∧ y ∈ B ∧ ps ) → D = C ) ↔ ( ( D ∈ A ∧ E ∈ B ∧ ch ) → D = F ) ) ) ) ;;
+	step 52 : wff = ad2antrr (step 51) |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → ( y = E → ( ( ( D ∈ A ∧ y ∈ B ∧ ps ) → D = C ) ↔ ( ( D ∈ A ∧ E ∈ B ∧ ch ) → D = F ) ) ) ) ;;
+	step 53 : wff = alrimi (step 43, step 52) |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → ∀ y ( y = E → ( ( ( D ∈ A ∧ y ∈ B ∧ ps ) → D = C ) ↔ ( ( D ∈ A ∧ E ∈ B ∧ ch ) → D = F ) ) ) ) ;;
+	step 54 : wff = nfi (hyp 2) |- F/ y ph ;;
+	step 55 : wff = nfv () |- F/ y A ∈ _V ;;
+	step 56 : wff = nfan (step 54, step 55) |- F/ y ( ph ∧ A ∈ _V ) ;;
+	step 57 : wff = riotasvdOLD (hyp 1, hyp 2, hyp 5) |- ( ( ( ph ∧ A ∈ _V ) ∧ D ∈ A ∧ ( y ∈ B ∧ ps ) ) → D = C ) ;;
+	step 58 : wff = 3exp (step 57) |- ( ( ph ∧ A ∈ _V ) → ( D ∈ A → ( ( y ∈ B ∧ ps ) → D = C ) ) ) ;;
+	step 59 : wff = exp4a (step 58) |- ( ( ph ∧ A ∈ _V ) → ( D ∈ A → ( y ∈ B → ( ps → D = C ) ) ) ) ;;
+	step 60 : wff = 3impd (step 59) |- ( ( ph ∧ A ∈ _V ) → ( ( D ∈ A ∧ y ∈ B ∧ ps ) → D = C ) ) ;;
+	step 61 : wff = alrimi (step 56, step 60) |- ( ( ph ∧ A ∈ _V ) → ∀ y ( ( D ∈ A ∧ y ∈ B ∧ ps ) → D = C ) ) ;;
+	step 62 : wff = adantr (step 61) |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → ∀ y ( ( D ∈ A ∧ y ∈ B ∧ ps ) → D = C ) ) ;;
+	step 63 : wff = simpr () |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → E ∈ B ) ;;
+	step 64 : wff = vtoclgft () |- ( ( ( F/_ y E ∧ F/ y ( ( D ∈ A ∧ E ∈ B ∧ ch ) → D = F ) ) ∧ ( ∀ y ( y = E → ( ( ( D ∈ A ∧ y ∈ B ∧ ps ) → D = C ) ↔ ( ( D ∈ A ∧ E ∈ B ∧ ch ) → D = F ) ) ) ∧ ∀ y ( ( D ∈ A ∧ y ∈ B ∧ ps ) → D = C ) ) ∧ E ∈ B ) → ( ( D ∈ A ∧ E ∈ B ∧ ch ) → D = F ) ) ;;
+	step 65 : wff = syl221anc (step 2, step 38, step 53, step 62, step 63, step 64) |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → ( ( D ∈ A ∧ E ∈ B ∧ ch ) → D = F ) ) ;;
+	step 66 : wff = 3expd (step 65) |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → ( D ∈ A → ( E ∈ B → ( ch → D = F ) ) ) ) ;;
+	step 67 : wff = com23 (step 66) |- ( ( ( ph ∧ A ∈ _V ) ∧ E ∈ B ) → ( E ∈ B → ( D ∈ A → ( ch → D = F ) ) ) ) ;;
+	step 68 : wff = ex (step 67) |- ( ( ph ∧ A ∈ _V ) → ( E ∈ B → ( E ∈ B → ( D ∈ A → ( ch → D = F ) ) ) ) ) ;;
+	step 69 : wff = pm2.43d (step 68) |- ( ( ph ∧ A ∈ _V ) → ( E ∈ B → ( D ∈ A → ( ch → D = F ) ) ) ) ;;
+	step 70 : wff = com23 (step 69) |- ( ( ph ∧ A ∈ _V ) → ( D ∈ A → ( E ∈ B → ( ch → D = F ) ) ) ) ;;
+	step 71 : wff = 3imp2 (step 70) |- ( ( ( ph ∧ A ∈ _V ) ∧ ( D ∈ A ∧ E ∈ B ∧ ch ) ) → D = F ) ;;
+	step 72 : wff = sylanl2 (step 1, step 71) |- ( ( ( ph ∧ A ∈ V ) ∧ ( D ∈ A ∧ E ∈ B ∧ ch ) ) → D = F ) ;;
+	qed prop 1 = step 72 ;;
+}
+
+/* The value of description binder ` D ` for a single-valued class
+       expression ` C ( y ) ` (as in e.g. ~ reusv2 ) in the form of a
+       substitution instance.  Special case of ~ riota2f .  (Contributed by NM,
+       3-Mar-2013.)  (Proof shortened by Mario Carneiro, 6-Dec-2016.) */
+
+theorem riotasv2s (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class, E : class, V : class) disjointed(x y A, x y B, x C, x y E, x ph) {
+	hyp 1 : wff = |- D = ( iota_ x ∈ A ∀ y ∈ B ( ph → x = C ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( A ∈ V ∧ D ∈ A ∧ ( E ∈ B ∧ [. E / y ]. ph ) ) → D = [_ E / y ]_ C ) ;;
+}
+
+proof of riotasv2s {
+	step 1 : wff = 3simpc () |- ( ( A ∈ V ∧ D ∈ A ∧ ( E ∈ B ∧ [. E / y ]. ph ) ) → ( D ∈ A ∧ ( E ∈ B ∧ [. E / y ]. ph ) ) ) ;;
+	step 2 : wff = simp1 () |- ( ( A ∈ V ∧ D ∈ A ∧ ( E ∈ B ∧ [. E / y ]. ph ) ) → A ∈ V ) ;;
+	step 3 : wff = nfra1 () |- F/ y ∀ y ∈ B ( ph → x = C ) ;;
+	step 4 : wff = nfcv () |- F/_ y A ;;
+	step 5 : wff = nfriota (step 3, step 4) |- F/_ y ( iota_ x ∈ A ∀ y ∈ B ( ph → x = C ) ) ;;
+	step 6 : wff = nfcxfr (hyp 1, step 5) |- F/_ y D ;;
+	step 7 : wff = nfel1 (step 6) |- F/ y D ∈ A ;;
+	step 8 : wff = nfv () |- F/ y E ∈ B ;;
+	step 9 : wff = nfsbc1v () |- F/ y [. E / y ]. ph ;;
+	step 10 : wff = nfan (step 8, step 9) |- F/ y ( E ∈ B ∧ [. E / y ]. ph ) ;;
+	step 11 : wff = nfan (step 7, step 10) |- F/ y ( D ∈ A ∧ ( E ∈ B ∧ [. E / y ]. ph ) ) ;;
+	step 12 : wff = nfcsb1v () |- F/_ y [_ E / y ]_ C ;;
+	step 13 : wff = a1i (step 12) |- ( ( D ∈ A ∧ ( E ∈ B ∧ [. E / y ]. ph ) ) → F/_ y [_ E / y ]_ C ) ;;
+	step 14 : wff = nfsbc1v () |- F/ y [. E / y ]. ph ;;
+	step 15 : wff = a1i (step 14) |- ( ( D ∈ A ∧ ( E ∈ B ∧ [. E / y ]. ph ) ) → F/ y [. E / y ]. ph ) ;;
+	step 16 : wff = a1i (hyp 1) |- ( ( D ∈ A ∧ ( E ∈ B ∧ [. E / y ]. ph ) ) → D = ( iota_ x ∈ A ∀ y ∈ B ( ph → x = C ) ) ) ;;
+	step 17 : wff = sbceq1a () |- ( y = E → ( ph ↔ [. E / y ]. ph ) ) ;;
+	step 18 : wff = adantl (step 17) |- ( ( ( D ∈ A ∧ ( E ∈ B ∧ [. E / y ]. ph ) ) ∧ y = E ) → ( ph ↔ [. E / y ]. ph ) ) ;;
+	step 19 : wff = csbeq1a () |- ( y = E → C = [_ E / y ]_ C ) ;;
+	step 20 : wff = adantl (step 19) |- ( ( ( D ∈ A ∧ ( E ∈ B ∧ [. E / y ]. ph ) ) ∧ y = E ) → C = [_ E / y ]_ C ) ;;
+	step 21 : wff = simpl () |- ( ( D ∈ A ∧ ( E ∈ B ∧ [. E / y ]. ph ) ) → D ∈ A ) ;;
+	step 22 : wff = simprl () |- ( ( D ∈ A ∧ ( E ∈ B ∧ [. E / y ]. ph ) ) → E ∈ B ) ;;
+	step 23 : wff = simprr () |- ( ( D ∈ A ∧ ( E ∈ B ∧ [. E / y ]. ph ) ) → [. E / y ]. ph ) ;;
+	step 24 : wff = riotasv2d (step 11, step 13, step 15, step 16, step 18, step 20, step 21, step 22, step 23) |- ( ( ( D ∈ A ∧ ( E ∈ B ∧ [. E / y ]. ph ) ) ∧ A ∈ V ) → D = [_ E / y ]_ C ) ;;
+	step 25 : wff = syl2anc (step 1, step 2, step 24) |- ( ( A ∈ V ∧ D ∈ A ∧ ( E ∈ B ∧ [. E / y ]. ph ) ) → D = [_ E / y ]_ C ) ;;
+	qed prop 1 = step 25 ;;
+}
+
+/* Value of description binder ` D ` for a single-valued class expression
+       ` C ( y ) ` (as in e.g. ~ reusv2 ).  Special case of ~ riota2f .
+       (Contributed by NM, 26-Jan-2013.)  (Proof shortened by Mario Carneiro,
+       6-Dec-2016.) */
+
+theorem riotasv (ph : wff, x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x y A, x B, x C, x ph) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- D = ( iota_ x ∈ A ∀ y ∈ B ( ph → x = C ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( D ∈ A ∧ y ∈ B ∧ ph ) → D = C ) ;;
+}
+
+proof of riotasv {
+	step 1 : wff = a1i (hyp 2) |- ( D ∈ A → D = ( iota_ x ∈ A ∀ y ∈ B ( ph → x = C ) ) ) ;;
+	step 2 : wff = id () |- ( D ∈ A → D ∈ A ) ;;
+	step 3 : wff = riotasvd (step 1, step 2) |- ( ( D ∈ A ∧ A ∈ _V ) → ( ( y ∈ B ∧ ph ) → D = C ) ) ;;
+	step 4 : wff = mpan2 (hyp 1, step 3) |- ( D ∈ A → ( ( y ∈ B ∧ ph ) → D = C ) ) ;;
+	step 5 : wff = 3impib (step 4) |- ( ( D ∈ A ∧ y ∈ B ∧ ph ) → D = C ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* A property ` ch ` holding for a representative of a single-valued class
+       expression ` C ( y ) ` (see e.g. ~ reusv2 ) also holds for its
+       description binder ` D ` (in the form of property ` th ` ).
+       (Contributed by NM, 5-Mar-2013.)  (Revised by Mario Carneiro,
+       15-Oct-2016.) */
+
+theorem riotasv3d (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, A : class, B : class, C : class, D : class, V : class) disjointed(x y A, x B, x C, x ps) {
+	hyp 1 : wff = |- F/ y ph ;;
+	hyp 2 : wff = |- ( ph → F/ y th ) ;;
+	hyp 3 : wff = |- ( ph → D = ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ;;
+	hyp 4 : wff = |- ( ( ph ∧ C = D ) → ( ch ↔ th ) ) ;;
+	hyp 5 : wff = |- ( ph → ( ( y ∈ B ∧ ps ) → ch ) ) ;;
+	hyp 6 : wff = |- ( ph → D ∈ A ) ;;
+	hyp 7 : wff = |- ( ph → ∃ y ∈ B ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ A ∈ V ) → th ) ;;
+}
+
+proof of riotasv3d {
+	step 1 : wff = elex () |- ( A ∈ V → A ∈ _V ) ;;
+	step 2 : wff = adantr (hyp 7) |- ( ( ph ∧ A ∈ _V ) → ∃ y ∈ B ps ) ;;
+	step 3 : wff = nfv () |- F/ y A ∈ _V ;;
+	step 4 : wff = imp (hyp 5) |- ( ( ph ∧ ( y ∈ B ∧ ps ) ) → ch ) ;;
+	step 5 : wff = adantrl (step 4) |- ( ( ph ∧ ( A ∈ _V ∧ ( y ∈ B ∧ ps ) ) ) → ch ) ;;
+	step 6 : wff = riotasvd (hyp 3, hyp 6) |- ( ( ph ∧ A ∈ _V ) → ( ( y ∈ B ∧ ps ) → D = C ) ) ;;
+	step 7 : wff = impr (step 6) |- ( ( ph ∧ ( A ∈ _V ∧ ( y ∈ B ∧ ps ) ) ) → D = C ) ;;
+	step 8 : wff = eqcomd (step 7) |- ( ( ph ∧ ( A ∈ _V ∧ ( y ∈ B ∧ ps ) ) ) → C = D ) ;;
+	step 9 : wff = syldan (step 8, hyp 4) |- ( ( ph ∧ ( A ∈ _V ∧ ( y ∈ B ∧ ps ) ) ) → ( ch ↔ th ) ) ;;
+	step 10 : wff = mpbid (step 5, step 9) |- ( ( ph ∧ ( A ∈ _V ∧ ( y ∈ B ∧ ps ) ) ) → th ) ;;
+	step 11 : wff = exp45 (step 10) |- ( ph → ( A ∈ _V → ( y ∈ B → ( ps → th ) ) ) ) ;;
+	step 12 : wff = ralrimd (hyp 1, step 3, step 11) |- ( ph → ( A ∈ _V → ∀ y ∈ B ( ps → th ) ) ) ;;
+	step 13 : wff = r19.23t () |- ( F/ y th → ( ∀ y ∈ B ( ps → th ) ↔ ( ∃ y ∈ B ps → th ) ) ) ;;
+	step 14 : wff = syl (hyp 2, step 13) |- ( ph → ( ∀ y ∈ B ( ps → th ) ↔ ( ∃ y ∈ B ps → th ) ) ) ;;
+	step 15 : wff = sylibd (step 12, step 14) |- ( ph → ( A ∈ _V → ( ∃ y ∈ B ps → th ) ) ) ;;
+	step 16 : wff = imp (step 15) |- ( ( ph ∧ A ∈ _V ) → ( ∃ y ∈ B ps → th ) ) ;;
+	step 17 : wff = mpd (step 2, step 16) |- ( ( ph ∧ A ∈ _V ) → th ) ;;
+	step 18 : wff = sylan2 (step 1, step 17) |- ( ( ph ∧ A ∈ V ) → th ) ;;
+	qed prop 1 = step 18 ;;
+}
+
+/* A property ` ch ` holding for a representative of a single-valued class
+       expression ` C ( y ) ` (see e.g. ~ reusv2 ) also holds for its
+       description binder ` D ` (in the form of property ` th ` ).
+       (Contributed by NM, 1-Feb-2013.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem riotasv3dOLD (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, A : class, B : class, C : class, D : class, V : class) disjointed(x y A, x B, x C, x ps) {
+	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
+	hyp 2 : wff = |- ( ph → ∀ y ph ) ;;
+	hyp 3 : wff = |- ( ph → ( th → ∀ y th ) ) ;;
+	hyp 4 : wff = |- ( ph → D = ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ;;
+	hyp 5 : wff = |- ( ph → ( C = D → ( ch ↔ th ) ) ) ;;
+	hyp 6 : wff = |- ( ph → ( ( y ∈ B ∧ ps ) → ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ ( A ∈ V ∧ D ∈ A ∧ ∃ y ∈ B ps ) ) → th ) ;;
+}
+
+proof of riotasv3dOLD {
+	step 1 : wff = elex () |- ( A ∈ V → A ∈ _V ) ;;
+	step 2 : wff = nfi (hyp 2) |- F/ y ph ;;
+	step 3 : wff = imp (hyp 6) |- ( ( ph ∧ ( y ∈ B ∧ ps ) ) → ch ) ;;
+	step 4 : wff = adantrl (step 3) |- ( ( ph ∧ ( ( A ∈ _V ∧ D ∈ A ) ∧ ( y ∈ B ∧ ps ) ) ) → ch ) ;;
+	step 5 : wff = riotasvdOLD (hyp 1, hyp 2, hyp 4) |- ( ( ( ph ∧ A ∈ _V ) ∧ D ∈ A ∧ ( y ∈ B ∧ ps ) ) → D = C ) ;;
+	step 6 : wff = eqcomd (step 5) |- ( ( ( ph ∧ A ∈ _V ) ∧ D ∈ A ∧ ( y ∈ B ∧ ps ) ) → C = D ) ;;
+	step 7 : wff = 3exp (step 6) |- ( ( ph ∧ A ∈ _V ) → ( D ∈ A → ( ( y ∈ B ∧ ps ) → C = D ) ) ) ;;
+	step 8 : wff = ex (step 7) |- ( ph → ( A ∈ _V → ( D ∈ A → ( ( y ∈ B ∧ ps ) → C = D ) ) ) ) ;;
+	step 9 : wff = imp4c (step 8) |- ( ph → ( ( ( A ∈ _V ∧ D ∈ A ) ∧ ( y ∈ B ∧ ps ) ) → C = D ) ) ;;
+	step 10 : wff = syld (step 9, hyp 5) |- ( ph → ( ( ( A ∈ _V ∧ D ∈ A ) ∧ ( y ∈ B ∧ ps ) ) → ( ch ↔ th ) ) ) ;;
+	step 11 : wff = imp (step 10) |- ( ( ph ∧ ( ( A ∈ _V ∧ D ∈ A ) ∧ ( y ∈ B ∧ ps ) ) ) → ( ch ↔ th ) ) ;;
+	step 12 : wff = mpbid (step 4, step 11) |- ( ( ph ∧ ( ( A ∈ _V ∧ D ∈ A ) ∧ ( y ∈ B ∧ ps ) ) ) → th ) ;;
+	step 13 : wff = exp45 (step 12) |- ( ph → ( ( A ∈ _V ∧ D ∈ A ) → ( y ∈ B → ( ps → th ) ) ) ) ;;
+	step 14 : wff = com23 (step 13) |- ( ph → ( y ∈ B → ( ( A ∈ _V ∧ D ∈ A ) → ( ps → th ) ) ) ) ;;
+	step 15 : wff = ralrimi (step 2, step 14) |- ( ph → ∀ y ∈ B ( ( A ∈ _V ∧ D ∈ A ) → ( ps → th ) ) ) ;;
+	step 16 : wff = nfvd () |- ( ph → F/ y A ∈ _V ) ;;
+	step 17 : wff = nfra1 () |- F/ y ∀ y ∈ B ( ps → x = C ) ;;
+	step 18 : wff = nfcv () |- F/_ y A ;;
+	step 19 : wff = nfriota (step 17, step 18) |- F/_ y ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ;;
+	step 20 : wff = nfi (hyp 2) |- F/ y ph ;;
+	step 21 : wff = nfceqdf (step 20, hyp 4) |- ( ph → ( F/_ y D ↔ F/_ y ( iota_ x ∈ A ∀ y ∈ B ( ps → x = C ) ) ) ) ;;
+	step 22 : wff = mpbiri (step 19, step 21) |- ( ph → F/_ y D ) ;;
+	step 23 : wff = nfcvd () |- ( ph → F/_ y A ) ;;
+	step 24 : wff = nfeld (step 22, step 23) |- ( ph → F/ y D ∈ A ) ;;
+	step 25 : wff = nfand (step 16, step 24) |- ( ph → F/ y ( A ∈ _V ∧ D ∈ A ) ) ;;
+	step 26 : wff = r19.21t () |- ( F/ y ( A ∈ _V ∧ D ∈ A ) → ( ∀ y ∈ B ( ( A ∈ _V ∧ D ∈ A ) → ( ps → th ) ) ↔ ( ( A ∈ _V ∧ D ∈ A ) → ∀ y ∈ B ( ps → th ) ) ) ) ;;
+	step 27 : wff = syl (step 25, step 26) |- ( ph → ( ∀ y ∈ B ( ( A ∈ _V ∧ D ∈ A ) → ( ps → th ) ) ↔ ( ( A ∈ _V ∧ D ∈ A ) → ∀ y ∈ B ( ps → th ) ) ) ) ;;
+	step 28 : wff = mpbid (step 15, step 27) |- ( ph → ( ( A ∈ _V ∧ D ∈ A ) → ∀ y ∈ B ( ps → th ) ) ) ;;
+	step 29 : wff = nfi (hyp 2) |- F/ y ph ;;
+	step 30 : wff = nfd (step 29, hyp 3) |- ( ph → F/ y th ) ;;
+	step 31 : wff = r19.23t () |- ( F/ y th → ( ∀ y ∈ B ( ps → th ) ↔ ( ∃ y ∈ B ps → th ) ) ) ;;
+	step 32 : wff = syl (step 30, step 31) |- ( ph → ( ∀ y ∈ B ( ps → th ) ↔ ( ∃ y ∈ B ps → th ) ) ) ;;
+	step 33 : wff = sylibd (step 28, step 32) |- ( ph → ( ( A ∈ _V ∧ D ∈ A ) → ( ∃ y ∈ B ps → th ) ) ) ;;
+	step 34 : wff = exp3a (step 33) |- ( ph → ( A ∈ _V → ( D ∈ A → ( ∃ y ∈ B ps → th ) ) ) ) ;;
+	step 35 : wff = syl5 (step 1, step 34) |- ( ph → ( A ∈ V → ( D ∈ A → ( ∃ y ∈ B ps → th ) ) ) ) ;;
+	step 36 : wff = 3imp2 (step 35) |- ( ( ph ∧ ( A ∈ V ∧ D ∈ A ∧ ∃ y ∈ B ps ) ) → th ) ;;
+	qed prop 1 = step 36 ;;
+}
+
+

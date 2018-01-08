@@ -1,0 +1,306 @@
+$[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_of_classical_propositional_calculus/Derive_Nicod_s_axiom_from_the_standard_axioms.smm $]
+$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+          Derive the Lukasiewicz axioms from Nicod's axiom
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+$)
+$( /* Minor premise. */
+
+$)
+$( /* Inference for ~ nic-mp using ~ nic-ax as major premise.  (Contributed by
+       Jeff Hoffman, 17-Nov-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -/\ ( ch -/\ ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	i0 $f wff ta $.
+	pnic-imp $p |- ( ( th -/\ ch ) -/\ ( ( ph -/\ th ) -/\ ( ph -/\ th ) ) ) $=
+	e0 f0 f1 f2 f3 i0 pnic-ax f0 f2 f1 awnan awnan f3 f2 awnan f0 f3 awnan f0 f3 awnan awnan awnan i0 i0 i0 awnan awnan pnic-mp $.
+$}
+$( /* Lemma for ~ nic-id .  (Contributed by Jeff Hoffman, 17-Nov-2007.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps ch th ta $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	pnic-idlem1 $p |- ( ( th -/\ ( ta -/\ ( ta -/\ ta ) ) ) -/\ ( ( ( ph -/\ ( ch -/\ ps ) ) -/\ th ) -/\ ( ( ph -/\ ( ch -/\ ps ) ) -/\ th ) ) ) $=
+	f0 f1 f2 f0 f4 pnic-ax f0 f2 f1 awnan awnan f0 f2 awnan f0 f0 awnan f0 f0 awnan awnan awnan f4 f4 f4 awnan awnan f3 pnic-imp $.
+$}
+$( /* Lemma for ~ nic-id .  Inference used by ~ nic-id .  (Contributed by Jeff
+       Hoffman, 17-Nov-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps ch th ta et $.
+	e0 $e |- ( et -/\ ( ( ph -/\ ( ch -/\ ps ) ) -/\ th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	f5 $f wff et $.
+	pnic-idlem2 $p |- ( ( th -/\ ( ta -/\ ( ta -/\ ta ) ) ) -/\ et ) $=
+	e0 f0 f1 f2 f0 f4 pnic-ax f0 f2 f1 awnan awnan f0 f2 awnan f0 f0 awnan f0 f0 awnan awnan awnan f4 f4 f4 awnan awnan f3 pnic-imp f3 f4 f4 f4 awnan awnan awnan f0 f2 f1 awnan awnan f3 awnan f0 f2 f1 awnan awnan f3 awnan f5 pnic-imp f5 f0 f2 f1 awnan awnan f3 awnan awnan f3 f4 f4 f4 awnan awnan awnan f5 awnan f3 f4 f4 f4 awnan awnan awnan f5 awnan pnic-mp $.
+$}
+$( /* Theorem ~ id expressed with ` -/\ ` .  (Contributed by Jeff Hoffman,
+     17-Nov-2007.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps ch th ta $.
+	f0 $f wff ta $.
+	i0 $f wff ph $.
+	i1 $f wff ps $.
+	i2 $f wff ch $.
+	i3 $f wff th $.
+	pnic-id $p |- ( ta -/\ ( ta -/\ ta ) ) $=
+	i1 i1 i1 i0 i3 pnic-ax i3 i3 i3 i0 i1 awnan i1 i0 awnan i1 i0 awnan awnan awnan i2 i1 i1 i1 awnan awnan pnic-idlem2 i0 i1 awnan i1 i0 awnan i1 i0 awnan i2 i2 i2 awnan awnan f0 pnic-idlem1 i0 i1 awnan i1 i0 awnan i1 i0 awnan awnan awnan i2 i2 awnan i2 i0 i1 awnan i1 i0 awnan i1 i0 awnan awnan awnan i2 i2 i2 awnan awnan awnan i1 i2 i2 i2 awnan awnan f0 f0 f0 awnan awnan awnan pnic-idlem2 i0 i1 awnan i1 i0 awnan i1 i0 awnan awnan awnan i2 i2 i2 awnan awnan awnan i1 i1 i1 awnan awnan awnan f0 f0 f0 awnan awnan i2 i2 i2 awnan awnan pnic-mp $.
+$}
+$( /* ` -/\ ` is symmetric.  (Contributed by Jeff Hoffman, 17-Nov-2007.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v ph th ta $.
+	f0 $f wff ph $.
+	f1 $f wff th $.
+	i0 $f wff ta $.
+	pnic-swap $p |- ( ( th -/\ ph ) -/\ ( ( ph -/\ th ) -/\ ( ph -/\ th ) ) ) $=
+	f0 pnic-id f0 f0 f0 f1 i0 pnic-ax f0 f0 f0 awnan awnan f1 f0 awnan f0 f1 awnan f0 f1 awnan awnan awnan i0 i0 i0 awnan awnan pnic-mp $.
+$}
+$( /* Inference version of ~ nic-swap .  (Contributed by Jeff Hoffman,
+       17-Nov-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+$)
+${
+	$v ph th $.
+	e0 $e |- ( th -/\ ph ) $.
+	f0 $f wff ph $.
+	f1 $f wff th $.
+	pnic-isw1 $p |- ( ph -/\ th ) $=
+	e0 f0 f1 pnic-swap f1 f0 awnan f0 f1 awnan f0 f1 awnan pnic-mp $.
+$}
+$( /* Inference for swapping nested terms.  (Contributed by Jeff Hoffman,
+       17-Nov-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps th $.
+	e0 $e |- ( ps -/\ ( th -/\ ph ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff th $.
+	pnic-isw2 $p |- ( ps -/\ ( ph -/\ th ) ) $=
+	e0 f2 f0 pnic-swap f0 f2 awnan f2 f0 awnan f2 f0 awnan f1 pnic-imp f1 f2 f0 awnan awnan f0 f2 awnan f1 awnan f0 f2 awnan f1 awnan pnic-mp f1 f0 f2 awnan pnic-isw1 $.
+$}
+$( /* Inference version of ~ nic-imp using right-handed term.  (Contributed by
+       Jeff Hoffman, 17-Nov-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -/\ ( ch -/\ ps ) ) $.
+	e1 $e |- ( th -/\ ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pnic-iimp1 $p |- ( th -/\ ph ) $=
+	e1 e0 f0 f1 f2 f3 pnic-imp f3 f2 awnan f0 f3 awnan f0 f3 awnan pnic-mp f3 f0 pnic-isw1 $.
+$}
+$( /* Inference version of ~ nic-imp using left-handed term.  (Contributed by
+       Jeff Hoffman, 17-Nov-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ( ph -/\ ps ) -/\ ( ch -/\ ch ) ) $.
+	e1 $e |- ( th -/\ ph ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pnic-iimp2 $p |- ( th -/\ ( ch -/\ ch ) ) $=
+	e0 f2 f2 awnan f0 f1 awnan pnic-isw1 e1 f2 f2 awnan f1 f0 f3 pnic-iimp1 $.
+$}
+$( /* Inference to remove the trailing term.  (Contributed by Jeff Hoffman,
+       17-Nov-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -/\ ( ch -/\ ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pnic-idel $p |- ( ph -/\ ( ch -/\ ch ) ) $=
+	f2 pnic-id f2 f2 awnan f2 pnic-isw1 e0 f0 f1 f2 f2 f2 awnan pnic-imp f2 f2 awnan f2 awnan f0 f2 f2 awnan awnan f0 f2 f2 awnan awnan pnic-mp $.
+$}
+$( /* Chained inference.  (Contributed by Jeff Hoffman, 17-Nov-2007.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -/\ ( ps -/\ ps ) ) $.
+	e1 $e |- ( ps -/\ ( ch -/\ ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pnic-ich $p |- ( ph -/\ ( ch -/\ ch ) ) $=
+	e1 f2 f2 awnan f1 pnic-isw1 e0 f0 f1 f1 f2 f2 awnan pnic-imp f2 f2 awnan f1 awnan f0 f2 f2 awnan awnan f0 f2 f2 awnan awnan pnic-mp $.
+$}
+$( /* Double the terms.  Since doubling is the same as negation, this can be
+       viewed as a contraposition inference.  (Contributed by Jeff Hoffman,
+       17-Nov-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- ( ph -/\ ( ps -/\ ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pnic-idbl $p |- ( ( ps -/\ ps ) -/\ ( ( ph -/\ ph ) -/\ ( ph -/\ ph ) ) ) $=
+	e0 f0 f1 f1 f1 pnic-imp e0 f0 f1 f1 f0 pnic-imp f1 f1 awnan f0 f1 awnan f0 f0 awnan pnic-ich $.
+$}
+$( /* (not in Table of Contents)
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Biconditional justification from Nicod's axiom
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+$)
+$( /* For nic-* definitions, the biconditional connective is not used.  Instead,
+     definitions are made based on this form. ~ nic-bi1 and ~ nic-bi2 are used
+     to convert the definitions into usable theorems about one side of the
+     implication.  (Contributed by Jeff Hoffman, 18-Nov-2007.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v ta $.
+	f0 $f wff ta $.
+	pnic-bijust $p |- ( ( ta -/\ ta ) -/\ ( ( ta -/\ ta ) -/\ ( ta -/\ ta ) ) ) $=
+	f0 f0 pnic-swap $.
+$}
+$( /* 'Biconditional' premise. */
+
+$)
+$( /* Inference to extract one side of an implication from a definition.
+       (Contributed by Jeff Hoffman, 18-Nov-2007.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- ( ( ph -/\ ps ) -/\ ( ( ph -/\ ph ) -/\ ( ps -/\ ps ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pnic-bi1 $p |- ( ph -/\ ( ps -/\ ps ) ) $=
+	e0 f0 pnic-id f0 f1 awnan f1 f1 awnan f0 f0 awnan f0 pnic-iimp1 f1 f0 f0 pnic-isw2 f0 f0 f1 pnic-idel $.
+$}
+$( /* 'Biconditional' premise.  */
+
+$)
+$( /* Inference to extract the other side of an implication from a
+       'biconditional' definition.  (Contributed by Jeff Hoffman,
+       18-Nov-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- ( ( ph -/\ ps ) -/\ ( ( ph -/\ ph ) -/\ ( ps -/\ ps ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pnic-bi2 $p |- ( ps -/\ ( ph -/\ ph ) ) $=
+	e0 f1 f1 awnan f0 f1 awnan f0 f0 awnan pnic-isw2 f1 pnic-id f0 f1 awnan f0 f0 awnan f1 f1 awnan f1 pnic-iimp1 f1 f1 f0 pnic-idel $.
+$}
+$( /* (not in Table of Contents)
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+             Prove the Lukasiewicz axioms from Nicod's axiom
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+$)
+$( /* Minor premise. */
+
+$)
+$( /* Major premise. */
+
+$)
+$( /* Derive the standard modus ponens from ~ nic-mp .  (Contributed by Jeff
+       Hoffman, 18-Nov-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- ph $.
+	e1 $e |- ( ph -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pnic-stdmp $p |- ps $=
+	e0 e1 f0 f1 pnic-dfim f0 f1 f1 awnan awnan f0 f1 awi pnic-bi2 f0 f1 awi f0 f1 f1 awnan awnan f0 f1 f1 awnan awnan pnic-mp f0 f1 f1 pnic-mp $.
+$}
+$( /* Proof of ~ luk-1 from ~ nic-ax and ~ nic-mp (and definitions ~ nic-dfim
+     and ~ nic-dfneg ).  Note that the standard axioms ~ ax-1 , ~ ax-2 , and
+     ~ ax-3 are proved from the Lukasiewicz axioms by theorems ~ ax1 , ~ ax2 ,
+     and ~ ax3 .  (Contributed by Jeff Hoffman, 18-Nov-2007.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps ch ta $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	i0 $f wff ta $.
+	pnic-luk1 $p |- ( ( ph -> ps ) -> ( ( ps -> ch ) -> ( ph -> ch ) ) ) $=
+	f0 f1 pnic-dfim f0 f1 f1 awnan awnan f0 f1 awi pnic-bi2 f0 f1 f1 f2 f2 awnan i0 pnic-ax f2 f2 awnan f1 awnan f0 f2 f2 awnan awnan f0 f2 f2 awnan awnan awnan awnan f0 f1 f1 awnan awnan i0 i0 i0 awnan awnan pnic-isw2 f0 f1 f1 awnan awnan i0 i0 i0 awnan awnan f2 f2 awnan f1 awnan f0 f2 f2 awnan awnan f0 f2 f2 awnan awnan awnan awnan pnic-idel f0 f2 pnic-dfim f0 f2 f2 awnan awnan f0 f2 awi pnic-bi1 f0 f2 f2 awnan awnan f0 f2 awi pnic-idbl f0 f2 awi f0 f2 awi awnan f0 f2 f2 awnan awnan f0 f2 f2 awnan awnan awnan f0 f2 f2 awnan awnan f0 f2 f2 awnan awnan awnan f2 f2 awnan f1 awnan pnic-imp f1 f2 pnic-dfim f1 f2 f2 awnan awnan f1 f2 awi pnic-bi2 f2 f2 awnan f1 pnic-swap f1 f2 awi f1 f2 f2 awnan awnan f2 f2 awnan f1 awnan pnic-ich f1 f2 awi f2 f2 awnan f1 awnan f2 f2 awnan f1 awnan f0 f2 awi f0 f2 awi awnan pnic-imp f2 f2 awnan f1 awnan f0 f2 f2 awnan awnan f0 f2 f2 awnan awnan awnan awnan f0 f2 awi f0 f2 awi awnan f2 f2 awnan f1 awnan awnan f1 f2 awi f0 f2 awi f0 f2 awi awnan awnan pnic-ich f0 f1 f1 awnan awnan f2 f2 awnan f1 awnan f0 f2 f2 awnan awnan f0 f2 f2 awnan awnan awnan awnan f1 f2 awi f0 f2 awi f0 f2 awi awnan awnan pnic-ich f1 f2 awi f0 f2 awi pnic-dfim f1 f2 awi f0 f2 awi f0 f2 awi awnan awnan f1 f2 awi f0 f2 awi awi pnic-bi1 f0 f1 f1 awnan awnan f1 f2 awi f0 f2 awi f0 f2 awi awnan awnan f1 f2 awi f0 f2 awi awi pnic-ich f0 f1 awi f0 f1 f1 awnan awnan f1 f2 awi f0 f2 awi awi pnic-ich f0 f1 awi f1 f2 awi f0 f2 awi awi pnic-dfim f0 f1 awi f1 f2 awi f0 f2 awi awi f1 f2 awi f0 f2 awi awi awnan awnan f0 f1 awi f1 f2 awi f0 f2 awi awi awi pnic-bi1 f0 f1 awi f1 f2 awi f0 f2 awi awi f1 f2 awi f0 f2 awi awi awnan awnan f0 f1 awi f1 f2 awi f0 f2 awi awi awi f0 f1 awi f1 f2 awi f0 f2 awi awi awi pnic-mp $.
+$}
+$( /* Proof of ~ luk-2 from ~ nic-ax and ~ nic-mp .  (Contributed by Jeff
+     Hoffman, 18-Nov-2007.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+$)
+${
+	$v ph $.
+	f0 $f wff ph $.
+	pnic-luk2 $p |- ( ( -. ph -> ph ) -> ph ) $=
+	f0 awn f0 pnic-dfim f0 awn f0 f0 awnan awnan f0 awn f0 awi pnic-bi2 f0 pnic-dfneg f0 f0 awnan pnic-id f0 f0 awnan f0 awn awnan f0 awn f0 awn awnan f0 f0 awnan f0 f0 awnan awnan f0 f0 awnan pnic-iimp1 f0 awn f0 f0 awnan f0 f0 awnan pnic-isw2 f0 awn f0 awi f0 awn f0 f0 awnan awnan f0 awn f0 f0 awnan awnan f0 f0 awnan pnic-iimp1 f0 awn f0 awi f0 f0 awnan pnic-isw1 f0 awn f0 awi f0 pnic-dfim f0 awn f0 awi f0 f0 awnan awnan f0 awn f0 awi f0 awi pnic-bi1 f0 awn f0 awi f0 f0 awnan awnan f0 awn f0 awi f0 awi f0 awn f0 awi f0 awi pnic-mp $.
+$}
+$( /* Proof of ~ luk-3 from ~ nic-ax and ~ nic-mp .  (Contributed by Jeff
+     Hoffman, 18-Nov-2007.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pnic-luk3 $p |- ( ph -> ( -. ph -> ps ) ) $=
+	f0 awn f1 pnic-dfim f0 awn f1 f1 awnan awnan f0 awn f1 awi pnic-bi1 f0 pnic-dfneg f0 f0 awnan f0 awn pnic-bi2 f0 pnic-id f0 awn f0 f0 awnan f0 f0 awnan f0 pnic-iimp1 f0 awn f1 f1 awnan f0 awn f1 awi f0 pnic-iimp2 f0 f0 awn f1 awi pnic-dfim f0 f0 awn f1 awi f0 awn f1 awi awnan awnan f0 f0 awn f1 awi awi pnic-bi1 f0 f0 awn f1 awi f0 awn f1 awi awnan awnan f0 f0 awn f1 awi awi f0 f0 awn f1 awi awi pnic-mp $.
+$}
+

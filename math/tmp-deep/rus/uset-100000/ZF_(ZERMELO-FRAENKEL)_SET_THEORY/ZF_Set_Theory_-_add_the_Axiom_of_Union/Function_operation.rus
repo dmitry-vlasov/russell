@@ -1,0 +1,1614 @@
+import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/_Maps_to__notation.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                             Function operation
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+constant {
+	symbol oF ;;
+}
+
+constant {
+	symbol oR ;;
+}
+
+/* Extend class notation to include mapping of an operation to a function
+     operation. */
+
+rule cof (R : class) {
+	term : class = # oF R ;;
+}
+
+/* Extend class notation to include mapping of a binary relation to a
+     function relation. */
+
+rule cofr (R : class) {
+	term : class = # oR R ;;
+}
+
+/* Define the function operation map.  The definition is designed so that
+       if ` R ` is a binary operation, then ` oF R ` is the analogous operation
+       on functions which corresponds to applying ` R ` pointwise to the values
+       of the functions.  (Contributed by Mario Carneiro, 20-Jul-2014.) */
+
+definition df-of (x : set, R : class, f : set, g : set) disjointed(f g x R) {
+	defiendum : class = # oF R ;;
+	definiens : class = # ( f ∈ _V , g ∈ _V ↦ ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) R ( g ` x ) ) ) ) ;;
+	-----------------------
+	prop : wff = |- defiendum = definiens ;;
+}
+
+/* Define the function relation map.  The definition is designed so that if
+       ` R ` is a binary relation, then ` oF R ` is the analogous relation on
+       functions which is true when each element of the left function relates
+       to the corresponding element of the right function.  (Contributed by
+       Mario Carneiro, 28-Jul-2014.) */
+
+definition df-ofr (x : set, R : class, f : set, g : set) disjointed(f g x R) {
+	defiendum : class = # oR R ;;
+	definiens : class = # { 〈 f , g 〉 | ∀ x ∈ ( dom f ∩ dom g ) ( f ` x ) R ( g ` x ) } ;;
+	-----------------------
+	prop : wff = |- defiendum = definiens ;;
+}
+
+/* Equality theorem for function operation.  (Contributed by Mario
+       Carneiro, 20-Jul-2014.) */
+
+theorem ofeq (R : class, S : class) disjointed(f g x R, f g x S) {
+	prop 1 : wff = |- ( R = S → oF R = oF S ) ;;
+}
+
+proof of ofeq {
+	var x : set, f : set, g : set;;
+	step 1 : wff = simp1 () |- ( ( R = S ∧ f ∈ _V ∧ g ∈ _V ) → R = S ) ;;
+	step 2 : wff = oveqd (step 1) |- ( ( R = S ∧ f ∈ _V ∧ g ∈ _V ) → ( ( f ` x ) R ( g ` x ) ) = ( ( f ` x ) S ( g ` x ) ) ) ;;
+	step 3 : wff = mpteq2dv (step 2) |- ( ( R = S ∧ f ∈ _V ∧ g ∈ _V ) → ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) R ( g ` x ) ) ) = ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) S ( g ` x ) ) ) ) ;;
+	step 4 : wff = mpt2eq3dva (step 3) |- ( R = S → ( f ∈ _V , g ∈ _V ↦ ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) R ( g ` x ) ) ) ) = ( f ∈ _V , g ∈ _V ↦ ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) S ( g ` x ) ) ) ) ) ;;
+	step 5 : wff = df-of () |- oF R = ( f ∈ _V , g ∈ _V ↦ ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) R ( g ` x ) ) ) ) ;;
+	step 6 : wff = df-of () |- oF S = ( f ∈ _V , g ∈ _V ↦ ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) S ( g ` x ) ) ) ) ;;
+	step 7 : wff = 3eqtr4g (step 4, step 5, step 6) |- ( R = S → oF R = oF S ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Equality theorem for function relation.  (Contributed by Mario Carneiro,
+       28-Jul-2014.) */
+
+theorem ofreq (R : class, S : class) disjointed(f g x R, f g x S) {
+	prop 1 : wff = |- ( R = S → oR R = oR S ) ;;
+}
+
+proof of ofreq {
+	var x : set, f : set, g : set;;
+	step 1 : wff = breq () |- ( R = S → ( ( f ` x ) R ( g ` x ) ↔ ( f ` x ) S ( g ` x ) ) ) ;;
+	step 2 : wff = ralbidv (step 1) |- ( R = S → ( ∀ x ∈ ( dom f ∩ dom g ) ( f ` x ) R ( g ` x ) ↔ ∀ x ∈ ( dom f ∩ dom g ) ( f ` x ) S ( g ` x ) ) ) ;;
+	step 3 : wff = opabbidv (step 2) |- ( R = S → { 〈 f , g 〉 | ∀ x ∈ ( dom f ∩ dom g ) ( f ` x ) R ( g ` x ) } = { 〈 f , g 〉 | ∀ x ∈ ( dom f ∩ dom g ) ( f ` x ) S ( g ` x ) } ) ;;
+	step 4 : wff = df-ofr () |- oR R = { 〈 f , g 〉 | ∀ x ∈ ( dom f ∩ dom g ) ( f ` x ) R ( g ` x ) } ;;
+	step 5 : wff = df-ofr () |- oR S = { 〈 f , g 〉 | ∀ x ∈ ( dom f ∩ dom g ) ( f ` x ) S ( g ` x ) } ;;
+	step 6 : wff = 3eqtr4g (step 3, step 4, step 5) |- ( R = S → oR R = oR S ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* A function operation restricted to a set is a set.  (Contributed by NM,
+       28-Jul-2014.) */
+
+theorem ofexg (A : class, R : class, V : class) disjointed(f g x R, f g x) {
+	prop 1 : wff = |- ( A ∈ V → ( oF R ↾ A ) ∈ _V ) ;;
+}
+
+proof of ofexg {
+	var x : set, f : set, g : set;;
+	step 1 : wff = df-of () |- oF R = ( f ∈ _V , g ∈ _V ↦ ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) R ( g ` x ) ) ) ) ;;
+	step 2 : wff = mpt2fun (step 1) |- Fun oF R ;;
+	step 3 : wff = resfunexg () |- ( ( Fun oF R ∧ A ∈ V ) → ( oF R ↾ A ) ∈ _V ) ;;
+	step 4 : wff = mpan (step 2, step 3) |- ( A ∈ V → ( oF R ↾ A ) ∈ _V ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Hypothesis builder for function operation.  (Contributed by Mario
+       Carneiro, 20-Jul-2014.) */
+
+theorem nfof (x : set, R : class) disjointed(f g x y R, f g x y) {
+	hyp 1 : wff = |- F/_ x R ;;
+	-----------------------
+	prop 1 : wff = |- F/_ x oF R ;;
+}
+
+proof of nfof {
+	var y : set, f : set, g : set;;
+	step 1 : wff = df-of () |- oF R = ( f ∈ _V , g ∈ _V ↦ ( y ∈ ( dom f ∩ dom g ) ↦ ( ( f ` y ) R ( g ` y ) ) ) ) ;;
+	step 2 : wff = nfcv () |- F/_ x _V ;;
+	step 3 : wff = nfcv () |- F/_ x _V ;;
+	step 4 : wff = nfcv () |- F/_ x ( dom f ∩ dom g ) ;;
+	step 5 : wff = nfcv () |- F/_ x ( f ` y ) ;;
+	step 6 : wff = nfcv () |- F/_ x ( g ` y ) ;;
+	step 7 : wff = nfov (step 5, hyp 1, step 6) |- F/_ x ( ( f ` y ) R ( g ` y ) ) ;;
+	step 8 : wff = nfmpt (step 4, step 7) |- F/_ x ( y ∈ ( dom f ∩ dom g ) ↦ ( ( f ` y ) R ( g ` y ) ) ) ;;
+	step 9 : wff = nfmpt2 (step 2, step 3, step 8) |- F/_ x ( f ∈ _V , g ∈ _V ↦ ( y ∈ ( dom f ∩ dom g ) ↦ ( ( f ` y ) R ( g ` y ) ) ) ) ;;
+	step 10 : wff = nfcxfr (step 1, step 9) |- F/_ x oF R ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Hypothesis builder for function relation.  (Contributed by Mario
+       Carneiro, 28-Jul-2014.) */
+
+theorem nfofr (x : set, R : class) disjointed(f g x y R, f g x y) {
+	hyp 1 : wff = |- F/_ x R ;;
+	-----------------------
+	prop 1 : wff = |- F/_ x oR R ;;
+}
+
+proof of nfofr {
+	var y : set, f : set, g : set;;
+	step 1 : wff = df-ofr () |- oR R = { 〈 f , g 〉 | ∀ y ∈ ( dom f ∩ dom g ) ( f ` y ) R ( g ` y ) } ;;
+	step 2 : wff = nfcv () |- F/_ x ( dom f ∩ dom g ) ;;
+	step 3 : wff = nfcv () |- F/_ x ( f ` y ) ;;
+	step 4 : wff = nfcv () |- F/_ x ( g ` y ) ;;
+	step 5 : wff = nfbr (step 3, hyp 1, step 4) |- F/ x ( f ` y ) R ( g ` y ) ;;
+	step 6 : wff = nfral (step 2, step 5) |- F/ x ∀ y ∈ ( dom f ∩ dom g ) ( f ` y ) R ( g ` y ) ;;
+	step 7 : wff = nfopab (step 6) |- F/_ x { 〈 f , g 〉 | ∀ y ∈ ( dom f ∩ dom g ) ( f ` y ) R ( g ` y ) } ;;
+	step 8 : wff = nfcxfr (step 1, step 7) |- F/_ x oR R ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Value of an operation applied to two functions.  (Contributed by Mario
+         Carneiro, 20-Jul-2014.) */
+
+theorem offval (ph : wff, x : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class, G : class, V : class, W : class) disjointed(x A, f g x F, f g x G, x ph, x S, f g x R) {
+	hyp 1 : wff = |- ( ph → F Fn A ) ;;
+	hyp 2 : wff = |- ( ph → G Fn B ) ;;
+	hyp 3 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 4 : wff = |- ( ph → B ∈ W ) ;;
+	hyp 5 : wff = |- ( A ∩ B ) = S ;;
+	hyp 6 : wff = |- ( ( ph ∧ x ∈ A ) → ( F ` x ) = C ) ;;
+	hyp 7 : wff = |- ( ( ph ∧ x ∈ B ) → ( G ` x ) = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( F oF R G ) = ( x ∈ S ↦ ( C R D ) ) ) ;;
+}
+
+proof of offval {
+	var f : set, g : set;;
+	step 1 : wff = fnex () |- ( ( F Fn A ∧ A ∈ V ) → F ∈ _V ) ;;
+	step 2 : wff = syl2anc (hyp 1, hyp 3, step 1) |- ( ph → F ∈ _V ) ;;
+	step 3 : wff = fnex () |- ( ( G Fn B ∧ B ∈ W ) → G ∈ _V ) ;;
+	step 4 : wff = syl2anc (hyp 2, hyp 4, step 3) |- ( ph → G ∈ _V ) ;;
+	step 5 : wff = fndm () |- ( F Fn A → dom F = A ) ;;
+	step 6 : wff = syl (hyp 1, step 5) |- ( ph → dom F = A ) ;;
+	step 7 : wff = fndm () |- ( G Fn B → dom G = B ) ;;
+	step 8 : wff = syl (hyp 2, step 7) |- ( ph → dom G = B ) ;;
+	step 9 : wff = ineq12d (step 6, step 8) |- ( ph → ( dom F ∩ dom G ) = ( A ∩ B ) ) ;;
+	step 10 : wff = syl6eq (step 9, hyp 5) |- ( ph → ( dom F ∩ dom G ) = S ) ;;
+	step 11 : wff = mpteq1 () |- ( ( dom F ∩ dom G ) = S → ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) = ( x ∈ S ↦ ( ( F ` x ) R ( G ` x ) ) ) ) ;;
+	step 12 : wff = syl (step 10, step 11) |- ( ph → ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) = ( x ∈ S ↦ ( ( F ` x ) R ( G ` x ) ) ) ) ;;
+	step 13 : wff = inex1g () |- ( A ∈ V → ( A ∩ B ) ∈ _V ) ;;
+	step 14 : wff = syl5eqelr (hyp 5, step 13) |- ( A ∈ V → S ∈ _V ) ;;
+	step 15 : wff = mptexg () |- ( S ∈ _V → ( x ∈ S ↦ ( ( F ` x ) R ( G ` x ) ) ) ∈ _V ) ;;
+	step 16 : wff = 3syl (hyp 3, step 14, step 15) |- ( ph → ( x ∈ S ↦ ( ( F ` x ) R ( G ` x ) ) ) ∈ _V ) ;;
+	step 17 : wff = eqeltrd (step 12, step 16) |- ( ph → ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) ∈ _V ) ;;
+	step 18 : wff = dmeq () |- ( f = F → dom f = dom F ) ;;
+	step 19 : wff = dmeq () |- ( g = G → dom g = dom G ) ;;
+	step 20 : wff = ineqan12d (step 18, step 19) |- ( ( f = F ∧ g = G ) → ( dom f ∩ dom g ) = ( dom F ∩ dom G ) ) ;;
+	step 21 : wff = fveq1 () |- ( f = F → ( f ` x ) = ( F ` x ) ) ;;
+	step 22 : wff = fveq1 () |- ( g = G → ( g ` x ) = ( G ` x ) ) ;;
+	step 23 : wff = oveqan12d (step 21, step 22) |- ( ( f = F ∧ g = G ) → ( ( f ` x ) R ( g ` x ) ) = ( ( F ` x ) R ( G ` x ) ) ) ;;
+	step 24 : wff = mpteq12dv (step 20, step 23) |- ( ( f = F ∧ g = G ) → ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) R ( g ` x ) ) ) = ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) ) ;;
+	step 25 : wff = df-of () |- oF R = ( f ∈ _V , g ∈ _V ↦ ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) R ( g ` x ) ) ) ) ;;
+	step 26 : wff = ovmpt2ga (step 24, step 25) |- ( ( F ∈ _V ∧ G ∈ _V ∧ ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) ∈ _V ) → ( F oF R G ) = ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) ) ;;
+	step 27 : wff = syl3anc (step 2, step 4, step 17, step 26) |- ( ph → ( F oF R G ) = ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) ) ;;
+	step 28 : wff = fndm () |- ( F Fn A → dom F = A ) ;;
+	step 29 : wff = syl (hyp 1, step 28) |- ( ph → dom F = A ) ;;
+	step 30 : wff = fndm () |- ( G Fn B → dom G = B ) ;;
+	step 31 : wff = syl (hyp 2, step 30) |- ( ph → dom G = B ) ;;
+	step 32 : wff = ineq12d (step 29, step 31) |- ( ph → ( dom F ∩ dom G ) = ( A ∩ B ) ) ;;
+	step 33 : wff = syl6eq (step 32, hyp 5) |- ( ph → ( dom F ∩ dom G ) = S ) ;;
+	step 34 : wff = mpteq1 () |- ( ( dom F ∩ dom G ) = S → ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) = ( x ∈ S ↦ ( ( F ` x ) R ( G ` x ) ) ) ) ;;
+	step 35 : wff = syl (step 33, step 34) |- ( ph → ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) = ( x ∈ S ↦ ( ( F ` x ) R ( G ` x ) ) ) ) ;;
+	step 36 : wff = eleq2i (hyp 5) |- ( x ∈ ( A ∩ B ) ↔ x ∈ S ) ;;
+	step 37 : wff = elin () |- ( x ∈ ( A ∩ B ) ↔ ( x ∈ A ∧ x ∈ B ) ) ;;
+	step 38 : wff = bitr3i (step 36, step 37) |- ( x ∈ S ↔ ( x ∈ A ∧ x ∈ B ) ) ;;
+	step 39 : wff = adantrr (hyp 6) |- ( ( ph ∧ ( x ∈ A ∧ x ∈ B ) ) → ( F ` x ) = C ) ;;
+	step 40 : wff = adantrl (hyp 7) |- ( ( ph ∧ ( x ∈ A ∧ x ∈ B ) ) → ( G ` x ) = D ) ;;
+	step 41 : wff = oveq12d (step 39, step 40) |- ( ( ph ∧ ( x ∈ A ∧ x ∈ B ) ) → ( ( F ` x ) R ( G ` x ) ) = ( C R D ) ) ;;
+	step 42 : wff = sylan2b (step 38, step 41) |- ( ( ph ∧ x ∈ S ) → ( ( F ` x ) R ( G ` x ) ) = ( C R D ) ) ;;
+	step 43 : wff = mpteq2dva (step 42) |- ( ph → ( x ∈ S ↦ ( ( F ` x ) R ( G ` x ) ) ) = ( x ∈ S ↦ ( C R D ) ) ) ;;
+	step 44 : wff = 3eqtrd (step 27, step 35, step 43) |- ( ph → ( F oF R G ) = ( x ∈ S ↦ ( C R D ) ) ) ;;
+	qed prop 1 = step 44 ;;
+}
+
+/* Value of a relation applied to two functions.  (Contributed by Mario
+         Carneiro, 28-Jul-2014.) */
+
+theorem ofrfval (ph : wff, x : set, A : class, B : class, C : class, D : class, R : class, S : class, F : class, G : class, V : class, W : class) disjointed(x A, f g x F, f g x G, x ph, x S, f g x R) {
+	hyp 1 : wff = |- ( ph → F Fn A ) ;;
+	hyp 2 : wff = |- ( ph → G Fn B ) ;;
+	hyp 3 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 4 : wff = |- ( ph → B ∈ W ) ;;
+	hyp 5 : wff = |- ( A ∩ B ) = S ;;
+	hyp 6 : wff = |- ( ( ph ∧ x ∈ A ) → ( F ` x ) = C ) ;;
+	hyp 7 : wff = |- ( ( ph ∧ x ∈ B ) → ( G ` x ) = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( F oR R G ↔ ∀ x ∈ S C R D ) ) ;;
+}
+
+proof of ofrfval {
+	var f : set, g : set;;
+	step 1 : wff = fnex () |- ( ( F Fn A ∧ A ∈ V ) → F ∈ _V ) ;;
+	step 2 : wff = syl2anc (hyp 1, hyp 3, step 1) |- ( ph → F ∈ _V ) ;;
+	step 3 : wff = fnex () |- ( ( G Fn B ∧ B ∈ W ) → G ∈ _V ) ;;
+	step 4 : wff = syl2anc (hyp 2, hyp 4, step 3) |- ( ph → G ∈ _V ) ;;
+	step 5 : wff = dmeq () |- ( f = F → dom f = dom F ) ;;
+	step 6 : wff = dmeq () |- ( g = G → dom g = dom G ) ;;
+	step 7 : wff = ineqan12d (step 5, step 6) |- ( ( f = F ∧ g = G ) → ( dom f ∩ dom g ) = ( dom F ∩ dom G ) ) ;;
+	step 8 : wff = fveq1 () |- ( f = F → ( f ` x ) = ( F ` x ) ) ;;
+	step 9 : wff = fveq1 () |- ( g = G → ( g ` x ) = ( G ` x ) ) ;;
+	step 10 : wff = breqan12d (step 8, step 9) |- ( ( f = F ∧ g = G ) → ( ( f ` x ) R ( g ` x ) ↔ ( F ` x ) R ( G ` x ) ) ) ;;
+	step 11 : wff = raleqbidv (step 7, step 10) |- ( ( f = F ∧ g = G ) → ( ∀ x ∈ ( dom f ∩ dom g ) ( f ` x ) R ( g ` x ) ↔ ∀ x ∈ ( dom F ∩ dom G ) ( F ` x ) R ( G ` x ) ) ) ;;
+	step 12 : wff = df-ofr () |- oR R = { 〈 f , g 〉 | ∀ x ∈ ( dom f ∩ dom g ) ( f ` x ) R ( g ` x ) } ;;
+	step 13 : wff = brabga (step 11, step 12) |- ( ( F ∈ _V ∧ G ∈ _V ) → ( F oR R G ↔ ∀ x ∈ ( dom F ∩ dom G ) ( F ` x ) R ( G ` x ) ) ) ;;
+	step 14 : wff = syl2anc (step 2, step 4, step 13) |- ( ph → ( F oR R G ↔ ∀ x ∈ ( dom F ∩ dom G ) ( F ` x ) R ( G ` x ) ) ) ;;
+	step 15 : wff = fndm () |- ( F Fn A → dom F = A ) ;;
+	step 16 : wff = syl (hyp 1, step 15) |- ( ph → dom F = A ) ;;
+	step 17 : wff = fndm () |- ( G Fn B → dom G = B ) ;;
+	step 18 : wff = syl (hyp 2, step 17) |- ( ph → dom G = B ) ;;
+	step 19 : wff = ineq12d (step 16, step 18) |- ( ph → ( dom F ∩ dom G ) = ( A ∩ B ) ) ;;
+	step 20 : wff = syl6eq (step 19, hyp 5) |- ( ph → ( dom F ∩ dom G ) = S ) ;;
+	step 21 : wff = raleqdv (step 20) |- ( ph → ( ∀ x ∈ ( dom F ∩ dom G ) ( F ` x ) R ( G ` x ) ↔ ∀ x ∈ S ( F ` x ) R ( G ` x ) ) ) ;;
+	step 22 : wff = inss1 () |- ( A ∩ B ) ⊆ A ;;
+	step 23 : wff = eqsstr3i (hyp 5, step 22) |- S ⊆ A ;;
+	step 24 : wff = sseli (step 23) |- ( x ∈ S → x ∈ A ) ;;
+	step 25 : wff = sylan2 (step 24, hyp 6) |- ( ( ph ∧ x ∈ S ) → ( F ` x ) = C ) ;;
+	step 26 : wff = inss2 () |- ( A ∩ B ) ⊆ B ;;
+	step 27 : wff = eqsstr3i (hyp 5, step 26) |- S ⊆ B ;;
+	step 28 : wff = sseli (step 27) |- ( x ∈ S → x ∈ B ) ;;
+	step 29 : wff = sylan2 (step 28, hyp 7) |- ( ( ph ∧ x ∈ S ) → ( G ` x ) = D ) ;;
+	step 30 : wff = breq12d (step 25, step 29) |- ( ( ph ∧ x ∈ S ) → ( ( F ` x ) R ( G ` x ) ↔ C R D ) ) ;;
+	step 31 : wff = ralbidva (step 30) |- ( ph → ( ∀ x ∈ S ( F ` x ) R ( G ` x ) ↔ ∀ x ∈ S C R D ) ) ;;
+	step 32 : wff = 3bitrd (step 14, step 21, step 31) |- ( ph → ( F oR R G ↔ ∀ x ∈ S C R D ) ) ;;
+	qed prop 1 = step 32 ;;
+}
+
+/* Evaluate a function operation at a point.  (Contributed by Mario
+         Carneiro, 20-Jul-2014.) */
+
+theorem ofval (ph : wff, A : class, B : class, C : class, D : class, R : class, S : class, F : class, G : class, V : class, W : class, X : class) disjointed(x A, x F, x G, x ph, x S, x X, x R) {
+	hyp 1 : wff = |- ( ph → F Fn A ) ;;
+	hyp 2 : wff = |- ( ph → G Fn B ) ;;
+	hyp 3 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 4 : wff = |- ( ph → B ∈ W ) ;;
+	hyp 5 : wff = |- ( A ∩ B ) = S ;;
+	hyp 6 : wff = |- ( ( ph ∧ X ∈ A ) → ( F ` X ) = C ) ;;
+	hyp 7 : wff = |- ( ( ph ∧ X ∈ B ) → ( G ` X ) = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ X ∈ S ) → ( ( F oF R G ) ` X ) = ( C R D ) ) ;;
+}
+
+proof of ofval {
+	var x : set;;
+	step 1 : wff = eqidd () |- ( ( ph ∧ x ∈ A ) → ( F ` x ) = ( F ` x ) ) ;;
+	step 2 : wff = eqidd () |- ( ( ph ∧ x ∈ B ) → ( G ` x ) = ( G ` x ) ) ;;
+	step 3 : wff = offval (hyp 1, hyp 2, hyp 3, hyp 4, hyp 5, step 1, step 2) |- ( ph → ( F oF R G ) = ( x ∈ S ↦ ( ( F ` x ) R ( G ` x ) ) ) ) ;;
+	step 4 : wff = fveq1d (step 3) |- ( ph → ( ( F oF R G ) ` X ) = ( ( x ∈ S ↦ ( ( F ` x ) R ( G ` x ) ) ) ` X ) ) ;;
+	step 5 : wff = adantr (step 4) |- ( ( ph ∧ X ∈ S ) → ( ( F oF R G ) ` X ) = ( ( x ∈ S ↦ ( ( F ` x ) R ( G ` x ) ) ) ` X ) ) ;;
+	step 6 : wff = fveq2 () |- ( x = X → ( F ` x ) = ( F ` X ) ) ;;
+	step 7 : wff = fveq2 () |- ( x = X → ( G ` x ) = ( G ` X ) ) ;;
+	step 8 : wff = oveq12d (step 6, step 7) |- ( x = X → ( ( F ` x ) R ( G ` x ) ) = ( ( F ` X ) R ( G ` X ) ) ) ;;
+	step 9 : wff = eqid () |- ( x ∈ S ↦ ( ( F ` x ) R ( G ` x ) ) ) = ( x ∈ S ↦ ( ( F ` x ) R ( G ` x ) ) ) ;;
+	step 10 : wff = ovex () |- ( ( F ` X ) R ( G ` X ) ) ∈ _V ;;
+	step 11 : wff = fvmpt (step 8, step 9, step 10) |- ( X ∈ S → ( ( x ∈ S ↦ ( ( F ` x ) R ( G ` x ) ) ) ` X ) = ( ( F ` X ) R ( G ` X ) ) ) ;;
+	step 12 : wff = adantl (step 11) |- ( ( ph ∧ X ∈ S ) → ( ( x ∈ S ↦ ( ( F ` x ) R ( G ` x ) ) ) ` X ) = ( ( F ` X ) R ( G ` X ) ) ) ;;
+	step 13 : wff = inss1 () |- ( A ∩ B ) ⊆ A ;;
+	step 14 : wff = eqsstr3i (hyp 5, step 13) |- S ⊆ A ;;
+	step 15 : wff = sseli (step 14) |- ( X ∈ S → X ∈ A ) ;;
+	step 16 : wff = sylan2 (step 15, hyp 6) |- ( ( ph ∧ X ∈ S ) → ( F ` X ) = C ) ;;
+	step 17 : wff = inss2 () |- ( A ∩ B ) ⊆ B ;;
+	step 18 : wff = eqsstr3i (hyp 5, step 17) |- S ⊆ B ;;
+	step 19 : wff = sseli (step 18) |- ( X ∈ S → X ∈ B ) ;;
+	step 20 : wff = sylan2 (step 19, hyp 7) |- ( ( ph ∧ X ∈ S ) → ( G ` X ) = D ) ;;
+	step 21 : wff = oveq12d (step 16, step 20) |- ( ( ph ∧ X ∈ S ) → ( ( F ` X ) R ( G ` X ) ) = ( C R D ) ) ;;
+	step 22 : wff = 3eqtrd (step 5, step 12, step 21) |- ( ( ph ∧ X ∈ S ) → ( ( F oF R G ) ` X ) = ( C R D ) ) ;;
+	qed prop 1 = step 22 ;;
+}
+
+/* Exhibit a function relation at a point.  (Contributed by Mario
+         Carneiro, 28-Jul-2014.) */
+
+theorem ofrval (ph : wff, A : class, B : class, C : class, D : class, R : class, S : class, F : class, G : class, V : class, W : class, X : class) disjointed(x A, x F, x G, x ph, x S, x X, x R) {
+	hyp 1 : wff = |- ( ph → F Fn A ) ;;
+	hyp 2 : wff = |- ( ph → G Fn B ) ;;
+	hyp 3 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 4 : wff = |- ( ph → B ∈ W ) ;;
+	hyp 5 : wff = |- ( A ∩ B ) = S ;;
+	hyp 6 : wff = |- ( ( ph ∧ X ∈ A ) → ( F ` X ) = C ) ;;
+	hyp 7 : wff = |- ( ( ph ∧ X ∈ B ) → ( G ` X ) = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ F oR R G ∧ X ∈ S ) → C R D ) ;;
+}
+
+proof of ofrval {
+	var x : set;;
+	step 1 : wff = eqidd () |- ( ( ph ∧ x ∈ A ) → ( F ` x ) = ( F ` x ) ) ;;
+	step 2 : wff = eqidd () |- ( ( ph ∧ x ∈ B ) → ( G ` x ) = ( G ` x ) ) ;;
+	step 3 : wff = ofrfval (hyp 1, hyp 2, hyp 3, hyp 4, hyp 5, step 1, step 2) |- ( ph → ( F oR R G ↔ ∀ x ∈ S ( F ` x ) R ( G ` x ) ) ) ;;
+	step 4 : wff = biimpa (step 3) |- ( ( ph ∧ F oR R G ) → ∀ x ∈ S ( F ` x ) R ( G ` x ) ) ;;
+	step 5 : wff = fveq2 () |- ( x = X → ( F ` x ) = ( F ` X ) ) ;;
+	step 6 : wff = fveq2 () |- ( x = X → ( G ` x ) = ( G ` X ) ) ;;
+	step 7 : wff = breq12d (step 5, step 6) |- ( x = X → ( ( F ` x ) R ( G ` x ) ↔ ( F ` X ) R ( G ` X ) ) ) ;;
+	step 8 : wff = rspccv (step 7) |- ( ∀ x ∈ S ( F ` x ) R ( G ` x ) → ( X ∈ S → ( F ` X ) R ( G ` X ) ) ) ;;
+	step 9 : wff = syl (step 4, step 8) |- ( ( ph ∧ F oR R G ) → ( X ∈ S → ( F ` X ) R ( G ` X ) ) ) ;;
+	step 10 : wff = 3impia (step 9) |- ( ( ph ∧ F oR R G ∧ X ∈ S ) → ( F ` X ) R ( G ` X ) ) ;;
+	step 11 : wff = simp1 () |- ( ( ph ∧ F oR R G ∧ X ∈ S ) → ph ) ;;
+	step 12 : wff = inss1 () |- ( A ∩ B ) ⊆ A ;;
+	step 13 : wff = eqsstr3i (hyp 5, step 12) |- S ⊆ A ;;
+	step 14 : wff = simp3 () |- ( ( ph ∧ F oR R G ∧ X ∈ S ) → X ∈ S ) ;;
+	step 15 : wff = sseldi (step 13, step 14) |- ( ( ph ∧ F oR R G ∧ X ∈ S ) → X ∈ A ) ;;
+	step 16 : wff = syl2anc (step 11, step 15, hyp 6) |- ( ( ph ∧ F oR R G ∧ X ∈ S ) → ( F ` X ) = C ) ;;
+	step 17 : wff = simp1 () |- ( ( ph ∧ F oR R G ∧ X ∈ S ) → ph ) ;;
+	step 18 : wff = inss2 () |- ( A ∩ B ) ⊆ B ;;
+	step 19 : wff = eqsstr3i (hyp 5, step 18) |- S ⊆ B ;;
+	step 20 : wff = simp3 () |- ( ( ph ∧ F oR R G ∧ X ∈ S ) → X ∈ S ) ;;
+	step 21 : wff = sseldi (step 19, step 20) |- ( ( ph ∧ F oR R G ∧ X ∈ S ) → X ∈ B ) ;;
+	step 22 : wff = syl2anc (step 17, step 21, hyp 7) |- ( ( ph ∧ F oR R G ∧ X ∈ S ) → ( G ` X ) = D ) ;;
+	step 23 : wff = 3brtr3d (step 10, step 16, step 22) |- ( ( ph ∧ F oR R G ∧ X ∈ S ) → C R D ) ;;
+	qed prop 1 = step 23 ;;
+}
+
+/* The function operation produces a function.  (Contributed by Mario
+       Carneiro, 22-Jul-2014.) */
+
+theorem offn (ph : wff, A : class, B : class, R : class, S : class, F : class, G : class, V : class, W : class) disjointed(x A, x F, x G, x ph, x S, x R) {
+	hyp 1 : wff = |- ( ph → F Fn A ) ;;
+	hyp 2 : wff = |- ( ph → G Fn B ) ;;
+	hyp 3 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 4 : wff = |- ( ph → B ∈ W ) ;;
+	hyp 5 : wff = |- ( A ∩ B ) = S ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( F oF R G ) Fn S ) ;;
+}
+
+proof of offn {
+	var x : set;;
+	step 1 : wff = ovex () |- ( ( F ` x ) R ( G ` x ) ) ∈ _V ;;
+	step 2 : wff = eqid () |- ( x ∈ S ↦ ( ( F ` x ) R ( G ` x ) ) ) = ( x ∈ S ↦ ( ( F ` x ) R ( G ` x ) ) ) ;;
+	step 3 : wff = fnmpti (step 1, step 2) |- ( x ∈ S ↦ ( ( F ` x ) R ( G ` x ) ) ) Fn S ;;
+	step 4 : wff = eqidd () |- ( ( ph ∧ x ∈ A ) → ( F ` x ) = ( F ` x ) ) ;;
+	step 5 : wff = eqidd () |- ( ( ph ∧ x ∈ B ) → ( G ` x ) = ( G ` x ) ) ;;
+	step 6 : wff = offval (hyp 1, hyp 2, hyp 3, hyp 4, hyp 5, step 4, step 5) |- ( ph → ( F oF R G ) = ( x ∈ S ↦ ( ( F ` x ) R ( G ` x ) ) ) ) ;;
+	step 7 : wff = fneq1d (step 6) |- ( ph → ( ( F oF R G ) Fn S ↔ ( x ∈ S ↦ ( ( F ` x ) R ( G ` x ) ) ) Fn S ) ) ;;
+	step 8 : wff = mpbiri (step 3, step 7) |- ( ph → ( F oF R G ) Fn S ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Function value of a pointwise composition.  (Contributed by Stefan O'Rear,
+     5-Oct-2014.)  (Proof shortened by Mario Carneiro, 5-Jun-2015.) */
+
+theorem fnfvof (A : class, R : class, F : class, G : class, V : class, X : class)  {
+	prop 1 : wff = |- ( ( ( F Fn A ∧ G Fn A ) ∧ ( A ∈ V ∧ X ∈ A ) ) → ( ( F oF R G ) ` X ) = ( ( F ` X ) R ( G ` X ) ) ) ;;
+}
+
+proof of fnfvof {
+	step 1 : wff = simpll () |- ( ( ( F Fn A ∧ G Fn A ) ∧ A ∈ V ) → F Fn A ) ;;
+	step 2 : wff = simplr () |- ( ( ( F Fn A ∧ G Fn A ) ∧ A ∈ V ) → G Fn A ) ;;
+	step 3 : wff = simpr () |- ( ( ( F Fn A ∧ G Fn A ) ∧ A ∈ V ) → A ∈ V ) ;;
+	step 4 : wff = simpr () |- ( ( ( F Fn A ∧ G Fn A ) ∧ A ∈ V ) → A ∈ V ) ;;
+	step 5 : wff = inidm () |- ( A ∩ A ) = A ;;
+	step 6 : wff = eqidd () |- ( ( ( ( F Fn A ∧ G Fn A ) ∧ A ∈ V ) ∧ X ∈ A ) → ( F ` X ) = ( F ` X ) ) ;;
+	step 7 : wff = eqidd () |- ( ( ( ( F Fn A ∧ G Fn A ) ∧ A ∈ V ) ∧ X ∈ A ) → ( G ` X ) = ( G ` X ) ) ;;
+	step 8 : wff = ofval (step 1, step 2, step 3, step 4, step 5, step 6, step 7) |- ( ( ( ( F Fn A ∧ G Fn A ) ∧ A ∈ V ) ∧ X ∈ A ) → ( ( F oF R G ) ` X ) = ( ( F ` X ) R ( G ` X ) ) ) ;;
+	step 9 : wff = anasss (step 8) |- ( ( ( F Fn A ∧ G Fn A ) ∧ ( A ∈ V ∧ X ∈ A ) ) → ( ( F oF R G ) ` X ) = ( ( F ` X ) R ( G ` X ) ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* General value of ` ( F oF R G ) ` with no assumptions on functionality
+       of ` F ` and ` G ` .  (Contributed by Stefan O'Rear, 24-Jan-2015.) */
+
+theorem offval3 (x : set, R : class, F : class, G : class, V : class, W : class) disjointed(F x a b, G x a b, V x, W x, R x a b) {
+	prop 1 : wff = |- ( ( F ∈ V ∧ G ∈ W ) → ( F oF R G ) = ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) ) ;;
+}
+
+proof of offval3 {
+	var a : set, b : set;;
+	step 1 : wff = elex () |- ( F ∈ V → F ∈ _V ) ;;
+	step 2 : wff = adantr (step 1) |- ( ( F ∈ V ∧ G ∈ W ) → F ∈ _V ) ;;
+	step 3 : wff = elex () |- ( G ∈ W → G ∈ _V ) ;;
+	step 4 : wff = adantl (step 3) |- ( ( F ∈ V ∧ G ∈ W ) → G ∈ _V ) ;;
+	step 5 : wff = dmexg () |- ( F ∈ V → dom F ∈ _V ) ;;
+	step 6 : wff = inex1g () |- ( dom F ∈ _V → ( dom F ∩ dom G ) ∈ _V ) ;;
+	step 7 : wff = mptexg () |- ( ( dom F ∩ dom G ) ∈ _V → ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) ∈ _V ) ;;
+	step 8 : wff = 3syl (step 5, step 6, step 7) |- ( F ∈ V → ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) ∈ _V ) ;;
+	step 9 : wff = adantr (step 8) |- ( ( F ∈ V ∧ G ∈ W ) → ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) ∈ _V ) ;;
+	step 10 : wff = dmeq () |- ( a = F → dom a = dom F ) ;;
+	step 11 : wff = dmeq () |- ( b = G → dom b = dom G ) ;;
+	step 12 : wff = ineqan12d (step 10, step 11) |- ( ( a = F ∧ b = G ) → ( dom a ∩ dom b ) = ( dom F ∩ dom G ) ) ;;
+	step 13 : wff = fveq1 () |- ( a = F → ( a ` x ) = ( F ` x ) ) ;;
+	step 14 : wff = fveq1 () |- ( b = G → ( b ` x ) = ( G ` x ) ) ;;
+	step 15 : wff = oveqan12d (step 13, step 14) |- ( ( a = F ∧ b = G ) → ( ( a ` x ) R ( b ` x ) ) = ( ( F ` x ) R ( G ` x ) ) ) ;;
+	step 16 : wff = mpteq12dv (step 12, step 15) |- ( ( a = F ∧ b = G ) → ( x ∈ ( dom a ∩ dom b ) ↦ ( ( a ` x ) R ( b ` x ) ) ) = ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) ) ;;
+	step 17 : wff = df-of () |- oF R = ( a ∈ _V , b ∈ _V ↦ ( x ∈ ( dom a ∩ dom b ) ↦ ( ( a ` x ) R ( b ` x ) ) ) ) ;;
+	step 18 : wff = ovmpt2ga (step 16, step 17) |- ( ( F ∈ _V ∧ G ∈ _V ∧ ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) ∈ _V ) → ( F oF R G ) = ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) ) ;;
+	step 19 : wff = syl3anc (step 2, step 4, step 9, step 18) |- ( ( F ∈ V ∧ G ∈ W ) → ( F oF R G ) = ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) ) ;;
+	qed prop 1 = step 19 ;;
+}
+
+/* Pointwise combination commutes with restriction.  (Contributed by Stefan
+       O'Rear, 24-Jan-2015.) */
+
+theorem offres (D : class, R : class, F : class, G : class, V : class, W : class) disjointed(F x, G x, V x, W x, R x, D x) {
+	prop 1 : wff = |- ( ( F ∈ V ∧ G ∈ W ) → ( ( F oF R G ) ↾ D ) = ( ( F ↾ D ) oF R ( G ↾ D ) ) ) ;;
+}
+
+proof of offres {
+	var x : set;;
+	step 1 : wff = inss2 () |- ( ( dom F ∩ dom G ) ∩ D ) ⊆ D ;;
+	step 2 : wff = sseli (step 1) |- ( x ∈ ( ( dom F ∩ dom G ) ∩ D ) → x ∈ D ) ;;
+	step 3 : wff = fvres () |- ( x ∈ D → ( ( F ↾ D ) ` x ) = ( F ` x ) ) ;;
+	step 4 : wff = fvres () |- ( x ∈ D → ( ( G ↾ D ) ` x ) = ( G ` x ) ) ;;
+	step 5 : wff = oveq12d (step 3, step 4) |- ( x ∈ D → ( ( ( F ↾ D ) ` x ) R ( ( G ↾ D ) ` x ) ) = ( ( F ` x ) R ( G ` x ) ) ) ;;
+	step 6 : wff = syl (step 2, step 5) |- ( x ∈ ( ( dom F ∩ dom G ) ∩ D ) → ( ( ( F ↾ D ) ` x ) R ( ( G ↾ D ) ` x ) ) = ( ( F ` x ) R ( G ` x ) ) ) ;;
+	step 7 : wff = mpteq2ia (step 6) |- ( x ∈ ( ( dom F ∩ dom G ) ∩ D ) ↦ ( ( ( F ↾ D ) ` x ) R ( ( G ↾ D ) ` x ) ) ) = ( x ∈ ( ( dom F ∩ dom G ) ∩ D ) ↦ ( ( F ` x ) R ( G ` x ) ) ) ;;
+	step 8 : wff = inindi () |- ( D ∩ ( dom F ∩ dom G ) ) = ( ( D ∩ dom F ) ∩ ( D ∩ dom G ) ) ;;
+	step 9 : wff = incom () |- ( ( dom F ∩ dom G ) ∩ D ) = ( D ∩ ( dom F ∩ dom G ) ) ;;
+	step 10 : wff = dmres () |- dom ( F ↾ D ) = ( D ∩ dom F ) ;;
+	step 11 : wff = dmres () |- dom ( G ↾ D ) = ( D ∩ dom G ) ;;
+	step 12 : wff = ineq12i (step 10, step 11) |- ( dom ( F ↾ D ) ∩ dom ( G ↾ D ) ) = ( ( D ∩ dom F ) ∩ ( D ∩ dom G ) ) ;;
+	step 13 : wff = 3eqtr4ri (step 8, step 9, step 12) |- ( dom ( F ↾ D ) ∩ dom ( G ↾ D ) ) = ( ( dom F ∩ dom G ) ∩ D ) ;;
+	step 14 : wff = eqid () |- ( ( ( F ↾ D ) ` x ) R ( ( G ↾ D ) ` x ) ) = ( ( ( F ↾ D ) ` x ) R ( ( G ↾ D ) ` x ) ) ;;
+	step 15 : wff = mpteq12i (step 13, step 14) |- ( x ∈ ( dom ( F ↾ D ) ∩ dom ( G ↾ D ) ) ↦ ( ( ( F ↾ D ) ` x ) R ( ( G ↾ D ) ` x ) ) ) = ( x ∈ ( ( dom F ∩ dom G ) ∩ D ) ↦ ( ( ( F ↾ D ) ` x ) R ( ( G ↾ D ) ` x ) ) ) ;;
+	step 16 : wff = resmpt3 () |- ( ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) ↾ D ) = ( x ∈ ( ( dom F ∩ dom G ) ∩ D ) ↦ ( ( F ` x ) R ( G ` x ) ) ) ;;
+	step 17 : wff = 3eqtr4ri (step 7, step 15, step 16) |- ( ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) ↾ D ) = ( x ∈ ( dom ( F ↾ D ) ∩ dom ( G ↾ D ) ) ↦ ( ( ( F ↾ D ) ` x ) R ( ( G ↾ D ) ` x ) ) ) ;;
+	step 18 : wff = offval3 () |- ( ( F ∈ V ∧ G ∈ W ) → ( F oF R G ) = ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) ) ;;
+	step 19 : wff = reseq1d (step 18) |- ( ( F ∈ V ∧ G ∈ W ) → ( ( F oF R G ) ↾ D ) = ( ( x ∈ ( dom F ∩ dom G ) ↦ ( ( F ` x ) R ( G ` x ) ) ) ↾ D ) ) ;;
+	step 20 : wff = resexg () |- ( F ∈ V → ( F ↾ D ) ∈ _V ) ;;
+	step 21 : wff = resexg () |- ( G ∈ W → ( G ↾ D ) ∈ _V ) ;;
+	step 22 : wff = offval3 () |- ( ( ( F ↾ D ) ∈ _V ∧ ( G ↾ D ) ∈ _V ) → ( ( F ↾ D ) oF R ( G ↾ D ) ) = ( x ∈ ( dom ( F ↾ D ) ∩ dom ( G ↾ D ) ) ↦ ( ( ( F ↾ D ) ` x ) R ( ( G ↾ D ) ` x ) ) ) ) ;;
+	step 23 : wff = syl2an (step 20, step 21, step 22) |- ( ( F ∈ V ∧ G ∈ W ) → ( ( F ↾ D ) oF R ( G ↾ D ) ) = ( x ∈ ( dom ( F ↾ D ) ∩ dom ( G ↾ D ) ) ↦ ( ( ( F ↾ D ) ` x ) R ( ( G ↾ D ) ` x ) ) ) ) ;;
+	step 24 : wff = 3eqtr4a (step 17, step 19, step 23) |- ( ( F ∈ V ∧ G ∈ W ) → ( ( F oF R G ) ↾ D ) = ( ( F ↾ D ) oF R ( G ↾ D ) ) ) ;;
+	qed prop 1 = step 24 ;;
+}
+
+/* The function operation produces a function.  (Contributed by Mario
+       Carneiro, 20-Jul-2014.) */
+
+theorem off (ph : wff, x : set, y : set, A : class, B : class, C : class, R : class, S : class, T : class, U : class, F : class, G : class, V : class, W : class) disjointed(z A, z C, y z G, x y z ph, x y S, x y T, x y z F, x y z R, x y z U) {
+	hyp 1 : wff = |- ( ( ph ∧ ( x ∈ S ∧ y ∈ T ) ) → ( x R y ) ∈ U ) ;;
+	hyp 2 : wff = |- ( ph → F : A ⟶ S ) ;;
+	hyp 3 : wff = |- ( ph → G : B ⟶ T ) ;;
+	hyp 4 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 5 : wff = |- ( ph → B ∈ W ) ;;
+	hyp 6 : wff = |- ( A ∩ B ) = C ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( F oF R G ) : C ⟶ U ) ;;
+}
+
+proof of off {
+	var z : set;;
+	step 1 : wff = inss1 () |- ( A ∩ B ) ⊆ A ;;
+	step 2 : wff = eqsstr3i (hyp 6, step 1) |- C ⊆ A ;;
+	step 3 : wff = sseli (step 2) |- ( z ∈ C → z ∈ A ) ;;
+	step 4 : wff = ffvelrn () |- ( ( F : A ⟶ S ∧ z ∈ A ) → ( F ` z ) ∈ S ) ;;
+	step 5 : wff = syl2an (hyp 2, step 3, step 4) |- ( ( ph ∧ z ∈ C ) → ( F ` z ) ∈ S ) ;;
+	step 6 : wff = inss2 () |- ( A ∩ B ) ⊆ B ;;
+	step 7 : wff = eqsstr3i (hyp 6, step 6) |- C ⊆ B ;;
+	step 8 : wff = sseli (step 7) |- ( z ∈ C → z ∈ B ) ;;
+	step 9 : wff = ffvelrn () |- ( ( G : B ⟶ T ∧ z ∈ B ) → ( G ` z ) ∈ T ) ;;
+	step 10 : wff = syl2an (hyp 3, step 8, step 9) |- ( ( ph ∧ z ∈ C ) → ( G ` z ) ∈ T ) ;;
+	step 11 : wff = ralrimivva (hyp 1) |- ( ph → ∀ x ∈ S ∀ y ∈ T ( x R y ) ∈ U ) ;;
+	step 12 : wff = adantr (step 11) |- ( ( ph ∧ z ∈ C ) → ∀ x ∈ S ∀ y ∈ T ( x R y ) ∈ U ) ;;
+	step 13 : wff = oveq1 () |- ( x = ( F ` z ) → ( x R y ) = ( ( F ` z ) R y ) ) ;;
+	step 14 : wff = eleq1d (step 13) |- ( x = ( F ` z ) → ( ( x R y ) ∈ U ↔ ( ( F ` z ) R y ) ∈ U ) ) ;;
+	step 15 : wff = oveq2 () |- ( y = ( G ` z ) → ( ( F ` z ) R y ) = ( ( F ` z ) R ( G ` z ) ) ) ;;
+	step 16 : wff = eleq1d (step 15) |- ( y = ( G ` z ) → ( ( ( F ` z ) R y ) ∈ U ↔ ( ( F ` z ) R ( G ` z ) ) ∈ U ) ) ;;
+	step 17 : wff = rspc2va (step 14, step 16) |- ( ( ( ( F ` z ) ∈ S ∧ ( G ` z ) ∈ T ) ∧ ∀ x ∈ S ∀ y ∈ T ( x R y ) ∈ U ) → ( ( F ` z ) R ( G ` z ) ) ∈ U ) ;;
+	step 18 : wff = syl21anc (step 5, step 10, step 12, step 17) |- ( ( ph ∧ z ∈ C ) → ( ( F ` z ) R ( G ` z ) ) ∈ U ) ;;
+	step 19 : wff = eqid () |- ( z ∈ C ↦ ( ( F ` z ) R ( G ` z ) ) ) = ( z ∈ C ↦ ( ( F ` z ) R ( G ` z ) ) ) ;;
+	step 20 : wff = fmptd (step 18, step 19) |- ( ph → ( z ∈ C ↦ ( ( F ` z ) R ( G ` z ) ) ) : C ⟶ U ) ;;
+	step 21 : wff = ffn () |- ( F : A ⟶ S → F Fn A ) ;;
+	step 22 : wff = syl (hyp 2, step 21) |- ( ph → F Fn A ) ;;
+	step 23 : wff = ffn () |- ( G : B ⟶ T → G Fn B ) ;;
+	step 24 : wff = syl (hyp 3, step 23) |- ( ph → G Fn B ) ;;
+	step 25 : wff = eqidd () |- ( ( ph ∧ z ∈ A ) → ( F ` z ) = ( F ` z ) ) ;;
+	step 26 : wff = eqidd () |- ( ( ph ∧ z ∈ B ) → ( G ` z ) = ( G ` z ) ) ;;
+	step 27 : wff = offval (step 22, step 24, hyp 4, hyp 5, hyp 6, step 25, step 26) |- ( ph → ( F oF R G ) = ( z ∈ C ↦ ( ( F ` z ) R ( G ` z ) ) ) ) ;;
+	step 28 : wff = feq1d (step 27) |- ( ph → ( ( F oF R G ) : C ⟶ U ↔ ( z ∈ C ↦ ( ( F ` z ) R ( G ` z ) ) ) : C ⟶ U ) ) ;;
+	step 29 : wff = mpbird (step 20, step 28) |- ( ph → ( F oF R G ) : C ⟶ U ) ;;
+	qed prop 1 = step 29 ;;
+}
+
+/* Restrict the operands of a function operation to the same domain as that
+       of the operation itself.  (Contributed by Mario Carneiro,
+       15-Sep-2014.) */
+
+theorem ofres (ph : wff, A : class, B : class, C : class, R : class, F : class, G : class, V : class, W : class) disjointed(x A, x C, x F, x G, x ph, x R) {
+	hyp 1 : wff = |- ( ph → F Fn A ) ;;
+	hyp 2 : wff = |- ( ph → G Fn B ) ;;
+	hyp 3 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 4 : wff = |- ( ph → B ∈ W ) ;;
+	hyp 5 : wff = |- ( A ∩ B ) = C ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( F oF R G ) = ( ( F ↾ C ) oF R ( G ↾ C ) ) ) ;;
+}
+
+proof of ofres {
+	var x : set;;
+	step 1 : wff = eqidd () |- ( ( ph ∧ x ∈ A ) → ( F ` x ) = ( F ` x ) ) ;;
+	step 2 : wff = eqidd () |- ( ( ph ∧ x ∈ B ) → ( G ` x ) = ( G ` x ) ) ;;
+	step 3 : wff = offval (hyp 1, hyp 2, hyp 3, hyp 4, hyp 5, step 1, step 2) |- ( ph → ( F oF R G ) = ( x ∈ C ↦ ( ( F ` x ) R ( G ` x ) ) ) ) ;;
+	step 4 : wff = inss1 () |- ( A ∩ B ) ⊆ A ;;
+	step 5 : wff = eqsstr3i (hyp 5, step 4) |- C ⊆ A ;;
+	step 6 : wff = fnssres () |- ( ( F Fn A ∧ C ⊆ A ) → ( F ↾ C ) Fn C ) ;;
+	step 7 : wff = sylancl (hyp 1, step 5, step 6) |- ( ph → ( F ↾ C ) Fn C ) ;;
+	step 8 : wff = inss2 () |- ( A ∩ B ) ⊆ B ;;
+	step 9 : wff = eqsstr3i (hyp 5, step 8) |- C ⊆ B ;;
+	step 10 : wff = fnssres () |- ( ( G Fn B ∧ C ⊆ B ) → ( G ↾ C ) Fn C ) ;;
+	step 11 : wff = sylancl (hyp 2, step 9, step 10) |- ( ph → ( G ↾ C ) Fn C ) ;;
+	step 12 : wff = inss1 () |- ( A ∩ B ) ⊆ A ;;
+	step 13 : wff = eqsstr3i (hyp 5, step 12) |- C ⊆ A ;;
+	step 14 : wff = ssexg () |- ( ( C ⊆ A ∧ A ∈ V ) → C ∈ _V ) ;;
+	step 15 : wff = sylancr (step 13, hyp 3, step 14) |- ( ph → C ∈ _V ) ;;
+	step 16 : wff = inss1 () |- ( A ∩ B ) ⊆ A ;;
+	step 17 : wff = eqsstr3i (hyp 5, step 16) |- C ⊆ A ;;
+	step 18 : wff = ssexg () |- ( ( C ⊆ A ∧ A ∈ V ) → C ∈ _V ) ;;
+	step 19 : wff = sylancr (step 17, hyp 3, step 18) |- ( ph → C ∈ _V ) ;;
+	step 20 : wff = inidm () |- ( C ∩ C ) = C ;;
+	step 21 : wff = fvres () |- ( x ∈ C → ( ( F ↾ C ) ` x ) = ( F ` x ) ) ;;
+	step 22 : wff = adantl (step 21) |- ( ( ph ∧ x ∈ C ) → ( ( F ↾ C ) ` x ) = ( F ` x ) ) ;;
+	step 23 : wff = fvres () |- ( x ∈ C → ( ( G ↾ C ) ` x ) = ( G ` x ) ) ;;
+	step 24 : wff = adantl (step 23) |- ( ( ph ∧ x ∈ C ) → ( ( G ↾ C ) ` x ) = ( G ` x ) ) ;;
+	step 25 : wff = offval (step 7, step 11, step 15, step 19, step 20, step 22, step 24) |- ( ph → ( ( F ↾ C ) oF R ( G ↾ C ) ) = ( x ∈ C ↦ ( ( F ` x ) R ( G ` x ) ) ) ) ;;
+	step 26 : wff = eqtr4d (step 3, step 25) |- ( ph → ( F oF R G ) = ( ( F ↾ C ) oF R ( G ↾ C ) ) ) ;;
+	qed prop 1 = step 26 ;;
+}
+
+/* The function operation expressed as a mapping.  (Contributed by Mario
+       Carneiro, 20-Jul-2014.) */
+
+theorem offval2 (ph : wff, x : set, A : class, B : class, C : class, R : class, F : class, G : class, V : class, W : class, X : class) disjointed(x y A, y B, y C, y F, y G, x y ph, x y R) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ( ph ∧ x ∈ A ) → B ∈ W ) ;;
+	hyp 3 : wff = |- ( ( ph ∧ x ∈ A ) → C ∈ X ) ;;
+	hyp 4 : wff = |- ( ph → F = ( x ∈ A ↦ B ) ) ;;
+	hyp 5 : wff = |- ( ph → G = ( x ∈ A ↦ C ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( F oF R G ) = ( x ∈ A ↦ ( B R C ) ) ) ;;
+}
+
+proof of offval2 {
+	var y : set;;
+	step 1 : wff = ralrimiva (hyp 2) |- ( ph → ∀ x ∈ A B ∈ W ) ;;
+	step 2 : wff = eqid () |- ( x ∈ A ↦ B ) = ( x ∈ A ↦ B ) ;;
+	step 3 : wff = fnmpt (step 2) |- ( ∀ x ∈ A B ∈ W → ( x ∈ A ↦ B ) Fn A ) ;;
+	step 4 : wff = syl (step 1, step 3) |- ( ph → ( x ∈ A ↦ B ) Fn A ) ;;
+	step 5 : wff = fneq1d (hyp 4) |- ( ph → ( F Fn A ↔ ( x ∈ A ↦ B ) Fn A ) ) ;;
+	step 6 : wff = mpbird (step 4, step 5) |- ( ph → F Fn A ) ;;
+	step 7 : wff = ralrimiva (hyp 3) |- ( ph → ∀ x ∈ A C ∈ X ) ;;
+	step 8 : wff = eqid () |- ( x ∈ A ↦ C ) = ( x ∈ A ↦ C ) ;;
+	step 9 : wff = fnmpt (step 8) |- ( ∀ x ∈ A C ∈ X → ( x ∈ A ↦ C ) Fn A ) ;;
+	step 10 : wff = syl (step 7, step 9) |- ( ph → ( x ∈ A ↦ C ) Fn A ) ;;
+	step 11 : wff = fneq1d (hyp 5) |- ( ph → ( G Fn A ↔ ( x ∈ A ↦ C ) Fn A ) ) ;;
+	step 12 : wff = mpbird (step 10, step 11) |- ( ph → G Fn A ) ;;
+	step 13 : wff = inidm () |- ( A ∩ A ) = A ;;
+	step 14 : wff = adantr (hyp 4) |- ( ( ph ∧ y ∈ A ) → F = ( x ∈ A ↦ B ) ) ;;
+	step 15 : wff = fveq1d (step 14) |- ( ( ph ∧ y ∈ A ) → ( F ` y ) = ( ( x ∈ A ↦ B ) ` y ) ) ;;
+	step 16 : wff = adantr (hyp 5) |- ( ( ph ∧ y ∈ A ) → G = ( x ∈ A ↦ C ) ) ;;
+	step 17 : wff = fveq1d (step 16) |- ( ( ph ∧ y ∈ A ) → ( G ` y ) = ( ( x ∈ A ↦ C ) ` y ) ) ;;
+	step 18 : wff = offval (step 6, step 12, hyp 1, hyp 1, step 13, step 15, step 17) |- ( ph → ( F oF R G ) = ( y ∈ A ↦ ( ( ( x ∈ A ↦ B ) ` y ) R ( ( x ∈ A ↦ C ) ` y ) ) ) ) ;;
+	step 19 : wff = nfmpt1 () |- F/_ x ( x ∈ A ↦ B ) ;;
+	step 20 : wff = nfcv () |- F/_ x y ;;
+	step 21 : wff = nffv (step 19, step 20) |- F/_ x ( ( x ∈ A ↦ B ) ` y ) ;;
+	step 22 : wff = nfcv () |- F/_ x R ;;
+	step 23 : wff = nfmpt1 () |- F/_ x ( x ∈ A ↦ C ) ;;
+	step 24 : wff = nfcv () |- F/_ x y ;;
+	step 25 : wff = nffv (step 23, step 24) |- F/_ x ( ( x ∈ A ↦ C ) ` y ) ;;
+	step 26 : wff = nfov (step 21, step 22, step 25) |- F/_ x ( ( ( x ∈ A ↦ B ) ` y ) R ( ( x ∈ A ↦ C ) ` y ) ) ;;
+	step 27 : wff = nfcv () |- F/_ y ( ( ( x ∈ A ↦ B ) ` x ) R ( ( x ∈ A ↦ C ) ` x ) ) ;;
+	step 28 : wff = fveq2 () |- ( y = x → ( ( x ∈ A ↦ B ) ` y ) = ( ( x ∈ A ↦ B ) ` x ) ) ;;
+	step 29 : wff = fveq2 () |- ( y = x → ( ( x ∈ A ↦ C ) ` y ) = ( ( x ∈ A ↦ C ) ` x ) ) ;;
+	step 30 : wff = oveq12d (step 28, step 29) |- ( y = x → ( ( ( x ∈ A ↦ B ) ` y ) R ( ( x ∈ A ↦ C ) ` y ) ) = ( ( ( x ∈ A ↦ B ) ` x ) R ( ( x ∈ A ↦ C ) ` x ) ) ) ;;
+	step 31 : wff = cbvmpt (step 26, step 27, step 30) |- ( y ∈ A ↦ ( ( ( x ∈ A ↦ B ) ` y ) R ( ( x ∈ A ↦ C ) ` y ) ) ) = ( x ∈ A ↦ ( ( ( x ∈ A ↦ B ) ` x ) R ( ( x ∈ A ↦ C ) ` x ) ) ) ;;
+	step 32 : wff = simpr () |- ( ( ph ∧ x ∈ A ) → x ∈ A ) ;;
+	step 33 : wff = eqid () |- ( x ∈ A ↦ B ) = ( x ∈ A ↦ B ) ;;
+	step 34 : wff = fvmpt2 (step 33) |- ( ( x ∈ A ∧ B ∈ W ) → ( ( x ∈ A ↦ B ) ` x ) = B ) ;;
+	step 35 : wff = syl2anc (step 32, hyp 2, step 34) |- ( ( ph ∧ x ∈ A ) → ( ( x ∈ A ↦ B ) ` x ) = B ) ;;
+	step 36 : wff = simpr () |- ( ( ph ∧ x ∈ A ) → x ∈ A ) ;;
+	step 37 : wff = eqid () |- ( x ∈ A ↦ C ) = ( x ∈ A ↦ C ) ;;
+	step 38 : wff = fvmpt2 (step 37) |- ( ( x ∈ A ∧ C ∈ X ) → ( ( x ∈ A ↦ C ) ` x ) = C ) ;;
+	step 39 : wff = syl2anc (step 36, hyp 3, step 38) |- ( ( ph ∧ x ∈ A ) → ( ( x ∈ A ↦ C ) ` x ) = C ) ;;
+	step 40 : wff = oveq12d (step 35, step 39) |- ( ( ph ∧ x ∈ A ) → ( ( ( x ∈ A ↦ B ) ` x ) R ( ( x ∈ A ↦ C ) ` x ) ) = ( B R C ) ) ;;
+	step 41 : wff = mpteq2dva (step 40) |- ( ph → ( x ∈ A ↦ ( ( ( x ∈ A ↦ B ) ` x ) R ( ( x ∈ A ↦ C ) ` x ) ) ) = ( x ∈ A ↦ ( B R C ) ) ) ;;
+	step 42 : wff = syl5eq (step 31, step 41) |- ( ph → ( y ∈ A ↦ ( ( ( x ∈ A ↦ B ) ` y ) R ( ( x ∈ A ↦ C ) ` y ) ) ) = ( x ∈ A ↦ ( B R C ) ) ) ;;
+	step 43 : wff = eqtrd (step 18, step 42) |- ( ph → ( F oF R G ) = ( x ∈ A ↦ ( B R C ) ) ) ;;
+	qed prop 1 = step 43 ;;
+}
+
+/* The function relation acting on maps.  (Contributed by Mario Carneiro,
+       20-Jul-2014.) */
+
+theorem ofrfval2 (ph : wff, x : set, A : class, B : class, C : class, R : class, F : class, G : class, V : class, W : class, X : class) disjointed(x y A, y B, y C, y F, y G, x y ph, x y R) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ( ph ∧ x ∈ A ) → B ∈ W ) ;;
+	hyp 3 : wff = |- ( ( ph ∧ x ∈ A ) → C ∈ X ) ;;
+	hyp 4 : wff = |- ( ph → F = ( x ∈ A ↦ B ) ) ;;
+	hyp 5 : wff = |- ( ph → G = ( x ∈ A ↦ C ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( F oR R G ↔ ∀ x ∈ A B R C ) ) ;;
+}
+
+proof of ofrfval2 {
+	var y : set;;
+	step 1 : wff = ralrimiva (hyp 2) |- ( ph → ∀ x ∈ A B ∈ W ) ;;
+	step 2 : wff = eqid () |- ( x ∈ A ↦ B ) = ( x ∈ A ↦ B ) ;;
+	step 3 : wff = fnmpt (step 2) |- ( ∀ x ∈ A B ∈ W → ( x ∈ A ↦ B ) Fn A ) ;;
+	step 4 : wff = syl (step 1, step 3) |- ( ph → ( x ∈ A ↦ B ) Fn A ) ;;
+	step 5 : wff = fneq1d (hyp 4) |- ( ph → ( F Fn A ↔ ( x ∈ A ↦ B ) Fn A ) ) ;;
+	step 6 : wff = mpbird (step 4, step 5) |- ( ph → F Fn A ) ;;
+	step 7 : wff = ralrimiva (hyp 3) |- ( ph → ∀ x ∈ A C ∈ X ) ;;
+	step 8 : wff = eqid () |- ( x ∈ A ↦ C ) = ( x ∈ A ↦ C ) ;;
+	step 9 : wff = fnmpt (step 8) |- ( ∀ x ∈ A C ∈ X → ( x ∈ A ↦ C ) Fn A ) ;;
+	step 10 : wff = syl (step 7, step 9) |- ( ph → ( x ∈ A ↦ C ) Fn A ) ;;
+	step 11 : wff = fneq1d (hyp 5) |- ( ph → ( G Fn A ↔ ( x ∈ A ↦ C ) Fn A ) ) ;;
+	step 12 : wff = mpbird (step 10, step 11) |- ( ph → G Fn A ) ;;
+	step 13 : wff = inidm () |- ( A ∩ A ) = A ;;
+	step 14 : wff = adantr (hyp 4) |- ( ( ph ∧ y ∈ A ) → F = ( x ∈ A ↦ B ) ) ;;
+	step 15 : wff = fveq1d (step 14) |- ( ( ph ∧ y ∈ A ) → ( F ` y ) = ( ( x ∈ A ↦ B ) ` y ) ) ;;
+	step 16 : wff = adantr (hyp 5) |- ( ( ph ∧ y ∈ A ) → G = ( x ∈ A ↦ C ) ) ;;
+	step 17 : wff = fveq1d (step 16) |- ( ( ph ∧ y ∈ A ) → ( G ` y ) = ( ( x ∈ A ↦ C ) ` y ) ) ;;
+	step 18 : wff = ofrfval (step 6, step 12, hyp 1, hyp 1, step 13, step 15, step 17) |- ( ph → ( F oR R G ↔ ∀ y ∈ A ( ( x ∈ A ↦ B ) ` y ) R ( ( x ∈ A ↦ C ) ` y ) ) ) ;;
+	step 19 : wff = nfmpt1 () |- F/_ x ( x ∈ A ↦ B ) ;;
+	step 20 : wff = nfcv () |- F/_ x y ;;
+	step 21 : wff = nffv (step 19, step 20) |- F/_ x ( ( x ∈ A ↦ B ) ` y ) ;;
+	step 22 : wff = nfcv () |- F/_ x R ;;
+	step 23 : wff = nfmpt1 () |- F/_ x ( x ∈ A ↦ C ) ;;
+	step 24 : wff = nfcv () |- F/_ x y ;;
+	step 25 : wff = nffv (step 23, step 24) |- F/_ x ( ( x ∈ A ↦ C ) ` y ) ;;
+	step 26 : wff = nfbr (step 21, step 22, step 25) |- F/ x ( ( x ∈ A ↦ B ) ` y ) R ( ( x ∈ A ↦ C ) ` y ) ;;
+	step 27 : wff = nfv () |- F/ y ( ( x ∈ A ↦ B ) ` x ) R ( ( x ∈ A ↦ C ) ` x ) ;;
+	step 28 : wff = fveq2 () |- ( y = x → ( ( x ∈ A ↦ B ) ` y ) = ( ( x ∈ A ↦ B ) ` x ) ) ;;
+	step 29 : wff = fveq2 () |- ( y = x → ( ( x ∈ A ↦ C ) ` y ) = ( ( x ∈ A ↦ C ) ` x ) ) ;;
+	step 30 : wff = breq12d (step 28, step 29) |- ( y = x → ( ( ( x ∈ A ↦ B ) ` y ) R ( ( x ∈ A ↦ C ) ` y ) ↔ ( ( x ∈ A ↦ B ) ` x ) R ( ( x ∈ A ↦ C ) ` x ) ) ) ;;
+	step 31 : wff = cbvral (step 26, step 27, step 30) |- ( ∀ y ∈ A ( ( x ∈ A ↦ B ) ` y ) R ( ( x ∈ A ↦ C ) ` y ) ↔ ∀ x ∈ A ( ( x ∈ A ↦ B ) ` x ) R ( ( x ∈ A ↦ C ) ` x ) ) ;;
+	step 32 : wff = simpr () |- ( ( ph ∧ x ∈ A ) → x ∈ A ) ;;
+	step 33 : wff = eqid () |- ( x ∈ A ↦ B ) = ( x ∈ A ↦ B ) ;;
+	step 34 : wff = fvmpt2 (step 33) |- ( ( x ∈ A ∧ B ∈ W ) → ( ( x ∈ A ↦ B ) ` x ) = B ) ;;
+	step 35 : wff = syl2anc (step 32, hyp 2, step 34) |- ( ( ph ∧ x ∈ A ) → ( ( x ∈ A ↦ B ) ` x ) = B ) ;;
+	step 36 : wff = simpr () |- ( ( ph ∧ x ∈ A ) → x ∈ A ) ;;
+	step 37 : wff = eqid () |- ( x ∈ A ↦ C ) = ( x ∈ A ↦ C ) ;;
+	step 38 : wff = fvmpt2 (step 37) |- ( ( x ∈ A ∧ C ∈ X ) → ( ( x ∈ A ↦ C ) ` x ) = C ) ;;
+	step 39 : wff = syl2anc (step 36, hyp 3, step 38) |- ( ( ph ∧ x ∈ A ) → ( ( x ∈ A ↦ C ) ` x ) = C ) ;;
+	step 40 : wff = breq12d (step 35, step 39) |- ( ( ph ∧ x ∈ A ) → ( ( ( x ∈ A ↦ B ) ` x ) R ( ( x ∈ A ↦ C ) ` x ) ↔ B R C ) ) ;;
+	step 41 : wff = ralbidva (step 40) |- ( ph → ( ∀ x ∈ A ( ( x ∈ A ↦ B ) ` x ) R ( ( x ∈ A ↦ C ) ` x ) ↔ ∀ x ∈ A B R C ) ) ;;
+	step 42 : wff = syl5bb (step 31, step 41) |- ( ph → ( ∀ y ∈ A ( ( x ∈ A ↦ B ) ` y ) R ( ( x ∈ A ↦ C ) ` y ) ↔ ∀ x ∈ A B R C ) ) ;;
+	step 43 : wff = bitrd (step 18, step 42) |- ( ph → ( F oR R G ↔ ∀ x ∈ A B R C ) ) ;;
+	qed prop 1 = step 43 ;;
+}
+
+/* The composition of a function operation with another function.
+       (Contributed by Mario Carneiro, 19-Dec-2014.) */
+
+theorem ofco (ph : wff, A : class, B : class, C : class, D : class, R : class, F : class, G : class, H : class, V : class, W : class, X : class) disjointed(y A, x y C, x y F, x y G, x y H, x y ph, x D, x y R) {
+	hyp 1 : wff = |- ( ph → F Fn A ) ;;
+	hyp 2 : wff = |- ( ph → G Fn B ) ;;
+	hyp 3 : wff = |- ( ph → H : D ⟶ C ) ;;
+	hyp 4 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 5 : wff = |- ( ph → B ∈ W ) ;;
+	hyp 6 : wff = |- ( ph → D ∈ X ) ;;
+	hyp 7 : wff = |- ( A ∩ B ) = C ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ( F oF R G ) ∘ H ) = ( ( F ∘ H ) oF R ( G ∘ H ) ) ) ;;
+}
+
+proof of ofco {
+	var x : set, y : set;;
+	step 1 : wff = ffvelrn () |- ( ( H : D ⟶ C ∧ x ∈ D ) → ( H ` x ) ∈ C ) ;;
+	step 2 : wff = sylan (hyp 3, step 1) |- ( ( ph ∧ x ∈ D ) → ( H ` x ) ∈ C ) ;;
+	step 3 : wff = feqmptd (hyp 3) |- ( ph → H = ( x ∈ D ↦ ( H ` x ) ) ) ;;
+	step 4 : wff = eqidd () |- ( ( ph ∧ y ∈ A ) → ( F ` y ) = ( F ` y ) ) ;;
+	step 5 : wff = eqidd () |- ( ( ph ∧ y ∈ B ) → ( G ` y ) = ( G ` y ) ) ;;
+	step 6 : wff = offval (hyp 1, hyp 2, hyp 4, hyp 5, hyp 7, step 4, step 5) |- ( ph → ( F oF R G ) = ( y ∈ C ↦ ( ( F ` y ) R ( G ` y ) ) ) ) ;;
+	step 7 : wff = fveq2 () |- ( y = ( H ` x ) → ( F ` y ) = ( F ` ( H ` x ) ) ) ;;
+	step 8 : wff = fveq2 () |- ( y = ( H ` x ) → ( G ` y ) = ( G ` ( H ` x ) ) ) ;;
+	step 9 : wff = oveq12d (step 7, step 8) |- ( y = ( H ` x ) → ( ( F ` y ) R ( G ` y ) ) = ( ( F ` ( H ` x ) ) R ( G ` ( H ` x ) ) ) ) ;;
+	step 10 : wff = fmptco (step 2, step 3, step 6, step 9) |- ( ph → ( ( F oF R G ) ∘ H ) = ( x ∈ D ↦ ( ( F ` ( H ` x ) ) R ( G ` ( H ` x ) ) ) ) ) ;;
+	step 11 : wff = inss1 () |- ( A ∩ B ) ⊆ A ;;
+	step 12 : wff = eqsstr3i (hyp 7, step 11) |- C ⊆ A ;;
+	step 13 : wff = fss () |- ( ( H : D ⟶ C ∧ C ⊆ A ) → H : D ⟶ A ) ;;
+	step 14 : wff = sylancl (hyp 3, step 12, step 13) |- ( ph → H : D ⟶ A ) ;;
+	step 15 : wff = fnfco () |- ( ( F Fn A ∧ H : D ⟶ A ) → ( F ∘ H ) Fn D ) ;;
+	step 16 : wff = syl2anc (hyp 1, step 14, step 15) |- ( ph → ( F ∘ H ) Fn D ) ;;
+	step 17 : wff = inss2 () |- ( A ∩ B ) ⊆ B ;;
+	step 18 : wff = eqsstr3i (hyp 7, step 17) |- C ⊆ B ;;
+	step 19 : wff = fss () |- ( ( H : D ⟶ C ∧ C ⊆ B ) → H : D ⟶ B ) ;;
+	step 20 : wff = sylancl (hyp 3, step 18, step 19) |- ( ph → H : D ⟶ B ) ;;
+	step 21 : wff = fnfco () |- ( ( G Fn B ∧ H : D ⟶ B ) → ( G ∘ H ) Fn D ) ;;
+	step 22 : wff = syl2anc (hyp 2, step 20, step 21) |- ( ph → ( G ∘ H ) Fn D ) ;;
+	step 23 : wff = inidm () |- ( D ∩ D ) = D ;;
+	step 24 : wff = ffn () |- ( H : D ⟶ C → H Fn D ) ;;
+	step 25 : wff = syl (hyp 3, step 24) |- ( ph → H Fn D ) ;;
+	step 26 : wff = fvco2 () |- ( ( H Fn D ∧ x ∈ D ) → ( ( F ∘ H ) ` x ) = ( F ` ( H ` x ) ) ) ;;
+	step 27 : wff = sylan (step 25, step 26) |- ( ( ph ∧ x ∈ D ) → ( ( F ∘ H ) ` x ) = ( F ` ( H ` x ) ) ) ;;
+	step 28 : wff = ffn () |- ( H : D ⟶ C → H Fn D ) ;;
+	step 29 : wff = syl (hyp 3, step 28) |- ( ph → H Fn D ) ;;
+	step 30 : wff = fvco2 () |- ( ( H Fn D ∧ x ∈ D ) → ( ( G ∘ H ) ` x ) = ( G ` ( H ` x ) ) ) ;;
+	step 31 : wff = sylan (step 29, step 30) |- ( ( ph ∧ x ∈ D ) → ( ( G ∘ H ) ` x ) = ( G ` ( H ` x ) ) ) ;;
+	step 32 : wff = offval (step 16, step 22, hyp 6, hyp 6, step 23, step 27, step 31) |- ( ph → ( ( F ∘ H ) oF R ( G ∘ H ) ) = ( x ∈ D ↦ ( ( F ` ( H ` x ) ) R ( G ` ( H ` x ) ) ) ) ) ;;
+	step 33 : wff = eqtr4d (step 10, step 32) |- ( ph → ( ( F oF R G ) ∘ H ) = ( ( F ∘ H ) oF R ( G ∘ H ) ) ) ;;
+	qed prop 1 = step 33 ;;
+}
+
+/* Convert an identity of the operation to the analogous identity on the
+         function operation.  (Contributed by Mario Carneiro, 24-Jul-2014.) */
+
+theorem offveq (ph : wff, x : set, A : class, B : class, C : class, R : class, F : class, G : class, H : class, V : class) disjointed(x A, x F, x G, x H, x ph, x R) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → F Fn A ) ;;
+	hyp 3 : wff = |- ( ph → G Fn A ) ;;
+	hyp 4 : wff = |- ( ph → H Fn A ) ;;
+	hyp 5 : wff = |- ( ( ph ∧ x ∈ A ) → ( F ` x ) = B ) ;;
+	hyp 6 : wff = |- ( ( ph ∧ x ∈ A ) → ( G ` x ) = C ) ;;
+	hyp 7 : wff = |- ( ( ph ∧ x ∈ A ) → ( B R C ) = ( H ` x ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( F oF R G ) = H ) ;;
+}
+
+proof of offveq {
+	step 1 : wff = inidm () |- ( A ∩ A ) = A ;;
+	step 2 : wff = offn (hyp 2, hyp 3, hyp 1, hyp 1, step 1) |- ( ph → ( F oF R G ) Fn A ) ;;
+	step 3 : wff = inidm () |- ( A ∩ A ) = A ;;
+	step 4 : wff = ofval (hyp 2, hyp 3, hyp 1, hyp 1, step 3, hyp 5, hyp 6) |- ( ( ph ∧ x ∈ A ) → ( ( F oF R G ) ` x ) = ( B R C ) ) ;;
+	step 5 : wff = eqtrd (step 4, hyp 7) |- ( ( ph ∧ x ∈ A ) → ( ( F oF R G ) ` x ) = ( H ` x ) ) ;;
+	step 6 : wff = eqfnfvd (step 2, hyp 4, step 5) |- ( ph → ( F oF R G ) = H ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Equivalent expressions for equality with a function operation.
+       (Contributed by NM, 9-Oct-2014.)  (Proof shortened by Mario Carneiro,
+       5-Dec-2016.) */
+
+theorem offveqb (ph : wff, x : set, A : class, B : class, C : class, R : class, F : class, G : class, H : class, V : class) disjointed(x A, x F, x G, x H, x ph, x R, x F) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → F Fn A ) ;;
+	hyp 3 : wff = |- ( ph → G Fn A ) ;;
+	hyp 4 : wff = |- ( ph → H Fn A ) ;;
+	hyp 5 : wff = |- ( ( ph ∧ x ∈ A ) → ( F ` x ) = B ) ;;
+	hyp 6 : wff = |- ( ( ph ∧ x ∈ A ) → ( G ` x ) = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( H = ( F oF R G ) ↔ ∀ x ∈ A ( H ` x ) = ( B R C ) ) ) ;;
+}
+
+proof of offveqb {
+	step 1 : wff = dffn5 () |- ( H Fn A ↔ H = ( x ∈ A ↦ ( H ` x ) ) ) ;;
+	step 2 : wff = sylib (hyp 4, step 1) |- ( ph → H = ( x ∈ A ↦ ( H ` x ) ) ) ;;
+	step 3 : wff = inidm () |- ( A ∩ A ) = A ;;
+	step 4 : wff = offval (hyp 2, hyp 3, hyp 1, hyp 1, step 3, hyp 5, hyp 6) |- ( ph → ( F oF R G ) = ( x ∈ A ↦ ( B R C ) ) ) ;;
+	step 5 : wff = eqeq12d (step 2, step 4) |- ( ph → ( H = ( F oF R G ) ↔ ( x ∈ A ↦ ( H ` x ) ) = ( x ∈ A ↦ ( B R C ) ) ) ) ;;
+	step 6 : wff = fvex () |- ( H ` x ) ∈ _V ;;
+	step 7 : wff = a1i (step 6) |- ( ph → ( H ` x ) ∈ _V ) ;;
+	step 8 : wff = ralrimivw (step 7) |- ( ph → ∀ x ∈ A ( H ` x ) ∈ _V ) ;;
+	step 9 : wff = mpteqb () |- ( ∀ x ∈ A ( H ` x ) ∈ _V → ( ( x ∈ A ↦ ( H ` x ) ) = ( x ∈ A ↦ ( B R C ) ) ↔ ∀ x ∈ A ( H ` x ) = ( B R C ) ) ) ;;
+	step 10 : wff = syl (step 8, step 9) |- ( ph → ( ( x ∈ A ↦ ( H ` x ) ) = ( x ∈ A ↦ ( B R C ) ) ↔ ∀ x ∈ A ( H ` x ) = ( B R C ) ) ) ;;
+	step 11 : wff = bitrd (step 5, step 10) |- ( ph → ( H = ( F oF R G ) ↔ ∀ x ∈ A ( H ` x ) = ( B R C ) ) ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* Left operation by a constant.  (Contributed by Mario Carneiro,
+       24-Jul-2014.) */
+
+theorem ofc1 (ph : wff, A : class, B : class, C : class, R : class, F : class, V : class, W : class, X : class)  {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → B ∈ W ) ;;
+	hyp 3 : wff = |- ( ph → F Fn A ) ;;
+	hyp 4 : wff = |- ( ( ph ∧ X ∈ A ) → ( F ` X ) = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ X ∈ A ) → ( ( ( A × { B } ) oF R F ) ` X ) = ( B R C ) ) ;;
+}
+
+proof of ofc1 {
+	step 1 : wff = fnconstg () |- ( B ∈ W → ( A × { B } ) Fn A ) ;;
+	step 2 : wff = syl (hyp 2, step 1) |- ( ph → ( A × { B } ) Fn A ) ;;
+	step 3 : wff = inidm () |- ( A ∩ A ) = A ;;
+	step 4 : wff = fvconst2g () |- ( ( B ∈ W ∧ X ∈ A ) → ( ( A × { B } ) ` X ) = B ) ;;
+	step 5 : wff = sylan (hyp 2, step 4) |- ( ( ph ∧ X ∈ A ) → ( ( A × { B } ) ` X ) = B ) ;;
+	step 6 : wff = ofval (step 2, hyp 3, hyp 1, hyp 1, step 3, step 5, hyp 4) |- ( ( ph ∧ X ∈ A ) → ( ( ( A × { B } ) oF R F ) ` X ) = ( B R C ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Right operation by a constant.  (Contributed by NM, 7-Oct-2014.) */
+
+theorem ofc2 (ph : wff, A : class, B : class, C : class, R : class, F : class, V : class, W : class, X : class)  {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → B ∈ W ) ;;
+	hyp 3 : wff = |- ( ph → F Fn A ) ;;
+	hyp 4 : wff = |- ( ( ph ∧ X ∈ A ) → ( F ` X ) = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ X ∈ A ) → ( ( F oF R ( A × { B } ) ) ` X ) = ( C R B ) ) ;;
+}
+
+proof of ofc2 {
+	step 1 : wff = fnconstg () |- ( B ∈ W → ( A × { B } ) Fn A ) ;;
+	step 2 : wff = syl (hyp 2, step 1) |- ( ph → ( A × { B } ) Fn A ) ;;
+	step 3 : wff = inidm () |- ( A ∩ A ) = A ;;
+	step 4 : wff = fvconst2g () |- ( ( B ∈ W ∧ X ∈ A ) → ( ( A × { B } ) ` X ) = B ) ;;
+	step 5 : wff = sylan (hyp 2, step 4) |- ( ( ph ∧ X ∈ A ) → ( ( A × { B } ) ` X ) = B ) ;;
+	step 6 : wff = ofval (hyp 3, step 2, hyp 1, hyp 1, step 3, hyp 4, step 5) |- ( ( ph ∧ X ∈ A ) → ( ( F oF R ( A × { B } ) ) ` X ) = ( C R B ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Function operation on two constant functions.  (Contributed by Mario
+       Carneiro, 28-Jul-2014.) */
+
+theorem ofc12 (ph : wff, A : class, B : class, C : class, R : class, V : class, W : class, X : class) disjointed(x A, x B, x C, x ph, x R, x W, x X) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → B ∈ W ) ;;
+	hyp 3 : wff = |- ( ph → C ∈ X ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ( A × { B } ) oF R ( A × { C } ) ) = ( A × { ( B R C ) } ) ) ;;
+}
+
+proof of ofc12 {
+	var x : set;;
+	step 1 : wff = adantr (hyp 2) |- ( ( ph ∧ x ∈ A ) → B ∈ W ) ;;
+	step 2 : wff = adantr (hyp 3) |- ( ( ph ∧ x ∈ A ) → C ∈ X ) ;;
+	step 3 : wff = fconstmpt () |- ( A × { B } ) = ( x ∈ A ↦ B ) ;;
+	step 4 : wff = a1i (step 3) |- ( ph → ( A × { B } ) = ( x ∈ A ↦ B ) ) ;;
+	step 5 : wff = fconstmpt () |- ( A × { C } ) = ( x ∈ A ↦ C ) ;;
+	step 6 : wff = a1i (step 5) |- ( ph → ( A × { C } ) = ( x ∈ A ↦ C ) ) ;;
+	step 7 : wff = offval2 (hyp 1, step 1, step 2, step 4, step 6) |- ( ph → ( ( A × { B } ) oF R ( A × { C } ) ) = ( x ∈ A ↦ ( B R C ) ) ) ;;
+	step 8 : wff = fconstmpt () |- ( A × { ( B R C ) } ) = ( x ∈ A ↦ ( B R C ) ) ;;
+	step 9 : wff = syl6eqr (step 7, step 8) |- ( ph → ( ( A × { B } ) oF R ( A × { C } ) ) = ( A × { ( B R C ) } ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Transfer a reflexive law to the function relation.  (Contributed by
+         Mario Carneiro, 28-Jul-2014.) */
+
+theorem caofref (ph : wff, x : set, A : class, R : class, S : class, F : class, V : class) disjointed(w x, w x, w x F, w x, w x, w x, w x, w x ph, w x R, w A, w x S, w x, w x) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → F : A ⟶ S ) ;;
+	hyp 3 : wff = |- ( ( ph ∧ x ∈ S ) → x R x ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → F oR R F ) ;;
+}
+
+proof of caofref {
+	var w : set;;
+	step 1 : wff = ffvelrn () |- ( ( F : A ⟶ S ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 2 : wff = sylan (hyp 2, step 1) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 3 : wff = ralrimiva (hyp 3) |- ( ph → ∀ x ∈ S x R x ) ;;
+	step 4 : wff = adantr (step 3) |- ( ( ph ∧ w ∈ A ) → ∀ x ∈ S x R x ) ;;
+	step 5 : wff = id () |- ( x = ( F ` w ) → x = ( F ` w ) ) ;;
+	step 6 : wff = id () |- ( x = ( F ` w ) → x = ( F ` w ) ) ;;
+	step 7 : wff = breq12d (step 5, step 6) |- ( x = ( F ` w ) → ( x R x ↔ ( F ` w ) R ( F ` w ) ) ) ;;
+	step 8 : wff = rspcv (step 7) |- ( ( F ` w ) ∈ S → ( ∀ x ∈ S x R x → ( F ` w ) R ( F ` w ) ) ) ;;
+	step 9 : wff = sylc (step 2, step 4, step 8) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) R ( F ` w ) ) ;;
+	step 10 : wff = ralrimiva (step 9) |- ( ph → ∀ w ∈ A ( F ` w ) R ( F ` w ) ) ;;
+	step 11 : wff = ffn () |- ( F : A ⟶ S → F Fn A ) ;;
+	step 12 : wff = syl (hyp 2, step 11) |- ( ph → F Fn A ) ;;
+	step 13 : wff = ffn () |- ( F : A ⟶ S → F Fn A ) ;;
+	step 14 : wff = syl (hyp 2, step 13) |- ( ph → F Fn A ) ;;
+	step 15 : wff = inidm () |- ( A ∩ A ) = A ;;
+	step 16 : wff = eqidd () |- ( ( ph ∧ w ∈ A ) → ( F ` w ) = ( F ` w ) ) ;;
+	step 17 : wff = eqidd () |- ( ( ph ∧ w ∈ A ) → ( F ` w ) = ( F ` w ) ) ;;
+	step 18 : wff = ofrfval (step 12, step 14, hyp 1, hyp 1, step 15, step 16, step 17) |- ( ph → ( F oR R F ↔ ∀ w ∈ A ( F ` w ) R ( F ` w ) ) ) ;;
+	step 19 : wff = mpbird (step 10, step 18) |- ( ph → F oR R F ) ;;
+	qed prop 1 = step 19 ;;
+}
+
+/* Transfer a left inverse law to the function operation.  (Contributed
+           by NM, 22-Oct-2014.) */
+
+theorem caofinvl (ph : wff, x : set, v : set, A : class, B : class, R : class, S : class, F : class, G : class, N : class, V : class, W : class) disjointed(w x B, w x, w x F, w x G, w x, w x, w x, w x ph, w x R, w A, w x S, w x, w x, v A, v F, x v N, v S, v ph, v w) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → F : A ⟶ S ) ;;
+	hyp 3 : wff = |- ( ph → B ∈ W ) ;;
+	hyp 4 : wff = |- ( ph → N : S ⟶ S ) ;;
+	hyp 5 : wff = |- ( ph → G = ( v ∈ A ↦ ( N ` ( F ` v ) ) ) ) ;;
+	hyp 6 : wff = |- ( ( ph ∧ x ∈ S ) → ( ( N ` x ) R x ) = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( G oF R F ) = ( A × { B } ) ) ;;
+}
+
+proof of caofinvl {
+	var w : set;;
+	step 1 : wff = adantr (hyp 4) |- ( ( ph ∧ v ∈ A ) → N : S ⟶ S ) ;;
+	step 2 : wff = ffvelrn () |- ( ( F : A ⟶ S ∧ v ∈ A ) → ( F ` v ) ∈ S ) ;;
+	step 3 : wff = sylan (hyp 2, step 2) |- ( ( ph ∧ v ∈ A ) → ( F ` v ) ∈ S ) ;;
+	step 4 : wff = ffvelrn () |- ( ( N : S ⟶ S ∧ ( F ` v ) ∈ S ) → ( N ` ( F ` v ) ) ∈ S ) ;;
+	step 5 : wff = syl2anc (step 1, step 3, step 4) |- ( ( ph ∧ v ∈ A ) → ( N ` ( F ` v ) ) ∈ S ) ;;
+	step 6 : wff = eqid () |- ( v ∈ A ↦ ( N ` ( F ` v ) ) ) = ( v ∈ A ↦ ( N ` ( F ` v ) ) ) ;;
+	step 7 : wff = fmptd (step 5, step 6) |- ( ph → ( v ∈ A ↦ ( N ` ( F ` v ) ) ) : A ⟶ S ) ;;
+	step 8 : wff = feq1d (hyp 5) |- ( ph → ( G : A ⟶ S ↔ ( v ∈ A ↦ ( N ` ( F ` v ) ) ) : A ⟶ S ) ) ;;
+	step 9 : wff = mpbird (step 7, step 8) |- ( ph → G : A ⟶ S ) ;;
+	step 10 : wff = ffvelrn () |- ( ( G : A ⟶ S ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 11 : wff = sylan (step 9, step 10) |- ( ( ph ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 12 : wff = ffvelrn () |- ( ( F : A ⟶ S ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 13 : wff = sylan (hyp 2, step 12) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 14 : wff = fvex () |- ( N ` ( F ` v ) ) ∈ _V ;;
+	step 15 : wff = eqid () |- ( v ∈ A ↦ ( N ` ( F ` v ) ) ) = ( v ∈ A ↦ ( N ` ( F ` v ) ) ) ;;
+	step 16 : wff = fnmpti (step 14, step 15) |- ( v ∈ A ↦ ( N ` ( F ` v ) ) ) Fn A ;;
+	step 17 : wff = fneq1d (hyp 5) |- ( ph → ( G Fn A ↔ ( v ∈ A ↦ ( N ` ( F ` v ) ) ) Fn A ) ) ;;
+	step 18 : wff = mpbiri (step 16, step 17) |- ( ph → G Fn A ) ;;
+	step 19 : wff = dffn5 () |- ( G Fn A ↔ G = ( w ∈ A ↦ ( G ` w ) ) ) ;;
+	step 20 : wff = sylib (step 18, step 19) |- ( ph → G = ( w ∈ A ↦ ( G ` w ) ) ) ;;
+	step 21 : wff = feqmptd (hyp 2) |- ( ph → F = ( w ∈ A ↦ ( F ` w ) ) ) ;;
+	step 22 : wff = offval2 (hyp 1, step 11, step 13, step 20, step 21) |- ( ph → ( G oF R F ) = ( w ∈ A ↦ ( ( G ` w ) R ( F ` w ) ) ) ) ;;
+	step 23 : wff = fveq1d (hyp 5) |- ( ph → ( G ` w ) = ( ( v ∈ A ↦ ( N ` ( F ` v ) ) ) ` w ) ) ;;
+	step 24 : wff = fveq2 () |- ( v = w → ( F ` v ) = ( F ` w ) ) ;;
+	step 25 : wff = fveq2d (step 24) |- ( v = w → ( N ` ( F ` v ) ) = ( N ` ( F ` w ) ) ) ;;
+	step 26 : wff = eqid () |- ( v ∈ A ↦ ( N ` ( F ` v ) ) ) = ( v ∈ A ↦ ( N ` ( F ` v ) ) ) ;;
+	step 27 : wff = fvex () |- ( N ` ( F ` w ) ) ∈ _V ;;
+	step 28 : wff = fvmpt (step 25, step 26, step 27) |- ( w ∈ A → ( ( v ∈ A ↦ ( N ` ( F ` v ) ) ) ` w ) = ( N ` ( F ` w ) ) ) ;;
+	step 29 : wff = sylan9eq (step 23, step 28) |- ( ( ph ∧ w ∈ A ) → ( G ` w ) = ( N ` ( F ` w ) ) ) ;;
+	step 30 : wff = oveq1d (step 29) |- ( ( ph ∧ w ∈ A ) → ( ( G ` w ) R ( F ` w ) ) = ( ( N ` ( F ` w ) ) R ( F ` w ) ) ) ;;
+	step 31 : wff = ffvelrn () |- ( ( F : A ⟶ S ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 32 : wff = sylan (hyp 2, step 31) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 33 : wff = ralrimiva (hyp 6) |- ( ph → ∀ x ∈ S ( ( N ` x ) R x ) = B ) ;;
+	step 34 : wff = adantr (step 33) |- ( ( ph ∧ w ∈ A ) → ∀ x ∈ S ( ( N ` x ) R x ) = B ) ;;
+	step 35 : wff = fveq2 () |- ( x = ( F ` w ) → ( N ` x ) = ( N ` ( F ` w ) ) ) ;;
+	step 36 : wff = id () |- ( x = ( F ` w ) → x = ( F ` w ) ) ;;
+	step 37 : wff = oveq12d (step 35, step 36) |- ( x = ( F ` w ) → ( ( N ` x ) R x ) = ( ( N ` ( F ` w ) ) R ( F ` w ) ) ) ;;
+	step 38 : wff = eqeq1d (step 37) |- ( x = ( F ` w ) → ( ( ( N ` x ) R x ) = B ↔ ( ( N ` ( F ` w ) ) R ( F ` w ) ) = B ) ) ;;
+	step 39 : wff = rspcva (step 38) |- ( ( ( F ` w ) ∈ S ∧ ∀ x ∈ S ( ( N ` x ) R x ) = B ) → ( ( N ` ( F ` w ) ) R ( F ` w ) ) = B ) ;;
+	step 40 : wff = syl2anc (step 32, step 34, step 39) |- ( ( ph ∧ w ∈ A ) → ( ( N ` ( F ` w ) ) R ( F ` w ) ) = B ) ;;
+	step 41 : wff = eqtrd (step 30, step 40) |- ( ( ph ∧ w ∈ A ) → ( ( G ` w ) R ( F ` w ) ) = B ) ;;
+	step 42 : wff = mpteq2dva (step 41) |- ( ph → ( w ∈ A ↦ ( ( G ` w ) R ( F ` w ) ) ) = ( w ∈ A ↦ B ) ) ;;
+	step 43 : wff = eqtrd (step 22, step 42) |- ( ph → ( G oF R F ) = ( w ∈ A ↦ B ) ) ;;
+	step 44 : wff = fconstmpt () |- ( A × { B } ) = ( w ∈ A ↦ B ) ;;
+	step 45 : wff = syl6eqr (step 43, step 44) |- ( ph → ( G oF R F ) = ( A × { B } ) ) ;;
+	qed prop 1 = step 45 ;;
+}
+
+/* Transfer a left identity law to the function operation.
+           (Contributed by NM, 21-Oct-2014.) */
+
+theorem caofid0l (ph : wff, x : set, A : class, B : class, R : class, S : class, F : class, V : class, W : class) disjointed(w x B, w x, w x F, w x, w x, w x, w x, w x ph, w x R, w A, w x S, w x, w x) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → F : A ⟶ S ) ;;
+	hyp 3 : wff = |- ( ph → B ∈ W ) ;;
+	hyp 4 : wff = |- ( ( ph ∧ x ∈ S ) → ( B R x ) = x ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ( A × { B } ) oF R F ) = F ) ;;
+}
+
+proof of caofid0l {
+	var w : set;;
+	step 1 : wff = fnconstg () |- ( B ∈ W → ( A × { B } ) Fn A ) ;;
+	step 2 : wff = syl (hyp 3, step 1) |- ( ph → ( A × { B } ) Fn A ) ;;
+	step 3 : wff = ffn () |- ( F : A ⟶ S → F Fn A ) ;;
+	step 4 : wff = syl (hyp 2, step 3) |- ( ph → F Fn A ) ;;
+	step 5 : wff = ffn () |- ( F : A ⟶ S → F Fn A ) ;;
+	step 6 : wff = syl (hyp 2, step 5) |- ( ph → F Fn A ) ;;
+	step 7 : wff = fvconst2g () |- ( ( B ∈ W ∧ w ∈ A ) → ( ( A × { B } ) ` w ) = B ) ;;
+	step 8 : wff = sylan (hyp 3, step 7) |- ( ( ph ∧ w ∈ A ) → ( ( A × { B } ) ` w ) = B ) ;;
+	step 9 : wff = eqidd () |- ( ( ph ∧ w ∈ A ) → ( F ` w ) = ( F ` w ) ) ;;
+	step 10 : wff = ffvelrn () |- ( ( F : A ⟶ S ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 11 : wff = sylan (hyp 2, step 10) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 12 : wff = ralrimiva (hyp 4) |- ( ph → ∀ x ∈ S ( B R x ) = x ) ;;
+	step 13 : wff = oveq2 () |- ( x = ( F ` w ) → ( B R x ) = ( B R ( F ` w ) ) ) ;;
+	step 14 : wff = id () |- ( x = ( F ` w ) → x = ( F ` w ) ) ;;
+	step 15 : wff = eqeq12d (step 13, step 14) |- ( x = ( F ` w ) → ( ( B R x ) = x ↔ ( B R ( F ` w ) ) = ( F ` w ) ) ) ;;
+	step 16 : wff = rspccva (step 15) |- ( ( ∀ x ∈ S ( B R x ) = x ∧ ( F ` w ) ∈ S ) → ( B R ( F ` w ) ) = ( F ` w ) ) ;;
+	step 17 : wff = sylan (step 12, step 16) |- ( ( ph ∧ ( F ` w ) ∈ S ) → ( B R ( F ` w ) ) = ( F ` w ) ) ;;
+	step 18 : wff = syldan (step 11, step 17) |- ( ( ph ∧ w ∈ A ) → ( B R ( F ` w ) ) = ( F ` w ) ) ;;
+	step 19 : wff = offveq (hyp 1, step 2, step 4, step 6, step 8, step 9, step 18) |- ( ph → ( ( A × { B } ) oF R F ) = F ) ;;
+	qed prop 1 = step 19 ;;
+}
+
+/* Transfer a right identity law to the function operation.
+           (Contributed by NM, 21-Oct-2014.) */
+
+theorem caofid0r (ph : wff, x : set, A : class, B : class, R : class, S : class, F : class, V : class, W : class) disjointed(w x B, w x, w x F, w x, w x, w x, w x, w x ph, w x R, w A, w x S, w x, w x) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → F : A ⟶ S ) ;;
+	hyp 3 : wff = |- ( ph → B ∈ W ) ;;
+	hyp 4 : wff = |- ( ( ph ∧ x ∈ S ) → ( x R B ) = x ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( F oF R ( A × { B } ) ) = F ) ;;
+}
+
+proof of caofid0r {
+	var w : set;;
+	step 1 : wff = ffn () |- ( F : A ⟶ S → F Fn A ) ;;
+	step 2 : wff = syl (hyp 2, step 1) |- ( ph → F Fn A ) ;;
+	step 3 : wff = fnconstg () |- ( B ∈ W → ( A × { B } ) Fn A ) ;;
+	step 4 : wff = syl (hyp 3, step 3) |- ( ph → ( A × { B } ) Fn A ) ;;
+	step 5 : wff = ffn () |- ( F : A ⟶ S → F Fn A ) ;;
+	step 6 : wff = syl (hyp 2, step 5) |- ( ph → F Fn A ) ;;
+	step 7 : wff = eqidd () |- ( ( ph ∧ w ∈ A ) → ( F ` w ) = ( F ` w ) ) ;;
+	step 8 : wff = fvconst2g () |- ( ( B ∈ W ∧ w ∈ A ) → ( ( A × { B } ) ` w ) = B ) ;;
+	step 9 : wff = sylan (hyp 3, step 8) |- ( ( ph ∧ w ∈ A ) → ( ( A × { B } ) ` w ) = B ) ;;
+	step 10 : wff = ffvelrn () |- ( ( F : A ⟶ S ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 11 : wff = sylan (hyp 2, step 10) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 12 : wff = ralrimiva (hyp 4) |- ( ph → ∀ x ∈ S ( x R B ) = x ) ;;
+	step 13 : wff = oveq1 () |- ( x = ( F ` w ) → ( x R B ) = ( ( F ` w ) R B ) ) ;;
+	step 14 : wff = id () |- ( x = ( F ` w ) → x = ( F ` w ) ) ;;
+	step 15 : wff = eqeq12d (step 13, step 14) |- ( x = ( F ` w ) → ( ( x R B ) = x ↔ ( ( F ` w ) R B ) = ( F ` w ) ) ) ;;
+	step 16 : wff = rspccva (step 15) |- ( ( ∀ x ∈ S ( x R B ) = x ∧ ( F ` w ) ∈ S ) → ( ( F ` w ) R B ) = ( F ` w ) ) ;;
+	step 17 : wff = sylan (step 12, step 16) |- ( ( ph ∧ ( F ` w ) ∈ S ) → ( ( F ` w ) R B ) = ( F ` w ) ) ;;
+	step 18 : wff = syldan (step 11, step 17) |- ( ( ph ∧ w ∈ A ) → ( ( F ` w ) R B ) = ( F ` w ) ) ;;
+	step 19 : wff = offveq (hyp 1, step 2, step 4, step 6, step 7, step 9, step 18) |- ( ph → ( F oF R ( A × { B } ) ) = F ) ;;
+	qed prop 1 = step 19 ;;
+}
+
+/* Transfer a right absorption law to the function operation.
+           (Contributed by Mario Carneiro, 28-Jul-2014.) */
+
+theorem caofid1 (ph : wff, x : set, A : class, B : class, C : class, R : class, S : class, F : class, V : class, W : class, X : class) disjointed(w x B, w x C, w x F, w x, w x, w x, w x, w x ph, w x R, w A, w x S, w x, w x) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → F : A ⟶ S ) ;;
+	hyp 3 : wff = |- ( ph → B ∈ W ) ;;
+	hyp 4 : wff = |- ( ph → C ∈ X ) ;;
+	hyp 5 : wff = |- ( ( ph ∧ x ∈ S ) → ( x R B ) = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( F oF R ( A × { B } ) ) = ( A × { C } ) ) ;;
+}
+
+proof of caofid1 {
+	var w : set;;
+	step 1 : wff = ffn () |- ( F : A ⟶ S → F Fn A ) ;;
+	step 2 : wff = syl (hyp 2, step 1) |- ( ph → F Fn A ) ;;
+	step 3 : wff = fnconstg () |- ( B ∈ W → ( A × { B } ) Fn A ) ;;
+	step 4 : wff = syl (hyp 3, step 3) |- ( ph → ( A × { B } ) Fn A ) ;;
+	step 5 : wff = fnconstg () |- ( C ∈ X → ( A × { C } ) Fn A ) ;;
+	step 6 : wff = syl (hyp 4, step 5) |- ( ph → ( A × { C } ) Fn A ) ;;
+	step 7 : wff = eqidd () |- ( ( ph ∧ w ∈ A ) → ( F ` w ) = ( F ` w ) ) ;;
+	step 8 : wff = fvconst2g () |- ( ( B ∈ W ∧ w ∈ A ) → ( ( A × { B } ) ` w ) = B ) ;;
+	step 9 : wff = sylan (hyp 3, step 8) |- ( ( ph ∧ w ∈ A ) → ( ( A × { B } ) ` w ) = B ) ;;
+	step 10 : wff = ffvelrn () |- ( ( F : A ⟶ S ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 11 : wff = sylan (hyp 2, step 10) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 12 : wff = ralrimiva (hyp 5) |- ( ph → ∀ x ∈ S ( x R B ) = C ) ;;
+	step 13 : wff = oveq1 () |- ( x = ( F ` w ) → ( x R B ) = ( ( F ` w ) R B ) ) ;;
+	step 14 : wff = eqeq1d (step 13) |- ( x = ( F ` w ) → ( ( x R B ) = C ↔ ( ( F ` w ) R B ) = C ) ) ;;
+	step 15 : wff = rspccva (step 14) |- ( ( ∀ x ∈ S ( x R B ) = C ∧ ( F ` w ) ∈ S ) → ( ( F ` w ) R B ) = C ) ;;
+	step 16 : wff = sylan (step 12, step 15) |- ( ( ph ∧ ( F ` w ) ∈ S ) → ( ( F ` w ) R B ) = C ) ;;
+	step 17 : wff = syldan (step 11, step 16) |- ( ( ph ∧ w ∈ A ) → ( ( F ` w ) R B ) = C ) ;;
+	step 18 : wff = fvconst2g () |- ( ( C ∈ X ∧ w ∈ A ) → ( ( A × { C } ) ` w ) = C ) ;;
+	step 19 : wff = sylan (hyp 4, step 18) |- ( ( ph ∧ w ∈ A ) → ( ( A × { C } ) ` w ) = C ) ;;
+	step 20 : wff = eqtr4d (step 17, step 19) |- ( ( ph ∧ w ∈ A ) → ( ( F ` w ) R B ) = ( ( A × { C } ) ` w ) ) ;;
+	step 21 : wff = offveq (hyp 1, step 2, step 4, step 6, step 7, step 9, step 20) |- ( ph → ( F oF R ( A × { B } ) ) = ( A × { C } ) ) ;;
+	qed prop 1 = step 21 ;;
+}
+
+/* Transfer a right absorption law to the function operation.
+         (Contributed by Mario Carneiro, 28-Jul-2014.) */
+
+theorem caofid2 (ph : wff, x : set, A : class, B : class, C : class, R : class, S : class, F : class, V : class, W : class, X : class) disjointed(w x B, w x C, w x F, w x, w x, w x, w x, w x ph, w x R, w A, w x S, w x, w x) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → F : A ⟶ S ) ;;
+	hyp 3 : wff = |- ( ph → B ∈ W ) ;;
+	hyp 4 : wff = |- ( ph → C ∈ X ) ;;
+	hyp 5 : wff = |- ( ( ph ∧ x ∈ S ) → ( B R x ) = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ( A × { B } ) oF R F ) = ( A × { C } ) ) ;;
+}
+
+proof of caofid2 {
+	var w : set;;
+	step 1 : wff = fnconstg () |- ( B ∈ W → ( A × { B } ) Fn A ) ;;
+	step 2 : wff = syl (hyp 3, step 1) |- ( ph → ( A × { B } ) Fn A ) ;;
+	step 3 : wff = ffn () |- ( F : A ⟶ S → F Fn A ) ;;
+	step 4 : wff = syl (hyp 2, step 3) |- ( ph → F Fn A ) ;;
+	step 5 : wff = fnconstg () |- ( C ∈ X → ( A × { C } ) Fn A ) ;;
+	step 6 : wff = syl (hyp 4, step 5) |- ( ph → ( A × { C } ) Fn A ) ;;
+	step 7 : wff = fvconst2g () |- ( ( B ∈ W ∧ w ∈ A ) → ( ( A × { B } ) ` w ) = B ) ;;
+	step 8 : wff = sylan (hyp 3, step 7) |- ( ( ph ∧ w ∈ A ) → ( ( A × { B } ) ` w ) = B ) ;;
+	step 9 : wff = eqidd () |- ( ( ph ∧ w ∈ A ) → ( F ` w ) = ( F ` w ) ) ;;
+	step 10 : wff = ffvelrn () |- ( ( F : A ⟶ S ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 11 : wff = sylan (hyp 2, step 10) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 12 : wff = ralrimiva (hyp 5) |- ( ph → ∀ x ∈ S ( B R x ) = C ) ;;
+	step 13 : wff = oveq2 () |- ( x = ( F ` w ) → ( B R x ) = ( B R ( F ` w ) ) ) ;;
+	step 14 : wff = eqeq1d (step 13) |- ( x = ( F ` w ) → ( ( B R x ) = C ↔ ( B R ( F ` w ) ) = C ) ) ;;
+	step 15 : wff = rspccva (step 14) |- ( ( ∀ x ∈ S ( B R x ) = C ∧ ( F ` w ) ∈ S ) → ( B R ( F ` w ) ) = C ) ;;
+	step 16 : wff = sylan (step 12, step 15) |- ( ( ph ∧ ( F ` w ) ∈ S ) → ( B R ( F ` w ) ) = C ) ;;
+	step 17 : wff = syldan (step 11, step 16) |- ( ( ph ∧ w ∈ A ) → ( B R ( F ` w ) ) = C ) ;;
+	step 18 : wff = fvconst2g () |- ( ( C ∈ X ∧ w ∈ A ) → ( ( A × { C } ) ` w ) = C ) ;;
+	step 19 : wff = sylan (hyp 4, step 18) |- ( ( ph ∧ w ∈ A ) → ( ( A × { C } ) ` w ) = C ) ;;
+	step 20 : wff = eqtr4d (step 17, step 19) |- ( ( ph ∧ w ∈ A ) → ( B R ( F ` w ) ) = ( ( A × { C } ) ` w ) ) ;;
+	step 21 : wff = offveq (hyp 1, step 2, step 4, step 6, step 8, step 9, step 20) |- ( ph → ( ( A × { B } ) oF R F ) = ( A × { C } ) ) ;;
+	qed prop 1 = step 21 ;;
+}
+
+/* Transfer a commutative law to the function operation.  (Contributed by
+         Mario Carneiro, 26-Jul-2014.) */
+
+theorem caofcom (ph : wff, x : set, y : set, A : class, R : class, S : class, F : class, G : class, V : class) disjointed(w x, w x, w x y F, w x y G, w x y, w x y, w x y, w x y ph, w x y R, w A, w x y S, w x y, w x y) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → F : A ⟶ S ) ;;
+	hyp 3 : wff = |- ( ph → G : A ⟶ S ) ;;
+	hyp 4 : wff = |- ( ( ph ∧ ( x ∈ S ∧ y ∈ S ) ) → ( x R y ) = ( y R x ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( F oF R G ) = ( G oF R F ) ) ;;
+}
+
+proof of caofcom {
+	var w : set;;
+	step 1 : wff = ffvelrn () |- ( ( F : A ⟶ S ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 2 : wff = sylan (hyp 2, step 1) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 3 : wff = ffvelrn () |- ( ( G : A ⟶ S ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 4 : wff = sylan (hyp 3, step 3) |- ( ( ph ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 5 : wff = jca (step 2, step 4) |- ( ( ph ∧ w ∈ A ) → ( ( F ` w ) ∈ S ∧ ( G ` w ) ∈ S ) ) ;;
+	step 6 : wff = caovcomg (hyp 4) |- ( ( ph ∧ ( ( F ` w ) ∈ S ∧ ( G ` w ) ∈ S ) ) → ( ( F ` w ) R ( G ` w ) ) = ( ( G ` w ) R ( F ` w ) ) ) ;;
+	step 7 : wff = syldan (step 5, step 6) |- ( ( ph ∧ w ∈ A ) → ( ( F ` w ) R ( G ` w ) ) = ( ( G ` w ) R ( F ` w ) ) ) ;;
+	step 8 : wff = mpteq2dva (step 7) |- ( ph → ( w ∈ A ↦ ( ( F ` w ) R ( G ` w ) ) ) = ( w ∈ A ↦ ( ( G ` w ) R ( F ` w ) ) ) ) ;;
+	step 9 : wff = ffvelrn () |- ( ( F : A ⟶ S ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 10 : wff = sylan (hyp 2, step 9) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 11 : wff = ffvelrn () |- ( ( G : A ⟶ S ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 12 : wff = sylan (hyp 3, step 11) |- ( ( ph ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 13 : wff = feqmptd (hyp 2) |- ( ph → F = ( w ∈ A ↦ ( F ` w ) ) ) ;;
+	step 14 : wff = feqmptd (hyp 3) |- ( ph → G = ( w ∈ A ↦ ( G ` w ) ) ) ;;
+	step 15 : wff = offval2 (hyp 1, step 10, step 12, step 13, step 14) |- ( ph → ( F oF R G ) = ( w ∈ A ↦ ( ( F ` w ) R ( G ` w ) ) ) ) ;;
+	step 16 : wff = ffvelrn () |- ( ( G : A ⟶ S ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 17 : wff = sylan (hyp 3, step 16) |- ( ( ph ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 18 : wff = ffvelrn () |- ( ( F : A ⟶ S ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 19 : wff = sylan (hyp 2, step 18) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 20 : wff = feqmptd (hyp 3) |- ( ph → G = ( w ∈ A ↦ ( G ` w ) ) ) ;;
+	step 21 : wff = feqmptd (hyp 2) |- ( ph → F = ( w ∈ A ↦ ( F ` w ) ) ) ;;
+	step 22 : wff = offval2 (hyp 1, step 17, step 19, step 20, step 21) |- ( ph → ( G oF R F ) = ( w ∈ A ↦ ( ( G ` w ) R ( F ` w ) ) ) ) ;;
+	step 23 : wff = 3eqtr4d (step 8, step 15, step 22) |- ( ph → ( F oF R G ) = ( G oF R F ) ) ;;
+	qed prop 1 = step 23 ;;
+}
+
+/* Transfer a relation subset law to the function relation.  (Contributed
+         by Mario Carneiro, 28-Jul-2014.) */
+
+theorem caofrss (ph : wff, x : set, y : set, A : class, R : class, S : class, T : class, F : class, G : class, V : class) disjointed(w x, w x, w x y F, w x y G, w x y, w x y, w x y, w x y ph, w x y R, w A, w x y S, w x y T, w x y) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → F : A ⟶ S ) ;;
+	hyp 3 : wff = |- ( ph → G : A ⟶ S ) ;;
+	hyp 4 : wff = |- ( ( ph ∧ ( x ∈ S ∧ y ∈ S ) ) → ( x R y → x T y ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( F oR R G → F oR T G ) ) ;;
+}
+
+proof of caofrss {
+	var w : set;;
+	step 1 : wff = ffvelrn () |- ( ( F : A ⟶ S ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 2 : wff = sylan (hyp 2, step 1) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 3 : wff = ffvelrn () |- ( ( G : A ⟶ S ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 4 : wff = sylan (hyp 3, step 3) |- ( ( ph ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 5 : wff = ralrimivva (hyp 4) |- ( ph → ∀ x ∈ S ∀ y ∈ S ( x R y → x T y ) ) ;;
+	step 6 : wff = adantr (step 5) |- ( ( ph ∧ w ∈ A ) → ∀ x ∈ S ∀ y ∈ S ( x R y → x T y ) ) ;;
+	step 7 : wff = breq1 () |- ( x = ( F ` w ) → ( x R y ↔ ( F ` w ) R y ) ) ;;
+	step 8 : wff = breq1 () |- ( x = ( F ` w ) → ( x T y ↔ ( F ` w ) T y ) ) ;;
+	step 9 : wff = imbi12d (step 7, step 8) |- ( x = ( F ` w ) → ( ( x R y → x T y ) ↔ ( ( F ` w ) R y → ( F ` w ) T y ) ) ) ;;
+	step 10 : wff = breq2 () |- ( y = ( G ` w ) → ( ( F ` w ) R y ↔ ( F ` w ) R ( G ` w ) ) ) ;;
+	step 11 : wff = breq2 () |- ( y = ( G ` w ) → ( ( F ` w ) T y ↔ ( F ` w ) T ( G ` w ) ) ) ;;
+	step 12 : wff = imbi12d (step 10, step 11) |- ( y = ( G ` w ) → ( ( ( F ` w ) R y → ( F ` w ) T y ) ↔ ( ( F ` w ) R ( G ` w ) → ( F ` w ) T ( G ` w ) ) ) ) ;;
+	step 13 : wff = rspc2va (step 9, step 12) |- ( ( ( ( F ` w ) ∈ S ∧ ( G ` w ) ∈ S ) ∧ ∀ x ∈ S ∀ y ∈ S ( x R y → x T y ) ) → ( ( F ` w ) R ( G ` w ) → ( F ` w ) T ( G ` w ) ) ) ;;
+	step 14 : wff = syl21anc (step 2, step 4, step 6, step 13) |- ( ( ph ∧ w ∈ A ) → ( ( F ` w ) R ( G ` w ) → ( F ` w ) T ( G ` w ) ) ) ;;
+	step 15 : wff = ralimdva (step 14) |- ( ph → ( ∀ w ∈ A ( F ` w ) R ( G ` w ) → ∀ w ∈ A ( F ` w ) T ( G ` w ) ) ) ;;
+	step 16 : wff = ffn () |- ( F : A ⟶ S → F Fn A ) ;;
+	step 17 : wff = syl (hyp 2, step 16) |- ( ph → F Fn A ) ;;
+	step 18 : wff = ffn () |- ( G : A ⟶ S → G Fn A ) ;;
+	step 19 : wff = syl (hyp 3, step 18) |- ( ph → G Fn A ) ;;
+	step 20 : wff = inidm () |- ( A ∩ A ) = A ;;
+	step 21 : wff = eqidd () |- ( ( ph ∧ w ∈ A ) → ( F ` w ) = ( F ` w ) ) ;;
+	step 22 : wff = eqidd () |- ( ( ph ∧ w ∈ A ) → ( G ` w ) = ( G ` w ) ) ;;
+	step 23 : wff = ofrfval (step 17, step 19, hyp 1, hyp 1, step 20, step 21, step 22) |- ( ph → ( F oR R G ↔ ∀ w ∈ A ( F ` w ) R ( G ` w ) ) ) ;;
+	step 24 : wff = ffn () |- ( F : A ⟶ S → F Fn A ) ;;
+	step 25 : wff = syl (hyp 2, step 24) |- ( ph → F Fn A ) ;;
+	step 26 : wff = ffn () |- ( G : A ⟶ S → G Fn A ) ;;
+	step 27 : wff = syl (hyp 3, step 26) |- ( ph → G Fn A ) ;;
+	step 28 : wff = inidm () |- ( A ∩ A ) = A ;;
+	step 29 : wff = eqidd () |- ( ( ph ∧ w ∈ A ) → ( F ` w ) = ( F ` w ) ) ;;
+	step 30 : wff = eqidd () |- ( ( ph ∧ w ∈ A ) → ( G ` w ) = ( G ` w ) ) ;;
+	step 31 : wff = ofrfval (step 25, step 27, hyp 1, hyp 1, step 28, step 29, step 30) |- ( ph → ( F oR T G ↔ ∀ w ∈ A ( F ` w ) T ( G ` w ) ) ) ;;
+	step 32 : wff = 3imtr4d (step 15, step 23, step 31) |- ( ph → ( F oR R G → F oR T G ) ) ;;
+	qed prop 1 = step 32 ;;
+}
+
+/* Transfer an associative law to the function operation.  (Contributed
+         by Mario Carneiro, 26-Jul-2014.) */
+
+theorem caofass (ph : wff, x : set, y : set, z : set, A : class, P : class, R : class, S : class, T : class, F : class, G : class, H : class, O : class, V : class) disjointed(w x, w x, w x y z F, w x y z G, w x y z H, w x y z O, w x y z P, w x y z ph, w x y z R, w A, w x y z S, w x y z T, w x y z) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → F : A ⟶ S ) ;;
+	hyp 3 : wff = |- ( ph → G : A ⟶ S ) ;;
+	hyp 4 : wff = |- ( ph → H : A ⟶ S ) ;;
+	hyp 5 : wff = |- ( ( ph ∧ ( x ∈ S ∧ y ∈ S ∧ z ∈ S ) ) → ( ( x R y ) T z ) = ( x O ( y P z ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ( F oF R G ) oF T H ) = ( F oF O ( G oF P H ) ) ) ;;
+}
+
+proof of caofass {
+	var w : set;;
+	step 1 : wff = ralrimivvva (hyp 5) |- ( ph → ∀ x ∈ S ∀ y ∈ S ∀ z ∈ S ( ( x R y ) T z ) = ( x O ( y P z ) ) ) ;;
+	step 2 : wff = adantr (step 1) |- ( ( ph ∧ w ∈ A ) → ∀ x ∈ S ∀ y ∈ S ∀ z ∈ S ( ( x R y ) T z ) = ( x O ( y P z ) ) ) ;;
+	step 3 : wff = ffvelrn () |- ( ( F : A ⟶ S ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 4 : wff = sylan (hyp 2, step 3) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 5 : wff = ffvelrn () |- ( ( G : A ⟶ S ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 6 : wff = sylan (hyp 3, step 5) |- ( ( ph ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 7 : wff = ffvelrn () |- ( ( H : A ⟶ S ∧ w ∈ A ) → ( H ` w ) ∈ S ) ;;
+	step 8 : wff = sylan (hyp 4, step 7) |- ( ( ph ∧ w ∈ A ) → ( H ` w ) ∈ S ) ;;
+	step 9 : wff = oveq1 () |- ( x = ( F ` w ) → ( x R y ) = ( ( F ` w ) R y ) ) ;;
+	step 10 : wff = oveq1d (step 9) |- ( x = ( F ` w ) → ( ( x R y ) T z ) = ( ( ( F ` w ) R y ) T z ) ) ;;
+	step 11 : wff = oveq1 () |- ( x = ( F ` w ) → ( x O ( y P z ) ) = ( ( F ` w ) O ( y P z ) ) ) ;;
+	step 12 : wff = eqeq12d (step 10, step 11) |- ( x = ( F ` w ) → ( ( ( x R y ) T z ) = ( x O ( y P z ) ) ↔ ( ( ( F ` w ) R y ) T z ) = ( ( F ` w ) O ( y P z ) ) ) ) ;;
+	step 13 : wff = oveq2 () |- ( y = ( G ` w ) → ( ( F ` w ) R y ) = ( ( F ` w ) R ( G ` w ) ) ) ;;
+	step 14 : wff = oveq1d (step 13) |- ( y = ( G ` w ) → ( ( ( F ` w ) R y ) T z ) = ( ( ( F ` w ) R ( G ` w ) ) T z ) ) ;;
+	step 15 : wff = oveq1 () |- ( y = ( G ` w ) → ( y P z ) = ( ( G ` w ) P z ) ) ;;
+	step 16 : wff = oveq2d (step 15) |- ( y = ( G ` w ) → ( ( F ` w ) O ( y P z ) ) = ( ( F ` w ) O ( ( G ` w ) P z ) ) ) ;;
+	step 17 : wff = eqeq12d (step 14, step 16) |- ( y = ( G ` w ) → ( ( ( ( F ` w ) R y ) T z ) = ( ( F ` w ) O ( y P z ) ) ↔ ( ( ( F ` w ) R ( G ` w ) ) T z ) = ( ( F ` w ) O ( ( G ` w ) P z ) ) ) ) ;;
+	step 18 : wff = oveq2 () |- ( z = ( H ` w ) → ( ( ( F ` w ) R ( G ` w ) ) T z ) = ( ( ( F ` w ) R ( G ` w ) ) T ( H ` w ) ) ) ;;
+	step 19 : wff = oveq2 () |- ( z = ( H ` w ) → ( ( G ` w ) P z ) = ( ( G ` w ) P ( H ` w ) ) ) ;;
+	step 20 : wff = oveq2d (step 19) |- ( z = ( H ` w ) → ( ( F ` w ) O ( ( G ` w ) P z ) ) = ( ( F ` w ) O ( ( G ` w ) P ( H ` w ) ) ) ) ;;
+	step 21 : wff = eqeq12d (step 18, step 20) |- ( z = ( H ` w ) → ( ( ( ( F ` w ) R ( G ` w ) ) T z ) = ( ( F ` w ) O ( ( G ` w ) P z ) ) ↔ ( ( ( F ` w ) R ( G ` w ) ) T ( H ` w ) ) = ( ( F ` w ) O ( ( G ` w ) P ( H ` w ) ) ) ) ) ;;
+	step 22 : wff = rspc3v (step 12, step 17, step 21) |- ( ( ( F ` w ) ∈ S ∧ ( G ` w ) ∈ S ∧ ( H ` w ) ∈ S ) → ( ∀ x ∈ S ∀ y ∈ S ∀ z ∈ S ( ( x R y ) T z ) = ( x O ( y P z ) ) → ( ( ( F ` w ) R ( G ` w ) ) T ( H ` w ) ) = ( ( F ` w ) O ( ( G ` w ) P ( H ` w ) ) ) ) ) ;;
+	step 23 : wff = syl3anc (step 4, step 6, step 8, step 22) |- ( ( ph ∧ w ∈ A ) → ( ∀ x ∈ S ∀ y ∈ S ∀ z ∈ S ( ( x R y ) T z ) = ( x O ( y P z ) ) → ( ( ( F ` w ) R ( G ` w ) ) T ( H ` w ) ) = ( ( F ` w ) O ( ( G ` w ) P ( H ` w ) ) ) ) ) ;;
+	step 24 : wff = mpd (step 2, step 23) |- ( ( ph ∧ w ∈ A ) → ( ( ( F ` w ) R ( G ` w ) ) T ( H ` w ) ) = ( ( F ` w ) O ( ( G ` w ) P ( H ` w ) ) ) ) ;;
+	step 25 : wff = mpteq2dva (step 24) |- ( ph → ( w ∈ A ↦ ( ( ( F ` w ) R ( G ` w ) ) T ( H ` w ) ) ) = ( w ∈ A ↦ ( ( F ` w ) O ( ( G ` w ) P ( H ` w ) ) ) ) ) ;;
+	step 26 : wff = ovex () |- ( ( F ` w ) R ( G ` w ) ) ∈ _V ;;
+	step 27 : wff = a1i (step 26) |- ( ( ph ∧ w ∈ A ) → ( ( F ` w ) R ( G ` w ) ) ∈ _V ) ;;
+	step 28 : wff = ffvelrn () |- ( ( H : A ⟶ S ∧ w ∈ A ) → ( H ` w ) ∈ S ) ;;
+	step 29 : wff = sylan (hyp 4, step 28) |- ( ( ph ∧ w ∈ A ) → ( H ` w ) ∈ S ) ;;
+	step 30 : wff = ffvelrn () |- ( ( F : A ⟶ S ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 31 : wff = sylan (hyp 2, step 30) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 32 : wff = ffvelrn () |- ( ( G : A ⟶ S ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 33 : wff = sylan (hyp 3, step 32) |- ( ( ph ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 34 : wff = feqmptd (hyp 2) |- ( ph → F = ( w ∈ A ↦ ( F ` w ) ) ) ;;
+	step 35 : wff = feqmptd (hyp 3) |- ( ph → G = ( w ∈ A ↦ ( G ` w ) ) ) ;;
+	step 36 : wff = offval2 (hyp 1, step 31, step 33, step 34, step 35) |- ( ph → ( F oF R G ) = ( w ∈ A ↦ ( ( F ` w ) R ( G ` w ) ) ) ) ;;
+	step 37 : wff = feqmptd (hyp 4) |- ( ph → H = ( w ∈ A ↦ ( H ` w ) ) ) ;;
+	step 38 : wff = offval2 (hyp 1, step 27, step 29, step 36, step 37) |- ( ph → ( ( F oF R G ) oF T H ) = ( w ∈ A ↦ ( ( ( F ` w ) R ( G ` w ) ) T ( H ` w ) ) ) ) ;;
+	step 39 : wff = ffvelrn () |- ( ( F : A ⟶ S ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 40 : wff = sylan (hyp 2, step 39) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 41 : wff = ovex () |- ( ( G ` w ) P ( H ` w ) ) ∈ _V ;;
+	step 42 : wff = a1i (step 41) |- ( ( ph ∧ w ∈ A ) → ( ( G ` w ) P ( H ` w ) ) ∈ _V ) ;;
+	step 43 : wff = feqmptd (hyp 2) |- ( ph → F = ( w ∈ A ↦ ( F ` w ) ) ) ;;
+	step 44 : wff = ffvelrn () |- ( ( G : A ⟶ S ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 45 : wff = sylan (hyp 3, step 44) |- ( ( ph ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 46 : wff = ffvelrn () |- ( ( H : A ⟶ S ∧ w ∈ A ) → ( H ` w ) ∈ S ) ;;
+	step 47 : wff = sylan (hyp 4, step 46) |- ( ( ph ∧ w ∈ A ) → ( H ` w ) ∈ S ) ;;
+	step 48 : wff = feqmptd (hyp 3) |- ( ph → G = ( w ∈ A ↦ ( G ` w ) ) ) ;;
+	step 49 : wff = feqmptd (hyp 4) |- ( ph → H = ( w ∈ A ↦ ( H ` w ) ) ) ;;
+	step 50 : wff = offval2 (hyp 1, step 45, step 47, step 48, step 49) |- ( ph → ( G oF P H ) = ( w ∈ A ↦ ( ( G ` w ) P ( H ` w ) ) ) ) ;;
+	step 51 : wff = offval2 (hyp 1, step 40, step 42, step 43, step 50) |- ( ph → ( F oF O ( G oF P H ) ) = ( w ∈ A ↦ ( ( F ` w ) O ( ( G ` w ) P ( H ` w ) ) ) ) ) ;;
+	step 52 : wff = 3eqtr4d (step 25, step 38, step 51) |- ( ph → ( ( F oF R G ) oF T H ) = ( F oF O ( G oF P H ) ) ) ;;
+	qed prop 1 = step 52 ;;
+}
+
+/* Transfer a transitivity law to the function relation.  (Contributed by
+         Mario Carneiro, 28-Jul-2014.) */
+
+theorem caoftrn (ph : wff, x : set, y : set, z : set, A : class, R : class, S : class, T : class, U : class, F : class, G : class, H : class, V : class) disjointed(w x, w x, w x y z F, w x y z G, w x y z H, w x y z, w x y z, w x y z ph, w x y z R, w A, w x y z S, w x y z T, w x y z U) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → F : A ⟶ S ) ;;
+	hyp 3 : wff = |- ( ph → G : A ⟶ S ) ;;
+	hyp 4 : wff = |- ( ph → H : A ⟶ S ) ;;
+	hyp 5 : wff = |- ( ( ph ∧ ( x ∈ S ∧ y ∈ S ∧ z ∈ S ) ) → ( ( x R y ∧ y T z ) → x U z ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ( F oR R G ∧ G oR T H ) → F oR U H ) ) ;;
+}
+
+proof of caoftrn {
+	var w : set;;
+	step 1 : wff = ralrimivvva (hyp 5) |- ( ph → ∀ x ∈ S ∀ y ∈ S ∀ z ∈ S ( ( x R y ∧ y T z ) → x U z ) ) ;;
+	step 2 : wff = adantr (step 1) |- ( ( ph ∧ w ∈ A ) → ∀ x ∈ S ∀ y ∈ S ∀ z ∈ S ( ( x R y ∧ y T z ) → x U z ) ) ;;
+	step 3 : wff = ffvelrn () |- ( ( F : A ⟶ S ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 4 : wff = sylan (hyp 2, step 3) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ S ) ;;
+	step 5 : wff = ffvelrn () |- ( ( G : A ⟶ S ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 6 : wff = sylan (hyp 3, step 5) |- ( ( ph ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 7 : wff = ffvelrn () |- ( ( H : A ⟶ S ∧ w ∈ A ) → ( H ` w ) ∈ S ) ;;
+	step 8 : wff = sylan (hyp 4, step 7) |- ( ( ph ∧ w ∈ A ) → ( H ` w ) ∈ S ) ;;
+	step 9 : wff = breq1 () |- ( x = ( F ` w ) → ( x R y ↔ ( F ` w ) R y ) ) ;;
+	step 10 : wff = anbi1d (step 9) |- ( x = ( F ` w ) → ( ( x R y ∧ y T z ) ↔ ( ( F ` w ) R y ∧ y T z ) ) ) ;;
+	step 11 : wff = breq1 () |- ( x = ( F ` w ) → ( x U z ↔ ( F ` w ) U z ) ) ;;
+	step 12 : wff = imbi12d (step 10, step 11) |- ( x = ( F ` w ) → ( ( ( x R y ∧ y T z ) → x U z ) ↔ ( ( ( F ` w ) R y ∧ y T z ) → ( F ` w ) U z ) ) ) ;;
+	step 13 : wff = breq2 () |- ( y = ( G ` w ) → ( ( F ` w ) R y ↔ ( F ` w ) R ( G ` w ) ) ) ;;
+	step 14 : wff = breq1 () |- ( y = ( G ` w ) → ( y T z ↔ ( G ` w ) T z ) ) ;;
+	step 15 : wff = anbi12d (step 13, step 14) |- ( y = ( G ` w ) → ( ( ( F ` w ) R y ∧ y T z ) ↔ ( ( F ` w ) R ( G ` w ) ∧ ( G ` w ) T z ) ) ) ;;
+	step 16 : wff = imbi1d (step 15) |- ( y = ( G ` w ) → ( ( ( ( F ` w ) R y ∧ y T z ) → ( F ` w ) U z ) ↔ ( ( ( F ` w ) R ( G ` w ) ∧ ( G ` w ) T z ) → ( F ` w ) U z ) ) ) ;;
+	step 17 : wff = breq2 () |- ( z = ( H ` w ) → ( ( G ` w ) T z ↔ ( G ` w ) T ( H ` w ) ) ) ;;
+	step 18 : wff = anbi2d (step 17) |- ( z = ( H ` w ) → ( ( ( F ` w ) R ( G ` w ) ∧ ( G ` w ) T z ) ↔ ( ( F ` w ) R ( G ` w ) ∧ ( G ` w ) T ( H ` w ) ) ) ) ;;
+	step 19 : wff = breq2 () |- ( z = ( H ` w ) → ( ( F ` w ) U z ↔ ( F ` w ) U ( H ` w ) ) ) ;;
+	step 20 : wff = imbi12d (step 18, step 19) |- ( z = ( H ` w ) → ( ( ( ( F ` w ) R ( G ` w ) ∧ ( G ` w ) T z ) → ( F ` w ) U z ) ↔ ( ( ( F ` w ) R ( G ` w ) ∧ ( G ` w ) T ( H ` w ) ) → ( F ` w ) U ( H ` w ) ) ) ) ;;
+	step 21 : wff = rspc3v (step 12, step 16, step 20) |- ( ( ( F ` w ) ∈ S ∧ ( G ` w ) ∈ S ∧ ( H ` w ) ∈ S ) → ( ∀ x ∈ S ∀ y ∈ S ∀ z ∈ S ( ( x R y ∧ y T z ) → x U z ) → ( ( ( F ` w ) R ( G ` w ) ∧ ( G ` w ) T ( H ` w ) ) → ( F ` w ) U ( H ` w ) ) ) ) ;;
+	step 22 : wff = syl3anc (step 4, step 6, step 8, step 21) |- ( ( ph ∧ w ∈ A ) → ( ∀ x ∈ S ∀ y ∈ S ∀ z ∈ S ( ( x R y ∧ y T z ) → x U z ) → ( ( ( F ` w ) R ( G ` w ) ∧ ( G ` w ) T ( H ` w ) ) → ( F ` w ) U ( H ` w ) ) ) ) ;;
+	step 23 : wff = mpd (step 2, step 22) |- ( ( ph ∧ w ∈ A ) → ( ( ( F ` w ) R ( G ` w ) ∧ ( G ` w ) T ( H ` w ) ) → ( F ` w ) U ( H ` w ) ) ) ;;
+	step 24 : wff = ralimdva (step 23) |- ( ph → ( ∀ w ∈ A ( ( F ` w ) R ( G ` w ) ∧ ( G ` w ) T ( H ` w ) ) → ∀ w ∈ A ( F ` w ) U ( H ` w ) ) ) ;;
+	step 25 : wff = ffn () |- ( F : A ⟶ S → F Fn A ) ;;
+	step 26 : wff = syl (hyp 2, step 25) |- ( ph → F Fn A ) ;;
+	step 27 : wff = ffn () |- ( G : A ⟶ S → G Fn A ) ;;
+	step 28 : wff = syl (hyp 3, step 27) |- ( ph → G Fn A ) ;;
+	step 29 : wff = inidm () |- ( A ∩ A ) = A ;;
+	step 30 : wff = eqidd () |- ( ( ph ∧ w ∈ A ) → ( F ` w ) = ( F ` w ) ) ;;
+	step 31 : wff = eqidd () |- ( ( ph ∧ w ∈ A ) → ( G ` w ) = ( G ` w ) ) ;;
+	step 32 : wff = ofrfval (step 26, step 28, hyp 1, hyp 1, step 29, step 30, step 31) |- ( ph → ( F oR R G ↔ ∀ w ∈ A ( F ` w ) R ( G ` w ) ) ) ;;
+	step 33 : wff = ffn () |- ( G : A ⟶ S → G Fn A ) ;;
+	step 34 : wff = syl (hyp 3, step 33) |- ( ph → G Fn A ) ;;
+	step 35 : wff = ffn () |- ( H : A ⟶ S → H Fn A ) ;;
+	step 36 : wff = syl (hyp 4, step 35) |- ( ph → H Fn A ) ;;
+	step 37 : wff = inidm () |- ( A ∩ A ) = A ;;
+	step 38 : wff = eqidd () |- ( ( ph ∧ w ∈ A ) → ( G ` w ) = ( G ` w ) ) ;;
+	step 39 : wff = eqidd () |- ( ( ph ∧ w ∈ A ) → ( H ` w ) = ( H ` w ) ) ;;
+	step 40 : wff = ofrfval (step 34, step 36, hyp 1, hyp 1, step 37, step 38, step 39) |- ( ph → ( G oR T H ↔ ∀ w ∈ A ( G ` w ) T ( H ` w ) ) ) ;;
+	step 41 : wff = anbi12d (step 32, step 40) |- ( ph → ( ( F oR R G ∧ G oR T H ) ↔ ( ∀ w ∈ A ( F ` w ) R ( G ` w ) ∧ ∀ w ∈ A ( G ` w ) T ( H ` w ) ) ) ) ;;
+	step 42 : wff = r19.26 () |- ( ∀ w ∈ A ( ( F ` w ) R ( G ` w ) ∧ ( G ` w ) T ( H ` w ) ) ↔ ( ∀ w ∈ A ( F ` w ) R ( G ` w ) ∧ ∀ w ∈ A ( G ` w ) T ( H ` w ) ) ) ;;
+	step 43 : wff = syl6bbr (step 41, step 42) |- ( ph → ( ( F oR R G ∧ G oR T H ) ↔ ∀ w ∈ A ( ( F ` w ) R ( G ` w ) ∧ ( G ` w ) T ( H ` w ) ) ) ) ;;
+	step 44 : wff = ffn () |- ( F : A ⟶ S → F Fn A ) ;;
+	step 45 : wff = syl (hyp 2, step 44) |- ( ph → F Fn A ) ;;
+	step 46 : wff = ffn () |- ( H : A ⟶ S → H Fn A ) ;;
+	step 47 : wff = syl (hyp 4, step 46) |- ( ph → H Fn A ) ;;
+	step 48 : wff = inidm () |- ( A ∩ A ) = A ;;
+	step 49 : wff = eqidd () |- ( ( ph ∧ w ∈ A ) → ( F ` w ) = ( F ` w ) ) ;;
+	step 50 : wff = eqidd () |- ( ( ph ∧ w ∈ A ) → ( H ` w ) = ( H ` w ) ) ;;
+	step 51 : wff = ofrfval (step 45, step 47, hyp 1, hyp 1, step 48, step 49, step 50) |- ( ph → ( F oR U H ↔ ∀ w ∈ A ( F ` w ) U ( H ` w ) ) ) ;;
+	step 52 : wff = 3imtr4d (step 24, step 43, step 51) |- ( ph → ( ( F oR R G ∧ G oR T H ) → F oR U H ) ) ;;
+	qed prop 1 = step 52 ;;
+}
+
+/* Transfer a distributive law to the function operation.  (Contributed
+         by Mario Carneiro, 26-Jul-2014.) */
+
+theorem caofdi (ph : wff, x : set, y : set, z : set, A : class, R : class, S : class, T : class, F : class, G : class, H : class, K : class, O : class, V : class) disjointed(w x y z A, w x y z F, w x y z G, w x y z ph, w x y z H, w x y z K, w x y z O, w x y z R, w x y z S, w x y z T) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → F : A ⟶ K ) ;;
+	hyp 3 : wff = |- ( ph → G : A ⟶ S ) ;;
+	hyp 4 : wff = |- ( ph → H : A ⟶ S ) ;;
+	hyp 5 : wff = |- ( ( ph ∧ ( x ∈ K ∧ y ∈ S ∧ z ∈ S ) ) → ( x T ( y R z ) ) = ( ( x T y ) O ( x T z ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( F oF T ( G oF R H ) ) = ( ( F oF T G ) oF O ( F oF T H ) ) ) ;;
+}
+
+proof of caofdi {
+	var w : set;;
+	step 1 : wff = adantlr (hyp 5) |- ( ( ( ph ∧ w ∈ A ) ∧ ( x ∈ K ∧ y ∈ S ∧ z ∈ S ) ) → ( x T ( y R z ) ) = ( ( x T y ) O ( x T z ) ) ) ;;
+	step 2 : wff = ffvelrn () |- ( ( F : A ⟶ K ∧ w ∈ A ) → ( F ` w ) ∈ K ) ;;
+	step 3 : wff = sylan (hyp 2, step 2) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ K ) ;;
+	step 4 : wff = ffvelrn () |- ( ( G : A ⟶ S ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 5 : wff = sylan (hyp 3, step 4) |- ( ( ph ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 6 : wff = ffvelrn () |- ( ( H : A ⟶ S ∧ w ∈ A ) → ( H ` w ) ∈ S ) ;;
+	step 7 : wff = sylan (hyp 4, step 6) |- ( ( ph ∧ w ∈ A ) → ( H ` w ) ∈ S ) ;;
+	step 8 : wff = caovdid (step 1, step 3, step 5, step 7) |- ( ( ph ∧ w ∈ A ) → ( ( F ` w ) T ( ( G ` w ) R ( H ` w ) ) ) = ( ( ( F ` w ) T ( G ` w ) ) O ( ( F ` w ) T ( H ` w ) ) ) ) ;;
+	step 9 : wff = mpteq2dva (step 8) |- ( ph → ( w ∈ A ↦ ( ( F ` w ) T ( ( G ` w ) R ( H ` w ) ) ) ) = ( w ∈ A ↦ ( ( ( F ` w ) T ( G ` w ) ) O ( ( F ` w ) T ( H ` w ) ) ) ) ) ;;
+	step 10 : wff = ffvelrn () |- ( ( F : A ⟶ K ∧ w ∈ A ) → ( F ` w ) ∈ K ) ;;
+	step 11 : wff = sylan (hyp 2, step 10) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ K ) ;;
+	step 12 : wff = ovex () |- ( ( G ` w ) R ( H ` w ) ) ∈ _V ;;
+	step 13 : wff = a1i (step 12) |- ( ( ph ∧ w ∈ A ) → ( ( G ` w ) R ( H ` w ) ) ∈ _V ) ;;
+	step 14 : wff = feqmptd (hyp 2) |- ( ph → F = ( w ∈ A ↦ ( F ` w ) ) ) ;;
+	step 15 : wff = ffvelrn () |- ( ( G : A ⟶ S ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 16 : wff = sylan (hyp 3, step 15) |- ( ( ph ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 17 : wff = ffvelrn () |- ( ( H : A ⟶ S ∧ w ∈ A ) → ( H ` w ) ∈ S ) ;;
+	step 18 : wff = sylan (hyp 4, step 17) |- ( ( ph ∧ w ∈ A ) → ( H ` w ) ∈ S ) ;;
+	step 19 : wff = feqmptd (hyp 3) |- ( ph → G = ( w ∈ A ↦ ( G ` w ) ) ) ;;
+	step 20 : wff = feqmptd (hyp 4) |- ( ph → H = ( w ∈ A ↦ ( H ` w ) ) ) ;;
+	step 21 : wff = offval2 (hyp 1, step 16, step 18, step 19, step 20) |- ( ph → ( G oF R H ) = ( w ∈ A ↦ ( ( G ` w ) R ( H ` w ) ) ) ) ;;
+	step 22 : wff = offval2 (hyp 1, step 11, step 13, step 14, step 21) |- ( ph → ( F oF T ( G oF R H ) ) = ( w ∈ A ↦ ( ( F ` w ) T ( ( G ` w ) R ( H ` w ) ) ) ) ) ;;
+	step 23 : wff = ovex () |- ( ( F ` w ) T ( G ` w ) ) ∈ _V ;;
+	step 24 : wff = a1i (step 23) |- ( ( ph ∧ w ∈ A ) → ( ( F ` w ) T ( G ` w ) ) ∈ _V ) ;;
+	step 25 : wff = ovex () |- ( ( F ` w ) T ( H ` w ) ) ∈ _V ;;
+	step 26 : wff = a1i (step 25) |- ( ( ph ∧ w ∈ A ) → ( ( F ` w ) T ( H ` w ) ) ∈ _V ) ;;
+	step 27 : wff = ffvelrn () |- ( ( F : A ⟶ K ∧ w ∈ A ) → ( F ` w ) ∈ K ) ;;
+	step 28 : wff = sylan (hyp 2, step 27) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ K ) ;;
+	step 29 : wff = ffvelrn () |- ( ( G : A ⟶ S ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 30 : wff = sylan (hyp 3, step 29) |- ( ( ph ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 31 : wff = feqmptd (hyp 2) |- ( ph → F = ( w ∈ A ↦ ( F ` w ) ) ) ;;
+	step 32 : wff = feqmptd (hyp 3) |- ( ph → G = ( w ∈ A ↦ ( G ` w ) ) ) ;;
+	step 33 : wff = offval2 (hyp 1, step 28, step 30, step 31, step 32) |- ( ph → ( F oF T G ) = ( w ∈ A ↦ ( ( F ` w ) T ( G ` w ) ) ) ) ;;
+	step 34 : wff = ffvelrn () |- ( ( F : A ⟶ K ∧ w ∈ A ) → ( F ` w ) ∈ K ) ;;
+	step 35 : wff = sylan (hyp 2, step 34) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ K ) ;;
+	step 36 : wff = ffvelrn () |- ( ( H : A ⟶ S ∧ w ∈ A ) → ( H ` w ) ∈ S ) ;;
+	step 37 : wff = sylan (hyp 4, step 36) |- ( ( ph ∧ w ∈ A ) → ( H ` w ) ∈ S ) ;;
+	step 38 : wff = feqmptd (hyp 2) |- ( ph → F = ( w ∈ A ↦ ( F ` w ) ) ) ;;
+	step 39 : wff = feqmptd (hyp 4) |- ( ph → H = ( w ∈ A ↦ ( H ` w ) ) ) ;;
+	step 40 : wff = offval2 (hyp 1, step 35, step 37, step 38, step 39) |- ( ph → ( F oF T H ) = ( w ∈ A ↦ ( ( F ` w ) T ( H ` w ) ) ) ) ;;
+	step 41 : wff = offval2 (hyp 1, step 24, step 26, step 33, step 40) |- ( ph → ( ( F oF T G ) oF O ( F oF T H ) ) = ( w ∈ A ↦ ( ( ( F ` w ) T ( G ` w ) ) O ( ( F ` w ) T ( H ` w ) ) ) ) ) ;;
+	step 42 : wff = 3eqtr4d (step 9, step 22, step 41) |- ( ph → ( F oF T ( G oF R H ) ) = ( ( F oF T G ) oF O ( F oF T H ) ) ) ;;
+	qed prop 1 = step 42 ;;
+}
+
+/* Transfer a reverse distributive law to the function operation.
+         (Contributed by NM, 19-Oct-2014.) */
+
+theorem caofdir (ph : wff, x : set, y : set, z : set, A : class, R : class, S : class, T : class, F : class, G : class, H : class, K : class, O : class, V : class) disjointed(w x y z A, w x y z F, w x y z G, w x y z ph, w x y z H, w x y z K, w x y z O, w x y z R, w x y z S, w x y z T) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → F : A ⟶ K ) ;;
+	hyp 3 : wff = |- ( ph → G : A ⟶ S ) ;;
+	hyp 4 : wff = |- ( ph → H : A ⟶ S ) ;;
+	hyp 5 : wff = |- ( ( ph ∧ ( x ∈ S ∧ y ∈ S ∧ z ∈ K ) ) → ( ( x R y ) T z ) = ( ( x T z ) O ( y T z ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ( G oF R H ) oF T F ) = ( ( G oF T F ) oF O ( H oF T F ) ) ) ;;
+}
+
+proof of caofdir {
+	var w : set;;
+	step 1 : wff = adantlr (hyp 5) |- ( ( ( ph ∧ w ∈ A ) ∧ ( x ∈ S ∧ y ∈ S ∧ z ∈ K ) ) → ( ( x R y ) T z ) = ( ( x T z ) O ( y T z ) ) ) ;;
+	step 2 : wff = ffvelrn () |- ( ( G : A ⟶ S ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 3 : wff = sylan (hyp 3, step 2) |- ( ( ph ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 4 : wff = ffvelrn () |- ( ( H : A ⟶ S ∧ w ∈ A ) → ( H ` w ) ∈ S ) ;;
+	step 5 : wff = sylan (hyp 4, step 4) |- ( ( ph ∧ w ∈ A ) → ( H ` w ) ∈ S ) ;;
+	step 6 : wff = ffvelrn () |- ( ( F : A ⟶ K ∧ w ∈ A ) → ( F ` w ) ∈ K ) ;;
+	step 7 : wff = sylan (hyp 2, step 6) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ K ) ;;
+	step 8 : wff = caovdird (step 1, step 3, step 5, step 7) |- ( ( ph ∧ w ∈ A ) → ( ( ( G ` w ) R ( H ` w ) ) T ( F ` w ) ) = ( ( ( G ` w ) T ( F ` w ) ) O ( ( H ` w ) T ( F ` w ) ) ) ) ;;
+	step 9 : wff = mpteq2dva (step 8) |- ( ph → ( w ∈ A ↦ ( ( ( G ` w ) R ( H ` w ) ) T ( F ` w ) ) ) = ( w ∈ A ↦ ( ( ( G ` w ) T ( F ` w ) ) O ( ( H ` w ) T ( F ` w ) ) ) ) ) ;;
+	step 10 : wff = ovex () |- ( ( G ` w ) R ( H ` w ) ) ∈ _V ;;
+	step 11 : wff = a1i (step 10) |- ( ( ph ∧ w ∈ A ) → ( ( G ` w ) R ( H ` w ) ) ∈ _V ) ;;
+	step 12 : wff = ffvelrn () |- ( ( F : A ⟶ K ∧ w ∈ A ) → ( F ` w ) ∈ K ) ;;
+	step 13 : wff = sylan (hyp 2, step 12) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ K ) ;;
+	step 14 : wff = ffvelrn () |- ( ( G : A ⟶ S ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 15 : wff = sylan (hyp 3, step 14) |- ( ( ph ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 16 : wff = ffvelrn () |- ( ( H : A ⟶ S ∧ w ∈ A ) → ( H ` w ) ∈ S ) ;;
+	step 17 : wff = sylan (hyp 4, step 16) |- ( ( ph ∧ w ∈ A ) → ( H ` w ) ∈ S ) ;;
+	step 18 : wff = feqmptd (hyp 3) |- ( ph → G = ( w ∈ A ↦ ( G ` w ) ) ) ;;
+	step 19 : wff = feqmptd (hyp 4) |- ( ph → H = ( w ∈ A ↦ ( H ` w ) ) ) ;;
+	step 20 : wff = offval2 (hyp 1, step 15, step 17, step 18, step 19) |- ( ph → ( G oF R H ) = ( w ∈ A ↦ ( ( G ` w ) R ( H ` w ) ) ) ) ;;
+	step 21 : wff = feqmptd (hyp 2) |- ( ph → F = ( w ∈ A ↦ ( F ` w ) ) ) ;;
+	step 22 : wff = offval2 (hyp 1, step 11, step 13, step 20, step 21) |- ( ph → ( ( G oF R H ) oF T F ) = ( w ∈ A ↦ ( ( ( G ` w ) R ( H ` w ) ) T ( F ` w ) ) ) ) ;;
+	step 23 : wff = ovex () |- ( ( G ` w ) T ( F ` w ) ) ∈ _V ;;
+	step 24 : wff = a1i (step 23) |- ( ( ph ∧ w ∈ A ) → ( ( G ` w ) T ( F ` w ) ) ∈ _V ) ;;
+	step 25 : wff = ovex () |- ( ( H ` w ) T ( F ` w ) ) ∈ _V ;;
+	step 26 : wff = a1i (step 25) |- ( ( ph ∧ w ∈ A ) → ( ( H ` w ) T ( F ` w ) ) ∈ _V ) ;;
+	step 27 : wff = ffvelrn () |- ( ( G : A ⟶ S ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 28 : wff = sylan (hyp 3, step 27) |- ( ( ph ∧ w ∈ A ) → ( G ` w ) ∈ S ) ;;
+	step 29 : wff = ffvelrn () |- ( ( F : A ⟶ K ∧ w ∈ A ) → ( F ` w ) ∈ K ) ;;
+	step 30 : wff = sylan (hyp 2, step 29) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ K ) ;;
+	step 31 : wff = feqmptd (hyp 3) |- ( ph → G = ( w ∈ A ↦ ( G ` w ) ) ) ;;
+	step 32 : wff = feqmptd (hyp 2) |- ( ph → F = ( w ∈ A ↦ ( F ` w ) ) ) ;;
+	step 33 : wff = offval2 (hyp 1, step 28, step 30, step 31, step 32) |- ( ph → ( G oF T F ) = ( w ∈ A ↦ ( ( G ` w ) T ( F ` w ) ) ) ) ;;
+	step 34 : wff = ffvelrn () |- ( ( H : A ⟶ S ∧ w ∈ A ) → ( H ` w ) ∈ S ) ;;
+	step 35 : wff = sylan (hyp 4, step 34) |- ( ( ph ∧ w ∈ A ) → ( H ` w ) ∈ S ) ;;
+	step 36 : wff = ffvelrn () |- ( ( F : A ⟶ K ∧ w ∈ A ) → ( F ` w ) ∈ K ) ;;
+	step 37 : wff = sylan (hyp 2, step 36) |- ( ( ph ∧ w ∈ A ) → ( F ` w ) ∈ K ) ;;
+	step 38 : wff = feqmptd (hyp 4) |- ( ph → H = ( w ∈ A ↦ ( H ` w ) ) ) ;;
+	step 39 : wff = feqmptd (hyp 2) |- ( ph → F = ( w ∈ A ↦ ( F ` w ) ) ) ;;
+	step 40 : wff = offval2 (hyp 1, step 35, step 37, step 38, step 39) |- ( ph → ( H oF T F ) = ( w ∈ A ↦ ( ( H ` w ) T ( F ` w ) ) ) ) ;;
+	step 41 : wff = offval2 (hyp 1, step 24, step 26, step 33, step 40) |- ( ph → ( ( G oF T F ) oF O ( H oF T F ) ) = ( w ∈ A ↦ ( ( ( G ` w ) T ( F ` w ) ) O ( ( H ` w ) T ( F ` w ) ) ) ) ) ;;
+	step 42 : wff = 3eqtr4d (step 9, step 22, step 41) |- ( ph → ( ( G oF R H ) oF T F ) = ( ( G oF T F ) oF O ( H oF T F ) ) ) ;;
+	qed prop 1 = step 42 ;;
+}
+
+/* Transfer ~ nncan -shaped laws to vectors of numbers.  (Contributed by
+       Stefan O'Rear, 27-Mar-2015.) */
+
+theorem caonncan (ph : wff, x : set, y : set, A : class, B : class, S : class, I : class, M : class, V : class) disjointed(ph x y z, A x y z, B y z, I z, M x y z, S x y) {
+	hyp 1 : wff = |- ( ph → I ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → A : I ⟶ S ) ;;
+	hyp 3 : wff = |- ( ph → B : I ⟶ S ) ;;
+	hyp 4 : wff = |- ( ( ph ∧ ( x ∈ S ∧ y ∈ S ) ) → ( x M ( x M y ) ) = y ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A oF M ( A oF M B ) ) = B ) ;;
+}
+
+proof of caonncan {
+	var z : set;;
+	step 1 : wff = ffvelrn () |- ( ( A : I ⟶ S ∧ z ∈ I ) → ( A ` z ) ∈ S ) ;;
+	step 2 : wff = sylan (hyp 2, step 1) |- ( ( ph ∧ z ∈ I ) → ( A ` z ) ∈ S ) ;;
+	step 3 : wff = ffvelrn () |- ( ( B : I ⟶ S ∧ z ∈ I ) → ( B ` z ) ∈ S ) ;;
+	step 4 : wff = sylan (hyp 3, step 3) |- ( ( ph ∧ z ∈ I ) → ( B ` z ) ∈ S ) ;;
+	step 5 : wff = ralrimivva (hyp 4) |- ( ph → ∀ x ∈ S ∀ y ∈ S ( x M ( x M y ) ) = y ) ;;
+	step 6 : wff = adantr (step 5) |- ( ( ph ∧ z ∈ I ) → ∀ x ∈ S ∀ y ∈ S ( x M ( x M y ) ) = y ) ;;
+	step 7 : wff = id () |- ( x = ( A ` z ) → x = ( A ` z ) ) ;;
+	step 8 : wff = oveq1 () |- ( x = ( A ` z ) → ( x M y ) = ( ( A ` z ) M y ) ) ;;
+	step 9 : wff = oveq12d (step 7, step 8) |- ( x = ( A ` z ) → ( x M ( x M y ) ) = ( ( A ` z ) M ( ( A ` z ) M y ) ) ) ;;
+	step 10 : wff = eqeq1d (step 9) |- ( x = ( A ` z ) → ( ( x M ( x M y ) ) = y ↔ ( ( A ` z ) M ( ( A ` z ) M y ) ) = y ) ) ;;
+	step 11 : wff = oveq2 () |- ( y = ( B ` z ) → ( ( A ` z ) M y ) = ( ( A ` z ) M ( B ` z ) ) ) ;;
+	step 12 : wff = oveq2d (step 11) |- ( y = ( B ` z ) → ( ( A ` z ) M ( ( A ` z ) M y ) ) = ( ( A ` z ) M ( ( A ` z ) M ( B ` z ) ) ) ) ;;
+	step 13 : wff = id () |- ( y = ( B ` z ) → y = ( B ` z ) ) ;;
+	step 14 : wff = eqeq12d (step 12, step 13) |- ( y = ( B ` z ) → ( ( ( A ` z ) M ( ( A ` z ) M y ) ) = y ↔ ( ( A ` z ) M ( ( A ` z ) M ( B ` z ) ) ) = ( B ` z ) ) ) ;;
+	step 15 : wff = rspc2va (step 10, step 14) |- ( ( ( ( A ` z ) ∈ S ∧ ( B ` z ) ∈ S ) ∧ ∀ x ∈ S ∀ y ∈ S ( x M ( x M y ) ) = y ) → ( ( A ` z ) M ( ( A ` z ) M ( B ` z ) ) ) = ( B ` z ) ) ;;
+	step 16 : wff = syl21anc (step 2, step 4, step 6, step 15) |- ( ( ph ∧ z ∈ I ) → ( ( A ` z ) M ( ( A ` z ) M ( B ` z ) ) ) = ( B ` z ) ) ;;
+	step 17 : wff = mpteq2dva (step 16) |- ( ph → ( z ∈ I ↦ ( ( A ` z ) M ( ( A ` z ) M ( B ` z ) ) ) ) = ( z ∈ I ↦ ( B ` z ) ) ) ;;
+	step 18 : wff = fvex () |- ( A ` z ) ∈ _V ;;
+	step 19 : wff = a1i (step 18) |- ( ( ph ∧ z ∈ I ) → ( A ` z ) ∈ _V ) ;;
+	step 20 : wff = ovex () |- ( ( A ` z ) M ( B ` z ) ) ∈ _V ;;
+	step 21 : wff = a1i (step 20) |- ( ( ph ∧ z ∈ I ) → ( ( A ` z ) M ( B ` z ) ) ∈ _V ) ;;
+	step 22 : wff = feqmptd (hyp 2) |- ( ph → A = ( z ∈ I ↦ ( A ` z ) ) ) ;;
+	step 23 : wff = fvex () |- ( A ` z ) ∈ _V ;;
+	step 24 : wff = a1i (step 23) |- ( ( ph ∧ z ∈ I ) → ( A ` z ) ∈ _V ) ;;
+	step 25 : wff = fvex () |- ( B ` z ) ∈ _V ;;
+	step 26 : wff = a1i (step 25) |- ( ( ph ∧ z ∈ I ) → ( B ` z ) ∈ _V ) ;;
+	step 27 : wff = feqmptd (hyp 2) |- ( ph → A = ( z ∈ I ↦ ( A ` z ) ) ) ;;
+	step 28 : wff = feqmptd (hyp 3) |- ( ph → B = ( z ∈ I ↦ ( B ` z ) ) ) ;;
+	step 29 : wff = offval2 (hyp 1, step 24, step 26, step 27, step 28) |- ( ph → ( A oF M B ) = ( z ∈ I ↦ ( ( A ` z ) M ( B ` z ) ) ) ) ;;
+	step 30 : wff = offval2 (hyp 1, step 19, step 21, step 22, step 29) |- ( ph → ( A oF M ( A oF M B ) ) = ( z ∈ I ↦ ( ( A ` z ) M ( ( A ` z ) M ( B ` z ) ) ) ) ) ;;
+	step 31 : wff = feqmptd (hyp 3) |- ( ph → B = ( z ∈ I ↦ ( B ` z ) ) ) ;;
+	step 32 : wff = 3eqtr4d (step 17, step 30, step 31) |- ( ph → ( A oF M ( A oF M B ) ) = B ) ;;
+	qed prop 1 = step 32 ;;
+}
+
+/* Equivalent expressions for a restriction of the function operation map.
+       Unlike ` oF R ` which is a proper class, ` ( oF R | `` ( A X. B ) ) `
+       can be a set by ~ ofmresex , allowing it to be used as a function or
+       structure argument.  By ~ ofmresval , the restricted operation map
+       values are the same as the original values, allowing theorems for
+       ` oF R ` to be reused.  (Contributed by NM, 20-Oct-2014.) */
+
+theorem ofmres (A : class, B : class, R : class, f : set, g : set) disjointed(f g A, f g B, f g x R) {
+	prop 1 : wff = |- ( oF R ↾ ( A × B ) ) = ( f ∈ A , g ∈ B ↦ ( f oF R g ) ) ;;
+}
+
+proof of ofmres {
+	var x : set;;
+	step 1 : wff = ssv () |- A ⊆ _V ;;
+	step 2 : wff = ssv () |- B ⊆ _V ;;
+	step 3 : wff = resmpt2 () |- ( ( A ⊆ _V ∧ B ⊆ _V ) → ( ( f ∈ _V , g ∈ _V ↦ ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) R ( g ` x ) ) ) ) ↾ ( A × B ) ) = ( f ∈ A , g ∈ B ↦ ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) R ( g ` x ) ) ) ) ) ;;
+	step 4 : wff = mp2an (step 1, step 2, step 3) |- ( ( f ∈ _V , g ∈ _V ↦ ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) R ( g ` x ) ) ) ) ↾ ( A × B ) ) = ( f ∈ A , g ∈ B ↦ ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) R ( g ` x ) ) ) ) ;;
+	step 5 : wff = df-of () |- oF R = ( f ∈ _V , g ∈ _V ↦ ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) R ( g ` x ) ) ) ) ;;
+	step 6 : wff = reseq1i (step 5) |- ( oF R ↾ ( A × B ) ) = ( ( f ∈ _V , g ∈ _V ↦ ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) R ( g ` x ) ) ) ) ↾ ( A × B ) ) ;;
+	step 7 : wff = eqid () |- A = A ;;
+	step 8 : wff = eqid () |- B = B ;;
+	step 9 : wff = vex () |- f ∈ _V ;;
+	step 10 : wff = vex () |- g ∈ _V ;;
+	step 11 : wff = vex () |- f ∈ _V ;;
+	step 12 : wff = dmex (step 11) |- dom f ∈ _V ;;
+	step 13 : wff = inex1 (step 12) |- ( dom f ∩ dom g ) ∈ _V ;;
+	step 14 : wff = mptex (step 13) |- ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) R ( g ` x ) ) ) ∈ _V ;;
+	step 15 : wff = df-of () |- oF R = ( f ∈ _V , g ∈ _V ↦ ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) R ( g ` x ) ) ) ) ;;
+	step 16 : wff = ovmpt4g (step 15) |- ( ( f ∈ _V ∧ g ∈ _V ∧ ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) R ( g ` x ) ) ) ∈ _V ) → ( f oF R g ) = ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) R ( g ` x ) ) ) ) ;;
+	step 17 : wff = mp3an (step 9, step 10, step 14, step 16) |- ( f oF R g ) = ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) R ( g ` x ) ) ) ;;
+	step 18 : wff = mpt2eq123i (step 7, step 8, step 17) |- ( f ∈ A , g ∈ B ↦ ( f oF R g ) ) = ( f ∈ A , g ∈ B ↦ ( x ∈ ( dom f ∩ dom g ) ↦ ( ( f ` x ) R ( g ` x ) ) ) ) ;;
+	step 19 : wff = 3eqtr4i (step 4, step 6, step 18) |- ( oF R ↾ ( A × B ) ) = ( f ∈ A , g ∈ B ↦ ( f oF R g ) ) ;;
+	qed prop 1 = step 19 ;;
+}
+
+/* Value of a restriction of the function operation map.  (Contributed by
+       NM, 20-Oct-2014.) */
+
+theorem ofmresval (ph : wff, A : class, B : class, R : class, F : class, G : class)  {
+	hyp 1 : wff = |- ( ph → F ∈ A ) ;;
+	hyp 2 : wff = |- ( ph → G ∈ B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( F ( oF R ↾ ( A × B ) ) G ) = ( F oF R G ) ) ;;
+}
+
+proof of ofmresval {
+	step 1 : wff = ovres () |- ( ( F ∈ A ∧ G ∈ B ) → ( F ( oF R ↾ ( A × B ) ) G ) = ( F oF R G ) ) ;;
+	step 2 : wff = syl2anc (hyp 1, hyp 2, step 1) |- ( ph → ( F ( oF R ↾ ( A × B ) ) G ) = ( F oF R G ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Existence of a restriction of the function operation map.  (Contributed
+       by NM, 20-Oct-2014.) */
+
+theorem ofmresex (ph : wff, A : class, B : class, R : class, V : class, W : class)  {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → B ∈ W ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( oF R ↾ ( A × B ) ) ∈ _V ) ;;
+}
+
+proof of ofmresex {
+	step 1 : wff = xpexg () |- ( ( A ∈ V ∧ B ∈ W ) → ( A × B ) ∈ _V ) ;;
+	step 2 : wff = syl2anc (hyp 1, hyp 2, step 1) |- ( ph → ( A × B ) ∈ _V ) ;;
+	step 3 : wff = ofexg () |- ( ( A × B ) ∈ _V → ( oF R ↾ ( A × B ) ) ∈ _V ) ;;
+	step 4 : wff = syl (step 2, step 3) |- ( ph → ( oF R ↾ ( A × B ) ) ∈ _V ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Formula building theorem for support restrictions: vector operation with
+       left annihilator.  (Contributed by Stefan O'Rear, 9-Mar-2015.) */
+
+theorem suppssof1 (ph : wff, v : set, A : class, B : class, D : class, R : class, L : class, O : class, V : class, W : class, Y : class, Z : class) disjointed(ph v x, A x, B v x, D x, O v x, R v, Y v x, Z v x) {
+	hyp 1 : wff = |- ( ph → ( ⁻¹ A " ( _V ∖ { Y } ) ) ⊆ L ) ;;
+	hyp 2 : wff = |- ( ( ph ∧ v ∈ R ) → ( Y O v ) = Z ) ;;
+	hyp 3 : wff = |- ( ph → A : D ⟶ V ) ;;
+	hyp 4 : wff = |- ( ph → B : D ⟶ R ) ;;
+	hyp 5 : wff = |- ( ph → D ∈ W ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ⁻¹ ( A oF O B ) " ( _V ∖ { Z } ) ) ⊆ L ) ;;
+}
+
+proof of suppssof1 {
+	var x : set;;
+	step 1 : wff = ffn () |- ( A : D ⟶ V → A Fn D ) ;;
+	step 2 : wff = syl (hyp 3, step 1) |- ( ph → A Fn D ) ;;
+	step 3 : wff = ffn () |- ( B : D ⟶ R → B Fn D ) ;;
+	step 4 : wff = syl (hyp 4, step 3) |- ( ph → B Fn D ) ;;
+	step 5 : wff = inidm () |- ( D ∩ D ) = D ;;
+	step 6 : wff = eqidd () |- ( ( ph ∧ x ∈ D ) → ( A ` x ) = ( A ` x ) ) ;;
+	step 7 : wff = eqidd () |- ( ( ph ∧ x ∈ D ) → ( B ` x ) = ( B ` x ) ) ;;
+	step 8 : wff = offval (step 2, step 4, hyp 5, hyp 5, step 5, step 6, step 7) |- ( ph → ( A oF O B ) = ( x ∈ D ↦ ( ( A ` x ) O ( B ` x ) ) ) ) ;;
+	step 9 : wff = cnveqd (step 8) |- ( ph → ⁻¹ ( A oF O B ) = ⁻¹ ( x ∈ D ↦ ( ( A ` x ) O ( B ` x ) ) ) ) ;;
+	step 10 : wff = imaeq1d (step 9) |- ( ph → ( ⁻¹ ( A oF O B ) " ( _V ∖ { Z } ) ) = ( ⁻¹ ( x ∈ D ↦ ( ( A ` x ) O ( B ` x ) ) ) " ( _V ∖ { Z } ) ) ) ;;
+	step 11 : wff = feqmptd (hyp 3) |- ( ph → A = ( x ∈ D ↦ ( A ` x ) ) ) ;;
+	step 12 : wff = cnveqd (step 11) |- ( ph → ⁻¹ A = ⁻¹ ( x ∈ D ↦ ( A ` x ) ) ) ;;
+	step 13 : wff = imaeq1d (step 12) |- ( ph → ( ⁻¹ A " ( _V ∖ { Y } ) ) = ( ⁻¹ ( x ∈ D ↦ ( A ` x ) ) " ( _V ∖ { Y } ) ) ) ;;
+	step 14 : wff = eqsstr3d (step 13, hyp 1) |- ( ph → ( ⁻¹ ( x ∈ D ↦ ( A ` x ) ) " ( _V ∖ { Y } ) ) ⊆ L ) ;;
+	step 15 : wff = fvex () |- ( A ` x ) ∈ _V ;;
+	step 16 : wff = a1i (step 15) |- ( ( ph ∧ x ∈ D ) → ( A ` x ) ∈ _V ) ;;
+	step 17 : wff = ffvelrn () |- ( ( B : D ⟶ R ∧ x ∈ D ) → ( B ` x ) ∈ R ) ;;
+	step 18 : wff = sylan (hyp 4, step 17) |- ( ( ph ∧ x ∈ D ) → ( B ` x ) ∈ R ) ;;
+	step 19 : wff = suppssov1 (step 14, hyp 2, step 16, step 18) |- ( ph → ( ⁻¹ ( x ∈ D ↦ ( ( A ` x ) O ( B ` x ) ) ) " ( _V ∖ { Z } ) ) ⊆ L ) ;;
+	step 20 : wff = eqsstrd (step 10, step 19) |- ( ph → ( ⁻¹ ( A oF O B ) " ( _V ∖ { Z } ) ) ⊆ L ) ;;
+	qed prop 1 = step 20 ;;
+}
+
+

@@ -1,0 +1,764 @@
+import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Binary_relations.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                Ordered-pair class abstractions (class builders)
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+constant {
+	symbol ↦ ;;
+	ascii |-> ;;
+	latex \mapsto ;;
+}
+
+/* Maps-to symbol */
+
+/* Extend class notation to include ordered-pair class abstraction (class
+     builder). */
+
+rule copab (ph : wff, x : set, y : set) {
+	term : class = # { 〈 x , y 〉 | ph } ;;
+}
+
+/* Extend the definition of a class to include maps-to notation for defining
+     a function via a rule. */
+
+rule cmpt (x : set, A : class, B : class) {
+	term : class = # ( x ∈ A ↦ B ) ;;
+}
+
+/* Define the class abstraction of a collection of ordered pairs.
+       Definition 3.3 of [Monk1] p. 34.  Usually ` x ` and ` y ` are distinct,
+       although the definition doesn't strictly require it (see ~ dfid2 for a
+       case where they are not distinct).  The brace notation is called "class
+       abstraction" by Quine; it is also (more commonly) called a "class
+       builder" in the literature.  An alternate definition using no
+       existential quantifiers is shown by ~ dfopab2 .  For example,
+` R = { <. x , y >. | ( x e. CC /\ y e. CC /\ ( x + 1 ) = y ) } -> 3 R 4 `
+       ( ~ ex-opab ).  (Contributed by NM, 4-Jul-1994.) */
+
+definition df-opab (ph : wff, x : set, y : set, z : set) disjointed(x z, y z, z ph) {
+	defiendum : class = # { 〈 x , y 〉 | ph } ;;
+	definiens : class = # { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ph ) } ;;
+	-----------------------
+	prop : wff = |- defiendum = definiens ;;
+}
+
+/* Define maps-to notation for defining a function via a rule.  Read as
+       "the function defined by the map from ` x ` (in ` A ` ) to
+       ` B ( x ) ` ."  The class expression ` B ` is the value of the function
+       at ` x ` and normally contains the variable ` x ` .  An example is the
+       square function for complex numbers, ` ( x e. CC |-> ( x ^ 2 ) ) ` .
+       Similar to the definition of mapping in [ChoquetDD] p. 2.  (Contributed
+       by NM, 17-Feb-2008.) */
+
+definition df-mpt (x : set, y : set, A : class, B : class) disjointed(x y, y A, y B) {
+	defiendum : class = # ( x ∈ A ↦ B ) ;;
+	definiens : class = # { 〈 x , y 〉 | ( x ∈ A ∧ y = B ) } ;;
+	-----------------------
+	prop : wff = |- defiendum = definiens ;;
+}
+
+/* The collection of ordered pairs in a class is a subclass of it.
+       (Contributed by NM, 27-Dec-1996.)  (Proof shortened by Andrew Salmon,
+       9-Jul-2011.) */
+
+theorem opabss (x : set, y : set, R : class) disjointed(x z R, y z R) {
+	prop 1 : wff = |- { 〈 x , y 〉 | x R y } ⊆ R ;;
+}
+
+proof of opabss {
+	var z : set;;
+	step 1 : wff = df-opab () |- { 〈 x , y 〉 | x R y } = { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ x R y ) } ;;
+	step 2 : wff = df-br () |- ( x R y ↔ 〈 x , y 〉 ∈ R ) ;;
+	step 3 : wff = eleq1 () |- ( z = 〈 x , y 〉 → ( z ∈ R ↔ 〈 x , y 〉 ∈ R ) ) ;;
+	step 4 : wff = biimpar (step 3) |- ( ( z = 〈 x , y 〉 ∧ 〈 x , y 〉 ∈ R ) → z ∈ R ) ;;
+	step 5 : wff = sylan2b (step 2, step 4) |- ( ( z = 〈 x , y 〉 ∧ x R y ) → z ∈ R ) ;;
+	step 6 : wff = exlimivv (step 5) |- ( ∃ x ∃ y ( z = 〈 x , y 〉 ∧ x R y ) → z ∈ R ) ;;
+	step 7 : wff = abssi (step 6) |- { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ x R y ) } ⊆ R ;;
+	step 8 : wff = eqsstri (step 1, step 7) |- { 〈 x , y 〉 | x R y } ⊆ R ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Equivalent wff's yield equal ordered-pair class abstractions (deduction
+       rule).  (Contributed by NM, 21-Feb-2004.)  (Proof shortened by Andrew
+       Salmon, 9-Jul-2011.) */
+
+theorem opabbid (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x z, y z, z ph, z ps, z ch) {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- F/ y ph ;;
+	hyp 3 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → { 〈 x , y 〉 | ps } = { 〈 x , y 〉 | ch } ) ;;
+}
+
+proof of opabbid {
+	var z : set;;
+	step 1 : wff = anbi2d (hyp 3) |- ( ph → ( ( z = 〈 x , y 〉 ∧ ps ) ↔ ( z = 〈 x , y 〉 ∧ ch ) ) ) ;;
+	step 2 : wff = exbid (hyp 2, step 1) |- ( ph → ( ∃ y ( z = 〈 x , y 〉 ∧ ps ) ↔ ∃ y ( z = 〈 x , y 〉 ∧ ch ) ) ) ;;
+	step 3 : wff = exbid (hyp 1, step 2) |- ( ph → ( ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ps ) ↔ ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ch ) ) ) ;;
+	step 4 : wff = abbidv (step 3) |- ( ph → { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ps ) } = { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ch ) } ) ;;
+	step 5 : wff = df-opab () |- { 〈 x , y 〉 | ps } = { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ps ) } ;;
+	step 6 : wff = df-opab () |- { 〈 x , y 〉 | ch } = { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ch ) } ;;
+	step 7 : wff = 3eqtr4g (step 4, step 5, step 6) |- ( ph → { 〈 x , y 〉 | ps } = { 〈 x , y 〉 | ch } ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Equivalent wff's yield equal ordered-pair class abstractions (deduction
+       rule).  (Contributed by NM, 15-May-1995.) */
+
+theorem opabbidv (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x ph, y ph) {
+	hyp 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → { 〈 x , y 〉 | ps } = { 〈 x , y 〉 | ch } ) ;;
+}
+
+proof of opabbidv {
+	step 1 : wff = nfv () |- F/ x ph ;;
+	step 2 : wff = nfv () |- F/ y ph ;;
+	step 3 : wff = opabbid (step 1, step 2, hyp 1) |- ( ph → { 〈 x , y 〉 | ps } = { 〈 x , y 〉 | ch } ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Equivalent wff's yield equal class abstractions.  (Contributed by NM,
+       15-May-1995.) */
+
+theorem opabbii (ph : wff, ps : wff, x : set, y : set) disjointed(x z, y z, z ph, z ps) {
+	hyp 1 : wff = |- ( ph ↔ ps ) ;;
+	-----------------------
+	prop 1 : wff = |- { 〈 x , y 〉 | ph } = { 〈 x , y 〉 | ps } ;;
+}
+
+proof of opabbii {
+	var z : set;;
+	step 1 : wff = eqid () |- z = z ;;
+	step 2 : wff = a1i (hyp 1) |- ( z = z → ( ph ↔ ps ) ) ;;
+	step 3 : wff = opabbidv (step 2) |- ( z = z → { 〈 x , y 〉 | ph } = { 〈 x , y 〉 | ps } ) ;;
+	step 4 : wff = ax-mp (step 1, step 3) |- { 〈 x , y 〉 | ph } = { 〈 x , y 〉 | ps } ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Bound-variable hypothesis builder for class abstraction.  (Contributed
+       by NM, 1-Sep-1999.)  (Unnecessary distinct variable restrictions were
+       removed by Andrew Salmon, 11-Jul-2011.) */
+
+theorem nfopab (ph : wff, x : set, y : set, z : set) disjointed(x z w, y z w, ph w) {
+	hyp 1 : wff = |- F/ z ph ;;
+	-----------------------
+	prop 1 : wff = |- F/_ z { 〈 x , y 〉 | ph } ;;
+}
+
+proof of nfopab {
+	var w : set;;
+	step 1 : wff = df-opab () |- { 〈 x , y 〉 | ph } = { w | ∃ x ∃ y ( w = 〈 x , y 〉 ∧ ph ) } ;;
+	step 2 : wff = nfv () |- F/ z w = 〈 x , y 〉 ;;
+	step 3 : wff = nfan (step 2, hyp 1) |- F/ z ( w = 〈 x , y 〉 ∧ ph ) ;;
+	step 4 : wff = nfex (step 3) |- F/ z ∃ y ( w = 〈 x , y 〉 ∧ ph ) ;;
+	step 5 : wff = nfex (step 4) |- F/ z ∃ x ∃ y ( w = 〈 x , y 〉 ∧ ph ) ;;
+	step 6 : wff = nfab (step 5) |- F/_ z { w | ∃ x ∃ y ( w = 〈 x , y 〉 ∧ ph ) } ;;
+	step 7 : wff = nfcxfr (step 1, step 6) |- F/_ z { 〈 x , y 〉 | ph } ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* The first abstraction variable in an ordered-pair class abstraction
+       (class builder) is effectively not free.  (Contributed by NM,
+       16-May-1995.)  (Revised by Mario Carneiro, 14-Oct-2016.) */
+
+theorem nfopab1 (ph : wff, x : set, y : set) disjointed(x z, y z, z ph) {
+	prop 1 : wff = |- F/_ x { 〈 x , y 〉 | ph } ;;
+}
+
+proof of nfopab1 {
+	var z : set;;
+	step 1 : wff = df-opab () |- { 〈 x , y 〉 | ph } = { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ph ) } ;;
+	step 2 : wff = nfe1 () |- F/ x ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ph ) ;;
+	step 3 : wff = nfab (step 2) |- F/_ x { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ph ) } ;;
+	step 4 : wff = nfcxfr (step 1, step 3) |- F/_ x { 〈 x , y 〉 | ph } ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* The second abstraction variable in an ordered-pair class abstraction
+       (class builder) is effectively not free.  (Contributed by NM,
+       16-May-1995.)  (Revised by Mario Carneiro, 14-Oct-2016.) */
+
+theorem nfopab2 (ph : wff, x : set, y : set) disjointed(x z, y z, z ph) {
+	prop 1 : wff = |- F/_ y { 〈 x , y 〉 | ph } ;;
+}
+
+proof of nfopab2 {
+	var z : set;;
+	step 1 : wff = df-opab () |- { 〈 x , y 〉 | ph } = { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ph ) } ;;
+	step 2 : wff = nfe1 () |- F/ y ∃ y ( z = 〈 x , y 〉 ∧ ph ) ;;
+	step 3 : wff = nfex (step 2) |- F/ y ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ph ) ;;
+	step 4 : wff = nfab (step 3) |- F/_ y { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ph ) } ;;
+	step 5 : wff = nfcxfr (step 1, step 4) |- F/_ y { 〈 x , y 〉 | ph } ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Rule used to change bound variables in an ordered-pair class
+       abstraction, using implicit substitution.  (Contributed by NM,
+       14-Sep-2003.) */
+
+theorem cbvopab (ph : wff, ps : wff, x : set, y : set, z : set, w : set) disjointed(x y z w v, v ph, v ps) {
+	hyp 1 : wff = |- F/ z ph ;;
+	hyp 2 : wff = |- F/ w ph ;;
+	hyp 3 : wff = |- F/ x ps ;;
+	hyp 4 : wff = |- F/ y ps ;;
+	hyp 5 : wff = |- ( ( x = z ∧ y = w ) → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- { 〈 x , y 〉 | ph } = { 〈 z , w 〉 | ps } ;;
+}
+
+proof of cbvopab {
+	var v : set;;
+	step 1 : wff = nfv () |- F/ z v = 〈 x , y 〉 ;;
+	step 2 : wff = nfan (step 1, hyp 1) |- F/ z ( v = 〈 x , y 〉 ∧ ph ) ;;
+	step 3 : wff = nfv () |- F/ w v = 〈 x , y 〉 ;;
+	step 4 : wff = nfan (step 3, hyp 2) |- F/ w ( v = 〈 x , y 〉 ∧ ph ) ;;
+	step 5 : wff = nfv () |- F/ x v = 〈 z , w 〉 ;;
+	step 6 : wff = nfan (step 5, hyp 3) |- F/ x ( v = 〈 z , w 〉 ∧ ps ) ;;
+	step 7 : wff = nfv () |- F/ y v = 〈 z , w 〉 ;;
+	step 8 : wff = nfan (step 7, hyp 4) |- F/ y ( v = 〈 z , w 〉 ∧ ps ) ;;
+	step 9 : wff = opeq12 () |- ( ( x = z ∧ y = w ) → 〈 x , y 〉 = 〈 z , w 〉 ) ;;
+	step 10 : wff = eqeq2d (step 9) |- ( ( x = z ∧ y = w ) → ( v = 〈 x , y 〉 ↔ v = 〈 z , w 〉 ) ) ;;
+	step 11 : wff = anbi12d (step 10, hyp 5) |- ( ( x = z ∧ y = w ) → ( ( v = 〈 x , y 〉 ∧ ph ) ↔ ( v = 〈 z , w 〉 ∧ ps ) ) ) ;;
+	step 12 : wff = cbvex2 (step 2, step 4, step 6, step 8, step 11) |- ( ∃ x ∃ y ( v = 〈 x , y 〉 ∧ ph ) ↔ ∃ z ∃ w ( v = 〈 z , w 〉 ∧ ps ) ) ;;
+	step 13 : wff = abbii (step 12) |- { v | ∃ x ∃ y ( v = 〈 x , y 〉 ∧ ph ) } = { v | ∃ z ∃ w ( v = 〈 z , w 〉 ∧ ps ) } ;;
+	step 14 : wff = df-opab () |- { 〈 x , y 〉 | ph } = { v | ∃ x ∃ y ( v = 〈 x , y 〉 ∧ ph ) } ;;
+	step 15 : wff = df-opab () |- { 〈 z , w 〉 | ps } = { v | ∃ z ∃ w ( v = 〈 z , w 〉 ∧ ps ) } ;;
+	step 16 : wff = 3eqtr4i (step 13, step 14, step 15) |- { 〈 x , y 〉 | ph } = { 〈 z , w 〉 | ps } ;;
+	qed prop 1 = step 16 ;;
+}
+
+/* Rule used to change bound variables in an ordered-pair class
+       abstraction, using implicit substitution.  (Contributed by NM,
+       15-Oct-1996.) */
+
+theorem cbvopabv (ph : wff, ps : wff, x : set, y : set, z : set, w : set) disjointed(x y z w, z w ph, x y ps) {
+	hyp 1 : wff = |- ( ( x = z ∧ y = w ) → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- { 〈 x , y 〉 | ph } = { 〈 z , w 〉 | ps } ;;
+}
+
+proof of cbvopabv {
+	step 1 : wff = nfv () |- F/ z ph ;;
+	step 2 : wff = nfv () |- F/ w ph ;;
+	step 3 : wff = nfv () |- F/ x ps ;;
+	step 4 : wff = nfv () |- F/ y ps ;;
+	step 5 : wff = cbvopab (step 1, step 2, step 3, step 4, hyp 1) |- { 〈 x , y 〉 | ph } = { 〈 z , w 〉 | ps } ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Change first bound variable in an ordered-pair class abstraction, using
+       explicit substitution.  (Contributed by NM, 6-Oct-2004.)  (Revised by
+       Mario Carneiro, 14-Oct-2016.) */
+
+theorem cbvopab1 (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(v w x y, v w y z, v w ph, v w ps) {
+	hyp 1 : wff = |- F/ z ph ;;
+	hyp 2 : wff = |- F/ x ps ;;
+	hyp 3 : wff = |- ( x = z → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- { 〈 x , y 〉 | ph } = { 〈 z , y 〉 | ps } ;;
+}
+
+proof of cbvopab1 {
+	var w : set, v : set;;
+	step 1 : wff = nfv () |- F/ v ∃ y ( w = 〈 x , y 〉 ∧ ph ) ;;
+	step 2 : wff = nfv () |- F/ x w = 〈 v , y 〉 ;;
+	step 3 : wff = nfs1v () |- F/ x [ v / x ] ph ;;
+	step 4 : wff = nfan (step 2, step 3) |- F/ x ( w = 〈 v , y 〉 ∧ [ v / x ] ph ) ;;
+	step 5 : wff = nfex (step 4) |- F/ x ∃ y ( w = 〈 v , y 〉 ∧ [ v / x ] ph ) ;;
+	step 6 : wff = opeq1 () |- ( x = v → 〈 x , y 〉 = 〈 v , y 〉 ) ;;
+	step 7 : wff = eqeq2d (step 6) |- ( x = v → ( w = 〈 x , y 〉 ↔ w = 〈 v , y 〉 ) ) ;;
+	step 8 : wff = sbequ12 () |- ( x = v → ( ph ↔ [ v / x ] ph ) ) ;;
+	step 9 : wff = anbi12d (step 7, step 8) |- ( x = v → ( ( w = 〈 x , y 〉 ∧ ph ) ↔ ( w = 〈 v , y 〉 ∧ [ v / x ] ph ) ) ) ;;
+	step 10 : wff = exbidv (step 9) |- ( x = v → ( ∃ y ( w = 〈 x , y 〉 ∧ ph ) ↔ ∃ y ( w = 〈 v , y 〉 ∧ [ v / x ] ph ) ) ) ;;
+	step 11 : wff = cbvex (step 1, step 5, step 10) |- ( ∃ x ∃ y ( w = 〈 x , y 〉 ∧ ph ) ↔ ∃ v ∃ y ( w = 〈 v , y 〉 ∧ [ v / x ] ph ) ) ;;
+	step 12 : wff = nfv () |- F/ z w = 〈 v , y 〉 ;;
+	step 13 : wff = nfsb (hyp 1) |- F/ z [ v / x ] ph ;;
+	step 14 : wff = nfan (step 12, step 13) |- F/ z ( w = 〈 v , y 〉 ∧ [ v / x ] ph ) ;;
+	step 15 : wff = nfex (step 14) |- F/ z ∃ y ( w = 〈 v , y 〉 ∧ [ v / x ] ph ) ;;
+	step 16 : wff = nfv () |- F/ v ∃ y ( w = 〈 z , y 〉 ∧ ps ) ;;
+	step 17 : wff = opeq1 () |- ( v = z → 〈 v , y 〉 = 〈 z , y 〉 ) ;;
+	step 18 : wff = eqeq2d (step 17) |- ( v = z → ( w = 〈 v , y 〉 ↔ w = 〈 z , y 〉 ) ) ;;
+	step 19 : wff = sbequ () |- ( v = z → ( [ v / x ] ph ↔ [ z / x ] ph ) ) ;;
+	step 20 : wff = sbie (hyp 2, hyp 3) |- ( [ z / x ] ph ↔ ps ) ;;
+	step 21 : wff = syl6bb (step 19, step 20) |- ( v = z → ( [ v / x ] ph ↔ ps ) ) ;;
+	step 22 : wff = anbi12d (step 18, step 21) |- ( v = z → ( ( w = 〈 v , y 〉 ∧ [ v / x ] ph ) ↔ ( w = 〈 z , y 〉 ∧ ps ) ) ) ;;
+	step 23 : wff = exbidv (step 22) |- ( v = z → ( ∃ y ( w = 〈 v , y 〉 ∧ [ v / x ] ph ) ↔ ∃ y ( w = 〈 z , y 〉 ∧ ps ) ) ) ;;
+	step 24 : wff = cbvex (step 15, step 16, step 23) |- ( ∃ v ∃ y ( w = 〈 v , y 〉 ∧ [ v / x ] ph ) ↔ ∃ z ∃ y ( w = 〈 z , y 〉 ∧ ps ) ) ;;
+	step 25 : wff = bitri (step 11, step 24) |- ( ∃ x ∃ y ( w = 〈 x , y 〉 ∧ ph ) ↔ ∃ z ∃ y ( w = 〈 z , y 〉 ∧ ps ) ) ;;
+	step 26 : wff = abbii (step 25) |- { w | ∃ x ∃ y ( w = 〈 x , y 〉 ∧ ph ) } = { w | ∃ z ∃ y ( w = 〈 z , y 〉 ∧ ps ) } ;;
+	step 27 : wff = df-opab () |- { 〈 x , y 〉 | ph } = { w | ∃ x ∃ y ( w = 〈 x , y 〉 ∧ ph ) } ;;
+	step 28 : wff = df-opab () |- { 〈 z , y 〉 | ps } = { w | ∃ z ∃ y ( w = 〈 z , y 〉 ∧ ps ) } ;;
+	step 29 : wff = 3eqtr4i (step 26, step 27, step 28) |- { 〈 x , y 〉 | ph } = { 〈 z , y 〉 | ps } ;;
+	qed prop 1 = step 29 ;;
+}
+
+/* Change second bound variable in an ordered-pair class abstraction, using
+       explicit substitution.  (Contributed by NM, 22-Aug-2013.) */
+
+theorem cbvopab2 (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(w x y z, w ph, w ps) {
+	hyp 1 : wff = |- F/ z ph ;;
+	hyp 2 : wff = |- F/ y ps ;;
+	hyp 3 : wff = |- ( y = z → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- { 〈 x , y 〉 | ph } = { 〈 x , z 〉 | ps } ;;
+}
+
+proof of cbvopab2 {
+	var w : set;;
+	step 1 : wff = nfv () |- F/ z w = 〈 x , y 〉 ;;
+	step 2 : wff = nfan (step 1, hyp 1) |- F/ z ( w = 〈 x , y 〉 ∧ ph ) ;;
+	step 3 : wff = nfv () |- F/ y w = 〈 x , z 〉 ;;
+	step 4 : wff = nfan (step 3, hyp 2) |- F/ y ( w = 〈 x , z 〉 ∧ ps ) ;;
+	step 5 : wff = opeq2 () |- ( y = z → 〈 x , y 〉 = 〈 x , z 〉 ) ;;
+	step 6 : wff = eqeq2d (step 5) |- ( y = z → ( w = 〈 x , y 〉 ↔ w = 〈 x , z 〉 ) ) ;;
+	step 7 : wff = anbi12d (step 6, hyp 3) |- ( y = z → ( ( w = 〈 x , y 〉 ∧ ph ) ↔ ( w = 〈 x , z 〉 ∧ ps ) ) ) ;;
+	step 8 : wff = cbvex (step 2, step 4, step 7) |- ( ∃ y ( w = 〈 x , y 〉 ∧ ph ) ↔ ∃ z ( w = 〈 x , z 〉 ∧ ps ) ) ;;
+	step 9 : wff = exbii (step 8) |- ( ∃ x ∃ y ( w = 〈 x , y 〉 ∧ ph ) ↔ ∃ x ∃ z ( w = 〈 x , z 〉 ∧ ps ) ) ;;
+	step 10 : wff = abbii (step 9) |- { w | ∃ x ∃ y ( w = 〈 x , y 〉 ∧ ph ) } = { w | ∃ x ∃ z ( w = 〈 x , z 〉 ∧ ps ) } ;;
+	step 11 : wff = df-opab () |- { 〈 x , y 〉 | ph } = { w | ∃ x ∃ y ( w = 〈 x , y 〉 ∧ ph ) } ;;
+	step 12 : wff = df-opab () |- { 〈 x , z 〉 | ps } = { w | ∃ x ∃ z ( w = 〈 x , z 〉 ∧ ps ) } ;;
+	step 13 : wff = 3eqtr4i (step 10, step 11, step 12) |- { 〈 x , y 〉 | ph } = { 〈 x , z 〉 | ps } ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* Change first bound variable in an ordered-pair class abstraction, using
+       explicit substitution.  (Contributed by NM, 31-Jul-2003.) */
+
+theorem cbvopab1s (ph : wff, x : set, y : set, z : set) disjointed(x y z w, z w ph) {
+	prop 1 : wff = |- { 〈 x , y 〉 | ph } = { 〈 z , y 〉 | [ z / x ] ph } ;;
+}
+
+proof of cbvopab1s {
+	var w : set;;
+	step 1 : wff = nfv () |- F/ z ∃ y ( w = 〈 x , y 〉 ∧ ph ) ;;
+	step 2 : wff = nfv () |- F/ x w = 〈 z , y 〉 ;;
+	step 3 : wff = nfs1v () |- F/ x [ z / x ] ph ;;
+	step 4 : wff = nfan (step 2, step 3) |- F/ x ( w = 〈 z , y 〉 ∧ [ z / x ] ph ) ;;
+	step 5 : wff = nfex (step 4) |- F/ x ∃ y ( w = 〈 z , y 〉 ∧ [ z / x ] ph ) ;;
+	step 6 : wff = opeq1 () |- ( x = z → 〈 x , y 〉 = 〈 z , y 〉 ) ;;
+	step 7 : wff = eqeq2d (step 6) |- ( x = z → ( w = 〈 x , y 〉 ↔ w = 〈 z , y 〉 ) ) ;;
+	step 8 : wff = sbequ12 () |- ( x = z → ( ph ↔ [ z / x ] ph ) ) ;;
+	step 9 : wff = anbi12d (step 7, step 8) |- ( x = z → ( ( w = 〈 x , y 〉 ∧ ph ) ↔ ( w = 〈 z , y 〉 ∧ [ z / x ] ph ) ) ) ;;
+	step 10 : wff = exbidv (step 9) |- ( x = z → ( ∃ y ( w = 〈 x , y 〉 ∧ ph ) ↔ ∃ y ( w = 〈 z , y 〉 ∧ [ z / x ] ph ) ) ) ;;
+	step 11 : wff = cbvex (step 1, step 5, step 10) |- ( ∃ x ∃ y ( w = 〈 x , y 〉 ∧ ph ) ↔ ∃ z ∃ y ( w = 〈 z , y 〉 ∧ [ z / x ] ph ) ) ;;
+	step 12 : wff = abbii (step 11) |- { w | ∃ x ∃ y ( w = 〈 x , y 〉 ∧ ph ) } = { w | ∃ z ∃ y ( w = 〈 z , y 〉 ∧ [ z / x ] ph ) } ;;
+	step 13 : wff = df-opab () |- { 〈 x , y 〉 | ph } = { w | ∃ x ∃ y ( w = 〈 x , y 〉 ∧ ph ) } ;;
+	step 14 : wff = df-opab () |- { 〈 z , y 〉 | [ z / x ] ph } = { w | ∃ z ∃ y ( w = 〈 z , y 〉 ∧ [ z / x ] ph ) } ;;
+	step 15 : wff = 3eqtr4i (step 12, step 13, step 14) |- { 〈 x , y 〉 | ph } = { 〈 z , y 〉 | [ z / x ] ph } ;;
+	qed prop 1 = step 15 ;;
+}
+
+/* Rule used to change the first bound variable in an ordered pair
+       abstraction, using implicit substitution.  (Contributed by NM,
+       31-Jul-2003.)  (Proof shortened by Eric Schmidt, 4-Apr-2007.) */
+
+theorem cbvopab1v (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(x y, y z, z ph, x ps) {
+	hyp 1 : wff = |- ( x = z → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- { 〈 x , y 〉 | ph } = { 〈 z , y 〉 | ps } ;;
+}
+
+proof of cbvopab1v {
+	step 1 : wff = nfv () |- F/ z ph ;;
+	step 2 : wff = nfv () |- F/ x ps ;;
+	step 3 : wff = cbvopab1 (step 1, step 2, hyp 1) |- { 〈 x , y 〉 | ph } = { 〈 z , y 〉 | ps } ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Rule used to change the second bound variable in an ordered pair
+       abstraction, using implicit substitution.  (Contributed by NM,
+       2-Sep-1999.) */
+
+theorem cbvopab2v (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(x y z w, z w ph, y w ps) {
+	hyp 1 : wff = |- ( y = z → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- { 〈 x , y 〉 | ph } = { 〈 x , z 〉 | ps } ;;
+}
+
+proof of cbvopab2v {
+	var w : set;;
+	step 1 : wff = opeq2 () |- ( y = z → 〈 x , y 〉 = 〈 x , z 〉 ) ;;
+	step 2 : wff = eqeq2d (step 1) |- ( y = z → ( w = 〈 x , y 〉 ↔ w = 〈 x , z 〉 ) ) ;;
+	step 3 : wff = anbi12d (step 2, hyp 1) |- ( y = z → ( ( w = 〈 x , y 〉 ∧ ph ) ↔ ( w = 〈 x , z 〉 ∧ ps ) ) ) ;;
+	step 4 : wff = cbvexv (step 3) |- ( ∃ y ( w = 〈 x , y 〉 ∧ ph ) ↔ ∃ z ( w = 〈 x , z 〉 ∧ ps ) ) ;;
+	step 5 : wff = exbii (step 4) |- ( ∃ x ∃ y ( w = 〈 x , y 〉 ∧ ph ) ↔ ∃ x ∃ z ( w = 〈 x , z 〉 ∧ ps ) ) ;;
+	step 6 : wff = abbii (step 5) |- { w | ∃ x ∃ y ( w = 〈 x , y 〉 ∧ ph ) } = { w | ∃ x ∃ z ( w = 〈 x , z 〉 ∧ ps ) } ;;
+	step 7 : wff = df-opab () |- { 〈 x , y 〉 | ph } = { w | ∃ x ∃ y ( w = 〈 x , y 〉 ∧ ph ) } ;;
+	step 8 : wff = df-opab () |- { 〈 x , z 〉 | ps } = { w | ∃ x ∃ z ( w = 〈 x , z 〉 ∧ ps ) } ;;
+	step 9 : wff = 3eqtr4i (step 6, step 7, step 8) |- { 〈 x , y 〉 | ph } = { 〈 x , z 〉 | ps } ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Move substitution into a class abstraction.  (Contributed by NM,
+       6-Aug-2007.)  (Proof shortened by Mario Carneiro, 17-Nov-2016.) */
+
+theorem csbopabg (ph : wff, x : set, y : set, z : set, A : class, V : class) disjointed(w y z A, w ph, w x y z) {
+	prop 1 : wff = |- ( A ∈ V → [_ A / x ]_ { 〈 y , z 〉 | ph } = { 〈 y , z 〉 | [. A / x ]. ph } ) ;;
+}
+
+proof of csbopabg {
+	var w : set;;
+	step 1 : wff = csbeq1 () |- ( w = A → [_ w / x ]_ { 〈 y , z 〉 | ph } = [_ A / x ]_ { 〈 y , z 〉 | ph } ) ;;
+	step 2 : wff = dfsbcq2 () |- ( w = A → ( [ w / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 3 : wff = opabbidv (step 2) |- ( w = A → { 〈 y , z 〉 | [ w / x ] ph } = { 〈 y , z 〉 | [. A / x ]. ph } ) ;;
+	step 4 : wff = eqeq12d (step 1, step 3) |- ( w = A → ( [_ w / x ]_ { 〈 y , z 〉 | ph } = { 〈 y , z 〉 | [ w / x ] ph } ↔ [_ A / x ]_ { 〈 y , z 〉 | ph } = { 〈 y , z 〉 | [. A / x ]. ph } ) ) ;;
+	step 5 : wff = vex () |- w ∈ _V ;;
+	step 6 : wff = nfs1v () |- F/ x [ w / x ] ph ;;
+	step 7 : wff = nfopab (step 6) |- F/_ x { 〈 y , z 〉 | [ w / x ] ph } ;;
+	step 8 : wff = sbequ12 () |- ( x = w → ( ph ↔ [ w / x ] ph ) ) ;;
+	step 9 : wff = opabbidv (step 8) |- ( x = w → { 〈 y , z 〉 | ph } = { 〈 y , z 〉 | [ w / x ] ph } ) ;;
+	step 10 : wff = csbief (step 5, step 7, step 9) |- [_ w / x ]_ { 〈 y , z 〉 | ph } = { 〈 y , z 〉 | [ w / x ] ph } ;;
+	step 11 : wff = vtoclg (step 4, step 10) |- ( A ∈ V → [_ A / x ]_ { 〈 y , z 〉 | ph } = { 〈 y , z 〉 | [. A / x ]. ph } ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* Union of two ordered pair class abstractions.  (Contributed by NM,
+       30-Sep-2002.) */
+
+theorem unopab (ph : wff, ps : wff, x : set, y : set) disjointed(x z, y z, ph z, ps z) {
+	prop 1 : wff = |- ( { 〈 x , y 〉 | ph } ∪ { 〈 x , y 〉 | ps } ) = { 〈 x , y 〉 | ( ph ∨ ps ) } ;;
+}
+
+proof of unopab {
+	var z : set;;
+	step 1 : wff = unab () |- ( { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ph ) } ∪ { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ps ) } ) = { z | ( ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ph ) ∨ ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ps ) ) } ;;
+	step 2 : wff = 19.43 () |- ( ∃ x ( ∃ y ( z = 〈 x , y 〉 ∧ ph ) ∨ ∃ y ( z = 〈 x , y 〉 ∧ ps ) ) ↔ ( ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ph ) ∨ ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ps ) ) ) ;;
+	step 3 : wff = andi () |- ( ( z = 〈 x , y 〉 ∧ ( ph ∨ ps ) ) ↔ ( ( z = 〈 x , y 〉 ∧ ph ) ∨ ( z = 〈 x , y 〉 ∧ ps ) ) ) ;;
+	step 4 : wff = exbii (step 3) |- ( ∃ y ( z = 〈 x , y 〉 ∧ ( ph ∨ ps ) ) ↔ ∃ y ( ( z = 〈 x , y 〉 ∧ ph ) ∨ ( z = 〈 x , y 〉 ∧ ps ) ) ) ;;
+	step 5 : wff = 19.43 () |- ( ∃ y ( ( z = 〈 x , y 〉 ∧ ph ) ∨ ( z = 〈 x , y 〉 ∧ ps ) ) ↔ ( ∃ y ( z = 〈 x , y 〉 ∧ ph ) ∨ ∃ y ( z = 〈 x , y 〉 ∧ ps ) ) ) ;;
+	step 6 : wff = bitr2i (step 4, step 5) |- ( ( ∃ y ( z = 〈 x , y 〉 ∧ ph ) ∨ ∃ y ( z = 〈 x , y 〉 ∧ ps ) ) ↔ ∃ y ( z = 〈 x , y 〉 ∧ ( ph ∨ ps ) ) ) ;;
+	step 7 : wff = exbii (step 6) |- ( ∃ x ( ∃ y ( z = 〈 x , y 〉 ∧ ph ) ∨ ∃ y ( z = 〈 x , y 〉 ∧ ps ) ) ↔ ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ( ph ∨ ps ) ) ) ;;
+	step 8 : wff = bitr3i (step 2, step 7) |- ( ( ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ph ) ∨ ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ps ) ) ↔ ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ( ph ∨ ps ) ) ) ;;
+	step 9 : wff = abbii (step 8) |- { z | ( ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ph ) ∨ ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ps ) ) } = { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ( ph ∨ ps ) ) } ;;
+	step 10 : wff = eqtri (step 1, step 9) |- ( { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ph ) } ∪ { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ps ) } ) = { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ( ph ∨ ps ) ) } ;;
+	step 11 : wff = df-opab () |- { 〈 x , y 〉 | ph } = { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ph ) } ;;
+	step 12 : wff = df-opab () |- { 〈 x , y 〉 | ps } = { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ps ) } ;;
+	step 13 : wff = uneq12i (step 11, step 12) |- ( { 〈 x , y 〉 | ph } ∪ { 〈 x , y 〉 | ps } ) = ( { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ph ) } ∪ { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ps ) } ) ;;
+	step 14 : wff = df-opab () |- { 〈 x , y 〉 | ( ph ∨ ps ) } = { z | ∃ x ∃ y ( z = 〈 x , y 〉 ∧ ( ph ∨ ps ) ) } ;;
+	step 15 : wff = 3eqtr4i (step 10, step 13, step 14) |- ( { 〈 x , y 〉 | ph } ∪ { 〈 x , y 〉 | ps } ) = { 〈 x , y 〉 | ( ph ∨ ps ) } ;;
+	qed prop 1 = step 15 ;;
+}
+
+/* An equality theorem for the maps to notation.  (Contributed by Mario
+       Carneiro, 16-Dec-2013.) */
+
+theorem mpteq12f (x : set, A : class, B : class, C : class, D : class) disjointed(x y, y A, y B, y C, y D) {
+	prop 1 : wff = |- ( ( ∀ x A = C ∧ ∀ x ∈ A B = D ) → ( x ∈ A ↦ B ) = ( x ∈ C ↦ D ) ) ;;
+}
+
+proof of mpteq12f {
+	var y : set;;
+	step 1 : wff = nfa1 () |- F/ x ∀ x A = C ;;
+	step 2 : wff = nfra1 () |- F/ x ∀ x ∈ A B = D ;;
+	step 3 : wff = nfan (step 1, step 2) |- F/ x ( ∀ x A = C ∧ ∀ x ∈ A B = D ) ;;
+	step 4 : wff = nfv () |- F/ y ( ∀ x A = C ∧ ∀ x ∈ A B = D ) ;;
+	step 5 : wff = rsp () |- ( ∀ x ∈ A B = D → ( x ∈ A → B = D ) ) ;;
+	step 6 : wff = imp (step 5) |- ( ( ∀ x ∈ A B = D ∧ x ∈ A ) → B = D ) ;;
+	step 7 : wff = eqeq2d (step 6) |- ( ( ∀ x ∈ A B = D ∧ x ∈ A ) → ( y = B ↔ y = D ) ) ;;
+	step 8 : wff = pm5.32da (step 7) |- ( ∀ x ∈ A B = D → ( ( x ∈ A ∧ y = B ) ↔ ( x ∈ A ∧ y = D ) ) ) ;;
+	step 9 : wff = sp () |- ( ∀ x A = C → A = C ) ;;
+	step 10 : wff = eleq2d (step 9) |- ( ∀ x A = C → ( x ∈ A ↔ x ∈ C ) ) ;;
+	step 11 : wff = anbi1d (step 10) |- ( ∀ x A = C → ( ( x ∈ A ∧ y = D ) ↔ ( x ∈ C ∧ y = D ) ) ) ;;
+	step 12 : wff = sylan9bbr (step 8, step 11) |- ( ( ∀ x A = C ∧ ∀ x ∈ A B = D ) → ( ( x ∈ A ∧ y = B ) ↔ ( x ∈ C ∧ y = D ) ) ) ;;
+	step 13 : wff = opabbid (step 3, step 4, step 12) |- ( ( ∀ x A = C ∧ ∀ x ∈ A B = D ) → { 〈 x , y 〉 | ( x ∈ A ∧ y = B ) } = { 〈 x , y 〉 | ( x ∈ C ∧ y = D ) } ) ;;
+	step 14 : wff = df-mpt () |- ( x ∈ A ↦ B ) = { 〈 x , y 〉 | ( x ∈ A ∧ y = B ) } ;;
+	step 15 : wff = df-mpt () |- ( x ∈ C ↦ D ) = { 〈 x , y 〉 | ( x ∈ C ∧ y = D ) } ;;
+	step 16 : wff = 3eqtr4g (step 13, step 14, step 15) |- ( ( ∀ x A = C ∧ ∀ x ∈ A B = D ) → ( x ∈ A ↦ B ) = ( x ∈ C ↦ D ) ) ;;
+	qed prop 1 = step 16 ;;
+}
+
+/* An equality inference for the maps to notation.  (Contributed by Mario
+         Carneiro, 26-Jan-2017.) */
+
+theorem mpteq12dva (ph : wff, x : set, A : class, B : class, C : class, D : class) disjointed(x ph) {
+	hyp 1 : wff = |- ( ph → A = C ) ;;
+	hyp 2 : wff = |- ( ( ph ∧ x ∈ A ) → B = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( x ∈ A ↦ B ) = ( x ∈ C ↦ D ) ) ;;
+}
+
+proof of mpteq12dva {
+	step 1 : wff = alrimiv (hyp 1) |- ( ph → ∀ x A = C ) ;;
+	step 2 : wff = ralrimiva (hyp 2) |- ( ph → ∀ x ∈ A B = D ) ;;
+	step 3 : wff = mpteq12f () |- ( ( ∀ x A = C ∧ ∀ x ∈ A B = D ) → ( x ∈ A ↦ B ) = ( x ∈ C ↦ D ) ) ;;
+	step 4 : wff = syl2anc (step 1, step 2, step 3) |- ( ph → ( x ∈ A ↦ B ) = ( x ∈ C ↦ D ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* An equality inference for the maps to notation.  (Contributed by NM,
+       24-Aug-2011.)  (Revised by Mario Carneiro, 16-Dec-2013.) */
+
+theorem mpteq12dv (ph : wff, x : set, A : class, B : class, C : class, D : class) disjointed(x ph) {
+	hyp 1 : wff = |- ( ph → A = C ) ;;
+	hyp 2 : wff = |- ( ph → B = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( x ∈ A ↦ B ) = ( x ∈ C ↦ D ) ) ;;
+}
+
+proof of mpteq12dv {
+	step 1 : wff = adantr (hyp 2) |- ( ( ph ∧ x ∈ A ) → B = D ) ;;
+	step 2 : wff = mpteq12dva (hyp 1, step 1) |- ( ph → ( x ∈ A ↦ B ) = ( x ∈ C ↦ D ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* An equality theorem for the maps to notation.  (Contributed by NM,
+       16-Dec-2013.) */
+
+theorem mpteq12 (x : set, A : class, B : class, C : class, D : class) disjointed(x A, x C) {
+	prop 1 : wff = |- ( ( A = C ∧ ∀ x ∈ A B = D ) → ( x ∈ A ↦ B ) = ( x ∈ C ↦ D ) ) ;;
+}
+
+proof of mpteq12 {
+	step 1 : wff = ax-17 () |- ( A = C → ∀ x A = C ) ;;
+	step 2 : wff = mpteq12f () |- ( ( ∀ x A = C ∧ ∀ x ∈ A B = D ) → ( x ∈ A ↦ B ) = ( x ∈ C ↦ D ) ) ;;
+	step 3 : wff = sylan (step 1, step 2) |- ( ( A = C ∧ ∀ x ∈ A B = D ) → ( x ∈ A ↦ B ) = ( x ∈ C ↦ D ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* An equality theorem for the maps to notation.  (Contributed by Mario
+       Carneiro, 16-Dec-2013.) */
+
+theorem mpteq1 (x : set, A : class, B : class, C : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( A = B → ( x ∈ A ↦ C ) = ( x ∈ B ↦ C ) ) ;;
+}
+
+proof of mpteq1 {
+	step 1 : wff = eqidd () |- ( x ∈ A → C = C ) ;;
+	step 2 : wff = rgen (step 1) |- ∀ x ∈ A C = C ;;
+	step 3 : wff = mpteq12 () |- ( ( A = B ∧ ∀ x ∈ A C = C ) → ( x ∈ A ↦ C ) = ( x ∈ B ↦ C ) ) ;;
+	step 4 : wff = mpan2 (step 2, step 3) |- ( A = B → ( x ∈ A ↦ C ) = ( x ∈ B ↦ C ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* An equality theorem for the maps to notation.  (Contributed by Mario
+       Carneiro, 11-Jun-2016.) */
+
+theorem mpteq1d (ph : wff, x : set, A : class, B : class, C : class) disjointed(x A, x B) {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( x ∈ A ↦ C ) = ( x ∈ B ↦ C ) ) ;;
+}
+
+proof of mpteq1d {
+	step 1 : wff = mpteq1 () |- ( A = B → ( x ∈ A ↦ C ) = ( x ∈ B ↦ C ) ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ph → ( x ∈ A ↦ C ) = ( x ∈ B ↦ C ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* An equality inference for the maps to notation.  (Contributed by Mario
+       Carneiro, 16-Dec-2013.) */
+
+theorem mpteq2ia (x : set, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( x ∈ A → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( x ∈ A ↦ B ) = ( x ∈ A ↦ C ) ;;
+}
+
+proof of mpteq2ia {
+	step 1 : wff = eqid () |- A = A ;;
+	step 2 : wff = ax-gen (step 1) |- ∀ x A = A ;;
+	step 3 : wff = rgen (hyp 1) |- ∀ x ∈ A B = C ;;
+	step 4 : wff = mpteq12f () |- ( ( ∀ x A = A ∧ ∀ x ∈ A B = C ) → ( x ∈ A ↦ B ) = ( x ∈ A ↦ C ) ) ;;
+	step 5 : wff = mp2an (step 2, step 3, step 4) |- ( x ∈ A ↦ B ) = ( x ∈ A ↦ C ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* An equality inference for the maps to notation.  (Contributed by Mario
+       Carneiro, 16-Dec-2013.) */
+
+theorem mpteq2i (x : set, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- B = C ;;
+	-----------------------
+	prop 1 : wff = |- ( x ∈ A ↦ B ) = ( x ∈ A ↦ C ) ;;
+}
+
+proof of mpteq2i {
+	step 1 : wff = a1i (hyp 1) |- ( x ∈ A → B = C ) ;;
+	step 2 : wff = mpteq2ia (step 1) |- ( x ∈ A ↦ B ) = ( x ∈ A ↦ C ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* An equality inference for the maps to notation.  (Contributed by Scott
+       Fenton, 27-Oct-2010.)  (Revised by Mario Carneiro, 16-Dec-2013.) */
+
+theorem mpteq12i (x : set, A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- A = C ;;
+	hyp 2 : wff = |- B = D ;;
+	-----------------------
+	prop 1 : wff = |- ( x ∈ A ↦ B ) = ( x ∈ C ↦ D ) ;;
+}
+
+proof of mpteq12i {
+	step 1 : wff = a1i (hyp 1) |- ( T. → A = C ) ;;
+	step 2 : wff = a1i (hyp 2) |- ( T. → B = D ) ;;
+	step 3 : wff = mpteq12dv (step 1, step 2) |- ( T. → ( x ∈ A ↦ B ) = ( x ∈ C ↦ D ) ) ;;
+	step 4 : wff = trud (step 3) |- ( x ∈ A ↦ B ) = ( x ∈ C ↦ D ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Slightly more general equality inference for the maps to notation.
+       (Contributed by FL, 14-Sep-2013.)  (Revised by Mario Carneiro,
+       16-Dec-2013.) */
+
+theorem mpteq2da (ph : wff, x : set, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- ( ( ph ∧ x ∈ A ) → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( x ∈ A ↦ B ) = ( x ∈ A ↦ C ) ) ;;
+}
+
+proof of mpteq2da {
+	step 1 : wff = eqid () |- A = A ;;
+	step 2 : wff = ax-gen (step 1) |- ∀ x A = A ;;
+	step 3 : wff = ex (hyp 2) |- ( ph → ( x ∈ A → B = C ) ) ;;
+	step 4 : wff = ralrimi (hyp 1, step 3) |- ( ph → ∀ x ∈ A B = C ) ;;
+	step 5 : wff = mpteq12f () |- ( ( ∀ x A = A ∧ ∀ x ∈ A B = C ) → ( x ∈ A ↦ B ) = ( x ∈ A ↦ C ) ) ;;
+	step 6 : wff = sylancr (step 2, step 4, step 5) |- ( ph → ( x ∈ A ↦ B ) = ( x ∈ A ↦ C ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Slightly more general equality inference for the maps to notation.
+       (Contributed by Scott Fenton, 25-Apr-2012.) */
+
+theorem mpteq2dva (ph : wff, x : set, A : class, B : class, C : class) disjointed(x ph) {
+	hyp 1 : wff = |- ( ( ph ∧ x ∈ A ) → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( x ∈ A ↦ B ) = ( x ∈ A ↦ C ) ) ;;
+}
+
+proof of mpteq2dva {
+	step 1 : wff = nfv () |- F/ x ph ;;
+	step 2 : wff = mpteq2da (step 1, hyp 1) |- ( ph → ( x ∈ A ↦ B ) = ( x ∈ A ↦ C ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* An equality inference for the maps to notation.  (Contributed by Mario
+       Carneiro, 23-Aug-2014.) */
+
+theorem mpteq2dv (ph : wff, x : set, A : class, B : class, C : class) disjointed(x ph) {
+	hyp 1 : wff = |- ( ph → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( x ∈ A ↦ B ) = ( x ∈ A ↦ C ) ) ;;
+}
+
+proof of mpteq2dv {
+	step 1 : wff = adantr (hyp 1) |- ( ( ph ∧ x ∈ A ) → B = C ) ;;
+	step 2 : wff = mpteq2dva (step 1) |- ( ph → ( x ∈ A ↦ B ) = ( x ∈ A ↦ C ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Bound-variable hypothesis builder for the maps-to notation.
+       (Contributed by NM, 20-Feb-2013.) */
+
+theorem nfmpt (x : set, y : set, A : class, B : class) disjointed(z A, z B, x y z) {
+	hyp 1 : wff = |- F/_ x A ;;
+	hyp 2 : wff = |- F/_ x B ;;
+	-----------------------
+	prop 1 : wff = |- F/_ x ( y ∈ A ↦ B ) ;;
+}
+
+proof of nfmpt {
+	var z : set;;
+	step 1 : wff = df-mpt () |- ( y ∈ A ↦ B ) = { 〈 y , z 〉 | ( y ∈ A ∧ z = B ) } ;;
+	step 2 : wff = nfcri (hyp 1) |- F/ x y ∈ A ;;
+	step 3 : wff = nfeq2 (hyp 2) |- F/ x z = B ;;
+	step 4 : wff = nfan (step 2, step 3) |- F/ x ( y ∈ A ∧ z = B ) ;;
+	step 5 : wff = nfopab (step 4) |- F/_ x { 〈 y , z 〉 | ( y ∈ A ∧ z = B ) } ;;
+	step 6 : wff = nfcxfr (step 1, step 5) |- F/_ x ( y ∈ A ↦ B ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Bound-variable hypothesis builder for the maps-to notation.
+       (Contributed by FL, 17-Feb-2008.) */
+
+theorem nfmpt1 (x : set, A : class, B : class) disjointed(A z, B z, x z) {
+	prop 1 : wff = |- F/_ x ( x ∈ A ↦ B ) ;;
+}
+
+proof of nfmpt1 {
+	var z : set;;
+	step 1 : wff = df-mpt () |- ( x ∈ A ↦ B ) = { 〈 x , z 〉 | ( x ∈ A ∧ z = B ) } ;;
+	step 2 : wff = nfopab1 () |- F/_ x { 〈 x , z 〉 | ( x ∈ A ∧ z = B ) } ;;
+	step 3 : wff = nfcxfr (step 1, step 2) |- F/_ x ( x ∈ A ↦ B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Rule to change the bound variable in a maps-to function, using implicit
+       substitution.  This version has bound-variable hypotheses in place of
+       distinct variable conditions.  (Contributed by NM, 11-Sep-2011.) */
+
+theorem cbvmpt (x : set, y : set, A : class, B : class, C : class) disjointed(w z x A, w z y A, w z B, w z C) {
+	hyp 1 : wff = |- F/_ y B ;;
+	hyp 2 : wff = |- F/_ x C ;;
+	hyp 3 : wff = |- ( x = y → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( x ∈ A ↦ B ) = ( y ∈ A ↦ C ) ;;
+}
+
+proof of cbvmpt {
+	var z : set, w : set;;
+	step 1 : wff = nfv () |- F/ w ( x ∈ A ∧ z = B ) ;;
+	step 2 : wff = nfv () |- F/ x w ∈ A ;;
+	step 3 : wff = nfs1v () |- F/ x [ w / x ] z = B ;;
+	step 4 : wff = nfan (step 2, step 3) |- F/ x ( w ∈ A ∧ [ w / x ] z = B ) ;;
+	step 5 : wff = eleq1 () |- ( x = w → ( x ∈ A ↔ w ∈ A ) ) ;;
+	step 6 : wff = sbequ12 () |- ( x = w → ( z = B ↔ [ w / x ] z = B ) ) ;;
+	step 7 : wff = anbi12d (step 5, step 6) |- ( x = w → ( ( x ∈ A ∧ z = B ) ↔ ( w ∈ A ∧ [ w / x ] z = B ) ) ) ;;
+	step 8 : wff = cbvopab1 (step 1, step 4, step 7) |- { 〈 x , z 〉 | ( x ∈ A ∧ z = B ) } = { 〈 w , z 〉 | ( w ∈ A ∧ [ w / x ] z = B ) } ;;
+	step 9 : wff = nfv () |- F/ y w ∈ A ;;
+	step 10 : wff = nfeq2 (hyp 1) |- F/ y z = B ;;
+	step 11 : wff = nfsb (step 10) |- F/ y [ w / x ] z = B ;;
+	step 12 : wff = nfan (step 9, step 11) |- F/ y ( w ∈ A ∧ [ w / x ] z = B ) ;;
+	step 13 : wff = nfv () |- F/ w ( y ∈ A ∧ z = C ) ;;
+	step 14 : wff = eleq1 () |- ( w = y → ( w ∈ A ↔ y ∈ A ) ) ;;
+	step 15 : wff = sbequ () |- ( w = y → ( [ w / x ] z = B ↔ [ y / x ] z = B ) ) ;;
+	step 16 : wff = nfeq2 (hyp 2) |- F/ x z = C ;;
+	step 17 : wff = eqeq2d (hyp 3) |- ( x = y → ( z = B ↔ z = C ) ) ;;
+	step 18 : wff = sbie (step 16, step 17) |- ( [ y / x ] z = B ↔ z = C ) ;;
+	step 19 : wff = syl6bb (step 15, step 18) |- ( w = y → ( [ w / x ] z = B ↔ z = C ) ) ;;
+	step 20 : wff = anbi12d (step 14, step 19) |- ( w = y → ( ( w ∈ A ∧ [ w / x ] z = B ) ↔ ( y ∈ A ∧ z = C ) ) ) ;;
+	step 21 : wff = cbvopab1 (step 12, step 13, step 20) |- { 〈 w , z 〉 | ( w ∈ A ∧ [ w / x ] z = B ) } = { 〈 y , z 〉 | ( y ∈ A ∧ z = C ) } ;;
+	step 22 : wff = eqtri (step 8, step 21) |- { 〈 x , z 〉 | ( x ∈ A ∧ z = B ) } = { 〈 y , z 〉 | ( y ∈ A ∧ z = C ) } ;;
+	step 23 : wff = df-mpt () |- ( x ∈ A ↦ B ) = { 〈 x , z 〉 | ( x ∈ A ∧ z = B ) } ;;
+	step 24 : wff = df-mpt () |- ( y ∈ A ↦ C ) = { 〈 y , z 〉 | ( y ∈ A ∧ z = C ) } ;;
+	step 25 : wff = 3eqtr4i (step 22, step 23, step 24) |- ( x ∈ A ↦ B ) = ( y ∈ A ↦ C ) ;;
+	qed prop 1 = step 25 ;;
+}
+
+/* Rule to change the bound variable in a maps-to function, using implicit
+       substitution.  (Contributed by Mario Carneiro, 19-Feb-2013.) */
+
+theorem cbvmptv (x : set, y : set, A : class, B : class, C : class) disjointed(A x, A y, B y, C x) {
+	hyp 1 : wff = |- ( x = y → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( x ∈ A ↦ B ) = ( y ∈ A ↦ C ) ;;
+}
+
+proof of cbvmptv {
+	step 1 : wff = nfcv () |- F/_ y B ;;
+	step 2 : wff = nfcv () |- F/_ x C ;;
+	step 3 : wff = cbvmpt (step 1, step 2, hyp 1) |- ( x ∈ A ↦ B ) = ( y ∈ A ↦ C ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Function with universal domain in maps-to notation.  (Contributed by NM,
+       16-Aug-2013.) */
+
+theorem mptv (x : set, y : set, B : class) disjointed(x y, y B) {
+	prop 1 : wff = |- ( x ∈ _V ↦ B ) = { 〈 x , y 〉 | y = B } ;;
+}
+
+proof of mptv {
+	step 1 : wff = df-mpt () |- ( x ∈ _V ↦ B ) = { 〈 x , y 〉 | ( x ∈ _V ∧ y = B ) } ;;
+	step 2 : wff = vex () |- x ∈ _V ;;
+	step 3 : wff = biantrur (step 2) |- ( y = B ↔ ( x ∈ _V ∧ y = B ) ) ;;
+	step 4 : wff = opabbii (step 3) |- { 〈 x , y 〉 | y = B } = { 〈 x , y 〉 | ( x ∈ _V ∧ y = B ) } ;;
+	step 5 : wff = eqtr4i (step 1, step 4) |- ( x ∈ _V ↦ B ) = { 〈 x , y 〉 | y = B } ;;
+	qed prop 1 = step 5 ;;
+}
+
+

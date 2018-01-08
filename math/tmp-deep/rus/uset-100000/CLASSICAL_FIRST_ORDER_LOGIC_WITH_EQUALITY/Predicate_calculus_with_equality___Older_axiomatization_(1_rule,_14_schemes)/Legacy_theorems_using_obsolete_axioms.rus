@@ -1,0 +1,1313 @@
+import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Older_axiomatization_(1_rule,_14_schemes)/Rederive_new_axioms_from_old__theorems_ax5_,_ax6_,_ax9from9o_,_ax11_,_ax12.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+               Legacy theorems using obsolete axioms
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+  These theorems were mostly intended to study properties of the older axiom
+  schemes and are not useful outside of this section.  They should not be
+  used outside of this section.  They may be deleted when they are deemed to no
+  longer be of interest.
+
+*/
+
+/* Axiom to quantify a variable over a formula in which it does not occur.
+       Axiom C5 in [Megill] p. 444 (p. 11 of the preprint).  Also appears as
+       Axiom B6 (p. 75) of system S2 of [Tarski] p. 77 and Axiom C5-1 of
+       [Monk2] p. 113.
+
+       (This theorem simply repeats ~ ax-17 so that we can include the
+       following note, which applies only to the obsolete axiomatization.)
+
+       This axiom is _logically_ redundant in the (logically complete)
+       predicate calculus axiom system consisting of ~ ax-gen , ~ ax-5o ,
+       ~ ax-4 , ~ ax-7 , ~ ax-6o , ~ ax-8 , ~ ax-12o , ~ ax-9o , ~ ax-10o ,
+       ~ ax-13 , ~ ax-14 , ~ ax-15 , ~ ax-11o , and ~ ax-16 : in that system,
+       we can derive any instance of ~ ax-17 not containing wff variables by
+       induction on formula length, using ~ ax17eq and ~ ax17el for the basis
+       together ~ hbn , ~ hbal , and ~ hbim .  However, if we omit this axiom,
+       our development would be quite inconvenient since we could work only
+       with specific instances of wffs containing no wff variables - this axiom
+       introduces the concept of a set variable not occurring in a wff (as
+       opposed to just two set variables being distinct).  (Contributed by NM,
+       19-Aug-2017.)  (New usage is discouraged.)  (Proof modification
+       discouraged.) */
+
+theorem ax17o (ph : wff, x : set) disjointed(x ph) {
+	prop 1 : wff = |- ( ph → ∀ x ph ) ;;
+}
+
+proof of ax17o {
+	step 1 : wff = ax-17 () |- ( ph → ∀ x ph ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+/* Identity law for equality (reflexivity).  Lemma 6 of [Tarski] p. 68.  This
+     is often an axiom of equality in textbook systems, but we don't need it as
+     an axiom since it can be proved from our other axioms (although the proof,
+     as you can see below, is not as obvious as you might think).  This proof
+     uses only axioms without distinct variable conditions and thus requires no
+     dummy variables.  A simpler proof, similar to Tarki's, is possible if we
+     make use of ~ ax-17 ; see the proof of ~ equid .  See ~ equid1ALT for an
+     alternate proof.  (Contributed by NM, 5-Aug-1993.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem equid1 (x : set)  {
+	prop 1 : wff = |- x = x ;;
+}
+
+proof of equid1 {
+	step 1 : wff = ax-5o () |- ( ∀ x ( ∀ x ¬ ∀ x x = x → ( x = x → ∀ x x = x ) ) → ( ∀ x ¬ ∀ x x = x → ∀ x ( x = x → ∀ x x = x ) ) ) ;;
+	step 2 : wff = ax-4 () |- ( ∀ x ¬ ∀ x x = x → ¬ ∀ x x = x ) ;;
+	step 3 : wff = ax-4 () |- ( ∀ x ¬ ∀ x x = x → ¬ ∀ x x = x ) ;;
+	step 4 : wff = ax-12o () |- ( ¬ ∀ x x = x → ( ¬ ∀ x x = x → ( x = x → ∀ x x = x ) ) ) ;;
+	step 5 : wff = sylc (step 2, step 3, step 4) |- ( ∀ x ¬ ∀ x x = x → ( x = x → ∀ x x = x ) ) ;;
+	step 6 : wff = mpg (step 1, step 5) |- ( ∀ x ¬ ∀ x x = x → ∀ x ( x = x → ∀ x x = x ) ) ;;
+	step 7 : wff = ax-9o () |- ( ∀ x ( x = x → ∀ x x = x ) → x = x ) ;;
+	step 8 : wff = syl (step 6, step 7) |- ( ∀ x ¬ ∀ x x = x → x = x ) ;;
+	step 9 : wff = ax-6o () |- ( ¬ ∀ x ¬ ∀ x x = x → x = x ) ;;
+	step 10 : wff = pm2.61i (step 8, step 9) |- x = x ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Generalization of antecedent.  (Contributed by NM, 5-Aug-1993.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem sps-o (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ph → ps ) ;;
+}
+
+proof of sps-o {
+	step 1 : wff = ax-4 () |- ( ∀ x ph → ph ) ;;
+	step 2 : wff = syl (step 1, hyp 1) |- ( ∀ x ph → ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Bound-variable hypothesis builder for ` x = x ` .  This theorem tells us
+     that any variable, including ` x ` , is effectively not free in
+     ` x = x ` , even though ` x ` is technically free according to the
+     traditional definition of free variable.  (The proof does not use
+     ~ ax-9o .)  (Contributed by NM, 13-Jan-2011.)  (Proof shortened by Wolf
+     Lammen, 23-Mar-2014.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem hbequid (x : set, y : set)  {
+	prop 1 : wff = |- ( x = x → ∀ y x = x ) ;;
+}
+
+proof of hbequid {
+	step 1 : wff = ax-12o () |- ( ¬ ∀ y y = x → ( ¬ ∀ y y = x → ( x = x → ∀ y x = x ) ) ) ;;
+	step 2 : wff = ax-8 () |- ( y = x → ( y = x → x = x ) ) ;;
+	step 3 : wff = pm2.43i (step 2) |- ( y = x → x = x ) ;;
+	step 4 : wff = alimi (step 3) |- ( ∀ y y = x → ∀ y x = x ) ;;
+	step 5 : wff = a1d (step 4) |- ( ∀ y y = x → ( x = x → ∀ y x = x ) ) ;;
+	step 6 : wff = ax-8 () |- ( y = x → ( y = x → x = x ) ) ;;
+	step 7 : wff = pm2.43i (step 6) |- ( y = x → x = x ) ;;
+	step 8 : wff = alimi (step 7) |- ( ∀ y y = x → ∀ y x = x ) ;;
+	step 9 : wff = a1d (step 8) |- ( ∀ y y = x → ( x = x → ∀ y x = x ) ) ;;
+	step 10 : wff = pm2.61ii (step 1, step 5, step 9) |- ( x = x → ∀ y x = x ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Bound-variable hypothesis builder for ` x = x ` .  This theorem tells us
+     that any variable, including ` x ` , is effectively not free in
+     ` x = x ` , even though ` x ` is technically free according to the
+     traditional definition of free variable.  (The proof uses only ~ ax-5 ,
+     ~ ax-8 , ~ ax-12o , and ~ ax-gen .  This shows that this can be proved
+     without ~ ax9 , even though the theorem ~ equid cannot be.  A shorter
+     proof using ~ ax9 is obtainable from ~ equid and ~ hbth .)  Remark added
+     2-Dec-2015 NM:  This proof does implicitly use ~ ax9v , which is used for
+     the derivation of ~ ax12o , unless we consider ~ ax-12o the starting axiom
+     rather than ~ ax-12 .  (Contributed by NM, 13-Jan-2011.)  (Revised by
+     Mario Carneiro, 12-Oct-2016.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem nfequid-o (x : set, y : set)  {
+	prop 1 : wff = |- F/ y x = x ;;
+}
+
+proof of nfequid-o {
+	step 1 : wff = hbequid () |- ( x = x → ∀ y x = x ) ;;
+	step 2 : wff = nfi (step 1) |- F/ y x = x ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Proof of a single axiom that can replace ~ ax-4 and ~ ax-6o .  See
+     ~ ax46to4 and ~ ax46to6 for the re-derivation of those axioms.
+     (Contributed by Scott Fenton, 12-Sep-2005.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem ax46 (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ( ∀ x ¬ ∀ x ph → ∀ x ph ) → ph ) ;;
+}
+
+proof of ax46 {
+	step 1 : wff = ax-6o () |- ( ¬ ∀ x ¬ ∀ x ph → ph ) ;;
+	step 2 : wff = ax-4 () |- ( ∀ x ph → ph ) ;;
+	step 3 : wff = ja (step 1, step 2) |- ( ( ∀ x ¬ ∀ x ph → ∀ x ph ) → ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Re-derivation of ~ ax-4 from ~ ax46 .  Only propositional calculus is used
+     for the re-derivation.  (Contributed by Scott Fenton, 12-Sep-2005.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem ax46to4 (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ∀ x ph → ph ) ;;
+}
+
+proof of ax46to4 {
+	step 1 : wff = ax-1 () |- ( ∀ x ph → ( ∀ x ¬ ∀ x ph → ∀ x ph ) ) ;;
+	step 2 : wff = ax46 () |- ( ( ∀ x ¬ ∀ x ph → ∀ x ph ) → ph ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( ∀ x ph → ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Re-derivation of ~ ax-6o from ~ ax46 .  Only propositional calculus is
+     used for the re-derivation.  (Contributed by Scott Fenton, 12-Sep-2005.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem ax46to6 (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ¬ ∀ x ¬ ∀ x ph → ph ) ;;
+}
+
+proof of ax46to6 {
+	step 1 : wff = pm2.21 () |- ( ¬ ∀ x ¬ ∀ x ph → ( ∀ x ¬ ∀ x ph → ∀ x ph ) ) ;;
+	step 2 : wff = ax46 () |- ( ( ∀ x ¬ ∀ x ph → ∀ x ph ) → ph ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( ¬ ∀ x ¬ ∀ x ph → ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Proof of a single axiom that can replace both ~ ax-6o and ~ ax-7 .  See
+     ~ ax67to6 and ~ ax67to7 for the re-derivation of those axioms.
+     (Contributed by NM, 18-Nov-2006.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem ax67 (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( ¬ ∀ x ¬ ∀ y ∀ x ph → ∀ y ph ) ;;
+}
+
+proof of ax67 {
+	step 1 : wff = ax-7 () |- ( ∀ y ∀ x ph → ∀ x ∀ y ph ) ;;
+	step 2 : wff = con3i (step 1) |- ( ¬ ∀ x ∀ y ph → ¬ ∀ y ∀ x ph ) ;;
+	step 3 : wff = alimi (step 2) |- ( ∀ x ¬ ∀ x ∀ y ph → ∀ x ¬ ∀ y ∀ x ph ) ;;
+	step 4 : wff = con3i (step 3) |- ( ¬ ∀ x ¬ ∀ y ∀ x ph → ¬ ∀ x ¬ ∀ x ∀ y ph ) ;;
+	step 5 : wff = ax-6o () |- ( ¬ ∀ x ¬ ∀ x ∀ y ph → ∀ y ph ) ;;
+	step 6 : wff = syl (step 4, step 5) |- ( ¬ ∀ x ¬ ∀ y ∀ x ph → ∀ y ph ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* ` x ` is not free in ` A. x ph ` .  (Contributed by Mario Carneiro,
+     11-Aug-2016.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem nfa1-o (ph : wff, x : set)  {
+	prop 1 : wff = |- F/ x ∀ x ph ;;
+}
+
+proof of nfa1-o {
+	step 1 : wff = hba1-o () |- ( ∀ x ph → ∀ x ∀ x ph ) ;;
+	step 2 : wff = nfi (step 1) |- F/ x ∀ x ph ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Re-derivation of ~ ax-6o from ~ ax67 .  Note that ~ ax-6o and ~ ax-7 are
+     not used by the re-derivation.  (Contributed by NM, 18-Nov-2006.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem ax67to6 (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ¬ ∀ x ¬ ∀ x ph → ph ) ;;
+}
+
+proof of ax67to6 {
+	step 1 : wff = hba1-o () |- ( ∀ x ph → ∀ x ∀ x ph ) ;;
+	step 2 : wff = con3i (step 1) |- ( ¬ ∀ x ∀ x ph → ¬ ∀ x ph ) ;;
+	step 3 : wff = alimi (step 2) |- ( ∀ x ¬ ∀ x ∀ x ph → ∀ x ¬ ∀ x ph ) ;;
+	step 4 : wff = con3i (step 3) |- ( ¬ ∀ x ¬ ∀ x ph → ¬ ∀ x ¬ ∀ x ∀ x ph ) ;;
+	step 5 : wff = ax67 () |- ( ¬ ∀ x ¬ ∀ x ∀ x ph → ∀ x ph ) ;;
+	step 6 : wff = ax-4 () |- ( ∀ x ph → ph ) ;;
+	step 7 : wff = 3syl (step 4, step 5, step 6) |- ( ¬ ∀ x ¬ ∀ x ph → ph ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Re-derivation of ~ ax-7 from ~ ax67 .  Note that ~ ax-6o and ~ ax-7 are
+     not used by the re-derivation.  (Contributed by NM, 18-Nov-2006.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem ax67to7 (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( ∀ x ∀ y ph → ∀ y ∀ x ph ) ;;
+}
+
+proof of ax67to7 {
+	step 1 : wff = ax67to6 () |- ( ¬ ∀ y ¬ ∀ y ¬ ∀ x ∀ y ph → ¬ ∀ x ∀ y ph ) ;;
+	step 2 : wff = con4i (step 1) |- ( ∀ x ∀ y ph → ∀ y ¬ ∀ y ¬ ∀ x ∀ y ph ) ;;
+	step 3 : wff = ax67 () |- ( ¬ ∀ y ¬ ∀ x ∀ y ph → ∀ x ph ) ;;
+	step 4 : wff = alimi (step 3) |- ( ∀ y ¬ ∀ y ¬ ∀ x ∀ y ph → ∀ y ∀ x ph ) ;;
+	step 5 : wff = syl (step 2, step 4) |- ( ∀ x ∀ y ph → ∀ y ∀ x ph ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Proof of a single axiom that can replace ~ ax-4 , ~ ax-6o , and ~ ax-7 in
+     a subsystem that includes these axioms plus ~ ax-5o and ~ ax-gen (and
+     propositional calculus).  See ~ ax467to4 , ~ ax467to6 , and ~ ax467to7 for
+     the re-derivation of those axioms.  This theorem extends the idea in Scott
+     Fenton's ~ ax46 .  (Contributed by NM, 18-Nov-2006.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem ax467 (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( ( ∀ x ∀ y ¬ ∀ x ∀ y ph → ∀ x ph ) → ph ) ;;
+}
+
+proof of ax467 {
+	step 1 : wff = ax-4 () |- ( ∀ y ph → ph ) ;;
+	step 2 : wff = ax6 () |- ( ¬ ∀ y ph → ∀ y ¬ ∀ y ph ) ;;
+	step 3 : wff = ax-6o () |- ( ¬ ∀ x ¬ ∀ x ∀ y ph → ∀ y ph ) ;;
+	step 4 : wff = con1i (step 3) |- ( ¬ ∀ y ph → ∀ x ¬ ∀ x ∀ y ph ) ;;
+	step 5 : wff = alimi (step 4) |- ( ∀ y ¬ ∀ y ph → ∀ y ∀ x ¬ ∀ x ∀ y ph ) ;;
+	step 6 : wff = ax-7 () |- ( ∀ y ∀ x ¬ ∀ x ∀ y ph → ∀ x ∀ y ¬ ∀ x ∀ y ph ) ;;
+	step 7 : wff = 3syl (step 2, step 5, step 6) |- ( ¬ ∀ y ph → ∀ x ∀ y ¬ ∀ x ∀ y ph ) ;;
+	step 8 : wff = nsyl4 (step 1, step 7) |- ( ¬ ∀ x ∀ y ¬ ∀ x ∀ y ph → ph ) ;;
+	step 9 : wff = ax-4 () |- ( ∀ x ph → ph ) ;;
+	step 10 : wff = ja (step 8, step 9) |- ( ( ∀ x ∀ y ¬ ∀ x ∀ y ph → ∀ x ph ) → ph ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Re-derivation of ~ ax-4 from ~ ax467 .  Only propositional calculus is
+     used by the re-derivation.  (Contributed by NM, 19-Nov-2006.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem ax467to4 (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ∀ x ph → ph ) ;;
+}
+
+proof of ax467to4 {
+	step 1 : wff = ax-1 () |- ( ∀ x ph → ( ∀ x ∀ x ¬ ∀ x ∀ x ph → ∀ x ph ) ) ;;
+	step 2 : wff = ax467 () |- ( ( ∀ x ∀ x ¬ ∀ x ∀ x ph → ∀ x ph ) → ph ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( ∀ x ph → ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Re-derivation of ~ ax-6o from ~ ax467 .  Note that ~ ax-6o and ~ ax-7 are
+     not used by the re-derivation.  The use of ~ alimi (which uses ~ ax-4 ) is
+     allowed since we have already proved ~ ax467to4 .  (Contributed by NM,
+     19-Nov-2006.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem ax467to6 (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ¬ ∀ x ¬ ∀ x ph → ph ) ;;
+}
+
+proof of ax467to6 {
+	step 1 : wff = hba1-o () |- ( ∀ x ph → ∀ x ∀ x ph ) ;;
+	step 2 : wff = con3i (step 1) |- ( ¬ ∀ x ∀ x ph → ¬ ∀ x ph ) ;;
+	step 3 : wff = alimi (step 2) |- ( ∀ x ¬ ∀ x ∀ x ph → ∀ x ¬ ∀ x ph ) ;;
+	step 4 : wff = sps-o (step 3) |- ( ∀ x ∀ x ¬ ∀ x ∀ x ph → ∀ x ¬ ∀ x ph ) ;;
+	step 5 : wff = con3i (step 4) |- ( ¬ ∀ x ¬ ∀ x ph → ¬ ∀ x ∀ x ¬ ∀ x ∀ x ph ) ;;
+	step 6 : wff = pm2.21 () |- ( ¬ ∀ x ∀ x ¬ ∀ x ∀ x ph → ( ∀ x ∀ x ¬ ∀ x ∀ x ph → ∀ x ph ) ) ;;
+	step 7 : wff = ax467 () |- ( ( ∀ x ∀ x ¬ ∀ x ∀ x ph → ∀ x ph ) → ph ) ;;
+	step 8 : wff = 3syl (step 5, step 6, step 7) |- ( ¬ ∀ x ¬ ∀ x ph → ph ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Re-derivation of ~ ax-7 from ~ ax467 .  Note that ~ ax-6o and ~ ax-7 are
+     not used by the re-derivation.  The use of ~ alimi (which uses ~ ax-4 ) is
+     allowed since we have already proved ~ ax467to4 .  (Contributed by NM,
+     19-Nov-2006.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem ax467to7 (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( ∀ x ∀ y ph → ∀ y ∀ x ph ) ;;
+}
+
+proof of ax467to7 {
+	step 1 : wff = ax467to6 () |- ( ¬ ∀ y ¬ ∀ y ¬ ∀ x ∀ y ph → ¬ ∀ x ∀ y ph ) ;;
+	step 2 : wff = con4i (step 1) |- ( ∀ x ∀ y ph → ∀ y ¬ ∀ y ¬ ∀ x ∀ y ph ) ;;
+	step 3 : wff = pm2.21 () |- ( ¬ ∀ x ∀ y ¬ ∀ x ∀ y ph → ( ∀ x ∀ y ¬ ∀ x ∀ y ph → ∀ x ph ) ) ;;
+	step 4 : wff = ax467 () |- ( ( ∀ x ∀ y ¬ ∀ x ∀ y ph → ∀ x ph ) → ph ) ;;
+	step 5 : wff = syl (step 3, step 4) |- ( ¬ ∀ x ∀ y ¬ ∀ x ∀ y ph → ph ) ;;
+	step 6 : wff = alimi (step 5) |- ( ∀ x ¬ ∀ x ∀ y ¬ ∀ x ∀ y ph → ∀ x ph ) ;;
+	step 7 : wff = ax467to6 () |- ( ¬ ∀ x ¬ ∀ x ∀ y ¬ ∀ x ∀ y ph → ∀ y ¬ ∀ x ∀ y ph ) ;;
+	step 8 : wff = nsyl4 (step 6, step 7) |- ( ¬ ∀ y ¬ ∀ x ∀ y ph → ∀ x ph ) ;;
+	step 9 : wff = alimi (step 8) |- ( ∀ y ¬ ∀ y ¬ ∀ x ∀ y ph → ∀ y ∀ x ph ) ;;
+	step 10 : wff = syl (step 2, step 9) |- ( ∀ x ∀ y ph → ∀ y ∀ x ph ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* ~ equid with existential quantifier without using ~ ax-4 or ~ ax-17 .
+     (Contributed by NM, 13-Jan-2011.)  (Proof shortened by Wolf Lammen,
+     27-Feb-2014.)  (Proof modification is discouraged.) */
+
+theorem equidqe (x : set, y : set)  {
+	prop 1 : wff = |- ¬ ∀ y ¬ x = x ;;
+}
+
+proof of equidqe {
+	step 1 : wff = ax9from9o () |- ¬ ∀ y ¬ y = x ;;
+	step 2 : wff = ax-8 () |- ( y = x → ( y = x → x = x ) ) ;;
+	step 3 : wff = pm2.43i (step 2) |- ( y = x → x = x ) ;;
+	step 4 : wff = con3i (step 3) |- ( ¬ x = x → ¬ y = x ) ;;
+	step 5 : wff = alimi (step 4) |- ( ∀ y ¬ x = x → ∀ y ¬ y = x ) ;;
+	step 6 : wff = mto (step 1, step 5) |- ¬ ∀ y ¬ x = x ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* A special case of ~ ax-4 without using ~ ax-4 or ~ ax-17 .  (Contributed
+     by NM, 13-Jan-2011.)  (Proof modification is discouraged.) */
+
+theorem ax4sp1 (x : set, y : set)  {
+	prop 1 : wff = |- ( ∀ y ¬ x = x → ¬ x = x ) ;;
+}
+
+proof of ax4sp1 {
+	step 1 : wff = equidqe () |- ¬ ∀ y ¬ x = x ;;
+	step 2 : wff = pm2.21i (step 1) |- ( ∀ y ¬ x = x → ¬ x = x ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* ~ equid with universal quantifier without using ~ ax-4 or ~ ax-17 .
+     (Contributed by NM, 13-Jan-2011.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem equidq (x : set, y : set)  {
+	prop 1 : wff = |- ∀ y x = x ;;
+}
+
+proof of equidq {
+	step 1 : wff = equidqe () |- ¬ ∀ y ¬ x = x ;;
+	step 2 : wff = ax6 () |- ( ¬ ∀ y x = x → ∀ y ¬ ∀ y x = x ) ;;
+	step 3 : wff = hbequid () |- ( x = x → ∀ y x = x ) ;;
+	step 4 : wff = con3i (step 3) |- ( ¬ ∀ y x = x → ¬ x = x ) ;;
+	step 5 : wff = alrimih (step 2, step 4) |- ( ¬ ∀ y x = x → ∀ y ¬ x = x ) ;;
+	step 6 : wff = mt3 (step 1, step 5) |- ∀ y x = x ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Identity law for equality (reflexivity).  Lemma 6 of [Tarski] p. 68.
+     Alternate proof of ~ equid1 from older axioms ~ ax-6o and ~ ax-9o .
+     (Contributed by NM, 5-Aug-1993.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem equid1ALT (x : set)  {
+	prop 1 : wff = |- x = x ;;
+}
+
+proof of equid1ALT {
+	step 1 : wff = ax-12o () |- ( ¬ ∀ x x = x → ( ¬ ∀ x x = x → ( x = x → ∀ x x = x ) ) ) ;;
+	step 2 : wff = pm2.43i (step 1) |- ( ¬ ∀ x x = x → ( x = x → ∀ x x = x ) ) ;;
+	step 3 : wff = alimi (step 2) |- ( ∀ x ¬ ∀ x x = x → ∀ x ( x = x → ∀ x x = x ) ) ;;
+	step 4 : wff = ax-9o () |- ( ∀ x ( x = x → ∀ x x = x ) → x = x ) ;;
+	step 5 : wff = syl (step 3, step 4) |- ( ∀ x ¬ ∀ x x = x → x = x ) ;;
+	step 6 : wff = ax-6o () |- ( ¬ ∀ x ¬ ∀ x x = x → x = x ) ;;
+	step 7 : wff = pm2.61i (step 5, step 6) |- x = x ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Rederivation of ~ ax-10 from original version ~ ax-10o .  See theorem
+     ~ ax10o for the derivation of ~ ax-10o from ~ ax-10 .
+
+     This theorem should not be referenced in any proof.  Instead, use ~ ax-10
+     above so that uses of ~ ax-10 can be more easily identified, or use
+     ~ aecom-o when this form is needed for studies involving ~ ax-10o and
+     omitting ~ ax-17 .  (Contributed by NM, 16-May-2008.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem ax10from10o (x : set, y : set)  {
+	prop 1 : wff = |- ( ∀ x x = y → ∀ y y = x ) ;;
+}
+
+proof of ax10from10o {
+	step 1 : wff = ax-10o () |- ( ∀ x x = y → ( ∀ x x = y → ∀ y x = y ) ) ;;
+	step 2 : wff = pm2.43i (step 1) |- ( ∀ x x = y → ∀ y x = y ) ;;
+	step 3 : wff = equcomi () |- ( x = y → y = x ) ;;
+	step 4 : wff = alimi (step 3) |- ( ∀ y x = y → ∀ y y = x ) ;;
+	step 5 : wff = syl (step 2, step 4) |- ( ∀ x x = y → ∀ y y = x ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* A commutation rule for distinct variable specifiers.  Version of
+       ~ naecoms using ~ ax-10o .  (Contributed by NM, 2-Jan-2002.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem naecoms-o (ph : wff, x : set, y : set)  {
+	hyp 1 : wff = |- ( ¬ ∀ x x = y → ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ∀ y y = x → ph ) ;;
+}
+
+proof of naecoms-o {
+	step 1 : wff = aecom-o () |- ( ∀ x x = y → ∀ y y = x ) ;;
+	step 2 : wff = nsyl4 (step 1, hyp 1) |- ( ¬ ph → ∀ y y = x ) ;;
+	step 3 : wff = con1i (step 2) |- ( ¬ ∀ y y = x → ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* All variables are effectively bound in a distinct variable specifier.
+     Lemma L19 in [Megill] p. 446 (p. 14 of the preprint).  Version of ~ hbnae
+     using ~ ax-10o .  (Contributed by NM, 5-Aug-1993.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem hbnae-o (x : set, y : set, z : set)  {
+	prop 1 : wff = |- ( ¬ ∀ x x = y → ∀ z ¬ ∀ x x = y ) ;;
+}
+
+proof of hbnae-o {
+	step 1 : wff = hbae-o () |- ( ∀ x x = y → ∀ z ∀ x x = y ) ;;
+	step 2 : wff = hbn (step 1) |- ( ¬ ∀ x x = y → ∀ z ¬ ∀ x x = y ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Proof of ~ dvelimh that uses ~ ax-10o but not ~ ax-11o , ~ ax-10 , or
+       ~ ax-11 .  Version of ~ dvelimh using ~ ax-10o instead of ~ ax10o .
+       (Contributed by NM, 12-Nov-2002.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem dvelimf-o (ph : wff, ps : wff, x : set, y : set, z : set)  {
+	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
+	hyp 2 : wff = |- ( ps → ∀ z ps ) ;;
+	hyp 3 : wff = |- ( z = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ∀ x x = y → ( ps → ∀ x ps ) ) ;;
+}
+
+proof of dvelimf-o {
+	step 1 : wff = hba1-o () |- ( ∀ z ( z = y → ph ) → ∀ z ∀ z ( z = y → ph ) ) ;;
+	step 2 : wff = ax-10o () |- ( ∀ z z = x → ( ∀ z ∀ z ( z = y → ph ) → ∀ x ∀ z ( z = y → ph ) ) ) ;;
+	step 3 : wff = aecoms-o (step 2) |- ( ∀ x x = z → ( ∀ z ∀ z ( z = y → ph ) → ∀ x ∀ z ( z = y → ph ) ) ) ;;
+	step 4 : wff = syl5 (step 1, step 3) |- ( ∀ x x = z → ( ∀ z ( z = y → ph ) → ∀ x ∀ z ( z = y → ph ) ) ) ;;
+	step 5 : wff = a1d (step 4) |- ( ∀ x x = z → ( ¬ ∀ x x = y → ( ∀ z ( z = y → ph ) → ∀ x ∀ z ( z = y → ph ) ) ) ) ;;
+	step 6 : wff = hbnae-o () |- ( ¬ ∀ x x = z → ∀ z ¬ ∀ x x = z ) ;;
+	step 7 : wff = hbnae-o () |- ( ¬ ∀ x x = y → ∀ z ¬ ∀ x x = y ) ;;
+	step 8 : wff = hban (step 6, step 7) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = y ) → ∀ z ( ¬ ∀ x x = z ∧ ¬ ∀ x x = y ) ) ;;
+	step 9 : wff = hbnae-o () |- ( ¬ ∀ x x = z → ∀ x ¬ ∀ x x = z ) ;;
+	step 10 : wff = hbnae-o () |- ( ¬ ∀ x x = y → ∀ x ¬ ∀ x x = y ) ;;
+	step 11 : wff = hban (step 9, step 10) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = y ) → ∀ x ( ¬ ∀ x x = z ∧ ¬ ∀ x x = y ) ) ;;
+	step 12 : wff = ax-12o () |- ( ¬ ∀ x x = z → ( ¬ ∀ x x = y → ( z = y → ∀ x z = y ) ) ) ;;
+	step 13 : wff = imp (step 12) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = y ) → ( z = y → ∀ x z = y ) ) ;;
+	step 14 : wff = a1i (hyp 1) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = y ) → ( ph → ∀ x ph ) ) ;;
+	step 15 : wff = hbimd (step 11, step 13, step 14) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = y ) → ( ( z = y → ph ) → ∀ x ( z = y → ph ) ) ) ;;
+	step 16 : wff = hbald (step 8, step 15) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = y ) → ( ∀ z ( z = y → ph ) → ∀ x ∀ z ( z = y → ph ) ) ) ;;
+	step 17 : wff = ex (step 16) |- ( ¬ ∀ x x = z → ( ¬ ∀ x x = y → ( ∀ z ( z = y → ph ) → ∀ x ∀ z ( z = y → ph ) ) ) ) ;;
+	step 18 : wff = pm2.61i (step 5, step 17) |- ( ¬ ∀ x x = y → ( ∀ z ( z = y → ph ) → ∀ x ∀ z ( z = y → ph ) ) ) ;;
+	step 19 : wff = equsalh (hyp 2, hyp 3) |- ( ∀ z ( z = y → ph ) ↔ ps ) ;;
+	step 20 : wff = equsalh (hyp 2, hyp 3) |- ( ∀ z ( z = y → ph ) ↔ ps ) ;;
+	step 21 : wff = albii (step 20) |- ( ∀ x ∀ z ( z = y → ph ) ↔ ∀ x ps ) ;;
+	step 22 : wff = 3imtr3g (step 18, step 19, step 21) |- ( ¬ ∀ x x = y → ( ps → ∀ x ps ) ) ;;
+	qed prop 1 = step 22 ;;
+}
+
+/* Formula-building lemma for use with the Distinctor Reduction Theorem.
+       Part of Theorem 9.4 of [Megill] p. 448 (p. 16 of preprint).  Version of
+       ~ dral2 using ~ ax-10o .  (Contributed by NM, 27-Feb-2005.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem dral2-o (ph : wff, ps : wff, x : set, y : set, z : set)  {
+	hyp 1 : wff = |- ( ∀ x x = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x x = y → ( ∀ z ph ↔ ∀ z ps ) ) ;;
+}
+
+proof of dral2-o {
+	step 1 : wff = hbae-o () |- ( ∀ x x = y → ∀ z ∀ x x = y ) ;;
+	step 2 : wff = albidh (step 1, hyp 1) |- ( ∀ x x = y → ( ∀ z ph ↔ ∀ z ps ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A "distinctor elimination" lemma with no restrictions on variables in
+       the consequent, proved without using ~ ax-16 .  Version of ~ aev using
+       ~ ax-10o .  (Contributed by NM, 8-Nov-2006.)  (Proof shortened by Andrew
+       Salmon, 21-Jun-2011.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem aev-o (x : set, y : set, z : set, w : set, v : set) disjointed(t u v, t u x y, u w) {
+	prop 1 : wff = |- ( ∀ x x = y → ∀ z w = v ) ;;
+}
+
+proof of aev-o {
+	var u : set, t : set;;
+	step 1 : wff = hbae-o () |- ( ∀ x x = y → ∀ z ∀ x x = y ) ;;
+	step 2 : wff = hbae-o () |- ( ∀ x x = y → ∀ t ∀ x x = y ) ;;
+	step 3 : wff = ax-8 () |- ( x = t → ( x = y → t = y ) ) ;;
+	step 4 : wff = spimv (step 3) |- ( ∀ x x = y → t = y ) ;;
+	step 5 : wff = alrimih (step 2, step 4) |- ( ∀ x x = y → ∀ t t = y ) ;;
+	step 6 : wff = ax-8 () |- ( y = u → ( y = t → u = t ) ) ;;
+	step 7 : wff = equcomi () |- ( u = t → t = u ) ;;
+	step 8 : wff = syl6 (step 6, step 7) |- ( y = u → ( y = t → t = u ) ) ;;
+	step 9 : wff = spimv (step 8) |- ( ∀ y y = t → t = u ) ;;
+	step 10 : wff = aecoms-o (step 9) |- ( ∀ t t = y → t = u ) ;;
+	step 11 : wff = a5i-o (step 10) |- ( ∀ t t = y → ∀ t t = u ) ;;
+	step 12 : wff = hbae-o () |- ( ∀ t t = u → ∀ v ∀ t t = u ) ;;
+	step 13 : wff = ax-8 () |- ( t = v → ( t = u → v = u ) ) ;;
+	step 14 : wff = spimv (step 13) |- ( ∀ t t = u → v = u ) ;;
+	step 15 : wff = alrimih (step 12, step 14) |- ( ∀ t t = u → ∀ v v = u ) ;;
+	step 16 : wff = aecom-o () |- ( ∀ v v = u → ∀ u u = v ) ;;
+	step 17 : wff = 3syl (step 11, step 15, step 16) |- ( ∀ t t = y → ∀ u u = v ) ;;
+	step 18 : wff = ax-8 () |- ( u = w → ( u = v → w = v ) ) ;;
+	step 19 : wff = spimv (step 18) |- ( ∀ u u = v → w = v ) ;;
+	step 20 : wff = 3syl (step 5, step 17, step 19) |- ( ∀ x x = y → w = v ) ;;
+	step 21 : wff = alrimih (step 1, step 20) |- ( ∀ x x = y → ∀ z w = v ) ;;
+	qed prop 1 = step 21 ;;
+}
+
+/* Theorem to add distinct quantifier to atomic formula.  (This theorem
+       demonstrates the induction basis for ~ ax-17 considered as a
+       metatheorem.  Do not use it for later proofs - use ~ ax-17 instead, to
+       avoid reference to the redundant axiom ~ ax-16 .)  (Contributed by NM,
+       5-Aug-1993.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem ax17eq (x : set, y : set, z : set) disjointed(x z, y z) {
+	prop 1 : wff = |- ( x = y → ∀ z x = y ) ;;
+}
+
+proof of ax17eq {
+	step 1 : wff = ax-12o () |- ( ¬ ∀ z z = x → ( ¬ ∀ z z = y → ( x = y → ∀ z x = y ) ) ) ;;
+	step 2 : wff = ax-16 () |- ( ∀ z z = x → ( x = y → ∀ z x = y ) ) ;;
+	step 3 : wff = ax-16 () |- ( ∀ z z = y → ( x = y → ∀ z x = y ) ) ;;
+	step 4 : wff = pm2.61ii (step 1, step 2, step 3) |- ( x = y → ∀ z x = y ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Quantifier introduction when one pair of variables is distinct.  Version
+       of ~ dveeq2 using ~ ax-11o .  (Contributed by NM, 2-Jan-2002.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem dveeq2-o (x : set, y : set, z : set) disjointed(w z x, w y) {
+	prop 1 : wff = |- ( ¬ ∀ x x = y → ( z = y → ∀ x z = y ) ) ;;
+}
+
+proof of dveeq2-o {
+	var w : set;;
+	step 1 : wff = ax-17 () |- ( z = w → ∀ x z = w ) ;;
+	step 2 : wff = ax-17 () |- ( z = y → ∀ w z = y ) ;;
+	step 3 : wff = equequ2 () |- ( w = y → ( z = w ↔ z = y ) ) ;;
+	step 4 : wff = dvelimf-o (step 1, step 2, step 3) |- ( ¬ ∀ x x = y → ( z = y → ∀ x z = y ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Version of ~ dveeq2 using ~ ax-16 instead of ~ ax-17 .  TO DO:  Recover
+       proof from older set.mm to remove use of ~ ax-17 .  (Contributed by NM,
+       29-Apr-2008.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem dveeq2-o16 (x : set, y : set, z : set) disjointed(w z x, w y) {
+	prop 1 : wff = |- ( ¬ ∀ x x = y → ( z = y → ∀ x z = y ) ) ;;
+}
+
+proof of dveeq2-o16 {
+	var w : set;;
+	step 1 : wff = ax17eq () |- ( z = w → ∀ x z = w ) ;;
+	step 2 : wff = equequ2 () |- ( w = y → ( z = w ↔ z = y ) ) ;;
+	step 3 : wff = dvelimALT (step 1, step 2) |- ( ¬ ∀ x x = y → ( z = y → ∀ x z = y ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A generalization of axiom ~ ax-16 .  Version of ~ a16g using ~ ax-10o .
+       (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
+       25-May-2011.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem a16g-o (ph : wff, x : set, y : set, z : set) disjointed(x y) {
+	prop 1 : wff = |- ( ∀ x x = y → ( ph → ∀ z ph ) ) ;;
+}
+
+proof of a16g-o {
+	step 1 : wff = aev-o () |- ( ∀ x x = y → ∀ z z = x ) ;;
+	step 2 : wff = ax-16 () |- ( ∀ x x = y → ( ph → ∀ x ph ) ) ;;
+	step 3 : wff = biidd () |- ( ∀ z z = x → ( ph ↔ ph ) ) ;;
+	step 4 : wff = dral1-o (step 3) |- ( ∀ z z = x → ( ∀ z ph ↔ ∀ x ph ) ) ;;
+	step 5 : wff = biimprd (step 4) |- ( ∀ z z = x → ( ∀ x ph → ∀ z ph ) ) ;;
+	step 6 : wff = sylsyld (step 1, step 2, step 5) |- ( ∀ x x = y → ( ph → ∀ z ph ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Quantifier introduction when one pair of variables is distinct.  Version
+       of ~ dveeq1 using ax-10o .  (Contributed by NM, 2-Jan-2002.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem dveeq1-o (x : set, y : set, z : set) disjointed(w z x, w y) {
+	prop 1 : wff = |- ( ¬ ∀ x x = y → ( y = z → ∀ x y = z ) ) ;;
+}
+
+proof of dveeq1-o {
+	var w : set;;
+	step 1 : wff = ax-17 () |- ( w = z → ∀ x w = z ) ;;
+	step 2 : wff = ax-17 () |- ( y = z → ∀ w y = z ) ;;
+	step 3 : wff = equequ1 () |- ( w = y → ( w = z ↔ y = z ) ) ;;
+	step 4 : wff = dvelimf-o (step 1, step 2, step 3) |- ( ¬ ∀ x x = y → ( y = z → ∀ x y = z ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Version of ~ dveeq1 using ~ ax-16 instead of ~ ax-17 .  (Contributed by
+       NM, 29-Apr-2008.)  TO DO:  Recover proof from older set.mm to remove use
+       of ~ ax-17 .  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem dveeq1-o16 (x : set, y : set, z : set) disjointed(w z x, w y) {
+	prop 1 : wff = |- ( ¬ ∀ x x = y → ( y = z → ∀ x y = z ) ) ;;
+}
+
+proof of dveeq1-o16 {
+	var w : set;;
+	step 1 : wff = ax17eq () |- ( w = z → ∀ x w = z ) ;;
+	step 2 : wff = ax17eq () |- ( y = z → ∀ w y = z ) ;;
+	step 3 : wff = equequ1 () |- ( w = y → ( w = z ↔ y = z ) ) ;;
+	step 4 : wff = dvelimh (step 1, step 2, step 3) |- ( ¬ ∀ x x = y → ( y = z → ∀ x y = z ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Theorem to add distinct quantifier to atomic formula.  This theorem
+       demonstrates the induction basis for ~ ax-17 considered as a
+       metatheorem.)  (Contributed by NM, 5-Aug-1993.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem ax17el (x : set, y : set, z : set) disjointed(x z, y z) {
+	prop 1 : wff = |- ( x ∈ y → ∀ z x ∈ y ) ;;
+}
+
+proof of ax17el {
+	step 1 : wff = ax-15 () |- ( ¬ ∀ z z = x → ( ¬ ∀ z z = y → ( x ∈ y → ∀ z x ∈ y ) ) ) ;;
+	step 2 : wff = ax-16 () |- ( ∀ z z = x → ( x ∈ y → ∀ z x ∈ y ) ) ;;
+	step 3 : wff = ax-16 () |- ( ∀ z z = y → ( x ∈ y → ∀ z x ∈ y ) ) ;;
+	step 4 : wff = pm2.61ii (step 1, step 2, step 3) |- ( x ∈ y → ∀ z x ∈ y ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* This theorem shows that, given ~ ax-16 , we can derive a version of
+       ~ ax-10 .  However, it is weaker than ~ ax-10 because it has a distinct
+       variable requirement.  (Contributed by Andrew Salmon, 27-Jul-2011.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem ax10-16 (x : set, z : set) disjointed(x z w) {
+	prop 1 : wff = |- ( ∀ x x = z → ∀ z z = x ) ;;
+}
+
+proof of ax10-16 {
+	var w : set;;
+	step 1 : wff = ax-16 () |- ( ∀ x x = z → ( x = w → ∀ x x = w ) ) ;;
+	step 2 : wff = alrimiv (step 1) |- ( ∀ x x = z → ∀ w ( x = w → ∀ x x = w ) ) ;;
+	step 3 : wff = a5i-o (step 2) |- ( ∀ x x = z → ∀ x ∀ w ( x = w → ∀ x x = w ) ) ;;
+	step 4 : wff = equequ1 () |- ( x = z → ( x = w ↔ z = w ) ) ;;
+	step 5 : wff = equequ1 () |- ( x = z → ( x = w ↔ z = w ) ) ;;
+	step 6 : wff = cbvalv (step 5) |- ( ∀ x x = w ↔ ∀ z z = w ) ;;
+	step 7 : wff = a1i (step 6) |- ( x = z → ( ∀ x x = w ↔ ∀ z z = w ) ) ;;
+	step 8 : wff = imbi12d (step 4, step 7) |- ( x = z → ( ( x = w → ∀ x x = w ) ↔ ( z = w → ∀ z z = w ) ) ) ;;
+	step 9 : wff = albidv (step 8) |- ( x = z → ( ∀ w ( x = w → ∀ x x = w ) ↔ ∀ w ( z = w → ∀ z z = w ) ) ) ;;
+	step 10 : wff = cbvalv (step 9) |- ( ∀ x ∀ w ( x = w → ∀ x x = w ) ↔ ∀ z ∀ w ( z = w → ∀ z z = w ) ) ;;
+	step 11 : wff = biimpi (step 10) |- ( ∀ x ∀ w ( x = w → ∀ x x = w ) → ∀ z ∀ w ( z = w → ∀ z z = w ) ) ;;
+	step 12 : wff = nfa1-o () |- F/ z ∀ z z = w ;;
+	step 13 : wff = 19.23 (step 12) |- ( ∀ z ( z = w → ∀ z z = w ) ↔ ( ∃ z z = w → ∀ z z = w ) ) ;;
+	step 14 : wff = albii (step 13) |- ( ∀ w ∀ z ( z = w → ∀ z z = w ) ↔ ∀ w ( ∃ z z = w → ∀ z z = w ) ) ;;
+	step 15 : wff = a9ev () |- ∃ z z = w ;;
+	step 16 : wff = pm2.27 () |- ( ∃ z z = w → ( ( ∃ z z = w → ∀ z z = w ) → ∀ z z = w ) ) ;;
+	step 17 : wff = ax-mp (step 15, step 16) |- ( ( ∃ z z = w → ∀ z z = w ) → ∀ z z = w ) ;;
+	step 18 : wff = alimi (step 17) |- ( ∀ w ( ∃ z z = w → ∀ z z = w ) → ∀ w ∀ z z = w ) ;;
+	step 19 : wff = equequ2 () |- ( w = x → ( z = w ↔ z = x ) ) ;;
+	step 20 : wff = spv (step 19) |- ( ∀ w z = w → z = x ) ;;
+	step 21 : wff = sps-o (step 20) |- ( ∀ z ∀ w z = w → z = x ) ;;
+	step 22 : wff = a7s (step 21) |- ( ∀ w ∀ z z = w → z = x ) ;;
+	step 23 : wff = syl (step 18, step 22) |- ( ∀ w ( ∃ z z = w → ∀ z z = w ) → z = x ) ;;
+	step 24 : wff = sylbi (step 14, step 23) |- ( ∀ w ∀ z ( z = w → ∀ z z = w ) → z = x ) ;;
+	step 25 : wff = a7s (step 24) |- ( ∀ z ∀ w ( z = w → ∀ z z = w ) → z = x ) ;;
+	step 26 : wff = a5i-o (step 25) |- ( ∀ z ∀ w ( z = w → ∀ z z = w ) → ∀ z z = x ) ;;
+	step 27 : wff = 3syl (step 3, step 11, step 26) |- ( ∀ x x = z → ∀ z z = x ) ;;
+	qed prop 1 = step 27 ;;
+}
+
+/* Version of ~ dveel2 using ~ ax-16 instead of ~ ax-17 .  (Contributed by
+       NM, 10-May-2008.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem dveel2ALT (x : set, y : set, z : set) disjointed(w z x, w y) {
+	prop 1 : wff = |- ( ¬ ∀ x x = y → ( z ∈ y → ∀ x z ∈ y ) ) ;;
+}
+
+proof of dveel2ALT {
+	var w : set;;
+	step 1 : wff = ax17el () |- ( z ∈ w → ∀ x z ∈ w ) ;;
+	step 2 : wff = ax17el () |- ( z ∈ y → ∀ w z ∈ y ) ;;
+	step 3 : wff = elequ2 () |- ( w = y → ( z ∈ w ↔ z ∈ y ) ) ;;
+	step 4 : wff = dvelimh (step 1, step 2, step 3) |- ( ¬ ∀ x x = y → ( z ∈ y → ∀ x z ∈ y ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Basis step for constructing a substitution instance of ~ ax-11o without
+       using ~ ax-11o .  We can start with any formula ` ph ` in which ` x ` is
+       not free.  (Contributed by NM, 21-Jan-2007.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem ax11f (ph : wff, x : set, y : set)  {
+	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ∀ x x = y → ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ) ;;
+}
+
+proof of ax11f {
+	step 1 : wff = ax-1 () |- ( ph → ( x = y → ph ) ) ;;
+	step 2 : wff = alrimih (hyp 1, step 1) |- ( ph → ∀ x ( x = y → ph ) ) ;;
+	step 3 : wff = a1ii (step 2) |- ( ¬ ∀ x x = y → ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Basis step for constructing a substitution instance of ~ ax-11o without
+       using ~ ax-11o .  Atomic formula for equality predicate.  (Contributed
+       by NM, 22-Jan-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem ax11eq (x : set, y : set, z : set, w : set) disjointed(x u v, y u v, z u v, w u v) {
+	prop 1 : wff = |- ( ¬ ∀ x x = y → ( x = y → ( z = w → ∀ x ( x = y → z = w ) ) ) ) ;;
+}
+
+proof of ax11eq {
+	var v : set, u : set;;
+	step 1 : wff = 19.26 () |- ( ∀ x ( x = z ∧ x = w ) ↔ ( ∀ x x = z ∧ ∀ x x = w ) ) ;;
+	step 2 : wff = equid () |- x = x ;;
+	step 3 : wff = a1i (step 2) |- ( x = y → x = x ) ;;
+	step 4 : wff = ax-gen (step 3) |- ∀ x ( x = y → x = x ) ;;
+	step 5 : wff = a1i (step 4) |- ( x = x → ∀ x ( x = y → x = x ) ) ;;
+	step 6 : wff = equequ1 () |- ( x = z → ( x = x ↔ z = x ) ) ;;
+	step 7 : wff = equequ2 () |- ( x = w → ( z = x ↔ z = w ) ) ;;
+	step 8 : wff = sylan9bb (step 6, step 7) |- ( ( x = z ∧ x = w ) → ( x = x ↔ z = w ) ) ;;
+	step 9 : wff = sps-o (step 8) |- ( ∀ x ( x = z ∧ x = w ) → ( x = x ↔ z = w ) ) ;;
+	step 10 : wff = nfa1-o () |- F/ x ∀ x ( x = z ∧ x = w ) ;;
+	step 11 : wff = equequ1 () |- ( x = z → ( x = x ↔ z = x ) ) ;;
+	step 12 : wff = equequ2 () |- ( x = w → ( z = x ↔ z = w ) ) ;;
+	step 13 : wff = sylan9bb (step 11, step 12) |- ( ( x = z ∧ x = w ) → ( x = x ↔ z = w ) ) ;;
+	step 14 : wff = sps-o (step 13) |- ( ∀ x ( x = z ∧ x = w ) → ( x = x ↔ z = w ) ) ;;
+	step 15 : wff = imbi2d (step 14) |- ( ∀ x ( x = z ∧ x = w ) → ( ( x = y → x = x ) ↔ ( x = y → z = w ) ) ) ;;
+	step 16 : wff = albid (step 10, step 15) |- ( ∀ x ( x = z ∧ x = w ) → ( ∀ x ( x = y → x = x ) ↔ ∀ x ( x = y → z = w ) ) ) ;;
+	step 17 : wff = imbi12d (step 9, step 16) |- ( ∀ x ( x = z ∧ x = w ) → ( ( x = x → ∀ x ( x = y → x = x ) ) ↔ ( z = w → ∀ x ( x = y → z = w ) ) ) ) ;;
+	step 18 : wff = adantr (step 17) |- ( ( ∀ x ( x = z ∧ x = w ) ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( ( x = x → ∀ x ( x = y → x = x ) ) ↔ ( z = w → ∀ x ( x = y → z = w ) ) ) ) ;;
+	step 19 : wff = mpbii (step 5, step 18) |- ( ( ∀ x ( x = z ∧ x = w ) ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( z = w → ∀ x ( x = y → z = w ) ) ) ;;
+	step 20 : wff = exp32 (step 19) |- ( ∀ x ( x = z ∧ x = w ) → ( ¬ ∀ x x = y → ( x = y → ( z = w → ∀ x ( x = y → z = w ) ) ) ) ) ;;
+	step 21 : wff = sylbir (step 1, step 20) |- ( ( ∀ x x = z ∧ ∀ x x = w ) → ( ¬ ∀ x x = y → ( x = y → ( z = w → ∀ x ( x = y → z = w ) ) ) ) ) ;;
+	step 22 : wff = equequ1 () |- ( x = y → ( x = w ↔ y = w ) ) ;;
+	step 23 : wff = ad2antll (step 22) |- ( ( ¬ ∀ x x = w ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( x = w ↔ y = w ) ) ;;
+	step 24 : wff = ax12o () |- ( ¬ ∀ x x = y → ( ¬ ∀ x x = w → ( y = w → ∀ x y = w ) ) ) ;;
+	step 25 : wff = impcom (step 24) |- ( ( ¬ ∀ x x = w ∧ ¬ ∀ x x = y ) → ( y = w → ∀ x y = w ) ) ;;
+	step 26 : wff = adantrr (step 25) |- ( ( ¬ ∀ x x = w ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( y = w → ∀ x y = w ) ) ;;
+	step 27 : wff = equtrr () |- ( y = w → ( x = y → x = w ) ) ;;
+	step 28 : wff = alimi (step 27) |- ( ∀ x y = w → ∀ x ( x = y → x = w ) ) ;;
+	step 29 : wff = syl6 (step 26, step 28) |- ( ( ¬ ∀ x x = w ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( y = w → ∀ x ( x = y → x = w ) ) ) ;;
+	step 30 : wff = sylbid (step 23, step 29) |- ( ( ¬ ∀ x x = w ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( x = w → ∀ x ( x = y → x = w ) ) ) ;;
+	step 31 : wff = adantll (step 30) |- ( ( ( ∀ x x = z ∧ ¬ ∀ x x = w ) ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( x = w → ∀ x ( x = y → x = w ) ) ) ;;
+	step 32 : wff = equequ1 () |- ( x = z → ( x = w ↔ z = w ) ) ;;
+	step 33 : wff = sps-o (step 32) |- ( ∀ x x = z → ( x = w ↔ z = w ) ) ;;
+	step 34 : wff = equequ1 () |- ( x = z → ( x = w ↔ z = w ) ) ;;
+	step 35 : wff = sps-o (step 34) |- ( ∀ x x = z → ( x = w ↔ z = w ) ) ;;
+	step 36 : wff = imbi2d (step 35) |- ( ∀ x x = z → ( ( x = y → x = w ) ↔ ( x = y → z = w ) ) ) ;;
+	step 37 : wff = dral2-o (step 36) |- ( ∀ x x = z → ( ∀ x ( x = y → x = w ) ↔ ∀ x ( x = y → z = w ) ) ) ;;
+	step 38 : wff = imbi12d (step 33, step 37) |- ( ∀ x x = z → ( ( x = w → ∀ x ( x = y → x = w ) ) ↔ ( z = w → ∀ x ( x = y → z = w ) ) ) ) ;;
+	step 39 : wff = ad2antrr (step 38) |- ( ( ( ∀ x x = z ∧ ¬ ∀ x x = w ) ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( ( x = w → ∀ x ( x = y → x = w ) ) ↔ ( z = w → ∀ x ( x = y → z = w ) ) ) ) ;;
+	step 40 : wff = mpbid (step 31, step 39) |- ( ( ( ∀ x x = z ∧ ¬ ∀ x x = w ) ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( z = w → ∀ x ( x = y → z = w ) ) ) ;;
+	step 41 : wff = exp32 (step 40) |- ( ( ∀ x x = z ∧ ¬ ∀ x x = w ) → ( ¬ ∀ x x = y → ( x = y → ( z = w → ∀ x ( x = y → z = w ) ) ) ) ) ;;
+	step 42 : wff = equequ2 () |- ( x = y → ( z = x ↔ z = y ) ) ;;
+	step 43 : wff = ad2antll (step 42) |- ( ( ¬ ∀ x x = z ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( z = x ↔ z = y ) ) ;;
+	step 44 : wff = ax12o () |- ( ¬ ∀ x x = z → ( ¬ ∀ x x = y → ( z = y → ∀ x z = y ) ) ) ;;
+	step 45 : wff = imp (step 44) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = y ) → ( z = y → ∀ x z = y ) ) ;;
+	step 46 : wff = adantrr (step 45) |- ( ( ¬ ∀ x x = z ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( z = y → ∀ x z = y ) ) ;;
+	step 47 : wff = equequ2 () |- ( x = y → ( z = x ↔ z = y ) ) ;;
+	step 48 : wff = biimprcd (step 47) |- ( z = y → ( x = y → z = x ) ) ;;
+	step 49 : wff = alimi (step 48) |- ( ∀ x z = y → ∀ x ( x = y → z = x ) ) ;;
+	step 50 : wff = syl6 (step 46, step 49) |- ( ( ¬ ∀ x x = z ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( z = y → ∀ x ( x = y → z = x ) ) ) ;;
+	step 51 : wff = sylbid (step 43, step 50) |- ( ( ¬ ∀ x x = z ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( z = x → ∀ x ( x = y → z = x ) ) ) ;;
+	step 52 : wff = adantlr (step 51) |- ( ( ( ¬ ∀ x x = z ∧ ∀ x x = w ) ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( z = x → ∀ x ( x = y → z = x ) ) ) ;;
+	step 53 : wff = equequ2 () |- ( x = w → ( z = x ↔ z = w ) ) ;;
+	step 54 : wff = sps-o (step 53) |- ( ∀ x x = w → ( z = x ↔ z = w ) ) ;;
+	step 55 : wff = equequ2 () |- ( x = w → ( z = x ↔ z = w ) ) ;;
+	step 56 : wff = sps-o (step 55) |- ( ∀ x x = w → ( z = x ↔ z = w ) ) ;;
+	step 57 : wff = imbi2d (step 56) |- ( ∀ x x = w → ( ( x = y → z = x ) ↔ ( x = y → z = w ) ) ) ;;
+	step 58 : wff = dral2-o (step 57) |- ( ∀ x x = w → ( ∀ x ( x = y → z = x ) ↔ ∀ x ( x = y → z = w ) ) ) ;;
+	step 59 : wff = imbi12d (step 54, step 58) |- ( ∀ x x = w → ( ( z = x → ∀ x ( x = y → z = x ) ) ↔ ( z = w → ∀ x ( x = y → z = w ) ) ) ) ;;
+	step 60 : wff = ad2antlr (step 59) |- ( ( ( ¬ ∀ x x = z ∧ ∀ x x = w ) ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( ( z = x → ∀ x ( x = y → z = x ) ) ↔ ( z = w → ∀ x ( x = y → z = w ) ) ) ) ;;
+	step 61 : wff = mpbid (step 52, step 60) |- ( ( ( ¬ ∀ x x = z ∧ ∀ x x = w ) ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( z = w → ∀ x ( x = y → z = w ) ) ) ;;
+	step 62 : wff = exp32 (step 61) |- ( ( ¬ ∀ x x = z ∧ ∀ x x = w ) → ( ¬ ∀ x x = y → ( x = y → ( z = w → ∀ x ( x = y → z = w ) ) ) ) ) ;;
+	step 63 : wff = a9ev () |- ∃ u u = w ;;
+	step 64 : wff = a9ev () |- ∃ v v = z ;;
+	step 65 : wff = ax-1 () |- ( v = u → ( x = y → v = u ) ) ;;
+	step 66 : wff = alrimiv (step 65) |- ( v = u → ∀ x ( x = y → v = u ) ) ;;
+	step 67 : wff = equequ1 () |- ( v = z → ( v = u ↔ z = u ) ) ;;
+	step 68 : wff = equequ2 () |- ( u = w → ( z = u ↔ z = w ) ) ;;
+	step 69 : wff = sylan9bb (step 67, step 68) |- ( ( v = z ∧ u = w ) → ( v = u ↔ z = w ) ) ;;
+	step 70 : wff = adantl (step 69) |- ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) ∧ ( v = z ∧ u = w ) ) → ( v = u ↔ z = w ) ) ;;
+	step 71 : wff = dveeq2-o () |- ( ¬ ∀ x x = z → ( v = z → ∀ x v = z ) ) ;;
+	step 72 : wff = dveeq2-o () |- ( ¬ ∀ x x = w → ( u = w → ∀ x u = w ) ) ;;
+	step 73 : wff = im2anan9 (step 71, step 72) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) → ( ( v = z ∧ u = w ) → ( ∀ x v = z ∧ ∀ x u = w ) ) ) ;;
+	step 74 : wff = imp (step 73) |- ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) ∧ ( v = z ∧ u = w ) ) → ( ∀ x v = z ∧ ∀ x u = w ) ) ;;
+	step 75 : wff = 19.26 () |- ( ∀ x ( v = z ∧ u = w ) ↔ ( ∀ x v = z ∧ ∀ x u = w ) ) ;;
+	step 76 : wff = sylibr (step 74, step 75) |- ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) ∧ ( v = z ∧ u = w ) ) → ∀ x ( v = z ∧ u = w ) ) ;;
+	step 77 : wff = nfa1-o () |- F/ x ∀ x ( v = z ∧ u = w ) ;;
+	step 78 : wff = equequ1 () |- ( v = z → ( v = u ↔ z = u ) ) ;;
+	step 79 : wff = equequ2 () |- ( u = w → ( z = u ↔ z = w ) ) ;;
+	step 80 : wff = sylan9bb (step 78, step 79) |- ( ( v = z ∧ u = w ) → ( v = u ↔ z = w ) ) ;;
+	step 81 : wff = sps-o (step 80) |- ( ∀ x ( v = z ∧ u = w ) → ( v = u ↔ z = w ) ) ;;
+	step 82 : wff = imbi2d (step 81) |- ( ∀ x ( v = z ∧ u = w ) → ( ( x = y → v = u ) ↔ ( x = y → z = w ) ) ) ;;
+	step 83 : wff = albid (step 77, step 82) |- ( ∀ x ( v = z ∧ u = w ) → ( ∀ x ( x = y → v = u ) ↔ ∀ x ( x = y → z = w ) ) ) ;;
+	step 84 : wff = syl (step 76, step 83) |- ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) ∧ ( v = z ∧ u = w ) ) → ( ∀ x ( x = y → v = u ) ↔ ∀ x ( x = y → z = w ) ) ) ;;
+	step 85 : wff = imbi12d (step 70, step 84) |- ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) ∧ ( v = z ∧ u = w ) ) → ( ( v = u → ∀ x ( x = y → v = u ) ) ↔ ( z = w → ∀ x ( x = y → z = w ) ) ) ) ;;
+	step 86 : wff = mpbii (step 66, step 85) |- ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) ∧ ( v = z ∧ u = w ) ) → ( z = w → ∀ x ( x = y → z = w ) ) ) ;;
+	step 87 : wff = exp32 (step 86) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) → ( v = z → ( u = w → ( z = w → ∀ x ( x = y → z = w ) ) ) ) ) ;;
+	step 88 : wff = exlimdv (step 87) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) → ( ∃ v v = z → ( u = w → ( z = w → ∀ x ( x = y → z = w ) ) ) ) ) ;;
+	step 89 : wff = mpi (step 64, step 88) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) → ( u = w → ( z = w → ∀ x ( x = y → z = w ) ) ) ) ;;
+	step 90 : wff = exlimdv (step 89) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) → ( ∃ u u = w → ( z = w → ∀ x ( x = y → z = w ) ) ) ) ;;
+	step 91 : wff = mpi (step 63, step 90) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) → ( z = w → ∀ x ( x = y → z = w ) ) ) ;;
+	step 92 : wff = a1d (step 91) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) → ( x = y → ( z = w → ∀ x ( x = y → z = w ) ) ) ) ;;
+	step 93 : wff = a1d (step 92) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) → ( ¬ ∀ x x = y → ( x = y → ( z = w → ∀ x ( x = y → z = w ) ) ) ) ) ;;
+	step 94 : wff = 4cases (step 21, step 41, step 62, step 93) |- ( ¬ ∀ x x = y → ( x = y → ( z = w → ∀ x ( x = y → z = w ) ) ) ) ;;
+	qed prop 1 = step 94 ;;
+}
+
+/* Basis step for constructing a substitution instance of ~ ax-11o without
+       using ~ ax-11o .  Atomic formula for membership predicate.  (Contributed
+       by NM, 22-Jan-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem ax11el (x : set, y : set, z : set, w : set) disjointed(x u v, y u v, z u v, w u v) {
+	prop 1 : wff = |- ( ¬ ∀ x x = y → ( x = y → ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ) ;;
+}
+
+proof of ax11el {
+	var v : set, u : set;;
+	step 1 : wff = 19.26 () |- ( ∀ x ( x = z ∧ x = w ) ↔ ( ∀ x x = z ∧ ∀ x x = w ) ) ;;
+	step 2 : wff = elequ1 () |- ( x = y → ( x ∈ x ↔ y ∈ x ) ) ;;
+	step 3 : wff = elequ2 () |- ( x = y → ( y ∈ x ↔ y ∈ y ) ) ;;
+	step 4 : wff = bitrd (step 2, step 3) |- ( x = y → ( x ∈ x ↔ y ∈ y ) ) ;;
+	step 5 : wff = adantl (step 4) |- ( ( ¬ ∀ x x = y ∧ x = y ) → ( x ∈ x ↔ y ∈ y ) ) ;;
+	step 6 : wff = ax-17 () |- ( v ∈ v → ∀ x v ∈ v ) ;;
+	step 7 : wff = ax-17 () |- ( y ∈ y → ∀ v y ∈ y ) ;;
+	step 8 : wff = elequ1 () |- ( v = y → ( v ∈ v ↔ y ∈ v ) ) ;;
+	step 9 : wff = elequ2 () |- ( v = y → ( y ∈ v ↔ y ∈ y ) ) ;;
+	step 10 : wff = bitrd (step 8, step 9) |- ( v = y → ( v ∈ v ↔ y ∈ y ) ) ;;
+	step 11 : wff = dvelimf-o (step 6, step 7, step 10) |- ( ¬ ∀ x x = y → ( y ∈ y → ∀ x y ∈ y ) ) ;;
+	step 12 : wff = elequ1 () |- ( x = y → ( x ∈ x ↔ y ∈ x ) ) ;;
+	step 13 : wff = elequ2 () |- ( x = y → ( y ∈ x ↔ y ∈ y ) ) ;;
+	step 14 : wff = bitrd (step 12, step 13) |- ( x = y → ( x ∈ x ↔ y ∈ y ) ) ;;
+	step 15 : wff = biimprcd (step 14) |- ( y ∈ y → ( x = y → x ∈ x ) ) ;;
+	step 16 : wff = alimi (step 15) |- ( ∀ x y ∈ y → ∀ x ( x = y → x ∈ x ) ) ;;
+	step 17 : wff = syl6 (step 11, step 16) |- ( ¬ ∀ x x = y → ( y ∈ y → ∀ x ( x = y → x ∈ x ) ) ) ;;
+	step 18 : wff = adantr (step 17) |- ( ( ¬ ∀ x x = y ∧ x = y ) → ( y ∈ y → ∀ x ( x = y → x ∈ x ) ) ) ;;
+	step 19 : wff = sylbid (step 5, step 18) |- ( ( ¬ ∀ x x = y ∧ x = y ) → ( x ∈ x → ∀ x ( x = y → x ∈ x ) ) ) ;;
+	step 20 : wff = adantl (step 19) |- ( ( ∀ x ( x = z ∧ x = w ) ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( x ∈ x → ∀ x ( x = y → x ∈ x ) ) ) ;;
+	step 21 : wff = elequ1 () |- ( x = z → ( x ∈ x ↔ z ∈ x ) ) ;;
+	step 22 : wff = elequ2 () |- ( x = w → ( z ∈ x ↔ z ∈ w ) ) ;;
+	step 23 : wff = sylan9bb (step 21, step 22) |- ( ( x = z ∧ x = w ) → ( x ∈ x ↔ z ∈ w ) ) ;;
+	step 24 : wff = sps-o (step 23) |- ( ∀ x ( x = z ∧ x = w ) → ( x ∈ x ↔ z ∈ w ) ) ;;
+	step 25 : wff = nfa1-o () |- F/ x ∀ x ( x = z ∧ x = w ) ;;
+	step 26 : wff = elequ1 () |- ( x = z → ( x ∈ x ↔ z ∈ x ) ) ;;
+	step 27 : wff = elequ2 () |- ( x = w → ( z ∈ x ↔ z ∈ w ) ) ;;
+	step 28 : wff = sylan9bb (step 26, step 27) |- ( ( x = z ∧ x = w ) → ( x ∈ x ↔ z ∈ w ) ) ;;
+	step 29 : wff = sps-o (step 28) |- ( ∀ x ( x = z ∧ x = w ) → ( x ∈ x ↔ z ∈ w ) ) ;;
+	step 30 : wff = imbi2d (step 29) |- ( ∀ x ( x = z ∧ x = w ) → ( ( x = y → x ∈ x ) ↔ ( x = y → z ∈ w ) ) ) ;;
+	step 31 : wff = albid (step 25, step 30) |- ( ∀ x ( x = z ∧ x = w ) → ( ∀ x ( x = y → x ∈ x ) ↔ ∀ x ( x = y → z ∈ w ) ) ) ;;
+	step 32 : wff = imbi12d (step 24, step 31) |- ( ∀ x ( x = z ∧ x = w ) → ( ( x ∈ x → ∀ x ( x = y → x ∈ x ) ) ↔ ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ) ;;
+	step 33 : wff = adantr (step 32) |- ( ( ∀ x ( x = z ∧ x = w ) ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( ( x ∈ x → ∀ x ( x = y → x ∈ x ) ) ↔ ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ) ;;
+	step 34 : wff = mpbid (step 20, step 33) |- ( ( ∀ x ( x = z ∧ x = w ) ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ;;
+	step 35 : wff = exp32 (step 34) |- ( ∀ x ( x = z ∧ x = w ) → ( ¬ ∀ x x = y → ( x = y → ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ) ) ;;
+	step 36 : wff = sylbir (step 1, step 35) |- ( ( ∀ x x = z ∧ ∀ x x = w ) → ( ¬ ∀ x x = y → ( x = y → ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ) ) ;;
+	step 37 : wff = elequ1 () |- ( x = y → ( x ∈ w ↔ y ∈ w ) ) ;;
+	step 38 : wff = ad2antll (step 37) |- ( ( ¬ ∀ x x = w ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( x ∈ w ↔ y ∈ w ) ) ;;
+	step 39 : wff = ax-15 () |- ( ¬ ∀ x x = y → ( ¬ ∀ x x = w → ( y ∈ w → ∀ x y ∈ w ) ) ) ;;
+	step 40 : wff = impcom (step 39) |- ( ( ¬ ∀ x x = w ∧ ¬ ∀ x x = y ) → ( y ∈ w → ∀ x y ∈ w ) ) ;;
+	step 41 : wff = adantrr (step 40) |- ( ( ¬ ∀ x x = w ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( y ∈ w → ∀ x y ∈ w ) ) ;;
+	step 42 : wff = elequ1 () |- ( x = y → ( x ∈ w ↔ y ∈ w ) ) ;;
+	step 43 : wff = biimprcd (step 42) |- ( y ∈ w → ( x = y → x ∈ w ) ) ;;
+	step 44 : wff = alimi (step 43) |- ( ∀ x y ∈ w → ∀ x ( x = y → x ∈ w ) ) ;;
+	step 45 : wff = syl6 (step 41, step 44) |- ( ( ¬ ∀ x x = w ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( y ∈ w → ∀ x ( x = y → x ∈ w ) ) ) ;;
+	step 46 : wff = sylbid (step 38, step 45) |- ( ( ¬ ∀ x x = w ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( x ∈ w → ∀ x ( x = y → x ∈ w ) ) ) ;;
+	step 47 : wff = adantll (step 46) |- ( ( ( ∀ x x = z ∧ ¬ ∀ x x = w ) ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( x ∈ w → ∀ x ( x = y → x ∈ w ) ) ) ;;
+	step 48 : wff = elequ1 () |- ( x = z → ( x ∈ w ↔ z ∈ w ) ) ;;
+	step 49 : wff = sps-o (step 48) |- ( ∀ x x = z → ( x ∈ w ↔ z ∈ w ) ) ;;
+	step 50 : wff = elequ1 () |- ( x = z → ( x ∈ w ↔ z ∈ w ) ) ;;
+	step 51 : wff = sps-o (step 50) |- ( ∀ x x = z → ( x ∈ w ↔ z ∈ w ) ) ;;
+	step 52 : wff = imbi2d (step 51) |- ( ∀ x x = z → ( ( x = y → x ∈ w ) ↔ ( x = y → z ∈ w ) ) ) ;;
+	step 53 : wff = dral2-o (step 52) |- ( ∀ x x = z → ( ∀ x ( x = y → x ∈ w ) ↔ ∀ x ( x = y → z ∈ w ) ) ) ;;
+	step 54 : wff = imbi12d (step 49, step 53) |- ( ∀ x x = z → ( ( x ∈ w → ∀ x ( x = y → x ∈ w ) ) ↔ ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ) ;;
+	step 55 : wff = ad2antrr (step 54) |- ( ( ( ∀ x x = z ∧ ¬ ∀ x x = w ) ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( ( x ∈ w → ∀ x ( x = y → x ∈ w ) ) ↔ ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ) ;;
+	step 56 : wff = mpbid (step 47, step 55) |- ( ( ( ∀ x x = z ∧ ¬ ∀ x x = w ) ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ;;
+	step 57 : wff = exp32 (step 56) |- ( ( ∀ x x = z ∧ ¬ ∀ x x = w ) → ( ¬ ∀ x x = y → ( x = y → ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ) ) ;;
+	step 58 : wff = elequ2 () |- ( x = y → ( z ∈ x ↔ z ∈ y ) ) ;;
+	step 59 : wff = ad2antll (step 58) |- ( ( ¬ ∀ x x = z ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( z ∈ x ↔ z ∈ y ) ) ;;
+	step 60 : wff = ax-15 () |- ( ¬ ∀ x x = z → ( ¬ ∀ x x = y → ( z ∈ y → ∀ x z ∈ y ) ) ) ;;
+	step 61 : wff = imp (step 60) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = y ) → ( z ∈ y → ∀ x z ∈ y ) ) ;;
+	step 62 : wff = adantrr (step 61) |- ( ( ¬ ∀ x x = z ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( z ∈ y → ∀ x z ∈ y ) ) ;;
+	step 63 : wff = elequ2 () |- ( x = y → ( z ∈ x ↔ z ∈ y ) ) ;;
+	step 64 : wff = biimprcd (step 63) |- ( z ∈ y → ( x = y → z ∈ x ) ) ;;
+	step 65 : wff = alimi (step 64) |- ( ∀ x z ∈ y → ∀ x ( x = y → z ∈ x ) ) ;;
+	step 66 : wff = syl6 (step 62, step 65) |- ( ( ¬ ∀ x x = z ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( z ∈ y → ∀ x ( x = y → z ∈ x ) ) ) ;;
+	step 67 : wff = sylbid (step 59, step 66) |- ( ( ¬ ∀ x x = z ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( z ∈ x → ∀ x ( x = y → z ∈ x ) ) ) ;;
+	step 68 : wff = adantlr (step 67) |- ( ( ( ¬ ∀ x x = z ∧ ∀ x x = w ) ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( z ∈ x → ∀ x ( x = y → z ∈ x ) ) ) ;;
+	step 69 : wff = elequ2 () |- ( x = w → ( z ∈ x ↔ z ∈ w ) ) ;;
+	step 70 : wff = sps-o (step 69) |- ( ∀ x x = w → ( z ∈ x ↔ z ∈ w ) ) ;;
+	step 71 : wff = elequ2 () |- ( x = w → ( z ∈ x ↔ z ∈ w ) ) ;;
+	step 72 : wff = sps-o (step 71) |- ( ∀ x x = w → ( z ∈ x ↔ z ∈ w ) ) ;;
+	step 73 : wff = imbi2d (step 72) |- ( ∀ x x = w → ( ( x = y → z ∈ x ) ↔ ( x = y → z ∈ w ) ) ) ;;
+	step 74 : wff = dral2-o (step 73) |- ( ∀ x x = w → ( ∀ x ( x = y → z ∈ x ) ↔ ∀ x ( x = y → z ∈ w ) ) ) ;;
+	step 75 : wff = imbi12d (step 70, step 74) |- ( ∀ x x = w → ( ( z ∈ x → ∀ x ( x = y → z ∈ x ) ) ↔ ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ) ;;
+	step 76 : wff = ad2antlr (step 75) |- ( ( ( ¬ ∀ x x = z ∧ ∀ x x = w ) ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( ( z ∈ x → ∀ x ( x = y → z ∈ x ) ) ↔ ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ) ;;
+	step 77 : wff = mpbid (step 68, step 76) |- ( ( ( ¬ ∀ x x = z ∧ ∀ x x = w ) ∧ ( ¬ ∀ x x = y ∧ x = y ) ) → ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ;;
+	step 78 : wff = exp32 (step 77) |- ( ( ¬ ∀ x x = z ∧ ∀ x x = w ) → ( ¬ ∀ x x = y → ( x = y → ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ) ) ;;
+	step 79 : wff = a9ev () |- ∃ u u = w ;;
+	step 80 : wff = a9ev () |- ∃ v v = z ;;
+	step 81 : wff = ax-1 () |- ( v ∈ u → ( x = y → v ∈ u ) ) ;;
+	step 82 : wff = alrimiv (step 81) |- ( v ∈ u → ∀ x ( x = y → v ∈ u ) ) ;;
+	step 83 : wff = elequ1 () |- ( v = z → ( v ∈ u ↔ z ∈ u ) ) ;;
+	step 84 : wff = elequ2 () |- ( u = w → ( z ∈ u ↔ z ∈ w ) ) ;;
+	step 85 : wff = sylan9bb (step 83, step 84) |- ( ( v = z ∧ u = w ) → ( v ∈ u ↔ z ∈ w ) ) ;;
+	step 86 : wff = adantl (step 85) |- ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) ∧ ( v = z ∧ u = w ) ) → ( v ∈ u ↔ z ∈ w ) ) ;;
+	step 87 : wff = dveeq2-o () |- ( ¬ ∀ x x = z → ( v = z → ∀ x v = z ) ) ;;
+	step 88 : wff = dveeq2-o () |- ( ¬ ∀ x x = w → ( u = w → ∀ x u = w ) ) ;;
+	step 89 : wff = im2anan9 (step 87, step 88) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) → ( ( v = z ∧ u = w ) → ( ∀ x v = z ∧ ∀ x u = w ) ) ) ;;
+	step 90 : wff = imp (step 89) |- ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) ∧ ( v = z ∧ u = w ) ) → ( ∀ x v = z ∧ ∀ x u = w ) ) ;;
+	step 91 : wff = 19.26 () |- ( ∀ x ( v = z ∧ u = w ) ↔ ( ∀ x v = z ∧ ∀ x u = w ) ) ;;
+	step 92 : wff = sylibr (step 90, step 91) |- ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) ∧ ( v = z ∧ u = w ) ) → ∀ x ( v = z ∧ u = w ) ) ;;
+	step 93 : wff = nfa1-o () |- F/ x ∀ x ( v = z ∧ u = w ) ;;
+	step 94 : wff = elequ1 () |- ( v = z → ( v ∈ u ↔ z ∈ u ) ) ;;
+	step 95 : wff = elequ2 () |- ( u = w → ( z ∈ u ↔ z ∈ w ) ) ;;
+	step 96 : wff = sylan9bb (step 94, step 95) |- ( ( v = z ∧ u = w ) → ( v ∈ u ↔ z ∈ w ) ) ;;
+	step 97 : wff = sps-o (step 96) |- ( ∀ x ( v = z ∧ u = w ) → ( v ∈ u ↔ z ∈ w ) ) ;;
+	step 98 : wff = imbi2d (step 97) |- ( ∀ x ( v = z ∧ u = w ) → ( ( x = y → v ∈ u ) ↔ ( x = y → z ∈ w ) ) ) ;;
+	step 99 : wff = albid (step 93, step 98) |- ( ∀ x ( v = z ∧ u = w ) → ( ∀ x ( x = y → v ∈ u ) ↔ ∀ x ( x = y → z ∈ w ) ) ) ;;
+	step 100 : wff = syl (step 92, step 99) |- ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) ∧ ( v = z ∧ u = w ) ) → ( ∀ x ( x = y → v ∈ u ) ↔ ∀ x ( x = y → z ∈ w ) ) ) ;;
+	step 101 : wff = imbi12d (step 86, step 100) |- ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) ∧ ( v = z ∧ u = w ) ) → ( ( v ∈ u → ∀ x ( x = y → v ∈ u ) ) ↔ ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ) ;;
+	step 102 : wff = mpbii (step 82, step 101) |- ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) ∧ ( v = z ∧ u = w ) ) → ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ;;
+	step 103 : wff = exp32 (step 102) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) → ( v = z → ( u = w → ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ) ) ;;
+	step 104 : wff = exlimdv (step 103) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) → ( ∃ v v = z → ( u = w → ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ) ) ;;
+	step 105 : wff = mpi (step 80, step 104) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) → ( u = w → ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ) ;;
+	step 106 : wff = exlimdv (step 105) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) → ( ∃ u u = w → ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ) ;;
+	step 107 : wff = mpi (step 79, step 106) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) → ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ;;
+	step 108 : wff = a1d (step 107) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) → ( x = y → ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ) ;;
+	step 109 : wff = a1d (step 108) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = w ) → ( ¬ ∀ x x = y → ( x = y → ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ) ) ;;
+	step 110 : wff = 4cases (step 36, step 57, step 78, step 109) |- ( ¬ ∀ x x = y → ( x = y → ( z ∈ w → ∀ x ( x = y → z ∈ w ) ) ) ) ;;
+	qed prop 1 = step 110 ;;
+}
+
+/* Induction step for constructing a substitution instance of ~ ax-11o
+       without using ~ ax-11o .  Negation case.  (Contributed by NM,
+       21-Jan-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem ax11indn (ph : wff, x : set, y : set)  {
+	hyp 1 : wff = |- ( ¬ ∀ x x = y → ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ∀ x x = y → ( x = y → ( ¬ ph → ∀ x ( x = y → ¬ ph ) ) ) ) ;;
+}
+
+proof of ax11indn {
+	step 1 : wff = 19.8a () |- ( ( x = y ∧ ¬ ph ) → ∃ x ( x = y ∧ ¬ ph ) ) ;;
+	step 2 : wff = exanali () |- ( ∃ x ( x = y ∧ ¬ ph ) ↔ ¬ ∀ x ( x = y → ph ) ) ;;
+	step 3 : wff = hbn1 () |- ( ¬ ∀ x x = y → ∀ x ¬ ∀ x x = y ) ;;
+	step 4 : wff = hbn1 () |- ( ¬ ∀ x ( x = y → ph ) → ∀ x ¬ ∀ x ( x = y → ph ) ) ;;
+	step 5 : wff = con3 () |- ( ( ph → ∀ x ( x = y → ph ) ) → ( ¬ ∀ x ( x = y → ph ) → ¬ ph ) ) ;;
+	step 6 : wff = syl6 (hyp 1, step 5) |- ( ¬ ∀ x x = y → ( x = y → ( ¬ ∀ x ( x = y → ph ) → ¬ ph ) ) ) ;;
+	step 7 : wff = com23 (step 6) |- ( ¬ ∀ x x = y → ( ¬ ∀ x ( x = y → ph ) → ( x = y → ¬ ph ) ) ) ;;
+	step 8 : wff = alrimdh (step 3, step 4, step 7) |- ( ¬ ∀ x x = y → ( ¬ ∀ x ( x = y → ph ) → ∀ x ( x = y → ¬ ph ) ) ) ;;
+	step 9 : wff = syl5bi (step 2, step 8) |- ( ¬ ∀ x x = y → ( ∃ x ( x = y ∧ ¬ ph ) → ∀ x ( x = y → ¬ ph ) ) ) ;;
+	step 10 : wff = syl5 (step 1, step 9) |- ( ¬ ∀ x x = y → ( ( x = y ∧ ¬ ph ) → ∀ x ( x = y → ¬ ph ) ) ) ;;
+	step 11 : wff = exp3a (step 10) |- ( ¬ ∀ x x = y → ( x = y → ( ¬ ph → ∀ x ( x = y → ¬ ph ) ) ) ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* Induction step for constructing a substitution instance of ~ ax-11o
+         without using ~ ax-11o .  Implication case.  (Contributed by NM,
+         21-Jan-2007.)  (Proof modification is discouraged.)
+         (New usage is discouraged.) */
+
+theorem ax11indi (ph : wff, ps : wff, x : set, y : set)  {
+	hyp 1 : wff = |- ( ¬ ∀ x x = y → ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ) ;;
+	hyp 2 : wff = |- ( ¬ ∀ x x = y → ( x = y → ( ps → ∀ x ( x = y → ps ) ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ∀ x x = y → ( x = y → ( ( ph → ps ) → ∀ x ( x = y → ( ph → ps ) ) ) ) ) ;;
+}
+
+proof of ax11indi {
+	step 1 : wff = ax11indn (hyp 1) |- ( ¬ ∀ x x = y → ( x = y → ( ¬ ph → ∀ x ( x = y → ¬ ph ) ) ) ) ;;
+	step 2 : wff = imp (step 1) |- ( ( ¬ ∀ x x = y ∧ x = y ) → ( ¬ ph → ∀ x ( x = y → ¬ ph ) ) ) ;;
+	step 3 : wff = pm2.21 () |- ( ¬ ph → ( ph → ps ) ) ;;
+	step 4 : wff = imim2i (step 3) |- ( ( x = y → ¬ ph ) → ( x = y → ( ph → ps ) ) ) ;;
+	step 5 : wff = alimi (step 4) |- ( ∀ x ( x = y → ¬ ph ) → ∀ x ( x = y → ( ph → ps ) ) ) ;;
+	step 6 : wff = syl6 (step 2, step 5) |- ( ( ¬ ∀ x x = y ∧ x = y ) → ( ¬ ph → ∀ x ( x = y → ( ph → ps ) ) ) ) ;;
+	step 7 : wff = imp (hyp 2) |- ( ( ¬ ∀ x x = y ∧ x = y ) → ( ps → ∀ x ( x = y → ps ) ) ) ;;
+	step 8 : wff = ax-1 () |- ( ps → ( ph → ps ) ) ;;
+	step 9 : wff = imim2i (step 8) |- ( ( x = y → ps ) → ( x = y → ( ph → ps ) ) ) ;;
+	step 10 : wff = alimi (step 9) |- ( ∀ x ( x = y → ps ) → ∀ x ( x = y → ( ph → ps ) ) ) ;;
+	step 11 : wff = syl6 (step 7, step 10) |- ( ( ¬ ∀ x x = y ∧ x = y ) → ( ps → ∀ x ( x = y → ( ph → ps ) ) ) ) ;;
+	step 12 : wff = jad (step 6, step 11) |- ( ( ¬ ∀ x x = y ∧ x = y ) → ( ( ph → ps ) → ∀ x ( x = y → ( ph → ps ) ) ) ) ;;
+	step 13 : wff = ex (step 12) |- ( ¬ ∀ x x = y → ( x = y → ( ( ph → ps ) → ∀ x ( x = y → ( ph → ps ) ) ) ) ) ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* Lemma for ~ ax11inda2 and ~ ax11inda .  (Contributed by NM,
+       24-Jan-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem ax11indalem (ph : wff, x : set, y : set, z : set)  {
+	hyp 1 : wff = |- ( ¬ ∀ x x = y → ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ∀ y y = z → ( ¬ ∀ x x = y → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ) ;;
+}
+
+proof of ax11indalem {
+	step 1 : wff = ax-1 () |- ( ∀ x ph → ( x = y → ∀ x ph ) ) ;;
+	step 2 : wff = a5i-o (step 1) |- ( ∀ x ph → ∀ x ( x = y → ∀ x ph ) ) ;;
+	step 3 : wff = a1i (step 2) |- ( ∀ z z = x → ( ∀ x ph → ∀ x ( x = y → ∀ x ph ) ) ) ;;
+	step 4 : wff = biidd () |- ( ∀ z z = x → ( ph ↔ ph ) ) ;;
+	step 5 : wff = dral1-o (step 4) |- ( ∀ z z = x → ( ∀ z ph ↔ ∀ x ph ) ) ;;
+	step 6 : wff = biidd () |- ( ∀ z z = x → ( ph ↔ ph ) ) ;;
+	step 7 : wff = dral1-o (step 6) |- ( ∀ z z = x → ( ∀ z ph ↔ ∀ x ph ) ) ;;
+	step 8 : wff = imbi2d (step 7) |- ( ∀ z z = x → ( ( x = y → ∀ z ph ) ↔ ( x = y → ∀ x ph ) ) ) ;;
+	step 9 : wff = dral2-o (step 8) |- ( ∀ z z = x → ( ∀ x ( x = y → ∀ z ph ) ↔ ∀ x ( x = y → ∀ x ph ) ) ) ;;
+	step 10 : wff = 3imtr4d (step 3, step 5, step 9) |- ( ∀ z z = x → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ;;
+	step 11 : wff = aecoms-o (step 10) |- ( ∀ x x = z → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ;;
+	step 12 : wff = a1d (step 11) |- ( ∀ x x = z → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ;;
+	step 13 : wff = a1d (step 12) |- ( ∀ x x = z → ( ¬ ∀ x x = y → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ) ;;
+	step 14 : wff = adantr (step 13) |- ( ( ∀ x x = z ∧ ¬ ∀ y y = z ) → ( ¬ ∀ x x = y → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ) ;;
+	step 15 : wff = simplr () |- ( ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ y y = z ) ∧ ¬ ∀ x x = y ) ∧ x = y ) → ¬ ∀ x x = y ) ;;
+	step 16 : wff = aecom-o () |- ( ∀ z z = x → ∀ x x = z ) ;;
+	step 17 : wff = con3i (step 16) |- ( ¬ ∀ x x = z → ¬ ∀ z z = x ) ;;
+	step 18 : wff = aecom-o () |- ( ∀ z z = y → ∀ y y = z ) ;;
+	step 19 : wff = con3i (step 18) |- ( ¬ ∀ y y = z → ¬ ∀ z z = y ) ;;
+	step 20 : wff = ax12o () |- ( ¬ ∀ z z = x → ( ¬ ∀ z z = y → ( x = y → ∀ z x = y ) ) ) ;;
+	step 21 : wff = imp (step 20) |- ( ( ¬ ∀ z z = x ∧ ¬ ∀ z z = y ) → ( x = y → ∀ z x = y ) ) ;;
+	step 22 : wff = syl2an (step 17, step 19, step 21) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ y y = z ) → ( x = y → ∀ z x = y ) ) ;;
+	step 23 : wff = imp (step 22) |- ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ y y = z ) ∧ x = y ) → ∀ z x = y ) ;;
+	step 24 : wff = adantlr (step 23) |- ( ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ y y = z ) ∧ ¬ ∀ x x = y ) ∧ x = y ) → ∀ z x = y ) ;;
+	step 25 : wff = hbnae-o () |- ( ¬ ∀ x x = y → ∀ z ¬ ∀ x x = y ) ;;
+	step 26 : wff = hba1-o () |- ( ∀ z x = y → ∀ z ∀ z x = y ) ;;
+	step 27 : wff = hban (step 25, step 26) |- ( ( ¬ ∀ x x = y ∧ ∀ z x = y ) → ∀ z ( ¬ ∀ x x = y ∧ ∀ z x = y ) ) ;;
+	step 28 : wff = ax-4 () |- ( ∀ z x = y → x = y ) ;;
+	step 29 : wff = imp (hyp 1) |- ( ( ¬ ∀ x x = y ∧ x = y ) → ( ph → ∀ x ( x = y → ph ) ) ) ;;
+	step 30 : wff = sylan2 (step 28, step 29) |- ( ( ¬ ∀ x x = y ∧ ∀ z x = y ) → ( ph → ∀ x ( x = y → ph ) ) ) ;;
+	step 31 : wff = alimdh (step 27, step 30) |- ( ( ¬ ∀ x x = y ∧ ∀ z x = y ) → ( ∀ z ph → ∀ z ∀ x ( x = y → ph ) ) ) ;;
+	step 32 : wff = syl2anc (step 15, step 24, step 31) |- ( ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ y y = z ) ∧ ¬ ∀ x x = y ) ∧ x = y ) → ( ∀ z ph → ∀ z ∀ x ( x = y → ph ) ) ) ;;
+	step 33 : wff = ax-7 () |- ( ∀ z ∀ x ( x = y → ph ) → ∀ x ∀ z ( x = y → ph ) ) ;;
+	step 34 : wff = hbnae-o () |- ( ¬ ∀ x x = z → ∀ x ¬ ∀ x x = z ) ;;
+	step 35 : wff = hbnae-o () |- ( ¬ ∀ y y = z → ∀ x ¬ ∀ y y = z ) ;;
+	step 36 : wff = hban (step 34, step 35) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ y y = z ) → ∀ x ( ¬ ∀ x x = z ∧ ¬ ∀ y y = z ) ) ;;
+	step 37 : wff = hbnae-o () |- ( ¬ ∀ x x = z → ∀ z ¬ ∀ x x = z ) ;;
+	step 38 : wff = hbnae-o () |- ( ¬ ∀ y y = z → ∀ z ¬ ∀ y y = z ) ;;
+	step 39 : wff = hban (step 37, step 38) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ y y = z ) → ∀ z ( ¬ ∀ x x = z ∧ ¬ ∀ y y = z ) ) ;;
+	step 40 : wff = aecom-o () |- ( ∀ z z = x → ∀ x x = z ) ;;
+	step 41 : wff = con3i (step 40) |- ( ¬ ∀ x x = z → ¬ ∀ z z = x ) ;;
+	step 42 : wff = aecom-o () |- ( ∀ z z = y → ∀ y y = z ) ;;
+	step 43 : wff = con3i (step 42) |- ( ¬ ∀ y y = z → ¬ ∀ z z = y ) ;;
+	step 44 : wff = ax12o () |- ( ¬ ∀ z z = x → ( ¬ ∀ z z = y → ( x = y → ∀ z x = y ) ) ) ;;
+	step 45 : wff = imp (step 44) |- ( ( ¬ ∀ z z = x ∧ ¬ ∀ z z = y ) → ( x = y → ∀ z x = y ) ) ;;
+	step 46 : wff = syl2an (step 41, step 43, step 45) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ y y = z ) → ( x = y → ∀ z x = y ) ) ;;
+	step 47 : wff = nfdh (step 39, step 46) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ y y = z ) → F/ z x = y ) ;;
+	step 48 : wff = 19.21t () |- ( F/ z x = y → ( ∀ z ( x = y → ph ) ↔ ( x = y → ∀ z ph ) ) ) ;;
+	step 49 : wff = syl (step 47, step 48) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ y y = z ) → ( ∀ z ( x = y → ph ) ↔ ( x = y → ∀ z ph ) ) ) ;;
+	step 50 : wff = albidh (step 36, step 49) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ y y = z ) → ( ∀ x ∀ z ( x = y → ph ) ↔ ∀ x ( x = y → ∀ z ph ) ) ) ;;
+	step 51 : wff = syl5ib (step 33, step 50) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ y y = z ) → ( ∀ z ∀ x ( x = y → ph ) → ∀ x ( x = y → ∀ z ph ) ) ) ;;
+	step 52 : wff = ad2antrr (step 51) |- ( ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ y y = z ) ∧ ¬ ∀ x x = y ) ∧ x = y ) → ( ∀ z ∀ x ( x = y → ph ) → ∀ x ( x = y → ∀ z ph ) ) ) ;;
+	step 53 : wff = syld (step 32, step 52) |- ( ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ y y = z ) ∧ ¬ ∀ x x = y ) ∧ x = y ) → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ;;
+	step 54 : wff = exp31 (step 53) |- ( ( ¬ ∀ x x = z ∧ ¬ ∀ y y = z ) → ( ¬ ∀ x x = y → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ) ;;
+	step 55 : wff = pm2.61ian (step 14, step 54) |- ( ¬ ∀ y y = z → ( ¬ ∀ x x = y → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ) ;;
+	qed prop 1 = step 55 ;;
+}
+
+/* A proof of ~ ax11inda2 that is slightly more direct.  (Contributed by
+       NM, 4-May-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem ax11inda2ALT (ph : wff, x : set, y : set, z : set) disjointed(z y) {
+	hyp 1 : wff = |- ( ¬ ∀ x x = y → ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ∀ x x = y → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ;;
+}
+
+proof of ax11inda2ALT {
+	step 1 : wff = ax-1 () |- ( ∀ x ph → ( x = y → ∀ x ph ) ) ;;
+	step 2 : wff = a5i-o (step 1) |- ( ∀ x ph → ∀ x ( x = y → ∀ x ph ) ) ;;
+	step 3 : wff = a1i (step 2) |- ( ∀ z z = x → ( ∀ x ph → ∀ x ( x = y → ∀ x ph ) ) ) ;;
+	step 4 : wff = biidd () |- ( ∀ z z = x → ( ph ↔ ph ) ) ;;
+	step 5 : wff = dral1-o (step 4) |- ( ∀ z z = x → ( ∀ z ph ↔ ∀ x ph ) ) ;;
+	step 6 : wff = biidd () |- ( ∀ z z = x → ( ph ↔ ph ) ) ;;
+	step 7 : wff = dral1-o (step 6) |- ( ∀ z z = x → ( ∀ z ph ↔ ∀ x ph ) ) ;;
+	step 8 : wff = imbi2d (step 7) |- ( ∀ z z = x → ( ( x = y → ∀ z ph ) ↔ ( x = y → ∀ x ph ) ) ) ;;
+	step 9 : wff = dral2-o (step 8) |- ( ∀ z z = x → ( ∀ x ( x = y → ∀ z ph ) ↔ ∀ x ( x = y → ∀ x ph ) ) ) ;;
+	step 10 : wff = 3imtr4d (step 3, step 5, step 9) |- ( ∀ z z = x → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ;;
+	step 11 : wff = aecoms-o (step 10) |- ( ∀ x x = z → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ;;
+	step 12 : wff = a1d (step 11) |- ( ∀ x x = z → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ;;
+	step 13 : wff = a1d (step 12) |- ( ∀ x x = z → ( ¬ ∀ x x = y → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ) ;;
+	step 14 : wff = simplr () |- ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = y ) ∧ x = y ) → ¬ ∀ x x = y ) ;;
+	step 15 : wff = dveeq1-o () |- ( ¬ ∀ z z = x → ( x = y → ∀ z x = y ) ) ;;
+	step 16 : wff = naecoms-o (step 15) |- ( ¬ ∀ x x = z → ( x = y → ∀ z x = y ) ) ;;
+	step 17 : wff = imp (step 16) |- ( ( ¬ ∀ x x = z ∧ x = y ) → ∀ z x = y ) ;;
+	step 18 : wff = adantlr (step 17) |- ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = y ) ∧ x = y ) → ∀ z x = y ) ;;
+	step 19 : wff = hbnae-o () |- ( ¬ ∀ x x = y → ∀ z ¬ ∀ x x = y ) ;;
+	step 20 : wff = hba1-o () |- ( ∀ z x = y → ∀ z ∀ z x = y ) ;;
+	step 21 : wff = hban (step 19, step 20) |- ( ( ¬ ∀ x x = y ∧ ∀ z x = y ) → ∀ z ( ¬ ∀ x x = y ∧ ∀ z x = y ) ) ;;
+	step 22 : wff = ax-4 () |- ( ∀ z x = y → x = y ) ;;
+	step 23 : wff = imp (hyp 1) |- ( ( ¬ ∀ x x = y ∧ x = y ) → ( ph → ∀ x ( x = y → ph ) ) ) ;;
+	step 24 : wff = sylan2 (step 22, step 23) |- ( ( ¬ ∀ x x = y ∧ ∀ z x = y ) → ( ph → ∀ x ( x = y → ph ) ) ) ;;
+	step 25 : wff = alimdh (step 21, step 24) |- ( ( ¬ ∀ x x = y ∧ ∀ z x = y ) → ( ∀ z ph → ∀ z ∀ x ( x = y → ph ) ) ) ;;
+	step 26 : wff = syl2anc (step 14, step 18, step 25) |- ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = y ) ∧ x = y ) → ( ∀ z ph → ∀ z ∀ x ( x = y → ph ) ) ) ;;
+	step 27 : wff = ax-7 () |- ( ∀ z ∀ x ( x = y → ph ) → ∀ x ∀ z ( x = y → ph ) ) ;;
+	step 28 : wff = hbnae-o () |- ( ¬ ∀ x x = z → ∀ x ¬ ∀ x x = z ) ;;
+	step 29 : wff = hbnae-o () |- ( ¬ ∀ x x = z → ∀ z ¬ ∀ x x = z ) ;;
+	step 30 : wff = dveeq1-o () |- ( ¬ ∀ z z = x → ( x = y → ∀ z x = y ) ) ;;
+	step 31 : wff = naecoms-o (step 30) |- ( ¬ ∀ x x = z → ( x = y → ∀ z x = y ) ) ;;
+	step 32 : wff = nfdh (step 29, step 31) |- ( ¬ ∀ x x = z → F/ z x = y ) ;;
+	step 33 : wff = 19.21t () |- ( F/ z x = y → ( ∀ z ( x = y → ph ) ↔ ( x = y → ∀ z ph ) ) ) ;;
+	step 34 : wff = syl (step 32, step 33) |- ( ¬ ∀ x x = z → ( ∀ z ( x = y → ph ) ↔ ( x = y → ∀ z ph ) ) ) ;;
+	step 35 : wff = albidh (step 28, step 34) |- ( ¬ ∀ x x = z → ( ∀ x ∀ z ( x = y → ph ) ↔ ∀ x ( x = y → ∀ z ph ) ) ) ;;
+	step 36 : wff = syl5ib (step 27, step 35) |- ( ¬ ∀ x x = z → ( ∀ z ∀ x ( x = y → ph ) → ∀ x ( x = y → ∀ z ph ) ) ) ;;
+	step 37 : wff = ad2antrr (step 36) |- ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = y ) ∧ x = y ) → ( ∀ z ∀ x ( x = y → ph ) → ∀ x ( x = y → ∀ z ph ) ) ) ;;
+	step 38 : wff = syld (step 26, step 37) |- ( ( ( ¬ ∀ x x = z ∧ ¬ ∀ x x = y ) ∧ x = y ) → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ;;
+	step 39 : wff = exp31 (step 38) |- ( ¬ ∀ x x = z → ( ¬ ∀ x x = y → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ) ;;
+	step 40 : wff = pm2.61i (step 13, step 39) |- ( ¬ ∀ x x = y → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ;;
+	qed prop 1 = step 40 ;;
+}
+
+/* Induction step for constructing a substitution instance of ~ ax-11o
+       without using ~ ax-11o .  Quantification case.  When ` z ` and ` y ` are
+       distinct, this theorem avoids the dummy variables needed by the more
+       general ~ ax11inda .  (Contributed by NM, 24-Jan-2007.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem ax11inda2 (ph : wff, x : set, y : set, z : set) disjointed(z y) {
+	hyp 1 : wff = |- ( ¬ ∀ x x = y → ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ∀ x x = y → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ;;
+}
+
+proof of ax11inda2 {
+	step 1 : wff = ax-1 () |- ( ∀ z ph → ( x = y → ∀ z ph ) ) ;;
+	step 2 : wff = a16g-o () |- ( ∀ y y = z → ( ( x = y → ∀ z ph ) → ∀ x ( x = y → ∀ z ph ) ) ) ;;
+	step 3 : wff = syl5 (step 1, step 2) |- ( ∀ y y = z → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ;;
+	step 4 : wff = a1d (step 3) |- ( ∀ y y = z → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ;;
+	step 5 : wff = a1d (step 4) |- ( ∀ y y = z → ( ¬ ∀ x x = y → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ) ;;
+	step 6 : wff = ax11indalem (hyp 1) |- ( ¬ ∀ y y = z → ( ¬ ∀ x x = y → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ) ;;
+	step 7 : wff = pm2.61i (step 5, step 6) |- ( ¬ ∀ x x = y → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Induction step for constructing a substitution instance of ~ ax-11o
+       without using ~ ax-11o .  Quantification case.  (When ` z ` and ` y `
+       are distinct, ~ ax11inda2 may be used instead to avoid the dummy
+       variable ` w ` in the proof.)  (Contributed by NM, 24-Jan-2007.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem ax11inda (ph : wff, x : set, y : set, z : set, w : set) disjointed(w ph, w x, w y, w z) {
+	hyp 1 : wff = |- ( ¬ ∀ x x = w → ( x = w → ( ph → ∀ x ( x = w → ph ) ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ∀ x x = y → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ;;
+}
+
+proof of ax11inda {
+	step 1 : wff = a9ev () |- ∃ w w = y ;;
+	step 2 : wff = ax11inda2 (hyp 1) |- ( ¬ ∀ x x = w → ( x = w → ( ∀ z ph → ∀ x ( x = w → ∀ z ph ) ) ) ) ;;
+	step 3 : wff = dveeq2-o () |- ( ¬ ∀ x x = y → ( w = y → ∀ x w = y ) ) ;;
+	step 4 : wff = imp (step 3) |- ( ( ¬ ∀ x x = y ∧ w = y ) → ∀ x w = y ) ;;
+	step 5 : wff = hba1-o () |- ( ∀ x w = y → ∀ x ∀ x w = y ) ;;
+	step 6 : wff = equequ2 () |- ( w = y → ( x = w ↔ x = y ) ) ;;
+	step 7 : wff = sps-o (step 6) |- ( ∀ x w = y → ( x = w ↔ x = y ) ) ;;
+	step 8 : wff = albidh (step 5, step 7) |- ( ∀ x w = y → ( ∀ x x = w ↔ ∀ x x = y ) ) ;;
+	step 9 : wff = notbid (step 8) |- ( ∀ x w = y → ( ¬ ∀ x x = w ↔ ¬ ∀ x x = y ) ) ;;
+	step 10 : wff = syl (step 4, step 9) |- ( ( ¬ ∀ x x = y ∧ w = y ) → ( ¬ ∀ x x = w ↔ ¬ ∀ x x = y ) ) ;;
+	step 11 : wff = equequ2 () |- ( w = y → ( x = w ↔ x = y ) ) ;;
+	step 12 : wff = adantl (step 11) |- ( ( ¬ ∀ x x = y ∧ w = y ) → ( x = w ↔ x = y ) ) ;;
+	step 13 : wff = dveeq2-o () |- ( ¬ ∀ x x = y → ( w = y → ∀ x w = y ) ) ;;
+	step 14 : wff = imp (step 13) |- ( ( ¬ ∀ x x = y ∧ w = y ) → ∀ x w = y ) ;;
+	step 15 : wff = hba1-o () |- ( ∀ x w = y → ∀ x ∀ x w = y ) ;;
+	step 16 : wff = equequ2 () |- ( w = y → ( x = w ↔ x = y ) ) ;;
+	step 17 : wff = sps-o (step 16) |- ( ∀ x w = y → ( x = w ↔ x = y ) ) ;;
+	step 18 : wff = imbi1d (step 17) |- ( ∀ x w = y → ( ( x = w → ∀ z ph ) ↔ ( x = y → ∀ z ph ) ) ) ;;
+	step 19 : wff = albidh (step 15, step 18) |- ( ∀ x w = y → ( ∀ x ( x = w → ∀ z ph ) ↔ ∀ x ( x = y → ∀ z ph ) ) ) ;;
+	step 20 : wff = syl (step 14, step 19) |- ( ( ¬ ∀ x x = y ∧ w = y ) → ( ∀ x ( x = w → ∀ z ph ) ↔ ∀ x ( x = y → ∀ z ph ) ) ) ;;
+	step 21 : wff = imbi2d (step 20) |- ( ( ¬ ∀ x x = y ∧ w = y ) → ( ( ∀ z ph → ∀ x ( x = w → ∀ z ph ) ) ↔ ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ;;
+	step 22 : wff = imbi12d (step 12, step 21) |- ( ( ¬ ∀ x x = y ∧ w = y ) → ( ( x = w → ( ∀ z ph → ∀ x ( x = w → ∀ z ph ) ) ) ↔ ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ) ;;
+	step 23 : wff = imbi12d (step 10, step 22) |- ( ( ¬ ∀ x x = y ∧ w = y ) → ( ( ¬ ∀ x x = w → ( x = w → ( ∀ z ph → ∀ x ( x = w → ∀ z ph ) ) ) ) ↔ ( ¬ ∀ x x = y → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ) ) ;;
+	step 24 : wff = mpbii (step 2, step 23) |- ( ( ¬ ∀ x x = y ∧ w = y ) → ( ¬ ∀ x x = y → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ) ;;
+	step 25 : wff = ex (step 24) |- ( ¬ ∀ x x = y → ( w = y → ( ¬ ∀ x x = y → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ) ) ;;
+	step 26 : wff = exlimdv (step 25) |- ( ¬ ∀ x x = y → ( ∃ w w = y → ( ¬ ∀ x x = y → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ) ) ;;
+	step 27 : wff = mpi (step 1, step 26) |- ( ¬ ∀ x x = y → ( ¬ ∀ x x = y → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ) ;;
+	step 28 : wff = pm2.43i (step 27) |- ( ¬ ∀ x x = y → ( x = y → ( ∀ z ph → ∀ x ( x = y → ∀ z ph ) ) ) ) ;;
+	qed prop 1 = step 28 ;;
+}
+
+/* Recovery of ~ ax-11o from ~ ax11v without using ~ ax-11o .  The
+       hypothesis is even weaker than ~ ax11v , with ` z ` both distinct from
+       ` x ` _and_ not occurring in ` ph ` .  Thus, the hypothesis provides an
+       alternate axiom that can be used in place of ~ ax-11o .  (Contributed by
+       NM, 2-Feb-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem ax11v2-o (ph : wff, x : set, y : set, z : set) disjointed(x z, y z, z ph) {
+	hyp 1 : wff = |- ( x = z → ( ph → ∀ x ( x = z → ph ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ∀ x x = y → ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ) ;;
+}
+
+proof of ax11v2-o {
+	step 1 : wff = a9ev () |- ∃ z z = y ;;
+	step 2 : wff = equequ2 () |- ( z = y → ( x = z ↔ x = y ) ) ;;
+	step 3 : wff = adantl (step 2) |- ( ( ¬ ∀ x x = y ∧ z = y ) → ( x = z ↔ x = y ) ) ;;
+	step 4 : wff = dveeq2-o () |- ( ¬ ∀ x x = y → ( z = y → ∀ x z = y ) ) ;;
+	step 5 : wff = imp (step 4) |- ( ( ¬ ∀ x x = y ∧ z = y ) → ∀ x z = y ) ;;
+	step 6 : wff = nfa1-o () |- F/ x ∀ x z = y ;;
+	step 7 : wff = equequ2 () |- ( z = y → ( x = z ↔ x = y ) ) ;;
+	step 8 : wff = imbi1d (step 7) |- ( z = y → ( ( x = z → ph ) ↔ ( x = y → ph ) ) ) ;;
+	step 9 : wff = sps-o (step 8) |- ( ∀ x z = y → ( ( x = z → ph ) ↔ ( x = y → ph ) ) ) ;;
+	step 10 : wff = albid (step 6, step 9) |- ( ∀ x z = y → ( ∀ x ( x = z → ph ) ↔ ∀ x ( x = y → ph ) ) ) ;;
+	step 11 : wff = syl (step 5, step 10) |- ( ( ¬ ∀ x x = y ∧ z = y ) → ( ∀ x ( x = z → ph ) ↔ ∀ x ( x = y → ph ) ) ) ;;
+	step 12 : wff = imbi2d (step 11) |- ( ( ¬ ∀ x x = y ∧ z = y ) → ( ( ph → ∀ x ( x = z → ph ) ) ↔ ( ph → ∀ x ( x = y → ph ) ) ) ) ;;
+	step 13 : wff = imbi12d (step 3, step 12) |- ( ( ¬ ∀ x x = y ∧ z = y ) → ( ( x = z → ( ph → ∀ x ( x = z → ph ) ) ) ↔ ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ) ) ;;
+	step 14 : wff = mpbii (hyp 1, step 13) |- ( ( ¬ ∀ x x = y ∧ z = y ) → ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ) ;;
+	step 15 : wff = ex (step 14) |- ( ¬ ∀ x x = y → ( z = y → ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ) ) ;;
+	step 16 : wff = exlimdv (step 15) |- ( ¬ ∀ x x = y → ( ∃ z z = y → ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ) ) ;;
+	step 17 : wff = mpi (step 1, step 16) |- ( ¬ ∀ x x = y → ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ) ;;
+	qed prop 1 = step 17 ;;
+}
+
+/* Derive ~ ax-11o from a hypothesis in the form of ~ ax-11 , without using
+       ~ ax-11 or ~ ax-11o .  The hypothesis is even weaker than ~ ax-11 , with
+       ` z ` both distinct from ` x ` and not occurring in ` ph ` .  Thus, the
+       hypothesis provides an alternate axiom that can be used in place of
+       ~ ax-11 , if we also hvae ~ ax-10o which this proof uses .  As theorem
+       ~ ax11 shows, the distinct variable conditions are optional.  An open
+       problem is whether we can derive this with ~ ax-10 instead of
+       ~ ax-10o .  (Contributed by NM, 2-Feb-2007.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem ax11a2-o (ph : wff, x : set, y : set, z : set) disjointed(x z, y z, z ph) {
+	hyp 1 : wff = |- ( x = z → ( ∀ z ph → ∀ x ( x = z → ph ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ∀ x x = y → ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ) ;;
+}
+
+proof of ax11a2-o {
+	step 1 : wff = ax-17 () |- ( ph → ∀ z ph ) ;;
+	step 2 : wff = syl5 (step 1, hyp 1) |- ( x = z → ( ph → ∀ x ( x = z → ph ) ) ) ;;
+	step 3 : wff = ax11v2-o (step 2) |- ( ¬ ∀ x x = y → ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Show that ~ ax-10o can be derived from ~ ax-10 .  An open problem is
+     whether this theorem can be derived from ~ ax-10 and the others when
+     ~ ax-11 is replaced with ~ ax-11o .  See theorem ~ ax10from10o for the
+     rederivation of ~ ax-10 from ~ ax10o .
+
+     Normally, ~ ax10o should be used rather than ~ ax-10o or ~ ax10o-o ,
+     except by theorems specifically studying the latter's properties.
+     (Contributed by NM, 16-May-2008.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem ax10o-o (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( ∀ x x = y → ( ∀ x ph → ∀ y ph ) ) ;;
+}
+
+proof of ax10o-o {
+	step 1 : wff = ax-10 () |- ( ∀ x x = y → ∀ y y = x ) ;;
+	step 2 : wff = ax11 () |- ( y = x → ( ∀ x ph → ∀ y ( y = x → ph ) ) ) ;;
+	step 3 : wff = equcoms (step 2) |- ( x = y → ( ∀ x ph → ∀ y ( y = x → ph ) ) ) ;;
+	step 4 : wff = sps-o (step 3) |- ( ∀ x x = y → ( ∀ x ph → ∀ y ( y = x → ph ) ) ) ;;
+	step 5 : wff = pm2.27 () |- ( y = x → ( ( y = x → ph ) → ph ) ) ;;
+	step 6 : wff = al2imi (step 5) |- ( ∀ y y = x → ( ∀ y ( y = x → ph ) → ∀ y ph ) ) ;;
+	step 7 : wff = sylsyld (step 1, step 4, step 6) |- ( ∀ x x = y → ( ∀ x ph → ∀ y ph ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+

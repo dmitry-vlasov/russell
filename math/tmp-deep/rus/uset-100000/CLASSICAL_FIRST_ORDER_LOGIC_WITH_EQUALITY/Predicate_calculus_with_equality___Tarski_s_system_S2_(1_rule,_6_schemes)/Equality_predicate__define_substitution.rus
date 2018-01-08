@@ -1,0 +1,311 @@
+import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Tarski_s_system_S2_(1_rule,_6_schemes)/Axiom_scheme_ax-17_(Distinctness)_-_first_use_of__d.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Equality predicate; define substitution
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* --- Start of patch to prevent connective overloading */
+
+/* Add 'class' as a typecode. */
+
+/* $j syntax 'class'; */
+
+/* This syntax construction states that a variable ` x ` , which has been
+     declared to be a set variable by $f statement vx, is also a class
+     expression.  This can be justified informally as follows.  We know that
+     the class builder ` { y | y e. x } ` is a class by ~ cab .  Since (when
+     ` y ` is distinct from ` x ` ) we have ` x = { y | y e. x } ` by
+     ~ cvjust , we can argue that the syntax " ` class x ` " can be viewed as
+     an abbreviation for " ` class { y | y e. x } ` ".  See the discussion
+     under the definition of class in [Jech] p. 4 showing that "Every set can
+     be considered to be a class."
+
+     While it is tempting and perhaps occasionally useful to view ~ cv as a
+     "type conversion" from a set variable to a class variable, keep in mind
+     that ~ cv is intrinsically no different from any other class-building
+     syntax such as ~ cab , ~ cun , or ~ c0 .
+
+     For a general discussion of the theory of classes and the role of ~ cv ,
+     see ~ http://us.metamath.org/mpeuni/mmset.html#class .
+
+     (The description above applies to set theory, not predicate calculus.  The
+     purpose of introducing ` class x ` here, and not in set theory where it
+     belongs, is to allow us to express i.e.  "prove" the ~ weq of predicate
+     calculus from the ~ wceq of set theory, so that we don't "overload" the
+     ` = ` connective with two syntax definitions.  This is done to prevent
+     ambiguity that would complicate some Metamath parsers.) */
+
+/* --- End of patch to prevent connective overloading */
+
+/* --- Start of old code before overloading prevention patch. */
+
+/* (None - the above patch had no old code.) */
+
+/* --- End of old code before overloading prevention patch. */
+
+/* Declare the equality predicate symbol. */
+
+constant {
+	symbol = ;;
+}
+
+/* Equal sign (read:  'is equal to') */
+
+/* --- Start of patch to prevent connective overloading */
+
+/* Extend wff definition to include class equality.
+
+       For a general discussion of the theory of classes, see
+       ~ http://us.metamath.org/mpeuni/mmset.html#class .
+
+       (The purpose of introducing ` wff A = B ` here, and not in set theory
+       where it belongs, is to allow us to express i.e.  "prove" the ~ weq of
+       predicate calculus in terms of the ~ wceq of set theory, so that we
+       don't "overload" the ` = ` connective with two syntax definitions.  This
+       is done to prevent ambiguity that would complicate some Metamath
+       parsers.  For example, some parsers - although not the Metamath program
+       - stumble on the fact that the ` = ` in ` x = y ` could be the ` = ` of
+       either ~ weq or ~ wceq , although mathematically it makes no
+       difference.  The class variables ` A ` and ` B ` are introduced
+       temporarily for the purpose of this definition but otherwise not used in
+       predicate calculus.  See ~ df-cleq for more information on the set
+       theory usage of ~ wceq .) */
+
+rule wceq (A : class, B : class) {
+	term : wff = # A = B ;;
+}
+
+/* Extend wff definition to include atomic formulas using the equality
+     predicate.
+
+     (Instead of introducing ~ weq as an axiomatic statement, as was done in an
+     older version of this database, we introduce it by "proving" a special
+     case of set theory's more general ~ wceq .  This lets us avoid overloading
+     the ` = ` connective, thus preventing ambiguity that would complicate
+     certain Metamath parsers.  However, logically ~ weq is considered to be a
+     primitive syntax, even though here it is artificially "derived" from
+     ~ wceq .  Note:  To see the proof steps of this syntax proof, type "show
+     proof weq /all" in the Metamath program.)  (Contributed by NM,
+     24-Jan-2006.) */
+
+/* --- End of patch to prevent connective overloading */
+
+/* --- Start of old code before overloading prevention patch. */
+
+/* @( Extend wff definition to include atomic formulas using the equality
+     predicate.
+
+     After we introduce ~ cv and ~ wceq in set theory, this syntax construction
+     becomes redundant, since it can be derived with the proof
+     "vx cv vy cv wceq". @)
+  weq @a wff x = y @.
+  */
+
+/* --- End of old code before overloading prevention patch. */
+
+/* Lemma used in proofs of substitution properties.  (Contributed by NM,
+     5-Aug-1993.) */
+
+theorem equs3 (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( ∃ x ( x = y ∧ ph ) ↔ ¬ ∀ x ( x = y → ¬ ph ) ) ;;
+}
+
+proof of equs3 {
+	step 1 : wff = alinexa () |- ( ∀ x ( x = y → ¬ ph ) ↔ ¬ ∃ x ( x = y ∧ ph ) ) ;;
+	step 2 : wff = con2bii (step 1) |- ( ∃ x ( x = y ∧ ph ) ↔ ¬ ∀ x ( x = y → ¬ ph ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Specialization, with additional weakening to allow bundling of ` x ` and
+       ` y ` .  Uses only Tarski's FOL axiom schemes.  (Contributed by NM,
+       23-Apr-2017.)  (Proof shortened by Wolf Lammen, 5-Aug-2017.) */
+
+theorem speimfw (ph : wff, ps : wff, x : set, y : set)  {
+	hyp 1 : wff = |- ( x = y → ( ph → ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ∀ x ¬ x = y → ( ∀ x ph → ∃ x ps ) ) ;;
+}
+
+proof of speimfw {
+	step 1 : wff = eximi (hyp 1) |- ( ∃ x x = y → ∃ x ( ph → ps ) ) ;;
+	step 2 : wff = df-ex () |- ( ∃ x x = y ↔ ¬ ∀ x ¬ x = y ) ;;
+	step 3 : wff = 19.35 () |- ( ∃ x ( ph → ps ) ↔ ( ∀ x ph → ∃ x ps ) ) ;;
+	step 4 : wff = 3imtr3i (step 1, step 2, step 3) |- ( ¬ ∀ x ¬ x = y → ( ∀ x ph → ∃ x ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Specialization, with additional weakening to allow bundling of ` x ` and
+       ` y ` .  Uses only Tarski's FOL axiom schemes.  (Contributed by NM,
+       23-Apr-1017.)  (Proof shortened by Wolf Lammen, 7-Aug-2017.) */
+
+theorem spimfw (ph : wff, ps : wff, x : set, y : set)  {
+	hyp 1 : wff = |- ( ¬ ps → ∀ x ¬ ps ) ;;
+	hyp 2 : wff = |- ( x = y → ( ph → ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ∀ x ¬ x = y → ( ∀ x ph → ps ) ) ;;
+}
+
+proof of spimfw {
+	step 1 : wff = speimfw (hyp 2) |- ( ¬ ∀ x ¬ x = y → ( ∀ x ph → ∃ x ps ) ) ;;
+	step 2 : wff = df-ex () |- ( ∃ x ps ↔ ¬ ∀ x ¬ ps ) ;;
+	step 3 : wff = con1i (hyp 1) |- ( ¬ ∀ x ¬ ps → ps ) ;;
+	step 4 : wff = sylbi (step 2, step 3) |- ( ∃ x ps → ps ) ;;
+	step 5 : wff = syl6 (step 1, step 4) |- ( ¬ ∀ x ¬ x = y → ( ∀ x ph → ps ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Inference that has ~ ax-11 (without ` A. y ` ) as its conclusion.  Uses
+       only Tarski's FOL axiom schemes.  The hypotheses may be eliminable
+       without one or more of these axioms in special cases.  Proof similar to
+       Lemma 16 of [Tarski] p. 70.  (Contributed by NM, 20-May-2008.) */
+
+theorem ax11i (ph : wff, ps : wff, x : set, y : set)  {
+	hyp 1 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	hyp 2 : wff = |- ( ps → ∀ x ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ;;
+}
+
+proof of ax11i {
+	step 1 : wff = biimprcd (hyp 1) |- ( ps → ( x = y → ph ) ) ;;
+	step 2 : wff = alrimih (hyp 2, step 1) |- ( ps → ∀ x ( x = y → ph ) ) ;;
+	step 3 : wff = syl6bi (hyp 1, step 2) |- ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+constant {
+	symbol [ ;;
+}
+
+/* Left bracket */
+
+constant {
+	symbol / ;;
+}
+
+/* Slash. */
+
+constant {
+	symbol ] ;;
+}
+
+/* Right bracket */
+
+/* Extend wff definition to include proper substitution (read "the wff that
+     results when ` y ` is properly substituted for ` x ` in wff ` ph ` ").
+     (Contributed by NM, 24-Jan-2006.) */
+
+rule wsb (ph : wff, x : set, y : set) {
+	term : wff = # [ y / x ] ph ;;
+}
+
+/* Define proper substitution.  Remark 9.1 in [Megill] p. 447 (p. 15 of the
+     preprint).  For our notation, we use ` [ y / x ] ph ` to mean "the wff
+     that results from the proper substitution of ` y ` for ` x ` in the wff
+     ` ph ` ."  We can also use ` [ y / x ] ph ` in place of the "free for"
+     side condition used in traditional predicate calculus; see, for example,
+     ~ stdpc4 .
+
+     Our notation was introduced in Haskell B. Curry's _Foundations of
+     Mathematical Logic_ (1977), p. 316 and is frequently used in textbooks of
+     lambda calculus and combinatory logic.  This notation improves the common
+     but ambiguous notation, " ` ph ( y ) ` is the wff that results when ` y `
+     is properly substituted for ` x ` in ` ph ( x ) ` ."  For example, if the
+     original ` ph ( x ) ` is ` x = y ` , then ` ph ( y ) ` is ` y = y ` , from
+     which we obtain that ` ph ( x ) ` is ` x = x ` .  So what exactly does
+     ` ph ( x ) ` mean?  Curry's notation solves this problem.
+
+     In most books, proper substitution has a somewhat complicated recursive
+     definition with multiple cases based on the occurrences of free and bound
+     variables in the wff.  Instead, we use a single formula that is exactly
+     equivalent and gives us a direct definition.  We later prove that our
+     definition has the properties we expect of proper substitution (see
+     theorems ~ sbequ , ~ sbcom2 and ~ sbid2v ).
+
+     Note that our definition is valid even when ` x ` and ` y ` are replaced
+     with the same variable, as ~ sbid shows.  We achieve this by having ` x `
+     free in the first conjunct and bound in the second.  We can also achieve
+     this by using a dummy variable, as the alternate definition ~ dfsb7 shows
+     (which some logicians may prefer because it doesn't mix free and bound
+     variables).  Another version that mixes free and bound variables is
+     ~ dfsb3 .  When ` x ` and ` y ` are distinct, we can express proper
+     substitution with the simpler expressions of ~ sb5 and ~ sb6 .
+
+     There are no restrictions on any of the variables, including what
+     variables may occur in wff ` ph ` .  (Contributed by NM, 5-Aug-1993.) */
+
+definition df-sb (ph : wff, x : set, y : set)  {
+	defiendum : wff = # [ y / x ] ph ;;
+	definiens : wff = # ( ( x = y → ph ) ∧ ∃ x ( x = y ∧ ph ) ) ;;
+	-----------------------
+	prop : wff = |- ( defiendum ↔ definiens ) ;;
+}
+
+/* An equality theorem for substitution.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem sbequ2 (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( x = y → ( [ y / x ] ph → ph ) ) ;;
+}
+
+proof of sbequ2 {
+	step 1 : wff = df-sb () |- ( [ y / x ] ph ↔ ( ( x = y → ph ) ∧ ∃ x ( x = y ∧ ph ) ) ) ;;
+	step 2 : wff = simpl () |- ( ( ( x = y → ph ) ∧ ∃ x ( x = y ∧ ph ) ) → ( x = y → ph ) ) ;;
+	step 3 : wff = com12 (step 2) |- ( x = y → ( ( ( x = y → ph ) ∧ ∃ x ( x = y ∧ ph ) ) → ph ) ) ;;
+	step 4 : wff = syl5bi (step 1, step 3) |- ( x = y → ( [ y / x ] ph → ph ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* One direction of a simplified definition of substitution.  (Contributed by
+     NM, 5-Aug-1993.) */
+
+theorem sb1 (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( [ y / x ] ph → ∃ x ( x = y ∧ ph ) ) ;;
+}
+
+proof of sb1 {
+	step 1 : wff = df-sb () |- ( [ y / x ] ph ↔ ( ( x = y → ph ) ∧ ∃ x ( x = y ∧ ph ) ) ) ;;
+	step 2 : wff = simprbi (step 1) |- ( [ y / x ] ph → ∃ x ( x = y ∧ ph ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Infer substitution into antecedent and consequent of an implication.
+       (Contributed by NM, 25-Jun-1998.) */
+
+theorem sbimi (ph : wff, ps : wff, x : set, y : set)  {
+	hyp 1 : wff = |- ( ph → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( [ y / x ] ph → [ y / x ] ps ) ;;
+}
+
+proof of sbimi {
+	step 1 : wff = imim2i (hyp 1) |- ( ( x = y → ph ) → ( x = y → ps ) ) ;;
+	step 2 : wff = anim2i (hyp 1) |- ( ( x = y ∧ ph ) → ( x = y ∧ ps ) ) ;;
+	step 3 : wff = eximi (step 2) |- ( ∃ x ( x = y ∧ ph ) → ∃ x ( x = y ∧ ps ) ) ;;
+	step 4 : wff = anim12i (step 1, step 3) |- ( ( ( x = y → ph ) ∧ ∃ x ( x = y ∧ ph ) ) → ( ( x = y → ps ) ∧ ∃ x ( x = y ∧ ps ) ) ) ;;
+	step 5 : wff = df-sb () |- ( [ y / x ] ph ↔ ( ( x = y → ph ) ∧ ∃ x ( x = y ∧ ph ) ) ) ;;
+	step 6 : wff = df-sb () |- ( [ y / x ] ps ↔ ( ( x = y → ps ) ∧ ∃ x ( x = y ∧ ps ) ) ) ;;
+	step 7 : wff = 3imtr4i (step 4, step 5, step 6) |- ( [ y / x ] ph → [ y / x ] ps ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Infer substitution into both sides of a logical equivalence.
+       (Contributed by NM, 5-Aug-1993.) */
+
+theorem sbbii (ph : wff, ps : wff, x : set, y : set)  {
+	hyp 1 : wff = |- ( ph ↔ ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( [ y / x ] ph ↔ [ y / x ] ps ) ;;
+}
+
+proof of sbbii {
+	step 1 : wff = biimpi (hyp 1) |- ( ph → ps ) ;;
+	step 2 : wff = sbimi (step 1) |- ( [ y / x ] ph → [ y / x ] ps ) ;;
+	step 3 : wff = biimpri (hyp 1) |- ( ps → ph ) ;;
+	step 4 : wff = sbimi (step 3) |- ( [ y / x ] ps → [ y / x ] ph ) ;;
+	step 5 : wff = impbii (step 2, step 4) |- ( [ y / x ] ph ↔ [ y / x ] ps ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+

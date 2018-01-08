@@ -1,0 +1,80 @@
+$[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets/Ordered-pair_class_abstractions_(cont_).smm $]
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                 Power class of union and intersection
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+$( The power class of the intersection of two classes is the intersection
+       of their power classes.  Exercise 4.12(j) of [Mendelson] p. 235.
+       (Contributed by NM, 23-Nov-2003.) $)
+${
+	$v x A B $.
+	$d A x $.
+	$d B x $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	ppwin $p |- ~P ( A i^i B ) = ( ~P A i^i ~P B ) $=
+	i0 acv f0 f1 pssin i0 pvex i0 acv f0 pelpw i0 pvex i0 acv f1 pelpw i0 acv f0 acpw awcel i0 acv f0 awss i0 acv f1 acpw awcel i0 acv f1 awss panbi12i i0 pvex i0 acv f0 f1 acin pelpw i0 acv f0 awss i0 acv f1 awss awa i0 acv f0 f1 acin awss i0 acv f0 acpw awcel i0 acv f1 acpw awcel awa i0 acv f0 f1 acin acpw awcel p3bitr4i i0 f0 acpw f1 acpw f0 f1 acin acpw pineqri f0 acpw f1 acpw acin f0 f1 acin acpw peqcomi $.
+$}
+$( The power class of the union of two classes includes the union of their
+       power classes.  Exercise 4.12(k) of [Mendelson] p. 235.  (Contributed by
+       NM, 23-Nov-2003.) $)
+${
+	$v x A B $.
+	$d A x $.
+	$d B x $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	ppwunss $p |- ( ~P A u. ~P B ) C_ ~P ( A u. B ) $=
+	i0 acv f0 f1 pssun i0 acv f0 acpw f1 acpw pelun i0 pvex i0 acv f0 pelpw i0 pvex i0 acv f1 pelpw i0 acv f0 acpw awcel i0 acv f0 awss i0 acv f1 acpw awcel i0 acv f1 awss porbi12i i0 acv f0 acpw f1 acpw acun awcel i0 acv f0 acpw awcel i0 acv f1 acpw awcel awo i0 acv f0 awss i0 acv f1 awss awo pbitri i0 pvex i0 acv f0 f1 acun pelpw i0 acv f0 awss i0 acv f1 awss awo i0 acv f0 f1 acun awss i0 acv f0 acpw f1 acpw acun awcel i0 acv f0 f1 acun acpw awcel p3imtr4i i0 f0 acpw f1 acpw acun f0 f1 acun acpw pssriv $.
+$}
+$( The power class of the union of two classes is a subset of the union of
+       their power classes, iff one class is a subclass of the other.  Exercise
+       4.12(l) of [Mendelson] p. 235.  (Contributed by NM, 23-Nov-2003.) $)
+${
+	$v x y A B $.
+	$d A x y $.
+	$d B x y $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	i1 $f set y $.
+	ppwssun $p |- ( ( A C_ B \/ B C_ A ) <-> ~P ( A u. B ) C_ ( ~P A u. ~P B ) ) $=
+	f1 f0 pssequn2 f0 f1 acun f0 ppweq f0 f1 acun acpw f0 acpw peqimss f0 f1 acun f0 awceq f0 f1 acun acpw f0 acpw awceq f0 f1 acun acpw f0 acpw awss psyl f1 f0 awss f0 f1 acun f0 awceq f0 f1 acun acpw f0 acpw awss psylbi f0 f1 pssequn1 f0 f1 acun f1 ppweq f0 f1 acun acpw f1 acpw peqimss f0 f1 acun f1 awceq f0 f1 acun acpw f1 acpw awceq f0 f1 acun acpw f1 acpw awss psyl f0 f1 awss f0 f1 acun f1 awceq f0 f1 acun acpw f1 acpw awss psylbi f1 f0 awss f0 f1 acun acpw f0 acpw awss f0 f1 awss f0 f1 acun acpw f1 acpw awss porim12i f1 f0 awss f0 f1 awss f0 f1 acun acpw f0 acpw awss f0 f1 acun acpw f1 acpw awss awo porcoms f0 f1 acun acpw f0 acpw f1 acpw pssun f0 f1 awss f1 f0 awss awo f0 f1 acun acpw f0 acpw awss f0 f1 acun acpw f1 acpw awss awo f0 f1 acun acpw f0 acpw f1 acpw acun awss psyl i0 pvex i0 acv f0 psnss i1 pvex i1 acv f1 psnss i0 acv acsn f0 i1 acv acsn f1 punss12 i0 acv f0 awcel i0 acv acsn f0 awss i1 acv acsn f1 awss i0 acv acsn i1 acv acsn acun f0 f1 acun awss i1 acv f1 awcel psyl2anb i0 i1 pzfpair2 i0 acv i1 acv acpr f0 f1 acun pelpw i0 acv i1 acv adf-pr i0 acv i1 acv acpr i0 acv acsn i1 acv acsn acun f0 f1 acun psseq1i i0 acv i1 acv acpr f0 f1 acun acpw awcel i0 acv i1 acv acpr f0 f1 acun awss i0 acv acsn i1 acv acsn acun f0 f1 acun awss pbitr2i i0 acv f0 awcel i1 acv f1 awcel awa i0 acv acsn i1 acv acsn acun f0 f1 acun awss i0 acv i1 acv acpr f0 f1 acun acpw awcel psylib f0 f1 acun acpw f0 acpw f1 acpw acun i0 acv i1 acv acpr pssel i0 acv f0 awcel i1 acv f1 awcel awa i0 acv i1 acv acpr f0 f1 acun acpw awcel f0 f1 acun acpw f0 acpw f1 acpw acun awss i0 acv i1 acv acpr f0 acpw f1 acpw acun awcel psyl5 f0 f1 acun acpw f0 acpw f1 acpw acun awss i0 acv f0 awcel i1 acv f1 awcel i0 acv i1 acv acpr f0 acpw f1 acpw acun awcel pexp3acom23 f0 f1 acun acpw f0 acpw f1 acpw acun awss i1 acv f1 awcel i0 acv f0 awcel i0 acv i1 acv acpr f0 acpw f1 acpw acun awcel pimp31 i0 acv i1 acv acpr f0 acpw f1 acpw pelun f0 f1 acun acpw f0 acpw f1 acpw acun awss i1 acv f1 awcel awa i0 acv f0 awcel awa i0 acv i1 acv acpr f0 acpw f1 acpw acun awcel i0 acv i1 acv acpr f0 acpw awcel i0 acv i1 acv acpr f1 acpw awcel awo psylib i0 i1 pzfpair2 i0 acv i1 acv acpr f0 pelpw i0 pvex i1 pvex i0 acv i1 acv f0 pprss i0 acv i1 acv acpr f0 acpw awcel i0 acv i1 acv acpr f0 awss i0 acv f0 awcel i1 acv f0 awcel awa pbitr4i i0 acv i1 acv acpr f0 acpw awcel i0 acv f0 awcel i1 acv f0 awcel psimprbi i0 i1 pzfpair2 i0 acv i1 acv acpr f1 pelpw i0 pvex i1 pvex i0 acv i1 acv f1 pprss i0 acv i1 acv acpr f1 acpw awcel i0 acv i1 acv acpr f1 awss i0 acv f1 awcel i1 acv f1 awcel awa pbitr4i i0 acv i1 acv acpr f1 acpw awcel i0 acv f1 awcel i1 acv f1 awcel psimplbi i0 acv i1 acv acpr f0 acpw awcel i1 acv f0 awcel i0 acv i1 acv acpr f1 acpw awcel i0 acv f1 awcel porim12i f0 f1 acun acpw f0 acpw f1 acpw acun awss i1 acv f1 awcel awa i0 acv f0 awcel awa i0 acv i1 acv acpr f0 acpw awcel i0 acv i1 acv acpr f1 acpw awcel awo i1 acv f0 awcel i0 acv f1 awcel awo psyl f0 f1 acun acpw f0 acpw f1 acpw acun awss i1 acv f1 awcel awa i0 acv f0 awcel awa i1 acv f0 awcel i0 acv f1 awcel pord f0 f1 acun acpw f0 acpw f1 acpw acun awss i1 acv f1 awcel awa i0 acv f0 awcel i1 acv f0 awcel awn i0 acv f1 awcel pimpancom f0 f1 acun acpw f0 acpw f1 acpw acun awss i1 acv f1 awcel awa i1 acv f0 awcel awn awa i0 f0 f1 pssrdv f0 f1 acun acpw f0 acpw f1 acpw acun awss i1 acv f1 awcel i1 acv f0 awcel awn f0 f1 awss pexp31 i1 acv f0 awcel f0 f1 awss pcon1b f0 f1 acun acpw f0 acpw f1 acpw acun awss i1 acv f1 awcel i1 acv f0 awcel awn f0 f1 awss awi f0 f1 awss awn i1 acv f0 awcel awi psyl6ib f0 f1 acun acpw f0 acpw f1 acpw acun awss i1 acv f1 awcel f0 f1 awss awn i1 acv f0 awcel pcom23 f0 f1 acun acpw f0 acpw f1 acpw acun awss f0 f1 awss awn i1 acv f1 awcel i1 acv f0 awcel awi pimp f0 f1 acun acpw f0 acpw f1 acpw acun awss f0 f1 awss awn awa i1 f1 f0 pssrdv f0 f1 acun acpw f0 acpw f1 acpw acun awss f0 f1 awss awn f1 f0 awss pex f0 f1 acun acpw f0 acpw f1 acpw acun awss f0 f1 awss f1 f0 awss porrd f0 f1 awss f1 f0 awss awo f0 f1 acun acpw f0 acpw f1 acpw acun awss pimpbii $.
+$}
+$( Break up the power class of a union into a union of smaller classes.
+       (Contributed by NM, 25-Mar-2007.)  (Proof shortened by Thierry Arnoux,
+       20-Dec-2016.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	ppwundif $p |- ~P ( A u. B ) = ( ( ~P ( A u. B ) \ ~P A ) u. ~P A ) $=
+	f0 f1 acun acpw f0 acpw pundif1 f0 f1 ppwunss f0 acpw f1 acpw f0 f1 acun acpw punss f0 acpw f0 f1 acun acpw awss f1 acpw f0 f1 acun acpw awss awa f0 acpw f1 acpw acun f0 f1 acun acpw awss pmpbir f0 acpw f0 f1 acun acpw awss f1 acpw f0 f1 acun acpw awss psimpli f0 acpw f0 f1 acun acpw pssequn2 f0 acpw f0 f1 acun acpw awss f0 f1 acun acpw f0 acpw acun f0 f1 acun acpw awceq pmpbi f0 f1 acun acpw f0 acpw acdif f0 acpw acun f0 f1 acun acpw f0 acpw acun f0 f1 acun acpw peqtr2i $.
+$}
+$( Break up the power class of a union into a union of smaller classes.
+       Obsolete as of 20-Dec-2016.  (Contributed by NM, 25-Mar-2007.)
+       (New usage is discouraged.) $)
+${
+	$v x A B $.
+	$d A x $.
+	$d B x $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	ppwundifOLD $p |- ~P ( A u. B ) = ( ( ~P ( A u. B ) \ ~P A ) u. ~P A ) $=
+	i0 pvex i0 acv f0 f1 acun pelpw i0 acv f0 awss ppm2.1 i0 acv f0 f1 acun awss i0 acv f0 awss awn i0 acv f0 awss pordir i0 acv f0 f1 acun awss i0 acv f0 awss awn awa i0 acv f0 awss awo i0 acv f0 f1 acun awss i0 acv f0 awss awo i0 acv f0 awss awn i0 acv f0 awss awo pmpbiran2 i0 acv f0 f1 acun acpw f0 acpw acdif f0 acpw pelun i0 acv f0 f1 acun acpw f0 acpw peldif i0 pvex i0 acv f0 f1 acun pelpw i0 pvex i0 acv f0 pelpw i0 acv f0 acpw awcel i0 acv f0 awss pnotbii i0 acv f0 f1 acun acpw awcel i0 acv f0 f1 acun awss i0 acv f0 acpw awcel awn i0 acv f0 awss awn panbi12i i0 acv f0 f1 acun acpw f0 acpw acdif awcel i0 acv f0 f1 acun acpw awcel i0 acv f0 acpw awcel awn awa i0 acv f0 f1 acun awss i0 acv f0 awss awn awa pbitri i0 pvex i0 acv f0 pelpw i0 acv f0 f1 acun acpw f0 acpw acdif awcel i0 acv f0 f1 acun awss i0 acv f0 awss awn awa i0 acv f0 acpw awcel i0 acv f0 awss porbi12i i0 acv f0 f1 acun acpw f0 acpw acdif f0 acpw acun awcel i0 acv f0 f1 acun acpw f0 acpw acdif awcel i0 acv f0 acpw awcel awo i0 acv f0 f1 acun awss i0 acv f0 awss awn awa i0 acv f0 awss awo pbitr2i i0 acv f0 f1 acun awss pid i0 acv f0 f1 pssun3 i0 acv f0 f1 acun awss i0 acv f0 f1 acun awss i0 acv f0 awss pjaoi i0 acv f0 f1 acun awss i0 acv f0 awss porc i0 acv f0 f1 acun awss i0 acv f0 awss awo i0 acv f0 f1 acun awss pimpbii i0 acv f0 f1 acun awss i0 acv f0 awss awn awa i0 acv f0 awss awo i0 acv f0 f1 acun awss i0 acv f0 awss awo i0 acv f0 f1 acun acpw f0 acpw acdif f0 acpw acun awcel i0 acv f0 f1 acun awss p3bitr3ri i0 acv f0 f1 acun acpw awcel i0 acv f0 f1 acun awss i0 acv f0 f1 acun acpw f0 acpw acdif f0 acpw acun awcel pbitri i0 f0 f1 acun acpw f0 f1 acun acpw f0 acpw acdif f0 acpw acun peqriv $.
+$}
+$( The power class of the union of two classes equals the union of their
+     power classes, iff one class is a subclass of the other.  Part of Exercise
+     7(b) of [Enderton] p. 28.  (Contributed by NM, 23-Nov-2003.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	ppwun $p |- ( ( A C_ B \/ B C_ A ) <-> ~P ( A u. B ) = ( ~P A u. ~P B ) ) $=
+	f0 f1 ppwunss f0 acpw f1 acpw acun f0 f1 acun acpw awss f0 f1 acun acpw f0 acpw f1 acpw acun awss pbiantru f0 f1 ppwssun f0 f1 acun acpw f0 acpw f1 acpw acun peqss f0 f1 acun acpw f0 acpw f1 acpw acun awss f0 f1 acun acpw f0 acpw f1 acpw acun awss f0 acpw f1 acpw acun f0 f1 acun acpw awss awa f0 f1 awss f1 f0 awss awo f0 f1 acun acpw f0 acpw f1 acpw acun awceq p3bitr4i $.
+$}
+

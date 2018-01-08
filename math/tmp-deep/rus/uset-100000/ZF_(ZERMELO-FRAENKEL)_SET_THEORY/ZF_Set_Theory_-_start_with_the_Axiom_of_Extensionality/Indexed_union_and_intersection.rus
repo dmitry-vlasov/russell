@@ -1,0 +1,1819 @@
+import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/The_intersection_of_a_class.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Indexed union and intersection
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+constant {
+	symbol ⋃_ ;;
+	ascii U_ ;;
+	latex \bigcup ;;
+}
+
+/* Underlined big cup. */
+
+constant {
+	symbol ⋂_ ;;
+	ascii |^|_ ;;
+	latex \bigcap ;;
+}
+
+/* Underlined big cap. */
+
+/* Extend class notation to include indexed union.  Note:  Historically
+     (prior to 21-Oct-2005), set.mm used the notation ` U. x e. A B ` , with
+     the same union symbol as ~ cuni .  While that syntax was unambiguous, it
+     did not allow for LALR parsing of the syntax constructions in set.mm.  The
+     new syntax uses as distinguished symbol ` U_ ` instead of ` U. ` and does
+     allow LALR parsing.  Thanks to Peter Backes for suggesting this change. */
+
+rule ciun (x : set, A : class, B : class) {
+	term : class = # ⋃_ x ∈ A B ;;
+}
+
+/* Extend class notation to include indexed intersection.  Note:
+     Historically (prior to 21-Oct-2005), set.mm used the notation
+     ` |^| x e. A B ` , with the same intersection symbol as ~ cint .  Although
+     that syntax was unambiguous, it did not allow for LALR parsing of the
+     syntax constructions in set.mm.  The new syntax uses a distinguished
+     symbol ` |^|_ ` instead of ` |^| ` and does allow LALR parsing.  Thanks to
+     Peter Backes for suggesting this change. */
+
+rule ciin (x : set, A : class, B : class) {
+	term : class = # ⋂_ x ∈ A B ;;
+}
+
+/* Define indexed union.  Definition indexed union in [Stoll] p. 45.  In
+       most applications, ` A ` is independent of ` x ` (although this is not
+       required by the definition), and ` B ` depends on ` x ` i.e. can be read
+       informally as ` B ( x ) ` .  We call ` x ` the index, ` A ` the index
+       set, and ` B ` the indexed set.  In most books, ` x e. A ` is written as
+       a subscript or underneath a union symbol ` U. ` .  We use a special
+       union symbol ` U_ ` to make it easier to distinguish from plain class
+       union.  In many theorems, you will see that ` x ` and ` A ` are in the
+       same distinct variable group (meaning ` A ` cannot depend on ` x ` ) and
+       that ` B ` and ` x ` do not share a distinct variable group (meaning
+       that can be thought of as ` B ( x ) ` i.e. can be substituted with a
+       class expression containing ` x ` ).  An alternate definition tying
+       indexed union to ordinary union is ~ dfiun2 .  Theorem ~ uniiun provides
+       a definition of ordinary union in terms of indexed union.  Theorems
+       ~ fniunfv and ~ funiunfv are useful when ` B ` is a function.
+       (Contributed by NM, 27-Jun-1998.) */
+
+definition df-iun (x : set, y : set, A : class, B : class) disjointed(x y, y A, y B) {
+	defiendum : class = # ⋃_ x ∈ A B ;;
+	definiens : class = # { y | ∃ x ∈ A y ∈ B } ;;
+	-----------------------
+	prop : wff = |- defiendum = definiens ;;
+}
+
+/* Define indexed intersection.  Definition of [Stoll] p. 45.  See the
+       remarks for its sibling operation of indexed union ~ df-iun .  An
+       alternate definition tying indexed intersection to ordinary intersection
+       is ~ dfiin2 .  Theorem ~ intiin provides a definition of ordinary
+       intersection in terms of indexed intersection.  (Contributed by NM,
+       27-Jun-1998.) */
+
+definition df-iin (x : set, y : set, A : class, B : class) disjointed(x y, y A, y B) {
+	defiendum : class = # ⋂_ x ∈ A B ;;
+	definiens : class = # { y | ∀ x ∈ A y ∈ B } ;;
+	-----------------------
+	prop : wff = |- defiendum = definiens ;;
+}
+
+/* Membership in indexed union.  (Contributed by NM, 3-Sep-2003.) */
+
+theorem eliun (x : set, A : class, B : class, C : class) disjointed(x y A, y B, y C) {
+	prop 1 : wff = |- ( A ∈ ⋃_ x ∈ B C ↔ ∃ x ∈ B A ∈ C ) ;;
+}
+
+proof of eliun {
+	var y : set;;
+	step 1 : wff = elex () |- ( A ∈ ⋃_ x ∈ B C → A ∈ _V ) ;;
+	step 2 : wff = elex () |- ( A ∈ C → A ∈ _V ) ;;
+	step 3 : wff = rexlimivw (step 2) |- ( ∃ x ∈ B A ∈ C → A ∈ _V ) ;;
+	step 4 : wff = eleq1 () |- ( y = A → ( y ∈ C ↔ A ∈ C ) ) ;;
+	step 5 : wff = rexbidv (step 4) |- ( y = A → ( ∃ x ∈ B y ∈ C ↔ ∃ x ∈ B A ∈ C ) ) ;;
+	step 6 : wff = df-iun () |- ⋃_ x ∈ B C = { y | ∃ x ∈ B y ∈ C } ;;
+	step 7 : wff = elab2g (step 5, step 6) |- ( A ∈ _V → ( A ∈ ⋃_ x ∈ B C ↔ ∃ x ∈ B A ∈ C ) ) ;;
+	step 8 : wff = pm5.21nii (step 1, step 3, step 7) |- ( A ∈ ⋃_ x ∈ B C ↔ ∃ x ∈ B A ∈ C ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Membership in indexed intersection.  (Contributed by NM, 3-Sep-2003.) */
+
+theorem eliin (x : set, A : class, B : class, C : class, V : class) disjointed(x y A, y B, y C) {
+	prop 1 : wff = |- ( A ∈ V → ( A ∈ ⋂_ x ∈ B C ↔ ∀ x ∈ B A ∈ C ) ) ;;
+}
+
+proof of eliin {
+	var y : set;;
+	step 1 : wff = eleq1 () |- ( y = A → ( y ∈ C ↔ A ∈ C ) ) ;;
+	step 2 : wff = ralbidv (step 1) |- ( y = A → ( ∀ x ∈ B y ∈ C ↔ ∀ x ∈ B A ∈ C ) ) ;;
+	step 3 : wff = df-iin () |- ⋂_ x ∈ B C = { y | ∀ x ∈ B y ∈ C } ;;
+	step 4 : wff = elab2g (step 2, step 3) |- ( A ∈ V → ( A ∈ ⋂_ x ∈ B C ↔ ∀ x ∈ B A ∈ C ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Commutation of indexed unions.  (Contributed by NM, 18-Dec-2008.) */
+
+theorem iuncom (x : set, y : set, A : class, B : class, C : class) disjointed(y z A, x z B, z C, x y) {
+	prop 1 : wff = |- ⋃_ x ∈ A ⋃_ y ∈ B C = ⋃_ y ∈ B ⋃_ x ∈ A C ;;
+}
+
+proof of iuncom {
+	var z : set;;
+	step 1 : wff = rexcom () |- ( ∃ x ∈ A ∃ y ∈ B z ∈ C ↔ ∃ y ∈ B ∃ x ∈ A z ∈ C ) ;;
+	step 2 : wff = eliun () |- ( z ∈ ⋃_ y ∈ B C ↔ ∃ y ∈ B z ∈ C ) ;;
+	step 3 : wff = rexbii (step 2) |- ( ∃ x ∈ A z ∈ ⋃_ y ∈ B C ↔ ∃ x ∈ A ∃ y ∈ B z ∈ C ) ;;
+	step 4 : wff = eliun () |- ( z ∈ ⋃_ x ∈ A C ↔ ∃ x ∈ A z ∈ C ) ;;
+	step 5 : wff = rexbii (step 4) |- ( ∃ y ∈ B z ∈ ⋃_ x ∈ A C ↔ ∃ y ∈ B ∃ x ∈ A z ∈ C ) ;;
+	step 6 : wff = 3bitr4i (step 1, step 3, step 5) |- ( ∃ x ∈ A z ∈ ⋃_ y ∈ B C ↔ ∃ y ∈ B z ∈ ⋃_ x ∈ A C ) ;;
+	step 7 : wff = eliun () |- ( z ∈ ⋃_ x ∈ A ⋃_ y ∈ B C ↔ ∃ x ∈ A z ∈ ⋃_ y ∈ B C ) ;;
+	step 8 : wff = eliun () |- ( z ∈ ⋃_ y ∈ B ⋃_ x ∈ A C ↔ ∃ y ∈ B z ∈ ⋃_ x ∈ A C ) ;;
+	step 9 : wff = 3bitr4i (step 6, step 7, step 8) |- ( z ∈ ⋃_ x ∈ A ⋃_ y ∈ B C ↔ z ∈ ⋃_ y ∈ B ⋃_ x ∈ A C ) ;;
+	step 10 : wff = eqriv (step 9) |- ⋃_ x ∈ A ⋃_ y ∈ B C = ⋃_ y ∈ B ⋃_ x ∈ A C ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Commutation of union with indexed union.  (Contributed by Mario
+       Carneiro, 18-Jan-2014.) */
+
+theorem iuncom4 (x : set, A : class, B : class) disjointed(y z A, y z B, x y z) {
+	prop 1 : wff = |- ⋃_ x ∈ A ⋃ B = ⋃ ⋃_ x ∈ A B ;;
+}
+
+proof of iuncom4 {
+	var y : set, z : set;;
+	step 1 : wff = df-rex () |- ( ∃ z ∈ B y ∈ z ↔ ∃ z ( z ∈ B ∧ y ∈ z ) ) ;;
+	step 2 : wff = rexbii (step 1) |- ( ∃ x ∈ A ∃ z ∈ B y ∈ z ↔ ∃ x ∈ A ∃ z ( z ∈ B ∧ y ∈ z ) ) ;;
+	step 3 : wff = rexcom4 () |- ( ∃ x ∈ A ∃ z ( z ∈ B ∧ y ∈ z ) ↔ ∃ z ∃ x ∈ A ( z ∈ B ∧ y ∈ z ) ) ;;
+	step 4 : wff = bitri (step 2, step 3) |- ( ∃ x ∈ A ∃ z ∈ B y ∈ z ↔ ∃ z ∃ x ∈ A ( z ∈ B ∧ y ∈ z ) ) ;;
+	step 5 : wff = r19.41v () |- ( ∃ x ∈ A ( z ∈ B ∧ y ∈ z ) ↔ ( ∃ x ∈ A z ∈ B ∧ y ∈ z ) ) ;;
+	step 6 : wff = exbii (step 5) |- ( ∃ z ∃ x ∈ A ( z ∈ B ∧ y ∈ z ) ↔ ∃ z ( ∃ x ∈ A z ∈ B ∧ y ∈ z ) ) ;;
+	step 7 : wff = bitri (step 4, step 6) |- ( ∃ x ∈ A ∃ z ∈ B y ∈ z ↔ ∃ z ( ∃ x ∈ A z ∈ B ∧ y ∈ z ) ) ;;
+	step 8 : wff = eluni2 () |- ( y ∈ ⋃ B ↔ ∃ z ∈ B y ∈ z ) ;;
+	step 9 : wff = rexbii (step 8) |- ( ∃ x ∈ A y ∈ ⋃ B ↔ ∃ x ∈ A ∃ z ∈ B y ∈ z ) ;;
+	step 10 : wff = df-rex () |- ( ∃ z ∈ ⋃_ x ∈ A B y ∈ z ↔ ∃ z ( z ∈ ⋃_ x ∈ A B ∧ y ∈ z ) ) ;;
+	step 11 : wff = eliun () |- ( z ∈ ⋃_ x ∈ A B ↔ ∃ x ∈ A z ∈ B ) ;;
+	step 12 : wff = anbi1i (step 11) |- ( ( z ∈ ⋃_ x ∈ A B ∧ y ∈ z ) ↔ ( ∃ x ∈ A z ∈ B ∧ y ∈ z ) ) ;;
+	step 13 : wff = exbii (step 12) |- ( ∃ z ( z ∈ ⋃_ x ∈ A B ∧ y ∈ z ) ↔ ∃ z ( ∃ x ∈ A z ∈ B ∧ y ∈ z ) ) ;;
+	step 14 : wff = bitri (step 10, step 13) |- ( ∃ z ∈ ⋃_ x ∈ A B y ∈ z ↔ ∃ z ( ∃ x ∈ A z ∈ B ∧ y ∈ z ) ) ;;
+	step 15 : wff = 3bitr4i (step 7, step 9, step 14) |- ( ∃ x ∈ A y ∈ ⋃ B ↔ ∃ z ∈ ⋃_ x ∈ A B y ∈ z ) ;;
+	step 16 : wff = eliun () |- ( y ∈ ⋃_ x ∈ A ⋃ B ↔ ∃ x ∈ A y ∈ ⋃ B ) ;;
+	step 17 : wff = eluni2 () |- ( y ∈ ⋃ ⋃_ x ∈ A B ↔ ∃ z ∈ ⋃_ x ∈ A B y ∈ z ) ;;
+	step 18 : wff = 3bitr4i (step 15, step 16, step 17) |- ( y ∈ ⋃_ x ∈ A ⋃ B ↔ y ∈ ⋃ ⋃_ x ∈ A B ) ;;
+	step 19 : wff = eqriv (step 18) |- ⋃_ x ∈ A ⋃ B = ⋃ ⋃_ x ∈ A B ;;
+	qed prop 1 = step 19 ;;
+}
+
+/* Indexed union of a constant class, i.e. where ` B ` does not depend on
+       ` x ` .  (Contributed by NM, 5-Sep-2004.)  (Proof shortened by Andrew
+       Salmon, 25-Jul-2011.) */
+
+theorem iunconst (x : set, A : class, B : class) disjointed(x y A, x y B) {
+	prop 1 : wff = |- ( A ≠ ∅ → ⋃_ x ∈ A B = B ) ;;
+}
+
+proof of iunconst {
+	var y : set;;
+	step 1 : wff = r19.9rzv () |- ( A ≠ ∅ → ( y ∈ B ↔ ∃ x ∈ A y ∈ B ) ) ;;
+	step 2 : wff = eliun () |- ( y ∈ ⋃_ x ∈ A B ↔ ∃ x ∈ A y ∈ B ) ;;
+	step 3 : wff = syl6rbbr (step 1, step 2) |- ( A ≠ ∅ → ( y ∈ ⋃_ x ∈ A B ↔ y ∈ B ) ) ;;
+	step 4 : wff = eqrdv (step 3) |- ( A ≠ ∅ → ⋃_ x ∈ A B = B ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Indexed intersection of a constant class, i.e. where ` B ` does not
+       depend on ` x ` .  (Contributed by Mario Carneiro, 6-Feb-2015.) */
+
+theorem iinconst (x : set, A : class, B : class) disjointed(x y A, x y B) {
+	prop 1 : wff = |- ( A ≠ ∅ → ⋂_ x ∈ A B = B ) ;;
+}
+
+proof of iinconst {
+	var y : set;;
+	step 1 : wff = r19.3rzv () |- ( A ≠ ∅ → ( y ∈ B ↔ ∀ x ∈ A y ∈ B ) ) ;;
+	step 2 : wff = vex () |- y ∈ _V ;;
+	step 3 : wff = eliin () |- ( y ∈ _V → ( y ∈ ⋂_ x ∈ A B ↔ ∀ x ∈ A y ∈ B ) ) ;;
+	step 4 : wff = ax-mp (step 2, step 3) |- ( y ∈ ⋂_ x ∈ A B ↔ ∀ x ∈ A y ∈ B ) ;;
+	step 5 : wff = syl6rbbr (step 1, step 4) |- ( A ≠ ∅ → ( y ∈ ⋂_ x ∈ A B ↔ y ∈ B ) ) ;;
+	step 6 : wff = eqrdv (step 5) |- ( A ≠ ∅ → ⋂_ x ∈ A B = B ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Law combining indexed union with indexed intersection.  Eq. 14 in
+       [KuratowskiMostowski] p. 109.  This theorem also appears as the last
+       example at ~ http://en.wikipedia.org/wiki/Union%5F%28set%5Ftheory%29 .
+       (Contributed by NM, 17-Aug-2004.)  (Proof shortened by Andrew Salmon,
+       25-Jul-2011.) */
+
+theorem iuniin (x : set, y : set, A : class, B : class, C : class) disjointed(x y, y z A, x z B, z C) {
+	prop 1 : wff = |- ⋃_ x ∈ A ⋂_ y ∈ B C ⊆ ⋂_ y ∈ B ⋃_ x ∈ A C ;;
+}
+
+proof of iuniin {
+	var z : set;;
+	step 1 : wff = r19.12 () |- ( ∃ x ∈ A ∀ y ∈ B z ∈ C → ∀ y ∈ B ∃ x ∈ A z ∈ C ) ;;
+	step 2 : wff = vex () |- z ∈ _V ;;
+	step 3 : wff = eliin () |- ( z ∈ _V → ( z ∈ ⋂_ y ∈ B C ↔ ∀ y ∈ B z ∈ C ) ) ;;
+	step 4 : wff = ax-mp (step 2, step 3) |- ( z ∈ ⋂_ y ∈ B C ↔ ∀ y ∈ B z ∈ C ) ;;
+	step 5 : wff = rexbii (step 4) |- ( ∃ x ∈ A z ∈ ⋂_ y ∈ B C ↔ ∃ x ∈ A ∀ y ∈ B z ∈ C ) ;;
+	step 6 : wff = eliun () |- ( z ∈ ⋃_ x ∈ A C ↔ ∃ x ∈ A z ∈ C ) ;;
+	step 7 : wff = ralbii (step 6) |- ( ∀ y ∈ B z ∈ ⋃_ x ∈ A C ↔ ∀ y ∈ B ∃ x ∈ A z ∈ C ) ;;
+	step 8 : wff = 3imtr4i (step 1, step 5, step 7) |- ( ∃ x ∈ A z ∈ ⋂_ y ∈ B C → ∀ y ∈ B z ∈ ⋃_ x ∈ A C ) ;;
+	step 9 : wff = eliun () |- ( z ∈ ⋃_ x ∈ A ⋂_ y ∈ B C ↔ ∃ x ∈ A z ∈ ⋂_ y ∈ B C ) ;;
+	step 10 : wff = vex () |- z ∈ _V ;;
+	step 11 : wff = eliin () |- ( z ∈ _V → ( z ∈ ⋂_ y ∈ B ⋃_ x ∈ A C ↔ ∀ y ∈ B z ∈ ⋃_ x ∈ A C ) ) ;;
+	step 12 : wff = ax-mp (step 10, step 11) |- ( z ∈ ⋂_ y ∈ B ⋃_ x ∈ A C ↔ ∀ y ∈ B z ∈ ⋃_ x ∈ A C ) ;;
+	step 13 : wff = 3imtr4i (step 8, step 9, step 12) |- ( z ∈ ⋃_ x ∈ A ⋂_ y ∈ B C → z ∈ ⋂_ y ∈ B ⋃_ x ∈ A C ) ;;
+	step 14 : wff = ssriv (step 13) |- ⋃_ x ∈ A ⋂_ y ∈ B C ⊆ ⋂_ y ∈ B ⋃_ x ∈ A C ;;
+	qed prop 1 = step 14 ;;
+}
+
+/* Subclass theorem for indexed union.  (Contributed by NM, 10-Dec-2004.)
+       (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem iunss1 (x : set, A : class, B : class, C : class) disjointed(x y A, x y B, y C) {
+	prop 1 : wff = |- ( A ⊆ B → ⋃_ x ∈ A C ⊆ ⋃_ x ∈ B C ) ;;
+}
+
+proof of iunss1 {
+	var y : set;;
+	step 1 : wff = ssrexv () |- ( A ⊆ B → ( ∃ x ∈ A y ∈ C → ∃ x ∈ B y ∈ C ) ) ;;
+	step 2 : wff = eliun () |- ( y ∈ ⋃_ x ∈ A C ↔ ∃ x ∈ A y ∈ C ) ;;
+	step 3 : wff = eliun () |- ( y ∈ ⋃_ x ∈ B C ↔ ∃ x ∈ B y ∈ C ) ;;
+	step 4 : wff = 3imtr4g (step 1, step 2, step 3) |- ( A ⊆ B → ( y ∈ ⋃_ x ∈ A C → y ∈ ⋃_ x ∈ B C ) ) ;;
+	step 5 : wff = ssrdv (step 4) |- ( A ⊆ B → ⋃_ x ∈ A C ⊆ ⋃_ x ∈ B C ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Subclass theorem for indexed union.  (Contributed by NM,
+       24-Jan-2012.) */
+
+theorem iinss1 (x : set, A : class, B : class, C : class) disjointed(x y A, x y B, y C) {
+	prop 1 : wff = |- ( A ⊆ B → ⋂_ x ∈ B C ⊆ ⋂_ x ∈ A C ) ;;
+}
+
+proof of iinss1 {
+	var y : set;;
+	step 1 : wff = ssralv () |- ( A ⊆ B → ( ∀ x ∈ B y ∈ C → ∀ x ∈ A y ∈ C ) ) ;;
+	step 2 : wff = vex () |- y ∈ _V ;;
+	step 3 : wff = eliin () |- ( y ∈ _V → ( y ∈ ⋂_ x ∈ B C ↔ ∀ x ∈ B y ∈ C ) ) ;;
+	step 4 : wff = ax-mp (step 2, step 3) |- ( y ∈ ⋂_ x ∈ B C ↔ ∀ x ∈ B y ∈ C ) ;;
+	step 5 : wff = vex () |- y ∈ _V ;;
+	step 6 : wff = eliin () |- ( y ∈ _V → ( y ∈ ⋂_ x ∈ A C ↔ ∀ x ∈ A y ∈ C ) ) ;;
+	step 7 : wff = ax-mp (step 5, step 6) |- ( y ∈ ⋂_ x ∈ A C ↔ ∀ x ∈ A y ∈ C ) ;;
+	step 8 : wff = 3imtr4g (step 1, step 4, step 7) |- ( A ⊆ B → ( y ∈ ⋂_ x ∈ B C → y ∈ ⋂_ x ∈ A C ) ) ;;
+	step 9 : wff = ssrdv (step 8) |- ( A ⊆ B → ⋂_ x ∈ B C ⊆ ⋂_ x ∈ A C ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Equality theorem for indexed union.  (Contributed by NM,
+       27-Jun-1998.) */
+
+theorem iuneq1 (x : set, A : class, B : class, C : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( A = B → ⋃_ x ∈ A C = ⋃_ x ∈ B C ) ;;
+}
+
+proof of iuneq1 {
+	step 1 : wff = iunss1 () |- ( A ⊆ B → ⋃_ x ∈ A C ⊆ ⋃_ x ∈ B C ) ;;
+	step 2 : wff = iunss1 () |- ( B ⊆ A → ⋃_ x ∈ B C ⊆ ⋃_ x ∈ A C ) ;;
+	step 3 : wff = anim12i (step 1, step 2) |- ( ( A ⊆ B ∧ B ⊆ A ) → ( ⋃_ x ∈ A C ⊆ ⋃_ x ∈ B C ∧ ⋃_ x ∈ B C ⊆ ⋃_ x ∈ A C ) ) ;;
+	step 4 : wff = eqss () |- ( A = B ↔ ( A ⊆ B ∧ B ⊆ A ) ) ;;
+	step 5 : wff = eqss () |- ( ⋃_ x ∈ A C = ⋃_ x ∈ B C ↔ ( ⋃_ x ∈ A C ⊆ ⋃_ x ∈ B C ∧ ⋃_ x ∈ B C ⊆ ⋃_ x ∈ A C ) ) ;;
+	step 6 : wff = 3imtr4i (step 3, step 4, step 5) |- ( A = B → ⋃_ x ∈ A C = ⋃_ x ∈ B C ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Equality theorem for restricted existential quantifier.  (Contributed by
+       NM, 27-Jun-1998.) */
+
+theorem iineq1 (x : set, A : class, B : class, C : class) disjointed(x y A, x y B, y C) {
+	prop 1 : wff = |- ( A = B → ⋂_ x ∈ A C = ⋂_ x ∈ B C ) ;;
+}
+
+proof of iineq1 {
+	var y : set;;
+	step 1 : wff = raleq () |- ( A = B → ( ∀ x ∈ A y ∈ C ↔ ∀ x ∈ B y ∈ C ) ) ;;
+	step 2 : wff = abbidv (step 1) |- ( A = B → { y | ∀ x ∈ A y ∈ C } = { y | ∀ x ∈ B y ∈ C } ) ;;
+	step 3 : wff = df-iin () |- ⋂_ x ∈ A C = { y | ∀ x ∈ A y ∈ C } ;;
+	step 4 : wff = df-iin () |- ⋂_ x ∈ B C = { y | ∀ x ∈ B y ∈ C } ;;
+	step 5 : wff = 3eqtr4g (step 2, step 3, step 4) |- ( A = B → ⋂_ x ∈ A C = ⋂_ x ∈ B C ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Subclass theorem for indexed union.  (Contributed by NM, 26-Nov-2003.)
+       (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem ss2iun (x : set, A : class, B : class, C : class) disjointed(x y, y A, y B, y C) {
+	prop 1 : wff = |- ( ∀ x ∈ A B ⊆ C → ⋃_ x ∈ A B ⊆ ⋃_ x ∈ A C ) ;;
+}
+
+proof of ss2iun {
+	var y : set;;
+	step 1 : wff = ssel () |- ( B ⊆ C → ( y ∈ B → y ∈ C ) ) ;;
+	step 2 : wff = ralimi (step 1) |- ( ∀ x ∈ A B ⊆ C → ∀ x ∈ A ( y ∈ B → y ∈ C ) ) ;;
+	step 3 : wff = rexim () |- ( ∀ x ∈ A ( y ∈ B → y ∈ C ) → ( ∃ x ∈ A y ∈ B → ∃ x ∈ A y ∈ C ) ) ;;
+	step 4 : wff = syl (step 2, step 3) |- ( ∀ x ∈ A B ⊆ C → ( ∃ x ∈ A y ∈ B → ∃ x ∈ A y ∈ C ) ) ;;
+	step 5 : wff = eliun () |- ( y ∈ ⋃_ x ∈ A B ↔ ∃ x ∈ A y ∈ B ) ;;
+	step 6 : wff = eliun () |- ( y ∈ ⋃_ x ∈ A C ↔ ∃ x ∈ A y ∈ C ) ;;
+	step 7 : wff = 3imtr4g (step 4, step 5, step 6) |- ( ∀ x ∈ A B ⊆ C → ( y ∈ ⋃_ x ∈ A B → y ∈ ⋃_ x ∈ A C ) ) ;;
+	step 8 : wff = ssrdv (step 7) |- ( ∀ x ∈ A B ⊆ C → ⋃_ x ∈ A B ⊆ ⋃_ x ∈ A C ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Equality theorem for indexed union.  (Contributed by NM,
+       22-Oct-2003.) */
+
+theorem iuneq2 (x : set, A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ∀ x ∈ A B = C → ⋃_ x ∈ A B = ⋃_ x ∈ A C ) ;;
+}
+
+proof of iuneq2 {
+	step 1 : wff = ss2iun () |- ( ∀ x ∈ A B ⊆ C → ⋃_ x ∈ A B ⊆ ⋃_ x ∈ A C ) ;;
+	step 2 : wff = ss2iun () |- ( ∀ x ∈ A C ⊆ B → ⋃_ x ∈ A C ⊆ ⋃_ x ∈ A B ) ;;
+	step 3 : wff = anim12i (step 1, step 2) |- ( ( ∀ x ∈ A B ⊆ C ∧ ∀ x ∈ A C ⊆ B ) → ( ⋃_ x ∈ A B ⊆ ⋃_ x ∈ A C ∧ ⋃_ x ∈ A C ⊆ ⋃_ x ∈ A B ) ) ;;
+	step 4 : wff = eqss () |- ( B = C ↔ ( B ⊆ C ∧ C ⊆ B ) ) ;;
+	step 5 : wff = ralbii (step 4) |- ( ∀ x ∈ A B = C ↔ ∀ x ∈ A ( B ⊆ C ∧ C ⊆ B ) ) ;;
+	step 6 : wff = r19.26 () |- ( ∀ x ∈ A ( B ⊆ C ∧ C ⊆ B ) ↔ ( ∀ x ∈ A B ⊆ C ∧ ∀ x ∈ A C ⊆ B ) ) ;;
+	step 7 : wff = bitri (step 5, step 6) |- ( ∀ x ∈ A B = C ↔ ( ∀ x ∈ A B ⊆ C ∧ ∀ x ∈ A C ⊆ B ) ) ;;
+	step 8 : wff = eqss () |- ( ⋃_ x ∈ A B = ⋃_ x ∈ A C ↔ ( ⋃_ x ∈ A B ⊆ ⋃_ x ∈ A C ∧ ⋃_ x ∈ A C ⊆ ⋃_ x ∈ A B ) ) ;;
+	step 9 : wff = 3imtr4i (step 3, step 7, step 8) |- ( ∀ x ∈ A B = C → ⋃_ x ∈ A B = ⋃_ x ∈ A C ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Equality theorem for indexed intersection.  (Contributed by NM,
+       22-Oct-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem iineq2 (x : set, A : class, B : class, C : class) disjointed(x y, y A, y B, y C) {
+	prop 1 : wff = |- ( ∀ x ∈ A B = C → ⋂_ x ∈ A B = ⋂_ x ∈ A C ) ;;
+}
+
+proof of iineq2 {
+	var y : set;;
+	step 1 : wff = eleq2 () |- ( B = C → ( y ∈ B ↔ y ∈ C ) ) ;;
+	step 2 : wff = ralimi (step 1) |- ( ∀ x ∈ A B = C → ∀ x ∈ A ( y ∈ B ↔ y ∈ C ) ) ;;
+	step 3 : wff = ralbi () |- ( ∀ x ∈ A ( y ∈ B ↔ y ∈ C ) → ( ∀ x ∈ A y ∈ B ↔ ∀ x ∈ A y ∈ C ) ) ;;
+	step 4 : wff = syl (step 2, step 3) |- ( ∀ x ∈ A B = C → ( ∀ x ∈ A y ∈ B ↔ ∀ x ∈ A y ∈ C ) ) ;;
+	step 5 : wff = abbidv (step 4) |- ( ∀ x ∈ A B = C → { y | ∀ x ∈ A y ∈ B } = { y | ∀ x ∈ A y ∈ C } ) ;;
+	step 6 : wff = df-iin () |- ⋂_ x ∈ A B = { y | ∀ x ∈ A y ∈ B } ;;
+	step 7 : wff = df-iin () |- ⋂_ x ∈ A C = { y | ∀ x ∈ A y ∈ C } ;;
+	step 8 : wff = 3eqtr4g (step 5, step 6, step 7) |- ( ∀ x ∈ A B = C → ⋂_ x ∈ A B = ⋂_ x ∈ A C ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Equality inference for indexed union.  (Contributed by NM,
+       22-Oct-2003.) */
+
+theorem iuneq2i (x : set, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( x ∈ A → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ⋃_ x ∈ A B = ⋃_ x ∈ A C ;;
+}
+
+proof of iuneq2i {
+	step 1 : wff = iuneq2 () |- ( ∀ x ∈ A B = C → ⋃_ x ∈ A B = ⋃_ x ∈ A C ) ;;
+	step 2 : wff = mprg (step 1, hyp 1) |- ⋃_ x ∈ A B = ⋃_ x ∈ A C ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Equality inference for indexed intersection.  (Contributed by NM,
+       22-Oct-2003.) */
+
+theorem iineq2i (x : set, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( x ∈ A → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ⋂_ x ∈ A B = ⋂_ x ∈ A C ;;
+}
+
+proof of iineq2i {
+	step 1 : wff = iineq2 () |- ( ∀ x ∈ A B = C → ⋂_ x ∈ A B = ⋂_ x ∈ A C ) ;;
+	step 2 : wff = mprg (step 1, hyp 1) |- ⋂_ x ∈ A B = ⋂_ x ∈ A C ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Equality deduction for indexed intersection.  (Contributed by NM,
+       7-Dec-2011.) */
+
+theorem iineq2d (ph : wff, x : set, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- ( ( ph ∧ x ∈ A ) → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ⋂_ x ∈ A B = ⋂_ x ∈ A C ) ;;
+}
+
+proof of iineq2d {
+	step 1 : wff = ex (hyp 2) |- ( ph → ( x ∈ A → B = C ) ) ;;
+	step 2 : wff = ralrimi (hyp 1, step 1) |- ( ph → ∀ x ∈ A B = C ) ;;
+	step 3 : wff = iineq2 () |- ( ∀ x ∈ A B = C → ⋂_ x ∈ A B = ⋂_ x ∈ A C ) ;;
+	step 4 : wff = syl (step 2, step 3) |- ( ph → ⋂_ x ∈ A B = ⋂_ x ∈ A C ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Equality deduction for indexed union.  (Contributed by NM,
+       3-Aug-2004.) */
+
+theorem iuneq2dv (ph : wff, x : set, A : class, B : class, C : class) disjointed(x ph) {
+	hyp 1 : wff = |- ( ( ph ∧ x ∈ A ) → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ⋃_ x ∈ A B = ⋃_ x ∈ A C ) ;;
+}
+
+proof of iuneq2dv {
+	step 1 : wff = ralrimiva (hyp 1) |- ( ph → ∀ x ∈ A B = C ) ;;
+	step 2 : wff = iuneq2 () |- ( ∀ x ∈ A B = C → ⋃_ x ∈ A B = ⋃_ x ∈ A C ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( ph → ⋃_ x ∈ A B = ⋃_ x ∈ A C ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Equality deduction for indexed intersection.  (Contributed by NM,
+       3-Aug-2004.) */
+
+theorem iineq2dv (ph : wff, x : set, A : class, B : class, C : class) disjointed(x ph) {
+	hyp 1 : wff = |- ( ( ph ∧ x ∈ A ) → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ⋂_ x ∈ A B = ⋂_ x ∈ A C ) ;;
+}
+
+proof of iineq2dv {
+	step 1 : wff = nfv () |- F/ x ph ;;
+	step 2 : wff = iineq2d (step 1, hyp 1) |- ( ph → ⋂_ x ∈ A B = ⋂_ x ∈ A C ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Equality theorem for indexed union, deduction version.  (Contributed by
+       Drahflow, 22-Oct-2015.) */
+
+theorem iuneq1d (ph : wff, x : set, A : class, B : class, C : class) disjointed(x A, x B) {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ⋃_ x ∈ A C = ⋃_ x ∈ B C ) ;;
+}
+
+proof of iuneq1d {
+	step 1 : wff = iuneq1 () |- ( A = B → ⋃_ x ∈ A C = ⋃_ x ∈ B C ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ph → ⋃_ x ∈ A C = ⋃_ x ∈ B C ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Equality deduction for indexed union, deduction version.  (Contributed
+         by Drahflow, 22-Oct-2015.) */
+
+theorem iuneq12d (ph : wff, x : set, A : class, B : class, C : class, D : class) disjointed(x A, x B, x ph) {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	hyp 2 : wff = |- ( ph → C = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ⋃_ x ∈ A C = ⋃_ x ∈ B D ) ;;
+}
+
+proof of iuneq12d {
+	step 1 : wff = iuneq1d (hyp 1) |- ( ph → ⋃_ x ∈ A C = ⋃_ x ∈ B C ) ;;
+	step 2 : wff = adantr (hyp 2) |- ( ( ph ∧ x ∈ B ) → C = D ) ;;
+	step 3 : wff = iuneq2dv (step 2) |- ( ph → ⋃_ x ∈ B C = ⋃_ x ∈ B D ) ;;
+	step 4 : wff = eqtrd (step 1, step 3) |- ( ph → ⋃_ x ∈ A C = ⋃_ x ∈ B D ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Equality deduction for indexed union.  (Contributed by Drahflow,
+       22-Oct-2015.) */
+
+theorem iuneq2d (ph : wff, x : set, A : class, B : class, C : class) disjointed(x ph, x A) {
+	hyp 1 : wff = |- ( ph → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ⋃_ x ∈ A B = ⋃_ x ∈ A C ) ;;
+}
+
+proof of iuneq2d {
+	step 1 : wff = adantr (hyp 1) |- ( ( ph ∧ x ∈ A ) → B = C ) ;;
+	step 2 : wff = iuneq2dv (step 1) |- ( ph → ⋃_ x ∈ A B = ⋃_ x ∈ A C ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Bound-variable hypothesis builder for indexed union.  (Contributed by
+       Mario Carneiro, 25-Jan-2014.) */
+
+theorem nfiun (x : set, y : set, A : class, B : class) disjointed(z A, z B, x z, y z) {
+	hyp 1 : wff = |- F/_ y A ;;
+	hyp 2 : wff = |- F/_ y B ;;
+	-----------------------
+	prop 1 : wff = |- F/_ y ⋃_ x ∈ A B ;;
+}
+
+proof of nfiun {
+	var z : set;;
+	step 1 : wff = df-iun () |- ⋃_ x ∈ A B = { z | ∃ x ∈ A z ∈ B } ;;
+	step 2 : wff = nfcri (hyp 2) |- F/ y z ∈ B ;;
+	step 3 : wff = nfrex (hyp 1, step 2) |- F/ y ∃ x ∈ A z ∈ B ;;
+	step 4 : wff = nfab (step 3) |- F/_ y { z | ∃ x ∈ A z ∈ B } ;;
+	step 5 : wff = nfcxfr (step 1, step 4) |- F/_ y ⋃_ x ∈ A B ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Bound-variable hypothesis builder for indexed intersection.
+       (Contributed by Mario Carneiro, 25-Jan-2014.) */
+
+theorem nfiin (x : set, y : set, A : class, B : class) disjointed(z A, z B, x z, y z) {
+	hyp 1 : wff = |- F/_ y A ;;
+	hyp 2 : wff = |- F/_ y B ;;
+	-----------------------
+	prop 1 : wff = |- F/_ y ⋂_ x ∈ A B ;;
+}
+
+proof of nfiin {
+	var z : set;;
+	step 1 : wff = df-iin () |- ⋂_ x ∈ A B = { z | ∀ x ∈ A z ∈ B } ;;
+	step 2 : wff = nfcri (hyp 2) |- F/ y z ∈ B ;;
+	step 3 : wff = nfral (hyp 1, step 2) |- F/ y ∀ x ∈ A z ∈ B ;;
+	step 4 : wff = nfab (step 3) |- F/_ y { z | ∀ x ∈ A z ∈ B } ;;
+	step 5 : wff = nfcxfr (step 1, step 4) |- F/_ y ⋂_ x ∈ A B ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Bound-variable hypothesis builder for indexed union.  (Contributed by
+       NM, 12-Oct-2003.) */
+
+theorem nfiu1 (x : set, A : class, B : class) disjointed(y A, y B, x y) {
+	prop 1 : wff = |- F/_ x ⋃_ x ∈ A B ;;
+}
+
+proof of nfiu1 {
+	var y : set;;
+	step 1 : wff = df-iun () |- ⋃_ x ∈ A B = { y | ∃ x ∈ A y ∈ B } ;;
+	step 2 : wff = nfre1 () |- F/ x ∃ x ∈ A y ∈ B ;;
+	step 3 : wff = nfab (step 2) |- F/_ x { y | ∃ x ∈ A y ∈ B } ;;
+	step 4 : wff = nfcxfr (step 1, step 3) |- F/_ x ⋃_ x ∈ A B ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Bound-variable hypothesis builder for indexed intersection.
+       (Contributed by NM, 15-Oct-2003.) */
+
+theorem nfii1 (x : set, A : class, B : class) disjointed(y A, y B, x y) {
+	prop 1 : wff = |- F/_ x ⋂_ x ∈ A B ;;
+}
+
+proof of nfii1 {
+	var y : set;;
+	step 1 : wff = df-iin () |- ⋂_ x ∈ A B = { y | ∀ x ∈ A y ∈ B } ;;
+	step 2 : wff = nfra1 () |- F/ x ∀ x ∈ A y ∈ B ;;
+	step 3 : wff = nfab (step 2) |- F/_ x { y | ∀ x ∈ A y ∈ B } ;;
+	step 4 : wff = nfcxfr (step 1, step 3) |- F/_ x ⋂_ x ∈ A B ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Alternate definition of indexed union when ` B ` is a set.  Definition
+       15(a) of [Suppes] p. 44.  (Contributed by NM, 23-Mar-2006.)  (Proof
+       shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem dfiun2g (x : set, y : set, A : class, B : class, C : class) disjointed(y z A, y z B, C z, x y z) {
+	prop 1 : wff = |- ( ∀ x ∈ A B ∈ C → ⋃_ x ∈ A B = ⋃ { y | ∃ x ∈ A y = B } ) ;;
+}
+
+proof of dfiun2g {
+	var z : set;;
+	step 1 : wff = nfra1 () |- F/ x ∀ x ∈ A B ∈ C ;;
+	step 2 : wff = rsp () |- ( ∀ x ∈ A B ∈ C → ( x ∈ A → B ∈ C ) ) ;;
+	step 3 : wff = clel3g () |- ( B ∈ C → ( z ∈ B ↔ ∃ y ( y = B ∧ z ∈ y ) ) ) ;;
+	step 4 : wff = syl6 (step 2, step 3) |- ( ∀ x ∈ A B ∈ C → ( x ∈ A → ( z ∈ B ↔ ∃ y ( y = B ∧ z ∈ y ) ) ) ) ;;
+	step 5 : wff = imp (step 4) |- ( ( ∀ x ∈ A B ∈ C ∧ x ∈ A ) → ( z ∈ B ↔ ∃ y ( y = B ∧ z ∈ y ) ) ) ;;
+	step 6 : wff = rexbida (step 1, step 5) |- ( ∀ x ∈ A B ∈ C → ( ∃ x ∈ A z ∈ B ↔ ∃ x ∈ A ∃ y ( y = B ∧ z ∈ y ) ) ) ;;
+	step 7 : wff = rexcom4 () |- ( ∃ x ∈ A ∃ y ( y = B ∧ z ∈ y ) ↔ ∃ y ∃ x ∈ A ( y = B ∧ z ∈ y ) ) ;;
+	step 8 : wff = syl6bb (step 6, step 7) |- ( ∀ x ∈ A B ∈ C → ( ∃ x ∈ A z ∈ B ↔ ∃ y ∃ x ∈ A ( y = B ∧ z ∈ y ) ) ) ;;
+	step 9 : wff = r19.41v () |- ( ∃ x ∈ A ( y = B ∧ z ∈ y ) ↔ ( ∃ x ∈ A y = B ∧ z ∈ y ) ) ;;
+	step 10 : wff = exbii (step 9) |- ( ∃ y ∃ x ∈ A ( y = B ∧ z ∈ y ) ↔ ∃ y ( ∃ x ∈ A y = B ∧ z ∈ y ) ) ;;
+	step 11 : wff = exancom () |- ( ∃ y ( ∃ x ∈ A y = B ∧ z ∈ y ) ↔ ∃ y ( z ∈ y ∧ ∃ x ∈ A y = B ) ) ;;
+	step 12 : wff = bitri (step 10, step 11) |- ( ∃ y ∃ x ∈ A ( y = B ∧ z ∈ y ) ↔ ∃ y ( z ∈ y ∧ ∃ x ∈ A y = B ) ) ;;
+	step 13 : wff = syl6bb (step 8, step 12) |- ( ∀ x ∈ A B ∈ C → ( ∃ x ∈ A z ∈ B ↔ ∃ y ( z ∈ y ∧ ∃ x ∈ A y = B ) ) ) ;;
+	step 14 : wff = eliun () |- ( z ∈ ⋃_ x ∈ A B ↔ ∃ x ∈ A z ∈ B ) ;;
+	step 15 : wff = eluniab () |- ( z ∈ ⋃ { y | ∃ x ∈ A y = B } ↔ ∃ y ( z ∈ y ∧ ∃ x ∈ A y = B ) ) ;;
+	step 16 : wff = 3bitr4g (step 13, step 14, step 15) |- ( ∀ x ∈ A B ∈ C → ( z ∈ ⋃_ x ∈ A B ↔ z ∈ ⋃ { y | ∃ x ∈ A y = B } ) ) ;;
+	step 17 : wff = eqrdv (step 16) |- ( ∀ x ∈ A B ∈ C → ⋃_ x ∈ A B = ⋃ { y | ∃ x ∈ A y = B } ) ;;
+	qed prop 1 = step 17 ;;
+}
+
+/* Alternate definition of indexed intersection when ` B ` is a set.
+       (Contributed by Jeff Hankins, 27-Aug-2009.) */
+
+theorem dfiin2g (x : set, y : set, A : class, B : class, C : class) disjointed(y z w A, y z w B, w C z, w x y z) {
+	prop 1 : wff = |- ( ∀ x ∈ A B ∈ C → ⋂_ x ∈ A B = ⋂ { y | ∃ x ∈ A y = B } ) ;;
+}
+
+proof of dfiin2g {
+	var z : set, w : set;;
+	step 1 : wff = df-ral () |- ( ∀ x ∈ A w ∈ B ↔ ∀ x ( x ∈ A → w ∈ B ) ) ;;
+	step 2 : wff = df-ral () |- ( ∀ x ∈ A B ∈ C ↔ ∀ x ( x ∈ A → B ∈ C ) ) ;;
+	step 3 : wff = eleq2 () |- ( z = B → ( w ∈ z ↔ w ∈ B ) ) ;;
+	step 4 : wff = biimprcd (step 3) |- ( w ∈ B → ( z = B → w ∈ z ) ) ;;
+	step 5 : wff = alrimiv (step 4) |- ( w ∈ B → ∀ z ( z = B → w ∈ z ) ) ;;
+	step 6 : wff = eqid () |- B = B ;;
+	step 7 : wff = eqeq1 () |- ( z = B → ( z = B ↔ B = B ) ) ;;
+	step 8 : wff = eleq2 () |- ( z = B → ( w ∈ z ↔ w ∈ B ) ) ;;
+	step 9 : wff = imbi12d (step 7, step 8) |- ( z = B → ( ( z = B → w ∈ z ) ↔ ( B = B → w ∈ B ) ) ) ;;
+	step 10 : wff = spcgv (step 9) |- ( B ∈ C → ( ∀ z ( z = B → w ∈ z ) → ( B = B → w ∈ B ) ) ) ;;
+	step 11 : wff = mpii (step 6, step 10) |- ( B ∈ C → ( ∀ z ( z = B → w ∈ z ) → w ∈ B ) ) ;;
+	step 12 : wff = impbid2 (step 5, step 11) |- ( B ∈ C → ( w ∈ B ↔ ∀ z ( z = B → w ∈ z ) ) ) ;;
+	step 13 : wff = imim2i (step 12) |- ( ( x ∈ A → B ∈ C ) → ( x ∈ A → ( w ∈ B ↔ ∀ z ( z = B → w ∈ z ) ) ) ) ;;
+	step 14 : wff = pm5.74d (step 13) |- ( ( x ∈ A → B ∈ C ) → ( ( x ∈ A → w ∈ B ) ↔ ( x ∈ A → ∀ z ( z = B → w ∈ z ) ) ) ) ;;
+	step 15 : wff = alimi (step 14) |- ( ∀ x ( x ∈ A → B ∈ C ) → ∀ x ( ( x ∈ A → w ∈ B ) ↔ ( x ∈ A → ∀ z ( z = B → w ∈ z ) ) ) ) ;;
+	step 16 : wff = albi () |- ( ∀ x ( ( x ∈ A → w ∈ B ) ↔ ( x ∈ A → ∀ z ( z = B → w ∈ z ) ) ) → ( ∀ x ( x ∈ A → w ∈ B ) ↔ ∀ x ( x ∈ A → ∀ z ( z = B → w ∈ z ) ) ) ) ;;
+	step 17 : wff = syl (step 15, step 16) |- ( ∀ x ( x ∈ A → B ∈ C ) → ( ∀ x ( x ∈ A → w ∈ B ) ↔ ∀ x ( x ∈ A → ∀ z ( z = B → w ∈ z ) ) ) ) ;;
+	step 18 : wff = sylbi (step 2, step 17) |- ( ∀ x ∈ A B ∈ C → ( ∀ x ( x ∈ A → w ∈ B ) ↔ ∀ x ( x ∈ A → ∀ z ( z = B → w ∈ z ) ) ) ) ;;
+	step 19 : wff = df-ral () |- ( ∀ x ∈ A ( z = B → w ∈ z ) ↔ ∀ x ( x ∈ A → ( z = B → w ∈ z ) ) ) ;;
+	step 20 : wff = albii (step 19) |- ( ∀ z ∀ x ∈ A ( z = B → w ∈ z ) ↔ ∀ z ∀ x ( x ∈ A → ( z = B → w ∈ z ) ) ) ;;
+	step 21 : wff = alcom () |- ( ∀ x ∀ z ( x ∈ A → ( z = B → w ∈ z ) ) ↔ ∀ z ∀ x ( x ∈ A → ( z = B → w ∈ z ) ) ) ;;
+	step 22 : wff = bitr4i (step 20, step 21) |- ( ∀ z ∀ x ∈ A ( z = B → w ∈ z ) ↔ ∀ x ∀ z ( x ∈ A → ( z = B → w ∈ z ) ) ) ;;
+	step 23 : wff = r19.23v () |- ( ∀ x ∈ A ( z = B → w ∈ z ) ↔ ( ∃ x ∈ A z = B → w ∈ z ) ) ;;
+	step 24 : wff = vex () |- z ∈ _V ;;
+	step 25 : wff = eqeq1 () |- ( y = z → ( y = B ↔ z = B ) ) ;;
+	step 26 : wff = rexbidv (step 25) |- ( y = z → ( ∃ x ∈ A y = B ↔ ∃ x ∈ A z = B ) ) ;;
+	step 27 : wff = elab (step 24, step 26) |- ( z ∈ { y | ∃ x ∈ A y = B } ↔ ∃ x ∈ A z = B ) ;;
+	step 28 : wff = imbi1i (step 27) |- ( ( z ∈ { y | ∃ x ∈ A y = B } → w ∈ z ) ↔ ( ∃ x ∈ A z = B → w ∈ z ) ) ;;
+	step 29 : wff = bitr4i (step 23, step 28) |- ( ∀ x ∈ A ( z = B → w ∈ z ) ↔ ( z ∈ { y | ∃ x ∈ A y = B } → w ∈ z ) ) ;;
+	step 30 : wff = albii (step 29) |- ( ∀ z ∀ x ∈ A ( z = B → w ∈ z ) ↔ ∀ z ( z ∈ { y | ∃ x ∈ A y = B } → w ∈ z ) ) ;;
+	step 31 : wff = 19.21v () |- ( ∀ z ( x ∈ A → ( z = B → w ∈ z ) ) ↔ ( x ∈ A → ∀ z ( z = B → w ∈ z ) ) ) ;;
+	step 32 : wff = albii (step 31) |- ( ∀ x ∀ z ( x ∈ A → ( z = B → w ∈ z ) ) ↔ ∀ x ( x ∈ A → ∀ z ( z = B → w ∈ z ) ) ) ;;
+	step 33 : wff = 3bitr3ri (step 22, step 30, step 32) |- ( ∀ x ( x ∈ A → ∀ z ( z = B → w ∈ z ) ) ↔ ∀ z ( z ∈ { y | ∃ x ∈ A y = B } → w ∈ z ) ) ;;
+	step 34 : wff = syl6bb (step 18, step 33) |- ( ∀ x ∈ A B ∈ C → ( ∀ x ( x ∈ A → w ∈ B ) ↔ ∀ z ( z ∈ { y | ∃ x ∈ A y = B } → w ∈ z ) ) ) ;;
+	step 35 : wff = syl5bb (step 1, step 34) |- ( ∀ x ∈ A B ∈ C → ( ∀ x ∈ A w ∈ B ↔ ∀ z ( z ∈ { y | ∃ x ∈ A y = B } → w ∈ z ) ) ) ;;
+	step 36 : wff = abbidv (step 35) |- ( ∀ x ∈ A B ∈ C → { w | ∀ x ∈ A w ∈ B } = { w | ∀ z ( z ∈ { y | ∃ x ∈ A y = B } → w ∈ z ) } ) ;;
+	step 37 : wff = df-iin () |- ⋂_ x ∈ A B = { w | ∀ x ∈ A w ∈ B } ;;
+	step 38 : wff = df-int () |- ⋂ { y | ∃ x ∈ A y = B } = { w | ∀ z ( z ∈ { y | ∃ x ∈ A y = B } → w ∈ z ) } ;;
+	step 39 : wff = 3eqtr4g (step 36, step 37, step 38) |- ( ∀ x ∈ A B ∈ C → ⋂_ x ∈ A B = ⋂ { y | ∃ x ∈ A y = B } ) ;;
+	qed prop 1 = step 39 ;;
+}
+
+/* Alternate definition of indexed union when ` B ` is a set.  Definition
+       15(a) of [Suppes] p. 44.  (Contributed by NM, 27-Jun-1998.)  (Revised by
+       David Abernethy, 19-Jun-2012.) */
+
+theorem dfiun2 (x : set, y : set, A : class, B : class) disjointed(x y, y A, y B) {
+	hyp 1 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ⋃_ x ∈ A B = ⋃ { y | ∃ x ∈ A y = B } ;;
+}
+
+proof of dfiun2 {
+	step 1 : wff = dfiun2g () |- ( ∀ x ∈ A B ∈ _V → ⋃_ x ∈ A B = ⋃ { y | ∃ x ∈ A y = B } ) ;;
+	step 2 : wff = a1i (hyp 1) |- ( x ∈ A → B ∈ _V ) ;;
+	step 3 : wff = mprg (step 1, step 2) |- ⋃_ x ∈ A B = ⋃ { y | ∃ x ∈ A y = B } ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Alternate definition of indexed intersection when ` B ` is a set.
+       Definition 15(b) of [Suppes] p. 44.  (Contributed by NM, 28-Jun-1998.)
+       (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem dfiin2 (x : set, y : set, A : class, B : class) disjointed(x y, y A, y B) {
+	hyp 1 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ⋂_ x ∈ A B = ⋂ { y | ∃ x ∈ A y = B } ;;
+}
+
+proof of dfiin2 {
+	step 1 : wff = dfiin2g () |- ( ∀ x ∈ A B ∈ _V → ⋂_ x ∈ A B = ⋂ { y | ∃ x ∈ A y = B } ) ;;
+	step 2 : wff = a1i (hyp 1) |- ( x ∈ A → B ∈ _V ) ;;
+	step 3 : wff = mprg (step 1, step 2) |- ⋂_ x ∈ A B = ⋂ { y | ∃ x ∈ A y = B } ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Rule used to change the bound variables in an indexed union, with the
+       substitution specified implicitly by the hypothesis.  (Contributed by
+       NM, 26-Mar-2006.)  (Revised by Andrew Salmon, 25-Jul-2011.) */
+
+theorem cbviun (x : set, y : set, A : class, B : class, C : class) disjointed(z y A, z x A, z B, z C) {
+	hyp 1 : wff = |- F/_ y B ;;
+	hyp 2 : wff = |- F/_ x C ;;
+	hyp 3 : wff = |- ( x = y → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ⋃_ x ∈ A B = ⋃_ y ∈ A C ;;
+}
+
+proof of cbviun {
+	var z : set;;
+	step 1 : wff = nfcri (hyp 1) |- F/ y z ∈ B ;;
+	step 2 : wff = nfcri (hyp 2) |- F/ x z ∈ C ;;
+	step 3 : wff = eleq2d (hyp 3) |- ( x = y → ( z ∈ B ↔ z ∈ C ) ) ;;
+	step 4 : wff = cbvrex (step 1, step 2, step 3) |- ( ∃ x ∈ A z ∈ B ↔ ∃ y ∈ A z ∈ C ) ;;
+	step 5 : wff = abbii (step 4) |- { z | ∃ x ∈ A z ∈ B } = { z | ∃ y ∈ A z ∈ C } ;;
+	step 6 : wff = df-iun () |- ⋃_ x ∈ A B = { z | ∃ x ∈ A z ∈ B } ;;
+	step 7 : wff = df-iun () |- ⋃_ y ∈ A C = { z | ∃ y ∈ A z ∈ C } ;;
+	step 8 : wff = 3eqtr4i (step 5, step 6, step 7) |- ⋃_ x ∈ A B = ⋃_ y ∈ A C ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Change bound variables in an indexed intersection.  (Contributed by Jeff
+       Hankins, 26-Aug-2009.)  (Revised by Mario Carneiro, 14-Oct-2016.) */
+
+theorem cbviin (x : set, y : set, A : class, B : class, C : class) disjointed(z y A, z x A, z B, z C) {
+	hyp 1 : wff = |- F/_ y B ;;
+	hyp 2 : wff = |- F/_ x C ;;
+	hyp 3 : wff = |- ( x = y → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ⋂_ x ∈ A B = ⋂_ y ∈ A C ;;
+}
+
+proof of cbviin {
+	var z : set;;
+	step 1 : wff = nfcri (hyp 1) |- F/ y z ∈ B ;;
+	step 2 : wff = nfcri (hyp 2) |- F/ x z ∈ C ;;
+	step 3 : wff = eleq2d (hyp 3) |- ( x = y → ( z ∈ B ↔ z ∈ C ) ) ;;
+	step 4 : wff = cbvral (step 1, step 2, step 3) |- ( ∀ x ∈ A z ∈ B ↔ ∀ y ∈ A z ∈ C ) ;;
+	step 5 : wff = abbii (step 4) |- { z | ∀ x ∈ A z ∈ B } = { z | ∀ y ∈ A z ∈ C } ;;
+	step 6 : wff = df-iin () |- ⋂_ x ∈ A B = { z | ∀ x ∈ A z ∈ B } ;;
+	step 7 : wff = df-iin () |- ⋂_ y ∈ A C = { z | ∀ y ∈ A z ∈ C } ;;
+	step 8 : wff = 3eqtr4i (step 5, step 6, step 7) |- ⋂_ x ∈ A B = ⋂_ y ∈ A C ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Rule used to change the bound variables in an indexed union, with the
+       substitution specified implicitly by the hypothesis.  (Contributed by
+       NM, 15-Sep-2003.) */
+
+theorem cbviunv (x : set, y : set, A : class, B : class, C : class) disjointed(x A, y A, y B, x C) {
+	hyp 1 : wff = |- ( x = y → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ⋃_ x ∈ A B = ⋃_ y ∈ A C ;;
+}
+
+proof of cbviunv {
+	step 1 : wff = nfcv () |- F/_ y B ;;
+	step 2 : wff = nfcv () |- F/_ x C ;;
+	step 3 : wff = cbviun (step 1, step 2, hyp 1) |- ⋃_ x ∈ A B = ⋃_ y ∈ A C ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Change bound variables in an indexed intersection.  (Contributed by Jeff
+       Hankins, 26-Aug-2009.) */
+
+theorem cbviinv (x : set, y : set, A : class, B : class, C : class) disjointed(x A, y A, y B, x C) {
+	hyp 1 : wff = |- ( x = y → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ⋂_ x ∈ A B = ⋂_ y ∈ A C ;;
+}
+
+proof of cbviinv {
+	step 1 : wff = nfcv () |- F/_ y B ;;
+	step 2 : wff = nfcv () |- F/_ x C ;;
+	step 3 : wff = cbviin (step 1, step 2, hyp 1) |- ⋂_ x ∈ A B = ⋂_ y ∈ A C ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Subset theorem for an indexed union.  (Contributed by NM, 13-Sep-2003.)
+       (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem iunss (x : set, A : class, B : class, C : class) disjointed(x y C, y A, y B) {
+	prop 1 : wff = |- ( ⋃_ x ∈ A B ⊆ C ↔ ∀ x ∈ A B ⊆ C ) ;;
+}
+
+proof of iunss {
+	var y : set;;
+	step 1 : wff = df-iun () |- ⋃_ x ∈ A B = { y | ∃ x ∈ A y ∈ B } ;;
+	step 2 : wff = sseq1i (step 1) |- ( ⋃_ x ∈ A B ⊆ C ↔ { y | ∃ x ∈ A y ∈ B } ⊆ C ) ;;
+	step 3 : wff = abss () |- ( { y | ∃ x ∈ A y ∈ B } ⊆ C ↔ ∀ y ( ∃ x ∈ A y ∈ B → y ∈ C ) ) ;;
+	step 4 : wff = dfss2 () |- ( B ⊆ C ↔ ∀ y ( y ∈ B → y ∈ C ) ) ;;
+	step 5 : wff = ralbii (step 4) |- ( ∀ x ∈ A B ⊆ C ↔ ∀ x ∈ A ∀ y ( y ∈ B → y ∈ C ) ) ;;
+	step 6 : wff = ralcom4 () |- ( ∀ x ∈ A ∀ y ( y ∈ B → y ∈ C ) ↔ ∀ y ∀ x ∈ A ( y ∈ B → y ∈ C ) ) ;;
+	step 7 : wff = r19.23v () |- ( ∀ x ∈ A ( y ∈ B → y ∈ C ) ↔ ( ∃ x ∈ A y ∈ B → y ∈ C ) ) ;;
+	step 8 : wff = albii (step 7) |- ( ∀ y ∀ x ∈ A ( y ∈ B → y ∈ C ) ↔ ∀ y ( ∃ x ∈ A y ∈ B → y ∈ C ) ) ;;
+	step 9 : wff = 3bitrri (step 5, step 6, step 8) |- ( ∀ y ( ∃ x ∈ A y ∈ B → y ∈ C ) ↔ ∀ x ∈ A B ⊆ C ) ;;
+	step 10 : wff = 3bitri (step 2, step 3, step 9) |- ( ⋃_ x ∈ A B ⊆ C ↔ ∀ x ∈ A B ⊆ C ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Subset implication for an indexed union.  (Contributed by NM,
+       3-Sep-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem ssiun (x : set, A : class, B : class, C : class) disjointed(x y C, y A, y B) {
+	prop 1 : wff = |- ( ∃ x ∈ A C ⊆ B → C ⊆ ⋃_ x ∈ A B ) ;;
+}
+
+proof of ssiun {
+	var y : set;;
+	step 1 : wff = ssel () |- ( C ⊆ B → ( y ∈ C → y ∈ B ) ) ;;
+	step 2 : wff = reximi (step 1) |- ( ∃ x ∈ A C ⊆ B → ∃ x ∈ A ( y ∈ C → y ∈ B ) ) ;;
+	step 3 : wff = r19.37av () |- ( ∃ x ∈ A ( y ∈ C → y ∈ B ) → ( y ∈ C → ∃ x ∈ A y ∈ B ) ) ;;
+	step 4 : wff = syl (step 2, step 3) |- ( ∃ x ∈ A C ⊆ B → ( y ∈ C → ∃ x ∈ A y ∈ B ) ) ;;
+	step 5 : wff = eliun () |- ( y ∈ ⋃_ x ∈ A B ↔ ∃ x ∈ A y ∈ B ) ;;
+	step 6 : wff = syl6ibr (step 4, step 5) |- ( ∃ x ∈ A C ⊆ B → ( y ∈ C → y ∈ ⋃_ x ∈ A B ) ) ;;
+	step 7 : wff = ssrdv (step 6) |- ( ∃ x ∈ A C ⊆ B → C ⊆ ⋃_ x ∈ A B ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Identity law for subset of an indexed union.  (Contributed by NM,
+       12-Oct-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem ssiun2 (x : set, A : class, B : class) disjointed(y A, y B, x y) {
+	prop 1 : wff = |- ( x ∈ A → B ⊆ ⋃_ x ∈ A B ) ;;
+}
+
+proof of ssiun2 {
+	var y : set;;
+	step 1 : wff = rspe () |- ( ( x ∈ A ∧ y ∈ B ) → ∃ x ∈ A y ∈ B ) ;;
+	step 2 : wff = ex (step 1) |- ( x ∈ A → ( y ∈ B → ∃ x ∈ A y ∈ B ) ) ;;
+	step 3 : wff = eliun () |- ( y ∈ ⋃_ x ∈ A B ↔ ∃ x ∈ A y ∈ B ) ;;
+	step 4 : wff = syl6ibr (step 2, step 3) |- ( x ∈ A → ( y ∈ B → y ∈ ⋃_ x ∈ A B ) ) ;;
+	step 5 : wff = ssrdv (step 4) |- ( x ∈ A → B ⊆ ⋃_ x ∈ A B ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Subset relationship for an indexed union.  (Contributed by NM,
+       26-Oct-2003.) */
+
+theorem ssiun2s (x : set, A : class, B : class, C : class, D : class) disjointed(x A, x C, x D) {
+	hyp 1 : wff = |- ( x = C → B = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( C ∈ A → D ⊆ ⋃_ x ∈ A B ) ;;
+}
+
+proof of ssiun2s {
+	step 1 : wff = nfcv () |- F/_ x C ;;
+	step 2 : wff = nfcv () |- F/_ x D ;;
+	step 3 : wff = nfiu1 () |- F/_ x ⋃_ x ∈ A B ;;
+	step 4 : wff = nfss (step 2, step 3) |- F/ x D ⊆ ⋃_ x ∈ A B ;;
+	step 5 : wff = sseq1d (hyp 1) |- ( x = C → ( B ⊆ ⋃_ x ∈ A B ↔ D ⊆ ⋃_ x ∈ A B ) ) ;;
+	step 6 : wff = ssiun2 () |- ( x ∈ A → B ⊆ ⋃_ x ∈ A B ) ;;
+	step 7 : wff = vtoclgaf (step 1, step 4, step 5, step 6) |- ( C ∈ A → D ⊆ ⋃_ x ∈ A B ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* A subclass condition on the members of two indexed classes ` C ( x ) `
+       and ` D ( y ) ` that implies a subclass relation on their indexed
+       unions.  Generalization of Proposition 8.6 of [TakeutiZaring] p. 59.
+       Compare ~ uniss2 .  (Contributed by NM, 9-Dec-2004.) */
+
+theorem iunss2 (x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x y, x B, y C, x D) {
+	prop 1 : wff = |- ( ∀ x ∈ A ∃ y ∈ B C ⊆ D → ⋃_ x ∈ A C ⊆ ⋃_ y ∈ B D ) ;;
+}
+
+proof of iunss2 {
+	step 1 : wff = ssiun () |- ( ∃ y ∈ B C ⊆ D → C ⊆ ⋃_ y ∈ B D ) ;;
+	step 2 : wff = ralimi (step 1) |- ( ∀ x ∈ A ∃ y ∈ B C ⊆ D → ∀ x ∈ A C ⊆ ⋃_ y ∈ B D ) ;;
+	step 3 : wff = iunss () |- ( ⋃_ x ∈ A C ⊆ ⋃_ y ∈ B D ↔ ∀ x ∈ A C ⊆ ⋃_ y ∈ B D ) ;;
+	step 4 : wff = sylibr (step 2, step 3) |- ( ∀ x ∈ A ∃ y ∈ B C ⊆ D → ⋃_ x ∈ A C ⊆ ⋃_ y ∈ B D ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* The indexed union of a class abstraction.  (Contributed by NM,
+       27-Dec-2004.) */
+
+theorem iunab (ph : wff, x : set, y : set, A : class) disjointed(y A, x y) {
+	prop 1 : wff = |- ⋃_ x ∈ A { y | ph } = { y | ∃ x ∈ A ph } ;;
+}
+
+proof of iunab {
+	step 1 : wff = nfcv () |- F/_ y A ;;
+	step 2 : wff = nfab1 () |- F/_ y { y | ph } ;;
+	step 3 : wff = nfiun (step 1, step 2) |- F/_ y ⋃_ x ∈ A { y | ph } ;;
+	step 4 : wff = nfab1 () |- F/_ y { y | ∃ x ∈ A ph } ;;
+	step 5 : wff = cleqf (step 3, step 4) |- ( ⋃_ x ∈ A { y | ph } = { y | ∃ x ∈ A ph } ↔ ∀ y ( y ∈ ⋃_ x ∈ A { y | ph } ↔ y ∈ { y | ∃ x ∈ A ph } ) ) ;;
+	step 6 : wff = abid () |- ( y ∈ { y | ph } ↔ ph ) ;;
+	step 7 : wff = rexbii (step 6) |- ( ∃ x ∈ A y ∈ { y | ph } ↔ ∃ x ∈ A ph ) ;;
+	step 8 : wff = eliun () |- ( y ∈ ⋃_ x ∈ A { y | ph } ↔ ∃ x ∈ A y ∈ { y | ph } ) ;;
+	step 9 : wff = abid () |- ( y ∈ { y | ∃ x ∈ A ph } ↔ ∃ x ∈ A ph ) ;;
+	step 10 : wff = 3bitr4i (step 7, step 8, step 9) |- ( y ∈ ⋃_ x ∈ A { y | ph } ↔ y ∈ { y | ∃ x ∈ A ph } ) ;;
+	step 11 : wff = mpgbir (step 5, step 10) |- ⋃_ x ∈ A { y | ph } = { y | ∃ x ∈ A ph } ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* The indexed union of a restricted class abstraction.  (Contributed by
+       NM, 3-Jan-2004.)  (Proof shortened by Mario Carneiro, 14-Nov-2016.) */
+
+theorem iunrab (ph : wff, x : set, y : set, A : class, B : class) disjointed(y A, x y, x B) {
+	prop 1 : wff = |- ⋃_ x ∈ A { y ∈ B | ph } = { y ∈ B | ∃ x ∈ A ph } ;;
+}
+
+proof of iunrab {
+	step 1 : wff = iunab () |- ⋃_ x ∈ A { y | ( y ∈ B ∧ ph ) } = { y | ∃ x ∈ A ( y ∈ B ∧ ph ) } ;;
+	step 2 : wff = df-rab () |- { y ∈ B | ph } = { y | ( y ∈ B ∧ ph ) } ;;
+	step 3 : wff = a1i (step 2) |- ( x ∈ A → { y ∈ B | ph } = { y | ( y ∈ B ∧ ph ) } ) ;;
+	step 4 : wff = iuneq2i (step 3) |- ⋃_ x ∈ A { y ∈ B | ph } = ⋃_ x ∈ A { y | ( y ∈ B ∧ ph ) } ;;
+	step 5 : wff = df-rab () |- { y ∈ B | ∃ x ∈ A ph } = { y | ( y ∈ B ∧ ∃ x ∈ A ph ) } ;;
+	step 6 : wff = r19.42v () |- ( ∃ x ∈ A ( y ∈ B ∧ ph ) ↔ ( y ∈ B ∧ ∃ x ∈ A ph ) ) ;;
+	step 7 : wff = abbii (step 6) |- { y | ∃ x ∈ A ( y ∈ B ∧ ph ) } = { y | ( y ∈ B ∧ ∃ x ∈ A ph ) } ;;
+	step 8 : wff = eqtr4i (step 5, step 7) |- { y ∈ B | ∃ x ∈ A ph } = { y | ∃ x ∈ A ( y ∈ B ∧ ph ) } ;;
+	step 9 : wff = 3eqtr4i (step 1, step 4, step 8) |- ⋃_ x ∈ A { y ∈ B | ph } = { y ∈ B | ∃ x ∈ A ph } ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Indexed union with a class difference as its index.  (Contributed by NM,
+       10-Dec-2004.) */
+
+theorem iunxdif2 (x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x y A, x y B, y C, x D) {
+	hyp 1 : wff = |- ( x = y → C = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ∈ A ∃ y ∈ ( A ∖ B ) C ⊆ D → ⋃_ y ∈ ( A ∖ B ) D = ⋃_ x ∈ A C ) ;;
+}
+
+proof of iunxdif2 {
+	step 1 : wff = iunss2 () |- ( ∀ x ∈ A ∃ y ∈ ( A ∖ B ) C ⊆ D → ⋃_ x ∈ A C ⊆ ⋃_ y ∈ ( A ∖ B ) D ) ;;
+	step 2 : wff = difss () |- ( A ∖ B ) ⊆ A ;;
+	step 3 : wff = iunss1 () |- ( ( A ∖ B ) ⊆ A → ⋃_ y ∈ ( A ∖ B ) D ⊆ ⋃_ y ∈ A D ) ;;
+	step 4 : wff = ax-mp (step 2, step 3) |- ⋃_ y ∈ ( A ∖ B ) D ⊆ ⋃_ y ∈ A D ;;
+	step 5 : wff = cbviunv (hyp 1) |- ⋃_ x ∈ A C = ⋃_ y ∈ A D ;;
+	step 6 : wff = sseqtr4i (step 4, step 5) |- ⋃_ y ∈ ( A ∖ B ) D ⊆ ⋃_ x ∈ A C ;;
+	step 7 : wff = jctil (step 1, step 6) |- ( ∀ x ∈ A ∃ y ∈ ( A ∖ B ) C ⊆ D → ( ⋃_ y ∈ ( A ∖ B ) D ⊆ ⋃_ x ∈ A C ∧ ⋃_ x ∈ A C ⊆ ⋃_ y ∈ ( A ∖ B ) D ) ) ;;
+	step 8 : wff = eqss () |- ( ⋃_ y ∈ ( A ∖ B ) D = ⋃_ x ∈ A C ↔ ( ⋃_ y ∈ ( A ∖ B ) D ⊆ ⋃_ x ∈ A C ∧ ⋃_ x ∈ A C ⊆ ⋃_ y ∈ ( A ∖ B ) D ) ) ;;
+	step 9 : wff = sylibr (step 7, step 8) |- ( ∀ x ∈ A ∃ y ∈ ( A ∖ B ) C ⊆ D → ⋃_ y ∈ ( A ∖ B ) D = ⋃_ x ∈ A C ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Subset theorem for an indexed intersection.  (Contributed by FL,
+       15-Oct-2012.)  (Proof shortened by Mario Carneiro, 14-Oct-2016.) */
+
+theorem ssiinf (x : set, A : class, B : class, C : class) disjointed(y A, y B, y C, x y) {
+	hyp 1 : wff = |- F/_ x C ;;
+	-----------------------
+	prop 1 : wff = |- ( C ⊆ ⋂_ x ∈ A B ↔ ∀ x ∈ A C ⊆ B ) ;;
+}
+
+proof of ssiinf {
+	var y : set;;
+	step 1 : wff = vex () |- y ∈ _V ;;
+	step 2 : wff = eliin () |- ( y ∈ _V → ( y ∈ ⋂_ x ∈ A B ↔ ∀ x ∈ A y ∈ B ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( y ∈ ⋂_ x ∈ A B ↔ ∀ x ∈ A y ∈ B ) ;;
+	step 4 : wff = ralbii (step 3) |- ( ∀ y ∈ C y ∈ ⋂_ x ∈ A B ↔ ∀ y ∈ C ∀ x ∈ A y ∈ B ) ;;
+	step 5 : wff = nfcv () |- F/_ y A ;;
+	step 6 : wff = ralcomf (hyp 1, step 5) |- ( ∀ y ∈ C ∀ x ∈ A y ∈ B ↔ ∀ x ∈ A ∀ y ∈ C y ∈ B ) ;;
+	step 7 : wff = bitri (step 4, step 6) |- ( ∀ y ∈ C y ∈ ⋂_ x ∈ A B ↔ ∀ x ∈ A ∀ y ∈ C y ∈ B ) ;;
+	step 8 : wff = dfss3 () |- ( C ⊆ ⋂_ x ∈ A B ↔ ∀ y ∈ C y ∈ ⋂_ x ∈ A B ) ;;
+	step 9 : wff = dfss3 () |- ( C ⊆ B ↔ ∀ y ∈ C y ∈ B ) ;;
+	step 10 : wff = ralbii (step 9) |- ( ∀ x ∈ A C ⊆ B ↔ ∀ x ∈ A ∀ y ∈ C y ∈ B ) ;;
+	step 11 : wff = 3bitr4i (step 7, step 8, step 10) |- ( C ⊆ ⋂_ x ∈ A B ↔ ∀ x ∈ A C ⊆ B ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* Subset theorem for an indexed intersection.  (Contributed by NM,
+       15-Oct-2003.) */
+
+theorem ssiin (x : set, A : class, B : class, C : class) disjointed(x C) {
+	prop 1 : wff = |- ( C ⊆ ⋂_ x ∈ A B ↔ ∀ x ∈ A C ⊆ B ) ;;
+}
+
+proof of ssiin {
+	step 1 : wff = nfcv () |- F/_ x C ;;
+	step 2 : wff = ssiinf (step 1) |- ( C ⊆ ⋂_ x ∈ A B ↔ ∀ x ∈ A C ⊆ B ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Subset implication for an indexed intersection.  (Contributed by NM,
+       15-Oct-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem iinss (x : set, A : class, B : class, C : class) disjointed(x y C, y A, y B) {
+	prop 1 : wff = |- ( ∃ x ∈ A B ⊆ C → ⋂_ x ∈ A B ⊆ C ) ;;
+}
+
+proof of iinss {
+	var y : set;;
+	step 1 : wff = vex () |- y ∈ _V ;;
+	step 2 : wff = eliin () |- ( y ∈ _V → ( y ∈ ⋂_ x ∈ A B ↔ ∀ x ∈ A y ∈ B ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( y ∈ ⋂_ x ∈ A B ↔ ∀ x ∈ A y ∈ B ) ;;
+	step 4 : wff = ssel () |- ( B ⊆ C → ( y ∈ B → y ∈ C ) ) ;;
+	step 5 : wff = reximi (step 4) |- ( ∃ x ∈ A B ⊆ C → ∃ x ∈ A ( y ∈ B → y ∈ C ) ) ;;
+	step 6 : wff = r19.36av () |- ( ∃ x ∈ A ( y ∈ B → y ∈ C ) → ( ∀ x ∈ A y ∈ B → y ∈ C ) ) ;;
+	step 7 : wff = syl (step 5, step 6) |- ( ∃ x ∈ A B ⊆ C → ( ∀ x ∈ A y ∈ B → y ∈ C ) ) ;;
+	step 8 : wff = syl5bi (step 3, step 7) |- ( ∃ x ∈ A B ⊆ C → ( y ∈ ⋂_ x ∈ A B → y ∈ C ) ) ;;
+	step 9 : wff = ssrdv (step 8) |- ( ∃ x ∈ A B ⊆ C → ⋂_ x ∈ A B ⊆ C ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* An indexed intersection is included in any of its members.  (Contributed
+       by FL, 15-Oct-2012.) */
+
+theorem iinss2 (x : set, A : class, B : class) disjointed(A y, B y, x y) {
+	prop 1 : wff = |- ( x ∈ A → ⋂_ x ∈ A B ⊆ B ) ;;
+}
+
+proof of iinss2 {
+	var y : set;;
+	step 1 : wff = vex () |- y ∈ _V ;;
+	step 2 : wff = eliin () |- ( y ∈ _V → ( y ∈ ⋂_ x ∈ A B ↔ ∀ x ∈ A y ∈ B ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( y ∈ ⋂_ x ∈ A B ↔ ∀ x ∈ A y ∈ B ) ;;
+	step 4 : wff = rsp () |- ( ∀ x ∈ A y ∈ B → ( x ∈ A → y ∈ B ) ) ;;
+	step 5 : wff = sylbi (step 3, step 4) |- ( y ∈ ⋂_ x ∈ A B → ( x ∈ A → y ∈ B ) ) ;;
+	step 6 : wff = com12 (step 5) |- ( x ∈ A → ( y ∈ ⋂_ x ∈ A B → y ∈ B ) ) ;;
+	step 7 : wff = ssrdv (step 6) |- ( x ∈ A → ⋂_ x ∈ A B ⊆ B ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Class union in terms of indexed union.  Definition in [Stoll] p. 43.
+       (Contributed by NM, 28-Jun-1998.) */
+
+theorem uniiun (x : set, A : class) disjointed(x y A) {
+	prop 1 : wff = |- ⋃ A = ⋃_ x ∈ A x ;;
+}
+
+proof of uniiun {
+	var y : set;;
+	step 1 : wff = dfuni2 () |- ⋃ A = { y | ∃ x ∈ A y ∈ x } ;;
+	step 2 : wff = df-iun () |- ⋃_ x ∈ A x = { y | ∃ x ∈ A y ∈ x } ;;
+	step 3 : wff = eqtr4i (step 1, step 2) |- ⋃ A = ⋃_ x ∈ A x ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Class intersection in terms of indexed intersection.  Definition in
+       [Stoll] p. 44.  (Contributed by NM, 28-Jun-1998.) */
+
+theorem intiin (x : set, A : class) disjointed(x y A) {
+	prop 1 : wff = |- ⋂ A = ⋂_ x ∈ A x ;;
+}
+
+proof of intiin {
+	var y : set;;
+	step 1 : wff = dfint2 () |- ⋂ A = { y | ∀ x ∈ A y ∈ x } ;;
+	step 2 : wff = df-iin () |- ⋂_ x ∈ A x = { y | ∀ x ∈ A y ∈ x } ;;
+	step 3 : wff = eqtr4i (step 1, step 2) |- ⋂ A = ⋂_ x ∈ A x ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* An indexed union of singletons recovers the index set.  (Contributed by
+       NM, 6-Sep-2005.) */
+
+theorem iunid (x : set, A : class) disjointed(x y A) {
+	prop 1 : wff = |- ⋃_ x ∈ A { x } = A ;;
+}
+
+proof of iunid {
+	var y : set;;
+	step 1 : wff = df-sn () |- { x } = { y | y = x } ;;
+	step 2 : wff = equcom () |- ( y = x ↔ x = y ) ;;
+	step 3 : wff = abbii (step 2) |- { y | y = x } = { y | x = y } ;;
+	step 4 : wff = eqtri (step 1, step 3) |- { x } = { y | x = y } ;;
+	step 5 : wff = a1i (step 4) |- ( x ∈ A → { x } = { y | x = y } ) ;;
+	step 6 : wff = iuneq2i (step 5) |- ⋃_ x ∈ A { x } = ⋃_ x ∈ A { y | x = y } ;;
+	step 7 : wff = iunab () |- ⋃_ x ∈ A { y | x = y } = { y | ∃ x ∈ A x = y } ;;
+	step 8 : wff = risset () |- ( y ∈ A ↔ ∃ x ∈ A x = y ) ;;
+	step 9 : wff = abbii (step 8) |- { y | y ∈ A } = { y | ∃ x ∈ A x = y } ;;
+	step 10 : wff = abid2 () |- { y | y ∈ A } = A ;;
+	step 11 : wff = 3eqtr2i (step 7, step 9, step 10) |- ⋃_ x ∈ A { y | x = y } = A ;;
+	step 12 : wff = eqtri (step 6, step 11) |- ⋃_ x ∈ A { x } = A ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* An indexed union of the empty set is empty.  (Contributed by NM,
+       26-Mar-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem iun0 (x : set, A : class) disjointed(x y, y A) {
+	prop 1 : wff = |- ⋃_ x ∈ A ∅ = ∅ ;;
+}
+
+proof of iun0 {
+	var y : set;;
+	step 1 : wff = noel () |- ¬ y ∈ ∅ ;;
+	step 2 : wff = a1i (step 1) |- ( x ∈ A → ¬ y ∈ ∅ ) ;;
+	step 3 : wff = nrex (step 2) |- ¬ ∃ x ∈ A y ∈ ∅ ;;
+	step 4 : wff = eliun () |- ( y ∈ ⋃_ x ∈ A ∅ ↔ ∃ x ∈ A y ∈ ∅ ) ;;
+	step 5 : wff = mtbir (step 3, step 4) |- ¬ y ∈ ⋃_ x ∈ A ∅ ;;
+	step 6 : wff = noel () |- ¬ y ∈ ∅ ;;
+	step 7 : wff = 2false (step 5, step 6) |- ( y ∈ ⋃_ x ∈ A ∅ ↔ y ∈ ∅ ) ;;
+	step 8 : wff = eqriv (step 7) |- ⋃_ x ∈ A ∅ = ∅ ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* An empty indexed union is empty.  (Contributed by NM, 4-Dec-2004.)
+       (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem 0iun (x : set, A : class) disjointed(x y, y A) {
+	prop 1 : wff = |- ⋃_ x ∈ ∅ A = ∅ ;;
+}
+
+proof of 0iun {
+	var y : set;;
+	step 1 : wff = rex0 () |- ¬ ∃ x ∈ ∅ y ∈ A ;;
+	step 2 : wff = eliun () |- ( y ∈ ⋃_ x ∈ ∅ A ↔ ∃ x ∈ ∅ y ∈ A ) ;;
+	step 3 : wff = mtbir (step 1, step 2) |- ¬ y ∈ ⋃_ x ∈ ∅ A ;;
+	step 4 : wff = noel () |- ¬ y ∈ ∅ ;;
+	step 5 : wff = 2false (step 3, step 4) |- ( y ∈ ⋃_ x ∈ ∅ A ↔ y ∈ ∅ ) ;;
+	step 6 : wff = eqriv (step 5) |- ⋃_ x ∈ ∅ A = ∅ ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* An empty indexed intersection is the universal class.  (Contributed by
+       NM, 20-Oct-2005.) */
+
+theorem 0iin (x : set, A : class) disjointed(x y, y A) {
+	prop 1 : wff = |- ⋂_ x ∈ ∅ A = _V ;;
+}
+
+proof of 0iin {
+	var y : set;;
+	step 1 : wff = df-iin () |- ⋂_ x ∈ ∅ A = { y | ∀ x ∈ ∅ y ∈ A } ;;
+	step 2 : wff = vex () |- y ∈ _V ;;
+	step 3 : wff = ral0 () |- ∀ x ∈ ∅ y ∈ A ;;
+	step 4 : wff = 2th (step 2, step 3) |- ( y ∈ _V ↔ ∀ x ∈ ∅ y ∈ A ) ;;
+	step 5 : wff = abbi2i (step 4) |- _V = { y | ∀ x ∈ ∅ y ∈ A } ;;
+	step 6 : wff = eqtr4i (step 1, step 5) |- ⋂_ x ∈ ∅ A = _V ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Indexed intersection with a universal index class.  When ` A ` doesn't
+       depend on ` x ` , this evaluates to ` A ` by ~ 19.3 and ~ abid2 .  When
+       ` A = x ` , this evaluates to ` (/) ` by ~ intiin and ~ intv .
+       (Contributed by NM, 11-Sep-2008.) */
+
+theorem viin (x : set, y : set, A : class) disjointed(x y, y A) {
+	prop 1 : wff = |- ⋂_ x ∈ _V A = { y | ∀ x y ∈ A } ;;
+}
+
+proof of viin {
+	step 1 : wff = df-iin () |- ⋂_ x ∈ _V A = { y | ∀ x ∈ _V y ∈ A } ;;
+	step 2 : wff = ralv () |- ( ∀ x ∈ _V y ∈ A ↔ ∀ x y ∈ A ) ;;
+	step 3 : wff = abbii (step 2) |- { y | ∀ x ∈ _V y ∈ A } = { y | ∀ x y ∈ A } ;;
+	step 4 : wff = eqtri (step 1, step 3) |- ⋂_ x ∈ _V A = { y | ∀ x y ∈ A } ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* There is a non-empty class in an indexed collection ` B ( x ) ` iff the
+       indexed union of them is non-empty.  (Contributed by NM, 15-Oct-2003.)
+       (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem iunn0 (x : set, A : class, B : class) disjointed(x y A, y B) {
+	prop 1 : wff = |- ( ∃ x ∈ A B ≠ ∅ ↔ ⋃_ x ∈ A B ≠ ∅ ) ;;
+}
+
+proof of iunn0 {
+	var y : set;;
+	step 1 : wff = rexcom4 () |- ( ∃ x ∈ A ∃ y y ∈ B ↔ ∃ y ∃ x ∈ A y ∈ B ) ;;
+	step 2 : wff = eliun () |- ( y ∈ ⋃_ x ∈ A B ↔ ∃ x ∈ A y ∈ B ) ;;
+	step 3 : wff = exbii (step 2) |- ( ∃ y y ∈ ⋃_ x ∈ A B ↔ ∃ y ∃ x ∈ A y ∈ B ) ;;
+	step 4 : wff = bitr4i (step 1, step 3) |- ( ∃ x ∈ A ∃ y y ∈ B ↔ ∃ y y ∈ ⋃_ x ∈ A B ) ;;
+	step 5 : wff = n0 () |- ( B ≠ ∅ ↔ ∃ y y ∈ B ) ;;
+	step 6 : wff = rexbii (step 5) |- ( ∃ x ∈ A B ≠ ∅ ↔ ∃ x ∈ A ∃ y y ∈ B ) ;;
+	step 7 : wff = n0 () |- ( ⋃_ x ∈ A B ≠ ∅ ↔ ∃ y y ∈ ⋃_ x ∈ A B ) ;;
+	step 8 : wff = 3bitr4i (step 4, step 6, step 7) |- ( ∃ x ∈ A B ≠ ∅ ↔ ⋃_ x ∈ A B ≠ ∅ ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Indexed intersection of a class builder.  (Contributed by NM,
+       6-Dec-2011.) */
+
+theorem iinab (ph : wff, x : set, y : set, A : class) disjointed(y A, x y) {
+	prop 1 : wff = |- ⋂_ x ∈ A { y | ph } = { y | ∀ x ∈ A ph } ;;
+}
+
+proof of iinab {
+	step 1 : wff = nfcv () |- F/_ y A ;;
+	step 2 : wff = nfab1 () |- F/_ y { y | ph } ;;
+	step 3 : wff = nfiin (step 1, step 2) |- F/_ y ⋂_ x ∈ A { y | ph } ;;
+	step 4 : wff = nfab1 () |- F/_ y { y | ∀ x ∈ A ph } ;;
+	step 5 : wff = cleqf (step 3, step 4) |- ( ⋂_ x ∈ A { y | ph } = { y | ∀ x ∈ A ph } ↔ ∀ y ( y ∈ ⋂_ x ∈ A { y | ph } ↔ y ∈ { y | ∀ x ∈ A ph } ) ) ;;
+	step 6 : wff = abid () |- ( y ∈ { y | ph } ↔ ph ) ;;
+	step 7 : wff = ralbii (step 6) |- ( ∀ x ∈ A y ∈ { y | ph } ↔ ∀ x ∈ A ph ) ;;
+	step 8 : wff = vex () |- y ∈ _V ;;
+	step 9 : wff = eliin () |- ( y ∈ _V → ( y ∈ ⋂_ x ∈ A { y | ph } ↔ ∀ x ∈ A y ∈ { y | ph } ) ) ;;
+	step 10 : wff = ax-mp (step 8, step 9) |- ( y ∈ ⋂_ x ∈ A { y | ph } ↔ ∀ x ∈ A y ∈ { y | ph } ) ;;
+	step 11 : wff = abid () |- ( y ∈ { y | ∀ x ∈ A ph } ↔ ∀ x ∈ A ph ) ;;
+	step 12 : wff = 3bitr4i (step 7, step 10, step 11) |- ( y ∈ ⋂_ x ∈ A { y | ph } ↔ y ∈ { y | ∀ x ∈ A ph } ) ;;
+	step 13 : wff = mpgbir (step 5, step 12) |- ⋂_ x ∈ A { y | ph } = { y | ∀ x ∈ A ph } ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* Indexed intersection of a restricted class builder.  (Contributed by NM,
+       6-Dec-2011.) */
+
+theorem iinrab (ph : wff, x : set, y : set, A : class, B : class) disjointed(y A, x y, x A, x B) {
+	prop 1 : wff = |- ( A ≠ ∅ → ⋂_ x ∈ A { y ∈ B | ph } = { y ∈ B | ∀ x ∈ A ph } ) ;;
+}
+
+proof of iinrab {
+	step 1 : wff = r19.28zv () |- ( A ≠ ∅ → ( ∀ x ∈ A ( y ∈ B ∧ ph ) ↔ ( y ∈ B ∧ ∀ x ∈ A ph ) ) ) ;;
+	step 2 : wff = abbidv (step 1) |- ( A ≠ ∅ → { y | ∀ x ∈ A ( y ∈ B ∧ ph ) } = { y | ( y ∈ B ∧ ∀ x ∈ A ph ) } ) ;;
+	step 3 : wff = df-rab () |- { y ∈ B | ph } = { y | ( y ∈ B ∧ ph ) } ;;
+	step 4 : wff = a1i (step 3) |- ( x ∈ A → { y ∈ B | ph } = { y | ( y ∈ B ∧ ph ) } ) ;;
+	step 5 : wff = iineq2i (step 4) |- ⋂_ x ∈ A { y ∈ B | ph } = ⋂_ x ∈ A { y | ( y ∈ B ∧ ph ) } ;;
+	step 6 : wff = iinab () |- ⋂_ x ∈ A { y | ( y ∈ B ∧ ph ) } = { y | ∀ x ∈ A ( y ∈ B ∧ ph ) } ;;
+	step 7 : wff = eqtri (step 5, step 6) |- ⋂_ x ∈ A { y ∈ B | ph } = { y | ∀ x ∈ A ( y ∈ B ∧ ph ) } ;;
+	step 8 : wff = df-rab () |- { y ∈ B | ∀ x ∈ A ph } = { y | ( y ∈ B ∧ ∀ x ∈ A ph ) } ;;
+	step 9 : wff = 3eqtr4g (step 2, step 7, step 8) |- ( A ≠ ∅ → ⋂_ x ∈ A { y ∈ B | ph } = { y ∈ B | ∀ x ∈ A ph } ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Indexed intersection of a restricted class builder.  (Contributed by NM,
+       6-Dec-2011.) */
+
+theorem iinrab2 (ph : wff, x : set, y : set, A : class, B : class) disjointed(y A, x y, x A, x B, y B) {
+	prop 1 : wff = |- ( ⋂_ x ∈ A { y ∈ B | ph } ∩ B ) = { y ∈ B | ∀ x ∈ A ph } ;;
+}
+
+proof of iinrab2 {
+	step 1 : wff = iineq1 () |- ( A = ∅ → ⋂_ x ∈ A { y ∈ B | ph } = ⋂_ x ∈ ∅ { y ∈ B | ph } ) ;;
+	step 2 : wff = 0iin () |- ⋂_ x ∈ ∅ { y ∈ B | ph } = _V ;;
+	step 3 : wff = syl6eq (step 1, step 2) |- ( A = ∅ → ⋂_ x ∈ A { y ∈ B | ph } = _V ) ;;
+	step 4 : wff = ineq1d (step 3) |- ( A = ∅ → ( ⋂_ x ∈ A { y ∈ B | ph } ∩ B ) = ( _V ∩ B ) ) ;;
+	step 5 : wff = incom () |- ( _V ∩ B ) = ( B ∩ _V ) ;;
+	step 6 : wff = inv1 () |- ( B ∩ _V ) = B ;;
+	step 7 : wff = eqtri (step 5, step 6) |- ( _V ∩ B ) = B ;;
+	step 8 : wff = syl6eq (step 4, step 7) |- ( A = ∅ → ( ⋂_ x ∈ A { y ∈ B | ph } ∩ B ) = B ) ;;
+	step 9 : wff = rzal () |- ( A = ∅ → ∀ x ∈ A ∀ y ∈ B ph ) ;;
+	step 10 : wff = rabid2 () |- ( B = { y ∈ B | ∀ x ∈ A ph } ↔ ∀ y ∈ B ∀ x ∈ A ph ) ;;
+	step 11 : wff = ralcom () |- ( ∀ y ∈ B ∀ x ∈ A ph ↔ ∀ x ∈ A ∀ y ∈ B ph ) ;;
+	step 12 : wff = bitr2i (step 10, step 11) |- ( ∀ x ∈ A ∀ y ∈ B ph ↔ B = { y ∈ B | ∀ x ∈ A ph } ) ;;
+	step 13 : wff = sylib (step 9, step 12) |- ( A = ∅ → B = { y ∈ B | ∀ x ∈ A ph } ) ;;
+	step 14 : wff = eqtrd (step 8, step 13) |- ( A = ∅ → ( ⋂_ x ∈ A { y ∈ B | ph } ∩ B ) = { y ∈ B | ∀ x ∈ A ph } ) ;;
+	step 15 : wff = iinrab () |- ( A ≠ ∅ → ⋂_ x ∈ A { y ∈ B | ph } = { y ∈ B | ∀ x ∈ A ph } ) ;;
+	step 16 : wff = ineq1d (step 15) |- ( A ≠ ∅ → ( ⋂_ x ∈ A { y ∈ B | ph } ∩ B ) = ( { y ∈ B | ∀ x ∈ A ph } ∩ B ) ) ;;
+	step 17 : wff = ssrab2 () |- { y ∈ B | ∀ x ∈ A ph } ⊆ B ;;
+	step 18 : wff = dfss () |- ( { y ∈ B | ∀ x ∈ A ph } ⊆ B ↔ { y ∈ B | ∀ x ∈ A ph } = ( { y ∈ B | ∀ x ∈ A ph } ∩ B ) ) ;;
+	step 19 : wff = mpbi (step 17, step 18) |- { y ∈ B | ∀ x ∈ A ph } = ( { y ∈ B | ∀ x ∈ A ph } ∩ B ) ;;
+	step 20 : wff = syl6eqr (step 16, step 19) |- ( A ≠ ∅ → ( ⋂_ x ∈ A { y ∈ B | ph } ∩ B ) = { y ∈ B | ∀ x ∈ A ph } ) ;;
+	step 21 : wff = pm2.61ine (step 14, step 20) |- ( ⋂_ x ∈ A { y ∈ B | ph } ∩ B ) = { y ∈ B | ∀ x ∈ A ph } ;;
+	qed prop 1 = step 21 ;;
+}
+
+/* Indexed union of intersection.  Generalization of half of theorem
+       "Distributive laws" in [Enderton] p. 30.  Use ~ uniiun to recover
+       Enderton's theorem.  (Contributed by NM, 26-Mar-2004.) */
+
+theorem iunin2 (x : set, A : class, B : class, C : class) disjointed(y A, x y B, y C) {
+	prop 1 : wff = |- ⋃_ x ∈ A ( B ∩ C ) = ( B ∩ ⋃_ x ∈ A C ) ;;
+}
+
+proof of iunin2 {
+	var y : set;;
+	step 1 : wff = r19.42v () |- ( ∃ x ∈ A ( y ∈ B ∧ y ∈ C ) ↔ ( y ∈ B ∧ ∃ x ∈ A y ∈ C ) ) ;;
+	step 2 : wff = elin () |- ( y ∈ ( B ∩ C ) ↔ ( y ∈ B ∧ y ∈ C ) ) ;;
+	step 3 : wff = rexbii (step 2) |- ( ∃ x ∈ A y ∈ ( B ∩ C ) ↔ ∃ x ∈ A ( y ∈ B ∧ y ∈ C ) ) ;;
+	step 4 : wff = eliun () |- ( y ∈ ⋃_ x ∈ A C ↔ ∃ x ∈ A y ∈ C ) ;;
+	step 5 : wff = anbi2i (step 4) |- ( ( y ∈ B ∧ y ∈ ⋃_ x ∈ A C ) ↔ ( y ∈ B ∧ ∃ x ∈ A y ∈ C ) ) ;;
+	step 6 : wff = 3bitr4i (step 1, step 3, step 5) |- ( ∃ x ∈ A y ∈ ( B ∩ C ) ↔ ( y ∈ B ∧ y ∈ ⋃_ x ∈ A C ) ) ;;
+	step 7 : wff = eliun () |- ( y ∈ ⋃_ x ∈ A ( B ∩ C ) ↔ ∃ x ∈ A y ∈ ( B ∩ C ) ) ;;
+	step 8 : wff = elin () |- ( y ∈ ( B ∩ ⋃_ x ∈ A C ) ↔ ( y ∈ B ∧ y ∈ ⋃_ x ∈ A C ) ) ;;
+	step 9 : wff = 3bitr4i (step 6, step 7, step 8) |- ( y ∈ ⋃_ x ∈ A ( B ∩ C ) ↔ y ∈ ( B ∩ ⋃_ x ∈ A C ) ) ;;
+	step 10 : wff = eqriv (step 9) |- ⋃_ x ∈ A ( B ∩ C ) = ( B ∩ ⋃_ x ∈ A C ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Indexed union of intersection.  Generalization of half of theorem
+       "Distributive laws" in [Enderton] p. 30.  Use ~ uniiun to recover
+       Enderton's theorem.  (Contributed by Mario Carneiro, 30-Aug-2015.) */
+
+theorem iunin1 (x : set, A : class, B : class, C : class) disjointed(x B) {
+	prop 1 : wff = |- ⋃_ x ∈ A ( C ∩ B ) = ( ⋃_ x ∈ A C ∩ B ) ;;
+}
+
+proof of iunin1 {
+	step 1 : wff = iunin2 () |- ⋃_ x ∈ A ( B ∩ C ) = ( B ∩ ⋃_ x ∈ A C ) ;;
+	step 2 : wff = incom () |- ( C ∩ B ) = ( B ∩ C ) ;;
+	step 3 : wff = a1i (step 2) |- ( x ∈ A → ( C ∩ B ) = ( B ∩ C ) ) ;;
+	step 4 : wff = iuneq2i (step 3) |- ⋃_ x ∈ A ( C ∩ B ) = ⋃_ x ∈ A ( B ∩ C ) ;;
+	step 5 : wff = incom () |- ( ⋃_ x ∈ A C ∩ B ) = ( B ∩ ⋃_ x ∈ A C ) ;;
+	step 6 : wff = 3eqtr4i (step 1, step 4, step 5) |- ⋃_ x ∈ A ( C ∩ B ) = ( ⋃_ x ∈ A C ∩ B ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Indexed intersection of union.  Generalization of half of theorem
+       "Distributive laws" in [Enderton] p. 30.  Use ~ intiin to recover
+       Enderton's theorem.  (Contributed by NM, 19-Aug-2004.) */
+
+theorem iinun2 (x : set, A : class, B : class, C : class) disjointed(y A, x y B, y C) {
+	prop 1 : wff = |- ⋂_ x ∈ A ( B ∪ C ) = ( B ∪ ⋂_ x ∈ A C ) ;;
+}
+
+proof of iinun2 {
+	var y : set;;
+	step 1 : wff = r19.32v () |- ( ∀ x ∈ A ( y ∈ B ∨ y ∈ C ) ↔ ( y ∈ B ∨ ∀ x ∈ A y ∈ C ) ) ;;
+	step 2 : wff = elun () |- ( y ∈ ( B ∪ C ) ↔ ( y ∈ B ∨ y ∈ C ) ) ;;
+	step 3 : wff = ralbii (step 2) |- ( ∀ x ∈ A y ∈ ( B ∪ C ) ↔ ∀ x ∈ A ( y ∈ B ∨ y ∈ C ) ) ;;
+	step 4 : wff = vex () |- y ∈ _V ;;
+	step 5 : wff = eliin () |- ( y ∈ _V → ( y ∈ ⋂_ x ∈ A C ↔ ∀ x ∈ A y ∈ C ) ) ;;
+	step 6 : wff = ax-mp (step 4, step 5) |- ( y ∈ ⋂_ x ∈ A C ↔ ∀ x ∈ A y ∈ C ) ;;
+	step 7 : wff = orbi2i (step 6) |- ( ( y ∈ B ∨ y ∈ ⋂_ x ∈ A C ) ↔ ( y ∈ B ∨ ∀ x ∈ A y ∈ C ) ) ;;
+	step 8 : wff = 3bitr4i (step 1, step 3, step 7) |- ( ∀ x ∈ A y ∈ ( B ∪ C ) ↔ ( y ∈ B ∨ y ∈ ⋂_ x ∈ A C ) ) ;;
+	step 9 : wff = vex () |- y ∈ _V ;;
+	step 10 : wff = eliin () |- ( y ∈ _V → ( y ∈ ⋂_ x ∈ A ( B ∪ C ) ↔ ∀ x ∈ A y ∈ ( B ∪ C ) ) ) ;;
+	step 11 : wff = ax-mp (step 9, step 10) |- ( y ∈ ⋂_ x ∈ A ( B ∪ C ) ↔ ∀ x ∈ A y ∈ ( B ∪ C ) ) ;;
+	step 12 : wff = elun () |- ( y ∈ ( B ∪ ⋂_ x ∈ A C ) ↔ ( y ∈ B ∨ y ∈ ⋂_ x ∈ A C ) ) ;;
+	step 13 : wff = 3bitr4i (step 8, step 11, step 12) |- ( y ∈ ⋂_ x ∈ A ( B ∪ C ) ↔ y ∈ ( B ∪ ⋂_ x ∈ A C ) ) ;;
+	step 14 : wff = eqriv (step 13) |- ⋂_ x ∈ A ( B ∪ C ) = ( B ∪ ⋂_ x ∈ A C ) ;;
+	qed prop 1 = step 14 ;;
+}
+
+/* Indexed union of class difference.  Generalization of half of theorem
+       "De Morgan's laws" in [Enderton] p. 31.  Use ~ intiin to recover
+       Enderton's theorem.  (Contributed by NM, 19-Aug-2004.) */
+
+theorem iundif2 (x : set, A : class, B : class, C : class) disjointed(y A, x y B, y C) {
+	prop 1 : wff = |- ⋃_ x ∈ A ( B ∖ C ) = ( B ∖ ⋂_ x ∈ A C ) ;;
+}
+
+proof of iundif2 {
+	var y : set;;
+	step 1 : wff = eldif () |- ( y ∈ ( B ∖ C ) ↔ ( y ∈ B ∧ ¬ y ∈ C ) ) ;;
+	step 2 : wff = rexbii (step 1) |- ( ∃ x ∈ A y ∈ ( B ∖ C ) ↔ ∃ x ∈ A ( y ∈ B ∧ ¬ y ∈ C ) ) ;;
+	step 3 : wff = r19.42v () |- ( ∃ x ∈ A ( y ∈ B ∧ ¬ y ∈ C ) ↔ ( y ∈ B ∧ ∃ x ∈ A ¬ y ∈ C ) ) ;;
+	step 4 : wff = rexnal () |- ( ∃ x ∈ A ¬ y ∈ C ↔ ¬ ∀ x ∈ A y ∈ C ) ;;
+	step 5 : wff = vex () |- y ∈ _V ;;
+	step 6 : wff = eliin () |- ( y ∈ _V → ( y ∈ ⋂_ x ∈ A C ↔ ∀ x ∈ A y ∈ C ) ) ;;
+	step 7 : wff = ax-mp (step 5, step 6) |- ( y ∈ ⋂_ x ∈ A C ↔ ∀ x ∈ A y ∈ C ) ;;
+	step 8 : wff = xchbinxr (step 4, step 7) |- ( ∃ x ∈ A ¬ y ∈ C ↔ ¬ y ∈ ⋂_ x ∈ A C ) ;;
+	step 9 : wff = anbi2i (step 8) |- ( ( y ∈ B ∧ ∃ x ∈ A ¬ y ∈ C ) ↔ ( y ∈ B ∧ ¬ y ∈ ⋂_ x ∈ A C ) ) ;;
+	step 10 : wff = 3bitri (step 2, step 3, step 9) |- ( ∃ x ∈ A y ∈ ( B ∖ C ) ↔ ( y ∈ B ∧ ¬ y ∈ ⋂_ x ∈ A C ) ) ;;
+	step 11 : wff = eliun () |- ( y ∈ ⋃_ x ∈ A ( B ∖ C ) ↔ ∃ x ∈ A y ∈ ( B ∖ C ) ) ;;
+	step 12 : wff = eldif () |- ( y ∈ ( B ∖ ⋂_ x ∈ A C ) ↔ ( y ∈ B ∧ ¬ y ∈ ⋂_ x ∈ A C ) ) ;;
+	step 13 : wff = 3bitr4i (step 10, step 11, step 12) |- ( y ∈ ⋃_ x ∈ A ( B ∖ C ) ↔ y ∈ ( B ∖ ⋂_ x ∈ A C ) ) ;;
+	step 14 : wff = eqriv (step 13) |- ⋃_ x ∈ A ( B ∖ C ) = ( B ∖ ⋂_ x ∈ A C ) ;;
+	qed prop 1 = step 14 ;;
+}
+
+/* Rearrange indexed unions over intersection.  (Contributed by NM,
+       18-Dec-2008.) */
+
+theorem 2iunin (x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x B, y C, x D, x y) {
+	prop 1 : wff = |- ⋃_ x ∈ A ⋃_ y ∈ B ( C ∩ D ) = ( ⋃_ x ∈ A C ∩ ⋃_ y ∈ B D ) ;;
+}
+
+proof of 2iunin {
+	step 1 : wff = iunin2 () |- ⋃_ y ∈ B ( C ∩ D ) = ( C ∩ ⋃_ y ∈ B D ) ;;
+	step 2 : wff = a1i (step 1) |- ( x ∈ A → ⋃_ y ∈ B ( C ∩ D ) = ( C ∩ ⋃_ y ∈ B D ) ) ;;
+	step 3 : wff = iuneq2i (step 2) |- ⋃_ x ∈ A ⋃_ y ∈ B ( C ∩ D ) = ⋃_ x ∈ A ( C ∩ ⋃_ y ∈ B D ) ;;
+	step 4 : wff = iunin1 () |- ⋃_ x ∈ A ( C ∩ ⋃_ y ∈ B D ) = ( ⋃_ x ∈ A C ∩ ⋃_ y ∈ B D ) ;;
+	step 5 : wff = eqtri (step 3, step 4) |- ⋃_ x ∈ A ⋃_ y ∈ B ( C ∩ D ) = ( ⋃_ x ∈ A C ∩ ⋃_ y ∈ B D ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Indexed intersection of class difference.  Generalization of half of
+       theorem "De Morgan's laws" in [Enderton] p. 31.  Use ~ uniiun to recover
+       Enderton's theorem.  (Contributed by NM, 5-Oct-2006.) */
+
+theorem iindif2 (x : set, A : class, B : class, C : class) disjointed(x y A, x y B, y C) {
+	prop 1 : wff = |- ( A ≠ ∅ → ⋂_ x ∈ A ( B ∖ C ) = ( B ∖ ⋃_ x ∈ A C ) ) ;;
+}
+
+proof of iindif2 {
+	var y : set;;
+	step 1 : wff = r19.28zv () |- ( A ≠ ∅ → ( ∀ x ∈ A ( y ∈ B ∧ ¬ y ∈ C ) ↔ ( y ∈ B ∧ ∀ x ∈ A ¬ y ∈ C ) ) ) ;;
+	step 2 : wff = eldif () |- ( y ∈ ( B ∖ C ) ↔ ( y ∈ B ∧ ¬ y ∈ C ) ) ;;
+	step 3 : wff = bicomi (step 2) |- ( ( y ∈ B ∧ ¬ y ∈ C ) ↔ y ∈ ( B ∖ C ) ) ;;
+	step 4 : wff = ralbii (step 3) |- ( ∀ x ∈ A ( y ∈ B ∧ ¬ y ∈ C ) ↔ ∀ x ∈ A y ∈ ( B ∖ C ) ) ;;
+	step 5 : wff = ralnex () |- ( ∀ x ∈ A ¬ y ∈ C ↔ ¬ ∃ x ∈ A y ∈ C ) ;;
+	step 6 : wff = eliun () |- ( y ∈ ⋃_ x ∈ A C ↔ ∃ x ∈ A y ∈ C ) ;;
+	step 7 : wff = xchbinxr (step 5, step 6) |- ( ∀ x ∈ A ¬ y ∈ C ↔ ¬ y ∈ ⋃_ x ∈ A C ) ;;
+	step 8 : wff = anbi2i (step 7) |- ( ( y ∈ B ∧ ∀ x ∈ A ¬ y ∈ C ) ↔ ( y ∈ B ∧ ¬ y ∈ ⋃_ x ∈ A C ) ) ;;
+	step 9 : wff = 3bitr3g (step 1, step 4, step 8) |- ( A ≠ ∅ → ( ∀ x ∈ A y ∈ ( B ∖ C ) ↔ ( y ∈ B ∧ ¬ y ∈ ⋃_ x ∈ A C ) ) ) ;;
+	step 10 : wff = vex () |- y ∈ _V ;;
+	step 11 : wff = eliin () |- ( y ∈ _V → ( y ∈ ⋂_ x ∈ A ( B ∖ C ) ↔ ∀ x ∈ A y ∈ ( B ∖ C ) ) ) ;;
+	step 12 : wff = ax-mp (step 10, step 11) |- ( y ∈ ⋂_ x ∈ A ( B ∖ C ) ↔ ∀ x ∈ A y ∈ ( B ∖ C ) ) ;;
+	step 13 : wff = eldif () |- ( y ∈ ( B ∖ ⋃_ x ∈ A C ) ↔ ( y ∈ B ∧ ¬ y ∈ ⋃_ x ∈ A C ) ) ;;
+	step 14 : wff = 3bitr4g (step 9, step 12, step 13) |- ( A ≠ ∅ → ( y ∈ ⋂_ x ∈ A ( B ∖ C ) ↔ y ∈ ( B ∖ ⋃_ x ∈ A C ) ) ) ;;
+	step 15 : wff = eqrdv (step 14) |- ( A ≠ ∅ → ⋂_ x ∈ A ( B ∖ C ) = ( B ∖ ⋃_ x ∈ A C ) ) ;;
+	qed prop 1 = step 15 ;;
+}
+
+/* Indexed intersection of intersection.  Generalization of half of theorem
+       "Distributive laws" in [Enderton] p. 30.  Use ~ intiin to recover
+       Enderton's theorem.  (Contributed by Mario Carneiro, 19-Mar-2015.) */
+
+theorem iinin2 (x : set, A : class, B : class, C : class) disjointed(x y A, x y B, y C) {
+	prop 1 : wff = |- ( A ≠ ∅ → ⋂_ x ∈ A ( B ∩ C ) = ( B ∩ ⋂_ x ∈ A C ) ) ;;
+}
+
+proof of iinin2 {
+	var y : set;;
+	step 1 : wff = r19.28zv () |- ( A ≠ ∅ → ( ∀ x ∈ A ( y ∈ B ∧ y ∈ C ) ↔ ( y ∈ B ∧ ∀ x ∈ A y ∈ C ) ) ) ;;
+	step 2 : wff = elin () |- ( y ∈ ( B ∩ C ) ↔ ( y ∈ B ∧ y ∈ C ) ) ;;
+	step 3 : wff = ralbii (step 2) |- ( ∀ x ∈ A y ∈ ( B ∩ C ) ↔ ∀ x ∈ A ( y ∈ B ∧ y ∈ C ) ) ;;
+	step 4 : wff = vex () |- y ∈ _V ;;
+	step 5 : wff = eliin () |- ( y ∈ _V → ( y ∈ ⋂_ x ∈ A C ↔ ∀ x ∈ A y ∈ C ) ) ;;
+	step 6 : wff = ax-mp (step 4, step 5) |- ( y ∈ ⋂_ x ∈ A C ↔ ∀ x ∈ A y ∈ C ) ;;
+	step 7 : wff = anbi2i (step 6) |- ( ( y ∈ B ∧ y ∈ ⋂_ x ∈ A C ) ↔ ( y ∈ B ∧ ∀ x ∈ A y ∈ C ) ) ;;
+	step 8 : wff = 3bitr4g (step 1, step 3, step 7) |- ( A ≠ ∅ → ( ∀ x ∈ A y ∈ ( B ∩ C ) ↔ ( y ∈ B ∧ y ∈ ⋂_ x ∈ A C ) ) ) ;;
+	step 9 : wff = vex () |- y ∈ _V ;;
+	step 10 : wff = eliin () |- ( y ∈ _V → ( y ∈ ⋂_ x ∈ A ( B ∩ C ) ↔ ∀ x ∈ A y ∈ ( B ∩ C ) ) ) ;;
+	step 11 : wff = ax-mp (step 9, step 10) |- ( y ∈ ⋂_ x ∈ A ( B ∩ C ) ↔ ∀ x ∈ A y ∈ ( B ∩ C ) ) ;;
+	step 12 : wff = elin () |- ( y ∈ ( B ∩ ⋂_ x ∈ A C ) ↔ ( y ∈ B ∧ y ∈ ⋂_ x ∈ A C ) ) ;;
+	step 13 : wff = 3bitr4g (step 8, step 11, step 12) |- ( A ≠ ∅ → ( y ∈ ⋂_ x ∈ A ( B ∩ C ) ↔ y ∈ ( B ∩ ⋂_ x ∈ A C ) ) ) ;;
+	step 14 : wff = eqrdv (step 13) |- ( A ≠ ∅ → ⋂_ x ∈ A ( B ∩ C ) = ( B ∩ ⋂_ x ∈ A C ) ) ;;
+	qed prop 1 = step 14 ;;
+}
+
+/* Indexed intersection of intersection.  Generalization of half of theorem
+       "Distributive laws" in [Enderton] p. 30.  Use ~ intiin to recover
+       Enderton's theorem.  (Contributed by Mario Carneiro, 19-Mar-2015.) */
+
+theorem iinin1 (x : set, A : class, B : class, C : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( A ≠ ∅ → ⋂_ x ∈ A ( C ∩ B ) = ( ⋂_ x ∈ A C ∩ B ) ) ;;
+}
+
+proof of iinin1 {
+	step 1 : wff = iinin2 () |- ( A ≠ ∅ → ⋂_ x ∈ A ( B ∩ C ) = ( B ∩ ⋂_ x ∈ A C ) ) ;;
+	step 2 : wff = incom () |- ( C ∩ B ) = ( B ∩ C ) ;;
+	step 3 : wff = a1i (step 2) |- ( x ∈ A → ( C ∩ B ) = ( B ∩ C ) ) ;;
+	step 4 : wff = iineq2i (step 3) |- ⋂_ x ∈ A ( C ∩ B ) = ⋂_ x ∈ A ( B ∩ C ) ;;
+	step 5 : wff = incom () |- ( ⋂_ x ∈ A C ∩ B ) = ( B ∩ ⋂_ x ∈ A C ) ;;
+	step 6 : wff = 3eqtr4g (step 1, step 4, step 5) |- ( A ≠ ∅ → ⋂_ x ∈ A ( C ∩ B ) = ( ⋂_ x ∈ A C ∩ B ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Elementhood in a relative intersection.  (Contributed by Mario Carneiro,
+       30-Dec-2016.) */
+
+theorem elriin (x : set, A : class, B : class, S : class, X : class) disjointed(A x, X x, B x) {
+	prop 1 : wff = |- ( B ∈ ( A ∩ ⋂_ x ∈ X S ) ↔ ( B ∈ A ∧ ∀ x ∈ X B ∈ S ) ) ;;
+}
+
+proof of elriin {
+	step 1 : wff = elin () |- ( B ∈ ( A ∩ ⋂_ x ∈ X S ) ↔ ( B ∈ A ∧ B ∈ ⋂_ x ∈ X S ) ) ;;
+	step 2 : wff = eliin () |- ( B ∈ A → ( B ∈ ⋂_ x ∈ X S ↔ ∀ x ∈ X B ∈ S ) ) ;;
+	step 3 : wff = pm5.32i (step 2) |- ( ( B ∈ A ∧ B ∈ ⋂_ x ∈ X S ) ↔ ( B ∈ A ∧ ∀ x ∈ X B ∈ S ) ) ;;
+	step 4 : wff = bitri (step 1, step 3) |- ( B ∈ ( A ∩ ⋂_ x ∈ X S ) ↔ ( B ∈ A ∧ ∀ x ∈ X B ∈ S ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Relative intersection of an empty family.  (Contributed by Stefan
+       O'Rear, 3-Apr-2015.) */
+
+theorem riin0 (x : set, A : class, S : class, X : class) disjointed(A x, X x) {
+	prop 1 : wff = |- ( X = ∅ → ( A ∩ ⋂_ x ∈ X S ) = A ) ;;
+}
+
+proof of riin0 {
+	step 1 : wff = iineq1 () |- ( X = ∅ → ⋂_ x ∈ X S = ⋂_ x ∈ ∅ S ) ;;
+	step 2 : wff = ineq2d (step 1) |- ( X = ∅ → ( A ∩ ⋂_ x ∈ X S ) = ( A ∩ ⋂_ x ∈ ∅ S ) ) ;;
+	step 3 : wff = 0iin () |- ⋂_ x ∈ ∅ S = _V ;;
+	step 4 : wff = ineq2i (step 3) |- ( A ∩ ⋂_ x ∈ ∅ S ) = ( A ∩ _V ) ;;
+	step 5 : wff = inv1 () |- ( A ∩ _V ) = A ;;
+	step 6 : wff = eqtri (step 4, step 5) |- ( A ∩ ⋂_ x ∈ ∅ S ) = A ;;
+	step 7 : wff = syl6eq (step 2, step 6) |- ( X = ∅ → ( A ∩ ⋂_ x ∈ X S ) = A ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Relative intersection of a nonempty family.  (Contributed by Stefan
+       O'Rear, 3-Apr-2015.) */
+
+theorem riinn0 (x : set, A : class, S : class, X : class) disjointed(A x, X x) {
+	prop 1 : wff = |- ( ( ∀ x ∈ X S ⊆ A ∧ X ≠ ∅ ) → ( A ∩ ⋂_ x ∈ X S ) = ⋂_ x ∈ X S ) ;;
+}
+
+proof of riinn0 {
+	step 1 : wff = incom () |- ( A ∩ ⋂_ x ∈ X S ) = ( ⋂_ x ∈ X S ∩ A ) ;;
+	step 2 : wff = r19.2z () |- ( ( X ≠ ∅ ∧ ∀ x ∈ X S ⊆ A ) → ∃ x ∈ X S ⊆ A ) ;;
+	step 3 : wff = ancoms (step 2) |- ( ( ∀ x ∈ X S ⊆ A ∧ X ≠ ∅ ) → ∃ x ∈ X S ⊆ A ) ;;
+	step 4 : wff = iinss () |- ( ∃ x ∈ X S ⊆ A → ⋂_ x ∈ X S ⊆ A ) ;;
+	step 5 : wff = syl (step 3, step 4) |- ( ( ∀ x ∈ X S ⊆ A ∧ X ≠ ∅ ) → ⋂_ x ∈ X S ⊆ A ) ;;
+	step 6 : wff = df-ss () |- ( ⋂_ x ∈ X S ⊆ A ↔ ( ⋂_ x ∈ X S ∩ A ) = ⋂_ x ∈ X S ) ;;
+	step 7 : wff = sylib (step 5, step 6) |- ( ( ∀ x ∈ X S ⊆ A ∧ X ≠ ∅ ) → ( ⋂_ x ∈ X S ∩ A ) = ⋂_ x ∈ X S ) ;;
+	step 8 : wff = syl5eq (step 1, step 7) |- ( ( ∀ x ∈ X S ⊆ A ∧ X ≠ ∅ ) → ( A ∩ ⋂_ x ∈ X S ) = ⋂_ x ∈ X S ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Relative intersection of a relative abstraction.  (Contributed by Stefan
+       O'Rear, 3-Apr-2015.) */
+
+theorem riinrab (ph : wff, x : set, y : set, A : class, X : class) disjointed(A x y, X x y) {
+	prop 1 : wff = |- ( A ∩ ⋂_ x ∈ X { y ∈ A | ph } ) = { y ∈ A | ∀ x ∈ X ph } ;;
+}
+
+proof of riinrab {
+	step 1 : wff = riin0 () |- ( X = ∅ → ( A ∩ ⋂_ x ∈ X { y ∈ A | ph } ) = A ) ;;
+	step 2 : wff = rzal () |- ( X = ∅ → ∀ x ∈ X ph ) ;;
+	step 3 : wff = ralrimivw (step 2) |- ( X = ∅ → ∀ y ∈ A ∀ x ∈ X ph ) ;;
+	step 4 : wff = rabid2 () |- ( A = { y ∈ A | ∀ x ∈ X ph } ↔ ∀ y ∈ A ∀ x ∈ X ph ) ;;
+	step 5 : wff = sylibr (step 3, step 4) |- ( X = ∅ → A = { y ∈ A | ∀ x ∈ X ph } ) ;;
+	step 6 : wff = eqtrd (step 1, step 5) |- ( X = ∅ → ( A ∩ ⋂_ x ∈ X { y ∈ A | ph } ) = { y ∈ A | ∀ x ∈ X ph } ) ;;
+	step 7 : wff = ssrab2 () |- { y ∈ A | ph } ⊆ A ;;
+	step 8 : wff = rgenw (step 7) |- ∀ x ∈ X { y ∈ A | ph } ⊆ A ;;
+	step 9 : wff = riinn0 () |- ( ( ∀ x ∈ X { y ∈ A | ph } ⊆ A ∧ X ≠ ∅ ) → ( A ∩ ⋂_ x ∈ X { y ∈ A | ph } ) = ⋂_ x ∈ X { y ∈ A | ph } ) ;;
+	step 10 : wff = mpan (step 8, step 9) |- ( X ≠ ∅ → ( A ∩ ⋂_ x ∈ X { y ∈ A | ph } ) = ⋂_ x ∈ X { y ∈ A | ph } ) ;;
+	step 11 : wff = iinrab () |- ( X ≠ ∅ → ⋂_ x ∈ X { y ∈ A | ph } = { y ∈ A | ∀ x ∈ X ph } ) ;;
+	step 12 : wff = eqtrd (step 10, step 11) |- ( X ≠ ∅ → ( A ∩ ⋂_ x ∈ X { y ∈ A | ph } ) = { y ∈ A | ∀ x ∈ X ph } ) ;;
+	step 13 : wff = pm2.61ine (step 6, step 12) |- ( A ∩ ⋂_ x ∈ X { y ∈ A | ph } ) = { y ∈ A | ∀ x ∈ X ph } ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* A singleton index picks out an instance of an indexed intersection's
+       argument.  (Contributed by NM, 15-Jan-2012.)  (Proof shortened by Mario
+       Carneiro, 17-Nov-2016.) */
+
+theorem iinxsng (x : set, A : class, B : class, C : class, V : class) disjointed(x y A, y B, x y C, y V) {
+	hyp 1 : wff = |- ( x = A → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ V → ⋂_ x ∈ { A } B = C ) ;;
+}
+
+proof of iinxsng {
+	var y : set;;
+	step 1 : wff = df-iin () |- ⋂_ x ∈ { A } B = { y | ∀ x ∈ { A } y ∈ B } ;;
+	step 2 : wff = eleq2d (hyp 1) |- ( x = A → ( y ∈ B ↔ y ∈ C ) ) ;;
+	step 3 : wff = ralsng (step 2) |- ( A ∈ V → ( ∀ x ∈ { A } y ∈ B ↔ y ∈ C ) ) ;;
+	step 4 : wff = abbi1dv (step 3) |- ( A ∈ V → { y | ∀ x ∈ { A } y ∈ B } = C ) ;;
+	step 5 : wff = syl5eq (step 1, step 4) |- ( A ∈ V → ⋂_ x ∈ { A } B = C ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Indexed intersection with an unordered pair index.  (Contributed by NM,
+       25-Jan-2012.) */
+
+theorem iinxprg (x : set, A : class, B : class, C : class, D : class, E : class, V : class, W : class) disjointed(x y A, x y B, y C, x y D, x y E, y V, y W) {
+	hyp 1 : wff = |- ( x = A → C = D ) ;;
+	hyp 2 : wff = |- ( x = B → C = E ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( A ∈ V ∧ B ∈ W ) → ⋂_ x ∈ { A , B } C = ( D ∩ E ) ) ;;
+}
+
+proof of iinxprg {
+	var y : set;;
+	step 1 : wff = eleq2d (hyp 1) |- ( x = A → ( y ∈ C ↔ y ∈ D ) ) ;;
+	step 2 : wff = eleq2d (hyp 2) |- ( x = B → ( y ∈ C ↔ y ∈ E ) ) ;;
+	step 3 : wff = ralprg (step 1, step 2) |- ( ( A ∈ V ∧ B ∈ W ) → ( ∀ x ∈ { A , B } y ∈ C ↔ ( y ∈ D ∧ y ∈ E ) ) ) ;;
+	step 4 : wff = abbidv (step 3) |- ( ( A ∈ V ∧ B ∈ W ) → { y | ∀ x ∈ { A , B } y ∈ C } = { y | ( y ∈ D ∧ y ∈ E ) } ) ;;
+	step 5 : wff = df-iin () |- ⋂_ x ∈ { A , B } C = { y | ∀ x ∈ { A , B } y ∈ C } ;;
+	step 6 : wff = df-in () |- ( D ∩ E ) = { y | ( y ∈ D ∧ y ∈ E ) } ;;
+	step 7 : wff = 3eqtr4g (step 4, step 5, step 6) |- ( ( A ∈ V ∧ B ∈ W ) → ⋂_ x ∈ { A , B } C = ( D ∩ E ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* A singleton index picks out an instance of an indexed union's argument.
+       (Contributed by Mario Carneiro, 25-Jun-2016.) */
+
+theorem iunxsng (x : set, A : class, B : class, C : class, V : class) disjointed(x y A, y B, x y C, y V) {
+	hyp 1 : wff = |- ( x = A → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ V → ⋃_ x ∈ { A } B = C ) ;;
+}
+
+proof of iunxsng {
+	var y : set;;
+	step 1 : wff = eliun () |- ( y ∈ ⋃_ x ∈ { A } B ↔ ∃ x ∈ { A } y ∈ B ) ;;
+	step 2 : wff = eleq2d (hyp 1) |- ( x = A → ( y ∈ B ↔ y ∈ C ) ) ;;
+	step 3 : wff = rexsng (step 2) |- ( A ∈ V → ( ∃ x ∈ { A } y ∈ B ↔ y ∈ C ) ) ;;
+	step 4 : wff = syl5bb (step 1, step 3) |- ( A ∈ V → ( y ∈ ⋃_ x ∈ { A } B ↔ y ∈ C ) ) ;;
+	step 5 : wff = eqrdv (step 4) |- ( A ∈ V → ⋃_ x ∈ { A } B = C ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* A singleton index picks out an instance of an indexed union's argument.
+       (Contributed by NM, 26-Mar-2004.)  (Proof shortened by Mario Carneiro,
+       25-Jun-2016.) */
+
+theorem iunxsn (x : set, A : class, B : class, C : class) disjointed(x A, x C) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- ( x = A → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ⋃_ x ∈ { A } B = C ;;
+}
+
+proof of iunxsn {
+	step 1 : wff = iunxsng (hyp 2) |- ( A ∈ _V → ⋃_ x ∈ { A } B = C ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ⋃_ x ∈ { A } B = C ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Separate a union in an indexed union.  (Contributed by NM,
+       27-Dec-2004.)  (Proof shortened by Mario Carneiro, 17-Nov-2016.) */
+
+theorem iunun (x : set, A : class, B : class, C : class) disjointed(x y, y A, y B, y C) {
+	prop 1 : wff = |- ⋃_ x ∈ A ( B ∪ C ) = ( ⋃_ x ∈ A B ∪ ⋃_ x ∈ A C ) ;;
+}
+
+proof of iunun {
+	var y : set;;
+	step 1 : wff = r19.43 () |- ( ∃ x ∈ A ( y ∈ B ∨ y ∈ C ) ↔ ( ∃ x ∈ A y ∈ B ∨ ∃ x ∈ A y ∈ C ) ) ;;
+	step 2 : wff = elun () |- ( y ∈ ( B ∪ C ) ↔ ( y ∈ B ∨ y ∈ C ) ) ;;
+	step 3 : wff = rexbii (step 2) |- ( ∃ x ∈ A y ∈ ( B ∪ C ) ↔ ∃ x ∈ A ( y ∈ B ∨ y ∈ C ) ) ;;
+	step 4 : wff = eliun () |- ( y ∈ ⋃_ x ∈ A B ↔ ∃ x ∈ A y ∈ B ) ;;
+	step 5 : wff = eliun () |- ( y ∈ ⋃_ x ∈ A C ↔ ∃ x ∈ A y ∈ C ) ;;
+	step 6 : wff = orbi12i (step 4, step 5) |- ( ( y ∈ ⋃_ x ∈ A B ∨ y ∈ ⋃_ x ∈ A C ) ↔ ( ∃ x ∈ A y ∈ B ∨ ∃ x ∈ A y ∈ C ) ) ;;
+	step 7 : wff = 3bitr4i (step 1, step 3, step 6) |- ( ∃ x ∈ A y ∈ ( B ∪ C ) ↔ ( y ∈ ⋃_ x ∈ A B ∨ y ∈ ⋃_ x ∈ A C ) ) ;;
+	step 8 : wff = eliun () |- ( y ∈ ⋃_ x ∈ A ( B ∪ C ) ↔ ∃ x ∈ A y ∈ ( B ∪ C ) ) ;;
+	step 9 : wff = elun () |- ( y ∈ ( ⋃_ x ∈ A B ∪ ⋃_ x ∈ A C ) ↔ ( y ∈ ⋃_ x ∈ A B ∨ y ∈ ⋃_ x ∈ A C ) ) ;;
+	step 10 : wff = 3bitr4i (step 7, step 8, step 9) |- ( y ∈ ⋃_ x ∈ A ( B ∪ C ) ↔ y ∈ ( ⋃_ x ∈ A B ∪ ⋃_ x ∈ A C ) ) ;;
+	step 11 : wff = eqriv (step 10) |- ⋃_ x ∈ A ( B ∪ C ) = ( ⋃_ x ∈ A B ∪ ⋃_ x ∈ A C ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* Separate a union in the index of an indexed union.  (Contributed by NM,
+       26-Mar-2004.)  (Proof shortened by Mario Carneiro, 17-Nov-2016.) */
+
+theorem iunxun (x : set, A : class, B : class, C : class) disjointed(x y, y A, y B, y C) {
+	prop 1 : wff = |- ⋃_ x ∈ ( A ∪ B ) C = ( ⋃_ x ∈ A C ∪ ⋃_ x ∈ B C ) ;;
+}
+
+proof of iunxun {
+	var y : set;;
+	step 1 : wff = rexun () |- ( ∃ x ∈ ( A ∪ B ) y ∈ C ↔ ( ∃ x ∈ A y ∈ C ∨ ∃ x ∈ B y ∈ C ) ) ;;
+	step 2 : wff = eliun () |- ( y ∈ ⋃_ x ∈ A C ↔ ∃ x ∈ A y ∈ C ) ;;
+	step 3 : wff = eliun () |- ( y ∈ ⋃_ x ∈ B C ↔ ∃ x ∈ B y ∈ C ) ;;
+	step 4 : wff = orbi12i (step 2, step 3) |- ( ( y ∈ ⋃_ x ∈ A C ∨ y ∈ ⋃_ x ∈ B C ) ↔ ( ∃ x ∈ A y ∈ C ∨ ∃ x ∈ B y ∈ C ) ) ;;
+	step 5 : wff = bitr4i (step 1, step 4) |- ( ∃ x ∈ ( A ∪ B ) y ∈ C ↔ ( y ∈ ⋃_ x ∈ A C ∨ y ∈ ⋃_ x ∈ B C ) ) ;;
+	step 6 : wff = eliun () |- ( y ∈ ⋃_ x ∈ ( A ∪ B ) C ↔ ∃ x ∈ ( A ∪ B ) y ∈ C ) ;;
+	step 7 : wff = elun () |- ( y ∈ ( ⋃_ x ∈ A C ∪ ⋃_ x ∈ B C ) ↔ ( y ∈ ⋃_ x ∈ A C ∨ y ∈ ⋃_ x ∈ B C ) ) ;;
+	step 8 : wff = 3bitr4i (step 5, step 6, step 7) |- ( y ∈ ⋃_ x ∈ ( A ∪ B ) C ↔ y ∈ ( ⋃_ x ∈ A C ∪ ⋃_ x ∈ B C ) ) ;;
+	step 9 : wff = eqriv (step 8) |- ⋃_ x ∈ ( A ∪ B ) C = ( ⋃_ x ∈ A C ∪ ⋃_ x ∈ B C ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Separate an indexed union in the index of an indexed union.
+       (Contributed by Mario Carneiro, 5-Dec-2016.) */
+
+theorem iunxiun (x : set, y : set, A : class, B : class, C : class) disjointed(x y z, x z A, z B, y z C) {
+	prop 1 : wff = |- ⋃_ x ∈ ⋃_ y ∈ A B C = ⋃_ y ∈ A ⋃_ x ∈ B C ;;
+}
+
+proof of iunxiun {
+	var z : set;;
+	step 1 : wff = eliun () |- ( x ∈ ⋃_ y ∈ A B ↔ ∃ y ∈ A x ∈ B ) ;;
+	step 2 : wff = anbi1i (step 1) |- ( ( x ∈ ⋃_ y ∈ A B ∧ z ∈ C ) ↔ ( ∃ y ∈ A x ∈ B ∧ z ∈ C ) ) ;;
+	step 3 : wff = r19.41v () |- ( ∃ y ∈ A ( x ∈ B ∧ z ∈ C ) ↔ ( ∃ y ∈ A x ∈ B ∧ z ∈ C ) ) ;;
+	step 4 : wff = bitr4i (step 2, step 3) |- ( ( x ∈ ⋃_ y ∈ A B ∧ z ∈ C ) ↔ ∃ y ∈ A ( x ∈ B ∧ z ∈ C ) ) ;;
+	step 5 : wff = exbii (step 4) |- ( ∃ x ( x ∈ ⋃_ y ∈ A B ∧ z ∈ C ) ↔ ∃ x ∃ y ∈ A ( x ∈ B ∧ z ∈ C ) ) ;;
+	step 6 : wff = rexcom4 () |- ( ∃ y ∈ A ∃ x ( x ∈ B ∧ z ∈ C ) ↔ ∃ x ∃ y ∈ A ( x ∈ B ∧ z ∈ C ) ) ;;
+	step 7 : wff = bitr4i (step 5, step 6) |- ( ∃ x ( x ∈ ⋃_ y ∈ A B ∧ z ∈ C ) ↔ ∃ y ∈ A ∃ x ( x ∈ B ∧ z ∈ C ) ) ;;
+	step 8 : wff = df-rex () |- ( ∃ x ∈ ⋃_ y ∈ A B z ∈ C ↔ ∃ x ( x ∈ ⋃_ y ∈ A B ∧ z ∈ C ) ) ;;
+	step 9 : wff = eliun () |- ( z ∈ ⋃_ x ∈ B C ↔ ∃ x ∈ B z ∈ C ) ;;
+	step 10 : wff = df-rex () |- ( ∃ x ∈ B z ∈ C ↔ ∃ x ( x ∈ B ∧ z ∈ C ) ) ;;
+	step 11 : wff = bitri (step 9, step 10) |- ( z ∈ ⋃_ x ∈ B C ↔ ∃ x ( x ∈ B ∧ z ∈ C ) ) ;;
+	step 12 : wff = rexbii (step 11) |- ( ∃ y ∈ A z ∈ ⋃_ x ∈ B C ↔ ∃ y ∈ A ∃ x ( x ∈ B ∧ z ∈ C ) ) ;;
+	step 13 : wff = 3bitr4i (step 7, step 8, step 12) |- ( ∃ x ∈ ⋃_ y ∈ A B z ∈ C ↔ ∃ y ∈ A z ∈ ⋃_ x ∈ B C ) ;;
+	step 14 : wff = eliun () |- ( z ∈ ⋃_ x ∈ ⋃_ y ∈ A B C ↔ ∃ x ∈ ⋃_ y ∈ A B z ∈ C ) ;;
+	step 15 : wff = eliun () |- ( z ∈ ⋃_ y ∈ A ⋃_ x ∈ B C ↔ ∃ y ∈ A z ∈ ⋃_ x ∈ B C ) ;;
+	step 16 : wff = 3bitr4i (step 13, step 14, step 15) |- ( z ∈ ⋃_ x ∈ ⋃_ y ∈ A B C ↔ z ∈ ⋃_ y ∈ A ⋃_ x ∈ B C ) ;;
+	step 17 : wff = eqriv (step 16) |- ⋃_ x ∈ ⋃_ y ∈ A B C = ⋃_ y ∈ A ⋃_ x ∈ B C ;;
+	qed prop 1 = step 17 ;;
+}
+
+/* A relationship involving union and indexed intersection.  Exercise 23 of
+       [Enderton] p. 33.  (Contributed by NM, 25-Nov-2003.)  (Proof shortened
+       by Mario Carneiro, 17-Nov-2016.) */
+
+theorem iinuni (x : set, A : class, B : class) disjointed(x y A, x y B) {
+	prop 1 : wff = |- ( A ∪ ⋂ B ) = ⋂_ x ∈ B ( A ∪ x ) ;;
+}
+
+proof of iinuni {
+	var y : set;;
+	step 1 : wff = r19.32v () |- ( ∀ x ∈ B ( y ∈ A ∨ y ∈ x ) ↔ ( y ∈ A ∨ ∀ x ∈ B y ∈ x ) ) ;;
+	step 2 : wff = elun () |- ( y ∈ ( A ∪ x ) ↔ ( y ∈ A ∨ y ∈ x ) ) ;;
+	step 3 : wff = ralbii (step 2) |- ( ∀ x ∈ B y ∈ ( A ∪ x ) ↔ ∀ x ∈ B ( y ∈ A ∨ y ∈ x ) ) ;;
+	step 4 : wff = vex () |- y ∈ _V ;;
+	step 5 : wff = elint2 (step 4) |- ( y ∈ ⋂ B ↔ ∀ x ∈ B y ∈ x ) ;;
+	step 6 : wff = orbi2i (step 5) |- ( ( y ∈ A ∨ y ∈ ⋂ B ) ↔ ( y ∈ A ∨ ∀ x ∈ B y ∈ x ) ) ;;
+	step 7 : wff = 3bitr4ri (step 1, step 3, step 6) |- ( ( y ∈ A ∨ y ∈ ⋂ B ) ↔ ∀ x ∈ B y ∈ ( A ∪ x ) ) ;;
+	step 8 : wff = abbii (step 7) |- { y | ( y ∈ A ∨ y ∈ ⋂ B ) } = { y | ∀ x ∈ B y ∈ ( A ∪ x ) } ;;
+	step 9 : wff = df-un () |- ( A ∪ ⋂ B ) = { y | ( y ∈ A ∨ y ∈ ⋂ B ) } ;;
+	step 10 : wff = df-iin () |- ⋂_ x ∈ B ( A ∪ x ) = { y | ∀ x ∈ B y ∈ ( A ∪ x ) } ;;
+	step 11 : wff = 3eqtr4i (step 8, step 9, step 10) |- ( A ∪ ⋂ B ) = ⋂_ x ∈ B ( A ∪ x ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* A relationship involving union and indexed union.  Exercise 25 of
+       [Enderton] p. 33.  (Contributed by NM, 25-Nov-2003.)  (Proof shortened
+       by Mario Carneiro, 17-Nov-2016.) */
+
+theorem iununi (x : set, A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( ( B = ∅ → A = ∅ ) ↔ ( A ∪ ⋃ B ) = ⋃_ x ∈ B ( A ∪ x ) ) ;;
+}
+
+proof of iununi {
+	step 1 : wff = df-ne () |- ( B ≠ ∅ ↔ ¬ B = ∅ ) ;;
+	step 2 : wff = iunconst () |- ( B ≠ ∅ → ⋃_ x ∈ B A = A ) ;;
+	step 3 : wff = sylbir (step 1, step 2) |- ( ¬ B = ∅ → ⋃_ x ∈ B A = A ) ;;
+	step 4 : wff = iun0 () |- ⋃_ x ∈ B ∅ = ∅ ;;
+	step 5 : wff = id () |- ( A = ∅ → A = ∅ ) ;;
+	step 6 : wff = iuneq2d (step 5) |- ( A = ∅ → ⋃_ x ∈ B A = ⋃_ x ∈ B ∅ ) ;;
+	step 7 : wff = id () |- ( A = ∅ → A = ∅ ) ;;
+	step 8 : wff = 3eqtr4a (step 4, step 6, step 7) |- ( A = ∅ → ⋃_ x ∈ B A = A ) ;;
+	step 9 : wff = ja (step 3, step 8) |- ( ( B = ∅ → A = ∅ ) → ⋃_ x ∈ B A = A ) ;;
+	step 10 : wff = eqcomd (step 9) |- ( ( B = ∅ → A = ∅ ) → A = ⋃_ x ∈ B A ) ;;
+	step 11 : wff = uneq1d (step 10) |- ( ( B = ∅ → A = ∅ ) → ( A ∪ ⋃_ x ∈ B x ) = ( ⋃_ x ∈ B A ∪ ⋃_ x ∈ B x ) ) ;;
+	step 12 : wff = uniiun () |- ⋃ B = ⋃_ x ∈ B x ;;
+	step 13 : wff = uneq2i (step 12) |- ( A ∪ ⋃ B ) = ( A ∪ ⋃_ x ∈ B x ) ;;
+	step 14 : wff = iunun () |- ⋃_ x ∈ B ( A ∪ x ) = ( ⋃_ x ∈ B A ∪ ⋃_ x ∈ B x ) ;;
+	step 15 : wff = 3eqtr4g (step 11, step 13, step 14) |- ( ( B = ∅ → A = ∅ ) → ( A ∪ ⋃ B ) = ⋃_ x ∈ B ( A ∪ x ) ) ;;
+	step 16 : wff = unieq () |- ( B = ∅ → ⋃ B = ⋃ ∅ ) ;;
+	step 17 : wff = uni0 () |- ⋃ ∅ = ∅ ;;
+	step 18 : wff = syl6eq (step 16, step 17) |- ( B = ∅ → ⋃ B = ∅ ) ;;
+	step 19 : wff = uneq2d (step 18) |- ( B = ∅ → ( A ∪ ⋃ B ) = ( A ∪ ∅ ) ) ;;
+	step 20 : wff = un0 () |- ( A ∪ ∅ ) = A ;;
+	step 21 : wff = syl6eq (step 19, step 20) |- ( B = ∅ → ( A ∪ ⋃ B ) = A ) ;;
+	step 22 : wff = iuneq1 () |- ( B = ∅ → ⋃_ x ∈ B ( A ∪ x ) = ⋃_ x ∈ ∅ ( A ∪ x ) ) ;;
+	step 23 : wff = 0iun () |- ⋃_ x ∈ ∅ ( A ∪ x ) = ∅ ;;
+	step 24 : wff = syl6eq (step 22, step 23) |- ( B = ∅ → ⋃_ x ∈ B ( A ∪ x ) = ∅ ) ;;
+	step 25 : wff = eqeq12d (step 21, step 24) |- ( B = ∅ → ( ( A ∪ ⋃ B ) = ⋃_ x ∈ B ( A ∪ x ) ↔ A = ∅ ) ) ;;
+	step 26 : wff = biimpcd (step 25) |- ( ( A ∪ ⋃ B ) = ⋃_ x ∈ B ( A ∪ x ) → ( B = ∅ → A = ∅ ) ) ;;
+	step 27 : wff = impbii (step 15, step 26) |- ( ( B = ∅ → A = ∅ ) ↔ ( A ∪ ⋃ B ) = ⋃_ x ∈ B ( A ∪ x ) ) ;;
+	qed prop 1 = step 27 ;;
+}
+
+/* Subclass relationship for power class and union.  (Contributed by NM,
+       18-Jul-2006.) */
+
+theorem sspwuni (A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( A ⊆ Pow B ↔ ⋃ A ⊆ B ) ;;
+}
+
+proof of sspwuni {
+	var x : set;;
+	step 1 : wff = vex () |- x ∈ _V ;;
+	step 2 : wff = elpw (step 1) |- ( x ∈ Pow B ↔ x ⊆ B ) ;;
+	step 3 : wff = ralbii (step 2) |- ( ∀ x ∈ A x ∈ Pow B ↔ ∀ x ∈ A x ⊆ B ) ;;
+	step 4 : wff = dfss3 () |- ( A ⊆ Pow B ↔ ∀ x ∈ A x ∈ Pow B ) ;;
+	step 5 : wff = unissb () |- ( ⋃ A ⊆ B ↔ ∀ x ∈ A x ⊆ B ) ;;
+	step 6 : wff = 3bitr4i (step 3, step 4, step 5) |- ( A ⊆ Pow B ↔ ⋃ A ⊆ B ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Two ways to express a collection of subclasses.  (Contributed by NM,
+       19-Jul-2006.) */
+
+theorem pwssb (x : set, A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( A ⊆ Pow B ↔ ∀ x ∈ A x ⊆ B ) ;;
+}
+
+proof of pwssb {
+	step 1 : wff = sspwuni () |- ( A ⊆ Pow B ↔ ⋃ A ⊆ B ) ;;
+	step 2 : wff = unissb () |- ( ⋃ A ⊆ B ↔ ∀ x ∈ A x ⊆ B ) ;;
+	step 3 : wff = bitri (step 1, step 2) |- ( A ⊆ Pow B ↔ ∀ x ∈ A x ⊆ B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Relationship for power class and union.  (Contributed by NM,
+     18-Jul-2006.) */
+
+theorem elpwuni (A : class, B : class)  {
+	prop 1 : wff = |- ( B ∈ A → ( A ⊆ Pow B ↔ ⋃ A = B ) ) ;;
+}
+
+proof of elpwuni {
+	step 1 : wff = sspwuni () |- ( A ⊆ Pow B ↔ ⋃ A ⊆ B ) ;;
+	step 2 : wff = unissel () |- ( ( ⋃ A ⊆ B ∧ B ∈ A ) → ⋃ A = B ) ;;
+	step 3 : wff = expcom (step 2) |- ( B ∈ A → ( ⋃ A ⊆ B → ⋃ A = B ) ) ;;
+	step 4 : wff = eqimss () |- ( ⋃ A = B → ⋃ A ⊆ B ) ;;
+	step 5 : wff = impbid1 (step 3, step 4) |- ( B ∈ A → ( ⋃ A ⊆ B ↔ ⋃ A = B ) ) ;;
+	step 6 : wff = syl5bb (step 1, step 5) |- ( B ∈ A → ( A ⊆ Pow B ↔ ⋃ A = B ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* The power class of an intersection in terms of indexed intersection.
+       Exercise 24(a) of [Enderton] p. 33.  (Contributed by NM,
+       29-Nov-2003.) */
+
+theorem iinpw (x : set, A : class) disjointed(x y A) {
+	prop 1 : wff = |- Pow ⋂ A = ⋂_ x ∈ A Pow x ;;
+}
+
+proof of iinpw {
+	var y : set;;
+	step 1 : wff = ssint () |- ( y ⊆ ⋂ A ↔ ∀ x ∈ A y ⊆ x ) ;;
+	step 2 : wff = vex () |- y ∈ _V ;;
+	step 3 : wff = elpw (step 2) |- ( y ∈ Pow x ↔ y ⊆ x ) ;;
+	step 4 : wff = ralbii (step 3) |- ( ∀ x ∈ A y ∈ Pow x ↔ ∀ x ∈ A y ⊆ x ) ;;
+	step 5 : wff = bitr4i (step 1, step 4) |- ( y ⊆ ⋂ A ↔ ∀ x ∈ A y ∈ Pow x ) ;;
+	step 6 : wff = vex () |- y ∈ _V ;;
+	step 7 : wff = elpw (step 6) |- ( y ∈ Pow ⋂ A ↔ y ⊆ ⋂ A ) ;;
+	step 8 : wff = vex () |- y ∈ _V ;;
+	step 9 : wff = eliin () |- ( y ∈ _V → ( y ∈ ⋂_ x ∈ A Pow x ↔ ∀ x ∈ A y ∈ Pow x ) ) ;;
+	step 10 : wff = ax-mp (step 8, step 9) |- ( y ∈ ⋂_ x ∈ A Pow x ↔ ∀ x ∈ A y ∈ Pow x ) ;;
+	step 11 : wff = 3bitr4i (step 5, step 7, step 10) |- ( y ∈ Pow ⋂ A ↔ y ∈ ⋂_ x ∈ A Pow x ) ;;
+	step 12 : wff = eqriv (step 11) |- Pow ⋂ A = ⋂_ x ∈ A Pow x ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* Inclusion of an indexed union of a power class in the power class of the
+       union of its index.  Part of Exercise 24(b) of [Enderton] p. 33.
+       (Contributed by NM, 25-Nov-2003.) */
+
+theorem iunpwss (x : set, A : class) disjointed(x y A) {
+	prop 1 : wff = |- ⋃_ x ∈ A Pow x ⊆ Pow ⋃ A ;;
+}
+
+proof of iunpwss {
+	var y : set;;
+	step 1 : wff = ssiun () |- ( ∃ x ∈ A y ⊆ x → y ⊆ ⋃_ x ∈ A x ) ;;
+	step 2 : wff = eliun () |- ( y ∈ ⋃_ x ∈ A Pow x ↔ ∃ x ∈ A y ∈ Pow x ) ;;
+	step 3 : wff = vex () |- y ∈ _V ;;
+	step 4 : wff = elpw (step 3) |- ( y ∈ Pow x ↔ y ⊆ x ) ;;
+	step 5 : wff = rexbii (step 4) |- ( ∃ x ∈ A y ∈ Pow x ↔ ∃ x ∈ A y ⊆ x ) ;;
+	step 6 : wff = bitri (step 2, step 5) |- ( y ∈ ⋃_ x ∈ A Pow x ↔ ∃ x ∈ A y ⊆ x ) ;;
+	step 7 : wff = vex () |- y ∈ _V ;;
+	step 8 : wff = elpw (step 7) |- ( y ∈ Pow ⋃ A ↔ y ⊆ ⋃ A ) ;;
+	step 9 : wff = uniiun () |- ⋃ A = ⋃_ x ∈ A x ;;
+	step 10 : wff = sseq2i (step 9) |- ( y ⊆ ⋃ A ↔ y ⊆ ⋃_ x ∈ A x ) ;;
+	step 11 : wff = bitri (step 8, step 10) |- ( y ∈ Pow ⋃ A ↔ y ⊆ ⋃_ x ∈ A x ) ;;
+	step 12 : wff = 3imtr4i (step 1, step 6, step 11) |- ( y ∈ ⋃_ x ∈ A Pow x → y ∈ Pow ⋃ A ) ;;
+	step 13 : wff = ssriv (step 12) |- ⋃_ x ∈ A Pow x ⊆ Pow ⋃ A ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* Relative intersection of a nonempty set.  (Contributed by Stefan O'Rear,
+     3-Apr-2015.)  (Revised by Mario Carneiro, 5-Jun-2015.) */
+
+theorem rintn0 (A : class, X : class)  {
+	prop 1 : wff = |- ( ( X ⊆ Pow A ∧ X ≠ ∅ ) → ( A ∩ ⋂ X ) = ⋂ X ) ;;
+}
+
+proof of rintn0 {
+	step 1 : wff = incom () |- ( A ∩ ⋂ X ) = ( ⋂ X ∩ A ) ;;
+	step 2 : wff = intssuni2 () |- ( ( X ⊆ Pow A ∧ X ≠ ∅ ) → ⋂ X ⊆ ⋃ Pow A ) ;;
+	step 3 : wff = ssid () |- Pow A ⊆ Pow A ;;
+	step 4 : wff = sspwuni () |- ( Pow A ⊆ Pow A ↔ ⋃ Pow A ⊆ A ) ;;
+	step 5 : wff = mpbi (step 3, step 4) |- ⋃ Pow A ⊆ A ;;
+	step 6 : wff = syl6ss (step 2, step 5) |- ( ( X ⊆ Pow A ∧ X ≠ ∅ ) → ⋂ X ⊆ A ) ;;
+	step 7 : wff = df-ss () |- ( ⋂ X ⊆ A ↔ ( ⋂ X ∩ A ) = ⋂ X ) ;;
+	step 8 : wff = sylib (step 6, step 7) |- ( ( X ⊆ Pow A ∧ X ≠ ∅ ) → ( ⋂ X ∩ A ) = ⋂ X ) ;;
+	step 9 : wff = syl5eq (step 1, step 8) |- ( ( X ⊆ Pow A ∧ X ≠ ∅ ) → ( A ∩ ⋂ X ) = ⋂ X ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+

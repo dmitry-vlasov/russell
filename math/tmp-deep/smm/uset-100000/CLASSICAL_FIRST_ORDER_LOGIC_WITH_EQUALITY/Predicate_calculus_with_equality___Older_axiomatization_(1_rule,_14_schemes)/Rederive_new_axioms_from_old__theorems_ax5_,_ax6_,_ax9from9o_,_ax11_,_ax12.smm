@@ -1,0 +1,163 @@
+$[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Older_axiomatization_(1_rule,_14_schemes)/Obsolete_schemes_ax-5o_ax-4_ax-6o_ax-9o_ax-10o_ax-10_ax-11o_ax-12o_ax-15_ax-16.smm $]
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  Rederive new axioms from old: theorems ax5 , ax6 , ax9from9o , ax11 , ax12
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+  Theorems ~ ax11 and ~ ax12 require some intermediate theorems that are
+  included in this section.
+
+$)
+$( This theorem repeats ~ sp under the name ~ ax4 , so that the metamath
+     program's "verify markup" command will check that it matches axiom scheme
+     ~ ax-4 .  It is preferred that references to this theorem use the name
+     ~ sp .  (Contributed by NM, 18-Aug-2017.)  (New usage is discouraged.)
+     (Proof modification is discouraged.) $)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	pax4 $p |- ( A. x ph -> ph ) $=
+	f0 f1 psp $.
+$}
+$( Rederivation of axiom ~ ax-5 from ~ ax-5o and other older axioms.  See
+     ~ ax5o for the derivation of ~ ax-5o from ~ ax-5 .  (Contributed by NM,
+     23-May-2008.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) $)
+${
+	$v ph ps x $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	pax5 $p |- ( A. x ( ph -> ps ) -> ( A. x ph -> A. x ps ) ) $=
+	f0 f1 awi f0 f2 awal f1 awi f2 aax-5o f0 f2 aax-4 f0 f1 awi f2 aax-4 f0 f2 awal f0 f0 f1 awi f2 awal f1 psyl5 f0 f1 awi f2 awal f0 f2 awal f1 awi awi f0 f1 awi f2 awal f0 f2 awal f1 awi f2 awal awi f2 pmpg f0 f1 f2 aax-5o f0 f1 awi f2 awal f0 f2 awal f1 awi f2 awal f0 f2 awal f1 f2 awal awi psyl $.
+$}
+$( Rederivation of axiom ~ ax-6 from ~ ax-6o and other older axioms.  See
+     ~ ax6o for the derivation of ~ ax-6o from ~ ax-6 .  (Contributed by NM,
+     23-May-2008.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) $)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	pax6 $p |- ( -. A. x ph -> A. x -. A. x ph ) $=
+	f0 f1 awal f1 awal awn f0 f1 awal awn f1 aax-5o f0 f1 awal f1 awal awn f1 aax-4 f0 f0 f1 awal f1 aax-5o f0 f1 awal pid f0 f1 awal f0 f1 awal awi f0 f1 awal f0 f1 awal f1 awal awi f1 pmpg f0 f1 awal f1 awal awn f1 awal f0 f1 awal f1 awal f0 f1 awal pnsyl f0 f1 awal f1 awal awn f1 awal f0 f1 awal awn awi f0 f1 awal f1 awal awn f1 awal f0 f1 awal awn f1 awal awi f1 pmpg f0 f1 awal f1 aax-6o f0 f1 awal f1 awal awn f1 awal f0 f1 awal awn f1 awal f0 f1 awal pnsyl4 $.
+$}
+$( Rederivation of axiom ~ ax-9 from ~ ax-9o and other older axioms.  See
+     ~ ax9o for the derivation of ~ ax-9o from ~ ax-9 .  Lemma L18 in [Megill]
+     p. 446 (p. 14 of the preprint).  (Contributed by NM, 5-Aug-1993.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) $)
+${
+	$v x y $.
+	f0 $f set x $.
+	f1 $f set y $.
+	pax9from9o $p |- -. A. x -. x = y $=
+	f0 f1 pweq awn f0 awal awn f0 f1 aax-9o f0 f1 pweq awn f0 aax-6o f0 f1 pweq awn f0 awal awn f0 awal f0 f1 pweq pcon4i f0 f1 pweq f0 f1 pweq awn f0 awal awn f0 awal awi f0 f1 pweq awn f0 awal awn f0 pmpg $.
+$}
+$( ` x ` is not free in ` A. x ph ` .  Example in Appendix in [Megill] p. 450
+     (p. 19 of the preprint).  Also Lemma 22 of [Monk2] p. 114.  (Contributed
+     by NM, 5-Aug-1993.)  (New usage is discouraged.) $)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	phba1-o $p |- ( A. x ph -> A. x A. x ph ) $=
+	f0 f1 awal awn f1 aax-4 f0 f1 awal awn f1 awal f0 f1 awal pcon2i f0 f1 awal awn f1 pax6 f0 f1 pax6 f0 f1 awal f0 f1 awal awn f1 awal pcon1i f0 f1 awal awn f1 awal awn f0 f1 awal f1 palimi f0 f1 awal f0 f1 awal awn f1 awal awn f0 f1 awal awn f1 awal awn f1 awal f0 f1 awal f1 awal p3syl $.
+$}
+$( Inference version of ~ ax-5o .  (Contributed by NM, 5-Aug-1993.)
+       (New usage is discouraged.) $)
+${
+	$v ph ps x $.
+	e0 $e |- ( A. x ph -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	pa5i-o $p |- ( A. x ph -> A. x ps ) $=
+	f0 f2 phba1-o e0 f0 f2 awal f1 f2 palrimih $.
+$}
+$( Commutation law for identical variable specifiers.  The antecedent and
+     consequent are true when ` x ` and ` y ` are substituted with the same
+     variable.  Lemma L12 in [Megill] p. 445 (p. 12 of the preprint).  Version
+     of ~ aecom using ~ ax-10o .  Unlike ~ ax10from10o , this version does not
+     require ~ ax-17 .  (Contributed by NM, 5-Aug-1993.)
+     (New usage is discouraged.) $)
+${
+	$v x y $.
+	f0 $f set x $.
+	f1 $f set y $.
+	paecom-o $p |- ( A. x x = y -> A. y y = x ) $=
+	f0 f1 pweq f0 f1 aax-10o f0 f1 pweq f0 awal f0 f1 pweq f1 awal ppm2.43i f0 f1 pequcomi f0 f1 pweq f1 f0 pweq f1 palimi f0 f1 pweq f0 awal f0 f1 pweq f1 awal f1 f0 pweq f1 awal psyl $.
+$}
+$( A commutation rule for identical variable specifiers.  Version of
+       ~ aecoms using ax-10o .  (Contributed by NM, 5-Aug-1993.)
+       (New usage is discouraged.) $)
+${
+	$v ph x y $.
+	e0 $e |- ( A. x x = y -> ph ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	paecoms-o $p |- ( A. y y = x -> ph ) $=
+	f2 f1 paecom-o e0 f2 f1 pweq f2 awal f1 f2 pweq f1 awal f0 psyl $.
+$}
+$( All variables are effectively bound in an identical variable specifier.
+     Version of ~ hbae using ~ ax-10o .  (Contributed by NM, 5-Aug-1993.)
+     (Proof modification is disccouraged.)  (New usage is discouraged.) $)
+${
+	$v x y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	phbae-o $p |- ( A. x x = y -> A. z A. x x = y ) $=
+	f0 f1 pweq f0 aax-4 f0 f1 f2 aax-12o f0 f1 pweq f0 awal f0 f1 pweq f2 f0 pweq f2 awal awn f2 f1 pweq f2 awal awn f0 f1 pweq f2 awal psyl7 f0 f1 pweq f0 f2 aax-10o f0 f1 pweq f0 awal f0 f1 pweq f2 awal awi f0 f2 paecoms-o f0 f1 pweq f0 f1 aax-10o f0 f1 pweq f0 awal f0 f1 pweq f1 awal ppm2.43i f0 f1 pweq f1 f2 aax-10o f0 f1 pweq f0 awal f0 f1 pweq f1 awal f1 f2 pweq f1 awal f0 f1 pweq f2 awal psyl5 f0 f1 pweq f0 awal f0 f1 pweq f2 awal awi f1 f2 paecoms-o f2 f0 pweq f2 awal f2 f1 pweq f2 awal f0 f1 pweq f0 awal f0 f1 pweq f2 awal awi ppm2.61ii f0 f1 pweq f0 f1 pweq f2 awal f0 pa5i-o f0 f1 pweq f0 f2 aax-7 f0 f1 pweq f0 awal f0 f1 pweq f2 awal f0 awal f0 f1 pweq f0 awal f2 awal psyl $.
+$}
+$( Formula-building lemma for use with the Distinctor Reduction Theorem.
+       Part of Theorem 9.4 of [Megill] p. 448 (p. 16 of preprint).  Version of
+       ~ dral1 using ~ ax-10o .  (Contributed by NM, 24-Nov-1994.)
+       (New usage is discouraged.) $)
+${
+	$v ph ps x y $.
+	e0 $e |- ( A. x x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	pdral1-o $p |- ( A. x x = y -> ( A. x ph <-> A. y ps ) ) $=
+	f2 f3 f2 phbae-o e0 f2 f3 pweq f2 awal f0 f1 pbiimpd f2 f3 pweq f2 awal f0 f1 f2 palimdh f1 f2 f3 aax-10o f2 f3 pweq f2 awal f0 f2 awal f1 f2 awal f1 f3 awal psyld f2 f3 f3 phbae-o e0 f2 f3 pweq f2 awal f0 f1 pbiimprd f2 f3 pweq f2 awal f1 f0 f3 palimdh f0 f3 f2 aax-10o f0 f3 awal f0 f2 awal awi f3 f2 paecoms-o f2 f3 pweq f2 awal f1 f3 awal f0 f3 awal f0 f2 awal psyld f2 f3 pweq f2 awal f0 f2 awal f1 f3 awal pimpbid $.
+$}
+$( Rederivation of axiom ~ ax-11 from ~ ax-11o , ~ ax-10o , and other older
+     axioms.  The proof does not require ~ ax-16 or ~ ax-17 .  See theorem
+     ~ ax11o for the derivation of ~ ax-11o from ~ ax-11 .
+
+     An open problem is whether we can prove this using ~ ax-10 instead of
+     ~ ax-10o .
+
+     This proof uses newer axioms ~ ax-5 and ~ ax-9 , but since these are
+     proved from the older axioms above, this is acceptable and lets us avoid
+     having to reprove several earlier theorems to use ~ ax-5o and ~ ax-9o .
+     (Contributed by NM, 22-Jan-2007.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) $)
+${
+	$v ph x y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	pax11 $p |- ( x = y -> ( A. y ph -> A. x ( x = y -> ph ) ) ) $=
+	f1 f2 pweq f1 awal f0 pbiidd f0 f0 f1 f2 pdral1-o f0 f1 f2 pweq aax-1 f0 f1 f2 pweq f0 awi f1 palimi f1 f2 pweq f1 awal f0 f2 awal f0 f1 awal f1 f2 pweq f0 awi f1 awal psyl6bir f1 f2 pweq f1 awal f0 f2 awal f1 f2 pweq f0 awi f1 awal awi f1 f2 pweq pa1d f0 f2 aax-4 f0 f1 f2 aax-11o f0 f2 awal f0 f1 f2 pweq f1 awal awn f1 f2 pweq f1 f2 pweq f0 awi f1 awal psyl7 f1 f2 pweq f1 awal f1 f2 pweq f0 f2 awal f1 f2 pweq f0 awi f1 awal awi awi ppm2.61i $.
+$}
+$( Derive ~ ax-12 from ~ ax-12o and other older axioms.
+
+     This proof uses newer axioms ~ ax-5 and ~ ax-9 , but since these are
+     proved from the older axioms above, this is acceptable and lets us avoid
+     having to reprove several earlier theorems to use ~ ax-5o and ~ ax-9o .
+     (Contributed by NM, 21-Dec-2015.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) $)
+${
+	$v x y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	pax12 $p |- ( -. x = y -> ( y = z -> A. x y = z ) ) $=
+	f0 f1 pweq f0 aax-4 f0 f1 pweq f0 awal f0 f1 pweq pcon3i f0 f1 pweq awn f0 f1 pweq f0 awal awn f1 f2 pweq padantr f2 f1 f0 pequtrr f0 f2 pweq f0 f1 pweq awi f2 f1 pequcoms f1 f2 pweq f0 f2 pweq f0 f1 pweq pcon3rr3 f0 f1 pweq awn f1 f2 pweq f0 f2 pweq awn pimp f0 f2 pweq f0 aax-4 f0 f1 pweq awn f1 f2 pweq awa f0 f2 pweq f0 f2 pweq f0 awal pnsyl f1 f2 f0 aax-12o f0 f1 pweq awn f1 f2 pweq awa f0 f1 pweq f0 awal awn f0 f2 pweq f0 awal awn f1 f2 pweq f1 f2 pweq f0 awal awi psylc f0 f1 pweq awn f1 f2 pweq f1 f2 pweq f1 f2 pweq f0 awal awi pex f0 f1 pweq awn f1 f2 pweq f1 f2 pweq f0 awal ppm2.43d $.
+$}
+

@@ -1,0 +1,455 @@
+import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_of_classical_propositional_calculus/Derive_the_Tarski-Bernays-Wajsberg_axioms_from_Meredith_s_Second_CO_Axiom.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+       Derive the Lukasiewicz axioms from the The Russell-Bernays Axioms
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* Justification for ~ rb-imdf .  (Contributed by Anthony Hart,
+     17-Aug-2011.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem rb-bijust (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ph ↔ ps ) ↔ ¬ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ps ∨ ph ) ) ) ;;
+}
+
+proof of rb-bijust {
+	step 1 : wff = dfbi1 () |- ( ( ph ↔ ps ) ↔ ¬ ( ( ph → ps ) → ¬ ( ps → ph ) ) ) ;;
+	step 2 : wff = imor () |- ( ( ph → ps ) ↔ ( ¬ ph ∨ ps ) ) ;;
+	step 3 : wff = imor () |- ( ( ps → ph ) ↔ ( ¬ ps ∨ ph ) ) ;;
+	step 4 : wff = notbii (step 3) |- ( ¬ ( ps → ph ) ↔ ¬ ( ¬ ps ∨ ph ) ) ;;
+	step 5 : wff = imbi12i (step 2, step 4) |- ( ( ( ph → ps ) → ¬ ( ps → ph ) ) ↔ ( ( ¬ ph ∨ ps ) → ¬ ( ¬ ps ∨ ph ) ) ) ;;
+	step 6 : wff = notbii (step 5) |- ( ¬ ( ( ph → ps ) → ¬ ( ps → ph ) ) ↔ ¬ ( ( ¬ ph ∨ ps ) → ¬ ( ¬ ps ∨ ph ) ) ) ;;
+	step 7 : wff = pm4.62 () |- ( ( ( ¬ ph ∨ ps ) → ¬ ( ¬ ps ∨ ph ) ) ↔ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ps ∨ ph ) ) ) ;;
+	step 8 : wff = notbii (step 7) |- ( ¬ ( ( ¬ ph ∨ ps ) → ¬ ( ¬ ps ∨ ph ) ) ↔ ¬ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ps ∨ ph ) ) ) ;;
+	step 9 : wff = 3bitri (step 1, step 6, step 8) |- ( ( ph ↔ ps ) ↔ ¬ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ps ∨ ph ) ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* The definition of implication, in terms of ` \/ ` and ` -. ` .
+     (Contributed by Anthony Hart, 17-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem rb-imdf (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ¬ ( ¬ ( ¬ ( ph → ps ) ∨ ( ¬ ph ∨ ps ) ) ∨ ¬ ( ¬ ( ¬ ph ∨ ps ) ∨ ( ph → ps ) ) ) ;;
+}
+
+proof of rb-imdf {
+	step 1 : wff = imor () |- ( ( ph → ps ) ↔ ( ¬ ph ∨ ps ) ) ;;
+	step 2 : wff = rb-bijust () |- ( ( ( ph → ps ) ↔ ( ¬ ph ∨ ps ) ) ↔ ¬ ( ¬ ( ¬ ( ph → ps ) ∨ ( ¬ ph ∨ ps ) ) ∨ ¬ ( ¬ ( ¬ ph ∨ ps ) ∨ ( ph → ps ) ) ) ) ;;
+	step 3 : wff = mpbi (step 1, step 2) |- ¬ ( ¬ ( ¬ ( ph → ps ) ∨ ( ¬ ph ∨ ps ) ) ∨ ¬ ( ¬ ( ¬ ph ∨ ps ) ∨ ( ph → ps ) ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Modus ponens for ` \/ ` ` -. ` axiom systems.  (Contributed by Anthony
+       Hart, 12-Aug-2011.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem anmp (ph : wff, ps : wff)  {
+	hyp 1 : wff = |- ph ;;
+	hyp 2 : wff = |- ( ¬ ph ∨ ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ps ;;
+}
+
+proof of anmp {
+	step 1 : wff = imorri (hyp 2) |- ( ph → ps ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ps ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* The first of four axioms in the Russell-Bernays axiom system.
+     (Contributed by Anthony Hart, 13-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem rb-ax1 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ¬ ( ¬ ps ∨ ch ) ∨ ( ¬ ( ph ∨ ps ) ∨ ( ph ∨ ch ) ) ) ;;
+}
+
+proof of rb-ax1 {
+	step 1 : wff = orim2 () |- ( ( ps → ch ) → ( ( ph ∨ ps ) → ( ph ∨ ch ) ) ) ;;
+	step 2 : wff = imor () |- ( ( ps → ch ) ↔ ( ¬ ps ∨ ch ) ) ;;
+	step 3 : wff = imor () |- ( ( ( ph ∨ ps ) → ( ph ∨ ch ) ) ↔ ( ¬ ( ph ∨ ps ) ∨ ( ph ∨ ch ) ) ) ;;
+	step 4 : wff = 3imtr3i (step 1, step 2, step 3) |- ( ( ¬ ps ∨ ch ) → ( ¬ ( ph ∨ ps ) ∨ ( ph ∨ ch ) ) ) ;;
+	step 5 : wff = imori (step 4) |- ( ¬ ( ¬ ps ∨ ch ) ∨ ( ¬ ( ph ∨ ps ) ∨ ( ph ∨ ch ) ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* The second of four axioms in the Russell-Bernays axiom system.
+     (Contributed by Anthony Hart, 13-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem rb-ax2 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ¬ ( ph ∨ ps ) ∨ ( ps ∨ ph ) ) ;;
+}
+
+proof of rb-ax2 {
+	step 1 : wff = pm1.4 () |- ( ( ph ∨ ps ) → ( ps ∨ ph ) ) ;;
+	step 2 : wff = con3i (step 1) |- ( ¬ ( ps ∨ ph ) → ¬ ( ph ∨ ps ) ) ;;
+	step 3 : wff = con1i (step 2) |- ( ¬ ¬ ( ph ∨ ps ) → ( ps ∨ ph ) ) ;;
+	step 4 : wff = orri (step 3) |- ( ¬ ( ph ∨ ps ) ∨ ( ps ∨ ph ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* The third of four axioms in the Russell-Bernays axiom system.
+     (Contributed by Anthony Hart, 13-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem rb-ax3 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ¬ ph ∨ ( ps ∨ ph ) ) ;;
+}
+
+proof of rb-ax3 {
+	step 1 : wff = pm2.46 () |- ( ¬ ( ps ∨ ph ) → ¬ ph ) ;;
+	step 2 : wff = con1i (step 1) |- ( ¬ ¬ ph → ( ps ∨ ph ) ) ;;
+	step 3 : wff = orri (step 2) |- ( ¬ ph ∨ ( ps ∨ ph ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* The fourth of four axioms in the Russell-Bernays axiom system.
+     (Contributed by Anthony Hart, 13-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem rb-ax4 (ph : wff)  {
+	prop 1 : wff = |- ( ¬ ( ph ∨ ph ) ∨ ph ) ;;
+}
+
+proof of rb-ax4 {
+	step 1 : wff = pm1.2 () |- ( ( ph ∨ ph ) → ph ) ;;
+	step 2 : wff = con3i (step 1) |- ( ¬ ph → ¬ ( ph ∨ ph ) ) ;;
+	step 3 : wff = con1i (step 2) |- ( ¬ ¬ ( ph ∨ ph ) → ph ) ;;
+	step 4 : wff = orri (step 3) |- ( ¬ ( ph ∨ ph ) ∨ ph ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+       (Contributed by Anthony Hart, 18-Aug-2011.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem rbsyl (ph : wff, ps : wff, ch : wff)  {
+	hyp 1 : wff = |- ( ¬ ps ∨ ch ) ;;
+	hyp 2 : wff = |- ( ph ∨ ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph ∨ ch ) ;;
+}
+
+proof of rbsyl {
+	step 1 : wff = rb-ax1 () |- ( ¬ ( ¬ ps ∨ ch ) ∨ ( ¬ ( ph ∨ ps ) ∨ ( ph ∨ ch ) ) ) ;;
+	step 2 : wff = anmp (hyp 1, step 1) |- ( ¬ ( ph ∨ ps ) ∨ ( ph ∨ ch ) ) ;;
+	step 3 : wff = anmp (hyp 2, step 2) |- ( ph ∨ ch ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+       (Contributed by Anthony Hart, 18-Aug-2011.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem rblem1 (ph : wff, ps : wff, ch : wff, th : wff)  {
+	hyp 1 : wff = |- ( ¬ ph ∨ ps ) ;;
+	hyp 2 : wff = |- ( ¬ ch ∨ th ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ( ph ∨ ch ) ∨ ( ps ∨ th ) ) ;;
+}
+
+proof of rblem1 {
+	step 1 : wff = rb-ax1 () |- ( ¬ ( ¬ ch ∨ th ) ∨ ( ¬ ( ps ∨ ch ) ∨ ( ps ∨ th ) ) ) ;;
+	step 2 : wff = anmp (hyp 2, step 1) |- ( ¬ ( ps ∨ ch ) ∨ ( ps ∨ th ) ) ;;
+	step 3 : wff = rb-ax2 () |- ( ¬ ( ch ∨ ps ) ∨ ( ps ∨ ch ) ) ;;
+	step 4 : wff = rb-ax1 () |- ( ¬ ( ¬ ph ∨ ps ) ∨ ( ¬ ( ch ∨ ph ) ∨ ( ch ∨ ps ) ) ) ;;
+	step 5 : wff = anmp (hyp 1, step 4) |- ( ¬ ( ch ∨ ph ) ∨ ( ch ∨ ps ) ) ;;
+	step 6 : wff = rb-ax2 () |- ( ¬ ( ph ∨ ch ) ∨ ( ch ∨ ph ) ) ;;
+	step 7 : wff = rbsyl (step 5, step 6) |- ( ¬ ( ph ∨ ch ) ∨ ( ch ∨ ps ) ) ;;
+	step 8 : wff = rbsyl (step 3, step 7) |- ( ¬ ( ph ∨ ch ) ∨ ( ps ∨ ch ) ) ;;
+	step 9 : wff = rbsyl (step 2, step 8) |- ( ¬ ( ph ∨ ch ) ∨ ( ps ∨ th ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+     (Contributed by Anthony Hart, 18-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem rblem2 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ¬ ( ch ∨ ph ) ∨ ( ch ∨ ( ph ∨ ps ) ) ) ;;
+}
+
+proof of rblem2 {
+	step 1 : wff = rb-ax2 () |- ( ¬ ( ps ∨ ph ) ∨ ( ph ∨ ps ) ) ;;
+	step 2 : wff = rb-ax3 () |- ( ¬ ph ∨ ( ps ∨ ph ) ) ;;
+	step 3 : wff = rbsyl (step 1, step 2) |- ( ¬ ph ∨ ( ph ∨ ps ) ) ;;
+	step 4 : wff = rb-ax1 () |- ( ¬ ( ¬ ph ∨ ( ph ∨ ps ) ) ∨ ( ¬ ( ch ∨ ph ) ∨ ( ch ∨ ( ph ∨ ps ) ) ) ) ;;
+	step 5 : wff = anmp (step 3, step 4) |- ( ¬ ( ch ∨ ph ) ∨ ( ch ∨ ( ph ∨ ps ) ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+     (Contributed by Anthony Hart, 18-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem rblem3 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ¬ ( ch ∨ ph ) ∨ ( ( ch ∨ ps ) ∨ ph ) ) ;;
+}
+
+proof of rblem3 {
+	step 1 : wff = rb-ax2 () |- ( ¬ ( ph ∨ ( ch ∨ ps ) ) ∨ ( ( ch ∨ ps ) ∨ ph ) ) ;;
+	step 2 : wff = rblem2 () |- ( ¬ ( ph ∨ ch ) ∨ ( ph ∨ ( ch ∨ ps ) ) ) ;;
+	step 3 : wff = rb-ax2 () |- ( ¬ ( ch ∨ ph ) ∨ ( ph ∨ ch ) ) ;;
+	step 4 : wff = rbsyl (step 2, step 3) |- ( ¬ ( ch ∨ ph ) ∨ ( ph ∨ ( ch ∨ ps ) ) ) ;;
+	step 5 : wff = rbsyl (step 1, step 4) |- ( ¬ ( ch ∨ ph ) ∨ ( ( ch ∨ ps ) ∨ ph ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+       (Contributed by Anthony Hart, 18-Aug-2011.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem rblem4 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
+	hyp 1 : wff = |- ( ¬ ph ∨ th ) ;;
+	hyp 2 : wff = |- ( ¬ ps ∨ ta ) ;;
+	hyp 3 : wff = |- ( ¬ ch ∨ et ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ( ( ph ∨ ps ) ∨ ch ) ∨ ( ( et ∨ ta ) ∨ th ) ) ;;
+}
+
+proof of rblem4 {
+	step 1 : wff = rblem1 (hyp 3, hyp 2) |- ( ¬ ( ch ∨ ps ) ∨ ( et ∨ ta ) ) ;;
+	step 2 : wff = rblem1 (step 1, hyp 1) |- ( ¬ ( ( ch ∨ ps ) ∨ ph ) ∨ ( ( et ∨ ta ) ∨ th ) ) ;;
+	step 3 : wff = rb-ax2 () |- ( ¬ ( ph ∨ ( ch ∨ ps ) ) ∨ ( ( ch ∨ ps ) ∨ ph ) ) ;;
+	step 4 : wff = rb-ax2 () |- ( ¬ ( ps ∨ ch ) ∨ ( ch ∨ ps ) ) ;;
+	step 5 : wff = rb-ax1 () |- ( ¬ ( ¬ ( ps ∨ ch ) ∨ ( ch ∨ ps ) ) ∨ ( ¬ ( ph ∨ ( ps ∨ ch ) ) ∨ ( ph ∨ ( ch ∨ ps ) ) ) ) ;;
+	step 6 : wff = anmp (step 4, step 5) |- ( ¬ ( ph ∨ ( ps ∨ ch ) ) ∨ ( ph ∨ ( ch ∨ ps ) ) ) ;;
+	step 7 : wff = rb-ax2 () |- ( ¬ ( ( ps ∨ ch ) ∨ ph ) ∨ ( ph ∨ ( ps ∨ ch ) ) ) ;;
+	step 8 : wff = rbsyl (step 6, step 7) |- ( ¬ ( ( ps ∨ ch ) ∨ ph ) ∨ ( ph ∨ ( ch ∨ ps ) ) ) ;;
+	step 9 : wff = rbsyl (step 3, step 8) |- ( ¬ ( ( ps ∨ ch ) ∨ ph ) ∨ ( ( ch ∨ ps ) ∨ ph ) ) ;;
+	step 10 : wff = rb-ax4 () |- ( ¬ ( ( ( ps ∨ ch ) ∨ ph ) ∨ ( ( ps ∨ ch ) ∨ ph ) ) ∨ ( ( ps ∨ ch ) ∨ ph ) ) ;;
+	step 11 : wff = rb-ax2 () |- ( ¬ ( ph ∨ ( ps ∨ ch ) ) ∨ ( ( ps ∨ ch ) ∨ ph ) ) ;;
+	step 12 : wff = rblem2 () |- ( ¬ ( ph ∨ ps ) ∨ ( ph ∨ ( ps ∨ ch ) ) ) ;;
+	step 13 : wff = rbsyl (step 11, step 12) |- ( ¬ ( ph ∨ ps ) ∨ ( ( ps ∨ ch ) ∨ ph ) ) ;;
+	step 14 : wff = rb-ax3 () |- ( ¬ ch ∨ ( ps ∨ ch ) ) ;;
+	step 15 : wff = rblem2 () |- ( ¬ ( ¬ ch ∨ ( ps ∨ ch ) ) ∨ ( ¬ ch ∨ ( ( ps ∨ ch ) ∨ ph ) ) ) ;;
+	step 16 : wff = anmp (step 14, step 15) |- ( ¬ ch ∨ ( ( ps ∨ ch ) ∨ ph ) ) ;;
+	step 17 : wff = rblem1 (step 13, step 16) |- ( ¬ ( ( ph ∨ ps ) ∨ ch ) ∨ ( ( ( ps ∨ ch ) ∨ ph ) ∨ ( ( ps ∨ ch ) ∨ ph ) ) ) ;;
+	step 18 : wff = rbsyl (step 10, step 17) |- ( ¬ ( ( ph ∨ ps ) ∨ ch ) ∨ ( ( ps ∨ ch ) ∨ ph ) ) ;;
+	step 19 : wff = rbsyl (step 9, step 18) |- ( ¬ ( ( ph ∨ ps ) ∨ ch ) ∨ ( ( ch ∨ ps ) ∨ ph ) ) ;;
+	step 20 : wff = rbsyl (step 2, step 19) |- ( ¬ ( ( ph ∨ ps ) ∨ ch ) ∨ ( ( et ∨ ta ) ∨ th ) ) ;;
+	qed prop 1 = step 20 ;;
+}
+
+/* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+     (Contributed by Anthony Hart, 19-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem rblem5 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ¬ ( ¬ ¬ ph ∨ ps ) ∨ ( ¬ ¬ ps ∨ ph ) ) ;;
+}
+
+proof of rblem5 {
+	step 1 : wff = rb-ax2 () |- ( ¬ ( ph ∨ ¬ ¬ ps ) ∨ ( ¬ ¬ ps ∨ ph ) ) ;;
+	step 2 : wff = rb-ax4 () |- ( ¬ ( ph ∨ ph ) ∨ ph ) ;;
+	step 3 : wff = rb-ax3 () |- ( ¬ ph ∨ ( ph ∨ ph ) ) ;;
+	step 4 : wff = rbsyl (step 2, step 3) |- ( ¬ ph ∨ ph ) ;;
+	step 5 : wff = rb-ax4 () |- ( ¬ ( ¬ ¬ ph ∨ ¬ ¬ ph ) ∨ ¬ ¬ ph ) ;;
+	step 6 : wff = rb-ax3 () |- ( ¬ ¬ ¬ ph ∨ ( ¬ ¬ ph ∨ ¬ ¬ ph ) ) ;;
+	step 7 : wff = rbsyl (step 5, step 6) |- ( ¬ ¬ ¬ ph ∨ ¬ ¬ ph ) ;;
+	step 8 : wff = rb-ax2 () |- ( ¬ ( ¬ ¬ ¬ ph ∨ ¬ ¬ ph ) ∨ ( ¬ ¬ ph ∨ ¬ ¬ ¬ ph ) ) ;;
+	step 9 : wff = anmp (step 7, step 8) |- ( ¬ ¬ ph ∨ ¬ ¬ ¬ ph ) ;;
+	step 10 : wff = rb-ax4 () |- ( ¬ ( ph ∨ ph ) ∨ ph ) ;;
+	step 11 : wff = rb-ax3 () |- ( ¬ ph ∨ ( ph ∨ ph ) ) ;;
+	step 12 : wff = rbsyl (step 10, step 11) |- ( ¬ ph ∨ ph ) ;;
+	step 13 : wff = rblem1 (step 9, step 12) |- ( ¬ ( ¬ ph ∨ ph ) ∨ ( ¬ ¬ ¬ ph ∨ ph ) ) ;;
+	step 14 : wff = anmp (step 4, step 13) |- ( ¬ ¬ ¬ ph ∨ ph ) ;;
+	step 15 : wff = rb-ax4 () |- ( ¬ ( ¬ ps ∨ ¬ ps ) ∨ ¬ ps ) ;;
+	step 16 : wff = rb-ax3 () |- ( ¬ ¬ ps ∨ ( ¬ ps ∨ ¬ ps ) ) ;;
+	step 17 : wff = rbsyl (step 15, step 16) |- ( ¬ ¬ ps ∨ ¬ ps ) ;;
+	step 18 : wff = rb-ax2 () |- ( ¬ ( ¬ ¬ ps ∨ ¬ ps ) ∨ ( ¬ ps ∨ ¬ ¬ ps ) ) ;;
+	step 19 : wff = anmp (step 17, step 18) |- ( ¬ ps ∨ ¬ ¬ ps ) ;;
+	step 20 : wff = rblem1 (step 14, step 19) |- ( ¬ ( ¬ ¬ ph ∨ ps ) ∨ ( ph ∨ ¬ ¬ ps ) ) ;;
+	step 21 : wff = rbsyl (step 1, step 20) |- ( ¬ ( ¬ ¬ ph ∨ ps ) ∨ ( ¬ ¬ ps ∨ ph ) ) ;;
+	qed prop 1 = step 21 ;;
+}
+
+/* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+       (Contributed by Anthony Hart, 19-Aug-2011.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem rblem6 (ph : wff, ps : wff)  {
+	hyp 1 : wff = |- ¬ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ps ∨ ph ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ph ∨ ps ) ;;
+}
+
+proof of rblem6 {
+	step 1 : wff = rb-ax4 () |- ( ¬ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ph ∨ ps ) ) ∨ ¬ ( ¬ ph ∨ ps ) ) ;;
+	step 2 : wff = rb-ax3 () |- ( ¬ ¬ ( ¬ ph ∨ ps ) ∨ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ph ∨ ps ) ) ) ;;
+	step 3 : wff = rbsyl (step 1, step 2) |- ( ¬ ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ph ∨ ps ) ) ;;
+	step 4 : wff = rb-ax2 () |- ( ¬ ( ¬ ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ph ∨ ps ) ) ∨ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ¬ ( ¬ ph ∨ ps ) ) ) ;;
+	step 5 : wff = anmp (step 3, step 4) |- ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ¬ ( ¬ ph ∨ ps ) ) ;;
+	step 6 : wff = rblem3 () |- ( ¬ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ¬ ( ¬ ph ∨ ps ) ) ∨ ( ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ps ∨ ph ) ) ∨ ¬ ¬ ( ¬ ph ∨ ps ) ) ) ;;
+	step 7 : wff = anmp (step 5, step 6) |- ( ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ps ∨ ph ) ) ∨ ¬ ¬ ( ¬ ph ∨ ps ) ) ;;
+	step 8 : wff = rb-ax2 () |- ( ¬ ( ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ps ∨ ph ) ) ∨ ¬ ¬ ( ¬ ph ∨ ps ) ) ∨ ( ¬ ¬ ( ¬ ph ∨ ps ) ∨ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ps ∨ ph ) ) ) ) ;;
+	step 9 : wff = anmp (step 7, step 8) |- ( ¬ ¬ ( ¬ ph ∨ ps ) ∨ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ps ∨ ph ) ) ) ;;
+	step 10 : wff = rblem5 () |- ( ¬ ( ¬ ¬ ( ¬ ph ∨ ps ) ∨ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ps ∨ ph ) ) ) ∨ ( ¬ ¬ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ps ∨ ph ) ) ∨ ( ¬ ph ∨ ps ) ) ) ;;
+	step 11 : wff = anmp (step 9, step 10) |- ( ¬ ¬ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ps ∨ ph ) ) ∨ ( ¬ ph ∨ ps ) ) ;;
+	step 12 : wff = anmp (hyp 1, step 11) |- ( ¬ ph ∨ ps ) ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+       (Contributed by Anthony Hart, 19-Aug-2011.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem rblem7 (ph : wff, ps : wff)  {
+	hyp 1 : wff = |- ¬ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ps ∨ ph ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ps ∨ ph ) ;;
+}
+
+proof of rblem7 {
+	step 1 : wff = rb-ax3 () |- ( ¬ ¬ ( ¬ ps ∨ ph ) ∨ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ps ∨ ph ) ) ) ;;
+	step 2 : wff = rblem5 () |- ( ¬ ( ¬ ¬ ( ¬ ps ∨ ph ) ∨ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ps ∨ ph ) ) ) ∨ ( ¬ ¬ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ps ∨ ph ) ) ∨ ( ¬ ps ∨ ph ) ) ) ;;
+	step 3 : wff = anmp (step 1, step 2) |- ( ¬ ¬ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ps ∨ ph ) ) ∨ ( ¬ ps ∨ ph ) ) ;;
+	step 4 : wff = anmp (hyp 1, step 3) |- ( ¬ ps ∨ ph ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* ~ ax-mp derived from Russell-Bernays'.  (Contributed by Anthony Hart,
+       19-Aug-2011.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem re1axmp (ph : wff, ps : wff)  {
+	hyp 1 : wff = |- ph ;;
+	hyp 2 : wff = |- ( ph → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ps ;;
+}
+
+proof of re1axmp {
+	step 1 : wff = rb-imdf () |- ¬ ( ¬ ( ¬ ( ph → ps ) ∨ ( ¬ ph ∨ ps ) ) ∨ ¬ ( ¬ ( ¬ ph ∨ ps ) ∨ ( ph → ps ) ) ) ;;
+	step 2 : wff = rblem6 (step 1) |- ( ¬ ( ph → ps ) ∨ ( ¬ ph ∨ ps ) ) ;;
+	step 3 : wff = anmp (hyp 2, step 2) |- ( ¬ ph ∨ ps ) ;;
+	step 4 : wff = anmp (hyp 1, step 3) |- ps ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* ~ luk-1 derived from Russell-Bernays'.  (Contributed by Anthony Hart,
+     19-Aug-2011.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem re2luk1 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ;;
+}
+
+proof of re2luk1 {
+	step 1 : wff = rb-imdf () |- ¬ ( ¬ ( ¬ ( ( ps → ch ) → ( ph → ch ) ) ∨ ( ¬ ( ps → ch ) ∨ ( ph → ch ) ) ) ∨ ¬ ( ¬ ( ¬ ( ps → ch ) ∨ ( ph → ch ) ) ∨ ( ( ps → ch ) → ( ph → ch ) ) ) ) ;;
+	step 2 : wff = rblem7 (step 1) |- ( ¬ ( ¬ ( ps → ch ) ∨ ( ph → ch ) ) ∨ ( ( ps → ch ) → ( ph → ch ) ) ) ;;
+	step 3 : wff = rb-imdf () |- ¬ ( ¬ ( ¬ ( ps → ch ) ∨ ( ¬ ps ∨ ch ) ) ∨ ¬ ( ¬ ( ¬ ps ∨ ch ) ∨ ( ps → ch ) ) ) ;;
+	step 4 : wff = rblem6 (step 3) |- ( ¬ ( ps → ch ) ∨ ( ¬ ps ∨ ch ) ) ;;
+	step 5 : wff = rb-ax2 () |- ( ¬ ( ¬ ( ps → ch ) ∨ ¬ ¬ ( ¬ ps ∨ ch ) ) ∨ ( ¬ ¬ ( ¬ ps ∨ ch ) ∨ ¬ ( ps → ch ) ) ) ;;
+	step 6 : wff = rb-ax4 () |- ( ¬ ( ¬ ( ps → ch ) ∨ ¬ ( ps → ch ) ) ∨ ¬ ( ps → ch ) ) ;;
+	step 7 : wff = rb-ax3 () |- ( ¬ ¬ ( ps → ch ) ∨ ( ¬ ( ps → ch ) ∨ ¬ ( ps → ch ) ) ) ;;
+	step 8 : wff = rbsyl (step 6, step 7) |- ( ¬ ¬ ( ps → ch ) ∨ ¬ ( ps → ch ) ) ;;
+	step 9 : wff = rb-ax4 () |- ( ¬ ( ¬ ( ¬ ps ∨ ch ) ∨ ¬ ( ¬ ps ∨ ch ) ) ∨ ¬ ( ¬ ps ∨ ch ) ) ;;
+	step 10 : wff = rb-ax3 () |- ( ¬ ¬ ( ¬ ps ∨ ch ) ∨ ( ¬ ( ¬ ps ∨ ch ) ∨ ¬ ( ¬ ps ∨ ch ) ) ) ;;
+	step 11 : wff = rbsyl (step 9, step 10) |- ( ¬ ¬ ( ¬ ps ∨ ch ) ∨ ¬ ( ¬ ps ∨ ch ) ) ;;
+	step 12 : wff = rb-ax2 () |- ( ¬ ( ¬ ¬ ( ¬ ps ∨ ch ) ∨ ¬ ( ¬ ps ∨ ch ) ) ∨ ( ¬ ( ¬ ps ∨ ch ) ∨ ¬ ¬ ( ¬ ps ∨ ch ) ) ) ;;
+	step 13 : wff = anmp (step 11, step 12) |- ( ¬ ( ¬ ps ∨ ch ) ∨ ¬ ¬ ( ¬ ps ∨ ch ) ) ;;
+	step 14 : wff = rblem1 (step 8, step 13) |- ( ¬ ( ¬ ( ps → ch ) ∨ ( ¬ ps ∨ ch ) ) ∨ ( ¬ ( ps → ch ) ∨ ¬ ¬ ( ¬ ps ∨ ch ) ) ) ;;
+	step 15 : wff = rbsyl (step 5, step 14) |- ( ¬ ( ¬ ( ps → ch ) ∨ ( ¬ ps ∨ ch ) ) ∨ ( ¬ ¬ ( ¬ ps ∨ ch ) ∨ ¬ ( ps → ch ) ) ) ;;
+	step 16 : wff = anmp (step 4, step 15) |- ( ¬ ¬ ( ¬ ps ∨ ch ) ∨ ¬ ( ps → ch ) ) ;;
+	step 17 : wff = rb-imdf () |- ¬ ( ¬ ( ¬ ( ph → ch ) ∨ ( ¬ ph ∨ ch ) ) ∨ ¬ ( ¬ ( ¬ ph ∨ ch ) ∨ ( ph → ch ) ) ) ;;
+	step 18 : wff = rblem7 (step 17) |- ( ¬ ( ¬ ph ∨ ch ) ∨ ( ph → ch ) ) ;;
+	step 19 : wff = rblem1 (step 16, step 18) |- ( ¬ ( ¬ ( ¬ ps ∨ ch ) ∨ ( ¬ ph ∨ ch ) ) ∨ ( ¬ ( ps → ch ) ∨ ( ph → ch ) ) ) ;;
+	step 20 : wff = rb-ax1 () |- ( ¬ ( ¬ ps ∨ ch ) ∨ ( ¬ ( ¬ ph ∨ ps ) ∨ ( ¬ ph ∨ ch ) ) ) ;;
+	step 21 : wff = rb-ax2 () |- ( ¬ ( ( ¬ ( ¬ ps ∨ ch ) ∨ ( ¬ ph ∨ ch ) ) ∨ ¬ ( ¬ ph ∨ ps ) ) ∨ ( ¬ ( ¬ ph ∨ ps ) ∨ ( ¬ ( ¬ ps ∨ ch ) ∨ ( ¬ ph ∨ ch ) ) ) ) ;;
+	step 22 : wff = rb-ax4 () |- ( ¬ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ph ∨ ps ) ) ∨ ¬ ( ¬ ph ∨ ps ) ) ;;
+	step 23 : wff = rb-ax3 () |- ( ¬ ¬ ( ¬ ph ∨ ps ) ∨ ( ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ph ∨ ps ) ) ) ;;
+	step 24 : wff = rbsyl (step 22, step 23) |- ( ¬ ¬ ( ¬ ph ∨ ps ) ∨ ¬ ( ¬ ph ∨ ps ) ) ;;
+	step 25 : wff = rb-ax4 () |- ( ¬ ( ( ¬ ph ∨ ch ) ∨ ( ¬ ph ∨ ch ) ) ∨ ( ¬ ph ∨ ch ) ) ;;
+	step 26 : wff = rb-ax3 () |- ( ¬ ( ¬ ph ∨ ch ) ∨ ( ( ¬ ph ∨ ch ) ∨ ( ¬ ph ∨ ch ) ) ) ;;
+	step 27 : wff = rbsyl (step 25, step 26) |- ( ¬ ( ¬ ph ∨ ch ) ∨ ( ¬ ph ∨ ch ) ) ;;
+	step 28 : wff = rb-ax4 () |- ( ¬ ( ¬ ( ¬ ps ∨ ch ) ∨ ¬ ( ¬ ps ∨ ch ) ) ∨ ¬ ( ¬ ps ∨ ch ) ) ;;
+	step 29 : wff = rb-ax3 () |- ( ¬ ¬ ( ¬ ps ∨ ch ) ∨ ( ¬ ( ¬ ps ∨ ch ) ∨ ¬ ( ¬ ps ∨ ch ) ) ) ;;
+	step 30 : wff = rbsyl (step 28, step 29) |- ( ¬ ¬ ( ¬ ps ∨ ch ) ∨ ¬ ( ¬ ps ∨ ch ) ) ;;
+	step 31 : wff = rblem4 (step 24, step 27, step 30) |- ( ¬ ( ( ¬ ( ¬ ph ∨ ps ) ∨ ( ¬ ph ∨ ch ) ) ∨ ¬ ( ¬ ps ∨ ch ) ) ∨ ( ( ¬ ( ¬ ps ∨ ch ) ∨ ( ¬ ph ∨ ch ) ) ∨ ¬ ( ¬ ph ∨ ps ) ) ) ;;
+	step 32 : wff = rb-ax2 () |- ( ¬ ( ¬ ( ¬ ps ∨ ch ) ∨ ( ¬ ( ¬ ph ∨ ps ) ∨ ( ¬ ph ∨ ch ) ) ) ∨ ( ( ¬ ( ¬ ph ∨ ps ) ∨ ( ¬ ph ∨ ch ) ) ∨ ¬ ( ¬ ps ∨ ch ) ) ) ;;
+	step 33 : wff = rbsyl (step 31, step 32) |- ( ¬ ( ¬ ( ¬ ps ∨ ch ) ∨ ( ¬ ( ¬ ph ∨ ps ) ∨ ( ¬ ph ∨ ch ) ) ) ∨ ( ( ¬ ( ¬ ps ∨ ch ) ∨ ( ¬ ph ∨ ch ) ) ∨ ¬ ( ¬ ph ∨ ps ) ) ) ;;
+	step 34 : wff = rbsyl (step 21, step 33) |- ( ¬ ( ¬ ( ¬ ps ∨ ch ) ∨ ( ¬ ( ¬ ph ∨ ps ) ∨ ( ¬ ph ∨ ch ) ) ) ∨ ( ¬ ( ¬ ph ∨ ps ) ∨ ( ¬ ( ¬ ps ∨ ch ) ∨ ( ¬ ph ∨ ch ) ) ) ) ;;
+	step 35 : wff = anmp (step 20, step 34) |- ( ¬ ( ¬ ph ∨ ps ) ∨ ( ¬ ( ¬ ps ∨ ch ) ∨ ( ¬ ph ∨ ch ) ) ) ;;
+	step 36 : wff = rbsyl (step 19, step 35) |- ( ¬ ( ¬ ph ∨ ps ) ∨ ( ¬ ( ps → ch ) ∨ ( ph → ch ) ) ) ;;
+	step 37 : wff = rb-imdf () |- ¬ ( ¬ ( ¬ ( ph → ps ) ∨ ( ¬ ph ∨ ps ) ) ∨ ¬ ( ¬ ( ¬ ph ∨ ps ) ∨ ( ph → ps ) ) ) ;;
+	step 38 : wff = rblem6 (step 37) |- ( ¬ ( ph → ps ) ∨ ( ¬ ph ∨ ps ) ) ;;
+	step 39 : wff = rbsyl (step 36, step 38) |- ( ¬ ( ph → ps ) ∨ ( ¬ ( ps → ch ) ∨ ( ph → ch ) ) ) ;;
+	step 40 : wff = rbsyl (step 2, step 39) |- ( ¬ ( ph → ps ) ∨ ( ( ps → ch ) → ( ph → ch ) ) ) ;;
+	step 41 : wff = rb-imdf () |- ¬ ( ¬ ( ¬ ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ∨ ( ¬ ( ph → ps ) ∨ ( ( ps → ch ) → ( ph → ch ) ) ) ) ∨ ¬ ( ¬ ( ¬ ( ph → ps ) ∨ ( ( ps → ch ) → ( ph → ch ) ) ) ∨ ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ;;
+	step 42 : wff = rblem7 (step 41) |- ( ¬ ( ¬ ( ph → ps ) ∨ ( ( ps → ch ) → ( ph → ch ) ) ) ∨ ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ;;
+	step 43 : wff = anmp (step 40, step 42) |- ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ;;
+	qed prop 1 = step 43 ;;
+}
+
+/* ~ luk-2 derived from Russell-Bernays'.  (Contributed by Anthony Hart,
+     19-Aug-2011.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem re2luk2 (ph : wff)  {
+	prop 1 : wff = |- ( ( ¬ ph → ph ) → ph ) ;;
+}
+
+proof of re2luk2 {
+	step 1 : wff = rb-ax4 () |- ( ¬ ( ph ∨ ph ) ∨ ph ) ;;
+	step 2 : wff = rb-ax4 () |- ( ¬ ( ph ∨ ph ) ∨ ph ) ;;
+	step 3 : wff = rb-ax3 () |- ( ¬ ph ∨ ( ph ∨ ph ) ) ;;
+	step 4 : wff = rbsyl (step 2, step 3) |- ( ¬ ph ∨ ph ) ;;
+	step 5 : wff = rb-ax4 () |- ( ¬ ( ¬ ¬ ph ∨ ¬ ¬ ph ) ∨ ¬ ¬ ph ) ;;
+	step 6 : wff = rb-ax3 () |- ( ¬ ¬ ¬ ph ∨ ( ¬ ¬ ph ∨ ¬ ¬ ph ) ) ;;
+	step 7 : wff = rbsyl (step 5, step 6) |- ( ¬ ¬ ¬ ph ∨ ¬ ¬ ph ) ;;
+	step 8 : wff = rb-ax2 () |- ( ¬ ( ¬ ¬ ¬ ph ∨ ¬ ¬ ph ) ∨ ( ¬ ¬ ph ∨ ¬ ¬ ¬ ph ) ) ;;
+	step 9 : wff = anmp (step 7, step 8) |- ( ¬ ¬ ph ∨ ¬ ¬ ¬ ph ) ;;
+	step 10 : wff = rb-ax4 () |- ( ¬ ( ph ∨ ph ) ∨ ph ) ;;
+	step 11 : wff = rb-ax3 () |- ( ¬ ph ∨ ( ph ∨ ph ) ) ;;
+	step 12 : wff = rbsyl (step 10, step 11) |- ( ¬ ph ∨ ph ) ;;
+	step 13 : wff = rblem1 (step 9, step 12) |- ( ¬ ( ¬ ph ∨ ph ) ∨ ( ¬ ¬ ¬ ph ∨ ph ) ) ;;
+	step 14 : wff = anmp (step 4, step 13) |- ( ¬ ¬ ¬ ph ∨ ph ) ;;
+	step 15 : wff = rb-ax4 () |- ( ¬ ( ph ∨ ph ) ∨ ph ) ;;
+	step 16 : wff = rb-ax3 () |- ( ¬ ph ∨ ( ph ∨ ph ) ) ;;
+	step 17 : wff = rbsyl (step 15, step 16) |- ( ¬ ph ∨ ph ) ;;
+	step 18 : wff = rblem1 (step 14, step 17) |- ( ¬ ( ¬ ¬ ph ∨ ph ) ∨ ( ph ∨ ph ) ) ;;
+	step 19 : wff = rbsyl (step 1, step 18) |- ( ¬ ( ¬ ¬ ph ∨ ph ) ∨ ph ) ;;
+	step 20 : wff = rb-imdf () |- ¬ ( ¬ ( ¬ ( ¬ ph → ph ) ∨ ( ¬ ¬ ph ∨ ph ) ) ∨ ¬ ( ¬ ( ¬ ¬ ph ∨ ph ) ∨ ( ¬ ph → ph ) ) ) ;;
+	step 21 : wff = rblem6 (step 20) |- ( ¬ ( ¬ ph → ph ) ∨ ( ¬ ¬ ph ∨ ph ) ) ;;
+	step 22 : wff = rbsyl (step 19, step 21) |- ( ¬ ( ¬ ph → ph ) ∨ ph ) ;;
+	step 23 : wff = rb-imdf () |- ¬ ( ¬ ( ¬ ( ( ¬ ph → ph ) → ph ) ∨ ( ¬ ( ¬ ph → ph ) ∨ ph ) ) ∨ ¬ ( ¬ ( ¬ ( ¬ ph → ph ) ∨ ph ) ∨ ( ( ¬ ph → ph ) → ph ) ) ) ;;
+	step 24 : wff = rblem7 (step 23) |- ( ¬ ( ¬ ( ¬ ph → ph ) ∨ ph ) ∨ ( ( ¬ ph → ph ) → ph ) ) ;;
+	step 25 : wff = anmp (step 22, step 24) |- ( ( ¬ ph → ph ) → ph ) ;;
+	qed prop 1 = step 25 ;;
+}
+
+/* ~ luk-3 derived from Russell-Bernays'.
+
+     This theorem, along with ~ re1axmp , ~ re2luk1 , and ~ re2luk2 shows that
+     ~ rb-ax1 , ~ rb-ax2 , ~ rb-ax3 , and ~ rb-ax4 , along with ~ anmp , can be
+     used as a complete axiomatization of propositional calculus.  (Contributed
+     by Anthony Hart, 19-Aug-2011.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem re2luk3 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ph → ( ¬ ph → ps ) ) ;;
+}
+
+proof of re2luk3 {
+	step 1 : wff = rb-imdf () |- ¬ ( ¬ ( ¬ ( ¬ ph → ps ) ∨ ( ¬ ¬ ph ∨ ps ) ) ∨ ¬ ( ¬ ( ¬ ¬ ph ∨ ps ) ∨ ( ¬ ph → ps ) ) ) ;;
+	step 2 : wff = rblem7 (step 1) |- ( ¬ ( ¬ ¬ ph ∨ ps ) ∨ ( ¬ ph → ps ) ) ;;
+	step 3 : wff = rb-ax4 () |- ( ¬ ( ¬ ph ∨ ¬ ph ) ∨ ¬ ph ) ;;
+	step 4 : wff = rb-ax3 () |- ( ¬ ¬ ph ∨ ( ¬ ph ∨ ¬ ph ) ) ;;
+	step 5 : wff = rbsyl (step 3, step 4) |- ( ¬ ¬ ph ∨ ¬ ph ) ;;
+	step 6 : wff = rb-ax2 () |- ( ¬ ( ¬ ¬ ph ∨ ¬ ph ) ∨ ( ¬ ph ∨ ¬ ¬ ph ) ) ;;
+	step 7 : wff = anmp (step 5, step 6) |- ( ¬ ph ∨ ¬ ¬ ph ) ;;
+	step 8 : wff = rblem2 () |- ( ¬ ( ¬ ph ∨ ¬ ¬ ph ) ∨ ( ¬ ph ∨ ( ¬ ¬ ph ∨ ps ) ) ) ;;
+	step 9 : wff = anmp (step 7, step 8) |- ( ¬ ph ∨ ( ¬ ¬ ph ∨ ps ) ) ;;
+	step 10 : wff = rbsyl (step 2, step 9) |- ( ¬ ph ∨ ( ¬ ph → ps ) ) ;;
+	step 11 : wff = rb-imdf () |- ¬ ( ¬ ( ¬ ( ph → ( ¬ ph → ps ) ) ∨ ( ¬ ph ∨ ( ¬ ph → ps ) ) ) ∨ ¬ ( ¬ ( ¬ ph ∨ ( ¬ ph → ps ) ) ∨ ( ph → ( ¬ ph → ps ) ) ) ) ;;
+	step 12 : wff = rblem7 (step 11) |- ( ¬ ( ¬ ph ∨ ( ¬ ph → ps ) ) ∨ ( ph → ( ¬ ph → ps ) ) ) ;;
+	step 13 : wff = anmp (step 10, step 12) |- ( ph → ( ¬ ph → ps ) ) ;;
+	qed prop 1 = step 13 ;;
+}
+
+

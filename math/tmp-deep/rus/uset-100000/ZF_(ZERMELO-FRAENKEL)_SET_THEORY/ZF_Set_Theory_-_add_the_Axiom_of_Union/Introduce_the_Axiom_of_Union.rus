@@ -1,0 +1,2022 @@
+import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                  Introduce the Axiom of Union
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* Axiom of Union.  An axiom of Zermelo-Fraenkel set theory.  It states
+       that a set ` y ` exists that includes the union of a given set ` x `
+       i.e. the collection of all members of the members of ` x ` .  The
+       variant ~ axun2 states that the union itself exists.  A version with the
+       standard abbreviation for union is ~ uniex2 .  A version using class
+       notation is ~ uniex .
+
+       The union of a class ~ df-uni should not be confused with the union of
+       two classes ~ df-un .  Their relationship is shown in ~ unipr .
+       (Contributed by NM, 23-Dec-1993.) */
+
+axiom ax-un (x : set, y : set, z : set, w : set) disjointed(w x y z) {
+	prop 1 : wff = |- ∃ y ∀ z ( ∃ w ( z ∈ w ∧ w ∈ x ) → z ∈ y ) ;;
+}
+
+/* Axiom of Union expressed with the fewest number of different variables.
+       (Contributed by NM, 14-Aug-2003.) */
+
+theorem zfun (x : set, y : set, z : set) disjointed(w x y z) {
+	prop 1 : wff = |- ∃ x ∀ y ( ∃ x ( y ∈ x ∧ x ∈ z ) → y ∈ x ) ;;
+}
+
+proof of zfun {
+	var w : set;;
+	step 1 : wff = ax-un () |- ∃ x ∀ y ( ∃ w ( y ∈ w ∧ w ∈ z ) → y ∈ x ) ;;
+	step 2 : wff = elequ2 () |- ( w = x → ( y ∈ w ↔ y ∈ x ) ) ;;
+	step 3 : wff = elequ1 () |- ( w = x → ( w ∈ z ↔ x ∈ z ) ) ;;
+	step 4 : wff = anbi12d (step 2, step 3) |- ( w = x → ( ( y ∈ w ∧ w ∈ z ) ↔ ( y ∈ x ∧ x ∈ z ) ) ) ;;
+	step 5 : wff = cbvexv (step 4) |- ( ∃ w ( y ∈ w ∧ w ∈ z ) ↔ ∃ x ( y ∈ x ∧ x ∈ z ) ) ;;
+	step 6 : wff = imbi1i (step 5) |- ( ( ∃ w ( y ∈ w ∧ w ∈ z ) → y ∈ x ) ↔ ( ∃ x ( y ∈ x ∧ x ∈ z ) → y ∈ x ) ) ;;
+	step 7 : wff = albii (step 6) |- ( ∀ y ( ∃ w ( y ∈ w ∧ w ∈ z ) → y ∈ x ) ↔ ∀ y ( ∃ x ( y ∈ x ∧ x ∈ z ) → y ∈ x ) ) ;;
+	step 8 : wff = exbii (step 7) |- ( ∃ x ∀ y ( ∃ w ( y ∈ w ∧ w ∈ z ) → y ∈ x ) ↔ ∃ x ∀ y ( ∃ x ( y ∈ x ∧ x ∈ z ) → y ∈ x ) ) ;;
+	step 9 : wff = mpbi (step 1, step 8) |- ∃ x ∀ y ( ∃ x ( y ∈ x ∧ x ∈ z ) → y ∈ x ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* A variant of the Axiom of Union ~ ax-un .  For any set ` x ` , there
+       exists a set ` y ` whose members are exactly the members of the members
+       of ` x ` i.e. the union of ` x ` .  Axiom Union of [BellMachover]
+       p. 466.  (Contributed by NM, 4-Jun-2006.) */
+
+theorem axun2 (x : set, y : set, z : set, w : set) disjointed(w x y z) {
+	prop 1 : wff = |- ∃ y ∀ z ( z ∈ y ↔ ∃ w ( z ∈ w ∧ w ∈ x ) ) ;;
+}
+
+proof of axun2 {
+	step 1 : wff = ax-un () |- ∃ y ∀ z ( ∃ w ( z ∈ w ∧ w ∈ x ) → z ∈ y ) ;;
+	step 2 : wff = bm1.3ii (step 1) |- ∃ y ∀ z ( z ∈ y ↔ ∃ w ( z ∈ w ∧ w ∈ x ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* The Axiom of Union using the standard abbreviation for union.  Given any
+       set ` x ` , its union ` y ` exists.  (Contributed by NM, 4-Jun-2006.) */
+
+theorem uniex2 (x : set, y : set) disjointed(x y z) {
+	prop 1 : wff = |- ∃ y y = ⋃ x ;;
+}
+
+proof of uniex2 {
+	var z : set;;
+	step 1 : wff = zfun () |- ∃ y ∀ z ( ∃ y ( z ∈ y ∧ y ∈ x ) → z ∈ y ) ;;
+	step 2 : wff = eluni () |- ( z ∈ ⋃ x ↔ ∃ y ( z ∈ y ∧ y ∈ x ) ) ;;
+	step 3 : wff = imbi1i (step 2) |- ( ( z ∈ ⋃ x → z ∈ y ) ↔ ( ∃ y ( z ∈ y ∧ y ∈ x ) → z ∈ y ) ) ;;
+	step 4 : wff = albii (step 3) |- ( ∀ z ( z ∈ ⋃ x → z ∈ y ) ↔ ∀ z ( ∃ y ( z ∈ y ∧ y ∈ x ) → z ∈ y ) ) ;;
+	step 5 : wff = exbii (step 4) |- ( ∃ y ∀ z ( z ∈ ⋃ x → z ∈ y ) ↔ ∃ y ∀ z ( ∃ y ( z ∈ y ∧ y ∈ x ) → z ∈ y ) ) ;;
+	step 6 : wff = mpbir (step 1, step 5) |- ∃ y ∀ z ( z ∈ ⋃ x → z ∈ y ) ;;
+	step 7 : wff = bm1.3ii (step 6) |- ∃ y ∀ z ( z ∈ y ↔ z ∈ ⋃ x ) ;;
+	step 8 : wff = dfcleq () |- ( y = ⋃ x ↔ ∀ z ( z ∈ y ↔ z ∈ ⋃ x ) ) ;;
+	step 9 : wff = exbii (step 8) |- ( ∃ y y = ⋃ x ↔ ∃ y ∀ z ( z ∈ y ↔ z ∈ ⋃ x ) ) ;;
+	step 10 : wff = mpbir (step 7, step 9) |- ∃ y y = ⋃ x ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* The Axiom of Union in class notation.  This says that if ` A ` is a set
+       i.e. ` A e. _V ` (see ~ isset ), then the union of ` A ` is also a set.
+       Same as Axiom 3 of [TakeutiZaring] p. 16.  (Contributed by NM,
+       11-Aug-1993.) */
+
+theorem uniex (A : class) disjointed(x y A) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ⋃ A ∈ _V ;;
+}
+
+proof of uniex {
+	var x : set, y : set;;
+	step 1 : wff = unieq () |- ( x = A → ⋃ x = ⋃ A ) ;;
+	step 2 : wff = eleq1d (step 1) |- ( x = A → ( ⋃ x ∈ _V ↔ ⋃ A ∈ _V ) ) ;;
+	step 3 : wff = uniex2 () |- ∃ y y = ⋃ x ;;
+	step 4 : wff = issetri (step 3) |- ⋃ x ∈ _V ;;
+	step 5 : wff = vtocl (hyp 1, step 2, step 4) |- ⋃ A ∈ _V ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* The ZF Axiom of Union in class notation, in the form of a theorem
+       instead of an inference.  We use the antecedent ` A e. V ` instead of
+       ` A e. _V ` to make the theorem more general and thus shorten some
+       proofs; obviously the universal class constant ` _V ` is one possible
+       substitution for class variable ` V ` .  (Contributed by NM,
+       25-Nov-1994.) */
+
+theorem uniexg (A : class, V : class) disjointed(x A) {
+	prop 1 : wff = |- ( A ∈ V → ⋃ A ∈ _V ) ;;
+}
+
+proof of uniexg {
+	var x : set;;
+	step 1 : wff = unieq () |- ( x = A → ⋃ x = ⋃ A ) ;;
+	step 2 : wff = eleq1d (step 1) |- ( x = A → ( ⋃ x ∈ _V ↔ ⋃ A ∈ _V ) ) ;;
+	step 3 : wff = vex () |- x ∈ _V ;;
+	step 4 : wff = uniex (step 3) |- ⋃ x ∈ _V ;;
+	step 5 : wff = vtoclg (step 2, step 4) |- ( A ∈ V → ⋃ A ∈ _V ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* The union of two sets is a set.  Corollary 5.8 of [TakeutiZaring]
+       p. 16.  (Contributed by NM, 1-Jul-1994.) */
+
+theorem unex (A : class, B : class)  {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∪ B ) ∈ _V ;;
+}
+
+proof of unex {
+	step 1 : wff = unipr (hyp 1, hyp 2) |- ⋃ { A , B } = ( A ∪ B ) ;;
+	step 2 : wff = prex () |- { A , B } ∈ _V ;;
+	step 3 : wff = uniex (step 2) |- ⋃ { A , B } ∈ _V ;;
+	step 4 : wff = eqeltrri (step 1, step 3) |- ( A ∪ B ) ∈ _V ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A triple of classes exists.  (Contributed by NM, 10-Apr-1994.) */
+
+theorem tpex (A : class, B : class, C : class)  {
+	prop 1 : wff = |- { A , B , C } ∈ _V ;;
+}
+
+proof of tpex {
+	step 1 : wff = df-tp () |- { A , B , C } = ( { A , B } ∪ { C } ) ;;
+	step 2 : wff = prex () |- { A , B } ∈ _V ;;
+	step 3 : wff = snex () |- { C } ∈ _V ;;
+	step 4 : wff = unex (step 2, step 3) |- ( { A , B } ∪ { C } ) ∈ _V ;;
+	step 5 : wff = eqeltri (step 1, step 4) |- { A , B , C } ∈ _V ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Existence of union is equivalent to existence of its components.
+       (Contributed by NM, 11-Jun-1998.) */
+
+theorem unexb (A : class, B : class) disjointed(x y A, x y B) {
+	prop 1 : wff = |- ( ( A ∈ _V ∧ B ∈ _V ) ↔ ( A ∪ B ) ∈ _V ) ;;
+}
+
+proof of unexb {
+	var x : set, y : set;;
+	step 1 : wff = uneq1 () |- ( x = A → ( x ∪ y ) = ( A ∪ y ) ) ;;
+	step 2 : wff = eleq1d (step 1) |- ( x = A → ( ( x ∪ y ) ∈ _V ↔ ( A ∪ y ) ∈ _V ) ) ;;
+	step 3 : wff = uneq2 () |- ( y = B → ( A ∪ y ) = ( A ∪ B ) ) ;;
+	step 4 : wff = eleq1d (step 3) |- ( y = B → ( ( A ∪ y ) ∈ _V ↔ ( A ∪ B ) ∈ _V ) ) ;;
+	step 5 : wff = vex () |- x ∈ _V ;;
+	step 6 : wff = vex () |- y ∈ _V ;;
+	step 7 : wff = unex (step 5, step 6) |- ( x ∪ y ) ∈ _V ;;
+	step 8 : wff = vtocl2g (step 2, step 4, step 7) |- ( ( A ∈ _V ∧ B ∈ _V ) → ( A ∪ B ) ∈ _V ) ;;
+	step 9 : wff = ssun1 () |- A ⊆ ( A ∪ B ) ;;
+	step 10 : wff = ssexg () |- ( ( A ⊆ ( A ∪ B ) ∧ ( A ∪ B ) ∈ _V ) → A ∈ _V ) ;;
+	step 11 : wff = mpan (step 9, step 10) |- ( ( A ∪ B ) ∈ _V → A ∈ _V ) ;;
+	step 12 : wff = ssun2 () |- B ⊆ ( A ∪ B ) ;;
+	step 13 : wff = ssexg () |- ( ( B ⊆ ( A ∪ B ) ∧ ( A ∪ B ) ∈ _V ) → B ∈ _V ) ;;
+	step 14 : wff = mpan (step 12, step 13) |- ( ( A ∪ B ) ∈ _V → B ∈ _V ) ;;
+	step 15 : wff = jca (step 11, step 14) |- ( ( A ∪ B ) ∈ _V → ( A ∈ _V ∧ B ∈ _V ) ) ;;
+	step 16 : wff = impbii (step 8, step 15) |- ( ( A ∈ _V ∧ B ∈ _V ) ↔ ( A ∪ B ) ∈ _V ) ;;
+	qed prop 1 = step 16 ;;
+}
+
+/* A union of two sets is a set.  Corollary 5.8 of [TakeutiZaring] p. 16.
+     (Contributed by NM, 18-Sep-2006.) */
+
+theorem unexg (A : class, B : class, V : class, W : class)  {
+	prop 1 : wff = |- ( ( A ∈ V ∧ B ∈ W ) → ( A ∪ B ) ∈ _V ) ;;
+}
+
+proof of unexg {
+	step 1 : wff = elex () |- ( A ∈ V → A ∈ _V ) ;;
+	step 2 : wff = elex () |- ( B ∈ W → B ∈ _V ) ;;
+	step 3 : wff = unexb () |- ( ( A ∈ _V ∧ B ∈ _V ) ↔ ( A ∪ B ) ∈ _V ) ;;
+	step 4 : wff = biimpi (step 3) |- ( ( A ∈ _V ∧ B ∈ _V ) → ( A ∪ B ) ∈ _V ) ;;
+	step 5 : wff = syl2an (step 1, step 2, step 4) |- ( ( A ∈ V ∧ B ∈ W ) → ( A ∪ B ) ∈ _V ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* A version of ~ unisn without the ` A e. _V ` hypothesis.  (Contributed
+       by Stefan Allan, 14-Mar-2006.) */
+
+theorem unisn2 (A : class)  {
+	prop 1 : wff = |- ⋃ { A } ∈ { ∅ , A } ;;
+}
+
+proof of unisn2 {
+	step 1 : wff = unisng () |- ( A ∈ _V → ⋃ { A } = A ) ;;
+	step 2 : wff = prid2g () |- ( A ∈ _V → A ∈ { ∅ , A } ) ;;
+	step 3 : wff = eqeltrd (step 1, step 2) |- ( A ∈ _V → ⋃ { A } ∈ { ∅ , A } ) ;;
+	step 4 : wff = snprc () |- ( ¬ A ∈ _V ↔ { A } = ∅ ) ;;
+	step 5 : wff = biimpi (step 4) |- ( ¬ A ∈ _V → { A } = ∅ ) ;;
+	step 6 : wff = unieqd (step 5) |- ( ¬ A ∈ _V → ⋃ { A } = ⋃ ∅ ) ;;
+	step 7 : wff = uni0 () |- ⋃ ∅ = ∅ ;;
+	step 8 : wff = 0ex () |- ∅ ∈ _V ;;
+	step 9 : wff = prid1 (step 8) |- ∅ ∈ { ∅ , A } ;;
+	step 10 : wff = eqeltri (step 7, step 9) |- ⋃ ∅ ∈ { ∅ , A } ;;
+	step 11 : wff = syl6eqel (step 6, step 10) |- ( ¬ A ∈ _V → ⋃ { A } ∈ { ∅ , A } ) ;;
+	step 12 : wff = pm2.61i (step 3, step 11) |- ⋃ { A } ∈ { ∅ , A } ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* Union of a singleton in the form of a restricted class abstraction.
+       (Contributed by NM, 3-Jul-2008.) */
+
+theorem unisn3 (x : set, A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( A ∈ B → ⋃ { x ∈ B | x = A } = A ) ;;
+}
+
+proof of unisn3 {
+	step 1 : wff = rabsn () |- ( A ∈ B → { x ∈ B | x = A } = { A } ) ;;
+	step 2 : wff = unieqd (step 1) |- ( A ∈ B → ⋃ { x ∈ B | x = A } = ⋃ { A } ) ;;
+	step 3 : wff = unisng () |- ( A ∈ B → ⋃ { A } = A ) ;;
+	step 4 : wff = eqtrd (step 2, step 3) |- ( A ∈ B → ⋃ { x ∈ B | x = A } = A ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* The class of all singletons is a proper class.  (Contributed by NM,
+       10-Oct-2008.)  (Proof shortened by Eric Schmidt, 7-Dec-2008.) */
+
+theorem snnex (x : set, y : set) disjointed(x y z) {
+	prop 1 : wff = |- { x | ∃ y x = { y } } ∉ _V ;;
+}
+
+proof of snnex {
+	var z : set;;
+	step 1 : wff = vprc () |- ¬ _V ∈ _V ;;
+	step 2 : wff = vex () |- z ∈ _V ;;
+	step 3 : wff = snid (step 2) |- z ∈ { z } ;;
+	step 4 : wff = a9ev () |- ∃ y y = z ;;
+	step 5 : wff = sneq () |- ( z = y → { z } = { y } ) ;;
+	step 6 : wff = eqcoms (step 5) |- ( y = z → { z } = { y } ) ;;
+	step 7 : wff = eximi (step 6) |- ( ∃ y y = z → ∃ y { z } = { y } ) ;;
+	step 8 : wff = ax-mp (step 4, step 7) |- ∃ y { z } = { y } ;;
+	step 9 : wff = snex () |- { z } ∈ _V ;;
+	step 10 : wff = eleq2 () |- ( x = { z } → ( z ∈ x ↔ z ∈ { z } ) ) ;;
+	step 11 : wff = eqeq1 () |- ( x = { z } → ( x = { y } ↔ { z } = { y } ) ) ;;
+	step 12 : wff = exbidv (step 11) |- ( x = { z } → ( ∃ y x = { y } ↔ ∃ y { z } = { y } ) ) ;;
+	step 13 : wff = anbi12d (step 10, step 12) |- ( x = { z } → ( ( z ∈ x ∧ ∃ y x = { y } ) ↔ ( z ∈ { z } ∧ ∃ y { z } = { y } ) ) ) ;;
+	step 14 : wff = spcev (step 9, step 13) |- ( ( z ∈ { z } ∧ ∃ y { z } = { y } ) → ∃ x ( z ∈ x ∧ ∃ y x = { y } ) ) ;;
+	step 15 : wff = mp2an (step 3, step 8, step 14) |- ∃ x ( z ∈ x ∧ ∃ y x = { y } ) ;;
+	step 16 : wff = eluniab () |- ( z ∈ ⋃ { x | ∃ y x = { y } } ↔ ∃ x ( z ∈ x ∧ ∃ y x = { y } ) ) ;;
+	step 17 : wff = mpbir (step 15, step 16) |- z ∈ ⋃ { x | ∃ y x = { y } } ;;
+	step 18 : wff = vex () |- z ∈ _V ;;
+	step 19 : wff = 2th (step 17, step 18) |- ( z ∈ ⋃ { x | ∃ y x = { y } } ↔ z ∈ _V ) ;;
+	step 20 : wff = eqriv (step 19) |- ⋃ { x | ∃ y x = { y } } = _V ;;
+	step 21 : wff = eleq1i (step 20) |- ( ⋃ { x | ∃ y x = { y } } ∈ _V ↔ _V ∈ _V ) ;;
+	step 22 : wff = mtbir (step 1, step 21) |- ¬ ⋃ { x | ∃ y x = { y } } ∈ _V ;;
+	step 23 : wff = uniexg () |- ( { x | ∃ y x = { y } } ∈ _V → ⋃ { x | ∃ y x = { y } } ∈ _V ) ;;
+	step 24 : wff = mto (step 22, step 23) |- ¬ { x | ∃ y x = { y } } ∈ _V ;;
+	step 25 : wff = df-nel () |- ( { x | ∃ y x = { y } } ∉ _V ↔ ¬ { x | ∃ y x = { y } } ∈ _V ) ;;
+	step 26 : wff = mpbir (step 24, step 25) |- { x | ∃ y x = { y } } ∉ _V ;;
+	qed prop 1 = step 26 ;;
+}
+
+/* If the subtrahend of a class difference exists, then the minuend exists
+     iff the difference exists.  (Contributed by NM, 12-Nov-2003.)  (Proof
+     shortened by Andrew Salmon, 12-Aug-2011.) */
+
+theorem difex2 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( B ∈ C → ( A ∈ _V ↔ ( A ∖ B ) ∈ _V ) ) ;;
+}
+
+proof of difex2 {
+	step 1 : wff = difexg () |- ( A ∈ _V → ( A ∖ B ) ∈ _V ) ;;
+	step 2 : wff = ssun2 () |- A ⊆ ( B ∪ A ) ;;
+	step 3 : wff = uncom () |- ( ( A ∖ B ) ∪ B ) = ( B ∪ ( A ∖ B ) ) ;;
+	step 4 : wff = undif2 () |- ( B ∪ ( A ∖ B ) ) = ( B ∪ A ) ;;
+	step 5 : wff = eqtr2i (step 3, step 4) |- ( B ∪ A ) = ( ( A ∖ B ) ∪ B ) ;;
+	step 6 : wff = sseqtri (step 2, step 5) |- A ⊆ ( ( A ∖ B ) ∪ B ) ;;
+	step 7 : wff = unexg () |- ( ( ( A ∖ B ) ∈ _V ∧ B ∈ C ) → ( ( A ∖ B ) ∪ B ) ∈ _V ) ;;
+	step 8 : wff = ssexg () |- ( ( A ⊆ ( ( A ∖ B ) ∪ B ) ∧ ( ( A ∖ B ) ∪ B ) ∈ _V ) → A ∈ _V ) ;;
+	step 9 : wff = sylancr (step 6, step 7, step 8) |- ( ( ( A ∖ B ) ∈ _V ∧ B ∈ C ) → A ∈ _V ) ;;
+	step 10 : wff = expcom (step 9) |- ( B ∈ C → ( ( A ∖ B ) ∈ _V → A ∈ _V ) ) ;;
+	step 11 : wff = impbid2 (step 1, step 10) |- ( B ∈ C → ( A ∈ _V ↔ ( A ∖ B ) ∈ _V ) ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* Each member of an ordered pair belongs to the union of the union of a
+       class to which the ordered pair belongs.  Lemma 3D of [Enderton] p. 41.
+       (Contributed by NM, 31-Mar-1995.)  (Revised by Mario Carneiro,
+       27-Feb-2016.) */
+
+theorem opeluu (A : class, B : class, C : class)  {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( 〈 A , B 〉 ∈ C → ( A ∈ ⋃ ⋃ C ∧ B ∈ ⋃ ⋃ C ) ) ;;
+}
+
+proof of opeluu {
+	step 1 : wff = prid1 (hyp 1) |- A ∈ { A , B } ;;
+	step 2 : wff = opi2 (hyp 1, hyp 2) |- { A , B } ∈ 〈 A , B 〉 ;;
+	step 3 : wff = elunii () |- ( ( { A , B } ∈ 〈 A , B 〉 ∧ 〈 A , B 〉 ∈ C ) → { A , B } ∈ ⋃ C ) ;;
+	step 4 : wff = mpan (step 2, step 3) |- ( 〈 A , B 〉 ∈ C → { A , B } ∈ ⋃ C ) ;;
+	step 5 : wff = elunii () |- ( ( A ∈ { A , B } ∧ { A , B } ∈ ⋃ C ) → A ∈ ⋃ ⋃ C ) ;;
+	step 6 : wff = sylancr (step 1, step 4, step 5) |- ( 〈 A , B 〉 ∈ C → A ∈ ⋃ ⋃ C ) ;;
+	step 7 : wff = prid2 (hyp 2) |- B ∈ { A , B } ;;
+	step 8 : wff = opi2 (hyp 1, hyp 2) |- { A , B } ∈ 〈 A , B 〉 ;;
+	step 9 : wff = elunii () |- ( ( { A , B } ∈ 〈 A , B 〉 ∧ 〈 A , B 〉 ∈ C ) → { A , B } ∈ ⋃ C ) ;;
+	step 10 : wff = mpan (step 8, step 9) |- ( 〈 A , B 〉 ∈ C → { A , B } ∈ ⋃ C ) ;;
+	step 11 : wff = elunii () |- ( ( B ∈ { A , B } ∧ { A , B } ∈ ⋃ C ) → B ∈ ⋃ ⋃ C ) ;;
+	step 12 : wff = sylancr (step 7, step 10, step 11) |- ( 〈 A , B 〉 ∈ C → B ∈ ⋃ ⋃ C ) ;;
+	step 13 : wff = jca (step 6, step 12) |- ( 〈 A , B 〉 ∈ C → ( A ∈ ⋃ ⋃ C ∧ B ∈ ⋃ ⋃ C ) ) ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* Expression for double union that moves union into a class builder.
+       (Contributed by FL, 28-May-2007.) */
+
+theorem uniuni (x : set, y : set, A : class) disjointed(A x y v z, A x y u z) {
+	prop 1 : wff = |- ⋃ ⋃ A = ⋃ { x | ∃ y ( x = ⋃ y ∧ y ∈ A ) } ;;
+}
+
+proof of uniuni {
+	var z : set, v : set, u : set;;
+	step 1 : wff = eluni () |- ( u ∈ ⋃ A ↔ ∃ y ( u ∈ y ∧ y ∈ A ) ) ;;
+	step 2 : wff = anbi2i (step 1) |- ( ( z ∈ u ∧ u ∈ ⋃ A ) ↔ ( z ∈ u ∧ ∃ y ( u ∈ y ∧ y ∈ A ) ) ) ;;
+	step 3 : wff = exbii (step 2) |- ( ∃ u ( z ∈ u ∧ u ∈ ⋃ A ) ↔ ∃ u ( z ∈ u ∧ ∃ y ( u ∈ y ∧ y ∈ A ) ) ) ;;
+	step 4 : wff = 19.42v () |- ( ∃ y ( z ∈ u ∧ ( u ∈ y ∧ y ∈ A ) ) ↔ ( z ∈ u ∧ ∃ y ( u ∈ y ∧ y ∈ A ) ) ) ;;
+	step 5 : wff = bicomi (step 4) |- ( ( z ∈ u ∧ ∃ y ( u ∈ y ∧ y ∈ A ) ) ↔ ∃ y ( z ∈ u ∧ ( u ∈ y ∧ y ∈ A ) ) ) ;;
+	step 6 : wff = exbii (step 5) |- ( ∃ u ( z ∈ u ∧ ∃ y ( u ∈ y ∧ y ∈ A ) ) ↔ ∃ u ∃ y ( z ∈ u ∧ ( u ∈ y ∧ y ∈ A ) ) ) ;;
+	step 7 : wff = excom () |- ( ∃ u ∃ y ( z ∈ u ∧ ( u ∈ y ∧ y ∈ A ) ) ↔ ∃ y ∃ u ( z ∈ u ∧ ( u ∈ y ∧ y ∈ A ) ) ) ;;
+	step 8 : wff = anass () |- ( ( ( z ∈ u ∧ u ∈ y ) ∧ y ∈ A ) ↔ ( z ∈ u ∧ ( u ∈ y ∧ y ∈ A ) ) ) ;;
+	step 9 : wff = ancom () |- ( ( ( z ∈ u ∧ u ∈ y ) ∧ y ∈ A ) ↔ ( y ∈ A ∧ ( z ∈ u ∧ u ∈ y ) ) ) ;;
+	step 10 : wff = bitr3i (step 8, step 9) |- ( ( z ∈ u ∧ ( u ∈ y ∧ y ∈ A ) ) ↔ ( y ∈ A ∧ ( z ∈ u ∧ u ∈ y ) ) ) ;;
+	step 11 : wff = 2exbii (step 10) |- ( ∃ y ∃ u ( z ∈ u ∧ ( u ∈ y ∧ y ∈ A ) ) ↔ ∃ y ∃ u ( y ∈ A ∧ ( z ∈ u ∧ u ∈ y ) ) ) ;;
+	step 12 : wff = exdistr () |- ( ∃ y ∃ u ( y ∈ A ∧ ( z ∈ u ∧ u ∈ y ) ) ↔ ∃ y ( y ∈ A ∧ ∃ u ( z ∈ u ∧ u ∈ y ) ) ) ;;
+	step 13 : wff = 3bitri (step 7, step 11, step 12) |- ( ∃ u ∃ y ( z ∈ u ∧ ( u ∈ y ∧ y ∈ A ) ) ↔ ∃ y ( y ∈ A ∧ ∃ u ( z ∈ u ∧ u ∈ y ) ) ) ;;
+	step 14 : wff = eluni () |- ( z ∈ ⋃ y ↔ ∃ u ( z ∈ u ∧ u ∈ y ) ) ;;
+	step 15 : wff = bicomi (step 14) |- ( ∃ u ( z ∈ u ∧ u ∈ y ) ↔ z ∈ ⋃ y ) ;;
+	step 16 : wff = anbi2i (step 15) |- ( ( y ∈ A ∧ ∃ u ( z ∈ u ∧ u ∈ y ) ) ↔ ( y ∈ A ∧ z ∈ ⋃ y ) ) ;;
+	step 17 : wff = exbii (step 16) |- ( ∃ y ( y ∈ A ∧ ∃ u ( z ∈ u ∧ u ∈ y ) ) ↔ ∃ y ( y ∈ A ∧ z ∈ ⋃ y ) ) ;;
+	step 18 : wff = 3bitri (step 6, step 13, step 17) |- ( ∃ u ( z ∈ u ∧ ∃ y ( u ∈ y ∧ y ∈ A ) ) ↔ ∃ y ( y ∈ A ∧ z ∈ ⋃ y ) ) ;;
+	step 19 : wff = vex () |- y ∈ _V ;;
+	step 20 : wff = uniex (step 19) |- ⋃ y ∈ _V ;;
+	step 21 : wff = eleq2 () |- ( v = ⋃ y → ( z ∈ v ↔ z ∈ ⋃ y ) ) ;;
+	step 22 : wff = ceqsexv (step 20, step 21) |- ( ∃ v ( v = ⋃ y ∧ z ∈ v ) ↔ z ∈ ⋃ y ) ;;
+	step 23 : wff = exancom () |- ( ∃ v ( v = ⋃ y ∧ z ∈ v ) ↔ ∃ v ( z ∈ v ∧ v = ⋃ y ) ) ;;
+	step 24 : wff = bitr3i (step 22, step 23) |- ( z ∈ ⋃ y ↔ ∃ v ( z ∈ v ∧ v = ⋃ y ) ) ;;
+	step 25 : wff = anbi2i (step 24) |- ( ( y ∈ A ∧ z ∈ ⋃ y ) ↔ ( y ∈ A ∧ ∃ v ( z ∈ v ∧ v = ⋃ y ) ) ) ;;
+	step 26 : wff = 19.42v () |- ( ∃ v ( y ∈ A ∧ ( z ∈ v ∧ v = ⋃ y ) ) ↔ ( y ∈ A ∧ ∃ v ( z ∈ v ∧ v = ⋃ y ) ) ) ;;
+	step 27 : wff = ancom () |- ( ( y ∈ A ∧ ( z ∈ v ∧ v = ⋃ y ) ) ↔ ( ( z ∈ v ∧ v = ⋃ y ) ∧ y ∈ A ) ) ;;
+	step 28 : wff = anass () |- ( ( ( z ∈ v ∧ v = ⋃ y ) ∧ y ∈ A ) ↔ ( z ∈ v ∧ ( v = ⋃ y ∧ y ∈ A ) ) ) ;;
+	step 29 : wff = bitri (step 27, step 28) |- ( ( y ∈ A ∧ ( z ∈ v ∧ v = ⋃ y ) ) ↔ ( z ∈ v ∧ ( v = ⋃ y ∧ y ∈ A ) ) ) ;;
+	step 30 : wff = exbii (step 29) |- ( ∃ v ( y ∈ A ∧ ( z ∈ v ∧ v = ⋃ y ) ) ↔ ∃ v ( z ∈ v ∧ ( v = ⋃ y ∧ y ∈ A ) ) ) ;;
+	step 31 : wff = 3bitr2i (step 25, step 26, step 30) |- ( ( y ∈ A ∧ z ∈ ⋃ y ) ↔ ∃ v ( z ∈ v ∧ ( v = ⋃ y ∧ y ∈ A ) ) ) ;;
+	step 32 : wff = exbii (step 31) |- ( ∃ y ( y ∈ A ∧ z ∈ ⋃ y ) ↔ ∃ y ∃ v ( z ∈ v ∧ ( v = ⋃ y ∧ y ∈ A ) ) ) ;;
+	step 33 : wff = excom () |- ( ∃ y ∃ v ( z ∈ v ∧ ( v = ⋃ y ∧ y ∈ A ) ) ↔ ∃ v ∃ y ( z ∈ v ∧ ( v = ⋃ y ∧ y ∈ A ) ) ) ;;
+	step 34 : wff = exdistr () |- ( ∃ v ∃ y ( z ∈ v ∧ ( v = ⋃ y ∧ y ∈ A ) ) ↔ ∃ v ( z ∈ v ∧ ∃ y ( v = ⋃ y ∧ y ∈ A ) ) ) ;;
+	step 35 : wff = vex () |- v ∈ _V ;;
+	step 36 : wff = eqeq1 () |- ( x = v → ( x = ⋃ y ↔ v = ⋃ y ) ) ;;
+	step 37 : wff = anbi1d (step 36) |- ( x = v → ( ( x = ⋃ y ∧ y ∈ A ) ↔ ( v = ⋃ y ∧ y ∈ A ) ) ) ;;
+	step 38 : wff = exbidv (step 37) |- ( x = v → ( ∃ y ( x = ⋃ y ∧ y ∈ A ) ↔ ∃ y ( v = ⋃ y ∧ y ∈ A ) ) ) ;;
+	step 39 : wff = elab (step 35, step 38) |- ( v ∈ { x | ∃ y ( x = ⋃ y ∧ y ∈ A ) } ↔ ∃ y ( v = ⋃ y ∧ y ∈ A ) ) ;;
+	step 40 : wff = bicomi (step 39) |- ( ∃ y ( v = ⋃ y ∧ y ∈ A ) ↔ v ∈ { x | ∃ y ( x = ⋃ y ∧ y ∈ A ) } ) ;;
+	step 41 : wff = anbi2i (step 40) |- ( ( z ∈ v ∧ ∃ y ( v = ⋃ y ∧ y ∈ A ) ) ↔ ( z ∈ v ∧ v ∈ { x | ∃ y ( x = ⋃ y ∧ y ∈ A ) } ) ) ;;
+	step 42 : wff = exbii (step 41) |- ( ∃ v ( z ∈ v ∧ ∃ y ( v = ⋃ y ∧ y ∈ A ) ) ↔ ∃ v ( z ∈ v ∧ v ∈ { x | ∃ y ( x = ⋃ y ∧ y ∈ A ) } ) ) ;;
+	step 43 : wff = bitri (step 34, step 42) |- ( ∃ v ∃ y ( z ∈ v ∧ ( v = ⋃ y ∧ y ∈ A ) ) ↔ ∃ v ( z ∈ v ∧ v ∈ { x | ∃ y ( x = ⋃ y ∧ y ∈ A ) } ) ) ;;
+	step 44 : wff = 3bitri (step 32, step 33, step 43) |- ( ∃ y ( y ∈ A ∧ z ∈ ⋃ y ) ↔ ∃ v ( z ∈ v ∧ v ∈ { x | ∃ y ( x = ⋃ y ∧ y ∈ A ) } ) ) ;;
+	step 45 : wff = 3bitri (step 3, step 18, step 44) |- ( ∃ u ( z ∈ u ∧ u ∈ ⋃ A ) ↔ ∃ v ( z ∈ v ∧ v ∈ { x | ∃ y ( x = ⋃ y ∧ y ∈ A ) } ) ) ;;
+	step 46 : wff = abbii (step 45) |- { z | ∃ u ( z ∈ u ∧ u ∈ ⋃ A ) } = { z | ∃ v ( z ∈ v ∧ v ∈ { x | ∃ y ( x = ⋃ y ∧ y ∈ A ) } ) } ;;
+	step 47 : wff = df-uni () |- ⋃ ⋃ A = { z | ∃ u ( z ∈ u ∧ u ∈ ⋃ A ) } ;;
+	step 48 : wff = df-uni () |- ⋃ { x | ∃ y ( x = ⋃ y ∧ y ∈ A ) } = { z | ∃ v ( z ∈ v ∧ v ∈ { x | ∃ y ( x = ⋃ y ∧ y ∈ A ) } ) } ;;
+	step 49 : wff = 3eqtr4i (step 46, step 47, step 48) |- ⋃ ⋃ A = ⋃ { x | ∃ y ( x = ⋃ y ∧ y ∈ A ) } ;;
+	qed prop 1 = step 49 ;;
+}
+
+/* Two ways to express single-valuedness of a class expression
+       ` A ( x ) ` .  (Contributed by NM, 14-Oct-2010.) */
+
+theorem eusv1 (x : set, y : set, A : class) disjointed(x y z, A y z) {
+	prop 1 : wff = |- ( ∃! y ∀ x y = A ↔ ∃ y ∀ x y = A ) ;;
+}
+
+proof of eusv1 {
+	var z : set;;
+	step 1 : wff = sp () |- ( ∀ x y = A → y = A ) ;;
+	step 2 : wff = sp () |- ( ∀ x z = A → z = A ) ;;
+	step 3 : wff = eqtr3 () |- ( ( y = A ∧ z = A ) → y = z ) ;;
+	step 4 : wff = syl2an (step 1, step 2, step 3) |- ( ( ∀ x y = A ∧ ∀ x z = A ) → y = z ) ;;
+	step 5 : wff = gen2 (step 4) |- ∀ y ∀ z ( ( ∀ x y = A ∧ ∀ x z = A ) → y = z ) ;;
+	step 6 : wff = eqeq1 () |- ( y = z → ( y = A ↔ z = A ) ) ;;
+	step 7 : wff = albidv (step 6) |- ( y = z → ( ∀ x y = A ↔ ∀ x z = A ) ) ;;
+	step 8 : wff = eu4 (step 7) |- ( ∃! y ∀ x y = A ↔ ( ∃ y ∀ x y = A ∧ ∀ y ∀ z ( ( ∀ x y = A ∧ ∀ x z = A ) → y = z ) ) ) ;;
+	step 9 : wff = mpbiran2 (step 5, step 8) |- ( ∃! y ∀ x y = A ↔ ∃ y ∀ x y = A ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Even if ` x ` is free in ` A ` , it is effectively bound when
+       ` A ( x ) ` is single-valued.  (Contributed by NM, 14-Oct-2010.)
+       (Revised by Mario Carneiro, 14-Oct-2016.) */
+
+theorem eusvnf (x : set, y : set, A : class) disjointed(x y z w, A y z w) {
+	prop 1 : wff = |- ( ∃! y ∀ x y = A → F/_ x A ) ;;
+}
+
+proof of eusvnf {
+	var z : set, w : set;;
+	step 1 : wff = euex () |- ( ∃! y ∀ x y = A → ∃ y ∀ x y = A ) ;;
+	step 2 : wff = vex () |- z ∈ _V ;;
+	step 3 : wff = nfcv () |- F/_ x z ;;
+	step 4 : wff = nfcsb1v () |- F/_ x [_ z / x ]_ A ;;
+	step 5 : wff = nfeq2 (step 4) |- F/ x y = [_ z / x ]_ A ;;
+	step 6 : wff = csbeq1a () |- ( x = z → A = [_ z / x ]_ A ) ;;
+	step 7 : wff = eqeq2d (step 6) |- ( x = z → ( y = A ↔ y = [_ z / x ]_ A ) ) ;;
+	step 8 : wff = spcgf (step 3, step 5, step 7) |- ( z ∈ _V → ( ∀ x y = A → y = [_ z / x ]_ A ) ) ;;
+	step 9 : wff = ax-mp (step 2, step 8) |- ( ∀ x y = A → y = [_ z / x ]_ A ) ;;
+	step 10 : wff = vex () |- w ∈ _V ;;
+	step 11 : wff = nfcv () |- F/_ x w ;;
+	step 12 : wff = nfcsb1v () |- F/_ x [_ w / x ]_ A ;;
+	step 13 : wff = nfeq2 (step 12) |- F/ x y = [_ w / x ]_ A ;;
+	step 14 : wff = csbeq1a () |- ( x = w → A = [_ w / x ]_ A ) ;;
+	step 15 : wff = eqeq2d (step 14) |- ( x = w → ( y = A ↔ y = [_ w / x ]_ A ) ) ;;
+	step 16 : wff = spcgf (step 11, step 13, step 15) |- ( w ∈ _V → ( ∀ x y = A → y = [_ w / x ]_ A ) ) ;;
+	step 17 : wff = ax-mp (step 10, step 16) |- ( ∀ x y = A → y = [_ w / x ]_ A ) ;;
+	step 18 : wff = eqtr3d (step 9, step 17) |- ( ∀ x y = A → [_ z / x ]_ A = [_ w / x ]_ A ) ;;
+	step 19 : wff = alrimivv (step 18) |- ( ∀ x y = A → ∀ z ∀ w [_ z / x ]_ A = [_ w / x ]_ A ) ;;
+	step 20 : wff = sbnfc2 () |- ( F/_ x A ↔ ∀ z ∀ w [_ z / x ]_ A = [_ w / x ]_ A ) ;;
+	step 21 : wff = sylibr (step 19, step 20) |- ( ∀ x y = A → F/_ x A ) ;;
+	step 22 : wff = exlimiv (step 21) |- ( ∃ y ∀ x y = A → F/_ x A ) ;;
+	step 23 : wff = syl (step 1, step 22) |- ( ∃! y ∀ x y = A → F/_ x A ) ;;
+	qed prop 1 = step 23 ;;
+}
+
+/* Two ways to say that ` A ( x ) ` is a set expression that does not
+       depend on ` x ` .  (Contributed by Mario Carneiro, 18-Nov-2016.) */
+
+theorem eusvnfb (x : set, y : set, A : class) disjointed(x y, A y) {
+	prop 1 : wff = |- ( ∃! y ∀ x y = A ↔ ( F/_ x A ∧ A ∈ _V ) ) ;;
+}
+
+proof of eusvnfb {
+	step 1 : wff = eusvnf () |- ( ∃! y ∀ x y = A → F/_ x A ) ;;
+	step 2 : wff = euex () |- ( ∃! y ∀ x y = A → ∃ y ∀ x y = A ) ;;
+	step 3 : wff = id () |- ( y = A → y = A ) ;;
+	step 4 : wff = vex () |- y ∈ _V ;;
+	step 5 : wff = syl6eqelr (step 3, step 4) |- ( y = A → A ∈ _V ) ;;
+	step 6 : wff = sps (step 5) |- ( ∀ x y = A → A ∈ _V ) ;;
+	step 7 : wff = exlimiv (step 6) |- ( ∃ y ∀ x y = A → A ∈ _V ) ;;
+	step 8 : wff = syl (step 2, step 7) |- ( ∃! y ∀ x y = A → A ∈ _V ) ;;
+	step 9 : wff = jca (step 1, step 8) |- ( ∃! y ∀ x y = A → ( F/_ x A ∧ A ∈ _V ) ) ;;
+	step 10 : wff = isset () |- ( A ∈ _V ↔ ∃ y y = A ) ;;
+	step 11 : wff = nfcvd () |- ( F/_ x A → F/_ x y ) ;;
+	step 12 : wff = id () |- ( F/_ x A → F/_ x A ) ;;
+	step 13 : wff = nfeqd (step 11, step 12) |- ( F/_ x A → F/ x y = A ) ;;
+	step 14 : wff = nfrd (step 13) |- ( F/_ x A → ( y = A → ∀ x y = A ) ) ;;
+	step 15 : wff = eximdv (step 14) |- ( F/_ x A → ( ∃ y y = A → ∃ y ∀ x y = A ) ) ;;
+	step 16 : wff = syl5bi (step 10, step 15) |- ( F/_ x A → ( A ∈ _V → ∃ y ∀ x y = A ) ) ;;
+	step 17 : wff = imp (step 16) |- ( ( F/_ x A ∧ A ∈ _V ) → ∃ y ∀ x y = A ) ;;
+	step 18 : wff = eusv1 () |- ( ∃! y ∀ x y = A ↔ ∃ y ∀ x y = A ) ;;
+	step 19 : wff = sylibr (step 17, step 18) |- ( ( F/_ x A ∧ A ∈ _V ) → ∃! y ∀ x y = A ) ;;
+	step 20 : wff = impbii (step 9, step 19) |- ( ∃! y ∀ x y = A ↔ ( F/_ x A ∧ A ∈ _V ) ) ;;
+	qed prop 1 = step 20 ;;
+}
+
+/* Two ways to express single-valuedness of a class expression
+       ` A ( x ) ` .  (Contributed by NM, 14-Oct-2010.)  (Revised by Mario
+       Carneiro, 18-Nov-2016.) */
+
+theorem eusv2i (x : set, y : set, A : class) disjointed(x y, A y) {
+	prop 1 : wff = |- ( ∃! y ∀ x y = A → ∃! y ∃ x y = A ) ;;
+}
+
+proof of eusv2i {
+	step 1 : wff = nfeu1 () |- F/ y ∃! y ∀ x y = A ;;
+	step 2 : wff = nfcvd () |- ( ∃! y ∀ x y = A → F/_ x y ) ;;
+	step 3 : wff = eusvnf () |- ( ∃! y ∀ x y = A → F/_ x A ) ;;
+	step 4 : wff = nfeqd (step 2, step 3) |- ( ∃! y ∀ x y = A → F/ x y = A ) ;;
+	step 5 : wff = nf2 () |- ( F/ x y = A ↔ ( ∃ x y = A → ∀ x y = A ) ) ;;
+	step 6 : wff = sylib (step 4, step 5) |- ( ∃! y ∀ x y = A → ( ∃ x y = A → ∀ x y = A ) ) ;;
+	step 7 : wff = 19.2 () |- ( ∀ x y = A → ∃ x y = A ) ;;
+	step 8 : wff = impbid1 (step 6, step 7) |- ( ∃! y ∀ x y = A → ( ∃ x y = A ↔ ∀ x y = A ) ) ;;
+	step 9 : wff = eubid (step 1, step 8) |- ( ∃! y ∀ x y = A → ( ∃! y ∃ x y = A ↔ ∃! y ∀ x y = A ) ) ;;
+	step 10 : wff = ibir (step 9) |- ( ∃! y ∀ x y = A → ∃! y ∃ x y = A ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Two ways to express single-valuedness of a class expression
+       ` A ( x ) ` .  (Contributed by Mario Carneiro, 18-Nov-2016.) */
+
+theorem eusv2nf (x : set, y : set, A : class) disjointed(x y, A y) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃! y ∃ x y = A ↔ F/_ x A ) ;;
+}
+
+proof of eusv2nf {
+	step 1 : wff = nfeu1 () |- F/ y ∃! y ∃ x y = A ;;
+	step 2 : wff = nfe1 () |- F/ x ∃ x y = A ;;
+	step 3 : wff = nfeu (step 2) |- F/ x ∃! y ∃ x y = A ;;
+	step 4 : wff = isseti (hyp 1) |- ∃ y y = A ;;
+	step 5 : wff = 19.8a () |- ( y = A → ∃ x y = A ) ;;
+	step 6 : wff = ancri (step 5) |- ( y = A → ( ∃ x y = A ∧ y = A ) ) ;;
+	step 7 : wff = eximi (step 6) |- ( ∃ y y = A → ∃ y ( ∃ x y = A ∧ y = A ) ) ;;
+	step 8 : wff = ax-mp (step 4, step 7) |- ∃ y ( ∃ x y = A ∧ y = A ) ;;
+	step 9 : wff = eupick () |- ( ( ∃! y ∃ x y = A ∧ ∃ y ( ∃ x y = A ∧ y = A ) ) → ( ∃ x y = A → y = A ) ) ;;
+	step 10 : wff = mpan2 (step 8, step 9) |- ( ∃! y ∃ x y = A → ( ∃ x y = A → y = A ) ) ;;
+	step 11 : wff = alrimi (step 3, step 10) |- ( ∃! y ∃ x y = A → ∀ x ( ∃ x y = A → y = A ) ) ;;
+	step 12 : wff = nf3 () |- ( F/ x y = A ↔ ∀ x ( ∃ x y = A → y = A ) ) ;;
+	step 13 : wff = sylibr (step 11, step 12) |- ( ∃! y ∃ x y = A → F/ x y = A ) ;;
+	step 14 : wff = alrimi (step 1, step 13) |- ( ∃! y ∃ x y = A → ∀ y F/ x y = A ) ;;
+	step 15 : wff = dfnfc2 () |- ( ∀ x A ∈ _V → ( F/_ x A ↔ ∀ y F/ x y = A ) ) ;;
+	step 16 : wff = mpg (step 15, hyp 1) |- ( F/_ x A ↔ ∀ y F/ x y = A ) ;;
+	step 17 : wff = sylibr (step 14, step 16) |- ( ∃! y ∃ x y = A → F/_ x A ) ;;
+	step 18 : wff = eusvnfb () |- ( ∃! y ∀ x y = A ↔ ( F/_ x A ∧ A ∈ _V ) ) ;;
+	step 19 : wff = mpbiran2 (hyp 1, step 18) |- ( ∃! y ∀ x y = A ↔ F/_ x A ) ;;
+	step 20 : wff = eusv2i () |- ( ∃! y ∀ x y = A → ∃! y ∃ x y = A ) ;;
+	step 21 : wff = sylbir (step 19, step 20) |- ( F/_ x A → ∃! y ∃ x y = A ) ;;
+	step 22 : wff = impbii (step 17, step 21) |- ( ∃! y ∃ x y = A ↔ F/_ x A ) ;;
+	qed prop 1 = step 22 ;;
+}
+
+/* Two ways to express single-valuedness of a class expression
+       ` A ( x ) ` .  (Contributed by NM, 15-Oct-2010.)  (Proof shortened by
+       Mario Carneiro, 18-Nov-2016.) */
+
+theorem eusv2 (x : set, y : set, A : class) disjointed(x y, A y) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃! y ∃ x y = A ↔ ∃! y ∀ x y = A ) ;;
+}
+
+proof of eusv2 {
+	step 1 : wff = eusv2nf (hyp 1) |- ( ∃! y ∃ x y = A ↔ F/_ x A ) ;;
+	step 2 : wff = eusvnfb () |- ( ∃! y ∀ x y = A ↔ ( F/_ x A ∧ A ∈ _V ) ) ;;
+	step 3 : wff = mpbiran2 (hyp 1, step 2) |- ( ∃! y ∀ x y = A ↔ F/_ x A ) ;;
+	step 4 : wff = bitr4i (step 1, step 3) |- ( ∃! y ∃ x y = A ↔ ∃! y ∀ x y = A ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Two ways to express single-valuedness of a class expression
+       ` C ( y ) ` .  (Contributed by NM, 16-Dec-2012.)  (Proof shortened by
+       Mario Carneiro, 18-Nov-2016.) */
+
+theorem reusv1 (ph : wff, x : set, y : set, A : class, B : class, C : class) disjointed(x A, x B, x C, x ph, x y) {
+	prop 1 : wff = |- ( ∃ y ∈ B ph → ( ∃! x ∈ A ∀ y ∈ B ( ph → x = C ) ↔ ∃ x ∈ A ∀ y ∈ B ( ph → x = C ) ) ) ;;
+}
+
+proof of reusv1 {
+	step 1 : wff = nfra1 () |- F/ y ∀ y ∈ B ( ph → x = C ) ;;
+	step 2 : wff = nfmo (step 1) |- F/ y ∃* x ∀ y ∈ B ( ph → x = C ) ;;
+	step 3 : wff = rsp () |- ( ∀ y ∈ B ( ph → x = C ) → ( y ∈ B → ( ph → x = C ) ) ) ;;
+	step 4 : wff = imp3a (step 3) |- ( ∀ y ∈ B ( ph → x = C ) → ( ( y ∈ B ∧ ph ) → x = C ) ) ;;
+	step 5 : wff = com12 (step 4) |- ( ( y ∈ B ∧ ph ) → ( ∀ y ∈ B ( ph → x = C ) → x = C ) ) ;;
+	step 6 : wff = alrimiv (step 5) |- ( ( y ∈ B ∧ ph ) → ∀ x ( ∀ y ∈ B ( ph → x = C ) → x = C ) ) ;;
+	step 7 : wff = moeq () |- ∃* x x = C ;;
+	step 8 : wff = moim () |- ( ∀ x ( ∀ y ∈ B ( ph → x = C ) → x = C ) → ( ∃* x x = C → ∃* x ∀ y ∈ B ( ph → x = C ) ) ) ;;
+	step 9 : wff = ee10 (step 6, step 7, step 8) |- ( ( y ∈ B ∧ ph ) → ∃* x ∀ y ∈ B ( ph → x = C ) ) ;;
+	step 10 : wff = ex (step 9) |- ( y ∈ B → ( ph → ∃* x ∀ y ∈ B ( ph → x = C ) ) ) ;;
+	step 11 : wff = rexlimi (step 2, step 10) |- ( ∃ y ∈ B ph → ∃* x ∀ y ∈ B ( ph → x = C ) ) ;;
+	step 12 : wff = mormo () |- ( ∃* x ∀ y ∈ B ( ph → x = C ) → ∃* x ∈ A ∀ y ∈ B ( ph → x = C ) ) ;;
+	step 13 : wff = reu5 () |- ( ∃! x ∈ A ∀ y ∈ B ( ph → x = C ) ↔ ( ∃ x ∈ A ∀ y ∈ B ( ph → x = C ) ∧ ∃* x ∈ A ∀ y ∈ B ( ph → x = C ) ) ) ;;
+	step 14 : wff = rbaib (step 13) |- ( ∃* x ∈ A ∀ y ∈ B ( ph → x = C ) → ( ∃! x ∈ A ∀ y ∈ B ( ph → x = C ) ↔ ∃ x ∈ A ∀ y ∈ B ( ph → x = C ) ) ) ;;
+	step 15 : wff = 3syl (step 11, step 12, step 14) |- ( ∃ y ∈ B ph → ( ∃! x ∈ A ∀ y ∈ B ( ph → x = C ) ↔ ∃ x ∈ A ∀ y ∈ B ( ph → x = C ) ) ) ;;
+	qed prop 1 = step 15 ;;
+}
+
+/* Lemma for ~ reusv2 .  (Contributed by NM, 22-Oct-2010.)  (Proof
+       shortened by Mario Carneiro, 19-Nov-2016.) */
+
+theorem reusv2lem1 (x : set, y : set, A : class, B : class) disjointed(x y A, x B) {
+	prop 1 : wff = |- ( A ≠ ∅ → ( ∃! x ∀ y ∈ A x = B ↔ ∃ x ∀ y ∈ A x = B ) ) ;;
+}
+
+proof of reusv2lem1 {
+	step 1 : wff = n0 () |- ( A ≠ ∅ ↔ ∃ y y ∈ A ) ;;
+	step 2 : wff = nfra1 () |- F/ y ∀ y ∈ A x = B ;;
+	step 3 : wff = nfmo (step 2) |- F/ y ∃* x ∀ y ∈ A x = B ;;
+	step 4 : wff = rsp () |- ( ∀ y ∈ A x = B → ( y ∈ A → x = B ) ) ;;
+	step 5 : wff = com12 (step 4) |- ( y ∈ A → ( ∀ y ∈ A x = B → x = B ) ) ;;
+	step 6 : wff = alrimiv (step 5) |- ( y ∈ A → ∀ x ( ∀ y ∈ A x = B → x = B ) ) ;;
+	step 7 : wff = moeq () |- ∃* x x = B ;;
+	step 8 : wff = moim () |- ( ∀ x ( ∀ y ∈ A x = B → x = B ) → ( ∃* x x = B → ∃* x ∀ y ∈ A x = B ) ) ;;
+	step 9 : wff = ee10 (step 6, step 7, step 8) |- ( y ∈ A → ∃* x ∀ y ∈ A x = B ) ;;
+	step 10 : wff = exlimi (step 3, step 9) |- ( ∃ y y ∈ A → ∃* x ∀ y ∈ A x = B ) ;;
+	step 11 : wff = sylbi (step 1, step 10) |- ( A ≠ ∅ → ∃* x ∀ y ∈ A x = B ) ;;
+	step 12 : wff = eu5 () |- ( ∃! x ∀ y ∈ A x = B ↔ ( ∃ x ∀ y ∈ A x = B ∧ ∃* x ∀ y ∈ A x = B ) ) ;;
+	step 13 : wff = rbaib (step 12) |- ( ∃* x ∀ y ∈ A x = B → ( ∃! x ∀ y ∈ A x = B ↔ ∃ x ∀ y ∈ A x = B ) ) ;;
+	step 14 : wff = syl (step 11, step 13) |- ( A ≠ ∅ → ( ∃! x ∀ y ∈ A x = B ↔ ∃ x ∀ y ∈ A x = B ) ) ;;
+	qed prop 1 = step 14 ;;
+}
+
+/* Lemma for ~ reusv2 .  (Contributed by NM, 27-Oct-2010.)  (Proof
+       shortened by Mario Carneiro, 19-Nov-2016.) */
+
+theorem reusv2lem2 (x : set, y : set, A : class, B : class) disjointed(x y z A, x z B, x z, x z) {
+	prop 1 : wff = |- ( ∃! x ∀ y ∈ A x = B → ∃! x ∃ y ∈ A x = B ) ;;
+}
+
+proof of reusv2lem2 {
+	var z : set;;
+	step 1 : wff = eunex () |- ( ∃! x ∀ y ∈ A x = B → ∃ x ¬ ∀ y ∈ A x = B ) ;;
+	step 2 : wff = exnal () |- ( ∃ x ¬ ∀ y ∈ A x = B ↔ ¬ ∀ x ∀ y ∈ A x = B ) ;;
+	step 3 : wff = sylib (step 1, step 2) |- ( ∃! x ∀ y ∈ A x = B → ¬ ∀ x ∀ y ∈ A x = B ) ;;
+	step 4 : wff = rzal () |- ( A = ∅ → ∀ y ∈ A x = B ) ;;
+	step 5 : wff = alrimiv (step 4) |- ( A = ∅ → ∀ x ∀ y ∈ A x = B ) ;;
+	step 6 : wff = nsyl3 (step 3, step 5) |- ( A = ∅ → ¬ ∃! x ∀ y ∈ A x = B ) ;;
+	step 7 : wff = pm2.21d (step 6) |- ( A = ∅ → ( ∃! x ∀ y ∈ A x = B → ∃! x ∃ y ∈ A x = B ) ) ;;
+	step 8 : wff = simpr () |- ( ( A ≠ ∅ ∧ ∃! x ∀ y ∈ A x = B ) → ∃! x ∀ y ∈ A x = B ) ;;
+	step 9 : wff = euex () |- ( ∃! x ∀ y ∈ A x = B → ∃ x ∀ y ∈ A x = B ) ;;
+	step 10 : wff = eqeq1 () |- ( x = z → ( x = B ↔ z = B ) ) ;;
+	step 11 : wff = ralbidv (step 10) |- ( x = z → ( ∀ y ∈ A x = B ↔ ∀ y ∈ A z = B ) ) ;;
+	step 12 : wff = cbvexv (step 11) |- ( ∃ x ∀ y ∈ A x = B ↔ ∃ z ∀ y ∈ A z = B ) ;;
+	step 13 : wff = sylib (step 9, step 12) |- ( ∃! x ∀ y ∈ A x = B → ∃ z ∀ y ∈ A z = B ) ;;
+	step 14 : wff = nfv () |- F/ y A ≠ ∅ ;;
+	step 15 : wff = nfra1 () |- F/ y ∀ y ∈ A z = B ;;
+	step 16 : wff = nfan (step 14, step 15) |- F/ y ( A ≠ ∅ ∧ ∀ y ∈ A z = B ) ;;
+	step 17 : wff = nfra1 () |- F/ y ∀ y ∈ A x = B ;;
+	step 18 : wff = simprr () |- ( ( ( A ≠ ∅ ∧ ∀ y ∈ A z = B ) ∧ ( y ∈ A ∧ x = B ) ) → x = B ) ;;
+	step 19 : wff = rsp () |- ( ∀ y ∈ A z = B → ( y ∈ A → z = B ) ) ;;
+	step 20 : wff = imp (step 19) |- ( ( ∀ y ∈ A z = B ∧ y ∈ A ) → z = B ) ;;
+	step 21 : wff = ad2ant2lr (step 20) |- ( ( ( A ≠ ∅ ∧ ∀ y ∈ A z = B ) ∧ ( y ∈ A ∧ x = B ) ) → z = B ) ;;
+	step 22 : wff = eqtr4d (step 18, step 21) |- ( ( ( A ≠ ∅ ∧ ∀ y ∈ A z = B ) ∧ ( y ∈ A ∧ x = B ) ) → x = z ) ;;
+	step 23 : wff = simplr () |- ( ( ( A ≠ ∅ ∧ ∀ y ∈ A z = B ) ∧ ( y ∈ A ∧ x = B ) ) → ∀ y ∈ A z = B ) ;;
+	step 24 : wff = eqeq1 () |- ( x = z → ( x = B ↔ z = B ) ) ;;
+	step 25 : wff = ralbidv (step 24) |- ( x = z → ( ∀ y ∈ A x = B ↔ ∀ y ∈ A z = B ) ) ;;
+	step 26 : wff = syl5ibrcom (step 23, step 25) |- ( ( ( A ≠ ∅ ∧ ∀ y ∈ A z = B ) ∧ ( y ∈ A ∧ x = B ) ) → ( x = z → ∀ y ∈ A x = B ) ) ;;
+	step 27 : wff = mpd (step 22, step 26) |- ( ( ( A ≠ ∅ ∧ ∀ y ∈ A z = B ) ∧ ( y ∈ A ∧ x = B ) ) → ∀ y ∈ A x = B ) ;;
+	step 28 : wff = exp32 (step 27) |- ( ( A ≠ ∅ ∧ ∀ y ∈ A z = B ) → ( y ∈ A → ( x = B → ∀ y ∈ A x = B ) ) ) ;;
+	step 29 : wff = rexlimd (step 16, step 17, step 28) |- ( ( A ≠ ∅ ∧ ∀ y ∈ A z = B ) → ( ∃ y ∈ A x = B → ∀ y ∈ A x = B ) ) ;;
+	step 30 : wff = r19.2z () |- ( ( A ≠ ∅ ∧ ∀ y ∈ A x = B ) → ∃ y ∈ A x = B ) ;;
+	step 31 : wff = ex (step 30) |- ( A ≠ ∅ → ( ∀ y ∈ A x = B → ∃ y ∈ A x = B ) ) ;;
+	step 32 : wff = adantr (step 31) |- ( ( A ≠ ∅ ∧ ∀ y ∈ A z = B ) → ( ∀ y ∈ A x = B → ∃ y ∈ A x = B ) ) ;;
+	step 33 : wff = impbid (step 29, step 32) |- ( ( A ≠ ∅ ∧ ∀ y ∈ A z = B ) → ( ∃ y ∈ A x = B ↔ ∀ y ∈ A x = B ) ) ;;
+	step 34 : wff = eubidv (step 33) |- ( ( A ≠ ∅ ∧ ∀ y ∈ A z = B ) → ( ∃! x ∃ y ∈ A x = B ↔ ∃! x ∀ y ∈ A x = B ) ) ;;
+	step 35 : wff = ex (step 34) |- ( A ≠ ∅ → ( ∀ y ∈ A z = B → ( ∃! x ∃ y ∈ A x = B ↔ ∃! x ∀ y ∈ A x = B ) ) ) ;;
+	step 36 : wff = exlimdv (step 35) |- ( A ≠ ∅ → ( ∃ z ∀ y ∈ A z = B → ( ∃! x ∃ y ∈ A x = B ↔ ∃! x ∀ y ∈ A x = B ) ) ) ;;
+	step 37 : wff = syl5 (step 13, step 36) |- ( A ≠ ∅ → ( ∃! x ∀ y ∈ A x = B → ( ∃! x ∃ y ∈ A x = B ↔ ∃! x ∀ y ∈ A x = B ) ) ) ;;
+	step 38 : wff = imp (step 37) |- ( ( A ≠ ∅ ∧ ∃! x ∀ y ∈ A x = B ) → ( ∃! x ∃ y ∈ A x = B ↔ ∃! x ∀ y ∈ A x = B ) ) ;;
+	step 39 : wff = mpbird (step 8, step 38) |- ( ( A ≠ ∅ ∧ ∃! x ∀ y ∈ A x = B ) → ∃! x ∃ y ∈ A x = B ) ;;
+	step 40 : wff = ex (step 39) |- ( A ≠ ∅ → ( ∃! x ∀ y ∈ A x = B → ∃! x ∃ y ∈ A x = B ) ) ;;
+	step 41 : wff = pm2.61ine (step 7, step 40) |- ( ∃! x ∀ y ∈ A x = B → ∃! x ∃ y ∈ A x = B ) ;;
+	qed prop 1 = step 41 ;;
+}
+
+/* Lemma for ~ reusv2 .  (Contributed by NM, 14-Dec-2012.)  (Proof
+       shortened by Mario Carneiro, 19-Nov-2016.) */
+
+theorem reusv2lem3 (x : set, y : set, A : class, B : class) disjointed(x y A, x B) {
+	prop 1 : wff = |- ( ∀ y ∈ A B ∈ _V → ( ∃! x ∃ y ∈ A x = B ↔ ∃! x ∀ y ∈ A x = B ) ) ;;
+}
+
+proof of reusv2lem3 {
+	step 1 : wff = simpr () |- ( ( ∀ y ∈ A B ∈ _V ∧ ∃! x ∃ y ∈ A x = B ) → ∃! x ∃ y ∈ A x = B ) ;;
+	step 2 : wff = nfv () |- F/ x ∀ y ∈ A B ∈ _V ;;
+	step 3 : wff = nfeu1 () |- F/ x ∃! x ∃ y ∈ A x = B ;;
+	step 4 : wff = nfan (step 2, step 3) |- F/ x ( ∀ y ∈ A B ∈ _V ∧ ∃! x ∃ y ∈ A x = B ) ;;
+	step 5 : wff = euex () |- ( ∃! x ∃ y ∈ A x = B → ∃ x ∃ y ∈ A x = B ) ;;
+	step 6 : wff = rexn0 () |- ( ∃ y ∈ A x = B → A ≠ ∅ ) ;;
+	step 7 : wff = exlimiv (step 6) |- ( ∃ x ∃ y ∈ A x = B → A ≠ ∅ ) ;;
+	step 8 : wff = syl (step 5, step 7) |- ( ∃! x ∃ y ∈ A x = B → A ≠ ∅ ) ;;
+	step 9 : wff = adantl (step 8) |- ( ( ∀ y ∈ A B ∈ _V ∧ ∃! x ∃ y ∈ A x = B ) → A ≠ ∅ ) ;;
+	step 10 : wff = r19.2z () |- ( ( A ≠ ∅ ∧ ∀ y ∈ A x = B ) → ∃ y ∈ A x = B ) ;;
+	step 11 : wff = ex (step 10) |- ( A ≠ ∅ → ( ∀ y ∈ A x = B → ∃ y ∈ A x = B ) ) ;;
+	step 12 : wff = syl (step 9, step 11) |- ( ( ∀ y ∈ A B ∈ _V ∧ ∃! x ∃ y ∈ A x = B ) → ( ∀ y ∈ A x = B → ∃ y ∈ A x = B ) ) ;;
+	step 13 : wff = nfra1 () |- F/ y ∀ y ∈ A B ∈ _V ;;
+	step 14 : wff = nfre1 () |- F/ y ∃ y ∈ A x = B ;;
+	step 15 : wff = nfeu (step 14) |- F/ y ∃! x ∃ y ∈ A x = B ;;
+	step 16 : wff = nfan (step 13, step 15) |- F/ y ( ∀ y ∈ A B ∈ _V ∧ ∃! x ∃ y ∈ A x = B ) ;;
+	step 17 : wff = nfre1 () |- F/ y ∃ y ∈ A x = B ;;
+	step 18 : wff = simplr () |- ( ( ( ∀ y ∈ A B ∈ _V ∧ ∃! x ∃ y ∈ A x = B ) ∧ y ∈ A ) → ∃! x ∃ y ∈ A x = B ) ;;
+	step 19 : wff = simpr () |- ( ( ( ∀ y ∈ A B ∈ _V ∧ ∃! x ∃ y ∈ A x = B ) ∧ y ∈ A ) → y ∈ A ) ;;
+	step 20 : wff = rsp () |- ( ∀ y ∈ A B ∈ _V → ( y ∈ A → B ∈ _V ) ) ;;
+	step 21 : wff = adantr (step 20) |- ( ( ∀ y ∈ A B ∈ _V ∧ ∃! x ∃ y ∈ A x = B ) → ( y ∈ A → B ∈ _V ) ) ;;
+	step 22 : wff = imp (step 21) |- ( ( ( ∀ y ∈ A B ∈ _V ∧ ∃! x ∃ y ∈ A x = B ) ∧ y ∈ A ) → B ∈ _V ) ;;
+	step 23 : wff = isset () |- ( B ∈ _V ↔ ∃ x x = B ) ;;
+	step 24 : wff = sylib (step 22, step 23) |- ( ( ( ∀ y ∈ A B ∈ _V ∧ ∃! x ∃ y ∈ A x = B ) ∧ y ∈ A ) → ∃ x x = B ) ;;
+	step 25 : wff = rspe () |- ( ( y ∈ A ∧ x = B ) → ∃ y ∈ A x = B ) ;;
+	step 26 : wff = ex (step 25) |- ( y ∈ A → ( x = B → ∃ y ∈ A x = B ) ) ;;
+	step 27 : wff = ancrd (step 26) |- ( y ∈ A → ( x = B → ( ∃ y ∈ A x = B ∧ x = B ) ) ) ;;
+	step 28 : wff = eximdv (step 27) |- ( y ∈ A → ( ∃ x x = B → ∃ x ( ∃ y ∈ A x = B ∧ x = B ) ) ) ;;
+	step 29 : wff = sylc (step 19, step 24, step 28) |- ( ( ( ∀ y ∈ A B ∈ _V ∧ ∃! x ∃ y ∈ A x = B ) ∧ y ∈ A ) → ∃ x ( ∃ y ∈ A x = B ∧ x = B ) ) ;;
+	step 30 : wff = eupick () |- ( ( ∃! x ∃ y ∈ A x = B ∧ ∃ x ( ∃ y ∈ A x = B ∧ x = B ) ) → ( ∃ y ∈ A x = B → x = B ) ) ;;
+	step 31 : wff = syl2anc (step 18, step 29, step 30) |- ( ( ( ∀ y ∈ A B ∈ _V ∧ ∃! x ∃ y ∈ A x = B ) ∧ y ∈ A ) → ( ∃ y ∈ A x = B → x = B ) ) ;;
+	step 32 : wff = ex (step 31) |- ( ( ∀ y ∈ A B ∈ _V ∧ ∃! x ∃ y ∈ A x = B ) → ( y ∈ A → ( ∃ y ∈ A x = B → x = B ) ) ) ;;
+	step 33 : wff = com23 (step 32) |- ( ( ∀ y ∈ A B ∈ _V ∧ ∃! x ∃ y ∈ A x = B ) → ( ∃ y ∈ A x = B → ( y ∈ A → x = B ) ) ) ;;
+	step 34 : wff = ralrimd (step 16, step 17, step 33) |- ( ( ∀ y ∈ A B ∈ _V ∧ ∃! x ∃ y ∈ A x = B ) → ( ∃ y ∈ A x = B → ∀ y ∈ A x = B ) ) ;;
+	step 35 : wff = impbid (step 12, step 34) |- ( ( ∀ y ∈ A B ∈ _V ∧ ∃! x ∃ y ∈ A x = B ) → ( ∀ y ∈ A x = B ↔ ∃ y ∈ A x = B ) ) ;;
+	step 36 : wff = eubid (step 4, step 35) |- ( ( ∀ y ∈ A B ∈ _V ∧ ∃! x ∃ y ∈ A x = B ) → ( ∃! x ∀ y ∈ A x = B ↔ ∃! x ∃ y ∈ A x = B ) ) ;;
+	step 37 : wff = mpbird (step 1, step 36) |- ( ( ∀ y ∈ A B ∈ _V ∧ ∃! x ∃ y ∈ A x = B ) → ∃! x ∀ y ∈ A x = B ) ;;
+	step 38 : wff = ex (step 37) |- ( ∀ y ∈ A B ∈ _V → ( ∃! x ∃ y ∈ A x = B → ∃! x ∀ y ∈ A x = B ) ) ;;
+	step 39 : wff = reusv2lem2 () |- ( ∃! x ∀ y ∈ A x = B → ∃! x ∃ y ∈ A x = B ) ;;
+	step 40 : wff = impbid1 (step 38, step 39) |- ( ∀ y ∈ A B ∈ _V → ( ∃! x ∃ y ∈ A x = B ↔ ∃! x ∀ y ∈ A x = B ) ) ;;
+	qed prop 1 = step 40 ;;
+}
+
+/* Lemma for ~ reusv2 .  (Contributed by NM, 13-Dec-2012.) */
+
+theorem reusv2lem4 (ph : wff, x : set, y : set, A : class, B : class, C : class) disjointed(x y z A, x z B, x z C, x z ph) {
+	prop 1 : wff = |- ( ∃! x ∈ A ∃ y ∈ B ( ph ∧ x = C ) ↔ ∃! x ∀ y ∈ B ( ( C ∈ A ∧ ph ) → x = C ) ) ;;
+}
+
+proof of reusv2lem4 {
+	var z : set;;
+	step 1 : wff = df-reu () |- ( ∃! x ∈ A ∃ y ∈ B ( ph ∧ x = C ) ↔ ∃! x ( x ∈ A ∧ ∃ y ∈ B ( ph ∧ x = C ) ) ) ;;
+	step 2 : wff = anass () |- ( ( ( y ∈ B ∧ ( C ∈ A ∧ ph ) ) ∧ x = C ) ↔ ( y ∈ B ∧ ( ( C ∈ A ∧ ph ) ∧ x = C ) ) ) ;;
+	step 3 : wff = bicomi (step 2) |- ( ( y ∈ B ∧ ( ( C ∈ A ∧ ph ) ∧ x = C ) ) ↔ ( ( y ∈ B ∧ ( C ∈ A ∧ ph ) ) ∧ x = C ) ) ;;
+	step 4 : wff = anass () |- ( ( ( x ∈ A ∧ ph ) ∧ x = C ) ↔ ( x ∈ A ∧ ( ph ∧ x = C ) ) ) ;;
+	step 5 : wff = eleq1 () |- ( x = C → ( x ∈ A ↔ C ∈ A ) ) ;;
+	step 6 : wff = anbi1d (step 5) |- ( x = C → ( ( x ∈ A ∧ ph ) ↔ ( C ∈ A ∧ ph ) ) ) ;;
+	step 7 : wff = pm5.32ri (step 6) |- ( ( ( x ∈ A ∧ ph ) ∧ x = C ) ↔ ( ( C ∈ A ∧ ph ) ∧ x = C ) ) ;;
+	step 8 : wff = bitr3i (step 4, step 7) |- ( ( x ∈ A ∧ ( ph ∧ x = C ) ) ↔ ( ( C ∈ A ∧ ph ) ∧ x = C ) ) ;;
+	step 9 : wff = anbi2i (step 8) |- ( ( y ∈ B ∧ ( x ∈ A ∧ ( ph ∧ x = C ) ) ) ↔ ( y ∈ B ∧ ( ( C ∈ A ∧ ph ) ∧ x = C ) ) ) ;;
+	step 10 : wff = rabid () |- ( y ∈ { y ∈ B | ( C ∈ A ∧ ph ) } ↔ ( y ∈ B ∧ ( C ∈ A ∧ ph ) ) ) ;;
+	step 11 : wff = anbi1i (step 10) |- ( ( y ∈ { y ∈ B | ( C ∈ A ∧ ph ) } ∧ x = C ) ↔ ( ( y ∈ B ∧ ( C ∈ A ∧ ph ) ) ∧ x = C ) ) ;;
+	step 12 : wff = 3bitr4i (step 3, step 9, step 11) |- ( ( y ∈ B ∧ ( x ∈ A ∧ ( ph ∧ x = C ) ) ) ↔ ( y ∈ { y ∈ B | ( C ∈ A ∧ ph ) } ∧ x = C ) ) ;;
+	step 13 : wff = rexbii2 (step 12) |- ( ∃ y ∈ B ( x ∈ A ∧ ( ph ∧ x = C ) ) ↔ ∃ y ∈ { y ∈ B | ( C ∈ A ∧ ph ) } x = C ) ;;
+	step 14 : wff = r19.42v () |- ( ∃ y ∈ B ( x ∈ A ∧ ( ph ∧ x = C ) ) ↔ ( x ∈ A ∧ ∃ y ∈ B ( ph ∧ x = C ) ) ) ;;
+	step 15 : wff = nfrab1 () |- F/_ y { y ∈ B | ( C ∈ A ∧ ph ) } ;;
+	step 16 : wff = nfcv () |- F/_ z { y ∈ B | ( C ∈ A ∧ ph ) } ;;
+	step 17 : wff = nfv () |- F/ z x = C ;;
+	step 18 : wff = nfcsb1v () |- F/_ y [_ z / y ]_ C ;;
+	step 19 : wff = nfeq2 (step 18) |- F/ y x = [_ z / y ]_ C ;;
+	step 20 : wff = csbeq1a () |- ( y = z → C = [_ z / y ]_ C ) ;;
+	step 21 : wff = eqeq2d (step 20) |- ( y = z → ( x = C ↔ x = [_ z / y ]_ C ) ) ;;
+	step 22 : wff = cbvrexf (step 15, step 16, step 17, step 19, step 21) |- ( ∃ y ∈ { y ∈ B | ( C ∈ A ∧ ph ) } x = C ↔ ∃ z ∈ { y ∈ B | ( C ∈ A ∧ ph ) } x = [_ z / y ]_ C ) ;;
+	step 23 : wff = 3bitr3i (step 13, step 14, step 22) |- ( ( x ∈ A ∧ ∃ y ∈ B ( ph ∧ x = C ) ) ↔ ∃ z ∈ { y ∈ B | ( C ∈ A ∧ ph ) } x = [_ z / y ]_ C ) ;;
+	step 24 : wff = eubii (step 23) |- ( ∃! x ( x ∈ A ∧ ∃ y ∈ B ( ph ∧ x = C ) ) ↔ ∃! x ∃ z ∈ { y ∈ B | ( C ∈ A ∧ ph ) } x = [_ z / y ]_ C ) ;;
+	step 25 : wff = rabid () |- ( y ∈ { y ∈ B | ( C ∈ A ∧ ph ) } ↔ ( y ∈ B ∧ ( C ∈ A ∧ ph ) ) ) ;;
+	step 26 : wff = elex () |- ( C ∈ A → C ∈ _V ) ;;
+	step 27 : wff = ad2antrl (step 26) |- ( ( y ∈ B ∧ ( C ∈ A ∧ ph ) ) → C ∈ _V ) ;;
+	step 28 : wff = sylbi (step 25, step 27) |- ( y ∈ { y ∈ B | ( C ∈ A ∧ ph ) } → C ∈ _V ) ;;
+	step 29 : wff = rgen (step 28) |- ∀ y ∈ { y ∈ B | ( C ∈ A ∧ ph ) } C ∈ _V ;;
+	step 30 : wff = nfrab1 () |- F/_ y { y ∈ B | ( C ∈ A ∧ ph ) } ;;
+	step 31 : wff = nfcv () |- F/_ z { y ∈ B | ( C ∈ A ∧ ph ) } ;;
+	step 32 : wff = nfv () |- F/ z C ∈ _V ;;
+	step 33 : wff = nfcsb1v () |- F/_ y [_ z / y ]_ C ;;
+	step 34 : wff = nfel1 (step 33) |- F/ y [_ z / y ]_ C ∈ _V ;;
+	step 35 : wff = csbeq1a () |- ( y = z → C = [_ z / y ]_ C ) ;;
+	step 36 : wff = eleq1d (step 35) |- ( y = z → ( C ∈ _V ↔ [_ z / y ]_ C ∈ _V ) ) ;;
+	step 37 : wff = cbvralf (step 30, step 31, step 32, step 34, step 36) |- ( ∀ y ∈ { y ∈ B | ( C ∈ A ∧ ph ) } C ∈ _V ↔ ∀ z ∈ { y ∈ B | ( C ∈ A ∧ ph ) } [_ z / y ]_ C ∈ _V ) ;;
+	step 38 : wff = mpbi (step 29, step 37) |- ∀ z ∈ { y ∈ B | ( C ∈ A ∧ ph ) } [_ z / y ]_ C ∈ _V ;;
+	step 39 : wff = reusv2lem3 () |- ( ∀ z ∈ { y ∈ B | ( C ∈ A ∧ ph ) } [_ z / y ]_ C ∈ _V → ( ∃! x ∃ z ∈ { y ∈ B | ( C ∈ A ∧ ph ) } x = [_ z / y ]_ C ↔ ∃! x ∀ z ∈ { y ∈ B | ( C ∈ A ∧ ph ) } x = [_ z / y ]_ C ) ) ;;
+	step 40 : wff = ax-mp (step 38, step 39) |- ( ∃! x ∃ z ∈ { y ∈ B | ( C ∈ A ∧ ph ) } x = [_ z / y ]_ C ↔ ∃! x ∀ z ∈ { y ∈ B | ( C ∈ A ∧ ph ) } x = [_ z / y ]_ C ) ;;
+	step 41 : wff = df-ral () |- ( ∀ z ∈ { y ∈ B | ( C ∈ A ∧ ph ) } x = [_ z / y ]_ C ↔ ∀ z ( z ∈ { y ∈ B | ( C ∈ A ∧ ph ) } → x = [_ z / y ]_ C ) ) ;;
+	step 42 : wff = nfv () |- F/ z ( y ∈ { y ∈ B | ( C ∈ A ∧ ph ) } → x = C ) ;;
+	step 43 : wff = nfrab1 () |- F/_ y { y ∈ B | ( C ∈ A ∧ ph ) } ;;
+	step 44 : wff = nfel2 (step 43) |- F/ y z ∈ { y ∈ B | ( C ∈ A ∧ ph ) } ;;
+	step 45 : wff = nfcsb1v () |- F/_ y [_ z / y ]_ C ;;
+	step 46 : wff = nfeq2 (step 45) |- F/ y x = [_ z / y ]_ C ;;
+	step 47 : wff = nfim (step 44, step 46) |- F/ y ( z ∈ { y ∈ B | ( C ∈ A ∧ ph ) } → x = [_ z / y ]_ C ) ;;
+	step 48 : wff = eleq1 () |- ( y = z → ( y ∈ { y ∈ B | ( C ∈ A ∧ ph ) } ↔ z ∈ { y ∈ B | ( C ∈ A ∧ ph ) } ) ) ;;
+	step 49 : wff = csbeq1a () |- ( y = z → C = [_ z / y ]_ C ) ;;
+	step 50 : wff = eqeq2d (step 49) |- ( y = z → ( x = C ↔ x = [_ z / y ]_ C ) ) ;;
+	step 51 : wff = imbi12d (step 48, step 50) |- ( y = z → ( ( y ∈ { y ∈ B | ( C ∈ A ∧ ph ) } → x = C ) ↔ ( z ∈ { y ∈ B | ( C ∈ A ∧ ph ) } → x = [_ z / y ]_ C ) ) ) ;;
+	step 52 : wff = cbval (step 42, step 47, step 51) |- ( ∀ y ( y ∈ { y ∈ B | ( C ∈ A ∧ ph ) } → x = C ) ↔ ∀ z ( z ∈ { y ∈ B | ( C ∈ A ∧ ph ) } → x = [_ z / y ]_ C ) ) ;;
+	step 53 : wff = rabid () |- ( y ∈ { y ∈ B | ( C ∈ A ∧ ph ) } ↔ ( y ∈ B ∧ ( C ∈ A ∧ ph ) ) ) ;;
+	step 54 : wff = imbi1i (step 53) |- ( ( y ∈ { y ∈ B | ( C ∈ A ∧ ph ) } → x = C ) ↔ ( ( y ∈ B ∧ ( C ∈ A ∧ ph ) ) → x = C ) ) ;;
+	step 55 : wff = impexp () |- ( ( ( y ∈ B ∧ ( C ∈ A ∧ ph ) ) → x = C ) ↔ ( y ∈ B → ( ( C ∈ A ∧ ph ) → x = C ) ) ) ;;
+	step 56 : wff = bitri (step 54, step 55) |- ( ( y ∈ { y ∈ B | ( C ∈ A ∧ ph ) } → x = C ) ↔ ( y ∈ B → ( ( C ∈ A ∧ ph ) → x = C ) ) ) ;;
+	step 57 : wff = albii (step 56) |- ( ∀ y ( y ∈ { y ∈ B | ( C ∈ A ∧ ph ) } → x = C ) ↔ ∀ y ( y ∈ B → ( ( C ∈ A ∧ ph ) → x = C ) ) ) ;;
+	step 58 : wff = df-ral () |- ( ∀ y ∈ B ( ( C ∈ A ∧ ph ) → x = C ) ↔ ∀ y ( y ∈ B → ( ( C ∈ A ∧ ph ) → x = C ) ) ) ;;
+	step 59 : wff = bitr4i (step 57, step 58) |- ( ∀ y ( y ∈ { y ∈ B | ( C ∈ A ∧ ph ) } → x = C ) ↔ ∀ y ∈ B ( ( C ∈ A ∧ ph ) → x = C ) ) ;;
+	step 60 : wff = 3bitr2i (step 41, step 52, step 59) |- ( ∀ z ∈ { y ∈ B | ( C ∈ A ∧ ph ) } x = [_ z / y ]_ C ↔ ∀ y ∈ B ( ( C ∈ A ∧ ph ) → x = C ) ) ;;
+	step 61 : wff = eubii (step 60) |- ( ∃! x ∀ z ∈ { y ∈ B | ( C ∈ A ∧ ph ) } x = [_ z / y ]_ C ↔ ∃! x ∀ y ∈ B ( ( C ∈ A ∧ ph ) → x = C ) ) ;;
+	step 62 : wff = bitri (step 40, step 61) |- ( ∃! x ∃ z ∈ { y ∈ B | ( C ∈ A ∧ ph ) } x = [_ z / y ]_ C ↔ ∃! x ∀ y ∈ B ( ( C ∈ A ∧ ph ) → x = C ) ) ;;
+	step 63 : wff = 3bitri (step 1, step 24, step 62) |- ( ∃! x ∈ A ∃ y ∈ B ( ph ∧ x = C ) ↔ ∃! x ∀ y ∈ B ( ( C ∈ A ∧ ph ) → x = C ) ) ;;
+	qed prop 1 = step 63 ;;
+}
+
+/* Lemma for ~ reusv2 .  (Contributed by NM, 4-Jan-2013.)  (Proof shortened
+       by Mario Carneiro, 19-Nov-2016.) */
+
+theorem reusv2lem5 (x : set, y : set, A : class, B : class, C : class) disjointed(x y A, x y B, x C) {
+	prop 1 : wff = |- ( ( ∀ y ∈ B C ∈ A ∧ B ≠ ∅ ) → ( ∃! x ∈ A ∃ y ∈ B x = C ↔ ∃! x ∈ A ∀ y ∈ B x = C ) ) ;;
+}
+
+proof of reusv2lem5 {
+	step 1 : wff = tru () |- T. ;;
+	step 2 : wff = biimt () |- ( ( C ∈ A ∧ T. ) → ( x = C ↔ ( ( C ∈ A ∧ T. ) → x = C ) ) ) ;;
+	step 3 : wff = mpan2 (step 1, step 2) |- ( C ∈ A → ( x = C ↔ ( ( C ∈ A ∧ T. ) → x = C ) ) ) ;;
+	step 4 : wff = ibar () |- ( C ∈ A → ( x = C ↔ ( C ∈ A ∧ x = C ) ) ) ;;
+	step 5 : wff = bitr3d (step 3, step 4) |- ( C ∈ A → ( ( ( C ∈ A ∧ T. ) → x = C ) ↔ ( C ∈ A ∧ x = C ) ) ) ;;
+	step 6 : wff = eleq1 () |- ( x = C → ( x ∈ A ↔ C ∈ A ) ) ;;
+	step 7 : wff = pm5.32ri (step 6) |- ( ( x ∈ A ∧ x = C ) ↔ ( C ∈ A ∧ x = C ) ) ;;
+	step 8 : wff = syl6bbr (step 5, step 7) |- ( C ∈ A → ( ( ( C ∈ A ∧ T. ) → x = C ) ↔ ( x ∈ A ∧ x = C ) ) ) ;;
+	step 9 : wff = ralimi (step 8) |- ( ∀ y ∈ B C ∈ A → ∀ y ∈ B ( ( ( C ∈ A ∧ T. ) → x = C ) ↔ ( x ∈ A ∧ x = C ) ) ) ;;
+	step 10 : wff = ralbi () |- ( ∀ y ∈ B ( ( ( C ∈ A ∧ T. ) → x = C ) ↔ ( x ∈ A ∧ x = C ) ) → ( ∀ y ∈ B ( ( C ∈ A ∧ T. ) → x = C ) ↔ ∀ y ∈ B ( x ∈ A ∧ x = C ) ) ) ;;
+	step 11 : wff = syl (step 9, step 10) |- ( ∀ y ∈ B C ∈ A → ( ∀ y ∈ B ( ( C ∈ A ∧ T. ) → x = C ) ↔ ∀ y ∈ B ( x ∈ A ∧ x = C ) ) ) ;;
+	step 12 : wff = eubidv (step 11) |- ( ∀ y ∈ B C ∈ A → ( ∃! x ∀ y ∈ B ( ( C ∈ A ∧ T. ) → x = C ) ↔ ∃! x ∀ y ∈ B ( x ∈ A ∧ x = C ) ) ) ;;
+	step 13 : wff = r19.28zv () |- ( B ≠ ∅ → ( ∀ y ∈ B ( x ∈ A ∧ x = C ) ↔ ( x ∈ A ∧ ∀ y ∈ B x = C ) ) ) ;;
+	step 14 : wff = eubidv (step 13) |- ( B ≠ ∅ → ( ∃! x ∀ y ∈ B ( x ∈ A ∧ x = C ) ↔ ∃! x ( x ∈ A ∧ ∀ y ∈ B x = C ) ) ) ;;
+	step 15 : wff = sylan9bb (step 12, step 14) |- ( ( ∀ y ∈ B C ∈ A ∧ B ≠ ∅ ) → ( ∃! x ∀ y ∈ B ( ( C ∈ A ∧ T. ) → x = C ) ↔ ∃! x ( x ∈ A ∧ ∀ y ∈ B x = C ) ) ) ;;
+	step 16 : wff = tru () |- T. ;;
+	step 17 : wff = biantrur (step 16) |- ( x = C ↔ ( T. ∧ x = C ) ) ;;
+	step 18 : wff = rexbii (step 17) |- ( ∃ y ∈ B x = C ↔ ∃ y ∈ B ( T. ∧ x = C ) ) ;;
+	step 19 : wff = reubii (step 18) |- ( ∃! x ∈ A ∃ y ∈ B x = C ↔ ∃! x ∈ A ∃ y ∈ B ( T. ∧ x = C ) ) ;;
+	step 20 : wff = reusv2lem4 () |- ( ∃! x ∈ A ∃ y ∈ B ( T. ∧ x = C ) ↔ ∃! x ∀ y ∈ B ( ( C ∈ A ∧ T. ) → x = C ) ) ;;
+	step 21 : wff = bitri (step 19, step 20) |- ( ∃! x ∈ A ∃ y ∈ B x = C ↔ ∃! x ∀ y ∈ B ( ( C ∈ A ∧ T. ) → x = C ) ) ;;
+	step 22 : wff = df-reu () |- ( ∃! x ∈ A ∀ y ∈ B x = C ↔ ∃! x ( x ∈ A ∧ ∀ y ∈ B x = C ) ) ;;
+	step 23 : wff = 3bitr4g (step 15, step 21, step 22) |- ( ( ∀ y ∈ B C ∈ A ∧ B ≠ ∅ ) → ( ∃! x ∈ A ∃ y ∈ B x = C ↔ ∃! x ∈ A ∀ y ∈ B x = C ) ) ;;
+	qed prop 1 = step 23 ;;
+}
+
+/* Two ways to express single-valuedness of a class expression ` C ( y ) `
+       that is constant for those ` y e. B ` such that ` ph ` .  The first
+       antecedent ensures that the constant value belongs to the existential
+       uniqueness domain ` A ` , and the second ensures that ` C ( y ) ` is
+       evaluated for at least one ` y ` .  (Contributed by NM, 4-Jan-2013.)
+       (Proof shortened by Mario Carneiro, 19-Nov-2016.) */
+
+theorem reusv2 (ph : wff, x : set, y : set, A : class, B : class, C : class) disjointed(x y z A, x z B, x z C, x z ph) {
+	prop 1 : wff = |- ( ( ∀ y ∈ B ( ph → C ∈ A ) ∧ ∃ y ∈ B ph ) → ( ∃! x ∈ A ∃ y ∈ B ( ph ∧ x = C ) ↔ ∃! x ∈ A ∀ y ∈ B ( ph → x = C ) ) ) ;;
+}
+
+proof of reusv2 {
+	var z : set;;
+	step 1 : wff = nfrab1 () |- F/_ y { y ∈ B | ph } ;;
+	step 2 : wff = nfcv () |- F/_ z { y ∈ B | ph } ;;
+	step 3 : wff = nfv () |- F/ z C ∈ A ;;
+	step 4 : wff = nfcsb1v () |- F/_ y [_ z / y ]_ C ;;
+	step 5 : wff = nfel1 (step 4) |- F/ y [_ z / y ]_ C ∈ A ;;
+	step 6 : wff = csbeq1a () |- ( y = z → C = [_ z / y ]_ C ) ;;
+	step 7 : wff = eleq1d (step 6) |- ( y = z → ( C ∈ A ↔ [_ z / y ]_ C ∈ A ) ) ;;
+	step 8 : wff = cbvralf (step 1, step 2, step 3, step 5, step 7) |- ( ∀ y ∈ { y ∈ B | ph } C ∈ A ↔ ∀ z ∈ { y ∈ B | ph } [_ z / y ]_ C ∈ A ) ;;
+	step 9 : wff = rabid () |- ( y ∈ { y ∈ B | ph } ↔ ( y ∈ B ∧ ph ) ) ;;
+	step 10 : wff = imbi1i (step 9) |- ( ( y ∈ { y ∈ B | ph } → C ∈ A ) ↔ ( ( y ∈ B ∧ ph ) → C ∈ A ) ) ;;
+	step 11 : wff = impexp () |- ( ( ( y ∈ B ∧ ph ) → C ∈ A ) ↔ ( y ∈ B → ( ph → C ∈ A ) ) ) ;;
+	step 12 : wff = bitri (step 10, step 11) |- ( ( y ∈ { y ∈ B | ph } → C ∈ A ) ↔ ( y ∈ B → ( ph → C ∈ A ) ) ) ;;
+	step 13 : wff = ralbii2 (step 12) |- ( ∀ y ∈ { y ∈ B | ph } C ∈ A ↔ ∀ y ∈ B ( ph → C ∈ A ) ) ;;
+	step 14 : wff = bitr3i (step 8, step 13) |- ( ∀ z ∈ { y ∈ B | ph } [_ z / y ]_ C ∈ A ↔ ∀ y ∈ B ( ph → C ∈ A ) ) ;;
+	step 15 : wff = rabn0 () |- ( { y ∈ B | ph } ≠ ∅ ↔ ∃ y ∈ B ph ) ;;
+	step 16 : wff = reusv2lem5 () |- ( ( ∀ z ∈ { y ∈ B | ph } [_ z / y ]_ C ∈ A ∧ { y ∈ B | ph } ≠ ∅ ) → ( ∃! x ∈ A ∃ z ∈ { y ∈ B | ph } x = [_ z / y ]_ C ↔ ∃! x ∈ A ∀ z ∈ { y ∈ B | ph } x = [_ z / y ]_ C ) ) ;;
+	step 17 : wff = nfrab1 () |- F/_ y { y ∈ B | ph } ;;
+	step 18 : wff = nfcv () |- F/_ z { y ∈ B | ph } ;;
+	step 19 : wff = nfv () |- F/ z x = C ;;
+	step 20 : wff = nfcsb1v () |- F/_ y [_ z / y ]_ C ;;
+	step 21 : wff = nfeq2 (step 20) |- F/ y x = [_ z / y ]_ C ;;
+	step 22 : wff = csbeq1a () |- ( y = z → C = [_ z / y ]_ C ) ;;
+	step 23 : wff = eqeq2d (step 22) |- ( y = z → ( x = C ↔ x = [_ z / y ]_ C ) ) ;;
+	step 24 : wff = cbvrexf (step 17, step 18, step 19, step 21, step 23) |- ( ∃ y ∈ { y ∈ B | ph } x = C ↔ ∃ z ∈ { y ∈ B | ph } x = [_ z / y ]_ C ) ;;
+	step 25 : wff = rabid () |- ( y ∈ { y ∈ B | ph } ↔ ( y ∈ B ∧ ph ) ) ;;
+	step 26 : wff = anbi1i (step 25) |- ( ( y ∈ { y ∈ B | ph } ∧ x = C ) ↔ ( ( y ∈ B ∧ ph ) ∧ x = C ) ) ;;
+	step 27 : wff = anass () |- ( ( ( y ∈ B ∧ ph ) ∧ x = C ) ↔ ( y ∈ B ∧ ( ph ∧ x = C ) ) ) ;;
+	step 28 : wff = bitri (step 26, step 27) |- ( ( y ∈ { y ∈ B | ph } ∧ x = C ) ↔ ( y ∈ B ∧ ( ph ∧ x = C ) ) ) ;;
+	step 29 : wff = rexbii2 (step 28) |- ( ∃ y ∈ { y ∈ B | ph } x = C ↔ ∃ y ∈ B ( ph ∧ x = C ) ) ;;
+	step 30 : wff = bitr3i (step 24, step 29) |- ( ∃ z ∈ { y ∈ B | ph } x = [_ z / y ]_ C ↔ ∃ y ∈ B ( ph ∧ x = C ) ) ;;
+	step 31 : wff = reubii (step 30) |- ( ∃! x ∈ A ∃ z ∈ { y ∈ B | ph } x = [_ z / y ]_ C ↔ ∃! x ∈ A ∃ y ∈ B ( ph ∧ x = C ) ) ;;
+	step 32 : wff = nfrab1 () |- F/_ y { y ∈ B | ph } ;;
+	step 33 : wff = nfcv () |- F/_ z { y ∈ B | ph } ;;
+	step 34 : wff = nfv () |- F/ z x = C ;;
+	step 35 : wff = nfcsb1v () |- F/_ y [_ z / y ]_ C ;;
+	step 36 : wff = nfeq2 (step 35) |- F/ y x = [_ z / y ]_ C ;;
+	step 37 : wff = csbeq1a () |- ( y = z → C = [_ z / y ]_ C ) ;;
+	step 38 : wff = eqeq2d (step 37) |- ( y = z → ( x = C ↔ x = [_ z / y ]_ C ) ) ;;
+	step 39 : wff = cbvralf (step 32, step 33, step 34, step 36, step 38) |- ( ∀ y ∈ { y ∈ B | ph } x = C ↔ ∀ z ∈ { y ∈ B | ph } x = [_ z / y ]_ C ) ;;
+	step 40 : wff = rabid () |- ( y ∈ { y ∈ B | ph } ↔ ( y ∈ B ∧ ph ) ) ;;
+	step 41 : wff = imbi1i (step 40) |- ( ( y ∈ { y ∈ B | ph } → x = C ) ↔ ( ( y ∈ B ∧ ph ) → x = C ) ) ;;
+	step 42 : wff = impexp () |- ( ( ( y ∈ B ∧ ph ) → x = C ) ↔ ( y ∈ B → ( ph → x = C ) ) ) ;;
+	step 43 : wff = bitri (step 41, step 42) |- ( ( y ∈ { y ∈ B | ph } → x = C ) ↔ ( y ∈ B → ( ph → x = C ) ) ) ;;
+	step 44 : wff = ralbii2 (step 43) |- ( ∀ y ∈ { y ∈ B | ph } x = C ↔ ∀ y ∈ B ( ph → x = C ) ) ;;
+	step 45 : wff = bitr3i (step 39, step 44) |- ( ∀ z ∈ { y ∈ B | ph } x = [_ z / y ]_ C ↔ ∀ y ∈ B ( ph → x = C ) ) ;;
+	step 46 : wff = reubii (step 45) |- ( ∃! x ∈ A ∀ z ∈ { y ∈ B | ph } x = [_ z / y ]_ C ↔ ∃! x ∈ A ∀ y ∈ B ( ph → x = C ) ) ;;
+	step 47 : wff = 3bitr3g (step 16, step 31, step 46) |- ( ( ∀ z ∈ { y ∈ B | ph } [_ z / y ]_ C ∈ A ∧ { y ∈ B | ph } ≠ ∅ ) → ( ∃! x ∈ A ∃ y ∈ B ( ph ∧ x = C ) ↔ ∃! x ∈ A ∀ y ∈ B ( ph → x = C ) ) ) ;;
+	step 48 : wff = syl2anbr (step 14, step 15, step 47) |- ( ( ∀ y ∈ B ( ph → C ∈ A ) ∧ ∃ y ∈ B ph ) → ( ∃! x ∈ A ∃ y ∈ B ( ph ∧ x = C ) ↔ ∃! x ∈ A ∀ y ∈ B ( ph → x = C ) ) ) ;;
+	qed prop 1 = step 48 ;;
+}
+
+/* Two ways of expressing existential uniqueness via an indirect equality.
+       (Contributed by NM, 23-Dec-2012.) */
+
+theorem reusv3i (ph : wff, ps : wff, x : set, y : set, z : set, A : class, B : class, C : class, D : class) disjointed(x y z B, x z C, x y D, x z ph, x y ps) {
+	hyp 1 : wff = |- ( y = z → ( ph ↔ ps ) ) ;;
+	hyp 2 : wff = |- ( y = z → C = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ x ∈ A ∀ y ∈ B ( ph → x = C ) → ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) ) ;;
+}
+
+proof of reusv3i {
+	step 1 : wff = eqeq2d (hyp 2) |- ( y = z → ( x = C ↔ x = D ) ) ;;
+	step 2 : wff = imbi12d (hyp 1, step 1) |- ( y = z → ( ( ph → x = C ) ↔ ( ps → x = D ) ) ) ;;
+	step 3 : wff = cbvralv (step 2) |- ( ∀ y ∈ B ( ph → x = C ) ↔ ∀ z ∈ B ( ps → x = D ) ) ;;
+	step 4 : wff = biimpi (step 3) |- ( ∀ y ∈ B ( ph → x = C ) → ∀ z ∈ B ( ps → x = D ) ) ;;
+	step 5 : wff = raaanv () |- ( ∀ y ∈ B ∀ z ∈ B ( ( ph → x = C ) ∧ ( ps → x = D ) ) ↔ ( ∀ y ∈ B ( ph → x = C ) ∧ ∀ z ∈ B ( ps → x = D ) ) ) ;;
+	step 6 : wff = prth () |- ( ( ( ph → x = C ) ∧ ( ps → x = D ) ) → ( ( ph ∧ ps ) → ( x = C ∧ x = D ) ) ) ;;
+	step 7 : wff = eqtr2 () |- ( ( x = C ∧ x = D ) → C = D ) ;;
+	step 8 : wff = syl6 (step 6, step 7) |- ( ( ( ph → x = C ) ∧ ( ps → x = D ) ) → ( ( ph ∧ ps ) → C = D ) ) ;;
+	step 9 : wff = ralimi (step 8) |- ( ∀ z ∈ B ( ( ph → x = C ) ∧ ( ps → x = D ) ) → ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) ) ;;
+	step 10 : wff = ralimi (step 9) |- ( ∀ y ∈ B ∀ z ∈ B ( ( ph → x = C ) ∧ ( ps → x = D ) ) → ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) ) ;;
+	step 11 : wff = sylbir (step 5, step 10) |- ( ( ∀ y ∈ B ( ph → x = C ) ∧ ∀ z ∈ B ( ps → x = D ) ) → ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) ) ;;
+	step 12 : wff = mpdan (step 4, step 11) |- ( ∀ y ∈ B ( ph → x = C ) → ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) ) ;;
+	step 13 : wff = rexlimivw (step 12) |- ( ∃ x ∈ A ∀ y ∈ B ( ph → x = C ) → ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) ) ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* Two ways to express single-valuedness of a class expression
+       ` C ( y ) ` .  See ~ reusv1 for the connection to uniqueness.
+       (Contributed by NM, 27-Dec-2012.) */
+
+theorem reusv3 (ph : wff, ps : wff, x : set, y : set, z : set, A : class, B : class, C : class, D : class) disjointed(x y z B, x z C, x y D, x z ph, x y ps, x y z A) {
+	hyp 1 : wff = |- ( y = z → ( ph ↔ ps ) ) ;;
+	hyp 2 : wff = |- ( y = z → C = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ y ∈ B ( ph ∧ C ∈ A ) → ( ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) ↔ ∃ x ∈ A ∀ y ∈ B ( ph → x = C ) ) ) ;;
+}
+
+proof of reusv3 {
+	step 1 : wff = eleq1d (hyp 2) |- ( y = z → ( C ∈ A ↔ D ∈ A ) ) ;;
+	step 2 : wff = anbi12d (hyp 1, step 1) |- ( y = z → ( ( ph ∧ C ∈ A ) ↔ ( ps ∧ D ∈ A ) ) ) ;;
+	step 3 : wff = cbvrexv (step 2) |- ( ∃ y ∈ B ( ph ∧ C ∈ A ) ↔ ∃ z ∈ B ( ps ∧ D ∈ A ) ) ;;
+	step 4 : wff = nfra2 () |- F/ z ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) ;;
+	step 5 : wff = nfv () |- F/ z ∃ x ∈ A ∀ y ∈ B ( ph → x = C ) ;;
+	step 6 : wff = nfim (step 4, step 5) |- F/ z ( ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) → ∃ x ∈ A ∀ y ∈ B ( ph → x = C ) ) ;;
+	step 7 : wff = risset () |- ( D ∈ A ↔ ∃ x ∈ A x = D ) ;;
+	step 8 : wff = ralcom () |- ( ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) ↔ ∀ z ∈ B ∀ y ∈ B ( ( ph ∧ ps ) → C = D ) ) ;;
+	step 9 : wff = impexp () |- ( ( ( ph ∧ ps ) → C = D ) ↔ ( ph → ( ps → C = D ) ) ) ;;
+	step 10 : wff = bi2.04 () |- ( ( ph → ( ps → C = D ) ) ↔ ( ps → ( ph → C = D ) ) ) ;;
+	step 11 : wff = bitri (step 9, step 10) |- ( ( ( ph ∧ ps ) → C = D ) ↔ ( ps → ( ph → C = D ) ) ) ;;
+	step 12 : wff = ralbii (step 11) |- ( ∀ y ∈ B ( ( ph ∧ ps ) → C = D ) ↔ ∀ y ∈ B ( ps → ( ph → C = D ) ) ) ;;
+	step 13 : wff = r19.21v () |- ( ∀ y ∈ B ( ps → ( ph → C = D ) ) ↔ ( ps → ∀ y ∈ B ( ph → C = D ) ) ) ;;
+	step 14 : wff = bitri (step 12, step 13) |- ( ∀ y ∈ B ( ( ph ∧ ps ) → C = D ) ↔ ( ps → ∀ y ∈ B ( ph → C = D ) ) ) ;;
+	step 15 : wff = ralbii (step 14) |- ( ∀ z ∈ B ∀ y ∈ B ( ( ph ∧ ps ) → C = D ) ↔ ∀ z ∈ B ( ps → ∀ y ∈ B ( ph → C = D ) ) ) ;;
+	step 16 : wff = bitri (step 8, step 15) |- ( ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) ↔ ∀ z ∈ B ( ps → ∀ y ∈ B ( ph → C = D ) ) ) ;;
+	step 17 : wff = rsp () |- ( ∀ z ∈ B ( ps → ∀ y ∈ B ( ph → C = D ) ) → ( z ∈ B → ( ps → ∀ y ∈ B ( ph → C = D ) ) ) ) ;;
+	step 18 : wff = sylbi (step 16, step 17) |- ( ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) → ( z ∈ B → ( ps → ∀ y ∈ B ( ph → C = D ) ) ) ) ;;
+	step 19 : wff = com3l (step 18) |- ( z ∈ B → ( ps → ( ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) → ∀ y ∈ B ( ph → C = D ) ) ) ) ;;
+	step 20 : wff = imp31 (step 19) |- ( ( ( z ∈ B ∧ ps ) ∧ ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) ) → ∀ y ∈ B ( ph → C = D ) ) ;;
+	step 21 : wff = eqeq1 () |- ( x = D → ( x = C ↔ D = C ) ) ;;
+	step 22 : wff = eqcom () |- ( D = C ↔ C = D ) ;;
+	step 23 : wff = syl6bb (step 21, step 22) |- ( x = D → ( x = C ↔ C = D ) ) ;;
+	step 24 : wff = imbi2d (step 23) |- ( x = D → ( ( ph → x = C ) ↔ ( ph → C = D ) ) ) ;;
+	step 25 : wff = ralbidv (step 24) |- ( x = D → ( ∀ y ∈ B ( ph → x = C ) ↔ ∀ y ∈ B ( ph → C = D ) ) ) ;;
+	step 26 : wff = syl5ibrcom (step 20, step 25) |- ( ( ( z ∈ B ∧ ps ) ∧ ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) ) → ( x = D → ∀ y ∈ B ( ph → x = C ) ) ) ;;
+	step 27 : wff = reximdv (step 26) |- ( ( ( z ∈ B ∧ ps ) ∧ ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) ) → ( ∃ x ∈ A x = D → ∃ x ∈ A ∀ y ∈ B ( ph → x = C ) ) ) ;;
+	step 28 : wff = ex (step 27) |- ( ( z ∈ B ∧ ps ) → ( ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) → ( ∃ x ∈ A x = D → ∃ x ∈ A ∀ y ∈ B ( ph → x = C ) ) ) ) ;;
+	step 29 : wff = com23 (step 28) |- ( ( z ∈ B ∧ ps ) → ( ∃ x ∈ A x = D → ( ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) → ∃ x ∈ A ∀ y ∈ B ( ph → x = C ) ) ) ) ;;
+	step 30 : wff = syl5bi (step 7, step 29) |- ( ( z ∈ B ∧ ps ) → ( D ∈ A → ( ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) → ∃ x ∈ A ∀ y ∈ B ( ph → x = C ) ) ) ) ;;
+	step 31 : wff = expimpd (step 30) |- ( z ∈ B → ( ( ps ∧ D ∈ A ) → ( ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) → ∃ x ∈ A ∀ y ∈ B ( ph → x = C ) ) ) ) ;;
+	step 32 : wff = rexlimi (step 6, step 31) |- ( ∃ z ∈ B ( ps ∧ D ∈ A ) → ( ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) → ∃ x ∈ A ∀ y ∈ B ( ph → x = C ) ) ) ;;
+	step 33 : wff = sylbi (step 3, step 32) |- ( ∃ y ∈ B ( ph ∧ C ∈ A ) → ( ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) → ∃ x ∈ A ∀ y ∈ B ( ph → x = C ) ) ) ;;
+	step 34 : wff = reusv3i (hyp 1, hyp 2) |- ( ∃ x ∈ A ∀ y ∈ B ( ph → x = C ) → ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) ) ;;
+	step 35 : wff = impbid1 (step 33, step 34) |- ( ∃ y ∈ B ( ph ∧ C ∈ A ) → ( ∀ y ∈ B ∀ z ∈ B ( ( ph ∧ ps ) → C = D ) ↔ ∃ x ∈ A ∀ y ∈ B ( ph → x = C ) ) ) ;;
+	qed prop 1 = step 35 ;;
+}
+
+/* Two ways to express single-valuedness of a class expression
+       ` B ( x ) ` .  (Contributed by NM, 27-Oct-2010.) */
+
+theorem eusv4 (x : set, y : set, A : class, B : class) disjointed(x y A, x B) {
+	hyp 1 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃! x ∃ y ∈ A x = B ↔ ∃! x ∀ y ∈ A x = B ) ;;
+}
+
+proof of eusv4 {
+	step 1 : wff = reusv2lem3 () |- ( ∀ y ∈ A B ∈ _V → ( ∃! x ∃ y ∈ A x = B ↔ ∃! x ∀ y ∈ A x = B ) ) ;;
+	step 2 : wff = a1i (hyp 1) |- ( y ∈ A → B ∈ _V ) ;;
+	step 3 : wff = mprg (step 1, step 2) |- ( ∃! x ∃ y ∈ A x = B ↔ ∃! x ∀ y ∈ A x = B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Two ways to express single-valuedness of a class expression
+       ` C ( y ) ` .  (Contributed by NM, 16-Dec-2012.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem reusv5OLD (x : set, y : set, A : class, B : class, C : class) disjointed(x A, x y B, x C, x y) {
+	prop 1 : wff = |- ( B ≠ ∅ → ( ∃! x ∈ A ∀ y ∈ B x = C ↔ ∃ x ∈ A ∀ y ∈ B x = C ) ) ;;
+}
+
+proof of reusv5OLD {
+	step 1 : wff = equid () |- y = y ;;
+	step 2 : wff = biantru (step 1) |- ( y ∈ B ↔ ( y ∈ B ∧ y = y ) ) ;;
+	step 3 : wff = exbii (step 2) |- ( ∃ y y ∈ B ↔ ∃ y ( y ∈ B ∧ y = y ) ) ;;
+	step 4 : wff = n0 () |- ( B ≠ ∅ ↔ ∃ y y ∈ B ) ;;
+	step 5 : wff = df-rex () |- ( ∃ y ∈ B y = y ↔ ∃ y ( y ∈ B ∧ y = y ) ) ;;
+	step 6 : wff = 3bitr4i (step 3, step 4, step 5) |- ( B ≠ ∅ ↔ ∃ y ∈ B y = y ) ;;
+	step 7 : wff = reusv1 () |- ( ∃ y ∈ B y = y → ( ∃! x ∈ A ∀ y ∈ B ( y = y → x = C ) ↔ ∃ x ∈ A ∀ y ∈ B ( y = y → x = C ) ) ) ;;
+	step 8 : wff = equid () |- y = y ;;
+	step 9 : wff = a1bi (step 8) |- ( x = C ↔ ( y = y → x = C ) ) ;;
+	step 10 : wff = ralbii (step 9) |- ( ∀ y ∈ B x = C ↔ ∀ y ∈ B ( y = y → x = C ) ) ;;
+	step 11 : wff = reubii (step 10) |- ( ∃! x ∈ A ∀ y ∈ B x = C ↔ ∃! x ∈ A ∀ y ∈ B ( y = y → x = C ) ) ;;
+	step 12 : wff = equid () |- y = y ;;
+	step 13 : wff = a1bi (step 12) |- ( x = C ↔ ( y = y → x = C ) ) ;;
+	step 14 : wff = ralbii (step 13) |- ( ∀ y ∈ B x = C ↔ ∀ y ∈ B ( y = y → x = C ) ) ;;
+	step 15 : wff = rexbii (step 14) |- ( ∃ x ∈ A ∀ y ∈ B x = C ↔ ∃ x ∈ A ∀ y ∈ B ( y = y → x = C ) ) ;;
+	step 16 : wff = 3bitr4g (step 7, step 11, step 15) |- ( ∃ y ∈ B y = y → ( ∃! x ∈ A ∀ y ∈ B x = C ↔ ∃ x ∈ A ∀ y ∈ B x = C ) ) ;;
+	step 17 : wff = sylbi (step 6, step 16) |- ( B ≠ ∅ → ( ∃! x ∈ A ∀ y ∈ B x = C ↔ ∃ x ∈ A ∀ y ∈ B x = C ) ) ;;
+	qed prop 1 = step 17 ;;
+}
+
+/* Two ways to express single-valuedness of a class expression
+       ` C ( y ) ` .  The converse does not hold.  Note that ` U. A = |^| A `
+       means ` A ` is a singleton ( ~ uniintsn ).  (Contributed by NM,
+       30-Oct-2010.)  (Proof shortened by Mario Carneiro, 24-Dec-2016.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem reusv6OLD (x : set, y : set, A : class, B : class, C : class) disjointed(x y z A, x y z B, x z C) {
+	prop 1 : wff = |- ( ( ⋃ A ≠ ⋂ A ∨ B ≠ ∅ ) → ( ∃! x ∈ A ∀ y ∈ B x = C → ∃! x ∈ A ∃ y ∈ B x = C ) ) ;;
+}
+
+proof of reusv6OLD {
+	var z : set;;
+	step 1 : wff = raleq () |- ( B = ∅ → ( ∀ y ∈ B x = C ↔ ∀ y ∈ ∅ x = C ) ) ;;
+	step 2 : wff = reubidv (step 1) |- ( B = ∅ → ( ∃! x ∈ A ∀ y ∈ B x = C ↔ ∃! x ∈ A ∀ y ∈ ∅ x = C ) ) ;;
+	step 3 : wff = df-reu () |- ( ∃! x ∈ A ∀ y ∈ ∅ x = C ↔ ∃! x ( x ∈ A ∧ ∀ y ∈ ∅ x = C ) ) ;;
+	step 4 : wff = uniintsn () |- ( ⋃ A = ⋂ A ↔ ∃ x A = { x } ) ;;
+	step 5 : wff = eusn () |- ( ∃! x x ∈ A ↔ ∃ x A = { x } ) ;;
+	step 6 : wff = ral0 () |- ∀ y ∈ ∅ x = C ;;
+	step 7 : wff = biantru (step 6) |- ( x ∈ A ↔ ( x ∈ A ∧ ∀ y ∈ ∅ x = C ) ) ;;
+	step 8 : wff = eubii (step 7) |- ( ∃! x x ∈ A ↔ ∃! x ( x ∈ A ∧ ∀ y ∈ ∅ x = C ) ) ;;
+	step 9 : wff = 3bitr2i (step 4, step 5, step 8) |- ( ⋃ A = ⋂ A ↔ ∃! x ( x ∈ A ∧ ∀ y ∈ ∅ x = C ) ) ;;
+	step 10 : wff = bitr4i (step 3, step 9) |- ( ∃! x ∈ A ∀ y ∈ ∅ x = C ↔ ⋃ A = ⋂ A ) ;;
+	step 11 : wff = syl6bb (step 2, step 10) |- ( B = ∅ → ( ∃! x ∈ A ∀ y ∈ B x = C ↔ ⋃ A = ⋂ A ) ) ;;
+	step 12 : wff = necon3bbid (step 11) |- ( B = ∅ → ( ¬ ∃! x ∈ A ∀ y ∈ B x = C ↔ ⋃ A ≠ ⋂ A ) ) ;;
+	step 13 : wff = pm2.21 () |- ( ¬ ∃! x ∈ A ∀ y ∈ B x = C → ( ∃! x ∈ A ∀ y ∈ B x = C → ∃! x ∈ A ∃ y ∈ B x = C ) ) ;;
+	step 14 : wff = syl6bir (step 12, step 13) |- ( B = ∅ → ( ⋃ A ≠ ⋂ A → ( ∃! x ∈ A ∀ y ∈ B x = C → ∃! x ∈ A ∃ y ∈ B x = C ) ) ) ;;
+	step 15 : wff = nfv () |- F/ x B ≠ ∅ ;;
+	step 16 : wff = nfrab1 () |- F/_ x { x ∈ A | ∀ y ∈ B x = C } ;;
+	step 17 : wff = nfeq1 (step 16) |- F/ x { x ∈ A | ∀ y ∈ B x = C } = { z } ;;
+	step 18 : wff = nfan (step 15, step 17) |- F/ x ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ) ;;
+	step 19 : wff = nfv () |- F/ y B ≠ ∅ ;;
+	step 20 : wff = nfra1 () |- F/ y ∀ y ∈ B x = C ;;
+	step 21 : wff = nfcv () |- F/_ y A ;;
+	step 22 : wff = nfrab (step 20, step 21) |- F/_ y { x ∈ A | ∀ y ∈ B x = C } ;;
+	step 23 : wff = nfeq1 (step 22) |- F/ y { x ∈ A | ∀ y ∈ B x = C } = { z } ;;
+	step 24 : wff = nfv () |- F/ y x ∈ A ;;
+	step 25 : wff = nf3an (step 19, step 23, step 24) |- F/ y ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ∧ x ∈ A ) ;;
+	step 26 : wff = nfv () |- F/ y x ∈ { z } ;;
+	step 27 : wff = vex () |- z ∈ _V ;;
+	step 28 : wff = snid (step 27) |- z ∈ { z } ;;
+	step 29 : wff = simp2 () |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ∧ x ∈ A ) → { x ∈ A | ∀ y ∈ B x = C } = { z } ) ;;
+	step 30 : wff = syl5eleqr (step 28, step 29) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ∧ x ∈ A ) → z ∈ { x ∈ A | ∀ y ∈ B x = C } ) ;;
+	step 31 : wff = eqeq1 () |- ( x = z → ( x = C ↔ z = C ) ) ;;
+	step 32 : wff = ralbidv (step 31) |- ( x = z → ( ∀ y ∈ B x = C ↔ ∀ y ∈ B z = C ) ) ;;
+	step 33 : wff = elrab (step 32) |- ( z ∈ { x ∈ A | ∀ y ∈ B x = C } ↔ ( z ∈ A ∧ ∀ y ∈ B z = C ) ) ;;
+	step 34 : wff = simprbi (step 33) |- ( z ∈ { x ∈ A | ∀ y ∈ B x = C } → ∀ y ∈ B z = C ) ;;
+	step 35 : wff = syl (step 30, step 34) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ∧ x ∈ A ) → ∀ y ∈ B z = C ) ;;
+	step 36 : wff = r19.21bi (step 35) |- ( ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ∧ x ∈ A ) ∧ y ∈ B ) → z = C ) ;;
+	step 37 : wff = eqeq2d (step 36) |- ( ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ∧ x ∈ A ) ∧ y ∈ B ) → ( x = z ↔ x = C ) ) ;;
+	step 38 : wff = biimprd (step 37) |- ( ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ∧ x ∈ A ) ∧ y ∈ B ) → ( x = C → x = z ) ) ;;
+	step 39 : wff = elsn () |- ( x ∈ { z } ↔ x = z ) ;;
+	step 40 : wff = syl6ibr (step 38, step 39) |- ( ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ∧ x ∈ A ) ∧ y ∈ B ) → ( x = C → x ∈ { z } ) ) ;;
+	step 41 : wff = ex (step 40) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ∧ x ∈ A ) → ( y ∈ B → ( x = C → x ∈ { z } ) ) ) ;;
+	step 42 : wff = rexlimd (step 25, step 26, step 41) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ∧ x ∈ A ) → ( ∃ y ∈ B x = C → x ∈ { z } ) ) ;;
+	step 43 : wff = 3expia (step 42) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ) → ( x ∈ A → ( ∃ y ∈ B x = C → x ∈ { z } ) ) ) ;;
+	step 44 : wff = ralrimi (step 18, step 43) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ) → ∀ x ∈ A ( ∃ y ∈ B x = C → x ∈ { z } ) ) ;;
+	step 45 : wff = rabss () |- ( { x ∈ A | ∃ y ∈ B x = C } ⊆ { z } ↔ ∀ x ∈ A ( ∃ y ∈ B x = C → x ∈ { z } ) ) ;;
+	step 46 : wff = sylibr (step 44, step 45) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ) → { x ∈ A | ∃ y ∈ B x = C } ⊆ { z } ) ;;
+	step 47 : wff = simpr () |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ) → { x ∈ A | ∀ y ∈ B x = C } = { z } ) ;;
+	step 48 : wff = sseqtr4d (step 46, step 47) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ) → { x ∈ A | ∃ y ∈ B x = C } ⊆ { x ∈ A | ∀ y ∈ B x = C } ) ;;
+	step 49 : wff = r19.2z () |- ( ( B ≠ ∅ ∧ ∀ y ∈ B x = C ) → ∃ y ∈ B x = C ) ;;
+	step 50 : wff = ex (step 49) |- ( B ≠ ∅ → ( ∀ y ∈ B x = C → ∃ y ∈ B x = C ) ) ;;
+	step 51 : wff = adantr (step 50) |- ( ( B ≠ ∅ ∧ x ∈ A ) → ( ∀ y ∈ B x = C → ∃ y ∈ B x = C ) ) ;;
+	step 52 : wff = ss2rabdv (step 51) |- ( B ≠ ∅ → { x ∈ A | ∀ y ∈ B x = C } ⊆ { x ∈ A | ∃ y ∈ B x = C } ) ;;
+	step 53 : wff = adantr (step 52) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ) → { x ∈ A | ∀ y ∈ B x = C } ⊆ { x ∈ A | ∃ y ∈ B x = C } ) ;;
+	step 54 : wff = eqssd (step 48, step 53) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ) → { x ∈ A | ∃ y ∈ B x = C } = { x ∈ A | ∀ y ∈ B x = C } ) ;;
+	step 55 : wff = simpr () |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ) → { x ∈ A | ∀ y ∈ B x = C } = { z } ) ;;
+	step 56 : wff = eqtrd (step 54, step 55) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ) → { x ∈ A | ∃ y ∈ B x = C } = { z } ) ;;
+	step 57 : wff = ex (step 56) |- ( B ≠ ∅ → ( { x ∈ A | ∀ y ∈ B x = C } = { z } → { x ∈ A | ∃ y ∈ B x = C } = { z } ) ) ;;
+	step 58 : wff = eximdv (step 57) |- ( B ≠ ∅ → ( ∃ z { x ∈ A | ∀ y ∈ B x = C } = { z } → ∃ z { x ∈ A | ∃ y ∈ B x = C } = { z } ) ) ;;
+	step 59 : wff = reusn () |- ( ∃! x ∈ A ∀ y ∈ B x = C ↔ ∃ z { x ∈ A | ∀ y ∈ B x = C } = { z } ) ;;
+	step 60 : wff = reusn () |- ( ∃! x ∈ A ∃ y ∈ B x = C ↔ ∃ z { x ∈ A | ∃ y ∈ B x = C } = { z } ) ;;
+	step 61 : wff = 3imtr4g (step 58, step 59, step 60) |- ( B ≠ ∅ → ( ∃! x ∈ A ∀ y ∈ B x = C → ∃! x ∈ A ∃ y ∈ B x = C ) ) ;;
+	step 62 : wff = a1d (step 61) |- ( B ≠ ∅ → ( ⋃ A ≠ ⋂ A → ( ∃! x ∈ A ∀ y ∈ B x = C → ∃! x ∈ A ∃ y ∈ B x = C ) ) ) ;;
+	step 63 : wff = pm2.61ine (step 14, step 62) |- ( ⋃ A ≠ ⋂ A → ( ∃! x ∈ A ∀ y ∈ B x = C → ∃! x ∈ A ∃ y ∈ B x = C ) ) ;;
+	step 64 : wff = nfv () |- F/ x B ≠ ∅ ;;
+	step 65 : wff = nfrab1 () |- F/_ x { x ∈ A | ∀ y ∈ B x = C } ;;
+	step 66 : wff = nfeq1 (step 65) |- F/ x { x ∈ A | ∀ y ∈ B x = C } = { z } ;;
+	step 67 : wff = nfan (step 64, step 66) |- F/ x ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ) ;;
+	step 68 : wff = nfv () |- F/ y B ≠ ∅ ;;
+	step 69 : wff = nfra1 () |- F/ y ∀ y ∈ B x = C ;;
+	step 70 : wff = nfcv () |- F/_ y A ;;
+	step 71 : wff = nfrab (step 69, step 70) |- F/_ y { x ∈ A | ∀ y ∈ B x = C } ;;
+	step 72 : wff = nfeq1 (step 71) |- F/ y { x ∈ A | ∀ y ∈ B x = C } = { z } ;;
+	step 73 : wff = nfv () |- F/ y x ∈ A ;;
+	step 74 : wff = nf3an (step 68, step 72, step 73) |- F/ y ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ∧ x ∈ A ) ;;
+	step 75 : wff = nfv () |- F/ y x ∈ { z } ;;
+	step 76 : wff = vex () |- z ∈ _V ;;
+	step 77 : wff = snid (step 76) |- z ∈ { z } ;;
+	step 78 : wff = simp2 () |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ∧ x ∈ A ) → { x ∈ A | ∀ y ∈ B x = C } = { z } ) ;;
+	step 79 : wff = syl5eleqr (step 77, step 78) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ∧ x ∈ A ) → z ∈ { x ∈ A | ∀ y ∈ B x = C } ) ;;
+	step 80 : wff = eqeq1 () |- ( x = z → ( x = C ↔ z = C ) ) ;;
+	step 81 : wff = ralbidv (step 80) |- ( x = z → ( ∀ y ∈ B x = C ↔ ∀ y ∈ B z = C ) ) ;;
+	step 82 : wff = elrab (step 81) |- ( z ∈ { x ∈ A | ∀ y ∈ B x = C } ↔ ( z ∈ A ∧ ∀ y ∈ B z = C ) ) ;;
+	step 83 : wff = simprbi (step 82) |- ( z ∈ { x ∈ A | ∀ y ∈ B x = C } → ∀ y ∈ B z = C ) ;;
+	step 84 : wff = syl (step 79, step 83) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ∧ x ∈ A ) → ∀ y ∈ B z = C ) ;;
+	step 85 : wff = r19.21bi (step 84) |- ( ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ∧ x ∈ A ) ∧ y ∈ B ) → z = C ) ;;
+	step 86 : wff = eqeq2d (step 85) |- ( ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ∧ x ∈ A ) ∧ y ∈ B ) → ( x = z ↔ x = C ) ) ;;
+	step 87 : wff = biimprd (step 86) |- ( ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ∧ x ∈ A ) ∧ y ∈ B ) → ( x = C → x = z ) ) ;;
+	step 88 : wff = elsn () |- ( x ∈ { z } ↔ x = z ) ;;
+	step 89 : wff = syl6ibr (step 87, step 88) |- ( ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ∧ x ∈ A ) ∧ y ∈ B ) → ( x = C → x ∈ { z } ) ) ;;
+	step 90 : wff = ex (step 89) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ∧ x ∈ A ) → ( y ∈ B → ( x = C → x ∈ { z } ) ) ) ;;
+	step 91 : wff = rexlimd (step 74, step 75, step 90) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ∧ x ∈ A ) → ( ∃ y ∈ B x = C → x ∈ { z } ) ) ;;
+	step 92 : wff = 3expia (step 91) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ) → ( x ∈ A → ( ∃ y ∈ B x = C → x ∈ { z } ) ) ) ;;
+	step 93 : wff = ralrimi (step 67, step 92) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ) → ∀ x ∈ A ( ∃ y ∈ B x = C → x ∈ { z } ) ) ;;
+	step 94 : wff = rabss () |- ( { x ∈ A | ∃ y ∈ B x = C } ⊆ { z } ↔ ∀ x ∈ A ( ∃ y ∈ B x = C → x ∈ { z } ) ) ;;
+	step 95 : wff = sylibr (step 93, step 94) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ) → { x ∈ A | ∃ y ∈ B x = C } ⊆ { z } ) ;;
+	step 96 : wff = simpr () |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ) → { x ∈ A | ∀ y ∈ B x = C } = { z } ) ;;
+	step 97 : wff = sseqtr4d (step 95, step 96) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ) → { x ∈ A | ∃ y ∈ B x = C } ⊆ { x ∈ A | ∀ y ∈ B x = C } ) ;;
+	step 98 : wff = r19.2z () |- ( ( B ≠ ∅ ∧ ∀ y ∈ B x = C ) → ∃ y ∈ B x = C ) ;;
+	step 99 : wff = ex (step 98) |- ( B ≠ ∅ → ( ∀ y ∈ B x = C → ∃ y ∈ B x = C ) ) ;;
+	step 100 : wff = adantr (step 99) |- ( ( B ≠ ∅ ∧ x ∈ A ) → ( ∀ y ∈ B x = C → ∃ y ∈ B x = C ) ) ;;
+	step 101 : wff = ss2rabdv (step 100) |- ( B ≠ ∅ → { x ∈ A | ∀ y ∈ B x = C } ⊆ { x ∈ A | ∃ y ∈ B x = C } ) ;;
+	step 102 : wff = adantr (step 101) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ) → { x ∈ A | ∀ y ∈ B x = C } ⊆ { x ∈ A | ∃ y ∈ B x = C } ) ;;
+	step 103 : wff = eqssd (step 97, step 102) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ) → { x ∈ A | ∃ y ∈ B x = C } = { x ∈ A | ∀ y ∈ B x = C } ) ;;
+	step 104 : wff = simpr () |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ) → { x ∈ A | ∀ y ∈ B x = C } = { z } ) ;;
+	step 105 : wff = eqtrd (step 103, step 104) |- ( ( B ≠ ∅ ∧ { x ∈ A | ∀ y ∈ B x = C } = { z } ) → { x ∈ A | ∃ y ∈ B x = C } = { z } ) ;;
+	step 106 : wff = ex (step 105) |- ( B ≠ ∅ → ( { x ∈ A | ∀ y ∈ B x = C } = { z } → { x ∈ A | ∃ y ∈ B x = C } = { z } ) ) ;;
+	step 107 : wff = eximdv (step 106) |- ( B ≠ ∅ → ( ∃ z { x ∈ A | ∀ y ∈ B x = C } = { z } → ∃ z { x ∈ A | ∃ y ∈ B x = C } = { z } ) ) ;;
+	step 108 : wff = reusn () |- ( ∃! x ∈ A ∀ y ∈ B x = C ↔ ∃ z { x ∈ A | ∀ y ∈ B x = C } = { z } ) ;;
+	step 109 : wff = reusn () |- ( ∃! x ∈ A ∃ y ∈ B x = C ↔ ∃ z { x ∈ A | ∃ y ∈ B x = C } = { z } ) ;;
+	step 110 : wff = 3imtr4g (step 107, step 108, step 109) |- ( B ≠ ∅ → ( ∃! x ∈ A ∀ y ∈ B x = C → ∃! x ∈ A ∃ y ∈ B x = C ) ) ;;
+	step 111 : wff = jaoi (step 63, step 110) |- ( ( ⋃ A ≠ ⋂ A ∨ B ≠ ∅ ) → ( ∃! x ∈ A ∀ y ∈ B x = C → ∃! x ∈ A ∃ y ∈ B x = C ) ) ;;
+	qed prop 1 = step 111 ;;
+}
+
+/* Two ways to express single-valuedness of a class expression
+       ` C ( y ) ` .  Note that ` U. A = |^| A ` means ` A ` is a singleton
+       ( ~ uniintsn ).  (Contributed by NM, 14-Dec-2012.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem reusv7OLD (x : set, y : set, A : class, B : class, C : class) disjointed(x y A, x y B, x C) {
+	hyp 1 : wff = |- ( y ∈ B → C ∈ A ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ⋃ A ≠ ⋂ A ∨ B ≠ ∅ ) → ( ∃! x ∈ A ∃ y ∈ B x = C ↔ ∃! x ∈ A ∀ y ∈ B x = C ) ) ;;
+}
+
+proof of reusv7OLD {
+	step 1 : wff = raleq () |- ( B = ∅ → ( ∀ y ∈ B x = C ↔ ∀ y ∈ ∅ x = C ) ) ;;
+	step 2 : wff = reubidv (step 1) |- ( B = ∅ → ( ∃! x ∈ A ∀ y ∈ B x = C ↔ ∃! x ∈ A ∀ y ∈ ∅ x = C ) ) ;;
+	step 3 : wff = df-reu () |- ( ∃! x ∈ A ∀ y ∈ ∅ x = C ↔ ∃! x ( x ∈ A ∧ ∀ y ∈ ∅ x = C ) ) ;;
+	step 4 : wff = uniintsn () |- ( ⋃ A = ⋂ A ↔ ∃ x A = { x } ) ;;
+	step 5 : wff = eusn () |- ( ∃! x x ∈ A ↔ ∃ x A = { x } ) ;;
+	step 6 : wff = ral0 () |- ∀ y ∈ ∅ x = C ;;
+	step 7 : wff = biantru (step 6) |- ( x ∈ A ↔ ( x ∈ A ∧ ∀ y ∈ ∅ x = C ) ) ;;
+	step 8 : wff = eubii (step 7) |- ( ∃! x x ∈ A ↔ ∃! x ( x ∈ A ∧ ∀ y ∈ ∅ x = C ) ) ;;
+	step 9 : wff = 3bitr2i (step 4, step 5, step 8) |- ( ⋃ A = ⋂ A ↔ ∃! x ( x ∈ A ∧ ∀ y ∈ ∅ x = C ) ) ;;
+	step 10 : wff = bitr4i (step 3, step 9) |- ( ∃! x ∈ A ∀ y ∈ ∅ x = C ↔ ⋃ A = ⋂ A ) ;;
+	step 11 : wff = syl6bb (step 2, step 10) |- ( B = ∅ → ( ∃! x ∈ A ∀ y ∈ B x = C ↔ ⋃ A = ⋂ A ) ) ;;
+	step 12 : wff = necon3bbid (step 11) |- ( B = ∅ → ( ¬ ∃! x ∈ A ∀ y ∈ B x = C ↔ ⋃ A ≠ ⋂ A ) ) ;;
+	step 13 : wff = biimprd (step 12) |- ( B = ∅ → ( ⋃ A ≠ ⋂ A → ¬ ∃! x ∈ A ∀ y ∈ B x = C ) ) ;;
+	step 14 : wff = reurex () |- ( ∃! x ∈ A ∃ y ∈ B x = C → ∃ x ∈ A ∃ y ∈ B x = C ) ;;
+	step 15 : wff = rexn0 () |- ( ∃ y ∈ B x = C → B ≠ ∅ ) ;;
+	step 16 : wff = rexlimivw (step 15) |- ( ∃ x ∈ A ∃ y ∈ B x = C → B ≠ ∅ ) ;;
+	step 17 : wff = syl (step 14, step 16) |- ( ∃! x ∈ A ∃ y ∈ B x = C → B ≠ ∅ ) ;;
+	step 18 : wff = necon2bi (step 17) |- ( B = ∅ → ¬ ∃! x ∈ A ∃ y ∈ B x = C ) ;;
+	step 19 : wff = jctild (step 13, step 18) |- ( B = ∅ → ( ⋃ A ≠ ⋂ A → ( ¬ ∃! x ∈ A ∃ y ∈ B x = C ∧ ¬ ∃! x ∈ A ∀ y ∈ B x = C ) ) ) ;;
+	step 20 : wff = pm5.21 () |- ( ( ¬ ∃! x ∈ A ∃ y ∈ B x = C ∧ ¬ ∃! x ∈ A ∀ y ∈ B x = C ) → ( ∃! x ∈ A ∃ y ∈ B x = C ↔ ∃! x ∈ A ∀ y ∈ B x = C ) ) ;;
+	step 21 : wff = syl6 (step 19, step 20) |- ( B = ∅ → ( ⋃ A ≠ ⋂ A → ( ∃! x ∈ A ∃ y ∈ B x = C ↔ ∃! x ∈ A ∀ y ∈ B x = C ) ) ) ;;
+	step 22 : wff = r19.28zv () |- ( B ≠ ∅ → ( ∀ y ∈ B ( x ∈ A ∧ x = C ) ↔ ( x ∈ A ∧ ∀ y ∈ B x = C ) ) ) ;;
+	step 23 : wff = eubidv (step 22) |- ( B ≠ ∅ → ( ∃! x ∀ y ∈ B ( x ∈ A ∧ x = C ) ↔ ∃! x ( x ∈ A ∧ ∀ y ∈ B x = C ) ) ) ;;
+	step 24 : wff = reusv2lem4 () |- ( ∃! x ∈ A ∃ y ∈ B ( y = y ∧ x = C ) ↔ ∃! x ∀ y ∈ B ( ( C ∈ A ∧ y = y ) → x = C ) ) ;;
+	step 25 : wff = equid () |- y = y ;;
+	step 26 : wff = biantrur (step 25) |- ( x = C ↔ ( y = y ∧ x = C ) ) ;;
+	step 27 : wff = rexbii (step 26) |- ( ∃ y ∈ B x = C ↔ ∃ y ∈ B ( y = y ∧ x = C ) ) ;;
+	step 28 : wff = reubii (step 27) |- ( ∃! x ∈ A ∃ y ∈ B x = C ↔ ∃! x ∈ A ∃ y ∈ B ( y = y ∧ x = C ) ) ;;
+	step 29 : wff = biantrurd (hyp 1) |- ( y ∈ B → ( x = C ↔ ( C ∈ A ∧ x = C ) ) ) ;;
+	step 30 : wff = eleq1 () |- ( x = C → ( x ∈ A ↔ C ∈ A ) ) ;;
+	step 31 : wff = pm5.32ri (step 30) |- ( ( x ∈ A ∧ x = C ) ↔ ( C ∈ A ∧ x = C ) ) ;;
+	step 32 : wff = syl6rbbr (step 29, step 31) |- ( y ∈ B → ( ( x ∈ A ∧ x = C ) ↔ x = C ) ) ;;
+	step 33 : wff = biimt () |- ( C ∈ A → ( x = C ↔ ( C ∈ A → x = C ) ) ) ;;
+	step 34 : wff = syl (hyp 1, step 33) |- ( y ∈ B → ( x = C ↔ ( C ∈ A → x = C ) ) ) ;;
+	step 35 : wff = bitrd (step 32, step 34) |- ( y ∈ B → ( ( x ∈ A ∧ x = C ) ↔ ( C ∈ A → x = C ) ) ) ;;
+	step 36 : wff = equid () |- y = y ;;
+	step 37 : wff = biantru (step 36) |- ( C ∈ A ↔ ( C ∈ A ∧ y = y ) ) ;;
+	step 38 : wff = imbi1i (step 37) |- ( ( C ∈ A → x = C ) ↔ ( ( C ∈ A ∧ y = y ) → x = C ) ) ;;
+	step 39 : wff = syl6bb (step 35, step 38) |- ( y ∈ B → ( ( x ∈ A ∧ x = C ) ↔ ( ( C ∈ A ∧ y = y ) → x = C ) ) ) ;;
+	step 40 : wff = ralbiia (step 39) |- ( ∀ y ∈ B ( x ∈ A ∧ x = C ) ↔ ∀ y ∈ B ( ( C ∈ A ∧ y = y ) → x = C ) ) ;;
+	step 41 : wff = eubii (step 40) |- ( ∃! x ∀ y ∈ B ( x ∈ A ∧ x = C ) ↔ ∃! x ∀ y ∈ B ( ( C ∈ A ∧ y = y ) → x = C ) ) ;;
+	step 42 : wff = 3bitr4i (step 24, step 28, step 41) |- ( ∃! x ∈ A ∃ y ∈ B x = C ↔ ∃! x ∀ y ∈ B ( x ∈ A ∧ x = C ) ) ;;
+	step 43 : wff = df-reu () |- ( ∃! x ∈ A ∀ y ∈ B x = C ↔ ∃! x ( x ∈ A ∧ ∀ y ∈ B x = C ) ) ;;
+	step 44 : wff = 3bitr4g (step 23, step 42, step 43) |- ( B ≠ ∅ → ( ∃! x ∈ A ∃ y ∈ B x = C ↔ ∃! x ∈ A ∀ y ∈ B x = C ) ) ;;
+	step 45 : wff = a1d (step 44) |- ( B ≠ ∅ → ( ⋃ A ≠ ⋂ A → ( ∃! x ∈ A ∃ y ∈ B x = C ↔ ∃! x ∈ A ∀ y ∈ B x = C ) ) ) ;;
+	step 46 : wff = pm2.61ine (step 21, step 45) |- ( ⋃ A ≠ ⋂ A → ( ∃! x ∈ A ∃ y ∈ B x = C ↔ ∃! x ∈ A ∀ y ∈ B x = C ) ) ;;
+	step 47 : wff = r19.28zv () |- ( B ≠ ∅ → ( ∀ y ∈ B ( x ∈ A ∧ x = C ) ↔ ( x ∈ A ∧ ∀ y ∈ B x = C ) ) ) ;;
+	step 48 : wff = eubidv (step 47) |- ( B ≠ ∅ → ( ∃! x ∀ y ∈ B ( x ∈ A ∧ x = C ) ↔ ∃! x ( x ∈ A ∧ ∀ y ∈ B x = C ) ) ) ;;
+	step 49 : wff = reusv2lem4 () |- ( ∃! x ∈ A ∃ y ∈ B ( y = y ∧ x = C ) ↔ ∃! x ∀ y ∈ B ( ( C ∈ A ∧ y = y ) → x = C ) ) ;;
+	step 50 : wff = equid () |- y = y ;;
+	step 51 : wff = biantrur (step 50) |- ( x = C ↔ ( y = y ∧ x = C ) ) ;;
+	step 52 : wff = rexbii (step 51) |- ( ∃ y ∈ B x = C ↔ ∃ y ∈ B ( y = y ∧ x = C ) ) ;;
+	step 53 : wff = reubii (step 52) |- ( ∃! x ∈ A ∃ y ∈ B x = C ↔ ∃! x ∈ A ∃ y ∈ B ( y = y ∧ x = C ) ) ;;
+	step 54 : wff = biantrurd (hyp 1) |- ( y ∈ B → ( x = C ↔ ( C ∈ A ∧ x = C ) ) ) ;;
+	step 55 : wff = eleq1 () |- ( x = C → ( x ∈ A ↔ C ∈ A ) ) ;;
+	step 56 : wff = pm5.32ri (step 55) |- ( ( x ∈ A ∧ x = C ) ↔ ( C ∈ A ∧ x = C ) ) ;;
+	step 57 : wff = syl6rbbr (step 54, step 56) |- ( y ∈ B → ( ( x ∈ A ∧ x = C ) ↔ x = C ) ) ;;
+	step 58 : wff = biimt () |- ( C ∈ A → ( x = C ↔ ( C ∈ A → x = C ) ) ) ;;
+	step 59 : wff = syl (hyp 1, step 58) |- ( y ∈ B → ( x = C ↔ ( C ∈ A → x = C ) ) ) ;;
+	step 60 : wff = bitrd (step 57, step 59) |- ( y ∈ B → ( ( x ∈ A ∧ x = C ) ↔ ( C ∈ A → x = C ) ) ) ;;
+	step 61 : wff = equid () |- y = y ;;
+	step 62 : wff = biantru (step 61) |- ( C ∈ A ↔ ( C ∈ A ∧ y = y ) ) ;;
+	step 63 : wff = imbi1i (step 62) |- ( ( C ∈ A → x = C ) ↔ ( ( C ∈ A ∧ y = y ) → x = C ) ) ;;
+	step 64 : wff = syl6bb (step 60, step 63) |- ( y ∈ B → ( ( x ∈ A ∧ x = C ) ↔ ( ( C ∈ A ∧ y = y ) → x = C ) ) ) ;;
+	step 65 : wff = ralbiia (step 64) |- ( ∀ y ∈ B ( x ∈ A ∧ x = C ) ↔ ∀ y ∈ B ( ( C ∈ A ∧ y = y ) → x = C ) ) ;;
+	step 66 : wff = eubii (step 65) |- ( ∃! x ∀ y ∈ B ( x ∈ A ∧ x = C ) ↔ ∃! x ∀ y ∈ B ( ( C ∈ A ∧ y = y ) → x = C ) ) ;;
+	step 67 : wff = 3bitr4i (step 49, step 53, step 66) |- ( ∃! x ∈ A ∃ y ∈ B x = C ↔ ∃! x ∀ y ∈ B ( x ∈ A ∧ x = C ) ) ;;
+	step 68 : wff = df-reu () |- ( ∃! x ∈ A ∀ y ∈ B x = C ↔ ∃! x ( x ∈ A ∧ ∀ y ∈ B x = C ) ) ;;
+	step 69 : wff = 3bitr4g (step 48, step 67, step 68) |- ( B ≠ ∅ → ( ∃! x ∈ A ∃ y ∈ B x = C ↔ ∃! x ∈ A ∀ y ∈ B x = C ) ) ;;
+	step 70 : wff = jaoi (step 46, step 69) |- ( ( ⋃ A ≠ ⋂ A ∨ B ≠ ∅ ) → ( ∃! x ∈ A ∃ y ∈ B x = C ↔ ∃! x ∈ A ∀ y ∈ B x = C ) ) ;;
+	qed prop 1 = step 70 ;;
+}
+
+/* Transfer universal quantification from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  (Contributed by NM,
+       18-Feb-2007.) */
+
+theorem alxfr (ph : wff, ps : wff, x : set, y : set, A : class, B : class) disjointed(x A, y ph, x ps, x y) {
+	hyp 1 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ∀ y A ∈ B ∧ ∀ x ∃ y x = A ) → ( ∀ x ph ↔ ∀ y ps ) ) ;;
+}
+
+proof of alxfr {
+	step 1 : wff = spcgv (hyp 1) |- ( A ∈ B → ( ∀ x ph → ps ) ) ;;
+	step 2 : wff = com12 (step 1) |- ( ∀ x ph → ( A ∈ B → ps ) ) ;;
+	step 3 : wff = alimdv (step 2) |- ( ∀ x ph → ( ∀ y A ∈ B → ∀ y ps ) ) ;;
+	step 4 : wff = com12 (step 3) |- ( ∀ y A ∈ B → ( ∀ x ph → ∀ y ps ) ) ;;
+	step 5 : wff = adantr (step 4) |- ( ( ∀ y A ∈ B ∧ ∀ x ∃ y x = A ) → ( ∀ x ph → ∀ y ps ) ) ;;
+	step 6 : wff = nfa1 () |- F/ y ∀ y ps ;;
+	step 7 : wff = nfv () |- F/ y ph ;;
+	step 8 : wff = sp () |- ( ∀ y ps → ps ) ;;
+	step 9 : wff = syl5ibrcom (step 8, hyp 1) |- ( ∀ y ps → ( x = A → ph ) ) ;;
+	step 10 : wff = exlimd (step 6, step 7, step 9) |- ( ∀ y ps → ( ∃ y x = A → ph ) ) ;;
+	step 11 : wff = alimdv (step 10) |- ( ∀ y ps → ( ∀ x ∃ y x = A → ∀ x ph ) ) ;;
+	step 12 : wff = com12 (step 11) |- ( ∀ x ∃ y x = A → ( ∀ y ps → ∀ x ph ) ) ;;
+	step 13 : wff = adantl (step 12) |- ( ( ∀ y A ∈ B ∧ ∀ x ∃ y x = A ) → ( ∀ y ps → ∀ x ph ) ) ;;
+	step 14 : wff = impbid (step 5, step 13) |- ( ( ∀ y A ∈ B ∧ ∀ x ∃ y x = A ) → ( ∀ x ph ↔ ∀ y ps ) ) ;;
+	qed prop 1 = step 14 ;;
+}
+
+/* Transfer universal quantification from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  (Contributed by NM,
+       15-Aug-2014.)  (Proof shortened by Mario Carneiro, 19-Nov-2016.) */
+
+theorem ralxfrd (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, C : class) disjointed(x A, x y B, x C, x ch, x y ph, y ps) {
+	hyp 1 : wff = |- ( ( ph ∧ y ∈ C ) → A ∈ B ) ;;
+	hyp 2 : wff = |- ( ( ph ∧ x ∈ B ) → ∃ y ∈ C x = A ) ;;
+	hyp 3 : wff = |- ( ( ph ∧ x = A ) → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∀ x ∈ B ps ↔ ∀ y ∈ C ch ) ) ;;
+}
+
+proof of ralxfrd {
+	step 1 : wff = adantlr (hyp 3) |- ( ( ( ph ∧ y ∈ C ) ∧ x = A ) → ( ps ↔ ch ) ) ;;
+	step 2 : wff = rspcdv (hyp 1, step 1) |- ( ( ph ∧ y ∈ C ) → ( ∀ x ∈ B ps → ch ) ) ;;
+	step 3 : wff = ralrimdva (step 2) |- ( ph → ( ∀ x ∈ B ps → ∀ y ∈ C ch ) ) ;;
+	step 4 : wff = r19.29 () |- ( ( ∀ y ∈ C ch ∧ ∃ y ∈ C x = A ) → ∃ y ∈ C ( ch ∧ x = A ) ) ;;
+	step 5 : wff = biimprd (hyp 3) |- ( ( ph ∧ x = A ) → ( ch → ps ) ) ;;
+	step 6 : wff = expimpd (step 5) |- ( ph → ( ( x = A ∧ ch ) → ps ) ) ;;
+	step 7 : wff = ancomsd (step 6) |- ( ph → ( ( ch ∧ x = A ) → ps ) ) ;;
+	step 8 : wff = ad2antrr (step 7) |- ( ( ( ph ∧ x ∈ B ) ∧ y ∈ C ) → ( ( ch ∧ x = A ) → ps ) ) ;;
+	step 9 : wff = rexlimdva (step 8) |- ( ( ph ∧ x ∈ B ) → ( ∃ y ∈ C ( ch ∧ x = A ) → ps ) ) ;;
+	step 10 : wff = syl5 (step 4, step 9) |- ( ( ph ∧ x ∈ B ) → ( ( ∀ y ∈ C ch ∧ ∃ y ∈ C x = A ) → ps ) ) ;;
+	step 11 : wff = mpan2d (hyp 2, step 10) |- ( ( ph ∧ x ∈ B ) → ( ∀ y ∈ C ch → ps ) ) ;;
+	step 12 : wff = ralrimdva (step 11) |- ( ph → ( ∀ y ∈ C ch → ∀ x ∈ B ps ) ) ;;
+	step 13 : wff = impbid (step 3, step 12) |- ( ph → ( ∀ x ∈ B ps ↔ ∀ y ∈ C ch ) ) ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* Transfer universal quantification from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  (Contributed by FL,
+       10-Apr-2007.)  (Revised by Mario Carneiro, 15-Aug-2014.) */
+
+theorem rexxfrd (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, C : class) disjointed(x A, x y B, x C, x ch, x y ph, y ps) {
+	hyp 1 : wff = |- ( ( ph ∧ y ∈ C ) → A ∈ B ) ;;
+	hyp 2 : wff = |- ( ( ph ∧ x ∈ B ) → ∃ y ∈ C x = A ) ;;
+	hyp 3 : wff = |- ( ( ph ∧ x = A ) → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∃ x ∈ B ps ↔ ∃ y ∈ C ch ) ) ;;
+}
+
+proof of rexxfrd {
+	step 1 : wff = notbid (hyp 3) |- ( ( ph ∧ x = A ) → ( ¬ ps ↔ ¬ ch ) ) ;;
+	step 2 : wff = ralxfrd (hyp 1, hyp 2, step 1) |- ( ph → ( ∀ x ∈ B ¬ ps ↔ ∀ y ∈ C ¬ ch ) ) ;;
+	step 3 : wff = notbid (step 2) |- ( ph → ( ¬ ∀ x ∈ B ¬ ps ↔ ¬ ∀ y ∈ C ¬ ch ) ) ;;
+	step 4 : wff = dfrex2 () |- ( ∃ x ∈ B ps ↔ ¬ ∀ x ∈ B ¬ ps ) ;;
+	step 5 : wff = dfrex2 () |- ( ∃ y ∈ C ch ↔ ¬ ∀ y ∈ C ¬ ch ) ;;
+	step 6 : wff = 3bitr4g (step 3, step 4, step 5) |- ( ph → ( ∃ x ∈ B ps ↔ ∃ y ∈ C ch ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Transfer universal quantification from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  (Contributed by Mario
+       Carneiro, 20-Aug-2014.) */
+
+theorem ralxfr2d (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, C : class, V : class) disjointed(x A, x y B, x C, x ch, x y ph, y ps) {
+	hyp 1 : wff = |- ( ( ph ∧ y ∈ C ) → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → ( x ∈ B ↔ ∃ y ∈ C x = A ) ) ;;
+	hyp 3 : wff = |- ( ( ph ∧ x = A ) → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∀ x ∈ B ps ↔ ∀ y ∈ C ch ) ) ;;
+}
+
+proof of ralxfr2d {
+	step 1 : wff = elisset () |- ( A ∈ V → ∃ x x = A ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ( ph ∧ y ∈ C ) → ∃ x x = A ) ;;
+	step 3 : wff = biimprd (hyp 2) |- ( ph → ( ∃ y ∈ C x = A → x ∈ B ) ) ;;
+	step 4 : wff = r19.23v () |- ( ∀ y ∈ C ( x = A → x ∈ B ) ↔ ( ∃ y ∈ C x = A → x ∈ B ) ) ;;
+	step 5 : wff = sylibr (step 3, step 4) |- ( ph → ∀ y ∈ C ( x = A → x ∈ B ) ) ;;
+	step 6 : wff = r19.21bi (step 5) |- ( ( ph ∧ y ∈ C ) → ( x = A → x ∈ B ) ) ;;
+	step 7 : wff = eleq1 () |- ( x = A → ( x ∈ B ↔ A ∈ B ) ) ;;
+	step 8 : wff = mpbidi (step 6, step 7) |- ( ( ph ∧ y ∈ C ) → ( x = A → A ∈ B ) ) ;;
+	step 9 : wff = exlimdv (step 8) |- ( ( ph ∧ y ∈ C ) → ( ∃ x x = A → A ∈ B ) ) ;;
+	step 10 : wff = mpd (step 2, step 9) |- ( ( ph ∧ y ∈ C ) → A ∈ B ) ;;
+	step 11 : wff = biimpa (hyp 2) |- ( ( ph ∧ x ∈ B ) → ∃ y ∈ C x = A ) ;;
+	step 12 : wff = ralxfrd (step 10, step 11, hyp 3) |- ( ph → ( ∀ x ∈ B ps ↔ ∀ y ∈ C ch ) ) ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* Transfer universal quantification from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  (Contributed by Mario
+       Carneiro, 20-Aug-2014.)  (Proof shortened by Mario Carneiro,
+       19-Nov-2016.) */
+
+theorem rexxfr2d (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, C : class, V : class) disjointed(x A, x y B, x C, x ch, x y ph, y ps) {
+	hyp 1 : wff = |- ( ( ph ∧ y ∈ C ) → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → ( x ∈ B ↔ ∃ y ∈ C x = A ) ) ;;
+	hyp 3 : wff = |- ( ( ph ∧ x = A ) → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∃ x ∈ B ps ↔ ∃ y ∈ C ch ) ) ;;
+}
+
+proof of rexxfr2d {
+	step 1 : wff = notbid (hyp 3) |- ( ( ph ∧ x = A ) → ( ¬ ps ↔ ¬ ch ) ) ;;
+	step 2 : wff = ralxfr2d (hyp 1, hyp 2, step 1) |- ( ph → ( ∀ x ∈ B ¬ ps ↔ ∀ y ∈ C ¬ ch ) ) ;;
+	step 3 : wff = notbid (step 2) |- ( ph → ( ¬ ∀ x ∈ B ¬ ps ↔ ¬ ∀ y ∈ C ¬ ch ) ) ;;
+	step 4 : wff = dfrex2 () |- ( ∃ x ∈ B ps ↔ ¬ ∀ x ∈ B ¬ ps ) ;;
+	step 5 : wff = dfrex2 () |- ( ∃ y ∈ C ch ↔ ¬ ∀ y ∈ C ¬ ch ) ;;
+	step 6 : wff = 3bitr4g (step 3, step 4, step 5) |- ( ph → ( ∃ x ∈ B ps ↔ ∃ y ∈ C ch ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Transfer universal quantification from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  (Contributed by NM,
+       10-Jun-2005.)  (Revised by Mario Carneiro, 15-Aug-2014.) */
+
+theorem ralxfr (ph : wff, ps : wff, x : set, y : set, A : class, B : class, C : class) disjointed(x ps, y ph, x A, x y B, x C) {
+	hyp 1 : wff = |- ( y ∈ C → A ∈ B ) ;;
+	hyp 2 : wff = |- ( x ∈ B → ∃ y ∈ C x = A ) ;;
+	hyp 3 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ∈ B ph ↔ ∀ y ∈ C ps ) ;;
+}
+
+proof of ralxfr {
+	step 1 : wff = adantl (hyp 1) |- ( ( T. ∧ y ∈ C ) → A ∈ B ) ;;
+	step 2 : wff = adantl (hyp 2) |- ( ( T. ∧ x ∈ B ) → ∃ y ∈ C x = A ) ;;
+	step 3 : wff = adantl (hyp 3) |- ( ( T. ∧ x = A ) → ( ph ↔ ps ) ) ;;
+	step 4 : wff = ralxfrd (step 1, step 2, step 3) |- ( T. → ( ∀ x ∈ B ph ↔ ∀ y ∈ C ps ) ) ;;
+	step 5 : wff = trud (step 4) |- ( ∀ x ∈ B ph ↔ ∀ y ∈ C ps ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Transfer universal quantification from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  This proof does not use
+       ~ ralxfrd .  (Contributed by NM, 10-Jun-2005.)  (Revised by Mario
+       Carneiro, 15-Aug-2014.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem ralxfrALT (ph : wff, ps : wff, x : set, y : set, A : class, B : class, C : class) disjointed(x ps, y ph, x A, x y B, x C) {
+	hyp 1 : wff = |- ( y ∈ C → A ∈ B ) ;;
+	hyp 2 : wff = |- ( x ∈ B → ∃ y ∈ C x = A ) ;;
+	hyp 3 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ∈ B ph ↔ ∀ y ∈ C ps ) ;;
+}
+
+proof of ralxfrALT {
+	step 1 : wff = rspcv (hyp 3) |- ( A ∈ B → ( ∀ x ∈ B ph → ps ) ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( y ∈ C → ( ∀ x ∈ B ph → ps ) ) ;;
+	step 3 : wff = com12 (step 2) |- ( ∀ x ∈ B ph → ( y ∈ C → ps ) ) ;;
+	step 4 : wff = ralrimiv (step 3) |- ( ∀ x ∈ B ph → ∀ y ∈ C ps ) ;;
+	step 5 : wff = nfra1 () |- F/ y ∀ y ∈ C ps ;;
+	step 6 : wff = nfv () |- F/ y ph ;;
+	step 7 : wff = rsp () |- ( ∀ y ∈ C ps → ( y ∈ C → ps ) ) ;;
+	step 8 : wff = biimprcd (hyp 3) |- ( ps → ( x = A → ph ) ) ;;
+	step 9 : wff = syl6 (step 7, step 8) |- ( ∀ y ∈ C ps → ( y ∈ C → ( x = A → ph ) ) ) ;;
+	step 10 : wff = rexlimd (step 5, step 6, step 9) |- ( ∀ y ∈ C ps → ( ∃ y ∈ C x = A → ph ) ) ;;
+	step 11 : wff = syl5 (hyp 2, step 10) |- ( ∀ y ∈ C ps → ( x ∈ B → ph ) ) ;;
+	step 12 : wff = ralrimiv (step 11) |- ( ∀ y ∈ C ps → ∀ x ∈ B ph ) ;;
+	step 13 : wff = impbii (step 4, step 12) |- ( ∀ x ∈ B ph ↔ ∀ y ∈ C ps ) ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* Transfer existence from a variable ` x ` to another variable ` y `
+       contained in expression ` A ` .  (Contributed by NM, 10-Jun-2005.)
+       (Revised by Mario Carneiro, 15-Aug-2014.) */
+
+theorem rexxfr (ph : wff, ps : wff, x : set, y : set, A : class, B : class, C : class) disjointed(x ps, y ph, x A, x y B, x C) {
+	hyp 1 : wff = |- ( y ∈ C → A ∈ B ) ;;
+	hyp 2 : wff = |- ( x ∈ B → ∃ y ∈ C x = A ) ;;
+	hyp 3 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ x ∈ B ph ↔ ∃ y ∈ C ps ) ;;
+}
+
+proof of rexxfr {
+	step 1 : wff = dfrex2 () |- ( ∃ x ∈ B ph ↔ ¬ ∀ x ∈ B ¬ ph ) ;;
+	step 2 : wff = dfrex2 () |- ( ∃ y ∈ C ps ↔ ¬ ∀ y ∈ C ¬ ps ) ;;
+	step 3 : wff = notbid (hyp 3) |- ( x = A → ( ¬ ph ↔ ¬ ps ) ) ;;
+	step 4 : wff = ralxfr (hyp 1, hyp 2, step 3) |- ( ∀ x ∈ B ¬ ph ↔ ∀ y ∈ C ¬ ps ) ;;
+	step 5 : wff = xchbinxr (step 2, step 4) |- ( ∃ y ∈ C ps ↔ ¬ ∀ x ∈ B ¬ ph ) ;;
+	step 6 : wff = bitr4i (step 1, step 5) |- ( ∃ x ∈ B ph ↔ ∃ y ∈ C ps ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Class builder membership after substituting an expression ` A `
+       (containing ` y ` ) for ` x ` in the class expression ` ch ` .
+       (Contributed by NM, 16-Jan-2012.) */
+
+theorem rabxfrd (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x A, x y D, y ph, y ps, x ch) {
+	hyp 1 : wff = |- F/_ y B ;;
+	hyp 2 : wff = |- F/_ y C ;;
+	hyp 3 : wff = |- ( ( ph ∧ y ∈ D ) → A ∈ D ) ;;
+	hyp 4 : wff = |- ( x = A → ( ps ↔ ch ) ) ;;
+	hyp 5 : wff = |- ( y = B → A = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ B ∈ D ) → ( C ∈ { x ∈ D | ps } ↔ B ∈ { y ∈ D | ch } ) ) ;;
+}
+
+proof of rabxfrd {
+	step 1 : wff = ex (hyp 3) |- ( ph → ( y ∈ D → A ∈ D ) ) ;;
+	step 2 : wff = ibibr () |- ( ( y ∈ D → A ∈ D ) ↔ ( y ∈ D → ( A ∈ D ↔ y ∈ D ) ) ) ;;
+	step 3 : wff = sylib (step 1, step 2) |- ( ph → ( y ∈ D → ( A ∈ D ↔ y ∈ D ) ) ) ;;
+	step 4 : wff = imp (step 3) |- ( ( ph ∧ y ∈ D ) → ( A ∈ D ↔ y ∈ D ) ) ;;
+	step 5 : wff = anbi1d (step 4) |- ( ( ph ∧ y ∈ D ) → ( ( A ∈ D ∧ ch ) ↔ ( y ∈ D ∧ ch ) ) ) ;;
+	step 6 : wff = elrab (hyp 4) |- ( A ∈ { x ∈ D | ps } ↔ ( A ∈ D ∧ ch ) ) ;;
+	step 7 : wff = rabid () |- ( y ∈ { y ∈ D | ch } ↔ ( y ∈ D ∧ ch ) ) ;;
+	step 8 : wff = 3bitr4g (step 5, step 6, step 7) |- ( ( ph ∧ y ∈ D ) → ( A ∈ { x ∈ D | ps } ↔ y ∈ { y ∈ D | ch } ) ) ;;
+	step 9 : wff = rabbidva (step 8) |- ( ph → { y ∈ D | A ∈ { x ∈ D | ps } } = { y ∈ D | y ∈ { y ∈ D | ch } } ) ;;
+	step 10 : wff = eleq2d (step 9) |- ( ph → ( B ∈ { y ∈ D | A ∈ { x ∈ D | ps } } ↔ B ∈ { y ∈ D | y ∈ { y ∈ D | ch } } ) ) ;;
+	step 11 : wff = nfcv () |- F/_ y D ;;
+	step 12 : wff = nfel1 (hyp 2) |- F/ y C ∈ { x ∈ D | ps } ;;
+	step 13 : wff = eleq1d (hyp 5) |- ( y = B → ( A ∈ { x ∈ D | ps } ↔ C ∈ { x ∈ D | ps } ) ) ;;
+	step 14 : wff = elrabf (hyp 1, step 11, step 12, step 13) |- ( B ∈ { y ∈ D | A ∈ { x ∈ D | ps } } ↔ ( B ∈ D ∧ C ∈ { x ∈ D | ps } ) ) ;;
+	step 15 : wff = nfcv () |- F/_ y D ;;
+	step 16 : wff = nfrab1 () |- F/_ y { y ∈ D | ch } ;;
+	step 17 : wff = nfel (hyp 1, step 16) |- F/ y B ∈ { y ∈ D | ch } ;;
+	step 18 : wff = eleq1 () |- ( y = B → ( y ∈ { y ∈ D | ch } ↔ B ∈ { y ∈ D | ch } ) ) ;;
+	step 19 : wff = elrabf (hyp 1, step 15, step 17, step 18) |- ( B ∈ { y ∈ D | y ∈ { y ∈ D | ch } } ↔ ( B ∈ D ∧ B ∈ { y ∈ D | ch } ) ) ;;
+	step 20 : wff = 3bitr3g (step 10, step 14, step 19) |- ( ph → ( ( B ∈ D ∧ C ∈ { x ∈ D | ps } ) ↔ ( B ∈ D ∧ B ∈ { y ∈ D | ch } ) ) ) ;;
+	step 21 : wff = pm5.32 () |- ( ( B ∈ D → ( C ∈ { x ∈ D | ps } ↔ B ∈ { y ∈ D | ch } ) ) ↔ ( ( B ∈ D ∧ C ∈ { x ∈ D | ps } ) ↔ ( B ∈ D ∧ B ∈ { y ∈ D | ch } ) ) ) ;;
+	step 22 : wff = sylibr (step 20, step 21) |- ( ph → ( B ∈ D → ( C ∈ { x ∈ D | ps } ↔ B ∈ { y ∈ D | ch } ) ) ) ;;
+	step 23 : wff = imp (step 22) |- ( ( ph ∧ B ∈ D ) → ( C ∈ { x ∈ D | ps } ↔ B ∈ { y ∈ D | ch } ) ) ;;
+	qed prop 1 = step 23 ;;
+}
+
+/* Class builder membership after substituting an expression ` A `
+       (containing ` y ` ) for ` x ` in the class expression ` ph ` .
+       (Contributed by NM, 10-Jun-2005.) */
+
+theorem rabxfr (ph : wff, ps : wff, x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x A, x y D, y ph, x ps) {
+	hyp 1 : wff = |- F/_ y B ;;
+	hyp 2 : wff = |- F/_ y C ;;
+	hyp 3 : wff = |- ( y ∈ D → A ∈ D ) ;;
+	hyp 4 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
+	hyp 5 : wff = |- ( y = B → A = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( B ∈ D → ( C ∈ { x ∈ D | ph } ↔ B ∈ { y ∈ D | ps } ) ) ;;
+}
+
+proof of rabxfr {
+	step 1 : wff = tru () |- T. ;;
+	step 2 : wff = adantl (hyp 3) |- ( ( T. ∧ y ∈ D ) → A ∈ D ) ;;
+	step 3 : wff = rabxfrd (hyp 1, hyp 2, step 2, hyp 4, hyp 5) |- ( ( T. ∧ B ∈ D ) → ( C ∈ { x ∈ D | ph } ↔ B ∈ { y ∈ D | ps } ) ) ;;
+	step 4 : wff = mpan (step 1, step 3) |- ( B ∈ D → ( C ∈ { x ∈ D | ph } ↔ B ∈ { y ∈ D | ps } ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Transfer existential uniqueness from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  (Contributed by NM,
+       16-Jan-2012.)  (Revised by NM, 16-Jun-2017.) */
+
+theorem reuxfr2d (ph : wff, ps : wff, x : set, y : set, A : class, B : class) disjointed(x y ph, x ps, x A, x y B) {
+	hyp 1 : wff = |- ( ( ph ∧ y ∈ B ) → A ∈ B ) ;;
+	hyp 2 : wff = |- ( ( ph ∧ x ∈ B ) → ∃* y ∈ B x = A ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∃! x ∈ B ∃ y ∈ B ( x = A ∧ ps ) ↔ ∃! y ∈ B ps ) ) ;;
+}
+
+proof of reuxfr2d {
+	step 1 : wff = rmoan () |- ( ∃* y ∈ B x = A → ∃* y ∈ B ( ps ∧ x = A ) ) ;;
+	step 2 : wff = syl (hyp 2, step 1) |- ( ( ph ∧ x ∈ B ) → ∃* y ∈ B ( ps ∧ x = A ) ) ;;
+	step 3 : wff = ancom () |- ( ( ps ∧ x = A ) ↔ ( x = A ∧ ps ) ) ;;
+	step 4 : wff = rmobii (step 3) |- ( ∃* y ∈ B ( ps ∧ x = A ) ↔ ∃* y ∈ B ( x = A ∧ ps ) ) ;;
+	step 5 : wff = sylib (step 2, step 4) |- ( ( ph ∧ x ∈ B ) → ∃* y ∈ B ( x = A ∧ ps ) ) ;;
+	step 6 : wff = ralrimiva (step 5) |- ( ph → ∀ x ∈ B ∃* y ∈ B ( x = A ∧ ps ) ) ;;
+	step 7 : wff = 2reuswap () |- ( ∀ x ∈ B ∃* y ∈ B ( x = A ∧ ps ) → ( ∃! x ∈ B ∃ y ∈ B ( x = A ∧ ps ) → ∃! y ∈ B ∃ x ∈ B ( x = A ∧ ps ) ) ) ;;
+	step 8 : wff = syl (step 6, step 7) |- ( ph → ( ∃! x ∈ B ∃ y ∈ B ( x = A ∧ ps ) → ∃! y ∈ B ∃ x ∈ B ( x = A ∧ ps ) ) ) ;;
+	step 9 : wff = df-rmo () |- ( ∃* x ∈ B ( x = A ∧ ps ) ↔ ∃* x ( x ∈ B ∧ ( x = A ∧ ps ) ) ) ;;
+	step 10 : wff = ralbii (step 9) |- ( ∀ y ∈ B ∃* x ∈ B ( x = A ∧ ps ) ↔ ∀ y ∈ B ∃* x ( x ∈ B ∧ ( x = A ∧ ps ) ) ) ;;
+	step 11 : wff = 2reuswap () |- ( ∀ y ∈ B ∃* x ∈ B ( x = A ∧ ps ) → ( ∃! y ∈ B ∃ x ∈ B ( x = A ∧ ps ) → ∃! x ∈ B ∃ y ∈ B ( x = A ∧ ps ) ) ) ;;
+	step 12 : wff = sylbir (step 10, step 11) |- ( ∀ y ∈ B ∃* x ( x ∈ B ∧ ( x = A ∧ ps ) ) → ( ∃! y ∈ B ∃ x ∈ B ( x = A ∧ ps ) → ∃! x ∈ B ∃ y ∈ B ( x = A ∧ ps ) ) ) ;;
+	step 13 : wff = moeq () |- ∃* x x = A ;;
+	step 14 : wff = moani (step 13) |- ∃* x ( ( x ∈ B ∧ ps ) ∧ x = A ) ;;
+	step 15 : wff = ancom () |- ( ( ( x ∈ B ∧ ps ) ∧ x = A ) ↔ ( x = A ∧ ( x ∈ B ∧ ps ) ) ) ;;
+	step 16 : wff = an12 () |- ( ( x = A ∧ ( x ∈ B ∧ ps ) ) ↔ ( x ∈ B ∧ ( x = A ∧ ps ) ) ) ;;
+	step 17 : wff = bitri (step 15, step 16) |- ( ( ( x ∈ B ∧ ps ) ∧ x = A ) ↔ ( x ∈ B ∧ ( x = A ∧ ps ) ) ) ;;
+	step 18 : wff = mobii (step 17) |- ( ∃* x ( ( x ∈ B ∧ ps ) ∧ x = A ) ↔ ∃* x ( x ∈ B ∧ ( x = A ∧ ps ) ) ) ;;
+	step 19 : wff = mpbi (step 14, step 18) |- ∃* x ( x ∈ B ∧ ( x = A ∧ ps ) ) ;;
+	step 20 : wff = a1i (step 19) |- ( y ∈ B → ∃* x ( x ∈ B ∧ ( x = A ∧ ps ) ) ) ;;
+	step 21 : wff = mprg (step 12, step 20) |- ( ∃! y ∈ B ∃ x ∈ B ( x = A ∧ ps ) → ∃! x ∈ B ∃ y ∈ B ( x = A ∧ ps ) ) ;;
+	step 22 : wff = impbid1 (step 8, step 21) |- ( ph → ( ∃! x ∈ B ∃ y ∈ B ( x = A ∧ ps ) ↔ ∃! y ∈ B ∃ x ∈ B ( x = A ∧ ps ) ) ) ;;
+	step 23 : wff = biidd () |- ( x = A → ( ps ↔ ps ) ) ;;
+	step 24 : wff = ceqsrexv (step 23) |- ( A ∈ B → ( ∃ x ∈ B ( x = A ∧ ps ) ↔ ps ) ) ;;
+	step 25 : wff = syl (hyp 1, step 24) |- ( ( ph ∧ y ∈ B ) → ( ∃ x ∈ B ( x = A ∧ ps ) ↔ ps ) ) ;;
+	step 26 : wff = reubidva (step 25) |- ( ph → ( ∃! y ∈ B ∃ x ∈ B ( x = A ∧ ps ) ↔ ∃! y ∈ B ps ) ) ;;
+	step 27 : wff = bitrd (step 22, step 26) |- ( ph → ( ∃! x ∈ B ∃ y ∈ B ( x = A ∧ ps ) ↔ ∃! y ∈ B ps ) ) ;;
+	qed prop 1 = step 27 ;;
+}
+
+/* Transfer existential uniqueness from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  (Contributed by NM,
+       14-Nov-2004.)  (Revised by NM, 16-Jun-2017.) */
+
+theorem reuxfr2 (ph : wff, x : set, y : set, A : class, B : class) disjointed(x ph, x A, x y B) {
+	hyp 1 : wff = |- ( y ∈ B → A ∈ B ) ;;
+	hyp 2 : wff = |- ( x ∈ B → ∃* y ∈ B x = A ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃! x ∈ B ∃ y ∈ B ( x = A ∧ ph ) ↔ ∃! y ∈ B ph ) ;;
+}
+
+proof of reuxfr2 {
+	step 1 : wff = adantl (hyp 1) |- ( ( T. ∧ y ∈ B ) → A ∈ B ) ;;
+	step 2 : wff = adantl (hyp 2) |- ( ( T. ∧ x ∈ B ) → ∃* y ∈ B x = A ) ;;
+	step 3 : wff = reuxfr2d (step 1, step 2) |- ( T. → ( ∃! x ∈ B ∃ y ∈ B ( x = A ∧ ph ) ↔ ∃! y ∈ B ph ) ) ;;
+	step 4 : wff = trud (step 3) |- ( ∃! x ∈ B ∃ y ∈ B ( x = A ∧ ph ) ↔ ∃! y ∈ B ph ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Transfer existential uniqueness from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  Use ~ reuhypd to
+       eliminate the second hypothesis.  (Contributed by NM, 16-Jan-2012.) */
+
+theorem reuxfrd (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class) disjointed(x y ph, y ps, x ch, x A, x y B) {
+	hyp 1 : wff = |- ( ( ph ∧ y ∈ B ) → A ∈ B ) ;;
+	hyp 2 : wff = |- ( ( ph ∧ x ∈ B ) → ∃! y ∈ B x = A ) ;;
+	hyp 3 : wff = |- ( x = A → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∃! x ∈ B ps ↔ ∃! y ∈ B ch ) ) ;;
+}
+
+proof of reuxfrd {
+	step 1 : wff = reurex () |- ( ∃! y ∈ B x = A → ∃ y ∈ B x = A ) ;;
+	step 2 : wff = syl (hyp 2, step 1) |- ( ( ph ∧ x ∈ B ) → ∃ y ∈ B x = A ) ;;
+	step 3 : wff = biantrurd (step 2) |- ( ( ph ∧ x ∈ B ) → ( ps ↔ ( ∃ y ∈ B x = A ∧ ps ) ) ) ;;
+	step 4 : wff = r19.41v () |- ( ∃ y ∈ B ( x = A ∧ ps ) ↔ ( ∃ y ∈ B x = A ∧ ps ) ) ;;
+	step 5 : wff = pm5.32i (hyp 3) |- ( ( x = A ∧ ps ) ↔ ( x = A ∧ ch ) ) ;;
+	step 6 : wff = rexbii (step 5) |- ( ∃ y ∈ B ( x = A ∧ ps ) ↔ ∃ y ∈ B ( x = A ∧ ch ) ) ;;
+	step 7 : wff = bitr3i (step 4, step 6) |- ( ( ∃ y ∈ B x = A ∧ ps ) ↔ ∃ y ∈ B ( x = A ∧ ch ) ) ;;
+	step 8 : wff = syl6bb (step 3, step 7) |- ( ( ph ∧ x ∈ B ) → ( ps ↔ ∃ y ∈ B ( x = A ∧ ch ) ) ) ;;
+	step 9 : wff = reubidva (step 8) |- ( ph → ( ∃! x ∈ B ps ↔ ∃! x ∈ B ∃ y ∈ B ( x = A ∧ ch ) ) ) ;;
+	step 10 : wff = reurmo () |- ( ∃! y ∈ B x = A → ∃* y ∈ B x = A ) ;;
+	step 11 : wff = syl (hyp 2, step 10) |- ( ( ph ∧ x ∈ B ) → ∃* y ∈ B x = A ) ;;
+	step 12 : wff = reuxfr2d (hyp 1, step 11) |- ( ph → ( ∃! x ∈ B ∃ y ∈ B ( x = A ∧ ch ) ↔ ∃! y ∈ B ch ) ) ;;
+	step 13 : wff = bitrd (step 9, step 12) |- ( ph → ( ∃! x ∈ B ps ↔ ∃! y ∈ B ch ) ) ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* Transfer existential uniqueness from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  Use ~ reuhyp to
+       eliminate the second hypothesis.  (Contributed by NM, 14-Nov-2004.) */
+
+theorem reuxfr (ph : wff, ps : wff, x : set, y : set, A : class, B : class) disjointed(x ps, y ph, x A, x y B) {
+	hyp 1 : wff = |- ( y ∈ B → A ∈ B ) ;;
+	hyp 2 : wff = |- ( x ∈ B → ∃! y ∈ B x = A ) ;;
+	hyp 3 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃! x ∈ B ph ↔ ∃! y ∈ B ps ) ;;
+}
+
+proof of reuxfr {
+	step 1 : wff = adantl (hyp 1) |- ( ( T. ∧ y ∈ B ) → A ∈ B ) ;;
+	step 2 : wff = adantl (hyp 2) |- ( ( T. ∧ x ∈ B ) → ∃! y ∈ B x = A ) ;;
+	step 3 : wff = reuxfrd (step 1, step 2, hyp 3) |- ( T. → ( ∃! x ∈ B ph ↔ ∃! y ∈ B ps ) ) ;;
+	step 4 : wff = trud (step 3) |- ( ∃! x ∈ B ph ↔ ∃! y ∈ B ps ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A theorem useful for eliminating the restricted existential uniqueness
+       hypotheses in ~ riotaxfrd .  (Contributed by NM, 16-Jan-2012.) */
+
+theorem reuhypd (ph : wff, x : set, y : set, A : class, B : class, C : class) disjointed(y ph, y B, y C, x y) {
+	hyp 1 : wff = |- ( ( ph ∧ x ∈ C ) → B ∈ C ) ;;
+	hyp 2 : wff = |- ( ( ph ∧ x ∈ C ∧ y ∈ C ) → ( x = A ↔ y = B ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ x ∈ C ) → ∃! y ∈ C x = A ) ;;
+}
+
+proof of reuhypd {
+	step 1 : wff = elex () |- ( B ∈ C → B ∈ _V ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ( ph ∧ x ∈ C ) → B ∈ _V ) ;;
+	step 3 : wff = eueq () |- ( B ∈ _V ↔ ∃! y y = B ) ;;
+	step 4 : wff = sylib (step 2, step 3) |- ( ( ph ∧ x ∈ C ) → ∃! y y = B ) ;;
+	step 5 : wff = eleq1 () |- ( y = B → ( y ∈ C ↔ B ∈ C ) ) ;;
+	step 6 : wff = syl5ibrcom (hyp 1, step 5) |- ( ( ph ∧ x ∈ C ) → ( y = B → y ∈ C ) ) ;;
+	step 7 : wff = pm4.71rd (step 6) |- ( ( ph ∧ x ∈ C ) → ( y = B ↔ ( y ∈ C ∧ y = B ) ) ) ;;
+	step 8 : wff = 3expa (hyp 2) |- ( ( ( ph ∧ x ∈ C ) ∧ y ∈ C ) → ( x = A ↔ y = B ) ) ;;
+	step 9 : wff = pm5.32da (step 8) |- ( ( ph ∧ x ∈ C ) → ( ( y ∈ C ∧ x = A ) ↔ ( y ∈ C ∧ y = B ) ) ) ;;
+	step 10 : wff = bitr4d (step 7, step 9) |- ( ( ph ∧ x ∈ C ) → ( y = B ↔ ( y ∈ C ∧ x = A ) ) ) ;;
+	step 11 : wff = eubidv (step 10) |- ( ( ph ∧ x ∈ C ) → ( ∃! y y = B ↔ ∃! y ( y ∈ C ∧ x = A ) ) ) ;;
+	step 12 : wff = mpbid (step 4, step 11) |- ( ( ph ∧ x ∈ C ) → ∃! y ( y ∈ C ∧ x = A ) ) ;;
+	step 13 : wff = df-reu () |- ( ∃! y ∈ C x = A ↔ ∃! y ( y ∈ C ∧ x = A ) ) ;;
+	step 14 : wff = sylibr (step 12, step 13) |- ( ( ph ∧ x ∈ C ) → ∃! y ∈ C x = A ) ;;
+	qed prop 1 = step 14 ;;
+}
+
+/* A theorem useful for eliminating the restricted existential uniqueness
+       hypotheses in ~ reuxfr .  (Contributed by NM, 15-Nov-2004.) */
+
+theorem reuhyp (x : set, y : set, A : class, B : class, C : class) disjointed(y B, y C, x y) {
+	hyp 1 : wff = |- ( x ∈ C → B ∈ C ) ;;
+	hyp 2 : wff = |- ( ( x ∈ C ∧ y ∈ C ) → ( x = A ↔ y = B ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( x ∈ C → ∃! y ∈ C x = A ) ;;
+}
+
+proof of reuhyp {
+	step 1 : wff = tru () |- T. ;;
+	step 2 : wff = adantl (hyp 1) |- ( ( T. ∧ x ∈ C ) → B ∈ C ) ;;
+	step 3 : wff = 3adant1 (hyp 2) |- ( ( T. ∧ x ∈ C ∧ y ∈ C ) → ( x = A ↔ y = B ) ) ;;
+	step 4 : wff = reuhypd (step 2, step 3) |- ( ( T. ∧ x ∈ C ) → ∃! y ∈ C x = A ) ;;
+	step 5 : wff = mpan (step 1, step 4) |- ( x ∈ C → ∃! y ∈ C x = A ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* The Axiom of Union and its converse.  A class is a set iff its union is a
+     set.  (Contributed by NM, 11-Nov-2003.) */
+
+theorem uniexb (A : class)  {
+	prop 1 : wff = |- ( A ∈ _V ↔ ⋃ A ∈ _V ) ;;
+}
+
+proof of uniexb {
+	step 1 : wff = uniexg () |- ( A ∈ _V → ⋃ A ∈ _V ) ;;
+	step 2 : wff = pwuni () |- A ⊆ Pow ⋃ A ;;
+	step 3 : wff = pwexg () |- ( ⋃ A ∈ _V → Pow ⋃ A ∈ _V ) ;;
+	step 4 : wff = ssexg () |- ( ( A ⊆ Pow ⋃ A ∧ Pow ⋃ A ∈ _V ) → A ∈ _V ) ;;
+	step 5 : wff = sylancr (step 2, step 3, step 4) |- ( ⋃ A ∈ _V → A ∈ _V ) ;;
+	step 6 : wff = impbii (step 1, step 5) |- ( A ∈ _V ↔ ⋃ A ∈ _V ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* The Axiom of Power Sets and its converse.  A class is a set iff its power
+     class is a set.  (Contributed by NM, 11-Nov-2003.) */
+
+theorem pwexb (A : class)  {
+	prop 1 : wff = |- ( A ∈ _V ↔ Pow A ∈ _V ) ;;
+}
+
+proof of pwexb {
+	step 1 : wff = uniexb () |- ( Pow A ∈ _V ↔ ⋃ Pow A ∈ _V ) ;;
+	step 2 : wff = unipw () |- ⋃ Pow A = A ;;
+	step 3 : wff = eleq1i (step 2) |- ( ⋃ Pow A ∈ _V ↔ A ∈ _V ) ;;
+	step 4 : wff = bitr2i (step 1, step 3) |- ( A ∈ _V ↔ Pow A ∈ _V ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* The union of the universe is the universe.  Exercise 4.12(c) of
+     [Mendelson] p. 235.  (Contributed by NM, 14-Sep-2003.) */
+
+theorem univ ()  {
+	prop 1 : wff = |- ⋃ _V = _V ;;
+}
+
+proof of univ {
+	step 1 : wff = pwv () |- Pow _V = _V ;;
+	step 2 : wff = unieqi (step 1) |- ⋃ Pow _V = ⋃ _V ;;
+	step 3 : wff = unipw () |- ⋃ Pow _V = _V ;;
+	step 4 : wff = eqtr3i (step 2, step 3) |- ⋃ _V = _V ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Membership in a power class difference.  (Contributed by NM,
+       25-Mar-2007.) */
+
+theorem eldifpw (A : class, B : class, C : class)  {
+	hyp 1 : wff = |- C ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( ( A ∈ Pow B ∧ ¬ C ⊆ B ) → ( A ∪ C ) ∈ ( Pow ( B ∪ C ) ∖ Pow B ) ) ;;
+}
+
+proof of eldifpw {
+	step 1 : wff = elpwi () |- ( A ∈ Pow B → A ⊆ B ) ;;
+	step 2 : wff = unss1 () |- ( A ⊆ B → ( A ∪ C ) ⊆ ( B ∪ C ) ) ;;
+	step 3 : wff = unexg () |- ( ( A ∈ Pow B ∧ C ∈ _V ) → ( A ∪ C ) ∈ _V ) ;;
+	step 4 : wff = mpan2 (hyp 1, step 3) |- ( A ∈ Pow B → ( A ∪ C ) ∈ _V ) ;;
+	step 5 : wff = elpwg () |- ( ( A ∪ C ) ∈ _V → ( ( A ∪ C ) ∈ Pow ( B ∪ C ) ↔ ( A ∪ C ) ⊆ ( B ∪ C ) ) ) ;;
+	step 6 : wff = syl (step 4, step 5) |- ( A ∈ Pow B → ( ( A ∪ C ) ∈ Pow ( B ∪ C ) ↔ ( A ∪ C ) ⊆ ( B ∪ C ) ) ) ;;
+	step 7 : wff = syl5ibr (step 2, step 6) |- ( A ∈ Pow B → ( A ⊆ B → ( A ∪ C ) ∈ Pow ( B ∪ C ) ) ) ;;
+	step 8 : wff = mpd (step 1, step 7) |- ( A ∈ Pow B → ( A ∪ C ) ∈ Pow ( B ∪ C ) ) ;;
+	step 9 : wff = elpwi () |- ( ( A ∪ C ) ∈ Pow B → ( A ∪ C ) ⊆ B ) ;;
+	step 10 : wff = unss () |- ( ( A ⊆ B ∧ C ⊆ B ) ↔ ( A ∪ C ) ⊆ B ) ;;
+	step 11 : wff = simpr () |- ( ( A ⊆ B ∧ C ⊆ B ) → C ⊆ B ) ;;
+	step 12 : wff = sylbir (step 10, step 11) |- ( ( A ∪ C ) ⊆ B → C ⊆ B ) ;;
+	step 13 : wff = syl (step 9, step 12) |- ( ( A ∪ C ) ∈ Pow B → C ⊆ B ) ;;
+	step 14 : wff = con3i (step 13) |- ( ¬ C ⊆ B → ¬ ( A ∪ C ) ∈ Pow B ) ;;
+	step 15 : wff = anim12i (step 8, step 14) |- ( ( A ∈ Pow B ∧ ¬ C ⊆ B ) → ( ( A ∪ C ) ∈ Pow ( B ∪ C ) ∧ ¬ ( A ∪ C ) ∈ Pow B ) ) ;;
+	step 16 : wff = eldif () |- ( ( A ∪ C ) ∈ ( Pow ( B ∪ C ) ∖ Pow B ) ↔ ( ( A ∪ C ) ∈ Pow ( B ∪ C ) ∧ ¬ ( A ∪ C ) ∈ Pow B ) ) ;;
+	step 17 : wff = sylibr (step 15, step 16) |- ( ( A ∈ Pow B ∧ ¬ C ⊆ B ) → ( A ∪ C ) ∈ ( Pow ( B ∪ C ) ∖ Pow B ) ) ;;
+	qed prop 1 = step 17 ;;
+}
+
+/* Membership in the power class of a union.  (Contributed by NM,
+       26-Mar-2007.) */
+
+theorem elpwun (A : class, B : class, C : class)  {
+	hyp 1 : wff = |- C ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ Pow ( B ∪ C ) ↔ ( A ∖ C ) ∈ Pow B ) ;;
+}
+
+proof of elpwun {
+	step 1 : wff = elex () |- ( A ∈ Pow ( B ∪ C ) → A ∈ _V ) ;;
+	step 2 : wff = elex () |- ( ( A ∖ C ) ∈ Pow B → ( A ∖ C ) ∈ _V ) ;;
+	step 3 : wff = difex2 () |- ( C ∈ _V → ( A ∈ _V ↔ ( A ∖ C ) ∈ _V ) ) ;;
+	step 4 : wff = ax-mp (hyp 1, step 3) |- ( A ∈ _V ↔ ( A ∖ C ) ∈ _V ) ;;
+	step 5 : wff = sylibr (step 2, step 4) |- ( ( A ∖ C ) ∈ Pow B → A ∈ _V ) ;;
+	step 6 : wff = elpwg () |- ( A ∈ _V → ( A ∈ Pow ( B ∪ C ) ↔ A ⊆ ( B ∪ C ) ) ) ;;
+	step 7 : wff = difexg () |- ( A ∈ _V → ( A ∖ C ) ∈ _V ) ;;
+	step 8 : wff = elpwg () |- ( ( A ∖ C ) ∈ _V → ( ( A ∖ C ) ∈ Pow B ↔ ( A ∖ C ) ⊆ B ) ) ;;
+	step 9 : wff = syl (step 7, step 8) |- ( A ∈ _V → ( ( A ∖ C ) ∈ Pow B ↔ ( A ∖ C ) ⊆ B ) ) ;;
+	step 10 : wff = uncom () |- ( B ∪ C ) = ( C ∪ B ) ;;
+	step 11 : wff = sseq2i (step 10) |- ( A ⊆ ( B ∪ C ) ↔ A ⊆ ( C ∪ B ) ) ;;
+	step 12 : wff = ssundif () |- ( A ⊆ ( C ∪ B ) ↔ ( A ∖ C ) ⊆ B ) ;;
+	step 13 : wff = bitri (step 11, step 12) |- ( A ⊆ ( B ∪ C ) ↔ ( A ∖ C ) ⊆ B ) ;;
+	step 14 : wff = syl6rbbr (step 9, step 13) |- ( A ∈ _V → ( A ⊆ ( B ∪ C ) ↔ ( A ∖ C ) ∈ Pow B ) ) ;;
+	step 15 : wff = bitrd (step 6, step 14) |- ( A ∈ _V → ( A ∈ Pow ( B ∪ C ) ↔ ( A ∖ C ) ∈ Pow B ) ) ;;
+	step 16 : wff = pm5.21nii (step 1, step 5, step 15) |- ( A ∈ Pow ( B ∪ C ) ↔ ( A ∖ C ) ∈ Pow B ) ;;
+	qed prop 1 = step 16 ;;
+}
+
+/* Membership in an extension of a power class.  (Contributed by NM,
+       26-Mar-2007.) */
+
+theorem elpwunsn (A : class, B : class, C : class) disjointed(x A, x B, x C) {
+	prop 1 : wff = |- ( A ∈ ( Pow ( B ∪ { C } ) ∖ Pow B ) → C ∈ A ) ;;
+}
+
+proof of elpwunsn {
+	var x : set;;
+	step 1 : wff = eldif () |- ( A ∈ ( Pow ( B ∪ { C } ) ∖ Pow B ) ↔ ( A ∈ Pow ( B ∪ { C } ) ∧ ¬ A ∈ Pow B ) ) ;;
+	step 2 : wff = elpwg () |- ( A ∈ Pow ( B ∪ { C } ) → ( A ∈ Pow B ↔ A ⊆ B ) ) ;;
+	step 3 : wff = dfss3 () |- ( A ⊆ B ↔ ∀ x ∈ A x ∈ B ) ;;
+	step 4 : wff = syl6bb (step 2, step 3) |- ( A ∈ Pow ( B ∪ { C } ) → ( A ∈ Pow B ↔ ∀ x ∈ A x ∈ B ) ) ;;
+	step 5 : wff = notbid (step 4) |- ( A ∈ Pow ( B ∪ { C } ) → ( ¬ A ∈ Pow B ↔ ¬ ∀ x ∈ A x ∈ B ) ) ;;
+	step 6 : wff = biimpa (step 5) |- ( ( A ∈ Pow ( B ∪ { C } ) ∧ ¬ A ∈ Pow B ) → ¬ ∀ x ∈ A x ∈ B ) ;;
+	step 7 : wff = rexnal () |- ( ∃ x ∈ A ¬ x ∈ B ↔ ¬ ∀ x ∈ A x ∈ B ) ;;
+	step 8 : wff = sylibr (step 6, step 7) |- ( ( A ∈ Pow ( B ∪ { C } ) ∧ ¬ A ∈ Pow B ) → ∃ x ∈ A ¬ x ∈ B ) ;;
+	step 9 : wff = elpwi () |- ( A ∈ Pow ( B ∪ { C } ) → A ⊆ ( B ∪ { C } ) ) ;;
+	step 10 : wff = ssel () |- ( A ⊆ ( B ∪ { C } ) → ( x ∈ A → x ∈ ( B ∪ { C } ) ) ) ;;
+	step 11 : wff = elun () |- ( x ∈ ( B ∪ { C } ) ↔ ( x ∈ B ∨ x ∈ { C } ) ) ;;
+	step 12 : wff = elsni () |- ( x ∈ { C } → x = C ) ;;
+	step 13 : wff = orim2i (step 12) |- ( ( x ∈ B ∨ x ∈ { C } ) → ( x ∈ B ∨ x = C ) ) ;;
+	step 14 : wff = ord (step 13) |- ( ( x ∈ B ∨ x ∈ { C } ) → ( ¬ x ∈ B → x = C ) ) ;;
+	step 15 : wff = sylbi (step 11, step 14) |- ( x ∈ ( B ∪ { C } ) → ( ¬ x ∈ B → x = C ) ) ;;
+	step 16 : wff = imim2i (step 15) |- ( ( x ∈ A → x ∈ ( B ∪ { C } ) ) → ( x ∈ A → ( ¬ x ∈ B → x = C ) ) ) ;;
+	step 17 : wff = imp3a (step 16) |- ( ( x ∈ A → x ∈ ( B ∪ { C } ) ) → ( ( x ∈ A ∧ ¬ x ∈ B ) → x = C ) ) ;;
+	step 18 : wff = 3syl (step 9, step 10, step 17) |- ( A ∈ Pow ( B ∪ { C } ) → ( ( x ∈ A ∧ ¬ x ∈ B ) → x = C ) ) ;;
+	step 19 : wff = eleq1 () |- ( x = C → ( x ∈ A ↔ C ∈ A ) ) ;;
+	step 20 : wff = biimpd (step 19) |- ( x = C → ( x ∈ A → C ∈ A ) ) ;;
+	step 21 : wff = syl6 (step 18, step 20) |- ( A ∈ Pow ( B ∪ { C } ) → ( ( x ∈ A ∧ ¬ x ∈ B ) → ( x ∈ A → C ∈ A ) ) ) ;;
+	step 22 : wff = exp3a (step 21) |- ( A ∈ Pow ( B ∪ { C } ) → ( x ∈ A → ( ¬ x ∈ B → ( x ∈ A → C ∈ A ) ) ) ) ;;
+	step 23 : wff = com4r (step 22) |- ( x ∈ A → ( A ∈ Pow ( B ∪ { C } ) → ( x ∈ A → ( ¬ x ∈ B → C ∈ A ) ) ) ) ;;
+	step 24 : wff = pm2.43b (step 23) |- ( A ∈ Pow ( B ∪ { C } ) → ( x ∈ A → ( ¬ x ∈ B → C ∈ A ) ) ) ;;
+	step 25 : wff = rexlimdv (step 24) |- ( A ∈ Pow ( B ∪ { C } ) → ( ∃ x ∈ A ¬ x ∈ B → C ∈ A ) ) ;;
+	step 26 : wff = imp (step 25) |- ( ( A ∈ Pow ( B ∪ { C } ) ∧ ∃ x ∈ A ¬ x ∈ B ) → C ∈ A ) ;;
+	step 27 : wff = syldan (step 8, step 26) |- ( ( A ∈ Pow ( B ∪ { C } ) ∧ ¬ A ∈ Pow B ) → C ∈ A ) ;;
+	step 28 : wff = sylbi (step 1, step 27) |- ( A ∈ ( Pow ( B ∪ { C } ) ∖ Pow B ) → C ∈ A ) ;;
+	qed prop 1 = step 28 ;;
+}
+
+/* Extract the first member of an ordered pair.  Theorem 73 of [Suppes]
+       p. 42.  (See ~ op2ndb to extract the second member, ~ op1sta for an
+       alternate version, and ~ op1st for the preferred version.)  (Contributed
+       by NM, 25-Nov-2003.) */
+
+theorem op1stb (A : class, B : class)  {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ⋂ ⋂ 〈 A , B 〉 = A ;;
+}
+
+proof of op1stb {
+	step 1 : wff = dfop (hyp 1, hyp 2) |- 〈 A , B 〉 = { { A } , { A , B } } ;;
+	step 2 : wff = inteqi (step 1) |- ⋂ 〈 A , B 〉 = ⋂ { { A } , { A , B } } ;;
+	step 3 : wff = snex () |- { A } ∈ _V ;;
+	step 4 : wff = prex () |- { A , B } ∈ _V ;;
+	step 5 : wff = intpr (step 3, step 4) |- ⋂ { { A } , { A , B } } = ( { A } ∩ { A , B } ) ;;
+	step 6 : wff = snsspr1 () |- { A } ⊆ { A , B } ;;
+	step 7 : wff = df-ss () |- ( { A } ⊆ { A , B } ↔ ( { A } ∩ { A , B } ) = { A } ) ;;
+	step 8 : wff = mpbi (step 6, step 7) |- ( { A } ∩ { A , B } ) = { A } ;;
+	step 9 : wff = eqtri (step 5, step 8) |- ⋂ { { A } , { A , B } } = { A } ;;
+	step 10 : wff = eqtri (step 2, step 9) |- ⋂ 〈 A , B 〉 = { A } ;;
+	step 11 : wff = inteqi (step 10) |- ⋂ ⋂ 〈 A , B 〉 = ⋂ { A } ;;
+	step 12 : wff = intsn (hyp 1) |- ⋂ { A } = A ;;
+	step 13 : wff = eqtri (step 11, step 12) |- ⋂ ⋂ 〈 A , B 〉 = A ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* An indexed union of a power class in terms of the power class of the
+       union of its index.  Part of Exercise 24(b) of [Enderton] p. 33.
+       (Contributed by NM, 29-Nov-2003.) */
+
+theorem iunpw (x : set, A : class) disjointed(x y A) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ x ∈ A x = ⋃ A ↔ Pow ⋃ A = ⋃_ x ∈ A Pow x ) ;;
+}
+
+proof of iunpw {
+	var y : set;;
+	step 1 : wff = sseq2 () |- ( x = ⋃ A → ( y ⊆ x ↔ y ⊆ ⋃ A ) ) ;;
+	step 2 : wff = biimprcd (step 1) |- ( y ⊆ ⋃ A → ( x = ⋃ A → y ⊆ x ) ) ;;
+	step 3 : wff = reximdv (step 2) |- ( y ⊆ ⋃ A → ( ∃ x ∈ A x = ⋃ A → ∃ x ∈ A y ⊆ x ) ) ;;
+	step 4 : wff = com12 (step 3) |- ( ∃ x ∈ A x = ⋃ A → ( y ⊆ ⋃ A → ∃ x ∈ A y ⊆ x ) ) ;;
+	step 5 : wff = ssiun () |- ( ∃ x ∈ A y ⊆ x → y ⊆ ⋃_ x ∈ A x ) ;;
+	step 6 : wff = uniiun () |- ⋃ A = ⋃_ x ∈ A x ;;
+	step 7 : wff = syl6sseqr (step 5, step 6) |- ( ∃ x ∈ A y ⊆ x → y ⊆ ⋃ A ) ;;
+	step 8 : wff = impbid1 (step 4, step 7) |- ( ∃ x ∈ A x = ⋃ A → ( y ⊆ ⋃ A ↔ ∃ x ∈ A y ⊆ x ) ) ;;
+	step 9 : wff = vex () |- y ∈ _V ;;
+	step 10 : wff = elpw (step 9) |- ( y ∈ Pow ⋃ A ↔ y ⊆ ⋃ A ) ;;
+	step 11 : wff = eliun () |- ( y ∈ ⋃_ x ∈ A Pow x ↔ ∃ x ∈ A y ∈ Pow x ) ;;
+	step 12 : wff = df-pw () |- Pow x = { y | y ⊆ x } ;;
+	step 13 : wff = abeq2i (step 12) |- ( y ∈ Pow x ↔ y ⊆ x ) ;;
+	step 14 : wff = rexbii (step 13) |- ( ∃ x ∈ A y ∈ Pow x ↔ ∃ x ∈ A y ⊆ x ) ;;
+	step 15 : wff = bitri (step 11, step 14) |- ( y ∈ ⋃_ x ∈ A Pow x ↔ ∃ x ∈ A y ⊆ x ) ;;
+	step 16 : wff = 3bitr4g (step 8, step 10, step 15) |- ( ∃ x ∈ A x = ⋃ A → ( y ∈ Pow ⋃ A ↔ y ∈ ⋃_ x ∈ A Pow x ) ) ;;
+	step 17 : wff = eqrdv (step 16) |- ( ∃ x ∈ A x = ⋃ A → Pow ⋃ A = ⋃_ x ∈ A Pow x ) ;;
+	step 18 : wff = ssid () |- ⋃ A ⊆ ⋃ A ;;
+	step 19 : wff = uniex (hyp 1) |- ⋃ A ∈ _V ;;
+	step 20 : wff = elpw (step 19) |- ( ⋃ A ∈ Pow ⋃ A ↔ ⋃ A ⊆ ⋃ A ) ;;
+	step 21 : wff = eleq2 () |- ( Pow ⋃ A = ⋃_ x ∈ A Pow x → ( ⋃ A ∈ Pow ⋃ A ↔ ⋃ A ∈ ⋃_ x ∈ A Pow x ) ) ;;
+	step 22 : wff = syl5bbr (step 20, step 21) |- ( Pow ⋃ A = ⋃_ x ∈ A Pow x → ( ⋃ A ⊆ ⋃ A ↔ ⋃ A ∈ ⋃_ x ∈ A Pow x ) ) ;;
+	step 23 : wff = mpbii (step 18, step 22) |- ( Pow ⋃ A = ⋃_ x ∈ A Pow x → ⋃ A ∈ ⋃_ x ∈ A Pow x ) ;;
+	step 24 : wff = eliun () |- ( ⋃ A ∈ ⋃_ x ∈ A Pow x ↔ ∃ x ∈ A ⋃ A ∈ Pow x ) ;;
+	step 25 : wff = sylib (step 23, step 24) |- ( Pow ⋃ A = ⋃_ x ∈ A Pow x → ∃ x ∈ A ⋃ A ∈ Pow x ) ;;
+	step 26 : wff = elssuni () |- ( x ∈ A → x ⊆ ⋃ A ) ;;
+	step 27 : wff = elpwi () |- ( ⋃ A ∈ Pow x → ⋃ A ⊆ x ) ;;
+	step 28 : wff = anim12i (step 26, step 27) |- ( ( x ∈ A ∧ ⋃ A ∈ Pow x ) → ( x ⊆ ⋃ A ∧ ⋃ A ⊆ x ) ) ;;
+	step 29 : wff = eqss () |- ( x = ⋃ A ↔ ( x ⊆ ⋃ A ∧ ⋃ A ⊆ x ) ) ;;
+	step 30 : wff = sylibr (step 28, step 29) |- ( ( x ∈ A ∧ ⋃ A ∈ Pow x ) → x = ⋃ A ) ;;
+	step 31 : wff = ex (step 30) |- ( x ∈ A → ( ⋃ A ∈ Pow x → x = ⋃ A ) ) ;;
+	step 32 : wff = reximia (step 31) |- ( ∃ x ∈ A ⋃ A ∈ Pow x → ∃ x ∈ A x = ⋃ A ) ;;
+	step 33 : wff = syl (step 25, step 32) |- ( Pow ⋃ A = ⋃_ x ∈ A Pow x → ∃ x ∈ A x = ⋃ A ) ;;
+	step 34 : wff = impbii (step 17, step 33) |- ( ∃ x ∈ A x = ⋃ A ↔ Pow ⋃ A = ⋃_ x ∈ A Pow x ) ;;
+	qed prop 1 = step 34 ;;
+}
+
+/* A well-founded relation has no 3-cycle loops.  Special case of
+       Proposition 6.23 of [TakeutiZaring] p. 30.  (Contributed by NM,
+       10-Apr-1994.)  (Revised by Mario Carneiro, 22-Jun-2015.) */
+
+theorem fr3nr (A : class, B : class, C : class, D : class, R : class) disjointed(x y A, x y B, x y C, x y D, x y R) {
+	prop 1 : wff = |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → ¬ ( B R C ∧ C R D ∧ D R B ) ) ;;
+}
+
+proof of fr3nr {
+	var x : set, y : set;;
+	step 1 : wff = tpex () |- { B , C , D } ∈ _V ;;
+	step 2 : wff = a1i (step 1) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → { B , C , D } ∈ _V ) ;;
+	step 3 : wff = simpl () |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → R Fr A ) ;;
+	step 4 : wff = df-tp () |- { B , C , D } = ( { B , C } ∪ { D } ) ;;
+	step 5 : wff = simpr1 () |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → B ∈ A ) ;;
+	step 6 : wff = simpr2 () |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → C ∈ A ) ;;
+	step 7 : wff = prssi () |- ( ( B ∈ A ∧ C ∈ A ) → { B , C } ⊆ A ) ;;
+	step 8 : wff = syl2anc (step 5, step 6, step 7) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → { B , C } ⊆ A ) ;;
+	step 9 : wff = simpr3 () |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → D ∈ A ) ;;
+	step 10 : wff = snssd (step 9) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → { D } ⊆ A ) ;;
+	step 11 : wff = unssd (step 8, step 10) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → ( { B , C } ∪ { D } ) ⊆ A ) ;;
+	step 12 : wff = syl5eqss (step 4, step 11) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → { B , C , D } ⊆ A ) ;;
+	step 13 : wff = snsstp1 () |- { B } ⊆ { B , C , D } ;;
+	step 14 : wff = simpr1 () |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → B ∈ A ) ;;
+	step 15 : wff = snssg () |- ( B ∈ A → ( B ∈ { B , C , D } ↔ { B } ⊆ { B , C , D } ) ) ;;
+	step 16 : wff = syl (step 14, step 15) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → ( B ∈ { B , C , D } ↔ { B } ⊆ { B , C , D } ) ) ;;
+	step 17 : wff = mpbiri (step 13, step 16) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → B ∈ { B , C , D } ) ;;
+	step 18 : wff = ne0i () |- ( B ∈ { B , C , D } → { B , C , D } ≠ ∅ ) ;;
+	step 19 : wff = syl (step 17, step 18) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → { B , C , D } ≠ ∅ ) ;;
+	step 20 : wff = fri () |- ( ( ( { B , C , D } ∈ _V ∧ R Fr A ) ∧ ( { B , C , D } ⊆ A ∧ { B , C , D } ≠ ∅ ) ) → ∃ x ∈ { B , C , D } ∀ y ∈ { B , C , D } ¬ y R x ) ;;
+	step 21 : wff = syl22anc (step 2, step 3, step 12, step 19, step 20) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → ∃ x ∈ { B , C , D } ∀ y ∈ { B , C , D } ¬ y R x ) ;;
+	step 22 : wff = breq2 () |- ( x = B → ( y R x ↔ y R B ) ) ;;
+	step 23 : wff = notbid (step 22) |- ( x = B → ( ¬ y R x ↔ ¬ y R B ) ) ;;
+	step 24 : wff = ralbidv (step 23) |- ( x = B → ( ∀ y ∈ { B , C , D } ¬ y R x ↔ ∀ y ∈ { B , C , D } ¬ y R B ) ) ;;
+	step 25 : wff = breq2 () |- ( x = C → ( y R x ↔ y R C ) ) ;;
+	step 26 : wff = notbid (step 25) |- ( x = C → ( ¬ y R x ↔ ¬ y R C ) ) ;;
+	step 27 : wff = ralbidv (step 26) |- ( x = C → ( ∀ y ∈ { B , C , D } ¬ y R x ↔ ∀ y ∈ { B , C , D } ¬ y R C ) ) ;;
+	step 28 : wff = breq2 () |- ( x = D → ( y R x ↔ y R D ) ) ;;
+	step 29 : wff = notbid (step 28) |- ( x = D → ( ¬ y R x ↔ ¬ y R D ) ) ;;
+	step 30 : wff = ralbidv (step 29) |- ( x = D → ( ∀ y ∈ { B , C , D } ¬ y R x ↔ ∀ y ∈ { B , C , D } ¬ y R D ) ) ;;
+	step 31 : wff = rextpg (step 24, step 27, step 30) |- ( ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) → ( ∃ x ∈ { B , C , D } ∀ y ∈ { B , C , D } ¬ y R x ↔ ( ∀ y ∈ { B , C , D } ¬ y R B ∨ ∀ y ∈ { B , C , D } ¬ y R C ∨ ∀ y ∈ { B , C , D } ¬ y R D ) ) ) ;;
+	step 32 : wff = adantl (step 31) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → ( ∃ x ∈ { B , C , D } ∀ y ∈ { B , C , D } ¬ y R x ↔ ( ∀ y ∈ { B , C , D } ¬ y R B ∨ ∀ y ∈ { B , C , D } ¬ y R C ∨ ∀ y ∈ { B , C , D } ¬ y R D ) ) ) ;;
+	step 33 : wff = mpbid (step 21, step 32) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → ( ∀ y ∈ { B , C , D } ¬ y R B ∨ ∀ y ∈ { B , C , D } ¬ y R C ∨ ∀ y ∈ { B , C , D } ¬ y R D ) ) ;;
+	step 34 : wff = snsstp3 () |- { D } ⊆ { B , C , D } ;;
+	step 35 : wff = simpr3 () |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → D ∈ A ) ;;
+	step 36 : wff = snssg () |- ( D ∈ A → ( D ∈ { B , C , D } ↔ { D } ⊆ { B , C , D } ) ) ;;
+	step 37 : wff = syl (step 35, step 36) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → ( D ∈ { B , C , D } ↔ { D } ⊆ { B , C , D } ) ) ;;
+	step 38 : wff = mpbiri (step 34, step 37) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → D ∈ { B , C , D } ) ;;
+	step 39 : wff = breq1 () |- ( y = D → ( y R B ↔ D R B ) ) ;;
+	step 40 : wff = notbid (step 39) |- ( y = D → ( ¬ y R B ↔ ¬ D R B ) ) ;;
+	step 41 : wff = rspcv (step 40) |- ( D ∈ { B , C , D } → ( ∀ y ∈ { B , C , D } ¬ y R B → ¬ D R B ) ) ;;
+	step 42 : wff = syl (step 38, step 41) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → ( ∀ y ∈ { B , C , D } ¬ y R B → ¬ D R B ) ) ;;
+	step 43 : wff = snsstp1 () |- { B } ⊆ { B , C , D } ;;
+	step 44 : wff = simpr1 () |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → B ∈ A ) ;;
+	step 45 : wff = snssg () |- ( B ∈ A → ( B ∈ { B , C , D } ↔ { B } ⊆ { B , C , D } ) ) ;;
+	step 46 : wff = syl (step 44, step 45) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → ( B ∈ { B , C , D } ↔ { B } ⊆ { B , C , D } ) ) ;;
+	step 47 : wff = mpbiri (step 43, step 46) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → B ∈ { B , C , D } ) ;;
+	step 48 : wff = breq1 () |- ( y = B → ( y R C ↔ B R C ) ) ;;
+	step 49 : wff = notbid (step 48) |- ( y = B → ( ¬ y R C ↔ ¬ B R C ) ) ;;
+	step 50 : wff = rspcv (step 49) |- ( B ∈ { B , C , D } → ( ∀ y ∈ { B , C , D } ¬ y R C → ¬ B R C ) ) ;;
+	step 51 : wff = syl (step 47, step 50) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → ( ∀ y ∈ { B , C , D } ¬ y R C → ¬ B R C ) ) ;;
+	step 52 : wff = snsstp2 () |- { C } ⊆ { B , C , D } ;;
+	step 53 : wff = simpr2 () |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → C ∈ A ) ;;
+	step 54 : wff = snssg () |- ( C ∈ A → ( C ∈ { B , C , D } ↔ { C } ⊆ { B , C , D } ) ) ;;
+	step 55 : wff = syl (step 53, step 54) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → ( C ∈ { B , C , D } ↔ { C } ⊆ { B , C , D } ) ) ;;
+	step 56 : wff = mpbiri (step 52, step 55) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → C ∈ { B , C , D } ) ;;
+	step 57 : wff = breq1 () |- ( y = C → ( y R D ↔ C R D ) ) ;;
+	step 58 : wff = notbid (step 57) |- ( y = C → ( ¬ y R D ↔ ¬ C R D ) ) ;;
+	step 59 : wff = rspcv (step 58) |- ( C ∈ { B , C , D } → ( ∀ y ∈ { B , C , D } ¬ y R D → ¬ C R D ) ) ;;
+	step 60 : wff = syl (step 56, step 59) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → ( ∀ y ∈ { B , C , D } ¬ y R D → ¬ C R D ) ) ;;
+	step 61 : wff = 3orim123d (step 42, step 51, step 60) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → ( ( ∀ y ∈ { B , C , D } ¬ y R B ∨ ∀ y ∈ { B , C , D } ¬ y R C ∨ ∀ y ∈ { B , C , D } ¬ y R D ) → ( ¬ D R B ∨ ¬ B R C ∨ ¬ C R D ) ) ) ;;
+	step 62 : wff = mpd (step 33, step 61) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → ( ¬ D R B ∨ ¬ B R C ∨ ¬ C R D ) ) ;;
+	step 63 : wff = 3ianor () |- ( ¬ ( D R B ∧ B R C ∧ C R D ) ↔ ( ¬ D R B ∨ ¬ B R C ∨ ¬ C R D ) ) ;;
+	step 64 : wff = sylibr (step 62, step 63) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → ¬ ( D R B ∧ B R C ∧ C R D ) ) ;;
+	step 65 : wff = 3anrot () |- ( ( D R B ∧ B R C ∧ C R D ) ↔ ( B R C ∧ C R D ∧ D R B ) ) ;;
+	step 66 : wff = sylnib (step 64, step 65) |- ( ( R Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → ¬ ( B R C ∧ C R D ∧ D R B ) ) ;;
+	qed prop 1 = step 66 ;;
+}
+
+/* A set well-founded by epsilon contains no 3-cycle loops.  (Contributed by
+     NM, 19-Apr-1994.)  (Revised by Mario Carneiro, 22-Jun-2015.) */
+
+theorem epne3 (A : class, B : class, C : class, D : class)  {
+	prop 1 : wff = |- ( ( 𝛜 Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → ¬ ( B ∈ C ∧ C ∈ D ∧ D ∈ B ) ) ;;
+}
+
+proof of epne3 {
+	step 1 : wff = fr3nr () |- ( ( 𝛜 Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → ¬ ( B 𝛜 C ∧ C 𝛜 D ∧ D 𝛜 B ) ) ;;
+	step 2 : wff = epelg () |- ( C ∈ A → ( B 𝛜 C ↔ B ∈ C ) ) ;;
+	step 3 : wff = 3ad2ant2 (step 2) |- ( ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) → ( B 𝛜 C ↔ B ∈ C ) ) ;;
+	step 4 : wff = epelg () |- ( D ∈ A → ( C 𝛜 D ↔ C ∈ D ) ) ;;
+	step 5 : wff = 3ad2ant3 (step 4) |- ( ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) → ( C 𝛜 D ↔ C ∈ D ) ) ;;
+	step 6 : wff = epelg () |- ( B ∈ A → ( D 𝛜 B ↔ D ∈ B ) ) ;;
+	step 7 : wff = 3ad2ant1 (step 6) |- ( ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) → ( D 𝛜 B ↔ D ∈ B ) ) ;;
+	step 8 : wff = 3anbi123d (step 3, step 5, step 7) |- ( ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) → ( ( B 𝛜 C ∧ C 𝛜 D ∧ D 𝛜 B ) ↔ ( B ∈ C ∧ C ∈ D ∧ D ∈ B ) ) ) ;;
+	step 9 : wff = adantl (step 8) |- ( ( 𝛜 Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → ( ( B 𝛜 C ∧ C 𝛜 D ∧ D 𝛜 B ) ↔ ( B ∈ C ∧ C ∈ D ∧ D ∈ B ) ) ) ;;
+	step 10 : wff = mtbid (step 1, step 9) |- ( ( 𝛜 Fr A ∧ ( B ∈ A ∧ C ∈ A ∧ D ∈ A ) ) → ¬ ( B ∈ C ∧ C ∈ D ∧ D ∈ B ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Alternate definition of well-ordering.  Definition 6.24(2) of
+       [TakeutiZaring] p. 30.  (Contributed by NM, 16-Mar-1997.)  (Proof
+       shortened by Andrew Salmon, 12-Aug-2011.) */
+
+theorem dfwe2 (x : set, y : set, A : class, R : class) disjointed(x y z R, x y z A) {
+	prop 1 : wff = |- ( R We A ↔ ( R Fr A ∧ ∀ x ∈ A ∀ y ∈ A ( x R y ∨ x = y ∨ y R x ) ) ) ;;
+}
+
+proof of dfwe2 {
+	var z : set;;
+	step 1 : wff = df-we () |- ( R We A ↔ ( R Fr A ∧ R Or A ) ) ;;
+	step 2 : wff = df-so () |- ( R Or A ↔ ( R Po A ∧ ∀ x ∈ A ∀ y ∈ A ( x R y ∨ x = y ∨ y R x ) ) ) ;;
+	step 3 : wff = simpr () |- ( ( R Po A ∧ ∀ x ∈ A ∀ y ∈ A ( x R y ∨ x = y ∨ y R x ) ) → ∀ x ∈ A ∀ y ∈ A ( x R y ∨ x = y ∨ y R x ) ) ;;
+	step 4 : wff = ax-1 () |- ( x R z → ( ( x R y ∧ y R z ) → x R z ) ) ;;
+	step 5 : wff = a1i (step 4) |- ( ( R Fr A ∧ ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) ) → ( x R z → ( ( x R y ∧ y R z ) → x R z ) ) ) ;;
+	step 6 : wff = fr2nr () |- ( ( R Fr A ∧ ( x ∈ A ∧ y ∈ A ) ) → ¬ ( x R y ∧ y R x ) ) ;;
+	step 7 : wff = 3adantr3 (step 6) |- ( ( R Fr A ∧ ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) ) → ¬ ( x R y ∧ y R x ) ) ;;
+	step 8 : wff = breq2 () |- ( x = z → ( y R x ↔ y R z ) ) ;;
+	step 9 : wff = anbi2d (step 8) |- ( x = z → ( ( x R y ∧ y R x ) ↔ ( x R y ∧ y R z ) ) ) ;;
+	step 10 : wff = notbid (step 9) |- ( x = z → ( ¬ ( x R y ∧ y R x ) ↔ ¬ ( x R y ∧ y R z ) ) ) ;;
+	step 11 : wff = syl5ibcom (step 7, step 10) |- ( ( R Fr A ∧ ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) ) → ( x = z → ¬ ( x R y ∧ y R z ) ) ) ;;
+	step 12 : wff = pm2.21 () |- ( ¬ ( x R y ∧ y R z ) → ( ( x R y ∧ y R z ) → x R z ) ) ;;
+	step 13 : wff = syl6 (step 11, step 12) |- ( ( R Fr A ∧ ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) ) → ( x = z → ( ( x R y ∧ y R z ) → x R z ) ) ) ;;
+	step 14 : wff = fr3nr () |- ( ( R Fr A ∧ ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) ) → ¬ ( x R y ∧ y R z ∧ z R x ) ) ;;
+	step 15 : wff = df-3an () |- ( ( x R y ∧ y R z ∧ z R x ) ↔ ( ( x R y ∧ y R z ) ∧ z R x ) ) ;;
+	step 16 : wff = biimpri (step 15) |- ( ( ( x R y ∧ y R z ) ∧ z R x ) → ( x R y ∧ y R z ∧ z R x ) ) ;;
+	step 17 : wff = ancoms (step 16) |- ( ( z R x ∧ ( x R y ∧ y R z ) ) → ( x R y ∧ y R z ∧ z R x ) ) ;;
+	step 18 : wff = nsyl (step 14, step 17) |- ( ( R Fr A ∧ ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) ) → ¬ ( z R x ∧ ( x R y ∧ y R z ) ) ) ;;
+	step 19 : wff = pm2.21d (step 18) |- ( ( R Fr A ∧ ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) ) → ( ( z R x ∧ ( x R y ∧ y R z ) ) → x R z ) ) ;;
+	step 20 : wff = exp3a (step 19) |- ( ( R Fr A ∧ ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) ) → ( z R x → ( ( x R y ∧ y R z ) → x R z ) ) ) ;;
+	step 21 : wff = 3jaod (step 5, step 13, step 20) |- ( ( R Fr A ∧ ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) ) → ( ( x R z ∨ x = z ∨ z R x ) → ( ( x R y ∧ y R z ) → x R z ) ) ) ;;
+	step 22 : wff = frirr () |- ( ( R Fr A ∧ x ∈ A ) → ¬ x R x ) ;;
+	step 23 : wff = 3ad2antr1 (step 22) |- ( ( R Fr A ∧ ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) ) → ¬ x R x ) ;;
+	step 24 : wff = jctild (step 21, step 23) |- ( ( R Fr A ∧ ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) ) → ( ( x R z ∨ x = z ∨ z R x ) → ( ¬ x R x ∧ ( ( x R y ∧ y R z ) → x R z ) ) ) ) ;;
+	step 25 : wff = ex (step 24) |- ( R Fr A → ( ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) → ( ( x R z ∨ x = z ∨ z R x ) → ( ¬ x R x ∧ ( ( x R y ∧ y R z ) → x R z ) ) ) ) ) ;;
+	step 26 : wff = a2d (step 25) |- ( R Fr A → ( ( ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) → ( x R z ∨ x = z ∨ z R x ) ) → ( ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) → ( ¬ x R x ∧ ( ( x R y ∧ y R z ) → x R z ) ) ) ) ) ;;
+	step 27 : wff = alimdv (step 26) |- ( R Fr A → ( ∀ z ( ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) → ( x R z ∨ x = z ∨ z R x ) ) → ∀ z ( ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) → ( ¬ x R x ∧ ( ( x R y ∧ y R z ) → x R z ) ) ) ) ) ;;
+	step 28 : wff = 2alimdv (step 27) |- ( R Fr A → ( ∀ x ∀ y ∀ z ( ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) → ( x R z ∨ x = z ∨ z R x ) ) → ∀ x ∀ y ∀ z ( ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) → ( ¬ x R x ∧ ( ( x R y ∧ y R z ) → x R z ) ) ) ) ) ;;
+	step 29 : wff = r3al () |- ( ∀ x ∈ A ∀ y ∈ A ∀ z ∈ A ( x R z ∨ x = z ∨ z R x ) ↔ ∀ x ∀ y ∀ z ( ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) → ( x R z ∨ x = z ∨ z R x ) ) ) ;;
+	step 30 : wff = r3al () |- ( ∀ x ∈ A ∀ y ∈ A ∀ z ∈ A ( ¬ x R x ∧ ( ( x R y ∧ y R z ) → x R z ) ) ↔ ∀ x ∀ y ∀ z ( ( x ∈ A ∧ y ∈ A ∧ z ∈ A ) → ( ¬ x R x ∧ ( ( x R y ∧ y R z ) → x R z ) ) ) ) ;;
+	step 31 : wff = 3imtr4g (step 28, step 29, step 30) |- ( R Fr A → ( ∀ x ∈ A ∀ y ∈ A ∀ z ∈ A ( x R z ∨ x = z ∨ z R x ) → ∀ x ∈ A ∀ y ∈ A ∀ z ∈ A ( ¬ x R x ∧ ( ( x R y ∧ y R z ) → x R z ) ) ) ) ;;
+	step 32 : wff = ralidm () |- ( ∀ y ∈ A ∀ y ∈ A ( x R y ∨ x = y ∨ y R x ) ↔ ∀ y ∈ A ( x R y ∨ x = y ∨ y R x ) ) ;;
+	step 33 : wff = breq2 () |- ( y = z → ( x R y ↔ x R z ) ) ;;
+	step 34 : wff = equequ2 () |- ( y = z → ( x = y ↔ x = z ) ) ;;
+	step 35 : wff = breq1 () |- ( y = z → ( y R x ↔ z R x ) ) ;;
+	step 36 : wff = 3orbi123d (step 33, step 34, step 35) |- ( y = z → ( ( x R y ∨ x = y ∨ y R x ) ↔ ( x R z ∨ x = z ∨ z R x ) ) ) ;;
+	step 37 : wff = cbvralv (step 36) |- ( ∀ y ∈ A ( x R y ∨ x = y ∨ y R x ) ↔ ∀ z ∈ A ( x R z ∨ x = z ∨ z R x ) ) ;;
+	step 38 : wff = ralbii (step 37) |- ( ∀ y ∈ A ∀ y ∈ A ( x R y ∨ x = y ∨ y R x ) ↔ ∀ y ∈ A ∀ z ∈ A ( x R z ∨ x = z ∨ z R x ) ) ;;
+	step 39 : wff = bitr3i (step 32, step 38) |- ( ∀ y ∈ A ( x R y ∨ x = y ∨ y R x ) ↔ ∀ y ∈ A ∀ z ∈ A ( x R z ∨ x = z ∨ z R x ) ) ;;
+	step 40 : wff = ralbii (step 39) |- ( ∀ x ∈ A ∀ y ∈ A ( x R y ∨ x = y ∨ y R x ) ↔ ∀ x ∈ A ∀ y ∈ A ∀ z ∈ A ( x R z ∨ x = z ∨ z R x ) ) ;;
+	step 41 : wff = df-po () |- ( R Po A ↔ ∀ x ∈ A ∀ y ∈ A ∀ z ∈ A ( ¬ x R x ∧ ( ( x R y ∧ y R z ) → x R z ) ) ) ;;
+	step 42 : wff = 3imtr4g (step 31, step 40, step 41) |- ( R Fr A → ( ∀ x ∈ A ∀ y ∈ A ( x R y ∨ x = y ∨ y R x ) → R Po A ) ) ;;
+	step 43 : wff = ancrd (step 42) |- ( R Fr A → ( ∀ x ∈ A ∀ y ∈ A ( x R y ∨ x = y ∨ y R x ) → ( R Po A ∧ ∀ x ∈ A ∀ y ∈ A ( x R y ∨ x = y ∨ y R x ) ) ) ) ;;
+	step 44 : wff = impbid2 (step 3, step 43) |- ( R Fr A → ( ( R Po A ∧ ∀ x ∈ A ∀ y ∈ A ( x R y ∨ x = y ∨ y R x ) ) ↔ ∀ x ∈ A ∀ y ∈ A ( x R y ∨ x = y ∨ y R x ) ) ) ;;
+	step 45 : wff = syl5bb (step 2, step 44) |- ( R Fr A → ( R Or A ↔ ∀ x ∈ A ∀ y ∈ A ( x R y ∨ x = y ∨ y R x ) ) ) ;;
+	step 46 : wff = pm5.32i (step 45) |- ( ( R Fr A ∧ R Or A ) ↔ ( R Fr A ∧ ∀ x ∈ A ∀ y ∈ A ( x R y ∨ x = y ∨ y R x ) ) ) ;;
+	step 47 : wff = bitri (step 1, step 46) |- ( R We A ↔ ( R Fr A ∧ ∀ x ∈ A ∀ y ∈ A ( x R y ∨ x = y ∨ y R x ) ) ) ;;
+	qed prop 1 = step 47 ;;
+}
+
+

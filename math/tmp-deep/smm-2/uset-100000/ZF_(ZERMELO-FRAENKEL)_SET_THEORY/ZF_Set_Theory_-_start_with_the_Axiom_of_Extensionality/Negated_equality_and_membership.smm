@@ -1,0 +1,1333 @@
+$[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Class_form_not-free_predicate.smm $]
+$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Negated equality and membership
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+$)
+$( /* Declare new connectives. */
+
+$)
+$c =/= $.
+$( /* Not equal to (equal sign with slash through it). */
+
+$)
+$c e/ $.
+$( /* Not an element of (epsilon with slash through it). */
+
+$)
+$( /* Extend wff notation to include inequality. */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	awne $a wff A =/= B $.
+$}
+$( /* Extend wff notation to include negated membership. */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	awnel $a wff A e/ B $.
+$}
+$( /* Define inequality.  (Contributed by NM, 5-Aug-1993.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	adf-ne $a |- ( A =/= B <-> -. A = B ) $.
+$}
+$( /* Define negated membership.  (Contributed by NM, 7-Aug-1994.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	adf-nel $a |- ( A e/ B <-> -. A e. B ) $.
+$}
+$( /* Negation of inequality.  (Contributed by NM, 9-Jun-2006.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pnne $p |- ( -. A =/= B <-> A = B ) $=
+	f0 f1 adf-ne f0 f1 awne f0 f1 awceq pcon2bii f0 f1 awceq f0 f1 awne awn pbicomi $.
+$}
+$( /* No class is unequal to itself.  (Contributed by Stefan O'Rear,
+     1-Jan-2015.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	pneirr $p |- -. A =/= A $=
+	f0 peqid f0 f0 pnne f0 f0 awne awn f0 f0 awceq pmpbir $.
+$}
+$( /* Excluded middle with equality and inequality.  (Contributed by NM,
+     3-Feb-2012.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pexmidne $p |- ( A = B \/ A =/= B ) $=
+	f0 f1 awceq pexmid f0 f1 adf-ne f0 f1 awne f0 f1 awceq awn f0 f1 awceq porbi2i f0 f1 awceq f0 f1 awne awo f0 f1 awceq f0 f1 awceq awn awo pmpbir $.
+$}
+$( /* Law of noncontradiction with equality and inequality.  (Contributed by NM,
+     3-Feb-2012.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pnonconne $p |- -. ( A = B /\ A =/= B ) $=
+	f0 f1 awceq ppm3.24 f0 f1 adf-ne f0 f1 awne f0 f1 awceq awn f0 f1 awceq panbi2i f0 f1 awceq f0 f1 awne awa f0 f1 awceq f0 f1 awceq awn awa pmtbir $.
+$}
+$( /* Equality theorem for inequality.  (Contributed by NM, 19-Nov-1994.) */
+
+$)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pneeq1 $p |- ( A = B -> ( A =/= C <-> B =/= C ) ) $=
+	f0 f1 f2 peqeq1 f0 f1 awceq f0 f2 awceq f1 f2 awceq pnotbid f0 f2 adf-ne f1 f2 adf-ne f0 f1 awceq f0 f2 awceq awn f1 f2 awceq awn f0 f2 awne f1 f2 awne p3bitr4g $.
+$}
+$( /* Equality theorem for inequality.  (Contributed by NM, 19-Nov-1994.) */
+
+$)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pneeq2 $p |- ( A = B -> ( C =/= A <-> C =/= B ) ) $=
+	f0 f1 f2 peqeq2 f0 f1 awceq f2 f0 awceq f2 f1 awceq pnotbid f2 f0 adf-ne f2 f1 adf-ne f0 f1 awceq f2 f0 awceq awn f2 f1 awceq awn f2 f0 awne f2 f1 awne p3bitr4g $.
+$}
+$( /* Inference for inequality.  (Contributed by NM, 29-Apr-2005.) */
+
+$)
+${
+	$v A B C $.
+	e0 $e |- A = B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pneeq1i $p |- ( A =/= C <-> B =/= C ) $=
+	e0 f0 f1 f2 pneeq1 f0 f1 awceq f0 f2 awne f1 f2 awne awb aax-mp $.
+$}
+$( /* Inference for inequality.  (Contributed by NM, 29-Apr-2005.) */
+
+$)
+${
+	$v A B C $.
+	e0 $e |- A = B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pneeq2i $p |- ( C =/= A <-> C =/= B ) $=
+	e0 f0 f1 f2 pneeq2 f0 f1 awceq f2 f0 awne f2 f1 awne awb aax-mp $.
+$}
+$( /* Inference for inequality.  (Contributed by NM, 24-Jul-2012.) */
+
+$)
+${
+	$v A B C D $.
+	e0 $e |- A = B $.
+	e1 $e |- C = D $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	pneeq12i $p |- ( A =/= C <-> B =/= D ) $=
+	e1 f2 f3 f0 pneeq2i e0 f0 f1 f3 pneeq1i f0 f2 awne f0 f3 awne f1 f3 awne pbitri $.
+$}
+$( /* Deduction for inequality.  (Contributed by NM, 25-Oct-1999.) */
+
+$)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pneeq1d $p |- ( ph -> ( A =/= C <-> B =/= C ) ) $=
+	e0 f1 f2 f3 pneeq1 f0 f1 f2 awceq f1 f3 awne f2 f3 awne awb psyl $.
+$}
+$( /* Deduction for inequality.  (Contributed by NM, 25-Oct-1999.) */
+
+$)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pneeq2d $p |- ( ph -> ( C =/= A <-> C =/= B ) ) $=
+	e0 f1 f2 f3 pneeq2 f0 f1 f2 awceq f3 f1 awne f3 f2 awne awb psyl $.
+$}
+$( /* Deduction for inequality.  (Contributed by NM, 24-Jul-2012.) */
+
+$)
+${
+	$v ph A B C D $.
+	e0 $e |- ( ph -> A = B ) $.
+	e1 $e |- ( ph -> C = D ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class D $.
+	pneeq12d $p |- ( ph -> ( A =/= C <-> B =/= D ) ) $=
+	e0 f0 f1 f2 f3 pneeq1d e1 f0 f3 f4 f2 pneeq2d f0 f1 f3 awne f2 f3 awne f2 f4 awne pbitrd $.
+$}
+$( /* Deduction eliminating inequality definition.  (Contributed by Jonathan
+       Ben-Naim, 3-Jun-2011.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- ( ph -> A =/= B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pneneqd $p |- ( ph -> -. A = B ) $=
+	e0 f1 f2 adf-ne f0 f1 f2 awne f1 f2 awceq awn psylib $.
+$}
+$( /* Substitution of equal classes into an inequality.  (Contributed by NM,
+       4-Jul-2012.) */
+
+$)
+${
+	$v A B C $.
+	e0 $e |- A = B $.
+	e1 $e |- B =/= C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	peqnetri $p |- A =/= C $=
+	e1 e0 f0 f1 f2 pneeq1i f0 f2 awne f1 f2 awne pmpbir $.
+$}
+$( /* Substitution of equal classes into an inequality.  (Contributed by NM,
+       4-Jul-2012.) */
+
+$)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> A = B ) $.
+	e1 $e |- ( ph -> B =/= C ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	peqnetrd $p |- ( ph -> A =/= C ) $=
+	e1 e0 f0 f1 f2 f3 pneeq1d f0 f1 f3 awne f2 f3 awne pmpbird $.
+$}
+$( /* Substitution of equal classes into an inequality.  (Contributed by NM,
+       4-Jul-2012.) */
+
+$)
+${
+	$v A B C $.
+	e0 $e |- A = B $.
+	e1 $e |- A =/= C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	peqnetrri $p |- B =/= C $=
+	e0 f0 f1 peqcomi e1 f1 f0 f2 peqnetri $.
+$}
+$( /* Substitution of equal classes into an inequality.  (Contributed by NM,
+       4-Jul-2012.) */
+
+$)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> A = B ) $.
+	e1 $e |- ( ph -> A =/= C ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	peqnetrrd $p |- ( ph -> B =/= C ) $=
+	e0 f0 f1 f2 peqcomd e1 f0 f2 f1 f3 peqnetrd $.
+$}
+$( /* Substitution of equal classes into an inequality.  (Contributed by NM,
+       4-Jul-2012.) */
+
+$)
+${
+	$v A B C $.
+	e0 $e |- A =/= B $.
+	e1 $e |- B = C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pneeqtri $p |- A =/= C $=
+	e0 e1 f1 f2 f0 pneeq2i f0 f1 awne f0 f2 awne pmpbi $.
+$}
+$( /* Substitution of equal classes into an inequality.  (Contributed by NM,
+       4-Jul-2012.) */
+
+$)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> A =/= B ) $.
+	e1 $e |- ( ph -> B = C ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pneeqtrd $p |- ( ph -> A =/= C ) $=
+	e0 e1 f0 f2 f3 f1 pneeq2d f0 f1 f2 awne f1 f3 awne pmpbid $.
+$}
+$( /* Substitution of equal classes into an inequality.  (Contributed by NM,
+       4-Jul-2012.) */
+
+$)
+${
+	$v A B C $.
+	e0 $e |- A =/= B $.
+	e1 $e |- C = B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pneeqtrri $p |- A =/= C $=
+	e0 e1 f2 f1 peqcomi f0 f1 f2 pneeqtri $.
+$}
+$( /* Substitution of equal classes into an inequality.  (Contributed by NM,
+       4-Jul-2012.) */
+
+$)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> A =/= B ) $.
+	e1 $e |- ( ph -> C = B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pneeqtrrd $p |- ( ph -> A =/= C ) $=
+	e0 e1 f0 f3 f2 peqcomd f0 f1 f2 f3 pneeqtrd $.
+$}
+$( /* B chained equality inference for inequality.  (Contributed by NM,
+       6-Jun-2012.) */
+
+$)
+${
+	$v ph A B C $.
+	e0 $e |- B = A $.
+	e1 $e |- ( ph -> B =/= C ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	psyl5eqner $p |- ( ph -> A =/= C ) $=
+	e1 e0 f2 f1 f3 pneeq1i f0 f2 f3 awne f1 f3 awne psylib $.
+$}
+$( /* Substitution of equality into both sides of an inequality.  (Contributed
+       by NM, 24-Jul-2012.) */
+
+$)
+${
+	$v ph A B C D $.
+	e0 $e |- ( ph -> A =/= B ) $.
+	e1 $e |- ( ph -> A = C ) $.
+	e2 $e |- ( ph -> B = D ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class D $.
+	p3netr3d $p |- ( ph -> C =/= D ) $=
+	e0 e1 e2 f0 f1 f3 f2 f4 pneeq12d f0 f1 f2 awne f3 f4 awne pmpbid $.
+$}
+$( /* Substitution of equality into both sides of an inequality.  (Contributed
+       by NM, 24-Jul-2012.) */
+
+$)
+${
+	$v ph A B C D $.
+	e0 $e |- ( ph -> A =/= B ) $.
+	e1 $e |- ( ph -> C = A ) $.
+	e2 $e |- ( ph -> D = B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class D $.
+	p3netr4d $p |- ( ph -> C =/= D ) $=
+	e0 e1 e2 f0 f3 f1 f4 f2 pneeq12d f0 f3 f4 awne f1 f2 awne pmpbird $.
+$}
+$( /* Substitution of equality into both sides of an inequality.  (Contributed
+       by NM, 24-Jul-2012.) */
+
+$)
+${
+	$v ph A B C D $.
+	e0 $e |- ( ph -> A =/= B ) $.
+	e1 $e |- A = C $.
+	e2 $e |- B = D $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class D $.
+	p3netr3g $p |- ( ph -> C =/= D ) $=
+	e0 e1 e2 f1 f3 f2 f4 pneeq12i f0 f1 f2 awne f3 f4 awne psylib $.
+$}
+$( /* Substitution of equality into both sides of an inequality.  (Contributed
+       by NM, 14-Jun-2012.) */
+
+$)
+${
+	$v ph A B C D $.
+	e0 $e |- ( ph -> A =/= B ) $.
+	e1 $e |- C = A $.
+	e2 $e |- D = B $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class D $.
+	p3netr4g $p |- ( ph -> C =/= D ) $=
+	e0 e1 e2 f3 f1 f4 f2 pneeq12i f0 f1 f2 awne f3 f4 awne psylibr $.
+$}
+$( /* Deduction from equality to inequality.  (Contributed by NM,
+       9-Nov-2007.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- ( A = B <-> ph ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnecon3abii $p |- ( A =/= B <-> -. ph ) $=
+	f1 f2 adf-ne e0 f1 f2 awne f1 f2 awceq f0 pxchbinx $.
+$}
+$( /* Deduction from equality to inequality.  (Contributed by NM,
+       13-Apr-2007.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- ( ph <-> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnecon3bbii $p |- ( -. ph <-> A =/= B ) $=
+	e0 f0 f1 f2 awceq pbicomi f0 f1 f2 pnecon3abii f1 f2 awne f0 awn pbicomi $.
+$}
+$( /* Inference from equality to inequality.  (Contributed by NM,
+       23-Feb-2005.) */
+
+$)
+${
+	$v A B C D $.
+	e0 $e |- ( A = B <-> C = D ) $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	pnecon3bii $p |- ( A =/= B <-> C =/= D ) $=
+	e0 f2 f3 awceq f0 f1 pnecon3abii f2 f3 adf-ne f0 f1 awne f2 f3 awceq awn f2 f3 awne pbitr4i $.
+$}
+$( /* Deduction from equality to inequality.  (Contributed by NM,
+       21-Mar-2007.) */
+
+$)
+${
+	$v ph ps A B $.
+	e0 $e |- ( ph -> ( A = B <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pnecon3abid $p |- ( ph -> ( A =/= B <-> -. ps ) ) $=
+	f2 f3 adf-ne e0 f0 f2 f3 awceq f1 pnotbid f2 f3 awne f2 f3 awceq awn f0 f1 awn psyl5bb $.
+$}
+$( /* Deduction from equality to inequality.  (Contributed by NM,
+       2-Jun-2007.) */
+
+$)
+${
+	$v ph ps A B $.
+	e0 $e |- ( ph -> ( ps <-> A = B ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pnecon3bbid $p |- ( ph -> ( -. ps <-> A =/= B ) ) $=
+	e0 f0 f1 f2 f3 awceq pbicomd f0 f1 f2 f3 pnecon3abid f0 f2 f3 awne f1 awn pbicomd $.
+$}
+$( /* Deduction from equality to inequality.  (Contributed by NM,
+       23-Feb-2005.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+$)
+${
+	$v ph A B C D $.
+	e0 $e |- ( ph -> ( A = B <-> C = D ) ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class D $.
+	pnecon3bid $p |- ( ph -> ( A =/= B <-> C =/= D ) ) $=
+	f1 f2 adf-ne e0 f0 f1 f2 awceq f3 f4 pnecon3bbid f1 f2 awne f1 f2 awceq awn f0 f3 f4 awne psyl5bb $.
+$}
+$( /* Contrapositive law deduction for inequality.  (Contributed by NM,
+       2-Apr-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+$)
+${
+	$v ph ps A B $.
+	e0 $e |- ( ph -> ( ps -> A = B ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pnecon3ad $p |- ( ph -> ( A =/= B -> -. ps ) ) $=
+	e0 f2 f3 pnne f0 f1 f2 f3 awceq f2 f3 awne awn psyl6ibr f0 f1 f2 f3 awne pcon2d $.
+$}
+$( /* Contrapositive law deduction for inequality.  (Contributed by NM,
+       2-Apr-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+$)
+${
+	$v ph ps A B $.
+	e0 $e |- ( ph -> ( A = B -> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pnecon3bd $p |- ( ph -> ( -. ps -> A =/= B ) ) $=
+	f2 f3 pnne e0 f2 f3 awne awn f2 f3 awceq f0 f1 psyl5bi f0 f2 f3 awne f1 pcon1d $.
+$}
+$( /* Contrapositive law deduction for inequality.  (Contributed by NM,
+       10-Jun-2006.) */
+
+$)
+${
+	$v ph A B C D $.
+	e0 $e |- ( ph -> ( A = B -> C = D ) ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class D $.
+	pnecon3d $p |- ( ph -> ( C =/= D -> A =/= B ) ) $=
+	e0 f0 f1 f2 awceq f3 f4 pnecon3ad f1 f2 adf-ne f0 f3 f4 awne f1 f2 awceq awn f1 f2 awne psyl6ibr $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       9-Aug-2006.) */
+
+$)
+${
+	$v A B C D $.
+	e0 $e |- ( A = B -> C = D ) $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	pnecon3i $p |- ( C =/= D -> A =/= B ) $=
+	e0 f0 f1 awceq f2 f3 awceq awi pid f0 f1 awceq f2 f3 awceq awi f0 f1 f2 f3 pnecon3d f0 f1 awceq f2 f3 awceq awi f2 f3 awne f0 f1 awne awi aax-mp $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       23-May-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- ( ph -> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnecon3ai $p |- ( A =/= B -> -. ph ) $=
+	e0 f1 f2 pnne f0 f1 f2 awceq f1 f2 awne awn psylibr f0 f1 f2 awne pcon2i $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       1-Jun-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- ( A = B -> ph ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnecon3bi $p |- ( -. ph -> A =/= B ) $=
+	f1 f2 pnne e0 f1 f2 awne awn f1 f2 awceq f0 psylbi f1 f2 awne f0 pcon1i $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       12-Feb-2007.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- ( -. ph -> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnecon1ai $p |- ( A =/= B -> ph ) $=
+	f1 f2 adf-ne e0 f0 f1 f2 awceq pcon1i f1 f2 awne f1 f2 awceq awn f0 psylbi $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       18-Mar-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- ( A =/= B -> ph ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnecon1bi $p |- ( -. ph -> A = B ) $=
+	e0 f1 f2 awne f0 pcon3i f1 f2 pnne f0 awn f1 f2 awne awn f1 f2 awceq psylib $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       18-Mar-2007.) */
+
+$)
+${
+	$v A B C D $.
+	e0 $e |- ( A =/= B -> C = D ) $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	pnecon1i $p |- ( C =/= D -> A = B ) $=
+	f0 f1 adf-ne e0 f0 f1 awceq awn f0 f1 awne f2 f3 awceq psylbir f0 f1 awceq f2 f3 pnecon1ai $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       16-Jan-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- ( A = B -> -. ph ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnecon2ai $p |- ( ph -> A =/= B ) $=
+	f1 f2 pnne e0 f1 f2 awne awn f1 f2 awceq f0 awn psylbi f1 f2 awne f0 pcon4i $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       1-Apr-2007.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- ( ph -> A =/= B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnecon2bi $p |- ( A = B -> -. ph ) $=
+	e0 f0 f1 f2 pneneqd f0 f1 f2 awceq pcon2i $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       18-Mar-2007.) */
+
+$)
+${
+	$v A B C D $.
+	e0 $e |- ( A = B -> C =/= D ) $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	pnecon2i $p |- ( C = D -> A =/= B ) $=
+	e0 f0 f1 awceq f2 f3 pneneqd f2 f3 awceq f0 f1 pnecon2ai $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       19-Apr-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+$)
+${
+	$v ph ps A B $.
+	e0 $e |- ( ph -> ( A = B -> -. ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pnecon2ad $p |- ( ph -> ( ps -> A =/= B ) ) $=
+	f2 f3 pnne e0 f2 f3 awne awn f2 f3 awceq f0 f1 awn psyl5bi f0 f2 f3 awne f1 pcon4d $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       13-Apr-2007.) */
+
+$)
+${
+	$v ph ps A B $.
+	e0 $e |- ( ph -> ( ps -> A =/= B ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pnecon2bd $p |- ( ph -> ( A = B -> -. ps ) ) $=
+	e0 f2 f3 adf-ne f0 f1 f2 f3 awne f2 f3 awceq awn psyl6ib f0 f1 f2 f3 awceq pcon2d $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       28-Dec-2008.) */
+
+$)
+${
+	$v ph A B C D $.
+	e0 $e |- ( ph -> ( A = B -> C =/= D ) ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class D $.
+	pnecon2d $p |- ( ph -> ( C = D -> A =/= B ) ) $=
+	e0 f3 f4 adf-ne f0 f1 f2 awceq f3 f4 awne f3 f4 awceq awn psyl6ib f0 f3 f4 awceq f1 f2 pnecon2ad $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       17-Mar-2007.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- ( -. ph <-> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnecon1abii $p |- ( A =/= B <-> ph ) $=
+	f1 f2 adf-ne e0 f0 f1 f2 awceq pcon1bii f1 f2 awne f1 f2 awceq awn f0 pbitri $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       17-Mar-2007.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- ( A =/= B <-> ph ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnecon1bbii $p |- ( -. ph <-> A = B ) $=
+	f1 f2 adf-ne e0 f1 f2 awceq awn f1 f2 awne f0 pbitr3i f1 f2 awceq f0 pcon1bii $.
+$}
+$( /* Contrapositive deduction for inequality.  (Contributed by NM,
+       21-Aug-2007.) */
+
+$)
+${
+	$v ph ps A B $.
+	e0 $e |- ( ph -> ( -. ps <-> A = B ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pnecon1abid $p |- ( ph -> ( A =/= B <-> ps ) ) $=
+	f2 f3 adf-ne e0 f0 f1 f2 f3 awceq pcon1bid f2 f3 awne f2 f3 awceq awn f0 f1 psyl5bb $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       31-Jan-2008.) */
+
+$)
+${
+	$v ph ps A B $.
+	e0 $e |- ( ph -> ( A =/= B <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pnecon1bbid $p |- ( ph -> ( -. ps <-> A = B ) ) $=
+	f2 f3 adf-ne e0 f2 f3 awceq awn f2 f3 awne f0 f1 psyl5bbr f0 f2 f3 awceq f1 pcon1bid $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       2-Mar-2007.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- ( A = B <-> -. ph ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnecon2abii $p |- ( ph <-> A =/= B ) $=
+	e0 f1 f2 awceq f0 awn pbicomi f0 f1 f2 pnecon1abii f1 f2 awne f0 pbicomi $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       13-Apr-2007.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- ( ph <-> A =/= B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnecon2bbii $p |- ( A = B <-> -. ph ) $=
+	e0 f0 f1 f2 awne pbicomi f0 f1 f2 pnecon1bbii f0 awn f1 f2 awceq pbicomi $.
+$}
+$( /* Contrapositive deduction for inequality.  (Contributed by NM,
+       18-Jul-2007.) */
+
+$)
+${
+	$v ph ps A B $.
+	e0 $e |- ( ph -> ( A = B <-> -. ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pnecon2abid $p |- ( ph -> ( ps <-> A =/= B ) ) $=
+	e0 f0 f2 f3 awceq f1 pcon2bid f2 f3 adf-ne f0 f1 f2 f3 awceq awn f2 f3 awne psyl6bbr $.
+$}
+$( /* Contrapositive deduction for inequality.  (Contributed by NM,
+       13-Apr-2007.) */
+
+$)
+${
+	$v ph ps A B $.
+	e0 $e |- ( ph -> ( ps <-> A =/= B ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pnecon2bbid $p |- ( ph -> ( A = B <-> -. ps ) ) $=
+	e0 f2 f3 adf-ne f0 f1 f2 f3 awne f2 f3 awceq awn psyl6bb f0 f1 f2 f3 awceq pcon2bid $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       16-Jan-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- ( A =/= B -> -. ph ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnecon4ai $p |- ( ph -> A = B ) $=
+	e0 f1 f2 awne f0 pcon2i f1 f2 pnne f0 f1 f2 awne awn f1 f2 awceq psylib $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       17-Mar-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+$)
+${
+	$v A B C D $.
+	e0 $e |- ( A =/= B -> C =/= D ) $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	pnecon4i $p |- ( C = D -> A = B ) $=
+	e0 f0 f1 awne f2 f3 pnecon2bi f0 f1 pnne f2 f3 awceq f0 f1 awne awn f0 f1 awceq psylib $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       2-Apr-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+$)
+${
+	$v ph ps A B $.
+	e0 $e |- ( ph -> ( A =/= B -> -. ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pnecon4ad $p |- ( ph -> ( ps -> A = B ) ) $=
+	e0 f0 f2 f3 awne f1 pcon2d f2 f3 pnne f0 f1 f2 f3 awne awn f2 f3 awceq psyl6ib $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       1-Jun-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+$)
+${
+	$v ph ps A B $.
+	e0 $e |- ( ph -> ( -. ps -> A =/= B ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pnecon4bd $p |- ( ph -> ( A = B -> ps ) ) $=
+	f2 f3 pnne e0 f0 f1 f2 f3 awne pcon1d f2 f3 awceq f2 f3 awne awn f0 f1 psyl5bir $.
+$}
+$( /* Contrapositive inference for inequality.  (Contributed by NM,
+       2-Apr-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+$)
+${
+	$v ph A B C D $.
+	e0 $e |- ( ph -> ( A =/= B -> C =/= D ) ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class D $.
+	pnecon4d $p |- ( ph -> ( C = D -> A = B ) ) $=
+	e0 f0 f1 f2 awne f3 f4 pnecon2bd f1 f2 pnne f0 f3 f4 awceq f1 f2 awne awn f1 f2 awceq psyl6ib $.
+$}
+$( /* Contrapositive law deduction for inequality.  (Contributed by NM,
+       11-Jan-2008.) */
+
+$)
+${
+	$v ph ps A B $.
+	e0 $e |- ( ph -> ( A =/= B <-> -. ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pnecon4abid $p |- ( ph -> ( A = B <-> ps ) ) $=
+	f2 f3 adf-ne e0 f2 f3 awceq awn f2 f3 awne f0 f1 awn psyl5bbr f0 f2 f3 awceq f1 pcon4bid $.
+$}
+$( /* Contrapositive law deduction for inequality.  (Contributed by NM,
+       9-May-2012.) */
+
+$)
+${
+	$v ph ps A B $.
+	e0 $e |- ( ph -> ( -. ps <-> A =/= B ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pnecon4bbid $p |- ( ph -> ( ps <-> A = B ) ) $=
+	e0 f0 f1 awn f2 f3 awne pbicomd f0 f1 f2 f3 pnecon4abid f0 f2 f3 awceq f1 pbicomd $.
+$}
+$( /* Contrapositive law deduction for inequality.  (Contributed by NM,
+       29-Jun-2007.) */
+
+$)
+${
+	$v ph A B C D $.
+	e0 $e |- ( ph -> ( A =/= B <-> C =/= D ) ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class D $.
+	pnecon4bid $p |- ( ph -> ( A = B <-> C = D ) ) $=
+	e0 f0 f1 f2 awne f3 f4 pnecon2bbid f1 f2 pnne f0 f3 f4 awceq f1 f2 awne awn f1 f2 awceq psyl6rbb $.
+$}
+$( /* Contrapositive deduction for inequality.  (Contributed by NM,
+       2-Apr-2007.) */
+
+$)
+${
+	$v ph ps A B $.
+	e0 $e |- ( ph -> ( -. ps -> A = B ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pnecon1ad $p |- ( ph -> ( A =/= B -> ps ) ) $=
+	f2 f3 adf-ne e0 f0 f1 f2 f3 awceq pcon1d f2 f3 awne f2 f3 awceq awn f0 f1 psyl5bi $.
+$}
+$( /* Contrapositive deduction for inequality.  (Contributed by NM,
+       21-Mar-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+$)
+${
+	$v ph ps A B $.
+	e0 $e |- ( ph -> ( A =/= B -> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pnecon1bd $p |- ( ph -> ( -. ps -> A = B ) ) $=
+	e0 f0 f2 f3 awne f1 pcon3d f2 f3 pnne f0 f1 awn f2 f3 awne awn f2 f3 awceq psyl6ib $.
+$}
+$( /* Contrapositive law deduction for inequality.  (Contributed by NM,
+       28-Dec-2008.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+$)
+${
+	$v ph A B C D $.
+	e0 $e |- ( ph -> ( A =/= B -> C = D ) ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class D $.
+	pnecon1d $p |- ( ph -> ( C =/= D -> A = B ) ) $=
+	e0 f3 f4 pnne f0 f1 f2 awne f3 f4 awceq f3 f4 awne awn psyl6ibr f0 f3 f4 awne f1 f2 pnecon4ad $.
+$}
+$( /* If it is not the case that two classes are equal, they are unequal.
+       Converse of ~ neneqd .  One-way deduction form of ~ df-ne .
+       (Contributed by David Moews, 28-Feb-2017.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- ( ph -> -. A = B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pneneqad $p |- ( ph -> A =/= B ) $=
+	e0 f0 f1 f2 awceq pcon2i f0 f1 f2 pnecon2ai $.
+$}
+$( /* Contraposition law for inequality.  (Contributed by NM, 28-Dec-2008.) */
+
+$)
+${
+	$v A B C D $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	pnebi $p |- ( ( A = B <-> C = D ) <-> ( A =/= B <-> C =/= D ) ) $=
+	f0 f1 awceq f2 f3 awceq awb pid f0 f1 awceq f2 f3 awceq awb f0 f1 f2 f3 pnecon3bid f0 f1 awne f2 f3 awne awb pid f0 f1 awne f2 f3 awne awb f0 f1 f2 f3 pnecon4bid f0 f1 awceq f2 f3 awceq awb f0 f1 awne f2 f3 awne awb pimpbii $.
+$}
+$( /* Theorem *13.18 in [WhiteheadRussell] p. 178.  (Contributed by Andrew
+     Salmon, 3-Jun-2011.) */
+
+$)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	ppm13.18 $p |- ( ( A = B /\ A =/= C ) -> B =/= C ) $=
+	f0 f1 f2 peqeq1 f0 f1 awceq f0 f2 awceq f1 f2 awceq pbiimprd f0 f1 awceq f1 f2 f0 f2 pnecon3d f0 f1 awceq f0 f2 awne f1 f2 awne pimp $.
+$}
+$( /* Theorem *13.181 in [WhiteheadRussell] p. 178.  (Contributed by Andrew
+     Salmon, 3-Jun-2011.) */
+
+$)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	ppm13.181 $p |- ( ( A = B /\ B =/= C ) -> A =/= C ) $=
+	f0 f1 peqcom f1 f0 f2 ppm13.18 f0 f1 awceq f1 f0 awceq f1 f2 awne f0 f2 awne psylanb $.
+$}
+$( /* A contradiction implies anything.  Equality/inequality deduction form.
+       (Contributed by David Moews, 28-Feb-2017.) */
+
+$)
+${
+	$v ph ps A B $.
+	e0 $e |- ( ph -> A = B ) $.
+	e1 $e |- ( ph -> A =/= B ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	ppm2.21ddne $p |- ( ph -> ps ) $=
+	e0 e1 f0 f2 f3 pneneqd f0 f2 f3 awceq f1 ppm2.21dd $.
+$}
+$( /* Deduction eliminating an inequality in an antecedent.  (Contributed by
+       NM, 24-May-2006.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+$)
+${
+	$v ph ps ch A B $.
+	e0 $e |- ( A = B -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ( ph /\ A =/= B ) -> ps ) $.
+	e2 $e |- ( ph -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f class A $.
+	f4 $f class B $.
+	ppm2.61ne $p |- ( ph -> ps ) $=
+	e1 f0 f3 f4 awne f1 pexpcom f3 f4 pnne e2 e0 f0 f1 f3 f4 awceq f2 psyl5ibr f3 f4 awne awn f3 f4 awceq f0 f1 awi psylbi f3 f4 awne f0 f1 awi ppm2.61i $.
+$}
+$( /* Inference eliminating an inequality in an antecedent.  (Contributed by
+       NM, 16-Jan-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- ( A = B -> ph ) $.
+	e1 $e |- ( A =/= B -> ph ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	ppm2.61ine $p |- ph $=
+	e1 f1 f2 pnne e0 f1 f2 awne awn f1 f2 awceq f0 psylbi f1 f2 awne f0 ppm2.61i $.
+$}
+$( /* Deduction eliminating an inequality in an antecedent.  (Contributed by
+       NM, 1-Jun-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+$)
+${
+	$v ph ps A B $.
+	e0 $e |- ( ph -> ( A = B -> ps ) ) $.
+	e1 $e |- ( ph -> ( A =/= B -> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	ppm2.61dne $p |- ( ph -> ps ) $=
+	e1 f2 f3 pnne e0 f2 f3 awne awn f2 f3 awceq f0 f1 psyl5bi f0 f2 f3 awne f1 ppm2.61d $.
+$}
+$( /* Deduction eliminating an inequality in an antecedent.  (Contributed by
+       NM, 30-Nov-2011.) */
+
+$)
+${
+	$v ph ps A B $.
+	e0 $e |- ( ( ph /\ A = B ) -> ps ) $.
+	e1 $e |- ( ( ph /\ A =/= B ) -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	ppm2.61dane $p |- ( ph -> ps ) $=
+	e0 f0 f2 f3 awceq f1 pex e1 f0 f2 f3 awne f1 pex f0 f1 f2 f3 ppm2.61dne $.
+$}
+$( /* Deduction eliminating two inequalities in an antecedent.  (Contributed
+       by NM, 29-May-2013.) */
+
+$)
+${
+	$v ph ps A B C D $.
+	e0 $e |- ( ( ph /\ A = B ) -> ps ) $.
+	e1 $e |- ( ( ph /\ C = D ) -> ps ) $.
+	e2 $e |- ( ( ph /\ ( A =/= B /\ C =/= D ) ) -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	f5 $f class D $.
+	ppm2.61da2ne $p |- ( ph -> ps ) $=
+	e0 e1 f0 f4 f5 awceq f1 f2 f3 awne padantlr e2 f0 f2 f3 awne f4 f5 awne f1 panassrs f0 f2 f3 awne awa f1 f4 f5 ppm2.61dane f0 f1 f2 f3 ppm2.61dane $.
+$}
+$( /* Deduction eliminating three inequalities in an antecedent.  (Contributed
+       by NM, 15-Jun-2013.) */
+
+$)
+${
+	$v ph ps A B C D F E $.
+	e0 $e |- ( ( ph /\ A = B ) -> ps ) $.
+	e1 $e |- ( ( ph /\ C = D ) -> ps ) $.
+	e2 $e |- ( ( ph /\ E = F ) -> ps ) $.
+	e3 $e |- ( ( ph /\ ( A =/= B /\ C =/= D /\ E =/= F ) ) -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	f5 $f class D $.
+	f6 $f class E $.
+	f7 $f class F $.
+	ppm2.61da3ne $p |- ( ph -> ps ) $=
+	e0 e1 e2 f0 f6 f7 awceq f1 f2 f3 awne f4 f5 awne awa padantlr f0 f2 f3 awne f4 f5 awne awa f6 f7 awne psimpll f0 f2 f3 awne f4 f5 awne f6 f7 awne psimplrl f0 f2 f3 awne f4 f5 awne f6 f7 awne psimplrr f0 f2 f3 awne f4 f5 awne awa awa f6 f7 awne psimpr e3 f0 f2 f3 awne f4 f5 awne awa awa f6 f7 awne awa f0 f2 f3 awne f4 f5 awne f6 f7 awne f1 psyl13anc f0 f2 f3 awne f4 f5 awne awa awa f1 f6 f7 ppm2.61dane f0 f1 f2 f3 f4 f5 ppm2.61da2ne $.
+$}
+$( /* Commutation of inequality.  (Contributed by NM, 14-May-1999.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pnecom $p |- ( A =/= B <-> B =/= A ) $=
+	f0 f1 peqcom f0 f1 f1 f0 pnecon3bii $.
+$}
+$( /* Inference from commutative law for inequality.  (Contributed by NM,
+       17-Oct-2012.) */
+
+$)
+${
+	$v A B $.
+	e0 $e |- A =/= B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pnecomi $p |- B =/= A $=
+	e0 f0 f1 pnecom f0 f1 awne f1 f0 awne pmpbi $.
+$}
+$( /* Deduction from commutative law for inequality.  (Contributed by NM,
+       12-Feb-2008.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- ( ph -> A =/= B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnecomd $p |- ( ph -> B =/= A ) $=
+	e0 f1 f2 pnecom f0 f1 f2 awne f2 f1 awne psylib $.
+$}
+$( /* Logical OR with an equality.  (Contributed by NM, 29-Apr-2007.) */
+
+$)
+${
+	$v ps A B $.
+	f0 $f wff ps $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pneor $p |- ( ( A = B \/ ps ) <-> ( A =/= B -> ps ) ) $=
+	f1 f2 awceq f0 adf-or f1 f2 adf-ne f1 f2 awne f1 f2 awceq awn f0 pimbi1i f1 f2 awceq f0 awo f1 f2 awceq awn f0 awi f1 f2 awne f0 awi pbitr4i $.
+$}
+$( /* A De Morgan's law for inequality.  (Contributed by NM, 18-May-2007.) */
+
+$)
+${
+	$v A B C D $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	pneanior $p |- ( ( A =/= B /\ C =/= D ) <-> -. ( A = B \/ C = D ) ) $=
+	f0 f1 adf-ne f2 f3 adf-ne f0 f1 awne f0 f1 awceq awn f2 f3 awne f2 f3 awceq awn panbi12i f0 f1 awceq f2 f3 awceq ppm4.56 f0 f1 awne f2 f3 awne awa f0 f1 awceq awn f2 f3 awceq awn awa f0 f1 awceq f2 f3 awceq awo awn pbitri $.
+$}
+$( /* A De Morgan's law for inequality.  (Contributed by NM, 30-Sep-2013.) */
+
+$)
+${
+	$v A B C D F E $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	f4 $f class E $.
+	f5 $f class F $.
+	pne3anior $p |- ( ( A =/= B /\ C =/= D /\ E =/= F ) <-> -. ( A = B \/ C = D \/ E = F ) ) $=
+	f0 f1 awne f2 f3 awne f4 f5 awne p3anor f0 f1 pnne f2 f3 pnne f4 f5 pnne f0 f1 awne awn f0 f1 awceq f2 f3 awne awn f2 f3 awceq f4 f5 awne awn f4 f5 awceq p3orbi123i f0 f1 awne f2 f3 awne f4 f5 awne aw3a f0 f1 awne awn f2 f3 awne awn f4 f5 awne awn aw3o f0 f1 awceq f2 f3 awceq f4 f5 awceq aw3o pxchbinx $.
+$}
+$( /* A De Morgan's law for inequality.  (Contributed by NM, 18-May-2007.) */
+
+$)
+${
+	$v A B C D $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	pneorian $p |- ( ( A =/= B \/ C =/= D ) <-> -. ( A = B /\ C = D ) ) $=
+	f0 f1 adf-ne f2 f3 adf-ne f0 f1 awne f0 f1 awceq awn f2 f3 awne f2 f3 awceq awn porbi12i f0 f1 awceq f2 f3 awceq pianor f0 f1 awne f2 f3 awne awo f0 f1 awceq awn f2 f3 awceq awn awo f0 f1 awceq f2 f3 awceq awa awn pbitr4i $.
+$}
+$( /* An inference from an inequality, related to modus tollens.  (Contributed
+       by NM, 13-Apr-2007.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- A =/= B $.
+	e1 $e |- ( ph <-> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnemtbir $p |- -. ph $=
+	e0 f1 f2 adf-ne f1 f2 awne f1 f2 awceq awn pmpbi e1 f0 f1 f2 awceq pmtbir $.
+$}
+$( /* Two classes are different if they don't contain the same element.
+     (Contributed by NM, 3-Feb-2012.) */
+
+$)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pnelne1 $p |- ( ( A e. B /\ -. A e. C ) -> B =/= C ) $=
+	f1 f2 f0 peleq2 f1 f2 awceq f0 f1 awcel f0 f2 awcel pbiimpcd f0 f1 awcel f0 f2 awcel f1 f2 pnecon3bd f0 f1 awcel f0 f2 awcel awn f1 f2 awne pimp $.
+$}
+$( /* Two classes are different if they don't belong to the same class.
+     (Contributed by NM, 25-Jun-2012.) */
+
+$)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pnelne2 $p |- ( ( A e. C /\ -. B e. C ) -> A =/= B ) $=
+	f0 f1 f2 peleq1 f0 f1 awceq f0 f2 awcel f1 f2 awcel pbiimpcd f0 f2 awcel f1 f2 awcel f0 f1 pnecon3bd f0 f2 awcel f1 f2 awcel awn f0 f1 awne pimp $.
+$}
+$( /* Equality theorem for negated membership.  (Contributed by NM,
+     20-Nov-1994.) */
+
+$)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pneleq1 $p |- ( A = B -> ( A e/ C <-> B e/ C ) ) $=
+	f0 f1 f2 peleq1 f0 f1 awceq f0 f2 awcel f1 f2 awcel pnotbid f0 f2 adf-nel f1 f2 adf-nel f0 f1 awceq f0 f2 awcel awn f1 f2 awcel awn f0 f2 awnel f1 f2 awnel p3bitr4g $.
+$}
+$( /* Equality theorem for negated membership.  (Contributed by NM,
+     20-Nov-1994.) */
+
+$)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pneleq2 $p |- ( A = B -> ( C e/ A <-> C e/ B ) ) $=
+	f0 f1 f2 peleq2 f0 f1 awceq f2 f0 awcel f2 f1 awcel pnotbid f2 f0 adf-nel f2 f1 adf-nel f0 f1 awceq f2 f0 awcel awn f2 f1 awcel awn f2 f0 awnel f2 f1 awnel p3bitr4g $.
+$}
+$( /* Bound-variable hypothesis builder for inequality.  (Contributed by NM,
+       10-Nov-2007.)  (Revised by Mario Carneiro, 7-Oct-2016.) */
+
+$)
+${
+	$v x A B $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/_ x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnfne $p |- F/ x A =/= B $=
+	f1 f2 adf-ne e0 e1 f0 f1 f2 pnfeq f1 f2 awceq f0 pnfn f1 f2 awne f1 f2 awceq awn f0 pnfxfr $.
+$}
+$( /* Bound-variable hypothesis builder for inequality.  (Contributed by David
+       Abernethy, 26-Jun-2011.)  (Revised by Mario Carneiro, 7-Oct-2016.) */
+
+$)
+${
+	$v x A B $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/_ x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnfnel $p |- F/ x A e/ B $=
+	f1 f2 adf-nel e0 e1 f0 f1 f2 pnfel f1 f2 awcel f0 pnfn f1 f2 awnel f1 f2 awcel awn f0 pnfxfr $.
+$}
+$( /* Bound-variable hypothesis builder for inequality.  (Contributed by NM,
+       10-Nov-2007.)  (Revised by Mario Carneiro, 7-Oct-2016.) */
+
+$)
+${
+	$v ph x A B $.
+	e0 $e |- ( ph -> F/_ x A ) $.
+	e1 $e |- ( ph -> F/_ x B ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pnfned $p |- ( ph -> F/ x A =/= B ) $=
+	f2 f3 adf-ne e0 e1 f0 f1 f2 f3 pnfeqd f0 f2 f3 awceq f1 pnfnd f2 f3 awne f2 f3 awceq awn f0 f1 pnfxfrd $.
+$}
+$( /* Bound-variable hypothesis builder for inequality.  (Contributed by David
+       Abernethy, 26-Jun-2011.)  (Revised by Mario Carneiro, 7-Oct-2016.) */
+
+$)
+${
+	$v ph x A B $.
+	e0 $e |- ( ph -> F/_ x A ) $.
+	e1 $e |- ( ph -> F/_ x B ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pnfneld $p |- ( ph -> F/ x A e/ B ) $=
+	f2 f3 adf-nel e0 e1 f0 f1 f2 f3 pnfeld f0 f2 f3 awcel f1 pnfnd f2 f3 awnel f2 f3 awcel awn f0 f1 pnfxfrd $.
+$}
+

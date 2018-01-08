@@ -1,0 +1,678 @@
+$[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Binary_relations.smm $]
+$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                Ordered-pair class abstractions (class builders)
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+$)
+$c |-> $.
+$( /* Maps-to symbol */
+
+$)
+$( /* Extend class notation to include ordered-pair class abstraction (class
+     builder). */
+
+$)
+${
+	$v ph x y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	acopab $a class { <. x , y >. | ph } $.
+$}
+$( /* Extend the definition of a class to include maps-to notation for defining
+     a function via a rule. */
+
+$)
+${
+	$v x A B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	acmpt $a class ( x e. A |-> B ) $.
+$}
+$( /* Define the class abstraction of a collection of ordered pairs.
+       Definition 3.3 of [Monk1] p. 34.  Usually ` x ` and ` y ` are distinct,
+       although the definition doesn't strictly require it (see ~ dfid2 for a
+       case where they are not distinct).  The brace notation is called "class
+       abstraction" by Quine; it is also (more commonly) called a "class
+       builder" in the literature.  An alternate definition using no
+       existential quantifiers is shown by ~ dfopab2 .  For example,
+` R = { <. x , y >. | ( x e. CC /\ y e. CC /\ ( x + 1 ) = y ) } -> 3 R 4 `
+       ( ~ ex-opab ).  (Contributed by NM, 4-Jul-1994.) */
+
+$)
+${
+	$v ph x y z $.
+	$d x z $.
+	$d y z $.
+	$d z ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	adf-opab $a |- { <. x , y >. | ph } = { z | E. x E. y ( z = <. x , y >. /\ ph ) } $.
+$}
+$( /* Define maps-to notation for defining a function via a rule.  Read as
+       "the function defined by the map from ` x ` (in ` A ` ) to
+       ` B ( x ) ` ."  The class expression ` B ` is the value of the function
+       at ` x ` and normally contains the variable ` x ` .  An example is the
+       square function for complex numbers, ` ( x e. CC |-> ( x ^ 2 ) ) ` .
+       Similar to the definition of mapping in [ChoquetDD] p. 2.  (Contributed
+       by NM, 17-Feb-2008.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y $.
+	$d y A $.
+	$d y B $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	adf-mpt $a |- ( x e. A |-> B ) = { <. x , y >. | ( x e. A /\ y = B ) } $.
+$}
+$( /* The collection of ordered pairs in a class is a subclass of it.
+       (Contributed by NM, 27-Dec-1996.)  (Proof shortened by Andrew Salmon,
+       9-Jul-2011.) */
+
+$)
+${
+	$v x y z R $.
+	$d x z R $.
+	$d y z R $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class R $.
+	i0 $f set z $.
+	popabss $p |- { <. x , y >. | x R y } C_ R $=
+	f0 asup_set_class f1 asup_set_class f2 awbr f0 f1 i0 adf-opab f0 asup_set_class f1 asup_set_class f2 adf-br i0 asup_set_class f0 asup_set_class f1 asup_set_class acop f2 peleq1 i0 asup_set_class f0 asup_set_class f1 asup_set_class acop awceq i0 asup_set_class f2 awcel f0 asup_set_class f1 asup_set_class acop f2 awcel pbiimpar f0 asup_set_class f1 asup_set_class f2 awbr i0 asup_set_class f0 asup_set_class f1 asup_set_class acop awceq f0 asup_set_class f1 asup_set_class acop f2 awcel i0 asup_set_class f2 awcel psylan2b i0 asup_set_class f0 asup_set_class f1 asup_set_class acop awceq f0 asup_set_class f1 asup_set_class f2 awbr awa i0 asup_set_class f2 awcel f0 f1 pexlimivv i0 asup_set_class f0 asup_set_class f1 asup_set_class acop awceq f0 asup_set_class f1 asup_set_class f2 awbr awa f1 awex f0 awex i0 f2 pabssi f0 asup_set_class f1 asup_set_class f2 awbr f0 f1 acopab i0 asup_set_class f0 asup_set_class f1 asup_set_class acop awceq f0 asup_set_class f1 asup_set_class f2 awbr awa f1 awex f0 awex i0 acab f2 peqsstri $.
+$}
+$( /* Equivalent wff's yield equal ordered-pair class abstractions (deduction
+       rule).  (Contributed by NM, 21-Feb-2004.)  (Proof shortened by Andrew
+       Salmon, 9-Jul-2011.) */
+
+$)
+${
+	$v ph ps ch x y z $.
+	$d x z $.
+	$d y z $.
+	$d z ph $.
+	$d z ps $.
+	$d z ch $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- F/ y ph $.
+	e2 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	i0 $f set z $.
+	popabbid $p |- ( ph -> { <. x , y >. | ps } = { <. x , y >. | ch } ) $=
+	e0 e1 e2 f0 f1 f2 i0 asup_set_class f3 asup_set_class f4 asup_set_class acop awceq panbi2d f0 i0 asup_set_class f3 asup_set_class f4 asup_set_class acop awceq f1 awa i0 asup_set_class f3 asup_set_class f4 asup_set_class acop awceq f2 awa f4 pexbid f0 i0 asup_set_class f3 asup_set_class f4 asup_set_class acop awceq f1 awa f4 awex i0 asup_set_class f3 asup_set_class f4 asup_set_class acop awceq f2 awa f4 awex f3 pexbid f0 i0 asup_set_class f3 asup_set_class f4 asup_set_class acop awceq f1 awa f4 awex f3 awex i0 asup_set_class f3 asup_set_class f4 asup_set_class acop awceq f2 awa f4 awex f3 awex i0 pabbidv f1 f3 f4 i0 adf-opab f2 f3 f4 i0 adf-opab f0 i0 asup_set_class f3 asup_set_class f4 asup_set_class acop awceq f1 awa f4 awex f3 awex i0 acab i0 asup_set_class f3 asup_set_class f4 asup_set_class acop awceq f2 awa f4 awex f3 awex i0 acab f1 f3 f4 acopab f2 f3 f4 acopab p3eqtr4g $.
+$}
+$( /* Equivalent wff's yield equal ordered-pair class abstractions (deduction
+       rule).  (Contributed by NM, 15-May-1995.) */
+
+$)
+${
+	$v ph ps ch x y $.
+	$d x ph $.
+	$d y ph $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	popabbidv $p |- ( ph -> { <. x , y >. | ps } = { <. x , y >. | ch } ) $=
+	f0 f3 pnfv f0 f4 pnfv e0 f0 f1 f2 f3 f4 popabbid $.
+$}
+$( /* Equivalent wff's yield equal class abstractions.  (Contributed by NM,
+       15-May-1995.) */
+
+$)
+${
+	$v ph ps x y z $.
+	$d x z $.
+	$d y z $.
+	$d z ph $.
+	$d z ps $.
+	e0 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	i0 $f set z $.
+	popabbii $p |- { <. x , y >. | ph } = { <. x , y >. | ps } $=
+	i0 asup_set_class peqid e0 f0 f1 awb i0 asup_set_class i0 asup_set_class awceq pa1i i0 asup_set_class i0 asup_set_class awceq f0 f1 f2 f3 popabbidv i0 asup_set_class i0 asup_set_class awceq f0 f2 f3 acopab f1 f2 f3 acopab awceq aax-mp $.
+$}
+$( /* Bound-variable hypothesis builder for class abstraction.  (Contributed
+       by NM, 1-Sep-1999.)  (Unnecessary distinct variable restrictions were
+       removed by Andrew Salmon, 11-Jul-2011.) */
+
+$)
+${
+	$v ph x y z w $.
+	$d x z w $.
+	$d y z w $.
+	$d ph w $.
+	e0 $e |- F/ z ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	i0 $f set w $.
+	pnfopab $p |- F/_ z { <. x , y >. | ph } $=
+	f0 f1 f2 i0 adf-opab i0 asup_set_class f1 asup_set_class f2 asup_set_class acop awceq f3 pnfv e0 i0 asup_set_class f1 asup_set_class f2 asup_set_class acop awceq f0 f3 pnfan i0 asup_set_class f1 asup_set_class f2 asup_set_class acop awceq f0 awa f3 f2 pnfex i0 asup_set_class f1 asup_set_class f2 asup_set_class acop awceq f0 awa f2 awex f3 f1 pnfex i0 asup_set_class f1 asup_set_class f2 asup_set_class acop awceq f0 awa f2 awex f1 awex f3 i0 pnfab f3 f0 f1 f2 acopab i0 asup_set_class f1 asup_set_class f2 asup_set_class acop awceq f0 awa f2 awex f1 awex i0 acab pnfcxfr $.
+$}
+$( /* The first abstraction variable in an ordered-pair class abstraction
+       (class builder) is effectively not free.  (Contributed by NM,
+       16-May-1995.)  (Revised by Mario Carneiro, 14-Oct-2016.) */
+
+$)
+${
+	$v ph x y z $.
+	$d x z $.
+	$d y z $.
+	$d z ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	i0 $f set z $.
+	pnfopab1 $p |- F/_ x { <. x , y >. | ph } $=
+	f0 f1 f2 i0 adf-opab i0 asup_set_class f1 asup_set_class f2 asup_set_class acop awceq f0 awa f2 awex f1 pnfe1 i0 asup_set_class f1 asup_set_class f2 asup_set_class acop awceq f0 awa f2 awex f1 awex f1 i0 pnfab f1 f0 f1 f2 acopab i0 asup_set_class f1 asup_set_class f2 asup_set_class acop awceq f0 awa f2 awex f1 awex i0 acab pnfcxfr $.
+$}
+$( /* The second abstraction variable in an ordered-pair class abstraction
+       (class builder) is effectively not free.  (Contributed by NM,
+       16-May-1995.)  (Revised by Mario Carneiro, 14-Oct-2016.) */
+
+$)
+${
+	$v ph x y z $.
+	$d x z $.
+	$d y z $.
+	$d z ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	i0 $f set z $.
+	pnfopab2 $p |- F/_ y { <. x , y >. | ph } $=
+	f0 f1 f2 i0 adf-opab i0 asup_set_class f1 asup_set_class f2 asup_set_class acop awceq f0 awa f2 pnfe1 i0 asup_set_class f1 asup_set_class f2 asup_set_class acop awceq f0 awa f2 awex f2 f1 pnfex i0 asup_set_class f1 asup_set_class f2 asup_set_class acop awceq f0 awa f2 awex f1 awex f2 i0 pnfab f2 f0 f1 f2 acopab i0 asup_set_class f1 asup_set_class f2 asup_set_class acop awceq f0 awa f2 awex f1 awex i0 acab pnfcxfr $.
+$}
+$( /* Rule used to change bound variables in an ordered-pair class
+       abstraction, using implicit substitution.  (Contributed by NM,
+       14-Sep-2003.) */
+
+$)
+${
+	$v ph ps x y z w v $.
+	$d x y z w v $.
+	$d v ph $.
+	$d v ps $.
+	e0 $e |- F/ z ph $.
+	e1 $e |- F/ w ph $.
+	e2 $e |- F/ x ps $.
+	e3 $e |- F/ y ps $.
+	e4 $e |- ( ( x = z /\ y = w ) -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f set z $.
+	f5 $f set w $.
+	i0 $f set v $.
+	pcbvopab $p |- { <. x , y >. | ph } = { <. z , w >. | ps } $=
+	i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f4 pnfv e0 i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 f4 pnfan i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f5 pnfv e1 i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 f5 pnfan i0 asup_set_class f4 asup_set_class f5 asup_set_class acop awceq f2 pnfv e2 i0 asup_set_class f4 asup_set_class f5 asup_set_class acop awceq f1 f2 pnfan i0 asup_set_class f4 asup_set_class f5 asup_set_class acop awceq f3 pnfv e3 i0 asup_set_class f4 asup_set_class f5 asup_set_class acop awceq f1 f3 pnfan f2 asup_set_class f3 asup_set_class f4 asup_set_class f5 asup_set_class popeq12 f2 asup_set_class f4 asup_set_class awceq f3 asup_set_class f5 asup_set_class awceq awa f2 asup_set_class f3 asup_set_class acop f4 asup_set_class f5 asup_set_class acop i0 asup_set_class peqeq2d e4 f2 asup_set_class f4 asup_set_class awceq f3 asup_set_class f5 asup_set_class awceq awa i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq i0 asup_set_class f4 asup_set_class f5 asup_set_class acop awceq f0 f1 panbi12d i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa i0 asup_set_class f4 asup_set_class f5 asup_set_class acop awceq f1 awa f2 f3 f4 f5 pcbvex2 i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex f2 awex i0 asup_set_class f4 asup_set_class f5 asup_set_class acop awceq f1 awa f5 awex f4 awex i0 pabbii f0 f2 f3 i0 adf-opab f1 f4 f5 i0 adf-opab i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex f2 awex i0 acab i0 asup_set_class f4 asup_set_class f5 asup_set_class acop awceq f1 awa f5 awex f4 awex i0 acab f0 f2 f3 acopab f1 f4 f5 acopab p3eqtr4i $.
+$}
+$( /* Rule used to change bound variables in an ordered-pair class
+       abstraction, using implicit substitution.  (Contributed by NM,
+       15-Oct-1996.) */
+
+$)
+${
+	$v ph ps x y z w $.
+	$d x y z w $.
+	$d z w ph $.
+	$d x y ps $.
+	e0 $e |- ( ( x = z /\ y = w ) -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f set z $.
+	f5 $f set w $.
+	pcbvopabv $p |- { <. x , y >. | ph } = { <. z , w >. | ps } $=
+	f0 f4 pnfv f0 f5 pnfv f1 f2 pnfv f1 f3 pnfv e0 f0 f1 f2 f3 f4 f5 pcbvopab $.
+$}
+$( /* Change first bound variable in an ordered-pair class abstraction, using
+       explicit substitution.  (Contributed by NM, 6-Oct-2004.)  (Revised by
+       Mario Carneiro, 14-Oct-2016.) */
+
+$)
+${
+	$v ph ps x y z w v $.
+	$d v w x y $.
+	$d v w y z $.
+	$d v w ph $.
+	$d v w ps $.
+	e0 $e |- F/ z ph $.
+	e1 $e |- F/ x ps $.
+	e2 $e |- ( x = z -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f set z $.
+	i0 $f set w $.
+	i1 $f set v $.
+	pcbvopab1 $p |- { <. x , y >. | ph } = { <. z , y >. | ps } $=
+	i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex i1 pnfv i0 asup_set_class i1 asup_set_class f3 asup_set_class acop awceq f2 pnfv f0 f2 i1 pnfs1v i0 asup_set_class i1 asup_set_class f3 asup_set_class acop awceq f0 f2 i1 awsb f2 pnfan i0 asup_set_class i1 asup_set_class f3 asup_set_class acop awceq f0 f2 i1 awsb awa f2 f3 pnfex f2 asup_set_class i1 asup_set_class f3 asup_set_class popeq1 f2 asup_set_class i1 asup_set_class awceq f2 asup_set_class f3 asup_set_class acop i1 asup_set_class f3 asup_set_class acop i0 asup_set_class peqeq2d f0 f2 i1 psbequ12 f2 asup_set_class i1 asup_set_class awceq i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq i0 asup_set_class i1 asup_set_class f3 asup_set_class acop awceq f0 f0 f2 i1 awsb panbi12d f2 asup_set_class i1 asup_set_class awceq i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa i0 asup_set_class i1 asup_set_class f3 asup_set_class acop awceq f0 f2 i1 awsb awa f3 pexbidv i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex i0 asup_set_class i1 asup_set_class f3 asup_set_class acop awceq f0 f2 i1 awsb awa f3 awex f2 i1 pcbvex i0 asup_set_class i1 asup_set_class f3 asup_set_class acop awceq f4 pnfv e0 f0 f2 i1 f4 pnfsb i0 asup_set_class i1 asup_set_class f3 asup_set_class acop awceq f0 f2 i1 awsb f4 pnfan i0 asup_set_class i1 asup_set_class f3 asup_set_class acop awceq f0 f2 i1 awsb awa f4 f3 pnfex i0 asup_set_class f4 asup_set_class f3 asup_set_class acop awceq f1 awa f3 awex i1 pnfv i1 asup_set_class f4 asup_set_class f3 asup_set_class popeq1 i1 asup_set_class f4 asup_set_class awceq i1 asup_set_class f3 asup_set_class acop f4 asup_set_class f3 asup_set_class acop i0 asup_set_class peqeq2d f0 i1 f4 f2 psbequ e1 e2 f0 f1 f2 f4 psbie i1 asup_set_class f4 asup_set_class awceq f0 f2 i1 awsb f0 f2 f4 awsb f1 psyl6bb i1 asup_set_class f4 asup_set_class awceq i0 asup_set_class i1 asup_set_class f3 asup_set_class acop awceq i0 asup_set_class f4 asup_set_class f3 asup_set_class acop awceq f0 f2 i1 awsb f1 panbi12d i1 asup_set_class f4 asup_set_class awceq i0 asup_set_class i1 asup_set_class f3 asup_set_class acop awceq f0 f2 i1 awsb awa i0 asup_set_class f4 asup_set_class f3 asup_set_class acop awceq f1 awa f3 pexbidv i0 asup_set_class i1 asup_set_class f3 asup_set_class acop awceq f0 f2 i1 awsb awa f3 awex i0 asup_set_class f4 asup_set_class f3 asup_set_class acop awceq f1 awa f3 awex i1 f4 pcbvex i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex f2 awex i0 asup_set_class i1 asup_set_class f3 asup_set_class acop awceq f0 f2 i1 awsb awa f3 awex i1 awex i0 asup_set_class f4 asup_set_class f3 asup_set_class acop awceq f1 awa f3 awex f4 awex pbitri i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex f2 awex i0 asup_set_class f4 asup_set_class f3 asup_set_class acop awceq f1 awa f3 awex f4 awex i0 pabbii f0 f2 f3 i0 adf-opab f1 f4 f3 i0 adf-opab i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex f2 awex i0 acab i0 asup_set_class f4 asup_set_class f3 asup_set_class acop awceq f1 awa f3 awex f4 awex i0 acab f0 f2 f3 acopab f1 f4 f3 acopab p3eqtr4i $.
+$}
+$( /* Change second bound variable in an ordered-pair class abstraction, using
+       explicit substitution.  (Contributed by NM, 22-Aug-2013.) */
+
+$)
+${
+	$v ph ps x y z w $.
+	$d w x y z $.
+	$d w ph $.
+	$d w ps $.
+	e0 $e |- F/ z ph $.
+	e1 $e |- F/ y ps $.
+	e2 $e |- ( y = z -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f set z $.
+	i0 $f set w $.
+	pcbvopab2 $p |- { <. x , y >. | ph } = { <. x , z >. | ps } $=
+	i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f4 pnfv e0 i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 f4 pnfan i0 asup_set_class f2 asup_set_class f4 asup_set_class acop awceq f3 pnfv e1 i0 asup_set_class f2 asup_set_class f4 asup_set_class acop awceq f1 f3 pnfan f3 asup_set_class f4 asup_set_class f2 asup_set_class popeq2 f3 asup_set_class f4 asup_set_class awceq f2 asup_set_class f3 asup_set_class acop f2 asup_set_class f4 asup_set_class acop i0 asup_set_class peqeq2d e2 f3 asup_set_class f4 asup_set_class awceq i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq i0 asup_set_class f2 asup_set_class f4 asup_set_class acop awceq f0 f1 panbi12d i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa i0 asup_set_class f2 asup_set_class f4 asup_set_class acop awceq f1 awa f3 f4 pcbvex i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex i0 asup_set_class f2 asup_set_class f4 asup_set_class acop awceq f1 awa f4 awex f2 pexbii i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex f2 awex i0 asup_set_class f2 asup_set_class f4 asup_set_class acop awceq f1 awa f4 awex f2 awex i0 pabbii f0 f2 f3 i0 adf-opab f1 f2 f4 i0 adf-opab i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex f2 awex i0 acab i0 asup_set_class f2 asup_set_class f4 asup_set_class acop awceq f1 awa f4 awex f2 awex i0 acab f0 f2 f3 acopab f1 f2 f4 acopab p3eqtr4i $.
+$}
+$( /* Change first bound variable in an ordered-pair class abstraction, using
+       explicit substitution.  (Contributed by NM, 31-Jul-2003.) */
+
+$)
+${
+	$v ph x y z w $.
+	$d x y z w $.
+	$d z w ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	i0 $f set w $.
+	pcbvopab1s $p |- { <. x , y >. | ph } = { <. z , y >. | [ z / x ] ph } $=
+	i0 asup_set_class f1 asup_set_class f2 asup_set_class acop awceq f0 awa f2 awex f3 pnfv i0 asup_set_class f3 asup_set_class f2 asup_set_class acop awceq f1 pnfv f0 f1 f3 pnfs1v i0 asup_set_class f3 asup_set_class f2 asup_set_class acop awceq f0 f1 f3 awsb f1 pnfan i0 asup_set_class f3 asup_set_class f2 asup_set_class acop awceq f0 f1 f3 awsb awa f1 f2 pnfex f1 asup_set_class f3 asup_set_class f2 asup_set_class popeq1 f1 asup_set_class f3 asup_set_class awceq f1 asup_set_class f2 asup_set_class acop f3 asup_set_class f2 asup_set_class acop i0 asup_set_class peqeq2d f0 f1 f3 psbequ12 f1 asup_set_class f3 asup_set_class awceq i0 asup_set_class f1 asup_set_class f2 asup_set_class acop awceq i0 asup_set_class f3 asup_set_class f2 asup_set_class acop awceq f0 f0 f1 f3 awsb panbi12d f1 asup_set_class f3 asup_set_class awceq i0 asup_set_class f1 asup_set_class f2 asup_set_class acop awceq f0 awa i0 asup_set_class f3 asup_set_class f2 asup_set_class acop awceq f0 f1 f3 awsb awa f2 pexbidv i0 asup_set_class f1 asup_set_class f2 asup_set_class acop awceq f0 awa f2 awex i0 asup_set_class f3 asup_set_class f2 asup_set_class acop awceq f0 f1 f3 awsb awa f2 awex f1 f3 pcbvex i0 asup_set_class f1 asup_set_class f2 asup_set_class acop awceq f0 awa f2 awex f1 awex i0 asup_set_class f3 asup_set_class f2 asup_set_class acop awceq f0 f1 f3 awsb awa f2 awex f3 awex i0 pabbii f0 f1 f2 i0 adf-opab f0 f1 f3 awsb f3 f2 i0 adf-opab i0 asup_set_class f1 asup_set_class f2 asup_set_class acop awceq f0 awa f2 awex f1 awex i0 acab i0 asup_set_class f3 asup_set_class f2 asup_set_class acop awceq f0 f1 f3 awsb awa f2 awex f3 awex i0 acab f0 f1 f2 acopab f0 f1 f3 awsb f3 f2 acopab p3eqtr4i $.
+$}
+$( /* Rule used to change the first bound variable in an ordered pair
+       abstraction, using implicit substitution.  (Contributed by NM,
+       31-Jul-2003.)  (Proof shortened by Eric Schmidt, 4-Apr-2007.) */
+
+$)
+${
+	$v ph ps x y z $.
+	$d x y $.
+	$d y z $.
+	$d z ph $.
+	$d x ps $.
+	e0 $e |- ( x = z -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f set z $.
+	pcbvopab1v $p |- { <. x , y >. | ph } = { <. z , y >. | ps } $=
+	f0 f4 pnfv f1 f2 pnfv e0 f0 f1 f2 f3 f4 pcbvopab1 $.
+$}
+$( /* Rule used to change the second bound variable in an ordered pair
+       abstraction, using implicit substitution.  (Contributed by NM,
+       2-Sep-1999.) */
+
+$)
+${
+	$v ph ps x y z w $.
+	$d x y z w $.
+	$d z w ph $.
+	$d y w ps $.
+	e0 $e |- ( y = z -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f set z $.
+	i0 $f set w $.
+	pcbvopab2v $p |- { <. x , y >. | ph } = { <. x , z >. | ps } $=
+	f3 asup_set_class f4 asup_set_class f2 asup_set_class popeq2 f3 asup_set_class f4 asup_set_class awceq f2 asup_set_class f3 asup_set_class acop f2 asup_set_class f4 asup_set_class acop i0 asup_set_class peqeq2d e0 f3 asup_set_class f4 asup_set_class awceq i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq i0 asup_set_class f2 asup_set_class f4 asup_set_class acop awceq f0 f1 panbi12d i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa i0 asup_set_class f2 asup_set_class f4 asup_set_class acop awceq f1 awa f3 f4 pcbvexv i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex i0 asup_set_class f2 asup_set_class f4 asup_set_class acop awceq f1 awa f4 awex f2 pexbii i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex f2 awex i0 asup_set_class f2 asup_set_class f4 asup_set_class acop awceq f1 awa f4 awex f2 awex i0 pabbii f0 f2 f3 i0 adf-opab f1 f2 f4 i0 adf-opab i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex f2 awex i0 acab i0 asup_set_class f2 asup_set_class f4 asup_set_class acop awceq f1 awa f4 awex f2 awex i0 acab f0 f2 f3 acopab f1 f2 f4 acopab p3eqtr4i $.
+$}
+$( /* Move substitution into a class abstraction.  (Contributed by NM,
+       6-Aug-2007.)  (Proof shortened by Mario Carneiro, 17-Nov-2016.) */
+
+$)
+${
+	$v ph x y z w A V $.
+	$d w y z A $.
+	$d w ph $.
+	$d w x y z $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	f4 $f class A $.
+	f5 $f class V $.
+	i0 $f set w $.
+	pcsbopabg $p |- ( A e. V -> [_ A / x ]_ { <. y , z >. | ph } = { <. y , z >. | [. A / x ]. ph } ) $=
+	f1 i0 asup_set_class f4 f0 f2 f3 acopab pcsbeq1 f0 f1 i0 f4 pdfsbcq2 i0 asup_set_class f4 awceq f0 f1 i0 awsb f0 f1 f4 awsbc f2 f3 popabbidv i0 asup_set_class f4 awceq f1 i0 asup_set_class f0 f2 f3 acopab acsb f1 f4 f0 f2 f3 acopab acsb f0 f1 i0 awsb f2 f3 acopab f0 f1 f4 awsbc f2 f3 acopab peqeq12d i0 pvex f0 f1 i0 pnfs1v f0 f1 i0 awsb f2 f3 f1 pnfopab f0 f1 i0 psbequ12 f1 asup_set_class i0 asup_set_class awceq f0 f0 f1 i0 awsb f2 f3 popabbidv f1 i0 asup_set_class f0 f2 f3 acopab f0 f1 i0 awsb f2 f3 acopab pcsbief f1 i0 asup_set_class f0 f2 f3 acopab acsb f0 f1 i0 awsb f2 f3 acopab awceq f1 f4 f0 f2 f3 acopab acsb f0 f1 f4 awsbc f2 f3 acopab awceq i0 f4 f5 pvtoclg $.
+$}
+$( /* Union of two ordered pair class abstractions.  (Contributed by NM,
+       30-Sep-2002.) */
+
+$)
+${
+	$v ph ps x y z $.
+	$d x z $.
+	$d y z $.
+	$d ph z $.
+	$d ps z $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	i0 $f set z $.
+	punopab $p |- ( { <. x , y >. | ph } u. { <. x , y >. | ps } ) = { <. x , y >. | ( ph \/ ps ) } $=
+	i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex f2 awex i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f1 awa f3 awex f2 awex i0 punab i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f1 awa f3 awex f2 p19.43 i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 f1 pandi i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 f1 awo awa i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f1 awa awo f3 pexbii i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f1 awa f3 p19.43 i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 f1 awo awa f3 awex i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f1 awa awo f3 awex i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f1 awa f3 awex awo pbitr2i i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f1 awa f3 awex awo i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 f1 awo awa f3 awex f2 pexbii i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex f2 awex i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f1 awa f3 awex f2 awex awo i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f1 awa f3 awex awo f2 awex i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 f1 awo awa f3 awex f2 awex pbitr3i i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex f2 awex i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f1 awa f3 awex f2 awex awo i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 f1 awo awa f3 awex f2 awex i0 pabbii i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex f2 awex i0 acab i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f1 awa f3 awex f2 awex i0 acab acun i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex f2 awex i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f1 awa f3 awex f2 awex awo i0 acab i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 f1 awo awa f3 awex f2 awex i0 acab peqtri f0 f2 f3 i0 adf-opab f1 f2 f3 i0 adf-opab f0 f2 f3 acopab i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex f2 awex i0 acab f1 f2 f3 acopab i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f1 awa f3 awex f2 awex i0 acab puneq12i f0 f1 awo f2 f3 i0 adf-opab i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 awa f3 awex f2 awex i0 acab i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f1 awa f3 awex f2 awex i0 acab acun i0 asup_set_class f2 asup_set_class f3 asup_set_class acop awceq f0 f1 awo awa f3 awex f2 awex i0 acab f0 f2 f3 acopab f1 f2 f3 acopab acun f0 f1 awo f2 f3 acopab p3eqtr4i $.
+$}
+$( /* An equality theorem for the maps to notation.  (Contributed by Mario
+       Carneiro, 16-Dec-2013.) */
+
+$)
+${
+	$v x y A B C D $.
+	$d x y $.
+	$d y A $.
+	$d y B $.
+	$d y C $.
+	$d y D $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class D $.
+	i0 $f set y $.
+	pmpteq12f $p |- ( ( A. x A = C /\ A. x e. A B = D ) -> ( x e. A |-> B ) = ( x e. C |-> D ) ) $=
+	f1 f3 awceq f0 pnfa1 f2 f4 awceq f0 f1 pnfra1 f1 f3 awceq f0 awal f2 f4 awceq f0 f1 awral f0 pnfan f1 f3 awceq f0 awal f2 f4 awceq f0 f1 awral awa i0 pnfv f2 f4 awceq f0 f1 prsp f2 f4 awceq f0 f1 awral f0 asup_set_class f1 awcel f2 f4 awceq pimp f2 f4 awceq f0 f1 awral f0 asup_set_class f1 awcel awa f2 f4 i0 asup_set_class peqeq2d f2 f4 awceq f0 f1 awral f0 asup_set_class f1 awcel i0 asup_set_class f2 awceq i0 asup_set_class f4 awceq ppm5.32da f1 f3 awceq f0 psp f1 f3 awceq f0 awal f1 f3 f0 asup_set_class peleq2d f1 f3 awceq f0 awal f0 asup_set_class f1 awcel f0 asup_set_class f3 awcel i0 asup_set_class f4 awceq panbi1d f2 f4 awceq f0 f1 awral f0 asup_set_class f1 awcel i0 asup_set_class f2 awceq awa f0 asup_set_class f1 awcel i0 asup_set_class f4 awceq awa f1 f3 awceq f0 awal f0 asup_set_class f3 awcel i0 asup_set_class f4 awceq awa psylan9bbr f1 f3 awceq f0 awal f2 f4 awceq f0 f1 awral awa f0 asup_set_class f1 awcel i0 asup_set_class f2 awceq awa f0 asup_set_class f3 awcel i0 asup_set_class f4 awceq awa f0 i0 popabbid f0 i0 f1 f2 adf-mpt f0 i0 f3 f4 adf-mpt f1 f3 awceq f0 awal f2 f4 awceq f0 f1 awral awa f0 asup_set_class f1 awcel i0 asup_set_class f2 awceq awa f0 i0 acopab f0 asup_set_class f3 awcel i0 asup_set_class f4 awceq awa f0 i0 acopab f0 f1 f2 acmpt f0 f3 f4 acmpt p3eqtr4g $.
+$}
+$( /* An equality inference for the maps to notation.  (Contributed by Mario
+         Carneiro, 26-Jan-2017.) */
+
+$)
+${
+	$v ph x A B C D $.
+	$d x ph $.
+	e0 $e |- ( ph -> A = C ) $.
+	e1 $e |- ( ( ph /\ x e. A ) -> B = D ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	f5 $f class D $.
+	pmpteq12dva $p |- ( ph -> ( x e. A |-> B ) = ( x e. C |-> D ) ) $=
+	e0 f0 f2 f4 awceq f1 palrimiv e1 f0 f3 f5 awceq f1 f2 pralrimiva f1 f2 f3 f4 f5 pmpteq12f f0 f2 f4 awceq f1 awal f3 f5 awceq f1 f2 awral f1 f2 f3 acmpt f1 f4 f5 acmpt awceq psyl2anc $.
+$}
+$( /* An equality inference for the maps to notation.  (Contributed by NM,
+       24-Aug-2011.)  (Revised by Mario Carneiro, 16-Dec-2013.) */
+
+$)
+${
+	$v ph x A B C D $.
+	$d x ph $.
+	e0 $e |- ( ph -> A = C ) $.
+	e1 $e |- ( ph -> B = D ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	f5 $f class D $.
+	pmpteq12dv $p |- ( ph -> ( x e. A |-> B ) = ( x e. C |-> D ) ) $=
+	e0 e1 f0 f3 f5 awceq f1 asup_set_class f2 awcel padantr f0 f1 f2 f3 f4 f5 pmpteq12dva $.
+$}
+$( /* An equality theorem for the maps to notation.  (Contributed by NM,
+       16-Dec-2013.) */
+
+$)
+${
+	$v x A B C D $.
+	$d x A $.
+	$d x C $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class D $.
+	pmpteq12 $p |- ( ( A = C /\ A. x e. A B = D ) -> ( x e. A |-> B ) = ( x e. C |-> D ) ) $=
+	f1 f3 awceq f0 aax-17 f0 f1 f2 f3 f4 pmpteq12f f1 f3 awceq f1 f3 awceq f0 awal f2 f4 awceq f0 f1 awral f0 f1 f2 acmpt f0 f3 f4 acmpt awceq psylan $.
+$}
+$( /* An equality theorem for the maps to notation.  (Contributed by Mario
+       Carneiro, 16-Dec-2013.) */
+
+$)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pmpteq1 $p |- ( A = B -> ( x e. A |-> C ) = ( x e. B |-> C ) ) $=
+	f0 asup_set_class f1 awcel f3 peqidd f3 f3 awceq f0 f1 prgen f0 f1 f3 f2 f3 pmpteq12 f1 f2 awceq f3 f3 awceq f0 f1 awral f0 f1 f3 acmpt f0 f2 f3 acmpt awceq pmpan2 $.
+$}
+$( /* An equality theorem for the maps to notation.  (Contributed by Mario
+       Carneiro, 11-Jun-2016.) */
+
+$)
+${
+	$v ph x A B C $.
+	$d x A $.
+	$d x B $.
+	e0 $e |- ( ph -> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	pmpteq1d $p |- ( ph -> ( x e. A |-> C ) = ( x e. B |-> C ) ) $=
+	e0 f1 f2 f3 f4 pmpteq1 f0 f2 f3 awceq f1 f2 f4 acmpt f1 f3 f4 acmpt awceq psyl $.
+$}
+$( /* An equality inference for the maps to notation.  (Contributed by Mario
+       Carneiro, 16-Dec-2013.) */
+
+$)
+${
+	$v x A B C $.
+	e0 $e |- ( x e. A -> B = C ) $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pmpteq2ia $p |- ( x e. A |-> B ) = ( x e. A |-> C ) $=
+	f1 peqid f1 f1 awceq f0 aax-gen e0 f2 f3 awceq f0 f1 prgen f0 f1 f2 f1 f3 pmpteq12f f1 f1 awceq f0 awal f2 f3 awceq f0 f1 awral f0 f1 f2 acmpt f0 f1 f3 acmpt awceq pmp2an $.
+$}
+$( /* An equality inference for the maps to notation.  (Contributed by Mario
+       Carneiro, 16-Dec-2013.) */
+
+$)
+${
+	$v x A B C $.
+	e0 $e |- B = C $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pmpteq2i $p |- ( x e. A |-> B ) = ( x e. A |-> C ) $=
+	e0 f2 f3 awceq f0 asup_set_class f1 awcel pa1i f0 f1 f2 f3 pmpteq2ia $.
+$}
+$( /* An equality inference for the maps to notation.  (Contributed by Scott
+       Fenton, 27-Oct-2010.)  (Revised by Mario Carneiro, 16-Dec-2013.) */
+
+$)
+${
+	$v x A B C D $.
+	e0 $e |- A = C $.
+	e1 $e |- B = D $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class D $.
+	pmpteq12i $p |- ( x e. A |-> B ) = ( x e. C |-> D ) $=
+	e0 f1 f3 awceq awtru pa1i e1 f2 f4 awceq awtru pa1i awtru f0 f1 f2 f3 f4 pmpteq12dv f0 f1 f2 acmpt f0 f3 f4 acmpt awceq ptrud $.
+$}
+$( /* Slightly more general equality inference for the maps to notation.
+       (Contributed by FL, 14-Sep-2013.)  (Revised by Mario Carneiro,
+       16-Dec-2013.) */
+
+$)
+${
+	$v ph x A B C $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- ( ( ph /\ x e. A ) -> B = C ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	pmpteq2da $p |- ( ph -> ( x e. A |-> B ) = ( x e. A |-> C ) ) $=
+	f2 peqid f2 f2 awceq f1 aax-gen e0 e1 f0 f1 asup_set_class f2 awcel f3 f4 awceq pex f0 f3 f4 awceq f1 f2 pralrimi f1 f2 f3 f2 f4 pmpteq12f f0 f2 f2 awceq f1 awal f3 f4 awceq f1 f2 awral f1 f2 f3 acmpt f1 f2 f4 acmpt awceq psylancr $.
+$}
+$( /* Slightly more general equality inference for the maps to notation.
+       (Contributed by Scott Fenton, 25-Apr-2012.) */
+
+$)
+${
+	$v ph x A B C $.
+	$d x ph $.
+	e0 $e |- ( ( ph /\ x e. A ) -> B = C ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	pmpteq2dva $p |- ( ph -> ( x e. A |-> B ) = ( x e. A |-> C ) ) $=
+	f0 f1 pnfv e0 f0 f1 f2 f3 f4 pmpteq2da $.
+$}
+$( /* An equality inference for the maps to notation.  (Contributed by Mario
+       Carneiro, 23-Aug-2014.) */
+
+$)
+${
+	$v ph x A B C $.
+	$d x ph $.
+	e0 $e |- ( ph -> B = C ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	pmpteq2dv $p |- ( ph -> ( x e. A |-> B ) = ( x e. A |-> C ) ) $=
+	e0 f0 f3 f4 awceq f1 asup_set_class f2 awcel padantr f0 f1 f2 f3 f4 pmpteq2dva $.
+$}
+$( /* Bound-variable hypothesis builder for the maps-to notation.
+       (Contributed by NM, 20-Feb-2013.) */
+
+$)
+${
+	$v x y z A B $.
+	$d z A $.
+	$d z B $.
+	$d x y z $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/_ x B $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	i0 $f set z $.
+	pnfmpt $p |- F/_ x ( y e. A |-> B ) $=
+	f1 i0 f2 f3 adf-mpt e0 f0 f1 f2 pnfcri e1 f0 i0 asup_set_class f3 pnfeq2 f1 asup_set_class f2 awcel i0 asup_set_class f3 awceq f0 pnfan f1 asup_set_class f2 awcel i0 asup_set_class f3 awceq awa f1 i0 f0 pnfopab f0 f1 f2 f3 acmpt f1 asup_set_class f2 awcel i0 asup_set_class f3 awceq awa f1 i0 acopab pnfcxfr $.
+$}
+$( /* Bound-variable hypothesis builder for the maps-to notation.
+       (Contributed by FL, 17-Feb-2008.) */
+
+$)
+${
+	$v x z A B $.
+	$d A z $.
+	$d B z $.
+	$d x z $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	i0 $f set z $.
+	pnfmpt1 $p |- F/_ x ( x e. A |-> B ) $=
+	f0 i0 f1 f2 adf-mpt f0 asup_set_class f1 awcel i0 asup_set_class f2 awceq awa f0 i0 pnfopab1 f0 f0 f1 f2 acmpt f0 asup_set_class f1 awcel i0 asup_set_class f2 awceq awa f0 i0 acopab pnfcxfr $.
+$}
+$( /* Rule to change the bound variable in a maps-to function, using implicit
+       substitution.  This version has bound-variable hypotheses in place of
+       distinct variable conditions.  (Contributed by NM, 11-Sep-2011.) */
+
+$)
+${
+	$v x y z w A B C $.
+	$d w z x A $.
+	$d w z y A $.
+	$d w z B $.
+	$d w z C $.
+	e0 $e |- F/_ y B $.
+	e1 $e |- F/_ x C $.
+	e2 $e |- ( x = y -> B = C ) $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	i0 $f set z $.
+	i1 $f set w $.
+	pcbvmpt $p |- ( x e. A |-> B ) = ( y e. A |-> C ) $=
+	f0 asup_set_class f2 awcel i0 asup_set_class f3 awceq awa i1 pnfv i1 asup_set_class f2 awcel f0 pnfv i0 asup_set_class f3 awceq f0 i1 pnfs1v i1 asup_set_class f2 awcel i0 asup_set_class f3 awceq f0 i1 awsb f0 pnfan f0 asup_set_class i1 asup_set_class f2 peleq1 i0 asup_set_class f3 awceq f0 i1 psbequ12 f0 asup_set_class i1 asup_set_class awceq f0 asup_set_class f2 awcel i1 asup_set_class f2 awcel i0 asup_set_class f3 awceq i0 asup_set_class f3 awceq f0 i1 awsb panbi12d f0 asup_set_class f2 awcel i0 asup_set_class f3 awceq awa i1 asup_set_class f2 awcel i0 asup_set_class f3 awceq f0 i1 awsb awa f0 i0 i1 pcbvopab1 i1 asup_set_class f2 awcel f1 pnfv e0 f1 i0 asup_set_class f3 pnfeq2 i0 asup_set_class f3 awceq f0 i1 f1 pnfsb i1 asup_set_class f2 awcel i0 asup_set_class f3 awceq f0 i1 awsb f1 pnfan f1 asup_set_class f2 awcel i0 asup_set_class f4 awceq awa i1 pnfv i1 asup_set_class f1 asup_set_class f2 peleq1 i0 asup_set_class f3 awceq i1 f1 f0 psbequ e1 f0 i0 asup_set_class f4 pnfeq2 e2 f0 asup_set_class f1 asup_set_class awceq f3 f4 i0 asup_set_class peqeq2d i0 asup_set_class f3 awceq i0 asup_set_class f4 awceq f0 f1 psbie i1 asup_set_class f1 asup_set_class awceq i0 asup_set_class f3 awceq f0 i1 awsb i0 asup_set_class f3 awceq f0 f1 awsb i0 asup_set_class f4 awceq psyl6bb i1 asup_set_class f1 asup_set_class awceq i1 asup_set_class f2 awcel f1 asup_set_class f2 awcel i0 asup_set_class f3 awceq f0 i1 awsb i0 asup_set_class f4 awceq panbi12d i1 asup_set_class f2 awcel i0 asup_set_class f3 awceq f0 i1 awsb awa f1 asup_set_class f2 awcel i0 asup_set_class f4 awceq awa i1 i0 f1 pcbvopab1 f0 asup_set_class f2 awcel i0 asup_set_class f3 awceq awa f0 i0 acopab i1 asup_set_class f2 awcel i0 asup_set_class f3 awceq f0 i1 awsb awa i1 i0 acopab f1 asup_set_class f2 awcel i0 asup_set_class f4 awceq awa f1 i0 acopab peqtri f0 i0 f2 f3 adf-mpt f1 i0 f2 f4 adf-mpt f0 asup_set_class f2 awcel i0 asup_set_class f3 awceq awa f0 i0 acopab f1 asup_set_class f2 awcel i0 asup_set_class f4 awceq awa f1 i0 acopab f0 f2 f3 acmpt f1 f2 f4 acmpt p3eqtr4i $.
+$}
+$( /* Rule to change the bound variable in a maps-to function, using implicit
+       substitution.  (Contributed by Mario Carneiro, 19-Feb-2013.) */
+
+$)
+${
+	$v x y A B C $.
+	$d A x $.
+	$d A y $.
+	$d B y $.
+	$d C x $.
+	e0 $e |- ( x = y -> B = C ) $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	pcbvmptv $p |- ( x e. A |-> B ) = ( y e. A |-> C ) $=
+	f1 f3 pnfcv f0 f4 pnfcv e0 f0 f1 f2 f3 f4 pcbvmpt $.
+$}
+$( /* Function with universal domain in maps-to notation.  (Contributed by NM,
+       16-Aug-2013.) */
+
+$)
+${
+	$v x y B $.
+	$d x y $.
+	$d y B $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class B $.
+	pmptv $p |- ( x e. _V |-> B ) = { <. x , y >. | y = B } $=
+	f0 f1 acvv f2 adf-mpt f0 pvex f0 asup_set_class acvv awcel f1 asup_set_class f2 awceq pbiantrur f1 asup_set_class f2 awceq f0 asup_set_class acvv awcel f1 asup_set_class f2 awceq awa f0 f1 popabbii f0 acvv f2 acmpt f0 asup_set_class acvv awcel f1 asup_set_class f2 awceq awa f0 f1 acopab f1 asup_set_class f2 awceq f0 f1 acopab peqtr4i $.
+$}
+

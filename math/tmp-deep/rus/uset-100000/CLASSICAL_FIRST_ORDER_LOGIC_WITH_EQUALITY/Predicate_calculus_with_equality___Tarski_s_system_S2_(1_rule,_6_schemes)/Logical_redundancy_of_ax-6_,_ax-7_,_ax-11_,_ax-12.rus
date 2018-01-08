@@ -1,0 +1,319 @@
+import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Tarski_s_system_S2_(1_rule,_6_schemes)/Axiom_schemes_ax-14_(Right_Membership_Equality).rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+      Logical redundancy of ax-6 , ax-7 , ax-11 , ax-12
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+  The orginal axiom schemes of Tarski's predicate calculus are ~ ax-5 ,
+  ~ ax-17 , ~ ax9v , ~ ax-8 , ~ ax-13 , and ~ ax-14 , together with rule
+  ~ ax-gen .  See ~ http://us.metamath.org/mpeuni/mmset.html#compare .  They
+  are given as axiom schemes B4 through B8 in [KalishMontague] p. 81.  These
+  are shown to be logically complete by Theorem 1 of [KalishMontague] p. 85.
+
+  The axiom system of set.mm includes the auxiliary axiom schemes ~ ax-6 ,
+  ~ ax-7 , ~ ax-12 , and ~ ax-11 , which are not part of Tarski's axiom
+  schemes.  They are used (and we conjecture are required) to make our system
+  "metalogically complete" i.e. able to prove directly all possible schemes
+  with wff and set metavariables, bundled or not, whose object-language
+  instances are valid.  ( ~ ax-11 has been proved to be required; see
+  ~ http://us.metamath.org/award2003.html#9a .  Metalogical independence of the
+  other three are open problems.)
+
+  (There are additional predicate calculus axiom schemes included in set.mm
+  such as ~ ax-4 , but they can all be proved as theorems from the above.)
+
+  Terminology:  Two set (individual) metavariables are "bundled" in an axiom or
+  theorem scheme when there is no distinct variable constraint ($d) imposed on
+  them.  (The term "bundled" is due to Raph Levien.)  For example, the ` x `
+  and ` y ` in ~ ax9 are bundled, but they are not in ~ ax9v . We also say that
+  a scheme is bundled when it has at least one pair of bundled set
+  metavariables.  If distinct variable conditions are added to all set
+  metavariable pairs in a bundled scheme, we call that the "principal" instance
+  of the bundled scheme.  For example, ~ ax9v is the principal instance of
+  ~ ax9 . Whenever a common variable is substituted for two or more bundled
+  variables in an axiom or theorem scheme, we call the substitution instance
+  "degenerate".  For example, the instance ` -. A. x -. x = x ` of ~ ax9 is
+  degenerate.  An advantage of bundling is ease of use since there are fewer
+  distinct variable restrictions ($d) to be concerned with.  There is also a
+  small economy in being able to state principal and degenerate instances
+  simultaneously.  A disadvantage is that bundling may present difficulties in
+  translations to other proof languages, which typically lack the concept (in
+  part because their variables often represent the variables of the object
+  language rather than metavariables ranging over them).
+
+  Because Tarski's axiom schemes are logically complete, they can be used to
+  prove any object-language instance of ~ ax-6 , ~ ax-7 , ~ ax-11 , and ~ ax-12
+  . "Translating" this to Metamath, it means that Tarski's axioms can prove any
+  substitution instance of ~ ax-6 , ~ ax-7 , ~ ax-11 , or ~ ax-12 in which (1)
+  there are no wff metavariables and (2) all set metavariables are mutually
+  distinct i.e. are not bundled.  In effect this is mimicking the object
+  language by pretending that each set metavariable is an object-language
+  variable.  (There may also be specific instances with wff metavariables
+  and/or bundling that are directly provable from Tarski's axiom schemes, but
+  it isn't guaranteed.  Whether all of them are possible is part of the still
+  open metalogical independence problem for our additional axiom schemes.)
+
+  It can be useful to see how this can be done, both to show that our
+  additional schemes are valid metatheorems of Tarski's system and to be able
+  to translate object language instances of our proofs into proofs that would
+  work with a system using only Tarski's original schemes.  In addition, it may
+  (or may not) provide insight into the conjectured metalogical independence of
+  our additional schemes.
+
+  The new theorem schemes ~ ax6w , ~ ax7w , ~ ax11w , and ~ ax12w are
+  derived using only Tarski's axiom schemes, showing that Tarski's schemes can
+  be used to derive all substitution instances of ~ ax-6 , ~ ax-7 , ~ ax-11 ,
+  and ~ ax-12 meeting conditions (1) and (2).  (The "w" suffix stands for "weak
+  version".)  Each hypothesis of ~ ax6w , ~ ax7w , and ~ ax11w is of the
+  form ` ( x = y -> ( ph <-> ps ) ) ` where ` ps ` is an auxiliary or "dummy"
+  wff metavariable in which ` x ` doesn't occur.  We can show by induction on
+  formula length that the hypotheses can be eliminated in all cases meeting
+  conditions (1) and (2).  The example ~ ax11wdemo illustrates the techniques
+  (equality theorems and bound variable renaming) used to achieve this.
+
+  We also show the degenerate instances for axioms with bundled variables in
+  ~ ax7dgen , ~ ax11dgen , ~ ax12dgen1 , ~ ax12dgen2 , ~ ax12dgen3 , and
+  ~ ax12dgen4 . (Their proofs are trivial, but we include them to be thorough.)
+  Combining the principal and degenerate cases _outside_ of Metamath, we show
+  that the bundled schemes ~ ax-6 , ~ ax-7 , ~ ax-11 , and ~ ax-12 are schemes
+  of Tarski's system, meaning that all object language instances they generate
+  are theorems of Tarski's system.
+
+  It is interesting that Tarski used the bundled scheme ~ ax-9 in an older
+  system, so it seems the main purpose of his later ~ ax9v was just to show
+  that the weaker unbundled form is sufficient rather than an aesthetic
+  objection to bundled free and bound variables.  Since we adopt the
+  bundled ~ ax-9 as our official axiom, we  show that the degenerate
+  instance holds in ~ ax9dgen .
+
+  The case of ~ sp is curious:  originally an axiom of Tarski's system, it
+  was proved redundant by Lemma 9 of [KalishMontague] p. 86.  However, the
+  proof is by induction on formula length, and the compact scheme form
+  ` A. x ph -> ph ` apparently cannot be proved directly from Tarski's other
+  axioms.  The best we can do seems to be ~ spw , again requiring
+  substitution instances of ` ph ` that meet conditions (1) and (2) above.
+  Note that our direct proof ~ sp requires ~ ax-11 , which is not part of
+  Tarski's system.
+
+*/
+
+/* Tarski's system uses the weaker ~ ax9v instead of the bundled ~ ax-9 ,
+       so here we show that the degenerate case of ~ ax-9 can be derived.
+       (Contributed by NM, 23-Apr-2017.) */
+
+theorem ax9dgen (x : set)  {
+	prop 1 : wff = |- ¬ ∀ x ¬ x = x ;;
+}
+
+proof of ax9dgen {
+	step 1 : wff = equid () |- x = x ;;
+	step 2 : wff = equid () |- x = x ;;
+	step 3 : wff = notnoti (step 2) |- ¬ ¬ x = x ;;
+	step 4 : wff = spfalw (step 3) |- ( ∀ x ¬ x = x → ¬ x = x ) ;;
+	step 5 : wff = mt2 (step 1, step 4) |- ¬ ∀ x ¬ x = x ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Weak version of ~ ax-6 from which we can prove any ~ ax-6 instance not
+       involving wff variables or bundling.  Uses only Tarski's FOL axiom
+       schemes.  (Contributed by NM, 9-Apr-2017.) */
+
+theorem ax6w (ph : wff, ps : wff, x : set, y : set) disjointed(y ph, x ps, x y) {
+	hyp 1 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ∀ x ph → ∀ x ¬ ∀ x ph ) ;;
+}
+
+proof of ax6w {
+	step 1 : wff = hbn1w (hyp 1) |- ( ¬ ∀ x ph → ∀ x ¬ ∀ x ph ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+/* Weak version of ~ ax-7 from which we can prove any ~ ax-7 instance not
+       involving wff variables or bundling.  Uses only Tarski's FOL axiom
+       schemes.  Unlike ~ ax-7 , this theorem requires that ` x ` and ` y ` be
+       distinct i.e. are not bundled.  (Contributed by NM, 10-Apr-2017.) */
+
+theorem ax7w (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(y z, x y, z ph, y ps) {
+	hyp 1 : wff = |- ( y = z → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ∀ y ph → ∀ y ∀ x ph ) ;;
+}
+
+proof of ax7w {
+	step 1 : wff = alcomiw (hyp 1) |- ( ∀ x ∀ y ph → ∀ y ∀ x ph ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+/* Degenerate instance of ~ ax-7 where bundled variables ` x ` and ` y ` have
+     a common substitution.  Uses only Tarski's FOL axiom schemes.
+     (Contributed by NM, 13-Apr-2017.) */
+
+theorem ax7dgen (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ∀ x ∀ x ph → ∀ x ∀ x ph ) ;;
+}
+
+proof of ax7dgen {
+	step 1 : wff = id () |- ( ∀ x ∀ x ph → ∀ x ∀ x ph ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+/* Lemma for weak version of ~ ax-11 .  Uses only Tarski's FOL axiom
+       schemes.  In some cases, this lemma may lead to shorter proofs than
+       ~ ax11w .  (Contributed by NM, 10-Apr-2017.) */
+
+theorem ax11wlem (ph : wff, ps : wff, x : set, y : set) disjointed(x ps) {
+	hyp 1 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ;;
+}
+
+proof of ax11wlem {
+	step 1 : wff = ax-17 () |- ( ps → ∀ x ps ) ;;
+	step 2 : wff = ax11i (hyp 1, step 1) |- ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Weak version of ~ ax-11 from which we can prove any ~ ax-11 instance not
+       involving wff variables or bundling.  Uses only Tarski's FOL axiom
+       schemes.  An instance of the first hypothesis will normally require that
+       ` x ` and ` y ` be distinct (unless ` x ` does not occur in ` ph ` ).
+       (Contributed by NM, 10-Apr-2017.) */
+
+theorem ax11w (ph : wff, ps : wff, ch : wff, x : set, y : set, z : set) disjointed(y z, x ps, z ph, y ch) {
+	hyp 1 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	hyp 2 : wff = |- ( y = z → ( ph ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( x = y → ( ∀ y ph → ∀ x ( x = y → ph ) ) ) ;;
+}
+
+proof of ax11w {
+	step 1 : wff = spw (hyp 2) |- ( ∀ y ph → ph ) ;;
+	step 2 : wff = ax11wlem (hyp 1) |- ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ;;
+	step 3 : wff = syl5 (step 1, step 2) |- ( x = y → ( ∀ y ph → ∀ x ( x = y → ph ) ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Degenerate instance of ~ ax-11 where bundled variables ` x ` and ` y `
+     have a common substitution.  Uses only Tarski's FOL axiom schemes.
+     (Contributed by NM, 13-Apr-2017.) */
+
+theorem ax11dgen (ph : wff, x : set)  {
+	prop 1 : wff = |- ( x = x → ( ∀ x ph → ∀ x ( x = x → ph ) ) ) ;;
+}
+
+proof of ax11dgen {
+	step 1 : wff = ax-1 () |- ( ph → ( x = x → ph ) ) ;;
+	step 2 : wff = alimi (step 1) |- ( ∀ x ph → ∀ x ( x = x → ph ) ) ;;
+	step 3 : wff = a1i (step 2) |- ( x = x → ( ∀ x ph → ∀ x ( x = x → ph ) ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Example of an application of ~ ax11w that results in an instance of
+       ~ ax-11 for a contrived formula with mixed free and bound variables,
+       ` ( x e. y /\ A. x z e. x /\ A. y A. z y e. x ) ` , in place of
+       ` ph ` .  The proof illustrates bound variable renaming with ~ cbvalvw
+       to obtain fresh variables to avoid distinct variable clashes.  Uses only
+       Tarski's FOL axiom schemes.  (Contributed by NM, 14-Apr-2017.) */
+
+theorem ax11wdemo (x : set, y : set, z : set) disjointed(x y z w v) {
+	prop 1 : wff = |- ( x = y → ( ∀ y ( x ∈ y ∧ ∀ x z ∈ x ∧ ∀ y ∀ z y ∈ x ) → ∀ x ( x = y → ( x ∈ y ∧ ∀ x z ∈ x ∧ ∀ y ∀ z y ∈ x ) ) ) ) ;;
+}
+
+proof of ax11wdemo {
+	var w : set, v : set;;
+	step 1 : wff = elequ1 () |- ( x = y → ( x ∈ y ↔ y ∈ y ) ) ;;
+	step 2 : wff = elequ2 () |- ( x = w → ( z ∈ x ↔ z ∈ w ) ) ;;
+	step 3 : wff = cbvalvw (step 2) |- ( ∀ x z ∈ x ↔ ∀ w z ∈ w ) ;;
+	step 4 : wff = a1i (step 3) |- ( x = y → ( ∀ x z ∈ x ↔ ∀ w z ∈ w ) ) ;;
+	step 5 : wff = elequ1 () |- ( y = v → ( y ∈ x ↔ v ∈ x ) ) ;;
+	step 6 : wff = albidv (step 5) |- ( y = v → ( ∀ z y ∈ x ↔ ∀ z v ∈ x ) ) ;;
+	step 7 : wff = cbvalvw (step 6) |- ( ∀ y ∀ z y ∈ x ↔ ∀ v ∀ z v ∈ x ) ;;
+	step 8 : wff = elequ2 () |- ( x = y → ( v ∈ x ↔ v ∈ y ) ) ;;
+	step 9 : wff = albidv (step 8) |- ( x = y → ( ∀ z v ∈ x ↔ ∀ z v ∈ y ) ) ;;
+	step 10 : wff = albidv (step 9) |- ( x = y → ( ∀ v ∀ z v ∈ x ↔ ∀ v ∀ z v ∈ y ) ) ;;
+	step 11 : wff = syl5bb (step 7, step 10) |- ( x = y → ( ∀ y ∀ z y ∈ x ↔ ∀ v ∀ z v ∈ y ) ) ;;
+	step 12 : wff = 3anbi123d (step 1, step 4, step 11) |- ( x = y → ( ( x ∈ y ∧ ∀ x z ∈ x ∧ ∀ y ∀ z y ∈ x ) ↔ ( y ∈ y ∧ ∀ w z ∈ w ∧ ∀ v ∀ z v ∈ y ) ) ) ;;
+	step 13 : wff = elequ2 () |- ( y = v → ( x ∈ y ↔ x ∈ v ) ) ;;
+	step 14 : wff = elequ1 () |- ( y = v → ( y ∈ x ↔ v ∈ x ) ) ;;
+	step 15 : wff = albidv (step 14) |- ( y = v → ( ∀ z y ∈ x ↔ ∀ z v ∈ x ) ) ;;
+	step 16 : wff = cbvalvw (step 15) |- ( ∀ y ∀ z y ∈ x ↔ ∀ v ∀ z v ∈ x ) ;;
+	step 17 : wff = a1i (step 16) |- ( y = v → ( ∀ y ∀ z y ∈ x ↔ ∀ v ∀ z v ∈ x ) ) ;;
+	step 18 : wff = 3anbi13d (step 13, step 17) |- ( y = v → ( ( x ∈ y ∧ ∀ x z ∈ x ∧ ∀ y ∀ z y ∈ x ) ↔ ( x ∈ v ∧ ∀ x z ∈ x ∧ ∀ v ∀ z v ∈ x ) ) ) ;;
+	step 19 : wff = ax11w (step 12, step 18) |- ( x = y → ( ∀ y ( x ∈ y ∧ ∀ x z ∈ x ∧ ∀ y ∀ z y ∈ x ) → ∀ x ( x = y → ( x ∈ y ∧ ∀ x z ∈ x ∧ ∀ y ∀ z y ∈ x ) ) ) ) ;;
+	qed prop 1 = step 19 ;;
+}
+
+/* Weak version (principal instance) of ~ ax-12 not involving bundling.
+       Uses only Tarski's FOL axiom schemes.  The proof is trivial but is
+       included to complete the set ~ ax6w , ~ ax7w , and ~ ax11w .
+       (Contributed by NM, 10-Apr-2017.) */
+
+theorem ax12w (x : set, y : set, z : set) disjointed(x y z) {
+	prop 1 : wff = |- ( ¬ x = y → ( y = z → ∀ x y = z ) ) ;;
+}
+
+proof of ax12w {
+	step 1 : wff = a17d () |- ( ¬ x = y → ( y = z → ∀ x y = z ) ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+/* Degenerate instance of ~ ax-12 where bundled variables ` x ` and ` y `
+     have a common substitution.  Uses only Tarski's FOL axiom schemes.
+     (Contributed by NM, 13-Apr-2017.) */
+
+theorem ax12dgen1 (x : set, z : set)  {
+	prop 1 : wff = |- ( ¬ x = x → ( x = z → ∀ x x = z ) ) ;;
+}
+
+proof of ax12dgen1 {
+	step 1 : wff = equid () |- x = x ;;
+	step 2 : wff = pm2.24i (step 1) |- ( ¬ x = x → ( x = z → ∀ x x = z ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Degenerate instance of ~ ax-12 where bundled variables ` x ` and ` z `
+     have a common substitution.  Uses only Tarski's FOL axiom schemes.
+     (Contributed by NM, 13-Apr-2017.) */
+
+theorem ax12dgen2 (x : set, y : set)  {
+	prop 1 : wff = |- ( ¬ x = y → ( y = x → ∀ x y = x ) ) ;;
+}
+
+proof of ax12dgen2 {
+	step 1 : wff = equcomi () |- ( y = x → x = y ) ;;
+	step 2 : wff = pm2.21 () |- ( ¬ x = y → ( x = y → ∀ x y = x ) ) ;;
+	step 3 : wff = syl5 (step 1, step 2) |- ( ¬ x = y → ( y = x → ∀ x y = x ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Degenerate instance of ~ ax-12 where bundled variables ` y ` and ` z `
+     have a common substitution.  Uses only Tarski's FOL axiom schemes.
+     (Contributed by NM, 13-Apr-2017.) */
+
+theorem ax12dgen3 (x : set, y : set)  {
+	prop 1 : wff = |- ( ¬ x = y → ( y = y → ∀ x y = y ) ) ;;
+}
+
+proof of ax12dgen3 {
+	step 1 : wff = equid () |- y = y ;;
+	step 2 : wff = ax-gen (step 1) |- ∀ x y = y ;;
+	step 3 : wff = a1ii (step 2) |- ( ¬ x = y → ( y = y → ∀ x y = y ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Degenerate instance of ~ ax-12 where bundled variables ` x ` , ` y ` , and
+     ` z ` have a common substitution.  Uses only Tarski's FOL axiom schemes .
+     (Contributed by NM, 13-Apr-2017.) */
+
+theorem ax12dgen4 (x : set)  {
+	prop 1 : wff = |- ( ¬ x = x → ( x = x → ∀ x x = x ) ) ;;
+}
+
+proof of ax12dgen4 {
+	step 1 : wff = ax12dgen1 () |- ( ¬ x = x → ( x = x → ∀ x x = x ) ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+

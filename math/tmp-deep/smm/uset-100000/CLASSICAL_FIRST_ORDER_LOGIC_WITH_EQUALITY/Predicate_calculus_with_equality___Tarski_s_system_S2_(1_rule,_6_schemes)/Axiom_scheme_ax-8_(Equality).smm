@@ -1,0 +1,575 @@
+$[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Tarski_s_system_S2_(1_rule,_6_schemes)/Axiom_scheme_ax-9_(Existence).smm $]
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                   Axiom scheme ax-8 (Equality)
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+$( Axiom of Equality.  One of the equality and substitution axioms of
+     predicate calculus with equality.  This is similar to, but not quite, a
+     transitive law for equality (proved later as ~ equtr ).  This axiom scheme
+     is a sub-scheme of Axiom Scheme B8 of system S2 of [Tarski], p. 75, whose
+     general form cannot be represented with our notation.  Also appears as
+     Axiom C7 of [Monk2] p. 105 and Axiom Scheme C8' in [Megill] p. 448 (p. 16
+     of the preprint).
+
+     The equality symbol was invented in 1527 by Robert Recorde.  He chose a
+     pair of parallel lines of the same length because "noe .2. thynges, can be
+     moare equalle."
+
+     Note that this axiom is still valid even when any two or all three of
+     ` x ` , ` y ` , and ` z ` are replaced with the same variable since they
+     do not have any distinct variable (Metamath's $d) restrictions.  Because
+     of this, we say that these three variables are "bundled" (a term coined by
+     Raph Levien).  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v x y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	aax-8 $a |- ( x = y -> ( x = z -> y = z ) ) $.
+$}
+$( Identity law for equality.  Lemma 2 of [KalishMontague] p. 85.  See also
+       Lemma 6 of [Tarski] p. 68.  (Contributed by NM, 1-Apr-2005.)  (Revised
+       by NM, 9-Apr-2017.) $)
+${
+	$v x y $.
+	$d x y $.
+	f0 $f set x $.
+	i0 $f set y $.
+	pequid $p |- x = x $=
+	i0 f0 pax9v i0 f0 f0 aax-8 i0 f0 pweq f0 f0 pweq ppm2.43i i0 f0 pweq f0 f0 pweq pcon3i f0 f0 pweq awn i0 f0 pweq awn i0 palimi f0 f0 pweq awn i0 awal i0 f0 pweq awn i0 awal pmto f0 f0 pweq awn i0 aax-17 f0 f0 pweq f0 f0 pweq awn i0 awal pmt3 $.
+$}
+$( Bound-variable hypothesis builder for ` x = x ` .  This theorem tells us
+     that any variable, including ` x ` , is effectively not free in
+     ` x = x ` , even though ` x ` is technically free according to the
+     traditional definition of free variable.  (Contributed by NM,
+     13-Jan-2011.)  (Revised by NM, 21-Aug-2017.) $)
+${
+	$v x y $.
+	f0 $f set x $.
+	f1 $f set y $.
+	pnfequid $p |- F/ y x = x $=
+	f0 pequid f0 f0 pweq f1 pnfth $.
+$}
+$( Commutative law for equality.  Lemma 3 of [KalishMontague] p. 85.  See
+       also Lemma 7 of [Tarski] p. 69.  (Contributed by NM, 5-Aug-1993.)
+       (Revised by NM, 9-Apr-2017.) $)
+${
+	$v x y $.
+	f0 $f set x $.
+	f1 $f set y $.
+	pequcomi $p |- ( x = y -> y = x ) $=
+	f0 pequid f0 f1 f0 aax-8 f0 f1 pweq f0 f0 pweq f1 f0 pweq pmpi $.
+$}
+$( Commutative law for equality.  (Contributed by NM, 20-Aug-1993.) $)
+${
+	$v x y $.
+	f0 $f set x $.
+	f1 $f set y $.
+	pequcom $p |- ( x = y <-> y = x ) $=
+	f0 f1 pequcomi f1 f0 pequcomi f0 f1 pweq f1 f0 pweq pimpbii $.
+$}
+$( An inference commuting equality in antecedent.  Used to eliminate the
+       need for a syllogism.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph x y $.
+	e0 $e |- ( x = y -> ph ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	pequcoms $p |- ( y = x -> ph ) $=
+	f2 f1 pequcomi e0 f2 f1 pweq f1 f2 pweq f0 psyl $.
+$}
+$( An equivalence law for equality.  (Contributed by NM, 5-Aug-1993.)  (Proof
+     shortened by Wolf Lammen, 12-Nov-2017.) $)
+${
+	$v x y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	pequequ1 $p |- ( x = y -> ( x = z <-> y = z ) ) $=
+	f0 f1 f2 aax-8 f1 f0 f2 aax-8 f1 f2 pweq f0 f2 pweq awi f1 f0 pequcoms f0 f1 pweq f0 f2 pweq f1 f2 pweq pimpbid $.
+$}
+$( An equivalence law for equality.  (Contributed by NM, 5-Aug-1993.)
+     (New usage is discouraged.)  (Proof modification is discouraged.) $)
+${
+	$v x y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	pequequ1OLD $p |- ( x = y -> ( x = z <-> y = z ) ) $=
+	f0 f1 f2 aax-8 f0 f1 pequcomi f1 f0 f2 aax-8 f0 f1 pweq f1 f0 pweq f1 f2 pweq f0 f2 pweq awi psyl f0 f1 pweq f0 f2 pweq f1 f2 pweq pimpbid $.
+$}
+$( An equivalence law for equality.  (Contributed by NM, 5-Aug-1993.)  (Proof
+     shortened by Wolf Lammen, 4-Aug-2017.) $)
+${
+	$v x y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	pequequ2 $p |- ( x = y -> ( z = x <-> z = y ) ) $=
+	f0 f1 f2 pequequ1 f0 f2 pequcom f1 f2 pequcom f0 f1 pweq f0 f2 pweq f1 f2 pweq f2 f0 pweq f2 f1 pweq p3bitr3g $.
+$}
+$( One of the two equality axioms of standard predicate calculus, called
+     reflexivity of equality.  (The other one is ~ stdpc7 .)  Axiom 6 of
+     [Mendelson] p. 95.  Mendelson doesn't say why he prepended the redundant
+     quantifier, but it was probably to be compatible with free logic (which is
+     valid in the empty domain).  (Contributed by NM, 16-Feb-2005.) $)
+${
+	$v x $.
+	f0 $f set x $.
+	pstdpc6 $p |- A. x x = x $=
+	f0 pequid f0 f0 pweq f0 aax-gen $.
+$}
+$( A transitive law for equality.  (Contributed by NM, 23-Aug-1993.) $)
+${
+	$v x y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	pequtr $p |- ( x = y -> ( y = z -> x = z ) ) $=
+	f1 f0 f2 aax-8 f1 f2 pweq f0 f2 pweq awi f1 f0 pequcoms $.
+$}
+$( A transitive law for equality.  Lemma L17 in [Megill] p. 446 (p. 14 of the
+     preprint).  (Contributed by NM, 23-Aug-1993.) $)
+${
+	$v x y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	pequtrr $p |- ( x = y -> ( z = x -> z = y ) ) $=
+	f2 f0 f1 pequtr f2 f0 pweq f0 f1 pweq f2 f1 pweq pcom12 $.
+$}
+$( A transitive law for equality.  (Contributed by NM, 12-Aug-1993.)  (Proof
+     shortened by Andrew Salmon, 25-May-2011.) $)
+${
+	$v x y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	pequtr2 $p |- ( ( x = z /\ y = z ) -> x = y ) $=
+	f2 f1 f0 pequtrr f0 f2 pweq f0 f1 pweq awi f2 f1 pequcoms f1 f2 pweq f0 f2 pweq f0 f1 pweq pimpcom $.
+$}
+$( Two equivalent ways of expressing ~ ax-12 .  See the comment for
+     ~ ax-12 .  (Contributed by NM, 2-May-2017.)  (Proof shortened by Wolf
+     Lammen, 12-Aug-2017.) $)
+${
+	$v x y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	pax12b $p |- ( ( -. x = y -> ( y = z -> A. x y = z ) ) <-> ( -. x = y -> ( -. x = z -> ( y = z -> A. x y = z ) ) ) ) $=
+	f0 f1 pweq awn f1 f2 pweq f1 f2 pweq f0 awal awi awi pid f0 f1 pweq awn f1 f2 pweq f1 f2 pweq f0 awal awi awi f0 f1 pweq awn f1 f2 pweq f1 f2 pweq f0 awal awi f0 f2 pweq awn pa1dd f2 f1 f0 pequtrr f0 f2 pweq f0 f1 pweq awi f2 f1 pequcoms f1 f2 pweq f0 f2 pweq f0 f1 pweq pcon3rr3 f0 f1 pweq awn f0 f2 pweq awn f1 f2 pweq f1 f2 pweq f0 awal awi awi awi pid f0 f1 pweq awn f0 f2 pweq awn f1 f2 pweq f1 f2 pweq f0 awal awi awi awi f0 f1 pweq awn f0 f2 pweq awn f1 f2 pweq f1 f2 pweq f0 awal pcom4l f0 f1 pweq awn f0 f2 pweq awn f1 f2 pweq f0 f1 pweq awn f0 f2 pweq awn f1 f2 pweq f1 f2 pweq f0 awal awi awi awi f1 f2 pweq f0 awal awi pcom23 f0 f1 pweq awn f1 f2 pweq f0 f2 pweq awn f0 f1 pweq awn f0 f2 pweq awn f1 f2 pweq f1 f2 pweq f0 awal awi awi awi f1 f2 pweq f0 awal awi pmpdd f0 f1 pweq awn f1 f2 pweq f0 f1 pweq awn f0 f2 pweq awn f1 f2 pweq f1 f2 pweq f0 awal awi awi awi f1 f2 pweq f0 awal pcom3r f0 f1 pweq awn f1 f2 pweq f1 f2 pweq f0 awal awi awi f0 f1 pweq awn f0 f2 pweq awn f1 f2 pweq f1 f2 pweq f0 awal awi awi awi pimpbii $.
+$}
+$( Obsolete version of ~ ax12b as of 12-Aug-2017.  (Contributed by NM,
+     2-May-2017.)  (New usage is discouraged.) $)
+${
+	$v x y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	pax12bOLD $p |- ( ( -. x = y -> ( y = z -> A. x y = z ) ) <-> ( -. x = y -> ( -. x = z -> ( y = z -> A. x y = z ) ) ) ) $=
+	f0 f1 pweq awn f1 f2 pweq f1 f2 pweq f0 awal pbi2.04 f2 f1 f0 pequtrr f0 f2 pweq f0 f1 pweq awi f2 f1 pequcoms f1 f2 pweq f0 f2 pweq f0 f1 pweq pcon3d f1 f2 pweq f0 f1 pweq awn f0 f2 pweq awn ppm4.71d f1 f2 pweq f0 f1 pweq awn f0 f1 pweq awn f0 f2 pweq awn awa f1 f2 pweq f0 awal pimbi1d f1 f2 pweq f0 f1 pweq awn f1 f2 pweq f0 awal awi f0 f1 pweq awn f0 f2 pweq awn awa f1 f2 pweq f0 awal awi ppm5.74i f0 f1 pweq awn f1 f2 pweq f1 f2 pweq f0 awal awi awi f1 f2 pweq f0 f1 pweq awn f1 f2 pweq f0 awal awi awi f1 f2 pweq f0 f1 pweq awn f0 f2 pweq awn awa f1 f2 pweq f0 awal awi awi pbitri f1 f2 pweq f0 f1 pweq awn f0 f2 pweq awn awa f1 f2 pweq f0 awal pbi2.04 f0 f1 pweq awn f1 f2 pweq f1 f2 pweq f0 awal awi awi f1 f2 pweq f0 f1 pweq awn f0 f2 pweq awn awa f1 f2 pweq f0 awal awi awi f0 f1 pweq awn f0 f2 pweq awn awa f1 f2 pweq f1 f2 pweq f0 awal awi awi pbitri f0 f1 pweq awn f0 f2 pweq awn f1 f2 pweq f1 f2 pweq f0 awal awi pimpexp f0 f1 pweq awn f1 f2 pweq f1 f2 pweq f0 awal awi awi f0 f1 pweq awn f0 f2 pweq awn awa f1 f2 pweq f1 f2 pweq f0 awal awi awi f0 f1 pweq awn f0 f2 pweq awn f1 f2 pweq f1 f2 pweq f0 awal awi awi awi pbitri $.
+$}
+$( Weak version of ~ sp .  Uses only Tarski's FOL axiom schemes.  Lemma 9
+       of [KalishMontague] p. 87.  This may be the best we can do with minimal
+       distinct variable conditions.  TO DO:  Do we need this theorem?  If not,
+       maybe it should be deleted.  (Contributed by NM, 19-Apr-2017.) $)
+${
+	$v ph ps x y $.
+	$d x y $.
+	e0 $e |- ( -. ps -> A. x -. ps ) $.
+	e1 $e |- ( A. x ph -> A. y A. x ph ) $.
+	e2 $e |- ( -. ph -> A. y -. ph ) $.
+	e3 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	pspfw $p |- ( A. x ph -> ph ) $=
+	e1 f0 f2 awal f1 f3 aax-5 e2 e3 f2 f3 pweq f0 f1 pbiimprd f1 f0 awi f2 f3 pequcoms f1 f0 f3 f2 pspimw f0 f2 awal f0 f2 awal f3 awal f0 f2 awal f1 awi f3 awal f1 f3 awal f0 psyl56 e0 e3 f2 f3 pweq f0 f1 pbiimpd f0 f1 f2 f3 pspimw f0 f2 awal f1 awi f0 f2 awal f0 awi f3 pmpg $.
+$}
+$( Weak version of ~ sp .  Uses only Tarski's FOL axiom schemes.  Obsolete
+       version of ~ spnfw as of 13-Aug-2017.  (Contributed by NM, 1-Aug-2017.)
+       (New usage is discouraged.) $)
+${
+	$v ph x y $.
+	$d x y $.
+	$d y ph $.
+	e0 $e |- ( -. ph -> A. x -. ph ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	i0 $f set y $.
+	pspnfwOLD $p |- ( A. x ph -> ph ) $=
+	e0 f0 f1 awal i0 aax-17 f0 awn i0 aax-17 f1 i0 pweq f0 pbiidd f0 f0 f1 i0 pspfw $.
+$}
+$( Weak version of ~ 19.8a .  Uses only Tarski's FOL axiom schemes.
+       (Contributed by NM, 1-Aug-2017.) $)
+${
+	$v ph x $.
+	e0 $e |- ( ph -> A. x ph ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	p19.8w $p |- ( ph -> E. x ph ) $=
+	e0 f0 pnotnot f0 pnotnot f0 f0 awn awn f1 palbii f0 f0 f1 awal f0 awn awn f0 awn awn f1 awal p3imtr3i f0 awn f1 pspnfw f0 awn f1 awal f0 pcon2i f0 f1 adf-ex f0 f0 awn f1 awal awn f0 f1 awex psylibr $.
+$}
+$( Weak version of specialization scheme ~ sp .  Lemma 9 of
+       [KalishMontague] p. 87.  While it appears that ~ sp in its general form
+       does not follow from Tarski's FOL axiom schemes, from this theorem we
+       can prove any instance of ~ sp having no wff metavariables and mutually
+       distinct set variables (see ~ ax11wdemo for an example of the procedure
+       to eliminate the hypothesis).  Other approximations of ~ sp are ~ spfw
+       (minimal distinct variable requirements), ~ spnfw (when ` x ` is not
+       free in ` -. ph ` ), ~ spvw (when ` x ` does not appear in ` ph ` ),
+       ~ sptruw (when ` ph ` is true), and ~ spfalw (when ` ph ` is false).
+       (Contributed by NM, 9-Apr-2017.) $)
+${
+	$v ph ps x y $.
+	$d x y $.
+	$d x ps $.
+	$d y ph $.
+	e0 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	pspw $p |- ( A. x ph -> ph ) $=
+	f0 f2 awal f3 aax-17 f0 f2 awal f1 f3 aax-5 e0 f2 f3 pweq f0 f1 pbiimprd f1 f0 awi f2 f3 pequcoms f1 f0 f3 f2 pspimvw f0 f2 awal f0 f2 awal f3 awal f0 f2 awal f1 awi f3 awal f1 f3 awal f0 psyl56 e0 f2 f3 pweq f0 f1 pbiimpd f0 f1 f2 f3 pspimvw f0 f2 awal f1 awi f0 f2 awal f0 awi f3 pmpg $.
+$}
+$( Version of ~ sp when ` x ` does not occur in ` ph ` .  This provides the
+       other direction of ~ ax-17 .  Uses only Tarski's FOL axiom schemes.
+       (Contributed by NM, 10-Apr-2017.) $)
+${
+	$v ph x y $.
+	$d x y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	i0 $f set y $.
+	pspvw $p |- ( A. x ph -> ph ) $=
+	f1 i0 pweq f0 pbiidd f0 f0 f1 i0 pspw $.
+$}
+$( Special case of Theorem 19.3 of [Margaris] p. 89.  (Contributed by NM,
+       1-Aug-2017.) $)
+${
+	$v ph x $.
+	$d x ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	p19.3v $p |- ( A. x ph <-> ph ) $=
+	f0 f1 pspvw f0 f1 aax-17 f0 f1 awal f0 pimpbii $.
+$}
+$( Special case of Theorem 19.9 of [Margaris] p. 89.  (Contributed by NM,
+       28-May-1995.)  (Revised by NM, 1-Aug-2017.) $)
+${
+	$v ph x $.
+	$d x ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	p19.9v $p |- ( E. x ph <-> ph ) $=
+	f0 f1 adf-ex f0 awn f1 p19.3v f0 awn f1 awal f0 pcon2bii f0 f1 awex f0 awn f1 awal awn f0 pbitr4i $.
+$}
+$( Deduction from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
+       27-Apr-1994.) $)
+${
+	$v ph ps ch x $.
+	$d x ch $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	pexlimdv $p |- ( ph -> ( E. x ps -> ch ) ) $=
+	e0 f0 f1 f2 f3 peximdv f2 f3 p19.9v f0 f1 f3 awex f2 f3 awex f2 psyl6ib $.
+$}
+$( Existential elimination rule of natural deduction.  (Contributed by
+       Mario Carneiro, 15-Jun-2016.) $)
+${
+	$v ph ps ch x $.
+	$d x ch $.
+	$d x ph $.
+	e0 $e |- ( ph -> E. x ps ) $.
+	e1 $e |- ( ( ph /\ ps ) -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	pexlimddv $p |- ( ph -> ch ) $=
+	e0 e1 f0 f1 f2 pex f0 f1 f2 f3 pexlimdv f0 f1 f3 awex f2 pmpd $.
+$}
+$( Inference from Theorem 19.23 of [Margaris] p. 90.
+
+       This inference, along with our many variants such as ~ rexlimdv , is
+       used to implement a metatheorem called "Rule C" that is given in many
+       logic textbooks.  See, for example, Rule C in [Mendelson] p. 81, Rule C
+       in [Margaris] p. 40, or Rule C in Hirst and Hirst's _A Primer for Logic
+       and Proof_ p. 59 (PDF p. 65) at
+       ~ http://www.mathsci.appstate.edu/~~hirstjl/primer/hirst.pdf .
+
+       In informal proofs, the statement "Let ` C ` be an element such that..."
+       almost always means an implicit application of Rule C.
+
+       In essence, Rule C states that if we can prove that some element ` x `
+       exists satisfying a wff, i.e. ` E. x ph ( x ) ` where ` ph ( x ) ` has
+       ` x ` free, then we can use ` ph ( C ) ` as a hypothesis for the proof
+       where ` C ` is a new (ficticious) constant not appearing previously in
+       the proof, nor in any axioms used, nor in the theorem to be proved.  The
+       purpose of Rule C is to get rid of the existential quantifier.
+
+       We cannot do this in Metamath directly.  Instead, we use the original
+       ` ph ` (containing ` x ` ) as an antecedent for the main part of the
+       proof.  We eventually arrive at ` ( ph -> ps ) ` where ` ps ` is the
+       theorem to be proved and does not contain ` x ` .  Then we apply
+       ~ exlimiv to arrive at ` ( E. x ph -> ps ) ` .  Finally, we separately
+       prove ` E. x ph ` and detach it with modus ponens ~ ax-mp to arrive at
+       the final theorem ` ps ` .  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps x $.
+	$d x ps $.
+	e0 $e |- ( ph -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	pexlimiv $p |- ( E. x ph -> ps ) $=
+	e0 f0 f1 f2 peximi f1 f2 p19.9v f0 f2 awex f1 f2 awex f1 psylib $.
+$}
+$( Inference from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
+       1-Aug-1995.) $)
+${
+	$v ph ps x y $.
+	$d x ps $.
+	$d y ps $.
+	e0 $e |- ( ph -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	pexlimivv $p |- ( E. x E. y ph -> ps ) $=
+	e0 f0 f1 f3 pexlimiv f0 f3 awex f1 f2 pexlimiv $.
+$}
+$( Deduction from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
+       31-Jul-1995.) $)
+${
+	$v ph ps ch x y $.
+	$d x ch $.
+	$d x ph $.
+	$d y ch $.
+	$d y ph $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	pexlimdvv $p |- ( ph -> ( E. x E. y ps -> ch ) ) $=
+	e0 f0 f1 f2 f4 pexlimdv f0 f1 f4 awex f2 f3 pexlimdv $.
+$}
+$( Version of ~ sp when ` ph ` is true.  Uses only Tarski's FOL axiom
+       schemes.  (Contributed by NM, 23-Apr-1017.) $)
+${
+	$v ph x $.
+	e0 $e |- ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	psptruw $p |- ( A. x ph -> ph ) $=
+	e0 f0 f0 f1 awal pa1i $.
+$}
+$( Version of ~ sp when ` ph ` is false.  Uses only Tarski's FOL axiom
+       schemes.  (Contributed by NM, 23-Apr-1017.) $)
+${
+	$v ph x y $.
+	$d x y $.
+	$d y ph $.
+	e0 $e |- -. ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	i0 $f set y $.
+	pspfalw $p |- ( A. x ph -> ph ) $=
+	e0 f0 pbifal f0 awfal awb f1 i0 pweq pa1i f0 awfal f1 i0 pspw $.
+$}
+$( Theorem 19.2 of [Margaris] p. 89.  Note:  This proof is very different
+     from Margaris' because we only have Tarski's FOL axiom schemes available
+     at this point.  See the later ~ 19.2g for a more conventional proof.
+     (Contributed by NM, 2-Aug-2017.) $)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	p19.2 $p |- ( A. x ph -> E. x ph ) $=
+	f1 pequid f1 pequid f1 f1 pweq pnotnoti f1 f1 pweq awn f1 pspfalw f1 f1 pweq awn f1 awal f1 f1 pweq pmt2 f1 f1 pweq f0 pidd f0 f0 f1 f1 pspeimfw f1 f1 pweq awn f1 awal awn f0 f1 awal f0 f1 awex awi aax-mp $.
+$}
+$( Theorem 19.39 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps x $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	p19.39 $p |- ( ( E. x ph -> E. x ps ) -> E. x ( ph -> ps ) ) $=
+	f0 f2 p19.2 f0 f2 awal f0 f2 awex f1 f2 awex pimim1i f0 f1 f2 p19.35 f0 f2 awex f1 f2 awex awi f0 f2 awal f1 f2 awex awi f0 f1 awi f2 awex psylibr $.
+$}
+$( Theorem 19.24 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps x $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	p19.24 $p |- ( ( A. x ph -> A. x ps ) -> E. x ( ph -> ps ) ) $=
+	f1 f2 p19.2 f1 f2 awal f1 f2 awex f0 f2 awal pimim2i f0 f1 f2 p19.35 f0 f2 awal f1 f2 awal awi f0 f2 awal f1 f2 awex awi f0 f1 awi f2 awex psylibr $.
+$}
+$( Theorem 19.34 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps x $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	p19.34 $p |- ( ( A. x ph \/ E. x ps ) -> E. x ( ph \/ ps ) ) $=
+	f0 f2 p19.2 f0 f2 awal f0 f2 awex f1 f2 awex porim1i f0 f1 f2 p19.43 f0 f2 awal f1 f2 awex awo f0 f2 awex f1 f2 awex awo f0 f1 awo f2 awex psylibr $.
+$}
+$( Change bound variable.  Uses only Tarski's FOL axiom schemes.
+       (Contributed by NM, 9-Apr-2017.) $)
+${
+	$v ph ps x y $.
+	$d x y $.
+	e0 $e |- ( A. x ph -> A. y A. x ph ) $.
+	e1 $e |- ( -. ps -> A. x -. ps ) $.
+	e2 $e |- ( A. y ps -> A. x A. y ps ) $.
+	e3 $e |- ( -. ph -> A. y -. ph ) $.
+	e4 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	pcbvalw $p |- ( A. x ph <-> A. y ps ) $=
+	e0 e1 e4 f2 f3 pweq f0 f1 pbiimpd f0 f1 f2 f3 pcbvaliw e2 e3 e4 f2 f3 pweq f0 f1 pbiimprd f1 f0 awi f2 f3 pequcoms f1 f0 f3 f2 pcbvaliw f0 f2 awal f1 f3 awal pimpbii $.
+$}
+$( Change bound variable.  Uses only Tarski's FOL axiom schemes.
+       (Contributed by NM, 9-Apr-2017.) $)
+${
+	$v ph ps x y $.
+	$d x y $.
+	$d x ps $.
+	$d y ph $.
+	e0 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	pcbvalvw $p |- ( A. x ph <-> A. y ps ) $=
+	e0 f2 f3 pweq f0 f1 pbiimpd f0 f1 f2 f3 pcbvalivw e0 f2 f3 pweq f0 f1 pbiimprd f1 f0 awi f2 f3 pequcoms f1 f0 f3 f2 pcbvalivw f0 f2 awal f1 f3 awal pimpbii $.
+$}
+$( Change bound variable.  Uses only Tarski's FOL axiom schemes.
+       (Contributed by NM, 19-Apr-2017.) $)
+${
+	$v ph ps x y $.
+	$d x y $.
+	$d x ps $.
+	$d y ph $.
+	e0 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	pcbvexvw $p |- ( E. x ph <-> E. y ps ) $=
+	e0 f2 f3 pweq f0 f1 pnotbid f0 awn f1 awn f2 f3 pcbvalvw f0 awn f2 awal f1 awn f3 awal pnotbii f0 f2 adf-ex f1 f3 adf-ex f0 awn f2 awal awn f1 awn f3 awal awn f0 f2 awex f1 f3 awex p3bitr4i $.
+$}
+$( Weak version of ~ alcom .  Uses only Tarski's FOL axiom schemes.
+       (Contributed by NM, 10-Apr-2017.) $)
+${
+	$v ph ps x y z $.
+	$d y z $.
+	$d x y $.
+	$d z ph $.
+	$d y ps $.
+	e0 $e |- ( y = z -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f set z $.
+	palcomiw $p |- ( A. x A. y ph -> A. y A. x ph ) $=
+	e0 f3 f4 pweq f0 f1 pbiimpd f0 f1 f3 f4 pcbvalivw f0 f3 awal f1 f4 awal f2 palimi f1 f4 awal f2 awal f3 aax-17 e0 f3 f4 pweq f0 f1 pbiimprd f1 f0 awi f3 f4 pequcoms f1 f0 f4 f3 pspimvw f1 f4 awal f0 f2 palimi f1 f4 awal f2 awal f0 f2 awal f3 palimi f0 f3 awal f2 awal f1 f4 awal f2 awal f1 f4 awal f2 awal f3 awal f0 f2 awal f3 awal p3syl $.
+$}
+$( Weak version of ~ ax-6 from which we can prove any ~ ax-6 instance not
+       involving wff variables or bundling.  Uses only Tarski's FOL axiom
+       schemes.  (Contributed by NM, 19-Apr-2017.) $)
+${
+	$v ph ps x y $.
+	$d x y $.
+	e0 $e |- ( A. x ph -> A. y A. x ph ) $.
+	e1 $e |- ( -. ps -> A. x -. ps ) $.
+	e2 $e |- ( A. y ps -> A. x A. y ps ) $.
+	e3 $e |- ( -. ph -> A. y -. ph ) $.
+	e4 $e |- ( -. A. y ps -> A. x -. A. y ps ) $.
+	e5 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	phbn1fw $p |- ( -. A. x ph -> A. x -. A. x ph ) $=
+	e0 e1 e2 e3 e5 f0 f1 f2 f3 pcbvalw f0 f2 awal f1 f3 awal pbiimpri f1 f3 awal f0 f2 awal pcon3i e4 e0 e1 e2 e3 e5 f0 f1 f2 f3 pcbvalw f0 f2 awal f1 f3 awal pbiimpi f0 f2 awal f1 f3 awal pcon3i f1 f3 awal awn f0 f2 awal awn f2 palimi f0 f2 awal awn f1 f3 awal awn f1 f3 awal awn f2 awal f0 f2 awal awn f2 awal p3syl $.
+$}
+$( Weak version of ~ hbn1 .  Uses only Tarski's FOL axiom schemes.
+       (Contributed by NM, 9-Apr-2017.) $)
+${
+	$v ph ps x y $.
+	$d y ph $.
+	$d x ps $.
+	$d x y $.
+	e0 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	phbn1w $p |- ( -. A. x ph -> A. x -. A. x ph ) $=
+	f0 f2 awal f3 aax-17 f1 awn f2 aax-17 f1 f3 awal f2 aax-17 f0 awn f3 aax-17 f1 f3 awal awn f2 aax-17 e0 f0 f1 f2 f3 phbn1fw $.
+$}
+$( Weak version of ~ hba1 .  See comments for ~ ax6w .  Uses only Tarski's
+       FOL axiom schemes.  (Contributed by NM, 9-Apr-2017.) $)
+${
+	$v ph ps x y $.
+	$d y ph $.
+	$d x ps $.
+	$d x y $.
+	e0 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	phba1w $p |- ( A. x ph -> A. x A. x ph ) $=
+	e0 f0 f1 f2 f3 pcbvalvw f0 f2 awal f1 f3 awal awb f2 f3 pweq pa1i f2 f3 pweq f0 f2 awal f1 f3 awal pnotbid f0 f2 awal awn f1 f3 awal awn f2 f3 pspw f0 f2 awal awn f2 awal f0 f2 awal pcon2i e0 f0 f1 f2 f3 pcbvalvw f0 f2 awal f1 f3 awal awb f2 f3 pweq pa1i f2 f3 pweq f0 f2 awal f1 f3 awal pnotbid f0 f2 awal awn f1 f3 awal awn f2 f3 phbn1w e0 f0 f1 f2 f3 phbn1w f0 f2 awal f0 f2 awal awn f2 awal pcon1i f0 f2 awal awn f2 awal awn f0 f2 awal f2 palimi f0 f2 awal f0 f2 awal awn f2 awal awn f0 f2 awal awn f2 awal awn f2 awal f0 f2 awal f2 awal p3syl $.
+$}
+$( Weak version of ~ hbe1 .  See comments for ~ ax6w .  Uses only Tarski's
+       FOL axiom schemes.  (Contributed by NM, 19-Apr-2017.) $)
+${
+	$v ph ps x y $.
+	$d y ph $.
+	$d x ps $.
+	$d x y $.
+	e0 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	phbe1w $p |- ( E. x ph -> A. x E. x ph ) $=
+	f0 f2 adf-ex e0 f2 f3 pweq f0 f1 pnotbid f0 awn f1 awn f2 f3 phbn1w f0 f2 awex f0 awn f2 awal awn f2 phbxfrbi $.
+$}
+$( Weak version of ~ hbal .  Uses only Tarski's FOL axiom schemes.  Unlike
+       ~ hbal , this theorem requires that ` x ` and ` y ` be distinct i.e. are
+       not bundled.  (Contributed by NM, 19-Apr-2017.) $)
+${
+	$v ph ps x y z $.
+	$d x z $.
+	$d x y $.
+	$d z ph $.
+	$d x ps $.
+	e0 $e |- ( x = z -> ( ph <-> ps ) ) $.
+	e1 $e |- ( ph -> A. x ph ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f set z $.
+	phbalw $p |- ( A. y ph -> A. x A. y ph ) $=
+	e1 f0 f0 f2 awal f3 palimi e0 f0 f1 f3 f2 f4 palcomiw f0 f3 awal f0 f2 awal f3 awal f0 f3 awal f2 awal psyl $.
+$}
+

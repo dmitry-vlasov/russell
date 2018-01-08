@@ -1,0 +1,109 @@
+$[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Proper_subset_relation.smm $]
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                            Iota properties
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+$( The value of a function that is expressed as an ordered pair
+       abstraction.  (Contributed by NM, 19-Feb-2006.)  (Revised by Mario
+       Carneiro, 11-Sep-2015.) $)
+${
+	$v ph ps x y z A F V $.
+	$d x y z A $.
+	$d z F $.
+	$d x ps $.
+	e0 $e |- F = { <. x , y >. | ph } $.
+	e1 $e |- ( x = A -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class F $.
+	f6 $f class V $.
+	i0 $f set z $.
+	pfvopab5 $p |- ( A e. V -> ( F ` A ) = ( iota y ps ) ) $=
+	f4 f6 pelex i0 f4 f5 adf-fv i0 acv f3 acv f4 f5 pbreq2 f3 f4 pnfcv e0 f0 f2 f3 pnfopab2 f3 f5 f0 f2 f3 acopab pnfcxfr f3 i0 acv pnfcv f3 f4 i0 acv f5 pnfbr f4 f3 acv f5 awbr i0 pnfv f4 i0 acv f5 awbr f4 f3 acv f5 awbr i0 f3 pcbviota f4 f5 acfv f4 i0 acv f5 awbr i0 acio f4 f3 acv f5 awbr f3 acio peqtri f2 f4 pnfcv f2 f4 pnfcv e0 f0 f2 f3 pnfopab1 f2 f5 f0 f2 f3 acopab pnfcxfr f2 f3 acv pnfcv f2 f4 f3 acv f5 pnfbr f1 f2 pnfv f4 f3 acv f5 awbr f1 f2 pnfbi f2 acv f4 f3 acv f5 pbreq1 e1 f2 acv f4 awceq f2 acv f3 acv f5 awbr f4 f3 acv f5 awbr f0 f1 pbibi12d f2 acv f3 acv f5 adf-br e0 f5 f0 f2 f3 acopab f2 acv f3 acv acop peleq2i f0 f2 f3 popabid f2 acv f3 acv f5 awbr f2 acv f3 acv acop f5 awcel f2 acv f3 acv acop f0 f2 f3 acopab awcel f0 p3bitri f2 acv f3 acv f5 awbr f0 awb f4 f3 acv f5 awbr f1 awb f2 f4 acvv pvtoclgf f4 acvv awcel f4 f3 acv f5 awbr f1 f3 piotabidv f4 acvv awcel f4 f5 acfv f4 f3 acv f5 awbr f3 acio f1 f3 acio psyl5eq f4 f6 awcel f4 acvv awcel f4 f5 acfv f1 f3 acio awceq psyl $.
+$}
+$( The property of a uniquely specified ordered pair.  (Contributed by
+       Mario Carneiro, 21-May-2015.) $)
+${
+	$v ph ps ch x y z A B C D I X Y $.
+	$d x y z A $.
+	$d x y z B $.
+	$d x y z C $.
+	$d y ch $.
+	$d z ph $.
+	$d x y z D $.
+	$d x ps $.
+	e0 $e |- I = ( iota z E. x e. A E. y e. B ( z = <. x , y >. /\ ph ) ) $.
+	e1 $e |- X = ( 1st ` I ) $.
+	e2 $e |- Y = ( 2nd ` I ) $.
+	e3 $e |- ( x = C -> ( ph <-> ps ) ) $.
+	e4 $e |- ( y = D -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f set z $.
+	f6 $f class A $.
+	f7 $f class B $.
+	f8 $f class C $.
+	f9 $f class D $.
+	f10 $f class I $.
+	f11 $f class X $.
+	f12 $f class Y $.
+	popiota $p |- ( E! z E. x e. A E. y e. B ( z = <. x , y >. /\ ph ) -> ( ( C e. A /\ D e. B /\ ch ) <-> ( C = X /\ D = Y ) ) ) $=
+	e3 e4 f0 f1 f2 f3 f4 f8 f9 f6 f7 pceqsrex2v f8 f6 awcel f9 f7 awcel awa f3 acv f8 awceq f4 acv f9 awceq awa f0 awa f4 f7 awrex f3 f6 awrex f2 pbicomd f8 f9 popex f8 f9 acop acvv awcel f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 aweu pa1i f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 aweu pid f5 acv f8 f9 acop f3 acv f4 acv acop peqeq1 f8 f9 acop f3 acv f4 acv acop peqcom f3 pvex f4 pvex f3 acv f4 acv f8 f9 popth f8 f9 acop f3 acv f4 acv acop awceq f3 acv f4 acv acop f8 f9 acop awceq f3 acv f8 awceq f4 acv f9 awceq awa pbitri f5 acv f8 f9 acop awceq f5 acv f3 acv f4 acv acop awceq f8 f9 acop f3 acv f4 acv acop awceq f3 acv f8 awceq f4 acv f9 awceq awa psyl6bb f5 acv f8 f9 acop awceq f5 acv f3 acv f4 acv acop awceq f3 acv f8 awceq f4 acv f9 awceq awa f0 panbi1d f5 acv f8 f9 acop awceq f5 acv f3 acv f4 acv acop awceq f0 awa f3 acv f8 awceq f4 acv f9 awceq awa f0 awa f3 f4 f6 f7 p2rexbidv f5 acv f8 f9 acop awceq f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f3 acv f8 awceq f4 acv f9 awceq awa f0 awa f4 f7 awrex f3 f6 awrex awb f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 aweu padantl f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 pnfeu1 f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 aweu f3 acv f8 awceq f4 acv f9 awceq awa f0 awa f4 f7 awrex f3 f6 awrex f5 pnfvd f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 aweu f5 f8 f9 acop pnfcvd f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 aweu f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f3 acv f8 awceq f4 acv f9 awceq awa f0 awa f4 f7 awrex f3 f6 awrex f5 f8 f9 acop acvv piota2df f8 f9 acop f10 peqcom e0 f10 f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 acio f8 f9 acop peqeq1i f8 f9 acop f10 awceq f10 f8 f9 acop awceq f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 acio f8 f9 acop awceq pbitri f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 aweu f3 acv f8 awceq f4 acv f9 awceq awa f0 awa f4 f7 awrex f3 f6 awrex f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 acio f8 f9 acop awceq f8 f9 acop f10 awceq psyl6bbr f8 f6 awcel f9 f7 awcel awa f2 f3 acv f8 awceq f4 acv f9 awceq awa f0 awa f4 f7 awrex f3 f6 awrex f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 aweu f8 f9 acop f10 awceq psylan9bbr f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 aweu f8 f6 awcel f9 f7 awcel awa f2 f8 f9 acop f10 awceq ppm5.32da e0 f3 acv f4 acv f6 f7 popelxpi f5 acv f3 acv f4 acv acop awceq f0 psimpl f5 acv f3 acv f4 acv acop awceq f0 awa f5 acv f3 acv f4 acv acop f6 f7 acxp peleq1d f3 acv f6 awcel f4 acv f7 awcel awa f5 acv f6 f7 acxp awcel f5 acv f3 acv f4 acv acop awceq f0 awa f3 acv f4 acv acop f6 f7 acxp awcel psyl5ibrcom f5 acv f3 acv f4 acv acop awceq f0 awa f5 acv f6 f7 acxp awcel f3 f4 f6 f7 prexlimivv f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 f6 f7 acxp pabssi f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 piotacl f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 aweu f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 acab f6 f7 acxp f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 acio psseldi f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 aweu f10 f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 acio f6 f7 acxp psyl5eqel f8 f9 f6 f7 popelxp f8 f9 acop f10 f6 f7 acxp peleq1 f8 f6 awcel f9 f7 awcel awa f8 f9 acop f6 f7 acxp awcel f8 f9 acop f10 awceq f10 f6 f7 acxp awcel psyl5bbr f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 aweu f8 f6 awcel f9 f7 awcel awa f8 f9 acop f10 awceq f10 f6 f7 acxp awcel psyl5ibrcom f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 aweu f8 f9 acop f10 awceq f8 f6 awcel f9 f7 awcel awa ppm4.71rd e0 f3 acv f4 acv f6 f7 popelxpi f5 acv f3 acv f4 acv acop awceq f0 psimpl f5 acv f3 acv f4 acv acop awceq f0 awa f5 acv f3 acv f4 acv acop f6 f7 acxp peleq1d f3 acv f6 awcel f4 acv f7 awcel awa f5 acv f6 f7 acxp awcel f5 acv f3 acv f4 acv acop awceq f0 awa f3 acv f4 acv acop f6 f7 acxp awcel psyl5ibrcom f5 acv f3 acv f4 acv acop awceq f0 awa f5 acv f6 f7 acxp awcel f3 f4 f6 f7 prexlimivv f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 f6 f7 acxp pabssi f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 piotacl f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 aweu f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 acab f6 f7 acxp f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 acio psseldi f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 aweu f10 f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 acio f6 f7 acxp psyl5eqel f10 f6 f7 p1st2nd2 f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 aweu f10 f6 f7 acxp awcel f10 f10 ac1st acfv f10 ac2nd acfv acop awceq psyl f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 aweu f10 f10 ac1st acfv f10 ac2nd acfv acop f8 f9 acop peqeq2d f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 aweu f8 f6 awcel f9 f7 awcel awa f2 awa f8 f6 awcel f9 f7 awcel awa f8 f9 acop f10 awceq awa f8 f9 acop f10 awceq f8 f9 acop f10 ac1st acfv f10 ac2nd acfv acop awceq p3bitr2d f8 f6 awcel f9 f7 awcel f2 adf-3an e1 f11 f10 ac1st acfv f8 peqeq2i e2 f12 f10 ac2nd acfv f9 peqeq2i f8 f11 awceq f8 f10 ac1st acfv awceq f9 f12 awceq f9 f10 ac2nd acfv awceq panbi12i f10 ac1st pfvex f10 ac2nd pfvex f8 f9 f10 ac1st acfv f10 ac2nd acfv popth2 f8 f11 awceq f9 f12 awceq awa f8 f10 ac1st acfv awceq f9 f10 ac2nd acfv awceq awa f8 f9 acop f10 ac1st acfv f10 ac2nd acfv acop awceq pbitr4i f5 acv f3 acv f4 acv acop awceq f0 awa f4 f7 awrex f3 f6 awrex f5 aweu f8 f6 awcel f9 f7 awcel awa f2 awa f8 f9 acop f10 ac1st acfv f10 ac2nd acfv acop awceq f8 f6 awcel f9 f7 awcel f2 aw3a f8 f11 awceq f9 f12 awceq awa p3bitr4g $.
+$}
+$( Define a function whose value is "the unique ` y ` such that
+       ` ph ( x , y ) ` ".  (Contributed by NM, 19-May-2015.) $)
+${
+	$v ph x y z F $.
+	$d x y z $.
+	$d x y z F $.
+	$d z ph $.
+	$d x z $.
+	e0 $e |- F = { <. x , y >. | { y | ph } = { y } } $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class F $.
+	i0 $f set z $.
+	popabiotafun $p |- Fun F $=
+	f0 f2 acab f2 acv acsn awceq f1 f2 pfunopab f0 f2 acab i0 acv acsn awceq i0 f0 f2 acab acuni pmo2icl f0 f2 acab i0 acv acsn punieq i0 pvex i0 acv punisn f0 f2 acab i0 acv acsn awceq f0 f2 acab acuni i0 acv acsn acuni i0 acv psyl6req f0 f2 acab i0 acv acsn awceq i0 acv f0 f2 acab acuni awceq awi f0 f2 acab i0 acv acsn awceq i0 awmo i0 pmpg f0 f2 acab f2 acv acsn awceq i0 pnfv f0 f2 pnfab1 f2 f0 f2 acab i0 acv acsn pnfeq1 f2 acv i0 acv psneq f2 acv i0 acv awceq f2 acv acsn i0 acv acsn f0 f2 acab peqeq2d f0 f2 acab f2 acv acsn awceq f0 f2 acab i0 acv acsn awceq f2 i0 pcbvmo f0 f2 acab f2 acv acsn awceq f2 awmo f0 f2 acab i0 acv acsn awceq i0 awmo pmpbir f0 f2 acab f2 acv acsn awceq f1 f2 acopab awfun f0 f2 acab f2 acv acsn awceq f2 awmo f1 pmpgbir e0 f3 f0 f2 acab f2 acv acsn awceq f1 f2 acopab pfuneqi f3 awfun f0 f2 acab f2 acv acsn awceq f1 f2 acopab awfun pmpbir $.
+$}
+$( Define a function whose value is "the unique ` y ` such that
+       ` ph ( x , y ) ` ".  (Contributed by NM, 16-Nov-2013.) $)
+${
+	$v ph x y F $.
+	$d x y $.
+	$d x y F $.
+	e0 $e |- F = { <. x , y >. | { y | ph } = { y } } $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class F $.
+	popabiotadm $p |- dom F = { x | E! y ph } $=
+	f0 f2 acab f2 acv acsn awceq f1 f2 pdmopab e0 f3 f0 f2 acab f2 acv acsn awceq f1 f2 acopab pdmeqi f0 f2 peuabsn f0 f2 aweu f0 f2 acab f2 acv acsn awceq f2 awex f1 pabbii f0 f2 acab f2 acv acsn awceq f1 f2 acopab acdm f0 f2 acab f2 acv acsn awceq f2 awex f1 acab f3 acdm f0 f2 aweu f1 acab p3eqtr4i $.
+$}
+$( Define a function whose value is "the unique ` y ` such that
+       ` ph ( x , y ) ` ".  (Contributed by NM, 16-Nov-2013.) $)
+${
+	$v ph ps x y B F $.
+	$d x y B $.
+	$d x y F $.
+	$d x ps $.
+	e0 $e |- F = { <. x , y >. | { y | ph } = { y } } $.
+	e1 $e |- ( x = B -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class B $.
+	f5 $f class F $.
+	popabiota $p |- ( B e. dom F -> ( F ` B ) = ( iota y ps ) ) $=
+	f2 acv f4 f5 pfveq2 e1 f2 acv f4 awceq f0 f1 f3 piotabidv f2 acv f4 awceq f2 acv f5 acfv f4 f5 acfv f0 f3 acio f1 f3 acio peqeq12d f2 pvex f3 f2 acv f5 peldm e0 f0 f3 acab f3 acv acsn awceq f2 f3 pnfopab2 f3 f5 f0 f3 acab f3 acv acsn awceq f2 f3 acopab pnfcxfr f3 f2 acv pnfcv f3 f2 acv f5 pnffv f0 f3 pnfiota1 f3 f2 acv f5 acfv f0 f3 acio pnfeq e0 f0 f2 f3 f5 popabiotafun f2 acv f3 acv f5 pfunbrfv f5 awfun f2 acv f3 acv f5 awbr f2 acv f5 acfv f3 acv awceq awi aax-mp f2 acv f3 acv f5 adf-br e0 f5 f0 f3 acab f3 acv acsn awceq f2 f3 acopab f2 acv f3 acv acop peleq2i f0 f3 acab f3 acv acsn awceq f2 f3 popabid f2 acv f3 acv f5 awbr f2 acv f3 acv acop f5 awcel f2 acv f3 acv acop f0 f3 acab f3 acv acsn awceq f2 f3 acopab awcel f0 f3 acab f3 acv acsn awceq p3bitri f3 pvex f3 acv psnid f0 f3 acab f3 acv acsn awceq pid f0 f3 acab f3 acv acsn awceq f3 acv f3 acv acsn f0 f3 acab psyl5eleqr f0 f3 pabid f0 f3 acab f3 acv acsn awceq f3 acv f0 f3 acab awcel f0 psylib f2 acv f3 acv f5 awbr f0 f3 acab f3 acv acsn awceq f0 psylbi f2 pvex f3 pvex f2 acv f3 acv f5 pbreldm e0 f0 f2 f3 f5 popabiotadm f0 f3 aweu f2 f5 acdm pabeq2i f2 acv f3 acv f5 awbr f2 acv f5 acdm awcel f0 f3 aweu psylib f0 f3 piota1 f2 acv f3 acv f5 awbr f0 f3 aweu f0 f0 f3 acio f3 acv awceq awb psyl f2 acv f3 acv f5 awbr f0 f0 f3 acio f3 acv awceq pmpbid f2 acv f3 acv f5 awbr f2 acv f5 acfv f3 acv f0 f3 acio peqtr4d f2 acv f3 acv f5 awbr f2 acv f5 acfv f0 f3 acio awceq f3 pexlimi f2 acv f5 acdm awcel f2 acv f3 acv f5 awbr f3 awex f2 acv f5 acfv f0 f3 acio awceq psylbi f2 acv f5 acfv f0 f3 acio awceq f4 f5 acfv f1 f3 acio awceq f2 f4 f5 acdm pvtoclga $.
+$}
+

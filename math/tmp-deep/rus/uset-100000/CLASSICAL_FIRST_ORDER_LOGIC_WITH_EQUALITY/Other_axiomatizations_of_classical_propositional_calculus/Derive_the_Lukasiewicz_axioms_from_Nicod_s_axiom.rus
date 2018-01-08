@@ -1,0 +1,388 @@
+import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_of_classical_propositional_calculus/Derive_Nicod_s_axiom_from_the_standard_axioms.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+          Derive the Lukasiewicz axioms from Nicod's axiom
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* Minor premise. */
+
+/* Inference for ~ nic-mp using ~ nic-ax as major premise.  (Contributed by
+       Jeff Hoffman, 17-Nov-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem nic-imp (ph : wff, ps : wff, ch : wff, th : wff)  {
+	hyp 1 : wff = |- ( ph ⊼ ( ch ⊼ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( th ⊼ ch ) ⊼ ( ( ph ⊼ th ) ⊼ ( ph ⊼ th ) ) ) ;;
+}
+
+proof of nic-imp {
+	var ta : wff;;
+	step 1 : wff = nic-ax () |- ( ( ph ⊼ ( ch ⊼ ps ) ) ⊼ ( ( ta ⊼ ( ta ⊼ ta ) ) ⊼ ( ( th ⊼ ch ) ⊼ ( ( ph ⊼ th ) ⊼ ( ph ⊼ th ) ) ) ) ) ;;
+	step 2 : wff = nic-mp (hyp 1, step 1) |- ( ( th ⊼ ch ) ⊼ ( ( ph ⊼ th ) ⊼ ( ph ⊼ th ) ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Lemma for ~ nic-id .  (Contributed by Jeff Hoffman, 17-Nov-2007.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem nic-idlem1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
+	prop 1 : wff = |- ( ( th ⊼ ( ta ⊼ ( ta ⊼ ta ) ) ) ⊼ ( ( ( ph ⊼ ( ch ⊼ ps ) ) ⊼ th ) ⊼ ( ( ph ⊼ ( ch ⊼ ps ) ) ⊼ th ) ) ) ;;
+}
+
+proof of nic-idlem1 {
+	step 1 : wff = nic-ax () |- ( ( ph ⊼ ( ch ⊼ ps ) ) ⊼ ( ( ta ⊼ ( ta ⊼ ta ) ) ⊼ ( ( ph ⊼ ch ) ⊼ ( ( ph ⊼ ph ) ⊼ ( ph ⊼ ph ) ) ) ) ) ;;
+	step 2 : wff = nic-imp (step 1) |- ( ( th ⊼ ( ta ⊼ ( ta ⊼ ta ) ) ) ⊼ ( ( ( ph ⊼ ( ch ⊼ ps ) ) ⊼ th ) ⊼ ( ( ph ⊼ ( ch ⊼ ps ) ) ⊼ th ) ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Lemma for ~ nic-id .  Inference used by ~ nic-id .  (Contributed by Jeff
+       Hoffman, 17-Nov-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem nic-idlem2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
+	hyp 1 : wff = |- ( et ⊼ ( ( ph ⊼ ( ch ⊼ ps ) ) ⊼ th ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( th ⊼ ( ta ⊼ ( ta ⊼ ta ) ) ) ⊼ et ) ;;
+}
+
+proof of nic-idlem2 {
+	step 1 : wff = nic-ax () |- ( ( ph ⊼ ( ch ⊼ ps ) ) ⊼ ( ( ta ⊼ ( ta ⊼ ta ) ) ⊼ ( ( ph ⊼ ch ) ⊼ ( ( ph ⊼ ph ) ⊼ ( ph ⊼ ph ) ) ) ) ) ;;
+	step 2 : wff = nic-imp (step 1) |- ( ( th ⊼ ( ta ⊼ ( ta ⊼ ta ) ) ) ⊼ ( ( ( ph ⊼ ( ch ⊼ ps ) ) ⊼ th ) ⊼ ( ( ph ⊼ ( ch ⊼ ps ) ) ⊼ th ) ) ) ;;
+	step 3 : wff = nic-imp (step 2) |- ( ( et ⊼ ( ( ph ⊼ ( ch ⊼ ps ) ) ⊼ th ) ) ⊼ ( ( ( th ⊼ ( ta ⊼ ( ta ⊼ ta ) ) ) ⊼ et ) ⊼ ( ( th ⊼ ( ta ⊼ ( ta ⊼ ta ) ) ) ⊼ et ) ) ) ;;
+	step 4 : wff = nic-mp (hyp 1, step 3) |- ( ( th ⊼ ( ta ⊼ ( ta ⊼ ta ) ) ) ⊼ et ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Theorem ~ id expressed with ` -/\ ` .  (Contributed by Jeff Hoffman,
+     17-Nov-2007.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem nic-id (ta : wff)  {
+	prop 1 : wff = |- ( ta ⊼ ( ta ⊼ ta ) ) ;;
+}
+
+proof of nic-id {
+	var ph : wff, ps : wff, ch : wff, th : wff;;
+	step 1 : wff = nic-ax () |- ( ( ps ⊼ ( ps ⊼ ps ) ) ⊼ ( ( th ⊼ ( th ⊼ th ) ) ⊼ ( ( ph ⊼ ps ) ⊼ ( ( ps ⊼ ph ) ⊼ ( ps ⊼ ph ) ) ) ) ) ;;
+	step 2 : wff = nic-idlem2 (step 1) |- ( ( ( ( ph ⊼ ps ) ⊼ ( ( ps ⊼ ph ) ⊼ ( ps ⊼ ph ) ) ) ⊼ ( ch ⊼ ( ch ⊼ ch ) ) ) ⊼ ( ps ⊼ ( ps ⊼ ps ) ) ) ;;
+	step 3 : wff = nic-idlem1 () |- ( ( ( ch ⊼ ( ch ⊼ ch ) ) ⊼ ( ta ⊼ ( ta ⊼ ta ) ) ) ⊼ ( ( ( ( ph ⊼ ps ) ⊼ ( ( ps ⊼ ph ) ⊼ ( ps ⊼ ph ) ) ) ⊼ ( ch ⊼ ( ch ⊼ ch ) ) ) ⊼ ( ( ( ph ⊼ ps ) ⊼ ( ( ps ⊼ ph ) ⊼ ( ps ⊼ ph ) ) ) ⊼ ( ch ⊼ ( ch ⊼ ch ) ) ) ) ) ;;
+	step 4 : wff = nic-idlem2 (step 3) |- ( ( ( ( ( ph ⊼ ps ) ⊼ ( ( ps ⊼ ph ) ⊼ ( ps ⊼ ph ) ) ) ⊼ ( ch ⊼ ( ch ⊼ ch ) ) ) ⊼ ( ps ⊼ ( ps ⊼ ps ) ) ) ⊼ ( ( ch ⊼ ( ch ⊼ ch ) ) ⊼ ( ta ⊼ ( ta ⊼ ta ) ) ) ) ;;
+	step 5 : wff = nic-mp (step 2, step 4) |- ( ta ⊼ ( ta ⊼ ta ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* ` -/\ ` is symmetric.  (Contributed by Jeff Hoffman, 17-Nov-2007.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem nic-swap (ph : wff, th : wff)  {
+	prop 1 : wff = |- ( ( th ⊼ ph ) ⊼ ( ( ph ⊼ th ) ⊼ ( ph ⊼ th ) ) ) ;;
+}
+
+proof of nic-swap {
+	var ta : wff;;
+	step 1 : wff = nic-id () |- ( ph ⊼ ( ph ⊼ ph ) ) ;;
+	step 2 : wff = nic-ax () |- ( ( ph ⊼ ( ph ⊼ ph ) ) ⊼ ( ( ta ⊼ ( ta ⊼ ta ) ) ⊼ ( ( th ⊼ ph ) ⊼ ( ( ph ⊼ th ) ⊼ ( ph ⊼ th ) ) ) ) ) ;;
+	step 3 : wff = nic-mp (step 1, step 2) |- ( ( th ⊼ ph ) ⊼ ( ( ph ⊼ th ) ⊼ ( ph ⊼ th ) ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Inference version of ~ nic-swap .  (Contributed by Jeff Hoffman,
+       17-Nov-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem nic-isw1 (ph : wff, th : wff)  {
+	hyp 1 : wff = |- ( th ⊼ ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph ⊼ th ) ;;
+}
+
+proof of nic-isw1 {
+	step 1 : wff = nic-swap () |- ( ( th ⊼ ph ) ⊼ ( ( ph ⊼ th ) ⊼ ( ph ⊼ th ) ) ) ;;
+	step 2 : wff = nic-mp (hyp 1, step 1) |- ( ph ⊼ th ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Inference for swapping nested terms.  (Contributed by Jeff Hoffman,
+       17-Nov-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem nic-isw2 (ph : wff, ps : wff, th : wff)  {
+	hyp 1 : wff = |- ( ps ⊼ ( th ⊼ ph ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ps ⊼ ( ph ⊼ th ) ) ;;
+}
+
+proof of nic-isw2 {
+	step 1 : wff = nic-swap () |- ( ( ph ⊼ th ) ⊼ ( ( th ⊼ ph ) ⊼ ( th ⊼ ph ) ) ) ;;
+	step 2 : wff = nic-imp (step 1) |- ( ( ps ⊼ ( th ⊼ ph ) ) ⊼ ( ( ( ph ⊼ th ) ⊼ ps ) ⊼ ( ( ph ⊼ th ) ⊼ ps ) ) ) ;;
+	step 3 : wff = nic-mp (hyp 1, step 2) |- ( ( ph ⊼ th ) ⊼ ps ) ;;
+	step 4 : wff = nic-isw1 (step 3) |- ( ps ⊼ ( ph ⊼ th ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Inference version of ~ nic-imp using right-handed term.  (Contributed by
+       Jeff Hoffman, 17-Nov-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem nic-iimp1 (ph : wff, ps : wff, ch : wff, th : wff)  {
+	hyp 1 : wff = |- ( ph ⊼ ( ch ⊼ ps ) ) ;;
+	hyp 2 : wff = |- ( th ⊼ ch ) ;;
+	-----------------------
+	prop 1 : wff = |- ( th ⊼ ph ) ;;
+}
+
+proof of nic-iimp1 {
+	step 1 : wff = nic-imp (hyp 1) |- ( ( th ⊼ ch ) ⊼ ( ( ph ⊼ th ) ⊼ ( ph ⊼ th ) ) ) ;;
+	step 2 : wff = nic-mp (hyp 2, step 1) |- ( ph ⊼ th ) ;;
+	step 3 : wff = nic-isw1 (step 2) |- ( th ⊼ ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Inference version of ~ nic-imp using left-handed term.  (Contributed by
+       Jeff Hoffman, 17-Nov-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem nic-iimp2 (ph : wff, ps : wff, ch : wff, th : wff)  {
+	hyp 1 : wff = |- ( ( ph ⊼ ps ) ⊼ ( ch ⊼ ch ) ) ;;
+	hyp 2 : wff = |- ( th ⊼ ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( th ⊼ ( ch ⊼ ch ) ) ;;
+}
+
+proof of nic-iimp2 {
+	step 1 : wff = nic-isw1 (hyp 1) |- ( ( ch ⊼ ch ) ⊼ ( ph ⊼ ps ) ) ;;
+	step 2 : wff = nic-iimp1 (step 1, hyp 2) |- ( th ⊼ ( ch ⊼ ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Inference to remove the trailing term.  (Contributed by Jeff Hoffman,
+       17-Nov-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem nic-idel (ph : wff, ps : wff, ch : wff)  {
+	hyp 1 : wff = |- ( ph ⊼ ( ch ⊼ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph ⊼ ( ch ⊼ ch ) ) ;;
+}
+
+proof of nic-idel {
+	step 1 : wff = nic-id () |- ( ch ⊼ ( ch ⊼ ch ) ) ;;
+	step 2 : wff = nic-isw1 (step 1) |- ( ( ch ⊼ ch ) ⊼ ch ) ;;
+	step 3 : wff = nic-imp (hyp 1) |- ( ( ( ch ⊼ ch ) ⊼ ch ) ⊼ ( ( ph ⊼ ( ch ⊼ ch ) ) ⊼ ( ph ⊼ ( ch ⊼ ch ) ) ) ) ;;
+	step 4 : wff = nic-mp (step 2, step 3) |- ( ph ⊼ ( ch ⊼ ch ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Chained inference.  (Contributed by Jeff Hoffman, 17-Nov-2007.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem nic-ich (ph : wff, ps : wff, ch : wff)  {
+	hyp 1 : wff = |- ( ph ⊼ ( ps ⊼ ps ) ) ;;
+	hyp 2 : wff = |- ( ps ⊼ ( ch ⊼ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph ⊼ ( ch ⊼ ch ) ) ;;
+}
+
+proof of nic-ich {
+	step 1 : wff = nic-isw1 (hyp 2) |- ( ( ch ⊼ ch ) ⊼ ps ) ;;
+	step 2 : wff = nic-imp (hyp 1) |- ( ( ( ch ⊼ ch ) ⊼ ps ) ⊼ ( ( ph ⊼ ( ch ⊼ ch ) ) ⊼ ( ph ⊼ ( ch ⊼ ch ) ) ) ) ;;
+	step 3 : wff = nic-mp (step 1, step 2) |- ( ph ⊼ ( ch ⊼ ch ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Double the terms.  Since doubling is the same as negation, this can be
+       viewed as a contraposition inference.  (Contributed by Jeff Hoffman,
+       17-Nov-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem nic-idbl (ph : wff, ps : wff)  {
+	hyp 1 : wff = |- ( ph ⊼ ( ps ⊼ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ps ⊼ ps ) ⊼ ( ( ph ⊼ ph ) ⊼ ( ph ⊼ ph ) ) ) ;;
+}
+
+proof of nic-idbl {
+	step 1 : wff = nic-imp (hyp 1) |- ( ( ps ⊼ ps ) ⊼ ( ( ph ⊼ ps ) ⊼ ( ph ⊼ ps ) ) ) ;;
+	step 2 : wff = nic-imp (hyp 1) |- ( ( ph ⊼ ps ) ⊼ ( ( ph ⊼ ph ) ⊼ ( ph ⊼ ph ) ) ) ;;
+	step 3 : wff = nic-ich (step 1, step 2) |- ( ( ps ⊼ ps ) ⊼ ( ( ph ⊼ ph ) ⊼ ( ph ⊼ ph ) ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* (not in Table of Contents)
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Biconditional justification from Nicod's axiom
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* For nic-* definitions, the biconditional connective is not used.  Instead,
+     definitions are made based on this form. ~ nic-bi1 and ~ nic-bi2 are used
+     to convert the definitions into usable theorems about one side of the
+     implication.  (Contributed by Jeff Hoffman, 18-Nov-2007.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem nic-bijust (ta : wff)  {
+	prop 1 : wff = |- ( ( ta ⊼ ta ) ⊼ ( ( ta ⊼ ta ) ⊼ ( ta ⊼ ta ) ) ) ;;
+}
+
+proof of nic-bijust {
+	step 1 : wff = nic-swap () |- ( ( ta ⊼ ta ) ⊼ ( ( ta ⊼ ta ) ⊼ ( ta ⊼ ta ) ) ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+/* 'Biconditional' premise. */
+
+/* Inference to extract one side of an implication from a definition.
+       (Contributed by Jeff Hoffman, 18-Nov-2007.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem nic-bi1 (ph : wff, ps : wff)  {
+	hyp 1 : wff = |- ( ( ph ⊼ ps ) ⊼ ( ( ph ⊼ ph ) ⊼ ( ps ⊼ ps ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph ⊼ ( ps ⊼ ps ) ) ;;
+}
+
+proof of nic-bi1 {
+	step 1 : wff = nic-id () |- ( ph ⊼ ( ph ⊼ ph ) ) ;;
+	step 2 : wff = nic-iimp1 (hyp 1, step 1) |- ( ph ⊼ ( ph ⊼ ps ) ) ;;
+	step 3 : wff = nic-isw2 (step 2) |- ( ph ⊼ ( ps ⊼ ph ) ) ;;
+	step 4 : wff = nic-idel (step 3) |- ( ph ⊼ ( ps ⊼ ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* 'Biconditional' premise.  */
+
+/* Inference to extract the other side of an implication from a
+       'biconditional' definition.  (Contributed by Jeff Hoffman,
+       18-Nov-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem nic-bi2 (ph : wff, ps : wff)  {
+	hyp 1 : wff = |- ( ( ph ⊼ ps ) ⊼ ( ( ph ⊼ ph ) ⊼ ( ps ⊼ ps ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ps ⊼ ( ph ⊼ ph ) ) ;;
+}
+
+proof of nic-bi2 {
+	step 1 : wff = nic-isw2 (hyp 1) |- ( ( ph ⊼ ps ) ⊼ ( ( ps ⊼ ps ) ⊼ ( ph ⊼ ph ) ) ) ;;
+	step 2 : wff = nic-id () |- ( ps ⊼ ( ps ⊼ ps ) ) ;;
+	step 3 : wff = nic-iimp1 (step 1, step 2) |- ( ps ⊼ ( ph ⊼ ps ) ) ;;
+	step 4 : wff = nic-idel (step 3) |- ( ps ⊼ ( ph ⊼ ph ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* (not in Table of Contents)
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+             Prove the Lukasiewicz axioms from Nicod's axiom
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* Minor premise. */
+
+/* Major premise. */
+
+/* Derive the standard modus ponens from ~ nic-mp .  (Contributed by Jeff
+       Hoffman, 18-Nov-2007.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem nic-stdmp (ph : wff, ps : wff)  {
+	hyp 1 : wff = |- ph ;;
+	hyp 2 : wff = |- ( ph → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ps ;;
+}
+
+proof of nic-stdmp {
+	step 1 : wff = nic-dfim () |- ( ( ( ph ⊼ ( ps ⊼ ps ) ) ⊼ ( ph → ps ) ) ⊼ ( ( ( ph ⊼ ( ps ⊼ ps ) ) ⊼ ( ph ⊼ ( ps ⊼ ps ) ) ) ⊼ ( ( ph → ps ) ⊼ ( ph → ps ) ) ) ) ;;
+	step 2 : wff = nic-bi2 (step 1) |- ( ( ph → ps ) ⊼ ( ( ph ⊼ ( ps ⊼ ps ) ) ⊼ ( ph ⊼ ( ps ⊼ ps ) ) ) ) ;;
+	step 3 : wff = nic-mp (hyp 2, step 2) |- ( ph ⊼ ( ps ⊼ ps ) ) ;;
+	step 4 : wff = nic-mp (hyp 1, step 3) |- ps ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Proof of ~ luk-1 from ~ nic-ax and ~ nic-mp (and definitions ~ nic-dfim
+     and ~ nic-dfneg ).  Note that the standard axioms ~ ax-1 , ~ ax-2 , and
+     ~ ax-3 are proved from the Lukasiewicz axioms by theorems ~ ax1 , ~ ax2 ,
+     and ~ ax3 .  (Contributed by Jeff Hoffman, 18-Nov-2007.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem nic-luk1 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ;;
+}
+
+proof of nic-luk1 {
+	var ta : wff;;
+	step 1 : wff = nic-dfim () |- ( ( ( ph ⊼ ( ps ⊼ ps ) ) ⊼ ( ph → ps ) ) ⊼ ( ( ( ph ⊼ ( ps ⊼ ps ) ) ⊼ ( ph ⊼ ( ps ⊼ ps ) ) ) ⊼ ( ( ph → ps ) ⊼ ( ph → ps ) ) ) ) ;;
+	step 2 : wff = nic-bi2 (step 1) |- ( ( ph → ps ) ⊼ ( ( ph ⊼ ( ps ⊼ ps ) ) ⊼ ( ph ⊼ ( ps ⊼ ps ) ) ) ) ;;
+	step 3 : wff = nic-ax () |- ( ( ph ⊼ ( ps ⊼ ps ) ) ⊼ ( ( ta ⊼ ( ta ⊼ ta ) ) ⊼ ( ( ( ch ⊼ ch ) ⊼ ps ) ⊼ ( ( ph ⊼ ( ch ⊼ ch ) ) ⊼ ( ph ⊼ ( ch ⊼ ch ) ) ) ) ) ) ;;
+	step 4 : wff = nic-isw2 (step 3) |- ( ( ph ⊼ ( ps ⊼ ps ) ) ⊼ ( ( ( ( ch ⊼ ch ) ⊼ ps ) ⊼ ( ( ph ⊼ ( ch ⊼ ch ) ) ⊼ ( ph ⊼ ( ch ⊼ ch ) ) ) ) ⊼ ( ta ⊼ ( ta ⊼ ta ) ) ) ) ;;
+	step 5 : wff = nic-idel (step 4) |- ( ( ph ⊼ ( ps ⊼ ps ) ) ⊼ ( ( ( ( ch ⊼ ch ) ⊼ ps ) ⊼ ( ( ph ⊼ ( ch ⊼ ch ) ) ⊼ ( ph ⊼ ( ch ⊼ ch ) ) ) ) ⊼ ( ( ( ch ⊼ ch ) ⊼ ps ) ⊼ ( ( ph ⊼ ( ch ⊼ ch ) ) ⊼ ( ph ⊼ ( ch ⊼ ch ) ) ) ) ) ) ;;
+	step 6 : wff = nic-dfim () |- ( ( ( ph ⊼ ( ch ⊼ ch ) ) ⊼ ( ph → ch ) ) ⊼ ( ( ( ph ⊼ ( ch ⊼ ch ) ) ⊼ ( ph ⊼ ( ch ⊼ ch ) ) ) ⊼ ( ( ph → ch ) ⊼ ( ph → ch ) ) ) ) ;;
+	step 7 : wff = nic-bi1 (step 6) |- ( ( ph ⊼ ( ch ⊼ ch ) ) ⊼ ( ( ph → ch ) ⊼ ( ph → ch ) ) ) ;;
+	step 8 : wff = nic-idbl (step 7) |- ( ( ( ph → ch ) ⊼ ( ph → ch ) ) ⊼ ( ( ( ph ⊼ ( ch ⊼ ch ) ) ⊼ ( ph ⊼ ( ch ⊼ ch ) ) ) ⊼ ( ( ph ⊼ ( ch ⊼ ch ) ) ⊼ ( ph ⊼ ( ch ⊼ ch ) ) ) ) ) ;;
+	step 9 : wff = nic-imp (step 8) |- ( ( ( ( ch ⊼ ch ) ⊼ ps ) ⊼ ( ( ph ⊼ ( ch ⊼ ch ) ) ⊼ ( ph ⊼ ( ch ⊼ ch ) ) ) ) ⊼ ( ( ( ( ph → ch ) ⊼ ( ph → ch ) ) ⊼ ( ( ch ⊼ ch ) ⊼ ps ) ) ⊼ ( ( ( ph → ch ) ⊼ ( ph → ch ) ) ⊼ ( ( ch ⊼ ch ) ⊼ ps ) ) ) ) ;;
+	step 10 : wff = nic-dfim () |- ( ( ( ps ⊼ ( ch ⊼ ch ) ) ⊼ ( ps → ch ) ) ⊼ ( ( ( ps ⊼ ( ch ⊼ ch ) ) ⊼ ( ps ⊼ ( ch ⊼ ch ) ) ) ⊼ ( ( ps → ch ) ⊼ ( ps → ch ) ) ) ) ;;
+	step 11 : wff = nic-bi2 (step 10) |- ( ( ps → ch ) ⊼ ( ( ps ⊼ ( ch ⊼ ch ) ) ⊼ ( ps ⊼ ( ch ⊼ ch ) ) ) ) ;;
+	step 12 : wff = nic-swap () |- ( ( ps ⊼ ( ch ⊼ ch ) ) ⊼ ( ( ( ch ⊼ ch ) ⊼ ps ) ⊼ ( ( ch ⊼ ch ) ⊼ ps ) ) ) ;;
+	step 13 : wff = nic-ich (step 11, step 12) |- ( ( ps → ch ) ⊼ ( ( ( ch ⊼ ch ) ⊼ ps ) ⊼ ( ( ch ⊼ ch ) ⊼ ps ) ) ) ;;
+	step 14 : wff = nic-imp (step 13) |- ( ( ( ( ph → ch ) ⊼ ( ph → ch ) ) ⊼ ( ( ch ⊼ ch ) ⊼ ps ) ) ⊼ ( ( ( ps → ch ) ⊼ ( ( ph → ch ) ⊼ ( ph → ch ) ) ) ⊼ ( ( ps → ch ) ⊼ ( ( ph → ch ) ⊼ ( ph → ch ) ) ) ) ) ;;
+	step 15 : wff = nic-ich (step 9, step 14) |- ( ( ( ( ch ⊼ ch ) ⊼ ps ) ⊼ ( ( ph ⊼ ( ch ⊼ ch ) ) ⊼ ( ph ⊼ ( ch ⊼ ch ) ) ) ) ⊼ ( ( ( ps → ch ) ⊼ ( ( ph → ch ) ⊼ ( ph → ch ) ) ) ⊼ ( ( ps → ch ) ⊼ ( ( ph → ch ) ⊼ ( ph → ch ) ) ) ) ) ;;
+	step 16 : wff = nic-ich (step 5, step 15) |- ( ( ph ⊼ ( ps ⊼ ps ) ) ⊼ ( ( ( ps → ch ) ⊼ ( ( ph → ch ) ⊼ ( ph → ch ) ) ) ⊼ ( ( ps → ch ) ⊼ ( ( ph → ch ) ⊼ ( ph → ch ) ) ) ) ) ;;
+	step 17 : wff = nic-dfim () |- ( ( ( ( ps → ch ) ⊼ ( ( ph → ch ) ⊼ ( ph → ch ) ) ) ⊼ ( ( ps → ch ) → ( ph → ch ) ) ) ⊼ ( ( ( ( ps → ch ) ⊼ ( ( ph → ch ) ⊼ ( ph → ch ) ) ) ⊼ ( ( ps → ch ) ⊼ ( ( ph → ch ) ⊼ ( ph → ch ) ) ) ) ⊼ ( ( ( ps → ch ) → ( ph → ch ) ) ⊼ ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ;;
+	step 18 : wff = nic-bi1 (step 17) |- ( ( ( ps → ch ) ⊼ ( ( ph → ch ) ⊼ ( ph → ch ) ) ) ⊼ ( ( ( ps → ch ) → ( ph → ch ) ) ⊼ ( ( ps → ch ) → ( ph → ch ) ) ) ) ;;
+	step 19 : wff = nic-ich (step 16, step 18) |- ( ( ph ⊼ ( ps ⊼ ps ) ) ⊼ ( ( ( ps → ch ) → ( ph → ch ) ) ⊼ ( ( ps → ch ) → ( ph → ch ) ) ) ) ;;
+	step 20 : wff = nic-ich (step 2, step 19) |- ( ( ph → ps ) ⊼ ( ( ( ps → ch ) → ( ph → ch ) ) ⊼ ( ( ps → ch ) → ( ph → ch ) ) ) ) ;;
+	step 21 : wff = nic-dfim () |- ( ( ( ( ph → ps ) ⊼ ( ( ( ps → ch ) → ( ph → ch ) ) ⊼ ( ( ps → ch ) → ( ph → ch ) ) ) ) ⊼ ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ⊼ ( ( ( ( ph → ps ) ⊼ ( ( ( ps → ch ) → ( ph → ch ) ) ⊼ ( ( ps → ch ) → ( ph → ch ) ) ) ) ⊼ ( ( ph → ps ) ⊼ ( ( ( ps → ch ) → ( ph → ch ) ) ⊼ ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ⊼ ( ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ⊼ ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ) ;;
+	step 22 : wff = nic-bi1 (step 21) |- ( ( ( ph → ps ) ⊼ ( ( ( ps → ch ) → ( ph → ch ) ) ⊼ ( ( ps → ch ) → ( ph → ch ) ) ) ) ⊼ ( ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ⊼ ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ;;
+	step 23 : wff = nic-mp (step 20, step 22) |- ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ;;
+	qed prop 1 = step 23 ;;
+}
+
+/* Proof of ~ luk-2 from ~ nic-ax and ~ nic-mp .  (Contributed by Jeff
+     Hoffman, 18-Nov-2007.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem nic-luk2 (ph : wff)  {
+	prop 1 : wff = |- ( ( ¬ ph → ph ) → ph ) ;;
+}
+
+proof of nic-luk2 {
+	step 1 : wff = nic-dfim () |- ( ( ( ¬ ph ⊼ ( ph ⊼ ph ) ) ⊼ ( ¬ ph → ph ) ) ⊼ ( ( ( ¬ ph ⊼ ( ph ⊼ ph ) ) ⊼ ( ¬ ph ⊼ ( ph ⊼ ph ) ) ) ⊼ ( ( ¬ ph → ph ) ⊼ ( ¬ ph → ph ) ) ) ) ;;
+	step 2 : wff = nic-bi2 (step 1) |- ( ( ¬ ph → ph ) ⊼ ( ( ¬ ph ⊼ ( ph ⊼ ph ) ) ⊼ ( ¬ ph ⊼ ( ph ⊼ ph ) ) ) ) ;;
+	step 3 : wff = nic-dfneg () |- ( ( ( ph ⊼ ph ) ⊼ ¬ ph ) ⊼ ( ( ( ph ⊼ ph ) ⊼ ( ph ⊼ ph ) ) ⊼ ( ¬ ph ⊼ ¬ ph ) ) ) ;;
+	step 4 : wff = nic-id () |- ( ( ph ⊼ ph ) ⊼ ( ( ph ⊼ ph ) ⊼ ( ph ⊼ ph ) ) ) ;;
+	step 5 : wff = nic-iimp1 (step 3, step 4) |- ( ( ph ⊼ ph ) ⊼ ( ( ph ⊼ ph ) ⊼ ¬ ph ) ) ;;
+	step 6 : wff = nic-isw2 (step 5) |- ( ( ph ⊼ ph ) ⊼ ( ¬ ph ⊼ ( ph ⊼ ph ) ) ) ;;
+	step 7 : wff = nic-iimp1 (step 2, step 6) |- ( ( ph ⊼ ph ) ⊼ ( ¬ ph → ph ) ) ;;
+	step 8 : wff = nic-isw1 (step 7) |- ( ( ¬ ph → ph ) ⊼ ( ph ⊼ ph ) ) ;;
+	step 9 : wff = nic-dfim () |- ( ( ( ( ¬ ph → ph ) ⊼ ( ph ⊼ ph ) ) ⊼ ( ( ¬ ph → ph ) → ph ) ) ⊼ ( ( ( ( ¬ ph → ph ) ⊼ ( ph ⊼ ph ) ) ⊼ ( ( ¬ ph → ph ) ⊼ ( ph ⊼ ph ) ) ) ⊼ ( ( ( ¬ ph → ph ) → ph ) ⊼ ( ( ¬ ph → ph ) → ph ) ) ) ) ;;
+	step 10 : wff = nic-bi1 (step 9) |- ( ( ( ¬ ph → ph ) ⊼ ( ph ⊼ ph ) ) ⊼ ( ( ( ¬ ph → ph ) → ph ) ⊼ ( ( ¬ ph → ph ) → ph ) ) ) ;;
+	step 11 : wff = nic-mp (step 8, step 10) |- ( ( ¬ ph → ph ) → ph ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* Proof of ~ luk-3 from ~ nic-ax and ~ nic-mp .  (Contributed by Jeff
+     Hoffman, 18-Nov-2007.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem nic-luk3 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ph → ( ¬ ph → ps ) ) ;;
+}
+
+proof of nic-luk3 {
+	step 1 : wff = nic-dfim () |- ( ( ( ¬ ph ⊼ ( ps ⊼ ps ) ) ⊼ ( ¬ ph → ps ) ) ⊼ ( ( ( ¬ ph ⊼ ( ps ⊼ ps ) ) ⊼ ( ¬ ph ⊼ ( ps ⊼ ps ) ) ) ⊼ ( ( ¬ ph → ps ) ⊼ ( ¬ ph → ps ) ) ) ) ;;
+	step 2 : wff = nic-bi1 (step 1) |- ( ( ¬ ph ⊼ ( ps ⊼ ps ) ) ⊼ ( ( ¬ ph → ps ) ⊼ ( ¬ ph → ps ) ) ) ;;
+	step 3 : wff = nic-dfneg () |- ( ( ( ph ⊼ ph ) ⊼ ¬ ph ) ⊼ ( ( ( ph ⊼ ph ) ⊼ ( ph ⊼ ph ) ) ⊼ ( ¬ ph ⊼ ¬ ph ) ) ) ;;
+	step 4 : wff = nic-bi2 (step 3) |- ( ¬ ph ⊼ ( ( ph ⊼ ph ) ⊼ ( ph ⊼ ph ) ) ) ;;
+	step 5 : wff = nic-id () |- ( ph ⊼ ( ph ⊼ ph ) ) ;;
+	step 6 : wff = nic-iimp1 (step 4, step 5) |- ( ph ⊼ ¬ ph ) ;;
+	step 7 : wff = nic-iimp2 (step 2, step 6) |- ( ph ⊼ ( ( ¬ ph → ps ) ⊼ ( ¬ ph → ps ) ) ) ;;
+	step 8 : wff = nic-dfim () |- ( ( ( ph ⊼ ( ( ¬ ph → ps ) ⊼ ( ¬ ph → ps ) ) ) ⊼ ( ph → ( ¬ ph → ps ) ) ) ⊼ ( ( ( ph ⊼ ( ( ¬ ph → ps ) ⊼ ( ¬ ph → ps ) ) ) ⊼ ( ph ⊼ ( ( ¬ ph → ps ) ⊼ ( ¬ ph → ps ) ) ) ) ⊼ ( ( ph → ( ¬ ph → ps ) ) ⊼ ( ph → ( ¬ ph → ps ) ) ) ) ) ;;
+	step 9 : wff = nic-bi1 (step 8) |- ( ( ph ⊼ ( ( ¬ ph → ps ) ⊼ ( ¬ ph → ps ) ) ) ⊼ ( ( ph → ( ¬ ph → ps ) ) ⊼ ( ph → ( ¬ ph → ps ) ) ) ) ;;
+	step 10 : wff = nic-mp (step 7, step 9) |- ( ph → ( ¬ ph → ps ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+

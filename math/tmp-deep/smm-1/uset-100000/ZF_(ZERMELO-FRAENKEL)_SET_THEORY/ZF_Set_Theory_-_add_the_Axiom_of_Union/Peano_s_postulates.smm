@@ -1,0 +1,86 @@
+$[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/The_natural_numbers_(i_e__finite_ordinals).smm $]
+$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                 Peano's postulates
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+$)
+$( /* Zero is a natural number.  One of Peano's 5 postulates for arithmetic.
+     Proposition 7.30(1) of [TakeutiZaring] p. 42.  Note:  Unlike most
+     textbooks, our proofs of ~ peano1 through ~ peano5 do not use the Axiom of
+     Infinity.  Unlike Takeuti and Zaring, they also do not use the Axiom of
+     Regularity.  (Contributed by NM, 15-May-1994.) */
+
+$)
+${
+	ppeano1 $p |- (/) e. om $=
+	plimom acom p0ellim acom awlim ac0 acom awcel aax-mp $.
+$}
+$( /* The successor of any natural number is a natural number.  One of Peano's 5
+     postulates for arithmetic.  Proposition 7.30(2) of [TakeutiZaring] p. 42.
+     (Contributed by NM, 3-Sep-2003.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	ppeano2 $p |- ( A e. om -> suc A e. om ) $=
+	f0 ppeano2b f0 acom awcel f0 acsuc acom awcel pbiimpi $.
+$}
+$( /* The successor of any natural number is not zero.  One of Peano's 5
+     postulates for arithmetic.  Proposition 7.30(3) of [TakeutiZaring] p. 42.
+     (Contributed by NM, 3-Sep-2003.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	ppeano3 $p |- ( A e. om -> suc A =/= (/) ) $=
+	f0 pnsuceq0 f0 acsuc ac0 awne f0 acom awcel pa1i $.
+$}
+$( /* Two natural numbers are equal iff their successors are equal, i.e. the
+     successor function is one-to-one.  One of Peano's 5 postulates for
+     arithmetic.  Proposition 7.30(4) of [TakeutiZaring] p. 43.  (Contributed
+     by NM, 3-Sep-2003.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	ppeano4 $p |- ( ( A e. om /\ B e. om ) -> ( suc A = suc B <-> A = B ) ) $=
+	f0 pnnon f1 pnnon f0 f1 psuc11 f0 acom awcel f0 acon0 awcel f1 acon0 awcel f0 acsuc f1 acsuc awceq f0 f1 awceq awb f1 acom awcel psyl2an $.
+$}
+$( /* The induction postulate: any class containing zero and closed under the
+       successor operation contains all natural numbers.  One of Peano's 5
+       postulates for arithmetic.  Proposition 7.30(5) of [TakeutiZaring]
+       p. 43, except our proof does not require the Axiom of Infinity.  The
+       more traditional statement of mathematical induction as a theorem
+       schema, with a basis and an induction hypothesis, is derived from this
+       theorem as theorem ~ findes .  (Contributed by NM, 18-Feb-2004.) */
+
+$)
+${
+	$v x A $.
+	$v y $.
+	$d x y A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	i0 $f set y $.
+	ppeano5 $p |- ( ( (/) e. A /\ A. x e. om ( x e. A -> suc x e. A ) ) -> om C_ A ) $=
+	i0 asup_set_class acom f1 peldifn i0 asup_set_class acom f1 acdif awcel i0 asup_set_class f1 awcel awn ac0 f1 awcel f0 asup_set_class f1 awcel f0 asup_set_class acsuc f1 awcel awi f0 acom awral awa padantl i0 asup_set_class acom f1 peldifi i0 asup_set_class acom f1 acdif awcel i0 asup_set_class acom awcel ac0 f1 awcel padantl ac0 f1 acom pelndif i0 asup_set_class ac0 acom f1 acdif peleq1 i0 asup_set_class ac0 awceq i0 asup_set_class acom f1 acdif awcel ac0 acom f1 acdif awcel pbiimpcd i0 asup_set_class acom f1 acdif awcel ac0 acom f1 acdif awcel i0 asup_set_class ac0 pnecon3bd ac0 f1 awcel ac0 acom f1 acdif awcel awn i0 asup_set_class acom f1 acdif awcel i0 asup_set_class ac0 awne pmpan9 f0 i0 asup_set_class pnnsuc ac0 f1 awcel i0 asup_set_class acom f1 acdif awcel awa i0 asup_set_class acom awcel i0 asup_set_class ac0 awne i0 asup_set_class f0 asup_set_class acsuc awceq f0 acom awrex psyl2anc ac0 f1 awcel i0 asup_set_class acom f1 acdif awcel i0 asup_set_class f0 asup_set_class acsuc awceq f0 acom awrex f0 asup_set_class f1 awcel f0 asup_set_class acsuc f1 awcel awi f0 acom awral padantlr ac0 f1 awcel f0 asup_set_class f1 awcel f0 asup_set_class acsuc f1 awcel awi f0 acom awral awa i0 asup_set_class acom f1 acdif awcel awa i0 asup_set_class f0 asup_set_class acsuc awceq f0 acom awrex acom f1 acdif i0 asup_set_class acin ac0 awceq padantr f0 asup_set_class f1 awcel f0 asup_set_class acsuc f1 awcel awi f0 acom pnfra1 i0 asup_set_class acom f1 acdif awcel acom f1 acdif i0 asup_set_class acin ac0 awceq awa f0 pnfv f0 asup_set_class f1 awcel f0 asup_set_class acsuc f1 awcel awi f0 acom awral i0 asup_set_class acom f1 acdif awcel acom f1 acdif i0 asup_set_class acin ac0 awceq awa f0 pnfan i0 asup_set_class f1 awcel f0 pnfv f0 asup_set_class f1 awcel f0 asup_set_class acsuc f1 awcel awi f0 acom prsp i0 asup_set_class acom f1 peldifi f0 pvex f0 asup_set_class psucid i0 asup_set_class f0 asup_set_class acsuc f0 asup_set_class peleq2 i0 asup_set_class f0 asup_set_class acsuc awceq f0 asup_set_class i0 asup_set_class awcel f0 asup_set_class f0 asup_set_class acsuc awcel pmpbiri i0 asup_set_class f0 asup_set_class acsuc acom peleq1 f0 asup_set_class ppeano2b i0 asup_set_class f0 asup_set_class acsuc awceq i0 asup_set_class acom awcel f0 asup_set_class acsuc acom awcel f0 asup_set_class acom awcel psyl6bbr f0 asup_set_class i0 asup_set_class acom f1 acdif pminel f0 asup_set_class acom f1 pneldif f0 asup_set_class i0 asup_set_class awcel acom f1 acdif i0 asup_set_class acin ac0 awceq awa f0 asup_set_class acom awcel f0 asup_set_class acom f1 acdif awcel awn f0 asup_set_class f1 awcel psylan2 f0 asup_set_class acom awcel f0 asup_set_class i0 asup_set_class awcel acom f1 acdif i0 asup_set_class acin ac0 awceq f0 asup_set_class f1 awcel pexp32 i0 asup_set_class f0 asup_set_class acsuc awceq i0 asup_set_class acom awcel f0 asup_set_class acom awcel f0 asup_set_class i0 asup_set_class awcel acom f1 acdif i0 asup_set_class acin ac0 awceq f0 asup_set_class f1 awcel awi awi psyl6bi i0 asup_set_class f0 asup_set_class acsuc awceq i0 asup_set_class acom awcel f0 asup_set_class i0 asup_set_class awcel acom f1 acdif i0 asup_set_class acin ac0 awceq f0 asup_set_class f1 awcel awi pmpid i0 asup_set_class acom f1 acdif awcel i0 asup_set_class acom awcel i0 asup_set_class f0 asup_set_class acsuc awceq acom f1 acdif i0 asup_set_class acin ac0 awceq f0 asup_set_class f1 awcel awi psyl5 i0 asup_set_class f0 asup_set_class acsuc awceq i0 asup_set_class acom f1 acdif awcel acom f1 acdif i0 asup_set_class acin ac0 awceq f0 asup_set_class f1 awcel pimp3a f0 asup_set_class acsuc f1 i0 asup_set_class peleq1a f0 asup_set_class acsuc f1 awcel i0 asup_set_class f0 asup_set_class acsuc awceq i0 asup_set_class f1 awcel pcom12 i0 asup_set_class f0 asup_set_class acsuc awceq i0 asup_set_class acom f1 acdif awcel acom f1 acdif i0 asup_set_class acin ac0 awceq awa f0 asup_set_class f1 awcel f0 asup_set_class acsuc f1 awcel i0 asup_set_class f1 awcel pimim12d i0 asup_set_class f0 asup_set_class acsuc awceq f0 asup_set_class f1 awcel f0 asup_set_class acsuc f1 awcel awi i0 asup_set_class acom f1 acdif awcel acom f1 acdif i0 asup_set_class acin ac0 awceq awa i0 asup_set_class f1 awcel pcom13 f0 asup_set_class f1 awcel f0 asup_set_class acsuc f1 awcel awi f0 acom awral f0 asup_set_class acom awcel f0 asup_set_class f1 awcel f0 asup_set_class acsuc f1 awcel awi i0 asup_set_class acom f1 acdif awcel acom f1 acdif i0 asup_set_class acin ac0 awceq awa i0 asup_set_class f0 asup_set_class acsuc awceq i0 asup_set_class f1 awcel awi psylan9 f0 asup_set_class f1 awcel f0 asup_set_class acsuc f1 awcel awi f0 acom awral i0 asup_set_class acom f1 acdif awcel acom f1 acdif i0 asup_set_class acin ac0 awceq awa awa i0 asup_set_class f0 asup_set_class acsuc awceq i0 asup_set_class f1 awcel f0 acom prexlimd f0 asup_set_class f1 awcel f0 asup_set_class acsuc f1 awcel awi f0 acom awral i0 asup_set_class acom f1 acdif awcel acom f1 acdif i0 asup_set_class acin ac0 awceq i0 asup_set_class f0 asup_set_class acsuc awceq f0 acom awrex i0 asup_set_class f1 awcel awi pexp32 f0 asup_set_class f1 awcel f0 asup_set_class acsuc f1 awcel awi f0 acom awral i0 asup_set_class acom f1 acdif awcel acom f1 acdif i0 asup_set_class acin ac0 awceq i0 asup_set_class f0 asup_set_class acsuc awceq f0 acom awrex i0 asup_set_class f1 awcel awi awi awi awi ac0 f1 awcel pa1i ac0 f1 awcel f0 asup_set_class f1 awcel f0 asup_set_class acsuc f1 awcel awi f0 acom awral i0 asup_set_class acom f1 acdif awcel acom f1 acdif i0 asup_set_class acin ac0 awceq i0 asup_set_class f0 asup_set_class acsuc awceq f0 acom awrex i0 asup_set_class f1 awcel awi pimp41 ac0 f1 awcel f0 asup_set_class f1 awcel f0 asup_set_class acsuc f1 awcel awi f0 acom awral awa i0 asup_set_class acom f1 acdif awcel awa acom f1 acdif i0 asup_set_class acin ac0 awceq awa i0 asup_set_class f0 asup_set_class acsuc awceq f0 acom awrex i0 asup_set_class f1 awcel pmpd ac0 f1 awcel f0 asup_set_class f1 awcel f0 asup_set_class acsuc f1 awcel awi f0 acom awral awa i0 asup_set_class acom f1 acdif awcel awa acom f1 acdif i0 asup_set_class acin ac0 awceq i0 asup_set_class f1 awcel pmtand ac0 f1 awcel f0 asup_set_class f1 awcel f0 asup_set_class acsuc f1 awcel awi f0 acom awral awa acom f1 acdif i0 asup_set_class acin ac0 awceq i0 acom f1 acdif pnrexdv pordom acom f1 pdifss i0 acom acom f1 acdif ptz7.5 acom aword acom f1 acdif acom awss acom f1 acdif ac0 awne acom f1 acdif i0 asup_set_class acin ac0 awceq i0 acom f1 acdif awrex pmp3an12 acom f1 acdif i0 asup_set_class acin ac0 awceq i0 acom f1 acdif awrex acom f1 acdif ac0 pnecon1bi ac0 f1 awcel f0 asup_set_class f1 awcel f0 asup_set_class acsuc f1 awcel awi f0 acom awral awa acom f1 acdif i0 asup_set_class acin ac0 awceq i0 acom f1 acdif awrex awn acom f1 acdif ac0 awceq psyl acom f1 pssdif0 ac0 f1 awcel f0 asup_set_class f1 awcel f0 asup_set_class acsuc f1 awcel awi f0 acom awral awa acom f1 acdif ac0 awceq acom f1 awss psylibr $.
+$}
+$( /* A natural number is either 0 or a successor.  (Contributed by NM,
+       27-May-1998.) */
+
+$)
+${
+	$v x A $.
+	$d x A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	pnn0suc $p |- ( A e. om -> ( A = (/) \/ E. x e. om A = suc x ) ) $=
+	f1 ac0 adf-ne f0 f1 pnnsuc f1 ac0 awceq awn f1 acom awcel f1 ac0 awne f1 f0 asup_set_class acsuc awceq f0 acom awrex psylan2br f1 acom awcel f1 ac0 awceq awn f1 f0 asup_set_class acsuc awceq f0 acom awrex pex f1 acom awcel f1 ac0 awceq f1 f0 asup_set_class acsuc awceq f0 acom awrex porrd $.
+$}
+

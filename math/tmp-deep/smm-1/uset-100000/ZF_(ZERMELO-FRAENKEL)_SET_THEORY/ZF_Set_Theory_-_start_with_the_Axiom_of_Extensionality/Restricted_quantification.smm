@@ -1,0 +1,3947 @@
+$[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Negated_equality_and_membership.smm $]
+$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Restricted quantification
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+$)
+$( /* Extend wff notation to include restricted universal quantification. */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	awral $a wff A. x e. A ph $.
+$}
+$( /* Extend wff notation to include restricted existential quantification. */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	awrex $a wff E. x e. A ph $.
+$}
+$( /* Extend wff notation to include restricted existential uniqueness. */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	awreu $a wff E! x e. A ph $.
+$}
+$( /* Extend wff notation to include restricted "at most one." */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	awrmo $a wff E* x e. A ph $.
+$}
+$( /* Extend class notation to include the restricted class abstraction (class
+     builder). */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	acrab $a class { x e. A | ph } $.
+$}
+$( /* Define restricted universal quantification.  Special case of Definition
+     4.15(3) of [TakeutiZaring] p. 22.  (Contributed by NM, 19-Aug-1993.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	adf-ral $a |- ( A. x e. A ph <-> A. x ( x e. A -> ph ) ) $.
+$}
+$( /* Define restricted existential quantification.  Special case of Definition
+     4.15(4) of [TakeutiZaring] p. 22.  (Contributed by NM, 30-Aug-1993.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	adf-rex $a |- ( E. x e. A ph <-> E. x ( x e. A /\ ph ) ) $.
+$}
+$( /* Define restricted existential uniqueness.  (Contributed by NM,
+     22-Nov-1994.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	adf-reu $a |- ( E! x e. A ph <-> E! x ( x e. A /\ ph ) ) $.
+$}
+$( /* Define restricted "at most one".  (Contributed by NM, 16-Jun-2017.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	adf-rmo $a |- ( E* x e. A ph <-> E* x ( x e. A /\ ph ) ) $.
+$}
+$( /* Define a restricted class abstraction (class builder), which is the class
+     of all ` x ` in ` A ` such that ` ph ` is true.  Definition of
+     [TakeutiZaring] p. 20.  (Contributed by NM, 22-Nov-1994.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	adf-rab $a |- { x e. A | ph } = { x | ( x e. A /\ ph ) } $.
+$}
+$( /* Relationship between restricted universal and existential quantifiers.
+     (Contributed by NM, 21-Jan-1997.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	pralnex $p |- ( A. x e. A -. ph <-> -. E. x e. A ph ) $=
+	f0 awn f1 f2 adf-ral f1 asup_set_class f2 awcel f0 f1 palinexa f0 f1 f2 adf-rex f1 asup_set_class f2 awcel f0 awn awi f1 awal f1 asup_set_class f2 awcel f0 awa f1 awex f0 f1 f2 awrex pxchbinxr f0 awn f1 f2 awral f1 asup_set_class f2 awcel f0 awn awi f1 awal f0 f1 f2 awrex awn pbitri $.
+$}
+$( /* Relationship between restricted universal and existential quantifiers.
+     (Contributed by NM, 21-Jan-1997.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	prexnal $p |- ( E. x e. A -. ph <-> -. A. x e. A ph ) $=
+	f0 awn f1 f2 adf-rex f1 asup_set_class f2 awcel f0 f1 pexanali f0 f1 f2 adf-ral f1 asup_set_class f2 awcel f0 awn awa f1 awex f1 asup_set_class f2 awcel f0 awi f1 awal f0 f1 f2 awral pxchbinxr f0 awn f1 f2 awrex f1 asup_set_class f2 awcel f0 awn awa f1 awex f0 f1 f2 awral awn pbitri $.
+$}
+$( /* Relationship between restricted universal and existential quantifiers.
+     (Contributed by NM, 21-Jan-1997.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	pdfral2 $p |- ( A. x e. A ph <-> -. E. x e. A -. ph ) $=
+	f0 f1 f2 prexnal f0 awn f1 f2 awrex f0 f1 f2 awral pcon2bii $.
+$}
+$( /* Relationship between restricted universal and existential quantifiers.
+     (Contributed by NM, 21-Jan-1997.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	pdfrex2 $p |- ( E. x e. A ph <-> -. A. x e. A -. ph ) $=
+	f0 f1 f2 pralnex f0 awn f1 f2 awral f0 f1 f2 awrex pcon2bii $.
+$}
+$( /* Formula-building rule for restricted universal quantifier (deduction
+       rule).  (Contributed by NM, 6-Oct-2003.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- ( ( ph /\ x e. A ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	pralbida $p |- ( ph -> ( A. x e. A ps <-> A. x e. A ch ) ) $=
+	e0 e1 f0 f3 asup_set_class f4 awcel f1 f2 ppm5.74da f0 f3 asup_set_class f4 awcel f1 awi f3 asup_set_class f4 awcel f2 awi f3 palbid f1 f3 f4 adf-ral f2 f3 f4 adf-ral f0 f3 asup_set_class f4 awcel f1 awi f3 awal f3 asup_set_class f4 awcel f2 awi f3 awal f1 f3 f4 awral f2 f3 f4 awral p3bitr4g $.
+$}
+$( /* Formula-building rule for restricted existential quantifier (deduction
+       rule).  (Contributed by NM, 6-Oct-2003.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- ( ( ph /\ x e. A ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	prexbida $p |- ( ph -> ( E. x e. A ps <-> E. x e. A ch ) ) $=
+	e0 e1 f0 f3 asup_set_class f4 awcel f1 f2 ppm5.32da f0 f3 asup_set_class f4 awcel f1 awa f3 asup_set_class f4 awcel f2 awa f3 pexbid f1 f3 f4 adf-rex f2 f3 f4 adf-rex f0 f3 asup_set_class f4 awcel f1 awa f3 awex f3 asup_set_class f4 awcel f2 awa f3 awex f1 f3 f4 awrex f2 f3 f4 awrex p3bitr4g $.
+$}
+$( /* Formula-building rule for restricted universal quantifier (deduction
+       rule).  (Contributed by NM, 4-Mar-1997.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	e0 $e |- ( ( ph /\ x e. A ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	pralbidva $p |- ( ph -> ( A. x e. A ps <-> A. x e. A ch ) ) $=
+	f0 f3 pnfv e0 f0 f1 f2 f3 f4 pralbida $.
+$}
+$( /* Formula-building rule for restricted existential quantifier (deduction
+       rule).  (Contributed by NM, 9-Mar-1997.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	e0 $e |- ( ( ph /\ x e. A ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	prexbidva $p |- ( ph -> ( E. x e. A ps <-> E. x e. A ch ) ) $=
+	f0 f3 pnfv e0 f0 f1 f2 f3 f4 prexbida $.
+$}
+$( /* Formula-building rule for restricted universal quantifier (deduction
+       rule).  (Contributed by NM, 27-Jun-1998.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	pralbid $p |- ( ph -> ( A. x e. A ps <-> A. x e. A ch ) ) $=
+	e0 e1 f0 f1 f2 awb f3 asup_set_class f4 awcel padantr f0 f1 f2 f3 f4 pralbida $.
+$}
+$( /* Formula-building rule for restricted existential quantifier (deduction
+       rule).  (Contributed by NM, 27-Jun-1998.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	prexbid $p |- ( ph -> ( E. x e. A ps <-> E. x e. A ch ) ) $=
+	e0 e1 f0 f1 f2 awb f3 asup_set_class f4 awcel padantr f0 f1 f2 f3 f4 prexbida $.
+$}
+$( /* Formula-building rule for restricted universal quantifier (deduction
+       rule).  (Contributed by NM, 20-Nov-1994.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	pralbidv $p |- ( ph -> ( A. x e. A ps <-> A. x e. A ch ) ) $=
+	f0 f3 pnfv e0 f0 f1 f2 f3 f4 pralbid $.
+$}
+$( /* Formula-building rule for restricted existential quantifier (deduction
+       rule).  (Contributed by NM, 20-Nov-1994.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	prexbidv $p |- ( ph -> ( E. x e. A ps <-> E. x e. A ch ) ) $=
+	f0 f3 pnfv e0 f0 f1 f2 f3 f4 prexbid $.
+$}
+$( /* Formula-building rule for restricted universal quantifier (deduction
+       rule).  (Contributed by NM, 6-Apr-1997.) */
+
+$)
+${
+	$v ph ps ch x A B $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( ( x e. A -> ps ) <-> ( x e. B -> ch ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	f5 $f class B $.
+	pralbidv2 $p |- ( ph -> ( A. x e. A ps <-> A. x e. B ch ) ) $=
+	e0 f0 f3 asup_set_class f4 awcel f1 awi f3 asup_set_class f5 awcel f2 awi f3 palbidv f1 f3 f4 adf-ral f2 f3 f5 adf-ral f0 f3 asup_set_class f4 awcel f1 awi f3 awal f3 asup_set_class f5 awcel f2 awi f3 awal f1 f3 f4 awral f2 f3 f5 awral p3bitr4g $.
+$}
+$( /* Formula-building rule for restricted existential quantifier (deduction
+       rule).  (Contributed by NM, 22-May-1999.) */
+
+$)
+${
+	$v ph ps ch x A B $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( ( x e. A /\ ps ) <-> ( x e. B /\ ch ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	f5 $f class B $.
+	prexbidv2 $p |- ( ph -> ( E. x e. A ps <-> E. x e. B ch ) ) $=
+	e0 f0 f3 asup_set_class f4 awcel f1 awa f3 asup_set_class f5 awcel f2 awa f3 pexbidv f1 f3 f4 adf-rex f2 f3 f5 adf-rex f0 f3 asup_set_class f4 awcel f1 awa f3 awex f3 asup_set_class f5 awcel f2 awa f3 awex f1 f3 f4 awrex f2 f3 f5 awrex p3bitr4g $.
+$}
+$( /* Inference adding restricted universal quantifier to both sides of an
+       equivalence.  (Contributed by NM, 23-Nov-1994.)  (Revised by Mario
+       Carneiro, 17-Oct-2016.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pralbii $p |- ( A. x e. A ph <-> A. x e. A ps ) $=
+	e0 f0 f1 awb awtru pa1i awtru f0 f1 f2 f3 pralbidv f0 f2 f3 awral f1 f2 f3 awral awb ptrud $.
+$}
+$( /* Inference adding restricted existential quantifier to both sides of an
+       equivalence.  (Contributed by NM, 23-Nov-1994.)  (Revised by Mario
+       Carneiro, 17-Oct-2016.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	prexbii $p |- ( E. x e. A ph <-> E. x e. A ps ) $=
+	e0 f0 f1 awb awtru pa1i awtru f0 f1 f2 f3 prexbidv f0 f2 f3 awrex f1 f2 f3 awrex awb ptrud $.
+$}
+$( /* Inference adding two restricted universal quantifiers to both sides of
+       an equivalence.  (Contributed by NM, 1-Aug-2004.) */
+
+$)
+${
+	$v ph ps x y A B $.
+	e0 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	p2ralbii $p |- ( A. x e. A A. y e. B ph <-> A. x e. A A. y e. B ps ) $=
+	e0 f0 f1 f3 f5 pralbii f0 f3 f5 awral f1 f3 f5 awral f2 f4 pralbii $.
+$}
+$( /* Inference adding two restricted existential quantifiers to both sides of
+       an equivalence.  (Contributed by NM, 11-Nov-1995.) */
+
+$)
+${
+	$v ph ps x y A B $.
+	e0 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	p2rexbii $p |- ( E. x e. A E. y e. B ph <-> E. x e. A E. y e. B ps ) $=
+	e0 f0 f1 f3 f5 prexbii f0 f3 f5 awrex f1 f3 f5 awrex f2 f4 prexbii $.
+$}
+$( /* Inference adding different restricted universal quantifiers to each side
+       of an equivalence.  (Contributed by NM, 15-Aug-2005.) */
+
+$)
+${
+	$v ph ps x A B $.
+	e0 $e |- ( ( x e. A -> ph ) <-> ( x e. B -> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class B $.
+	pralbii2 $p |- ( A. x e. A ph <-> A. x e. B ps ) $=
+	e0 f2 asup_set_class f3 awcel f0 awi f2 asup_set_class f4 awcel f1 awi f2 palbii f0 f2 f3 adf-ral f1 f2 f4 adf-ral f2 asup_set_class f3 awcel f0 awi f2 awal f2 asup_set_class f4 awcel f1 awi f2 awal f0 f2 f3 awral f1 f2 f4 awral p3bitr4i $.
+$}
+$( /* Inference adding different restricted existential quantifiers to each
+       side of an equivalence.  (Contributed by NM, 4-Feb-2004.) */
+
+$)
+${
+	$v ph ps x A B $.
+	e0 $e |- ( ( x e. A /\ ph ) <-> ( x e. B /\ ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class B $.
+	prexbii2 $p |- ( E. x e. A ph <-> E. x e. B ps ) $=
+	e0 f2 asup_set_class f3 awcel f0 awa f2 asup_set_class f4 awcel f1 awa f2 pexbii f0 f2 f3 adf-rex f1 f2 f4 adf-rex f2 asup_set_class f3 awcel f0 awa f2 awex f2 asup_set_class f4 awcel f1 awa f2 awex f0 f2 f3 awrex f1 f2 f4 awrex p3bitr4i $.
+$}
+$( /* Equality deduction for restricted universal quantifier, changing both
+       formula and quantifier domain.  Inference form.  (Contributed by David
+       Moews, 1-May-2017.) */
+
+$)
+${
+	$v ps ch x A B $.
+	e0 $e |- A = B $.
+	e1 $e |- ( ps <-> ch ) $.
+	f0 $f wff ps $.
+	f1 $f wff ch $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class B $.
+	praleqbii $p |- ( A. x e. A ps <-> A. x e. B ch ) $=
+	e0 f3 f4 f2 asup_set_class peleq2i e1 f2 asup_set_class f3 awcel f2 asup_set_class f4 awcel f0 f1 pimbi12i f0 f1 f2 f3 f4 pralbii2 $.
+$}
+$( /* Equality deduction for restricted existential quantifier, changing both
+       formula and quantifier domain.  Inference form.  (Contributed by David
+       Moews, 1-May-2017.) */
+
+$)
+${
+	$v ps ch x A B $.
+	e0 $e |- A = B $.
+	e1 $e |- ( ps <-> ch ) $.
+	f0 $f wff ps $.
+	f1 $f wff ch $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class B $.
+	prexeqbii $p |- ( E. x e. A ps <-> E. x e. B ch ) $=
+	e0 f3 f4 f2 asup_set_class peleq2i e1 f2 asup_set_class f3 awcel f2 asup_set_class f4 awcel f0 f1 panbi12i f0 f1 f2 f3 f4 prexbii2 $.
+$}
+$( /* Inference adding restricted universal quantifier to both sides of an
+       equivalence.  (Contributed by NM, 26-Nov-2000.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- ( x e. A -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pralbiia $p |- ( A. x e. A ph <-> A. x e. A ps ) $=
+	e0 f2 asup_set_class f3 awcel f0 f1 ppm5.74i f0 f1 f2 f3 f3 pralbii2 $.
+$}
+$( /* Inference adding restricted existential quantifier to both sides of an
+       equivalence.  (Contributed by NM, 26-Oct-1999.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- ( x e. A -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	prexbiia $p |- ( E. x e. A ph <-> E. x e. A ps ) $=
+	e0 f2 asup_set_class f3 awcel f0 f1 ppm5.32i f0 f1 f2 f3 f3 prexbii2 $.
+$}
+$( /* Inference adding two restricted existential quantifiers to both sides of
+       an equivalence.  (Contributed by NM, 1-Aug-2004.) */
+
+$)
+${
+	$v ph ps x y A B $.
+	$d x y $.
+	$d y A $.
+	e0 $e |- ( ( x e. A /\ y e. B ) -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	p2rexbiia $p |- ( E. x e. A E. y e. B ph <-> E. x e. A E. y e. B ps ) $=
+	e0 f2 asup_set_class f4 awcel f0 f1 f3 f5 prexbidva f0 f3 f5 awrex f1 f3 f5 awrex f2 f4 prexbiia $.
+$}
+$( /* Double restricted universal quantification.  (Contributed by Mario
+       Carneiro, 14-Oct-2016.) */
+
+$)
+${
+	$v ph x y A B $.
+	$d x y $.
+	e0 $e |- F/_ y A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	pr2alf $p |- ( A. x e. A A. y e. B ph <-> A. x A. y ( ( x e. A /\ y e. B ) -> ph ) ) $=
+	f0 f2 f4 awral f1 f3 adf-ral e0 f2 f1 f3 pnfcri f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel f0 awi f2 p19.21 f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel f0 pimpexp f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel awa f0 awi f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel f0 awi awi f2 palbii f0 f2 f4 adf-ral f0 f2 f4 awral f2 asup_set_class f4 awcel f0 awi f2 awal f1 asup_set_class f3 awcel pimbi2i f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel f0 awi awi f2 awal f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel f0 awi f2 awal awi f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel awa f0 awi f2 awal f1 asup_set_class f3 awcel f0 f2 f4 awral awi p3bitr4i f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel awa f0 awi f2 awal f1 asup_set_class f3 awcel f0 f2 f4 awral awi f1 palbii f0 f2 f4 awral f1 f3 awral f1 asup_set_class f3 awcel f0 f2 f4 awral awi f1 awal f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel awa f0 awi f2 awal f1 awal pbitr4i $.
+$}
+$( /* Double restricted existential quantification.  (Contributed by Mario
+       Carneiro, 14-Oct-2016.) */
+
+$)
+${
+	$v ph x y A B $.
+	$d x y $.
+	e0 $e |- F/_ y A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	pr2exf $p |- ( E. x e. A E. y e. B ph <-> E. x E. y ( ( x e. A /\ y e. B ) /\ ph ) ) $=
+	f0 f2 f4 awrex f1 f3 adf-rex e0 f2 f1 f3 pnfcri f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel f0 awa f2 p19.42 f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel f0 panass f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel awa f0 awa f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel f0 awa awa f2 pexbii f0 f2 f4 adf-rex f0 f2 f4 awrex f2 asup_set_class f4 awcel f0 awa f2 awex f1 asup_set_class f3 awcel panbi2i f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel f0 awa awa f2 awex f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel f0 awa f2 awex awa f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel awa f0 awa f2 awex f1 asup_set_class f3 awcel f0 f2 f4 awrex awa p3bitr4i f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel awa f0 awa f2 awex f1 asup_set_class f3 awcel f0 f2 f4 awrex awa f1 pexbii f0 f2 f4 awrex f1 f3 awrex f1 asup_set_class f3 awcel f0 f2 f4 awrex awa f1 awex f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel awa f0 awa f2 awex f1 awex pbitr4i $.
+$}
+$( /* Double restricted universal quantification.  (Contributed by NM,
+       19-Nov-1995.) */
+
+$)
+${
+	$v ph x y A B $.
+	$d x y $.
+	$d y A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	pr2al $p |- ( A. x e. A A. y e. B ph <-> A. x A. y ( ( x e. A /\ y e. B ) -> ph ) ) $=
+	f2 f3 pnfcv f0 f1 f2 f3 f4 pr2alf $.
+$}
+$( /* Double restricted existential quantification.  (Contributed by NM,
+       11-Nov-1995.) */
+
+$)
+${
+	$v ph x y A B $.
+	$d x y $.
+	$d y A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	pr2ex $p |- ( E. x e. A E. y e. B ph <-> E. x E. y ( ( x e. A /\ y e. B ) /\ ph ) ) $=
+	f2 f3 pnfcv f0 f1 f2 f3 f4 pr2exf $.
+$}
+$( /* Formula-building rule for restricted universal quantifier (deduction
+       rule).  (Contributed by NM, 24-Feb-2004.) */
+
+$)
+${
+	$v ph ps ch x y A B $.
+	$d x y $.
+	$d y A $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- F/ y ph $.
+	e2 $e |- ( ( ph /\ ( x e. A /\ y e. B ) ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	f6 $f class B $.
+	p2ralbida $p |- ( ph -> ( A. x e. A A. y e. B ps <-> A. x e. A A. y e. B ch ) ) $=
+	e0 e1 f3 asup_set_class f5 awcel f4 pnfv f0 f3 asup_set_class f5 awcel f4 pnfan e2 f0 f3 asup_set_class f5 awcel f4 asup_set_class f6 awcel f1 f2 awb panassrs f0 f3 asup_set_class f5 awcel awa f1 f2 f4 f6 pralbida f0 f1 f4 f6 awral f2 f4 f6 awral f3 f5 pralbida $.
+$}
+$( /* Formula-building rule for restricted universal quantifiers (deduction
+       rule).  (Contributed by NM, 4-Mar-1997.) */
+
+$)
+${
+	$v ph ps ch x y A B $.
+	$d x y ph $.
+	$d y A $.
+	e0 $e |- ( ( ph /\ ( x e. A /\ y e. B ) ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	f6 $f class B $.
+	p2ralbidva $p |- ( ph -> ( A. x e. A A. y e. B ps <-> A. x e. A A. y e. B ch ) ) $=
+	f0 f3 pnfv f0 f4 pnfv e0 f0 f1 f2 f3 f4 f5 f6 p2ralbida $.
+$}
+$( /* Formula-building rule for restricted existential quantifiers (deduction
+       rule).  (Contributed by NM, 15-Dec-2004.) */
+
+$)
+${
+	$v ph ps ch x y A B $.
+	$d x y ph $.
+	$d y A $.
+	e0 $e |- ( ( ph /\ ( x e. A /\ y e. B ) ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	f6 $f class B $.
+	p2rexbidva $p |- ( ph -> ( E. x e. A E. y e. B ps <-> E. x e. A E. y e. B ch ) ) $=
+	e0 f0 f3 asup_set_class f5 awcel f4 asup_set_class f6 awcel f1 f2 awb panassrs f0 f3 asup_set_class f5 awcel awa f1 f2 f4 f6 prexbidva f0 f1 f4 f6 awrex f2 f4 f6 awrex f3 f5 prexbidva $.
+$}
+$( /* Formula-building rule for restricted universal quantifiers (deduction
+       rule).  (Contributed by NM, 28-Jan-2006.)  (Revised by Szymon
+       Jaroszewicz, 16-Mar-2007.) */
+
+$)
+${
+	$v ph ps ch x y A B $.
+	$d x ph $.
+	$d y ph $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	f6 $f class B $.
+	p2ralbidv $p |- ( ph -> ( A. x e. A A. y e. B ps <-> A. x e. A A. y e. B ch ) ) $=
+	e0 f0 f1 f2 f4 f6 pralbidv f0 f1 f4 f6 awral f2 f4 f6 awral f3 f5 pralbidv $.
+$}
+$( /* Formula-building rule for restricted existential quantifiers (deduction
+       rule).  (Contributed by NM, 28-Jan-2006.) */
+
+$)
+${
+	$v ph ps ch x y A B $.
+	$d x ph $.
+	$d y ph $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	f6 $f class B $.
+	p2rexbidv $p |- ( ph -> ( E. x e. A E. y e. B ps <-> E. x e. A E. y e. B ch ) ) $=
+	e0 f0 f1 f2 f4 f6 prexbidv f0 f1 f4 f6 awrex f2 f4 f6 awrex f3 f5 prexbidv $.
+$}
+$( /* Formula-building rule for restricted quantifiers (deduction rule).
+       (Contributed by NM, 28-Jan-2006.) */
+
+$)
+${
+	$v ph ps ch x y A B $.
+	$d x ph $.
+	$d y ph $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	f6 $f class B $.
+	prexralbidv $p |- ( ph -> ( E. x e. A A. y e. B ps <-> E. x e. A A. y e. B ch ) ) $=
+	e0 f0 f1 f2 f4 f6 pralbidv f0 f1 f4 f6 awral f2 f4 f6 awral f3 f5 prexbidv $.
+$}
+$( /* A transformation of restricted quantifiers and logical connectives.
+     (Contributed by NM, 4-Sep-2005.) */
+
+$)
+${
+	$v ph ps x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pralinexa $p |- ( A. x e. A ( ph -> -. ps ) <-> -. E. x e. A ( ph /\ ps ) ) $=
+	f0 f1 pimnan f0 f1 awn awi f0 f1 awa awn f2 f3 pralbii f0 f1 awa f2 f3 pralnex f0 f1 awn awi f2 f3 awral f0 f1 awa awn f2 f3 awral f0 f1 awa f2 f3 awrex awn pbitri $.
+$}
+$( /* A transformation of restricted quantifiers and logical connectives.
+     (Contributed by NM, 4-Sep-2005.) */
+
+$)
+${
+	$v ph ps x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	prexanali $p |- ( E. x e. A ( ph /\ -. ps ) <-> -. A. x e. A ( ph -> ps ) ) $=
+	f0 f1 pannim f0 f1 awn awa f0 f1 awi awn f2 f3 prexbii f0 f1 awi f2 f3 prexnal f0 f1 awn awa f2 f3 awrex f0 f1 awi awn f2 f3 awrex f0 f1 awi f2 f3 awral awn pbitri $.
+$}
+$( /* Two ways to say " ` A ` belongs to ` B ` ."  (Contributed by NM,
+       22-Nov-1994.) */
+
+$)
+${
+	$v x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	prisset $p |- ( A e. B <-> E. x e. B x = A ) $=
+	f0 asup_set_class f2 awcel f0 asup_set_class f1 awceq f0 pexancom f0 asup_set_class f1 awceq f0 f2 adf-rex f0 f1 f2 adf-clel f0 asup_set_class f2 awcel f0 asup_set_class f1 awceq awa f0 awex f0 asup_set_class f1 awceq f0 asup_set_class f2 awcel awa f0 awex f0 asup_set_class f1 awceq f0 f2 awrex f1 f2 awcel p3bitr4ri $.
+$}
+$( /* Bound-variable hypothesis builder for restricted quantification.
+       (Contributed by NM, 1-Sep-1999.)  (Revised by David Abernethy,
+       13-Dec-2009.) */
+
+$)
+${
+	$v ph x y A $.
+	e0 $e |- ( y e. A -> A. x y e. A ) $.
+	e1 $e |- ( ph -> A. x ph ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	phbral $p |- ( A. y e. A ph -> A. x A. y e. A ph ) $=
+	f0 f2 f3 adf-ral e0 e1 f2 asup_set_class f3 awcel f0 f1 phbim f2 asup_set_class f3 awcel f0 awi f1 f2 phbal f0 f2 f3 awral f2 asup_set_class f3 awcel f0 awi f2 awal f1 phbxfrbi $.
+$}
+$( /* ` x ` is not free in ` A. x e. A ph ` .  (Contributed by NM,
+     18-Oct-1996.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	phbra1 $p |- ( A. x e. A ph -> A. x A. x e. A ph ) $=
+	f0 f1 f2 adf-ral f1 asup_set_class f2 awcel f0 awi f1 phba1 f0 f1 f2 awral f1 asup_set_class f2 awcel f0 awi f1 awal f1 phbxfrbi $.
+$}
+$( /* ` x ` is not free in ` A. x e. A ph ` .  (Contributed by NM,
+     18-Oct-1996.)  (Revised by Mario Carneiro, 7-Oct-2016.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	pnfra1 $p |- F/ x A. x e. A ph $=
+	f0 f1 f2 adf-ral f1 asup_set_class f2 awcel f0 awi f1 pnfa1 f0 f1 f2 awral f1 asup_set_class f2 awcel f0 awi f1 awal f1 pnfxfr $.
+$}
+$( /* Deduction version of ~ nfral .  (Contributed by NM, 15-Feb-2013.)
+       (Revised by Mario Carneiro, 7-Oct-2016.) */
+
+$)
+${
+	$v ph ps x y A $.
+	e0 $e |- F/ y ph $.
+	e1 $e |- ( ph -> F/_ x A ) $.
+	e2 $e |- ( ph -> F/ x ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	pnfrald $p |- ( ph -> F/ x A. y e. A ps ) $=
+	f1 f3 f4 adf-ral e0 f2 f3 pnfcvf f2 asup_set_class f3 asup_set_class awceq f2 awal awn f2 f3 asup_set_class awnfc f0 padantl e1 f0 f2 f4 awnfc f2 asup_set_class f3 asup_set_class awceq f2 awal awn padantr f0 f2 asup_set_class f3 asup_set_class awceq f2 awal awn awa f2 f3 asup_set_class f4 pnfeld e2 f0 f1 f2 awnf f2 asup_set_class f3 asup_set_class awceq f2 awal awn padantr f0 f2 asup_set_class f3 asup_set_class awceq f2 awal awn awa f3 asup_set_class f4 awcel f1 f2 pnfimd f0 f3 asup_set_class f4 awcel f1 awi f2 f3 pnfald2 f1 f3 f4 awral f3 asup_set_class f4 awcel f1 awi f3 awal f0 f2 pnfxfrd $.
+$}
+$( /* Deduction version of ~ nfrex .  (Contributed by Mario Carneiro,
+       14-Oct-2016.) */
+
+$)
+${
+	$v ph ps x y A $.
+	e0 $e |- F/ y ph $.
+	e1 $e |- ( ph -> F/_ x A ) $.
+	e2 $e |- ( ph -> F/ x ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	pnfrexd $p |- ( ph -> F/ x E. y e. A ps ) $=
+	f1 f3 f4 pdfrex2 e0 e1 e2 f0 f1 f2 pnfnd f0 f1 awn f2 f3 f4 pnfrald f0 f1 awn f3 f4 awral f2 pnfnd f1 f3 f4 awrex f1 awn f3 f4 awral awn f0 f2 pnfxfrd $.
+$}
+$( /* Bound-variable hypothesis builder for restricted quantification.
+       (Contributed by NM, 1-Sep-1999.)  (Revised by Mario Carneiro,
+       7-Oct-2016.) */
+
+$)
+${
+	$v ph x y A $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/ x ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	pnfral $p |- F/ x A. y e. A ph $=
+	f2 pnftru e0 f1 f3 awnfc awtru pa1i e1 f0 f1 awnf awtru pa1i awtru f0 f1 f2 f3 pnfrald f0 f2 f3 awral f1 awnf ptrud $.
+$}
+$( /* Similar to Lemma 24 of [Monk2] p. 114, except the quantification of the
+       antecedent is restricted.  Derived automatically from ~ hbra2VD .
+       Contributed by Alan Sare 31-Dec-2011.  (Contributed by NM,
+       31-Dec-2011.) */
+
+$)
+${
+	$v ph x y A B $.
+	$d A y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	pnfra2 $p |- F/ y A. x e. A A. y e. B ph $=
+	f2 f3 pnfcv f0 f2 f4 pnfra1 f0 f2 f4 awral f2 f1 f3 pnfral $.
+$}
+$( /* Bound-variable hypothesis builder for restricted quantification.
+       (Contributed by NM, 1-Sep-1999.)  (Revised by Mario Carneiro,
+       7-Oct-2016.) */
+
+$)
+${
+	$v ph x y A $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/ x ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	pnfrex $p |- F/ x E. y e. A ph $=
+	f0 f2 f3 pdfrex2 e0 e1 f0 f1 pnfn f0 awn f1 f2 f3 pnfral f0 awn f2 f3 awral f1 pnfn f0 f2 f3 awrex f0 awn f2 f3 awral awn f1 pnfxfr $.
+$}
+$( /* ` x ` is not free in ` E. x e. A ph ` .  (Contributed by NM,
+     19-Mar-1997.)  (Revised by Mario Carneiro, 7-Oct-2016.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	pnfre1 $p |- F/ x E. x e. A ph $=
+	f0 f1 f2 adf-rex f1 asup_set_class f2 awcel f0 awa f1 pnfe1 f0 f1 f2 awrex f1 asup_set_class f2 awcel f0 awa f1 awex f1 pnfxfr $.
+$}
+$( /* Triple restricted universal quantification.  (Contributed by NM,
+       19-Nov-1995.) */
+
+$)
+${
+	$v ph x y z A B C $.
+	$d x y z $.
+	$d y z A $.
+	$d z B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	f4 $f class A $.
+	f5 $f class B $.
+	f6 $f class C $.
+	pr3al $p |- ( A. x e. A A. y e. B A. z e. C ph <-> A. x A. y A. z ( ( x e. A /\ y e. B /\ z e. C ) -> ph ) ) $=
+	f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel awa f0 awi f3 awal f2 awal f1 f4 adf-ral f0 f2 f3 f5 f6 pr2al f0 f3 f6 awral f2 f5 awral f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel awa f0 awi f3 awal f2 awal f1 f4 pralbii f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel p3anass f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel aw3a f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel awa awa f0 pimbi1i f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel awa f0 pimpexp f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel aw3a f0 awi f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel awa awa f0 awi f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel awa f0 awi awi pbitri f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel aw3a f0 awi f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel awa f0 awi awi f3 palbii f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel awa f0 awi f3 p19.21v f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel aw3a f0 awi f3 awal f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel awa f0 awi awi f3 awal f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel awa f0 awi f3 awal awi pbitri f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel aw3a f0 awi f3 awal f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel awa f0 awi f3 awal awi f2 palbii f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel awa f0 awi f3 awal f2 p19.21v f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel aw3a f0 awi f3 awal f2 awal f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel awa f0 awi f3 awal awi f2 awal f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel awa f0 awi f3 awal f2 awal awi pbitri f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel aw3a f0 awi f3 awal f2 awal f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel awa f0 awi f3 awal f2 awal awi f1 palbii f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel awa f0 awi f3 awal f2 awal f1 f4 awral f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel awa f0 awi f3 awal f2 awal awi f1 awal f0 f3 f6 awral f2 f5 awral f1 f4 awral f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel aw3a f0 awi f3 awal f2 awal f1 awal p3bitr4i $.
+$}
+$( /* Universal quantification implies restricted quantification.  (Contributed
+     by NM, 20-Oct-2006.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	palral $p |- ( A. x ph -> A. x e. A ph ) $=
+	f0 f1 asup_set_class f2 awcel aax-1 f0 f1 asup_set_class f2 awcel f0 awi f1 palimi f0 f1 f2 adf-ral f0 f1 awal f1 asup_set_class f2 awcel f0 awi f1 awal f0 f1 f2 awral psylibr $.
+$}
+$( /* Restricted existence implies existence.  (Contributed by NM,
+     11-Nov-1995.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	prexex $p |- ( E. x e. A ph -> E. x ph ) $=
+	f0 f1 f2 adf-rex f1 asup_set_class f2 awcel f0 psimpr f1 asup_set_class f2 awcel f0 awa f0 f1 peximi f0 f1 f2 awrex f1 asup_set_class f2 awcel f0 awa f1 awex f0 f1 awex psylbi $.
+$}
+$( /* Restricted specialization.  (Contributed by NM, 17-Oct-1996.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	prsp $p |- ( A. x e. A ph -> ( x e. A -> ph ) ) $=
+	f0 f1 f2 adf-ral f1 asup_set_class f2 awcel f0 awi f1 psp f0 f1 f2 awral f1 asup_set_class f2 awcel f0 awi f1 awal f1 asup_set_class f2 awcel f0 awi psylbi $.
+$}
+$( /* Restricted specialization.  (Contributed by NM, 12-Oct-1999.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	prspe $p |- ( ( x e. A /\ ph ) -> E. x e. A ph ) $=
+	f1 asup_set_class f2 awcel f0 awa f1 p19.8a f0 f1 f2 adf-rex f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f2 awcel f0 awa f1 awex f0 f1 f2 awrex psylibr $.
+$}
+$( /* Restricted specialization.  (Contributed by NM, 11-Feb-1997.) */
+
+$)
+${
+	$v ph x y A B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	prsp2 $p |- ( A. x e. A A. y e. B ph -> ( ( x e. A /\ y e. B ) -> ph ) ) $=
+	f0 f2 f4 awral f1 f3 prsp f0 f2 f4 prsp f0 f2 f4 awral f1 f3 awral f1 asup_set_class f3 awcel f0 f2 f4 awral f2 asup_set_class f4 awcel f0 awi psyl6 f0 f2 f4 awral f1 f3 awral f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel f0 pimp3a $.
+$}
+$( /* Restricted specialization.  (Contributed by FL, 4-Jun-2012.) */
+
+$)
+${
+	$v ph x y A B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	prsp2e $p |- ( ( x e. A /\ y e. B /\ ph ) -> E. x e. A E. y e. B ph ) $=
+	f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel f0 psimp1 f0 f2 f4 prspe f2 asup_set_class f4 awcel f0 f0 f2 f4 awrex f1 asup_set_class f3 awcel p3adant1 f1 asup_set_class f3 awcel f0 f2 f4 awrex awa f1 p19.8a f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel f0 aw3a f1 asup_set_class f3 awcel f0 f2 f4 awrex f1 asup_set_class f3 awcel f0 f2 f4 awrex awa f1 awex psyl2anc f0 f2 f4 awrex f1 f3 adf-rex f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel f0 aw3a f1 asup_set_class f3 awcel f0 f2 f4 awrex awa f1 awex f0 f2 f4 awrex f1 f3 awrex psylibr $.
+$}
+$( /* Specialization rule for restricted quantification.  (Contributed by NM,
+       19-Nov-1994.) */
+
+$)
+${
+	$v ph x A $.
+	e0 $e |- A. x e. A ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	prspec $p |- ( x e. A -> ph ) $=
+	e0 f0 f1 f2 prsp f0 f1 f2 awral f1 asup_set_class f2 awcel f0 awi aax-mp $.
+$}
+$( /* Generalization rule for restricted quantification.  (Contributed by NM,
+       19-Nov-1994.) */
+
+$)
+${
+	$v ph x A $.
+	e0 $e |- ( x e. A -> ph ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	prgen $p |- A. x e. A ph $=
+	f0 f1 f2 adf-ral e0 f0 f1 f2 awral f1 asup_set_class f2 awcel f0 awi f1 pmpgbir $.
+$}
+$( /* Generalization rule for restricted quantification.  Note that ` x ` and
+       ` y ` needn't be distinct (and illustrates the use of ~ dvelim ).
+       (Contributed by NM, 23-Nov-1994.)  (Proof shortened by Andrew Salmon,
+       25-May-2011.)  (Proof modification is discouraged. */
+
+$)
+${
+	$v ph x y A $.
+	$v z $.
+	$d y z A $.
+	$d x z $.
+	e0 $e |- ( ( x e. A /\ y e. A ) -> ph ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	i0 $f set z $.
+	prgen2a $p |- A. x e. A A. y e. A ph $=
+	f2 asup_set_class f1 asup_set_class f3 peleq1 e0 f1 asup_set_class f3 awcel f2 asup_set_class f3 awcel f0 pex f2 asup_set_class f1 asup_set_class awceq f2 asup_set_class f3 awcel f1 asup_set_class f3 awcel f2 asup_set_class f3 awcel f0 awi psyl6bi f2 asup_set_class f1 asup_set_class awceq f2 asup_set_class f3 awcel f0 ppm2.43d f2 asup_set_class f1 asup_set_class awceq f2 asup_set_class f3 awcel f0 awi f2 palimi f2 asup_set_class f1 asup_set_class awceq f2 awal f2 asup_set_class f3 awcel f0 awi f2 awal f1 asup_set_class f3 awcel pa1d i0 asup_set_class f1 asup_set_class f3 peleq1 i0 asup_set_class f3 awcel f1 asup_set_class f3 awcel f2 f1 i0 pdvelimv e0 f1 asup_set_class f3 awcel f2 asup_set_class f3 awcel f0 pex f1 asup_set_class f3 awcel f2 asup_set_class f3 awcel f0 awi f2 palimi f2 asup_set_class f1 asup_set_class awceq f2 awal awn f1 asup_set_class f3 awcel f1 asup_set_class f3 awcel f2 awal f2 asup_set_class f3 awcel f0 awi f2 awal psyl6 f2 asup_set_class f1 asup_set_class awceq f2 awal f1 asup_set_class f3 awcel f2 asup_set_class f3 awcel f0 awi f2 awal awi ppm2.61i f0 f2 f3 adf-ral f1 asup_set_class f3 awcel f2 asup_set_class f3 awcel f0 awi f2 awal f0 f2 f3 awral psylibr f0 f2 f3 awral f1 f3 prgen $.
+$}
+$( /* Generalization rule for restricted quantification.  (Contributed by NM,
+       18-Jun-2014.) */
+
+$)
+${
+	$v ph x A $.
+	e0 $e |- ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	prgenw $p |- A. x e. A ph $=
+	e0 f0 f1 asup_set_class f2 awcel pa1i f0 f1 f2 prgen $.
+$}
+$( /* Generalization rule for restricted quantification.  Note that ` x ` and
+       ` y ` needn't be distinct.  (Contributed by NM, 18-Jun-2014.) */
+
+$)
+${
+	$v ph x y A B $.
+	e0 $e |- ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	prgen2w $p |- A. x e. A A. y e. B ph $=
+	e0 f0 f2 f4 prgenw f0 f2 f4 awral f1 f3 prgenw $.
+$}
+$( /* Modus ponens combined with restricted generalization.  (Contributed by
+       NM, 10-Aug-2004.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- ( A. x e. A ph -> ps ) $.
+	e1 $e |- ( x e. A -> ph ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pmprg $p |- ps $=
+	e1 f0 f2 f3 prgen e0 f0 f2 f3 awral f1 aax-mp $.
+$}
+$( /* Modus ponens on biconditional combined with restricted generalization.
+       (Contributed by NM, 21-Mar-2004.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- ( ph <-> A. x e. A ps ) $.
+	e1 $e |- ( x e. A -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pmprgbir $p |- ph $=
+	e1 f1 f2 f3 prgen e0 f0 f1 f2 f3 awral pmpbir $.
+$}
+$( /* Distribution of restricted quantification over implication.  (Contributed
+     by NM, 9-Feb-1997.) */
+
+$)
+${
+	$v ph ps x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pralim $p |- ( A. x e. A ( ph -> ps ) -> ( A. x e. A ph -> A. x e. A ps ) ) $=
+	f0 f1 awi f2 f3 adf-ral f2 asup_set_class f3 awcel f0 f1 aax-2 f2 asup_set_class f3 awcel f0 f1 awi awi f2 asup_set_class f3 awcel f0 awi f2 asup_set_class f3 awcel f1 awi f2 pal2imi f0 f1 awi f2 f3 awral f2 asup_set_class f3 awcel f0 f1 awi awi f2 awal f2 asup_set_class f3 awcel f0 awi f2 awal f2 asup_set_class f3 awcel f1 awi f2 awal awi psylbi f0 f2 f3 adf-ral f1 f2 f3 adf-ral f0 f1 awi f2 f3 awral f2 asup_set_class f3 awcel f0 awi f2 awal f2 asup_set_class f3 awcel f1 awi f2 awal f0 f2 f3 awral f1 f2 f3 awral p3imtr4g $.
+$}
+$( /* Inference quantifying both antecedent and consequent.  (Contributed by
+       NM, 22-Feb-2004.) */
+
+$)
+${
+	$v ph ps x A B $.
+	e0 $e |- ( ( x e. A -> ph ) -> ( x e. B -> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class B $.
+	pralimi2 $p |- ( A. x e. A ph -> A. x e. B ps ) $=
+	e0 f2 asup_set_class f3 awcel f0 awi f2 asup_set_class f4 awcel f1 awi f2 palimi f0 f2 f3 adf-ral f1 f2 f4 adf-ral f2 asup_set_class f3 awcel f0 awi f2 awal f2 asup_set_class f4 awcel f1 awi f2 awal f0 f2 f3 awral f1 f2 f4 awral p3imtr4i $.
+$}
+$( /* Inference quantifying both antecedent and consequent.  (Contributed by
+       NM, 19-Jul-1996.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- ( x e. A -> ( ph -> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pralimia $p |- ( A. x e. A ph -> A. x e. A ps ) $=
+	e0 f2 asup_set_class f3 awcel f0 f1 pa2i f0 f1 f2 f3 f3 pralimi2 $.
+$}
+$( /* Inference quantifying both antecedent and consequent.  (Contributed by
+       NM, 4-Aug-2007.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- ( ( x e. A /\ ph ) -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pralimiaa $p |- ( A. x e. A ph -> A. x e. A ps ) $=
+	e0 f2 asup_set_class f3 awcel f0 f1 pex f0 f1 f2 f3 pralimia $.
+$}
+$( /* Inference quantifying both antecedent and consequent, with strong
+       hypothesis.  (Contributed by NM, 4-Mar-1997.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- ( ph -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pralimi $p |- ( A. x e. A ph -> A. x e. A ps ) $=
+	e0 f0 f1 awi f2 asup_set_class f3 awcel pa1i f0 f1 f2 f3 pralimia $.
+$}
+$( /* Inference quantifying antecedent, nested antecedent, and consequent,
+       with a strong hypothesis.  (Contributed by NM, 19-Dec-2006.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	pral2imi $p |- ( A. x e. A ph -> ( A. x e. A ps -> A. x e. A ch ) ) $=
+	e0 f0 f1 f2 awi f3 f4 pralimi f1 f2 f3 f4 pralim f0 f3 f4 awral f1 f2 awi f3 f4 awral f1 f3 f4 awral f2 f3 f4 awral awi psyl $.
+$}
+$( /* Deduction quantifying both antecedent and consequent, based on Theorem
+       19.20 of [Margaris] p. 90.  (Contributed by NM, 22-Sep-2003.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- ( ( ph /\ x e. A ) -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	pralimdaa $p |- ( ph -> ( A. x e. A ps -> A. x e. A ch ) ) $=
+	e0 e1 f0 f3 asup_set_class f4 awcel f1 f2 awi pex f0 f3 asup_set_class f4 awcel f1 f2 pa2d f0 f3 asup_set_class f4 awcel f1 awi f3 asup_set_class f4 awcel f2 awi f3 palimd f1 f3 f4 adf-ral f2 f3 f4 adf-ral f0 f3 asup_set_class f4 awcel f1 awi f3 awal f3 asup_set_class f4 awcel f2 awi f3 awal f1 f3 f4 awral f2 f3 f4 awral p3imtr4g $.
+$}
+$( /* Deduction quantifying both antecedent and consequent, based on Theorem
+       19.20 of [Margaris] p. 90.  (Contributed by NM, 22-May-1999.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	e0 $e |- ( ( ph /\ x e. A ) -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	pralimdva $p |- ( ph -> ( A. x e. A ps -> A. x e. A ch ) ) $=
+	f0 f3 pnfv e0 f0 f1 f2 f3 f4 pralimdaa $.
+$}
+$( /* Deduction quantifying both antecedent and consequent, based on Theorem
+       19.20 of [Margaris] p. 90.  (Contributed by NM, 8-Oct-2003.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	pralimdv $p |- ( ph -> ( A. x e. A ps -> A. x e. A ch ) ) $=
+	e0 f0 f1 f2 awi f3 asup_set_class f4 awcel padantr f0 f1 f2 f3 f4 pralimdva $.
+$}
+$( /* Inference quantifying both antecedent and consequent.  (Contributed by
+       NM, 1-Feb-2005.) */
+
+$)
+${
+	$v ph ps ch x A B $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( ( x e. A -> ps ) -> ( x e. B -> ch ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	f5 $f class B $.
+	pralimdv2 $p |- ( ph -> ( A. x e. A ps -> A. x e. B ch ) ) $=
+	e0 f0 f3 asup_set_class f4 awcel f1 awi f3 asup_set_class f5 awcel f2 awi f3 palimdv f1 f3 f4 adf-ral f2 f3 f5 adf-ral f0 f3 asup_set_class f4 awcel f1 awi f3 awal f3 asup_set_class f5 awcel f2 awi f3 awal f1 f3 f4 awral f2 f3 f5 awral p3imtr4g $.
+$}
+$( /* Inference from Theorem 19.21 of [Margaris] p. 90 (restricted quantifier
+       version).  (Contributed by NM, 10-Oct-1999.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- ( ph -> ( x e. A -> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pralrimi $p |- ( ph -> A. x e. A ps ) $=
+	e0 e1 f0 f2 asup_set_class f3 awcel f1 awi f2 palrimi f1 f2 f3 adf-ral f0 f2 asup_set_class f3 awcel f1 awi f2 awal f1 f2 f3 awral psylibr $.
+$}
+$( /* Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
+       quantifier version.)  (Contributed by NM, 22-Nov-1994.) */
+
+$)
+${
+	$v ph ps x A $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( x e. A -> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pralrimiv $p |- ( ph -> A. x e. A ps ) $=
+	f0 f2 pnfv e0 f0 f1 f2 f3 pralrimi $.
+$}
+$( /* Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
+       quantifier version.)  (Contributed by NM, 2-Jan-2006.) */
+
+$)
+${
+	$v ph ps x A $.
+	$d x ph $.
+	e0 $e |- ( ( ph /\ x e. A ) -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pralrimiva $p |- ( ph -> A. x e. A ps ) $=
+	e0 f0 f2 asup_set_class f3 awcel f1 pex f0 f1 f2 f3 pralrimiv $.
+$}
+$( /* Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
+       quantifier version.)  (Contributed by NM, 18-Jun-2014.) */
+
+$)
+${
+	$v ph ps x A $.
+	$d x ph $.
+	e0 $e |- ( ph -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pralrimivw $p |- ( ph -> A. x e. A ps ) $=
+	e0 f0 f1 f2 asup_set_class f3 awcel pa1d f0 f1 f2 f3 pralrimiv $.
+$}
+$( /* Theorem 19.21 of [Margaris] p. 90 with restricted quantifiers (closed
+       theorem version).  (Contributed by NM, 1-Mar-2008.) */
+
+$)
+${
+	$v ph ps x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.21t $p |- ( F/ x ph -> ( A. x e. A ( ph -> ps ) <-> ( ph -> A. x e. A ps ) ) ) $=
+	f2 asup_set_class f3 awcel f0 f1 pbi2.04 f2 asup_set_class f3 awcel f0 f1 awi awi f0 f2 asup_set_class f3 awcel f1 awi awi f2 palbii f0 f2 asup_set_class f3 awcel f1 awi f2 p19.21t f2 asup_set_class f3 awcel f0 f1 awi awi f2 awal f0 f2 asup_set_class f3 awcel f1 awi awi f2 awal f0 f2 awnf f0 f2 asup_set_class f3 awcel f1 awi f2 awal awi psyl5bb f0 f1 awi f2 f3 adf-ral f1 f2 f3 adf-ral f1 f2 f3 awral f2 asup_set_class f3 awcel f1 awi f2 awal f0 pimbi2i f0 f2 awnf f2 asup_set_class f3 awcel f0 f1 awi awi f2 awal f0 f2 asup_set_class f3 awcel f1 awi f2 awal awi f0 f1 awi f2 f3 awral f0 f1 f2 f3 awral awi p3bitr4g $.
+$}
+$( /* Theorem 19.21 of [Margaris] p. 90 with restricted quantifiers.
+       (Contributed by Scott Fenton, 30-Mar-2011.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- F/ x ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.21 $p |- ( A. x e. A ( ph -> ps ) <-> ( ph -> A. x e. A ps ) ) $=
+	e0 f0 f1 f2 f3 pr19.21t f0 f2 awnf f0 f1 awi f2 f3 awral f0 f1 f2 f3 awral awi awb aax-mp $.
+$}
+$( /* Theorem 19.21 of [Margaris] p. 90 with restricted quantifiers.
+       (Contributed by NM, 15-Oct-2003.)  (Proof shortened by Andrew Salmon,
+       30-May-2011.) */
+
+$)
+${
+	$v ph ps x A $.
+	$d x ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.21v $p |- ( A. x e. A ( ph -> ps ) <-> ( ph -> A. x e. A ps ) ) $=
+	f0 f2 pnfv f0 f1 f2 f3 pr19.21 $.
+$}
+$( /* Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
+       quantifier version.)  (Contributed by NM, 16-Feb-2004.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- F/ x ps $.
+	e2 $e |- ( ph -> ( ps -> ( x e. A -> ch ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	pralrimd $p |- ( ph -> ( ps -> A. x e. A ch ) ) $=
+	e0 e1 e2 f0 f1 f3 asup_set_class f4 awcel f2 awi f3 palrimd f2 f3 f4 adf-ral f0 f1 f3 asup_set_class f4 awcel f2 awi f3 awal f2 f3 f4 awral psyl6ibr $.
+$}
+$( /* Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
+       quantifier version.)  (Contributed by NM, 27-May-1998.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	$d x ps $.
+	e0 $e |- ( ph -> ( ps -> ( x e. A -> ch ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	pralrimdv $p |- ( ph -> ( ps -> A. x e. A ch ) ) $=
+	f0 f3 pnfv f1 f3 pnfv e0 f0 f1 f2 f3 f4 pralrimd $.
+$}
+$( /* Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
+       quantifier version.)  (Contributed by NM, 2-Feb-2008.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	$d x ps $.
+	e0 $e |- ( ( ph /\ x e. A ) -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	pralrimdva $p |- ( ph -> ( ps -> A. x e. A ch ) ) $=
+	e0 f0 f3 asup_set_class f4 awcel f1 f2 awi pex f0 f3 asup_set_class f4 awcel f1 f2 pcom23 f0 f1 f2 f3 f4 pralrimdv $.
+$}
+$( /* Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
+       quantifier version with double quantification.)  (Contributed by NM,
+       24-Jul-2004.) */
+
+$)
+${
+	$v ph ps x y A B $.
+	$d x y ph $.
+	$d y A $.
+	e0 $e |- ( ph -> ( ( x e. A /\ y e. B ) -> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	pralrimivv $p |- ( ph -> A. x e. A A. y e. B ps ) $=
+	e0 f0 f2 asup_set_class f4 awcel f3 asup_set_class f5 awcel f1 pexp3a f0 f2 asup_set_class f4 awcel f1 f3 f5 pralrimdv f0 f1 f3 f5 awral f2 f4 pralrimiv $.
+$}
+$( /* Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
+       quantifier version with double quantification.)  (Contributed by Jeff
+       Madsen, 19-Jun-2011.) */
+
+$)
+${
+	$v ph ps x y A B $.
+	$d ph x y $.
+	$d A y $.
+	e0 $e |- ( ( ph /\ ( x e. A /\ y e. B ) ) -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	pralrimivva $p |- ( ph -> A. x e. A A. y e. B ps ) $=
+	e0 f0 f2 asup_set_class f4 awcel f3 asup_set_class f5 awcel awa f1 pex f0 f1 f2 f3 f4 f5 pralrimivv $.
+$}
+$( /* Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
+       quantifier version with triple quantification.)  (Contributed by Mario
+       Carneiro, 9-Jul-2014.) */
+
+$)
+${
+	$v ph ps x y z A B C $.
+	$d ph x y z $.
+	$d A y z $.
+	$d B z $.
+	e0 $e |- ( ( ph /\ ( x e. A /\ y e. B /\ z e. C ) ) -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f set z $.
+	f5 $f class A $.
+	f6 $f class B $.
+	f7 $f class C $.
+	pralrimivvva $p |- ( ph -> A. x e. A A. y e. B A. z e. C ps ) $=
+	e0 f0 f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel f4 asup_set_class f7 awcel f1 p3exp2 f0 f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel f4 asup_set_class f7 awcel f1 pimp41 f0 f2 asup_set_class f5 awcel awa f3 asup_set_class f6 awcel awa f1 f4 f7 pralrimiva f0 f2 asup_set_class f5 awcel awa f1 f4 f7 awral f3 f6 pralrimiva f0 f1 f4 f7 awral f3 f6 awral f2 f5 pralrimiva $.
+$}
+$( /* Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
+       quantifier version with double quantification.)  (Contributed by NM,
+       1-Jun-2005.) */
+
+$)
+${
+	$v ph ps ch x y A B $.
+	$d x y ph $.
+	$d x y ps $.
+	$d y A $.
+	e0 $e |- ( ph -> ( ps -> ( ( x e. A /\ y e. B ) -> ch ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	f6 $f class B $.
+	pralrimdvv $p |- ( ph -> ( ps -> A. x e. A A. y e. B ch ) ) $=
+	e0 f0 f1 f3 asup_set_class f5 awcel f4 asup_set_class f6 awcel awa f2 awi pimp f0 f1 awa f2 f3 f4 f5 f6 pralrimivv f0 f1 f2 f4 f6 awral f3 f5 awral pex $.
+$}
+$( /* Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
+       quantifier version with double quantification.)  (Contributed by NM,
+       2-Feb-2008.) */
+
+$)
+${
+	$v ph ps ch x y A B $.
+	$d x y ph $.
+	$d x y ps $.
+	$d y A $.
+	e0 $e |- ( ( ph /\ ( x e. A /\ y e. B ) ) -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	f6 $f class B $.
+	pralrimdvva $p |- ( ph -> ( ps -> A. x e. A A. y e. B ch ) ) $=
+	e0 f0 f3 asup_set_class f5 awcel f4 asup_set_class f6 awcel awa f1 f2 awi pex f0 f3 asup_set_class f5 awcel f4 asup_set_class f6 awcel awa f1 f2 pcom23 f0 f1 f2 f3 f4 f5 f6 pralrimdvv $.
+$}
+$( /* Generalization rule for restricted quantification.  (Contributed by NM,
+       30-May-1999.) */
+
+$)
+${
+	$v ph x y A B $.
+	$d x y $.
+	$d y A $.
+	e0 $e |- ( ( x e. A /\ y e. B ) -> ph ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	prgen2 $p |- A. x e. A A. y e. B ph $=
+	e0 f1 asup_set_class f3 awcel f0 f2 f4 pralrimiva f0 f2 f4 awral f1 f3 prgen $.
+$}
+$( /* Generalization rule for restricted quantification.  (Contributed by NM,
+       12-Jan-2008.) */
+
+$)
+${
+	$v ph x y z A B C $.
+	$d y z A $.
+	$d z B $.
+	$d x y z $.
+	e0 $e |- ( ( x e. A /\ y e. B /\ z e. C ) -> ph ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	f4 $f class A $.
+	f5 $f class B $.
+	f6 $f class C $.
+	prgen3 $p |- A. x e. A A. y e. B A. z e. C ph $=
+	e0 f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel f0 p3expa f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel awa f0 f3 f6 pralrimiva f0 f3 f6 awral f1 f2 f4 f5 prgen2 $.
+$}
+$( /* Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
+       quantifier version.)  (Contributed by NM, 20-Nov-1994.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- ( ph -> A. x e. A ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.21bi $p |- ( ( ph /\ x e. A ) -> ps ) $=
+	e0 f1 f2 f3 adf-ral f0 f1 f2 f3 awral f2 asup_set_class f3 awcel f1 awi f2 awal psylib f0 f2 asup_set_class f3 awcel f1 awi f2 p19.21bi f0 f2 asup_set_class f3 awcel f1 pimp $.
+$}
+$( /* Specialization rule for restricted quantification.  (Contributed by NM,
+       20-Nov-1994.) */
+
+$)
+${
+	$v ph x y A B $.
+	e0 $e |- A. x e. A A. y e. B ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	prspec2 $p |- ( ( x e. A /\ y e. B ) -> ph ) $=
+	e0 f0 f2 f4 awral f1 f3 prspec f1 asup_set_class f3 awcel f0 f2 f4 pr19.21bi $.
+$}
+$( /* Specialization rule for restricted quantification.  (Contributed by NM,
+       20-Nov-1994.) */
+
+$)
+${
+	$v ph x y z A B C $.
+	e0 $e |- A. x e. A A. y e. B A. z e. C ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	f4 $f class A $.
+	f5 $f class B $.
+	f6 $f class C $.
+	prspec3 $p |- ( ( x e. A /\ y e. B /\ z e. C ) -> ph ) $=
+	e0 f0 f3 f6 awral f1 f2 f4 f5 prspec2 f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel awa f0 f3 f6 pr19.21bi f1 asup_set_class f4 awcel f2 asup_set_class f5 awcel f3 asup_set_class f6 awcel f0 p3impa $.
+$}
+$( /* Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
+       quantifier version.)  (Contributed by NM, 21-Nov-1994.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- ( ph -> A. x e. A ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.21be $p |- A. x e. A ( ph -> ps ) $=
+	e0 f0 f1 f2 f3 pr19.21bi f0 f2 asup_set_class f3 awcel f1 pexpcom f0 f1 awi f2 f3 prgen $.
+$}
+$( /* Inference adding restricted existential quantifier to negated wff.
+       (Contributed by NM, 16-Oct-2003.) */
+
+$)
+${
+	$v ps x A $.
+	e0 $e |- ( x e. A -> -. ps ) $.
+	f0 $f wff ps $.
+	f1 $f set x $.
+	f2 $f class A $.
+	pnrex $p |- -. E. x e. A ps $=
+	e0 f0 awn f1 f2 prgen f0 f1 f2 pralnex f0 awn f1 f2 awral f0 f1 f2 awrex awn pmpbi $.
+$}
+$( /* Deduction adding restricted existential quantifier to negated wff.
+       (Contributed by NM, 16-Oct-2003.) */
+
+$)
+${
+	$v ph ps x A $.
+	$d x ph $.
+	e0 $e |- ( ( ph /\ x e. A ) -> -. ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pnrexdv $p |- ( ph -> -. E. x e. A ps ) $=
+	e0 f0 f1 awn f2 f3 pralrimiva f1 f2 f3 pralnex f0 f1 awn f2 f3 awral f1 f2 f3 awrex awn psylib $.
+$}
+$( /* Theorem 19.22 of [Margaris] p. 90.  (Restricted quantifier version.)
+     (Contributed by NM, 22-Nov-1994.)  (Proof shortened by Andrew Salmon,
+     30-May-2011.) */
+
+$)
+${
+	$v ph ps x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	prexim $p |- ( A. x e. A ( ph -> ps ) -> ( E. x e. A ph -> E. x e. A ps ) ) $=
+	f0 f1 pcon3 f0 f1 awi f1 awn f0 awn f2 f3 pral2imi f0 f1 awi f2 f3 awral f1 awn f2 f3 awral f0 awn f2 f3 awral pcon3d f0 f2 f3 pdfrex2 f1 f2 f3 pdfrex2 f0 f1 awi f2 f3 awral f0 awn f2 f3 awral awn f1 awn f2 f3 awral awn f0 f2 f3 awrex f1 f2 f3 awrex p3imtr4g $.
+$}
+$( /* Inference quantifying both antecedent and consequent.  (Contributed by
+       NM, 10-Feb-1997.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- ( x e. A -> ( ph -> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	preximia $p |- ( E. x e. A ph -> E. x e. A ps ) $=
+	f0 f1 f2 f3 prexim e0 f0 f1 awi f0 f2 f3 awrex f1 f2 f3 awrex awi f2 f3 pmprg $.
+$}
+$( /* Inference quantifying both antecedent and consequent, based on Theorem
+       19.22 of [Margaris] p. 90.  (Contributed by NM, 8-Nov-2004.) */
+
+$)
+${
+	$v ph ps x A B $.
+	e0 $e |- ( ( x e. A /\ ph ) -> ( x e. B /\ ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class B $.
+	preximi2 $p |- ( E. x e. A ph -> E. x e. B ps ) $=
+	e0 f2 asup_set_class f3 awcel f0 awa f2 asup_set_class f4 awcel f1 awa f2 peximi f0 f2 f3 adf-rex f1 f2 f4 adf-rex f2 asup_set_class f3 awcel f0 awa f2 awex f2 asup_set_class f4 awcel f1 awa f2 awex f0 f2 f3 awrex f1 f2 f4 awrex p3imtr4i $.
+$}
+$( /* Inference quantifying both antecedent and consequent.  (Contributed by
+       NM, 18-Oct-1996.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- ( ph -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	preximi $p |- ( E. x e. A ph -> E. x e. A ps ) $=
+	e0 f0 f1 awi f2 asup_set_class f3 awcel pa1i f0 f1 f2 f3 preximia $.
+$}
+$( /* Deduction from Theorem 19.22 of [Margaris] p. 90.  (Restricted
+       quantifier version.)  (Contributed by NM, 31-Aug-1999.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- ( ph -> ( x e. A -> ( ps -> ch ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	preximdai $p |- ( ph -> ( E. x e. A ps -> E. x e. A ch ) ) $=
+	e0 e1 f0 f1 f2 awi f3 f4 pralrimi f1 f2 f3 f4 prexim f0 f1 f2 awi f3 f4 awral f1 f3 f4 awrex f2 f3 f4 awrex awi psyl $.
+$}
+$( /* Deduction quantifying both antecedent and consequent, based on Theorem
+       19.22 of [Margaris] p. 90.  (Contributed by NM, 17-Sep-2003.) */
+
+$)
+${
+	$v ph ps ch x A B $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( ( x e. A /\ ps ) -> ( x e. B /\ ch ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	f5 $f class B $.
+	preximdv2 $p |- ( ph -> ( E. x e. A ps -> E. x e. B ch ) ) $=
+	e0 f0 f3 asup_set_class f4 awcel f1 awa f3 asup_set_class f5 awcel f2 awa f3 peximdv f1 f3 f4 adf-rex f2 f3 f5 adf-rex f0 f3 asup_set_class f4 awcel f1 awa f3 awex f3 asup_set_class f5 awcel f2 awa f3 awex f1 f3 f4 awrex f2 f3 f5 awrex p3imtr4g $.
+$}
+$( /* Deduction quantifying both antecedent and consequent, based on Theorem
+       19.22 of [Margaris] p. 90.  (Contributed by NM, 14-Nov-2002.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( x e. A -> ( ps -> ch ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	preximdvai $p |- ( ph -> ( E. x e. A ps -> E. x e. A ch ) ) $=
+	f0 f3 pnfv e0 f0 f1 f2 f3 f4 preximdai $.
+$}
+$( /* Deduction from Theorem 19.22 of [Margaris] p. 90.  (Restricted
+       quantifier version with strong hypothesis.)  (Contributed by NM,
+       24-Jun-1998.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	preximdv $p |- ( ph -> ( E. x e. A ps -> E. x e. A ch ) ) $=
+	e0 f0 f1 f2 awi f3 asup_set_class f4 awcel pa1d f0 f1 f2 f3 f4 preximdvai $.
+$}
+$( /* Deduction quantifying both antecedent and consequent, based on Theorem
+       19.22 of [Margaris] p. 90.  (Contributed by NM, 22-May-1999.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	e0 $e |- ( ( ph /\ x e. A ) -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	preximdva $p |- ( ph -> ( E. x e. A ps -> E. x e. A ch ) ) $=
+	e0 f0 f3 asup_set_class f4 awcel f1 f2 awi pex f0 f1 f2 f3 f4 preximdvai $.
+$}
+$( /* Theorem 19.12 of [Margaris] p. 89 with restricted quantifiers.
+       (Contributed by NM, 15-Oct-2003.)  (Proof shortened by Andrew Salmon,
+       30-May-2011.) */
+
+$)
+${
+	$v ph x y A B $.
+	$d x y $.
+	$d y A $.
+	$d x B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	pr19.12 $p |- ( E. x e. A A. y e. B ph -> A. y e. B E. x e. A ph ) $=
+	f2 f3 pnfcv f0 f2 f4 pnfra1 f0 f2 f4 awral f2 f1 f3 pnfrex f0 f2 f4 awral f1 f3 awrex f2 asup_set_class f4 awcel aax-1 f0 f2 f4 awral f1 f3 awrex f0 f2 f4 awral f1 f3 awrex f2 f4 pralrimi f0 f2 f4 prsp f0 f2 f4 awral f2 asup_set_class f4 awcel f0 pcom12 f2 asup_set_class f4 awcel f0 f2 f4 awral f0 f1 f3 preximdv f0 f2 f4 awral f1 f3 awrex f0 f1 f3 awrex f2 f4 pralimia f0 f2 f4 awral f1 f3 awrex f0 f2 f4 awral f1 f3 awrex f2 f4 awral f0 f1 f3 awrex f2 f4 awral psyl $.
+$}
+$( /* Closed theorem form of ~ r19.23 .  (Contributed by NM, 4-Mar-2013.)
+     (Revised by Mario Carneiro, 8-Oct-2016.) */
+
+$)
+${
+	$v ph ps x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.23t $p |- ( F/ x ps -> ( A. x e. A ( ph -> ps ) <-> ( E. x e. A ph -> ps ) ) ) $=
+	f2 asup_set_class f3 awcel f0 awa f1 f2 p19.23t f0 f1 awi f2 f3 adf-ral f2 asup_set_class f3 awcel f0 f1 pimpexp f2 asup_set_class f3 awcel f0 awa f1 awi f2 asup_set_class f3 awcel f0 f1 awi awi f2 palbii f0 f1 awi f2 f3 awral f2 asup_set_class f3 awcel f0 f1 awi awi f2 awal f2 asup_set_class f3 awcel f0 awa f1 awi f2 awal pbitr4i f0 f2 f3 adf-rex f0 f2 f3 awrex f2 asup_set_class f3 awcel f0 awa f2 awex f1 pimbi1i f1 f2 awnf f2 asup_set_class f3 awcel f0 awa f1 awi f2 awal f2 asup_set_class f3 awcel f0 awa f2 awex f1 awi f0 f1 awi f2 f3 awral f0 f2 f3 awrex f1 awi p3bitr4g $.
+$}
+$( /* Theorem 19.23 of [Margaris] p. 90 with restricted quantifiers.
+       (Contributed by NM, 22-Oct-2010.)  (Proof shortened by Mario Carneiro,
+       8-Oct-2016.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- F/ x ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.23 $p |- ( A. x e. A ( ph -> ps ) <-> ( E. x e. A ph -> ps ) ) $=
+	e0 f0 f1 f2 f3 pr19.23t f1 f2 awnf f0 f1 awi f2 f3 awral f0 f2 f3 awrex f1 awi awb aax-mp $.
+$}
+$( /* Theorem 19.23 of [Margaris] p. 90 with restricted quantifiers.
+       (Contributed by NM, 31-Aug-1999.) */
+
+$)
+${
+	$v ph ps x A $.
+	$d x ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.23v $p |- ( A. x e. A ( ph -> ps ) <-> ( E. x e. A ph -> ps ) ) $=
+	f1 f2 pnfv f0 f1 f2 f3 pr19.23 $.
+$}
+$( /* Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
+       quantifier version.)  (Contributed by NM, 30-Nov-2003.)  (Proof
+       shortened by Andrew Salmon, 30-May-2011.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- F/ x ps $.
+	e1 $e |- ( x e. A -> ( ph -> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	prexlimi $p |- ( E. x e. A ph -> ps ) $=
+	e1 f0 f1 awi f2 f3 prgen e0 f0 f1 f2 f3 pr19.23 f0 f1 awi f2 f3 awral f0 f2 f3 awrex f1 awi pmpbi $.
+$}
+$( /* Inference from Theorem 19.23 of [Margaris] p. 90.  (Restricted
+       quantifier version.)  (Contributed by NM, 20-Nov-1994.) */
+
+$)
+${
+	$v ph ps x A $.
+	$d x ps $.
+	e0 $e |- ( x e. A -> ( ph -> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	prexlimiv $p |- ( E. x e. A ph -> ps ) $=
+	f1 f2 pnfv e0 f0 f1 f2 f3 prexlimi $.
+$}
+$( /* Inference from Theorem 19.23 of [Margaris] p. 90 (restricted quantifier
+       version).  (Contributed by NM, 18-Dec-2006.) */
+
+$)
+${
+	$v ph ps x A $.
+	$d x ps $.
+	e0 $e |- ( ( x e. A /\ ph ) -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	prexlimiva $p |- ( E. x e. A ph -> ps ) $=
+	e0 f2 asup_set_class f3 awcel f0 f1 pex f0 f1 f2 f3 prexlimiv $.
+$}
+$( /* Weaker version of ~ rexlimiv .  (Contributed by FL, 19-Sep-2011.) */
+
+$)
+${
+	$v ph ps x A $.
+	$d ps x $.
+	e0 $e |- ( ph -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	prexlimivw $p |- ( E. x e. A ph -> ps ) $=
+	e0 f0 f1 awi f2 asup_set_class f3 awcel pa1i f0 f1 f2 f3 prexlimiv $.
+$}
+$( /* Deduction from Theorem 19.23 of [Margaris] p. 90 (restricted quantifier
+       version).  (Contributed by NM, 27-May-1998.)  (Proof shortened by Andrew
+       Salmon, 30-May-2011.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- F/ x ch $.
+	e2 $e |- ( ph -> ( x e. A -> ( ps -> ch ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	prexlimd $p |- ( ph -> ( E. x e. A ps -> ch ) ) $=
+	e0 e2 f0 f1 f2 awi f3 f4 pralrimi e1 f1 f2 f3 f4 pr19.23 f0 f1 f2 awi f3 f4 awral f1 f3 f4 awrex f2 awi psylib $.
+$}
+$( /* Version of ~ rexlimd with deduction version of second hypothesis.
+       (Contributed by NM, 21-Jul-2013.)  (Revised by Mario Carneiro,
+       8-Oct-2016.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- ( ph -> F/ x ch ) $.
+	e2 $e |- ( ph -> ( x e. A -> ( ps -> ch ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	prexlimd2 $p |- ( ph -> ( E. x e. A ps -> ch ) ) $=
+	e0 e2 f0 f1 f2 awi f3 f4 pralrimi e1 f1 f2 f3 f4 pr19.23t f0 f2 f3 awnf f1 f2 awi f3 f4 awral f1 f3 f4 awrex f2 awi awb psyl f0 f1 f2 awi f3 f4 awral f1 f3 f4 awrex f2 awi pmpbid $.
+$}
+$( /* Inference from Theorem 19.23 of [Margaris] p. 90 (restricted quantifier
+       version).  (Contributed by NM, 14-Nov-2002.)  (Proof shortened by Eric
+       Schmidt, 22-Dec-2006.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	$d x ch $.
+	e0 $e |- ( ph -> ( x e. A -> ( ps -> ch ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	prexlimdv $p |- ( ph -> ( E. x e. A ps -> ch ) ) $=
+	f0 f3 pnfv f2 f3 pnfv e0 f0 f1 f2 f3 f4 prexlimd $.
+$}
+$( /* Inference from Theorem 19.23 of [Margaris] p. 90 (restricted quantifier
+       version).  (Contributed by NM, 20-Jan-2007.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	$d x ch $.
+	e0 $e |- ( ( ph /\ x e. A ) -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	prexlimdva $p |- ( ph -> ( E. x e. A ps -> ch ) ) $=
+	e0 f0 f3 asup_set_class f4 awcel f1 f2 awi pex f0 f1 f2 f3 f4 prexlimdv $.
+$}
+$( /* Inference from Theorem 19.23 of [Margaris] p. 90 (restricted quantifier
+       version).  (Contributed by Mario Carneiro, 15-Jun-2016.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	$d x ch $.
+	e0 $e |- ( ( ph /\ ( x e. A /\ ps ) ) -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	prexlimdvaa $p |- ( ph -> ( E. x e. A ps -> ch ) ) $=
+	e0 f0 f3 asup_set_class f4 awcel f1 f2 pexpr f0 f1 f2 f3 f4 prexlimdva $.
+$}
+$( /* Inference from Theorem 19.23 of [Margaris] p. 90 (restricted quantifier
+       version).  Frequently-used variant of ~ rexlimdv .  (Contributed by NM,
+       7-Jun-2015.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	$d x ch $.
+	e0 $e |- ( ( ph /\ x e. A /\ ps ) -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	prexlimdv3a $p |- ( ph -> ( E. x e. A ps -> ch ) ) $=
+	e0 f0 f3 asup_set_class f4 awcel f1 f2 p3exp f0 f1 f2 f3 f4 prexlimdv $.
+$}
+$( /* Inference from Theorem 19.23 of [Margaris] p. 90 (restricted quantifier
+       version).  (Contributed by NM, 18-Jun-2014.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	$d x ch $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	prexlimdvw $p |- ( ph -> ( E. x e. A ps -> ch ) ) $=
+	e0 f0 f1 f2 awi f3 asup_set_class f4 awcel pa1d f0 f1 f2 f3 f4 prexlimdv $.
+$}
+$( /* Restricted existential elimination rule of natural deduction.
+       (Contributed by Mario Carneiro, 15-Jun-2016.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	$d x ch $.
+	e0 $e |- ( ph -> E. x e. A ps ) $.
+	e1 $e |- ( ( ph /\ ( x e. A /\ ps ) ) -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	prexlimddv $p |- ( ph -> ch ) $=
+	e0 e1 f0 f1 f2 f3 f4 prexlimdvaa f0 f1 f3 f4 awrex f2 pmpd $.
+$}
+$( /* Inference from Theorem 19.23 of [Margaris] p. 90 (restricted quantifier
+       version).  (Contributed by NM, 17-Feb-2004.) */
+
+$)
+${
+	$v ph ps x y A B $.
+	$d x y ps $.
+	$d y A $.
+	e0 $e |- ( ( x e. A /\ y e. B ) -> ( ph -> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	prexlimivv $p |- ( E. x e. A E. y e. B ph -> ps ) $=
+	e0 f2 asup_set_class f4 awcel f0 f1 f3 f5 prexlimdva f0 f3 f5 awrex f1 f2 f4 prexlimiv $.
+$}
+$( /* Inference from Theorem 19.23 of [Margaris] p. 90.  (Restricted
+       quantifier version.)  (Contributed by NM, 22-Jul-2004.) */
+
+$)
+${
+	$v ph ps ch x y A B $.
+	$d x y ph $.
+	$d x y ch $.
+	$d y A $.
+	e0 $e |- ( ph -> ( ( x e. A /\ y e. B ) -> ( ps -> ch ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	f6 $f class B $.
+	prexlimdvv $p |- ( ph -> ( E. x e. A E. y e. B ps -> ch ) ) $=
+	e0 f0 f3 asup_set_class f5 awcel f4 asup_set_class f6 awcel f1 f2 awi pexpdimp f0 f3 asup_set_class f5 awcel awa f1 f2 f4 f6 prexlimdv f0 f1 f4 f6 awrex f2 f3 f5 prexlimdva $.
+$}
+$( /* Inference from Theorem 19.23 of [Margaris] p. 90.  (Restricted
+       quantifier version.)  (Contributed by NM, 18-Jun-2014.) */
+
+$)
+${
+	$v ph ps ch x y A B $.
+	$d x y ph $.
+	$d x y ch $.
+	$d y A $.
+	e0 $e |- ( ( ph /\ ( x e. A /\ y e. B ) ) -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	f6 $f class B $.
+	prexlimdvva $p |- ( ph -> ( E. x e. A E. y e. B ps -> ch ) ) $=
+	e0 f0 f3 asup_set_class f5 awcel f4 asup_set_class f6 awcel awa f1 f2 awi pex f0 f1 f2 f3 f4 f5 f6 prexlimdvv $.
+$}
+$( /* Theorem 19.26 of [Margaris] p. 90 with restricted quantifiers.
+     (Contributed by NM, 28-Jan-1997.)  (Proof shortened by Andrew Salmon,
+     30-May-2011.) */
+
+$)
+${
+	$v ph ps x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.26 $p |- ( A. x e. A ( ph /\ ps ) <-> ( A. x e. A ph /\ A. x e. A ps ) ) $=
+	f0 f1 psimpl f0 f1 awa f0 f2 f3 pralimi f0 f1 psimpr f0 f1 awa f1 f2 f3 pralimi f0 f1 awa f2 f3 awral f0 f2 f3 awral f1 f2 f3 awral pjca f0 f1 ppm3.2 f0 f1 f0 f1 awa f2 f3 pral2imi f0 f2 f3 awral f1 f2 f3 awral f0 f1 awa f2 f3 awral pimp f0 f1 awa f2 f3 awral f0 f2 f3 awral f1 f2 f3 awral awa pimpbii $.
+$}
+$( /* Theorem 19.26 of [Margaris] p. 90 with 2 restricted quantifiers.
+     (Contributed by NM, 10-Aug-2004.) */
+
+$)
+${
+	$v ph ps x y A B $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	pr19.26-2 $p |- ( A. x e. A A. y e. B ( ph /\ ps ) <-> ( A. x e. A A. y e. B ph /\ A. x e. A A. y e. B ps ) ) $=
+	f0 f1 f3 f5 pr19.26 f0 f1 awa f3 f5 awral f0 f3 f5 awral f1 f3 f5 awral awa f2 f4 pralbii f0 f3 f5 awral f1 f3 f5 awral f2 f4 pr19.26 f0 f1 awa f3 f5 awral f2 f4 awral f0 f3 f5 awral f1 f3 f5 awral awa f2 f4 awral f0 f3 f5 awral f2 f4 awral f1 f3 f5 awral f2 f4 awral awa pbitri $.
+$}
+$( /* Theorem 19.26 of [Margaris] p. 90 with 3 restricted quantifiers.
+     (Contributed by FL, 22-Nov-2010.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	pr19.26-3 $p |- ( A. x e. A ( ph /\ ps /\ ch ) <-> ( A. x e. A ph /\ A. x e. A ps /\ A. x e. A ch ) ) $=
+	f0 f1 f2 adf-3an f0 f1 f2 aw3a f0 f1 awa f2 awa f3 f4 pralbii f0 f1 awa f2 f3 f4 pr19.26 f0 f1 f3 f4 pr19.26 f0 f1 awa f3 f4 awral f0 f3 f4 awral f1 f3 f4 awral awa f2 f3 f4 awral panbi1i f0 f3 f4 awral f1 f3 f4 awral f2 f3 f4 awral adf-3an f0 f1 awa f3 f4 awral f2 f3 f4 awral awa f0 f3 f4 awral f1 f3 f4 awral awa f2 f3 f4 awral awa f0 f3 f4 awral f1 f3 f4 awral f2 f3 f4 awral aw3a pbitr4i f0 f1 f2 aw3a f3 f4 awral f0 f1 awa f2 awa f3 f4 awral f0 f1 awa f3 f4 awral f2 f3 f4 awral awa f0 f3 f4 awral f1 f3 f4 awral f2 f3 f4 awral aw3a p3bitri $.
+$}
+$( /* Theorem 19.26 of [Margaris] p. 90 with mixed quantifiers.  (Contributed by
+     NM, 22-Feb-2004.) */
+
+$)
+${
+	$v ph ps x A B $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class B $.
+	pr19.26m $p |- ( A. x ( ( x e. A -> ph ) /\ ( x e. B -> ps ) ) <-> ( A. x e. A ph /\ A. x e. B ps ) ) $=
+	f2 asup_set_class f3 awcel f0 awi f2 asup_set_class f4 awcel f1 awi f2 p19.26 f0 f2 f3 adf-ral f1 f2 f4 adf-ral f0 f2 f3 awral f2 asup_set_class f3 awcel f0 awi f2 awal f1 f2 f4 awral f2 asup_set_class f4 awcel f1 awi f2 awal panbi12i f2 asup_set_class f3 awcel f0 awi f2 asup_set_class f4 awcel f1 awi awa f2 awal f2 asup_set_class f3 awcel f0 awi f2 awal f2 asup_set_class f4 awcel f1 awi f2 awal awa f0 f2 f3 awral f1 f2 f4 awral awa pbitr4i $.
+$}
+$( /* Distribute a restricted universal quantifier over a biconditional.
+     Theorem 19.15 of [Margaris] p. 90 with restricted quantification.
+     (Contributed by NM, 6-Oct-2003.) */
+
+$)
+${
+	$v ph ps x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pralbi $p |- ( A. x e. A ( ph <-> ps ) -> ( A. x e. A ph <-> A. x e. A ps ) ) $=
+	f0 f1 awb f2 f3 pnfra1 f0 f1 awb f2 f3 prsp f0 f1 awb f2 f3 awral f2 asup_set_class f3 awcel f0 f1 awb pimp f0 f1 awb f2 f3 awral f0 f1 f2 f3 pralbida $.
+$}
+$( /* Split a biconditional and distribute quantifier.  (Contributed by NM,
+     3-Jun-2012.) */
+
+$)
+${
+	$v ph ps x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pralbiim $p |- ( A. x e. A ( ph <-> ps ) <-> ( A. x e. A ( ph -> ps ) /\ A. x e. A ( ps -> ph ) ) ) $=
+	f0 f1 pdfbi2 f0 f1 awb f0 f1 awi f1 f0 awi awa f2 f3 pralbii f0 f1 awi f1 f0 awi f2 f3 pr19.26 f0 f1 awb f2 f3 awral f0 f1 awi f1 f0 awi awa f2 f3 awral f0 f1 awi f2 f3 awral f1 f0 awi f2 f3 awral awa pbitri $.
+$}
+$( /* Restricted version of one direction of Theorem 19.27 of [Margaris]
+       p. 90.  (The other direction doesn't hold when ` A ` is empty.)
+       (Contributed by NM, 3-Jun-2004.)  (Proof shortened by Andrew Salmon,
+       30-May-2011.) */
+
+$)
+${
+	$v ph ps x A $.
+	$d x ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.27av $p |- ( ( A. x e. A ph /\ ps ) -> A. x e. A ( ph /\ ps ) ) $=
+	f1 f2 asup_set_class f3 awcel aax-1 f1 f1 f2 f3 pralrimiv f1 f1 f2 f3 awral f0 f2 f3 awral panim2i f0 f1 f2 f3 pr19.26 f0 f2 f3 awral f1 awa f0 f2 f3 awral f1 f2 f3 awral awa f0 f1 awa f2 f3 awral psylibr $.
+$}
+$( /* Restricted version of one direction of Theorem 19.28 of [Margaris]
+       p. 90.  (The other direction doesn't hold when ` A ` is empty.)
+       (Contributed by NM, 2-Apr-2004.) */
+
+$)
+${
+	$v ph ps x A $.
+	$d x ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.28av $p |- ( ( ph /\ A. x e. A ps ) -> A. x e. A ( ph /\ ps ) ) $=
+	f1 f0 f2 f3 pr19.27av f0 f1 f2 f3 awral pancom f0 f1 pancom f0 f1 awa f1 f0 awa f2 f3 pralbii f1 f2 f3 awral f0 awa f1 f0 awa f2 f3 awral f0 f1 f2 f3 awral awa f0 f1 awa f2 f3 awral p3imtr4i $.
+$}
+$( /* Theorem 19.29 of [Margaris] p. 90 with restricted quantifiers.
+     (Contributed by NM, 31-Aug-1999.)  (Proof shortened by Andrew Salmon,
+     30-May-2011.) */
+
+$)
+${
+	$v ph ps x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.29 $p |- ( ( A. x e. A ph /\ E. x e. A ps ) -> E. x e. A ( ph /\ ps ) ) $=
+	f0 f1 ppm3.2 f0 f1 f0 f1 awa awi f2 f3 pralimi f1 f0 f1 awa f2 f3 prexim f0 f2 f3 awral f1 f0 f1 awa awi f2 f3 awral f1 f2 f3 awrex f0 f1 awa f2 f3 awrex awi psyl f0 f2 f3 awral f1 f2 f3 awrex f0 f1 awa f2 f3 awrex pimp $.
+$}
+$( /* Variation of Theorem 19.29 of [Margaris] p. 90 with restricted
+     quantifiers.  (Contributed by NM, 31-Aug-1999.) */
+
+$)
+${
+	$v ph ps x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.29r $p |- ( ( E. x e. A ph /\ A. x e. A ps ) -> E. x e. A ( ph /\ ps ) ) $=
+	f1 f0 f2 f3 pr19.29 f0 f2 f3 awrex f1 f2 f3 awral pancom f0 f1 pancom f0 f1 awa f1 f0 awa f2 f3 prexbii f1 f2 f3 awral f0 f2 f3 awrex awa f1 f0 awa f2 f3 awrex f0 f2 f3 awrex f1 f2 f3 awral awa f0 f1 awa f2 f3 awrex p3imtr4i $.
+$}
+$( /* Theorem 19.30 of [Margaris] p. 90 with restricted quantifiers.
+     (Contributed by Scott Fenton, 25-Feb-2011.) */
+
+$)
+${
+	$v ph ps x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.30 $p |- ( A. x e. A ( ph \/ ps ) -> ( A. x e. A ph \/ E. x e. A ps ) ) $=
+	f1 awn f0 f2 f3 pralim f0 f1 porcom f1 f0 adf-or f0 f1 awo f1 f0 awo f1 awn f0 awi pbitri f0 f1 awo f1 awn f0 awi f2 f3 pralbii f0 f2 f3 awral f1 awn f2 f3 awral awn porcom f1 f2 f3 pdfrex2 f1 f2 f3 awrex f1 awn f2 f3 awral awn f0 f2 f3 awral porbi2i f1 awn f2 f3 awral f0 f2 f3 awral pimor f0 f2 f3 awral f1 awn f2 f3 awral awn awo f1 awn f2 f3 awral awn f0 f2 f3 awral awo f0 f2 f3 awral f1 f2 f3 awrex awo f1 awn f2 f3 awral f0 f2 f3 awral awi p3bitr4i f1 awn f0 awi f2 f3 awral f1 awn f2 f3 awral f0 f2 f3 awral awi f0 f1 awo f2 f3 awral f0 f2 f3 awral f1 f2 f3 awrex awo p3imtr4i $.
+$}
+$( /* Theorem 19.32 of [Margaris] p. 90 with restricted quantifiers.
+       (Contributed by NM, 25-Nov-2003.) */
+
+$)
+${
+	$v ph ps x A $.
+	$d x ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.32v $p |- ( A. x e. A ( ph \/ ps ) <-> ( ph \/ A. x e. A ps ) ) $=
+	f0 awn f1 f2 f3 pr19.21v f0 f1 adf-or f0 f1 awo f0 awn f1 awi f2 f3 pralbii f0 f1 f2 f3 awral adf-or f0 awn f1 awi f2 f3 awral f0 awn f1 f2 f3 awral awi f0 f1 awo f2 f3 awral f0 f1 f2 f3 awral awo p3bitr4i $.
+$}
+$( /* Restricted quantifier version of Theorem 19.35 of [Margaris] p. 90.
+     (Contributed by NM, 20-Sep-2003.) */
+
+$)
+${
+	$v ph ps x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.35 $p |- ( E. x e. A ( ph -> ps ) <-> ( A. x e. A ph -> E. x e. A ps ) ) $=
+	f0 f1 awn f2 f3 pr19.26 f0 f1 pannim f0 f1 awn awa f0 f1 awi awn f2 f3 pralbii f0 f2 f3 awral f1 awn f2 f3 awral adf-an f0 f1 awn awa f2 f3 awral f0 f2 f3 awral f1 awn f2 f3 awral awa f0 f1 awi awn f2 f3 awral f0 f2 f3 awral f1 awn f2 f3 awral awn awi awn p3bitr3i f0 f1 awi awn f2 f3 awral f0 f2 f3 awral f1 awn f2 f3 awral awn awi pcon2bii f1 f2 f3 pdfrex2 f1 f2 f3 awrex f1 awn f2 f3 awral awn f0 f2 f3 awral pimbi2i f0 f1 awi f2 f3 pdfrex2 f0 f2 f3 awral f1 awn f2 f3 awral awn awi f0 f1 awi awn f2 f3 awral awn f0 f2 f3 awral f1 f2 f3 awrex awi f0 f1 awi f2 f3 awrex p3bitr4ri $.
+$}
+$( /* One direction of a restricted quantifier version of Theorem 19.36 of
+       [Margaris] p. 90.  The other direction doesn't hold when ` A ` is
+       empty.  (Contributed by NM, 22-Oct-2003.) */
+
+$)
+${
+	$v ph ps x A $.
+	$d x ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.36av $p |- ( E. x e. A ( ph -> ps ) -> ( A. x e. A ph -> ps ) ) $=
+	f0 f1 f2 f3 pr19.35 f2 asup_set_class f3 awcel f1 pidd f1 f1 f2 f3 prexlimiv f1 f2 f3 awrex f1 f0 f2 f3 awral pimim2i f0 f1 awi f2 f3 awrex f0 f2 f3 awral f1 f2 f3 awrex awi f0 f2 f3 awral f1 awi psylbi $.
+$}
+$( /* Restricted version of one direction of Theorem 19.37 of [Margaris]
+       p. 90.  (The other direction doesn't hold when ` A ` is empty.)
+       (Contributed by FL, 13-May-2012.)  (Revised by Mario Carneiro,
+       11-Dec-2016.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- F/ x ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.37 $p |- ( E. x e. A ( ph -> ps ) -> ( ph -> E. x e. A ps ) ) $=
+	f0 f1 f2 f3 pr19.35 e0 f0 f2 asup_set_class f3 awcel aax-1 f0 f0 f2 f3 pralrimi f0 f0 f2 f3 awral f1 f2 f3 awrex pimim1i f0 f1 awi f2 f3 awrex f0 f2 f3 awral f1 f2 f3 awrex awi f0 f1 f2 f3 awrex awi psylbi $.
+$}
+$( /* Restricted version of one direction of Theorem 19.37 of [Margaris]
+       p. 90.  (The other direction doesn't hold when ` A ` is empty.)
+       (Contributed by NM, 2-Apr-2004.) */
+
+$)
+${
+	$v ph ps x A $.
+	$d x ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.37av $p |- ( E. x e. A ( ph -> ps ) -> ( ph -> E. x e. A ps ) ) $=
+	f0 f2 pnfv f0 f1 f2 f3 pr19.37 $.
+$}
+$( /* Restricted quantifier version of Theorem 19.40 of [Margaris] p. 90.
+     (Contributed by NM, 2-Apr-2004.) */
+
+$)
+${
+	$v ph ps x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.40 $p |- ( E. x e. A ( ph /\ ps ) -> ( E. x e. A ph /\ E. x e. A ps ) ) $=
+	f0 f1 psimpl f0 f1 awa f0 f2 f3 preximi f0 f1 psimpr f0 f1 awa f1 f2 f3 preximi f0 f1 awa f2 f3 awrex f0 f2 f3 awrex f1 f2 f3 awrex pjca $.
+$}
+$( /* Restricted quantifier version of Theorem 19.41 of [Margaris] p. 90.
+       (Contributed by NM, 1-Nov-2010.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- F/ x ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.41 $p |- ( E. x e. A ( ph /\ ps ) <-> ( E. x e. A ph /\ ps ) ) $=
+	f2 asup_set_class f3 awcel f0 f1 panass f2 asup_set_class f3 awcel f0 awa f1 awa f2 asup_set_class f3 awcel f0 f1 awa awa f2 pexbii e0 f2 asup_set_class f3 awcel f0 awa f1 f2 p19.41 f2 asup_set_class f3 awcel f0 f1 awa awa f2 awex f2 asup_set_class f3 awcel f0 awa f1 awa f2 awex f2 asup_set_class f3 awcel f0 awa f2 awex f1 awa pbitr3i f0 f1 awa f2 f3 adf-rex f0 f2 f3 adf-rex f0 f2 f3 awrex f2 asup_set_class f3 awcel f0 awa f2 awex f1 panbi1i f2 asup_set_class f3 awcel f0 f1 awa awa f2 awex f2 asup_set_class f3 awcel f0 awa f2 awex f1 awa f0 f1 awa f2 f3 awrex f0 f2 f3 awrex f1 awa p3bitr4i $.
+$}
+$( /* Restricted quantifier version of Theorem 19.41 of [Margaris] p. 90.
+       (Contributed by NM, 17-Dec-2003.) */
+
+$)
+${
+	$v ph ps x A $.
+	$d x ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.41v $p |- ( E. x e. A ( ph /\ ps ) <-> ( E. x e. A ph /\ ps ) ) $=
+	f1 f2 pnfv f0 f1 f2 f3 pr19.41 $.
+$}
+$( /* Restricted version of Theorem 19.42 of [Margaris] p. 90.  (Contributed
+       by NM, 27-May-1998.) */
+
+$)
+${
+	$v ph ps x A $.
+	$d x ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.42v $p |- ( E. x e. A ( ph /\ ps ) <-> ( ph /\ E. x e. A ps ) ) $=
+	f1 f0 f2 f3 pr19.41v f0 f1 pancom f0 f1 awa f1 f0 awa f2 f3 prexbii f0 f1 f2 f3 awrex pancom f1 f0 awa f2 f3 awrex f1 f2 f3 awrex f0 awa f0 f1 awa f2 f3 awrex f0 f1 f2 f3 awrex awa p3bitr4i $.
+$}
+$( /* Restricted version of Theorem 19.43 of [Margaris] p. 90.  (Contributed by
+     NM, 27-May-1998.)  (Proof shortened by Andrew Salmon, 30-May-2011.) */
+
+$)
+${
+	$v ph ps x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.43 $p |- ( E. x e. A ( ph \/ ps ) <-> ( E. x e. A ph \/ E. x e. A ps ) ) $=
+	f0 awn f1 f2 f3 pr19.35 f0 f1 adf-or f0 f1 awo f0 awn f1 awi f2 f3 prexbii f0 f2 f3 awrex f1 f2 f3 awrex adf-or f0 f2 f3 pralnex f0 awn f2 f3 awral f0 f2 f3 awrex awn f1 f2 f3 awrex pimbi1i f0 f2 f3 awrex f1 f2 f3 awrex awo f0 f2 f3 awrex awn f1 f2 f3 awrex awi f0 awn f2 f3 awral f1 f2 f3 awrex awi pbitr4i f0 awn f1 awi f2 f3 awrex f0 awn f2 f3 awral f1 f2 f3 awrex awi f0 f1 awo f2 f3 awrex f0 f2 f3 awrex f1 f2 f3 awrex awo p3bitr4i $.
+$}
+$( /* One direction of a restricted quantifier version of Theorem 19.44 of
+       [Margaris] p. 90.  The other direction doesn't hold when ` A ` is
+       empty.  (Contributed by NM, 2-Apr-2004.) */
+
+$)
+${
+	$v ph ps x A $.
+	$d x ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.44av $p |- ( E. x e. A ( ph \/ ps ) -> ( E. x e. A ph \/ ps ) ) $=
+	f0 f1 f2 f3 pr19.43 f2 asup_set_class f3 awcel f1 pidd f1 f1 f2 f3 prexlimiv f1 f2 f3 awrex f1 f0 f2 f3 awrex porim2i f0 f1 awo f2 f3 awrex f0 f2 f3 awrex f1 f2 f3 awrex awo f0 f2 f3 awrex f1 awo psylbi $.
+$}
+$( /* Restricted version of one direction of Theorem 19.45 of [Margaris]
+       p. 90.  (The other direction doesn't hold when ` A ` is empty.)
+       (Contributed by NM, 2-Apr-2004.) */
+
+$)
+${
+	$v ph ps x A $.
+	$d x ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pr19.45av $p |- ( E. x e. A ( ph \/ ps ) -> ( ph \/ E. x e. A ps ) ) $=
+	f0 f1 f2 f3 pr19.43 f2 asup_set_class f3 awcel f0 pidd f0 f0 f2 f3 prexlimiv f0 f2 f3 awrex f0 f1 f2 f3 awrex porim1i f0 f1 awo f2 f3 awrex f0 f2 f3 awrex f1 f2 f3 awrex awo f0 f1 f2 f3 awrex awo psylbi $.
+$}
+$( /* Commutation of restricted quantifiers.  (Contributed by Mario Carneiro,
+       14-Oct-2016.) */
+
+$)
+${
+	$v ph x y A B $.
+	$d x y $.
+	e0 $e |- F/_ y A $.
+	e1 $e |- F/_ x B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	pralcomf $p |- ( A. x e. A A. y e. B ph <-> A. y e. B A. x e. A ph ) $=
+	f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel f0 pancomsimp f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel awa f0 awi f2 asup_set_class f4 awcel f1 asup_set_class f3 awcel awa f0 awi f1 f2 p2albii f2 asup_set_class f4 awcel f1 asup_set_class f3 awcel awa f0 awi f1 f2 palcom f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel awa f0 awi f2 awal f1 awal f2 asup_set_class f4 awcel f1 asup_set_class f3 awcel awa f0 awi f2 awal f1 awal f2 asup_set_class f4 awcel f1 asup_set_class f3 awcel awa f0 awi f1 awal f2 awal pbitri e0 f0 f1 f2 f3 f4 pr2alf e1 f0 f2 f1 f4 f3 pr2alf f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel awa f0 awi f2 awal f1 awal f2 asup_set_class f4 awcel f1 asup_set_class f3 awcel awa f0 awi f1 awal f2 awal f0 f2 f4 awral f1 f3 awral f0 f1 f3 awral f2 f4 awral p3bitr4i $.
+$}
+$( /* Commutation of restricted quantifiers.  (Contributed by Mario Carneiro,
+       14-Oct-2016.) */
+
+$)
+${
+	$v ph x y A B $.
+	$d x y $.
+	e0 $e |- F/_ y A $.
+	e1 $e |- F/_ x B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	prexcomf $p |- ( E. x e. A E. y e. B ph <-> E. y e. B E. x e. A ph ) $=
+	f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel pancom f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel awa f2 asup_set_class f4 awcel f1 asup_set_class f3 awcel awa f0 panbi1i f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel awa f0 awa f2 asup_set_class f4 awcel f1 asup_set_class f3 awcel awa f0 awa f1 f2 p2exbii f2 asup_set_class f4 awcel f1 asup_set_class f3 awcel awa f0 awa f1 f2 pexcom f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel awa f0 awa f2 awex f1 awex f2 asup_set_class f4 awcel f1 asup_set_class f3 awcel awa f0 awa f2 awex f1 awex f2 asup_set_class f4 awcel f1 asup_set_class f3 awcel awa f0 awa f1 awex f2 awex pbitri e0 f0 f1 f2 f3 f4 pr2exf e1 f0 f2 f1 f4 f3 pr2exf f1 asup_set_class f3 awcel f2 asup_set_class f4 awcel awa f0 awa f2 awex f1 awex f2 asup_set_class f4 awcel f1 asup_set_class f3 awcel awa f0 awa f1 awex f2 awex f0 f2 f4 awrex f1 f3 awrex f0 f1 f3 awrex f2 f4 awrex p3bitr4i $.
+$}
+$( /* Commutation of restricted quantifiers.  (Contributed by NM,
+       13-Oct-1999.)  (Revised by Mario Carneiro, 14-Oct-2016.) */
+
+$)
+${
+	$v ph x y A B $.
+	$d x y $.
+	$d x B $.
+	$d y A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	pralcom $p |- ( A. x e. A A. y e. B ph <-> A. y e. B A. x e. A ph ) $=
+	f2 f3 pnfcv f1 f4 pnfcv f0 f1 f2 f3 f4 pralcomf $.
+$}
+$( /* Commutation of restricted quantifiers.  (Contributed by NM,
+       19-Nov-1995.)  (Revised by Mario Carneiro, 14-Oct-2016.) */
+
+$)
+${
+	$v ph x y A B $.
+	$d x y $.
+	$d x B $.
+	$d y A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	prexcom $p |- ( E. x e. A E. y e. B ph <-> E. y e. B E. x e. A ph ) $=
+	f2 f3 pnfcv f1 f4 pnfcv f0 f1 f2 f3 f4 prexcomf $.
+$}
+$( /* Swap 1st and 3rd restricted existential quantifiers.  (Contributed by
+       NM, 8-Apr-2015.) */
+
+$)
+${
+	$v ph x y z A B C $.
+	$d y z A $.
+	$d x z B $.
+	$d x y C $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	f4 $f class A $.
+	f5 $f class B $.
+	f6 $f class C $.
+	prexcom13 $p |- ( E. x e. A E. y e. B E. z e. C ph <-> E. z e. C E. y e. B E. x e. A ph ) $=
+	f0 f3 f6 awrex f1 f2 f4 f5 prexcom f0 f1 f3 f4 f6 prexcom f0 f3 f6 awrex f1 f4 awrex f0 f1 f4 awrex f3 f6 awrex f2 f5 prexbii f0 f1 f4 awrex f2 f3 f5 f6 prexcom f0 f3 f6 awrex f2 f5 awrex f1 f4 awrex f0 f3 f6 awrex f1 f4 awrex f2 f5 awrex f0 f1 f4 awrex f3 f6 awrex f2 f5 awrex f0 f1 f4 awrex f2 f5 awrex f3 f6 awrex p3bitri $.
+$}
+$( /* Rotate existential restricted quantifiers twice.  (Contributed by NM,
+       8-Apr-2015.) */
+
+$)
+${
+	$v ph x y z w A B C D $.
+	$d w z A $.
+	$d w z B $.
+	$d w x y C $.
+	$d x y z D $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	f4 $f set w $.
+	f5 $f class A $.
+	f6 $f class B $.
+	f7 $f class C $.
+	f8 $f class D $.
+	prexrot4 $p |- ( E. x e. A E. y e. B E. z e. C E. w e. D ph <-> E. z e. C E. w e. D E. x e. A E. y e. B ph ) $=
+	f0 f2 f3 f4 f6 f7 f8 prexcom13 f0 f4 f8 awrex f3 f7 awrex f2 f6 awrex f0 f2 f6 awrex f3 f7 awrex f4 f8 awrex f1 f5 prexbii f0 f2 f6 awrex f1 f4 f3 f5 f8 f7 prexcom13 f0 f4 f8 awrex f3 f7 awrex f2 f6 awrex f1 f5 awrex f0 f2 f6 awrex f3 f7 awrex f4 f8 awrex f1 f5 awrex f0 f2 f6 awrex f1 f5 awrex f4 f8 awrex f3 f7 awrex pbitri $.
+$}
+$( /* Commutation of restricted quantifiers.  Note that ` x ` and ` y `
+       needn't be distinct (this makes the proof longer).  (Contributed by NM,
+       24-Nov-1994.)  (Proof shortened by Mario Carneiro, 17-Oct-2016.) */
+
+$)
+${
+	$v ph x y A $.
+	$d y A $.
+	$d x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	pralcom2 $p |- ( A. x e. A A. y e. A ph -> A. y e. A A. x e. A ph ) $=
+	f1 asup_set_class f2 asup_set_class f3 peleq1 f1 asup_set_class f2 asup_set_class awceq f1 asup_set_class f3 awcel f2 asup_set_class f3 awcel awb f1 psps f1 asup_set_class f2 asup_set_class f3 peleq1 f1 asup_set_class f2 asup_set_class awceq f1 asup_set_class f3 awcel f2 asup_set_class f3 awcel awb f1 psps f1 asup_set_class f2 asup_set_class awceq f1 awal f1 asup_set_class f3 awcel f2 asup_set_class f3 awcel f0 pimbi1d f1 asup_set_class f3 awcel f0 awi f2 asup_set_class f3 awcel f0 awi f1 f2 pdral1 f1 asup_set_class f2 asup_set_class awceq f1 awal f1 asup_set_class f3 awcel f0 awi f1 awal f2 asup_set_class f3 awcel f0 awi f2 awal pbicomd f0 f2 f3 adf-ral f0 f1 f3 adf-ral f1 asup_set_class f2 asup_set_class awceq f1 awal f2 asup_set_class f3 awcel f0 awi f2 awal f1 asup_set_class f3 awcel f0 awi f1 awal f0 f2 f3 awral f0 f1 f3 awral p3bitr4g f1 asup_set_class f2 asup_set_class awceq f1 awal f1 asup_set_class f3 awcel f2 asup_set_class f3 awcel f0 f2 f3 awral f0 f1 f3 awral pimbi12d f1 asup_set_class f3 awcel f0 f2 f3 awral awi f2 asup_set_class f3 awcel f0 f1 f3 awral awi f1 f2 pdral1 f0 f2 f3 awral f1 f3 adf-ral f0 f1 f3 awral f2 f3 adf-ral f1 asup_set_class f2 asup_set_class awceq f1 awal f1 asup_set_class f3 awcel f0 f2 f3 awral awi f1 awal f2 asup_set_class f3 awcel f0 f1 f3 awral awi f2 awal f0 f2 f3 awral f1 f3 awral f0 f1 f3 awral f2 f3 awral p3bitr4g f1 asup_set_class f2 asup_set_class awceq f1 awal f0 f2 f3 awral f1 f3 awral f0 f1 f3 awral f2 f3 awral pbiimpd f1 f2 f2 pnfnae f0 f1 f2 f3 f3 pnfra2 f1 asup_set_class f2 asup_set_class awceq f1 awal awn f0 f2 f3 awral f1 f3 awral f2 pnfan f1 f2 f1 pnfnae f0 f2 f3 awral f1 f3 pnfra1 f1 asup_set_class f2 asup_set_class awceq f1 awal awn f0 f2 f3 awral f1 f3 awral f1 pnfan f1 f2 pnfcvf f1 asup_set_class f2 asup_set_class awceq f1 awal awn f1 f2 asup_set_class awnfc f0 f2 f3 awral f1 f3 awral padantr f1 asup_set_class f2 asup_set_class awceq f1 awal awn f0 f2 f3 awral f1 f3 awral awa f1 f3 pnfcvd f1 asup_set_class f2 asup_set_class awceq f1 awal awn f0 f2 f3 awral f1 f3 awral awa f1 f2 asup_set_class f3 pnfeld f1 asup_set_class f2 asup_set_class awceq f1 awal awn f0 f2 f3 awral f1 f3 awral awa f2 asup_set_class f3 awcel f1 pnfan1 f0 f1 f2 f3 f3 prsp2 f0 f2 f3 awral f1 f3 awral f1 asup_set_class f3 awcel f2 asup_set_class f3 awcel f0 pancomsd f0 f2 f3 awral f1 f3 awral f2 asup_set_class f3 awcel f1 asup_set_class f3 awcel f0 pexpdimp f0 f2 f3 awral f1 f3 awral f2 asup_set_class f3 awcel f1 asup_set_class f3 awcel f0 awi f1 asup_set_class f2 asup_set_class awceq f1 awal awn padantll f1 asup_set_class f2 asup_set_class awceq f1 awal awn f0 f2 f3 awral f1 f3 awral awa f2 asup_set_class f3 awcel awa f0 f1 f3 pralrimi f1 asup_set_class f2 asup_set_class awceq f1 awal awn f0 f2 f3 awral f1 f3 awral awa f2 asup_set_class f3 awcel f0 f1 f3 awral pex f1 asup_set_class f2 asup_set_class awceq f1 awal awn f0 f2 f3 awral f1 f3 awral awa f0 f1 f3 awral f2 f3 pralrimi f1 asup_set_class f2 asup_set_class awceq f1 awal awn f0 f2 f3 awral f1 f3 awral f0 f1 f3 awral f2 f3 awral pex f1 asup_set_class f2 asup_set_class awceq f1 awal f0 f2 f3 awral f1 f3 awral f0 f1 f3 awral f2 f3 awral awi ppm2.61i $.
+$}
+$( /* A commutative law for restricted quantifiers that swaps the domain of
+       the restriction.  (Contributed by NM, 22-Feb-2004.) */
+
+$)
+${
+	$v ph x A B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pralcom3 $p |- ( A. x e. A ( x e. B -> ph ) <-> A. x e. B ( x e. A -> ph ) ) $=
+	f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel f0 ppm2.04 f1 asup_set_class f3 awcel f0 awi f1 asup_set_class f2 awcel f0 awi f1 f2 f3 pralimi2 f1 asup_set_class f3 awcel f1 asup_set_class f2 awcel f0 ppm2.04 f1 asup_set_class f2 awcel f0 awi f1 asup_set_class f3 awcel f0 awi f1 f3 f2 pralimi2 f1 asup_set_class f3 awcel f0 awi f1 f2 awral f1 asup_set_class f2 awcel f0 awi f1 f3 awral pimpbii $.
+$}
+$( /* Rearrange existential quantifiers.  (Contributed by NM, 27-Oct-2010.)
+       (Proof shortened by Andrew Salmon, 30-May-2011.) */
+
+$)
+${
+	$v ph ps x y A B $.
+	$d y A $.
+	$d x B $.
+	$d x y $.
+	e0 $e |- F/ y ph $.
+	e1 $e |- F/ x ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	preean $p |- ( E. x e. A E. y e. B ( ph /\ ps ) <-> ( E. x e. A ph /\ E. y e. B ps ) ) $=
+	f2 asup_set_class f4 awcel f3 asup_set_class f5 awcel f0 f1 pan4 f2 asup_set_class f4 awcel f3 asup_set_class f5 awcel awa f0 f1 awa awa f2 asup_set_class f4 awcel f0 awa f3 asup_set_class f5 awcel f1 awa awa f2 f3 p2exbii f2 asup_set_class f4 awcel f3 pnfv e0 f2 asup_set_class f4 awcel f0 f3 pnfan f3 asup_set_class f5 awcel f2 pnfv e1 f3 asup_set_class f5 awcel f1 f2 pnfan f2 asup_set_class f4 awcel f0 awa f3 asup_set_class f5 awcel f1 awa f2 f3 peean f2 asup_set_class f4 awcel f3 asup_set_class f5 awcel awa f0 f1 awa awa f3 awex f2 awex f2 asup_set_class f4 awcel f0 awa f3 asup_set_class f5 awcel f1 awa awa f3 awex f2 awex f2 asup_set_class f4 awcel f0 awa f2 awex f3 asup_set_class f5 awcel f1 awa f3 awex awa pbitri f0 f1 awa f2 f3 f4 f5 pr2ex f0 f2 f4 adf-rex f1 f3 f5 adf-rex f0 f2 f4 awrex f2 asup_set_class f4 awcel f0 awa f2 awex f1 f3 f5 awrex f3 asup_set_class f5 awcel f1 awa f3 awex panbi12i f2 asup_set_class f4 awcel f3 asup_set_class f5 awcel awa f0 f1 awa awa f3 awex f2 awex f2 asup_set_class f4 awcel f0 awa f2 awex f3 asup_set_class f5 awcel f1 awa f3 awex awa f0 f1 awa f3 f5 awrex f2 f4 awrex f0 f2 f4 awrex f1 f3 f5 awrex awa p3bitr4i $.
+$}
+$( /* Rearrange existential quantifiers.  (Contributed by NM, 9-May-1999.) */
+
+$)
+${
+	$v ph ps x y A B $.
+	$d y ph $.
+	$d x ps $.
+	$d x y $.
+	$d y A $.
+	$d x B $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	preeanv $p |- ( E. x e. A E. y e. B ( ph /\ ps ) <-> ( E. x e. A ph /\ E. y e. B ps ) ) $=
+	f0 f3 pnfv f1 f2 pnfv f0 f1 f2 f3 f4 f5 preean $.
+$}
+$( /* Rearrange three existential quantifiers.  (Contributed by Jeff Madsen,
+       11-Jun-2010.) */
+
+$)
+${
+	$v ph ps ch x y z A B C $.
+	$d ph y z $.
+	$d ps x z $.
+	$d ch x y $.
+	$d A y $.
+	$d B x z $.
+	$d C x y $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f set z $.
+	f6 $f class A $.
+	f7 $f class B $.
+	f8 $f class C $.
+	p3reeanv $p |- ( E. x e. A E. y e. B E. z e. C ( ph /\ ps /\ ch ) <-> ( E. x e. A ph /\ E. y e. B ps /\ E. z e. C ch ) ) $=
+	f0 f1 awa f4 f7 awrex f2 f5 f8 awrex f3 f6 pr19.41v f0 f1 f3 f4 f6 f7 preeanv f0 f1 awa f4 f7 awrex f3 f6 awrex f0 f3 f6 awrex f1 f4 f7 awrex awa f2 f5 f8 awrex panbi1i f0 f1 awa f4 f7 awrex f2 f5 f8 awrex awa f3 f6 awrex f0 f1 awa f4 f7 awrex f3 f6 awrex f2 f5 f8 awrex awa f0 f3 f6 awrex f1 f4 f7 awrex awa f2 f5 f8 awrex awa pbitri f0 f1 f2 adf-3an f0 f1 f2 aw3a f0 f1 awa f2 awa f4 f5 f7 f8 p2rexbii f0 f1 awa f2 f4 f5 f7 f8 preeanv f0 f1 f2 aw3a f5 f8 awrex f4 f7 awrex f0 f1 awa f2 awa f5 f8 awrex f4 f7 awrex f0 f1 awa f4 f7 awrex f2 f5 f8 awrex awa pbitri f0 f1 f2 aw3a f5 f8 awrex f4 f7 awrex f0 f1 awa f4 f7 awrex f2 f5 f8 awrex awa f3 f6 prexbii f0 f3 f6 awrex f1 f4 f7 awrex f2 f5 f8 awrex adf-3an f0 f1 awa f4 f7 awrex f2 f5 f8 awrex awa f3 f6 awrex f0 f3 f6 awrex f1 f4 f7 awrex awa f2 f5 f8 awrex awa f0 f1 f2 aw3a f5 f8 awrex f4 f7 awrex f3 f6 awrex f0 f3 f6 awrex f1 f4 f7 awrex f2 f5 f8 awrex aw3a p3bitr4i $.
+$}
+$( /* Distribute quantification over "or".  (Contributed by Jeff Madsen,
+       19-Jun-2010.) */
+
+$)
+${
+	$v ph ps x y A B $.
+	$d ph y $.
+	$d ps x $.
+	$d A y $.
+	$d B x $.
+	$d x y $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	p2ralor $p |- ( A. x e. A A. y e. B ( ph \/ ps ) <-> ( A. x e. A ph \/ A. y e. B ps ) ) $=
+	f0 f2 f4 prexnal f1 f3 f5 prexnal f0 awn f2 f4 awrex f0 f2 f4 awral awn f1 awn f3 f5 awrex f1 f3 f5 awral awn panbi12i f0 f1 pioran f0 f1 awo awn f0 awn f1 awn awa f3 f5 prexbii f0 f1 awo f3 f5 prexnal f0 awn f1 awn awa f3 f5 awrex f0 f1 awo awn f3 f5 awrex f0 f1 awo f3 f5 awral awn pbitr3i f0 awn f1 awn awa f3 f5 awrex f0 f1 awo f3 f5 awral awn f2 f4 prexbii f0 awn f1 awn f2 f3 f4 f5 preeanv f0 f1 awo f3 f5 awral f2 f4 prexnal f0 awn f1 awn awa f3 f5 awrex f2 f4 awrex f0 f1 awo f3 f5 awral awn f2 f4 awrex f0 awn f2 f4 awrex f1 awn f3 f5 awrex awa f0 f1 awo f3 f5 awral f2 f4 awral awn p3bitr3ri f0 f2 f4 awral f1 f3 f5 awral pioran f0 awn f2 f4 awrex f1 awn f3 f5 awrex awa f0 f2 f4 awral awn f1 f3 f5 awral awn awa f0 f1 awo f3 f5 awral f2 f4 awral awn f0 f2 f4 awral f1 f3 f5 awral awo awn p3bitr4i f0 f1 awo f3 f5 awral f2 f4 awral f0 f2 f4 awral f1 f3 f5 awral awo pcon4bii $.
+$}
+$( /* ` x ` is not free in ` E! x e. A ph ` .  (Contributed by NM,
+     19-Mar-1997.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	pnfreu1 $p |- F/ x E! x e. A ph $=
+	f0 f1 f2 adf-reu f1 asup_set_class f2 awcel f0 awa f1 pnfeu1 f0 f1 f2 awreu f1 asup_set_class f2 awcel f0 awa f1 aweu f1 pnfxfr $.
+$}
+$( /* ` x ` is not free in ` E* x e. A ph ` .  (Contributed by NM,
+     16-Jun-2017.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	pnfrmo1 $p |- F/ x E* x e. A ph $=
+	f0 f1 f2 adf-rmo f1 asup_set_class f2 awcel f0 awa f1 pnfmo1 f0 f1 f2 awrmo f1 asup_set_class f2 awcel f0 awa f1 awmo f1 pnfxfr $.
+$}
+$( /* Deduction version of ~ nfreu .  (Contributed by NM, 15-Feb-2013.)
+       (Revised by Mario Carneiro, 8-Oct-2016.) */
+
+$)
+${
+	$v ph ps x y A $.
+	e0 $e |- F/ y ph $.
+	e1 $e |- ( ph -> F/_ x A ) $.
+	e2 $e |- ( ph -> F/ x ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	pnfreud $p |- ( ph -> F/ x E! y e. A ps ) $=
+	f1 f3 f4 adf-reu e0 f2 f3 pnfcvf f2 asup_set_class f3 asup_set_class awceq f2 awal awn f2 f3 asup_set_class awnfc f0 padantl e1 f0 f2 f4 awnfc f2 asup_set_class f3 asup_set_class awceq f2 awal awn padantr f0 f2 asup_set_class f3 asup_set_class awceq f2 awal awn awa f2 f3 asup_set_class f4 pnfeld e2 f0 f1 f2 awnf f2 asup_set_class f3 asup_set_class awceq f2 awal awn padantr f0 f2 asup_set_class f3 asup_set_class awceq f2 awal awn awa f3 asup_set_class f4 awcel f1 f2 pnfand f0 f3 asup_set_class f4 awcel f1 awa f2 f3 pnfeud2 f1 f3 f4 awreu f3 asup_set_class f4 awcel f1 awa f3 aweu f0 f2 pnfxfrd $.
+$}
+$( /* Deduction version of ~ nfrmo .  (Contributed by NM, 17-Jun-2017.) */
+
+$)
+${
+	$v ph ps x y A $.
+	e0 $e |- F/ y ph $.
+	e1 $e |- ( ph -> F/_ x A ) $.
+	e2 $e |- ( ph -> F/ x ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	pnfrmod $p |- ( ph -> F/ x E* y e. A ps ) $=
+	f1 f3 f4 adf-rmo e0 f2 f3 pnfcvf f2 asup_set_class f3 asup_set_class awceq f2 awal awn f2 f3 asup_set_class awnfc f0 padantl e1 f0 f2 f4 awnfc f2 asup_set_class f3 asup_set_class awceq f2 awal awn padantr f0 f2 asup_set_class f3 asup_set_class awceq f2 awal awn awa f2 f3 asup_set_class f4 pnfeld e2 f0 f1 f2 awnf f2 asup_set_class f3 asup_set_class awceq f2 awal awn padantr f0 f2 asup_set_class f3 asup_set_class awceq f2 awal awn awa f3 asup_set_class f4 awcel f1 f2 pnfand f0 f3 asup_set_class f4 awcel f1 awa f2 f3 pnfmod2 f1 f3 f4 awrmo f3 asup_set_class f4 awcel f1 awa f3 awmo f0 f2 pnfxfrd $.
+$}
+$( /* Bound-variable hypothesis builder for restricted uniqueness.
+       (Contributed by NM, 30-Oct-2010.)  (Revised by Mario Carneiro,
+       8-Oct-2016.) */
+
+$)
+${
+	$v ph x y A $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/ x ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	pnfreu $p |- F/ x E! y e. A ph $=
+	f2 pnftru e0 f1 f3 awnfc awtru pa1i e1 f0 f1 awnf awtru pa1i awtru f0 f1 f2 f3 pnfreud f0 f2 f3 awreu f1 awnf ptrud $.
+$}
+$( /* Bound-variable hypothesis builder for restricted uniqueness.
+       (Contributed by NM, 16-Jun-2017.) */
+
+$)
+${
+	$v ph x y A $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/ x ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	pnfrmo $p |- F/ x E* y e. A ph $=
+	f0 f2 f3 adf-rmo f2 pnftru f1 f2 pnfcvf e0 f1 f3 awnfc f1 asup_set_class f2 asup_set_class awceq f1 awal awn pa1i f1 asup_set_class f2 asup_set_class awceq f1 awal awn f1 f2 asup_set_class f3 pnfeld e1 f0 f1 awnf f1 asup_set_class f2 asup_set_class awceq f1 awal awn pa1i f1 asup_set_class f2 asup_set_class awceq f1 awal awn f2 asup_set_class f3 awcel f0 f1 pnfand f1 asup_set_class f2 asup_set_class awceq f1 awal awn f2 asup_set_class f3 awcel f0 awa f1 awnf awtru padantl awtru f2 asup_set_class f3 awcel f0 awa f1 f2 pnfmod2 f2 asup_set_class f3 awcel f0 awa f2 awmo f1 awnf ptrud f0 f2 f3 awrmo f2 asup_set_class f3 awcel f0 awa f2 awmo f1 pnfxfr $.
+$}
+$( /* An "identity" law of concretion for restricted abstraction.  Special case
+     of Definition 2.1 of [Quine] p. 16.  (Contributed by NM, 9-Oct-2003.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	prabid $p |- ( x e. { x e. A | ph } <-> ( x e. A /\ ph ) ) $=
+	f0 f1 f2 adf-rab f1 asup_set_class f2 awcel f0 awa f1 f0 f1 f2 acrab pabeq2i $.
+$}
+$( /* An "identity" law for restricted class abstraction.  (Contributed by NM,
+       9-Oct-2003.)  (Proof shortened by Andrew Salmon, 30-May-2011.) */
+
+$)
+${
+	$v ph x A $.
+	$d x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	prabid2 $p |- ( A = { x e. A | ph } <-> A. x e. A ph ) $=
+	f1 asup_set_class f2 awcel f0 awa f1 f2 pabeq2 f1 asup_set_class f2 awcel f0 ppm4.71 f1 asup_set_class f2 awcel f0 awi f1 asup_set_class f2 awcel f1 asup_set_class f2 awcel f0 awa awb f1 palbii f2 f1 asup_set_class f2 awcel f0 awa f1 acab awceq f1 asup_set_class f2 awcel f1 asup_set_class f2 awcel f0 awa awb f1 awal f1 asup_set_class f2 awcel f0 awi f1 awal pbitr4i f0 f1 f2 adf-rab f0 f1 f2 acrab f1 asup_set_class f2 awcel f0 awa f1 acab f2 peqeq2i f0 f1 f2 adf-ral f2 f1 asup_set_class f2 awcel f0 awa f1 acab awceq f1 asup_set_class f2 awcel f0 awi f1 awal f2 f0 f1 f2 acrab awceq f0 f1 f2 awral p3bitr4i $.
+$}
+$( /* Equivalent wff's correspond to equal restricted class abstractions.
+       Closed theorem form of ~ rabbidva .  (Contributed by NM,
+       25-Nov-2013.) */
+
+$)
+${
+	$v ps ch x A $.
+	f0 $f wff ps $.
+	f1 $f wff ch $.
+	f2 $f set x $.
+	f3 $f class A $.
+	prabbi $p |- ( A. x e. A ( ps <-> ch ) <-> { x e. A | ps } = { x e. A | ch } ) $=
+	f2 asup_set_class f3 awcel f0 awa f2 asup_set_class f3 awcel f1 awa f2 pabbi f0 f1 awb f2 f3 adf-ral f2 asup_set_class f3 awcel f0 f1 ppm5.32 f2 asup_set_class f3 awcel f0 f1 awb awi f2 asup_set_class f3 awcel f0 awa f2 asup_set_class f3 awcel f1 awa awb f2 palbii f0 f1 awb f2 f3 awral f2 asup_set_class f3 awcel f0 f1 awb awi f2 awal f2 asup_set_class f3 awcel f0 awa f2 asup_set_class f3 awcel f1 awa awb f2 awal pbitri f0 f2 f3 adf-rab f1 f2 f3 adf-rab f0 f2 f3 acrab f2 asup_set_class f3 awcel f0 awa f2 acab f1 f2 f3 acrab f2 asup_set_class f3 awcel f1 awa f2 acab peqeq12i f2 asup_set_class f3 awcel f0 awa f2 asup_set_class f3 awcel f1 awa awb f2 awal f2 asup_set_class f3 awcel f0 awa f2 acab f2 asup_set_class f3 awcel f1 awa f2 acab awceq f0 f1 awb f2 f3 awral f0 f2 f3 acrab f1 f2 f3 acrab awceq p3bitr4i $.
+$}
+$( /* Swap with a membership relation in a restricted class abstraction.
+     (Contributed by NM, 4-Jul-2005.) */
+
+$)
+${
+	$v x A B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	prabswap $p |- { x e. A | x e. B } = { x e. B | x e. A } $=
+	f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel pancom f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awa f0 asup_set_class f2 awcel f0 asup_set_class f1 awcel awa f0 pabbii f0 asup_set_class f2 awcel f0 f1 adf-rab f0 asup_set_class f1 awcel f0 f2 adf-rab f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awa f0 acab f0 asup_set_class f2 awcel f0 asup_set_class f1 awcel awa f0 acab f0 asup_set_class f2 awcel f0 f1 acrab f0 asup_set_class f1 awcel f0 f2 acrab p3eqtr4i $.
+$}
+$( /* The abstraction variable in a restricted class abstraction isn't free.
+       (Contributed by NM, 19-Mar-1997.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	pnfrab1 $p |- F/_ x { x e. A | ph } $=
+	f0 f1 f2 adf-rab f1 asup_set_class f2 awcel f0 awa f1 pnfab1 f1 f0 f1 f2 acrab f1 asup_set_class f2 awcel f0 awa f1 acab pnfcxfr $.
+$}
+$( /* A variable not free in a wff remains so in a restricted class
+       abstraction.  (Contributed by NM, 13-Oct-2003.)  (Revised by Mario
+       Carneiro, 9-Oct-2016.) */
+
+$)
+${
+	$v ph x y A $.
+	$v z $.
+	$d x z $.
+	$d y z $.
+	$d z A $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- F/_ x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	i0 $f set z $.
+	pnfrab $p |- F/_ x { y e. A | ph } $=
+	f0 f2 f3 adf-rab f2 pnftru e1 f1 i0 f3 pnfcri i0 asup_set_class f2 asup_set_class f3 peleq1 i0 asup_set_class f3 awcel f2 asup_set_class f3 awcel f1 f2 i0 pdvelimnf e0 f0 f1 awnf f1 asup_set_class f2 asup_set_class awceq f1 awal awn pa1i f1 asup_set_class f2 asup_set_class awceq f1 awal awn f2 asup_set_class f3 awcel f0 f1 pnfand f1 asup_set_class f2 asup_set_class awceq f1 awal awn f2 asup_set_class f3 awcel f0 awa f1 awnf awtru padantl awtru f2 asup_set_class f3 awcel f0 awa f1 f2 pnfabd2 f1 f2 asup_set_class f3 awcel f0 awa f2 acab awnfc ptrud f1 f0 f2 f3 acrab f2 asup_set_class f3 awcel f0 awa f2 acab pnfcxfr $.
+$}
+$( /* Formula-building rule for restricted existential quantifier (deduction
+       rule).  (Contributed by Mario Carneiro, 19-Nov-2016.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- ( ( ph /\ x e. A ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	preubida $p |- ( ph -> ( E! x e. A ps <-> E! x e. A ch ) ) $=
+	e0 e1 f0 f3 asup_set_class f4 awcel f1 f2 ppm5.32da f0 f3 asup_set_class f4 awcel f1 awa f3 asup_set_class f4 awcel f2 awa f3 peubid f1 f3 f4 adf-reu f2 f3 f4 adf-reu f0 f3 asup_set_class f4 awcel f1 awa f3 aweu f3 asup_set_class f4 awcel f2 awa f3 aweu f1 f3 f4 awreu f2 f3 f4 awreu p3bitr4g $.
+$}
+$( /* Formula-building rule for restricted existential quantifier (deduction
+       rule).  (Contributed by NM, 13-Nov-2004.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	e0 $e |- ( ( ph /\ x e. A ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	preubidva $p |- ( ph -> ( E! x e. A ps <-> E! x e. A ch ) ) $=
+	f0 f3 pnfv e0 f0 f1 f2 f3 f4 preubida $.
+$}
+$( /* Formula-building rule for restricted existential quantifier (deduction
+       rule).  (Contributed by NM, 17-Oct-1996.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	preubidv $p |- ( ph -> ( E! x e. A ps <-> E! x e. A ch ) ) $=
+	e0 f0 f1 f2 awb f3 asup_set_class f4 awcel padantr f0 f1 f2 f3 f4 preubidva $.
+$}
+$( /* Formula-building rule for restricted existential quantifier (inference
+       rule).  (Contributed by NM, 14-Nov-2004.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- ( x e. A -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	preubiia $p |- ( E! x e. A ph <-> E! x e. A ps ) $=
+	e0 f2 asup_set_class f3 awcel f0 f1 ppm5.32i f2 asup_set_class f3 awcel f0 awa f2 asup_set_class f3 awcel f1 awa f2 peubii f0 f2 f3 adf-reu f1 f2 f3 adf-reu f2 asup_set_class f3 awcel f0 awa f2 aweu f2 asup_set_class f3 awcel f1 awa f2 aweu f0 f2 f3 awreu f1 f2 f3 awreu p3bitr4i $.
+$}
+$( /* Formula-building rule for restricted existential quantifier (inference
+       rule).  (Contributed by NM, 22-Oct-1999.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	preubii $p |- ( E! x e. A ph <-> E! x e. A ps ) $=
+	e0 f0 f1 awb f2 asup_set_class f3 awcel pa1i f0 f1 f2 f3 preubiia $.
+$}
+$( /* Formula-building rule for restricted existential quantifier (deduction
+       rule).  (Contributed by NM, 16-Jun-2017.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- ( ( ph /\ x e. A ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	prmobida $p |- ( ph -> ( E* x e. A ps <-> E* x e. A ch ) ) $=
+	e0 e1 f0 f3 asup_set_class f4 awcel f1 f2 ppm5.32da f0 f3 asup_set_class f4 awcel f1 awa f3 asup_set_class f4 awcel f2 awa f3 pmobid f1 f3 f4 adf-rmo f2 f3 f4 adf-rmo f0 f3 asup_set_class f4 awcel f1 awa f3 awmo f3 asup_set_class f4 awcel f2 awa f3 awmo f1 f3 f4 awrmo f2 f3 f4 awrmo p3bitr4g $.
+$}
+$( /* Formula-building rule for restricted existential quantifier (deduction
+       rule).  (Contributed by NM, 16-Jun-2017.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	e0 $e |- ( ( ph /\ x e. A ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	prmobidva $p |- ( ph -> ( E* x e. A ps <-> E* x e. A ch ) ) $=
+	f0 f3 pnfv e0 f0 f1 f2 f3 f4 prmobida $.
+$}
+$( /* Formula-building rule for restricted existential quantifier (deduction
+       rule).  (Contributed by NM, 16-Jun-2017.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	prmobidv $p |- ( ph -> ( E* x e. A ps <-> E* x e. A ch ) ) $=
+	e0 f0 f1 f2 awb f3 asup_set_class f4 awcel padantr f0 f1 f2 f3 f4 prmobidva $.
+$}
+$( /* Formula-building rule for restricted existential quantifier (inference
+       rule).  (Contributed by NM, 16-Jun-2017.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- ( x e. A -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	prmobiia $p |- ( E* x e. A ph <-> E* x e. A ps ) $=
+	e0 f2 asup_set_class f3 awcel f0 f1 ppm5.32i f2 asup_set_class f3 awcel f0 awa f2 asup_set_class f3 awcel f1 awa f2 pmobii f0 f2 f3 adf-rmo f1 f2 f3 adf-rmo f2 asup_set_class f3 awcel f0 awa f2 awmo f2 asup_set_class f3 awcel f1 awa f2 awmo f0 f2 f3 awrmo f1 f2 f3 awrmo p3bitr4i $.
+$}
+$( /* Formula-building rule for restricted existential quantifier (inference
+       rule).  (Contributed by NM, 16-Jun-2017.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	prmobii $p |- ( E* x e. A ph <-> E* x e. A ps ) $=
+	e0 f0 f1 awb f2 asup_set_class f3 awcel pa1i f0 f1 f2 f3 prmobiia $.
+$}
+$( /* Equality theorem for restricted universal quantifier, with
+       bound-variable hypotheses instead of distinct variable restrictions.
+       (Contributed by NM, 7-Mar-2004.)  (Revised by Andrew Salmon,
+       11-Jul-2011.) */
+
+$)
+${
+	$v ph x A B $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/_ x B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	praleqf $p |- ( A = B -> ( A. x e. A ph <-> A. x e. B ph ) ) $=
+	e0 e1 f1 f2 f3 pnfeq f2 f3 f1 asup_set_class peleq2 f2 f3 awceq f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel f0 pimbi1d f2 f3 awceq f1 asup_set_class f2 awcel f0 awi f1 asup_set_class f3 awcel f0 awi f1 palbid f0 f1 f2 adf-ral f0 f1 f3 adf-ral f2 f3 awceq f1 asup_set_class f2 awcel f0 awi f1 awal f1 asup_set_class f3 awcel f0 awi f1 awal f0 f1 f2 awral f0 f1 f3 awral p3bitr4g $.
+$}
+$( /* Equality theorem for restricted existential quantifier, with
+       bound-variable hypotheses instead of distinct variable restrictions.
+       (Contributed by NM, 9-Oct-2003.)  (Revised by Andrew Salmon,
+       11-Jul-2011.) */
+
+$)
+${
+	$v ph x A B $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/_ x B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	prexeqf $p |- ( A = B -> ( E. x e. A ph <-> E. x e. B ph ) ) $=
+	e0 e1 f1 f2 f3 pnfeq f2 f3 f1 asup_set_class peleq2 f2 f3 awceq f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel f0 panbi1d f2 f3 awceq f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f3 awcel f0 awa f1 pexbid f0 f1 f2 adf-rex f0 f1 f3 adf-rex f2 f3 awceq f1 asup_set_class f2 awcel f0 awa f1 awex f1 asup_set_class f3 awcel f0 awa f1 awex f0 f1 f2 awrex f0 f1 f3 awrex p3bitr4g $.
+$}
+$( /* Equality theorem for restricted uniqueness quantifier, with
+       bound-variable hypotheses instead of distinct variable restrictions.
+       (Contributed by NM, 5-Apr-2004.)  (Revised by Andrew Salmon,
+       11-Jul-2011.) */
+
+$)
+${
+	$v ph x A B $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/_ x B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	preueq1f $p |- ( A = B -> ( E! x e. A ph <-> E! x e. B ph ) ) $=
+	e0 e1 f1 f2 f3 pnfeq f2 f3 f1 asup_set_class peleq2 f2 f3 awceq f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel f0 panbi1d f2 f3 awceq f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f3 awcel f0 awa f1 peubid f0 f1 f2 adf-reu f0 f1 f3 adf-reu f2 f3 awceq f1 asup_set_class f2 awcel f0 awa f1 aweu f1 asup_set_class f3 awcel f0 awa f1 aweu f0 f1 f2 awreu f0 f1 f3 awreu p3bitr4g $.
+$}
+$( /* Equality theorem for restricted uniqueness quantifier, with
+       bound-variable hypotheses instead of distinct variable restrictions.
+       (Contributed by Alexander van der Vekens, 17-Jun-2017.) */
+
+$)
+${
+	$v ph x A B $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/_ x B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	prmoeq1f $p |- ( A = B -> ( E* x e. A ph <-> E* x e. B ph ) ) $=
+	e0 e1 f1 f2 f3 pnfeq f2 f3 f1 asup_set_class peleq2 f2 f3 awceq f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel f0 panbi1d f2 f3 awceq f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f3 awcel f0 awa f1 pmobid f0 f1 f2 adf-rmo f0 f1 f3 adf-rmo f2 f3 awceq f1 asup_set_class f2 awcel f0 awa f1 awmo f1 asup_set_class f3 awcel f0 awa f1 awmo f0 f1 f2 awrmo f0 f1 f3 awrmo p3bitr4g $.
+$}
+$( /* Equality theorem for restricted universal quantifier.  (Contributed by
+       NM, 16-Nov-1995.) */
+
+$)
+${
+	$v ph x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	praleq $p |- ( A = B -> ( A. x e. A ph <-> A. x e. B ph ) ) $=
+	f1 f2 pnfcv f1 f3 pnfcv f0 f1 f2 f3 praleqf $.
+$}
+$( /* Equality theorem for restricted existential quantifier.  (Contributed by
+       NM, 29-Oct-1995.) */
+
+$)
+${
+	$v ph x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	prexeq $p |- ( A = B -> ( E. x e. A ph <-> E. x e. B ph ) ) $=
+	f1 f2 pnfcv f1 f3 pnfcv f0 f1 f2 f3 prexeqf $.
+$}
+$( /* Equality theorem for restricted uniqueness quantifier.  (Contributed by
+       NM, 5-Apr-2004.) */
+
+$)
+${
+	$v ph x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	preueq1 $p |- ( A = B -> ( E! x e. A ph <-> E! x e. B ph ) ) $=
+	f1 f2 pnfcv f1 f3 pnfcv f0 f1 f2 f3 preueq1f $.
+$}
+$( /* Equality theorem for restricted uniqueness quantifier.  (Contributed by
+       Alexander van der Vekens, 17-Jun-2017.) */
+
+$)
+${
+	$v ph x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	prmoeq1 $p |- ( A = B -> ( E* x e. A ph <-> E* x e. B ph ) ) $=
+	f1 f2 pnfcv f1 f3 pnfcv f0 f1 f2 f3 prmoeq1f $.
+$}
+$( /* Equality inference for restricted universal qualifier.  (Contributed by
+       Paul Chapman, 22-Jun-2011.) */
+
+$)
+${
+	$v ph x A B $.
+	$d A x $.
+	$d B x $.
+	e0 $e |- A = B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	praleqi $p |- ( A. x e. A ph <-> A. x e. B ph ) $=
+	e0 f0 f1 f2 f3 praleq f2 f3 awceq f0 f1 f2 awral f0 f1 f3 awral awb aax-mp $.
+$}
+$( /* Equality inference for restricted existential qualifier.  (Contributed
+       by Mario Carneiro, 23-Apr-2015.) */
+
+$)
+${
+	$v ph x A B $.
+	$d A x $.
+	$d B x $.
+	e0 $e |- A = B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	prexeqi $p |- ( E. x e. A ph <-> E. x e. B ph ) $=
+	e0 f0 f1 f2 f3 prexeq f2 f3 awceq f0 f1 f2 awrex f0 f1 f3 awrex awb aax-mp $.
+$}
+$( /* Equality deduction for restricted universal quantifier.  (Contributed by
+       NM, 13-Nov-2005.) */
+
+$)
+${
+	$v ph ps x A B $.
+	$d x A $.
+	$d x B $.
+	e0 $e |- ( ph -> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class B $.
+	praleqdv $p |- ( ph -> ( A. x e. A ps <-> A. x e. B ps ) ) $=
+	e0 f1 f2 f3 f4 praleq f0 f3 f4 awceq f1 f2 f3 awral f1 f2 f4 awral awb psyl $.
+$}
+$( /* Equality deduction for restricted existential quantifier.  (Contributed
+       by NM, 14-Jan-2007.) */
+
+$)
+${
+	$v ph ps x A B $.
+	$d x A $.
+	$d x B $.
+	e0 $e |- ( ph -> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class B $.
+	prexeqdv $p |- ( ph -> ( E. x e. A ps <-> E. x e. B ps ) ) $=
+	e0 f1 f2 f3 f4 prexeq f0 f3 f4 awceq f1 f2 f3 awrex f1 f2 f4 awrex awb psyl $.
+$}
+$( /* Equality deduction for restricted universal quantifier.  (Contributed by
+       NM, 16-Nov-1995.) */
+
+$)
+${
+	$v ph ps x A B $.
+	$d x A $.
+	$d x B $.
+	e0 $e |- ( A = B -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class B $.
+	praleqbi1dv $p |- ( A = B -> ( A. x e. A ph <-> A. x e. B ps ) ) $=
+	f0 f2 f3 f4 praleq e0 f3 f4 awceq f0 f1 f2 f4 pralbidv f3 f4 awceq f0 f2 f3 awral f0 f2 f4 awral f1 f2 f4 awral pbitrd $.
+$}
+$( /* Equality deduction for restricted existential quantifier.  (Contributed
+       by NM, 18-Mar-1997.) */
+
+$)
+${
+	$v ph ps x A B $.
+	$d x A $.
+	$d x B $.
+	e0 $e |- ( A = B -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class B $.
+	prexeqbi1dv $p |- ( A = B -> ( E. x e. A ph <-> E. x e. B ps ) ) $=
+	f0 f2 f3 f4 prexeq e0 f3 f4 awceq f0 f1 f2 f4 prexbidv f3 f4 awceq f0 f2 f3 awrex f0 f2 f4 awrex f1 f2 f4 awrex pbitrd $.
+$}
+$( /* Equality deduction for restricted uniqueness quantifier.  (Contributed
+       by NM, 5-Apr-2004.) */
+
+$)
+${
+	$v ph ps x A B $.
+	$d x A $.
+	$d x B $.
+	e0 $e |- ( A = B -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class B $.
+	preueqd $p |- ( A = B -> ( E! x e. A ph <-> E! x e. B ps ) ) $=
+	f0 f2 f3 f4 preueq1 e0 f3 f4 awceq f0 f1 f2 f4 preubidv f3 f4 awceq f0 f2 f3 awreu f0 f2 f4 awreu f1 f2 f4 awreu pbitrd $.
+$}
+$( /* Equality deduction for restricted uniqueness quantifier.  (Contributed
+       by Alexander van der Vekens, 17-Jun-2017.) */
+
+$)
+${
+	$v ph ps x A B $.
+	$d x A $.
+	$d x B $.
+	e0 $e |- ( A = B -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class B $.
+	prmoeqd $p |- ( A = B -> ( E* x e. A ph <-> E* x e. B ps ) ) $=
+	f0 f2 f3 f4 prmoeq1 e0 f3 f4 awceq f0 f1 f2 f4 prmobidv f3 f4 awceq f0 f2 f3 awrmo f0 f2 f4 awrmo f1 f2 f4 awrmo pbitrd $.
+$}
+$( /* Equality deduction for restricted universal quantifier.  (Contributed by
+       NM, 6-Nov-2007.) */
+
+$)
+${
+	$v ph ps ch x A B $.
+	$d x A $.
+	$d x B $.
+	$d x ph $.
+	e0 $e |- ( ph -> A = B ) $.
+	e1 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	f5 $f class B $.
+	praleqbidv $p |- ( ph -> ( A. x e. A ps <-> A. x e. B ch ) ) $=
+	e0 f0 f1 f3 f4 f5 praleqdv e1 f0 f1 f2 f3 f5 pralbidv f0 f1 f3 f4 awral f1 f3 f5 awral f2 f3 f5 awral pbitrd $.
+$}
+$( /* Equality deduction for restricted universal quantifier.  (Contributed by
+       NM, 6-Nov-2007.) */
+
+$)
+${
+	$v ph ps ch x A B $.
+	$d x A $.
+	$d x B $.
+	$d x ph $.
+	e0 $e |- ( ph -> A = B ) $.
+	e1 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	f5 $f class B $.
+	prexeqbidv $p |- ( ph -> ( E. x e. A ps <-> E. x e. B ch ) ) $=
+	e0 f0 f1 f3 f4 f5 prexeqdv e1 f0 f1 f2 f3 f5 prexbidv f0 f1 f3 f4 awrex f1 f3 f5 awrex f2 f3 f5 awrex pbitrd $.
+$}
+$( /* Equality deduction for restricted universal quantifier.  (Contributed by
+       Mario Carneiro, 5-Jan-2017.) */
+
+$)
+${
+	$v ph ps ch x A B $.
+	$d x A $.
+	$d x B $.
+	$d x ph $.
+	e0 $e |- ( ph -> A = B ) $.
+	e1 $e |- ( ( ph /\ x e. A ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	f5 $f class B $.
+	praleqbidva $p |- ( ph -> ( A. x e. A ps <-> A. x e. B ch ) ) $=
+	e1 f0 f1 f2 f3 f4 pralbidva e0 f0 f2 f3 f4 f5 praleqdv f0 f1 f3 f4 awral f2 f3 f4 awral f2 f3 f5 awral pbitrd $.
+$}
+$( /* Equality deduction for restricted universal quantifier.  (Contributed by
+       Mario Carneiro, 5-Jan-2017.) */
+
+$)
+${
+	$v ph ps ch x A B $.
+	$d x A $.
+	$d x B $.
+	$d x ph $.
+	e0 $e |- ( ph -> A = B ) $.
+	e1 $e |- ( ( ph /\ x e. A ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	f5 $f class B $.
+	prexeqbidva $p |- ( ph -> ( E. x e. A ps <-> E. x e. B ch ) ) $=
+	e1 f0 f1 f2 f3 f4 prexbidva e0 f0 f2 f3 f4 f5 prexeqdv f0 f1 f3 f4 awrex f2 f3 f4 awrex f2 f3 f5 awrex pbitrd $.
+$}
+$( /* Unrestricted "at most one" implies restricted "at most one".  (Contributed
+     by NM, 16-Jun-2017.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	pmormo $p |- ( E* x ph -> E* x e. A ph ) $=
+	f0 f1 asup_set_class f2 awcel f1 pmoan f0 f1 f2 adf-rmo f0 f1 awmo f1 asup_set_class f2 awcel f0 awa f1 awmo f0 f1 f2 awrmo psylibr $.
+$}
+$( /* Restricted uniqueness in terms of "at most one."  (Contributed by NM,
+     23-May-1999.)  (Revised by NM, 16-Jun-2017.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	preu5 $p |- ( E! x e. A ph <-> ( E. x e. A ph /\ E* x e. A ph ) ) $=
+	f1 asup_set_class f2 awcel f0 awa f1 peu5 f0 f1 f2 adf-reu f0 f1 f2 adf-rex f0 f1 f2 adf-rmo f0 f1 f2 awrex f1 asup_set_class f2 awcel f0 awa f1 awex f0 f1 f2 awrmo f1 asup_set_class f2 awcel f0 awa f1 awmo panbi12i f1 asup_set_class f2 awcel f0 awa f1 aweu f1 asup_set_class f2 awcel f0 awa f1 awex f1 asup_set_class f2 awcel f0 awa f1 awmo awa f0 f1 f2 awreu f0 f1 f2 awrex f0 f1 f2 awrmo awa p3bitr4i $.
+$}
+$( /* Restricted unique existence implies restricted existence.  (Contributed by
+     NM, 19-Aug-1999.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	preurex $p |- ( E! x e. A ph -> E. x e. A ph ) $=
+	f0 f1 f2 preu5 f0 f1 f2 awreu f0 f1 f2 awrex f0 f1 f2 awrmo psimplbi $.
+$}
+$( /* Restricted existential uniqueness implies restricted "at most one."
+     (Contributed by NM, 16-Jun-2017.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	preurmo $p |- ( E! x e. A ph -> E* x e. A ph ) $=
+	f0 f1 f2 preu5 f0 f1 f2 awreu f0 f1 f2 awrex f0 f1 f2 awrmo psimprbi $.
+$}
+$( /* Restricted "at most one" in term of uniqueness.  (Contributed by NM,
+     16-Jun-2017.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	prmo5 $p |- ( E* x e. A ph <-> ( E. x e. A ph -> E! x e. A ph ) ) $=
+	f1 asup_set_class f2 awcel f0 awa f1 adf-mo f0 f1 f2 adf-rmo f0 f1 f2 adf-rex f0 f1 f2 adf-reu f0 f1 f2 awrex f1 asup_set_class f2 awcel f0 awa f1 awex f0 f1 f2 awreu f1 asup_set_class f2 awcel f0 awa f1 aweu pimbi12i f1 asup_set_class f2 awcel f0 awa f1 awmo f1 asup_set_class f2 awcel f0 awa f1 awex f1 asup_set_class f2 awcel f0 awa f1 aweu awi f0 f1 f2 awrmo f0 f1 f2 awrex f0 f1 f2 awreu awi p3bitr4i $.
+$}
+$( /* Nonexistence implies restricted "at most one".  (Contributed by NM,
+     17-Jun-2017.) */
+
+$)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	pnrexrmo $p |- ( -. E. x e. A ph -> E* x e. A ph ) $=
+	f0 f1 f2 awrex f0 f1 f2 awreu ppm2.21 f0 f1 f2 prmo5 f0 f1 f2 awrex awn f0 f1 f2 awrex f0 f1 f2 awreu awi f0 f1 f2 awrmo psylibr $.
+$}
+$( /* Rule used to change bound variables, using implicit substitution.
+       (Contributed by NM, 7-Mar-2004.)  (Revised by Mario Carneiro,
+       9-Oct-2016.) */
+
+$)
+${
+	$v ph ps x y A $.
+	$v z $.
+	$d x z $.
+	$d y z $.
+	$d z A $.
+	$d z ps $.
+	$d z ph $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/_ y A $.
+	e2 $e |- F/ y ph $.
+	e3 $e |- F/ x ps $.
+	e4 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	i0 $f set z $.
+	pcbvralf $p |- ( A. x e. A ph <-> A. y e. A ps ) $=
+	f2 asup_set_class f4 awcel f0 awi i0 pnfv e0 f2 i0 f4 pnfcri f0 f2 i0 pnfs1v i0 asup_set_class f4 awcel f0 f2 i0 awsb f2 pnfim f2 asup_set_class i0 asup_set_class f4 peleq1 f0 f2 i0 psbequ12 f2 asup_set_class i0 asup_set_class awceq f2 asup_set_class f4 awcel i0 asup_set_class f4 awcel f0 f0 f2 i0 awsb pimbi12d f2 asup_set_class f4 awcel f0 awi i0 asup_set_class f4 awcel f0 f2 i0 awsb awi f2 i0 pcbval e1 f3 i0 f4 pnfcri e2 f0 f2 i0 f3 pnfsb i0 asup_set_class f4 awcel f0 f2 i0 awsb f3 pnfim f3 asup_set_class f4 awcel f1 awi i0 pnfv i0 asup_set_class f3 asup_set_class f4 peleq1 f0 i0 f3 f2 psbequ e3 e4 f0 f1 f2 f3 psbie i0 asup_set_class f3 asup_set_class awceq f0 f2 i0 awsb f0 f2 f3 awsb f1 psyl6bb i0 asup_set_class f3 asup_set_class awceq i0 asup_set_class f4 awcel f3 asup_set_class f4 awcel f0 f2 i0 awsb f1 pimbi12d i0 asup_set_class f4 awcel f0 f2 i0 awsb awi f3 asup_set_class f4 awcel f1 awi i0 f3 pcbval f2 asup_set_class f4 awcel f0 awi f2 awal i0 asup_set_class f4 awcel f0 f2 i0 awsb awi i0 awal f3 asup_set_class f4 awcel f1 awi f3 awal pbitri f0 f2 f4 adf-ral f1 f3 f4 adf-ral f2 asup_set_class f4 awcel f0 awi f2 awal f3 asup_set_class f4 awcel f1 awi f3 awal f0 f2 f4 awral f1 f3 f4 awral p3bitr4i $.
+$}
+$( /* Rule used to change bound variables, using implicit substitution.
+       (Contributed by FL, 27-Apr-2008.)  (Revised by Mario Carneiro,
+       9-Oct-2016.) */
+
+$)
+${
+	$v ph ps x y A $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/_ y A $.
+	e2 $e |- F/ y ph $.
+	e3 $e |- F/ x ps $.
+	e4 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	pcbvrexf $p |- ( E. x e. A ph <-> E. y e. A ps ) $=
+	e0 e1 e2 f0 f3 pnfn e3 f1 f2 pnfn e4 f2 asup_set_class f3 asup_set_class awceq f0 f1 pnotbid f0 awn f1 awn f2 f3 f4 pcbvralf f0 awn f2 f4 awral f1 awn f3 f4 awral pnotbii f0 f2 f4 pdfrex2 f1 f3 f4 pdfrex2 f0 awn f2 f4 awral awn f1 awn f3 f4 awral awn f0 f2 f4 awrex f1 f3 f4 awrex p3bitr4i $.
+$}
+$( /* Rule used to change bound variables, using implicit substitution.
+       (Contributed by NM, 31-Jul-2003.) */
+
+$)
+${
+	$v ph ps x y A $.
+	$d x A $.
+	$d y A $.
+	e0 $e |- F/ y ph $.
+	e1 $e |- F/ x ps $.
+	e2 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	pcbvral $p |- ( A. x e. A ph <-> A. y e. A ps ) $=
+	f2 f4 pnfcv f3 f4 pnfcv e0 e1 e2 f0 f1 f2 f3 f4 pcbvralf $.
+$}
+$( /* Rule used to change bound variables, using implicit substitution.
+       (Contributed by NM, 31-Jul-2003.)  (Proof shortened by Andrew Salmon,
+       8-Jun-2011.) */
+
+$)
+${
+	$v ph ps x y A $.
+	$d x A $.
+	$d y A $.
+	e0 $e |- F/ y ph $.
+	e1 $e |- F/ x ps $.
+	e2 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	pcbvrex $p |- ( E. x e. A ph <-> E. y e. A ps ) $=
+	f2 f4 pnfcv f3 f4 pnfcv e0 e1 e2 f0 f1 f2 f3 f4 pcbvrexf $.
+$}
+$( /* Change the bound variable of a restricted uniqueness quantifier using
+       implicit substitution.  (Contributed by Mario Carneiro, 15-Oct-2016.) */
+
+$)
+${
+	$v ph ps x y A $.
+	$v z $.
+	$d x z A $.
+	$d y z A $.
+	$d z ph $.
+	$d z ps $.
+	e0 $e |- F/ y ph $.
+	e1 $e |- F/ x ps $.
+	e2 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	i0 $f set z $.
+	pcbvreu $p |- ( E! x e. A ph <-> E! y e. A ps ) $=
+	f2 asup_set_class f4 awcel f0 awa i0 pnfv f2 asup_set_class f4 awcel f0 awa f2 i0 psb8eu f2 asup_set_class f4 awcel f0 f2 i0 psban f2 asup_set_class f4 awcel f0 awa f2 i0 awsb f2 asup_set_class f4 awcel f2 i0 awsb f0 f2 i0 awsb awa i0 peubii i0 f2 f4 pclelsb3 f2 asup_set_class f4 awcel f2 i0 awsb i0 asup_set_class f4 awcel f0 f2 i0 awsb panbi1i f2 asup_set_class f4 awcel f2 i0 awsb f0 f2 i0 awsb awa i0 asup_set_class f4 awcel f0 f2 i0 awsb awa i0 peubii i0 asup_set_class f4 awcel f3 pnfv e0 f0 f2 i0 f3 pnfsb i0 asup_set_class f4 awcel f0 f2 i0 awsb f3 pnfan f3 asup_set_class f4 awcel f1 awa i0 pnfv i0 asup_set_class f3 asup_set_class f4 peleq1 f0 i0 f3 f2 psbequ e1 e2 f0 f1 f2 f3 psbie i0 asup_set_class f3 asup_set_class awceq f0 f2 i0 awsb f0 f2 f3 awsb f1 psyl6bb i0 asup_set_class f3 asup_set_class awceq i0 asup_set_class f4 awcel f3 asup_set_class f4 awcel f0 f2 i0 awsb f1 panbi12d i0 asup_set_class f4 awcel f0 f2 i0 awsb awa f3 asup_set_class f4 awcel f1 awa i0 f3 pcbveu f2 asup_set_class f4 awcel f2 i0 awsb f0 f2 i0 awsb awa i0 aweu i0 asup_set_class f4 awcel f0 f2 i0 awsb awa i0 aweu f3 asup_set_class f4 awcel f1 awa f3 aweu pbitri f2 asup_set_class f4 awcel f0 awa f2 aweu f2 asup_set_class f4 awcel f0 awa f2 i0 awsb i0 aweu f2 asup_set_class f4 awcel f2 i0 awsb f0 f2 i0 awsb awa i0 aweu f3 asup_set_class f4 awcel f1 awa f3 aweu p3bitri f0 f2 f4 adf-reu f1 f3 f4 adf-reu f2 asup_set_class f4 awcel f0 awa f2 aweu f3 asup_set_class f4 awcel f1 awa f3 aweu f0 f2 f4 awreu f1 f3 f4 awreu p3bitr4i $.
+$}
+$( /* Change the bound variable of restricted "at most one" using implicit
+       substitution.  (Contributed by NM, 16-Jun-2017.) */
+
+$)
+${
+	$v ph ps x y A $.
+	$d x A $.
+	$d y A $.
+	e0 $e |- F/ y ph $.
+	e1 $e |- F/ x ps $.
+	e2 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	pcbvrmo $p |- ( E* x e. A ph <-> E* y e. A ps ) $=
+	e0 e1 e2 f0 f1 f2 f3 f4 pcbvrex e0 e1 e2 f0 f1 f2 f3 f4 pcbvreu f0 f2 f4 awrex f1 f3 f4 awrex f0 f2 f4 awreu f1 f3 f4 awreu pimbi12i f0 f2 f4 prmo5 f1 f3 f4 prmo5 f0 f2 f4 awrex f0 f2 f4 awreu awi f1 f3 f4 awrex f1 f3 f4 awreu awi f0 f2 f4 awrmo f1 f3 f4 awrmo p3bitr4i $.
+$}
+$( /* Change the bound variable of a restricted universal quantifier using
+       implicit substitution.  (Contributed by NM, 28-Jan-1997.) */
+
+$)
+${
+	$v ph ps x y A $.
+	$d x A $.
+	$d y A $.
+	$d y ph $.
+	$d x ps $.
+	e0 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	pcbvralv $p |- ( A. x e. A ph <-> A. y e. A ps ) $=
+	f0 f3 pnfv f1 f2 pnfv e0 f0 f1 f2 f3 f4 pcbvral $.
+$}
+$( /* Change the bound variable of a restricted existential quantifier using
+       implicit substitution.  (Contributed by NM, 2-Jun-1998.) */
+
+$)
+${
+	$v ph ps x y A $.
+	$d x A $.
+	$d y A $.
+	$d y ph $.
+	$d x ps $.
+	e0 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	pcbvrexv $p |- ( E. x e. A ph <-> E. y e. A ps ) $=
+	f0 f3 pnfv f1 f2 pnfv e0 f0 f1 f2 f3 f4 pcbvrex $.
+$}
+$( /* Change the bound variable of a restricted uniqueness quantifier using
+       implicit substitution.  (Contributed by NM, 5-Apr-2004.)  (Revised by
+       Mario Carneiro, 15-Oct-2016.) */
+
+$)
+${
+	$v ph ps x y A $.
+	$d x A $.
+	$d y A $.
+	$d y ph $.
+	$d x ps $.
+	e0 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	pcbvreuv $p |- ( E! x e. A ph <-> E! y e. A ps ) $=
+	f0 f3 pnfv f1 f2 pnfv e0 f0 f1 f2 f3 f4 pcbvreu $.
+$}
+$( /* Change the bound variable of a restricted uniqueness quantifier using
+       implicit substitution.  (Contributed by Alexander van der Vekens,
+       17-Jun-2017.) */
+
+$)
+${
+	$v ph ps x y A $.
+	$d x A $.
+	$d y A $.
+	$d y ph $.
+	$d x ps $.
+	e0 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	pcbvrmov $p |- ( E* x e. A ph <-> E* y e. A ps ) $=
+	f0 f3 pnfv f1 f2 pnfv e0 f0 f1 f2 f3 f4 pcbvrmo $.
+$}
+$( /* Rule used to change the bound variable in a restricted universal
+       quantifier with implicit substitution which also changes the quantifier
+       domain.  Deduction form.  (Contributed by David Moews, 1-May-2017.) */
+
+$)
+${
+	$v ph ps ch x y A B $.
+	$d A y $.
+	$d ps y $.
+	$d B x $.
+	$d ch x $.
+	$d x ph y $.
+	e0 $e |- ( ( ph /\ x = y ) -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ( ph /\ x = y ) -> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	f6 $f class B $.
+	pcbvraldva2 $p |- ( ph -> ( A. x e. A ps <-> A. y e. B ch ) ) $=
+	f0 f3 asup_set_class f4 asup_set_class awceq psimpr e1 f0 f3 asup_set_class f4 asup_set_class awceq awa f3 asup_set_class f4 asup_set_class f5 f6 peleq12d e0 f0 f3 asup_set_class f4 asup_set_class awceq awa f3 asup_set_class f5 awcel f4 asup_set_class f6 awcel f1 f2 pimbi12d f0 f3 asup_set_class f5 awcel f1 awi f4 asup_set_class f6 awcel f2 awi f3 f4 pcbvaldva f1 f3 f5 adf-ral f2 f4 f6 adf-ral f0 f3 asup_set_class f5 awcel f1 awi f3 awal f4 asup_set_class f6 awcel f2 awi f4 awal f1 f3 f5 awral f2 f4 f6 awral p3bitr4g $.
+$}
+$( /* Rule used to change the bound variable in a restricted existential
+       quantifier with implicit substitution which also changes the quantifier
+       domain.  Deduction form.  (Contributed by David Moews, 1-May-2017.) */
+
+$)
+${
+	$v ph ps ch x y A B $.
+	$d A y $.
+	$d ps y $.
+	$d B x $.
+	$d ch x $.
+	$d x ph y $.
+	e0 $e |- ( ( ph /\ x = y ) -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ( ph /\ x = y ) -> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	f6 $f class B $.
+	pcbvrexdva2 $p |- ( ph -> ( E. x e. A ps <-> E. y e. B ch ) ) $=
+	f0 f3 asup_set_class f4 asup_set_class awceq psimpr e1 f0 f3 asup_set_class f4 asup_set_class awceq awa f3 asup_set_class f4 asup_set_class f5 f6 peleq12d e0 f0 f3 asup_set_class f4 asup_set_class awceq awa f3 asup_set_class f5 awcel f4 asup_set_class f6 awcel f1 f2 panbi12d f0 f3 asup_set_class f5 awcel f1 awa f4 asup_set_class f6 awcel f2 awa f3 f4 pcbvexdva f1 f3 f5 adf-rex f2 f4 f6 adf-rex f0 f3 asup_set_class f5 awcel f1 awa f3 awex f4 asup_set_class f6 awcel f2 awa f4 awex f1 f3 f5 awrex f2 f4 f6 awrex p3bitr4g $.
+$}
+$( /* Rule used to change the bound variable in a restricted universal
+       quantifier with implicit substitution.  Deduction form.  (Contributed by
+       David Moews, 1-May-2017.) */
+
+$)
+${
+	$v ph ps ch x y A $.
+	$d ps y $.
+	$d ch x $.
+	$d A x y $.
+	$d x ph y $.
+	e0 $e |- ( ( ph /\ x = y ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	pcbvraldva $p |- ( ph -> ( A. x e. A ps <-> A. y e. A ch ) ) $=
+	e0 f0 f3 asup_set_class f4 asup_set_class awceq awa f5 peqidd f0 f1 f2 f3 f4 f5 f5 pcbvraldva2 $.
+$}
+$( /* Rule used to change the bound variable in a restricted existential
+       quantifier with implicit substitution.  Deduction form.  (Contributed by
+       David Moews, 1-May-2017.) */
+
+$)
+${
+	$v ph ps ch x y A $.
+	$d ps y $.
+	$d ch x $.
+	$d A x y $.
+	$d x ph y $.
+	e0 $e |- ( ( ph /\ x = y ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	pcbvrexdva $p |- ( ph -> ( E. x e. A ps <-> E. y e. A ch ) ) $=
+	e0 f0 f3 asup_set_class f4 asup_set_class awceq awa f5 peqidd f0 f1 f2 f3 f4 f5 f5 pcbvrexdva2 $.
+$}
+$( /* Change bound variables of double restricted universal quantification,
+       using implicit substitution.  (Contributed by NM, 10-Aug-2004.) */
+
+$)
+${
+	$v ph ps ch x y z w A B $.
+	$d x A $.
+	$d z A $.
+	$d x y B $.
+	$d z y B $.
+	$d w B $.
+	$d z ph $.
+	$d y ps $.
+	$d x ch $.
+	$d w ch $.
+	e0 $e |- ( x = z -> ( ph <-> ch ) ) $.
+	e1 $e |- ( y = w -> ( ch <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f set z $.
+	f6 $f set w $.
+	f7 $f class A $.
+	f8 $f class B $.
+	pcbvral2v $p |- ( A. x e. A A. y e. B ph <-> A. z e. A A. w e. B ps ) $=
+	e0 f3 asup_set_class f5 asup_set_class awceq f0 f2 f4 f8 pralbidv f0 f4 f8 awral f2 f4 f8 awral f3 f5 f7 pcbvralv e1 f2 f1 f4 f6 f8 pcbvralv f2 f4 f8 awral f1 f6 f8 awral f5 f7 pralbii f0 f4 f8 awral f3 f7 awral f2 f4 f8 awral f5 f7 awral f1 f6 f8 awral f5 f7 awral pbitri $.
+$}
+$( /* Change bound variables of double restricted universal quantification,
+       using implicit substitution.  (Contributed by FL, 2-Jul-2012.) */
+
+$)
+${
+	$v ph ps ch x y z w A B $.
+	$d A x $.
+	$d A z $.
+	$d B w $.
+	$d B x y $.
+	$d B z y $.
+	$d ch w $.
+	$d ch x $.
+	$d ph z $.
+	$d ps y $.
+	e0 $e |- ( x = z -> ( ph <-> ch ) ) $.
+	e1 $e |- ( y = w -> ( ch <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f set z $.
+	f6 $f set w $.
+	f7 $f class A $.
+	f8 $f class B $.
+	pcbvrex2v $p |- ( E. x e. A E. y e. B ph <-> E. z e. A E. w e. B ps ) $=
+	e0 f3 asup_set_class f5 asup_set_class awceq f0 f2 f4 f8 prexbidv f0 f4 f8 awrex f2 f4 f8 awrex f3 f5 f7 pcbvrexv e1 f2 f1 f4 f6 f8 pcbvrexv f2 f4 f8 awrex f1 f6 f8 awrex f5 f7 prexbii f0 f4 f8 awrex f3 f7 awrex f2 f4 f8 awrex f5 f7 awrex f1 f6 f8 awrex f5 f7 awrex pbitri $.
+$}
+$( /* Change bound variables of triple restricted universal quantification,
+       using implicit substitution.  (Contributed by NM, 10-May-2005.) */
+
+$)
+${
+	$v ph ps ch th x y z w v u A B C $.
+	$d w ph $.
+	$d z ps $.
+	$d x ch $.
+	$d v ch $.
+	$d y u th $.
+	$d x A $.
+	$d w A $.
+	$d x y B $.
+	$d w y B $.
+	$d v B $.
+	$d x y z C $.
+	$d w y z C $.
+	$d v z C $.
+	$d z y C $.
+	$d z C $.
+	$d u C $.
+	e0 $e |- ( x = w -> ( ph <-> ch ) ) $.
+	e1 $e |- ( y = v -> ( ch <-> th ) ) $.
+	e2 $e |- ( z = u -> ( th <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f set x $.
+	f5 $f set y $.
+	f6 $f set z $.
+	f7 $f set w $.
+	f8 $f set v $.
+	f9 $f set u $.
+	f10 $f class A $.
+	f11 $f class B $.
+	f12 $f class C $.
+	pcbvral3v $p |- ( A. x e. A A. y e. B A. z e. C ph <-> A. w e. A A. v e. B A. u e. C ps ) $=
+	e0 f4 asup_set_class f7 asup_set_class awceq f0 f2 f5 f6 f11 f12 p2ralbidv f0 f6 f12 awral f5 f11 awral f2 f6 f12 awral f5 f11 awral f4 f7 f10 pcbvralv e1 e2 f2 f1 f3 f5 f6 f8 f9 f11 f12 pcbvral2v f2 f6 f12 awral f5 f11 awral f1 f9 f12 awral f8 f11 awral f7 f10 pralbii f0 f6 f12 awral f5 f11 awral f4 f10 awral f2 f6 f12 awral f5 f11 awral f7 f10 awral f1 f9 f12 awral f8 f11 awral f7 f10 awral pbitri $.
+$}
+$( /* Change bound variable by using a substitution.  (Contributed by NM,
+       20-Nov-2005.)  (Revised by Andrew Salmon, 11-Jul-2011.) */
+
+$)
+${
+	$v ph x y A $.
+	$v z $.
+	$d z x A $.
+	$d y A $.
+	$d z y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	i0 $f set z $.
+	pcbvralsv $p |- ( A. x e. A ph <-> A. y e. A [ y / x ] ph ) $=
+	f0 i0 pnfv f0 f1 i0 pnfs1v f0 f1 i0 psbequ12 f0 f0 f1 i0 awsb f1 i0 f3 pcbvral f0 f2 pnfv f0 f1 i0 f2 pnfsb f0 f1 f2 awsb i0 pnfv f0 i0 f2 f1 psbequ f0 f1 i0 awsb f0 f1 f2 awsb i0 f2 f3 pcbvral f0 f1 f3 awral f0 f1 i0 awsb i0 f3 awral f0 f1 f2 awsb f2 f3 awral pbitri $.
+$}
+$( /* Change bound variable by using a substitution.  (Contributed by NM,
+       2-Mar-2008.)  (Revised by Andrew Salmon, 11-Jul-2011.) */
+
+$)
+${
+	$v ph x y A $.
+	$v z $.
+	$d z x A $.
+	$d y z ph $.
+	$d y A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	i0 $f set z $.
+	pcbvrexsv $p |- ( E. x e. A ph <-> E. y e. A [ y / x ] ph ) $=
+	f0 i0 pnfv f0 f1 i0 pnfs1v f0 f1 i0 psbequ12 f0 f0 f1 i0 awsb f1 i0 f3 pcbvrex f0 f2 pnfv f0 f1 i0 f2 pnfsb f0 f1 f2 awsb i0 pnfv f0 i0 f2 f1 psbequ f0 f1 i0 awsb f0 f1 f2 awsb i0 f2 f3 pcbvrex f0 f1 f3 awrex f0 f1 i0 awsb i0 f3 awrex f0 f1 f2 awsb f2 f3 awrex pbitri $.
+$}
+$( /* Implicit to explicit substitution that swaps variables in a quantified
+       expression.  (Contributed by NM, 5-Sep-2004.) */
+
+$)
+${
+	$v ph ps x y $.
+	$v z $.
+	$d x y z $.
+	$d y z ph $.
+	$d x z ps $.
+	e0 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	i0 $f set z $.
+	psbralie $p |- ( [ x / y ] A. x e. y ph <-> A. y e. x ps ) $=
+	f0 f2 i0 f3 asup_set_class pcbvralsv f0 f2 f3 asup_set_class awral f0 f2 i0 awsb i0 f3 asup_set_class awral f3 f2 psbbii f0 f2 i0 awsb i0 f2 asup_set_class awral f3 pnfv f0 f2 i0 awsb i0 f3 asup_set_class f2 asup_set_class praleq f0 f2 i0 awsb i0 f3 asup_set_class awral f0 f2 i0 awsb i0 f2 asup_set_class awral f3 f2 psbie f0 f2 f3 asup_set_class awral f3 f2 awsb f0 f2 i0 awsb i0 f3 asup_set_class awral f3 f2 awsb f0 f2 i0 awsb i0 f2 asup_set_class awral pbitri f0 f2 i0 awsb i0 f3 f2 asup_set_class pcbvralsv f0 i0 pnfv f0 f2 f3 i0 psbco2 f1 f2 pnfv e0 f0 f1 f2 f3 psbie f0 f2 i0 awsb i0 f3 awsb f0 f2 f3 awsb f1 pbitri f0 f2 i0 awsb i0 f3 awsb f1 f3 f2 asup_set_class pralbii f0 f2 i0 awsb i0 f2 asup_set_class awral f0 f2 i0 awsb i0 f3 awsb f3 f2 asup_set_class awral f1 f3 f2 asup_set_class awral pbitri f0 f2 f3 asup_set_class awral f3 f2 awsb f0 f2 i0 awsb i0 f2 asup_set_class awral f1 f3 f2 asup_set_class awral pbitri $.
+$}
+$( /* Equivalent wff's yield equal restricted class abstractions (inference
+       rule).  (Contributed by NM, 22-May-1999.) */
+
+$)
+${
+	$v ph ps x A $.
+	e0 $e |- ( x e. A -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	prabbiia $p |- { x e. A | ph } = { x e. A | ps } $=
+	e0 f2 asup_set_class f3 awcel f0 f1 ppm5.32i f2 asup_set_class f3 awcel f0 awa f2 asup_set_class f3 awcel f1 awa f2 pabbii f0 f2 f3 adf-rab f1 f2 f3 adf-rab f2 asup_set_class f3 awcel f0 awa f2 acab f2 asup_set_class f3 awcel f1 awa f2 acab f0 f2 f3 acrab f1 f2 f3 acrab p3eqtr4i $.
+$}
+$( /* Equivalent wff's yield equal restricted class abstractions (deduction
+       rule).  (Contributed by NM, 28-Nov-2003.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	e0 $e |- ( ( ph /\ x e. A ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	prabbidva $p |- ( ph -> { x e. A | ps } = { x e. A | ch } ) $=
+	e0 f0 f1 f2 awb f3 f4 pralrimiva f1 f2 f3 f4 prabbi f0 f1 f2 awb f3 f4 awral f1 f3 f4 acrab f2 f3 f4 acrab awceq psylib $.
+$}
+$( /* Equivalent wff's yield equal restricted class abstractions (deduction
+       rule).  (Contributed by NM, 10-Feb-1995.) */
+
+$)
+${
+	$v ph ps ch x A $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	prabbidv $p |- ( ph -> { x e. A | ps } = { x e. A | ch } ) $=
+	e0 f0 f1 f2 awb f3 asup_set_class f4 awcel padantr f0 f1 f2 f3 f4 prabbidva $.
+$}
+$( /* Equality theorem for restricted class abstractions, with bound-variable
+       hypotheses instead of distinct variable restrictions.  (Contributed by
+       NM, 7-Mar-2004.) */
+
+$)
+${
+	$v ph x A B $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/_ x B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	prabeqf $p |- ( A = B -> { x e. A | ph } = { x e. B | ph } ) $=
+	e0 e1 f1 f2 f3 pnfeq f2 f3 f1 asup_set_class peleq2 f2 f3 awceq f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel f0 panbi1d f2 f3 awceq f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f3 awcel f0 awa f1 pabbid f0 f1 f2 adf-rab f0 f1 f3 adf-rab f2 f3 awceq f1 asup_set_class f2 awcel f0 awa f1 acab f1 asup_set_class f3 awcel f0 awa f1 acab f0 f1 f2 acrab f0 f1 f3 acrab p3eqtr4g $.
+$}
+$( /* Equality theorem for restricted class abstractions.  (Contributed by NM,
+       15-Oct-2003.) */
+
+$)
+${
+	$v ph x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	prabeq $p |- ( A = B -> { x e. A | ph } = { x e. B | ph } ) $=
+	f1 f2 pnfcv f1 f3 pnfcv f0 f1 f2 f3 prabeqf $.
+$}
+$( /* Equality of restricted class abstractions.  (Contributed by Jeff Madsen,
+       1-Dec-2009.) */
+
+$)
+${
+	$v ph ps ch x A B $.
+	$d A x $.
+	$d B x $.
+	$d ph x $.
+	e0 $e |- ( ph -> A = B ) $.
+	e1 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	f5 $f class B $.
+	prabeqbidv $p |- ( ph -> { x e. A | ps } = { x e. B | ch } ) $=
+	e0 f1 f3 f4 f5 prabeq f0 f4 f5 awceq f1 f3 f4 acrab f1 f3 f5 acrab awceq psyl e1 f0 f1 f2 f3 f5 prabbidv f0 f1 f3 f4 acrab f1 f3 f5 acrab f2 f3 f5 acrab peqtrd $.
+$}
+$( /* Equality of restricted class abstractions.  (Contributed by Mario
+       Carneiro, 26-Jan-2017.) */
+
+$)
+${
+	$v ph ps ch x A B $.
+	$d A x $.
+	$d B x $.
+	$d ph x $.
+	e0 $e |- ( ph -> A = B ) $.
+	e1 $e |- ( ( ph /\ x e. A ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class A $.
+	f5 $f class B $.
+	prabeqbidva $p |- ( ph -> { x e. A | ps } = { x e. B | ch } ) $=
+	e1 f0 f1 f2 f3 f4 prabbidva e0 f2 f3 f4 f5 prabeq f0 f4 f5 awceq f2 f3 f4 acrab f2 f3 f5 acrab awceq psyl f0 f1 f3 f4 acrab f2 f3 f4 acrab f2 f3 f5 acrab peqtrd $.
+$}
+$( /* Inference rule from equality of a class variable and a restricted class
+       abstraction.  (Contributed by NM, 16-Feb-2004.) */
+
+$)
+${
+	$v ph x A B $.
+	e0 $e |- A = { x e. B | ph } $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	prabeq2i $p |- ( x e. A <-> ( x e. B /\ ph ) ) $=
+	e0 f2 f0 f1 f3 acrab f1 asup_set_class peleq2i f0 f1 f3 prabid f1 asup_set_class f2 awcel f1 asup_set_class f0 f1 f3 acrab awcel f1 asup_set_class f3 awcel f0 awa pbitri $.
+$}
+$( /* Rule to change the bound variable in a restricted class abstraction,
+       using implicit substitution.  This version has bound-variable hypotheses
+       in place of distinct variable conditions.  (Contributed by Andrew
+       Salmon, 11-Jul-2011.)  (Revised by Mario Carneiro, 9-Oct-2016.) */
+
+$)
+${
+	$v ph ps x y A $.
+	$v z $.
+	$d x z $.
+	$d y z $.
+	$d A z $.
+	$d ph z $.
+	$d ps z $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/_ y A $.
+	e2 $e |- F/ y ph $.
+	e3 $e |- F/ x ps $.
+	e4 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	i0 $f set z $.
+	pcbvrab $p |- { x e. A | ph } = { y e. A | ps } $=
+	f2 asup_set_class f4 awcel f0 awa i0 pnfv e0 f2 i0 f4 pnfcri f0 f2 i0 pnfs1v i0 asup_set_class f4 awcel f0 f2 i0 awsb f2 pnfan f2 asup_set_class i0 asup_set_class f4 peleq1 f0 f2 i0 psbequ12 f2 asup_set_class i0 asup_set_class awceq f2 asup_set_class f4 awcel i0 asup_set_class f4 awcel f0 f0 f2 i0 awsb panbi12d f2 asup_set_class f4 awcel f0 awa i0 asup_set_class f4 awcel f0 f2 i0 awsb awa f2 i0 pcbvab e1 f3 i0 f4 pnfcri e2 f0 f2 i0 f3 pnfsb i0 asup_set_class f4 awcel f0 f2 i0 awsb f3 pnfan f3 asup_set_class f4 awcel f1 awa i0 pnfv i0 asup_set_class f3 asup_set_class f4 peleq1 f0 i0 f3 f2 psbequ e3 e4 f0 f1 f2 f3 psbie i0 asup_set_class f3 asup_set_class awceq f0 f2 i0 awsb f0 f2 f3 awsb f1 psyl6bb i0 asup_set_class f3 asup_set_class awceq i0 asup_set_class f4 awcel f3 asup_set_class f4 awcel f0 f2 i0 awsb f1 panbi12d i0 asup_set_class f4 awcel f0 f2 i0 awsb awa f3 asup_set_class f4 awcel f1 awa i0 f3 pcbvab f2 asup_set_class f4 awcel f0 awa f2 acab i0 asup_set_class f4 awcel f0 f2 i0 awsb awa i0 acab f3 asup_set_class f4 awcel f1 awa f3 acab peqtri f0 f2 f4 adf-rab f1 f3 f4 adf-rab f2 asup_set_class f4 awcel f0 awa f2 acab f3 asup_set_class f4 awcel f1 awa f3 acab f0 f2 f4 acrab f1 f3 f4 acrab p3eqtr4i $.
+$}
+$( /* Rule to change the bound variable in a restricted class abstraction,
+       using implicit substitution.  (Contributed by NM, 26-May-1999.) */
+
+$)
+${
+	$v ph ps x y A $.
+	$d x y A $.
+	$d y ph $.
+	$d x ps $.
+	e0 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	pcbvrabv $p |- { x e. A | ph } = { y e. A | ps } $=
+	f2 f4 pnfcv f3 f4 pnfcv f0 f3 pnfv f1 f2 pnfv e0 f0 f1 f2 f3 f4 pcbvrab $.
+$}
+

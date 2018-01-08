@@ -1,0 +1,905 @@
+$[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Logical_disjunction_and_conjunction.smm $]
+$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Miscellaneous theorems of propositional calculus
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+$)
+$( /* Eliminate an antecedent implied by each side of a biconditional.
+       (Contributed by NM, 20-Nov-2005.)  (Proof shortened by Wolf Lammen,
+       4-Nov-2013.) */
+
+$)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ( ph /\ ps ) -> th ) $.
+	e1 $e |- ( ( ph /\ ch ) -> th ) $.
+	e2 $e |- ( th -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	ppm5.21nd $p |- ( ph -> ( ps <-> ch ) ) $=
+	e0 f0 f1 f3 pex e1 f0 f2 f3 pex e2 f3 f1 f2 awb awi f0 pa1i f0 f3 f1 f2 ppm5.21ndd $.
+$}
+$( /* Theorem *5.35 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+     3-Jan-2005.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm5.35 $p |- ( ( ( ph -> ps ) /\ ( ph -> ch ) ) -> ( ph -> ( ps <-> ch ) ) ) $=
+	f0 f1 awi f0 f2 awi ppm5.1 f0 f1 awi f0 f2 awi awa f0 f1 f2 ppm5.74rd $.
+$}
+$( /* Theorem *5.54 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+     3-Jan-2005.)  (Proof shortened by Wolf Lammen, 7-Nov-2013.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm5.54 $p |- ( ( ( ph /\ ps ) <-> ph ) \/ ( ( ph /\ ps ) <-> ps ) ) $=
+	f1 f0 piba f1 f0 f0 f1 awa pbicomd f1 f0 f1 awa f0 awb f0 padantl f1 f0 piba f1 f0 f0 f1 awa pbicomd f0 f1 awa f0 f1 awa f0 awb f1 ppm5.21ni f0 f1 awa f0 awb f0 f1 awa f1 awb porri $.
+$}
+$( /* Move conjunction outside of biconditional.  (Contributed by NM,
+       13-May-1999.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph <-> ( ps /\ ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbaib $p |- ( ps -> ( ph <-> ch ) ) $=
+	f1 f2 pibar e0 f1 f2 f1 f2 awa f0 psyl6rbbr $.
+$}
+$( /* Move conjunction outside of biconditional.  (Contributed by NM,
+       11-Jul-1994.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph <-> ( ps /\ ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbaibr $p |- ( ps -> ( ch <-> ph ) ) $=
+	e0 f0 f1 f2 pbaib f1 f0 f2 pbicomd $.
+$}
+$( /* Move conjunction outside of biconditional.  (Contributed by Mario
+       Carneiro, 11-Sep-2015.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph <-> ( ps /\ ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	prbaib $p |- ( ch -> ( ph <-> ps ) ) $=
+	e0 f1 f2 pancom f0 f1 f2 awa f2 f1 awa pbitri f0 f2 f1 pbaib $.
+$}
+$( /* Move conjunction outside of biconditional.  (Contributed by Mario
+       Carneiro, 11-Sep-2015.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph <-> ( ps /\ ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	prbaibr $p |- ( ch -> ( ps <-> ph ) ) $=
+	e0 f1 f2 pancom f0 f1 f2 awa f2 f1 awa pbitri f0 f2 f1 pbaibr $.
+$}
+$( /* Move conjunction outside of biconditional.  (Contributed by Mario
+       Carneiro, 11-Sep-2015.) */
+
+$)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps <-> ( ch /\ th ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pbaibd $p |- ( ( ph /\ ch ) -> ( ps <-> th ) ) $=
+	e0 f2 f3 pibar f2 f3 f2 f3 awa pbicomd f0 f1 f2 f3 awa f2 f3 psylan9bb $.
+$}
+$( /* Move conjunction outside of biconditional.  (Contributed by Mario
+       Carneiro, 11-Sep-2015.) */
+
+$)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps <-> ( ch /\ th ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	prbaibd $p |- ( ( ph /\ th ) -> ( ps <-> ch ) ) $=
+	e0 f3 f2 piba f3 f2 f2 f3 awa pbicomd f0 f1 f2 f3 awa f3 f2 psylan9bb $.
+$}
+$( /* Theorem *5.44 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+     3-Jan-2005.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm5.44 $p |- ( ( ph -> ps ) -> ( ( ph -> ch ) <-> ( ph -> ( ps /\ ch ) ) ) ) $=
+	f0 f1 f2 pjcab f0 f1 f2 awa awi f0 f1 awi f0 f2 awi pbaibr $.
+$}
+$( /* Conjunction in antecedent versus disjunction in consequent.  Theorem *5.6
+     of [WhiteheadRussell] p. 125.  (Contributed by NM, 8-Jun-1994.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm5.6 $p |- ( ( ( ph /\ -. ps ) -> ch ) <-> ( ph -> ( ps \/ ch ) ) ) $=
+	f0 f1 awn f2 pimpexp f1 f2 adf-or f1 f2 awo f1 awn f2 awi f0 pimbi2i f0 f1 awn awa f2 awi f0 f1 awn f2 awi awi f0 f1 f2 awo awi pbitr4i $.
+$}
+$( /* Change disjunction in consequent to conjunction in antecedent.
+       (Contributed by NM, 8-Jun-1994.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps \/ ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	porcanai $p |- ( ( ph /\ -. ps ) -> ch ) $=
+	e0 f0 f1 f2 pord f0 f1 awn f2 pimp $.
+$}
+$( /* Introduction of conjunct inside of a contradiction.  (Contributed by NM,
+       16-Sep-1993.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- -. ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pintnan $p |- -. ( ps /\ ph ) $=
+	e0 f1 f0 psimpr f1 f0 awa f0 pmto $.
+$}
+$( /* Introduction of conjunct inside of a contradiction.  (Contributed by NM,
+       3-Apr-1995.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- -. ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pintnanr $p |- -. ( ph /\ ps ) $=
+	e0 f0 f1 psimpl f0 f1 awa f0 pmto $.
+$}
+$( /* Introduction of conjunct inside of a contradiction.  (Contributed by NM,
+       10-Jul-2005.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> -. ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pintnand $p |- ( ph -> -. ( ch /\ ps ) ) $=
+	e0 f2 f1 psimpr f0 f1 f2 f1 awa pnsyl $.
+$}
+$( /* Introduction of conjunct inside of a contradiction.  (Contributed by NM,
+       10-Jul-2005.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> -. ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pintnanrd $p |- ( ph -> -. ( ps /\ ch ) ) $=
+	e0 f1 f2 psimpl f0 f1 f1 f2 awa pnsyl $.
+$}
+$( /* Detach truth from conjunction in biconditional.  (Contributed by NM,
+       27-Feb-1996.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ps $.
+	e1 $e |- ( ph <-> ( ps /\ ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pmpbiran $p |- ( ph <-> ch ) $=
+	e1 e0 f1 f2 pbiantrur f0 f1 f2 awa f2 pbitr4i $.
+$}
+$( /* Detach truth from conjunction in biconditional.  (Contributed by NM,
+       22-Feb-1996.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ch $.
+	e1 $e |- ( ph <-> ( ps /\ ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pmpbiran2 $p |- ( ph <-> ps ) $=
+	e1 e0 f2 f1 pbiantru f0 f1 f2 awa f1 pbitr4i $.
+$}
+$( /* Detach a conjunction of truths in a biconditional.  (Contributed by NM,
+       10-May-2005.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ps $.
+	e1 $e |- ch $.
+	e2 $e |- ( ph <-> ( ps /\ ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pmpbir2an $p |- ph $=
+	e1 e0 e2 f0 f1 f2 pmpbiran f0 f2 pmpbir $.
+$}
+$( /* Detach a conjunction of truths in a biconditional.  (Contributed by NM,
+       6-Nov-2011.)  (Proof shortened by Wolf Lammen, 24-Nov-2012.) */
+
+$)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( ph -> ch ) $.
+	e2 $e |- ( ph -> ( ( ps /\ ch ) <-> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pmpbi2and $p |- ( ph -> th ) $=
+	e0 e1 f0 f1 f2 pjca e2 f0 f1 f2 awa f3 pmpbid $.
+$}
+$( /* Detach a conjunction of truths in a biconditional.  (Contributed by NM,
+       6-Nov-2011.)  (Proof shortened by Wolf Lammen, 24-Nov-2012.) */
+
+$)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ch ) $.
+	e1 $e |- ( ph -> th ) $.
+	e2 $e |- ( ph -> ( ps <-> ( ch /\ th ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pmpbir2and $p |- ( ph -> ps ) $=
+	e0 e1 f0 f2 f3 pjca e2 f0 f1 f2 f3 awa pmpbird $.
+$}
+$( /* Theorem *5.62 of [WhiteheadRussell] p. 125.  (Contributed by Roy F.
+     Longton, 21-Jun-2005.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm5.62 $p |- ( ( ( ph /\ ps ) \/ -. ps ) <-> ( ph \/ -. ps ) ) $=
+	f1 pexmid f0 f1 f1 awn pordir f0 f1 awa f1 awn awo f0 f1 awn awo f1 f1 awn awo pmpbiran2 $.
+$}
+$( /* Theorem *5.63 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+     3-Jan-2005.)  (Proof shortened by Wolf Lammen, 25-Dec-2012.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm5.63 $p |- ( ( ph \/ ps ) <-> ( ph \/ ( -. ph /\ ps ) ) ) $=
+	f0 pexmid f0 f0 awn f1 pordi f0 f0 awn f1 awa awo f0 f0 awn awo f0 f1 awo pmpbiran f0 f0 awn f1 awa awo f0 f1 awo pbicomi $.
+$}
+$( /* A wff conjoined with falsehood is false.  (Contributed by NM,
+       5-Aug-1993.)  (Proof shortened by Wolf Lammen, 26-Nov-2012.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- -. ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pbianfi $p |- ( ph <-> ( ps /\ ph ) ) $=
+	e0 e0 f0 f1 pintnan f0 f1 f0 awa p2false $.
+$}
+$( /* A wff conjoined with falsehood is false.  (Contributed by NM,
+       27-Mar-1995.)  (Proof shortened by Wolf Lammen, 5-Nov-2013.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> -. ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbianfd $p |- ( ph -> ( ps <-> ( ps /\ ch ) ) ) $=
+	e0 e0 f0 f1 f2 pintnanrd f0 f1 f1 f2 awa p2falsed $.
+$}
+$( /* Theorem *4.43 of [WhiteheadRussell] p. 119.  (Contributed by NM,
+     3-Jan-2005.)  (Proof shortened by Wolf Lammen, 26-Nov-2012.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm4.43 $p |- ( ph <-> ( ( ph \/ ps ) /\ ( ph \/ -. ps ) ) ) $=
+	f1 ppm3.24 f1 f1 awn awa f0 pbiorfi f0 f1 f1 awn pordi f0 f0 f1 f1 awn awa awo f0 f1 awo f0 f1 awn awo awa pbitri $.
+$}
+$( /* Theorem *4.82 of [WhiteheadRussell] p. 122.  (Contributed by NM,
+     3-Jan-2005.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm4.82 $p |- ( ( ( ph -> ps ) /\ ( ph -> -. ps ) ) <-> -. ph ) $=
+	f0 f1 ppm2.65 f0 f1 awi f0 f1 awn awi f0 awn pimp f0 f1 ppm2.21 f0 f1 awn ppm2.21 f0 awn f0 f1 awi f0 f1 awn awi pjca f0 f1 awi f0 f1 awn awi awa f0 awn pimpbii $.
+$}
+$( /* Theorem *4.83 of [WhiteheadRussell] p. 122.  (Contributed by NM,
+     3-Jan-2005.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm4.83 $p |- ( ( ( ph -> ps ) /\ ( -. ph -> ps ) ) <-> ps ) $=
+	f0 pexmid f0 f0 awn awo f1 pa1bi f0 f1 f0 awn pjaob f1 f0 f0 awn awo f1 awi f0 f1 awi f0 awn f1 awi awa pbitr2i $.
+$}
+$( /* Negation inferred from embedded conjunct.  (Contributed by NM,
+     20-Aug-1993.)  (Proof shortened by Wolf Lammen, 25-Nov-2012.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppclem6 $p |- ( ( ph <-> ( ps /\ -. ph ) ) -> -. ps ) $=
+	f1 f0 awn pibar f0 f1 f0 awn awa pnbbn f1 f0 awn f1 f0 awn awa awb f0 f1 f0 awn awa awb awn psylib f1 f0 f1 f0 awn awa awb pcon2i $.
+$}
+$( /* A transitive law of equivalence.  Compare Theorem *4.22 of
+     [WhiteheadRussell] p. 117.  (Contributed by NM, 18-Aug-1993.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbiantr $p |- ( ( ( ph <-> ps ) /\ ( ch <-> ps ) ) -> ( ph <-> ch ) ) $=
+	f2 f1 awb pid f2 f1 awb f2 f1 f0 pbibi2d f2 f1 awb f0 f2 awb f0 f1 awb pbiimparc $.
+$}
+$( /* Disjunction distributes over the biconditional.  An axiom of system DS in
+     Vladimir Lifschitz, "On calculational proofs" (1998),
+     ~ http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.25.3384 .
+     (Contributed by NM, 8-Jan-2005.)  (Proof shortened by Wolf Lammen,
+     4-Feb-2013.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	porbidi $p |- ( ( ph \/ ( ps <-> ch ) ) <-> ( ( ph \/ ps ) <-> ( ph \/ ch ) ) ) $=
+	f0 awn f1 f2 ppm5.74 f0 f1 f2 awb adf-or f0 f1 adf-or f0 f2 adf-or f0 f1 awo f0 awn f1 awi f0 f2 awo f0 awn f2 awi pbibi12i f0 awn f1 f2 awb awi f0 awn f1 awi f0 awn f2 awi awb f0 f1 f2 awb awo f0 f1 awo f0 f2 awo awb p3bitr4i $.
+$}
+$( /* Lukasiewicz's shortest axiom for equivalential calculus.  Storrs McCall,
+     ed., _Polish Logic 1920-1939_ (Oxford, 1967), p. 96.  (Contributed by NM,
+     10-Jan-2005.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbiluk $p |- ( ( ph <-> ps ) <-> ( ( ch <-> ps ) <-> ( ph <-> ch ) ) ) $=
+	f0 f1 pbicom f0 f1 awb f1 f0 awb f2 pbibi1i f1 f0 f2 pbiass f0 f1 awb f2 awb f1 f0 awb f2 awb f1 f0 f2 awb awb pbitri f0 f1 awb f2 f1 f0 f2 awb awb pbiass f0 f1 awb f2 awb f1 f0 f2 awb awb awb f0 f1 awb f2 f1 f0 f2 awb awb awb awb pmpbi f2 f1 f0 f2 awb pbiass f0 f1 awb f2 f1 f0 f2 awb awb awb f2 f1 awb f0 f2 awb awb pbitr4i $.
+$}
+$( /* Disjunction distributes over the biconditional.  Theorem *5.7 of
+     [WhiteheadRussell] p. 125.  This theorem is similar to ~ orbidi .
+     (Contributed by Roy F. Longton, 21-Jun-2005.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm5.7 $p |- ( ( ( ph \/ ch ) <-> ( ps \/ ch ) ) <-> ( ch \/ ( ph <-> ps ) ) ) $=
+	f2 f0 f1 porbidi f2 f0 porcom f2 f1 porcom f2 f0 awo f0 f2 awo f2 f1 awo f1 f2 awo pbibi12i f2 f0 f1 awb awo f2 f0 awo f2 f1 awo awb f0 f2 awo f1 f2 awo awb pbitr2i $.
+$}
+$( /* Dijkstra-Scholten's Golden Rule for calculational proofs.  (Contributed by
+     NM, 10-Jan-2005.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pbigolden $p |- ( ( ( ph /\ ps ) <-> ph ) <-> ( ps <-> ( ph \/ ps ) ) ) $=
+	f0 f1 ppm4.71 f0 f1 ppm4.72 f0 f0 f1 awa pbicom f0 f1 awi f0 f0 f1 awa awb f1 f0 f1 awo awb f0 f1 awa f0 awb p3bitr3ri $.
+$}
+$( /* Theorem *5.71 of [WhiteheadRussell] p. 125.  (Contributed by Roy F.
+     Longton, 23-Jun-2005.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm5.71 $p |- ( ( ps -> -. ch ) -> ( ( ( ph \/ ps ) /\ ch ) <-> ( ph /\ ch ) ) ) $=
+	f1 f0 porel2 f0 f1 porc f1 awn f0 f1 awo f0 pimpbid1 f1 awn f0 f1 awo f0 f2 panbi1d f2 f0 f1 awo f0 awb ppm2.21 f2 awn f2 f0 f1 awo f0 ppm5.32rd f1 f2 awn f0 f1 awo f2 awa f0 f2 awa awb pja $.
+$}
+$( /* Theorem *5.75 of [WhiteheadRussell] p. 126.  (Contributed by NM,
+     3-Jan-2005.)  (Proof shortened by Andrew Salmon, 7-May-2011.)  (Proof
+     shortened by Wolf Lammen, 23-Dec-2012.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm5.75 $p |- ( ( ( ch -> -. ps ) /\ ( ph <-> ( ps \/ ch ) ) ) -> ( ( ph /\ -. ps ) <-> ch ) ) $=
+	f0 f1 f2 awo f1 awn panbi1 f1 f2 porcom f1 f2 awo f2 f1 awo f1 awn panbi1i f2 f1 ppm5.61 f1 f2 awo f1 awn awa f2 f1 awo f1 awn awa f2 f1 awn awa pbitri f0 f1 f2 awo awb f0 f1 awn awa f1 f2 awo f1 awn awa f2 f1 awn awa psyl6bb f2 f1 awn ppm4.71 f2 f1 awn awi f2 f2 f1 awn awa awb pbiimpi f2 f1 awn awi f2 f2 f1 awn awa pbicomd f0 f1 f2 awo awb f0 f1 awn awa f2 f1 awn awa f2 f1 awn awi f2 psylan9bbr $.
+$}
+$( /* Removal of conjunct from one side of an equivalence.  (Contributed by NM,
+     5-Aug-1993.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbimsc1 $p |- ( ( ( ph -> ps ) /\ ( ch <-> ( ps /\ ph ) ) ) -> ( ch <-> ph ) ) $=
+	f1 f0 psimpr f0 f1 pancr f0 f1 awi f1 f0 awa f0 pimpbid2 f0 f1 awi f1 f0 awa f0 f2 pbibi2d f0 f1 awi f2 f1 f0 awa awb f2 f0 awb pbiimpa $.
+$}
+$( /* The disjunction of the four possible combinations of two wffs and their
+     negations is always true.  (Contributed by David Abernethy,
+     28-Jan-2014.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	p4exmid $p |- ( ( ( ph /\ ps ) \/ ( -. ph /\ -. ps ) ) \/ ( ( ph /\ -. ps ) \/ ( ps /\ -. ph ) ) ) $=
+	f0 f1 awb pexmid f0 f1 pdfbi3 f0 f1 pxor f0 f1 awb f0 f1 awa f0 awn f1 awn awa awo f0 f1 awb awn f0 f1 awn awa f1 f0 awn awa awo porbi12i f0 f1 awb f0 f1 awb awn awo f0 f1 awa f0 awn f1 awn awa awo f0 f1 awn awa f1 f0 awn awa awo awo pmpbi $.
+$}
+$( /* Deduction for elimination by cases.  (Contributed by NM, 21-Apr-1994.)
+       (Proof shortened by Wolf Lammen, 22-Dec-2012.) */
+
+$)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( ph -> -. ( ps /\ ch ) ) $.
+	e2 $e |- ( ph -> -. ( ps /\ th ) ) $.
+	e3 $e |- ( ph -> ( ta \/ ( ch \/ th ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	pecase2d $p |- ( ph -> ta ) $=
+	f0 f4 pidd e0 e1 f0 f1 f2 awa f4 ppm2.21d f0 f1 f2 f4 pmpand e0 e2 f0 f1 f3 awa f4 ppm2.21d f0 f1 f3 f4 pmpand f0 f2 f4 f3 pjaod e3 f0 f4 f4 f2 f3 awo pmpjaod $.
+$}
+$( /* Inference for elimination by cases.  (Contributed by NM, 23-Mar-1995.)
+       (Proof shortened by Wolf Lammen, 26-Nov-2012.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ch ) $.
+	e1 $e |- ( ps -> ch ) $.
+	e2 $e |- ( -. ( ph \/ ps ) -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pecase3 $p |- ch $=
+	e0 e1 f0 f2 f1 pjaoi e2 f0 f1 awo f2 ppm2.61i $.
+$}
+$( /* Inference for elimination by cases.  (Contributed by NM,
+       13-Jul-2005.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( -. ph -> ch ) $.
+	e1 $e |- ( -. ps -> ch ) $.
+	e2 $e |- ( ( ph /\ ps ) -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pecase $p |- ch $=
+	e2 f0 f1 f2 pex e0 e1 f0 f1 f2 ppm2.61nii $.
+$}
+$( /* Deduction for elimination by cases.  (Contributed by NM, 2-May-1996.)
+       (Proof shortened by Andrew Salmon, 7-May-2011.) */
+
+$)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps -> th ) ) $.
+	e1 $e |- ( ph -> ( ch -> th ) ) $.
+	e2 $e |- ( ph -> ( -. ( ps \/ ch ) -> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pecase3d $p |- ( ph -> th ) $=
+	e0 e1 f0 f1 f3 f2 pjaod e2 f0 f1 f2 awo f3 ppm2.61d $.
+$}
+$( /* Deduction for elimination by cases.  (Contributed by NM, 8-Oct-2012.) */
+
+$)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( -. ps -> th ) ) $.
+	e1 $e |- ( ph -> ( -. ch -> th ) ) $.
+	e2 $e |- ( ph -> ( ( ps /\ ch ) -> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pecased $p |- ( ph -> th ) $=
+	e0 e1 f1 f2 ppm3.11 e2 f1 awn f2 awn awo awn f1 f2 awa f0 f3 psyl5 f0 f1 awn f2 awn f3 pecase3d $.
+$}
+$( /* Deduction for elimination by cases.  (Contributed by NM,
+       24-May-2013.) */
+
+$)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps -> th ) ) $.
+	e1 $e |- ( ph -> ( ch -> th ) ) $.
+	e2 $e |- ( ph -> ( ( -. ps /\ -. ch ) -> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pecase3ad $p |- ( ph -> th ) $=
+	f1 pnotnot2 e0 f1 awn awn f1 f0 f3 psyl5 f2 pnotnot2 e1 f2 awn awn f2 f0 f3 psyl5 e2 f0 f1 awn f2 awn f3 pecased $.
+$}
+$( /* Inference for combining cases.  (Contributed by NM, 29-Jul-1999.)
+       (Proof shortened by Wolf Lammen, 6-Jan-2013.) */
+
+$)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ( ph /\ ps ) -> ta ) $.
+	e1 $e |- ( ( ch /\ ps ) -> ta ) $.
+	e2 $e |- ( ( ph /\ th ) -> ta ) $.
+	e3 $e |- ( ( ch /\ th ) -> ta ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	pccase $p |- ( ( ( ph \/ ch ) /\ ( ps \/ th ) ) -> ta ) $=
+	e0 e1 f0 f1 f4 f2 pjaoian e2 e3 f0 f3 f4 f2 pjaoian f0 f2 awo f1 f4 f3 pjaodan $.
+$}
+$( /* Deduction for combining cases.  (Contributed by NM, 9-May-2004.) */
+
+$)
+${
+	$v ph ps ch th ta et $.
+	e0 $e |- ( ph -> ( ( ps /\ ch ) -> et ) ) $.
+	e1 $e |- ( ph -> ( ( th /\ ch ) -> et ) ) $.
+	e2 $e |- ( ph -> ( ( ps /\ ta ) -> et ) ) $.
+	e3 $e |- ( ph -> ( ( th /\ ta ) -> et ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	f5 $f wff et $.
+	pccased $p |- ( ph -> ( ( ( ps \/ th ) /\ ( ch \/ ta ) ) -> et ) ) $=
+	e0 f0 f1 f2 awa f5 pcom12 e1 f0 f3 f2 awa f5 pcom12 e2 f0 f1 f4 awa f5 pcom12 e3 f0 f3 f4 awa f5 pcom12 f1 f2 f3 f4 f0 f5 awi pccase f1 f3 awo f2 f4 awo awa f0 f5 pcom12 $.
+$}
+$( /* Inference for combining cases.  (Contributed by NM, 29-Jul-1999.) */
+
+$)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ( ph /\ ps ) -> ta ) $.
+	e1 $e |- ( ch -> ta ) $.
+	e2 $e |- ( th -> ta ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	pccase2 $p |- ( ( ( ph \/ ch ) /\ ( ps \/ th ) ) -> ta ) $=
+	e0 e1 f2 f4 f1 padantr e2 f3 f4 f0 padantl e2 f3 f4 f2 padantl f0 f1 f2 f3 f4 pccase $.
+$}
+$( /* Inference eliminating two antecedents from the four possible cases that
+       result from their true/false combinations.  (Contributed by NM,
+       25-Oct-2003.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ( ph /\ ps ) -> ch ) $.
+	e1 $e |- ( ( ph /\ -. ps ) -> ch ) $.
+	e2 $e |- ( ( -. ph /\ ps ) -> ch ) $.
+	e3 $e |- ( ( -. ph /\ -. ps ) -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	p4cases $p |- ch $=
+	e0 e2 f0 f1 f2 ppm2.61ian e1 e3 f0 f1 awn f2 ppm2.61ian f1 f2 ppm2.61i $.
+$}
+$( /* Deduction eliminating two antecedents from the four possible cases that
+       result from their true/false combinations.  (Contributed by NM,
+       19-Mar-2013.) */
+
+$)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ( ph /\ ( ps /\ ch ) ) -> th ) $.
+	e1 $e |- ( ( ph /\ ( ps /\ -. ch ) ) -> th ) $.
+	e2 $e |- ( ( ph /\ ( -. ps /\ ch ) ) -> th ) $.
+	e3 $e |- ( ( ph /\ ( -. ps /\ -. ch ) ) -> th ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	p4casesdan $p |- ( ph -> th ) $=
+	e0 f0 f1 f2 awa f3 pexpcom e1 f0 f1 f2 awn awa f3 pexpcom e2 f0 f1 awn f2 awa f3 pexpcom e3 f0 f1 awn f2 awn awa f3 pexpcom f1 f2 f0 f3 awi p4cases $.
+$}
+$( /* Miscellaneous inference relating falsehoods.  (Contributed by NM,
+       31-Mar-1994.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pniabn $p |- ( -. ps -> ( ( ch /\ ps ) <-> -. ph ) ) $=
+	f2 f1 psimpr e0 f0 f1 ppm2.24i f2 f1 awa f1 f0 awn ppm5.21ni $.
+$}
+$( /* Lemma for an alternate version of weak deduction theorem.  (Contributed by
+     NM, 2-Apr-1994.)  (Proof shortened by Andrew Salmon, 7-May-2011.)  (Proof
+     shortened by Wolf Lammen, 4-Dec-2012.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pdedlem0a $p |- ( ph -> ( ps <-> ( ( ch -> ph ) -> ( ps /\ ph ) ) ) ) $=
+	f0 f1 piba f0 f2 aax-1 f2 f0 awi f1 f0 awa pbiimt f0 f2 f0 awi f1 f0 awa f2 f0 awi f1 f0 awa awi awb psyl f0 f1 f1 f0 awa f2 f0 awi f1 f0 awa awi pbitrd $.
+$}
+$( /* Lemma for an alternate version of weak deduction theorem.  (Contributed by
+     NM, 2-Apr-1994.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pdedlem0b $p |- ( -. ph -> ( ps <-> ( ( ps -> ph ) -> ( ch /\ ph ) ) ) ) $=
+	f0 f2 f0 awa ppm2.21 f0 awn f0 f2 f0 awa f1 pimim2d f0 awn f1 f0 awi f1 f2 f0 awa pcom23 f1 f0 ppm2.21 f2 f0 psimpr f1 awn f1 f0 awi f2 f0 awa f0 pimim12i f1 f0 awi f2 f0 awa awi f1 f0 pcon1d f1 f0 awi f2 f0 awa awi f0 awn f1 pcom12 f0 awn f1 f1 f0 awi f2 f0 awa awi pimpbid $.
+$}
+$( /* Lemma for weak deduction theorem.  (Contributed by NM, 26-Jun-2002.)
+     (Proof shortened by Andrew Salmon, 7-May-2011.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pdedlema $p |- ( ph -> ( ps <-> ( ( ps /\ ph ) \/ ( ch /\ -. ph ) ) ) ) $=
+	f1 f0 awa f2 f0 awn awa porc f1 f0 f1 f0 awa f2 f0 awn awa awo pexpcom f1 f0 psimpl f1 f0 awa f1 awi f0 pa1i f0 f1 ppm2.24 f0 f0 awn f1 f2 padantld f0 f1 f0 awa f1 f2 f0 awn awa pjaod f0 f1 f1 f0 awa f2 f0 awn awa awo pimpbid $.
+$}
+$( /* Lemma for weak deduction theorem.  (Contributed by NM, 15-May-1999.)
+     (Proof shortened by Andrew Salmon, 7-May-2011.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pdedlemb $p |- ( -. ph -> ( ch <-> ( ( ps /\ ph ) \/ ( ch /\ -. ph ) ) ) ) $=
+	f2 f0 awn awa f1 f0 awa polc f2 f0 awn f1 f0 awa f2 f0 awn awa awo pexpcom f0 f2 ppm2.21 f0 awn f0 f2 f1 padantld f2 f0 awn psimpl f2 f0 awn awa f2 awi f0 awn pa1i f0 awn f1 f0 awa f2 f2 f0 awn awa pjaod f0 awn f2 f1 f0 awa f2 f0 awn awa awo pimpbid $.
+$}
+$( /* Hypothesis builder for weak deduction theorem.  For more information,
+       see the Deduction Theorem link on the Metamath Proof Explorer home
+       page.  (Contributed by NM, 26-Jun-2002.) */
+
+$)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ( ph <-> ( ( ph /\ ch ) \/ ( ps /\ -. ch ) ) ) -> ( ch <-> ta ) ) $.
+	e1 $e |- ( ( ps <-> ( ( ph /\ ch ) \/ ( ps /\ -. ch ) ) ) -> ( th <-> ta ) ) $.
+	e2 $e |- th $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	pelimh $p |- ta $=
+	f2 f0 f1 pdedlema e0 f2 f0 f0 f2 awa f1 f2 awn awa awo awb f2 f4 awb psyl f2 f4 pibi e2 f2 f0 f1 pdedlemb e1 f2 awn f1 f0 f2 awa f1 f2 awn awa awo awb f3 f4 awb psyl f2 awn f3 f4 pmpbii f2 f4 ppm2.61i $.
+$}
+$( /* The weak deduction theorem.  For more information, see the Deduction
+       Theorem link on the Metamath Proof Explorer home page.  (Contributed by
+       NM, 26-Jun-2002.) */
+
+$)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ( ph <-> ( ( ph /\ ch ) \/ ( ps /\ -. ch ) ) ) -> ( th <-> ta ) ) $.
+	e1 $e |- ta $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	pdedt $p |- ( ch -> th ) $=
+	f2 f0 f1 pdedlema e1 e0 f0 f0 f2 awa f1 f2 awn awa awo awb f3 f4 pmpbiri f2 f0 f0 f2 awa f1 f2 awn awa awo awb f3 psyl $.
+$}
+$( /* Contraposition.  Theorem *2.16 of [WhiteheadRussell] p. 103.  This version
+     of ~ con3 demonstrates the use of the weak deduction theorem ~ dedt to
+     derive it from ~ con3i .  (Contributed by NM, 27-Jun-2002.)
+     (Proof modification is discouraged.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pcon3th $p |- ( ( ph -> ps ) -> ( -. ps -> -. ph ) ) $=
+	f1 f1 f0 f1 awi awa f0 f0 f1 awi awn awa awo awb pid f1 f1 f0 f1 awi awa f0 f0 f1 awi awn awa awo awb f1 f1 f0 f1 awi awa f0 f0 f1 awi awn awa awo pnotbid f1 f1 f0 f1 awi awa f0 f0 f1 awi awn awa awo awb f1 awn f1 f0 f1 awi awa f0 f0 f1 awi awn awa awo awn f0 awn pimbi1d f1 f1 f0 f1 awi awa f0 f0 f1 awi awn awa awo awb pid f1 f1 f0 f1 awi awa f0 f0 f1 awi awn awa awo awb f1 f1 f0 f1 awi awa f0 f0 f1 awi awn awa awo f0 pimbi2d f0 f1 f0 f1 awi awa f0 f0 f1 awi awn awa awo awb pid f0 f1 f0 f1 awi awa f0 f0 f1 awi awn awa awo awb f0 f1 f0 f1 awi awa f0 f0 f1 awi awn awa awo f0 pimbi2d f0 pid f1 f0 f0 f1 awi f0 f0 awi f0 f1 f0 f1 awi awa f0 f0 f1 awi awn awa awo awi pelimh f0 f1 f0 f1 awi awa f0 f0 f1 awi awn awa awo pcon3i f1 f0 f0 f1 awi f1 awn f0 awn awi f1 f0 f1 awi awa f0 f0 f1 awi awn awa awo awn f0 awn awi pdedt $.
+$}
+$( /* The consensus theorem.  This theorem and its dual (with ` \/ ` and ` /\ `
+     interchanged) are commonly used in computer logic design to eliminate
+     redundant terms from Boolean expressions.  Specifically, we prove that the
+     term ` ( ps /\ ch ) ` on the left-hand side is redundant.  (Contributed by
+     NM, 16-May-2003.)  (Proof shortened by Andrew Salmon, 13-May-2011.)
+     (Proof shortened by Wolf Lammen, 20-Jan-2013.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pconsensus $p |- ( ( ( ( ph /\ ps ) \/ ( -. ph /\ ch ) ) \/ ( ps /\ ch ) ) <-> ( ( ph /\ ps ) \/ ( -. ph /\ ch ) ) ) $=
+	f0 f1 awa f0 awn f2 awa awo pid f0 f1 awa f0 awn f2 awa porc f0 f1 f0 f1 awa f0 awn f2 awa awo f2 padantrr f0 awn f2 awa f0 f1 awa polc f0 awn f2 f0 f1 awa f0 awn f2 awa awo f1 padantrl f0 f1 f2 awa f0 f1 awa f0 awn f2 awa awo ppm2.61ian f0 f1 awa f0 awn f2 awa awo f0 f1 awa f0 awn f2 awa awo f1 f2 awa pjaoi f0 f1 awa f0 awn f2 awa awo f1 f2 awa porc f0 f1 awa f0 awn f2 awa awo f1 f2 awa awo f0 f1 awa f0 awn f2 awa awo pimpbii $.
+$}
+$( /* Theorem *4.42 of [WhiteheadRussell] p. 119.  (Contributed by Roy F.
+     Longton, 21-Jun-2005.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm4.42 $p |- ( ph <-> ( ( ph /\ ps ) \/ ( ph /\ -. ps ) ) ) $=
+	f1 f0 f0 pdedlema f1 f0 f0 pdedlemb f1 f0 f0 f1 awa f0 f1 awn awa awo awb ppm2.61i $.
+$}
+$( /* Miscellaneous inference relating falsehoods.  (Contributed by NM,
+       31-Mar-1994.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pninba $p |- ( -. ps -> ( -. ph <-> ( ch /\ ps ) ) ) $=
+	e0 f0 f1 f2 pniabn f1 awn f2 f1 awa f0 awn pbicomd $.
+$}
+$( /* A specialized lemma for set theory (to derive the Axiom of Pairing).
+       (Contributed by NM, 18-Oct-1995.)  (Proof shortened by Andrew Salmon,
+       13-May-2011.)  (Proof shortened by Wolf Lammen, 5-Jan-2013.) */
+
+$)
+${
+	$v ph ps ch th ta et $.
+	e0 $e |- ( ph -> ( et <-> ch ) ) $.
+	e1 $e |- ( ps -> -. th ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	f5 $f wff et $.
+	pprlem1 $p |- ( ph -> ( ps -> ( ( ( ps /\ ch ) \/ ( th /\ ta ) ) -> et ) ) ) $=
+	e0 f0 f5 f2 pbiimprd f0 f2 f5 f1 padantld e1 f1 f3 f5 ppm2.21d f1 f3 f5 f4 padantrd f0 f1 f2 awa f5 f1 f3 f4 awa pjaao f0 f1 f1 f2 awa f3 f4 awa awo f5 awi pex $.
+$}
+$( /* A specialized lemma for set theory (to derive the Axiom of Pairing).
+     (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
+     13-May-2011.)  (Proof shortened by Wolf Lammen, 9-Dec-2012.) */
+
+$)
+${
+	$v ph ps ch th $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pprlem2 $p |- ( ( ( ph /\ ps ) \/ ( ch /\ th ) ) <-> ( ( ph \/ ch ) /\ ( ( ph /\ ps ) \/ ( ch /\ th ) ) ) ) $=
+	f0 f1 psimpl f2 f3 psimpl f0 f1 awa f0 f2 f3 awa f2 porim12i f0 f1 awa f2 f3 awa awo f0 f2 awo ppm4.71ri $.
+$}
+$( /* A specialized lemma for set theory (ordered pair theorem).  (Contributed
+       by NM, 18-Oct-1995.)  (Proof shortened by Wolf Lammen, 8-Dec-2012.) */
+
+$)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps \/ ch ) ) $.
+	e1 $e |- ( ph -> ( th \/ ta ) ) $.
+	e2 $e |- ( ps <-> th ) $.
+	e3 $e |- ( ch -> ( th <-> ta ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	poplem1 $p |- ( ph -> ps ) $=
+	e2 f1 f3 pnotbii e0 f0 f1 f2 pord f3 awn f1 awn f0 f2 psyl5bir e1 f0 f3 f4 pord f0 f3 awn f2 f4 pjcad e3 f2 f3 f4 pbiimpar f0 f3 awn f2 f4 awa f3 psyl6 f0 f3 ppm2.18d e2 f0 f3 f1 psylibr $.
+$}
+$( /* Lemma used in construction of real numbers.  (Contributed by NM,
+     4-Sep-1995.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
+
+$)
+${
+	$v ph ps ch th $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	prnlem $p |- ( ( ( ph /\ ps ) /\ ( ch /\ th ) ) <-> ( ( ( ph /\ ch ) /\ ( ps /\ th ) ) /\ ( ( ph /\ th ) /\ ( ps /\ ch ) ) ) ) $=
+	f0 f1 f2 f3 pan4 f0 f1 awa f2 f3 awa awa f0 f2 awa f1 f3 awa awa pbiimpi f0 f3 f1 f2 pan42 f0 f3 awa f1 f2 awa awa f0 f1 awa f2 f3 awa awa pbiimpri f0 f1 awa f2 f3 awa awa f0 f2 awa f1 f3 awa awa f0 f3 awa f1 f2 awa awa pjca f0 f3 f1 f2 pan42 f0 f3 awa f1 f2 awa awa f0 f1 awa f2 f3 awa awa pbiimpi f0 f3 awa f1 f2 awa awa f0 f1 awa f2 f3 awa awa f0 f2 awa f1 f3 awa awa padantl f0 f1 awa f2 f3 awa awa f0 f2 awa f1 f3 awa awa f0 f3 awa f1 f2 awa awa awa pimpbii $.
+$}
+$( /* A single axiom for Boolean algebra known as DN_1.  See
+     ~ http://www-unix.mcs.anl.gov/~~mccune/papers/basax/v12.pdf .
+     (Contributed by Jeffrey Hankins, 3-Jul-2009.)  (Proof shortened by Andrew
+     Salmon, 13-May-2011.)  (Proof shortened by Wolf Lammen, 6-Jan-2013.) */
+
+$)
+${
+	$v ph ps ch th $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pdn1 $p |- ( -. ( -. ( -. ( ph \/ ps ) \/ ch ) \/ -. ( ph \/ -. ( -. ch \/ -. ( ch \/ th ) ) ) ) <-> ch ) $=
+	f0 f1 ppm2.45 f0 f1 awo awn f0 pimnan f0 f1 awo awn f0 awn awi f0 f1 awo awn f0 awa awn pmpbi f0 f1 awo awn f0 awa f2 pbiorfi f2 f0 f1 awo awn f0 awa porcom f0 f1 awo awn f0 f2 pordir f2 f0 f1 awo awn f0 awa awo f0 f1 awo awn f0 awa f2 awo f0 f1 awo awn f2 awo f0 f2 awo awa pbitri f2 f2 f0 f1 awo awn f0 awa awo f0 f1 awo awn f2 awo f0 f2 awo awa pbitri f2 f3 ppm4.45 f2 f2 f3 awo panor f2 f2 f2 f3 awo awa f2 awn f2 f3 awo awn awo awn pbitri f2 f2 awn f2 f3 awo awn awo awn f0 porbi2i f0 f2 awo f0 f2 awn f2 f3 awo awn awo awn awo f0 f1 awo awn f2 awo panbi2i f0 f1 awo awn f2 awo f0 f2 awn f2 f3 awo awn awo awn awo panor f2 f0 f1 awo awn f2 awo f0 f2 awo awa f0 f1 awo awn f2 awo f0 f2 awn f2 f3 awo awn awo awn awo awa f0 f1 awo awn f2 awo awn f0 f2 awn f2 f3 awo awn awo awn awo awn awo awn p3bitrri $.
+$}
+

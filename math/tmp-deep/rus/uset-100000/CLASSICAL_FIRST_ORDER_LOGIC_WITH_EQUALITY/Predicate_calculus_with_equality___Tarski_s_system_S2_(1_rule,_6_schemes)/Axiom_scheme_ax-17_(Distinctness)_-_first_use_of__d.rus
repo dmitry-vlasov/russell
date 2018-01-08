@@ -1,0 +1,292 @@
+import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Tarski_s_system_S2_(1_rule,_6_schemes)/Axiom_scheme_ax-5_(Quantified_Implication).rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  Axiom scheme ax-17 (Distinctness) - first use of $d
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* Axiom of Distinctness.  This axiom quantifies a variable over a formula
+       in which it does not occur.  Axiom C5 in [Megill] p. 444 (p. 11 of the
+       preprint).  Also appears as Axiom B6 (p. 75) of system S2 of [Tarski]
+       p. 77 and Axiom C5-1 of [Monk2] p. 113.
+
+       (See comments in ~ ax17o about the logical redundancy of ~ ax-17 in the
+       presence of our obsolete axioms.)
+
+       This axiom essentially says that if ` x ` does not occur in ` ph ` ,
+       i.e. ` ph ` does not depend on ` x ` in any way, then we can add the
+       quantifier ` A. x ` to ` ph ` with no further assumptions.  By ~ sp , we
+       can also remove the quantifier (unconditionally).  (Contributed by NM,
+       5-Aug-1993.) */
+
+axiom ax-17 (ph : wff, x : set) disjointed(x ph) {
+	prop 1 : wff = |- ( ph → ∀ x ph ) ;;
+}
+
+/* ~ ax-17 with antecedent.  Useful in proofs of deduction versions of
+       bound-variable hypothesis builders.  (Contributed by NM, 1-Mar-2013.) */
+
+theorem a17d (ph : wff, ps : wff, x : set) disjointed(x ps) {
+	prop 1 : wff = |- ( ph → ( ps → ∀ x ps ) ) ;;
+}
+
+proof of a17d {
+	step 1 : wff = ax-17 () |- ( ps → ∀ x ps ) ;;
+	step 2 : wff = a1i (step 1) |- ( ph → ( ps → ∀ x ps ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* If ` x ` is not present in ` ph ` , then ` x ` is not free in ` ph ` .
+       (Contributed by Mario Carneiro, 11-Aug-2016.) */
+
+theorem nfv (ph : wff, x : set) disjointed(x ph) {
+	prop 1 : wff = |- F/ x ph ;;
+}
+
+proof of nfv {
+	step 1 : wff = ax-17 () |- ( ph → ∀ x ph ) ;;
+	step 2 : wff = nfi (step 1) |- F/ x ph ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* ~ nfv with antecedent.  Useful in proofs of deduction versions of
+       bound-variable hypothesis builders such as ~ nfimd .  (Contributed by
+       Mario Carneiro, 6-Oct-2016.) */
+
+theorem nfvd (ph : wff, ps : wff, x : set) disjointed(x ps) {
+	prop 1 : wff = |- ( ph → F/ x ps ) ;;
+}
+
+proof of nfvd {
+	step 1 : wff = nfv () |- F/ x ps ;;
+	step 2 : wff = a1i (step 1) |- ( ph → F/ x ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction from Theorem 19.20 of [Margaris] p. 90.  (Contributed by NM,
+       3-Apr-1994.) */
+
+theorem alimdv (ph : wff, ps : wff, ch : wff, x : set) disjointed(x ph) {
+	hyp 1 : wff = |- ( ph → ( ps → ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∀ x ps → ∀ x ch ) ) ;;
+}
+
+proof of alimdv {
+	step 1 : wff = ax-17 () |- ( ph → ∀ x ph ) ;;
+	step 2 : wff = alimdh (step 1, hyp 1) |- ( ph → ( ∀ x ps → ∀ x ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction from Theorem 19.22 of [Margaris] p. 90.  (Contributed by NM,
+       27-Apr-1994.) */
+
+theorem eximdv (ph : wff, ps : wff, ch : wff, x : set) disjointed(x ph) {
+	hyp 1 : wff = |- ( ph → ( ps → ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∃ x ps → ∃ x ch ) ) ;;
+}
+
+proof of eximdv {
+	step 1 : wff = ax-17 () |- ( ph → ∀ x ph ) ;;
+	step 2 : wff = eximdh (step 1, hyp 1) |- ( ph → ( ∃ x ps → ∃ x ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction from Theorem 19.22 of [Margaris] p. 90.  (Contributed by NM,
+       27-Apr-2004.) */
+
+theorem 2alimdv (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x ph, y ph) {
+	hyp 1 : wff = |- ( ph → ( ps → ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∀ x ∀ y ps → ∀ x ∀ y ch ) ) ;;
+}
+
+proof of 2alimdv {
+	step 1 : wff = alimdv (hyp 1) |- ( ph → ( ∀ y ps → ∀ y ch ) ) ;;
+	step 2 : wff = alimdv (step 1) |- ( ph → ( ∀ x ∀ y ps → ∀ x ∀ y ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction from Theorem 19.22 of [Margaris] p. 90.  (Contributed by NM,
+       3-Aug-1995.) */
+
+theorem 2eximdv (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x ph, y ph) {
+	hyp 1 : wff = |- ( ph → ( ps → ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∃ x ∃ y ps → ∃ x ∃ y ch ) ) ;;
+}
+
+proof of 2eximdv {
+	step 1 : wff = eximdv (hyp 1) |- ( ph → ( ∃ y ps → ∃ y ch ) ) ;;
+	step 2 : wff = eximdv (step 1) |- ( ph → ( ∃ x ∃ y ps → ∃ x ∃ y ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Formula-building rule for universal quantifier (deduction rule).
+       (Contributed by NM, 5-Aug-1993.) */
+
+theorem albidv (ph : wff, ps : wff, ch : wff, x : set) disjointed(x ph) {
+	hyp 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∀ x ps ↔ ∀ x ch ) ) ;;
+}
+
+proof of albidv {
+	step 1 : wff = ax-17 () |- ( ph → ∀ x ph ) ;;
+	step 2 : wff = albidh (step 1, hyp 1) |- ( ph → ( ∀ x ps ↔ ∀ x ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Formula-building rule for existential quantifier (deduction rule).
+       (Contributed by NM, 5-Aug-1993.) */
+
+theorem exbidv (ph : wff, ps : wff, ch : wff, x : set) disjointed(x ph) {
+	hyp 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∃ x ps ↔ ∃ x ch ) ) ;;
+}
+
+proof of exbidv {
+	step 1 : wff = ax-17 () |- ( ph → ∀ x ph ) ;;
+	step 2 : wff = exbidh (step 1, hyp 1) |- ( ph → ( ∃ x ps ↔ ∃ x ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Formula-building rule for 2 universal quantifiers (deduction rule).
+       (Contributed by NM, 4-Mar-1997.) */
+
+theorem 2albidv (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x ph, y ph) {
+	hyp 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∀ x ∀ y ps ↔ ∀ x ∀ y ch ) ) ;;
+}
+
+proof of 2albidv {
+	step 1 : wff = albidv (hyp 1) |- ( ph → ( ∀ y ps ↔ ∀ y ch ) ) ;;
+	step 2 : wff = albidv (step 1) |- ( ph → ( ∀ x ∀ y ps ↔ ∀ x ∀ y ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Formula-building rule for 2 existential quantifiers (deduction rule).
+       (Contributed by NM, 1-May-1995.) */
+
+theorem 2exbidv (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x ph, y ph) {
+	hyp 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∃ x ∃ y ps ↔ ∃ x ∃ y ch ) ) ;;
+}
+
+proof of 2exbidv {
+	step 1 : wff = exbidv (hyp 1) |- ( ph → ( ∃ y ps ↔ ∃ y ch ) ) ;;
+	step 2 : wff = exbidv (step 1) |- ( ph → ( ∃ x ∃ y ps ↔ ∃ x ∃ y ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Formula-building rule for 3 existential quantifiers (deduction rule).
+       (Contributed by NM, 1-May-1995.) */
+
+theorem 3exbidv (ph : wff, ps : wff, ch : wff, x : set, y : set, z : set) disjointed(x ph, y ph, z ph) {
+	hyp 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∃ x ∃ y ∃ z ps ↔ ∃ x ∃ y ∃ z ch ) ) ;;
+}
+
+proof of 3exbidv {
+	step 1 : wff = exbidv (hyp 1) |- ( ph → ( ∃ z ps ↔ ∃ z ch ) ) ;;
+	step 2 : wff = 2exbidv (step 1) |- ( ph → ( ∃ x ∃ y ∃ z ps ↔ ∃ x ∃ y ∃ z ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Formula-building rule for 4 existential quantifiers (deduction rule).
+       (Contributed by NM, 3-Aug-1995.) */
+
+theorem 4exbidv (ph : wff, ps : wff, ch : wff, x : set, y : set, z : set, w : set) disjointed(x ph, y ph, z ph, w ph) {
+	hyp 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∃ x ∃ y ∃ z ∃ w ps ↔ ∃ x ∃ y ∃ z ∃ w ch ) ) ;;
+}
+
+proof of 4exbidv {
+	step 1 : wff = 2exbidv (hyp 1) |- ( ph → ( ∃ z ∃ w ps ↔ ∃ z ∃ w ch ) ) ;;
+	step 2 : wff = 2exbidv (step 1) |- ( ph → ( ∃ x ∃ y ∃ z ∃ w ps ↔ ∃ x ∃ y ∃ z ∃ w ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Inference from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
+       5-Aug-1993.) */
+
+theorem alrimiv (ph : wff, ps : wff, x : set) disjointed(x ph) {
+	hyp 1 : wff = |- ( ph → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ∀ x ps ) ;;
+}
+
+proof of alrimiv {
+	step 1 : wff = ax-17 () |- ( ph → ∀ x ph ) ;;
+	step 2 : wff = alrimih (step 1, hyp 1) |- ( ph → ∀ x ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Inference from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
+       31-Jul-1995.) */
+
+theorem alrimivv (ph : wff, ps : wff, x : set, y : set) disjointed(x ph, y ph) {
+	hyp 1 : wff = |- ( ph → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ∀ x ∀ y ps ) ;;
+}
+
+proof of alrimivv {
+	step 1 : wff = alrimiv (hyp 1) |- ( ph → ∀ y ps ) ;;
+	step 2 : wff = alrimiv (step 1) |- ( ph → ∀ x ∀ y ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
+       10-Feb-1997.) */
+
+theorem alrimdv (ph : wff, ps : wff, ch : wff, x : set) disjointed(x ph, x ps) {
+	hyp 1 : wff = |- ( ph → ( ps → ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ps → ∀ x ch ) ) ;;
+}
+
+proof of alrimdv {
+	step 1 : wff = ax-17 () |- ( ph → ∀ x ph ) ;;
+	step 2 : wff = ax-17 () |- ( ps → ∀ x ps ) ;;
+	step 3 : wff = alrimdh (step 1, step 2, hyp 1) |- ( ph → ( ps → ∀ x ch ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Apply the definition of not-free in a context.  (Contributed by Mario
+       Carneiro, 11-Aug-2016.) */
+
+theorem nfdv (ph : wff, ps : wff, x : set) disjointed(x ph) {
+	hyp 1 : wff = |- ( ph → ( ps → ∀ x ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → F/ x ps ) ;;
+}
+
+proof of nfdv {
+	step 1 : wff = alrimiv (hyp 1) |- ( ph → ∀ x ( ps → ∀ x ps ) ) ;;
+	step 2 : wff = df-nf () |- ( F/ x ps ↔ ∀ x ( ps → ∀ x ps ) ) ;;
+	step 3 : wff = sylibr (step 1, step 2) |- ( ph → F/ x ps ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Quantification of two variables over a formula in which they do not
+       occur.  (Contributed by Alan Sare, 12-Apr-2011.) */
+
+theorem 2ax17 (ph : wff, x : set, y : set) disjointed(x ph, y ph) {
+	prop 1 : wff = |- ( ph → ∀ x ∀ y ph ) ;;
+}
+
+proof of 2ax17 {
+	step 1 : wff = id () |- ( ph → ph ) ;;
+	step 2 : wff = alrimivv (step 1) |- ( ph → ∀ x ∀ y ph ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+

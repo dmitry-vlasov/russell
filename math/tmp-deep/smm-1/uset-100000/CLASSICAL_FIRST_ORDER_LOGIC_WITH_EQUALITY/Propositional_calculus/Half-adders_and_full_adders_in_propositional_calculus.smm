@@ -1,0 +1,355 @@
+$[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Auxiliary_theorems_for_Alan_Sare_s_virtual_deduction_tool,_part_1.smm $]
+$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+       Half-adders and full adders in propositional calculus
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+  Propositional calculus deals with truth values, which can be interpreted as
+  bits. Using this, we can define the half-adder in pure propositional
+  calculus, and show its basic properties.
+
+*/
+
+$)
+$c hadd $.
+$c cadd $.
+$c , $.
+$( /* Comma (also used for unordered pair notation later) */
+
+$)
+$( /* Define the half adder (triple XOR).  (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	awhad $a wff hadd ( ph , ps , ch ) $.
+$}
+$( /* Define the half adder carry.  (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	awcad $a wff cadd ( ph , ps , ch ) $.
+$}
+$( /* Define the half adder (triple XOR).  (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	adf-had $a |- ( hadd ( ph , ps , ch ) <-> ( ( ph \/_ ps ) \/_ ch ) ) $.
+$}
+$( /* Define the half adder carry, which is true when at least two arguments are
+     true.  (Contributed by Mario Carneiro, 4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	adf-cad $a |- ( cadd ( ph , ps , ch ) <-> ( ( ph /\ ps ) \/ ( ch /\ ( ph \/_ ps ) ) ) ) $.
+$}
+$( /* Equality theorem for half adder.  (Contributed by Mario Carneiro,
+       4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch th ta et ze $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ph -> ( th <-> ta ) ) $.
+	e2 $e |- ( ph -> ( et <-> ze ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	f5 $f wff et $.
+	f6 $f wff ze $.
+	phadbi123d $p |- ( ph -> ( hadd ( ps , th , et ) <-> hadd ( ch , ta , ze ) ) ) $=
+	e0 e1 f0 f1 f2 f3 f4 pxorbi12d e2 f0 f1 f3 awxo f2 f4 awxo f5 f6 pxorbi12d f1 f3 f5 adf-had f2 f4 f6 adf-had f0 f1 f3 awxo f5 awxo f2 f4 awxo f6 awxo f1 f3 f5 awhad f2 f4 f6 awhad p3bitr4g $.
+$}
+$( /* Equality theorem for adder carry.  (Contributed by Mario Carneiro,
+       4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch th ta et ze $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ph -> ( th <-> ta ) ) $.
+	e2 $e |- ( ph -> ( et <-> ze ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	f5 $f wff et $.
+	f6 $f wff ze $.
+	pcadbi123d $p |- ( ph -> ( cadd ( ps , th , et ) <-> cadd ( ch , ta , ze ) ) ) $=
+	e0 e1 f0 f1 f2 f3 f4 panbi12d e2 e0 e1 f0 f1 f2 f3 f4 pxorbi12d f0 f5 f6 f1 f3 awxo f2 f4 awxo panbi12d f0 f1 f3 awa f2 f4 awa f5 f1 f3 awxo awa f6 f2 f4 awxo awa porbi12d f1 f3 f5 adf-cad f2 f4 f6 adf-cad f0 f1 f3 awa f5 f1 f3 awxo awa awo f2 f4 awa f6 f2 f4 awxo awa awo f1 f3 f5 awcad f2 f4 f6 awcad p3bitr4g $.
+$}
+$( /* Equality theorem for half adder.  (Contributed by Mario Carneiro,
+       4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch th ta et $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( ch <-> th ) $.
+	e2 $e |- ( ta <-> et ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	f5 $f wff et $.
+	phadbi123i $p |- ( hadd ( ph , ch , ta ) <-> hadd ( ps , th , et ) ) $=
+	e0 f0 f1 awb awtru pa1i e1 f2 f3 awb awtru pa1i e2 f4 f5 awb awtru pa1i awtru f0 f1 f2 f3 f4 f5 phadbi123d f0 f2 f4 awhad f1 f3 f5 awhad awb ptrud $.
+$}
+$( /* Equality theorem for adder carry.  (Contributed by Mario Carneiro,
+       4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch th ta et $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( ch <-> th ) $.
+	e2 $e |- ( ta <-> et ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	f5 $f wff et $.
+	pcadbi123i $p |- ( cadd ( ph , ch , ta ) <-> cadd ( ps , th , et ) ) $=
+	e0 f0 f1 awb awtru pa1i e1 f2 f3 awb awtru pa1i e2 f4 f5 awb awtru pa1i awtru f0 f1 f2 f3 f4 f5 pcadbi123d f0 f2 f4 awcad f1 f3 f5 awcad awb ptrud $.
+$}
+$( /* Associative law for triple XOR. (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	phadass $p |- ( hadd ( ph , ps , ch ) <-> ( ph \/_ ( ps \/_ ch ) ) ) $=
+	f0 f1 f2 adf-had f0 f1 f2 pxorass f0 f1 f2 awhad f0 f1 awxo f2 awxo f0 f1 f2 awxo awxo pbitri $.
+$}
+$( /* The half adder is the same as the triple biconditional.  (Contributed by
+     Mario Carneiro, 4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	phadbi $p |- ( hadd ( ph , ps , ch ) <-> ( ( ph <-> ps ) <-> ch ) ) $=
+	f0 f1 awxo f2 adf-xor f0 f1 f2 adf-had f0 f1 pxnor f0 f1 awb f0 f1 awxo awn f2 pbibi1i f0 f1 awxo f2 pnbbn f0 f1 awb f2 awb f0 f1 awxo awn f2 awb f0 f1 awxo f2 awb awn pbitri f0 f1 awxo f2 awxo f0 f1 awxo f2 awb awn f0 f1 f2 awhad f0 f1 awb f2 awb p3bitr4i $.
+$}
+$( /* Commutative law for triple XOR. (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	phadcoma $p |- ( hadd ( ph , ps , ch ) <-> hadd ( ps , ph , ch ) ) $=
+	f0 f1 pxorcom f2 pbiid f0 f1 awxo f1 f0 awxo f2 f2 pxorbi12i f0 f1 f2 adf-had f1 f0 f2 adf-had f0 f1 awxo f2 awxo f1 f0 awxo f2 awxo f0 f1 f2 awhad f1 f0 f2 awhad p3bitr4i $.
+$}
+$( /* Commutative law for triple XOR. (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	phadcomb $p |- ( hadd ( ph , ps , ch ) <-> hadd ( ph , ch , ps ) ) $=
+	f0 pbiid f1 f2 pxorcom f0 f0 f1 f2 awxo f2 f1 awxo pxorbi12i f0 f1 f2 phadass f0 f2 f1 phadass f0 f1 f2 awxo awxo f0 f2 f1 awxo awxo f0 f1 f2 awhad f0 f2 f1 awhad p3bitr4i $.
+$}
+$( /* Rotation law for triple XOR. (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	phadrot $p |- ( hadd ( ph , ps , ch ) <-> hadd ( ps , ch , ph ) ) $=
+	f0 f1 f2 phadcoma f1 f0 f2 phadcomb f0 f1 f2 awhad f1 f0 f2 awhad f1 f2 f0 awhad pbitri $.
+$}
+$( /* Write the adder carry in disjunctive normal form.  (Contributed by Mario
+     Carneiro, 4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pcador $p |- ( cadd ( ph , ps , ch ) <-> ( ( ph /\ ps ) \/ ( ph /\ ch ) \/ ( ps /\ ch ) ) ) $=
+	f0 f1 f2 adf-cad f0 f1 pxor2 f0 f1 awxo f0 f1 awo f0 f1 awa awn prbaib f0 f1 awa awn f0 f1 awxo f0 f1 awo f2 panbi1d f0 f1 awxo f2 pancom f0 f1 f2 pandir f0 f1 awa awn f0 f1 awxo f2 awa f0 f1 awo f2 awa f2 f0 f1 awxo awa f0 f2 awa f1 f2 awa awo p3bitr3g f0 f1 awa awn f2 f0 f1 awxo awa f0 f2 awa f1 f2 awa awo ppm5.74i f0 f1 awa f2 f0 f1 awxo awa adf-or f0 f1 awa f0 f2 awa f1 f2 awa p3orass f0 f1 awa f0 f2 awa f1 f2 awa awo adf-or f0 f1 awa f0 f2 awa f1 f2 awa aw3o f0 f1 awa f0 f2 awa f1 f2 awa awo awo f0 f1 awa awn f0 f2 awa f1 f2 awa awo awi pbitri f0 f1 awa awn f2 f0 f1 awxo awa awi f0 f1 awa awn f0 f2 awa f1 f2 awa awo awi f0 f1 awa f2 f0 f1 awxo awa awo f0 f1 awa f0 f2 awa f1 f2 awa aw3o p3bitr4i f0 f1 f2 awcad f0 f1 awa f2 f0 f1 awxo awa awo f0 f1 awa f0 f2 awa f1 f2 awa aw3o pbitri $.
+$}
+$( /* Write the adder carry in conjunctive normal form.  (Contributed by Mario
+     Carneiro, 4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pcadan $p |- ( cadd ( ph , ps , ch ) <-> ( ( ph \/ ps ) /\ ( ph \/ ch ) /\ ( ps \/ ch ) ) ) $=
+	f0 f1 awa f0 f2 awa awo f1 f2 pordi f0 f2 f1 pordir f0 f1 psimpr f0 f1 awa f1 pcon3i f0 f1 awa f0 f2 awa pbiorf f1 awn f0 f1 awa awn f0 f2 awa f0 f1 awa f0 f2 awa awo awb psyl f1 awn f0 f2 awa f0 f1 awa f0 f2 awa awo ppm5.74i f1 f0 f2 awa adf-or f1 f0 f1 awa f0 f2 awa awo adf-or f1 awn f0 f2 awa awi f1 awn f0 f1 awa f0 f2 awa awo awi f1 f0 f2 awa awo f1 f0 f1 awa f0 f2 awa awo awo p3bitr4i f0 f2 awa f1 porcom f0 f1 awa f0 f2 awa awo f1 porcom f1 f0 f2 awa awo f1 f0 f1 awa f0 f2 awa awo awo f0 f2 awa f1 awo f0 f1 awa f0 f2 awa awo f1 awo p3bitr4i f2 f1 porcom f2 f1 awo f1 f2 awo f0 f1 awo panbi2i f0 f2 awa f1 awo f0 f1 awo f2 f1 awo awa f0 f1 awa f0 f2 awa awo f1 awo f0 f1 awo f1 f2 awo awa p3bitr3i f0 f2 psimpr f0 f2 awa f2 pcon3i f0 f2 awa f0 f1 awa pbiorf f0 f2 awa f0 f1 awa porcom f0 f2 awa awn f0 f1 awa f0 f2 awa f0 f1 awa awo f0 f1 awa f0 f2 awa awo psyl6bb f2 awn f0 f2 awa awn f0 f1 awa f0 f1 awa f0 f2 awa awo awb psyl f2 awn f0 f1 awa f0 f1 awa f0 f2 awa awo ppm5.74i f2 f0 f1 awa adf-or f2 f0 f1 awa f0 f2 awa awo adf-or f2 awn f0 f1 awa awi f2 awn f0 f1 awa f0 f2 awa awo awi f2 f0 f1 awa awo f2 f0 f1 awa f0 f2 awa awo awo p3bitr4i f0 f1 awa f2 porcom f0 f1 awa f0 f2 awa awo f2 porcom f2 f0 f1 awa awo f2 f0 f1 awa f0 f2 awa awo awo f0 f1 awa f2 awo f0 f1 awa f0 f2 awa awo f2 awo p3bitr4i f0 f1 f2 pordir f0 f1 awa f0 f2 awa awo f2 awo f0 f1 awa f2 awo f0 f2 awo f1 f2 awo awa pbitr3i f0 f1 awa f0 f2 awa awo f1 awo f0 f1 awo f1 f2 awo awa f0 f1 awa f0 f2 awa awo f2 awo f0 f2 awo f1 f2 awo awa panbi12i f0 f1 awa f0 f2 awa awo f1 f2 awa awo f0 f1 awa f0 f2 awa awo f1 awo f0 f1 awa f0 f2 awa awo f2 awo awa f0 f1 awo f1 f2 awo awa f0 f2 awo f1 f2 awo awa awa pbitri f0 f1 awa f0 f2 awa f1 f2 awa adf-3or f0 f1 awo f0 f2 awo f1 f2 awo panandir f0 f1 awa f0 f2 awa awo f1 f2 awa awo f0 f1 awo f1 f2 awo awa f0 f2 awo f1 f2 awo awa awa f0 f1 awa f0 f2 awa f1 f2 awa aw3o f0 f1 awo f0 f2 awo awa f1 f2 awo awa p3bitr4i f0 f1 f2 pcador f0 f1 awo f0 f2 awo f1 f2 awo adf-3an f0 f1 awa f0 f2 awa f1 f2 awa aw3o f0 f1 awo f0 f2 awo awa f1 f2 awo awa f0 f1 f2 awcad f0 f1 awo f0 f2 awo f1 f2 awo aw3a p3bitr4i $.
+$}
+$( /* The half adder distributes over negation.  (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	phadnot $p |- ( -. hadd ( ph , ps , ch ) <-> hadd ( -. ph , -. ps , -. ch ) ) $=
+	f0 f1 pxorneg f2 awn pbiid f0 awn f1 awn awxo f0 f1 awxo f2 awn f2 awn pxorbi12i f0 f1 awxo f2 pxorneg2 f0 awn f1 awn awxo f2 awn awxo f0 f1 awxo f2 awn awxo f0 f1 awxo f2 awxo awn pbitr2i f0 f1 f2 adf-had f0 f1 f2 awhad f0 f1 awxo f2 awxo pnotbii f0 awn f1 awn f2 awn adf-had f0 f1 awxo f2 awxo awn f0 awn f1 awn awxo f2 awn awxo f0 f1 f2 awhad awn f0 awn f1 awn f2 awn awhad p3bitr4i $.
+$}
+$( /* The adder carry distributes over negation.  (Contributed by Mario
+     Carneiro, 4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pcadnot $p |- ( -. cadd ( ph , ps , ch ) <-> cadd ( -. ph , -. ps , -. ch ) ) $=
+	f0 f1 awa f0 f2 awa f1 f2 awa p3ioran f0 f1 pianor f0 f2 pianor f1 f2 pianor f0 f1 awa awn f0 awn f1 awn awo f0 f2 awa awn f0 awn f2 awn awo f1 f2 awa awn f1 awn f2 awn awo p3anbi123i f0 f1 awa f0 f2 awa f1 f2 awa aw3o awn f0 f1 awa awn f0 f2 awa awn f1 f2 awa awn aw3a f0 awn f1 awn awo f0 awn f2 awn awo f1 awn f2 awn awo aw3a pbitri f0 f1 f2 pcador f0 f1 f2 awcad f0 f1 awa f0 f2 awa f1 f2 awa aw3o pnotbii f0 awn f1 awn f2 awn pcadan f0 f1 awa f0 f2 awa f1 f2 awa aw3o awn f0 awn f1 awn awo f0 awn f2 awn awo f1 awn f2 awn awo aw3a f0 f1 f2 awcad awn f0 awn f1 awn f2 awn awcad p3bitr4i $.
+$}
+$( /* Commutative law for adder carry.  (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pcadcoma $p |- ( cadd ( ph , ps , ch ) <-> cadd ( ps , ph , ch ) ) $=
+	f0 f1 pancom f0 f1 pxorcom f0 f1 awxo f1 f0 awxo f2 panbi2i f0 f1 awa f1 f0 awa f2 f0 f1 awxo awa f2 f1 f0 awxo awa porbi12i f0 f1 f2 adf-cad f1 f0 f2 adf-cad f0 f1 awa f2 f0 f1 awxo awa awo f1 f0 awa f2 f1 f0 awxo awa awo f0 f1 f2 awcad f1 f0 f2 awcad p3bitr4i $.
+$}
+$( /* Commutative law for adder carry.  (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pcadcomb $p |- ( cadd ( ph , ps , ch ) <-> cadd ( ph , ch , ps ) ) $=
+	f0 f1 awa f0 f2 awa f1 f2 awa p3orcoma f0 f2 awa pbiid f0 f1 awa pbiid f1 f2 pancom f0 f2 awa f0 f2 awa f0 f1 awa f0 f1 awa f1 f2 awa f2 f1 awa p3orbi123i f0 f1 awa f0 f2 awa f1 f2 awa aw3o f0 f2 awa f0 f1 awa f1 f2 awa aw3o f0 f2 awa f0 f1 awa f2 f1 awa aw3o pbitri f0 f1 f2 pcador f0 f2 f1 pcador f0 f1 awa f0 f2 awa f1 f2 awa aw3o f0 f2 awa f0 f1 awa f2 f1 awa aw3o f0 f1 f2 awcad f0 f2 f1 awcad p3bitr4i $.
+$}
+$( /* Rotation law for adder carry.  (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pcadrot $p |- ( cadd ( ph , ps , ch ) <-> cadd ( ps , ch , ph ) ) $=
+	f0 f1 f2 pcadcoma f1 f0 f2 pcadcomb f0 f1 f2 awcad f1 f0 f2 awcad f1 f2 f0 awcad pbitri $.
+$}
+$( /* If one parameter is true, the adder carry is true exactly when at least
+     one of the other parameters is true.  (Contributed by Mario Carneiro,
+     8-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pcad1 $p |- ( ch -> ( cadd ( ph , ps , ch ) <-> ( ph \/ ps ) ) ) $=
+	f2 f0 f1 awxo pibar f2 f0 f1 awxo f2 f0 f1 awxo awa pbicomd f2 f2 f0 f1 awxo awa f0 f1 awxo f0 f1 awa porbi2d f0 f1 f2 adf-cad f0 f1 awa f0 f1 awo ppm5.63 f0 f1 awo f0 f1 awa polc f0 f1 porc f0 f0 f1 awo f1 padantr f0 f1 awo pid f0 f1 awa f0 f1 awo f0 f1 awo pjaoi f0 f1 awo f0 f1 awa f0 f1 awo awo pimpbii f0 f1 pxor2 f0 f1 awo f0 f1 awa awn pancom f0 f1 awxo f0 f1 awo f0 f1 awa awn awa f0 f1 awa awn f0 f1 awo awa pbitri f0 f1 awxo f0 f1 awa awn f0 f1 awo awa f0 f1 awa porbi2i f0 f1 awa f0 f1 awo awo f0 f1 awa f0 f1 awa awn f0 f1 awo awa awo f0 f1 awo f0 f1 awa f0 f1 awxo awo p3bitr4i f2 f0 f1 awa f2 f0 f1 awxo awa awo f0 f1 awa f0 f1 awxo awo f0 f1 f2 awcad f0 f1 awo p3bitr4g $.
+$}
+$( /* If two parameters are true, the adder carry is true.  (Contributed by
+     Mario Carneiro, 4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pcad11 $p |- ( ( ph /\ ps ) -> cadd ( ph , ps , ch ) ) $=
+	f0 f1 awa f2 f0 f1 awxo awa porc f0 f1 f2 adf-cad f0 f1 awa f0 f1 awa f2 f0 f1 awxo awa awo f0 f1 f2 awcad psylibr $.
+$}
+$( /* If one parameter is false, the adder carry is true exactly when both of
+     the other two parameters are true.  (Contributed by Mario Carneiro,
+     8-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pcad0 $p |- ( -. ch -> ( cadd ( ph , ps , ch ) <-> ( ph /\ ps ) ) ) $=
+	f0 f1 f2 adf-cad f2 awn f0 f1 awa pidd f2 f0 f1 awa ppm2.21 f2 awn f2 f0 f1 awa f0 f1 awxo padantrd f2 awn f0 f1 awa f0 f1 awa f2 f0 f1 awxo awa pjaod f0 f1 awa f2 f0 f1 awxo awa porc f2 awn f0 f1 awa f2 f0 f1 awxo awa awo f0 f1 awa pimpbid1 f0 f1 f2 awcad f0 f1 awa f2 f0 f1 awxo awa awo f2 awn f0 f1 awa psyl5bb $.
+$}
+$( /* Rotation law for adder carry.  (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+$)
+${
+	$v ph $.
+	f0 $f wff ph $.
+	pcadtru $p |- cadd ( T. , T. , ph ) $=
+	ptru ptru awtru awtru f0 pcad11 awtru awtru awtru awtru f0 awcad pmp2an $.
+$}
+$( /* If the first parameter is true, the half adder is equivalent to the
+     equality of the other two inputs.  (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	phad1 $p |- ( ph -> ( hadd ( ph , ps , ch ) <-> ( ps <-> ch ) ) ) $=
+	f0 f1 f2 phadbi f0 f1 f2 pbiass f0 f1 f2 awhad f0 f1 awb f2 awb f0 f1 f2 awb awb pbitri f0 pid f0 f1 f2 awb pbiidd f0 f0 f1 f2 awb f1 f2 awb awb p2thd f0 f1 f2 awb f1 f2 awb pbiass f0 f0 f1 f2 awb f1 f2 awb awb awb f0 f1 f2 awb awb f1 f2 awb awb psylibr f0 f1 f2 awhad f0 f1 f2 awb awb f0 f1 f2 awb psyl5bb $.
+$}
+$( /* If the first parameter is false, the half adder is equivalent to the XOR
+     of the other two inputs.  (Contributed by Mario Carneiro, 4-Sep-2016.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	phad0 $p |- ( -. ph -> ( hadd ( ph , ps , ch ) <-> ( ps \/_ ch ) ) ) $=
+	f0 awn f1 awn f2 awn phad1 f0 f1 f2 phadnot f1 awn f2 awn adf-xor f1 f2 pxorneg f1 awn f2 awn awb awn f1 awn f2 awn awxo f1 f2 awxo pbitr3i f1 awn f2 awn awb f1 f2 awxo pcon1bii f0 awn f0 awn f1 awn f2 awn awhad f1 awn f2 awn awb f0 f1 f2 awhad awn f1 f2 awxo awn p3bitr4g f0 awn f0 f1 f2 awhad f1 f2 awxo pcon4bid $.
+$}
+

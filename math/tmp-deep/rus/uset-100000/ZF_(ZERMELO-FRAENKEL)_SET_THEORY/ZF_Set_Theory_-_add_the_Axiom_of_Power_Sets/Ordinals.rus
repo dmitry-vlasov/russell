@@ -1,0 +1,2411 @@
+import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets/Founded_and_well-ordering_relations.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Ordinals
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* Introduce new constant symbols. */
+
+constant {
+	symbol Ord ;;
+}
+
+/* Ordinal predicate */
+
+constant {
+	symbol On ;;
+}
+
+/* The class of ordinal numbers */
+
+constant {
+	symbol Lim ;;
+}
+
+/* Limit ordinal predicate */
+
+constant {
+	symbol suc ;;
+}
+
+/* Successor function (read:  'successor of') */
+
+/* Extend the definition of a wff to include the ordinal predicate. */
+
+rule word (A : class) {
+	term : wff = # Ord A ;;
+}
+
+/* Extend the definition of a class to include the class of all ordinal
+     numbers.  (The 0 in the name prevents creating a file called con.html,
+     which causes problems in Windows.) */
+
+rule con0 () {
+	term : class = # On ;;
+}
+
+/* Extend the definition of a wff to include the limit ordinal predicate. */
+
+rule wlim (A : class) {
+	term : wff = # Lim A ;;
+}
+
+/* Extend class notation to include the successor function. */
+
+rule csuc (A : class) {
+	term : class = # suc A ;;
+}
+
+/* Define the ordinal predicate, which is true for a class that is transitive
+     and is well-ordered by the epsilon relation.  Variant of definition of
+     [BellMachover] p. 468.  (Contributed by NM, 17-Sep-1993.) */
+
+definition df-ord (A : class)  {
+	defiendum : wff = # Ord A ;;
+	definiens : wff = # ( Tr A ∧ 𝛜 We A ) ;;
+	-----------------------
+	prop : wff = |- ( defiendum ↔ definiens ) ;;
+}
+
+/* Define the class of all ordinal numbers.  Definition 7.11 of
+     [TakeutiZaring] p. 38.  (Contributed by NM, 5-Jun-1994.) */
+
+definition df-on (x : set)  {
+	defiendum : class = # On ;;
+	definiens : class = # { x | Ord x } ;;
+	-----------------------
+	prop : wff = |- defiendum = definiens ;;
+}
+
+/* Define the limit ordinal predicate, which is true for a non-empty ordinal
+     that is not a successor (i.e. that is the union of itself).  Our
+     definition combines the definition of Lim of [BellMachover] p. 471 and
+     Exercise 1 of [TakeutiZaring] p. 42.  See ~ dflim2 , ~ dflim3 , and dflim4
+     for alternate definitions.  (Contributed by NM, 22-Apr-1994.) */
+
+definition df-lim (A : class)  {
+	defiendum : wff = # Lim A ;;
+	definiens : wff = # ( Ord A ∧ A ≠ ∅ ∧ A = ⋃ A ) ;;
+	-----------------------
+	prop : wff = |- ( defiendum ↔ definiens ) ;;
+}
+
+/* Define the successor of a class.  When applied to an ordinal number, the
+     successor means the same thing as "plus 1" (see ~ oa1suc ).  Definition
+     7.22 of [TakeutiZaring] p. 41, who use "+ 1" to denote this function.  Our
+     definition is a generalization to classes.  Although it is not
+     conventional to use it with proper classes, it has no effect on a proper
+     class ( ~ sucprc ), so that the successor of any ordinal class is still an
+     ordinal class ( ~ ordsuc ), simplifying certain proofs.  Some authors
+     denote the successor operation with a prime (apostrophe-like) symbol, such
+     as Definition 6 of [Suppes] p. 134 and the definition of successor in
+     [Mendelson] p. 246 (who uses the symbol "Suc" as a predicate to mean "is a
+     successor ordinal").  The definition of successor of [Enderton] p. 68
+     denotes the operation with a plus-sign superscript.  (Contributed by NM,
+     30-Aug-1993.) */
+
+definition df-suc (A : class)  {
+	defiendum : class = # suc A ;;
+	definiens : class = # ( A ∪ { A } ) ;;
+	-----------------------
+	prop : wff = |- defiendum = definiens ;;
+}
+
+/* Equality theorem for the ordinal predicate.  (Contributed by NM,
+     17-Sep-1993.) */
+
+theorem ordeq (A : class, B : class)  {
+	prop 1 : wff = |- ( A = B → ( Ord A ↔ Ord B ) ) ;;
+}
+
+proof of ordeq {
+	step 1 : wff = treq () |- ( A = B → ( Tr A ↔ Tr B ) ) ;;
+	step 2 : wff = weeq2 () |- ( A = B → ( 𝛜 We A ↔ 𝛜 We B ) ) ;;
+	step 3 : wff = anbi12d (step 1, step 2) |- ( A = B → ( ( Tr A ∧ 𝛜 We A ) ↔ ( Tr B ∧ 𝛜 We B ) ) ) ;;
+	step 4 : wff = df-ord () |- ( Ord A ↔ ( Tr A ∧ 𝛜 We A ) ) ;;
+	step 5 : wff = df-ord () |- ( Ord B ↔ ( Tr B ∧ 𝛜 We B ) ) ;;
+	step 6 : wff = 3bitr4g (step 3, step 4, step 5) |- ( A = B → ( Ord A ↔ Ord B ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* An ordinal number is an ordinal set.  (Contributed by NM,
+       5-Jun-1994.) */
+
+theorem elong (A : class, V : class) disjointed(x A) {
+	prop 1 : wff = |- ( A ∈ V → ( A ∈ On ↔ Ord A ) ) ;;
+}
+
+proof of elong {
+	var x : set;;
+	step 1 : wff = ordeq () |- ( x = A → ( Ord x ↔ Ord A ) ) ;;
+	step 2 : wff = df-on () |- On = { x | Ord x } ;;
+	step 3 : wff = elab2g (step 1, step 2) |- ( A ∈ V → ( A ∈ On ↔ Ord A ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* An ordinal number is an ordinal set.  (Contributed by NM,
+       5-Jun-1994.) */
+
+theorem elon (A : class)  {
+	hyp 1 : wff = |- A ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ On ↔ Ord A ) ;;
+}
+
+proof of elon {
+	step 1 : wff = elong () |- ( A ∈ _V → ( A ∈ On ↔ Ord A ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( A ∈ On ↔ Ord A ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* An ordinal number has the ordinal property.  (Contributed by NM,
+     5-Jun-1994.) */
+
+theorem eloni (A : class)  {
+	prop 1 : wff = |- ( A ∈ On → Ord A ) ;;
+}
+
+proof of eloni {
+	step 1 : wff = elong () |- ( A ∈ On → ( A ∈ On ↔ Ord A ) ) ;;
+	step 2 : wff = ibi (step 1) |- ( A ∈ On → Ord A ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* An ordinal number is an ordinal set.  (Contributed by NM, 8-Feb-2004.) */
+
+theorem elon2 (A : class)  {
+	prop 1 : wff = |- ( A ∈ On ↔ ( Ord A ∧ A ∈ _V ) ) ;;
+}
+
+proof of elon2 {
+	step 1 : wff = eloni () |- ( A ∈ On → Ord A ) ;;
+	step 2 : wff = elex () |- ( A ∈ On → A ∈ _V ) ;;
+	step 3 : wff = jca (step 1, step 2) |- ( A ∈ On → ( Ord A ∧ A ∈ _V ) ) ;;
+	step 4 : wff = elong () |- ( A ∈ _V → ( A ∈ On ↔ Ord A ) ) ;;
+	step 5 : wff = biimparc (step 4) |- ( ( Ord A ∧ A ∈ _V ) → A ∈ On ) ;;
+	step 6 : wff = impbii (step 3, step 5) |- ( A ∈ On ↔ ( Ord A ∧ A ∈ _V ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Equality theorem for the limit predicate.  (Contributed by NM,
+     22-Apr-1994.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem limeq (A : class, B : class)  {
+	prop 1 : wff = |- ( A = B → ( Lim A ↔ Lim B ) ) ;;
+}
+
+proof of limeq {
+	step 1 : wff = ordeq () |- ( A = B → ( Ord A ↔ Ord B ) ) ;;
+	step 2 : wff = neeq1 () |- ( A = B → ( A ≠ ∅ ↔ B ≠ ∅ ) ) ;;
+	step 3 : wff = id () |- ( A = B → A = B ) ;;
+	step 4 : wff = unieq () |- ( A = B → ⋃ A = ⋃ B ) ;;
+	step 5 : wff = eqeq12d (step 3, step 4) |- ( A = B → ( A = ⋃ A ↔ B = ⋃ B ) ) ;;
+	step 6 : wff = 3anbi123d (step 1, step 2, step 5) |- ( A = B → ( ( Ord A ∧ A ≠ ∅ ∧ A = ⋃ A ) ↔ ( Ord B ∧ B ≠ ∅ ∧ B = ⋃ B ) ) ) ;;
+	step 7 : wff = df-lim () |- ( Lim A ↔ ( Ord A ∧ A ≠ ∅ ∧ A = ⋃ A ) ) ;;
+	step 8 : wff = df-lim () |- ( Lim B ↔ ( Ord B ∧ B ≠ ∅ ∧ B = ⋃ B ) ) ;;
+	step 9 : wff = 3bitr4g (step 6, step 7, step 8) |- ( A = B → ( Lim A ↔ Lim B ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Epsilon well-orders every ordinal.  Proposition 7.4 of [TakeutiZaring]
+     p. 36.  (Contributed by NM, 3-Apr-1994.) */
+
+theorem ordwe (A : class)  {
+	prop 1 : wff = |- ( Ord A → 𝛜 We A ) ;;
+}
+
+proof of ordwe {
+	step 1 : wff = df-ord () |- ( Ord A ↔ ( Tr A ∧ 𝛜 We A ) ) ;;
+	step 2 : wff = simprbi (step 1) |- ( Ord A → 𝛜 We A ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* An ordinal class is transitive.  (Contributed by NM, 3-Apr-1994.) */
+
+theorem ordtr (A : class)  {
+	prop 1 : wff = |- ( Ord A → Tr A ) ;;
+}
+
+proof of ordtr {
+	step 1 : wff = df-ord () |- ( Ord A ↔ ( Tr A ∧ 𝛜 We A ) ) ;;
+	step 2 : wff = simplbi (step 1) |- ( Ord A → Tr A ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Epsilon is well-founded on an ordinal class.  (Contributed by NM,
+     22-Apr-1994.) */
+
+theorem ordfr (A : class)  {
+	prop 1 : wff = |- ( Ord A → 𝛜 Fr A ) ;;
+}
+
+proof of ordfr {
+	step 1 : wff = ordwe () |- ( Ord A → 𝛜 We A ) ;;
+	step 2 : wff = wefr () |- ( 𝛜 We A → 𝛜 Fr A ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( Ord A → 𝛜 Fr A ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* An element of an ordinal class is a subset of it.  (Contributed by NM,
+     30-May-1994.) */
+
+theorem ordelss (A : class, B : class)  {
+	prop 1 : wff = |- ( ( Ord A ∧ B ∈ A ) → B ⊆ A ) ;;
+}
+
+proof of ordelss {
+	step 1 : wff = ordtr () |- ( Ord A → Tr A ) ;;
+	step 2 : wff = trss () |- ( Tr A → ( B ∈ A → B ⊆ A ) ) ;;
+	step 3 : wff = imp (step 2) |- ( ( Tr A ∧ B ∈ A ) → B ⊆ A ) ;;
+	step 4 : wff = sylan (step 1, step 3) |- ( ( Ord A ∧ B ∈ A ) → B ⊆ A ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A transitive subclass of an ordinal class is ordinal.  (Contributed by NM,
+     29-May-1994.) */
+
+theorem trssord (A : class, B : class)  {
+	prop 1 : wff = |- ( ( Tr A ∧ A ⊆ B ∧ Ord B ) → Ord A ) ;;
+}
+
+proof of trssord {
+	step 1 : wff = ordwe () |- ( Ord B → 𝛜 We B ) ;;
+	step 2 : wff = wess () |- ( A ⊆ B → ( 𝛜 We B → 𝛜 We A ) ) ;;
+	step 3 : wff = imp (step 2) |- ( ( A ⊆ B ∧ 𝛜 We B ) → 𝛜 We A ) ;;
+	step 4 : wff = sylan2 (step 1, step 3) |- ( ( A ⊆ B ∧ Ord B ) → 𝛜 We A ) ;;
+	step 5 : wff = anim2i (step 4) |- ( ( Tr A ∧ ( A ⊆ B ∧ Ord B ) ) → ( Tr A ∧ 𝛜 We A ) ) ;;
+	step 6 : wff = 3impb (step 5) |- ( ( Tr A ∧ A ⊆ B ∧ Ord B ) → ( Tr A ∧ 𝛜 We A ) ) ;;
+	step 7 : wff = df-ord () |- ( Ord A ↔ ( Tr A ∧ 𝛜 We A ) ) ;;
+	step 8 : wff = sylibr (step 6, step 7) |- ( ( Tr A ∧ A ⊆ B ∧ Ord B ) → Ord A ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Epsilon irreflexivity of ordinals: no ordinal class is a member of
+     itself.  Theorem 2.2(i) of [BellMachover] p. 469, generalized to classes.
+     We prove this without invoking the Axiom of Regularity.  (Contributed by
+     NM, 2-Jan-1994.) */
+
+theorem ordirr (A : class)  {
+	prop 1 : wff = |- ( Ord A → ¬ A ∈ A ) ;;
+}
+
+proof of ordirr {
+	step 1 : wff = ordfr () |- ( Ord A → 𝛜 Fr A ) ;;
+	step 2 : wff = efrirr () |- ( 𝛜 Fr A → ¬ A ∈ A ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( Ord A → ¬ A ∈ A ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A member of an ordinal class is not equal to it.  (Contributed by NM,
+     25-May-1998.) */
+
+theorem nordeq (A : class, B : class)  {
+	prop 1 : wff = |- ( ( Ord A ∧ B ∈ A ) → A ≠ B ) ;;
+}
+
+proof of nordeq {
+	step 1 : wff = ordirr () |- ( Ord A → ¬ A ∈ A ) ;;
+	step 2 : wff = eleq1 () |- ( A = B → ( A ∈ A ↔ B ∈ A ) ) ;;
+	step 3 : wff = notbid (step 2) |- ( A = B → ( ¬ A ∈ A ↔ ¬ B ∈ A ) ) ;;
+	step 4 : wff = syl5ibcom (step 1, step 3) |- ( Ord A → ( A = B → ¬ B ∈ A ) ) ;;
+	step 5 : wff = necon2ad (step 4) |- ( Ord A → ( B ∈ A → A ≠ B ) ) ;;
+	step 6 : wff = imp (step 5) |- ( ( Ord A ∧ B ∈ A ) → A ≠ B ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* An ordinal class cannot an element of one of its members.  Variant of
+     first part of Theorem 2.2(vii) of [BellMachover] p. 469.  (Contributed by
+     NM, 3-Apr-1994.) */
+
+theorem ordn2lp (A : class, B : class)  {
+	prop 1 : wff = |- ( Ord A → ¬ ( A ∈ B ∧ B ∈ A ) ) ;;
+}
+
+proof of ordn2lp {
+	step 1 : wff = ordirr () |- ( Ord A → ¬ A ∈ A ) ;;
+	step 2 : wff = ordtr () |- ( Ord A → Tr A ) ;;
+	step 3 : wff = trel () |- ( Tr A → ( ( A ∈ B ∧ B ∈ A ) → A ∈ A ) ) ;;
+	step 4 : wff = syl (step 2, step 3) |- ( Ord A → ( ( A ∈ B ∧ B ∈ A ) → A ∈ A ) ) ;;
+	step 5 : wff = mtod (step 1, step 4) |- ( Ord A → ¬ ( A ∈ B ∧ B ∈ A ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* A subclass (possibly proper) of an ordinal class has a minimal element.
+       Proposition 7.5 of [TakeutiZaring] p. 36.  (Contributed by NM,
+       18-Feb-2004.)  (Revised by David Abernethy, 16-Mar-2011.) */
+
+theorem tz7.5 (x : set, A : class, B : class) disjointed(x B) {
+	prop 1 : wff = |- ( ( Ord A ∧ B ⊆ A ∧ B ≠ ∅ ) → ∃ x ∈ B ( B ∩ x ) = ∅ ) ;;
+}
+
+proof of tz7.5 {
+	step 1 : wff = ordwe () |- ( Ord A → 𝛜 We A ) ;;
+	step 2 : wff = wefrc () |- ( ( 𝛜 We A ∧ B ⊆ A ∧ B ≠ ∅ ) → ∃ x ∈ B ( B ∩ x ) = ∅ ) ;;
+	step 3 : wff = syl3an1 (step 1, step 2) |- ( ( Ord A ∧ B ⊆ A ∧ B ≠ ∅ ) → ∃ x ∈ B ( B ∩ x ) = ∅ ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* An element of an ordinal class is ordinal.  Proposition 7.6 of
+       [TakeutiZaring] p. 36.  (Contributed by NM, 23-Apr-1994.) */
+
+theorem ordelord (A : class, B : class) disjointed(x y z A, x y z B) {
+	prop 1 : wff = |- ( ( Ord A ∧ B ∈ A ) → Ord B ) ;;
+}
+
+proof of ordelord {
+	var x : set, y : set, z : set;;
+	step 1 : wff = eleq1 () |- ( x = B → ( x ∈ A ↔ B ∈ A ) ) ;;
+	step 2 : wff = anbi2d (step 1) |- ( x = B → ( ( Ord A ∧ x ∈ A ) ↔ ( Ord A ∧ B ∈ A ) ) ) ;;
+	step 3 : wff = ordeq () |- ( x = B → ( Ord x ↔ Ord B ) ) ;;
+	step 4 : wff = imbi12d (step 2, step 3) |- ( x = B → ( ( ( Ord A ∧ x ∈ A ) → Ord x ) ↔ ( ( Ord A ∧ B ∈ A ) → Ord B ) ) ) ;;
+	step 5 : wff = simpll () |- ( ( ( Ord A ∧ x ∈ A ) ∧ ( z ∈ y ∧ y ∈ x ) ) → Ord A ) ;;
+	step 6 : wff = 3anrot () |- ( ( x ∈ A ∧ z ∈ y ∧ y ∈ x ) ↔ ( z ∈ y ∧ y ∈ x ∧ x ∈ A ) ) ;;
+	step 7 : wff = 3anass () |- ( ( x ∈ A ∧ z ∈ y ∧ y ∈ x ) ↔ ( x ∈ A ∧ ( z ∈ y ∧ y ∈ x ) ) ) ;;
+	step 8 : wff = bitr3i (step 6, step 7) |- ( ( z ∈ y ∧ y ∈ x ∧ x ∈ A ) ↔ ( x ∈ A ∧ ( z ∈ y ∧ y ∈ x ) ) ) ;;
+	step 9 : wff = ordtr () |- ( Ord A → Tr A ) ;;
+	step 10 : wff = trel3 () |- ( Tr A → ( ( z ∈ y ∧ y ∈ x ∧ x ∈ A ) → z ∈ A ) ) ;;
+	step 11 : wff = syl (step 9, step 10) |- ( Ord A → ( ( z ∈ y ∧ y ∈ x ∧ x ∈ A ) → z ∈ A ) ) ;;
+	step 12 : wff = syl5bir (step 8, step 11) |- ( Ord A → ( ( x ∈ A ∧ ( z ∈ y ∧ y ∈ x ) ) → z ∈ A ) ) ;;
+	step 13 : wff = impl (step 12) |- ( ( ( Ord A ∧ x ∈ A ) ∧ ( z ∈ y ∧ y ∈ x ) ) → z ∈ A ) ;;
+	step 14 : wff = ordtr () |- ( Ord A → Tr A ) ;;
+	step 15 : wff = trel () |- ( Tr A → ( ( y ∈ x ∧ x ∈ A ) → y ∈ A ) ) ;;
+	step 16 : wff = syl (step 14, step 15) |- ( Ord A → ( ( y ∈ x ∧ x ∈ A ) → y ∈ A ) ) ;;
+	step 17 : wff = exp3acom23 (step 16) |- ( Ord A → ( x ∈ A → ( y ∈ x → y ∈ A ) ) ) ;;
+	step 18 : wff = imp31 (step 17) |- ( ( ( Ord A ∧ x ∈ A ) ∧ y ∈ x ) → y ∈ A ) ;;
+	step 19 : wff = adantrl (step 18) |- ( ( ( Ord A ∧ x ∈ A ) ∧ ( z ∈ y ∧ y ∈ x ) ) → y ∈ A ) ;;
+	step 20 : wff = simplr () |- ( ( ( Ord A ∧ x ∈ A ) ∧ ( z ∈ y ∧ y ∈ x ) ) → x ∈ A ) ;;
+	step 21 : wff = ordwe () |- ( Ord A → 𝛜 We A ) ;;
+	step 22 : wff = wetrep () |- ( ( 𝛜 We A ∧ ( z ∈ A ∧ y ∈ A ∧ x ∈ A ) ) → ( ( z ∈ y ∧ y ∈ x ) → z ∈ x ) ) ;;
+	step 23 : wff = sylan (step 21, step 22) |- ( ( Ord A ∧ ( z ∈ A ∧ y ∈ A ∧ x ∈ A ) ) → ( ( z ∈ y ∧ y ∈ x ) → z ∈ x ) ) ;;
+	step 24 : wff = syl13anc (step 5, step 13, step 19, step 20, step 23) |- ( ( ( Ord A ∧ x ∈ A ) ∧ ( z ∈ y ∧ y ∈ x ) ) → ( ( z ∈ y ∧ y ∈ x ) → z ∈ x ) ) ;;
+	step 25 : wff = ex (step 24) |- ( ( Ord A ∧ x ∈ A ) → ( ( z ∈ y ∧ y ∈ x ) → ( ( z ∈ y ∧ y ∈ x ) → z ∈ x ) ) ) ;;
+	step 26 : wff = pm2.43d (step 25) |- ( ( Ord A ∧ x ∈ A ) → ( ( z ∈ y ∧ y ∈ x ) → z ∈ x ) ) ;;
+	step 27 : wff = alrimivv (step 26) |- ( ( Ord A ∧ x ∈ A ) → ∀ z ∀ y ( ( z ∈ y ∧ y ∈ x ) → z ∈ x ) ) ;;
+	step 28 : wff = dftr2 () |- ( Tr x ↔ ∀ z ∀ y ( ( z ∈ y ∧ y ∈ x ) → z ∈ x ) ) ;;
+	step 29 : wff = sylibr (step 27, step 28) |- ( ( Ord A ∧ x ∈ A ) → Tr x ) ;;
+	step 30 : wff = ordtr () |- ( Ord A → Tr A ) ;;
+	step 31 : wff = trss () |- ( Tr A → ( x ∈ A → x ⊆ A ) ) ;;
+	step 32 : wff = syl (step 30, step 31) |- ( Ord A → ( x ∈ A → x ⊆ A ) ) ;;
+	step 33 : wff = ordwe () |- ( Ord A → 𝛜 We A ) ;;
+	step 34 : wff = wess () |- ( x ⊆ A → ( 𝛜 We A → 𝛜 We x ) ) ;;
+	step 35 : wff = syl5com (step 33, step 34) |- ( Ord A → ( x ⊆ A → 𝛜 We x ) ) ;;
+	step 36 : wff = syld (step 32, step 35) |- ( Ord A → ( x ∈ A → 𝛜 We x ) ) ;;
+	step 37 : wff = imp (step 36) |- ( ( Ord A ∧ x ∈ A ) → 𝛜 We x ) ;;
+	step 38 : wff = df-ord () |- ( Ord x ↔ ( Tr x ∧ 𝛜 We x ) ) ;;
+	step 39 : wff = sylanbrc (step 29, step 37, step 38) |- ( ( Ord A ∧ x ∈ A ) → Ord x ) ;;
+	step 40 : wff = vtoclg (step 4, step 39) |- ( B ∈ A → ( ( Ord A ∧ B ∈ A ) → Ord B ) ) ;;
+	step 41 : wff = anabsi7 (step 40) |- ( ( Ord A ∧ B ∈ A ) → Ord B ) ;;
+	qed prop 1 = step 41 ;;
+}
+
+/* The class of all ordinal numbers is transitive.  (Contributed by NM,
+       4-May-2009.) */
+
+theorem tron () disjointed(x y) {
+	prop 1 : wff = |- Tr On ;;
+}
+
+proof of tron {
+	var x : set, y : set;;
+	step 1 : wff = dftr3 () |- ( Tr On ↔ ∀ x ∈ On x ⊆ On ) ;;
+	step 2 : wff = vex () |- x ∈ _V ;;
+	step 3 : wff = elon (step 2) |- ( x ∈ On ↔ Ord x ) ;;
+	step 4 : wff = ordelord () |- ( ( Ord x ∧ y ∈ x ) → Ord y ) ;;
+	step 5 : wff = sylanb (step 3, step 4) |- ( ( x ∈ On ∧ y ∈ x ) → Ord y ) ;;
+	step 6 : wff = ex (step 5) |- ( x ∈ On → ( y ∈ x → Ord y ) ) ;;
+	step 7 : wff = vex () |- y ∈ _V ;;
+	step 8 : wff = elon (step 7) |- ( y ∈ On ↔ Ord y ) ;;
+	step 9 : wff = syl6ibr (step 6, step 8) |- ( x ∈ On → ( y ∈ x → y ∈ On ) ) ;;
+	step 10 : wff = ssrdv (step 9) |- ( x ∈ On → x ⊆ On ) ;;
+	step 11 : wff = mprgbir (step 1, step 10) |- Tr On ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* An element of an ordinal class is an ordinal number.  (Contributed by NM,
+     26-Oct-2003.) */
+
+theorem ordelon (A : class, B : class)  {
+	prop 1 : wff = |- ( ( Ord A ∧ B ∈ A ) → B ∈ On ) ;;
+}
+
+proof of ordelon {
+	step 1 : wff = ordelord () |- ( ( Ord A ∧ B ∈ A ) → Ord B ) ;;
+	step 2 : wff = elong () |- ( B ∈ A → ( B ∈ On ↔ Ord B ) ) ;;
+	step 3 : wff = adantl (step 2) |- ( ( Ord A ∧ B ∈ A ) → ( B ∈ On ↔ Ord B ) ) ;;
+	step 4 : wff = mpbird (step 1, step 3) |- ( ( Ord A ∧ B ∈ A ) → B ∈ On ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* An element of an ordinal number is an ordinal number.  Theorem 2.2(iii) of
+     [BellMachover] p. 469.  (Contributed by NM, 26-Oct-2003.) */
+
+theorem onelon (A : class, B : class)  {
+	prop 1 : wff = |- ( ( A ∈ On ∧ B ∈ A ) → B ∈ On ) ;;
+}
+
+proof of onelon {
+	step 1 : wff = eloni () |- ( A ∈ On → Ord A ) ;;
+	step 2 : wff = ordelon () |- ( ( Ord A ∧ B ∈ A ) → B ∈ On ) ;;
+	step 3 : wff = sylan (step 1, step 2) |- ( ( A ∈ On ∧ B ∈ A ) → B ∈ On ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Proposition 7.7 of [TakeutiZaring] p. 37.  (Contributed by NM,
+       5-May-1994.) */
+
+theorem tz7.7 (A : class, B : class) disjointed(x y A, x y B) {
+	prop 1 : wff = |- ( ( Ord A ∧ Tr B ) → ( B ∈ A ↔ ( B ⊆ A ∧ B ≠ A ) ) ) ;;
+}
+
+proof of tz7.7 {
+	var x : set, y : set;;
+	step 1 : wff = ordtr () |- ( Ord A → Tr A ) ;;
+	step 2 : wff = ordfr () |- ( Ord A → 𝛜 Fr A ) ;;
+	step 3 : wff = tz7.2 () |- ( ( Tr A ∧ 𝛜 Fr A ∧ B ∈ A ) → ( B ⊆ A ∧ B ≠ A ) ) ;;
+	step 4 : wff = 3exp (step 3) |- ( Tr A → ( 𝛜 Fr A → ( B ∈ A → ( B ⊆ A ∧ B ≠ A ) ) ) ) ;;
+	step 5 : wff = sylc (step 1, step 2, step 4) |- ( Ord A → ( B ∈ A → ( B ⊆ A ∧ B ≠ A ) ) ) ;;
+	step 6 : wff = adantr (step 5) |- ( ( Ord A ∧ Tr B ) → ( B ∈ A → ( B ⊆ A ∧ B ≠ A ) ) ) ;;
+	step 7 : wff = pssdifn0 () |- ( ( B ⊆ A ∧ B ≠ A ) → ( A ∖ B ) ≠ ∅ ) ;;
+	step 8 : wff = difss () |- ( A ∖ B ) ⊆ A ;;
+	step 9 : wff = tz7.5 () |- ( ( Ord A ∧ ( A ∖ B ) ⊆ A ∧ ( A ∖ B ) ≠ ∅ ) → ∃ x ∈ ( A ∖ B ) ( ( A ∖ B ) ∩ x ) = ∅ ) ;;
+	step 10 : wff = mp3an2 (step 8, step 9) |- ( ( Ord A ∧ ( A ∖ B ) ≠ ∅ ) → ∃ x ∈ ( A ∖ B ) ( ( A ∖ B ) ∩ x ) = ∅ ) ;;
+	step 11 : wff = ordtr () |- ( Ord A → Tr A ) ;;
+	step 12 : wff = eldifi () |- ( x ∈ ( A ∖ B ) → x ∈ A ) ;;
+	step 13 : wff = trss () |- ( Tr A → ( x ∈ A → x ⊆ A ) ) ;;
+	step 14 : wff = difin0ss () |- ( ( ( A ∖ B ) ∩ x ) = ∅ → ( x ⊆ A → x ⊆ B ) ) ;;
+	step 15 : wff = com12 (step 14) |- ( x ⊆ A → ( ( ( A ∖ B ) ∩ x ) = ∅ → x ⊆ B ) ) ;;
+	step 16 : wff = syl56 (step 12, step 13, step 15) |- ( Tr A → ( x ∈ ( A ∖ B ) → ( ( ( A ∖ B ) ∩ x ) = ∅ → x ⊆ B ) ) ) ;;
+	step 17 : wff = syl (step 11, step 16) |- ( Ord A → ( x ∈ ( A ∖ B ) → ( ( ( A ∖ B ) ∩ x ) = ∅ → x ⊆ B ) ) ) ;;
+	step 18 : wff = ad2antrr (step 17) |- ( ( ( Ord A ∧ Tr B ) ∧ B ⊆ A ) → ( x ∈ ( A ∖ B ) → ( ( ( A ∖ B ) ∩ x ) = ∅ → x ⊆ B ) ) ) ;;
+	step 19 : wff = imp32 (step 18) |- ( ( ( ( Ord A ∧ Tr B ) ∧ B ⊆ A ) ∧ ( x ∈ ( A ∖ B ) ∧ ( ( A ∖ B ) ∩ x ) = ∅ ) ) → x ⊆ B ) ;;
+	step 20 : wff = eleq1 () |- ( y = x → ( y ∈ B ↔ x ∈ B ) ) ;;
+	step 21 : wff = biimpcd (step 20) |- ( y ∈ B → ( y = x → x ∈ B ) ) ;;
+	step 22 : wff = eldifn () |- ( x ∈ ( A ∖ B ) → ¬ x ∈ B ) ;;
+	step 23 : wff = nsyli (step 21, step 22) |- ( y ∈ B → ( x ∈ ( A ∖ B ) → ¬ y = x ) ) ;;
+	step 24 : wff = imp (step 23) |- ( ( y ∈ B ∧ x ∈ ( A ∖ B ) ) → ¬ y = x ) ;;
+	step 25 : wff = adantll (step 24) |- ( ( ( B ⊆ A ∧ y ∈ B ) ∧ x ∈ ( A ∖ B ) ) → ¬ y = x ) ;;
+	step 26 : wff = adantl (step 25) |- ( ( ( Ord A ∧ Tr B ) ∧ ( ( B ⊆ A ∧ y ∈ B ) ∧ x ∈ ( A ∖ B ) ) ) → ¬ y = x ) ;;
+	step 27 : wff = trel () |- ( Tr B → ( ( x ∈ y ∧ y ∈ B ) → x ∈ B ) ) ;;
+	step 28 : wff = exp3acom23 (step 27) |- ( Tr B → ( y ∈ B → ( x ∈ y → x ∈ B ) ) ) ;;
+	step 29 : wff = imp (step 28) |- ( ( Tr B ∧ y ∈ B ) → ( x ∈ y → x ∈ B ) ) ;;
+	step 30 : wff = eldifn () |- ( x ∈ ( A ∖ B ) → ¬ x ∈ B ) ;;
+	step 31 : wff = nsyli (step 29, step 30) |- ( ( Tr B ∧ y ∈ B ) → ( x ∈ ( A ∖ B ) → ¬ x ∈ y ) ) ;;
+	step 32 : wff = ex (step 31) |- ( Tr B → ( y ∈ B → ( x ∈ ( A ∖ B ) → ¬ x ∈ y ) ) ) ;;
+	step 33 : wff = adantld (step 32) |- ( Tr B → ( ( B ⊆ A ∧ y ∈ B ) → ( x ∈ ( A ∖ B ) → ¬ x ∈ y ) ) ) ;;
+	step 34 : wff = imp32 (step 33) |- ( ( Tr B ∧ ( ( B ⊆ A ∧ y ∈ B ) ∧ x ∈ ( A ∖ B ) ) ) → ¬ x ∈ y ) ;;
+	step 35 : wff = adantll (step 34) |- ( ( ( Ord A ∧ Tr B ) ∧ ( ( B ⊆ A ∧ y ∈ B ) ∧ x ∈ ( A ∖ B ) ) ) → ¬ x ∈ y ) ;;
+	step 36 : wff = ordwe () |- ( Ord A → 𝛜 We A ) ;;
+	step 37 : wff = ssel2 () |- ( ( B ⊆ A ∧ y ∈ B ) → y ∈ A ) ;;
+	step 38 : wff = eldifi () |- ( x ∈ ( A ∖ B ) → x ∈ A ) ;;
+	step 39 : wff = anim12i (step 37, step 38) |- ( ( ( B ⊆ A ∧ y ∈ B ) ∧ x ∈ ( A ∖ B ) ) → ( y ∈ A ∧ x ∈ A ) ) ;;
+	step 40 : wff = wecmpep () |- ( ( 𝛜 We A ∧ ( y ∈ A ∧ x ∈ A ) ) → ( y ∈ x ∨ y = x ∨ x ∈ y ) ) ;;
+	step 41 : wff = syl2an (step 36, step 39, step 40) |- ( ( Ord A ∧ ( ( B ⊆ A ∧ y ∈ B ) ∧ x ∈ ( A ∖ B ) ) ) → ( y ∈ x ∨ y = x ∨ x ∈ y ) ) ;;
+	step 42 : wff = adantlr (step 41) |- ( ( ( Ord A ∧ Tr B ) ∧ ( ( B ⊆ A ∧ y ∈ B ) ∧ x ∈ ( A ∖ B ) ) ) → ( y ∈ x ∨ y = x ∨ x ∈ y ) ) ;;
+	step 43 : wff = ecase23d (step 26, step 35, step 42) |- ( ( ( Ord A ∧ Tr B ) ∧ ( ( B ⊆ A ∧ y ∈ B ) ∧ x ∈ ( A ∖ B ) ) ) → y ∈ x ) ;;
+	step 44 : wff = exp44 (step 43) |- ( ( Ord A ∧ Tr B ) → ( B ⊆ A → ( y ∈ B → ( x ∈ ( A ∖ B ) → y ∈ x ) ) ) ) ;;
+	step 45 : wff = com34 (step 44) |- ( ( Ord A ∧ Tr B ) → ( B ⊆ A → ( x ∈ ( A ∖ B ) → ( y ∈ B → y ∈ x ) ) ) ) ;;
+	step 46 : wff = imp31 (step 45) |- ( ( ( ( Ord A ∧ Tr B ) ∧ B ⊆ A ) ∧ x ∈ ( A ∖ B ) ) → ( y ∈ B → y ∈ x ) ) ;;
+	step 47 : wff = ssrdv (step 46) |- ( ( ( ( Ord A ∧ Tr B ) ∧ B ⊆ A ) ∧ x ∈ ( A ∖ B ) ) → B ⊆ x ) ;;
+	step 48 : wff = adantrr (step 47) |- ( ( ( ( Ord A ∧ Tr B ) ∧ B ⊆ A ) ∧ ( x ∈ ( A ∖ B ) ∧ ( ( A ∖ B ) ∩ x ) = ∅ ) ) → B ⊆ x ) ;;
+	step 49 : wff = eqssd (step 19, step 48) |- ( ( ( ( Ord A ∧ Tr B ) ∧ B ⊆ A ) ∧ ( x ∈ ( A ∖ B ) ∧ ( ( A ∖ B ) ∩ x ) = ∅ ) ) → x = B ) ;;
+	step 50 : wff = eldifi () |- ( x ∈ ( A ∖ B ) → x ∈ A ) ;;
+	step 51 : wff = ad2antrl (step 50) |- ( ( ( ( Ord A ∧ Tr B ) ∧ B ⊆ A ) ∧ ( x ∈ ( A ∖ B ) ∧ ( ( A ∖ B ) ∩ x ) = ∅ ) ) → x ∈ A ) ;;
+	step 52 : wff = eqeltrrd (step 49, step 51) |- ( ( ( ( Ord A ∧ Tr B ) ∧ B ⊆ A ) ∧ ( x ∈ ( A ∖ B ) ∧ ( ( A ∖ B ) ∩ x ) = ∅ ) ) → B ∈ A ) ;;
+	step 53 : wff = exp32 (step 52) |- ( ( ( Ord A ∧ Tr B ) ∧ B ⊆ A ) → ( x ∈ ( A ∖ B ) → ( ( ( A ∖ B ) ∩ x ) = ∅ → B ∈ A ) ) ) ;;
+	step 54 : wff = rexlimdv (step 53) |- ( ( ( Ord A ∧ Tr B ) ∧ B ⊆ A ) → ( ∃ x ∈ ( A ∖ B ) ( ( A ∖ B ) ∩ x ) = ∅ → B ∈ A ) ) ;;
+	step 55 : wff = syl5 (step 10, step 54) |- ( ( ( Ord A ∧ Tr B ) ∧ B ⊆ A ) → ( ( Ord A ∧ ( A ∖ B ) ≠ ∅ ) → B ∈ A ) ) ;;
+	step 56 : wff = exp4b (step 55) |- ( ( Ord A ∧ Tr B ) → ( B ⊆ A → ( Ord A → ( ( A ∖ B ) ≠ ∅ → B ∈ A ) ) ) ) ;;
+	step 57 : wff = com23 (step 56) |- ( ( Ord A ∧ Tr B ) → ( Ord A → ( B ⊆ A → ( ( A ∖ B ) ≠ ∅ → B ∈ A ) ) ) ) ;;
+	step 58 : wff = adantrd (step 57) |- ( ( Ord A ∧ Tr B ) → ( ( Ord A ∧ Tr B ) → ( B ⊆ A → ( ( A ∖ B ) ≠ ∅ → B ∈ A ) ) ) ) ;;
+	step 59 : wff = pm2.43i (step 58) |- ( ( Ord A ∧ Tr B ) → ( B ⊆ A → ( ( A ∖ B ) ≠ ∅ → B ∈ A ) ) ) ;;
+	step 60 : wff = syl7 (step 7, step 59) |- ( ( Ord A ∧ Tr B ) → ( B ⊆ A → ( ( B ⊆ A ∧ B ≠ A ) → B ∈ A ) ) ) ;;
+	step 61 : wff = exp4a (step 60) |- ( ( Ord A ∧ Tr B ) → ( B ⊆ A → ( B ⊆ A → ( B ≠ A → B ∈ A ) ) ) ) ;;
+	step 62 : wff = pm2.43d (step 61) |- ( ( Ord A ∧ Tr B ) → ( B ⊆ A → ( B ≠ A → B ∈ A ) ) ) ;;
+	step 63 : wff = imp3a (step 62) |- ( ( Ord A ∧ Tr B ) → ( ( B ⊆ A ∧ B ≠ A ) → B ∈ A ) ) ;;
+	step 64 : wff = impbid (step 6, step 63) |- ( ( Ord A ∧ Tr B ) → ( B ∈ A ↔ ( B ⊆ A ∧ B ≠ A ) ) ) ;;
+	qed prop 1 = step 64 ;;
+}
+
+/* Corollary 7.8 of [TakeutiZaring] p. 37.  (Contributed by NM,
+     25-Nov-1995.) */
+
+theorem ordelssne (A : class, B : class)  {
+	prop 1 : wff = |- ( ( Ord A ∧ Ord B ) → ( A ∈ B ↔ ( A ⊆ B ∧ A ≠ B ) ) ) ;;
+}
+
+proof of ordelssne {
+	step 1 : wff = ordtr () |- ( Ord A → Tr A ) ;;
+	step 2 : wff = tz7.7 () |- ( ( Ord B ∧ Tr A ) → ( A ∈ B ↔ ( A ⊆ B ∧ A ≠ B ) ) ) ;;
+	step 3 : wff = sylan2 (step 1, step 2) |- ( ( Ord B ∧ Ord A ) → ( A ∈ B ↔ ( A ⊆ B ∧ A ≠ B ) ) ) ;;
+	step 4 : wff = ancoms (step 3) |- ( ( Ord A ∧ Ord B ) → ( A ∈ B ↔ ( A ⊆ B ∧ A ≠ B ) ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Corollary 7.8 of [TakeutiZaring] p. 37.  (Contributed by NM,
+     17-Jun-1998.) */
+
+theorem ordelpss (A : class, B : class)  {
+	prop 1 : wff = |- ( ( Ord A ∧ Ord B ) → ( A ∈ B ↔ A ⊂ B ) ) ;;
+}
+
+proof of ordelpss {
+	step 1 : wff = ordelssne () |- ( ( Ord A ∧ Ord B ) → ( A ∈ B ↔ ( A ⊆ B ∧ A ≠ B ) ) ) ;;
+	step 2 : wff = df-pss () |- ( A ⊂ B ↔ ( A ⊆ B ∧ A ≠ B ) ) ;;
+	step 3 : wff = syl6bbr (step 1, step 2) |- ( ( Ord A ∧ Ord B ) → ( A ∈ B ↔ A ⊂ B ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* For ordinal classes, subclass is equivalent to membership or equality.
+     (Contributed by NM, 25-Nov-1995.)  (Proof shortened by Andrew Salmon,
+     25-Jul-2011.) */
+
+theorem ordsseleq (A : class, B : class)  {
+	prop 1 : wff = |- ( ( Ord A ∧ Ord B ) → ( A ⊆ B ↔ ( A ∈ B ∨ A = B ) ) ) ;;
+}
+
+proof of ordsseleq {
+	step 1 : wff = ordelpss () |- ( ( Ord A ∧ Ord B ) → ( A ∈ B ↔ A ⊂ B ) ) ;;
+	step 2 : wff = orbi1d (step 1) |- ( ( Ord A ∧ Ord B ) → ( ( A ∈ B ∨ A = B ) ↔ ( A ⊂ B ∨ A = B ) ) ) ;;
+	step 3 : wff = sspss () |- ( A ⊆ B ↔ ( A ⊂ B ∨ A = B ) ) ;;
+	step 4 : wff = syl6rbbr (step 2, step 3) |- ( ( Ord A ∧ Ord B ) → ( A ⊆ B ↔ ( A ∈ B ∨ A = B ) ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* The intersection of two ordinal classes is ordinal.  Proposition 7.9 of
+     [TakeutiZaring] p. 37.  (Contributed by NM, 9-May-1994.) */
+
+theorem ordin (A : class, B : class)  {
+	prop 1 : wff = |- ( ( Ord A ∧ Ord B ) → Ord ( A ∩ B ) ) ;;
+}
+
+proof of ordin {
+	step 1 : wff = ordtr () |- ( Ord A → Tr A ) ;;
+	step 2 : wff = ordtr () |- ( Ord B → Tr B ) ;;
+	step 3 : wff = trin () |- ( ( Tr A ∧ Tr B ) → Tr ( A ∩ B ) ) ;;
+	step 4 : wff = syl2an (step 1, step 2, step 3) |- ( ( Ord A ∧ Ord B ) → Tr ( A ∩ B ) ) ;;
+	step 5 : wff = inss2 () |- ( A ∩ B ) ⊆ B ;;
+	step 6 : wff = trssord () |- ( ( Tr ( A ∩ B ) ∧ ( A ∩ B ) ⊆ B ∧ Ord B ) → Ord ( A ∩ B ) ) ;;
+	step 7 : wff = mp3an2 (step 5, step 6) |- ( ( Tr ( A ∩ B ) ∧ Ord B ) → Ord ( A ∩ B ) ) ;;
+	step 8 : wff = sylancom (step 4, step 7) |- ( ( Ord A ∧ Ord B ) → Ord ( A ∩ B ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* The intersection of two ordinal numbers is an ordinal number.
+       (Contributed by NM, 7-Apr-1995.) */
+
+theorem onin (A : class, B : class)  {
+	prop 1 : wff = |- ( ( A ∈ On ∧ B ∈ On ) → ( A ∩ B ) ∈ On ) ;;
+}
+
+proof of onin {
+	step 1 : wff = eloni () |- ( A ∈ On → Ord A ) ;;
+	step 2 : wff = eloni () |- ( B ∈ On → Ord B ) ;;
+	step 3 : wff = ordin () |- ( ( Ord A ∧ Ord B ) → Ord ( A ∩ B ) ) ;;
+	step 4 : wff = syl2an (step 1, step 2, step 3) |- ( ( A ∈ On ∧ B ∈ On ) → Ord ( A ∩ B ) ) ;;
+	step 5 : wff = simpl () |- ( ( A ∈ On ∧ B ∈ On ) → A ∈ On ) ;;
+	step 6 : wff = inex1g () |- ( A ∈ On → ( A ∩ B ) ∈ _V ) ;;
+	step 7 : wff = elong () |- ( ( A ∩ B ) ∈ _V → ( ( A ∩ B ) ∈ On ↔ Ord ( A ∩ B ) ) ) ;;
+	step 8 : wff = 3syl (step 5, step 6, step 7) |- ( ( A ∈ On ∧ B ∈ On ) → ( ( A ∩ B ) ∈ On ↔ Ord ( A ∩ B ) ) ) ;;
+	step 9 : wff = mpbird (step 4, step 8) |- ( ( A ∈ On ∧ B ∈ On ) → ( A ∩ B ) ∈ On ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* A trichotomy law for ordinals.  Proposition 7.10 of [TakeutiZaring]
+     p. 38.  (Contributed by NM, 10-May-1994.)  (Proof shortened by Andrew
+     Salmon, 25-Jul-2011.) */
+
+theorem ordtri3or (A : class, B : class)  {
+	prop 1 : wff = |- ( ( Ord A ∧ Ord B ) → ( A ∈ B ∨ A = B ∨ B ∈ A ) ) ;;
+}
+
+proof of ordtri3or {
+	step 1 : wff = ordin () |- ( ( Ord A ∧ Ord B ) → Ord ( A ∩ B ) ) ;;
+	step 2 : wff = ordirr () |- ( Ord ( A ∩ B ) → ¬ ( A ∩ B ) ∈ ( A ∩ B ) ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( ( Ord A ∧ Ord B ) → ¬ ( A ∩ B ) ∈ ( A ∩ B ) ) ;;
+	step 4 : wff = ianor () |- ( ¬ ( ( A ∩ B ) ∈ A ∧ ( B ∩ A ) ∈ B ) ↔ ( ¬ ( A ∩ B ) ∈ A ∨ ¬ ( B ∩ A ) ∈ B ) ) ;;
+	step 5 : wff = elin () |- ( ( A ∩ B ) ∈ ( A ∩ B ) ↔ ( ( A ∩ B ) ∈ A ∧ ( A ∩ B ) ∈ B ) ) ;;
+	step 6 : wff = incom () |- ( A ∩ B ) = ( B ∩ A ) ;;
+	step 7 : wff = eleq1i (step 6) |- ( ( A ∩ B ) ∈ B ↔ ( B ∩ A ) ∈ B ) ;;
+	step 8 : wff = anbi2i (step 7) |- ( ( ( A ∩ B ) ∈ A ∧ ( A ∩ B ) ∈ B ) ↔ ( ( A ∩ B ) ∈ A ∧ ( B ∩ A ) ∈ B ) ) ;;
+	step 9 : wff = bitri (step 5, step 8) |- ( ( A ∩ B ) ∈ ( A ∩ B ) ↔ ( ( A ∩ B ) ∈ A ∧ ( B ∩ A ) ∈ B ) ) ;;
+	step 10 : wff = xchnxbir (step 4, step 9) |- ( ¬ ( A ∩ B ) ∈ ( A ∩ B ) ↔ ( ¬ ( A ∩ B ) ∈ A ∨ ¬ ( B ∩ A ) ∈ B ) ) ;;
+	step 11 : wff = sylib (step 3, step 10) |- ( ( Ord A ∧ Ord B ) → ( ¬ ( A ∩ B ) ∈ A ∨ ¬ ( B ∩ A ) ∈ B ) ) ;;
+	step 12 : wff = ordin () |- ( ( Ord A ∧ Ord B ) → Ord ( A ∩ B ) ) ;;
+	step 13 : wff = inss1 () |- ( A ∩ B ) ⊆ A ;;
+	step 14 : wff = ordsseleq () |- ( ( Ord ( A ∩ B ) ∧ Ord A ) → ( ( A ∩ B ) ⊆ A ↔ ( ( A ∩ B ) ∈ A ∨ ( A ∩ B ) = A ) ) ) ;;
+	step 15 : wff = mpbii (step 13, step 14) |- ( ( Ord ( A ∩ B ) ∧ Ord A ) → ( ( A ∩ B ) ∈ A ∨ ( A ∩ B ) = A ) ) ;;
+	step 16 : wff = sylan (step 12, step 15) |- ( ( ( Ord A ∧ Ord B ) ∧ Ord A ) → ( ( A ∩ B ) ∈ A ∨ ( A ∩ B ) = A ) ) ;;
+	step 17 : wff = anabss1 (step 16) |- ( ( Ord A ∧ Ord B ) → ( ( A ∩ B ) ∈ A ∨ ( A ∩ B ) = A ) ) ;;
+	step 18 : wff = ord (step 17) |- ( ( Ord A ∧ Ord B ) → ( ¬ ( A ∩ B ) ∈ A → ( A ∩ B ) = A ) ) ;;
+	step 19 : wff = df-ss () |- ( A ⊆ B ↔ ( A ∩ B ) = A ) ;;
+	step 20 : wff = syl6ibr (step 18, step 19) |- ( ( Ord A ∧ Ord B ) → ( ¬ ( A ∩ B ) ∈ A → A ⊆ B ) ) ;;
+	step 21 : wff = ordin () |- ( ( Ord B ∧ Ord A ) → Ord ( B ∩ A ) ) ;;
+	step 22 : wff = inss1 () |- ( B ∩ A ) ⊆ B ;;
+	step 23 : wff = ordsseleq () |- ( ( Ord ( B ∩ A ) ∧ Ord B ) → ( ( B ∩ A ) ⊆ B ↔ ( ( B ∩ A ) ∈ B ∨ ( B ∩ A ) = B ) ) ) ;;
+	step 24 : wff = mpbii (step 22, step 23) |- ( ( Ord ( B ∩ A ) ∧ Ord B ) → ( ( B ∩ A ) ∈ B ∨ ( B ∩ A ) = B ) ) ;;
+	step 25 : wff = sylan (step 21, step 24) |- ( ( ( Ord B ∧ Ord A ) ∧ Ord B ) → ( ( B ∩ A ) ∈ B ∨ ( B ∩ A ) = B ) ) ;;
+	step 26 : wff = anabss4 (step 25) |- ( ( Ord A ∧ Ord B ) → ( ( B ∩ A ) ∈ B ∨ ( B ∩ A ) = B ) ) ;;
+	step 27 : wff = ord (step 26) |- ( ( Ord A ∧ Ord B ) → ( ¬ ( B ∩ A ) ∈ B → ( B ∩ A ) = B ) ) ;;
+	step 28 : wff = df-ss () |- ( B ⊆ A ↔ ( B ∩ A ) = B ) ;;
+	step 29 : wff = syl6ibr (step 27, step 28) |- ( ( Ord A ∧ Ord B ) → ( ¬ ( B ∩ A ) ∈ B → B ⊆ A ) ) ;;
+	step 30 : wff = orim12d (step 20, step 29) |- ( ( Ord A ∧ Ord B ) → ( ( ¬ ( A ∩ B ) ∈ A ∨ ¬ ( B ∩ A ) ∈ B ) → ( A ⊆ B ∨ B ⊆ A ) ) ) ;;
+	step 31 : wff = mpd (step 11, step 30) |- ( ( Ord A ∧ Ord B ) → ( A ⊆ B ∨ B ⊆ A ) ) ;;
+	step 32 : wff = sspsstri () |- ( ( A ⊆ B ∨ B ⊆ A ) ↔ ( A ⊂ B ∨ A = B ∨ B ⊂ A ) ) ;;
+	step 33 : wff = sylib (step 31, step 32) |- ( ( Ord A ∧ Ord B ) → ( A ⊂ B ∨ A = B ∨ B ⊂ A ) ) ;;
+	step 34 : wff = ordelpss () |- ( ( Ord A ∧ Ord B ) → ( A ∈ B ↔ A ⊂ B ) ) ;;
+	step 35 : wff = biidd () |- ( ( Ord A ∧ Ord B ) → ( A = B ↔ A = B ) ) ;;
+	step 36 : wff = ordelpss () |- ( ( Ord B ∧ Ord A ) → ( B ∈ A ↔ B ⊂ A ) ) ;;
+	step 37 : wff = ancoms (step 36) |- ( ( Ord A ∧ Ord B ) → ( B ∈ A ↔ B ⊂ A ) ) ;;
+	step 38 : wff = 3orbi123d (step 34, step 35, step 37) |- ( ( Ord A ∧ Ord B ) → ( ( A ∈ B ∨ A = B ∨ B ∈ A ) ↔ ( A ⊂ B ∨ A = B ∨ B ⊂ A ) ) ) ;;
+	step 39 : wff = mpbird (step 33, step 38) |- ( ( Ord A ∧ Ord B ) → ( A ∈ B ∨ A = B ∨ B ∈ A ) ) ;;
+	qed prop 1 = step 39 ;;
+}
+
+/* A trichotomy law for ordinals.  (Contributed by NM, 25-Mar-1995.)  (Proof
+     shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem ordtri1 (A : class, B : class)  {
+	prop 1 : wff = |- ( ( Ord A ∧ Ord B ) → ( A ⊆ B ↔ ¬ B ∈ A ) ) ;;
+}
+
+proof of ordtri1 {
+	step 1 : wff = ordsseleq () |- ( ( Ord A ∧ Ord B ) → ( A ⊆ B ↔ ( A ∈ B ∨ A = B ) ) ) ;;
+	step 2 : wff = ordn2lp () |- ( Ord A → ¬ ( A ∈ B ∧ B ∈ A ) ) ;;
+	step 3 : wff = imnan () |- ( ( A ∈ B → ¬ B ∈ A ) ↔ ¬ ( A ∈ B ∧ B ∈ A ) ) ;;
+	step 4 : wff = sylibr (step 2, step 3) |- ( Ord A → ( A ∈ B → ¬ B ∈ A ) ) ;;
+	step 5 : wff = ordirr () |- ( Ord B → ¬ B ∈ B ) ;;
+	step 6 : wff = eleq2 () |- ( A = B → ( B ∈ A ↔ B ∈ B ) ) ;;
+	step 7 : wff = notbid (step 6) |- ( A = B → ( ¬ B ∈ A ↔ ¬ B ∈ B ) ) ;;
+	step 8 : wff = syl5ibrcom (step 5, step 7) |- ( Ord B → ( A = B → ¬ B ∈ A ) ) ;;
+	step 9 : wff = jaao (step 4, step 8) |- ( ( Ord A ∧ Ord B ) → ( ( A ∈ B ∨ A = B ) → ¬ B ∈ A ) ) ;;
+	step 10 : wff = ordtri3or () |- ( ( Ord A ∧ Ord B ) → ( A ∈ B ∨ A = B ∨ B ∈ A ) ) ;;
+	step 11 : wff = df-3or () |- ( ( A ∈ B ∨ A = B ∨ B ∈ A ) ↔ ( ( A ∈ B ∨ A = B ) ∨ B ∈ A ) ) ;;
+	step 12 : wff = sylib (step 10, step 11) |- ( ( Ord A ∧ Ord B ) → ( ( A ∈ B ∨ A = B ) ∨ B ∈ A ) ) ;;
+	step 13 : wff = orcomd (step 12) |- ( ( Ord A ∧ Ord B ) → ( B ∈ A ∨ ( A ∈ B ∨ A = B ) ) ) ;;
+	step 14 : wff = ord (step 13) |- ( ( Ord A ∧ Ord B ) → ( ¬ B ∈ A → ( A ∈ B ∨ A = B ) ) ) ;;
+	step 15 : wff = impbid (step 9, step 14) |- ( ( Ord A ∧ Ord B ) → ( ( A ∈ B ∨ A = B ) ↔ ¬ B ∈ A ) ) ;;
+	step 16 : wff = bitrd (step 1, step 15) |- ( ( Ord A ∧ Ord B ) → ( A ⊆ B ↔ ¬ B ∈ A ) ) ;;
+	qed prop 1 = step 16 ;;
+}
+
+/* A trichotomy law for ordinal numbers.  (Contributed by NM, 6-Nov-2003.) */
+
+theorem ontri1 (A : class, B : class)  {
+	prop 1 : wff = |- ( ( A ∈ On ∧ B ∈ On ) → ( A ⊆ B ↔ ¬ B ∈ A ) ) ;;
+}
+
+proof of ontri1 {
+	step 1 : wff = eloni () |- ( A ∈ On → Ord A ) ;;
+	step 2 : wff = eloni () |- ( B ∈ On → Ord B ) ;;
+	step 3 : wff = ordtri1 () |- ( ( Ord A ∧ Ord B ) → ( A ⊆ B ↔ ¬ B ∈ A ) ) ;;
+	step 4 : wff = syl2an (step 1, step 2, step 3) |- ( ( A ∈ On ∧ B ∈ On ) → ( A ⊆ B ↔ ¬ B ∈ A ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A trichotomy law for ordinals.  (Contributed by NM, 25-Nov-1995.) */
+
+theorem ordtri2 (A : class, B : class)  {
+	prop 1 : wff = |- ( ( Ord A ∧ Ord B ) → ( A ∈ B ↔ ¬ ( A = B ∨ B ∈ A ) ) ) ;;
+}
+
+proof of ordtri2 {
+	step 1 : wff = ordsseleq () |- ( ( Ord B ∧ Ord A ) → ( B ⊆ A ↔ ( B ∈ A ∨ B = A ) ) ) ;;
+	step 2 : wff = eqcom () |- ( B = A ↔ A = B ) ;;
+	step 3 : wff = orbi2i (step 2) |- ( ( B ∈ A ∨ B = A ) ↔ ( B ∈ A ∨ A = B ) ) ;;
+	step 4 : wff = orcom () |- ( ( B ∈ A ∨ A = B ) ↔ ( A = B ∨ B ∈ A ) ) ;;
+	step 5 : wff = bitri (step 3, step 4) |- ( ( B ∈ A ∨ B = A ) ↔ ( A = B ∨ B ∈ A ) ) ;;
+	step 6 : wff = syl6bb (step 1, step 5) |- ( ( Ord B ∧ Ord A ) → ( B ⊆ A ↔ ( A = B ∨ B ∈ A ) ) ) ;;
+	step 7 : wff = ordtri1 () |- ( ( Ord B ∧ Ord A ) → ( B ⊆ A ↔ ¬ A ∈ B ) ) ;;
+	step 8 : wff = bitr3d (step 6, step 7) |- ( ( Ord B ∧ Ord A ) → ( ( A = B ∨ B ∈ A ) ↔ ¬ A ∈ B ) ) ;;
+	step 9 : wff = ancoms (step 8) |- ( ( Ord A ∧ Ord B ) → ( ( A = B ∨ B ∈ A ) ↔ ¬ A ∈ B ) ) ;;
+	step 10 : wff = con2bid (step 9) |- ( ( Ord A ∧ Ord B ) → ( A ∈ B ↔ ¬ ( A = B ∨ B ∈ A ) ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* A trichotomy law for ordinals.  (Contributed by NM, 18-Oct-1995.)  (Proof
+     shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem ordtri3 (A : class, B : class)  {
+	prop 1 : wff = |- ( ( Ord A ∧ Ord B ) → ( A = B ↔ ¬ ( A ∈ B ∨ B ∈ A ) ) ) ;;
+}
+
+proof of ordtri3 {
+	step 1 : wff = ordirr () |- ( Ord A → ¬ A ∈ A ) ;;
+	step 2 : wff = eleq2 () |- ( A = B → ( A ∈ A ↔ A ∈ B ) ) ;;
+	step 3 : wff = notbid (step 2) |- ( A = B → ( ¬ A ∈ A ↔ ¬ A ∈ B ) ) ;;
+	step 4 : wff = syl5ib (step 1, step 3) |- ( A = B → ( Ord A → ¬ A ∈ B ) ) ;;
+	step 5 : wff = ordirr () |- ( Ord B → ¬ B ∈ B ) ;;
+	step 6 : wff = eleq2 () |- ( A = B → ( B ∈ A ↔ B ∈ B ) ) ;;
+	step 7 : wff = notbid (step 6) |- ( A = B → ( ¬ B ∈ A ↔ ¬ B ∈ B ) ) ;;
+	step 8 : wff = syl5ibr (step 5, step 7) |- ( A = B → ( Ord B → ¬ B ∈ A ) ) ;;
+	step 9 : wff = anim12d (step 4, step 8) |- ( A = B → ( ( Ord A ∧ Ord B ) → ( ¬ A ∈ B ∧ ¬ B ∈ A ) ) ) ;;
+	step 10 : wff = com12 (step 9) |- ( ( Ord A ∧ Ord B ) → ( A = B → ( ¬ A ∈ B ∧ ¬ B ∈ A ) ) ) ;;
+	step 11 : wff = pm4.56 () |- ( ( ¬ A ∈ B ∧ ¬ B ∈ A ) ↔ ¬ ( A ∈ B ∨ B ∈ A ) ) ;;
+	step 12 : wff = syl6ib (step 10, step 11) |- ( ( Ord A ∧ Ord B ) → ( A = B → ¬ ( A ∈ B ∨ B ∈ A ) ) ) ;;
+	step 13 : wff = ordtri3or () |- ( ( Ord A ∧ Ord B ) → ( A ∈ B ∨ A = B ∨ B ∈ A ) ) ;;
+	step 14 : wff = df-3or () |- ( ( A ∈ B ∨ A = B ∨ B ∈ A ) ↔ ( ( A ∈ B ∨ A = B ) ∨ B ∈ A ) ) ;;
+	step 15 : wff = sylib (step 13, step 14) |- ( ( Ord A ∧ Ord B ) → ( ( A ∈ B ∨ A = B ) ∨ B ∈ A ) ) ;;
+	step 16 : wff = or32 () |- ( ( ( A ∈ B ∨ A = B ) ∨ B ∈ A ) ↔ ( ( A ∈ B ∨ B ∈ A ) ∨ A = B ) ) ;;
+	step 17 : wff = sylib (step 15, step 16) |- ( ( Ord A ∧ Ord B ) → ( ( A ∈ B ∨ B ∈ A ) ∨ A = B ) ) ;;
+	step 18 : wff = ord (step 17) |- ( ( Ord A ∧ Ord B ) → ( ¬ ( A ∈ B ∨ B ∈ A ) → A = B ) ) ;;
+	step 19 : wff = impbid (step 12, step 18) |- ( ( Ord A ∧ Ord B ) → ( A = B ↔ ¬ ( A ∈ B ∨ B ∈ A ) ) ) ;;
+	qed prop 1 = step 19 ;;
+}
+
+/* A trichotomy law for ordinals.  (Contributed by NM, 1-Nov-2003.)  (Proof
+     shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem ordtri4 (A : class, B : class)  {
+	prop 1 : wff = |- ( ( Ord A ∧ Ord B ) → ( A = B ↔ ( A ⊆ B ∧ ¬ A ∈ B ) ) ) ;;
+}
+
+proof of ordtri4 {
+	step 1 : wff = eqss () |- ( A = B ↔ ( A ⊆ B ∧ B ⊆ A ) ) ;;
+	step 2 : wff = ordtri1 () |- ( ( Ord B ∧ Ord A ) → ( B ⊆ A ↔ ¬ A ∈ B ) ) ;;
+	step 3 : wff = ancoms (step 2) |- ( ( Ord A ∧ Ord B ) → ( B ⊆ A ↔ ¬ A ∈ B ) ) ;;
+	step 4 : wff = anbi2d (step 3) |- ( ( Ord A ∧ Ord B ) → ( ( A ⊆ B ∧ B ⊆ A ) ↔ ( A ⊆ B ∧ ¬ A ∈ B ) ) ) ;;
+	step 5 : wff = syl5bb (step 1, step 4) |- ( ( Ord A ∧ Ord B ) → ( A = B ↔ ( A ⊆ B ∧ ¬ A ∈ B ) ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* An ordinal class and its singleton are disjoint.  (Contributed by NM,
+     19-May-1998.) */
+
+theorem orddisj (A : class)  {
+	prop 1 : wff = |- ( Ord A → ( A ∩ { A } ) = ∅ ) ;;
+}
+
+proof of orddisj {
+	step 1 : wff = ordirr () |- ( Ord A → ¬ A ∈ A ) ;;
+	step 2 : wff = disjsn () |- ( ( A ∩ { A } ) = ∅ ↔ ¬ A ∈ A ) ;;
+	step 3 : wff = sylibr (step 1, step 2) |- ( Ord A → ( A ∩ { A } ) = ∅ ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* The ordinal class is well-founded.  This lemma is needed for ~ ordon in
+       order to eliminate the need for the Axiom of Regularity.  (Contributed
+       by NM, 17-May-1994.) */
+
+theorem onfr () disjointed(x y z) {
+	prop 1 : wff = |- 𝛜 Fr On ;;
+}
+
+proof of onfr {
+	var x : set, y : set, z : set;;
+	step 1 : wff = dfepfr () |- ( 𝛜 Fr On ↔ ∀ x ( ( x ⊆ On ∧ x ≠ ∅ ) → ∃ z ∈ x ( x ∩ z ) = ∅ ) ) ;;
+	step 2 : wff = n0 () |- ( x ≠ ∅ ↔ ∃ y y ∈ x ) ;;
+	step 3 : wff = ineq2 () |- ( z = y → ( x ∩ z ) = ( x ∩ y ) ) ;;
+	step 4 : wff = eqeq1d (step 3) |- ( z = y → ( ( x ∩ z ) = ∅ ↔ ( x ∩ y ) = ∅ ) ) ;;
+	step 5 : wff = rspcev (step 4) |- ( ( y ∈ x ∧ ( x ∩ y ) = ∅ ) → ∃ z ∈ x ( x ∩ z ) = ∅ ) ;;
+	step 6 : wff = adantll (step 5) |- ( ( ( x ⊆ On ∧ y ∈ x ) ∧ ( x ∩ y ) = ∅ ) → ∃ z ∈ x ( x ∩ z ) = ∅ ) ;;
+	step 7 : wff = ssel2 () |- ( ( x ⊆ On ∧ y ∈ x ) → y ∈ On ) ;;
+	step 8 : wff = eloni () |- ( y ∈ On → Ord y ) ;;
+	step 9 : wff = syl (step 7, step 8) |- ( ( x ⊆ On ∧ y ∈ x ) → Ord y ) ;;
+	step 10 : wff = ordfr () |- ( Ord y → 𝛜 Fr y ) ;;
+	step 11 : wff = syl (step 9, step 10) |- ( ( x ⊆ On ∧ y ∈ x ) → 𝛜 Fr y ) ;;
+	step 12 : wff = inss2 () |- ( x ∩ y ) ⊆ y ;;
+	step 13 : wff = vex () |- x ∈ _V ;;
+	step 14 : wff = inex1 (step 13) |- ( x ∩ y ) ∈ _V ;;
+	step 15 : wff = epfrc (step 14) |- ( ( 𝛜 Fr y ∧ ( x ∩ y ) ⊆ y ∧ ( x ∩ y ) ≠ ∅ ) → ∃ z ∈ ( x ∩ y ) ( ( x ∩ y ) ∩ z ) = ∅ ) ;;
+	step 16 : wff = mp3an2 (step 12, step 15) |- ( ( 𝛜 Fr y ∧ ( x ∩ y ) ≠ ∅ ) → ∃ z ∈ ( x ∩ y ) ( ( x ∩ y ) ∩ z ) = ∅ ) ;;
+	step 17 : wff = sylan (step 11, step 16) |- ( ( ( x ⊆ On ∧ y ∈ x ) ∧ ( x ∩ y ) ≠ ∅ ) → ∃ z ∈ ( x ∩ y ) ( ( x ∩ y ) ∩ z ) = ∅ ) ;;
+	step 18 : wff = inass () |- ( ( x ∩ y ) ∩ z ) = ( x ∩ ( y ∩ z ) ) ;;
+	step 19 : wff = ssel2 () |- ( ( x ⊆ On ∧ y ∈ x ) → y ∈ On ) ;;
+	step 20 : wff = eloni () |- ( y ∈ On → Ord y ) ;;
+	step 21 : wff = syl (step 19, step 20) |- ( ( x ⊆ On ∧ y ∈ x ) → Ord y ) ;;
+	step 22 : wff = adantr (step 21) |- ( ( ( x ⊆ On ∧ y ∈ x ) ∧ z ∈ ( x ∩ y ) ) → Ord y ) ;;
+	step 23 : wff = inss2 () |- ( x ∩ y ) ⊆ y ;;
+	step 24 : wff = simpr () |- ( ( ( x ⊆ On ∧ y ∈ x ) ∧ z ∈ ( x ∩ y ) ) → z ∈ ( x ∩ y ) ) ;;
+	step 25 : wff = sseldi (step 23, step 24) |- ( ( ( x ⊆ On ∧ y ∈ x ) ∧ z ∈ ( x ∩ y ) ) → z ∈ y ) ;;
+	step 26 : wff = ordelss () |- ( ( Ord y ∧ z ∈ y ) → z ⊆ y ) ;;
+	step 27 : wff = syl2anc (step 22, step 25, step 26) |- ( ( ( x ⊆ On ∧ y ∈ x ) ∧ z ∈ ( x ∩ y ) ) → z ⊆ y ) ;;
+	step 28 : wff = dfss1 () |- ( z ⊆ y ↔ ( y ∩ z ) = z ) ;;
+	step 29 : wff = sylib (step 27, step 28) |- ( ( ( x ⊆ On ∧ y ∈ x ) ∧ z ∈ ( x ∩ y ) ) → ( y ∩ z ) = z ) ;;
+	step 30 : wff = ineq2d (step 29) |- ( ( ( x ⊆ On ∧ y ∈ x ) ∧ z ∈ ( x ∩ y ) ) → ( x ∩ ( y ∩ z ) ) = ( x ∩ z ) ) ;;
+	step 31 : wff = syl5eq (step 18, step 30) |- ( ( ( x ⊆ On ∧ y ∈ x ) ∧ z ∈ ( x ∩ y ) ) → ( ( x ∩ y ) ∩ z ) = ( x ∩ z ) ) ;;
+	step 32 : wff = eqeq1d (step 31) |- ( ( ( x ⊆ On ∧ y ∈ x ) ∧ z ∈ ( x ∩ y ) ) → ( ( ( x ∩ y ) ∩ z ) = ∅ ↔ ( x ∩ z ) = ∅ ) ) ;;
+	step 33 : wff = rexbidva (step 32) |- ( ( x ⊆ On ∧ y ∈ x ) → ( ∃ z ∈ ( x ∩ y ) ( ( x ∩ y ) ∩ z ) = ∅ ↔ ∃ z ∈ ( x ∩ y ) ( x ∩ z ) = ∅ ) ) ;;
+	step 34 : wff = adantr (step 33) |- ( ( ( x ⊆ On ∧ y ∈ x ) ∧ ( x ∩ y ) ≠ ∅ ) → ( ∃ z ∈ ( x ∩ y ) ( ( x ∩ y ) ∩ z ) = ∅ ↔ ∃ z ∈ ( x ∩ y ) ( x ∩ z ) = ∅ ) ) ;;
+	step 35 : wff = mpbid (step 17, step 34) |- ( ( ( x ⊆ On ∧ y ∈ x ) ∧ ( x ∩ y ) ≠ ∅ ) → ∃ z ∈ ( x ∩ y ) ( x ∩ z ) = ∅ ) ;;
+	step 36 : wff = inss1 () |- ( x ∩ y ) ⊆ x ;;
+	step 37 : wff = ssrexv () |- ( ( x ∩ y ) ⊆ x → ( ∃ z ∈ ( x ∩ y ) ( x ∩ z ) = ∅ → ∃ z ∈ x ( x ∩ z ) = ∅ ) ) ;;
+	step 38 : wff = ax-mp (step 36, step 37) |- ( ∃ z ∈ ( x ∩ y ) ( x ∩ z ) = ∅ → ∃ z ∈ x ( x ∩ z ) = ∅ ) ;;
+	step 39 : wff = syl (step 35, step 38) |- ( ( ( x ⊆ On ∧ y ∈ x ) ∧ ( x ∩ y ) ≠ ∅ ) → ∃ z ∈ x ( x ∩ z ) = ∅ ) ;;
+	step 40 : wff = pm2.61dane (step 6, step 39) |- ( ( x ⊆ On ∧ y ∈ x ) → ∃ z ∈ x ( x ∩ z ) = ∅ ) ;;
+	step 41 : wff = ex (step 40) |- ( x ⊆ On → ( y ∈ x → ∃ z ∈ x ( x ∩ z ) = ∅ ) ) ;;
+	step 42 : wff = exlimdv (step 41) |- ( x ⊆ On → ( ∃ y y ∈ x → ∃ z ∈ x ( x ∩ z ) = ∅ ) ) ;;
+	step 43 : wff = syl5bi (step 2, step 42) |- ( x ⊆ On → ( x ≠ ∅ → ∃ z ∈ x ( x ∩ z ) = ∅ ) ) ;;
+	step 44 : wff = imp (step 43) |- ( ( x ⊆ On ∧ x ≠ ∅ ) → ∃ z ∈ x ( x ∩ z ) = ∅ ) ;;
+	step 45 : wff = mpgbir (step 1, step 44) |- 𝛜 Fr On ;;
+	qed prop 1 = step 45 ;;
+}
+
+/* Relationship between membership and proper subset of an ordinal number.
+     (Contributed by NM, 15-Sep-1995.) */
+
+theorem onelpss (A : class, B : class)  {
+	prop 1 : wff = |- ( ( A ∈ On ∧ B ∈ On ) → ( A ∈ B ↔ ( A ⊆ B ∧ A ≠ B ) ) ) ;;
+}
+
+proof of onelpss {
+	step 1 : wff = eloni () |- ( A ∈ On → Ord A ) ;;
+	step 2 : wff = eloni () |- ( B ∈ On → Ord B ) ;;
+	step 3 : wff = ordelssne () |- ( ( Ord A ∧ Ord B ) → ( A ∈ B ↔ ( A ⊆ B ∧ A ≠ B ) ) ) ;;
+	step 4 : wff = syl2an (step 1, step 2, step 3) |- ( ( A ∈ On ∧ B ∈ On ) → ( A ∈ B ↔ ( A ⊆ B ∧ A ≠ B ) ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Relationship between subset and membership of an ordinal number.
+     (Contributed by NM, 15-Sep-1995.) */
+
+theorem onsseleq (A : class, B : class)  {
+	prop 1 : wff = |- ( ( A ∈ On ∧ B ∈ On ) → ( A ⊆ B ↔ ( A ∈ B ∨ A = B ) ) ) ;;
+}
+
+proof of onsseleq {
+	step 1 : wff = eloni () |- ( A ∈ On → Ord A ) ;;
+	step 2 : wff = eloni () |- ( B ∈ On → Ord B ) ;;
+	step 3 : wff = ordsseleq () |- ( ( Ord A ∧ Ord B ) → ( A ⊆ B ↔ ( A ∈ B ∨ A = B ) ) ) ;;
+	step 4 : wff = syl2an (step 1, step 2, step 3) |- ( ( A ∈ On ∧ B ∈ On ) → ( A ⊆ B ↔ ( A ∈ B ∨ A = B ) ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* An element of an ordinal number is a subset of the number.  (Contributed
+     by NM, 5-Jun-1994.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem onelss (A : class, B : class)  {
+	prop 1 : wff = |- ( A ∈ On → ( B ∈ A → B ⊆ A ) ) ;;
+}
+
+proof of onelss {
+	step 1 : wff = eloni () |- ( A ∈ On → Ord A ) ;;
+	step 2 : wff = ordelss () |- ( ( Ord A ∧ B ∈ A ) → B ⊆ A ) ;;
+	step 3 : wff = ex (step 2) |- ( Ord A → ( B ∈ A → B ⊆ A ) ) ;;
+	step 4 : wff = syl (step 1, step 3) |- ( A ∈ On → ( B ∈ A → B ⊆ A ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Transitive law for ordinal classes.  (Contributed by NM, 12-Dec-2004.) */
+
+theorem ordtr1 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( Ord C → ( ( A ∈ B ∧ B ∈ C ) → A ∈ C ) ) ;;
+}
+
+proof of ordtr1 {
+	step 1 : wff = ordtr () |- ( Ord C → Tr C ) ;;
+	step 2 : wff = trel () |- ( Tr C → ( ( A ∈ B ∧ B ∈ C ) → A ∈ C ) ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( Ord C → ( ( A ∈ B ∧ B ∈ C ) → A ∈ C ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Transitive law for ordinal classes.  (Contributed by NM, 12-Dec-2004.)
+     (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem ordtr2 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( Ord A ∧ Ord C ) → ( ( A ⊆ B ∧ B ∈ C ) → A ∈ C ) ) ;;
+}
+
+proof of ordtr2 {
+	step 1 : wff = ordelord () |- ( ( Ord C ∧ B ∈ C ) → Ord B ) ;;
+	step 2 : wff = ex (step 1) |- ( Ord C → ( B ∈ C → Ord B ) ) ;;
+	step 3 : wff = ancld (step 2) |- ( Ord C → ( B ∈ C → ( B ∈ C ∧ Ord B ) ) ) ;;
+	step 4 : wff = anc2li (step 3) |- ( Ord C → ( B ∈ C → ( Ord C ∧ ( B ∈ C ∧ Ord B ) ) ) ) ;;
+	step 5 : wff = ordelpss () |- ( ( Ord B ∧ Ord C ) → ( B ∈ C ↔ B ⊂ C ) ) ;;
+	step 6 : wff = ancoms (step 5) |- ( ( Ord C ∧ Ord B ) → ( B ∈ C ↔ B ⊂ C ) ) ;;
+	step 7 : wff = sspsstr () |- ( ( A ⊆ B ∧ B ⊂ C ) → A ⊂ C ) ;;
+	step 8 : wff = expcom (step 7) |- ( B ⊂ C → ( A ⊆ B → A ⊂ C ) ) ;;
+	step 9 : wff = syl6bi (step 6, step 8) |- ( ( Ord C ∧ Ord B ) → ( B ∈ C → ( A ⊆ B → A ⊂ C ) ) ) ;;
+	step 10 : wff = ex (step 9) |- ( Ord C → ( Ord B → ( B ∈ C → ( A ⊆ B → A ⊂ C ) ) ) ) ;;
+	step 11 : wff = com23 (step 10) |- ( Ord C → ( B ∈ C → ( Ord B → ( A ⊆ B → A ⊂ C ) ) ) ) ;;
+	step 12 : wff = imp32 (step 11) |- ( ( Ord C ∧ ( B ∈ C ∧ Ord B ) ) → ( A ⊆ B → A ⊂ C ) ) ;;
+	step 13 : wff = com12 (step 12) |- ( A ⊆ B → ( ( Ord C ∧ ( B ∈ C ∧ Ord B ) ) → A ⊂ C ) ) ;;
+	step 14 : wff = syl9 (step 4, step 13) |- ( Ord C → ( A ⊆ B → ( B ∈ C → A ⊂ C ) ) ) ;;
+	step 15 : wff = imp3a (step 14) |- ( Ord C → ( ( A ⊆ B ∧ B ∈ C ) → A ⊂ C ) ) ;;
+	step 16 : wff = adantl (step 15) |- ( ( Ord A ∧ Ord C ) → ( ( A ⊆ B ∧ B ∈ C ) → A ⊂ C ) ) ;;
+	step 17 : wff = ordelpss () |- ( ( Ord A ∧ Ord C ) → ( A ∈ C ↔ A ⊂ C ) ) ;;
+	step 18 : wff = sylibrd (step 16, step 17) |- ( ( Ord A ∧ Ord C ) → ( ( A ⊆ B ∧ B ∈ C ) → A ∈ C ) ) ;;
+	qed prop 1 = step 18 ;;
+}
+
+/* Transitive law for ordinal classes.  (Contributed by Mario Carneiro,
+     30-Dec-2014.) */
+
+theorem ordtr3 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( Ord B ∧ Ord C ) → ( A ∈ B → ( A ∈ C ∨ C ∈ B ) ) ) ;;
+}
+
+proof of ordtr3 {
+	step 1 : wff = simplr () |- ( ( ( Ord B ∧ Ord C ) ∧ A ∈ B ) → Ord C ) ;;
+	step 2 : wff = ordelord () |- ( ( Ord B ∧ A ∈ B ) → Ord A ) ;;
+	step 3 : wff = adantlr (step 2) |- ( ( ( Ord B ∧ Ord C ) ∧ A ∈ B ) → Ord A ) ;;
+	step 4 : wff = ordtri1 () |- ( ( Ord C ∧ Ord A ) → ( C ⊆ A ↔ ¬ A ∈ C ) ) ;;
+	step 5 : wff = syl2anc (step 1, step 3, step 4) |- ( ( ( Ord B ∧ Ord C ) ∧ A ∈ B ) → ( C ⊆ A ↔ ¬ A ∈ C ) ) ;;
+	step 6 : wff = ordtr2 () |- ( ( Ord C ∧ Ord B ) → ( ( C ⊆ A ∧ A ∈ B ) → C ∈ B ) ) ;;
+	step 7 : wff = ancoms (step 6) |- ( ( Ord B ∧ Ord C ) → ( ( C ⊆ A ∧ A ∈ B ) → C ∈ B ) ) ;;
+	step 8 : wff = ancomsd (step 7) |- ( ( Ord B ∧ Ord C ) → ( ( A ∈ B ∧ C ⊆ A ) → C ∈ B ) ) ;;
+	step 9 : wff = expdimp (step 8) |- ( ( ( Ord B ∧ Ord C ) ∧ A ∈ B ) → ( C ⊆ A → C ∈ B ) ) ;;
+	step 10 : wff = sylbird (step 5, step 9) |- ( ( ( Ord B ∧ Ord C ) ∧ A ∈ B ) → ( ¬ A ∈ C → C ∈ B ) ) ;;
+	step 11 : wff = orrd (step 10) |- ( ( ( Ord B ∧ Ord C ) ∧ A ∈ B ) → ( A ∈ C ∨ C ∈ B ) ) ;;
+	step 12 : wff = ex (step 11) |- ( ( Ord B ∧ Ord C ) → ( A ∈ B → ( A ∈ C ∨ C ∈ B ) ) ) ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* Transitive law for ordinal numbers.  Theorem 7M(b) of [Enderton] p. 192.
+     (Contributed by NM, 11-Aug-1994.) */
+
+theorem ontr1 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( C ∈ On → ( ( A ∈ B ∧ B ∈ C ) → A ∈ C ) ) ;;
+}
+
+proof of ontr1 {
+	step 1 : wff = eloni () |- ( C ∈ On → Ord C ) ;;
+	step 2 : wff = ordtr1 () |- ( Ord C → ( ( A ∈ B ∧ B ∈ C ) → A ∈ C ) ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( C ∈ On → ( ( A ∈ B ∧ B ∈ C ) → A ∈ C ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Transitive law for ordinal numbers.  Exercise 3 of [TakeutiZaring] p. 40.
+     (Contributed by NM, 6-Nov-2003.) */
+
+theorem ontr2 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( A ∈ On ∧ C ∈ On ) → ( ( A ⊆ B ∧ B ∈ C ) → A ∈ C ) ) ;;
+}
+
+proof of ontr2 {
+	step 1 : wff = eloni () |- ( A ∈ On → Ord A ) ;;
+	step 2 : wff = eloni () |- ( C ∈ On → Ord C ) ;;
+	step 3 : wff = ordtr2 () |- ( ( Ord A ∧ Ord C ) → ( ( A ⊆ B ∧ B ∈ C ) → A ∈ C ) ) ;;
+	step 4 : wff = syl2an (step 1, step 2, step 3) |- ( ( A ∈ On ∧ C ∈ On ) → ( ( A ⊆ B ∧ B ∈ C ) → A ∈ C ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* The union of an ordinal stays the same if a subset equal to one of its
+       elements is removed.  (Contributed by NM, 10-Dec-2004.) */
+
+theorem ordunidif (A : class, B : class) disjointed(x y A, x y B) {
+	prop 1 : wff = |- ( ( Ord A ∧ B ∈ A ) → ⋃ ( A ∖ B ) = ⋃ A ) ;;
+}
+
+proof of ordunidif {
+	var x : set, y : set;;
+	step 1 : wff = ordelon () |- ( ( Ord A ∧ B ∈ A ) → B ∈ On ) ;;
+	step 2 : wff = onelss () |- ( B ∈ On → ( x ∈ B → x ⊆ B ) ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( ( Ord A ∧ B ∈ A ) → ( x ∈ B → x ⊆ B ) ) ;;
+	step 4 : wff = ordelon () |- ( ( Ord A ∧ B ∈ A ) → B ∈ On ) ;;
+	step 5 : wff = eloni () |- ( B ∈ On → Ord B ) ;;
+	step 6 : wff = ordirr () |- ( Ord B → ¬ B ∈ B ) ;;
+	step 7 : wff = syl (step 5, step 6) |- ( B ∈ On → ¬ B ∈ B ) ;;
+	step 8 : wff = eldif () |- ( B ∈ ( A ∖ B ) ↔ ( B ∈ A ∧ ¬ B ∈ B ) ) ;;
+	step 9 : wff = simplbi2 (step 8) |- ( B ∈ A → ( ¬ B ∈ B → B ∈ ( A ∖ B ) ) ) ;;
+	step 10 : wff = syl5 (step 7, step 9) |- ( B ∈ A → ( B ∈ On → B ∈ ( A ∖ B ) ) ) ;;
+	step 11 : wff = adantl (step 10) |- ( ( Ord A ∧ B ∈ A ) → ( B ∈ On → B ∈ ( A ∖ B ) ) ) ;;
+	step 12 : wff = mpd (step 4, step 11) |- ( ( Ord A ∧ B ∈ A ) → B ∈ ( A ∖ B ) ) ;;
+	step 13 : wff = jctild (step 3, step 12) |- ( ( Ord A ∧ B ∈ A ) → ( x ∈ B → ( B ∈ ( A ∖ B ) ∧ x ⊆ B ) ) ) ;;
+	step 14 : wff = adantr (step 13) |- ( ( ( Ord A ∧ B ∈ A ) ∧ x ∈ A ) → ( x ∈ B → ( B ∈ ( A ∖ B ) ∧ x ⊆ B ) ) ) ;;
+	step 15 : wff = sseq2 () |- ( y = B → ( x ⊆ y ↔ x ⊆ B ) ) ;;
+	step 16 : wff = rspcev (step 15) |- ( ( B ∈ ( A ∖ B ) ∧ x ⊆ B ) → ∃ y ∈ ( A ∖ B ) x ⊆ y ) ;;
+	step 17 : wff = syl6 (step 14, step 16) |- ( ( ( Ord A ∧ B ∈ A ) ∧ x ∈ A ) → ( x ∈ B → ∃ y ∈ ( A ∖ B ) x ⊆ y ) ) ;;
+	step 18 : wff = eldif () |- ( x ∈ ( A ∖ B ) ↔ ( x ∈ A ∧ ¬ x ∈ B ) ) ;;
+	step 19 : wff = biimpri (step 18) |- ( ( x ∈ A ∧ ¬ x ∈ B ) → x ∈ ( A ∖ B ) ) ;;
+	step 20 : wff = ssid () |- x ⊆ x ;;
+	step 21 : wff = jctir (step 19, step 20) |- ( ( x ∈ A ∧ ¬ x ∈ B ) → ( x ∈ ( A ∖ B ) ∧ x ⊆ x ) ) ;;
+	step 22 : wff = ex (step 21) |- ( x ∈ A → ( ¬ x ∈ B → ( x ∈ ( A ∖ B ) ∧ x ⊆ x ) ) ) ;;
+	step 23 : wff = sseq2 () |- ( y = x → ( x ⊆ y ↔ x ⊆ x ) ) ;;
+	step 24 : wff = rspcev (step 23) |- ( ( x ∈ ( A ∖ B ) ∧ x ⊆ x ) → ∃ y ∈ ( A ∖ B ) x ⊆ y ) ;;
+	step 25 : wff = syl6 (step 22, step 24) |- ( x ∈ A → ( ¬ x ∈ B → ∃ y ∈ ( A ∖ B ) x ⊆ y ) ) ;;
+	step 26 : wff = adantl (step 25) |- ( ( ( Ord A ∧ B ∈ A ) ∧ x ∈ A ) → ( ¬ x ∈ B → ∃ y ∈ ( A ∖ B ) x ⊆ y ) ) ;;
+	step 27 : wff = pm2.61d (step 17, step 26) |- ( ( ( Ord A ∧ B ∈ A ) ∧ x ∈ A ) → ∃ y ∈ ( A ∖ B ) x ⊆ y ) ;;
+	step 28 : wff = ralrimiva (step 27) |- ( ( Ord A ∧ B ∈ A ) → ∀ x ∈ A ∃ y ∈ ( A ∖ B ) x ⊆ y ) ;;
+	step 29 : wff = unidif () |- ( ∀ x ∈ A ∃ y ∈ ( A ∖ B ) x ⊆ y → ⋃ ( A ∖ B ) = ⋃ A ) ;;
+	step 30 : wff = syl (step 28, step 29) |- ( ( Ord A ∧ B ∈ A ) → ⋃ ( A ∖ B ) = ⋃ A ) ;;
+	qed prop 1 = step 30 ;;
+}
+
+/* If ` B ` is smaller than ` A ` , then it equals the intersection of the
+       difference.  Exercise 11 in [TakeutiZaring] p. 44.  (Contributed by
+       Andrew Salmon, 14-Nov-2011.) */
+
+theorem ordintdif (A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( ( Ord A ∧ Ord B ∧ ( A ∖ B ) ≠ ∅ ) → B = ⋂ ( A ∖ B ) ) ;;
+}
+
+proof of ordintdif {
+	var x : set;;
+	step 1 : wff = ssdif0 () |- ( A ⊆ B ↔ ( A ∖ B ) = ∅ ) ;;
+	step 2 : wff = necon3bbii (step 1) |- ( ¬ A ⊆ B ↔ ( A ∖ B ) ≠ ∅ ) ;;
+	step 3 : wff = dfdif2 () |- ( A ∖ B ) = { x ∈ A | ¬ x ∈ B } ;;
+	step 4 : wff = inteqi (step 3) |- ⋂ ( A ∖ B ) = ⋂ { x ∈ A | ¬ x ∈ B } ;;
+	step 5 : wff = ordtri1 () |- ( ( Ord A ∧ Ord B ) → ( A ⊆ B ↔ ¬ B ∈ A ) ) ;;
+	step 6 : wff = con2bid (step 5) |- ( ( Ord A ∧ Ord B ) → ( B ∈ A ↔ ¬ A ⊆ B ) ) ;;
+	step 7 : wff = ordelord () |- ( ( Ord A ∧ x ∈ A ) → Ord x ) ;;
+	step 8 : wff = ordtri1 () |- ( ( Ord B ∧ Ord x ) → ( B ⊆ x ↔ ¬ x ∈ B ) ) ;;
+	step 9 : wff = ancoms (step 8) |- ( ( Ord x ∧ Ord B ) → ( B ⊆ x ↔ ¬ x ∈ B ) ) ;;
+	step 10 : wff = sylan (step 7, step 9) |- ( ( ( Ord A ∧ x ∈ A ) ∧ Ord B ) → ( B ⊆ x ↔ ¬ x ∈ B ) ) ;;
+	step 11 : wff = an32s (step 10) |- ( ( ( Ord A ∧ Ord B ) ∧ x ∈ A ) → ( B ⊆ x ↔ ¬ x ∈ B ) ) ;;
+	step 12 : wff = bicomd (step 11) |- ( ( ( Ord A ∧ Ord B ) ∧ x ∈ A ) → ( ¬ x ∈ B ↔ B ⊆ x ) ) ;;
+	step 13 : wff = rabbidva (step 12) |- ( ( Ord A ∧ Ord B ) → { x ∈ A | ¬ x ∈ B } = { x ∈ A | B ⊆ x } ) ;;
+	step 14 : wff = inteqd (step 13) |- ( ( Ord A ∧ Ord B ) → ⋂ { x ∈ A | ¬ x ∈ B } = ⋂ { x ∈ A | B ⊆ x } ) ;;
+	step 15 : wff = intmin () |- ( B ∈ A → ⋂ { x ∈ A | B ⊆ x } = B ) ;;
+	step 16 : wff = sylan9eq (step 14, step 15) |- ( ( ( Ord A ∧ Ord B ) ∧ B ∈ A ) → ⋂ { x ∈ A | ¬ x ∈ B } = B ) ;;
+	step 17 : wff = ex (step 16) |- ( ( Ord A ∧ Ord B ) → ( B ∈ A → ⋂ { x ∈ A | ¬ x ∈ B } = B ) ) ;;
+	step 18 : wff = sylbird (step 6, step 17) |- ( ( Ord A ∧ Ord B ) → ( ¬ A ⊆ B → ⋂ { x ∈ A | ¬ x ∈ B } = B ) ) ;;
+	step 19 : wff = 3impia (step 18) |- ( ( Ord A ∧ Ord B ∧ ¬ A ⊆ B ) → ⋂ { x ∈ A | ¬ x ∈ B } = B ) ;;
+	step 20 : wff = syl5req (step 4, step 19) |- ( ( Ord A ∧ Ord B ∧ ¬ A ⊆ B ) → B = ⋂ ( A ∖ B ) ) ;;
+	step 21 : wff = syl3an3br (step 2, step 20) |- ( ( Ord A ∧ Ord B ∧ ( A ∖ B ) ≠ ∅ ) → B = ⋂ ( A ∖ B ) ) ;;
+	qed prop 1 = step 21 ;;
+}
+
+/* If a property is true for an ordinal number, then the minimum ordinal
+       number for which it is true is smaller or equal.  Theorem Schema 61 of
+       [Suppes] p. 228.  (Contributed by NM, 3-Oct-2003.) */
+
+theorem onintss (ph : wff, ps : wff, x : set, A : class) disjointed(x ps, x A) {
+	hyp 1 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ On → ( ps → ⋂ { x ∈ On | ph } ⊆ A ) ) ;;
+}
+
+proof of onintss {
+	step 1 : wff = intminss (hyp 1) |- ( ( A ∈ On ∧ ps ) → ⋂ { x ∈ On | ph } ⊆ A ) ;;
+	step 2 : wff = ex (step 1) |- ( A ∈ On → ( ps → ⋂ { x ∈ On | ph } ⊆ A ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A way to show that an ordinal number equals the minimum of a collection
+       of ordinal numbers: it must be in the collection, and it must not be
+       larger than any member of the collection.  (Contributed by NM,
+       14-Nov-2003.) */
+
+theorem oneqmini (x : set, A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( B ⊆ On → ( ( A ∈ B ∧ ∀ x ∈ A ¬ x ∈ B ) → A = ⋂ B ) ) ;;
+}
+
+proof of oneqmini {
+	step 1 : wff = ssint () |- ( A ⊆ ⋂ B ↔ ∀ x ∈ B A ⊆ x ) ;;
+	step 2 : wff = ssel () |- ( B ⊆ On → ( A ∈ B → A ∈ On ) ) ;;
+	step 3 : wff = ssel () |- ( B ⊆ On → ( x ∈ B → x ∈ On ) ) ;;
+	step 4 : wff = anim12d (step 2, step 3) |- ( B ⊆ On → ( ( A ∈ B ∧ x ∈ B ) → ( A ∈ On ∧ x ∈ On ) ) ) ;;
+	step 5 : wff = ontri1 () |- ( ( A ∈ On ∧ x ∈ On ) → ( A ⊆ x ↔ ¬ x ∈ A ) ) ;;
+	step 6 : wff = syl6 (step 4, step 5) |- ( B ⊆ On → ( ( A ∈ B ∧ x ∈ B ) → ( A ⊆ x ↔ ¬ x ∈ A ) ) ) ;;
+	step 7 : wff = expdimp (step 6) |- ( ( B ⊆ On ∧ A ∈ B ) → ( x ∈ B → ( A ⊆ x ↔ ¬ x ∈ A ) ) ) ;;
+	step 8 : wff = pm5.74d (step 7) |- ( ( B ⊆ On ∧ A ∈ B ) → ( ( x ∈ B → A ⊆ x ) ↔ ( x ∈ B → ¬ x ∈ A ) ) ) ;;
+	step 9 : wff = con2b () |- ( ( x ∈ B → ¬ x ∈ A ) ↔ ( x ∈ A → ¬ x ∈ B ) ) ;;
+	step 10 : wff = syl6bb (step 8, step 9) |- ( ( B ⊆ On ∧ A ∈ B ) → ( ( x ∈ B → A ⊆ x ) ↔ ( x ∈ A → ¬ x ∈ B ) ) ) ;;
+	step 11 : wff = ralbidv2 (step 10) |- ( ( B ⊆ On ∧ A ∈ B ) → ( ∀ x ∈ B A ⊆ x ↔ ∀ x ∈ A ¬ x ∈ B ) ) ;;
+	step 12 : wff = syl5bb (step 1, step 11) |- ( ( B ⊆ On ∧ A ∈ B ) → ( A ⊆ ⋂ B ↔ ∀ x ∈ A ¬ x ∈ B ) ) ;;
+	step 13 : wff = biimprd (step 12) |- ( ( B ⊆ On ∧ A ∈ B ) → ( ∀ x ∈ A ¬ x ∈ B → A ⊆ ⋂ B ) ) ;;
+	step 14 : wff = expimpd (step 13) |- ( B ⊆ On → ( ( A ∈ B ∧ ∀ x ∈ A ¬ x ∈ B ) → A ⊆ ⋂ B ) ) ;;
+	step 15 : wff = intss1 () |- ( A ∈ B → ⋂ B ⊆ A ) ;;
+	step 16 : wff = a1i (step 15) |- ( B ⊆ On → ( A ∈ B → ⋂ B ⊆ A ) ) ;;
+	step 17 : wff = adantrd (step 16) |- ( B ⊆ On → ( ( A ∈ B ∧ ∀ x ∈ A ¬ x ∈ B ) → ⋂ B ⊆ A ) ) ;;
+	step 18 : wff = jcad (step 14, step 17) |- ( B ⊆ On → ( ( A ∈ B ∧ ∀ x ∈ A ¬ x ∈ B ) → ( A ⊆ ⋂ B ∧ ⋂ B ⊆ A ) ) ) ;;
+	step 19 : wff = eqss () |- ( A = ⋂ B ↔ ( A ⊆ ⋂ B ∧ ⋂ B ⊆ A ) ) ;;
+	step 20 : wff = syl6ibr (step 18, step 19) |- ( B ⊆ On → ( ( A ∈ B ∧ ∀ x ∈ A ¬ x ∈ B ) → A = ⋂ B ) ) ;;
+	qed prop 1 = step 20 ;;
+}
+
+/* The empty set is an ordinal class.  (Contributed by NM, 11-May-1994.) */
+
+theorem ord0 ()  {
+	prop 1 : wff = |- Ord ∅ ;;
+}
+
+proof of ord0 {
+	step 1 : wff = tr0 () |- Tr ∅ ;;
+	step 2 : wff = we0 () |- 𝛜 We ∅ ;;
+	step 3 : wff = df-ord () |- ( Ord ∅ ↔ ( Tr ∅ ∧ 𝛜 We ∅ ) ) ;;
+	step 4 : wff = mpbir2an (step 1, step 2, step 3) |- Ord ∅ ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* The empty set is an ordinal number.  Corollary 7N(b) of [Enderton]
+     p. 193.  (Contributed by NM, 17-Sep-1993.) */
+
+theorem 0elon ()  {
+	prop 1 : wff = |- ∅ ∈ On ;;
+}
+
+proof of 0elon {
+	step 1 : wff = ord0 () |- Ord ∅ ;;
+	step 2 : wff = 0ex () |- ∅ ∈ _V ;;
+	step 3 : wff = elon (step 2) |- ( ∅ ∈ On ↔ Ord ∅ ) ;;
+	step 4 : wff = mpbir (step 1, step 3) |- ∅ ∈ On ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A non-empty ordinal contains the empty set.  (Contributed by NM,
+     25-Nov-1995.) */
+
+theorem ord0eln0 (A : class)  {
+	prop 1 : wff = |- ( Ord A → ( ∅ ∈ A ↔ A ≠ ∅ ) ) ;;
+}
+
+proof of ord0eln0 {
+	step 1 : wff = ne0i () |- ( ∅ ∈ A → A ≠ ∅ ) ;;
+	step 2 : wff = df-ne () |- ( A ≠ ∅ ↔ ¬ A = ∅ ) ;;
+	step 3 : wff = ord0 () |- Ord ∅ ;;
+	step 4 : wff = noel () |- ¬ A ∈ ∅ ;;
+	step 5 : wff = ordtri2 () |- ( ( Ord A ∧ Ord ∅ ) → ( A ∈ ∅ ↔ ¬ ( A = ∅ ∨ ∅ ∈ A ) ) ) ;;
+	step 6 : wff = con2bid (step 5) |- ( ( Ord A ∧ Ord ∅ ) → ( ( A = ∅ ∨ ∅ ∈ A ) ↔ ¬ A ∈ ∅ ) ) ;;
+	step 7 : wff = mpbiri (step 4, step 6) |- ( ( Ord A ∧ Ord ∅ ) → ( A = ∅ ∨ ∅ ∈ A ) ) ;;
+	step 8 : wff = mpan2 (step 3, step 7) |- ( Ord A → ( A = ∅ ∨ ∅ ∈ A ) ) ;;
+	step 9 : wff = ord (step 8) |- ( Ord A → ( ¬ A = ∅ → ∅ ∈ A ) ) ;;
+	step 10 : wff = syl5bi (step 2, step 9) |- ( Ord A → ( A ≠ ∅ → ∅ ∈ A ) ) ;;
+	step 11 : wff = impbid2 (step 1, step 10) |- ( Ord A → ( ∅ ∈ A ↔ A ≠ ∅ ) ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* An ordinal number contains zero iff it is nonzero.  (Contributed by NM,
+     6-Dec-2004.) */
+
+theorem on0eln0 (A : class)  {
+	prop 1 : wff = |- ( A ∈ On → ( ∅ ∈ A ↔ A ≠ ∅ ) ) ;;
+}
+
+proof of on0eln0 {
+	step 1 : wff = eloni () |- ( A ∈ On → Ord A ) ;;
+	step 2 : wff = ord0eln0 () |- ( Ord A → ( ∅ ∈ A ↔ A ≠ ∅ ) ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( A ∈ On → ( ∅ ∈ A ↔ A ≠ ∅ ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* An alternate definition of a limit ordinal.  (Contributed by NM,
+     4-Nov-2004.) */
+
+theorem dflim2 (A : class)  {
+	prop 1 : wff = |- ( Lim A ↔ ( Ord A ∧ ∅ ∈ A ∧ A = ⋃ A ) ) ;;
+}
+
+proof of dflim2 {
+	step 1 : wff = df-lim () |- ( Lim A ↔ ( Ord A ∧ A ≠ ∅ ∧ A = ⋃ A ) ) ;;
+	step 2 : wff = ord0eln0 () |- ( Ord A → ( ∅ ∈ A ↔ A ≠ ∅ ) ) ;;
+	step 3 : wff = anbi1d (step 2) |- ( Ord A → ( ( ∅ ∈ A ∧ A = ⋃ A ) ↔ ( A ≠ ∅ ∧ A = ⋃ A ) ) ) ;;
+	step 4 : wff = pm5.32i (step 3) |- ( ( Ord A ∧ ( ∅ ∈ A ∧ A = ⋃ A ) ) ↔ ( Ord A ∧ ( A ≠ ∅ ∧ A = ⋃ A ) ) ) ;;
+	step 5 : wff = 3anass () |- ( ( Ord A ∧ ∅ ∈ A ∧ A = ⋃ A ) ↔ ( Ord A ∧ ( ∅ ∈ A ∧ A = ⋃ A ) ) ) ;;
+	step 6 : wff = 3anass () |- ( ( Ord A ∧ A ≠ ∅ ∧ A = ⋃ A ) ↔ ( Ord A ∧ ( A ≠ ∅ ∧ A = ⋃ A ) ) ) ;;
+	step 7 : wff = 3bitr4i (step 4, step 5, step 6) |- ( ( Ord A ∧ ∅ ∈ A ∧ A = ⋃ A ) ↔ ( Ord A ∧ A ≠ ∅ ∧ A = ⋃ A ) ) ;;
+	step 8 : wff = bitr4i (step 1, step 7) |- ( Lim A ↔ ( Ord A ∧ ∅ ∈ A ∧ A = ⋃ A ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* The intersection of the class of ordinal numbers is the empty set.
+     (Contributed by NM, 20-Oct-2003.) */
+
+theorem inton ()  {
+	prop 1 : wff = |- ⋂ On = ∅ ;;
+}
+
+proof of inton {
+	step 1 : wff = 0elon () |- ∅ ∈ On ;;
+	step 2 : wff = int0el () |- ( ∅ ∈ On → ⋂ On = ∅ ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ⋂ On = ∅ ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* The empty set is not a limit ordinal.  (Contributed by NM, 24-Mar-1995.)
+     (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem nlim0 ()  {
+	prop 1 : wff = |- ¬ Lim ∅ ;;
+}
+
+proof of nlim0 {
+	step 1 : wff = noel () |- ¬ ∅ ∈ ∅ ;;
+	step 2 : wff = simp2 () |- ( ( Ord ∅ ∧ ∅ ∈ ∅ ∧ ∅ = ⋃ ∅ ) → ∅ ∈ ∅ ) ;;
+	step 3 : wff = mto (step 1, step 2) |- ¬ ( Ord ∅ ∧ ∅ ∈ ∅ ∧ ∅ = ⋃ ∅ ) ;;
+	step 4 : wff = dflim2 () |- ( Lim ∅ ↔ ( Ord ∅ ∧ ∅ ∈ ∅ ∧ ∅ = ⋃ ∅ ) ) ;;
+	step 5 : wff = mtbir (step 3, step 4) |- ¬ Lim ∅ ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* A limit ordinal is ordinal.  (Contributed by NM, 4-May-1995.) */
+
+theorem limord (A : class)  {
+	prop 1 : wff = |- ( Lim A → Ord A ) ;;
+}
+
+proof of limord {
+	step 1 : wff = df-lim () |- ( Lim A ↔ ( Ord A ∧ A ≠ ∅ ∧ A = ⋃ A ) ) ;;
+	step 2 : wff = simp1bi (step 1) |- ( Lim A → Ord A ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A limit ordinal is its own supremum (union).  (Contributed by NM,
+     4-May-1995.) */
+
+theorem limuni (A : class)  {
+	prop 1 : wff = |- ( Lim A → A = ⋃ A ) ;;
+}
+
+proof of limuni {
+	step 1 : wff = df-lim () |- ( Lim A ↔ ( Ord A ∧ A ≠ ∅ ∧ A = ⋃ A ) ) ;;
+	step 2 : wff = simp3bi (step 1) |- ( Lim A → A = ⋃ A ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* The union of a limit ordinal is a limit ordinal.  (Contributed by NM,
+     19-Sep-2006.) */
+
+theorem limuni2 (A : class)  {
+	prop 1 : wff = |- ( Lim A → Lim ⋃ A ) ;;
+}
+
+proof of limuni2 {
+	step 1 : wff = limuni () |- ( Lim A → A = ⋃ A ) ;;
+	step 2 : wff = limeq () |- ( A = ⋃ A → ( Lim A ↔ Lim ⋃ A ) ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( Lim A → ( Lim A ↔ Lim ⋃ A ) ) ;;
+	step 4 : wff = ibi (step 3) |- ( Lim A → Lim ⋃ A ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A limit ordinal contains the empty set.  (Contributed by NM,
+     15-May-1994.) */
+
+theorem 0ellim (A : class)  {
+	prop 1 : wff = |- ( Lim A → ∅ ∈ A ) ;;
+}
+
+proof of 0ellim {
+	step 1 : wff = nlim0 () |- ¬ Lim ∅ ;;
+	step 2 : wff = limeq () |- ( A = ∅ → ( Lim A ↔ Lim ∅ ) ) ;;
+	step 3 : wff = mtbiri (step 1, step 2) |- ( A = ∅ → ¬ Lim A ) ;;
+	step 4 : wff = necon2ai (step 3) |- ( Lim A → A ≠ ∅ ) ;;
+	step 5 : wff = limord () |- ( Lim A → Ord A ) ;;
+	step 6 : wff = ord0eln0 () |- ( Ord A → ( ∅ ∈ A ↔ A ≠ ∅ ) ) ;;
+	step 7 : wff = syl (step 5, step 6) |- ( Lim A → ( ∅ ∈ A ↔ A ≠ ∅ ) ) ;;
+	step 8 : wff = mpbird (step 4, step 7) |- ( Lim A → ∅ ∈ A ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* A limit ordinal class that is also a set is an ordinal number.
+     (Contributed by NM, 26-Apr-2004.) */
+
+theorem limelon (A : class, B : class)  {
+	prop 1 : wff = |- ( ( A ∈ B ∧ Lim A ) → A ∈ On ) ;;
+}
+
+proof of limelon {
+	step 1 : wff = limord () |- ( Lim A → Ord A ) ;;
+	step 2 : wff = elong () |- ( A ∈ B → ( A ∈ On ↔ Ord A ) ) ;;
+	step 3 : wff = syl5ibr (step 1, step 2) |- ( A ∈ B → ( Lim A → A ∈ On ) ) ;;
+	step 4 : wff = imp (step 3) |- ( ( A ∈ B ∧ Lim A ) → A ∈ On ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* The class of all ordinal numbers in not empty.  (Contributed by NM,
+     17-Sep-1995.) */
+
+theorem onn0 ()  {
+	prop 1 : wff = |- On ≠ ∅ ;;
+}
+
+proof of onn0 {
+	step 1 : wff = 0elon () |- ∅ ∈ On ;;
+	step 2 : wff = ne0i () |- ( ∅ ∈ On → On ≠ ∅ ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- On ≠ ∅ ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Equality of successors.  (Contributed by NM, 30-Aug-1993.)  (Proof
+     shortened by Andrew Salmon, 25-Jul-2011.) */
+
+theorem suceq (A : class, B : class)  {
+	prop 1 : wff = |- ( A = B → suc A = suc B ) ;;
+}
+
+proof of suceq {
+	step 1 : wff = id () |- ( A = B → A = B ) ;;
+	step 2 : wff = sneq () |- ( A = B → { A } = { B } ) ;;
+	step 3 : wff = uneq12d (step 1, step 2) |- ( A = B → ( A ∪ { A } ) = ( B ∪ { B } ) ) ;;
+	step 4 : wff = df-suc () |- suc A = ( A ∪ { A } ) ;;
+	step 5 : wff = df-suc () |- suc B = ( B ∪ { B } ) ;;
+	step 6 : wff = 3eqtr4g (step 3, step 4, step 5) |- ( A = B → suc A = suc B ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Membership in a successor.  This one-way implication does not require that
+     either ` A ` or ` B ` be sets.  (Contributed by NM, 6-Jun-1994.) */
+
+theorem elsuci (A : class, B : class)  {
+	prop 1 : wff = |- ( A ∈ suc B → ( A ∈ B ∨ A = B ) ) ;;
+}
+
+proof of elsuci {
+	step 1 : wff = df-suc () |- suc B = ( B ∪ { B } ) ;;
+	step 2 : wff = eleq2i (step 1) |- ( A ∈ suc B ↔ A ∈ ( B ∪ { B } ) ) ;;
+	step 3 : wff = elun () |- ( A ∈ ( B ∪ { B } ) ↔ ( A ∈ B ∨ A ∈ { B } ) ) ;;
+	step 4 : wff = bitri (step 2, step 3) |- ( A ∈ suc B ↔ ( A ∈ B ∨ A ∈ { B } ) ) ;;
+	step 5 : wff = elsni () |- ( A ∈ { B } → A = B ) ;;
+	step 6 : wff = orim2i (step 5) |- ( ( A ∈ B ∨ A ∈ { B } ) → ( A ∈ B ∨ A = B ) ) ;;
+	step 7 : wff = sylbi (step 4, step 6) |- ( A ∈ suc B → ( A ∈ B ∨ A = B ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Membership in a successor.  Exercise 5 of [TakeutiZaring] p. 17.
+     (Contributed by NM, 15-Sep-1995.) */
+
+theorem elsucg (A : class, B : class, V : class)  {
+	prop 1 : wff = |- ( A ∈ V → ( A ∈ suc B ↔ ( A ∈ B ∨ A = B ) ) ) ;;
+}
+
+proof of elsucg {
+	step 1 : wff = df-suc () |- suc B = ( B ∪ { B } ) ;;
+	step 2 : wff = eleq2i (step 1) |- ( A ∈ suc B ↔ A ∈ ( B ∪ { B } ) ) ;;
+	step 3 : wff = elun () |- ( A ∈ ( B ∪ { B } ) ↔ ( A ∈ B ∨ A ∈ { B } ) ) ;;
+	step 4 : wff = bitri (step 2, step 3) |- ( A ∈ suc B ↔ ( A ∈ B ∨ A ∈ { B } ) ) ;;
+	step 5 : wff = elsncg () |- ( A ∈ V → ( A ∈ { B } ↔ A = B ) ) ;;
+	step 6 : wff = orbi2d (step 5) |- ( A ∈ V → ( ( A ∈ B ∨ A ∈ { B } ) ↔ ( A ∈ B ∨ A = B ) ) ) ;;
+	step 7 : wff = syl5bb (step 4, step 6) |- ( A ∈ V → ( A ∈ suc B ↔ ( A ∈ B ∨ A = B ) ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Variant of membership in a successor, requiring that ` B ` rather than
+     ` A ` be a set.  (Contributed by NM, 28-Oct-2003.) */
+
+theorem elsuc2g (A : class, B : class, V : class)  {
+	prop 1 : wff = |- ( B ∈ V → ( A ∈ suc B ↔ ( A ∈ B ∨ A = B ) ) ) ;;
+}
+
+proof of elsuc2g {
+	step 1 : wff = df-suc () |- suc B = ( B ∪ { B } ) ;;
+	step 2 : wff = eleq2i (step 1) |- ( A ∈ suc B ↔ A ∈ ( B ∪ { B } ) ) ;;
+	step 3 : wff = elun () |- ( A ∈ ( B ∪ { B } ) ↔ ( A ∈ B ∨ A ∈ { B } ) ) ;;
+	step 4 : wff = elsnc2g () |- ( B ∈ V → ( A ∈ { B } ↔ A = B ) ) ;;
+	step 5 : wff = orbi2d (step 4) |- ( B ∈ V → ( ( A ∈ B ∨ A ∈ { B } ) ↔ ( A ∈ B ∨ A = B ) ) ) ;;
+	step 6 : wff = syl5bb (step 3, step 5) |- ( B ∈ V → ( A ∈ ( B ∪ { B } ) ↔ ( A ∈ B ∨ A = B ) ) ) ;;
+	step 7 : wff = syl5bb (step 2, step 6) |- ( B ∈ V → ( A ∈ suc B ↔ ( A ∈ B ∨ A = B ) ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Membership in a successor.  Exercise 5 of [TakeutiZaring] p. 17.
+       (Contributed by NM, 15-Sep-2003.) */
+
+theorem elsuc (A : class, B : class)  {
+	hyp 1 : wff = |- A ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ suc B ↔ ( A ∈ B ∨ A = B ) ) ;;
+}
+
+proof of elsuc {
+	step 1 : wff = elsucg () |- ( A ∈ _V → ( A ∈ suc B ↔ ( A ∈ B ∨ A = B ) ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( A ∈ suc B ↔ ( A ∈ B ∨ A = B ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Membership in a successor.  (Contributed by NM, 15-Sep-2003.) */
+
+theorem elsuc2 (A : class, B : class)  {
+	hyp 1 : wff = |- A ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( B ∈ suc A ↔ ( B ∈ A ∨ B = A ) ) ;;
+}
+
+proof of elsuc2 {
+	step 1 : wff = elsuc2g () |- ( A ∈ _V → ( B ∈ suc A ↔ ( B ∈ A ∨ B = A ) ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( B ∈ suc A ↔ ( B ∈ A ∨ B = A ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Bound-variable hypothesis builder for successor.  (Contributed by NM,
+       15-Sep-2003.) */
+
+theorem nfsuc (x : set, A : class)  {
+	hyp 1 : wff = |- F/_ x A ;;
+	-----------------------
+	prop 1 : wff = |- F/_ x suc A ;;
+}
+
+proof of nfsuc {
+	step 1 : wff = df-suc () |- suc A = ( A ∪ { A } ) ;;
+	step 2 : wff = nfsn (hyp 1) |- F/_ x { A } ;;
+	step 3 : wff = nfun (hyp 1, step 2) |- F/_ x ( A ∪ { A } ) ;;
+	step 4 : wff = nfcxfr (step 1, step 3) |- F/_ x suc A ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Membership in a successor.  (Contributed by NM, 20-Jun-1998.) */
+
+theorem elelsuc (A : class, B : class)  {
+	prop 1 : wff = |- ( A ∈ B → A ∈ suc B ) ;;
+}
+
+proof of elelsuc {
+	step 1 : wff = orc () |- ( A ∈ B → ( A ∈ B ∨ A = B ) ) ;;
+	step 2 : wff = elsucg () |- ( A ∈ B → ( A ∈ suc B ↔ ( A ∈ B ∨ A = B ) ) ) ;;
+	step 3 : wff = mpbird (step 1, step 2) |- ( A ∈ B → A ∈ suc B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Membership of a successor in another class.  (Contributed by NM,
+       29-Jun-2004.) */
+
+theorem sucel (x : set, y : set, A : class, B : class) disjointed(x y A, x B) {
+	prop 1 : wff = |- ( suc A ∈ B ↔ ∃ x ∈ B ∀ y ( y ∈ x ↔ ( y ∈ A ∨ y = A ) ) ) ;;
+}
+
+proof of sucel {
+	step 1 : wff = risset () |- ( suc A ∈ B ↔ ∃ x ∈ B x = suc A ) ;;
+	step 2 : wff = dfcleq () |- ( x = suc A ↔ ∀ y ( y ∈ x ↔ y ∈ suc A ) ) ;;
+	step 3 : wff = vex () |- y ∈ _V ;;
+	step 4 : wff = elsuc (step 3) |- ( y ∈ suc A ↔ ( y ∈ A ∨ y = A ) ) ;;
+	step 5 : wff = bibi2i (step 4) |- ( ( y ∈ x ↔ y ∈ suc A ) ↔ ( y ∈ x ↔ ( y ∈ A ∨ y = A ) ) ) ;;
+	step 6 : wff = albii (step 5) |- ( ∀ y ( y ∈ x ↔ y ∈ suc A ) ↔ ∀ y ( y ∈ x ↔ ( y ∈ A ∨ y = A ) ) ) ;;
+	step 7 : wff = bitri (step 2, step 6) |- ( x = suc A ↔ ∀ y ( y ∈ x ↔ ( y ∈ A ∨ y = A ) ) ) ;;
+	step 8 : wff = rexbii (step 7) |- ( ∃ x ∈ B x = suc A ↔ ∃ x ∈ B ∀ y ( y ∈ x ↔ ( y ∈ A ∨ y = A ) ) ) ;;
+	step 9 : wff = bitri (step 1, step 8) |- ( suc A ∈ B ↔ ∃ x ∈ B ∀ y ( y ∈ x ↔ ( y ∈ A ∨ y = A ) ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* The successor of the empty set.  (Contributed by NM, 1-Feb-2005.) */
+
+theorem suc0 ()  {
+	prop 1 : wff = |- suc ∅ = { ∅ } ;;
+}
+
+proof of suc0 {
+	step 1 : wff = df-suc () |- suc ∅ = ( ∅ ∪ { ∅ } ) ;;
+	step 2 : wff = uncom () |- ( ∅ ∪ { ∅ } ) = ( { ∅ } ∪ ∅ ) ;;
+	step 3 : wff = un0 () |- ( { ∅ } ∪ ∅ ) = { ∅ } ;;
+	step 4 : wff = 3eqtri (step 1, step 2, step 3) |- suc ∅ = { ∅ } ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A proper class is its own successor.  (Contributed by NM, 3-Apr-1995.) */
+
+theorem sucprc (A : class)  {
+	prop 1 : wff = |- ( ¬ A ∈ _V → suc A = A ) ;;
+}
+
+proof of sucprc {
+	step 1 : wff = df-suc () |- suc A = ( A ∪ { A } ) ;;
+	step 2 : wff = snprc () |- ( ¬ A ∈ _V ↔ { A } = ∅ ) ;;
+	step 3 : wff = uneq2 () |- ( { A } = ∅ → ( A ∪ { A } ) = ( A ∪ ∅ ) ) ;;
+	step 4 : wff = sylbi (step 2, step 3) |- ( ¬ A ∈ _V → ( A ∪ { A } ) = ( A ∪ ∅ ) ) ;;
+	step 5 : wff = syl5eq (step 1, step 4) |- ( ¬ A ∈ _V → suc A = ( A ∪ ∅ ) ) ;;
+	step 6 : wff = un0 () |- ( A ∪ ∅ ) = A ;;
+	step 7 : wff = syl6eq (step 5, step 6) |- ( ¬ A ∈ _V → suc A = A ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* A transitive class is equal to the union of its successor.  Combines
+       Theorem 4E of [Enderton] p. 72 and Exercise 6 of [Enderton] p. 73.
+       (Contributed by NM, 30-Aug-1993.) */
+
+theorem unisuc (A : class)  {
+	hyp 1 : wff = |- A ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( Tr A ↔ ⋃ suc A = A ) ;;
+}
+
+proof of unisuc {
+	step 1 : wff = ssequn1 () |- ( ⋃ A ⊆ A ↔ ( ⋃ A ∪ A ) = A ) ;;
+	step 2 : wff = df-tr () |- ( Tr A ↔ ⋃ A ⊆ A ) ;;
+	step 3 : wff = df-suc () |- suc A = ( A ∪ { A } ) ;;
+	step 4 : wff = unieqi (step 3) |- ⋃ suc A = ⋃ ( A ∪ { A } ) ;;
+	step 5 : wff = uniun () |- ⋃ ( A ∪ { A } ) = ( ⋃ A ∪ ⋃ { A } ) ;;
+	step 6 : wff = unisn (hyp 1) |- ⋃ { A } = A ;;
+	step 7 : wff = uneq2i (step 6) |- ( ⋃ A ∪ ⋃ { A } ) = ( ⋃ A ∪ A ) ;;
+	step 8 : wff = 3eqtri (step 4, step 5, step 7) |- ⋃ suc A = ( ⋃ A ∪ A ) ;;
+	step 9 : wff = eqeq1i (step 8) |- ( ⋃ suc A = A ↔ ( ⋃ A ∪ A ) = A ) ;;
+	step 10 : wff = 3bitr4i (step 1, step 2, step 9) |- ( Tr A ↔ ⋃ suc A = A ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* A class is included in its own successor.  Part of Proposition 7.23 of
+     [TakeutiZaring] p. 41 (generalized to arbitrary classes).  (Contributed by
+     NM, 31-May-1994.) */
+
+theorem sssucid (A : class)  {
+	prop 1 : wff = |- A ⊆ suc A ;;
+}
+
+proof of sssucid {
+	step 1 : wff = ssun1 () |- A ⊆ ( A ∪ { A } ) ;;
+	step 2 : wff = df-suc () |- suc A = ( A ∪ { A } ) ;;
+	step 3 : wff = sseqtr4i (step 1, step 2) |- A ⊆ suc A ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Part of Proposition 7.23 of [TakeutiZaring] p. 41 (generalized).
+     (Contributed by NM, 25-Mar-1995.)  (Proof shortened by Scott Fenton,
+     20-Feb-2012.) */
+
+theorem sucidg (A : class, V : class)  {
+	prop 1 : wff = |- ( A ∈ V → A ∈ suc A ) ;;
+}
+
+proof of sucidg {
+	step 1 : wff = eqid () |- A = A ;;
+	step 2 : wff = olci (step 1) |- ( A ∈ A ∨ A = A ) ;;
+	step 3 : wff = elsucg () |- ( A ∈ V → ( A ∈ suc A ↔ ( A ∈ A ∨ A = A ) ) ) ;;
+	step 4 : wff = mpbiri (step 2, step 3) |- ( A ∈ V → A ∈ suc A ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A set belongs to its successor.  (Contributed by NM, 22-Jun-1994.)
+       (Proof shortened by Alan Sare, 18-Feb-2012.)  (Proof shortened by Scott
+       Fenton, 20-Feb-2012.) */
+
+theorem sucid (A : class)  {
+	hyp 1 : wff = |- A ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- A ∈ suc A ;;
+}
+
+proof of sucid {
+	step 1 : wff = sucidg () |- ( A ∈ _V → A ∈ suc A ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- A ∈ suc A ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* No successor is empty.  (Contributed by NM, 3-Apr-1995.) */
+
+theorem nsuceq0 (A : class)  {
+	prop 1 : wff = |- suc A ≠ ∅ ;;
+}
+
+proof of nsuceq0 {
+	step 1 : wff = noel () |- ¬ A ∈ ∅ ;;
+	step 2 : wff = sucidg () |- ( A ∈ _V → A ∈ suc A ) ;;
+	step 3 : wff = eleq2 () |- ( suc A = ∅ → ( A ∈ suc A ↔ A ∈ ∅ ) ) ;;
+	step 4 : wff = syl5ibcom (step 2, step 3) |- ( A ∈ _V → ( suc A = ∅ → A ∈ ∅ ) ) ;;
+	step 5 : wff = mtoi (step 1, step 4) |- ( A ∈ _V → ¬ suc A = ∅ ) ;;
+	step 6 : wff = sucprc () |- ( ¬ A ∈ _V → suc A = A ) ;;
+	step 7 : wff = eqeq1d (step 6) |- ( ¬ A ∈ _V → ( suc A = ∅ ↔ A = ∅ ) ) ;;
+	step 8 : wff = 0ex () |- ∅ ∈ _V ;;
+	step 9 : wff = eleq1 () |- ( A = ∅ → ( A ∈ _V ↔ ∅ ∈ _V ) ) ;;
+	step 10 : wff = mpbiri (step 8, step 9) |- ( A = ∅ → A ∈ _V ) ;;
+	step 11 : wff = syl6bi (step 7, step 10) |- ( ¬ A ∈ _V → ( suc A = ∅ → A ∈ _V ) ) ;;
+	step 12 : wff = con3d (step 11) |- ( ¬ A ∈ _V → ( ¬ A ∈ _V → ¬ suc A = ∅ ) ) ;;
+	step 13 : wff = pm2.43i (step 12) |- ( ¬ A ∈ _V → ¬ suc A = ∅ ) ;;
+	step 14 : wff = pm2.61i (step 5, step 13) |- ¬ suc A = ∅ ;;
+	step 15 : wff = df-ne () |- ( suc A ≠ ∅ ↔ ¬ suc A = ∅ ) ;;
+	step 16 : wff = mpbir (step 14, step 15) |- suc A ≠ ∅ ;;
+	qed prop 1 = step 16 ;;
+}
+
+/* A set belongs to the successor of an equal set.  (Contributed by NM,
+       18-Aug-1994.) */
+
+theorem eqelsuc (A : class, B : class)  {
+	hyp 1 : wff = |- A ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( A = B → A ∈ suc B ) ;;
+}
+
+proof of eqelsuc {
+	step 1 : wff = sucid (hyp 1) |- A ∈ suc A ;;
+	step 2 : wff = suceq () |- ( A = B → suc A = suc B ) ;;
+	step 3 : wff = syl5eleq (step 1, step 2) |- ( A = B → A ∈ suc B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Inductive definition for the indexed union at a successor.  (Contributed
+       by Mario Carneiro, 4-Feb-2013.)  (Proof shortened by Mario Carneiro,
+       18-Nov-2016.) */
+
+theorem iunsuc (x : set, A : class, B : class, C : class) disjointed(A x, C x) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- ( x = A → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ⋃_ x ∈ suc A B = ( ⋃_ x ∈ A B ∪ C ) ;;
+}
+
+proof of iunsuc {
+	step 1 : wff = df-suc () |- suc A = ( A ∪ { A } ) ;;
+	step 2 : wff = iuneq1 () |- ( suc A = ( A ∪ { A } ) → ⋃_ x ∈ suc A B = ⋃_ x ∈ ( A ∪ { A } ) B ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ⋃_ x ∈ suc A B = ⋃_ x ∈ ( A ∪ { A } ) B ;;
+	step 4 : wff = iunxun () |- ⋃_ x ∈ ( A ∪ { A } ) B = ( ⋃_ x ∈ A B ∪ ⋃_ x ∈ { A } B ) ;;
+	step 5 : wff = iunxsn (hyp 1, hyp 2) |- ⋃_ x ∈ { A } B = C ;;
+	step 6 : wff = uneq2i (step 5) |- ( ⋃_ x ∈ A B ∪ ⋃_ x ∈ { A } B ) = ( ⋃_ x ∈ A B ∪ C ) ;;
+	step 7 : wff = 3eqtri (step 3, step 4, step 6) |- ⋃_ x ∈ suc A B = ( ⋃_ x ∈ A B ∪ C ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* The successor of a transtive class is transitive.  (Contributed by Alan
+       Sare, 11-Apr-2009.) */
+
+theorem suctr (A : class) disjointed(z y A) {
+	prop 1 : wff = |- ( Tr A → Tr suc A ) ;;
+}
+
+proof of suctr {
+	var y : set, z : set;;
+	step 1 : wff = simpr () |- ( ( z ∈ y ∧ y ∈ suc A ) → y ∈ suc A ) ;;
+	step 2 : wff = vex () |- y ∈ _V ;;
+	step 3 : wff = elsuc (step 2) |- ( y ∈ suc A ↔ ( y ∈ A ∨ y = A ) ) ;;
+	step 4 : wff = sylib (step 1, step 3) |- ( ( z ∈ y ∧ y ∈ suc A ) → ( y ∈ A ∨ y = A ) ) ;;
+	step 5 : wff = simpl () |- ( ( z ∈ y ∧ y ∈ suc A ) → z ∈ y ) ;;
+	step 6 : wff = eleq2 () |- ( y = A → ( z ∈ y ↔ z ∈ A ) ) ;;
+	step 7 : wff = syl5ibcom (step 5, step 6) |- ( ( z ∈ y ∧ y ∈ suc A ) → ( y = A → z ∈ A ) ) ;;
+	step 8 : wff = elelsuc () |- ( z ∈ A → z ∈ suc A ) ;;
+	step 9 : wff = syl6 (step 7, step 8) |- ( ( z ∈ y ∧ y ∈ suc A ) → ( y = A → z ∈ suc A ) ) ;;
+	step 10 : wff = trel () |- ( Tr A → ( ( z ∈ y ∧ y ∈ A ) → z ∈ A ) ) ;;
+	step 11 : wff = exp3a (step 10) |- ( Tr A → ( z ∈ y → ( y ∈ A → z ∈ A ) ) ) ;;
+	step 12 : wff = adantrd (step 11) |- ( Tr A → ( ( z ∈ y ∧ y ∈ suc A ) → ( y ∈ A → z ∈ A ) ) ) ;;
+	step 13 : wff = elelsuc () |- ( z ∈ A → z ∈ suc A ) ;;
+	step 14 : wff = syl8 (step 12, step 13) |- ( Tr A → ( ( z ∈ y ∧ y ∈ suc A ) → ( y ∈ A → z ∈ suc A ) ) ) ;;
+	step 15 : wff = jao () |- ( ( y ∈ A → z ∈ suc A ) → ( ( y = A → z ∈ suc A ) → ( ( y ∈ A ∨ y = A ) → z ∈ suc A ) ) ) ;;
+	step 16 : wff = syl6 (step 14, step 15) |- ( Tr A → ( ( z ∈ y ∧ y ∈ suc A ) → ( ( y = A → z ∈ suc A ) → ( ( y ∈ A ∨ y = A ) → z ∈ suc A ) ) ) ) ;;
+	step 17 : wff = mpdi (step 9, step 16) |- ( Tr A → ( ( z ∈ y ∧ y ∈ suc A ) → ( ( y ∈ A ∨ y = A ) → z ∈ suc A ) ) ) ;;
+	step 18 : wff = mpdi (step 4, step 17) |- ( Tr A → ( ( z ∈ y ∧ y ∈ suc A ) → z ∈ suc A ) ) ;;
+	step 19 : wff = alrimivv (step 18) |- ( Tr A → ∀ z ∀ y ( ( z ∈ y ∧ y ∈ suc A ) → z ∈ suc A ) ) ;;
+	step 20 : wff = dftr2 () |- ( Tr suc A ↔ ∀ z ∀ y ( ( z ∈ y ∧ y ∈ suc A ) → z ∈ suc A ) ) ;;
+	step 21 : wff = sylibr (step 19, step 20) |- ( Tr A → Tr suc A ) ;;
+	qed prop 1 = step 21 ;;
+}
+
+/* A set whose successor belongs to a transitive class also belongs.
+     (Contributed by NM, 5-Sep-2003.)  (Proof shortened by Andrew Salmon,
+     12-Aug-2011.) */
+
+theorem trsuc (A : class, B : class)  {
+	prop 1 : wff = |- ( ( Tr A ∧ suc B ∈ A ) → B ∈ A ) ;;
+}
+
+proof of trsuc {
+	step 1 : wff = sssucid () |- B ⊆ suc B ;;
+	step 2 : wff = ssexg () |- ( ( B ⊆ suc B ∧ suc B ∈ A ) → B ∈ _V ) ;;
+	step 3 : wff = mpan (step 1, step 2) |- ( suc B ∈ A → B ∈ _V ) ;;
+	step 4 : wff = sucidg () |- ( B ∈ _V → B ∈ suc B ) ;;
+	step 5 : wff = syl (step 3, step 4) |- ( suc B ∈ A → B ∈ suc B ) ;;
+	step 6 : wff = ancri (step 5) |- ( suc B ∈ A → ( B ∈ suc B ∧ suc B ∈ A ) ) ;;
+	step 7 : wff = trel () |- ( Tr A → ( ( B ∈ suc B ∧ suc B ∈ A ) → B ∈ A ) ) ;;
+	step 8 : wff = syl5 (step 6, step 7) |- ( Tr A → ( suc B ∈ A → B ∈ A ) ) ;;
+	step 9 : wff = imp (step 8) |- ( ( Tr A ∧ suc B ∈ A ) → B ∈ A ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Obsolete proof of ~ suctr as of 5-Apr-2016.  The successor of a
+       transitive set is transitive.  (Contributed by Scott Fenton,
+       21-Feb-2011.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+theorem trsuc2OLD (A : class) disjointed(x y A) {
+	prop 1 : wff = |- ( Tr A → Tr suc A ) ;;
+}
+
+proof of trsuc2OLD {
+	var x : set, y : set;;
+	step 1 : wff = andi () |- ( ( x ∈ y ∧ ( y ∈ A ∨ y ∈ { A } ) ) ↔ ( ( x ∈ y ∧ y ∈ A ) ∨ ( x ∈ y ∧ y ∈ { A } ) ) ) ;;
+	step 2 : wff = eleq2 () |- ( y = A → ( x ∈ y ↔ x ∈ A ) ) ;;
+	step 3 : wff = biimpac (step 2) |- ( ( x ∈ y ∧ y = A ) → x ∈ A ) ;;
+	step 4 : wff = orim2i (step 3) |- ( ( ( x ∈ y ∧ y ∈ A ) ∨ ( x ∈ y ∧ y = A ) ) → ( ( x ∈ y ∧ y ∈ A ) ∨ x ∈ A ) ) ;;
+	step 5 : wff = trel () |- ( Tr A → ( ( x ∈ y ∧ y ∈ A ) → x ∈ A ) ) ;;
+	step 6 : wff = orc () |- ( x ∈ A → ( x ∈ A ∨ x = A ) ) ;;
+	step 7 : wff = syl6 (step 5, step 6) |- ( Tr A → ( ( x ∈ y ∧ y ∈ A ) → ( x ∈ A ∨ x = A ) ) ) ;;
+	step 8 : wff = orc () |- ( x ∈ A → ( x ∈ A ∨ x = A ) ) ;;
+	step 9 : wff = a1i (step 8) |- ( Tr A → ( x ∈ A → ( x ∈ A ∨ x = A ) ) ) ;;
+	step 10 : wff = jaod (step 7, step 9) |- ( Tr A → ( ( ( x ∈ y ∧ y ∈ A ) ∨ x ∈ A ) → ( x ∈ A ∨ x = A ) ) ) ;;
+	step 11 : wff = syl5 (step 4, step 10) |- ( Tr A → ( ( ( x ∈ y ∧ y ∈ A ) ∨ ( x ∈ y ∧ y = A ) ) → ( x ∈ A ∨ x = A ) ) ) ;;
+	step 12 : wff = elsn () |- ( y ∈ { A } ↔ y = A ) ;;
+	step 13 : wff = anbi2i (step 12) |- ( ( x ∈ y ∧ y ∈ { A } ) ↔ ( x ∈ y ∧ y = A ) ) ;;
+	step 14 : wff = orbi2i (step 13) |- ( ( ( x ∈ y ∧ y ∈ A ) ∨ ( x ∈ y ∧ y ∈ { A } ) ) ↔ ( ( x ∈ y ∧ y ∈ A ) ∨ ( x ∈ y ∧ y = A ) ) ) ;;
+	step 15 : wff = elsn () |- ( x ∈ { A } ↔ x = A ) ;;
+	step 16 : wff = orbi2i (step 15) |- ( ( x ∈ A ∨ x ∈ { A } ) ↔ ( x ∈ A ∨ x = A ) ) ;;
+	step 17 : wff = 3imtr4g (step 11, step 14, step 16) |- ( Tr A → ( ( ( x ∈ y ∧ y ∈ A ) ∨ ( x ∈ y ∧ y ∈ { A } ) ) → ( x ∈ A ∨ x ∈ { A } ) ) ) ;;
+	step 18 : wff = syl5bi (step 1, step 17) |- ( Tr A → ( ( x ∈ y ∧ ( y ∈ A ∨ y ∈ { A } ) ) → ( x ∈ A ∨ x ∈ { A } ) ) ) ;;
+	step 19 : wff = alrimivv (step 18) |- ( Tr A → ∀ x ∀ y ( ( x ∈ y ∧ ( y ∈ A ∨ y ∈ { A } ) ) → ( x ∈ A ∨ x ∈ { A } ) ) ) ;;
+	step 20 : wff = df-suc () |- suc A = ( A ∪ { A } ) ;;
+	step 21 : wff = treq () |- ( suc A = ( A ∪ { A } ) → ( Tr suc A ↔ Tr ( A ∪ { A } ) ) ) ;;
+	step 22 : wff = ax-mp (step 20, step 21) |- ( Tr suc A ↔ Tr ( A ∪ { A } ) ) ;;
+	step 23 : wff = dftr2 () |- ( Tr ( A ∪ { A } ) ↔ ∀ x ∀ y ( ( x ∈ y ∧ y ∈ ( A ∪ { A } ) ) → x ∈ ( A ∪ { A } ) ) ) ;;
+	step 24 : wff = elun () |- ( y ∈ ( A ∪ { A } ) ↔ ( y ∈ A ∨ y ∈ { A } ) ) ;;
+	step 25 : wff = anbi2i (step 24) |- ( ( x ∈ y ∧ y ∈ ( A ∪ { A } ) ) ↔ ( x ∈ y ∧ ( y ∈ A ∨ y ∈ { A } ) ) ) ;;
+	step 26 : wff = elun () |- ( x ∈ ( A ∪ { A } ) ↔ ( x ∈ A ∨ x ∈ { A } ) ) ;;
+	step 27 : wff = imbi12i (step 25, step 26) |- ( ( ( x ∈ y ∧ y ∈ ( A ∪ { A } ) ) → x ∈ ( A ∪ { A } ) ) ↔ ( ( x ∈ y ∧ ( y ∈ A ∨ y ∈ { A } ) ) → ( x ∈ A ∨ x ∈ { A } ) ) ) ;;
+	step 28 : wff = 2albii (step 27) |- ( ∀ x ∀ y ( ( x ∈ y ∧ y ∈ ( A ∪ { A } ) ) → x ∈ ( A ∪ { A } ) ) ↔ ∀ x ∀ y ( ( x ∈ y ∧ ( y ∈ A ∨ y ∈ { A } ) ) → ( x ∈ A ∨ x ∈ { A } ) ) ) ;;
+	step 29 : wff = 3bitri (step 22, step 23, step 28) |- ( Tr suc A ↔ ∀ x ∀ y ( ( x ∈ y ∧ ( y ∈ A ∨ y ∈ { A } ) ) → ( x ∈ A ∨ x ∈ { A } ) ) ) ;;
+	step 30 : wff = sylibr (step 19, step 29) |- ( Tr A → Tr suc A ) ;;
+	qed prop 1 = step 30 ;;
+}
+
+/* A member of the successor of a transitive class is a subclass of it.
+     (Contributed by NM, 4-Oct-2003.) */
+
+theorem trsucss (A : class, B : class)  {
+	prop 1 : wff = |- ( Tr A → ( B ∈ suc A → B ⊆ A ) ) ;;
+}
+
+proof of trsucss {
+	step 1 : wff = elsuci () |- ( B ∈ suc A → ( B ∈ A ∨ B = A ) ) ;;
+	step 2 : wff = trss () |- ( Tr A → ( B ∈ A → B ⊆ A ) ) ;;
+	step 3 : wff = eqimss () |- ( B = A → B ⊆ A ) ;;
+	step 4 : wff = a1i (step 3) |- ( Tr A → ( B = A → B ⊆ A ) ) ;;
+	step 5 : wff = jaod (step 2, step 4) |- ( Tr A → ( ( B ∈ A ∨ B = A ) → B ⊆ A ) ) ;;
+	step 6 : wff = syl5 (step 1, step 5) |- ( Tr A → ( B ∈ suc A → B ⊆ A ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* A subset of an ordinal belongs to its successor.  (Contributed by NM,
+     28-Nov-2003.) */
+
+theorem ordsssuc (A : class, B : class)  {
+	prop 1 : wff = |- ( ( A ∈ On ∧ Ord B ) → ( A ⊆ B ↔ A ∈ suc B ) ) ;;
+}
+
+proof of ordsssuc {
+	step 1 : wff = eloni () |- ( A ∈ On → Ord A ) ;;
+	step 2 : wff = ordsseleq () |- ( ( Ord A ∧ Ord B ) → ( A ⊆ B ↔ ( A ∈ B ∨ A = B ) ) ) ;;
+	step 3 : wff = sylan (step 1, step 2) |- ( ( A ∈ On ∧ Ord B ) → ( A ⊆ B ↔ ( A ∈ B ∨ A = B ) ) ) ;;
+	step 4 : wff = elsucg () |- ( A ∈ On → ( A ∈ suc B ↔ ( A ∈ B ∨ A = B ) ) ) ;;
+	step 5 : wff = adantr (step 4) |- ( ( A ∈ On ∧ Ord B ) → ( A ∈ suc B ↔ ( A ∈ B ∨ A = B ) ) ) ;;
+	step 6 : wff = bitr4d (step 3, step 5) |- ( ( A ∈ On ∧ Ord B ) → ( A ⊆ B ↔ A ∈ suc B ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* A subset of an ordinal number belongs to its successor.  (Contributed by
+     NM, 15-Sep-1995.) */
+
+theorem onsssuc (A : class, B : class)  {
+	prop 1 : wff = |- ( ( A ∈ On ∧ B ∈ On ) → ( A ⊆ B ↔ A ∈ suc B ) ) ;;
+}
+
+proof of onsssuc {
+	step 1 : wff = eloni () |- ( B ∈ On → Ord B ) ;;
+	step 2 : wff = ordsssuc () |- ( ( A ∈ On ∧ Ord B ) → ( A ⊆ B ↔ A ∈ suc B ) ) ;;
+	step 3 : wff = sylan2 (step 1, step 2) |- ( ( A ∈ On ∧ B ∈ On ) → ( A ⊆ B ↔ A ∈ suc B ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* An ordinal subset of an ordinal number belongs to its successor.
+     (Contributed by NM, 1-Feb-2005.)  (Proof shortened by Andrew Salmon,
+     12-Aug-2011.) */
+
+theorem ordsssuc2 (A : class, B : class)  {
+	prop 1 : wff = |- ( ( Ord A ∧ B ∈ On ) → ( A ⊆ B ↔ A ∈ suc B ) ) ;;
+}
+
+proof of ordsssuc2 {
+	step 1 : wff = elong () |- ( A ∈ _V → ( A ∈ On ↔ Ord A ) ) ;;
+	step 2 : wff = biimprd (step 1) |- ( A ∈ _V → ( Ord A → A ∈ On ) ) ;;
+	step 3 : wff = anim1d (step 2) |- ( A ∈ _V → ( ( Ord A ∧ B ∈ On ) → ( A ∈ On ∧ B ∈ On ) ) ) ;;
+	step 4 : wff = onsssuc () |- ( ( A ∈ On ∧ B ∈ On ) → ( A ⊆ B ↔ A ∈ suc B ) ) ;;
+	step 5 : wff = syl6 (step 3, step 4) |- ( A ∈ _V → ( ( Ord A ∧ B ∈ On ) → ( A ⊆ B ↔ A ∈ suc B ) ) ) ;;
+	step 6 : wff = annim () |- ( ( B ∈ On ∧ ¬ A ∈ _V ) ↔ ¬ ( B ∈ On → A ∈ _V ) ) ;;
+	step 7 : wff = ssexg () |- ( ( A ⊆ B ∧ B ∈ On ) → A ∈ _V ) ;;
+	step 8 : wff = ex (step 7) |- ( A ⊆ B → ( B ∈ On → A ∈ _V ) ) ;;
+	step 9 : wff = elex () |- ( A ∈ suc B → A ∈ _V ) ;;
+	step 10 : wff = a1d (step 9) |- ( A ∈ suc B → ( B ∈ On → A ∈ _V ) ) ;;
+	step 11 : wff = pm5.21ni (step 8, step 10) |- ( ¬ ( B ∈ On → A ∈ _V ) → ( A ⊆ B ↔ A ∈ suc B ) ) ;;
+	step 12 : wff = sylbi (step 6, step 11) |- ( ( B ∈ On ∧ ¬ A ∈ _V ) → ( A ⊆ B ↔ A ∈ suc B ) ) ;;
+	step 13 : wff = expcom (step 12) |- ( ¬ A ∈ _V → ( B ∈ On → ( A ⊆ B ↔ A ∈ suc B ) ) ) ;;
+	step 14 : wff = adantld (step 13) |- ( ¬ A ∈ _V → ( ( Ord A ∧ B ∈ On ) → ( A ⊆ B ↔ A ∈ suc B ) ) ) ;;
+	step 15 : wff = pm2.61i (step 5, step 14) |- ( ( Ord A ∧ B ∈ On ) → ( A ⊆ B ↔ A ∈ suc B ) ) ;;
+	qed prop 1 = step 15 ;;
+}
+
+/* When its successor is subtracted from a class of ordinal numbers, an
+       ordinal number is less than the minimum of the resulting subclass.
+       (Contributed by NM, 1-Dec-2003.) */
+
+theorem onmindif (A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( ( A ⊆ On ∧ B ∈ On ) → B ∈ ⋂ ( A ∖ suc B ) ) ;;
+}
+
+proof of onmindif {
+	var x : set;;
+	step 1 : wff = eldif () |- ( x ∈ ( A ∖ suc B ) ↔ ( x ∈ A ∧ ¬ x ∈ suc B ) ) ;;
+	step 2 : wff = ssel2 () |- ( ( A ⊆ On ∧ x ∈ A ) → x ∈ On ) ;;
+	step 3 : wff = ontri1 () |- ( ( x ∈ On ∧ B ∈ On ) → ( x ⊆ B ↔ ¬ B ∈ x ) ) ;;
+	step 4 : wff = onsssuc () |- ( ( x ∈ On ∧ B ∈ On ) → ( x ⊆ B ↔ x ∈ suc B ) ) ;;
+	step 5 : wff = bitr3d (step 3, step 4) |- ( ( x ∈ On ∧ B ∈ On ) → ( ¬ B ∈ x ↔ x ∈ suc B ) ) ;;
+	step 6 : wff = con1bid (step 5) |- ( ( x ∈ On ∧ B ∈ On ) → ( ¬ x ∈ suc B ↔ B ∈ x ) ) ;;
+	step 7 : wff = sylan (step 2, step 6) |- ( ( ( A ⊆ On ∧ x ∈ A ) ∧ B ∈ On ) → ( ¬ x ∈ suc B ↔ B ∈ x ) ) ;;
+	step 8 : wff = biimpd (step 7) |- ( ( ( A ⊆ On ∧ x ∈ A ) ∧ B ∈ On ) → ( ¬ x ∈ suc B → B ∈ x ) ) ;;
+	step 9 : wff = exp31 (step 8) |- ( A ⊆ On → ( x ∈ A → ( B ∈ On → ( ¬ x ∈ suc B → B ∈ x ) ) ) ) ;;
+	step 10 : wff = com23 (step 9) |- ( A ⊆ On → ( B ∈ On → ( x ∈ A → ( ¬ x ∈ suc B → B ∈ x ) ) ) ) ;;
+	step 11 : wff = imp4b (step 10) |- ( ( A ⊆ On ∧ B ∈ On ) → ( ( x ∈ A ∧ ¬ x ∈ suc B ) → B ∈ x ) ) ;;
+	step 12 : wff = syl5bi (step 1, step 11) |- ( ( A ⊆ On ∧ B ∈ On ) → ( x ∈ ( A ∖ suc B ) → B ∈ x ) ) ;;
+	step 13 : wff = ralrimiv (step 12) |- ( ( A ⊆ On ∧ B ∈ On ) → ∀ x ∈ ( A ∖ suc B ) B ∈ x ) ;;
+	step 14 : wff = elintg () |- ( B ∈ On → ( B ∈ ⋂ ( A ∖ suc B ) ↔ ∀ x ∈ ( A ∖ suc B ) B ∈ x ) ) ;;
+	step 15 : wff = adantl (step 14) |- ( ( A ⊆ On ∧ B ∈ On ) → ( B ∈ ⋂ ( A ∖ suc B ) ↔ ∀ x ∈ ( A ∖ suc B ) B ∈ x ) ) ;;
+	step 16 : wff = mpbird (step 13, step 15) |- ( ( A ⊆ On ∧ B ∈ On ) → B ∈ ⋂ ( A ∖ suc B ) ) ;;
+	qed prop 1 = step 16 ;;
+}
+
+/* There is no set between an ordinal class and its successor.  Generalized
+     Proposition 7.25 of [TakeutiZaring] p. 41.  (Contributed by NM,
+     21-Jun-1998.) */
+
+theorem ordnbtwn (A : class, B : class)  {
+	prop 1 : wff = |- ( Ord A → ¬ ( A ∈ B ∧ B ∈ suc A ) ) ;;
+}
+
+proof of ordnbtwn {
+	step 1 : wff = ordn2lp () |- ( Ord A → ¬ ( A ∈ B ∧ B ∈ A ) ) ;;
+	step 2 : wff = ordirr () |- ( Ord A → ¬ A ∈ A ) ;;
+	step 3 : wff = ioran () |- ( ¬ ( ( A ∈ B ∧ B ∈ A ) ∨ A ∈ A ) ↔ ( ¬ ( A ∈ B ∧ B ∈ A ) ∧ ¬ A ∈ A ) ) ;;
+	step 4 : wff = sylanbrc (step 1, step 2, step 3) |- ( Ord A → ¬ ( ( A ∈ B ∧ B ∈ A ) ∨ A ∈ A ) ) ;;
+	step 5 : wff = elsuci () |- ( B ∈ suc A → ( B ∈ A ∨ B = A ) ) ;;
+	step 6 : wff = anim2i (step 5) |- ( ( A ∈ B ∧ B ∈ suc A ) → ( A ∈ B ∧ ( B ∈ A ∨ B = A ) ) ) ;;
+	step 7 : wff = andi () |- ( ( A ∈ B ∧ ( B ∈ A ∨ B = A ) ) ↔ ( ( A ∈ B ∧ B ∈ A ) ∨ ( A ∈ B ∧ B = A ) ) ) ;;
+	step 8 : wff = sylib (step 6, step 7) |- ( ( A ∈ B ∧ B ∈ suc A ) → ( ( A ∈ B ∧ B ∈ A ) ∨ ( A ∈ B ∧ B = A ) ) ) ;;
+	step 9 : wff = eleq2 () |- ( B = A → ( A ∈ B ↔ A ∈ A ) ) ;;
+	step 10 : wff = biimpac (step 9) |- ( ( A ∈ B ∧ B = A ) → A ∈ A ) ;;
+	step 11 : wff = orim2i (step 10) |- ( ( ( A ∈ B ∧ B ∈ A ) ∨ ( A ∈ B ∧ B = A ) ) → ( ( A ∈ B ∧ B ∈ A ) ∨ A ∈ A ) ) ;;
+	step 12 : wff = syl (step 8, step 11) |- ( ( A ∈ B ∧ B ∈ suc A ) → ( ( A ∈ B ∧ B ∈ A ) ∨ A ∈ A ) ) ;;
+	step 13 : wff = nsyl (step 4, step 12) |- ( Ord A → ¬ ( A ∈ B ∧ B ∈ suc A ) ) ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* There is no set between an ordinal number and its successor.  Proposition
+     7.25 of [TakeutiZaring] p. 41.  (Contributed by NM, 9-Jun-1994.) */
+
+theorem onnbtwn (A : class, B : class)  {
+	prop 1 : wff = |- ( A ∈ On → ¬ ( A ∈ B ∧ B ∈ suc A ) ) ;;
+}
+
+proof of onnbtwn {
+	step 1 : wff = eloni () |- ( A ∈ On → Ord A ) ;;
+	step 2 : wff = ordnbtwn () |- ( Ord A → ¬ ( A ∈ B ∧ B ∈ suc A ) ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( A ∈ On → ¬ ( A ∈ B ∧ B ∈ suc A ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A set whose successor is a subset of another class is a member of that
+     class.  (Contributed by NM, 16-Sep-1995.) */
+
+theorem sucssel (A : class, B : class, V : class)  {
+	prop 1 : wff = |- ( A ∈ V → ( suc A ⊆ B → A ∈ B ) ) ;;
+}
+
+proof of sucssel {
+	step 1 : wff = sucidg () |- ( A ∈ V → A ∈ suc A ) ;;
+	step 2 : wff = ssel () |- ( suc A ⊆ B → ( A ∈ suc A → A ∈ B ) ) ;;
+	step 3 : wff = syl5com (step 1, step 2) |- ( A ∈ V → ( suc A ⊆ B → A ∈ B ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Ordinal derived from its successor.  (Contributed by NM, 20-May-1998.) */
+
+theorem orddif (A : class)  {
+	prop 1 : wff = |- ( Ord A → A = ( suc A ∖ { A } ) ) ;;
+}
+
+proof of orddif {
+	step 1 : wff = orddisj () |- ( Ord A → ( A ∩ { A } ) = ∅ ) ;;
+	step 2 : wff = disj3 () |- ( ( A ∩ { A } ) = ∅ ↔ A = ( A ∖ { A } ) ) ;;
+	step 3 : wff = df-suc () |- suc A = ( A ∪ { A } ) ;;
+	step 4 : wff = difeq1i (step 3) |- ( suc A ∖ { A } ) = ( ( A ∪ { A } ) ∖ { A } ) ;;
+	step 5 : wff = difun2 () |- ( ( A ∪ { A } ) ∖ { A } ) = ( A ∖ { A } ) ;;
+	step 6 : wff = eqtri (step 4, step 5) |- ( suc A ∖ { A } ) = ( A ∖ { A } ) ;;
+	step 7 : wff = eqeq2i (step 6) |- ( A = ( suc A ∖ { A } ) ↔ A = ( A ∖ { A } ) ) ;;
+	step 8 : wff = bitr4i (step 2, step 7) |- ( ( A ∩ { A } ) = ∅ ↔ A = ( suc A ∖ { A } ) ) ;;
+	step 9 : wff = sylib (step 1, step 8) |- ( Ord A → A = ( suc A ∖ { A } ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* An ordinal class includes its union.  (Contributed by NM, 13-Sep-2003.) */
+
+theorem orduniss (A : class)  {
+	prop 1 : wff = |- ( Ord A → ⋃ A ⊆ A ) ;;
+}
+
+proof of orduniss {
+	step 1 : wff = ordtr () |- ( Ord A → Tr A ) ;;
+	step 2 : wff = df-tr () |- ( Tr A ↔ ⋃ A ⊆ A ) ;;
+	step 3 : wff = sylib (step 1, step 2) |- ( Ord A → ⋃ A ⊆ A ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A trichotomy law for ordinal classes.  (Contributed by NM, 13-Sep-2003.)
+     (Proof shortened by Andrew Salmon, 12-Aug-2011.) */
+
+theorem ordtri2or (A : class, B : class)  {
+	prop 1 : wff = |- ( ( Ord A ∧ Ord B ) → ( A ∈ B ∨ B ⊆ A ) ) ;;
+}
+
+proof of ordtri2or {
+	step 1 : wff = ordtri1 () |- ( ( Ord B ∧ Ord A ) → ( B ⊆ A ↔ ¬ A ∈ B ) ) ;;
+	step 2 : wff = ancoms (step 1) |- ( ( Ord A ∧ Ord B ) → ( B ⊆ A ↔ ¬ A ∈ B ) ) ;;
+	step 3 : wff = biimprd (step 2) |- ( ( Ord A ∧ Ord B ) → ( ¬ A ∈ B → B ⊆ A ) ) ;;
+	step 4 : wff = orrd (step 3) |- ( ( Ord A ∧ Ord B ) → ( A ∈ B ∨ B ⊆ A ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A trichotomy law for ordinal classes.  (Contributed by NM, 2-Nov-2003.) */
+
+theorem ordtri2or2 (A : class, B : class)  {
+	prop 1 : wff = |- ( ( Ord A ∧ Ord B ) → ( A ⊆ B ∨ B ⊆ A ) ) ;;
+}
+
+proof of ordtri2or2 {
+	step 1 : wff = ordtri2or () |- ( ( Ord A ∧ Ord B ) → ( A ∈ B ∨ B ⊆ A ) ) ;;
+	step 2 : wff = ordelss () |- ( ( Ord B ∧ A ∈ B ) → A ⊆ B ) ;;
+	step 3 : wff = ex (step 2) |- ( Ord B → ( A ∈ B → A ⊆ B ) ) ;;
+	step 4 : wff = orim1d (step 3) |- ( Ord B → ( ( A ∈ B ∨ B ⊆ A ) → ( A ⊆ B ∨ B ⊆ A ) ) ) ;;
+	step 5 : wff = adantl (step 4) |- ( ( Ord A ∧ Ord B ) → ( ( A ∈ B ∨ B ⊆ A ) → ( A ⊆ B ∨ B ⊆ A ) ) ) ;;
+	step 6 : wff = mpd (step 1, step 5) |- ( ( Ord A ∧ Ord B ) → ( A ⊆ B ∨ B ⊆ A ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* A consequence of total ordering for ordinal classes.  Similar to
+     ~ ordtri2or2 .  (Contributed by David Moews, 1-May-2017.) */
+
+theorem ordtri2or3 (A : class, B : class)  {
+	prop 1 : wff = |- ( ( Ord A ∧ Ord B ) → ( A = ( A ∩ B ) ∨ B = ( A ∩ B ) ) ) ;;
+}
+
+proof of ordtri2or3 {
+	step 1 : wff = ordtri2or2 () |- ( ( Ord A ∧ Ord B ) → ( A ⊆ B ∨ B ⊆ A ) ) ;;
+	step 2 : wff = dfss () |- ( A ⊆ B ↔ A = ( A ∩ B ) ) ;;
+	step 3 : wff = dfss5 () |- ( B ⊆ A ↔ B = ( A ∩ B ) ) ;;
+	step 4 : wff = orbi12i (step 2, step 3) |- ( ( A ⊆ B ∨ B ⊆ A ) ↔ ( A = ( A ∩ B ) ∨ B = ( A ∩ B ) ) ) ;;
+	step 5 : wff = sylib (step 1, step 4) |- ( ( Ord A ∧ Ord B ) → ( A = ( A ∩ B ) ∨ B = ( A ∩ B ) ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* The intersection of two ordinal classes is an element of a third if and
+     only if either one of them is.  (Contributed by David Moews,
+     1-May-2017.) */
+
+theorem ordelinel (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( Ord A ∧ Ord B ∧ Ord C ) → ( ( A ∩ B ) ∈ C ↔ ( A ∈ C ∨ B ∈ C ) ) ) ;;
+}
+
+proof of ordelinel {
+	step 1 : wff = ordtri2or3 () |- ( ( Ord A ∧ Ord B ) → ( A = ( A ∩ B ) ∨ B = ( A ∩ B ) ) ) ;;
+	step 2 : wff = 3adant3 (step 1) |- ( ( Ord A ∧ Ord B ∧ Ord C ) → ( A = ( A ∩ B ) ∨ B = ( A ∩ B ) ) ) ;;
+	step 3 : wff = eleq1 () |- ( A = ( A ∩ B ) → ( A ∈ C ↔ ( A ∩ B ) ∈ C ) ) ;;
+	step 4 : wff = orc () |- ( A ∈ C → ( A ∈ C ∨ B ∈ C ) ) ;;
+	step 5 : wff = syl6bir (step 3, step 4) |- ( A = ( A ∩ B ) → ( ( A ∩ B ) ∈ C → ( A ∈ C ∨ B ∈ C ) ) ) ;;
+	step 6 : wff = eleq1 () |- ( B = ( A ∩ B ) → ( B ∈ C ↔ ( A ∩ B ) ∈ C ) ) ;;
+	step 7 : wff = olc () |- ( B ∈ C → ( A ∈ C ∨ B ∈ C ) ) ;;
+	step 8 : wff = syl6bir (step 6, step 7) |- ( B = ( A ∩ B ) → ( ( A ∩ B ) ∈ C → ( A ∈ C ∨ B ∈ C ) ) ) ;;
+	step 9 : wff = jaoi (step 5, step 8) |- ( ( A = ( A ∩ B ) ∨ B = ( A ∩ B ) ) → ( ( A ∩ B ) ∈ C → ( A ∈ C ∨ B ∈ C ) ) ) ;;
+	step 10 : wff = syl (step 2, step 9) |- ( ( Ord A ∧ Ord B ∧ Ord C ) → ( ( A ∩ B ) ∈ C → ( A ∈ C ∨ B ∈ C ) ) ) ;;
+	step 11 : wff = inss1 () |- ( A ∩ B ) ⊆ A ;;
+	step 12 : wff = ordin () |- ( ( Ord A ∧ Ord B ) → Ord ( A ∩ B ) ) ;;
+	step 13 : wff = anim1i (step 12) |- ( ( ( Ord A ∧ Ord B ) ∧ Ord C ) → ( Ord ( A ∩ B ) ∧ Ord C ) ) ;;
+	step 14 : wff = 3impa (step 13) |- ( ( Ord A ∧ Ord B ∧ Ord C ) → ( Ord ( A ∩ B ) ∧ Ord C ) ) ;;
+	step 15 : wff = ordtr2 () |- ( ( Ord ( A ∩ B ) ∧ Ord C ) → ( ( ( A ∩ B ) ⊆ A ∧ A ∈ C ) → ( A ∩ B ) ∈ C ) ) ;;
+	step 16 : wff = syl (step 14, step 15) |- ( ( Ord A ∧ Ord B ∧ Ord C ) → ( ( ( A ∩ B ) ⊆ A ∧ A ∈ C ) → ( A ∩ B ) ∈ C ) ) ;;
+	step 17 : wff = mpani (step 11, step 16) |- ( ( Ord A ∧ Ord B ∧ Ord C ) → ( A ∈ C → ( A ∩ B ) ∈ C ) ) ;;
+	step 18 : wff = inss2 () |- ( A ∩ B ) ⊆ B ;;
+	step 19 : wff = ordin () |- ( ( Ord A ∧ Ord B ) → Ord ( A ∩ B ) ) ;;
+	step 20 : wff = anim1i (step 19) |- ( ( ( Ord A ∧ Ord B ) ∧ Ord C ) → ( Ord ( A ∩ B ) ∧ Ord C ) ) ;;
+	step 21 : wff = 3impa (step 20) |- ( ( Ord A ∧ Ord B ∧ Ord C ) → ( Ord ( A ∩ B ) ∧ Ord C ) ) ;;
+	step 22 : wff = ordtr2 () |- ( ( Ord ( A ∩ B ) ∧ Ord C ) → ( ( ( A ∩ B ) ⊆ B ∧ B ∈ C ) → ( A ∩ B ) ∈ C ) ) ;;
+	step 23 : wff = syl (step 21, step 22) |- ( ( Ord A ∧ Ord B ∧ Ord C ) → ( ( ( A ∩ B ) ⊆ B ∧ B ∈ C ) → ( A ∩ B ) ∈ C ) ) ;;
+	step 24 : wff = mpani (step 18, step 23) |- ( ( Ord A ∧ Ord B ∧ Ord C ) → ( B ∈ C → ( A ∩ B ) ∈ C ) ) ;;
+	step 25 : wff = jaod (step 17, step 24) |- ( ( Ord A ∧ Ord B ∧ Ord C ) → ( ( A ∈ C ∨ B ∈ C ) → ( A ∩ B ) ∈ C ) ) ;;
+	step 26 : wff = impbid (step 10, step 25) |- ( ( Ord A ∧ Ord B ∧ Ord C ) → ( ( A ∩ B ) ∈ C ↔ ( A ∈ C ∨ B ∈ C ) ) ) ;;
+	qed prop 1 = step 26 ;;
+}
+
+/* Property of a subclass of the maximum (i.e. union) of two ordinals.
+     (Contributed by NM, 28-Nov-2003.) */
+
+theorem ordssun (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( Ord B ∧ Ord C ) → ( A ⊆ ( B ∪ C ) ↔ ( A ⊆ B ∨ A ⊆ C ) ) ) ;;
+}
+
+proof of ordssun {
+	step 1 : wff = ordtri2or2 () |- ( ( Ord B ∧ Ord C ) → ( B ⊆ C ∨ C ⊆ B ) ) ;;
+	step 2 : wff = ssequn1 () |- ( B ⊆ C ↔ ( B ∪ C ) = C ) ;;
+	step 3 : wff = sseq2 () |- ( ( B ∪ C ) = C → ( A ⊆ ( B ∪ C ) ↔ A ⊆ C ) ) ;;
+	step 4 : wff = sylbi (step 2, step 3) |- ( B ⊆ C → ( A ⊆ ( B ∪ C ) ↔ A ⊆ C ) ) ;;
+	step 5 : wff = olc () |- ( A ⊆ C → ( A ⊆ B ∨ A ⊆ C ) ) ;;
+	step 6 : wff = syl6bi (step 4, step 5) |- ( B ⊆ C → ( A ⊆ ( B ∪ C ) → ( A ⊆ B ∨ A ⊆ C ) ) ) ;;
+	step 7 : wff = ssequn2 () |- ( C ⊆ B ↔ ( B ∪ C ) = B ) ;;
+	step 8 : wff = sseq2 () |- ( ( B ∪ C ) = B → ( A ⊆ ( B ∪ C ) ↔ A ⊆ B ) ) ;;
+	step 9 : wff = sylbi (step 7, step 8) |- ( C ⊆ B → ( A ⊆ ( B ∪ C ) ↔ A ⊆ B ) ) ;;
+	step 10 : wff = orc () |- ( A ⊆ B → ( A ⊆ B ∨ A ⊆ C ) ) ;;
+	step 11 : wff = syl6bi (step 9, step 10) |- ( C ⊆ B → ( A ⊆ ( B ∪ C ) → ( A ⊆ B ∨ A ⊆ C ) ) ) ;;
+	step 12 : wff = jaoi (step 6, step 11) |- ( ( B ⊆ C ∨ C ⊆ B ) → ( A ⊆ ( B ∪ C ) → ( A ⊆ B ∨ A ⊆ C ) ) ) ;;
+	step 13 : wff = syl (step 1, step 12) |- ( ( Ord B ∧ Ord C ) → ( A ⊆ ( B ∪ C ) → ( A ⊆ B ∨ A ⊆ C ) ) ) ;;
+	step 14 : wff = ssun () |- ( ( A ⊆ B ∨ A ⊆ C ) → A ⊆ ( B ∪ C ) ) ;;
+	step 15 : wff = impbid1 (step 13, step 14) |- ( ( Ord B ∧ Ord C ) → ( A ⊆ ( B ∪ C ) ↔ ( A ⊆ B ∨ A ⊆ C ) ) ) ;;
+	qed prop 1 = step 15 ;;
+}
+
+/* The maximum (i.e. union) of two ordinals is either one or the other.
+     Similar to Exercise 14 of [TakeutiZaring] p. 40.  (Contributed by NM,
+     28-Nov-2003.) */
+
+theorem ordequn (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( Ord B ∧ Ord C ) → ( A = ( B ∪ C ) → ( A = B ∨ A = C ) ) ) ;;
+}
+
+proof of ordequn {
+	step 1 : wff = ordtri2or2 () |- ( ( Ord B ∧ Ord C ) → ( B ⊆ C ∨ C ⊆ B ) ) ;;
+	step 2 : wff = ssequn1 () |- ( B ⊆ C ↔ ( B ∪ C ) = C ) ;;
+	step 3 : wff = eqeq2 () |- ( ( B ∪ C ) = C → ( A = ( B ∪ C ) ↔ A = C ) ) ;;
+	step 4 : wff = sylbi (step 2, step 3) |- ( B ⊆ C → ( A = ( B ∪ C ) ↔ A = C ) ) ;;
+	step 5 : wff = olc () |- ( A = C → ( A = B ∨ A = C ) ) ;;
+	step 6 : wff = syl6bi (step 4, step 5) |- ( B ⊆ C → ( A = ( B ∪ C ) → ( A = B ∨ A = C ) ) ) ;;
+	step 7 : wff = ssequn2 () |- ( C ⊆ B ↔ ( B ∪ C ) = B ) ;;
+	step 8 : wff = eqeq2 () |- ( ( B ∪ C ) = B → ( A = ( B ∪ C ) ↔ A = B ) ) ;;
+	step 9 : wff = sylbi (step 7, step 8) |- ( C ⊆ B → ( A = ( B ∪ C ) ↔ A = B ) ) ;;
+	step 10 : wff = orc () |- ( A = B → ( A = B ∨ A = C ) ) ;;
+	step 11 : wff = syl6bi (step 9, step 10) |- ( C ⊆ B → ( A = ( B ∪ C ) → ( A = B ∨ A = C ) ) ) ;;
+	step 12 : wff = jaoi (step 6, step 11) |- ( ( B ⊆ C ∨ C ⊆ B ) → ( A = ( B ∪ C ) → ( A = B ∨ A = C ) ) ) ;;
+	step 13 : wff = syl (step 1, step 12) |- ( ( Ord B ∧ Ord C ) → ( A = ( B ∪ C ) → ( A = B ∨ A = C ) ) ) ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* The maximum (i.e. union) of two ordinals is ordinal.  Exercise 12 of
+     [TakeutiZaring] p. 40.  (Contributed by NM, 28-Nov-2003.) */
+
+theorem ordun (A : class, B : class)  {
+	prop 1 : wff = |- ( ( Ord A ∧ Ord B ) → Ord ( A ∪ B ) ) ;;
+}
+
+proof of ordun {
+	step 1 : wff = eqid () |- ( A ∪ B ) = ( A ∪ B ) ;;
+	step 2 : wff = ordequn () |- ( ( Ord A ∧ Ord B ) → ( ( A ∪ B ) = ( A ∪ B ) → ( ( A ∪ B ) = A ∨ ( A ∪ B ) = B ) ) ) ;;
+	step 3 : wff = mpi (step 1, step 2) |- ( ( Ord A ∧ Ord B ) → ( ( A ∪ B ) = A ∨ ( A ∪ B ) = B ) ) ;;
+	step 4 : wff = ordeq () |- ( ( A ∪ B ) = A → ( Ord ( A ∪ B ) ↔ Ord A ) ) ;;
+	step 5 : wff = biimprcd (step 4) |- ( Ord A → ( ( A ∪ B ) = A → Ord ( A ∪ B ) ) ) ;;
+	step 6 : wff = ordeq () |- ( ( A ∪ B ) = B → ( Ord ( A ∪ B ) ↔ Ord B ) ) ;;
+	step 7 : wff = biimprcd (step 6) |- ( Ord B → ( ( A ∪ B ) = B → Ord ( A ∪ B ) ) ) ;;
+	step 8 : wff = jaao (step 5, step 7) |- ( ( Ord A ∧ Ord B ) → ( ( ( A ∪ B ) = A ∨ ( A ∪ B ) = B ) → Ord ( A ∪ B ) ) ) ;;
+	step 9 : wff = mpd (step 3, step 8) |- ( ( Ord A ∧ Ord B ) → Ord ( A ∪ B ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* A subclass relationship for union and successor of ordinal classes.
+       (Contributed by NM, 28-Nov-2003.) */
+
+theorem ordunisssuc (A : class, B : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( ( A ⊆ On ∧ Ord B ) → ( ⋃ A ⊆ B ↔ A ⊆ suc B ) ) ;;
+}
+
+proof of ordunisssuc {
+	var x : set;;
+	step 1 : wff = ssel2 () |- ( ( A ⊆ On ∧ x ∈ A ) → x ∈ On ) ;;
+	step 2 : wff = ordsssuc () |- ( ( x ∈ On ∧ Ord B ) → ( x ⊆ B ↔ x ∈ suc B ) ) ;;
+	step 3 : wff = sylan (step 1, step 2) |- ( ( ( A ⊆ On ∧ x ∈ A ) ∧ Ord B ) → ( x ⊆ B ↔ x ∈ suc B ) ) ;;
+	step 4 : wff = an32s (step 3) |- ( ( ( A ⊆ On ∧ Ord B ) ∧ x ∈ A ) → ( x ⊆ B ↔ x ∈ suc B ) ) ;;
+	step 5 : wff = ralbidva (step 4) |- ( ( A ⊆ On ∧ Ord B ) → ( ∀ x ∈ A x ⊆ B ↔ ∀ x ∈ A x ∈ suc B ) ) ;;
+	step 6 : wff = unissb () |- ( ⋃ A ⊆ B ↔ ∀ x ∈ A x ⊆ B ) ;;
+	step 7 : wff = dfss3 () |- ( A ⊆ suc B ↔ ∀ x ∈ A x ∈ suc B ) ;;
+	step 8 : wff = 3bitr4g (step 5, step 6, step 7) |- ( ( A ⊆ On ∧ Ord B ) → ( ⋃ A ⊆ B ↔ A ⊆ suc B ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* The successor operation behaves like a one-to-one function.  Compare
+     Exercise 16 of [Enderton] p. 194.  (Contributed by NM, 3-Sep-2003.) */
+
+theorem suc11 (A : class, B : class)  {
+	prop 1 : wff = |- ( ( A ∈ On ∧ B ∈ On ) → ( suc A = suc B ↔ A = B ) ) ;;
+}
+
+proof of suc11 {
+	step 1 : wff = eloni () |- ( A ∈ On → Ord A ) ;;
+	step 2 : wff = ordn2lp () |- ( Ord A → ¬ ( A ∈ B ∧ B ∈ A ) ) ;;
+	step 3 : wff = ianor () |- ( ¬ ( A ∈ B ∧ B ∈ A ) ↔ ( ¬ A ∈ B ∨ ¬ B ∈ A ) ) ;;
+	step 4 : wff = sylib (step 2, step 3) |- ( Ord A → ( ¬ A ∈ B ∨ ¬ B ∈ A ) ) ;;
+	step 5 : wff = syl (step 1, step 4) |- ( A ∈ On → ( ¬ A ∈ B ∨ ¬ B ∈ A ) ) ;;
+	step 6 : wff = adantr (step 5) |- ( ( A ∈ On ∧ B ∈ On ) → ( ¬ A ∈ B ∨ ¬ B ∈ A ) ) ;;
+	step 7 : wff = eqimss () |- ( suc A = suc B → suc A ⊆ suc B ) ;;
+	step 8 : wff = sucssel () |- ( A ∈ On → ( suc A ⊆ suc B → A ∈ suc B ) ) ;;
+	step 9 : wff = syl5 (step 7, step 8) |- ( A ∈ On → ( suc A = suc B → A ∈ suc B ) ) ;;
+	step 10 : wff = elsuci () |- ( A ∈ suc B → ( A ∈ B ∨ A = B ) ) ;;
+	step 11 : wff = ord (step 10) |- ( A ∈ suc B → ( ¬ A ∈ B → A = B ) ) ;;
+	step 12 : wff = com12 (step 11) |- ( ¬ A ∈ B → ( A ∈ suc B → A = B ) ) ;;
+	step 13 : wff = syl9 (step 9, step 12) |- ( A ∈ On → ( ¬ A ∈ B → ( suc A = suc B → A = B ) ) ) ;;
+	step 14 : wff = eqimss2 () |- ( suc A = suc B → suc B ⊆ suc A ) ;;
+	step 15 : wff = sucssel () |- ( B ∈ On → ( suc B ⊆ suc A → B ∈ suc A ) ) ;;
+	step 16 : wff = syl5 (step 14, step 15) |- ( B ∈ On → ( suc A = suc B → B ∈ suc A ) ) ;;
+	step 17 : wff = elsuci () |- ( B ∈ suc A → ( B ∈ A ∨ B = A ) ) ;;
+	step 18 : wff = ord (step 17) |- ( B ∈ suc A → ( ¬ B ∈ A → B = A ) ) ;;
+	step 19 : wff = com12 (step 18) |- ( ¬ B ∈ A → ( B ∈ suc A → B = A ) ) ;;
+	step 20 : wff = eqcom () |- ( B = A ↔ A = B ) ;;
+	step 21 : wff = syl6ib (step 19, step 20) |- ( ¬ B ∈ A → ( B ∈ suc A → A = B ) ) ;;
+	step 22 : wff = syl9 (step 16, step 21) |- ( B ∈ On → ( ¬ B ∈ A → ( suc A = suc B → A = B ) ) ) ;;
+	step 23 : wff = jaao (step 13, step 22) |- ( ( A ∈ On ∧ B ∈ On ) → ( ( ¬ A ∈ B ∨ ¬ B ∈ A ) → ( suc A = suc B → A = B ) ) ) ;;
+	step 24 : wff = mpd (step 6, step 23) |- ( ( A ∈ On ∧ B ∈ On ) → ( suc A = suc B → A = B ) ) ;;
+	step 25 : wff = suceq () |- ( A = B → suc A = suc B ) ;;
+	step 26 : wff = impbid1 (step 24, step 25) |- ( ( A ∈ On ∧ B ∈ On ) → ( suc A = suc B ↔ A = B ) ) ;;
+	qed prop 1 = step 26 ;;
+}
+
+/* An ordinal number is an ordinal class.  (Contributed by NM,
+       11-Jun-1994.) */
+
+theorem onordi (A : class)  {
+	hyp 1 : wff = |- A ∈ On ;;
+	-----------------------
+	prop 1 : wff = |- Ord A ;;
+}
+
+proof of onordi {
+	step 1 : wff = eloni () |- ( A ∈ On → Ord A ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- Ord A ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* An ordinal number is a transitive class.  (Contributed by NM,
+       11-Jun-1994.) */
+
+theorem ontrci (A : class)  {
+	hyp 1 : wff = |- A ∈ On ;;
+	-----------------------
+	prop 1 : wff = |- Tr A ;;
+}
+
+proof of ontrci {
+	step 1 : wff = onordi (hyp 1) |- Ord A ;;
+	step 2 : wff = ordtr () |- ( Ord A → Tr A ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- Tr A ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* An ordinal number is not a member of itself.  Theorem 7M(c) of
+       [Enderton] p. 192.  (Contributed by NM, 11-Jun-1994.) */
+
+theorem onirri (A : class)  {
+	hyp 1 : wff = |- A ∈ On ;;
+	-----------------------
+	prop 1 : wff = |- ¬ A ∈ A ;;
+}
+
+proof of onirri {
+	step 1 : wff = onordi (hyp 1) |- Ord A ;;
+	step 2 : wff = ordirr () |- ( Ord A → ¬ A ∈ A ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ¬ A ∈ A ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A member of an ordinal number is an ordinal number.  Theorem 7M(a) of
+       [Enderton] p. 192.  (Contributed by NM, 11-Jun-1994.) */
+
+theorem oneli (A : class, B : class)  {
+	hyp 1 : wff = |- A ∈ On ;;
+	-----------------------
+	prop 1 : wff = |- ( B ∈ A → B ∈ On ) ;;
+}
+
+proof of oneli {
+	step 1 : wff = onelon () |- ( ( A ∈ On ∧ B ∈ A ) → B ∈ On ) ;;
+	step 2 : wff = mpan (hyp 1, step 1) |- ( B ∈ A → B ∈ On ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A member of an ordinal number is a subset of it.  (Contributed by NM,
+       11-Aug-1994.) */
+
+theorem onelssi (A : class, B : class)  {
+	hyp 1 : wff = |- A ∈ On ;;
+	-----------------------
+	prop 1 : wff = |- ( B ∈ A → B ⊆ A ) ;;
+}
+
+proof of onelssi {
+	step 1 : wff = onelss () |- ( A ∈ On → ( B ∈ A → B ⊆ A ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( B ∈ A → B ⊆ A ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* An ordering law for ordinal numbers.  (Contributed by NM,
+       13-Jun-1994.) */
+
+theorem onssneli (A : class, B : class)  {
+	hyp 1 : wff = |- A ∈ On ;;
+	-----------------------
+	prop 1 : wff = |- ( A ⊆ B → ¬ B ∈ A ) ;;
+}
+
+proof of onssneli {
+	step 1 : wff = oneli (hyp 1) |- ( B ∈ A → B ∈ On ) ;;
+	step 2 : wff = eloni () |- ( B ∈ On → Ord B ) ;;
+	step 3 : wff = ordirr () |- ( Ord B → ¬ B ∈ B ) ;;
+	step 4 : wff = 3syl (step 1, step 2, step 3) |- ( B ∈ A → ¬ B ∈ B ) ;;
+	step 5 : wff = ssel () |- ( A ⊆ B → ( B ∈ A → B ∈ B ) ) ;;
+	step 6 : wff = com12 (step 5) |- ( B ∈ A → ( A ⊆ B → B ∈ B ) ) ;;
+	step 7 : wff = mtod (step 4, step 6) |- ( B ∈ A → ¬ A ⊆ B ) ;;
+	step 8 : wff = con2i (step 7) |- ( A ⊆ B → ¬ B ∈ A ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* An ordering law for ordinal numbers.  (Contributed by NM,
+       13-Jun-1994.) */
+
+theorem onssnel2i (A : class, B : class)  {
+	hyp 1 : wff = |- A ∈ On ;;
+	-----------------------
+	prop 1 : wff = |- ( B ⊆ A → ¬ A ∈ B ) ;;
+}
+
+proof of onssnel2i {
+	step 1 : wff = onirri (hyp 1) |- ¬ A ∈ A ;;
+	step 2 : wff = ssel () |- ( B ⊆ A → ( A ∈ B → A ∈ A ) ) ;;
+	step 3 : wff = mtoi (step 1, step 2) |- ( B ⊆ A → ¬ A ∈ B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* An element of an ordinal number equals the intersection with it.
+       (Contributed by NM, 11-Jun-1994.) */
+
+theorem onelini (A : class, B : class)  {
+	hyp 1 : wff = |- A ∈ On ;;
+	-----------------------
+	prop 1 : wff = |- ( B ∈ A → B = ( B ∩ A ) ) ;;
+}
+
+proof of onelini {
+	step 1 : wff = onelssi (hyp 1) |- ( B ∈ A → B ⊆ A ) ;;
+	step 2 : wff = dfss () |- ( B ⊆ A ↔ B = ( B ∩ A ) ) ;;
+	step 3 : wff = sylib (step 1, step 2) |- ( B ∈ A → B = ( B ∩ A ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* An ordinal number equals its union with any element.  (Contributed by
+       NM, 13-Jun-1994.) */
+
+theorem oneluni (A : class, B : class)  {
+	hyp 1 : wff = |- A ∈ On ;;
+	-----------------------
+	prop 1 : wff = |- ( B ∈ A → ( A ∪ B ) = A ) ;;
+}
+
+proof of oneluni {
+	step 1 : wff = onelssi (hyp 1) |- ( B ∈ A → B ⊆ A ) ;;
+	step 2 : wff = ssequn2 () |- ( B ⊆ A ↔ ( A ∪ B ) = A ) ;;
+	step 3 : wff = sylib (step 1, step 2) |- ( B ∈ A → ( A ∪ B ) = A ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* An ordinal number is equal to the union of its successor.  (Contributed
+       by NM, 12-Jun-1994.) */
+
+theorem onunisuci (A : class)  {
+	hyp 1 : wff = |- A ∈ On ;;
+	-----------------------
+	prop 1 : wff = |- ⋃ suc A = A ;;
+}
+
+proof of onunisuci {
+	step 1 : wff = ontrci (hyp 1) |- Tr A ;;
+	step 2 : wff = elexi (hyp 1) |- A ∈ _V ;;
+	step 3 : wff = unisuc (step 2) |- ( Tr A ↔ ⋃ suc A = A ) ;;
+	step 4 : wff = mpbi (step 1, step 3) |- ⋃ suc A = A ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Subset is equivalent to membership or equality for ordinal numbers.
+         (Contributed by NM, 15-Sep-1995.) */
+
+theorem onsseli (A : class, B : class)  {
+	hyp 1 : wff = |- A ∈ On ;;
+	hyp 2 : wff = |- B ∈ On ;;
+	-----------------------
+	prop 1 : wff = |- ( A ⊆ B ↔ ( A ∈ B ∨ A = B ) ) ;;
+}
+
+proof of onsseli {
+	step 1 : wff = onsseleq () |- ( ( A ∈ On ∧ B ∈ On ) → ( A ⊆ B ↔ ( A ∈ B ∨ A = B ) ) ) ;;
+	step 2 : wff = mp2an (hyp 1, hyp 2, step 1) |- ( A ⊆ B ↔ ( A ∈ B ∨ A = B ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* The union of two ordinal numbers is an ordinal number.  (Contributed
+         by NM, 13-Jun-1994.) */
+
+theorem onun2i (A : class, B : class)  {
+	hyp 1 : wff = |- A ∈ On ;;
+	hyp 2 : wff = |- B ∈ On ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∪ B ) ∈ On ;;
+}
+
+proof of onun2i {
+	step 1 : wff = onordi (hyp 2) |- Ord B ;;
+	step 2 : wff = onordi (hyp 1) |- Ord A ;;
+	step 3 : wff = ordtri2or () |- ( ( Ord B ∧ Ord A ) → ( B ∈ A ∨ A ⊆ B ) ) ;;
+	step 4 : wff = mp2an (step 1, step 2, step 3) |- ( B ∈ A ∨ A ⊆ B ) ;;
+	step 5 : wff = oneluni (hyp 1) |- ( B ∈ A → ( A ∪ B ) = A ) ;;
+	step 6 : wff = syl6eqel (step 5, hyp 1) |- ( B ∈ A → ( A ∪ B ) ∈ On ) ;;
+	step 7 : wff = ssequn1 () |- ( A ⊆ B ↔ ( A ∪ B ) = B ) ;;
+	step 8 : wff = eleq1 () |- ( ( A ∪ B ) = B → ( ( A ∪ B ) ∈ On ↔ B ∈ On ) ) ;;
+	step 9 : wff = mpbiri (hyp 2, step 8) |- ( ( A ∪ B ) = B → ( A ∪ B ) ∈ On ) ;;
+	step 10 : wff = sylbi (step 7, step 9) |- ( A ⊆ B → ( A ∪ B ) ∈ On ) ;;
+	step 11 : wff = jaoi (step 6, step 10) |- ( ( B ∈ A ∨ A ⊆ B ) → ( A ∪ B ) ∈ On ) ;;
+	step 12 : wff = ax-mp (step 4, step 11) |- ( A ∪ B ) ∈ On ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* An ordinal equal to its own union is either zero or a limit ordinal.
+     (Contributed by NM, 1-Oct-2003.) */
+
+theorem unizlim (A : class)  {
+	prop 1 : wff = |- ( Ord A → ( A = ⋃ A ↔ ( A = ∅ ∨ Lim A ) ) ) ;;
+}
+
+proof of unizlim {
+	step 1 : wff = df-ne () |- ( A ≠ ∅ ↔ ¬ A = ∅ ) ;;
+	step 2 : wff = df-lim () |- ( Lim A ↔ ( Ord A ∧ A ≠ ∅ ∧ A = ⋃ A ) ) ;;
+	step 3 : wff = biimpri (step 2) |- ( ( Ord A ∧ A ≠ ∅ ∧ A = ⋃ A ) → Lim A ) ;;
+	step 4 : wff = 3exp (step 3) |- ( Ord A → ( A ≠ ∅ → ( A = ⋃ A → Lim A ) ) ) ;;
+	step 5 : wff = syl5bir (step 1, step 4) |- ( Ord A → ( ¬ A = ∅ → ( A = ⋃ A → Lim A ) ) ) ;;
+	step 6 : wff = com23 (step 5) |- ( Ord A → ( A = ⋃ A → ( ¬ A = ∅ → Lim A ) ) ) ;;
+	step 7 : wff = imp (step 6) |- ( ( Ord A ∧ A = ⋃ A ) → ( ¬ A = ∅ → Lim A ) ) ;;
+	step 8 : wff = orrd (step 7) |- ( ( Ord A ∧ A = ⋃ A ) → ( A = ∅ ∨ Lim A ) ) ;;
+	step 9 : wff = ex (step 8) |- ( Ord A → ( A = ⋃ A → ( A = ∅ ∨ Lim A ) ) ) ;;
+	step 10 : wff = uni0 () |- ⋃ ∅ = ∅ ;;
+	step 11 : wff = eqcomi (step 10) |- ∅ = ⋃ ∅ ;;
+	step 12 : wff = id () |- ( A = ∅ → A = ∅ ) ;;
+	step 13 : wff = unieq () |- ( A = ∅ → ⋃ A = ⋃ ∅ ) ;;
+	step 14 : wff = 3eqtr4a (step 11, step 12, step 13) |- ( A = ∅ → A = ⋃ A ) ;;
+	step 15 : wff = limuni () |- ( Lim A → A = ⋃ A ) ;;
+	step 16 : wff = jaoi (step 14, step 15) |- ( ( A = ∅ ∨ Lim A ) → A = ⋃ A ) ;;
+	step 17 : wff = impbid1 (step 9, step 16) |- ( Ord A → ( A = ⋃ A ↔ ( A = ∅ ∨ Lim A ) ) ) ;;
+	qed prop 1 = step 17 ;;
+}
+
+/* An ordinal number either equals zero or contains zero.  (Contributed by
+     NM, 1-Jun-2004.) */
+
+theorem on0eqel (A : class)  {
+	prop 1 : wff = |- ( A ∈ On → ( A = ∅ ∨ ∅ ∈ A ) ) ;;
+}
+
+proof of on0eqel {
+	step 1 : wff = 0ss () |- ∅ ⊆ A ;;
+	step 2 : wff = 0elon () |- ∅ ∈ On ;;
+	step 3 : wff = onsseleq () |- ( ( ∅ ∈ On ∧ A ∈ On ) → ( ∅ ⊆ A ↔ ( ∅ ∈ A ∨ ∅ = A ) ) ) ;;
+	step 4 : wff = mpan (step 2, step 3) |- ( A ∈ On → ( ∅ ⊆ A ↔ ( ∅ ∈ A ∨ ∅ = A ) ) ) ;;
+	step 5 : wff = mpbii (step 1, step 4) |- ( A ∈ On → ( ∅ ∈ A ∨ ∅ = A ) ) ;;
+	step 6 : wff = eqcom () |- ( ∅ = A ↔ A = ∅ ) ;;
+	step 7 : wff = orbi2i (step 6) |- ( ( ∅ ∈ A ∨ ∅ = A ) ↔ ( ∅ ∈ A ∨ A = ∅ ) ) ;;
+	step 8 : wff = orcom () |- ( ( ∅ ∈ A ∨ A = ∅ ) ↔ ( A = ∅ ∨ ∅ ∈ A ) ) ;;
+	step 9 : wff = bitri (step 7, step 8) |- ( ( ∅ ∈ A ∨ ∅ = A ) ↔ ( A = ∅ ∨ ∅ ∈ A ) ) ;;
+	step 10 : wff = sylib (step 5, step 9) |- ( A ∈ On → ( A = ∅ ∨ ∅ ∈ A ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* The singleton of the singleton of the empty set is not an ordinal (nor a
+     natural number by ~ omsson ).  It can be used to represent an "undefined"
+     value for a partial operation on natural or ordinal numbers.  See also
+     ~ onxpdisj .  (Contributed by NM, 21-May-2004.)  (Proof shortened by
+     Andrew Salmon, 12-Aug-2011.) */
+
+theorem snsn0non ()  {
+	prop 1 : wff = |- ¬ { { ∅ } } ∈ On ;;
+}
+
+proof of snsn0non {
+	step 1 : wff = p0ex () |- { ∅ } ∈ _V ;;
+	step 2 : wff = snid (step 1) |- { ∅ } ∈ { { ∅ } } ;;
+	step 3 : wff = n0i () |- ( { ∅ } ∈ { { ∅ } } → ¬ { { ∅ } } = ∅ ) ;;
+	step 4 : wff = ax-mp (step 2, step 3) |- ¬ { { ∅ } } = ∅ ;;
+	step 5 : wff = 0ex () |- ∅ ∈ _V ;;
+	step 6 : wff = snid (step 5) |- ∅ ∈ { ∅ } ;;
+	step 7 : wff = n0i () |- ( ∅ ∈ { ∅ } → ¬ { ∅ } = ∅ ) ;;
+	step 8 : wff = ax-mp (step 6, step 7) |- ¬ { ∅ } = ∅ ;;
+	step 9 : wff = eqcom () |- ( ∅ = { ∅ } ↔ { ∅ } = ∅ ) ;;
+	step 10 : wff = mtbir (step 8, step 9) |- ¬ ∅ = { ∅ } ;;
+	step 11 : wff = 0ex () |- ∅ ∈ _V ;;
+	step 12 : wff = elsnc (step 11) |- ( ∅ ∈ { { ∅ } } ↔ ∅ = { ∅ } ) ;;
+	step 13 : wff = mtbir (step 10, step 12) |- ¬ ∅ ∈ { { ∅ } } ;;
+	step 14 : wff = pm3.2ni (step 4, step 13) |- ¬ ( { { ∅ } } = ∅ ∨ ∅ ∈ { { ∅ } } ) ;;
+	step 15 : wff = on0eqel () |- ( { { ∅ } } ∈ On → ( { { ∅ } } = ∅ ∨ ∅ ∈ { { ∅ } } ) ) ;;
+	step 16 : wff = mto (step 14, step 15) |- ¬ { { ∅ } } ∈ On ;;
+	qed prop 1 = step 16 ;;
+}
+
+

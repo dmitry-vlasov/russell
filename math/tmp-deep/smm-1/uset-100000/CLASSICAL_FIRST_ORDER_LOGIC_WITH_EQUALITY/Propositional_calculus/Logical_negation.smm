@@ -1,0 +1,1021 @@
+$[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Logical_implication.smm $]
+$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Logical negation
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+  This section makes our first use of the third axiom of propositional
+  calculus, ~ ax-3 .
+
+*/
+
+$)
+$( /* Deduction derived from axiom ~ ax-3 .  (Contributed by NM,
+       26-Mar-1995.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( -. ps -> -. ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pcon4d $p |- ( ph -> ( ch -> ps ) ) $=
+	e0 f1 f2 aax-3 f0 f1 awn f2 awn awi f2 f1 awi psyl $.
+$}
+$( /* A contradiction implies anything.  Deduction from ~ pm2.21 .
+       (Contributed by NM, 10-Feb-1996.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> -. ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm2.21d $p |- ( ph -> ( ps -> ch ) ) $=
+	e0 f0 f1 awn f2 awn pa1d f0 f2 f1 pcon4d $.
+$}
+$( /* A contradiction implies anything.  Deduction from ~ pm2.21 .
+       (Contributed by Mario Carneiro, 9-Feb-2017.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( ph -> -. ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm2.21dd $p |- ( ph -> ch ) $=
+	e0 e1 f0 f1 f2 ppm2.21d f0 f1 f2 pmpd $.
+$}
+$( /* From a wff and its negation, anything is true.  Theorem *2.21 of
+     [WhiteheadRussell] p. 104.  Also called the Duns Scotus law.  (Contributed
+     by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 14-Sep-2012.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm2.21 $p |- ( -. ph -> ( ph -> ps ) ) $=
+	f0 awn pid f0 awn f0 f1 ppm2.21d $.
+$}
+$( /* Theorem *2.24 of [WhiteheadRussell] p. 104.  (Contributed by NM,
+     3-Jan-2005.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm2.24 $p |- ( ph -> ( -. ph -> ps ) ) $=
+	f0 f1 ppm2.21 f0 awn f0 f1 pcom12 $.
+$}
+$( /* Proof by contradiction.  Theorem *2.18 of [WhiteheadRussell] p. 103.  Also
+     called the Law of Clavius.  (Contributed by NM, 5-Aug-1993.) */
+
+$)
+${
+	$v ph $.
+	f0 $f wff ph $.
+	ppm2.18 $p |- ( ( -. ph -> ph ) -> ph ) $=
+	f0 f0 awn f0 awi awn ppm2.21 f0 awn f0 f0 awn f0 awi awn pa2i f0 awn f0 awi f0 f0 awn f0 awi pcon4d f0 awn f0 awi f0 ppm2.43i $.
+$}
+$( /* Deduction based on reductio ad absurdum.  (Contributed by FL,
+       12-Jul-2009.)  (Proof shortened by Andrew Salmon, 7-May-2011.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- ( ph -> ( -. ps -> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm2.18d $p |- ( ph -> ps ) $=
+	e0 f1 ppm2.18 f0 f1 awn f1 awi f1 psyl $.
+$}
+$( /* Converse of double negation.  Theorem *2.14 of [WhiteheadRussell] p. 102.
+     (Contributed by NM, 5-Aug-1993.)  (Proof shortened by David Harvey,
+     5-Sep-1999.)  (Proof shortened by Josh Purinton, 29-Dec-2000.) */
+
+$)
+${
+	$v ph $.
+	f0 $f wff ph $.
+	pnotnot2 $p |- ( -. -. ph -> ph ) $=
+	f0 awn f0 ppm2.21 f0 awn awn f0 ppm2.18d $.
+$}
+$( /* Deduction converting double-negation into the original wff, aka the
+       double negation rule.  A translation of natural deduction rule ` -. -. `
+       -C, ` _G |- -. -. ps ` => ` _G |- ps ` ; see ~ natded .  This is
+       definition NNC in [Pfenning] p. 17.  This rule is valid in classical
+       logic (which MPE uses), but not intuitionistic logic.  (Contributed by
+       DAW, 8-Feb-2017.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- ( ph -> -. -. ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pnotnotrd $p |- ( ph -> ps ) $=
+	e0 f1 pnotnot2 f0 f1 awn awn f1 psyl $.
+$}
+$( /* Inference from double negation.  (Contributed by NM, 27-Feb-2008.) */
+
+$)
+${
+	$v ph $.
+	e0 $e |- -. -. ph $.
+	f0 $f wff ph $.
+	pnotnotri $p |- ph $=
+	e0 f0 pnotnot2 f0 awn awn f0 aax-mp $.
+$}
+$( /* A contraposition deduction.  (Contributed by NM, 19-Aug-1993.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps -> -. ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pcon2d $p |- ( ph -> ( ch -> -. ps ) ) $=
+	f1 pnotnot2 e0 f1 awn awn f1 f0 f2 awn psyl5 f0 f1 awn f2 pcon4d $.
+$}
+$( /* Contraposition.  Theorem *2.03 of [WhiteheadRussell] p. 100.  (Contributed
+     by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 12-Feb-2013.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pcon2 $p |- ( ( ph -> -. ps ) -> ( ps -> -. ph ) ) $=
+	f0 f1 awn awi pid f0 f1 awn awi f0 f1 pcon2d $.
+$}
+$( /* Modus tollens deduction.  (Contributed by NM, 4-Jul-1994.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ch ) $.
+	e1 $e |- ( ph -> ( ps -> -. ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pmt2d $p |- ( ph -> -. ps ) $=
+	e0 e1 f0 f1 f2 pcon2d f0 f2 f1 awn pmpd $.
+$}
+$( /* Modus tollens inference.  (Contributed by NM, 26-Mar-1995.)  (Proof
+       shortened by Wolf Lammen, 15-Sep-2012.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ch $.
+	e1 $e |- ( ph -> ( ps -> -. ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pmt2i $p |- ( ph -> -. ps ) $=
+	e0 f2 f0 pa1i e1 f0 f1 f2 pmt2d $.
+$}
+$( /* A negated syllogism inference.  (Contributed by NM, 1-Dec-1995.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> -. ps ) $.
+	e1 $e |- ( ch -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pnsyl3 $p |- ( ch -> -. ph ) $=
+	e1 e0 f0 f1 awn awi f2 pa1i f2 f0 f1 pmt2d $.
+$}
+$( /* A contraposition inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
+       shortened by O'Cat, 28-Nov-2008.)  (Proof shortened by Wolf Lammen,
+       13-Jun-2013.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- ( ph -> -. ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pcon2i $p |- ( ps -> -. ph ) $=
+	e0 f1 pid f0 f1 f1 pnsyl3 $.
+$}
+$( /* A negated syllogism inference.  (Contributed by NM, 31-Dec-1993.)
+       (Proof shortened by Wolf Lammen, 2-Mar-2013.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> -. ps ) $.
+	e1 $e |- ( ch -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pnsyl $p |- ( ph -> -. ch ) $=
+	e0 e1 f0 f1 f2 pnsyl3 f2 f0 pcon2i $.
+$}
+$( /* Converse of double negation.  Theorem *2.12 of [WhiteheadRussell] p. 101.
+     (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
+     2-Mar-2013.) */
+
+$)
+${
+	$v ph $.
+	f0 $f wff ph $.
+	pnotnot1 $p |- ( ph -> -. -. ph ) $=
+	f0 awn pid f0 awn f0 pcon2i $.
+$}
+$( /* Infer double negation.  (Contributed by NM, 27-Feb-2008.) */
+
+$)
+${
+	$v ph $.
+	e0 $e |- ph $.
+	f0 $f wff ph $.
+	pnotnoti $p |- -. -. ph $=
+	e0 f0 pnotnot1 f0 f0 awn awn aax-mp $.
+$}
+$( /* A contraposition deduction.  (Contributed by NM, 5-Aug-1993.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( -. ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pcon1d $p |- ( ph -> ( -. ch -> ps ) ) $=
+	e0 f2 pnotnot1 f0 f1 awn f2 f2 awn awn psyl6 f0 f1 f2 awn pcon4d $.
+$}
+$( /* Modus tollens deduction.  (Contributed by NM, 26-Mar-1995.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> -. ch ) $.
+	e1 $e |- ( ph -> ( -. ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pmt3d $p |- ( ph -> ps ) $=
+	e0 e1 f0 f1 f2 pcon1d f0 f2 awn f1 pmpd $.
+$}
+$( /* Modus tollens inference.  (Contributed by NM, 26-Mar-1995.)  (Proof
+       shortened by Wolf Lammen, 15-Sep-2012.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- -. ch $.
+	e1 $e |- ( ph -> ( -. ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pmt3i $p |- ( ph -> ps ) $=
+	e0 f2 awn f0 pa1i e1 f0 f1 f2 pmt3d $.
+$}
+$( /* A negated syllogism inference.  (Contributed by NM, 26-Jun-1994.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> -. ps ) $.
+	e1 $e |- ( -. ch -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pnsyl2 $p |- ( ph -> ch ) $=
+	e0 e1 f2 awn f1 awi f0 pa1i f0 f2 f1 pmt3d $.
+$}
+$( /* Contraposition.  Theorem *2.15 of [WhiteheadRussell] p. 102.  (Contributed
+     by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 12-Feb-2013.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pcon1 $p |- ( ( -. ph -> ps ) -> ( -. ps -> ph ) ) $=
+	f0 awn f1 awi pid f0 awn f1 awi f0 f1 pcon1d $.
+$}
+$( /* A contraposition inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
+       shortened by O'Cat, 28-Nov-2008.)  (Proof shortened by Wolf Lammen,
+       19-Jun-2013.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- ( -. ph -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pcon1i $p |- ( -. ps -> ph ) $=
+	f1 awn pid e0 f1 awn f1 f0 pnsyl2 $.
+$}
+$( /* Inference rule derived from axiom ~ ax-3 .  (Contributed by NM,
+       5-Aug-1993.)  (Proof shortened by Wolf Lammen, 21-Jun-2013.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- ( -. ph -> -. ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pcon4i $p |- ( ps -> ph ) $=
+	f1 pnotnot1 e0 f1 f1 awn f0 pnsyl2 $.
+$}
+$( /* A contradiction implies anything.  Inference from ~ pm2.21 .
+       (Contributed by NM, 16-Sep-1993.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- -. ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm2.21i $p |- ( ph -> ps ) $=
+	e0 f0 awn f1 awn pa1i f1 f0 pcon4i $.
+$}
+$( /* A contradiction implies anything.  Inference from ~ pm2.24 .
+       (Contributed by NM, 27-Feb-2008.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- ph $.
+	e1 $e |- -. ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm2.24ii $p |- ps $=
+	e0 e1 f0 f1 ppm2.21i f0 f1 aax-mp $.
+$}
+$( /* A contraposition deduction.  (Contributed by NM, 5-Aug-1993.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pcon3d $p |- ( ph -> ( -. ch -> -. ps ) ) $=
+	f1 pnotnot2 e0 f1 awn awn f1 f0 f2 psyl5 f0 f1 awn f2 pcon1d $.
+$}
+$( /* Contraposition.  Theorem *2.16 of [WhiteheadRussell] p. 103.  (Contributed
+     by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 13-Feb-2013.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pcon3 $p |- ( ( ph -> ps ) -> ( -. ps -> -. ph ) ) $=
+	f0 f1 awi pid f0 f1 awi f0 f1 pcon3d $.
+$}
+$( /* A contraposition inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
+       shortened by Wolf Lammen, 20-Jun-2013.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- ( ph -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pcon3i $p |- ( -. ps -> -. ph ) $=
+	f1 awn pid e0 f1 awn f1 f0 pnsyl $.
+$}
+$( /* Rotate through consequent right.  (Contributed by Wolf Lammen,
+       3-Nov-2013.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pcon3rr3 $p |- ( -. ch -> ( ph -> -. ps ) ) $=
+	e0 f0 f1 f2 pcon3d f0 f2 awn f1 awn pcom12 $.
+$}
+$( /* The rule of modus tollens.  (Contributed by Wolf Lammen,
+       12-May-2013.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- ph $.
+	e1 $e |- ( -. ps -> -. ph ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pmt4 $p |- ps $=
+	e0 e1 f1 f0 pcon4i f0 f1 aax-mp $.
+$}
+$( /* Modus tollens deduction.  (Contributed by NM, 9-Jun-2006.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( ph -> ( -. ch -> -. ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pmt4d $p |- ( ph -> ch ) $=
+	e0 e1 f0 f2 f1 pcon4d f0 f1 f2 pmpd $.
+$}
+$( /* Modus tollens inference.  (Contributed by Wolf Lammen, 12-May-2013.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ch $.
+	e1 $e |- ( ph -> ( -. ps -> -. ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pmt4i $p |- ( ph -> ps ) $=
+	e0 f2 f0 pa1i e1 f0 f2 f1 pmt4d $.
+$}
+$( /* A negated syllogism deduction.  (Contributed by NM, 9-Apr-2005.) */
+
+$)
+${
+	$v ph ps ch ta $.
+	e0 $e |- ( ph -> ( ps -> -. ch ) ) $.
+	e1 $e |- ( ph -> ( ta -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff ta $.
+	pnsyld $p |- ( ph -> ( ps -> -. ta ) ) $=
+	e0 e1 f0 f3 f2 pcon3d f0 f1 f2 awn f3 awn psyld $.
+$}
+$( /* A negated syllogism inference.  (Contributed by NM, 3-May-1994.) */
+
+$)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1 $e |- ( th -> -. ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pnsyli $p |- ( ph -> ( th -> -. ps ) ) $=
+	e1 e0 f0 f1 f2 pcon3d f3 f2 awn f0 f1 awn psyl5 $.
+$}
+$( /* A negated syllogism inference.  (Contributed by NM, 15-Feb-1996.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( -. ph -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pnsyl4 $p |- ( -. ch -> ps ) $=
+	e1 f0 f2 pcon1i e0 f2 awn f0 f1 psyl $.
+$}
+$( /* Deduction version of ~ pm2.24 .  (Contributed by NM, 30-Jan-2006.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm2.24d $p |- ( ph -> ( -. ps -> ch ) ) $=
+	e0 f0 f1 f2 awn pa1d f0 f2 f1 pcon1d $.
+$}
+$( /* Inference version of ~ pm2.24 .  (Contributed by NM, 20-Aug-2001.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm2.24i $p |- ( -. ph -> ps ) $=
+	e0 f0 f1 awn pa1i f1 f0 pcon1i $.
+$}
+$( /* Theorem *3.2 of [WhiteheadRussell] p. 111, expressed with primitive
+     connectives.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Josh
+     Purinton, 29-Dec-2000.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm3.2im $p |- ( ph -> ( ps -> -. ( ph -> -. ps ) ) ) $=
+	f0 f1 awn ppm2.27 f0 f0 f1 awn awi f1 pcon2d $.
+$}
+$( /* Theorem 8 of [Margaris] p. 60.  (Contributed by NM, 5-Aug-1993.)  (Proof
+     shortened by Josh Purinton, 29-Dec-2000.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pmth8 $p |- ( ph -> ( -. ps -> -. ( ph -> ps ) ) ) $=
+	f0 f1 ppm2.27 f0 f0 f1 awi f1 pcon3d $.
+$}
+$( /* Inference joining the consequents of two premises.  (Contributed by NM,
+       5-Aug-1993.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( ph -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pjc $p |- ( ph -> -. ( ps -> -. ch ) ) $=
+	e0 e1 f1 f2 ppm3.2im f0 f1 f2 f1 f2 awn awi awn psylc $.
+$}
+$( /* An importation inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
+       shortened by Wolf Lammen, 20-Jul-2013.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pimpi $p |- ( -. ( ph -> -. ps ) -> ch ) $=
+	e0 f0 f1 f2 pcon3rr3 f2 f0 f1 awn awi pcon1i $.
+$}
+$( /* An exportation inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
+       shortened by O'Cat, 28-Nov-2008.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( -. ( ph -> -. ps ) -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pexpi $p |- ( ph -> ( ps -> ch ) ) $=
+	f0 f1 ppm3.2im e0 f0 f1 f0 f1 awn awi awn f2 psyl6 $.
+$}
+$( /* Simplification.  Similar to Theorem *3.27 (Simp) of [WhiteheadRussell]
+     p. 112.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
+     Lammen, 13-Nov-2012.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	psimprim $p |- ( -. ( ph -> -. ps ) -> ps ) $=
+	f0 f1 pidd f0 f1 f1 pimpi $.
+$}
+$( /* Simplification.  Similar to Theorem *3.26 (Simp) of [WhiteheadRussell]
+     p. 112.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
+     Lammen, 21-Jul-2012.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	psimplim $p |- ( -. ( ph -> ps ) -> ph ) $=
+	f0 f1 ppm2.21 f0 f0 f1 awi pcon1i $.
+$}
+$( /* Theorem *2.5 of [WhiteheadRussell] p. 107.  (Contributed by NM,
+     3-Jan-2005.)  (Proof shortened by Wolf Lammen, 9-Oct-2012.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm2.5 $p |- ( -. ( ph -> ps ) -> ( -. ph -> ps ) ) $=
+	f0 f1 psimplim f0 f1 awi awn f0 f1 ppm2.24d $.
+$}
+$( /* Theorem *2.51 of [WhiteheadRussell] p. 107.  (Contributed by NM,
+     3-Jan-2005.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm2.51 $p |- ( -. ( ph -> ps ) -> ( ph -> -. ps ) ) $=
+	f1 f0 aax-1 f1 f0 f1 awi pcon3i f0 f1 awi awn f1 awn f0 pa1d $.
+$}
+$( /* Theorem *2.521 of [WhiteheadRussell] p. 107.  (Contributed by NM,
+     3-Jan-2005.)  (Proof shortened by Wolf Lammen, 8-Oct-2012.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm2.521 $p |- ( -. ( ph -> ps ) -> ( ps -> ph ) ) $=
+	f0 f1 psimplim f0 f1 awi awn f0 f1 pa1d $.
+$}
+$( /* Theorem *2.52 of [WhiteheadRussell] p. 107.  (Contributed by NM,
+     3-Jan-2005.)  (Proof shortened by Wolf Lammen, 8-Oct-2012.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm2.52 $p |- ( -. ( ph -> ps ) -> ( -. ph -> -. ps ) ) $=
+	f0 f1 ppm2.521 f0 f1 awi awn f1 f0 pcon3d $.
+$}
+$( /* Exportation theorem expressed with primitive connectives.  (Contributed by
+     NM, 5-Aug-1993.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pexpt $p |- ( ( -. ( ph -> -. ps ) -> ch ) -> ( ph -> ( ps -> ch ) ) ) $=
+	f0 f1 ppm3.2im f0 f1 f0 f1 awn awi awn f2 pimim1d f0 f0 f1 awn awi awn f2 awi f1 f2 awi pcom12 $.
+$}
+$( /* Importation theorem expressed with primitive connectives.  (Contributed by
+     NM, 25-Apr-1994.)  (Proof shortened by Wolf Lammen, 20-Jul-2013.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pimpt $p |- ( ( ph -> ( ps -> ch ) ) -> ( -. ( ph -> -. ps ) -> ch ) ) $=
+	f0 f1 psimprim f0 f1 awn psimplim f0 f1 awn awi awn f0 f1 f2 awi pimim1i f0 f1 f2 awi awi f0 f1 awn awi awn f1 f2 pmpdi $.
+$}
+$( /* Deduction eliminating an antecedent.  (Contributed by NM, 27-Apr-1994.)
+       (Proof shortened by Wolf Lammen, 12-Sep-2013.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1 $e |- ( ph -> ( -. ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm2.61d $p |- ( ph -> ch ) $=
+	e1 f0 f1 f2 pcon1d e0 f0 f2 awn f1 f2 psyld f0 f2 ppm2.18d $.
+$}
+$( /* Inference eliminating an antecedent.  (Contributed by NM,
+       15-Jul-2005.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1 $e |- ( -. ps -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm2.61d1 $p |- ( ph -> ch ) $=
+	e0 e1 f1 awn f2 awi f0 pa1i f0 f1 f2 ppm2.61d $.
+$}
+$( /* Inference eliminating an antecedent.  (Contributed by NM,
+       18-Aug-1993.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( -. ps -> ch ) ) $.
+	e1 $e |- ( ps -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm2.61d2 $p |- ( ph -> ch ) $=
+	e1 f1 f2 awi f0 pa1i e0 f0 f1 f2 ppm2.61d $.
+$}
+$( /* Inference joining the antecedents of two premises.  (Contributed by NM,
+       5-Aug-1993.)  (Proof shortened by O'Cat, 19-Feb-2008.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( -. ph -> ch ) $.
+	e1 $e |- ( ps -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pja $p |- ( ( ph -> ps ) -> ch ) $=
+	e1 f1 f2 f0 pimim2i e0 f0 f1 awi f0 f2 ppm2.61d1 $.
+$}
+$( /* Deduction form of ~ ja .  (Contributed by Scott Fenton, 13-Dec-2010.)
+       (Proof shortened by Andrew Salmon, 17-Sep-2011.) */
+
+$)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( -. ps -> th ) ) $.
+	e1 $e |- ( ph -> ( ch -> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pjad $p |- ( ph -> ( ( ps -> ch ) -> th ) ) $=
+	e0 f0 f1 awn f3 pcom12 e1 f0 f2 f3 pcom12 f1 f2 f0 f3 awi pja f1 f2 awi f0 f3 pcom12 $.
+$}
+$( /* Elimination of a nested antecedent as a kind of reversal of inference
+     ~ ja .  (Contributed by Wolf Lammen, 10-May-2013.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pjarl $p |- ( ( ( ph -> ps ) -> ch ) -> ( -. ph -> ch ) ) $=
+	f0 f1 ppm2.21 f0 awn f0 f1 awi f2 pimim1i $.
+$}
+$( /* Inference eliminating an antecedent.  (Contributed by NM, 5-Apr-1994.)
+       (Proof shortened by Wolf Lammen, 12-Sep-2013.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( -. ph -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm2.61i $p |- ps $=
+	f0 pid e1 e0 f0 f0 f1 pja f0 f0 awi f1 aax-mp $.
+$}
+$( /* Inference eliminating two antecedents.  (Contributed by NM,
+       5-Aug-1993.)  (Proof shortened by Josh Purinton, 29-Dec-2000.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( -. ph -> ( -. ps -> ch ) ) $.
+	e1 $e |- ( ph -> ch ) $.
+	e2 $e |- ( ps -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm2.61ii $p |- ch $=
+	e1 e0 e2 f0 awn f1 f2 ppm2.61d2 f0 f2 ppm2.61i $.
+$}
+$( /* Inference eliminating two antecedents.  (Contributed by NM,
+       5-Aug-1993.)  (Proof shortened by Andrew Salmon, 25-May-2011.)  (Proof
+       shortened by Wolf Lammen, 13-Nov-2012.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1 $e |- ( -. ph -> ch ) $.
+	e2 $e |- ( -. ps -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm2.61nii $p |- ch $=
+	e0 e2 f0 f1 f2 ppm2.61d1 e1 f0 f2 ppm2.61i $.
+$}
+$( /* Inference eliminating three antecedents.  (Contributed by NM,
+       2-Jan-2002.)  (Proof shortened by Wolf Lammen, 22-Sep-2013.) */
+
+$)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( -. ph -> ( -. ps -> ( -. ch -> th ) ) ) $.
+	e1 $e |- ( ph -> th ) $.
+	e2 $e |- ( ps -> th ) $.
+	e3 $e |- ( ch -> th ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	ppm2.61iii $p |- th $=
+	e3 e0 e1 f0 f3 f2 awn pa1d e2 f1 f3 f2 awn pa1d f0 f1 f2 awn f3 awi ppm2.61ii f2 f3 ppm2.61i $.
+$}
+$( /* Reductio ad absurdum.  Theorem *2.01 of [WhiteheadRussell] p. 100.
+     (Contributed by NM, 18-Aug-1993.)  (Proof shortened by O'Cat,
+     21-Nov-2008.)  (Proof shortened by Wolf Lammen, 31-Oct-2012.) */
+
+$)
+${
+	$v ph $.
+	f0 $f wff ph $.
+	ppm2.01 $p |- ( ( ph -> -. ph ) -> -. ph ) $=
+	f0 awn pid f0 awn pid f0 f0 awn f0 awn pja $.
+$}
+$( /* Deduction based on reductio ad absurdum.  (Contributed by NM,
+       18-Aug-1993.)  (Proof shortened by Wolf Lammen, 5-Mar-2013.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- ( ph -> ( ps -> -. ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm2.01d $p |- ( ph -> -. ps ) $=
+	e0 f1 awn pid f0 f1 f1 awn ppm2.61d1 $.
+$}
+$( /* Theorem *2.6 of [WhiteheadRussell] p. 107.  (Contributed by NM,
+     3-Jan-2005.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm2.6 $p |- ( ( -. ph -> ps ) -> ( ( ph -> ps ) -> ps ) ) $=
+	f0 awn f1 awi pid f0 awn f1 awi f1 pidd f0 awn f1 awi f0 f1 f1 pjad $.
+$}
+$( /* Theorem *2.61 of [WhiteheadRussell] p. 107.  Useful for eliminating an
+     antecedent.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
+     Lammen, 22-Sep-2013.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm2.61 $p |- ( ( ph -> ps ) -> ( ( -. ph -> ps ) -> ps ) ) $=
+	f0 f1 ppm2.6 f0 awn f1 awi f0 f1 awi f1 pcom12 $.
+$}
+$( /* Theorem *2.65 of [WhiteheadRussell] p. 107.  Proof by contradiction.
+     (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
+     8-Mar-2013.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm2.65 $p |- ( ( ph -> ps ) -> ( ( ph -> -. ps ) -> -. ph ) ) $=
+	f0 f1 awi f0 awn pidd f0 f1 pcon3 f0 f1 awi f0 f1 awn f0 awn pjad $.
+$}
+$( /* Inference rule for proof by contradiction.  (Contributed by NM,
+       18-May-1994.)  (Proof shortened by Wolf Lammen, 11-Sep-2013.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( ph -> -. ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm2.65i $p |- -. ph $=
+	e1 f0 f1 pcon2i e0 f0 f1 pcon3i f1 f0 awn ppm2.61i $.
+$}
+$( /* Deduction rule for proof by contradiction.  (Contributed by NM,
+       26-Jun-1994.)  (Proof shortened by Wolf Lammen, 26-May-2013.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1 $e |- ( ph -> ( ps -> -. ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm2.65d $p |- ( ph -> -. ps ) $=
+	e1 e0 f0 f1 f2 f1 pnsyld f0 f1 ppm2.01d $.
+$}
+$( /* The rule of modus tollens.  The rule says, "if ` ps ` is not true, and
+       ` ph ` implies ` ps ` , then ` ps ` must also be not true."  Modus
+       tollens is short for "modus tollendo tollens," a Latin phrase that means
+       "the mood that by denying affirms" [Sanford] p. 39.  It is also called
+       denying the consequent.  Modus tollens is closely related to modus
+       ponens ~ ax-mp .  (Contributed by NM, 19-Aug-1993.)  (Proof shortened by
+       Wolf Lammen, 11-Sep-2013.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- -. ps $.
+	e1 $e |- ( ph -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pmto $p |- -. ph $=
+	e1 e0 f1 awn f0 pa1i f0 f1 ppm2.65i $.
+$}
+$( /* Modus tollens deduction.  (Contributed by NM, 3-Apr-1994.)  (Proof
+       shortened by Wolf Lammen, 11-Sep-2013.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> -. ch ) $.
+	e1 $e |- ( ph -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pmtod $p |- ( ph -> -. ps ) $=
+	e1 e0 f0 f2 awn f1 pa1d f0 f1 f2 ppm2.65d $.
+$}
+$( /* Modus tollens inference.  (Contributed by NM, 5-Jul-1994.)  (Proof
+       shortened by Wolf Lammen, 15-Sep-2012.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- -. ch $.
+	e1 $e |- ( ph -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pmtoi $p |- ( ph -> -. ps ) $=
+	e0 f2 awn f0 pa1i e1 f0 f1 f2 pmtod $.
+$}
+$( /* A rule similar to modus tollens.  (Contributed by NM, 19-Aug-1993.)
+       (Proof shortened by Wolf Lammen, 10-Sep-2013.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- ps $.
+	e1 $e |- ( ph -> -. ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pmt2 $p |- -. ph $=
+	e0 f1 f0 pa1i e1 f0 f1 ppm2.65i $.
+$}
+$( /* A rule similar to modus tollens.  (Contributed by NM, 18-May-1994.)
+       (Proof shortened by Wolf Lammen, 11-Sep-2013.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- -. ps $.
+	e1 $e |- ( -. ph -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pmt3 $p |- ph $=
+	e0 e1 f0 awn f1 pmto f0 pnotnotri $.
+$}
+$( /* Peirce's axiom.  This odd-looking theorem is the "difference" between an
+     intuitionistic system of propositional calculus and a classical system and
+     is not accepted by intuitionists.  When Peirce's axiom is added to an
+     intuitionistic system, the system becomes equivalent to our classical
+     system ~ ax-1 through ~ ax-3 .  A curious fact about this theorem is that
+     it requires ~ ax-3 for its proof even though the result has no negation
+     connectives in it.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by
+     Wolf Lammen, 9-Oct-2012.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppeirce $p |- ( ( ( ph -> ps ) -> ph ) -> ph ) $=
+	f0 f1 psimplim f0 pid f0 f1 awi f0 f0 pja $.
+$}
+$( /* The Linearity Axiom of the infinite-valued sentential logic (L-infinity)
+     of Lukasiewicz.  For a version not using ~ ax-3 , see ~ loolinALT .
+     (Contributed by O'Cat, 12-Aug-2004.)  (Proof shortened by Wolf Lammen,
+     2-Nov-2012.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ploolin $p |- ( ( ( ph -> ps ) -> ( ps -> ph ) ) -> ( ps -> ph ) ) $=
+	f0 f1 ppm2.521 f1 f0 awi pid f0 f1 awi f1 f0 awi f1 f0 awi pja $.
+$}
+$( /* The Inversion Axiom of the infinite-valued sentential logic (L-infinity)
+     of Lukasiewicz.  Using ~ dfor2 , we can see that this essentially
+     expresses "disjunction commutes."  Theorem *2.69 of [WhiteheadRussell]
+     p. 108.  (Contributed by NM, 12-Aug-2004.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	plooinv $p |- ( ( ( ph -> ps ) -> ps ) -> ( ( ps -> ph ) -> ph ) ) $=
+	f0 f1 awi f1 f0 pimim1 f0 f1 ppeirce f0 f1 awi f1 awi f1 f0 awi f0 f1 awi f0 awi f0 psyl6 $.
+$}
+$( /* Theorem used to justify definition of biconditional ~ df-bi .
+     (Contributed by NM, 11-May-1999.)  (Proof shortened by Josh Purinton,
+     29-Dec-2000.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pbijust $p |- -. ( ( -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) -> -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) ) -> -. ( -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) -> -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) ) ) $=
+	f0 f1 awi f1 f0 awi awn awi awn pid f0 f1 awi f1 f0 awi awn awi awn f0 f1 awi f1 f0 awi awn awi awn awi ppm2.01 f0 f1 awi f1 f0 awi awn awi awn f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awi f1 f0 awi awn awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awi f1 f0 awi awn awi awn awi pmt2 $.
+$}
+

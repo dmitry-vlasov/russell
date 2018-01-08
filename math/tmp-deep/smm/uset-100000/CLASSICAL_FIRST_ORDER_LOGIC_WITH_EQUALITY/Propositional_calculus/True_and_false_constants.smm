@@ -1,0 +1,160 @@
+$[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Logical__xor_.smm $]
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                True and false constants
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+$c T. $.
+$c F. $.
+$( ` T. ` is a wff. $)
+${
+	awtru $a wff T. $.
+$}
+$( ` F. ` is a wff. $)
+${
+	awfal $a wff F. $.
+$}
+$( Soundness justification theorem for ~ df-tru .  (Contributed by Mario
+     Carneiro, 17-Nov-2013.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ptrujust $p |- ( ( ph <-> ph ) <-> ( ps <-> ps ) ) $=
+	f0 pbiid f1 pbiid f0 f0 awb f1 f1 awb p2th $.
+$}
+$( Definition of ` T. ` , a tautology. ` T. ` is a constant true.  In this
+     definition ~ biid is used as an antecedent, however, any true wff, such as
+     an axiom, can be used in its place.  (Contributed by Anthony Hart,
+     13-Oct-2010.) $)
+${
+	$v ph $.
+	f0 $f wff ph $.
+	adf-tru $a |- ( T. <-> ( ph <-> ph ) ) $.
+$}
+$( Definition of ` F. ` , a contradiction. ` F. ` is a constant false.
+     (Contributed by Anthony Hart, 22-Oct-2010.) $)
+${
+	adf-fal $a |- ( F. <-> -. T. ) $.
+$}
+$( ` T. ` is provable.  (Contributed by Anthony Hart, 13-Oct-2010.) $)
+${
+	$v ph $.
+	i0 $f wff ph $.
+	ptru $p |- T. $=
+	i0 pbiid i0 adf-tru awtru i0 i0 awb pmpbir $.
+$}
+$( ` F. ` is refutable.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Mel L. O'Cat, 11-Mar-2012.) $)
+${
+	pfal $p |- -. F. $=
+	ptru awtru pnotnoti adf-fal awfal awtru awn pmtbir $.
+$}
+$( Eliminate ` T. ` as an antecedent.  (Contributed by Mario Carneiro,
+       13-Mar-2014.) $)
+${
+	$v ph $.
+	e0 $e |- ( T. -> ph ) $.
+	f0 $f wff ph $.
+	ptrud $p |- ph $=
+	ptru e0 awtru f0 aax-mp $.
+$}
+$( If something is true, it outputs ` T. ` .  (Contributed by Anthony Hart,
+     14-Aug-2011.) $)
+${
+	$v ph $.
+	f0 $f wff ph $.
+	ptbtru $p |- ( ph <-> ( ph <-> T. ) ) $=
+	ptru awtru f0 ptbt $.
+$}
+$( If something is not true, it outputs ` F. ` .  (Contributed by Anthony
+     Hart, 14-Aug-2011.) $)
+${
+	$v ph $.
+	f0 $f wff ph $.
+	pnbfal $p |- ( -. ph <-> ( ph <-> F. ) ) $=
+	pfal awfal f0 pnbn $.
+$}
+$( A theorem is equivalent to truth.  (Contributed by Mario Carneiro,
+       9-May-2015.) $)
+${
+	$v ph $.
+	e0 $e |- ph $.
+	f0 $f wff ph $.
+	pbitru $p |- ( ph <-> T. ) $=
+	e0 ptru f0 awtru p2th $.
+$}
+$( A contradiction is equivalent to falsehood.  (Contributed by Mario
+       Carneiro, 9-May-2015.) $)
+${
+	$v ph $.
+	e0 $e |- -. ph $.
+	f0 $f wff ph $.
+	pbifal $p |- ( ph <-> F. ) $=
+	e0 pfal f0 awfal p2false $.
+$}
+$( ` F. ` implies anything.  (Contributed by FL, 20-Mar-2011.)  (Proof
+     shortened by Anthony Hart, 1-Aug-2011.) $)
+${
+	$v ph $.
+	f0 $f wff ph $.
+	pfalim $p |- ( F. -> ph ) $=
+	pfal awfal f0 ppm2.21i $.
+$}
+$( ` F. ` implies anything.  (Contributed by Mario Carneiro, 9-Feb-2017.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pfalimd $p |- ( ( ph /\ F. ) -> ps ) $=
+	f1 pfalim awfal f1 f0 padantl $.
+$}
+$( Anything implies ` T. ` .  (Contributed by FL, 20-Mar-2011.)  (Proof
+     shortened by Anthony Hart, 1-Aug-2011.) $)
+${
+	$v ph $.
+	f0 $f wff ph $.
+	pa1tru $p |- ( ph -> T. ) $=
+	ptru awtru f0 pa1i $.
+$}
+$( Given falsum, we can define the negation of a wff ` ph ` as the statement
+     that a contradiction follows from assuming ` ph ` .  (Contributed by Mario
+     Carneiro, 9-Feb-2017.) $)
+${
+	$v ph $.
+	f0 $f wff ph $.
+	pdfnot $p |- ( -. ph <-> ( ph -> F. ) ) $=
+	f0 awfal ppm2.21 f0 awn pid f0 awn pfalim f0 awfal f0 awn pja f0 awn f0 awfal awi pimpbii $.
+$}
+$( Negation introduction rule from natural deduction.  (Contributed by
+       Mario Carneiro, 9-Feb-2017.) $)
+${
+	$v ph ps $.
+	e0 $e |- ( ( ph /\ ps ) -> F. ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pinegd $p |- ( ph -> -. ps ) $=
+	e0 f0 f1 awfal pex f1 pdfnot f0 f1 awfal awi f1 awn psylibr $.
+$}
+$( Deduction based on reductio ad absurdum.  (Contributed by Mario
+       Carneiro, 9-Feb-2017.) $)
+${
+	$v ph ps $.
+	e0 $e |- ( ( ph /\ -. ps ) -> F. ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pefald $p |- ( ph -> ps ) $=
+	e0 f0 f1 awn pinegd f0 f1 pnotnotrd $.
+$}
+$( If a wff and its negation are provable, then falsum is provable.
+       (Contributed by Mario Carneiro, 9-Feb-2017.) $)
+${
+	$v ph ps $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( ph -> -. ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm2.21fal $p |- ( ph -> F. ) $=
+	e0 e1 f0 f1 awfal ppm2.21dd $.
+$}
+

@@ -1,0 +1,544 @@
+import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Replacement/Derive_the_Null_Set_Axiom.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+           Theorems requiring subset and intersection existence
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* No set contains all sets.  Theorem 41 of [Suppes] p. 30.  (Contributed
+       by NM, 23-Aug-1993.) */
+
+theorem nalset (x : set, y : set) disjointed(x y z) {
+	prop 1 : wff = |- ¬ ∃ x ∀ y y ∈ x ;;
+}
+
+proof of nalset {
+	var z : set;;
+	step 1 : wff = alexn () |- ( ∀ x ∃ y ¬ y ∈ x ↔ ¬ ∃ x ∀ y y ∈ x ) ;;
+	step 2 : wff = ax-sep () |- ∃ y ∀ z ( z ∈ y ↔ ( z ∈ x ∧ ¬ z ∈ z ) ) ;;
+	step 3 : wff = elequ1 () |- ( z = y → ( z ∈ y ↔ y ∈ y ) ) ;;
+	step 4 : wff = elequ1 () |- ( z = y → ( z ∈ x ↔ y ∈ x ) ) ;;
+	step 5 : wff = elequ1 () |- ( z = y → ( z ∈ z ↔ y ∈ z ) ) ;;
+	step 6 : wff = elequ2 () |- ( z = y → ( y ∈ z ↔ y ∈ y ) ) ;;
+	step 7 : wff = bitrd (step 5, step 6) |- ( z = y → ( z ∈ z ↔ y ∈ y ) ) ;;
+	step 8 : wff = notbid (step 7) |- ( z = y → ( ¬ z ∈ z ↔ ¬ y ∈ y ) ) ;;
+	step 9 : wff = anbi12d (step 4, step 8) |- ( z = y → ( ( z ∈ x ∧ ¬ z ∈ z ) ↔ ( y ∈ x ∧ ¬ y ∈ y ) ) ) ;;
+	step 10 : wff = bibi12d (step 3, step 9) |- ( z = y → ( ( z ∈ y ↔ ( z ∈ x ∧ ¬ z ∈ z ) ) ↔ ( y ∈ y ↔ ( y ∈ x ∧ ¬ y ∈ y ) ) ) ) ;;
+	step 11 : wff = spv (step 10) |- ( ∀ z ( z ∈ y ↔ ( z ∈ x ∧ ¬ z ∈ z ) ) → ( y ∈ y ↔ ( y ∈ x ∧ ¬ y ∈ y ) ) ) ;;
+	step 12 : wff = pclem6 () |- ( ( y ∈ y ↔ ( y ∈ x ∧ ¬ y ∈ y ) ) → ¬ y ∈ x ) ;;
+	step 13 : wff = syl (step 11, step 12) |- ( ∀ z ( z ∈ y ↔ ( z ∈ x ∧ ¬ z ∈ z ) ) → ¬ y ∈ x ) ;;
+	step 14 : wff = eximi (step 13) |- ( ∃ y ∀ z ( z ∈ y ↔ ( z ∈ x ∧ ¬ z ∈ z ) ) → ∃ y ¬ y ∈ x ) ;;
+	step 15 : wff = ax-mp (step 2, step 14) |- ∃ y ¬ y ∈ x ;;
+	step 16 : wff = mpgbi (step 1, step 15) |- ¬ ∃ x ∀ y y ∈ x ;;
+	qed prop 1 = step 16 ;;
+}
+
+/* The universal class is not a member of itself (and thus is not a set).
+       Proposition 5.21 of [TakeutiZaring] p. 21; our proof, however, does not
+       depend on the Axiom of Regularity.  (Contributed by NM, 23-Aug-1993.) */
+
+theorem vprc () disjointed(x y) {
+	prop 1 : wff = |- ¬ _V ∈ _V ;;
+}
+
+proof of vprc {
+	var x : set, y : set;;
+	step 1 : wff = nalset () |- ¬ ∃ x ∀ y y ∈ x ;;
+	step 2 : wff = vex () |- y ∈ _V ;;
+	step 3 : wff = tbt (step 2) |- ( y ∈ x ↔ ( y ∈ x ↔ y ∈ _V ) ) ;;
+	step 4 : wff = albii (step 3) |- ( ∀ y y ∈ x ↔ ∀ y ( y ∈ x ↔ y ∈ _V ) ) ;;
+	step 5 : wff = dfcleq () |- ( x = _V ↔ ∀ y ( y ∈ x ↔ y ∈ _V ) ) ;;
+	step 6 : wff = bitr4i (step 4, step 5) |- ( ∀ y y ∈ x ↔ x = _V ) ;;
+	step 7 : wff = exbii (step 6) |- ( ∃ x ∀ y y ∈ x ↔ ∃ x x = _V ) ;;
+	step 8 : wff = mtbi (step 1, step 7) |- ¬ ∃ x x = _V ;;
+	step 9 : wff = isset () |- ( _V ∈ _V ↔ ∃ x x = _V ) ;;
+	step 10 : wff = mtbir (step 8, step 9) |- ¬ _V ∈ _V ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* The universal class doesn't belong to any class.  (Contributed by FL,
+     31-Dec-2006.) */
+
+theorem nvel (A : class)  {
+	prop 1 : wff = |- ¬ _V ∈ A ;;
+}
+
+proof of nvel {
+	step 1 : wff = vprc () |- ¬ _V ∈ _V ;;
+	step 2 : wff = elex () |- ( _V ∈ A → _V ∈ _V ) ;;
+	step 3 : wff = mto (step 1, step 2) |- ¬ _V ∈ A ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* The universal class does not exist.  (Contributed by NM, 4-Jul-2005.) */
+
+theorem vnex (x : set)  {
+	prop 1 : wff = |- ¬ ∃ x x = _V ;;
+}
+
+proof of vnex {
+	step 1 : wff = vprc () |- ¬ _V ∈ _V ;;
+	step 2 : wff = isset () |- ( _V ∈ _V ↔ ∃ x x = _V ) ;;
+	step 3 : wff = mtbi (step 1, step 2) |- ¬ ∃ x x = _V ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Separation Scheme (Aussonderung) using class notation.  Compare Exercise
+       4 of [TakeutiZaring] p. 22.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem inex1 (A : class, B : class) disjointed(A x y, B x y) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∩ B ) ∈ _V ;;
+}
+
+proof of inex1 {
+	var x : set, y : set;;
+	step 1 : wff = zfauscl (hyp 1) |- ∃ x ∀ y ( y ∈ x ↔ ( y ∈ A ∧ y ∈ B ) ) ;;
+	step 2 : wff = dfcleq () |- ( x = ( A ∩ B ) ↔ ∀ y ( y ∈ x ↔ y ∈ ( A ∩ B ) ) ) ;;
+	step 3 : wff = elin () |- ( y ∈ ( A ∩ B ) ↔ ( y ∈ A ∧ y ∈ B ) ) ;;
+	step 4 : wff = bibi2i (step 3) |- ( ( y ∈ x ↔ y ∈ ( A ∩ B ) ) ↔ ( y ∈ x ↔ ( y ∈ A ∧ y ∈ B ) ) ) ;;
+	step 5 : wff = albii (step 4) |- ( ∀ y ( y ∈ x ↔ y ∈ ( A ∩ B ) ) ↔ ∀ y ( y ∈ x ↔ ( y ∈ A ∧ y ∈ B ) ) ) ;;
+	step 6 : wff = bitri (step 2, step 5) |- ( x = ( A ∩ B ) ↔ ∀ y ( y ∈ x ↔ ( y ∈ A ∧ y ∈ B ) ) ) ;;
+	step 7 : wff = exbii (step 6) |- ( ∃ x x = ( A ∩ B ) ↔ ∃ x ∀ y ( y ∈ x ↔ ( y ∈ A ∧ y ∈ B ) ) ) ;;
+	step 8 : wff = mpbir (step 1, step 7) |- ∃ x x = ( A ∩ B ) ;;
+	step 9 : wff = issetri (step 8) |- ( A ∩ B ) ∈ _V ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Separation Scheme (Aussonderung) using class notation.  (Contributed by
+       NM, 27-Apr-1994.) */
+
+theorem inex2 (A : class, B : class)  {
+	hyp 1 : wff = |- A ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( B ∩ A ) ∈ _V ;;
+}
+
+proof of inex2 {
+	step 1 : wff = incom () |- ( B ∩ A ) = ( A ∩ B ) ;;
+	step 2 : wff = inex1 (hyp 1) |- ( A ∩ B ) ∈ _V ;;
+	step 3 : wff = eqeltri (step 1, step 2) |- ( B ∩ A ) ∈ _V ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Closed-form, generalized Separation Scheme.  (Contributed by NM,
+       7-Apr-1995.) */
+
+theorem inex1g (A : class, B : class, V : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( A ∈ V → ( A ∩ B ) ∈ _V ) ;;
+}
+
+proof of inex1g {
+	var x : set;;
+	step 1 : wff = ineq1 () |- ( x = A → ( x ∩ B ) = ( A ∩ B ) ) ;;
+	step 2 : wff = eleq1d (step 1) |- ( x = A → ( ( x ∩ B ) ∈ _V ↔ ( A ∩ B ) ∈ _V ) ) ;;
+	step 3 : wff = vex () |- x ∈ _V ;;
+	step 4 : wff = inex1 (step 3) |- ( x ∩ B ) ∈ _V ;;
+	step 5 : wff = vtoclg (step 2, step 4) |- ( A ∈ V → ( A ∩ B ) ∈ _V ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* The subset of a set is also a set.  Exercise 3 of [TakeutiZaring]
+       p. 22.  This is one way to express the Axiom of Separation ~ ax-sep
+       (a.k.a.  Subset Axiom).  (Contributed by NM, 27-Apr-1994.) */
+
+theorem ssex (A : class, B : class)  {
+	hyp 1 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( A ⊆ B → A ∈ _V ) ;;
+}
+
+proof of ssex {
+	step 1 : wff = df-ss () |- ( A ⊆ B ↔ ( A ∩ B ) = A ) ;;
+	step 2 : wff = inex2 (hyp 1) |- ( A ∩ B ) ∈ _V ;;
+	step 3 : wff = eleq1 () |- ( ( A ∩ B ) = A → ( ( A ∩ B ) ∈ _V ↔ A ∈ _V ) ) ;;
+	step 4 : wff = mpbii (step 2, step 3) |- ( ( A ∩ B ) = A → A ∈ _V ) ;;
+	step 5 : wff = sylbi (step 1, step 4) |- ( A ⊆ B → A ∈ _V ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* The subset of a set is also a set.  (Contributed by NM, 9-Sep-1993.) */
+
+theorem ssexi (A : class, B : class)  {
+	hyp 1 : wff = |- B ∈ _V ;;
+	hyp 2 : wff = |- A ⊆ B ;;
+	-----------------------
+	prop 1 : wff = |- A ∈ _V ;;
+}
+
+proof of ssexi {
+	step 1 : wff = ssex (hyp 1) |- ( A ⊆ B → A ∈ _V ) ;;
+	step 2 : wff = ax-mp (hyp 2, step 1) |- A ∈ _V ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* The subset of a set is also a set.  Exercise 3 of [TakeutiZaring] p. 22
+       (generalized).  (Contributed by NM, 14-Aug-1994.) */
+
+theorem ssexg (A : class, B : class, C : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( ( A ⊆ B ∧ B ∈ C ) → A ∈ _V ) ;;
+}
+
+proof of ssexg {
+	var x : set;;
+	step 1 : wff = sseq2 () |- ( x = B → ( A ⊆ x ↔ A ⊆ B ) ) ;;
+	step 2 : wff = imbi1d (step 1) |- ( x = B → ( ( A ⊆ x → A ∈ _V ) ↔ ( A ⊆ B → A ∈ _V ) ) ) ;;
+	step 3 : wff = vex () |- x ∈ _V ;;
+	step 4 : wff = ssex (step 3) |- ( A ⊆ x → A ∈ _V ) ;;
+	step 5 : wff = vtoclg (step 2, step 4) |- ( B ∈ C → ( A ⊆ B → A ∈ _V ) ) ;;
+	step 6 : wff = impcom (step 5) |- ( ( A ⊆ B ∧ B ∈ C ) → A ∈ _V ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* A subclass of a set is a set.  Deduction form of ~ ssexg .  (Contributed
+       by David Moews, 1-May-2017.) */
+
+theorem ssexd (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → B ∈ C ) ;;
+	hyp 2 : wff = |- ( ph → A ⊆ B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → A ∈ _V ) ;;
+}
+
+proof of ssexd {
+	step 1 : wff = ssexg () |- ( ( A ⊆ B ∧ B ∈ C ) → A ∈ _V ) ;;
+	step 2 : wff = syl2anc (hyp 2, hyp 1, step 1) |- ( ph → A ∈ _V ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Existence of a difference.  (Contributed by NM, 26-May-1998.) */
+
+theorem difexg (A : class, B : class, V : class)  {
+	prop 1 : wff = |- ( A ∈ V → ( A ∖ B ) ∈ _V ) ;;
+}
+
+proof of difexg {
+	step 1 : wff = difss () |- ( A ∖ B ) ⊆ A ;;
+	step 2 : wff = ssexg () |- ( ( ( A ∖ B ) ⊆ A ∧ A ∈ V ) → ( A ∖ B ) ∈ _V ) ;;
+	step 3 : wff = mpan (step 1, step 2) |- ( A ∈ V → ( A ∖ B ) ∈ _V ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Separation Scheme (Aussonderung) in terms of a class abstraction.
+       (Contributed by NM, 8-Jun-1994.) */
+
+theorem zfausab (ph : wff, x : set, A : class) disjointed(x A) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- { x | ( x ∈ A ∧ ph ) } ∈ _V ;;
+}
+
+proof of zfausab {
+	step 1 : wff = ssab2 () |- { x | ( x ∈ A ∧ ph ) } ⊆ A ;;
+	step 2 : wff = ssexi (hyp 1, step 1) |- { x | ( x ∈ A ∧ ph ) } ∈ _V ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Separation Scheme in terms of a restricted class abstraction.
+       (Contributed by NM, 23-Oct-1999.) */
+
+theorem rabexg (ph : wff, x : set, A : class, V : class) disjointed(x A) {
+	prop 1 : wff = |- ( A ∈ V → { x ∈ A | ph } ∈ _V ) ;;
+}
+
+proof of rabexg {
+	step 1 : wff = ssrab2 () |- { x ∈ A | ph } ⊆ A ;;
+	step 2 : wff = ssexg () |- ( ( { x ∈ A | ph } ⊆ A ∧ A ∈ V ) → { x ∈ A | ph } ∈ _V ) ;;
+	step 3 : wff = mpan (step 1, step 2) |- ( A ∈ V → { x ∈ A | ph } ∈ _V ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Separation Scheme in terms of a restricted class abstraction.
+       (Contributed by NM, 19-Jul-1996.) */
+
+theorem rabex (ph : wff, x : set, A : class) disjointed(x A) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- { x ∈ A | ph } ∈ _V ;;
+}
+
+proof of rabex {
+	step 1 : wff = rabexg () |- ( A ∈ _V → { x ∈ A | ph } ∈ _V ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- { x ∈ A | ph } ∈ _V ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Membership in a class abstraction involving a subset.  Unlike ~ elabg ,
+       ` A ` does not have to be a set.  (Contributed by NM, 29-Aug-2006.) */
+
+theorem elssabg (ph : wff, ps : wff, x : set, A : class, B : class, V : class) disjointed(x A, x B, x ps) {
+	hyp 1 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( B ∈ V → ( A ∈ { x | ( x ⊆ B ∧ ph ) } ↔ ( A ⊆ B ∧ ps ) ) ) ;;
+}
+
+proof of elssabg {
+	step 1 : wff = ssexg () |- ( ( A ⊆ B ∧ B ∈ V ) → A ∈ _V ) ;;
+	step 2 : wff = expcom (step 1) |- ( B ∈ V → ( A ⊆ B → A ∈ _V ) ) ;;
+	step 3 : wff = adantrd (step 2) |- ( B ∈ V → ( ( A ⊆ B ∧ ps ) → A ∈ _V ) ) ;;
+	step 4 : wff = sseq1 () |- ( x = A → ( x ⊆ B ↔ A ⊆ B ) ) ;;
+	step 5 : wff = anbi12d (step 4, hyp 1) |- ( x = A → ( ( x ⊆ B ∧ ph ) ↔ ( A ⊆ B ∧ ps ) ) ) ;;
+	step 6 : wff = elab3g (step 5) |- ( ( ( A ⊆ B ∧ ps ) → A ∈ _V ) → ( A ∈ { x | ( x ⊆ B ∧ ph ) } ↔ ( A ⊆ B ∧ ps ) ) ) ;;
+	step 7 : wff = syl (step 3, step 6) |- ( B ∈ V → ( A ∈ { x | ( x ⊆ B ∧ ph ) } ↔ ( A ⊆ B ∧ ps ) ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* The intersection of a non-empty class exists.  Exercise 5 of
+       [TakeutiZaring] p. 44 and its converse.  (Contributed by NM,
+       13-Aug-2002.) */
+
+theorem intex (A : class) disjointed(x A) {
+	prop 1 : wff = |- ( A ≠ ∅ ↔ ⋂ A ∈ _V ) ;;
+}
+
+proof of intex {
+	var x : set;;
+	step 1 : wff = n0 () |- ( A ≠ ∅ ↔ ∃ x x ∈ A ) ;;
+	step 2 : wff = intss1 () |- ( x ∈ A → ⋂ A ⊆ x ) ;;
+	step 3 : wff = vex () |- x ∈ _V ;;
+	step 4 : wff = ssex (step 3) |- ( ⋂ A ⊆ x → ⋂ A ∈ _V ) ;;
+	step 5 : wff = syl (step 2, step 4) |- ( x ∈ A → ⋂ A ∈ _V ) ;;
+	step 6 : wff = exlimiv (step 5) |- ( ∃ x x ∈ A → ⋂ A ∈ _V ) ;;
+	step 7 : wff = sylbi (step 1, step 6) |- ( A ≠ ∅ → ⋂ A ∈ _V ) ;;
+	step 8 : wff = vprc () |- ¬ _V ∈ _V ;;
+	step 9 : wff = inteq () |- ( A = ∅ → ⋂ A = ⋂ ∅ ) ;;
+	step 10 : wff = int0 () |- ⋂ ∅ = _V ;;
+	step 11 : wff = syl6eq (step 9, step 10) |- ( A = ∅ → ⋂ A = _V ) ;;
+	step 12 : wff = eleq1d (step 11) |- ( A = ∅ → ( ⋂ A ∈ _V ↔ _V ∈ _V ) ) ;;
+	step 13 : wff = mtbiri (step 8, step 12) |- ( A = ∅ → ¬ ⋂ A ∈ _V ) ;;
+	step 14 : wff = necon2ai (step 13) |- ( ⋂ A ∈ _V → A ≠ ∅ ) ;;
+	step 15 : wff = impbii (step 7, step 14) |- ( A ≠ ∅ ↔ ⋂ A ∈ _V ) ;;
+	qed prop 1 = step 15 ;;
+}
+
+/* If a class intersection is not a set, it must be the universe.
+     (Contributed by NM, 3-Jul-2005.) */
+
+theorem intnex (A : class)  {
+	prop 1 : wff = |- ( ¬ ⋂ A ∈ _V ↔ ⋂ A = _V ) ;;
+}
+
+proof of intnex {
+	step 1 : wff = intex () |- ( A ≠ ∅ ↔ ⋂ A ∈ _V ) ;;
+	step 2 : wff = necon1bbii (step 1) |- ( ¬ ⋂ A ∈ _V ↔ A = ∅ ) ;;
+	step 3 : wff = inteq () |- ( A = ∅ → ⋂ A = ⋂ ∅ ) ;;
+	step 4 : wff = int0 () |- ⋂ ∅ = _V ;;
+	step 5 : wff = syl6eq (step 3, step 4) |- ( A = ∅ → ⋂ A = _V ) ;;
+	step 6 : wff = sylbi (step 2, step 5) |- ( ¬ ⋂ A ∈ _V → ⋂ A = _V ) ;;
+	step 7 : wff = vprc () |- ¬ _V ∈ _V ;;
+	step 8 : wff = eleq1 () |- ( ⋂ A = _V → ( ⋂ A ∈ _V ↔ _V ∈ _V ) ) ;;
+	step 9 : wff = mtbiri (step 7, step 8) |- ( ⋂ A = _V → ¬ ⋂ A ∈ _V ) ;;
+	step 10 : wff = impbii (step 6, step 9) |- ( ¬ ⋂ A ∈ _V ↔ ⋂ A = _V ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* The intersection of a non-empty class abstraction exists.  (Contributed
+       by NM, 21-Oct-2003.) */
+
+theorem intexab (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ∃ x ph ↔ ⋂ { x | ph } ∈ _V ) ;;
+}
+
+proof of intexab {
+	step 1 : wff = abn0 () |- ( { x | ph } ≠ ∅ ↔ ∃ x ph ) ;;
+	step 2 : wff = intex () |- ( { x | ph } ≠ ∅ ↔ ⋂ { x | ph } ∈ _V ) ;;
+	step 3 : wff = bitr3i (step 1, step 2) |- ( ∃ x ph ↔ ⋂ { x | ph } ∈ _V ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* The intersection of a non-empty restricted class abstraction exists.
+     (Contributed by NM, 21-Oct-2003.) */
+
+theorem intexrab (ph : wff, x : set, A : class)  {
+	prop 1 : wff = |- ( ∃ x ∈ A ph ↔ ⋂ { x ∈ A | ph } ∈ _V ) ;;
+}
+
+proof of intexrab {
+	step 1 : wff = intexab () |- ( ∃ x ( x ∈ A ∧ ph ) ↔ ⋂ { x | ( x ∈ A ∧ ph ) } ∈ _V ) ;;
+	step 2 : wff = df-rex () |- ( ∃ x ∈ A ph ↔ ∃ x ( x ∈ A ∧ ph ) ) ;;
+	step 3 : wff = df-rab () |- { x ∈ A | ph } = { x | ( x ∈ A ∧ ph ) } ;;
+	step 4 : wff = inteqi (step 3) |- ⋂ { x ∈ A | ph } = ⋂ { x | ( x ∈ A ∧ ph ) } ;;
+	step 5 : wff = eleq1i (step 4) |- ( ⋂ { x ∈ A | ph } ∈ _V ↔ ⋂ { x | ( x ∈ A ∧ ph ) } ∈ _V ) ;;
+	step 6 : wff = 3bitr4i (step 1, step 2, step 5) |- ( ∃ x ∈ A ph ↔ ⋂ { x ∈ A | ph } ∈ _V ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* The existence of an indexed union. ` x ` is normally a free-variable
+       parameter in ` B ` , which should be read ` B ( x ) ` .  (Contributed by
+       FL, 19-Sep-2011.) */
+
+theorem iinexg (x : set, A : class, B : class, C : class) disjointed(A x y, B y) {
+	prop 1 : wff = |- ( ( A ≠ ∅ ∧ ∀ x ∈ A B ∈ C ) → ⋂_ x ∈ A B ∈ _V ) ;;
+}
+
+proof of iinexg {
+	var y : set;;
+	step 1 : wff = dfiin2g () |- ( ∀ x ∈ A B ∈ C → ⋂_ x ∈ A B = ⋂ { y | ∃ x ∈ A y = B } ) ;;
+	step 2 : wff = adantl (step 1) |- ( ( A ≠ ∅ ∧ ∀ x ∈ A B ∈ C ) → ⋂_ x ∈ A B = ⋂ { y | ∃ x ∈ A y = B } ) ;;
+	step 3 : wff = elisset () |- ( B ∈ C → ∃ y y = B ) ;;
+	step 4 : wff = rgenw (step 3) |- ∀ x ∈ A ( B ∈ C → ∃ y y = B ) ;;
+	step 5 : wff = r19.2z () |- ( ( A ≠ ∅ ∧ ∀ x ∈ A ( B ∈ C → ∃ y y = B ) ) → ∃ x ∈ A ( B ∈ C → ∃ y y = B ) ) ;;
+	step 6 : wff = mpan2 (step 4, step 5) |- ( A ≠ ∅ → ∃ x ∈ A ( B ∈ C → ∃ y y = B ) ) ;;
+	step 7 : wff = r19.35 () |- ( ∃ x ∈ A ( B ∈ C → ∃ y y = B ) ↔ ( ∀ x ∈ A B ∈ C → ∃ x ∈ A ∃ y y = B ) ) ;;
+	step 8 : wff = sylib (step 6, step 7) |- ( A ≠ ∅ → ( ∀ x ∈ A B ∈ C → ∃ x ∈ A ∃ y y = B ) ) ;;
+	step 9 : wff = imp (step 8) |- ( ( A ≠ ∅ ∧ ∀ x ∈ A B ∈ C ) → ∃ x ∈ A ∃ y y = B ) ;;
+	step 10 : wff = rexcom4 () |- ( ∃ x ∈ A ∃ y y = B ↔ ∃ y ∃ x ∈ A y = B ) ;;
+	step 11 : wff = sylib (step 9, step 10) |- ( ( A ≠ ∅ ∧ ∀ x ∈ A B ∈ C ) → ∃ y ∃ x ∈ A y = B ) ;;
+	step 12 : wff = abn0 () |- ( { y | ∃ x ∈ A y = B } ≠ ∅ ↔ ∃ y ∃ x ∈ A y = B ) ;;
+	step 13 : wff = sylibr (step 11, step 12) |- ( ( A ≠ ∅ ∧ ∀ x ∈ A B ∈ C ) → { y | ∃ x ∈ A y = B } ≠ ∅ ) ;;
+	step 14 : wff = intex () |- ( { y | ∃ x ∈ A y = B } ≠ ∅ ↔ ⋂ { y | ∃ x ∈ A y = B } ∈ _V ) ;;
+	step 15 : wff = sylib (step 13, step 14) |- ( ( A ≠ ∅ ∧ ∀ x ∈ A B ∈ C ) → ⋂ { y | ∃ x ∈ A y = B } ∈ _V ) ;;
+	step 16 : wff = eqeltrd (step 2, step 15) |- ( ( A ≠ ∅ ∧ ∀ x ∈ A B ∈ C ) → ⋂_ x ∈ A B ∈ _V ) ;;
+	qed prop 1 = step 16 ;;
+}
+
+/* Absorption of a redundant conjunct in the intersection of a class
+       abstraction.  (Contributed by NM, 3-Jul-2005.) */
+
+theorem intabs (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class) disjointed(x y, x A, y ph, x ps, x ch) {
+	hyp 1 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	hyp 2 : wff = |- ( x = ⋂ { y | ps } → ( ph ↔ ch ) ) ;;
+	hyp 3 : wff = |- ( ⋂ { y | ps } ⊆ A ∧ ch ) ;;
+	-----------------------
+	prop 1 : wff = |- ⋂ { x | ( x ⊆ A ∧ ph ) } = ⋂ { x | ph } ;;
+}
+
+proof of intabs {
+	step 1 : wff = sseq1 () |- ( x = ⋂ { y | ps } → ( x ⊆ A ↔ ⋂ { y | ps } ⊆ A ) ) ;;
+	step 2 : wff = anbi12d (step 1, hyp 2) |- ( x = ⋂ { y | ps } → ( ( x ⊆ A ∧ ph ) ↔ ( ⋂ { y | ps } ⊆ A ∧ ch ) ) ) ;;
+	step 3 : wff = intmin3 (step 2, hyp 3) |- ( ⋂ { y | ps } ∈ _V → ⋂ { x | ( x ⊆ A ∧ ph ) } ⊆ ⋂ { y | ps } ) ;;
+	step 4 : wff = intnex () |- ( ¬ ⋂ { y | ps } ∈ _V ↔ ⋂ { y | ps } = _V ) ;;
+	step 5 : wff = ssv () |- ⋂ { x | ( x ⊆ A ∧ ph ) } ⊆ _V ;;
+	step 6 : wff = sseq2 () |- ( ⋂ { y | ps } = _V → ( ⋂ { x | ( x ⊆ A ∧ ph ) } ⊆ ⋂ { y | ps } ↔ ⋂ { x | ( x ⊆ A ∧ ph ) } ⊆ _V ) ) ;;
+	step 7 : wff = mpbiri (step 5, step 6) |- ( ⋂ { y | ps } = _V → ⋂ { x | ( x ⊆ A ∧ ph ) } ⊆ ⋂ { y | ps } ) ;;
+	step 8 : wff = sylbi (step 4, step 7) |- ( ¬ ⋂ { y | ps } ∈ _V → ⋂ { x | ( x ⊆ A ∧ ph ) } ⊆ ⋂ { y | ps } ) ;;
+	step 9 : wff = pm2.61i (step 3, step 8) |- ⋂ { x | ( x ⊆ A ∧ ph ) } ⊆ ⋂ { y | ps } ;;
+	step 10 : wff = cbvabv (hyp 1) |- { x | ph } = { y | ps } ;;
+	step 11 : wff = inteqi (step 10) |- ⋂ { x | ph } = ⋂ { y | ps } ;;
+	step 12 : wff = sseqtr4i (step 9, step 11) |- ⋂ { x | ( x ⊆ A ∧ ph ) } ⊆ ⋂ { x | ph } ;;
+	step 13 : wff = simpr () |- ( ( x ⊆ A ∧ ph ) → ph ) ;;
+	step 14 : wff = ss2abi (step 13) |- { x | ( x ⊆ A ∧ ph ) } ⊆ { x | ph } ;;
+	step 15 : wff = intss () |- ( { x | ( x ⊆ A ∧ ph ) } ⊆ { x | ph } → ⋂ { x | ph } ⊆ ⋂ { x | ( x ⊆ A ∧ ph ) } ) ;;
+	step 16 : wff = ax-mp (step 14, step 15) |- ⋂ { x | ph } ⊆ ⋂ { x | ( x ⊆ A ∧ ph ) } ;;
+	step 17 : wff = eqssi (step 12, step 16) |- ⋂ { x | ( x ⊆ A ∧ ph ) } = ⋂ { x | ph } ;;
+	qed prop 1 = step 17 ;;
+}
+
+/* The intersection of a union ` U. A ` with a class ` B ` is equal to the
+       union of the intersections of each element of ` A ` with ` B ` .
+       (Contributed by FL, 24-Mar-2007.) */
+
+theorem inuni (x : set, y : set, A : class, B : class) disjointed(A x y z, B x y z) {
+	prop 1 : wff = |- ( ⋃ A ∩ B ) = ⋃ { x | ∃ y ∈ A x = ( y ∩ B ) } ;;
+}
+
+proof of inuni {
+	var z : set;;
+	step 1 : wff = eluni2 () |- ( z ∈ ⋃ A ↔ ∃ y ∈ A z ∈ y ) ;;
+	step 2 : wff = anbi1i (step 1) |- ( ( z ∈ ⋃ A ∧ z ∈ B ) ↔ ( ∃ y ∈ A z ∈ y ∧ z ∈ B ) ) ;;
+	step 3 : wff = elin () |- ( z ∈ ( ⋃ A ∩ B ) ↔ ( z ∈ ⋃ A ∧ z ∈ B ) ) ;;
+	step 4 : wff = ancom () |- ( ( z ∈ x ∧ ∃ y ∈ A x = ( y ∩ B ) ) ↔ ( ∃ y ∈ A x = ( y ∩ B ) ∧ z ∈ x ) ) ;;
+	step 5 : wff = r19.41v () |- ( ∃ y ∈ A ( x = ( y ∩ B ) ∧ z ∈ x ) ↔ ( ∃ y ∈ A x = ( y ∩ B ) ∧ z ∈ x ) ) ;;
+	step 6 : wff = bitr4i (step 4, step 5) |- ( ( z ∈ x ∧ ∃ y ∈ A x = ( y ∩ B ) ) ↔ ∃ y ∈ A ( x = ( y ∩ B ) ∧ z ∈ x ) ) ;;
+	step 7 : wff = exbii (step 6) |- ( ∃ x ( z ∈ x ∧ ∃ y ∈ A x = ( y ∩ B ) ) ↔ ∃ x ∃ y ∈ A ( x = ( y ∩ B ) ∧ z ∈ x ) ) ;;
+	step 8 : wff = rexcom4 () |- ( ∃ y ∈ A ∃ x ( x = ( y ∩ B ) ∧ z ∈ x ) ↔ ∃ x ∃ y ∈ A ( x = ( y ∩ B ) ∧ z ∈ x ) ) ;;
+	step 9 : wff = bitr4i (step 7, step 8) |- ( ∃ x ( z ∈ x ∧ ∃ y ∈ A x = ( y ∩ B ) ) ↔ ∃ y ∈ A ∃ x ( x = ( y ∩ B ) ∧ z ∈ x ) ) ;;
+	step 10 : wff = vex () |- y ∈ _V ;;
+	step 11 : wff = inex1 (step 10) |- ( y ∩ B ) ∈ _V ;;
+	step 12 : wff = eleq2 () |- ( x = ( y ∩ B ) → ( z ∈ x ↔ z ∈ ( y ∩ B ) ) ) ;;
+	step 13 : wff = ceqsexv (step 11, step 12) |- ( ∃ x ( x = ( y ∩ B ) ∧ z ∈ x ) ↔ z ∈ ( y ∩ B ) ) ;;
+	step 14 : wff = elin () |- ( z ∈ ( y ∩ B ) ↔ ( z ∈ y ∧ z ∈ B ) ) ;;
+	step 15 : wff = bitri (step 13, step 14) |- ( ∃ x ( x = ( y ∩ B ) ∧ z ∈ x ) ↔ ( z ∈ y ∧ z ∈ B ) ) ;;
+	step 16 : wff = rexbii (step 15) |- ( ∃ y ∈ A ∃ x ( x = ( y ∩ B ) ∧ z ∈ x ) ↔ ∃ y ∈ A ( z ∈ y ∧ z ∈ B ) ) ;;
+	step 17 : wff = r19.41v () |- ( ∃ y ∈ A ( z ∈ y ∧ z ∈ B ) ↔ ( ∃ y ∈ A z ∈ y ∧ z ∈ B ) ) ;;
+	step 18 : wff = bitri (step 16, step 17) |- ( ∃ y ∈ A ∃ x ( x = ( y ∩ B ) ∧ z ∈ x ) ↔ ( ∃ y ∈ A z ∈ y ∧ z ∈ B ) ) ;;
+	step 19 : wff = bitri (step 9, step 18) |- ( ∃ x ( z ∈ x ∧ ∃ y ∈ A x = ( y ∩ B ) ) ↔ ( ∃ y ∈ A z ∈ y ∧ z ∈ B ) ) ;;
+	step 20 : wff = 3bitr4i (step 2, step 3, step 19) |- ( z ∈ ( ⋃ A ∩ B ) ↔ ∃ x ( z ∈ x ∧ ∃ y ∈ A x = ( y ∩ B ) ) ) ;;
+	step 21 : wff = eluniab () |- ( z ∈ ⋃ { x | ∃ y ∈ A x = ( y ∩ B ) } ↔ ∃ x ( z ∈ x ∧ ∃ y ∈ A x = ( y ∩ B ) ) ) ;;
+	step 22 : wff = bitr4i (step 20, step 21) |- ( z ∈ ( ⋃ A ∩ B ) ↔ z ∈ ⋃ { x | ∃ y ∈ A x = ( y ∩ B ) } ) ;;
+	step 23 : wff = eqriv (step 22) |- ( ⋃ A ∩ B ) = ⋃ { x | ∃ y ∈ A x = ( y ∩ B ) } ;;
+	qed prop 1 = step 23 ;;
+}
+
+/* Membership in a power class.  Theorem 86 of [Suppes] p. 47.  (Contributed
+     by NM, 7-Aug-2000.) */
+
+theorem elpw2g (A : class, B : class, V : class)  {
+	prop 1 : wff = |- ( B ∈ V → ( A ∈ Pow B ↔ A ⊆ B ) ) ;;
+}
+
+proof of elpw2g {
+	step 1 : wff = elpwi () |- ( A ∈ Pow B → A ⊆ B ) ;;
+	step 2 : wff = ssexg () |- ( ( A ⊆ B ∧ B ∈ V ) → A ∈ _V ) ;;
+	step 3 : wff = elpwg () |- ( A ∈ _V → ( A ∈ Pow B ↔ A ⊆ B ) ) ;;
+	step 4 : wff = biimparc (step 3) |- ( ( A ⊆ B ∧ A ∈ _V ) → A ∈ Pow B ) ;;
+	step 5 : wff = syldan (step 2, step 4) |- ( ( A ⊆ B ∧ B ∈ V ) → A ∈ Pow B ) ;;
+	step 6 : wff = expcom (step 5) |- ( B ∈ V → ( A ⊆ B → A ∈ Pow B ) ) ;;
+	step 7 : wff = impbid2 (step 1, step 6) |- ( B ∈ V → ( A ∈ Pow B ↔ A ⊆ B ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Membership in a power class.  Theorem 86 of [Suppes] p. 47.
+       (Contributed by NM, 11-Oct-2007.) */
+
+theorem elpw2 (A : class, B : class)  {
+	hyp 1 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ Pow B ↔ A ⊆ B ) ;;
+}
+
+proof of elpw2 {
+	step 1 : wff = elpw2g () |- ( B ∈ _V → ( A ∈ Pow B ↔ A ⊆ B ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( A ∈ Pow B ↔ A ⊆ B ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* The power set of a set is never a subset.  (Contributed by Stefan
+       O'Rear, 22-Feb-2015.) */
+
+theorem pwnss (A : class, V : class) disjointed(A x y, V x y) {
+	prop 1 : wff = |- ( A ∈ V → ¬ Pow A ⊆ A ) ;;
+}
+
+proof of pwnss {
+	var x : set, y : set;;
+	step 1 : wff = eleq12 () |- ( ( y = { x ∈ A | x ∉ x } ∧ y = { x ∈ A | x ∉ x } ) → ( y ∈ y ↔ { x ∈ A | x ∉ x } ∈ { x ∈ A | x ∉ x } ) ) ;;
+	step 2 : wff = anidms (step 1) |- ( y = { x ∈ A | x ∉ x } → ( y ∈ y ↔ { x ∈ A | x ∉ x } ∈ { x ∈ A | x ∉ x } ) ) ;;
+	step 3 : wff = notbid (step 2) |- ( y = { x ∈ A | x ∉ x } → ( ¬ y ∈ y ↔ ¬ { x ∈ A | x ∉ x } ∈ { x ∈ A | x ∉ x } ) ) ;;
+	step 4 : wff = df-nel () |- ( x ∉ x ↔ ¬ x ∈ x ) ;;
+	step 5 : wff = eleq12 () |- ( ( x = y ∧ x = y ) → ( x ∈ x ↔ y ∈ y ) ) ;;
+	step 6 : wff = anidms (step 5) |- ( x = y → ( x ∈ x ↔ y ∈ y ) ) ;;
+	step 7 : wff = notbid (step 6) |- ( x = y → ( ¬ x ∈ x ↔ ¬ y ∈ y ) ) ;;
+	step 8 : wff = syl5bb (step 4, step 7) |- ( x = y → ( x ∉ x ↔ ¬ y ∈ y ) ) ;;
+	step 9 : wff = cbvrabv (step 8) |- { x ∈ A | x ∉ x } = { y ∈ A | ¬ y ∈ y } ;;
+	step 10 : wff = elrab2 (step 3, step 9) |- ( { x ∈ A | x ∉ x } ∈ { x ∈ A | x ∉ x } ↔ ( { x ∈ A | x ∉ x } ∈ A ∧ ¬ { x ∈ A | x ∉ x } ∈ { x ∈ A | x ∉ x } ) ) ;;
+	step 11 : wff = pclem6 () |- ( ( { x ∈ A | x ∉ x } ∈ { x ∈ A | x ∉ x } ↔ ( { x ∈ A | x ∉ x } ∈ A ∧ ¬ { x ∈ A | x ∉ x } ∈ { x ∈ A | x ∉ x } ) ) → ¬ { x ∈ A | x ∉ x } ∈ A ) ;;
+	step 12 : wff = ax-mp (step 10, step 11) |- ¬ { x ∈ A | x ∉ x } ∈ A ;;
+	step 13 : wff = ssel () |- ( Pow A ⊆ A → ( { x ∈ A | x ∉ x } ∈ Pow A → { x ∈ A | x ∉ x } ∈ A ) ) ;;
+	step 14 : wff = mtoi (step 12, step 13) |- ( Pow A ⊆ A → ¬ { x ∈ A | x ∉ x } ∈ Pow A ) ;;
+	step 15 : wff = ssrab2 () |- { x ∈ A | x ∉ x } ⊆ A ;;
+	step 16 : wff = elpw2g () |- ( A ∈ V → ( { x ∈ A | x ∉ x } ∈ Pow A ↔ { x ∈ A | x ∉ x } ⊆ A ) ) ;;
+	step 17 : wff = mpbiri (step 15, step 16) |- ( A ∈ V → { x ∈ A | x ∉ x } ∈ Pow A ) ;;
+	step 18 : wff = nsyl3 (step 14, step 17) |- ( A ∈ V → ¬ Pow A ⊆ A ) ;;
+	qed prop 1 = step 18 ;;
+}
+
+/* No set equals its power set.  The sethood antecedent is necessary; compare
+     ~ pwv .  (Contributed by NM, 17-Nov-2008.)  (Proof shortened by Mario
+     Carneiro, 23-Dec-2016.) */
+
+theorem pwne (A : class, V : class)  {
+	prop 1 : wff = |- ( A ∈ V → Pow A ≠ A ) ;;
+}
+
+proof of pwne {
+	step 1 : wff = pwnss () |- ( A ∈ V → ¬ Pow A ⊆ A ) ;;
+	step 2 : wff = eqimss () |- ( Pow A = A → Pow A ⊆ A ) ;;
+	step 3 : wff = necon3bi (step 2) |- ( ¬ Pow A ⊆ A → Pow A ≠ A ) ;;
+	step 4 : wff = syl (step 1, step 3) |- ( A ∈ V → Pow A ≠ A ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+

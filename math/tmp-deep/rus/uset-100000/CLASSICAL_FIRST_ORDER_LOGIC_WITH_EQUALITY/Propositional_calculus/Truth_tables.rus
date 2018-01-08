@@ -1,0 +1,367 @@
+import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/True_and_false_constants.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Truth tables
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+  Some sources define operations on true/false values using truth tables.
+  These tables show the results of their operations for all possible
+  combinations of true ( ` T. ` ) and false ( ` F. ` ).
+  Here we show that our definitions and axioms produce equivalent results for
+  ` /\ ` (conjunction aka logical 'and') ~ df-an ,
+  ` \/ ` (disjunction aka logical inclusive 'or') ~ df-or ,
+  ` -> ` (implies) ~ wi ,
+  ` -. ` (not) ~ wn ,
+  ` <-> ` (logical equivalence) ~ df-bi ,
+  ` -/\ ` (nand aka Sheffer stroke) ~ df-nan , and
+  ` \/_ ` (exclusive or) ~ df-xor .
+*/
+
+/* A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
+
+theorem truantru ()  {
+	prop 1 : wff = |- ( ( T. ∧ T. ) ↔ T. ) ;;
+}
+
+proof of truantru {
+	step 1 : wff = anidm () |- ( ( T. ∧ T. ) ↔ T. ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+/* A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
+
+theorem truanfal ()  {
+	prop 1 : wff = |- ( ( T. ∧ F. ) ↔ F. ) ;;
+}
+
+proof of truanfal {
+	step 1 : wff = fal () |- ¬ F. ;;
+	step 2 : wff = intnan (step 1) |- ¬ ( T. ∧ F. ) ;;
+	step 3 : wff = bifal (step 2) |- ( ( T. ∧ F. ) ↔ F. ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
+
+theorem falantru ()  {
+	prop 1 : wff = |- ( ( F. ∧ T. ) ↔ F. ) ;;
+}
+
+proof of falantru {
+	step 1 : wff = fal () |- ¬ F. ;;
+	step 2 : wff = intnanr (step 1) |- ¬ ( F. ∧ T. ) ;;
+	step 3 : wff = bifal (step 2) |- ( ( F. ∧ T. ) ↔ F. ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
+
+theorem falanfal ()  {
+	prop 1 : wff = |- ( ( F. ∧ F. ) ↔ F. ) ;;
+}
+
+proof of falanfal {
+	step 1 : wff = anidm () |- ( ( F. ∧ F. ) ↔ F. ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+/* A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) */
+
+theorem truortru ()  {
+	prop 1 : wff = |- ( ( T. ∨ T. ) ↔ T. ) ;;
+}
+
+proof of truortru {
+	step 1 : wff = oridm () |- ( ( T. ∨ T. ) ↔ T. ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+/* A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
+
+theorem truorfal ()  {
+	prop 1 : wff = |- ( ( T. ∨ F. ) ↔ T. ) ;;
+}
+
+proof of truorfal {
+	step 1 : wff = tru () |- T. ;;
+	step 2 : wff = orci (step 1) |- ( T. ∨ F. ) ;;
+	step 3 : wff = bitru (step 2) |- ( ( T. ∨ F. ) ↔ T. ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
+
+theorem falortru ()  {
+	prop 1 : wff = |- ( ( F. ∨ T. ) ↔ T. ) ;;
+}
+
+proof of falortru {
+	step 1 : wff = tru () |- T. ;;
+	step 2 : wff = olci (step 1) |- ( F. ∨ T. ) ;;
+	step 3 : wff = bitru (step 2) |- ( ( F. ∨ T. ) ↔ T. ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) */
+
+theorem falorfal ()  {
+	prop 1 : wff = |- ( ( F. ∨ F. ) ↔ F. ) ;;
+}
+
+proof of falorfal {
+	step 1 : wff = oridm () |- ( ( F. ∨ F. ) ↔ F. ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+/* A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
+
+theorem truimtru ()  {
+	prop 1 : wff = |- ( ( T. → T. ) ↔ T. ) ;;
+}
+
+proof of truimtru {
+	step 1 : wff = id () |- ( T. → T. ) ;;
+	step 2 : wff = bitru (step 1) |- ( ( T. → T. ) ↔ T. ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) */
+
+theorem truimfal ()  {
+	prop 1 : wff = |- ( ( T. → F. ) ↔ F. ) ;;
+}
+
+proof of truimfal {
+	step 1 : wff = tru () |- T. ;;
+	step 2 : wff = a1bi (step 1) |- ( F. ↔ ( T. → F. ) ) ;;
+	step 3 : wff = bicomi (step 2) |- ( ( T. → F. ) ↔ F. ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
+
+theorem falimtru ()  {
+	prop 1 : wff = |- ( ( F. → T. ) ↔ T. ) ;;
+}
+
+proof of falimtru {
+	step 1 : wff = falim () |- ( F. → T. ) ;;
+	step 2 : wff = bitru (step 1) |- ( ( F. → T. ) ↔ T. ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
+
+theorem falimfal ()  {
+	prop 1 : wff = |- ( ( F. → F. ) ↔ T. ) ;;
+}
+
+proof of falimfal {
+	step 1 : wff = id () |- ( F. → F. ) ;;
+	step 2 : wff = bitru (step 1) |- ( ( F. → F. ) ↔ T. ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A ` -. ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
+
+theorem nottru ()  {
+	prop 1 : wff = |- ( ¬ T. ↔ F. ) ;;
+}
+
+proof of nottru {
+	step 1 : wff = df-fal () |- ( F. ↔ ¬ T. ) ;;
+	step 2 : wff = bicomi (step 1) |- ( ¬ T. ↔ F. ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A ` -. ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) */
+
+theorem notfal ()  {
+	prop 1 : wff = |- ( ¬ F. ↔ T. ) ;;
+}
+
+proof of notfal {
+	step 1 : wff = fal () |- ¬ F. ;;
+	step 2 : wff = bitru (step 1) |- ( ¬ F. ↔ T. ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) */
+
+theorem trubitru ()  {
+	prop 1 : wff = |- ( ( T. ↔ T. ) ↔ T. ) ;;
+}
+
+proof of trubitru {
+	step 1 : wff = biid () |- ( T. ↔ T. ) ;;
+	step 2 : wff = bitru (step 1) |- ( ( T. ↔ T. ) ↔ T. ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) */
+
+theorem trubifal ()  {
+	prop 1 : wff = |- ( ( T. ↔ F. ) ↔ F. ) ;;
+}
+
+proof of trubifal {
+	step 1 : wff = nottru () |- ( ¬ T. ↔ F. ) ;;
+	step 2 : wff = nbbn () |- ( ( ¬ T. ↔ F. ) ↔ ¬ ( T. ↔ F. ) ) ;;
+	step 3 : wff = mpbi (step 1, step 2) |- ¬ ( T. ↔ F. ) ;;
+	step 4 : wff = bifal (step 3) |- ( ( T. ↔ F. ) ↔ F. ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) */
+
+theorem falbitru ()  {
+	prop 1 : wff = |- ( ( F. ↔ T. ) ↔ F. ) ;;
+}
+
+proof of falbitru {
+	step 1 : wff = bicom () |- ( ( F. ↔ T. ) ↔ ( T. ↔ F. ) ) ;;
+	step 2 : wff = trubifal () |- ( ( T. ↔ F. ) ↔ F. ) ;;
+	step 3 : wff = bitri (step 1, step 2) |- ( ( F. ↔ T. ) ↔ F. ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) */
+
+theorem falbifal ()  {
+	prop 1 : wff = |- ( ( F. ↔ F. ) ↔ T. ) ;;
+}
+
+proof of falbifal {
+	step 1 : wff = biid () |- ( F. ↔ F. ) ;;
+	step 2 : wff = bitru (step 1) |- ( ( F. ↔ F. ) ↔ T. ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A ` -/\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) */
+
+theorem trunantru ()  {
+	prop 1 : wff = |- ( ( T. ⊼ T. ) ↔ F. ) ;;
+}
+
+proof of trunantru {
+	step 1 : wff = nannot () |- ( ¬ T. ↔ ( T. ⊼ T. ) ) ;;
+	step 2 : wff = nottru () |- ( ¬ T. ↔ F. ) ;;
+	step 3 : wff = bitr3i (step 1, step 2) |- ( ( T. ⊼ T. ) ↔ F. ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A ` -/\ ` identity.  (Contributed by Anthony Hart, 23-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) */
+
+theorem trunanfal ()  {
+	prop 1 : wff = |- ( ( T. ⊼ F. ) ↔ T. ) ;;
+}
+
+proof of trunanfal {
+	step 1 : wff = df-nan () |- ( ( T. ⊼ F. ) ↔ ¬ ( T. ∧ F. ) ) ;;
+	step 2 : wff = truanfal () |- ( ( T. ∧ F. ) ↔ F. ) ;;
+	step 3 : wff = notbii (step 2) |- ( ¬ ( T. ∧ F. ) ↔ ¬ F. ) ;;
+	step 4 : wff = notfal () |- ( ¬ F. ↔ T. ) ;;
+	step 5 : wff = 3bitri (step 1, step 3, step 4) |- ( ( T. ⊼ F. ) ↔ T. ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* A ` -/\ ` identity.  (Contributed by Anthony Hart, 23-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) */
+
+theorem falnantru ()  {
+	prop 1 : wff = |- ( ( F. ⊼ T. ) ↔ T. ) ;;
+}
+
+proof of falnantru {
+	step 1 : wff = nancom () |- ( ( F. ⊼ T. ) ↔ ( T. ⊼ F. ) ) ;;
+	step 2 : wff = trunanfal () |- ( ( T. ⊼ F. ) ↔ T. ) ;;
+	step 3 : wff = bitri (step 1, step 2) |- ( ( F. ⊼ T. ) ↔ T. ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A ` -/\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) */
+
+theorem falnanfal ()  {
+	prop 1 : wff = |- ( ( F. ⊼ F. ) ↔ T. ) ;;
+}
+
+proof of falnanfal {
+	step 1 : wff = nannot () |- ( ¬ F. ↔ ( F. ⊼ F. ) ) ;;
+	step 2 : wff = notfal () |- ( ¬ F. ↔ T. ) ;;
+	step 3 : wff = bitr3i (step 1, step 2) |- ( ( F. ⊼ F. ) ↔ T. ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A ` \/_ ` identity.  (Contributed by David A. Wheeler, 8-May-2015.) */
+
+theorem truxortru ()  {
+	prop 1 : wff = |- ( ( T. \/_ T. ) ↔ F. ) ;;
+}
+
+proof of truxortru {
+	step 1 : wff = df-xor () |- ( ( T. \/_ T. ) ↔ ¬ ( T. ↔ T. ) ) ;;
+	step 2 : wff = trubitru () |- ( ( T. ↔ T. ) ↔ T. ) ;;
+	step 3 : wff = xchbinx (step 1, step 2) |- ( ( T. \/_ T. ) ↔ ¬ T. ) ;;
+	step 4 : wff = nottru () |- ( ¬ T. ↔ F. ) ;;
+	step 5 : wff = bitri (step 3, step 4) |- ( ( T. \/_ T. ) ↔ F. ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* A ` \/_ ` identity.  (Contributed by David A. Wheeler, 8-May-2015.) */
+
+theorem truxorfal ()  {
+	prop 1 : wff = |- ( ( T. \/_ F. ) ↔ T. ) ;;
+}
+
+proof of truxorfal {
+	step 1 : wff = df-xor () |- ( ( T. \/_ F. ) ↔ ¬ ( T. ↔ F. ) ) ;;
+	step 2 : wff = trubifal () |- ( ( T. ↔ F. ) ↔ F. ) ;;
+	step 3 : wff = xchbinx (step 1, step 2) |- ( ( T. \/_ F. ) ↔ ¬ F. ) ;;
+	step 4 : wff = notfal () |- ( ¬ F. ↔ T. ) ;;
+	step 5 : wff = bitri (step 3, step 4) |- ( ( T. \/_ F. ) ↔ T. ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* A ` \/_ ` identity.  (Contributed by David A. Wheeler, 9-May-2015.) */
+
+theorem falxortru ()  {
+	prop 1 : wff = |- ( ( F. \/_ T. ) ↔ T. ) ;;
+}
+
+proof of falxortru {
+	step 1 : wff = df-xor () |- ( ( F. \/_ T. ) ↔ ¬ ( F. ↔ T. ) ) ;;
+	step 2 : wff = falbitru () |- ( ( F. ↔ T. ) ↔ F. ) ;;
+	step 3 : wff = notbii (step 2) |- ( ¬ ( F. ↔ T. ) ↔ ¬ F. ) ;;
+	step 4 : wff = notfal () |- ( ¬ F. ↔ T. ) ;;
+	step 5 : wff = 3bitri (step 1, step 3, step 4) |- ( ( F. \/_ T. ) ↔ T. ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* A ` \/_ ` identity.  (Contributed by David A. Wheeler, 9-May-2015.) */
+
+theorem falxorfal ()  {
+	prop 1 : wff = |- ( ( F. \/_ F. ) ↔ F. ) ;;
+}
+
+proof of falxorfal {
+	step 1 : wff = df-xor () |- ( ( F. \/_ F. ) ↔ ¬ ( F. ↔ F. ) ) ;;
+	step 2 : wff = falbifal () |- ( ( F. ↔ F. ) ↔ T. ) ;;
+	step 3 : wff = xchbinx (step 1, step 2) |- ( ( F. \/_ F. ) ↔ ¬ T. ) ;;
+	step 4 : wff = nottru () |- ( ¬ T. ↔ F. ) ;;
+	step 5 : wff = bitri (step 3, step 4) |- ( ( F. \/_ F. ) ↔ F. ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+

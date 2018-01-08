@@ -1,0 +1,515 @@
+import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_of_classical_propositional_calculus/Derive_the_Lukasiewicz_Axioms_from_the_Tarski-Bernays-Wajsberg_Axioms.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  Derive the Tarski-Bernays-Wajsberg axioms from Meredith's First CO Axiom
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* A single axiom for propositional calculus offered by Meredith.
+
+     This axiom is worthy of note, due to it having only 19 symbols, not
+     counting parentheses.  The more well-known ~ meredith has 21 symbols, sans
+     parentheses.
+
+     See ~ merco2 for another axiom of equal length.  (Contributed by Anthony
+     Hart, 13-Aug-2011.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem merco1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
+	prop 1 : wff = |- ( ( ( ( ( ph → ps ) → ( ch → F. ) ) → th ) → ta ) → ( ( ta → ph ) → ( ch → ph ) ) ) ;;
+}
+
+proof of merco1 {
+	step 1 : wff = ax-1 () |- ( ¬ ch → ( ¬ th → ¬ ch ) ) ;;
+	step 2 : wff = falim () |- ( F. → ( ¬ th → ¬ ch ) ) ;;
+	step 3 : wff = ja (step 1, step 2) |- ( ( ch → F. ) → ( ¬ th → ¬ ch ) ) ;;
+	step 4 : wff = imim2i (step 3) |- ( ( ( ph → ps ) → ( ch → F. ) ) → ( ( ph → ps ) → ( ¬ th → ¬ ch ) ) ) ;;
+	step 5 : wff = imim1i (step 4) |- ( ( ( ( ph → ps ) → ( ¬ th → ¬ ch ) ) → th ) → ( ( ( ph → ps ) → ( ch → F. ) ) → th ) ) ;;
+	step 6 : wff = imim1i (step 5) |- ( ( ( ( ( ph → ps ) → ( ch → F. ) ) → th ) → ta ) → ( ( ( ( ph → ps ) → ( ¬ th → ¬ ch ) ) → th ) → ta ) ) ;;
+	step 7 : wff = meredith () |- ( ( ( ( ( ph → ps ) → ( ¬ th → ¬ ch ) ) → th ) → ta ) → ( ( ta → ph ) → ( ch → ph ) ) ) ;;
+	step 8 : wff = syl (step 6, step 7) |- ( ( ( ( ( ph → ps ) → ( ch → F. ) ) → th ) → ta ) → ( ( ta → ph ) → ( ch → ph ) ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+     (Contributed by Anthony Hart, 17-Sep-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem merco1lem1 (ph : wff, ch : wff)  {
+	prop 1 : wff = |- ( ph → ( F. → ch ) ) ;;
+}
+
+proof of merco1lem1 {
+	step 1 : wff = merco1 () |- ( ( ( ( ( F. → ph ) → ( ph → F. ) ) → ( ph → F. ) ) → ( F. → ph ) ) → ( ( ( F. → ph ) → F. ) → ( ph → F. ) ) ) ;;
+	step 2 : wff = merco1 () |- ( ( ( ( ( ( F. → ph ) → ( ph → F. ) ) → ( ph → F. ) ) → ( F. → ph ) ) → ( ( ( F. → ph ) → F. ) → ( ph → F. ) ) ) → ( ( ( ( ( F. → ph ) → F. ) → ( ph → F. ) ) → ( F. → ph ) ) → ( ph → ( F. → ph ) ) ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( ( ( ( ( F. → ph ) → F. ) → ( ph → F. ) ) → ( F. → ph ) ) → ( ph → ( F. → ph ) ) ) ;;
+	step 4 : wff = merco1 () |- ( ( ( ( ( ( F. → ph ) → F. ) → ( ph → F. ) ) → ( F. → ph ) ) → ( ph → ( F. → ph ) ) ) → ( ( ( ph → ( F. → ph ) ) → ( F. → ph ) ) → ( ph → ( F. → ph ) ) ) ) ;;
+	step 5 : wff = ax-mp (step 3, step 4) |- ( ( ( ph → ( F. → ph ) ) → ( F. → ph ) ) → ( ph → ( F. → ph ) ) ) ;;
+	step 6 : wff = merco1 () |- ( ( ( ( ( F. → ph ) → ( ph → F. ) ) → ( ( ph → ( F. → ph ) ) → F. ) ) → ( ph → ( F. → ph ) ) ) → ( ( ( ph → ( F. → ph ) ) → F. ) → ( ph → F. ) ) ) ;;
+	step 7 : wff = merco1 () |- ( ( ( ( ( ( F. → ph ) → ( ph → F. ) ) → ( ( ph → ( F. → ph ) ) → F. ) ) → ( ph → ( F. → ph ) ) ) → ( ( ( ph → ( F. → ph ) ) → F. ) → ( ph → F. ) ) ) → ( ( ( ( ( ph → ( F. → ph ) ) → F. ) → ( ph → F. ) ) → ( F. → ph ) ) → ( ( ph → ( F. → ph ) ) → ( F. → ph ) ) ) ) ;;
+	step 8 : wff = ax-mp (step 6, step 7) |- ( ( ( ( ( ph → ( F. → ph ) ) → F. ) → ( ph → F. ) ) → ( F. → ph ) ) → ( ( ph → ( F. → ph ) ) → ( F. → ph ) ) ) ;;
+	step 9 : wff = merco1 () |- ( ( ( ( ( ( ph → ( F. → ph ) ) → F. ) → ( ph → F. ) ) → ( F. → ph ) ) → ( ( ph → ( F. → ph ) ) → ( F. → ph ) ) ) → ( ( ( ( ph → ( F. → ph ) ) → ( F. → ph ) ) → ( ph → ( F. → ph ) ) ) → ( ph → ( ph → ( F. → ph ) ) ) ) ) ;;
+	step 10 : wff = ax-mp (step 8, step 9) |- ( ( ( ( ph → ( F. → ph ) ) → ( F. → ph ) ) → ( ph → ( F. → ph ) ) ) → ( ph → ( ph → ( F. → ph ) ) ) ) ;;
+	step 11 : wff = ax-mp (step 5, step 10) |- ( ph → ( ph → ( F. → ph ) ) ) ;;
+	step 12 : wff = merco1 () |- ( ( ( ( ( F. → ph ) → ( ph → F. ) ) → ( ph → F. ) ) → ( F. → ch ) ) → ( ( ( F. → ch ) → F. ) → ( ph → F. ) ) ) ;;
+	step 13 : wff = merco1 () |- ( ( ( ( ( ( F. → ph ) → ( ph → F. ) ) → ( ph → F. ) ) → ( F. → ch ) ) → ( ( ( F. → ch ) → F. ) → ( ph → F. ) ) ) → ( ( ( ( ( F. → ch ) → F. ) → ( ph → F. ) ) → ( F. → ph ) ) → ( ph → ( F. → ph ) ) ) ) ;;
+	step 14 : wff = ax-mp (step 12, step 13) |- ( ( ( ( ( F. → ch ) → F. ) → ( ph → F. ) ) → ( F. → ph ) ) → ( ph → ( F. → ph ) ) ) ;;
+	step 15 : wff = merco1 () |- ( ( ( ( ( ( F. → ch ) → F. ) → ( ph → F. ) ) → ( F. → ph ) ) → ( ph → ( F. → ph ) ) ) → ( ( ( ph → ( F. → ph ) ) → ( F. → ch ) ) → ( ph → ( F. → ch ) ) ) ) ;;
+	step 16 : wff = ax-mp (step 14, step 15) |- ( ( ( ph → ( F. → ph ) ) → ( F. → ch ) ) → ( ph → ( F. → ch ) ) ) ;;
+	step 17 : wff = merco1 () |- ( ( ( ( ( F. → ch ) → ( ( ph → ( ph → ( F. → ph ) ) ) → F. ) ) → ( ( ph → ( F. → ph ) ) → F. ) ) → ( ph → ( F. → ch ) ) ) → ( ( ( ph → ( F. → ch ) ) → F. ) → ( ( ph → ( ph → ( F. → ph ) ) ) → F. ) ) ) ;;
+	step 18 : wff = merco1 () |- ( ( ( ( ( ( F. → ch ) → ( ( ph → ( ph → ( F. → ph ) ) ) → F. ) ) → ( ( ph → ( F. → ph ) ) → F. ) ) → ( ph → ( F. → ch ) ) ) → ( ( ( ph → ( F. → ch ) ) → F. ) → ( ( ph → ( ph → ( F. → ph ) ) ) → F. ) ) ) → ( ( ( ( ( ph → ( F. → ch ) ) → F. ) → ( ( ph → ( ph → ( F. → ph ) ) ) → F. ) ) → ( F. → ch ) ) → ( ( ph → ( F. → ph ) ) → ( F. → ch ) ) ) ) ;;
+	step 19 : wff = ax-mp (step 17, step 18) |- ( ( ( ( ( ph → ( F. → ch ) ) → F. ) → ( ( ph → ( ph → ( F. → ph ) ) ) → F. ) ) → ( F. → ch ) ) → ( ( ph → ( F. → ph ) ) → ( F. → ch ) ) ) ;;
+	step 20 : wff = merco1 () |- ( ( ( ( ( ( ph → ( F. → ch ) ) → F. ) → ( ( ph → ( ph → ( F. → ph ) ) ) → F. ) ) → ( F. → ch ) ) → ( ( ph → ( F. → ph ) ) → ( F. → ch ) ) ) → ( ( ( ( ph → ( F. → ph ) ) → ( F. → ch ) ) → ( ph → ( F. → ch ) ) ) → ( ( ph → ( ph → ( F. → ph ) ) ) → ( ph → ( F. → ch ) ) ) ) ) ;;
+	step 21 : wff = ax-mp (step 19, step 20) |- ( ( ( ( ph → ( F. → ph ) ) → ( F. → ch ) ) → ( ph → ( F. → ch ) ) ) → ( ( ph → ( ph → ( F. → ph ) ) ) → ( ph → ( F. → ch ) ) ) ) ;;
+	step 22 : wff = ax-mp (step 16, step 21) |- ( ( ph → ( ph → ( F. → ph ) ) ) → ( ph → ( F. → ch ) ) ) ;;
+	step 23 : wff = ax-mp (step 11, step 22) |- ( ph → ( F. → ch ) ) ;;
+	qed prop 1 = step 23 ;;
+}
+
+/* ~ tbw-ax4 rederived from ~ merco1 .  (Contributed by Anthony Hart,
+     17-Sep-2011.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem retbwax4 (ph : wff)  {
+	prop 1 : wff = |- ( F. → ph ) ;;
+}
+
+proof of retbwax4 {
+	step 1 : wff = merco1lem1 () |- ( ph → ( F. → ph ) ) ;;
+	step 2 : wff = merco1lem1 () |- ( ( ph → ( F. → ph ) ) → ( F. → ph ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( F. → ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* ~ tbw-ax2 rederived from ~ merco1 .  (Contributed by Anthony Hart,
+     17-Sep-2011.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem retbwax2 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ph → ( ps → ph ) ) ;;
+}
+
+proof of retbwax2 {
+	step 1 : wff = merco1lem1 () |- ( ( ( ( ( ph → ph ) → ph ) → ( ph → F. ) ) → ph ) → ( F. → ph ) ) ;;
+	step 2 : wff = merco1 () |- ( ( ( ( ( ( ph → ph ) → ph ) → ( ph → F. ) ) → ph ) → ( F. → ph ) ) → ( ( ( F. → ph ) → ( ph → ph ) ) → ( ph → ( ph → ph ) ) ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( ( ( F. → ph ) → ( ph → ph ) ) → ( ph → ( ph → ph ) ) ) ;;
+	step 4 : wff = merco1 () |- ( ( ( ( ( ph → ( ph → ph ) ) → ( ph → F. ) ) → ( ph → F. ) ) → F. ) → ( ( F. → ph ) → ( ph → ph ) ) ) ;;
+	step 5 : wff = merco1 () |- ( ( ( ( ( ( ph → ( ph → ph ) ) → ( ph → F. ) ) → ( ph → F. ) ) → F. ) → ( ( F. → ph ) → ( ph → ph ) ) ) → ( ( ( ( F. → ph ) → ( ph → ph ) ) → ( ph → ( ph → ph ) ) ) → ( ph → ( ph → ( ph → ph ) ) ) ) ) ;;
+	step 6 : wff = ax-mp (step 4, step 5) |- ( ( ( ( F. → ph ) → ( ph → ph ) ) → ( ph → ( ph → ph ) ) ) → ( ph → ( ph → ( ph → ph ) ) ) ) ;;
+	step 7 : wff = ax-mp (step 3, step 6) |- ( ph → ( ph → ( ph → ph ) ) ) ;;
+	step 8 : wff = merco1lem1 () |- ( ( ( ( ( ps → ph ) → ph ) → ( ph → F. ) ) → ph ) → ( F. → ph ) ) ;;
+	step 9 : wff = merco1 () |- ( ( ( ( ( ( ps → ph ) → ph ) → ( ph → F. ) ) → ph ) → ( F. → ph ) ) → ( ( ( F. → ph ) → ( ps → ph ) ) → ( ph → ( ps → ph ) ) ) ) ;;
+	step 10 : wff = ax-mp (step 8, step 9) |- ( ( ( F. → ph ) → ( ps → ph ) ) → ( ph → ( ps → ph ) ) ) ;;
+	step 11 : wff = merco1 () |- ( ( ( ( ( ph → ( ps → ph ) ) → ( ps → F. ) ) → ( ( ph → ( ph → ( ph → ph ) ) ) → F. ) ) → F. ) → ( ( F. → ph ) → ( ps → ph ) ) ) ;;
+	step 12 : wff = merco1 () |- ( ( ( ( ( ( ph → ( ps → ph ) ) → ( ps → F. ) ) → ( ( ph → ( ph → ( ph → ph ) ) ) → F. ) ) → F. ) → ( ( F. → ph ) → ( ps → ph ) ) ) → ( ( ( ( F. → ph ) → ( ps → ph ) ) → ( ph → ( ps → ph ) ) ) → ( ( ph → ( ph → ( ph → ph ) ) ) → ( ph → ( ps → ph ) ) ) ) ) ;;
+	step 13 : wff = ax-mp (step 11, step 12) |- ( ( ( ( F. → ph ) → ( ps → ph ) ) → ( ph → ( ps → ph ) ) ) → ( ( ph → ( ph → ( ph → ph ) ) ) → ( ph → ( ps → ph ) ) ) ) ;;
+	step 14 : wff = ax-mp (step 10, step 13) |- ( ( ph → ( ph → ( ph → ph ) ) ) → ( ph → ( ps → ph ) ) ) ;;
+	step 15 : wff = ax-mp (step 7, step 14) |- ( ph → ( ps → ph ) ) ;;
+	qed prop 1 = step 15 ;;
+}
+
+/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+     (Contributed by Anthony Hart, 17-Sep-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem merco1lem2 (ph : wff, ps : wff, ch : wff, ta : wff)  {
+	prop 1 : wff = |- ( ( ( ph → ps ) → ch ) → ( ( ( ps → ta ) → ( ph → F. ) ) → ch ) ) ;;
+}
+
+proof of merco1lem2 {
+	step 1 : wff = retbwax2 () |- ( ( ( ( ps → ta ) → ( ph → F. ) ) → F. ) → ( ( ch → ph ) → ( ( ( ps → ta ) → ( ph → F. ) ) → F. ) ) ) ;;
+	step 2 : wff = merco1 () |- ( ( ( ( ( ps → ta ) → ( ph → F. ) ) → F. ) → ( ( ch → ph ) → ( ( ( ps → ta ) → ( ph → F. ) ) → F. ) ) ) → ( ( ( ( ch → ph ) → ( ( ( ps → ta ) → ( ph → F. ) ) → F. ) ) → ps ) → ( ph → ps ) ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( ( ( ( ch → ph ) → ( ( ( ps → ta ) → ( ph → F. ) ) → F. ) ) → ps ) → ( ph → ps ) ) ;;
+	step 4 : wff = merco1 () |- ( ( ( ( ( ch → ph ) → ( ( ( ps → ta ) → ( ph → F. ) ) → F. ) ) → ps ) → ( ph → ps ) ) → ( ( ( ph → ps ) → ch ) → ( ( ( ps → ta ) → ( ph → F. ) ) → ch ) ) ) ;;
+	step 5 : wff = ax-mp (step 3, step 4) |- ( ( ( ph → ps ) → ch ) → ( ( ( ps → ta ) → ( ph → F. ) ) → ch ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+     (Contributed by Anthony Hart, 17-Sep-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem merco1lem3 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ( ph → ps ) → ( ch → F. ) ) → ( ch → ph ) ) ;;
+}
+
+proof of merco1lem3 {
+	step 1 : wff = merco1lem2 () |- ( ( ( ph → ph ) → F. ) → ( ( ( ph → ph ) → ( ph → F. ) ) → F. ) ) ;;
+	step 2 : wff = retbwax2 () |- ( ( ( ( ph → ph ) → ( ph → F. ) ) → ( ph → ph ) ) → ( ph → ( ( ( ph → ph ) → ( ph → F. ) ) → ( ph → ph ) ) ) ) ;;
+	step 3 : wff = merco1lem2 () |- ( ( ( ( ( ph → ph ) → ( ph → F. ) ) → ( ph → ph ) ) → ( ph → ( ( ( ph → ph ) → ( ph → F. ) ) → ( ph → ph ) ) ) ) → ( ( ( ( ph → ph ) → F. ) → ( ( ( ph → ph ) → ( ph → F. ) ) → F. ) ) → ( ph → ( ( ( ph → ph ) → ( ph → F. ) ) → ( ph → ph ) ) ) ) ) ;;
+	step 4 : wff = ax-mp (step 2, step 3) |- ( ( ( ( ph → ph ) → F. ) → ( ( ( ph → ph ) → ( ph → F. ) ) → F. ) ) → ( ph → ( ( ( ph → ph ) → ( ph → F. ) ) → ( ph → ph ) ) ) ) ;;
+	step 5 : wff = ax-mp (step 1, step 4) |- ( ph → ( ( ( ph → ph ) → ( ph → F. ) ) → ( ph → ph ) ) ) ;;
+	step 6 : wff = merco1lem2 () |- ( ( ( ch → ph ) → F. ) → ( ( ( ph → ps ) → ( ch → F. ) ) → F. ) ) ;;
+	step 7 : wff = retbwax2 () |- ( ( ( ( ph → ps ) → ( ch → F. ) ) → ( ch → ph ) ) → ( ( ph → ( ( ( ph → ph ) → ( ph → F. ) ) → ( ph → ph ) ) ) → ( ( ( ph → ps ) → ( ch → F. ) ) → ( ch → ph ) ) ) ) ;;
+	step 8 : wff = merco1lem2 () |- ( ( ( ( ( ph → ps ) → ( ch → F. ) ) → ( ch → ph ) ) → ( ( ph → ( ( ( ph → ph ) → ( ph → F. ) ) → ( ph → ph ) ) ) → ( ( ( ph → ps ) → ( ch → F. ) ) → ( ch → ph ) ) ) ) → ( ( ( ( ch → ph ) → F. ) → ( ( ( ph → ps ) → ( ch → F. ) ) → F. ) ) → ( ( ph → ( ( ( ph → ph ) → ( ph → F. ) ) → ( ph → ph ) ) ) → ( ( ( ph → ps ) → ( ch → F. ) ) → ( ch → ph ) ) ) ) ) ;;
+	step 9 : wff = ax-mp (step 7, step 8) |- ( ( ( ( ch → ph ) → F. ) → ( ( ( ph → ps ) → ( ch → F. ) ) → F. ) ) → ( ( ph → ( ( ( ph → ph ) → ( ph → F. ) ) → ( ph → ph ) ) ) → ( ( ( ph → ps ) → ( ch → F. ) ) → ( ch → ph ) ) ) ) ;;
+	step 10 : wff = ax-mp (step 6, step 9) |- ( ( ph → ( ( ( ph → ph ) → ( ph → F. ) ) → ( ph → ph ) ) ) → ( ( ( ph → ps ) → ( ch → F. ) ) → ( ch → ph ) ) ) ;;
+	step 11 : wff = ax-mp (step 5, step 10) |- ( ( ( ph → ps ) → ( ch → F. ) ) → ( ch → ph ) ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+     (Contributed by Anthony Hart, 17-Sep-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem merco1lem4 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ( ph → ps ) → ch ) → ( ps → ch ) ) ;;
+}
+
+proof of merco1lem4 {
+	step 1 : wff = merco1lem3 () |- ( ( ( ( ps → F. ) → ( ph → F. ) ) → ( ( ch → ph ) → F. ) ) → ( ( ch → ph ) → ( ps → F. ) ) ) ;;
+	step 2 : wff = merco1 () |- ( ( ( ( ( ps → F. ) → ( ph → F. ) ) → ( ( ch → ph ) → F. ) ) → ( ( ch → ph ) → ( ps → F. ) ) ) → ( ( ( ( ch → ph ) → ( ps → F. ) ) → ps ) → ( ph → ps ) ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( ( ( ( ch → ph ) → ( ps → F. ) ) → ps ) → ( ph → ps ) ) ;;
+	step 4 : wff = merco1 () |- ( ( ( ( ( ch → ph ) → ( ps → F. ) ) → ps ) → ( ph → ps ) ) → ( ( ( ph → ps ) → ch ) → ( ps → ch ) ) ) ;;
+	step 5 : wff = ax-mp (step 3, step 4) |- ( ( ( ph → ps ) → ch ) → ( ps → ch ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+     (Contributed by Anthony Hart, 17-Sep-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem merco1lem5 (ph : wff, ch : wff, ta : wff)  {
+	prop 1 : wff = |- ( ( ( ( ph → F. ) → ch ) → ta ) → ( ph → ta ) ) ;;
+}
+
+proof of merco1lem5 {
+	step 1 : wff = merco1lem4 () |- ( ( ( ( ta → ph ) → ( ph → F. ) ) → ch ) → ( ( ph → F. ) → ch ) ) ;;
+	step 2 : wff = merco1 () |- ( ( ( ( ( ta → ph ) → ( ph → F. ) ) → ch ) → ( ( ph → F. ) → ch ) ) → ( ( ( ( ph → F. ) → ch ) → ta ) → ( ph → ta ) ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( ( ( ( ph → F. ) → ch ) → ta ) → ( ph → ta ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+     (Contributed by Anthony Hart, 17-Sep-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem merco1lem6 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ph → ( ph → ps ) ) → ( ch → ( ph → ps ) ) ) ;;
+}
+
+proof of merco1lem6 {
+	step 1 : wff = merco1lem5 () |- ( ( ( ( ( ( ( ph → ps ) → F. ) → ( ch → F. ) ) → F. ) → F. ) → F. ) → ( ( ( ( ph → ps ) → F. ) → ( ch → F. ) ) → F. ) ) ;;
+	step 2 : wff = merco1lem3 () |- ( ( ( ( ( ( ( ( ph → ps ) → F. ) → ( ch → F. ) ) → F. ) → F. ) → F. ) → ( ( ( ( ph → ps ) → F. ) → ( ch → F. ) ) → F. ) ) → ( ( ( ( ph → ps ) → F. ) → ( ch → F. ) ) → ( ( ( ( ( ph → ps ) → F. ) → ( ch → F. ) ) → F. ) → F. ) ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( ( ( ( ph → ps ) → F. ) → ( ch → F. ) ) → ( ( ( ( ( ph → ps ) → F. ) → ( ch → F. ) ) → F. ) → F. ) ) ;;
+	step 4 : wff = merco1lem5 () |- ( ( ( ( ( ph → ps ) → F. ) → ( ch → F. ) ) → ( ( ( ( ( ph → ps ) → F. ) → ( ch → F. ) ) → F. ) → F. ) ) → ( ( ph → ps ) → ( ( ( ( ( ph → ps ) → F. ) → ( ch → F. ) ) → F. ) → F. ) ) ) ;;
+	step 5 : wff = ax-mp (step 3, step 4) |- ( ( ph → ps ) → ( ( ( ( ( ph → ps ) → F. ) → ( ch → F. ) ) → F. ) → F. ) ) ;;
+	step 6 : wff = merco1lem3 () |- ( ( ( ph → ps ) → ( ( ( ( ( ph → ps ) → F. ) → ( ch → F. ) ) → F. ) → F. ) ) → ( ( ( ( ( ph → ps ) → F. ) → ( ch → F. ) ) → F. ) → ph ) ) ;;
+	step 7 : wff = ax-mp (step 5, step 6) |- ( ( ( ( ( ph → ps ) → F. ) → ( ch → F. ) ) → F. ) → ph ) ;;
+	step 8 : wff = merco1 () |- ( ( ( ( ( ( ph → ps ) → F. ) → ( ch → F. ) ) → F. ) → ph ) → ( ( ph → ( ph → ps ) ) → ( ch → ( ph → ps ) ) ) ) ;;
+	step 9 : wff = ax-mp (step 7, step 8) |- ( ( ph → ( ph → ps ) ) → ( ch → ( ph → ps ) ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+     (Contributed by Anthony Hart, 17-Sep-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem merco1lem7 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ph → ( ( ( ps → ch ) → ps ) → ps ) ) ;;
+}
+
+proof of merco1lem7 {
+	step 1 : wff = merco1lem5 () |- ( ( ( ( ps → F. ) → ( ( ( ps → ch ) → ps ) → F. ) ) → ch ) → ( ps → ch ) ) ;;
+	step 2 : wff = merco1 () |- ( ( ( ( ( ps → F. ) → ( ( ( ps → ch ) → ps ) → F. ) ) → ch ) → ( ps → ch ) ) → ( ( ( ps → ch ) → ps ) → ( ( ( ps → ch ) → ps ) → ps ) ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( ( ( ps → ch ) → ps ) → ( ( ( ps → ch ) → ps ) → ps ) ) ;;
+	step 4 : wff = merco1lem6 () |- ( ( ( ( ps → ch ) → ps ) → ( ( ( ps → ch ) → ps ) → ps ) ) → ( ph → ( ( ( ps → ch ) → ps ) → ps ) ) ) ;;
+	step 5 : wff = ax-mp (step 3, step 4) |- ( ph → ( ( ( ps → ch ) → ps ) → ps ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* ~ tbw-ax3 rederived from ~ merco1 .  (Contributed by Anthony Hart,
+     17-Sep-2011.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem retbwax3 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ( ph → ps ) → ph ) → ph ) ;;
+}
+
+proof of retbwax3 {
+	step 1 : wff = retbwax2 () |- ( ph → ( ph → ph ) ) ;;
+	step 2 : wff = merco1lem7 () |- ( ( ph → ( ph → ph ) ) → ( ( ( ph → ps ) → ph ) → ph ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( ( ( ph → ps ) → ph ) → ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+     (Contributed by Anthony Hart, 17-Sep-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem merco1lem8 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ph → ( ( ps → ( ps → ch ) ) → ( ps → ch ) ) ) ;;
+}
+
+proof of merco1lem8 {
+	step 1 : wff = merco1lem6 () |- ( ( ps → ( ps → ch ) ) → ( ( ps → ( ps → ch ) ) → ( ps → ch ) ) ) ;;
+	step 2 : wff = merco1lem6 () |- ( ( ( ps → ( ps → ch ) ) → ( ( ps → ( ps → ch ) ) → ( ps → ch ) ) ) → ( ph → ( ( ps → ( ps → ch ) ) → ( ps → ch ) ) ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( ph → ( ( ps → ( ps → ch ) ) → ( ps → ch ) ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+     (Contributed by Anthony Hart, 18-Sep-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem merco1lem9 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ph → ( ph → ps ) ) → ( ph → ps ) ) ;;
+}
+
+proof of merco1lem9 {
+	step 1 : wff = merco1lem8 () |- ( ( F. → ph ) → ( ( ph → ( ph → ps ) ) → ( ph → ps ) ) ) ;;
+	step 2 : wff = merco1lem8 () |- ( ( ( F. → ph ) → ( ( ph → ( ph → ps ) ) → ( ph → ps ) ) ) → ( ( ph → ( ph → ps ) ) → ( ph → ps ) ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( ( ph → ( ph → ps ) ) → ( ph → ps ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+     (Contributed by Anthony Hart, 18-Sep-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem merco1lem10 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
+	prop 1 : wff = |- ( ( ( ( ( ph → ps ) → ch ) → ( ta → ch ) ) → ph ) → ( th → ph ) ) ;;
+}
+
+proof of merco1lem10 {
+	step 1 : wff = merco1 () |- ( ( ( ( ( ch → ph ) → ( ta → F. ) ) → ph ) → ( ph → ps ) ) → ( ( ( ph → ps ) → ch ) → ( ta → ch ) ) ) ;;
+	step 2 : wff = merco1lem2 () |- ( ( ( ( ( ( ch → ph ) → ( ta → F. ) ) → ph ) → ( ph → ps ) ) → ( ( ( ph → ps ) → ch ) → ( ta → ch ) ) ) → ( ( ( ( ph → ps ) → ( th → F. ) ) → ( ( ( ( ch → ph ) → ( ta → F. ) ) → ph ) → F. ) ) → ( ( ( ph → ps ) → ch ) → ( ta → ch ) ) ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( ( ( ( ph → ps ) → ( th → F. ) ) → ( ( ( ( ch → ph ) → ( ta → F. ) ) → ph ) → F. ) ) → ( ( ( ph → ps ) → ch ) → ( ta → ch ) ) ) ;;
+	step 4 : wff = merco1 () |- ( ( ( ( ( ph → ps ) → ( th → F. ) ) → ( ( ( ( ch → ph ) → ( ta → F. ) ) → ph ) → F. ) ) → ( ( ( ph → ps ) → ch ) → ( ta → ch ) ) ) → ( ( ( ( ( ph → ps ) → ch ) → ( ta → ch ) ) → ph ) → ( th → ph ) ) ) ;;
+	step 5 : wff = ax-mp (step 3, step 4) |- ( ( ( ( ( ph → ps ) → ch ) → ( ta → ch ) ) → ph ) → ( th → ph ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+     (Contributed by Anthony Hart, 18-Sep-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem merco1lem11 (ph : wff, ps : wff, ch : wff, ta : wff)  {
+	prop 1 : wff = |- ( ( ph → ps ) → ( ( ( ch → ( ph → ta ) ) → F. ) → ps ) ) ;;
+}
+
+proof of merco1lem11 {
+	step 1 : wff = merco1lem5 () |- ( ( ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → F. ) → F. ) → F. ) → ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → F. ) ) ;;
+	step 2 : wff = merco1lem3 () |- ( ( ( ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → F. ) → F. ) → F. ) → ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → F. ) ) → ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → F. ) → F. ) ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → F. ) → F. ) ) ;;
+	step 4 : wff = merco1lem4 () |- ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → F. ) → F. ) ) → ( ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) → ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → F. ) → F. ) ) ) ;;
+	step 5 : wff = ax-mp (step 3, step 4) |- ( ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) → ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → F. ) → F. ) ) ;;
+	step 6 : wff = merco1lem5 () |- ( ( ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) → ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → F. ) → F. ) ) → ( ( ch → ( ph → ta ) ) → ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → F. ) → F. ) ) ) ;;
+	step 7 : wff = ax-mp (step 5, step 6) |- ( ( ch → ( ph → ta ) ) → ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → F. ) → F. ) ) ;;
+	step 8 : wff = merco1lem4 () |- ( ( ( ch → ( ph → ta ) ) → ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → F. ) → F. ) ) → ( ( ph → ta ) → ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → F. ) → F. ) ) ) ;;
+	step 9 : wff = ax-mp (step 7, step 8) |- ( ( ph → ta ) → ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → F. ) → F. ) ) ;;
+	step 10 : wff = merco1 () |- ( ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → F. ) → ph ) → ( ( ph → ps ) → ( ( ( ch → ( ph → ta ) ) → F. ) → ps ) ) ) ;;
+	step 11 : wff = merco1lem2 () |- ( ( ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → F. ) → ph ) → ( ( ph → ps ) → ( ( ( ch → ( ph → ta ) ) → F. ) → ps ) ) ) → ( ( ( ph → ta ) → ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → F. ) → F. ) ) → ( ( ph → ps ) → ( ( ( ch → ( ph → ta ) ) → F. ) → ps ) ) ) ) ;;
+	step 12 : wff = ax-mp (step 10, step 11) |- ( ( ( ph → ta ) → ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → F. ) → F. ) ) → F. ) → F. ) ) → ( ( ph → ps ) → ( ( ( ch → ( ph → ta ) ) → F. ) → ps ) ) ) ;;
+	step 13 : wff = ax-mp (step 9, step 12) |- ( ( ph → ps ) → ( ( ( ch → ( ph → ta ) ) → F. ) → ps ) ) ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+     (Contributed by Anthony Hart, 18-Sep-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem merco1lem12 (ph : wff, ps : wff, ch : wff, ta : wff)  {
+	prop 1 : wff = |- ( ( ph → ps ) → ( ( ( ch → ( ph → ta ) ) → ph ) → ps ) ) ;;
+}
+
+proof of merco1lem12 {
+	step 1 : wff = merco1lem3 () |- ( ( ( ( ph → ta ) → ( ( ( ch → ( ph → ta ) ) → ph ) → F. ) ) → ( ch → F. ) ) → ( ch → ( ph → ta ) ) ) ;;
+	step 2 : wff = merco1 () |- ( ( ( ( ( ph → ta ) → ( ( ( ch → ( ph → ta ) ) → ph ) → F. ) ) → ( ch → F. ) ) → ( ch → ( ph → ta ) ) ) → ( ( ( ch → ( ph → ta ) ) → ph ) → ( ( ( ch → ( ph → ta ) ) → ph ) → ph ) ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( ( ( ch → ( ph → ta ) ) → ph ) → ( ( ( ch → ( ph → ta ) ) → ph ) → ph ) ) ;;
+	step 4 : wff = merco1lem9 () |- ( ( ( ( ch → ( ph → ta ) ) → ph ) → ( ( ( ch → ( ph → ta ) ) → ph ) → ph ) ) → ( ( ( ch → ( ph → ta ) ) → ph ) → ph ) ) ;;
+	step 5 : wff = ax-mp (step 3, step 4) |- ( ( ( ch → ( ph → ta ) ) → ph ) → ph ) ;;
+	step 6 : wff = merco1lem11 () |- ( ( ( ( ch → ( ph → ta ) ) → ph ) → ph ) → ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → ph ) → F. ) ) → F. ) → ph ) ) ;;
+	step 7 : wff = ax-mp (step 5, step 6) |- ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → ph ) → F. ) ) → F. ) → ph ) ;;
+	step 8 : wff = merco1 () |- ( ( ( ( ( ps → ph ) → ( ( ( ch → ( ph → ta ) ) → ph ) → F. ) ) → F. ) → ph ) → ( ( ph → ps ) → ( ( ( ch → ( ph → ta ) ) → ph ) → ps ) ) ) ;;
+	step 9 : wff = ax-mp (step 7, step 8) |- ( ( ph → ps ) → ( ( ( ch → ( ph → ta ) ) → ph ) → ps ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+     (Contributed by Anthony Hart, 18-Sep-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem merco1lem13 (ph : wff, ps : wff, ch : wff, ta : wff)  {
+	prop 1 : wff = |- ( ( ( ( ph → ps ) → ( ch → ps ) ) → ta ) → ( ph → ta ) ) ;;
+}
+
+proof of merco1lem13 {
+	step 1 : wff = merco1 () |- ( ( ( ( ( ps → ph ) → ( ch → F. ) ) → ph ) → ph ) → ( ( ph → ps ) → ( ch → ps ) ) ) ;;
+	step 2 : wff = merco1lem4 () |- ( ( ( ( ( ( ps → ph ) → ( ch → F. ) ) → ph ) → ph ) → ( ( ph → ps ) → ( ch → ps ) ) ) → ( ph → ( ( ph → ps ) → ( ch → ps ) ) ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( ph → ( ( ph → ps ) → ( ch → ps ) ) ) ;;
+	step 4 : wff = merco1lem12 () |- ( ( ph → ( ( ph → ps ) → ( ch → ps ) ) ) → ( ( ( ( ta → ph ) → ( ph → F. ) ) → ph ) → ( ( ph → ps ) → ( ch → ps ) ) ) ) ;;
+	step 5 : wff = ax-mp (step 3, step 4) |- ( ( ( ( ta → ph ) → ( ph → F. ) ) → ph ) → ( ( ph → ps ) → ( ch → ps ) ) ) ;;
+	step 6 : wff = merco1 () |- ( ( ( ( ( ta → ph ) → ( ph → F. ) ) → ph ) → ( ( ph → ps ) → ( ch → ps ) ) ) → ( ( ( ( ph → ps ) → ( ch → ps ) ) → ta ) → ( ph → ta ) ) ) ;;
+	step 7 : wff = ax-mp (step 5, step 6) |- ( ( ( ( ph → ps ) → ( ch → ps ) ) → ta ) → ( ph → ta ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+     (Contributed by Anthony Hart, 18-Sep-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem merco1lem14 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ( ( ph → ps ) → ps ) → ch ) → ( ph → ch ) ) ;;
+}
+
+proof of merco1lem14 {
+	step 1 : wff = merco1lem13 () |- ( ( ( ( ph → ps ) → ( ( ph → ps ) → ps ) ) → ( ( ph → ps ) → ps ) ) → ( ph → ( ( ph → ps ) → ps ) ) ) ;;
+	step 2 : wff = merco1lem8 () |- ( ( ( ( ( ph → ( ( ph → ps ) → ps ) ) → ph ) → ( ( ( ( ( ph → ps ) → ( ( ph → ps ) → ps ) ) → ( ( ph → ps ) → ps ) ) → ( ph → ( ( ph → ps ) → ps ) ) ) → F. ) ) → ph ) → ( ( ( ph → ps ) → ( ( ph → ps ) → ps ) ) → ( ( ph → ps ) → ps ) ) ) ;;
+	step 3 : wff = merco1 () |- ( ( ( ( ( ( ph → ( ( ph → ps ) → ps ) ) → ph ) → ( ( ( ( ( ph → ps ) → ( ( ph → ps ) → ps ) ) → ( ( ph → ps ) → ps ) ) → ( ph → ( ( ph → ps ) → ps ) ) ) → F. ) ) → ph ) → ( ( ( ph → ps ) → ( ( ph → ps ) → ps ) ) → ( ( ph → ps ) → ps ) ) ) → ( ( ( ( ( ph → ps ) → ( ( ph → ps ) → ps ) ) → ( ( ph → ps ) → ps ) ) → ( ph → ( ( ph → ps ) → ps ) ) ) → ( ( ( ( ( ph → ps ) → ( ( ph → ps ) → ps ) ) → ( ( ph → ps ) → ps ) ) → ( ph → ( ( ph → ps ) → ps ) ) ) → ( ph → ( ( ph → ps ) → ps ) ) ) ) ) ;;
+	step 4 : wff = ax-mp (step 2, step 3) |- ( ( ( ( ( ph → ps ) → ( ( ph → ps ) → ps ) ) → ( ( ph → ps ) → ps ) ) → ( ph → ( ( ph → ps ) → ps ) ) ) → ( ( ( ( ( ph → ps ) → ( ( ph → ps ) → ps ) ) → ( ( ph → ps ) → ps ) ) → ( ph → ( ( ph → ps ) → ps ) ) ) → ( ph → ( ( ph → ps ) → ps ) ) ) ) ;;
+	step 5 : wff = merco1lem9 () |- ( ( ( ( ( ( ph → ps ) → ( ( ph → ps ) → ps ) ) → ( ( ph → ps ) → ps ) ) → ( ph → ( ( ph → ps ) → ps ) ) ) → ( ( ( ( ( ph → ps ) → ( ( ph → ps ) → ps ) ) → ( ( ph → ps ) → ps ) ) → ( ph → ( ( ph → ps ) → ps ) ) ) → ( ph → ( ( ph → ps ) → ps ) ) ) ) → ( ( ( ( ( ph → ps ) → ( ( ph → ps ) → ps ) ) → ( ( ph → ps ) → ps ) ) → ( ph → ( ( ph → ps ) → ps ) ) ) → ( ph → ( ( ph → ps ) → ps ) ) ) ) ;;
+	step 6 : wff = ax-mp (step 4, step 5) |- ( ( ( ( ( ph → ps ) → ( ( ph → ps ) → ps ) ) → ( ( ph → ps ) → ps ) ) → ( ph → ( ( ph → ps ) → ps ) ) ) → ( ph → ( ( ph → ps ) → ps ) ) ) ;;
+	step 7 : wff = ax-mp (step 1, step 6) |- ( ph → ( ( ph → ps ) → ps ) ) ;;
+	step 8 : wff = merco1lem12 () |- ( ( ph → ( ( ph → ps ) → ps ) ) → ( ( ( ( ch → ph ) → ( ph → F. ) ) → ph ) → ( ( ph → ps ) → ps ) ) ) ;;
+	step 9 : wff = ax-mp (step 7, step 8) |- ( ( ( ( ch → ph ) → ( ph → F. ) ) → ph ) → ( ( ph → ps ) → ps ) ) ;;
+	step 10 : wff = merco1 () |- ( ( ( ( ( ch → ph ) → ( ph → F. ) ) → ph ) → ( ( ph → ps ) → ps ) ) → ( ( ( ( ph → ps ) → ps ) → ch ) → ( ph → ch ) ) ) ;;
+	step 11 : wff = ax-mp (step 9, step 10) |- ( ( ( ( ph → ps ) → ps ) → ch ) → ( ph → ch ) ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+     (Contributed by Anthony Hart, 18-Sep-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem merco1lem15 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ph → ps ) → ( ph → ( ch → ps ) ) ) ;;
+}
+
+proof of merco1lem15 {
+	step 1 : wff = merco1lem14 () |- ( ( ( ( ph → ps ) → ps ) → ( ch → ps ) ) → ( ph → ( ch → ps ) ) ) ;;
+	step 2 : wff = merco1lem13 () |- ( ( ( ( ( ph → ps ) → ps ) → ( ch → ps ) ) → ( ph → ( ch → ps ) ) ) → ( ( ph → ps ) → ( ph → ( ch → ps ) ) ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( ( ph → ps ) → ( ph → ( ch → ps ) ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+     (Contributed by Anthony Hart, 18-Sep-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem merco1lem16 (ph : wff, ps : wff, ch : wff, ta : wff)  {
+	prop 1 : wff = |- ( ( ( ph → ( ps → ch ) ) → ta ) → ( ( ph → ch ) → ta ) ) ;;
+}
+
+proof of merco1lem16 {
+	step 1 : wff = merco1lem15 () |- ( ( ph → ch ) → ( ph → ( ps → ch ) ) ) ;;
+	step 2 : wff = merco1lem11 () |- ( ( ( ph → ch ) → ( ph → ( ps → ch ) ) ) → ( ( ( ( ta → ph ) → ( ( ph → ch ) → F. ) ) → F. ) → ( ph → ( ps → ch ) ) ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( ( ( ( ta → ph ) → ( ( ph → ch ) → F. ) ) → F. ) → ( ph → ( ps → ch ) ) ) ;;
+	step 4 : wff = merco1 () |- ( ( ( ( ( ta → ph ) → ( ( ph → ch ) → F. ) ) → F. ) → ( ph → ( ps → ch ) ) ) → ( ( ( ph → ( ps → ch ) ) → ta ) → ( ( ph → ch ) → ta ) ) ) ;;
+	step 5 : wff = ax-mp (step 3, step 4) |- ( ( ( ph → ( ps → ch ) ) → ta ) → ( ( ph → ch ) → ta ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+     (Contributed by Anthony Hart, 18-Sep-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem merco1lem17 (ph : wff, ps : wff, ch : wff, ta : wff)  {
+	prop 1 : wff = |- ( ( ( ( ( ph → ps ) → ph ) → ch ) → ta ) → ( ( ph → ch ) → ta ) ) ;;
+}
+
+proof of merco1lem17 {
+	step 1 : wff = merco1lem11 () |- ( ( ( ( ph → ps ) → ph ) → ph ) → ( ( ( ( ch → ph ) → ( ( ( ph → ps ) → ph ) → F. ) ) → F. ) → ph ) ) ;;
+	step 2 : wff = merco1lem7 () |- ( ( ( ( ( ( ( ( ch → ph ) → ( ( ( ph → ps ) → ph ) → F. ) ) → F. ) → ph ) → ph ) → ( ( ( ( ( ph → ps ) → ph ) → ph ) → ( ( ( ( ch → ph ) → ( ( ( ph → ps ) → ph ) → F. ) ) → F. ) → ph ) ) → F. ) ) → ph ) → ( ( ( ph → ps ) → ph ) → ph ) ) ;;
+	step 3 : wff = merco1 () |- ( ( ( ( ( ( ( ( ( ch → ph ) → ( ( ( ph → ps ) → ph ) → F. ) ) → F. ) → ph ) → ph ) → ( ( ( ( ( ph → ps ) → ph ) → ph ) → ( ( ( ( ch → ph ) → ( ( ( ph → ps ) → ph ) → F. ) ) → F. ) → ph ) ) → F. ) ) → ph ) → ( ( ( ph → ps ) → ph ) → ph ) ) → ( ( ( ( ( ph → ps ) → ph ) → ph ) → ( ( ( ( ch → ph ) → ( ( ( ph → ps ) → ph ) → F. ) ) → F. ) → ph ) ) → ( ( ( ( ( ph → ps ) → ph ) → ph ) → ( ( ( ( ch → ph ) → ( ( ( ph → ps ) → ph ) → F. ) ) → F. ) → ph ) ) → ( ( ( ( ch → ph ) → ( ( ( ph → ps ) → ph ) → F. ) ) → F. ) → ph ) ) ) ) ;;
+	step 4 : wff = ax-mp (step 2, step 3) |- ( ( ( ( ( ph → ps ) → ph ) → ph ) → ( ( ( ( ch → ph ) → ( ( ( ph → ps ) → ph ) → F. ) ) → F. ) → ph ) ) → ( ( ( ( ( ph → ps ) → ph ) → ph ) → ( ( ( ( ch → ph ) → ( ( ( ph → ps ) → ph ) → F. ) ) → F. ) → ph ) ) → ( ( ( ( ch → ph ) → ( ( ( ph → ps ) → ph ) → F. ) ) → F. ) → ph ) ) ) ;;
+	step 5 : wff = merco1lem9 () |- ( ( ( ( ( ( ph → ps ) → ph ) → ph ) → ( ( ( ( ch → ph ) → ( ( ( ph → ps ) → ph ) → F. ) ) → F. ) → ph ) ) → ( ( ( ( ( ph → ps ) → ph ) → ph ) → ( ( ( ( ch → ph ) → ( ( ( ph → ps ) → ph ) → F. ) ) → F. ) → ph ) ) → ( ( ( ( ch → ph ) → ( ( ( ph → ps ) → ph ) → F. ) ) → F. ) → ph ) ) ) → ( ( ( ( ( ph → ps ) → ph ) → ph ) → ( ( ( ( ch → ph ) → ( ( ( ph → ps ) → ph ) → F. ) ) → F. ) → ph ) ) → ( ( ( ( ch → ph ) → ( ( ( ph → ps ) → ph ) → F. ) ) → F. ) → ph ) ) ) ;;
+	step 6 : wff = ax-mp (step 4, step 5) |- ( ( ( ( ( ph → ps ) → ph ) → ph ) → ( ( ( ( ch → ph ) → ( ( ( ph → ps ) → ph ) → F. ) ) → F. ) → ph ) ) → ( ( ( ( ch → ph ) → ( ( ( ph → ps ) → ph ) → F. ) ) → F. ) → ph ) ) ;;
+	step 7 : wff = ax-mp (step 1, step 6) |- ( ( ( ( ch → ph ) → ( ( ( ph → ps ) → ph ) → F. ) ) → F. ) → ph ) ;;
+	step 8 : wff = merco1 () |- ( ( ( ( ( ch → ph ) → ( ( ( ph → ps ) → ph ) → F. ) ) → F. ) → ph ) → ( ( ph → ch ) → ( ( ( ph → ps ) → ph ) → ch ) ) ) ;;
+	step 9 : wff = ax-mp (step 7, step 8) |- ( ( ph → ch ) → ( ( ( ph → ps ) → ph ) → ch ) ) ;;
+	step 10 : wff = merco1lem11 () |- ( ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → ( ph → ch ) ) → ( ( ( ( ( ( ( ph → ps ) → ph ) → ch ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → F. ) ) → F. ) → ( ph → ch ) ) ) ;;
+	step 11 : wff = merco1lem7 () |- ( ( ( ( ( ( ( ( ( ( ( ph → ps ) → ph ) → ch ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → F. ) ) → F. ) → ( ph → ch ) ) → ph ) → ( ( ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → ( ph → ch ) ) → ( ( ( ( ( ( ( ph → ps ) → ph ) → ch ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → F. ) ) → F. ) → ( ph → ch ) ) ) → F. ) ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → ( ph → ch ) ) ) ;;
+	step 12 : wff = merco1 () |- ( ( ( ( ( ( ( ( ( ( ( ( ph → ps ) → ph ) → ch ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → F. ) ) → F. ) → ( ph → ch ) ) → ph ) → ( ( ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → ( ph → ch ) ) → ( ( ( ( ( ( ( ph → ps ) → ph ) → ch ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → F. ) ) → F. ) → ( ph → ch ) ) ) → F. ) ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → ( ph → ch ) ) ) → ( ( ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → ( ph → ch ) ) → ( ( ( ( ( ( ( ph → ps ) → ph ) → ch ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → F. ) ) → F. ) → ( ph → ch ) ) ) → ( ( ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → ( ph → ch ) ) → ( ( ( ( ( ( ( ph → ps ) → ph ) → ch ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → F. ) ) → F. ) → ( ph → ch ) ) ) → ( ( ( ( ( ( ( ph → ps ) → ph ) → ch ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → F. ) ) → F. ) → ( ph → ch ) ) ) ) ) ;;
+	step 13 : wff = ax-mp (step 11, step 12) |- ( ( ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → ( ph → ch ) ) → ( ( ( ( ( ( ( ph → ps ) → ph ) → ch ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → F. ) ) → F. ) → ( ph → ch ) ) ) → ( ( ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → ( ph → ch ) ) → ( ( ( ( ( ( ( ph → ps ) → ph ) → ch ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → F. ) ) → F. ) → ( ph → ch ) ) ) → ( ( ( ( ( ( ( ph → ps ) → ph ) → ch ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → F. ) ) → F. ) → ( ph → ch ) ) ) ) ;;
+	step 14 : wff = merco1lem9 () |- ( ( ( ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → ( ph → ch ) ) → ( ( ( ( ( ( ( ph → ps ) → ph ) → ch ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → F. ) ) → F. ) → ( ph → ch ) ) ) → ( ( ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → ( ph → ch ) ) → ( ( ( ( ( ( ( ph → ps ) → ph ) → ch ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → F. ) ) → F. ) → ( ph → ch ) ) ) → ( ( ( ( ( ( ( ph → ps ) → ph ) → ch ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → F. ) ) → F. ) → ( ph → ch ) ) ) ) → ( ( ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → ( ph → ch ) ) → ( ( ( ( ( ( ( ph → ps ) → ph ) → ch ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → F. ) ) → F. ) → ( ph → ch ) ) ) → ( ( ( ( ( ( ( ph → ps ) → ph ) → ch ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → F. ) ) → F. ) → ( ph → ch ) ) ) ) ;;
+	step 15 : wff = ax-mp (step 13, step 14) |- ( ( ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → ( ph → ch ) ) → ( ( ( ( ( ( ( ph → ps ) → ph ) → ch ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → F. ) ) → F. ) → ( ph → ch ) ) ) → ( ( ( ( ( ( ( ph → ps ) → ph ) → ch ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → F. ) ) → F. ) → ( ph → ch ) ) ) ;;
+	step 16 : wff = ax-mp (step 10, step 15) |- ( ( ( ( ( ( ( ph → ps ) → ph ) → ch ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → F. ) ) → F. ) → ( ph → ch ) ) ;;
+	step 17 : wff = merco1 () |- ( ( ( ( ( ( ( ( ph → ps ) → ph ) → ch ) → ph ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → F. ) ) → F. ) → ( ph → ch ) ) → ( ( ( ph → ch ) → ( ( ( ph → ps ) → ph ) → ch ) ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → ( ( ( ph → ps ) → ph ) → ch ) ) ) ) ;;
+	step 18 : wff = ax-mp (step 16, step 17) |- ( ( ( ph → ch ) → ( ( ( ph → ps ) → ph ) → ch ) ) → ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → ( ( ( ph → ps ) → ph ) → ch ) ) ) ;;
+	step 19 : wff = ax-mp (step 9, step 18) |- ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → ( ( ( ph → ps ) → ph ) → ch ) ) ;;
+	step 20 : wff = merco1lem4 () |- ( ( ( ( ta → ph ) → ( ( ph → ch ) → F. ) ) → ch ) → ( ( ( ph → ch ) → F. ) → ch ) ) ;;
+	step 21 : wff = merco1lem16 () |- ( ( ( ( ( ph → ch ) → F. ) → ( ph → ch ) ) → ( ( ( ph → ps ) → ph ) → ch ) ) → ( ( ( ( ph → ch ) → F. ) → ch ) → ( ( ( ph → ps ) → ph ) → ch ) ) ) ;;
+	step 22 : wff = mpsyl (step 19, step 20, step 21) |- ( ( ( ( ta → ph ) → ( ( ph → ch ) → F. ) ) → ch ) → ( ( ( ph → ps ) → ph ) → ch ) ) ;;
+	step 23 : wff = merco1 () |- ( ( ( ( ( ta → ph ) → ( ( ph → ch ) → F. ) ) → ch ) → ( ( ( ph → ps ) → ph ) → ch ) ) → ( ( ( ( ( ph → ps ) → ph ) → ch ) → ta ) → ( ( ph → ch ) → ta ) ) ) ;;
+	step 24 : wff = ax-mp (step 22, step 23) |- ( ( ( ( ( ph → ps ) → ph ) → ch ) → ta ) → ( ( ph → ch ) → ta ) ) ;;
+	qed prop 1 = step 24 ;;
+}
+
+/* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco1 .
+     (Contributed by Anthony Hart, 18-Sep-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem merco1lem18 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ;;
+}
+
+proof of merco1lem18 {
+	step 1 : wff = merco1 () |- ( ( ( ( ( ( ps → ch ) → ps ) → ( ( ps → ph ) → F. ) ) → ( ( ps → ch ) → ps ) ) → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) ;;
+	step 2 : wff = merco1lem17 () |- ( ( ( ( ( ( ( ps → ch ) → ps ) → ( ( ps → ph ) → F. ) ) → ( ( ps → ch ) → ps ) ) → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → ( ( ( ( ps → ch ) → ps ) → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( ( ( ( ps → ch ) → ps ) → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) ;;
+	step 4 : wff = merco1lem17 () |- ( ( ( ( ( ps → ch ) → ps ) → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) ) ;;
+	step 5 : wff = ax-mp (step 3, step 4) |- ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) ;;
+	step 6 : wff = merco1lem5 () |- ( ( ( ( ( ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → F. ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → F. ) ) → F. ) → F. ) → F. ) → ( ( ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → F. ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → F. ) ) → F. ) ) ;;
+	step 7 : wff = merco1lem3 () |- ( ( ( ( ( ( ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → F. ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → F. ) ) → F. ) → F. ) → F. ) → ( ( ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → F. ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → F. ) ) → F. ) ) → ( ( ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → F. ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → F. ) ) → ( ( ( ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → F. ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → F. ) ) → F. ) → F. ) ) ) ;;
+	step 8 : wff = ax-mp (step 6, step 7) |- ( ( ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → F. ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → F. ) ) → ( ( ( ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → F. ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → F. ) ) → F. ) → F. ) ) ;;
+	step 9 : wff = merco1lem5 () |- ( ( ( ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → F. ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → F. ) ) → ( ( ( ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → F. ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → F. ) ) → F. ) → F. ) ) → ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → ( ( ( ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → F. ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → F. ) ) → F. ) → F. ) ) ) ;;
+	step 10 : wff = ax-mp (step 8, step 9) |- ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → ( ( ( ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → F. ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → F. ) ) → F. ) → F. ) ) ;;
+	step 11 : wff = merco1lem4 () |- ( ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → ( ( ( ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → F. ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → F. ) ) → F. ) → F. ) ) → ( ( ( ps → ph ) → ( ps → ch ) ) → ( ( ( ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → F. ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → F. ) ) → F. ) → F. ) ) ) ;;
+	step 12 : wff = ax-mp (step 10, step 11) |- ( ( ( ps → ph ) → ( ps → ch ) ) → ( ( ( ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → F. ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → F. ) ) → F. ) → F. ) ) ;;
+	step 13 : wff = merco1 () |- ( ( ( ( ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → F. ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → F. ) ) → F. ) → ( ps → ph ) ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) ) ) ;;
+	step 14 : wff = merco1lem2 () |- ( ( ( ( ( ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → F. ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → F. ) ) → F. ) → ( ps → ph ) ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) ) ) → ( ( ( ( ps → ph ) → ( ps → ch ) ) → ( ( ( ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → F. ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → F. ) ) → F. ) → F. ) ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) ) ) ) ;;
+	step 15 : wff = ax-mp (step 13, step 14) |- ( ( ( ( ps → ph ) → ( ps → ch ) ) → ( ( ( ( ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) → F. ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → F. ) ) → F. ) → F. ) ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) ) ) ;;
+	step 16 : wff = ax-mp (step 12, step 15) |- ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) ) ;;
+	step 17 : wff = merco1lem9 () |- ( ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) ) → ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) ) ;;
+	step 18 : wff = ax-mp (step 16, step 17) |- ( ( ( ps → ph ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) → ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ) ;;
+	step 19 : wff = ax-mp (step 5, step 18) |- ( ( ph → ( ps → ch ) ) → ( ( ps → ph ) → ( ps → ch ) ) ) ;;
+	qed prop 1 = step 19 ;;
+}
+
+/* ~ tbw-ax1 rederived from ~ merco1 .
+
+     This theorem, along with ~ retbwax2 , ~ retbwax3 , and ~ retbwax4 , shows
+     that ~ merco1 with ~ ax-mp can be used as a complete axiomatization of
+     propositional calculus.  (Contributed by Anthony Hart, 18-Sep-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem retbwax1 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ;;
+}
+
+proof of retbwax1 {
+	step 1 : wff = merco1lem18 () |- ( ( ps → ( ph → ch ) ) → ( ( ph → ps ) → ( ph → ch ) ) ) ;;
+	step 2 : wff = merco1lem16 () |- ( ( ( ps → ( ph → ch ) ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) ;;
+	step 4 : wff = merco1lem15 () |- ( ( ( ph → ps ) → ( ph → ch ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ;;
+	step 5 : wff = merco1lem15 () |- ( ( ( ( ph → ps ) → ( ph → ch ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) → ( ( ( ph → ps ) → ( ph → ch ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ) ;;
+	step 6 : wff = ax-mp (step 4, step 5) |- ( ( ( ph → ps ) → ( ph → ch ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ;;
+	step 7 : wff = merco1lem18 () |- ( ( ( ( ph → ps ) → ( ph → ch ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ) ;;
+	step 8 : wff = ax-mp (step 6, step 7) |- ( ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ;;
+	step 9 : wff = merco1lem14 () |- ( ( ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ) ;;
+	step 10 : wff = ax-mp (step 8, step 9) |- ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ;;
+	step 11 : wff = merco1lem14 () |- ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ph → ch ) ) → ( ( ps → ch ) → ( ph → ch ) ) ) ;;
+	step 12 : wff = merco1lem10 () |- ( ( ( ( ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → F. ) → F. ) → ( ( ( ( ps → ch ) → ( ph → ch ) ) → ph ) → F. ) ) → ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) ) → ( ( ( ph → ch ) → ph ) → ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) ) ) ;;
+	step 13 : wff = merco1 () |- ( ( ( ( ( ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → F. ) → F. ) → ( ( ( ( ps → ch ) → ( ph → ch ) ) → ph ) → F. ) ) → ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) ) → ( ( ( ph → ch ) → ph ) → ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) ) ) → ( ( ( ( ( ph → ch ) → ph ) → ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) ) → ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → F. ) ) → ( ( ( ( ps → ch ) → ( ph → ch ) ) → ph ) → ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → F. ) ) ) ) ;;
+	step 14 : wff = ax-mp (step 12, step 13) |- ( ( ( ( ( ph → ch ) → ph ) → ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) ) → ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → F. ) ) → ( ( ( ( ps → ch ) → ( ph → ch ) ) → ph ) → ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → F. ) ) ) ;;
+	step 15 : wff = merco1 () |- ( ( ( ( ( ( ph → ch ) → ph ) → ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) ) → ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → F. ) ) → ( ( ( ( ps → ch ) → ( ph → ch ) ) → ph ) → ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → F. ) ) ) → ( ( ( ( ( ( ps → ch ) → ( ph → ch ) ) → ph ) → ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → F. ) ) → ( ph → ch ) ) → ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ph → ch ) ) ) ) ;;
+	step 16 : wff = ax-mp (step 14, step 15) |- ( ( ( ( ( ( ps → ch ) → ( ph → ch ) ) → ph ) → ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → F. ) ) → ( ph → ch ) ) → ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ph → ch ) ) ) ;;
+	step 17 : wff = merco1 () |- ( ( ( ( ( ( ( ps → ch ) → ( ph → ch ) ) → ph ) → ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → F. ) ) → ( ph → ch ) ) → ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ph → ch ) ) ) → ( ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ph → ch ) ) → ( ( ps → ch ) → ( ph → ch ) ) ) → ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ;;
+	step 18 : wff = ax-mp (step 16, step 17) |- ( ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ph → ch ) ) → ( ( ps → ch ) → ( ph → ch ) ) ) → ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ;;
+	step 19 : wff = ax-mp (step 11, step 18) |- ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → ( ( ps → ch ) → ( ph → ch ) ) ) ;;
+	step 20 : wff = merco1lem15 () |- ( ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → ( ( ps → ch ) → ( ph → ch ) ) ) → ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ;;
+	step 21 : wff = ax-mp (step 19, step 20) |- ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ;;
+	step 22 : wff = merco1lem10 () |- ( ( ( ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ) → ( ( ( ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ) ) ;;
+	step 23 : wff = merco1lem9 () |- ( ( ( ( ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ) → ( ( ( ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ) ) → ( ( ( ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ) ) ;;
+	step 24 : wff = ax-mp (step 22, step 23) |- ( ( ( ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ) ;;
+	step 25 : wff = merco1lem13 () |- ( ( ( ( ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ) → ( ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) → ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ) ) ;;
+	step 26 : wff = ax-mp (step 24, step 25) |- ( ( ( ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → F. ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) → ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ) ;;
+	step 27 : wff = ax-mp (step 21, step 26) |- ( ( ( ps → ch ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) → ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ) ;;
+	step 28 : wff = ax-mp (step 10, step 27) |- ( ( ( ps → ch ) → ( ( ph → ps ) → ( ph → ch ) ) ) → ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ) ;;
+	step 29 : wff = ax-mp (step 3, step 28) |- ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ;;
+	qed prop 1 = step 29 ;;
+}
+
+

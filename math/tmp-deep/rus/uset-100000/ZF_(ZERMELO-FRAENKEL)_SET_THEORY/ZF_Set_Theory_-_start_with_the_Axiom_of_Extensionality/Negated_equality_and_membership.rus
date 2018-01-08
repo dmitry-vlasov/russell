@@ -1,0 +1,1539 @@
+import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Class_form_not-free_predicate.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Negated equality and membership
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* Declare new connectives. */
+
+constant {
+	symbol ≠ ;;
+	ascii =/= ;;
+	latex \ne ;;
+}
+
+/* Not equal to (equal sign with slash through it). */
+
+constant {
+	symbol ∉ ;;
+	ascii e/ ;;
+	latex \notin ;;
+}
+
+/* Not an element of (epsilon with slash through it). */
+
+/* Extend wff notation to include inequality. */
+
+rule wne (A : class, B : class) {
+	term : wff = # A ≠ B ;;
+}
+
+/* Extend wff notation to include negated membership. */
+
+rule wnel (A : class, B : class) {
+	term : wff = # A ∉ B ;;
+}
+
+/* Define inequality.  (Contributed by NM, 5-Aug-1993.) */
+
+definition df-ne (A : class, B : class)  {
+	defiendum : wff = # A ≠ B ;;
+	definiens : wff = # ¬ A = B ;;
+	-----------------------
+	prop : wff = |- ( defiendum ↔ definiens ) ;;
+}
+
+/* Define negated membership.  (Contributed by NM, 7-Aug-1994.) */
+
+definition df-nel (A : class, B : class)  {
+	defiendum : wff = # A ∉ B ;;
+	definiens : wff = # ¬ A ∈ B ;;
+	-----------------------
+	prop : wff = |- ( defiendum ↔ definiens ) ;;
+}
+
+/* Negation of inequality.  (Contributed by NM, 9-Jun-2006.) */
+
+theorem nne (A : class, B : class)  {
+	prop 1 : wff = |- ( ¬ A ≠ B ↔ A = B ) ;;
+}
+
+proof of nne {
+	step 1 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 2 : wff = con2bii (step 1) |- ( A = B ↔ ¬ A ≠ B ) ;;
+	step 3 : wff = bicomi (step 2) |- ( ¬ A ≠ B ↔ A = B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* No class is unequal to itself.  (Contributed by Stefan O'Rear,
+     1-Jan-2015.) */
+
+theorem neirr (A : class)  {
+	prop 1 : wff = |- ¬ A ≠ A ;;
+}
+
+proof of neirr {
+	step 1 : wff = eqid () |- A = A ;;
+	step 2 : wff = nne () |- ( ¬ A ≠ A ↔ A = A ) ;;
+	step 3 : wff = mpbir (step 1, step 2) |- ¬ A ≠ A ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Excluded middle with equality and inequality.  (Contributed by NM,
+     3-Feb-2012.) */
+
+theorem exmidne (A : class, B : class)  {
+	prop 1 : wff = |- ( A = B ∨ A ≠ B ) ;;
+}
+
+proof of exmidne {
+	step 1 : wff = exmid () |- ( A = B ∨ ¬ A = B ) ;;
+	step 2 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 3 : wff = orbi2i (step 2) |- ( ( A = B ∨ A ≠ B ) ↔ ( A = B ∨ ¬ A = B ) ) ;;
+	step 4 : wff = mpbir (step 1, step 3) |- ( A = B ∨ A ≠ B ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Law of noncontradiction with equality and inequality.  (Contributed by NM,
+     3-Feb-2012.) */
+
+theorem nonconne (A : class, B : class)  {
+	prop 1 : wff = |- ¬ ( A = B ∧ A ≠ B ) ;;
+}
+
+proof of nonconne {
+	step 1 : wff = pm3.24 () |- ¬ ( A = B ∧ ¬ A = B ) ;;
+	step 2 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 3 : wff = anbi2i (step 2) |- ( ( A = B ∧ A ≠ B ) ↔ ( A = B ∧ ¬ A = B ) ) ;;
+	step 4 : wff = mtbir (step 1, step 3) |- ¬ ( A = B ∧ A ≠ B ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Equality theorem for inequality.  (Contributed by NM, 19-Nov-1994.) */
+
+theorem neeq1 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A = B → ( A ≠ C ↔ B ≠ C ) ) ;;
+}
+
+proof of neeq1 {
+	step 1 : wff = eqeq1 () |- ( A = B → ( A = C ↔ B = C ) ) ;;
+	step 2 : wff = notbid (step 1) |- ( A = B → ( ¬ A = C ↔ ¬ B = C ) ) ;;
+	step 3 : wff = df-ne () |- ( A ≠ C ↔ ¬ A = C ) ;;
+	step 4 : wff = df-ne () |- ( B ≠ C ↔ ¬ B = C ) ;;
+	step 5 : wff = 3bitr4g (step 2, step 3, step 4) |- ( A = B → ( A ≠ C ↔ B ≠ C ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Equality theorem for inequality.  (Contributed by NM, 19-Nov-1994.) */
+
+theorem neeq2 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A = B → ( C ≠ A ↔ C ≠ B ) ) ;;
+}
+
+proof of neeq2 {
+	step 1 : wff = eqeq2 () |- ( A = B → ( C = A ↔ C = B ) ) ;;
+	step 2 : wff = notbid (step 1) |- ( A = B → ( ¬ C = A ↔ ¬ C = B ) ) ;;
+	step 3 : wff = df-ne () |- ( C ≠ A ↔ ¬ C = A ) ;;
+	step 4 : wff = df-ne () |- ( C ≠ B ↔ ¬ C = B ) ;;
+	step 5 : wff = 3bitr4g (step 2, step 3, step 4) |- ( A = B → ( C ≠ A ↔ C ≠ B ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Inference for inequality.  (Contributed by NM, 29-Apr-2005.) */
+
+theorem neeq1i (A : class, B : class, C : class)  {
+	hyp 1 : wff = |- A = B ;;
+	-----------------------
+	prop 1 : wff = |- ( A ≠ C ↔ B ≠ C ) ;;
+}
+
+proof of neeq1i {
+	step 1 : wff = neeq1 () |- ( A = B → ( A ≠ C ↔ B ≠ C ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( A ≠ C ↔ B ≠ C ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Inference for inequality.  (Contributed by NM, 29-Apr-2005.) */
+
+theorem neeq2i (A : class, B : class, C : class)  {
+	hyp 1 : wff = |- A = B ;;
+	-----------------------
+	prop 1 : wff = |- ( C ≠ A ↔ C ≠ B ) ;;
+}
+
+proof of neeq2i {
+	step 1 : wff = neeq2 () |- ( A = B → ( C ≠ A ↔ C ≠ B ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( C ≠ A ↔ C ≠ B ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Inference for inequality.  (Contributed by NM, 24-Jul-2012.) */
+
+theorem neeq12i (A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- A = B ;;
+	hyp 2 : wff = |- C = D ;;
+	-----------------------
+	prop 1 : wff = |- ( A ≠ C ↔ B ≠ D ) ;;
+}
+
+proof of neeq12i {
+	step 1 : wff = neeq2i (hyp 2) |- ( A ≠ C ↔ A ≠ D ) ;;
+	step 2 : wff = neeq1i (hyp 1) |- ( A ≠ D ↔ B ≠ D ) ;;
+	step 3 : wff = bitri (step 1, step 2) |- ( A ≠ C ↔ B ≠ D ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Deduction for inequality.  (Contributed by NM, 25-Oct-1999.) */
+
+theorem neeq1d (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A ≠ C ↔ B ≠ C ) ) ;;
+}
+
+proof of neeq1d {
+	step 1 : wff = neeq1 () |- ( A = B → ( A ≠ C ↔ B ≠ C ) ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ph → ( A ≠ C ↔ B ≠ C ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction for inequality.  (Contributed by NM, 25-Oct-1999.) */
+
+theorem neeq2d (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( C ≠ A ↔ C ≠ B ) ) ;;
+}
+
+proof of neeq2d {
+	step 1 : wff = neeq2 () |- ( A = B → ( C ≠ A ↔ C ≠ B ) ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ph → ( C ≠ A ↔ C ≠ B ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction for inequality.  (Contributed by NM, 24-Jul-2012.) */
+
+theorem neeq12d (ph : wff, A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	hyp 2 : wff = |- ( ph → C = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A ≠ C ↔ B ≠ D ) ) ;;
+}
+
+proof of neeq12d {
+	step 1 : wff = neeq1d (hyp 1) |- ( ph → ( A ≠ C ↔ B ≠ C ) ) ;;
+	step 2 : wff = neeq2d (hyp 2) |- ( ph → ( B ≠ C ↔ B ≠ D ) ) ;;
+	step 3 : wff = bitrd (step 1, step 2) |- ( ph → ( A ≠ C ↔ B ≠ D ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Deduction eliminating inequality definition.  (Contributed by Jonathan
+       Ben-Naim, 3-Jun-2011.) */
+
+theorem neneqd (ph : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → A ≠ B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ¬ A = B ) ;;
+}
+
+proof of neneqd {
+	step 1 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 2 : wff = sylib (hyp 1, step 1) |- ( ph → ¬ A = B ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Substitution of equal classes into an inequality.  (Contributed by NM,
+       4-Jul-2012.) */
+
+theorem eqnetri (A : class, B : class, C : class)  {
+	hyp 1 : wff = |- A = B ;;
+	hyp 2 : wff = |- B ≠ C ;;
+	-----------------------
+	prop 1 : wff = |- A ≠ C ;;
+}
+
+proof of eqnetri {
+	step 1 : wff = neeq1i (hyp 1) |- ( A ≠ C ↔ B ≠ C ) ;;
+	step 2 : wff = mpbir (hyp 2, step 1) |- A ≠ C ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Substitution of equal classes into an inequality.  (Contributed by NM,
+       4-Jul-2012.) */
+
+theorem eqnetrd (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	hyp 2 : wff = |- ( ph → B ≠ C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → A ≠ C ) ;;
+}
+
+proof of eqnetrd {
+	step 1 : wff = neeq1d (hyp 1) |- ( ph → ( A ≠ C ↔ B ≠ C ) ) ;;
+	step 2 : wff = mpbird (hyp 2, step 1) |- ( ph → A ≠ C ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Substitution of equal classes into an inequality.  (Contributed by NM,
+       4-Jul-2012.) */
+
+theorem eqnetrri (A : class, B : class, C : class)  {
+	hyp 1 : wff = |- A = B ;;
+	hyp 2 : wff = |- A ≠ C ;;
+	-----------------------
+	prop 1 : wff = |- B ≠ C ;;
+}
+
+proof of eqnetrri {
+	step 1 : wff = eqcomi (hyp 1) |- B = A ;;
+	step 2 : wff = eqnetri (step 1, hyp 2) |- B ≠ C ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Substitution of equal classes into an inequality.  (Contributed by NM,
+       4-Jul-2012.) */
+
+theorem eqnetrrd (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	hyp 2 : wff = |- ( ph → A ≠ C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → B ≠ C ) ;;
+}
+
+proof of eqnetrrd {
+	step 1 : wff = eqcomd (hyp 1) |- ( ph → B = A ) ;;
+	step 2 : wff = eqnetrd (step 1, hyp 2) |- ( ph → B ≠ C ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Substitution of equal classes into an inequality.  (Contributed by NM,
+       4-Jul-2012.) */
+
+theorem neeqtri (A : class, B : class, C : class)  {
+	hyp 1 : wff = |- A ≠ B ;;
+	hyp 2 : wff = |- B = C ;;
+	-----------------------
+	prop 1 : wff = |- A ≠ C ;;
+}
+
+proof of neeqtri {
+	step 1 : wff = neeq2i (hyp 2) |- ( A ≠ B ↔ A ≠ C ) ;;
+	step 2 : wff = mpbi (hyp 1, step 1) |- A ≠ C ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Substitution of equal classes into an inequality.  (Contributed by NM,
+       4-Jul-2012.) */
+
+theorem neeqtrd (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → A ≠ B ) ;;
+	hyp 2 : wff = |- ( ph → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → A ≠ C ) ;;
+}
+
+proof of neeqtrd {
+	step 1 : wff = neeq2d (hyp 2) |- ( ph → ( A ≠ B ↔ A ≠ C ) ) ;;
+	step 2 : wff = mpbid (hyp 1, step 1) |- ( ph → A ≠ C ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Substitution of equal classes into an inequality.  (Contributed by NM,
+       4-Jul-2012.) */
+
+theorem neeqtrri (A : class, B : class, C : class)  {
+	hyp 1 : wff = |- A ≠ B ;;
+	hyp 2 : wff = |- C = B ;;
+	-----------------------
+	prop 1 : wff = |- A ≠ C ;;
+}
+
+proof of neeqtrri {
+	step 1 : wff = eqcomi (hyp 2) |- B = C ;;
+	step 2 : wff = neeqtri (hyp 1, step 1) |- A ≠ C ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Substitution of equal classes into an inequality.  (Contributed by NM,
+       4-Jul-2012.) */
+
+theorem neeqtrrd (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- ( ph → A ≠ B ) ;;
+	hyp 2 : wff = |- ( ph → C = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → A ≠ C ) ;;
+}
+
+proof of neeqtrrd {
+	step 1 : wff = eqcomd (hyp 2) |- ( ph → B = C ) ;;
+	step 2 : wff = neeqtrd (hyp 1, step 1) |- ( ph → A ≠ C ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* B chained equality inference for inequality.  (Contributed by NM,
+       6-Jun-2012.) */
+
+theorem syl5eqner (ph : wff, A : class, B : class, C : class)  {
+	hyp 1 : wff = |- B = A ;;
+	hyp 2 : wff = |- ( ph → B ≠ C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → A ≠ C ) ;;
+}
+
+proof of syl5eqner {
+	step 1 : wff = neeq1i (hyp 1) |- ( B ≠ C ↔ A ≠ C ) ;;
+	step 2 : wff = sylib (hyp 2, step 1) |- ( ph → A ≠ C ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Substitution of equality into both sides of an inequality.  (Contributed
+       by NM, 24-Jul-2012.) */
+
+theorem 3netr3d (ph : wff, A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( ph → A ≠ B ) ;;
+	hyp 2 : wff = |- ( ph → A = C ) ;;
+	hyp 3 : wff = |- ( ph → B = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → C ≠ D ) ;;
+}
+
+proof of 3netr3d {
+	step 1 : wff = neeq12d (hyp 2, hyp 3) |- ( ph → ( A ≠ B ↔ C ≠ D ) ) ;;
+	step 2 : wff = mpbid (hyp 1, step 1) |- ( ph → C ≠ D ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Substitution of equality into both sides of an inequality.  (Contributed
+       by NM, 24-Jul-2012.) */
+
+theorem 3netr4d (ph : wff, A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( ph → A ≠ B ) ;;
+	hyp 2 : wff = |- ( ph → C = A ) ;;
+	hyp 3 : wff = |- ( ph → D = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → C ≠ D ) ;;
+}
+
+proof of 3netr4d {
+	step 1 : wff = neeq12d (hyp 2, hyp 3) |- ( ph → ( C ≠ D ↔ A ≠ B ) ) ;;
+	step 2 : wff = mpbird (hyp 1, step 1) |- ( ph → C ≠ D ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Substitution of equality into both sides of an inequality.  (Contributed
+       by NM, 24-Jul-2012.) */
+
+theorem 3netr3g (ph : wff, A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( ph → A ≠ B ) ;;
+	hyp 2 : wff = |- A = C ;;
+	hyp 3 : wff = |- B = D ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → C ≠ D ) ;;
+}
+
+proof of 3netr3g {
+	step 1 : wff = neeq12i (hyp 2, hyp 3) |- ( A ≠ B ↔ C ≠ D ) ;;
+	step 2 : wff = sylib (hyp 1, step 1) |- ( ph → C ≠ D ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Substitution of equality into both sides of an inequality.  (Contributed
+       by NM, 14-Jun-2012.) */
+
+theorem 3netr4g (ph : wff, A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( ph → A ≠ B ) ;;
+	hyp 2 : wff = |- C = A ;;
+	hyp 3 : wff = |- D = B ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → C ≠ D ) ;;
+}
+
+proof of 3netr4g {
+	step 1 : wff = neeq12i (hyp 2, hyp 3) |- ( C ≠ D ↔ A ≠ B ) ;;
+	step 2 : wff = sylibr (hyp 1, step 1) |- ( ph → C ≠ D ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction from equality to inequality.  (Contributed by NM,
+       9-Nov-2007.) */
+
+theorem necon3abii (ph : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( A = B ↔ ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ≠ B ↔ ¬ ph ) ;;
+}
+
+proof of necon3abii {
+	step 1 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 2 : wff = xchbinx (step 1, hyp 1) |- ( A ≠ B ↔ ¬ ph ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction from equality to inequality.  (Contributed by NM,
+       13-Apr-2007.) */
+
+theorem necon3bbii (ph : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph ↔ A = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ph ↔ A ≠ B ) ;;
+}
+
+proof of necon3bbii {
+	step 1 : wff = bicomi (hyp 1) |- ( A = B ↔ ph ) ;;
+	step 2 : wff = necon3abii (step 1) |- ( A ≠ B ↔ ¬ ph ) ;;
+	step 3 : wff = bicomi (step 2) |- ( ¬ ph ↔ A ≠ B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Inference from equality to inequality.  (Contributed by NM,
+       23-Feb-2005.) */
+
+theorem necon3bii (A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( A = B ↔ C = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ≠ B ↔ C ≠ D ) ;;
+}
+
+proof of necon3bii {
+	step 1 : wff = necon3abii (hyp 1) |- ( A ≠ B ↔ ¬ C = D ) ;;
+	step 2 : wff = df-ne () |- ( C ≠ D ↔ ¬ C = D ) ;;
+	step 3 : wff = bitr4i (step 1, step 2) |- ( A ≠ B ↔ C ≠ D ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Deduction from equality to inequality.  (Contributed by NM,
+       21-Mar-2007.) */
+
+theorem necon3abid (ph : wff, ps : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → ( A = B ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A ≠ B ↔ ¬ ps ) ) ;;
+}
+
+proof of necon3abid {
+	step 1 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 2 : wff = notbid (hyp 1) |- ( ph → ( ¬ A = B ↔ ¬ ps ) ) ;;
+	step 3 : wff = syl5bb (step 1, step 2) |- ( ph → ( A ≠ B ↔ ¬ ps ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Deduction from equality to inequality.  (Contributed by NM,
+       2-Jun-2007.) */
+
+theorem necon3bbid (ph : wff, ps : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → ( ps ↔ A = B ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ¬ ps ↔ A ≠ B ) ) ;;
+}
+
+proof of necon3bbid {
+	step 1 : wff = bicomd (hyp 1) |- ( ph → ( A = B ↔ ps ) ) ;;
+	step 2 : wff = necon3abid (step 1) |- ( ph → ( A ≠ B ↔ ¬ ps ) ) ;;
+	step 3 : wff = bicomd (step 2) |- ( ph → ( ¬ ps ↔ A ≠ B ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Deduction from equality to inequality.  (Contributed by NM,
+       23-Feb-2005.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem necon3bid (ph : wff, A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( ph → ( A = B ↔ C = D ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A ≠ B ↔ C ≠ D ) ) ;;
+}
+
+proof of necon3bid {
+	step 1 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 2 : wff = necon3bbid (hyp 1) |- ( ph → ( ¬ A = B ↔ C ≠ D ) ) ;;
+	step 3 : wff = syl5bb (step 1, step 2) |- ( ph → ( A ≠ B ↔ C ≠ D ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive law deduction for inequality.  (Contributed by NM,
+       2-Apr-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem necon3ad (ph : wff, ps : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → ( ps → A = B ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A ≠ B → ¬ ps ) ) ;;
+}
+
+proof of necon3ad {
+	step 1 : wff = nne () |- ( ¬ A ≠ B ↔ A = B ) ;;
+	step 2 : wff = syl6ibr (hyp 1, step 1) |- ( ph → ( ps → ¬ A ≠ B ) ) ;;
+	step 3 : wff = con2d (step 2) |- ( ph → ( A ≠ B → ¬ ps ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive law deduction for inequality.  (Contributed by NM,
+       2-Apr-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem necon3bd (ph : wff, ps : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → ( A = B → ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ¬ ps → A ≠ B ) ) ;;
+}
+
+proof of necon3bd {
+	step 1 : wff = nne () |- ( ¬ A ≠ B ↔ A = B ) ;;
+	step 2 : wff = syl5bi (step 1, hyp 1) |- ( ph → ( ¬ A ≠ B → ps ) ) ;;
+	step 3 : wff = con1d (step 2) |- ( ph → ( ¬ ps → A ≠ B ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive law deduction for inequality.  (Contributed by NM,
+       10-Jun-2006.) */
+
+theorem necon3d (ph : wff, A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( ph → ( A = B → C = D ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( C ≠ D → A ≠ B ) ) ;;
+}
+
+proof of necon3d {
+	step 1 : wff = necon3ad (hyp 1) |- ( ph → ( C ≠ D → ¬ A = B ) ) ;;
+	step 2 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 3 : wff = syl6ibr (step 1, step 2) |- ( ph → ( C ≠ D → A ≠ B ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       9-Aug-2006.) */
+
+theorem necon3i (A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( A = B → C = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( C ≠ D → A ≠ B ) ;;
+}
+
+proof of necon3i {
+	step 1 : wff = id () |- ( ( A = B → C = D ) → ( A = B → C = D ) ) ;;
+	step 2 : wff = necon3d (step 1) |- ( ( A = B → C = D ) → ( C ≠ D → A ≠ B ) ) ;;
+	step 3 : wff = ax-mp (hyp 1, step 2) |- ( C ≠ D → A ≠ B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       23-May-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem necon3ai (ph : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ≠ B → ¬ ph ) ;;
+}
+
+proof of necon3ai {
+	step 1 : wff = nne () |- ( ¬ A ≠ B ↔ A = B ) ;;
+	step 2 : wff = sylibr (hyp 1, step 1) |- ( ph → ¬ A ≠ B ) ;;
+	step 3 : wff = con2i (step 2) |- ( A ≠ B → ¬ ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       1-Jun-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem necon3bi (ph : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( A = B → ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ph → A ≠ B ) ;;
+}
+
+proof of necon3bi {
+	step 1 : wff = nne () |- ( ¬ A ≠ B ↔ A = B ) ;;
+	step 2 : wff = sylbi (step 1, hyp 1) |- ( ¬ A ≠ B → ph ) ;;
+	step 3 : wff = con1i (step 2) |- ( ¬ ph → A ≠ B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       12-Feb-2007.) */
+
+theorem necon1ai (ph : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ¬ ph → A = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ≠ B → ph ) ;;
+}
+
+proof of necon1ai {
+	step 1 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 2 : wff = con1i (hyp 1) |- ( ¬ A = B → ph ) ;;
+	step 3 : wff = sylbi (step 1, step 2) |- ( A ≠ B → ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       18-Mar-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem necon1bi (ph : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( A ≠ B → ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ph → A = B ) ;;
+}
+
+proof of necon1bi {
+	step 1 : wff = con3i (hyp 1) |- ( ¬ ph → ¬ A ≠ B ) ;;
+	step 2 : wff = nne () |- ( ¬ A ≠ B ↔ A = B ) ;;
+	step 3 : wff = sylib (step 1, step 2) |- ( ¬ ph → A = B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       18-Mar-2007.) */
+
+theorem necon1i (A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( A ≠ B → C = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( C ≠ D → A = B ) ;;
+}
+
+proof of necon1i {
+	step 1 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 2 : wff = sylbir (step 1, hyp 1) |- ( ¬ A = B → C = D ) ;;
+	step 3 : wff = necon1ai (step 2) |- ( C ≠ D → A = B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       16-Jan-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem necon2ai (ph : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( A = B → ¬ ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → A ≠ B ) ;;
+}
+
+proof of necon2ai {
+	step 1 : wff = nne () |- ( ¬ A ≠ B ↔ A = B ) ;;
+	step 2 : wff = sylbi (step 1, hyp 1) |- ( ¬ A ≠ B → ¬ ph ) ;;
+	step 3 : wff = con4i (step 2) |- ( ph → A ≠ B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       1-Apr-2007.) */
+
+theorem necon2bi (ph : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → A ≠ B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A = B → ¬ ph ) ;;
+}
+
+proof of necon2bi {
+	step 1 : wff = neneqd (hyp 1) |- ( ph → ¬ A = B ) ;;
+	step 2 : wff = con2i (step 1) |- ( A = B → ¬ ph ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       18-Mar-2007.) */
+
+theorem necon2i (A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( A = B → C ≠ D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( C = D → A ≠ B ) ;;
+}
+
+proof of necon2i {
+	step 1 : wff = neneqd (hyp 1) |- ( A = B → ¬ C = D ) ;;
+	step 2 : wff = necon2ai (step 1) |- ( C = D → A ≠ B ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       19-Apr-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem necon2ad (ph : wff, ps : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → ( A = B → ¬ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ps → A ≠ B ) ) ;;
+}
+
+proof of necon2ad {
+	step 1 : wff = nne () |- ( ¬ A ≠ B ↔ A = B ) ;;
+	step 2 : wff = syl5bi (step 1, hyp 1) |- ( ph → ( ¬ A ≠ B → ¬ ps ) ) ;;
+	step 3 : wff = con4d (step 2) |- ( ph → ( ps → A ≠ B ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       13-Apr-2007.) */
+
+theorem necon2bd (ph : wff, ps : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → ( ps → A ≠ B ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A = B → ¬ ps ) ) ;;
+}
+
+proof of necon2bd {
+	step 1 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 2 : wff = syl6ib (hyp 1, step 1) |- ( ph → ( ps → ¬ A = B ) ) ;;
+	step 3 : wff = con2d (step 2) |- ( ph → ( A = B → ¬ ps ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       28-Dec-2008.) */
+
+theorem necon2d (ph : wff, A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( ph → ( A = B → C ≠ D ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( C = D → A ≠ B ) ) ;;
+}
+
+proof of necon2d {
+	step 1 : wff = df-ne () |- ( C ≠ D ↔ ¬ C = D ) ;;
+	step 2 : wff = syl6ib (hyp 1, step 1) |- ( ph → ( A = B → ¬ C = D ) ) ;;
+	step 3 : wff = necon2ad (step 2) |- ( ph → ( C = D → A ≠ B ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       17-Mar-2007.) */
+
+theorem necon1abii (ph : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ¬ ph ↔ A = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ≠ B ↔ ph ) ;;
+}
+
+proof of necon1abii {
+	step 1 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 2 : wff = con1bii (hyp 1) |- ( ¬ A = B ↔ ph ) ;;
+	step 3 : wff = bitri (step 1, step 2) |- ( A ≠ B ↔ ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       17-Mar-2007.) */
+
+theorem necon1bbii (ph : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( A ≠ B ↔ ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ph ↔ A = B ) ;;
+}
+
+proof of necon1bbii {
+	step 1 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 2 : wff = bitr3i (step 1, hyp 1) |- ( ¬ A = B ↔ ph ) ;;
+	step 3 : wff = con1bii (step 2) |- ( ¬ ph ↔ A = B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive deduction for inequality.  (Contributed by NM,
+       21-Aug-2007.) */
+
+theorem necon1abid (ph : wff, ps : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → ( ¬ ps ↔ A = B ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A ≠ B ↔ ps ) ) ;;
+}
+
+proof of necon1abid {
+	step 1 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 2 : wff = con1bid (hyp 1) |- ( ph → ( ¬ A = B ↔ ps ) ) ;;
+	step 3 : wff = syl5bb (step 1, step 2) |- ( ph → ( A ≠ B ↔ ps ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       31-Jan-2008.) */
+
+theorem necon1bbid (ph : wff, ps : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → ( A ≠ B ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ¬ ps ↔ A = B ) ) ;;
+}
+
+proof of necon1bbid {
+	step 1 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 2 : wff = syl5bbr (step 1, hyp 1) |- ( ph → ( ¬ A = B ↔ ps ) ) ;;
+	step 3 : wff = con1bid (step 2) |- ( ph → ( ¬ ps ↔ A = B ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       2-Mar-2007.) */
+
+theorem necon2abii (ph : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( A = B ↔ ¬ ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph ↔ A ≠ B ) ;;
+}
+
+proof of necon2abii {
+	step 1 : wff = bicomi (hyp 1) |- ( ¬ ph ↔ A = B ) ;;
+	step 2 : wff = necon1abii (step 1) |- ( A ≠ B ↔ ph ) ;;
+	step 3 : wff = bicomi (step 2) |- ( ph ↔ A ≠ B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       13-Apr-2007.) */
+
+theorem necon2bbii (ph : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph ↔ A ≠ B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A = B ↔ ¬ ph ) ;;
+}
+
+proof of necon2bbii {
+	step 1 : wff = bicomi (hyp 1) |- ( A ≠ B ↔ ph ) ;;
+	step 2 : wff = necon1bbii (step 1) |- ( ¬ ph ↔ A = B ) ;;
+	step 3 : wff = bicomi (step 2) |- ( A = B ↔ ¬ ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive deduction for inequality.  (Contributed by NM,
+       18-Jul-2007.) */
+
+theorem necon2abid (ph : wff, ps : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → ( A = B ↔ ¬ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ps ↔ A ≠ B ) ) ;;
+}
+
+proof of necon2abid {
+	step 1 : wff = con2bid (hyp 1) |- ( ph → ( ps ↔ ¬ A = B ) ) ;;
+	step 2 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 3 : wff = syl6bbr (step 1, step 2) |- ( ph → ( ps ↔ A ≠ B ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive deduction for inequality.  (Contributed by NM,
+       13-Apr-2007.) */
+
+theorem necon2bbid (ph : wff, ps : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → ( ps ↔ A ≠ B ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A = B ↔ ¬ ps ) ) ;;
+}
+
+proof of necon2bbid {
+	step 1 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 2 : wff = syl6bb (hyp 1, step 1) |- ( ph → ( ps ↔ ¬ A = B ) ) ;;
+	step 3 : wff = con2bid (step 2) |- ( ph → ( A = B ↔ ¬ ps ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       16-Jan-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem necon4ai (ph : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( A ≠ B → ¬ ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → A = B ) ;;
+}
+
+proof of necon4ai {
+	step 1 : wff = con2i (hyp 1) |- ( ph → ¬ A ≠ B ) ;;
+	step 2 : wff = nne () |- ( ¬ A ≠ B ↔ A = B ) ;;
+	step 3 : wff = sylib (step 1, step 2) |- ( ph → A = B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       17-Mar-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem necon4i (A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( A ≠ B → C ≠ D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( C = D → A = B ) ;;
+}
+
+proof of necon4i {
+	step 1 : wff = necon2bi (hyp 1) |- ( C = D → ¬ A ≠ B ) ;;
+	step 2 : wff = nne () |- ( ¬ A ≠ B ↔ A = B ) ;;
+	step 3 : wff = sylib (step 1, step 2) |- ( C = D → A = B ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       2-Apr-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem necon4ad (ph : wff, ps : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → ( A ≠ B → ¬ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ps → A = B ) ) ;;
+}
+
+proof of necon4ad {
+	step 1 : wff = con2d (hyp 1) |- ( ph → ( ps → ¬ A ≠ B ) ) ;;
+	step 2 : wff = nne () |- ( ¬ A ≠ B ↔ A = B ) ;;
+	step 3 : wff = syl6ib (step 1, step 2) |- ( ph → ( ps → A = B ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       1-Jun-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem necon4bd (ph : wff, ps : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → ( ¬ ps → A ≠ B ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A = B → ps ) ) ;;
+}
+
+proof of necon4bd {
+	step 1 : wff = nne () |- ( ¬ A ≠ B ↔ A = B ) ;;
+	step 2 : wff = con1d (hyp 1) |- ( ph → ( ¬ A ≠ B → ps ) ) ;;
+	step 3 : wff = syl5bir (step 1, step 2) |- ( ph → ( A = B → ps ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive inference for inequality.  (Contributed by NM,
+       2-Apr-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem necon4d (ph : wff, A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( ph → ( A ≠ B → C ≠ D ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( C = D → A = B ) ) ;;
+}
+
+proof of necon4d {
+	step 1 : wff = necon2bd (hyp 1) |- ( ph → ( C = D → ¬ A ≠ B ) ) ;;
+	step 2 : wff = nne () |- ( ¬ A ≠ B ↔ A = B ) ;;
+	step 3 : wff = syl6ib (step 1, step 2) |- ( ph → ( C = D → A = B ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive law deduction for inequality.  (Contributed by NM,
+       11-Jan-2008.) */
+
+theorem necon4abid (ph : wff, ps : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → ( A ≠ B ↔ ¬ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A = B ↔ ps ) ) ;;
+}
+
+proof of necon4abid {
+	step 1 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 2 : wff = syl5bbr (step 1, hyp 1) |- ( ph → ( ¬ A = B ↔ ¬ ps ) ) ;;
+	step 3 : wff = con4bid (step 2) |- ( ph → ( A = B ↔ ps ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive law deduction for inequality.  (Contributed by NM,
+       9-May-2012.) */
+
+theorem necon4bbid (ph : wff, ps : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → ( ¬ ps ↔ A ≠ B ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ps ↔ A = B ) ) ;;
+}
+
+proof of necon4bbid {
+	step 1 : wff = bicomd (hyp 1) |- ( ph → ( A ≠ B ↔ ¬ ps ) ) ;;
+	step 2 : wff = necon4abid (step 1) |- ( ph → ( A = B ↔ ps ) ) ;;
+	step 3 : wff = bicomd (step 2) |- ( ph → ( ps ↔ A = B ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive law deduction for inequality.  (Contributed by NM,
+       29-Jun-2007.) */
+
+theorem necon4bid (ph : wff, A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( ph → ( A ≠ B ↔ C ≠ D ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A = B ↔ C = D ) ) ;;
+}
+
+proof of necon4bid {
+	step 1 : wff = necon2bbid (hyp 1) |- ( ph → ( C = D ↔ ¬ A ≠ B ) ) ;;
+	step 2 : wff = nne () |- ( ¬ A ≠ B ↔ A = B ) ;;
+	step 3 : wff = syl6rbb (step 1, step 2) |- ( ph → ( A = B ↔ C = D ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive deduction for inequality.  (Contributed by NM,
+       2-Apr-2007.) */
+
+theorem necon1ad (ph : wff, ps : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → ( ¬ ps → A = B ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( A ≠ B → ps ) ) ;;
+}
+
+proof of necon1ad {
+	step 1 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 2 : wff = con1d (hyp 1) |- ( ph → ( ¬ A = B → ps ) ) ;;
+	step 3 : wff = syl5bi (step 1, step 2) |- ( ph → ( A ≠ B → ps ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive deduction for inequality.  (Contributed by NM,
+       21-Mar-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem necon1bd (ph : wff, ps : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → ( A ≠ B → ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ¬ ps → A = B ) ) ;;
+}
+
+proof of necon1bd {
+	step 1 : wff = con3d (hyp 1) |- ( ph → ( ¬ ps → ¬ A ≠ B ) ) ;;
+	step 2 : wff = nne () |- ( ¬ A ≠ B ↔ A = B ) ;;
+	step 3 : wff = syl6ib (step 1, step 2) |- ( ph → ( ¬ ps → A = B ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contrapositive law deduction for inequality.  (Contributed by NM,
+       28-Dec-2008.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem necon1d (ph : wff, A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( ph → ( A ≠ B → C = D ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( C ≠ D → A = B ) ) ;;
+}
+
+proof of necon1d {
+	step 1 : wff = nne () |- ( ¬ C ≠ D ↔ C = D ) ;;
+	step 2 : wff = syl6ibr (hyp 1, step 1) |- ( ph → ( A ≠ B → ¬ C ≠ D ) ) ;;
+	step 3 : wff = necon4ad (step 2) |- ( ph → ( C ≠ D → A = B ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* If it is not the case that two classes are equal, they are unequal.
+       Converse of ~ neneqd .  One-way deduction form of ~ df-ne .
+       (Contributed by David Moews, 28-Feb-2017.) */
+
+theorem neneqad (ph : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → ¬ A = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → A ≠ B ) ;;
+}
+
+proof of neneqad {
+	step 1 : wff = con2i (hyp 1) |- ( A = B → ¬ ph ) ;;
+	step 2 : wff = necon2ai (step 1) |- ( ph → A ≠ B ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Contraposition law for inequality.  (Contributed by NM, 28-Dec-2008.) */
+
+theorem nebi (A : class, B : class, C : class, D : class)  {
+	prop 1 : wff = |- ( ( A = B ↔ C = D ) ↔ ( A ≠ B ↔ C ≠ D ) ) ;;
+}
+
+proof of nebi {
+	step 1 : wff = id () |- ( ( A = B ↔ C = D ) → ( A = B ↔ C = D ) ) ;;
+	step 2 : wff = necon3bid (step 1) |- ( ( A = B ↔ C = D ) → ( A ≠ B ↔ C ≠ D ) ) ;;
+	step 3 : wff = id () |- ( ( A ≠ B ↔ C ≠ D ) → ( A ≠ B ↔ C ≠ D ) ) ;;
+	step 4 : wff = necon4bid (step 3) |- ( ( A ≠ B ↔ C ≠ D ) → ( A = B ↔ C = D ) ) ;;
+	step 5 : wff = impbii (step 2, step 4) |- ( ( A = B ↔ C = D ) ↔ ( A ≠ B ↔ C ≠ D ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Theorem *13.18 in [WhiteheadRussell] p. 178.  (Contributed by Andrew
+     Salmon, 3-Jun-2011.) */
+
+theorem pm13.18 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( A = B ∧ A ≠ C ) → B ≠ C ) ;;
+}
+
+proof of pm13.18 {
+	step 1 : wff = eqeq1 () |- ( A = B → ( A = C ↔ B = C ) ) ;;
+	step 2 : wff = biimprd (step 1) |- ( A = B → ( B = C → A = C ) ) ;;
+	step 3 : wff = necon3d (step 2) |- ( A = B → ( A ≠ C → B ≠ C ) ) ;;
+	step 4 : wff = imp (step 3) |- ( ( A = B ∧ A ≠ C ) → B ≠ C ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Theorem *13.181 in [WhiteheadRussell] p. 178.  (Contributed by Andrew
+     Salmon, 3-Jun-2011.) */
+
+theorem pm13.181 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( A = B ∧ B ≠ C ) → A ≠ C ) ;;
+}
+
+proof of pm13.181 {
+	step 1 : wff = eqcom () |- ( A = B ↔ B = A ) ;;
+	step 2 : wff = pm13.18 () |- ( ( B = A ∧ B ≠ C ) → A ≠ C ) ;;
+	step 3 : wff = sylanb (step 1, step 2) |- ( ( A = B ∧ B ≠ C ) → A ≠ C ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A contradiction implies anything.  Equality/inequality deduction form.
+       (Contributed by David Moews, 28-Feb-2017.) */
+
+theorem pm2.21ddne (ph : wff, ps : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	hyp 2 : wff = |- ( ph → A ≠ B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ps ) ;;
+}
+
+proof of pm2.21ddne {
+	step 1 : wff = neneqd (hyp 2) |- ( ph → ¬ A = B ) ;;
+	step 2 : wff = pm2.21dd (hyp 1, step 1) |- ( ph → ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction eliminating an inequality in an antecedent.  (Contributed by
+       NM, 24-May-2006.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem pm2.61ne (ph : wff, ps : wff, ch : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( A = B → ( ps ↔ ch ) ) ;;
+	hyp 2 : wff = |- ( ( ph ∧ A ≠ B ) → ps ) ;;
+	hyp 3 : wff = |- ( ph → ch ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ps ) ;;
+}
+
+proof of pm2.61ne {
+	step 1 : wff = expcom (hyp 2) |- ( A ≠ B → ( ph → ps ) ) ;;
+	step 2 : wff = nne () |- ( ¬ A ≠ B ↔ A = B ) ;;
+	step 3 : wff = syl5ibr (hyp 3, hyp 1) |- ( A = B → ( ph → ps ) ) ;;
+	step 4 : wff = sylbi (step 2, step 3) |- ( ¬ A ≠ B → ( ph → ps ) ) ;;
+	step 5 : wff = pm2.61i (step 1, step 4) |- ( ph → ps ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Inference eliminating an inequality in an antecedent.  (Contributed by
+       NM, 16-Jan-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem pm2.61ine (ph : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( A = B → ph ) ;;
+	hyp 2 : wff = |- ( A ≠ B → ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ph ;;
+}
+
+proof of pm2.61ine {
+	step 1 : wff = nne () |- ( ¬ A ≠ B ↔ A = B ) ;;
+	step 2 : wff = sylbi (step 1, hyp 1) |- ( ¬ A ≠ B → ph ) ;;
+	step 3 : wff = pm2.61i (hyp 2, step 2) |- ph ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Deduction eliminating an inequality in an antecedent.  (Contributed by
+       NM, 1-Jun-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem pm2.61dne (ph : wff, ps : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → ( A = B → ps ) ) ;;
+	hyp 2 : wff = |- ( ph → ( A ≠ B → ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ps ) ;;
+}
+
+proof of pm2.61dne {
+	step 1 : wff = nne () |- ( ¬ A ≠ B ↔ A = B ) ;;
+	step 2 : wff = syl5bi (step 1, hyp 1) |- ( ph → ( ¬ A ≠ B → ps ) ) ;;
+	step 3 : wff = pm2.61d (hyp 2, step 2) |- ( ph → ps ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Deduction eliminating an inequality in an antecedent.  (Contributed by
+       NM, 30-Nov-2011.) */
+
+theorem pm2.61dane (ph : wff, ps : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ( ph ∧ A = B ) → ps ) ;;
+	hyp 2 : wff = |- ( ( ph ∧ A ≠ B ) → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ps ) ;;
+}
+
+proof of pm2.61dane {
+	step 1 : wff = ex (hyp 1) |- ( ph → ( A = B → ps ) ) ;;
+	step 2 : wff = ex (hyp 2) |- ( ph → ( A ≠ B → ps ) ) ;;
+	step 3 : wff = pm2.61dne (step 1, step 2) |- ( ph → ps ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Deduction eliminating two inequalities in an antecedent.  (Contributed
+       by NM, 29-May-2013.) */
+
+theorem pm2.61da2ne (ph : wff, ps : wff, A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- ( ( ph ∧ A = B ) → ps ) ;;
+	hyp 2 : wff = |- ( ( ph ∧ C = D ) → ps ) ;;
+	hyp 3 : wff = |- ( ( ph ∧ ( A ≠ B ∧ C ≠ D ) ) → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ps ) ;;
+}
+
+proof of pm2.61da2ne {
+	step 1 : wff = adantlr (hyp 2) |- ( ( ( ph ∧ A ≠ B ) ∧ C = D ) → ps ) ;;
+	step 2 : wff = anassrs (hyp 3) |- ( ( ( ph ∧ A ≠ B ) ∧ C ≠ D ) → ps ) ;;
+	step 3 : wff = pm2.61dane (step 1, step 2) |- ( ( ph ∧ A ≠ B ) → ps ) ;;
+	step 4 : wff = pm2.61dane (hyp 1, step 3) |- ( ph → ps ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Deduction eliminating three inequalities in an antecedent.  (Contributed
+       by NM, 15-Jun-2013.) */
+
+theorem pm2.61da3ne (ph : wff, ps : wff, A : class, B : class, C : class, D : class, E : class, F : class)  {
+	hyp 1 : wff = |- ( ( ph ∧ A = B ) → ps ) ;;
+	hyp 2 : wff = |- ( ( ph ∧ C = D ) → ps ) ;;
+	hyp 3 : wff = |- ( ( ph ∧ E = F ) → ps ) ;;
+	hyp 4 : wff = |- ( ( ph ∧ ( A ≠ B ∧ C ≠ D ∧ E ≠ F ) ) → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ps ) ;;
+}
+
+proof of pm2.61da3ne {
+	step 1 : wff = adantlr (hyp 3) |- ( ( ( ph ∧ ( A ≠ B ∧ C ≠ D ) ) ∧ E = F ) → ps ) ;;
+	step 2 : wff = simpll () |- ( ( ( ph ∧ ( A ≠ B ∧ C ≠ D ) ) ∧ E ≠ F ) → ph ) ;;
+	step 3 : wff = simplrl () |- ( ( ( ph ∧ ( A ≠ B ∧ C ≠ D ) ) ∧ E ≠ F ) → A ≠ B ) ;;
+	step 4 : wff = simplrr () |- ( ( ( ph ∧ ( A ≠ B ∧ C ≠ D ) ) ∧ E ≠ F ) → C ≠ D ) ;;
+	step 5 : wff = simpr () |- ( ( ( ph ∧ ( A ≠ B ∧ C ≠ D ) ) ∧ E ≠ F ) → E ≠ F ) ;;
+	step 6 : wff = syl13anc (step 2, step 3, step 4, step 5, hyp 4) |- ( ( ( ph ∧ ( A ≠ B ∧ C ≠ D ) ) ∧ E ≠ F ) → ps ) ;;
+	step 7 : wff = pm2.61dane (step 1, step 6) |- ( ( ph ∧ ( A ≠ B ∧ C ≠ D ) ) → ps ) ;;
+	step 8 : wff = pm2.61da2ne (hyp 1, hyp 2, step 7) |- ( ph → ps ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Commutation of inequality.  (Contributed by NM, 14-May-1999.) */
+
+theorem necom (A : class, B : class)  {
+	prop 1 : wff = |- ( A ≠ B ↔ B ≠ A ) ;;
+}
+
+proof of necom {
+	step 1 : wff = eqcom () |- ( A = B ↔ B = A ) ;;
+	step 2 : wff = necon3bii (step 1) |- ( A ≠ B ↔ B ≠ A ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Inference from commutative law for inequality.  (Contributed by NM,
+       17-Oct-2012.) */
+
+theorem necomi (A : class, B : class)  {
+	hyp 1 : wff = |- A ≠ B ;;
+	-----------------------
+	prop 1 : wff = |- B ≠ A ;;
+}
+
+proof of necomi {
+	step 1 : wff = necom () |- ( A ≠ B ↔ B ≠ A ) ;;
+	step 2 : wff = mpbi (hyp 1, step 1) |- B ≠ A ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction from commutative law for inequality.  (Contributed by NM,
+       12-Feb-2008.) */
+
+theorem necomd (ph : wff, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → A ≠ B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → B ≠ A ) ;;
+}
+
+proof of necomd {
+	step 1 : wff = necom () |- ( A ≠ B ↔ B ≠ A ) ;;
+	step 2 : wff = sylib (hyp 1, step 1) |- ( ph → B ≠ A ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Logical OR with an equality.  (Contributed by NM, 29-Apr-2007.) */
+
+theorem neor (ps : wff, A : class, B : class)  {
+	prop 1 : wff = |- ( ( A = B ∨ ps ) ↔ ( A ≠ B → ps ) ) ;;
+}
+
+proof of neor {
+	step 1 : wff = df-or () |- ( ( A = B ∨ ps ) ↔ ( ¬ A = B → ps ) ) ;;
+	step 2 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 3 : wff = imbi1i (step 2) |- ( ( A ≠ B → ps ) ↔ ( ¬ A = B → ps ) ) ;;
+	step 4 : wff = bitr4i (step 1, step 3) |- ( ( A = B ∨ ps ) ↔ ( A ≠ B → ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A De Morgan's law for inequality.  (Contributed by NM, 18-May-2007.) */
+
+theorem neanior (A : class, B : class, C : class, D : class)  {
+	prop 1 : wff = |- ( ( A ≠ B ∧ C ≠ D ) ↔ ¬ ( A = B ∨ C = D ) ) ;;
+}
+
+proof of neanior {
+	step 1 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 2 : wff = df-ne () |- ( C ≠ D ↔ ¬ C = D ) ;;
+	step 3 : wff = anbi12i (step 1, step 2) |- ( ( A ≠ B ∧ C ≠ D ) ↔ ( ¬ A = B ∧ ¬ C = D ) ) ;;
+	step 4 : wff = pm4.56 () |- ( ( ¬ A = B ∧ ¬ C = D ) ↔ ¬ ( A = B ∨ C = D ) ) ;;
+	step 5 : wff = bitri (step 3, step 4) |- ( ( A ≠ B ∧ C ≠ D ) ↔ ¬ ( A = B ∨ C = D ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* A De Morgan's law for inequality.  (Contributed by NM, 30-Sep-2013.) */
+
+theorem ne3anior (A : class, B : class, C : class, D : class, E : class, F : class)  {
+	prop 1 : wff = |- ( ( A ≠ B ∧ C ≠ D ∧ E ≠ F ) ↔ ¬ ( A = B ∨ C = D ∨ E = F ) ) ;;
+}
+
+proof of ne3anior {
+	step 1 : wff = 3anor () |- ( ( A ≠ B ∧ C ≠ D ∧ E ≠ F ) ↔ ¬ ( ¬ A ≠ B ∨ ¬ C ≠ D ∨ ¬ E ≠ F ) ) ;;
+	step 2 : wff = nne () |- ( ¬ A ≠ B ↔ A = B ) ;;
+	step 3 : wff = nne () |- ( ¬ C ≠ D ↔ C = D ) ;;
+	step 4 : wff = nne () |- ( ¬ E ≠ F ↔ E = F ) ;;
+	step 5 : wff = 3orbi123i (step 2, step 3, step 4) |- ( ( ¬ A ≠ B ∨ ¬ C ≠ D ∨ ¬ E ≠ F ) ↔ ( A = B ∨ C = D ∨ E = F ) ) ;;
+	step 6 : wff = xchbinx (step 1, step 5) |- ( ( A ≠ B ∧ C ≠ D ∧ E ≠ F ) ↔ ¬ ( A = B ∨ C = D ∨ E = F ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* A De Morgan's law for inequality.  (Contributed by NM, 18-May-2007.) */
+
+theorem neorian (A : class, B : class, C : class, D : class)  {
+	prop 1 : wff = |- ( ( A ≠ B ∨ C ≠ D ) ↔ ¬ ( A = B ∧ C = D ) ) ;;
+}
+
+proof of neorian {
+	step 1 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 2 : wff = df-ne () |- ( C ≠ D ↔ ¬ C = D ) ;;
+	step 3 : wff = orbi12i (step 1, step 2) |- ( ( A ≠ B ∨ C ≠ D ) ↔ ( ¬ A = B ∨ ¬ C = D ) ) ;;
+	step 4 : wff = ianor () |- ( ¬ ( A = B ∧ C = D ) ↔ ( ¬ A = B ∨ ¬ C = D ) ) ;;
+	step 5 : wff = bitr4i (step 3, step 4) |- ( ( A ≠ B ∨ C ≠ D ) ↔ ¬ ( A = B ∧ C = D ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* An inference from an inequality, related to modus tollens.  (Contributed
+       by NM, 13-Apr-2007.) */
+
+theorem nemtbir (ph : wff, A : class, B : class)  {
+	hyp 1 : wff = |- A ≠ B ;;
+	hyp 2 : wff = |- ( ph ↔ A = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ¬ ph ;;
+}
+
+proof of nemtbir {
+	step 1 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 2 : wff = mpbi (hyp 1, step 1) |- ¬ A = B ;;
+	step 3 : wff = mtbir (step 2, hyp 2) |- ¬ ph ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Two classes are different if they don't contain the same element.
+     (Contributed by NM, 3-Feb-2012.) */
+
+theorem nelne1 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( A ∈ B ∧ ¬ A ∈ C ) → B ≠ C ) ;;
+}
+
+proof of nelne1 {
+	step 1 : wff = eleq2 () |- ( B = C → ( A ∈ B ↔ A ∈ C ) ) ;;
+	step 2 : wff = biimpcd (step 1) |- ( A ∈ B → ( B = C → A ∈ C ) ) ;;
+	step 3 : wff = necon3bd (step 2) |- ( A ∈ B → ( ¬ A ∈ C → B ≠ C ) ) ;;
+	step 4 : wff = imp (step 3) |- ( ( A ∈ B ∧ ¬ A ∈ C ) → B ≠ C ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Two classes are different if they don't belong to the same class.
+     (Contributed by NM, 25-Jun-2012.) */
+
+theorem nelne2 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( A ∈ C ∧ ¬ B ∈ C ) → A ≠ B ) ;;
+}
+
+proof of nelne2 {
+	step 1 : wff = eleq1 () |- ( A = B → ( A ∈ C ↔ B ∈ C ) ) ;;
+	step 2 : wff = biimpcd (step 1) |- ( A ∈ C → ( A = B → B ∈ C ) ) ;;
+	step 3 : wff = necon3bd (step 2) |- ( A ∈ C → ( ¬ B ∈ C → A ≠ B ) ) ;;
+	step 4 : wff = imp (step 3) |- ( ( A ∈ C ∧ ¬ B ∈ C ) → A ≠ B ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Equality theorem for negated membership.  (Contributed by NM,
+     20-Nov-1994.) */
+
+theorem neleq1 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A = B → ( A ∉ C ↔ B ∉ C ) ) ;;
+}
+
+proof of neleq1 {
+	step 1 : wff = eleq1 () |- ( A = B → ( A ∈ C ↔ B ∈ C ) ) ;;
+	step 2 : wff = notbid (step 1) |- ( A = B → ( ¬ A ∈ C ↔ ¬ B ∈ C ) ) ;;
+	step 3 : wff = df-nel () |- ( A ∉ C ↔ ¬ A ∈ C ) ;;
+	step 4 : wff = df-nel () |- ( B ∉ C ↔ ¬ B ∈ C ) ;;
+	step 5 : wff = 3bitr4g (step 2, step 3, step 4) |- ( A = B → ( A ∉ C ↔ B ∉ C ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Equality theorem for negated membership.  (Contributed by NM,
+     20-Nov-1994.) */
+
+theorem neleq2 (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( A = B → ( C ∉ A ↔ C ∉ B ) ) ;;
+}
+
+proof of neleq2 {
+	step 1 : wff = eleq2 () |- ( A = B → ( C ∈ A ↔ C ∈ B ) ) ;;
+	step 2 : wff = notbid (step 1) |- ( A = B → ( ¬ C ∈ A ↔ ¬ C ∈ B ) ) ;;
+	step 3 : wff = df-nel () |- ( C ∉ A ↔ ¬ C ∈ A ) ;;
+	step 4 : wff = df-nel () |- ( C ∉ B ↔ ¬ C ∈ B ) ;;
+	step 5 : wff = 3bitr4g (step 2, step 3, step 4) |- ( A = B → ( C ∉ A ↔ C ∉ B ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Bound-variable hypothesis builder for inequality.  (Contributed by NM,
+       10-Nov-2007.)  (Revised by Mario Carneiro, 7-Oct-2016.) */
+
+theorem nfne (x : set, A : class, B : class)  {
+	hyp 1 : wff = |- F/_ x A ;;
+	hyp 2 : wff = |- F/_ x B ;;
+	-----------------------
+	prop 1 : wff = |- F/ x A ≠ B ;;
+}
+
+proof of nfne {
+	step 1 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 2 : wff = nfeq (hyp 1, hyp 2) |- F/ x A = B ;;
+	step 3 : wff = nfn (step 2) |- F/ x ¬ A = B ;;
+	step 4 : wff = nfxfr (step 1, step 3) |- F/ x A ≠ B ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Bound-variable hypothesis builder for inequality.  (Contributed by David
+       Abernethy, 26-Jun-2011.)  (Revised by Mario Carneiro, 7-Oct-2016.) */
+
+theorem nfnel (x : set, A : class, B : class)  {
+	hyp 1 : wff = |- F/_ x A ;;
+	hyp 2 : wff = |- F/_ x B ;;
+	-----------------------
+	prop 1 : wff = |- F/ x A ∉ B ;;
+}
+
+proof of nfnel {
+	step 1 : wff = df-nel () |- ( A ∉ B ↔ ¬ A ∈ B ) ;;
+	step 2 : wff = nfel (hyp 1, hyp 2) |- F/ x A ∈ B ;;
+	step 3 : wff = nfn (step 2) |- F/ x ¬ A ∈ B ;;
+	step 4 : wff = nfxfr (step 1, step 3) |- F/ x A ∉ B ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Bound-variable hypothesis builder for inequality.  (Contributed by NM,
+       10-Nov-2007.)  (Revised by Mario Carneiro, 7-Oct-2016.) */
+
+theorem nfned (ph : wff, x : set, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → F/_ x A ) ;;
+	hyp 2 : wff = |- ( ph → F/_ x B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → F/ x A ≠ B ) ;;
+}
+
+proof of nfned {
+	step 1 : wff = df-ne () |- ( A ≠ B ↔ ¬ A = B ) ;;
+	step 2 : wff = nfeqd (hyp 1, hyp 2) |- ( ph → F/ x A = B ) ;;
+	step 3 : wff = nfnd (step 2) |- ( ph → F/ x ¬ A = B ) ;;
+	step 4 : wff = nfxfrd (step 1, step 3) |- ( ph → F/ x A ≠ B ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Bound-variable hypothesis builder for inequality.  (Contributed by David
+       Abernethy, 26-Jun-2011.)  (Revised by Mario Carneiro, 7-Oct-2016.) */
+
+theorem nfneld (ph : wff, x : set, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → F/_ x A ) ;;
+	hyp 2 : wff = |- ( ph → F/_ x B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → F/ x A ∉ B ) ;;
+}
+
+proof of nfneld {
+	step 1 : wff = df-nel () |- ( A ∉ B ↔ ¬ A ∈ B ) ;;
+	step 2 : wff = nfeld (hyp 1, hyp 2) |- ( ph → F/ x A ∈ B ) ;;
+	step 3 : wff = nfnd (step 2) |- ( ph → F/ x ¬ A ∈ B ) ;;
+	step 4 : wff = nfxfrd (step 1, step 3) |- ( ph → F/ x A ∉ B ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+

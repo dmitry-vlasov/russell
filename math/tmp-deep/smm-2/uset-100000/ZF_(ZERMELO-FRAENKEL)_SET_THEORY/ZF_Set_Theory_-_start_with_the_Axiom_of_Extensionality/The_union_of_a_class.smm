@@ -1,0 +1,516 @@
+$[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Unordered_and_ordered_pairs.smm $]
+$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                       The union of a class
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+$)
+$( /* Declare class union symbol. */
+
+$)
+$c U. $.
+$( /* Big cup */
+
+$)
+$( /* Extend class notation to include the union of a class (read:  'union
+     ` A ` ') */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	acuni $a class U. A $.
+$}
+$( /* Define the union of a class i.e. the collection of all members of the
+       members of the class.  Definition 5.5 of [TakeutiZaring] p. 16.  For
+       example, ` U. { { 1 , 3 } , { 1 , 8 } } = { 1 , 3 , 8 } ` ( ~ ex-uni ).
+       This is similar to the union of two classes ~ df-un .  (Contributed by
+       NM, 23-Aug-1993.) */
+
+$)
+${
+	$v x y A $.
+	$d x y A $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	adf-uni $a |- U. A = { x | E. y ( x e. y /\ y e. A ) } $.
+$}
+$( /* Alternate definition of class union.  (Contributed by NM,
+       28-Jun-1998.) */
+
+$)
+${
+	$v x y A $.
+	$d x y A $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	pdfuni2 $p |- U. A = { x | E. y e. A x e. y } $=
+	f0 f1 f2 adf-uni f0 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel f1 pexancom f0 asup_set_class f1 asup_set_class awcel f1 f2 adf-rex f0 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa f1 awex f1 asup_set_class f2 awcel f0 asup_set_class f1 asup_set_class awcel awa f1 awex f0 asup_set_class f1 asup_set_class awcel f1 f2 awrex pbitr4i f0 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa f1 awex f0 asup_set_class f1 asup_set_class awcel f1 f2 awrex f0 pabbii f2 acuni f0 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa f1 awex f0 acab f0 asup_set_class f1 asup_set_class awcel f1 f2 awrex f0 acab peqtri $.
+$}
+$( /* Membership in class union.  (Contributed by NM, 22-May-1994.) */
+
+$)
+${
+	$v x y A B $.
+	$d x A y $.
+	$d x B y $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	i0 $f set y $.
+	peluni $p |- ( A e. U. B <-> E. x ( A e. x /\ x e. B ) ) $=
+	f1 f2 acuni pelex f1 f0 asup_set_class pelex f1 f0 asup_set_class awcel f1 acvv awcel f0 asup_set_class f2 awcel padantr f1 f0 asup_set_class awcel f0 asup_set_class f2 awcel awa f1 acvv awcel f0 pexlimiv i0 asup_set_class f1 f0 asup_set_class peleq1 i0 asup_set_class f1 awceq i0 asup_set_class f0 asup_set_class awcel f1 f0 asup_set_class awcel f0 asup_set_class f2 awcel panbi1d i0 asup_set_class f1 awceq i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f2 awcel awa f1 f0 asup_set_class awcel f0 asup_set_class f2 awcel awa f0 pexbidv i0 f0 f2 adf-uni i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f2 awcel awa f0 awex f1 f0 asup_set_class awcel f0 asup_set_class f2 awcel awa f0 awex i0 f1 f2 acuni acvv pelab2g f1 f2 acuni awcel f1 acvv awcel f1 f0 asup_set_class awcel f0 asup_set_class f2 awcel awa f0 awex ppm5.21nii $.
+$}
+$( /* Membership in class union.  Restricted quantifier version.  (Contributed
+       by NM, 31-Aug-1999.) */
+
+$)
+${
+	$v x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	peluni2 $p |- ( A e. U. B <-> E. x e. B A e. x ) $=
+	f1 f0 asup_set_class awcel f0 asup_set_class f2 awcel f0 pexancom f0 f1 f2 peluni f1 f0 asup_set_class awcel f0 f2 adf-rex f1 f0 asup_set_class awcel f0 asup_set_class f2 awcel awa f0 awex f0 asup_set_class f2 awcel f1 f0 asup_set_class awcel awa f0 awex f1 f2 acuni awcel f1 f0 asup_set_class awcel f0 f2 awrex p3bitr4i $.
+$}
+$( /* Membership in class union.  (Contributed by NM, 24-Mar-1995.) */
+
+$)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	pelunii $p |- ( ( A e. B /\ B e. C ) -> A e. U. C ) $=
+	i0 asup_set_class f1 f0 peleq2 i0 asup_set_class f1 f2 peleq1 i0 asup_set_class f1 awceq f0 i0 asup_set_class awcel f0 f1 awcel i0 asup_set_class f2 awcel f1 f2 awcel panbi12d f0 i0 asup_set_class awcel i0 asup_set_class f2 awcel awa f0 f1 awcel f1 f2 awcel awa i0 f1 f2 pspcegv f0 f1 awcel f1 f2 awcel f0 i0 asup_set_class awcel i0 asup_set_class f2 awcel awa i0 awex panabsi7 i0 f0 f2 peluni f0 f1 awcel f1 f2 awcel awa f0 i0 asup_set_class awcel i0 asup_set_class f2 awcel awa i0 awex f0 f2 acuni awcel psylibr $.
+$}
+$( /* Bound-variable hypothesis builder for union.  (Contributed by NM,
+       30-Dec-1996.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
+
+$)
+${
+	$v x y z A $.
+	$d y z A $.
+	$d x y z $.
+	e0 $e |- F/_ x A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	i0 $f set y $.
+	i1 $f set z $.
+	pnfuni $p |- F/_ x U. A $=
+	i0 i1 f1 pdfuni2 e0 i0 asup_set_class i1 asup_set_class awcel f0 pnfv i0 asup_set_class i1 asup_set_class awcel f0 i1 f1 pnfrex i0 asup_set_class i1 asup_set_class awcel i1 f1 awrex f0 i0 pnfab f0 f1 acuni i0 asup_set_class i1 asup_set_class awcel i1 f1 awrex i0 acab pnfcxfr $.
+$}
+$( /* Deduction version of ~ nfuni .  (Contributed by NM, 18-Feb-2013.) */
+
+$)
+${
+	$v ph x y z A $.
+	$d y z A $.
+	$d x y z $.
+	$d y z ph $.
+	e0 $e |- ( ph -> F/_ x A ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	i0 $f set y $.
+	i1 $f set z $.
+	pnfunid $p |- ( ph -> F/_ x U. A ) $=
+	i0 i1 f2 pdfuni2 f0 i0 pnfv f0 i1 pnfv e0 f0 i0 asup_set_class i1 asup_set_class awcel f1 pnfvd f0 i0 asup_set_class i1 asup_set_class awcel f1 i1 f2 pnfrexd f0 i0 asup_set_class i1 asup_set_class awcel i1 f2 awrex f1 i0 pnfabd f0 f1 f2 acuni i0 asup_set_class i1 asup_set_class awcel i1 f2 awrex i0 acab pnfcxfrd $.
+$}
+$( /* Distribute proper substitution through the union of a class.
+       (Contributed by Alan Sare, 10-Nov-2012.) */
+
+$)
+${
+	$v x y z A B V $.
+	$d A y z $.
+	$d B y z $.
+	$d V y z $.
+	$d x y z $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class V $.
+	i0 $f set y $.
+	i1 $f set z $.
+	pcsbunig $p |- ( A e. V -> [_ A / x ]_ U. B = U. [_ A / x ]_ B ) $=
+	i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f2 awcel awa i0 awex f0 i1 f1 f3 pcsbabg i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f2 awcel awa i0 f0 f1 f3 psbcexg i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f2 awcel f0 f1 f3 psbcang i1 asup_set_class i0 asup_set_class awcel f0 f1 f3 psbcg f0 f1 i0 asup_set_class f2 f3 psbcel2g f1 f3 awcel i1 asup_set_class i0 asup_set_class awcel f0 f1 awsbc i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f2 awcel f0 f1 awsbc i0 asup_set_class f0 f1 f2 acsb awcel panbi12d f1 f3 awcel i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f2 awcel awa f0 f1 awsbc i1 asup_set_class i0 asup_set_class awcel f0 f1 awsbc i0 asup_set_class f2 awcel f0 f1 awsbc awa i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 f1 f2 acsb awcel awa pbitrd f1 f3 awcel i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f2 awcel awa f0 f1 awsbc i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 f1 f2 acsb awcel awa i0 pexbidv f1 f3 awcel i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f2 awcel awa i0 awex f0 f1 awsbc i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f2 awcel awa f0 f1 awsbc i0 awex i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 f1 f2 acsb awcel awa i0 awex pbitrd f1 f3 awcel i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f2 awcel awa i0 awex f0 f1 awsbc i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 f1 f2 acsb awcel awa i0 awex i1 pabbidv f1 f3 awcel f0 f1 i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f2 awcel awa i0 awex i1 acab acsb i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f2 awcel awa i0 awex f0 f1 awsbc i1 acab i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 f1 f2 acsb awcel awa i0 awex i1 acab peqtrd i1 i0 f2 adf-uni f0 f1 f2 acuni i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f2 awcel awa i0 awex i1 acab pcsbeq2i i1 i0 f0 f1 f2 acsb adf-uni f1 f3 awcel f0 f1 i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f2 awcel awa i0 awex i1 acab acsb i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 f1 f2 acsb awcel awa i0 awex i1 acab f0 f1 f2 acuni acsb f0 f1 f2 acsb acuni p3eqtr4g $.
+$}
+$( /* Equality theorem for class union.  Exercise 15 of [TakeutiZaring]
+       p. 18.  (Contributed by NM, 10-Aug-1993.)  (Proof shortened by Andrew
+       Salmon, 29-Jun-2011.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x y B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	i1 $f set y $.
+	punieq $p |- ( A = B -> U. A = U. B ) $=
+	i1 asup_set_class i0 asup_set_class awcel i0 f0 f1 prexeq f0 f1 awceq i1 asup_set_class i0 asup_set_class awcel i0 f0 awrex i1 asup_set_class i0 asup_set_class awcel i0 f1 awrex i1 pabbidv i1 i0 f0 pdfuni2 i1 i0 f1 pdfuni2 f0 f1 awceq i1 asup_set_class i0 asup_set_class awcel i0 f0 awrex i1 acab i1 asup_set_class i0 asup_set_class awcel i0 f1 awrex i1 acab f0 acuni f1 acuni p3eqtr4g $.
+$}
+$( /* Inference of equality of two class unions.  (Contributed by NM,
+       30-Aug-1993.) */
+
+$)
+${
+	$v A B $.
+	e0 $e |- A = B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	punieqi $p |- U. A = U. B $=
+	e0 f0 f1 punieq f0 f1 awceq f0 acuni f1 acuni awceq aax-mp $.
+$}
+$( /* Deduction of equality of two class unions.  (Contributed by NM,
+       21-Apr-1995.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- ( ph -> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	punieqd $p |- ( ph -> U. A = U. B ) $=
+	e0 f1 f2 punieq f0 f1 f2 awceq f1 acuni f2 acuni awceq psyl $.
+$}
+$( /* Membership in union of a class abstraction.  (Contributed by NM,
+       11-Aug-1994.)  (Revised by Mario Carneiro, 14-Nov-2016.) */
+
+$)
+${
+	$v ph x y A $.
+	$d x A y $.
+	$d ph y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	i0 $f set y $.
+	peluniab $p |- ( A e. U. { x | ph } <-> E. x ( A e. x /\ ph ) ) $=
+	i0 f2 f0 f1 acab peluni f2 i0 asup_set_class awcel f1 pnfv f0 f1 i0 pnfsab1 f2 i0 asup_set_class awcel i0 asup_set_class f0 f1 acab awcel f1 pnfan f2 f1 asup_set_class awcel f0 awa i0 pnfv i0 asup_set_class f1 asup_set_class f2 peleq2 i0 asup_set_class f1 asup_set_class f0 f1 acab peleq1 f0 f1 pabid i0 asup_set_class f1 asup_set_class awceq i0 asup_set_class f0 f1 acab awcel f1 asup_set_class f0 f1 acab awcel f0 psyl6bb i0 asup_set_class f1 asup_set_class awceq f2 i0 asup_set_class awcel f2 f1 asup_set_class awcel i0 asup_set_class f0 f1 acab awcel f0 panbi12d f2 i0 asup_set_class awcel i0 asup_set_class f0 f1 acab awcel awa f2 f1 asup_set_class awcel f0 awa i0 f1 pcbvex f2 f0 f1 acab acuni awcel f2 i0 asup_set_class awcel i0 asup_set_class f0 f1 acab awcel awa i0 awex f2 f1 asup_set_class awcel f0 awa f1 awex pbitri $.
+$}
+$( /* Membership in union of a class abstraction.  (Contributed by NM,
+       4-Oct-2006.) */
+
+$)
+${
+	$v ph x A B $.
+	$d x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pelunirab $p |- ( A e. U. { x e. B | ph } <-> E. x e. B ( A e. x /\ ph ) ) $=
+	f1 asup_set_class f3 awcel f0 awa f1 f2 peluniab f0 f1 f3 adf-rab f0 f1 f3 acrab f1 asup_set_class f3 awcel f0 awa f1 acab punieqi f0 f1 f3 acrab acuni f1 asup_set_class f3 awcel f0 awa f1 acab acuni f2 peleq2i f2 f1 asup_set_class awcel f0 awa f1 f3 adf-rex f1 asup_set_class f3 awcel f2 f1 asup_set_class awcel f0 pan12 f1 asup_set_class f3 awcel f2 f1 asup_set_class awcel f0 awa awa f2 f1 asup_set_class awcel f1 asup_set_class f3 awcel f0 awa awa f1 pexbii f2 f1 asup_set_class awcel f0 awa f1 f3 awrex f1 asup_set_class f3 awcel f2 f1 asup_set_class awcel f0 awa awa f1 awex f2 f1 asup_set_class awcel f1 asup_set_class f3 awcel f0 awa awa f1 awex pbitri f2 f1 asup_set_class f3 awcel f0 awa f1 acab acuni awcel f2 f1 asup_set_class awcel f1 asup_set_class f3 awcel f0 awa awa f1 awex f2 f0 f1 f3 acrab acuni awcel f2 f1 asup_set_class awcel f0 awa f1 f3 awrex p3bitr4i $.
+$}
+$( /* The union of a pair is the union of its members.  Proposition 5.7 of
+       [TakeutiZaring] p. 16.  (Contributed by NM, 23-Aug-1993.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x y B $.
+	e0 $e |- A e. _V $.
+	e1 $e |- B e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	i1 $f set y $.
+	punipr $p |- U. { A , B } = ( A u. B ) $=
+	i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awceq awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awceq awa i1 p19.43 i1 pvex i1 asup_set_class f0 f1 pelpr i1 asup_set_class f0 f1 acpr awcel i1 asup_set_class f0 awceq i1 asup_set_class f1 awceq awo i0 asup_set_class i1 asup_set_class awcel panbi2i i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awceq i1 asup_set_class f1 awceq pandi i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 f1 acpr awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awceq i1 asup_set_class f1 awceq awo awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awceq awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awceq awa awo pbitri i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 f1 acpr awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awceq awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awceq awa awo i1 pexbii e0 i1 i0 asup_set_class f0 pclel3 i1 asup_set_class f0 awceq i0 asup_set_class i1 asup_set_class awcel i1 pexancom i0 asup_set_class f0 awcel i1 asup_set_class f0 awceq i0 asup_set_class i1 asup_set_class awcel awa i1 awex i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awceq awa i1 awex pbitri e1 i1 i0 asup_set_class f1 pclel3 i1 asup_set_class f1 awceq i0 asup_set_class i1 asup_set_class awcel i1 pexancom i0 asup_set_class f1 awcel i1 asup_set_class f1 awceq i0 asup_set_class i1 asup_set_class awcel awa i1 awex i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awceq awa i1 awex pbitri i0 asup_set_class f0 awcel i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awceq awa i1 awex i0 asup_set_class f1 awcel i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awceq awa i1 awex porbi12i i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awceq awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awceq awa awo i1 awex i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awceq awa i1 awex i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awceq awa i1 awex awo i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 f1 acpr awcel awa i1 awex i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awo p3bitr4ri i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awo i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 f1 acpr awcel awa i1 awex i0 pabbii i0 f0 f1 adf-un i0 i1 f0 f1 acpr adf-uni i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awo i0 acab i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 f1 acpr awcel awa i1 awex i0 acab f0 f1 acun f0 f1 acpr acuni p3eqtr4ri $.
+$}
+$( /* The union of a pair is the union of its members.  Proposition 5.7 of
+       [TakeutiZaring] p. 16.  (Contributed by NM, 25-Aug-2006.) */
+
+$)
+${
+	$v x y A B V W $.
+	$d x y A $.
+	$d y B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class V $.
+	f3 $f class W $.
+	i0 $f set x $.
+	i1 $f set y $.
+	puniprg $p |- ( ( A e. V /\ B e. W ) -> U. { A , B } = ( A u. B ) ) $=
+	i0 asup_set_class f0 i1 asup_set_class ppreq1 i0 asup_set_class f0 awceq i0 asup_set_class i1 asup_set_class acpr f0 i1 asup_set_class acpr punieqd i0 asup_set_class f0 i1 asup_set_class puneq1 i0 asup_set_class f0 awceq i0 asup_set_class i1 asup_set_class acpr acuni f0 i1 asup_set_class acpr acuni i0 asup_set_class i1 asup_set_class acun f0 i1 asup_set_class acun peqeq12d i1 asup_set_class f1 f0 ppreq2 i1 asup_set_class f1 awceq f0 i1 asup_set_class acpr f0 f1 acpr punieqd i1 asup_set_class f1 f0 puneq2 i1 asup_set_class f1 awceq f0 i1 asup_set_class acpr acuni f0 f1 acpr acuni f0 i1 asup_set_class acun f0 f1 acun peqeq12d i0 pvex i1 pvex i0 asup_set_class i1 asup_set_class punipr i0 asup_set_class i1 asup_set_class acpr acuni i0 asup_set_class i1 asup_set_class acun awceq f0 i1 asup_set_class acpr acuni f0 i1 asup_set_class acun awceq f0 f1 acpr acuni f0 f1 acun awceq i0 i1 f0 f1 f2 f3 pvtocl2g $.
+$}
+$( /* A set equals the union of its singleton.  Theorem 8.2 of [Quine] p. 53.
+       (Contributed by NM, 30-Aug-1993.) */
+
+$)
+${
+	$v A $.
+	e0 $e |- A e. _V $.
+	f0 $f class A $.
+	punisn $p |- U. { A } = A $=
+	f0 pdfsn2 f0 acsn f0 f0 acpr punieqi e0 e0 f0 f0 punipr f0 punidm f0 acsn acuni f0 f0 acpr acuni f0 f0 acun f0 p3eqtri $.
+$}
+$( /* A set equals the union of its singleton.  Theorem 8.2 of [Quine] p. 53.
+       (Contributed by NM, 13-Aug-2002.) */
+
+$)
+${
+	$v x A V $.
+	$d x A $.
+	f0 $f class A $.
+	f1 $f class V $.
+	i0 $f set x $.
+	punisng $p |- ( A e. V -> U. { A } = A ) $=
+	i0 asup_set_class f0 psneq i0 asup_set_class f0 awceq i0 asup_set_class acsn f0 acsn punieqd i0 asup_set_class f0 awceq pid i0 asup_set_class f0 awceq i0 asup_set_class acsn acuni f0 acsn acuni i0 asup_set_class f0 peqeq12d i0 pvex i0 asup_set_class punisn i0 asup_set_class acsn acuni i0 asup_set_class awceq f0 acsn acuni f0 awceq i0 f0 f1 pvtoclg $.
+$}
+$( /* An alternative statement of the effective freeness of a class ` A ` ,
+       when it is a set.  (Contributed by Mario Carneiro, 14-Oct-2016.) */
+
+$)
+${
+	$v x y A V $.
+	$d x y $.
+	$d y A $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class V $.
+	pdfnfc2 $p |- ( A. x A e. V -> ( F/_ x A <-> A. y F/ x y = A ) ) $=
+	f0 f2 awnfc f0 f1 asup_set_class pnfcvd f0 f2 awnfc pid f0 f2 awnfc f0 f1 asup_set_class f2 pnfeqd f0 f2 awnfc f1 asup_set_class f2 awceq f0 awnf f1 palrimiv f2 f3 awcel f0 awal f1 asup_set_class f2 awceq f0 awnf f1 awal psimpr f0 f1 f2 acsn adf-nfc f1 f2 pelsn f1 asup_set_class f2 acsn awcel f1 asup_set_class f2 awceq f0 pnfbii f1 asup_set_class f2 acsn awcel f0 awnf f1 asup_set_class f2 awceq f0 awnf f1 palbii f0 f2 acsn awnfc f1 asup_set_class f2 acsn awcel f0 awnf f1 awal f1 asup_set_class f2 awceq f0 awnf f1 awal pbitri f2 f3 awcel f0 awal f1 asup_set_class f2 awceq f0 awnf f1 awal awa f1 asup_set_class f2 awceq f0 awnf f1 awal f0 f2 acsn awnfc psylibr f2 f3 awcel f0 awal f1 asup_set_class f2 awceq f0 awnf f1 awal awa f0 f2 acsn pnfunid f2 f3 awcel f0 pnfa1 f1 asup_set_class f2 awceq f0 pnfnf1 f1 asup_set_class f2 awceq f0 awnf f0 f1 pnfal f2 f3 awcel f0 awal f1 asup_set_class f2 awceq f0 awnf f1 awal f0 pnfan f2 f3 punisng f2 f3 awcel f2 acsn acuni f2 awceq f0 psps f2 f3 awcel f0 awal f2 acsn acuni f2 awceq f1 asup_set_class f2 awceq f0 awnf f1 awal padantr f2 f3 awcel f0 awal f1 asup_set_class f2 awceq f0 awnf f1 awal awa f0 f2 acsn acuni f2 pnfceqdf f2 f3 awcel f0 awal f1 asup_set_class f2 awceq f0 awnf f1 awal awa f0 f2 acsn acuni awnfc f0 f2 awnfc pmpbid f2 f3 awcel f0 awal f1 asup_set_class f2 awceq f0 awnf f1 awal f0 f2 awnfc pex f2 f3 awcel f0 awal f0 f2 awnfc f1 asup_set_class f2 awceq f0 awnf f1 awal pimpbid2 $.
+$}
+$( /* The class union of the union of two classes.  Theorem 8.3 of [Quine]
+       p. 53.  (Contributed by NM, 20-Aug-1993.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x y B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	i1 $f set y $.
+	puniun $p |- U. ( A u. B ) = ( U. A u. U. B ) $=
+	i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awcel awa i1 p19.43 i1 asup_set_class f0 f1 pelun i1 asup_set_class f0 f1 acun awcel i1 asup_set_class f0 awcel i1 asup_set_class f1 awcel awo i0 asup_set_class i1 asup_set_class awcel panbi2i i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel i1 asup_set_class f1 awcel pandi i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 f1 acun awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel i1 asup_set_class f1 awcel awo awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awcel awa awo pbitri i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 f1 acun awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awcel awa awo i1 pexbii i1 i0 asup_set_class f0 peluni i1 i0 asup_set_class f1 peluni i0 asup_set_class f0 acuni awcel i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i1 awex i0 asup_set_class f1 acuni awcel i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awcel awa i1 awex porbi12i i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awcel awa awo i1 awex i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i1 awex i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awcel awa i1 awex awo i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 f1 acun awcel awa i1 awex i0 asup_set_class f0 acuni awcel i0 asup_set_class f1 acuni awcel awo p3bitr4i i1 i0 asup_set_class f0 f1 acun peluni i0 asup_set_class f0 acuni f1 acuni pelun i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 f1 acun awcel awa i1 awex i0 asup_set_class f0 acuni awcel i0 asup_set_class f1 acuni awcel awo i0 asup_set_class f0 f1 acun acuni awcel i0 asup_set_class f0 acuni f1 acuni acun awcel p3bitr4i i0 f0 f1 acun acuni f0 acuni f1 acuni acun peqriv $.
+$}
+$( /* The class union of the intersection of two classes.  Exercise 4.12(n) of
+       [Mendelson] p. 235.  See ~ uninqs for a condition where equality holds.
+       (Contributed by NM, 4-Dec-2003.)  (Proof shortened by Andrew Salmon,
+       29-Jun-2011.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x y B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	i1 $f set y $.
+	puniin $p |- U. ( A i^i B ) C_ ( U. A i^i U. B ) $=
+	i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awcel awa i1 p19.40 i1 asup_set_class f0 f1 pelin i1 asup_set_class f0 f1 acin awcel i1 asup_set_class f0 awcel i1 asup_set_class f1 awcel awa i0 asup_set_class i1 asup_set_class awcel panbi2i i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel i1 asup_set_class f1 awcel panandi i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 f1 acin awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel i1 asup_set_class f1 awcel awa awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awcel awa awa pbitri i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 f1 acin awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awcel awa awa i1 pexbii i1 i0 asup_set_class f0 peluni i1 i0 asup_set_class f1 peluni i0 asup_set_class f0 acuni awcel i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i1 awex i0 asup_set_class f1 acuni awcel i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awcel awa i1 awex panbi12i i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awcel awa awa i1 awex i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i1 awex i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awcel awa i1 awex awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 f1 acin awcel awa i1 awex i0 asup_set_class f0 acuni awcel i0 asup_set_class f1 acuni awcel awa p3imtr4i i1 i0 asup_set_class f0 f1 acin peluni i0 asup_set_class f0 acuni f1 acuni pelin i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 f1 acin awcel awa i1 awex i0 asup_set_class f0 acuni awcel i0 asup_set_class f1 acuni awcel awa i0 asup_set_class f0 f1 acin acuni awcel i0 asup_set_class f0 acuni f1 acuni acin awcel p3imtr4i i0 f0 f1 acin acuni f0 acuni f1 acuni acin pssriv $.
+$}
+$( /* Subclass relationship for class union.  Theorem 61 of [Suppes] p. 39.
+       (Contributed by NM, 22-Mar-1998.)  (Proof shortened by Andrew Salmon,
+       29-Jun-2011.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x y B $.
+	$d x y $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	i1 $f set y $.
+	puniss $p |- ( A C_ B -> U. A C_ U. B ) $=
+	f0 f1 i1 asup_set_class pssel f0 f1 awss i1 asup_set_class f0 awcel i1 asup_set_class f1 awcel i0 asup_set_class i1 asup_set_class awcel panim2d f0 f1 awss i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awcel awa i1 peximdv i1 i0 asup_set_class f0 peluni i1 i0 asup_set_class f1 peluni f0 f1 awss i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i1 awex i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awcel awa i1 awex i0 asup_set_class f0 acuni awcel i0 asup_set_class f1 acuni awcel p3imtr4g f0 f1 awss i0 f0 acuni f1 acuni pssrdv $.
+$}
+$( /* Subclass relationship for class union.  (Contributed by NM,
+       24-May-1994.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) */
+
+$)
+${
+	$v x y A B C $.
+	$d x y A $.
+	$d x y B $.
+	$d x y C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	i1 $f set y $.
+	pssuni $p |- ( ( A C_ B /\ B e. C ) -> A C_ U. C ) $=
+	i0 asup_set_class f1 i1 asup_set_class peleq2 i0 asup_set_class f1 awceq i1 asup_set_class i0 asup_set_class awcel i1 asup_set_class f1 awcel i1 asup_set_class f2 acuni awcel pimbi1d i1 asup_set_class i0 asup_set_class f2 pelunii i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f2 awcel i1 asup_set_class f2 acuni awcel pexpcom i1 asup_set_class i0 asup_set_class awcel i1 asup_set_class f2 acuni awcel awi i1 asup_set_class f1 awcel i1 asup_set_class f2 acuni awcel awi i0 f1 f2 pvtoclga f1 f2 awcel i1 asup_set_class f1 awcel i1 asup_set_class f2 acuni awcel i1 asup_set_class f0 awcel pimim2d f1 f2 awcel i1 asup_set_class f0 awcel i1 asup_set_class f1 awcel awi i1 asup_set_class f0 awcel i1 asup_set_class f2 acuni awcel awi i1 palimdv i1 f0 f1 pdfss2 i1 f0 f2 acuni pdfss2 f1 f2 awcel i1 asup_set_class f0 awcel i1 asup_set_class f1 awcel awi i1 awal i1 asup_set_class f0 awcel i1 asup_set_class f2 acuni awcel awi i1 awal f0 f1 awss f0 f2 acuni awss p3imtr4g f1 f2 awcel f0 f1 awss f0 f2 acuni awss pimpcom $.
+$}
+$( /* Subclass relationship for subclass union.  Inference form of ~ uniss .
+       (Contributed by David Moews, 1-May-2017.) */
+
+$)
+${
+	$v A B $.
+	e0 $e |- A C_ B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	punissi $p |- U. A C_ U. B $=
+	e0 f0 f1 puniss f0 f1 awss f0 acuni f1 acuni awss aax-mp $.
+$}
+$( /* Subclass relationship for subclass union.  Deduction form of ~ uniss .
+       (Contributed by David Moews, 1-May-2017.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- ( ph -> A C_ B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	punissd $p |- ( ph -> U. A C_ U. B ) $=
+	e0 f1 f2 puniss f0 f1 f2 awss f1 acuni f2 acuni awss psyl $.
+$}
+$( /* The union of a set is empty iff the set is included in the singleton of
+       the empty set.  (Contributed by NM, 12-Sep-2004.) */
+
+$)
+${
+	$v x y A $.
+	$d x y A $.
+	f0 $f class A $.
+	i0 $f set x $.
+	i1 $f set y $.
+	puni0b $p |- ( U. A = (/) <-> A C_ { (/) } ) $=
+	i0 ac0 pelsn i0 asup_set_class ac0 acsn awcel i0 asup_set_class ac0 awceq i0 f0 pralbii i0 f0 ac0 acsn pdfss3 i1 f0 acuni pneq0 i1 asup_set_class i0 asup_set_class awcel i0 i1 f0 prexcom4 i1 i0 asup_set_class pneq0 i0 asup_set_class ac0 awceq awn i1 asup_set_class i0 asup_set_class awcel i1 awex i0 f0 prexbii i0 i1 asup_set_class f0 peluni2 i1 asup_set_class f0 acuni awcel i1 asup_set_class i0 asup_set_class awcel i0 f0 awrex i1 pexbii i1 asup_set_class i0 asup_set_class awcel i1 awex i0 f0 awrex i1 asup_set_class i0 asup_set_class awcel i0 f0 awrex i1 awex i0 asup_set_class ac0 awceq awn i0 f0 awrex i1 asup_set_class f0 acuni awcel i1 awex p3bitr4ri i0 asup_set_class ac0 awceq i0 f0 prexnal f0 acuni ac0 awceq awn i1 asup_set_class f0 acuni awcel i1 awex i0 asup_set_class ac0 awceq awn i0 f0 awrex i0 asup_set_class ac0 awceq i0 f0 awral awn p3bitri f0 acuni ac0 awceq i0 asup_set_class ac0 awceq i0 f0 awral pcon4bii i0 asup_set_class ac0 acsn awcel i0 f0 awral i0 asup_set_class ac0 awceq i0 f0 awral f0 ac0 acsn awss f0 acuni ac0 awceq p3bitr4ri $.
+$}
+$( /* The union of a set is empty iff all of its members are empty.
+       (Contributed by NM, 16-Aug-2006.) */
+
+$)
+${
+	$v x A $.
+	$d x A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	puni0c $p |- ( U. A = (/) <-> A. x e. A x = (/) ) $=
+	f1 puni0b f0 f1 ac0 acsn pdfss3 f0 ac0 pelsn f0 asup_set_class ac0 acsn awcel f0 asup_set_class ac0 awceq f0 f1 pralbii f1 acuni ac0 awceq f1 ac0 acsn awss f0 asup_set_class ac0 acsn awcel f0 f1 awral f0 asup_set_class ac0 awceq f0 f1 awral p3bitri $.
+$}
+$( /* The union of the empty set is the empty set.  Theorem 8.7 of [Quine]
+     p. 54.  (Reproved without relying on ~ ax-nul by Eric Schmidt.)
+     (Contributed by NM, 16-Sep-1993.)  (Revised by Eric Schmidt,
+     4-Apr-2007.) */
+
+$)
+${
+	puni0 $p |- U. (/) = (/) $=
+	ac0 acsn p0ss ac0 puni0b ac0 acuni ac0 awceq ac0 ac0 acsn awss pmpbir $.
+$}
+$( /* An element of a class is a subclass of its union.  Theorem 8.6 of [Quine]
+     p. 54.  Also the basis for Proposition 7.20 of [TakeutiZaring] p. 40.
+     (Contributed by NM, 6-Jun-1994.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pelssuni $p |- ( A e. B -> A C_ U. B ) $=
+	f0 pssid f0 f0 f1 pssuni f0 f0 awss f0 f1 awcel f0 f1 acuni awss pmpan $.
+$}
+$( /* Condition turning a subclass relationship for union into an equality.
+     (Contributed by NM, 18-Jul-2006.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	punissel $p |- ( ( U. A C_ B /\ B e. A ) -> U. A = B ) $=
+	f0 acuni f1 awss f1 f0 awcel psimpl f1 f0 pelssuni f1 f0 awcel f1 f0 acuni awss f0 acuni f1 awss padantl f0 acuni f1 awss f1 f0 awcel awa f0 acuni f1 peqssd $.
+$}
+$( /* Relationship involving membership, subset, and union.  Exercise 5 of
+       [Enderton] p. 26 and its converse.  (Contributed by NM, 20-Sep-2003.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x y B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	i0 $f set y $.
+	punissb $p |- ( U. A C_ B <-> A. x e. A x C_ B ) $=
+	f0 i0 asup_set_class f1 peluni i0 asup_set_class f1 acuni awcel i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f1 awcel awa f0 awex i0 asup_set_class f2 awcel pimbi1i i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f1 awcel awa i0 asup_set_class f2 awcel f0 p19.23v i0 asup_set_class f1 acuni awcel i0 asup_set_class f2 awcel awi i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f1 awcel awa f0 awex i0 asup_set_class f2 awcel awi i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f1 awcel awa i0 asup_set_class f2 awcel awi f0 awal pbitr4i i0 asup_set_class f1 acuni awcel i0 asup_set_class f2 awcel awi i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f1 awcel awa i0 asup_set_class f2 awcel awi f0 awal i0 palbii i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f1 awcel awa i0 asup_set_class f2 awcel awi i0 f0 palcom f0 asup_set_class f1 awcel i0 asup_set_class f0 asup_set_class awcel i0 asup_set_class f2 awcel awi i0 p19.21v i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f1 awcel i0 asup_set_class f2 awcel pimpexp i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f1 awcel i0 asup_set_class f2 awcel pbi2.04 i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f1 awcel awa i0 asup_set_class f2 awcel awi i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f1 awcel i0 asup_set_class f2 awcel awi awi f0 asup_set_class f1 awcel i0 asup_set_class f0 asup_set_class awcel i0 asup_set_class f2 awcel awi awi pbitri i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f1 awcel awa i0 asup_set_class f2 awcel awi f0 asup_set_class f1 awcel i0 asup_set_class f0 asup_set_class awcel i0 asup_set_class f2 awcel awi awi i0 palbii i0 f0 asup_set_class f2 pdfss2 f0 asup_set_class f2 awss i0 asup_set_class f0 asup_set_class awcel i0 asup_set_class f2 awcel awi i0 awal f0 asup_set_class f1 awcel pimbi2i f0 asup_set_class f1 awcel i0 asup_set_class f0 asup_set_class awcel i0 asup_set_class f2 awcel awi awi i0 awal f0 asup_set_class f1 awcel i0 asup_set_class f0 asup_set_class awcel i0 asup_set_class f2 awcel awi i0 awal awi i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f1 awcel awa i0 asup_set_class f2 awcel awi i0 awal f0 asup_set_class f1 awcel f0 asup_set_class f2 awss awi p3bitr4i i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f1 awcel awa i0 asup_set_class f2 awcel awi i0 awal f0 asup_set_class f1 awcel f0 asup_set_class f2 awss awi f0 palbii i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f1 awcel awa i0 asup_set_class f2 awcel awi f0 awal i0 awal i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f1 awcel awa i0 asup_set_class f2 awcel awi i0 awal f0 awal f0 asup_set_class f1 awcel f0 asup_set_class f2 awss awi f0 awal pbitri i0 asup_set_class f1 acuni awcel i0 asup_set_class f2 awcel awi i0 awal i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f1 awcel awa i0 asup_set_class f2 awcel awi f0 awal i0 awal f0 asup_set_class f1 awcel f0 asup_set_class f2 awss awi f0 awal pbitri i0 f1 acuni f2 pdfss2 f0 asup_set_class f2 awss f0 f1 adf-ral i0 asup_set_class f1 acuni awcel i0 asup_set_class f2 awcel awi i0 awal f0 asup_set_class f1 awcel f0 asup_set_class f2 awss awi f0 awal f1 acuni f2 awss f0 asup_set_class f2 awss f0 f1 awral p3bitr4i $.
+$}
+$( /* A subclass condition on the members of two classes that implies a
+       subclass relation on their unions.  Proposition 8.6 of [TakeutiZaring]
+       p. 59.  See ~ iunss2 for a generalization to indexed unions.
+       (Contributed by NM, 22-Mar-2004.) */
+
+$)
+${
+	$v x y A B $.
+	$d x A $.
+	$d x y B $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	puniss2 $p |- ( A. x e. A E. y e. B x C_ y -> U. A C_ U. B ) $=
+	f0 asup_set_class f1 asup_set_class f3 pssuni f0 asup_set_class f1 asup_set_class awss f1 asup_set_class f3 awcel f0 asup_set_class f3 acuni awss pexpcom f0 asup_set_class f1 asup_set_class awss f0 asup_set_class f3 acuni awss f1 f3 prexlimiv f0 asup_set_class f1 asup_set_class awss f1 f3 awrex f0 asup_set_class f3 acuni awss f0 f2 pralimi f0 f2 f3 acuni punissb f0 asup_set_class f1 asup_set_class awss f1 f3 awrex f0 f2 awral f0 asup_set_class f3 acuni awss f0 f2 awral f2 acuni f3 acuni awss psylibr $.
+$}
+$( /* If the difference ` A \ B ` contains the largest members of ` A ` , then
+       the union of the difference is the union of ` A ` .  (Contributed by NM,
+       22-Mar-2004.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x y B $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	punidif $p |- ( A. x e. A E. y e. ( A \ B ) x C_ y -> U. ( A \ B ) = U. A ) $=
+	f0 f1 f2 f2 f3 acdif puniss2 f2 f3 pdifss f2 f3 acdif f2 puniss f2 f3 acdif f2 awss f2 f3 acdif acuni f2 acuni awss aax-mp f0 asup_set_class f1 asup_set_class awss f1 f2 f3 acdif awrex f0 f2 awral f2 acuni f2 f3 acdif acuni awss f2 f3 acdif acuni f2 acuni awss pjctil f2 f3 acdif acuni f2 acuni peqss f0 asup_set_class f1 asup_set_class awss f1 f2 f3 acdif awrex f0 f2 awral f2 f3 acdif acuni f2 acuni awss f2 acuni f2 f3 acdif acuni awss awa f2 f3 acdif acuni f2 acuni awceq psylibr $.
+$}
+$( /* Relationship implying union.  (Contributed by NM, 10-Nov-1999.) */
+
+$)
+${
+	$v x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pssunieq $p |- ( ( A e. B /\ A. x e. B x C_ A ) -> A = U. B ) $=
+	f1 f2 pelssuni f0 f2 f1 punissb f2 acuni f1 awss f0 asup_set_class f1 awss f0 f2 awral pbiimpri f1 f2 awcel f1 f2 acuni awss f0 asup_set_class f1 awss f0 f2 awral f2 acuni f1 awss panim12i f1 f2 acuni peqss f1 f2 awcel f0 asup_set_class f1 awss f0 f2 awral awa f1 f2 acuni awss f2 acuni f1 awss awa f1 f2 acuni awceq psylibr $.
+$}
+$( /* Any member of a class is the largest of those members that it includes.
+       (Contributed by NM, 13-Aug-2002.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x y B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	i0 $f set y $.
+	punimax $p |- ( A e. B -> U. { x e. B | x C_ A } = A ) $=
+	f1 pssid f0 asup_set_class f1 f1 psseq1 f0 asup_set_class f1 awss f1 f1 awss f0 f1 f2 pelrab3 f1 f2 awcel f1 f0 asup_set_class f1 awss f0 f2 acrab awcel f1 f1 awss pmpbiri f0 asup_set_class i0 asup_set_class f1 psseq1 f0 asup_set_class f1 awss i0 asup_set_class f1 awss f0 i0 asup_set_class f2 pelrab i0 asup_set_class f0 asup_set_class f1 awss f0 f2 acrab awcel i0 asup_set_class f2 awcel i0 asup_set_class f1 awss psimprbi i0 asup_set_class f1 awss i0 f0 asup_set_class f1 awss f0 f2 acrab prgen i0 f1 f0 asup_set_class f1 awss f0 f2 acrab pssunieq f1 f0 asup_set_class f1 awss f0 f2 acrab awcel i0 asup_set_class f1 awss i0 f0 asup_set_class f1 awss f0 f2 acrab awral awa f1 f0 asup_set_class f1 awss f0 f2 acrab acuni peqcomd f1 f2 awcel f1 f0 asup_set_class f1 awss f0 f2 acrab awcel i0 asup_set_class f1 awss i0 f0 asup_set_class f1 awss f0 f2 acrab awral f0 asup_set_class f1 awss f0 f2 acrab acuni f1 awceq psylancl $.
+$}
+

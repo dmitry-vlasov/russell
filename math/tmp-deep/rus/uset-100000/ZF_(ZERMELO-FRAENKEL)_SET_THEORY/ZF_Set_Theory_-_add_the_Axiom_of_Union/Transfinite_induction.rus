@@ -1,0 +1,682 @@
+import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Ordinals_(continued).rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+          Transfinite induction
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* The Principle of Transfinite Induction.  Theorem 7.17 of [TakeutiZaring]
+       p. 39.  This principle states that if ` A ` is a class of ordinal
+       numbers with the property that every ordinal number included in ` A `
+       also belongs to ` A ` , then every ordinal number is in ` A ` .
+
+       See theorem ~ tfindes or ~ tfinds for the version involving basis and
+       induction hypotheses.  (Contributed by NM, 18-Feb-2004.) */
+
+theorem tfi (x : set, A : class) disjointed(x A) {
+	prop 1 : wff = |- ( ( A ⊆ On ∧ ∀ x ∈ On ( x ⊆ A → x ∈ A ) ) → A = On ) ;;
+}
+
+proof of tfi {
+	step 1 : wff = eldifn () |- ( x ∈ ( On ∖ A ) → ¬ x ∈ A ) ;;
+	step 2 : wff = adantl (step 1) |- ( ( ( x ∈ On → ( x ⊆ A → x ∈ A ) ) ∧ x ∈ ( On ∖ A ) ) → ¬ x ∈ A ) ;;
+	step 3 : wff = eldifi () |- ( x ∈ ( On ∖ A ) → x ∈ On ) ;;
+	step 4 : wff = onss () |- ( x ∈ On → x ⊆ On ) ;;
+	step 5 : wff = difin0ss () |- ( ( ( On ∖ A ) ∩ x ) = ∅ → ( x ⊆ On → x ⊆ A ) ) ;;
+	step 6 : wff = syl5com (step 4, step 5) |- ( x ∈ On → ( ( ( On ∖ A ) ∩ x ) = ∅ → x ⊆ A ) ) ;;
+	step 7 : wff = imim1d (step 6) |- ( x ∈ On → ( ( x ⊆ A → x ∈ A ) → ( ( ( On ∖ A ) ∩ x ) = ∅ → x ∈ A ) ) ) ;;
+	step 8 : wff = a2i (step 7) |- ( ( x ∈ On → ( x ⊆ A → x ∈ A ) ) → ( x ∈ On → ( ( ( On ∖ A ) ∩ x ) = ∅ → x ∈ A ) ) ) ;;
+	step 9 : wff = syl5 (step 3, step 8) |- ( ( x ∈ On → ( x ⊆ A → x ∈ A ) ) → ( x ∈ ( On ∖ A ) → ( ( ( On ∖ A ) ∩ x ) = ∅ → x ∈ A ) ) ) ;;
+	step 10 : wff = imp (step 9) |- ( ( ( x ∈ On → ( x ⊆ A → x ∈ A ) ) ∧ x ∈ ( On ∖ A ) ) → ( ( ( On ∖ A ) ∩ x ) = ∅ → x ∈ A ) ) ;;
+	step 11 : wff = mtod (step 2, step 10) |- ( ( ( x ∈ On → ( x ⊆ A → x ∈ A ) ) ∧ x ∈ ( On ∖ A ) ) → ¬ ( ( On ∖ A ) ∩ x ) = ∅ ) ;;
+	step 12 : wff = ex (step 11) |- ( ( x ∈ On → ( x ⊆ A → x ∈ A ) ) → ( x ∈ ( On ∖ A ) → ¬ ( ( On ∖ A ) ∩ x ) = ∅ ) ) ;;
+	step 13 : wff = ralimi2 (step 12) |- ( ∀ x ∈ On ( x ⊆ A → x ∈ A ) → ∀ x ∈ ( On ∖ A ) ¬ ( ( On ∖ A ) ∩ x ) = ∅ ) ;;
+	step 14 : wff = ralnex () |- ( ∀ x ∈ ( On ∖ A ) ¬ ( ( On ∖ A ) ∩ x ) = ∅ ↔ ¬ ∃ x ∈ ( On ∖ A ) ( ( On ∖ A ) ∩ x ) = ∅ ) ;;
+	step 15 : wff = sylib (step 13, step 14) |- ( ∀ x ∈ On ( x ⊆ A → x ∈ A ) → ¬ ∃ x ∈ ( On ∖ A ) ( ( On ∖ A ) ∩ x ) = ∅ ) ;;
+	step 16 : wff = ssdif0 () |- ( On ⊆ A ↔ ( On ∖ A ) = ∅ ) ;;
+	step 17 : wff = necon3bbii (step 16) |- ( ¬ On ⊆ A ↔ ( On ∖ A ) ≠ ∅ ) ;;
+	step 18 : wff = ordon () |- Ord On ;;
+	step 19 : wff = difss () |- ( On ∖ A ) ⊆ On ;;
+	step 20 : wff = tz7.5 () |- ( ( Ord On ∧ ( On ∖ A ) ⊆ On ∧ ( On ∖ A ) ≠ ∅ ) → ∃ x ∈ ( On ∖ A ) ( ( On ∖ A ) ∩ x ) = ∅ ) ;;
+	step 21 : wff = mp3an12 (step 18, step 19, step 20) |- ( ( On ∖ A ) ≠ ∅ → ∃ x ∈ ( On ∖ A ) ( ( On ∖ A ) ∩ x ) = ∅ ) ;;
+	step 22 : wff = sylbi (step 17, step 21) |- ( ¬ On ⊆ A → ∃ x ∈ ( On ∖ A ) ( ( On ∖ A ) ∩ x ) = ∅ ) ;;
+	step 23 : wff = nsyl2 (step 15, step 22) |- ( ∀ x ∈ On ( x ⊆ A → x ∈ A ) → On ⊆ A ) ;;
+	step 24 : wff = anim2i (step 23) |- ( ( A ⊆ On ∧ ∀ x ∈ On ( x ⊆ A → x ∈ A ) ) → ( A ⊆ On ∧ On ⊆ A ) ) ;;
+	step 25 : wff = eqss () |- ( A = On ↔ ( A ⊆ On ∧ On ⊆ A ) ) ;;
+	step 26 : wff = sylibr (step 24, step 25) |- ( ( A ⊆ On ∧ ∀ x ∈ On ( x ⊆ A → x ∈ A ) ) → A = On ) ;;
+	qed prop 1 = step 26 ;;
+}
+
+/* Transfinite Induction Schema.  If all ordinal numbers less than a given
+       number ` x ` have a property (induction hypothesis), then all ordinal
+       numbers have the property (conclusion).  Exercise 25 of [Enderton]
+       p. 200.  (Contributed by NM, 1-Aug-1994.)  (Revised by Mario Carneiro,
+       20-Nov-2016.) */
+
+theorem tfis (ph : wff, x : set, y : set) disjointed(w y z ph, w x y z) {
+	hyp 1 : wff = |- ( x ∈ On → ( ∀ y ∈ x [ y / x ] ph → ph ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( x ∈ On → ph ) ;;
+}
+
+proof of tfis {
+	var z : set, w : set;;
+	step 1 : wff = ssrab2 () |- { x ∈ On | ph } ⊆ On ;;
+	step 2 : wff = nfcv () |- F/_ x z ;;
+	step 3 : wff = nfcv () |- F/_ x z ;;
+	step 4 : wff = nfrab1 () |- F/_ x { x ∈ On | ph } ;;
+	step 5 : wff = nfss (step 3, step 4) |- F/ x z ⊆ { x ∈ On | ph } ;;
+	step 6 : wff = nfrab1 () |- F/_ x { x ∈ On | ph } ;;
+	step 7 : wff = nfcri (step 6) |- F/ x z ∈ { x ∈ On | ph } ;;
+	step 8 : wff = nfim (step 5, step 7) |- F/ x ( z ⊆ { x ∈ On | ph } → z ∈ { x ∈ On | ph } ) ;;
+	step 9 : wff = dfss3 () |- ( x ⊆ { x ∈ On | ph } ↔ ∀ y ∈ x y ∈ { x ∈ On | ph } ) ;;
+	step 10 : wff = sseq1 () |- ( x = z → ( x ⊆ { x ∈ On | ph } ↔ z ⊆ { x ∈ On | ph } ) ) ;;
+	step 11 : wff = syl5bbr (step 9, step 10) |- ( x = z → ( ∀ y ∈ x y ∈ { x ∈ On | ph } ↔ z ⊆ { x ∈ On | ph } ) ) ;;
+	step 12 : wff = rabid () |- ( x ∈ { x ∈ On | ph } ↔ ( x ∈ On ∧ ph ) ) ;;
+	step 13 : wff = eleq1 () |- ( x = z → ( x ∈ { x ∈ On | ph } ↔ z ∈ { x ∈ On | ph } ) ) ;;
+	step 14 : wff = syl5bbr (step 12, step 13) |- ( x = z → ( ( x ∈ On ∧ ph ) ↔ z ∈ { x ∈ On | ph } ) ) ;;
+	step 15 : wff = imbi12d (step 11, step 14) |- ( x = z → ( ( ∀ y ∈ x y ∈ { x ∈ On | ph } → ( x ∈ On ∧ ph ) ) ↔ ( z ⊆ { x ∈ On | ph } → z ∈ { x ∈ On | ph } ) ) ) ;;
+	step 16 : wff = sbequ () |- ( w = y → ( [ w / x ] ph ↔ [ y / x ] ph ) ) ;;
+	step 17 : wff = nfcv () |- F/_ x On ;;
+	step 18 : wff = nfcv () |- F/_ w On ;;
+	step 19 : wff = nfv () |- F/ w ph ;;
+	step 20 : wff = nfs1v () |- F/ x [ w / x ] ph ;;
+	step 21 : wff = sbequ12 () |- ( x = w → ( ph ↔ [ w / x ] ph ) ) ;;
+	step 22 : wff = cbvrab (step 17, step 18, step 19, step 20, step 21) |- { x ∈ On | ph } = { w ∈ On | [ w / x ] ph } ;;
+	step 23 : wff = elrab2 (step 16, step 22) |- ( y ∈ { x ∈ On | ph } ↔ ( y ∈ On ∧ [ y / x ] ph ) ) ;;
+	step 24 : wff = simprbi (step 23) |- ( y ∈ { x ∈ On | ph } → [ y / x ] ph ) ;;
+	step 25 : wff = ralimi (step 24) |- ( ∀ y ∈ x y ∈ { x ∈ On | ph } → ∀ y ∈ x [ y / x ] ph ) ;;
+	step 26 : wff = syl5 (step 25, hyp 1) |- ( x ∈ On → ( ∀ y ∈ x y ∈ { x ∈ On | ph } → ph ) ) ;;
+	step 27 : wff = anc2li (step 26) |- ( x ∈ On → ( ∀ y ∈ x y ∈ { x ∈ On | ph } → ( x ∈ On ∧ ph ) ) ) ;;
+	step 28 : wff = vtoclgaf (step 2, step 8, step 15, step 27) |- ( z ∈ On → ( z ⊆ { x ∈ On | ph } → z ∈ { x ∈ On | ph } ) ) ;;
+	step 29 : wff = rgen (step 28) |- ∀ z ∈ On ( z ⊆ { x ∈ On | ph } → z ∈ { x ∈ On | ph } ) ;;
+	step 30 : wff = tfi () |- ( ( { x ∈ On | ph } ⊆ On ∧ ∀ z ∈ On ( z ⊆ { x ∈ On | ph } → z ∈ { x ∈ On | ph } ) ) → { x ∈ On | ph } = On ) ;;
+	step 31 : wff = mp2an (step 1, step 29, step 30) |- { x ∈ On | ph } = On ;;
+	step 32 : wff = eqcomi (step 31) |- On = { x ∈ On | ph } ;;
+	step 33 : wff = rabeq2i (step 32) |- ( x ∈ On ↔ ( x ∈ On ∧ ph ) ) ;;
+	step 34 : wff = simprbi (step 33) |- ( x ∈ On → ph ) ;;
+	qed prop 1 = step 34 ;;
+}
+
+/* Transfinite Induction Schema, using implicit substitution.  (Contributed
+       by NM, 18-Aug-1994.) */
+
+theorem tfis2f (ph : wff, ps : wff, x : set, y : set) disjointed(y ph, x y) {
+	hyp 1 : wff = |- F/ x ps ;;
+	hyp 2 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	hyp 3 : wff = |- ( x ∈ On → ( ∀ y ∈ x ps → ph ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( x ∈ On → ph ) ;;
+}
+
+proof of tfis2f {
+	step 1 : wff = sbie (hyp 1, hyp 2) |- ( [ y / x ] ph ↔ ps ) ;;
+	step 2 : wff = ralbii (step 1) |- ( ∀ y ∈ x [ y / x ] ph ↔ ∀ y ∈ x ps ) ;;
+	step 3 : wff = syl5bi (step 2, hyp 3) |- ( x ∈ On → ( ∀ y ∈ x [ y / x ] ph → ph ) ) ;;
+	step 4 : wff = tfis (step 3) |- ( x ∈ On → ph ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Transfinite Induction Schema, using implicit substitution.  (Contributed
+       by NM, 18-Aug-1994.) */
+
+theorem tfis2 (ph : wff, ps : wff, x : set, y : set) disjointed(x ps, y ph, x y) {
+	hyp 1 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	hyp 2 : wff = |- ( x ∈ On → ( ∀ y ∈ x ps → ph ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( x ∈ On → ph ) ;;
+}
+
+proof of tfis2 {
+	step 1 : wff = nfv () |- F/ x ps ;;
+	step 2 : wff = tfis2f (step 1, hyp 1, hyp 2) |- ( x ∈ On → ph ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Transfinite Induction Schema, using implicit substitution.  (Contributed
+       by NM, 4-Nov-2003.) */
+
+theorem tfis3 (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class) disjointed(x ps, y ph, x ch, x A, x y) {
+	hyp 1 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	hyp 2 : wff = |- ( x = A → ( ph ↔ ch ) ) ;;
+	hyp 3 : wff = |- ( x ∈ On → ( ∀ y ∈ x ps → ph ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ On → ch ) ;;
+}
+
+proof of tfis3 {
+	step 1 : wff = tfis2 (hyp 1, hyp 3) |- ( x ∈ On → ph ) ;;
+	step 2 : wff = vtoclga (hyp 2, step 1) |- ( A ∈ On → ch ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A transfinite induction scheme in "implicit" form where the induction is
+       done on an object derived from the object of interest.  (Contributed by
+       Stefan O'Rear, 24-Aug-2015.) */
+
+theorem tfisi (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, A : class, R : class, S : class, T : class, V : class) disjointed(x v w y z T, v w y z R, x v w z S, x v w z ch, x v w y z ph, w y z ps, x A, x th) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → T ∈ On ) ;;
+	hyp 3 : wff = |- ( ( ph ∧ ( R ∈ On ∧ R ⊆ T ) ∧ ∀ y ( S ∈ R → ch ) ) → ps ) ;;
+	hyp 4 : wff = |- ( x = y → ( ps ↔ ch ) ) ;;
+	hyp 5 : wff = |- ( x = A → ( ps ↔ th ) ) ;;
+	hyp 6 : wff = |- ( x = y → R = S ) ;;
+	hyp 7 : wff = |- ( x = A → R = T ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → th ) ;;
+}
+
+proof of tfisi {
+	var z : set, w : set, v : set;;
+	step 1 : wff = ssid () |- T ⊆ T ;;
+	step 2 : wff = eqid () |- T = T ;;
+	step 3 : wff = eqeq2 () |- ( z = w → ( R = z ↔ R = w ) ) ;;
+	step 4 : wff = sseq1 () |- ( z = w → ( z ⊆ T ↔ w ⊆ T ) ) ;;
+	step 5 : wff = anbi2d (step 4) |- ( z = w → ( ( ph ∧ z ⊆ T ) ↔ ( ph ∧ w ⊆ T ) ) ) ;;
+	step 6 : wff = imbi1d (step 5) |- ( z = w → ( ( ( ph ∧ z ⊆ T ) → ps ) ↔ ( ( ph ∧ w ⊆ T ) → ps ) ) ) ;;
+	step 7 : wff = imbi12d (step 3, step 6) |- ( z = w → ( ( R = z → ( ( ph ∧ z ⊆ T ) → ps ) ) ↔ ( R = w → ( ( ph ∧ w ⊆ T ) → ps ) ) ) ) ;;
+	step 8 : wff = albidv (step 7) |- ( z = w → ( ∀ x ( R = z → ( ( ph ∧ z ⊆ T ) → ps ) ) ↔ ∀ x ( R = w → ( ( ph ∧ w ⊆ T ) → ps ) ) ) ) ;;
+	step 9 : wff = eqeq1d (hyp 6) |- ( x = y → ( R = w ↔ S = w ) ) ;;
+	step 10 : wff = imbi2d (hyp 4) |- ( x = y → ( ( ( ph ∧ w ⊆ T ) → ps ) ↔ ( ( ph ∧ w ⊆ T ) → ch ) ) ) ;;
+	step 11 : wff = imbi12d (step 9, step 10) |- ( x = y → ( ( R = w → ( ( ph ∧ w ⊆ T ) → ps ) ) ↔ ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ) ;;
+	step 12 : wff = cbvalv (step 11) |- ( ∀ x ( R = w → ( ( ph ∧ w ⊆ T ) → ps ) ) ↔ ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ;;
+	step 13 : wff = syl6bb (step 8, step 12) |- ( z = w → ( ∀ x ( R = z → ( ( ph ∧ z ⊆ T ) → ps ) ) ↔ ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ) ;;
+	step 14 : wff = eqeq2 () |- ( z = T → ( R = z ↔ R = T ) ) ;;
+	step 15 : wff = sseq1 () |- ( z = T → ( z ⊆ T ↔ T ⊆ T ) ) ;;
+	step 16 : wff = anbi2d (step 15) |- ( z = T → ( ( ph ∧ z ⊆ T ) ↔ ( ph ∧ T ⊆ T ) ) ) ;;
+	step 17 : wff = imbi1d (step 16) |- ( z = T → ( ( ( ph ∧ z ⊆ T ) → ps ) ↔ ( ( ph ∧ T ⊆ T ) → ps ) ) ) ;;
+	step 18 : wff = imbi12d (step 14, step 17) |- ( z = T → ( ( R = z → ( ( ph ∧ z ⊆ T ) → ps ) ) ↔ ( R = T → ( ( ph ∧ T ⊆ T ) → ps ) ) ) ) ;;
+	step 19 : wff = albidv (step 18) |- ( z = T → ( ∀ x ( R = z → ( ( ph ∧ z ⊆ T ) → ps ) ) ↔ ∀ x ( R = T → ( ( ph ∧ T ⊆ T ) → ps ) ) ) ) ;;
+	step 20 : wff = simp3l () |- ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) → ph ) ;;
+	step 21 : wff = simp2 () |- ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) → R = z ) ;;
+	step 22 : wff = simp1l () |- ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) → z ∈ On ) ;;
+	step 23 : wff = eqeltrd (step 21, step 22) |- ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) → R ∈ On ) ;;
+	step 24 : wff = simp2 () |- ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) → R = z ) ;;
+	step 25 : wff = simp3r () |- ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) → z ⊆ T ) ;;
+	step 26 : wff = eqsstrd (step 24, step 25) |- ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) → R ⊆ T ) ;;
+	step 27 : wff = simpl3l () |- ( ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) ∧ [_ v / x ]_ R ∈ R ) → ph ) ;;
+	step 28 : wff = simpl1l () |- ( ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) ∧ [_ v / x ]_ R ∈ R ) → z ∈ On ) ;;
+	step 29 : wff = simpr () |- ( ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) ∧ [_ v / x ]_ R ∈ R ) → [_ v / x ]_ R ∈ R ) ;;
+	step 30 : wff = simpl2 () |- ( ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) ∧ [_ v / x ]_ R ∈ R ) → R = z ) ;;
+	step 31 : wff = eleqtrd (step 29, step 30) |- ( ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) ∧ [_ v / x ]_ R ∈ R ) → [_ v / x ]_ R ∈ z ) ;;
+	step 32 : wff = onelss () |- ( z ∈ On → ( [_ v / x ]_ R ∈ z → [_ v / x ]_ R ⊆ z ) ) ;;
+	step 33 : wff = sylc (step 28, step 31, step 32) |- ( ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) ∧ [_ v / x ]_ R ∈ R ) → [_ v / x ]_ R ⊆ z ) ;;
+	step 34 : wff = simpl3r () |- ( ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) ∧ [_ v / x ]_ R ∈ R ) → z ⊆ T ) ;;
+	step 35 : wff = sstrd (step 33, step 34) |- ( ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) ∧ [_ v / x ]_ R ∈ R ) → [_ v / x ]_ R ⊆ T ) ;;
+	step 36 : wff = simpr () |- ( ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) ∧ [_ v / x ]_ R ∈ R ) → [_ v / x ]_ R ∈ R ) ;;
+	step 37 : wff = simpl2 () |- ( ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) ∧ [_ v / x ]_ R ∈ R ) → R = z ) ;;
+	step 38 : wff = eleqtrd (step 36, step 37) |- ( ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) ∧ [_ v / x ]_ R ∈ R ) → [_ v / x ]_ R ∈ z ) ;;
+	step 39 : wff = simpl1r () |- ( ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) ∧ [_ v / x ]_ R ∈ R ) → ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ;;
+	step 40 : wff = eqeq2 () |- ( w = [_ v / x ]_ R → ( S = w ↔ S = [_ v / x ]_ R ) ) ;;
+	step 41 : wff = sseq1 () |- ( w = [_ v / x ]_ R → ( w ⊆ T ↔ [_ v / x ]_ R ⊆ T ) ) ;;
+	step 42 : wff = anbi2d (step 41) |- ( w = [_ v / x ]_ R → ( ( ph ∧ w ⊆ T ) ↔ ( ph ∧ [_ v / x ]_ R ⊆ T ) ) ) ;;
+	step 43 : wff = imbi1d (step 42) |- ( w = [_ v / x ]_ R → ( ( ( ph ∧ w ⊆ T ) → ch ) ↔ ( ( ph ∧ [_ v / x ]_ R ⊆ T ) → ch ) ) ) ;;
+	step 44 : wff = imbi12d (step 40, step 43) |- ( w = [_ v / x ]_ R → ( ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ↔ ( S = [_ v / x ]_ R → ( ( ph ∧ [_ v / x ]_ R ⊆ T ) → ch ) ) ) ) ;;
+	step 45 : wff = albidv (step 44) |- ( w = [_ v / x ]_ R → ( ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ↔ ∀ y ( S = [_ v / x ]_ R → ( ( ph ∧ [_ v / x ]_ R ⊆ T ) → ch ) ) ) ) ;;
+	step 46 : wff = rspcva (step 45) |- ( ( [_ v / x ]_ R ∈ z ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) → ∀ y ( S = [_ v / x ]_ R → ( ( ph ∧ [_ v / x ]_ R ⊆ T ) → ch ) ) ) ;;
+	step 47 : wff = syl2anc (step 38, step 39, step 46) |- ( ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) ∧ [_ v / x ]_ R ∈ R ) → ∀ y ( S = [_ v / x ]_ R → ( ( ph ∧ [_ v / x ]_ R ⊆ T ) → ch ) ) ) ;;
+	step 48 : wff = eqidd () |- ( ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) ∧ [_ v / x ]_ R ∈ R ) → [_ v / x ]_ R = [_ v / x ]_ R ) ;;
+	step 49 : wff = nfcv () |- F/_ x y ;;
+	step 50 : wff = nfcv () |- F/_ x S ;;
+	step 51 : wff = csbhypf (step 49, step 50, hyp 6) |- ( v = y → [_ v / x ]_ R = S ) ;;
+	step 52 : wff = eqcomd (step 51) |- ( v = y → S = [_ v / x ]_ R ) ;;
+	step 53 : wff = eqcoms (step 52) |- ( y = v → S = [_ v / x ]_ R ) ;;
+	step 54 : wff = eqeq1d (step 53) |- ( y = v → ( S = [_ v / x ]_ R ↔ [_ v / x ]_ R = [_ v / x ]_ R ) ) ;;
+	step 55 : wff = sbequ () |- ( v = y → ( [ v / x ] ps ↔ [ y / x ] ps ) ) ;;
+	step 56 : wff = nfv () |- F/ x ch ;;
+	step 57 : wff = sbie (step 56, hyp 4) |- ( [ y / x ] ps ↔ ch ) ;;
+	step 58 : wff = syl6bb (step 55, step 57) |- ( v = y → ( [ v / x ] ps ↔ ch ) ) ;;
+	step 59 : wff = bicomd (step 58) |- ( v = y → ( ch ↔ [ v / x ] ps ) ) ;;
+	step 60 : wff = eqcoms (step 59) |- ( y = v → ( ch ↔ [ v / x ] ps ) ) ;;
+	step 61 : wff = imbi2d (step 60) |- ( y = v → ( ( ( ph ∧ [_ v / x ]_ R ⊆ T ) → ch ) ↔ ( ( ph ∧ [_ v / x ]_ R ⊆ T ) → [ v / x ] ps ) ) ) ;;
+	step 62 : wff = imbi12d (step 54, step 61) |- ( y = v → ( ( S = [_ v / x ]_ R → ( ( ph ∧ [_ v / x ]_ R ⊆ T ) → ch ) ) ↔ ( [_ v / x ]_ R = [_ v / x ]_ R → ( ( ph ∧ [_ v / x ]_ R ⊆ T ) → [ v / x ] ps ) ) ) ) ;;
+	step 63 : wff = spv (step 62) |- ( ∀ y ( S = [_ v / x ]_ R → ( ( ph ∧ [_ v / x ]_ R ⊆ T ) → ch ) ) → ( [_ v / x ]_ R = [_ v / x ]_ R → ( ( ph ∧ [_ v / x ]_ R ⊆ T ) → [ v / x ] ps ) ) ) ;;
+	step 64 : wff = sylc (step 47, step 48, step 63) |- ( ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) ∧ [_ v / x ]_ R ∈ R ) → ( ( ph ∧ [_ v / x ]_ R ⊆ T ) → [ v / x ] ps ) ) ;;
+	step 65 : wff = mp2and (step 27, step 35, step 64) |- ( ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) ∧ [_ v / x ]_ R ∈ R ) → [ v / x ] ps ) ;;
+	step 66 : wff = ex (step 65) |- ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) → ( [_ v / x ]_ R ∈ R → [ v / x ] ps ) ) ;;
+	step 67 : wff = alrimiv (step 66) |- ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) → ∀ v ( [_ v / x ]_ R ∈ R → [ v / x ] ps ) ) ;;
+	step 68 : wff = nfcv () |- F/_ x y ;;
+	step 69 : wff = nfcv () |- F/_ x S ;;
+	step 70 : wff = csbhypf (step 68, step 69, hyp 6) |- ( v = y → [_ v / x ]_ R = S ) ;;
+	step 71 : wff = eleq1d (step 70) |- ( v = y → ( [_ v / x ]_ R ∈ R ↔ S ∈ R ) ) ;;
+	step 72 : wff = sbequ () |- ( v = y → ( [ v / x ] ps ↔ [ y / x ] ps ) ) ;;
+	step 73 : wff = nfv () |- F/ x ch ;;
+	step 74 : wff = sbie (step 73, hyp 4) |- ( [ y / x ] ps ↔ ch ) ;;
+	step 75 : wff = syl6bb (step 72, step 74) |- ( v = y → ( [ v / x ] ps ↔ ch ) ) ;;
+	step 76 : wff = imbi12d (step 71, step 75) |- ( v = y → ( ( [_ v / x ]_ R ∈ R → [ v / x ] ps ) ↔ ( S ∈ R → ch ) ) ) ;;
+	step 77 : wff = cbvalv (step 76) |- ( ∀ v ( [_ v / x ]_ R ∈ R → [ v / x ] ps ) ↔ ∀ y ( S ∈ R → ch ) ) ;;
+	step 78 : wff = sylib (step 67, step 77) |- ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) → ∀ y ( S ∈ R → ch ) ) ;;
+	step 79 : wff = syl121anc (step 20, step 23, step 26, step 78, hyp 3) |- ( ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) ∧ R = z ∧ ( ph ∧ z ⊆ T ) ) → ps ) ;;
+	step 80 : wff = 3exp (step 79) |- ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) → ( R = z → ( ( ph ∧ z ⊆ T ) → ps ) ) ) ;;
+	step 81 : wff = alrimiv (step 80) |- ( ( z ∈ On ∧ ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) ) → ∀ x ( R = z → ( ( ph ∧ z ⊆ T ) → ps ) ) ) ;;
+	step 82 : wff = ex (step 81) |- ( z ∈ On → ( ∀ w ∈ z ∀ y ( S = w → ( ( ph ∧ w ⊆ T ) → ch ) ) → ∀ x ( R = z → ( ( ph ∧ z ⊆ T ) → ps ) ) ) ) ;;
+	step 83 : wff = tfis3 (step 13, step 19, step 82) |- ( T ∈ On → ∀ x ( R = T → ( ( ph ∧ T ⊆ T ) → ps ) ) ) ;;
+	step 84 : wff = syl (hyp 2, step 83) |- ( ph → ∀ x ( R = T → ( ( ph ∧ T ⊆ T ) → ps ) ) ) ;;
+	step 85 : wff = eqeq1d (hyp 7) |- ( x = A → ( R = T ↔ T = T ) ) ;;
+	step 86 : wff = imbi2d (hyp 5) |- ( x = A → ( ( ( ph ∧ T ⊆ T ) → ps ) ↔ ( ( ph ∧ T ⊆ T ) → th ) ) ) ;;
+	step 87 : wff = imbi12d (step 85, step 86) |- ( x = A → ( ( R = T → ( ( ph ∧ T ⊆ T ) → ps ) ) ↔ ( T = T → ( ( ph ∧ T ⊆ T ) → th ) ) ) ) ;;
+	step 88 : wff = spcgv (step 87) |- ( A ∈ V → ( ∀ x ( R = T → ( ( ph ∧ T ⊆ T ) → ps ) ) → ( T = T → ( ( ph ∧ T ⊆ T ) → th ) ) ) ) ;;
+	step 89 : wff = sylc (hyp 1, step 84, step 88) |- ( ph → ( T = T → ( ( ph ∧ T ⊆ T ) → th ) ) ) ;;
+	step 90 : wff = mpi (step 2, step 89) |- ( ph → ( ( ph ∧ T ⊆ T ) → th ) ) ;;
+	step 91 : wff = exp3a (step 90) |- ( ph → ( ph → ( T ⊆ T → th ) ) ) ;;
+	step 92 : wff = pm2.43i (step 91) |- ( ph → ( T ⊆ T → th ) ) ;;
+	step 93 : wff = mpi (step 1, step 92) |- ( ph → th ) ;;
+	qed prop 1 = step 93 ;;
+}
+
+/* Substitutions. */
+
+/* Basis. */
+
+/* Induction hypothesis for successors. */
+
+/* Induction hypothesis for limit ordinals. */
+
+/* Principle of Transfinite Induction (inference schema), using implicit
+       substitutions.  The first four hypotheses establish the substitutions we
+       need.  The last three are the basis, the induction hypothesis for
+       successors, and the induction hypothesis for limit ordinals.  Theorem
+       Schema 4 of [Suppes] p. 197.  (Contributed by NM, 16-Apr-1995.)  (Proof
+       shortened by Andrew Salmon, 27-Aug-2011.) */
+
+theorem tfinds (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, x : set, y : set, A : class) disjointed(x y z, x A, x z ch, x ta, y z ph) {
+	hyp 1 : wff = |- ( x = ∅ → ( ph ↔ ps ) ) ;;
+	hyp 2 : wff = |- ( x = y → ( ph ↔ ch ) ) ;;
+	hyp 3 : wff = |- ( x = suc y → ( ph ↔ th ) ) ;;
+	hyp 4 : wff = |- ( x = A → ( ph ↔ ta ) ) ;;
+	hyp 5 : wff = |- ps ;;
+	hyp 6 : wff = |- ( y ∈ On → ( ch → th ) ) ;;
+	hyp 7 : wff = |- ( Lim x → ( ∀ y ∈ x ch → ph ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ On → ta ) ;;
+}
+
+proof of tfinds {
+	var z : set;;
+	step 1 : wff = dflim3 () |- ( Lim x ↔ ( Ord x ∧ ¬ ( x = ∅ ∨ ∃ y ∈ On x = suc y ) ) ) ;;
+	step 2 : wff = notbii (step 1) |- ( ¬ Lim x ↔ ¬ ( Ord x ∧ ¬ ( x = ∅ ∨ ∃ y ∈ On x = suc y ) ) ) ;;
+	step 3 : wff = iman () |- ( ( Ord x → ( x = ∅ ∨ ∃ y ∈ On x = suc y ) ) ↔ ¬ ( Ord x ∧ ¬ ( x = ∅ ∨ ∃ y ∈ On x = suc y ) ) ) ;;
+	step 4 : wff = eloni () |- ( x ∈ On → Ord x ) ;;
+	step 5 : wff = pm2.27 () |- ( Ord x → ( ( Ord x → ( x = ∅ ∨ ∃ y ∈ On x = suc y ) ) → ( x = ∅ ∨ ∃ y ∈ On x = suc y ) ) ) ;;
+	step 6 : wff = syl (step 4, step 5) |- ( x ∈ On → ( ( Ord x → ( x = ∅ ∨ ∃ y ∈ On x = suc y ) ) → ( x = ∅ ∨ ∃ y ∈ On x = suc y ) ) ) ;;
+	step 7 : wff = mpbiri (hyp 5, hyp 1) |- ( x = ∅ → ph ) ;;
+	step 8 : wff = a1d (step 7) |- ( x = ∅ → ( ∀ y ∈ x ch → ph ) ) ;;
+	step 9 : wff = nfra1 () |- F/ y ∀ y ∈ x ch ;;
+	step 10 : wff = nfv () |- F/ y ph ;;
+	step 11 : wff = nfim (step 9, step 10) |- F/ y ( ∀ y ∈ x ch → ph ) ;;
+	step 12 : wff = vex () |- y ∈ _V ;;
+	step 13 : wff = sucid (step 12) |- y ∈ suc y ;;
+	step 14 : wff = rspcv (hyp 2) |- ( y ∈ suc y → ( ∀ x ∈ suc y ph → ch ) ) ;;
+	step 15 : wff = ax-mp (step 13, step 14) |- ( ∀ x ∈ suc y ph → ch ) ;;
+	step 16 : wff = syl5 (step 15, hyp 6) |- ( y ∈ On → ( ∀ x ∈ suc y ph → th ) ) ;;
+	step 17 : wff = raleq () |- ( x = suc y → ( ∀ z ∈ x [ z / x ] ph ↔ ∀ z ∈ suc y [ z / x ] ph ) ) ;;
+	step 18 : wff = nfv () |- F/ x ch ;;
+	step 19 : wff = sbie (step 18, hyp 2) |- ( [ y / x ] ph ↔ ch ) ;;
+	step 20 : wff = sbequ () |- ( y = z → ( [ y / x ] ph ↔ [ z / x ] ph ) ) ;;
+	step 21 : wff = syl5bbr (step 19, step 20) |- ( y = z → ( ch ↔ [ z / x ] ph ) ) ;;
+	step 22 : wff = cbvralv (step 21) |- ( ∀ y ∈ x ch ↔ ∀ z ∈ x [ z / x ] ph ) ;;
+	step 23 : wff = cbvralsv () |- ( ∀ x ∈ suc y ph ↔ ∀ z ∈ suc y [ z / x ] ph ) ;;
+	step 24 : wff = 3bitr4g (step 17, step 22, step 23) |- ( x = suc y → ( ∀ y ∈ x ch ↔ ∀ x ∈ suc y ph ) ) ;;
+	step 25 : wff = imbi1d (step 24) |- ( x = suc y → ( ( ∀ y ∈ x ch → th ) ↔ ( ∀ x ∈ suc y ph → th ) ) ) ;;
+	step 26 : wff = syl5ibrcom (step 16, step 25) |- ( y ∈ On → ( x = suc y → ( ∀ y ∈ x ch → th ) ) ) ;;
+	step 27 : wff = biimprd (hyp 3) |- ( x = suc y → ( th → ph ) ) ;;
+	step 28 : wff = a1i (step 27) |- ( y ∈ On → ( x = suc y → ( th → ph ) ) ) ;;
+	step 29 : wff = syldd (step 26, step 28) |- ( y ∈ On → ( x = suc y → ( ∀ y ∈ x ch → ph ) ) ) ;;
+	step 30 : wff = rexlimi (step 11, step 29) |- ( ∃ y ∈ On x = suc y → ( ∀ y ∈ x ch → ph ) ) ;;
+	step 31 : wff = jaoi (step 8, step 30) |- ( ( x = ∅ ∨ ∃ y ∈ On x = suc y ) → ( ∀ y ∈ x ch → ph ) ) ;;
+	step 32 : wff = syl6 (step 6, step 31) |- ( x ∈ On → ( ( Ord x → ( x = ∅ ∨ ∃ y ∈ On x = suc y ) ) → ( ∀ y ∈ x ch → ph ) ) ) ;;
+	step 33 : wff = syl5bir (step 3, step 32) |- ( x ∈ On → ( ¬ ( Ord x ∧ ¬ ( x = ∅ ∨ ∃ y ∈ On x = suc y ) ) → ( ∀ y ∈ x ch → ph ) ) ) ;;
+	step 34 : wff = syl5bi (step 2, step 33) |- ( x ∈ On → ( ¬ Lim x → ( ∀ y ∈ x ch → ph ) ) ) ;;
+	step 35 : wff = pm2.61d2 (step 34, hyp 7) |- ( x ∈ On → ( ∀ y ∈ x ch → ph ) ) ;;
+	step 36 : wff = tfis3 (hyp 2, hyp 4, step 35) |- ( A ∈ On → ta ) ;;
+	qed prop 1 = step 36 ;;
+}
+
+/* Substitutions. */
+
+/* Basis. */
+
+/* Induction hypothesis for successor ordinals. */
+
+/* Induction hypothesis for limit ordinals. */
+
+/* Transfinite Induction (inference schema), using implicit substitutions.
+       The first four hypotheses establish the substitutions we need.  The last
+       three are the basis, the induction hypothesis for successors, and the
+       induction hypothesis for limit ordinals.  The basis of this version is
+       an arbitrary ordinal ` B ` instead of zero.  Remark in [TakeutiZaring]
+       p. 57.  (Contributed by NM, 5-Mar-2004.) */
+
+theorem tfindsg (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, x : set, y : set, A : class, B : class) disjointed(x A, x y B, x ch, x th, x ta, y ph) {
+	hyp 1 : wff = |- ( x = B → ( ph ↔ ps ) ) ;;
+	hyp 2 : wff = |- ( x = y → ( ph ↔ ch ) ) ;;
+	hyp 3 : wff = |- ( x = suc y → ( ph ↔ th ) ) ;;
+	hyp 4 : wff = |- ( x = A → ( ph ↔ ta ) ) ;;
+	hyp 5 : wff = |- ( B ∈ On → ps ) ;;
+	hyp 6 : wff = |- ( ( ( y ∈ On ∧ B ∈ On ) ∧ B ⊆ y ) → ( ch → th ) ) ;;
+	hyp 7 : wff = |- ( ( ( Lim x ∧ B ∈ On ) ∧ B ⊆ x ) → ( ∀ y ∈ x ( B ⊆ y → ch ) → ph ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ( A ∈ On ∧ B ∈ On ) ∧ B ⊆ A ) → ta ) ;;
+}
+
+proof of tfindsg {
+	step 1 : wff = sseq2 () |- ( x = ∅ → ( B ⊆ x ↔ B ⊆ ∅ ) ) ;;
+	step 2 : wff = adantl (step 1) |- ( ( B = ∅ ∧ x = ∅ ) → ( B ⊆ x ↔ B ⊆ ∅ ) ) ;;
+	step 3 : wff = eqeq2 () |- ( B = ∅ → ( x = B ↔ x = ∅ ) ) ;;
+	step 4 : wff = syl6bir (step 3, hyp 1) |- ( B = ∅ → ( x = ∅ → ( ph ↔ ps ) ) ) ;;
+	step 5 : wff = imp (step 4) |- ( ( B = ∅ ∧ x = ∅ ) → ( ph ↔ ps ) ) ;;
+	step 6 : wff = imbi12d (step 2, step 5) |- ( ( B = ∅ ∧ x = ∅ ) → ( ( B ⊆ x → ph ) ↔ ( B ⊆ ∅ → ps ) ) ) ;;
+	step 7 : wff = sseq2 () |- ( x = ∅ → ( B ⊆ x ↔ B ⊆ ∅ ) ) ;;
+	step 8 : wff = imbi1d (step 7) |- ( x = ∅ → ( ( B ⊆ x → ph ) ↔ ( B ⊆ ∅ → ph ) ) ) ;;
+	step 9 : wff = ss0 () |- ( B ⊆ ∅ → B = ∅ ) ;;
+	step 10 : wff = con3i (step 9) |- ( ¬ B = ∅ → ¬ B ⊆ ∅ ) ;;
+	step 11 : wff = pm2.21d (step 10) |- ( ¬ B = ∅ → ( B ⊆ ∅ → ( ph ↔ ps ) ) ) ;;
+	step 12 : wff = pm5.74d (step 11) |- ( ¬ B = ∅ → ( ( B ⊆ ∅ → ph ) ↔ ( B ⊆ ∅ → ps ) ) ) ;;
+	step 13 : wff = sylan9bbr (step 8, step 12) |- ( ( ¬ B = ∅ ∧ x = ∅ ) → ( ( B ⊆ x → ph ) ↔ ( B ⊆ ∅ → ps ) ) ) ;;
+	step 14 : wff = pm2.61ian (step 6, step 13) |- ( x = ∅ → ( ( B ⊆ x → ph ) ↔ ( B ⊆ ∅ → ps ) ) ) ;;
+	step 15 : wff = imbi2d (step 14) |- ( x = ∅ → ( ( B ∈ On → ( B ⊆ x → ph ) ) ↔ ( B ∈ On → ( B ⊆ ∅ → ps ) ) ) ) ;;
+	step 16 : wff = sseq2 () |- ( x = y → ( B ⊆ x ↔ B ⊆ y ) ) ;;
+	step 17 : wff = imbi12d (step 16, hyp 2) |- ( x = y → ( ( B ⊆ x → ph ) ↔ ( B ⊆ y → ch ) ) ) ;;
+	step 18 : wff = imbi2d (step 17) |- ( x = y → ( ( B ∈ On → ( B ⊆ x → ph ) ) ↔ ( B ∈ On → ( B ⊆ y → ch ) ) ) ) ;;
+	step 19 : wff = sseq2 () |- ( x = suc y → ( B ⊆ x ↔ B ⊆ suc y ) ) ;;
+	step 20 : wff = imbi12d (step 19, hyp 3) |- ( x = suc y → ( ( B ⊆ x → ph ) ↔ ( B ⊆ suc y → th ) ) ) ;;
+	step 21 : wff = imbi2d (step 20) |- ( x = suc y → ( ( B ∈ On → ( B ⊆ x → ph ) ) ↔ ( B ∈ On → ( B ⊆ suc y → th ) ) ) ) ;;
+	step 22 : wff = sseq2 () |- ( x = A → ( B ⊆ x ↔ B ⊆ A ) ) ;;
+	step 23 : wff = imbi12d (step 22, hyp 4) |- ( x = A → ( ( B ⊆ x → ph ) ↔ ( B ⊆ A → ta ) ) ) ;;
+	step 24 : wff = imbi2d (step 23) |- ( x = A → ( ( B ∈ On → ( B ⊆ x → ph ) ) ↔ ( B ∈ On → ( B ⊆ A → ta ) ) ) ) ;;
+	step 25 : wff = a1d (hyp 5) |- ( B ∈ On → ( B ⊆ ∅ → ps ) ) ;;
+	step 26 : wff = vex () |- y ∈ _V ;;
+	step 27 : wff = sucex (step 26) |- suc y ∈ _V ;;
+	step 28 : wff = eqvinc (step 27) |- ( suc y = B ↔ ∃ x ( x = suc y ∧ x = B ) ) ;;
+	step 29 : wff = syl5ibr (hyp 5, hyp 1) |- ( x = B → ( B ∈ On → ph ) ) ;;
+	step 30 : wff = biimpd (hyp 3) |- ( x = suc y → ( ph → th ) ) ;;
+	step 31 : wff = sylan9r (step 29, step 30) |- ( ( x = suc y ∧ x = B ) → ( B ∈ On → th ) ) ;;
+	step 32 : wff = exlimiv (step 31) |- ( ∃ x ( x = suc y ∧ x = B ) → ( B ∈ On → th ) ) ;;
+	step 33 : wff = sylbi (step 28, step 32) |- ( suc y = B → ( B ∈ On → th ) ) ;;
+	step 34 : wff = eqcoms (step 33) |- ( B = suc y → ( B ∈ On → th ) ) ;;
+	step 35 : wff = imim2i (step 34) |- ( ( B ⊆ suc y → B = suc y ) → ( B ⊆ suc y → ( B ∈ On → th ) ) ) ;;
+	step 36 : wff = a1d (step 35) |- ( ( B ⊆ suc y → B = suc y ) → ( ( B ⊆ y → ch ) → ( B ⊆ suc y → ( B ∈ On → th ) ) ) ) ;;
+	step 37 : wff = com4r (step 36) |- ( B ∈ On → ( ( B ⊆ suc y → B = suc y ) → ( ( B ⊆ y → ch ) → ( B ⊆ suc y → th ) ) ) ) ;;
+	step 38 : wff = adantl (step 37) |- ( ( y ∈ On ∧ B ∈ On ) → ( ( B ⊆ suc y → B = suc y ) → ( ( B ⊆ y → ch ) → ( B ⊆ suc y → th ) ) ) ) ;;
+	step 39 : wff = df-ne () |- ( B ≠ suc y ↔ ¬ B = suc y ) ;;
+	step 40 : wff = anbi2i (step 39) |- ( ( B ⊆ suc y ∧ B ≠ suc y ) ↔ ( B ⊆ suc y ∧ ¬ B = suc y ) ) ;;
+	step 41 : wff = annim () |- ( ( B ⊆ suc y ∧ ¬ B = suc y ) ↔ ¬ ( B ⊆ suc y → B = suc y ) ) ;;
+	step 42 : wff = bitri (step 40, step 41) |- ( ( B ⊆ suc y ∧ B ≠ suc y ) ↔ ¬ ( B ⊆ suc y → B = suc y ) ) ;;
+	step 43 : wff = onsssuc () |- ( ( B ∈ On ∧ y ∈ On ) → ( B ⊆ y ↔ B ∈ suc y ) ) ;;
+	step 44 : wff = suceloni () |- ( y ∈ On → suc y ∈ On ) ;;
+	step 45 : wff = onelpss () |- ( ( B ∈ On ∧ suc y ∈ On ) → ( B ∈ suc y ↔ ( B ⊆ suc y ∧ B ≠ suc y ) ) ) ;;
+	step 46 : wff = sylan2 (step 44, step 45) |- ( ( B ∈ On ∧ y ∈ On ) → ( B ∈ suc y ↔ ( B ⊆ suc y ∧ B ≠ suc y ) ) ) ;;
+	step 47 : wff = bitrd (step 43, step 46) |- ( ( B ∈ On ∧ y ∈ On ) → ( B ⊆ y ↔ ( B ⊆ suc y ∧ B ≠ suc y ) ) ) ;;
+	step 48 : wff = ancoms (step 47) |- ( ( y ∈ On ∧ B ∈ On ) → ( B ⊆ y ↔ ( B ⊆ suc y ∧ B ≠ suc y ) ) ) ;;
+	step 49 : wff = ex (hyp 6) |- ( ( y ∈ On ∧ B ∈ On ) → ( B ⊆ y → ( ch → th ) ) ) ;;
+	step 50 : wff = ax-1 () |- ( th → ( B ⊆ suc y → th ) ) ;;
+	step 51 : wff = syl8 (step 49, step 50) |- ( ( y ∈ On ∧ B ∈ On ) → ( B ⊆ y → ( ch → ( B ⊆ suc y → th ) ) ) ) ;;
+	step 52 : wff = a2d (step 51) |- ( ( y ∈ On ∧ B ∈ On ) → ( ( B ⊆ y → ch ) → ( B ⊆ y → ( B ⊆ suc y → th ) ) ) ) ;;
+	step 53 : wff = com23 (step 52) |- ( ( y ∈ On ∧ B ∈ On ) → ( B ⊆ y → ( ( B ⊆ y → ch ) → ( B ⊆ suc y → th ) ) ) ) ;;
+	step 54 : wff = sylbird (step 48, step 53) |- ( ( y ∈ On ∧ B ∈ On ) → ( ( B ⊆ suc y ∧ B ≠ suc y ) → ( ( B ⊆ y → ch ) → ( B ⊆ suc y → th ) ) ) ) ;;
+	step 55 : wff = syl5bir (step 42, step 54) |- ( ( y ∈ On ∧ B ∈ On ) → ( ¬ ( B ⊆ suc y → B = suc y ) → ( ( B ⊆ y → ch ) → ( B ⊆ suc y → th ) ) ) ) ;;
+	step 56 : wff = pm2.61d (step 38, step 55) |- ( ( y ∈ On ∧ B ∈ On ) → ( ( B ⊆ y → ch ) → ( B ⊆ suc y → th ) ) ) ;;
+	step 57 : wff = ex (step 56) |- ( y ∈ On → ( B ∈ On → ( ( B ⊆ y → ch ) → ( B ⊆ suc y → th ) ) ) ) ;;
+	step 58 : wff = a2d (step 57) |- ( y ∈ On → ( ( B ∈ On → ( B ⊆ y → ch ) ) → ( B ∈ On → ( B ⊆ suc y → th ) ) ) ) ;;
+	step 59 : wff = pm2.27 () |- ( B ∈ On → ( ( B ∈ On → ( B ⊆ y → ch ) ) → ( B ⊆ y → ch ) ) ) ;;
+	step 60 : wff = ralimdv (step 59) |- ( B ∈ On → ( ∀ y ∈ x ( B ∈ On → ( B ⊆ y → ch ) ) → ∀ y ∈ x ( B ⊆ y → ch ) ) ) ;;
+	step 61 : wff = ad2antlr (step 60) |- ( ( ( Lim x ∧ B ∈ On ) ∧ B ⊆ x ) → ( ∀ y ∈ x ( B ∈ On → ( B ⊆ y → ch ) ) → ∀ y ∈ x ( B ⊆ y → ch ) ) ) ;;
+	step 62 : wff = syld (step 61, hyp 7) |- ( ( ( Lim x ∧ B ∈ On ) ∧ B ⊆ x ) → ( ∀ y ∈ x ( B ∈ On → ( B ⊆ y → ch ) ) → ph ) ) ;;
+	step 63 : wff = exp31 (step 62) |- ( Lim x → ( B ∈ On → ( B ⊆ x → ( ∀ y ∈ x ( B ∈ On → ( B ⊆ y → ch ) ) → ph ) ) ) ) ;;
+	step 64 : wff = com3l (step 63) |- ( B ∈ On → ( B ⊆ x → ( Lim x → ( ∀ y ∈ x ( B ∈ On → ( B ⊆ y → ch ) ) → ph ) ) ) ) ;;
+	step 65 : wff = com4t (step 64) |- ( Lim x → ( ∀ y ∈ x ( B ∈ On → ( B ⊆ y → ch ) ) → ( B ∈ On → ( B ⊆ x → ph ) ) ) ) ;;
+	step 66 : wff = tfinds (step 15, step 18, step 21, step 24, step 25, step 58, step 65) |- ( A ∈ On → ( B ∈ On → ( B ⊆ A → ta ) ) ) ;;
+	step 67 : wff = imp31 (step 66) |- ( ( ( A ∈ On ∧ B ∈ On ) ∧ B ⊆ A ) → ta ) ;;
+	qed prop 1 = step 67 ;;
+}
+
+/* Substitutions. */
+
+/* Basis. */
+
+/* Induction hypothesis for successor ordinals. */
+
+/* Induction hypothesis for limit ordinals. */
+
+/* Transfinite Induction (inference schema), using implicit substitutions.
+       The first four hypotheses establish the substitutions we need.  The last
+       three are the basis, the induction hypothesis for successors, and the
+       induction hypothesis for limit ordinals.  The basis of this version is
+       an arbitrary ordinal ` suc B ` instead of zero.  (Unnecessary distinct
+       variable restrictions were removed by David Abernethy, 19-Jun-2012.)
+       (Contributed by NM, 5-Jan-2005.) */
+
+theorem tfindsg2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, x : set, y : set, A : class, B : class) disjointed(x A, x y B, x ch, x th, x ta, y ph) {
+	hyp 1 : wff = |- ( x = suc B → ( ph ↔ ps ) ) ;;
+	hyp 2 : wff = |- ( x = y → ( ph ↔ ch ) ) ;;
+	hyp 3 : wff = |- ( x = suc y → ( ph ↔ th ) ) ;;
+	hyp 4 : wff = |- ( x = A → ( ph ↔ ta ) ) ;;
+	hyp 5 : wff = |- ( B ∈ On → ps ) ;;
+	hyp 6 : wff = |- ( ( y ∈ On ∧ B ∈ y ) → ( ch → th ) ) ;;
+	hyp 7 : wff = |- ( ( Lim x ∧ B ∈ x ) → ( ∀ y ∈ x ( B ∈ y → ch ) → ph ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( A ∈ On ∧ B ∈ A ) → ta ) ;;
+}
+
+proof of tfindsg2 {
+	step 1 : wff = onelon () |- ( ( A ∈ On ∧ B ∈ A ) → B ∈ On ) ;;
+	step 2 : wff = sucelon () |- ( B ∈ On ↔ suc B ∈ On ) ;;
+	step 3 : wff = sylib (step 1, step 2) |- ( ( A ∈ On ∧ B ∈ A ) → suc B ∈ On ) ;;
+	step 4 : wff = eloni () |- ( A ∈ On → Ord A ) ;;
+	step 5 : wff = ordsucss () |- ( Ord A → ( B ∈ A → suc B ⊆ A ) ) ;;
+	step 6 : wff = syl (step 4, step 5) |- ( A ∈ On → ( B ∈ A → suc B ⊆ A ) ) ;;
+	step 7 : wff = imp (step 6) |- ( ( A ∈ On ∧ B ∈ A ) → suc B ⊆ A ) ;;
+	step 8 : wff = sucelon () |- ( B ∈ On ↔ suc B ∈ On ) ;;
+	step 9 : wff = sylbir (step 8, hyp 5) |- ( suc B ∈ On → ps ) ;;
+	step 10 : wff = sucelon () |- ( B ∈ On ↔ suc B ∈ On ) ;;
+	step 11 : wff = eloni () |- ( y ∈ On → Ord y ) ;;
+	step 12 : wff = ordelsuc () |- ( ( B ∈ On ∧ Ord y ) → ( B ∈ y ↔ suc B ⊆ y ) ) ;;
+	step 13 : wff = sylan2 (step 11, step 12) |- ( ( B ∈ On ∧ y ∈ On ) → ( B ∈ y ↔ suc B ⊆ y ) ) ;;
+	step 14 : wff = ancoms (step 13) |- ( ( y ∈ On ∧ B ∈ On ) → ( B ∈ y ↔ suc B ⊆ y ) ) ;;
+	step 15 : wff = ex (hyp 6) |- ( y ∈ On → ( B ∈ y → ( ch → th ) ) ) ;;
+	step 16 : wff = adantr (step 15) |- ( ( y ∈ On ∧ B ∈ On ) → ( B ∈ y → ( ch → th ) ) ) ;;
+	step 17 : wff = sylbird (step 14, step 16) |- ( ( y ∈ On ∧ B ∈ On ) → ( suc B ⊆ y → ( ch → th ) ) ) ;;
+	step 18 : wff = sylan2br (step 10, step 17) |- ( ( y ∈ On ∧ suc B ∈ On ) → ( suc B ⊆ y → ( ch → th ) ) ) ;;
+	step 19 : wff = imp (step 18) |- ( ( ( y ∈ On ∧ suc B ∈ On ) ∧ suc B ⊆ y ) → ( ch → th ) ) ;;
+	step 20 : wff = sucelon () |- ( B ∈ On ↔ suc B ∈ On ) ;;
+	step 21 : wff = ex (hyp 7) |- ( Lim x → ( B ∈ x → ( ∀ y ∈ x ( B ∈ y → ch ) → ph ) ) ) ;;
+	step 22 : wff = adantr (step 21) |- ( ( Lim x ∧ B ∈ On ) → ( B ∈ x → ( ∀ y ∈ x ( B ∈ y → ch ) → ph ) ) ) ;;
+	step 23 : wff = vex () |- x ∈ _V ;;
+	step 24 : wff = limelon () |- ( ( x ∈ _V ∧ Lim x ) → x ∈ On ) ;;
+	step 25 : wff = mpan (step 23, step 24) |- ( Lim x → x ∈ On ) ;;
+	step 26 : wff = eloni () |- ( x ∈ On → Ord x ) ;;
+	step 27 : wff = ordelsuc () |- ( ( B ∈ On ∧ Ord x ) → ( B ∈ x ↔ suc B ⊆ x ) ) ;;
+	step 28 : wff = sylan2 (step 26, step 27) |- ( ( B ∈ On ∧ x ∈ On ) → ( B ∈ x ↔ suc B ⊆ x ) ) ;;
+	step 29 : wff = onelon () |- ( ( x ∈ On ∧ y ∈ x ) → y ∈ On ) ;;
+	step 30 : wff = eloni () |- ( y ∈ On → Ord y ) ;;
+	step 31 : wff = syl (step 29, step 30) |- ( ( x ∈ On ∧ y ∈ x ) → Ord y ) ;;
+	step 32 : wff = ordelsuc () |- ( ( B ∈ On ∧ Ord y ) → ( B ∈ y ↔ suc B ⊆ y ) ) ;;
+	step 33 : wff = sylan2 (step 31, step 32) |- ( ( B ∈ On ∧ ( x ∈ On ∧ y ∈ x ) ) → ( B ∈ y ↔ suc B ⊆ y ) ) ;;
+	step 34 : wff = anassrs (step 33) |- ( ( ( B ∈ On ∧ x ∈ On ) ∧ y ∈ x ) → ( B ∈ y ↔ suc B ⊆ y ) ) ;;
+	step 35 : wff = imbi1d (step 34) |- ( ( ( B ∈ On ∧ x ∈ On ) ∧ y ∈ x ) → ( ( B ∈ y → ch ) ↔ ( suc B ⊆ y → ch ) ) ) ;;
+	step 36 : wff = ralbidva (step 35) |- ( ( B ∈ On ∧ x ∈ On ) → ( ∀ y ∈ x ( B ∈ y → ch ) ↔ ∀ y ∈ x ( suc B ⊆ y → ch ) ) ) ;;
+	step 37 : wff = imbi1d (step 36) |- ( ( B ∈ On ∧ x ∈ On ) → ( ( ∀ y ∈ x ( B ∈ y → ch ) → ph ) ↔ ( ∀ y ∈ x ( suc B ⊆ y → ch ) → ph ) ) ) ;;
+	step 38 : wff = imbi12d (step 28, step 37) |- ( ( B ∈ On ∧ x ∈ On ) → ( ( B ∈ x → ( ∀ y ∈ x ( B ∈ y → ch ) → ph ) ) ↔ ( suc B ⊆ x → ( ∀ y ∈ x ( suc B ⊆ y → ch ) → ph ) ) ) ) ;;
+	step 39 : wff = sylan2 (step 25, step 38) |- ( ( B ∈ On ∧ Lim x ) → ( ( B ∈ x → ( ∀ y ∈ x ( B ∈ y → ch ) → ph ) ) ↔ ( suc B ⊆ x → ( ∀ y ∈ x ( suc B ⊆ y → ch ) → ph ) ) ) ) ;;
+	step 40 : wff = ancoms (step 39) |- ( ( Lim x ∧ B ∈ On ) → ( ( B ∈ x → ( ∀ y ∈ x ( B ∈ y → ch ) → ph ) ) ↔ ( suc B ⊆ x → ( ∀ y ∈ x ( suc B ⊆ y → ch ) → ph ) ) ) ) ;;
+	step 41 : wff = mpbid (step 22, step 40) |- ( ( Lim x ∧ B ∈ On ) → ( suc B ⊆ x → ( ∀ y ∈ x ( suc B ⊆ y → ch ) → ph ) ) ) ;;
+	step 42 : wff = sylan2br (step 20, step 41) |- ( ( Lim x ∧ suc B ∈ On ) → ( suc B ⊆ x → ( ∀ y ∈ x ( suc B ⊆ y → ch ) → ph ) ) ) ;;
+	step 43 : wff = imp (step 42) |- ( ( ( Lim x ∧ suc B ∈ On ) ∧ suc B ⊆ x ) → ( ∀ y ∈ x ( suc B ⊆ y → ch ) → ph ) ) ;;
+	step 44 : wff = tfindsg (hyp 1, hyp 2, hyp 3, hyp 4, step 9, step 19, step 43) |- ( ( ( A ∈ On ∧ suc B ∈ On ) ∧ suc B ⊆ A ) → ta ) ;;
+	step 45 : wff = expl (step 44) |- ( A ∈ On → ( ( suc B ∈ On ∧ suc B ⊆ A ) → ta ) ) ;;
+	step 46 : wff = adantr (step 45) |- ( ( A ∈ On ∧ B ∈ A ) → ( ( suc B ∈ On ∧ suc B ⊆ A ) → ta ) ) ;;
+	step 47 : wff = mp2and (step 3, step 7, step 46) |- ( ( A ∈ On ∧ B ∈ A ) → ta ) ;;
+	qed prop 1 = step 47 ;;
+}
+
+/* Transfinite Induction with explicit substitution.  The first hypothesis
+       is the basis, the second is the induction hypothesis for successors, and
+       the third is the induction hypothesis for limit ordinals.  Theorem
+       Schema 4 of [Suppes] p. 197.  (Contributed by NM, 5-Mar-2004.) */
+
+theorem tfindes (ph : wff, x : set, y : set) disjointed(x y z, y z ph) {
+	hyp 1 : wff = |- [. ∅ / x ]. ph ;;
+	hyp 2 : wff = |- ( x ∈ On → ( ph → [. suc x / x ]. ph ) ) ;;
+	hyp 3 : wff = |- ( Lim y → ( ∀ x ∈ y ph → [. y / x ]. ph ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( x ∈ On → ph ) ;;
+}
+
+proof of tfindes {
+	var z : set;;
+	step 1 : wff = dfsbcq () |- ( y = ∅ → ( [. y / x ]. ph ↔ [. ∅ / x ]. ph ) ) ;;
+	step 2 : wff = dfsbcq () |- ( y = z → ( [. y / x ]. ph ↔ [. z / x ]. ph ) ) ;;
+	step 3 : wff = dfsbcq () |- ( y = suc z → ( [. y / x ]. ph ↔ [. suc z / x ]. ph ) ) ;;
+	step 4 : wff = sbceq2a () |- ( y = x → ( [. y / x ]. ph ↔ ph ) ) ;;
+	step 5 : wff = nfv () |- F/ x z ∈ On ;;
+	step 6 : wff = nfsbc1v () |- F/ x [. z / x ]. ph ;;
+	step 7 : wff = nfsbc1v () |- F/ x [. suc z / x ]. ph ;;
+	step 8 : wff = nfim (step 6, step 7) |- F/ x ( [. z / x ]. ph → [. suc z / x ]. ph ) ;;
+	step 9 : wff = nfim (step 5, step 8) |- F/ x ( z ∈ On → ( [. z / x ]. ph → [. suc z / x ]. ph ) ) ;;
+	step 10 : wff = eleq1 () |- ( x = z → ( x ∈ On ↔ z ∈ On ) ) ;;
+	step 11 : wff = sbceq1a () |- ( x = z → ( ph ↔ [. z / x ]. ph ) ) ;;
+	step 12 : wff = suceq () |- ( x = z → suc x = suc z ) ;;
+	step 13 : wff = dfsbcq () |- ( suc x = suc z → ( [. suc x / x ]. ph ↔ [. suc z / x ]. ph ) ) ;;
+	step 14 : wff = syl (step 12, step 13) |- ( x = z → ( [. suc x / x ]. ph ↔ [. suc z / x ]. ph ) ) ;;
+	step 15 : wff = imbi12d (step 11, step 14) |- ( x = z → ( ( ph → [. suc x / x ]. ph ) ↔ ( [. z / x ]. ph → [. suc z / x ]. ph ) ) ) ;;
+	step 16 : wff = imbi12d (step 10, step 15) |- ( x = z → ( ( x ∈ On → ( ph → [. suc x / x ]. ph ) ) ↔ ( z ∈ On → ( [. z / x ]. ph → [. suc z / x ]. ph ) ) ) ) ;;
+	step 17 : wff = chvar (step 9, step 16, hyp 2) |- ( z ∈ On → ( [. z / x ]. ph → [. suc z / x ]. ph ) ) ;;
+	step 18 : wff = cbvralsv () |- ( ∀ x ∈ y ph ↔ ∀ z ∈ y [ z / x ] ph ) ;;
+	step 19 : wff = sbsbc () |- ( [ z / x ] ph ↔ [. z / x ]. ph ) ;;
+	step 20 : wff = ralbii (step 19) |- ( ∀ z ∈ y [ z / x ] ph ↔ ∀ z ∈ y [. z / x ]. ph ) ;;
+	step 21 : wff = bitri (step 18, step 20) |- ( ∀ x ∈ y ph ↔ ∀ z ∈ y [. z / x ]. ph ) ;;
+	step 22 : wff = syl5bir (step 21, hyp 3) |- ( Lim y → ( ∀ z ∈ y [. z / x ]. ph → [. y / x ]. ph ) ) ;;
+	step 23 : wff = tfinds (step 1, step 2, step 3, step 4, hyp 1, step 17, step 22) |- ( x ∈ On → ph ) ;;
+	qed prop 1 = step 23 ;;
+}
+
+/* Substitutions. */
+
+/* Basis. */
+
+/* Induction hypothesis for successors. */
+
+/* Induction hypothesis for limit ordinals. */
+
+/* Transfinite Induction (inference schema), using implicit substitutions.
+       The first three hypotheses establish the substitutions we need.  The
+       last three are the basis and the induction hypotheses (for successor and
+       limit ordinals respectively).  Theorem Schema 4 of [Suppes] p. 197.  The
+       wff ` ta ` is an auxiliary antecedent to help shorten proofs using this
+       theorem.  (Contributed by NM, 4-Sep-2004.) */
+
+theorem tfinds2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, x : set, y : set) disjointed(x y ta, x ps, x ch, x th, y ph) {
+	hyp 1 : wff = |- ( x = ∅ → ( ph ↔ ps ) ) ;;
+	hyp 2 : wff = |- ( x = y → ( ph ↔ ch ) ) ;;
+	hyp 3 : wff = |- ( x = suc y → ( ph ↔ th ) ) ;;
+	hyp 4 : wff = |- ( ta → ps ) ;;
+	hyp 5 : wff = |- ( y ∈ On → ( ta → ( ch → th ) ) ) ;;
+	hyp 6 : wff = |- ( Lim x → ( ta → ( ∀ y ∈ x ch → ph ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( x ∈ On → ( ta → ph ) ) ;;
+}
+
+proof of tfinds2 {
+	step 1 : wff = 0ex () |- ∅ ∈ _V ;;
+	step 2 : wff = imbi2d (hyp 1) |- ( x = ∅ → ( ( ta → ph ) ↔ ( ta → ps ) ) ) ;;
+	step 3 : wff = sbcie (step 1, step 2) |- ( [. ∅ / x ]. ( ta → ph ) ↔ ( ta → ps ) ) ;;
+	step 4 : wff = mpbir (hyp 4, step 3) |- [. ∅ / x ]. ( ta → ph ) ;;
+	step 5 : wff = vex () |- x ∈ _V ;;
+	step 6 : wff = a2d (hyp 5) |- ( y ∈ On → ( ( ta → ch ) → ( ta → th ) ) ) ;;
+	step 7 : wff = sbcth (step 6) |- ( x ∈ _V → [. x / y ]. ( y ∈ On → ( ( ta → ch ) → ( ta → th ) ) ) ) ;;
+	step 8 : wff = ax-mp (step 5, step 7) |- [. x / y ]. ( y ∈ On → ( ( ta → ch ) → ( ta → th ) ) ) ;;
+	step 9 : wff = vex () |- x ∈ _V ;;
+	step 10 : wff = sbcimg () |- ( x ∈ _V → ( [. x / y ]. ( y ∈ On → ( ( ta → ch ) → ( ta → th ) ) ) ↔ ( [. x / y ]. y ∈ On → [. x / y ]. ( ( ta → ch ) → ( ta → th ) ) ) ) ) ;;
+	step 11 : wff = ax-mp (step 9, step 10) |- ( [. x / y ]. ( y ∈ On → ( ( ta → ch ) → ( ta → th ) ) ) ↔ ( [. x / y ]. y ∈ On → [. x / y ]. ( ( ta → ch ) → ( ta → th ) ) ) ) ;;
+	step 12 : wff = mpbi (step 8, step 11) |- ( [. x / y ]. y ∈ On → [. x / y ]. ( ( ta → ch ) → ( ta → th ) ) ) ;;
+	step 13 : wff = vex () |- x ∈ _V ;;
+	step 14 : wff = sbcel1gv () |- ( x ∈ _V → ( [. x / y ]. y ∈ On ↔ x ∈ On ) ) ;;
+	step 15 : wff = ax-mp (step 13, step 14) |- ( [. x / y ]. y ∈ On ↔ x ∈ On ) ;;
+	step 16 : wff = vex () |- x ∈ _V ;;
+	step 17 : wff = sbcimg () |- ( x ∈ _V → ( [. x / y ]. ( ( ta → ch ) → ( ta → th ) ) ↔ ( [. x / y ]. ( ta → ch ) → [. x / y ]. ( ta → th ) ) ) ) ;;
+	step 18 : wff = ax-mp (step 16, step 17) |- ( [. x / y ]. ( ( ta → ch ) → ( ta → th ) ) ↔ ( [. x / y ]. ( ta → ch ) → [. x / y ]. ( ta → th ) ) ) ;;
+	step 19 : wff = 3imtr3i (step 12, step 15, step 18) |- ( x ∈ On → ( [. x / y ]. ( ta → ch ) → [. x / y ]. ( ta → th ) ) ) ;;
+	step 20 : wff = vex () |- x ∈ _V ;;
+	step 21 : wff = bicomd (hyp 2) |- ( x = y → ( ch ↔ ph ) ) ;;
+	step 22 : wff = equcoms (step 21) |- ( y = x → ( ch ↔ ph ) ) ;;
+	step 23 : wff = imbi2d (step 22) |- ( y = x → ( ( ta → ch ) ↔ ( ta → ph ) ) ) ;;
+	step 24 : wff = sbcie (step 20, step 23) |- ( [. x / y ]. ( ta → ch ) ↔ ( ta → ph ) ) ;;
+	step 25 : wff = vex () |- y ∈ _V ;;
+	step 26 : wff = sucex (step 25) |- suc y ∈ _V ;;
+	step 27 : wff = imbi2d (hyp 3) |- ( x = suc y → ( ( ta → ph ) ↔ ( ta → th ) ) ) ;;
+	step 28 : wff = sbcie (step 26, step 27) |- ( [. suc y / x ]. ( ta → ph ) ↔ ( ta → th ) ) ;;
+	step 29 : wff = sbcbii (step 28) |- ( [. x / y ]. [. suc y / x ]. ( ta → ph ) ↔ [. x / y ]. ( ta → th ) ) ;;
+	step 30 : wff = suceq () |- ( x = y → suc x = suc y ) ;;
+	step 31 : wff = sbcco2 (step 30) |- ( [. x / y ]. [. suc y / x ]. ( ta → ph ) ↔ [. suc x / x ]. ( ta → ph ) ) ;;
+	step 32 : wff = bitr3i (step 29, step 31) |- ( [. x / y ]. ( ta → th ) ↔ [. suc x / x ]. ( ta → ph ) ) ;;
+	step 33 : wff = 3imtr3g (step 19, step 24, step 32) |- ( x ∈ On → ( ( ta → ph ) → [. suc x / x ]. ( ta → ph ) ) ) ;;
+	step 34 : wff = sbsbc () |- ( [ y / x ] ∀ y ∈ x ( ta → ch ) ↔ [. y / x ]. ∀ y ∈ x ( ta → ch ) ) ;;
+	step 35 : wff = bicomd (hyp 2) |- ( x = y → ( ch ↔ ph ) ) ;;
+	step 36 : wff = equcoms (step 35) |- ( y = x → ( ch ↔ ph ) ) ;;
+	step 37 : wff = imbi2d (step 36) |- ( y = x → ( ( ta → ch ) ↔ ( ta → ph ) ) ) ;;
+	step 38 : wff = sbralie (step 37) |- ( [ y / x ] ∀ y ∈ x ( ta → ch ) ↔ ∀ x ∈ y ( ta → ph ) ) ;;
+	step 39 : wff = bitr3i (step 34, step 38) |- ( [. y / x ]. ∀ y ∈ x ( ta → ch ) ↔ ∀ x ∈ y ( ta → ph ) ) ;;
+	step 40 : wff = vex () |- y ∈ _V ;;
+	step 41 : wff = r19.21v () |- ( ∀ y ∈ x ( ta → ch ) ↔ ( ta → ∀ y ∈ x ch ) ) ;;
+	step 42 : wff = a2d (hyp 6) |- ( Lim x → ( ( ta → ∀ y ∈ x ch ) → ( ta → ph ) ) ) ;;
+	step 43 : wff = syl5bi (step 41, step 42) |- ( Lim x → ( ∀ y ∈ x ( ta → ch ) → ( ta → ph ) ) ) ;;
+	step 44 : wff = sbcth (step 43) |- ( y ∈ _V → [. y / x ]. ( Lim x → ( ∀ y ∈ x ( ta → ch ) → ( ta → ph ) ) ) ) ;;
+	step 45 : wff = ax-mp (step 40, step 44) |- [. y / x ]. ( Lim x → ( ∀ y ∈ x ( ta → ch ) → ( ta → ph ) ) ) ;;
+	step 46 : wff = vex () |- y ∈ _V ;;
+	step 47 : wff = sbcimg () |- ( y ∈ _V → ( [. y / x ]. ( Lim x → ( ∀ y ∈ x ( ta → ch ) → ( ta → ph ) ) ) ↔ ( [. y / x ]. Lim x → [. y / x ]. ( ∀ y ∈ x ( ta → ch ) → ( ta → ph ) ) ) ) ) ;;
+	step 48 : wff = ax-mp (step 46, step 47) |- ( [. y / x ]. ( Lim x → ( ∀ y ∈ x ( ta → ch ) → ( ta → ph ) ) ) ↔ ( [. y / x ]. Lim x → [. y / x ]. ( ∀ y ∈ x ( ta → ch ) → ( ta → ph ) ) ) ) ;;
+	step 49 : wff = mpbi (step 45, step 48) |- ( [. y / x ]. Lim x → [. y / x ]. ( ∀ y ∈ x ( ta → ch ) → ( ta → ph ) ) ) ;;
+	step 50 : wff = vex () |- y ∈ _V ;;
+	step 51 : wff = limeq () |- ( x = y → ( Lim x ↔ Lim y ) ) ;;
+	step 52 : wff = sbcie (step 50, step 51) |- ( [. y / x ]. Lim x ↔ Lim y ) ;;
+	step 53 : wff = vex () |- y ∈ _V ;;
+	step 54 : wff = sbcimg () |- ( y ∈ _V → ( [. y / x ]. ( ∀ y ∈ x ( ta → ch ) → ( ta → ph ) ) ↔ ( [. y / x ]. ∀ y ∈ x ( ta → ch ) → [. y / x ]. ( ta → ph ) ) ) ) ;;
+	step 55 : wff = ax-mp (step 53, step 54) |- ( [. y / x ]. ( ∀ y ∈ x ( ta → ch ) → ( ta → ph ) ) ↔ ( [. y / x ]. ∀ y ∈ x ( ta → ch ) → [. y / x ]. ( ta → ph ) ) ) ;;
+	step 56 : wff = 3imtr3i (step 49, step 52, step 55) |- ( Lim y → ( [. y / x ]. ∀ y ∈ x ( ta → ch ) → [. y / x ]. ( ta → ph ) ) ) ;;
+	step 57 : wff = syl5bir (step 39, step 56) |- ( Lim y → ( ∀ x ∈ y ( ta → ph ) → [. y / x ]. ( ta → ph ) ) ) ;;
+	step 58 : wff = tfindes (step 4, step 33, step 57) |- ( x ∈ On → ( ta → ph ) ) ;;
+	qed prop 1 = step 58 ;;
+}
+
+/* Substitutions. */
+
+/* Basis. */
+
+/* Induction hypothesis for successors. */
+
+/* Induction hypothesis for limit ordinals. */
+
+/* Principle of Transfinite Induction (inference schema), using implicit
+       substitutions.  The first four hypotheses establish the substitutions we
+       need.  The last three are the basis, the induction hypothesis for
+       successors, and the induction hypothesis for limit ordinals.
+       (Contributed by NM, 6-Jan-2005.)  (Revised by David Abernethy,
+       21-Jun-2011.) */
+
+theorem tfinds3 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, x : set, y : set, A : class) disjointed(x A, y ph, x ch, x ta, x y et) {
+	hyp 1 : wff = |- ( x = ∅ → ( ph ↔ ps ) ) ;;
+	hyp 2 : wff = |- ( x = y → ( ph ↔ ch ) ) ;;
+	hyp 3 : wff = |- ( x = suc y → ( ph ↔ th ) ) ;;
+	hyp 4 : wff = |- ( x = A → ( ph ↔ ta ) ) ;;
+	hyp 5 : wff = |- ( et → ps ) ;;
+	hyp 6 : wff = |- ( y ∈ On → ( et → ( ch → th ) ) ) ;;
+	hyp 7 : wff = |- ( Lim x → ( et → ( ∀ y ∈ x ch → ph ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ On → ( et → ta ) ) ;;
+}
+
+proof of tfinds3 {
+	step 1 : wff = imbi2d (hyp 1) |- ( x = ∅ → ( ( et → ph ) ↔ ( et → ps ) ) ) ;;
+	step 2 : wff = imbi2d (hyp 2) |- ( x = y → ( ( et → ph ) ↔ ( et → ch ) ) ) ;;
+	step 3 : wff = imbi2d (hyp 3) |- ( x = suc y → ( ( et → ph ) ↔ ( et → th ) ) ) ;;
+	step 4 : wff = imbi2d (hyp 4) |- ( x = A → ( ( et → ph ) ↔ ( et → ta ) ) ) ;;
+	step 5 : wff = a2d (hyp 6) |- ( y ∈ On → ( ( et → ch ) → ( et → th ) ) ) ;;
+	step 6 : wff = r19.21v () |- ( ∀ y ∈ x ( et → ch ) ↔ ( et → ∀ y ∈ x ch ) ) ;;
+	step 7 : wff = a2d (hyp 7) |- ( Lim x → ( ( et → ∀ y ∈ x ch ) → ( et → ph ) ) ) ;;
+	step 8 : wff = syl5bi (step 6, step 7) |- ( Lim x → ( ∀ y ∈ x ( et → ch ) → ( et → ph ) ) ) ;;
+	step 9 : wff = tfinds (step 1, step 2, step 3, step 4, hyp 5, step 5, step 8) |- ( A ∈ On → ( et → ta ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+

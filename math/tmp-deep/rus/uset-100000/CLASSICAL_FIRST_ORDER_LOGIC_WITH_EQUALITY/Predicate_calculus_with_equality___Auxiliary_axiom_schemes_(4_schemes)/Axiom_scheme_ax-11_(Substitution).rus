@@ -1,0 +1,2650 @@
+import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Auxiliary_axiom_schemes_(4_schemes)/Axiom_scheme_ax-7_(Quantifier_Commutation).rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+           Axiom scheme ax-11 (Substitution)
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* Axiom of Substitution.  One of the 5 equality axioms of predicate
+     calculus.  The final consequent ` A. x ( x = y -> ph ) ` is a way of
+     expressing " ` y ` substituted for ` x ` in wff ` ph ` " (cf. ~ sb6 ).  It
+     is based on Lemma 16 of [Tarski] p. 70 and Axiom C8 of [Monk2] p. 105,
+     from which it can be proved by cases.
+
+     The original version of this axiom was ~ ax-11o ("o" for "old") and was
+     replaced with this shorter ~ ax-11 in Jan. 2007.  The old axiom is proved
+     from this one as theorem ~ ax11o .  Conversely, this axiom is proved from
+     ~ ax-11o as theorem ~ ax11 .
+
+     Juha Arpiainen proved the metalogical independence of this axiom (in the
+     form of the older axiom ~ ax-11o ) from the others on 19-Jan-2006.  See
+     item 9a at ~ http://us.metamath.org/award2003.html .
+
+     See ~ ax11v and ~ ax11v2 for other equivalents of this axiom that (unlike
+     this axiom) have distinct variable restrictions.
+
+     This axiom scheme is logically redundant (see ~ ax11w ) but is used as an
+     auxiliary axiom to achieve metalogical completeness.  (Contributed by NM,
+     22-Jan-2007.) */
+
+axiom ax-11 (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( x = y → ( ∀ y ph → ∀ x ( x = y → ph ) ) ) ;;
+}
+
+/* Specialization.  A universally quantified wff implies the wff without a
+       quantifier Axiom scheme B5 of [Tarski] p. 67 (under his system S2,
+       defined in the last paragraph on p. 77).  Also appears as Axiom scheme
+       C5' in [Megill] p. 448 (p. 16 of the preprint).
+
+       For the axiom of specialization presented in many logic textbooks, see
+       theorem ~ stdpc4 .
+
+       This theorem shows that our obsolete axiom ~ ax-4 can be derived from
+       the others.  The proof uses ideas from the proof of Lemma 21 of [Monk2]
+       p. 114.
+
+       It appears that this scheme cannot be derived directly from Tarski's
+       axioms without auxilliary axiom scheme ~ ax-11 .  It is thought the best
+       we can do using only Tarski's axioms is ~ spw .  (Contributed by NM,
+       21-May-2008.)  (Proof shortened by Scott Fenton, 24-Jan-2011.) */
+
+theorem sp (ph : wff, x : set) disjointed(x w, w ph) {
+	prop 1 : wff = |- ( ∀ x ph → ph ) ;;
+}
+
+proof of sp {
+	var w : set;;
+	step 1 : wff = ax9v () |- ¬ ∀ w ¬ w = x ;;
+	step 2 : wff = equcomi () |- ( w = x → x = w ) ;;
+	step 3 : wff = ax-17 () |- ( ¬ ph → ∀ w ¬ ph ) ;;
+	step 4 : wff = ax-11 () |- ( x = w → ( ∀ w ¬ ph → ∀ x ( x = w → ¬ ph ) ) ) ;;
+	step 5 : wff = syl2im (step 2, step 3, step 4) |- ( w = x → ( ¬ ph → ∀ x ( x = w → ¬ ph ) ) ) ;;
+	step 6 : wff = ax9v () |- ¬ ∀ x ¬ x = w ;;
+	step 7 : wff = con2 () |- ( ( x = w → ¬ ph ) → ( ph → ¬ x = w ) ) ;;
+	step 8 : wff = al2imi (step 7) |- ( ∀ x ( x = w → ¬ ph ) → ( ∀ x ph → ∀ x ¬ x = w ) ) ;;
+	step 9 : wff = mtoi (step 6, step 8) |- ( ∀ x ( x = w → ¬ ph ) → ¬ ∀ x ph ) ;;
+	step 10 : wff = syl6 (step 5, step 9) |- ( w = x → ( ¬ ph → ¬ ∀ x ph ) ) ;;
+	step 11 : wff = con4d (step 10) |- ( w = x → ( ∀ x ph → ph ) ) ;;
+	step 12 : wff = con3i (step 11) |- ( ¬ ( ∀ x ph → ph ) → ¬ w = x ) ;;
+	step 13 : wff = alrimiv (step 12) |- ( ¬ ( ∀ x ph → ph ) → ∀ w ¬ w = x ) ;;
+	step 14 : wff = mt3 (step 1, step 13) |- ( ∀ x ph → ph ) ;;
+	qed prop 1 = step 14 ;;
+}
+
+/* Show that the original axiom ~ ax-5o can be derived from ~ ax-5 and
+     others.  See ~ ax5 for the rederivation of ~ ax-5 from ~ ax-5o .
+
+     Part of the proof is based on the proof of Lemma 22 of [Monk2] p. 114.
+     (Contributed by NM, 21-May-2008.)  (Proof modification is discouraged.) */
+
+theorem ax5o (ph : wff, ps : wff, x : set)  {
+	prop 1 : wff = |- ( ∀ x ( ∀ x ph → ps ) → ( ∀ x ph → ∀ x ps ) ) ;;
+}
+
+proof of ax5o {
+	step 1 : wff = sp () |- ( ∀ x ¬ ∀ x ph → ¬ ∀ x ph ) ;;
+	step 2 : wff = con2i (step 1) |- ( ∀ x ph → ¬ ∀ x ¬ ∀ x ph ) ;;
+	step 3 : wff = hbn1 () |- ( ¬ ∀ x ¬ ∀ x ph → ∀ x ¬ ∀ x ¬ ∀ x ph ) ;;
+	step 4 : wff = hbn1 () |- ( ¬ ∀ x ph → ∀ x ¬ ∀ x ph ) ;;
+	step 5 : wff = con1i (step 4) |- ( ¬ ∀ x ¬ ∀ x ph → ∀ x ph ) ;;
+	step 6 : wff = alimi (step 5) |- ( ∀ x ¬ ∀ x ¬ ∀ x ph → ∀ x ∀ x ph ) ;;
+	step 7 : wff = 3syl (step 2, step 3, step 6) |- ( ∀ x ph → ∀ x ∀ x ph ) ;;
+	step 8 : wff = ax-5 () |- ( ∀ x ( ∀ x ph → ps ) → ( ∀ x ∀ x ph → ∀ x ps ) ) ;;
+	step 9 : wff = syl5 (step 7, step 8) |- ( ∀ x ( ∀ x ph → ps ) → ( ∀ x ph → ∀ x ps ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* If a wff is true, it is true for at least one instance.  Special case of
+     Theorem 19.8 of [Margaris] p. 89.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem 19.8a (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ph → ∃ x ph ) ;;
+}
+
+proof of 19.8a {
+	step 1 : wff = sp () |- ( ∀ x ¬ ph → ¬ ph ) ;;
+	step 2 : wff = con2i (step 1) |- ( ph → ¬ ∀ x ¬ ph ) ;;
+	step 3 : wff = df-ex () |- ( ∃ x ph ↔ ¬ ∀ x ¬ ph ) ;;
+	step 4 : wff = sylibr (step 2, step 3) |- ( ph → ∃ x ph ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* ` x ` is not free in ` A. x ph ` .  Example in Appendix in [Megill] p. 450
+     (p. 19 of the preprint).  Also Lemma 22 of [Monk2] p. 114.  (Contributed
+     by NM, 5-Aug-1993.) */
+
+theorem hba1 (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ∀ x ph → ∀ x ∀ x ph ) ;;
+}
+
+proof of hba1 {
+	step 1 : wff = sp () |- ( ∀ x ¬ ∀ x ph → ¬ ∀ x ph ) ;;
+	step 2 : wff = con2i (step 1) |- ( ∀ x ph → ¬ ∀ x ¬ ∀ x ph ) ;;
+	step 3 : wff = hbn1 () |- ( ¬ ∀ x ¬ ∀ x ph → ∀ x ¬ ∀ x ¬ ∀ x ph ) ;;
+	step 4 : wff = hbn1 () |- ( ¬ ∀ x ph → ∀ x ¬ ∀ x ph ) ;;
+	step 5 : wff = con1i (step 4) |- ( ¬ ∀ x ¬ ∀ x ph → ∀ x ph ) ;;
+	step 6 : wff = alimi (step 5) |- ( ∀ x ¬ ∀ x ¬ ∀ x ph → ∀ x ∀ x ph ) ;;
+	step 7 : wff = 3syl (step 2, step 3, step 6) |- ( ∀ x ph → ∀ x ∀ x ph ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* If ` x ` is not free in ` ph ` , it is not free in ` -. ph ` .
+       (Contributed by NM, 5-Aug-1993.) */
+
+theorem hbn (ph : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ph → ∀ x ¬ ph ) ;;
+}
+
+proof of hbn {
+	step 1 : wff = sp () |- ( ∀ x ph → ph ) ;;
+	step 2 : wff = con3i (step 1) |- ( ¬ ph → ¬ ∀ x ph ) ;;
+	step 3 : wff = hbn1 () |- ( ¬ ∀ x ph → ∀ x ¬ ∀ x ph ) ;;
+	step 4 : wff = con3i (hyp 1) |- ( ¬ ∀ x ph → ¬ ph ) ;;
+	step 5 : wff = alrimih (step 3, step 4) |- ( ¬ ∀ x ph → ∀ x ¬ ph ) ;;
+	step 6 : wff = syl (step 2, step 5) |- ( ¬ ph → ∀ x ¬ ph ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Deduction form of bound-variable hypothesis builder ~ hbim .
+       (Contributed by NM, 1-Jan-2002.) */
+
+theorem hbimd (ph : wff, ps : wff, ch : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
+	hyp 2 : wff = |- ( ph → ( ps → ∀ x ps ) ) ;;
+	hyp 3 : wff = |- ( ph → ( ch → ∀ x ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ( ps → ch ) → ∀ x ( ps → ch ) ) ) ;;
+}
+
+proof of hbimd {
+	step 1 : wff = alrimih (hyp 1, hyp 2) |- ( ph → ∀ x ( ps → ∀ x ps ) ) ;;
+	step 2 : wff = sp () |- ( ∀ x ps → ps ) ;;
+	step 3 : wff = hbn1 () |- ( ¬ ∀ x ps → ∀ x ¬ ∀ x ps ) ;;
+	step 4 : wff = nsyl4 (step 2, step 3) |- ( ¬ ∀ x ¬ ∀ x ps → ps ) ;;
+	step 5 : wff = con1i (step 4) |- ( ¬ ps → ∀ x ¬ ∀ x ps ) ;;
+	step 6 : wff = con3 () |- ( ( ps → ∀ x ps ) → ( ¬ ∀ x ps → ¬ ps ) ) ;;
+	step 7 : wff = al2imi (step 6) |- ( ∀ x ( ps → ∀ x ps ) → ( ∀ x ¬ ∀ x ps → ∀ x ¬ ps ) ) ;;
+	step 8 : wff = syl2im (step 1, step 5, step 7) |- ( ph → ( ¬ ps → ∀ x ¬ ps ) ) ;;
+	step 9 : wff = pm2.21 () |- ( ¬ ps → ( ps → ch ) ) ;;
+	step 10 : wff = alimi (step 9) |- ( ∀ x ¬ ps → ∀ x ( ps → ch ) ) ;;
+	step 11 : wff = syl6 (step 8, step 10) |- ( ph → ( ¬ ps → ∀ x ( ps → ch ) ) ) ;;
+	step 12 : wff = ax-1 () |- ( ch → ( ps → ch ) ) ;;
+	step 13 : wff = alimi (step 12) |- ( ∀ x ch → ∀ x ( ps → ch ) ) ;;
+	step 14 : wff = syl6 (hyp 3, step 13) |- ( ph → ( ch → ∀ x ( ps → ch ) ) ) ;;
+	step 15 : wff = jad (step 11, step 14) |- ( ph → ( ( ps → ch ) → ∀ x ( ps → ch ) ) ) ;;
+	qed prop 1 = step 15 ;;
+}
+
+/* Existential introduction, using implicit substitution.  Compare Lemma 14
+       of [Tarski] p. 70.  (Contributed by NM, 7-Aug-1994.) */
+
+theorem spimeh (ph : wff, ps : wff, x : set, z : set) disjointed(x z) {
+	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
+	hyp 2 : wff = |- ( x = z → ( ph → ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ∃ x ps ) ;;
+}
+
+proof of spimeh {
+	step 1 : wff = ax9v () |- ¬ ∀ x ¬ x = z ;;
+	step 2 : wff = id () |- ( ph → ph ) ;;
+	step 3 : wff = id () |- ( ph → ph ) ;;
+	step 4 : wff = hbth (step 3) |- ( ( ph → ph ) → ∀ x ( ph → ph ) ) ;;
+	step 5 : wff = hba1 () |- ( ∀ x ¬ ps → ∀ x ∀ x ¬ ps ) ;;
+	step 6 : wff = a1i (step 5) |- ( ( ph → ph ) → ( ∀ x ¬ ps → ∀ x ∀ x ¬ ps ) ) ;;
+	step 7 : wff = hbn (hyp 1) |- ( ¬ ph → ∀ x ¬ ph ) ;;
+	step 8 : wff = a1i (step 7) |- ( ( ph → ph ) → ( ¬ ph → ∀ x ¬ ph ) ) ;;
+	step 9 : wff = hbimd (step 4, step 6, step 8) |- ( ( ph → ph ) → ( ( ∀ x ¬ ps → ¬ ph ) → ∀ x ( ∀ x ¬ ps → ¬ ph ) ) ) ;;
+	step 10 : wff = ax-mp (step 2, step 9) |- ( ( ∀ x ¬ ps → ¬ ph ) → ∀ x ( ∀ x ¬ ps → ¬ ph ) ) ;;
+	step 11 : wff = hbn (step 10) |- ( ¬ ( ∀ x ¬ ps → ¬ ph ) → ∀ x ¬ ( ∀ x ¬ ps → ¬ ph ) ) ;;
+	step 12 : wff = sp () |- ( ∀ x ¬ ps → ¬ ps ) ;;
+	step 13 : wff = nsyli (hyp 2, step 12) |- ( x = z → ( ∀ x ¬ ps → ¬ ph ) ) ;;
+	step 14 : wff = con3i (step 13) |- ( ¬ ( ∀ x ¬ ps → ¬ ph ) → ¬ x = z ) ;;
+	step 15 : wff = alrimih (step 11, step 14) |- ( ¬ ( ∀ x ¬ ps → ¬ ph ) → ∀ x ¬ x = z ) ;;
+	step 16 : wff = mt3 (step 1, step 15) |- ( ∀ x ¬ ps → ¬ ph ) ;;
+	step 17 : wff = con2i (step 16) |- ( ph → ¬ ∀ x ¬ ps ) ;;
+	step 18 : wff = df-ex () |- ( ∃ x ps ↔ ¬ ∀ x ¬ ps ) ;;
+	step 19 : wff = sylibr (step 17, step 18) |- ( ph → ∃ x ps ) ;;
+	qed prop 1 = step 19 ;;
+}
+
+/* Show that the original axiom ~ ax-6o can be derived from ~ ax-6 and
+     others.  See ~ ax6 for the rederivation of ~ ax-6 from ~ ax-6o .
+
+     Normally, ~ ax6o should be used rather than ~ ax-6o , except by theorems
+     specifically studying the latter's properties.  (Contributed by NM,
+     21-May-2008.) */
+
+theorem ax6o (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ¬ ∀ x ¬ ∀ x ph → ph ) ;;
+}
+
+proof of ax6o {
+	step 1 : wff = sp () |- ( ∀ x ph → ph ) ;;
+	step 2 : wff = ax-6 () |- ( ¬ ∀ x ph → ∀ x ¬ ∀ x ph ) ;;
+	step 3 : wff = nsyl4 (step 1, step 2) |- ( ¬ ∀ x ¬ ∀ x ph → ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Closed theorem version of bound-variable hypothesis builder ~ hbn .
+     (Contributed by NM, 5-Aug-1993.) */
+
+theorem hbnt (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ∀ x ( ph → ∀ x ph ) → ( ¬ ph → ∀ x ¬ ph ) ) ;;
+}
+
+proof of hbnt {
+	step 1 : wff = ax6o () |- ( ¬ ∀ x ¬ ∀ x ph → ph ) ;;
+	step 2 : wff = con1i (step 1) |- ( ¬ ph → ∀ x ¬ ∀ x ph ) ;;
+	step 3 : wff = con3 () |- ( ( ph → ∀ x ph ) → ( ¬ ∀ x ph → ¬ ph ) ) ;;
+	step 4 : wff = al2imi (step 3) |- ( ∀ x ( ph → ∀ x ph ) → ( ∀ x ¬ ∀ x ph → ∀ x ¬ ph ) ) ;;
+	step 5 : wff = syl5 (step 2, step 4) |- ( ∀ x ( ph → ∀ x ph ) → ( ¬ ph → ∀ x ¬ ph ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
+       ` ( ph -> ps ) ` .  (Contributed by NM, 5-Aug-1993.)  (Proof shortened
+       by O'Cat, 3-Mar-2008.) */
+
+theorem hbim (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
+	hyp 2 : wff = |- ( ps → ∀ x ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph → ps ) → ∀ x ( ph → ps ) ) ;;
+}
+
+proof of hbim {
+	step 1 : wff = hbn (hyp 1) |- ( ¬ ph → ∀ x ¬ ph ) ;;
+	step 2 : wff = pm2.21 () |- ( ¬ ph → ( ph → ps ) ) ;;
+	step 3 : wff = alrimih (step 1, step 2) |- ( ¬ ph → ∀ x ( ph → ps ) ) ;;
+	step 4 : wff = ax-1 () |- ( ps → ( ph → ps ) ) ;;
+	step 5 : wff = alrimih (hyp 2, step 4) |- ( ps → ∀ x ( ph → ps ) ) ;;
+	step 6 : wff = ja (step 3, step 5) |- ( ( ph → ps ) → ∀ x ( ph → ps ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* A closed version of ~ 19.9 .  (Contributed by NM, 5-Aug-1993.) */
+
+theorem 19.9ht (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ∀ x ( ph → ∀ x ph ) → ( ∃ x ph → ph ) ) ;;
+}
+
+proof of 19.9ht {
+	step 1 : wff = df-ex () |- ( ∃ x ph ↔ ¬ ∀ x ¬ ph ) ;;
+	step 2 : wff = hbnt () |- ( ∀ x ( ph → ∀ x ph ) → ( ¬ ph → ∀ x ¬ ph ) ) ;;
+	step 3 : wff = con1d (step 2) |- ( ∀ x ( ph → ∀ x ph ) → ( ¬ ∀ x ¬ ph → ph ) ) ;;
+	step 4 : wff = syl5bi (step 1, step 3) |- ( ∀ x ( ph → ∀ x ph ) → ( ∃ x ph → ph ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A wff may be existentially quantified with a variable not free in it.
+       Theorem 19.9 of [Margaris] p. 89.  (Contributed by FL, 24-Mar-2007.) */
+
+theorem 19.9h (ph : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ x ph ↔ ph ) ;;
+}
+
+proof of 19.9h {
+	step 1 : wff = 19.9ht () |- ( ∀ x ( ph → ∀ x ph ) → ( ∃ x ph → ph ) ) ;;
+	step 2 : wff = mpg (step 1, hyp 1) |- ( ∃ x ph → ph ) ;;
+	step 3 : wff = 19.8a () |- ( ph → ∃ x ph ) ;;
+	step 4 : wff = impbii (step 2, step 3) |- ( ∃ x ph ↔ ph ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
+       (Revised by Mario Carneiro, 24-Sep-2016.) */
+
+theorem 19.23h (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- ( ps → ∀ x ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ( ph → ps ) ↔ ( ∃ x ph → ps ) ) ;;
+}
+
+proof of 19.23h {
+	step 1 : wff = exim () |- ( ∀ x ( ph → ps ) → ( ∃ x ph → ∃ x ps ) ) ;;
+	step 2 : wff = 19.9h (hyp 1) |- ( ∃ x ps ↔ ps ) ;;
+	step 3 : wff = syl6ib (step 1, step 2) |- ( ∀ x ( ph → ps ) → ( ∃ x ph → ps ) ) ;;
+	step 4 : wff = hbe1 () |- ( ∃ x ph → ∀ x ∃ x ph ) ;;
+	step 5 : wff = hbim (step 4, hyp 1) |- ( ( ∃ x ph → ps ) → ∀ x ( ∃ x ph → ps ) ) ;;
+	step 6 : wff = 19.8a () |- ( ph → ∃ x ph ) ;;
+	step 7 : wff = imim1i (step 6) |- ( ( ∃ x ph → ps ) → ( ph → ps ) ) ;;
+	step 8 : wff = alrimih (step 5, step 7) |- ( ( ∃ x ph → ps ) → ∀ x ( ph → ps ) ) ;;
+	step 9 : wff = impbii (step 3, step 8) |- ( ∀ x ( ph → ps ) ↔ ( ∃ x ph → ps ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Inference from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
+       5-Aug-1993.)  (Proof shortened by Andrew Salmon, 13-May-2011.) */
+
+theorem exlimih (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- ( ps → ∀ x ps ) ;;
+	hyp 2 : wff = |- ( ph → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ x ph → ps ) ;;
+}
+
+proof of exlimih {
+	step 1 : wff = 19.23h (hyp 1) |- ( ∀ x ( ph → ps ) ↔ ( ∃ x ph → ps ) ) ;;
+	step 2 : wff = mpgbi (step 1, hyp 2) |- ( ∃ x ph → ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Weaker version of ~ equsalh (requiring distinct variables) without using
+       ~ ax-12 .  (Contributed by NM, 29-Nov-2015.) */
+
+theorem equsalhw (ph : wff, ps : wff, x : set, y : set) disjointed(x y) {
+	hyp 1 : wff = |- ( ps → ∀ x ps ) ;;
+	hyp 2 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ( x = y → ph ) ↔ ps ) ;;
+}
+
+proof of equsalhw {
+	step 1 : wff = sp () |- ( ∀ x ps → ps ) ;;
+	step 2 : wff = impbii (step 1, hyp 1) |- ( ∀ x ps ↔ ps ) ;;
+	step 3 : wff = syl6bbr (hyp 2, step 2) |- ( x = y → ( ph ↔ ∀ x ps ) ) ;;
+	step 4 : wff = pm5.74i (step 3) |- ( ( x = y → ph ) ↔ ( x = y → ∀ x ps ) ) ;;
+	step 5 : wff = albii (step 4) |- ( ∀ x ( x = y → ph ) ↔ ∀ x ( x = y → ∀ x ps ) ) ;;
+	step 6 : wff = a1d (hyp 1) |- ( ps → ( x = y → ∀ x ps ) ) ;;
+	step 7 : wff = alrimih (hyp 1, step 6) |- ( ps → ∀ x ( x = y → ∀ x ps ) ) ;;
+	step 8 : wff = ax9v () |- ¬ ∀ x ¬ x = y ;;
+	step 9 : wff = con3 () |- ( ( x = y → ∀ x ps ) → ( ¬ ∀ x ps → ¬ x = y ) ) ;;
+	step 10 : wff = al2imi (step 9) |- ( ∀ x ( x = y → ∀ x ps ) → ( ∀ x ¬ ∀ x ps → ∀ x ¬ x = y ) ) ;;
+	step 11 : wff = mtoi (step 8, step 10) |- ( ∀ x ( x = y → ∀ x ps ) → ¬ ∀ x ¬ ∀ x ps ) ;;
+	step 12 : wff = ax6o () |- ( ¬ ∀ x ¬ ∀ x ps → ps ) ;;
+	step 13 : wff = syl (step 11, step 12) |- ( ∀ x ( x = y → ∀ x ps ) → ps ) ;;
+	step 14 : wff = impbii (step 7, step 13) |- ( ps ↔ ∀ x ( x = y → ∀ x ps ) ) ;;
+	step 15 : wff = bitr4i (step 5, step 14) |- ( ∀ x ( x = y → ph ) ↔ ps ) ;;
+	qed prop 1 = step 15 ;;
+}
+
+/* Theorem 19.21 of [Margaris] p. 90.  The hypothesis can be thought of
+       as " ` x ` is not free in ` ph ` ."  (Contributed by NM, 1-Aug-2017.) */
+
+theorem 19.21h (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ( ph → ps ) ↔ ( ph → ∀ x ps ) ) ;;
+}
+
+proof of 19.21h {
+	step 1 : wff = alim () |- ( ∀ x ( ph → ps ) → ( ∀ x ph → ∀ x ps ) ) ;;
+	step 2 : wff = syl5 (hyp 1, step 1) |- ( ∀ x ( ph → ps ) → ( ph → ∀ x ps ) ) ;;
+	step 3 : wff = hba1 () |- ( ∀ x ps → ∀ x ∀ x ps ) ;;
+	step 4 : wff = hbim (hyp 1, step 3) |- ( ( ph → ∀ x ps ) → ∀ x ( ph → ∀ x ps ) ) ;;
+	step 5 : wff = sp () |- ( ∀ x ps → ps ) ;;
+	step 6 : wff = imim2i (step 5) |- ( ( ph → ∀ x ps ) → ( ph → ps ) ) ;;
+	step 7 : wff = alrimih (step 4, step 6) |- ( ( ph → ∀ x ps ) → ∀ x ( ph → ps ) ) ;;
+	step 8 : wff = impbii (step 2, step 7) |- ( ∀ x ( ph → ps ) ↔ ( ph → ∀ x ps ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* A closed form of ~ hbim .  (Contributed by NM, 5-Aug-1993.) */
+
+theorem hbim1 (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
+	hyp 2 : wff = |- ( ph → ( ps → ∀ x ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph → ps ) → ∀ x ( ph → ps ) ) ;;
+}
+
+proof of hbim1 {
+	step 1 : wff = a2i (hyp 2) |- ( ( ph → ps ) → ( ph → ∀ x ps ) ) ;;
+	step 2 : wff = 19.21h (hyp 1) |- ( ∀ x ( ph → ps ) ↔ ( ph → ∀ x ps ) ) ;;
+	step 3 : wff = sylibr (step 1, step 2) |- ( ( ph → ps ) → ∀ x ( ph → ps ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* If ` x ` is not free in ` ph ` , it is not free in ` E. y ph ` .
+       (Contributed by NM, 5-Aug-1993.) */
+
+theorem hbex (ph : wff, x : set, y : set)  {
+	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ y ph → ∀ x ∃ y ph ) ;;
+}
+
+proof of hbex {
+	step 1 : wff = df-ex () |- ( ∃ y ph ↔ ¬ ∀ y ¬ ph ) ;;
+	step 2 : wff = hbn (hyp 1) |- ( ¬ ph → ∀ x ¬ ph ) ;;
+	step 3 : wff = hbal (step 2) |- ( ∀ y ¬ ph → ∀ x ∀ y ¬ ph ) ;;
+	step 4 : wff = hbn (step 3) |- ( ¬ ∀ y ¬ ph → ∀ x ¬ ∀ y ¬ ph ) ;;
+	step 5 : wff = hbxfrbi (step 1, step 4) |- ( ∃ y ph → ∀ x ∃ y ph ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Theorem 19.12 of [Margaris] p. 89.  Assuming the converse is a mistake
+     sometimes made by beginners!  But sometimes the converse does hold, as in
+     ~ 19.12vv and ~ r19.12sn .  (Contributed by NM, 5-Aug-1993.) */
+
+theorem 19.12 (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( ∃ x ∀ y ph → ∀ y ∃ x ph ) ;;
+}
+
+proof of 19.12 {
+	step 1 : wff = hba1 () |- ( ∀ y ph → ∀ y ∀ y ph ) ;;
+	step 2 : wff = hbex (step 1) |- ( ∃ x ∀ y ph → ∀ y ∃ x ∀ y ph ) ;;
+	step 3 : wff = sp () |- ( ∀ y ph → ph ) ;;
+	step 4 : wff = eximi (step 3) |- ( ∃ x ∀ y ph → ∃ x ph ) ;;
+	step 5 : wff = alrimih (step 2, step 4) |- ( ∃ x ∀ y ph → ∀ y ∃ x ph ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* dvelimhw.4 $e |- ( -. A. x x = y -> ( z = y -> A. x z = y ) ) $. */
+
+/* Proof of ~ dvelimh without using ~ ax-12 but with additional distinct
+       variable conditions.  (Contributed by Andrew Salmon, 21-Jul-2011.)
+       (Revised by NM, 1-Aug-2017.) */
+
+theorem dvelimhw (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(x z, y z) {
+	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
+	hyp 2 : wff = |- ( ps → ∀ z ps ) ;;
+	hyp 3 : wff = |- ( z = y → ( ph ↔ ps ) ) ;;
+	hyp 4 : wff = |- ( ¬ ∀ x x = y → ( y = z → ∀ x y = z ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ∀ x x = y → ( ps → ∀ x ps ) ) ;;
+}
+
+proof of dvelimhw {
+	step 1 : wff = ax-17 () |- ( ¬ ∀ x x = y → ∀ z ¬ ∀ x x = y ) ;;
+	step 2 : wff = hbn1 () |- ( ¬ ∀ x x = y → ∀ x ¬ ∀ x x = y ) ;;
+	step 3 : wff = equcomi () |- ( z = y → y = z ) ;;
+	step 4 : wff = equcomi () |- ( y = z → z = y ) ;;
+	step 5 : wff = alimi (step 4) |- ( ∀ x y = z → ∀ x z = y ) ;;
+	step 6 : wff = syl56 (step 3, hyp 4, step 5) |- ( ¬ ∀ x x = y → ( z = y → ∀ x z = y ) ) ;;
+	step 7 : wff = a1i (hyp 1) |- ( ¬ ∀ x x = y → ( ph → ∀ x ph ) ) ;;
+	step 8 : wff = hbimd (step 2, step 6, step 7) |- ( ¬ ∀ x x = y → ( ( z = y → ph ) → ∀ x ( z = y → ph ) ) ) ;;
+	step 9 : wff = hbald (step 1, step 8) |- ( ¬ ∀ x x = y → ( ∀ z ( z = y → ph ) → ∀ x ∀ z ( z = y → ph ) ) ) ;;
+	step 10 : wff = equsalhw (hyp 2, hyp 3) |- ( ∀ z ( z = y → ph ) ↔ ps ) ;;
+	step 11 : wff = equsalhw (hyp 2, hyp 3) |- ( ∀ z ( z = y → ph ) ↔ ps ) ;;
+	step 12 : wff = albii (step 11) |- ( ∀ x ∀ z ( z = y → ph ) ↔ ∀ x ps ) ;;
+	step 13 : wff = 3imtr3g (step 9, step 10, step 12) |- ( ¬ ∀ x x = y → ( ps → ∀ x ps ) ) ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
+       ` ( ph /\ ps ) ` .  (Contributed by NM, 5-Aug-1993.) */
+
+theorem hban (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
+	hyp 2 : wff = |- ( ps → ∀ x ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ ps ) → ∀ x ( ph ∧ ps ) ) ;;
+}
+
+proof of hban {
+	step 1 : wff = df-an () |- ( ( ph ∧ ps ) ↔ ¬ ( ph → ¬ ps ) ) ;;
+	step 2 : wff = hbn (hyp 2) |- ( ¬ ps → ∀ x ¬ ps ) ;;
+	step 3 : wff = hbim (hyp 1, step 2) |- ( ( ph → ¬ ps ) → ∀ x ( ph → ¬ ps ) ) ;;
+	step 4 : wff = hbn (step 3) |- ( ¬ ( ph → ¬ ps ) → ∀ x ¬ ( ph → ¬ ps ) ) ;;
+	step 5 : wff = hbxfrbi (step 1, step 4) |- ( ( ph ∧ ps ) → ∀ x ( ph ∧ ps ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Lemma for ~ ax10 .  Similar to ~ cbv3h .  Requires distinct variables
+       but avoids ~ ax-12 .  (Contributed by NM, 25-Jul-2015.) */
+
+theorem cbv3hv (ph : wff, ps : wff, x : set, y : set) disjointed(x y) {
+	hyp 1 : wff = |- ( ph → ∀ y ph ) ;;
+	hyp 2 : wff = |- ( ps → ∀ x ps ) ;;
+	hyp 3 : wff = |- ( x = y → ( ph → ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ph → ∀ y ps ) ;;
+}
+
+proof of cbv3hv {
+	step 1 : wff = alimi (hyp 1) |- ( ∀ x ph → ∀ x ∀ y ph ) ;;
+	step 2 : wff = ax9v () |- ¬ ∀ x ¬ x = y ;;
+	step 3 : wff = hba1 () |- ( ∀ x ph → ∀ x ∀ x ph ) ;;
+	step 4 : wff = hbim (step 3, hyp 2) |- ( ( ∀ x ph → ps ) → ∀ x ( ∀ x ph → ps ) ) ;;
+	step 5 : wff = hbn (step 4) |- ( ¬ ( ∀ x ph → ps ) → ∀ x ¬ ( ∀ x ph → ps ) ) ;;
+	step 6 : wff = sp () |- ( ∀ x ph → ph ) ;;
+	step 7 : wff = syl5 (step 6, hyp 3) |- ( x = y → ( ∀ x ph → ps ) ) ;;
+	step 8 : wff = con3i (step 7) |- ( ¬ ( ∀ x ph → ps ) → ¬ x = y ) ;;
+	step 9 : wff = alrimih (step 5, step 8) |- ( ¬ ( ∀ x ph → ps ) → ∀ x ¬ x = y ) ;;
+	step 10 : wff = mt3 (step 2, step 9) |- ( ∀ x ph → ps ) ;;
+	step 11 : wff = alimi (step 10) |- ( ∀ y ∀ x ph → ∀ y ps ) ;;
+	step 12 : wff = a7s (step 11) |- ( ∀ x ∀ y ph → ∀ y ps ) ;;
+	step 13 : wff = syl (step 1, step 12) |- ( ∀ x ph → ∀ y ps ) ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* Inference rule reversing generalization.  (Contributed by NM,
+       5-Aug-1993.) */
+
+theorem spi (ph : wff, x : set)  {
+	hyp 1 : wff = |- ∀ x ph ;;
+	-----------------------
+	prop 1 : wff = |- ph ;;
+}
+
+proof of spi {
+	step 1 : wff = sp () |- ( ∀ x ph → ph ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ph ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Generalization of antecedent.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem sps (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ph → ps ) ;;
+}
+
+proof of sps {
+	step 1 : wff = sp () |- ( ∀ x ph → ph ) ;;
+	step 2 : wff = syl (step 1, hyp 1) |- ( ∀ x ph → ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction generalizing antecedent.  (Contributed by NM, 17-Aug-1994.) */
+
+theorem spsd (ph : wff, ps : wff, ch : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → ( ps → ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∀ x ps → ch ) ) ;;
+}
+
+proof of spsd {
+	step 1 : wff = sp () |- ( ∀ x ps → ps ) ;;
+	step 2 : wff = syl5 (step 1, hyp 1) |- ( ph → ( ∀ x ps → ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Consequence of the definition of not-free.  (Contributed by Mario
+     Carneiro, 26-Sep-2016.) */
+
+theorem nfr (ph : wff, x : set)  {
+	prop 1 : wff = |- ( F/ x ph → ( ph → ∀ x ph ) ) ;;
+}
+
+proof of nfr {
+	step 1 : wff = df-nf () |- ( F/ x ph ↔ ∀ x ( ph → ∀ x ph ) ) ;;
+	step 2 : wff = sp () |- ( ∀ x ( ph → ∀ x ph ) → ( ph → ∀ x ph ) ) ;;
+	step 3 : wff = sylbi (step 1, step 2) |- ( F/ x ph → ( ph → ∀ x ph ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Consequence of the definition of not-free.  (Contributed by Mario
+       Carneiro, 11-Aug-2016.) */
+
+theorem nfri (ph : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ∀ x ph ) ;;
+}
+
+proof of nfri {
+	step 1 : wff = nfr () |- ( F/ x ph → ( ph → ∀ x ph ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( ph → ∀ x ph ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Consequence of the definition of not-free in a context.  (Contributed by
+       Mario Carneiro, 11-Aug-2016.) */
+
+theorem nfrd (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → F/ x ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ps → ∀ x ps ) ) ;;
+}
+
+proof of nfrd {
+	step 1 : wff = nfr () |- ( F/ x ps → ( ps → ∀ x ps ) ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ph → ( ps → ∀ x ps ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction from Theorem 19.20 of [Margaris] p. 90.  (Contributed by Mario
+       Carneiro, 24-Sep-2016.) */
+
+theorem alimd (ph : wff, ps : wff, ch : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- ( ph → ( ps → ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∀ x ps → ∀ x ch ) ) ;;
+}
+
+proof of alimd {
+	step 1 : wff = nfri (hyp 1) |- ( ph → ∀ x ph ) ;;
+	step 2 : wff = alimdh (step 1, hyp 2) |- ( ph → ( ∀ x ps → ∀ x ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Inference from Theorem 19.21 of [Margaris] p. 90.  (Contributed by Mario
+       Carneiro, 24-Sep-2016.) */
+
+theorem alrimi (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- ( ph → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ∀ x ps ) ;;
+}
+
+proof of alrimi {
+	step 1 : wff = nfri (hyp 1) |- ( ph → ∀ x ph ) ;;
+	step 2 : wff = alrimih (step 1, hyp 2) |- ( ph → ∀ x ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduce that ` x ` is not free in ` ph ` in a context.  (Contributed by
+       Mario Carneiro, 24-Sep-2016.) */
+
+theorem nfd (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- ( ph → ( ps → ∀ x ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → F/ x ps ) ;;
+}
+
+proof of nfd {
+	step 1 : wff = alrimi (hyp 1, hyp 2) |- ( ph → ∀ x ( ps → ∀ x ps ) ) ;;
+	step 2 : wff = df-nf () |- ( F/ x ps ↔ ∀ x ( ps → ∀ x ps ) ) ;;
+	step 3 : wff = sylibr (step 1, step 2) |- ( ph → F/ x ps ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Deduce that ` x ` is not free in ` ph ` in a context.  (Contributed by
+       Mario Carneiro, 24-Sep-2016.) */
+
+theorem nfdh (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
+	hyp 2 : wff = |- ( ph → ( ps → ∀ x ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → F/ x ps ) ;;
+}
+
+proof of nfdh {
+	step 1 : wff = nfi (hyp 1) |- F/ x ph ;;
+	step 2 : wff = nfd (step 1, hyp 2) |- ( ph → F/ x ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction from Theorem 19.21 of [Margaris] p. 90.  (Contributed by Mario
+       Carneiro, 24-Sep-2016.) */
+
+theorem alrimdd (ph : wff, ps : wff, ch : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- ( ph → F/ x ps ) ;;
+	hyp 3 : wff = |- ( ph → ( ps → ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ps → ∀ x ch ) ) ;;
+}
+
+proof of alrimdd {
+	step 1 : wff = nfrd (hyp 2) |- ( ph → ( ps → ∀ x ps ) ) ;;
+	step 2 : wff = alimd (hyp 1, hyp 3) |- ( ph → ( ∀ x ps → ∀ x ch ) ) ;;
+	step 3 : wff = syld (step 1, step 2) |- ( ph → ( ps → ∀ x ch ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Deduction from Theorem 19.21 of [Margaris] p. 90.  (Contributed by Mario
+       Carneiro, 24-Sep-2016.) */
+
+theorem alrimd (ph : wff, ps : wff, ch : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- F/ x ps ;;
+	hyp 3 : wff = |- ( ph → ( ps → ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ps → ∀ x ch ) ) ;;
+}
+
+proof of alrimd {
+	step 1 : wff = a1i (hyp 2) |- ( ph → F/ x ps ) ;;
+	step 2 : wff = alrimdd (hyp 1, step 1, hyp 3) |- ( ph → ( ps → ∀ x ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction from Theorem 19.22 of [Margaris] p. 90.  (Contributed by Mario
+       Carneiro, 24-Sep-2016.) */
+
+theorem eximd (ph : wff, ps : wff, ch : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- ( ph → ( ps → ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∃ x ps → ∃ x ch ) ) ;;
+}
+
+proof of eximd {
+	step 1 : wff = nfri (hyp 1) |- ( ph → ∀ x ph ) ;;
+	step 2 : wff = eximdh (step 1, hyp 2) |- ( ph → ( ∃ x ps → ∃ x ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction for generalization rule for negated wff.  (Contributed by
+       Mario Carneiro, 24-Sep-2016.) */
+
+theorem nexd (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- ( ph → ¬ ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ¬ ∃ x ps ) ;;
+}
+
+proof of nexd {
+	step 1 : wff = nfri (hyp 1) |- ( ph → ∀ x ph ) ;;
+	step 2 : wff = nexdh (step 1, hyp 2) |- ( ph → ¬ ∃ x ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Formula-building rule for universal quantifier (deduction rule).
+       (Contributed by Mario Carneiro, 24-Sep-2016.) */
+
+theorem albid (ph : wff, ps : wff, ch : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∀ x ps ↔ ∀ x ch ) ) ;;
+}
+
+proof of albid {
+	step 1 : wff = nfri (hyp 1) |- ( ph → ∀ x ph ) ;;
+	step 2 : wff = albidh (step 1, hyp 2) |- ( ph → ( ∀ x ps ↔ ∀ x ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Formula-building rule for existential quantifier (deduction rule).
+       (Contributed by Mario Carneiro, 24-Sep-2016.) */
+
+theorem exbid (ph : wff, ps : wff, ch : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∃ x ps ↔ ∃ x ch ) ) ;;
+}
+
+proof of exbid {
+	step 1 : wff = nfri (hyp 1) |- ( ph → ∀ x ph ) ;;
+	step 2 : wff = exbidh (step 1, hyp 2) |- ( ph → ( ∃ x ps ↔ ∃ x ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* An equality theorem for effectively not free.  (Contributed by Mario
+       Carneiro, 4-Oct-2016.) */
+
+theorem nfbidf (ph : wff, ps : wff, ch : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( F/ x ps ↔ F/ x ch ) ) ;;
+}
+
+proof of nfbidf {
+	step 1 : wff = albid (hyp 1, hyp 2) |- ( ph → ( ∀ x ps ↔ ∀ x ch ) ) ;;
+	step 2 : wff = imbi12d (hyp 2, step 1) |- ( ph → ( ( ps → ∀ x ps ) ↔ ( ch → ∀ x ch ) ) ) ;;
+	step 3 : wff = albid (hyp 1, step 2) |- ( ph → ( ∀ x ( ps → ∀ x ps ) ↔ ∀ x ( ch → ∀ x ch ) ) ) ;;
+	step 4 : wff = df-nf () |- ( F/ x ps ↔ ∀ x ( ps → ∀ x ps ) ) ;;
+	step 5 : wff = df-nf () |- ( F/ x ch ↔ ∀ x ( ch → ∀ x ch ) ) ;;
+	step 6 : wff = 3bitr4g (step 3, step 4, step 5) |- ( ph → ( F/ x ps ↔ F/ x ch ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Abbreviated version of ~ ax6o .  (Contributed by NM, 5-Aug-1993.) */
+
+theorem a6e (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ∃ x ∀ x ph → ph ) ;;
+}
+
+proof of a6e {
+	step 1 : wff = df-ex () |- ( ∃ x ∀ x ph ↔ ¬ ∀ x ¬ ∀ x ph ) ;;
+	step 2 : wff = ax6o () |- ( ¬ ∀ x ¬ ∀ x ph → ph ) ;;
+	step 3 : wff = sylbi (step 1, step 2) |- ( ∃ x ∀ x ph → ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* ` x ` is not free in ` A. x ph ` .  (Contributed by Mario Carneiro,
+     11-Aug-2016.) */
+
+theorem nfa1 (ph : wff, x : set)  {
+	prop 1 : wff = |- F/ x ∀ x ph ;;
+}
+
+proof of nfa1 {
+	step 1 : wff = hba1 () |- ( ∀ x ph → ∀ x ∀ x ph ) ;;
+	step 2 : wff = nfi (step 1) |- F/ x ∀ x ph ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* ` x ` is not free in ` F/ x ph ` .  (Contributed by Mario Carneiro,
+     11-Aug-2016.) */
+
+theorem nfnf1 (ph : wff, x : set)  {
+	prop 1 : wff = |- F/ x F/ x ph ;;
+}
+
+proof of nfnf1 {
+	step 1 : wff = df-nf () |- ( F/ x ph ↔ ∀ x ( ph → ∀ x ph ) ) ;;
+	step 2 : wff = nfa1 () |- F/ x ∀ x ( ph → ∀ x ph ) ;;
+	step 3 : wff = nfxfr (step 1, step 2) |- F/ x F/ x ph ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Inference version of ~ ax5o .  (Contributed by NM, 5-Aug-1993.) */
+
+theorem a5i (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- ( ∀ x ph → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ph → ∀ x ps ) ;;
+}
+
+proof of a5i {
+	step 1 : wff = nfa1 () |- F/ x ∀ x ph ;;
+	step 2 : wff = alrimi (step 1, hyp 1) |- ( ∀ x ph → ∀ x ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* If ` x ` is not free in ` ph ` , ` ps ` , and ` ch ` , it is not free in
+       ` ( ph /\ ps /\ ch ) ` .  (Contributed by NM, 14-Sep-2003.) */
+
+theorem hb3an (ph : wff, ps : wff, ch : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
+	hyp 2 : wff = |- ( ps → ∀ x ps ) ;;
+	hyp 3 : wff = |- ( ch → ∀ x ch ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ ps ∧ ch ) → ∀ x ( ph ∧ ps ∧ ch ) ) ;;
+}
+
+proof of hb3an {
+	step 1 : wff = df-3an () |- ( ( ph ∧ ps ∧ ch ) ↔ ( ( ph ∧ ps ) ∧ ch ) ) ;;
+	step 2 : wff = hban (hyp 1, hyp 2) |- ( ( ph ∧ ps ) → ∀ x ( ph ∧ ps ) ) ;;
+	step 3 : wff = hban (step 2, hyp 3) |- ( ( ( ph ∧ ps ) ∧ ch ) → ∀ x ( ( ph ∧ ps ) ∧ ch ) ) ;;
+	step 4 : wff = hbxfrbi (step 1, step 3) |- ( ( ph ∧ ps ∧ ch ) → ∀ x ( ph ∧ ps ∧ ch ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* If ` x ` is not free in ` ph ` , it is not free in ` -. ph ` .
+       (Contributed by Mario Carneiro, 24-Sep-2016.) */
+
+theorem nfnd (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → F/ x ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → F/ x ¬ ps ) ;;
+}
+
+proof of nfnd {
+	step 1 : wff = nfnf1 () |- F/ x F/ x ps ;;
+	step 2 : wff = ax6o () |- ( ¬ ∀ x ¬ ∀ x ps → ps ) ;;
+	step 3 : wff = con1i (step 2) |- ( ¬ ps → ∀ x ¬ ∀ x ps ) ;;
+	step 4 : wff = df-nf () |- ( F/ x ps ↔ ∀ x ( ps → ∀ x ps ) ) ;;
+	step 5 : wff = con3 () |- ( ( ps → ∀ x ps ) → ( ¬ ∀ x ps → ¬ ps ) ) ;;
+	step 6 : wff = al2imi (step 5) |- ( ∀ x ( ps → ∀ x ps ) → ( ∀ x ¬ ∀ x ps → ∀ x ¬ ps ) ) ;;
+	step 7 : wff = sylbi (step 4, step 6) |- ( F/ x ps → ( ∀ x ¬ ∀ x ps → ∀ x ¬ ps ) ) ;;
+	step 8 : wff = syl5 (step 3, step 7) |- ( F/ x ps → ( ¬ ps → ∀ x ¬ ps ) ) ;;
+	step 9 : wff = nfd (step 1, step 8) |- ( F/ x ps → F/ x ¬ ps ) ;;
+	step 10 : wff = syl (hyp 1, step 9) |- ( ph → F/ x ¬ ps ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
+       ` ( ph -> ps ) ` .  (Contributed by Mario Carneiro, 24-Sep-2016.) */
+
+theorem nfimd (ph : wff, ps : wff, ch : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → F/ x ps ) ;;
+	hyp 2 : wff = |- ( ph → F/ x ch ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → F/ x ( ps → ch ) ) ;;
+}
+
+proof of nfimd {
+	step 1 : wff = nfa1 () |- F/ x ∀ x ( ps → ∀ x ps ) ;;
+	step 2 : wff = hbnt () |- ( ∀ x ( ps → ∀ x ps ) → ( ¬ ps → ∀ x ¬ ps ) ) ;;
+	step 3 : wff = pm2.21 () |- ( ¬ ps → ( ps → ch ) ) ;;
+	step 4 : wff = alimi (step 3) |- ( ∀ x ¬ ps → ∀ x ( ps → ch ) ) ;;
+	step 5 : wff = imim2i (step 4) |- ( ( ¬ ps → ∀ x ¬ ps ) → ( ¬ ps → ∀ x ( ps → ch ) ) ) ;;
+	step 6 : wff = adantr (step 5) |- ( ( ( ¬ ps → ∀ x ¬ ps ) ∧ ( ch → ∀ x ch ) ) → ( ¬ ps → ∀ x ( ps → ch ) ) ) ;;
+	step 7 : wff = ax-1 () |- ( ch → ( ps → ch ) ) ;;
+	step 8 : wff = alimi (step 7) |- ( ∀ x ch → ∀ x ( ps → ch ) ) ;;
+	step 9 : wff = imim2i (step 8) |- ( ( ch → ∀ x ch ) → ( ch → ∀ x ( ps → ch ) ) ) ;;
+	step 10 : wff = adantl (step 9) |- ( ( ( ¬ ps → ∀ x ¬ ps ) ∧ ( ch → ∀ x ch ) ) → ( ch → ∀ x ( ps → ch ) ) ) ;;
+	step 11 : wff = jad (step 6, step 10) |- ( ( ( ¬ ps → ∀ x ¬ ps ) ∧ ( ch → ∀ x ch ) ) → ( ( ps → ch ) → ∀ x ( ps → ch ) ) ) ;;
+	step 12 : wff = ex (step 11) |- ( ( ¬ ps → ∀ x ¬ ps ) → ( ( ch → ∀ x ch ) → ( ( ps → ch ) → ∀ x ( ps → ch ) ) ) ) ;;
+	step 13 : wff = syl (step 2, step 12) |- ( ∀ x ( ps → ∀ x ps ) → ( ( ch → ∀ x ch ) → ( ( ps → ch ) → ∀ x ( ps → ch ) ) ) ) ;;
+	step 14 : wff = alimd (step 1, step 13) |- ( ∀ x ( ps → ∀ x ps ) → ( ∀ x ( ch → ∀ x ch ) → ∀ x ( ( ps → ch ) → ∀ x ( ps → ch ) ) ) ) ;;
+	step 15 : wff = imp (step 14) |- ( ( ∀ x ( ps → ∀ x ps ) ∧ ∀ x ( ch → ∀ x ch ) ) → ∀ x ( ( ps → ch ) → ∀ x ( ps → ch ) ) ) ;;
+	step 16 : wff = df-nf () |- ( F/ x ps ↔ ∀ x ( ps → ∀ x ps ) ) ;;
+	step 17 : wff = df-nf () |- ( F/ x ch ↔ ∀ x ( ch → ∀ x ch ) ) ;;
+	step 18 : wff = anbi12i (step 16, step 17) |- ( ( F/ x ps ∧ F/ x ch ) ↔ ( ∀ x ( ps → ∀ x ps ) ∧ ∀ x ( ch → ∀ x ch ) ) ) ;;
+	step 19 : wff = df-nf () |- ( F/ x ( ps → ch ) ↔ ∀ x ( ( ps → ch ) → ∀ x ( ps → ch ) ) ) ;;
+	step 20 : wff = 3imtr4i (step 15, step 18, step 19) |- ( ( F/ x ps ∧ F/ x ch ) → F/ x ( ps → ch ) ) ;;
+	step 21 : wff = syl2anc (hyp 1, hyp 2, step 20) |- ( ph → F/ x ( ps → ch ) ) ;;
+	qed prop 1 = step 21 ;;
+}
+
+/* If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
+       ` ( ph -> ps ) ` .  (Contributed by Mario Carneiro, 24-Sep-2016.) */
+
+theorem nfbid (ph : wff, ps : wff, ch : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → F/ x ps ) ;;
+	hyp 2 : wff = |- ( ph → F/ x ch ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → F/ x ( ps ↔ ch ) ) ;;
+}
+
+proof of nfbid {
+	step 1 : wff = dfbi1 () |- ( ( ps ↔ ch ) ↔ ¬ ( ( ps → ch ) → ¬ ( ch → ps ) ) ) ;;
+	step 2 : wff = nfimd (hyp 1, hyp 2) |- ( ph → F/ x ( ps → ch ) ) ;;
+	step 3 : wff = nfimd (hyp 2, hyp 1) |- ( ph → F/ x ( ch → ps ) ) ;;
+	step 4 : wff = nfnd (step 3) |- ( ph → F/ x ¬ ( ch → ps ) ) ;;
+	step 5 : wff = nfimd (step 2, step 4) |- ( ph → F/ x ( ( ps → ch ) → ¬ ( ch → ps ) ) ) ;;
+	step 6 : wff = nfnd (step 5) |- ( ph → F/ x ¬ ( ( ps → ch ) → ¬ ( ch → ps ) ) ) ;;
+	step 7 : wff = nfxfrd (step 1, step 6) |- ( ph → F/ x ( ps ↔ ch ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
+       ` ( ph /\ ps ) ` .  (Contributed by Mario Carneiro, 7-Oct-2016.) */
+
+theorem nfand (ph : wff, ps : wff, ch : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → F/ x ps ) ;;
+	hyp 2 : wff = |- ( ph → F/ x ch ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → F/ x ( ps ∧ ch ) ) ;;
+}
+
+proof of nfand {
+	step 1 : wff = df-an () |- ( ( ps ∧ ch ) ↔ ¬ ( ps → ¬ ch ) ) ;;
+	step 2 : wff = nfnd (hyp 2) |- ( ph → F/ x ¬ ch ) ;;
+	step 3 : wff = nfimd (hyp 1, step 2) |- ( ph → F/ x ( ps → ¬ ch ) ) ;;
+	step 4 : wff = nfnd (step 3) |- ( ph → F/ x ¬ ( ps → ¬ ch ) ) ;;
+	step 5 : wff = nfxfrd (step 1, step 4) |- ( ph → F/ x ( ps ∧ ch ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Deduction form of bound-variable hypothesis builder ~ nf3an .
+       (Contributed by NM, 17-Feb-2013.)  (Revised by Mario Carneiro,
+       16-Oct-2016.) */
+
+theorem nf3and (ph : wff, ps : wff, ch : wff, th : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → F/ x ps ) ;;
+	hyp 2 : wff = |- ( ph → F/ x ch ) ;;
+	hyp 3 : wff = |- ( ph → F/ x th ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → F/ x ( ps ∧ ch ∧ th ) ) ;;
+}
+
+proof of nf3and {
+	step 1 : wff = df-3an () |- ( ( ps ∧ ch ∧ th ) ↔ ( ( ps ∧ ch ) ∧ th ) ) ;;
+	step 2 : wff = nfand (hyp 1, hyp 2) |- ( ph → F/ x ( ps ∧ ch ) ) ;;
+	step 3 : wff = nfand (step 2, hyp 3) |- ( ph → F/ x ( ( ps ∧ ch ) ∧ th ) ) ;;
+	step 4 : wff = nfxfrd (step 1, step 3) |- ( ph → F/ x ( ps ∧ ch ∧ th ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* If ` x ` is not free in ` ph ` , it is not free in ` -. ph ` .
+       (Contributed by Mario Carneiro, 11-Aug-2016.) */
+
+theorem nfn (ph : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- F/ x ¬ ph ;;
+}
+
+proof of nfn {
+	step 1 : wff = a1i (hyp 1) |- ( T. → F/ x ph ) ;;
+	step 2 : wff = nfnd (step 1) |- ( T. → F/ x ¬ ph ) ;;
+	step 3 : wff = trud (step 2) |- F/ x ¬ ph ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* If ` x ` is not free in ` ph ` , it is not free in ` A. y ph ` .
+       (Contributed by Mario Carneiro, 11-Aug-2016.) */
+
+theorem nfal (ph : wff, x : set, y : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- F/ x ∀ y ph ;;
+}
+
+proof of nfal {
+	step 1 : wff = nfri (hyp 1) |- ( ph → ∀ x ph ) ;;
+	step 2 : wff = hbal (step 1) |- ( ∀ y ph → ∀ x ∀ y ph ) ;;
+	step 3 : wff = nfi (step 2) |- F/ x ∀ y ph ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* If ` x ` is not free in ` ph ` , it is not free in ` E. y ph ` .
+       (Contributed by Mario Carneiro, 11-Aug-2016.) */
+
+theorem nfex (ph : wff, x : set, y : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- F/ x ∃ y ph ;;
+}
+
+proof of nfex {
+	step 1 : wff = df-ex () |- ( ∃ y ph ↔ ¬ ∀ y ¬ ph ) ;;
+	step 2 : wff = nfn (hyp 1) |- F/ x ¬ ph ;;
+	step 3 : wff = nfal (step 2) |- F/ x ∀ y ¬ ph ;;
+	step 4 : wff = nfn (step 3) |- F/ x ¬ ∀ y ¬ ph ;;
+	step 5 : wff = nfxfr (step 1, step 4) |- F/ x ∃ y ph ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* If ` x ` is not free in ` ph ` , it is not free in ` F/ y ph ` .
+       (Contributed by Mario Carneiro, 11-Aug-2016.) */
+
+theorem nfnf (ph : wff, x : set, y : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- F/ x F/ y ph ;;
+}
+
+proof of nfnf {
+	step 1 : wff = df-nf () |- ( F/ y ph ↔ ∀ y ( ph → ∀ y ph ) ) ;;
+	step 2 : wff = a1i (hyp 1) |- ( T. → F/ x ph ) ;;
+	step 3 : wff = nfal (hyp 1) |- F/ x ∀ y ph ;;
+	step 4 : wff = a1i (step 3) |- ( T. → F/ x ∀ y ph ) ;;
+	step 5 : wff = nfimd (step 2, step 4) |- ( T. → F/ x ( ph → ∀ y ph ) ) ;;
+	step 6 : wff = trud (step 5) |- F/ x ( ph → ∀ y ph ) ;;
+	step 7 : wff = nfal (step 6) |- F/ x ∀ y ( ph → ∀ y ph ) ;;
+	step 8 : wff = nfxfr (step 1, step 7) |- F/ x F/ y ph ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
+       ` ( ph -> ps ) ` .  (Contributed by Mario Carneiro, 11-Aug-2016.) */
+
+theorem nfim (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- F/ x ps ;;
+	-----------------------
+	prop 1 : wff = |- F/ x ( ph → ps ) ;;
+}
+
+proof of nfim {
+	step 1 : wff = a1i (hyp 1) |- ( T. → F/ x ph ) ;;
+	step 2 : wff = a1i (hyp 2) |- ( T. → F/ x ps ) ;;
+	step 3 : wff = nfimd (step 1, step 2) |- ( T. → F/ x ( ph → ps ) ) ;;
+	step 4 : wff = trud (step 3) |- F/ x ( ph → ps ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
+       ` ( ph \/ ps ) ` .  (Contributed by Mario Carneiro, 11-Aug-2016.) */
+
+theorem nfor (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- F/ x ps ;;
+	-----------------------
+	prop 1 : wff = |- F/ x ( ph ∨ ps ) ;;
+}
+
+proof of nfor {
+	step 1 : wff = df-or () |- ( ( ph ∨ ps ) ↔ ( ¬ ph → ps ) ) ;;
+	step 2 : wff = nfn (hyp 1) |- F/ x ¬ ph ;;
+	step 3 : wff = nfim (step 2, hyp 2) |- F/ x ( ¬ ph → ps ) ;;
+	step 4 : wff = nfxfr (step 1, step 3) |- F/ x ( ph ∨ ps ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
+       ` ( ph /\ ps ) ` .  (Contributed by Mario Carneiro, 11-Aug-2016.) */
+
+theorem nfan (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- F/ x ps ;;
+	-----------------------
+	prop 1 : wff = |- F/ x ( ph ∧ ps ) ;;
+}
+
+proof of nfan {
+	step 1 : wff = df-an () |- ( ( ph ∧ ps ) ↔ ¬ ( ph → ¬ ps ) ) ;;
+	step 2 : wff = nfn (hyp 2) |- F/ x ¬ ps ;;
+	step 3 : wff = nfim (hyp 1, step 2) |- F/ x ( ph → ¬ ps ) ;;
+	step 4 : wff = nfn (step 3) |- F/ x ¬ ( ph → ¬ ps ) ;;
+	step 5 : wff = nfxfr (step 1, step 4) |- F/ x ( ph ∧ ps ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
+       ` ( ph <-> ps ) ` .  (Contributed by Mario Carneiro, 11-Aug-2016.) */
+
+theorem nfbi (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- F/ x ps ;;
+	-----------------------
+	prop 1 : wff = |- F/ x ( ph ↔ ps ) ;;
+}
+
+proof of nfbi {
+	step 1 : wff = dfbi2 () |- ( ( ph ↔ ps ) ↔ ( ( ph → ps ) ∧ ( ps → ph ) ) ) ;;
+	step 2 : wff = nfim (hyp 1, hyp 2) |- F/ x ( ph → ps ) ;;
+	step 3 : wff = nfim (hyp 2, hyp 1) |- F/ x ( ps → ph ) ;;
+	step 4 : wff = nfan (step 2, step 3) |- F/ x ( ( ph → ps ) ∧ ( ps → ph ) ) ;;
+	step 5 : wff = nfxfr (step 1, step 4) |- F/ x ( ph ↔ ps ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* If ` x ` is not free in ` ph ` , ` ps ` , and ` ch ` , it is not free in
+       ` ( ph \/ ps \/ ch ) ` .  (Contributed by Mario Carneiro,
+       11-Aug-2016.) */
+
+theorem nf3or (ph : wff, ps : wff, ch : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- F/ x ps ;;
+	hyp 3 : wff = |- F/ x ch ;;
+	-----------------------
+	prop 1 : wff = |- F/ x ( ph ∨ ps ∨ ch ) ;;
+}
+
+proof of nf3or {
+	step 1 : wff = df-3or () |- ( ( ph ∨ ps ∨ ch ) ↔ ( ( ph ∨ ps ) ∨ ch ) ) ;;
+	step 2 : wff = nfor (hyp 1, hyp 2) |- F/ x ( ph ∨ ps ) ;;
+	step 3 : wff = nfor (step 2, hyp 3) |- F/ x ( ( ph ∨ ps ) ∨ ch ) ;;
+	step 4 : wff = nfxfr (step 1, step 3) |- F/ x ( ph ∨ ps ∨ ch ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* If ` x ` is not free in ` ph ` , ` ps ` , and ` ch ` , it is not free in
+       ` ( ph /\ ps /\ ch ) ` .  (Contributed by Mario Carneiro,
+       11-Aug-2016.) */
+
+theorem nf3an (ph : wff, ps : wff, ch : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- F/ x ps ;;
+	hyp 3 : wff = |- F/ x ch ;;
+	-----------------------
+	prop 1 : wff = |- F/ x ( ph ∧ ps ∧ ch ) ;;
+}
+
+proof of nf3an {
+	step 1 : wff = df-3an () |- ( ( ph ∧ ps ∧ ch ) ↔ ( ( ph ∧ ps ) ∧ ch ) ) ;;
+	step 2 : wff = nfan (hyp 1, hyp 2) |- F/ x ( ph ∧ ps ) ;;
+	step 3 : wff = nfan (step 2, hyp 3) |- F/ x ( ( ph ∧ ps ) ∧ ch ) ;;
+	step 4 : wff = nfxfr (step 1, step 3) |- F/ x ( ph ∧ ps ∧ ch ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* If ` x ` is not free in ` ph ` , it is not free in ` A. y ph ` .
+       (Contributed by Mario Carneiro, 24-Sep-2016.) */
+
+theorem nfald (ph : wff, ps : wff, x : set, y : set)  {
+	hyp 1 : wff = |- F/ y ph ;;
+	hyp 2 : wff = |- ( ph → F/ x ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → F/ x ∀ y ps ) ;;
+}
+
+proof of nfald {
+	step 1 : wff = alrimi (hyp 1, hyp 2) |- ( ph → ∀ y F/ x ps ) ;;
+	step 2 : wff = nfnf1 () |- F/ x F/ x ps ;;
+	step 3 : wff = nfal (step 2) |- F/ x ∀ y F/ x ps ;;
+	step 4 : wff = nfr () |- ( F/ x ps → ( ps → ∀ x ps ) ) ;;
+	step 5 : wff = al2imi (step 4) |- ( ∀ y F/ x ps → ( ∀ y ps → ∀ y ∀ x ps ) ) ;;
+	step 6 : wff = ax-7 () |- ( ∀ y ∀ x ps → ∀ x ∀ y ps ) ;;
+	step 7 : wff = syl6 (step 5, step 6) |- ( ∀ y F/ x ps → ( ∀ y ps → ∀ x ∀ y ps ) ) ;;
+	step 8 : wff = nfd (step 3, step 7) |- ( ∀ y F/ x ps → F/ x ∀ y ps ) ;;
+	step 9 : wff = syl (step 1, step 8) |- ( ph → F/ x ∀ y ps ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* If ` x ` is not free in ` ph ` , it is not free in ` E. y ph ` .
+       (Contributed by Mario Carneiro, 24-Sep-2016.) */
+
+theorem nfexd (ph : wff, ps : wff, x : set, y : set)  {
+	hyp 1 : wff = |- F/ y ph ;;
+	hyp 2 : wff = |- ( ph → F/ x ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → F/ x ∃ y ps ) ;;
+}
+
+proof of nfexd {
+	step 1 : wff = df-ex () |- ( ∃ y ps ↔ ¬ ∀ y ¬ ps ) ;;
+	step 2 : wff = nfnd (hyp 2) |- ( ph → F/ x ¬ ps ) ;;
+	step 3 : wff = nfald (hyp 1, step 2) |- ( ph → F/ x ∀ y ¬ ps ) ;;
+	step 4 : wff = nfnd (step 3) |- ( ph → F/ x ¬ ∀ y ¬ ps ) ;;
+	step 5 : wff = nfxfrd (step 1, step 4) |- ( ph → F/ x ∃ y ps ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Lemma 24 of [Monk2] p. 114.  (Contributed by Mario Carneiro,
+     24-Sep-2016.) */
+
+theorem nfa2 (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- F/ x ∀ y ∀ x ph ;;
+}
+
+proof of nfa2 {
+	step 1 : wff = nfa1 () |- F/ x ∀ x ph ;;
+	step 2 : wff = nfal (step 1) |- F/ x ∀ y ∀ x ph ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Lemma 23 of [Monk2] p. 114.  (Contributed by Mario Carneiro,
+     24-Sep-2016.) */
+
+theorem nfia1 (ph : wff, ps : wff, x : set)  {
+	prop 1 : wff = |- F/ x ( ∀ x ph → ∀ x ps ) ;;
+}
+
+proof of nfia1 {
+	step 1 : wff = nfa1 () |- F/ x ∀ x ph ;;
+	step 2 : wff = nfa1 () |- F/ x ∀ x ps ;;
+	step 3 : wff = nfim (step 1, step 2) |- F/ x ( ∀ x ph → ∀ x ps ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* The analog in our "pure" predicate calculus of the Brouwer axiom (B) of
+     modal logic S5.  (Contributed by NM, 5-Oct-2005.) */
+
+theorem modal-b (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ph → ∀ x ¬ ∀ x ¬ ph ) ;;
+}
+
+proof of modal-b {
+	step 1 : wff = ax6o () |- ( ¬ ∀ x ¬ ∀ x ¬ ph → ¬ ph ) ;;
+	step 2 : wff = con4i (step 1) |- ( ph → ∀ x ¬ ∀ x ¬ ph ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Theorem 19.2 of [Margaris] p. 89, generalized to use two set variables.
+     (Contributed by O'Cat, 31-Mar-2008.) */
+
+theorem 19.2g (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( ∀ x ph → ∃ y ph ) ;;
+}
+
+proof of 19.2g {
+	step 1 : wff = 19.8a () |- ( ph → ∃ y ph ) ;;
+	step 2 : wff = sps (step 1) |- ( ∀ x ph → ∃ y ph ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A wff may be quantified with a variable not free in it.  Theorem 19.3 of
+       [Margaris] p. 89.  (Contributed by NM, 5-Aug-1993.)  (Revised by Mario
+       Carneiro, 24-Sep-2016.) */
+
+theorem 19.3 (ph : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ph ↔ ph ) ;;
+}
+
+proof of 19.3 {
+	step 1 : wff = sp () |- ( ∀ x ph → ph ) ;;
+	step 2 : wff = nfri (hyp 1) |- ( ph → ∀ x ph ) ;;
+	step 3 : wff = impbii (step 1, step 2) |- ( ∀ x ph ↔ ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A closed version of ~ 19.9 .  (Contributed by NM, 5-Aug-1993.)  (Revised
+     by Mario Carneiro, 24-Sep-2016.) */
+
+theorem 19.9t (ph : wff, x : set)  {
+	prop 1 : wff = |- ( F/ x ph → ( ∃ x ph ↔ ph ) ) ;;
+}
+
+proof of 19.9t {
+	step 1 : wff = df-ex () |- ( ∃ x ph ↔ ¬ ∀ x ¬ ph ) ;;
+	step 2 : wff = id () |- ( F/ x ph → F/ x ph ) ;;
+	step 3 : wff = nfnd (step 2) |- ( F/ x ph → F/ x ¬ ph ) ;;
+	step 4 : wff = nfrd (step 3) |- ( F/ x ph → ( ¬ ph → ∀ x ¬ ph ) ) ;;
+	step 5 : wff = con1d (step 4) |- ( F/ x ph → ( ¬ ∀ x ¬ ph → ph ) ) ;;
+	step 6 : wff = syl5bi (step 1, step 5) |- ( F/ x ph → ( ∃ x ph → ph ) ) ;;
+	step 7 : wff = 19.8a () |- ( ph → ∃ x ph ) ;;
+	step 8 : wff = impbid1 (step 6, step 7) |- ( F/ x ph → ( ∃ x ph ↔ ph ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* A wff may be existentially quantified with a variable not free in it.
+       Theorem 19.9 of [Margaris] p. 89.  (Contributed by FL, 24-Mar-2007.)
+       (Revised by Mario Carneiro, 24-Sep-2016.) */
+
+theorem 19.9 (ph : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ x ph ↔ ph ) ;;
+}
+
+proof of 19.9 {
+	step 1 : wff = 19.9t () |- ( F/ x ph → ( ∃ x ph ↔ ph ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( ∃ x ph ↔ ph ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A deduction version of one direction of ~ 19.9 .  (Contributed by NM,
+       5-Aug-1993.)  (Revised by Mario Carneiro, 24-Sep-2016.) */
+
+theorem 19.9d (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- ( ps → F/ x ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ps → ( ∃ x ph → ph ) ) ;;
+}
+
+proof of 19.9d {
+	step 1 : wff = 19.9t () |- ( F/ x ph → ( ∃ x ph ↔ ph ) ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ps → ( ∃ x ph ↔ ph ) ) ;;
+	step 3 : wff = biimpd (step 2) |- ( ps → ( ∃ x ph → ph ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* One direction of Theorem 19.11 of [Margaris] p. 89.  (Contributed by NM,
+     5-Aug-1993.)  (Revised by Mario Carneiro, 24-Sep-2016.) */
+
+theorem excomim (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( ∃ x ∃ y ph → ∃ y ∃ x ph ) ;;
+}
+
+proof of excomim {
+	step 1 : wff = 19.8a () |- ( ph → ∃ x ph ) ;;
+	step 2 : wff = 2eximi (step 1) |- ( ∃ x ∃ y ph → ∃ x ∃ y ∃ x ph ) ;;
+	step 3 : wff = nfe1 () |- F/ x ∃ x ph ;;
+	step 4 : wff = nfex (step 3) |- F/ x ∃ y ∃ x ph ;;
+	step 5 : wff = 19.9 (step 4) |- ( ∃ x ∃ y ∃ x ph ↔ ∃ y ∃ x ph ) ;;
+	step 6 : wff = sylib (step 2, step 5) |- ( ∃ x ∃ y ph → ∃ y ∃ x ph ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Theorem 19.11 of [Margaris] p. 89.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem excom (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( ∃ x ∃ y ph ↔ ∃ y ∃ x ph ) ;;
+}
+
+proof of excom {
+	step 1 : wff = excomim () |- ( ∃ x ∃ y ph → ∃ y ∃ x ph ) ;;
+	step 2 : wff = excomim () |- ( ∃ y ∃ x ph → ∃ x ∃ y ph ) ;;
+	step 3 : wff = impbii (step 1, step 2) |- ( ∃ x ∃ y ph ↔ ∃ y ∃ x ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Theorem 19.16 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem 19.16 (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ( ph ↔ ps ) → ( ph ↔ ∀ x ps ) ) ;;
+}
+
+proof of 19.16 {
+	step 1 : wff = 19.3 (hyp 1) |- ( ∀ x ph ↔ ph ) ;;
+	step 2 : wff = albi () |- ( ∀ x ( ph ↔ ps ) → ( ∀ x ph ↔ ∀ x ps ) ) ;;
+	step 3 : wff = syl5bbr (step 1, step 2) |- ( ∀ x ( ph ↔ ps ) → ( ph ↔ ∀ x ps ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Theorem 19.17 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem 19.17 (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ps ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ( ph ↔ ps ) → ( ∀ x ph ↔ ps ) ) ;;
+}
+
+proof of 19.17 {
+	step 1 : wff = albi () |- ( ∀ x ( ph ↔ ps ) → ( ∀ x ph ↔ ∀ x ps ) ) ;;
+	step 2 : wff = 19.3 (hyp 1) |- ( ∀ x ps ↔ ps ) ;;
+	step 3 : wff = syl6bb (step 1, step 2) |- ( ∀ x ( ph ↔ ps ) → ( ∀ x ph ↔ ps ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Theorem 19.19 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem 19.19 (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ( ph ↔ ps ) → ( ph ↔ ∃ x ps ) ) ;;
+}
+
+proof of 19.19 {
+	step 1 : wff = 19.9 (hyp 1) |- ( ∃ x ph ↔ ph ) ;;
+	step 2 : wff = exbi () |- ( ∀ x ( ph ↔ ps ) → ( ∃ x ph ↔ ∃ x ps ) ) ;;
+	step 3 : wff = syl5bbr (step 1, step 2) |- ( ∀ x ( ph ↔ ps ) → ( ph ↔ ∃ x ps ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Closed form of Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
+     27-May-1997.)  (Revised by Mario Carneiro, 24-Sep-2016.) */
+
+theorem 19.21t (ph : wff, ps : wff, x : set)  {
+	prop 1 : wff = |- ( F/ x ph → ( ∀ x ( ph → ps ) ↔ ( ph → ∀ x ps ) ) ) ;;
+}
+
+proof of 19.21t {
+	step 1 : wff = id () |- ( F/ x ph → F/ x ph ) ;;
+	step 2 : wff = nfrd (step 1) |- ( F/ x ph → ( ph → ∀ x ph ) ) ;;
+	step 3 : wff = alim () |- ( ∀ x ( ph → ps ) → ( ∀ x ph → ∀ x ps ) ) ;;
+	step 4 : wff = syl9 (step 2, step 3) |- ( F/ x ph → ( ∀ x ( ph → ps ) → ( ph → ∀ x ps ) ) ) ;;
+	step 5 : wff = id () |- ( F/ x ph → F/ x ph ) ;;
+	step 6 : wff = nfa1 () |- F/ x ∀ x ps ;;
+	step 7 : wff = a1i (step 6) |- ( F/ x ph → F/ x ∀ x ps ) ;;
+	step 8 : wff = nfimd (step 5, step 7) |- ( F/ x ph → F/ x ( ph → ∀ x ps ) ) ;;
+	step 9 : wff = nfrd (step 8) |- ( F/ x ph → ( ( ph → ∀ x ps ) → ∀ x ( ph → ∀ x ps ) ) ) ;;
+	step 10 : wff = sp () |- ( ∀ x ps → ps ) ;;
+	step 11 : wff = imim2i (step 10) |- ( ( ph → ∀ x ps ) → ( ph → ps ) ) ;;
+	step 12 : wff = alimi (step 11) |- ( ∀ x ( ph → ∀ x ps ) → ∀ x ( ph → ps ) ) ;;
+	step 13 : wff = syl6 (step 9, step 12) |- ( F/ x ph → ( ( ph → ∀ x ps ) → ∀ x ( ph → ps ) ) ) ;;
+	step 14 : wff = impbid (step 4, step 13) |- ( F/ x ph → ( ∀ x ( ph → ps ) ↔ ( ph → ∀ x ps ) ) ) ;;
+	qed prop 1 = step 14 ;;
+}
+
+/* Theorem 19.21 of [Margaris] p. 90.  The hypothesis can be thought of
+       as " ` x ` is not free in ` ph ` ."  (Contributed by NM, 5-Aug-1993.)
+       (Revised by Mario Carneiro, 24-Sep-2016.) */
+
+theorem 19.21 (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ( ph → ps ) ↔ ( ph → ∀ x ps ) ) ;;
+}
+
+proof of 19.21 {
+	step 1 : wff = 19.21t () |- ( F/ x ph → ( ∀ x ( ph → ps ) ↔ ( ph → ∀ x ps ) ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( ∀ x ( ph → ps ) ↔ ( ph → ∀ x ps ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Theorem 19.21 of [Margaris] p. 90 but with 2 quantifiers.  (Contributed
+       by NM, 4-Feb-2005.) */
+
+theorem 19.21-2 (ph : wff, ps : wff, x : set, y : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- F/ y ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ∀ y ( ph → ps ) ↔ ( ph → ∀ x ∀ y ps ) ) ;;
+}
+
+proof of 19.21-2 {
+	step 1 : wff = 19.21 (hyp 2) |- ( ∀ y ( ph → ps ) ↔ ( ph → ∀ y ps ) ) ;;
+	step 2 : wff = albii (step 1) |- ( ∀ x ∀ y ( ph → ps ) ↔ ∀ x ( ph → ∀ y ps ) ) ;;
+	step 3 : wff = 19.21 (hyp 1) |- ( ∀ x ( ph → ∀ y ps ) ↔ ( ph → ∀ x ∀ y ps ) ) ;;
+	step 4 : wff = bitri (step 2, step 3) |- ( ∀ x ∀ y ( ph → ps ) ↔ ( ph → ∀ x ∀ y ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* An axiom scheme of standard predicate calculus that emulates Axiom 5 of
+       [Mendelson] p. 69.  The hypothesis ` F/ x ph ` can be thought of as
+       emulating " ` x ` is not free in ` ph ` ."  With this definition, the
+       meaning of "not free" is less restrictive than the usual textbook
+       definition; for example ` x ` would not (for us) be free in ` x = x ` by
+       ~ nfequid .  This theorem scheme can be proved as a metatheorem of
+       Mendelson's axiom system, even though it is slightly stronger than his
+       Axiom 5.  (Contributed by NM, 22-Sep-1993.)  (Revised by Mario Carneiro,
+       12-Oct-2016.) */
+
+theorem stdpc5 (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ( ph → ps ) → ( ph → ∀ x ps ) ) ;;
+}
+
+proof of stdpc5 {
+	step 1 : wff = nfri (hyp 1) |- ( ph → ∀ x ph ) ;;
+	step 2 : wff = alim () |- ( ∀ x ( ph → ps ) → ( ∀ x ph → ∀ x ps ) ) ;;
+	step 3 : wff = syl5 (step 1, step 2) |- ( ∀ x ( ph → ps ) → ( ph → ∀ x ps ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Inference from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
+       5-Aug-1993.) */
+
+theorem 19.21bi (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → ∀ x ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ps ) ;;
+}
+
+proof of 19.21bi {
+	step 1 : wff = sp () |- ( ∀ x ps → ps ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ph → ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Inference removing double quantifier.  (Contributed by NM,
+       20-Apr-1994.) */
+
+theorem 19.21bbi (ph : wff, ps : wff, x : set, y : set)  {
+	hyp 1 : wff = |- ( ph → ∀ x ∀ y ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ps ) ;;
+}
+
+proof of 19.21bbi {
+	step 1 : wff = 19.21bi (hyp 1) |- ( ph → ∀ y ps ) ;;
+	step 2 : wff = 19.21bi (step 1) |- ( ph → ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Closed form of Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
+     7-Nov-2005.) */
+
+theorem 19.23t (ph : wff, ps : wff, x : set)  {
+	prop 1 : wff = |- ( F/ x ps → ( ∀ x ( ph → ps ) ↔ ( ∃ x ph → ps ) ) ) ;;
+}
+
+proof of 19.23t {
+	step 1 : wff = exim () |- ( ∀ x ( ph → ps ) → ( ∃ x ph → ∃ x ps ) ) ;;
+	step 2 : wff = 19.9t () |- ( F/ x ps → ( ∃ x ps ↔ ps ) ) ;;
+	step 3 : wff = imbi2d (step 2) |- ( F/ x ps → ( ( ∃ x ph → ∃ x ps ) ↔ ( ∃ x ph → ps ) ) ) ;;
+	step 4 : wff = syl5ib (step 1, step 3) |- ( F/ x ps → ( ∀ x ( ph → ps ) → ( ∃ x ph → ps ) ) ) ;;
+	step 5 : wff = nfnf1 () |- F/ x F/ x ps ;;
+	step 6 : wff = nfe1 () |- F/ x ∃ x ph ;;
+	step 7 : wff = a1i (step 6) |- ( F/ x ps → F/ x ∃ x ph ) ;;
+	step 8 : wff = id () |- ( F/ x ps → F/ x ps ) ;;
+	step 9 : wff = nfimd (step 7, step 8) |- ( F/ x ps → F/ x ( ∃ x ph → ps ) ) ;;
+	step 10 : wff = 19.8a () |- ( ph → ∃ x ph ) ;;
+	step 11 : wff = a1i (step 10) |- ( F/ x ps → ( ph → ∃ x ph ) ) ;;
+	step 12 : wff = imim1d (step 11) |- ( F/ x ps → ( ( ∃ x ph → ps ) → ( ph → ps ) ) ) ;;
+	step 13 : wff = alrimdd (step 5, step 9, step 12) |- ( F/ x ps → ( ( ∃ x ph → ps ) → ∀ x ( ph → ps ) ) ) ;;
+	step 14 : wff = impbid (step 4, step 13) |- ( F/ x ps → ( ∀ x ( ph → ps ) ↔ ( ∃ x ph → ps ) ) ) ;;
+	qed prop 1 = step 14 ;;
+}
+
+/* Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
+       (Revised by Mario Carneiro, 24-Sep-2016.) */
+
+theorem 19.23 (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ps ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ( ph → ps ) ↔ ( ∃ x ph → ps ) ) ;;
+}
+
+proof of 19.23 {
+	step 1 : wff = 19.23t () |- ( F/ x ps → ( ∀ x ( ph → ps ) ↔ ( ∃ x ph → ps ) ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( ∀ x ( ph → ps ) ↔ ( ∃ x ph → ps ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* An alternative definition of ~ df-nf , which does not involve nested
+     quantifiers on the same variable.  (Contributed by Mario Carneiro,
+     24-Sep-2016.) */
+
+theorem nf2 (ph : wff, x : set)  {
+	prop 1 : wff = |- ( F/ x ph ↔ ( ∃ x ph → ∀ x ph ) ) ;;
+}
+
+proof of nf2 {
+	step 1 : wff = df-nf () |- ( F/ x ph ↔ ∀ x ( ph → ∀ x ph ) ) ;;
+	step 2 : wff = nfa1 () |- F/ x ∀ x ph ;;
+	step 3 : wff = 19.23 (step 2) |- ( ∀ x ( ph → ∀ x ph ) ↔ ( ∃ x ph → ∀ x ph ) ) ;;
+	step 4 : wff = bitri (step 1, step 3) |- ( F/ x ph ↔ ( ∃ x ph → ∀ x ph ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* An alternative definition of ~ df-nf .  (Contributed by Mario Carneiro,
+     24-Sep-2016.) */
+
+theorem nf3 (ph : wff, x : set)  {
+	prop 1 : wff = |- ( F/ x ph ↔ ∀ x ( ∃ x ph → ph ) ) ;;
+}
+
+proof of nf3 {
+	step 1 : wff = nf2 () |- ( F/ x ph ↔ ( ∃ x ph → ∀ x ph ) ) ;;
+	step 2 : wff = nfe1 () |- F/ x ∃ x ph ;;
+	step 3 : wff = 19.21 (step 2) |- ( ∀ x ( ∃ x ph → ph ) ↔ ( ∃ x ph → ∀ x ph ) ) ;;
+	step 4 : wff = bitr4i (step 1, step 3) |- ( F/ x ph ↔ ∀ x ( ∃ x ph → ph ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Variable ` x ` is effectively not free in ` ph ` iff ` ph ` is always true
+     or always false.  (Contributed by Mario Carneiro, 24-Sep-2016.) */
+
+theorem nf4 (ph : wff, x : set)  {
+	prop 1 : wff = |- ( F/ x ph ↔ ( ∀ x ph ∨ ∀ x ¬ ph ) ) ;;
+}
+
+proof of nf4 {
+	step 1 : wff = nf2 () |- ( F/ x ph ↔ ( ∃ x ph → ∀ x ph ) ) ;;
+	step 2 : wff = imor () |- ( ( ∃ x ph → ∀ x ph ) ↔ ( ¬ ∃ x ph ∨ ∀ x ph ) ) ;;
+	step 3 : wff = orcom () |- ( ( ¬ ∃ x ph ∨ ∀ x ph ) ↔ ( ∀ x ph ∨ ¬ ∃ x ph ) ) ;;
+	step 4 : wff = alnex () |- ( ∀ x ¬ ph ↔ ¬ ∃ x ph ) ;;
+	step 5 : wff = orbi2i (step 4) |- ( ( ∀ x ph ∨ ∀ x ¬ ph ) ↔ ( ∀ x ph ∨ ¬ ∃ x ph ) ) ;;
+	step 6 : wff = bitr4i (step 3, step 5) |- ( ( ¬ ∃ x ph ∨ ∀ x ph ) ↔ ( ∀ x ph ∨ ∀ x ¬ ph ) ) ;;
+	step 7 : wff = 3bitri (step 1, step 2, step 6) |- ( F/ x ph ↔ ( ∀ x ph ∨ ∀ x ¬ ph ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Inference from Theorem 19.23 of [Margaris] p. 90.  (Contributed by Mario
+       Carneiro, 24-Sep-2016.) */
+
+theorem exlimi (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ps ;;
+	hyp 2 : wff = |- ( ph → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ x ph → ps ) ;;
+}
+
+proof of exlimi {
+	step 1 : wff = 19.23 (hyp 1) |- ( ∀ x ( ph → ps ) ↔ ( ∃ x ph → ps ) ) ;;
+	step 2 : wff = mpgbi (step 1, hyp 2) |- ( ∃ x ph → ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Inference from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
+       5-Aug-1993.) */
+
+theorem 19.23bi (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- ( ∃ x ph → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ps ) ;;
+}
+
+proof of 19.23bi {
+	step 1 : wff = 19.8a () |- ( ph → ∃ x ph ) ;;
+	step 2 : wff = syl (step 1, hyp 1) |- ( ph → ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction from Theorem 19.23 of [Margaris] p. 90.  (Contributed by Mario
+       Carneiro, 24-Sep-2016.) */
+
+theorem exlimd (ph : wff, ps : wff, ch : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- F/ x ch ;;
+	hyp 3 : wff = |- ( ph → ( ps → ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∃ x ps → ch ) ) ;;
+}
+
+proof of exlimd {
+	step 1 : wff = alrimi (hyp 1, hyp 3) |- ( ph → ∀ x ( ps → ch ) ) ;;
+	step 2 : wff = 19.23 (hyp 2) |- ( ∀ x ( ps → ch ) ↔ ( ∃ x ps → ch ) ) ;;
+	step 3 : wff = sylib (step 1, step 2) |- ( ph → ( ∃ x ps → ch ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Deduction from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
+       28-Jan-1997.) */
+
+theorem exlimdh (ph : wff, ps : wff, ch : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
+	hyp 2 : wff = |- ( ch → ∀ x ch ) ;;
+	hyp 3 : wff = |- ( ph → ( ps → ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∃ x ps → ch ) ) ;;
+}
+
+proof of exlimdh {
+	step 1 : wff = nfi (hyp 1) |- F/ x ph ;;
+	step 2 : wff = nfi (hyp 2) |- F/ x ch ;;
+	step 3 : wff = exlimd (step 1, step 2, hyp 3) |- ( ph → ( ∃ x ps → ch ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Theorem 19.27 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem 19.27 (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ps ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ( ph ∧ ps ) ↔ ( ∀ x ph ∧ ps ) ) ;;
+}
+
+proof of 19.27 {
+	step 1 : wff = 19.26 () |- ( ∀ x ( ph ∧ ps ) ↔ ( ∀ x ph ∧ ∀ x ps ) ) ;;
+	step 2 : wff = 19.3 (hyp 1) |- ( ∀ x ps ↔ ps ) ;;
+	step 3 : wff = anbi2i (step 2) |- ( ( ∀ x ph ∧ ∀ x ps ) ↔ ( ∀ x ph ∧ ps ) ) ;;
+	step 4 : wff = bitri (step 1, step 3) |- ( ∀ x ( ph ∧ ps ) ↔ ( ∀ x ph ∧ ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Theorem 19.28 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem 19.28 (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ( ph ∧ ps ) ↔ ( ph ∧ ∀ x ps ) ) ;;
+}
+
+proof of 19.28 {
+	step 1 : wff = 19.26 () |- ( ∀ x ( ph ∧ ps ) ↔ ( ∀ x ph ∧ ∀ x ps ) ) ;;
+	step 2 : wff = 19.3 (hyp 1) |- ( ∀ x ph ↔ ph ) ;;
+	step 3 : wff = anbi1i (step 2) |- ( ( ∀ x ph ∧ ∀ x ps ) ↔ ( ph ∧ ∀ x ps ) ) ;;
+	step 4 : wff = bitri (step 1, step 3) |- ( ∀ x ( ph ∧ ps ) ↔ ( ph ∧ ∀ x ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Theorem 19.36 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem 19.36 (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ps ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ x ( ph → ps ) ↔ ( ∀ x ph → ps ) ) ;;
+}
+
+proof of 19.36 {
+	step 1 : wff = 19.35 () |- ( ∃ x ( ph → ps ) ↔ ( ∀ x ph → ∃ x ps ) ) ;;
+	step 2 : wff = 19.9 (hyp 1) |- ( ∃ x ps ↔ ps ) ;;
+	step 3 : wff = imbi2i (step 2) |- ( ( ∀ x ph → ∃ x ps ) ↔ ( ∀ x ph → ps ) ) ;;
+	step 4 : wff = bitri (step 1, step 3) |- ( ∃ x ( ph → ps ) ↔ ( ∀ x ph → ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Inference from Theorem 19.36 of [Margaris] p. 90.  (Contributed by NM,
+       5-Aug-1993.) */
+
+theorem 19.36i (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ps ;;
+	hyp 2 : wff = |- ∃ x ( ph → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ph → ps ) ;;
+}
+
+proof of 19.36i {
+	step 1 : wff = 19.36 (hyp 1) |- ( ∃ x ( ph → ps ) ↔ ( ∀ x ph → ps ) ) ;;
+	step 2 : wff = mpbi (hyp 2, step 1) |- ( ∀ x ph → ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Theorem 19.37 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem 19.37 (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ x ( ph → ps ) ↔ ( ph → ∃ x ps ) ) ;;
+}
+
+proof of 19.37 {
+	step 1 : wff = 19.35 () |- ( ∃ x ( ph → ps ) ↔ ( ∀ x ph → ∃ x ps ) ) ;;
+	step 2 : wff = 19.3 (hyp 1) |- ( ∀ x ph ↔ ph ) ;;
+	step 3 : wff = imbi1i (step 2) |- ( ( ∀ x ph → ∃ x ps ) ↔ ( ph → ∃ x ps ) ) ;;
+	step 4 : wff = bitri (step 1, step 3) |- ( ∃ x ( ph → ps ) ↔ ( ph → ∃ x ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Theorem 19.38 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem 19.38 (ph : wff, ps : wff, x : set)  {
+	prop 1 : wff = |- ( ( ∃ x ph → ∀ x ps ) → ∀ x ( ph → ps ) ) ;;
+}
+
+proof of 19.38 {
+	step 1 : wff = nfe1 () |- F/ x ∃ x ph ;;
+	step 2 : wff = nfa1 () |- F/ x ∀ x ps ;;
+	step 3 : wff = nfim (step 1, step 2) |- F/ x ( ∃ x ph → ∀ x ps ) ;;
+	step 4 : wff = 19.8a () |- ( ph → ∃ x ph ) ;;
+	step 5 : wff = sp () |- ( ∀ x ps → ps ) ;;
+	step 6 : wff = imim12i (step 4, step 5) |- ( ( ∃ x ph → ∀ x ps ) → ( ph → ps ) ) ;;
+	step 7 : wff = alrimi (step 3, step 6) |- ( ( ∃ x ph → ∀ x ps ) → ∀ x ( ph → ps ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Theorem 19.32 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
+       (Revised by Mario Carneiro, 24-Sep-2016.) */
+
+theorem 19.32 (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ( ph ∨ ps ) ↔ ( ph ∨ ∀ x ps ) ) ;;
+}
+
+proof of 19.32 {
+	step 1 : wff = nfn (hyp 1) |- F/ x ¬ ph ;;
+	step 2 : wff = 19.21 (step 1) |- ( ∀ x ( ¬ ph → ps ) ↔ ( ¬ ph → ∀ x ps ) ) ;;
+	step 3 : wff = df-or () |- ( ( ph ∨ ps ) ↔ ( ¬ ph → ps ) ) ;;
+	step 4 : wff = albii (step 3) |- ( ∀ x ( ph ∨ ps ) ↔ ∀ x ( ¬ ph → ps ) ) ;;
+	step 5 : wff = df-or () |- ( ( ph ∨ ∀ x ps ) ↔ ( ¬ ph → ∀ x ps ) ) ;;
+	step 6 : wff = 3bitr4i (step 2, step 4, step 5) |- ( ∀ x ( ph ∨ ps ) ↔ ( ph ∨ ∀ x ps ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Theorem 19.31 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem 19.31 (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ps ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ( ph ∨ ps ) ↔ ( ∀ x ph ∨ ps ) ) ;;
+}
+
+proof of 19.31 {
+	step 1 : wff = 19.32 (hyp 1) |- ( ∀ x ( ps ∨ ph ) ↔ ( ps ∨ ∀ x ph ) ) ;;
+	step 2 : wff = orcom () |- ( ( ph ∨ ps ) ↔ ( ps ∨ ph ) ) ;;
+	step 3 : wff = albii (step 2) |- ( ∀ x ( ph ∨ ps ) ↔ ∀ x ( ps ∨ ph ) ) ;;
+	step 4 : wff = orcom () |- ( ( ∀ x ph ∨ ps ) ↔ ( ps ∨ ∀ x ph ) ) ;;
+	step 5 : wff = 3bitr4i (step 1, step 3, step 4) |- ( ∀ x ( ph ∨ ps ) ↔ ( ∀ x ph ∨ ps ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Theorem 19.44 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem 19.44 (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ps ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ x ( ph ∨ ps ) ↔ ( ∃ x ph ∨ ps ) ) ;;
+}
+
+proof of 19.44 {
+	step 1 : wff = 19.43 () |- ( ∃ x ( ph ∨ ps ) ↔ ( ∃ x ph ∨ ∃ x ps ) ) ;;
+	step 2 : wff = 19.9 (hyp 1) |- ( ∃ x ps ↔ ps ) ;;
+	step 3 : wff = orbi2i (step 2) |- ( ( ∃ x ph ∨ ∃ x ps ) ↔ ( ∃ x ph ∨ ps ) ) ;;
+	step 4 : wff = bitri (step 1, step 3) |- ( ∃ x ( ph ∨ ps ) ↔ ( ∃ x ph ∨ ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Theorem 19.45 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem 19.45 (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ x ( ph ∨ ps ) ↔ ( ph ∨ ∃ x ps ) ) ;;
+}
+
+proof of 19.45 {
+	step 1 : wff = 19.43 () |- ( ∃ x ( ph ∨ ps ) ↔ ( ∃ x ph ∨ ∃ x ps ) ) ;;
+	step 2 : wff = 19.9 (hyp 1) |- ( ∃ x ph ↔ ph ) ;;
+	step 3 : wff = orbi1i (step 2) |- ( ( ∃ x ph ∨ ∃ x ps ) ↔ ( ph ∨ ∃ x ps ) ) ;;
+	step 4 : wff = bitri (step 1, step 3) |- ( ∃ x ( ph ∨ ps ) ↔ ( ph ∨ ∃ x ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Theorem 19.41 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
+       (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem 19.41 (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ps ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ x ( ph ∧ ps ) ↔ ( ∃ x ph ∧ ps ) ) ;;
+}
+
+proof of 19.41 {
+	step 1 : wff = 19.40 () |- ( ∃ x ( ph ∧ ps ) → ( ∃ x ph ∧ ∃ x ps ) ) ;;
+	step 2 : wff = id () |- ( ps → ps ) ;;
+	step 3 : wff = exlimi (hyp 1, step 2) |- ( ∃ x ps → ps ) ;;
+	step 4 : wff = anim2i (step 3) |- ( ( ∃ x ph ∧ ∃ x ps ) → ( ∃ x ph ∧ ps ) ) ;;
+	step 5 : wff = syl (step 1, step 4) |- ( ∃ x ( ph ∧ ps ) → ( ∃ x ph ∧ ps ) ) ;;
+	step 6 : wff = pm3.21 () |- ( ps → ( ph → ( ph ∧ ps ) ) ) ;;
+	step 7 : wff = eximd (hyp 1, step 6) |- ( ps → ( ∃ x ph → ∃ x ( ph ∧ ps ) ) ) ;;
+	step 8 : wff = impcom (step 7) |- ( ( ∃ x ph ∧ ps ) → ∃ x ( ph ∧ ps ) ) ;;
+	step 9 : wff = impbii (step 5, step 8) |- ( ∃ x ( ph ∧ ps ) ↔ ( ∃ x ph ∧ ps ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Theorem 19.42 of [Margaris] p. 90.  (Contributed by NM, 18-Aug-1993.) */
+
+theorem 19.42 (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ x ( ph ∧ ps ) ↔ ( ph ∧ ∃ x ps ) ) ;;
+}
+
+proof of 19.42 {
+	step 1 : wff = 19.41 (hyp 1) |- ( ∃ x ( ps ∧ ph ) ↔ ( ∃ x ps ∧ ph ) ) ;;
+	step 2 : wff = exancom () |- ( ∃ x ( ph ∧ ps ) ↔ ∃ x ( ps ∧ ph ) ) ;;
+	step 3 : wff = ancom () |- ( ( ph ∧ ∃ x ps ) ↔ ( ∃ x ps ∧ ph ) ) ;;
+	step 4 : wff = 3bitr4i (step 1, step 2, step 3) |- ( ∃ x ( ph ∧ ps ) ↔ ( ph ∧ ∃ x ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Swap 1st and 3rd existential quantifiers.  (Contributed by NM,
+     9-Mar-1995.) */
+
+theorem excom13 (ph : wff, x : set, y : set, z : set)  {
+	prop 1 : wff = |- ( ∃ x ∃ y ∃ z ph ↔ ∃ z ∃ y ∃ x ph ) ;;
+}
+
+proof of excom13 {
+	step 1 : wff = excom () |- ( ∃ x ∃ y ∃ z ph ↔ ∃ y ∃ x ∃ z ph ) ;;
+	step 2 : wff = excom () |- ( ∃ x ∃ z ph ↔ ∃ z ∃ x ph ) ;;
+	step 3 : wff = exbii (step 2) |- ( ∃ y ∃ x ∃ z ph ↔ ∃ y ∃ z ∃ x ph ) ;;
+	step 4 : wff = excom () |- ( ∃ y ∃ z ∃ x ph ↔ ∃ z ∃ y ∃ x ph ) ;;
+	step 5 : wff = 3bitri (step 1, step 3, step 4) |- ( ∃ x ∃ y ∃ z ph ↔ ∃ z ∃ y ∃ x ph ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Rotate existential quantifiers.  (Contributed by NM, 17-Mar-1995.) */
+
+theorem exrot3 (ph : wff, x : set, y : set, z : set)  {
+	prop 1 : wff = |- ( ∃ x ∃ y ∃ z ph ↔ ∃ y ∃ z ∃ x ph ) ;;
+}
+
+proof of exrot3 {
+	step 1 : wff = excom13 () |- ( ∃ x ∃ y ∃ z ph ↔ ∃ z ∃ y ∃ x ph ) ;;
+	step 2 : wff = excom () |- ( ∃ z ∃ y ∃ x ph ↔ ∃ y ∃ z ∃ x ph ) ;;
+	step 3 : wff = bitri (step 1, step 2) |- ( ∃ x ∃ y ∃ z ph ↔ ∃ y ∃ z ∃ x ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Rotate existential quantifiers twice.  (Contributed by NM, 9-Mar-1995.) */
+
+theorem exrot4 (ph : wff, x : set, y : set, z : set, w : set)  {
+	prop 1 : wff = |- ( ∃ x ∃ y ∃ z ∃ w ph ↔ ∃ z ∃ w ∃ x ∃ y ph ) ;;
+}
+
+proof of exrot4 {
+	step 1 : wff = excom13 () |- ( ∃ y ∃ z ∃ w ph ↔ ∃ w ∃ z ∃ y ph ) ;;
+	step 2 : wff = exbii (step 1) |- ( ∃ x ∃ y ∃ z ∃ w ph ↔ ∃ x ∃ w ∃ z ∃ y ph ) ;;
+	step 3 : wff = excom13 () |- ( ∃ x ∃ w ∃ z ∃ y ph ↔ ∃ z ∃ w ∃ x ∃ y ph ) ;;
+	step 4 : wff = bitri (step 2, step 3) |- ( ∃ x ∃ y ∃ z ∃ w ph ↔ ∃ z ∃ w ∃ x ∃ y ph ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Inference from ~ 19.8a .  (Contributed by Jeff Hankins, 26-Jul-2009.) */
+
+theorem nexr (ph : wff, x : set)  {
+	hyp 1 : wff = |- ¬ ∃ x ph ;;
+	-----------------------
+	prop 1 : wff = |- ¬ ph ;;
+}
+
+proof of nexr {
+	step 1 : wff = 19.8a () |- ( ph → ∃ x ph ) ;;
+	step 2 : wff = mto (hyp 1, step 1) |- ¬ ph ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A closed form of ~ nfim .  (Contributed by NM, 5-Aug-1993.)  (Revised by
+       Mario Carneiro, 24-Sep-2016.) */
+
+theorem nfim1 (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- ( ph → F/ x ps ) ;;
+	-----------------------
+	prop 1 : wff = |- F/ x ( ph → ps ) ;;
+}
+
+proof of nfim1 {
+	step 1 : wff = nfrd (hyp 2) |- ( ph → ( ps → ∀ x ps ) ) ;;
+	step 2 : wff = a2i (step 1) |- ( ( ph → ps ) → ( ph → ∀ x ps ) ) ;;
+	step 3 : wff = 19.21 (hyp 1) |- ( ∀ x ( ph → ps ) ↔ ( ph → ∀ x ps ) ) ;;
+	step 4 : wff = sylibr (step 2, step 3) |- ( ( ph → ps ) → ∀ x ( ph → ps ) ) ;;
+	step 5 : wff = nfi (step 4) |- F/ x ( ph → ps ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* A closed form of ~ nfan .  (Contributed by Mario Carneiro,
+       3-Oct-2016.) */
+
+theorem nfan1 (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- ( ph → F/ x ps ) ;;
+	-----------------------
+	prop 1 : wff = |- F/ x ( ph ∧ ps ) ;;
+}
+
+proof of nfan1 {
+	step 1 : wff = nfrd (hyp 2) |- ( ph → ( ps → ∀ x ps ) ) ;;
+	step 2 : wff = imdistani (step 1) |- ( ( ph ∧ ps ) → ( ph ∧ ∀ x ps ) ) ;;
+	step 3 : wff = 19.28 (hyp 1) |- ( ∀ x ( ph ∧ ps ) ↔ ( ph ∧ ∀ x ps ) ) ;;
+	step 4 : wff = sylibr (step 2, step 3) |- ( ( ph ∧ ps ) → ∀ x ( ph ∧ ps ) ) ;;
+	step 5 : wff = nfi (step 4) |- F/ x ( ph ∧ ps ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Place a conjunct in the scope of an existential quantifier.
+       (Contributed by NM, 18-Aug-1993.)  (Proof shortened by Andrew Salmon,
+       25-May-2011.) */
+
+theorem exan (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- ( ∃ x ph ∧ ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ∃ x ( ph ∧ ps ) ;;
+}
+
+proof of exan {
+	step 1 : wff = nfe1 () |- F/ x ∃ x ph ;;
+	step 2 : wff = 19.28 (step 1) |- ( ∀ x ( ∃ x ph ∧ ps ) ↔ ( ∃ x ph ∧ ∀ x ps ) ) ;;
+	step 3 : wff = mpgbi (step 2, hyp 1) |- ( ∃ x ph ∧ ∀ x ps ) ;;
+	step 4 : wff = 19.29r () |- ( ( ∃ x ph ∧ ∀ x ps ) → ∃ x ( ph ∧ ps ) ) ;;
+	step 5 : wff = ax-mp (step 3, step 4) |- ∃ x ( ph ∧ ps ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Deduction form of bound-variable hypothesis builder ~ hbn .
+       (Contributed by NM, 3-Jan-2002.) */
+
+theorem hbnd (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
+	hyp 2 : wff = |- ( ph → ( ps → ∀ x ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ¬ ps → ∀ x ¬ ps ) ) ;;
+}
+
+proof of hbnd {
+	step 1 : wff = alrimih (hyp 1, hyp 2) |- ( ph → ∀ x ( ps → ∀ x ps ) ) ;;
+	step 2 : wff = hbnt () |- ( ∀ x ( ps → ∀ x ps ) → ( ¬ ps → ∀ x ¬ ps ) ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( ph → ( ¬ ps → ∀ x ¬ ps ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Rearrange universal quantifiers.  (Contributed by NM, 12-Aug-1993.) */
+
+theorem aaan (ph : wff, ps : wff, x : set, y : set)  {
+	hyp 1 : wff = |- F/ y ph ;;
+	hyp 2 : wff = |- F/ x ps ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ∀ y ( ph ∧ ps ) ↔ ( ∀ x ph ∧ ∀ y ps ) ) ;;
+}
+
+proof of aaan {
+	step 1 : wff = 19.28 (hyp 1) |- ( ∀ y ( ph ∧ ps ) ↔ ( ph ∧ ∀ y ps ) ) ;;
+	step 2 : wff = albii (step 1) |- ( ∀ x ∀ y ( ph ∧ ps ) ↔ ∀ x ( ph ∧ ∀ y ps ) ) ;;
+	step 3 : wff = nfal (hyp 2) |- F/ x ∀ y ps ;;
+	step 4 : wff = 19.27 (step 3) |- ( ∀ x ( ph ∧ ∀ y ps ) ↔ ( ∀ x ph ∧ ∀ y ps ) ) ;;
+	step 5 : wff = bitri (step 2, step 4) |- ( ∀ x ∀ y ( ph ∧ ps ) ↔ ( ∀ x ph ∧ ∀ y ps ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Rearrange existential quantifiers.  (Contributed by NM, 8-Aug-1994.) */
+
+theorem eeor (ph : wff, ps : wff, x : set, y : set)  {
+	hyp 1 : wff = |- F/ y ph ;;
+	hyp 2 : wff = |- F/ x ps ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ x ∃ y ( ph ∨ ps ) ↔ ( ∃ x ph ∨ ∃ y ps ) ) ;;
+}
+
+proof of eeor {
+	step 1 : wff = 19.45 (hyp 1) |- ( ∃ y ( ph ∨ ps ) ↔ ( ph ∨ ∃ y ps ) ) ;;
+	step 2 : wff = exbii (step 1) |- ( ∃ x ∃ y ( ph ∨ ps ) ↔ ∃ x ( ph ∨ ∃ y ps ) ) ;;
+	step 3 : wff = nfex (hyp 2) |- F/ x ∃ y ps ;;
+	step 4 : wff = 19.44 (step 3) |- ( ∃ x ( ph ∨ ∃ y ps ) ↔ ( ∃ x ph ∨ ∃ y ps ) ) ;;
+	step 5 : wff = bitri (step 2, step 4) |- ( ∃ x ∃ y ( ph ∨ ps ) ↔ ( ∃ x ph ∨ ∃ y ps ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Quantified "excluded middle."  Exercise 9.2a of Boolos, p. 111,
+     _Computability and Logic_.  (Contributed by NM, 10-Dec-2000.) */
+
+theorem qexmid (ph : wff, x : set)  {
+	prop 1 : wff = |- ∃ x ( ph → ∀ x ph ) ;;
+}
+
+proof of qexmid {
+	step 1 : wff = 19.8a () |- ( ∀ x ph → ∃ x ∀ x ph ) ;;
+	step 2 : wff = 19.35ri (step 1) |- ∃ x ( ph → ∀ x ph ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A property related to substitution that unlike ~ equs5 doesn't require a
+     distinctor antecedent.  (Contributed by NM, 2-Feb-2007.) */
+
+theorem equs5a (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( ∃ x ( x = y ∧ ∀ y ph ) → ∀ x ( x = y → ph ) ) ;;
+}
+
+proof of equs5a {
+	step 1 : wff = nfa1 () |- F/ x ∀ x ( x = y → ph ) ;;
+	step 2 : wff = ax-11 () |- ( x = y → ( ∀ y ph → ∀ x ( x = y → ph ) ) ) ;;
+	step 3 : wff = imp (step 2) |- ( ( x = y ∧ ∀ y ph ) → ∀ x ( x = y → ph ) ) ;;
+	step 4 : wff = exlimi (step 1, step 3) |- ( ∃ x ( x = y ∧ ∀ y ph ) → ∀ x ( x = y → ph ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A property related to substitution that unlike ~ equs5 doesn't require a
+     distinctor antecedent.  (Contributed by NM, 2-Feb-2007.) */
+
+theorem equs5e (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( ∃ x ( x = y ∧ ph ) → ∀ x ( x = y → ∃ y ph ) ) ;;
+}
+
+proof of equs5e {
+	step 1 : wff = nfe1 () |- F/ x ∃ x ( x = y ∧ ph ) ;;
+	step 2 : wff = equs3 () |- ( ∃ x ( x = y ∧ ph ) ↔ ¬ ∀ x ( x = y → ¬ ph ) ) ;;
+	step 3 : wff = ax-11 () |- ( x = y → ( ∀ y ¬ ph → ∀ x ( x = y → ¬ ph ) ) ) ;;
+	step 4 : wff = con3rr3 (step 3) |- ( ¬ ∀ x ( x = y → ¬ ph ) → ( x = y → ¬ ∀ y ¬ ph ) ) ;;
+	step 5 : wff = df-ex () |- ( ∃ y ph ↔ ¬ ∀ y ¬ ph ) ;;
+	step 6 : wff = syl6ibr (step 4, step 5) |- ( ¬ ∀ x ( x = y → ¬ ph ) → ( x = y → ∃ y ph ) ) ;;
+	step 7 : wff = sylbi (step 2, step 6) |- ( ∃ x ( x = y ∧ ph ) → ( x = y → ∃ y ph ) ) ;;
+	step 8 : wff = alrimi (step 1, step 7) |- ( ∃ x ( x = y ∧ ph ) → ∀ x ( x = y → ∃ y ph ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Existential elimination rule of natural deduction.  (Contributed by
+       Mario Carneiro, 9-Feb-2017.) */
+
+theorem exlimdd (ph : wff, ps : wff, ch : wff, x : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- F/ x ch ;;
+	hyp 3 : wff = |- ( ph → ∃ x ps ) ;;
+	hyp 4 : wff = |- ( ( ph ∧ ps ) → ch ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ch ) ;;
+}
+
+proof of exlimdd {
+	step 1 : wff = ex (hyp 4) |- ( ph → ( ps → ch ) ) ;;
+	step 2 : wff = exlimd (hyp 1, hyp 2, step 1) |- ( ph → ( ∃ x ps → ch ) ) ;;
+	step 3 : wff = mpd (hyp 3, step 2) |- ( ph → ch ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Special case of Theorem 19.21 of [Margaris] p. 90. _Notational
+       convention_:  We sometimes suffix with "v" the label of a theorem
+       eliminating a hypothesis such as ` F/ x ph ` in ~ 19.21 via the use of
+       distinct variable conditions combined with ~ nfv .  Conversely, we
+       sometimes suffix with "f" the label of a theorem introducing such a
+       hypothesis to eliminate the need for the distinct variable condition;
+       e.g. ~ euf derived from ~ df-eu .  The "f" stands for "not free in"
+       which is less restrictive than "does not occur in."  (Contributed by NM,
+       5-Aug-1993.) */
+
+theorem 19.21v (ph : wff, ps : wff, x : set) disjointed(x ph) {
+	prop 1 : wff = |- ( ∀ x ( ph → ps ) ↔ ( ph → ∀ x ps ) ) ;;
+}
+
+proof of 19.21v {
+	step 1 : wff = nfv () |- F/ x ph ;;
+	step 2 : wff = 19.21 (step 1) |- ( ∀ x ( ph → ps ) ↔ ( ph → ∀ x ps ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Special case of Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
+       28-Jun-1998.) */
+
+theorem 19.23v (ph : wff, ps : wff, x : set) disjointed(x ps) {
+	prop 1 : wff = |- ( ∀ x ( ph → ps ) ↔ ( ∃ x ph → ps ) ) ;;
+}
+
+proof of 19.23v {
+	step 1 : wff = nfv () |- F/ x ps ;;
+	step 2 : wff = 19.23 (step 1) |- ( ∀ x ( ph → ps ) ↔ ( ∃ x ph → ps ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Theorem 19.23 of [Margaris] p. 90 extended to two variables.
+       (Contributed by NM, 10-Aug-2004.) */
+
+theorem 19.23vv (ph : wff, ps : wff, x : set, y : set) disjointed(x ps, y ps) {
+	prop 1 : wff = |- ( ∀ x ∀ y ( ph → ps ) ↔ ( ∃ x ∃ y ph → ps ) ) ;;
+}
+
+proof of 19.23vv {
+	step 1 : wff = 19.23v () |- ( ∀ y ( ph → ps ) ↔ ( ∃ y ph → ps ) ) ;;
+	step 2 : wff = albii (step 1) |- ( ∀ x ∀ y ( ph → ps ) ↔ ∀ x ( ∃ y ph → ps ) ) ;;
+	step 3 : wff = 19.23v () |- ( ∀ x ( ∃ y ph → ps ) ↔ ( ∃ x ∃ y ph → ps ) ) ;;
+	step 4 : wff = bitri (step 2, step 3) |- ( ∀ x ∀ y ( ph → ps ) ↔ ( ∃ x ∃ y ph → ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Theorem *11.53 in [WhiteheadRussell] p. 164.  (Contributed by Andrew
+       Salmon, 24-May-2011.) */
+
+theorem pm11.53 (ph : wff, ps : wff, x : set, y : set) disjointed(ph y, ps x) {
+	prop 1 : wff = |- ( ∀ x ∀ y ( ph → ps ) ↔ ( ∃ x ph → ∀ y ps ) ) ;;
+}
+
+proof of pm11.53 {
+	step 1 : wff = 19.21v () |- ( ∀ y ( ph → ps ) ↔ ( ph → ∀ y ps ) ) ;;
+	step 2 : wff = albii (step 1) |- ( ∀ x ∀ y ( ph → ps ) ↔ ∀ x ( ph → ∀ y ps ) ) ;;
+	step 3 : wff = nfv () |- F/ x ps ;;
+	step 4 : wff = nfal (step 3) |- F/ x ∀ y ps ;;
+	step 5 : wff = 19.23 (step 4) |- ( ∀ x ( ph → ∀ y ps ) ↔ ( ∃ x ph → ∀ y ps ) ) ;;
+	step 6 : wff = bitri (step 2, step 5) |- ( ∀ x ∀ y ( ph → ps ) ↔ ( ∃ x ph → ∀ y ps ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Theorem 19.27 of [Margaris] p. 90.  (Contributed by NM, 3-Jun-2004.) */
+
+theorem 19.27v (ph : wff, ps : wff, x : set) disjointed(x ps) {
+	prop 1 : wff = |- ( ∀ x ( ph ∧ ps ) ↔ ( ∀ x ph ∧ ps ) ) ;;
+}
+
+proof of 19.27v {
+	step 1 : wff = nfv () |- F/ x ps ;;
+	step 2 : wff = 19.27 (step 1) |- ( ∀ x ( ph ∧ ps ) ↔ ( ∀ x ph ∧ ps ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Theorem 19.28 of [Margaris] p. 90.  (Contributed by NM, 25-Mar-2004.) */
+
+theorem 19.28v (ph : wff, ps : wff, x : set) disjointed(x ph) {
+	prop 1 : wff = |- ( ∀ x ( ph ∧ ps ) ↔ ( ph ∧ ∀ x ps ) ) ;;
+}
+
+proof of 19.28v {
+	step 1 : wff = nfv () |- F/ x ph ;;
+	step 2 : wff = 19.28 (step 1) |- ( ∀ x ( ph ∧ ps ) ↔ ( ph ∧ ∀ x ps ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Special case of Theorem 19.36 of [Margaris] p. 90.  (Contributed by NM,
+       18-Aug-1993.) */
+
+theorem 19.36v (ph : wff, ps : wff, x : set) disjointed(x ps) {
+	prop 1 : wff = |- ( ∃ x ( ph → ps ) ↔ ( ∀ x ph → ps ) ) ;;
+}
+
+proof of 19.36v {
+	step 1 : wff = nfv () |- F/ x ps ;;
+	step 2 : wff = 19.36 (step 1) |- ( ∃ x ( ph → ps ) ↔ ( ∀ x ph → ps ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Inference from Theorem 19.36 of [Margaris] p. 90.  (Contributed by NM,
+       5-Aug-1993.) */
+
+theorem 19.36aiv (ph : wff, ps : wff, x : set) disjointed(x ps) {
+	hyp 1 : wff = |- ∃ x ( ph → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ph → ps ) ;;
+}
+
+proof of 19.36aiv {
+	step 1 : wff = nfv () |- F/ x ps ;;
+	step 2 : wff = 19.36i (step 1, hyp 1) |- ( ∀ x ph → ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Special case of ~ 19.12 where its converse holds.  (Contributed by NM,
+       18-Jul-2001.)  (Revised by Andrew Salmon, 11-Jul-2011.) */
+
+theorem 19.12vv (ph : wff, ps : wff, x : set, y : set) disjointed(x ps, y ph) {
+	prop 1 : wff = |- ( ∃ x ∀ y ( ph → ps ) ↔ ∀ y ∃ x ( ph → ps ) ) ;;
+}
+
+proof of 19.12vv {
+	step 1 : wff = 19.21v () |- ( ∀ y ( ph → ps ) ↔ ( ph → ∀ y ps ) ) ;;
+	step 2 : wff = exbii (step 1) |- ( ∃ x ∀ y ( ph → ps ) ↔ ∃ x ( ph → ∀ y ps ) ) ;;
+	step 3 : wff = nfv () |- F/ x ps ;;
+	step 4 : wff = nfal (step 3) |- F/ x ∀ y ps ;;
+	step 5 : wff = 19.36 (step 4) |- ( ∃ x ( ph → ∀ y ps ) ↔ ( ∀ x ph → ∀ y ps ) ) ;;
+	step 6 : wff = 19.36v () |- ( ∃ x ( ph → ps ) ↔ ( ∀ x ph → ps ) ) ;;
+	step 7 : wff = albii (step 6) |- ( ∀ y ∃ x ( ph → ps ) ↔ ∀ y ( ∀ x ph → ps ) ) ;;
+	step 8 : wff = nfv () |- F/ y ph ;;
+	step 9 : wff = nfal (step 8) |- F/ y ∀ x ph ;;
+	step 10 : wff = 19.21 (step 9) |- ( ∀ y ( ∀ x ph → ps ) ↔ ( ∀ x ph → ∀ y ps ) ) ;;
+	step 11 : wff = bitr2i (step 7, step 10) |- ( ( ∀ x ph → ∀ y ps ) ↔ ∀ y ∃ x ( ph → ps ) ) ;;
+	step 12 : wff = 3bitri (step 2, step 5, step 11) |- ( ∃ x ∀ y ( ph → ps ) ↔ ∀ y ∃ x ( ph → ps ) ) ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* Special case of Theorem 19.37 of [Margaris] p. 90.  (Contributed by NM,
+       5-Aug-1993.) */
+
+theorem 19.37v (ph : wff, ps : wff, x : set) disjointed(x ph) {
+	prop 1 : wff = |- ( ∃ x ( ph → ps ) ↔ ( ph → ∃ x ps ) ) ;;
+}
+
+proof of 19.37v {
+	step 1 : wff = nfv () |- F/ x ph ;;
+	step 2 : wff = 19.37 (step 1) |- ( ∃ x ( ph → ps ) ↔ ( ph → ∃ x ps ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Inference from Theorem 19.37 of [Margaris] p. 90.  (Contributed by NM,
+       5-Aug-1993.) */
+
+theorem 19.37aiv (ph : wff, ps : wff, x : set) disjointed(x ph) {
+	hyp 1 : wff = |- ∃ x ( ph → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ∃ x ps ) ;;
+}
+
+proof of 19.37aiv {
+	step 1 : wff = 19.37v () |- ( ∃ x ( ph → ps ) ↔ ( ph → ∃ x ps ) ) ;;
+	step 2 : wff = mpbi (hyp 1, step 1) |- ( ph → ∃ x ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Special case of Theorem 19.41 of [Margaris] p. 90.  (Contributed by NM,
+       5-Aug-1993.) */
+
+theorem 19.41v (ph : wff, ps : wff, x : set) disjointed(x ps) {
+	prop 1 : wff = |- ( ∃ x ( ph ∧ ps ) ↔ ( ∃ x ph ∧ ps ) ) ;;
+}
+
+proof of 19.41v {
+	step 1 : wff = nfv () |- F/ x ps ;;
+	step 2 : wff = 19.41 (step 1) |- ( ∃ x ( ph ∧ ps ) ↔ ( ∃ x ph ∧ ps ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Theorem 19.41 of [Margaris] p. 90 with 2 quantifiers.  (Contributed by
+       NM, 30-Apr-1995.) */
+
+theorem 19.41vv (ph : wff, ps : wff, x : set, y : set) disjointed(x ps, y ps) {
+	prop 1 : wff = |- ( ∃ x ∃ y ( ph ∧ ps ) ↔ ( ∃ x ∃ y ph ∧ ps ) ) ;;
+}
+
+proof of 19.41vv {
+	step 1 : wff = 19.41v () |- ( ∃ y ( ph ∧ ps ) ↔ ( ∃ y ph ∧ ps ) ) ;;
+	step 2 : wff = exbii (step 1) |- ( ∃ x ∃ y ( ph ∧ ps ) ↔ ∃ x ( ∃ y ph ∧ ps ) ) ;;
+	step 3 : wff = 19.41v () |- ( ∃ x ( ∃ y ph ∧ ps ) ↔ ( ∃ x ∃ y ph ∧ ps ) ) ;;
+	step 4 : wff = bitri (step 2, step 3) |- ( ∃ x ∃ y ( ph ∧ ps ) ↔ ( ∃ x ∃ y ph ∧ ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Theorem 19.41 of [Margaris] p. 90 with 3 quantifiers.  (Contributed by
+       NM, 30-Apr-1995.) */
+
+theorem 19.41vvv (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(x ps, y ps, z ps) {
+	prop 1 : wff = |- ( ∃ x ∃ y ∃ z ( ph ∧ ps ) ↔ ( ∃ x ∃ y ∃ z ph ∧ ps ) ) ;;
+}
+
+proof of 19.41vvv {
+	step 1 : wff = 19.41vv () |- ( ∃ y ∃ z ( ph ∧ ps ) ↔ ( ∃ y ∃ z ph ∧ ps ) ) ;;
+	step 2 : wff = exbii (step 1) |- ( ∃ x ∃ y ∃ z ( ph ∧ ps ) ↔ ∃ x ( ∃ y ∃ z ph ∧ ps ) ) ;;
+	step 3 : wff = 19.41v () |- ( ∃ x ( ∃ y ∃ z ph ∧ ps ) ↔ ( ∃ x ∃ y ∃ z ph ∧ ps ) ) ;;
+	step 4 : wff = bitri (step 2, step 3) |- ( ∃ x ∃ y ∃ z ( ph ∧ ps ) ↔ ( ∃ x ∃ y ∃ z ph ∧ ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Theorem 19.41 of [Margaris] p. 90 with 4 quantifiers.  (Contributed by
+       FL, 14-Jul-2007.) */
+
+theorem 19.41vvvv (ph : wff, ps : wff, x : set, y : set, z : set, w : set) disjointed(w ps, x ps, y ps, z ps) {
+	prop 1 : wff = |- ( ∃ w ∃ x ∃ y ∃ z ( ph ∧ ps ) ↔ ( ∃ w ∃ x ∃ y ∃ z ph ∧ ps ) ) ;;
+}
+
+proof of 19.41vvvv {
+	step 1 : wff = 19.41vvv () |- ( ∃ x ∃ y ∃ z ( ph ∧ ps ) ↔ ( ∃ x ∃ y ∃ z ph ∧ ps ) ) ;;
+	step 2 : wff = exbii (step 1) |- ( ∃ w ∃ x ∃ y ∃ z ( ph ∧ ps ) ↔ ∃ w ( ∃ x ∃ y ∃ z ph ∧ ps ) ) ;;
+	step 3 : wff = 19.41v () |- ( ∃ w ( ∃ x ∃ y ∃ z ph ∧ ps ) ↔ ( ∃ w ∃ x ∃ y ∃ z ph ∧ ps ) ) ;;
+	step 4 : wff = bitri (step 2, step 3) |- ( ∃ w ∃ x ∃ y ∃ z ( ph ∧ ps ) ↔ ( ∃ w ∃ x ∃ y ∃ z ph ∧ ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Special case of Theorem 19.42 of [Margaris] p. 90.  (Contributed by NM,
+       5-Aug-1993.) */
+
+theorem 19.42v (ph : wff, ps : wff, x : set) disjointed(x ph) {
+	prop 1 : wff = |- ( ∃ x ( ph ∧ ps ) ↔ ( ph ∧ ∃ x ps ) ) ;;
+}
+
+proof of 19.42v {
+	step 1 : wff = nfv () |- F/ x ph ;;
+	step 2 : wff = 19.42 (step 1) |- ( ∃ x ( ph ∧ ps ) ↔ ( ph ∧ ∃ x ps ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Distribution of existential quantifiers.  (Contributed by NM,
+       9-Mar-1995.) */
+
+theorem exdistr (ph : wff, ps : wff, x : set, y : set) disjointed(y ph) {
+	prop 1 : wff = |- ( ∃ x ∃ y ( ph ∧ ps ) ↔ ∃ x ( ph ∧ ∃ y ps ) ) ;;
+}
+
+proof of exdistr {
+	step 1 : wff = 19.42v () |- ( ∃ y ( ph ∧ ps ) ↔ ( ph ∧ ∃ y ps ) ) ;;
+	step 2 : wff = exbii (step 1) |- ( ∃ x ∃ y ( ph ∧ ps ) ↔ ∃ x ( ph ∧ ∃ y ps ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Theorem 19.42 of [Margaris] p. 90 with 2 quantifiers.  (Contributed by
+       NM, 16-Mar-1995.) */
+
+theorem 19.42vv (ph : wff, ps : wff, x : set, y : set) disjointed(x ph, y ph) {
+	prop 1 : wff = |- ( ∃ x ∃ y ( ph ∧ ps ) ↔ ( ph ∧ ∃ x ∃ y ps ) ) ;;
+}
+
+proof of 19.42vv {
+	step 1 : wff = exdistr () |- ( ∃ x ∃ y ( ph ∧ ps ) ↔ ∃ x ( ph ∧ ∃ y ps ) ) ;;
+	step 2 : wff = 19.42v () |- ( ∃ x ( ph ∧ ∃ y ps ) ↔ ( ph ∧ ∃ x ∃ y ps ) ) ;;
+	step 3 : wff = bitri (step 1, step 2) |- ( ∃ x ∃ y ( ph ∧ ps ) ↔ ( ph ∧ ∃ x ∃ y ps ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Theorem 19.42 of [Margaris] p. 90 with 3 quantifiers.  (Contributed by
+       NM, 21-Sep-2011.) */
+
+theorem 19.42vvv (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(x ph, y ph, z ph) {
+	prop 1 : wff = |- ( ∃ x ∃ y ∃ z ( ph ∧ ps ) ↔ ( ph ∧ ∃ x ∃ y ∃ z ps ) ) ;;
+}
+
+proof of 19.42vvv {
+	step 1 : wff = 19.42vv () |- ( ∃ y ∃ z ( ph ∧ ps ) ↔ ( ph ∧ ∃ y ∃ z ps ) ) ;;
+	step 2 : wff = exbii (step 1) |- ( ∃ x ∃ y ∃ z ( ph ∧ ps ) ↔ ∃ x ( ph ∧ ∃ y ∃ z ps ) ) ;;
+	step 3 : wff = 19.42v () |- ( ∃ x ( ph ∧ ∃ y ∃ z ps ) ↔ ( ph ∧ ∃ x ∃ y ∃ z ps ) ) ;;
+	step 4 : wff = bitri (step 2, step 3) |- ( ∃ x ∃ y ∃ z ( ph ∧ ps ) ↔ ( ph ∧ ∃ x ∃ y ∃ z ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Distribution of existential quantifiers.  (Contributed by NM,
+       17-Mar-1995.) */
+
+theorem exdistr2 (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(y ph, z ph) {
+	prop 1 : wff = |- ( ∃ x ∃ y ∃ z ( ph ∧ ps ) ↔ ∃ x ( ph ∧ ∃ y ∃ z ps ) ) ;;
+}
+
+proof of exdistr2 {
+	step 1 : wff = 19.42vv () |- ( ∃ y ∃ z ( ph ∧ ps ) ↔ ( ph ∧ ∃ y ∃ z ps ) ) ;;
+	step 2 : wff = exbii (step 1) |- ( ∃ x ∃ y ∃ z ( ph ∧ ps ) ↔ ∃ x ( ph ∧ ∃ y ∃ z ps ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Distribution of existential quantifiers.  (Contributed by NM,
+       9-Mar-1995.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem 3exdistr (ph : wff, ps : wff, ch : wff, x : set, y : set, z : set) disjointed(y ph, z ph, z ps) {
+	prop 1 : wff = |- ( ∃ x ∃ y ∃ z ( ph ∧ ps ∧ ch ) ↔ ∃ x ( ph ∧ ∃ y ( ps ∧ ∃ z ch ) ) ) ;;
+}
+
+proof of 3exdistr {
+	step 1 : wff = 3anass () |- ( ( ph ∧ ps ∧ ch ) ↔ ( ph ∧ ( ps ∧ ch ) ) ) ;;
+	step 2 : wff = 2exbii (step 1) |- ( ∃ y ∃ z ( ph ∧ ps ∧ ch ) ↔ ∃ y ∃ z ( ph ∧ ( ps ∧ ch ) ) ) ;;
+	step 3 : wff = 19.42vv () |- ( ∃ y ∃ z ( ph ∧ ( ps ∧ ch ) ) ↔ ( ph ∧ ∃ y ∃ z ( ps ∧ ch ) ) ) ;;
+	step 4 : wff = exdistr () |- ( ∃ y ∃ z ( ps ∧ ch ) ↔ ∃ y ( ps ∧ ∃ z ch ) ) ;;
+	step 5 : wff = anbi2i (step 4) |- ( ( ph ∧ ∃ y ∃ z ( ps ∧ ch ) ) ↔ ( ph ∧ ∃ y ( ps ∧ ∃ z ch ) ) ) ;;
+	step 6 : wff = 3bitri (step 2, step 3, step 5) |- ( ∃ y ∃ z ( ph ∧ ps ∧ ch ) ↔ ( ph ∧ ∃ y ( ps ∧ ∃ z ch ) ) ) ;;
+	step 7 : wff = exbii (step 6) |- ( ∃ x ∃ y ∃ z ( ph ∧ ps ∧ ch ) ↔ ∃ x ( ph ∧ ∃ y ( ps ∧ ∃ z ch ) ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Distribution of existential quantifiers.  (Contributed by NM,
+       9-Mar-1995.) */
+
+theorem 4exdistr (ph : wff, ps : wff, ch : wff, th : wff, x : set, y : set, z : set, w : set) disjointed(y ph, z ph, w ph, z ps, w ps, w ch) {
+	prop 1 : wff = |- ( ∃ x ∃ y ∃ z ∃ w ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) ↔ ∃ x ( ph ∧ ∃ y ( ps ∧ ∃ z ( ch ∧ ∃ w th ) ) ) ) ;;
+}
+
+proof of 4exdistr {
+	step 1 : wff = anass () |- ( ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) ↔ ( ph ∧ ( ps ∧ ( ch ∧ th ) ) ) ) ;;
+	step 2 : wff = exbii (step 1) |- ( ∃ w ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) ↔ ∃ w ( ph ∧ ( ps ∧ ( ch ∧ th ) ) ) ) ;;
+	step 3 : wff = 19.42v () |- ( ∃ w ( ph ∧ ( ps ∧ ( ch ∧ th ) ) ) ↔ ( ph ∧ ∃ w ( ps ∧ ( ch ∧ th ) ) ) ) ;;
+	step 4 : wff = 19.42v () |- ( ∃ w ( ps ∧ ( ch ∧ th ) ) ↔ ( ps ∧ ∃ w ( ch ∧ th ) ) ) ;;
+	step 5 : wff = anbi2i (step 4) |- ( ( ph ∧ ∃ w ( ps ∧ ( ch ∧ th ) ) ) ↔ ( ph ∧ ( ps ∧ ∃ w ( ch ∧ th ) ) ) ) ;;
+	step 6 : wff = 19.42v () |- ( ∃ w ( ch ∧ th ) ↔ ( ch ∧ ∃ w th ) ) ;;
+	step 7 : wff = anbi2i (step 6) |- ( ( ps ∧ ∃ w ( ch ∧ th ) ) ↔ ( ps ∧ ( ch ∧ ∃ w th ) ) ) ;;
+	step 8 : wff = anbi2i (step 7) |- ( ( ph ∧ ( ps ∧ ∃ w ( ch ∧ th ) ) ) ↔ ( ph ∧ ( ps ∧ ( ch ∧ ∃ w th ) ) ) ) ;;
+	step 9 : wff = 3bitri (step 3, step 5, step 8) |- ( ∃ w ( ph ∧ ( ps ∧ ( ch ∧ th ) ) ) ↔ ( ph ∧ ( ps ∧ ( ch ∧ ∃ w th ) ) ) ) ;;
+	step 10 : wff = bitri (step 2, step 9) |- ( ∃ w ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) ↔ ( ph ∧ ( ps ∧ ( ch ∧ ∃ w th ) ) ) ) ;;
+	step 11 : wff = exbii (step 10) |- ( ∃ z ∃ w ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) ↔ ∃ z ( ph ∧ ( ps ∧ ( ch ∧ ∃ w th ) ) ) ) ;;
+	step 12 : wff = 19.42v () |- ( ∃ z ( ph ∧ ( ps ∧ ( ch ∧ ∃ w th ) ) ) ↔ ( ph ∧ ∃ z ( ps ∧ ( ch ∧ ∃ w th ) ) ) ) ;;
+	step 13 : wff = 19.42v () |- ( ∃ z ( ps ∧ ( ch ∧ ∃ w th ) ) ↔ ( ps ∧ ∃ z ( ch ∧ ∃ w th ) ) ) ;;
+	step 14 : wff = anbi2i (step 13) |- ( ( ph ∧ ∃ z ( ps ∧ ( ch ∧ ∃ w th ) ) ) ↔ ( ph ∧ ( ps ∧ ∃ z ( ch ∧ ∃ w th ) ) ) ) ;;
+	step 15 : wff = 3bitri (step 11, step 12, step 14) |- ( ∃ z ∃ w ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) ↔ ( ph ∧ ( ps ∧ ∃ z ( ch ∧ ∃ w th ) ) ) ) ;;
+	step 16 : wff = exbii (step 15) |- ( ∃ y ∃ z ∃ w ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) ↔ ∃ y ( ph ∧ ( ps ∧ ∃ z ( ch ∧ ∃ w th ) ) ) ) ;;
+	step 17 : wff = 19.42v () |- ( ∃ y ( ph ∧ ( ps ∧ ∃ z ( ch ∧ ∃ w th ) ) ) ↔ ( ph ∧ ∃ y ( ps ∧ ∃ z ( ch ∧ ∃ w th ) ) ) ) ;;
+	step 18 : wff = bitri (step 16, step 17) |- ( ∃ y ∃ z ∃ w ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) ↔ ( ph ∧ ∃ y ( ps ∧ ∃ z ( ch ∧ ∃ w th ) ) ) ) ;;
+	step 19 : wff = exbii (step 18) |- ( ∃ x ∃ y ∃ z ∃ w ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) ↔ ∃ x ( ph ∧ ∃ y ( ps ∧ ∃ z ( ch ∧ ∃ w th ) ) ) ) ;;
+	qed prop 1 = step 19 ;;
+}
+
+/* Rearrange existential quantifiers.  (Contributed by NM, 27-Oct-2010.)
+       (Revised by Mario Carneiro, 6-Oct-2016.) */
+
+theorem eean (ph : wff, ps : wff, x : set, y : set)  {
+	hyp 1 : wff = |- F/ y ph ;;
+	hyp 2 : wff = |- F/ x ps ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ x ∃ y ( ph ∧ ps ) ↔ ( ∃ x ph ∧ ∃ y ps ) ) ;;
+}
+
+proof of eean {
+	step 1 : wff = 19.42 (hyp 1) |- ( ∃ y ( ph ∧ ps ) ↔ ( ph ∧ ∃ y ps ) ) ;;
+	step 2 : wff = exbii (step 1) |- ( ∃ x ∃ y ( ph ∧ ps ) ↔ ∃ x ( ph ∧ ∃ y ps ) ) ;;
+	step 3 : wff = nfex (hyp 2) |- F/ x ∃ y ps ;;
+	step 4 : wff = 19.41 (step 3) |- ( ∃ x ( ph ∧ ∃ y ps ) ↔ ( ∃ x ph ∧ ∃ y ps ) ) ;;
+	step 5 : wff = bitri (step 2, step 4) |- ( ∃ x ∃ y ( ph ∧ ps ) ↔ ( ∃ x ph ∧ ∃ y ps ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Rearrange existential quantifiers.  (Contributed by NM, 26-Jul-1995.) */
+
+theorem eeanv (ph : wff, ps : wff, x : set, y : set) disjointed(y ph, x ps) {
+	prop 1 : wff = |- ( ∃ x ∃ y ( ph ∧ ps ) ↔ ( ∃ x ph ∧ ∃ y ps ) ) ;;
+}
+
+proof of eeanv {
+	step 1 : wff = nfv () |- F/ y ph ;;
+	step 2 : wff = nfv () |- F/ x ps ;;
+	step 3 : wff = eean (step 1, step 2) |- ( ∃ x ∃ y ( ph ∧ ps ) ↔ ( ∃ x ph ∧ ∃ y ps ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Rearrange existential quantifiers.  (Contributed by NM, 26-Jul-1995.)
+       (Proof shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem eeeanv (ph : wff, ps : wff, ch : wff, x : set, y : set, z : set) disjointed(y ph, z ph, x z ps, x y ch) {
+	prop 1 : wff = |- ( ∃ x ∃ y ∃ z ( ph ∧ ps ∧ ch ) ↔ ( ∃ x ph ∧ ∃ y ps ∧ ∃ z ch ) ) ;;
+}
+
+proof of eeeanv {
+	step 1 : wff = df-3an () |- ( ( ph ∧ ps ∧ ch ) ↔ ( ( ph ∧ ps ) ∧ ch ) ) ;;
+	step 2 : wff = 3exbii (step 1) |- ( ∃ x ∃ y ∃ z ( ph ∧ ps ∧ ch ) ↔ ∃ x ∃ y ∃ z ( ( ph ∧ ps ) ∧ ch ) ) ;;
+	step 3 : wff = eeanv () |- ( ∃ y ∃ z ( ( ph ∧ ps ) ∧ ch ) ↔ ( ∃ y ( ph ∧ ps ) ∧ ∃ z ch ) ) ;;
+	step 4 : wff = exbii (step 3) |- ( ∃ x ∃ y ∃ z ( ( ph ∧ ps ) ∧ ch ) ↔ ∃ x ( ∃ y ( ph ∧ ps ) ∧ ∃ z ch ) ) ;;
+	step 5 : wff = eeanv () |- ( ∃ x ∃ y ( ph ∧ ps ) ↔ ( ∃ x ph ∧ ∃ y ps ) ) ;;
+	step 6 : wff = anbi1i (step 5) |- ( ( ∃ x ∃ y ( ph ∧ ps ) ∧ ∃ z ch ) ↔ ( ( ∃ x ph ∧ ∃ y ps ) ∧ ∃ z ch ) ) ;;
+	step 7 : wff = 19.41v () |- ( ∃ x ( ∃ y ( ph ∧ ps ) ∧ ∃ z ch ) ↔ ( ∃ x ∃ y ( ph ∧ ps ) ∧ ∃ z ch ) ) ;;
+	step 8 : wff = df-3an () |- ( ( ∃ x ph ∧ ∃ y ps ∧ ∃ z ch ) ↔ ( ( ∃ x ph ∧ ∃ y ps ) ∧ ∃ z ch ) ) ;;
+	step 9 : wff = 3bitr4i (step 6, step 7, step 8) |- ( ∃ x ( ∃ y ( ph ∧ ps ) ∧ ∃ z ch ) ↔ ( ∃ x ph ∧ ∃ y ps ∧ ∃ z ch ) ) ;;
+	step 10 : wff = 3bitri (step 2, step 4, step 9) |- ( ∃ x ∃ y ∃ z ( ph ∧ ps ∧ ch ) ↔ ( ∃ x ph ∧ ∃ y ps ∧ ∃ z ch ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Rearrange existential quantifiers.  (Contributed by NM, 31-Jul-1995.) */
+
+theorem ee4anv (ph : wff, ps : wff, x : set, y : set, z : set, w : set) disjointed(z ph, w ph, x ps, y ps, y z, w x) {
+	prop 1 : wff = |- ( ∃ x ∃ y ∃ z ∃ w ( ph ∧ ps ) ↔ ( ∃ x ∃ y ph ∧ ∃ z ∃ w ps ) ) ;;
+}
+
+proof of ee4anv {
+	step 1 : wff = excom () |- ( ∃ y ∃ z ∃ w ( ph ∧ ps ) ↔ ∃ z ∃ y ∃ w ( ph ∧ ps ) ) ;;
+	step 2 : wff = exbii (step 1) |- ( ∃ x ∃ y ∃ z ∃ w ( ph ∧ ps ) ↔ ∃ x ∃ z ∃ y ∃ w ( ph ∧ ps ) ) ;;
+	step 3 : wff = eeanv () |- ( ∃ y ∃ w ( ph ∧ ps ) ↔ ( ∃ y ph ∧ ∃ w ps ) ) ;;
+	step 4 : wff = 2exbii (step 3) |- ( ∃ x ∃ z ∃ y ∃ w ( ph ∧ ps ) ↔ ∃ x ∃ z ( ∃ y ph ∧ ∃ w ps ) ) ;;
+	step 5 : wff = eeanv () |- ( ∃ x ∃ z ( ∃ y ph ∧ ∃ w ps ) ↔ ( ∃ x ∃ y ph ∧ ∃ z ∃ w ps ) ) ;;
+	step 6 : wff = 3bitri (step 2, step 4, step 5) |- ( ∃ x ∃ y ∃ z ∃ w ( ph ∧ ps ) ↔ ( ∃ x ∃ y ph ∧ ∃ z ∃ w ps ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Deduction for generalization rule for negated wff.  (Contributed by NM,
+       5-Aug-1993.) */
+
+theorem nexdv (ph : wff, ps : wff, x : set) disjointed(x ph) {
+	hyp 1 : wff = |- ( ph → ¬ ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ¬ ∃ x ps ) ;;
+}
+
+proof of nexdv {
+	step 1 : wff = nfv () |- F/ x ph ;;
+	step 2 : wff = nexd (step 1, hyp 1) |- ( ph → ¬ ∃ x ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* One of the two equality axioms of standard predicate calculus, called
+     substitutivity of equality.  (The other one is ~ stdpc6 .)  Translated to
+     traditional notation, it can be
+     read:  " ` x = y -> ( ph ( x , x ) -> ph ( x , y ) ) ` , provided that
+     ` y ` is free for ` x ` in ` ph ( x , x ) ` ."  Axiom 7 of [Mendelson]
+     p. 95.  (Contributed by NM, 15-Feb-2005.) */
+
+theorem stdpc7 (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( x = y → ( [ x / y ] ph → ph ) ) ;;
+}
+
+proof of stdpc7 {
+	step 1 : wff = sbequ2 () |- ( y = x → ( [ x / y ] ph → ph ) ) ;;
+	step 2 : wff = equcoms (step 1) |- ( x = y → ( [ x / y ] ph → ph ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* An equality theorem for substitution.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem sbequ1 (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( x = y → ( ph → [ y / x ] ph ) ) ;;
+}
+
+proof of sbequ1 {
+	step 1 : wff = pm3.4 () |- ( ( x = y ∧ ph ) → ( x = y → ph ) ) ;;
+	step 2 : wff = 19.8a () |- ( ( x = y ∧ ph ) → ∃ x ( x = y ∧ ph ) ) ;;
+	step 3 : wff = df-sb () |- ( [ y / x ] ph ↔ ( ( x = y → ph ) ∧ ∃ x ( x = y ∧ ph ) ) ) ;;
+	step 4 : wff = sylanbrc (step 1, step 2, step 3) |- ( ( x = y ∧ ph ) → [ y / x ] ph ) ;;
+	step 5 : wff = ex (step 4) |- ( x = y → ( ph → [ y / x ] ph ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* An equality theorem for substitution.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem sbequ12 (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( x = y → ( ph ↔ [ y / x ] ph ) ) ;;
+}
+
+proof of sbequ12 {
+	step 1 : wff = sbequ1 () |- ( x = y → ( ph → [ y / x ] ph ) ) ;;
+	step 2 : wff = sbequ2 () |- ( x = y → ( [ y / x ] ph → ph ) ) ;;
+	step 3 : wff = impbid (step 1, step 2) |- ( x = y → ( ph ↔ [ y / x ] ph ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* An equality theorem for substitution.  (Contributed by NM, 6-Oct-2004.)
+     (Proof shortened by Andrew Salmon, 21-Jun-2011.) */
+
+theorem sbequ12r (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( x = y → ( [ x / y ] ph ↔ ph ) ) ;;
+}
+
+proof of sbequ12r {
+	step 1 : wff = sbequ12 () |- ( y = x → ( ph ↔ [ x / y ] ph ) ) ;;
+	step 2 : wff = bicomd (step 1) |- ( y = x → ( [ x / y ] ph ↔ ph ) ) ;;
+	step 3 : wff = equcoms (step 2) |- ( x = y → ( [ x / y ] ph ↔ ph ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* An equality theorem for substitution.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem sbequ12a (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( x = y → ( [ y / x ] ph ↔ [ x / y ] ph ) ) ;;
+}
+
+proof of sbequ12a {
+	step 1 : wff = sbequ12 () |- ( x = y → ( ph ↔ [ y / x ] ph ) ) ;;
+	step 2 : wff = sbequ12 () |- ( y = x → ( ph ↔ [ x / y ] ph ) ) ;;
+	step 3 : wff = equcoms (step 2) |- ( x = y → ( ph ↔ [ x / y ] ph ) ) ;;
+	step 4 : wff = bitr3d (step 1, step 3) |- ( x = y → ( [ y / x ] ph ↔ [ x / y ] ph ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* An identity theorem for substitution.  Remark 9.1 in [Megill] p. 447 (p.
+     15 of the preprint).  (Contributed by NM, 5-Aug-1993.) */
+
+theorem sbid (ph : wff, x : set)  {
+	prop 1 : wff = |- ( [ x / x ] ph ↔ ph ) ;;
+}
+
+proof of sbid {
+	step 1 : wff = equid () |- x = x ;;
+	step 2 : wff = sbequ12 () |- ( x = x → ( ph ↔ [ x / x ] ph ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( ph ↔ [ x / x ] ph ) ;;
+	step 4 : wff = bicomi (step 3) |- ( [ x / x ] ph ↔ ph ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A version of ~ sb4 that doesn't require a distinctor antecedent.
+     (Contributed by NM, 2-Feb-2007.) */
+
+theorem sb4a (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( [ y / x ] ∀ y ph → ∀ x ( x = y → ph ) ) ;;
+}
+
+proof of sb4a {
+	step 1 : wff = sb1 () |- ( [ y / x ] ∀ y ph → ∃ x ( x = y ∧ ∀ y ph ) ) ;;
+	step 2 : wff = equs5a () |- ( ∃ x ( x = y ∧ ∀ y ph ) → ∀ x ( x = y → ph ) ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( [ y / x ] ∀ y ph → ∀ x ( x = y → ph ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* One direction of a simplified definition of substitution that unlike ~ sb4
+     doesn't require a distinctor antecedent.  (Contributed by NM,
+     2-Feb-2007.) */
+
+theorem sb4e (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( [ y / x ] ph → ∀ x ( x = y → ∃ y ph ) ) ;;
+}
+
+proof of sb4e {
+	step 1 : wff = sb1 () |- ( [ y / x ] ph → ∃ x ( x = y ∧ ph ) ) ;;
+	step 2 : wff = equs5e () |- ( ∃ x ( x = y ∧ ph ) → ∀ x ( x = y → ∃ y ph ) ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( [ y / x ] ph → ∀ x ( x = y → ∃ y ph ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+

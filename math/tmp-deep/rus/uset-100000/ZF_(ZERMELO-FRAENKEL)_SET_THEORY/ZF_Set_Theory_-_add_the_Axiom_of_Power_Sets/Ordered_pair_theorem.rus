@@ -1,0 +1,951 @@
+import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets/Derive_the_Axiom_of_Pairing.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                   Ordered pair theorem
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* An ordered pair is nonempty iff the arguments are sets.  (Contributed by
+       NM, 24-Jan-2004.)  (Revised by Mario Carneiro, 26-Apr-2015.) */
+
+theorem opnz (A : class, B : class)  {
+	prop 1 : wff = |- ( 〈 A , B 〉 ≠ ∅ ↔ ( A ∈ _V ∧ B ∈ _V ) ) ;;
+}
+
+proof of opnz {
+	step 1 : wff = opprc () |- ( ¬ ( A ∈ _V ∧ B ∈ _V ) → 〈 A , B 〉 = ∅ ) ;;
+	step 2 : wff = necon1ai (step 1) |- ( 〈 A , B 〉 ≠ ∅ → ( A ∈ _V ∧ B ∈ _V ) ) ;;
+	step 3 : wff = dfopg () |- ( ( A ∈ _V ∧ B ∈ _V ) → 〈 A , B 〉 = { { A } , { A , B } } ) ;;
+	step 4 : wff = snex () |- { A } ∈ _V ;;
+	step 5 : wff = prnz (step 4) |- { { A } , { A , B } } ≠ ∅ ;;
+	step 6 : wff = a1i (step 5) |- ( ( A ∈ _V ∧ B ∈ _V ) → { { A } , { A , B } } ≠ ∅ ) ;;
+	step 7 : wff = eqnetrd (step 3, step 6) |- ( ( A ∈ _V ∧ B ∈ _V ) → 〈 A , B 〉 ≠ ∅ ) ;;
+	step 8 : wff = impbii (step 2, step 7) |- ( 〈 A , B 〉 ≠ ∅ ↔ ( A ∈ _V ∧ B ∈ _V ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* An ordered pair is nonempty if the arguments are sets.  (Contributed by
+       Mario Carneiro, 26-Apr-2015.) */
+
+theorem opnzi (A : class, B : class)  {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- 〈 A , B 〉 ≠ ∅ ;;
+}
+
+proof of opnzi {
+	step 1 : wff = opnz () |- ( 〈 A , B 〉 ≠ ∅ ↔ ( A ∈ _V ∧ B ∈ _V ) ) ;;
+	step 2 : wff = mpbir2an (hyp 1, hyp 2, step 1) |- 〈 A , B 〉 ≠ ∅ ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Equality of the first members of equal ordered pairs.  (Contributed by
+       NM, 28-May-2008.)  (Revised by Mario Carneiro, 26-Apr-2015.) */
+
+theorem opth1 (A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( 〈 A , B 〉 = 〈 C , D 〉 → A = C ) ;;
+}
+
+proof of opth1 {
+	step 1 : wff = sneqr (hyp 1) |- ( { A } = { C } → A = C ) ;;
+	step 2 : wff = a1i (step 1) |- ( 〈 A , B 〉 = 〈 C , D 〉 → ( { A } = { C } → A = C ) ) ;;
+	step 3 : wff = opi1 (hyp 1, hyp 2) |- { A } ∈ 〈 A , B 〉 ;;
+	step 4 : wff = id () |- ( 〈 A , B 〉 = 〈 C , D 〉 → 〈 A , B 〉 = 〈 C , D 〉 ) ;;
+	step 5 : wff = syl5eleq (step 3, step 4) |- ( 〈 A , B 〉 = 〈 C , D 〉 → { A } ∈ 〈 C , D 〉 ) ;;
+	step 6 : wff = oprcl () |- ( { A } ∈ 〈 C , D 〉 → ( C ∈ _V ∧ D ∈ _V ) ) ;;
+	step 7 : wff = syl (step 5, step 6) |- ( 〈 A , B 〉 = 〈 C , D 〉 → ( C ∈ _V ∧ D ∈ _V ) ) ;;
+	step 8 : wff = simpld (step 7) |- ( 〈 A , B 〉 = 〈 C , D 〉 → C ∈ _V ) ;;
+	step 9 : wff = prid1g () |- ( C ∈ _V → C ∈ { C , D } ) ;;
+	step 10 : wff = syl (step 8, step 9) |- ( 〈 A , B 〉 = 〈 C , D 〉 → C ∈ { C , D } ) ;;
+	step 11 : wff = eleq2 () |- ( { A } = { C , D } → ( C ∈ { A } ↔ C ∈ { C , D } ) ) ;;
+	step 12 : wff = syl5ibrcom (step 10, step 11) |- ( 〈 A , B 〉 = 〈 C , D 〉 → ( { A } = { C , D } → C ∈ { A } ) ) ;;
+	step 13 : wff = elsni () |- ( C ∈ { A } → C = A ) ;;
+	step 14 : wff = eqcomd (step 13) |- ( C ∈ { A } → A = C ) ;;
+	step 15 : wff = syl6 (step 12, step 14) |- ( 〈 A , B 〉 = 〈 C , D 〉 → ( { A } = { C , D } → A = C ) ) ;;
+	step 16 : wff = opi1 (hyp 1, hyp 2) |- { A } ∈ 〈 A , B 〉 ;;
+	step 17 : wff = id () |- ( 〈 A , B 〉 = 〈 C , D 〉 → 〈 A , B 〉 = 〈 C , D 〉 ) ;;
+	step 18 : wff = syl5eleq (step 16, step 17) |- ( 〈 A , B 〉 = 〈 C , D 〉 → { A } ∈ 〈 C , D 〉 ) ;;
+	step 19 : wff = opi1 (hyp 1, hyp 2) |- { A } ∈ 〈 A , B 〉 ;;
+	step 20 : wff = id () |- ( 〈 A , B 〉 = 〈 C , D 〉 → 〈 A , B 〉 = 〈 C , D 〉 ) ;;
+	step 21 : wff = syl5eleq (step 19, step 20) |- ( 〈 A , B 〉 = 〈 C , D 〉 → { A } ∈ 〈 C , D 〉 ) ;;
+	step 22 : wff = oprcl () |- ( { A } ∈ 〈 C , D 〉 → ( C ∈ _V ∧ D ∈ _V ) ) ;;
+	step 23 : wff = dfopg () |- ( ( C ∈ _V ∧ D ∈ _V ) → 〈 C , D 〉 = { { C } , { C , D } } ) ;;
+	step 24 : wff = 3syl (step 21, step 22, step 23) |- ( 〈 A , B 〉 = 〈 C , D 〉 → 〈 C , D 〉 = { { C } , { C , D } } ) ;;
+	step 25 : wff = eleqtrd (step 18, step 24) |- ( 〈 A , B 〉 = 〈 C , D 〉 → { A } ∈ { { C } , { C , D } } ) ;;
+	step 26 : wff = elpri () |- ( { A } ∈ { { C } , { C , D } } → ( { A } = { C } ∨ { A } = { C , D } ) ) ;;
+	step 27 : wff = syl (step 25, step 26) |- ( 〈 A , B 〉 = 〈 C , D 〉 → ( { A } = { C } ∨ { A } = { C , D } ) ) ;;
+	step 28 : wff = mpjaod (step 2, step 15, step 27) |- ( 〈 A , B 〉 = 〈 C , D 〉 → A = C ) ;;
+	qed prop 1 = step 28 ;;
+}
+
+/* The ordered pair theorem.  If two ordered pairs are equal, their first
+       elements are equal and their second elements are equal.  Exercise 6 of
+       [TakeutiZaring] p. 16.  Note that ` C ` and ` D ` are not required to be
+       sets due our specific ordered pair definition.  (Contributed by NM,
+       28-May-1995.) */
+
+theorem opth (A : class, B : class, C : class, D : class) disjointed(x B, x C, x D) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( 〈 A , B 〉 = 〈 C , D 〉 ↔ ( A = C ∧ B = D ) ) ;;
+}
+
+proof of opth {
+	var x : set;;
+	step 1 : wff = opth1 (hyp 1, hyp 2) |- ( 〈 A , B 〉 = 〈 C , D 〉 → A = C ) ;;
+	step 2 : wff = opi1 (hyp 1, hyp 2) |- { A } ∈ 〈 A , B 〉 ;;
+	step 3 : wff = id () |- ( 〈 A , B 〉 = 〈 C , D 〉 → 〈 A , B 〉 = 〈 C , D 〉 ) ;;
+	step 4 : wff = syl5eleq (step 2, step 3) |- ( 〈 A , B 〉 = 〈 C , D 〉 → { A } ∈ 〈 C , D 〉 ) ;;
+	step 5 : wff = oprcl () |- ( { A } ∈ 〈 C , D 〉 → ( C ∈ _V ∧ D ∈ _V ) ) ;;
+	step 6 : wff = syl (step 4, step 5) |- ( 〈 A , B 〉 = 〈 C , D 〉 → ( C ∈ _V ∧ D ∈ _V ) ) ;;
+	step 7 : wff = simprd (step 6) |- ( 〈 A , B 〉 = 〈 C , D 〉 → D ∈ _V ) ;;
+	step 8 : wff = opth1 (hyp 1, hyp 2) |- ( 〈 A , B 〉 = 〈 C , D 〉 → A = C ) ;;
+	step 9 : wff = opeq1d (step 8) |- ( 〈 A , B 〉 = 〈 C , D 〉 → 〈 A , B 〉 = 〈 C , B 〉 ) ;;
+	step 10 : wff = id () |- ( 〈 A , B 〉 = 〈 C , D 〉 → 〈 A , B 〉 = 〈 C , D 〉 ) ;;
+	step 11 : wff = eqtr3d (step 9, step 10) |- ( 〈 A , B 〉 = 〈 C , D 〉 → 〈 C , B 〉 = 〈 C , D 〉 ) ;;
+	step 12 : wff = opi1 (hyp 1, hyp 2) |- { A } ∈ 〈 A , B 〉 ;;
+	step 13 : wff = id () |- ( 〈 A , B 〉 = 〈 C , D 〉 → 〈 A , B 〉 = 〈 C , D 〉 ) ;;
+	step 14 : wff = syl5eleq (step 12, step 13) |- ( 〈 A , B 〉 = 〈 C , D 〉 → { A } ∈ 〈 C , D 〉 ) ;;
+	step 15 : wff = oprcl () |- ( { A } ∈ 〈 C , D 〉 → ( C ∈ _V ∧ D ∈ _V ) ) ;;
+	step 16 : wff = syl (step 14, step 15) |- ( 〈 A , B 〉 = 〈 C , D 〉 → ( C ∈ _V ∧ D ∈ _V ) ) ;;
+	step 17 : wff = simpld (step 16) |- ( 〈 A , B 〉 = 〈 C , D 〉 → C ∈ _V ) ;;
+	step 18 : wff = dfopg () |- ( ( C ∈ _V ∧ B ∈ _V ) → 〈 C , B 〉 = { { C } , { C , B } } ) ;;
+	step 19 : wff = sylancl (step 17, hyp 2, step 18) |- ( 〈 A , B 〉 = 〈 C , D 〉 → 〈 C , B 〉 = { { C } , { C , B } } ) ;;
+	step 20 : wff = eqtr3d (step 11, step 19) |- ( 〈 A , B 〉 = 〈 C , D 〉 → 〈 C , D 〉 = { { C } , { C , B } } ) ;;
+	step 21 : wff = opi1 (hyp 1, hyp 2) |- { A } ∈ 〈 A , B 〉 ;;
+	step 22 : wff = id () |- ( 〈 A , B 〉 = 〈 C , D 〉 → 〈 A , B 〉 = 〈 C , D 〉 ) ;;
+	step 23 : wff = syl5eleq (step 21, step 22) |- ( 〈 A , B 〉 = 〈 C , D 〉 → { A } ∈ 〈 C , D 〉 ) ;;
+	step 24 : wff = oprcl () |- ( { A } ∈ 〈 C , D 〉 → ( C ∈ _V ∧ D ∈ _V ) ) ;;
+	step 25 : wff = syl (step 23, step 24) |- ( 〈 A , B 〉 = 〈 C , D 〉 → ( C ∈ _V ∧ D ∈ _V ) ) ;;
+	step 26 : wff = dfopg () |- ( ( C ∈ _V ∧ D ∈ _V ) → 〈 C , D 〉 = { { C } , { C , D } } ) ;;
+	step 27 : wff = syl (step 25, step 26) |- ( 〈 A , B 〉 = 〈 C , D 〉 → 〈 C , D 〉 = { { C } , { C , D } } ) ;;
+	step 28 : wff = eqtr3d (step 20, step 27) |- ( 〈 A , B 〉 = 〈 C , D 〉 → { { C } , { C , B } } = { { C } , { C , D } } ) ;;
+	step 29 : wff = prex () |- { C , B } ∈ _V ;;
+	step 30 : wff = prex () |- { C , D } ∈ _V ;;
+	step 31 : wff = preqr2 (step 29, step 30) |- ( { { C } , { C , B } } = { { C } , { C , D } } → { C , B } = { C , D } ) ;;
+	step 32 : wff = syl (step 28, step 31) |- ( 〈 A , B 〉 = 〈 C , D 〉 → { C , B } = { C , D } ) ;;
+	step 33 : wff = preq2 () |- ( x = D → { C , x } = { C , D } ) ;;
+	step 34 : wff = eqeq2d (step 33) |- ( x = D → ( { C , B } = { C , x } ↔ { C , B } = { C , D } ) ) ;;
+	step 35 : wff = eqeq2 () |- ( x = D → ( B = x ↔ B = D ) ) ;;
+	step 36 : wff = imbi12d (step 34, step 35) |- ( x = D → ( ( { C , B } = { C , x } → B = x ) ↔ ( { C , B } = { C , D } → B = D ) ) ) ;;
+	step 37 : wff = vex () |- x ∈ _V ;;
+	step 38 : wff = preqr2 (hyp 2, step 37) |- ( { C , B } = { C , x } → B = x ) ;;
+	step 39 : wff = vtoclg (step 36, step 38) |- ( D ∈ _V → ( { C , B } = { C , D } → B = D ) ) ;;
+	step 40 : wff = sylc (step 7, step 32, step 39) |- ( 〈 A , B 〉 = 〈 C , D 〉 → B = D ) ;;
+	step 41 : wff = jca (step 1, step 40) |- ( 〈 A , B 〉 = 〈 C , D 〉 → ( A = C ∧ B = D ) ) ;;
+	step 42 : wff = opeq12 () |- ( ( A = C ∧ B = D ) → 〈 A , B 〉 = 〈 C , D 〉 ) ;;
+	step 43 : wff = impbii (step 41, step 42) |- ( 〈 A , B 〉 = 〈 C , D 〉 ↔ ( A = C ∧ B = D ) ) ;;
+	qed prop 1 = step 43 ;;
+}
+
+/* Ordered pair theorem. ` C ` and ` D ` are not required to be sets under
+       our specific ordered pair definition.  (Contributed by NM,
+       14-Oct-2005.)  (Revised by Mario Carneiro, 26-Apr-2015.) */
+
+theorem opthg (A : class, B : class, C : class, D : class, V : class, W : class) disjointed(x y A, y B, x y C, x y D) {
+	prop 1 : wff = |- ( ( A ∈ V ∧ B ∈ W ) → ( 〈 A , B 〉 = 〈 C , D 〉 ↔ ( A = C ∧ B = D ) ) ) ;;
+}
+
+proof of opthg {
+	var x : set, y : set;;
+	step 1 : wff = opeq1 () |- ( x = A → 〈 x , y 〉 = 〈 A , y 〉 ) ;;
+	step 2 : wff = eqeq1d (step 1) |- ( x = A → ( 〈 x , y 〉 = 〈 C , D 〉 ↔ 〈 A , y 〉 = 〈 C , D 〉 ) ) ;;
+	step 3 : wff = eqeq1 () |- ( x = A → ( x = C ↔ A = C ) ) ;;
+	step 4 : wff = anbi1d (step 3) |- ( x = A → ( ( x = C ∧ y = D ) ↔ ( A = C ∧ y = D ) ) ) ;;
+	step 5 : wff = bibi12d (step 2, step 4) |- ( x = A → ( ( 〈 x , y 〉 = 〈 C , D 〉 ↔ ( x = C ∧ y = D ) ) ↔ ( 〈 A , y 〉 = 〈 C , D 〉 ↔ ( A = C ∧ y = D ) ) ) ) ;;
+	step 6 : wff = opeq2 () |- ( y = B → 〈 A , y 〉 = 〈 A , B 〉 ) ;;
+	step 7 : wff = eqeq1d (step 6) |- ( y = B → ( 〈 A , y 〉 = 〈 C , D 〉 ↔ 〈 A , B 〉 = 〈 C , D 〉 ) ) ;;
+	step 8 : wff = eqeq1 () |- ( y = B → ( y = D ↔ B = D ) ) ;;
+	step 9 : wff = anbi2d (step 8) |- ( y = B → ( ( A = C ∧ y = D ) ↔ ( A = C ∧ B = D ) ) ) ;;
+	step 10 : wff = bibi12d (step 7, step 9) |- ( y = B → ( ( 〈 A , y 〉 = 〈 C , D 〉 ↔ ( A = C ∧ y = D ) ) ↔ ( 〈 A , B 〉 = 〈 C , D 〉 ↔ ( A = C ∧ B = D ) ) ) ) ;;
+	step 11 : wff = vex () |- x ∈ _V ;;
+	step 12 : wff = vex () |- y ∈ _V ;;
+	step 13 : wff = opth (step 11, step 12) |- ( 〈 x , y 〉 = 〈 C , D 〉 ↔ ( x = C ∧ y = D ) ) ;;
+	step 14 : wff = vtocl2g (step 5, step 10, step 13) |- ( ( A ∈ V ∧ B ∈ W ) → ( 〈 A , B 〉 = 〈 C , D 〉 ↔ ( A = C ∧ B = D ) ) ) ;;
+	qed prop 1 = step 14 ;;
+}
+
+/* Ordered pair theorem.  (Contributed by NM, 14-Oct-2005.)  (Revised by
+       Mario Carneiro, 26-Apr-2015.) */
+
+theorem opthg2 (A : class, B : class, C : class, D : class, V : class, W : class)  {
+	prop 1 : wff = |- ( ( C ∈ V ∧ D ∈ W ) → ( 〈 A , B 〉 = 〈 C , D 〉 ↔ ( A = C ∧ B = D ) ) ) ;;
+}
+
+proof of opthg2 {
+	step 1 : wff = opthg () |- ( ( C ∈ V ∧ D ∈ W ) → ( 〈 C , D 〉 = 〈 A , B 〉 ↔ ( C = A ∧ D = B ) ) ) ;;
+	step 2 : wff = eqcom () |- ( 〈 A , B 〉 = 〈 C , D 〉 ↔ 〈 C , D 〉 = 〈 A , B 〉 ) ;;
+	step 3 : wff = eqcom () |- ( A = C ↔ C = A ) ;;
+	step 4 : wff = eqcom () |- ( B = D ↔ D = B ) ;;
+	step 5 : wff = anbi12i (step 3, step 4) |- ( ( A = C ∧ B = D ) ↔ ( C = A ∧ D = B ) ) ;;
+	step 6 : wff = 3bitr4g (step 1, step 2, step 5) |- ( ( C ∈ V ∧ D ∈ W ) → ( 〈 A , B 〉 = 〈 C , D 〉 ↔ ( A = C ∧ B = D ) ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Ordered pair theorem.  (Contributed by NM, 21-Sep-2014.) */
+
+theorem opth2 (A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- C ∈ _V ;;
+	hyp 2 : wff = |- D ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( 〈 A , B 〉 = 〈 C , D 〉 ↔ ( A = C ∧ B = D ) ) ;;
+}
+
+proof of opth2 {
+	step 1 : wff = opthg2 () |- ( ( C ∈ _V ∧ D ∈ _V ) → ( 〈 A , B 〉 = 〈 C , D 〉 ↔ ( A = C ∧ B = D ) ) ) ;;
+	step 2 : wff = mp2an (hyp 1, hyp 2, step 1) |- ( 〈 A , B 〉 = 〈 C , D 〉 ↔ ( A = C ∧ B = D ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Ordered triple theorem, with triple express with ordered pairs.
+       (Contributed by NM, 1-May-1995.)  (Revised by Mario Carneiro,
+       26-Apr-2015.) */
+
+theorem otth2 (A : class, B : class, C : class, D : class, R : class, S : class)  {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- B ∈ _V ;;
+	hyp 3 : wff = |- R ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( 〈 〈 A , B 〉 , R 〉 = 〈 〈 C , D 〉 , S 〉 ↔ ( A = C ∧ B = D ∧ R = S ) ) ;;
+}
+
+proof of otth2 {
+	step 1 : wff = opth (hyp 1, hyp 2) |- ( 〈 A , B 〉 = 〈 C , D 〉 ↔ ( A = C ∧ B = D ) ) ;;
+	step 2 : wff = anbi1i (step 1) |- ( ( 〈 A , B 〉 = 〈 C , D 〉 ∧ R = S ) ↔ ( ( A = C ∧ B = D ) ∧ R = S ) ) ;;
+	step 3 : wff = opex () |- 〈 A , B 〉 ∈ _V ;;
+	step 4 : wff = opth (step 3, hyp 3) |- ( 〈 〈 A , B 〉 , R 〉 = 〈 〈 C , D 〉 , S 〉 ↔ ( 〈 A , B 〉 = 〈 C , D 〉 ∧ R = S ) ) ;;
+	step 5 : wff = df-3an () |- ( ( A = C ∧ B = D ∧ R = S ) ↔ ( ( A = C ∧ B = D ) ∧ R = S ) ) ;;
+	step 6 : wff = 3bitr4i (step 2, step 4, step 5) |- ( 〈 〈 A , B 〉 , R 〉 = 〈 〈 C , D 〉 , S 〉 ↔ ( A = C ∧ B = D ∧ R = S ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Ordered triple theorem.  (Contributed by NM, 25-Sep-2014.)  (Revised by
+       Mario Carneiro, 26-Apr-2015.) */
+
+theorem otth (A : class, B : class, C : class, D : class, R : class, S : class)  {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- B ∈ _V ;;
+	hyp 3 : wff = |- R ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( 〈 A , B , R 〉 = 〈 C , D , S 〉 ↔ ( A = C ∧ B = D ∧ R = S ) ) ;;
+}
+
+proof of otth {
+	step 1 : wff = df-ot () |- 〈 A , B , R 〉 = 〈 〈 A , B 〉 , R 〉 ;;
+	step 2 : wff = df-ot () |- 〈 C , D , S 〉 = 〈 〈 C , D 〉 , S 〉 ;;
+	step 3 : wff = eqeq12i (step 1, step 2) |- ( 〈 A , B , R 〉 = 〈 C , D , S 〉 ↔ 〈 〈 A , B 〉 , R 〉 = 〈 〈 C , D 〉 , S 〉 ) ;;
+	step 4 : wff = otth2 (hyp 1, hyp 2, hyp 3) |- ( 〈 〈 A , B 〉 , R 〉 = 〈 〈 C , D 〉 , S 〉 ↔ ( A = C ∧ B = D ∧ R = S ) ) ;;
+	step 5 : wff = bitri (step 3, step 4) |- ( 〈 A , B , R 〉 = 〈 C , D , S 〉 ↔ ( A = C ∧ B = D ∧ R = S ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* A variable introduction law for ordered pairs.  Analog of Lemma 15 of
+       [Monk2] p. 109.  (Contributed by NM, 28-May-1995.) */
+
+theorem eqvinop (x : set, y : set, A : class, B : class, C : class) disjointed(x y A, x y B, x y C) {
+	hyp 1 : wff = |- B ∈ _V ;;
+	hyp 2 : wff = |- C ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( A = 〈 B , C 〉 ↔ ∃ x ∃ y ( A = 〈 x , y 〉 ∧ 〈 x , y 〉 = 〈 B , C 〉 ) ) ;;
+}
+
+proof of eqvinop {
+	step 1 : wff = opth2 (hyp 1, hyp 2) |- ( 〈 x , y 〉 = 〈 B , C 〉 ↔ ( x = B ∧ y = C ) ) ;;
+	step 2 : wff = anbi2i (step 1) |- ( ( A = 〈 x , y 〉 ∧ 〈 x , y 〉 = 〈 B , C 〉 ) ↔ ( A = 〈 x , y 〉 ∧ ( x = B ∧ y = C ) ) ) ;;
+	step 3 : wff = ancom () |- ( ( A = 〈 x , y 〉 ∧ ( x = B ∧ y = C ) ) ↔ ( ( x = B ∧ y = C ) ∧ A = 〈 x , y 〉 ) ) ;;
+	step 4 : wff = anass () |- ( ( ( x = B ∧ y = C ) ∧ A = 〈 x , y 〉 ) ↔ ( x = B ∧ ( y = C ∧ A = 〈 x , y 〉 ) ) ) ;;
+	step 5 : wff = 3bitri (step 2, step 3, step 4) |- ( ( A = 〈 x , y 〉 ∧ 〈 x , y 〉 = 〈 B , C 〉 ) ↔ ( x = B ∧ ( y = C ∧ A = 〈 x , y 〉 ) ) ) ;;
+	step 6 : wff = exbii (step 5) |- ( ∃ y ( A = 〈 x , y 〉 ∧ 〈 x , y 〉 = 〈 B , C 〉 ) ↔ ∃ y ( x = B ∧ ( y = C ∧ A = 〈 x , y 〉 ) ) ) ;;
+	step 7 : wff = 19.42v () |- ( ∃ y ( x = B ∧ ( y = C ∧ A = 〈 x , y 〉 ) ) ↔ ( x = B ∧ ∃ y ( y = C ∧ A = 〈 x , y 〉 ) ) ) ;;
+	step 8 : wff = opeq2 () |- ( y = C → 〈 x , y 〉 = 〈 x , C 〉 ) ;;
+	step 9 : wff = eqeq2d (step 8) |- ( y = C → ( A = 〈 x , y 〉 ↔ A = 〈 x , C 〉 ) ) ;;
+	step 10 : wff = ceqsexv (hyp 2, step 9) |- ( ∃ y ( y = C ∧ A = 〈 x , y 〉 ) ↔ A = 〈 x , C 〉 ) ;;
+	step 11 : wff = anbi2i (step 10) |- ( ( x = B ∧ ∃ y ( y = C ∧ A = 〈 x , y 〉 ) ) ↔ ( x = B ∧ A = 〈 x , C 〉 ) ) ;;
+	step 12 : wff = 3bitri (step 6, step 7, step 11) |- ( ∃ y ( A = 〈 x , y 〉 ∧ 〈 x , y 〉 = 〈 B , C 〉 ) ↔ ( x = B ∧ A = 〈 x , C 〉 ) ) ;;
+	step 13 : wff = exbii (step 12) |- ( ∃ x ∃ y ( A = 〈 x , y 〉 ∧ 〈 x , y 〉 = 〈 B , C 〉 ) ↔ ∃ x ( x = B ∧ A = 〈 x , C 〉 ) ) ;;
+	step 14 : wff = opeq1 () |- ( x = B → 〈 x , C 〉 = 〈 B , C 〉 ) ;;
+	step 15 : wff = eqeq2d (step 14) |- ( x = B → ( A = 〈 x , C 〉 ↔ A = 〈 B , C 〉 ) ) ;;
+	step 16 : wff = ceqsexv (hyp 1, step 15) |- ( ∃ x ( x = B ∧ A = 〈 x , C 〉 ) ↔ A = 〈 B , C 〉 ) ;;
+	step 17 : wff = bitr2i (step 13, step 16) |- ( A = 〈 B , C 〉 ↔ ∃ x ∃ y ( A = 〈 x , y 〉 ∧ 〈 x , y 〉 = 〈 B , C 〉 ) ) ;;
+	qed prop 1 = step 17 ;;
+}
+
+/* Substitution of class ` A ` for ordered pair ` <. x , y >. ` .
+       (Contributed by NM, 27-Dec-1996.)  (Revised by Andrew Salmon,
+       11-Jul-2011.) */
+
+theorem copsexg (ph : wff, x : set, y : set, A : class) disjointed(x z w A, y z w A, z w ph) {
+	prop 1 : wff = |- ( A = 〈 x , y 〉 → ( ph ↔ ∃ x ∃ y ( A = 〈 x , y 〉 ∧ ph ) ) ) ;;
+}
+
+proof of copsexg {
+	var z : set, w : set;;
+	step 1 : wff = vex () |- x ∈ _V ;;
+	step 2 : wff = vex () |- y ∈ _V ;;
+	step 3 : wff = eqvinop (step 1, step 2) |- ( A = 〈 x , y 〉 ↔ ∃ z ∃ w ( A = 〈 z , w 〉 ∧ 〈 z , w 〉 = 〈 x , y 〉 ) ) ;;
+	step 4 : wff = 19.8a () |- ( ∃ y ( 〈 z , w 〉 = 〈 x , y 〉 ∧ ph ) → ∃ x ∃ y ( 〈 z , w 〉 = 〈 x , y 〉 ∧ ph ) ) ;;
+	step 5 : wff = 19.23bi (step 4) |- ( ( 〈 z , w 〉 = 〈 x , y 〉 ∧ ph ) → ∃ x ∃ y ( 〈 z , w 〉 = 〈 x , y 〉 ∧ ph ) ) ;;
+	step 6 : wff = ex (step 5) |- ( 〈 z , w 〉 = 〈 x , y 〉 → ( ph → ∃ x ∃ y ( 〈 z , w 〉 = 〈 x , y 〉 ∧ ph ) ) ) ;;
+	step 7 : wff = vex () |- z ∈ _V ;;
+	step 8 : wff = vex () |- w ∈ _V ;;
+	step 9 : wff = opth (step 7, step 8) |- ( 〈 z , w 〉 = 〈 x , y 〉 ↔ ( z = x ∧ w = y ) ) ;;
+	step 10 : wff = vex () |- z ∈ _V ;;
+	step 11 : wff = vex () |- w ∈ _V ;;
+	step 12 : wff = opth (step 10, step 11) |- ( 〈 z , w 〉 = 〈 x , y 〉 ↔ ( z = x ∧ w = y ) ) ;;
+	step 13 : wff = anbi1i (step 12) |- ( ( 〈 z , w 〉 = 〈 x , y 〉 ∧ ph ) ↔ ( ( z = x ∧ w = y ) ∧ ph ) ) ;;
+	step 14 : wff = 2exbii (step 13) |- ( ∃ x ∃ y ( 〈 z , w 〉 = 〈 x , y 〉 ∧ ph ) ↔ ∃ x ∃ y ( ( z = x ∧ w = y ) ∧ ph ) ) ;;
+	step 15 : wff = nfe1 () |- F/ x ∃ x ( z = x ∧ ∃ y ( w = y ∧ ph ) ) ;;
+	step 16 : wff = nfa1 () |- F/ y ∀ y y = x ;;
+	step 17 : wff = anass () |- ( ( ( z = x ∧ w = y ) ∧ ph ) ↔ ( z = x ∧ ( w = y ∧ ph ) ) ) ;;
+	step 18 : wff = 19.8a () |- ( ( w = y ∧ ph ) → ∃ y ( w = y ∧ ph ) ) ;;
+	step 19 : wff = a1i (step 18) |- ( ∀ y y = x → ( ( w = y ∧ ph ) → ∃ y ( w = y ∧ ph ) ) ) ;;
+	step 20 : wff = anim2d (step 19) |- ( ∀ y y = x → ( ( z = x ∧ ( w = y ∧ ph ) ) → ( z = x ∧ ∃ y ( w = y ∧ ph ) ) ) ) ;;
+	step 21 : wff = syl5bi (step 17, step 20) |- ( ∀ y y = x → ( ( ( z = x ∧ w = y ) ∧ ph ) → ( z = x ∧ ∃ y ( w = y ∧ ph ) ) ) ) ;;
+	step 22 : wff = eximd (step 16, step 21) |- ( ∀ y y = x → ( ∃ y ( ( z = x ∧ w = y ) ∧ ph ) → ∃ y ( z = x ∧ ∃ y ( w = y ∧ ph ) ) ) ) ;;
+	step 23 : wff = biidd () |- ( ∀ y y = x → ( ( z = x ∧ ∃ y ( w = y ∧ ph ) ) ↔ ( z = x ∧ ∃ y ( w = y ∧ ph ) ) ) ) ;;
+	step 24 : wff = drex1 (step 23) |- ( ∀ y y = x → ( ∃ y ( z = x ∧ ∃ y ( w = y ∧ ph ) ) ↔ ∃ x ( z = x ∧ ∃ y ( w = y ∧ ph ) ) ) ) ;;
+	step 25 : wff = sylibd (step 22, step 24) |- ( ∀ y y = x → ( ∃ y ( ( z = x ∧ w = y ) ∧ ph ) → ∃ x ( z = x ∧ ∃ y ( w = y ∧ ph ) ) ) ) ;;
+	step 26 : wff = anass () |- ( ( ( z = x ∧ w = y ) ∧ ph ) ↔ ( z = x ∧ ( w = y ∧ ph ) ) ) ;;
+	step 27 : wff = exbii (step 26) |- ( ∃ y ( ( z = x ∧ w = y ) ∧ ph ) ↔ ∃ y ( z = x ∧ ( w = y ∧ ph ) ) ) ;;
+	step 28 : wff = 19.40 () |- ( ∃ y ( z = x ∧ ( w = y ∧ ph ) ) → ( ∃ y z = x ∧ ∃ y ( w = y ∧ ph ) ) ) ;;
+	step 29 : wff = nfnae () |- F/ y ¬ ∀ y y = x ;;
+	step 30 : wff = dveeq2 () |- ( ¬ ∀ y y = x → ( z = x → ∀ y z = x ) ) ;;
+	step 31 : wff = nfd (step 29, step 30) |- ( ¬ ∀ y y = x → F/ y z = x ) ;;
+	step 32 : wff = 19.9d (step 31) |- ( ¬ ∀ y y = x → ( ∃ y z = x → z = x ) ) ;;
+	step 33 : wff = anim1d (step 32) |- ( ¬ ∀ y y = x → ( ( ∃ y z = x ∧ ∃ y ( w = y ∧ ph ) ) → ( z = x ∧ ∃ y ( w = y ∧ ph ) ) ) ) ;;
+	step 34 : wff = syl5 (step 28, step 33) |- ( ¬ ∀ y y = x → ( ∃ y ( z = x ∧ ( w = y ∧ ph ) ) → ( z = x ∧ ∃ y ( w = y ∧ ph ) ) ) ) ;;
+	step 35 : wff = syl5bi (step 27, step 34) |- ( ¬ ∀ y y = x → ( ∃ y ( ( z = x ∧ w = y ) ∧ ph ) → ( z = x ∧ ∃ y ( w = y ∧ ph ) ) ) ) ;;
+	step 36 : wff = 19.8a () |- ( ( z = x ∧ ∃ y ( w = y ∧ ph ) ) → ∃ x ( z = x ∧ ∃ y ( w = y ∧ ph ) ) ) ;;
+	step 37 : wff = syl6 (step 35, step 36) |- ( ¬ ∀ y y = x → ( ∃ y ( ( z = x ∧ w = y ) ∧ ph ) → ∃ x ( z = x ∧ ∃ y ( w = y ∧ ph ) ) ) ) ;;
+	step 38 : wff = pm2.61i (step 25, step 37) |- ( ∃ y ( ( z = x ∧ w = y ) ∧ ph ) → ∃ x ( z = x ∧ ∃ y ( w = y ∧ ph ) ) ) ;;
+	step 39 : wff = exlimi (step 15, step 38) |- ( ∃ x ∃ y ( ( z = x ∧ w = y ) ∧ ph ) → ∃ x ( z = x ∧ ∃ y ( w = y ∧ ph ) ) ) ;;
+	step 40 : wff = euequ1 () |- ∃! x x = z ;;
+	step 41 : wff = equcom () |- ( x = z ↔ z = x ) ;;
+	step 42 : wff = eubii (step 41) |- ( ∃! x x = z ↔ ∃! x z = x ) ;;
+	step 43 : wff = mpbi (step 40, step 42) |- ∃! x z = x ;;
+	step 44 : wff = eupick () |- ( ( ∃! x z = x ∧ ∃ x ( z = x ∧ ∃ y ( w = y ∧ ph ) ) ) → ( z = x → ∃ y ( w = y ∧ ph ) ) ) ;;
+	step 45 : wff = mpan (step 43, step 44) |- ( ∃ x ( z = x ∧ ∃ y ( w = y ∧ ph ) ) → ( z = x → ∃ y ( w = y ∧ ph ) ) ) ;;
+	step 46 : wff = com12 (step 45) |- ( z = x → ( ∃ x ( z = x ∧ ∃ y ( w = y ∧ ph ) ) → ∃ y ( w = y ∧ ph ) ) ) ;;
+	step 47 : wff = euequ1 () |- ∃! y y = w ;;
+	step 48 : wff = eqcom () |- ( y = w ↔ w = y ) ;;
+	step 49 : wff = eubii (step 48) |- ( ∃! y y = w ↔ ∃! y w = y ) ;;
+	step 50 : wff = mpbi (step 47, step 49) |- ∃! y w = y ;;
+	step 51 : wff = eupick () |- ( ( ∃! y w = y ∧ ∃ y ( w = y ∧ ph ) ) → ( w = y → ph ) ) ;;
+	step 52 : wff = mpan (step 50, step 51) |- ( ∃ y ( w = y ∧ ph ) → ( w = y → ph ) ) ;;
+	step 53 : wff = com12 (step 52) |- ( w = y → ( ∃ y ( w = y ∧ ph ) → ph ) ) ;;
+	step 54 : wff = sylan9 (step 46, step 53) |- ( ( z = x ∧ w = y ) → ( ∃ x ( z = x ∧ ∃ y ( w = y ∧ ph ) ) → ph ) ) ;;
+	step 55 : wff = syl5 (step 39, step 54) |- ( ( z = x ∧ w = y ) → ( ∃ x ∃ y ( ( z = x ∧ w = y ) ∧ ph ) → ph ) ) ;;
+	step 56 : wff = syl5bi (step 14, step 55) |- ( ( z = x ∧ w = y ) → ( ∃ x ∃ y ( 〈 z , w 〉 = 〈 x , y 〉 ∧ ph ) → ph ) ) ;;
+	step 57 : wff = sylbi (step 9, step 56) |- ( 〈 z , w 〉 = 〈 x , y 〉 → ( ∃ x ∃ y ( 〈 z , w 〉 = 〈 x , y 〉 ∧ ph ) → ph ) ) ;;
+	step 58 : wff = impbid (step 6, step 57) |- ( 〈 z , w 〉 = 〈 x , y 〉 → ( ph ↔ ∃ x ∃ y ( 〈 z , w 〉 = 〈 x , y 〉 ∧ ph ) ) ) ;;
+	step 59 : wff = eqeq1 () |- ( A = 〈 z , w 〉 → ( A = 〈 x , y 〉 ↔ 〈 z , w 〉 = 〈 x , y 〉 ) ) ;;
+	step 60 : wff = eqeq1 () |- ( A = 〈 z , w 〉 → ( A = 〈 x , y 〉 ↔ 〈 z , w 〉 = 〈 x , y 〉 ) ) ;;
+	step 61 : wff = anbi1d (step 60) |- ( A = 〈 z , w 〉 → ( ( A = 〈 x , y 〉 ∧ ph ) ↔ ( 〈 z , w 〉 = 〈 x , y 〉 ∧ ph ) ) ) ;;
+	step 62 : wff = 2exbidv (step 61) |- ( A = 〈 z , w 〉 → ( ∃ x ∃ y ( A = 〈 x , y 〉 ∧ ph ) ↔ ∃ x ∃ y ( 〈 z , w 〉 = 〈 x , y 〉 ∧ ph ) ) ) ;;
+	step 63 : wff = bibi2d (step 62) |- ( A = 〈 z , w 〉 → ( ( ph ↔ ∃ x ∃ y ( A = 〈 x , y 〉 ∧ ph ) ) ↔ ( ph ↔ ∃ x ∃ y ( 〈 z , w 〉 = 〈 x , y 〉 ∧ ph ) ) ) ) ;;
+	step 64 : wff = imbi12d (step 59, step 63) |- ( A = 〈 z , w 〉 → ( ( A = 〈 x , y 〉 → ( ph ↔ ∃ x ∃ y ( A = 〈 x , y 〉 ∧ ph ) ) ) ↔ ( 〈 z , w 〉 = 〈 x , y 〉 → ( ph ↔ ∃ x ∃ y ( 〈 z , w 〉 = 〈 x , y 〉 ∧ ph ) ) ) ) ) ;;
+	step 65 : wff = mpbiri (step 58, step 64) |- ( A = 〈 z , w 〉 → ( A = 〈 x , y 〉 → ( ph ↔ ∃ x ∃ y ( A = 〈 x , y 〉 ∧ ph ) ) ) ) ;;
+	step 66 : wff = adantr (step 65) |- ( ( A = 〈 z , w 〉 ∧ 〈 z , w 〉 = 〈 x , y 〉 ) → ( A = 〈 x , y 〉 → ( ph ↔ ∃ x ∃ y ( A = 〈 x , y 〉 ∧ ph ) ) ) ) ;;
+	step 67 : wff = exlimivv (step 66) |- ( ∃ z ∃ w ( A = 〈 z , w 〉 ∧ 〈 z , w 〉 = 〈 x , y 〉 ) → ( A = 〈 x , y 〉 → ( ph ↔ ∃ x ∃ y ( A = 〈 x , y 〉 ∧ ph ) ) ) ) ;;
+	step 68 : wff = sylbi (step 3, step 67) |- ( A = 〈 x , y 〉 → ( A = 〈 x , y 〉 → ( ph ↔ ∃ x ∃ y ( A = 〈 x , y 〉 ∧ ph ) ) ) ) ;;
+	step 69 : wff = pm2.43i (step 68) |- ( A = 〈 x , y 〉 → ( ph ↔ ∃ x ∃ y ( A = 〈 x , y 〉 ∧ ph ) ) ) ;;
+	qed prop 1 = step 69 ;;
+}
+
+/* Closed theorem form of ~ copsex2g .  (Contributed by NM,
+       17-Feb-2013.) */
+
+theorem copsex2t (ph : wff, ps : wff, x : set, y : set, A : class, B : class, V : class, W : class) disjointed(x y ps, x y A, x y B) {
+	prop 1 : wff = |- ( ( ∀ x ∀ y ( ( x = A ∧ y = B ) → ( ph ↔ ps ) ) ∧ ( A ∈ V ∧ B ∈ W ) ) → ( ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ↔ ps ) ) ;;
+}
+
+proof of copsex2t {
+	step 1 : wff = elisset () |- ( A ∈ V → ∃ x x = A ) ;;
+	step 2 : wff = elisset () |- ( B ∈ W → ∃ y y = B ) ;;
+	step 3 : wff = anim12i (step 1, step 2) |- ( ( A ∈ V ∧ B ∈ W ) → ( ∃ x x = A ∧ ∃ y y = B ) ) ;;
+	step 4 : wff = eeanv () |- ( ∃ x ∃ y ( x = A ∧ y = B ) ↔ ( ∃ x x = A ∧ ∃ y y = B ) ) ;;
+	step 5 : wff = sylibr (step 3, step 4) |- ( ( A ∈ V ∧ B ∈ W ) → ∃ x ∃ y ( x = A ∧ y = B ) ) ;;
+	step 6 : wff = nfa1 () |- F/ x ∀ x ∀ y ( ( x = A ∧ y = B ) → ( ph ↔ ps ) ) ;;
+	step 7 : wff = nfe1 () |- F/ x ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ;;
+	step 8 : wff = nfv () |- F/ x ps ;;
+	step 9 : wff = nfbi (step 7, step 8) |- F/ x ( ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ↔ ps ) ;;
+	step 10 : wff = nfa2 () |- F/ y ∀ x ∀ y ( ( x = A ∧ y = B ) → ( ph ↔ ps ) ) ;;
+	step 11 : wff = nfe1 () |- F/ y ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ;;
+	step 12 : wff = nfex (step 11) |- F/ y ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ;;
+	step 13 : wff = nfv () |- F/ y ps ;;
+	step 14 : wff = nfbi (step 12, step 13) |- F/ y ( ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ↔ ps ) ;;
+	step 15 : wff = opeq12 () |- ( ( x = A ∧ y = B ) → 〈 x , y 〉 = 〈 A , B 〉 ) ;;
+	step 16 : wff = copsexg () |- ( 〈 A , B 〉 = 〈 x , y 〉 → ( ph ↔ ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ) ) ;;
+	step 17 : wff = eqcoms (step 16) |- ( 〈 x , y 〉 = 〈 A , B 〉 → ( ph ↔ ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ) ) ;;
+	step 18 : wff = syl (step 15, step 17) |- ( ( x = A ∧ y = B ) → ( ph ↔ ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ) ) ;;
+	step 19 : wff = adantl (step 18) |- ( ( ∀ x ∀ y ( ( x = A ∧ y = B ) → ( ph ↔ ps ) ) ∧ ( x = A ∧ y = B ) ) → ( ph ↔ ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ) ) ;;
+	step 20 : wff = sp () |- ( ∀ x ∀ y ( ( x = A ∧ y = B ) → ( ph ↔ ps ) ) → ∀ y ( ( x = A ∧ y = B ) → ( ph ↔ ps ) ) ) ;;
+	step 21 : wff = 19.21bi (step 20) |- ( ∀ x ∀ y ( ( x = A ∧ y = B ) → ( ph ↔ ps ) ) → ( ( x = A ∧ y = B ) → ( ph ↔ ps ) ) ) ;;
+	step 22 : wff = imp (step 21) |- ( ( ∀ x ∀ y ( ( x = A ∧ y = B ) → ( ph ↔ ps ) ) ∧ ( x = A ∧ y = B ) ) → ( ph ↔ ps ) ) ;;
+	step 23 : wff = bitr3d (step 19, step 22) |- ( ( ∀ x ∀ y ( ( x = A ∧ y = B ) → ( ph ↔ ps ) ) ∧ ( x = A ∧ y = B ) ) → ( ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ↔ ps ) ) ;;
+	step 24 : wff = ex (step 23) |- ( ∀ x ∀ y ( ( x = A ∧ y = B ) → ( ph ↔ ps ) ) → ( ( x = A ∧ y = B ) → ( ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ↔ ps ) ) ) ;;
+	step 25 : wff = exlimd (step 10, step 14, step 24) |- ( ∀ x ∀ y ( ( x = A ∧ y = B ) → ( ph ↔ ps ) ) → ( ∃ y ( x = A ∧ y = B ) → ( ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ↔ ps ) ) ) ;;
+	step 26 : wff = exlimd (step 6, step 9, step 25) |- ( ∀ x ∀ y ( ( x = A ∧ y = B ) → ( ph ↔ ps ) ) → ( ∃ x ∃ y ( x = A ∧ y = B ) → ( ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ↔ ps ) ) ) ;;
+	step 27 : wff = imp (step 26) |- ( ( ∀ x ∀ y ( ( x = A ∧ y = B ) → ( ph ↔ ps ) ) ∧ ∃ x ∃ y ( x = A ∧ y = B ) ) → ( ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ↔ ps ) ) ;;
+	step 28 : wff = sylan2 (step 5, step 27) |- ( ( ∀ x ∀ y ( ( x = A ∧ y = B ) → ( ph ↔ ps ) ) ∧ ( A ∈ V ∧ B ∈ W ) ) → ( ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ↔ ps ) ) ;;
+	qed prop 1 = step 28 ;;
+}
+
+/* Implicit substitution inference for ordered pairs.  (Contributed by NM,
+       28-May-1995.) */
+
+theorem copsex2g (ph : wff, ps : wff, x : set, y : set, A : class, B : class, V : class, W : class) disjointed(x y ps, x y A, x y B) {
+	hyp 1 : wff = |- ( ( x = A ∧ y = B ) → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( A ∈ V ∧ B ∈ W ) → ( ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ↔ ps ) ) ;;
+}
+
+proof of copsex2g {
+	step 1 : wff = elisset () |- ( A ∈ V → ∃ x x = A ) ;;
+	step 2 : wff = elisset () |- ( B ∈ W → ∃ y y = B ) ;;
+	step 3 : wff = eeanv () |- ( ∃ x ∃ y ( x = A ∧ y = B ) ↔ ( ∃ x x = A ∧ ∃ y y = B ) ) ;;
+	step 4 : wff = nfe1 () |- F/ x ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ;;
+	step 5 : wff = nfv () |- F/ x ps ;;
+	step 6 : wff = nfbi (step 4, step 5) |- F/ x ( ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ↔ ps ) ;;
+	step 7 : wff = nfe1 () |- F/ y ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ;;
+	step 8 : wff = nfex (step 7) |- F/ y ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ;;
+	step 9 : wff = nfv () |- F/ y ps ;;
+	step 10 : wff = nfbi (step 8, step 9) |- F/ y ( ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ↔ ps ) ;;
+	step 11 : wff = opeq12 () |- ( ( x = A ∧ y = B ) → 〈 x , y 〉 = 〈 A , B 〉 ) ;;
+	step 12 : wff = copsexg () |- ( 〈 A , B 〉 = 〈 x , y 〉 → ( ph ↔ ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ) ) ;;
+	step 13 : wff = eqcoms (step 12) |- ( 〈 x , y 〉 = 〈 A , B 〉 → ( ph ↔ ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ) ) ;;
+	step 14 : wff = syl (step 11, step 13) |- ( ( x = A ∧ y = B ) → ( ph ↔ ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ) ) ;;
+	step 15 : wff = bitr3d (step 14, hyp 1) |- ( ( x = A ∧ y = B ) → ( ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ↔ ps ) ) ;;
+	step 16 : wff = exlimi (step 10, step 15) |- ( ∃ y ( x = A ∧ y = B ) → ( ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ↔ ps ) ) ;;
+	step 17 : wff = exlimi (step 6, step 16) |- ( ∃ x ∃ y ( x = A ∧ y = B ) → ( ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ↔ ps ) ) ;;
+	step 18 : wff = sylbir (step 3, step 17) |- ( ( ∃ x x = A ∧ ∃ y y = B ) → ( ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ↔ ps ) ) ;;
+	step 19 : wff = syl2an (step 1, step 2, step 18) |- ( ( A ∈ V ∧ B ∈ W ) → ( ∃ x ∃ y ( 〈 A , B 〉 = 〈 x , y 〉 ∧ ph ) ↔ ps ) ) ;;
+	qed prop 1 = step 19 ;;
+}
+
+/* An implicit substitution inference for 2 ordered pairs.  (Contributed by
+       NM, 5-Aug-1995.) */
+
+theorem copsex4g (ph : wff, ps : wff, x : set, y : set, z : set, w : set, A : class, B : class, C : class, D : class, R : class, S : class) disjointed(x y z w A, x y z w B, x y z w C, x y z w D, x y z w ps, x y z w R, x y z w S) {
+	hyp 1 : wff = |- ( ( ( x = A ∧ y = B ) ∧ ( z = C ∧ w = D ) ) → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ( A ∈ R ∧ B ∈ S ) ∧ ( C ∈ R ∧ D ∈ S ) ) → ( ∃ x ∃ y ∃ z ∃ w ( ( 〈 A , B 〉 = 〈 x , y 〉 ∧ 〈 C , D 〉 = 〈 z , w 〉 ) ∧ ph ) ↔ ps ) ) ;;
+}
+
+proof of copsex4g {
+	step 1 : wff = eqcom () |- ( 〈 A , B 〉 = 〈 x , y 〉 ↔ 〈 x , y 〉 = 〈 A , B 〉 ) ;;
+	step 2 : wff = vex () |- x ∈ _V ;;
+	step 3 : wff = vex () |- y ∈ _V ;;
+	step 4 : wff = opth (step 2, step 3) |- ( 〈 x , y 〉 = 〈 A , B 〉 ↔ ( x = A ∧ y = B ) ) ;;
+	step 5 : wff = bitri (step 1, step 4) |- ( 〈 A , B 〉 = 〈 x , y 〉 ↔ ( x = A ∧ y = B ) ) ;;
+	step 6 : wff = eqcom () |- ( 〈 C , D 〉 = 〈 z , w 〉 ↔ 〈 z , w 〉 = 〈 C , D 〉 ) ;;
+	step 7 : wff = vex () |- z ∈ _V ;;
+	step 8 : wff = vex () |- w ∈ _V ;;
+	step 9 : wff = opth (step 7, step 8) |- ( 〈 z , w 〉 = 〈 C , D 〉 ↔ ( z = C ∧ w = D ) ) ;;
+	step 10 : wff = bitri (step 6, step 9) |- ( 〈 C , D 〉 = 〈 z , w 〉 ↔ ( z = C ∧ w = D ) ) ;;
+	step 11 : wff = anbi12i (step 5, step 10) |- ( ( 〈 A , B 〉 = 〈 x , y 〉 ∧ 〈 C , D 〉 = 〈 z , w 〉 ) ↔ ( ( x = A ∧ y = B ) ∧ ( z = C ∧ w = D ) ) ) ;;
+	step 12 : wff = anbi1i (step 11) |- ( ( ( 〈 A , B 〉 = 〈 x , y 〉 ∧ 〈 C , D 〉 = 〈 z , w 〉 ) ∧ ph ) ↔ ( ( ( x = A ∧ y = B ) ∧ ( z = C ∧ w = D ) ) ∧ ph ) ) ;;
+	step 13 : wff = a1i (step 12) |- ( ( ( A ∈ R ∧ B ∈ S ) ∧ ( C ∈ R ∧ D ∈ S ) ) → ( ( ( 〈 A , B 〉 = 〈 x , y 〉 ∧ 〈 C , D 〉 = 〈 z , w 〉 ) ∧ ph ) ↔ ( ( ( x = A ∧ y = B ) ∧ ( z = C ∧ w = D ) ) ∧ ph ) ) ) ;;
+	step 14 : wff = 4exbidv (step 13) |- ( ( ( A ∈ R ∧ B ∈ S ) ∧ ( C ∈ R ∧ D ∈ S ) ) → ( ∃ x ∃ y ∃ z ∃ w ( ( 〈 A , B 〉 = 〈 x , y 〉 ∧ 〈 C , D 〉 = 〈 z , w 〉 ) ∧ ph ) ↔ ∃ x ∃ y ∃ z ∃ w ( ( ( x = A ∧ y = B ) ∧ ( z = C ∧ w = D ) ) ∧ ph ) ) ) ;;
+	step 15 : wff = id () |- ( ( ( x = A ∧ y = B ) ∧ ( z = C ∧ w = D ) ) → ( ( x = A ∧ y = B ) ∧ ( z = C ∧ w = D ) ) ) ;;
+	step 16 : wff = cgsex4g (step 15, hyp 1) |- ( ( ( A ∈ R ∧ B ∈ S ) ∧ ( C ∈ R ∧ D ∈ S ) ) → ( ∃ x ∃ y ∃ z ∃ w ( ( ( x = A ∧ y = B ) ∧ ( z = C ∧ w = D ) ) ∧ ph ) ↔ ps ) ) ;;
+	step 17 : wff = bitrd (step 14, step 16) |- ( ( ( A ∈ R ∧ B ∈ S ) ∧ ( C ∈ R ∧ D ∈ S ) ) → ( ∃ x ∃ y ∃ z ∃ w ( ( 〈 A , B 〉 = 〈 x , y 〉 ∧ 〈 C , D 〉 = 〈 z , w 〉 ) ∧ ph ) ↔ ps ) ) ;;
+	qed prop 1 = step 17 ;;
+}
+
+/* A property of ordered pairs.  (Contributed by Mario Carneiro,
+     26-Apr-2015.) */
+
+theorem 0nelop (A : class, B : class)  {
+	prop 1 : wff = |- ¬ ∅ ∈ 〈 A , B 〉 ;;
+}
+
+proof of 0nelop {
+	step 1 : wff = id () |- ( ∅ ∈ 〈 A , B 〉 → ∅ ∈ 〈 A , B 〉 ) ;;
+	step 2 : wff = oprcl () |- ( ∅ ∈ 〈 A , B 〉 → ( A ∈ _V ∧ B ∈ _V ) ) ;;
+	step 3 : wff = dfopg () |- ( ( A ∈ _V ∧ B ∈ _V ) → 〈 A , B 〉 = { { A } , { A , B } } ) ;;
+	step 4 : wff = syl (step 2, step 3) |- ( ∅ ∈ 〈 A , B 〉 → 〈 A , B 〉 = { { A } , { A , B } } ) ;;
+	step 5 : wff = eleqtrd (step 1, step 4) |- ( ∅ ∈ 〈 A , B 〉 → ∅ ∈ { { A } , { A , B } } ) ;;
+	step 6 : wff = elpri () |- ( ∅ ∈ { { A } , { A , B } } → ( ∅ = { A } ∨ ∅ = { A , B } ) ) ;;
+	step 7 : wff = syl (step 5, step 6) |- ( ∅ ∈ 〈 A , B 〉 → ( ∅ = { A } ∨ ∅ = { A , B } ) ) ;;
+	step 8 : wff = oprcl () |- ( ∅ ∈ 〈 A , B 〉 → ( A ∈ _V ∧ B ∈ _V ) ) ;;
+	step 9 : wff = simpld (step 8) |- ( ∅ ∈ 〈 A , B 〉 → A ∈ _V ) ;;
+	step 10 : wff = snnzg () |- ( A ∈ _V → { A } ≠ ∅ ) ;;
+	step 11 : wff = syl (step 9, step 10) |- ( ∅ ∈ 〈 A , B 〉 → { A } ≠ ∅ ) ;;
+	step 12 : wff = necomd (step 11) |- ( ∅ ∈ 〈 A , B 〉 → ∅ ≠ { A } ) ;;
+	step 13 : wff = oprcl () |- ( ∅ ∈ 〈 A , B 〉 → ( A ∈ _V ∧ B ∈ _V ) ) ;;
+	step 14 : wff = simpld (step 13) |- ( ∅ ∈ 〈 A , B 〉 → A ∈ _V ) ;;
+	step 15 : wff = prnzg () |- ( A ∈ _V → { A , B } ≠ ∅ ) ;;
+	step 16 : wff = syl (step 14, step 15) |- ( ∅ ∈ 〈 A , B 〉 → { A , B } ≠ ∅ ) ;;
+	step 17 : wff = necomd (step 16) |- ( ∅ ∈ 〈 A , B 〉 → ∅ ≠ { A , B } ) ;;
+	step 18 : wff = jca (step 12, step 17) |- ( ∅ ∈ 〈 A , B 〉 → ( ∅ ≠ { A } ∧ ∅ ≠ { A , B } ) ) ;;
+	step 19 : wff = neanior () |- ( ( ∅ ≠ { A } ∧ ∅ ≠ { A , B } ) ↔ ¬ ( ∅ = { A } ∨ ∅ = { A , B } ) ) ;;
+	step 20 : wff = sylib (step 18, step 19) |- ( ∅ ∈ 〈 A , B 〉 → ¬ ( ∅ = { A } ∨ ∅ = { A , B } ) ) ;;
+	step 21 : wff = pm2.65i (step 7, step 20) |- ¬ ∅ ∈ 〈 A , B 〉 ;;
+	qed prop 1 = step 21 ;;
+}
+
+/* Equivalence of existence implied by equality of ordered pairs.
+     (Contributed by NM, 28-May-2008.) */
+
+theorem opeqex (A : class, B : class, C : class, D : class)  {
+	prop 1 : wff = |- ( 〈 A , B 〉 = 〈 C , D 〉 → ( ( A ∈ _V ∧ B ∈ _V ) ↔ ( C ∈ _V ∧ D ∈ _V ) ) ) ;;
+}
+
+proof of opeqex {
+	step 1 : wff = neeq1 () |- ( 〈 A , B 〉 = 〈 C , D 〉 → ( 〈 A , B 〉 ≠ ∅ ↔ 〈 C , D 〉 ≠ ∅ ) ) ;;
+	step 2 : wff = opnz () |- ( 〈 A , B 〉 ≠ ∅ ↔ ( A ∈ _V ∧ B ∈ _V ) ) ;;
+	step 3 : wff = opnz () |- ( 〈 C , D 〉 ≠ ∅ ↔ ( C ∈ _V ∧ D ∈ _V ) ) ;;
+	step 4 : wff = 3bitr3g (step 1, step 2, step 3) |- ( 〈 A , B 〉 = 〈 C , D 〉 → ( ( A ∈ _V ∧ B ∈ _V ) ↔ ( C ∈ _V ∧ D ∈ _V ) ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Equivalence of existence implied by equality of ordered triples.
+     (Contributed by NM, 26-Apr-2015.) */
+
+theorem oteqex2 (A : class, B : class, C : class, R : class, S : class, T : class)  {
+	prop 1 : wff = |- ( 〈 〈 A , B 〉 , C 〉 = 〈 〈 R , S 〉 , T 〉 → ( C ∈ _V ↔ T ∈ _V ) ) ;;
+}
+
+proof of oteqex2 {
+	step 1 : wff = opeqex () |- ( 〈 〈 A , B 〉 , C 〉 = 〈 〈 R , S 〉 , T 〉 → ( ( 〈 A , B 〉 ∈ _V ∧ C ∈ _V ) ↔ ( 〈 R , S 〉 ∈ _V ∧ T ∈ _V ) ) ) ;;
+	step 2 : wff = opex () |- 〈 A , B 〉 ∈ _V ;;
+	step 3 : wff = biantrur (step 2) |- ( C ∈ _V ↔ ( 〈 A , B 〉 ∈ _V ∧ C ∈ _V ) ) ;;
+	step 4 : wff = opex () |- 〈 R , S 〉 ∈ _V ;;
+	step 5 : wff = biantrur (step 4) |- ( T ∈ _V ↔ ( 〈 R , S 〉 ∈ _V ∧ T ∈ _V ) ) ;;
+	step 6 : wff = 3bitr4g (step 1, step 3, step 5) |- ( 〈 〈 A , B 〉 , C 〉 = 〈 〈 R , S 〉 , T 〉 → ( C ∈ _V ↔ T ∈ _V ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Equivalence of existence implied by equality of ordered triples.
+     (Contributed by NM, 28-May-2008.)  (Revised by Mario Carneiro,
+     26-Apr-2015.) */
+
+theorem oteqex (A : class, B : class, C : class, R : class, S : class, T : class)  {
+	prop 1 : wff = |- ( 〈 〈 A , B 〉 , C 〉 = 〈 〈 R , S 〉 , T 〉 → ( ( A ∈ _V ∧ B ∈ _V ∧ C ∈ _V ) ↔ ( R ∈ _V ∧ S ∈ _V ∧ T ∈ _V ) ) ) ;;
+}
+
+proof of oteqex {
+	step 1 : wff = simp3 () |- ( ( A ∈ _V ∧ B ∈ _V ∧ C ∈ _V ) → C ∈ _V ) ;;
+	step 2 : wff = a1i (step 1) |- ( 〈 〈 A , B 〉 , C 〉 = 〈 〈 R , S 〉 , T 〉 → ( ( A ∈ _V ∧ B ∈ _V ∧ C ∈ _V ) → C ∈ _V ) ) ;;
+	step 3 : wff = simp3 () |- ( ( R ∈ _V ∧ S ∈ _V ∧ T ∈ _V ) → T ∈ _V ) ;;
+	step 4 : wff = oteqex2 () |- ( 〈 〈 A , B 〉 , C 〉 = 〈 〈 R , S 〉 , T 〉 → ( C ∈ _V ↔ T ∈ _V ) ) ;;
+	step 5 : wff = syl5ibr (step 3, step 4) |- ( 〈 〈 A , B 〉 , C 〉 = 〈 〈 R , S 〉 , T 〉 → ( ( R ∈ _V ∧ S ∈ _V ∧ T ∈ _V ) → C ∈ _V ) ) ;;
+	step 6 : wff = opex () |- 〈 A , B 〉 ∈ _V ;;
+	step 7 : wff = opthg () |- ( ( 〈 A , B 〉 ∈ _V ∧ C ∈ _V ) → ( 〈 〈 A , B 〉 , C 〉 = 〈 〈 R , S 〉 , T 〉 ↔ ( 〈 A , B 〉 = 〈 R , S 〉 ∧ C = T ) ) ) ;;
+	step 8 : wff = mpan (step 6, step 7) |- ( C ∈ _V → ( 〈 〈 A , B 〉 , C 〉 = 〈 〈 R , S 〉 , T 〉 ↔ ( 〈 A , B 〉 = 〈 R , S 〉 ∧ C = T ) ) ) ;;
+	step 9 : wff = simprbda (step 8) |- ( ( C ∈ _V ∧ 〈 〈 A , B 〉 , C 〉 = 〈 〈 R , S 〉 , T 〉 ) → 〈 A , B 〉 = 〈 R , S 〉 ) ;;
+	step 10 : wff = opeqex () |- ( 〈 A , B 〉 = 〈 R , S 〉 → ( ( A ∈ _V ∧ B ∈ _V ) ↔ ( R ∈ _V ∧ S ∈ _V ) ) ) ;;
+	step 11 : wff = syl (step 9, step 10) |- ( ( C ∈ _V ∧ 〈 〈 A , B 〉 , C 〉 = 〈 〈 R , S 〉 , T 〉 ) → ( ( A ∈ _V ∧ B ∈ _V ) ↔ ( R ∈ _V ∧ S ∈ _V ) ) ) ;;
+	step 12 : wff = oteqex2 () |- ( 〈 〈 A , B 〉 , C 〉 = 〈 〈 R , S 〉 , T 〉 → ( C ∈ _V ↔ T ∈ _V ) ) ;;
+	step 13 : wff = adantl (step 12) |- ( ( C ∈ _V ∧ 〈 〈 A , B 〉 , C 〉 = 〈 〈 R , S 〉 , T 〉 ) → ( C ∈ _V ↔ T ∈ _V ) ) ;;
+	step 14 : wff = anbi12d (step 11, step 13) |- ( ( C ∈ _V ∧ 〈 〈 A , B 〉 , C 〉 = 〈 〈 R , S 〉 , T 〉 ) → ( ( ( A ∈ _V ∧ B ∈ _V ) ∧ C ∈ _V ) ↔ ( ( R ∈ _V ∧ S ∈ _V ) ∧ T ∈ _V ) ) ) ;;
+	step 15 : wff = df-3an () |- ( ( A ∈ _V ∧ B ∈ _V ∧ C ∈ _V ) ↔ ( ( A ∈ _V ∧ B ∈ _V ) ∧ C ∈ _V ) ) ;;
+	step 16 : wff = df-3an () |- ( ( R ∈ _V ∧ S ∈ _V ∧ T ∈ _V ) ↔ ( ( R ∈ _V ∧ S ∈ _V ) ∧ T ∈ _V ) ) ;;
+	step 17 : wff = 3bitr4g (step 14, step 15, step 16) |- ( ( C ∈ _V ∧ 〈 〈 A , B 〉 , C 〉 = 〈 〈 R , S 〉 , T 〉 ) → ( ( A ∈ _V ∧ B ∈ _V ∧ C ∈ _V ) ↔ ( R ∈ _V ∧ S ∈ _V ∧ T ∈ _V ) ) ) ;;
+	step 18 : wff = expcom (step 17) |- ( 〈 〈 A , B 〉 , C 〉 = 〈 〈 R , S 〉 , T 〉 → ( C ∈ _V → ( ( A ∈ _V ∧ B ∈ _V ∧ C ∈ _V ) ↔ ( R ∈ _V ∧ S ∈ _V ∧ T ∈ _V ) ) ) ) ;;
+	step 19 : wff = pm5.21ndd (step 2, step 5, step 18) |- ( 〈 〈 A , B 〉 , C 〉 = 〈 〈 R , S 〉 , T 〉 → ( ( A ∈ _V ∧ B ∈ _V ∧ C ∈ _V ) ↔ ( R ∈ _V ∧ S ∈ _V ∧ T ∈ _V ) ) ) ;;
+	qed prop 1 = step 19 ;;
+}
+
+/* An ordered pair commutes iff its members are equal.  (Contributed by NM,
+       28-May-2009.) */
+
+theorem opcom (A : class, B : class)  {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( 〈 A , B 〉 = 〈 B , A 〉 ↔ A = B ) ;;
+}
+
+proof of opcom {
+	step 1 : wff = opth (hyp 1, hyp 2) |- ( 〈 A , B 〉 = 〈 B , A 〉 ↔ ( A = B ∧ B = A ) ) ;;
+	step 2 : wff = eqcom () |- ( B = A ↔ A = B ) ;;
+	step 3 : wff = anbi2i (step 2) |- ( ( A = B ∧ B = A ) ↔ ( A = B ∧ A = B ) ) ;;
+	step 4 : wff = anidm () |- ( ( A = B ∧ A = B ) ↔ A = B ) ;;
+	step 5 : wff = 3bitri (step 1, step 3, step 4) |- ( 〈 A , B 〉 = 〈 B , A 〉 ↔ A = B ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* "At most one" property of an ordered pair.  (Contributed by NM,
+       11-Apr-2004.)  (Revised by Mario Carneiro, 26-Apr-2015.) */
+
+theorem moop2 (x : set, A : class, B : class) disjointed(x y A, y B) {
+	hyp 1 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ∃* x A = 〈 B , x 〉 ;;
+}
+
+proof of moop2 {
+	var y : set;;
+	step 1 : wff = eqtr2 () |- ( ( A = 〈 B , x 〉 ∧ A = 〈 [_ y / x ]_ B , y 〉 ) → 〈 B , x 〉 = 〈 [_ y / x ]_ B , y 〉 ) ;;
+	step 2 : wff = vex () |- x ∈ _V ;;
+	step 3 : wff = opth (hyp 1, step 2) |- ( 〈 B , x 〉 = 〈 [_ y / x ]_ B , y 〉 ↔ ( B = [_ y / x ]_ B ∧ x = y ) ) ;;
+	step 4 : wff = simprbi (step 3) |- ( 〈 B , x 〉 = 〈 [_ y / x ]_ B , y 〉 → x = y ) ;;
+	step 5 : wff = syl (step 1, step 4) |- ( ( A = 〈 B , x 〉 ∧ A = 〈 [_ y / x ]_ B , y 〉 ) → x = y ) ;;
+	step 6 : wff = gen2 (step 5) |- ∀ x ∀ y ( ( A = 〈 B , x 〉 ∧ A = 〈 [_ y / x ]_ B , y 〉 ) → x = y ) ;;
+	step 7 : wff = nfcsb1v () |- F/_ x [_ y / x ]_ B ;;
+	step 8 : wff = nfcv () |- F/_ x y ;;
+	step 9 : wff = nfop (step 7, step 8) |- F/_ x 〈 [_ y / x ]_ B , y 〉 ;;
+	step 10 : wff = nfeq2 (step 9) |- F/ x A = 〈 [_ y / x ]_ B , y 〉 ;;
+	step 11 : wff = csbeq1a () |- ( x = y → B = [_ y / x ]_ B ) ;;
+	step 12 : wff = id () |- ( x = y → x = y ) ;;
+	step 13 : wff = opeq12d (step 11, step 12) |- ( x = y → 〈 B , x 〉 = 〈 [_ y / x ]_ B , y 〉 ) ;;
+	step 14 : wff = eqeq2d (step 13) |- ( x = y → ( A = 〈 B , x 〉 ↔ A = 〈 [_ y / x ]_ B , y 〉 ) ) ;;
+	step 15 : wff = mo4f (step 10, step 14) |- ( ∃* x A = 〈 B , x 〉 ↔ ∀ x ∀ y ( ( A = 〈 B , x 〉 ∧ A = 〈 [_ y / x ]_ B , y 〉 ) → x = y ) ) ;;
+	step 16 : wff = mpbir (step 6, step 15) |- ∃* x A = 〈 B , x 〉 ;;
+	qed prop 1 = step 16 ;;
+}
+
+/* Equivalence for an ordered pair equal to a singleton.  (Contributed by
+       NM, 3-Jun-2008.) */
+
+theorem opeqsn (A : class, B : class, C : class)  {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- B ∈ _V ;;
+	hyp 3 : wff = |- C ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( 〈 A , B 〉 = { C } ↔ ( A = B ∧ C = { A } ) ) ;;
+}
+
+proof of opeqsn {
+	step 1 : wff = dfop (hyp 1, hyp 2) |- 〈 A , B 〉 = { { A } , { A , B } } ;;
+	step 2 : wff = eqeq1i (step 1) |- ( 〈 A , B 〉 = { C } ↔ { { A } , { A , B } } = { C } ) ;;
+	step 3 : wff = snex () |- { A } ∈ _V ;;
+	step 4 : wff = prex () |- { A , B } ∈ _V ;;
+	step 5 : wff = preqsn (step 3, step 4, hyp 3) |- ( { { A } , { A , B } } = { C } ↔ ( { A } = { A , B } ∧ { A , B } = C ) ) ;;
+	step 6 : wff = eqcom () |- ( { A } = { A , B } ↔ { A , B } = { A } ) ;;
+	step 7 : wff = preqsn (hyp 1, hyp 2, hyp 1) |- ( { A , B } = { A } ↔ ( A = B ∧ B = A ) ) ;;
+	step 8 : wff = eqcom () |- ( B = A ↔ A = B ) ;;
+	step 9 : wff = anbi2i (step 8) |- ( ( A = B ∧ B = A ) ↔ ( A = B ∧ A = B ) ) ;;
+	step 10 : wff = anidm () |- ( ( A = B ∧ A = B ) ↔ A = B ) ;;
+	step 11 : wff = bitri (step 9, step 10) |- ( ( A = B ∧ B = A ) ↔ A = B ) ;;
+	step 12 : wff = 3bitri (step 6, step 7, step 11) |- ( { A } = { A , B } ↔ A = B ) ;;
+	step 13 : wff = anbi1i (step 12) |- ( ( { A } = { A , B } ∧ { A , B } = C ) ↔ ( A = B ∧ { A , B } = C ) ) ;;
+	step 14 : wff = dfsn2 () |- { A } = { A , A } ;;
+	step 15 : wff = preq2 () |- ( A = B → { A , A } = { A , B } ) ;;
+	step 16 : wff = syl5req (step 14, step 15) |- ( A = B → { A , B } = { A } ) ;;
+	step 17 : wff = eqeq1d (step 16) |- ( A = B → ( { A , B } = C ↔ { A } = C ) ) ;;
+	step 18 : wff = eqcom () |- ( { A } = C ↔ C = { A } ) ;;
+	step 19 : wff = syl6bb (step 17, step 18) |- ( A = B → ( { A , B } = C ↔ C = { A } ) ) ;;
+	step 20 : wff = pm5.32i (step 19) |- ( ( A = B ∧ { A , B } = C ) ↔ ( A = B ∧ C = { A } ) ) ;;
+	step 21 : wff = bitri (step 13, step 20) |- ( ( { A } = { A , B } ∧ { A , B } = C ) ↔ ( A = B ∧ C = { A } ) ) ;;
+	step 22 : wff = 3bitri (step 2, step 5, step 21) |- ( 〈 A , B 〉 = { C } ↔ ( A = B ∧ C = { A } ) ) ;;
+	qed prop 1 = step 22 ;;
+}
+
+/* Equivalence for an ordered pair equal to an unordered pair.
+       (Contributed by NM, 3-Jun-2008.) */
+
+theorem opeqpr (A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- B ∈ _V ;;
+	hyp 3 : wff = |- C ∈ _V ;;
+	hyp 4 : wff = |- D ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( 〈 A , B 〉 = { C , D } ↔ ( ( C = { A } ∧ D = { A , B } ) ∨ ( C = { A , B } ∧ D = { A } ) ) ) ;;
+}
+
+proof of opeqpr {
+	step 1 : wff = eqcom () |- ( 〈 A , B 〉 = { C , D } ↔ { C , D } = 〈 A , B 〉 ) ;;
+	step 2 : wff = dfop (hyp 1, hyp 2) |- 〈 A , B 〉 = { { A } , { A , B } } ;;
+	step 3 : wff = eqeq2i (step 2) |- ( { C , D } = 〈 A , B 〉 ↔ { C , D } = { { A } , { A , B } } ) ;;
+	step 4 : wff = snex () |- { A } ∈ _V ;;
+	step 5 : wff = prex () |- { A , B } ∈ _V ;;
+	step 6 : wff = preq12b (hyp 3, hyp 4, step 4, step 5) |- ( { C , D } = { { A } , { A , B } } ↔ ( ( C = { A } ∧ D = { A , B } ) ∨ ( C = { A , B } ∧ D = { A } ) ) ) ;;
+	step 7 : wff = 3bitri (step 1, step 3, step 6) |- ( 〈 A , B 〉 = { C , D } ↔ ( ( C = { A } ∧ D = { A , B } ) ∨ ( C = { A , B } ∧ D = { A } ) ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* "At most one" remains true inside ordered pair quantification.
+       (Contributed by NM, 28-Aug-2007.) */
+
+theorem mosubopt (ph : wff, x : set, y : set, z : set, A : class) disjointed(x y z A) {
+	prop 1 : wff = |- ( ∀ y ∀ z ∃* x ph → ∃* x ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ) ;;
+}
+
+proof of mosubopt {
+	step 1 : wff = nfa1 () |- F/ y ∀ y ∀ z ∃* x ph ;;
+	step 2 : wff = nfe1 () |- F/ y ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ;;
+	step 3 : wff = nfmo (step 2) |- F/ y ∃* x ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ;;
+	step 4 : wff = nfa1 () |- F/ z ∀ z ∃* x ph ;;
+	step 5 : wff = nfe1 () |- F/ z ∃ z ( A = 〈 y , z 〉 ∧ ph ) ;;
+	step 6 : wff = nfex (step 5) |- F/ z ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ;;
+	step 7 : wff = nfmo (step 6) |- F/ z ∃* x ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ;;
+	step 8 : wff = copsexg () |- ( A = 〈 y , z 〉 → ( ph ↔ ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ) ) ;;
+	step 9 : wff = mobidv (step 8) |- ( A = 〈 y , z 〉 → ( ∃* x ph ↔ ∃* x ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ) ) ;;
+	step 10 : wff = biimpcd (step 9) |- ( ∃* x ph → ( A = 〈 y , z 〉 → ∃* x ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ) ) ;;
+	step 11 : wff = sps (step 10) |- ( ∀ z ∃* x ph → ( A = 〈 y , z 〉 → ∃* x ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ) ) ;;
+	step 12 : wff = exlimd (step 4, step 7, step 11) |- ( ∀ z ∃* x ph → ( ∃ z A = 〈 y , z 〉 → ∃* x ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ) ) ;;
+	step 13 : wff = sps (step 12) |- ( ∀ y ∀ z ∃* x ph → ( ∃ z A = 〈 y , z 〉 → ∃* x ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ) ) ;;
+	step 14 : wff = exlimd (step 1, step 3, step 13) |- ( ∀ y ∀ z ∃* x ph → ( ∃ y ∃ z A = 〈 y , z 〉 → ∃* x ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ) ) ;;
+	step 15 : wff = simpl () |- ( ( A = 〈 y , z 〉 ∧ ph ) → A = 〈 y , z 〉 ) ;;
+	step 16 : wff = 2eximi (step 15) |- ( ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) → ∃ y ∃ z A = 〈 y , z 〉 ) ;;
+	step 17 : wff = exlimiv (step 16) |- ( ∃ x ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) → ∃ y ∃ z A = 〈 y , z 〉 ) ;;
+	step 18 : wff = con3i (step 17) |- ( ¬ ∃ y ∃ z A = 〈 y , z 〉 → ¬ ∃ x ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ) ;;
+	step 19 : wff = exmo () |- ( ∃ x ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ∨ ∃* x ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ) ;;
+	step 20 : wff = ori (step 19) |- ( ¬ ∃ x ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) → ∃* x ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ) ;;
+	step 21 : wff = syl (step 18, step 20) |- ( ¬ ∃ y ∃ z A = 〈 y , z 〉 → ∃* x ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ) ;;
+	step 22 : wff = pm2.61d1 (step 14, step 21) |- ( ∀ y ∀ z ∃* x ph → ∃* x ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ) ;;
+	qed prop 1 = step 22 ;;
+}
+
+/* "At most one" remains true inside ordered pair quantification.
+       (Contributed by NM, 28-May-1995.) */
+
+theorem mosubop (ph : wff, x : set, y : set, z : set, A : class) disjointed(x y z A) {
+	hyp 1 : wff = |- ∃* x ph ;;
+	-----------------------
+	prop 1 : wff = |- ∃* x ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ;;
+}
+
+proof of mosubop {
+	step 1 : wff = gen2 (hyp 1) |- ∀ y ∀ z ∃* x ph ;;
+	step 2 : wff = mosubopt () |- ( ∀ y ∀ z ∃* x ph → ∃* x ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ∃* x ∃ y ∃ z ( A = 〈 y , z 〉 ∧ ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Transfer existential uniqueness to second member of an ordered pair.
+       (Contributed by NM, 10-Apr-2004.) */
+
+theorem euop2 (ph : wff, x : set, y : set, A : class) disjointed(x ph, x A, x y) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃! x ∃ y ( x = 〈 A , y 〉 ∧ ph ) ↔ ∃! y ph ) ;;
+}
+
+proof of euop2 {
+	step 1 : wff = opex () |- 〈 A , y 〉 ∈ _V ;;
+	step 2 : wff = moop2 (hyp 1) |- ∃* y x = 〈 A , y 〉 ;;
+	step 3 : wff = euxfr2 (step 1, step 2) |- ( ∃! x ∃ y ( x = 〈 A , y 〉 ∧ ph ) ↔ ∃! y ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Prove existential uniqueness for an ordered triple.  (Contributed by
+       Mario Carneiro, 20-May-2015.) */
+
+theorem euotd (ph : wff, ps : wff, x : set, A : class, B : class, C : class, a : set, b : set, c : set) disjointed(a b c x y A, a b c x y B, a b c x y C, a b c x ph, y ps) {
+	hyp 1 : wff = |- ( ph → A ∈ _V ) ;;
+	hyp 2 : wff = |- ( ph → B ∈ _V ) ;;
+	hyp 3 : wff = |- ( ph → C ∈ _V ) ;;
+	hyp 4 : wff = |- ( ph → ( ps ↔ ( a = A ∧ b = B ∧ c = C ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ∃! x ∃ a ∃ b ∃ c ( x = 〈 a , b , c 〉 ∧ ps ) ) ;;
+}
+
+proof of euotd {
+	var y : set;;
+	step 1 : wff = biimpa (hyp 4) |- ( ( ph ∧ ps ) → ( a = A ∧ b = B ∧ c = C ) ) ;;
+	step 2 : wff = vex () |- a ∈ _V ;;
+	step 3 : wff = vex () |- b ∈ _V ;;
+	step 4 : wff = vex () |- c ∈ _V ;;
+	step 5 : wff = otth (step 2, step 3, step 4) |- ( 〈 a , b , c 〉 = 〈 A , B , C 〉 ↔ ( a = A ∧ b = B ∧ c = C ) ) ;;
+	step 6 : wff = sylibr (step 1, step 5) |- ( ( ph ∧ ps ) → 〈 a , b , c 〉 = 〈 A , B , C 〉 ) ;;
+	step 7 : wff = eqeq2d (step 6) |- ( ( ph ∧ ps ) → ( x = 〈 a , b , c 〉 ↔ x = 〈 A , B , C 〉 ) ) ;;
+	step 8 : wff = biimpd (step 7) |- ( ( ph ∧ ps ) → ( x = 〈 a , b , c 〉 → x = 〈 A , B , C 〉 ) ) ;;
+	step 9 : wff = impancom (step 8) |- ( ( ph ∧ x = 〈 a , b , c 〉 ) → ( ps → x = 〈 A , B , C 〉 ) ) ;;
+	step 10 : wff = expimpd (step 9) |- ( ph → ( ( x = 〈 a , b , c 〉 ∧ ps ) → x = 〈 A , B , C 〉 ) ) ;;
+	step 11 : wff = exlimdv (step 10) |- ( ph → ( ∃ c ( x = 〈 a , b , c 〉 ∧ ps ) → x = 〈 A , B , C 〉 ) ) ;;
+	step 12 : wff = exlimdvv (step 11) |- ( ph → ( ∃ a ∃ b ∃ c ( x = 〈 a , b , c 〉 ∧ ps ) → x = 〈 A , B , C 〉 ) ) ;;
+	step 13 : wff = tru () |- T. ;;
+	step 14 : wff = adantr (hyp 2) |- ( ( ph ∧ a = A ) → B ∈ _V ) ;;
+	step 15 : wff = ad2antrr (hyp 3) |- ( ( ( ph ∧ a = A ) ∧ b = B ) → C ∈ _V ) ;;
+	step 16 : wff = simpr () |- ( ( ph ∧ ( a = A ∧ b = B ∧ c = C ) ) → ( a = A ∧ b = B ∧ c = C ) ) ;;
+	step 17 : wff = vex () |- a ∈ _V ;;
+	step 18 : wff = vex () |- b ∈ _V ;;
+	step 19 : wff = vex () |- c ∈ _V ;;
+	step 20 : wff = otth (step 17, step 18, step 19) |- ( 〈 a , b , c 〉 = 〈 A , B , C 〉 ↔ ( a = A ∧ b = B ∧ c = C ) ) ;;
+	step 21 : wff = sylibr (step 16, step 20) |- ( ( ph ∧ ( a = A ∧ b = B ∧ c = C ) ) → 〈 a , b , c 〉 = 〈 A , B , C 〉 ) ;;
+	step 22 : wff = eqcomd (step 21) |- ( ( ph ∧ ( a = A ∧ b = B ∧ c = C ) ) → 〈 A , B , C 〉 = 〈 a , b , c 〉 ) ;;
+	step 23 : wff = biimpar (hyp 4) |- ( ( ph ∧ ( a = A ∧ b = B ∧ c = C ) ) → ps ) ;;
+	step 24 : wff = jca (step 22, step 23) |- ( ( ph ∧ ( a = A ∧ b = B ∧ c = C ) ) → ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ) ;;
+	step 25 : wff = a1tru () |- ( ( ph ∧ ( a = A ∧ b = B ∧ c = C ) ) → T. ) ;;
+	step 26 : wff = 2thd (step 24, step 25) |- ( ( ph ∧ ( a = A ∧ b = B ∧ c = C ) ) → ( ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ↔ T. ) ) ;;
+	step 27 : wff = 3exp2 (step 26) |- ( ph → ( a = A → ( b = B → ( c = C → ( ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ↔ T. ) ) ) ) ) ;;
+	step 28 : wff = imp41 (step 27) |- ( ( ( ( ph ∧ a = A ) ∧ b = B ) ∧ c = C ) → ( ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ↔ T. ) ) ;;
+	step 29 : wff = sbcied (step 15, step 28) |- ( ( ( ph ∧ a = A ) ∧ b = B ) → ( [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ↔ T. ) ) ;;
+	step 30 : wff = sbcied (step 14, step 29) |- ( ( ph ∧ a = A ) → ( [. B / b ]. [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ↔ T. ) ) ;;
+	step 31 : wff = sbcied (hyp 1, step 30) |- ( ph → ( [. A / a ]. [. B / b ]. [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ↔ T. ) ) ;;
+	step 32 : wff = mpbiri (step 13, step 31) |- ( ph → [. A / a ]. [. B / b ]. [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ) ;;
+	step 33 : wff = nfcv () |- F/_ a A ;;
+	step 34 : wff = nfsbc1v () |- F/ a [. A / a ]. [. B / b ]. [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ;;
+	step 35 : wff = sbceq1a () |- ( a = A → ( [. B / b ]. [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ↔ [. A / a ]. [. B / b ]. [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ) ) ;;
+	step 36 : wff = spcegf (step 33, step 34, step 35) |- ( A ∈ _V → ( [. A / a ]. [. B / b ]. [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) → ∃ a [. B / b ]. [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ) ) ;;
+	step 37 : wff = sylc (hyp 1, step 32, step 36) |- ( ph → ∃ a [. B / b ]. [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ) ;;
+	step 38 : wff = nfcv () |- F/_ b B ;;
+	step 39 : wff = nfsbc1v () |- F/ b [. B / b ]. [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ;;
+	step 40 : wff = nfex (step 39) |- F/ b ∃ a [. B / b ]. [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ;;
+	step 41 : wff = sbceq1a () |- ( b = B → ( [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ↔ [. B / b ]. [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ) ) ;;
+	step 42 : wff = exbidv (step 41) |- ( b = B → ( ∃ a [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ↔ ∃ a [. B / b ]. [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ) ) ;;
+	step 43 : wff = spcegf (step 38, step 40, step 42) |- ( B ∈ _V → ( ∃ a [. B / b ]. [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) → ∃ b ∃ a [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ) ) ;;
+	step 44 : wff = sylc (hyp 2, step 37, step 43) |- ( ph → ∃ b ∃ a [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ) ;;
+	step 45 : wff = nfcv () |- F/_ c C ;;
+	step 46 : wff = nfsbc1v () |- F/ c [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ;;
+	step 47 : wff = nfex (step 46) |- F/ c ∃ a [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ;;
+	step 48 : wff = nfex (step 47) |- F/ c ∃ b ∃ a [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ;;
+	step 49 : wff = sbceq1a () |- ( c = C → ( ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ↔ [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ) ) ;;
+	step 50 : wff = 2exbidv (step 49) |- ( c = C → ( ∃ b ∃ a ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ↔ ∃ b ∃ a [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ) ) ;;
+	step 51 : wff = spcegf (step 45, step 48, step 50) |- ( C ∈ _V → ( ∃ b ∃ a [. C / c ]. ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) → ∃ c ∃ b ∃ a ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ) ) ;;
+	step 52 : wff = sylc (hyp 3, step 44, step 51) |- ( ph → ∃ c ∃ b ∃ a ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ) ;;
+	step 53 : wff = excom13 () |- ( ∃ c ∃ b ∃ a ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ↔ ∃ a ∃ b ∃ c ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ) ;;
+	step 54 : wff = sylib (step 52, step 53) |- ( ph → ∃ a ∃ b ∃ c ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ) ;;
+	step 55 : wff = eqeq1 () |- ( x = 〈 A , B , C 〉 → ( x = 〈 a , b , c 〉 ↔ 〈 A , B , C 〉 = 〈 a , b , c 〉 ) ) ;;
+	step 56 : wff = anbi1d (step 55) |- ( x = 〈 A , B , C 〉 → ( ( x = 〈 a , b , c 〉 ∧ ps ) ↔ ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ) ) ;;
+	step 57 : wff = 3exbidv (step 56) |- ( x = 〈 A , B , C 〉 → ( ∃ a ∃ b ∃ c ( x = 〈 a , b , c 〉 ∧ ps ) ↔ ∃ a ∃ b ∃ c ( 〈 A , B , C 〉 = 〈 a , b , c 〉 ∧ ps ) ) ) ;;
+	step 58 : wff = syl5ibrcom (step 54, step 57) |- ( ph → ( x = 〈 A , B , C 〉 → ∃ a ∃ b ∃ c ( x = 〈 a , b , c 〉 ∧ ps ) ) ) ;;
+	step 59 : wff = impbid (step 12, step 58) |- ( ph → ( ∃ a ∃ b ∃ c ( x = 〈 a , b , c 〉 ∧ ps ) ↔ x = 〈 A , B , C 〉 ) ) ;;
+	step 60 : wff = alrimiv (step 59) |- ( ph → ∀ x ( ∃ a ∃ b ∃ c ( x = 〈 a , b , c 〉 ∧ ps ) ↔ x = 〈 A , B , C 〉 ) ) ;;
+	step 61 : wff = otex () |- 〈 A , B , C 〉 ∈ _V ;;
+	step 62 : wff = eqeq2 () |- ( y = 〈 A , B , C 〉 → ( x = y ↔ x = 〈 A , B , C 〉 ) ) ;;
+	step 63 : wff = bibi2d (step 62) |- ( y = 〈 A , B , C 〉 → ( ( ∃ a ∃ b ∃ c ( x = 〈 a , b , c 〉 ∧ ps ) ↔ x = y ) ↔ ( ∃ a ∃ b ∃ c ( x = 〈 a , b , c 〉 ∧ ps ) ↔ x = 〈 A , B , C 〉 ) ) ) ;;
+	step 64 : wff = albidv (step 63) |- ( y = 〈 A , B , C 〉 → ( ∀ x ( ∃ a ∃ b ∃ c ( x = 〈 a , b , c 〉 ∧ ps ) ↔ x = y ) ↔ ∀ x ( ∃ a ∃ b ∃ c ( x = 〈 a , b , c 〉 ∧ ps ) ↔ x = 〈 A , B , C 〉 ) ) ) ;;
+	step 65 : wff = spcev (step 61, step 64) |- ( ∀ x ( ∃ a ∃ b ∃ c ( x = 〈 a , b , c 〉 ∧ ps ) ↔ x = 〈 A , B , C 〉 ) → ∃ y ∀ x ( ∃ a ∃ b ∃ c ( x = 〈 a , b , c 〉 ∧ ps ) ↔ x = y ) ) ;;
+	step 66 : wff = syl (step 60, step 65) |- ( ph → ∃ y ∀ x ( ∃ a ∃ b ∃ c ( x = 〈 a , b , c 〉 ∧ ps ) ↔ x = y ) ) ;;
+	step 67 : wff = df-eu () |- ( ∃! x ∃ a ∃ b ∃ c ( x = 〈 a , b , c 〉 ∧ ps ) ↔ ∃ y ∀ x ( ∃ a ∃ b ∃ c ( x = 〈 a , b , c 〉 ∧ ps ) ↔ x = y ) ) ;;
+	step 68 : wff = sylibr (step 66, step 67) |- ( ph → ∃! x ∃ a ∃ b ∃ c ( x = 〈 a , b , c 〉 ∧ ps ) ) ;;
+	qed prop 1 = step 68 ;;
+}
+
+/* Justification theorem for the ordered pair definition in Norbert Wiener,
+       "A simplification of the logic of relations," _Proc. of the Cambridge
+       Philos.  Soc_., 1914, vol. 17, pp.387-390.  It is also shown as a
+       definition in [Enderton] p. 36 and as Exercise 4.8(b) of [Mendelson]
+       p. 230.  It is meaningful only for classes that exist as sets (i.e. are
+       not proper classes).  See ~ df-op for other ordered pair definitions.
+       (Contributed by NM, 28-Sep-2003.) */
+
+theorem opthwiener (A : class, B : class, C : class, D : class)  {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } ↔ ( A = C ∧ B = D ) ) ;;
+}
+
+proof of opthwiener {
+	step 1 : wff = id () |- ( { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } → { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } ) ;;
+	step 2 : wff = snex () |- { { B } } ∈ _V ;;
+	step 3 : wff = prid2 (step 2) |- { { B } } ∈ { { { A } , ∅ } , { { B } } } ;;
+	step 4 : wff = eleq2 () |- ( { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } → ( { { B } } ∈ { { { A } , ∅ } , { { B } } } ↔ { { B } } ∈ { { { C } , ∅ } , { { D } } } ) ) ;;
+	step 5 : wff = mpbii (step 3, step 4) |- ( { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } → { { B } } ∈ { { { C } , ∅ } , { { D } } } ) ;;
+	step 6 : wff = snex () |- { { B } } ∈ _V ;;
+	step 7 : wff = elpr (step 6) |- ( { { B } } ∈ { { { C } , ∅ } , { { D } } } ↔ ( { { B } } = { { C } , ∅ } ∨ { { B } } = { { D } } ) ) ;;
+	step 8 : wff = sylib (step 5, step 7) |- ( { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } → ( { { B } } = { { C } , ∅ } ∨ { { B } } = { { D } } ) ) ;;
+	step 9 : wff = 0ex () |- ∅ ∈ _V ;;
+	step 10 : wff = prid2 (step 9) |- ∅ ∈ { { C } , ∅ } ;;
+	step 11 : wff = snnz (hyp 2) |- { B } ≠ ∅ ;;
+	step 12 : wff = 0ex () |- ∅ ∈ _V ;;
+	step 13 : wff = elsnc (step 12) |- ( ∅ ∈ { { B } } ↔ ∅ = { B } ) ;;
+	step 14 : wff = eqcom () |- ( ∅ = { B } ↔ { B } = ∅ ) ;;
+	step 15 : wff = bitri (step 13, step 14) |- ( ∅ ∈ { { B } } ↔ { B } = ∅ ) ;;
+	step 16 : wff = nemtbir (step 11, step 15) |- ¬ ∅ ∈ { { B } } ;;
+	step 17 : wff = nelneq2 () |- ( ( ∅ ∈ { { C } , ∅ } ∧ ¬ ∅ ∈ { { B } } ) → ¬ { { C } , ∅ } = { { B } } ) ;;
+	step 18 : wff = mp2an (step 10, step 16, step 17) |- ¬ { { C } , ∅ } = { { B } } ;;
+	step 19 : wff = eqcom () |- ( { { C } , ∅ } = { { B } } ↔ { { B } } = { { C } , ∅ } ) ;;
+	step 20 : wff = mtbi (step 18, step 19) |- ¬ { { B } } = { { C } , ∅ } ;;
+	step 21 : wff = biorf () |- ( ¬ { { B } } = { { C } , ∅ } → ( { { B } } = { { D } } ↔ ( { { B } } = { { C } , ∅ } ∨ { { B } } = { { D } } ) ) ) ;;
+	step 22 : wff = ax-mp (step 20, step 21) |- ( { { B } } = { { D } } ↔ ( { { B } } = { { C } , ∅ } ∨ { { B } } = { { D } } ) ) ;;
+	step 23 : wff = sylibr (step 8, step 22) |- ( { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } → { { B } } = { { D } } ) ;;
+	step 24 : wff = preq2d (step 23) |- ( { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } → { { { C } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } ) ;;
+	step 25 : wff = eqtr4d (step 1, step 24) |- ( { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } → { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { B } } } ) ;;
+	step 26 : wff = prex () |- { { A } , ∅ } ∈ _V ;;
+	step 27 : wff = prex () |- { { C } , ∅ } ∈ _V ;;
+	step 28 : wff = preqr1 (step 26, step 27) |- ( { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { B } } } → { { A } , ∅ } = { { C } , ∅ } ) ;;
+	step 29 : wff = syl (step 25, step 28) |- ( { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } → { { A } , ∅ } = { { C } , ∅ } ) ;;
+	step 30 : wff = snex () |- { A } ∈ _V ;;
+	step 31 : wff = snex () |- { C } ∈ _V ;;
+	step 32 : wff = preqr1 (step 30, step 31) |- ( { { A } , ∅ } = { { C } , ∅ } → { A } = { C } ) ;;
+	step 33 : wff = syl (step 29, step 32) |- ( { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } → { A } = { C } ) ;;
+	step 34 : wff = sneqr (hyp 1) |- ( { A } = { C } → A = C ) ;;
+	step 35 : wff = syl (step 33, step 34) |- ( { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } → A = C ) ;;
+	step 36 : wff = snex () |- { { B } } ∈ _V ;;
+	step 37 : wff = prid2 (step 36) |- { { B } } ∈ { { { A } , ∅ } , { { B } } } ;;
+	step 38 : wff = eleq2 () |- ( { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } → ( { { B } } ∈ { { { A } , ∅ } , { { B } } } ↔ { { B } } ∈ { { { C } , ∅ } , { { D } } } ) ) ;;
+	step 39 : wff = mpbii (step 37, step 38) |- ( { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } → { { B } } ∈ { { { C } , ∅ } , { { D } } } ) ;;
+	step 40 : wff = snex () |- { { B } } ∈ _V ;;
+	step 41 : wff = elpr (step 40) |- ( { { B } } ∈ { { { C } , ∅ } , { { D } } } ↔ ( { { B } } = { { C } , ∅ } ∨ { { B } } = { { D } } ) ) ;;
+	step 42 : wff = sylib (step 39, step 41) |- ( { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } → ( { { B } } = { { C } , ∅ } ∨ { { B } } = { { D } } ) ) ;;
+	step 43 : wff = 0ex () |- ∅ ∈ _V ;;
+	step 44 : wff = prid2 (step 43) |- ∅ ∈ { { C } , ∅ } ;;
+	step 45 : wff = snnz (hyp 2) |- { B } ≠ ∅ ;;
+	step 46 : wff = 0ex () |- ∅ ∈ _V ;;
+	step 47 : wff = elsnc (step 46) |- ( ∅ ∈ { { B } } ↔ ∅ = { B } ) ;;
+	step 48 : wff = eqcom () |- ( ∅ = { B } ↔ { B } = ∅ ) ;;
+	step 49 : wff = bitri (step 47, step 48) |- ( ∅ ∈ { { B } } ↔ { B } = ∅ ) ;;
+	step 50 : wff = nemtbir (step 45, step 49) |- ¬ ∅ ∈ { { B } } ;;
+	step 51 : wff = nelneq2 () |- ( ( ∅ ∈ { { C } , ∅ } ∧ ¬ ∅ ∈ { { B } } ) → ¬ { { C } , ∅ } = { { B } } ) ;;
+	step 52 : wff = mp2an (step 44, step 50, step 51) |- ¬ { { C } , ∅ } = { { B } } ;;
+	step 53 : wff = eqcom () |- ( { { C } , ∅ } = { { B } } ↔ { { B } } = { { C } , ∅ } ) ;;
+	step 54 : wff = mtbi (step 52, step 53) |- ¬ { { B } } = { { C } , ∅ } ;;
+	step 55 : wff = biorf () |- ( ¬ { { B } } = { { C } , ∅ } → ( { { B } } = { { D } } ↔ ( { { B } } = { { C } , ∅ } ∨ { { B } } = { { D } } ) ) ) ;;
+	step 56 : wff = ax-mp (step 54, step 55) |- ( { { B } } = { { D } } ↔ ( { { B } } = { { C } , ∅ } ∨ { { B } } = { { D } } ) ) ;;
+	step 57 : wff = sylibr (step 42, step 56) |- ( { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } → { { B } } = { { D } } ) ;;
+	step 58 : wff = snex () |- { B } ∈ _V ;;
+	step 59 : wff = sneqr (step 58) |- ( { { B } } = { { D } } → { B } = { D } ) ;;
+	step 60 : wff = syl (step 57, step 59) |- ( { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } → { B } = { D } ) ;;
+	step 61 : wff = sneqr (hyp 2) |- ( { B } = { D } → B = D ) ;;
+	step 62 : wff = syl (step 60, step 61) |- ( { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } → B = D ) ;;
+	step 63 : wff = jca (step 35, step 62) |- ( { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } → ( A = C ∧ B = D ) ) ;;
+	step 64 : wff = sneq () |- ( A = C → { A } = { C } ) ;;
+	step 65 : wff = preq1d (step 64) |- ( A = C → { { A } , ∅ } = { { C } , ∅ } ) ;;
+	step 66 : wff = preq1d (step 65) |- ( A = C → { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { B } } } ) ;;
+	step 67 : wff = sneq () |- ( B = D → { B } = { D } ) ;;
+	step 68 : wff = sneq () |- ( { B } = { D } → { { B } } = { { D } } ) ;;
+	step 69 : wff = syl (step 67, step 68) |- ( B = D → { { B } } = { { D } } ) ;;
+	step 70 : wff = preq2d (step 69) |- ( B = D → { { { C } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } ) ;;
+	step 71 : wff = sylan9eq (step 66, step 70) |- ( ( A = C ∧ B = D ) → { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } ) ;;
+	step 72 : wff = impbii (step 63, step 71) |- ( { { { A } , ∅ } , { { B } } } = { { { C } , ∅ } , { { D } } } ↔ ( A = C ∧ B = D ) ) ;;
+	qed prop 1 = step 72 ;;
+}
+
+/* The union of an ordered pair.  Theorem 65 of [Suppes] p. 39.
+       (Contributed by NM, 17-Aug-2004.)  (Revised by Mario Carneiro,
+       26-Apr-2015.) */
+
+theorem uniop (A : class, B : class)  {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ⋃ 〈 A , B 〉 = { A , B } ;;
+}
+
+proof of uniop {
+	step 1 : wff = dfop (hyp 1, hyp 2) |- 〈 A , B 〉 = { { A } , { A , B } } ;;
+	step 2 : wff = unieqi (step 1) |- ⋃ 〈 A , B 〉 = ⋃ { { A } , { A , B } } ;;
+	step 3 : wff = snex () |- { A } ∈ _V ;;
+	step 4 : wff = prex () |- { A , B } ∈ _V ;;
+	step 5 : wff = unipr (step 3, step 4) |- ⋃ { { A } , { A , B } } = ( { A } ∪ { A , B } ) ;;
+	step 6 : wff = snsspr1 () |- { A } ⊆ { A , B } ;;
+	step 7 : wff = ssequn1 () |- ( { A } ⊆ { A , B } ↔ ( { A } ∪ { A , B } ) = { A , B } ) ;;
+	step 8 : wff = mpbi (step 6, step 7) |- ( { A } ∪ { A , B } ) = { A , B } ;;
+	step 9 : wff = 3eqtri (step 2, step 5, step 8) |- ⋃ 〈 A , B 〉 = { A , B } ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Ordered pair membership is inherited by class union.  (Contributed by
+       NM, 13-May-2008.)  (Revised by Mario Carneiro, 26-Apr-2015.) */
+
+theorem uniopel (A : class, B : class, C : class)  {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( 〈 A , B 〉 ∈ C → ⋃ 〈 A , B 〉 ∈ ⋃ C ) ;;
+}
+
+proof of uniopel {
+	step 1 : wff = uniop (hyp 1, hyp 2) |- ⋃ 〈 A , B 〉 = { A , B } ;;
+	step 2 : wff = opi2 (hyp 1, hyp 2) |- { A , B } ∈ 〈 A , B 〉 ;;
+	step 3 : wff = eqeltri (step 1, step 2) |- ⋃ 〈 A , B 〉 ∈ 〈 A , B 〉 ;;
+	step 4 : wff = elssuni () |- ( 〈 A , B 〉 ∈ C → 〈 A , B 〉 ⊆ ⋃ C ) ;;
+	step 5 : wff = sseld (step 4) |- ( 〈 A , B 〉 ∈ C → ( ⋃ 〈 A , B 〉 ∈ 〈 A , B 〉 → ⋃ 〈 A , B 〉 ∈ ⋃ C ) ) ;;
+	step 6 : wff = mpi (step 3, step 5) |- ( 〈 A , B 〉 ∈ C → ⋃ 〈 A , B 〉 ∈ ⋃ C ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+

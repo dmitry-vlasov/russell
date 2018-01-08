@@ -1,0 +1,208 @@
+import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Logical__nand__(Sheffer_stroke).rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Logical 'xor'
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* Declare connective for exclusive disjunction ('xor'). */
+
+constant {
+	symbol \/_ ;;
+}
+
+/* Underlined 'vee' (read:  'xor') */
+
+/* Extend wff definition to include exclusive disjunction ('xor'). */
+
+rule wxo (ph : wff, ps : wff) {
+	term : wff = # ( ph \/_ ps ) ;;
+}
+
+/* Define exclusive disjunction (logical 'xor').  Return true if either the
+     left or right, but not both, are true.  After we define the constant true
+     ` T. ` ( ~ df-tru ) and the constant false ` F. ` ( ~ df-fal ), we will be
+     able to prove these truth table values: ` ( ( T. \/_ T. ) <-> F. ) `
+     ( ~ truxortru ), ` ( ( T. \/_ F. ) <-> T. ) ` ( ~ truxorfal ),
+     ` ( ( F. \/_ T. ) <-> T. ) ` ( ~ falxortru ), and
+     ` ( ( F. \/_ F. ) <-> F. ) ` ( ~ falxorfal ).  Contrast with ` /\ `
+     ( ~ df-an ), ` \/ ` ( ~ df-or ), ` -> ` ( ~ wi ), and ` -/\ `
+     ( ~ df-nan ) .  (Contributed by FL, 22-Nov-2010.) */
+
+definition df-xor (ph : wff, ps : wff)  {
+	defiendum : wff = # ( ph \/_ ps ) ;;
+	definiens : wff = # ¬ ( ph ↔ ps ) ;;
+	-----------------------
+	prop : wff = |- ( defiendum ↔ definiens ) ;;
+}
+
+/* Two ways to write XNOR. (Contributed by Mario Carneiro, 4-Sep-2016.) */
+
+theorem xnor (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ph ↔ ps ) ↔ ¬ ( ph \/_ ps ) ) ;;
+}
+
+proof of xnor {
+	step 1 : wff = df-xor () |- ( ( ph \/_ ps ) ↔ ¬ ( ph ↔ ps ) ) ;;
+	step 2 : wff = con2bii (step 1) |- ( ( ph ↔ ps ) ↔ ¬ ( ph \/_ ps ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* ` \/_ ` is commutative.  (Contributed by Mario Carneiro, 4-Sep-2016.) */
+
+theorem xorcom (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ph \/_ ps ) ↔ ( ps \/_ ph ) ) ;;
+}
+
+proof of xorcom {
+	step 1 : wff = bicom () |- ( ( ph ↔ ps ) ↔ ( ps ↔ ph ) ) ;;
+	step 2 : wff = notbii (step 1) |- ( ¬ ( ph ↔ ps ) ↔ ¬ ( ps ↔ ph ) ) ;;
+	step 3 : wff = df-xor () |- ( ( ph \/_ ps ) ↔ ¬ ( ph ↔ ps ) ) ;;
+	step 4 : wff = df-xor () |- ( ( ps \/_ ph ) ↔ ¬ ( ps ↔ ph ) ) ;;
+	step 5 : wff = 3bitr4i (step 2, step 3, step 4) |- ( ( ph \/_ ps ) ↔ ( ps \/_ ph ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* ` \/_ ` is associative.  (Contributed by FL, 22-Nov-2010.)  (Proof
+     shortened by Andrew Salmon, 8-Jun-2011.) */
+
+theorem xorass (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ( ph \/_ ps ) \/_ ch ) ↔ ( ph \/_ ( ps \/_ ch ) ) ) ;;
+}
+
+proof of xorass {
+	step 1 : wff = biass () |- ( ( ( ph ↔ ps ) ↔ ch ) ↔ ( ph ↔ ( ps ↔ ch ) ) ) ;;
+	step 2 : wff = notbii (step 1) |- ( ¬ ( ( ph ↔ ps ) ↔ ch ) ↔ ¬ ( ph ↔ ( ps ↔ ch ) ) ) ;;
+	step 3 : wff = nbbn () |- ( ( ¬ ( ph ↔ ps ) ↔ ch ) ↔ ¬ ( ( ph ↔ ps ) ↔ ch ) ) ;;
+	step 4 : wff = pm5.18 () |- ( ( ph ↔ ( ps ↔ ch ) ) ↔ ¬ ( ph ↔ ¬ ( ps ↔ ch ) ) ) ;;
+	step 5 : wff = con2bii (step 4) |- ( ( ph ↔ ¬ ( ps ↔ ch ) ) ↔ ¬ ( ph ↔ ( ps ↔ ch ) ) ) ;;
+	step 6 : wff = 3bitr4i (step 2, step 3, step 5) |- ( ( ¬ ( ph ↔ ps ) ↔ ch ) ↔ ( ph ↔ ¬ ( ps ↔ ch ) ) ) ;;
+	step 7 : wff = df-xor () |- ( ( ph \/_ ps ) ↔ ¬ ( ph ↔ ps ) ) ;;
+	step 8 : wff = bibi1i (step 7) |- ( ( ( ph \/_ ps ) ↔ ch ) ↔ ( ¬ ( ph ↔ ps ) ↔ ch ) ) ;;
+	step 9 : wff = df-xor () |- ( ( ps \/_ ch ) ↔ ¬ ( ps ↔ ch ) ) ;;
+	step 10 : wff = bibi2i (step 9) |- ( ( ph ↔ ( ps \/_ ch ) ) ↔ ( ph ↔ ¬ ( ps ↔ ch ) ) ) ;;
+	step 11 : wff = 3bitr4i (step 6, step 8, step 10) |- ( ( ( ph \/_ ps ) ↔ ch ) ↔ ( ph ↔ ( ps \/_ ch ) ) ) ;;
+	step 12 : wff = notbii (step 11) |- ( ¬ ( ( ph \/_ ps ) ↔ ch ) ↔ ¬ ( ph ↔ ( ps \/_ ch ) ) ) ;;
+	step 13 : wff = df-xor () |- ( ( ( ph \/_ ps ) \/_ ch ) ↔ ¬ ( ( ph \/_ ps ) ↔ ch ) ) ;;
+	step 14 : wff = df-xor () |- ( ( ph \/_ ( ps \/_ ch ) ) ↔ ¬ ( ph ↔ ( ps \/_ ch ) ) ) ;;
+	step 15 : wff = 3bitr4i (step 12, step 13, step 14) |- ( ( ( ph \/_ ps ) \/_ ch ) ↔ ( ph \/_ ( ps \/_ ch ) ) ) ;;
+	qed prop 1 = step 15 ;;
+}
+
+/* This tautology shows that xor is really exclusive.  (Contributed by FL,
+     22-Nov-2010.) */
+
+theorem excxor (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ph \/_ ps ) ↔ ( ( ph ∧ ¬ ps ) ∨ ( ¬ ph ∧ ps ) ) ) ;;
+}
+
+proof of excxor {
+	step 1 : wff = df-xor () |- ( ( ph \/_ ps ) ↔ ¬ ( ph ↔ ps ) ) ;;
+	step 2 : wff = xor () |- ( ¬ ( ph ↔ ps ) ↔ ( ( ph ∧ ¬ ps ) ∨ ( ps ∧ ¬ ph ) ) ) ;;
+	step 3 : wff = ancom () |- ( ( ps ∧ ¬ ph ) ↔ ( ¬ ph ∧ ps ) ) ;;
+	step 4 : wff = orbi2i (step 3) |- ( ( ( ph ∧ ¬ ps ) ∨ ( ps ∧ ¬ ph ) ) ↔ ( ( ph ∧ ¬ ps ) ∨ ( ¬ ph ∧ ps ) ) ) ;;
+	step 5 : wff = 3bitri (step 1, step 2, step 4) |- ( ( ph \/_ ps ) ↔ ( ( ph ∧ ¬ ps ) ∨ ( ¬ ph ∧ ps ) ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Two ways to express "exclusive or."  (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+theorem xor2 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ph \/_ ps ) ↔ ( ( ph ∨ ps ) ∧ ¬ ( ph ∧ ps ) ) ) ;;
+}
+
+proof of xor2 {
+	step 1 : wff = df-xor () |- ( ( ph \/_ ps ) ↔ ¬ ( ph ↔ ps ) ) ;;
+	step 2 : wff = nbi2 () |- ( ¬ ( ph ↔ ps ) ↔ ( ( ph ∨ ps ) ∧ ¬ ( ph ∧ ps ) ) ) ;;
+	step 3 : wff = bitri (step 1, step 2) |- ( ( ph \/_ ps ) ↔ ( ( ph ∨ ps ) ∧ ¬ ( ph ∧ ps ) ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* ` \/_ ` is negated under negation of one argument.  (Contributed by Mario
+     Carneiro, 4-Sep-2016.) */
+
+theorem xorneg1 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ¬ ph \/_ ps ) ↔ ¬ ( ph \/_ ps ) ) ;;
+}
+
+proof of xorneg1 {
+	step 1 : wff = df-xor () |- ( ( ¬ ph \/_ ps ) ↔ ¬ ( ¬ ph ↔ ps ) ) ;;
+	step 2 : wff = nbbn () |- ( ( ¬ ph ↔ ps ) ↔ ¬ ( ph ↔ ps ) ) ;;
+	step 3 : wff = con2bii (step 2) |- ( ( ph ↔ ps ) ↔ ¬ ( ¬ ph ↔ ps ) ) ;;
+	step 4 : wff = xnor () |- ( ( ph ↔ ps ) ↔ ¬ ( ph \/_ ps ) ) ;;
+	step 5 : wff = 3bitr2i (step 1, step 3, step 4) |- ( ( ¬ ph \/_ ps ) ↔ ¬ ( ph \/_ ps ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* ` \/_ ` is negated under negation of one argument.  (Contributed by Mario
+     Carneiro, 4-Sep-2016.) */
+
+theorem xorneg2 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ph \/_ ¬ ps ) ↔ ¬ ( ph \/_ ps ) ) ;;
+}
+
+proof of xorneg2 {
+	step 1 : wff = xorneg1 () |- ( ( ¬ ps \/_ ph ) ↔ ¬ ( ps \/_ ph ) ) ;;
+	step 2 : wff = xorcom () |- ( ( ph \/_ ¬ ps ) ↔ ( ¬ ps \/_ ph ) ) ;;
+	step 3 : wff = xorcom () |- ( ( ph \/_ ps ) ↔ ( ps \/_ ph ) ) ;;
+	step 4 : wff = notbii (step 3) |- ( ¬ ( ph \/_ ps ) ↔ ¬ ( ps \/_ ph ) ) ;;
+	step 5 : wff = 3bitr4i (step 1, step 2, step 4) |- ( ( ph \/_ ¬ ps ) ↔ ¬ ( ph \/_ ps ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* ` \/_ ` is unchanged under negation of both arguments.  (Contributed by
+     Mario Carneiro, 4-Sep-2016.) */
+
+theorem xorneg (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ¬ ph \/_ ¬ ps ) ↔ ( ph \/_ ps ) ) ;;
+}
+
+proof of xorneg {
+	step 1 : wff = xorneg1 () |- ( ( ¬ ph \/_ ¬ ps ) ↔ ¬ ( ph \/_ ¬ ps ) ) ;;
+	step 2 : wff = xorneg2 () |- ( ( ph \/_ ¬ ps ) ↔ ¬ ( ph \/_ ps ) ) ;;
+	step 3 : wff = con2bii (step 2) |- ( ( ph \/_ ps ) ↔ ¬ ( ph \/_ ¬ ps ) ) ;;
+	step 4 : wff = bitr4i (step 1, step 3) |- ( ( ¬ ph \/_ ¬ ps ) ↔ ( ph \/_ ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Equality property for XOR. (Contributed by Mario Carneiro,
+       4-Sep-2016.) */
+
+theorem xorbi12i (ph : wff, ps : wff, ch : wff, th : wff)  {
+	hyp 1 : wff = |- ( ph ↔ ps ) ;;
+	hyp 2 : wff = |- ( ch ↔ th ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph \/_ ch ) ↔ ( ps \/_ th ) ) ;;
+}
+
+proof of xorbi12i {
+	step 1 : wff = bibi12i (hyp 1, hyp 2) |- ( ( ph ↔ ch ) ↔ ( ps ↔ th ) ) ;;
+	step 2 : wff = notbii (step 1) |- ( ¬ ( ph ↔ ch ) ↔ ¬ ( ps ↔ th ) ) ;;
+	step 3 : wff = df-xor () |- ( ( ph \/_ ch ) ↔ ¬ ( ph ↔ ch ) ) ;;
+	step 4 : wff = df-xor () |- ( ( ps \/_ th ) ↔ ¬ ( ps ↔ th ) ) ;;
+	step 5 : wff = 3bitr4i (step 2, step 3, step 4) |- ( ( ph \/_ ch ) ↔ ( ps \/_ th ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Equality property for XOR. (Contributed by Mario Carneiro,
+       4-Sep-2016.) */
+
+theorem xorbi12d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
+	hyp 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
+	hyp 2 : wff = |- ( ph → ( th ↔ ta ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ( ps \/_ th ) ↔ ( ch \/_ ta ) ) ) ;;
+}
+
+proof of xorbi12d {
+	step 1 : wff = bibi12d (hyp 1, hyp 2) |- ( ph → ( ( ps ↔ th ) ↔ ( ch ↔ ta ) ) ) ;;
+	step 2 : wff = notbid (step 1) |- ( ph → ( ¬ ( ps ↔ th ) ↔ ¬ ( ch ↔ ta ) ) ) ;;
+	step 3 : wff = df-xor () |- ( ( ps \/_ th ) ↔ ¬ ( ps ↔ th ) ) ;;
+	step 4 : wff = df-xor () |- ( ( ch \/_ ta ) ↔ ¬ ( ch ↔ ta ) ) ;;
+	step 5 : wff = 3bitr4g (step 2, step 3, step 4) |- ( ph → ( ( ps \/_ th ) ↔ ( ch \/_ ta ) ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+

@@ -1,0 +1,243 @@
+$[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Transfinite_induction.smm $]
+$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        The natural numbers (i.e. finite ordinals)
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+$)
+$( /* Declare new symbol. */
+
+$)
+$c om $.
+$( /* Greek letter omega */
+
+$)
+$( /* Extend class notation to include the class of natural numbers. */
+
+$)
+${
+	acom $a class om $.
+$}
+$( /* Define the class of natural numbers, which are all ordinal numbers that
+       are less than every limit ordinal, i.e. all finite ordinals.  Our
+       definition is a variant of the Definition of N of [BellMachover]
+       p. 471.  See ~ dfom2 for an alternate definition.  Later, when we assume
+       the Axiom of Infinity, we show ` om ` is a set in ~ omex , and ` om `
+       can then be defined per ~ dfom3 (the smallest inductive set) and
+       ~ dfom4 .
+
+       _Note_: the natural numbers ` om ` are a subset of the ordinal numbers
+       ~ df-on .  They are completely different from the natural numbers ` NN `
+       ( ~ df-nn ) that are a subset of the complex numbers defined much later
+       in our development, although the two sets have analogous properties and
+       operations defined on them.  (Contributed by NM, 15-May-1994.) */
+
+$)
+${
+	$v x y $.
+	$d x y $.
+	f0 $f set x $.
+	f1 $f set y $.
+	adf-om $a |- om = { x e. On | A. y ( Lim y -> x e. y ) } $.
+$}
+$( /* An alternate definition of the set of natural numbers ` om ` .
+       Definition 7.28 of [TakeutiZaring] p. 42, who use the symbol K_I for the
+       inner class builder of non-limit ordinal numbers (see ~ nlimon ).
+       (Contributed by NM, 1-Nov-2004.) */
+
+$)
+${
+	$v x y z $.
+	$d x z $.
+	$d y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	i0 $f set z $.
+	pdfom2 $p |- om = { x e. On | suc x C_ { y e. On | -. Lim y } } $=
+	f0 i0 adf-om i0 asup_set_class f0 asup_set_class ponsssuc i0 asup_set_class f0 asup_set_class pontri1 i0 asup_set_class acon0 awcel f0 asup_set_class acon0 awcel awa i0 asup_set_class f0 asup_set_class awss i0 asup_set_class f0 asup_set_class acsuc awcel f0 asup_set_class i0 asup_set_class awcel awn pbitr3d i0 asup_set_class acon0 awcel f0 asup_set_class acon0 awcel i0 asup_set_class f0 asup_set_class acsuc awcel f0 asup_set_class i0 asup_set_class awcel awn awb pancoms f1 asup_set_class i0 asup_set_class plimeq f1 asup_set_class i0 asup_set_class awceq f1 asup_set_class awlim i0 asup_set_class awlim pnotbid f1 asup_set_class awlim awn i0 asup_set_class awlim awn f1 i0 asup_set_class acon0 pelrab i0 asup_set_class f1 asup_set_class awlim awn f1 acon0 acrab awcel i0 asup_set_class acon0 awcel i0 asup_set_class awlim awn awa awb f0 asup_set_class acon0 awcel i0 asup_set_class acon0 awcel awa pa1i f0 asup_set_class acon0 awcel i0 asup_set_class acon0 awcel awa i0 asup_set_class f0 asup_set_class acsuc awcel f0 asup_set_class i0 asup_set_class awcel awn i0 asup_set_class f1 asup_set_class awlim awn f1 acon0 acrab awcel i0 asup_set_class acon0 awcel i0 asup_set_class awlim awn awa pimbi12d f0 asup_set_class acon0 awcel i0 asup_set_class acon0 awcel i0 asup_set_class f0 asup_set_class acsuc awcel i0 asup_set_class f1 asup_set_class awlim awn f1 acon0 acrab awcel awi f0 asup_set_class i0 asup_set_class awcel awn i0 asup_set_class acon0 awcel i0 asup_set_class awlim awn awa awi ppm5.74da i0 pvex i0 asup_set_class acvv plimelon i0 asup_set_class acvv awcel i0 asup_set_class awlim i0 asup_set_class acon0 awcel pmpan i0 asup_set_class awlim i0 asup_set_class acon0 awcel ppm4.71ri i0 asup_set_class awlim i0 asup_set_class acon0 awcel i0 asup_set_class awlim awa f0 asup_set_class i0 asup_set_class awcel pimbi1i i0 asup_set_class acon0 awcel i0 asup_set_class awlim f0 asup_set_class i0 asup_set_class awcel pimpexp i0 asup_set_class awlim f0 asup_set_class i0 asup_set_class awcel pcon34b i0 asup_set_class acon0 awcel i0 asup_set_class awlim awn pibar i0 asup_set_class acon0 awcel i0 asup_set_class awlim awn i0 asup_set_class acon0 awcel i0 asup_set_class awlim awn awa f0 asup_set_class i0 asup_set_class awcel awn pimbi2d i0 asup_set_class awlim f0 asup_set_class i0 asup_set_class awcel awi f0 asup_set_class i0 asup_set_class awcel awn i0 asup_set_class awlim awn awi i0 asup_set_class acon0 awcel f0 asup_set_class i0 asup_set_class awcel awn i0 asup_set_class acon0 awcel i0 asup_set_class awlim awn awa awi psyl5bb i0 asup_set_class acon0 awcel i0 asup_set_class awlim f0 asup_set_class i0 asup_set_class awcel awi f0 asup_set_class i0 asup_set_class awcel awn i0 asup_set_class acon0 awcel i0 asup_set_class awlim awn awa awi ppm5.74i i0 asup_set_class awlim f0 asup_set_class i0 asup_set_class awcel awi i0 asup_set_class acon0 awcel i0 asup_set_class awlim awa f0 asup_set_class i0 asup_set_class awcel awi i0 asup_set_class acon0 awcel i0 asup_set_class awlim f0 asup_set_class i0 asup_set_class awcel awi awi i0 asup_set_class acon0 awcel f0 asup_set_class i0 asup_set_class awcel awn i0 asup_set_class acon0 awcel i0 asup_set_class awlim awn awa awi awi p3bitri f0 asup_set_class acon0 awcel i0 asup_set_class acon0 awcel i0 asup_set_class f0 asup_set_class acsuc awcel i0 asup_set_class f1 asup_set_class awlim awn f1 acon0 acrab awcel awi awi i0 asup_set_class acon0 awcel f0 asup_set_class i0 asup_set_class awcel awn i0 asup_set_class acon0 awcel i0 asup_set_class awlim awn awa awi awi i0 asup_set_class awlim f0 asup_set_class i0 asup_set_class awcel awi psyl6rbbr i0 asup_set_class acon0 awcel i0 asup_set_class f0 asup_set_class acsuc awcel i0 asup_set_class f1 asup_set_class awlim awn f1 acon0 acrab awcel pimpexp i0 asup_set_class acon0 awcel i0 asup_set_class f0 asup_set_class acsuc awcel psimpr f0 asup_set_class psuceloni f0 asup_set_class acsuc i0 asup_set_class ponelon f0 asup_set_class acsuc acon0 awcel i0 asup_set_class f0 asup_set_class acsuc awcel i0 asup_set_class acon0 awcel pex f0 asup_set_class acon0 awcel f0 asup_set_class acsuc acon0 awcel i0 asup_set_class f0 asup_set_class acsuc awcel i0 asup_set_class acon0 awcel awi psyl f0 asup_set_class acon0 awcel i0 asup_set_class f0 asup_set_class acsuc awcel i0 asup_set_class acon0 awcel pancrd f0 asup_set_class acon0 awcel i0 asup_set_class acon0 awcel i0 asup_set_class f0 asup_set_class acsuc awcel awa i0 asup_set_class f0 asup_set_class acsuc awcel pimpbid2 f0 asup_set_class acon0 awcel i0 asup_set_class acon0 awcel i0 asup_set_class f0 asup_set_class acsuc awcel awa i0 asup_set_class f0 asup_set_class acsuc awcel i0 asup_set_class f1 asup_set_class awlim awn f1 acon0 acrab awcel pimbi1d i0 asup_set_class acon0 awcel i0 asup_set_class f0 asup_set_class acsuc awcel i0 asup_set_class f1 asup_set_class awlim awn f1 acon0 acrab awcel awi awi i0 asup_set_class acon0 awcel i0 asup_set_class f0 asup_set_class acsuc awcel awa i0 asup_set_class f1 asup_set_class awlim awn f1 acon0 acrab awcel awi f0 asup_set_class acon0 awcel i0 asup_set_class f0 asup_set_class acsuc awcel i0 asup_set_class f1 asup_set_class awlim awn f1 acon0 acrab awcel awi psyl5bbr f0 asup_set_class acon0 awcel i0 asup_set_class awlim f0 asup_set_class i0 asup_set_class awcel awi i0 asup_set_class acon0 awcel i0 asup_set_class f0 asup_set_class acsuc awcel i0 asup_set_class f1 asup_set_class awlim awn f1 acon0 acrab awcel awi awi i0 asup_set_class f0 asup_set_class acsuc awcel i0 asup_set_class f1 asup_set_class awlim awn f1 acon0 acrab awcel awi pbitrd f0 asup_set_class acon0 awcel i0 asup_set_class awlim f0 asup_set_class i0 asup_set_class awcel awi i0 asup_set_class f0 asup_set_class acsuc awcel i0 asup_set_class f1 asup_set_class awlim awn f1 acon0 acrab awcel awi i0 palbidv i0 f0 asup_set_class acsuc f1 asup_set_class awlim awn f1 acon0 acrab pdfss2 f0 asup_set_class acon0 awcel i0 asup_set_class awlim f0 asup_set_class i0 asup_set_class awcel awi i0 awal i0 asup_set_class f0 asup_set_class acsuc awcel i0 asup_set_class f1 asup_set_class awlim awn f1 acon0 acrab awcel awi i0 awal f0 asup_set_class acsuc f1 asup_set_class awlim awn f1 acon0 acrab awss psyl6bbr i0 asup_set_class awlim f0 asup_set_class i0 asup_set_class awcel awi i0 awal f0 asup_set_class acsuc f1 asup_set_class awlim awn f1 acon0 acrab awss f0 acon0 prabbiia acom i0 asup_set_class awlim f0 asup_set_class i0 asup_set_class awcel awi i0 awal f0 acon0 acrab f0 asup_set_class acsuc f1 asup_set_class awlim awn f1 acon0 acrab awss f0 acon0 acrab peqtri $.
+$}
+$( /* Membership in omega.  The left conjunct can be eliminated if we assume
+       the Axiom of Infinity; see ~ elom3 .  (Contributed by NM,
+       15-May-1994.) */
+
+$)
+${
+	$v x y A $.
+	$d A x y $.
+	f0 $f set x $.
+	f1 $f class A $.
+	i0 $f set y $.
+	pelom $p |- ( A e. om <-> ( A e. On /\ A. x ( Lim x -> A e. x ) ) ) $=
+	i0 asup_set_class f1 f0 asup_set_class peleq1 i0 asup_set_class f1 awceq i0 asup_set_class f0 asup_set_class awcel f1 f0 asup_set_class awcel f0 asup_set_class awlim pimbi2d i0 asup_set_class f1 awceq f0 asup_set_class awlim i0 asup_set_class f0 asup_set_class awcel awi f0 asup_set_class awlim f1 f0 asup_set_class awcel awi f0 palbidv i0 f0 adf-om f0 asup_set_class awlim i0 asup_set_class f0 asup_set_class awcel awi f0 awal f0 asup_set_class awlim f1 f0 asup_set_class awcel awi f0 awal i0 f1 acon0 acom pelrab2 $.
+$}
+$( /* Omega is a subset of ` On ` .  (Contributed by NM, 13-Jun-1994.)  (Proof
+       shortened by Andrew Salmon, 27-Aug-2011.) */
+
+$)
+${
+	$v x y $.
+	$d x y $.
+	i0 $f set x $.
+	i1 $f set y $.
+	pomsson $p |- om C_ On $=
+	i0 i1 pdfom2 i0 asup_set_class acsuc i1 asup_set_class awlim awn i1 acon0 acrab awss i0 acon0 pssrab2 acom i0 asup_set_class acsuc i1 asup_set_class awlim awn i1 acon0 acrab awss i0 acon0 acrab acon0 peqsstri $.
+$}
+$( /* The class of natural numbers is a subclass of any (infinite) limit
+       ordinal.  Exercise 1 of [TakeutiZaring] p. 44.  Remarkably, our proof
+       does not require the Axiom of Infinity.  (Contributed by NM,
+       30-Oct-2003.) */
+
+$)
+${
+	$v x y A $.
+	$d x y A $.
+	f0 $f class A $.
+	i0 $f set x $.
+	i1 $f set y $.
+	plimomss $p |- ( Lim A -> om C_ A ) $=
+	f0 plimord f0 pordeleqon i1 i0 asup_set_class pelom i0 asup_set_class acom awcel i0 asup_set_class acon0 awcel i1 asup_set_class awlim i0 asup_set_class i1 asup_set_class awcel awi i1 awal psimprbi i1 asup_set_class f0 plimeq i1 asup_set_class f0 i0 asup_set_class peleq2 i1 asup_set_class f0 awceq i1 asup_set_class awlim f0 awlim i0 asup_set_class i1 asup_set_class awcel i0 asup_set_class f0 awcel pimbi12d i1 asup_set_class awlim i0 asup_set_class i1 asup_set_class awcel awi f0 awlim i0 asup_set_class f0 awcel awi i1 f0 acon0 pspcgv i0 asup_set_class acom awcel i1 asup_set_class awlim i0 asup_set_class i1 asup_set_class awcel awi i1 awal f0 acon0 awcel f0 awlim i0 asup_set_class f0 awcel awi psyl5 f0 acon0 awcel i0 asup_set_class acom awcel f0 awlim i0 asup_set_class f0 awcel pcom23 f0 acon0 awcel f0 awlim i0 asup_set_class acom awcel i0 asup_set_class f0 awcel awi pimp f0 acon0 awcel f0 awlim awa i0 acom f0 pssrdv f0 acon0 awcel f0 awlim acom f0 awss pex pomsson f0 acon0 acom psseq2 f0 acon0 awceq acom f0 awss acom acon0 awss pmpbiri f0 acon0 awceq acom f0 awss f0 awlim pa1d f0 acon0 awcel f0 awlim acom f0 awss awi f0 acon0 awceq pjaoi f0 aword f0 acon0 awcel f0 acon0 awceq awo f0 awlim acom f0 awss awi psylbi f0 aword f0 awlim acom f0 awss pmpcom $.
+$}
+$( /* A natural number is an ordinal number.  (Contributed by NM,
+     27-Jun-1994.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	pnnon $p |- ( A e. om -> A e. On ) $=
+	pomsson acom acon0 f0 psseli $.
+$}
+$( /* A natural number is an ordinal number.  (Contributed by NM,
+       27-Jun-1994.) */
+
+$)
+${
+	$v A $.
+	e0 $e |- A e. om $.
+	f0 $f class A $.
+	pnnoni $p |- A e. On $=
+	e0 f0 pnnon f0 acom awcel f0 acon0 awcel aax-mp $.
+$}
+$( /* A natural number is ordinal.  (Contributed by NM, 17-Oct-1995.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	pnnord $p |- ( A e. om -> Ord A ) $=
+	f0 pnnon f0 peloni f0 acom awcel f0 acon0 awcel f0 aword psyl $.
+$}
+$( /* Omega is ordinal.  Theorem 7.32 of [TakeutiZaring] p. 43.  (Contributed
+       by NM, 18-Oct-1995.)  (Proof shortened by Andrew Salmon,
+       27-Aug-2011.) */
+
+$)
+${
+	$v x y z $.
+	$d x y z $.
+	i0 $f set x $.
+	i1 $f set y $.
+	i2 $f set z $.
+	pordom $p |- Ord om $=
+	i1 i0 acom pdftr2 i0 asup_set_class i1 asup_set_class ponelon i0 asup_set_class acon0 awcel i1 asup_set_class i0 asup_set_class awcel i1 asup_set_class acon0 awcel pexpcom i2 asup_set_class plimord i2 asup_set_class pordtr i2 asup_set_class i1 asup_set_class i0 asup_set_class ptrel i2 asup_set_class awlim i2 asup_set_class aword i2 asup_set_class awtr i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class i2 asup_set_class awcel awa i1 asup_set_class i2 asup_set_class awcel awi p3syl i2 asup_set_class awlim i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class i2 asup_set_class awcel i1 asup_set_class i2 asup_set_class awcel pexp3a i2 asup_set_class awlim i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class i2 asup_set_class awcel i1 asup_set_class i2 asup_set_class awcel awi pcom12 i1 asup_set_class i0 asup_set_class awcel i2 asup_set_class awlim i0 asup_set_class i2 asup_set_class awcel i1 asup_set_class i2 asup_set_class awcel pa2d i1 asup_set_class i0 asup_set_class awcel i2 asup_set_class awlim i0 asup_set_class i2 asup_set_class awcel awi i2 asup_set_class awlim i1 asup_set_class i2 asup_set_class awcel awi i2 palimdv i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class acon0 awcel i1 asup_set_class acon0 awcel i2 asup_set_class awlim i0 asup_set_class i2 asup_set_class awcel awi i2 awal i2 asup_set_class awlim i1 asup_set_class i2 asup_set_class awcel awi i2 awal panim12d i2 i0 asup_set_class pelom i2 i1 asup_set_class pelom i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class acon0 awcel i2 asup_set_class awlim i0 asup_set_class i2 asup_set_class awcel awi i2 awal awa i1 asup_set_class acon0 awcel i2 asup_set_class awlim i1 asup_set_class i2 asup_set_class awcel awi i2 awal awa i0 asup_set_class acom awcel i1 asup_set_class acom awcel p3imtr4g i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class acom awcel i1 asup_set_class acom awcel pimp i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class acom awcel awa i1 asup_set_class acom awcel awi i0 aax-gen acom awtr i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class acom awcel awa i1 asup_set_class acom awcel awi i0 awal i1 pmpgbir pomsson pordon acom acon0 ptrssord acom awtr acom acon0 awss acon0 aword acom aword pmp3an $.
+$}
+$( /* A member of a natural number is a natural number.  (Contributed by NM,
+     21-Jun-1998.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pelnn $p |- ( ( A e. B /\ B e. om ) -> A e. om ) $=
+	pordom acom pordtr acom f0 f1 ptrel acom aword acom awtr f0 f1 awcel f1 acom awcel awa f0 acom awcel awi pmp2b $.
+$}
+$( /* The class of natural numbers ` om ` is either an ordinal number (if we
+     accept the Axiom of Infinity) or the proper class of all ordinal numbers
+     (if we deny the Axiom of Infinity).  Remark in [TakeutiZaring] p. 43.
+     (Contributed by NM, 10-May-1998.) */
+
+$)
+${
+	pomon $p |- ( om e. On \/ om = On ) $=
+	pordom acom pordeleqon acom aword acom acon0 awcel acom acon0 awceq awo pmpbi $.
+$}
+$( /* Omega is an ordinal number.  (Contributed by Mario Carneiro,
+       30-Jan-2013.) */
+
+$)
+${
+	pomelon2 $p |- ( om e. _V -> om e. On ) $=
+	pomon acom acon0 awcel acom acon0 awceq pori ponprc acom acon0 acvv peleq1 acom acon0 awceq acom acvv awcel acon0 acvv awcel pmtbiri acom acon0 awcel awn acom acon0 awceq acom acvv awcel awn psyl acom acon0 awcel acom acvv awcel pcon4i $.
+$}
+$( /* A natural number is not a limit ordinal.  (Contributed by NM,
+       18-Oct-1995.) */
+
+$)
+${
+	$v x A $.
+	$d x A $.
+	f0 $f class A $.
+	i0 $f set x $.
+	pnnlim $p |- ( A e. om -> -. Lim A ) $=
+	f0 pnnord f0 pordirr f0 acom awcel f0 aword f0 f0 awcel awn psyl i0 f0 pelom f0 acom awcel f0 acon0 awcel i0 asup_set_class awlim f0 i0 asup_set_class awcel awi i0 awal psimprbi i0 asup_set_class f0 plimeq i0 asup_set_class f0 f0 peleq2 i0 asup_set_class f0 awceq i0 asup_set_class awlim f0 awlim f0 i0 asup_set_class awcel f0 f0 awcel pimbi12d i0 asup_set_class awlim f0 i0 asup_set_class awcel awi f0 awlim f0 f0 awcel awi i0 f0 acom pspcgv f0 acom awcel i0 asup_set_class awlim f0 i0 asup_set_class awcel awi i0 awal f0 awlim f0 f0 awcel awi pmpd f0 acom awcel f0 awlim f0 f0 awcel pmtod $.
+$}
+$( /* The class of natural numbers is a subclass of the class of non-limit
+       ordinal numbers.  Exercise 4 of [TakeutiZaring] p. 42.  (Contributed by
+       NM, 2-Nov-2004.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) */
+
+$)
+${
+	$v x $.
+	f0 $f set x $.
+	pomssnlim $p |- om C_ { x e. On | -. Lim x } $=
+	pomsson f0 asup_set_class pnnlim f0 asup_set_class awlim awn f0 acom prgen f0 asup_set_class awlim awn f0 acon0 acom pssrab acom f0 asup_set_class awlim awn f0 acon0 acrab awss acom acon0 awss f0 asup_set_class awlim awn f0 acom awral pmpbir2an $.
+$}
+$( /* Omega is a limit ordinal.  Theorem 2.8 of [BellMachover] p. 473.  Our
+     proof, however, does not require the Axiom of Infinity.  (Contributed by
+     NM, 26-Mar-1995.)  (Proof shortened by Mario Carneiro, 2-Sep-2015.) */
+
+$)
+${
+	$v x $.
+	i0 $f set x $.
+	plimom $p |- Lim om $=
+	pordom acom pordeleqon pordom acom pordirr acom aword acom acom awcel awn aax-mp i0 acom pelom acom acom awcel acom acon0 awcel i0 asup_set_class awlim acom i0 asup_set_class awcel awi i0 awal pbaib acom acon0 awcel acom acom awcel i0 asup_set_class awlim acom i0 asup_set_class awcel awi i0 awal pmtbii i0 asup_set_class plimomss pordom i0 asup_set_class plimord acom i0 asup_set_class pordsseleq i0 asup_set_class awlim acom aword i0 asup_set_class aword acom i0 asup_set_class awss acom i0 asup_set_class awcel acom i0 asup_set_class awceq awo awb psylancr i0 asup_set_class awlim acom i0 asup_set_class awss acom i0 asup_set_class awcel acom i0 asup_set_class awceq awo pmpbid i0 asup_set_class awlim acom i0 asup_set_class awcel acom i0 asup_set_class awceq pord acom i0 asup_set_class plimeq acom i0 asup_set_class awceq acom awlim i0 asup_set_class awlim pbiimprcd i0 asup_set_class awlim acom i0 asup_set_class awcel awn acom i0 asup_set_class awceq acom awlim psyld i0 asup_set_class awlim acom i0 asup_set_class awcel acom awlim pcon1d i0 asup_set_class awlim acom awlim awn acom i0 asup_set_class awcel pcom12 acom awlim awn i0 asup_set_class awlim acom i0 asup_set_class awcel awi i0 palrimiv acom acon0 awcel i0 asup_set_class awlim acom i0 asup_set_class awcel awi i0 awal acom awlim pnsyl2 plimon acom acon0 plimeq acom acon0 awceq acom awlim acon0 awlim pmpbiri acom acon0 awcel acom awlim acom acon0 awceq pjaoi acom aword acom acon0 awcel acom acon0 awceq awo acom awlim psylbi acom aword acom awlim aax-mp $.
+$}
+$( /* A class belongs to omega iff its successor does.  (Contributed by NM,
+     3-Dec-1995.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	ppeano2b $p |- ( A e. om <-> suc A e. om ) $=
+	plimom acom f0 plimsuc acom awlim f0 acom awcel f0 acsuc acom awcel awb aax-mp $.
+$}
+$( /* A nonzero natural number is a successor.  (Contributed by NM,
+       18-Feb-2004.) */
+
+$)
+${
+	$v x A $.
+	$d x A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	pnnsuc $p |- ( ( A e. om /\ A =/= (/) ) -> E. x e. om A = suc x ) $=
+	f1 pnnlim f1 acom awcel f1 awlim awn f1 ac0 awne padantr f1 pnnord f0 f1 porduninsuc f1 aword f1 f1 acuni awceq f1 f0 asup_set_class acsuc awceq f0 acon0 awrex awn awb f1 ac0 awne padantr f1 adf-lim f1 awlim f1 aword f1 ac0 awne f1 f1 acuni awceq aw3a pbiimpri f1 aword f1 ac0 awne f1 f1 acuni awceq f1 awlim p3expia f1 aword f1 ac0 awne awa f1 f0 asup_set_class acsuc awceq f0 acon0 awrex awn f1 f1 acuni awceq f1 awlim psylbird f1 acom awcel f1 aword f1 ac0 awne f1 f0 asup_set_class acsuc awceq f0 acon0 awrex awn f1 awlim awi psylan f1 acom awcel f1 ac0 awne awa f1 f0 asup_set_class acsuc awceq f0 acon0 awrex f1 awlim pmt3d f1 f0 asup_set_class acsuc acom peleq1 f1 f0 asup_set_class acsuc awceq f1 acom awcel f0 asup_set_class acsuc acom awcel pbiimpcd f0 asup_set_class ppeano2b f1 acom awcel f1 f0 asup_set_class acsuc awceq f0 asup_set_class acsuc acom awcel f0 asup_set_class acom awcel psyl6ibr f1 acom awcel f1 f0 asup_set_class acsuc awceq f0 asup_set_class acom awcel pancrd f1 acom awcel f1 f0 asup_set_class acsuc awceq f0 asup_set_class acom awcel f1 f0 asup_set_class acsuc awceq awa f0 asup_set_class acon0 awcel padantld f1 acom awcel f1 f0 asup_set_class acsuc awceq f1 f0 asup_set_class acsuc awceq f0 acon0 acom preximdv2 f1 acom awcel f1 f0 asup_set_class acsuc awceq f0 acon0 awrex f1 f0 asup_set_class acsuc awceq f0 acom awrex awi f1 ac0 awne padantr f1 acom awcel f1 ac0 awne awa f1 f0 asup_set_class acsuc awceq f0 acon0 awrex f1 f0 asup_set_class acsuc awceq f0 acom awrex pmpd $.
+$}
+$( /* An ordinal subclass of non-limit ordinals is a class of natural
+       numbers.  Exercise 7 of [TakeutiZaring] p. 42.  (Contributed by NM,
+       2-Nov-2004.) */
+
+$)
+${
+	$v x A $.
+	$d x A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	pssnlim $p |- ( ( Ord A /\ A C_ { x e. On | -. Lim x } ) -> A C_ om ) $=
+	plimom f1 f0 asup_set_class awlim awn f0 acon0 acrab acom pssel f0 asup_set_class acom plimeq f0 asup_set_class acom awceq f0 asup_set_class awlim acom awlim pnotbid f0 asup_set_class awlim awn acom awlim awn f0 acom acon0 pelrab acom f0 asup_set_class awlim awn f0 acon0 acrab awcel acom acon0 awcel acom awlim awn psimprbi f1 f0 asup_set_class awlim awn f0 acon0 acrab awss acom f1 awcel acom f0 asup_set_class awlim awn f0 acon0 acrab awcel acom awlim awn psyl6 f1 f0 asup_set_class awlim awn f0 acon0 acrab awss acom f1 awcel acom awlim pmt2i f1 f0 asup_set_class awlim awn f0 acon0 acrab awss acom f1 awcel awn f1 aword padantl pordom f1 acom pordtri1 f1 aword acom aword f1 acom awss acom f1 awcel awn awb pmpan2 f1 aword f1 acom awss acom f1 awcel awn awb f1 f0 asup_set_class awlim awn f0 acon0 acrab awss padantr f1 aword f1 f0 asup_set_class awlim awn f0 acon0 acrab awss awa f1 acom awss acom f1 awcel awn pmpbird $.
+$}
+

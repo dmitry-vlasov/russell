@@ -1,0 +1,1970 @@
+$[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Subclasses_and_subsets.smm $]
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        The difference, union, and intersection of two classes
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+$( Equality theorem for class difference.  (Contributed by NM,
+       10-Feb-1997.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	pdifeq1 $p |- ( A = B -> ( A \ C ) = ( B \ C ) ) $=
+	i0 acv f2 awcel awn i0 f0 f1 prabeq i0 f0 f2 pdfdif2 i0 f1 f2 pdfdif2 f0 f1 awceq i0 acv f2 awcel awn i0 f0 acrab i0 acv f2 awcel awn i0 f1 acrab f0 f2 acdif f1 f2 acdif p3eqtr4g $.
+$}
+$( Equality theorem for class difference.  (Contributed by NM,
+       10-Feb-1997.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	pdifeq2 $p |- ( A = B -> ( C \ A ) = ( C \ B ) ) $=
+	f0 f1 i0 acv peleq2 f0 f1 awceq i0 acv f0 awcel i0 acv f1 awcel pnotbid f0 f1 awceq i0 acv f0 awcel awn i0 acv f1 awcel awn i0 f2 prabbidv i0 f2 f0 pdfdif2 i0 f2 f1 pdfdif2 f0 f1 awceq i0 acv f0 awcel awn i0 f2 acrab i0 acv f1 awcel awn i0 f2 acrab f2 f0 acdif f2 f1 acdif p3eqtr4g $.
+$}
+$( Equality theorem for class difference.  (Contributed by FL,
+     31-Aug-2009.) $)
+${
+	$v A B C D $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	pdifeq12 $p |- ( ( A = B /\ C = D ) -> ( A \ C ) = ( B \ D ) ) $=
+	f0 f1 f2 pdifeq1 f2 f3 f1 pdifeq2 f0 f1 awceq f2 f3 awceq f0 f2 acdif f1 f2 acdif f1 f3 acdif psylan9eq $.
+$}
+$( Inference adding difference to the right in a class equality.
+       (Contributed by NM, 15-Nov-2002.) $)
+${
+	$v A B C $.
+	e0 $e |- A = B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pdifeq1i $p |- ( A \ C ) = ( B \ C ) $=
+	e0 f0 f1 f2 pdifeq1 f0 f1 awceq f0 f2 acdif f1 f2 acdif awceq aax-mp $.
+$}
+$( Inference adding difference to the left in a class equality.
+       (Contributed by NM, 15-Nov-2002.) $)
+${
+	$v A B C $.
+	e0 $e |- A = B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pdifeq2i $p |- ( C \ A ) = ( C \ B ) $=
+	e0 f0 f1 f2 pdifeq2 f0 f1 awceq f2 f0 acdif f2 f1 acdif awceq aax-mp $.
+$}
+$( Equality inference for class difference.  (Contributed by NM,
+         29-Aug-2004.) $)
+${
+	$v A B C D $.
+	e0 $e |- A = B $.
+	e1 $e |- C = D $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	pdifeq12i $p |- ( A \ C ) = ( B \ D ) $=
+	e0 f0 f1 f2 pdifeq1i e1 f2 f3 f1 pdifeq2i f0 f2 acdif f1 f2 acdif f1 f3 acdif peqtri $.
+$}
+$( Deduction adding difference to the right in a class equality.
+       (Contributed by NM, 15-Nov-2002.) $)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pdifeq1d $p |- ( ph -> ( A \ C ) = ( B \ C ) ) $=
+	e0 f1 f2 f3 pdifeq1 f0 f1 f2 awceq f1 f3 acdif f2 f3 acdif awceq psyl $.
+$}
+$( Deduction adding difference to the left in a class equality.
+       (Contributed by NM, 15-Nov-2002.) $)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pdifeq2d $p |- ( ph -> ( C \ A ) = ( C \ B ) ) $=
+	e0 f1 f2 f3 pdifeq2 f0 f1 f2 awceq f3 f1 acdif f3 f2 acdif awceq psyl $.
+$}
+$( Equality deduction for class difference.  (Contributed by FL,
+       29-May-2014.) $)
+${
+	$v ph A B C D $.
+	e0 $e |- ( ph -> A = B ) $.
+	e1 $e |- ( ph -> C = D ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class D $.
+	pdifeq12d $p |- ( ph -> ( A \ C ) = ( B \ D ) ) $=
+	e0 f0 f1 f2 f3 pdifeq1d e1 f0 f3 f4 f2 pdifeq2d f0 f1 f3 acdif f2 f3 acdif f2 f4 acdif peqtrd $.
+$}
+$( Inference from membership to difference.  (Contributed by NM,
+       17-May-1998.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	e0 $e |- ( ( x e. A /\ -. x e. B ) <-> x e. C ) $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pdifeqri $p |- ( A \ B ) = C $=
+	f0 acv f1 f2 peldif e0 f0 acv f1 f2 acdif awcel f0 acv f1 awcel f0 acv f2 awcel awn awa f0 acv f3 awcel pbitri f0 f1 f2 acdif f3 peqriv $.
+$}
+$( Bound-variable hypothesis builder for class difference.  (Contributed by
+       NM, 3-Dec-2003.)  (Revised by Mario Carneiro, 13-Oct-2016.) $)
+${
+	$v x y A B $.
+	$d x y $.
+	$d y A $.
+	$d y B $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/_ x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	i0 $f set y $.
+	pnfdif $p |- F/_ x ( A \ B ) $=
+	i0 f1 f2 pdfdif2 e1 f0 i0 f2 pnfcri i0 acv f2 awcel f0 pnfn e0 i0 acv f2 awcel awn f0 i0 f1 pnfrab f0 f1 f2 acdif i0 acv f2 awcel awn i0 f1 acrab pnfcxfr $.
+$}
+$( Implication of membership in a class difference.  (Contributed by NM,
+     29-Apr-1994.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	peldifi $p |- ( A e. ( B \ C ) -> A e. B ) $=
+	f0 f1 f2 peldif f0 f1 f2 acdif awcel f0 f1 awcel f0 f2 awcel awn psimplbi $.
+$}
+$( Implication of membership in a class difference.  (Contributed by NM,
+     3-May-1994.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	peldifn $p |- ( A e. ( B \ C ) -> -. A e. C ) $=
+	f0 f1 f2 peldif f0 f1 f2 acdif awcel f0 f1 awcel f0 f2 awcel awn psimprbi $.
+$}
+$( A set does not belong to a class excluding it.  (Contributed by NM,
+     27-Jun-1994.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pelndif $p |- ( A e. B -> -. A e. ( C \ B ) ) $=
+	f0 f2 f1 peldifn f0 f2 f1 acdif awcel f0 f1 awcel pcon2i $.
+$}
+$( Implication of membership in a class difference.  (Contributed by NM,
+     28-Jun-1994.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pneldif $p |- ( ( A e. B /\ -. A e. ( B \ C ) ) -> A e. C ) $=
+	f0 f1 f2 peldif f0 f1 f2 acdif awcel f0 f1 awcel f0 f2 awcel awn psimplbi2 f0 f1 awcel f0 f2 awcel f0 f1 f2 acdif awcel pcon1d f0 f1 awcel f0 f1 f2 acdif awcel awn f0 f2 awcel pimp $.
+$}
+$( Double class difference.  Exercise 11 of [TakeutiZaring] p. 22.
+       (Contributed by NM, 17-May-1998.) $)
+${
+	$v x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	pdifdif $p |- ( A \ ( B \ A ) ) = A $=
+	i0 acv f0 awcel i0 acv f1 awcel ppm4.45im i0 acv f1 awcel i0 acv f0 awcel piman i0 acv f1 f0 peldif i0 acv f1 awcel i0 acv f0 awcel awi i0 acv f1 awcel i0 acv f0 awcel awn awa i0 acv f1 f0 acdif awcel pxchbinxr i0 acv f1 awcel i0 acv f0 awcel awi i0 acv f1 f0 acdif awcel awn i0 acv f0 awcel panbi2i i0 acv f0 awcel i0 acv f0 awcel i0 acv f1 awcel i0 acv f0 awcel awi awa i0 acv f0 awcel i0 acv f1 f0 acdif awcel awn awa pbitr2i i0 f0 f1 f0 acdif f0 pdifeqri $.
+$}
+$( Subclass relationship for class difference.  Exercise 14 of
+       [TakeutiZaring] p. 22.  (Contributed by NM, 29-Apr-1994.) $)
+${
+	$v x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	pdifss $p |- ( A \ B ) C_ A $=
+	i0 acv f0 f1 peldifi i0 f0 f1 acdif f0 pssriv $.
+$}
+$( A difference of two classes is contained in the minuend.  Deduction form
+     of ~ difss .  (Contributed by David Moews, 1-May-2017.) $)
+${
+	$v ph A B $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pdifssd $p |- ( ph -> ( A \ B ) C_ A ) $=
+	f1 f2 pdifss f1 f2 acdif f1 awss f0 pa1i $.
+$}
+$( If a class is contained in a difference, it is contained in the minuend.
+     (Contributed by David Moews, 1-May-2017.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pdifss2 $p |- ( A C_ ( B \ C ) -> A C_ B ) $=
+	f0 f1 f2 acdif awss pid f1 f2 pdifss f0 f1 f2 acdif awss f0 f1 f2 acdif f1 psyl6ss $.
+$}
+$( If a class is contained in a difference, it is contained in the
+       minuend.  Deduction form of ~ difss2 .  (Contributed by David Moews,
+       1-May-2017.) $)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> A C_ ( B \ C ) ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pdifss2d $p |- ( ph -> A C_ B ) $=
+	e0 f1 f2 f3 pdifss2 f0 f1 f2 f3 acdif awss f1 f2 awss psyl $.
+$}
+$( Preservation of a subclass relationship by class difference.  (Contributed
+     by NM, 15-Feb-2007.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pssdifss $p |- ( A C_ B -> ( A \ C ) C_ B ) $=
+	f0 f2 pdifss f0 f2 acdif f0 f1 psstr f0 f2 acdif f0 awss f0 f1 awss f0 f2 acdif f1 awss pmpan $.
+$}
+$( Double complement under universal class.  Exercise 4.10(s) of
+       [Mendelson] p. 231.  (Contributed by NM, 8-Jan-2002.) $)
+${
+	$v x A $.
+	$d x A $.
+	f0 $f class A $.
+	i0 $f set x $.
+	pddif $p |- ( _V \ ( _V \ A ) ) = A $=
+	i0 pvex i0 acv acvv f0 peldif i0 acv acvv f0 acdif awcel i0 acv acvv awcel i0 acv f0 awcel awn pmpbiran i0 acv acvv f0 acdif awcel i0 acv f0 awcel pcon2bii i0 pvex i0 acv acvv awcel i0 acv acvv f0 acdif awcel awn pbiantrur i0 acv f0 awcel i0 acv acvv f0 acdif awcel awn i0 acv acvv awcel i0 acv acvv f0 acdif awcel awn awa pbitr2i i0 acvv acvv f0 acdif f0 pdifeqri $.
+$}
+$( Contraposition law for subsets.  (Contributed by NM, 22-Mar-1998.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	pssconb $p |- ( ( A C_ C /\ B C_ C ) -> ( A C_ ( C \ B ) <-> B C_ ( C \ A ) ) ) $=
+	f0 f2 i0 acv pssel f1 f2 i0 acv pssel i0 acv f0 awcel i0 acv f2 awcel awi i0 acv f1 awcel i0 acv f2 awcel awi ppm5.1 f0 f2 awss i0 acv f0 awcel i0 acv f2 awcel awi i0 acv f1 awcel i0 acv f2 awcel awi i0 acv f0 awcel i0 acv f2 awcel awi i0 acv f1 awcel i0 acv f2 awcel awi awb f1 f2 awss psyl2an i0 acv f0 awcel i0 acv f1 awcel pcon2b i0 acv f0 awcel i0 acv f1 awcel awn awi i0 acv f1 awcel i0 acv f0 awcel awn awi awb f0 f2 awss f1 f2 awss awa pa1i f0 f2 awss f1 f2 awss awa i0 acv f0 awcel i0 acv f2 awcel awi i0 acv f1 awcel i0 acv f2 awcel awi i0 acv f0 awcel i0 acv f1 awcel awn awi i0 acv f1 awcel i0 acv f0 awcel awn awi panbi12d i0 acv f0 awcel i0 acv f2 awcel i0 acv f1 awcel awn pjcab i0 acv f1 awcel i0 acv f2 awcel i0 acv f0 awcel awn pjcab f0 f2 awss f1 f2 awss awa i0 acv f0 awcel i0 acv f2 awcel awi i0 acv f0 awcel i0 acv f1 awcel awn awi awa i0 acv f1 awcel i0 acv f2 awcel awi i0 acv f1 awcel i0 acv f0 awcel awn awi awa i0 acv f0 awcel i0 acv f2 awcel i0 acv f1 awcel awn awa awi i0 acv f1 awcel i0 acv f2 awcel i0 acv f0 awcel awn awa awi p3bitr4g i0 acv f2 f1 peldif i0 acv f2 f1 acdif awcel i0 acv f2 awcel i0 acv f1 awcel awn awa i0 acv f0 awcel pimbi2i i0 acv f2 f0 peldif i0 acv f2 f0 acdif awcel i0 acv f2 awcel i0 acv f0 awcel awn awa i0 acv f1 awcel pimbi2i f0 f2 awss f1 f2 awss awa i0 acv f0 awcel i0 acv f2 awcel i0 acv f1 awcel awn awa awi i0 acv f1 awcel i0 acv f2 awcel i0 acv f0 awcel awn awa awi i0 acv f0 awcel i0 acv f2 f1 acdif awcel awi i0 acv f1 awcel i0 acv f2 f0 acdif awcel awi p3bitr4g f0 f2 awss f1 f2 awss awa i0 acv f0 awcel i0 acv f2 f1 acdif awcel awi i0 acv f1 awcel i0 acv f2 f0 acdif awcel awi i0 palbidv i0 f0 f2 f1 acdif pdfss2 i0 f1 f2 f0 acdif pdfss2 f0 f2 awss f1 f2 awss awa i0 acv f0 awcel i0 acv f2 f1 acdif awcel awi i0 awal i0 acv f1 awcel i0 acv f2 f0 acdif awcel awi i0 awal f0 f2 f1 acdif awss f1 f2 f0 acdif awss p3bitr4g $.
+$}
+$( Contraposition law for subsets.  Exercise 15 of [TakeutiZaring] p. 22.
+       (Contributed by NM, 22-Mar-1998.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	psscon $p |- ( A C_ B -> ( C \ B ) C_ ( C \ A ) ) $=
+	f0 f1 i0 acv pssel f0 f1 awss i0 acv f0 awcel i0 acv f1 awcel pcon3d f0 f1 awss i0 acv f1 awcel awn i0 acv f0 awcel awn i0 acv f2 awcel panim2d i0 acv f2 f1 peldif i0 acv f2 f0 peldif f0 f1 awss i0 acv f2 awcel i0 acv f1 awcel awn awa i0 acv f2 awcel i0 acv f0 awcel awn awa i0 acv f2 f1 acdif awcel i0 acv f2 f0 acdif awcel p3imtr4g f0 f1 awss i0 f2 f1 acdif f2 f0 acdif pssrdv $.
+$}
+$( Difference law for subsets.  (Contributed by NM, 28-May-1998.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	pssdif $p |- ( A C_ B -> ( A \ C ) C_ ( B \ C ) ) $=
+	f0 f1 i0 acv pssel f0 f1 awss i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel awn panim1d i0 acv f0 f2 peldif i0 acv f1 f2 peldif f0 f1 awss i0 acv f0 awcel i0 acv f2 awcel awn awa i0 acv f1 awcel i0 acv f2 awcel awn awa i0 acv f0 f2 acdif awcel i0 acv f1 f2 acdif awcel p3imtr4g f0 f1 awss i0 f0 f2 acdif f1 f2 acdif pssrdv $.
+$}
+$( If ` A ` is contained in ` B ` , then ` ( A \ C ) ` is contained in
+       ` ( B \ C ) ` .  Deduction form of ~ ssdif .  (Contributed by David
+       Moews, 1-May-2017.) $)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> A C_ B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pssdifd $p |- ( ph -> ( A \ C ) C_ ( B \ C ) ) $=
+	e0 f1 f2 f3 pssdif f0 f1 f2 awss f1 f3 acdif f2 f3 acdif awss psyl $.
+$}
+$( If ` A ` is contained in ` B ` , then ` ( C \ B ) ` is contained in
+       ` ( C \ A ) ` .  Deduction form of ~ sscon .  (Contributed by David
+       Moews, 1-May-2017.) $)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> A C_ B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	psscond $p |- ( ph -> ( C \ B ) C_ ( C \ A ) ) $=
+	e0 f1 f2 f3 psscon f0 f1 f2 awss f3 f2 acdif f3 f1 acdif awss psyl $.
+$}
+$( If ` A ` is contained in ` B ` , then ` ( A \ C ) ` is also contained in
+       ` B ` .  Deduction form of ~ ssdifss .  (Contributed by David Moews,
+       1-May-2017.) $)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> A C_ B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pssdifssd $p |- ( ph -> ( A \ C ) C_ B ) $=
+	e0 f1 f2 f3 pssdifss f0 f1 f2 awss f1 f3 acdif f2 awss psyl $.
+$}
+$( If ` A ` is contained in ` B ` and ` C ` is contained in ` D ` , then
+       ` ( A \ D ) ` is contained in ` ( B \ C ) ` .  Deduction form.
+       (Contributed by David Moews, 1-May-2017.) $)
+${
+	$v ph A B C D $.
+	e0 $e |- ( ph -> A C_ B ) $.
+	e1 $e |- ( ph -> C C_ D ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class D $.
+	pssdif2d $p |- ( ph -> ( A \ D ) C_ ( B \ C ) ) $=
+	e1 f0 f3 f4 f1 psscond e0 f0 f1 f2 f3 pssdifd f0 f1 f4 acdif f1 f3 acdif f2 f3 acdif psstrd $.
+$}
+$( Expansion of membership in class union.  Theorem 12 of [Suppes] p. 25.
+       (Contributed by NM, 7-Aug-1994.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	pelun $p |- ( A e. ( B u. C ) <-> ( A e. B \/ A e. C ) ) $=
+	f0 f1 f2 acun pelex f0 f1 pelex f0 f2 pelex f0 f1 awcel f0 acvv awcel f0 f2 awcel pjaoi i0 acv f0 f1 peleq1 i0 acv f0 f2 peleq1 i0 acv f0 awceq i0 acv f1 awcel f0 f1 awcel i0 acv f2 awcel f0 f2 awcel porbi12d i0 f1 f2 adf-un i0 acv f1 awcel i0 acv f2 awcel awo f0 f1 awcel f0 f2 awcel awo i0 f0 f1 f2 acun acvv pelab2g f0 f1 f2 acun awcel f0 acvv awcel f0 f1 awcel f0 f2 awcel awo ppm5.21nii $.
+$}
+$( Inference from membership to union.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	e0 $e |- ( ( x e. A \/ x e. B ) <-> x e. C ) $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	puneqri $p |- ( A u. B ) = C $=
+	f0 acv f1 f2 pelun e0 f0 acv f1 f2 acun awcel f0 acv f1 awcel f0 acv f2 awcel awo f0 acv f3 awcel pbitri f0 f1 f2 acun f3 peqriv $.
+$}
+$( Idempotent law for union of classes.  Theorem 23 of [Suppes] p. 27.
+       (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v x A $.
+	$d x A $.
+	f0 $f class A $.
+	i0 $f set x $.
+	punidm $p |- ( A u. A ) = A $=
+	i0 acv f0 awcel poridm i0 f0 f0 f0 puneqri $.
+$}
+$( Commutative law for union of classes.  Exercise 6 of [TakeutiZaring]
+       p. 17.  (Contributed by NM, 25-Jun-1998.)  (Proof shortened by Andrew
+       Salmon, 26-Jun-2011.) $)
+${
+	$v x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	puncom $p |- ( A u. B ) = ( B u. A ) $=
+	i0 acv f0 awcel i0 acv f1 awcel porcom i0 acv f1 f0 pelun i0 acv f0 awcel i0 acv f1 awcel awo i0 acv f1 awcel i0 acv f0 awcel awo i0 acv f1 f0 acun awcel pbitr4i i0 f0 f1 f1 f0 acun puneqri $.
+$}
+$( If a class equals the union of two other classes, then it equals the
+       union of those two classes commuted. ~ equncom was automatically derived
+       from ~ equncomVD using the tools program
+       translate_without_overwriting.cmd and minimizing.  (Contributed by Alan
+       Sare, 18-Feb-2012.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pequncom $p |- ( A = ( B u. C ) <-> A = ( C u. B ) ) $=
+	f1 f2 puncom f1 f2 acun f2 f1 acun f0 peqeq2i $.
+$}
+$( Inference form of ~ equncom . ~ equncomi was automatically derived from
+       ~ equncomiVD using the tools program translate_without_overwriting.cmd
+       and minimizing.  (Contributed by Alan Sare, 18-Feb-2012.) $)
+${
+	$v A B C $.
+	e0 $e |- A = ( B u. C ) $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pequncomi $p |- A = ( C u. B ) $=
+	e0 f0 f1 f2 pequncom f0 f1 f2 acun awceq f0 f2 f1 acun awceq pmpbi $.
+$}
+$( Equality theorem for union of two classes.  (Contributed by NM,
+       5-Aug-1993.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	puneq1 $p |- ( A = B -> ( A u. C ) = ( B u. C ) ) $=
+	f0 f1 i0 acv peleq2 f0 f1 awceq i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel porbi1d i0 acv f0 f2 pelun i0 acv f1 f2 pelun f0 f1 awceq i0 acv f0 awcel i0 acv f2 awcel awo i0 acv f1 awcel i0 acv f2 awcel awo i0 acv f0 f2 acun awcel i0 acv f1 f2 acun awcel p3bitr4g f0 f1 awceq i0 f0 f2 acun f1 f2 acun peqrdv $.
+$}
+$( Equality theorem for the union of two classes.  (Contributed by NM,
+     5-Aug-1993.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	puneq2 $p |- ( A = B -> ( C u. A ) = ( C u. B ) ) $=
+	f0 f1 f2 puneq1 f2 f0 puncom f2 f1 puncom f0 f1 awceq f0 f2 acun f1 f2 acun f2 f0 acun f2 f1 acun p3eqtr4g $.
+$}
+$( Equality theorem for union of two classes.  (Contributed by NM,
+     29-Mar-1998.) $)
+${
+	$v A B C D $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	puneq12 $p |- ( ( A = B /\ C = D ) -> ( A u. C ) = ( B u. D ) ) $=
+	f0 f1 f2 puneq1 f2 f3 f1 puneq2 f0 f1 awceq f2 f3 awceq f0 f2 acun f1 f2 acun f1 f3 acun psylan9eq $.
+$}
+$( Inference adding union to the right in a class equality.  (Contributed
+       by NM, 30-Aug-1993.) $)
+${
+	$v A B C $.
+	e0 $e |- A = B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	puneq1i $p |- ( A u. C ) = ( B u. C ) $=
+	e0 f0 f1 f2 puneq1 f0 f1 awceq f0 f2 acun f1 f2 acun awceq aax-mp $.
+$}
+$( Inference adding union to the left in a class equality.  (Contributed by
+       NM, 30-Aug-1993.) $)
+${
+	$v A B C $.
+	e0 $e |- A = B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	puneq2i $p |- ( C u. A ) = ( C u. B ) $=
+	e0 f0 f1 f2 puneq2 f0 f1 awceq f2 f0 acun f2 f1 acun awceq aax-mp $.
+$}
+$( Equality inference for union of two classes.  (Contributed by NM,
+         12-Aug-2004.)  (Proof shortened by Eric Schmidt, 26-Jan-2007.) $)
+${
+	$v A B C D $.
+	e0 $e |- A = B $.
+	e1 $e |- C = D $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	puneq12i $p |- ( A u. C ) = ( B u. D ) $=
+	e0 e1 f0 f1 f2 f3 puneq12 f0 f1 awceq f2 f3 awceq f0 f2 acun f1 f3 acun awceq pmp2an $.
+$}
+$( Deduction adding union to the right in a class equality.  (Contributed
+       by NM, 29-Mar-1998.) $)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	puneq1d $p |- ( ph -> ( A u. C ) = ( B u. C ) ) $=
+	e0 f1 f2 f3 puneq1 f0 f1 f2 awceq f1 f3 acun f2 f3 acun awceq psyl $.
+$}
+$( Deduction adding union to the left in a class equality.  (Contributed by
+       NM, 29-Mar-1998.) $)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	puneq2d $p |- ( ph -> ( C u. A ) = ( C u. B ) ) $=
+	e0 f1 f2 f3 puneq2 f0 f1 f2 awceq f3 f1 acun f3 f2 acun awceq psyl $.
+$}
+$( Equality deduction for union of two classes.  (Contributed by NM,
+         29-Sep-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+${
+	$v ph A B C D $.
+	e0 $e |- ( ph -> A = B ) $.
+	e1 $e |- ( ph -> C = D ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class D $.
+	puneq12d $p |- ( ph -> ( A u. C ) = ( B u. D ) ) $=
+	e0 e1 f1 f2 f3 f4 puneq12 f0 f1 f2 awceq f3 f4 awceq f1 f3 acun f2 f4 acun awceq psyl2anc $.
+$}
+$( Bound-variable hypothesis builder for the union of classes.
+       (Contributed by NM, 15-Sep-2003.)  (Revised by Mario Carneiro,
+       14-Oct-2016.) $)
+${
+	$v x y A B $.
+	$d x y $.
+	$d y A $.
+	$d y B $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/_ x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	i0 $f set y $.
+	pnfun $p |- F/_ x ( A u. B ) $=
+	i0 f1 f2 adf-un e0 f0 i0 f1 pnfcri e1 f0 i0 f2 pnfcri i0 acv f1 awcel i0 acv f2 awcel f0 pnfor i0 acv f1 awcel i0 acv f2 awcel awo f0 i0 pnfab f0 f1 f2 acun i0 acv f1 awcel i0 acv f2 awcel awo i0 acab pnfcxfr $.
+$}
+$( Associative law for union of classes.  Exercise 8 of [TakeutiZaring]
+       p. 17.  (Contributed by NM, 3-May-1994.)  (Proof shortened by Andrew
+       Salmon, 26-Jun-2011.) $)
+${
+	$v x A B C $.
+	$d A x $.
+	$d B x $.
+	$d C x $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	punass $p |- ( ( A u. B ) u. C ) = ( A u. ( B u. C ) ) $=
+	i0 acv f0 f1 f2 acun pelun i0 acv f1 f2 pelun i0 acv f1 f2 acun awcel i0 acv f1 awcel i0 acv f2 awcel awo i0 acv f0 awcel porbi2i i0 acv f0 f1 pelun i0 acv f0 f1 acun awcel i0 acv f0 awcel i0 acv f1 awcel awo i0 acv f2 awcel porbi1i i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel porass i0 acv f0 f1 acun awcel i0 acv f2 awcel awo i0 acv f0 awcel i0 acv f1 awcel awo i0 acv f2 awcel awo i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel awo awo pbitr2i i0 acv f0 f1 f2 acun acun awcel i0 acv f0 awcel i0 acv f1 f2 acun awcel awo i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel awo awo i0 acv f0 f1 acun awcel i0 acv f2 awcel awo p3bitrri i0 f0 f1 acun f2 f0 f1 f2 acun acun puneqri $.
+$}
+$( A rearrangement of union.  (Contributed by NM, 12-Aug-2004.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pun12 $p |- ( A u. ( B u. C ) ) = ( B u. ( A u. C ) ) $=
+	f0 f1 puncom f0 f1 acun f1 f0 acun f2 puneq1i f0 f1 f2 punass f1 f0 f2 punass f0 f1 acun f2 acun f1 f0 acun f2 acun f0 f1 f2 acun acun f1 f0 f2 acun acun p3eqtr3i $.
+$}
+$( A rearrangement of union.  (Contributed by NM, 12-Aug-2004.)  (Proof
+     shortened by Andrew Salmon, 26-Jun-2011.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pun23 $p |- ( ( A u. B ) u. C ) = ( ( A u. C ) u. B ) $=
+	f0 f1 f2 punass f0 f1 f2 pun12 f1 f0 f2 acun puncom f0 f1 acun f2 acun f0 f1 f2 acun acun f1 f0 f2 acun acun f0 f2 acun f1 acun p3eqtri $.
+$}
+$( A rearrangement of the union of 4 classes.  (Contributed by NM,
+     12-Aug-2004.) $)
+${
+	$v A B C D $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	pun4 $p |- ( ( A u. B ) u. ( C u. D ) ) = ( ( A u. C ) u. ( B u. D ) ) $=
+	f1 f2 f3 pun12 f1 f2 f3 acun acun f2 f1 f3 acun acun f0 puneq2i f0 f1 f2 f3 acun punass f0 f2 f1 f3 acun punass f0 f1 f2 f3 acun acun acun f0 f2 f1 f3 acun acun acun f0 f1 acun f2 f3 acun acun f0 f2 acun f1 f3 acun acun p3eqtr4i $.
+$}
+$( Union distributes over itself.  (Contributed by NM, 17-Aug-2004.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	punundi $p |- ( A u. ( B u. C ) ) = ( ( A u. B ) u. ( A u. C ) ) $=
+	f0 punidm f0 f0 acun f0 f1 f2 acun puneq1i f0 f0 f1 f2 pun4 f0 f0 acun f1 f2 acun acun f0 f1 f2 acun acun f0 f1 acun f0 f2 acun acun peqtr3i $.
+$}
+$( Union distributes over itself.  (Contributed by NM, 17-Aug-2004.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	punundir $p |- ( ( A u. B ) u. C ) = ( ( A u. C ) u. ( B u. C ) ) $=
+	f2 punidm f2 f2 acun f2 f0 f1 acun puneq2i f0 f1 f2 f2 pun4 f0 f1 acun f2 f2 acun acun f0 f1 acun f2 acun f0 f2 acun f1 f2 acun acun peqtr3i $.
+$}
+$( Subclass relationship for union of classes.  Theorem 25 of [Suppes]
+       p. 27.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	pssun1 $p |- A C_ ( A u. B ) $=
+	i0 acv f0 awcel i0 acv f1 awcel porc i0 acv f0 f1 pelun i0 acv f0 awcel i0 acv f0 awcel i0 acv f1 awcel awo i0 acv f0 f1 acun awcel psylibr i0 f0 f0 f1 acun pssriv $.
+$}
+$( Subclass relationship for union of classes.  (Contributed by NM,
+     30-Aug-1993.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pssun2 $p |- A C_ ( B u. A ) $=
+	f0 f1 pssun1 f0 f1 puncom f0 f0 f1 acun f1 f0 acun psseqtri $.
+$}
+$( Subclass law for union of classes.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pssun3 $p |- ( A C_ B -> A C_ ( B u. C ) ) $=
+	f1 f2 pssun1 f0 f1 f1 f2 acun psstr2 f0 f1 awss f1 f1 f2 acun awss f0 f1 f2 acun awss pmpi $.
+$}
+$( Subclass law for union of classes.  (Contributed by NM, 14-Aug-1994.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pssun4 $p |- ( A C_ B -> A C_ ( C u. B ) ) $=
+	f1 f2 pssun2 f0 f1 f2 f1 acun psstr2 f0 f1 awss f1 f2 f1 acun awss f0 f2 f1 acun awss pmpi $.
+$}
+$( Membership law for union of classes.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pelun1 $p |- ( A e. B -> A e. ( B u. C ) ) $=
+	f1 f2 pssun1 f1 f1 f2 acun f0 psseli $.
+$}
+$( Membership law for union of classes.  (Contributed by NM, 30-Aug-1993.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pelun2 $p |- ( A e. B -> A e. ( C u. B ) ) $=
+	f1 f2 pssun2 f1 f2 f1 acun f0 psseli $.
+$}
+$( Subclass law for union of classes.  (Contributed by NM, 14-Oct-1999.)
+       (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	punss1 $p |- ( A C_ B -> ( A u. C ) C_ ( B u. C ) ) $=
+	f0 f1 i0 acv pssel f0 f1 awss i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel porim1d i0 acv f0 f2 pelun i0 acv f1 f2 pelun f0 f1 awss i0 acv f0 awcel i0 acv f2 awcel awo i0 acv f1 awcel i0 acv f2 awcel awo i0 acv f0 f2 acun awcel i0 acv f1 f2 acun awcel p3imtr4g f0 f1 awss i0 f0 f2 acun f1 f2 acun pssrdv $.
+$}
+$( A relationship between subclass and union.  Theorem 26 of [Suppes]
+       p. 27.  (Contributed by NM, 30-Aug-1993.)  (Proof shortened by Andrew
+       Salmon, 26-Jun-2011.) $)
+${
+	$v x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	pssequn1 $p |- ( A C_ B <-> ( A u. B ) = B ) $=
+	i0 acv f1 awcel i0 acv f0 awcel i0 acv f1 awcel awo pbicom i0 acv f0 awcel i0 acv f1 awcel ppm4.72 i0 acv f0 f1 pelun i0 acv f0 f1 acun awcel i0 acv f0 awcel i0 acv f1 awcel awo i0 acv f1 awcel pbibi1i i0 acv f1 awcel i0 acv f0 awcel i0 acv f1 awcel awo awb i0 acv f0 awcel i0 acv f1 awcel awo i0 acv f1 awcel awb i0 acv f0 awcel i0 acv f1 awcel awi i0 acv f0 f1 acun awcel i0 acv f1 awcel awb p3bitr4i i0 acv f0 awcel i0 acv f1 awcel awi i0 acv f0 f1 acun awcel i0 acv f1 awcel awb i0 palbii i0 f0 f1 pdfss2 i0 f0 f1 acun f1 pdfcleq i0 acv f0 awcel i0 acv f1 awcel awi i0 awal i0 acv f0 f1 acun awcel i0 acv f1 awcel awb i0 awal f0 f1 awss f0 f1 acun f1 awceq p3bitr4i $.
+$}
+$( Subclass law for union of classes.  Exercise 7 of [TakeutiZaring] p. 18.
+     (Contributed by NM, 14-Oct-1999.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	punss2 $p |- ( A C_ B -> ( C u. A ) C_ ( C u. B ) ) $=
+	f0 f1 f2 punss1 f2 f0 puncom f2 f1 puncom f0 f1 awss f0 f2 acun f1 f2 acun f2 f0 acun f2 f1 acun p3sstr4g $.
+$}
+$( Subclass law for union of classes.  (Contributed by NM, 2-Jun-2004.) $)
+${
+	$v A B C D $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	punss12 $p |- ( ( A C_ B /\ C C_ D ) -> ( A u. C ) C_ ( B u. D ) ) $=
+	f0 f1 f2 punss1 f2 f3 f1 punss2 f0 f1 awss f2 f3 awss f0 f2 acun f1 f2 acun f1 f3 acun psylan9ss $.
+$}
+$( A relationship between subclass and union.  (Contributed by NM,
+     13-Jun-1994.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pssequn2 $p |- ( A C_ B <-> ( B u. A ) = B ) $=
+	f0 f1 pssequn1 f0 f1 puncom f0 f1 acun f1 f0 acun f1 peqeq1i f0 f1 awss f0 f1 acun f1 awceq f1 f0 acun f1 awceq pbitri $.
+$}
+$( The union of two subclasses is a subclass.  Theorem 27 of [Suppes] p. 27
+       and its converse.  (Contributed by NM, 11-Jun-2004.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	punss $p |- ( ( A C_ C /\ B C_ C ) <-> ( A u. B ) C_ C ) $=
+	i0 f0 f1 acun f2 pdfss2 i0 acv f0 awcel i0 acv f2 awcel awi i0 acv f1 awcel i0 acv f2 awcel awi i0 p19.26 i0 acv f0 f1 pelun i0 acv f0 f1 acun awcel i0 acv f0 awcel i0 acv f1 awcel awo i0 acv f2 awcel pimbi1i i0 acv f0 awcel i0 acv f2 awcel i0 acv f1 awcel pjaob i0 acv f0 f1 acun awcel i0 acv f2 awcel awi i0 acv f0 awcel i0 acv f1 awcel awo i0 acv f2 awcel awi i0 acv f0 awcel i0 acv f2 awcel awi i0 acv f1 awcel i0 acv f2 awcel awi awa pbitri i0 acv f0 f1 acun awcel i0 acv f2 awcel awi i0 acv f0 awcel i0 acv f2 awcel awi i0 acv f1 awcel i0 acv f2 awcel awi awa i0 palbii i0 f0 f2 pdfss2 i0 f1 f2 pdfss2 f0 f2 awss i0 acv f0 awcel i0 acv f2 awcel awi i0 awal f1 f2 awss i0 acv f1 awcel i0 acv f2 awcel awi i0 awal panbi12i i0 acv f0 awcel i0 acv f2 awcel awi i0 acv f1 awcel i0 acv f2 awcel awi awa i0 awal i0 acv f0 awcel i0 acv f2 awcel awi i0 awal i0 acv f1 awcel i0 acv f2 awcel awi i0 awal awa i0 acv f0 f1 acun awcel i0 acv f2 awcel awi i0 awal f0 f2 awss f1 f2 awss awa p3bitr4i f0 f1 acun f2 awss i0 acv f0 f1 acun awcel i0 acv f2 awcel awi i0 awal f0 f2 awss f1 f2 awss awa pbitr2i $.
+$}
+$( An inference showing the union of two subclasses is a subclass.
+       (Contributed by Raph Levien, 10-Dec-2002.) $)
+${
+	$v A B C $.
+	e0 $e |- A C_ C $.
+	e1 $e |- B C_ C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	punssi $p |- ( A u. B ) C_ C $=
+	e0 e1 f0 f2 awss f1 f2 awss ppm3.2i f0 f1 f2 punss f0 f2 awss f1 f2 awss awa f0 f1 acun f2 awss pmpbi $.
+$}
+$( A deduction showing the union of two subclasses is a subclass.
+       (Contributed by Jonathan Ben-Naim, 3-Jun-2011.) $)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> A C_ C ) $.
+	e1 $e |- ( ph -> B C_ C ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	punssd $p |- ( ph -> ( A u. B ) C_ C ) $=
+	e0 e1 f1 f2 f3 punss f1 f3 awss f2 f3 awss awa f1 f2 acun f3 awss pbiimpi f0 f1 f3 awss f2 f3 awss f1 f2 acun f3 awss psyl2anc $.
+$}
+$( If ` ( A u. B ) ` is contained in ` C ` , so is ` A ` .  One-way
+       deduction form of ~ unss .  Partial converse of ~ unssd .  (Contributed
+       by David Moews, 1-May-2017.) $)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> ( A u. B ) C_ C ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	punssad $p |- ( ph -> A C_ C ) $=
+	e0 f1 f2 f3 punss f0 f1 f2 acun f3 awss f1 f3 awss f2 f3 awss awa psylibr f0 f1 f3 awss f2 f3 awss psimpld $.
+$}
+$( If ` ( A u. B ) ` is contained in ` C ` , so is ` B ` .  One-way
+       deduction form of ~ unss .  Partial converse of ~ unssd .  (Contributed
+       by David Moews, 1-May-2017.) $)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> ( A u. B ) C_ C ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	punssbd $p |- ( ph -> B C_ C ) $=
+	e0 f1 f2 f3 punss f0 f1 f2 acun f3 awss f1 f3 awss f2 f3 awss awa psylibr f0 f1 f3 awss f2 f3 awss psimprd $.
+$}
+$( A condition that implies inclusion in the union of two classes.
+     (Contributed by NM, 23-Nov-2003.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pssun $p |- ( ( A C_ B \/ A C_ C ) -> A C_ ( B u. C ) ) $=
+	f0 f1 f2 pssun3 f0 f2 f1 pssun4 f0 f1 awss f0 f1 f2 acun awss f0 f2 awss pjaoi $.
+$}
+$( Restricted existential quantification over union.  (Contributed by Jeff
+     Madsen, 5-Jan-2011.) $)
+${
+	$v ph x A B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	prexun $p |- ( E. x e. ( A u. B ) ph <-> ( E. x e. A ph \/ E. x e. B ph ) ) $=
+	f0 f1 f2 f3 acun adf-rex f1 acv f2 awcel f0 awa f1 acv f3 awcel f0 awa f1 p19.43 f1 acv f2 f3 pelun f1 acv f2 f3 acun awcel f1 acv f2 awcel f1 acv f3 awcel awo f0 panbi1i f1 acv f2 awcel f1 acv f3 awcel f0 pandir f1 acv f2 f3 acun awcel f0 awa f1 acv f2 awcel f1 acv f3 awcel awo f0 awa f1 acv f2 awcel f0 awa f1 acv f3 awcel f0 awa awo pbitri f1 acv f2 f3 acun awcel f0 awa f1 acv f2 awcel f0 awa f1 acv f3 awcel f0 awa awo f1 pexbii f0 f1 f2 adf-rex f0 f1 f3 adf-rex f0 f1 f2 awrex f1 acv f2 awcel f0 awa f1 awex f0 f1 f3 awrex f1 acv f3 awcel f0 awa f1 awex porbi12i f1 acv f2 awcel f0 awa f1 acv f3 awcel f0 awa awo f1 awex f1 acv f2 awcel f0 awa f1 awex f1 acv f3 awcel f0 awa f1 awex awo f1 acv f2 f3 acun awcel f0 awa f1 awex f0 f1 f2 awrex f0 f1 f3 awrex awo p3bitr4i f0 f1 f2 f3 acun awrex f1 acv f2 f3 acun awcel f0 awa f1 awex f0 f1 f2 awrex f0 f1 f3 awrex awo pbitri $.
+$}
+$( Restricted quantification over a union.  (Contributed by Scott Fenton,
+     12-Apr-2011.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
+${
+	$v ph x A B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pralunb $p |- ( A. x e. ( A u. B ) ph <-> ( A. x e. A ph /\ A. x e. B ph ) ) $=
+	f1 acv f2 f3 pelun f1 acv f2 f3 acun awcel f1 acv f2 awcel f1 acv f3 awcel awo f0 pimbi1i f1 acv f2 awcel f0 f1 acv f3 awcel pjaob f1 acv f2 f3 acun awcel f0 awi f1 acv f2 awcel f1 acv f3 awcel awo f0 awi f1 acv f2 awcel f0 awi f1 acv f3 awcel f0 awi awa pbitri f1 acv f2 f3 acun awcel f0 awi f1 acv f2 awcel f0 awi f1 acv f3 awcel f0 awi awa f1 palbii f1 acv f2 awcel f0 awi f1 acv f3 awcel f0 awi f1 p19.26 f1 acv f2 f3 acun awcel f0 awi f1 awal f1 acv f2 awcel f0 awi f1 acv f3 awcel f0 awi awa f1 awal f1 acv f2 awcel f0 awi f1 awal f1 acv f3 awcel f0 awi f1 awal awa pbitri f0 f1 f2 f3 acun adf-ral f0 f1 f2 adf-ral f0 f1 f3 adf-ral f0 f1 f2 awral f1 acv f2 awcel f0 awi f1 awal f0 f1 f3 awral f1 acv f3 awcel f0 awi f1 awal panbi12i f1 acv f2 f3 acun awcel f0 awi f1 awal f1 acv f2 awcel f0 awi f1 awal f1 acv f3 awcel f0 awi f1 awal awa f0 f1 f2 f3 acun awral f0 f1 f2 awral f0 f1 f3 awral awa p3bitr4i $.
+$}
+$( Restricted quantification over union.  (Contributed by Jeff Madsen,
+     2-Sep-2009.) $)
+${
+	$v ph x A B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pralun $p |- ( ( A. x e. A ph /\ A. x e. B ph ) -> A. x e. ( A u. B ) ph ) $=
+	f0 f1 f2 f3 pralunb f0 f1 f2 f3 acun awral f0 f1 f2 awral f0 f1 f3 awral awa pbiimpri $.
+$}
+$( Expansion of membership in an intersection of two classes.  Theorem 12
+       of [Suppes] p. 25.  (Contributed by NM, 29-Apr-1994.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	pelin $p |- ( A e. ( B i^i C ) <-> ( A e. B /\ A e. C ) ) $=
+	f0 f1 f2 acin pelex f0 f2 pelex f0 f2 awcel f0 acvv awcel f0 f1 awcel padantl i0 acv f0 f1 peleq1 i0 acv f0 f2 peleq1 i0 acv f0 awceq i0 acv f1 awcel f0 f1 awcel i0 acv f2 awcel f0 f2 awcel panbi12d i0 f1 f2 adf-in i0 acv f1 awcel i0 acv f2 awcel awa f0 f1 awcel f0 f2 awcel awa i0 f0 f1 f2 acin acvv pelab2g f0 f1 f2 acin awcel f0 acvv awcel f0 f1 awcel f0 f2 awcel awa ppm5.21nii $.
+$}
+$( Membership in a class defined as an intersection.  (Contributed by
+       Stefan O'Rear, 29-Mar-2015.) $)
+${
+	$v A B C X $.
+	e0 $e |- X = ( B i^i C ) $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class X $.
+	pelin2 $p |- ( A e. X <-> ( A e. B /\ A e. C ) ) $=
+	e0 f3 f1 f2 acin f0 peleq2i f0 f1 f2 pelin f0 f3 awcel f0 f1 f2 acin awcel f0 f1 awcel f0 f2 awcel awa pbitri $.
+$}
+$( Membership in a class defined as a ternary intersection.  (Contributed
+       by Stefan O'Rear, 29-Mar-2015.) $)
+${
+	$v A B C D X $.
+	e0 $e |- X = ( ( B i^i C ) i^i D ) $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	f4 $f class X $.
+	pelin3 $p |- ( A e. X <-> ( A e. B /\ A e. C /\ A e. D ) ) $=
+	f0 f1 f2 pelin f0 f1 f2 acin awcel f0 f1 awcel f0 f2 awcel awa f0 f3 awcel panbi1i e0 f0 f1 f2 acin f3 f4 pelin2 f0 f1 awcel f0 f2 awcel f0 f3 awcel adf-3an f0 f1 f2 acin awcel f0 f3 awcel awa f0 f1 awcel f0 f2 awcel awa f0 f3 awcel awa f0 f4 awcel f0 f1 awcel f0 f2 awcel f0 f3 awcel aw3a p3bitr4i $.
+$}
+$( Commutative law for intersection of classes.  Exercise 7 of
+       [TakeutiZaring] p. 17.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v x A B $.
+	$d A x $.
+	$d B x $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	pincom $p |- ( A i^i B ) = ( B i^i A ) $=
+	i0 acv f0 awcel i0 acv f1 awcel pancom i0 acv f0 f1 pelin i0 acv f1 f0 pelin i0 acv f0 awcel i0 acv f1 awcel awa i0 acv f1 awcel i0 acv f0 awcel awa i0 acv f0 f1 acin awcel i0 acv f1 f0 acin awcel p3bitr4i i0 f0 f1 acin f1 f0 acin peqriv $.
+$}
+$( Inference from membership to intersection.  (Contributed by NM,
+       5-Aug-1993.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	e0 $e |- ( ( x e. A /\ x e. B ) <-> x e. C ) $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pineqri $p |- ( A i^i B ) = C $=
+	f0 acv f1 f2 pelin e0 f0 acv f1 f2 acin awcel f0 acv f1 awcel f0 acv f2 awcel awa f0 acv f3 awcel pbitri f0 f1 f2 acin f3 peqriv $.
+$}
+$( Equality theorem for intersection of two classes.  (Contributed by NM,
+       14-Dec-1993.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	pineq1 $p |- ( A = B -> ( A i^i C ) = ( B i^i C ) ) $=
+	f0 f1 i0 acv peleq2 f0 f1 awceq i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel panbi1d i0 acv f0 f2 pelin i0 acv f1 f2 pelin f0 f1 awceq i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f1 awcel i0 acv f2 awcel awa i0 acv f0 f2 acin awcel i0 acv f1 f2 acin awcel p3bitr4g f0 f1 awceq i0 f0 f2 acin f1 f2 acin peqrdv $.
+$}
+$( Equality theorem for intersection of two classes.  (Contributed by NM,
+     26-Dec-1993.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pineq2 $p |- ( A = B -> ( C i^i A ) = ( C i^i B ) ) $=
+	f0 f1 f2 pineq1 f2 f0 pincom f2 f1 pincom f0 f1 awceq f0 f2 acin f1 f2 acin f2 f0 acin f2 f1 acin p3eqtr4g $.
+$}
+$( Equality theorem for intersection of two classes.  (Contributed by NM,
+     8-May-1994.) $)
+${
+	$v A B C D $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	pineq12 $p |- ( ( A = B /\ C = D ) -> ( A i^i C ) = ( B i^i D ) ) $=
+	f0 f1 f2 pineq1 f2 f3 f1 pineq2 f0 f1 awceq f2 f3 awceq f0 f2 acin f1 f2 acin f1 f3 acin psylan9eq $.
+$}
+$( Equality inference for intersection of two classes.  (Contributed by NM,
+       26-Dec-1993.) $)
+${
+	$v A B C $.
+	e0 $e |- A = B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pineq1i $p |- ( A i^i C ) = ( B i^i C ) $=
+	e0 f0 f1 f2 pineq1 f0 f1 awceq f0 f2 acin f1 f2 acin awceq aax-mp $.
+$}
+$( Equality inference for intersection of two classes.  (Contributed by NM,
+       26-Dec-1993.) $)
+${
+	$v A B C $.
+	e0 $e |- A = B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pineq2i $p |- ( C i^i A ) = ( C i^i B ) $=
+	e0 f0 f1 f2 pineq2 f0 f1 awceq f2 f0 acin f2 f1 acin awceq aax-mp $.
+$}
+$( Equality inference for intersection of two classes.  (Contributed by
+         NM, 24-Jun-2004.)  (Proof shortened by Eric Schmidt, 26-Jan-2007.) $)
+${
+	$v A B C D $.
+	e0 $e |- A = B $.
+	e1 $e |- C = D $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	pineq12i $p |- ( A i^i C ) = ( B i^i D ) $=
+	e0 e1 f0 f1 f2 f3 pineq12 f0 f1 awceq f2 f3 awceq f0 f2 acin f1 f3 acin awceq pmp2an $.
+$}
+$( Equality deduction for intersection of two classes.  (Contributed by NM,
+       10-Apr-1994.) $)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pineq1d $p |- ( ph -> ( A i^i C ) = ( B i^i C ) ) $=
+	e0 f1 f2 f3 pineq1 f0 f1 f2 awceq f1 f3 acin f2 f3 acin awceq psyl $.
+$}
+$( Equality deduction for intersection of two classes.  (Contributed by NM,
+       10-Apr-1994.) $)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pineq2d $p |- ( ph -> ( C i^i A ) = ( C i^i B ) ) $=
+	e0 f1 f2 f3 pineq2 f0 f1 f2 awceq f3 f1 acin f3 f2 acin awceq psyl $.
+$}
+$( Equality deduction for intersection of two classes.  (Contributed by
+         NM, 24-Jun-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+${
+	$v ph A B C D $.
+	e0 $e |- ( ph -> A = B ) $.
+	e1 $e |- ( ph -> C = D ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class D $.
+	pineq12d $p |- ( ph -> ( A i^i C ) = ( B i^i D ) ) $=
+	e0 e1 f1 f2 f3 f4 pineq12 f0 f1 f2 awceq f3 f4 awceq f1 f3 acin f2 f4 acin awceq psyl2anc $.
+$}
+$( Equality deduction for intersection of two classes.  (Contributed by
+         NM, 7-Feb-2007.) $)
+${
+	$v ph ps A B C D $.
+	e0 $e |- ( ph -> A = B ) $.
+	e1 $e |- ( ps -> C = D ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	f5 $f class D $.
+	pineqan12d $p |- ( ( ph /\ ps ) -> ( A i^i C ) = ( B i^i D ) ) $=
+	e0 e1 f2 f3 f4 f5 pineq12 f0 f2 f3 awceq f4 f5 awceq f2 f4 acin f3 f5 acin awceq f1 psyl2an $.
+$}
+$( A frequently-used variant of subclass definition ~ df-ss .  (Contributed
+     by NM, 10-Jan-2015.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pdfss1 $p |- ( A C_ B <-> ( B i^i A ) = A ) $=
+	f0 f1 adf-ss f0 f1 pincom f0 f1 acin f1 f0 acin f0 peqeq1i f0 f1 awss f0 f1 acin f0 awceq f1 f0 acin f0 awceq pbitri $.
+$}
+$( Another definition of subclasshood.  Similar to ~ df-ss , ~ dfss , and
+     ~ dfss1 .  (Contributed by David Moews, 1-May-2017.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pdfss5 $p |- ( A C_ B <-> A = ( B i^i A ) ) $=
+	f0 f1 pdfss1 f1 f0 acin f0 peqcom f0 f1 awss f1 f0 acin f0 awceq f0 f1 f0 acin awceq pbitri $.
+$}
+$( Bound-variable hypothesis builder for the intersection of classes.
+       (Contributed by NM, 15-Sep-2003.)  (Revised by Mario Carneiro,
+       14-Oct-2016.) $)
+${
+	$v x y A B $.
+	$d x y $.
+	$d y A $.
+	$d y B $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/_ x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	i0 $f set y $.
+	pnfin $p |- F/_ x ( A i^i B ) $=
+	i0 f1 f2 pdfin5 e1 f0 i0 f2 pnfcri e0 i0 acv f2 awcel f0 i0 f1 pnfrab f0 f1 f2 acin i0 acv f2 awcel i0 f1 acrab pnfcxfr $.
+$}
+$( Distribute proper substitution through an intersection relation.
+       (Contributed by Alan Sare, 22-Jul-2012.) $)
+${
+	$v x y A B C D $.
+	$d A y $.
+	$d C y $.
+	$d D y $.
+	$d x y $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class D $.
+	i0 $f set y $.
+	pcsbing $p |- ( A e. B -> [_ A / x ]_ ( C i^i D ) = ( [_ A / x ]_ C i^i [_ A / x ]_ D ) ) $=
+	f0 i0 acv f1 f3 f4 acin pcsbeq1 f0 i0 acv f1 f3 pcsbeq1 f0 i0 acv f1 f4 pcsbeq1 i0 acv f1 awceq f0 i0 acv f3 acsb f0 f1 f3 acsb f0 i0 acv f4 acsb f0 f1 f4 acsb pineq12d i0 acv f1 awceq f0 i0 acv f3 f4 acin acsb f0 f1 f3 f4 acin acsb f0 i0 acv f3 acsb f0 i0 acv f4 acsb acin f0 f1 f3 acsb f0 f1 f4 acsb acin peqeq12d i0 pvex f0 i0 acv f3 pnfcsb1v f0 i0 acv f4 pnfcsb1v f0 f0 i0 acv f3 acsb f0 i0 acv f4 acsb pnfin f0 i0 acv f3 pcsbeq1a f0 i0 acv f4 pcsbeq1a f0 acv i0 acv awceq f3 f0 i0 acv f3 acsb f4 f0 i0 acv f4 acsb pineq12d f0 i0 acv f3 f4 acin f0 i0 acv f3 acsb f0 i0 acv f4 acsb acin pcsbief f0 i0 acv f3 f4 acin acsb f0 i0 acv f3 acsb f0 i0 acv f4 acsb acin awceq f0 f1 f3 f4 acin acsb f0 f1 f3 acsb f0 f1 f4 acsb acin awceq i0 f1 f2 pvtoclg $.
+$}
+$( Deduction from a wff to a restricted class abstraction.  (Contributed by
+       NM, 14-Jan-2014.) $)
+${
+	$v ph ps x A B $.
+	$d x ph $.
+	$d x A $.
+	$d x B $.
+	e0 $e |- ( ( ph /\ x e. A ) -> ( x e. B <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class B $.
+	prabbi2dva $p |- ( ph -> ( A i^i B ) = { x e. A | ps } ) $=
+	f2 f3 f4 pdfin5 e0 f0 f2 acv f4 awcel f1 f2 f3 prabbidva f0 f3 f4 acin f2 acv f4 awcel f2 f3 acrab f1 f2 f3 acrab psyl5eq $.
+$}
+$( Idempotent law for intersection of classes.  Theorem 15 of [Suppes]
+       p. 26.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v x A $.
+	$d x A $.
+	f0 $f class A $.
+	i0 $f set x $.
+	pinidm $p |- ( A i^i A ) = A $=
+	i0 acv f0 awcel panidm i0 f0 f0 f0 pineqri $.
+$}
+$( Associative law for intersection of classes.  Exercise 9 of
+       [TakeutiZaring] p. 17.  (Contributed by NM, 3-May-1994.) $)
+${
+	$v x A B C $.
+	$d A x $.
+	$d B x $.
+	$d C x $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	pinass $p |- ( ( A i^i B ) i^i C ) = ( A i^i ( B i^i C ) ) $=
+	i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel panass i0 acv f1 f2 pelin i0 acv f1 f2 acin awcel i0 acv f1 awcel i0 acv f2 awcel awa i0 acv f0 awcel panbi2i i0 acv f0 awcel i0 acv f1 awcel awa i0 acv f2 awcel awa i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel awa awa i0 acv f0 awcel i0 acv f1 f2 acin awcel awa pbitr4i i0 acv f0 f1 pelin i0 acv f0 f1 acin awcel i0 acv f0 awcel i0 acv f1 awcel awa i0 acv f2 awcel panbi1i i0 acv f0 f1 f2 acin pelin i0 acv f0 awcel i0 acv f1 awcel awa i0 acv f2 awcel awa i0 acv f0 awcel i0 acv f1 f2 acin awcel awa i0 acv f0 f1 acin awcel i0 acv f2 awcel awa i0 acv f0 f1 f2 acin acin awcel p3bitr4i i0 f0 f1 acin f2 f0 f1 f2 acin acin pineqri $.
+$}
+$( A rearrangement of intersection.  (Contributed by NM, 21-Apr-2001.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pin12 $p |- ( A i^i ( B i^i C ) ) = ( B i^i ( A i^i C ) ) $=
+	f0 f1 pincom f0 f1 acin f1 f0 acin f2 pineq1i f0 f1 f2 pinass f1 f0 f2 pinass f0 f1 acin f2 acin f1 f0 acin f2 acin f0 f1 f2 acin acin f1 f0 f2 acin acin p3eqtr3i $.
+$}
+$( A rearrangement of intersection.  (Contributed by NM, 21-Apr-2001.)
+     (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pin32 $p |- ( ( A i^i B ) i^i C ) = ( ( A i^i C ) i^i B ) $=
+	f0 f1 f2 pinass f0 f1 f2 pin12 f1 f0 f2 acin pincom f0 f1 acin f2 acin f0 f1 f2 acin acin f1 f0 f2 acin acin f0 f2 acin f1 acin p3eqtri $.
+$}
+$( A rearrangement of intersection.  (Contributed by NM, 27-Aug-2012.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pin13 $p |- ( A i^i ( B i^i C ) ) = ( C i^i ( B i^i A ) ) $=
+	f1 f2 f0 pin32 f0 f1 f2 acin pincom f2 f1 f0 acin pincom f1 f2 acin f0 acin f1 f0 acin f2 acin f0 f1 f2 acin acin f2 f1 f0 acin acin p3eqtr4i $.
+$}
+$( A rearrangement of intersection.  (Contributed by NM, 27-Aug-2012.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pin31 $p |- ( ( A i^i B ) i^i C ) = ( ( C i^i B ) i^i A ) $=
+	f2 f0 f1 pin12 f0 f1 acin f2 pincom f2 f1 acin f0 pincom f2 f0 f1 acin acin f0 f2 f1 acin acin f0 f1 acin f2 acin f2 f1 acin f0 acin p3eqtr4i $.
+$}
+$( Rotate the intersection of 3 classes.  (Contributed by NM,
+     27-Aug-2012.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pinrot $p |- ( ( A i^i B ) i^i C ) = ( ( C i^i A ) i^i B ) $=
+	f0 f1 f2 pin31 f2 f1 f0 pin32 f0 f1 acin f2 acin f2 f1 acin f0 acin f2 f0 acin f1 acin peqtri $.
+$}
+$( Rearrangement of intersection of 4 classes.  (Contributed by NM,
+     21-Apr-2001.) $)
+${
+	$v A B C D $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	pin4 $p |- ( ( A i^i B ) i^i ( C i^i D ) ) = ( ( A i^i C ) i^i ( B i^i D ) ) $=
+	f1 f2 f3 pin12 f1 f2 f3 acin acin f2 f1 f3 acin acin f0 pineq2i f0 f1 f2 f3 acin pinass f0 f2 f1 f3 acin pinass f0 f1 f2 f3 acin acin acin f0 f2 f1 f3 acin acin acin f0 f1 acin f2 f3 acin acin f0 f2 acin f1 f3 acin acin p3eqtr4i $.
+$}
+$( Intersection distributes over itself.  (Contributed by NM, 6-May-1994.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pinindi $p |- ( A i^i ( B i^i C ) ) = ( ( A i^i B ) i^i ( A i^i C ) ) $=
+	f0 pinidm f0 f0 acin f0 f1 f2 acin pineq1i f0 f0 f1 f2 pin4 f0 f0 acin f1 f2 acin acin f0 f1 f2 acin acin f0 f1 acin f0 f2 acin acin peqtr3i $.
+$}
+$( Intersection distributes over itself.  (Contributed by NM,
+     17-Aug-2004.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pinindir $p |- ( ( A i^i B ) i^i C ) = ( ( A i^i C ) i^i ( B i^i C ) ) $=
+	f2 pinidm f2 f2 acin f2 f0 f1 acin pineq2i f0 f1 f2 f2 pin4 f0 f1 acin f2 f2 acin acin f0 f1 acin f2 acin f0 f2 acin f1 f2 acin acin peqtr3i $.
+$}
+$( A relationship between subclass and intersection.  Similar to Exercise 9
+     of [TakeutiZaring] p. 18.  (Contributed by NM, 17-May-1994.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	psseqin2 $p |- ( A C_ B <-> ( B i^i A ) = A ) $=
+	f0 f1 pdfss1 $.
+$}
+$( The intersection of two classes is a subset of one of them.  Part of
+       Exercise 12 of [TakeutiZaring] p. 18.  (Contributed by NM,
+       27-Apr-1994.) $)
+${
+	$v x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	pinss1 $p |- ( A i^i B ) C_ A $=
+	i0 acv f0 f1 pelin i0 acv f0 f1 acin awcel i0 acv f0 awcel i0 acv f1 awcel psimplbi i0 f0 f1 acin f0 pssriv $.
+$}
+$( The intersection of two classes is a subset of one of them.  Part of
+     Exercise 12 of [TakeutiZaring] p. 18.  (Contributed by NM,
+     27-Apr-1994.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pinss2 $p |- ( A i^i B ) C_ B $=
+	f1 f0 pincom f1 f0 pinss1 f0 f1 acin f1 f0 acin f1 peqsstr3i $.
+$}
+$( Subclass of intersection.  Theorem 2.8(vii) of [Monk1] p. 26.
+       (Contributed by NM, 15-Jun-2004.)  (Proof shortened by Andrew Salmon,
+       26-Jun-2011.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	pssin $p |- ( ( A C_ B /\ A C_ C ) <-> A C_ ( B i^i C ) ) $=
+	i0 acv f1 f2 pelin i0 acv f1 f2 acin awcel i0 acv f1 awcel i0 acv f2 awcel awa i0 acv f0 awcel pimbi2i i0 acv f0 awcel i0 acv f1 f2 acin awcel awi i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel awa awi i0 palbii i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel pjcab i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel awa awi i0 acv f0 awcel i0 acv f1 awcel awi i0 acv f0 awcel i0 acv f2 awcel awi awa i0 palbii i0 acv f0 awcel i0 acv f1 awcel awi i0 acv f0 awcel i0 acv f2 awcel awi i0 p19.26 i0 acv f0 awcel i0 acv f1 f2 acin awcel awi i0 awal i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel awa awi i0 awal i0 acv f0 awcel i0 acv f1 awcel awi i0 acv f0 awcel i0 acv f2 awcel awi awa i0 awal i0 acv f0 awcel i0 acv f1 awcel awi i0 awal i0 acv f0 awcel i0 acv f2 awcel awi i0 awal awa p3bitrri i0 f0 f1 pdfss2 i0 f0 f2 pdfss2 f0 f1 awss i0 acv f0 awcel i0 acv f1 awcel awi i0 awal f0 f2 awss i0 acv f0 awcel i0 acv f2 awcel awi i0 awal panbi12i i0 f0 f1 f2 acin pdfss2 i0 acv f0 awcel i0 acv f1 awcel awi i0 awal i0 acv f0 awcel i0 acv f2 awcel awi i0 awal awa i0 acv f0 awcel i0 acv f1 f2 acin awcel awi i0 awal f0 f1 awss f0 f2 awss awa f0 f1 f2 acin awss p3bitr4i $.
+$}
+$( An inference showing that a subclass of two classes is a subclass of
+       their intersection.  (Contributed by NM, 24-Nov-2003.) $)
+${
+	$v A B C $.
+	e0 $e |- A C_ B $.
+	e1 $e |- A C_ C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pssini $p |- A C_ ( B i^i C ) $=
+	e0 e1 f0 f1 awss f0 f2 awss ppm3.2i f0 f1 f2 pssin f0 f1 awss f0 f2 awss awa f0 f1 f2 acin awss pmpbi $.
+$}
+$( A deduction showing that a subclass of two classes is a subclass of
+       their intersection.  (Contributed by Jonathan Ben-Naim, 3-Jun-2011.) $)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> A C_ B ) $.
+	e1 $e |- ( ph -> A C_ C ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pssind $p |- ( ph -> A C_ ( B i^i C ) ) $=
+	e0 e1 f1 f2 f3 pssin f1 f2 awss f1 f3 awss awa f1 f2 f3 acin awss pbiimpi f0 f1 f2 awss f1 f3 awss f1 f2 f3 acin awss psyl2anc $.
+$}
+$( Add right intersection to subclass relation.  (Contributed by NM,
+       16-Aug-1994.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	pssrin $p |- ( A C_ B -> ( A i^i C ) C_ ( B i^i C ) ) $=
+	f0 f1 i0 acv pssel f0 f1 awss i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel panim1d i0 acv f0 f2 pelin i0 acv f1 f2 pelin f0 f1 awss i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f1 awcel i0 acv f2 awcel awa i0 acv f0 f2 acin awcel i0 acv f1 f2 acin awcel p3imtr4g f0 f1 awss i0 f0 f2 acin f1 f2 acin pssrdv $.
+$}
+$( Add left intersection to subclass relation.  (Contributed by NM,
+       19-Oct-1999.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	psslin $p |- ( A C_ B -> ( C i^i A ) C_ ( C i^i B ) ) $=
+	f0 f1 f2 pssrin f2 f0 pincom f2 f1 pincom f0 f1 awss f0 f2 acin f1 f2 acin f2 f0 acin f2 f1 acin p3sstr4g $.
+$}
+$( Intersection of subclasses.  (Contributed by NM, 5-May-2000.) $)
+${
+	$v A B C D $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	pss2in $p |- ( ( A C_ B /\ C C_ D ) -> ( A i^i C ) C_ ( B i^i D ) ) $=
+	f0 f1 f2 pssrin f2 f3 f1 psslin f0 f1 awss f2 f3 awss f0 f2 acin f1 f2 acin f1 f3 acin psylan9ss $.
+$}
+$( Intersection preserves subclass relationship.  (Contributed by NM,
+     14-Sep-1999.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pssinss1 $p |- ( A C_ C -> ( A i^i B ) C_ C ) $=
+	f0 f1 pinss1 f0 f1 acin f0 f2 psstr2 f0 f1 acin f0 awss f0 f2 awss f0 f1 acin f2 awss awi aax-mp $.
+$}
+$( Inclusion of an intersection of two classes.  (Contributed by NM,
+     30-Oct-2014.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pinss $p |- ( ( A C_ C \/ B C_ C ) -> ( A i^i B ) C_ C ) $=
+	f0 f1 f2 pssinss1 f0 f1 pincom f1 f0 f2 pssinss1 f1 f2 awss f0 f1 acin f1 f0 acin f2 psyl5eqss f0 f2 awss f0 f1 acin f2 awss f1 f2 awss pjaoi $.
+$}
+$( Absorption law for union.  (Contributed by NM, 16-Apr-2006.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	punabs $p |- ( A u. ( A i^i B ) ) = A $=
+	f0 f1 pinss1 f0 f1 acin f0 pssequn2 f0 f1 acin f0 awss f0 f0 f1 acin acun f0 awceq pmpbi $.
+$}
+$( Absorption law for intersection.  (Contributed by NM, 16-Apr-2006.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pinabs $p |- ( A i^i ( A u. B ) ) = A $=
+	f0 f1 pssun1 f0 f0 f1 acun adf-ss f0 f0 f1 acun awss f0 f0 f1 acun acin f0 awceq pmpbi $.
+$}
+$( Negation of subclass expressed in terms of intersection and proper
+     subclass.  (Contributed by NM, 30-Jun-2004.)  (Proof shortened by Andrew
+     Salmon, 26-Jun-2011.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pnssinpss $p |- ( -. A C_ B <-> ( A i^i B ) C. A ) $=
+	f0 f1 pinss1 f0 f1 acin f0 awss f0 f1 acin f0 awne pbiantrur f0 f1 adf-ss f0 f1 awss f0 f1 acin f0 pnecon3bbii f0 f1 acin f0 adf-pss f0 f1 acin f0 awne f0 f1 acin f0 awss f0 f1 acin f0 awne awa f0 f1 awss awn f0 f1 acin f0 awpss p3bitr4i $.
+$}
+$( Negation of subclass expressed in terms of proper subclass and union.
+     (Contributed by NM, 15-Sep-2004.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pnsspssun $p |- ( -. A C_ B <-> B C. ( A u. B ) ) $=
+	f1 f0 pssun2 f1 f0 f1 acun awss f0 f1 acun f1 awss awn pbiantrur f1 pssid f1 f1 awss f0 f1 awss pbiantru f0 f1 f1 punss f0 f1 awss f0 f1 awss f1 f1 awss awa f0 f1 acun f1 awss pbitri f0 f1 acun f1 awss f1 f0 f1 acun awss f0 f1 acun f1 awss awn awa f0 f1 awss pxchnxbir f1 f0 f1 acun pdfpss3 f0 f1 awss awn f1 f0 f1 acun awss f0 f1 acun f1 awss awn awa f1 f0 f1 acun awpss pbitr4i $.
+$}
+$( Subclass defined in terms of class difference.  See comments under
+       ~ dfun2 .  (Contributed by NM, 22-Mar-1998.)  (Proof shortened by Andrew
+       Salmon, 26-Jun-2011.) $)
+${
+	$v x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	pdfss4 $p |- ( A C_ B <-> ( B \ ( B \ A ) ) = A ) $=
+	f0 f1 psseqin2 i0 acv f1 f0 peldif i0 acv f1 f0 acdif awcel i0 acv f1 awcel i0 acv f0 awcel awn awa pnotbii i0 acv f1 f0 acdif awcel awn i0 acv f1 awcel i0 acv f0 awcel awn awa awn i0 acv f1 awcel panbi2i i0 acv f1 f0 pelin i0 acv f1 awcel i0 acv f0 awcel pabai i0 acv f1 awcel i0 acv f0 awcel piman i0 acv f1 awcel i0 acv f0 awcel awi i0 acv f1 awcel i0 acv f0 awcel awn awa awn i0 acv f1 awcel panbi2i i0 acv f1 f0 acin awcel i0 acv f1 awcel i0 acv f0 awcel awa i0 acv f1 awcel i0 acv f1 awcel i0 acv f0 awcel awi awa i0 acv f1 awcel i0 acv f1 awcel i0 acv f0 awcel awn awa awn awa p3bitri i0 acv f1 awcel i0 acv f1 f0 acdif awcel awn awa i0 acv f1 awcel i0 acv f1 awcel i0 acv f0 awcel awn awa awn awa i0 acv f1 f0 acin awcel pbitr4i i0 f1 f1 f0 acdif f1 f0 acin pdifeqri f1 f1 f0 acdif acdif f1 f0 acin f0 peqeq1i f0 f1 awss f1 f0 acin f0 awceq f1 f1 f0 acdif acdif f0 awceq pbitr4i $.
+$}
+$( An alternate definition of the union of two classes in terms of class
+       difference, requiring no dummy variables.  Along with ~ dfin2 and
+       ~ dfss4 it shows we can express union, intersection, and subset directly
+       in terms of the single "primitive" operation ` \ ` (class difference).
+       (Contributed by NM, 10-Jun-2004.) $)
+${
+	$v x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	pdfun2 $p |- ( A u. B ) = ( _V \ ( ( _V \ A ) \ B ) ) $=
+	i0 pvex i0 acv acvv f0 peldif i0 acv acvv f0 acdif awcel i0 acv acvv awcel i0 acv f0 awcel awn pmpbiran i0 acv acvv f0 acdif awcel i0 acv f0 awcel awn i0 acv f1 awcel awn panbi1i i0 acv acvv f0 acdif f1 peldif i0 acv f0 awcel i0 acv f1 awcel pioran i0 acv acvv f0 acdif awcel i0 acv f1 awcel awn awa i0 acv f0 awcel awn i0 acv f1 awcel awn awa i0 acv acvv f0 acdif f1 acdif awcel i0 acv f0 awcel i0 acv f1 awcel awo awn p3bitr4i i0 acv acvv f0 acdif f1 acdif awcel i0 acv f0 awcel i0 acv f1 awcel awo pcon2bii i0 pvex i0 acv acvv acvv f0 acdif f1 acdif peldif i0 acv acvv acvv f0 acdif f1 acdif acdif awcel i0 acv acvv awcel i0 acv acvv f0 acdif f1 acdif awcel awn pmpbiran i0 acv f0 awcel i0 acv f1 awcel awo i0 acv acvv f0 acdif f1 acdif awcel awn i0 acv acvv acvv f0 acdif f1 acdif acdif awcel pbitr4i i0 f0 f1 acvv acvv f0 acdif f1 acdif acdif puneqri $.
+$}
+$( An alternate definition of the intersection of two classes in terms of
+       class difference, requiring no dummy variables.  See comments under
+       ~ dfun2 .  Another version is given by ~ dfin4 .  (Contributed by NM,
+       10-Jun-2004.) $)
+${
+	$v x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	pdfin2 $p |- ( A i^i B ) = ( A \ ( _V \ B ) ) $=
+	i0 pvex i0 acv acvv f1 peldif i0 acv acvv f1 acdif awcel i0 acv acvv awcel i0 acv f1 awcel awn pmpbiran i0 acv acvv f1 acdif awcel i0 acv f1 awcel pcon2bii i0 acv f1 awcel i0 acv acvv f1 acdif awcel awn i0 acv f0 awcel panbi2i i0 acv f0 acvv f1 acdif peldif i0 acv f0 awcel i0 acv f1 awcel awa i0 acv f0 awcel i0 acv acvv f1 acdif awcel awn awa i0 acv f0 acvv f1 acdif acdif awcel pbitr4i i0 f0 f1 f0 acvv f1 acdif acdif pineqri $.
+$}
+$( Difference with intersection.  Theorem 33 of [Suppes] p. 29.
+       (Contributed by NM, 31-Mar-1998.)  (Proof shortened by Andrew Salmon,
+       26-Jun-2011.) $)
+${
+	$v x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	pdifin $p |- ( A \ ( A i^i B ) ) = ( A \ B ) $=
+	i0 acv f0 awcel i0 acv f1 awcel ppm4.61 i0 acv f0 awcel i0 acv f1 awcel panclb i0 acv f0 f1 pelin i0 acv f0 f1 acin awcel i0 acv f0 awcel i0 acv f1 awcel awa i0 acv f0 awcel pimbi2i i0 acv f0 awcel i0 acv f0 f1 acin awcel piman i0 acv f0 awcel i0 acv f1 awcel awi i0 acv f0 awcel i0 acv f0 awcel i0 acv f1 awcel awa awi i0 acv f0 awcel i0 acv f0 f1 acin awcel awi i0 acv f0 awcel i0 acv f0 f1 acin awcel awn awa awn p3bitr2i i0 acv f0 awcel i0 acv f1 awcel awi i0 acv f0 awcel i0 acv f0 f1 acin awcel awn awa pcon2bii i0 acv f0 f1 peldif i0 acv f0 awcel i0 acv f1 awcel awi awn i0 acv f0 awcel i0 acv f1 awcel awn awa i0 acv f0 awcel i0 acv f0 f1 acin awcel awn awa i0 acv f0 f1 acdif awcel p3bitr4i i0 f0 f0 f1 acin f0 f1 acdif pdifeqri $.
+$}
+$( Union defined in terms of intersection (De Morgan's law).  Definition of
+     union in [Mendelson] p. 231.  (Contributed by NM, 8-Jan-2002.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pdfun3 $p |- ( A u. B ) = ( _V \ ( ( _V \ A ) i^i ( _V \ B ) ) ) $=
+	f0 f1 pdfun2 acvv f0 acdif acvv f1 acdif pdfin2 f1 pddif acvv acvv f1 acdif acdif f1 acvv f0 acdif pdifeq2i acvv f0 acdif acvv f1 acdif acin acvv f0 acdif acvv acvv f1 acdif acdif acdif acvv f0 acdif f1 acdif peqtr2i acvv f0 acdif f1 acdif acvv f0 acdif acvv f1 acdif acin acvv pdifeq2i f0 f1 acun acvv acvv f0 acdif f1 acdif acdif acvv acvv f0 acdif acvv f1 acdif acin acdif peqtri $.
+$}
+$( Intersection defined in terms of union (De Morgan's law.  Similar to
+     Exercise 4.10(n) of [Mendelson] p. 231.  (Contributed by NM,
+     8-Jan-2002.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pdfin3 $p |- ( A i^i B ) = ( _V \ ( ( _V \ A ) u. ( _V \ B ) ) ) $=
+	f0 acvv f1 acdif acdif pddif acvv f0 acdif acvv f1 acdif pdfun2 f0 pddif acvv acvv f0 acdif acdif f0 acvv f1 acdif pdifeq1i acvv acvv f0 acdif acdif acvv f1 acdif acdif f0 acvv f1 acdif acdif acvv pdifeq2i acvv f0 acdif acvv f1 acdif acun acvv acvv acvv f0 acdif acdif acvv f1 acdif acdif acdif acvv f0 acvv f1 acdif acdif acdif peqtri acvv f0 acdif acvv f1 acdif acun acvv f0 acvv f1 acdif acdif acdif acvv pdifeq2i f0 f1 pdfin2 acvv acvv f0 acvv f1 acdif acdif acdif acdif f0 acvv f1 acdif acdif acvv acvv f0 acdif acvv f1 acdif acun acdif f0 f1 acin p3eqtr4ri $.
+$}
+$( Alternate definition of the intersection of two classes.  Exercise 4.10(q)
+     of [Mendelson] p. 231.  (Contributed by NM, 25-Nov-2003.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pdfin4 $p |- ( A i^i B ) = ( A \ ( A \ B ) ) $=
+	f0 f1 pinss1 f0 f1 acin f0 pdfss4 f0 f1 acin f0 awss f0 f0 f0 f1 acin acdif acdif f0 f1 acin awceq pmpbi f0 f1 pdifin f0 f0 f1 acin acdif f0 f1 acdif f0 pdifeq2i f0 f0 f0 f1 acin acdif acdif f0 f1 acin f0 f0 f1 acdif acdif peqtr3i $.
+$}
+$( Intersection with universal complement.  Remark in [Stoll] p. 20.
+     (Contributed by NM, 17-Aug-2004.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pinvdif $p |- ( A i^i ( _V \ B ) ) = ( A \ B ) $=
+	f0 acvv f1 acdif pdfin2 f1 pddif acvv acvv f1 acdif acdif f1 f0 pdifeq2i f0 acvv f1 acdif acin f0 acvv acvv f1 acdif acdif acdif f0 f1 acdif peqtri $.
+$}
+$( Intersection with class difference.  Theorem 34 of [Suppes] p. 29.
+     (Contributed by NM, 17-Aug-2004.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pindif $p |- ( A i^i ( A \ B ) ) = ( A \ B ) $=
+	f0 f0 f1 acdif pdfin4 f0 f1 pdfin4 f0 f1 acin f0 f0 f1 acdif acdif f0 pdifeq2i f0 f1 pdifin f0 f0 f1 acdif acin f0 f0 f0 f1 acdif acdif acdif f0 f0 f1 acin acdif f0 f1 acdif p3eqtr2i $.
+$}
+$( Bring an intersection in and out of a class difference.  (Contributed by
+     Jeff Hankins, 15-Jul-2009.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pindif2 $p |- ( A i^i ( B \ C ) ) = ( ( A i^i B ) \ C ) $=
+	f0 f1 acvv f2 acdif pinass f0 f1 acin f2 pinvdif f1 f2 pinvdif f1 acvv f2 acdif acin f1 f2 acdif f0 pineq2i f0 f1 acin acvv f2 acdif acin f0 f1 acvv f2 acdif acin acin f0 f1 acin f2 acdif f0 f1 f2 acdif acin p3eqtr3ri $.
+$}
+$( Bring an intersection in and out of a class difference.  (Contributed by
+     Mario Carneiro, 15-May-2015.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pindif1 $p |- ( ( A \ C ) i^i B ) = ( ( A i^i B ) \ C ) $=
+	f1 f0 f2 pindif2 f1 f0 f2 acdif pincom f1 f0 pincom f1 f0 acin f0 f1 acin f2 pdifeq1i f1 f0 f2 acdif acin f1 f0 acin f2 acdif f0 f2 acdif f1 acin f0 f1 acin f2 acdif p3eqtr3i $.
+$}
+$( Commutation law for intersection and difference.  (Contributed by Scott
+     Fenton, 18-Feb-2013.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pindifcom $p |- ( A i^i ( B \ C ) ) = ( B i^i ( A \ C ) ) $=
+	f0 f1 pincom f0 f1 acin f1 f0 acin f2 pdifeq1i f0 f1 f2 pindif2 f1 f0 f2 pindif2 f0 f1 acin f2 acdif f1 f0 acin f2 acdif f0 f1 f2 acdif acin f1 f0 f2 acdif acin p3eqtr4i $.
+$}
+$( Distributive law for intersection over union.  Exercise 10 of
+       [TakeutiZaring] p. 17.  (Contributed by NM, 30-Sep-2002.)  (Proof
+       shortened by Andrew Salmon, 26-Jun-2011.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	pindi $p |- ( A i^i ( B u. C ) ) = ( ( A i^i B ) u. ( A i^i C ) ) $=
+	i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel pandi i0 acv f0 f1 pelin i0 acv f0 f2 pelin i0 acv f0 f1 acin awcel i0 acv f0 awcel i0 acv f1 awcel awa i0 acv f0 f2 acin awcel i0 acv f0 awcel i0 acv f2 awcel awa porbi12i i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel awo awa i0 acv f0 awcel i0 acv f1 awcel awa i0 acv f0 awcel i0 acv f2 awcel awa awo i0 acv f0 f1 acin awcel i0 acv f0 f2 acin awcel awo pbitr4i i0 acv f1 f2 pelun i0 acv f1 f2 acun awcel i0 acv f1 awcel i0 acv f2 awcel awo i0 acv f0 awcel panbi2i i0 acv f0 f1 acin f0 f2 acin pelun i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel awo awa i0 acv f0 f1 acin awcel i0 acv f0 f2 acin awcel awo i0 acv f0 awcel i0 acv f1 f2 acun awcel awa i0 acv f0 f1 acin f0 f2 acin acun awcel p3bitr4i i0 f0 f1 f2 acun f0 f1 acin f0 f2 acin acun pineqri $.
+$}
+$( Distributive law for union over intersection.  Exercise 11 of
+       [TakeutiZaring] p. 17.  (Contributed by NM, 30-Sep-2002.)  (Proof
+       shortened by Andrew Salmon, 26-Jun-2011.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	pundi $p |- ( A u. ( B i^i C ) ) = ( ( A u. B ) i^i ( A u. C ) ) $=
+	i0 acv f1 f2 pelin i0 acv f1 f2 acin awcel i0 acv f1 awcel i0 acv f2 awcel awa i0 acv f0 awcel porbi2i i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel pordi i0 acv f0 f1 acun f0 f2 acun pelin i0 acv f0 f1 pelun i0 acv f0 f2 pelun i0 acv f0 f1 acun awcel i0 acv f0 awcel i0 acv f1 awcel awo i0 acv f0 f2 acun awcel i0 acv f0 awcel i0 acv f2 awcel awo panbi12i i0 acv f0 f1 acun f0 f2 acun acin awcel i0 acv f0 f1 acun awcel i0 acv f0 f2 acun awcel awa i0 acv f0 awcel i0 acv f1 awcel awo i0 acv f0 awcel i0 acv f2 awcel awo awa pbitr2i i0 acv f0 awcel i0 acv f1 f2 acin awcel awo i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel awa awo i0 acv f0 awcel i0 acv f1 awcel awo i0 acv f0 awcel i0 acv f2 awcel awo awa i0 acv f0 f1 acun f0 f2 acun acin awcel p3bitri i0 f0 f1 f2 acin f0 f1 acun f0 f2 acun acin puneqri $.
+$}
+$( Distributive law for intersection over union.  Theorem 28 of [Suppes]
+     p. 27.  (Contributed by NM, 30-Sep-2002.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pindir $p |- ( ( A u. B ) i^i C ) = ( ( A i^i C ) u. ( B i^i C ) ) $=
+	f2 f0 f1 pindi f0 f1 acun f2 pincom f0 f2 pincom f1 f2 pincom f0 f2 acin f2 f0 acin f1 f2 acin f2 f1 acin puneq12i f2 f0 f1 acun acin f2 f0 acin f2 f1 acin acun f0 f1 acun f2 acin f0 f2 acin f1 f2 acin acun p3eqtr4i $.
+$}
+$( Distributive law for union over intersection.  Theorem 29 of [Suppes]
+     p. 27.  (Contributed by NM, 30-Sep-2002.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pundir $p |- ( ( A i^i B ) u. C ) = ( ( A u. C ) i^i ( B u. C ) ) $=
+	f2 f0 f1 pundi f0 f1 acin f2 puncom f0 f2 puncom f1 f2 puncom f0 f2 acun f2 f0 acun f1 f2 acun f2 f1 acun pineq12i f2 f0 f1 acin acun f2 f0 acun f2 f1 acun acin f0 f1 acin f2 acun f0 f2 acun f1 f2 acun acin p3eqtr4i $.
+$}
+$( Infer equality from equalities of union and intersection.  Exercise 20
+       of [Enderton] p. 32 and its converse.  (Contributed by NM,
+       10-Aug-2004.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	punineq $p |- ( ( ( A u. C ) = ( B u. C ) /\ ( A i^i C ) = ( B i^i C ) ) <-> A = B ) $=
+	f0 f2 acin f1 f2 acin i0 acv peleq2 i0 acv f0 f2 pelin i0 acv f1 f2 pelin f0 f2 acin f1 f2 acin awceq i0 acv f0 f2 acin awcel i0 acv f1 f2 acin awcel i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f1 awcel i0 acv f2 awcel awa p3bitr3g i0 acv f2 awcel i0 acv f0 awcel piba i0 acv f2 awcel i0 acv f1 awcel piba i0 acv f2 awcel i0 acv f0 awcel i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f1 awcel i0 acv f1 awcel i0 acv f2 awcel awa pbibi12d f0 f2 acin f1 f2 acin awceq i0 acv f0 awcel i0 acv f1 awcel awb i0 acv f2 awcel i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f1 awcel i0 acv f2 awcel awa awb psyl5ibr i0 acv f2 awcel f0 f2 acin f1 f2 acin awceq i0 acv f0 awcel i0 acv f1 awcel awb f0 f2 acun f1 f2 acun awceq padantld f0 f2 puncom f1 f2 puncom f0 f2 acun f2 f0 acun f1 f2 acun f2 f1 acun peqeq12i f2 f0 acun f2 f1 acun i0 acv peleq2 f0 f2 acun f1 f2 acun awceq f2 f0 acun f2 f1 acun awceq i0 acv f2 f0 acun awcel i0 acv f2 f1 acun awcel awb psylbi i0 acv f2 f0 pelun i0 acv f2 f1 pelun f0 f2 acun f1 f2 acun awceq i0 acv f2 f0 acun awcel i0 acv f2 f1 acun awcel i0 acv f2 awcel i0 acv f0 awcel awo i0 acv f2 awcel i0 acv f1 awcel awo p3bitr3g i0 acv f2 awcel i0 acv f0 awcel pbiorf i0 acv f2 awcel i0 acv f1 awcel pbiorf i0 acv f2 awcel awn i0 acv f0 awcel i0 acv f2 awcel i0 acv f0 awcel awo i0 acv f1 awcel i0 acv f2 awcel i0 acv f1 awcel awo pbibi12d f0 f2 acun f1 f2 acun awceq i0 acv f0 awcel i0 acv f1 awcel awb i0 acv f2 awcel awn i0 acv f2 awcel i0 acv f0 awcel awo i0 acv f2 awcel i0 acv f1 awcel awo awb psyl5ibr i0 acv f2 awcel awn f0 f2 acun f1 f2 acun awceq i0 acv f0 awcel i0 acv f1 awcel awb f0 f2 acin f1 f2 acin awceq padantrd i0 acv f2 awcel f0 f2 acun f1 f2 acun awceq f0 f2 acin f1 f2 acin awceq awa i0 acv f0 awcel i0 acv f1 awcel awb awi ppm2.61i f0 f2 acun f1 f2 acun awceq f0 f2 acin f1 f2 acin awceq awa i0 f0 f1 peqrdv f0 f1 f2 puneq1 f0 f1 f2 pineq1 f0 f1 awceq f0 f2 acun f1 f2 acun awceq f0 f2 acin f1 f2 acin awceq pjca f0 f2 acun f1 f2 acun awceq f0 f2 acin f1 f2 acin awceq awa f0 f1 awceq pimpbii $.
+$}
+$( Equality of union and intersection implies equality of their arguments.
+     (Contributed by NM, 16-Apr-2006.)  (Proof shortened by Andrew Salmon,
+     26-Jun-2011.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	puneqin $p |- ( ( A u. B ) = ( A i^i B ) <-> A = B ) $=
+	f0 f1 acun f0 f1 acin peqimss f0 f1 f0 f1 acin punss f0 f0 f1 pssin f0 f0 f1 psstr f0 f0 f1 acin awss f0 f0 awss f0 f1 awss awa f0 f1 awss psylbir f1 f0 f1 pssin f1 f0 awss f1 f1 awss psimpl f1 f0 f1 acin awss f1 f0 awss f1 f1 awss awa f1 f0 awss psylbir f0 f0 f1 acin awss f0 f1 awss f1 f0 f1 acin awss f1 f0 awss panim12i f0 f1 acun f0 f1 acin awss f0 f0 f1 acin awss f1 f0 f1 acin awss awa f0 f1 awss f1 f0 awss awa psylbir f0 f1 acun f0 f1 acin awceq f0 f1 acun f0 f1 acin awss f0 f1 awss f1 f0 awss awa psyl f0 f1 peqss f0 f1 acun f0 f1 acin awceq f0 f1 awss f1 f0 awss awa f0 f1 awceq psylibr f0 punidm f0 pinidm f0 f0 acun f0 f0 f0 acin peqtr4i f0 f1 f0 puneq2 f0 f1 f0 pineq2 f0 f1 awceq f0 f0 acun f0 f0 acin f0 f1 acun f0 f1 acin p3eqtr3a f0 f1 acun f0 f1 acin awceq f0 f1 awceq pimpbii $.
+$}
+$( Distributive law for class difference.  Theorem 39 of [Suppes] p. 29.
+     (Contributed by NM, 17-Aug-2004.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pdifundi $p |- ( A \ ( B u. C ) ) = ( ( A \ B ) i^i ( A \ C ) ) $=
+	f1 f2 pdfun3 f1 f2 acun acvv acvv f1 acdif acvv f2 acdif acin acdif f0 pdifeq2i f0 acvv f1 acdif acvv f2 acdif pinindi f0 acvv f1 acdif acvv f2 acdif acin pdfin2 f0 f1 pinvdif f0 f2 pinvdif f0 acvv f1 acdif acin f0 f1 acdif f0 acvv f2 acdif acin f0 f2 acdif pineq12i f0 acvv f1 acdif acvv f2 acdif acin acin f0 acvv f1 acdif acin f0 acvv f2 acdif acin acin f0 acvv acvv f1 acdif acvv f2 acdif acin acdif acdif f0 f1 acdif f0 f2 acdif acin p3eqtr3i f0 f1 f2 acun acdif f0 acvv acvv f1 acdif acvv f2 acdif acin acdif acdif f0 f1 acdif f0 f2 acdif acin peqtri $.
+$}
+$( Distributive law for class difference.  (Contributed by NM,
+     17-Aug-2004.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pdifundir $p |- ( ( A u. B ) \ C ) = ( ( A \ C ) u. ( B \ C ) ) $=
+	f0 f1 acvv f2 acdif pindir f0 f1 acun f2 pinvdif f0 f2 pinvdif f1 f2 pinvdif f0 acvv f2 acdif acin f0 f2 acdif f1 acvv f2 acdif acin f1 f2 acdif puneq12i f0 f1 acun acvv f2 acdif acin f0 acvv f2 acdif acin f1 acvv f2 acdif acin acun f0 f1 acun f2 acdif f0 f2 acdif f1 f2 acdif acun p3eqtr3i $.
+$}
+$( Distributive law for class difference.  Theorem 40 of [Suppes] p. 29.
+     (Contributed by NM, 17-Aug-2004.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pdifindi $p |- ( A \ ( B i^i C ) ) = ( ( A \ B ) u. ( A \ C ) ) $=
+	f1 f2 pdfin3 f1 f2 acin acvv acvv f1 acdif acvv f2 acdif acun acdif f0 pdifeq2i f0 acvv f1 acdif acvv f2 acdif pindi f0 acvv f1 acdif acvv f2 acdif acun pdfin2 f0 f1 pinvdif f0 f2 pinvdif f0 acvv f1 acdif acin f0 f1 acdif f0 acvv f2 acdif acin f0 f2 acdif puneq12i f0 acvv f1 acdif acvv f2 acdif acun acin f0 acvv f1 acdif acin f0 acvv f2 acdif acin acun f0 acvv acvv f1 acdif acvv f2 acdif acun acdif acdif f0 f1 acdif f0 f2 acdif acun p3eqtr3i f0 f1 f2 acin acdif f0 acvv acvv f1 acdif acvv f2 acdif acun acdif acdif f0 f1 acdif f0 f2 acdif acun peqtri $.
+$}
+$( Distributive law for class difference.  (Contributed by NM,
+     17-Aug-2004.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pdifindir $p |- ( ( A i^i B ) \ C ) = ( ( A \ C ) i^i ( B \ C ) ) $=
+	f0 f1 acvv f2 acdif pinindir f0 f1 acin f2 pinvdif f0 f2 pinvdif f1 f2 pinvdif f0 acvv f2 acdif acin f0 f2 acdif f1 acvv f2 acdif acin f1 f2 acdif pineq12i f0 f1 acin acvv f2 acdif acin f0 acvv f2 acdif acin f1 acvv f2 acdif acin acin f0 f1 acin f2 acdif f0 f2 acdif f1 f2 acdif acin p3eqtr3i $.
+$}
+$( Distribute intersection over difference.  (Contributed by Scott Fenton,
+       14-Apr-2011.) $)
+${
+	$v x A B C $.
+	$d A x $.
+	$d B x $.
+	$d C x $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	pindifdir $p |- ( ( A \ B ) i^i C ) = ( ( A i^i C ) \ ( B i^i C ) ) $=
+	i0 acv f2 awcel ppm3.24 i0 acv f2 awcel i0 acv f2 awcel awn awa i0 acv f0 awcel pintnan i0 acv f0 awcel i0 acv f2 awcel i0 acv f2 awcel awn panass i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f2 awcel awn awa i0 acv f0 awcel i0 acv f2 awcel i0 acv f2 awcel awn awa awa pmtbir i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f2 awcel awn awa i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f1 awcel awn awa pbiorfi i0 acv f0 awcel i0 acv f1 awcel awn i0 acv f2 awcel pan32 i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f1 awcel awn i0 acv f2 awcel awn pandi i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f1 awcel awn awa i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f1 awcel awn awa i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f2 awcel awn awa awo i0 acv f0 awcel i0 acv f1 awcel awn awa i0 acv f2 awcel awa i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f1 awcel awn i0 acv f2 awcel awn awo awa p3bitr4i i0 acv f1 awcel i0 acv f2 awcel pianor i0 acv f1 awcel i0 acv f2 awcel awa awn i0 acv f1 awcel awn i0 acv f2 awcel awn awo i0 acv f0 awcel i0 acv f2 awcel awa panbi2i i0 acv f0 awcel i0 acv f1 awcel awn awa i0 acv f2 awcel awa i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f1 awcel awn i0 acv f2 awcel awn awo awa i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f1 awcel i0 acv f2 awcel awa awn awa pbitr4i i0 acv f0 f1 acdif f2 pelin i0 acv f0 f1 peldif i0 acv f0 f1 acdif awcel i0 acv f0 awcel i0 acv f1 awcel awn awa i0 acv f2 awcel panbi1i i0 acv f0 f1 acdif f2 acin awcel i0 acv f0 f1 acdif awcel i0 acv f2 awcel awa i0 acv f0 awcel i0 acv f1 awcel awn awa i0 acv f2 awcel awa pbitri i0 acv f0 f2 acin f1 f2 acin peldif i0 acv f0 f2 pelin i0 acv f1 f2 pelin i0 acv f1 f2 acin awcel i0 acv f1 awcel i0 acv f2 awcel awa pnotbii i0 acv f0 f2 acin awcel i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f1 f2 acin awcel awn i0 acv f1 awcel i0 acv f2 awcel awa awn panbi12i i0 acv f0 f2 acin f1 f2 acin acdif awcel i0 acv f0 f2 acin awcel i0 acv f1 f2 acin awcel awn awa i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f1 awcel i0 acv f2 awcel awa awn awa pbitri i0 acv f0 awcel i0 acv f1 awcel awn awa i0 acv f2 awcel awa i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f1 awcel i0 acv f2 awcel awa awn awa i0 acv f0 f1 acdif f2 acin awcel i0 acv f0 f2 acin f1 f2 acin acdif awcel p3bitr4i i0 f0 f1 acdif f2 acin f0 f2 acin f1 f2 acin acdif peqriv $.
+$}
+$( De Morgan's law for union.  Theorem 5.2(13) of [Stoll] p. 19.
+     (Contributed by NM, 18-Aug-2004.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pundm $p |- ( _V \ ( A u. B ) ) = ( ( _V \ A ) i^i ( _V \ B ) ) $=
+	acvv f0 f1 pdifundi $.
+$}
+$( De Morgan's law for intersection.  Theorem 5.2(13') of [Stoll] p. 19.
+     (Contributed by NM, 18-Aug-2004.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pindm $p |- ( _V \ ( A i^i B ) ) = ( ( _V \ A ) u. ( _V \ B ) ) $=
+	acvv f0 f1 pdifindi $.
+$}
+$( A relationship involving double difference and union.  (Contributed by NM,
+     29-Aug-2004.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pdifun1 $p |- ( A \ ( B u. C ) ) = ( ( A \ B ) \ C ) $=
+	f0 acvv f1 acdif acvv f2 acdif pinass f0 acvv f1 acdif acin f2 pinvdif f0 acvv f1 acdif acin acvv f2 acdif acin f0 acvv f1 acdif acvv f2 acdif acin acin f0 acvv f1 acdif acin f2 acdif peqtr3i f1 f2 pundm acvv f1 f2 acun acdif acvv f1 acdif acvv f2 acdif acin f0 pineq2i f0 f1 f2 acun pinvdif f0 acvv f1 f2 acun acdif acin f0 acvv f1 acdif acvv f2 acdif acin acin f0 f1 f2 acun acdif peqtr3i f0 acvv f1 acdif acvv f2 acdif acin acin f0 acvv f1 acdif acin f2 acdif f0 f1 f2 acun acdif peqtr3i f0 f1 pinvdif f0 acvv f1 acdif acin f0 f1 acdif f2 pdifeq1i f0 acvv f1 acdif acin f2 acdif f0 f1 f2 acun acdif f0 f1 acdif f2 acdif peqtr3i $.
+$}
+$( An equality involving class union and class difference.  The first
+       equality of Exercise 13 of [TakeutiZaring] p. 22.  (Contributed by Alan
+       Sare, 17-Apr-2012.) $)
+${
+	$v x A B C $.
+	$d A x $.
+	$d B x $.
+	$d C x $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	pundif3 $p |- ( A u. ( B \ C ) ) = ( ( A u. B ) \ ( C \ A ) ) $=
+	i0 acv f0 f1 pelun i0 acv f2 awcel i0 acv f0 awcel ppm4.53 i0 acv f2 f0 peldif i0 acv f2 awcel i0 acv f0 awcel awn awa i0 acv f2 awcel awn i0 acv f0 awcel awo i0 acv f2 f0 acdif awcel pxchnxbir i0 acv f0 f1 acun awcel i0 acv f0 awcel i0 acv f1 awcel awo i0 acv f2 f0 acdif awcel awn i0 acv f2 awcel awn i0 acv f0 awcel awo panbi12i i0 acv f0 f1 acun f2 f0 acdif peldif i0 acv f0 f1 f2 acdif pelun i0 acv f1 f2 peldif i0 acv f1 f2 acdif awcel i0 acv f1 awcel i0 acv f2 awcel awn awa i0 acv f0 awcel porbi2i i0 acv f0 awcel i0 acv f1 awcel porc i0 acv f0 awcel i0 acv f2 awcel awn polc i0 acv f0 awcel i0 acv f0 awcel i0 acv f1 awcel awo i0 acv f2 awcel awn i0 acv f0 awcel awo pjca i0 acv f1 awcel i0 acv f0 awcel polc i0 acv f2 awcel awn i0 acv f0 awcel porc i0 acv f1 awcel i0 acv f0 awcel i0 acv f1 awcel awo i0 acv f2 awcel awn i0 acv f2 awcel awn i0 acv f0 awcel awo panim12i i0 acv f0 awcel i0 acv f0 awcel i0 acv f1 awcel awo i0 acv f2 awcel awn i0 acv f0 awcel awo awa i0 acv f1 awcel i0 acv f2 awcel awn awa pjaoi i0 acv f0 awcel i0 acv f2 awcel awn psimpl i0 acv f0 awcel i0 acv f2 awcel awn awa i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel awn awa porcd i0 acv f1 awcel i0 acv f2 awcel awn awa i0 acv f0 awcel polc i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel awn awa porc i0 acv f0 awcel i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel awn awa awo i0 acv f0 awcel padantr i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel awn awa porc i0 acv f0 awcel i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel awn awa awo i0 acv f1 awcel padantl i0 acv f0 awcel i0 acv f2 awcel awn i0 acv f1 awcel i0 acv f0 awcel i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel awn awa awo pccase i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel awn awa awo i0 acv f0 awcel i0 acv f1 awcel awo i0 acv f2 awcel awn i0 acv f0 awcel awo awa pimpbii i0 acv f0 f1 f2 acdif acun awcel i0 acv f0 awcel i0 acv f1 f2 acdif awcel awo i0 acv f0 awcel i0 acv f1 awcel i0 acv f2 awcel awn awa awo i0 acv f0 awcel i0 acv f1 awcel awo i0 acv f2 awcel awn i0 acv f0 awcel awo awa p3bitri i0 acv f0 f1 acun awcel i0 acv f2 f0 acdif awcel awn awa i0 acv f0 awcel i0 acv f1 awcel awo i0 acv f2 awcel awn i0 acv f0 awcel awo awa i0 acv f0 f1 acun f2 f0 acdif acdif awcel i0 acv f0 f1 f2 acdif acun awcel p3bitr4ri i0 f0 f1 f2 acdif acun f0 f1 acun f2 f0 acdif acdif peqriv $.
+$}
+$( Represent a set difference as an intersection with a larger difference.
+       (Contributed by Jeff Madsen, 2-Sep-2009.) $)
+${
+	$v x A B C $.
+	$d A x $.
+	$d B x $.
+	$d C x $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	pdifin2 $p |- ( A C_ C -> ( A \ B ) = ( ( C \ B ) i^i A ) ) $=
+	f0 f2 i0 acv pssel f0 f2 awss i0 acv f0 awcel i0 acv f2 awcel ppm4.71d f0 f2 awss i0 acv f0 awcel i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f1 awcel awn panbi1d i0 acv f0 f1 peldif i0 acv f2 f1 acdif f0 pelin i0 acv f2 f1 peldif i0 acv f2 f1 acdif awcel i0 acv f2 awcel i0 acv f1 awcel awn awa i0 acv f0 awcel panbi1i i0 acv f2 awcel i0 acv f1 awcel awn awa i0 acv f0 awcel pancom i0 acv f0 awcel i0 acv f2 awcel i0 acv f1 awcel awn panass i0 acv f2 awcel i0 acv f1 awcel awn awa i0 acv f0 awcel awa i0 acv f0 awcel i0 acv f2 awcel i0 acv f1 awcel awn awa awa i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f1 awcel awn awa pbitr4i i0 acv f2 f1 acdif f0 acin awcel i0 acv f2 f1 acdif awcel i0 acv f0 awcel awa i0 acv f2 awcel i0 acv f1 awcel awn awa i0 acv f0 awcel awa i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f1 awcel awn awa p3bitri f0 f2 awss i0 acv f0 awcel i0 acv f1 awcel awn awa i0 acv f0 awcel i0 acv f2 awcel awa i0 acv f1 awcel awn awa i0 acv f0 f1 acdif awcel i0 acv f2 f1 acdif f0 acin awcel p3bitr4g f0 f2 awss i0 f0 f1 acdif f2 f1 acdif f0 acin peqrdv $.
+$}
+$( Swap second and third argument of double difference.  (Contributed by NM,
+     18-Aug-2004.) $)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pdif32 $p |- ( ( A \ B ) \ C ) = ( ( A \ C ) \ B ) $=
+	f1 f2 puncom f1 f2 acun f2 f1 acun f0 pdifeq2i f0 f1 f2 pdifun1 f0 f2 f1 pdifun1 f0 f1 f2 acun acdif f0 f2 f1 acun acdif f0 f1 acdif f2 acdif f0 f2 acdif f1 acdif p3eqtr3i $.
+$}
+$( Absorption-like law for class difference: you can remove a class only
+     once.  (Contributed by FL, 2-Aug-2009.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pdifabs $p |- ( ( A \ B ) \ B ) = ( A \ B ) $=
+	f0 f1 f1 pdifun1 f1 punidm f1 f1 acun f1 f0 pdifeq2i f0 f1 f1 acun acdif f0 f1 acdif f1 acdif f0 f1 acdif peqtr3i $.
+$}
+$( Two ways to express symmetric difference.  This theorem shows the
+     equivalence of the definition of symmetric difference in [Stoll] p. 13 and
+     the restated definition in Example 4.1 of [Stoll] p. 262.  (Contributed by
+     NM, 17-Aug-2004.) $)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	psymdif1 $p |- ( ( A \ B ) u. ( B \ A ) ) = ( ( A u. B ) \ ( A i^i B ) ) $=
+	f0 f1 f0 f1 acin pdifundir f0 f1 pdifin f0 f1 pincom f0 f1 acin f1 f0 acin f1 pdifeq2i f1 f0 pdifin f1 f0 f1 acin acdif f1 f1 f0 acin acdif f1 f0 acdif peqtri f0 f0 f1 acin acdif f0 f1 acdif f1 f0 f1 acin acdif f1 f0 acdif puneq12i f0 f1 acun f0 f1 acin acdif f0 f0 f1 acin acdif f1 f0 f1 acin acdif acun f0 f1 acdif f1 f0 acdif acun peqtr2i $.
+$}
+$( Two ways to express symmetric difference.  (Contributed by NM,
+       17-Aug-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+${
+	$v x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	psymdif2 $p |- ( ( A \ B ) u. ( B \ A ) ) = { x | -. ( x e. A <-> x e. B ) } $=
+	f0 acv f1 f2 peldif f0 acv f2 f1 peldif f0 acv f1 f2 acdif awcel f0 acv f1 awcel f0 acv f2 awcel awn awa f0 acv f2 f1 acdif awcel f0 acv f2 awcel f0 acv f1 awcel awn awa porbi12i f0 acv f1 f2 acdif f2 f1 acdif pelun f0 acv f1 awcel f0 acv f2 awcel pxor f0 acv f1 f2 acdif awcel f0 acv f2 f1 acdif awcel awo f0 acv f1 awcel f0 acv f2 awcel awn awa f0 acv f2 awcel f0 acv f1 awcel awn awa awo f0 acv f1 f2 acdif f2 f1 acdif acun awcel f0 acv f1 awcel f0 acv f2 awcel awb awn p3bitr4i f0 acv f1 awcel f0 acv f2 awcel awb awn f0 f1 f2 acdif f2 f1 acdif acun pabbi2i $.
+$}
+$( Union of two class abstractions.  (Contributed by NM, 29-Sep-2002.)
+       (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+${
+	$v ph ps x y $.
+	$d x y $.
+	$d ph y $.
+	$d ps y $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	i0 $f set y $.
+	punab $p |- ( { x | ph } u. { x | ps } ) = { x | ( ph \/ ps ) } $=
+	f0 f1 f2 i0 psbor f0 f1 awo i0 f2 adf-clab f0 i0 f2 adf-clab f1 i0 f2 adf-clab i0 acv f0 f2 acab awcel f0 f2 i0 awsb i0 acv f1 f2 acab awcel f1 f2 i0 awsb porbi12i f0 f1 awo f2 i0 awsb f0 f2 i0 awsb f1 f2 i0 awsb awo i0 acv f0 f1 awo f2 acab awcel i0 acv f0 f2 acab awcel i0 acv f1 f2 acab awcel awo p3bitr4ri i0 f0 f2 acab f1 f2 acab f0 f1 awo f2 acab puneqri $.
+$}
+$( Intersection of two class abstractions.  (Contributed by NM,
+       29-Sep-2002.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+${
+	$v ph ps x y $.
+	$d x y $.
+	$d ph y $.
+	$d ps y $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	i0 $f set y $.
+	pinab $p |- ( { x | ph } i^i { x | ps } ) = { x | ( ph /\ ps ) } $=
+	f0 f1 f2 i0 psban f0 f1 awa i0 f2 adf-clab f0 i0 f2 adf-clab f1 i0 f2 adf-clab i0 acv f0 f2 acab awcel f0 f2 i0 awsb i0 acv f1 f2 acab awcel f1 f2 i0 awsb panbi12i f0 f1 awa f2 i0 awsb f0 f2 i0 awsb f1 f2 i0 awsb awa i0 acv f0 f1 awa f2 acab awcel i0 acv f0 f2 acab awcel i0 acv f1 f2 acab awcel awa p3bitr4ri i0 f0 f2 acab f1 f2 acab f0 f1 awa f2 acab pineqri $.
+$}
+$( Difference of two class abstractions.  (Contributed by NM,
+       23-Oct-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
+${
+	$v ph ps x y $.
+	$d x y $.
+	$d ph y $.
+	$d ps y $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	i0 $f set y $.
+	pdifab $p |- ( { x | ph } \ { x | ps } ) = { x | ( ph /\ -. ps ) } $=
+	f0 f1 awn awa i0 f2 adf-clab f0 f1 awn f2 i0 psban f0 i0 f2 adf-clab i0 acv f0 f2 acab awcel f0 f2 i0 awsb pbicomi f1 f2 i0 psbn f1 i0 f2 adf-clab f1 awn f2 i0 awsb f1 f2 i0 awsb i0 acv f1 f2 acab awcel pxchbinxr f0 f2 i0 awsb i0 acv f0 f2 acab awcel f1 awn f2 i0 awsb i0 acv f1 f2 acab awcel awn panbi12i i0 acv f0 f1 awn awa f2 acab awcel f0 f1 awn awa f2 i0 awsb f0 f2 i0 awsb f1 awn f2 i0 awsb awa i0 acv f0 f2 acab awcel i0 acv f1 f2 acab awcel awn awa p3bitrri i0 f0 f2 acab f1 f2 acab f0 f1 awn awa f2 acab pdifeqri $.
+$}
+$( A class builder defined by a negation.  (Contributed by FL,
+     18-Sep-2010.) $)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	pnotab $p |- { x | -. ph } = ( _V \ { x | ph } ) $=
+	f0 awn f1 acvv adf-rab f0 awn f1 prabab f0 awn f1 acvv acrab f1 acv acvv awcel f0 awn awa f1 acab f0 awn f1 acab peqtr3i f1 acv acvv awcel f0 f1 pdifab f1 acvv pabid2 f1 acv acvv awcel f1 acab acvv f0 f1 acab pdifeq1i f1 acv acvv awcel f1 acab f0 f1 acab acdif f1 acv acvv awcel f0 awn awa f1 acab acvv f0 f1 acab acdif peqtr3i f1 acv acvv awcel f0 awn awa f1 acab f0 awn f1 acab acvv f0 f1 acab acdif peqtr3i $.
+$}
+$( Union of two restricted class abstractions.  (Contributed by NM,
+     25-Mar-2004.) $)
+${
+	$v ph ps x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	punrab $p |- ( { x e. A | ph } u. { x e. A | ps } ) = { x e. A | ( ph \/ ps ) } $=
+	f0 f2 f3 adf-rab f1 f2 f3 adf-rab f0 f2 f3 acrab f2 acv f3 awcel f0 awa f2 acab f1 f2 f3 acrab f2 acv f3 awcel f1 awa f2 acab puneq12i f0 f1 awo f2 f3 adf-rab f2 acv f3 awcel f0 awa f2 acv f3 awcel f1 awa f2 punab f2 acv f3 awcel f0 f1 pandi f2 acv f3 awcel f0 f1 awo awa f2 acv f3 awcel f0 awa f2 acv f3 awcel f1 awa awo f2 pabbii f2 acv f3 awcel f0 awa f2 acab f2 acv f3 awcel f1 awa f2 acab acun f2 acv f3 awcel f0 awa f2 acv f3 awcel f1 awa awo f2 acab f2 acv f3 awcel f0 f1 awo awa f2 acab peqtr4i f0 f1 awo f2 f3 acrab f2 acv f3 awcel f0 f1 awo awa f2 acab f2 acv f3 awcel f0 awa f2 acab f2 acv f3 awcel f1 awa f2 acab acun peqtr4i f0 f2 f3 acrab f1 f2 f3 acrab acun f2 acv f3 awcel f0 awa f2 acab f2 acv f3 awcel f1 awa f2 acab acun f0 f1 awo f2 f3 acrab peqtr4i $.
+$}
+$( Intersection of two restricted class abstractions.  (Contributed by NM,
+     1-Sep-2006.) $)
+${
+	$v ph ps x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pinrab $p |- ( { x e. A | ph } i^i { x e. A | ps } ) = { x e. A | ( ph /\ ps ) } $=
+	f0 f2 f3 adf-rab f1 f2 f3 adf-rab f0 f2 f3 acrab f2 acv f3 awcel f0 awa f2 acab f1 f2 f3 acrab f2 acv f3 awcel f1 awa f2 acab pineq12i f0 f1 awa f2 f3 adf-rab f2 acv f3 awcel f0 awa f2 acv f3 awcel f1 awa f2 pinab f2 acv f3 awcel f0 f1 panandi f2 acv f3 awcel f0 f1 awa awa f2 acv f3 awcel f0 awa f2 acv f3 awcel f1 awa awa f2 pabbii f2 acv f3 awcel f0 awa f2 acab f2 acv f3 awcel f1 awa f2 acab acin f2 acv f3 awcel f0 awa f2 acv f3 awcel f1 awa awa f2 acab f2 acv f3 awcel f0 f1 awa awa f2 acab peqtr4i f0 f1 awa f2 f3 acrab f2 acv f3 awcel f0 f1 awa awa f2 acab f2 acv f3 awcel f0 awa f2 acab f2 acv f3 awcel f1 awa f2 acab acin peqtr4i f0 f2 f3 acrab f1 f2 f3 acrab acin f2 acv f3 awcel f0 awa f2 acab f2 acv f3 awcel f1 awa f2 acab acin f0 f1 awa f2 f3 acrab peqtr4i $.
+$}
+$( Intersection with a restricted class abstraction.  (Contributed by NM,
+       19-Nov-2007.) $)
+${
+	$v ph x A B $.
+	$d x B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pinrab2 $p |- ( { x e. A | ph } i^i B ) = { x e. ( A i^i B ) | ph } $=
+	f0 f1 f2 adf-rab f1 f3 pabid2 f1 acv f3 awcel f1 acab f3 peqcomi f0 f1 f2 acrab f1 acv f2 awcel f0 awa f1 acab f3 f1 acv f3 awcel f1 acab pineq12i f0 f1 f2 f3 acin adf-rab f1 acv f2 awcel f0 awa f1 acv f3 awcel f1 pinab f1 acv f2 f3 pelin f1 acv f2 f3 acin awcel f1 acv f2 awcel f1 acv f3 awcel awa f0 panbi1i f1 acv f2 awcel f1 acv f3 awcel f0 pan32 f1 acv f2 f3 acin awcel f0 awa f1 acv f2 awcel f1 acv f3 awcel awa f0 awa f1 acv f2 awcel f0 awa f1 acv f3 awcel awa pbitri f1 acv f2 f3 acin awcel f0 awa f1 acv f2 awcel f0 awa f1 acv f3 awcel awa f1 pabbii f1 acv f2 awcel f0 awa f1 acab f1 acv f3 awcel f1 acab acin f1 acv f2 awcel f0 awa f1 acv f3 awcel awa f1 acab f1 acv f2 f3 acin awcel f0 awa f1 acab peqtr4i f0 f1 f2 f3 acin acrab f1 acv f2 f3 acin awcel f0 awa f1 acab f1 acv f2 awcel f0 awa f1 acab f1 acv f3 awcel f1 acab acin peqtr4i f0 f1 f2 acrab f3 acin f1 acv f2 awcel f0 awa f1 acab f1 acv f3 awcel f1 acab acin f0 f1 f2 f3 acin acrab peqtr4i $.
+$}
+$( Difference of two restricted class abstractions.  (Contributed by NM,
+     23-Oct-2004.) $)
+${
+	$v ph ps x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	pdifrab $p |- ( { x e. A | ph } \ { x e. A | ps } ) = { x e. A | ( ph /\ -. ps ) } $=
+	f0 f2 f3 adf-rab f1 f2 f3 adf-rab f0 f2 f3 acrab f2 acv f3 awcel f0 awa f2 acab f1 f2 f3 acrab f2 acv f3 awcel f1 awa f2 acab pdifeq12i f0 f1 awn awa f2 f3 adf-rab f2 acv f3 awcel f0 awa f2 acv f3 awcel f1 awa f2 pdifab f2 acv f3 awcel f0 f1 awn panass f2 acv f3 awcel f1 psimpr f2 acv f3 awcel f1 awa f1 pcon3i f1 awn f2 acv f3 awcel f1 awa awn f2 acv f3 awcel f0 awa panim2i f2 acv f3 awcel f1 ppm3.2 f2 acv f3 awcel f1 f2 acv f3 awcel f1 awa awi f0 padantr f2 acv f3 awcel f0 awa f1 f2 acv f3 awcel f1 awa pcon3d f2 acv f3 awcel f0 awa f2 acv f3 awcel f1 awa awn f1 awn pimdistani f2 acv f3 awcel f0 awa f1 awn awa f2 acv f3 awcel f0 awa f2 acv f3 awcel f1 awa awn awa pimpbii f2 acv f3 awcel f0 f1 awn awa awa f2 acv f3 awcel f0 awa f1 awn awa f2 acv f3 awcel f0 awa f2 acv f3 awcel f1 awa awn awa pbitr3i f2 acv f3 awcel f0 f1 awn awa awa f2 acv f3 awcel f0 awa f2 acv f3 awcel f1 awa awn awa f2 pabbii f2 acv f3 awcel f0 awa f2 acab f2 acv f3 awcel f1 awa f2 acab acdif f2 acv f3 awcel f0 awa f2 acv f3 awcel f1 awa awn awa f2 acab f2 acv f3 awcel f0 f1 awn awa awa f2 acab peqtr4i f0 f1 awn awa f2 f3 acrab f2 acv f3 awcel f0 f1 awn awa awa f2 acab f2 acv f3 awcel f0 awa f2 acab f2 acv f3 awcel f1 awa f2 acab acdif peqtr4i f0 f2 f3 acrab f1 f2 f3 acrab acdif f2 acv f3 awcel f0 awa f2 acab f2 acv f3 awcel f1 awa f2 acab acdif f0 f1 awn awa f2 f3 acrab peqtr4i $.
+$}
+$( Alternate definition of restricted class abstraction.  (Contributed by
+       NM, 20-Sep-2003.) $)
+${
+	$v ph x A $.
+	$d x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	pdfrab2 $p |- { x e. A | ph } = ( { x | ph } i^i A ) $=
+	f0 f1 f2 adf-rab f1 acv f2 awcel f0 f1 pinab f1 f2 pabid2 f1 acv f2 awcel f1 acab f2 f0 f1 acab pineq1i f1 acv f2 awcel f1 acab f0 f1 acab acin f1 acv f2 awcel f0 awa f1 acab f2 f0 f1 acab acin peqtr3i f2 f0 f1 acab pincom f0 f1 f2 acrab f1 acv f2 awcel f0 awa f1 acab f2 f0 f1 acab acin f0 f1 acab f2 acin p3eqtri $.
+$}
+$( Alternate definition of restricted class abstraction.  (Contributed by
+       Mario Carneiro, 8-Sep-2013.) $)
+${
+	$v ph x A $.
+	$d x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	pdfrab3 $p |- { x e. A | ph } = ( A i^i { x | ph } ) $=
+	f0 f1 f2 adf-rab f1 acv f2 awcel f0 f1 pinab f1 f2 pabid2 f1 acv f2 awcel f1 acab f2 f0 f1 acab pineq1i f0 f1 f2 acrab f1 acv f2 awcel f0 awa f1 acab f1 acv f2 awcel f1 acab f0 f1 acab acin f2 f0 f1 acab acin p3eqtr2i $.
+$}
+$( Complementation of restricted class abstractions.  (Contributed by Mario
+       Carneiro, 3-Sep-2015.) $)
+${
+	$v ph x A $.
+	$d x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	pnotrab $p |- ( A \ { x e. A | ph } ) = { x e. A | -. ph } $=
+	f1 acv f2 awcel f0 f1 pdifab f2 f0 f1 acab pdifin f0 f1 f2 pdfrab3 f0 f1 f2 acrab f2 f0 f1 acab acin f2 pdifeq2i f1 f2 pabid2 f1 acv f2 awcel f1 acab f2 f0 f1 acab pdifeq1i f2 f2 f0 f1 acab acin acdif f2 f0 f1 acab acdif f2 f0 f1 f2 acrab acdif f1 acv f2 awcel f1 acab f0 f1 acab acdif p3eqtr4i f0 awn f1 f2 adf-rab f1 acv f2 awcel f1 acab f0 f1 acab acdif f1 acv f2 awcel f0 awn awa f1 acab f2 f0 f1 f2 acrab acdif f0 awn f1 f2 acrab p3eqtr4i $.
+$}
+$( Restricted class abstraction with a common superset.  (Contributed by
+       Stefan O'Rear, 12-Sep-2015.)  (Proof shortened by Mario Carneiro,
+       8-Nov-2015.) $)
+${
+	$v ph x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pdfrab3ss $p |- ( A C_ B -> { x e. A | ph } = ( A i^i { x e. B | ph } ) ) $=
+	f2 f3 adf-ss f2 f3 acin f2 f0 f1 acab pineq1 f2 f3 acin f2 awceq f2 f3 acin f0 f1 acab acin f2 f0 f1 acab acin peqcomd f2 f3 awss f2 f3 acin f2 awceq f2 f0 f1 acab acin f2 f3 acin f0 f1 acab acin awceq psylbi f0 f1 f2 pdfrab3 f0 f1 f3 pdfrab3 f0 f1 f3 acrab f3 f0 f1 acab acin f2 pineq2i f2 f3 f0 f1 acab pinass f2 f0 f1 f3 acrab acin f2 f3 f0 f1 acab acin acin f2 f3 acin f0 f1 acab acin peqtr4i f2 f3 awss f2 f0 f1 acab acin f2 f3 acin f0 f1 acab acin f0 f1 f2 acrab f2 f0 f1 f3 acrab acin p3eqtr4g $.
+$}
+$( Abstraction restricted to a union.  (Contributed by Stefan O'Rear,
+     5-Feb-2015.) $)
+${
+	$v ph x A B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	prabun2 $p |- { x e. ( A u. B ) | ph } = ( { x e. A | ph } u. { x e. B | ph } ) $=
+	f0 f1 f2 f3 acun adf-rab f0 f1 f2 adf-rab f0 f1 f3 adf-rab f0 f1 f2 acrab f1 acv f2 awcel f0 awa f1 acab f0 f1 f3 acrab f1 acv f3 awcel f0 awa f1 acab puneq12i f1 acv f2 f3 pelun f1 acv f2 f3 acun awcel f1 acv f2 awcel f1 acv f3 awcel awo f0 panbi1i f1 acv f2 awcel f1 acv f3 awcel f0 pandir f1 acv f2 f3 acun awcel f0 awa f1 acv f2 awcel f1 acv f3 awcel awo f0 awa f1 acv f2 awcel f0 awa f1 acv f3 awcel f0 awa awo pbitri f1 acv f2 f3 acun awcel f0 awa f1 acv f2 awcel f0 awa f1 acv f3 awcel f0 awa awo f1 pabbii f1 acv f2 awcel f0 awa f1 acv f3 awcel f0 awa f1 punab f1 acv f2 f3 acun awcel f0 awa f1 acab f1 acv f2 awcel f0 awa f1 acv f3 awcel f0 awa awo f1 acab f1 acv f2 awcel f0 awa f1 acab f1 acv f3 awcel f0 awa f1 acab acun peqtr4i f0 f1 f2 acrab f0 f1 f3 acrab acun f1 acv f2 awcel f0 awa f1 acab f1 acv f3 awcel f0 awa f1 acab acun f1 acv f2 f3 acun awcel f0 awa f1 acab peqtr4i f0 f1 f2 f3 acun acrab f1 acv f2 f3 acun awcel f0 awa f1 acab f0 f1 f2 acrab f0 f1 f3 acrab acun peqtr4i $.
+$}
+$( Transfer uniqueness to a smaller subclass.  (Contributed by NM,
+       20-Oct-2005.) $)
+${
+	$v ph ps x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class B $.
+	preuss2 $p |- ( ( ( A C_ B /\ A. x e. A ( ph -> ps ) ) /\ ( E. x e. A ph /\ E! x e. B ps ) ) -> E! x e. A ph ) $=
+	f0 f2 f3 adf-rex f1 f2 f4 adf-reu f0 f2 f3 awrex f2 acv f3 awcel f0 awa f2 awex f1 f2 f4 awreu f2 acv f4 awcel f1 awa f2 aweu panbi12i f0 f1 awi f2 f3 adf-ral f3 f4 f2 acv pssel f2 acv f3 awcel f2 acv f4 awcel f0 f1 pprth f3 f4 awss f2 acv f3 awcel f2 acv f4 awcel awi f0 f1 awi f2 acv f3 awcel f0 awa f2 acv f4 awcel f1 awa awi psylan f3 f4 awss f0 f1 awi f2 acv f3 awcel f0 f2 acv f4 awcel f1 awa pexp4b f3 f4 awss f0 f1 awi f2 acv f3 awcel f0 f2 acv f4 awcel f1 awa awi pcom23 f3 f4 awss f2 acv f3 awcel f0 f1 awi f0 f2 acv f4 awcel f1 awa awi pa2d f3 f4 awss f2 acv f3 awcel f0 f1 awi awi f2 acv f3 awcel f0 f2 acv f4 awcel f1 awa pimp4a f3 f4 awss f2 acv f3 awcel f0 f1 awi awi f2 acv f3 awcel f0 awa f2 acv f4 awcel f1 awa awi f2 palimdv f3 f4 awss f2 acv f3 awcel f0 f1 awi awi f2 awal f2 acv f3 awcel f0 awa f2 acv f4 awcel f1 awa awi f2 awal pimp f0 f1 awi f2 f3 awral f3 f4 awss f2 acv f3 awcel f0 f1 awi awi f2 awal f2 acv f3 awcel f0 awa f2 acv f4 awcel f1 awa awi f2 awal psylan2b f2 acv f3 awcel f0 awa f2 acv f4 awcel f1 awa f2 peuimmo f3 f4 awss f0 f1 awi f2 f3 awral awa f2 acv f3 awcel f0 awa f2 acv f4 awcel f1 awa awi f2 awal f2 acv f4 awcel f1 awa f2 aweu f2 acv f3 awcel f0 awa f2 awmo awi psyl f2 acv f3 awcel f0 awa f2 peu5 f2 acv f3 awcel f0 awa f2 aweu f2 acv f3 awcel f0 awa f2 awex f2 acv f3 awcel f0 awa f2 awmo psimplbi2 f3 f4 awss f0 f1 awi f2 f3 awral awa f2 acv f4 awcel f1 awa f2 aweu f2 acv f3 awcel f0 awa f2 awmo f2 acv f3 awcel f0 awa f2 awex f2 acv f3 awcel f0 awa f2 aweu psyl9 f3 f4 awss f0 f1 awi f2 f3 awral awa f2 acv f3 awcel f0 awa f2 awex f2 acv f4 awcel f1 awa f2 aweu f2 acv f3 awcel f0 awa f2 aweu pimp32 f0 f2 f3 adf-reu f3 f4 awss f0 f1 awi f2 f3 awral awa f2 acv f3 awcel f0 awa f2 awex f2 acv f4 awcel f1 awa f2 aweu awa awa f2 acv f3 awcel f0 awa f2 aweu f0 f2 f3 awreu psylibr f0 f2 f3 awrex f1 f2 f4 awreu awa f3 f4 awss f0 f1 awi f2 f3 awral awa f2 acv f3 awcel f0 awa f2 awex f2 acv f4 awcel f1 awa f2 aweu awa f0 f2 f3 awreu psylan2b $.
+$}
+$( Transfer uniqueness to a smaller subclass.  (Contributed by NM,
+       21-Aug-1999.) $)
+${
+	$v ph x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	preuss $p |- ( ( A C_ B /\ E. x e. A ph /\ E! x e. B ph ) -> E! x e. A ph ) $=
+	f1 acv f2 awcel f0 pidd f0 f0 awi f1 f2 prgen f0 f0 f1 f2 f3 preuss2 f2 f3 awss f0 f0 awi f1 f2 awral f0 f1 f2 awrex f0 f1 f3 awreu awa f0 f1 f2 awreu pmpanl2 f2 f3 awss f0 f1 f2 awrex f0 f1 f3 awreu f0 f1 f2 awreu p3impb $.
+$}
+$( Transfer uniqueness to a smaller class.  (Contributed by NM,
+       21-Oct-2005.) $)
+${
+	$v ph ps x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class B $.
+	preuun1 $p |- ( ( E. x e. A ph /\ E! x e. ( A u. B ) ( ph \/ ps ) ) -> E! x e. A ph ) $=
+	f3 f4 pssun1 f0 f1 porc f0 f0 f1 awo awi f2 f3 prgenw f0 f0 f1 awo f2 f3 f3 f4 acun preuss2 f3 f3 f4 acun awss f0 f0 f1 awo awi f2 f3 awral f0 f2 f3 awrex f0 f1 awo f2 f3 f4 acun awreu awa f0 f2 f3 awreu pmpanl12 $.
+$}
+$( Transfer uniqueness to a smaller or larger class.  (Contributed by NM,
+       21-Oct-2005.) $)
+${
+	$v ph x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	preuun2 $p |- ( -. E. x e. B ph -> ( E! x e. ( A u. B ) ph <-> E! x e. A ph ) ) $=
+	f0 f1 f3 adf-rex f1 acv f3 awcel f0 awa f1 acv f2 awcel f0 awa f1 peuor2 f0 f1 f3 awrex f1 acv f3 awcel f0 awa f1 awex f1 acv f3 awcel f0 awa f1 acv f2 awcel f0 awa awo f1 aweu f1 acv f2 awcel f0 awa f1 aweu awb psylnbi f0 f1 f2 f3 acun adf-reu f1 acv f2 f3 pelun f1 acv f2 f3 acun awcel f1 acv f2 awcel f1 acv f3 awcel awo f0 panbi1i f1 acv f2 awcel f1 acv f3 awcel f0 pandir f1 acv f2 awcel f0 awa f1 acv f3 awcel f0 awa porcom f1 acv f2 awcel f1 acv f3 awcel awo f0 awa f1 acv f2 awcel f0 awa f1 acv f3 awcel f0 awa awo f1 acv f3 awcel f0 awa f1 acv f2 awcel f0 awa awo pbitri f1 acv f2 f3 acun awcel f0 awa f1 acv f2 awcel f1 acv f3 awcel awo f0 awa f1 acv f3 awcel f0 awa f1 acv f2 awcel f0 awa awo pbitri f1 acv f2 f3 acun awcel f0 awa f1 acv f3 awcel f0 awa f1 acv f2 awcel f0 awa awo f1 peubii f0 f1 f2 f3 acun awreu f1 acv f2 f3 acun awcel f0 awa f1 aweu f1 acv f3 awcel f0 awa f1 acv f2 awcel f0 awa awo f1 aweu pbitri f0 f1 f2 adf-reu f0 f1 f3 awrex awn f1 acv f3 awcel f0 awa f1 acv f2 awcel f0 awa awo f1 aweu f1 acv f2 awcel f0 awa f1 aweu f0 f1 f2 f3 acun awreu f0 f1 f2 awreu p3bitr4g $.
+$}
+$( Restricted uniqueness "picks" a member of a subclass.  (Contributed by
+       NM, 21-Aug-1999.) $)
+${
+	$v ph x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	preupick $p |- ( ( ( A C_ B /\ ( E. x e. A ph /\ E! x e. B ph ) ) /\ ph ) -> ( x e. A <-> x e. B ) ) $=
+	f2 f3 f1 acv pssel f2 f3 awss f1 acv f2 awcel f1 acv f3 awcel awi f0 f1 f2 awrex f0 f1 f3 awreu awa f0 pad2antrr f0 f1 f2 adf-rex f0 f1 f3 adf-reu f0 f1 f2 awrex f1 acv f2 awcel f0 awa f1 awex f0 f1 f3 awreu f1 acv f3 awcel f0 awa f1 aweu panbi12i f2 f3 f1 acv pssel f2 f3 awss f1 acv f2 awcel f1 acv f3 awcel pancrd f2 f3 awss f1 acv f2 awcel f1 acv f3 awcel f1 acv f2 awcel awa f0 panim1d f1 acv f3 awcel f1 acv f2 awcel f0 pan32 f2 f3 awss f1 acv f2 awcel f0 awa f1 acv f3 awcel f1 acv f2 awcel awa f0 awa f1 acv f3 awcel f0 awa f1 acv f2 awcel awa psyl6ib f2 f3 awss f1 acv f2 awcel f0 awa f1 acv f3 awcel f0 awa f1 acv f2 awcel awa f1 peximdv f1 acv f3 awcel f0 awa f1 acv f2 awcel f1 peupick f1 acv f3 awcel f0 awa f1 aweu f1 acv f3 awcel f0 awa f1 acv f2 awcel awa f1 awex f1 acv f3 awcel f0 awa f1 acv f2 awcel awi pex f2 f3 awss f1 acv f2 awcel f0 awa f1 awex f1 acv f3 awcel f0 awa f1 acv f2 awcel awa f1 awex f1 acv f3 awcel f0 awa f1 aweu f1 acv f3 awcel f0 awa f1 acv f2 awcel awi psyl9 f2 f3 awss f1 acv f3 awcel f0 awa f1 aweu f1 acv f2 awcel f0 awa f1 awex f1 acv f3 awcel f0 awa f1 acv f2 awcel awi pcom23 f2 f3 awss f1 acv f2 awcel f0 awa f1 awex f1 acv f3 awcel f0 awa f1 aweu f1 acv f3 awcel f0 awa f1 acv f2 awcel awi pimp32 f0 f1 f2 awrex f0 f1 f3 awreu awa f2 f3 awss f1 acv f2 awcel f0 awa f1 awex f1 acv f3 awcel f0 awa f1 aweu awa f1 acv f3 awcel f0 awa f1 acv f2 awcel awi psylan2b f2 f3 awss f0 f1 f2 awrex f0 f1 f3 awreu awa awa f1 acv f3 awcel f0 f1 acv f2 awcel pexp3acom23 f2 f3 awss f0 f1 f2 awrex f0 f1 f3 awreu awa awa f0 f1 acv f3 awcel f1 acv f2 awcel awi pimp f2 f3 awss f0 f1 f2 awrex f0 f1 f3 awreu awa awa f0 awa f1 acv f2 awcel f1 acv f3 awcel pimpbid $.
+$}
+$( Restricted uniqueness "picks" a member of a subclass.  (Contributed by
+       Mario Carneiro, 19-Nov-2016.) $)
+${
+	$v ph ps x A $.
+	$d x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	preupick3 $p |- ( ( E! x e. A ph /\ E. x e. A ( ph /\ ps ) /\ x e. A ) -> ( ph -> ps ) ) $=
+	f0 f2 f3 adf-reu f0 f1 awa f2 f3 adf-rex f2 acv f3 awcel f0 f1 panass f2 acv f3 awcel f0 awa f1 awa f2 acv f3 awcel f0 f1 awa awa f2 pexbii f0 f1 awa f2 f3 awrex f2 acv f3 awcel f0 f1 awa awa f2 awex f2 acv f3 awcel f0 awa f1 awa f2 awex pbitr4i f2 acv f3 awcel f0 awa f1 f2 peupick f0 f2 f3 awreu f2 acv f3 awcel f0 awa f2 aweu f2 acv f3 awcel f0 awa f1 awa f2 awex f2 acv f3 awcel f0 awa f1 awi f0 f1 awa f2 f3 awrex psyl2anb f0 f2 f3 awreu f0 f1 awa f2 f3 awrex awa f2 acv f3 awcel f0 f1 pexp3a f0 f2 f3 awreu f0 f1 awa f2 f3 awrex f2 acv f3 awcel f0 f1 awi p3impia $.
+$}
+$( Restricted uniqueness "picks" a member of a subclass.  (Contributed by
+       Mario Carneiro, 15-Dec-2013.)  (Proof shortened by Mario Carneiro,
+       19-Nov-2016.) $)
+${
+	$v ph ps x A $.
+	$d x A $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	preupick2 $p |- ( ( ( A. x e. A ( ps -> ph ) /\ E. x e. A ps /\ E! x e. A ph ) /\ x e. A ) -> ( ph <-> ps ) ) $=
+	f1 f0 pancr f1 f0 awi f1 f0 f1 awa awi f2 f3 pralimi f1 f0 f1 awa f2 f3 prexim f1 f0 awi f2 f3 awral f1 f0 f1 awa awi f2 f3 awral f1 f2 f3 awrex f0 f1 awa f2 f3 awrex awi psyl f0 f1 f2 f3 preupick3 f0 f2 f3 awreu f0 f1 awa f2 f3 awrex f2 acv f3 awcel f0 f1 awi p3exp f0 f2 f3 awreu f0 f1 awa f2 f3 awrex f2 acv f3 awcel f0 f1 awi awi pcom12 f1 f0 awi f2 f3 awral f1 f2 f3 awrex f0 f1 awa f2 f3 awrex f0 f2 f3 awreu f2 acv f3 awcel f0 f1 awi awi awi psyl6 f1 f0 awi f2 f3 awral f1 f2 f3 awrex f0 f2 f3 awreu f2 acv f3 awcel f0 f1 awi p3imp1 f1 f0 awi f2 f3 prsp f1 f0 awi f2 f3 awral f1 f2 f3 awrex f2 acv f3 awcel f1 f0 awi awi f0 f2 f3 awreu p3ad2ant1 f1 f0 awi f2 f3 awral f1 f2 f3 awrex f0 f2 f3 awreu aw3a f2 acv f3 awcel f1 f0 awi pimp f1 f0 awi f2 f3 awral f1 f2 f3 awrex f0 f2 f3 awreu aw3a f2 acv f3 awcel awa f0 f1 pimpbid $.
+$}
+

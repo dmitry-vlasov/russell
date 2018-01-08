@@ -1,0 +1,346 @@
+import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Curry_and_uncurry.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Proper subset relation
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+constant {
+	symbol [C.] ;;
+}
+
+/* Extend class notation to include the reified proper subset relation. */
+
+rule crpss () {
+	term : class = # [C.] ;;
+}
+
+/* Define a relation which corresponds to proper subsethood ~ df-pss on
+       sets.  This allows us to use proper subsethood with general concepts
+       that require relations, such as strict ordering, see ~ sorpss .
+       (Contributed by Stefan O'Rear, 2-Nov-2014.) */
+
+definition df-rpss (x : set, y : set) disjointed(x y, x y) {
+	defiendum : class = # [C.] ;;
+	definiens : class = # { 〈 x , y 〉 | x ⊂ y } ;;
+	-----------------------
+	prop : wff = |- defiendum = definiens ;;
+}
+
+/* The proper subset relation is a relation.  (Contributed by Stefan
+       O'Rear, 2-Nov-2014.) */
+
+theorem relrpss () disjointed(x y, x y) {
+	prop 1 : wff = |- Rel [C.] ;;
+}
+
+proof of relrpss {
+	var x : set, y : set;;
+	step 1 : wff = df-rpss () |- [C.] = { 〈 x , y 〉 | x ⊂ y } ;;
+	step 2 : wff = relopabi (step 1) |- Rel [C.] ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* The proper subset relation on sets is the same as class proper
+       subsethood.  (Contributed by Stefan O'Rear, 2-Nov-2014.) */
+
+theorem brrpssg (A : class, B : class, V : class) disjointed(x y A, x y B) {
+	prop 1 : wff = |- ( B ∈ V → ( A [C.] B ↔ A ⊂ B ) ) ;;
+}
+
+proof of brrpssg {
+	var x : set, y : set;;
+	step 1 : wff = elex () |- ( B ∈ V → B ∈ _V ) ;;
+	step 2 : wff = relrpss () |- Rel [C.] ;;
+	step 3 : wff = brrelexi (step 2) |- ( A [C.] B → A ∈ _V ) ;;
+	step 4 : wff = anim12i (step 1, step 3) |- ( ( B ∈ V ∧ A [C.] B ) → ( B ∈ _V ∧ A ∈ _V ) ) ;;
+	step 5 : wff = elex () |- ( B ∈ V → B ∈ _V ) ;;
+	step 6 : wff = adantr (step 5) |- ( ( B ∈ V ∧ A ⊂ B ) → B ∈ _V ) ;;
+	step 7 : wff = pssss () |- ( A ⊂ B → A ⊆ B ) ;;
+	step 8 : wff = elex () |- ( B ∈ V → B ∈ _V ) ;;
+	step 9 : wff = ssexg () |- ( ( A ⊆ B ∧ B ∈ _V ) → A ∈ _V ) ;;
+	step 10 : wff = syl2anr (step 7, step 8, step 9) |- ( ( B ∈ V ∧ A ⊂ B ) → A ∈ _V ) ;;
+	step 11 : wff = jca (step 6, step 10) |- ( ( B ∈ V ∧ A ⊂ B ) → ( B ∈ _V ∧ A ∈ _V ) ) ;;
+	step 12 : wff = psseq1 () |- ( x = A → ( x ⊂ y ↔ A ⊂ y ) ) ;;
+	step 13 : wff = psseq2 () |- ( y = B → ( A ⊂ y ↔ A ⊂ B ) ) ;;
+	step 14 : wff = df-rpss () |- [C.] = { 〈 x , y 〉 | x ⊂ y } ;;
+	step 15 : wff = brabg (step 12, step 13, step 14) |- ( ( A ∈ _V ∧ B ∈ _V ) → ( A [C.] B ↔ A ⊂ B ) ) ;;
+	step 16 : wff = ancoms (step 15) |- ( ( B ∈ _V ∧ A ∈ _V ) → ( A [C.] B ↔ A ⊂ B ) ) ;;
+	step 17 : wff = pm5.21nd (step 4, step 11, step 16) |- ( B ∈ V → ( A [C.] B ↔ A ⊂ B ) ) ;;
+	qed prop 1 = step 17 ;;
+}
+
+/* The proper subset relation on sets is the same as class proper
+       subsethood.  (Contributed by Stefan O'Rear, 2-Nov-2014.) */
+
+theorem brrpss (A : class, B : class)  {
+	hyp 1 : wff = |- B ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( A [C.] B ↔ A ⊂ B ) ;;
+}
+
+proof of brrpss {
+	step 1 : wff = brrpssg () |- ( B ∈ _V → ( A [C.] B ↔ A ⊂ B ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( A [C.] B ↔ A ⊂ B ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Every class is partially ordered by proper subsets.  (Contributed by
+       Stefan O'Rear, 2-Nov-2014.) */
+
+theorem porpss (A : class) disjointed(x y z A) {
+	prop 1 : wff = |- [C.] Po A ;;
+}
+
+proof of porpss {
+	var x : set, y : set, z : set;;
+	step 1 : wff = pssirr () |- ¬ x ⊂ x ;;
+	step 2 : wff = psstr () |- ( ( x ⊂ y ∧ y ⊂ z ) → x ⊂ z ) ;;
+	step 3 : wff = vex () |- x ∈ _V ;;
+	step 4 : wff = brrpss (step 3) |- ( x [C.] x ↔ x ⊂ x ) ;;
+	step 5 : wff = notbii (step 4) |- ( ¬ x [C.] x ↔ ¬ x ⊂ x ) ;;
+	step 6 : wff = vex () |- y ∈ _V ;;
+	step 7 : wff = brrpss (step 6) |- ( x [C.] y ↔ x ⊂ y ) ;;
+	step 8 : wff = vex () |- z ∈ _V ;;
+	step 9 : wff = brrpss (step 8) |- ( y [C.] z ↔ y ⊂ z ) ;;
+	step 10 : wff = anbi12i (step 7, step 9) |- ( ( x [C.] y ∧ y [C.] z ) ↔ ( x ⊂ y ∧ y ⊂ z ) ) ;;
+	step 11 : wff = vex () |- z ∈ _V ;;
+	step 12 : wff = brrpss (step 11) |- ( x [C.] z ↔ x ⊂ z ) ;;
+	step 13 : wff = imbi12i (step 10, step 12) |- ( ( ( x [C.] y ∧ y [C.] z ) → x [C.] z ) ↔ ( ( x ⊂ y ∧ y ⊂ z ) → x ⊂ z ) ) ;;
+	step 14 : wff = anbi12i (step 5, step 13) |- ( ( ¬ x [C.] x ∧ ( ( x [C.] y ∧ y [C.] z ) → x [C.] z ) ) ↔ ( ¬ x ⊂ x ∧ ( ( x ⊂ y ∧ y ⊂ z ) → x ⊂ z ) ) ) ;;
+	step 15 : wff = mpbir2an (step 1, step 2, step 14) |- ( ¬ x [C.] x ∧ ( ( x [C.] y ∧ y [C.] z ) → x [C.] z ) ) ;;
+	step 16 : wff = rgenw (step 15) |- ∀ z ∈ A ( ¬ x [C.] x ∧ ( ( x [C.] y ∧ y [C.] z ) → x [C.] z ) ) ;;
+	step 17 : wff = rgen2w (step 16) |- ∀ x ∈ A ∀ y ∈ A ∀ z ∈ A ( ¬ x [C.] x ∧ ( ( x [C.] y ∧ y [C.] z ) → x [C.] z ) ) ;;
+	step 18 : wff = df-po () |- ( [C.] Po A ↔ ∀ x ∈ A ∀ y ∈ A ∀ z ∈ A ( ¬ x [C.] x ∧ ( ( x [C.] y ∧ y [C.] z ) → x [C.] z ) ) ) ;;
+	step 19 : wff = mpbir (step 17, step 18) |- [C.] Po A ;;
+	qed prop 1 = step 19 ;;
+}
+
+/* Express strict ordering under proper subsets, i.e. the notion of a chain
+       of sets.  (Contributed by Stefan O'Rear, 2-Nov-2014.) */
+
+theorem sorpss (x : set, y : set, A : class) disjointed(x y A) {
+	prop 1 : wff = |- ( [C.] Or A ↔ ∀ x ∈ A ∀ y ∈ A ( x ⊆ y ∨ y ⊆ x ) ) ;;
+}
+
+proof of sorpss {
+	step 1 : wff = porpss () |- [C.] Po A ;;
+	step 2 : wff = biantrur (step 1) |- ( ∀ x ∈ A ∀ y ∈ A ( x [C.] y ∨ x = y ∨ y [C.] x ) ↔ ( [C.] Po A ∧ ∀ x ∈ A ∀ y ∈ A ( x [C.] y ∨ x = y ∨ y [C.] x ) ) ) ;;
+	step 3 : wff = sspsstri () |- ( ( x ⊆ y ∨ y ⊆ x ) ↔ ( x ⊂ y ∨ x = y ∨ y ⊂ x ) ) ;;
+	step 4 : wff = vex () |- y ∈ _V ;;
+	step 5 : wff = brrpss (step 4) |- ( x [C.] y ↔ x ⊂ y ) ;;
+	step 6 : wff = biid () |- ( x = y ↔ x = y ) ;;
+	step 7 : wff = vex () |- x ∈ _V ;;
+	step 8 : wff = brrpss (step 7) |- ( y [C.] x ↔ y ⊂ x ) ;;
+	step 9 : wff = 3orbi123i (step 5, step 6, step 8) |- ( ( x [C.] y ∨ x = y ∨ y [C.] x ) ↔ ( x ⊂ y ∨ x = y ∨ y ⊂ x ) ) ;;
+	step 10 : wff = bitr4i (step 3, step 9) |- ( ( x ⊆ y ∨ y ⊆ x ) ↔ ( x [C.] y ∨ x = y ∨ y [C.] x ) ) ;;
+	step 11 : wff = 2ralbii (step 10) |- ( ∀ x ∈ A ∀ y ∈ A ( x ⊆ y ∨ y ⊆ x ) ↔ ∀ x ∈ A ∀ y ∈ A ( x [C.] y ∨ x = y ∨ y [C.] x ) ) ;;
+	step 12 : wff = df-so () |- ( [C.] Or A ↔ ( [C.] Po A ∧ ∀ x ∈ A ∀ y ∈ A ( x [C.] y ∨ x = y ∨ y [C.] x ) ) ) ;;
+	step 13 : wff = 3bitr4ri (step 2, step 11, step 12) |- ( [C.] Or A ↔ ∀ x ∈ A ∀ y ∈ A ( x ⊆ y ∨ y ⊆ x ) ) ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* Property of a chain of sets.  (Contributed by Stefan O'Rear,
+     2-Nov-2014.) */
+
+theorem sorpssi (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( B ⊆ C ∨ C ⊆ B ) ) ;;
+}
+
+proof of sorpssi {
+	step 1 : wff = solin () |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( B [C.] C ∨ B = C ∨ C [C.] B ) ) ;;
+	step 2 : wff = elex () |- ( C ∈ A → C ∈ _V ) ;;
+	step 3 : wff = ad2antll (step 2) |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → C ∈ _V ) ;;
+	step 4 : wff = brrpssg () |- ( C ∈ _V → ( B [C.] C ↔ B ⊂ C ) ) ;;
+	step 5 : wff = syl (step 3, step 4) |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( B [C.] C ↔ B ⊂ C ) ) ;;
+	step 6 : wff = biidd () |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( B = C ↔ B = C ) ) ;;
+	step 7 : wff = elex () |- ( B ∈ A → B ∈ _V ) ;;
+	step 8 : wff = ad2antrl (step 7) |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → B ∈ _V ) ;;
+	step 9 : wff = brrpssg () |- ( B ∈ _V → ( C [C.] B ↔ C ⊂ B ) ) ;;
+	step 10 : wff = syl (step 8, step 9) |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( C [C.] B ↔ C ⊂ B ) ) ;;
+	step 11 : wff = 3orbi123d (step 5, step 6, step 10) |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( ( B [C.] C ∨ B = C ∨ C [C.] B ) ↔ ( B ⊂ C ∨ B = C ∨ C ⊂ B ) ) ) ;;
+	step 12 : wff = mpbid (step 1, step 11) |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( B ⊂ C ∨ B = C ∨ C ⊂ B ) ) ;;
+	step 13 : wff = sspsstri () |- ( ( B ⊆ C ∨ C ⊆ B ) ↔ ( B ⊂ C ∨ B = C ∨ C ⊂ B ) ) ;;
+	step 14 : wff = sylibr (step 12, step 13) |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( B ⊆ C ∨ C ⊆ B ) ) ;;
+	qed prop 1 = step 14 ;;
+}
+
+/* A chain of sets is closed under binary union.  (Contributed by Mario
+     Carneiro, 16-May-2015.) */
+
+theorem sorpssun (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( B ∪ C ) ∈ A ) ;;
+}
+
+proof of sorpssun {
+	step 1 : wff = simprr () |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → C ∈ A ) ;;
+	step 2 : wff = ssequn1 () |- ( B ⊆ C ↔ ( B ∪ C ) = C ) ;;
+	step 3 : wff = eleq1 () |- ( ( B ∪ C ) = C → ( ( B ∪ C ) ∈ A ↔ C ∈ A ) ) ;;
+	step 4 : wff = sylbi (step 2, step 3) |- ( B ⊆ C → ( ( B ∪ C ) ∈ A ↔ C ∈ A ) ) ;;
+	step 5 : wff = syl5ibrcom (step 1, step 4) |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( B ⊆ C → ( B ∪ C ) ∈ A ) ) ;;
+	step 6 : wff = simprl () |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → B ∈ A ) ;;
+	step 7 : wff = ssequn2 () |- ( C ⊆ B ↔ ( B ∪ C ) = B ) ;;
+	step 8 : wff = eleq1 () |- ( ( B ∪ C ) = B → ( ( B ∪ C ) ∈ A ↔ B ∈ A ) ) ;;
+	step 9 : wff = sylbi (step 7, step 8) |- ( C ⊆ B → ( ( B ∪ C ) ∈ A ↔ B ∈ A ) ) ;;
+	step 10 : wff = syl5ibrcom (step 6, step 9) |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( C ⊆ B → ( B ∪ C ) ∈ A ) ) ;;
+	step 11 : wff = sorpssi () |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( B ⊆ C ∨ C ⊆ B ) ) ;;
+	step 12 : wff = mpjaod (step 5, step 10, step 11) |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( B ∪ C ) ∈ A ) ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* A chain of sets is closed under binary intersection.  (Contributed by
+     Mario Carneiro, 16-May-2015.) */
+
+theorem sorpssin (A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( B ∩ C ) ∈ A ) ;;
+}
+
+proof of sorpssin {
+	step 1 : wff = simprl () |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → B ∈ A ) ;;
+	step 2 : wff = df-ss () |- ( B ⊆ C ↔ ( B ∩ C ) = B ) ;;
+	step 3 : wff = eleq1 () |- ( ( B ∩ C ) = B → ( ( B ∩ C ) ∈ A ↔ B ∈ A ) ) ;;
+	step 4 : wff = sylbi (step 2, step 3) |- ( B ⊆ C → ( ( B ∩ C ) ∈ A ↔ B ∈ A ) ) ;;
+	step 5 : wff = syl5ibrcom (step 1, step 4) |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( B ⊆ C → ( B ∩ C ) ∈ A ) ) ;;
+	step 6 : wff = simprr () |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → C ∈ A ) ;;
+	step 7 : wff = dfss1 () |- ( C ⊆ B ↔ ( B ∩ C ) = C ) ;;
+	step 8 : wff = eleq1 () |- ( ( B ∩ C ) = C → ( ( B ∩ C ) ∈ A ↔ C ∈ A ) ) ;;
+	step 9 : wff = sylbi (step 7, step 8) |- ( C ⊆ B → ( ( B ∩ C ) ∈ A ↔ C ∈ A ) ) ;;
+	step 10 : wff = syl5ibrcom (step 6, step 9) |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( C ⊆ B → ( B ∩ C ) ∈ A ) ) ;;
+	step 11 : wff = sorpssi () |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( B ⊆ C ∨ C ⊆ B ) ) ;;
+	step 12 : wff = mpjaod (step 5, step 10, step 11) |- ( ( [C.] Or A ∧ ( B ∈ A ∧ C ∈ A ) ) → ( B ∩ C ) ∈ A ) ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* In a chain of sets, a maximal element is the union of the chain.
+       (Contributed by Stefan O'Rear, 2-Nov-2014.) */
+
+theorem sorpssuni (v : set, u : set, Y : class) disjointed(Y u v) {
+	prop 1 : wff = |- ( [C.] Or Y → ( ∃ u ∈ Y ∀ v ∈ Y ¬ u ⊂ v ↔ ⋃ Y ∈ Y ) ) ;;
+}
+
+proof of sorpssuni {
+	step 1 : wff = sorpssi () |- ( ( [C.] Or Y ∧ ( u ∈ Y ∧ v ∈ Y ) ) → ( u ⊆ v ∨ v ⊆ u ) ) ;;
+	step 2 : wff = anassrs (step 1) |- ( ( ( [C.] Or Y ∧ u ∈ Y ) ∧ v ∈ Y ) → ( u ⊆ v ∨ v ⊆ u ) ) ;;
+	step 3 : wff = sspss () |- ( u ⊆ v ↔ ( u ⊂ v ∨ u = v ) ) ;;
+	step 4 : wff = orel1 () |- ( ¬ u ⊂ v → ( ( u ⊂ v ∨ u = v ) → u = v ) ) ;;
+	step 5 : wff = eqimss2 () |- ( u = v → v ⊆ u ) ;;
+	step 6 : wff = syl6com (step 4, step 5) |- ( ( u ⊂ v ∨ u = v ) → ( ¬ u ⊂ v → v ⊆ u ) ) ;;
+	step 7 : wff = sylbi (step 3, step 6) |- ( u ⊆ v → ( ¬ u ⊂ v → v ⊆ u ) ) ;;
+	step 8 : wff = ax-1 () |- ( v ⊆ u → ( ¬ u ⊂ v → v ⊆ u ) ) ;;
+	step 9 : wff = jaoi (step 7, step 8) |- ( ( u ⊆ v ∨ v ⊆ u ) → ( ¬ u ⊂ v → v ⊆ u ) ) ;;
+	step 10 : wff = syl (step 2, step 9) |- ( ( ( [C.] Or Y ∧ u ∈ Y ) ∧ v ∈ Y ) → ( ¬ u ⊂ v → v ⊆ u ) ) ;;
+	step 11 : wff = ralimdva (step 10) |- ( ( [C.] Or Y ∧ u ∈ Y ) → ( ∀ v ∈ Y ¬ u ⊂ v → ∀ v ∈ Y v ⊆ u ) ) ;;
+	step 12 : wff = 3impia (step 11) |- ( ( [C.] Or Y ∧ u ∈ Y ∧ ∀ v ∈ Y ¬ u ⊂ v ) → ∀ v ∈ Y v ⊆ u ) ;;
+	step 13 : wff = unissb () |- ( ⋃ Y ⊆ u ↔ ∀ v ∈ Y v ⊆ u ) ;;
+	step 14 : wff = sylibr (step 12, step 13) |- ( ( [C.] Or Y ∧ u ∈ Y ∧ ∀ v ∈ Y ¬ u ⊂ v ) → ⋃ Y ⊆ u ) ;;
+	step 15 : wff = elssuni () |- ( u ∈ Y → u ⊆ ⋃ Y ) ;;
+	step 16 : wff = 3ad2ant2 (step 15) |- ( ( [C.] Or Y ∧ u ∈ Y ∧ ∀ v ∈ Y ¬ u ⊂ v ) → u ⊆ ⋃ Y ) ;;
+	step 17 : wff = eqssd (step 14, step 16) |- ( ( [C.] Or Y ∧ u ∈ Y ∧ ∀ v ∈ Y ¬ u ⊂ v ) → ⋃ Y = u ) ;;
+	step 18 : wff = simp2 () |- ( ( [C.] Or Y ∧ u ∈ Y ∧ ∀ v ∈ Y ¬ u ⊂ v ) → u ∈ Y ) ;;
+	step 19 : wff = eqeltrd (step 17, step 18) |- ( ( [C.] Or Y ∧ u ∈ Y ∧ ∀ v ∈ Y ¬ u ⊂ v ) → ⋃ Y ∈ Y ) ;;
+	step 20 : wff = rexlimdv3a (step 19) |- ( [C.] Or Y → ( ∃ u ∈ Y ∀ v ∈ Y ¬ u ⊂ v → ⋃ Y ∈ Y ) ) ;;
+	step 21 : wff = elssuni () |- ( v ∈ Y → v ⊆ ⋃ Y ) ;;
+	step 22 : wff = ssnpss () |- ( v ⊆ ⋃ Y → ¬ ⋃ Y ⊂ v ) ;;
+	step 23 : wff = syl (step 21, step 22) |- ( v ∈ Y → ¬ ⋃ Y ⊂ v ) ;;
+	step 24 : wff = rgen (step 23) |- ∀ v ∈ Y ¬ ⋃ Y ⊂ v ;;
+	step 25 : wff = psseq1 () |- ( u = ⋃ Y → ( u ⊂ v ↔ ⋃ Y ⊂ v ) ) ;;
+	step 26 : wff = notbid (step 25) |- ( u = ⋃ Y → ( ¬ u ⊂ v ↔ ¬ ⋃ Y ⊂ v ) ) ;;
+	step 27 : wff = ralbidv (step 26) |- ( u = ⋃ Y → ( ∀ v ∈ Y ¬ u ⊂ v ↔ ∀ v ∈ Y ¬ ⋃ Y ⊂ v ) ) ;;
+	step 28 : wff = rspcev (step 27) |- ( ( ⋃ Y ∈ Y ∧ ∀ v ∈ Y ¬ ⋃ Y ⊂ v ) → ∃ u ∈ Y ∀ v ∈ Y ¬ u ⊂ v ) ;;
+	step 29 : wff = mpan2 (step 24, step 28) |- ( ⋃ Y ∈ Y → ∃ u ∈ Y ∀ v ∈ Y ¬ u ⊂ v ) ;;
+	step 30 : wff = impbid1 (step 20, step 29) |- ( [C.] Or Y → ( ∃ u ∈ Y ∀ v ∈ Y ¬ u ⊂ v ↔ ⋃ Y ∈ Y ) ) ;;
+	qed prop 1 = step 30 ;;
+}
+
+/* In a chain of sets, a minimal element is the intersection of the chain.
+       (Contributed by Stefan O'Rear, 2-Nov-2014.) */
+
+theorem sorpssint (v : set, u : set, Y : class) disjointed(Y u v) {
+	prop 1 : wff = |- ( [C.] Or Y → ( ∃ u ∈ Y ∀ v ∈ Y ¬ v ⊂ u ↔ ⋂ Y ∈ Y ) ) ;;
+}
+
+proof of sorpssint {
+	step 1 : wff = intss1 () |- ( u ∈ Y → ⋂ Y ⊆ u ) ;;
+	step 2 : wff = 3ad2ant2 (step 1) |- ( ( [C.] Or Y ∧ u ∈ Y ∧ ∀ v ∈ Y ¬ v ⊂ u ) → ⋂ Y ⊆ u ) ;;
+	step 3 : wff = sorpssi () |- ( ( [C.] Or Y ∧ ( u ∈ Y ∧ v ∈ Y ) ) → ( u ⊆ v ∨ v ⊆ u ) ) ;;
+	step 4 : wff = anassrs (step 3) |- ( ( ( [C.] Or Y ∧ u ∈ Y ) ∧ v ∈ Y ) → ( u ⊆ v ∨ v ⊆ u ) ) ;;
+	step 5 : wff = ax-1 () |- ( u ⊆ v → ( ¬ v ⊂ u → u ⊆ v ) ) ;;
+	step 6 : wff = sspss () |- ( v ⊆ u ↔ ( v ⊂ u ∨ v = u ) ) ;;
+	step 7 : wff = orel1 () |- ( ¬ v ⊂ u → ( ( v ⊂ u ∨ v = u ) → v = u ) ) ;;
+	step 8 : wff = eqimss2 () |- ( v = u → u ⊆ v ) ;;
+	step 9 : wff = syl6com (step 7, step 8) |- ( ( v ⊂ u ∨ v = u ) → ( ¬ v ⊂ u → u ⊆ v ) ) ;;
+	step 10 : wff = sylbi (step 6, step 9) |- ( v ⊆ u → ( ¬ v ⊂ u → u ⊆ v ) ) ;;
+	step 11 : wff = jaoi (step 5, step 10) |- ( ( u ⊆ v ∨ v ⊆ u ) → ( ¬ v ⊂ u → u ⊆ v ) ) ;;
+	step 12 : wff = syl (step 4, step 11) |- ( ( ( [C.] Or Y ∧ u ∈ Y ) ∧ v ∈ Y ) → ( ¬ v ⊂ u → u ⊆ v ) ) ;;
+	step 13 : wff = ralimdva (step 12) |- ( ( [C.] Or Y ∧ u ∈ Y ) → ( ∀ v ∈ Y ¬ v ⊂ u → ∀ v ∈ Y u ⊆ v ) ) ;;
+	step 14 : wff = 3impia (step 13) |- ( ( [C.] Or Y ∧ u ∈ Y ∧ ∀ v ∈ Y ¬ v ⊂ u ) → ∀ v ∈ Y u ⊆ v ) ;;
+	step 15 : wff = ssint () |- ( u ⊆ ⋂ Y ↔ ∀ v ∈ Y u ⊆ v ) ;;
+	step 16 : wff = sylibr (step 14, step 15) |- ( ( [C.] Or Y ∧ u ∈ Y ∧ ∀ v ∈ Y ¬ v ⊂ u ) → u ⊆ ⋂ Y ) ;;
+	step 17 : wff = eqssd (step 2, step 16) |- ( ( [C.] Or Y ∧ u ∈ Y ∧ ∀ v ∈ Y ¬ v ⊂ u ) → ⋂ Y = u ) ;;
+	step 18 : wff = simp2 () |- ( ( [C.] Or Y ∧ u ∈ Y ∧ ∀ v ∈ Y ¬ v ⊂ u ) → u ∈ Y ) ;;
+	step 19 : wff = eqeltrd (step 17, step 18) |- ( ( [C.] Or Y ∧ u ∈ Y ∧ ∀ v ∈ Y ¬ v ⊂ u ) → ⋂ Y ∈ Y ) ;;
+	step 20 : wff = rexlimdv3a (step 19) |- ( [C.] Or Y → ( ∃ u ∈ Y ∀ v ∈ Y ¬ v ⊂ u → ⋂ Y ∈ Y ) ) ;;
+	step 21 : wff = intss1 () |- ( v ∈ Y → ⋂ Y ⊆ v ) ;;
+	step 22 : wff = ssnpss () |- ( ⋂ Y ⊆ v → ¬ v ⊂ ⋂ Y ) ;;
+	step 23 : wff = syl (step 21, step 22) |- ( v ∈ Y → ¬ v ⊂ ⋂ Y ) ;;
+	step 24 : wff = rgen (step 23) |- ∀ v ∈ Y ¬ v ⊂ ⋂ Y ;;
+	step 25 : wff = psseq2 () |- ( u = ⋂ Y → ( v ⊂ u ↔ v ⊂ ⋂ Y ) ) ;;
+	step 26 : wff = notbid (step 25) |- ( u = ⋂ Y → ( ¬ v ⊂ u ↔ ¬ v ⊂ ⋂ Y ) ) ;;
+	step 27 : wff = ralbidv (step 26) |- ( u = ⋂ Y → ( ∀ v ∈ Y ¬ v ⊂ u ↔ ∀ v ∈ Y ¬ v ⊂ ⋂ Y ) ) ;;
+	step 28 : wff = rspcev (step 27) |- ( ( ⋂ Y ∈ Y ∧ ∀ v ∈ Y ¬ v ⊂ ⋂ Y ) → ∃ u ∈ Y ∀ v ∈ Y ¬ v ⊂ u ) ;;
+	step 29 : wff = mpan2 (step 24, step 28) |- ( ⋂ Y ∈ Y → ∃ u ∈ Y ∀ v ∈ Y ¬ v ⊂ u ) ;;
+	step 30 : wff = impbid1 (step 20, step 29) |- ( [C.] Or Y → ( ∃ u ∈ Y ∀ v ∈ Y ¬ v ⊂ u ↔ ⋂ Y ∈ Y ) ) ;;
+	qed prop 1 = step 30 ;;
+}
+
+/* The componentwise complement of a chain of sets is also a chain of
+       sets.  (Contributed by Stefan O'Rear, 2-Nov-2014.) */
+
+theorem sorpsscmpl (u : set, A : class, Y : class) disjointed(Y x y, A x y, Y u, A u, u x y) {
+	prop 1 : wff = |- ( [C.] Or Y → [C.] Or { u ∈ Pow A | ( A ∖ u ) ∈ Y } ) ;;
+}
+
+proof of sorpsscmpl {
+	var x : set, y : set;;
+	step 1 : wff = difeq2 () |- ( u = x → ( A ∖ u ) = ( A ∖ x ) ) ;;
+	step 2 : wff = eleq1d (step 1) |- ( u = x → ( ( A ∖ u ) ∈ Y ↔ ( A ∖ x ) ∈ Y ) ) ;;
+	step 3 : wff = elrab (step 2) |- ( x ∈ { u ∈ Pow A | ( A ∖ u ) ∈ Y } ↔ ( x ∈ Pow A ∧ ( A ∖ x ) ∈ Y ) ) ;;
+	step 4 : wff = difeq2 () |- ( u = y → ( A ∖ u ) = ( A ∖ y ) ) ;;
+	step 5 : wff = eleq1d (step 4) |- ( u = y → ( ( A ∖ u ) ∈ Y ↔ ( A ∖ y ) ∈ Y ) ) ;;
+	step 6 : wff = elrab (step 5) |- ( y ∈ { u ∈ Pow A | ( A ∖ u ) ∈ Y } ↔ ( y ∈ Pow A ∧ ( A ∖ y ) ∈ Y ) ) ;;
+	step 7 : wff = an4 () |- ( ( ( x ∈ Pow A ∧ ( A ∖ x ) ∈ Y ) ∧ ( y ∈ Pow A ∧ ( A ∖ y ) ∈ Y ) ) ↔ ( ( x ∈ Pow A ∧ y ∈ Pow A ) ∧ ( ( A ∖ x ) ∈ Y ∧ ( A ∖ y ) ∈ Y ) ) ) ;;
+	step 8 : wff = biimpi (step 7) |- ( ( ( x ∈ Pow A ∧ ( A ∖ x ) ∈ Y ) ∧ ( y ∈ Pow A ∧ ( A ∖ y ) ∈ Y ) ) → ( ( x ∈ Pow A ∧ y ∈ Pow A ) ∧ ( ( A ∖ x ) ∈ Y ∧ ( A ∖ y ) ∈ Y ) ) ) ;;
+	step 9 : wff = syl2anb (step 3, step 6, step 8) |- ( ( x ∈ { u ∈ Pow A | ( A ∖ u ) ∈ Y } ∧ y ∈ { u ∈ Pow A | ( A ∖ u ) ∈ Y } ) → ( ( x ∈ Pow A ∧ y ∈ Pow A ) ∧ ( ( A ∖ x ) ∈ Y ∧ ( A ∖ y ) ∈ Y ) ) ) ;;
+	step 10 : wff = sorpssi () |- ( ( [C.] Or Y ∧ ( ( A ∖ x ) ∈ Y ∧ ( A ∖ y ) ∈ Y ) ) → ( ( A ∖ x ) ⊆ ( A ∖ y ) ∨ ( A ∖ y ) ⊆ ( A ∖ x ) ) ) ;;
+	step 11 : wff = expcom (step 10) |- ( ( ( A ∖ x ) ∈ Y ∧ ( A ∖ y ) ∈ Y ) → ( [C.] Or Y → ( ( A ∖ x ) ⊆ ( A ∖ y ) ∨ ( A ∖ y ) ⊆ ( A ∖ x ) ) ) ) ;;
+	step 12 : wff = vex () |- x ∈ _V ;;
+	step 13 : wff = elpw (step 12) |- ( x ∈ Pow A ↔ x ⊆ A ) ;;
+	step 14 : wff = dfss4 () |- ( x ⊆ A ↔ ( A ∖ ( A ∖ x ) ) = x ) ;;
+	step 15 : wff = bitri (step 13, step 14) |- ( x ∈ Pow A ↔ ( A ∖ ( A ∖ x ) ) = x ) ;;
+	step 16 : wff = vex () |- y ∈ _V ;;
+	step 17 : wff = elpw (step 16) |- ( y ∈ Pow A ↔ y ⊆ A ) ;;
+	step 18 : wff = dfss4 () |- ( y ⊆ A ↔ ( A ∖ ( A ∖ y ) ) = y ) ;;
+	step 19 : wff = bitri (step 17, step 18) |- ( y ∈ Pow A ↔ ( A ∖ ( A ∖ y ) ) = y ) ;;
+	step 20 : wff = sscon () |- ( ( A ∖ y ) ⊆ ( A ∖ x ) → ( A ∖ ( A ∖ x ) ) ⊆ ( A ∖ ( A ∖ y ) ) ) ;;
+	step 21 : wff = sseq12 () |- ( ( ( A ∖ ( A ∖ x ) ) = x ∧ ( A ∖ ( A ∖ y ) ) = y ) → ( ( A ∖ ( A ∖ x ) ) ⊆ ( A ∖ ( A ∖ y ) ) ↔ x ⊆ y ) ) ;;
+	step 22 : wff = syl5ib (step 20, step 21) |- ( ( ( A ∖ ( A ∖ x ) ) = x ∧ ( A ∖ ( A ∖ y ) ) = y ) → ( ( A ∖ y ) ⊆ ( A ∖ x ) → x ⊆ y ) ) ;;
+	step 23 : wff = sscon () |- ( ( A ∖ x ) ⊆ ( A ∖ y ) → ( A ∖ ( A ∖ y ) ) ⊆ ( A ∖ ( A ∖ x ) ) ) ;;
+	step 24 : wff = sseq12 () |- ( ( ( A ∖ ( A ∖ y ) ) = y ∧ ( A ∖ ( A ∖ x ) ) = x ) → ( ( A ∖ ( A ∖ y ) ) ⊆ ( A ∖ ( A ∖ x ) ) ↔ y ⊆ x ) ) ;;
+	step 25 : wff = ancoms (step 24) |- ( ( ( A ∖ ( A ∖ x ) ) = x ∧ ( A ∖ ( A ∖ y ) ) = y ) → ( ( A ∖ ( A ∖ y ) ) ⊆ ( A ∖ ( A ∖ x ) ) ↔ y ⊆ x ) ) ;;
+	step 26 : wff = syl5ib (step 23, step 25) |- ( ( ( A ∖ ( A ∖ x ) ) = x ∧ ( A ∖ ( A ∖ y ) ) = y ) → ( ( A ∖ x ) ⊆ ( A ∖ y ) → y ⊆ x ) ) ;;
+	step 27 : wff = orim12d (step 22, step 26) |- ( ( ( A ∖ ( A ∖ x ) ) = x ∧ ( A ∖ ( A ∖ y ) ) = y ) → ( ( ( A ∖ y ) ⊆ ( A ∖ x ) ∨ ( A ∖ x ) ⊆ ( A ∖ y ) ) → ( x ⊆ y ∨ y ⊆ x ) ) ) ;;
+	step 28 : wff = syl2anb (step 15, step 19, step 27) |- ( ( x ∈ Pow A ∧ y ∈ Pow A ) → ( ( ( A ∖ y ) ⊆ ( A ∖ x ) ∨ ( A ∖ x ) ⊆ ( A ∖ y ) ) → ( x ⊆ y ∨ y ⊆ x ) ) ) ;;
+	step 29 : wff = com12 (step 28) |- ( ( ( A ∖ y ) ⊆ ( A ∖ x ) ∨ ( A ∖ x ) ⊆ ( A ∖ y ) ) → ( ( x ∈ Pow A ∧ y ∈ Pow A ) → ( x ⊆ y ∨ y ⊆ x ) ) ) ;;
+	step 30 : wff = orcoms (step 29) |- ( ( ( A ∖ x ) ⊆ ( A ∖ y ) ∨ ( A ∖ y ) ⊆ ( A ∖ x ) ) → ( ( x ∈ Pow A ∧ y ∈ Pow A ) → ( x ⊆ y ∨ y ⊆ x ) ) ) ;;
+	step 31 : wff = syl6 (step 11, step 30) |- ( ( ( A ∖ x ) ∈ Y ∧ ( A ∖ y ) ∈ Y ) → ( [C.] Or Y → ( ( x ∈ Pow A ∧ y ∈ Pow A ) → ( x ⊆ y ∨ y ⊆ x ) ) ) ) ;;
+	step 32 : wff = com3l (step 31) |- ( [C.] Or Y → ( ( x ∈ Pow A ∧ y ∈ Pow A ) → ( ( ( A ∖ x ) ∈ Y ∧ ( A ∖ y ) ∈ Y ) → ( x ⊆ y ∨ y ⊆ x ) ) ) ) ;;
+	step 33 : wff = imp3a (step 32) |- ( [C.] Or Y → ( ( ( x ∈ Pow A ∧ y ∈ Pow A ) ∧ ( ( A ∖ x ) ∈ Y ∧ ( A ∖ y ) ∈ Y ) ) → ( x ⊆ y ∨ y ⊆ x ) ) ) ;;
+	step 34 : wff = syl5 (step 9, step 33) |- ( [C.] Or Y → ( ( x ∈ { u ∈ Pow A | ( A ∖ u ) ∈ Y } ∧ y ∈ { u ∈ Pow A | ( A ∖ u ) ∈ Y } ) → ( x ⊆ y ∨ y ⊆ x ) ) ) ;;
+	step 35 : wff = ralrimivv (step 34) |- ( [C.] Or Y → ∀ x ∈ { u ∈ Pow A | ( A ∖ u ) ∈ Y } ∀ y ∈ { u ∈ Pow A | ( A ∖ u ) ∈ Y } ( x ⊆ y ∨ y ⊆ x ) ) ;;
+	step 36 : wff = sorpss () |- ( [C.] Or { u ∈ Pow A | ( A ∖ u ) ∈ Y } ↔ ∀ x ∈ { u ∈ Pow A | ( A ∖ u ) ∈ Y } ∀ y ∈ { u ∈ Pow A | ( A ∖ u ) ∈ Y } ( x ⊆ y ∨ y ⊆ x ) ) ;;
+	step 37 : wff = sylibr (step 35, step 36) |- ( [C.] Or Y → [C.] Or { u ∈ Pow A | ( A ∖ u ) ∈ Y } ) ;;
+	qed prop 1 = step 37 ;;
+}
+
+

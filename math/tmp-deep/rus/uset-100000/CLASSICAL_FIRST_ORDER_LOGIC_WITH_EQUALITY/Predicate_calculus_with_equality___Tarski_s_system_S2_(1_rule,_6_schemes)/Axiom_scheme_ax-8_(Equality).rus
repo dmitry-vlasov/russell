@@ -1,0 +1,786 @@
+import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Tarski_s_system_S2_(1_rule,_6_schemes)/Axiom_scheme_ax-9_(Existence).rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                   Axiom scheme ax-8 (Equality)
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* Axiom of Equality.  One of the equality and substitution axioms of
+     predicate calculus with equality.  This is similar to, but not quite, a
+     transitive law for equality (proved later as ~ equtr ).  This axiom scheme
+     is a sub-scheme of Axiom Scheme B8 of system S2 of [Tarski], p. 75, whose
+     general form cannot be represented with our notation.  Also appears as
+     Axiom C7 of [Monk2] p. 105 and Axiom Scheme C8' in [Megill] p. 448 (p. 16
+     of the preprint).
+
+     The equality symbol was invented in 1527 by Robert Recorde.  He chose a
+     pair of parallel lines of the same length because "noe .2. thynges, can be
+     moare equalle."
+
+     Note that this axiom is still valid even when any two or all three of
+     ` x ` , ` y ` , and ` z ` are replaced with the same variable since they
+     do not have any distinct variable (Metamath's $d) restrictions.  Because
+     of this, we say that these three variables are "bundled" (a term coined by
+     Raph Levien).  (Contributed by NM, 5-Aug-1993.) */
+
+axiom ax-8 (x : set, y : set, z : set)  {
+	prop 1 : wff = |- ( x = y → ( x = z → y = z ) ) ;;
+}
+
+/* Identity law for equality.  Lemma 2 of [KalishMontague] p. 85.  See also
+       Lemma 6 of [Tarski] p. 68.  (Contributed by NM, 1-Apr-2005.)  (Revised
+       by NM, 9-Apr-2017.) */
+
+theorem equid (x : set) disjointed(x y) {
+	prop 1 : wff = |- x = x ;;
+}
+
+proof of equid {
+	var y : set;;
+	step 1 : wff = ax9v () |- ¬ ∀ y ¬ y = x ;;
+	step 2 : wff = ax-8 () |- ( y = x → ( y = x → x = x ) ) ;;
+	step 3 : wff = pm2.43i (step 2) |- ( y = x → x = x ) ;;
+	step 4 : wff = con3i (step 3) |- ( ¬ x = x → ¬ y = x ) ;;
+	step 5 : wff = alimi (step 4) |- ( ∀ y ¬ x = x → ∀ y ¬ y = x ) ;;
+	step 6 : wff = mto (step 1, step 5) |- ¬ ∀ y ¬ x = x ;;
+	step 7 : wff = ax-17 () |- ( ¬ x = x → ∀ y ¬ x = x ) ;;
+	step 8 : wff = mt3 (step 6, step 7) |- x = x ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Bound-variable hypothesis builder for ` x = x ` .  This theorem tells us
+     that any variable, including ` x ` , is effectively not free in
+     ` x = x ` , even though ` x ` is technically free according to the
+     traditional definition of free variable.  (Contributed by NM,
+     13-Jan-2011.)  (Revised by NM, 21-Aug-2017.) */
+
+theorem nfequid (x : set, y : set)  {
+	prop 1 : wff = |- F/ y x = x ;;
+}
+
+proof of nfequid {
+	step 1 : wff = equid () |- x = x ;;
+	step 2 : wff = nfth (step 1) |- F/ y x = x ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Commutative law for equality.  Lemma 3 of [KalishMontague] p. 85.  See
+       also Lemma 7 of [Tarski] p. 69.  (Contributed by NM, 5-Aug-1993.)
+       (Revised by NM, 9-Apr-2017.) */
+
+theorem equcomi (x : set, y : set)  {
+	prop 1 : wff = |- ( x = y → y = x ) ;;
+}
+
+proof of equcomi {
+	step 1 : wff = equid () |- x = x ;;
+	step 2 : wff = ax-8 () |- ( x = y → ( x = x → y = x ) ) ;;
+	step 3 : wff = mpi (step 1, step 2) |- ( x = y → y = x ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Commutative law for equality.  (Contributed by NM, 20-Aug-1993.) */
+
+theorem equcom (x : set, y : set)  {
+	prop 1 : wff = |- ( x = y ↔ y = x ) ;;
+}
+
+proof of equcom {
+	step 1 : wff = equcomi () |- ( x = y → y = x ) ;;
+	step 2 : wff = equcomi () |- ( y = x → x = y ) ;;
+	step 3 : wff = impbii (step 1, step 2) |- ( x = y ↔ y = x ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* An inference commuting equality in antecedent.  Used to eliminate the
+       need for a syllogism.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem equcoms (ph : wff, x : set, y : set)  {
+	hyp 1 : wff = |- ( x = y → ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( y = x → ph ) ;;
+}
+
+proof of equcoms {
+	step 1 : wff = equcomi () |- ( y = x → x = y ) ;;
+	step 2 : wff = syl (step 1, hyp 1) |- ( y = x → ph ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* An equivalence law for equality.  (Contributed by NM, 5-Aug-1993.)  (Proof
+     shortened by Wolf Lammen, 12-Nov-2017.) */
+
+theorem equequ1 (x : set, y : set, z : set)  {
+	prop 1 : wff = |- ( x = y → ( x = z ↔ y = z ) ) ;;
+}
+
+proof of equequ1 {
+	step 1 : wff = ax-8 () |- ( x = y → ( x = z → y = z ) ) ;;
+	step 2 : wff = ax-8 () |- ( y = x → ( y = z → x = z ) ) ;;
+	step 3 : wff = equcoms (step 2) |- ( x = y → ( y = z → x = z ) ) ;;
+	step 4 : wff = impbid (step 1, step 3) |- ( x = y → ( x = z ↔ y = z ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* An equivalence law for equality.  (Contributed by NM, 5-Aug-1993.)
+     (New usage is discouraged.)  (Proof modification is discouraged.) */
+
+theorem equequ1OLD (x : set, y : set, z : set)  {
+	prop 1 : wff = |- ( x = y → ( x = z ↔ y = z ) ) ;;
+}
+
+proof of equequ1OLD {
+	step 1 : wff = ax-8 () |- ( x = y → ( x = z → y = z ) ) ;;
+	step 2 : wff = equcomi () |- ( x = y → y = x ) ;;
+	step 3 : wff = ax-8 () |- ( y = x → ( y = z → x = z ) ) ;;
+	step 4 : wff = syl (step 2, step 3) |- ( x = y → ( y = z → x = z ) ) ;;
+	step 5 : wff = impbid (step 1, step 4) |- ( x = y → ( x = z ↔ y = z ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* An equivalence law for equality.  (Contributed by NM, 5-Aug-1993.)  (Proof
+     shortened by Wolf Lammen, 4-Aug-2017.) */
+
+theorem equequ2 (x : set, y : set, z : set)  {
+	prop 1 : wff = |- ( x = y → ( z = x ↔ z = y ) ) ;;
+}
+
+proof of equequ2 {
+	step 1 : wff = equequ1 () |- ( x = y → ( x = z ↔ y = z ) ) ;;
+	step 2 : wff = equcom () |- ( x = z ↔ z = x ) ;;
+	step 3 : wff = equcom () |- ( y = z ↔ z = y ) ;;
+	step 4 : wff = 3bitr3g (step 1, step 2, step 3) |- ( x = y → ( z = x ↔ z = y ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* One of the two equality axioms of standard predicate calculus, called
+     reflexivity of equality.  (The other one is ~ stdpc7 .)  Axiom 6 of
+     [Mendelson] p. 95.  Mendelson doesn't say why he prepended the redundant
+     quantifier, but it was probably to be compatible with free logic (which is
+     valid in the empty domain).  (Contributed by NM, 16-Feb-2005.) */
+
+theorem stdpc6 (x : set)  {
+	prop 1 : wff = |- ∀ x x = x ;;
+}
+
+proof of stdpc6 {
+	step 1 : wff = equid () |- x = x ;;
+	step 2 : wff = ax-gen (step 1) |- ∀ x x = x ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A transitive law for equality.  (Contributed by NM, 23-Aug-1993.) */
+
+theorem equtr (x : set, y : set, z : set)  {
+	prop 1 : wff = |- ( x = y → ( y = z → x = z ) ) ;;
+}
+
+proof of equtr {
+	step 1 : wff = ax-8 () |- ( y = x → ( y = z → x = z ) ) ;;
+	step 2 : wff = equcoms (step 1) |- ( x = y → ( y = z → x = z ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A transitive law for equality.  Lemma L17 in [Megill] p. 446 (p. 14 of the
+     preprint).  (Contributed by NM, 23-Aug-1993.) */
+
+theorem equtrr (x : set, y : set, z : set)  {
+	prop 1 : wff = |- ( x = y → ( z = x → z = y ) ) ;;
+}
+
+proof of equtrr {
+	step 1 : wff = equtr () |- ( z = x → ( x = y → z = y ) ) ;;
+	step 2 : wff = com12 (step 1) |- ( x = y → ( z = x → z = y ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A transitive law for equality.  (Contributed by NM, 12-Aug-1993.)  (Proof
+     shortened by Andrew Salmon, 25-May-2011.) */
+
+theorem equtr2 (x : set, y : set, z : set)  {
+	prop 1 : wff = |- ( ( x = z ∧ y = z ) → x = y ) ;;
+}
+
+proof of equtr2 {
+	step 1 : wff = equtrr () |- ( z = y → ( x = z → x = y ) ) ;;
+	step 2 : wff = equcoms (step 1) |- ( y = z → ( x = z → x = y ) ) ;;
+	step 3 : wff = impcom (step 2) |- ( ( x = z ∧ y = z ) → x = y ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Two equivalent ways of expressing ~ ax-12 .  See the comment for
+     ~ ax-12 .  (Contributed by NM, 2-May-2017.)  (Proof shortened by Wolf
+     Lammen, 12-Aug-2017.) */
+
+theorem ax12b (x : set, y : set, z : set)  {
+	prop 1 : wff = |- ( ( ¬ x = y → ( y = z → ∀ x y = z ) ) ↔ ( ¬ x = y → ( ¬ x = z → ( y = z → ∀ x y = z ) ) ) ) ;;
+}
+
+proof of ax12b {
+	step 1 : wff = id () |- ( ( ¬ x = y → ( y = z → ∀ x y = z ) ) → ( ¬ x = y → ( y = z → ∀ x y = z ) ) ) ;;
+	step 2 : wff = a1dd (step 1) |- ( ( ¬ x = y → ( y = z → ∀ x y = z ) ) → ( ¬ x = y → ( ¬ x = z → ( y = z → ∀ x y = z ) ) ) ) ;;
+	step 3 : wff = equtrr () |- ( z = y → ( x = z → x = y ) ) ;;
+	step 4 : wff = equcoms (step 3) |- ( y = z → ( x = z → x = y ) ) ;;
+	step 5 : wff = con3rr3 (step 4) |- ( ¬ x = y → ( y = z → ¬ x = z ) ) ;;
+	step 6 : wff = id () |- ( ( ¬ x = y → ( ¬ x = z → ( y = z → ∀ x y = z ) ) ) → ( ¬ x = y → ( ¬ x = z → ( y = z → ∀ x y = z ) ) ) ) ;;
+	step 7 : wff = com4l (step 6) |- ( ¬ x = y → ( ¬ x = z → ( y = z → ( ( ¬ x = y → ( ¬ x = z → ( y = z → ∀ x y = z ) ) ) → ∀ x y = z ) ) ) ) ;;
+	step 8 : wff = com23 (step 7) |- ( ¬ x = y → ( y = z → ( ¬ x = z → ( ( ¬ x = y → ( ¬ x = z → ( y = z → ∀ x y = z ) ) ) → ∀ x y = z ) ) ) ) ;;
+	step 9 : wff = mpdd (step 5, step 8) |- ( ¬ x = y → ( y = z → ( ( ¬ x = y → ( ¬ x = z → ( y = z → ∀ x y = z ) ) ) → ∀ x y = z ) ) ) ;;
+	step 10 : wff = com3r (step 9) |- ( ( ¬ x = y → ( ¬ x = z → ( y = z → ∀ x y = z ) ) ) → ( ¬ x = y → ( y = z → ∀ x y = z ) ) ) ;;
+	step 11 : wff = impbii (step 2, step 10) |- ( ( ¬ x = y → ( y = z → ∀ x y = z ) ) ↔ ( ¬ x = y → ( ¬ x = z → ( y = z → ∀ x y = z ) ) ) ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* Obsolete version of ~ ax12b as of 12-Aug-2017.  (Contributed by NM,
+     2-May-2017.)  (New usage is discouraged.) */
+
+theorem ax12bOLD (x : set, y : set, z : set)  {
+	prop 1 : wff = |- ( ( ¬ x = y → ( y = z → ∀ x y = z ) ) ↔ ( ¬ x = y → ( ¬ x = z → ( y = z → ∀ x y = z ) ) ) ) ;;
+}
+
+proof of ax12bOLD {
+	step 1 : wff = bi2.04 () |- ( ( ¬ x = y → ( y = z → ∀ x y = z ) ) ↔ ( y = z → ( ¬ x = y → ∀ x y = z ) ) ) ;;
+	step 2 : wff = equtrr () |- ( z = y → ( x = z → x = y ) ) ;;
+	step 3 : wff = equcoms (step 2) |- ( y = z → ( x = z → x = y ) ) ;;
+	step 4 : wff = con3d (step 3) |- ( y = z → ( ¬ x = y → ¬ x = z ) ) ;;
+	step 5 : wff = pm4.71d (step 4) |- ( y = z → ( ¬ x = y ↔ ( ¬ x = y ∧ ¬ x = z ) ) ) ;;
+	step 6 : wff = imbi1d (step 5) |- ( y = z → ( ( ¬ x = y → ∀ x y = z ) ↔ ( ( ¬ x = y ∧ ¬ x = z ) → ∀ x y = z ) ) ) ;;
+	step 7 : wff = pm5.74i (step 6) |- ( ( y = z → ( ¬ x = y → ∀ x y = z ) ) ↔ ( y = z → ( ( ¬ x = y ∧ ¬ x = z ) → ∀ x y = z ) ) ) ;;
+	step 8 : wff = bitri (step 1, step 7) |- ( ( ¬ x = y → ( y = z → ∀ x y = z ) ) ↔ ( y = z → ( ( ¬ x = y ∧ ¬ x = z ) → ∀ x y = z ) ) ) ;;
+	step 9 : wff = bi2.04 () |- ( ( y = z → ( ( ¬ x = y ∧ ¬ x = z ) → ∀ x y = z ) ) ↔ ( ( ¬ x = y ∧ ¬ x = z ) → ( y = z → ∀ x y = z ) ) ) ;;
+	step 10 : wff = bitri (step 8, step 9) |- ( ( ¬ x = y → ( y = z → ∀ x y = z ) ) ↔ ( ( ¬ x = y ∧ ¬ x = z ) → ( y = z → ∀ x y = z ) ) ) ;;
+	step 11 : wff = impexp () |- ( ( ( ¬ x = y ∧ ¬ x = z ) → ( y = z → ∀ x y = z ) ) ↔ ( ¬ x = y → ( ¬ x = z → ( y = z → ∀ x y = z ) ) ) ) ;;
+	step 12 : wff = bitri (step 10, step 11) |- ( ( ¬ x = y → ( y = z → ∀ x y = z ) ) ↔ ( ¬ x = y → ( ¬ x = z → ( y = z → ∀ x y = z ) ) ) ) ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* Weak version of ~ sp .  Uses only Tarski's FOL axiom schemes.  Lemma 9
+       of [KalishMontague] p. 87.  This may be the best we can do with minimal
+       distinct variable conditions.  TO DO:  Do we need this theorem?  If not,
+       maybe it should be deleted.  (Contributed by NM, 19-Apr-2017.) */
+
+theorem spfw (ph : wff, ps : wff, x : set, y : set) disjointed(x y) {
+	hyp 1 : wff = |- ( ¬ ps → ∀ x ¬ ps ) ;;
+	hyp 2 : wff = |- ( ∀ x ph → ∀ y ∀ x ph ) ;;
+	hyp 3 : wff = |- ( ¬ ph → ∀ y ¬ ph ) ;;
+	hyp 4 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ph → ph ) ;;
+}
+
+proof of spfw {
+	step 1 : wff = ax-5 () |- ( ∀ y ( ∀ x ph → ps ) → ( ∀ y ∀ x ph → ∀ y ps ) ) ;;
+	step 2 : wff = biimprd (hyp 4) |- ( x = y → ( ps → ph ) ) ;;
+	step 3 : wff = equcoms (step 2) |- ( y = x → ( ps → ph ) ) ;;
+	step 4 : wff = spimw (hyp 3, step 3) |- ( ∀ y ps → ph ) ;;
+	step 5 : wff = syl56 (hyp 2, step 1, step 4) |- ( ∀ y ( ∀ x ph → ps ) → ( ∀ x ph → ph ) ) ;;
+	step 6 : wff = biimpd (hyp 4) |- ( x = y → ( ph → ps ) ) ;;
+	step 7 : wff = spimw (hyp 1, step 6) |- ( ∀ x ph → ps ) ;;
+	step 8 : wff = mpg (step 5, step 7) |- ( ∀ x ph → ph ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Weak version of ~ sp .  Uses only Tarski's FOL axiom schemes.  Obsolete
+       version of ~ spnfw as of 13-Aug-2017.  (Contributed by NM, 1-Aug-2017.)
+       (New usage is discouraged.) */
+
+theorem spnfwOLD (ph : wff, x : set) disjointed(x y, y ph) {
+	hyp 1 : wff = |- ( ¬ ph → ∀ x ¬ ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ph → ph ) ;;
+}
+
+proof of spnfwOLD {
+	var y : set;;
+	step 1 : wff = ax-17 () |- ( ∀ x ph → ∀ y ∀ x ph ) ;;
+	step 2 : wff = ax-17 () |- ( ¬ ph → ∀ y ¬ ph ) ;;
+	step 3 : wff = biidd () |- ( x = y → ( ph ↔ ph ) ) ;;
+	step 4 : wff = spfw (hyp 1, step 1, step 2, step 3) |- ( ∀ x ph → ph ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Weak version of ~ 19.8a .  Uses only Tarski's FOL axiom schemes.
+       (Contributed by NM, 1-Aug-2017.) */
+
+theorem 19.8w (ph : wff, x : set)  {
+	hyp 1 : wff = |- ( ph → ∀ x ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ∃ x ph ) ;;
+}
+
+proof of 19.8w {
+	step 1 : wff = notnot () |- ( ph ↔ ¬ ¬ ph ) ;;
+	step 2 : wff = notnot () |- ( ph ↔ ¬ ¬ ph ) ;;
+	step 3 : wff = albii (step 2) |- ( ∀ x ph ↔ ∀ x ¬ ¬ ph ) ;;
+	step 4 : wff = 3imtr3i (hyp 1, step 1, step 3) |- ( ¬ ¬ ph → ∀ x ¬ ¬ ph ) ;;
+	step 5 : wff = spnfw (step 4) |- ( ∀ x ¬ ph → ¬ ph ) ;;
+	step 6 : wff = con2i (step 5) |- ( ph → ¬ ∀ x ¬ ph ) ;;
+	step 7 : wff = df-ex () |- ( ∃ x ph ↔ ¬ ∀ x ¬ ph ) ;;
+	step 8 : wff = sylibr (step 6, step 7) |- ( ph → ∃ x ph ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Weak version of specialization scheme ~ sp .  Lemma 9 of
+       [KalishMontague] p. 87.  While it appears that ~ sp in its general form
+       does not follow from Tarski's FOL axiom schemes, from this theorem we
+       can prove any instance of ~ sp having no wff metavariables and mutually
+       distinct set variables (see ~ ax11wdemo for an example of the procedure
+       to eliminate the hypothesis).  Other approximations of ~ sp are ~ spfw
+       (minimal distinct variable requirements), ~ spnfw (when ` x ` is not
+       free in ` -. ph ` ), ~ spvw (when ` x ` does not appear in ` ph ` ),
+       ~ sptruw (when ` ph ` is true), and ~ spfalw (when ` ph ` is false).
+       (Contributed by NM, 9-Apr-2017.) */
+
+theorem spw (ph : wff, ps : wff, x : set, y : set) disjointed(x y, x ps, y ph) {
+	hyp 1 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ph → ph ) ;;
+}
+
+proof of spw {
+	step 1 : wff = ax-17 () |- ( ∀ x ph → ∀ y ∀ x ph ) ;;
+	step 2 : wff = ax-5 () |- ( ∀ y ( ∀ x ph → ps ) → ( ∀ y ∀ x ph → ∀ y ps ) ) ;;
+	step 3 : wff = biimprd (hyp 1) |- ( x = y → ( ps → ph ) ) ;;
+	step 4 : wff = equcoms (step 3) |- ( y = x → ( ps → ph ) ) ;;
+	step 5 : wff = spimvw (step 4) |- ( ∀ y ps → ph ) ;;
+	step 6 : wff = syl56 (step 1, step 2, step 5) |- ( ∀ y ( ∀ x ph → ps ) → ( ∀ x ph → ph ) ) ;;
+	step 7 : wff = biimpd (hyp 1) |- ( x = y → ( ph → ps ) ) ;;
+	step 8 : wff = spimvw (step 7) |- ( ∀ x ph → ps ) ;;
+	step 9 : wff = mpg (step 6, step 8) |- ( ∀ x ph → ph ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Version of ~ sp when ` x ` does not occur in ` ph ` .  This provides the
+       other direction of ~ ax-17 .  Uses only Tarski's FOL axiom schemes.
+       (Contributed by NM, 10-Apr-2017.) */
+
+theorem spvw (ph : wff, x : set) disjointed(x y ph) {
+	prop 1 : wff = |- ( ∀ x ph → ph ) ;;
+}
+
+proof of spvw {
+	var y : set;;
+	step 1 : wff = biidd () |- ( x = y → ( ph ↔ ph ) ) ;;
+	step 2 : wff = spw (step 1) |- ( ∀ x ph → ph ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Special case of Theorem 19.3 of [Margaris] p. 89.  (Contributed by NM,
+       1-Aug-2017.) */
+
+theorem 19.3v (ph : wff, x : set) disjointed(x ph) {
+	prop 1 : wff = |- ( ∀ x ph ↔ ph ) ;;
+}
+
+proof of 19.3v {
+	step 1 : wff = spvw () |- ( ∀ x ph → ph ) ;;
+	step 2 : wff = ax-17 () |- ( ph → ∀ x ph ) ;;
+	step 3 : wff = impbii (step 1, step 2) |- ( ∀ x ph ↔ ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Special case of Theorem 19.9 of [Margaris] p. 89.  (Contributed by NM,
+       28-May-1995.)  (Revised by NM, 1-Aug-2017.) */
+
+theorem 19.9v (ph : wff, x : set) disjointed(x ph) {
+	prop 1 : wff = |- ( ∃ x ph ↔ ph ) ;;
+}
+
+proof of 19.9v {
+	step 1 : wff = df-ex () |- ( ∃ x ph ↔ ¬ ∀ x ¬ ph ) ;;
+	step 2 : wff = 19.3v () |- ( ∀ x ¬ ph ↔ ¬ ph ) ;;
+	step 3 : wff = con2bii (step 2) |- ( ph ↔ ¬ ∀ x ¬ ph ) ;;
+	step 4 : wff = bitr4i (step 1, step 3) |- ( ∃ x ph ↔ ph ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Deduction from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
+       27-Apr-1994.) */
+
+theorem exlimdv (ph : wff, ps : wff, ch : wff, x : set) disjointed(x ch, x ph) {
+	hyp 1 : wff = |- ( ph → ( ps → ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∃ x ps → ch ) ) ;;
+}
+
+proof of exlimdv {
+	step 1 : wff = eximdv (hyp 1) |- ( ph → ( ∃ x ps → ∃ x ch ) ) ;;
+	step 2 : wff = 19.9v () |- ( ∃ x ch ↔ ch ) ;;
+	step 3 : wff = syl6ib (step 1, step 2) |- ( ph → ( ∃ x ps → ch ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Existential elimination rule of natural deduction.  (Contributed by
+       Mario Carneiro, 15-Jun-2016.) */
+
+theorem exlimddv (ph : wff, ps : wff, ch : wff, x : set) disjointed(x ch, x ph) {
+	hyp 1 : wff = |- ( ph → ∃ x ps ) ;;
+	hyp 2 : wff = |- ( ( ph ∧ ps ) → ch ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ch ) ;;
+}
+
+proof of exlimddv {
+	step 1 : wff = ex (hyp 2) |- ( ph → ( ps → ch ) ) ;;
+	step 2 : wff = exlimdv (step 1) |- ( ph → ( ∃ x ps → ch ) ) ;;
+	step 3 : wff = mpd (hyp 1, step 2) |- ( ph → ch ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Inference from Theorem 19.23 of [Margaris] p. 90.
+
+       This inference, along with our many variants such as ~ rexlimdv , is
+       used to implement a metatheorem called "Rule C" that is given in many
+       logic textbooks.  See, for example, Rule C in [Mendelson] p. 81, Rule C
+       in [Margaris] p. 40, or Rule C in Hirst and Hirst's _A Primer for Logic
+       and Proof_ p. 59 (PDF p. 65) at
+       ~ http://www.mathsci.appstate.edu/~~hirstjl/primer/hirst.pdf .
+
+       In informal proofs, the statement "Let ` C ` be an element such that..."
+       almost always means an implicit application of Rule C.
+
+       In essence, Rule C states that if we can prove that some element ` x `
+       exists satisfying a wff, i.e. ` E. x ph ( x ) ` where ` ph ( x ) ` has
+       ` x ` free, then we can use ` ph ( C ) ` as a hypothesis for the proof
+       where ` C ` is a new (ficticious) constant not appearing previously in
+       the proof, nor in any axioms used, nor in the theorem to be proved.  The
+       purpose of Rule C is to get rid of the existential quantifier.
+
+       We cannot do this in Metamath directly.  Instead, we use the original
+       ` ph ` (containing ` x ` ) as an antecedent for the main part of the
+       proof.  We eventually arrive at ` ( ph -> ps ) ` where ` ps ` is the
+       theorem to be proved and does not contain ` x ` .  Then we apply
+       ~ exlimiv to arrive at ` ( E. x ph -> ps ) ` .  Finally, we separately
+       prove ` E. x ph ` and detach it with modus ponens ~ ax-mp to arrive at
+       the final theorem ` ps ` .  (Contributed by NM, 5-Aug-1993.) */
+
+theorem exlimiv (ph : wff, ps : wff, x : set) disjointed(x ps) {
+	hyp 1 : wff = |- ( ph → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ x ph → ps ) ;;
+}
+
+proof of exlimiv {
+	step 1 : wff = eximi (hyp 1) |- ( ∃ x ph → ∃ x ps ) ;;
+	step 2 : wff = 19.9v () |- ( ∃ x ps ↔ ps ) ;;
+	step 3 : wff = sylib (step 1, step 2) |- ( ∃ x ph → ps ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Inference from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
+       1-Aug-1995.) */
+
+theorem exlimivv (ph : wff, ps : wff, x : set, y : set) disjointed(x ps, y ps) {
+	hyp 1 : wff = |- ( ph → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ x ∃ y ph → ps ) ;;
+}
+
+proof of exlimivv {
+	step 1 : wff = exlimiv (hyp 1) |- ( ∃ y ph → ps ) ;;
+	step 2 : wff = exlimiv (step 1) |- ( ∃ x ∃ y ph → ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
+       31-Jul-1995.) */
+
+theorem exlimdvv (ph : wff, ps : wff, ch : wff, x : set, y : set) disjointed(x ch, x ph, y ch, y ph) {
+	hyp 1 : wff = |- ( ph → ( ps → ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ∃ x ∃ y ps → ch ) ) ;;
+}
+
+proof of exlimdvv {
+	step 1 : wff = exlimdv (hyp 1) |- ( ph → ( ∃ y ps → ch ) ) ;;
+	step 2 : wff = exlimdv (step 1) |- ( ph → ( ∃ x ∃ y ps → ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Version of ~ sp when ` ph ` is true.  Uses only Tarski's FOL axiom
+       schemes.  (Contributed by NM, 23-Apr-1017.) */
+
+theorem sptruw (ph : wff, x : set)  {
+	hyp 1 : wff = |- ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ph → ph ) ;;
+}
+
+proof of sptruw {
+	step 1 : wff = a1i (hyp 1) |- ( ∀ x ph → ph ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+/* Version of ~ sp when ` ph ` is false.  Uses only Tarski's FOL axiom
+       schemes.  (Contributed by NM, 23-Apr-1017.) */
+
+theorem spfalw (ph : wff, x : set) disjointed(x y, y ph) {
+	hyp 1 : wff = |- ¬ ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ph → ph ) ;;
+}
+
+proof of spfalw {
+	var y : set;;
+	step 1 : wff = bifal (hyp 1) |- ( ph ↔ F. ) ;;
+	step 2 : wff = a1i (step 1) |- ( x = y → ( ph ↔ F. ) ) ;;
+	step 3 : wff = spw (step 2) |- ( ∀ x ph → ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Theorem 19.2 of [Margaris] p. 89.  Note:  This proof is very different
+     from Margaris' because we only have Tarski's FOL axiom schemes available
+     at this point.  See the later ~ 19.2g for a more conventional proof.
+     (Contributed by NM, 2-Aug-2017.) */
+
+theorem 19.2 (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ∀ x ph → ∃ x ph ) ;;
+}
+
+proof of 19.2 {
+	step 1 : wff = equid () |- x = x ;;
+	step 2 : wff = equid () |- x = x ;;
+	step 3 : wff = notnoti (step 2) |- ¬ ¬ x = x ;;
+	step 4 : wff = spfalw (step 3) |- ( ∀ x ¬ x = x → ¬ x = x ) ;;
+	step 5 : wff = mt2 (step 1, step 4) |- ¬ ∀ x ¬ x = x ;;
+	step 6 : wff = idd () |- ( x = x → ( ph → ph ) ) ;;
+	step 7 : wff = speimfw (step 6) |- ( ¬ ∀ x ¬ x = x → ( ∀ x ph → ∃ x ph ) ) ;;
+	step 8 : wff = ax-mp (step 5, step 7) |- ( ∀ x ph → ∃ x ph ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Theorem 19.39 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem 19.39 (ph : wff, ps : wff, x : set)  {
+	prop 1 : wff = |- ( ( ∃ x ph → ∃ x ps ) → ∃ x ( ph → ps ) ) ;;
+}
+
+proof of 19.39 {
+	step 1 : wff = 19.2 () |- ( ∀ x ph → ∃ x ph ) ;;
+	step 2 : wff = imim1i (step 1) |- ( ( ∃ x ph → ∃ x ps ) → ( ∀ x ph → ∃ x ps ) ) ;;
+	step 3 : wff = 19.35 () |- ( ∃ x ( ph → ps ) ↔ ( ∀ x ph → ∃ x ps ) ) ;;
+	step 4 : wff = sylibr (step 2, step 3) |- ( ( ∃ x ph → ∃ x ps ) → ∃ x ( ph → ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Theorem 19.24 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem 19.24 (ph : wff, ps : wff, x : set)  {
+	prop 1 : wff = |- ( ( ∀ x ph → ∀ x ps ) → ∃ x ( ph → ps ) ) ;;
+}
+
+proof of 19.24 {
+	step 1 : wff = 19.2 () |- ( ∀ x ps → ∃ x ps ) ;;
+	step 2 : wff = imim2i (step 1) |- ( ( ∀ x ph → ∀ x ps ) → ( ∀ x ph → ∃ x ps ) ) ;;
+	step 3 : wff = 19.35 () |- ( ∃ x ( ph → ps ) ↔ ( ∀ x ph → ∃ x ps ) ) ;;
+	step 4 : wff = sylibr (step 2, step 3) |- ( ( ∀ x ph → ∀ x ps ) → ∃ x ( ph → ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Theorem 19.34 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) */
+
+theorem 19.34 (ph : wff, ps : wff, x : set)  {
+	prop 1 : wff = |- ( ( ∀ x ph ∨ ∃ x ps ) → ∃ x ( ph ∨ ps ) ) ;;
+}
+
+proof of 19.34 {
+	step 1 : wff = 19.2 () |- ( ∀ x ph → ∃ x ph ) ;;
+	step 2 : wff = orim1i (step 1) |- ( ( ∀ x ph ∨ ∃ x ps ) → ( ∃ x ph ∨ ∃ x ps ) ) ;;
+	step 3 : wff = 19.43 () |- ( ∃ x ( ph ∨ ps ) ↔ ( ∃ x ph ∨ ∃ x ps ) ) ;;
+	step 4 : wff = sylibr (step 2, step 3) |- ( ( ∀ x ph ∨ ∃ x ps ) → ∃ x ( ph ∨ ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Change bound variable.  Uses only Tarski's FOL axiom schemes.
+       (Contributed by NM, 9-Apr-2017.) */
+
+theorem cbvalw (ph : wff, ps : wff, x : set, y : set) disjointed(x y) {
+	hyp 1 : wff = |- ( ∀ x ph → ∀ y ∀ x ph ) ;;
+	hyp 2 : wff = |- ( ¬ ps → ∀ x ¬ ps ) ;;
+	hyp 3 : wff = |- ( ∀ y ps → ∀ x ∀ y ps ) ;;
+	hyp 4 : wff = |- ( ¬ ph → ∀ y ¬ ph ) ;;
+	hyp 5 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ph ↔ ∀ y ps ) ;;
+}
+
+proof of cbvalw {
+	step 1 : wff = biimpd (hyp 5) |- ( x = y → ( ph → ps ) ) ;;
+	step 2 : wff = cbvaliw (hyp 1, hyp 2, step 1) |- ( ∀ x ph → ∀ y ps ) ;;
+	step 3 : wff = biimprd (hyp 5) |- ( x = y → ( ps → ph ) ) ;;
+	step 4 : wff = equcoms (step 3) |- ( y = x → ( ps → ph ) ) ;;
+	step 5 : wff = cbvaliw (hyp 3, hyp 4, step 4) |- ( ∀ y ps → ∀ x ph ) ;;
+	step 6 : wff = impbii (step 2, step 5) |- ( ∀ x ph ↔ ∀ y ps ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Change bound variable.  Uses only Tarski's FOL axiom schemes.
+       (Contributed by NM, 9-Apr-2017.) */
+
+theorem cbvalvw (ph : wff, ps : wff, x : set, y : set) disjointed(x y, x ps, y ph) {
+	hyp 1 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ph ↔ ∀ y ps ) ;;
+}
+
+proof of cbvalvw {
+	step 1 : wff = biimpd (hyp 1) |- ( x = y → ( ph → ps ) ) ;;
+	step 2 : wff = cbvalivw (step 1) |- ( ∀ x ph → ∀ y ps ) ;;
+	step 3 : wff = biimprd (hyp 1) |- ( x = y → ( ps → ph ) ) ;;
+	step 4 : wff = equcoms (step 3) |- ( y = x → ( ps → ph ) ) ;;
+	step 5 : wff = cbvalivw (step 4) |- ( ∀ y ps → ∀ x ph ) ;;
+	step 6 : wff = impbii (step 2, step 5) |- ( ∀ x ph ↔ ∀ y ps ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Change bound variable.  Uses only Tarski's FOL axiom schemes.
+       (Contributed by NM, 19-Apr-2017.) */
+
+theorem cbvexvw (ph : wff, ps : wff, x : set, y : set) disjointed(x y, x ps, y ph) {
+	hyp 1 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ x ph ↔ ∃ y ps ) ;;
+}
+
+proof of cbvexvw {
+	step 1 : wff = notbid (hyp 1) |- ( x = y → ( ¬ ph ↔ ¬ ps ) ) ;;
+	step 2 : wff = cbvalvw (step 1) |- ( ∀ x ¬ ph ↔ ∀ y ¬ ps ) ;;
+	step 3 : wff = notbii (step 2) |- ( ¬ ∀ x ¬ ph ↔ ¬ ∀ y ¬ ps ) ;;
+	step 4 : wff = df-ex () |- ( ∃ x ph ↔ ¬ ∀ x ¬ ph ) ;;
+	step 5 : wff = df-ex () |- ( ∃ y ps ↔ ¬ ∀ y ¬ ps ) ;;
+	step 6 : wff = 3bitr4i (step 3, step 4, step 5) |- ( ∃ x ph ↔ ∃ y ps ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Weak version of ~ alcom .  Uses only Tarski's FOL axiom schemes.
+       (Contributed by NM, 10-Apr-2017.) */
+
+theorem alcomiw (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(y z, x y, z ph, y ps) {
+	hyp 1 : wff = |- ( y = z → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ∀ y ph → ∀ y ∀ x ph ) ;;
+}
+
+proof of alcomiw {
+	step 1 : wff = biimpd (hyp 1) |- ( y = z → ( ph → ps ) ) ;;
+	step 2 : wff = cbvalivw (step 1) |- ( ∀ y ph → ∀ z ps ) ;;
+	step 3 : wff = alimi (step 2) |- ( ∀ x ∀ y ph → ∀ x ∀ z ps ) ;;
+	step 4 : wff = ax-17 () |- ( ∀ x ∀ z ps → ∀ y ∀ x ∀ z ps ) ;;
+	step 5 : wff = biimprd (hyp 1) |- ( y = z → ( ps → ph ) ) ;;
+	step 6 : wff = equcoms (step 5) |- ( z = y → ( ps → ph ) ) ;;
+	step 7 : wff = spimvw (step 6) |- ( ∀ z ps → ph ) ;;
+	step 8 : wff = alimi (step 7) |- ( ∀ x ∀ z ps → ∀ x ph ) ;;
+	step 9 : wff = alimi (step 8) |- ( ∀ y ∀ x ∀ z ps → ∀ y ∀ x ph ) ;;
+	step 10 : wff = 3syl (step 3, step 4, step 9) |- ( ∀ x ∀ y ph → ∀ y ∀ x ph ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Weak version of ~ ax-6 from which we can prove any ~ ax-6 instance not
+       involving wff variables or bundling.  Uses only Tarski's FOL axiom
+       schemes.  (Contributed by NM, 19-Apr-2017.) */
+
+theorem hbn1fw (ph : wff, ps : wff, x : set, y : set) disjointed(x y) {
+	hyp 1 : wff = |- ( ∀ x ph → ∀ y ∀ x ph ) ;;
+	hyp 2 : wff = |- ( ¬ ps → ∀ x ¬ ps ) ;;
+	hyp 3 : wff = |- ( ∀ y ps → ∀ x ∀ y ps ) ;;
+	hyp 4 : wff = |- ( ¬ ph → ∀ y ¬ ph ) ;;
+	hyp 5 : wff = |- ( ¬ ∀ y ps → ∀ x ¬ ∀ y ps ) ;;
+	hyp 6 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ∀ x ph → ∀ x ¬ ∀ x ph ) ;;
+}
+
+proof of hbn1fw {
+	step 1 : wff = cbvalw (hyp 1, hyp 2, hyp 3, hyp 4, hyp 6) |- ( ∀ x ph ↔ ∀ y ps ) ;;
+	step 2 : wff = biimpri (step 1) |- ( ∀ y ps → ∀ x ph ) ;;
+	step 3 : wff = con3i (step 2) |- ( ¬ ∀ x ph → ¬ ∀ y ps ) ;;
+	step 4 : wff = cbvalw (hyp 1, hyp 2, hyp 3, hyp 4, hyp 6) |- ( ∀ x ph ↔ ∀ y ps ) ;;
+	step 5 : wff = biimpi (step 4) |- ( ∀ x ph → ∀ y ps ) ;;
+	step 6 : wff = con3i (step 5) |- ( ¬ ∀ y ps → ¬ ∀ x ph ) ;;
+	step 7 : wff = alimi (step 6) |- ( ∀ x ¬ ∀ y ps → ∀ x ¬ ∀ x ph ) ;;
+	step 8 : wff = 3syl (step 3, hyp 5, step 7) |- ( ¬ ∀ x ph → ∀ x ¬ ∀ x ph ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Weak version of ~ hbn1 .  Uses only Tarski's FOL axiom schemes.
+       (Contributed by NM, 9-Apr-2017.) */
+
+theorem hbn1w (ph : wff, ps : wff, x : set, y : set) disjointed(y ph, x ps, x y) {
+	hyp 1 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ∀ x ph → ∀ x ¬ ∀ x ph ) ;;
+}
+
+proof of hbn1w {
+	step 1 : wff = ax-17 () |- ( ∀ x ph → ∀ y ∀ x ph ) ;;
+	step 2 : wff = ax-17 () |- ( ¬ ps → ∀ x ¬ ps ) ;;
+	step 3 : wff = ax-17 () |- ( ∀ y ps → ∀ x ∀ y ps ) ;;
+	step 4 : wff = ax-17 () |- ( ¬ ph → ∀ y ¬ ph ) ;;
+	step 5 : wff = ax-17 () |- ( ¬ ∀ y ps → ∀ x ¬ ∀ y ps ) ;;
+	step 6 : wff = hbn1fw (step 1, step 2, step 3, step 4, step 5, hyp 1) |- ( ¬ ∀ x ph → ∀ x ¬ ∀ x ph ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Weak version of ~ hba1 .  See comments for ~ ax6w .  Uses only Tarski's
+       FOL axiom schemes.  (Contributed by NM, 9-Apr-2017.) */
+
+theorem hba1w (ph : wff, ps : wff, x : set, y : set) disjointed(y ph, x ps, x y) {
+	hyp 1 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ph → ∀ x ∀ x ph ) ;;
+}
+
+proof of hba1w {
+	step 1 : wff = cbvalvw (hyp 1) |- ( ∀ x ph ↔ ∀ y ps ) ;;
+	step 2 : wff = a1i (step 1) |- ( x = y → ( ∀ x ph ↔ ∀ y ps ) ) ;;
+	step 3 : wff = notbid (step 2) |- ( x = y → ( ¬ ∀ x ph ↔ ¬ ∀ y ps ) ) ;;
+	step 4 : wff = spw (step 3) |- ( ∀ x ¬ ∀ x ph → ¬ ∀ x ph ) ;;
+	step 5 : wff = con2i (step 4) |- ( ∀ x ph → ¬ ∀ x ¬ ∀ x ph ) ;;
+	step 6 : wff = cbvalvw (hyp 1) |- ( ∀ x ph ↔ ∀ y ps ) ;;
+	step 7 : wff = a1i (step 6) |- ( x = y → ( ∀ x ph ↔ ∀ y ps ) ) ;;
+	step 8 : wff = notbid (step 7) |- ( x = y → ( ¬ ∀ x ph ↔ ¬ ∀ y ps ) ) ;;
+	step 9 : wff = hbn1w (step 8) |- ( ¬ ∀ x ¬ ∀ x ph → ∀ x ¬ ∀ x ¬ ∀ x ph ) ;;
+	step 10 : wff = hbn1w (hyp 1) |- ( ¬ ∀ x ph → ∀ x ¬ ∀ x ph ) ;;
+	step 11 : wff = con1i (step 10) |- ( ¬ ∀ x ¬ ∀ x ph → ∀ x ph ) ;;
+	step 12 : wff = alimi (step 11) |- ( ∀ x ¬ ∀ x ¬ ∀ x ph → ∀ x ∀ x ph ) ;;
+	step 13 : wff = 3syl (step 5, step 9, step 12) |- ( ∀ x ph → ∀ x ∀ x ph ) ;;
+	qed prop 1 = step 13 ;;
+}
+
+/* Weak version of ~ hbe1 .  See comments for ~ ax6w .  Uses only Tarski's
+       FOL axiom schemes.  (Contributed by NM, 19-Apr-2017.) */
+
+theorem hbe1w (ph : wff, ps : wff, x : set, y : set) disjointed(y ph, x ps, x y) {
+	hyp 1 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ x ph → ∀ x ∃ x ph ) ;;
+}
+
+proof of hbe1w {
+	step 1 : wff = df-ex () |- ( ∃ x ph ↔ ¬ ∀ x ¬ ph ) ;;
+	step 2 : wff = notbid (hyp 1) |- ( x = y → ( ¬ ph ↔ ¬ ps ) ) ;;
+	step 3 : wff = hbn1w (step 2) |- ( ¬ ∀ x ¬ ph → ∀ x ¬ ∀ x ¬ ph ) ;;
+	step 4 : wff = hbxfrbi (step 1, step 3) |- ( ∃ x ph → ∀ x ∃ x ph ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Weak version of ~ hbal .  Uses only Tarski's FOL axiom schemes.  Unlike
+       ~ hbal , this theorem requires that ` x ` and ` y ` be distinct i.e. are
+       not bundled.  (Contributed by NM, 19-Apr-2017.) */
+
+theorem hbalw (ph : wff, ps : wff, x : set, y : set, z : set) disjointed(x z, x y, z ph, x ps) {
+	hyp 1 : wff = |- ( x = z → ( ph ↔ ps ) ) ;;
+	hyp 2 : wff = |- ( ph → ∀ x ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ y ph → ∀ x ∀ y ph ) ;;
+}
+
+proof of hbalw {
+	step 1 : wff = alimi (hyp 2) |- ( ∀ y ph → ∀ y ∀ x ph ) ;;
+	step 2 : wff = alcomiw (hyp 1) |- ( ∀ y ∀ x ph → ∀ x ∀ y ph ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( ∀ y ph → ∀ x ∀ y ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+

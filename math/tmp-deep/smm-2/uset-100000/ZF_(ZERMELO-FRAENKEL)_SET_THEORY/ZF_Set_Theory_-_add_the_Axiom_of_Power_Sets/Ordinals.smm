@@ -1,0 +1,1400 @@
+$[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets/Founded_and_well-ordering_relations.smm $]
+$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Ordinals
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+$)
+$( /* Introduce new constant symbols. */
+
+$)
+$c Ord $.
+$( /* Ordinal predicate */
+
+$)
+$c On $.
+$( /* The class of ordinal numbers */
+
+$)
+$c Lim $.
+$( /* Limit ordinal predicate */
+
+$)
+$c suc $.
+$( /* Successor function (read:  'successor of') */
+
+$)
+$( /* Extend the definition of a wff to include the ordinal predicate. */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	aword $a wff Ord A $.
+$}
+$( /* Extend the definition of a class to include the class of all ordinal
+     numbers.  (The 0 in the name prevents creating a file called con.html,
+     which causes problems in Windows.) */
+
+$)
+${
+	acon0 $a class On $.
+$}
+$( /* Extend the definition of a wff to include the limit ordinal predicate. */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	awlim $a wff Lim A $.
+$}
+$( /* Extend class notation to include the successor function. */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	acsuc $a class suc A $.
+$}
+$( /* Define the ordinal predicate, which is true for a class that is transitive
+     and is well-ordered by the epsilon relation.  Variant of definition of
+     [BellMachover] p. 468.  (Contributed by NM, 17-Sep-1993.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	adf-ord $a |- ( Ord A <-> ( Tr A /\ _E We A ) ) $.
+$}
+$( /* Define the class of all ordinal numbers.  Definition 7.11 of
+     [TakeutiZaring] p. 38.  (Contributed by NM, 5-Jun-1994.) */
+
+$)
+${
+	$v x $.
+	f0 $f set x $.
+	adf-on $a |- On = { x | Ord x } $.
+$}
+$( /* Define the limit ordinal predicate, which is true for a non-empty ordinal
+     that is not a successor (i.e. that is the union of itself).  Our
+     definition combines the definition of Lim of [BellMachover] p. 471 and
+     Exercise 1 of [TakeutiZaring] p. 42.  See ~ dflim2 , ~ dflim3 , and dflim4
+     for alternate definitions.  (Contributed by NM, 22-Apr-1994.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	adf-lim $a |- ( Lim A <-> ( Ord A /\ A =/= (/) /\ A = U. A ) ) $.
+$}
+$( /* Define the successor of a class.  When applied to an ordinal number, the
+     successor means the same thing as "plus 1" (see ~ oa1suc ).  Definition
+     7.22 of [TakeutiZaring] p. 41, who use "+ 1" to denote this function.  Our
+     definition is a generalization to classes.  Although it is not
+     conventional to use it with proper classes, it has no effect on a proper
+     class ( ~ sucprc ), so that the successor of any ordinal class is still an
+     ordinal class ( ~ ordsuc ), simplifying certain proofs.  Some authors
+     denote the successor operation with a prime (apostrophe-like) symbol, such
+     as Definition 6 of [Suppes] p. 134 and the definition of successor in
+     [Mendelson] p. 246 (who uses the symbol "Suc" as a predicate to mean "is a
+     successor ordinal").  The definition of successor of [Enderton] p. 68
+     denotes the operation with a plus-sign superscript.  (Contributed by NM,
+     30-Aug-1993.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	adf-suc $a |- suc A = ( A u. { A } ) $.
+$}
+$( /* Equality theorem for the ordinal predicate.  (Contributed by NM,
+     17-Sep-1993.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pordeq $p |- ( A = B -> ( Ord A <-> Ord B ) ) $=
+	f0 f1 ptreq f0 f1 acep pweeq2 f0 f1 awceq f0 awtr f1 awtr f0 acep awwe f1 acep awwe panbi12d f0 adf-ord f1 adf-ord f0 f1 awceq f0 awtr f0 acep awwe awa f1 awtr f1 acep awwe awa f0 aword f1 aword p3bitr4g $.
+$}
+$( /* An ordinal number is an ordinal set.  (Contributed by NM,
+       5-Jun-1994.) */
+
+$)
+${
+	$v x A V $.
+	$d x A $.
+	f0 $f class A $.
+	f1 $f class V $.
+	i0 $f set x $.
+	pelong $p |- ( A e. V -> ( A e. On <-> Ord A ) ) $=
+	i0 asup_set_class f0 pordeq i0 adf-on i0 asup_set_class aword f0 aword i0 f0 acon0 f1 pelab2g $.
+$}
+$( /* An ordinal number is an ordinal set.  (Contributed by NM,
+       5-Jun-1994.) */
+
+$)
+${
+	$v A $.
+	e0 $e |- A e. _V $.
+	f0 $f class A $.
+	pelon $p |- ( A e. On <-> Ord A ) $=
+	e0 f0 acvv pelong f0 acvv awcel f0 acon0 awcel f0 aword awb aax-mp $.
+$}
+$( /* An ordinal number has the ordinal property.  (Contributed by NM,
+     5-Jun-1994.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	peloni $p |- ( A e. On -> Ord A ) $=
+	f0 acon0 pelong f0 acon0 awcel f0 aword pibi $.
+$}
+$( /* An ordinal number is an ordinal set.  (Contributed by NM, 8-Feb-2004.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	pelon2 $p |- ( A e. On <-> ( Ord A /\ A e. _V ) ) $=
+	f0 peloni f0 acon0 pelex f0 acon0 awcel f0 aword f0 acvv awcel pjca f0 acvv pelong f0 acvv awcel f0 acon0 awcel f0 aword pbiimparc f0 acon0 awcel f0 aword f0 acvv awcel awa pimpbii $.
+$}
+$( /* Equality theorem for the limit predicate.  (Contributed by NM,
+     22-Apr-1994.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	plimeq $p |- ( A = B -> ( Lim A <-> Lim B ) ) $=
+	f0 f1 pordeq f0 f1 ac0 pneeq1 f0 f1 awceq pid f0 f1 punieq f0 f1 awceq f0 f1 f0 acuni f1 acuni peqeq12d f0 f1 awceq f0 aword f1 aword f0 ac0 awne f1 ac0 awne f0 f0 acuni awceq f1 f1 acuni awceq p3anbi123d f0 adf-lim f1 adf-lim f0 f1 awceq f0 aword f0 ac0 awne f0 f0 acuni awceq aw3a f1 aword f1 ac0 awne f1 f1 acuni awceq aw3a f0 awlim f1 awlim p3bitr4g $.
+$}
+$( /* Epsilon well-orders every ordinal.  Proposition 7.4 of [TakeutiZaring]
+     p. 36.  (Contributed by NM, 3-Apr-1994.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	pordwe $p |- ( Ord A -> _E We A ) $=
+	f0 adf-ord f0 aword f0 awtr f0 acep awwe psimprbi $.
+$}
+$( /* An ordinal class is transitive.  (Contributed by NM, 3-Apr-1994.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	pordtr $p |- ( Ord A -> Tr A ) $=
+	f0 adf-ord f0 aword f0 awtr f0 acep awwe psimplbi $.
+$}
+$( /* Epsilon is well-founded on an ordinal class.  (Contributed by NM,
+     22-Apr-1994.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	pordfr $p |- ( Ord A -> _E Fr A ) $=
+	f0 pordwe f0 acep pwefr f0 aword f0 acep awwe f0 acep awfr psyl $.
+$}
+$( /* An element of an ordinal class is a subset of it.  (Contributed by NM,
+     30-May-1994.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pordelss $p |- ( ( Ord A /\ B e. A ) -> B C_ A ) $=
+	f0 pordtr f0 f1 ptrss f0 awtr f1 f0 awcel f1 f0 awss pimp f0 aword f0 awtr f1 f0 awcel f1 f0 awss psylan $.
+$}
+$( /* A transitive subclass of an ordinal class is ordinal.  (Contributed by NM,
+     29-May-1994.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	ptrssord $p |- ( ( Tr A /\ A C_ B /\ Ord B ) -> Ord A ) $=
+	f1 pordwe f0 f1 acep pwess f0 f1 awss f1 acep awwe f0 acep awwe pimp f1 aword f0 f1 awss f1 acep awwe f0 acep awwe psylan2 f0 f1 awss f1 aword awa f0 acep awwe f0 awtr panim2i f0 awtr f0 f1 awss f1 aword f0 awtr f0 acep awwe awa p3impb f0 adf-ord f0 awtr f0 f1 awss f1 aword aw3a f0 awtr f0 acep awwe awa f0 aword psylibr $.
+$}
+$( /* Epsilon irreflexivity of ordinals: no ordinal class is a member of
+     itself.  Theorem 2.2(i) of [BellMachover] p. 469, generalized to classes.
+     We prove this without invoking the Axiom of Regularity.  (Contributed by
+     NM, 2-Jan-1994.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	pordirr $p |- ( Ord A -> -. A e. A ) $=
+	f0 pordfr f0 pefrirr f0 aword f0 acep awfr f0 f0 awcel awn psyl $.
+$}
+$( /* A member of an ordinal class is not equal to it.  (Contributed by NM,
+     25-May-1998.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pnordeq $p |- ( ( Ord A /\ B e. A ) -> A =/= B ) $=
+	f0 pordirr f0 f1 f0 peleq1 f0 f1 awceq f0 f0 awcel f1 f0 awcel pnotbid f0 aword f0 f0 awcel awn f0 f1 awceq f1 f0 awcel awn psyl5ibcom f0 aword f1 f0 awcel f0 f1 pnecon2ad f0 aword f1 f0 awcel f0 f1 awne pimp $.
+$}
+$( /* An ordinal class cannot an element of one of its members.  Variant of
+     first part of Theorem 2.2(vii) of [BellMachover] p. 469.  (Contributed by
+     NM, 3-Apr-1994.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pordn2lp $p |- ( Ord A -> -. ( A e. B /\ B e. A ) ) $=
+	f0 pordirr f0 pordtr f0 f0 f1 ptrel f0 aword f0 awtr f0 f1 awcel f1 f0 awcel awa f0 f0 awcel awi psyl f0 aword f0 f1 awcel f1 f0 awcel awa f0 f0 awcel pmtod $.
+$}
+$( /* A subclass (possibly proper) of an ordinal class has a minimal element.
+       Proposition 7.5 of [TakeutiZaring] p. 36.  (Contributed by NM,
+       18-Feb-2004.)  (Revised by David Abernethy, 16-Mar-2011.) */
+
+$)
+${
+	$v x A B $.
+	$d x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	ptz7.5 $p |- ( ( Ord A /\ B C_ A /\ B =/= (/) ) -> E. x e. B ( B i^i x ) = (/) ) $=
+	f1 pordwe f0 f1 f2 pwefrc f1 aword f1 acep awwe f2 f1 awss f2 ac0 awne f2 f0 asup_set_class acin ac0 awceq f0 f2 awrex psyl3an1 $.
+$}
+$( /* An element of an ordinal class is ordinal.  Proposition 7.6 of
+       [TakeutiZaring] p. 36.  (Contributed by NM, 23-Apr-1994.) */
+
+$)
+${
+	$v x y z A B $.
+	$d x y z A $.
+	$d x y z B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	i1 $f set y $.
+	i2 $f set z $.
+	pordelord $p |- ( ( Ord A /\ B e. A ) -> Ord B ) $=
+	i0 asup_set_class f1 f0 peleq1 i0 asup_set_class f1 awceq i0 asup_set_class f0 awcel f1 f0 awcel f0 aword panbi2d i0 asup_set_class f1 pordeq i0 asup_set_class f1 awceq f0 aword i0 asup_set_class f0 awcel awa f0 aword f1 f0 awcel awa i0 asup_set_class aword f1 aword pimbi12d f0 aword i0 asup_set_class f0 awcel i2 asup_set_class i1 asup_set_class awcel i1 asup_set_class i0 asup_set_class awcel awa psimpll i0 asup_set_class f0 awcel i2 asup_set_class i1 asup_set_class awcel i1 asup_set_class i0 asup_set_class awcel p3anrot i0 asup_set_class f0 awcel i2 asup_set_class i1 asup_set_class awcel i1 asup_set_class i0 asup_set_class awcel p3anass i2 asup_set_class i1 asup_set_class awcel i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 awcel aw3a i0 asup_set_class f0 awcel i2 asup_set_class i1 asup_set_class awcel i1 asup_set_class i0 asup_set_class awcel aw3a i0 asup_set_class f0 awcel i2 asup_set_class i1 asup_set_class awcel i1 asup_set_class i0 asup_set_class awcel awa awa pbitr3i f0 pordtr f0 i2 asup_set_class i1 asup_set_class i0 asup_set_class ptrel3 f0 aword f0 awtr i2 asup_set_class i1 asup_set_class awcel i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 awcel aw3a i2 asup_set_class f0 awcel awi psyl i0 asup_set_class f0 awcel i2 asup_set_class i1 asup_set_class awcel i1 asup_set_class i0 asup_set_class awcel awa awa i2 asup_set_class i1 asup_set_class awcel i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 awcel aw3a f0 aword i2 asup_set_class f0 awcel psyl5bir f0 aword i0 asup_set_class f0 awcel i2 asup_set_class i1 asup_set_class awcel i1 asup_set_class i0 asup_set_class awcel awa i2 asup_set_class f0 awcel pimpl f0 pordtr f0 i1 asup_set_class i0 asup_set_class ptrel f0 aword f0 awtr i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 awcel awa i1 asup_set_class f0 awcel awi psyl f0 aword i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 awcel i1 asup_set_class f0 awcel pexp3acom23 f0 aword i0 asup_set_class f0 awcel i1 asup_set_class i0 asup_set_class awcel i1 asup_set_class f0 awcel pimp31 f0 aword i0 asup_set_class f0 awcel awa i1 asup_set_class i0 asup_set_class awcel i1 asup_set_class f0 awcel i2 asup_set_class i1 asup_set_class awcel padantrl f0 aword i0 asup_set_class f0 awcel i2 asup_set_class i1 asup_set_class awcel i1 asup_set_class i0 asup_set_class awcel awa psimplr f0 pordwe i2 i1 i0 f0 pwetrep f0 aword f0 acep awwe i2 asup_set_class f0 awcel i1 asup_set_class f0 awcel i0 asup_set_class f0 awcel aw3a i2 asup_set_class i1 asup_set_class awcel i1 asup_set_class i0 asup_set_class awcel awa i2 asup_set_class i0 asup_set_class awcel awi psylan f0 aword i0 asup_set_class f0 awcel awa i2 asup_set_class i1 asup_set_class awcel i1 asup_set_class i0 asup_set_class awcel awa awa f0 aword i2 asup_set_class f0 awcel i1 asup_set_class f0 awcel i0 asup_set_class f0 awcel i2 asup_set_class i1 asup_set_class awcel i1 asup_set_class i0 asup_set_class awcel awa i2 asup_set_class i0 asup_set_class awcel awi psyl13anc f0 aword i0 asup_set_class f0 awcel awa i2 asup_set_class i1 asup_set_class awcel i1 asup_set_class i0 asup_set_class awcel awa i2 asup_set_class i1 asup_set_class awcel i1 asup_set_class i0 asup_set_class awcel awa i2 asup_set_class i0 asup_set_class awcel awi pex f0 aword i0 asup_set_class f0 awcel awa i2 asup_set_class i1 asup_set_class awcel i1 asup_set_class i0 asup_set_class awcel awa i2 asup_set_class i0 asup_set_class awcel ppm2.43d f0 aword i0 asup_set_class f0 awcel awa i2 asup_set_class i1 asup_set_class awcel i1 asup_set_class i0 asup_set_class awcel awa i2 asup_set_class i0 asup_set_class awcel awi i2 i1 palrimivv i2 i1 i0 asup_set_class pdftr2 f0 aword i0 asup_set_class f0 awcel awa i2 asup_set_class i1 asup_set_class awcel i1 asup_set_class i0 asup_set_class awcel awa i2 asup_set_class i0 asup_set_class awcel awi i1 awal i2 awal i0 asup_set_class awtr psylibr f0 pordtr f0 i0 asup_set_class ptrss f0 aword f0 awtr i0 asup_set_class f0 awcel i0 asup_set_class f0 awss awi psyl f0 pordwe i0 asup_set_class f0 acep pwess f0 aword f0 acep awwe i0 asup_set_class f0 awss i0 asup_set_class acep awwe psyl5com f0 aword i0 asup_set_class f0 awcel i0 asup_set_class f0 awss i0 asup_set_class acep awwe psyld f0 aword i0 asup_set_class f0 awcel i0 asup_set_class acep awwe pimp i0 asup_set_class adf-ord f0 aword i0 asup_set_class f0 awcel awa i0 asup_set_class awtr i0 asup_set_class acep awwe i0 asup_set_class aword psylanbrc f0 aword i0 asup_set_class f0 awcel awa i0 asup_set_class aword awi f0 aword f1 f0 awcel awa f1 aword awi i0 f1 f0 pvtoclg f0 aword f1 f0 awcel f1 aword panabsi7 $.
+$}
+$( /* The class of all ordinal numbers is transitive.  (Contributed by NM,
+       4-May-2009.) */
+
+$)
+${
+	$v x y $.
+	$d x y $.
+	i0 $f set x $.
+	i1 $f set y $.
+	ptron $p |- Tr On $=
+	i0 acon0 pdftr3 i0 pvex i0 asup_set_class pelon i0 asup_set_class i1 asup_set_class pordelord i0 asup_set_class acon0 awcel i0 asup_set_class aword i1 asup_set_class i0 asup_set_class awcel i1 asup_set_class aword psylanb i0 asup_set_class acon0 awcel i1 asup_set_class i0 asup_set_class awcel i1 asup_set_class aword pex i1 pvex i1 asup_set_class pelon i0 asup_set_class acon0 awcel i1 asup_set_class i0 asup_set_class awcel i1 asup_set_class aword i1 asup_set_class acon0 awcel psyl6ibr i0 asup_set_class acon0 awcel i1 i0 asup_set_class acon0 pssrdv acon0 awtr i0 asup_set_class acon0 awss i0 acon0 pmprgbir $.
+$}
+$( /* An element of an ordinal class is an ordinal number.  (Contributed by NM,
+     26-Oct-2003.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pordelon $p |- ( ( Ord A /\ B e. A ) -> B e. On ) $=
+	f0 f1 pordelord f1 f0 pelong f1 f0 awcel f1 acon0 awcel f1 aword awb f0 aword padantl f0 aword f1 f0 awcel awa f1 acon0 awcel f1 aword pmpbird $.
+$}
+$( /* An element of an ordinal number is an ordinal number.  Theorem 2.2(iii) of
+     [BellMachover] p. 469.  (Contributed by NM, 26-Oct-2003.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	ponelon $p |- ( ( A e. On /\ B e. A ) -> B e. On ) $=
+	f0 peloni f0 f1 pordelon f0 acon0 awcel f0 aword f1 f0 awcel f1 acon0 awcel psylan $.
+$}
+$( /* Proposition 7.7 of [TakeutiZaring] p. 37.  (Contributed by NM,
+       5-May-1994.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x y B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	i1 $f set y $.
+	ptz7.7 $p |- ( ( Ord A /\ Tr B ) -> ( B e. A <-> ( B C_ A /\ B =/= A ) ) ) $=
+	f0 pordtr f0 pordfr f0 f1 ptz7.2 f0 awtr f0 acep awfr f1 f0 awcel f1 f0 awss f1 f0 awne awa p3exp f0 aword f0 awtr f0 acep awfr f1 f0 awcel f1 f0 awss f1 f0 awne awa awi psylc f0 aword f1 f0 awcel f1 f0 awss f1 f0 awne awa awi f1 awtr padantr f1 f0 ppssdifn0 f0 f1 pdifss i0 f0 f0 f1 acdif ptz7.5 f0 aword f0 f1 acdif f0 awss f0 f1 acdif ac0 awne f0 f1 acdif i0 asup_set_class acin ac0 awceq i0 f0 f1 acdif awrex pmp3an2 f0 pordtr i0 asup_set_class f0 f1 peldifi f0 i0 asup_set_class ptrss f0 f1 i0 asup_set_class pdifin0ss f0 f1 acdif i0 asup_set_class acin ac0 awceq i0 asup_set_class f0 awss i0 asup_set_class f1 awss pcom12 i0 asup_set_class f0 f1 acdif awcel i0 asup_set_class f0 awcel f0 awtr i0 asup_set_class f0 awss f0 f1 acdif i0 asup_set_class acin ac0 awceq i0 asup_set_class f1 awss awi psyl56 f0 aword f0 awtr i0 asup_set_class f0 f1 acdif awcel f0 f1 acdif i0 asup_set_class acin ac0 awceq i0 asup_set_class f1 awss awi awi psyl f0 aword i0 asup_set_class f0 f1 acdif awcel f0 f1 acdif i0 asup_set_class acin ac0 awceq i0 asup_set_class f1 awss awi awi f1 awtr f1 f0 awss pad2antrr f0 aword f1 awtr awa f1 f0 awss awa i0 asup_set_class f0 f1 acdif awcel f0 f1 acdif i0 asup_set_class acin ac0 awceq i0 asup_set_class f1 awss pimp32 i1 asup_set_class i0 asup_set_class f1 peleq1 i1 asup_set_class i0 asup_set_class awceq i1 asup_set_class f1 awcel i0 asup_set_class f1 awcel pbiimpcd i0 asup_set_class f0 f1 peldifn i1 asup_set_class f1 awcel i1 asup_set_class i0 asup_set_class awceq i0 asup_set_class f1 awcel i0 asup_set_class f0 f1 acdif awcel pnsyli i1 asup_set_class f1 awcel i0 asup_set_class f0 f1 acdif awcel i1 asup_set_class i0 asup_set_class awceq awn pimp i1 asup_set_class f1 awcel i0 asup_set_class f0 f1 acdif awcel i1 asup_set_class i0 asup_set_class awceq awn f1 f0 awss padantll f1 f0 awss i1 asup_set_class f1 awcel awa i0 asup_set_class f0 f1 acdif awcel awa i1 asup_set_class i0 asup_set_class awceq awn f0 aword f1 awtr awa padantl f1 i0 asup_set_class i1 asup_set_class ptrel f1 awtr i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awcel i0 asup_set_class f1 awcel pexp3acom23 f1 awtr i1 asup_set_class f1 awcel i0 asup_set_class i1 asup_set_class awcel i0 asup_set_class f1 awcel awi pimp i0 asup_set_class f0 f1 peldifn f1 awtr i1 asup_set_class f1 awcel awa i0 asup_set_class i1 asup_set_class awcel i0 asup_set_class f1 awcel i0 asup_set_class f0 f1 acdif awcel pnsyli f1 awtr i1 asup_set_class f1 awcel i0 asup_set_class f0 f1 acdif awcel i0 asup_set_class i1 asup_set_class awcel awn awi pex f1 awtr i1 asup_set_class f1 awcel i0 asup_set_class f0 f1 acdif awcel i0 asup_set_class i1 asup_set_class awcel awn awi f1 f0 awss padantld f1 awtr f1 f0 awss i1 asup_set_class f1 awcel awa i0 asup_set_class f0 f1 acdif awcel i0 asup_set_class i1 asup_set_class awcel awn pimp32 f1 awtr f1 f0 awss i1 asup_set_class f1 awcel awa i0 asup_set_class f0 f1 acdif awcel awa i0 asup_set_class i1 asup_set_class awcel awn f0 aword padantll f0 pordwe f1 f0 i1 asup_set_class pssel2 i0 asup_set_class f0 f1 peldifi f1 f0 awss i1 asup_set_class f1 awcel awa i1 asup_set_class f0 awcel i0 asup_set_class f0 f1 acdif awcel i0 asup_set_class f0 awcel panim12i i1 i0 f0 pwecmpep f0 aword f0 acep awwe i1 asup_set_class f0 awcel i0 asup_set_class f0 awcel awa i1 asup_set_class i0 asup_set_class awcel i1 asup_set_class i0 asup_set_class awceq i0 asup_set_class i1 asup_set_class awcel aw3o f1 f0 awss i1 asup_set_class f1 awcel awa i0 asup_set_class f0 f1 acdif awcel awa psyl2an f0 aword f1 f0 awss i1 asup_set_class f1 awcel awa i0 asup_set_class f0 f1 acdif awcel awa i1 asup_set_class i0 asup_set_class awcel i1 asup_set_class i0 asup_set_class awceq i0 asup_set_class i1 asup_set_class awcel aw3o f1 awtr padantlr f0 aword f1 awtr awa f1 f0 awss i1 asup_set_class f1 awcel awa i0 asup_set_class f0 f1 acdif awcel awa awa i1 asup_set_class i0 asup_set_class awcel i1 asup_set_class i0 asup_set_class awceq i0 asup_set_class i1 asup_set_class awcel pecase23d f0 aword f1 awtr awa f1 f0 awss i1 asup_set_class f1 awcel i0 asup_set_class f0 f1 acdif awcel i1 asup_set_class i0 asup_set_class awcel pexp44 f0 aword f1 awtr awa f1 f0 awss i1 asup_set_class f1 awcel i0 asup_set_class f0 f1 acdif awcel i1 asup_set_class i0 asup_set_class awcel pcom34 f0 aword f1 awtr awa f1 f0 awss i0 asup_set_class f0 f1 acdif awcel i1 asup_set_class f1 awcel i1 asup_set_class i0 asup_set_class awcel awi pimp31 f0 aword f1 awtr awa f1 f0 awss awa i0 asup_set_class f0 f1 acdif awcel awa i1 f1 i0 asup_set_class pssrdv f0 aword f1 awtr awa f1 f0 awss awa i0 asup_set_class f0 f1 acdif awcel f1 i0 asup_set_class awss f0 f1 acdif i0 asup_set_class acin ac0 awceq padantrr f0 aword f1 awtr awa f1 f0 awss awa i0 asup_set_class f0 f1 acdif awcel f0 f1 acdif i0 asup_set_class acin ac0 awceq awa awa i0 asup_set_class f1 peqssd i0 asup_set_class f0 f1 peldifi i0 asup_set_class f0 f1 acdif awcel i0 asup_set_class f0 awcel f0 aword f1 awtr awa f1 f0 awss awa f0 f1 acdif i0 asup_set_class acin ac0 awceq pad2antrl f0 aword f1 awtr awa f1 f0 awss awa i0 asup_set_class f0 f1 acdif awcel f0 f1 acdif i0 asup_set_class acin ac0 awceq awa awa i0 asup_set_class f1 f0 peqeltrrd f0 aword f1 awtr awa f1 f0 awss awa i0 asup_set_class f0 f1 acdif awcel f0 f1 acdif i0 asup_set_class acin ac0 awceq f1 f0 awcel pexp32 f0 aword f1 awtr awa f1 f0 awss awa f0 f1 acdif i0 asup_set_class acin ac0 awceq f1 f0 awcel i0 f0 f1 acdif prexlimdv f0 aword f0 f1 acdif ac0 awne awa f0 f1 acdif i0 asup_set_class acin ac0 awceq i0 f0 f1 acdif awrex f0 aword f1 awtr awa f1 f0 awss awa f1 f0 awcel psyl5 f0 aword f1 awtr awa f1 f0 awss f0 aword f0 f1 acdif ac0 awne f1 f0 awcel pexp4b f0 aword f1 awtr awa f1 f0 awss f0 aword f0 f1 acdif ac0 awne f1 f0 awcel awi pcom23 f0 aword f1 awtr awa f0 aword f1 f0 awss f0 f1 acdif ac0 awne f1 f0 awcel awi awi f1 awtr padantrd f0 aword f1 awtr awa f1 f0 awss f0 f1 acdif ac0 awne f1 f0 awcel awi awi ppm2.43i f1 f0 awss f1 f0 awne awa f0 f1 acdif ac0 awne f0 aword f1 awtr awa f1 f0 awss f1 f0 awcel psyl7 f0 aword f1 awtr awa f1 f0 awss f1 f0 awss f1 f0 awne f1 f0 awcel pexp4a f0 aword f1 awtr awa f1 f0 awss f1 f0 awne f1 f0 awcel awi ppm2.43d f0 aword f1 awtr awa f1 f0 awss f1 f0 awne f1 f0 awcel pimp3a f0 aword f1 awtr awa f1 f0 awcel f1 f0 awss f1 f0 awne awa pimpbid $.
+$}
+$( /* Corollary 7.8 of [TakeutiZaring] p. 37.  (Contributed by NM,
+     25-Nov-1995.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pordelssne $p |- ( ( Ord A /\ Ord B ) -> ( A e. B <-> ( A C_ B /\ A =/= B ) ) ) $=
+	f0 pordtr f1 f0 ptz7.7 f0 aword f1 aword f0 awtr f0 f1 awcel f0 f1 awss f0 f1 awne awa awb psylan2 f1 aword f0 aword f0 f1 awcel f0 f1 awss f0 f1 awne awa awb pancoms $.
+$}
+$( /* Corollary 7.8 of [TakeutiZaring] p. 37.  (Contributed by NM,
+     17-Jun-1998.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pordelpss $p |- ( ( Ord A /\ Ord B ) -> ( A e. B <-> A C. B ) ) $=
+	f0 f1 pordelssne f0 f1 adf-pss f0 aword f1 aword awa f0 f1 awcel f0 f1 awss f0 f1 awne awa f0 f1 awpss psyl6bbr $.
+$}
+$( /* For ordinal classes, subclass is equivalent to membership or equality.
+     (Contributed by NM, 25-Nov-1995.)  (Proof shortened by Andrew Salmon,
+     25-Jul-2011.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pordsseleq $p |- ( ( Ord A /\ Ord B ) -> ( A C_ B <-> ( A e. B \/ A = B ) ) ) $=
+	f0 f1 pordelpss f0 aword f1 aword awa f0 f1 awcel f0 f1 awpss f0 f1 awceq porbi1d f0 f1 psspss f0 aword f1 aword awa f0 f1 awcel f0 f1 awceq awo f0 f1 awpss f0 f1 awceq awo f0 f1 awss psyl6rbbr $.
+$}
+$( /* The intersection of two ordinal classes is ordinal.  Proposition 7.9 of
+     [TakeutiZaring] p. 37.  (Contributed by NM, 9-May-1994.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pordin $p |- ( ( Ord A /\ Ord B ) -> Ord ( A i^i B ) ) $=
+	f0 pordtr f1 pordtr f0 f1 ptrin f0 aword f0 awtr f1 awtr f0 f1 acin awtr f1 aword psyl2an f0 f1 pinss2 f0 f1 acin f1 ptrssord f0 f1 acin awtr f0 f1 acin f1 awss f1 aword f0 f1 acin aword pmp3an2 f0 aword f1 aword f0 f1 acin awtr f0 f1 acin aword psylancom $.
+$}
+$( /* The intersection of two ordinal numbers is an ordinal number.
+       (Contributed by NM, 7-Apr-1995.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	ponin $p |- ( ( A e. On /\ B e. On ) -> ( A i^i B ) e. On ) $=
+	f0 peloni f1 peloni f0 f1 pordin f0 acon0 awcel f0 aword f1 aword f0 f1 acin aword f1 acon0 awcel psyl2an f0 acon0 awcel f1 acon0 awcel psimpl f0 f1 acon0 pinex1g f0 f1 acin acvv pelong f0 acon0 awcel f1 acon0 awcel awa f0 acon0 awcel f0 f1 acin acvv awcel f0 f1 acin acon0 awcel f0 f1 acin aword awb p3syl f0 acon0 awcel f1 acon0 awcel awa f0 f1 acin acon0 awcel f0 f1 acin aword pmpbird $.
+$}
+$( /* A trichotomy law for ordinals.  Proposition 7.10 of [TakeutiZaring]
+     p. 38.  (Contributed by NM, 10-May-1994.)  (Proof shortened by Andrew
+     Salmon, 25-Jul-2011.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pordtri3or $p |- ( ( Ord A /\ Ord B ) -> ( A e. B \/ A = B \/ B e. A ) ) $=
+	f0 f1 pordin f0 f1 acin pordirr f0 aword f1 aword awa f0 f1 acin aword f0 f1 acin f0 f1 acin awcel awn psyl f0 f1 acin f0 awcel f1 f0 acin f1 awcel pianor f0 f1 acin f0 f1 pelin f0 f1 pincom f0 f1 acin f1 f0 acin f1 peleq1i f0 f1 acin f1 awcel f1 f0 acin f1 awcel f0 f1 acin f0 awcel panbi2i f0 f1 acin f0 f1 acin awcel f0 f1 acin f0 awcel f0 f1 acin f1 awcel awa f0 f1 acin f0 awcel f1 f0 acin f1 awcel awa pbitri f0 f1 acin f0 awcel f1 f0 acin f1 awcel awa f0 f1 acin f0 awcel awn f1 f0 acin f1 awcel awn awo f0 f1 acin f0 f1 acin awcel pxchnxbir f0 aword f1 aword awa f0 f1 acin f0 f1 acin awcel awn f0 f1 acin f0 awcel awn f1 f0 acin f1 awcel awn awo psylib f0 f1 pordin f0 f1 pinss1 f0 f1 acin f0 pordsseleq f0 f1 acin aword f0 aword awa f0 f1 acin f0 awss f0 f1 acin f0 awcel f0 f1 acin f0 awceq awo pmpbii f0 aword f1 aword awa f0 f1 acin aword f0 aword f0 f1 acin f0 awcel f0 f1 acin f0 awceq awo psylan f0 aword f1 aword f0 f1 acin f0 awcel f0 f1 acin f0 awceq awo panabss1 f0 aword f1 aword awa f0 f1 acin f0 awcel f0 f1 acin f0 awceq pord f0 f1 adf-ss f0 aword f1 aword awa f0 f1 acin f0 awcel awn f0 f1 acin f0 awceq f0 f1 awss psyl6ibr f1 f0 pordin f1 f0 pinss1 f1 f0 acin f1 pordsseleq f1 f0 acin aword f1 aword awa f1 f0 acin f1 awss f1 f0 acin f1 awcel f1 f0 acin f1 awceq awo pmpbii f1 aword f0 aword awa f1 f0 acin aword f1 aword f1 f0 acin f1 awcel f1 f0 acin f1 awceq awo psylan f0 aword f1 aword f1 f0 acin f1 awcel f1 f0 acin f1 awceq awo panabss4 f0 aword f1 aword awa f1 f0 acin f1 awcel f1 f0 acin f1 awceq pord f1 f0 adf-ss f0 aword f1 aword awa f1 f0 acin f1 awcel awn f1 f0 acin f1 awceq f1 f0 awss psyl6ibr f0 aword f1 aword awa f0 f1 acin f0 awcel awn f0 f1 awss f1 f0 acin f1 awcel awn f1 f0 awss porim12d f0 aword f1 aword awa f0 f1 acin f0 awcel awn f1 f0 acin f1 awcel awn awo f0 f1 awss f1 f0 awss awo pmpd f0 f1 psspsstri f0 aword f1 aword awa f0 f1 awss f1 f0 awss awo f0 f1 awpss f0 f1 awceq f1 f0 awpss aw3o psylib f0 f1 pordelpss f0 aword f1 aword awa f0 f1 awceq pbiidd f1 f0 pordelpss f1 aword f0 aword f1 f0 awcel f1 f0 awpss awb pancoms f0 aword f1 aword awa f0 f1 awcel f0 f1 awpss f0 f1 awceq f0 f1 awceq f1 f0 awcel f1 f0 awpss p3orbi123d f0 aword f1 aword awa f0 f1 awcel f0 f1 awceq f1 f0 awcel aw3o f0 f1 awpss f0 f1 awceq f1 f0 awpss aw3o pmpbird $.
+$}
+$( /* A trichotomy law for ordinals.  (Contributed by NM, 25-Mar-1995.)  (Proof
+     shortened by Andrew Salmon, 25-Jul-2011.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pordtri1 $p |- ( ( Ord A /\ Ord B ) -> ( A C_ B <-> -. B e. A ) ) $=
+	f0 f1 pordsseleq f0 f1 pordn2lp f0 f1 awcel f1 f0 awcel pimnan f0 aword f0 f1 awcel f1 f0 awcel awa awn f0 f1 awcel f1 f0 awcel awn awi psylibr f1 pordirr f0 f1 f1 peleq2 f0 f1 awceq f1 f0 awcel f1 f1 awcel pnotbid f1 aword f1 f0 awcel awn f0 f1 awceq f1 f1 awcel awn psyl5ibrcom f0 aword f0 f1 awcel f1 f0 awcel awn f1 aword f0 f1 awceq pjaao f0 f1 pordtri3or f0 f1 awcel f0 f1 awceq f1 f0 awcel adf-3or f0 aword f1 aword awa f0 f1 awcel f0 f1 awceq f1 f0 awcel aw3o f0 f1 awcel f0 f1 awceq awo f1 f0 awcel awo psylib f0 aword f1 aword awa f0 f1 awcel f0 f1 awceq awo f1 f0 awcel porcomd f0 aword f1 aword awa f1 f0 awcel f0 f1 awcel f0 f1 awceq awo pord f0 aword f1 aword awa f0 f1 awcel f0 f1 awceq awo f1 f0 awcel awn pimpbid f0 aword f1 aword awa f0 f1 awss f0 f1 awcel f0 f1 awceq awo f1 f0 awcel awn pbitrd $.
+$}
+$( /* A trichotomy law for ordinal numbers.  (Contributed by NM, 6-Nov-2003.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pontri1 $p |- ( ( A e. On /\ B e. On ) -> ( A C_ B <-> -. B e. A ) ) $=
+	f0 peloni f1 peloni f0 f1 pordtri1 f0 acon0 awcel f0 aword f1 aword f0 f1 awss f1 f0 awcel awn awb f1 acon0 awcel psyl2an $.
+$}
+$( /* A trichotomy law for ordinals.  (Contributed by NM, 25-Nov-1995.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pordtri2 $p |- ( ( Ord A /\ Ord B ) -> ( A e. B <-> -. ( A = B \/ B e. A ) ) ) $=
+	f1 f0 pordsseleq f1 f0 peqcom f1 f0 awceq f0 f1 awceq f1 f0 awcel porbi2i f1 f0 awcel f0 f1 awceq porcom f1 f0 awcel f1 f0 awceq awo f1 f0 awcel f0 f1 awceq awo f0 f1 awceq f1 f0 awcel awo pbitri f1 aword f0 aword awa f1 f0 awss f1 f0 awcel f1 f0 awceq awo f0 f1 awceq f1 f0 awcel awo psyl6bb f1 f0 pordtri1 f1 aword f0 aword awa f1 f0 awss f0 f1 awceq f1 f0 awcel awo f0 f1 awcel awn pbitr3d f1 aword f0 aword f0 f1 awceq f1 f0 awcel awo f0 f1 awcel awn awb pancoms f0 aword f1 aword awa f0 f1 awceq f1 f0 awcel awo f0 f1 awcel pcon2bid $.
+$}
+$( /* A trichotomy law for ordinals.  (Contributed by NM, 18-Oct-1995.)  (Proof
+     shortened by Andrew Salmon, 25-Jul-2011.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pordtri3 $p |- ( ( Ord A /\ Ord B ) -> ( A = B <-> -. ( A e. B \/ B e. A ) ) ) $=
+	f0 pordirr f0 f1 f0 peleq2 f0 f1 awceq f0 f0 awcel f0 f1 awcel pnotbid f0 aword f0 f0 awcel awn f0 f1 awceq f0 f1 awcel awn psyl5ib f1 pordirr f0 f1 f1 peleq2 f0 f1 awceq f1 f0 awcel f1 f1 awcel pnotbid f1 aword f1 f0 awcel awn f0 f1 awceq f1 f1 awcel awn psyl5ibr f0 f1 awceq f0 aword f0 f1 awcel awn f1 aword f1 f0 awcel awn panim12d f0 f1 awceq f0 aword f1 aword awa f0 f1 awcel awn f1 f0 awcel awn awa pcom12 f0 f1 awcel f1 f0 awcel ppm4.56 f0 aword f1 aword awa f0 f1 awceq f0 f1 awcel awn f1 f0 awcel awn awa f0 f1 awcel f1 f0 awcel awo awn psyl6ib f0 f1 pordtri3or f0 f1 awcel f0 f1 awceq f1 f0 awcel adf-3or f0 aword f1 aword awa f0 f1 awcel f0 f1 awceq f1 f0 awcel aw3o f0 f1 awcel f0 f1 awceq awo f1 f0 awcel awo psylib f0 f1 awcel f0 f1 awceq f1 f0 awcel por32 f0 aword f1 aword awa f0 f1 awcel f0 f1 awceq awo f1 f0 awcel awo f0 f1 awcel f1 f0 awcel awo f0 f1 awceq awo psylib f0 aword f1 aword awa f0 f1 awcel f1 f0 awcel awo f0 f1 awceq pord f0 aword f1 aword awa f0 f1 awceq f0 f1 awcel f1 f0 awcel awo awn pimpbid $.
+$}
+$( /* A trichotomy law for ordinals.  (Contributed by NM, 1-Nov-2003.)  (Proof
+     shortened by Andrew Salmon, 25-Jul-2011.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pordtri4 $p |- ( ( Ord A /\ Ord B ) -> ( A = B <-> ( A C_ B /\ -. A e. B ) ) ) $=
+	f0 f1 peqss f1 f0 pordtri1 f1 aword f0 aword f1 f0 awss f0 f1 awcel awn awb pancoms f0 aword f1 aword awa f1 f0 awss f0 f1 awcel awn f0 f1 awss panbi2d f0 f1 awceq f0 f1 awss f1 f0 awss awa f0 aword f1 aword awa f0 f1 awss f0 f1 awcel awn awa psyl5bb $.
+$}
+$( /* An ordinal class and its singleton are disjoint.  (Contributed by NM,
+     19-May-1998.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	porddisj $p |- ( Ord A -> ( A i^i { A } ) = (/) ) $=
+	f0 pordirr f0 f0 pdisjsn f0 aword f0 f0 awcel awn f0 f0 acsn acin ac0 awceq psylibr $.
+$}
+$( /* The ordinal class is well-founded.  This lemma is needed for ~ ordon in
+       order to eliminate the need for the Axiom of Regularity.  (Contributed
+       by NM, 17-May-1994.) */
+
+$)
+${
+	$v x y z $.
+	$d x y z $.
+	i0 $f set x $.
+	i1 $f set y $.
+	i2 $f set z $.
+	ponfr $p |- _E Fr On $=
+	i0 i2 acon0 pdfepfr i1 i0 asup_set_class pn0 i2 asup_set_class i1 asup_set_class i0 asup_set_class pineq2 i2 asup_set_class i1 asup_set_class awceq i0 asup_set_class i2 asup_set_class acin i0 asup_set_class i1 asup_set_class acin ac0 peqeq1d i0 asup_set_class i2 asup_set_class acin ac0 awceq i0 asup_set_class i1 asup_set_class acin ac0 awceq i2 i1 asup_set_class i0 asup_set_class prspcev i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class i1 asup_set_class acin ac0 awceq i0 asup_set_class i2 asup_set_class acin ac0 awceq i2 i0 asup_set_class awrex i0 asup_set_class acon0 awss padantll i0 asup_set_class acon0 i1 asup_set_class pssel2 i1 asup_set_class peloni i0 asup_set_class acon0 awss i1 asup_set_class i0 asup_set_class awcel awa i1 asup_set_class acon0 awcel i1 asup_set_class aword psyl i1 asup_set_class pordfr i0 asup_set_class acon0 awss i1 asup_set_class i0 asup_set_class awcel awa i1 asup_set_class aword i1 asup_set_class acep awfr psyl i0 asup_set_class i1 asup_set_class pinss2 i0 pvex i0 asup_set_class i1 asup_set_class pinex1 i2 i1 asup_set_class i0 asup_set_class i1 asup_set_class acin pepfrc i1 asup_set_class acep awfr i0 asup_set_class i1 asup_set_class acin i1 asup_set_class awss i0 asup_set_class i1 asup_set_class acin ac0 awne i0 asup_set_class i1 asup_set_class acin i2 asup_set_class acin ac0 awceq i2 i0 asup_set_class i1 asup_set_class acin awrex pmp3an2 i0 asup_set_class acon0 awss i1 asup_set_class i0 asup_set_class awcel awa i1 asup_set_class acep awfr i0 asup_set_class i1 asup_set_class acin ac0 awne i0 asup_set_class i1 asup_set_class acin i2 asup_set_class acin ac0 awceq i2 i0 asup_set_class i1 asup_set_class acin awrex psylan i0 asup_set_class i1 asup_set_class i2 asup_set_class pinass i0 asup_set_class acon0 i1 asup_set_class pssel2 i1 asup_set_class peloni i0 asup_set_class acon0 awss i1 asup_set_class i0 asup_set_class awcel awa i1 asup_set_class acon0 awcel i1 asup_set_class aword psyl i0 asup_set_class acon0 awss i1 asup_set_class i0 asup_set_class awcel awa i1 asup_set_class aword i2 asup_set_class i0 asup_set_class i1 asup_set_class acin awcel padantr i0 asup_set_class i1 asup_set_class pinss2 i0 asup_set_class acon0 awss i1 asup_set_class i0 asup_set_class awcel awa i2 asup_set_class i0 asup_set_class i1 asup_set_class acin awcel psimpr i0 asup_set_class acon0 awss i1 asup_set_class i0 asup_set_class awcel awa i2 asup_set_class i0 asup_set_class i1 asup_set_class acin awcel awa i0 asup_set_class i1 asup_set_class acin i1 asup_set_class i2 asup_set_class psseldi i1 asup_set_class i2 asup_set_class pordelss i0 asup_set_class acon0 awss i1 asup_set_class i0 asup_set_class awcel awa i2 asup_set_class i0 asup_set_class i1 asup_set_class acin awcel awa i1 asup_set_class aword i2 asup_set_class i1 asup_set_class awcel i2 asup_set_class i1 asup_set_class awss psyl2anc i2 asup_set_class i1 asup_set_class pdfss1 i0 asup_set_class acon0 awss i1 asup_set_class i0 asup_set_class awcel awa i2 asup_set_class i0 asup_set_class i1 asup_set_class acin awcel awa i2 asup_set_class i1 asup_set_class awss i1 asup_set_class i2 asup_set_class acin i2 asup_set_class awceq psylib i0 asup_set_class acon0 awss i1 asup_set_class i0 asup_set_class awcel awa i2 asup_set_class i0 asup_set_class i1 asup_set_class acin awcel awa i1 asup_set_class i2 asup_set_class acin i2 asup_set_class i0 asup_set_class pineq2d i0 asup_set_class acon0 awss i1 asup_set_class i0 asup_set_class awcel awa i2 asup_set_class i0 asup_set_class i1 asup_set_class acin awcel awa i0 asup_set_class i1 asup_set_class acin i2 asup_set_class acin i0 asup_set_class i1 asup_set_class i2 asup_set_class acin acin i0 asup_set_class i2 asup_set_class acin psyl5eq i0 asup_set_class acon0 awss i1 asup_set_class i0 asup_set_class awcel awa i2 asup_set_class i0 asup_set_class i1 asup_set_class acin awcel awa i0 asup_set_class i1 asup_set_class acin i2 asup_set_class acin i0 asup_set_class i2 asup_set_class acin ac0 peqeq1d i0 asup_set_class acon0 awss i1 asup_set_class i0 asup_set_class awcel awa i0 asup_set_class i1 asup_set_class acin i2 asup_set_class acin ac0 awceq i0 asup_set_class i2 asup_set_class acin ac0 awceq i2 i0 asup_set_class i1 asup_set_class acin prexbidva i0 asup_set_class acon0 awss i1 asup_set_class i0 asup_set_class awcel awa i0 asup_set_class i1 asup_set_class acin i2 asup_set_class acin ac0 awceq i2 i0 asup_set_class i1 asup_set_class acin awrex i0 asup_set_class i2 asup_set_class acin ac0 awceq i2 i0 asup_set_class i1 asup_set_class acin awrex awb i0 asup_set_class i1 asup_set_class acin ac0 awne padantr i0 asup_set_class acon0 awss i1 asup_set_class i0 asup_set_class awcel awa i0 asup_set_class i1 asup_set_class acin ac0 awne awa i0 asup_set_class i1 asup_set_class acin i2 asup_set_class acin ac0 awceq i2 i0 asup_set_class i1 asup_set_class acin awrex i0 asup_set_class i2 asup_set_class acin ac0 awceq i2 i0 asup_set_class i1 asup_set_class acin awrex pmpbid i0 asup_set_class i1 asup_set_class pinss1 i0 asup_set_class i2 asup_set_class acin ac0 awceq i2 i0 asup_set_class i1 asup_set_class acin i0 asup_set_class pssrexv i0 asup_set_class i1 asup_set_class acin i0 asup_set_class awss i0 asup_set_class i2 asup_set_class acin ac0 awceq i2 i0 asup_set_class i1 asup_set_class acin awrex i0 asup_set_class i2 asup_set_class acin ac0 awceq i2 i0 asup_set_class awrex awi aax-mp i0 asup_set_class acon0 awss i1 asup_set_class i0 asup_set_class awcel awa i0 asup_set_class i1 asup_set_class acin ac0 awne awa i0 asup_set_class i2 asup_set_class acin ac0 awceq i2 i0 asup_set_class i1 asup_set_class acin awrex i0 asup_set_class i2 asup_set_class acin ac0 awceq i2 i0 asup_set_class awrex psyl i0 asup_set_class acon0 awss i1 asup_set_class i0 asup_set_class awcel awa i0 asup_set_class i2 asup_set_class acin ac0 awceq i2 i0 asup_set_class awrex i0 asup_set_class i1 asup_set_class acin ac0 ppm2.61dane i0 asup_set_class acon0 awss i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class i2 asup_set_class acin ac0 awceq i2 i0 asup_set_class awrex pex i0 asup_set_class acon0 awss i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class i2 asup_set_class acin ac0 awceq i2 i0 asup_set_class awrex i1 pexlimdv i0 asup_set_class ac0 awne i1 asup_set_class i0 asup_set_class awcel i1 awex i0 asup_set_class acon0 awss i0 asup_set_class i2 asup_set_class acin ac0 awceq i2 i0 asup_set_class awrex psyl5bi i0 asup_set_class acon0 awss i0 asup_set_class ac0 awne i0 asup_set_class i2 asup_set_class acin ac0 awceq i2 i0 asup_set_class awrex pimp acon0 acep awfr i0 asup_set_class acon0 awss i0 asup_set_class ac0 awne awa i0 asup_set_class i2 asup_set_class acin ac0 awceq i2 i0 asup_set_class awrex awi i0 pmpgbir $.
+$}
+$( /* Relationship between membership and proper subset of an ordinal number.
+     (Contributed by NM, 15-Sep-1995.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	ponelpss $p |- ( ( A e. On /\ B e. On ) -> ( A e. B <-> ( A C_ B /\ A =/= B ) ) ) $=
+	f0 peloni f1 peloni f0 f1 pordelssne f0 acon0 awcel f0 aword f1 aword f0 f1 awcel f0 f1 awss f0 f1 awne awa awb f1 acon0 awcel psyl2an $.
+$}
+$( /* Relationship between subset and membership of an ordinal number.
+     (Contributed by NM, 15-Sep-1995.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	ponsseleq $p |- ( ( A e. On /\ B e. On ) -> ( A C_ B <-> ( A e. B \/ A = B ) ) ) $=
+	f0 peloni f1 peloni f0 f1 pordsseleq f0 acon0 awcel f0 aword f1 aword f0 f1 awss f0 f1 awcel f0 f1 awceq awo awb f1 acon0 awcel psyl2an $.
+$}
+$( /* An element of an ordinal number is a subset of the number.  (Contributed
+     by NM, 5-Jun-1994.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	ponelss $p |- ( A e. On -> ( B e. A -> B C_ A ) ) $=
+	f0 peloni f0 f1 pordelss f0 aword f1 f0 awcel f1 f0 awss pex f0 acon0 awcel f0 aword f1 f0 awcel f1 f0 awss awi psyl $.
+$}
+$( /* Transitive law for ordinal classes.  (Contributed by NM, 12-Dec-2004.) */
+
+$)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pordtr1 $p |- ( Ord C -> ( ( A e. B /\ B e. C ) -> A e. C ) ) $=
+	f2 pordtr f2 f0 f1 ptrel f2 aword f2 awtr f0 f1 awcel f1 f2 awcel awa f0 f2 awcel awi psyl $.
+$}
+$( /* Transitive law for ordinal classes.  (Contributed by NM, 12-Dec-2004.)
+     (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
+
+$)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pordtr2 $p |- ( ( Ord A /\ Ord C ) -> ( ( A C_ B /\ B e. C ) -> A e. C ) ) $=
+	f2 f1 pordelord f2 aword f1 f2 awcel f1 aword pex f2 aword f1 f2 awcel f1 aword pancld f2 aword f1 f2 awcel f1 f2 awcel f1 aword awa panc2li f1 f2 pordelpss f1 aword f2 aword f1 f2 awcel f1 f2 awpss awb pancoms f0 f1 f2 psspsstr f0 f1 awss f1 f2 awpss f0 f2 awpss pexpcom f2 aword f1 aword awa f1 f2 awcel f1 f2 awpss f0 f1 awss f0 f2 awpss awi psyl6bi f2 aword f1 aword f1 f2 awcel f0 f1 awss f0 f2 awpss awi awi pex f2 aword f1 aword f1 f2 awcel f0 f1 awss f0 f2 awpss awi pcom23 f2 aword f1 f2 awcel f1 aword f0 f1 awss f0 f2 awpss awi pimp32 f2 aword f1 f2 awcel f1 aword awa awa f0 f1 awss f0 f2 awpss pcom12 f2 aword f1 f2 awcel f2 aword f1 f2 awcel f1 aword awa awa f0 f1 awss f0 f2 awpss psyl9 f2 aword f0 f1 awss f1 f2 awcel f0 f2 awpss pimp3a f2 aword f0 f1 awss f1 f2 awcel awa f0 f2 awpss awi f0 aword padantl f0 f2 pordelpss f0 aword f2 aword awa f0 f1 awss f1 f2 awcel awa f0 f2 awpss f0 f2 awcel psylibrd $.
+$}
+$( /* Transitive law for ordinal classes.  (Contributed by Mario Carneiro,
+     30-Dec-2014.) */
+
+$)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pordtr3 $p |- ( ( Ord B /\ Ord C ) -> ( A e. B -> ( A e. C \/ C e. B ) ) ) $=
+	f1 aword f2 aword f0 f1 awcel psimplr f1 f0 pordelord f1 aword f0 f1 awcel f0 aword f2 aword padantlr f2 f0 pordtri1 f1 aword f2 aword awa f0 f1 awcel awa f2 aword f0 aword f2 f0 awss f0 f2 awcel awn awb psyl2anc f2 f0 f1 pordtr2 f2 aword f1 aword f2 f0 awss f0 f1 awcel awa f2 f1 awcel awi pancoms f1 aword f2 aword awa f2 f0 awss f0 f1 awcel f2 f1 awcel pancomsd f1 aword f2 aword awa f0 f1 awcel f2 f0 awss f2 f1 awcel pexpdimp f1 aword f2 aword awa f0 f1 awcel awa f0 f2 awcel awn f2 f0 awss f2 f1 awcel psylbird f1 aword f2 aword awa f0 f1 awcel awa f0 f2 awcel f2 f1 awcel porrd f1 aword f2 aword awa f0 f1 awcel f0 f2 awcel f2 f1 awcel awo pex $.
+$}
+$( /* Transitive law for ordinal numbers.  Theorem 7M(b) of [Enderton] p. 192.
+     (Contributed by NM, 11-Aug-1994.) */
+
+$)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pontr1 $p |- ( C e. On -> ( ( A e. B /\ B e. C ) -> A e. C ) ) $=
+	f2 peloni f0 f1 f2 pordtr1 f2 acon0 awcel f2 aword f0 f1 awcel f1 f2 awcel awa f0 f2 awcel awi psyl $.
+$}
+$( /* Transitive law for ordinal numbers.  Exercise 3 of [TakeutiZaring] p. 40.
+     (Contributed by NM, 6-Nov-2003.) */
+
+$)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pontr2 $p |- ( ( A e. On /\ C e. On ) -> ( ( A C_ B /\ B e. C ) -> A e. C ) ) $=
+	f0 peloni f2 peloni f0 f1 f2 pordtr2 f0 acon0 awcel f0 aword f2 aword f0 f1 awss f1 f2 awcel awa f0 f2 awcel awi f2 acon0 awcel psyl2an $.
+$}
+$( /* The union of an ordinal stays the same if a subset equal to one of its
+       elements is removed.  (Contributed by NM, 10-Dec-2004.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x y B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	i1 $f set y $.
+	pordunidif $p |- ( ( Ord A /\ B e. A ) -> U. ( A \ B ) = U. A ) $=
+	f0 f1 pordelon f1 i0 asup_set_class ponelss f0 aword f1 f0 awcel awa f1 acon0 awcel i0 asup_set_class f1 awcel i0 asup_set_class f1 awss awi psyl f0 f1 pordelon f1 peloni f1 pordirr f1 acon0 awcel f1 aword f1 f1 awcel awn psyl f1 f0 f1 peldif f1 f0 f1 acdif awcel f1 f0 awcel f1 f1 awcel awn psimplbi2 f1 acon0 awcel f1 f1 awcel awn f1 f0 awcel f1 f0 f1 acdif awcel psyl5 f1 f0 awcel f1 acon0 awcel f1 f0 f1 acdif awcel awi f0 aword padantl f0 aword f1 f0 awcel awa f1 acon0 awcel f1 f0 f1 acdif awcel pmpd f0 aword f1 f0 awcel awa i0 asup_set_class f1 awcel i0 asup_set_class f1 awss f1 f0 f1 acdif awcel pjctild f0 aword f1 f0 awcel awa i0 asup_set_class f1 awcel f1 f0 f1 acdif awcel i0 asup_set_class f1 awss awa awi i0 asup_set_class f0 awcel padantr i1 asup_set_class f1 i0 asup_set_class psseq2 i0 asup_set_class i1 asup_set_class awss i0 asup_set_class f1 awss i1 f1 f0 f1 acdif prspcev f0 aword f1 f0 awcel awa i0 asup_set_class f0 awcel awa i0 asup_set_class f1 awcel f1 f0 f1 acdif awcel i0 asup_set_class f1 awss awa i0 asup_set_class i1 asup_set_class awss i1 f0 f1 acdif awrex psyl6 i0 asup_set_class f0 f1 peldif i0 asup_set_class f0 f1 acdif awcel i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awn awa pbiimpri i0 asup_set_class pssid i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awn awa i0 asup_set_class f0 f1 acdif awcel i0 asup_set_class i0 asup_set_class awss pjctir i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awn i0 asup_set_class f0 f1 acdif awcel i0 asup_set_class i0 asup_set_class awss awa pex i1 asup_set_class i0 asup_set_class i0 asup_set_class psseq2 i0 asup_set_class i1 asup_set_class awss i0 asup_set_class i0 asup_set_class awss i1 i0 asup_set_class f0 f1 acdif prspcev i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awn i0 asup_set_class f0 f1 acdif awcel i0 asup_set_class i0 asup_set_class awss awa i0 asup_set_class i1 asup_set_class awss i1 f0 f1 acdif awrex psyl6 i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awn i0 asup_set_class i1 asup_set_class awss i1 f0 f1 acdif awrex awi f0 aword f1 f0 awcel awa padantl f0 aword f1 f0 awcel awa i0 asup_set_class f0 awcel awa i0 asup_set_class f1 awcel i0 asup_set_class i1 asup_set_class awss i1 f0 f1 acdif awrex ppm2.61d f0 aword f1 f0 awcel awa i0 asup_set_class i1 asup_set_class awss i1 f0 f1 acdif awrex i0 f0 pralrimiva i0 i1 f0 f1 punidif f0 aword f1 f0 awcel awa i0 asup_set_class i1 asup_set_class awss i1 f0 f1 acdif awrex i0 f0 awral f0 f1 acdif acuni f0 acuni awceq psyl $.
+$}
+$( /* If ` B ` is smaller than ` A ` , then it equals the intersection of the
+       difference.  Exercise 11 in [TakeutiZaring] p. 44.  (Contributed by
+       Andrew Salmon, 14-Nov-2011.) */
+
+$)
+${
+	$v x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	pordintdif $p |- ( ( Ord A /\ Ord B /\ ( A \ B ) =/= (/) ) -> B = |^| ( A \ B ) ) $=
+	f0 f1 pssdif0 f0 f1 awss f0 f1 acdif ac0 pnecon3bbii i0 f0 f1 pdfdif2 f0 f1 acdif i0 asup_set_class f1 awcel awn i0 f0 acrab pinteqi f0 f1 pordtri1 f0 aword f1 aword awa f0 f1 awss f1 f0 awcel pcon2bid f0 i0 asup_set_class pordelord f1 i0 asup_set_class pordtri1 f1 aword i0 asup_set_class aword f1 i0 asup_set_class awss i0 asup_set_class f1 awcel awn awb pancoms f0 aword i0 asup_set_class f0 awcel awa i0 asup_set_class aword f1 aword f1 i0 asup_set_class awss i0 asup_set_class f1 awcel awn awb psylan f0 aword i0 asup_set_class f0 awcel f1 aword f1 i0 asup_set_class awss i0 asup_set_class f1 awcel awn awb pan32s f0 aword f1 aword awa i0 asup_set_class f0 awcel awa f1 i0 asup_set_class awss i0 asup_set_class f1 awcel awn pbicomd f0 aword f1 aword awa i0 asup_set_class f1 awcel awn f1 i0 asup_set_class awss i0 f0 prabbidva f0 aword f1 aword awa i0 asup_set_class f1 awcel awn i0 f0 acrab f1 i0 asup_set_class awss i0 f0 acrab pinteqd i0 f1 f0 pintmin f0 aword f1 aword awa f1 f0 awcel i0 asup_set_class f1 awcel awn i0 f0 acrab acint f1 i0 asup_set_class awss i0 f0 acrab acint f1 psylan9eq f0 aword f1 aword awa f1 f0 awcel i0 asup_set_class f1 awcel awn i0 f0 acrab acint f1 awceq pex f0 aword f1 aword awa f0 f1 awss awn f1 f0 awcel i0 asup_set_class f1 awcel awn i0 f0 acrab acint f1 awceq psylbird f0 aword f1 aword f0 f1 awss awn i0 asup_set_class f1 awcel awn i0 f0 acrab acint f1 awceq p3impia f0 aword f1 aword f0 f1 awss awn aw3a f0 f1 acdif acint i0 asup_set_class f1 awcel awn i0 f0 acrab acint f1 psyl5req f0 f1 acdif ac0 awne f0 aword f1 aword f0 f1 awss awn f1 f0 f1 acdif acint awceq psyl3an3br $.
+$}
+$( /* If a property is true for an ordinal number, then the minimum ordinal
+       number for which it is true is smaller or equal.  Theorem Schema 61 of
+       [Suppes] p. 228.  (Contributed by NM, 3-Oct-2003.) */
+
+$)
+${
+	$v ph ps x A $.
+	$d x ps $.
+	$d x A $.
+	e0 $e |- ( x = A -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	ponintss $p |- ( A e. On -> ( ps -> |^| { x e. On | ph } C_ A ) ) $=
+	e0 f0 f1 f2 f3 acon0 pintminss f3 acon0 awcel f1 f0 f2 acon0 acrab acint f3 awss pex $.
+$}
+$( /* A way to show that an ordinal number equals the minimum of a collection
+       of ordinal numbers: it must be in the collection, and it must not be
+       larger than any member of the collection.  (Contributed by NM,
+       14-Nov-2003.) */
+
+$)
+${
+	$v x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	poneqmini $p |- ( B C_ On -> ( ( A e. B /\ A. x e. A -. x e. B ) -> A = |^| B ) ) $=
+	f0 f1 f2 pssint f2 acon0 f1 pssel f2 acon0 f0 asup_set_class pssel f2 acon0 awss f1 f2 awcel f1 acon0 awcel f0 asup_set_class f2 awcel f0 asup_set_class acon0 awcel panim12d f1 f0 asup_set_class pontri1 f2 acon0 awss f1 f2 awcel f0 asup_set_class f2 awcel awa f1 acon0 awcel f0 asup_set_class acon0 awcel awa f1 f0 asup_set_class awss f0 asup_set_class f1 awcel awn awb psyl6 f2 acon0 awss f1 f2 awcel f0 asup_set_class f2 awcel f1 f0 asup_set_class awss f0 asup_set_class f1 awcel awn awb pexpdimp f2 acon0 awss f1 f2 awcel awa f0 asup_set_class f2 awcel f1 f0 asup_set_class awss f0 asup_set_class f1 awcel awn ppm5.74d f0 asup_set_class f2 awcel f0 asup_set_class f1 awcel pcon2b f2 acon0 awss f1 f2 awcel awa f0 asup_set_class f2 awcel f1 f0 asup_set_class awss awi f0 asup_set_class f2 awcel f0 asup_set_class f1 awcel awn awi f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awn awi psyl6bb f2 acon0 awss f1 f2 awcel awa f1 f0 asup_set_class awss f0 asup_set_class f2 awcel awn f0 f2 f1 pralbidv2 f1 f2 acint awss f1 f0 asup_set_class awss f0 f2 awral f2 acon0 awss f1 f2 awcel awa f0 asup_set_class f2 awcel awn f0 f1 awral psyl5bb f2 acon0 awss f1 f2 awcel awa f1 f2 acint awss f0 asup_set_class f2 awcel awn f0 f1 awral pbiimprd f2 acon0 awss f1 f2 awcel f0 asup_set_class f2 awcel awn f0 f1 awral f1 f2 acint awss pexpimpd f1 f2 pintss1 f1 f2 awcel f2 acint f1 awss awi f2 acon0 awss pa1i f2 acon0 awss f1 f2 awcel f2 acint f1 awss f0 asup_set_class f2 awcel awn f0 f1 awral padantrd f2 acon0 awss f1 f2 awcel f0 asup_set_class f2 awcel awn f0 f1 awral awa f1 f2 acint awss f2 acint f1 awss pjcad f1 f2 acint peqss f2 acon0 awss f1 f2 awcel f0 asup_set_class f2 awcel awn f0 f1 awral awa f1 f2 acint awss f2 acint f1 awss awa f1 f2 acint awceq psyl6ibr $.
+$}
+$( /* The empty set is an ordinal class.  (Contributed by NM, 11-May-1994.) */
+
+$)
+${
+	pord0 $p |- Ord (/) $=
+	ptr0 acep pwe0 ac0 adf-ord ac0 aword ac0 awtr ac0 acep awwe pmpbir2an $.
+$}
+$( /* The empty set is an ordinal number.  Corollary 7N(b) of [Enderton]
+     p. 193.  (Contributed by NM, 17-Sep-1993.) */
+
+$)
+${
+	p0elon $p |- (/) e. On $=
+	pord0 p0ex ac0 pelon ac0 acon0 awcel ac0 aword pmpbir $.
+$}
+$( /* A non-empty ordinal contains the empty set.  (Contributed by NM,
+     25-Nov-1995.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	pord0eln0 $p |- ( Ord A -> ( (/) e. A <-> A =/= (/) ) ) $=
+	f0 ac0 pne0i f0 ac0 adf-ne pord0 f0 pnoel f0 ac0 pordtri2 f0 aword ac0 aword awa f0 ac0 awcel f0 ac0 awceq ac0 f0 awcel awo pcon2bid f0 aword ac0 aword awa f0 ac0 awceq ac0 f0 awcel awo f0 ac0 awcel awn pmpbiri f0 aword ac0 aword f0 ac0 awceq ac0 f0 awcel awo pmpan2 f0 aword f0 ac0 awceq ac0 f0 awcel pord f0 ac0 awne f0 ac0 awceq awn f0 aword ac0 f0 awcel psyl5bi f0 aword ac0 f0 awcel f0 ac0 awne pimpbid2 $.
+$}
+$( /* An ordinal number contains zero iff it is nonzero.  (Contributed by NM,
+     6-Dec-2004.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	pon0eln0 $p |- ( A e. On -> ( (/) e. A <-> A =/= (/) ) ) $=
+	f0 peloni f0 pord0eln0 f0 acon0 awcel f0 aword ac0 f0 awcel f0 ac0 awne awb psyl $.
+$}
+$( /* An alternate definition of a limit ordinal.  (Contributed by NM,
+     4-Nov-2004.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	pdflim2 $p |- ( Lim A <-> ( Ord A /\ (/) e. A /\ A = U. A ) ) $=
+	f0 adf-lim f0 pord0eln0 f0 aword ac0 f0 awcel f0 ac0 awne f0 f0 acuni awceq panbi1d f0 aword ac0 f0 awcel f0 f0 acuni awceq awa f0 ac0 awne f0 f0 acuni awceq awa ppm5.32i f0 aword ac0 f0 awcel f0 f0 acuni awceq p3anass f0 aword f0 ac0 awne f0 f0 acuni awceq p3anass f0 aword ac0 f0 awcel f0 f0 acuni awceq awa awa f0 aword f0 ac0 awne f0 f0 acuni awceq awa awa f0 aword ac0 f0 awcel f0 f0 acuni awceq aw3a f0 aword f0 ac0 awne f0 f0 acuni awceq aw3a p3bitr4i f0 awlim f0 aword f0 ac0 awne f0 f0 acuni awceq aw3a f0 aword ac0 f0 awcel f0 f0 acuni awceq aw3a pbitr4i $.
+$}
+$( /* The intersection of the class of ordinal numbers is the empty set.
+     (Contributed by NM, 20-Oct-2003.) */
+
+$)
+${
+	pinton $p |- |^| On = (/) $=
+	p0elon acon0 pint0el ac0 acon0 awcel acon0 acint ac0 awceq aax-mp $.
+$}
+$( /* The empty set is not a limit ordinal.  (Contributed by NM, 24-Mar-1995.)
+     (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
+
+$)
+${
+	pnlim0 $p |- -. Lim (/) $=
+	ac0 pnoel ac0 aword ac0 ac0 awcel ac0 ac0 acuni awceq psimp2 ac0 aword ac0 ac0 awcel ac0 ac0 acuni awceq aw3a ac0 ac0 awcel pmto ac0 pdflim2 ac0 awlim ac0 aword ac0 ac0 awcel ac0 ac0 acuni awceq aw3a pmtbir $.
+$}
+$( /* A limit ordinal is ordinal.  (Contributed by NM, 4-May-1995.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	plimord $p |- ( Lim A -> Ord A ) $=
+	f0 adf-lim f0 awlim f0 aword f0 ac0 awne f0 f0 acuni awceq psimp1bi $.
+$}
+$( /* A limit ordinal is its own supremum (union).  (Contributed by NM,
+     4-May-1995.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	plimuni $p |- ( Lim A -> A = U. A ) $=
+	f0 adf-lim f0 awlim f0 aword f0 ac0 awne f0 f0 acuni awceq psimp3bi $.
+$}
+$( /* The union of a limit ordinal is a limit ordinal.  (Contributed by NM,
+     19-Sep-2006.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	plimuni2 $p |- ( Lim A -> Lim U. A ) $=
+	f0 plimuni f0 f0 acuni plimeq f0 awlim f0 f0 acuni awceq f0 awlim f0 acuni awlim awb psyl f0 awlim f0 acuni awlim pibi $.
+$}
+$( /* A limit ordinal contains the empty set.  (Contributed by NM,
+     15-May-1994.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	p0ellim $p |- ( Lim A -> (/) e. A ) $=
+	pnlim0 f0 ac0 plimeq f0 ac0 awceq f0 awlim ac0 awlim pmtbiri f0 awlim f0 ac0 pnecon2ai f0 plimord f0 pord0eln0 f0 awlim f0 aword ac0 f0 awcel f0 ac0 awne awb psyl f0 awlim ac0 f0 awcel f0 ac0 awne pmpbird $.
+$}
+$( /* A limit ordinal class that is also a set is an ordinal number.
+     (Contributed by NM, 26-Apr-2004.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	plimelon $p |- ( ( A e. B /\ Lim A ) -> A e. On ) $=
+	f0 plimord f0 f1 pelong f0 awlim f0 acon0 awcel f0 f1 awcel f0 aword psyl5ibr f0 f1 awcel f0 awlim f0 acon0 awcel pimp $.
+$}
+$( /* The class of all ordinal numbers in not empty.  (Contributed by NM,
+     17-Sep-1995.) */
+
+$)
+${
+	ponn0 $p |- On =/= (/) $=
+	p0elon acon0 ac0 pne0i ac0 acon0 awcel acon0 ac0 awne aax-mp $.
+$}
+$( /* Equality of successors.  (Contributed by NM, 30-Aug-1993.)  (Proof
+     shortened by Andrew Salmon, 25-Jul-2011.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	psuceq $p |- ( A = B -> suc A = suc B ) $=
+	f0 f1 awceq pid f0 f1 psneq f0 f1 awceq f0 f1 f0 acsn f1 acsn puneq12d f0 adf-suc f1 adf-suc f0 f1 awceq f0 f0 acsn acun f1 f1 acsn acun f0 acsuc f1 acsuc p3eqtr4g $.
+$}
+$( /* Membership in a successor.  This one-way implication does not require that
+     either ` A ` or ` B ` be sets.  (Contributed by NM, 6-Jun-1994.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pelsuci $p |- ( A e. suc B -> ( A e. B \/ A = B ) ) $=
+	f1 adf-suc f1 acsuc f1 f1 acsn acun f0 peleq2i f0 f1 f1 acsn pelun f0 f1 acsuc awcel f0 f1 f1 acsn acun awcel f0 f1 awcel f0 f1 acsn awcel awo pbitri f0 f1 pelsni f0 f1 acsn awcel f0 f1 awceq f0 f1 awcel porim2i f0 f1 acsuc awcel f0 f1 awcel f0 f1 acsn awcel awo f0 f1 awcel f0 f1 awceq awo psylbi $.
+$}
+$( /* Membership in a successor.  Exercise 5 of [TakeutiZaring] p. 17.
+     (Contributed by NM, 15-Sep-1995.) */
+
+$)
+${
+	$v A B V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class V $.
+	pelsucg $p |- ( A e. V -> ( A e. suc B <-> ( A e. B \/ A = B ) ) ) $=
+	f1 adf-suc f1 acsuc f1 f1 acsn acun f0 peleq2i f0 f1 f1 acsn pelun f0 f1 acsuc awcel f0 f1 f1 acsn acun awcel f0 f1 awcel f0 f1 acsn awcel awo pbitri f0 f1 f2 pelsncg f0 f2 awcel f0 f1 acsn awcel f0 f1 awceq f0 f1 awcel porbi2d f0 f1 acsuc awcel f0 f1 awcel f0 f1 acsn awcel awo f0 f2 awcel f0 f1 awcel f0 f1 awceq awo psyl5bb $.
+$}
+$( /* Variant of membership in a successor, requiring that ` B ` rather than
+     ` A ` be a set.  (Contributed by NM, 28-Oct-2003.) */
+
+$)
+${
+	$v A B V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class V $.
+	pelsuc2g $p |- ( B e. V -> ( A e. suc B <-> ( A e. B \/ A = B ) ) ) $=
+	f1 adf-suc f1 acsuc f1 f1 acsn acun f0 peleq2i f0 f1 f1 acsn pelun f0 f1 f2 pelsnc2g f1 f2 awcel f0 f1 acsn awcel f0 f1 awceq f0 f1 awcel porbi2d f0 f1 f1 acsn acun awcel f0 f1 awcel f0 f1 acsn awcel awo f1 f2 awcel f0 f1 awcel f0 f1 awceq awo psyl5bb f0 f1 acsuc awcel f0 f1 f1 acsn acun awcel f1 f2 awcel f0 f1 awcel f0 f1 awceq awo psyl5bb $.
+$}
+$( /* Membership in a successor.  Exercise 5 of [TakeutiZaring] p. 17.
+       (Contributed by NM, 15-Sep-2003.) */
+
+$)
+${
+	$v A B $.
+	e0 $e |- A e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pelsuc $p |- ( A e. suc B <-> ( A e. B \/ A = B ) ) $=
+	e0 f0 f1 acvv pelsucg f0 acvv awcel f0 f1 acsuc awcel f0 f1 awcel f0 f1 awceq awo awb aax-mp $.
+$}
+$( /* Membership in a successor.  (Contributed by NM, 15-Sep-2003.) */
+
+$)
+${
+	$v A B $.
+	e0 $e |- A e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pelsuc2 $p |- ( B e. suc A <-> ( B e. A \/ B = A ) ) $=
+	e0 f1 f0 acvv pelsuc2g f0 acvv awcel f1 f0 acsuc awcel f1 f0 awcel f1 f0 awceq awo awb aax-mp $.
+$}
+$( /* Bound-variable hypothesis builder for successor.  (Contributed by NM,
+       15-Sep-2003.) */
+
+$)
+${
+	$v x A $.
+	e0 $e |- F/_ x A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	pnfsuc $p |- F/_ x suc A $=
+	f1 adf-suc e0 e0 f0 f1 pnfsn f0 f1 f1 acsn pnfun f0 f1 acsuc f1 f1 acsn acun pnfcxfr $.
+$}
+$( /* Membership in a successor.  (Contributed by NM, 20-Jun-1998.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pelelsuc $p |- ( A e. B -> A e. suc B ) $=
+	f0 f1 awcel f0 f1 awceq porc f0 f1 f1 pelsucg f0 f1 awcel f0 f1 acsuc awcel f0 f1 awcel f0 f1 awceq awo pmpbird $.
+$}
+$( /* Membership of a successor in another class.  (Contributed by NM,
+       29-Jun-2004.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x B $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	psucel $p |- ( suc A e. B <-> E. x e. B A. y ( y e. x <-> ( y e. A \/ y = A ) ) ) $=
+	f0 f2 acsuc f3 prisset f1 f0 asup_set_class f2 acsuc pdfcleq f1 pvex f1 asup_set_class f2 pelsuc f1 asup_set_class f2 acsuc awcel f1 asup_set_class f2 awcel f1 asup_set_class f2 awceq awo f1 asup_set_class f0 asup_set_class awcel pbibi2i f1 asup_set_class f0 asup_set_class awcel f1 asup_set_class f2 acsuc awcel awb f1 asup_set_class f0 asup_set_class awcel f1 asup_set_class f2 awcel f1 asup_set_class f2 awceq awo awb f1 palbii f0 asup_set_class f2 acsuc awceq f1 asup_set_class f0 asup_set_class awcel f1 asup_set_class f2 acsuc awcel awb f1 awal f1 asup_set_class f0 asup_set_class awcel f1 asup_set_class f2 awcel f1 asup_set_class f2 awceq awo awb f1 awal pbitri f0 asup_set_class f2 acsuc awceq f1 asup_set_class f0 asup_set_class awcel f1 asup_set_class f2 awcel f1 asup_set_class f2 awceq awo awb f1 awal f0 f3 prexbii f2 acsuc f3 awcel f0 asup_set_class f2 acsuc awceq f0 f3 awrex f1 asup_set_class f0 asup_set_class awcel f1 asup_set_class f2 awcel f1 asup_set_class f2 awceq awo awb f1 awal f0 f3 awrex pbitri $.
+$}
+$( /* The successor of the empty set.  (Contributed by NM, 1-Feb-2005.) */
+
+$)
+${
+	psuc0 $p |- suc (/) = { (/) } $=
+	ac0 adf-suc ac0 ac0 acsn puncom ac0 acsn pun0 ac0 acsuc ac0 ac0 acsn acun ac0 acsn ac0 acun ac0 acsn p3eqtri $.
+$}
+$( /* A proper class is its own successor.  (Contributed by NM, 3-Apr-1995.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	psucprc $p |- ( -. A e. _V -> suc A = A ) $=
+	f0 adf-suc f0 psnprc f0 acsn ac0 f0 puneq2 f0 acvv awcel awn f0 acsn ac0 awceq f0 f0 acsn acun f0 ac0 acun awceq psylbi f0 acvv awcel awn f0 acsuc f0 f0 acsn acun f0 ac0 acun psyl5eq f0 pun0 f0 acvv awcel awn f0 acsuc f0 ac0 acun f0 psyl6eq $.
+$}
+$( /* A transitive class is equal to the union of its successor.  Combines
+       Theorem 4E of [Enderton] p. 72 and Exercise 6 of [Enderton] p. 73.
+       (Contributed by NM, 30-Aug-1993.) */
+
+$)
+${
+	$v A $.
+	e0 $e |- A e. _V $.
+	f0 $f class A $.
+	punisuc $p |- ( Tr A <-> U. suc A = A ) $=
+	f0 acuni f0 pssequn1 f0 adf-tr f0 adf-suc f0 acsuc f0 f0 acsn acun punieqi f0 f0 acsn puniun e0 f0 punisn f0 acsn acuni f0 f0 acuni puneq2i f0 acsuc acuni f0 f0 acsn acun acuni f0 acuni f0 acsn acuni acun f0 acuni f0 acun p3eqtri f0 acsuc acuni f0 acuni f0 acun f0 peqeq1i f0 acuni f0 awss f0 acuni f0 acun f0 awceq f0 awtr f0 acsuc acuni f0 awceq p3bitr4i $.
+$}
+$( /* A class is included in its own successor.  Part of Proposition 7.23 of
+     [TakeutiZaring] p. 41 (generalized to arbitrary classes).  (Contributed by
+     NM, 31-May-1994.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	psssucid $p |- A C_ suc A $=
+	f0 f0 acsn pssun1 f0 adf-suc f0 f0 f0 acsn acun f0 acsuc psseqtr4i $.
+$}
+$( /* Part of Proposition 7.23 of [TakeutiZaring] p. 41 (generalized).
+     (Contributed by NM, 25-Mar-1995.)  (Proof shortened by Scott Fenton,
+     20-Feb-2012.) */
+
+$)
+${
+	$v A V $.
+	f0 $f class A $.
+	f1 $f class V $.
+	psucidg $p |- ( A e. V -> A e. suc A ) $=
+	f0 peqid f0 f0 awceq f0 f0 awcel polci f0 f0 f1 pelsucg f0 f1 awcel f0 f0 acsuc awcel f0 f0 awcel f0 f0 awceq awo pmpbiri $.
+$}
+$( /* A set belongs to its successor.  (Contributed by NM, 22-Jun-1994.)
+       (Proof shortened by Alan Sare, 18-Feb-2012.)  (Proof shortened by Scott
+       Fenton, 20-Feb-2012.) */
+
+$)
+${
+	$v A $.
+	e0 $e |- A e. _V $.
+	f0 $f class A $.
+	psucid $p |- A e. suc A $=
+	e0 f0 acvv psucidg f0 acvv awcel f0 f0 acsuc awcel aax-mp $.
+$}
+$( /* No successor is empty.  (Contributed by NM, 3-Apr-1995.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	pnsuceq0 $p |- suc A =/= (/) $=
+	f0 pnoel f0 acvv psucidg f0 acsuc ac0 f0 peleq2 f0 acvv awcel f0 f0 acsuc awcel f0 acsuc ac0 awceq f0 ac0 awcel psyl5ibcom f0 acvv awcel f0 acsuc ac0 awceq f0 ac0 awcel pmtoi f0 psucprc f0 acvv awcel awn f0 acsuc f0 ac0 peqeq1d p0ex f0 ac0 acvv peleq1 f0 ac0 awceq f0 acvv awcel ac0 acvv awcel pmpbiri f0 acvv awcel awn f0 acsuc ac0 awceq f0 ac0 awceq f0 acvv awcel psyl6bi f0 acvv awcel awn f0 acsuc ac0 awceq f0 acvv awcel pcon3d f0 acvv awcel awn f0 acsuc ac0 awceq awn ppm2.43i f0 acvv awcel f0 acsuc ac0 awceq awn ppm2.61i f0 acsuc ac0 adf-ne f0 acsuc ac0 awne f0 acsuc ac0 awceq awn pmpbir $.
+$}
+$( /* A set belongs to the successor of an equal set.  (Contributed by NM,
+       18-Aug-1994.) */
+
+$)
+${
+	$v A B $.
+	e0 $e |- A e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	peqelsuc $p |- ( A = B -> A e. suc B ) $=
+	e0 f0 psucid f0 f1 psuceq f0 f1 awceq f0 f0 acsuc f1 acsuc psyl5eleq $.
+$}
+$( /* Inductive definition for the indexed union at a successor.  (Contributed
+       by Mario Carneiro, 4-Feb-2013.)  (Proof shortened by Mario Carneiro,
+       18-Nov-2016.) */
+
+$)
+${
+	$v x A B C $.
+	$d A x $.
+	$d C x $.
+	e0 $e |- A e. _V $.
+	e1 $e |- ( x = A -> B = C ) $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	piunsuc $p |- U_ x e. suc A B = ( U_ x e. A B u. C ) $=
+	f1 adf-suc f0 f1 acsuc f1 f1 acsn acun f2 piuneq1 f1 acsuc f1 f1 acsn acun awceq f0 f1 acsuc f2 aciun f0 f1 f1 acsn acun f2 aciun awceq aax-mp f0 f1 f1 acsn f2 piunxun e0 e1 f0 f1 f2 f3 piunxsn f0 f1 acsn f2 aciun f3 f0 f1 f2 aciun puneq2i f0 f1 acsuc f2 aciun f0 f1 f1 acsn acun f2 aciun f0 f1 f2 aciun f0 f1 acsn f2 aciun acun f0 f1 f2 aciun f3 acun p3eqtri $.
+$}
+$( /* The successor of a transtive class is transitive.  (Contributed by Alan
+       Sare, 11-Apr-2009.) */
+
+$)
+${
+	$v y z A $.
+	$d z y A $.
+	f0 $f class A $.
+	i0 $f set y $.
+	i1 $f set z $.
+	psuctr $p |- ( Tr A -> Tr suc A ) $=
+	i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 acsuc awcel psimpr i0 pvex i0 asup_set_class f0 pelsuc i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 acsuc awcel awa i0 asup_set_class f0 acsuc awcel i0 asup_set_class f0 awcel i0 asup_set_class f0 awceq awo psylib i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 acsuc awcel psimpl i0 asup_set_class f0 i1 asup_set_class peleq2 i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 acsuc awcel awa i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 awceq i1 asup_set_class f0 awcel psyl5ibcom i1 asup_set_class f0 pelelsuc i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 acsuc awcel awa i0 asup_set_class f0 awceq i1 asup_set_class f0 awcel i1 asup_set_class f0 acsuc awcel psyl6 f0 i1 asup_set_class i0 asup_set_class ptrel f0 awtr i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 awcel i1 asup_set_class f0 awcel pexp3a f0 awtr i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 awcel i1 asup_set_class f0 awcel awi i0 asup_set_class f0 acsuc awcel padantrd i1 asup_set_class f0 pelelsuc f0 awtr i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 acsuc awcel awa i0 asup_set_class f0 awcel i1 asup_set_class f0 awcel i1 asup_set_class f0 acsuc awcel psyl8 i0 asup_set_class f0 awcel i1 asup_set_class f0 acsuc awcel i0 asup_set_class f0 awceq pjao f0 awtr i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 acsuc awcel awa i0 asup_set_class f0 awcel i1 asup_set_class f0 acsuc awcel awi i0 asup_set_class f0 awceq i1 asup_set_class f0 acsuc awcel awi i0 asup_set_class f0 awcel i0 asup_set_class f0 awceq awo i1 asup_set_class f0 acsuc awcel awi awi psyl6 f0 awtr i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 acsuc awcel awa i0 asup_set_class f0 awceq i1 asup_set_class f0 acsuc awcel awi i0 asup_set_class f0 awcel i0 asup_set_class f0 awceq awo i1 asup_set_class f0 acsuc awcel awi pmpdi f0 awtr i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 acsuc awcel awa i0 asup_set_class f0 awcel i0 asup_set_class f0 awceq awo i1 asup_set_class f0 acsuc awcel pmpdi f0 awtr i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 acsuc awcel awa i1 asup_set_class f0 acsuc awcel awi i1 i0 palrimivv i1 i0 f0 acsuc pdftr2 f0 awtr i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 acsuc awcel awa i1 asup_set_class f0 acsuc awcel awi i0 awal i1 awal f0 acsuc awtr psylibr $.
+$}
+$( /* A set whose successor belongs to a transitive class also belongs.
+     (Contributed by NM, 5-Sep-2003.)  (Proof shortened by Andrew Salmon,
+     12-Aug-2011.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	ptrsuc $p |- ( ( Tr A /\ suc B e. A ) -> B e. A ) $=
+	f1 psssucid f1 f1 acsuc f0 pssexg f1 f1 acsuc awss f1 acsuc f0 awcel f1 acvv awcel pmpan f1 acvv psucidg f1 acsuc f0 awcel f1 acvv awcel f1 f1 acsuc awcel psyl f1 acsuc f0 awcel f1 f1 acsuc awcel pancri f0 f1 f1 acsuc ptrel f1 acsuc f0 awcel f1 f1 acsuc awcel f1 acsuc f0 awcel awa f0 awtr f1 f0 awcel psyl5 f0 awtr f1 acsuc f0 awcel f1 f0 awcel pimp $.
+$}
+$( /* Obsolete proof of ~ suctr as of 5-Apr-2016.  The successor of a
+       transitive set is transitive.  (Contributed by Scott Fenton,
+       21-Feb-2011.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+$)
+${
+	$v x y A $.
+	$d x y A $.
+	f0 $f class A $.
+	i0 $f set x $.
+	i1 $f set y $.
+	ptrsuc2OLD $p |- ( Tr A -> Tr suc A ) $=
+	i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel i1 asup_set_class f0 acsn awcel pandi i1 asup_set_class f0 i0 asup_set_class peleq2 i1 asup_set_class f0 awceq i0 asup_set_class i1 asup_set_class awcel i0 asup_set_class f0 awcel pbiimpac i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awceq awa i0 asup_set_class f0 awcel i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa porim2i f0 i0 asup_set_class i1 asup_set_class ptrel i0 asup_set_class f0 awcel i0 asup_set_class f0 awceq porc f0 awtr i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i0 asup_set_class f0 awcel i0 asup_set_class f0 awcel i0 asup_set_class f0 awceq awo psyl6 i0 asup_set_class f0 awcel i0 asup_set_class f0 awceq porc i0 asup_set_class f0 awcel i0 asup_set_class f0 awcel i0 asup_set_class f0 awceq awo awi f0 awtr pa1i f0 awtr i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i0 asup_set_class f0 awcel i0 asup_set_class f0 awceq awo i0 asup_set_class f0 awcel pjaod i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awceq awa awo i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i0 asup_set_class f0 awcel awo f0 awtr i0 asup_set_class f0 awcel i0 asup_set_class f0 awceq awo psyl5 i1 f0 pelsn i1 asup_set_class f0 acsn awcel i1 asup_set_class f0 awceq i0 asup_set_class i1 asup_set_class awcel panbi2i i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 acsn awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awceq awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa porbi2i i0 f0 pelsn i0 asup_set_class f0 acsn awcel i0 asup_set_class f0 awceq i0 asup_set_class f0 awcel porbi2i f0 awtr i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awceq awa awo i0 asup_set_class f0 awcel i0 asup_set_class f0 awceq awo i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 acsn awcel awa awo i0 asup_set_class f0 awcel i0 asup_set_class f0 acsn awcel awo p3imtr4g i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel i1 asup_set_class f0 acsn awcel awo awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 acsn awcel awa awo f0 awtr i0 asup_set_class f0 awcel i0 asup_set_class f0 acsn awcel awo psyl5bi f0 awtr i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel i1 asup_set_class f0 acsn awcel awo awa i0 asup_set_class f0 awcel i0 asup_set_class f0 acsn awcel awo awi i0 i1 palrimivv f0 adf-suc f0 acsuc f0 f0 acsn acun ptreq f0 acsuc f0 f0 acsn acun awceq f0 acsuc awtr f0 f0 acsn acun awtr awb aax-mp i0 i1 f0 f0 acsn acun pdftr2 i1 asup_set_class f0 f0 acsn pelun i1 asup_set_class f0 f0 acsn acun awcel i1 asup_set_class f0 awcel i1 asup_set_class f0 acsn awcel awo i0 asup_set_class i1 asup_set_class awcel panbi2i i0 asup_set_class f0 f0 acsn pelun i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 f0 acsn acun awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel i1 asup_set_class f0 acsn awcel awo awa i0 asup_set_class f0 f0 acsn acun awcel i0 asup_set_class f0 awcel i0 asup_set_class f0 acsn awcel awo pimbi12i i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 f0 acsn acun awcel awa i0 asup_set_class f0 f0 acsn acun awcel awi i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel i1 asup_set_class f0 acsn awcel awo awa i0 asup_set_class f0 awcel i0 asup_set_class f0 acsn awcel awo awi i0 i1 p2albii f0 acsuc awtr f0 f0 acsn acun awtr i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 f0 acsn acun awcel awa i0 asup_set_class f0 f0 acsn acun awcel awi i1 awal i0 awal i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel i1 asup_set_class f0 acsn awcel awo awa i0 asup_set_class f0 awcel i0 asup_set_class f0 acsn awcel awo awi i1 awal i0 awal p3bitri f0 awtr i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 awcel i1 asup_set_class f0 acsn awcel awo awa i0 asup_set_class f0 awcel i0 asup_set_class f0 acsn awcel awo awi i1 awal i0 awal f0 acsuc awtr psylibr $.
+$}
+$( /* A member of the successor of a transitive class is a subclass of it.
+     (Contributed by NM, 4-Oct-2003.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	ptrsucss $p |- ( Tr A -> ( B e. suc A -> B C_ A ) ) $=
+	f1 f0 pelsuci f0 f1 ptrss f1 f0 peqimss f1 f0 awceq f1 f0 awss awi f0 awtr pa1i f0 awtr f1 f0 awcel f1 f0 awss f1 f0 awceq pjaod f1 f0 acsuc awcel f1 f0 awcel f1 f0 awceq awo f0 awtr f1 f0 awss psyl5 $.
+$}
+$( /* A subset of an ordinal belongs to its successor.  (Contributed by NM,
+     28-Nov-2003.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pordsssuc $p |- ( ( A e. On /\ Ord B ) -> ( A C_ B <-> A e. suc B ) ) $=
+	f0 peloni f0 f1 pordsseleq f0 acon0 awcel f0 aword f1 aword f0 f1 awss f0 f1 awcel f0 f1 awceq awo awb psylan f0 f1 acon0 pelsucg f0 acon0 awcel f0 f1 acsuc awcel f0 f1 awcel f0 f1 awceq awo awb f1 aword padantr f0 acon0 awcel f1 aword awa f0 f1 awss f0 f1 awcel f0 f1 awceq awo f0 f1 acsuc awcel pbitr4d $.
+$}
+$( /* A subset of an ordinal number belongs to its successor.  (Contributed by
+     NM, 15-Sep-1995.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	ponsssuc $p |- ( ( A e. On /\ B e. On ) -> ( A C_ B <-> A e. suc B ) ) $=
+	f1 peloni f0 f1 pordsssuc f1 acon0 awcel f0 acon0 awcel f1 aword f0 f1 awss f0 f1 acsuc awcel awb psylan2 $.
+$}
+$( /* An ordinal subset of an ordinal number belongs to its successor.
+     (Contributed by NM, 1-Feb-2005.)  (Proof shortened by Andrew Salmon,
+     12-Aug-2011.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pordsssuc2 $p |- ( ( Ord A /\ B e. On ) -> ( A C_ B <-> A e. suc B ) ) $=
+	f0 acvv pelong f0 acvv awcel f0 acon0 awcel f0 aword pbiimprd f0 acvv awcel f0 aword f0 acon0 awcel f1 acon0 awcel panim1d f0 f1 ponsssuc f0 acvv awcel f0 aword f1 acon0 awcel awa f0 acon0 awcel f1 acon0 awcel awa f0 f1 awss f0 f1 acsuc awcel awb psyl6 f1 acon0 awcel f0 acvv awcel pannim f0 f1 acon0 pssexg f0 f1 awss f1 acon0 awcel f0 acvv awcel pex f0 f1 acsuc pelex f0 f1 acsuc awcel f0 acvv awcel f1 acon0 awcel pa1d f0 f1 awss f1 acon0 awcel f0 acvv awcel awi f0 f1 acsuc awcel ppm5.21ni f1 acon0 awcel f0 acvv awcel awn awa f1 acon0 awcel f0 acvv awcel awi awn f0 f1 awss f0 f1 acsuc awcel awb psylbi f1 acon0 awcel f0 acvv awcel awn f0 f1 awss f0 f1 acsuc awcel awb pexpcom f0 acvv awcel awn f1 acon0 awcel f0 f1 awss f0 f1 acsuc awcel awb f0 aword padantld f0 acvv awcel f0 aword f1 acon0 awcel awa f0 f1 awss f0 f1 acsuc awcel awb awi ppm2.61i $.
+$}
+$( /* When its successor is subtracted from a class of ordinal numbers, an
+       ordinal number is less than the minimum of the resulting subclass.
+       (Contributed by NM, 1-Dec-2003.) */
+
+$)
+${
+	$v x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	ponmindif $p |- ( ( A C_ On /\ B e. On ) -> B e. |^| ( A \ suc B ) ) $=
+	i0 asup_set_class f0 f1 acsuc peldif f0 acon0 i0 asup_set_class pssel2 i0 asup_set_class f1 pontri1 i0 asup_set_class f1 ponsssuc i0 asup_set_class acon0 awcel f1 acon0 awcel awa i0 asup_set_class f1 awss f1 i0 asup_set_class awcel awn i0 asup_set_class f1 acsuc awcel pbitr3d i0 asup_set_class acon0 awcel f1 acon0 awcel awa f1 i0 asup_set_class awcel i0 asup_set_class f1 acsuc awcel pcon1bid f0 acon0 awss i0 asup_set_class f0 awcel awa i0 asup_set_class acon0 awcel f1 acon0 awcel i0 asup_set_class f1 acsuc awcel awn f1 i0 asup_set_class awcel awb psylan f0 acon0 awss i0 asup_set_class f0 awcel awa f1 acon0 awcel awa i0 asup_set_class f1 acsuc awcel awn f1 i0 asup_set_class awcel pbiimpd f0 acon0 awss i0 asup_set_class f0 awcel f1 acon0 awcel i0 asup_set_class f1 acsuc awcel awn f1 i0 asup_set_class awcel awi pexp31 f0 acon0 awss i0 asup_set_class f0 awcel f1 acon0 awcel i0 asup_set_class f1 acsuc awcel awn f1 i0 asup_set_class awcel awi pcom23 f0 acon0 awss f1 acon0 awcel i0 asup_set_class f0 awcel i0 asup_set_class f1 acsuc awcel awn f1 i0 asup_set_class awcel pimp4b i0 asup_set_class f0 f1 acsuc acdif awcel i0 asup_set_class f0 awcel i0 asup_set_class f1 acsuc awcel awn awa f0 acon0 awss f1 acon0 awcel awa f1 i0 asup_set_class awcel psyl5bi f0 acon0 awss f1 acon0 awcel awa f1 i0 asup_set_class awcel i0 f0 f1 acsuc acdif pralrimiv i0 f1 f0 f1 acsuc acdif acon0 pelintg f1 acon0 awcel f1 f0 f1 acsuc acdif acint awcel f1 i0 asup_set_class awcel i0 f0 f1 acsuc acdif awral awb f0 acon0 awss padantl f0 acon0 awss f1 acon0 awcel awa f1 f0 f1 acsuc acdif acint awcel f1 i0 asup_set_class awcel i0 f0 f1 acsuc acdif awral pmpbird $.
+$}
+$( /* There is no set between an ordinal class and its successor.  Generalized
+     Proposition 7.25 of [TakeutiZaring] p. 41.  (Contributed by NM,
+     21-Jun-1998.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pordnbtwn $p |- ( Ord A -> -. ( A e. B /\ B e. suc A ) ) $=
+	f0 f1 pordn2lp f0 pordirr f0 f1 awcel f1 f0 awcel awa f0 f0 awcel pioran f0 aword f0 f1 awcel f1 f0 awcel awa awn f0 f0 awcel awn f0 f1 awcel f1 f0 awcel awa f0 f0 awcel awo awn psylanbrc f1 f0 pelsuci f1 f0 acsuc awcel f1 f0 awcel f1 f0 awceq awo f0 f1 awcel panim2i f0 f1 awcel f1 f0 awcel f1 f0 awceq pandi f0 f1 awcel f1 f0 acsuc awcel awa f0 f1 awcel f1 f0 awcel f1 f0 awceq awo awa f0 f1 awcel f1 f0 awcel awa f0 f1 awcel f1 f0 awceq awa awo psylib f1 f0 f0 peleq2 f1 f0 awceq f0 f1 awcel f0 f0 awcel pbiimpac f0 f1 awcel f1 f0 awceq awa f0 f0 awcel f0 f1 awcel f1 f0 awcel awa porim2i f0 f1 awcel f1 f0 acsuc awcel awa f0 f1 awcel f1 f0 awcel awa f0 f1 awcel f1 f0 awceq awa awo f0 f1 awcel f1 f0 awcel awa f0 f0 awcel awo psyl f0 aword f0 f1 awcel f1 f0 awcel awa f0 f0 awcel awo f0 f1 awcel f1 f0 acsuc awcel awa pnsyl $.
+$}
+$( /* There is no set between an ordinal number and its successor.  Proposition
+     7.25 of [TakeutiZaring] p. 41.  (Contributed by NM, 9-Jun-1994.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	ponnbtwn $p |- ( A e. On -> -. ( A e. B /\ B e. suc A ) ) $=
+	f0 peloni f0 f1 pordnbtwn f0 acon0 awcel f0 aword f0 f1 awcel f1 f0 acsuc awcel awa awn psyl $.
+$}
+$( /* A set whose successor is a subset of another class is a member of that
+     class.  (Contributed by NM, 16-Sep-1995.) */
+
+$)
+${
+	$v A B V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class V $.
+	psucssel $p |- ( A e. V -> ( suc A C_ B -> A e. B ) ) $=
+	f0 f2 psucidg f0 acsuc f1 f0 pssel f0 f2 awcel f0 f0 acsuc awcel f0 acsuc f1 awss f0 f1 awcel psyl5com $.
+$}
+$( /* Ordinal derived from its successor.  (Contributed by NM, 20-May-1998.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	porddif $p |- ( Ord A -> A = ( suc A \ { A } ) ) $=
+	f0 porddisj f0 f0 acsn pdisj3 f0 adf-suc f0 acsuc f0 f0 acsn acun f0 acsn pdifeq1i f0 f0 acsn pdifun2 f0 acsuc f0 acsn acdif f0 f0 acsn acun f0 acsn acdif f0 f0 acsn acdif peqtri f0 acsuc f0 acsn acdif f0 f0 acsn acdif f0 peqeq2i f0 f0 acsn acin ac0 awceq f0 f0 f0 acsn acdif awceq f0 f0 acsuc f0 acsn acdif awceq pbitr4i f0 aword f0 f0 acsn acin ac0 awceq f0 f0 acsuc f0 acsn acdif awceq psylib $.
+$}
+$( /* An ordinal class includes its union.  (Contributed by NM, 13-Sep-2003.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	porduniss $p |- ( Ord A -> U. A C_ A ) $=
+	f0 pordtr f0 adf-tr f0 aword f0 awtr f0 acuni f0 awss psylib $.
+$}
+$( /* A trichotomy law for ordinal classes.  (Contributed by NM, 13-Sep-2003.)
+     (Proof shortened by Andrew Salmon, 12-Aug-2011.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pordtri2or $p |- ( ( Ord A /\ Ord B ) -> ( A e. B \/ B C_ A ) ) $=
+	f1 f0 pordtri1 f1 aword f0 aword f1 f0 awss f0 f1 awcel awn awb pancoms f0 aword f1 aword awa f1 f0 awss f0 f1 awcel awn pbiimprd f0 aword f1 aword awa f0 f1 awcel f1 f0 awss porrd $.
+$}
+$( /* A trichotomy law for ordinal classes.  (Contributed by NM, 2-Nov-2003.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pordtri2or2 $p |- ( ( Ord A /\ Ord B ) -> ( A C_ B \/ B C_ A ) ) $=
+	f0 f1 pordtri2or f1 f0 pordelss f1 aword f0 f1 awcel f0 f1 awss pex f1 aword f0 f1 awcel f0 f1 awss f1 f0 awss porim1d f1 aword f0 f1 awcel f1 f0 awss awo f0 f1 awss f1 f0 awss awo awi f0 aword padantl f0 aword f1 aword awa f0 f1 awcel f1 f0 awss awo f0 f1 awss f1 f0 awss awo pmpd $.
+$}
+$( /* A consequence of total ordering for ordinal classes.  Similar to
+     ~ ordtri2or2 .  (Contributed by David Moews, 1-May-2017.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pordtri2or3 $p |- ( ( Ord A /\ Ord B ) -> ( A = ( A i^i B ) \/ B = ( A i^i B ) ) ) $=
+	f0 f1 pordtri2or2 f0 f1 pdfss f1 f0 pdfss5 f0 f1 awss f0 f0 f1 acin awceq f1 f0 awss f1 f0 f1 acin awceq porbi12i f0 aword f1 aword awa f0 f1 awss f1 f0 awss awo f0 f0 f1 acin awceq f1 f0 f1 acin awceq awo psylib $.
+$}
+$( /* The intersection of two ordinal classes is an element of a third if and
+     only if either one of them is.  (Contributed by David Moews,
+     1-May-2017.) */
+
+$)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pordelinel $p |- ( ( Ord A /\ Ord B /\ Ord C ) -> ( ( A i^i B ) e. C <-> ( A e. C \/ B e. C ) ) ) $=
+	f0 f1 pordtri2or3 f0 aword f1 aword f0 f0 f1 acin awceq f1 f0 f1 acin awceq awo f2 aword p3adant3 f0 f0 f1 acin f2 peleq1 f0 f2 awcel f1 f2 awcel porc f0 f0 f1 acin awceq f0 f1 acin f2 awcel f0 f2 awcel f0 f2 awcel f1 f2 awcel awo psyl6bir f1 f0 f1 acin f2 peleq1 f1 f2 awcel f0 f2 awcel polc f1 f0 f1 acin awceq f0 f1 acin f2 awcel f1 f2 awcel f0 f2 awcel f1 f2 awcel awo psyl6bir f0 f0 f1 acin awceq f0 f1 acin f2 awcel f0 f2 awcel f1 f2 awcel awo awi f1 f0 f1 acin awceq pjaoi f0 aword f1 aword f2 aword aw3a f0 f0 f1 acin awceq f1 f0 f1 acin awceq awo f0 f1 acin f2 awcel f0 f2 awcel f1 f2 awcel awo awi psyl f0 f1 pinss1 f0 f1 pordin f0 aword f1 aword awa f0 f1 acin aword f2 aword panim1i f0 aword f1 aword f2 aword f0 f1 acin aword f2 aword awa p3impa f0 f1 acin f0 f2 pordtr2 f0 aword f1 aword f2 aword aw3a f0 f1 acin aword f2 aword awa f0 f1 acin f0 awss f0 f2 awcel awa f0 f1 acin f2 awcel awi psyl f0 aword f1 aword f2 aword aw3a f0 f1 acin f0 awss f0 f2 awcel f0 f1 acin f2 awcel pmpani f0 f1 pinss2 f0 f1 pordin f0 aword f1 aword awa f0 f1 acin aword f2 aword panim1i f0 aword f1 aword f2 aword f0 f1 acin aword f2 aword awa p3impa f0 f1 acin f1 f2 pordtr2 f0 aword f1 aword f2 aword aw3a f0 f1 acin aword f2 aword awa f0 f1 acin f1 awss f1 f2 awcel awa f0 f1 acin f2 awcel awi psyl f0 aword f1 aword f2 aword aw3a f0 f1 acin f1 awss f1 f2 awcel f0 f1 acin f2 awcel pmpani f0 aword f1 aword f2 aword aw3a f0 f2 awcel f0 f1 acin f2 awcel f1 f2 awcel pjaod f0 aword f1 aword f2 aword aw3a f0 f1 acin f2 awcel f0 f2 awcel f1 f2 awcel awo pimpbid $.
+$}
+$( /* Property of a subclass of the maximum (i.e. union) of two ordinals.
+     (Contributed by NM, 28-Nov-2003.) */
+
+$)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pordssun $p |- ( ( Ord B /\ Ord C ) -> ( A C_ ( B u. C ) <-> ( A C_ B \/ A C_ C ) ) ) $=
+	f1 f2 pordtri2or2 f1 f2 pssequn1 f1 f2 acun f2 f0 psseq2 f1 f2 awss f1 f2 acun f2 awceq f0 f1 f2 acun awss f0 f2 awss awb psylbi f0 f2 awss f0 f1 awss polc f1 f2 awss f0 f1 f2 acun awss f0 f2 awss f0 f1 awss f0 f2 awss awo psyl6bi f2 f1 pssequn2 f1 f2 acun f1 f0 psseq2 f2 f1 awss f1 f2 acun f1 awceq f0 f1 f2 acun awss f0 f1 awss awb psylbi f0 f1 awss f0 f2 awss porc f2 f1 awss f0 f1 f2 acun awss f0 f1 awss f0 f1 awss f0 f2 awss awo psyl6bi f1 f2 awss f0 f1 f2 acun awss f0 f1 awss f0 f2 awss awo awi f2 f1 awss pjaoi f1 aword f2 aword awa f1 f2 awss f2 f1 awss awo f0 f1 f2 acun awss f0 f1 awss f0 f2 awss awo awi psyl f0 f1 f2 pssun f1 aword f2 aword awa f0 f1 f2 acun awss f0 f1 awss f0 f2 awss awo pimpbid1 $.
+$}
+$( /* The maximum (i.e. union) of two ordinals is either one or the other.
+     Similar to Exercise 14 of [TakeutiZaring] p. 40.  (Contributed by NM,
+     28-Nov-2003.) */
+
+$)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pordequn $p |- ( ( Ord B /\ Ord C ) -> ( A = ( B u. C ) -> ( A = B \/ A = C ) ) ) $=
+	f1 f2 pordtri2or2 f1 f2 pssequn1 f1 f2 acun f2 f0 peqeq2 f1 f2 awss f1 f2 acun f2 awceq f0 f1 f2 acun awceq f0 f2 awceq awb psylbi f0 f2 awceq f0 f1 awceq polc f1 f2 awss f0 f1 f2 acun awceq f0 f2 awceq f0 f1 awceq f0 f2 awceq awo psyl6bi f2 f1 pssequn2 f1 f2 acun f1 f0 peqeq2 f2 f1 awss f1 f2 acun f1 awceq f0 f1 f2 acun awceq f0 f1 awceq awb psylbi f0 f1 awceq f0 f2 awceq porc f2 f1 awss f0 f1 f2 acun awceq f0 f1 awceq f0 f1 awceq f0 f2 awceq awo psyl6bi f1 f2 awss f0 f1 f2 acun awceq f0 f1 awceq f0 f2 awceq awo awi f2 f1 awss pjaoi f1 aword f2 aword awa f1 f2 awss f2 f1 awss awo f0 f1 f2 acun awceq f0 f1 awceq f0 f2 awceq awo awi psyl $.
+$}
+$( /* The maximum (i.e. union) of two ordinals is ordinal.  Exercise 12 of
+     [TakeutiZaring] p. 40.  (Contributed by NM, 28-Nov-2003.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pordun $p |- ( ( Ord A /\ Ord B ) -> Ord ( A u. B ) ) $=
+	f0 f1 acun peqid f0 f1 acun f0 f1 pordequn f0 aword f1 aword awa f0 f1 acun f0 f1 acun awceq f0 f1 acun f0 awceq f0 f1 acun f1 awceq awo pmpi f0 f1 acun f0 pordeq f0 f1 acun f0 awceq f0 f1 acun aword f0 aword pbiimprcd f0 f1 acun f1 pordeq f0 f1 acun f1 awceq f0 f1 acun aword f1 aword pbiimprcd f0 aword f0 f1 acun f0 awceq f0 f1 acun aword f1 aword f0 f1 acun f1 awceq pjaao f0 aword f1 aword awa f0 f1 acun f0 awceq f0 f1 acun f1 awceq awo f0 f1 acun aword pmpd $.
+$}
+$( /* A subclass relationship for union and successor of ordinal classes.
+       (Contributed by NM, 28-Nov-2003.) */
+
+$)
+${
+	$v x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	pordunisssuc $p |- ( ( A C_ On /\ Ord B ) -> ( U. A C_ B <-> A C_ suc B ) ) $=
+	f0 acon0 i0 asup_set_class pssel2 i0 asup_set_class f1 pordsssuc f0 acon0 awss i0 asup_set_class f0 awcel awa i0 asup_set_class acon0 awcel f1 aword i0 asup_set_class f1 awss i0 asup_set_class f1 acsuc awcel awb psylan f0 acon0 awss i0 asup_set_class f0 awcel f1 aword i0 asup_set_class f1 awss i0 asup_set_class f1 acsuc awcel awb pan32s f0 acon0 awss f1 aword awa i0 asup_set_class f1 awss i0 asup_set_class f1 acsuc awcel i0 f0 pralbidva i0 f0 f1 punissb i0 f0 f1 acsuc pdfss3 f0 acon0 awss f1 aword awa i0 asup_set_class f1 awss i0 f0 awral i0 asup_set_class f1 acsuc awcel i0 f0 awral f0 acuni f1 awss f0 f1 acsuc awss p3bitr4g $.
+$}
+$( /* The successor operation behaves like a one-to-one function.  Compare
+     Exercise 16 of [Enderton] p. 194.  (Contributed by NM, 3-Sep-2003.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	psuc11 $p |- ( ( A e. On /\ B e. On ) -> ( suc A = suc B <-> A = B ) ) $=
+	f0 peloni f0 f1 pordn2lp f0 f1 awcel f1 f0 awcel pianor f0 aword f0 f1 awcel f1 f0 awcel awa awn f0 f1 awcel awn f1 f0 awcel awn awo psylib f0 acon0 awcel f0 aword f0 f1 awcel awn f1 f0 awcel awn awo psyl f0 acon0 awcel f0 f1 awcel awn f1 f0 awcel awn awo f1 acon0 awcel padantr f0 acsuc f1 acsuc peqimss f0 f1 acsuc acon0 psucssel f0 acsuc f1 acsuc awceq f0 acsuc f1 acsuc awss f0 acon0 awcel f0 f1 acsuc awcel psyl5 f0 f1 pelsuci f0 f1 acsuc awcel f0 f1 awcel f0 f1 awceq pord f0 f1 acsuc awcel f0 f1 awcel awn f0 f1 awceq pcom12 f0 acon0 awcel f0 acsuc f1 acsuc awceq f0 f1 acsuc awcel f0 f1 awcel awn f0 f1 awceq psyl9 f1 acsuc f0 acsuc peqimss2 f1 f0 acsuc acon0 psucssel f0 acsuc f1 acsuc awceq f1 acsuc f0 acsuc awss f1 acon0 awcel f1 f0 acsuc awcel psyl5 f1 f0 pelsuci f1 f0 acsuc awcel f1 f0 awcel f1 f0 awceq pord f1 f0 acsuc awcel f1 f0 awcel awn f1 f0 awceq pcom12 f1 f0 peqcom f1 f0 awcel awn f1 f0 acsuc awcel f1 f0 awceq f0 f1 awceq psyl6ib f1 acon0 awcel f0 acsuc f1 acsuc awceq f1 f0 acsuc awcel f1 f0 awcel awn f0 f1 awceq psyl9 f0 acon0 awcel f0 f1 awcel awn f0 acsuc f1 acsuc awceq f0 f1 awceq awi f1 acon0 awcel f1 f0 awcel awn pjaao f0 acon0 awcel f1 acon0 awcel awa f0 f1 awcel awn f1 f0 awcel awn awo f0 acsuc f1 acsuc awceq f0 f1 awceq awi pmpd f0 f1 psuceq f0 acon0 awcel f1 acon0 awcel awa f0 acsuc f1 acsuc awceq f0 f1 awceq pimpbid1 $.
+$}
+$( /* An ordinal number is an ordinal class.  (Contributed by NM,
+       11-Jun-1994.) */
+
+$)
+${
+	$v A $.
+	e0 $e |- A e. On $.
+	f0 $f class A $.
+	ponordi $p |- Ord A $=
+	e0 f0 peloni f0 acon0 awcel f0 aword aax-mp $.
+$}
+$( /* An ordinal number is a transitive class.  (Contributed by NM,
+       11-Jun-1994.) */
+
+$)
+${
+	$v A $.
+	e0 $e |- A e. On $.
+	f0 $f class A $.
+	pontrci $p |- Tr A $=
+	e0 f0 ponordi f0 pordtr f0 aword f0 awtr aax-mp $.
+$}
+$( /* An ordinal number is not a member of itself.  Theorem 7M(c) of
+       [Enderton] p. 192.  (Contributed by NM, 11-Jun-1994.) */
+
+$)
+${
+	$v A $.
+	e0 $e |- A e. On $.
+	f0 $f class A $.
+	ponirri $p |- -. A e. A $=
+	e0 f0 ponordi f0 pordirr f0 aword f0 f0 awcel awn aax-mp $.
+$}
+$( /* A member of an ordinal number is an ordinal number.  Theorem 7M(a) of
+       [Enderton] p. 192.  (Contributed by NM, 11-Jun-1994.) */
+
+$)
+${
+	$v A B $.
+	e0 $e |- A e. On $.
+	f0 $f class A $.
+	f1 $f class B $.
+	poneli $p |- ( B e. A -> B e. On ) $=
+	e0 f0 f1 ponelon f0 acon0 awcel f1 f0 awcel f1 acon0 awcel pmpan $.
+$}
+$( /* A member of an ordinal number is a subset of it.  (Contributed by NM,
+       11-Aug-1994.) */
+
+$)
+${
+	$v A B $.
+	e0 $e |- A e. On $.
+	f0 $f class A $.
+	f1 $f class B $.
+	ponelssi $p |- ( B e. A -> B C_ A ) $=
+	e0 f0 f1 ponelss f0 acon0 awcel f1 f0 awcel f1 f0 awss awi aax-mp $.
+$}
+$( /* An ordering law for ordinal numbers.  (Contributed by NM,
+       13-Jun-1994.) */
+
+$)
+${
+	$v A B $.
+	e0 $e |- A e. On $.
+	f0 $f class A $.
+	f1 $f class B $.
+	ponssneli $p |- ( A C_ B -> -. B e. A ) $=
+	e0 f0 f1 poneli f1 peloni f1 pordirr f1 f0 awcel f1 acon0 awcel f1 aword f1 f1 awcel awn p3syl f0 f1 f1 pssel f0 f1 awss f1 f0 awcel f1 f1 awcel pcom12 f1 f0 awcel f0 f1 awss f1 f1 awcel pmtod f1 f0 awcel f0 f1 awss pcon2i $.
+$}
+$( /* An ordering law for ordinal numbers.  (Contributed by NM,
+       13-Jun-1994.) */
+
+$)
+${
+	$v A B $.
+	e0 $e |- A e. On $.
+	f0 $f class A $.
+	f1 $f class B $.
+	ponssnel2i $p |- ( B C_ A -> -. A e. B ) $=
+	e0 f0 ponirri f1 f0 f0 pssel f1 f0 awss f0 f1 awcel f0 f0 awcel pmtoi $.
+$}
+$( /* An element of an ordinal number equals the intersection with it.
+       (Contributed by NM, 11-Jun-1994.) */
+
+$)
+${
+	$v A B $.
+	e0 $e |- A e. On $.
+	f0 $f class A $.
+	f1 $f class B $.
+	ponelini $p |- ( B e. A -> B = ( B i^i A ) ) $=
+	e0 f0 f1 ponelssi f1 f0 pdfss f1 f0 awcel f1 f0 awss f1 f1 f0 acin awceq psylib $.
+$}
+$( /* An ordinal number equals its union with any element.  (Contributed by
+       NM, 13-Jun-1994.) */
+
+$)
+${
+	$v A B $.
+	e0 $e |- A e. On $.
+	f0 $f class A $.
+	f1 $f class B $.
+	poneluni $p |- ( B e. A -> ( A u. B ) = A ) $=
+	e0 f0 f1 ponelssi f1 f0 pssequn2 f1 f0 awcel f1 f0 awss f0 f1 acun f0 awceq psylib $.
+$}
+$( /* An ordinal number is equal to the union of its successor.  (Contributed
+       by NM, 12-Jun-1994.) */
+
+$)
+${
+	$v A $.
+	e0 $e |- A e. On $.
+	f0 $f class A $.
+	ponunisuci $p |- U. suc A = A $=
+	e0 f0 pontrci e0 f0 acon0 pelexi f0 punisuc f0 awtr f0 acsuc acuni f0 awceq pmpbi $.
+$}
+$( /* Subset is equivalent to membership or equality for ordinal numbers.
+         (Contributed by NM, 15-Sep-1995.) */
+
+$)
+${
+	$v A B $.
+	e0 $e |- A e. On $.
+	e1 $e |- B e. On $.
+	f0 $f class A $.
+	f1 $f class B $.
+	ponsseli $p |- ( A C_ B <-> ( A e. B \/ A = B ) ) $=
+	e0 e1 f0 f1 ponsseleq f0 acon0 awcel f1 acon0 awcel f0 f1 awss f0 f1 awcel f0 f1 awceq awo awb pmp2an $.
+$}
+$( /* The union of two ordinal numbers is an ordinal number.  (Contributed
+         by NM, 13-Jun-1994.) */
+
+$)
+${
+	$v A B $.
+	e0 $e |- A e. On $.
+	e1 $e |- B e. On $.
+	f0 $f class A $.
+	f1 $f class B $.
+	ponun2i $p |- ( A u. B ) e. On $=
+	e1 f1 ponordi e0 f0 ponordi f1 f0 pordtri2or f1 aword f0 aword f1 f0 awcel f0 f1 awss awo pmp2an e0 f0 f1 poneluni e0 f1 f0 awcel f0 f1 acun f0 acon0 psyl6eqel f0 f1 pssequn1 e1 f0 f1 acun f1 acon0 peleq1 f0 f1 acun f1 awceq f0 f1 acun acon0 awcel f1 acon0 awcel pmpbiri f0 f1 awss f0 f1 acun f1 awceq f0 f1 acun acon0 awcel psylbi f1 f0 awcel f0 f1 acun acon0 awcel f0 f1 awss pjaoi f1 f0 awcel f0 f1 awss awo f0 f1 acun acon0 awcel aax-mp $.
+$}
+$( /* An ordinal equal to its own union is either zero or a limit ordinal.
+     (Contributed by NM, 1-Oct-2003.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	punizlim $p |- ( Ord A -> ( A = U. A <-> ( A = (/) \/ Lim A ) ) ) $=
+	f0 ac0 adf-ne f0 adf-lim f0 awlim f0 aword f0 ac0 awne f0 f0 acuni awceq aw3a pbiimpri f0 aword f0 ac0 awne f0 f0 acuni awceq f0 awlim p3exp f0 ac0 awceq awn f0 ac0 awne f0 aword f0 f0 acuni awceq f0 awlim awi psyl5bir f0 aword f0 ac0 awceq awn f0 f0 acuni awceq f0 awlim pcom23 f0 aword f0 f0 acuni awceq f0 ac0 awceq awn f0 awlim awi pimp f0 aword f0 f0 acuni awceq awa f0 ac0 awceq f0 awlim porrd f0 aword f0 f0 acuni awceq f0 ac0 awceq f0 awlim awo pex puni0 ac0 acuni ac0 peqcomi f0 ac0 awceq pid f0 ac0 punieq f0 ac0 awceq ac0 ac0 acuni f0 f0 acuni p3eqtr4a f0 plimuni f0 ac0 awceq f0 f0 acuni awceq f0 awlim pjaoi f0 aword f0 f0 acuni awceq f0 ac0 awceq f0 awlim awo pimpbid1 $.
+$}
+$( /* An ordinal number either equals zero or contains zero.  (Contributed by
+     NM, 1-Jun-2004.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	pon0eqel $p |- ( A e. On -> ( A = (/) \/ (/) e. A ) ) $=
+	f0 p0ss p0elon ac0 f0 ponsseleq ac0 acon0 awcel f0 acon0 awcel ac0 f0 awss ac0 f0 awcel ac0 f0 awceq awo awb pmpan f0 acon0 awcel ac0 f0 awss ac0 f0 awcel ac0 f0 awceq awo pmpbii ac0 f0 peqcom ac0 f0 awceq f0 ac0 awceq ac0 f0 awcel porbi2i ac0 f0 awcel f0 ac0 awceq porcom ac0 f0 awcel ac0 f0 awceq awo ac0 f0 awcel f0 ac0 awceq awo f0 ac0 awceq ac0 f0 awcel awo pbitri f0 acon0 awcel ac0 f0 awcel ac0 f0 awceq awo f0 ac0 awceq ac0 f0 awcel awo psylib $.
+$}
+$( /* The singleton of the singleton of the empty set is not an ordinal (nor a
+     natural number by ~ omsson ).  It can be used to represent an "undefined"
+     value for a partial operation on natural or ordinal numbers.  See also
+     ~ onxpdisj .  (Contributed by NM, 21-May-2004.)  (Proof shortened by
+     Andrew Salmon, 12-Aug-2011.) */
+
+$)
+${
+	psnsn0non $p |- -. { { (/) } } e. On $=
+	pp0ex ac0 acsn psnid ac0 acsn acsn ac0 acsn pn0i ac0 acsn ac0 acsn acsn awcel ac0 acsn acsn ac0 awceq awn aax-mp p0ex ac0 psnid ac0 acsn ac0 pn0i ac0 ac0 acsn awcel ac0 acsn ac0 awceq awn aax-mp ac0 ac0 acsn peqcom ac0 ac0 acsn awceq ac0 acsn ac0 awceq pmtbir p0ex ac0 ac0 acsn pelsnc ac0 ac0 acsn acsn awcel ac0 ac0 acsn awceq pmtbir ac0 acsn acsn ac0 awceq ac0 ac0 acsn acsn awcel ppm3.2ni ac0 acsn acsn pon0eqel ac0 acsn acsn acon0 awcel ac0 acsn acsn ac0 awceq ac0 ac0 acsn acsn awcel awo pmto $.
+$}
+

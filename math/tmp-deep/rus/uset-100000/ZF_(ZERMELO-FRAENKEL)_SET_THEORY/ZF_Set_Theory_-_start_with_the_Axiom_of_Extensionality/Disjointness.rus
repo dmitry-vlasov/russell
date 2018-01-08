@@ -1,0 +1,979 @@
+import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Indexed_union_and_intersection.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                     Disjointness
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+constant {
+	symbol Disj_ ;;
+}
+
+/* Extend wff notation to include the statement that a family of classes
+     ` B ( x ) ` , for ` x e. A ` , is a disjoint family. */
+
+rule wdisj (x : set, A : class, B : class) {
+	term : wff = # Disj_ x ∈ A B ;;
+}
+
+/* A collection of classes ` B ( x ) ` is disjoint when for each element
+       ` y ` , it is in ` B ( x ) ` for at most one ` x ` .  (Contributed by
+       Mario Carneiro, 14-Nov-2016.)  (Revised by NM, 16-Jun-2017.) */
+
+definition df-disj (x : set, y : set, A : class, B : class) disjointed(x y, y A, y B) {
+	defiendum : wff = # Disj_ x ∈ A B ;;
+	definiens : wff = # ∀ y ∃* x ∈ A y ∈ B ;;
+	-----------------------
+	prop : wff = |- ( defiendum ↔ definiens ) ;;
+}
+
+/* Alternate definition for disjoint classes.  (Contributed by NM,
+       17-Jun-2017.) */
+
+theorem dfdisj2 (x : set, y : set, A : class, B : class) disjointed(x y, y A, y B) {
+	prop 1 : wff = |- ( Disj_ x ∈ A B ↔ ∀ y ∃* x ( x ∈ A ∧ y ∈ B ) ) ;;
+}
+
+proof of dfdisj2 {
+	step 1 : wff = df-disj () |- ( Disj_ x ∈ A B ↔ ∀ y ∃* x ∈ A y ∈ B ) ;;
+	step 2 : wff = df-rmo () |- ( ∃* x ∈ A y ∈ B ↔ ∃* x ( x ∈ A ∧ y ∈ B ) ) ;;
+	step 3 : wff = albii (step 2) |- ( ∀ y ∃* x ∈ A y ∈ B ↔ ∀ y ∃* x ( x ∈ A ∧ y ∈ B ) ) ;;
+	step 4 : wff = bitri (step 1, step 3) |- ( Disj_ x ∈ A B ↔ ∀ y ∃* x ( x ∈ A ∧ y ∈ B ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* If each element of a collection is contained in a disjoint collection,
+       the original collection is also disjoint.  (Contributed by Mario
+       Carneiro, 14-Nov-2016.) */
+
+theorem disjss2 (x : set, A : class, B : class, C : class) disjointed(x y, y A, y B, y C) {
+	prop 1 : wff = |- ( ∀ x ∈ A B ⊆ C → ( Disj_ x ∈ A C → Disj_ x ∈ A B ) ) ;;
+}
+
+proof of disjss2 {
+	var y : set;;
+	step 1 : wff = ssel () |- ( B ⊆ C → ( y ∈ B → y ∈ C ) ) ;;
+	step 2 : wff = ralimi (step 1) |- ( ∀ x ∈ A B ⊆ C → ∀ x ∈ A ( y ∈ B → y ∈ C ) ) ;;
+	step 3 : wff = rmoim () |- ( ∀ x ∈ A ( y ∈ B → y ∈ C ) → ( ∃* x ∈ A y ∈ C → ∃* x ∈ A y ∈ B ) ) ;;
+	step 4 : wff = syl (step 2, step 3) |- ( ∀ x ∈ A B ⊆ C → ( ∃* x ∈ A y ∈ C → ∃* x ∈ A y ∈ B ) ) ;;
+	step 5 : wff = alimdv (step 4) |- ( ∀ x ∈ A B ⊆ C → ( ∀ y ∃* x ∈ A y ∈ C → ∀ y ∃* x ∈ A y ∈ B ) ) ;;
+	step 6 : wff = df-disj () |- ( Disj_ x ∈ A C ↔ ∀ y ∃* x ∈ A y ∈ C ) ;;
+	step 7 : wff = df-disj () |- ( Disj_ x ∈ A B ↔ ∀ y ∃* x ∈ A y ∈ B ) ;;
+	step 8 : wff = 3imtr4g (step 5, step 6, step 7) |- ( ∀ x ∈ A B ⊆ C → ( Disj_ x ∈ A C → Disj_ x ∈ A B ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Equality theorem for disjoint collection.  (Contributed by Mario Carneiro,
+     14-Nov-2016.) */
+
+theorem disjeq2 (x : set, A : class, B : class, C : class)  {
+	prop 1 : wff = |- ( ∀ x ∈ A B = C → ( Disj_ x ∈ A B ↔ Disj_ x ∈ A C ) ) ;;
+}
+
+proof of disjeq2 {
+	step 1 : wff = eqimss2 () |- ( B = C → C ⊆ B ) ;;
+	step 2 : wff = ralimi (step 1) |- ( ∀ x ∈ A B = C → ∀ x ∈ A C ⊆ B ) ;;
+	step 3 : wff = disjss2 () |- ( ∀ x ∈ A C ⊆ B → ( Disj_ x ∈ A B → Disj_ x ∈ A C ) ) ;;
+	step 4 : wff = syl (step 2, step 3) |- ( ∀ x ∈ A B = C → ( Disj_ x ∈ A B → Disj_ x ∈ A C ) ) ;;
+	step 5 : wff = eqimss () |- ( B = C → B ⊆ C ) ;;
+	step 6 : wff = ralimi (step 5) |- ( ∀ x ∈ A B = C → ∀ x ∈ A B ⊆ C ) ;;
+	step 7 : wff = disjss2 () |- ( ∀ x ∈ A B ⊆ C → ( Disj_ x ∈ A C → Disj_ x ∈ A B ) ) ;;
+	step 8 : wff = syl (step 6, step 7) |- ( ∀ x ∈ A B = C → ( Disj_ x ∈ A C → Disj_ x ∈ A B ) ) ;;
+	step 9 : wff = impbid (step 4, step 8) |- ( ∀ x ∈ A B = C → ( Disj_ x ∈ A B ↔ Disj_ x ∈ A C ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Equality deduction for disjoint collection.  (Contributed by Mario
+       Carneiro, 14-Nov-2016.) */
+
+theorem disjeq2dv (ph : wff, x : set, A : class, B : class, C : class) disjointed(x ph) {
+	hyp 1 : wff = |- ( ( ph ∧ x ∈ A ) → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( Disj_ x ∈ A B ↔ Disj_ x ∈ A C ) ) ;;
+}
+
+proof of disjeq2dv {
+	step 1 : wff = ralrimiva (hyp 1) |- ( ph → ∀ x ∈ A B = C ) ;;
+	step 2 : wff = disjeq2 () |- ( ∀ x ∈ A B = C → ( Disj_ x ∈ A B ↔ Disj_ x ∈ A C ) ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( ph → ( Disj_ x ∈ A B ↔ Disj_ x ∈ A C ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A subset of a disjoint collection is disjoint.  (Contributed by Mario
+       Carneiro, 14-Nov-2016.) */
+
+theorem disjss1 (x : set, A : class, B : class, C : class) disjointed(x y A, x y B, y C) {
+	prop 1 : wff = |- ( A ⊆ B → ( Disj_ x ∈ B C → Disj_ x ∈ A C ) ) ;;
+}
+
+proof of disjss1 {
+	var y : set;;
+	step 1 : wff = ssel () |- ( A ⊆ B → ( x ∈ A → x ∈ B ) ) ;;
+	step 2 : wff = anim1d (step 1) |- ( A ⊆ B → ( ( x ∈ A ∧ y ∈ C ) → ( x ∈ B ∧ y ∈ C ) ) ) ;;
+	step 3 : wff = alrimiv (step 2) |- ( A ⊆ B → ∀ x ( ( x ∈ A ∧ y ∈ C ) → ( x ∈ B ∧ y ∈ C ) ) ) ;;
+	step 4 : wff = moim () |- ( ∀ x ( ( x ∈ A ∧ y ∈ C ) → ( x ∈ B ∧ y ∈ C ) ) → ( ∃* x ( x ∈ B ∧ y ∈ C ) → ∃* x ( x ∈ A ∧ y ∈ C ) ) ) ;;
+	step 5 : wff = syl (step 3, step 4) |- ( A ⊆ B → ( ∃* x ( x ∈ B ∧ y ∈ C ) → ∃* x ( x ∈ A ∧ y ∈ C ) ) ) ;;
+	step 6 : wff = alimdv (step 5) |- ( A ⊆ B → ( ∀ y ∃* x ( x ∈ B ∧ y ∈ C ) → ∀ y ∃* x ( x ∈ A ∧ y ∈ C ) ) ) ;;
+	step 7 : wff = dfdisj2 () |- ( Disj_ x ∈ B C ↔ ∀ y ∃* x ( x ∈ B ∧ y ∈ C ) ) ;;
+	step 8 : wff = dfdisj2 () |- ( Disj_ x ∈ A C ↔ ∀ y ∃* x ( x ∈ A ∧ y ∈ C ) ) ;;
+	step 9 : wff = 3imtr4g (step 6, step 7, step 8) |- ( A ⊆ B → ( Disj_ x ∈ B C → Disj_ x ∈ A C ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Equality theorem for disjoint collection.  (Contributed by Mario
+       Carneiro, 14-Nov-2016.) */
+
+theorem disjeq1 (x : set, A : class, B : class, C : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( A = B → ( Disj_ x ∈ A C ↔ Disj_ x ∈ B C ) ) ;;
+}
+
+proof of disjeq1 {
+	step 1 : wff = eqimss2 () |- ( A = B → B ⊆ A ) ;;
+	step 2 : wff = disjss1 () |- ( B ⊆ A → ( Disj_ x ∈ A C → Disj_ x ∈ B C ) ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( A = B → ( Disj_ x ∈ A C → Disj_ x ∈ B C ) ) ;;
+	step 4 : wff = eqimss () |- ( A = B → A ⊆ B ) ;;
+	step 5 : wff = disjss1 () |- ( A ⊆ B → ( Disj_ x ∈ B C → Disj_ x ∈ A C ) ) ;;
+	step 6 : wff = syl (step 4, step 5) |- ( A = B → ( Disj_ x ∈ B C → Disj_ x ∈ A C ) ) ;;
+	step 7 : wff = impbid (step 3, step 6) |- ( A = B → ( Disj_ x ∈ A C ↔ Disj_ x ∈ B C ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Equality theorem for disjoint collection.  (Contributed by Mario
+       Carneiro, 14-Nov-2016.) */
+
+theorem disjeq1d (ph : wff, x : set, A : class, B : class, C : class) disjointed(x A, x B) {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( Disj_ x ∈ A C ↔ Disj_ x ∈ B C ) ) ;;
+}
+
+proof of disjeq1d {
+	step 1 : wff = disjeq1 () |- ( A = B → ( Disj_ x ∈ A C ↔ Disj_ x ∈ B C ) ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ph → ( Disj_ x ∈ A C ↔ Disj_ x ∈ B C ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Equality theorem for disjoint collection.  (Contributed by Mario
+       Carneiro, 14-Nov-2016.) */
+
+theorem disjeq12d (ph : wff, x : set, A : class, B : class, C : class, D : class) disjointed(x A, x B, x ph) {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	hyp 2 : wff = |- ( ph → C = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( Disj_ x ∈ A C ↔ Disj_ x ∈ B D ) ) ;;
+}
+
+proof of disjeq12d {
+	step 1 : wff = disjeq1d (hyp 1) |- ( ph → ( Disj_ x ∈ A C ↔ Disj_ x ∈ B C ) ) ;;
+	step 2 : wff = adantr (hyp 2) |- ( ( ph ∧ x ∈ B ) → C = D ) ;;
+	step 3 : wff = disjeq2dv (step 2) |- ( ph → ( Disj_ x ∈ B C ↔ Disj_ x ∈ B D ) ) ;;
+	step 4 : wff = bitrd (step 1, step 3) |- ( ph → ( Disj_ x ∈ A C ↔ Disj_ x ∈ B D ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Change bound variables in a disjoint collection.  (Contributed by Mario
+       Carneiro, 14-Nov-2016.) */
+
+theorem cbvdisj (x : set, y : set, A : class, B : class, C : class) disjointed(x y z A, z B, z C) {
+	hyp 1 : wff = |- F/_ y B ;;
+	hyp 2 : wff = |- F/_ x C ;;
+	hyp 3 : wff = |- ( x = y → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( Disj_ x ∈ A B ↔ Disj_ y ∈ A C ) ;;
+}
+
+proof of cbvdisj {
+	var z : set;;
+	step 1 : wff = nfcri (hyp 1) |- F/ y z ∈ B ;;
+	step 2 : wff = nfcri (hyp 2) |- F/ x z ∈ C ;;
+	step 3 : wff = eleq2d (hyp 3) |- ( x = y → ( z ∈ B ↔ z ∈ C ) ) ;;
+	step 4 : wff = cbvrmo (step 1, step 2, step 3) |- ( ∃* x ∈ A z ∈ B ↔ ∃* y ∈ A z ∈ C ) ;;
+	step 5 : wff = albii (step 4) |- ( ∀ z ∃* x ∈ A z ∈ B ↔ ∀ z ∃* y ∈ A z ∈ C ) ;;
+	step 6 : wff = df-disj () |- ( Disj_ x ∈ A B ↔ ∀ z ∃* x ∈ A z ∈ B ) ;;
+	step 7 : wff = df-disj () |- ( Disj_ y ∈ A C ↔ ∀ z ∃* y ∈ A z ∈ C ) ;;
+	step 8 : wff = 3bitr4i (step 5, step 6, step 7) |- ( Disj_ x ∈ A B ↔ Disj_ y ∈ A C ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Change bound variables in a disjoint collection.  (Contributed by Mario
+       Carneiro, 11-Dec-2016.) */
+
+theorem cbvdisjv (x : set, y : set, A : class, B : class, C : class) disjointed(x y A, y B, x C) {
+	hyp 1 : wff = |- ( x = y → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( Disj_ x ∈ A B ↔ Disj_ y ∈ A C ) ;;
+}
+
+proof of cbvdisjv {
+	step 1 : wff = nfcv () |- F/_ y B ;;
+	step 2 : wff = nfcv () |- F/_ x C ;;
+	step 3 : wff = cbvdisj (step 1, step 2, hyp 1) |- ( Disj_ x ∈ A B ↔ Disj_ y ∈ A C ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Bound-variable hypothesis builder for disjoint collection.  (Contributed
+       by Mario Carneiro, 14-Nov-2016.) */
+
+theorem nfdisj (x : set, y : set, A : class, B : class) disjointed(z A, z B, x z, y z) {
+	hyp 1 : wff = |- F/_ y A ;;
+	hyp 2 : wff = |- F/_ y B ;;
+	-----------------------
+	prop 1 : wff = |- F/ y Disj_ x ∈ A B ;;
+}
+
+proof of nfdisj {
+	var z : set;;
+	step 1 : wff = df-disj () |- ( Disj_ x ∈ A B ↔ ∀ z ∃* x ∈ A z ∈ B ) ;;
+	step 2 : wff = df-rmo () |- ( ∃* x ∈ A z ∈ B ↔ ∃* x ( x ∈ A ∧ z ∈ B ) ) ;;
+	step 3 : wff = albii (step 2) |- ( ∀ z ∃* x ∈ A z ∈ B ↔ ∀ z ∃* x ( x ∈ A ∧ z ∈ B ) ) ;;
+	step 4 : wff = bitri (step 1, step 3) |- ( Disj_ x ∈ A B ↔ ∀ z ∃* x ( x ∈ A ∧ z ∈ B ) ) ;;
+	step 5 : wff = nftru () |- F/ x T. ;;
+	step 6 : wff = nfcvf () |- ( ¬ ∀ y y = x → F/_ y x ) ;;
+	step 7 : wff = a1i (hyp 1) |- ( ¬ ∀ y y = x → F/_ y A ) ;;
+	step 8 : wff = nfeld (step 6, step 7) |- ( ¬ ∀ y y = x → F/ y x ∈ A ) ;;
+	step 9 : wff = nfcri (hyp 2) |- F/ y z ∈ B ;;
+	step 10 : wff = a1i (step 9) |- ( ¬ ∀ y y = x → F/ y z ∈ B ) ;;
+	step 11 : wff = nfand (step 8, step 10) |- ( ¬ ∀ y y = x → F/ y ( x ∈ A ∧ z ∈ B ) ) ;;
+	step 12 : wff = adantl (step 11) |- ( ( T. ∧ ¬ ∀ y y = x ) → F/ y ( x ∈ A ∧ z ∈ B ) ) ;;
+	step 13 : wff = nfmod2 (step 5, step 12) |- ( T. → F/ y ∃* x ( x ∈ A ∧ z ∈ B ) ) ;;
+	step 14 : wff = trud (step 13) |- F/ y ∃* x ( x ∈ A ∧ z ∈ B ) ;;
+	step 15 : wff = nfal (step 14) |- F/ y ∀ z ∃* x ( x ∈ A ∧ z ∈ B ) ;;
+	step 16 : wff = nfxfr (step 4, step 15) |- F/ y Disj_ x ∈ A B ;;
+	qed prop 1 = step 16 ;;
+}
+
+/* Bound-variable hypothesis builder for disjoint collection.  (Contributed
+       by Mario Carneiro, 14-Nov-2016.) */
+
+theorem nfdisj1 (x : set, A : class, B : class) disjointed(y A, y B, x y) {
+	prop 1 : wff = |- F/ x Disj_ x ∈ A B ;;
+}
+
+proof of nfdisj1 {
+	var y : set;;
+	step 1 : wff = df-disj () |- ( Disj_ x ∈ A B ↔ ∀ y ∃* x ∈ A y ∈ B ) ;;
+	step 2 : wff = nfrmo1 () |- F/ x ∃* x ∈ A y ∈ B ;;
+	step 3 : wff = nfal (step 2) |- F/ x ∀ y ∃* x ∈ A y ∈ B ;;
+	step 4 : wff = nfxfr (step 1, step 3) |- F/ x Disj_ x ∈ A B ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Two ways to say that a collection ` B ( i ) ` for ` i e. A ` is
+       disjoint.  (Contributed by Mario Carneiro, 26-Mar-2015.)  (Revised by
+       Mario Carneiro, 14-Nov-2016.) */
+
+theorem disjor (A : class, B : class, C : class, i : set, j : set) disjointed(i j x A, j x B, i x C) {
+	hyp 1 : wff = |- ( i = j → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( Disj_ i ∈ A B ↔ ∀ i ∈ A ∀ j ∈ A ( i = j ∨ ( B ∩ C ) = ∅ ) ) ;;
+}
+
+proof of disjor {
+	var x : set;;
+	step 1 : wff = df-disj () |- ( Disj_ i ∈ A B ↔ ∀ x ∃* i ∈ A x ∈ B ) ;;
+	step 2 : wff = ralcom4 () |- ( ∀ i ∈ A ∀ x ∀ j ∈ A ( ( x ∈ B ∧ x ∈ C ) → i = j ) ↔ ∀ x ∀ i ∈ A ∀ j ∈ A ( ( x ∈ B ∧ x ∈ C ) → i = j ) ) ;;
+	step 3 : wff = orcom () |- ( ( i = j ∨ ( B ∩ C ) = ∅ ) ↔ ( ( B ∩ C ) = ∅ ∨ i = j ) ) ;;
+	step 4 : wff = df-or () |- ( ( ( B ∩ C ) = ∅ ∨ i = j ) ↔ ( ¬ ( B ∩ C ) = ∅ → i = j ) ) ;;
+	step 5 : wff = neq0 () |- ( ¬ ( B ∩ C ) = ∅ ↔ ∃ x x ∈ ( B ∩ C ) ) ;;
+	step 6 : wff = elin () |- ( x ∈ ( B ∩ C ) ↔ ( x ∈ B ∧ x ∈ C ) ) ;;
+	step 7 : wff = exbii (step 6) |- ( ∃ x x ∈ ( B ∩ C ) ↔ ∃ x ( x ∈ B ∧ x ∈ C ) ) ;;
+	step 8 : wff = bitri (step 5, step 7) |- ( ¬ ( B ∩ C ) = ∅ ↔ ∃ x ( x ∈ B ∧ x ∈ C ) ) ;;
+	step 9 : wff = imbi1i (step 8) |- ( ( ¬ ( B ∩ C ) = ∅ → i = j ) ↔ ( ∃ x ( x ∈ B ∧ x ∈ C ) → i = j ) ) ;;
+	step 10 : wff = 19.23v () |- ( ∀ x ( ( x ∈ B ∧ x ∈ C ) → i = j ) ↔ ( ∃ x ( x ∈ B ∧ x ∈ C ) → i = j ) ) ;;
+	step 11 : wff = bitr4i (step 9, step 10) |- ( ( ¬ ( B ∩ C ) = ∅ → i = j ) ↔ ∀ x ( ( x ∈ B ∧ x ∈ C ) → i = j ) ) ;;
+	step 12 : wff = 3bitri (step 3, step 4, step 11) |- ( ( i = j ∨ ( B ∩ C ) = ∅ ) ↔ ∀ x ( ( x ∈ B ∧ x ∈ C ) → i = j ) ) ;;
+	step 13 : wff = ralbii (step 12) |- ( ∀ j ∈ A ( i = j ∨ ( B ∩ C ) = ∅ ) ↔ ∀ j ∈ A ∀ x ( ( x ∈ B ∧ x ∈ C ) → i = j ) ) ;;
+	step 14 : wff = ralcom4 () |- ( ∀ j ∈ A ∀ x ( ( x ∈ B ∧ x ∈ C ) → i = j ) ↔ ∀ x ∀ j ∈ A ( ( x ∈ B ∧ x ∈ C ) → i = j ) ) ;;
+	step 15 : wff = bitri (step 13, step 14) |- ( ∀ j ∈ A ( i = j ∨ ( B ∩ C ) = ∅ ) ↔ ∀ x ∀ j ∈ A ( ( x ∈ B ∧ x ∈ C ) → i = j ) ) ;;
+	step 16 : wff = ralbii (step 15) |- ( ∀ i ∈ A ∀ j ∈ A ( i = j ∨ ( B ∩ C ) = ∅ ) ↔ ∀ i ∈ A ∀ x ∀ j ∈ A ( ( x ∈ B ∧ x ∈ C ) → i = j ) ) ;;
+	step 17 : wff = eleq2d (hyp 1) |- ( i = j → ( x ∈ B ↔ x ∈ C ) ) ;;
+	step 18 : wff = rmo4 (step 17) |- ( ∃* i ∈ A x ∈ B ↔ ∀ i ∈ A ∀ j ∈ A ( ( x ∈ B ∧ x ∈ C ) → i = j ) ) ;;
+	step 19 : wff = albii (step 18) |- ( ∀ x ∃* i ∈ A x ∈ B ↔ ∀ x ∀ i ∈ A ∀ j ∈ A ( ( x ∈ B ∧ x ∈ C ) → i = j ) ) ;;
+	step 20 : wff = 3bitr4i (step 2, step 16, step 19) |- ( ∀ i ∈ A ∀ j ∈ A ( i = j ∨ ( B ∩ C ) = ∅ ) ↔ ∀ x ∃* i ∈ A x ∈ B ) ;;
+	step 21 : wff = bitr4i (step 1, step 20) |- ( Disj_ i ∈ A B ↔ ∀ i ∈ A ∀ j ∈ A ( i = j ∨ ( B ∩ C ) = ∅ ) ) ;;
+	qed prop 1 = step 21 ;;
+}
+
+/* Two ways to say that a collection ` B ( i ) ` for ` i e. A ` is
+       disjoint.  (Contributed by Mario Carneiro, 26-Mar-2015.)
+       (New usage is discouraged.) */
+
+theorem disjmoOLD (x : set, A : class, B : class, C : class, i : set, j : set) disjointed(i j x A, j x B, i x C) {
+	hyp 1 : wff = |- ( i = j → B = C ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ∃* i ( i ∈ A ∧ x ∈ B ) ↔ ∀ i ∈ A ∀ j ∈ A ( i = j ∨ ( B ∩ C ) = ∅ ) ) ;;
+}
+
+proof of disjmoOLD {
+	step 1 : wff = dfdisj2 () |- ( Disj_ i ∈ A B ↔ ∀ x ∃* i ( i ∈ A ∧ x ∈ B ) ) ;;
+	step 2 : wff = disjor (hyp 1) |- ( Disj_ i ∈ A B ↔ ∀ i ∈ A ∀ j ∈ A ( i = j ∨ ( B ∩ C ) = ∅ ) ) ;;
+	step 3 : wff = bitr3i (step 1, step 2) |- ( ∀ x ∃* i ( i ∈ A ∧ x ∈ B ) ↔ ∀ i ∈ A ∀ j ∈ A ( i = j ∨ ( B ∩ C ) = ∅ ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Two ways to say that a collection ` B ( i ) ` for ` i e. A ` is
+       disjoint.  (Contributed by Mario Carneiro, 14-Nov-2016.) */
+
+theorem disjors (x : set, A : class, B : class, i : set, j : set) disjointed(i j x A, i j B) {
+	prop 1 : wff = |- ( Disj_ x ∈ A B ↔ ∀ i ∈ A ∀ j ∈ A ( i = j ∨ ( [_ i / x ]_ B ∩ [_ j / x ]_ B ) = ∅ ) ) ;;
+}
+
+proof of disjors {
+	step 1 : wff = nfcv () |- F/_ i B ;;
+	step 2 : wff = nfcsb1v () |- F/_ x [_ i / x ]_ B ;;
+	step 3 : wff = csbeq1a () |- ( x = i → B = [_ i / x ]_ B ) ;;
+	step 4 : wff = cbvdisj (step 1, step 2, step 3) |- ( Disj_ x ∈ A B ↔ Disj_ i ∈ A [_ i / x ]_ B ) ;;
+	step 5 : wff = csbeq1 () |- ( i = j → [_ i / x ]_ B = [_ j / x ]_ B ) ;;
+	step 6 : wff = disjor (step 5) |- ( Disj_ i ∈ A [_ i / x ]_ B ↔ ∀ i ∈ A ∀ j ∈ A ( i = j ∨ ( [_ i / x ]_ B ∩ [_ j / x ]_ B ) = ∅ ) ) ;;
+	step 7 : wff = bitri (step 4, step 6) |- ( Disj_ x ∈ A B ↔ ∀ i ∈ A ∀ j ∈ A ( i = j ∨ ( [_ i / x ]_ B ∩ [_ j / x ]_ B ) = ∅ ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Property of a disjoint collection: if ` B ( X ) = C ` and
+       ` B ( Y ) = D ` , and ` X =/= Y ` , then ` C ` and ` D ` are disjoint.
+       (Contributed by Mario Carneiro, 14-Nov-2016.) */
+
+theorem disji2 (x : set, A : class, B : class, C : class, D : class, X : class, Y : class) disjointed(x y z A, y z B, x y z C, x z D, x y z X, x z Y) {
+	hyp 1 : wff = |- ( x = X → B = C ) ;;
+	hyp 2 : wff = |- ( x = Y → B = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( Disj_ x ∈ A B ∧ ( X ∈ A ∧ Y ∈ A ) ∧ X ≠ Y ) → ( C ∩ D ) = ∅ ) ;;
+}
+
+proof of disji2 {
+	var y : set, z : set;;
+	step 1 : wff = df-ne () |- ( X ≠ Y ↔ ¬ X = Y ) ;;
+	step 2 : wff = disjors () |- ( Disj_ x ∈ A B ↔ ∀ y ∈ A ∀ z ∈ A ( y = z ∨ ( [_ y / x ]_ B ∩ [_ z / x ]_ B ) = ∅ ) ) ;;
+	step 3 : wff = eqeq1 () |- ( y = X → ( y = z ↔ X = z ) ) ;;
+	step 4 : wff = nfcv () |- F/_ x X ;;
+	step 5 : wff = nfcv () |- F/_ x C ;;
+	step 6 : wff = csbhypf (step 4, step 5, hyp 1) |- ( y = X → [_ y / x ]_ B = C ) ;;
+	step 7 : wff = ineq1d (step 6) |- ( y = X → ( [_ y / x ]_ B ∩ [_ z / x ]_ B ) = ( C ∩ [_ z / x ]_ B ) ) ;;
+	step 8 : wff = eqeq1d (step 7) |- ( y = X → ( ( [_ y / x ]_ B ∩ [_ z / x ]_ B ) = ∅ ↔ ( C ∩ [_ z / x ]_ B ) = ∅ ) ) ;;
+	step 9 : wff = orbi12d (step 3, step 8) |- ( y = X → ( ( y = z ∨ ( [_ y / x ]_ B ∩ [_ z / x ]_ B ) = ∅ ) ↔ ( X = z ∨ ( C ∩ [_ z / x ]_ B ) = ∅ ) ) ) ;;
+	step 10 : wff = eqeq2 () |- ( z = Y → ( X = z ↔ X = Y ) ) ;;
+	step 11 : wff = nfcv () |- F/_ x Y ;;
+	step 12 : wff = nfcv () |- F/_ x D ;;
+	step 13 : wff = csbhypf (step 11, step 12, hyp 2) |- ( z = Y → [_ z / x ]_ B = D ) ;;
+	step 14 : wff = ineq2d (step 13) |- ( z = Y → ( C ∩ [_ z / x ]_ B ) = ( C ∩ D ) ) ;;
+	step 15 : wff = eqeq1d (step 14) |- ( z = Y → ( ( C ∩ [_ z / x ]_ B ) = ∅ ↔ ( C ∩ D ) = ∅ ) ) ;;
+	step 16 : wff = orbi12d (step 10, step 15) |- ( z = Y → ( ( X = z ∨ ( C ∩ [_ z / x ]_ B ) = ∅ ) ↔ ( X = Y ∨ ( C ∩ D ) = ∅ ) ) ) ;;
+	step 17 : wff = rspc2v (step 9, step 16) |- ( ( X ∈ A ∧ Y ∈ A ) → ( ∀ y ∈ A ∀ z ∈ A ( y = z ∨ ( [_ y / x ]_ B ∩ [_ z / x ]_ B ) = ∅ ) → ( X = Y ∨ ( C ∩ D ) = ∅ ) ) ) ;;
+	step 18 : wff = syl5bi (step 2, step 17) |- ( ( X ∈ A ∧ Y ∈ A ) → ( Disj_ x ∈ A B → ( X = Y ∨ ( C ∩ D ) = ∅ ) ) ) ;;
+	step 19 : wff = impcom (step 18) |- ( ( Disj_ x ∈ A B ∧ ( X ∈ A ∧ Y ∈ A ) ) → ( X = Y ∨ ( C ∩ D ) = ∅ ) ) ;;
+	step 20 : wff = ord (step 19) |- ( ( Disj_ x ∈ A B ∧ ( X ∈ A ∧ Y ∈ A ) ) → ( ¬ X = Y → ( C ∩ D ) = ∅ ) ) ;;
+	step 21 : wff = syl5bi (step 1, step 20) |- ( ( Disj_ x ∈ A B ∧ ( X ∈ A ∧ Y ∈ A ) ) → ( X ≠ Y → ( C ∩ D ) = ∅ ) ) ;;
+	step 22 : wff = 3impia (step 21) |- ( ( Disj_ x ∈ A B ∧ ( X ∈ A ∧ Y ∈ A ) ∧ X ≠ Y ) → ( C ∩ D ) = ∅ ) ;;
+	qed prop 1 = step 22 ;;
+}
+
+/* Property of a disjoint collection: if ` B ( X ) = C ` and
+       ` B ( Y ) = D ` have a common element ` Z ` , then ` X = Y ` .
+       (Contributed by Mario Carneiro, 14-Nov-2016.) */
+
+theorem disji (x : set, A : class, B : class, C : class, D : class, X : class, Y : class, Z : class) disjointed(x A, x C, x D, x X, x Y) {
+	hyp 1 : wff = |- ( x = X → B = C ) ;;
+	hyp 2 : wff = |- ( x = Y → B = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( Disj_ x ∈ A B ∧ ( X ∈ A ∧ Y ∈ A ) ∧ ( Z ∈ C ∧ Z ∈ D ) ) → X = Y ) ;;
+}
+
+proof of disji {
+	step 1 : wff = inelcm () |- ( ( Z ∈ C ∧ Z ∈ D ) → ( C ∩ D ) ≠ ∅ ) ;;
+	step 2 : wff = disji2 (hyp 1, hyp 2) |- ( ( Disj_ x ∈ A B ∧ ( X ∈ A ∧ Y ∈ A ) ∧ X ≠ Y ) → ( C ∩ D ) = ∅ ) ;;
+	step 3 : wff = 3expia (step 2) |- ( ( Disj_ x ∈ A B ∧ ( X ∈ A ∧ Y ∈ A ) ) → ( X ≠ Y → ( C ∩ D ) = ∅ ) ) ;;
+	step 4 : wff = necon1d (step 3) |- ( ( Disj_ x ∈ A B ∧ ( X ∈ A ∧ Y ∈ A ) ) → ( ( C ∩ D ) ≠ ∅ → X = Y ) ) ;;
+	step 5 : wff = 3impia (step 4) |- ( ( Disj_ x ∈ A B ∧ ( X ∈ A ∧ Y ∈ A ) ∧ ( C ∩ D ) ≠ ∅ ) → X = Y ) ;;
+	step 6 : wff = syl3an3 (step 1, step 5) |- ( ( Disj_ x ∈ A B ∧ ( X ∈ A ∧ Y ∈ A ) ∧ ( Z ∈ C ∧ Z ∈ D ) ) → X = Y ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* If there is a function ` C ( y ) ` such that ` C ( y ) = x ` for all
+       ` y e. B ( x ) ` , then the sets ` B ( x ) ` for distinct ` x e. A ` are
+       disjoint.  (Contributed by Mario Carneiro, 10-Dec-2016.) */
+
+theorem invdisj (x : set, y : set, A : class, B : class, C : class) disjointed(x y, y A, y B, x C) {
+	prop 1 : wff = |- ( ∀ x ∈ A ∀ y ∈ B C = x → Disj_ x ∈ A B ) ;;
+}
+
+proof of invdisj {
+	step 1 : wff = nfra2 () |- F/ y ∀ x ∈ A ∀ y ∈ B C = x ;;
+	step 2 : wff = df-ral () |- ( ∀ x ∈ A ∀ y ∈ B C = x ↔ ∀ x ( x ∈ A → ∀ y ∈ B C = x ) ) ;;
+	step 3 : wff = rsp () |- ( ∀ y ∈ B C = x → ( y ∈ B → C = x ) ) ;;
+	step 4 : wff = eqcom () |- ( C = x ↔ x = C ) ;;
+	step 5 : wff = syl6ib (step 3, step 4) |- ( ∀ y ∈ B C = x → ( y ∈ B → x = C ) ) ;;
+	step 6 : wff = imim2i (step 5) |- ( ( x ∈ A → ∀ y ∈ B C = x ) → ( x ∈ A → ( y ∈ B → x = C ) ) ) ;;
+	step 7 : wff = imp3a (step 6) |- ( ( x ∈ A → ∀ y ∈ B C = x ) → ( ( x ∈ A ∧ y ∈ B ) → x = C ) ) ;;
+	step 8 : wff = alimi (step 7) |- ( ∀ x ( x ∈ A → ∀ y ∈ B C = x ) → ∀ x ( ( x ∈ A ∧ y ∈ B ) → x = C ) ) ;;
+	step 9 : wff = sylbi (step 2, step 8) |- ( ∀ x ∈ A ∀ y ∈ B C = x → ∀ x ( ( x ∈ A ∧ y ∈ B ) → x = C ) ) ;;
+	step 10 : wff = mo2icl () |- ( ∀ x ( ( x ∈ A ∧ y ∈ B ) → x = C ) → ∃* x ( x ∈ A ∧ y ∈ B ) ) ;;
+	step 11 : wff = syl (step 9, step 10) |- ( ∀ x ∈ A ∀ y ∈ B C = x → ∃* x ( x ∈ A ∧ y ∈ B ) ) ;;
+	step 12 : wff = alrimi (step 1, step 11) |- ( ∀ x ∈ A ∀ y ∈ B C = x → ∀ y ∃* x ( x ∈ A ∧ y ∈ B ) ) ;;
+	step 13 : wff = df-disj () |- ( Disj_ x ∈ A B ↔ ∀ y ∃* x ∈ A y ∈ B ) ;;
+	step 14 : wff = df-rmo () |- ( ∃* x ∈ A y ∈ B ↔ ∃* x ( x ∈ A ∧ y ∈ B ) ) ;;
+	step 15 : wff = albii (step 14) |- ( ∀ y ∃* x ∈ A y ∈ B ↔ ∀ y ∃* x ( x ∈ A ∧ y ∈ B ) ) ;;
+	step 16 : wff = bitri (step 13, step 15) |- ( Disj_ x ∈ A B ↔ ∀ y ∃* x ( x ∈ A ∧ y ∈ B ) ) ;;
+	step 17 : wff = sylibr (step 12, step 16) |- ( ∀ x ∈ A ∀ y ∈ B C = x → Disj_ x ∈ A B ) ;;
+	qed prop 1 = step 17 ;;
+}
+
+/* A disjoint collection yields disjoint indexed unions for disjoint index
+       sets.  (Contributed by Mario Carneiro, 26-Mar-2015.)  (Revised by Mario
+       Carneiro, 14-Nov-2016.) */
+
+theorem disjiun (x : set, A : class, B : class, C : class, D : class) disjointed(x y z A, y z B, x y z C, x y z D) {
+	prop 1 : wff = |- ( ( Disj_ x ∈ A B ∧ ( C ⊆ A ∧ D ⊆ A ∧ ( C ∩ D ) = ∅ ) ) → ( ⋃_ x ∈ C B ∩ ⋃_ x ∈ D B ) = ∅ ) ;;
+}
+
+proof of disjiun {
+	var y : set, z : set;;
+	step 1 : wff = df-disj () |- ( Disj_ x ∈ A B ↔ ∀ y ∃* x ∈ A y ∈ B ) ;;
+	step 2 : wff = elin () |- ( y ∈ ( ⋃_ x ∈ C B ∩ ⋃_ x ∈ D B ) ↔ ( y ∈ ⋃_ x ∈ C B ∧ y ∈ ⋃_ x ∈ D B ) ) ;;
+	step 3 : wff = eliun () |- ( y ∈ ⋃_ x ∈ C B ↔ ∃ x ∈ C y ∈ B ) ;;
+	step 4 : wff = eliun () |- ( y ∈ ⋃_ x ∈ D B ↔ ∃ x ∈ D y ∈ B ) ;;
+	step 5 : wff = anbi12i (step 3, step 4) |- ( ( y ∈ ⋃_ x ∈ C B ∧ y ∈ ⋃_ x ∈ D B ) ↔ ( ∃ x ∈ C y ∈ B ∧ ∃ x ∈ D y ∈ B ) ) ;;
+	step 6 : wff = bitri (step 2, step 5) |- ( y ∈ ( ⋃_ x ∈ C B ∩ ⋃_ x ∈ D B ) ↔ ( ∃ x ∈ C y ∈ B ∧ ∃ x ∈ D y ∈ B ) ) ;;
+	step 7 : wff = nfv () |- F/ z y ∈ B ;;
+	step 8 : wff = rmo2 (step 7) |- ( ∃* x ∈ A y ∈ B ↔ ∃ z ∀ x ∈ A ( y ∈ B → x = z ) ) ;;
+	step 9 : wff = an4 () |- ( ( ( C ⊆ A ∧ D ⊆ A ) ∧ ( ∃ x ∈ C y ∈ B ∧ ∃ x ∈ D y ∈ B ) ) ↔ ( ( C ⊆ A ∧ ∃ x ∈ C y ∈ B ) ∧ ( D ⊆ A ∧ ∃ x ∈ D y ∈ B ) ) ) ;;
+	step 10 : wff = ssralv () |- ( C ⊆ A → ( ∀ x ∈ A ( y ∈ B → x = z ) → ∀ x ∈ C ( y ∈ B → x = z ) ) ) ;;
+	step 11 : wff = impcom (step 10) |- ( ( ∀ x ∈ A ( y ∈ B → x = z ) ∧ C ⊆ A ) → ∀ x ∈ C ( y ∈ B → x = z ) ) ;;
+	step 12 : wff = r19.29 () |- ( ( ∀ x ∈ C ( y ∈ B → x = z ) ∧ ∃ x ∈ C y ∈ B ) → ∃ x ∈ C ( ( y ∈ B → x = z ) ∧ y ∈ B ) ) ;;
+	step 13 : wff = id () |- ( ( y ∈ B → x = z ) → ( y ∈ B → x = z ) ) ;;
+	step 14 : wff = imp (step 13) |- ( ( ( y ∈ B → x = z ) ∧ y ∈ B ) → x = z ) ;;
+	step 15 : wff = eleq1d (step 14) |- ( ( ( y ∈ B → x = z ) ∧ y ∈ B ) → ( x ∈ C ↔ z ∈ C ) ) ;;
+	step 16 : wff = biimpcd (step 15) |- ( x ∈ C → ( ( ( y ∈ B → x = z ) ∧ y ∈ B ) → z ∈ C ) ) ;;
+	step 17 : wff = rexlimiv (step 16) |- ( ∃ x ∈ C ( ( y ∈ B → x = z ) ∧ y ∈ B ) → z ∈ C ) ;;
+	step 18 : wff = syl (step 12, step 17) |- ( ( ∀ x ∈ C ( y ∈ B → x = z ) ∧ ∃ x ∈ C y ∈ B ) → z ∈ C ) ;;
+	step 19 : wff = ex (step 18) |- ( ∀ x ∈ C ( y ∈ B → x = z ) → ( ∃ x ∈ C y ∈ B → z ∈ C ) ) ;;
+	step 20 : wff = syl (step 11, step 19) |- ( ( ∀ x ∈ A ( y ∈ B → x = z ) ∧ C ⊆ A ) → ( ∃ x ∈ C y ∈ B → z ∈ C ) ) ;;
+	step 21 : wff = expimpd (step 20) |- ( ∀ x ∈ A ( y ∈ B → x = z ) → ( ( C ⊆ A ∧ ∃ x ∈ C y ∈ B ) → z ∈ C ) ) ;;
+	step 22 : wff = ssralv () |- ( D ⊆ A → ( ∀ x ∈ A ( y ∈ B → x = z ) → ∀ x ∈ D ( y ∈ B → x = z ) ) ) ;;
+	step 23 : wff = impcom (step 22) |- ( ( ∀ x ∈ A ( y ∈ B → x = z ) ∧ D ⊆ A ) → ∀ x ∈ D ( y ∈ B → x = z ) ) ;;
+	step 24 : wff = r19.29 () |- ( ( ∀ x ∈ D ( y ∈ B → x = z ) ∧ ∃ x ∈ D y ∈ B ) → ∃ x ∈ D ( ( y ∈ B → x = z ) ∧ y ∈ B ) ) ;;
+	step 25 : wff = id () |- ( ( y ∈ B → x = z ) → ( y ∈ B → x = z ) ) ;;
+	step 26 : wff = imp (step 25) |- ( ( ( y ∈ B → x = z ) ∧ y ∈ B ) → x = z ) ;;
+	step 27 : wff = eleq1d (step 26) |- ( ( ( y ∈ B → x = z ) ∧ y ∈ B ) → ( x ∈ D ↔ z ∈ D ) ) ;;
+	step 28 : wff = biimpcd (step 27) |- ( x ∈ D → ( ( ( y ∈ B → x = z ) ∧ y ∈ B ) → z ∈ D ) ) ;;
+	step 29 : wff = rexlimiv (step 28) |- ( ∃ x ∈ D ( ( y ∈ B → x = z ) ∧ y ∈ B ) → z ∈ D ) ;;
+	step 30 : wff = syl (step 24, step 29) |- ( ( ∀ x ∈ D ( y ∈ B → x = z ) ∧ ∃ x ∈ D y ∈ B ) → z ∈ D ) ;;
+	step 31 : wff = ex (step 30) |- ( ∀ x ∈ D ( y ∈ B → x = z ) → ( ∃ x ∈ D y ∈ B → z ∈ D ) ) ;;
+	step 32 : wff = syl (step 23, step 31) |- ( ( ∀ x ∈ A ( y ∈ B → x = z ) ∧ D ⊆ A ) → ( ∃ x ∈ D y ∈ B → z ∈ D ) ) ;;
+	step 33 : wff = expimpd (step 32) |- ( ∀ x ∈ A ( y ∈ B → x = z ) → ( ( D ⊆ A ∧ ∃ x ∈ D y ∈ B ) → z ∈ D ) ) ;;
+	step 34 : wff = anim12d (step 21, step 33) |- ( ∀ x ∈ A ( y ∈ B → x = z ) → ( ( ( C ⊆ A ∧ ∃ x ∈ C y ∈ B ) ∧ ( D ⊆ A ∧ ∃ x ∈ D y ∈ B ) ) → ( z ∈ C ∧ z ∈ D ) ) ) ;;
+	step 35 : wff = inelcm () |- ( ( z ∈ C ∧ z ∈ D ) → ( C ∩ D ) ≠ ∅ ) ;;
+	step 36 : wff = syl6 (step 34, step 35) |- ( ∀ x ∈ A ( y ∈ B → x = z ) → ( ( ( C ⊆ A ∧ ∃ x ∈ C y ∈ B ) ∧ ( D ⊆ A ∧ ∃ x ∈ D y ∈ B ) ) → ( C ∩ D ) ≠ ∅ ) ) ;;
+	step 37 : wff = exlimiv (step 36) |- ( ∃ z ∀ x ∈ A ( y ∈ B → x = z ) → ( ( ( C ⊆ A ∧ ∃ x ∈ C y ∈ B ) ∧ ( D ⊆ A ∧ ∃ x ∈ D y ∈ B ) ) → ( C ∩ D ) ≠ ∅ ) ) ;;
+	step 38 : wff = syl5bi (step 9, step 37) |- ( ∃ z ∀ x ∈ A ( y ∈ B → x = z ) → ( ( ( C ⊆ A ∧ D ⊆ A ) ∧ ( ∃ x ∈ C y ∈ B ∧ ∃ x ∈ D y ∈ B ) ) → ( C ∩ D ) ≠ ∅ ) ) ;;
+	step 39 : wff = exp3a (step 38) |- ( ∃ z ∀ x ∈ A ( y ∈ B → x = z ) → ( ( C ⊆ A ∧ D ⊆ A ) → ( ( ∃ x ∈ C y ∈ B ∧ ∃ x ∈ D y ∈ B ) → ( C ∩ D ) ≠ ∅ ) ) ) ;;
+	step 40 : wff = sylbi (step 8, step 39) |- ( ∃* x ∈ A y ∈ B → ( ( C ⊆ A ∧ D ⊆ A ) → ( ( ∃ x ∈ C y ∈ B ∧ ∃ x ∈ D y ∈ B ) → ( C ∩ D ) ≠ ∅ ) ) ) ;;
+	step 41 : wff = impcom (step 40) |- ( ( ( C ⊆ A ∧ D ⊆ A ) ∧ ∃* x ∈ A y ∈ B ) → ( ( ∃ x ∈ C y ∈ B ∧ ∃ x ∈ D y ∈ B ) → ( C ∩ D ) ≠ ∅ ) ) ;;
+	step 42 : wff = syl5bi (step 6, step 41) |- ( ( ( C ⊆ A ∧ D ⊆ A ) ∧ ∃* x ∈ A y ∈ B ) → ( y ∈ ( ⋃_ x ∈ C B ∩ ⋃_ x ∈ D B ) → ( C ∩ D ) ≠ ∅ ) ) ;;
+	step 43 : wff = necon2bd (step 42) |- ( ( ( C ⊆ A ∧ D ⊆ A ) ∧ ∃* x ∈ A y ∈ B ) → ( ( C ∩ D ) = ∅ → ¬ y ∈ ( ⋃_ x ∈ C B ∩ ⋃_ x ∈ D B ) ) ) ;;
+	step 44 : wff = impancom (step 43) |- ( ( ( C ⊆ A ∧ D ⊆ A ) ∧ ( C ∩ D ) = ∅ ) → ( ∃* x ∈ A y ∈ B → ¬ y ∈ ( ⋃_ x ∈ C B ∩ ⋃_ x ∈ D B ) ) ) ;;
+	step 45 : wff = 3impa (step 44) |- ( ( C ⊆ A ∧ D ⊆ A ∧ ( C ∩ D ) = ∅ ) → ( ∃* x ∈ A y ∈ B → ¬ y ∈ ( ⋃_ x ∈ C B ∩ ⋃_ x ∈ D B ) ) ) ;;
+	step 46 : wff = alimdv (step 45) |- ( ( C ⊆ A ∧ D ⊆ A ∧ ( C ∩ D ) = ∅ ) → ( ∀ y ∃* x ∈ A y ∈ B → ∀ y ¬ y ∈ ( ⋃_ x ∈ C B ∩ ⋃_ x ∈ D B ) ) ) ;;
+	step 47 : wff = syl5bi (step 1, step 46) |- ( ( C ⊆ A ∧ D ⊆ A ∧ ( C ∩ D ) = ∅ ) → ( Disj_ x ∈ A B → ∀ y ¬ y ∈ ( ⋃_ x ∈ C B ∩ ⋃_ x ∈ D B ) ) ) ;;
+	step 48 : wff = impcom (step 47) |- ( ( Disj_ x ∈ A B ∧ ( C ⊆ A ∧ D ⊆ A ∧ ( C ∩ D ) = ∅ ) ) → ∀ y ¬ y ∈ ( ⋃_ x ∈ C B ∩ ⋃_ x ∈ D B ) ) ;;
+	step 49 : wff = eq0 () |- ( ( ⋃_ x ∈ C B ∩ ⋃_ x ∈ D B ) = ∅ ↔ ∀ y ¬ y ∈ ( ⋃_ x ∈ C B ∩ ⋃_ x ∈ D B ) ) ;;
+	step 50 : wff = sylibr (step 48, step 49) |- ( ( Disj_ x ∈ A B ∧ ( C ⊆ A ∧ D ⊆ A ∧ ( C ∩ D ) = ∅ ) ) → ( ⋃_ x ∈ C B ∩ ⋃_ x ∈ D B ) = ∅ ) ;;
+	qed prop 1 = step 50 ;;
+}
+
+/* A disjoint collection yields disjoint indexed unions for disjoint index
+       sets.  (Contributed by Mario Carneiro, 26-Mar-2015.)
+       (New usage is discouraged.) */
+
+theorem disjiunOLD (x : set, y : set, A : class, B : class, C : class, D : class) disjointed(x y A, y B, x y C, x y D) {
+	prop 1 : wff = |- ( ( ∀ y ∃* x ( x ∈ A ∧ y ∈ B ) ∧ ( C ⊆ A ∧ D ⊆ A ∧ ( C ∩ D ) = ∅ ) ) → ( ⋃_ x ∈ C B ∩ ⋃_ x ∈ D B ) = ∅ ) ;;
+}
+
+proof of disjiunOLD {
+	step 1 : wff = dfdisj2 () |- ( Disj_ x ∈ A B ↔ ∀ y ∃* x ( x ∈ A ∧ y ∈ B ) ) ;;
+	step 2 : wff = disjiun () |- ( ( Disj_ x ∈ A B ∧ ( C ⊆ A ∧ D ⊆ A ∧ ( C ∩ D ) = ∅ ) ) → ( ⋃_ x ∈ C B ∩ ⋃_ x ∈ D B ) = ∅ ) ;;
+	step 3 : wff = sylanbr (step 1, step 2) |- ( ( ∀ y ∃* x ( x ∈ A ∧ y ∈ B ) ∧ ( C ⊆ A ∧ D ⊆ A ∧ ( C ∩ D ) = ∅ ) ) → ( ⋃_ x ∈ C B ∩ ⋃_ x ∈ D B ) = ∅ ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Any collection of singletons is disjoint.  (Contributed by Mario
+       Carneiro, 14-Nov-2016.) */
+
+theorem sndisj (x : set, A : class) disjointed(x y, y A) {
+	prop 1 : wff = |- Disj_ x ∈ A { x } ;;
+}
+
+proof of sndisj {
+	var y : set;;
+	step 1 : wff = dfdisj2 () |- ( Disj_ x ∈ A { x } ↔ ∀ y ∃* x ( x ∈ A ∧ y ∈ { x } ) ) ;;
+	step 2 : wff = moeq () |- ∃* x x = y ;;
+	step 3 : wff = simpr () |- ( ( x ∈ A ∧ y ∈ { x } ) → y ∈ { x } ) ;;
+	step 4 : wff = elsn () |- ( y ∈ { x } ↔ y = x ) ;;
+	step 5 : wff = sylib (step 3, step 4) |- ( ( x ∈ A ∧ y ∈ { x } ) → y = x ) ;;
+	step 6 : wff = eqcomd (step 5) |- ( ( x ∈ A ∧ y ∈ { x } ) → x = y ) ;;
+	step 7 : wff = moimi (step 6) |- ( ∃* x x = y → ∃* x ( x ∈ A ∧ y ∈ { x } ) ) ;;
+	step 8 : wff = ax-mp (step 2, step 7) |- ∃* x ( x ∈ A ∧ y ∈ { x } ) ;;
+	step 9 : wff = mpgbir (step 1, step 8) |- Disj_ x ∈ A { x } ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Any collection of empty sets is disjoint.  (Contributed by Mario Carneiro,
+     14-Nov-2016.) */
+
+theorem 0disj (x : set, A : class)  {
+	prop 1 : wff = |- Disj_ x ∈ A ∅ ;;
+}
+
+proof of 0disj {
+	step 1 : wff = 0ss () |- ∅ ⊆ { x } ;;
+	step 2 : wff = rgenw (step 1) |- ∀ x ∈ A ∅ ⊆ { x } ;;
+	step 3 : wff = sndisj () |- Disj_ x ∈ A { x } ;;
+	step 4 : wff = disjss2 () |- ( ∀ x ∈ A ∅ ⊆ { x } → ( Disj_ x ∈ A { x } → Disj_ x ∈ A ∅ ) ) ;;
+	step 5 : wff = mp2 (step 2, step 3, step 4) |- Disj_ x ∈ A ∅ ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* A singleton collection is disjoint.  (Contributed by Mario Carneiro,
+       14-Nov-2016.) */
+
+theorem disjxsn (x : set, A : class, B : class) disjointed(x y A, y B) {
+	prop 1 : wff = |- Disj_ x ∈ { A } B ;;
+}
+
+proof of disjxsn {
+	var y : set;;
+	step 1 : wff = dfdisj2 () |- ( Disj_ x ∈ { A } B ↔ ∀ y ∃* x ( x ∈ { A } ∧ y ∈ B ) ) ;;
+	step 2 : wff = moeq () |- ∃* x x = A ;;
+	step 3 : wff = elsni () |- ( x ∈ { A } → x = A ) ;;
+	step 4 : wff = adantr (step 3) |- ( ( x ∈ { A } ∧ y ∈ B ) → x = A ) ;;
+	step 5 : wff = moimi (step 4) |- ( ∃* x x = A → ∃* x ( x ∈ { A } ∧ y ∈ B ) ) ;;
+	step 6 : wff = ax-mp (step 2, step 5) |- ∃* x ( x ∈ { A } ∧ y ∈ B ) ;;
+	step 7 : wff = mpgbir (step 1, step 6) |- Disj_ x ∈ { A } B ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* An empty collection is disjoint.  (Contributed by Mario Carneiro,
+       14-Nov-2016.) */
+
+theorem disjx0 (x : set, B : class)  {
+	prop 1 : wff = |- Disj_ x ∈ ∅ B ;;
+}
+
+proof of disjx0 {
+	step 1 : wff = 0ss () |- ∅ ⊆ { ∅ } ;;
+	step 2 : wff = disjxsn () |- Disj_ x ∈ { ∅ } B ;;
+	step 3 : wff = disjss1 () |- ( ∅ ⊆ { ∅ } → ( Disj_ x ∈ { ∅ } B → Disj_ x ∈ ∅ B ) ) ;;
+	step 4 : wff = mp2 (step 1, step 2, step 3) |- Disj_ x ∈ ∅ B ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A pair collection is disjoint iff the two sets in the family have empty
+       intersection.  (Contributed by Mario Carneiro, 14-Nov-2016.) */
+
+theorem disjprg (x : set, A : class, B : class, C : class, D : class, E : class, V : class) disjointed(x y z A, x y z B, y z C, x y z D, x y z E) {
+	hyp 1 : wff = |- ( x = A → C = D ) ;;
+	hyp 2 : wff = |- ( x = B → C = E ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( A ∈ V ∧ B ∈ V ∧ A ≠ B ) → ( Disj_ x ∈ { A , B } C ↔ ( D ∩ E ) = ∅ ) ) ;;
+}
+
+proof of disjprg {
+	var y : set, z : set;;
+	step 1 : wff = eqeq1 () |- ( y = A → ( y = z ↔ A = z ) ) ;;
+	step 2 : wff = nfcv () |- F/_ x A ;;
+	step 3 : wff = nfcv () |- F/_ x D ;;
+	step 4 : wff = csbhypf (step 2, step 3, hyp 1) |- ( y = A → [_ y / x ]_ C = D ) ;;
+	step 5 : wff = ineq1d (step 4) |- ( y = A → ( [_ y / x ]_ C ∩ [_ z / x ]_ C ) = ( D ∩ [_ z / x ]_ C ) ) ;;
+	step 6 : wff = eqeq1d (step 5) |- ( y = A → ( ( [_ y / x ]_ C ∩ [_ z / x ]_ C ) = ∅ ↔ ( D ∩ [_ z / x ]_ C ) = ∅ ) ) ;;
+	step 7 : wff = orbi12d (step 1, step 6) |- ( y = A → ( ( y = z ∨ ( [_ y / x ]_ C ∩ [_ z / x ]_ C ) = ∅ ) ↔ ( A = z ∨ ( D ∩ [_ z / x ]_ C ) = ∅ ) ) ) ;;
+	step 8 : wff = ralbidv (step 7) |- ( y = A → ( ∀ z ∈ { A , B } ( y = z ∨ ( [_ y / x ]_ C ∩ [_ z / x ]_ C ) = ∅ ) ↔ ∀ z ∈ { A , B } ( A = z ∨ ( D ∩ [_ z / x ]_ C ) = ∅ ) ) ) ;;
+	step 9 : wff = eqeq1 () |- ( y = B → ( y = z ↔ B = z ) ) ;;
+	step 10 : wff = nfcv () |- F/_ x B ;;
+	step 11 : wff = nfcv () |- F/_ x E ;;
+	step 12 : wff = csbhypf (step 10, step 11, hyp 2) |- ( y = B → [_ y / x ]_ C = E ) ;;
+	step 13 : wff = ineq1d (step 12) |- ( y = B → ( [_ y / x ]_ C ∩ [_ z / x ]_ C ) = ( E ∩ [_ z / x ]_ C ) ) ;;
+	step 14 : wff = eqeq1d (step 13) |- ( y = B → ( ( [_ y / x ]_ C ∩ [_ z / x ]_ C ) = ∅ ↔ ( E ∩ [_ z / x ]_ C ) = ∅ ) ) ;;
+	step 15 : wff = orbi12d (step 9, step 14) |- ( y = B → ( ( y = z ∨ ( [_ y / x ]_ C ∩ [_ z / x ]_ C ) = ∅ ) ↔ ( B = z ∨ ( E ∩ [_ z / x ]_ C ) = ∅ ) ) ) ;;
+	step 16 : wff = ralbidv (step 15) |- ( y = B → ( ∀ z ∈ { A , B } ( y = z ∨ ( [_ y / x ]_ C ∩ [_ z / x ]_ C ) = ∅ ) ↔ ∀ z ∈ { A , B } ( B = z ∨ ( E ∩ [_ z / x ]_ C ) = ∅ ) ) ) ;;
+	step 17 : wff = ralprg (step 8, step 16) |- ( ( A ∈ V ∧ B ∈ V ) → ( ∀ y ∈ { A , B } ∀ z ∈ { A , B } ( y = z ∨ ( [_ y / x ]_ C ∩ [_ z / x ]_ C ) = ∅ ) ↔ ( ∀ z ∈ { A , B } ( A = z ∨ ( D ∩ [_ z / x ]_ C ) = ∅ ) ∧ ∀ z ∈ { A , B } ( B = z ∨ ( E ∩ [_ z / x ]_ C ) = ∅ ) ) ) ) ;;
+	step 18 : wff = 3adant3 (step 17) |- ( ( A ∈ V ∧ B ∈ V ∧ A ≠ B ) → ( ∀ y ∈ { A , B } ∀ z ∈ { A , B } ( y = z ∨ ( [_ y / x ]_ C ∩ [_ z / x ]_ C ) = ∅ ) ↔ ( ∀ z ∈ { A , B } ( A = z ∨ ( D ∩ [_ z / x ]_ C ) = ∅ ) ∧ ∀ z ∈ { A , B } ( B = z ∨ ( E ∩ [_ z / x ]_ C ) = ∅ ) ) ) ) ;;
+	step 19 : wff = id () |- ( z = A → z = A ) ;;
+	step 20 : wff = eqcomd (step 19) |- ( z = A → A = z ) ;;
+	step 21 : wff = orcd (step 20) |- ( z = A → ( A = z ∨ ( D ∩ [_ z / x ]_ C ) = ∅ ) ) ;;
+	step 22 : wff = a1tru () |- ( z = A → T. ) ;;
+	step 23 : wff = 2thd (step 21, step 22) |- ( z = A → ( ( A = z ∨ ( D ∩ [_ z / x ]_ C ) = ∅ ) ↔ T. ) ) ;;
+	step 24 : wff = eqeq2 () |- ( z = B → ( A = z ↔ A = B ) ) ;;
+	step 25 : wff = nfcv () |- F/_ x B ;;
+	step 26 : wff = nfcv () |- F/_ x E ;;
+	step 27 : wff = csbhypf (step 25, step 26, hyp 2) |- ( z = B → [_ z / x ]_ C = E ) ;;
+	step 28 : wff = ineq2d (step 27) |- ( z = B → ( D ∩ [_ z / x ]_ C ) = ( D ∩ E ) ) ;;
+	step 29 : wff = eqeq1d (step 28) |- ( z = B → ( ( D ∩ [_ z / x ]_ C ) = ∅ ↔ ( D ∩ E ) = ∅ ) ) ;;
+	step 30 : wff = orbi12d (step 24, step 29) |- ( z = B → ( ( A = z ∨ ( D ∩ [_ z / x ]_ C ) = ∅ ) ↔ ( A = B ∨ ( D ∩ E ) = ∅ ) ) ) ;;
+	step 31 : wff = ralprg (step 23, step 30) |- ( ( A ∈ V ∧ B ∈ V ) → ( ∀ z ∈ { A , B } ( A = z ∨ ( D ∩ [_ z / x ]_ C ) = ∅ ) ↔ ( T. ∧ ( A = B ∨ ( D ∩ E ) = ∅ ) ) ) ) ;;
+	step 32 : wff = 3adant3 (step 31) |- ( ( A ∈ V ∧ B ∈ V ∧ A ≠ B ) → ( ∀ z ∈ { A , B } ( A = z ∨ ( D ∩ [_ z / x ]_ C ) = ∅ ) ↔ ( T. ∧ ( A = B ∨ ( D ∩ E ) = ∅ ) ) ) ) ;;
+	step 33 : wff = simp3 () |- ( ( A ∈ V ∧ B ∈ V ∧ A ≠ B ) → A ≠ B ) ;;
+	step 34 : wff = neneqd (step 33) |- ( ( A ∈ V ∧ B ∈ V ∧ A ≠ B ) → ¬ A = B ) ;;
+	step 35 : wff = biorf () |- ( ¬ A = B → ( ( D ∩ E ) = ∅ ↔ ( A = B ∨ ( D ∩ E ) = ∅ ) ) ) ;;
+	step 36 : wff = syl (step 34, step 35) |- ( ( A ∈ V ∧ B ∈ V ∧ A ≠ B ) → ( ( D ∩ E ) = ∅ ↔ ( A = B ∨ ( D ∩ E ) = ∅ ) ) ) ;;
+	step 37 : wff = tru () |- T. ;;
+	step 38 : wff = biantrur (step 37) |- ( ( A = B ∨ ( D ∩ E ) = ∅ ) ↔ ( T. ∧ ( A = B ∨ ( D ∩ E ) = ∅ ) ) ) ;;
+	step 39 : wff = syl6bb (step 36, step 38) |- ( ( A ∈ V ∧ B ∈ V ∧ A ≠ B ) → ( ( D ∩ E ) = ∅ ↔ ( T. ∧ ( A = B ∨ ( D ∩ E ) = ∅ ) ) ) ) ;;
+	step 40 : wff = bitr4d (step 32, step 39) |- ( ( A ∈ V ∧ B ∈ V ∧ A ≠ B ) → ( ∀ z ∈ { A , B } ( A = z ∨ ( D ∩ [_ z / x ]_ C ) = ∅ ) ↔ ( D ∩ E ) = ∅ ) ) ;;
+	step 41 : wff = eqeq2 () |- ( z = A → ( B = z ↔ B = A ) ) ;;
+	step 42 : wff = eqcom () |- ( B = A ↔ A = B ) ;;
+	step 43 : wff = syl6bb (step 41, step 42) |- ( z = A → ( B = z ↔ A = B ) ) ;;
+	step 44 : wff = nfcv () |- F/_ x A ;;
+	step 45 : wff = nfcv () |- F/_ x D ;;
+	step 46 : wff = csbhypf (step 44, step 45, hyp 1) |- ( z = A → [_ z / x ]_ C = D ) ;;
+	step 47 : wff = ineq2d (step 46) |- ( z = A → ( E ∩ [_ z / x ]_ C ) = ( E ∩ D ) ) ;;
+	step 48 : wff = incom () |- ( E ∩ D ) = ( D ∩ E ) ;;
+	step 49 : wff = syl6eq (step 47, step 48) |- ( z = A → ( E ∩ [_ z / x ]_ C ) = ( D ∩ E ) ) ;;
+	step 50 : wff = eqeq1d (step 49) |- ( z = A → ( ( E ∩ [_ z / x ]_ C ) = ∅ ↔ ( D ∩ E ) = ∅ ) ) ;;
+	step 51 : wff = orbi12d (step 43, step 50) |- ( z = A → ( ( B = z ∨ ( E ∩ [_ z / x ]_ C ) = ∅ ) ↔ ( A = B ∨ ( D ∩ E ) = ∅ ) ) ) ;;
+	step 52 : wff = id () |- ( z = B → z = B ) ;;
+	step 53 : wff = eqcomd (step 52) |- ( z = B → B = z ) ;;
+	step 54 : wff = orcd (step 53) |- ( z = B → ( B = z ∨ ( E ∩ [_ z / x ]_ C ) = ∅ ) ) ;;
+	step 55 : wff = a1tru () |- ( z = B → T. ) ;;
+	step 56 : wff = 2thd (step 54, step 55) |- ( z = B → ( ( B = z ∨ ( E ∩ [_ z / x ]_ C ) = ∅ ) ↔ T. ) ) ;;
+	step 57 : wff = ralprg (step 51, step 56) |- ( ( A ∈ V ∧ B ∈ V ) → ( ∀ z ∈ { A , B } ( B = z ∨ ( E ∩ [_ z / x ]_ C ) = ∅ ) ↔ ( ( A = B ∨ ( D ∩ E ) = ∅ ) ∧ T. ) ) ) ;;
+	step 58 : wff = 3adant3 (step 57) |- ( ( A ∈ V ∧ B ∈ V ∧ A ≠ B ) → ( ∀ z ∈ { A , B } ( B = z ∨ ( E ∩ [_ z / x ]_ C ) = ∅ ) ↔ ( ( A = B ∨ ( D ∩ E ) = ∅ ) ∧ T. ) ) ) ;;
+	step 59 : wff = simp3 () |- ( ( A ∈ V ∧ B ∈ V ∧ A ≠ B ) → A ≠ B ) ;;
+	step 60 : wff = neneqd (step 59) |- ( ( A ∈ V ∧ B ∈ V ∧ A ≠ B ) → ¬ A = B ) ;;
+	step 61 : wff = biorf () |- ( ¬ A = B → ( ( D ∩ E ) = ∅ ↔ ( A = B ∨ ( D ∩ E ) = ∅ ) ) ) ;;
+	step 62 : wff = syl (step 60, step 61) |- ( ( A ∈ V ∧ B ∈ V ∧ A ≠ B ) → ( ( D ∩ E ) = ∅ ↔ ( A = B ∨ ( D ∩ E ) = ∅ ) ) ) ;;
+	step 63 : wff = tru () |- T. ;;
+	step 64 : wff = biantru (step 63) |- ( ( A = B ∨ ( D ∩ E ) = ∅ ) ↔ ( ( A = B ∨ ( D ∩ E ) = ∅ ) ∧ T. ) ) ;;
+	step 65 : wff = syl6bb (step 62, step 64) |- ( ( A ∈ V ∧ B ∈ V ∧ A ≠ B ) → ( ( D ∩ E ) = ∅ ↔ ( ( A = B ∨ ( D ∩ E ) = ∅ ) ∧ T. ) ) ) ;;
+	step 66 : wff = bitr4d (step 58, step 65) |- ( ( A ∈ V ∧ B ∈ V ∧ A ≠ B ) → ( ∀ z ∈ { A , B } ( B = z ∨ ( E ∩ [_ z / x ]_ C ) = ∅ ) ↔ ( D ∩ E ) = ∅ ) ) ;;
+	step 67 : wff = anbi12d (step 40, step 66) |- ( ( A ∈ V ∧ B ∈ V ∧ A ≠ B ) → ( ( ∀ z ∈ { A , B } ( A = z ∨ ( D ∩ [_ z / x ]_ C ) = ∅ ) ∧ ∀ z ∈ { A , B } ( B = z ∨ ( E ∩ [_ z / x ]_ C ) = ∅ ) ) ↔ ( ( D ∩ E ) = ∅ ∧ ( D ∩ E ) = ∅ ) ) ) ;;
+	step 68 : wff = bitrd (step 18, step 67) |- ( ( A ∈ V ∧ B ∈ V ∧ A ≠ B ) → ( ∀ y ∈ { A , B } ∀ z ∈ { A , B } ( y = z ∨ ( [_ y / x ]_ C ∩ [_ z / x ]_ C ) = ∅ ) ↔ ( ( D ∩ E ) = ∅ ∧ ( D ∩ E ) = ∅ ) ) ) ;;
+	step 69 : wff = disjors () |- ( Disj_ x ∈ { A , B } C ↔ ∀ y ∈ { A , B } ∀ z ∈ { A , B } ( y = z ∨ ( [_ y / x ]_ C ∩ [_ z / x ]_ C ) = ∅ ) ) ;;
+	step 70 : wff = pm4.24 () |- ( ( D ∩ E ) = ∅ ↔ ( ( D ∩ E ) = ∅ ∧ ( D ∩ E ) = ∅ ) ) ;;
+	step 71 : wff = 3bitr4g (step 68, step 69, step 70) |- ( ( A ∈ V ∧ B ∈ V ∧ A ≠ B ) → ( Disj_ x ∈ { A , B } C ↔ ( D ∩ E ) = ∅ ) ) ;;
+	qed prop 1 = step 71 ;;
+}
+
+/* An indexed union of a disjoint collection of disjoint collections is
+       disjoint if each component is disjoint, and the disjoint unions in the
+       collection are also disjoint.  Note that ` B ( y ) ` and ` C ( x ) ` may
+       have the displayed free variables.  (Contributed by Mario Carneiro,
+       14-Nov-2016.) */
+
+theorem disjxiun (x : set, y : set, A : class, B : class, C : class) disjointed(r s u v x y z A, r s u v x z B, r s u v y z C) {
+	prop 1 : wff = |- ( Disj_ y ∈ A B → ( Disj_ x ∈ ⋃_ y ∈ A B C ↔ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ) ;;
+}
+
+proof of disjxiun {
+	var z : set, v : set, u : set, s : set, r : set;;
+	step 1 : wff = nfiu1 () |- F/_ y ⋃_ y ∈ A B ;;
+	step 2 : wff = nfcv () |- F/_ y C ;;
+	step 3 : wff = nfdisj (step 1, step 2) |- F/ y Disj_ x ∈ ⋃_ y ∈ A B C ;;
+	step 4 : wff = ssiun2 () |- ( y ∈ A → B ⊆ ⋃_ y ∈ A B ) ;;
+	step 5 : wff = disjss1 () |- ( B ⊆ ⋃_ y ∈ A B → ( Disj_ x ∈ ⋃_ y ∈ A B C → Disj_ x ∈ B C ) ) ;;
+	step 6 : wff = syl (step 4, step 5) |- ( y ∈ A → ( Disj_ x ∈ ⋃_ y ∈ A B C → Disj_ x ∈ B C ) ) ;;
+	step 7 : wff = com12 (step 6) |- ( Disj_ x ∈ ⋃_ y ∈ A B C → ( y ∈ A → Disj_ x ∈ B C ) ) ;;
+	step 8 : wff = ralrimi (step 3, step 7) |- ( Disj_ x ∈ ⋃_ y ∈ A B C → ∀ y ∈ A Disj_ x ∈ B C ) ;;
+	step 9 : wff = a1i (step 8) |- ( Disj_ y ∈ A B → ( Disj_ x ∈ ⋃_ y ∈ A B C → ∀ y ∈ A Disj_ x ∈ B C ) ) ;;
+	step 10 : wff = simplr () |- ( ( ( Disj_ y ∈ A B ∧ Disj_ x ∈ ⋃_ y ∈ A B C ) ∧ ( ( u ∈ A ∧ v ∈ A ) ∧ ¬ u = v ) ) → Disj_ x ∈ ⋃_ y ∈ A B C ) ;;
+	step 11 : wff = simprll () |- ( ( ( Disj_ y ∈ A B ∧ Disj_ x ∈ ⋃_ y ∈ A B C ) ∧ ( ( u ∈ A ∧ v ∈ A ) ∧ ¬ u = v ) ) → u ∈ A ) ;;
+	step 12 : wff = ssiun2 () |- ( u ∈ A → [_ u / y ]_ B ⊆ ⋃_ u ∈ A [_ u / y ]_ B ) ;;
+	step 13 : wff = nfcv () |- F/_ u B ;;
+	step 14 : wff = nfcsb1v () |- F/_ y [_ u / y ]_ B ;;
+	step 15 : wff = csbeq1a () |- ( y = u → B = [_ u / y ]_ B ) ;;
+	step 16 : wff = cbviun (step 13, step 14, step 15) |- ⋃_ y ∈ A B = ⋃_ u ∈ A [_ u / y ]_ B ;;
+	step 17 : wff = syl6sseqr (step 12, step 16) |- ( u ∈ A → [_ u / y ]_ B ⊆ ⋃_ y ∈ A B ) ;;
+	step 18 : wff = syl (step 11, step 17) |- ( ( ( Disj_ y ∈ A B ∧ Disj_ x ∈ ⋃_ y ∈ A B C ) ∧ ( ( u ∈ A ∧ v ∈ A ) ∧ ¬ u = v ) ) → [_ u / y ]_ B ⊆ ⋃_ y ∈ A B ) ;;
+	step 19 : wff = simprlr () |- ( ( ( Disj_ y ∈ A B ∧ Disj_ x ∈ ⋃_ y ∈ A B C ) ∧ ( ( u ∈ A ∧ v ∈ A ) ∧ ¬ u = v ) ) → v ∈ A ) ;;
+	step 20 : wff = csbeq1 () |- ( u = v → [_ u / y ]_ B = [_ v / y ]_ B ) ;;
+	step 21 : wff = sseq1d (step 20) |- ( u = v → ( [_ u / y ]_ B ⊆ ⋃_ y ∈ A B ↔ [_ v / y ]_ B ⊆ ⋃_ y ∈ A B ) ) ;;
+	step 22 : wff = ssiun2 () |- ( u ∈ A → [_ u / y ]_ B ⊆ ⋃_ u ∈ A [_ u / y ]_ B ) ;;
+	step 23 : wff = nfcv () |- F/_ u B ;;
+	step 24 : wff = nfcsb1v () |- F/_ y [_ u / y ]_ B ;;
+	step 25 : wff = csbeq1a () |- ( y = u → B = [_ u / y ]_ B ) ;;
+	step 26 : wff = cbviun (step 23, step 24, step 25) |- ⋃_ y ∈ A B = ⋃_ u ∈ A [_ u / y ]_ B ;;
+	step 27 : wff = syl6sseqr (step 22, step 26) |- ( u ∈ A → [_ u / y ]_ B ⊆ ⋃_ y ∈ A B ) ;;
+	step 28 : wff = vtoclga (step 21, step 27) |- ( v ∈ A → [_ v / y ]_ B ⊆ ⋃_ y ∈ A B ) ;;
+	step 29 : wff = syl (step 19, step 28) |- ( ( ( Disj_ y ∈ A B ∧ Disj_ x ∈ ⋃_ y ∈ A B C ) ∧ ( ( u ∈ A ∧ v ∈ A ) ∧ ¬ u = v ) ) → [_ v / y ]_ B ⊆ ⋃_ y ∈ A B ) ;;
+	step 30 : wff = simpl () |- ( ( Disj_ y ∈ A B ∧ Disj_ x ∈ ⋃_ y ∈ A B C ) → Disj_ y ∈ A B ) ;;
+	step 31 : wff = nfcv () |- F/_ u B ;;
+	step 32 : wff = nfcsb1v () |- F/_ y [_ u / y ]_ B ;;
+	step 33 : wff = csbeq1a () |- ( y = u → B = [_ u / y ]_ B ) ;;
+	step 34 : wff = cbvdisj (step 31, step 32, step 33) |- ( Disj_ y ∈ A B ↔ Disj_ u ∈ A [_ u / y ]_ B ) ;;
+	step 35 : wff = sylib (step 30, step 34) |- ( ( Disj_ y ∈ A B ∧ Disj_ x ∈ ⋃_ y ∈ A B C ) → Disj_ u ∈ A [_ u / y ]_ B ) ;;
+	step 36 : wff = csbeq1 () |- ( u = v → [_ u / y ]_ B = [_ v / y ]_ B ) ;;
+	step 37 : wff = disjor (step 36) |- ( Disj_ u ∈ A [_ u / y ]_ B ↔ ∀ u ∈ A ∀ v ∈ A ( u = v ∨ ( [_ u / y ]_ B ∩ [_ v / y ]_ B ) = ∅ ) ) ;;
+	step 38 : wff = sylib (step 35, step 37) |- ( ( Disj_ y ∈ A B ∧ Disj_ x ∈ ⋃_ y ∈ A B C ) → ∀ u ∈ A ∀ v ∈ A ( u = v ∨ ( [_ u / y ]_ B ∩ [_ v / y ]_ B ) = ∅ ) ) ;;
+	step 39 : wff = rsp2 () |- ( ∀ u ∈ A ∀ v ∈ A ( u = v ∨ ( [_ u / y ]_ B ∩ [_ v / y ]_ B ) = ∅ ) → ( ( u ∈ A ∧ v ∈ A ) → ( u = v ∨ ( [_ u / y ]_ B ∩ [_ v / y ]_ B ) = ∅ ) ) ) ;;
+	step 40 : wff = syl (step 38, step 39) |- ( ( Disj_ y ∈ A B ∧ Disj_ x ∈ ⋃_ y ∈ A B C ) → ( ( u ∈ A ∧ v ∈ A ) → ( u = v ∨ ( [_ u / y ]_ B ∩ [_ v / y ]_ B ) = ∅ ) ) ) ;;
+	step 41 : wff = imp (step 40) |- ( ( ( Disj_ y ∈ A B ∧ Disj_ x ∈ ⋃_ y ∈ A B C ) ∧ ( u ∈ A ∧ v ∈ A ) ) → ( u = v ∨ ( [_ u / y ]_ B ∩ [_ v / y ]_ B ) = ∅ ) ) ;;
+	step 42 : wff = ord (step 41) |- ( ( ( Disj_ y ∈ A B ∧ Disj_ x ∈ ⋃_ y ∈ A B C ) ∧ ( u ∈ A ∧ v ∈ A ) ) → ( ¬ u = v → ( [_ u / y ]_ B ∩ [_ v / y ]_ B ) = ∅ ) ) ;;
+	step 43 : wff = impr (step 42) |- ( ( ( Disj_ y ∈ A B ∧ Disj_ x ∈ ⋃_ y ∈ A B C ) ∧ ( ( u ∈ A ∧ v ∈ A ) ∧ ¬ u = v ) ) → ( [_ u / y ]_ B ∩ [_ v / y ]_ B ) = ∅ ) ;;
+	step 44 : wff = disjiun () |- ( ( Disj_ x ∈ ⋃_ y ∈ A B C ∧ ( [_ u / y ]_ B ⊆ ⋃_ y ∈ A B ∧ [_ v / y ]_ B ⊆ ⋃_ y ∈ A B ∧ ( [_ u / y ]_ B ∩ [_ v / y ]_ B ) = ∅ ) ) → ( ⋃_ x ∈ [_ u / y ]_ B C ∩ ⋃_ x ∈ [_ v / y ]_ B C ) = ∅ ) ;;
+	step 45 : wff = syl13anc (step 10, step 18, step 29, step 43, step 44) |- ( ( ( Disj_ y ∈ A B ∧ Disj_ x ∈ ⋃_ y ∈ A B C ) ∧ ( ( u ∈ A ∧ v ∈ A ) ∧ ¬ u = v ) ) → ( ⋃_ x ∈ [_ u / y ]_ B C ∩ ⋃_ x ∈ [_ v / y ]_ B C ) = ∅ ) ;;
+	step 46 : wff = expr (step 45) |- ( ( ( Disj_ y ∈ A B ∧ Disj_ x ∈ ⋃_ y ∈ A B C ) ∧ ( u ∈ A ∧ v ∈ A ) ) → ( ¬ u = v → ( ⋃_ x ∈ [_ u / y ]_ B C ∩ ⋃_ x ∈ [_ v / y ]_ B C ) = ∅ ) ) ;;
+	step 47 : wff = orrd (step 46) |- ( ( ( Disj_ y ∈ A B ∧ Disj_ x ∈ ⋃_ y ∈ A B C ) ∧ ( u ∈ A ∧ v ∈ A ) ) → ( u = v ∨ ( ⋃_ x ∈ [_ u / y ]_ B C ∩ ⋃_ x ∈ [_ v / y ]_ B C ) = ∅ ) ) ;;
+	step 48 : wff = ralrimivva (step 47) |- ( ( Disj_ y ∈ A B ∧ Disj_ x ∈ ⋃_ y ∈ A B C ) → ∀ u ∈ A ∀ v ∈ A ( u = v ∨ ( ⋃_ x ∈ [_ u / y ]_ B C ∩ ⋃_ x ∈ [_ v / y ]_ B C ) = ∅ ) ) ;;
+	step 49 : wff = csbeq1 () |- ( u = v → [_ u / y ]_ B = [_ v / y ]_ B ) ;;
+	step 50 : wff = iuneq1d (step 49) |- ( u = v → ⋃_ x ∈ [_ u / y ]_ B C = ⋃_ x ∈ [_ v / y ]_ B C ) ;;
+	step 51 : wff = disjor (step 50) |- ( Disj_ u ∈ A ⋃_ x ∈ [_ u / y ]_ B C ↔ ∀ u ∈ A ∀ v ∈ A ( u = v ∨ ( ⋃_ x ∈ [_ u / y ]_ B C ∩ ⋃_ x ∈ [_ v / y ]_ B C ) = ∅ ) ) ;;
+	step 52 : wff = sylibr (step 48, step 51) |- ( ( Disj_ y ∈ A B ∧ Disj_ x ∈ ⋃_ y ∈ A B C ) → Disj_ u ∈ A ⋃_ x ∈ [_ u / y ]_ B C ) ;;
+	step 53 : wff = nfcv () |- F/_ u ⋃_ x ∈ B C ;;
+	step 54 : wff = nfcsb1v () |- F/_ y [_ u / y ]_ B ;;
+	step 55 : wff = nfcv () |- F/_ y C ;;
+	step 56 : wff = nfiun (step 54, step 55) |- F/_ y ⋃_ x ∈ [_ u / y ]_ B C ;;
+	step 57 : wff = csbeq1a () |- ( y = u → B = [_ u / y ]_ B ) ;;
+	step 58 : wff = iuneq1d (step 57) |- ( y = u → ⋃_ x ∈ B C = ⋃_ x ∈ [_ u / y ]_ B C ) ;;
+	step 59 : wff = cbvdisj (step 53, step 56, step 58) |- ( Disj_ y ∈ A ⋃_ x ∈ B C ↔ Disj_ u ∈ A ⋃_ x ∈ [_ u / y ]_ B C ) ;;
+	step 60 : wff = sylibr (step 52, step 59) |- ( ( Disj_ y ∈ A B ∧ Disj_ x ∈ ⋃_ y ∈ A B C ) → Disj_ y ∈ A ⋃_ x ∈ B C ) ;;
+	step 61 : wff = ex (step 60) |- ( Disj_ y ∈ A B → ( Disj_ x ∈ ⋃_ y ∈ A B C → Disj_ y ∈ A ⋃_ x ∈ B C ) ) ;;
+	step 62 : wff = jcad (step 9, step 61) |- ( Disj_ y ∈ A B → ( Disj_ x ∈ ⋃_ y ∈ A B C → ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ) ;;
+	step 63 : wff = nfcv () |- F/_ u B ;;
+	step 64 : wff = nfcsb1v () |- F/_ y [_ u / y ]_ B ;;
+	step 65 : wff = csbeq1a () |- ( y = u → B = [_ u / y ]_ B ) ;;
+	step 66 : wff = cbviun (step 63, step 64, step 65) |- ⋃_ y ∈ A B = ⋃_ u ∈ A [_ u / y ]_ B ;;
+	step 67 : wff = eleq2i (step 66) |- ( r ∈ ⋃_ y ∈ A B ↔ r ∈ ⋃_ u ∈ A [_ u / y ]_ B ) ;;
+	step 68 : wff = eliun () |- ( r ∈ ⋃_ u ∈ A [_ u / y ]_ B ↔ ∃ u ∈ A r ∈ [_ u / y ]_ B ) ;;
+	step 69 : wff = bitri (step 67, step 68) |- ( r ∈ ⋃_ y ∈ A B ↔ ∃ u ∈ A r ∈ [_ u / y ]_ B ) ;;
+	step 70 : wff = nfcv () |- F/_ v B ;;
+	step 71 : wff = nfcsb1v () |- F/_ y [_ v / y ]_ B ;;
+	step 72 : wff = csbeq1a () |- ( y = v → B = [_ v / y ]_ B ) ;;
+	step 73 : wff = cbviun (step 70, step 71, step 72) |- ⋃_ y ∈ A B = ⋃_ v ∈ A [_ v / y ]_ B ;;
+	step 74 : wff = eleq2i (step 73) |- ( s ∈ ⋃_ y ∈ A B ↔ s ∈ ⋃_ v ∈ A [_ v / y ]_ B ) ;;
+	step 75 : wff = eliun () |- ( s ∈ ⋃_ v ∈ A [_ v / y ]_ B ↔ ∃ v ∈ A s ∈ [_ v / y ]_ B ) ;;
+	step 76 : wff = bitri (step 74, step 75) |- ( s ∈ ⋃_ y ∈ A B ↔ ∃ v ∈ A s ∈ [_ v / y ]_ B ) ;;
+	step 77 : wff = anbi12i (step 69, step 76) |- ( ( r ∈ ⋃_ y ∈ A B ∧ s ∈ ⋃_ y ∈ A B ) ↔ ( ∃ u ∈ A r ∈ [_ u / y ]_ B ∧ ∃ v ∈ A s ∈ [_ v / y ]_ B ) ) ;;
+	step 78 : wff = reeanv () |- ( ∃ u ∈ A ∃ v ∈ A ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ↔ ( ∃ u ∈ A r ∈ [_ u / y ]_ B ∧ ∃ v ∈ A s ∈ [_ v / y ]_ B ) ) ;;
+	step 79 : wff = bitr4i (step 77, step 78) |- ( ( r ∈ ⋃_ y ∈ A B ∧ s ∈ ⋃_ y ∈ A B ) ↔ ∃ u ∈ A ∃ v ∈ A ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ) ;;
+	step 80 : wff = simplrr () |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u = v ) → ¬ r = s ) ;;
+	step 81 : wff = simprl () |- ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) → u ∈ A ) ;;
+	step 82 : wff = simplrl () |- ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) → ∀ y ∈ A Disj_ x ∈ B C ) ;;
+	step 83 : wff = nfcsb1v () |- F/_ y [_ u / y ]_ B ;;
+	step 84 : wff = nfcv () |- F/_ y C ;;
+	step 85 : wff = nfdisj (step 83, step 84) |- F/ y Disj_ x ∈ [_ u / y ]_ B C ;;
+	step 86 : wff = csbeq1a () |- ( y = u → B = [_ u / y ]_ B ) ;;
+	step 87 : wff = disjeq1d (step 86) |- ( y = u → ( Disj_ x ∈ B C ↔ Disj_ x ∈ [_ u / y ]_ B C ) ) ;;
+	step 88 : wff = rspc (step 85, step 87) |- ( u ∈ A → ( ∀ y ∈ A Disj_ x ∈ B C → Disj_ x ∈ [_ u / y ]_ B C ) ) ;;
+	step 89 : wff = sylc (step 81, step 82, step 88) |- ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) → Disj_ x ∈ [_ u / y ]_ B C ) ;;
+	step 90 : wff = ad2antrr (step 89) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u = v ) → Disj_ x ∈ [_ u / y ]_ B C ) ;;
+	step 91 : wff = disjors () |- ( Disj_ x ∈ [_ u / y ]_ B C ↔ ∀ r ∈ [_ u / y ]_ B ∀ s ∈ [_ u / y ]_ B ( r = s ∨ ( [_ r / x ]_ C ∩ [_ s / x ]_ C ) = ∅ ) ) ;;
+	step 92 : wff = sylib (step 90, step 91) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u = v ) → ∀ r ∈ [_ u / y ]_ B ∀ s ∈ [_ u / y ]_ B ( r = s ∨ ( [_ r / x ]_ C ∩ [_ s / x ]_ C ) = ∅ ) ) ;;
+	step 93 : wff = simplrl () |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u = v ) → ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ) ;;
+	step 94 : wff = simpld (step 93) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u = v ) → r ∈ [_ u / y ]_ B ) ;;
+	step 95 : wff = simplrl () |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u = v ) → ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ) ;;
+	step 96 : wff = simprd (step 95) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u = v ) → s ∈ [_ v / y ]_ B ) ;;
+	step 97 : wff = csbeq1 () |- ( u = v → [_ u / y ]_ B = [_ v / y ]_ B ) ;;
+	step 98 : wff = adantl (step 97) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u = v ) → [_ u / y ]_ B = [_ v / y ]_ B ) ;;
+	step 99 : wff = eleqtrrd (step 96, step 98) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u = v ) → s ∈ [_ u / y ]_ B ) ;;
+	step 100 : wff = jca (step 94, step 99) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u = v ) → ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ u / y ]_ B ) ) ;;
+	step 101 : wff = rsp2 () |- ( ∀ r ∈ [_ u / y ]_ B ∀ s ∈ [_ u / y ]_ B ( r = s ∨ ( [_ r / x ]_ C ∩ [_ s / x ]_ C ) = ∅ ) → ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ u / y ]_ B ) → ( r = s ∨ ( [_ r / x ]_ C ∩ [_ s / x ]_ C ) = ∅ ) ) ) ;;
+	step 102 : wff = sylc (step 92, step 100, step 101) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u = v ) → ( r = s ∨ ( [_ r / x ]_ C ∩ [_ s / x ]_ C ) = ∅ ) ) ;;
+	step 103 : wff = ord (step 102) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u = v ) → ( ¬ r = s → ( [_ r / x ]_ C ∩ [_ s / x ]_ C ) = ∅ ) ) ;;
+	step 104 : wff = mpd (step 80, step 103) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u = v ) → ( [_ r / x ]_ C ∩ [_ s / x ]_ C ) = ∅ ) ;;
+	step 105 : wff = simplrl () |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u ≠ v ) → ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ) ;;
+	step 106 : wff = simpld (step 105) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u ≠ v ) → r ∈ [_ u / y ]_ B ) ;;
+	step 107 : wff = ssiun2 () |- ( r ∈ [_ u / y ]_ B → [_ r / x ]_ C ⊆ ⋃_ r ∈ [_ u / y ]_ B [_ r / x ]_ C ) ;;
+	step 108 : wff = nfcv () |- F/_ r C ;;
+	step 109 : wff = nfcsb1v () |- F/_ x [_ r / x ]_ C ;;
+	step 110 : wff = csbeq1a () |- ( x = r → C = [_ r / x ]_ C ) ;;
+	step 111 : wff = cbviun (step 108, step 109, step 110) |- ⋃_ x ∈ [_ u / y ]_ B C = ⋃_ r ∈ [_ u / y ]_ B [_ r / x ]_ C ;;
+	step 112 : wff = syl6sseqr (step 107, step 111) |- ( r ∈ [_ u / y ]_ B → [_ r / x ]_ C ⊆ ⋃_ x ∈ [_ u / y ]_ B C ) ;;
+	step 113 : wff = syl (step 106, step 112) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u ≠ v ) → [_ r / x ]_ C ⊆ ⋃_ x ∈ [_ u / y ]_ B C ) ;;
+	step 114 : wff = simplrl () |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u ≠ v ) → ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ) ;;
+	step 115 : wff = simprd (step 114) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u ≠ v ) → s ∈ [_ v / y ]_ B ) ;;
+	step 116 : wff = ssiun2 () |- ( s ∈ [_ v / y ]_ B → [_ s / x ]_ C ⊆ ⋃_ s ∈ [_ v / y ]_ B [_ s / x ]_ C ) ;;
+	step 117 : wff = nfcv () |- F/_ s C ;;
+	step 118 : wff = nfcsb1v () |- F/_ x [_ s / x ]_ C ;;
+	step 119 : wff = csbeq1a () |- ( x = s → C = [_ s / x ]_ C ) ;;
+	step 120 : wff = cbviun (step 117, step 118, step 119) |- ⋃_ x ∈ [_ v / y ]_ B C = ⋃_ s ∈ [_ v / y ]_ B [_ s / x ]_ C ;;
+	step 121 : wff = syl6sseqr (step 116, step 120) |- ( s ∈ [_ v / y ]_ B → [_ s / x ]_ C ⊆ ⋃_ x ∈ [_ v / y ]_ B C ) ;;
+	step 122 : wff = syl (step 115, step 121) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u ≠ v ) → [_ s / x ]_ C ⊆ ⋃_ x ∈ [_ v / y ]_ B C ) ;;
+	step 123 : wff = ss2in () |- ( ( [_ r / x ]_ C ⊆ ⋃_ x ∈ [_ u / y ]_ B C ∧ [_ s / x ]_ C ⊆ ⋃_ x ∈ [_ v / y ]_ B C ) → ( [_ r / x ]_ C ∩ [_ s / x ]_ C ) ⊆ ( ⋃_ x ∈ [_ u / y ]_ B C ∩ ⋃_ x ∈ [_ v / y ]_ B C ) ) ;;
+	step 124 : wff = syl2anc (step 113, step 122, step 123) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u ≠ v ) → ( [_ r / x ]_ C ∩ [_ s / x ]_ C ) ⊆ ( ⋃_ x ∈ [_ u / y ]_ B C ∩ ⋃_ x ∈ [_ v / y ]_ B C ) ) ;;
+	step 125 : wff = simplrr () |- ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) → Disj_ y ∈ A ⋃_ x ∈ B C ) ;;
+	step 126 : wff = ad2antrr (step 125) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u ≠ v ) → Disj_ y ∈ A ⋃_ x ∈ B C ) ;;
+	step 127 : wff = nfcv () |- F/_ z ⋃_ x ∈ B C ;;
+	step 128 : wff = nfcsb1v () |- F/_ y [_ z / y ]_ B ;;
+	step 129 : wff = nfcv () |- F/_ y C ;;
+	step 130 : wff = nfiun (step 128, step 129) |- F/_ y ⋃_ x ∈ [_ z / y ]_ B C ;;
+	step 131 : wff = csbeq1a () |- ( y = z → B = [_ z / y ]_ B ) ;;
+	step 132 : wff = iuneq1d (step 131) |- ( y = z → ⋃_ x ∈ B C = ⋃_ x ∈ [_ z / y ]_ B C ) ;;
+	step 133 : wff = cbvdisj (step 127, step 130, step 132) |- ( Disj_ y ∈ A ⋃_ x ∈ B C ↔ Disj_ z ∈ A ⋃_ x ∈ [_ z / y ]_ B C ) ;;
+	step 134 : wff = sylib (step 126, step 133) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u ≠ v ) → Disj_ z ∈ A ⋃_ x ∈ [_ z / y ]_ B C ) ;;
+	step 135 : wff = simprl () |- ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) → u ∈ A ) ;;
+	step 136 : wff = ad2antrr (step 135) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u ≠ v ) → u ∈ A ) ;;
+	step 137 : wff = simprr () |- ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) → v ∈ A ) ;;
+	step 138 : wff = ad2antrr (step 137) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u ≠ v ) → v ∈ A ) ;;
+	step 139 : wff = simpr () |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u ≠ v ) → u ≠ v ) ;;
+	step 140 : wff = csbeq1 () |- ( z = u → [_ z / y ]_ B = [_ u / y ]_ B ) ;;
+	step 141 : wff = iuneq1d (step 140) |- ( z = u → ⋃_ x ∈ [_ z / y ]_ B C = ⋃_ x ∈ [_ u / y ]_ B C ) ;;
+	step 142 : wff = csbeq1 () |- ( z = v → [_ z / y ]_ B = [_ v / y ]_ B ) ;;
+	step 143 : wff = iuneq1d (step 142) |- ( z = v → ⋃_ x ∈ [_ z / y ]_ B C = ⋃_ x ∈ [_ v / y ]_ B C ) ;;
+	step 144 : wff = disji2 (step 141, step 143) |- ( ( Disj_ z ∈ A ⋃_ x ∈ [_ z / y ]_ B C ∧ ( u ∈ A ∧ v ∈ A ) ∧ u ≠ v ) → ( ⋃_ x ∈ [_ u / y ]_ B C ∩ ⋃_ x ∈ [_ v / y ]_ B C ) = ∅ ) ;;
+	step 145 : wff = syl121anc (step 134, step 136, step 138, step 139, step 144) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u ≠ v ) → ( ⋃_ x ∈ [_ u / y ]_ B C ∩ ⋃_ x ∈ [_ v / y ]_ B C ) = ∅ ) ;;
+	step 146 : wff = sseq0 () |- ( ( ( [_ r / x ]_ C ∩ [_ s / x ]_ C ) ⊆ ( ⋃_ x ∈ [_ u / y ]_ B C ∩ ⋃_ x ∈ [_ v / y ]_ B C ) ∧ ( ⋃_ x ∈ [_ u / y ]_ B C ∩ ⋃_ x ∈ [_ v / y ]_ B C ) = ∅ ) → ( [_ r / x ]_ C ∩ [_ s / x ]_ C ) = ∅ ) ;;
+	step 147 : wff = syl2anc (step 124, step 145, step 146) |- ( ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) ∧ u ≠ v ) → ( [_ r / x ]_ C ∩ [_ s / x ]_ C ) = ∅ ) ;;
+	step 148 : wff = pm2.61dane (step 104, step 147) |- ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ∧ ¬ r = s ) ) → ( [_ r / x ]_ C ∩ [_ s / x ]_ C ) = ∅ ) ;;
+	step 149 : wff = expr (step 148) |- ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ) → ( ¬ r = s → ( [_ r / x ]_ C ∩ [_ s / x ]_ C ) = ∅ ) ) ;;
+	step 150 : wff = orrd (step 149) |- ( ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) ∧ ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) ) → ( r = s ∨ ( [_ r / x ]_ C ∩ [_ s / x ]_ C ) = ∅ ) ) ;;
+	step 151 : wff = ex (step 150) |- ( ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ∧ ( u ∈ A ∧ v ∈ A ) ) → ( ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) → ( r = s ∨ ( [_ r / x ]_ C ∩ [_ s / x ]_ C ) = ∅ ) ) ) ;;
+	step 152 : wff = rexlimdvva (step 151) |- ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) → ( ∃ u ∈ A ∃ v ∈ A ( r ∈ [_ u / y ]_ B ∧ s ∈ [_ v / y ]_ B ) → ( r = s ∨ ( [_ r / x ]_ C ∩ [_ s / x ]_ C ) = ∅ ) ) ) ;;
+	step 153 : wff = syl5bi (step 79, step 152) |- ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) → ( ( r ∈ ⋃_ y ∈ A B ∧ s ∈ ⋃_ y ∈ A B ) → ( r = s ∨ ( [_ r / x ]_ C ∩ [_ s / x ]_ C ) = ∅ ) ) ) ;;
+	step 154 : wff = ralrimivv (step 153) |- ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) → ∀ r ∈ ⋃_ y ∈ A B ∀ s ∈ ⋃_ y ∈ A B ( r = s ∨ ( [_ r / x ]_ C ∩ [_ s / x ]_ C ) = ∅ ) ) ;;
+	step 155 : wff = disjors () |- ( Disj_ x ∈ ⋃_ y ∈ A B C ↔ ∀ r ∈ ⋃_ y ∈ A B ∀ s ∈ ⋃_ y ∈ A B ( r = s ∨ ( [_ r / x ]_ C ∩ [_ s / x ]_ C ) = ∅ ) ) ;;
+	step 156 : wff = sylibr (step 154, step 155) |- ( ( Disj_ y ∈ A B ∧ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) → Disj_ x ∈ ⋃_ y ∈ A B C ) ;;
+	step 157 : wff = ex (step 156) |- ( Disj_ y ∈ A B → ( ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) → Disj_ x ∈ ⋃_ y ∈ A B C ) ) ;;
+	step 158 : wff = impbid (step 62, step 157) |- ( Disj_ y ∈ A B → ( Disj_ x ∈ ⋃_ y ∈ A B C ↔ ( ∀ y ∈ A Disj_ x ∈ B C ∧ Disj_ y ∈ A ⋃_ x ∈ B C ) ) ) ;;
+	qed prop 1 = step 158 ;;
+}
+
+/* The union of two disjoint collections.  (Contributed by Mario Carneiro,
+       14-Nov-2016.) */
+
+theorem disjxun (x : set, y : set, A : class, B : class, C : class, D : class) disjointed(w x y z A, w x y z B, w y z C, w x z D) {
+	hyp 1 : wff = |- ( x = y → C = D ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( A ∩ B ) = ∅ → ( Disj_ x ∈ ( A ∪ B ) C ↔ ( Disj_ x ∈ A C ∧ Disj_ x ∈ B C ∧ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ) ) ;;
+}
+
+proof of disjxun {
+	var z : set, w : set;;
+	step 1 : wff = disjel () |- ( ( ( A ∩ B ) = ∅ ∧ x ∈ A ) → ¬ x ∈ B ) ;;
+	step 2 : wff = eleq1 () |- ( x = y → ( x ∈ B ↔ y ∈ B ) ) ;;
+	step 3 : wff = notbid (step 2) |- ( x = y → ( ¬ x ∈ B ↔ ¬ y ∈ B ) ) ;;
+	step 4 : wff = syl5ibcom (step 1, step 3) |- ( ( ( A ∩ B ) = ∅ ∧ x ∈ A ) → ( x = y → ¬ y ∈ B ) ) ;;
+	step 5 : wff = con2d (step 4) |- ( ( ( A ∩ B ) = ∅ ∧ x ∈ A ) → ( y ∈ B → ¬ x = y ) ) ;;
+	step 6 : wff = impr (step 5) |- ( ( ( A ∩ B ) = ∅ ∧ ( x ∈ A ∧ y ∈ B ) ) → ¬ x = y ) ;;
+	step 7 : wff = biorf () |- ( ¬ x = y → ( ( C ∩ D ) = ∅ ↔ ( x = y ∨ ( C ∩ D ) = ∅ ) ) ) ;;
+	step 8 : wff = syl (step 6, step 7) |- ( ( ( A ∩ B ) = ∅ ∧ ( x ∈ A ∧ y ∈ B ) ) → ( ( C ∩ D ) = ∅ ↔ ( x = y ∨ ( C ∩ D ) = ∅ ) ) ) ;;
+	step 9 : wff = bicomd (step 8) |- ( ( ( A ∩ B ) = ∅ ∧ ( x ∈ A ∧ y ∈ B ) ) → ( ( x = y ∨ ( C ∩ D ) = ∅ ) ↔ ( C ∩ D ) = ∅ ) ) ;;
+	step 10 : wff = 2ralbidva (step 9) |- ( ( A ∩ B ) = ∅ → ( ∀ x ∈ A ∀ y ∈ B ( x = y ∨ ( C ∩ D ) = ∅ ) ↔ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ) ;;
+	step 11 : wff = anbi2d (step 10) |- ( ( A ∩ B ) = ∅ → ( ( ∀ x ∈ A ∀ y ∈ A ( x = y ∨ ( C ∩ D ) = ∅ ) ∧ ∀ x ∈ A ∀ y ∈ B ( x = y ∨ ( C ∩ D ) = ∅ ) ) ↔ ( ∀ x ∈ A ∀ y ∈ A ( x = y ∨ ( C ∩ D ) = ∅ ) ∧ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ) ) ;;
+	step 12 : wff = ralunb () |- ( ∀ y ∈ ( A ∪ B ) ( x = y ∨ ( C ∩ D ) = ∅ ) ↔ ( ∀ y ∈ A ( x = y ∨ ( C ∩ D ) = ∅ ) ∧ ∀ y ∈ B ( x = y ∨ ( C ∩ D ) = ∅ ) ) ) ;;
+	step 13 : wff = ralbii (step 12) |- ( ∀ x ∈ A ∀ y ∈ ( A ∪ B ) ( x = y ∨ ( C ∩ D ) = ∅ ) ↔ ∀ x ∈ A ( ∀ y ∈ A ( x = y ∨ ( C ∩ D ) = ∅ ) ∧ ∀ y ∈ B ( x = y ∨ ( C ∩ D ) = ∅ ) ) ) ;;
+	step 14 : wff = nfv () |- F/ z ∀ y ∈ ( A ∪ B ) ( x = y ∨ ( C ∩ D ) = ∅ ) ;;
+	step 15 : wff = nfcv () |- F/_ x ( A ∪ B ) ;;
+	step 16 : wff = nfv () |- F/ x z = w ;;
+	step 17 : wff = nfcsb1v () |- F/_ x [_ z / x ]_ C ;;
+	step 18 : wff = nfcsb1v () |- F/_ x [_ w / x ]_ C ;;
+	step 19 : wff = nfin (step 17, step 18) |- F/_ x ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) ;;
+	step 20 : wff = nfeq1 (step 19) |- F/ x ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ;;
+	step 21 : wff = nfor (step 16, step 20) |- F/ x ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ;;
+	step 22 : wff = nfral (step 15, step 21) |- F/ x ∀ w ∈ ( A ∪ B ) ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ;;
+	step 23 : wff = eqeq2 () |- ( w = y → ( x = w ↔ x = y ) ) ;;
+	step 24 : wff = nfcv () |- F/_ x y ;;
+	step 25 : wff = nfcv () |- F/_ x D ;;
+	step 26 : wff = csbhypf (step 24, step 25, hyp 1) |- ( w = y → [_ w / x ]_ C = D ) ;;
+	step 27 : wff = ineq2d (step 26) |- ( w = y → ( C ∩ [_ w / x ]_ C ) = ( C ∩ D ) ) ;;
+	step 28 : wff = eqeq1d (step 27) |- ( w = y → ( ( C ∩ [_ w / x ]_ C ) = ∅ ↔ ( C ∩ D ) = ∅ ) ) ;;
+	step 29 : wff = orbi12d (step 23, step 28) |- ( w = y → ( ( x = w ∨ ( C ∩ [_ w / x ]_ C ) = ∅ ) ↔ ( x = y ∨ ( C ∩ D ) = ∅ ) ) ) ;;
+	step 30 : wff = cbvralv (step 29) |- ( ∀ w ∈ ( A ∪ B ) ( x = w ∨ ( C ∩ [_ w / x ]_ C ) = ∅ ) ↔ ∀ y ∈ ( A ∪ B ) ( x = y ∨ ( C ∩ D ) = ∅ ) ) ;;
+	step 31 : wff = eqeq1 () |- ( x = z → ( x = w ↔ z = w ) ) ;;
+	step 32 : wff = csbeq1a () |- ( x = z → C = [_ z / x ]_ C ) ;;
+	step 33 : wff = ineq1d (step 32) |- ( x = z → ( C ∩ [_ w / x ]_ C ) = ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) ) ;;
+	step 34 : wff = eqeq1d (step 33) |- ( x = z → ( ( C ∩ [_ w / x ]_ C ) = ∅ ↔ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ;;
+	step 35 : wff = orbi12d (step 31, step 34) |- ( x = z → ( ( x = w ∨ ( C ∩ [_ w / x ]_ C ) = ∅ ) ↔ ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ) ;;
+	step 36 : wff = ralbidv (step 35) |- ( x = z → ( ∀ w ∈ ( A ∪ B ) ( x = w ∨ ( C ∩ [_ w / x ]_ C ) = ∅ ) ↔ ∀ w ∈ ( A ∪ B ) ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ) ;;
+	step 37 : wff = syl5bbr (step 30, step 36) |- ( x = z → ( ∀ y ∈ ( A ∪ B ) ( x = y ∨ ( C ∩ D ) = ∅ ) ↔ ∀ w ∈ ( A ∪ B ) ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ) ;;
+	step 38 : wff = cbvral (step 14, step 22, step 37) |- ( ∀ x ∈ A ∀ y ∈ ( A ∪ B ) ( x = y ∨ ( C ∩ D ) = ∅ ) ↔ ∀ z ∈ A ∀ w ∈ ( A ∪ B ) ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ;;
+	step 39 : wff = r19.26 () |- ( ∀ x ∈ A ( ∀ y ∈ A ( x = y ∨ ( C ∩ D ) = ∅ ) ∧ ∀ y ∈ B ( x = y ∨ ( C ∩ D ) = ∅ ) ) ↔ ( ∀ x ∈ A ∀ y ∈ A ( x = y ∨ ( C ∩ D ) = ∅ ) ∧ ∀ x ∈ A ∀ y ∈ B ( x = y ∨ ( C ∩ D ) = ∅ ) ) ) ;;
+	step 40 : wff = 3bitr3i (step 13, step 38, step 39) |- ( ∀ z ∈ A ∀ w ∈ ( A ∪ B ) ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ↔ ( ∀ x ∈ A ∀ y ∈ A ( x = y ∨ ( C ∩ D ) = ∅ ) ∧ ∀ x ∈ A ∀ y ∈ B ( x = y ∨ ( C ∩ D ) = ∅ ) ) ) ;;
+	step 41 : wff = disjor (hyp 1) |- ( Disj_ x ∈ A C ↔ ∀ x ∈ A ∀ y ∈ A ( x = y ∨ ( C ∩ D ) = ∅ ) ) ;;
+	step 42 : wff = anbi1i (step 41) |- ( ( Disj_ x ∈ A C ∧ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ↔ ( ∀ x ∈ A ∀ y ∈ A ( x = y ∨ ( C ∩ D ) = ∅ ) ∧ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ) ;;
+	step 43 : wff = 3bitr4g (step 11, step 40, step 42) |- ( ( A ∩ B ) = ∅ → ( ∀ z ∈ A ∀ w ∈ ( A ∪ B ) ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ↔ ( Disj_ x ∈ A C ∧ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ) ) ;;
+	step 44 : wff = nfv () |- F/ w ( z = x ∨ ( [_ z / x ]_ C ∩ C ) = ∅ ) ;;
+	step 45 : wff = nfv () |- F/ x z = w ;;
+	step 46 : wff = nfcsb1v () |- F/_ x [_ z / x ]_ C ;;
+	step 47 : wff = nfcsb1v () |- F/_ x [_ w / x ]_ C ;;
+	step 48 : wff = nfin (step 46, step 47) |- F/_ x ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) ;;
+	step 49 : wff = nfeq1 (step 48) |- F/ x ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ;;
+	step 50 : wff = nfor (step 45, step 49) |- F/ x ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ;;
+	step 51 : wff = eqeq2 () |- ( x = w → ( z = x ↔ z = w ) ) ;;
+	step 52 : wff = csbeq1a () |- ( x = w → C = [_ w / x ]_ C ) ;;
+	step 53 : wff = ineq2d (step 52) |- ( x = w → ( [_ z / x ]_ C ∩ C ) = ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) ) ;;
+	step 54 : wff = eqeq1d (step 53) |- ( x = w → ( ( [_ z / x ]_ C ∩ C ) = ∅ ↔ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ;;
+	step 55 : wff = orbi12d (step 51, step 54) |- ( x = w → ( ( z = x ∨ ( [_ z / x ]_ C ∩ C ) = ∅ ) ↔ ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ) ;;
+	step 56 : wff = cbvral (step 44, step 50, step 55) |- ( ∀ x ∈ A ( z = x ∨ ( [_ z / x ]_ C ∩ C ) = ∅ ) ↔ ∀ w ∈ A ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ;;
+	step 57 : wff = eqeq1 () |- ( z = y → ( z = x ↔ y = x ) ) ;;
+	step 58 : wff = eqcom () |- ( y = x ↔ x = y ) ;;
+	step 59 : wff = syl6bb (step 57, step 58) |- ( z = y → ( z = x ↔ x = y ) ) ;;
+	step 60 : wff = nfcv () |- F/_ x y ;;
+	step 61 : wff = nfcv () |- F/_ x D ;;
+	step 62 : wff = csbhypf (step 60, step 61, hyp 1) |- ( z = y → [_ z / x ]_ C = D ) ;;
+	step 63 : wff = ineq1d (step 62) |- ( z = y → ( [_ z / x ]_ C ∩ C ) = ( D ∩ C ) ) ;;
+	step 64 : wff = incom () |- ( D ∩ C ) = ( C ∩ D ) ;;
+	step 65 : wff = syl6eq (step 63, step 64) |- ( z = y → ( [_ z / x ]_ C ∩ C ) = ( C ∩ D ) ) ;;
+	step 66 : wff = eqeq1d (step 65) |- ( z = y → ( ( [_ z / x ]_ C ∩ C ) = ∅ ↔ ( C ∩ D ) = ∅ ) ) ;;
+	step 67 : wff = orbi12d (step 59, step 66) |- ( z = y → ( ( z = x ∨ ( [_ z / x ]_ C ∩ C ) = ∅ ) ↔ ( x = y ∨ ( C ∩ D ) = ∅ ) ) ) ;;
+	step 68 : wff = ralbidv (step 67) |- ( z = y → ( ∀ x ∈ A ( z = x ∨ ( [_ z / x ]_ C ∩ C ) = ∅ ) ↔ ∀ x ∈ A ( x = y ∨ ( C ∩ D ) = ∅ ) ) ) ;;
+	step 69 : wff = syl5bbr (step 56, step 68) |- ( z = y → ( ∀ w ∈ A ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ↔ ∀ x ∈ A ( x = y ∨ ( C ∩ D ) = ∅ ) ) ) ;;
+	step 70 : wff = cbvralv (step 69) |- ( ∀ z ∈ B ∀ w ∈ A ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ↔ ∀ y ∈ B ∀ x ∈ A ( x = y ∨ ( C ∩ D ) = ∅ ) ) ;;
+	step 71 : wff = ralcom () |- ( ∀ y ∈ B ∀ x ∈ A ( x = y ∨ ( C ∩ D ) = ∅ ) ↔ ∀ x ∈ A ∀ y ∈ B ( x = y ∨ ( C ∩ D ) = ∅ ) ) ;;
+	step 72 : wff = bitri (step 70, step 71) |- ( ∀ z ∈ B ∀ w ∈ A ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ↔ ∀ x ∈ A ∀ y ∈ B ( x = y ∨ ( C ∩ D ) = ∅ ) ) ;;
+	step 73 : wff = disjel () |- ( ( ( A ∩ B ) = ∅ ∧ x ∈ A ) → ¬ x ∈ B ) ;;
+	step 74 : wff = eleq1 () |- ( x = y → ( x ∈ B ↔ y ∈ B ) ) ;;
+	step 75 : wff = notbid (step 74) |- ( x = y → ( ¬ x ∈ B ↔ ¬ y ∈ B ) ) ;;
+	step 76 : wff = syl5ibcom (step 73, step 75) |- ( ( ( A ∩ B ) = ∅ ∧ x ∈ A ) → ( x = y → ¬ y ∈ B ) ) ;;
+	step 77 : wff = con2d (step 76) |- ( ( ( A ∩ B ) = ∅ ∧ x ∈ A ) → ( y ∈ B → ¬ x = y ) ) ;;
+	step 78 : wff = impr (step 77) |- ( ( ( A ∩ B ) = ∅ ∧ ( x ∈ A ∧ y ∈ B ) ) → ¬ x = y ) ;;
+	step 79 : wff = biorf () |- ( ¬ x = y → ( ( C ∩ D ) = ∅ ↔ ( x = y ∨ ( C ∩ D ) = ∅ ) ) ) ;;
+	step 80 : wff = syl (step 78, step 79) |- ( ( ( A ∩ B ) = ∅ ∧ ( x ∈ A ∧ y ∈ B ) ) → ( ( C ∩ D ) = ∅ ↔ ( x = y ∨ ( C ∩ D ) = ∅ ) ) ) ;;
+	step 81 : wff = bicomd (step 80) |- ( ( ( A ∩ B ) = ∅ ∧ ( x ∈ A ∧ y ∈ B ) ) → ( ( x = y ∨ ( C ∩ D ) = ∅ ) ↔ ( C ∩ D ) = ∅ ) ) ;;
+	step 82 : wff = 2ralbidva (step 81) |- ( ( A ∩ B ) = ∅ → ( ∀ x ∈ A ∀ y ∈ B ( x = y ∨ ( C ∩ D ) = ∅ ) ↔ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ) ;;
+	step 83 : wff = syl5bb (step 72, step 82) |- ( ( A ∩ B ) = ∅ → ( ∀ z ∈ B ∀ w ∈ A ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ↔ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ) ;;
+	step 84 : wff = anbi1d (step 83) |- ( ( A ∩ B ) = ∅ → ( ( ∀ z ∈ B ∀ w ∈ A ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ∧ ∀ z ∈ B ∀ w ∈ B ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ↔ ( ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ∧ ∀ z ∈ B ∀ w ∈ B ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ) ) ;;
+	step 85 : wff = ralunb () |- ( ∀ w ∈ ( A ∪ B ) ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ↔ ( ∀ w ∈ A ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ∧ ∀ w ∈ B ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ) ;;
+	step 86 : wff = ralbii (step 85) |- ( ∀ z ∈ B ∀ w ∈ ( A ∪ B ) ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ↔ ∀ z ∈ B ( ∀ w ∈ A ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ∧ ∀ w ∈ B ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ) ;;
+	step 87 : wff = r19.26 () |- ( ∀ z ∈ B ( ∀ w ∈ A ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ∧ ∀ w ∈ B ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ↔ ( ∀ z ∈ B ∀ w ∈ A ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ∧ ∀ z ∈ B ∀ w ∈ B ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ) ;;
+	step 88 : wff = bitri (step 86, step 87) |- ( ∀ z ∈ B ∀ w ∈ ( A ∪ B ) ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ↔ ( ∀ z ∈ B ∀ w ∈ A ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ∧ ∀ z ∈ B ∀ w ∈ B ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ) ;;
+	step 89 : wff = disjors () |- ( Disj_ x ∈ B C ↔ ∀ z ∈ B ∀ w ∈ B ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ;;
+	step 90 : wff = anbi2ci (step 89) |- ( ( Disj_ x ∈ B C ∧ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ↔ ( ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ∧ ∀ z ∈ B ∀ w ∈ B ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ) ;;
+	step 91 : wff = 3bitr4g (step 84, step 88, step 90) |- ( ( A ∩ B ) = ∅ → ( ∀ z ∈ B ∀ w ∈ ( A ∪ B ) ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ↔ ( Disj_ x ∈ B C ∧ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ) ) ;;
+	step 92 : wff = anbi12d (step 43, step 91) |- ( ( A ∩ B ) = ∅ → ( ( ∀ z ∈ A ∀ w ∈ ( A ∪ B ) ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ∧ ∀ z ∈ B ∀ w ∈ ( A ∪ B ) ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ↔ ( ( Disj_ x ∈ A C ∧ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ∧ ( Disj_ x ∈ B C ∧ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ) ) ) ;;
+	step 93 : wff = disjors () |- ( Disj_ x ∈ ( A ∪ B ) C ↔ ∀ z ∈ ( A ∪ B ) ∀ w ∈ ( A ∪ B ) ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ;;
+	step 94 : wff = ralunb () |- ( ∀ z ∈ ( A ∪ B ) ∀ w ∈ ( A ∪ B ) ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ↔ ( ∀ z ∈ A ∀ w ∈ ( A ∪ B ) ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ∧ ∀ z ∈ B ∀ w ∈ ( A ∪ B ) ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ) ;;
+	step 95 : wff = bitri (step 93, step 94) |- ( Disj_ x ∈ ( A ∪ B ) C ↔ ( ∀ z ∈ A ∀ w ∈ ( A ∪ B ) ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ∧ ∀ z ∈ B ∀ w ∈ ( A ∪ B ) ( z = w ∨ ( [_ z / x ]_ C ∩ [_ w / x ]_ C ) = ∅ ) ) ) ;;
+	step 96 : wff = df-3an () |- ( ( Disj_ x ∈ A C ∧ Disj_ x ∈ B C ∧ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ↔ ( ( Disj_ x ∈ A C ∧ Disj_ x ∈ B C ) ∧ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ) ;;
+	step 97 : wff = anandir () |- ( ( ( Disj_ x ∈ A C ∧ Disj_ x ∈ B C ) ∧ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ↔ ( ( Disj_ x ∈ A C ∧ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ∧ ( Disj_ x ∈ B C ∧ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ) ) ;;
+	step 98 : wff = bitri (step 96, step 97) |- ( ( Disj_ x ∈ A C ∧ Disj_ x ∈ B C ∧ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ↔ ( ( Disj_ x ∈ A C ∧ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ∧ ( Disj_ x ∈ B C ∧ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ) ) ;;
+	step 99 : wff = 3bitr4g (step 92, step 95, step 98) |- ( ( A ∩ B ) = ∅ → ( Disj_ x ∈ ( A ∪ B ) C ↔ ( Disj_ x ∈ A C ∧ Disj_ x ∈ B C ∧ ∀ x ∈ A ∀ y ∈ B ( C ∩ D ) = ∅ ) ) ) ;;
+	qed prop 1 = step 99 ;;
+}
+
+/* Expand a disjoint collection with any number of empty sets.
+       (Contributed by Mario Carneiro, 15-Nov-2016.) */
+
+theorem disjss3 (x : set, A : class, B : class, C : class) disjointed(x y A, x y B, y C) {
+	prop 1 : wff = |- ( ( A ⊆ B ∧ ∀ x ∈ ( B ∖ A ) C = ∅ ) → ( Disj_ x ∈ A C ↔ Disj_ x ∈ B C ) ) ;;
+}
+
+proof of disjss3 {
+	var y : set;;
+	step 1 : wff = df-ral () |- ( ∀ x ∈ ( B ∖ A ) C = ∅ ↔ ∀ x ( x ∈ ( B ∖ A ) → C = ∅ ) ) ;;
+	step 2 : wff = simp3r () |- ( ( A ⊆ B ∧ ( x ∈ ( B ∖ A ) → C = ∅ ) ∧ ( x ∈ B ∧ y ∈ C ) ) → y ∈ C ) ;;
+	step 3 : wff = n0i () |- ( y ∈ C → ¬ C = ∅ ) ;;
+	step 4 : wff = syl (step 2, step 3) |- ( ( A ⊆ B ∧ ( x ∈ ( B ∖ A ) → C = ∅ ) ∧ ( x ∈ B ∧ y ∈ C ) ) → ¬ C = ∅ ) ;;
+	step 5 : wff = simp3l () |- ( ( A ⊆ B ∧ ( x ∈ ( B ∖ A ) → C = ∅ ) ∧ ( x ∈ B ∧ y ∈ C ) ) → x ∈ B ) ;;
+	step 6 : wff = eldif () |- ( x ∈ ( B ∖ A ) ↔ ( x ∈ B ∧ ¬ x ∈ A ) ) ;;
+	step 7 : wff = simp2 () |- ( ( A ⊆ B ∧ ( x ∈ ( B ∖ A ) → C = ∅ ) ∧ ( x ∈ B ∧ y ∈ C ) ) → ( x ∈ ( B ∖ A ) → C = ∅ ) ) ;;
+	step 8 : wff = syl5bir (step 6, step 7) |- ( ( A ⊆ B ∧ ( x ∈ ( B ∖ A ) → C = ∅ ) ∧ ( x ∈ B ∧ y ∈ C ) ) → ( ( x ∈ B ∧ ¬ x ∈ A ) → C = ∅ ) ) ;;
+	step 9 : wff = mpand (step 5, step 8) |- ( ( A ⊆ B ∧ ( x ∈ ( B ∖ A ) → C = ∅ ) ∧ ( x ∈ B ∧ y ∈ C ) ) → ( ¬ x ∈ A → C = ∅ ) ) ;;
+	step 10 : wff = mt3d (step 4, step 9) |- ( ( A ⊆ B ∧ ( x ∈ ( B ∖ A ) → C = ∅ ) ∧ ( x ∈ B ∧ y ∈ C ) ) → x ∈ A ) ;;
+	step 11 : wff = simp3r () |- ( ( A ⊆ B ∧ ( x ∈ ( B ∖ A ) → C = ∅ ) ∧ ( x ∈ B ∧ y ∈ C ) ) → y ∈ C ) ;;
+	step 12 : wff = jca (step 10, step 11) |- ( ( A ⊆ B ∧ ( x ∈ ( B ∖ A ) → C = ∅ ) ∧ ( x ∈ B ∧ y ∈ C ) ) → ( x ∈ A ∧ y ∈ C ) ) ;;
+	step 13 : wff = 3exp (step 12) |- ( A ⊆ B → ( ( x ∈ ( B ∖ A ) → C = ∅ ) → ( ( x ∈ B ∧ y ∈ C ) → ( x ∈ A ∧ y ∈ C ) ) ) ) ;;
+	step 14 : wff = alimdv (step 13) |- ( A ⊆ B → ( ∀ x ( x ∈ ( B ∖ A ) → C = ∅ ) → ∀ x ( ( x ∈ B ∧ y ∈ C ) → ( x ∈ A ∧ y ∈ C ) ) ) ) ;;
+	step 15 : wff = syl5bi (step 1, step 14) |- ( A ⊆ B → ( ∀ x ∈ ( B ∖ A ) C = ∅ → ∀ x ( ( x ∈ B ∧ y ∈ C ) → ( x ∈ A ∧ y ∈ C ) ) ) ) ;;
+	step 16 : wff = imp (step 15) |- ( ( A ⊆ B ∧ ∀ x ∈ ( B ∖ A ) C = ∅ ) → ∀ x ( ( x ∈ B ∧ y ∈ C ) → ( x ∈ A ∧ y ∈ C ) ) ) ;;
+	step 17 : wff = moim () |- ( ∀ x ( ( x ∈ B ∧ y ∈ C ) → ( x ∈ A ∧ y ∈ C ) ) → ( ∃* x ( x ∈ A ∧ y ∈ C ) → ∃* x ( x ∈ B ∧ y ∈ C ) ) ) ;;
+	step 18 : wff = syl (step 16, step 17) |- ( ( A ⊆ B ∧ ∀ x ∈ ( B ∖ A ) C = ∅ ) → ( ∃* x ( x ∈ A ∧ y ∈ C ) → ∃* x ( x ∈ B ∧ y ∈ C ) ) ) ;;
+	step 19 : wff = alimdv (step 18) |- ( ( A ⊆ B ∧ ∀ x ∈ ( B ∖ A ) C = ∅ ) → ( ∀ y ∃* x ( x ∈ A ∧ y ∈ C ) → ∀ y ∃* x ( x ∈ B ∧ y ∈ C ) ) ) ;;
+	step 20 : wff = dfdisj2 () |- ( Disj_ x ∈ A C ↔ ∀ y ∃* x ( x ∈ A ∧ y ∈ C ) ) ;;
+	step 21 : wff = dfdisj2 () |- ( Disj_ x ∈ B C ↔ ∀ y ∃* x ( x ∈ B ∧ y ∈ C ) ) ;;
+	step 22 : wff = 3imtr4g (step 19, step 20, step 21) |- ( ( A ⊆ B ∧ ∀ x ∈ ( B ∖ A ) C = ∅ ) → ( Disj_ x ∈ A C → Disj_ x ∈ B C ) ) ;;
+	step 23 : wff = disjss1 () |- ( A ⊆ B → ( Disj_ x ∈ B C → Disj_ x ∈ A C ) ) ;;
+	step 24 : wff = adantr (step 23) |- ( ( A ⊆ B ∧ ∀ x ∈ ( B ∖ A ) C = ∅ ) → ( Disj_ x ∈ B C → Disj_ x ∈ A C ) ) ;;
+	step 25 : wff = impbid (step 22, step 24) |- ( ( A ⊆ B ∧ ∀ x ∈ ( B ∖ A ) C = ∅ ) → ( Disj_ x ∈ A C ↔ Disj_ x ∈ B C ) ) ;;
+	qed prop 1 = step 25 ;;
+}
+
+

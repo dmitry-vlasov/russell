@@ -1,0 +1,322 @@
+$[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Replacement/Derive_the_Null_Set_Axiom.smm $]
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+           Theorems requiring subset and intersection existence
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+$( No set contains all sets.  Theorem 41 of [Suppes] p. 30.  (Contributed
+       by NM, 23-Aug-1993.) $)
+${
+	$v x y z $.
+	$d x y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	i0 $f set z $.
+	pnalset $p |- -. E. x A. y y e. x $=
+	f1 acv f0 acv awcel f0 f1 palexn i0 acv i0 acv awcel awn i0 f1 f0 aax-sep i0 f1 f1 pelequ1 i0 f1 f0 pelequ1 i0 f1 i0 pelequ1 i0 f1 f1 pelequ2 i0 acv f1 acv awceq i0 acv i0 acv awcel f1 acv i0 acv awcel f1 acv f1 acv awcel pbitrd i0 acv f1 acv awceq i0 acv i0 acv awcel f1 acv f1 acv awcel pnotbid i0 acv f1 acv awceq i0 acv f0 acv awcel f1 acv f0 acv awcel i0 acv i0 acv awcel awn f1 acv f1 acv awcel awn panbi12d i0 acv f1 acv awceq i0 acv f1 acv awcel f1 acv f1 acv awcel i0 acv f0 acv awcel i0 acv i0 acv awcel awn awa f1 acv f0 acv awcel f1 acv f1 acv awcel awn awa pbibi12d i0 acv f1 acv awcel i0 acv f0 acv awcel i0 acv i0 acv awcel awn awa awb f1 acv f1 acv awcel f1 acv f0 acv awcel f1 acv f1 acv awcel awn awa awb i0 f1 pspv f1 acv f1 acv awcel f1 acv f0 acv awcel ppclem6 i0 acv f1 acv awcel i0 acv f0 acv awcel i0 acv i0 acv awcel awn awa awb i0 awal f1 acv f1 acv awcel f1 acv f0 acv awcel f1 acv f1 acv awcel awn awa awb f1 acv f0 acv awcel awn psyl i0 acv f1 acv awcel i0 acv f0 acv awcel i0 acv i0 acv awcel awn awa awb i0 awal f1 acv f0 acv awcel awn f1 peximi i0 acv f1 acv awcel i0 acv f0 acv awcel i0 acv i0 acv awcel awn awa awb i0 awal f1 awex f1 acv f0 acv awcel awn f1 awex aax-mp f1 acv f0 acv awcel awn f1 awex f1 acv f0 acv awcel f1 awal f0 awex awn f0 pmpgbi $.
+$}
+$( The universal class is not a member of itself (and thus is not a set).
+       Proposition 5.21 of [TakeutiZaring] p. 21; our proof, however, does not
+       depend on the Axiom of Regularity.  (Contributed by NM, 23-Aug-1993.) $)
+${
+	$v x y $.
+	$d x y $.
+	i0 $f set x $.
+	i1 $f set y $.
+	pvprc $p |- -. _V e. _V $=
+	i0 i1 pnalset i1 pvex i1 acv acvv awcel i1 acv i0 acv awcel ptbt i1 acv i0 acv awcel i1 acv i0 acv awcel i1 acv acvv awcel awb i1 palbii i1 i0 acv acvv pdfcleq i1 acv i0 acv awcel i1 awal i1 acv i0 acv awcel i1 acv acvv awcel awb i1 awal i0 acv acvv awceq pbitr4i i1 acv i0 acv awcel i1 awal i0 acv acvv awceq i0 pexbii i1 acv i0 acv awcel i1 awal i0 awex i0 acv acvv awceq i0 awex pmtbi i0 acvv pisset acvv acvv awcel i0 acv acvv awceq i0 awex pmtbir $.
+$}
+$( The universal class doesn't belong to any class.  (Contributed by FL,
+     31-Dec-2006.) $)
+${
+	$v A $.
+	f0 $f class A $.
+	pnvel $p |- -. _V e. A $=
+	pvprc acvv f0 pelex acvv f0 awcel acvv acvv awcel pmto $.
+$}
+$( The universal class does not exist.  (Contributed by NM, 4-Jul-2005.) $)
+${
+	$v x $.
+	f0 $f set x $.
+	pvnex $p |- -. E. x x = _V $=
+	pvprc f0 acvv pisset acvv acvv awcel f0 acv acvv awceq f0 awex pmtbi $.
+$}
+$( Separation Scheme (Aussonderung) using class notation.  Compare Exercise
+       4 of [TakeutiZaring] p. 22.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v x y A B $.
+	$d A x y $.
+	$d B x y $.
+	e0 $e |- A e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	i1 $f set y $.
+	pinex1 $p |- ( A i^i B ) e. _V $=
+	e0 i1 acv f1 awcel i1 i0 f0 pzfauscl i1 i0 acv f0 f1 acin pdfcleq i1 acv f0 f1 pelin i1 acv f0 f1 acin awcel i1 acv f0 awcel i1 acv f1 awcel awa i1 acv i0 acv awcel pbibi2i i1 acv i0 acv awcel i1 acv f0 f1 acin awcel awb i1 acv i0 acv awcel i1 acv f0 awcel i1 acv f1 awcel awa awb i1 palbii i0 acv f0 f1 acin awceq i1 acv i0 acv awcel i1 acv f0 f1 acin awcel awb i1 awal i1 acv i0 acv awcel i1 acv f0 awcel i1 acv f1 awcel awa awb i1 awal pbitri i0 acv f0 f1 acin awceq i1 acv i0 acv awcel i1 acv f0 awcel i1 acv f1 awcel awa awb i1 awal i0 pexbii i0 acv f0 f1 acin awceq i0 awex i1 acv i0 acv awcel i1 acv f0 awcel i1 acv f1 awcel awa awb i1 awal i0 awex pmpbir i0 f0 f1 acin pissetri $.
+$}
+$( Separation Scheme (Aussonderung) using class notation.  (Contributed by
+       NM, 27-Apr-1994.) $)
+${
+	$v A B $.
+	e0 $e |- A e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pinex2 $p |- ( B i^i A ) e. _V $=
+	f1 f0 pincom e0 f0 f1 pinex1 f1 f0 acin f0 f1 acin acvv peqeltri $.
+$}
+$( Closed-form, generalized Separation Scheme.  (Contributed by NM,
+       7-Apr-1995.) $)
+${
+	$v x A B V $.
+	$d x A $.
+	$d x B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class V $.
+	i0 $f set x $.
+	pinex1g $p |- ( A e. V -> ( A i^i B ) e. _V ) $=
+	i0 acv f0 f1 pineq1 i0 acv f0 awceq i0 acv f1 acin f0 f1 acin acvv peleq1d i0 pvex i0 acv f1 pinex1 i0 acv f1 acin acvv awcel f0 f1 acin acvv awcel i0 f0 f2 pvtoclg $.
+$}
+$( The subset of a set is also a set.  Exercise 3 of [TakeutiZaring]
+       p. 22.  This is one way to express the Axiom of Separation ~ ax-sep
+       (a.k.a.  Subset Axiom).  (Contributed by NM, 27-Apr-1994.) $)
+${
+	$v A B $.
+	e0 $e |- B e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pssex $p |- ( A C_ B -> A e. _V ) $=
+	f0 f1 adf-ss e0 f1 f0 pinex2 f0 f1 acin f0 acvv peleq1 f0 f1 acin f0 awceq f0 f1 acin acvv awcel f0 acvv awcel pmpbii f0 f1 awss f0 f1 acin f0 awceq f0 acvv awcel psylbi $.
+$}
+$( The subset of a set is also a set.  (Contributed by NM, 9-Sep-1993.) $)
+${
+	$v A B $.
+	e0 $e |- B e. _V $.
+	e1 $e |- A C_ B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pssexi $p |- A e. _V $=
+	e1 e0 f0 f1 pssex f0 f1 awss f0 acvv awcel aax-mp $.
+$}
+$( The subset of a set is also a set.  Exercise 3 of [TakeutiZaring] p. 22
+       (generalized).  (Contributed by NM, 14-Aug-1994.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	pssexg $p |- ( ( A C_ B /\ B e. C ) -> A e. _V ) $=
+	i0 acv f1 f0 psseq2 i0 acv f1 awceq f0 i0 acv awss f0 f1 awss f0 acvv awcel pimbi1d i0 pvex f0 i0 acv pssex f0 i0 acv awss f0 acvv awcel awi f0 f1 awss f0 acvv awcel awi i0 f1 f2 pvtoclg f1 f2 awcel f0 f1 awss f0 acvv awcel pimpcom $.
+$}
+$( A subclass of a set is a set.  Deduction form of ~ ssexg .  (Contributed
+       by David Moews, 1-May-2017.) $)
+${
+	$v ph A B C $.
+	e0 $e |- ( ph -> B e. C ) $.
+	e1 $e |- ( ph -> A C_ B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pssexd $p |- ( ph -> A e. _V ) $=
+	e1 e0 f1 f2 f3 pssexg f0 f1 f2 awss f2 f3 awcel f1 acvv awcel psyl2anc $.
+$}
+$( Existence of a difference.  (Contributed by NM, 26-May-1998.) $)
+${
+	$v A B V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class V $.
+	pdifexg $p |- ( A e. V -> ( A \ B ) e. _V ) $=
+	f0 f1 pdifss f0 f1 acdif f0 f2 pssexg f0 f1 acdif f0 awss f0 f2 awcel f0 f1 acdif acvv awcel pmpan $.
+$}
+$( Separation Scheme (Aussonderung) in terms of a class abstraction.
+       (Contributed by NM, 8-Jun-1994.) $)
+${
+	$v ph x A $.
+	$d x A $.
+	e0 $e |- A e. _V $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	pzfausab $p |- { x | ( x e. A /\ ph ) } e. _V $=
+	e0 f0 f1 f2 pssab2 f1 acv f2 awcel f0 awa f1 acab f2 pssexi $.
+$}
+$( Separation Scheme in terms of a restricted class abstraction.
+       (Contributed by NM, 23-Oct-1999.) $)
+${
+	$v ph x A V $.
+	$d x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class V $.
+	prabexg $p |- ( A e. V -> { x e. A | ph } e. _V ) $=
+	f0 f1 f2 pssrab2 f0 f1 f2 acrab f2 f3 pssexg f0 f1 f2 acrab f2 awss f2 f3 awcel f0 f1 f2 acrab acvv awcel pmpan $.
+$}
+$( Separation Scheme in terms of a restricted class abstraction.
+       (Contributed by NM, 19-Jul-1996.) $)
+${
+	$v ph x A $.
+	$d x A $.
+	e0 $e |- A e. _V $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	prabex $p |- { x e. A | ph } e. _V $=
+	e0 f0 f1 f2 acvv prabexg f2 acvv awcel f0 f1 f2 acrab acvv awcel aax-mp $.
+$}
+$( Membership in a class abstraction involving a subset.  Unlike ~ elabg ,
+       ` A ` does not have to be a set.  (Contributed by NM, 29-Aug-2006.) $)
+${
+	$v ph ps x A B V $.
+	$d x A $.
+	$d x B $.
+	$d x ps $.
+	e0 $e |- ( x = A -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class B $.
+	f5 $f class V $.
+	pelssabg $p |- ( B e. V -> ( A e. { x | ( x C_ B /\ ph ) } <-> ( A C_ B /\ ps ) ) ) $=
+	f3 f4 f5 pssexg f3 f4 awss f4 f5 awcel f3 acvv awcel pexpcom f4 f5 awcel f3 f4 awss f3 acvv awcel f1 padantrd f2 acv f3 f4 psseq1 e0 f2 acv f3 awceq f2 acv f4 awss f3 f4 awss f0 f1 panbi12d f2 acv f4 awss f0 awa f3 f4 awss f1 awa f2 f3 acvv pelab3g f4 f5 awcel f3 f4 awss f1 awa f3 acvv awcel awi f3 f2 acv f4 awss f0 awa f2 acab awcel f3 f4 awss f1 awa awb psyl $.
+$}
+$( The intersection of a non-empty class exists.  Exercise 5 of
+       [TakeutiZaring] p. 44 and its converse.  (Contributed by NM,
+       13-Aug-2002.) $)
+${
+	$v x A $.
+	$d x A $.
+	f0 $f class A $.
+	i0 $f set x $.
+	pintex $p |- ( A =/= (/) <-> |^| A e. _V ) $=
+	i0 f0 pn0 i0 acv f0 pintss1 i0 pvex f0 acint i0 acv pssex i0 acv f0 awcel f0 acint i0 acv awss f0 acint acvv awcel psyl i0 acv f0 awcel f0 acint acvv awcel i0 pexlimiv f0 ac0 awne i0 acv f0 awcel i0 awex f0 acint acvv awcel psylbi pvprc f0 ac0 pinteq pint0 f0 ac0 awceq f0 acint ac0 acint acvv psyl6eq f0 ac0 awceq f0 acint acvv acvv peleq1d f0 ac0 awceq f0 acint acvv awcel acvv acvv awcel pmtbiri f0 acint acvv awcel f0 ac0 pnecon2ai f0 ac0 awne f0 acint acvv awcel pimpbii $.
+$}
+$( If a class intersection is not a set, it must be the universe.
+     (Contributed by NM, 3-Jul-2005.) $)
+${
+	$v A $.
+	f0 $f class A $.
+	pintnex $p |- ( -. |^| A e. _V <-> |^| A = _V ) $=
+	f0 pintex f0 acint acvv awcel f0 ac0 pnecon1bbii f0 ac0 pinteq pint0 f0 ac0 awceq f0 acint ac0 acint acvv psyl6eq f0 acint acvv awcel awn f0 ac0 awceq f0 acint acvv awceq psylbi pvprc f0 acint acvv acvv peleq1 f0 acint acvv awceq f0 acint acvv awcel acvv acvv awcel pmtbiri f0 acint acvv awcel awn f0 acint acvv awceq pimpbii $.
+$}
+$( The intersection of a non-empty class abstraction exists.  (Contributed
+       by NM, 21-Oct-2003.) $)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	pintexab $p |- ( E. x ph <-> |^| { x | ph } e. _V ) $=
+	f0 f1 pabn0 f0 f1 acab pintex f0 f1 awex f0 f1 acab ac0 awne f0 f1 acab acint acvv awcel pbitr3i $.
+$}
+$( The intersection of a non-empty restricted class abstraction exists.
+     (Contributed by NM, 21-Oct-2003.) $)
+${
+	$v ph x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	pintexrab $p |- ( E. x e. A ph <-> |^| { x e. A | ph } e. _V ) $=
+	f1 acv f2 awcel f0 awa f1 pintexab f0 f1 f2 adf-rex f0 f1 f2 adf-rab f0 f1 f2 acrab f1 acv f2 awcel f0 awa f1 acab pinteqi f0 f1 f2 acrab acint f1 acv f2 awcel f0 awa f1 acab acint acvv peleq1i f1 acv f2 awcel f0 awa f1 awex f1 acv f2 awcel f0 awa f1 acab acint acvv awcel f0 f1 f2 awrex f0 f1 f2 acrab acint acvv awcel p3bitr4i $.
+$}
+$( The existence of an indexed union. ` x ` is normally a free-variable
+       parameter in ` B ` , which should be read ` B ( x ) ` .  (Contributed by
+       FL, 19-Sep-2011.) $)
+${
+	$v x y A B C $.
+	$d A x y $.
+	$d B y $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	i0 $f set y $.
+	piinexg $p |- ( ( A =/= (/) /\ A. x e. A B e. C ) -> |^|_ x e. A B e. _V ) $=
+	f0 i0 f1 f2 f3 pdfiin2g f2 f3 awcel f0 f1 awral f0 f1 f2 aciin i0 acv f2 awceq f0 f1 awrex i0 acab acint awceq f1 ac0 awne padantl i0 f2 f3 pelisset f2 f3 awcel i0 acv f2 awceq i0 awex awi f0 f1 prgenw f2 f3 awcel i0 acv f2 awceq i0 awex awi f0 f1 pr19.2z f1 ac0 awne f2 f3 awcel i0 acv f2 awceq i0 awex awi f0 f1 awral f2 f3 awcel i0 acv f2 awceq i0 awex awi f0 f1 awrex pmpan2 f2 f3 awcel i0 acv f2 awceq i0 awex f0 f1 pr19.35 f1 ac0 awne f2 f3 awcel i0 acv f2 awceq i0 awex awi f0 f1 awrex f2 f3 awcel f0 f1 awral i0 acv f2 awceq i0 awex f0 f1 awrex awi psylib f1 ac0 awne f2 f3 awcel f0 f1 awral i0 acv f2 awceq i0 awex f0 f1 awrex pimp i0 acv f2 awceq f0 i0 f1 prexcom4 f1 ac0 awne f2 f3 awcel f0 f1 awral awa i0 acv f2 awceq i0 awex f0 f1 awrex i0 acv f2 awceq f0 f1 awrex i0 awex psylib i0 acv f2 awceq f0 f1 awrex i0 pabn0 f1 ac0 awne f2 f3 awcel f0 f1 awral awa i0 acv f2 awceq f0 f1 awrex i0 awex i0 acv f2 awceq f0 f1 awrex i0 acab ac0 awne psylibr i0 acv f2 awceq f0 f1 awrex i0 acab pintex f1 ac0 awne f2 f3 awcel f0 f1 awral awa i0 acv f2 awceq f0 f1 awrex i0 acab ac0 awne i0 acv f2 awceq f0 f1 awrex i0 acab acint acvv awcel psylib f1 ac0 awne f2 f3 awcel f0 f1 awral awa f0 f1 f2 aciin i0 acv f2 awceq f0 f1 awrex i0 acab acint acvv peqeltrd $.
+$}
+$( Absorption of a redundant conjunct in the intersection of a class
+       abstraction.  (Contributed by NM, 3-Jul-2005.) $)
+${
+	$v ph ps ch x y A $.
+	$d x y $.
+	$d x A $.
+	$d y ph $.
+	$d x ps $.
+	$d x ch $.
+	e0 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	e1 $e |- ( x = |^| { y | ps } -> ( ph <-> ch ) ) $.
+	e2 $e |- ( |^| { y | ps } C_ A /\ ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	pintabs $p |- |^| { x | ( x C_ A /\ ph ) } = |^| { x | ph } $=
+	f3 acv f1 f4 acab acint f5 psseq1 e1 f3 acv f1 f4 acab acint awceq f3 acv f5 awss f1 f4 acab acint f5 awss f0 f2 panbi12d e2 f3 acv f5 awss f0 awa f1 f4 acab acint f5 awss f2 awa f3 f1 f4 acab acint acvv pintmin3 f1 f4 acab pintnex f3 acv f5 awss f0 awa f3 acab acint pssv f1 f4 acab acint acvv f3 acv f5 awss f0 awa f3 acab acint psseq2 f1 f4 acab acint acvv awceq f3 acv f5 awss f0 awa f3 acab acint f1 f4 acab acint awss f3 acv f5 awss f0 awa f3 acab acint acvv awss pmpbiri f1 f4 acab acint acvv awcel awn f1 f4 acab acint acvv awceq f3 acv f5 awss f0 awa f3 acab acint f1 f4 acab acint awss psylbi f1 f4 acab acint acvv awcel f3 acv f5 awss f0 awa f3 acab acint f1 f4 acab acint awss ppm2.61i e0 f0 f1 f3 f4 pcbvabv f0 f3 acab f1 f4 acab pinteqi f3 acv f5 awss f0 awa f3 acab acint f1 f4 acab acint f0 f3 acab acint psseqtr4i f3 acv f5 awss f0 psimpr f3 acv f5 awss f0 awa f0 f3 pss2abi f3 acv f5 awss f0 awa f3 acab f0 f3 acab pintss f3 acv f5 awss f0 awa f3 acab f0 f3 acab awss f0 f3 acab acint f3 acv f5 awss f0 awa f3 acab acint awss aax-mp f3 acv f5 awss f0 awa f3 acab acint f0 f3 acab acint peqssi $.
+$}
+$( The intersection of a union ` U. A ` with a class ` B ` is equal to the
+       union of the intersections of each element of ` A ` with ` B ` .
+       (Contributed by FL, 24-Mar-2007.) $)
+${
+	$v x y z A B $.
+	$d A x y z $.
+	$d B x y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	i0 $f set z $.
+	pinuni $p |- ( U. A i^i B ) = U. { x | E. y e. A x = ( y i^i B ) } $=
+	f1 i0 acv f2 peluni2 i0 acv f2 acuni awcel i0 acv f1 acv awcel f1 f2 awrex i0 acv f3 awcel panbi1i i0 acv f2 acuni f3 pelin i0 acv f0 acv awcel f0 acv f1 acv f3 acin awceq f1 f2 awrex pancom f0 acv f1 acv f3 acin awceq i0 acv f0 acv awcel f1 f2 pr19.41v i0 acv f0 acv awcel f0 acv f1 acv f3 acin awceq f1 f2 awrex awa f0 acv f1 acv f3 acin awceq f1 f2 awrex i0 acv f0 acv awcel awa f0 acv f1 acv f3 acin awceq i0 acv f0 acv awcel awa f1 f2 awrex pbitr4i i0 acv f0 acv awcel f0 acv f1 acv f3 acin awceq f1 f2 awrex awa f0 acv f1 acv f3 acin awceq i0 acv f0 acv awcel awa f1 f2 awrex f0 pexbii f0 acv f1 acv f3 acin awceq i0 acv f0 acv awcel awa f1 f0 f2 prexcom4 i0 acv f0 acv awcel f0 acv f1 acv f3 acin awceq f1 f2 awrex awa f0 awex f0 acv f1 acv f3 acin awceq i0 acv f0 acv awcel awa f1 f2 awrex f0 awex f0 acv f1 acv f3 acin awceq i0 acv f0 acv awcel awa f0 awex f1 f2 awrex pbitr4i f1 pvex f1 acv f3 pinex1 f0 acv f1 acv f3 acin i0 acv peleq2 i0 acv f0 acv awcel i0 acv f1 acv f3 acin awcel f0 f1 acv f3 acin pceqsexv i0 acv f1 acv f3 pelin f0 acv f1 acv f3 acin awceq i0 acv f0 acv awcel awa f0 awex i0 acv f1 acv f3 acin awcel i0 acv f1 acv awcel i0 acv f3 awcel awa pbitri f0 acv f1 acv f3 acin awceq i0 acv f0 acv awcel awa f0 awex i0 acv f1 acv awcel i0 acv f3 awcel awa f1 f2 prexbii i0 acv f1 acv awcel i0 acv f3 awcel f1 f2 pr19.41v f0 acv f1 acv f3 acin awceq i0 acv f0 acv awcel awa f0 awex f1 f2 awrex i0 acv f1 acv awcel i0 acv f3 awcel awa f1 f2 awrex i0 acv f1 acv awcel f1 f2 awrex i0 acv f3 awcel awa pbitri i0 acv f0 acv awcel f0 acv f1 acv f3 acin awceq f1 f2 awrex awa f0 awex f0 acv f1 acv f3 acin awceq i0 acv f0 acv awcel awa f0 awex f1 f2 awrex i0 acv f1 acv awcel f1 f2 awrex i0 acv f3 awcel awa pbitri i0 acv f2 acuni awcel i0 acv f3 awcel awa i0 acv f1 acv awcel f1 f2 awrex i0 acv f3 awcel awa i0 acv f2 acuni f3 acin awcel i0 acv f0 acv awcel f0 acv f1 acv f3 acin awceq f1 f2 awrex awa f0 awex p3bitr4i f0 acv f1 acv f3 acin awceq f1 f2 awrex f0 i0 acv peluniab i0 acv f2 acuni f3 acin awcel i0 acv f0 acv awcel f0 acv f1 acv f3 acin awceq f1 f2 awrex awa f0 awex i0 acv f0 acv f1 acv f3 acin awceq f1 f2 awrex f0 acab acuni awcel pbitr4i i0 f2 acuni f3 acin f0 acv f1 acv f3 acin awceq f1 f2 awrex f0 acab acuni peqriv $.
+$}
+$( Membership in a power class.  Theorem 86 of [Suppes] p. 47.  (Contributed
+     by NM, 7-Aug-2000.) $)
+${
+	$v A B V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class V $.
+	pelpw2g $p |- ( B e. V -> ( A e. ~P B <-> A C_ B ) ) $=
+	f0 f1 pelpwi f0 f1 f2 pssexg f0 f1 acvv pelpwg f0 acvv awcel f0 f1 acpw awcel f0 f1 awss pbiimparc f0 f1 awss f1 f2 awcel f0 acvv awcel f0 f1 acpw awcel psyldan f0 f1 awss f1 f2 awcel f0 f1 acpw awcel pexpcom f1 f2 awcel f0 f1 acpw awcel f0 f1 awss pimpbid2 $.
+$}
+$( Membership in a power class.  Theorem 86 of [Suppes] p. 47.
+       (Contributed by NM, 11-Oct-2007.) $)
+${
+	$v A B $.
+	e0 $e |- B e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pelpw2 $p |- ( A e. ~P B <-> A C_ B ) $=
+	e0 f0 f1 acvv pelpw2g f1 acvv awcel f0 f1 acpw awcel f0 f1 awss awb aax-mp $.
+$}
+$( The power set of a set is never a subset.  (Contributed by Stefan
+       O'Rear, 22-Feb-2015.) $)
+${
+	$v x y A V $.
+	$d A x y $.
+	$d V x y $.
+	f0 $f class A $.
+	f1 $f class V $.
+	i0 $f set x $.
+	i1 $f set y $.
+	ppwnss $p |- ( A e. V -> -. ~P A C_ A ) $=
+	i1 acv i0 acv i0 acv awnel i0 f0 acrab i1 acv i0 acv i0 acv awnel i0 f0 acrab peleq12 i1 acv i0 acv i0 acv awnel i0 f0 acrab awceq i1 acv i1 acv awcel i0 acv i0 acv awnel i0 f0 acrab i0 acv i0 acv awnel i0 f0 acrab awcel awb panidms i1 acv i0 acv i0 acv awnel i0 f0 acrab awceq i1 acv i1 acv awcel i0 acv i0 acv awnel i0 f0 acrab i0 acv i0 acv awnel i0 f0 acrab awcel pnotbid i0 acv i0 acv adf-nel i0 acv i1 acv i0 acv i1 acv peleq12 i0 acv i1 acv awceq i0 acv i0 acv awcel i1 acv i1 acv awcel awb panidms i0 acv i1 acv awceq i0 acv i0 acv awcel i1 acv i1 acv awcel pnotbid i0 acv i0 acv awnel i0 acv i0 acv awcel awn i0 acv i1 acv awceq i1 acv i1 acv awcel awn psyl5bb i0 acv i0 acv awnel i1 acv i1 acv awcel awn i0 i1 f0 pcbvrabv i1 acv i1 acv awcel awn i0 acv i0 acv awnel i0 f0 acrab i0 acv i0 acv awnel i0 f0 acrab awcel awn i1 i0 acv i0 acv awnel i0 f0 acrab f0 i0 acv i0 acv awnel i0 f0 acrab pelrab2 i0 acv i0 acv awnel i0 f0 acrab i0 acv i0 acv awnel i0 f0 acrab awcel i0 acv i0 acv awnel i0 f0 acrab f0 awcel ppclem6 i0 acv i0 acv awnel i0 f0 acrab i0 acv i0 acv awnel i0 f0 acrab awcel i0 acv i0 acv awnel i0 f0 acrab f0 awcel i0 acv i0 acv awnel i0 f0 acrab i0 acv i0 acv awnel i0 f0 acrab awcel awn awa awb i0 acv i0 acv awnel i0 f0 acrab f0 awcel awn aax-mp f0 acpw f0 i0 acv i0 acv awnel i0 f0 acrab pssel f0 acpw f0 awss i0 acv i0 acv awnel i0 f0 acrab f0 acpw awcel i0 acv i0 acv awnel i0 f0 acrab f0 awcel pmtoi i0 acv i0 acv awnel i0 f0 pssrab2 i0 acv i0 acv awnel i0 f0 acrab f0 f1 pelpw2g f0 f1 awcel i0 acv i0 acv awnel i0 f0 acrab f0 acpw awcel i0 acv i0 acv awnel i0 f0 acrab f0 awss pmpbiri f0 acpw f0 awss i0 acv i0 acv awnel i0 f0 acrab f0 acpw awcel f0 f1 awcel pnsyl3 $.
+$}
+$( No set equals its power set.  The sethood antecedent is necessary; compare
+     ~ pwv .  (Contributed by NM, 17-Nov-2008.)  (Proof shortened by Mario
+     Carneiro, 23-Dec-2016.) $)
+${
+	$v A V $.
+	f0 $f class A $.
+	f1 $f class V $.
+	ppwne $p |- ( A e. V -> ~P A =/= A ) $=
+	f0 f1 ppwnss f0 acpw f0 peqimss f0 acpw f0 awss f0 acpw f0 pnecon3bi f0 f1 awcel f0 acpw f0 awss awn f0 acpw f0 awne psyl $.
+$}
+

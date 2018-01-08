@@ -1,0 +1,529 @@
+$[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Relations.smm $]
+$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Definite description binder (inverted iota)
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+$)
+$c iota $.
+$( /* Extend class notation with Russell's definition description binder
+     (inverted iota). */
+
+$)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	acio $a class ( iota x ph ) $.
+$}
+$( /* Soundness justification theorem for ~ df-iota .  (Contributed by Andrew
+       Salmon, 29-Jun-2011.) */
+
+$)
+${
+	$v ph x y z $.
+	$v w $.
+	$d w x z $.
+	$d ph w z $.
+	$d ph w y $.
+	$d x y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	i0 $f set w $.
+	piotajust $p |- U. { y | { x | ph } = { y } } = U. { z | { x | ph } = { z } } $=
+	f2 asup_set_class i0 asup_set_class psneq f2 asup_set_class i0 asup_set_class awceq f2 asup_set_class acsn i0 asup_set_class acsn f0 f1 acab peqeq2d f0 f1 acab f2 asup_set_class acsn awceq f0 f1 acab i0 asup_set_class acsn awceq f2 i0 pcbvabv i0 asup_set_class f3 asup_set_class psneq i0 asup_set_class f3 asup_set_class awceq i0 asup_set_class acsn f3 asup_set_class acsn f0 f1 acab peqeq2d f0 f1 acab i0 asup_set_class acsn awceq f0 f1 acab f3 asup_set_class acsn awceq i0 f3 pcbvabv f0 f1 acab f2 asup_set_class acsn awceq f2 acab f0 f1 acab i0 asup_set_class acsn awceq i0 acab f0 f1 acab f3 asup_set_class acsn awceq f3 acab peqtri f0 f1 acab f2 asup_set_class acsn awceq f2 acab f0 f1 acab f3 asup_set_class acsn awceq f3 acab punieqi $.
+$}
+$( /* Define Russell's definition description binder, which can be read as
+       "the unique ` x ` such that ` ph ` ," where ` ph ` ordinarily contains
+       ` x ` as a free variable.  Our definition is meaningful only when there
+       is exactly one ` x ` such that ` ph ` is true (see ~ iotaval );
+       otherwise, it evaluates to the empty set (see ~ iotanul ).  Russell used
+       the inverted iota symbol ` iota ` to represent the binder.
+
+       Sometimes proofs need to expand an iota-based definition.  That is,
+       given "X = the x for which ... x ... x ..." holds, the proof needs to
+       get to "...  X ...  X ...".  A general strategy to do this is to use
+       ~ riotacl2 (or ~ iotacl for unbounded iota), as demonstrated in the
+       proof of ~ supub .  This can be easier than applying ~ riotasbc or a
+       version that applies an explicit substitution, because substituting an
+       iota into its own property always has a bound variable clash which must
+       be first renamed or else guarded with NF.
+
+       (Contributed by Andrew Salmon, 30-Jun-2011.) */
+
+$)
+${
+	$v ph x y $.
+	$d y x $.
+	$d y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	adf-iota $a |- ( iota x ph ) = U. { y | { x | ph } = { y } } $.
+$}
+$( /* Alternate definition for descriptions.  Definition 8.18 in [Quine]
+       p. 56.  (Contributed by Andrew Salmon, 30-Jun-2011.) */
+
+$)
+${
+	$v ph x y $.
+	$d y x $.
+	$d y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	pdfiota2 $p |- ( iota x ph ) = U. { y | A. x ( ph <-> x = y ) } $=
+	f0 f1 f2 adf-iota f1 f2 asup_set_class adf-sn f2 asup_set_class acsn f1 asup_set_class f2 asup_set_class awceq f1 acab f0 f1 acab peqeq2i f0 f1 asup_set_class f2 asup_set_class awceq f1 pabbi f0 f1 acab f2 asup_set_class acsn awceq f0 f1 acab f1 asup_set_class f2 asup_set_class awceq f1 acab awceq f0 f1 asup_set_class f2 asup_set_class awceq awb f1 awal pbitr4i f0 f1 acab f2 asup_set_class acsn awceq f0 f1 asup_set_class f2 asup_set_class awceq awb f1 awal f2 pabbii f0 f1 acab f2 asup_set_class acsn awceq f2 acab f0 f1 asup_set_class f2 asup_set_class awceq awb f1 awal f2 acab punieqi f0 f1 acio f0 f1 acab f2 asup_set_class acsn awceq f2 acab acuni f0 f1 asup_set_class f2 asup_set_class awceq awb f1 awal f2 acab acuni peqtri $.
+$}
+$( /* Bound-variable hypothesis builder for the ` iota ` class.  (Contributed
+       by Andrew Salmon, 11-Jul-2011.)  (Revised by Mario Carneiro,
+       15-Oct-2016.) */
+
+$)
+${
+	$v ph x $.
+	$v y $.
+	$d x y $.
+	$d y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	i0 $f set y $.
+	pnfiota1 $p |- F/_ x ( iota x ph ) $=
+	f0 f1 i0 pdfiota2 f0 f1 asup_set_class i0 asup_set_class awceq awb f1 i0 pnfaba1 f1 f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 acab pnfuni f1 f0 f1 acio f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 acab acuni pnfcxfr $.
+$}
+$( /* Deduction version of ~ nfiota .  (Contributed by NM, 18-Feb-2013.) */
+
+$)
+${
+	$v ph ps x y $.
+	$v z $.
+	$d z ps $.
+	$d z ph $.
+	$d x z $.
+	$d y z $.
+	e0 $e |- F/ y ph $.
+	e1 $e |- ( ph -> F/ x ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	i0 $f set z $.
+	pnfiotad $p |- ( ph -> F/_ x ( iota y ps ) ) $=
+	f1 f3 i0 pdfiota2 f0 i0 pnfv e0 e1 f0 f1 f2 awnf f2 asup_set_class f3 asup_set_class awceq f2 awal awn padantr f2 f3 pnfcvf f2 asup_set_class f3 asup_set_class awceq f2 awal awn f2 f3 asup_set_class awnfc f0 padantl f0 f2 asup_set_class f3 asup_set_class awceq f2 awal awn awa f2 i0 asup_set_class pnfcvd f0 f2 asup_set_class f3 asup_set_class awceq f2 awal awn awa f2 f3 asup_set_class i0 asup_set_class pnfeqd f0 f2 asup_set_class f3 asup_set_class awceq f2 awal awn awa f1 f3 asup_set_class i0 asup_set_class awceq f2 pnfbid f0 f1 f3 asup_set_class i0 asup_set_class awceq awb f2 f3 pnfald2 f0 f1 f3 asup_set_class i0 asup_set_class awceq awb f3 awal f2 i0 pnfabd f0 f2 f1 f3 asup_set_class i0 asup_set_class awceq awb f3 awal i0 acab pnfunid f0 f2 f1 f3 acio f1 f3 asup_set_class i0 asup_set_class awceq awb f3 awal i0 acab acuni pnfcxfrd $.
+$}
+$( /* Bound-variable hypothesis builder for the ` iota ` class.  (Contributed
+       by NM, 23-Aug-2011.) */
+
+$)
+${
+	$v ph x y $.
+	e0 $e |- F/ x ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	pnfiota $p |- F/_ x ( iota y ph ) $=
+	f2 pnftru e0 f0 f1 awnf awtru pa1i awtru f0 f1 f2 pnfiotad f1 f0 f2 acio awnfc ptrud $.
+$}
+$( /* Change bound variables in a description binder.  (Contributed by Andrew
+       Salmon, 1-Aug-2011.) */
+
+$)
+${
+	$v ph ps x y $.
+	$v z w $.
+	$d z w x $.
+	$d z w y $.
+	$d z w ph $.
+	$d z w ps $.
+	e0 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	e1 $e |- F/ y ph $.
+	e2 $e |- F/ x ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	i0 $f set z $.
+	i1 $f set w $.
+	pcbviota $p |- ( iota x ph ) = ( iota y ps ) $=
+	f0 f2 asup_set_class i1 asup_set_class awceq awb i0 pnfv f0 f2 i0 pnfs1v i0 asup_set_class i1 asup_set_class awceq f2 pnfv f0 f2 i0 awsb i0 asup_set_class i1 asup_set_class awceq f2 pnfbi f0 f2 i0 psbequ12 f2 i0 i1 pequequ1 f2 asup_set_class i0 asup_set_class awceq f0 f0 f2 i0 awsb f2 asup_set_class i1 asup_set_class awceq i0 asup_set_class i1 asup_set_class awceq pbibi12d f0 f2 asup_set_class i1 asup_set_class awceq awb f0 f2 i0 awsb i0 asup_set_class i1 asup_set_class awceq awb f2 i0 pcbval e1 f0 f2 i0 f3 pnfsb i0 asup_set_class i1 asup_set_class awceq f3 pnfv f0 f2 i0 awsb i0 asup_set_class i1 asup_set_class awceq f3 pnfbi f1 f3 asup_set_class i1 asup_set_class awceq awb i0 pnfv f0 i0 f3 f2 psbequ e2 e0 f0 f1 f2 f3 psbie i0 asup_set_class f3 asup_set_class awceq f0 f2 i0 awsb f0 f2 f3 awsb f1 psyl6bb i0 f3 i1 pequequ1 i0 asup_set_class f3 asup_set_class awceq f0 f2 i0 awsb f1 i0 asup_set_class i1 asup_set_class awceq f3 asup_set_class i1 asup_set_class awceq pbibi12d f0 f2 i0 awsb i0 asup_set_class i1 asup_set_class awceq awb f1 f3 asup_set_class i1 asup_set_class awceq awb i0 f3 pcbval f0 f2 asup_set_class i1 asup_set_class awceq awb f2 awal f0 f2 i0 awsb i0 asup_set_class i1 asup_set_class awceq awb i0 awal f1 f3 asup_set_class i1 asup_set_class awceq awb f3 awal pbitri f0 f2 asup_set_class i1 asup_set_class awceq awb f2 awal f1 f3 asup_set_class i1 asup_set_class awceq awb f3 awal i1 pabbii f0 f2 asup_set_class i1 asup_set_class awceq awb f2 awal i1 acab f1 f3 asup_set_class i1 asup_set_class awceq awb f3 awal i1 acab punieqi f0 f2 i1 pdfiota2 f1 f3 i1 pdfiota2 f0 f2 asup_set_class i1 asup_set_class awceq awb f2 awal i1 acab acuni f1 f3 asup_set_class i1 asup_set_class awceq awb f3 awal i1 acab acuni f0 f2 acio f1 f3 acio p3eqtr4i $.
+$}
+$( /* Change bound variables in a description binder.  (Contributed by Andrew
+       Salmon, 1-Aug-2011.) */
+
+$)
+${
+	$v ph ps x y $.
+	$d ph y $.
+	$d ps x $.
+	e0 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	pcbviotav $p |- ( iota x ph ) = ( iota y ps ) $=
+	e0 f0 f3 pnfv f1 f2 pnfv f0 f1 f2 f3 pcbviota $.
+$}
+$( /* Variable substitution in description binder.  Compare ~ sb8eu .
+       (Contributed by NM, 18-Mar-2013.) */
+
+$)
+${
+	$v ph x y $.
+	$v z w $.
+	$d w z ph $.
+	$d w z x $.
+	$d w z y $.
+	e0 $e |- F/ y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	i0 $f set z $.
+	i1 $f set w $.
+	psb8iota $p |- ( iota x ph ) = ( iota y [ y / x ] ph ) $=
+	f0 f1 asup_set_class i0 asup_set_class awceq awb i1 pnfv f0 f1 asup_set_class i0 asup_set_class awceq awb f1 i1 psb8 f0 f1 asup_set_class i0 asup_set_class awceq f1 i1 psbbi e0 f0 f1 i1 f2 pnfsb i1 f1 i0 asup_set_class peqsb3 i1 asup_set_class i0 asup_set_class awceq f2 pnfv f1 asup_set_class i0 asup_set_class awceq f1 i1 awsb i1 asup_set_class i0 asup_set_class awceq f2 pnfxfr f0 f1 i1 awsb f1 asup_set_class i0 asup_set_class awceq f1 i1 awsb f2 pnfbi f0 f1 asup_set_class i0 asup_set_class awceq awb f1 i1 awsb f0 f1 i1 awsb f1 asup_set_class i0 asup_set_class awceq f1 i1 awsb awb f2 pnfxfr f0 f1 asup_set_class i0 asup_set_class awceq awb f1 f2 awsb i1 pnfv f0 f1 asup_set_class i0 asup_set_class awceq awb i1 f2 f1 psbequ f0 f1 asup_set_class i0 asup_set_class awceq awb f1 i1 awsb f0 f1 asup_set_class i0 asup_set_class awceq awb f1 f2 awsb i1 f2 pcbval f2 f1 i0 pequsb3 f1 asup_set_class i0 asup_set_class awceq f2 asup_set_class i0 asup_set_class awceq f0 f1 f2 psblbis f0 f1 asup_set_class i0 asup_set_class awceq awb f1 f2 awsb f0 f1 f2 awsb f2 asup_set_class i0 asup_set_class awceq awb f2 palbii f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal f0 f1 asup_set_class i0 asup_set_class awceq awb f1 i1 awsb i1 awal f0 f1 asup_set_class i0 asup_set_class awceq awb f1 f2 awsb f2 awal f0 f1 f2 awsb f2 asup_set_class i0 asup_set_class awceq awb f2 awal p3bitri f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal f0 f1 f2 awsb f2 asup_set_class i0 asup_set_class awceq awb f2 awal i0 pabbii f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 acab f0 f1 f2 awsb f2 asup_set_class i0 asup_set_class awceq awb f2 awal i0 acab punieqi f0 f1 i0 pdfiota2 f0 f1 f2 awsb f2 i0 pdfiota2 f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 acab acuni f0 f1 f2 awsb f2 asup_set_class i0 asup_set_class awceq awb f2 awal i0 acab acuni f0 f1 acio f0 f1 f2 awsb f2 acio p3eqtr4i $.
+$}
+$( /* Equality theorem for descriptions.  (Contributed by Andrew Salmon,
+       30-Jun-2011.) */
+
+$)
+${
+	$v ph x y $.
+	$v z $.
+	$d y z $.
+	$d x z $.
+	$d ph z $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	i0 $f set z $.
+	piotaeq $p |- ( A. x x = y -> ( iota x ph ) = ( iota y ph ) ) $=
+	f0 f1 f2 i0 pdrsb1 f0 i0 f1 adf-clab f0 i0 f2 adf-clab f1 asup_set_class f2 asup_set_class awceq f1 awal f0 f1 i0 awsb f0 f2 i0 awsb i0 asup_set_class f0 f1 acab awcel i0 asup_set_class f0 f2 acab awcel p3bitr4g f1 asup_set_class f2 asup_set_class awceq f1 awal i0 f0 f1 acab f0 f2 acab peqrdv f1 asup_set_class f2 asup_set_class awceq f1 awal f0 f1 acab f0 f2 acab i0 asup_set_class acsn peqeq1d f1 asup_set_class f2 asup_set_class awceq f1 awal f0 f1 acab i0 asup_set_class acsn awceq f0 f2 acab i0 asup_set_class acsn awceq i0 pabbidv f1 asup_set_class f2 asup_set_class awceq f1 awal f0 f1 acab i0 asup_set_class acsn awceq i0 acab f0 f2 acab i0 asup_set_class acsn awceq i0 acab punieqd f0 f1 i0 adf-iota f0 f2 i0 adf-iota f1 asup_set_class f2 asup_set_class awceq f1 awal f0 f1 acab i0 asup_set_class acsn awceq i0 acab acuni f0 f2 acab i0 asup_set_class acsn awceq i0 acab acuni f0 f1 acio f0 f2 acio p3eqtr4g $.
+$}
+$( /* Equivalence theorem for descriptions.  (Contributed by Andrew Salmon,
+       30-Jun-2011.) */
+
+$)
+${
+	$v ph ps x $.
+	$v z $.
+	$d ph z $.
+	$d ps z $.
+	$d x z $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	i0 $f set z $.
+	piotabi $p |- ( A. x ( ph <-> ps ) -> ( iota x ph ) = ( iota x ps ) ) $=
+	f0 f1 f2 pabbi f0 f1 awb f2 awal f0 f2 acab f1 f2 acab awceq pbiimpi f0 f1 awb f2 awal f0 f2 acab f1 f2 acab i0 asup_set_class acsn peqeq1d f0 f1 awb f2 awal f0 f2 acab i0 asup_set_class acsn awceq f1 f2 acab i0 asup_set_class acsn awceq i0 pabbidv f0 f1 awb f2 awal f0 f2 acab i0 asup_set_class acsn awceq i0 acab f1 f2 acab i0 asup_set_class acsn awceq i0 acab punieqd f0 f2 i0 adf-iota f1 f2 i0 adf-iota f0 f1 awb f2 awal f0 f2 acab i0 asup_set_class acsn awceq i0 acab acuni f1 f2 acab i0 asup_set_class acsn awceq i0 acab acuni f0 f2 acio f1 f2 acio p3eqtr4g $.
+$}
+$( /* Part of Theorem 8.17 in [Quine] p. 56.  This theorem serves as a lemma
+       for the fundamental property of iota.  (Contributed by Andrew Salmon,
+       11-Jul-2011.) */
+
+$)
+${
+	$v ph x y $.
+	$d x y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	puniabio $p |- ( A. x ( ph <-> x = y ) -> U. { x | ph } = y ) $=
+	f0 f1 asup_set_class f2 asup_set_class awceq f1 pabbi f0 f1 asup_set_class f2 asup_set_class awceq awb f1 awal f0 f1 acab f1 asup_set_class f2 asup_set_class awceq f1 acab awceq pbiimpi f1 f2 asup_set_class adf-sn f0 f1 asup_set_class f2 asup_set_class awceq awb f1 awal f0 f1 acab f1 asup_set_class f2 asup_set_class awceq f1 acab f2 asup_set_class acsn psyl6eqr f0 f1 asup_set_class f2 asup_set_class awceq awb f1 awal f0 f1 acab f2 asup_set_class acsn punieqd f2 pvex f2 asup_set_class punisn f0 f1 asup_set_class f2 asup_set_class awceq awb f1 awal f0 f1 acab acuni f2 asup_set_class acsn acuni f2 asup_set_class psyl6eq $.
+$}
+$( /* Theorem 8.19 in [Quine] p. 57.  This theorem is the fundamental property
+       of iota.  (Contributed by Andrew Salmon, 11-Jul-2011.) */
+
+$)
+${
+	$v ph x y $.
+	$v z $.
+	$d ph z $.
+	$d x y z $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	i0 $f set z $.
+	piotaval $p |- ( A. x ( ph <-> x = y ) -> ( iota x ph ) = y ) $=
+	f0 f1 i0 pdfiota2 f2 pvex f0 f1 f2 asup_set_class i0 asup_set_class acvv psbeqalb f2 i0 pequcomi f2 asup_set_class acvv awcel f0 f1 asup_set_class f2 asup_set_class awceq awb f1 awal f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal awa f2 asup_set_class i0 asup_set_class awceq i0 asup_set_class f2 asup_set_class awceq psyl6 f2 asup_set_class acvv awcel f0 f1 asup_set_class f2 asup_set_class awceq awb f1 awal f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal awa i0 asup_set_class f2 asup_set_class awceq awi aax-mp f0 f1 asup_set_class f2 asup_set_class awceq awb f1 awal f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 asup_set_class f2 asup_set_class awceq pex f2 i0 f1 pequequ2 f1 asup_set_class f2 asup_set_class awceq f1 asup_set_class i0 asup_set_class awceq awb f2 asup_set_class i0 asup_set_class peqcoms i0 asup_set_class f2 asup_set_class awceq f1 asup_set_class f2 asup_set_class awceq f1 asup_set_class i0 asup_set_class awceq f0 pbibi2d i0 asup_set_class f2 asup_set_class awceq f0 f1 asup_set_class f2 asup_set_class awceq awb f0 f1 asup_set_class i0 asup_set_class awceq awb pbiimpd i0 asup_set_class f2 asup_set_class awceq f0 f1 asup_set_class f2 asup_set_class awceq awb f0 f1 asup_set_class i0 asup_set_class awceq awb f1 palimdv i0 asup_set_class f2 asup_set_class awceq f0 f1 asup_set_class f2 asup_set_class awceq awb f1 awal f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal pcom12 f0 f1 asup_set_class f2 asup_set_class awceq awb f1 awal f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 asup_set_class f2 asup_set_class awceq pimpbid f0 f1 asup_set_class f2 asup_set_class awceq awb f1 awal f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 asup_set_class f2 asup_set_class awceq awb i0 palrimiv f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 f2 puniabio f0 f1 asup_set_class f2 asup_set_class awceq awb f1 awal f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 asup_set_class f2 asup_set_class awceq awb i0 awal f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 acab acuni f2 asup_set_class awceq psyl f0 f1 asup_set_class f2 asup_set_class awceq awb f1 awal f0 f1 acio f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 acab acuni f2 asup_set_class psyl5eq $.
+$}
+$( /* Equivalence between two different forms of ` iota ` .  (Contributed by
+       Andrew Salmon, 12-Jul-2011.) */
+
+$)
+${
+	$v ph x $.
+	$v z $.
+	$d ph z $.
+	$d x z $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	i0 $f set z $.
+	piotauni $p |- ( E! x ph -> ( iota x ph ) = U. { x | ph } ) $=
+	f0 f1 i0 adf-eu f0 f1 i0 piotaval f0 f1 i0 puniabio f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal f0 f1 acio i0 asup_set_class f0 f1 acab acuni peqtr4d f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal f0 f1 acio f0 f1 acab acuni awceq i0 pexlimiv f0 f1 aweu f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 awex f0 f1 acio f0 f1 acab acuni awceq psylbi $.
+$}
+$( /* Equivalence between two different forms of ` iota ` .  (Contributed by
+       Mario Carneiro, 24-Dec-2016.) */
+
+$)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	piotaint $p |- ( E! x ph -> ( iota x ph ) = |^| { x | ph } ) $=
+	f0 f1 piotauni f0 f1 puniintab f0 f1 aweu f0 f1 acab acuni f0 f1 acab acint awceq pbiimpi f0 f1 aweu f0 f1 acio f0 f1 acab acuni f0 f1 acab acint peqtrd $.
+$}
+$( /* Property of iota.  (Contributed by NM, 23-Aug-2011.)  (Revised by Mario
+       Carneiro, 23-Dec-2016.) */
+
+$)
+${
+	$v ph x $.
+	$v z $.
+	$d ph z $.
+	$d x z $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	i0 $f set z $.
+	piota1 $p |- ( E! x ph -> ( ph <-> ( iota x ph ) = x ) ) $=
+	f0 f1 i0 adf-eu f0 f1 asup_set_class i0 asup_set_class awceq awb f1 psp f0 f1 i0 piotaval f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal f0 f1 acio i0 asup_set_class f1 asup_set_class peqeq2d f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal f0 f1 asup_set_class i0 asup_set_class awceq f1 asup_set_class f0 f1 acio awceq pbitr4d f1 asup_set_class f0 f1 acio peqcom f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal f0 f1 asup_set_class f0 f1 acio awceq f0 f1 acio f1 asup_set_class awceq psyl6bb f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal f0 f0 f1 acio f1 asup_set_class awceq awb i0 pexlimiv f0 f1 aweu f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 awex f0 f0 f1 acio f1 asup_set_class awceq awb psylbi $.
+$}
+$( /* Theorem 8.22 in [Quine] p. 57.  This theorem is the result if there
+       isn't exactly one ` x ` that satisfies ` ph ` .  (Contributed by Andrew
+       Salmon, 11-Jul-2011.) */
+
+$)
+${
+	$v ph x $.
+	$v z $.
+	$d ph z $.
+	$d x z $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	i0 $f set z $.
+	piotanul $p |- ( -. E! x ph -> ( iota x ph ) = (/) ) $=
+	f0 f1 i0 adf-eu f0 f1 i0 pdfiota2 f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 palnex f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal awn i0 asup_set_class i0 asup_set_class awceq aax-1 f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal awn i0 asup_set_class peqidd f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal awn i0 asup_set_class i0 asup_set_class awceq f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal awn pimpbid1 f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal awn i0 asup_set_class i0 asup_set_class awceq f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal pcon2bid f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal awn f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 asup_set_class i0 asup_set_class awceq awn awb i0 palimi f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 asup_set_class i0 asup_set_class awceq awn i0 pabbi f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal awn i0 awal f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 asup_set_class i0 asup_set_class awceq awn awb i0 awal f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 acab i0 asup_set_class i0 asup_set_class awceq awn i0 acab awceq psylib i0 pdfnul2 f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal awn i0 awal f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 acab i0 asup_set_class i0 asup_set_class awceq awn i0 acab ac0 psyl6eqr f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 awex awn f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal awn i0 awal f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 acab ac0 awceq psylbir f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 awex awn f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 acab ac0 punieqd puni0 f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 awex awn f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 acab acuni ac0 acuni ac0 psyl6eq f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 awex awn f0 f1 acio f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 acab acuni ac0 psyl5eq f0 f1 aweu f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 awex f0 f1 acio ac0 awceq psylnbi $.
+$}
+$( /* The ` iota ` class is a subset of the union of all elements satisfying
+       ` ph ` .  (Contributed by Mario Carneiro, 24-Dec-2016.) */
+
+$)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	piotassuni $p |- ( iota x ph ) C_ U. { x | ph } $=
+	f0 f1 piotauni f0 f1 acio f0 f1 acab acuni peqimss f0 f1 aweu f0 f1 acio f0 f1 acab acuni awceq f0 f1 acio f0 f1 acab acuni awss psyl f0 f1 acab acuni p0ss f0 f1 piotanul f0 f1 aweu awn f0 f1 acio ac0 f0 f1 acab acuni psseq1d f0 f1 aweu awn f0 f1 acio f0 f1 acab acuni awss ac0 f0 f1 acab acuni awss pmpbiri f0 f1 aweu f0 f1 acio f0 f1 acab acuni awss ppm2.61i $.
+$}
+$( /* Theorem 8.23 in [Quine] p. 58.  This theorem proves the existence of the
+       ` iota ` class under our definition.  (Contributed by Andrew Salmon,
+       11-Jul-2011.) */
+
+$)
+${
+	$v ph x $.
+	$v z $.
+	$d ph z $.
+	$d x z $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	i0 $f set z $.
+	piotaex $p |- ( iota x ph ) e. _V $=
+	f0 f1 i0 piotaval f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal f0 f1 acio i0 asup_set_class peqcomd f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 asup_set_class f0 f1 acio awceq i0 peximi f0 f1 i0 adf-eu i0 f0 f1 acio pisset f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 awex i0 asup_set_class f0 f1 acio awceq i0 awex f0 f1 aweu f0 f1 acio acvv awcel p3imtr4i f0 f1 piotanul p0ex f0 f1 aweu awn f0 f1 acio ac0 acvv psyl6eqel f0 f1 aweu f0 f1 acio acvv awcel ppm2.61i $.
+$}
+$( /* Theorem *14.22 in [WhiteheadRussell] p. 190.  (Contributed by Andrew
+       Salmon, 12-Jul-2011.) */
+
+$)
+${
+	$v ph x $.
+	$v z $.
+	$d ph z $.
+	$d x z $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	i0 $f set z $.
+	piota4 $p |- ( E! x ph -> [. ( iota x ph ) / x ]. ph ) $=
+	f0 f1 i0 adf-eu f0 f1 asup_set_class i0 asup_set_class awceq pbi2 f0 f1 asup_set_class i0 asup_set_class awceq awb f1 asup_set_class i0 asup_set_class awceq f0 awi f1 palimi f0 f1 i0 psb2 f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal f1 asup_set_class i0 asup_set_class awceq f0 awi f1 awal f0 f1 i0 awsb psyl f0 f1 i0 piotaval f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal f0 f1 acio i0 asup_set_class peqcomd f0 f1 i0 f0 f1 acio pdfsbcq2 f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 asup_set_class f0 f1 acio awceq f0 f1 i0 awsb f0 f1 f0 f1 acio awsbc awb psyl f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal f0 f1 i0 awsb f0 f1 f0 f1 acio awsbc pmpbid f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal f0 f1 f0 f1 acio awsbc i0 pexlimiv f0 f1 aweu f0 f1 asup_set_class i0 asup_set_class awceq awb f1 awal i0 awex f0 f1 f0 f1 acio awsbc psylbi $.
+$}
+$( /* Theorem *14.23 in [WhiteheadRussell] p. 191.  (Contributed by Andrew
+     Salmon, 12-Jul-2011.) */
+
+$)
+${
+	$v ph ps x $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	piota4an $p |- ( E! x ( ph /\ ps ) -> [. ( iota x ( ph /\ ps ) ) / x ]. ph ) $=
+	f0 f1 awa f2 piota4 f0 f1 awa f2 piotaex f0 f1 psimpl f0 f1 awa f0 awi f2 f0 f1 awa f2 acio acvv psbcth f0 f1 awa f2 acio acvv awcel f0 f1 awa f0 awi f2 f0 f1 awa f2 acio awsbc aax-mp f0 f1 awa f2 piotaex f0 f1 awa f0 f2 f0 f1 awa f2 acio acvv psbcimg f0 f1 awa f2 acio acvv awcel f0 f1 awa f0 awi f2 f0 f1 awa f2 acio awsbc f0 f1 awa f2 f0 f1 awa f2 acio awsbc f0 f2 f0 f1 awa f2 acio awsbc awi awb aax-mp f0 f1 awa f0 awi f2 f0 f1 awa f2 acio awsbc f0 f1 awa f2 f0 f1 awa f2 acio awsbc f0 f2 f0 f1 awa f2 acio awsbc awi pmpbi f0 f1 awa f2 aweu f0 f1 awa f2 f0 f1 awa f2 acio awsbc f0 f2 f0 f1 awa f2 acio awsbc psyl $.
+$}
+$( /* A method for computing iota.  (Contributed by NM, 17-Sep-2013.) */
+
+$)
+${
+	$v ph ps x A V $.
+	$v y $.
+	$d x y A $.
+	$d x V $.
+	$d x ph $.
+	$d y ps $.
+	e0 $e |- ( ( ph /\ A e. V ) -> ( ps <-> x = A ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class V $.
+	i0 $f set y $.
+	piota5 $p |- ( ( ph /\ A e. V ) -> ( iota x ps ) = A ) $=
+	e0 f0 f3 f4 awcel awa f1 f2 asup_set_class f3 awceq awb f2 palrimiv i0 asup_set_class f3 f2 asup_set_class peqeq2 i0 asup_set_class f3 awceq f2 asup_set_class i0 asup_set_class awceq f2 asup_set_class f3 awceq f1 pbibi2d i0 asup_set_class f3 awceq f1 f2 asup_set_class i0 asup_set_class awceq awb f1 f2 asup_set_class f3 awceq awb f2 palbidv i0 asup_set_class f3 f1 f2 acio peqeq2 i0 asup_set_class f3 awceq f1 f2 asup_set_class i0 asup_set_class awceq awb f2 awal f1 f2 asup_set_class f3 awceq awb f2 awal f1 f2 acio i0 asup_set_class awceq f1 f2 acio f3 awceq pimbi12d f1 f2 i0 piotaval f1 f2 asup_set_class i0 asup_set_class awceq awb f2 awal f1 f2 acio i0 asup_set_class awceq awi f1 f2 asup_set_class f3 awceq awb f2 awal f1 f2 acio f3 awceq awi i0 f3 f4 pvtoclg f3 f4 awcel f1 f2 asup_set_class f3 awceq awb f2 awal f1 f2 acio f3 awceq awi f0 padantl f0 f3 f4 awcel awa f1 f2 asup_set_class f3 awceq awb f2 awal f1 f2 acio f3 awceq pmpd $.
+$}
+$( /* Formula-building deduction rule for iota.  (Contributed by NM,
+       20-Aug-2011.) */
+
+$)
+${
+	$v ph ps ch x $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	piotabidv $p |- ( ph -> ( iota x ps ) = ( iota x ch ) ) $=
+	e0 f0 f1 f2 awb f3 palrimiv f1 f2 f3 piotabi f0 f1 f2 awb f3 awal f1 f3 acio f2 f3 acio awceq psyl $.
+$}
+$( /* Formula-building deduction rule for iota.  (Contributed by Mario
+       Carneiro, 2-Oct-2015.) */
+
+$)
+${
+	$v ph ps x $.
+	e0 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	piotabii $p |- ( iota x ph ) = ( iota x ps ) $=
+	f0 f1 f2 piotabi e0 f0 f1 awb f0 f2 acio f1 f2 acio awceq f2 pmpg $.
+$}
+$( /* Membership law for descriptions.
+
+     This can useful for expanding an unbounded iota-based definition (see
+     ~ df-iota ).  If you have a bounded iota-based definition, ~ riotacl2 may
+     be useful.
+
+     (Contributed by Andrew Salmon, 1-Aug-2011.) */
+
+$)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	piotacl $p |- ( E! x ph -> ( iota x ph ) e. { x | ph } ) $=
+	f0 f1 piota4 f0 f1 f0 f1 acio adf-sbc f0 f1 aweu f0 f1 f0 f1 acio awsbc f0 f1 acio f0 f1 acab awcel psylib $.
+$}
+$( /* A condition that allows us to represent "the unique element such that
+         ` ph ` " with a class expression ` A ` .  (Contributed by NM,
+         30-Dec-2014.) */
+
+$)
+${
+	$v ph ps ch x B V $.
+	e0 $e |- ( ph -> B e. V ) $.
+	e1 $e |- ( ph -> E! x ps ) $.
+	e2 $e |- ( ( ph /\ x = B ) -> ( ps <-> ch ) ) $.
+	e3 $e |- F/ x ph $.
+	e4 $e |- ( ph -> F/ x ch ) $.
+	e5 $e |- ( ph -> F/_ x B ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class B $.
+	f5 $f class V $.
+	piota2df $p |- ( ph -> ( ch <-> ( iota x ps ) = B ) ) $=
+	e5 e4 f1 f3 pnfiota1 f3 f1 f3 acio awnfc f0 pa1i e5 f0 f3 f1 f3 acio f4 pnfeqd f0 f2 f1 f3 acio f4 awceq f3 pnfbid e3 e2 f0 f3 asup_set_class f4 awceq psimpr f0 f3 asup_set_class f4 awceq awa f3 asup_set_class f4 f1 f3 acio peqeq2d f0 f3 asup_set_class f4 awceq awa f1 f2 f1 f3 acio f3 asup_set_class awceq f1 f3 acio f4 awceq pbibi12d f0 f3 asup_set_class f4 awceq f1 f1 f3 acio f3 asup_set_class awceq awb f2 f1 f3 acio f4 awceq awb awb pex f0 f3 asup_set_class f4 awceq f1 f1 f3 acio f3 asup_set_class awceq awb f2 f1 f3 acio f4 awceq awb awb awi f3 palrimi e3 e1 f1 f3 piota1 f0 f1 f3 aweu f1 f1 f3 acio f3 asup_set_class awceq awb psyl f0 f1 f1 f3 acio f3 asup_set_class awceq awb f3 palrimi e0 f1 f1 f3 acio f3 asup_set_class awceq awb f2 f1 f3 acio f4 awceq awb f3 f4 f5 pvtoclgft f0 f3 f4 awnfc f2 f1 f3 acio f4 awceq awb f3 awnf f3 asup_set_class f4 awceq f1 f1 f3 acio f3 asup_set_class awceq awb f2 f1 f3 acio f4 awceq awb awb awi f3 awal f1 f1 f3 acio f3 asup_set_class awceq awb f3 awal f4 f5 awcel f2 f1 f3 acio f4 awceq awb psyl221anc $.
+$}
+$( /* A condition that allows us to represent "the unique element such that
+       ` ph ` " with a class expression ` A ` .  (Contributed by NM,
+       30-Dec-2014.) */
+
+$)
+${
+	$v ph ps ch x B V $.
+	$d x B $.
+	$d x ph $.
+	$d x ch $.
+	e0 $e |- ( ph -> B e. V ) $.
+	e1 $e |- ( ph -> E! x ps ) $.
+	e2 $e |- ( ( ph /\ x = B ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f class B $.
+	f5 $f class V $.
+	piota2d $p |- ( ph -> ( ch <-> ( iota x ps ) = B ) ) $=
+	e0 e1 e2 f0 f3 pnfv f0 f2 f3 pnfvd f0 f3 f4 pnfcvd f0 f1 f2 f3 f4 f5 piota2df $.
+$}
+$( /* The unique element such that ` ph ` .  (Contributed by Jeff Madsen,
+       1-Jun-2011.)  (Revised by Mario Carneiro, 23-Dec-2016.) */
+
+$)
+${
+	$v ph ps x A B $.
+	$d A x $.
+	$d ps x $.
+	e0 $e |- ( x = A -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class B $.
+	piota2 $p |- ( ( A e. B /\ E! x ph ) -> ( ps <-> ( iota x ph ) = A ) ) $=
+	f3 f4 pelex f3 acvv awcel f0 f2 aweu psimpl f3 acvv awcel f0 f2 aweu psimpr e0 f2 asup_set_class f3 awceq f0 f1 awb f3 acvv awcel f0 f2 aweu awa padantl f3 acvv awcel f2 pnfv f0 f2 pnfeu1 f3 acvv awcel f0 f2 aweu f2 pnfan f3 acvv awcel f0 f2 aweu awa f1 f2 pnfvd f3 acvv awcel f0 f2 aweu awa f2 f3 pnfcvd f3 acvv awcel f0 f2 aweu awa f0 f1 f2 f3 acvv piota2df f3 f4 awcel f3 acvv awcel f0 f2 aweu f1 f0 f2 acio f3 awceq awb psylan $.
+$}
+$( /* A class abstraction with a unique member can be expressed as a singleton.
+     (Contributed by Mario Carneiro, 23-Dec-2016.) */
+
+$)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	psniota $p |- ( E! x ph -> { x | ph } = { ( iota x ph ) } ) $=
+	f0 f1 pnfeu1 f0 f1 piota1 f0 f1 acio f1 asup_set_class peqcom f0 f1 aweu f0 f0 f1 acio f1 asup_set_class awceq f1 asup_set_class f0 f1 acio awceq psyl6bb f0 f1 pabid f1 pvex f1 asup_set_class f0 f1 acio pelsnc f0 f1 aweu f0 f1 asup_set_class f0 f1 acio awceq f1 asup_set_class f0 f1 acab awcel f1 asup_set_class f0 f1 acio acsn awcel p3bitr4g f0 f1 aweu f1 asup_set_class f0 f1 acab awcel f1 asup_set_class f0 f1 acio acsn awcel awb f1 palrimi f0 f1 pnfab1 f0 f1 pnfiota1 f1 f0 f1 acio pnfsn f1 f0 f1 acab f0 f1 acio acsn pcleqf f0 f1 aweu f1 asup_set_class f0 f1 acab awcel f1 asup_set_class f0 f1 acio acsn awcel awb f1 awal f0 f1 acab f0 f1 acio acsn awceq psylibr $.
+$}
+$( /* The ` iota ` operation using the ` if ` operator.  (Contributed by Scott
+       Fenton, 6-Oct-2017.) */
+
+$)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	pdfiota4 $p |- ( iota x ph ) = if ( E! x ph , U. { x | ph } , (/) ) $=
+	f0 f1 piotauni f0 f1 aweu f0 f1 acab acuni ac0 piftrue f0 f1 aweu f0 f1 acio f0 f1 acab acuni f0 f1 aweu f0 f1 acab acuni ac0 acif peqtr4d f0 f1 piotanul f0 f1 aweu f0 f1 acab acuni ac0 piffalse f0 f1 aweu awn f0 f1 acio ac0 f0 f1 aweu f0 f1 acab acuni ac0 acif peqtr4d f0 f1 aweu f0 f1 acio f0 f1 aweu f0 f1 acab acuni ac0 acif awceq ppm2.61i $.
+$}
+$( /* Class substitution within a description binder.  (Contributed by Scott
+       Fenton, 6-Oct-2017.) */
+
+$)
+${
+	$v ph x y A V $.
+	$v z $.
+	$d A y z $.
+	$d x y z $.
+	$d ph z $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class V $.
+	i0 $f set z $.
+	pcsbiotag $p |- ( A e. V -> [_ A / x ]_ ( iota y ph ) = ( iota y [. A / x ]. ph ) ) $=
+	f1 i0 asup_set_class f3 f0 f2 acio pcsbeq1 f0 f1 i0 f3 pdfsbcq2 i0 asup_set_class f3 awceq f0 f1 i0 awsb f0 f1 f3 awsbc f2 piotabidv i0 asup_set_class f3 awceq f1 i0 asup_set_class f0 f2 acio acsb f1 f3 f0 f2 acio acsb f0 f1 i0 awsb f2 acio f0 f1 f3 awsbc f2 acio peqeq12d i0 pvex f0 f1 i0 pnfs1v f0 f1 i0 awsb f1 f2 pnfiota f0 f1 i0 psbequ12 f1 asup_set_class i0 asup_set_class awceq f0 f0 f1 i0 awsb f2 piotabidv f1 i0 asup_set_class f0 f2 acio f0 f1 i0 awsb f2 acio pcsbief f1 i0 asup_set_class f0 f2 acio acsb f0 f1 i0 awsb f2 acio awceq f1 f3 f0 f2 acio acsb f0 f1 f3 awsbc f2 acio awceq i0 f3 f4 pvtoclg $.
+$}
+

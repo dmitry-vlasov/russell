@@ -1,0 +1,1150 @@
+import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Logical_disjunction_and_conjunction.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Miscellaneous theorems of propositional calculus
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* Eliminate an antecedent implied by each side of a biconditional.
+       (Contributed by NM, 20-Nov-2005.)  (Proof shortened by Wolf Lammen,
+       4-Nov-2013.) */
+
+theorem pm5.21nd (ph : wff, ps : wff, ch : wff, th : wff)  {
+	hyp 1 : wff = |- ( ( ph ∧ ps ) → th ) ;;
+	hyp 2 : wff = |- ( ( ph ∧ ch ) → th ) ;;
+	hyp 3 : wff = |- ( th → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
+}
+
+proof of pm5.21nd {
+	step 1 : wff = ex (hyp 1) |- ( ph → ( ps → th ) ) ;;
+	step 2 : wff = ex (hyp 2) |- ( ph → ( ch → th ) ) ;;
+	step 3 : wff = a1i (hyp 3) |- ( ph → ( th → ( ps ↔ ch ) ) ) ;;
+	step 4 : wff = pm5.21ndd (step 1, step 2, step 3) |- ( ph → ( ps ↔ ch ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Theorem *5.35 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+     3-Jan-2005.) */
+
+theorem pm5.35 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ( ph → ps ) ∧ ( ph → ch ) ) → ( ph → ( ps ↔ ch ) ) ) ;;
+}
+
+proof of pm5.35 {
+	step 1 : wff = pm5.1 () |- ( ( ( ph → ps ) ∧ ( ph → ch ) ) → ( ( ph → ps ) ↔ ( ph → ch ) ) ) ;;
+	step 2 : wff = pm5.74rd (step 1) |- ( ( ( ph → ps ) ∧ ( ph → ch ) ) → ( ph → ( ps ↔ ch ) ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Theorem *5.54 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+     3-Jan-2005.)  (Proof shortened by Wolf Lammen, 7-Nov-2013.) */
+
+theorem pm5.54 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ( ph ∧ ps ) ↔ ph ) ∨ ( ( ph ∧ ps ) ↔ ps ) ) ;;
+}
+
+proof of pm5.54 {
+	step 1 : wff = iba () |- ( ps → ( ph ↔ ( ph ∧ ps ) ) ) ;;
+	step 2 : wff = bicomd (step 1) |- ( ps → ( ( ph ∧ ps ) ↔ ph ) ) ;;
+	step 3 : wff = adantl (step 2) |- ( ( ph ∧ ps ) → ( ( ph ∧ ps ) ↔ ph ) ) ;;
+	step 4 : wff = iba () |- ( ps → ( ph ↔ ( ph ∧ ps ) ) ) ;;
+	step 5 : wff = bicomd (step 4) |- ( ps → ( ( ph ∧ ps ) ↔ ph ) ) ;;
+	step 6 : wff = pm5.21ni (step 3, step 5) |- ( ¬ ( ( ph ∧ ps ) ↔ ph ) → ( ( ph ∧ ps ) ↔ ps ) ) ;;
+	step 7 : wff = orri (step 6) |- ( ( ( ph ∧ ps ) ↔ ph ) ∨ ( ( ph ∧ ps ) ↔ ps ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Move conjunction outside of biconditional.  (Contributed by NM,
+       13-May-1999.) */
+
+theorem baib (ph : wff, ps : wff, ch : wff)  {
+	hyp 1 : wff = |- ( ph ↔ ( ps ∧ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ps → ( ph ↔ ch ) ) ;;
+}
+
+proof of baib {
+	step 1 : wff = ibar () |- ( ps → ( ch ↔ ( ps ∧ ch ) ) ) ;;
+	step 2 : wff = syl6rbbr (step 1, hyp 1) |- ( ps → ( ph ↔ ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Move conjunction outside of biconditional.  (Contributed by NM,
+       11-Jul-1994.) */
+
+theorem baibr (ph : wff, ps : wff, ch : wff)  {
+	hyp 1 : wff = |- ( ph ↔ ( ps ∧ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ps → ( ch ↔ ph ) ) ;;
+}
+
+proof of baibr {
+	step 1 : wff = baib (hyp 1) |- ( ps → ( ph ↔ ch ) ) ;;
+	step 2 : wff = bicomd (step 1) |- ( ps → ( ch ↔ ph ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Move conjunction outside of biconditional.  (Contributed by Mario
+       Carneiro, 11-Sep-2015.) */
+
+theorem rbaib (ph : wff, ps : wff, ch : wff)  {
+	hyp 1 : wff = |- ( ph ↔ ( ps ∧ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ch → ( ph ↔ ps ) ) ;;
+}
+
+proof of rbaib {
+	step 1 : wff = ancom () |- ( ( ps ∧ ch ) ↔ ( ch ∧ ps ) ) ;;
+	step 2 : wff = bitri (hyp 1, step 1) |- ( ph ↔ ( ch ∧ ps ) ) ;;
+	step 3 : wff = baib (step 2) |- ( ch → ( ph ↔ ps ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Move conjunction outside of biconditional.  (Contributed by Mario
+       Carneiro, 11-Sep-2015.) */
+
+theorem rbaibr (ph : wff, ps : wff, ch : wff)  {
+	hyp 1 : wff = |- ( ph ↔ ( ps ∧ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ch → ( ps ↔ ph ) ) ;;
+}
+
+proof of rbaibr {
+	step 1 : wff = ancom () |- ( ( ps ∧ ch ) ↔ ( ch ∧ ps ) ) ;;
+	step 2 : wff = bitri (hyp 1, step 1) |- ( ph ↔ ( ch ∧ ps ) ) ;;
+	step 3 : wff = baibr (step 2) |- ( ch → ( ps ↔ ph ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Move conjunction outside of biconditional.  (Contributed by Mario
+       Carneiro, 11-Sep-2015.) */
+
+theorem baibd (ph : wff, ps : wff, ch : wff, th : wff)  {
+	hyp 1 : wff = |- ( ph → ( ps ↔ ( ch ∧ th ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ ch ) → ( ps ↔ th ) ) ;;
+}
+
+proof of baibd {
+	step 1 : wff = ibar () |- ( ch → ( th ↔ ( ch ∧ th ) ) ) ;;
+	step 2 : wff = bicomd (step 1) |- ( ch → ( ( ch ∧ th ) ↔ th ) ) ;;
+	step 3 : wff = sylan9bb (hyp 1, step 2) |- ( ( ph ∧ ch ) → ( ps ↔ th ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Move conjunction outside of biconditional.  (Contributed by Mario
+       Carneiro, 11-Sep-2015.) */
+
+theorem rbaibd (ph : wff, ps : wff, ch : wff, th : wff)  {
+	hyp 1 : wff = |- ( ph → ( ps ↔ ( ch ∧ th ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ th ) → ( ps ↔ ch ) ) ;;
+}
+
+proof of rbaibd {
+	step 1 : wff = iba () |- ( th → ( ch ↔ ( ch ∧ th ) ) ) ;;
+	step 2 : wff = bicomd (step 1) |- ( th → ( ( ch ∧ th ) ↔ ch ) ) ;;
+	step 3 : wff = sylan9bb (hyp 1, step 2) |- ( ( ph ∧ th ) → ( ps ↔ ch ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Theorem *5.44 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+     3-Jan-2005.) */
+
+theorem pm5.44 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ph → ps ) → ( ( ph → ch ) ↔ ( ph → ( ps ∧ ch ) ) ) ) ;;
+}
+
+proof of pm5.44 {
+	step 1 : wff = jcab () |- ( ( ph → ( ps ∧ ch ) ) ↔ ( ( ph → ps ) ∧ ( ph → ch ) ) ) ;;
+	step 2 : wff = baibr (step 1) |- ( ( ph → ps ) → ( ( ph → ch ) ↔ ( ph → ( ps ∧ ch ) ) ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Conjunction in antecedent versus disjunction in consequent.  Theorem *5.6
+     of [WhiteheadRussell] p. 125.  (Contributed by NM, 8-Jun-1994.) */
+
+theorem pm5.6 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ( ph ∧ ¬ ps ) → ch ) ↔ ( ph → ( ps ∨ ch ) ) ) ;;
+}
+
+proof of pm5.6 {
+	step 1 : wff = impexp () |- ( ( ( ph ∧ ¬ ps ) → ch ) ↔ ( ph → ( ¬ ps → ch ) ) ) ;;
+	step 2 : wff = df-or () |- ( ( ps ∨ ch ) ↔ ( ¬ ps → ch ) ) ;;
+	step 3 : wff = imbi2i (step 2) |- ( ( ph → ( ps ∨ ch ) ) ↔ ( ph → ( ¬ ps → ch ) ) ) ;;
+	step 4 : wff = bitr4i (step 1, step 3) |- ( ( ( ph ∧ ¬ ps ) → ch ) ↔ ( ph → ( ps ∨ ch ) ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Change disjunction in consequent to conjunction in antecedent.
+       (Contributed by NM, 8-Jun-1994.) */
+
+theorem orcanai (ph : wff, ps : wff, ch : wff)  {
+	hyp 1 : wff = |- ( ph → ( ps ∨ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ ¬ ps ) → ch ) ;;
+}
+
+proof of orcanai {
+	step 1 : wff = ord (hyp 1) |- ( ph → ( ¬ ps → ch ) ) ;;
+	step 2 : wff = imp (step 1) |- ( ( ph ∧ ¬ ps ) → ch ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Introduction of conjunct inside of a contradiction.  (Contributed by NM,
+       16-Sep-1993.) */
+
+theorem intnan (ph : wff, ps : wff)  {
+	hyp 1 : wff = |- ¬ ph ;;
+	-----------------------
+	prop 1 : wff = |- ¬ ( ps ∧ ph ) ;;
+}
+
+proof of intnan {
+	step 1 : wff = simpr () |- ( ( ps ∧ ph ) → ph ) ;;
+	step 2 : wff = mto (hyp 1, step 1) |- ¬ ( ps ∧ ph ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Introduction of conjunct inside of a contradiction.  (Contributed by NM,
+       3-Apr-1995.) */
+
+theorem intnanr (ph : wff, ps : wff)  {
+	hyp 1 : wff = |- ¬ ph ;;
+	-----------------------
+	prop 1 : wff = |- ¬ ( ph ∧ ps ) ;;
+}
+
+proof of intnanr {
+	step 1 : wff = simpl () |- ( ( ph ∧ ps ) → ph ) ;;
+	step 2 : wff = mto (hyp 1, step 1) |- ¬ ( ph ∧ ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Introduction of conjunct inside of a contradiction.  (Contributed by NM,
+       10-Jul-2005.) */
+
+theorem intnand (ph : wff, ps : wff, ch : wff)  {
+	hyp 1 : wff = |- ( ph → ¬ ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ¬ ( ch ∧ ps ) ) ;;
+}
+
+proof of intnand {
+	step 1 : wff = simpr () |- ( ( ch ∧ ps ) → ps ) ;;
+	step 2 : wff = nsyl (hyp 1, step 1) |- ( ph → ¬ ( ch ∧ ps ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Introduction of conjunct inside of a contradiction.  (Contributed by NM,
+       10-Jul-2005.) */
+
+theorem intnanrd (ph : wff, ps : wff, ch : wff)  {
+	hyp 1 : wff = |- ( ph → ¬ ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ¬ ( ps ∧ ch ) ) ;;
+}
+
+proof of intnanrd {
+	step 1 : wff = simpl () |- ( ( ps ∧ ch ) → ps ) ;;
+	step 2 : wff = nsyl (hyp 1, step 1) |- ( ph → ¬ ( ps ∧ ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Detach truth from conjunction in biconditional.  (Contributed by NM,
+       27-Feb-1996.) */
+
+theorem mpbiran (ph : wff, ps : wff, ch : wff)  {
+	hyp 1 : wff = |- ps ;;
+	hyp 2 : wff = |- ( ph ↔ ( ps ∧ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph ↔ ch ) ;;
+}
+
+proof of mpbiran {
+	step 1 : wff = biantrur (hyp 1) |- ( ch ↔ ( ps ∧ ch ) ) ;;
+	step 2 : wff = bitr4i (hyp 2, step 1) |- ( ph ↔ ch ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Detach truth from conjunction in biconditional.  (Contributed by NM,
+       22-Feb-1996.) */
+
+theorem mpbiran2 (ph : wff, ps : wff, ch : wff)  {
+	hyp 1 : wff = |- ch ;;
+	hyp 2 : wff = |- ( ph ↔ ( ps ∧ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph ↔ ps ) ;;
+}
+
+proof of mpbiran2 {
+	step 1 : wff = biantru (hyp 1) |- ( ps ↔ ( ps ∧ ch ) ) ;;
+	step 2 : wff = bitr4i (hyp 2, step 1) |- ( ph ↔ ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Detach a conjunction of truths in a biconditional.  (Contributed by NM,
+       10-May-2005.) */
+
+theorem mpbir2an (ph : wff, ps : wff, ch : wff)  {
+	hyp 1 : wff = |- ps ;;
+	hyp 2 : wff = |- ch ;;
+	hyp 3 : wff = |- ( ph ↔ ( ps ∧ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ph ;;
+}
+
+proof of mpbir2an {
+	step 1 : wff = mpbiran (hyp 1, hyp 3) |- ( ph ↔ ch ) ;;
+	step 2 : wff = mpbir (hyp 2, step 1) |- ph ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Detach a conjunction of truths in a biconditional.  (Contributed by NM,
+       6-Nov-2011.)  (Proof shortened by Wolf Lammen, 24-Nov-2012.) */
+
+theorem mpbi2and (ph : wff, ps : wff, ch : wff, th : wff)  {
+	hyp 1 : wff = |- ( ph → ps ) ;;
+	hyp 2 : wff = |- ( ph → ch ) ;;
+	hyp 3 : wff = |- ( ph → ( ( ps ∧ ch ) ↔ th ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → th ) ;;
+}
+
+proof of mpbi2and {
+	step 1 : wff = jca (hyp 1, hyp 2) |- ( ph → ( ps ∧ ch ) ) ;;
+	step 2 : wff = mpbid (step 1, hyp 3) |- ( ph → th ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Detach a conjunction of truths in a biconditional.  (Contributed by NM,
+       6-Nov-2011.)  (Proof shortened by Wolf Lammen, 24-Nov-2012.) */
+
+theorem mpbir2and (ph : wff, ps : wff, ch : wff, th : wff)  {
+	hyp 1 : wff = |- ( ph → ch ) ;;
+	hyp 2 : wff = |- ( ph → th ) ;;
+	hyp 3 : wff = |- ( ph → ( ps ↔ ( ch ∧ th ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ps ) ;;
+}
+
+proof of mpbir2and {
+	step 1 : wff = jca (hyp 1, hyp 2) |- ( ph → ( ch ∧ th ) ) ;;
+	step 2 : wff = mpbird (step 1, hyp 3) |- ( ph → ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Theorem *5.62 of [WhiteheadRussell] p. 125.  (Contributed by Roy F.
+     Longton, 21-Jun-2005.) */
+
+theorem pm5.62 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ( ph ∧ ps ) ∨ ¬ ps ) ↔ ( ph ∨ ¬ ps ) ) ;;
+}
+
+proof of pm5.62 {
+	step 1 : wff = exmid () |- ( ps ∨ ¬ ps ) ;;
+	step 2 : wff = ordir () |- ( ( ( ph ∧ ps ) ∨ ¬ ps ) ↔ ( ( ph ∨ ¬ ps ) ∧ ( ps ∨ ¬ ps ) ) ) ;;
+	step 3 : wff = mpbiran2 (step 1, step 2) |- ( ( ( ph ∧ ps ) ∨ ¬ ps ) ↔ ( ph ∨ ¬ ps ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Theorem *5.63 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+     3-Jan-2005.)  (Proof shortened by Wolf Lammen, 25-Dec-2012.) */
+
+theorem pm5.63 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ph ∨ ps ) ↔ ( ph ∨ ( ¬ ph ∧ ps ) ) ) ;;
+}
+
+proof of pm5.63 {
+	step 1 : wff = exmid () |- ( ph ∨ ¬ ph ) ;;
+	step 2 : wff = ordi () |- ( ( ph ∨ ( ¬ ph ∧ ps ) ) ↔ ( ( ph ∨ ¬ ph ) ∧ ( ph ∨ ps ) ) ) ;;
+	step 3 : wff = mpbiran (step 1, step 2) |- ( ( ph ∨ ( ¬ ph ∧ ps ) ) ↔ ( ph ∨ ps ) ) ;;
+	step 4 : wff = bicomi (step 3) |- ( ( ph ∨ ps ) ↔ ( ph ∨ ( ¬ ph ∧ ps ) ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A wff conjoined with falsehood is false.  (Contributed by NM,
+       5-Aug-1993.)  (Proof shortened by Wolf Lammen, 26-Nov-2012.) */
+
+theorem bianfi (ph : wff, ps : wff)  {
+	hyp 1 : wff = |- ¬ ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ph ↔ ( ps ∧ ph ) ) ;;
+}
+
+proof of bianfi {
+	step 1 : wff = intnan (hyp 1) |- ¬ ( ps ∧ ph ) ;;
+	step 2 : wff = 2false (hyp 1, step 1) |- ( ph ↔ ( ps ∧ ph ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A wff conjoined with falsehood is false.  (Contributed by NM,
+       27-Mar-1995.)  (Proof shortened by Wolf Lammen, 5-Nov-2013.) */
+
+theorem bianfd (ph : wff, ps : wff, ch : wff)  {
+	hyp 1 : wff = |- ( ph → ¬ ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ps ↔ ( ps ∧ ch ) ) ) ;;
+}
+
+proof of bianfd {
+	step 1 : wff = intnanrd (hyp 1) |- ( ph → ¬ ( ps ∧ ch ) ) ;;
+	step 2 : wff = 2falsed (hyp 1, step 1) |- ( ph → ( ps ↔ ( ps ∧ ch ) ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Theorem *4.43 of [WhiteheadRussell] p. 119.  (Contributed by NM,
+     3-Jan-2005.)  (Proof shortened by Wolf Lammen, 26-Nov-2012.) */
+
+theorem pm4.43 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ph ↔ ( ( ph ∨ ps ) ∧ ( ph ∨ ¬ ps ) ) ) ;;
+}
+
+proof of pm4.43 {
+	step 1 : wff = pm3.24 () |- ¬ ( ps ∧ ¬ ps ) ;;
+	step 2 : wff = biorfi (step 1) |- ( ph ↔ ( ph ∨ ( ps ∧ ¬ ps ) ) ) ;;
+	step 3 : wff = ordi () |- ( ( ph ∨ ( ps ∧ ¬ ps ) ) ↔ ( ( ph ∨ ps ) ∧ ( ph ∨ ¬ ps ) ) ) ;;
+	step 4 : wff = bitri (step 2, step 3) |- ( ph ↔ ( ( ph ∨ ps ) ∧ ( ph ∨ ¬ ps ) ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Theorem *4.82 of [WhiteheadRussell] p. 122.  (Contributed by NM,
+     3-Jan-2005.) */
+
+theorem pm4.82 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ( ph → ps ) ∧ ( ph → ¬ ps ) ) ↔ ¬ ph ) ;;
+}
+
+proof of pm4.82 {
+	step 1 : wff = pm2.65 () |- ( ( ph → ps ) → ( ( ph → ¬ ps ) → ¬ ph ) ) ;;
+	step 2 : wff = imp (step 1) |- ( ( ( ph → ps ) ∧ ( ph → ¬ ps ) ) → ¬ ph ) ;;
+	step 3 : wff = pm2.21 () |- ( ¬ ph → ( ph → ps ) ) ;;
+	step 4 : wff = pm2.21 () |- ( ¬ ph → ( ph → ¬ ps ) ) ;;
+	step 5 : wff = jca (step 3, step 4) |- ( ¬ ph → ( ( ph → ps ) ∧ ( ph → ¬ ps ) ) ) ;;
+	step 6 : wff = impbii (step 2, step 5) |- ( ( ( ph → ps ) ∧ ( ph → ¬ ps ) ) ↔ ¬ ph ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Theorem *4.83 of [WhiteheadRussell] p. 122.  (Contributed by NM,
+     3-Jan-2005.) */
+
+theorem pm4.83 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ( ph → ps ) ∧ ( ¬ ph → ps ) ) ↔ ps ) ;;
+}
+
+proof of pm4.83 {
+	step 1 : wff = exmid () |- ( ph ∨ ¬ ph ) ;;
+	step 2 : wff = a1bi (step 1) |- ( ps ↔ ( ( ph ∨ ¬ ph ) → ps ) ) ;;
+	step 3 : wff = jaob () |- ( ( ( ph ∨ ¬ ph ) → ps ) ↔ ( ( ph → ps ) ∧ ( ¬ ph → ps ) ) ) ;;
+	step 4 : wff = bitr2i (step 2, step 3) |- ( ( ( ph → ps ) ∧ ( ¬ ph → ps ) ) ↔ ps ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Negation inferred from embedded conjunct.  (Contributed by NM,
+     20-Aug-1993.)  (Proof shortened by Wolf Lammen, 25-Nov-2012.) */
+
+theorem pclem6 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ph ↔ ( ps ∧ ¬ ph ) ) → ¬ ps ) ;;
+}
+
+proof of pclem6 {
+	step 1 : wff = ibar () |- ( ps → ( ¬ ph ↔ ( ps ∧ ¬ ph ) ) ) ;;
+	step 2 : wff = nbbn () |- ( ( ¬ ph ↔ ( ps ∧ ¬ ph ) ) ↔ ¬ ( ph ↔ ( ps ∧ ¬ ph ) ) ) ;;
+	step 3 : wff = sylib (step 1, step 2) |- ( ps → ¬ ( ph ↔ ( ps ∧ ¬ ph ) ) ) ;;
+	step 4 : wff = con2i (step 3) |- ( ( ph ↔ ( ps ∧ ¬ ph ) ) → ¬ ps ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A transitive law of equivalence.  Compare Theorem *4.22 of
+     [WhiteheadRussell] p. 117.  (Contributed by NM, 18-Aug-1993.) */
+
+theorem biantr (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ( ph ↔ ps ) ∧ ( ch ↔ ps ) ) → ( ph ↔ ch ) ) ;;
+}
+
+proof of biantr {
+	step 1 : wff = id () |- ( ( ch ↔ ps ) → ( ch ↔ ps ) ) ;;
+	step 2 : wff = bibi2d (step 1) |- ( ( ch ↔ ps ) → ( ( ph ↔ ch ) ↔ ( ph ↔ ps ) ) ) ;;
+	step 3 : wff = biimparc (step 2) |- ( ( ( ph ↔ ps ) ∧ ( ch ↔ ps ) ) → ( ph ↔ ch ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Disjunction distributes over the biconditional.  An axiom of system DS in
+     Vladimir Lifschitz, "On calculational proofs" (1998),
+     ~ http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.25.3384 .
+     (Contributed by NM, 8-Jan-2005.)  (Proof shortened by Wolf Lammen,
+     4-Feb-2013.) */
+
+theorem orbidi (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ph ∨ ( ps ↔ ch ) ) ↔ ( ( ph ∨ ps ) ↔ ( ph ∨ ch ) ) ) ;;
+}
+
+proof of orbidi {
+	step 1 : wff = pm5.74 () |- ( ( ¬ ph → ( ps ↔ ch ) ) ↔ ( ( ¬ ph → ps ) ↔ ( ¬ ph → ch ) ) ) ;;
+	step 2 : wff = df-or () |- ( ( ph ∨ ( ps ↔ ch ) ) ↔ ( ¬ ph → ( ps ↔ ch ) ) ) ;;
+	step 3 : wff = df-or () |- ( ( ph ∨ ps ) ↔ ( ¬ ph → ps ) ) ;;
+	step 4 : wff = df-or () |- ( ( ph ∨ ch ) ↔ ( ¬ ph → ch ) ) ;;
+	step 5 : wff = bibi12i (step 3, step 4) |- ( ( ( ph ∨ ps ) ↔ ( ph ∨ ch ) ) ↔ ( ( ¬ ph → ps ) ↔ ( ¬ ph → ch ) ) ) ;;
+	step 6 : wff = 3bitr4i (step 1, step 2, step 5) |- ( ( ph ∨ ( ps ↔ ch ) ) ↔ ( ( ph ∨ ps ) ↔ ( ph ∨ ch ) ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Lukasiewicz's shortest axiom for equivalential calculus.  Storrs McCall,
+     ed., _Polish Logic 1920-1939_ (Oxford, 1967), p. 96.  (Contributed by NM,
+     10-Jan-2005.) */
+
+theorem biluk (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ph ↔ ps ) ↔ ( ( ch ↔ ps ) ↔ ( ph ↔ ch ) ) ) ;;
+}
+
+proof of biluk {
+	step 1 : wff = bicom () |- ( ( ph ↔ ps ) ↔ ( ps ↔ ph ) ) ;;
+	step 2 : wff = bibi1i (step 1) |- ( ( ( ph ↔ ps ) ↔ ch ) ↔ ( ( ps ↔ ph ) ↔ ch ) ) ;;
+	step 3 : wff = biass () |- ( ( ( ps ↔ ph ) ↔ ch ) ↔ ( ps ↔ ( ph ↔ ch ) ) ) ;;
+	step 4 : wff = bitri (step 2, step 3) |- ( ( ( ph ↔ ps ) ↔ ch ) ↔ ( ps ↔ ( ph ↔ ch ) ) ) ;;
+	step 5 : wff = biass () |- ( ( ( ( ph ↔ ps ) ↔ ch ) ↔ ( ps ↔ ( ph ↔ ch ) ) ) ↔ ( ( ph ↔ ps ) ↔ ( ch ↔ ( ps ↔ ( ph ↔ ch ) ) ) ) ) ;;
+	step 6 : wff = mpbi (step 4, step 5) |- ( ( ph ↔ ps ) ↔ ( ch ↔ ( ps ↔ ( ph ↔ ch ) ) ) ) ;;
+	step 7 : wff = biass () |- ( ( ( ch ↔ ps ) ↔ ( ph ↔ ch ) ) ↔ ( ch ↔ ( ps ↔ ( ph ↔ ch ) ) ) ) ;;
+	step 8 : wff = bitr4i (step 6, step 7) |- ( ( ph ↔ ps ) ↔ ( ( ch ↔ ps ) ↔ ( ph ↔ ch ) ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Disjunction distributes over the biconditional.  Theorem *5.7 of
+     [WhiteheadRussell] p. 125.  This theorem is similar to ~ orbidi .
+     (Contributed by Roy F. Longton, 21-Jun-2005.) */
+
+theorem pm5.7 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ( ph ∨ ch ) ↔ ( ps ∨ ch ) ) ↔ ( ch ∨ ( ph ↔ ps ) ) ) ;;
+}
+
+proof of pm5.7 {
+	step 1 : wff = orbidi () |- ( ( ch ∨ ( ph ↔ ps ) ) ↔ ( ( ch ∨ ph ) ↔ ( ch ∨ ps ) ) ) ;;
+	step 2 : wff = orcom () |- ( ( ch ∨ ph ) ↔ ( ph ∨ ch ) ) ;;
+	step 3 : wff = orcom () |- ( ( ch ∨ ps ) ↔ ( ps ∨ ch ) ) ;;
+	step 4 : wff = bibi12i (step 2, step 3) |- ( ( ( ch ∨ ph ) ↔ ( ch ∨ ps ) ) ↔ ( ( ph ∨ ch ) ↔ ( ps ∨ ch ) ) ) ;;
+	step 5 : wff = bitr2i (step 1, step 4) |- ( ( ( ph ∨ ch ) ↔ ( ps ∨ ch ) ) ↔ ( ch ∨ ( ph ↔ ps ) ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Dijkstra-Scholten's Golden Rule for calculational proofs.  (Contributed by
+     NM, 10-Jan-2005.) */
+
+theorem bigolden (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ( ph ∧ ps ) ↔ ph ) ↔ ( ps ↔ ( ph ∨ ps ) ) ) ;;
+}
+
+proof of bigolden {
+	step 1 : wff = pm4.71 () |- ( ( ph → ps ) ↔ ( ph ↔ ( ph ∧ ps ) ) ) ;;
+	step 2 : wff = pm4.72 () |- ( ( ph → ps ) ↔ ( ps ↔ ( ph ∨ ps ) ) ) ;;
+	step 3 : wff = bicom () |- ( ( ph ↔ ( ph ∧ ps ) ) ↔ ( ( ph ∧ ps ) ↔ ph ) ) ;;
+	step 4 : wff = 3bitr3ri (step 1, step 2, step 3) |- ( ( ( ph ∧ ps ) ↔ ph ) ↔ ( ps ↔ ( ph ∨ ps ) ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Theorem *5.71 of [WhiteheadRussell] p. 125.  (Contributed by Roy F.
+     Longton, 23-Jun-2005.) */
+
+theorem pm5.71 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ps → ¬ ch ) → ( ( ( ph ∨ ps ) ∧ ch ) ↔ ( ph ∧ ch ) ) ) ;;
+}
+
+proof of pm5.71 {
+	step 1 : wff = orel2 () |- ( ¬ ps → ( ( ph ∨ ps ) → ph ) ) ;;
+	step 2 : wff = orc () |- ( ph → ( ph ∨ ps ) ) ;;
+	step 3 : wff = impbid1 (step 1, step 2) |- ( ¬ ps → ( ( ph ∨ ps ) ↔ ph ) ) ;;
+	step 4 : wff = anbi1d (step 3) |- ( ¬ ps → ( ( ( ph ∨ ps ) ∧ ch ) ↔ ( ph ∧ ch ) ) ) ;;
+	step 5 : wff = pm2.21 () |- ( ¬ ch → ( ch → ( ( ph ∨ ps ) ↔ ph ) ) ) ;;
+	step 6 : wff = pm5.32rd (step 5) |- ( ¬ ch → ( ( ( ph ∨ ps ) ∧ ch ) ↔ ( ph ∧ ch ) ) ) ;;
+	step 7 : wff = ja (step 4, step 6) |- ( ( ps → ¬ ch ) → ( ( ( ph ∨ ps ) ∧ ch ) ↔ ( ph ∧ ch ) ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Theorem *5.75 of [WhiteheadRussell] p. 126.  (Contributed by NM,
+     3-Jan-2005.)  (Proof shortened by Andrew Salmon, 7-May-2011.)  (Proof
+     shortened by Wolf Lammen, 23-Dec-2012.) */
+
+theorem pm5.75 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ( ch → ¬ ps ) ∧ ( ph ↔ ( ps ∨ ch ) ) ) → ( ( ph ∧ ¬ ps ) ↔ ch ) ) ;;
+}
+
+proof of pm5.75 {
+	step 1 : wff = anbi1 () |- ( ( ph ↔ ( ps ∨ ch ) ) → ( ( ph ∧ ¬ ps ) ↔ ( ( ps ∨ ch ) ∧ ¬ ps ) ) ) ;;
+	step 2 : wff = orcom () |- ( ( ps ∨ ch ) ↔ ( ch ∨ ps ) ) ;;
+	step 3 : wff = anbi1i (step 2) |- ( ( ( ps ∨ ch ) ∧ ¬ ps ) ↔ ( ( ch ∨ ps ) ∧ ¬ ps ) ) ;;
+	step 4 : wff = pm5.61 () |- ( ( ( ch ∨ ps ) ∧ ¬ ps ) ↔ ( ch ∧ ¬ ps ) ) ;;
+	step 5 : wff = bitri (step 3, step 4) |- ( ( ( ps ∨ ch ) ∧ ¬ ps ) ↔ ( ch ∧ ¬ ps ) ) ;;
+	step 6 : wff = syl6bb (step 1, step 5) |- ( ( ph ↔ ( ps ∨ ch ) ) → ( ( ph ∧ ¬ ps ) ↔ ( ch ∧ ¬ ps ) ) ) ;;
+	step 7 : wff = pm4.71 () |- ( ( ch → ¬ ps ) ↔ ( ch ↔ ( ch ∧ ¬ ps ) ) ) ;;
+	step 8 : wff = biimpi (step 7) |- ( ( ch → ¬ ps ) → ( ch ↔ ( ch ∧ ¬ ps ) ) ) ;;
+	step 9 : wff = bicomd (step 8) |- ( ( ch → ¬ ps ) → ( ( ch ∧ ¬ ps ) ↔ ch ) ) ;;
+	step 10 : wff = sylan9bbr (step 6, step 9) |- ( ( ( ch → ¬ ps ) ∧ ( ph ↔ ( ps ∨ ch ) ) ) → ( ( ph ∧ ¬ ps ) ↔ ch ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Removal of conjunct from one side of an equivalence.  (Contributed by NM,
+     5-Aug-1993.) */
+
+theorem bimsc1 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ( ph → ps ) ∧ ( ch ↔ ( ps ∧ ph ) ) ) → ( ch ↔ ph ) ) ;;
+}
+
+proof of bimsc1 {
+	step 1 : wff = simpr () |- ( ( ps ∧ ph ) → ph ) ;;
+	step 2 : wff = ancr () |- ( ( ph → ps ) → ( ph → ( ps ∧ ph ) ) ) ;;
+	step 3 : wff = impbid2 (step 1, step 2) |- ( ( ph → ps ) → ( ( ps ∧ ph ) ↔ ph ) ) ;;
+	step 4 : wff = bibi2d (step 3) |- ( ( ph → ps ) → ( ( ch ↔ ( ps ∧ ph ) ) ↔ ( ch ↔ ph ) ) ) ;;
+	step 5 : wff = biimpa (step 4) |- ( ( ( ph → ps ) ∧ ( ch ↔ ( ps ∧ ph ) ) ) → ( ch ↔ ph ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* The disjunction of the four possible combinations of two wffs and their
+     negations is always true.  (Contributed by David Abernethy,
+     28-Jan-2014.) */
+
+theorem 4exmid (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ( ph ∧ ps ) ∨ ( ¬ ph ∧ ¬ ps ) ) ∨ ( ( ph ∧ ¬ ps ) ∨ ( ps ∧ ¬ ph ) ) ) ;;
+}
+
+proof of 4exmid {
+	step 1 : wff = exmid () |- ( ( ph ↔ ps ) ∨ ¬ ( ph ↔ ps ) ) ;;
+	step 2 : wff = dfbi3 () |- ( ( ph ↔ ps ) ↔ ( ( ph ∧ ps ) ∨ ( ¬ ph ∧ ¬ ps ) ) ) ;;
+	step 3 : wff = xor () |- ( ¬ ( ph ↔ ps ) ↔ ( ( ph ∧ ¬ ps ) ∨ ( ps ∧ ¬ ph ) ) ) ;;
+	step 4 : wff = orbi12i (step 2, step 3) |- ( ( ( ph ↔ ps ) ∨ ¬ ( ph ↔ ps ) ) ↔ ( ( ( ph ∧ ps ) ∨ ( ¬ ph ∧ ¬ ps ) ) ∨ ( ( ph ∧ ¬ ps ) ∨ ( ps ∧ ¬ ph ) ) ) ) ;;
+	step 5 : wff = mpbi (step 1, step 4) |- ( ( ( ph ∧ ps ) ∨ ( ¬ ph ∧ ¬ ps ) ) ∨ ( ( ph ∧ ¬ ps ) ∨ ( ps ∧ ¬ ph ) ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Deduction for elimination by cases.  (Contributed by NM, 21-Apr-1994.)
+       (Proof shortened by Wolf Lammen, 22-Dec-2012.) */
+
+theorem ecase2d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
+	hyp 1 : wff = |- ( ph → ps ) ;;
+	hyp 2 : wff = |- ( ph → ¬ ( ps ∧ ch ) ) ;;
+	hyp 3 : wff = |- ( ph → ¬ ( ps ∧ th ) ) ;;
+	hyp 4 : wff = |- ( ph → ( ta ∨ ( ch ∨ th ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ta ) ;;
+}
+
+proof of ecase2d {
+	step 1 : wff = idd () |- ( ph → ( ta → ta ) ) ;;
+	step 2 : wff = pm2.21d (hyp 2) |- ( ph → ( ( ps ∧ ch ) → ta ) ) ;;
+	step 3 : wff = mpand (hyp 1, step 2) |- ( ph → ( ch → ta ) ) ;;
+	step 4 : wff = pm2.21d (hyp 3) |- ( ph → ( ( ps ∧ th ) → ta ) ) ;;
+	step 5 : wff = mpand (hyp 1, step 4) |- ( ph → ( th → ta ) ) ;;
+	step 6 : wff = jaod (step 3, step 5) |- ( ph → ( ( ch ∨ th ) → ta ) ) ;;
+	step 7 : wff = mpjaod (step 1, step 6, hyp 4) |- ( ph → ta ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Inference for elimination by cases.  (Contributed by NM, 23-Mar-1995.)
+       (Proof shortened by Wolf Lammen, 26-Nov-2012.) */
+
+theorem ecase3 (ph : wff, ps : wff, ch : wff)  {
+	hyp 1 : wff = |- ( ph → ch ) ;;
+	hyp 2 : wff = |- ( ps → ch ) ;;
+	hyp 3 : wff = |- ( ¬ ( ph ∨ ps ) → ch ) ;;
+	-----------------------
+	prop 1 : wff = |- ch ;;
+}
+
+proof of ecase3 {
+	step 1 : wff = jaoi (hyp 1, hyp 2) |- ( ( ph ∨ ps ) → ch ) ;;
+	step 2 : wff = pm2.61i (step 1, hyp 3) |- ch ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Inference for elimination by cases.  (Contributed by NM,
+       13-Jul-2005.) */
+
+theorem ecase (ph : wff, ps : wff, ch : wff)  {
+	hyp 1 : wff = |- ( ¬ ph → ch ) ;;
+	hyp 2 : wff = |- ( ¬ ps → ch ) ;;
+	hyp 3 : wff = |- ( ( ph ∧ ps ) → ch ) ;;
+	-----------------------
+	prop 1 : wff = |- ch ;;
+}
+
+proof of ecase {
+	step 1 : wff = ex (hyp 3) |- ( ph → ( ps → ch ) ) ;;
+	step 2 : wff = pm2.61nii (step 1, hyp 1, hyp 2) |- ch ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction for elimination by cases.  (Contributed by NM, 2-May-1996.)
+       (Proof shortened by Andrew Salmon, 7-May-2011.) */
+
+theorem ecase3d (ph : wff, ps : wff, ch : wff, th : wff)  {
+	hyp 1 : wff = |- ( ph → ( ps → th ) ) ;;
+	hyp 2 : wff = |- ( ph → ( ch → th ) ) ;;
+	hyp 3 : wff = |- ( ph → ( ¬ ( ps ∨ ch ) → th ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → th ) ;;
+}
+
+proof of ecase3d {
+	step 1 : wff = jaod (hyp 1, hyp 2) |- ( ph → ( ( ps ∨ ch ) → th ) ) ;;
+	step 2 : wff = pm2.61d (step 1, hyp 3) |- ( ph → th ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction for elimination by cases.  (Contributed by NM, 8-Oct-2012.) */
+
+theorem ecased (ph : wff, ps : wff, ch : wff, th : wff)  {
+	hyp 1 : wff = |- ( ph → ( ¬ ps → th ) ) ;;
+	hyp 2 : wff = |- ( ph → ( ¬ ch → th ) ) ;;
+	hyp 3 : wff = |- ( ph → ( ( ps ∧ ch ) → th ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → th ) ;;
+}
+
+proof of ecased {
+	step 1 : wff = pm3.11 () |- ( ¬ ( ¬ ps ∨ ¬ ch ) → ( ps ∧ ch ) ) ;;
+	step 2 : wff = syl5 (step 1, hyp 3) |- ( ph → ( ¬ ( ¬ ps ∨ ¬ ch ) → th ) ) ;;
+	step 3 : wff = ecase3d (hyp 1, hyp 2, step 2) |- ( ph → th ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Deduction for elimination by cases.  (Contributed by NM,
+       24-May-2013.) */
+
+theorem ecase3ad (ph : wff, ps : wff, ch : wff, th : wff)  {
+	hyp 1 : wff = |- ( ph → ( ps → th ) ) ;;
+	hyp 2 : wff = |- ( ph → ( ch → th ) ) ;;
+	hyp 3 : wff = |- ( ph → ( ( ¬ ps ∧ ¬ ch ) → th ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → th ) ;;
+}
+
+proof of ecase3ad {
+	step 1 : wff = notnot2 () |- ( ¬ ¬ ps → ps ) ;;
+	step 2 : wff = syl5 (step 1, hyp 1) |- ( ph → ( ¬ ¬ ps → th ) ) ;;
+	step 3 : wff = notnot2 () |- ( ¬ ¬ ch → ch ) ;;
+	step 4 : wff = syl5 (step 3, hyp 2) |- ( ph → ( ¬ ¬ ch → th ) ) ;;
+	step 5 : wff = ecased (step 2, step 4, hyp 3) |- ( ph → th ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Inference for combining cases.  (Contributed by NM, 29-Jul-1999.)
+       (Proof shortened by Wolf Lammen, 6-Jan-2013.) */
+
+theorem ccase (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
+	hyp 1 : wff = |- ( ( ph ∧ ps ) → ta ) ;;
+	hyp 2 : wff = |- ( ( ch ∧ ps ) → ta ) ;;
+	hyp 3 : wff = |- ( ( ph ∧ th ) → ta ) ;;
+	hyp 4 : wff = |- ( ( ch ∧ th ) → ta ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ( ph ∨ ch ) ∧ ( ps ∨ th ) ) → ta ) ;;
+}
+
+proof of ccase {
+	step 1 : wff = jaoian (hyp 1, hyp 2) |- ( ( ( ph ∨ ch ) ∧ ps ) → ta ) ;;
+	step 2 : wff = jaoian (hyp 3, hyp 4) |- ( ( ( ph ∨ ch ) ∧ th ) → ta ) ;;
+	step 3 : wff = jaodan (step 1, step 2) |- ( ( ( ph ∨ ch ) ∧ ( ps ∨ th ) ) → ta ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Deduction for combining cases.  (Contributed by NM, 9-May-2004.) */
+
+theorem ccased (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
+	hyp 1 : wff = |- ( ph → ( ( ps ∧ ch ) → et ) ) ;;
+	hyp 2 : wff = |- ( ph → ( ( th ∧ ch ) → et ) ) ;;
+	hyp 3 : wff = |- ( ph → ( ( ps ∧ ta ) → et ) ) ;;
+	hyp 4 : wff = |- ( ph → ( ( th ∧ ta ) → et ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ( ( ps ∨ th ) ∧ ( ch ∨ ta ) ) → et ) ) ;;
+}
+
+proof of ccased {
+	step 1 : wff = com12 (hyp 1) |- ( ( ps ∧ ch ) → ( ph → et ) ) ;;
+	step 2 : wff = com12 (hyp 2) |- ( ( th ∧ ch ) → ( ph → et ) ) ;;
+	step 3 : wff = com12 (hyp 3) |- ( ( ps ∧ ta ) → ( ph → et ) ) ;;
+	step 4 : wff = com12 (hyp 4) |- ( ( th ∧ ta ) → ( ph → et ) ) ;;
+	step 5 : wff = ccase (step 1, step 2, step 3, step 4) |- ( ( ( ps ∨ th ) ∧ ( ch ∨ ta ) ) → ( ph → et ) ) ;;
+	step 6 : wff = com12 (step 5) |- ( ph → ( ( ( ps ∨ th ) ∧ ( ch ∨ ta ) ) → et ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Inference for combining cases.  (Contributed by NM, 29-Jul-1999.) */
+
+theorem ccase2 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
+	hyp 1 : wff = |- ( ( ph ∧ ps ) → ta ) ;;
+	hyp 2 : wff = |- ( ch → ta ) ;;
+	hyp 3 : wff = |- ( th → ta ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ( ph ∨ ch ) ∧ ( ps ∨ th ) ) → ta ) ;;
+}
+
+proof of ccase2 {
+	step 1 : wff = adantr (hyp 2) |- ( ( ch ∧ ps ) → ta ) ;;
+	step 2 : wff = adantl (hyp 3) |- ( ( ph ∧ th ) → ta ) ;;
+	step 3 : wff = adantl (hyp 3) |- ( ( ch ∧ th ) → ta ) ;;
+	step 4 : wff = ccase (hyp 1, step 1, step 2, step 3) |- ( ( ( ph ∨ ch ) ∧ ( ps ∨ th ) ) → ta ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Inference eliminating two antecedents from the four possible cases that
+       result from their true/false combinations.  (Contributed by NM,
+       25-Oct-2003.) */
+
+theorem 4cases (ph : wff, ps : wff, ch : wff)  {
+	hyp 1 : wff = |- ( ( ph ∧ ps ) → ch ) ;;
+	hyp 2 : wff = |- ( ( ph ∧ ¬ ps ) → ch ) ;;
+	hyp 3 : wff = |- ( ( ¬ ph ∧ ps ) → ch ) ;;
+	hyp 4 : wff = |- ( ( ¬ ph ∧ ¬ ps ) → ch ) ;;
+	-----------------------
+	prop 1 : wff = |- ch ;;
+}
+
+proof of 4cases {
+	step 1 : wff = pm2.61ian (hyp 1, hyp 3) |- ( ps → ch ) ;;
+	step 2 : wff = pm2.61ian (hyp 2, hyp 4) |- ( ¬ ps → ch ) ;;
+	step 3 : wff = pm2.61i (step 1, step 2) |- ch ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Deduction eliminating two antecedents from the four possible cases that
+       result from their true/false combinations.  (Contributed by NM,
+       19-Mar-2013.) */
+
+theorem 4casesdan (ph : wff, ps : wff, ch : wff, th : wff)  {
+	hyp 1 : wff = |- ( ( ph ∧ ( ps ∧ ch ) ) → th ) ;;
+	hyp 2 : wff = |- ( ( ph ∧ ( ps ∧ ¬ ch ) ) → th ) ;;
+	hyp 3 : wff = |- ( ( ph ∧ ( ¬ ps ∧ ch ) ) → th ) ;;
+	hyp 4 : wff = |- ( ( ph ∧ ( ¬ ps ∧ ¬ ch ) ) → th ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → th ) ;;
+}
+
+proof of 4casesdan {
+	step 1 : wff = expcom (hyp 1) |- ( ( ps ∧ ch ) → ( ph → th ) ) ;;
+	step 2 : wff = expcom (hyp 2) |- ( ( ps ∧ ¬ ch ) → ( ph → th ) ) ;;
+	step 3 : wff = expcom (hyp 3) |- ( ( ¬ ps ∧ ch ) → ( ph → th ) ) ;;
+	step 4 : wff = expcom (hyp 4) |- ( ( ¬ ps ∧ ¬ ch ) → ( ph → th ) ) ;;
+	step 5 : wff = 4cases (step 1, step 2, step 3, step 4) |- ( ph → th ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Miscellaneous inference relating falsehoods.  (Contributed by NM,
+       31-Mar-1994.) */
+
+theorem niabn (ph : wff, ps : wff, ch : wff)  {
+	hyp 1 : wff = |- ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ps → ( ( ch ∧ ps ) ↔ ¬ ph ) ) ;;
+}
+
+proof of niabn {
+	step 1 : wff = simpr () |- ( ( ch ∧ ps ) → ps ) ;;
+	step 2 : wff = pm2.24i (hyp 1) |- ( ¬ ph → ps ) ;;
+	step 3 : wff = pm5.21ni (step 1, step 2) |- ( ¬ ps → ( ( ch ∧ ps ) ↔ ¬ ph ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Lemma for an alternate version of weak deduction theorem.  (Contributed by
+     NM, 2-Apr-1994.)  (Proof shortened by Andrew Salmon, 7-May-2011.)  (Proof
+     shortened by Wolf Lammen, 4-Dec-2012.) */
+
+theorem dedlem0a (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ph → ( ps ↔ ( ( ch → ph ) → ( ps ∧ ph ) ) ) ) ;;
+}
+
+proof of dedlem0a {
+	step 1 : wff = iba () |- ( ph → ( ps ↔ ( ps ∧ ph ) ) ) ;;
+	step 2 : wff = ax-1 () |- ( ph → ( ch → ph ) ) ;;
+	step 3 : wff = biimt () |- ( ( ch → ph ) → ( ( ps ∧ ph ) ↔ ( ( ch → ph ) → ( ps ∧ ph ) ) ) ) ;;
+	step 4 : wff = syl (step 2, step 3) |- ( ph → ( ( ps ∧ ph ) ↔ ( ( ch → ph ) → ( ps ∧ ph ) ) ) ) ;;
+	step 5 : wff = bitrd (step 1, step 4) |- ( ph → ( ps ↔ ( ( ch → ph ) → ( ps ∧ ph ) ) ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Lemma for an alternate version of weak deduction theorem.  (Contributed by
+     NM, 2-Apr-1994.) */
+
+theorem dedlem0b (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ¬ ph → ( ps ↔ ( ( ps → ph ) → ( ch ∧ ph ) ) ) ) ;;
+}
+
+proof of dedlem0b {
+	step 1 : wff = pm2.21 () |- ( ¬ ph → ( ph → ( ch ∧ ph ) ) ) ;;
+	step 2 : wff = imim2d (step 1) |- ( ¬ ph → ( ( ps → ph ) → ( ps → ( ch ∧ ph ) ) ) ) ;;
+	step 3 : wff = com23 (step 2) |- ( ¬ ph → ( ps → ( ( ps → ph ) → ( ch ∧ ph ) ) ) ) ;;
+	step 4 : wff = pm2.21 () |- ( ¬ ps → ( ps → ph ) ) ;;
+	step 5 : wff = simpr () |- ( ( ch ∧ ph ) → ph ) ;;
+	step 6 : wff = imim12i (step 4, step 5) |- ( ( ( ps → ph ) → ( ch ∧ ph ) ) → ( ¬ ps → ph ) ) ;;
+	step 7 : wff = con1d (step 6) |- ( ( ( ps → ph ) → ( ch ∧ ph ) ) → ( ¬ ph → ps ) ) ;;
+	step 8 : wff = com12 (step 7) |- ( ¬ ph → ( ( ( ps → ph ) → ( ch ∧ ph ) ) → ps ) ) ;;
+	step 9 : wff = impbid (step 3, step 8) |- ( ¬ ph → ( ps ↔ ( ( ps → ph ) → ( ch ∧ ph ) ) ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Lemma for weak deduction theorem.  (Contributed by NM, 26-Jun-2002.)
+     (Proof shortened by Andrew Salmon, 7-May-2011.) */
+
+theorem dedlema (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ph → ( ps ↔ ( ( ps ∧ ph ) ∨ ( ch ∧ ¬ ph ) ) ) ) ;;
+}
+
+proof of dedlema {
+	step 1 : wff = orc () |- ( ( ps ∧ ph ) → ( ( ps ∧ ph ) ∨ ( ch ∧ ¬ ph ) ) ) ;;
+	step 2 : wff = expcom (step 1) |- ( ph → ( ps → ( ( ps ∧ ph ) ∨ ( ch ∧ ¬ ph ) ) ) ) ;;
+	step 3 : wff = simpl () |- ( ( ps ∧ ph ) → ps ) ;;
+	step 4 : wff = a1i (step 3) |- ( ph → ( ( ps ∧ ph ) → ps ) ) ;;
+	step 5 : wff = pm2.24 () |- ( ph → ( ¬ ph → ps ) ) ;;
+	step 6 : wff = adantld (step 5) |- ( ph → ( ( ch ∧ ¬ ph ) → ps ) ) ;;
+	step 7 : wff = jaod (step 4, step 6) |- ( ph → ( ( ( ps ∧ ph ) ∨ ( ch ∧ ¬ ph ) ) → ps ) ) ;;
+	step 8 : wff = impbid (step 2, step 7) |- ( ph → ( ps ↔ ( ( ps ∧ ph ) ∨ ( ch ∧ ¬ ph ) ) ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Lemma for weak deduction theorem.  (Contributed by NM, 15-May-1999.)
+     (Proof shortened by Andrew Salmon, 7-May-2011.) */
+
+theorem dedlemb (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ¬ ph → ( ch ↔ ( ( ps ∧ ph ) ∨ ( ch ∧ ¬ ph ) ) ) ) ;;
+}
+
+proof of dedlemb {
+	step 1 : wff = olc () |- ( ( ch ∧ ¬ ph ) → ( ( ps ∧ ph ) ∨ ( ch ∧ ¬ ph ) ) ) ;;
+	step 2 : wff = expcom (step 1) |- ( ¬ ph → ( ch → ( ( ps ∧ ph ) ∨ ( ch ∧ ¬ ph ) ) ) ) ;;
+	step 3 : wff = pm2.21 () |- ( ¬ ph → ( ph → ch ) ) ;;
+	step 4 : wff = adantld (step 3) |- ( ¬ ph → ( ( ps ∧ ph ) → ch ) ) ;;
+	step 5 : wff = simpl () |- ( ( ch ∧ ¬ ph ) → ch ) ;;
+	step 6 : wff = a1i (step 5) |- ( ¬ ph → ( ( ch ∧ ¬ ph ) → ch ) ) ;;
+	step 7 : wff = jaod (step 4, step 6) |- ( ¬ ph → ( ( ( ps ∧ ph ) ∨ ( ch ∧ ¬ ph ) ) → ch ) ) ;;
+	step 8 : wff = impbid (step 2, step 7) |- ( ¬ ph → ( ch ↔ ( ( ps ∧ ph ) ∨ ( ch ∧ ¬ ph ) ) ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Hypothesis builder for weak deduction theorem.  For more information,
+       see the Deduction Theorem link on the Metamath Proof Explorer home
+       page.  (Contributed by NM, 26-Jun-2002.) */
+
+theorem elimh (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
+	hyp 1 : wff = |- ( ( ph ↔ ( ( ph ∧ ch ) ∨ ( ps ∧ ¬ ch ) ) ) → ( ch ↔ ta ) ) ;;
+	hyp 2 : wff = |- ( ( ps ↔ ( ( ph ∧ ch ) ∨ ( ps ∧ ¬ ch ) ) ) → ( th ↔ ta ) ) ;;
+	hyp 3 : wff = |- th ;;
+	-----------------------
+	prop 1 : wff = |- ta ;;
+}
+
+proof of elimh {
+	step 1 : wff = dedlema () |- ( ch → ( ph ↔ ( ( ph ∧ ch ) ∨ ( ps ∧ ¬ ch ) ) ) ) ;;
+	step 2 : wff = syl (step 1, hyp 1) |- ( ch → ( ch ↔ ta ) ) ;;
+	step 3 : wff = ibi (step 2) |- ( ch → ta ) ;;
+	step 4 : wff = dedlemb () |- ( ¬ ch → ( ps ↔ ( ( ph ∧ ch ) ∨ ( ps ∧ ¬ ch ) ) ) ) ;;
+	step 5 : wff = syl (step 4, hyp 2) |- ( ¬ ch → ( th ↔ ta ) ) ;;
+	step 6 : wff = mpbii (hyp 3, step 5) |- ( ¬ ch → ta ) ;;
+	step 7 : wff = pm2.61i (step 3, step 6) |- ta ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* The weak deduction theorem.  For more information, see the Deduction
+       Theorem link on the Metamath Proof Explorer home page.  (Contributed by
+       NM, 26-Jun-2002.) */
+
+theorem dedt (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
+	hyp 1 : wff = |- ( ( ph ↔ ( ( ph ∧ ch ) ∨ ( ps ∧ ¬ ch ) ) ) → ( th ↔ ta ) ) ;;
+	hyp 2 : wff = |- ta ;;
+	-----------------------
+	prop 1 : wff = |- ( ch → th ) ;;
+}
+
+proof of dedt {
+	step 1 : wff = dedlema () |- ( ch → ( ph ↔ ( ( ph ∧ ch ) ∨ ( ps ∧ ¬ ch ) ) ) ) ;;
+	step 2 : wff = mpbiri (hyp 2, hyp 1) |- ( ( ph ↔ ( ( ph ∧ ch ) ∨ ( ps ∧ ¬ ch ) ) ) → th ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( ch → th ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Contraposition.  Theorem *2.16 of [WhiteheadRussell] p. 103.  This version
+     of ~ con3 demonstrates the use of the weak deduction theorem ~ dedt to
+     derive it from ~ con3i .  (Contributed by NM, 27-Jun-2002.)
+     (Proof modification is discouraged.) */
+
+theorem con3th (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ph → ps ) → ( ¬ ps → ¬ ph ) ) ;;
+}
+
+proof of con3th {
+	step 1 : wff = id () |- ( ( ps ↔ ( ( ps ∧ ( ph → ps ) ) ∨ ( ph ∧ ¬ ( ph → ps ) ) ) ) → ( ps ↔ ( ( ps ∧ ( ph → ps ) ) ∨ ( ph ∧ ¬ ( ph → ps ) ) ) ) ) ;;
+	step 2 : wff = notbid (step 1) |- ( ( ps ↔ ( ( ps ∧ ( ph → ps ) ) ∨ ( ph ∧ ¬ ( ph → ps ) ) ) ) → ( ¬ ps ↔ ¬ ( ( ps ∧ ( ph → ps ) ) ∨ ( ph ∧ ¬ ( ph → ps ) ) ) ) ) ;;
+	step 3 : wff = imbi1d (step 2) |- ( ( ps ↔ ( ( ps ∧ ( ph → ps ) ) ∨ ( ph ∧ ¬ ( ph → ps ) ) ) ) → ( ( ¬ ps → ¬ ph ) ↔ ( ¬ ( ( ps ∧ ( ph → ps ) ) ∨ ( ph ∧ ¬ ( ph → ps ) ) ) → ¬ ph ) ) ) ;;
+	step 4 : wff = id () |- ( ( ps ↔ ( ( ps ∧ ( ph → ps ) ) ∨ ( ph ∧ ¬ ( ph → ps ) ) ) ) → ( ps ↔ ( ( ps ∧ ( ph → ps ) ) ∨ ( ph ∧ ¬ ( ph → ps ) ) ) ) ) ;;
+	step 5 : wff = imbi2d (step 4) |- ( ( ps ↔ ( ( ps ∧ ( ph → ps ) ) ∨ ( ph ∧ ¬ ( ph → ps ) ) ) ) → ( ( ph → ps ) ↔ ( ph → ( ( ps ∧ ( ph → ps ) ) ∨ ( ph ∧ ¬ ( ph → ps ) ) ) ) ) ) ;;
+	step 6 : wff = id () |- ( ( ph ↔ ( ( ps ∧ ( ph → ps ) ) ∨ ( ph ∧ ¬ ( ph → ps ) ) ) ) → ( ph ↔ ( ( ps ∧ ( ph → ps ) ) ∨ ( ph ∧ ¬ ( ph → ps ) ) ) ) ) ;;
+	step 7 : wff = imbi2d (step 6) |- ( ( ph ↔ ( ( ps ∧ ( ph → ps ) ) ∨ ( ph ∧ ¬ ( ph → ps ) ) ) ) → ( ( ph → ph ) ↔ ( ph → ( ( ps ∧ ( ph → ps ) ) ∨ ( ph ∧ ¬ ( ph → ps ) ) ) ) ) ) ;;
+	step 8 : wff = id () |- ( ph → ph ) ;;
+	step 9 : wff = elimh (step 5, step 7, step 8) |- ( ph → ( ( ps ∧ ( ph → ps ) ) ∨ ( ph ∧ ¬ ( ph → ps ) ) ) ) ;;
+	step 10 : wff = con3i (step 9) |- ( ¬ ( ( ps ∧ ( ph → ps ) ) ∨ ( ph ∧ ¬ ( ph → ps ) ) ) → ¬ ph ) ;;
+	step 11 : wff = dedt (step 3, step 10) |- ( ( ph → ps ) → ( ¬ ps → ¬ ph ) ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* The consensus theorem.  This theorem and its dual (with ` \/ ` and ` /\ `
+     interchanged) are commonly used in computer logic design to eliminate
+     redundant terms from Boolean expressions.  Specifically, we prove that the
+     term ` ( ps /\ ch ) ` on the left-hand side is redundant.  (Contributed by
+     NM, 16-May-2003.)  (Proof shortened by Andrew Salmon, 13-May-2011.)
+     (Proof shortened by Wolf Lammen, 20-Jan-2013.) */
+
+theorem consensus (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ( ( ph ∧ ps ) ∨ ( ¬ ph ∧ ch ) ) ∨ ( ps ∧ ch ) ) ↔ ( ( ph ∧ ps ) ∨ ( ¬ ph ∧ ch ) ) ) ;;
+}
+
+proof of consensus {
+	step 1 : wff = id () |- ( ( ( ph ∧ ps ) ∨ ( ¬ ph ∧ ch ) ) → ( ( ph ∧ ps ) ∨ ( ¬ ph ∧ ch ) ) ) ;;
+	step 2 : wff = orc () |- ( ( ph ∧ ps ) → ( ( ph ∧ ps ) ∨ ( ¬ ph ∧ ch ) ) ) ;;
+	step 3 : wff = adantrr (step 2) |- ( ( ph ∧ ( ps ∧ ch ) ) → ( ( ph ∧ ps ) ∨ ( ¬ ph ∧ ch ) ) ) ;;
+	step 4 : wff = olc () |- ( ( ¬ ph ∧ ch ) → ( ( ph ∧ ps ) ∨ ( ¬ ph ∧ ch ) ) ) ;;
+	step 5 : wff = adantrl (step 4) |- ( ( ¬ ph ∧ ( ps ∧ ch ) ) → ( ( ph ∧ ps ) ∨ ( ¬ ph ∧ ch ) ) ) ;;
+	step 6 : wff = pm2.61ian (step 3, step 5) |- ( ( ps ∧ ch ) → ( ( ph ∧ ps ) ∨ ( ¬ ph ∧ ch ) ) ) ;;
+	step 7 : wff = jaoi (step 1, step 6) |- ( ( ( ( ph ∧ ps ) ∨ ( ¬ ph ∧ ch ) ) ∨ ( ps ∧ ch ) ) → ( ( ph ∧ ps ) ∨ ( ¬ ph ∧ ch ) ) ) ;;
+	step 8 : wff = orc () |- ( ( ( ph ∧ ps ) ∨ ( ¬ ph ∧ ch ) ) → ( ( ( ph ∧ ps ) ∨ ( ¬ ph ∧ ch ) ) ∨ ( ps ∧ ch ) ) ) ;;
+	step 9 : wff = impbii (step 7, step 8) |- ( ( ( ( ph ∧ ps ) ∨ ( ¬ ph ∧ ch ) ) ∨ ( ps ∧ ch ) ) ↔ ( ( ph ∧ ps ) ∨ ( ¬ ph ∧ ch ) ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Theorem *4.42 of [WhiteheadRussell] p. 119.  (Contributed by Roy F.
+     Longton, 21-Jun-2005.) */
+
+theorem pm4.42 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ph ↔ ( ( ph ∧ ps ) ∨ ( ph ∧ ¬ ps ) ) ) ;;
+}
+
+proof of pm4.42 {
+	step 1 : wff = dedlema () |- ( ps → ( ph ↔ ( ( ph ∧ ps ) ∨ ( ph ∧ ¬ ps ) ) ) ) ;;
+	step 2 : wff = dedlemb () |- ( ¬ ps → ( ph ↔ ( ( ph ∧ ps ) ∨ ( ph ∧ ¬ ps ) ) ) ) ;;
+	step 3 : wff = pm2.61i (step 1, step 2) |- ( ph ↔ ( ( ph ∧ ps ) ∨ ( ph ∧ ¬ ps ) ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Miscellaneous inference relating falsehoods.  (Contributed by NM,
+       31-Mar-1994.) */
+
+theorem ninba (ph : wff, ps : wff, ch : wff)  {
+	hyp 1 : wff = |- ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ¬ ps → ( ¬ ph ↔ ( ch ∧ ps ) ) ) ;;
+}
+
+proof of ninba {
+	step 1 : wff = niabn (hyp 1) |- ( ¬ ps → ( ( ch ∧ ps ) ↔ ¬ ph ) ) ;;
+	step 2 : wff = bicomd (step 1) |- ( ¬ ps → ( ¬ ph ↔ ( ch ∧ ps ) ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A specialized lemma for set theory (to derive the Axiom of Pairing).
+       (Contributed by NM, 18-Oct-1995.)  (Proof shortened by Andrew Salmon,
+       13-May-2011.)  (Proof shortened by Wolf Lammen, 5-Jan-2013.) */
+
+theorem prlem1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
+	hyp 1 : wff = |- ( ph → ( et ↔ ch ) ) ;;
+	hyp 2 : wff = |- ( ps → ¬ th ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ps → ( ( ( ps ∧ ch ) ∨ ( th ∧ ta ) ) → et ) ) ) ;;
+}
+
+proof of prlem1 {
+	step 1 : wff = biimprd (hyp 1) |- ( ph → ( ch → et ) ) ;;
+	step 2 : wff = adantld (step 1) |- ( ph → ( ( ps ∧ ch ) → et ) ) ;;
+	step 3 : wff = pm2.21d (hyp 2) |- ( ps → ( th → et ) ) ;;
+	step 4 : wff = adantrd (step 3) |- ( ps → ( ( th ∧ ta ) → et ) ) ;;
+	step 5 : wff = jaao (step 2, step 4) |- ( ( ph ∧ ps ) → ( ( ( ps ∧ ch ) ∨ ( th ∧ ta ) ) → et ) ) ;;
+	step 6 : wff = ex (step 5) |- ( ph → ( ps → ( ( ( ps ∧ ch ) ∨ ( th ∧ ta ) ) → et ) ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* A specialized lemma for set theory (to derive the Axiom of Pairing).
+     (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
+     13-May-2011.)  (Proof shortened by Wolf Lammen, 9-Dec-2012.) */
+
+theorem prlem2 (ph : wff, ps : wff, ch : wff, th : wff)  {
+	prop 1 : wff = |- ( ( ( ph ∧ ps ) ∨ ( ch ∧ th ) ) ↔ ( ( ph ∨ ch ) ∧ ( ( ph ∧ ps ) ∨ ( ch ∧ th ) ) ) ) ;;
+}
+
+proof of prlem2 {
+	step 1 : wff = simpl () |- ( ( ph ∧ ps ) → ph ) ;;
+	step 2 : wff = simpl () |- ( ( ch ∧ th ) → ch ) ;;
+	step 3 : wff = orim12i (step 1, step 2) |- ( ( ( ph ∧ ps ) ∨ ( ch ∧ th ) ) → ( ph ∨ ch ) ) ;;
+	step 4 : wff = pm4.71ri (step 3) |- ( ( ( ph ∧ ps ) ∨ ( ch ∧ th ) ) ↔ ( ( ph ∨ ch ) ∧ ( ( ph ∧ ps ) ∨ ( ch ∧ th ) ) ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* A specialized lemma for set theory (ordered pair theorem).  (Contributed
+       by NM, 18-Oct-1995.)  (Proof shortened by Wolf Lammen, 8-Dec-2012.) */
+
+theorem oplem1 (ph : wff, ps : wff, ch : wff, th : wff, ta : wff)  {
+	hyp 1 : wff = |- ( ph → ( ps ∨ ch ) ) ;;
+	hyp 2 : wff = |- ( ph → ( th ∨ ta ) ) ;;
+	hyp 3 : wff = |- ( ps ↔ th ) ;;
+	hyp 4 : wff = |- ( ch → ( th ↔ ta ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ps ) ;;
+}
+
+proof of oplem1 {
+	step 1 : wff = notbii (hyp 3) |- ( ¬ ps ↔ ¬ th ) ;;
+	step 2 : wff = ord (hyp 1) |- ( ph → ( ¬ ps → ch ) ) ;;
+	step 3 : wff = syl5bir (step 1, step 2) |- ( ph → ( ¬ th → ch ) ) ;;
+	step 4 : wff = ord (hyp 2) |- ( ph → ( ¬ th → ta ) ) ;;
+	step 5 : wff = jcad (step 3, step 4) |- ( ph → ( ¬ th → ( ch ∧ ta ) ) ) ;;
+	step 6 : wff = biimpar (hyp 4) |- ( ( ch ∧ ta ) → th ) ;;
+	step 7 : wff = syl6 (step 5, step 6) |- ( ph → ( ¬ th → th ) ) ;;
+	step 8 : wff = pm2.18d (step 7) |- ( ph → th ) ;;
+	step 9 : wff = sylibr (step 8, hyp 3) |- ( ph → ps ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Lemma used in construction of real numbers.  (Contributed by NM,
+     4-Sep-1995.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
+
+theorem rnlem (ph : wff, ps : wff, ch : wff, th : wff)  {
+	prop 1 : wff = |- ( ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) ↔ ( ( ( ph ∧ ch ) ∧ ( ps ∧ th ) ) ∧ ( ( ph ∧ th ) ∧ ( ps ∧ ch ) ) ) ) ;;
+}
+
+proof of rnlem {
+	step 1 : wff = an4 () |- ( ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) ↔ ( ( ph ∧ ch ) ∧ ( ps ∧ th ) ) ) ;;
+	step 2 : wff = biimpi (step 1) |- ( ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) → ( ( ph ∧ ch ) ∧ ( ps ∧ th ) ) ) ;;
+	step 3 : wff = an42 () |- ( ( ( ph ∧ th ) ∧ ( ps ∧ ch ) ) ↔ ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) ) ;;
+	step 4 : wff = biimpri (step 3) |- ( ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) → ( ( ph ∧ th ) ∧ ( ps ∧ ch ) ) ) ;;
+	step 5 : wff = jca (step 2, step 4) |- ( ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) → ( ( ( ph ∧ ch ) ∧ ( ps ∧ th ) ) ∧ ( ( ph ∧ th ) ∧ ( ps ∧ ch ) ) ) ) ;;
+	step 6 : wff = an42 () |- ( ( ( ph ∧ th ) ∧ ( ps ∧ ch ) ) ↔ ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) ) ;;
+	step 7 : wff = biimpi (step 6) |- ( ( ( ph ∧ th ) ∧ ( ps ∧ ch ) ) → ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) ) ;;
+	step 8 : wff = adantl (step 7) |- ( ( ( ( ph ∧ ch ) ∧ ( ps ∧ th ) ) ∧ ( ( ph ∧ th ) ∧ ( ps ∧ ch ) ) ) → ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) ) ;;
+	step 9 : wff = impbii (step 5, step 8) |- ( ( ( ph ∧ ps ) ∧ ( ch ∧ th ) ) ↔ ( ( ( ph ∧ ch ) ∧ ( ps ∧ th ) ) ∧ ( ( ph ∧ th ) ∧ ( ps ∧ ch ) ) ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* A single axiom for Boolean algebra known as DN_1.  See
+     ~ http://www-unix.mcs.anl.gov/~~mccune/papers/basax/v12.pdf .
+     (Contributed by Jeffrey Hankins, 3-Jul-2009.)  (Proof shortened by Andrew
+     Salmon, 13-May-2011.)  (Proof shortened by Wolf Lammen, 6-Jan-2013.) */
+
+theorem dn1 (ph : wff, ps : wff, ch : wff, th : wff)  {
+	prop 1 : wff = |- ( ¬ ( ¬ ( ¬ ( ph ∨ ps ) ∨ ch ) ∨ ¬ ( ph ∨ ¬ ( ¬ ch ∨ ¬ ( ch ∨ th ) ) ) ) ↔ ch ) ;;
+}
+
+proof of dn1 {
+	step 1 : wff = pm2.45 () |- ( ¬ ( ph ∨ ps ) → ¬ ph ) ;;
+	step 2 : wff = imnan () |- ( ( ¬ ( ph ∨ ps ) → ¬ ph ) ↔ ¬ ( ¬ ( ph ∨ ps ) ∧ ph ) ) ;;
+	step 3 : wff = mpbi (step 1, step 2) |- ¬ ( ¬ ( ph ∨ ps ) ∧ ph ) ;;
+	step 4 : wff = biorfi (step 3) |- ( ch ↔ ( ch ∨ ( ¬ ( ph ∨ ps ) ∧ ph ) ) ) ;;
+	step 5 : wff = orcom () |- ( ( ch ∨ ( ¬ ( ph ∨ ps ) ∧ ph ) ) ↔ ( ( ¬ ( ph ∨ ps ) ∧ ph ) ∨ ch ) ) ;;
+	step 6 : wff = ordir () |- ( ( ( ¬ ( ph ∨ ps ) ∧ ph ) ∨ ch ) ↔ ( ( ¬ ( ph ∨ ps ) ∨ ch ) ∧ ( ph ∨ ch ) ) ) ;;
+	step 7 : wff = bitri (step 5, step 6) |- ( ( ch ∨ ( ¬ ( ph ∨ ps ) ∧ ph ) ) ↔ ( ( ¬ ( ph ∨ ps ) ∨ ch ) ∧ ( ph ∨ ch ) ) ) ;;
+	step 8 : wff = bitri (step 4, step 7) |- ( ch ↔ ( ( ¬ ( ph ∨ ps ) ∨ ch ) ∧ ( ph ∨ ch ) ) ) ;;
+	step 9 : wff = pm4.45 () |- ( ch ↔ ( ch ∧ ( ch ∨ th ) ) ) ;;
+	step 10 : wff = anor () |- ( ( ch ∧ ( ch ∨ th ) ) ↔ ¬ ( ¬ ch ∨ ¬ ( ch ∨ th ) ) ) ;;
+	step 11 : wff = bitri (step 9, step 10) |- ( ch ↔ ¬ ( ¬ ch ∨ ¬ ( ch ∨ th ) ) ) ;;
+	step 12 : wff = orbi2i (step 11) |- ( ( ph ∨ ch ) ↔ ( ph ∨ ¬ ( ¬ ch ∨ ¬ ( ch ∨ th ) ) ) ) ;;
+	step 13 : wff = anbi2i (step 12) |- ( ( ( ¬ ( ph ∨ ps ) ∨ ch ) ∧ ( ph ∨ ch ) ) ↔ ( ( ¬ ( ph ∨ ps ) ∨ ch ) ∧ ( ph ∨ ¬ ( ¬ ch ∨ ¬ ( ch ∨ th ) ) ) ) ) ;;
+	step 14 : wff = anor () |- ( ( ( ¬ ( ph ∨ ps ) ∨ ch ) ∧ ( ph ∨ ¬ ( ¬ ch ∨ ¬ ( ch ∨ th ) ) ) ) ↔ ¬ ( ¬ ( ¬ ( ph ∨ ps ) ∨ ch ) ∨ ¬ ( ph ∨ ¬ ( ¬ ch ∨ ¬ ( ch ∨ th ) ) ) ) ) ;;
+	step 15 : wff = 3bitrri (step 8, step 13, step 14) |- ( ¬ ( ¬ ( ¬ ( ph ∨ ps ) ∨ ch ) ∨ ¬ ( ph ∨ ¬ ( ¬ ch ∨ ¬ ( ch ∨ th ) ) ) ) ↔ ch ) ;;
+	qed prop 1 = step 15 ;;
+}
+
+

@@ -1,0 +1,263 @@
+$[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_of_classical_propositional_calculus/Derive_the_Tarski-Bernays-Wajsberg_axioms_from_Meredith_s_Second_CO_Axiom.smm $]
+$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+       Derive the Lukasiewicz axioms from the The Russell-Bernays Axioms
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+$)
+$( /* Justification for ~ rb-imdf .  (Contributed by Anthony Hart,
+     17-Aug-2011.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	prb-bijust $p |- ( ( ph <-> ps ) <-> -. ( -. ( -. ph \/ ps ) \/ -. ( -. ps \/ ph ) ) ) $=
+	f0 f1 pdfbi1 f0 f1 pimor f1 f0 pimor f1 f0 awi f1 awn f0 awo pnotbii f0 f1 awi f0 awn f1 awo f1 f0 awi awn f1 awn f0 awo awn pimbi12i f0 f1 awi f1 f0 awi awn awi f0 awn f1 awo f1 awn f0 awo awn awi pnotbii f0 awn f1 awo f1 awn f0 awo ppm4.62 f0 awn f1 awo f1 awn f0 awo awn awi f0 awn f1 awo awn f1 awn f0 awo awn awo pnotbii f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn f0 awn f1 awo f1 awn f0 awo awn awi awn f0 awn f1 awo awn f1 awn f0 awo awn awo awn p3bitri $.
+$}
+$( /* The definition of implication, in terms of ` \/ ` and ` -. ` .
+     (Contributed by Anthony Hart, 17-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	prb-imdf $p |- -. ( -. ( -. ( ph -> ps ) \/ ( -. ph \/ ps ) ) \/ -. ( -. ( -. ph \/ ps ) \/ ( ph -> ps ) ) ) $=
+	f0 f1 pimor f0 f1 awi f0 awn f1 awo prb-bijust f0 f1 awi f0 awn f1 awo awb f0 f1 awi awn f0 awn f1 awo awo awn f0 awn f1 awo awn f0 f1 awi awo awn awo awn pmpbi $.
+$}
+$( /* Modus ponens for ` \/ ` ` -. ` axiom systems.  (Contributed by Anthony
+       Hart, 12-Aug-2011.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- ph $.
+	e1 $e |- ( -. ph \/ ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	panmp $p |- ps $=
+	e0 e1 f0 f1 pimorri f0 f1 aax-mp $.
+$}
+$( /* The first of four axioms in the Russell-Bernays axiom system.
+     (Contributed by Anthony Hart, 13-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	prb-ax1 $p |- ( -. ( -. ps \/ ch ) \/ ( -. ( ph \/ ps ) \/ ( ph \/ ch ) ) ) $=
+	f0 f1 f2 porim2 f1 f2 pimor f0 f1 awo f0 f2 awo pimor f1 f2 awi f0 f1 awo f0 f2 awo awi f1 awn f2 awo f0 f1 awo awn f0 f2 awo awo p3imtr3i f1 awn f2 awo f0 f1 awo awn f0 f2 awo awo pimori $.
+$}
+$( /* The second of four axioms in the Russell-Bernays axiom system.
+     (Contributed by Anthony Hart, 13-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	prb-ax2 $p |- ( -. ( ph \/ ps ) \/ ( ps \/ ph ) ) $=
+	f0 f1 ppm1.4 f0 f1 awo f1 f0 awo pcon3i f1 f0 awo f0 f1 awo awn pcon1i f0 f1 awo awn f1 f0 awo porri $.
+$}
+$( /* The third of four axioms in the Russell-Bernays axiom system.
+     (Contributed by Anthony Hart, 13-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	prb-ax3 $p |- ( -. ph \/ ( ps \/ ph ) ) $=
+	f1 f0 ppm2.46 f1 f0 awo f0 awn pcon1i f0 awn f1 f0 awo porri $.
+$}
+$( /* The fourth of four axioms in the Russell-Bernays axiom system.
+     (Contributed by Anthony Hart, 13-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v ph $.
+	f0 $f wff ph $.
+	prb-ax4 $p |- ( -. ( ph \/ ph ) \/ ph ) $=
+	f0 ppm1.2 f0 f0 awo f0 pcon3i f0 f0 f0 awo awn pcon1i f0 f0 awo awn f0 porri $.
+$}
+$( /* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+       (Contributed by Anthony Hart, 18-Aug-2011.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( -. ps \/ ch ) $.
+	e1 $e |- ( ph \/ ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	prbsyl $p |- ( ph \/ ch ) $=
+	e1 e0 f0 f1 f2 prb-ax1 f1 awn f2 awo f0 f1 awo awn f0 f2 awo awo panmp f0 f1 awo f0 f2 awo panmp $.
+$}
+$( /* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+       (Contributed by Anthony Hart, 18-Aug-2011.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( -. ph \/ ps ) $.
+	e1 $e |- ( -. ch \/ th ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	prblem1 $p |- ( -. ( ph \/ ch ) \/ ( ps \/ th ) ) $=
+	e1 f1 f2 f3 prb-ax1 f2 awn f3 awo f1 f2 awo awn f1 f3 awo awo panmp f2 f1 prb-ax2 e0 f2 f0 f1 prb-ax1 f0 awn f1 awo f2 f0 awo awn f2 f1 awo awo panmp f0 f2 prb-ax2 f0 f2 awo awn f2 f0 awo f2 f1 awo prbsyl f0 f2 awo awn f2 f1 awo f1 f2 awo prbsyl f0 f2 awo awn f1 f2 awo f1 f3 awo prbsyl $.
+$}
+$( /* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+     (Contributed by Anthony Hart, 18-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	prblem2 $p |- ( -. ( ch \/ ph ) \/ ( ch \/ ( ph \/ ps ) ) ) $=
+	f1 f0 prb-ax2 f0 f1 prb-ax3 f0 awn f1 f0 awo f0 f1 awo prbsyl f2 f0 f0 f1 awo prb-ax1 f0 awn f0 f1 awo awo f2 f0 awo awn f2 f0 f1 awo awo awo panmp $.
+$}
+$( /* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+     (Contributed by Anthony Hart, 18-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	prblem3 $p |- ( -. ( ch \/ ph ) \/ ( ( ch \/ ps ) \/ ph ) ) $=
+	f0 f2 f1 awo prb-ax2 f2 f1 f0 prblem2 f2 f0 prb-ax2 f2 f0 awo awn f0 f2 awo f0 f2 f1 awo awo prbsyl f2 f0 awo awn f0 f2 f1 awo awo f2 f1 awo f0 awo prbsyl $.
+$}
+$( /* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+       (Contributed by Anthony Hart, 18-Aug-2011.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps ch th ta et $.
+	e0 $e |- ( -. ph \/ th ) $.
+	e1 $e |- ( -. ps \/ ta ) $.
+	e2 $e |- ( -. ch \/ et ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	f5 $f wff et $.
+	prblem4 $p |- ( -. ( ( ph \/ ps ) \/ ch ) \/ ( ( et \/ ta ) \/ th ) ) $=
+	e2 e1 f2 f5 f1 f4 prblem1 e0 f2 f1 awo f5 f4 awo f0 f3 prblem1 f0 f2 f1 awo prb-ax2 f1 f2 prb-ax2 f0 f1 f2 awo f2 f1 awo prb-ax1 f1 f2 awo awn f2 f1 awo awo f0 f1 f2 awo awo awn f0 f2 f1 awo awo awo panmp f1 f2 awo f0 prb-ax2 f1 f2 awo f0 awo awn f0 f1 f2 awo awo f0 f2 f1 awo awo prbsyl f1 f2 awo f0 awo awn f0 f2 f1 awo awo f2 f1 awo f0 awo prbsyl f1 f2 awo f0 awo prb-ax4 f0 f1 f2 awo prb-ax2 f1 f2 f0 prblem2 f0 f1 awo awn f0 f1 f2 awo awo f1 f2 awo f0 awo prbsyl f2 f1 prb-ax3 f1 f2 awo f0 f2 awn prblem2 f2 awn f1 f2 awo awo f2 awn f1 f2 awo f0 awo awo panmp f0 f1 awo f1 f2 awo f0 awo f2 f1 f2 awo f0 awo prblem1 f0 f1 awo f2 awo awn f1 f2 awo f0 awo f1 f2 awo f0 awo awo f1 f2 awo f0 awo prbsyl f0 f1 awo f2 awo awn f1 f2 awo f0 awo f2 f1 awo f0 awo prbsyl f0 f1 awo f2 awo awn f2 f1 awo f0 awo f5 f4 awo f3 awo prbsyl $.
+$}
+$( /* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+     (Contributed by Anthony Hart, 19-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	prblem5 $p |- ( -. ( -. -. ph \/ ps ) \/ ( -. -. ps \/ ph ) ) $=
+	f0 f1 awn awn prb-ax2 f0 prb-ax4 f0 f0 prb-ax3 f0 awn f0 f0 awo f0 prbsyl f0 awn awn prb-ax4 f0 awn awn f0 awn awn prb-ax3 f0 awn awn awn f0 awn awn f0 awn awn awo f0 awn awn prbsyl f0 awn awn awn f0 awn awn prb-ax2 f0 awn awn awn f0 awn awn awo f0 awn awn f0 awn awn awn awo panmp f0 prb-ax4 f0 f0 prb-ax3 f0 awn f0 f0 awo f0 prbsyl f0 awn f0 awn awn awn f0 f0 prblem1 f0 awn f0 awo f0 awn awn awn f0 awo panmp f1 awn prb-ax4 f1 awn f1 awn prb-ax3 f1 awn awn f1 awn f1 awn awo f1 awn prbsyl f1 awn awn f1 awn prb-ax2 f1 awn awn f1 awn awo f1 awn f1 awn awn awo panmp f0 awn awn f0 f1 f1 awn awn prblem1 f0 awn awn f1 awo awn f0 f1 awn awn awo f1 awn awn f0 awo prbsyl $.
+$}
+$( /* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+       (Contributed by Anthony Hart, 19-Aug-2011.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- -. ( -. ( -. ph \/ ps ) \/ -. ( -. ps \/ ph ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	prblem6 $p |- ( -. ph \/ ps ) $=
+	e0 f0 awn f1 awo awn prb-ax4 f0 awn f1 awo awn f0 awn f1 awo awn prb-ax3 f0 awn f1 awo awn awn f0 awn f1 awo awn f0 awn f1 awo awn awo f0 awn f1 awo awn prbsyl f0 awn f1 awo awn awn f0 awn f1 awo awn prb-ax2 f0 awn f1 awo awn awn f0 awn f1 awo awn awo f0 awn f1 awo awn f0 awn f1 awo awn awn awo panmp f0 awn f1 awo awn awn f1 awn f0 awo awn f0 awn f1 awo awn prblem3 f0 awn f1 awo awn f0 awn f1 awo awn awn awo f0 awn f1 awo awn f1 awn f0 awo awn awo f0 awn f1 awo awn awn awo panmp f0 awn f1 awo awn f1 awn f0 awo awn awo f0 awn f1 awo awn awn prb-ax2 f0 awn f1 awo awn f1 awn f0 awo awn awo f0 awn f1 awo awn awn awo f0 awn f1 awo awn awn f0 awn f1 awo awn f1 awn f0 awo awn awo awo panmp f0 awn f1 awo f0 awn f1 awo awn f1 awn f0 awo awn awo prblem5 f0 awn f1 awo awn awn f0 awn f1 awo awn f1 awn f0 awo awn awo awo f0 awn f1 awo awn f1 awn f0 awo awn awo awn awn f0 awn f1 awo awo panmp f0 awn f1 awo awn f1 awn f0 awo awn awo awn f0 awn f1 awo panmp $.
+$}
+$( /* Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
+       (Contributed by Anthony Hart, 19-Aug-2011.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- -. ( -. ( -. ph \/ ps ) \/ -. ( -. ps \/ ph ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	prblem7 $p |- ( -. ps \/ ph ) $=
+	e0 f1 awn f0 awo awn f0 awn f1 awo awn prb-ax3 f1 awn f0 awo f0 awn f1 awo awn f1 awn f0 awo awn awo prblem5 f1 awn f0 awo awn awn f0 awn f1 awo awn f1 awn f0 awo awn awo awo f0 awn f1 awo awn f1 awn f0 awo awn awo awn awn f1 awn f0 awo awo panmp f0 awn f1 awo awn f1 awn f0 awo awn awo awn f1 awn f0 awo panmp $.
+$}
+$( /* ~ ax-mp derived from Russell-Bernays'.  (Contributed by Anthony Hart,
+       19-Aug-2011.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps $.
+	e0 $e |- ph $.
+	e1 $e |- ( ph -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pre1axmp $p |- ps $=
+	e0 e1 f0 f1 prb-imdf f0 f1 awi f0 awn f1 awo prblem6 f0 f1 awi f0 awn f1 awo panmp f0 f1 panmp $.
+$}
+$( /* ~ luk-1 derived from Russell-Bernays'.  (Contributed by Anthony Hart,
+     19-Aug-2011.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pre2luk1 $p |- ( ( ph -> ps ) -> ( ( ps -> ch ) -> ( ph -> ch ) ) ) $=
+	f1 f2 awi f0 f2 awi prb-imdf f1 f2 awi f0 f2 awi awi f1 f2 awi awn f0 f2 awi awo prblem7 f1 f2 prb-imdf f1 f2 awi f1 awn f2 awo prblem6 f1 f2 awi awn f1 awn f2 awo awn awn prb-ax2 f1 f2 awi awn prb-ax4 f1 f2 awi awn f1 f2 awi awn prb-ax3 f1 f2 awi awn awn f1 f2 awi awn f1 f2 awi awn awo f1 f2 awi awn prbsyl f1 awn f2 awo awn prb-ax4 f1 awn f2 awo awn f1 awn f2 awo awn prb-ax3 f1 awn f2 awo awn awn f1 awn f2 awo awn f1 awn f2 awo awn awo f1 awn f2 awo awn prbsyl f1 awn f2 awo awn awn f1 awn f2 awo awn prb-ax2 f1 awn f2 awo awn awn f1 awn f2 awo awn awo f1 awn f2 awo awn f1 awn f2 awo awn awn awo panmp f1 f2 awi awn f1 f2 awi awn f1 awn f2 awo f1 awn f2 awo awn awn prblem1 f1 f2 awi awn f1 awn f2 awo awo awn f1 f2 awi awn f1 awn f2 awo awn awn awo f1 awn f2 awo awn awn f1 f2 awi awn awo prbsyl f1 f2 awi awn f1 awn f2 awo awo f1 awn f2 awo awn awn f1 f2 awi awn awo panmp f0 f2 prb-imdf f0 f2 awi f0 awn f2 awo prblem7 f1 awn f2 awo awn f1 f2 awi awn f0 awn f2 awo f0 f2 awi prblem1 f0 awn f1 f2 prb-ax1 f1 awn f2 awo awn f0 awn f2 awo awo f0 awn f1 awo awn prb-ax2 f0 awn f1 awo awn prb-ax4 f0 awn f1 awo awn f0 awn f1 awo awn prb-ax3 f0 awn f1 awo awn awn f0 awn f1 awo awn f0 awn f1 awo awn awo f0 awn f1 awo awn prbsyl f0 awn f2 awo prb-ax4 f0 awn f2 awo f0 awn f2 awo prb-ax3 f0 awn f2 awo awn f0 awn f2 awo f0 awn f2 awo awo f0 awn f2 awo prbsyl f1 awn f2 awo awn prb-ax4 f1 awn f2 awo awn f1 awn f2 awo awn prb-ax3 f1 awn f2 awo awn awn f1 awn f2 awo awn f1 awn f2 awo awn awo f1 awn f2 awo awn prbsyl f0 awn f1 awo awn f0 awn f2 awo f1 awn f2 awo awn f0 awn f1 awo awn f0 awn f2 awo f1 awn f2 awo awn prblem4 f1 awn f2 awo awn f0 awn f1 awo awn f0 awn f2 awo awo prb-ax2 f1 awn f2 awo awn f0 awn f1 awo awn f0 awn f2 awo awo awo awn f0 awn f1 awo awn f0 awn f2 awo awo f1 awn f2 awo awn awo f1 awn f2 awo awn f0 awn f2 awo awo f0 awn f1 awo awn awo prbsyl f1 awn f2 awo awn f0 awn f1 awo awn f0 awn f2 awo awo awo awn f1 awn f2 awo awn f0 awn f2 awo awo f0 awn f1 awo awn awo f0 awn f1 awo awn f1 awn f2 awo awn f0 awn f2 awo awo awo prbsyl f1 awn f2 awo awn f0 awn f1 awo awn f0 awn f2 awo awo awo f0 awn f1 awo awn f1 awn f2 awo awn f0 awn f2 awo awo awo panmp f0 awn f1 awo awn f1 awn f2 awo awn f0 awn f2 awo awo f1 f2 awi awn f0 f2 awi awo prbsyl f0 f1 prb-imdf f0 f1 awi f0 awn f1 awo prblem6 f0 f1 awi awn f0 awn f1 awo f1 f2 awi awn f0 f2 awi awo prbsyl f0 f1 awi awn f1 f2 awi awn f0 f2 awi awo f1 f2 awi f0 f2 awi awi prbsyl f0 f1 awi f1 f2 awi f0 f2 awi awi prb-imdf f0 f1 awi f1 f2 awi f0 f2 awi awi awi f0 f1 awi awn f1 f2 awi f0 f2 awi awi awo prblem7 f0 f1 awi awn f1 f2 awi f0 f2 awi awi awo f0 f1 awi f1 f2 awi f0 f2 awi awi awi panmp $.
+$}
+$( /* ~ luk-2 derived from Russell-Bernays'.  (Contributed by Anthony Hart,
+     19-Aug-2011.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+$)
+${
+	$v ph $.
+	f0 $f wff ph $.
+	pre2luk2 $p |- ( ( -. ph -> ph ) -> ph ) $=
+	f0 prb-ax4 f0 prb-ax4 f0 f0 prb-ax3 f0 awn f0 f0 awo f0 prbsyl f0 awn awn prb-ax4 f0 awn awn f0 awn awn prb-ax3 f0 awn awn awn f0 awn awn f0 awn awn awo f0 awn awn prbsyl f0 awn awn awn f0 awn awn prb-ax2 f0 awn awn awn f0 awn awn awo f0 awn awn f0 awn awn awn awo panmp f0 prb-ax4 f0 f0 prb-ax3 f0 awn f0 f0 awo f0 prbsyl f0 awn f0 awn awn awn f0 f0 prblem1 f0 awn f0 awo f0 awn awn awn f0 awo panmp f0 prb-ax4 f0 f0 prb-ax3 f0 awn f0 f0 awo f0 prbsyl f0 awn awn f0 f0 f0 prblem1 f0 awn awn f0 awo awn f0 f0 awo f0 prbsyl f0 awn f0 prb-imdf f0 awn f0 awi f0 awn awn f0 awo prblem6 f0 awn f0 awi awn f0 awn awn f0 awo f0 prbsyl f0 awn f0 awi f0 prb-imdf f0 awn f0 awi f0 awi f0 awn f0 awi awn f0 awo prblem7 f0 awn f0 awi awn f0 awo f0 awn f0 awi f0 awi panmp $.
+$}
+$( /* ~ luk-3 derived from Russell-Bernays'.
+
+     This theorem, along with ~ re1axmp , ~ re2luk1 , and ~ re2luk2 shows that
+     ~ rb-ax1 , ~ rb-ax2 , ~ rb-ax3 , and ~ rb-ax4 , along with ~ anmp , can be
+     used as a complete axiomatization of propositional calculus.  (Contributed
+     by Anthony Hart, 19-Aug-2011.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pre2luk3 $p |- ( ph -> ( -. ph -> ps ) ) $=
+	f0 awn f1 prb-imdf f0 awn f1 awi f0 awn awn f1 awo prblem7 f0 awn prb-ax4 f0 awn f0 awn prb-ax3 f0 awn awn f0 awn f0 awn awo f0 awn prbsyl f0 awn awn f0 awn prb-ax2 f0 awn awn f0 awn awo f0 awn f0 awn awn awo panmp f0 awn awn f1 f0 awn prblem2 f0 awn f0 awn awn awo f0 awn f0 awn awn f1 awo awo panmp f0 awn f0 awn awn f1 awo f0 awn f1 awi prbsyl f0 f0 awn f1 awi prb-imdf f0 f0 awn f1 awi awi f0 awn f0 awn f1 awi awo prblem7 f0 awn f0 awn f1 awi awo f0 f0 awn f1 awi awi panmp $.
+$}
+

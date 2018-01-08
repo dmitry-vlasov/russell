@@ -1,0 +1,634 @@
+$[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/The_union_of_a_class.smm $]
+$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        The intersection of a class
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+$)
+$( /* Declare class intersection symbol. */
+
+$)
+$c |^| $.
+$( /* Big cap */
+
+$)
+$( /* Extend class notation to include the intersection of a class (read:
+     'intersect ` A ` '). */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	acint $a class |^| A $.
+$}
+$( /* Define the intersection of a class.  Definition 7.35 of [TakeutiZaring]
+       p. 44.  For example, ` |^| { { 1 , 3 } , { 1 , 8 } } = { 1 } ` .
+       Compare this with the intersection of two classes, ~ df-in .
+       (Contributed by NM, 18-Aug-1993.) */
+
+$)
+${
+	$v x y A $.
+	$d x y A $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	adf-int $a |- |^| A = { x | A. y ( y e. A -> x e. y ) } $.
+$}
+$( /* Alternate definition of class intersection.  (Contributed by NM,
+       28-Jun-1998.) */
+
+$)
+${
+	$v x y A $.
+	$d x y A $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	pdfint2 $p |- |^| A = { x | A. y e. A x e. y } $=
+	f0 f1 f2 adf-int f0 asup_set_class f1 asup_set_class awcel f1 f2 adf-ral f0 asup_set_class f1 asup_set_class awcel f1 f2 awral f1 asup_set_class f2 awcel f0 asup_set_class f1 asup_set_class awcel awi f1 awal f0 pabbii f2 acint f1 asup_set_class f2 awcel f0 asup_set_class f1 asup_set_class awcel awi f1 awal f0 acab f0 asup_set_class f1 asup_set_class awcel f1 f2 awral f0 acab peqtr4i $.
+$}
+$( /* Equality law for intersection.  (Contributed by NM, 13-Sep-1999.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x y B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	i1 $f set y $.
+	pinteq $p |- ( A = B -> |^| A = |^| B ) $=
+	i0 asup_set_class i1 asup_set_class awcel i1 f0 f1 praleq f0 f1 awceq i0 asup_set_class i1 asup_set_class awcel i1 f0 awral i0 asup_set_class i1 asup_set_class awcel i1 f1 awral i0 pabbidv i0 i1 f0 pdfint2 i0 i1 f1 pdfint2 f0 f1 awceq i0 asup_set_class i1 asup_set_class awcel i1 f0 awral i0 acab i0 asup_set_class i1 asup_set_class awcel i1 f1 awral i0 acab f0 acint f1 acint p3eqtr4g $.
+$}
+$( /* Equality inference for class intersection.  (Contributed by NM,
+       2-Sep-2003.) */
+
+$)
+${
+	$v A B $.
+	e0 $e |- A = B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pinteqi $p |- |^| A = |^| B $=
+	e0 f0 f1 pinteq f0 f1 awceq f0 acint f1 acint awceq aax-mp $.
+$}
+$( /* Equality deduction for class intersection.  (Contributed by NM,
+       2-Sep-2003.) */
+
+$)
+${
+	$v ph A B $.
+	e0 $e |- ( ph -> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pinteqd $p |- ( ph -> |^| A = |^| B ) $=
+	e0 f1 f2 pinteq f0 f1 f2 awceq f1 acint f2 acint awceq psyl $.
+$}
+$( /* Membership in class intersection.  (Contributed by NM, 21-May-1994.) */
+
+$)
+${
+	$v x y A B $.
+	$d x A y $.
+	$d x B y $.
+	e0 $e |- A e. _V $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	i0 $f set y $.
+	pelint $p |- ( A e. |^| B <-> A. x ( x e. B -> A e. x ) ) $=
+	e0 i0 asup_set_class f1 f0 asup_set_class peleq1 i0 asup_set_class f1 awceq i0 asup_set_class f0 asup_set_class awcel f1 f0 asup_set_class awcel f0 asup_set_class f2 awcel pimbi2d i0 asup_set_class f1 awceq f0 asup_set_class f2 awcel i0 asup_set_class f0 asup_set_class awcel awi f0 asup_set_class f2 awcel f1 f0 asup_set_class awcel awi f0 palbidv i0 f0 f2 adf-int f0 asup_set_class f2 awcel i0 asup_set_class f0 asup_set_class awcel awi f0 awal f0 asup_set_class f2 awcel f1 f0 asup_set_class awcel awi f0 awal i0 f1 f2 acint pelab2 $.
+$}
+$( /* Membership in class intersection.  (Contributed by NM, 14-Oct-1999.) */
+
+$)
+${
+	$v x A B $.
+	$d x A $.
+	$d x B $.
+	e0 $e |- A e. _V $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pelint2 $p |- ( A e. |^| B <-> A. x e. B A e. x ) $=
+	e0 f0 f1 f2 pelint f1 f0 asup_set_class awcel f0 f2 adf-ral f1 f2 acint awcel f0 asup_set_class f2 awcel f1 f0 asup_set_class awcel awi f0 awal f1 f0 asup_set_class awcel f0 f2 awral pbitr4i $.
+$}
+$( /* Membership in class intersection, with the sethood requirement expressed
+       as an antecedent.  (Contributed by NM, 20-Nov-2003.) */
+
+$)
+${
+	$v x y A B V $.
+	$d x y A $.
+	$d x y B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class V $.
+	i0 $f set y $.
+	pelintg $p |- ( A e. V -> ( A e. |^| B <-> A. x e. B A e. x ) ) $=
+	i0 asup_set_class f1 f2 acint peleq1 i0 asup_set_class f1 f0 asup_set_class peleq1 i0 asup_set_class f1 awceq i0 asup_set_class f0 asup_set_class awcel f1 f0 asup_set_class awcel f0 f2 pralbidv i0 pvex f0 i0 asup_set_class f2 pelint2 i0 asup_set_class f2 acint awcel i0 asup_set_class f0 asup_set_class awcel f0 f2 awral f1 f2 acint awcel f1 f0 asup_set_class awcel f0 f2 awral i0 f1 f3 pvtoclbg $.
+$}
+$( /* Membership in class intersection.  (Contributed by NM, 14-Oct-1999.)
+       (Proof shortened by Andrew Salmon, 9-Jul-2011.) */
+
+$)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	pelinti $p |- ( A e. |^| B -> ( C e. B -> A e. C ) ) $=
+	i0 f0 f1 f1 acint pelintg i0 asup_set_class f2 f0 peleq2 f0 i0 asup_set_class awcel f0 f2 awcel i0 f2 f1 prspccv f0 f1 acint awcel f0 f1 acint awcel f0 i0 asup_set_class awcel i0 f1 awral f2 f1 awcel f0 f2 awcel awi psyl6bi f0 f1 acint awcel f2 f1 awcel f0 f2 awcel awi ppm2.43i $.
+$}
+$( /* Bound-variable hypothesis builder for intersection.  (Contributed by NM,
+       2-Feb-1997.)  (Proof shortened by Andrew Salmon, 12-Aug-2011.) */
+
+$)
+${
+	$v x y z A $.
+	$d y z A $.
+	$d x y z $.
+	e0 $e |- F/_ x A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	i0 $f set y $.
+	i1 $f set z $.
+	pnfint $p |- F/_ x |^| A $=
+	i0 i1 f1 pdfint2 e0 i0 asup_set_class i1 asup_set_class awcel f0 pnfv i0 asup_set_class i1 asup_set_class awcel f0 i1 f1 pnfral i0 asup_set_class i1 asup_set_class awcel i1 f1 awral f0 i0 pnfab f0 f1 acint i0 asup_set_class i1 asup_set_class awcel i1 f1 awral i0 acab pnfcxfr $.
+$}
+$( /* Membership in the intersection of a class abstraction.  (Contributed by
+       NM, 30-Aug-1993.) */
+
+$)
+${
+	$v ph x y A $.
+	$d A x y $.
+	$d ph y $.
+	e0 $e |- A e. _V $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	i0 $f set y $.
+	pelintab $p |- ( A e. |^| { x | ph } <-> A. x ( ph -> A e. x ) ) $=
+	e0 i0 f2 f0 f1 acab pelint f0 f1 i0 pnfsab1 f2 i0 asup_set_class awcel f1 pnfv i0 asup_set_class f0 f1 acab awcel f2 i0 asup_set_class awcel f1 pnfim f0 f2 f1 asup_set_class awcel awi i0 pnfv i0 asup_set_class f1 asup_set_class f0 f1 acab peleq1 f0 f1 pabid i0 asup_set_class f1 asup_set_class awceq i0 asup_set_class f0 f1 acab awcel f1 asup_set_class f0 f1 acab awcel f0 psyl6bb i0 asup_set_class f1 asup_set_class f2 peleq2 i0 asup_set_class f1 asup_set_class awceq i0 asup_set_class f0 f1 acab awcel f0 f2 i0 asup_set_class awcel f2 f1 asup_set_class awcel pimbi12d i0 asup_set_class f0 f1 acab awcel f2 i0 asup_set_class awcel awi f0 f2 f1 asup_set_class awcel awi i0 f1 pcbval f2 f0 f1 acab acint awcel i0 asup_set_class f0 f1 acab awcel f2 i0 asup_set_class awcel awi i0 awal f0 f2 f1 asup_set_class awcel awi f1 awal pbitri $.
+$}
+$( /* Membership in the intersection of a class abstraction.  (Contributed by
+       NM, 17-Oct-1999.) */
+
+$)
+${
+	$v ph x A B $.
+	$d A x $.
+	e0 $e |- A e. _V $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pelintrab $p |- ( A e. |^| { x e. B | ph } <-> A. x e. B ( ph -> A e. x ) ) $=
+	e0 f1 asup_set_class f3 awcel f0 awa f1 f2 pelintab f1 asup_set_class f3 awcel f0 f2 f1 asup_set_class awcel pimpexp f1 asup_set_class f3 awcel f0 awa f2 f1 asup_set_class awcel awi f1 asup_set_class f3 awcel f0 f2 f1 asup_set_class awcel awi awi f1 palbii f2 f1 asup_set_class f3 awcel f0 awa f1 acab acint awcel f1 asup_set_class f3 awcel f0 awa f2 f1 asup_set_class awcel awi f1 awal f1 asup_set_class f3 awcel f0 f2 f1 asup_set_class awcel awi awi f1 awal pbitri f0 f1 f3 adf-rab f0 f1 f3 acrab f1 asup_set_class f3 awcel f0 awa f1 acab pinteqi f0 f1 f3 acrab acint f1 asup_set_class f3 awcel f0 awa f1 acab acint f2 peleq2i f0 f2 f1 asup_set_class awcel awi f1 f3 adf-ral f2 f1 asup_set_class f3 awcel f0 awa f1 acab acint awcel f1 asup_set_class f3 awcel f0 f2 f1 asup_set_class awcel awi awi f1 awal f2 f0 f1 f3 acrab acint awcel f0 f2 f1 asup_set_class awcel awi f1 f3 awral p3bitr4i $.
+$}
+$( /* Membership in the intersection of a class abstraction.  (Contributed by
+       NM, 17-Feb-2007.) */
+
+$)
+${
+	$v ph x y A B V $.
+	$d x y A $.
+	$d y B $.
+	$d y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class V $.
+	i0 $f set y $.
+	pelintrabg $p |- ( A e. V -> ( A e. |^| { x e. B | ph } <-> A. x e. B ( ph -> A e. x ) ) ) $=
+	i0 asup_set_class f2 f0 f1 f3 acrab acint peleq1 i0 asup_set_class f2 f1 asup_set_class peleq1 i0 asup_set_class f2 awceq i0 asup_set_class f1 asup_set_class awcel f2 f1 asup_set_class awcel f0 pimbi2d i0 asup_set_class f2 awceq f0 i0 asup_set_class f1 asup_set_class awcel awi f0 f2 f1 asup_set_class awcel awi f1 f3 pralbidv i0 pvex f0 f1 i0 asup_set_class f3 pelintrab i0 asup_set_class f0 f1 f3 acrab acint awcel f0 i0 asup_set_class f1 asup_set_class awcel awi f1 f3 awral f2 f0 f1 f3 acrab acint awcel f0 f2 f1 asup_set_class awcel awi f1 f3 awral i0 f2 f4 pvtoclbg $.
+$}
+$( /* The intersection of the empty set is the universal class.  Exercise 2 of
+       [TakeutiZaring] p. 44.  (Contributed by NM, 18-Aug-1993.) */
+
+$)
+${
+	$v x y $.
+	$d x y $.
+	i0 $f set x $.
+	i1 $f set y $.
+	pint0 $p |- |^| (/) = _V $=
+	i1 asup_set_class pnoel i1 asup_set_class ac0 awcel i0 asup_set_class i1 asup_set_class awcel ppm2.21i i1 asup_set_class ac0 awcel i0 asup_set_class i1 asup_set_class awcel awi i1 aax-gen i0 asup_set_class peqid i1 asup_set_class ac0 awcel i0 asup_set_class i1 asup_set_class awcel awi i1 awal i0 asup_set_class i0 asup_set_class awceq p2th i1 asup_set_class ac0 awcel i0 asup_set_class i1 asup_set_class awcel awi i1 awal i0 asup_set_class i0 asup_set_class awceq i0 pabbii i0 i1 ac0 adf-int i0 adf-v i1 asup_set_class ac0 awcel i0 asup_set_class i1 asup_set_class awcel awi i1 awal i0 acab i0 asup_set_class i0 asup_set_class awceq i0 acab ac0 acint acvv p3eqtr4i $.
+$}
+$( /* An element of a class includes the intersection of the class.  Exercise
+       4 of [TakeutiZaring] p. 44 (with correction), generalized to classes.
+       (Contributed by NM, 18-Nov-1995.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x y B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	i1 $f set y $.
+	pintss1 $p |- ( A e. B -> |^| B C_ A ) $=
+	i0 pvex i1 i0 asup_set_class f1 pelint i1 asup_set_class f0 f1 peleq1 i1 asup_set_class f0 i0 asup_set_class peleq2 i1 asup_set_class f0 awceq i1 asup_set_class f1 awcel f0 f1 awcel i0 asup_set_class i1 asup_set_class awcel i0 asup_set_class f0 awcel pimbi12d i1 asup_set_class f1 awcel i0 asup_set_class i1 asup_set_class awcel awi f0 f1 awcel i0 asup_set_class f0 awcel awi i1 f0 f1 pspcgv i1 asup_set_class f1 awcel i0 asup_set_class i1 asup_set_class awcel awi i1 awal f0 f1 awcel i0 asup_set_class f0 awcel ppm2.43a i0 asup_set_class f1 acint awcel i1 asup_set_class f1 awcel i0 asup_set_class i1 asup_set_class awcel awi i1 awal f0 f1 awcel i0 asup_set_class f0 awcel psyl5bi f0 f1 awcel i0 f1 acint f0 pssrdv $.
+$}
+$( /* Subclass of a class intersection.  Theorem 5.11(viii) of [Monk1] p. 52
+       and its converse.  (Contributed by NM, 14-Oct-1999.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x y B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	i0 $f set y $.
+	pssint $p |- ( A C_ |^| B <-> A. x e. B A C_ x ) $=
+	i0 f1 f2 acint pdfss3 i0 pvex f0 i0 asup_set_class f2 pelint2 i0 asup_set_class f2 acint awcel i0 asup_set_class f0 asup_set_class awcel f0 f2 awral i0 f1 pralbii i0 asup_set_class f0 asup_set_class awcel i0 f0 f1 f2 pralcom i0 f1 f0 asup_set_class pdfss3 f1 f0 asup_set_class awss i0 asup_set_class f0 asup_set_class awcel i0 f1 awral f0 f2 pralbii i0 asup_set_class f0 asup_set_class awcel f0 f2 awral i0 f1 awral i0 asup_set_class f0 asup_set_class awcel i0 f1 awral f0 f2 awral f1 f0 asup_set_class awss f0 f2 awral pbitr4i f1 f2 acint awss i0 asup_set_class f2 acint awcel i0 f1 awral i0 asup_set_class f0 asup_set_class awcel f0 f2 awral i0 f1 awral f1 f0 asup_set_class awss f0 f2 awral p3bitri $.
+$}
+$( /* Subclass of the intersection of a class abstraction.  (Contributed by
+       NM, 31-Jul-2006.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) */
+
+$)
+${
+	$v ph x y A $.
+	$d x y A $.
+	$d x y $.
+	$d y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	i0 $f set y $.
+	pssintab $p |- ( A C_ |^| { x | ph } <-> A. x ( ph -> A C_ x ) ) $=
+	i0 f2 f0 f1 acab pssint i0 asup_set_class f1 asup_set_class f2 psseq2 f0 f2 i0 asup_set_class awss f2 f1 asup_set_class awss i0 f1 pralab2 f2 f0 f1 acab acint awss f2 i0 asup_set_class awss i0 f0 f1 acab awral f0 f2 f1 asup_set_class awss awi f1 awal pbitri $.
+$}
+$( /* Subclass of the least upper bound.  (Contributed by NM, 8-Aug-2000.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x y B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	i0 $f set y $.
+	pssintub $p |- A C_ |^| { x e. B | A C_ x } $=
+	i0 f1 f1 f0 asup_set_class awss f0 f2 acrab pssint f0 asup_set_class i0 asup_set_class f1 psseq2 f1 f0 asup_set_class awss f1 i0 asup_set_class awss f0 i0 asup_set_class f2 pelrab i0 asup_set_class f1 f0 asup_set_class awss f0 f2 acrab awcel i0 asup_set_class f2 awcel f1 i0 asup_set_class awss psimprbi f1 f1 f0 asup_set_class awss f0 f2 acrab acint awss f1 i0 asup_set_class awss i0 f1 f0 asup_set_class awss f0 f2 acrab pmprgbir $.
+$}
+$( /* Subclass of the minimum value of class of supersets.  (Contributed by
+       NM, 10-Aug-2006.) */
+
+$)
+${
+	$v ph x A $.
+	$d x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	pssmin $p |- A C_ |^| { x | ( A C_ x /\ ph ) } $=
+	f2 f1 asup_set_class awss f0 awa f1 f2 pssintab f2 f1 asup_set_class awss f0 psimpl f2 f2 f1 asup_set_class awss f0 awa f1 acab acint awss f2 f1 asup_set_class awss f0 awa f2 f1 asup_set_class awss awi f1 pmpgbir $.
+$}
+$( /* Any member of a class is the smallest of those members that include it.
+       (Contributed by NM, 13-Aug-2002.)  (Proof shortened by Andrew Salmon,
+       9-Jul-2011.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x y B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	i0 $f set y $.
+	pintmin $p |- ( A e. B -> |^| { x e. B | A C_ x } = A ) $=
+	i0 pvex f1 f0 asup_set_class awss f0 i0 asup_set_class f2 pelintrab f1 pssid f0 asup_set_class f1 f1 psseq2 f0 asup_set_class f1 i0 asup_set_class peleq2 f0 asup_set_class f1 awceq f1 f0 asup_set_class awss f1 f1 awss i0 asup_set_class f0 asup_set_class awcel i0 asup_set_class f1 awcel pimbi12d f1 f0 asup_set_class awss i0 asup_set_class f0 asup_set_class awcel awi f1 f1 awss i0 asup_set_class f1 awcel awi f0 f1 f2 prspcv f1 f2 awcel f1 f0 asup_set_class awss i0 asup_set_class f0 asup_set_class awcel awi f0 f2 awral f1 f1 awss i0 asup_set_class f1 awcel pmpii i0 asup_set_class f1 f0 asup_set_class awss f0 f2 acrab acint awcel f1 f0 asup_set_class awss i0 asup_set_class f0 asup_set_class awcel awi f0 f2 awral f1 f2 awcel i0 asup_set_class f1 awcel psyl5bi f1 f2 awcel i0 f1 f0 asup_set_class awss f0 f2 acrab acint f1 pssrdv f0 f1 f2 pssintub f1 f1 f0 asup_set_class awss f0 f2 acrab acint awss f1 f2 awcel pa1i f1 f2 awcel f1 f0 asup_set_class awss f0 f2 acrab acint f1 peqssd $.
+$}
+$( /* Intersection of subclasses.  (Contributed by NM, 14-Oct-1999.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x y B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	i1 $f set y $.
+	pintss $p |- ( A C_ B -> |^| B C_ |^| A ) $=
+	i1 asup_set_class f0 awcel i1 asup_set_class f1 awcel i0 asup_set_class i1 asup_set_class awcel pimim1 i1 asup_set_class f0 awcel i1 asup_set_class f1 awcel awi i1 asup_set_class f1 awcel i0 asup_set_class i1 asup_set_class awcel awi i1 asup_set_class f0 awcel i0 asup_set_class i1 asup_set_class awcel awi i1 pal2imi i0 pvex i1 i0 asup_set_class f1 pelint i0 pvex i1 i0 asup_set_class f0 pelint i1 asup_set_class f0 awcel i1 asup_set_class f1 awcel awi i1 awal i1 asup_set_class f1 awcel i0 asup_set_class i1 asup_set_class awcel awi i1 awal i1 asup_set_class f0 awcel i0 asup_set_class i1 asup_set_class awcel awi i1 awal i0 asup_set_class f1 acint awcel i0 asup_set_class f0 acint awcel p3imtr4g i1 asup_set_class f0 awcel i1 asup_set_class f1 awcel awi i1 awal i0 asup_set_class f1 acint awcel i0 asup_set_class f0 acint awcel awi i0 palrimiv i1 f0 f1 pdfss2 i0 f1 acint f0 acint pdfss2 i1 asup_set_class f0 awcel i1 asup_set_class f1 awcel awi i1 awal i0 asup_set_class f1 acint awcel i0 asup_set_class f0 acint awcel awi i0 awal f0 f1 awss f1 acint f0 acint awss p3imtr4i $.
+$}
+$( /* The intersection of a nonempty set is a subclass of its union.
+       (Contributed by NM, 29-Jul-2006.) */
+
+$)
+${
+	$v x y A $.
+	$d x y A $.
+	$d x y $.
+	f0 $f class A $.
+	i0 $f set x $.
+	i1 $f set y $.
+	pintssuni $p |- ( A =/= (/) -> |^| A C_ U. A ) $=
+	i0 asup_set_class i1 asup_set_class awcel i1 f0 pr19.2z f0 ac0 awne i0 asup_set_class i1 asup_set_class awcel i1 f0 awral i0 asup_set_class i1 asup_set_class awcel i1 f0 awrex pex i0 pvex i1 i0 asup_set_class f0 pelint2 i1 i0 asup_set_class f0 peluni2 f0 ac0 awne i0 asup_set_class i1 asup_set_class awcel i1 f0 awral i0 asup_set_class i1 asup_set_class awcel i1 f0 awrex i0 asup_set_class f0 acint awcel i0 asup_set_class f0 acuni awcel p3imtr4g f0 ac0 awne i0 f0 acint f0 acuni pssrdv $.
+$}
+$( /* Subclass of the intersection of a restricted class builder.
+       (Contributed by NM, 30-Jan-2015.) */
+
+$)
+${
+	$v ph x A B $.
+	$d x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pssintrab $p |- ( A C_ |^| { x e. B | ph } <-> A. x e. B ( ph -> A C_ x ) ) $=
+	f0 f1 f3 adf-rab f0 f1 f3 acrab f1 asup_set_class f3 awcel f0 awa f1 acab pinteqi f0 f1 f3 acrab acint f1 asup_set_class f3 awcel f0 awa f1 acab acint f2 psseq2i f1 asup_set_class f3 awcel f0 f2 f1 asup_set_class awss pimpexp f1 asup_set_class f3 awcel f0 awa f2 f1 asup_set_class awss awi f1 asup_set_class f3 awcel f0 f2 f1 asup_set_class awss awi awi f1 palbii f1 asup_set_class f3 awcel f0 awa f1 f2 pssintab f0 f2 f1 asup_set_class awss awi f1 f3 adf-ral f1 asup_set_class f3 awcel f0 awa f2 f1 asup_set_class awss awi f1 awal f1 asup_set_class f3 awcel f0 f2 f1 asup_set_class awss awi awi f1 awal f2 f1 asup_set_class f3 awcel f0 awa f1 acab acint awss f0 f2 f1 asup_set_class awss awi f1 f3 awral p3bitr4i f2 f0 f1 f3 acrab acint awss f2 f1 asup_set_class f3 awcel f0 awa f1 acab acint awss f0 f2 f1 asup_set_class awss awi f1 f3 awral pbitri $.
+$}
+$( /* If the union of a class is included in its intersection, the class is
+     either the empty set or a singleton ( ~ uniintsn ).  (Contributed by NM,
+     30-Oct-2010.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	punissint $p |- ( U. A C_ |^| A <-> ( A = (/) \/ U. A = |^| A ) ) $=
+	f0 acuni f0 acint awss f0 ac0 awceq awn psimpl f0 ac0 adf-ne f0 pintssuni f0 ac0 awceq awn f0 ac0 awne f0 acint f0 acuni awss psylbir f0 ac0 awceq awn f0 acint f0 acuni awss f0 acuni f0 acint awss padantl f0 acuni f0 acint awss f0 ac0 awceq awn awa f0 acuni f0 acint peqssd f0 acuni f0 acint awss f0 ac0 awceq awn f0 acuni f0 acint awceq pex f0 acuni f0 acint awss f0 ac0 awceq f0 acuni f0 acint awceq porrd f0 acuni pssv pint0 f0 acuni acvv ac0 acint psseqtr4i f0 ac0 pinteq f0 ac0 awceq ac0 acint f0 acuni f0 acint psyl5sseqr f0 acuni f0 acint peqimss f0 ac0 awceq f0 acuni f0 acint awss f0 acuni f0 acint awceq pjaoi f0 acuni f0 acint awss f0 ac0 awceq f0 acuni f0 acint awceq awo pimpbii $.
+$}
+$( /* Subclass relationship for intersection and union.  (Contributed by NM,
+     29-Jul-2006.) */
+
+$)
+${
+	$v A B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pintssuni2 $p |- ( ( A C_ B /\ A =/= (/) ) -> |^| A C_ U. B ) $=
+	f0 pintssuni f0 f1 puniss f0 ac0 awne f0 f1 awss f0 acint f0 acuni f1 acuni psylan9ssr $.
+$}
+$( /* Under subset ordering, the intersection of a restricted class
+       abstraction is less than or equal to any of its members.  (Contributed
+       by NM, 7-Sep-2013.) */
+
+$)
+${
+	$v ph ps x A B $.
+	$d x A $.
+	$d x B $.
+	$d x ps $.
+	e0 $e |- ( x = A -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class B $.
+	pintminss $p |- ( ( A e. B /\ ps ) -> |^| { x e. B | ph } C_ A ) $=
+	e0 f0 f1 f2 f3 f4 pelrab f3 f0 f2 f4 acrab pintss1 f3 f4 awcel f1 awa f3 f0 f2 f4 acrab awcel f0 f2 f4 acrab acint f3 awss psylbir $.
+$}
+$( /* Any set is the smallest of all sets that include it.  (Contributed by
+       NM, 20-Sep-2003.) */
+
+$)
+${
+	$v x A $.
+	$d x A $.
+	e0 $e |- A e. _V $.
+	f0 $f set x $.
+	f1 $f class A $.
+	pintmin2 $p |- |^| { x | A C_ x } = A $=
+	f1 f0 asup_set_class awss f0 prabab f1 f0 asup_set_class awss f0 acvv acrab f1 f0 asup_set_class awss f0 acab pinteqi e0 f0 f1 acvv pintmin f1 acvv awcel f1 f0 asup_set_class awss f0 acvv acrab acint f1 awceq aax-mp f1 f0 asup_set_class awss f0 acvv acrab acint f1 f0 asup_set_class awss f0 acab acint f1 peqtr3i $.
+$}
+$( /* Under subset ordering, the intersection of a class abstraction is less
+       than or equal to any of its members.  (Contributed by NM,
+       3-Jul-2005.) */
+
+$)
+${
+	$v ph ps x A V $.
+	$d x A $.
+	$d x ps $.
+	e0 $e |- ( x = A -> ( ph <-> ps ) ) $.
+	e1 $e |- ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f class A $.
+	f4 $f class V $.
+	pintmin3 $p |- ( A e. V -> |^| { x | ph } C_ A ) $=
+	e1 e0 f0 f1 f2 f3 f4 pelabg f3 f4 awcel f3 f0 f2 acab awcel f1 pmpbiri f3 f0 f2 acab pintss1 f3 f4 awcel f3 f0 f2 acab awcel f0 f2 acab acint f3 awss psyl $.
+$}
+$( /* Elimination of a conjunct in a class intersection.  (Contributed by NM,
+       31-Jul-2006.) */
+
+$)
+${
+	$v ph x y A $.
+	$d x y A $.
+	$d y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	i0 $f set y $.
+	pintmin4 $p |- ( A C_ |^| { x | ph } -> |^| { x | ( A C_ x /\ ph ) } = |^| { x | ph } ) $=
+	f0 f1 f2 pssintab f2 f1 asup_set_class awss f0 psimpr f0 f2 f1 asup_set_class awss pancr f0 f2 f1 asup_set_class awss awi f2 f1 asup_set_class awss f0 awa f0 pimpbid2 f0 f2 f1 asup_set_class awss awi f2 f1 asup_set_class awss f0 awa f0 i0 asup_set_class f1 asup_set_class awcel pimbi1d f0 f2 f1 asup_set_class awss awi f2 f1 asup_set_class awss f0 awa i0 asup_set_class f1 asup_set_class awcel awi f0 i0 asup_set_class f1 asup_set_class awcel awi awb f1 palimi f2 f1 asup_set_class awss f0 awa i0 asup_set_class f1 asup_set_class awcel awi f0 i0 asup_set_class f1 asup_set_class awcel awi f1 palbi f0 f2 f1 asup_set_class awss awi f1 awal f2 f1 asup_set_class awss f0 awa i0 asup_set_class f1 asup_set_class awcel awi f0 i0 asup_set_class f1 asup_set_class awcel awi awb f1 awal f2 f1 asup_set_class awss f0 awa i0 asup_set_class f1 asup_set_class awcel awi f1 awal f0 i0 asup_set_class f1 asup_set_class awcel awi f1 awal awb psyl f2 f0 f1 acab acint awss f0 f2 f1 asup_set_class awss awi f1 awal f2 f1 asup_set_class awss f0 awa i0 asup_set_class f1 asup_set_class awcel awi f1 awal f0 i0 asup_set_class f1 asup_set_class awcel awi f1 awal awb psylbi i0 pvex f2 f1 asup_set_class awss f0 awa f1 i0 asup_set_class pelintab i0 pvex f0 f1 i0 asup_set_class pelintab f2 f0 f1 acab acint awss f2 f1 asup_set_class awss f0 awa i0 asup_set_class f1 asup_set_class awcel awi f1 awal f0 i0 asup_set_class f1 asup_set_class awcel awi f1 awal i0 asup_set_class f2 f1 asup_set_class awss f0 awa f1 acab acint awcel i0 asup_set_class f0 f1 acab acint awcel p3bitr4g f2 f0 f1 acab acint awss i0 f2 f1 asup_set_class awss f0 awa f1 acab acint f0 f1 acab acint peqrdv $.
+$}
+$( /* The intersection of a special case of a class abstraction. ` y ` may be
+       free in ` ph ` and ` A ` , which can be thought of a ` ph ( y ) ` and
+       ` A ( y ) ` .  Typically, ~ abrexex2 or ~ abexssex can be used to
+       satisfy the second hypothesis.  (Contributed by NM, 28-Jul-2006.)
+       (Proof shortened by Mario Carneiro, 14-Nov-2016.) */
+
+$)
+${
+	$v ph x y z A $.
+	$d x z A $.
+	$d x z ph $.
+	$d x y z $.
+	e0 $e |- A e. _V $.
+	e1 $e |- { x | E. y ( ph /\ x = A ) } e. _V $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	i0 $f set z $.
+	pintab $p |- |^| { x | A. y ( ph -> A e. x ) } = { x | E. y ( ph /\ x = A ) } $=
+	i0 asup_set_class f1 asup_set_class f3 peqeq1 i0 asup_set_class f1 asup_set_class awceq i0 asup_set_class f3 awceq f1 asup_set_class f3 awceq f0 panbi2d i0 asup_set_class f1 asup_set_class awceq f0 i0 asup_set_class f3 awceq awa f0 f1 asup_set_class f3 awceq awa f2 pexbidv f0 i0 asup_set_class f3 awceq awa f2 awex f0 f1 asup_set_class f3 awceq awa f2 awex i0 f1 pcbvabv e1 f0 i0 asup_set_class f3 awceq awa f2 awex i0 acab f0 f1 asup_set_class f3 awceq awa f2 awex f1 acab acvv peqeltri f0 i0 asup_set_class f3 awceq awa f2 pnfe1 f0 i0 asup_set_class f3 awceq awa f2 awex f2 i0 pnfab f2 f1 asup_set_class f0 i0 asup_set_class f3 awceq awa f2 awex i0 acab pnfeq2 f1 asup_set_class f0 i0 asup_set_class f3 awceq awa f2 awex i0 acab f3 peleq2 f1 asup_set_class f0 i0 asup_set_class f3 awceq awa f2 awex i0 acab awceq f3 f1 asup_set_class awcel f3 f0 i0 asup_set_class f3 awceq awa f2 awex i0 acab awcel f0 pimbi2d f1 asup_set_class f0 i0 asup_set_class f3 awceq awa f2 awex i0 acab awceq f0 f3 f1 asup_set_class awcel awi f0 f3 f0 i0 asup_set_class f3 awceq awa f2 awex i0 acab awcel awi f2 palbid f0 f3 f1 asup_set_class awcel awi f2 awal f0 f3 f0 i0 asup_set_class f3 awceq awa f2 awex i0 acab awcel awi f2 awal f1 f0 i0 asup_set_class f3 awceq awa f2 awex i0 acab pelab f0 i0 asup_set_class f3 awceq awa f2 p19.8a f0 i0 asup_set_class f3 awceq f0 i0 asup_set_class f3 awceq awa f2 awex pex f0 i0 asup_set_class f3 awceq f0 i0 asup_set_class f3 awceq awa f2 awex awi i0 palrimiv e0 f0 i0 asup_set_class f3 awceq awa f2 awex i0 f3 psbc6 f0 i0 asup_set_class f3 awceq f0 i0 asup_set_class f3 awceq awa f2 awex awi i0 awal f0 i0 asup_set_class f3 awceq awa f2 awex i0 f3 awsbc psylibr f0 i0 asup_set_class f3 awceq awa f2 awex i0 f3 adf-sbc f0 f0 i0 asup_set_class f3 awceq awa f2 awex i0 f3 awsbc f3 f0 i0 asup_set_class f3 awceq awa f2 awex i0 acab awcel psylib f0 i0 asup_set_class f3 awceq awa f2 awex i0 acab f0 f3 f1 asup_set_class awcel awi f2 awal f1 acab awcel f0 f3 f0 i0 asup_set_class f3 awceq awa f2 awex i0 acab awcel awi f2 pmpgbir f0 i0 asup_set_class f3 awceq awa f2 awex i0 acab f0 f3 f1 asup_set_class awcel awi f2 awal f1 acab pintss1 f0 i0 asup_set_class f3 awceq awa f2 awex i0 acab f0 f3 f1 asup_set_class awcel awi f2 awal f1 acab awcel f0 f3 f1 asup_set_class awcel awi f2 awal f1 acab acint f0 i0 asup_set_class f3 awceq awa f2 awex i0 acab awss aax-mp f0 i0 asup_set_class f3 awceq awa f0 f3 f1 asup_set_class awcel awi f2 p19.29r f0 i0 asup_set_class f3 awceq f0 f3 f1 asup_set_class awcel awi psimplr f0 f3 f1 asup_set_class awcel ppm3.35 f0 f0 f3 f1 asup_set_class awcel awi f3 f1 asup_set_class awcel i0 asup_set_class f3 awceq padantlr f0 i0 asup_set_class f3 awceq awa f0 f3 f1 asup_set_class awcel awi awa i0 asup_set_class f3 f1 asup_set_class peqeltrd f0 i0 asup_set_class f3 awceq awa f0 f3 f1 asup_set_class awcel awi awa i0 asup_set_class f1 asup_set_class awcel f2 pexlimiv f0 i0 asup_set_class f3 awceq awa f2 awex f0 f3 f1 asup_set_class awcel awi f2 awal awa f0 i0 asup_set_class f3 awceq awa f0 f3 f1 asup_set_class awcel awi awa f2 awex i0 asup_set_class f1 asup_set_class awcel psyl f0 i0 asup_set_class f3 awceq awa f2 awex f0 f3 f1 asup_set_class awcel awi f2 awal i0 asup_set_class f1 asup_set_class awcel pex f0 i0 asup_set_class f3 awceq awa f2 awex f0 f3 f1 asup_set_class awcel awi f2 awal i0 asup_set_class f1 asup_set_class awcel awi f1 palrimiv i0 pvex f0 f3 f1 asup_set_class awcel awi f2 awal f1 i0 asup_set_class pelintab f0 i0 asup_set_class f3 awceq awa f2 awex f0 f3 f1 asup_set_class awcel awi f2 awal i0 asup_set_class f1 asup_set_class awcel awi f1 awal i0 asup_set_class f0 f3 f1 asup_set_class awcel awi f2 awal f1 acab acint awcel psylibr f0 i0 asup_set_class f3 awceq awa f2 awex i0 f0 f3 f1 asup_set_class awcel awi f2 awal f1 acab acint pabssi f0 f3 f1 asup_set_class awcel awi f2 awal f1 acab acint f0 i0 asup_set_class f3 awceq awa f2 awex i0 acab peqssi i0 asup_set_class f1 asup_set_class f3 peqeq1 i0 asup_set_class f1 asup_set_class awceq i0 asup_set_class f3 awceq f1 asup_set_class f3 awceq f0 panbi2d i0 asup_set_class f1 asup_set_class awceq f0 i0 asup_set_class f3 awceq awa f0 f1 asup_set_class f3 awceq awa f2 pexbidv f0 i0 asup_set_class f3 awceq awa f2 awex f0 f1 asup_set_class f3 awceq awa f2 awex i0 f1 pcbvabv f0 f3 f1 asup_set_class awcel awi f2 awal f1 acab acint f0 i0 asup_set_class f3 awceq awa f2 awex i0 acab f0 f1 asup_set_class f3 awceq awa f2 awex f1 acab peqtri $.
+$}
+$( /* The intersection of a class containing the empty set is empty.
+     (Contributed by NM, 24-Apr-2004.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	pint0el $p |- ( (/) e. A -> |^| A = (/) ) $=
+	ac0 f0 pintss1 f0 acint p0ss ac0 f0 acint awss ac0 f0 awcel pa1i ac0 f0 awcel f0 acint ac0 peqssd $.
+$}
+$( /* The class intersection of the union of two classes.  Theorem 78 of
+       [Suppes] p. 42.  (Contributed by NM, 22-Sep-2002.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x y B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	i1 $f set y $.
+	pintun $p |- |^| ( A u. B ) = ( |^| A i^i |^| B ) $=
+	i1 asup_set_class f0 awcel i0 asup_set_class i1 asup_set_class awcel awi i1 asup_set_class f1 awcel i0 asup_set_class i1 asup_set_class awcel awi i1 p19.26 i1 asup_set_class f0 f1 pelun i1 asup_set_class f0 f1 acun awcel i1 asup_set_class f0 awcel i1 asup_set_class f1 awcel awo i0 asup_set_class i1 asup_set_class awcel pimbi1i i1 asup_set_class f0 awcel i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awcel pjaob i1 asup_set_class f0 f1 acun awcel i0 asup_set_class i1 asup_set_class awcel awi i1 asup_set_class f0 awcel i1 asup_set_class f1 awcel awo i0 asup_set_class i1 asup_set_class awcel awi i1 asup_set_class f0 awcel i0 asup_set_class i1 asup_set_class awcel awi i1 asup_set_class f1 awcel i0 asup_set_class i1 asup_set_class awcel awi awa pbitri i1 asup_set_class f0 f1 acun awcel i0 asup_set_class i1 asup_set_class awcel awi i1 asup_set_class f0 awcel i0 asup_set_class i1 asup_set_class awcel awi i1 asup_set_class f1 awcel i0 asup_set_class i1 asup_set_class awcel awi awa i1 palbii i0 pvex i1 i0 asup_set_class f0 pelint i0 pvex i1 i0 asup_set_class f1 pelint i0 asup_set_class f0 acint awcel i1 asup_set_class f0 awcel i0 asup_set_class i1 asup_set_class awcel awi i1 awal i0 asup_set_class f1 acint awcel i1 asup_set_class f1 awcel i0 asup_set_class i1 asup_set_class awcel awi i1 awal panbi12i i1 asup_set_class f0 awcel i0 asup_set_class i1 asup_set_class awcel awi i1 asup_set_class f1 awcel i0 asup_set_class i1 asup_set_class awcel awi awa i1 awal i1 asup_set_class f0 awcel i0 asup_set_class i1 asup_set_class awcel awi i1 awal i1 asup_set_class f1 awcel i0 asup_set_class i1 asup_set_class awcel awi i1 awal awa i1 asup_set_class f0 f1 acun awcel i0 asup_set_class i1 asup_set_class awcel awi i1 awal i0 asup_set_class f0 acint awcel i0 asup_set_class f1 acint awcel awa p3bitr4i i0 pvex i1 i0 asup_set_class f0 f1 acun pelint i0 asup_set_class f0 acint f1 acint pelin i1 asup_set_class f0 f1 acun awcel i0 asup_set_class i1 asup_set_class awcel awi i1 awal i0 asup_set_class f0 acint awcel i0 asup_set_class f1 acint awcel awa i0 asup_set_class f0 f1 acun acint awcel i0 asup_set_class f0 acint f1 acint acin awcel p3bitr4i i0 f0 f1 acun acint f0 acint f1 acint acin peqriv $.
+$}
+$( /* The intersection of a pair is the intersection of its members.  Theorem
+       71 of [Suppes] p. 42.  (Contributed by NM, 14-Oct-1999.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x y B $.
+	e0 $e |- A e. _V $.
+	e1 $e |- B e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	i1 $f set y $.
+	pintpr $p |- |^| { A , B } = ( A i^i B ) $=
+	i1 asup_set_class f0 awceq i0 asup_set_class i1 asup_set_class awcel awi i1 asup_set_class f1 awceq i0 asup_set_class i1 asup_set_class awcel awi i1 p19.26 i1 pvex i1 asup_set_class f0 f1 pelpr i1 asup_set_class f0 f1 acpr awcel i1 asup_set_class f0 awceq i1 asup_set_class f1 awceq awo i0 asup_set_class i1 asup_set_class awcel pimbi1i i1 asup_set_class f0 awceq i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 awceq pjaob i1 asup_set_class f0 f1 acpr awcel i0 asup_set_class i1 asup_set_class awcel awi i1 asup_set_class f0 awceq i1 asup_set_class f1 awceq awo i0 asup_set_class i1 asup_set_class awcel awi i1 asup_set_class f0 awceq i0 asup_set_class i1 asup_set_class awcel awi i1 asup_set_class f1 awceq i0 asup_set_class i1 asup_set_class awcel awi awa pbitri i1 asup_set_class f0 f1 acpr awcel i0 asup_set_class i1 asup_set_class awcel awi i1 asup_set_class f0 awceq i0 asup_set_class i1 asup_set_class awcel awi i1 asup_set_class f1 awceq i0 asup_set_class i1 asup_set_class awcel awi awa i1 palbii e0 i1 i0 asup_set_class f0 pclel4 e1 i1 i0 asup_set_class f1 pclel4 i0 asup_set_class f0 awcel i1 asup_set_class f0 awceq i0 asup_set_class i1 asup_set_class awcel awi i1 awal i0 asup_set_class f1 awcel i1 asup_set_class f1 awceq i0 asup_set_class i1 asup_set_class awcel awi i1 awal panbi12i i1 asup_set_class f0 awceq i0 asup_set_class i1 asup_set_class awcel awi i1 asup_set_class f1 awceq i0 asup_set_class i1 asup_set_class awcel awi awa i1 awal i1 asup_set_class f0 awceq i0 asup_set_class i1 asup_set_class awcel awi i1 awal i1 asup_set_class f1 awceq i0 asup_set_class i1 asup_set_class awcel awi i1 awal awa i1 asup_set_class f0 f1 acpr awcel i0 asup_set_class i1 asup_set_class awcel awi i1 awal i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awa p3bitr4i i0 pvex i1 i0 asup_set_class f0 f1 acpr pelint i0 asup_set_class f0 f1 pelin i1 asup_set_class f0 f1 acpr awcel i0 asup_set_class i1 asup_set_class awcel awi i1 awal i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awa i0 asup_set_class f0 f1 acpr acint awcel i0 asup_set_class f0 f1 acin awcel p3bitr4i i0 f0 f1 acpr acint f0 f1 acin peqriv $.
+$}
+$( /* The intersection of a pair is the intersection of its members.  Closed
+       form of ~ intpr .  Theorem 71 of [Suppes] p. 42.  (Contributed by FL,
+       27-Apr-2008.) */
+
+$)
+${
+	$v x y A B V W $.
+	$d x y A $.
+	$d y B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class V $.
+	f3 $f class W $.
+	i0 $f set x $.
+	i1 $f set y $.
+	pintprg $p |- ( ( A e. V /\ B e. W ) -> |^| { A , B } = ( A i^i B ) ) $=
+	i0 asup_set_class f0 i1 asup_set_class ppreq1 i0 asup_set_class f0 awceq i0 asup_set_class i1 asup_set_class acpr f0 i1 asup_set_class acpr pinteqd i0 asup_set_class f0 i1 asup_set_class pineq1 i0 asup_set_class f0 awceq i0 asup_set_class i1 asup_set_class acpr acint f0 i1 asup_set_class acpr acint i0 asup_set_class i1 asup_set_class acin f0 i1 asup_set_class acin peqeq12d i1 asup_set_class f1 f0 ppreq2 i1 asup_set_class f1 awceq f0 i1 asup_set_class acpr f0 f1 acpr pinteqd i1 asup_set_class f1 f0 pineq2 i1 asup_set_class f1 awceq f0 i1 asup_set_class acpr acint f0 f1 acpr acint f0 i1 asup_set_class acin f0 f1 acin peqeq12d i0 pvex i1 pvex i0 asup_set_class i1 asup_set_class pintpr i0 asup_set_class i1 asup_set_class acpr acint i0 asup_set_class i1 asup_set_class acin awceq f0 i1 asup_set_class acpr acint f0 i1 asup_set_class acin awceq f0 f1 acpr acint f0 f1 acin awceq i0 i1 f0 f1 f2 f3 pvtocl2g $.
+$}
+$( /* Intersection of a singleton.  (Contributed by Stefan O'Rear,
+     22-Feb-2015.) */
+
+$)
+${
+	$v A V $.
+	f0 $f class A $.
+	f1 $f class V $.
+	pintsng $p |- ( A e. V -> |^| { A } = A ) $=
+	f0 pdfsn2 f0 acsn f0 f0 acpr pinteqi f0 f0 f1 f1 pintprg f0 f1 awcel f0 f0 acpr acint f0 f0 acin awceq panidms f0 pinidm f0 f1 awcel f0 f0 acpr acint f0 f0 acin f0 psyl6eq f0 f1 awcel f0 acsn acint f0 f0 acpr acint f0 psyl5eq $.
+$}
+$( /* The intersection of a singleton is its member.  Theorem 70 of [Suppes]
+       p. 41.  (Contributed by NM, 29-Sep-2002.) */
+
+$)
+${
+	$v A $.
+	e0 $e |- A e. _V $.
+	f0 $f class A $.
+	pintsn $p |- |^| { A } = A $=
+	e0 f0 acvv pintsng f0 acvv awcel f0 acsn acint f0 awceq aax-mp $.
+$}
+$( /* Two ways to express " ` A ` is a singleton."  See also ~ en1 , ~ en1b ,
+       ~ card1 , and ~ eusn .  (Contributed by NM, 2-Aug-2010.) */
+
+$)
+${
+	$v x y A $.
+	$d x y A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	i0 $f set y $.
+	puniintsn $p |- ( U. A = |^| A <-> E. x A = { x } ) $=
+	pvn0 f1 ac0 pinteq pint0 f1 ac0 awceq f1 acint ac0 acint acvv psyl6eq f1 ac0 awceq f1 acint acvv awceq f1 acuni f1 acint awceq padantl f1 ac0 punieq puni0 f1 ac0 awceq f1 acuni ac0 acuni ac0 psyl6eq f1 acuni f1 acint ac0 peqeq1 f1 ac0 awceq f1 acuni ac0 awceq f1 acuni f1 acint awceq f1 acint ac0 awceq psyl5ib f1 acuni f1 acint awceq f1 ac0 awceq f1 acint ac0 awceq pimp f1 acuni f1 acint awceq f1 ac0 awceq awa f1 acint acvv ac0 peqtr3d f1 acuni f1 acint awceq f1 ac0 awceq acvv ac0 awceq pex f1 acuni f1 acint awceq f1 ac0 acvv ac0 pnecon3d f1 acuni f1 acint awceq acvv ac0 awne f1 ac0 awne pmpi f0 f1 pn0 f1 acuni f1 acint awceq f1 ac0 awne f0 asup_set_class f1 awcel f0 awex psylib f0 pvex i0 pvex f0 asup_set_class i0 asup_set_class f1 pprss f0 asup_set_class i0 asup_set_class acpr f1 puniss f0 asup_set_class i0 asup_set_class acpr f1 awss f0 asup_set_class i0 asup_set_class acpr acuni f1 acuni awss f1 acuni f1 acint awceq padantl f1 acuni f1 acint awceq f0 asup_set_class i0 asup_set_class acpr f1 awss psimpl f1 acuni f1 acint awceq f0 asup_set_class i0 asup_set_class acpr f1 awss awa f0 asup_set_class i0 asup_set_class acpr acuni f1 acuni f1 acint psseqtrd f0 asup_set_class i0 asup_set_class acpr f1 pintss f0 asup_set_class i0 asup_set_class acpr f1 awss f1 acint f0 asup_set_class i0 asup_set_class acpr acint awss f1 acuni f1 acint awceq padantl f1 acuni f1 acint awceq f0 asup_set_class i0 asup_set_class acpr f1 awss awa f0 asup_set_class i0 asup_set_class acpr acuni f1 acint f0 asup_set_class i0 asup_set_class acpr acint psstrd f0 pvex i0 pvex f0 asup_set_class i0 asup_set_class punipr f0 pvex i0 pvex f0 asup_set_class i0 asup_set_class pintpr f1 acuni f1 acint awceq f0 asup_set_class i0 asup_set_class acpr f1 awss awa f0 asup_set_class i0 asup_set_class acpr acuni f0 asup_set_class i0 asup_set_class acpr acint f0 asup_set_class i0 asup_set_class acun f0 asup_set_class i0 asup_set_class acin p3sstr3g f0 asup_set_class i0 asup_set_class pinss1 f0 asup_set_class i0 asup_set_class pssun1 f0 asup_set_class i0 asup_set_class acin f0 asup_set_class f0 asup_set_class i0 asup_set_class acun psstri f1 acuni f1 acint awceq f0 asup_set_class i0 asup_set_class acpr f1 awss awa f0 asup_set_class i0 asup_set_class acun f0 asup_set_class i0 asup_set_class acin awss f0 asup_set_class i0 asup_set_class acin f0 asup_set_class i0 asup_set_class acun awss pjctir f0 asup_set_class i0 asup_set_class acun f0 asup_set_class i0 asup_set_class acin peqss f0 asup_set_class i0 asup_set_class puneqin f0 asup_set_class i0 asup_set_class acun f0 asup_set_class i0 asup_set_class acin awss f0 asup_set_class i0 asup_set_class acin f0 asup_set_class i0 asup_set_class acun awss awa f0 asup_set_class i0 asup_set_class acun f0 asup_set_class i0 asup_set_class acin awceq f0 asup_set_class i0 asup_set_class awceq pbitr3i f1 acuni f1 acint awceq f0 asup_set_class i0 asup_set_class acpr f1 awss awa f0 asup_set_class i0 asup_set_class acun f0 asup_set_class i0 asup_set_class acin awss f0 asup_set_class i0 asup_set_class acin f0 asup_set_class i0 asup_set_class acun awss awa f0 asup_set_class i0 asup_set_class awceq psylib f1 acuni f1 acint awceq f0 asup_set_class i0 asup_set_class acpr f1 awss f0 asup_set_class i0 asup_set_class awceq pex f0 asup_set_class f1 awcel i0 asup_set_class f1 awcel awa f0 asup_set_class i0 asup_set_class acpr f1 awss f1 acuni f1 acint awceq f0 asup_set_class i0 asup_set_class awceq psyl5bi f1 acuni f1 acint awceq f0 asup_set_class f1 awcel i0 asup_set_class f1 awcel awa f0 asup_set_class i0 asup_set_class awceq awi f0 i0 palrimivv f1 acuni f1 acint awceq f0 asup_set_class f1 awcel f0 awex f0 asup_set_class f1 awcel i0 asup_set_class f1 awcel awa f0 asup_set_class i0 asup_set_class awceq awi i0 awal f0 awal pjca f0 asup_set_class f1 awcel f0 peuabsn f0 asup_set_class i0 asup_set_class f1 peleq1 f0 asup_set_class f1 awcel i0 asup_set_class f1 awcel f0 i0 peu4 f0 f1 pabid2 f0 asup_set_class f1 awcel f0 acab f1 f0 asup_set_class acsn peqeq1i f0 asup_set_class f1 awcel f0 acab f0 asup_set_class acsn awceq f1 f0 asup_set_class acsn awceq f0 pexbii f0 asup_set_class f1 awcel f0 aweu f0 asup_set_class f1 awcel f0 acab f0 asup_set_class acsn awceq f0 awex f0 asup_set_class f1 awcel f0 awex f0 asup_set_class f1 awcel i0 asup_set_class f1 awcel awa f0 asup_set_class i0 asup_set_class awceq awi i0 awal f0 awal awa f1 f0 asup_set_class acsn awceq f0 awex p3bitr3i f1 acuni f1 acint awceq f0 asup_set_class f1 awcel f0 awex f0 asup_set_class f1 awcel i0 asup_set_class f1 awcel awa f0 asup_set_class i0 asup_set_class awceq awi i0 awal f0 awal awa f1 f0 asup_set_class acsn awceq f0 awex psylib f0 pvex f0 asup_set_class punisn f1 f0 asup_set_class acsn punieq f1 f0 asup_set_class acsn pinteq f0 pvex f0 asup_set_class pintsn f1 f0 asup_set_class acsn awceq f1 acint f0 asup_set_class acsn acint f0 asup_set_class psyl6eq f1 f0 asup_set_class acsn awceq f0 asup_set_class acsn acuni f0 asup_set_class f1 acuni f1 acint p3eqtr4a f1 f0 asup_set_class acsn awceq f1 acuni f1 acint awceq f0 pexlimiv f1 acuni f1 acint awceq f1 f0 asup_set_class acsn awceq f0 awex pimpbii $.
+$}
+$( /* The union and the intersection of a class abstraction are equal exactly
+       when there is a unique satisfying value of ` ph ( x ) ` .  (Contributed
+       by Mario Carneiro, 24-Dec-2016.) */
+
+$)
+${
+	$v ph x y $.
+	$d x y $.
+	$d y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	i0 $f set y $.
+	puniintab $p |- ( E! x ph <-> U. { x | ph } = |^| { x | ph } ) $=
+	f0 f1 i0 peuabsn2 i0 f0 f1 acab puniintsn f0 f1 aweu f0 f1 acab i0 asup_set_class acsn awceq i0 awex f0 f1 acab acuni f0 f1 acab acint awceq pbitr4i $.
+$}
+$( /* Theorem joining a singleton to an intersection.  (Contributed by NM,
+       29-Sep-2002.) */
+
+$)
+${
+	$v A B $.
+	e0 $e |- B e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pintunsn $p |- |^| ( A u. { B } ) = ( |^| A i^i B ) $=
+	f0 f1 acsn pintun e0 f1 pintsn f1 acsn acint f1 f0 acint pineq2i f0 f1 acsn acun acint f0 acint f1 acsn acint acin f0 acint f1 acin peqtri $.
+$}
+$( /* Relative intersection of an empty set.  (Contributed by Stefan O'Rear,
+     3-Apr-2015.) */
+
+$)
+${
+	$v A X $.
+	f0 $f class A $.
+	f1 $f class X $.
+	print0 $p |- ( X = (/) -> ( A i^i |^| X ) = A ) $=
+	f1 ac0 pinteq f1 ac0 awceq f1 acint ac0 acint f0 pineq2d pint0 ac0 acint acvv f0 pineq2i f0 pinv1 f0 ac0 acint acin f0 acvv acin f0 peqtri f1 ac0 awceq f0 f1 acint acin f0 ac0 acint acin f0 psyl6eq $.
+$}
+$( /* Membership in a restricted intersection.  (Contributed by Stefan O'Rear,
+       3-Apr-2015.) */
+
+$)
+${
+	$v y A B X $.
+	$d B y $.
+	$d X y $.
+	f0 $f set y $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class X $.
+	pelrint $p |- ( X e. ( A i^i |^| B ) <-> ( X e. A /\ A. y e. B X e. y ) ) $=
+	f3 f1 f2 acint pelin f0 f3 f2 f1 pelintg f3 f1 awcel f3 f2 acint awcel f3 f0 asup_set_class awcel f0 f2 awral ppm5.32i f3 f1 f2 acint acin awcel f3 f1 awcel f3 f2 acint awcel awa f3 f1 awcel f3 f0 asup_set_class awcel f0 f2 awral awa pbitri $.
+$}
+$( /* Membership in a restricted intersection.  (Contributed by Stefan O'Rear,
+       3-Apr-2015.) */
+
+$)
+${
+	$v y A B X $.
+	$d B y $.
+	$d X y $.
+	f0 $f set y $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class X $.
+	pelrint2 $p |- ( X e. A -> ( X e. ( A i^i |^| B ) <-> A. y e. B X e. y ) ) $=
+	f0 f1 f2 f3 pelrint f3 f1 f2 acint acin awcel f3 f1 awcel f3 f0 asup_set_class awcel f0 f2 awral pbaib $.
+$}
+

@@ -1,0 +1,1137 @@
+$[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets.smm $]
+$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                  Introduce the Axiom of Union
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+$)
+$( /* Axiom of Union.  An axiom of Zermelo-Fraenkel set theory.  It states
+       that a set ` y ` exists that includes the union of a given set ` x `
+       i.e. the collection of all members of the members of ` x ` .  The
+       variant ~ axun2 states that the union itself exists.  A version with the
+       standard abbreviation for union is ~ uniex2 .  A version using class
+       notation is ~ uniex .
+
+       The union of a class ~ df-uni should not be confused with the union of
+       two classes ~ df-un .  Their relationship is shown in ~ unipr .
+       (Contributed by NM, 23-Dec-1993.) */
+
+$)
+${
+	$v x y z w $.
+	$d w x y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	f3 $f set w $.
+	aax-un $a |- E. y A. z ( E. w ( z e. w /\ w e. x ) -> z e. y ) $.
+$}
+$( /* Axiom of Union expressed with the fewest number of different variables.
+       (Contributed by NM, 14-Aug-2003.) */
+
+$)
+${
+	$v x y z w $.
+	$d w x y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	i0 $f set w $.
+	pzfun $p |- E. x A. y ( E. x ( y e. x /\ x e. z ) -> y e. x ) $=
+	f2 f0 f1 i0 aax-un i0 f0 f1 pelequ2 i0 f0 f2 pelequ1 i0 asup_set_class f0 asup_set_class awceq f1 asup_set_class i0 asup_set_class awcel f1 asup_set_class f0 asup_set_class awcel i0 asup_set_class f2 asup_set_class awcel f0 asup_set_class f2 asup_set_class awcel panbi12d f1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f2 asup_set_class awcel awa f1 asup_set_class f0 asup_set_class awcel f0 asup_set_class f2 asup_set_class awcel awa i0 f0 pcbvexv f1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f2 asup_set_class awcel awa i0 awex f1 asup_set_class f0 asup_set_class awcel f0 asup_set_class f2 asup_set_class awcel awa f0 awex f1 asup_set_class f0 asup_set_class awcel pimbi1i f1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f2 asup_set_class awcel awa i0 awex f1 asup_set_class f0 asup_set_class awcel awi f1 asup_set_class f0 asup_set_class awcel f0 asup_set_class f2 asup_set_class awcel awa f0 awex f1 asup_set_class f0 asup_set_class awcel awi f1 palbii f1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f2 asup_set_class awcel awa i0 awex f1 asup_set_class f0 asup_set_class awcel awi f1 awal f1 asup_set_class f0 asup_set_class awcel f0 asup_set_class f2 asup_set_class awcel awa f0 awex f1 asup_set_class f0 asup_set_class awcel awi f1 awal f0 pexbii f1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f2 asup_set_class awcel awa i0 awex f1 asup_set_class f0 asup_set_class awcel awi f1 awal f0 awex f1 asup_set_class f0 asup_set_class awcel f0 asup_set_class f2 asup_set_class awcel awa f0 awex f1 asup_set_class f0 asup_set_class awcel awi f1 awal f0 awex pmpbi $.
+$}
+$( /* A variant of the Axiom of Union ~ ax-un .  For any set ` x ` , there
+       exists a set ` y ` whose members are exactly the members of the members
+       of ` x ` i.e. the union of ` x ` .  Axiom Union of [BellMachover]
+       p. 466.  (Contributed by NM, 4-Jun-2006.) */
+
+$)
+${
+	$v x y z w $.
+	$d w x y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	f3 $f set w $.
+	paxun2 $p |- E. y A. z ( z e. y <-> E. w ( z e. w /\ w e. x ) ) $=
+	f0 f1 f2 f3 aax-un f2 asup_set_class f3 asup_set_class awcel f3 asup_set_class f0 asup_set_class awcel awa f3 awex f1 f2 pbm1.3ii $.
+$}
+$( /* The Axiom of Union using the standard abbreviation for union.  Given any
+       set ` x ` , its union ` y ` exists.  (Contributed by NM, 4-Jun-2006.) */
+
+$)
+${
+	$v x y z $.
+	$d x y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	i0 $f set z $.
+	puniex2 $p |- E. y y = U. x $=
+	f1 i0 f0 pzfun f1 i0 asup_set_class f0 asup_set_class peluni i0 asup_set_class f0 asup_set_class acuni awcel i0 asup_set_class f1 asup_set_class awcel f1 asup_set_class f0 asup_set_class awcel awa f1 awex i0 asup_set_class f1 asup_set_class awcel pimbi1i i0 asup_set_class f0 asup_set_class acuni awcel i0 asup_set_class f1 asup_set_class awcel awi i0 asup_set_class f1 asup_set_class awcel f1 asup_set_class f0 asup_set_class awcel awa f1 awex i0 asup_set_class f1 asup_set_class awcel awi i0 palbii i0 asup_set_class f0 asup_set_class acuni awcel i0 asup_set_class f1 asup_set_class awcel awi i0 awal i0 asup_set_class f1 asup_set_class awcel f1 asup_set_class f0 asup_set_class awcel awa f1 awex i0 asup_set_class f1 asup_set_class awcel awi i0 awal f1 pexbii i0 asup_set_class f0 asup_set_class acuni awcel i0 asup_set_class f1 asup_set_class awcel awi i0 awal f1 awex i0 asup_set_class f1 asup_set_class awcel f1 asup_set_class f0 asup_set_class awcel awa f1 awex i0 asup_set_class f1 asup_set_class awcel awi i0 awal f1 awex pmpbir i0 asup_set_class f0 asup_set_class acuni awcel f1 i0 pbm1.3ii i0 f1 asup_set_class f0 asup_set_class acuni pdfcleq f1 asup_set_class f0 asup_set_class acuni awceq i0 asup_set_class f1 asup_set_class awcel i0 asup_set_class f0 asup_set_class acuni awcel awb i0 awal f1 pexbii f1 asup_set_class f0 asup_set_class acuni awceq f1 awex i0 asup_set_class f1 asup_set_class awcel i0 asup_set_class f0 asup_set_class acuni awcel awb i0 awal f1 awex pmpbir $.
+$}
+$( /* The Axiom of Union in class notation.  This says that if ` A ` is a set
+       i.e. ` A e. _V ` (see ~ isset ), then the union of ` A ` is also a set.
+       Same as Axiom 3 of [TakeutiZaring] p. 16.  (Contributed by NM,
+       11-Aug-1993.) */
+
+$)
+${
+	$v x y A $.
+	$d x y A $.
+	e0 $e |- A e. _V $.
+	f0 $f class A $.
+	i0 $f set x $.
+	i1 $f set y $.
+	puniex $p |- U. A e. _V $=
+	e0 i0 asup_set_class f0 punieq i0 asup_set_class f0 awceq i0 asup_set_class acuni f0 acuni acvv peleq1d i0 i1 puniex2 i1 i0 asup_set_class acuni pissetri i0 asup_set_class acuni acvv awcel f0 acuni acvv awcel i0 f0 pvtocl $.
+$}
+$( /* The ZF Axiom of Union in class notation, in the form of a theorem
+       instead of an inference.  We use the antecedent ` A e. V ` instead of
+       ` A e. _V ` to make the theorem more general and thus shorten some
+       proofs; obviously the universal class constant ` _V ` is one possible
+       substitution for class variable ` V ` .  (Contributed by NM,
+       25-Nov-1994.) */
+
+$)
+${
+	$v x A V $.
+	$d x A $.
+	f0 $f class A $.
+	f1 $f class V $.
+	i0 $f set x $.
+	puniexg $p |- ( A e. V -> U. A e. _V ) $=
+	i0 asup_set_class f0 punieq i0 asup_set_class f0 awceq i0 asup_set_class acuni f0 acuni acvv peleq1d i0 pvex i0 asup_set_class puniex i0 asup_set_class acuni acvv awcel f0 acuni acvv awcel i0 f0 f1 pvtoclg $.
+$}
+$( /* The union of two sets is a set.  Corollary 5.8 of [TakeutiZaring]
+       p. 16.  (Contributed by NM, 1-Jul-1994.) */
+
+$)
+${
+	$v A B $.
+	e0 $e |- A e. _V $.
+	e1 $e |- B e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	punex $p |- ( A u. B ) e. _V $=
+	e0 e1 f0 f1 punipr f0 f1 pprex f0 f1 acpr puniex f0 f1 acpr acuni f0 f1 acun acvv peqeltrri $.
+$}
+$( /* A triple of classes exists.  (Contributed by NM, 10-Apr-1994.) */
+
+$)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	ptpex $p |- { A , B , C } e. _V $=
+	f0 f1 f2 adf-tp f0 f1 pprex f2 psnex f0 f1 acpr f2 acsn punex f0 f1 f2 actp f0 f1 acpr f2 acsn acun acvv peqeltri $.
+$}
+$( /* Existence of union is equivalent to existence of its components.
+       (Contributed by NM, 11-Jun-1998.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x y B $.
+	f0 $f class A $.
+	f1 $f class B $.
+	i0 $f set x $.
+	i1 $f set y $.
+	punexb $p |- ( ( A e. _V /\ B e. _V ) <-> ( A u. B ) e. _V ) $=
+	i0 asup_set_class f0 i1 asup_set_class puneq1 i0 asup_set_class f0 awceq i0 asup_set_class i1 asup_set_class acun f0 i1 asup_set_class acun acvv peleq1d i1 asup_set_class f1 f0 puneq2 i1 asup_set_class f1 awceq f0 i1 asup_set_class acun f0 f1 acun acvv peleq1d i0 pvex i1 pvex i0 asup_set_class i1 asup_set_class punex i0 asup_set_class i1 asup_set_class acun acvv awcel f0 i1 asup_set_class acun acvv awcel f0 f1 acun acvv awcel i0 i1 f0 f1 acvv acvv pvtocl2g f0 f1 pssun1 f0 f0 f1 acun acvv pssexg f0 f0 f1 acun awss f0 f1 acun acvv awcel f0 acvv awcel pmpan f1 f0 pssun2 f1 f0 f1 acun acvv pssexg f1 f0 f1 acun awss f0 f1 acun acvv awcel f1 acvv awcel pmpan f0 f1 acun acvv awcel f0 acvv awcel f1 acvv awcel pjca f0 acvv awcel f1 acvv awcel awa f0 f1 acun acvv awcel pimpbii $.
+$}
+$( /* A union of two sets is a set.  Corollary 5.8 of [TakeutiZaring] p. 16.
+     (Contributed by NM, 18-Sep-2006.) */
+
+$)
+${
+	$v A B V W $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class V $.
+	f3 $f class W $.
+	punexg $p |- ( ( A e. V /\ B e. W ) -> ( A u. B ) e. _V ) $=
+	f0 f2 pelex f1 f3 pelex f0 f1 punexb f0 acvv awcel f1 acvv awcel awa f0 f1 acun acvv awcel pbiimpi f0 f2 awcel f0 acvv awcel f1 acvv awcel f0 f1 acun acvv awcel f1 f3 awcel psyl2an $.
+$}
+$( /* A version of ~ unisn without the ` A e. _V ` hypothesis.  (Contributed
+       by Stefan Allan, 14-Mar-2006.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	punisn2 $p |- U. { A } e. { (/) , A } $=
+	f0 acvv punisng ac0 f0 acvv pprid2g f0 acvv awcel f0 acsn acuni f0 ac0 f0 acpr peqeltrd f0 psnprc f0 acvv awcel awn f0 acsn ac0 awceq pbiimpi f0 acvv awcel awn f0 acsn ac0 punieqd puni0 p0ex ac0 f0 pprid1 ac0 acuni ac0 ac0 f0 acpr peqeltri f0 acvv awcel awn f0 acsn acuni ac0 acuni ac0 f0 acpr psyl6eqel f0 acvv awcel f0 acsn acuni ac0 f0 acpr awcel ppm2.61i $.
+$}
+$( /* Union of a singleton in the form of a restricted class abstraction.
+       (Contributed by NM, 3-Jul-2008.) */
+
+$)
+${
+	$v x A B $.
+	$d x A $.
+	$d x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	punisn3 $p |- ( A e. B -> U. { x e. B | x = A } = A ) $=
+	f0 f2 f1 prabsn f1 f2 awcel f0 asup_set_class f1 awceq f0 f2 acrab f1 acsn punieqd f1 f2 punisng f1 f2 awcel f0 asup_set_class f1 awceq f0 f2 acrab acuni f1 acsn acuni f1 peqtrd $.
+$}
+$( /* The class of all singletons is a proper class.  (Contributed by NM,
+       10-Oct-2008.)  (Proof shortened by Eric Schmidt, 7-Dec-2008.) */
+
+$)
+${
+	$v x y z $.
+	$d x y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	i0 $f set z $.
+	psnnex $p |- { x | E. y x = { y } } e/ _V $=
+	pvprc i0 pvex i0 asup_set_class psnid f1 i0 pa9ev i0 asup_set_class f1 asup_set_class psneq i0 asup_set_class acsn f1 asup_set_class acsn awceq i0 asup_set_class f1 asup_set_class peqcoms f1 asup_set_class i0 asup_set_class awceq i0 asup_set_class acsn f1 asup_set_class acsn awceq f1 peximi f1 asup_set_class i0 asup_set_class awceq f1 awex i0 asup_set_class acsn f1 asup_set_class acsn awceq f1 awex aax-mp i0 asup_set_class psnex f0 asup_set_class i0 asup_set_class acsn i0 asup_set_class peleq2 f0 asup_set_class i0 asup_set_class acsn f1 asup_set_class acsn peqeq1 f0 asup_set_class i0 asup_set_class acsn awceq f0 asup_set_class f1 asup_set_class acsn awceq i0 asup_set_class acsn f1 asup_set_class acsn awceq f1 pexbidv f0 asup_set_class i0 asup_set_class acsn awceq i0 asup_set_class f0 asup_set_class awcel i0 asup_set_class i0 asup_set_class acsn awcel f0 asup_set_class f1 asup_set_class acsn awceq f1 awex i0 asup_set_class acsn f1 asup_set_class acsn awceq f1 awex panbi12d i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f1 asup_set_class acsn awceq f1 awex awa i0 asup_set_class i0 asup_set_class acsn awcel i0 asup_set_class acsn f1 asup_set_class acsn awceq f1 awex awa f0 i0 asup_set_class acsn pspcev i0 asup_set_class i0 asup_set_class acsn awcel i0 asup_set_class acsn f1 asup_set_class acsn awceq f1 awex i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f1 asup_set_class acsn awceq f1 awex awa f0 awex pmp2an f0 asup_set_class f1 asup_set_class acsn awceq f1 awex f0 i0 asup_set_class peluniab i0 asup_set_class f0 asup_set_class f1 asup_set_class acsn awceq f1 awex f0 acab acuni awcel i0 asup_set_class f0 asup_set_class awcel f0 asup_set_class f1 asup_set_class acsn awceq f1 awex awa f0 awex pmpbir i0 pvex i0 asup_set_class f0 asup_set_class f1 asup_set_class acsn awceq f1 awex f0 acab acuni awcel i0 asup_set_class acvv awcel p2th i0 f0 asup_set_class f1 asup_set_class acsn awceq f1 awex f0 acab acuni acvv peqriv f0 asup_set_class f1 asup_set_class acsn awceq f1 awex f0 acab acuni acvv acvv peleq1i f0 asup_set_class f1 asup_set_class acsn awceq f1 awex f0 acab acuni acvv awcel acvv acvv awcel pmtbir f0 asup_set_class f1 asup_set_class acsn awceq f1 awex f0 acab acvv puniexg f0 asup_set_class f1 asup_set_class acsn awceq f1 awex f0 acab acvv awcel f0 asup_set_class f1 asup_set_class acsn awceq f1 awex f0 acab acuni acvv awcel pmto f0 asup_set_class f1 asup_set_class acsn awceq f1 awex f0 acab acvv adf-nel f0 asup_set_class f1 asup_set_class acsn awceq f1 awex f0 acab acvv awnel f0 asup_set_class f1 asup_set_class acsn awceq f1 awex f0 acab acvv awcel awn pmpbir $.
+$}
+$( /* If the subtrahend of a class difference exists, then the minuend exists
+     iff the difference exists.  (Contributed by NM, 12-Nov-2003.)  (Proof
+     shortened by Andrew Salmon, 12-Aug-2011.) */
+
+$)
+${
+	$v A B C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pdifex2 $p |- ( B e. C -> ( A e. _V <-> ( A \ B ) e. _V ) ) $=
+	f0 f1 acvv pdifexg f0 f1 pssun2 f0 f1 acdif f1 puncom f1 f0 pundif2 f0 f1 acdif f1 acun f1 f0 f1 acdif acun f1 f0 acun peqtr2i f0 f1 f0 acun f0 f1 acdif f1 acun psseqtri f0 f1 acdif f1 acvv f2 punexg f0 f0 f1 acdif f1 acun acvv pssexg f0 f1 acdif acvv awcel f1 f2 awcel awa f0 f0 f1 acdif f1 acun awss f0 f1 acdif f1 acun acvv awcel f0 acvv awcel psylancr f0 f1 acdif acvv awcel f1 f2 awcel f0 acvv awcel pexpcom f1 f2 awcel f0 acvv awcel f0 f1 acdif acvv awcel pimpbid2 $.
+$}
+$( /* Each member of an ordered pair belongs to the union of the union of a
+       class to which the ordered pair belongs.  Lemma 3D of [Enderton] p. 41.
+       (Contributed by NM, 31-Mar-1995.)  (Revised by Mario Carneiro,
+       27-Feb-2016.) */
+
+$)
+${
+	$v A B C $.
+	e0 $e |- A e. _V $.
+	e1 $e |- B e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	popeluu $p |- ( <. A , B >. e. C -> ( A e. U. U. C /\ B e. U. U. C ) ) $=
+	e0 f0 f1 pprid1 e0 e1 f0 f1 popi2 f0 f1 acpr f0 f1 acop f2 pelunii f0 f1 acpr f0 f1 acop awcel f0 f1 acop f2 awcel f0 f1 acpr f2 acuni awcel pmpan f0 f0 f1 acpr f2 acuni pelunii f0 f1 acop f2 awcel f0 f0 f1 acpr awcel f0 f1 acpr f2 acuni awcel f0 f2 acuni acuni awcel psylancr e1 f0 f1 pprid2 e0 e1 f0 f1 popi2 f0 f1 acpr f0 f1 acop f2 pelunii f0 f1 acpr f0 f1 acop awcel f0 f1 acop f2 awcel f0 f1 acpr f2 acuni awcel pmpan f1 f0 f1 acpr f2 acuni pelunii f0 f1 acop f2 awcel f1 f0 f1 acpr awcel f0 f1 acpr f2 acuni awcel f1 f2 acuni acuni awcel psylancr f0 f1 acop f2 awcel f0 f2 acuni acuni awcel f1 f2 acuni acuni awcel pjca $.
+$}
+$( /* Expression for double union that moves union into a class builder.
+       (Contributed by FL, 28-May-2007.) */
+
+$)
+${
+	$v x y z A v u $.
+	$d A x y v z $.
+	$d A x y u z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	i0 $f set z $.
+	i1 $f set v $.
+	i2 $f set u $.
+	puniuni $p |- U. U. A = U. { x | E. y ( x = U. y /\ y e. A ) } $=
+	f1 i2 asup_set_class f2 peluni i2 asup_set_class f2 acuni awcel i2 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa f1 awex i0 asup_set_class i2 asup_set_class awcel panbi2i i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f2 acuni awcel awa i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa f1 awex awa i2 pexbii i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa f1 p19.42v i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa awa f1 awex i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa f1 awex awa pbicomi i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa f1 awex awa i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa awa f1 awex i2 pexbii i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa awa i2 f1 pexcom i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel panass i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel awa f1 asup_set_class f2 awcel pancom i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa awa i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel awa f1 asup_set_class f2 awcel awa f1 asup_set_class f2 awcel i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel awa awa pbitr3i i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa awa f1 asup_set_class f2 awcel i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel awa awa f1 i2 p2exbii f1 asup_set_class f2 awcel i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel awa f1 i2 pexdistr i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa awa f1 awex i2 awex i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa awa i2 awex f1 awex f1 asup_set_class f2 awcel i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel awa awa i2 awex f1 awex f1 asup_set_class f2 awcel i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel awa i2 awex awa f1 awex p3bitri i2 i0 asup_set_class f1 asup_set_class peluni i0 asup_set_class f1 asup_set_class acuni awcel i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel awa i2 awex pbicomi i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel awa i2 awex i0 asup_set_class f1 asup_set_class acuni awcel f1 asup_set_class f2 awcel panbi2i f1 asup_set_class f2 awcel i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel awa i2 awex awa f1 asup_set_class f2 awcel i0 asup_set_class f1 asup_set_class acuni awcel awa f1 pexbii i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa f1 awex awa i2 awex i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa awa f1 awex i2 awex f1 asup_set_class f2 awcel i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel awa i2 awex awa f1 awex f1 asup_set_class f2 awcel i0 asup_set_class f1 asup_set_class acuni awcel awa f1 awex p3bitri f1 pvex f1 asup_set_class puniex i1 asup_set_class f1 asup_set_class acuni i0 asup_set_class peleq2 i0 asup_set_class i1 asup_set_class awcel i0 asup_set_class f1 asup_set_class acuni awcel i1 f1 asup_set_class acuni pceqsexv i1 asup_set_class f1 asup_set_class acuni awceq i0 asup_set_class i1 asup_set_class awcel i1 pexancom i0 asup_set_class f1 asup_set_class acuni awcel i1 asup_set_class f1 asup_set_class acuni awceq i0 asup_set_class i1 asup_set_class awcel awa i1 awex i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq awa i1 awex pbitr3i i0 asup_set_class f1 asup_set_class acuni awcel i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq awa i1 awex f1 asup_set_class f2 awcel panbi2i f1 asup_set_class f2 awcel i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq awa i1 p19.42v f1 asup_set_class f2 awcel i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq awa pancom i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel panass f1 asup_set_class f2 awcel i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq awa awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq awa f1 asup_set_class f2 awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa awa pbitri f1 asup_set_class f2 awcel i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq awa awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa awa i1 pexbii f1 asup_set_class f2 awcel i0 asup_set_class f1 asup_set_class acuni awcel awa f1 asup_set_class f2 awcel i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq awa i1 awex awa f1 asup_set_class f2 awcel i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq awa awa i1 awex i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa awa i1 awex p3bitr2i f1 asup_set_class f2 awcel i0 asup_set_class f1 asup_set_class acuni awcel awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa awa i1 awex f1 pexbii i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa awa f1 i1 pexcom i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa i1 f1 pexdistr i1 pvex f0 asup_set_class i1 asup_set_class f1 asup_set_class acuni peqeq1 f0 asup_set_class i1 asup_set_class awceq f0 asup_set_class f1 asup_set_class acuni awceq i1 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel panbi1d f0 asup_set_class i1 asup_set_class awceq f0 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa i1 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa f1 pexbidv f0 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa f1 awex i1 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa f1 awex f0 i1 asup_set_class pelab i1 asup_set_class f0 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa f1 awex f0 acab awcel i1 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa f1 awex pbicomi i1 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa f1 awex i1 asup_set_class f0 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa f1 awex f0 acab awcel i0 asup_set_class i1 asup_set_class awcel panbi2i i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa f1 awex awa i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa f1 awex f0 acab awcel awa i1 pexbii i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa awa f1 awex i1 awex i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa f1 awex awa i1 awex i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa f1 awex f0 acab awcel awa i1 awex pbitri f1 asup_set_class f2 awcel i0 asup_set_class f1 asup_set_class acuni awcel awa f1 awex i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa awa i1 awex f1 awex i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa awa f1 awex i1 awex i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa f1 awex f0 acab awcel awa i1 awex p3bitri i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f2 acuni awcel awa i2 awex i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa f1 awex awa i2 awex f1 asup_set_class f2 awcel i0 asup_set_class f1 asup_set_class acuni awcel awa f1 awex i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa f1 awex f0 acab awcel awa i1 awex p3bitri i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f2 acuni awcel awa i2 awex i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa f1 awex f0 acab awcel awa i1 awex i0 pabbii i0 i2 f2 acuni adf-uni i0 i1 f0 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa f1 awex f0 acab adf-uni i0 asup_set_class i2 asup_set_class awcel i2 asup_set_class f2 acuni awcel awa i2 awex i0 acab i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa f1 awex f0 acab awcel awa i1 awex i0 acab f2 acuni acuni f0 asup_set_class f1 asup_set_class acuni awceq f1 asup_set_class f2 awcel awa f1 awex f0 acab acuni p3eqtr4i $.
+$}
+$( /* Two ways to express single-valuedness of a class expression
+       ` A ( x ) ` .  (Contributed by NM, 14-Oct-2010.) */
+
+$)
+${
+	$v x y z A $.
+	$d x y z $.
+	$d A y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	i0 $f set z $.
+	peusv1 $p |- ( E! y A. x y = A <-> E. y A. x y = A ) $=
+	f1 asup_set_class f2 awceq f0 psp i0 asup_set_class f2 awceq f0 psp f1 asup_set_class i0 asup_set_class f2 peqtr3 f1 asup_set_class f2 awceq f0 awal f1 asup_set_class f2 awceq i0 asup_set_class f2 awceq f1 asup_set_class i0 asup_set_class awceq i0 asup_set_class f2 awceq f0 awal psyl2an f1 asup_set_class f2 awceq f0 awal i0 asup_set_class f2 awceq f0 awal awa f1 asup_set_class i0 asup_set_class awceq awi f1 i0 pgen2 f1 asup_set_class i0 asup_set_class f2 peqeq1 f1 asup_set_class i0 asup_set_class awceq f1 asup_set_class f2 awceq i0 asup_set_class f2 awceq f0 palbidv f1 asup_set_class f2 awceq f0 awal i0 asup_set_class f2 awceq f0 awal f1 i0 peu4 f1 asup_set_class f2 awceq f0 awal f1 aweu f1 asup_set_class f2 awceq f0 awal f1 awex f1 asup_set_class f2 awceq f0 awal i0 asup_set_class f2 awceq f0 awal awa f1 asup_set_class i0 asup_set_class awceq awi i0 awal f1 awal pmpbiran2 $.
+$}
+$( /* Even if ` x ` is free in ` A ` , it is effectively bound when
+       ` A ( x ) ` is single-valued.  (Contributed by NM, 14-Oct-2010.)
+       (Revised by Mario Carneiro, 14-Oct-2016.) */
+
+$)
+${
+	$v x y z w A $.
+	$d x y z w $.
+	$d A y z w $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	i0 $f set z $.
+	i1 $f set w $.
+	peusvnf $p |- ( E! y A. x y = A -> F/_ x A ) $=
+	f1 asup_set_class f2 awceq f0 awal f1 peuex i0 pvex f0 i0 asup_set_class pnfcv f0 i0 asup_set_class f2 pnfcsb1v f0 f1 asup_set_class f0 i0 asup_set_class f2 acsb pnfeq2 f0 i0 asup_set_class f2 pcsbeq1a f0 asup_set_class i0 asup_set_class awceq f2 f0 i0 asup_set_class f2 acsb f1 asup_set_class peqeq2d f1 asup_set_class f2 awceq f1 asup_set_class f0 i0 asup_set_class f2 acsb awceq f0 i0 asup_set_class acvv pspcgf i0 asup_set_class acvv awcel f1 asup_set_class f2 awceq f0 awal f1 asup_set_class f0 i0 asup_set_class f2 acsb awceq awi aax-mp i1 pvex f0 i1 asup_set_class pnfcv f0 i1 asup_set_class f2 pnfcsb1v f0 f1 asup_set_class f0 i1 asup_set_class f2 acsb pnfeq2 f0 i1 asup_set_class f2 pcsbeq1a f0 asup_set_class i1 asup_set_class awceq f2 f0 i1 asup_set_class f2 acsb f1 asup_set_class peqeq2d f1 asup_set_class f2 awceq f1 asup_set_class f0 i1 asup_set_class f2 acsb awceq f0 i1 asup_set_class acvv pspcgf i1 asup_set_class acvv awcel f1 asup_set_class f2 awceq f0 awal f1 asup_set_class f0 i1 asup_set_class f2 acsb awceq awi aax-mp f1 asup_set_class f2 awceq f0 awal f1 asup_set_class f0 i0 asup_set_class f2 acsb f0 i1 asup_set_class f2 acsb peqtr3d f1 asup_set_class f2 awceq f0 awal f0 i0 asup_set_class f2 acsb f0 i1 asup_set_class f2 acsb awceq i0 i1 palrimivv f0 i0 i1 f2 psbnfc2 f1 asup_set_class f2 awceq f0 awal f0 i0 asup_set_class f2 acsb f0 i1 asup_set_class f2 acsb awceq i1 awal i0 awal f0 f2 awnfc psylibr f1 asup_set_class f2 awceq f0 awal f0 f2 awnfc f1 pexlimiv f1 asup_set_class f2 awceq f0 awal f1 aweu f1 asup_set_class f2 awceq f0 awal f1 awex f0 f2 awnfc psyl $.
+$}
+$( /* Two ways to say that ` A ( x ) ` is a set expression that does not
+       depend on ` x ` .  (Contributed by Mario Carneiro, 18-Nov-2016.) */
+
+$)
+${
+	$v x y A $.
+	$d x y $.
+	$d A y $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	peusvnfb $p |- ( E! y A. x y = A <-> ( F/_ x A /\ A e. _V ) ) $=
+	f0 f1 f2 peusvnf f1 asup_set_class f2 awceq f0 awal f1 peuex f1 asup_set_class f2 awceq pid f1 pvex f1 asup_set_class f2 awceq f2 f1 asup_set_class acvv psyl6eqelr f1 asup_set_class f2 awceq f2 acvv awcel f0 psps f1 asup_set_class f2 awceq f0 awal f2 acvv awcel f1 pexlimiv f1 asup_set_class f2 awceq f0 awal f1 aweu f1 asup_set_class f2 awceq f0 awal f1 awex f2 acvv awcel psyl f1 asup_set_class f2 awceq f0 awal f1 aweu f0 f2 awnfc f2 acvv awcel pjca f1 f2 pisset f0 f2 awnfc f0 f1 asup_set_class pnfcvd f0 f2 awnfc pid f0 f2 awnfc f0 f1 asup_set_class f2 pnfeqd f0 f2 awnfc f1 asup_set_class f2 awceq f0 pnfrd f0 f2 awnfc f1 asup_set_class f2 awceq f1 asup_set_class f2 awceq f0 awal f1 peximdv f2 acvv awcel f1 asup_set_class f2 awceq f1 awex f0 f2 awnfc f1 asup_set_class f2 awceq f0 awal f1 awex psyl5bi f0 f2 awnfc f2 acvv awcel f1 asup_set_class f2 awceq f0 awal f1 awex pimp f0 f1 f2 peusv1 f0 f2 awnfc f2 acvv awcel awa f1 asup_set_class f2 awceq f0 awal f1 awex f1 asup_set_class f2 awceq f0 awal f1 aweu psylibr f1 asup_set_class f2 awceq f0 awal f1 aweu f0 f2 awnfc f2 acvv awcel awa pimpbii $.
+$}
+$( /* Two ways to express single-valuedness of a class expression
+       ` A ( x ) ` .  (Contributed by NM, 14-Oct-2010.)  (Revised by Mario
+       Carneiro, 18-Nov-2016.) */
+
+$)
+${
+	$v x y A $.
+	$d x y $.
+	$d A y $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	peusv2i $p |- ( E! y A. x y = A -> E! y E. x y = A ) $=
+	f1 asup_set_class f2 awceq f0 awal f1 pnfeu1 f1 asup_set_class f2 awceq f0 awal f1 aweu f0 f1 asup_set_class pnfcvd f0 f1 f2 peusvnf f1 asup_set_class f2 awceq f0 awal f1 aweu f0 f1 asup_set_class f2 pnfeqd f1 asup_set_class f2 awceq f0 pnf2 f1 asup_set_class f2 awceq f0 awal f1 aweu f1 asup_set_class f2 awceq f0 awnf f1 asup_set_class f2 awceq f0 awex f1 asup_set_class f2 awceq f0 awal awi psylib f1 asup_set_class f2 awceq f0 p19.2 f1 asup_set_class f2 awceq f0 awal f1 aweu f1 asup_set_class f2 awceq f0 awex f1 asup_set_class f2 awceq f0 awal pimpbid1 f1 asup_set_class f2 awceq f0 awal f1 aweu f1 asup_set_class f2 awceq f0 awex f1 asup_set_class f2 awceq f0 awal f1 peubid f1 asup_set_class f2 awceq f0 awal f1 aweu f1 asup_set_class f2 awceq f0 awex f1 aweu pibir $.
+$}
+$( /* Two ways to express single-valuedness of a class expression
+       ` A ( x ) ` .  (Contributed by Mario Carneiro, 18-Nov-2016.) */
+
+$)
+${
+	$v x y A $.
+	$d x y $.
+	$d A y $.
+	e0 $e |- A e. _V $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	peusv2nf $p |- ( E! y E. x y = A <-> F/_ x A ) $=
+	f1 asup_set_class f2 awceq f0 awex f1 pnfeu1 f1 asup_set_class f2 awceq f0 pnfe1 f1 asup_set_class f2 awceq f0 awex f0 f1 pnfeu e0 f1 f2 pisseti f1 asup_set_class f2 awceq f0 p19.8a f1 asup_set_class f2 awceq f1 asup_set_class f2 awceq f0 awex pancri f1 asup_set_class f2 awceq f1 asup_set_class f2 awceq f0 awex f1 asup_set_class f2 awceq awa f1 peximi f1 asup_set_class f2 awceq f1 awex f1 asup_set_class f2 awceq f0 awex f1 asup_set_class f2 awceq awa f1 awex aax-mp f1 asup_set_class f2 awceq f0 awex f1 asup_set_class f2 awceq f1 peupick f1 asup_set_class f2 awceq f0 awex f1 aweu f1 asup_set_class f2 awceq f0 awex f1 asup_set_class f2 awceq awa f1 awex f1 asup_set_class f2 awceq f0 awex f1 asup_set_class f2 awceq awi pmpan2 f1 asup_set_class f2 awceq f0 awex f1 aweu f1 asup_set_class f2 awceq f0 awex f1 asup_set_class f2 awceq awi f0 palrimi f1 asup_set_class f2 awceq f0 pnf3 f1 asup_set_class f2 awceq f0 awex f1 aweu f1 asup_set_class f2 awceq f0 awex f1 asup_set_class f2 awceq awi f0 awal f1 asup_set_class f2 awceq f0 awnf psylibr f1 asup_set_class f2 awceq f0 awex f1 aweu f1 asup_set_class f2 awceq f0 awnf f1 palrimi f0 f1 f2 acvv pdfnfc2 e0 f2 acvv awcel f0 f2 awnfc f1 asup_set_class f2 awceq f0 awnf f1 awal awb f0 pmpg f1 asup_set_class f2 awceq f0 awex f1 aweu f1 asup_set_class f2 awceq f0 awnf f1 awal f0 f2 awnfc psylibr e0 f0 f1 f2 peusvnfb f1 asup_set_class f2 awceq f0 awal f1 aweu f0 f2 awnfc f2 acvv awcel pmpbiran2 f0 f1 f2 peusv2i f0 f2 awnfc f1 asup_set_class f2 awceq f0 awal f1 aweu f1 asup_set_class f2 awceq f0 awex f1 aweu psylbir f1 asup_set_class f2 awceq f0 awex f1 aweu f0 f2 awnfc pimpbii $.
+$}
+$( /* Two ways to express single-valuedness of a class expression
+       ` A ( x ) ` .  (Contributed by NM, 15-Oct-2010.)  (Proof shortened by
+       Mario Carneiro, 18-Nov-2016.) */
+
+$)
+${
+	$v x y A $.
+	$d x y $.
+	$d A y $.
+	e0 $e |- A e. _V $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	peusv2 $p |- ( E! y E. x y = A <-> E! y A. x y = A ) $=
+	e0 f0 f1 f2 peusv2nf e0 f0 f1 f2 peusvnfb f1 asup_set_class f2 awceq f0 awal f1 aweu f0 f2 awnfc f2 acvv awcel pmpbiran2 f1 asup_set_class f2 awceq f0 awex f1 aweu f0 f2 awnfc f1 asup_set_class f2 awceq f0 awal f1 aweu pbitr4i $.
+$}
+$( /* Two ways to express single-valuedness of a class expression
+       ` C ( y ) ` .  (Contributed by NM, 16-Dec-2012.)  (Proof shortened by
+       Mario Carneiro, 18-Nov-2016.) */
+
+$)
+${
+	$v ph x y A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	$d x ph $.
+	$d x y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	f5 $f class C $.
+	preusv1 $p |- ( E. y e. B ph -> ( E! x e. A A. y e. B ( ph -> x = C ) <-> E. x e. A A. y e. B ( ph -> x = C ) ) ) $=
+	f0 f1 asup_set_class f5 awceq awi f2 f4 pnfra1 f0 f1 asup_set_class f5 awceq awi f2 f4 awral f2 f1 pnfmo f0 f1 asup_set_class f5 awceq awi f2 f4 prsp f0 f1 asup_set_class f5 awceq awi f2 f4 awral f2 asup_set_class f4 awcel f0 f1 asup_set_class f5 awceq pimp3a f0 f1 asup_set_class f5 awceq awi f2 f4 awral f2 asup_set_class f4 awcel f0 awa f1 asup_set_class f5 awceq pcom12 f2 asup_set_class f4 awcel f0 awa f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 asup_set_class f5 awceq awi f1 palrimiv f1 f5 pmoeq f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 asup_set_class f5 awceq f1 pmoim f2 asup_set_class f4 awcel f0 awa f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 asup_set_class f5 awceq awi f1 awal f1 asup_set_class f5 awceq f1 awmo f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 awmo pee10 f2 asup_set_class f4 awcel f0 f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 awmo pex f0 f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 awmo f2 f4 prexlimi f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 f3 pmormo f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 f3 preu5 f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 f3 awreu f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 f3 awrex f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 f3 awrmo prbaib f0 f2 f4 awrex f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 awmo f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 f3 awrmo f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 f3 awreu f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 f3 awrex awb p3syl $.
+$}
+$( /* Lemma for ~ reusv2 .  (Contributed by NM, 22-Oct-2010.)  (Proof
+       shortened by Mario Carneiro, 19-Nov-2016.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x B $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	preusv2lem1 $p |- ( A =/= (/) -> ( E! x A. y e. A x = B <-> E. x A. y e. A x = B ) ) $=
+	f1 f2 pn0 f0 asup_set_class f3 awceq f1 f2 pnfra1 f0 asup_set_class f3 awceq f1 f2 awral f1 f0 pnfmo f0 asup_set_class f3 awceq f1 f2 prsp f0 asup_set_class f3 awceq f1 f2 awral f1 asup_set_class f2 awcel f0 asup_set_class f3 awceq pcom12 f1 asup_set_class f2 awcel f0 asup_set_class f3 awceq f1 f2 awral f0 asup_set_class f3 awceq awi f0 palrimiv f0 f3 pmoeq f0 asup_set_class f3 awceq f1 f2 awral f0 asup_set_class f3 awceq f0 pmoim f1 asup_set_class f2 awcel f0 asup_set_class f3 awceq f1 f2 awral f0 asup_set_class f3 awceq awi f0 awal f0 asup_set_class f3 awceq f0 awmo f0 asup_set_class f3 awceq f1 f2 awral f0 awmo pee10 f1 asup_set_class f2 awcel f0 asup_set_class f3 awceq f1 f2 awral f0 awmo f1 pexlimi f2 ac0 awne f1 asup_set_class f2 awcel f1 awex f0 asup_set_class f3 awceq f1 f2 awral f0 awmo psylbi f0 asup_set_class f3 awceq f1 f2 awral f0 peu5 f0 asup_set_class f3 awceq f1 f2 awral f0 aweu f0 asup_set_class f3 awceq f1 f2 awral f0 awex f0 asup_set_class f3 awceq f1 f2 awral f0 awmo prbaib f2 ac0 awne f0 asup_set_class f3 awceq f1 f2 awral f0 awmo f0 asup_set_class f3 awceq f1 f2 awral f0 aweu f0 asup_set_class f3 awceq f1 f2 awral f0 awex awb psyl $.
+$}
+$( /* Lemma for ~ reusv2 .  (Contributed by NM, 27-Oct-2010.)  (Proof
+       shortened by Mario Carneiro, 19-Nov-2016.) */
+
+$)
+${
+	$v x y z A B $.
+	$d x y z A $.
+	$d x z B $.
+	$d x z $.
+	$d x z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	i0 $f set z $.
+	preusv2lem2 $p |- ( E! x A. y e. A x = B -> E! x E. y e. A x = B ) $=
+	f0 asup_set_class f3 awceq f1 f2 awral f0 peunex f0 asup_set_class f3 awceq f1 f2 awral f0 pexnal f0 asup_set_class f3 awceq f1 f2 awral f0 aweu f0 asup_set_class f3 awceq f1 f2 awral awn f0 awex f0 asup_set_class f3 awceq f1 f2 awral f0 awal awn psylib f0 asup_set_class f3 awceq f1 f2 przal f2 ac0 awceq f0 asup_set_class f3 awceq f1 f2 awral f0 palrimiv f0 asup_set_class f3 awceq f1 f2 awral f0 aweu f0 asup_set_class f3 awceq f1 f2 awral f0 awal f2 ac0 awceq pnsyl3 f2 ac0 awceq f0 asup_set_class f3 awceq f1 f2 awral f0 aweu f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu ppm2.21d f2 ac0 awne f0 asup_set_class f3 awceq f1 f2 awral f0 aweu psimpr f0 asup_set_class f3 awceq f1 f2 awral f0 peuex f0 asup_set_class i0 asup_set_class f3 peqeq1 f0 asup_set_class i0 asup_set_class awceq f0 asup_set_class f3 awceq i0 asup_set_class f3 awceq f1 f2 pralbidv f0 asup_set_class f3 awceq f1 f2 awral i0 asup_set_class f3 awceq f1 f2 awral f0 i0 pcbvexv f0 asup_set_class f3 awceq f1 f2 awral f0 aweu f0 asup_set_class f3 awceq f1 f2 awral f0 awex i0 asup_set_class f3 awceq f1 f2 awral i0 awex psylib f2 ac0 awne f1 pnfv i0 asup_set_class f3 awceq f1 f2 pnfra1 f2 ac0 awne i0 asup_set_class f3 awceq f1 f2 awral f1 pnfan f0 asup_set_class f3 awceq f1 f2 pnfra1 f2 ac0 awne i0 asup_set_class f3 awceq f1 f2 awral awa f1 asup_set_class f2 awcel f0 asup_set_class f3 awceq psimprr i0 asup_set_class f3 awceq f1 f2 prsp i0 asup_set_class f3 awceq f1 f2 awral f1 asup_set_class f2 awcel i0 asup_set_class f3 awceq pimp i0 asup_set_class f3 awceq f1 f2 awral f1 asup_set_class f2 awcel i0 asup_set_class f3 awceq f2 ac0 awne f0 asup_set_class f3 awceq pad2ant2lr f2 ac0 awne i0 asup_set_class f3 awceq f1 f2 awral awa f1 asup_set_class f2 awcel f0 asup_set_class f3 awceq awa awa f0 asup_set_class f3 i0 asup_set_class peqtr4d f2 ac0 awne i0 asup_set_class f3 awceq f1 f2 awral f1 asup_set_class f2 awcel f0 asup_set_class f3 awceq awa psimplr f0 asup_set_class i0 asup_set_class f3 peqeq1 f0 asup_set_class i0 asup_set_class awceq f0 asup_set_class f3 awceq i0 asup_set_class f3 awceq f1 f2 pralbidv f2 ac0 awne i0 asup_set_class f3 awceq f1 f2 awral awa f1 asup_set_class f2 awcel f0 asup_set_class f3 awceq awa awa f0 asup_set_class f3 awceq f1 f2 awral f0 asup_set_class i0 asup_set_class awceq i0 asup_set_class f3 awceq f1 f2 awral psyl5ibrcom f2 ac0 awne i0 asup_set_class f3 awceq f1 f2 awral awa f1 asup_set_class f2 awcel f0 asup_set_class f3 awceq awa awa f0 asup_set_class i0 asup_set_class awceq f0 asup_set_class f3 awceq f1 f2 awral pmpd f2 ac0 awne i0 asup_set_class f3 awceq f1 f2 awral awa f1 asup_set_class f2 awcel f0 asup_set_class f3 awceq f0 asup_set_class f3 awceq f1 f2 awral pexp32 f2 ac0 awne i0 asup_set_class f3 awceq f1 f2 awral awa f0 asup_set_class f3 awceq f0 asup_set_class f3 awceq f1 f2 awral f1 f2 prexlimd f0 asup_set_class f3 awceq f1 f2 pr19.2z f2 ac0 awne f0 asup_set_class f3 awceq f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex pex f2 ac0 awne f0 asup_set_class f3 awceq f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex awi i0 asup_set_class f3 awceq f1 f2 awral padantr f2 ac0 awne i0 asup_set_class f3 awceq f1 f2 awral awa f0 asup_set_class f3 awceq f1 f2 awrex f0 asup_set_class f3 awceq f1 f2 awral pimpbid f2 ac0 awne i0 asup_set_class f3 awceq f1 f2 awral awa f0 asup_set_class f3 awceq f1 f2 awrex f0 asup_set_class f3 awceq f1 f2 awral f0 peubidv f2 ac0 awne i0 asup_set_class f3 awceq f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu f0 asup_set_class f3 awceq f1 f2 awral f0 aweu awb pex f2 ac0 awne i0 asup_set_class f3 awceq f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu f0 asup_set_class f3 awceq f1 f2 awral f0 aweu awb i0 pexlimdv f0 asup_set_class f3 awceq f1 f2 awral f0 aweu i0 asup_set_class f3 awceq f1 f2 awral i0 awex f2 ac0 awne f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu f0 asup_set_class f3 awceq f1 f2 awral f0 aweu awb psyl5 f2 ac0 awne f0 asup_set_class f3 awceq f1 f2 awral f0 aweu f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu f0 asup_set_class f3 awceq f1 f2 awral f0 aweu awb pimp f2 ac0 awne f0 asup_set_class f3 awceq f1 f2 awral f0 aweu awa f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu f0 asup_set_class f3 awceq f1 f2 awral f0 aweu pmpbird f2 ac0 awne f0 asup_set_class f3 awceq f1 f2 awral f0 aweu f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu pex f0 asup_set_class f3 awceq f1 f2 awral f0 aweu f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu awi f2 ac0 ppm2.61ine $.
+$}
+$( /* Lemma for ~ reusv2 .  (Contributed by NM, 14-Dec-2012.)  (Proof
+       shortened by Mario Carneiro, 19-Nov-2016.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x B $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	preusv2lem3 $p |- ( A. y e. A B e. _V -> ( E! x E. y e. A x = B <-> E! x A. y e. A x = B ) ) $=
+	f3 acvv awcel f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu psimpr f3 acvv awcel f1 f2 awral f0 pnfv f0 asup_set_class f3 awceq f1 f2 awrex f0 pnfeu1 f3 acvv awcel f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu f0 pnfan f0 asup_set_class f3 awceq f1 f2 awrex f0 peuex f0 asup_set_class f3 awceq f1 f2 prexn0 f0 asup_set_class f3 awceq f1 f2 awrex f2 ac0 awne f0 pexlimiv f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu f0 asup_set_class f3 awceq f1 f2 awrex f0 awex f2 ac0 awne psyl f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu f2 ac0 awne f3 acvv awcel f1 f2 awral padantl f0 asup_set_class f3 awceq f1 f2 pr19.2z f2 ac0 awne f0 asup_set_class f3 awceq f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex pex f3 acvv awcel f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu awa f2 ac0 awne f0 asup_set_class f3 awceq f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex awi psyl f3 acvv awcel f1 f2 pnfra1 f0 asup_set_class f3 awceq f1 f2 pnfre1 f0 asup_set_class f3 awceq f1 f2 awrex f1 f0 pnfeu f3 acvv awcel f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu f1 pnfan f0 asup_set_class f3 awceq f1 f2 pnfre1 f3 acvv awcel f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu f1 asup_set_class f2 awcel psimplr f3 acvv awcel f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu awa f1 asup_set_class f2 awcel psimpr f3 acvv awcel f1 f2 prsp f3 acvv awcel f1 f2 awral f1 asup_set_class f2 awcel f3 acvv awcel awi f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu padantr f3 acvv awcel f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu awa f1 asup_set_class f2 awcel f3 acvv awcel pimp f0 f3 pisset f3 acvv awcel f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu awa f1 asup_set_class f2 awcel awa f3 acvv awcel f0 asup_set_class f3 awceq f0 awex psylib f0 asup_set_class f3 awceq f1 f2 prspe f1 asup_set_class f2 awcel f0 asup_set_class f3 awceq f0 asup_set_class f3 awceq f1 f2 awrex pex f1 asup_set_class f2 awcel f0 asup_set_class f3 awceq f0 asup_set_class f3 awceq f1 f2 awrex pancrd f1 asup_set_class f2 awcel f0 asup_set_class f3 awceq f0 asup_set_class f3 awceq f1 f2 awrex f0 asup_set_class f3 awceq awa f0 peximdv f3 acvv awcel f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu awa f1 asup_set_class f2 awcel awa f1 asup_set_class f2 awcel f0 asup_set_class f3 awceq f0 awex f0 asup_set_class f3 awceq f1 f2 awrex f0 asup_set_class f3 awceq awa f0 awex psylc f0 asup_set_class f3 awceq f1 f2 awrex f0 asup_set_class f3 awceq f0 peupick f3 acvv awcel f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu awa f1 asup_set_class f2 awcel awa f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu f0 asup_set_class f3 awceq f1 f2 awrex f0 asup_set_class f3 awceq awa f0 awex f0 asup_set_class f3 awceq f1 f2 awrex f0 asup_set_class f3 awceq awi psyl2anc f3 acvv awcel f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu awa f1 asup_set_class f2 awcel f0 asup_set_class f3 awceq f1 f2 awrex f0 asup_set_class f3 awceq awi pex f3 acvv awcel f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu awa f1 asup_set_class f2 awcel f0 asup_set_class f3 awceq f1 f2 awrex f0 asup_set_class f3 awceq pcom23 f3 acvv awcel f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu awa f0 asup_set_class f3 awceq f1 f2 awrex f0 asup_set_class f3 awceq f1 f2 pralrimd f3 acvv awcel f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu awa f0 asup_set_class f3 awceq f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex pimpbid f3 acvv awcel f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu awa f0 asup_set_class f3 awceq f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 peubid f3 acvv awcel f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu awa f0 asup_set_class f3 awceq f1 f2 awral f0 aweu f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu pmpbird f3 acvv awcel f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu f0 asup_set_class f3 awceq f1 f2 awral f0 aweu pex f0 f1 f2 f3 preusv2lem2 f3 acvv awcel f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu f0 asup_set_class f3 awceq f1 f2 awral f0 aweu pimpbid1 $.
+$}
+$( /* Lemma for ~ reusv2 .  (Contributed by NM, 13-Dec-2012.) */
+
+$)
+${
+	$v ph x y z A B C $.
+	$d x y z A $.
+	$d x z B $.
+	$d x z C $.
+	$d x z ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	f5 $f class C $.
+	i0 $f set z $.
+	preusv2lem4 $p |- ( E! x e. A E. y e. B ( ph /\ x = C ) <-> E! x A. y e. B ( ( C e. A /\ ph ) -> x = C ) ) $=
+	f0 f1 asup_set_class f5 awceq awa f2 f4 awrex f1 f3 adf-reu f2 asup_set_class f4 awcel f5 f3 awcel f0 awa f1 asup_set_class f5 awceq panass f2 asup_set_class f4 awcel f5 f3 awcel f0 awa awa f1 asup_set_class f5 awceq awa f2 asup_set_class f4 awcel f5 f3 awcel f0 awa f1 asup_set_class f5 awceq awa awa pbicomi f1 asup_set_class f3 awcel f0 f1 asup_set_class f5 awceq panass f1 asup_set_class f5 f3 peleq1 f1 asup_set_class f5 awceq f1 asup_set_class f3 awcel f5 f3 awcel f0 panbi1d f1 asup_set_class f5 awceq f1 asup_set_class f3 awcel f0 awa f5 f3 awcel f0 awa ppm5.32ri f1 asup_set_class f3 awcel f0 f1 asup_set_class f5 awceq awa awa f1 asup_set_class f3 awcel f0 awa f1 asup_set_class f5 awceq awa f5 f3 awcel f0 awa f1 asup_set_class f5 awceq awa pbitr3i f1 asup_set_class f3 awcel f0 f1 asup_set_class f5 awceq awa awa f5 f3 awcel f0 awa f1 asup_set_class f5 awceq awa f2 asup_set_class f4 awcel panbi2i f5 f3 awcel f0 awa f2 f4 prabid f2 asup_set_class f5 f3 awcel f0 awa f2 f4 acrab awcel f2 asup_set_class f4 awcel f5 f3 awcel f0 awa awa f1 asup_set_class f5 awceq panbi1i f2 asup_set_class f4 awcel f5 f3 awcel f0 awa f1 asup_set_class f5 awceq awa awa f2 asup_set_class f4 awcel f5 f3 awcel f0 awa awa f1 asup_set_class f5 awceq awa f2 asup_set_class f4 awcel f1 asup_set_class f3 awcel f0 f1 asup_set_class f5 awceq awa awa awa f2 asup_set_class f5 f3 awcel f0 awa f2 f4 acrab awcel f1 asup_set_class f5 awceq awa p3bitr4i f1 asup_set_class f3 awcel f0 f1 asup_set_class f5 awceq awa awa f1 asup_set_class f5 awceq f2 f4 f5 f3 awcel f0 awa f2 f4 acrab prexbii2 f1 asup_set_class f3 awcel f0 f1 asup_set_class f5 awceq awa f2 f4 pr19.42v f5 f3 awcel f0 awa f2 f4 pnfrab1 i0 f5 f3 awcel f0 awa f2 f4 acrab pnfcv f1 asup_set_class f5 awceq i0 pnfv f2 i0 asup_set_class f5 pnfcsb1v f2 f1 asup_set_class f2 i0 asup_set_class f5 acsb pnfeq2 f2 i0 asup_set_class f5 pcsbeq1a f2 asup_set_class i0 asup_set_class awceq f5 f2 i0 asup_set_class f5 acsb f1 asup_set_class peqeq2d f1 asup_set_class f5 awceq f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq f2 i0 f5 f3 awcel f0 awa f2 f4 acrab pcbvrexf f1 asup_set_class f3 awcel f0 f1 asup_set_class f5 awceq awa awa f2 f4 awrex f1 asup_set_class f5 awceq f2 f5 f3 awcel f0 awa f2 f4 acrab awrex f1 asup_set_class f3 awcel f0 f1 asup_set_class f5 awceq awa f2 f4 awrex awa f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq i0 f5 f3 awcel f0 awa f2 f4 acrab awrex p3bitr3i f1 asup_set_class f3 awcel f0 f1 asup_set_class f5 awceq awa f2 f4 awrex awa f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq i0 f5 f3 awcel f0 awa f2 f4 acrab awrex f1 peubii f5 f3 awcel f0 awa f2 f4 prabid f5 f3 pelex f5 f3 awcel f5 acvv awcel f2 asup_set_class f4 awcel f0 pad2antrl f2 asup_set_class f5 f3 awcel f0 awa f2 f4 acrab awcel f2 asup_set_class f4 awcel f5 f3 awcel f0 awa awa f5 acvv awcel psylbi f5 acvv awcel f2 f5 f3 awcel f0 awa f2 f4 acrab prgen f5 f3 awcel f0 awa f2 f4 pnfrab1 i0 f5 f3 awcel f0 awa f2 f4 acrab pnfcv f5 acvv awcel i0 pnfv f2 i0 asup_set_class f5 pnfcsb1v f2 f2 i0 asup_set_class f5 acsb acvv pnfel1 f2 i0 asup_set_class f5 pcsbeq1a f2 asup_set_class i0 asup_set_class awceq f5 f2 i0 asup_set_class f5 acsb acvv peleq1d f5 acvv awcel f2 i0 asup_set_class f5 acsb acvv awcel f2 i0 f5 f3 awcel f0 awa f2 f4 acrab pcbvralf f5 acvv awcel f2 f5 f3 awcel f0 awa f2 f4 acrab awral f2 i0 asup_set_class f5 acsb acvv awcel i0 f5 f3 awcel f0 awa f2 f4 acrab awral pmpbi f1 i0 f5 f3 awcel f0 awa f2 f4 acrab f2 i0 asup_set_class f5 acsb preusv2lem3 f2 i0 asup_set_class f5 acsb acvv awcel i0 f5 f3 awcel f0 awa f2 f4 acrab awral f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq i0 f5 f3 awcel f0 awa f2 f4 acrab awrex f1 aweu f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq i0 f5 f3 awcel f0 awa f2 f4 acrab awral f1 aweu awb aax-mp f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq i0 f5 f3 awcel f0 awa f2 f4 acrab adf-ral f2 asup_set_class f5 f3 awcel f0 awa f2 f4 acrab awcel f1 asup_set_class f5 awceq awi i0 pnfv f5 f3 awcel f0 awa f2 f4 pnfrab1 f2 i0 asup_set_class f5 f3 awcel f0 awa f2 f4 acrab pnfel2 f2 i0 asup_set_class f5 pnfcsb1v f2 f1 asup_set_class f2 i0 asup_set_class f5 acsb pnfeq2 i0 asup_set_class f5 f3 awcel f0 awa f2 f4 acrab awcel f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq f2 pnfim f2 asup_set_class i0 asup_set_class f5 f3 awcel f0 awa f2 f4 acrab peleq1 f2 i0 asup_set_class f5 pcsbeq1a f2 asup_set_class i0 asup_set_class awceq f5 f2 i0 asup_set_class f5 acsb f1 asup_set_class peqeq2d f2 asup_set_class i0 asup_set_class awceq f2 asup_set_class f5 f3 awcel f0 awa f2 f4 acrab awcel i0 asup_set_class f5 f3 awcel f0 awa f2 f4 acrab awcel f1 asup_set_class f5 awceq f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq pimbi12d f2 asup_set_class f5 f3 awcel f0 awa f2 f4 acrab awcel f1 asup_set_class f5 awceq awi i0 asup_set_class f5 f3 awcel f0 awa f2 f4 acrab awcel f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq awi f2 i0 pcbval f5 f3 awcel f0 awa f2 f4 prabid f2 asup_set_class f5 f3 awcel f0 awa f2 f4 acrab awcel f2 asup_set_class f4 awcel f5 f3 awcel f0 awa awa f1 asup_set_class f5 awceq pimbi1i f2 asup_set_class f4 awcel f5 f3 awcel f0 awa f1 asup_set_class f5 awceq pimpexp f2 asup_set_class f5 f3 awcel f0 awa f2 f4 acrab awcel f1 asup_set_class f5 awceq awi f2 asup_set_class f4 awcel f5 f3 awcel f0 awa awa f1 asup_set_class f5 awceq awi f2 asup_set_class f4 awcel f5 f3 awcel f0 awa f1 asup_set_class f5 awceq awi awi pbitri f2 asup_set_class f5 f3 awcel f0 awa f2 f4 acrab awcel f1 asup_set_class f5 awceq awi f2 asup_set_class f4 awcel f5 f3 awcel f0 awa f1 asup_set_class f5 awceq awi awi f2 palbii f5 f3 awcel f0 awa f1 asup_set_class f5 awceq awi f2 f4 adf-ral f2 asup_set_class f5 f3 awcel f0 awa f2 f4 acrab awcel f1 asup_set_class f5 awceq awi f2 awal f2 asup_set_class f4 awcel f5 f3 awcel f0 awa f1 asup_set_class f5 awceq awi awi f2 awal f5 f3 awcel f0 awa f1 asup_set_class f5 awceq awi f2 f4 awral pbitr4i f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq i0 f5 f3 awcel f0 awa f2 f4 acrab awral i0 asup_set_class f5 f3 awcel f0 awa f2 f4 acrab awcel f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq awi i0 awal f2 asup_set_class f5 f3 awcel f0 awa f2 f4 acrab awcel f1 asup_set_class f5 awceq awi f2 awal f5 f3 awcel f0 awa f1 asup_set_class f5 awceq awi f2 f4 awral p3bitr2i f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq i0 f5 f3 awcel f0 awa f2 f4 acrab awral f5 f3 awcel f0 awa f1 asup_set_class f5 awceq awi f2 f4 awral f1 peubii f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq i0 f5 f3 awcel f0 awa f2 f4 acrab awrex f1 aweu f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq i0 f5 f3 awcel f0 awa f2 f4 acrab awral f1 aweu f5 f3 awcel f0 awa f1 asup_set_class f5 awceq awi f2 f4 awral f1 aweu pbitri f0 f1 asup_set_class f5 awceq awa f2 f4 awrex f1 f3 awreu f1 asup_set_class f3 awcel f0 f1 asup_set_class f5 awceq awa f2 f4 awrex awa f1 aweu f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq i0 f5 f3 awcel f0 awa f2 f4 acrab awrex f1 aweu f5 f3 awcel f0 awa f1 asup_set_class f5 awceq awi f2 f4 awral f1 aweu p3bitri $.
+$}
+$( /* Lemma for ~ reusv2 .  (Contributed by NM, 4-Jan-2013.)  (Proof shortened
+       by Mario Carneiro, 19-Nov-2016.) */
+
+$)
+${
+	$v x y A B C $.
+	$d x y A $.
+	$d x y B $.
+	$d x C $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	preusv2lem5 $p |- ( ( A. y e. B C e. A /\ B =/= (/) ) -> ( E! x e. A E. y e. B x = C <-> E! x e. A A. y e. B x = C ) ) $=
+	ptru f4 f2 awcel awtru awa f0 asup_set_class f4 awceq pbiimt f4 f2 awcel awtru f0 asup_set_class f4 awceq f4 f2 awcel awtru awa f0 asup_set_class f4 awceq awi awb pmpan2 f4 f2 awcel f0 asup_set_class f4 awceq pibar f4 f2 awcel f0 asup_set_class f4 awceq f4 f2 awcel awtru awa f0 asup_set_class f4 awceq awi f4 f2 awcel f0 asup_set_class f4 awceq awa pbitr3d f0 asup_set_class f4 f2 peleq1 f0 asup_set_class f4 awceq f0 asup_set_class f2 awcel f4 f2 awcel ppm5.32ri f4 f2 awcel f4 f2 awcel awtru awa f0 asup_set_class f4 awceq awi f4 f2 awcel f0 asup_set_class f4 awceq awa f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa psyl6bbr f4 f2 awcel f4 f2 awcel awtru awa f0 asup_set_class f4 awceq awi f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa awb f1 f3 pralimi f4 f2 awcel awtru awa f0 asup_set_class f4 awceq awi f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa f1 f3 pralbi f4 f2 awcel f1 f3 awral f4 f2 awcel awtru awa f0 asup_set_class f4 awceq awi f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa awb f1 f3 awral f4 f2 awcel awtru awa f0 asup_set_class f4 awceq awi f1 f3 awral f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa f1 f3 awral awb psyl f4 f2 awcel f1 f3 awral f4 f2 awcel awtru awa f0 asup_set_class f4 awceq awi f1 f3 awral f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa f1 f3 awral f0 peubidv f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq f1 f3 pr19.28zv f3 ac0 awne f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa f1 f3 awral f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq f1 f3 awral awa f0 peubidv f4 f2 awcel f1 f3 awral f4 f2 awcel awtru awa f0 asup_set_class f4 awceq awi f1 f3 awral f0 aweu f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa f1 f3 awral f0 aweu f3 ac0 awne f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq f1 f3 awral awa f0 aweu psylan9bb ptru awtru f0 asup_set_class f4 awceq pbiantrur f0 asup_set_class f4 awceq awtru f0 asup_set_class f4 awceq awa f1 f3 prexbii f0 asup_set_class f4 awceq f1 f3 awrex awtru f0 asup_set_class f4 awceq awa f1 f3 awrex f0 f2 preubii awtru f0 f1 f2 f3 f4 preusv2lem4 f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu awtru f0 asup_set_class f4 awceq awa f1 f3 awrex f0 f2 awreu f4 f2 awcel awtru awa f0 asup_set_class f4 awceq awi f1 f3 awral f0 aweu pbitri f0 asup_set_class f4 awceq f1 f3 awral f0 f2 adf-reu f4 f2 awcel f1 f3 awral f3 ac0 awne awa f4 f2 awcel awtru awa f0 asup_set_class f4 awceq awi f1 f3 awral f0 aweu f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq f1 f3 awral awa f0 aweu f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu p3bitr4g $.
+$}
+$( /* Two ways to express single-valuedness of a class expression ` C ( y ) `
+       that is constant for those ` y e. B ` such that ` ph ` .  The first
+       antecedent ensures that the constant value belongs to the existential
+       uniqueness domain ` A ` , and the second ensures that ` C ( y ) ` is
+       evaluated for at least one ` y ` .  (Contributed by NM, 4-Jan-2013.)
+       (Proof shortened by Mario Carneiro, 19-Nov-2016.) */
+
+$)
+${
+	$v ph x y z A B C $.
+	$d x y z A $.
+	$d x z B $.
+	$d x z C $.
+	$d x z ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	f5 $f class C $.
+	i0 $f set z $.
+	preusv2 $p |- ( ( A. y e. B ( ph -> C e. A ) /\ E. y e. B ph ) -> ( E! x e. A E. y e. B ( ph /\ x = C ) <-> E! x e. A A. y e. B ( ph -> x = C ) ) ) $=
+	f0 f2 f4 pnfrab1 i0 f0 f2 f4 acrab pnfcv f5 f3 awcel i0 pnfv f2 i0 asup_set_class f5 pnfcsb1v f2 f2 i0 asup_set_class f5 acsb f3 pnfel1 f2 i0 asup_set_class f5 pcsbeq1a f2 asup_set_class i0 asup_set_class awceq f5 f2 i0 asup_set_class f5 acsb f3 peleq1d f5 f3 awcel f2 i0 asup_set_class f5 acsb f3 awcel f2 i0 f0 f2 f4 acrab pcbvralf f0 f2 f4 prabid f2 asup_set_class f0 f2 f4 acrab awcel f2 asup_set_class f4 awcel f0 awa f5 f3 awcel pimbi1i f2 asup_set_class f4 awcel f0 f5 f3 awcel pimpexp f2 asup_set_class f0 f2 f4 acrab awcel f5 f3 awcel awi f2 asup_set_class f4 awcel f0 awa f5 f3 awcel awi f2 asup_set_class f4 awcel f0 f5 f3 awcel awi awi pbitri f5 f3 awcel f0 f5 f3 awcel awi f2 f0 f2 f4 acrab f4 pralbii2 f2 i0 asup_set_class f5 acsb f3 awcel i0 f0 f2 f4 acrab awral f5 f3 awcel f2 f0 f2 f4 acrab awral f0 f5 f3 awcel awi f2 f4 awral pbitr3i f0 f2 f4 prabn0 f1 i0 f3 f0 f2 f4 acrab f2 i0 asup_set_class f5 acsb preusv2lem5 f0 f2 f4 pnfrab1 i0 f0 f2 f4 acrab pnfcv f1 asup_set_class f5 awceq i0 pnfv f2 i0 asup_set_class f5 pnfcsb1v f2 f1 asup_set_class f2 i0 asup_set_class f5 acsb pnfeq2 f2 i0 asup_set_class f5 pcsbeq1a f2 asup_set_class i0 asup_set_class awceq f5 f2 i0 asup_set_class f5 acsb f1 asup_set_class peqeq2d f1 asup_set_class f5 awceq f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq f2 i0 f0 f2 f4 acrab pcbvrexf f0 f2 f4 prabid f2 asup_set_class f0 f2 f4 acrab awcel f2 asup_set_class f4 awcel f0 awa f1 asup_set_class f5 awceq panbi1i f2 asup_set_class f4 awcel f0 f1 asup_set_class f5 awceq panass f2 asup_set_class f0 f2 f4 acrab awcel f1 asup_set_class f5 awceq awa f2 asup_set_class f4 awcel f0 awa f1 asup_set_class f5 awceq awa f2 asup_set_class f4 awcel f0 f1 asup_set_class f5 awceq awa awa pbitri f1 asup_set_class f5 awceq f0 f1 asup_set_class f5 awceq awa f2 f0 f2 f4 acrab f4 prexbii2 f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq i0 f0 f2 f4 acrab awrex f1 asup_set_class f5 awceq f2 f0 f2 f4 acrab awrex f0 f1 asup_set_class f5 awceq awa f2 f4 awrex pbitr3i f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq i0 f0 f2 f4 acrab awrex f0 f1 asup_set_class f5 awceq awa f2 f4 awrex f1 f3 preubii f0 f2 f4 pnfrab1 i0 f0 f2 f4 acrab pnfcv f1 asup_set_class f5 awceq i0 pnfv f2 i0 asup_set_class f5 pnfcsb1v f2 f1 asup_set_class f2 i0 asup_set_class f5 acsb pnfeq2 f2 i0 asup_set_class f5 pcsbeq1a f2 asup_set_class i0 asup_set_class awceq f5 f2 i0 asup_set_class f5 acsb f1 asup_set_class peqeq2d f1 asup_set_class f5 awceq f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq f2 i0 f0 f2 f4 acrab pcbvralf f0 f2 f4 prabid f2 asup_set_class f0 f2 f4 acrab awcel f2 asup_set_class f4 awcel f0 awa f1 asup_set_class f5 awceq pimbi1i f2 asup_set_class f4 awcel f0 f1 asup_set_class f5 awceq pimpexp f2 asup_set_class f0 f2 f4 acrab awcel f1 asup_set_class f5 awceq awi f2 asup_set_class f4 awcel f0 awa f1 asup_set_class f5 awceq awi f2 asup_set_class f4 awcel f0 f1 asup_set_class f5 awceq awi awi pbitri f1 asup_set_class f5 awceq f0 f1 asup_set_class f5 awceq awi f2 f0 f2 f4 acrab f4 pralbii2 f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq i0 f0 f2 f4 acrab awral f1 asup_set_class f5 awceq f2 f0 f2 f4 acrab awral f0 f1 asup_set_class f5 awceq awi f2 f4 awral pbitr3i f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq i0 f0 f2 f4 acrab awral f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 f3 preubii f2 i0 asup_set_class f5 acsb f3 awcel i0 f0 f2 f4 acrab awral f0 f2 f4 acrab ac0 awne awa f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq i0 f0 f2 f4 acrab awrex f1 f3 awreu f1 asup_set_class f2 i0 asup_set_class f5 acsb awceq i0 f0 f2 f4 acrab awral f1 f3 awreu f0 f1 asup_set_class f5 awceq awa f2 f4 awrex f1 f3 awreu f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 f3 awreu p3bitr3g f0 f5 f3 awcel awi f2 f4 awral f2 i0 asup_set_class f5 acsb f3 awcel i0 f0 f2 f4 acrab awral f0 f2 f4 acrab ac0 awne f0 f1 asup_set_class f5 awceq awa f2 f4 awrex f1 f3 awreu f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 f3 awreu awb f0 f2 f4 awrex psyl2anbr $.
+$}
+$( /* Two ways of expressing existential uniqueness via an indirect equality.
+       (Contributed by NM, 23-Dec-2012.) */
+
+$)
+${
+	$v ph ps x y z A B C D $.
+	$d x y z B $.
+	$d x z C $.
+	$d x y D $.
+	$d x z ph $.
+	$d x y ps $.
+	e0 $e |- ( y = z -> ( ph <-> ps ) ) $.
+	e1 $e |- ( y = z -> C = D ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f set z $.
+	f5 $f class A $.
+	f6 $f class B $.
+	f7 $f class C $.
+	f8 $f class D $.
+	preusv3i $p |- ( E. x e. A A. y e. B ( ph -> x = C ) -> A. y e. B A. z e. B ( ( ph /\ ps ) -> C = D ) ) $=
+	e0 e1 f3 asup_set_class f4 asup_set_class awceq f7 f8 f2 asup_set_class peqeq2d f3 asup_set_class f4 asup_set_class awceq f0 f1 f2 asup_set_class f7 awceq f2 asup_set_class f8 awceq pimbi12d f0 f2 asup_set_class f7 awceq awi f1 f2 asup_set_class f8 awceq awi f3 f4 f6 pcbvralv f0 f2 asup_set_class f7 awceq awi f3 f6 awral f1 f2 asup_set_class f8 awceq awi f4 f6 awral pbiimpi f0 f2 asup_set_class f7 awceq awi f1 f2 asup_set_class f8 awceq awi f3 f4 f6 praaanv f0 f2 asup_set_class f7 awceq f1 f2 asup_set_class f8 awceq pprth f2 asup_set_class f7 f8 peqtr2 f0 f2 asup_set_class f7 awceq awi f1 f2 asup_set_class f8 awceq awi awa f0 f1 awa f2 asup_set_class f7 awceq f2 asup_set_class f8 awceq awa f7 f8 awceq psyl6 f0 f2 asup_set_class f7 awceq awi f1 f2 asup_set_class f8 awceq awi awa f0 f1 awa f7 f8 awceq awi f4 f6 pralimi f0 f2 asup_set_class f7 awceq awi f1 f2 asup_set_class f8 awceq awi awa f4 f6 awral f0 f1 awa f7 f8 awceq awi f4 f6 awral f3 f6 pralimi f0 f2 asup_set_class f7 awceq awi f3 f6 awral f1 f2 asup_set_class f8 awceq awi f4 f6 awral awa f0 f2 asup_set_class f7 awceq awi f1 f2 asup_set_class f8 awceq awi awa f4 f6 awral f3 f6 awral f0 f1 awa f7 f8 awceq awi f4 f6 awral f3 f6 awral psylbir f0 f2 asup_set_class f7 awceq awi f3 f6 awral f1 f2 asup_set_class f8 awceq awi f4 f6 awral f0 f1 awa f7 f8 awceq awi f4 f6 awral f3 f6 awral pmpdan f0 f2 asup_set_class f7 awceq awi f3 f6 awral f0 f1 awa f7 f8 awceq awi f4 f6 awral f3 f6 awral f2 f5 prexlimivw $.
+$}
+$( /* Two ways to express single-valuedness of a class expression
+       ` C ( y ) ` .  See ~ reusv1 for the connection to uniqueness.
+       (Contributed by NM, 27-Dec-2012.) */
+
+$)
+${
+	$v ph ps x y z A B C D $.
+	$d x y z B $.
+	$d x z C $.
+	$d x y D $.
+	$d x z ph $.
+	$d x y ps $.
+	$d x y z A $.
+	e0 $e |- ( y = z -> ( ph <-> ps ) ) $.
+	e1 $e |- ( y = z -> C = D ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f set z $.
+	f5 $f class A $.
+	f6 $f class B $.
+	f7 $f class C $.
+	f8 $f class D $.
+	preusv3 $p |- ( E. y e. B ( ph /\ C e. A ) -> ( A. y e. B A. z e. B ( ( ph /\ ps ) -> C = D ) <-> E. x e. A A. y e. B ( ph -> x = C ) ) ) $=
+	e0 e1 f3 asup_set_class f4 asup_set_class awceq f7 f8 f5 peleq1d f3 asup_set_class f4 asup_set_class awceq f0 f1 f7 f5 awcel f8 f5 awcel panbi12d f0 f7 f5 awcel awa f1 f8 f5 awcel awa f3 f4 f6 pcbvrexv f0 f1 awa f7 f8 awceq awi f3 f4 f6 f6 pnfra2 f0 f2 asup_set_class f7 awceq awi f3 f6 awral f2 f5 awrex f4 pnfv f0 f1 awa f7 f8 awceq awi f4 f6 awral f3 f6 awral f0 f2 asup_set_class f7 awceq awi f3 f6 awral f2 f5 awrex f4 pnfim f2 f8 f5 prisset f0 f1 awa f7 f8 awceq awi f3 f4 f6 f6 pralcom f0 f1 f7 f8 awceq pimpexp f0 f1 f7 f8 awceq pbi2.04 f0 f1 awa f7 f8 awceq awi f0 f1 f7 f8 awceq awi awi f1 f0 f7 f8 awceq awi awi pbitri f0 f1 awa f7 f8 awceq awi f1 f0 f7 f8 awceq awi awi f3 f6 pralbii f1 f0 f7 f8 awceq awi f3 f6 pr19.21v f0 f1 awa f7 f8 awceq awi f3 f6 awral f1 f0 f7 f8 awceq awi awi f3 f6 awral f1 f0 f7 f8 awceq awi f3 f6 awral awi pbitri f0 f1 awa f7 f8 awceq awi f3 f6 awral f1 f0 f7 f8 awceq awi f3 f6 awral awi f4 f6 pralbii f0 f1 awa f7 f8 awceq awi f4 f6 awral f3 f6 awral f0 f1 awa f7 f8 awceq awi f3 f6 awral f4 f6 awral f1 f0 f7 f8 awceq awi f3 f6 awral awi f4 f6 awral pbitri f1 f0 f7 f8 awceq awi f3 f6 awral awi f4 f6 prsp f0 f1 awa f7 f8 awceq awi f4 f6 awral f3 f6 awral f1 f0 f7 f8 awceq awi f3 f6 awral awi f4 f6 awral f4 asup_set_class f6 awcel f1 f0 f7 f8 awceq awi f3 f6 awral awi awi psylbi f0 f1 awa f7 f8 awceq awi f4 f6 awral f3 f6 awral f4 asup_set_class f6 awcel f1 f0 f7 f8 awceq awi f3 f6 awral pcom3l f4 asup_set_class f6 awcel f1 f0 f1 awa f7 f8 awceq awi f4 f6 awral f3 f6 awral f0 f7 f8 awceq awi f3 f6 awral pimp31 f2 asup_set_class f8 f7 peqeq1 f8 f7 peqcom f2 asup_set_class f8 awceq f2 asup_set_class f7 awceq f8 f7 awceq f7 f8 awceq psyl6bb f2 asup_set_class f8 awceq f2 asup_set_class f7 awceq f7 f8 awceq f0 pimbi2d f2 asup_set_class f8 awceq f0 f2 asup_set_class f7 awceq awi f0 f7 f8 awceq awi f3 f6 pralbidv f4 asup_set_class f6 awcel f1 awa f0 f1 awa f7 f8 awceq awi f4 f6 awral f3 f6 awral awa f0 f2 asup_set_class f7 awceq awi f3 f6 awral f2 asup_set_class f8 awceq f0 f7 f8 awceq awi f3 f6 awral psyl5ibrcom f4 asup_set_class f6 awcel f1 awa f0 f1 awa f7 f8 awceq awi f4 f6 awral f3 f6 awral awa f2 asup_set_class f8 awceq f0 f2 asup_set_class f7 awceq awi f3 f6 awral f2 f5 preximdv f4 asup_set_class f6 awcel f1 awa f0 f1 awa f7 f8 awceq awi f4 f6 awral f3 f6 awral f2 asup_set_class f8 awceq f2 f5 awrex f0 f2 asup_set_class f7 awceq awi f3 f6 awral f2 f5 awrex awi pex f4 asup_set_class f6 awcel f1 awa f0 f1 awa f7 f8 awceq awi f4 f6 awral f3 f6 awral f2 asup_set_class f8 awceq f2 f5 awrex f0 f2 asup_set_class f7 awceq awi f3 f6 awral f2 f5 awrex pcom23 f8 f5 awcel f2 asup_set_class f8 awceq f2 f5 awrex f4 asup_set_class f6 awcel f1 awa f0 f1 awa f7 f8 awceq awi f4 f6 awral f3 f6 awral f0 f2 asup_set_class f7 awceq awi f3 f6 awral f2 f5 awrex awi psyl5bi f4 asup_set_class f6 awcel f1 f8 f5 awcel f0 f1 awa f7 f8 awceq awi f4 f6 awral f3 f6 awral f0 f2 asup_set_class f7 awceq awi f3 f6 awral f2 f5 awrex awi pexpimpd f1 f8 f5 awcel awa f0 f1 awa f7 f8 awceq awi f4 f6 awral f3 f6 awral f0 f2 asup_set_class f7 awceq awi f3 f6 awral f2 f5 awrex awi f4 f6 prexlimi f0 f7 f5 awcel awa f3 f6 awrex f1 f8 f5 awcel awa f4 f6 awrex f0 f1 awa f7 f8 awceq awi f4 f6 awral f3 f6 awral f0 f2 asup_set_class f7 awceq awi f3 f6 awral f2 f5 awrex awi psylbi e0 e1 f0 f1 f2 f3 f4 f5 f6 f7 f8 preusv3i f0 f7 f5 awcel awa f3 f6 awrex f0 f1 awa f7 f8 awceq awi f4 f6 awral f3 f6 awral f0 f2 asup_set_class f7 awceq awi f3 f6 awral f2 f5 awrex pimpbid1 $.
+$}
+$( /* Two ways to express single-valuedness of a class expression
+       ` B ( x ) ` .  (Contributed by NM, 27-Oct-2010.) */
+
+$)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d x B $.
+	e0 $e |- B e. _V $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	peusv4 $p |- ( E! x E. y e. A x = B <-> E! x A. y e. A x = B ) $=
+	f0 f1 f2 f3 preusv2lem3 e0 f3 acvv awcel f1 asup_set_class f2 awcel pa1i f3 acvv awcel f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu f0 asup_set_class f3 awceq f1 f2 awral f0 aweu awb f1 f2 pmprg $.
+$}
+$( /* Two ways to express single-valuedness of a class expression
+       ` C ( y ) ` .  (Contributed by NM, 16-Dec-2012.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v x y A B C $.
+	$d x A $.
+	$d x y B $.
+	$d x C $.
+	$d x y $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	preusv5OLD $p |- ( B =/= (/) -> ( E! x e. A A. y e. B x = C <-> E. x e. A A. y e. B x = C ) ) $=
+	f1 pequid f1 asup_set_class f1 asup_set_class awceq f1 asup_set_class f3 awcel pbiantru f1 asup_set_class f3 awcel f1 asup_set_class f3 awcel f1 asup_set_class f1 asup_set_class awceq awa f1 pexbii f1 f3 pn0 f1 asup_set_class f1 asup_set_class awceq f1 f3 adf-rex f1 asup_set_class f3 awcel f1 awex f1 asup_set_class f3 awcel f1 asup_set_class f1 asup_set_class awceq awa f1 awex f3 ac0 awne f1 asup_set_class f1 asup_set_class awceq f1 f3 awrex p3bitr4i f1 asup_set_class f1 asup_set_class awceq f0 f1 f2 f3 f4 preusv1 f1 pequid f1 asup_set_class f1 asup_set_class awceq f0 asup_set_class f4 awceq pa1bi f0 asup_set_class f4 awceq f1 asup_set_class f1 asup_set_class awceq f0 asup_set_class f4 awceq awi f1 f3 pralbii f0 asup_set_class f4 awceq f1 f3 awral f1 asup_set_class f1 asup_set_class awceq f0 asup_set_class f4 awceq awi f1 f3 awral f0 f2 preubii f1 pequid f1 asup_set_class f1 asup_set_class awceq f0 asup_set_class f4 awceq pa1bi f0 asup_set_class f4 awceq f1 asup_set_class f1 asup_set_class awceq f0 asup_set_class f4 awceq awi f1 f3 pralbii f0 asup_set_class f4 awceq f1 f3 awral f1 asup_set_class f1 asup_set_class awceq f0 asup_set_class f4 awceq awi f1 f3 awral f0 f2 prexbii f1 asup_set_class f1 asup_set_class awceq f1 f3 awrex f1 asup_set_class f1 asup_set_class awceq f0 asup_set_class f4 awceq awi f1 f3 awral f0 f2 awreu f1 asup_set_class f1 asup_set_class awceq f0 asup_set_class f4 awceq awi f1 f3 awral f0 f2 awrex f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awrex p3bitr4g f3 ac0 awne f1 asup_set_class f1 asup_set_class awceq f1 f3 awrex f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awrex awb psylbi $.
+$}
+$( /* Two ways to express single-valuedness of a class expression
+       ` C ( y ) ` .  The converse does not hold.  Note that ` U. A = |^| A `
+       means ` A ` is a singleton ( ~ uniintsn ).  (Contributed by NM,
+       30-Oct-2010.)  (Proof shortened by Mario Carneiro, 24-Dec-2016.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v x y z A B C $.
+	$d x y z A $.
+	$d x y z B $.
+	$d x z C $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	i0 $f set z $.
+	preusv6OLD $p |- ( ( U. A =/= |^| A \/ B =/= (/) ) -> ( E! x e. A A. y e. B x = C -> E! x e. A E. y e. B x = C ) ) $=
+	f0 asup_set_class f4 awceq f1 f3 ac0 praleq f3 ac0 awceq f0 asup_set_class f4 awceq f1 f3 awral f0 asup_set_class f4 awceq f1 ac0 awral f0 f2 preubidv f0 asup_set_class f4 awceq f1 ac0 awral f0 f2 adf-reu f0 f2 puniintsn f0 f2 peusn f0 asup_set_class f4 awceq f1 pral0 f0 asup_set_class f4 awceq f1 ac0 awral f0 asup_set_class f2 awcel pbiantru f0 asup_set_class f2 awcel f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq f1 ac0 awral awa f0 peubii f2 acuni f2 acint awceq f2 f0 asup_set_class acsn awceq f0 awex f0 asup_set_class f2 awcel f0 aweu f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq f1 ac0 awral awa f0 aweu p3bitr2i f0 asup_set_class f4 awceq f1 ac0 awral f0 f2 awreu f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq f1 ac0 awral awa f0 aweu f2 acuni f2 acint awceq pbitr4i f3 ac0 awceq f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu f0 asup_set_class f4 awceq f1 ac0 awral f0 f2 awreu f2 acuni f2 acint awceq psyl6bb f3 ac0 awceq f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu f2 acuni f2 acint pnecon3bbid f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu ppm2.21 f3 ac0 awceq f2 acuni f2 acint awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu awn f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu awi psyl6bir f3 ac0 awne f0 pnfv f0 asup_set_class f4 awceq f1 f3 awral f0 f2 pnfrab1 f0 f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn pnfeq1 f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 pnfan f3 ac0 awne f1 pnfv f0 asup_set_class f4 awceq f1 f3 pnfra1 f1 f2 pnfcv f0 asup_set_class f4 awceq f1 f3 awral f1 f0 f2 pnfrab f1 f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn pnfeq1 f0 asup_set_class f2 awcel f1 pnfv f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel f1 pnf3an f0 asup_set_class i0 asup_set_class acsn awcel f1 pnfv i0 pvex i0 asup_set_class psnid f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel psimp2 f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel aw3a i0 asup_set_class i0 asup_set_class acsn f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab psyl5eleqr f0 asup_set_class i0 asup_set_class f4 peqeq1 f0 asup_set_class i0 asup_set_class awceq f0 asup_set_class f4 awceq i0 asup_set_class f4 awceq f1 f3 pralbidv f0 asup_set_class f4 awceq f1 f3 awral i0 asup_set_class f4 awceq f1 f3 awral f0 i0 asup_set_class f2 pelrab i0 asup_set_class f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab awcel i0 asup_set_class f2 awcel i0 asup_set_class f4 awceq f1 f3 awral psimprbi f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel aw3a i0 asup_set_class f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab awcel i0 asup_set_class f4 awceq f1 f3 awral psyl f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel aw3a i0 asup_set_class f4 awceq f1 f3 pr19.21bi f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel aw3a f1 asup_set_class f3 awcel awa i0 asup_set_class f4 f0 asup_set_class peqeq2d f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel aw3a f1 asup_set_class f3 awcel awa f0 asup_set_class i0 asup_set_class awceq f0 asup_set_class f4 awceq pbiimprd f0 i0 asup_set_class pelsn f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel aw3a f1 asup_set_class f3 awcel awa f0 asup_set_class f4 awceq f0 asup_set_class i0 asup_set_class awceq f0 asup_set_class i0 asup_set_class acsn awcel psyl6ibr f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel aw3a f1 asup_set_class f3 awcel f0 asup_set_class f4 awceq f0 asup_set_class i0 asup_set_class acsn awcel awi pex f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel aw3a f0 asup_set_class f4 awceq f0 asup_set_class i0 asup_set_class acsn awcel f1 f3 prexlimd f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq f1 f3 awrex f0 asup_set_class i0 asup_set_class acsn awcel awi p3expia f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq awa f0 asup_set_class f4 awceq f1 f3 awrex f0 asup_set_class i0 asup_set_class acsn awcel awi f0 f2 pralrimi f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 i0 asup_set_class acsn prabss f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq awa f0 asup_set_class f4 awceq f1 f3 awrex f0 asup_set_class i0 asup_set_class acsn awcel awi f0 f2 awral f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 acrab i0 asup_set_class acsn awss psylibr f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq psimpr f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq awa f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 acrab i0 asup_set_class acsn f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab psseqtr4d f0 asup_set_class f4 awceq f1 f3 pr19.2z f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 asup_set_class f4 awceq f1 f3 awrex pex f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 asup_set_class f4 awceq f1 f3 awrex awi f0 asup_set_class f2 awcel padantr f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 pss2rabdv f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 acrab awss f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq padantr f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq awa f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 acrab f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab peqssd f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq psimpr f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq awa f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 acrab f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn peqtrd f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 acrab i0 asup_set_class acsn awceq pex f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 acrab i0 asup_set_class acsn awceq i0 peximdv f0 asup_set_class f4 awceq f1 f3 awral f0 i0 f2 preusn f0 asup_set_class f4 awceq f1 f3 awrex f0 i0 f2 preusn f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq i0 awex f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 acrab i0 asup_set_class acsn awceq i0 awex f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu p3imtr4g f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu awi f2 acuni f2 acint awne pa1d f2 acuni f2 acint awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu awi awi f3 ac0 ppm2.61ine f3 ac0 awne f0 pnfv f0 asup_set_class f4 awceq f1 f3 awral f0 f2 pnfrab1 f0 f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn pnfeq1 f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 pnfan f3 ac0 awne f1 pnfv f0 asup_set_class f4 awceq f1 f3 pnfra1 f1 f2 pnfcv f0 asup_set_class f4 awceq f1 f3 awral f1 f0 f2 pnfrab f1 f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn pnfeq1 f0 asup_set_class f2 awcel f1 pnfv f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel f1 pnf3an f0 asup_set_class i0 asup_set_class acsn awcel f1 pnfv i0 pvex i0 asup_set_class psnid f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel psimp2 f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel aw3a i0 asup_set_class i0 asup_set_class acsn f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab psyl5eleqr f0 asup_set_class i0 asup_set_class f4 peqeq1 f0 asup_set_class i0 asup_set_class awceq f0 asup_set_class f4 awceq i0 asup_set_class f4 awceq f1 f3 pralbidv f0 asup_set_class f4 awceq f1 f3 awral i0 asup_set_class f4 awceq f1 f3 awral f0 i0 asup_set_class f2 pelrab i0 asup_set_class f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab awcel i0 asup_set_class f2 awcel i0 asup_set_class f4 awceq f1 f3 awral psimprbi f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel aw3a i0 asup_set_class f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab awcel i0 asup_set_class f4 awceq f1 f3 awral psyl f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel aw3a i0 asup_set_class f4 awceq f1 f3 pr19.21bi f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel aw3a f1 asup_set_class f3 awcel awa i0 asup_set_class f4 f0 asup_set_class peqeq2d f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel aw3a f1 asup_set_class f3 awcel awa f0 asup_set_class i0 asup_set_class awceq f0 asup_set_class f4 awceq pbiimprd f0 i0 asup_set_class pelsn f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel aw3a f1 asup_set_class f3 awcel awa f0 asup_set_class f4 awceq f0 asup_set_class i0 asup_set_class awceq f0 asup_set_class i0 asup_set_class acsn awcel psyl6ibr f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel aw3a f1 asup_set_class f3 awcel f0 asup_set_class f4 awceq f0 asup_set_class i0 asup_set_class acsn awcel awi pex f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel aw3a f0 asup_set_class f4 awceq f0 asup_set_class i0 asup_set_class acsn awcel f1 f3 prexlimd f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq f1 f3 awrex f0 asup_set_class i0 asup_set_class acsn awcel awi p3expia f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq awa f0 asup_set_class f4 awceq f1 f3 awrex f0 asup_set_class i0 asup_set_class acsn awcel awi f0 f2 pralrimi f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 i0 asup_set_class acsn prabss f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq awa f0 asup_set_class f4 awceq f1 f3 awrex f0 asup_set_class i0 asup_set_class acsn awcel awi f0 f2 awral f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 acrab i0 asup_set_class acsn awss psylibr f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq psimpr f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq awa f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 acrab i0 asup_set_class acsn f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab psseqtr4d f0 asup_set_class f4 awceq f1 f3 pr19.2z f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 asup_set_class f4 awceq f1 f3 awrex pex f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 asup_set_class f4 awceq f1 f3 awrex awi f0 asup_set_class f2 awcel padantr f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 pss2rabdv f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 acrab awss f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq padantr f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq awa f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 acrab f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab peqssd f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq psimpr f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq awa f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 acrab f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn peqtrd f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 acrab i0 asup_set_class acsn awceq pex f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 acrab i0 asup_set_class acsn awceq i0 peximdv f0 asup_set_class f4 awceq f1 f3 awral f0 i0 f2 preusn f0 asup_set_class f4 awceq f1 f3 awrex f0 i0 f2 preusn f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 acrab i0 asup_set_class acsn awceq i0 awex f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 acrab i0 asup_set_class acsn awceq i0 awex f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu p3imtr4g f2 acuni f2 acint awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu awi f3 ac0 awne pjaoi $.
+$}
+$( /* Two ways to express single-valuedness of a class expression
+       ` C ( y ) ` .  Note that ` U. A = |^| A ` means ` A ` is a singleton
+       ( ~ uniintsn ).  (Contributed by NM, 14-Dec-2012.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+$)
+${
+	$v x y A B C $.
+	$d x y A $.
+	$d x y B $.
+	$d x C $.
+	e0 $e |- ( y e. B -> C e. A ) $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	preusv7OLD $p |- ( ( U. A =/= |^| A \/ B =/= (/) ) -> ( E! x e. A E. y e. B x = C <-> E! x e. A A. y e. B x = C ) ) $=
+	f0 asup_set_class f4 awceq f1 f3 ac0 praleq f3 ac0 awceq f0 asup_set_class f4 awceq f1 f3 awral f0 asup_set_class f4 awceq f1 ac0 awral f0 f2 preubidv f0 asup_set_class f4 awceq f1 ac0 awral f0 f2 adf-reu f0 f2 puniintsn f0 f2 peusn f0 asup_set_class f4 awceq f1 pral0 f0 asup_set_class f4 awceq f1 ac0 awral f0 asup_set_class f2 awcel pbiantru f0 asup_set_class f2 awcel f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq f1 ac0 awral awa f0 peubii f2 acuni f2 acint awceq f2 f0 asup_set_class acsn awceq f0 awex f0 asup_set_class f2 awcel f0 aweu f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq f1 ac0 awral awa f0 aweu p3bitr2i f0 asup_set_class f4 awceq f1 ac0 awral f0 f2 awreu f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq f1 ac0 awral awa f0 aweu f2 acuni f2 acint awceq pbitr4i f3 ac0 awceq f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu f0 asup_set_class f4 awceq f1 ac0 awral f0 f2 awreu f2 acuni f2 acint awceq psyl6bb f3 ac0 awceq f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu f2 acuni f2 acint pnecon3bbid f3 ac0 awceq f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu awn f2 acuni f2 acint awne pbiimprd f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 preurex f0 asup_set_class f4 awceq f1 f3 prexn0 f0 asup_set_class f4 awceq f1 f3 awrex f3 ac0 awne f0 f2 prexlimivw f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awrex f3 ac0 awne psyl f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu f3 ac0 pnecon2bi f3 ac0 awceq f2 acuni f2 acint awne f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu awn f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu awn pjctild f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu ppm5.21 f3 ac0 awceq f2 acuni f2 acint awne f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu awn f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu awn awa f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu awb psyl6 f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq f1 f3 pr19.28zv f3 ac0 awne f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa f1 f3 awral f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq f1 f3 awral awa f0 peubidv f1 asup_set_class f1 asup_set_class awceq f0 f1 f2 f3 f4 preusv2lem4 f1 pequid f1 asup_set_class f1 asup_set_class awceq f0 asup_set_class f4 awceq pbiantrur f0 asup_set_class f4 awceq f1 asup_set_class f1 asup_set_class awceq f0 asup_set_class f4 awceq awa f1 f3 prexbii f0 asup_set_class f4 awceq f1 f3 awrex f1 asup_set_class f1 asup_set_class awceq f0 asup_set_class f4 awceq awa f1 f3 awrex f0 f2 preubii e0 f1 asup_set_class f3 awcel f4 f2 awcel f0 asup_set_class f4 awceq pbiantrurd f0 asup_set_class f4 f2 peleq1 f0 asup_set_class f4 awceq f0 asup_set_class f2 awcel f4 f2 awcel ppm5.32ri f1 asup_set_class f3 awcel f0 asup_set_class f4 awceq f4 f2 awcel f0 asup_set_class f4 awceq awa f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa psyl6rbbr e0 f4 f2 awcel f0 asup_set_class f4 awceq pbiimt f1 asup_set_class f3 awcel f4 f2 awcel f0 asup_set_class f4 awceq f4 f2 awcel f0 asup_set_class f4 awceq awi awb psyl f1 asup_set_class f3 awcel f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa f0 asup_set_class f4 awceq f4 f2 awcel f0 asup_set_class f4 awceq awi pbitrd f1 pequid f1 asup_set_class f1 asup_set_class awceq f4 f2 awcel pbiantru f4 f2 awcel f4 f2 awcel f1 asup_set_class f1 asup_set_class awceq awa f0 asup_set_class f4 awceq pimbi1i f1 asup_set_class f3 awcel f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa f4 f2 awcel f0 asup_set_class f4 awceq awi f4 f2 awcel f1 asup_set_class f1 asup_set_class awceq awa f0 asup_set_class f4 awceq awi psyl6bb f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa f4 f2 awcel f1 asup_set_class f1 asup_set_class awceq awa f0 asup_set_class f4 awceq awi f1 f3 pralbiia f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa f1 f3 awral f4 f2 awcel f1 asup_set_class f1 asup_set_class awceq awa f0 asup_set_class f4 awceq awi f1 f3 awral f0 peubii f1 asup_set_class f1 asup_set_class awceq f0 asup_set_class f4 awceq awa f1 f3 awrex f0 f2 awreu f4 f2 awcel f1 asup_set_class f1 asup_set_class awceq awa f0 asup_set_class f4 awceq awi f1 f3 awral f0 aweu f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa f1 f3 awral f0 aweu p3bitr4i f0 asup_set_class f4 awceq f1 f3 awral f0 f2 adf-reu f3 ac0 awne f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa f1 f3 awral f0 aweu f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq f1 f3 awral awa f0 aweu f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu p3bitr4g f3 ac0 awne f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu awb f2 acuni f2 acint awne pa1d f2 acuni f2 acint awne f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu awb awi f3 ac0 ppm2.61ine f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq f1 f3 pr19.28zv f3 ac0 awne f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa f1 f3 awral f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq f1 f3 awral awa f0 peubidv f1 asup_set_class f1 asup_set_class awceq f0 f1 f2 f3 f4 preusv2lem4 f1 pequid f1 asup_set_class f1 asup_set_class awceq f0 asup_set_class f4 awceq pbiantrur f0 asup_set_class f4 awceq f1 asup_set_class f1 asup_set_class awceq f0 asup_set_class f4 awceq awa f1 f3 prexbii f0 asup_set_class f4 awceq f1 f3 awrex f1 asup_set_class f1 asup_set_class awceq f0 asup_set_class f4 awceq awa f1 f3 awrex f0 f2 preubii e0 f1 asup_set_class f3 awcel f4 f2 awcel f0 asup_set_class f4 awceq pbiantrurd f0 asup_set_class f4 f2 peleq1 f0 asup_set_class f4 awceq f0 asup_set_class f2 awcel f4 f2 awcel ppm5.32ri f1 asup_set_class f3 awcel f0 asup_set_class f4 awceq f4 f2 awcel f0 asup_set_class f4 awceq awa f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa psyl6rbbr e0 f4 f2 awcel f0 asup_set_class f4 awceq pbiimt f1 asup_set_class f3 awcel f4 f2 awcel f0 asup_set_class f4 awceq f4 f2 awcel f0 asup_set_class f4 awceq awi awb psyl f1 asup_set_class f3 awcel f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa f0 asup_set_class f4 awceq f4 f2 awcel f0 asup_set_class f4 awceq awi pbitrd f1 pequid f1 asup_set_class f1 asup_set_class awceq f4 f2 awcel pbiantru f4 f2 awcel f4 f2 awcel f1 asup_set_class f1 asup_set_class awceq awa f0 asup_set_class f4 awceq pimbi1i f1 asup_set_class f3 awcel f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa f4 f2 awcel f0 asup_set_class f4 awceq awi f4 f2 awcel f1 asup_set_class f1 asup_set_class awceq awa f0 asup_set_class f4 awceq awi psyl6bb f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa f4 f2 awcel f1 asup_set_class f1 asup_set_class awceq awa f0 asup_set_class f4 awceq awi f1 f3 pralbiia f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa f1 f3 awral f4 f2 awcel f1 asup_set_class f1 asup_set_class awceq awa f0 asup_set_class f4 awceq awi f1 f3 awral f0 peubii f1 asup_set_class f1 asup_set_class awceq f0 asup_set_class f4 awceq awa f1 f3 awrex f0 f2 awreu f4 f2 awcel f1 asup_set_class f1 asup_set_class awceq awa f0 asup_set_class f4 awceq awi f1 f3 awral f0 aweu f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa f1 f3 awral f0 aweu p3bitr4i f0 asup_set_class f4 awceq f1 f3 awral f0 f2 adf-reu f3 ac0 awne f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq awa f1 f3 awral f0 aweu f0 asup_set_class f2 awcel f0 asup_set_class f4 awceq f1 f3 awral awa f0 aweu f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu p3bitr4g f2 acuni f2 acint awne f0 asup_set_class f4 awceq f1 f3 awrex f0 f2 awreu f0 asup_set_class f4 awceq f1 f3 awral f0 f2 awreu awb f3 ac0 awne pjaoi $.
+$}
+$( /* Transfer universal quantification from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  (Contributed by NM,
+       18-Feb-2007.) */
+
+$)
+${
+	$v ph ps x y A B $.
+	$d x A $.
+	$d y ph $.
+	$d x ps $.
+	$d x y $.
+	e0 $e |- ( x = A -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	palxfr $p |- ( ( A. y A e. B /\ A. x E. y x = A ) -> ( A. x ph <-> A. y ps ) ) $=
+	e0 f0 f1 f2 f4 f5 pspcgv f4 f5 awcel f0 f2 awal f1 pcom12 f0 f2 awal f4 f5 awcel f1 f3 palimdv f0 f2 awal f4 f5 awcel f3 awal f1 f3 awal pcom12 f4 f5 awcel f3 awal f0 f2 awal f1 f3 awal awi f2 asup_set_class f4 awceq f3 awex f2 awal padantr f1 f3 pnfa1 f0 f3 pnfv f1 f3 psp e0 f1 f3 awal f0 f2 asup_set_class f4 awceq f1 psyl5ibrcom f1 f3 awal f2 asup_set_class f4 awceq f0 f3 pexlimd f1 f3 awal f2 asup_set_class f4 awceq f3 awex f0 f2 palimdv f1 f3 awal f2 asup_set_class f4 awceq f3 awex f2 awal f0 f2 awal pcom12 f2 asup_set_class f4 awceq f3 awex f2 awal f1 f3 awal f0 f2 awal awi f4 f5 awcel f3 awal padantl f4 f5 awcel f3 awal f2 asup_set_class f4 awceq f3 awex f2 awal awa f0 f2 awal f1 f3 awal pimpbid $.
+$}
+$( /* Transfer universal quantification from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  (Contributed by NM,
+       15-Aug-2014.)  (Proof shortened by Mario Carneiro, 19-Nov-2016.) */
+
+$)
+${
+	$v ph ps ch x y A B C $.
+	$d x A $.
+	$d x y B $.
+	$d x C $.
+	$d x ch $.
+	$d x y ph $.
+	$d y ps $.
+	e0 $e |- ( ( ph /\ y e. C ) -> A e. B ) $.
+	e1 $e |- ( ( ph /\ x e. B ) -> E. y e. C x = A ) $.
+	e2 $e |- ( ( ph /\ x = A ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	f6 $f class B $.
+	f7 $f class C $.
+	pralxfrd $p |- ( ph -> ( A. x e. B ps <-> A. y e. C ch ) ) $=
+	e0 e2 f0 f3 asup_set_class f5 awceq f1 f2 awb f4 asup_set_class f7 awcel padantlr f0 f4 asup_set_class f7 awcel awa f1 f2 f3 f5 f6 prspcdv f0 f1 f3 f6 awral f2 f4 f7 pralrimdva e1 f2 f3 asup_set_class f5 awceq f4 f7 pr19.29 e2 f0 f3 asup_set_class f5 awceq awa f1 f2 pbiimprd f0 f3 asup_set_class f5 awceq f2 f1 pexpimpd f0 f3 asup_set_class f5 awceq f2 f1 pancomsd f0 f2 f3 asup_set_class f5 awceq awa f1 awi f3 asup_set_class f6 awcel f4 asup_set_class f7 awcel pad2antrr f0 f3 asup_set_class f6 awcel awa f2 f3 asup_set_class f5 awceq awa f1 f4 f7 prexlimdva f2 f4 f7 awral f3 asup_set_class f5 awceq f4 f7 awrex awa f2 f3 asup_set_class f5 awceq awa f4 f7 awrex f0 f3 asup_set_class f6 awcel awa f1 psyl5 f0 f3 asup_set_class f6 awcel awa f2 f4 f7 awral f3 asup_set_class f5 awceq f4 f7 awrex f1 pmpan2d f0 f2 f4 f7 awral f1 f3 f6 pralrimdva f0 f1 f3 f6 awral f2 f4 f7 awral pimpbid $.
+$}
+$( /* Transfer universal quantification from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  (Contributed by FL,
+       10-Apr-2007.)  (Revised by Mario Carneiro, 15-Aug-2014.) */
+
+$)
+${
+	$v ph ps ch x y A B C $.
+	$d x A $.
+	$d x y B $.
+	$d x C $.
+	$d x ch $.
+	$d x y ph $.
+	$d y ps $.
+	e0 $e |- ( ( ph /\ y e. C ) -> A e. B ) $.
+	e1 $e |- ( ( ph /\ x e. B ) -> E. y e. C x = A ) $.
+	e2 $e |- ( ( ph /\ x = A ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	f6 $f class B $.
+	f7 $f class C $.
+	prexxfrd $p |- ( ph -> ( E. x e. B ps <-> E. y e. C ch ) ) $=
+	e0 e1 e2 f0 f3 asup_set_class f5 awceq awa f1 f2 pnotbid f0 f1 awn f2 awn f3 f4 f5 f6 f7 pralxfrd f0 f1 awn f3 f6 awral f2 awn f4 f7 awral pnotbid f1 f3 f6 pdfrex2 f2 f4 f7 pdfrex2 f0 f1 awn f3 f6 awral awn f2 awn f4 f7 awral awn f1 f3 f6 awrex f2 f4 f7 awrex p3bitr4g $.
+$}
+$( /* Transfer universal quantification from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  (Contributed by Mario
+       Carneiro, 20-Aug-2014.) */
+
+$)
+${
+	$v ph ps ch x y A B C V $.
+	$d x A $.
+	$d x y B $.
+	$d x C $.
+	$d x ch $.
+	$d x y ph $.
+	$d y ps $.
+	e0 $e |- ( ( ph /\ y e. C ) -> A e. V ) $.
+	e1 $e |- ( ph -> ( x e. B <-> E. y e. C x = A ) ) $.
+	e2 $e |- ( ( ph /\ x = A ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	f6 $f class B $.
+	f7 $f class C $.
+	f8 $f class V $.
+	pralxfr2d $p |- ( ph -> ( A. x e. B ps <-> A. y e. C ch ) ) $=
+	e0 f3 f5 f8 pelisset f0 f4 asup_set_class f7 awcel awa f5 f8 awcel f3 asup_set_class f5 awceq f3 awex psyl e1 f0 f3 asup_set_class f6 awcel f3 asup_set_class f5 awceq f4 f7 awrex pbiimprd f3 asup_set_class f5 awceq f3 asup_set_class f6 awcel f4 f7 pr19.23v f0 f3 asup_set_class f5 awceq f4 f7 awrex f3 asup_set_class f6 awcel awi f3 asup_set_class f5 awceq f3 asup_set_class f6 awcel awi f4 f7 awral psylibr f0 f3 asup_set_class f5 awceq f3 asup_set_class f6 awcel awi f4 f7 pr19.21bi f3 asup_set_class f5 f6 peleq1 f3 asup_set_class f5 awceq f3 asup_set_class f6 awcel f5 f6 awcel f0 f4 asup_set_class f7 awcel awa pmpbidi f0 f4 asup_set_class f7 awcel awa f3 asup_set_class f5 awceq f5 f6 awcel f3 pexlimdv f0 f4 asup_set_class f7 awcel awa f3 asup_set_class f5 awceq f3 awex f5 f6 awcel pmpd e1 f0 f3 asup_set_class f6 awcel f3 asup_set_class f5 awceq f4 f7 awrex pbiimpa e2 f0 f1 f2 f3 f4 f5 f6 f7 pralxfrd $.
+$}
+$( /* Transfer universal quantification from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  (Contributed by Mario
+       Carneiro, 20-Aug-2014.)  (Proof shortened by Mario Carneiro,
+       19-Nov-2016.) */
+
+$)
+${
+	$v ph ps ch x y A B C V $.
+	$d x A $.
+	$d x y B $.
+	$d x C $.
+	$d x ch $.
+	$d x y ph $.
+	$d y ps $.
+	e0 $e |- ( ( ph /\ y e. C ) -> A e. V ) $.
+	e1 $e |- ( ph -> ( x e. B <-> E. y e. C x = A ) ) $.
+	e2 $e |- ( ( ph /\ x = A ) -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	f6 $f class B $.
+	f7 $f class C $.
+	f8 $f class V $.
+	prexxfr2d $p |- ( ph -> ( E. x e. B ps <-> E. y e. C ch ) ) $=
+	e0 e1 e2 f0 f3 asup_set_class f5 awceq awa f1 f2 pnotbid f0 f1 awn f2 awn f3 f4 f5 f6 f7 f8 pralxfr2d f0 f1 awn f3 f6 awral f2 awn f4 f7 awral pnotbid f1 f3 f6 pdfrex2 f2 f4 f7 pdfrex2 f0 f1 awn f3 f6 awral awn f2 awn f4 f7 awral awn f1 f3 f6 awrex f2 f4 f7 awrex p3bitr4g $.
+$}
+$( /* Transfer universal quantification from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  (Contributed by NM,
+       10-Jun-2005.)  (Revised by Mario Carneiro, 15-Aug-2014.) */
+
+$)
+${
+	$v ph ps x y A B C $.
+	$d x ps $.
+	$d y ph $.
+	$d x A $.
+	$d x y B $.
+	$d x C $.
+	e0 $e |- ( y e. C -> A e. B ) $.
+	e1 $e |- ( x e. B -> E. y e. C x = A ) $.
+	e2 $e |- ( x = A -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	f6 $f class C $.
+	pralxfr $p |- ( A. x e. B ph <-> A. y e. C ps ) $=
+	e0 f3 asup_set_class f6 awcel f4 f5 awcel awtru padantl e1 f2 asup_set_class f5 awcel f2 asup_set_class f4 awceq f3 f6 awrex awtru padantl e2 f2 asup_set_class f4 awceq f0 f1 awb awtru padantl awtru f0 f1 f2 f3 f4 f5 f6 pralxfrd f0 f2 f5 awral f1 f3 f6 awral awb ptrud $.
+$}
+$( /* Transfer universal quantification from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  This proof does not use
+       ~ ralxfrd .  (Contributed by NM, 10-Jun-2005.)  (Revised by Mario
+       Carneiro, 15-Aug-2014.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) */
+
+$)
+${
+	$v ph ps x y A B C $.
+	$d x ps $.
+	$d y ph $.
+	$d x A $.
+	$d x y B $.
+	$d x C $.
+	e0 $e |- ( y e. C -> A e. B ) $.
+	e1 $e |- ( x e. B -> E. y e. C x = A ) $.
+	e2 $e |- ( x = A -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	f6 $f class C $.
+	pralxfrALT $p |- ( A. x e. B ph <-> A. y e. C ps ) $=
+	e0 e2 f0 f1 f2 f4 f5 prspcv f3 asup_set_class f6 awcel f4 f5 awcel f0 f2 f5 awral f1 awi psyl f3 asup_set_class f6 awcel f0 f2 f5 awral f1 pcom12 f0 f2 f5 awral f1 f3 f6 pralrimiv e1 f1 f3 f6 pnfra1 f0 f3 pnfv f1 f3 f6 prsp e2 f2 asup_set_class f4 awceq f0 f1 pbiimprcd f1 f3 f6 awral f3 asup_set_class f6 awcel f1 f2 asup_set_class f4 awceq f0 awi psyl6 f1 f3 f6 awral f2 asup_set_class f4 awceq f0 f3 f6 prexlimd f2 asup_set_class f5 awcel f2 asup_set_class f4 awceq f3 f6 awrex f1 f3 f6 awral f0 psyl5 f1 f3 f6 awral f0 f2 f5 pralrimiv f0 f2 f5 awral f1 f3 f6 awral pimpbii $.
+$}
+$( /* Transfer existence from a variable ` x ` to another variable ` y `
+       contained in expression ` A ` .  (Contributed by NM, 10-Jun-2005.)
+       (Revised by Mario Carneiro, 15-Aug-2014.) */
+
+$)
+${
+	$v ph ps x y A B C $.
+	$d x ps $.
+	$d y ph $.
+	$d x A $.
+	$d x y B $.
+	$d x C $.
+	e0 $e |- ( y e. C -> A e. B ) $.
+	e1 $e |- ( x e. B -> E. y e. C x = A ) $.
+	e2 $e |- ( x = A -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	f6 $f class C $.
+	prexxfr $p |- ( E. x e. B ph <-> E. y e. C ps ) $=
+	f0 f2 f5 pdfrex2 f1 f3 f6 pdfrex2 e0 e1 e2 f2 asup_set_class f4 awceq f0 f1 pnotbid f0 awn f1 awn f2 f3 f4 f5 f6 pralxfr f1 f3 f6 awrex f1 awn f3 f6 awral f0 awn f2 f5 awral pxchbinxr f0 f2 f5 awrex f0 awn f2 f5 awral awn f1 f3 f6 awrex pbitr4i $.
+$}
+$( /* Class builder membership after substituting an expression ` A `
+       (containing ` y ` ) for ` x ` in the class expression ` ch ` .
+       (Contributed by NM, 16-Jan-2012.) */
+
+$)
+${
+	$v ph ps ch x y A B C D $.
+	$d x A $.
+	$d x y D $.
+	$d y ph $.
+	$d y ps $.
+	$d x ch $.
+	e0 $e |- F/_ y B $.
+	e1 $e |- F/_ y C $.
+	e2 $e |- ( ( ph /\ y e. D ) -> A e. D ) $.
+	e3 $e |- ( x = A -> ( ps <-> ch ) ) $.
+	e4 $e |- ( y = B -> A = C ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	f6 $f class B $.
+	f7 $f class C $.
+	f8 $f class D $.
+	prabxfrd $p |- ( ( ph /\ B e. D ) -> ( C e. { x e. D | ps } <-> B e. { y e. D | ch } ) ) $=
+	e2 f0 f4 asup_set_class f8 awcel f5 f8 awcel pex f4 asup_set_class f8 awcel f5 f8 awcel pibibr f0 f4 asup_set_class f8 awcel f5 f8 awcel awi f4 asup_set_class f8 awcel f5 f8 awcel f4 asup_set_class f8 awcel awb awi psylib f0 f4 asup_set_class f8 awcel f5 f8 awcel f4 asup_set_class f8 awcel awb pimp f0 f4 asup_set_class f8 awcel awa f5 f8 awcel f4 asup_set_class f8 awcel f2 panbi1d e3 f1 f2 f3 f5 f8 pelrab f2 f4 f8 prabid f0 f4 asup_set_class f8 awcel awa f5 f8 awcel f2 awa f4 asup_set_class f8 awcel f2 awa f5 f1 f3 f8 acrab awcel f4 asup_set_class f2 f4 f8 acrab awcel p3bitr4g f0 f5 f1 f3 f8 acrab awcel f4 asup_set_class f2 f4 f8 acrab awcel f4 f8 prabbidva f0 f5 f1 f3 f8 acrab awcel f4 f8 acrab f4 asup_set_class f2 f4 f8 acrab awcel f4 f8 acrab f6 peleq2d e0 f4 f8 pnfcv e1 f4 f7 f1 f3 f8 acrab pnfel1 e4 f4 asup_set_class f6 awceq f5 f7 f1 f3 f8 acrab peleq1d f5 f1 f3 f8 acrab awcel f7 f1 f3 f8 acrab awcel f4 f6 f8 pelrabf e0 f4 f8 pnfcv e0 f2 f4 f8 pnfrab1 f4 f6 f2 f4 f8 acrab pnfel f4 asup_set_class f6 f2 f4 f8 acrab peleq1 f4 asup_set_class f2 f4 f8 acrab awcel f6 f2 f4 f8 acrab awcel f4 f6 f8 pelrabf f0 f6 f5 f1 f3 f8 acrab awcel f4 f8 acrab awcel f6 f4 asup_set_class f2 f4 f8 acrab awcel f4 f8 acrab awcel f6 f8 awcel f7 f1 f3 f8 acrab awcel awa f6 f8 awcel f6 f2 f4 f8 acrab awcel awa p3bitr3g f6 f8 awcel f7 f1 f3 f8 acrab awcel f6 f2 f4 f8 acrab awcel ppm5.32 f0 f6 f8 awcel f7 f1 f3 f8 acrab awcel awa f6 f8 awcel f6 f2 f4 f8 acrab awcel awa awb f6 f8 awcel f7 f1 f3 f8 acrab awcel f6 f2 f4 f8 acrab awcel awb awi psylibr f0 f6 f8 awcel f7 f1 f3 f8 acrab awcel f6 f2 f4 f8 acrab awcel awb pimp $.
+$}
+$( /* Class builder membership after substituting an expression ` A `
+       (containing ` y ` ) for ` x ` in the class expression ` ph ` .
+       (Contributed by NM, 10-Jun-2005.) */
+
+$)
+${
+	$v ph ps x y A B C D $.
+	$d x A $.
+	$d x y D $.
+	$d y ph $.
+	$d x ps $.
+	e0 $e |- F/_ y B $.
+	e1 $e |- F/_ y C $.
+	e2 $e |- ( y e. D -> A e. D ) $.
+	e3 $e |- ( x = A -> ( ph <-> ps ) ) $.
+	e4 $e |- ( y = B -> A = C ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	f6 $f class C $.
+	f7 $f class D $.
+	prabxfr $p |- ( B e. D -> ( C e. { x e. D | ph } <-> B e. { y e. D | ps } ) ) $=
+	ptru e0 e1 e2 f3 asup_set_class f7 awcel f4 f7 awcel awtru padantl e3 e4 awtru f0 f1 f2 f3 f4 f5 f6 f7 prabxfrd awtru f5 f7 awcel f6 f0 f2 f7 acrab awcel f5 f1 f3 f7 acrab awcel awb pmpan $.
+$}
+$( /* Transfer existential uniqueness from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  (Contributed by NM,
+       16-Jan-2012.)  (Revised by NM, 16-Jun-2017.) */
+
+$)
+${
+	$v ph ps x y A B $.
+	$d x y ph $.
+	$d x ps $.
+	$d x A $.
+	$d x y B $.
+	e0 $e |- ( ( ph /\ y e. B ) -> A e. B ) $.
+	e1 $e |- ( ( ph /\ x e. B ) -> E* y e. B x = A ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	preuxfr2d $p |- ( ph -> ( E! x e. B E. y e. B ( x = A /\ ps ) <-> E! y e. B ps ) ) $=
+	e1 f2 asup_set_class f4 awceq f1 f3 f5 prmoan f0 f2 asup_set_class f5 awcel awa f2 asup_set_class f4 awceq f3 f5 awrmo f1 f2 asup_set_class f4 awceq awa f3 f5 awrmo psyl f1 f2 asup_set_class f4 awceq pancom f1 f2 asup_set_class f4 awceq awa f2 asup_set_class f4 awceq f1 awa f3 f5 prmobii f0 f2 asup_set_class f5 awcel awa f1 f2 asup_set_class f4 awceq awa f3 f5 awrmo f2 asup_set_class f4 awceq f1 awa f3 f5 awrmo psylib f0 f2 asup_set_class f4 awceq f1 awa f3 f5 awrmo f2 f5 pralrimiva f2 asup_set_class f4 awceq f1 awa f2 f3 f5 f5 p2reuswap f0 f2 asup_set_class f4 awceq f1 awa f3 f5 awrmo f2 f5 awral f2 asup_set_class f4 awceq f1 awa f3 f5 awrex f2 f5 awreu f2 asup_set_class f4 awceq f1 awa f2 f5 awrex f3 f5 awreu awi psyl f2 asup_set_class f4 awceq f1 awa f2 f5 adf-rmo f2 asup_set_class f4 awceq f1 awa f2 f5 awrmo f2 asup_set_class f5 awcel f2 asup_set_class f4 awceq f1 awa awa f2 awmo f3 f5 pralbii f2 asup_set_class f4 awceq f1 awa f3 f2 f5 f5 p2reuswap f2 asup_set_class f5 awcel f2 asup_set_class f4 awceq f1 awa awa f2 awmo f3 f5 awral f2 asup_set_class f4 awceq f1 awa f2 f5 awrmo f3 f5 awral f2 asup_set_class f4 awceq f1 awa f2 f5 awrex f3 f5 awreu f2 asup_set_class f4 awceq f1 awa f3 f5 awrex f2 f5 awreu awi psylbir f2 f4 pmoeq f2 asup_set_class f4 awceq f2 asup_set_class f5 awcel f1 awa f2 pmoani f2 asup_set_class f5 awcel f1 awa f2 asup_set_class f4 awceq pancom f2 asup_set_class f4 awceq f2 asup_set_class f5 awcel f1 pan12 f2 asup_set_class f5 awcel f1 awa f2 asup_set_class f4 awceq awa f2 asup_set_class f4 awceq f2 asup_set_class f5 awcel f1 awa awa f2 asup_set_class f5 awcel f2 asup_set_class f4 awceq f1 awa awa pbitri f2 asup_set_class f5 awcel f1 awa f2 asup_set_class f4 awceq awa f2 asup_set_class f5 awcel f2 asup_set_class f4 awceq f1 awa awa f2 pmobii f2 asup_set_class f5 awcel f1 awa f2 asup_set_class f4 awceq awa f2 awmo f2 asup_set_class f5 awcel f2 asup_set_class f4 awceq f1 awa awa f2 awmo pmpbi f2 asup_set_class f5 awcel f2 asup_set_class f4 awceq f1 awa awa f2 awmo f3 asup_set_class f5 awcel pa1i f2 asup_set_class f5 awcel f2 asup_set_class f4 awceq f1 awa awa f2 awmo f2 asup_set_class f4 awceq f1 awa f2 f5 awrex f3 f5 awreu f2 asup_set_class f4 awceq f1 awa f3 f5 awrex f2 f5 awreu awi f3 f5 pmprg f0 f2 asup_set_class f4 awceq f1 awa f3 f5 awrex f2 f5 awreu f2 asup_set_class f4 awceq f1 awa f2 f5 awrex f3 f5 awreu pimpbid1 e0 f2 asup_set_class f4 awceq f1 pbiidd f1 f1 f2 f4 f5 pceqsrexv f0 f3 asup_set_class f5 awcel awa f4 f5 awcel f2 asup_set_class f4 awceq f1 awa f2 f5 awrex f1 awb psyl f0 f2 asup_set_class f4 awceq f1 awa f2 f5 awrex f1 f3 f5 preubidva f0 f2 asup_set_class f4 awceq f1 awa f3 f5 awrex f2 f5 awreu f2 asup_set_class f4 awceq f1 awa f2 f5 awrex f3 f5 awreu f1 f3 f5 awreu pbitrd $.
+$}
+$( /* Transfer existential uniqueness from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  (Contributed by NM,
+       14-Nov-2004.)  (Revised by NM, 16-Jun-2017.) */
+
+$)
+${
+	$v ph x y A B $.
+	$d x ph $.
+	$d x A $.
+	$d x y B $.
+	e0 $e |- ( y e. B -> A e. B ) $.
+	e1 $e |- ( x e. B -> E* y e. B x = A ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	preuxfr2 $p |- ( E! x e. B E. y e. B ( x = A /\ ph ) <-> E! y e. B ph ) $=
+	e0 f2 asup_set_class f4 awcel f3 f4 awcel awtru padantl e1 f1 asup_set_class f4 awcel f1 asup_set_class f3 awceq f2 f4 awrmo awtru padantl awtru f0 f1 f2 f3 f4 preuxfr2d f1 asup_set_class f3 awceq f0 awa f2 f4 awrex f1 f4 awreu f0 f2 f4 awreu awb ptrud $.
+$}
+$( /* Transfer existential uniqueness from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  Use ~ reuhypd to
+       eliminate the second hypothesis.  (Contributed by NM, 16-Jan-2012.) */
+
+$)
+${
+	$v ph ps ch x y A B $.
+	$d x y ph $.
+	$d y ps $.
+	$d x ch $.
+	$d x A $.
+	$d x y B $.
+	e0 $e |- ( ( ph /\ y e. B ) -> A e. B ) $.
+	e1 $e |- ( ( ph /\ x e. B ) -> E! y e. B x = A ) $.
+	e2 $e |- ( x = A -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f class A $.
+	f6 $f class B $.
+	preuxfrd $p |- ( ph -> ( E! x e. B ps <-> E! y e. B ch ) ) $=
+	e1 f3 asup_set_class f5 awceq f4 f6 preurex f0 f3 asup_set_class f6 awcel awa f3 asup_set_class f5 awceq f4 f6 awreu f3 asup_set_class f5 awceq f4 f6 awrex psyl f0 f3 asup_set_class f6 awcel awa f3 asup_set_class f5 awceq f4 f6 awrex f1 pbiantrurd f3 asup_set_class f5 awceq f1 f4 f6 pr19.41v e2 f3 asup_set_class f5 awceq f1 f2 ppm5.32i f3 asup_set_class f5 awceq f1 awa f3 asup_set_class f5 awceq f2 awa f4 f6 prexbii f3 asup_set_class f5 awceq f4 f6 awrex f1 awa f3 asup_set_class f5 awceq f1 awa f4 f6 awrex f3 asup_set_class f5 awceq f2 awa f4 f6 awrex pbitr3i f0 f3 asup_set_class f6 awcel awa f1 f3 asup_set_class f5 awceq f4 f6 awrex f1 awa f3 asup_set_class f5 awceq f2 awa f4 f6 awrex psyl6bb f0 f1 f3 asup_set_class f5 awceq f2 awa f4 f6 awrex f3 f6 preubidva e0 e1 f3 asup_set_class f5 awceq f4 f6 preurmo f0 f3 asup_set_class f6 awcel awa f3 asup_set_class f5 awceq f4 f6 awreu f3 asup_set_class f5 awceq f4 f6 awrmo psyl f0 f2 f3 f4 f5 f6 preuxfr2d f0 f1 f3 f6 awreu f3 asup_set_class f5 awceq f2 awa f4 f6 awrex f3 f6 awreu f2 f4 f6 awreu pbitrd $.
+$}
+$( /* Transfer existential uniqueness from a variable ` x ` to another
+       variable ` y ` contained in expression ` A ` .  Use ~ reuhyp to
+       eliminate the second hypothesis.  (Contributed by NM, 14-Nov-2004.) */
+
+$)
+${
+	$v ph ps x y A B $.
+	$d x ps $.
+	$d y ph $.
+	$d x A $.
+	$d x y B $.
+	e0 $e |- ( y e. B -> A e. B ) $.
+	e1 $e |- ( x e. B -> E! y e. B x = A ) $.
+	e2 $e |- ( x = A -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	preuxfr $p |- ( E! x e. B ph <-> E! y e. B ps ) $=
+	e0 f3 asup_set_class f5 awcel f4 f5 awcel awtru padantl e1 f2 asup_set_class f5 awcel f2 asup_set_class f4 awceq f3 f5 awreu awtru padantl e2 awtru f0 f1 f2 f3 f4 f5 preuxfrd f0 f2 f5 awreu f1 f3 f5 awreu awb ptrud $.
+$}
+$( /* A theorem useful for eliminating the restricted existential uniqueness
+       hypotheses in ~ riotaxfrd .  (Contributed by NM, 16-Jan-2012.) */
+
+$)
+${
+	$v ph x y A B C $.
+	$d y ph $.
+	$d y B $.
+	$d y C $.
+	$d x y $.
+	e0 $e |- ( ( ph /\ x e. C ) -> B e. C ) $.
+	e1 $e |- ( ( ph /\ x e. C /\ y e. C ) -> ( x = A <-> y = B ) ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	f5 $f class C $.
+	preuhypd $p |- ( ( ph /\ x e. C ) -> E! y e. C x = A ) $=
+	e0 f4 f5 pelex f0 f1 asup_set_class f5 awcel awa f4 f5 awcel f4 acvv awcel psyl f2 f4 peueq f0 f1 asup_set_class f5 awcel awa f4 acvv awcel f2 asup_set_class f4 awceq f2 aweu psylib e0 f2 asup_set_class f4 f5 peleq1 f0 f1 asup_set_class f5 awcel awa f2 asup_set_class f5 awcel f2 asup_set_class f4 awceq f4 f5 awcel psyl5ibrcom f0 f1 asup_set_class f5 awcel awa f2 asup_set_class f4 awceq f2 asup_set_class f5 awcel ppm4.71rd e1 f0 f1 asup_set_class f5 awcel f2 asup_set_class f5 awcel f1 asup_set_class f3 awceq f2 asup_set_class f4 awceq awb p3expa f0 f1 asup_set_class f5 awcel awa f2 asup_set_class f5 awcel f1 asup_set_class f3 awceq f2 asup_set_class f4 awceq ppm5.32da f0 f1 asup_set_class f5 awcel awa f2 asup_set_class f4 awceq f2 asup_set_class f5 awcel f2 asup_set_class f4 awceq awa f2 asup_set_class f5 awcel f1 asup_set_class f3 awceq awa pbitr4d f0 f1 asup_set_class f5 awcel awa f2 asup_set_class f4 awceq f2 asup_set_class f5 awcel f1 asup_set_class f3 awceq awa f2 peubidv f0 f1 asup_set_class f5 awcel awa f2 asup_set_class f4 awceq f2 aweu f2 asup_set_class f5 awcel f1 asup_set_class f3 awceq awa f2 aweu pmpbid f1 asup_set_class f3 awceq f2 f5 adf-reu f0 f1 asup_set_class f5 awcel awa f2 asup_set_class f5 awcel f1 asup_set_class f3 awceq awa f2 aweu f1 asup_set_class f3 awceq f2 f5 awreu psylibr $.
+$}
+$( /* A theorem useful for eliminating the restricted existential uniqueness
+       hypotheses in ~ reuxfr .  (Contributed by NM, 15-Nov-2004.) */
+
+$)
+${
+	$v x y A B C $.
+	$d y B $.
+	$d y C $.
+	$d x y $.
+	e0 $e |- ( x e. C -> B e. C ) $.
+	e1 $e |- ( ( x e. C /\ y e. C ) -> ( x = A <-> y = B ) ) $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	preuhyp $p |- ( x e. C -> E! y e. C x = A ) $=
+	ptru e0 f0 asup_set_class f4 awcel f3 f4 awcel awtru padantl e1 f0 asup_set_class f4 awcel f1 asup_set_class f4 awcel f0 asup_set_class f2 awceq f1 asup_set_class f3 awceq awb awtru p3adant1 awtru f0 f1 f2 f3 f4 preuhypd awtru f0 asup_set_class f4 awcel f0 asup_set_class f2 awceq f1 f4 awreu pmpan $.
+$}
+$( /* The Axiom of Union and its converse.  A class is a set iff its union is a
+     set.  (Contributed by NM, 11-Nov-2003.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	puniexb $p |- ( A e. _V <-> U. A e. _V ) $=
+	f0 acvv puniexg f0 ppwuni f0 acuni acvv ppwexg f0 f0 acuni acpw acvv pssexg f0 acuni acvv awcel f0 f0 acuni acpw awss f0 acuni acpw acvv awcel f0 acvv awcel psylancr f0 acvv awcel f0 acuni acvv awcel pimpbii $.
+$}
+$( /* The Axiom of Power Sets and its converse.  A class is a set iff its power
+     class is a set.  (Contributed by NM, 11-Nov-2003.) */
+
+$)
+${
+	$v A $.
+	f0 $f class A $.
+	ppwexb $p |- ( A e. _V <-> ~P A e. _V ) $=
+	f0 acpw puniexb f0 punipw f0 acpw acuni f0 acvv peleq1i f0 acpw acvv awcel f0 acpw acuni acvv awcel f0 acvv awcel pbitr2i $.
+$}
+$( /* The union of the universe is the universe.  Exercise 4.12(c) of
+     [Mendelson] p. 235.  (Contributed by NM, 14-Sep-2003.) */
+
+$)
+${
+	puniv $p |- U. _V = _V $=
+	ppwv acvv acpw acvv punieqi acvv punipw acvv acpw acuni acvv acuni acvv peqtr3i $.
+$}
+$( /* Membership in a power class difference.  (Contributed by NM,
+       25-Mar-2007.) */
+
+$)
+${
+	$v A B C $.
+	e0 $e |- C e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	peldifpw $p |- ( ( A e. ~P B /\ -. C C_ B ) -> ( A u. C ) e. ( ~P ( B u. C ) \ ~P B ) ) $=
+	f0 f1 pelpwi f0 f1 f2 punss1 e0 f0 f2 f1 acpw acvv punexg f0 f1 acpw awcel f2 acvv awcel f0 f2 acun acvv awcel pmpan2 f0 f2 acun f1 f2 acun acvv pelpwg f0 f1 acpw awcel f0 f2 acun acvv awcel f0 f2 acun f1 f2 acun acpw awcel f0 f2 acun f1 f2 acun awss awb psyl f0 f1 awss f0 f2 acun f1 f2 acun acpw awcel f0 f1 acpw awcel f0 f2 acun f1 f2 acun awss psyl5ibr f0 f1 acpw awcel f0 f1 awss f0 f2 acun f1 f2 acun acpw awcel pmpd f0 f2 acun f1 pelpwi f0 f2 f1 punss f0 f1 awss f2 f1 awss psimpr f0 f2 acun f1 awss f0 f1 awss f2 f1 awss awa f2 f1 awss psylbir f0 f2 acun f1 acpw awcel f0 f2 acun f1 awss f2 f1 awss psyl f0 f2 acun f1 acpw awcel f2 f1 awss pcon3i f0 f1 acpw awcel f0 f2 acun f1 f2 acun acpw awcel f2 f1 awss awn f0 f2 acun f1 acpw awcel awn panim12i f0 f2 acun f1 f2 acun acpw f1 acpw peldif f0 f1 acpw awcel f2 f1 awss awn awa f0 f2 acun f1 f2 acun acpw awcel f0 f2 acun f1 acpw awcel awn awa f0 f2 acun f1 f2 acun acpw f1 acpw acdif awcel psylibr $.
+$}
+$( /* Membership in the power class of a union.  (Contributed by NM,
+       26-Mar-2007.) */
+
+$)
+${
+	$v A B C $.
+	e0 $e |- C e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	pelpwun $p |- ( A e. ~P ( B u. C ) <-> ( A \ C ) e. ~P B ) $=
+	f0 f1 f2 acun acpw pelex f0 f2 acdif f1 acpw pelex e0 f0 f2 acvv pdifex2 f2 acvv awcel f0 acvv awcel f0 f2 acdif acvv awcel awb aax-mp f0 f2 acdif f1 acpw awcel f0 f2 acdif acvv awcel f0 acvv awcel psylibr f0 f1 f2 acun acvv pelpwg f0 f2 acvv pdifexg f0 f2 acdif f1 acvv pelpwg f0 acvv awcel f0 f2 acdif acvv awcel f0 f2 acdif f1 acpw awcel f0 f2 acdif f1 awss awb psyl f1 f2 puncom f1 f2 acun f2 f1 acun f0 psseq2i f0 f2 f1 pssundif f0 f1 f2 acun awss f0 f2 f1 acun awss f0 f2 acdif f1 awss pbitri f0 acvv awcel f0 f2 acdif f1 acpw awcel f0 f2 acdif f1 awss f0 f1 f2 acun awss psyl6rbbr f0 acvv awcel f0 f1 f2 acun acpw awcel f0 f1 f2 acun awss f0 f2 acdif f1 acpw awcel pbitrd f0 f1 f2 acun acpw awcel f0 acvv awcel f0 f2 acdif f1 acpw awcel ppm5.21nii $.
+$}
+$( /* Membership in an extension of a power class.  (Contributed by NM,
+       26-Mar-2007.) */
+
+$)
+${
+	$v x A B C $.
+	$d x A $.
+	$d x B $.
+	$d x C $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	i0 $f set x $.
+	pelpwunsn $p |- ( A e. ( ~P ( B u. { C } ) \ ~P B ) -> C e. A ) $=
+	f0 f1 f2 acsn acun acpw f1 acpw peldif f0 f1 f1 f2 acsn acun acpw pelpwg i0 f0 f1 pdfss3 f0 f1 f2 acsn acun acpw awcel f0 f1 acpw awcel f0 f1 awss i0 asup_set_class f1 awcel i0 f0 awral psyl6bb f0 f1 f2 acsn acun acpw awcel f0 f1 acpw awcel i0 asup_set_class f1 awcel i0 f0 awral pnotbid f0 f1 f2 acsn acun acpw awcel f0 f1 acpw awcel awn i0 asup_set_class f1 awcel i0 f0 awral awn pbiimpa i0 asup_set_class f1 awcel i0 f0 prexnal f0 f1 f2 acsn acun acpw awcel f0 f1 acpw awcel awn awa i0 asup_set_class f1 awcel i0 f0 awral awn i0 asup_set_class f1 awcel awn i0 f0 awrex psylibr f0 f1 f2 acsn acun pelpwi f0 f1 f2 acsn acun i0 asup_set_class pssel i0 asup_set_class f1 f2 acsn pelun i0 asup_set_class f2 pelsni i0 asup_set_class f2 acsn awcel i0 asup_set_class f2 awceq i0 asup_set_class f1 awcel porim2i i0 asup_set_class f1 awcel i0 asup_set_class f2 acsn awcel awo i0 asup_set_class f1 awcel i0 asup_set_class f2 awceq pord i0 asup_set_class f1 f2 acsn acun awcel i0 asup_set_class f1 awcel i0 asup_set_class f2 acsn awcel awo i0 asup_set_class f1 awcel awn i0 asup_set_class f2 awceq awi psylbi i0 asup_set_class f1 f2 acsn acun awcel i0 asup_set_class f1 awcel awn i0 asup_set_class f2 awceq awi i0 asup_set_class f0 awcel pimim2i i0 asup_set_class f0 awcel i0 asup_set_class f1 f2 acsn acun awcel awi i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awn i0 asup_set_class f2 awceq pimp3a f0 f1 f2 acsn acun acpw awcel f0 f1 f2 acsn acun awss i0 asup_set_class f0 awcel i0 asup_set_class f1 f2 acsn acun awcel awi i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awn awa i0 asup_set_class f2 awceq awi p3syl i0 asup_set_class f2 f0 peleq1 i0 asup_set_class f2 awceq i0 asup_set_class f0 awcel f2 f0 awcel pbiimpd f0 f1 f2 acsn acun acpw awcel i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awn awa i0 asup_set_class f2 awceq i0 asup_set_class f0 awcel f2 f0 awcel awi psyl6 f0 f1 f2 acsn acun acpw awcel i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awn i0 asup_set_class f0 awcel f2 f0 awcel awi pexp3a f0 f1 f2 acsn acun acpw awcel i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awn i0 asup_set_class f0 awcel f2 f0 awcel pcom4r f0 f1 f2 acsn acun acpw awcel i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awn f2 f0 awcel awi ppm2.43b f0 f1 f2 acsn acun acpw awcel i0 asup_set_class f1 awcel awn f2 f0 awcel i0 f0 prexlimdv f0 f1 f2 acsn acun acpw awcel i0 asup_set_class f1 awcel awn i0 f0 awrex f2 f0 awcel pimp f0 f1 f2 acsn acun acpw awcel f0 f1 acpw awcel awn i0 asup_set_class f1 awcel awn i0 f0 awrex f2 f0 awcel psyldan f0 f1 f2 acsn acun acpw f1 acpw acdif awcel f0 f1 f2 acsn acun acpw awcel f0 f1 acpw awcel awn awa f2 f0 awcel psylbi $.
+$}
+$( /* Extract the first member of an ordered pair.  Theorem 73 of [Suppes]
+       p. 42.  (See ~ op2ndb to extract the second member, ~ op1sta for an
+       alternate version, and ~ op1st for the preferred version.)  (Contributed
+       by NM, 25-Nov-2003.) */
+
+$)
+${
+	$v A B $.
+	e0 $e |- A e. _V $.
+	e1 $e |- B e. _V $.
+	f0 $f class A $.
+	f1 $f class B $.
+	pop1stb $p |- |^| |^| <. A , B >. = A $=
+	e0 e1 f0 f1 pdfop f0 f1 acop f0 acsn f0 f1 acpr acpr pinteqi f0 psnex f0 f1 pprex f0 acsn f0 f1 acpr pintpr f0 f1 psnsspr1 f0 acsn f0 f1 acpr adf-ss f0 acsn f0 f1 acpr awss f0 acsn f0 f1 acpr acin f0 acsn awceq pmpbi f0 acsn f0 f1 acpr acpr acint f0 acsn f0 f1 acpr acin f0 acsn peqtri f0 f1 acop acint f0 acsn f0 f1 acpr acpr acint f0 acsn peqtri f0 f1 acop acint f0 acsn pinteqi e0 f0 pintsn f0 f1 acop acint acint f0 acsn acint f0 peqtri $.
+$}
+$( /* An indexed union of a power class in terms of the power class of the
+       union of its index.  Part of Exercise 24(b) of [Enderton] p. 33.
+       (Contributed by NM, 29-Nov-2003.) */
+
+$)
+${
+	$v x y A $.
+	$d x y A $.
+	e0 $e |- A e. _V $.
+	f0 $f set x $.
+	f1 $f class A $.
+	i0 $f set y $.
+	piunpw $p |- ( E. x e. A x = U. A <-> ~P U. A = U_ x e. A ~P x ) $=
+	f0 asup_set_class f1 acuni i0 asup_set_class psseq2 f0 asup_set_class f1 acuni awceq i0 asup_set_class f0 asup_set_class awss i0 asup_set_class f1 acuni awss pbiimprcd i0 asup_set_class f1 acuni awss f0 asup_set_class f1 acuni awceq i0 asup_set_class f0 asup_set_class awss f0 f1 preximdv i0 asup_set_class f1 acuni awss f0 asup_set_class f1 acuni awceq f0 f1 awrex i0 asup_set_class f0 asup_set_class awss f0 f1 awrex pcom12 f0 f1 f0 asup_set_class i0 asup_set_class pssiun f0 f1 puniiun i0 asup_set_class f0 asup_set_class awss f0 f1 awrex i0 asup_set_class f0 f1 f0 asup_set_class aciun f1 acuni psyl6sseqr f0 asup_set_class f1 acuni awceq f0 f1 awrex i0 asup_set_class f1 acuni awss i0 asup_set_class f0 asup_set_class awss f0 f1 awrex pimpbid1 i0 pvex i0 asup_set_class f1 acuni pelpw f0 i0 asup_set_class f1 f0 asup_set_class acpw peliun i0 f0 asup_set_class adf-pw i0 asup_set_class f0 asup_set_class awss i0 f0 asup_set_class acpw pabeq2i i0 asup_set_class f0 asup_set_class acpw awcel i0 asup_set_class f0 asup_set_class awss f0 f1 prexbii i0 asup_set_class f0 f1 f0 asup_set_class acpw aciun awcel i0 asup_set_class f0 asup_set_class acpw awcel f0 f1 awrex i0 asup_set_class f0 asup_set_class awss f0 f1 awrex pbitri f0 asup_set_class f1 acuni awceq f0 f1 awrex i0 asup_set_class f1 acuni awss i0 asup_set_class f0 asup_set_class awss f0 f1 awrex i0 asup_set_class f1 acuni acpw awcel i0 asup_set_class f0 f1 f0 asup_set_class acpw aciun awcel p3bitr4g f0 asup_set_class f1 acuni awceq f0 f1 awrex i0 f1 acuni acpw f0 f1 f0 asup_set_class acpw aciun peqrdv f1 acuni pssid e0 f1 puniex f1 acuni f1 acuni pelpw f1 acuni acpw f0 f1 f0 asup_set_class acpw aciun f1 acuni peleq2 f1 acuni f1 acuni awss f1 acuni f1 acuni acpw awcel f1 acuni acpw f0 f1 f0 asup_set_class acpw aciun awceq f1 acuni f0 f1 f0 asup_set_class acpw aciun awcel psyl5bbr f1 acuni acpw f0 f1 f0 asup_set_class acpw aciun awceq f1 acuni f1 acuni awss f1 acuni f0 f1 f0 asup_set_class acpw aciun awcel pmpbii f0 f1 acuni f1 f0 asup_set_class acpw peliun f1 acuni acpw f0 f1 f0 asup_set_class acpw aciun awceq f1 acuni f0 f1 f0 asup_set_class acpw aciun awcel f1 acuni f0 asup_set_class acpw awcel f0 f1 awrex psylib f0 asup_set_class f1 pelssuni f1 acuni f0 asup_set_class pelpwi f0 asup_set_class f1 awcel f0 asup_set_class f1 acuni awss f1 acuni f0 asup_set_class acpw awcel f1 acuni f0 asup_set_class awss panim12i f0 asup_set_class f1 acuni peqss f0 asup_set_class f1 awcel f1 acuni f0 asup_set_class acpw awcel awa f0 asup_set_class f1 acuni awss f1 acuni f0 asup_set_class awss awa f0 asup_set_class f1 acuni awceq psylibr f0 asup_set_class f1 awcel f1 acuni f0 asup_set_class acpw awcel f0 asup_set_class f1 acuni awceq pex f1 acuni f0 asup_set_class acpw awcel f0 asup_set_class f1 acuni awceq f0 f1 preximia f1 acuni acpw f0 f1 f0 asup_set_class acpw aciun awceq f1 acuni f0 asup_set_class acpw awcel f0 f1 awrex f0 asup_set_class f1 acuni awceq f0 f1 awrex psyl f0 asup_set_class f1 acuni awceq f0 f1 awrex f1 acuni acpw f0 f1 f0 asup_set_class acpw aciun awceq pimpbii $.
+$}
+$( /* A well-founded relation has no 3-cycle loops.  Special case of
+       Proposition 6.23 of [TakeutiZaring] p. 30.  (Contributed by NM,
+       10-Apr-1994.)  (Revised by Mario Carneiro, 22-Jun-2015.) */
+
+$)
+${
+	$v x y A B C D R $.
+	$d x y A $.
+	$d x y B $.
+	$d x y C $.
+	$d x y D $.
+	$d x y R $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	f4 $f class R $.
+	i0 $f set x $.
+	i1 $f set y $.
+	pfr3nr $p |- ( ( R Fr A /\ ( B e. A /\ C e. A /\ D e. A ) ) -> -. ( B R C /\ C R D /\ D R B ) ) $=
+	f1 f2 f3 ptpex f1 f2 f3 actp acvv awcel f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa pa1i f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a psimpl f1 f2 f3 adf-tp f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel psimpr1 f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel psimpr2 f1 f2 f0 pprssi f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa f1 f0 awcel f2 f0 awcel f1 f2 acpr f0 awss psyl2anc f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel psimpr3 f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa f3 f0 psnssd f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa f1 f2 acpr f3 acsn f0 punssd f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa f1 f2 f3 actp f1 f2 acpr f3 acsn acun f0 psyl5eqss f1 f2 f3 psnsstp1 f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel psimpr1 f1 f1 f2 f3 actp f0 psnssg f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa f1 f0 awcel f1 f1 f2 f3 actp awcel f1 acsn f1 f2 f3 actp awss awb psyl f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa f1 f1 f2 f3 actp awcel f1 acsn f1 f2 f3 actp awss pmpbiri f1 f2 f3 actp f1 pne0i f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa f1 f1 f2 f3 actp awcel f1 f2 f3 actp ac0 awne psyl i0 i1 f0 f1 f2 f3 actp acvv f4 pfri f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa f1 f2 f3 actp acvv awcel f0 f4 awfr f1 f2 f3 actp f0 awss f1 f2 f3 actp ac0 awne i1 asup_set_class i0 asup_set_class f4 awbr awn i1 f1 f2 f3 actp awral i0 f1 f2 f3 actp awrex psyl22anc i0 asup_set_class f1 i1 asup_set_class f4 pbreq2 i0 asup_set_class f1 awceq i1 asup_set_class i0 asup_set_class f4 awbr i1 asup_set_class f1 f4 awbr pnotbid i0 asup_set_class f1 awceq i1 asup_set_class i0 asup_set_class f4 awbr awn i1 asup_set_class f1 f4 awbr awn i1 f1 f2 f3 actp pralbidv i0 asup_set_class f2 i1 asup_set_class f4 pbreq2 i0 asup_set_class f2 awceq i1 asup_set_class i0 asup_set_class f4 awbr i1 asup_set_class f2 f4 awbr pnotbid i0 asup_set_class f2 awceq i1 asup_set_class i0 asup_set_class f4 awbr awn i1 asup_set_class f2 f4 awbr awn i1 f1 f2 f3 actp pralbidv i0 asup_set_class f3 i1 asup_set_class f4 pbreq2 i0 asup_set_class f3 awceq i1 asup_set_class i0 asup_set_class f4 awbr i1 asup_set_class f3 f4 awbr pnotbid i0 asup_set_class f3 awceq i1 asup_set_class i0 asup_set_class f4 awbr awn i1 asup_set_class f3 f4 awbr awn i1 f1 f2 f3 actp pralbidv i1 asup_set_class i0 asup_set_class f4 awbr awn i1 f1 f2 f3 actp awral i1 asup_set_class f1 f4 awbr awn i1 f1 f2 f3 actp awral i1 asup_set_class f2 f4 awbr awn i1 f1 f2 f3 actp awral i1 asup_set_class f3 f4 awbr awn i1 f1 f2 f3 actp awral i0 f1 f2 f3 f0 f0 f0 prextpg f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a i1 asup_set_class i0 asup_set_class f4 awbr awn i1 f1 f2 f3 actp awral i0 f1 f2 f3 actp awrex i1 asup_set_class f1 f4 awbr awn i1 f1 f2 f3 actp awral i1 asup_set_class f2 f4 awbr awn i1 f1 f2 f3 actp awral i1 asup_set_class f3 f4 awbr awn i1 f1 f2 f3 actp awral aw3o awb f0 f4 awfr padantl f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa i1 asup_set_class i0 asup_set_class f4 awbr awn i1 f1 f2 f3 actp awral i0 f1 f2 f3 actp awrex i1 asup_set_class f1 f4 awbr awn i1 f1 f2 f3 actp awral i1 asup_set_class f2 f4 awbr awn i1 f1 f2 f3 actp awral i1 asup_set_class f3 f4 awbr awn i1 f1 f2 f3 actp awral aw3o pmpbid f1 f2 f3 psnsstp3 f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel psimpr3 f3 f1 f2 f3 actp f0 psnssg f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa f3 f0 awcel f3 f1 f2 f3 actp awcel f3 acsn f1 f2 f3 actp awss awb psyl f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa f3 f1 f2 f3 actp awcel f3 acsn f1 f2 f3 actp awss pmpbiri i1 asup_set_class f3 f1 f4 pbreq1 i1 asup_set_class f3 awceq i1 asup_set_class f1 f4 awbr f3 f1 f4 awbr pnotbid i1 asup_set_class f1 f4 awbr awn f3 f1 f4 awbr awn i1 f3 f1 f2 f3 actp prspcv f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa f3 f1 f2 f3 actp awcel i1 asup_set_class f1 f4 awbr awn i1 f1 f2 f3 actp awral f3 f1 f4 awbr awn awi psyl f1 f2 f3 psnsstp1 f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel psimpr1 f1 f1 f2 f3 actp f0 psnssg f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa f1 f0 awcel f1 f1 f2 f3 actp awcel f1 acsn f1 f2 f3 actp awss awb psyl f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa f1 f1 f2 f3 actp awcel f1 acsn f1 f2 f3 actp awss pmpbiri i1 asup_set_class f1 f2 f4 pbreq1 i1 asup_set_class f1 awceq i1 asup_set_class f2 f4 awbr f1 f2 f4 awbr pnotbid i1 asup_set_class f2 f4 awbr awn f1 f2 f4 awbr awn i1 f1 f1 f2 f3 actp prspcv f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa f1 f1 f2 f3 actp awcel i1 asup_set_class f2 f4 awbr awn i1 f1 f2 f3 actp awral f1 f2 f4 awbr awn awi psyl f1 f2 f3 psnsstp2 f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel psimpr2 f2 f1 f2 f3 actp f0 psnssg f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa f2 f0 awcel f2 f1 f2 f3 actp awcel f2 acsn f1 f2 f3 actp awss awb psyl f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa f2 f1 f2 f3 actp awcel f2 acsn f1 f2 f3 actp awss pmpbiri i1 asup_set_class f2 f3 f4 pbreq1 i1 asup_set_class f2 awceq i1 asup_set_class f3 f4 awbr f2 f3 f4 awbr pnotbid i1 asup_set_class f3 f4 awbr awn f2 f3 f4 awbr awn i1 f2 f1 f2 f3 actp prspcv f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa f2 f1 f2 f3 actp awcel i1 asup_set_class f3 f4 awbr awn i1 f1 f2 f3 actp awral f2 f3 f4 awbr awn awi psyl f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa i1 asup_set_class f1 f4 awbr awn i1 f1 f2 f3 actp awral f3 f1 f4 awbr awn i1 asup_set_class f2 f4 awbr awn i1 f1 f2 f3 actp awral f1 f2 f4 awbr awn i1 asup_set_class f3 f4 awbr awn i1 f1 f2 f3 actp awral f2 f3 f4 awbr awn p3orim123d f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa i1 asup_set_class f1 f4 awbr awn i1 f1 f2 f3 actp awral i1 asup_set_class f2 f4 awbr awn i1 f1 f2 f3 actp awral i1 asup_set_class f3 f4 awbr awn i1 f1 f2 f3 actp awral aw3o f3 f1 f4 awbr awn f1 f2 f4 awbr awn f2 f3 f4 awbr awn aw3o pmpd f3 f1 f4 awbr f1 f2 f4 awbr f2 f3 f4 awbr p3ianor f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa f3 f1 f4 awbr awn f1 f2 f4 awbr awn f2 f3 f4 awbr awn aw3o f3 f1 f4 awbr f1 f2 f4 awbr f2 f3 f4 awbr aw3a awn psylibr f3 f1 f4 awbr f1 f2 f4 awbr f2 f3 f4 awbr p3anrot f0 f4 awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa f3 f1 f4 awbr f1 f2 f4 awbr f2 f3 f4 awbr aw3a f1 f2 f4 awbr f2 f3 f4 awbr f3 f1 f4 awbr aw3a psylnib $.
+$}
+$( /* A set well-founded by epsilon contains no 3-cycle loops.  (Contributed by
+     NM, 19-Apr-1994.)  (Revised by Mario Carneiro, 22-Jun-2015.) */
+
+$)
+${
+	$v A B C D $.
+	f0 $f class A $.
+	f1 $f class B $.
+	f2 $f class C $.
+	f3 $f class D $.
+	pepne3 $p |- ( ( _E Fr A /\ ( B e. A /\ C e. A /\ D e. A ) ) -> -. ( B e. C /\ C e. D /\ D e. B ) ) $=
+	f0 f1 f2 f3 acep pfr3nr f1 f2 f0 pepelg f2 f0 awcel f1 f0 awcel f1 f2 acep awbr f1 f2 awcel awb f3 f0 awcel p3ad2ant2 f2 f3 f0 pepelg f3 f0 awcel f1 f0 awcel f2 f3 acep awbr f2 f3 awcel awb f2 f0 awcel p3ad2ant3 f3 f1 f0 pepelg f1 f0 awcel f2 f0 awcel f3 f1 acep awbr f3 f1 awcel awb f3 f0 awcel p3ad2ant1 f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a f1 f2 acep awbr f1 f2 awcel f2 f3 acep awbr f2 f3 awcel f3 f1 acep awbr f3 f1 awcel p3anbi123d f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a f1 f2 acep awbr f2 f3 acep awbr f3 f1 acep awbr aw3a f1 f2 awcel f2 f3 awcel f3 f1 awcel aw3a awb f0 acep awfr padantl f0 acep awfr f1 f0 awcel f2 f0 awcel f3 f0 awcel aw3a awa f1 f2 acep awbr f2 f3 acep awbr f3 f1 acep awbr aw3a f1 f2 awcel f2 f3 awcel f3 f1 awcel aw3a pmtbid $.
+$}
+$( /* Alternate definition of well-ordering.  Definition 6.24(2) of
+       [TakeutiZaring] p. 30.  (Contributed by NM, 16-Mar-1997.)  (Proof
+       shortened by Andrew Salmon, 12-Aug-2011.) */
+
+$)
+${
+	$v x y z A R $.
+	$d x y z R $.
+	$d x y z A $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class R $.
+	i0 $f set z $.
+	pdfwe2 $p |- ( R We A <-> ( R Fr A /\ A. x e. A A. y e. A ( x R y \/ x = y \/ y R x ) ) ) $=
+	f2 f3 adf-we f0 f1 f2 f3 adf-so f2 f3 awpo f0 asup_set_class f1 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class awceq f1 asup_set_class f0 asup_set_class f3 awbr aw3o f1 f2 awral f0 f2 awral psimpr f0 asup_set_class i0 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa aax-1 f0 asup_set_class i0 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa f0 asup_set_class i0 asup_set_class f3 awbr awi awi f2 f3 awfr f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel i0 asup_set_class f2 awcel aw3a awa pa1i f2 f0 asup_set_class f1 asup_set_class f3 pfr2nr f2 f3 awfr f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class f0 asup_set_class f3 awbr awa awn i0 asup_set_class f2 awcel p3adantr3 f0 asup_set_class i0 asup_set_class f1 asup_set_class f3 pbreq2 f0 asup_set_class i0 asup_set_class awceq f1 asup_set_class f0 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class f3 awbr panbi2d f0 asup_set_class i0 asup_set_class awceq f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class f0 asup_set_class f3 awbr awa f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa pnotbid f2 f3 awfr f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel i0 asup_set_class f2 awcel aw3a awa f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class f0 asup_set_class f3 awbr awa awn f0 asup_set_class i0 asup_set_class awceq f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa awn psyl5ibcom f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa f0 asup_set_class i0 asup_set_class f3 awbr ppm2.21 f2 f3 awfr f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel i0 asup_set_class f2 awcel aw3a awa f0 asup_set_class i0 asup_set_class awceq f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa awn f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa f0 asup_set_class i0 asup_set_class f3 awbr awi psyl6 f2 f0 asup_set_class f1 asup_set_class i0 asup_set_class f3 pfr3nr f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr i0 asup_set_class f0 asup_set_class f3 awbr adf-3an f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr i0 asup_set_class f0 asup_set_class f3 awbr aw3a f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa i0 asup_set_class f0 asup_set_class f3 awbr awa pbiimpri f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa i0 asup_set_class f0 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr i0 asup_set_class f0 asup_set_class f3 awbr aw3a pancoms f2 f3 awfr f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel i0 asup_set_class f2 awcel aw3a awa f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr i0 asup_set_class f0 asup_set_class f3 awbr aw3a i0 asup_set_class f0 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa awa pnsyl f2 f3 awfr f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel i0 asup_set_class f2 awcel aw3a awa i0 asup_set_class f0 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa awa f0 asup_set_class i0 asup_set_class f3 awbr ppm2.21d f2 f3 awfr f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel i0 asup_set_class f2 awcel aw3a awa i0 asup_set_class f0 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa f0 asup_set_class i0 asup_set_class f3 awbr pexp3a f2 f3 awfr f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel i0 asup_set_class f2 awcel aw3a awa f0 asup_set_class i0 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa f0 asup_set_class i0 asup_set_class f3 awbr awi f0 asup_set_class i0 asup_set_class awceq i0 asup_set_class f0 asup_set_class f3 awbr p3jaod f2 f0 asup_set_class f3 pfrirr f2 f3 awfr f1 asup_set_class f2 awcel f0 asup_set_class f2 awcel f0 asup_set_class f0 asup_set_class f3 awbr awn i0 asup_set_class f2 awcel p3ad2antr1 f2 f3 awfr f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel i0 asup_set_class f2 awcel aw3a awa f0 asup_set_class i0 asup_set_class f3 awbr f0 asup_set_class i0 asup_set_class awceq i0 asup_set_class f0 asup_set_class f3 awbr aw3o f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa f0 asup_set_class i0 asup_set_class f3 awbr awi f0 asup_set_class f0 asup_set_class f3 awbr awn pjctild f2 f3 awfr f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel i0 asup_set_class f2 awcel aw3a f0 asup_set_class i0 asup_set_class f3 awbr f0 asup_set_class i0 asup_set_class awceq i0 asup_set_class f0 asup_set_class f3 awbr aw3o f0 asup_set_class f0 asup_set_class f3 awbr awn f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa f0 asup_set_class i0 asup_set_class f3 awbr awi awa awi pex f2 f3 awfr f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel i0 asup_set_class f2 awcel aw3a f0 asup_set_class i0 asup_set_class f3 awbr f0 asup_set_class i0 asup_set_class awceq i0 asup_set_class f0 asup_set_class f3 awbr aw3o f0 asup_set_class f0 asup_set_class f3 awbr awn f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa f0 asup_set_class i0 asup_set_class f3 awbr awi awa pa2d f2 f3 awfr f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel i0 asup_set_class f2 awcel aw3a f0 asup_set_class i0 asup_set_class f3 awbr f0 asup_set_class i0 asup_set_class awceq i0 asup_set_class f0 asup_set_class f3 awbr aw3o awi f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel i0 asup_set_class f2 awcel aw3a f0 asup_set_class f0 asup_set_class f3 awbr awn f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa f0 asup_set_class i0 asup_set_class f3 awbr awi awa awi i0 palimdv f2 f3 awfr f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel i0 asup_set_class f2 awcel aw3a f0 asup_set_class i0 asup_set_class f3 awbr f0 asup_set_class i0 asup_set_class awceq i0 asup_set_class f0 asup_set_class f3 awbr aw3o awi i0 awal f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel i0 asup_set_class f2 awcel aw3a f0 asup_set_class f0 asup_set_class f3 awbr awn f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa f0 asup_set_class i0 asup_set_class f3 awbr awi awa awi i0 awal f0 f1 p2alimdv f0 asup_set_class i0 asup_set_class f3 awbr f0 asup_set_class i0 asup_set_class awceq i0 asup_set_class f0 asup_set_class f3 awbr aw3o f0 f1 i0 f2 f2 f2 pr3al f0 asup_set_class f0 asup_set_class f3 awbr awn f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa f0 asup_set_class i0 asup_set_class f3 awbr awi awa f0 f1 i0 f2 f2 f2 pr3al f2 f3 awfr f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel i0 asup_set_class f2 awcel aw3a f0 asup_set_class i0 asup_set_class f3 awbr f0 asup_set_class i0 asup_set_class awceq i0 asup_set_class f0 asup_set_class f3 awbr aw3o awi i0 awal f1 awal f0 awal f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel i0 asup_set_class f2 awcel aw3a f0 asup_set_class f0 asup_set_class f3 awbr awn f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa f0 asup_set_class i0 asup_set_class f3 awbr awi awa awi i0 awal f1 awal f0 awal f0 asup_set_class i0 asup_set_class f3 awbr f0 asup_set_class i0 asup_set_class awceq i0 asup_set_class f0 asup_set_class f3 awbr aw3o i0 f2 awral f1 f2 awral f0 f2 awral f0 asup_set_class f0 asup_set_class f3 awbr awn f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa f0 asup_set_class i0 asup_set_class f3 awbr awi awa i0 f2 awral f1 f2 awral f0 f2 awral p3imtr4g f0 asup_set_class f1 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class awceq f1 asup_set_class f0 asup_set_class f3 awbr aw3o f1 f2 pralidm f1 asup_set_class i0 asup_set_class f0 asup_set_class f3 pbreq2 f1 i0 f0 pequequ2 f1 asup_set_class i0 asup_set_class f0 asup_set_class f3 pbreq1 f1 asup_set_class i0 asup_set_class awceq f0 asup_set_class f1 asup_set_class f3 awbr f0 asup_set_class i0 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class awceq f0 asup_set_class i0 asup_set_class awceq f1 asup_set_class f0 asup_set_class f3 awbr i0 asup_set_class f0 asup_set_class f3 awbr p3orbi123d f0 asup_set_class f1 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class awceq f1 asup_set_class f0 asup_set_class f3 awbr aw3o f0 asup_set_class i0 asup_set_class f3 awbr f0 asup_set_class i0 asup_set_class awceq i0 asup_set_class f0 asup_set_class f3 awbr aw3o f1 i0 f2 pcbvralv f0 asup_set_class f1 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class awceq f1 asup_set_class f0 asup_set_class f3 awbr aw3o f1 f2 awral f0 asup_set_class i0 asup_set_class f3 awbr f0 asup_set_class i0 asup_set_class awceq i0 asup_set_class f0 asup_set_class f3 awbr aw3o i0 f2 awral f1 f2 pralbii f0 asup_set_class f1 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class awceq f1 asup_set_class f0 asup_set_class f3 awbr aw3o f1 f2 awral f0 asup_set_class f1 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class awceq f1 asup_set_class f0 asup_set_class f3 awbr aw3o f1 f2 awral f1 f2 awral f0 asup_set_class i0 asup_set_class f3 awbr f0 asup_set_class i0 asup_set_class awceq i0 asup_set_class f0 asup_set_class f3 awbr aw3o i0 f2 awral f1 f2 awral pbitr3i f0 asup_set_class f1 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class awceq f1 asup_set_class f0 asup_set_class f3 awbr aw3o f1 f2 awral f0 asup_set_class i0 asup_set_class f3 awbr f0 asup_set_class i0 asup_set_class awceq i0 asup_set_class f0 asup_set_class f3 awbr aw3o i0 f2 awral f1 f2 awral f0 f2 pralbii f0 f1 i0 f2 f3 adf-po f2 f3 awfr f0 asup_set_class i0 asup_set_class f3 awbr f0 asup_set_class i0 asup_set_class awceq i0 asup_set_class f0 asup_set_class f3 awbr aw3o i0 f2 awral f1 f2 awral f0 f2 awral f0 asup_set_class f0 asup_set_class f3 awbr awn f0 asup_set_class f1 asup_set_class f3 awbr f1 asup_set_class i0 asup_set_class f3 awbr awa f0 asup_set_class i0 asup_set_class f3 awbr awi awa i0 f2 awral f1 f2 awral f0 f2 awral f0 asup_set_class f1 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class awceq f1 asup_set_class f0 asup_set_class f3 awbr aw3o f1 f2 awral f0 f2 awral f2 f3 awpo p3imtr4g f2 f3 awfr f0 asup_set_class f1 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class awceq f1 asup_set_class f0 asup_set_class f3 awbr aw3o f1 f2 awral f0 f2 awral f2 f3 awpo pancrd f2 f3 awfr f2 f3 awpo f0 asup_set_class f1 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class awceq f1 asup_set_class f0 asup_set_class f3 awbr aw3o f1 f2 awral f0 f2 awral awa f0 asup_set_class f1 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class awceq f1 asup_set_class f0 asup_set_class f3 awbr aw3o f1 f2 awral f0 f2 awral pimpbid2 f2 f3 awor f2 f3 awpo f0 asup_set_class f1 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class awceq f1 asup_set_class f0 asup_set_class f3 awbr aw3o f1 f2 awral f0 f2 awral awa f2 f3 awfr f0 asup_set_class f1 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class awceq f1 asup_set_class f0 asup_set_class f3 awbr aw3o f1 f2 awral f0 f2 awral psyl5bb f2 f3 awfr f2 f3 awor f0 asup_set_class f1 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class awceq f1 asup_set_class f0 asup_set_class f3 awbr aw3o f1 f2 awral f0 f2 awral ppm5.32i f2 f3 awwe f2 f3 awfr f2 f3 awor awa f2 f3 awfr f0 asup_set_class f1 asup_set_class f3 awbr f0 asup_set_class f1 asup_set_class awceq f1 asup_set_class f0 asup_set_class f3 awbr aw3o f1 f2 awral f0 f2 awral awa pbitri $.
+$}
+

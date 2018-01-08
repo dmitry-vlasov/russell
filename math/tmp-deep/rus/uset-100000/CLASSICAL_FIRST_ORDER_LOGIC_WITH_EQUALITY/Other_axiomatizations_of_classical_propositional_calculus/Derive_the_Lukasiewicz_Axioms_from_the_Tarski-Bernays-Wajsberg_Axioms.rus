@@ -1,0 +1,305 @@
+import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_of_classical_propositional_calculus/Derive_Nicod_s_Axiom_from_Lukasiewicz_s_First_Sheffer_Stroke_Axiom.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+      Derive the Lukasiewicz Axioms from the Tarski-Bernays-Wajsberg Axioms
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* Justification for ~ tbw-negdf .  (Contributed by Anthony Hart,
+     15-Aug-2011.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem tbw-bijust (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ph ↔ ps ) ↔ ( ( ( ph → ps ) → ( ( ps → ph ) → F. ) ) → F. ) ) ;;
+}
+
+proof of tbw-bijust {
+	step 1 : wff = dfbi1 () |- ( ( ph ↔ ps ) ↔ ¬ ( ( ph → ps ) → ¬ ( ps → ph ) ) ) ;;
+	step 2 : wff = pm2.21 () |- ( ¬ ( ps → ph ) → ( ( ps → ph ) → F. ) ) ;;
+	step 3 : wff = imim2i (step 2) |- ( ( ( ph → ps ) → ¬ ( ps → ph ) ) → ( ( ph → ps ) → ( ( ps → ph ) → F. ) ) ) ;;
+	step 4 : wff = id () |- ( ¬ ( ps → ph ) → ¬ ( ps → ph ) ) ;;
+	step 5 : wff = falim () |- ( F. → ¬ ( ps → ph ) ) ;;
+	step 6 : wff = ja (step 4, step 5) |- ( ( ( ps → ph ) → F. ) → ¬ ( ps → ph ) ) ;;
+	step 7 : wff = imim2i (step 6) |- ( ( ( ph → ps ) → ( ( ps → ph ) → F. ) ) → ( ( ph → ps ) → ¬ ( ps → ph ) ) ) ;;
+	step 8 : wff = impbii (step 3, step 7) |- ( ( ( ph → ps ) → ¬ ( ps → ph ) ) ↔ ( ( ph → ps ) → ( ( ps → ph ) → F. ) ) ) ;;
+	step 9 : wff = notbii (step 8) |- ( ¬ ( ( ph → ps ) → ¬ ( ps → ph ) ) ↔ ¬ ( ( ph → ps ) → ( ( ps → ph ) → F. ) ) ) ;;
+	step 10 : wff = pm2.21 () |- ( ¬ ( ( ph → ps ) → ( ( ps → ph ) → F. ) ) → ( ( ( ph → ps ) → ( ( ps → ph ) → F. ) ) → F. ) ) ;;
+	step 11 : wff = ax-1 () |- ( ¬ ( ( ph → ps ) → ( ( ps → ph ) → F. ) ) → ( ( ( ( ph → ps ) → ( ( ps → ph ) → F. ) ) → F. ) → ¬ ( ( ph → ps ) → ( ( ps → ph ) → F. ) ) ) ) ;;
+	step 12 : wff = falim () |- ( F. → ( ( ( ( ph → ps ) → ( ( ps → ph ) → F. ) ) → F. ) → ¬ ( ( ph → ps ) → ( ( ps → ph ) → F. ) ) ) ) ;;
+	step 13 : wff = ja (step 11, step 12) |- ( ( ( ( ph → ps ) → ( ( ps → ph ) → F. ) ) → F. ) → ( ( ( ( ph → ps ) → ( ( ps → ph ) → F. ) ) → F. ) → ¬ ( ( ph → ps ) → ( ( ps → ph ) → F. ) ) ) ) ;;
+	step 14 : wff = pm2.43i (step 13) |- ( ( ( ( ph → ps ) → ( ( ps → ph ) → F. ) ) → F. ) → ¬ ( ( ph → ps ) → ( ( ps → ph ) → F. ) ) ) ;;
+	step 15 : wff = impbii (step 10, step 14) |- ( ¬ ( ( ph → ps ) → ( ( ps → ph ) → F. ) ) ↔ ( ( ( ph → ps ) → ( ( ps → ph ) → F. ) ) → F. ) ) ;;
+	step 16 : wff = 3bitri (step 1, step 9, step 15) |- ( ( ph ↔ ps ) ↔ ( ( ( ph → ps ) → ( ( ps → ph ) → F. ) ) → F. ) ) ;;
+	qed prop 1 = step 16 ;;
+}
+
+/* The definition of negation, in terms of ` -> ` and ` F. ` .  (Contributed
+     by Anthony Hart, 15-Aug-2011.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem tbw-negdf (ph : wff)  {
+	prop 1 : wff = |- ( ( ( ¬ ph → ( ph → F. ) ) → ( ( ( ph → F. ) → ¬ ph ) → F. ) ) → F. ) ;;
+}
+
+proof of tbw-negdf {
+	step 1 : wff = pm2.21 () |- ( ¬ ph → ( ph → F. ) ) ;;
+	step 2 : wff = ax-1 () |- ( ¬ ph → ( ( ph → F. ) → ¬ ph ) ) ;;
+	step 3 : wff = falim () |- ( F. → ( ( ph → F. ) → ¬ ph ) ) ;;
+	step 4 : wff = ja (step 2, step 3) |- ( ( ph → F. ) → ( ( ph → F. ) → ¬ ph ) ) ;;
+	step 5 : wff = pm2.43i (step 4) |- ( ( ph → F. ) → ¬ ph ) ;;
+	step 6 : wff = impbii (step 1, step 5) |- ( ¬ ph ↔ ( ph → F. ) ) ;;
+	step 7 : wff = tbw-bijust () |- ( ( ¬ ph ↔ ( ph → F. ) ) ↔ ( ( ( ¬ ph → ( ph → F. ) ) → ( ( ( ph → F. ) → ¬ ph ) → F. ) ) → F. ) ) ;;
+	step 8 : wff = mpbi (step 6, step 7) |- ( ( ( ¬ ph → ( ph → F. ) ) → ( ( ( ph → F. ) → ¬ ph ) → F. ) ) → F. ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* The first of four axioms in the Tarski-Bernays-Wajsberg system.
+     (Contributed by Anthony Hart, 13-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem tbw-ax1 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ;;
+}
+
+proof of tbw-ax1 {
+	step 1 : wff = imim1 () |- ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+/* The second of four axioms in the Tarski-Bernays-Wajsberg system.
+     (Contributed by Anthony Hart, 13-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem tbw-ax2 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ph → ( ps → ph ) ) ;;
+}
+
+proof of tbw-ax2 {
+	step 1 : wff = ax-1 () |- ( ph → ( ps → ph ) ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+/* The third of four axioms in the Tarski-Bernays-Wajsberg system.
+     (Contributed by Anthony Hart, 13-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem tbw-ax3 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ( ph → ps ) → ph ) → ph ) ;;
+}
+
+proof of tbw-ax3 {
+	step 1 : wff = peirce () |- ( ( ( ph → ps ) → ph ) → ph ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+/* The fourth of four axioms in the Tarski-Bernays-Wajsberg system.
+
+     This axiom was added to the Tarski-Bernays axiom system ( see ~ tb-ax1 ,
+     ~ tb-ax2 , and ~ tb-ax3 ) by Wajsberg for completeness.  (Contributed by
+     Anthony Hart, 13-Aug-2011.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem tbw-ax4 (ph : wff)  {
+	prop 1 : wff = |- ( F. → ph ) ;;
+}
+
+proof of tbw-ax4 {
+	step 1 : wff = falim () |- ( F. → ph ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+/* Used to rederive the Lukasiewicz axioms from Tarski-Bernays-Wajsberg'.
+       (Contributed by Anthony Hart, 16-Aug-2011.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem tbwsyl (ph : wff, ps : wff, ch : wff)  {
+	hyp 1 : wff = |- ( ph → ps ) ;;
+	hyp 2 : wff = |- ( ps → ch ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ch ) ;;
+}
+
+proof of tbwsyl {
+	step 1 : wff = tbw-ax1 () |- ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( ( ps → ch ) → ( ph → ch ) ) ;;
+	step 3 : wff = ax-mp (hyp 2, step 2) |- ( ph → ch ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Used to rederive the Lukasiewicz axioms from Tarski-Bernays-Wajsberg'.
+     (Contributed by Anthony Hart, 16-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem tbwlem1 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ph → ( ps → ch ) ) → ( ps → ( ph → ch ) ) ) ;;
+}
+
+proof of tbwlem1 {
+	step 1 : wff = tbw-ax2 () |- ( ps → ( ( ps → ch ) → ps ) ) ;;
+	step 2 : wff = tbw-ax1 () |- ( ( ( ps → ch ) → ps ) → ( ( ps → ch ) → ( ( ps → ch ) → ch ) ) ) ;;
+	step 3 : wff = tbwsyl (step 1, step 2) |- ( ps → ( ( ps → ch ) → ( ( ps → ch ) → ch ) ) ) ;;
+	step 4 : wff = tbw-ax1 () |- ( ( ( ps → ch ) → ( ( ps → ch ) → ch ) ) → ( ( ( ( ps → ch ) → ch ) → ch ) → ( ( ps → ch ) → ch ) ) ) ;;
+	step 5 : wff = tbw-ax3 () |- ( ( ( ( ( ps → ch ) → ch ) → ch ) → ( ( ps → ch ) → ch ) ) → ( ( ps → ch ) → ch ) ) ;;
+	step 6 : wff = tbwsyl (step 4, step 5) |- ( ( ( ps → ch ) → ( ( ps → ch ) → ch ) ) → ( ( ps → ch ) → ch ) ) ;;
+	step 7 : wff = tbwsyl (step 3, step 6) |- ( ps → ( ( ps → ch ) → ch ) ) ;;
+	step 8 : wff = tbw-ax1 () |- ( ( ph → ( ps → ch ) ) → ( ( ( ps → ch ) → ch ) → ( ph → ch ) ) ) ;;
+	step 9 : wff = tbw-ax1 () |- ( ( ps → ( ( ps → ch ) → ch ) ) → ( ( ( ( ps → ch ) → ch ) → ( ph → ch ) ) → ( ps → ( ph → ch ) ) ) ) ;;
+	step 10 : wff = mpsyl (step 7, step 8, step 9) |- ( ( ph → ( ps → ch ) ) → ( ps → ( ph → ch ) ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Used to rederive the Lukasiewicz axioms from Tarski-Bernays-Wajsberg'.
+     (Contributed by Anthony Hart, 16-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem tbwlem2 (ph : wff, ps : wff, ch : wff, th : wff)  {
+	prop 1 : wff = |- ( ( ph → ( ps → F. ) ) → ( ( ( ph → ch ) → th ) → ( ps → th ) ) ) ;;
+}
+
+proof of tbwlem2 {
+	step 1 : wff = tbw-ax4 () |- ( F. → ch ) ;;
+	step 2 : wff = tbw-ax1 () |- ( ( ps → F. ) → ( ( F. → ch ) → ( ps → ch ) ) ) ;;
+	step 3 : wff = tbwlem1 () |- ( ( ( ps → F. ) → ( ( F. → ch ) → ( ps → ch ) ) ) → ( ( F. → ch ) → ( ( ps → F. ) → ( ps → ch ) ) ) ) ;;
+	step 4 : wff = ax-mp (step 2, step 3) |- ( ( F. → ch ) → ( ( ps → F. ) → ( ps → ch ) ) ) ;;
+	step 5 : wff = ax-mp (step 1, step 4) |- ( ( ps → F. ) → ( ps → ch ) ) ;;
+	step 6 : wff = tbwlem1 () |- ( ( ( ps → F. ) → ( ps → ch ) ) → ( ps → ( ( ps → F. ) → ch ) ) ) ;;
+	step 7 : wff = ax-mp (step 5, step 6) |- ( ps → ( ( ps → F. ) → ch ) ) ;;
+	step 8 : wff = tbw-ax1 () |- ( ( ph → ( ps → F. ) ) → ( ( ( ps → F. ) → ch ) → ( ph → ch ) ) ) ;;
+	step 9 : wff = tbw-ax1 () |- ( ( ps → ( ( ps → F. ) → ch ) ) → ( ( ( ( ps → F. ) → ch ) → ( ph → ch ) ) → ( ps → ( ph → ch ) ) ) ) ;;
+	step 10 : wff = mpsyl (step 7, step 8, step 9) |- ( ( ph → ( ps → F. ) ) → ( ps → ( ph → ch ) ) ) ;;
+	step 11 : wff = tbw-ax1 () |- ( ( ps → ( ph → ch ) ) → ( ( ( ph → ch ) → th ) → ( ps → th ) ) ) ;;
+	step 12 : wff = tbwsyl (step 10, step 11) |- ( ( ph → ( ps → F. ) ) → ( ( ( ph → ch ) → th ) → ( ps → th ) ) ) ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* Used to rederive the Lukasiewicz axioms from Tarski-Bernays-Wajsberg'.
+     (Contributed by Anthony Hart, 16-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem tbwlem3 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ( ( ( ph → F. ) → ph ) → ph ) → ps ) → ps ) ;;
+}
+
+proof of tbwlem3 {
+	step 1 : wff = tbw-ax3 () |- ( ( ( ph → F. ) → ph ) → ph ) ;;
+	step 2 : wff = tbw-ax2 () |- ( ( ( ( ph → F. ) → ph ) → ph ) → ( ( ( ( ( ph → F. ) → ph ) → ph ) → ps ) → ( ( ( ph → F. ) → ph ) → ph ) ) ) ;;
+	step 3 : wff = tbw-ax1 () |- ( ( ( ( ( ( ph → F. ) → ph ) → ph ) → ps ) → ( ( ( ph → F. ) → ph ) → ph ) ) → ( ( ( ( ( ph → F. ) → ph ) → ph ) → ps ) → ( ( ( ( ( ph → F. ) → ph ) → ph ) → ps ) → ps ) ) ) ;;
+	step 4 : wff = tbwsyl (step 2, step 3) |- ( ( ( ( ph → F. ) → ph ) → ph ) → ( ( ( ( ( ph → F. ) → ph ) → ph ) → ps ) → ( ( ( ( ( ph → F. ) → ph ) → ph ) → ps ) → ps ) ) ) ;;
+	step 5 : wff = ax-mp (step 1, step 4) |- ( ( ( ( ( ph → F. ) → ph ) → ph ) → ps ) → ( ( ( ( ( ph → F. ) → ph ) → ph ) → ps ) → ps ) ) ;;
+	step 6 : wff = tbw-ax1 () |- ( ( ( ( ( ( ph → F. ) → ph ) → ph ) → ps ) → ( ( ( ( ( ph → F. ) → ph ) → ph ) → ps ) → ps ) ) → ( ( ( ( ( ( ( ph → F. ) → ph ) → ph ) → ps ) → ps ) → ps ) → ( ( ( ( ( ph → F. ) → ph ) → ph ) → ps ) → ps ) ) ) ;;
+	step 7 : wff = tbw-ax3 () |- ( ( ( ( ( ( ( ( ph → F. ) → ph ) → ph ) → ps ) → ps ) → ps ) → ( ( ( ( ( ph → F. ) → ph ) → ph ) → ps ) → ps ) ) → ( ( ( ( ( ph → F. ) → ph ) → ph ) → ps ) → ps ) ) ;;
+	step 8 : wff = tbwsyl (step 6, step 7) |- ( ( ( ( ( ( ph → F. ) → ph ) → ph ) → ps ) → ( ( ( ( ( ph → F. ) → ph ) → ph ) → ps ) → ps ) ) → ( ( ( ( ( ph → F. ) → ph ) → ph ) → ps ) → ps ) ) ;;
+	step 9 : wff = ax-mp (step 5, step 8) |- ( ( ( ( ( ph → F. ) → ph ) → ph ) → ps ) → ps ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Used to rederive the Lukasiewicz axioms from Tarski-Bernays-Wajsberg'.
+     (Contributed by Anthony Hart, 16-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem tbwlem4 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ( ph → F. ) → ps ) → ( ( ps → F. ) → ph ) ) ;;
+}
+
+proof of tbwlem4 {
+	step 1 : wff = tbw-ax4 () |- ( F. → F. ) ;;
+	step 2 : wff = tbw-ax1 () |- ( ( ps → F. ) → ( ( F. → F. ) → ( ps → F. ) ) ) ;;
+	step 3 : wff = tbwlem1 () |- ( ( ( ps → F. ) → ( ( F. → F. ) → ( ps → F. ) ) ) → ( ( F. → F. ) → ( ( ps → F. ) → ( ps → F. ) ) ) ) ;;
+	step 4 : wff = ax-mp (step 2, step 3) |- ( ( F. → F. ) → ( ( ps → F. ) → ( ps → F. ) ) ) ;;
+	step 5 : wff = ax-mp (step 1, step 4) |- ( ( ps → F. ) → ( ps → F. ) ) ;;
+	step 6 : wff = tbwlem1 () |- ( ( ( ps → F. ) → ( ps → F. ) ) → ( ps → ( ( ps → F. ) → F. ) ) ) ;;
+	step 7 : wff = ax-mp (step 5, step 6) |- ( ps → ( ( ps → F. ) → F. ) ) ;;
+	step 8 : wff = tbw-ax1 () |- ( ( ( ph → F. ) → ps ) → ( ( ps → ( ( ps → F. ) → F. ) ) → ( ( ph → F. ) → ( ( ps → F. ) → F. ) ) ) ) ;;
+	step 9 : wff = tbwlem1 () |- ( ( ( ( ph → F. ) → ps ) → ( ( ps → ( ( ps → F. ) → F. ) ) → ( ( ph → F. ) → ( ( ps → F. ) → F. ) ) ) ) → ( ( ps → ( ( ps → F. ) → F. ) ) → ( ( ( ph → F. ) → ps ) → ( ( ph → F. ) → ( ( ps → F. ) → F. ) ) ) ) ) ;;
+	step 10 : wff = ax-mp (step 8, step 9) |- ( ( ps → ( ( ps → F. ) → F. ) ) → ( ( ( ph → F. ) → ps ) → ( ( ph → F. ) → ( ( ps → F. ) → F. ) ) ) ) ;;
+	step 11 : wff = ax-mp (step 7, step 10) |- ( ( ( ph → F. ) → ps ) → ( ( ph → F. ) → ( ( ps → F. ) → F. ) ) ) ;;
+	step 12 : wff = tbwlem2 () |- ( ( ( ph → F. ) → ( ( ps → F. ) → F. ) ) → ( ( ( ( ph → F. ) → ph ) → ph ) → ( ( ps → F. ) → ph ) ) ) ;;
+	step 13 : wff = tbwlem3 () |- ( ( ( ( ( ph → F. ) → ph ) → ph ) → ( ( ps → F. ) → ph ) ) → ( ( ps → F. ) → ph ) ) ;;
+	step 14 : wff = tbwsyl (step 12, step 13) |- ( ( ( ph → F. ) → ( ( ps → F. ) → F. ) ) → ( ( ps → F. ) → ph ) ) ;;
+	step 15 : wff = tbwsyl (step 11, step 14) |- ( ( ( ph → F. ) → ps ) → ( ( ps → F. ) → ph ) ) ;;
+	qed prop 1 = step 15 ;;
+}
+
+/* Used to rederive the Lukasiewicz axioms from Tarski-Bernays-Wajsberg'.
+     (Contributed by Anthony Hart, 16-Aug-2011.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem tbwlem5 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ( ( ph → ( ps → F. ) ) → F. ) → ph ) ;;
+}
+
+proof of tbwlem5 {
+	step 1 : wff = tbw-ax2 () |- ( ph → ( ps → ph ) ) ;;
+	step 2 : wff = tbw-ax1 () |- ( ( ps → ph ) → ( ( ph → F. ) → ( ps → F. ) ) ) ;;
+	step 3 : wff = tbwsyl (step 1, step 2) |- ( ph → ( ( ph → F. ) → ( ps → F. ) ) ) ;;
+	step 4 : wff = tbwlem1 () |- ( ( ph → ( ( ph → F. ) → ( ps → F. ) ) ) → ( ( ph → F. ) → ( ph → ( ps → F. ) ) ) ) ;;
+	step 5 : wff = ax-mp (step 3, step 4) |- ( ( ph → F. ) → ( ph → ( ps → F. ) ) ) ;;
+	step 6 : wff = tbwlem4 () |- ( ( ( ph → F. ) → ( ph → ( ps → F. ) ) ) → ( ( ( ph → ( ps → F. ) ) → F. ) → ph ) ) ;;
+	step 7 : wff = ax-mp (step 5, step 6) |- ( ( ( ph → ( ps → F. ) ) → F. ) → ph ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* ~ luk-1 derived from the Tarski-Bernays-Wajsberg axioms.  (Contributed by
+     Anthony Hart, 16-Aug-2011.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem re1luk1 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ;;
+}
+
+proof of re1luk1 {
+	step 1 : wff = tbw-ax1 () |- ( ( ph → ps ) → ( ( ps → ch ) → ( ph → ch ) ) ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+/* ~ luk-2 derived from the Tarski-Bernays-Wajsberg axioms.  (Contributed by
+     Anthony Hart, 16-Aug-2011.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem re1luk2 (ph : wff)  {
+	prop 1 : wff = |- ( ( ¬ ph → ph ) → ph ) ;;
+}
+
+proof of re1luk2 {
+	step 1 : wff = tbw-negdf () |- ( ( ( ¬ ph → ( ph → F. ) ) → ( ( ( ph → F. ) → ¬ ph ) → F. ) ) → F. ) ;;
+	step 2 : wff = tbw-ax2 () |- ( ( ( ( ph → F. ) → ¬ ph ) → F. ) → ( ( ¬ ph → ( ph → F. ) ) → ( ( ( ph → F. ) → ¬ ph ) → F. ) ) ) ;;
+	step 3 : wff = tbwlem4 () |- ( ( ( ( ( ph → F. ) → ¬ ph ) → F. ) → ( ( ¬ ph → ( ph → F. ) ) → ( ( ( ph → F. ) → ¬ ph ) → F. ) ) ) → ( ( ( ( ¬ ph → ( ph → F. ) ) → ( ( ( ph → F. ) → ¬ ph ) → F. ) ) → F. ) → ( ( ph → F. ) → ¬ ph ) ) ) ;;
+	step 4 : wff = ax-mp (step 2, step 3) |- ( ( ( ( ¬ ph → ( ph → F. ) ) → ( ( ( ph → F. ) → ¬ ph ) → F. ) ) → F. ) → ( ( ph → F. ) → ¬ ph ) ) ;;
+	step 5 : wff = ax-mp (step 1, step 4) |- ( ( ph → F. ) → ¬ ph ) ;;
+	step 6 : wff = tbw-ax1 () |- ( ( ( ph → F. ) → ¬ ph ) → ( ( ¬ ph → ph ) → ( ( ph → F. ) → ph ) ) ) ;;
+	step 7 : wff = ax-mp (step 5, step 6) |- ( ( ¬ ph → ph ) → ( ( ph → F. ) → ph ) ) ;;
+	step 8 : wff = tbw-ax3 () |- ( ( ( ph → F. ) → ph ) → ph ) ;;
+	step 9 : wff = tbwsyl (step 7, step 8) |- ( ( ¬ ph → ph ) → ph ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* ~ luk-3 derived from the Tarski-Bernays-Wajsberg axioms.
+
+     This theorem, along with ~ re1luk1 and ~ re1luk2 proves that ~ tbw-ax1 ,
+     ~ tbw-ax2 , ~ tbw-ax3 , and ~ tbw-ax4 , with ~ ax-mp can be used as a
+     complete axiom system for all of propositional calculus.  (Contributed by
+     Anthony Hart, 16-Aug-2011.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem re1luk3 (ph : wff, ps : wff)  {
+	prop 1 : wff = |- ( ph → ( ¬ ph → ps ) ) ;;
+}
+
+proof of re1luk3 {
+	step 1 : wff = tbw-negdf () |- ( ( ( ¬ ph → ( ph → F. ) ) → ( ( ( ph → F. ) → ¬ ph ) → F. ) ) → F. ) ;;
+	step 2 : wff = tbwlem5 () |- ( ( ( ( ¬ ph → ( ph → F. ) ) → ( ( ( ph → F. ) → ¬ ph ) → F. ) ) → F. ) → ( ¬ ph → ( ph → F. ) ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( ¬ ph → ( ph → F. ) ) ;;
+	step 4 : wff = tbw-ax4 () |- ( F. → ps ) ;;
+	step 5 : wff = tbw-ax1 () |- ( ( ph → F. ) → ( ( F. → ps ) → ( ph → ps ) ) ) ;;
+	step 6 : wff = tbwlem1 () |- ( ( ( ph → F. ) → ( ( F. → ps ) → ( ph → ps ) ) ) → ( ( F. → ps ) → ( ( ph → F. ) → ( ph → ps ) ) ) ) ;;
+	step 7 : wff = ax-mp (step 5, step 6) |- ( ( F. → ps ) → ( ( ph → F. ) → ( ph → ps ) ) ) ;;
+	step 8 : wff = ax-mp (step 4, step 7) |- ( ( ph → F. ) → ( ph → ps ) ) ;;
+	step 9 : wff = tbwlem1 () |- ( ( ( ph → F. ) → ( ph → ps ) ) → ( ph → ( ( ph → F. ) → ps ) ) ) ;;
+	step 10 : wff = ax-mp (step 8, step 9) |- ( ph → ( ( ph → F. ) → ps ) ) ;;
+	step 11 : wff = tbw-ax1 () |- ( ( ¬ ph → ( ph → F. ) ) → ( ( ( ph → F. ) → ps ) → ( ¬ ph → ps ) ) ) ;;
+	step 12 : wff = mpsyl (step 3, step 10, step 11) |- ( ph → ( ¬ ph → ps ) ) ;;
+	qed prop 1 = step 12 ;;
+}
+
+

@@ -1,0 +1,264 @@
+$[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Truth_tables.smm $]
+$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+       Auxiliary theorems for Alan Sare's virtual deduction tool, part 1
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+$)
+$( /* Virtual deduction rule ~ e22 without virtual deduction connectives.
+       Special theorem needed for Alan Sare's virtual deduction translation
+       tool.  (Contributed by Alan Sare, 2-May-2011.)
+       (New usage is discouraged.)  TODO: decide if this is worth keeping. */
+
+$)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1 $e |- ( ph -> ( ps -> th ) ) $.
+	e2 $e |- ( ch -> ( th -> ta ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	pee22 $p |- ( ph -> ( ps -> ta ) ) $=
+	e0 e1 e2 f0 f1 f2 f3 f4 psyl6c $.
+$}
+$( /* ~ e12an without virtual deduction connectives.  Special theorem needed
+       for Alan Sare's virtual deduction translation tool.  (Contributed by
+       Alan Sare, 28-Oct-2011.)  TODO: this is frequently used; come up with
+       better label. */
+
+$)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( ph -> ( ch -> th ) ) $.
+	e2 $e |- ( ( ps /\ th ) -> ta ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	pee12an $p |- ( ph -> ( ch -> ta ) ) $=
+	e1 e0 f0 f2 f3 f1 pjctild e2 f0 f2 f1 f3 awa f4 psyl6 $.
+$}
+$( /* ~ e23 without virtual deductions.  (Contributed by Alan Sare,
+       17-Jul-2011.)  (New usage is discouraged.)  TODO: decide if this is
+       worth keeping. */
+
+$)
+${
+	$v ph ps ch th ta et $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1 $e |- ( ph -> ( ps -> ( th -> ta ) ) ) $.
+	e2 $e |- ( ch -> ( ta -> et ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	f5 $f wff et $.
+	pee23 $p |- ( ph -> ( ps -> ( th -> et ) ) ) $=
+	e1 e0 e2 f0 f1 f2 f4 f5 awi psyl6 f0 f1 f3 f4 f5 psyldd $.
+$}
+$( /* Exportation implication also converting head from biconditional to
+     conditional.  This proof is ~ exbirVD automatically translated and
+     minimized.  (Contributed by Alan Sare, 31-Dec-2011.)
+     (New usage is discouraged.)  TODO: decide if this is worth keeping. */
+
+$)
+${
+	$v ph ps ch th $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pexbir $p |- ( ( ( ph /\ ps ) -> ( ch <-> th ) ) -> ( ph -> ( ps -> ( th -> ch ) ) ) ) $=
+	f2 f3 pbi2 f2 f3 awb f3 f2 awi f0 f1 awa pimim2i f0 f1 awa f2 f3 awb awi f0 f1 f3 f2 awi pexp3a $.
+$}
+$( /* ~ impexp with a 3-conjunct antecedent.  (Contributed by Alan Sare,
+     31-Dec-2011.) */
+
+$)
+${
+	$v ph ps ch th $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	p3impexp $p |- ( ( ( ph /\ ps /\ ch ) -> th ) <-> ( ph -> ( ps -> ( ch -> th ) ) ) ) $=
+	f0 f1 f2 aw3a f3 awi pid f0 f1 f2 aw3a f3 awi f0 f1 f2 f3 p3expd f0 f1 f2 f3 awi awi awi pid f0 f1 f2 f3 awi awi awi f0 f1 f2 f3 p3impd f0 f1 f2 aw3a f3 awi f0 f1 f2 f3 awi awi awi pimpbii $.
+$}
+$( /* ~ 3impexp with biconditional consequent of antecedent that is commuted in
+     consequent.  Derived automatically from ~ 3impexpVD .  (Contributed by
+     Alan Sare, 31-Dec-2011.)  (New usage is discouraged.)  TODO: decide if
+     this is worth keeping. */
+
+$)
+${
+	$v ph ps ch th ta $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	p3impexpbicom $p |- ( ( ( ph /\ ps /\ ch ) -> ( th <-> ta ) ) <-> ( ph -> ( ps -> ( ch -> ( ta <-> th ) ) ) ) ) $=
+	f3 f4 pbicom f3 f4 awb f4 f3 awb f0 f1 f2 aw3a pimbi2 f3 f4 awb f4 f3 awb awb f0 f1 f2 aw3a f3 f4 awb awi f0 f1 f2 aw3a f4 f3 awb awi pbiimpcd f0 f1 f2 aw3a f3 f4 awb awi f3 f4 awb f4 f3 awb awb f0 f1 f2 aw3a f4 f3 awb awi pmpi f0 f1 f2 aw3a f3 f4 awb awi f0 f1 f2 f4 f3 awb p3expd f0 f1 f2 f4 f3 awb p3impexp f0 f1 f2 aw3a f4 f3 awb awi f0 f1 f2 f4 f3 awb awi awi awi pbiimpri f3 f4 pbicom f0 f1 f2 f4 f3 awb awi awi awi f0 f1 f2 aw3a f4 f3 awb f3 f4 awb psyl6ibr f0 f1 f2 aw3a f3 f4 awb awi f0 f1 f2 f4 f3 awb awi awi awi pimpbii $.
+$}
+$( /* Deduction form of ~ 3impexpbicom .  Derived automatically from
+       ~ 3impexpbicomiVD .  (Contributed by Alan Sare, 31-Dec-2011.)
+       (New usage is discouraged.)  TODO: decide if this is worth keeping. */
+
+$)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ( ph /\ ps /\ ch ) -> ( th <-> ta ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	p3impexpbicomi $p |- ( ph -> ( ps -> ( ch -> ( ta <-> th ) ) ) ) $=
+	e0 f0 f1 f2 aw3a f3 f4 pbicomd f0 f1 f2 f4 f3 awb p3exp $.
+$}
+$( /* Closed form of ~ ancoms .  Derived automatically from ~ ancomsimpVD .
+     (Contributed by Alan Sare, 31-Dec-2011.) */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pancomsimp $p |- ( ( ( ph /\ ps ) -> ch ) <-> ( ( ps /\ ph ) -> ch ) ) $=
+	f0 f1 pancom f0 f1 awa f1 f0 awa f2 pimbi1i $.
+$}
+$( /* Export and commute antecedents.  (Contributed by Alan Sare,
+       18-Mar-2012.) */
+
+$)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ( ps /\ ch ) -> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pexp3acom3r $p |- ( ps -> ( ch -> ( ph -> th ) ) ) $=
+	e0 f0 f1 f2 f3 pexp3a f0 f1 f2 f3 pcom3l $.
+$}
+$( /* Implication form of ~ exp3acom23 .  (Contributed by Alan Sare,
+     22-Jul-2012.)  (New usage is discouraged.)  TODO: decide if this is worth
+     keeping. */
+
+$)
+${
+	$v ph ps ch th $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pexp3acom23g $p |- ( ( ph -> ( ( ps /\ ch ) -> th ) ) <-> ( ph -> ( ch -> ( ps -> th ) ) ) ) $=
+	f1 f2 f3 pancomsimp f2 f1 f3 pimpexp f1 f2 awa f3 awi f2 f1 awa f3 awi f2 f1 f3 awi awi pbitri f1 f2 awa f3 awi f2 f1 f3 awi awi f0 pimbi2i $.
+$}
+$( /* The exportation deduction ~ exp3a with commutation of the conjoined
+       wwfs.  (Contributed by Alan Sare, 22-Jul-2012.) */
+
+$)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ( ps /\ ch ) -> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pexp3acom23 $p |- ( ph -> ( ch -> ( ps -> th ) ) ) $=
+	e0 f0 f1 f2 f3 pexp3a f0 f1 f2 f3 pcom23 $.
+$}
+$( /* Implication form of ~ simplbi2com .  (Contributed by Alan Sare,
+     22-Jul-2012.)  (New usage is discouraged.)  TODO: decide if this is worth
+     keeping. */
+
+$)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	psimplbi2comg $p |- ( ( ph <-> ( ps /\ ch ) ) -> ( ch -> ( ps -> ph ) ) ) $=
+	f0 f1 f2 awa pbi2 f0 f1 f2 awa awb f1 f2 f0 pexp3acom23 $.
+$}
+$( /* A deduction eliminating a conjunct, similar to ~ simplbi2 .
+       (Contributed by Alan Sare, 22-Jul-2012.)  (Proof shortened by Wolf
+       Lammen, 10-Nov-2012.) */
+
+$)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph <-> ( ps /\ ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	psimplbi2com $p |- ( ch -> ( ps -> ph ) ) $=
+	e0 f0 f1 f2 psimplbi2 f1 f2 f0 pcom12 $.
+$}
+$( /* ~ e21 without virtual deductions.  (Contributed by Alan Sare,
+       18-Mar-2012.)  (New usage is discouraged.)  TODO: decide if this is
+       worth keeping. */
+
+$)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1 $e |- ( ph -> th ) $.
+	e2 $e |- ( ch -> ( th -> ta ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	pee21 $p |- ( ph -> ( ps -> ta ) ) $=
+	e0 e1 f0 f3 f1 pa1d e2 f0 f1 f2 f3 f4 pee22 $.
+$}
+$( /* ~ e10 without virtual deductions.  (Contributed by Alan Sare,
+       25-Jul-2011.)  TODO: this is frequently used; come up with better
+       label. */
+
+$)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ch $.
+	e2 $e |- ( ps -> ( ch -> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pee10 $p |- ( ph -> th ) $=
+	e0 e1 e2 f1 f2 f3 pmpi f0 f1 f3 psyl $.
+$}
+$( /* ~ e02 without virtual deductions.  (Contributed by Alan Sare,
+       22-Jul-2012.)  (New usage is discouraged.)  TODO: decide if this is
+       worth keeping. */
+
+$)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ph $.
+	e1 $e |- ( ps -> ( ch -> th ) ) $.
+	e2 $e |- ( ph -> ( th -> ta ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	pee02 $p |- ( ps -> ( ch -> ta ) ) $=
+	e0 f0 f1 pa1i e1 e2 f1 f0 f2 f3 f4 psylsyld $.
+$}
+$( /* End of auxiliary theorems for Alan Sare's virtual deduction tool, part 1 */
+
+
+$)
+

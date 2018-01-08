@@ -1,0 +1,510 @@
+import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Auxiliary_theorems_for_Alan_Sare_s_virtual_deduction_tool,_part_1.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+       Half-adders and full adders in propositional calculus
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+  Propositional calculus deals with truth values, which can be interpreted as
+  bits. Using this, we can define the half-adder in pure propositional
+  calculus, and show its basic properties.
+
+*/
+
+constant {
+	symbol hadd ;;
+}
+
+constant {
+	symbol cadd ;;
+}
+
+constant {
+	symbol , ;;
+}
+
+/* Comma (also used for unordered pair notation later) */
+
+/* Define the half adder (triple XOR).  (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+rule whad (ph : wff, ps : wff, ch : wff) {
+	term : wff = # hadd ( ph , ps , ch ) ;;
+}
+
+/* Define the half adder carry.  (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+rule wcad (ph : wff, ps : wff, ch : wff) {
+	term : wff = # cadd ( ph , ps , ch ) ;;
+}
+
+/* Define the half adder (triple XOR).  (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+definition df-had (ph : wff, ps : wff, ch : wff)  {
+	defiendum : wff = # hadd ( ph , ps , ch ) ;;
+	definiens : wff = # ( ( ph \/_ ps ) \/_ ch ) ;;
+	-----------------------
+	prop : wff = |- ( defiendum ↔ definiens ) ;;
+}
+
+/* Define the half adder carry, which is true when at least two arguments are
+     true.  (Contributed by Mario Carneiro, 4-Sep-2016.) */
+
+definition df-cad (ph : wff, ps : wff, ch : wff)  {
+	defiendum : wff = # cadd ( ph , ps , ch ) ;;
+	definiens : wff = # ( ( ph ∧ ps ) ∨ ( ch ∧ ( ph \/_ ps ) ) ) ;;
+	-----------------------
+	prop : wff = |- ( defiendum ↔ definiens ) ;;
+}
+
+/* Equality theorem for half adder.  (Contributed by Mario Carneiro,
+       4-Sep-2016.) */
+
+theorem hadbi123d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
+	hyp 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
+	hyp 2 : wff = |- ( ph → ( th ↔ ta ) ) ;;
+	hyp 3 : wff = |- ( ph → ( et ↔ ze ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( hadd ( ps , th , et ) ↔ hadd ( ch , ta , ze ) ) ) ;;
+}
+
+proof of hadbi123d {
+	step 1 : wff = xorbi12d (hyp 1, hyp 2) |- ( ph → ( ( ps \/_ th ) ↔ ( ch \/_ ta ) ) ) ;;
+	step 2 : wff = xorbi12d (step 1, hyp 3) |- ( ph → ( ( ( ps \/_ th ) \/_ et ) ↔ ( ( ch \/_ ta ) \/_ ze ) ) ) ;;
+	step 3 : wff = df-had () |- ( hadd ( ps , th , et ) ↔ ( ( ps \/_ th ) \/_ et ) ) ;;
+	step 4 : wff = df-had () |- ( hadd ( ch , ta , ze ) ↔ ( ( ch \/_ ta ) \/_ ze ) ) ;;
+	step 5 : wff = 3bitr4g (step 2, step 3, step 4) |- ( ph → ( hadd ( ps , th , et ) ↔ hadd ( ch , ta , ze ) ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Equality theorem for adder carry.  (Contributed by Mario Carneiro,
+       4-Sep-2016.) */
+
+theorem cadbi123d (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff, ze : wff)  {
+	hyp 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
+	hyp 2 : wff = |- ( ph → ( th ↔ ta ) ) ;;
+	hyp 3 : wff = |- ( ph → ( et ↔ ze ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( cadd ( ps , th , et ) ↔ cadd ( ch , ta , ze ) ) ) ;;
+}
+
+proof of cadbi123d {
+	step 1 : wff = anbi12d (hyp 1, hyp 2) |- ( ph → ( ( ps ∧ th ) ↔ ( ch ∧ ta ) ) ) ;;
+	step 2 : wff = xorbi12d (hyp 1, hyp 2) |- ( ph → ( ( ps \/_ th ) ↔ ( ch \/_ ta ) ) ) ;;
+	step 3 : wff = anbi12d (hyp 3, step 2) |- ( ph → ( ( et ∧ ( ps \/_ th ) ) ↔ ( ze ∧ ( ch \/_ ta ) ) ) ) ;;
+	step 4 : wff = orbi12d (step 1, step 3) |- ( ph → ( ( ( ps ∧ th ) ∨ ( et ∧ ( ps \/_ th ) ) ) ↔ ( ( ch ∧ ta ) ∨ ( ze ∧ ( ch \/_ ta ) ) ) ) ) ;;
+	step 5 : wff = df-cad () |- ( cadd ( ps , th , et ) ↔ ( ( ps ∧ th ) ∨ ( et ∧ ( ps \/_ th ) ) ) ) ;;
+	step 6 : wff = df-cad () |- ( cadd ( ch , ta , ze ) ↔ ( ( ch ∧ ta ) ∨ ( ze ∧ ( ch \/_ ta ) ) ) ) ;;
+	step 7 : wff = 3bitr4g (step 4, step 5, step 6) |- ( ph → ( cadd ( ps , th , et ) ↔ cadd ( ch , ta , ze ) ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Equality theorem for half adder.  (Contributed by Mario Carneiro,
+       4-Sep-2016.) */
+
+theorem hadbi123i (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
+	hyp 1 : wff = |- ( ph ↔ ps ) ;;
+	hyp 2 : wff = |- ( ch ↔ th ) ;;
+	hyp 3 : wff = |- ( ta ↔ et ) ;;
+	-----------------------
+	prop 1 : wff = |- ( hadd ( ph , ch , ta ) ↔ hadd ( ps , th , et ) ) ;;
+}
+
+proof of hadbi123i {
+	step 1 : wff = a1i (hyp 1) |- ( T. → ( ph ↔ ps ) ) ;;
+	step 2 : wff = a1i (hyp 2) |- ( T. → ( ch ↔ th ) ) ;;
+	step 3 : wff = a1i (hyp 3) |- ( T. → ( ta ↔ et ) ) ;;
+	step 4 : wff = hadbi123d (step 1, step 2, step 3) |- ( T. → ( hadd ( ph , ch , ta ) ↔ hadd ( ps , th , et ) ) ) ;;
+	step 5 : wff = trud (step 4) |- ( hadd ( ph , ch , ta ) ↔ hadd ( ps , th , et ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Equality theorem for adder carry.  (Contributed by Mario Carneiro,
+       4-Sep-2016.) */
+
+theorem cadbi123i (ph : wff, ps : wff, ch : wff, th : wff, ta : wff, et : wff)  {
+	hyp 1 : wff = |- ( ph ↔ ps ) ;;
+	hyp 2 : wff = |- ( ch ↔ th ) ;;
+	hyp 3 : wff = |- ( ta ↔ et ) ;;
+	-----------------------
+	prop 1 : wff = |- ( cadd ( ph , ch , ta ) ↔ cadd ( ps , th , et ) ) ;;
+}
+
+proof of cadbi123i {
+	step 1 : wff = a1i (hyp 1) |- ( T. → ( ph ↔ ps ) ) ;;
+	step 2 : wff = a1i (hyp 2) |- ( T. → ( ch ↔ th ) ) ;;
+	step 3 : wff = a1i (hyp 3) |- ( T. → ( ta ↔ et ) ) ;;
+	step 4 : wff = cadbi123d (step 1, step 2, step 3) |- ( T. → ( cadd ( ph , ch , ta ) ↔ cadd ( ps , th , et ) ) ) ;;
+	step 5 : wff = trud (step 4) |- ( cadd ( ph , ch , ta ) ↔ cadd ( ps , th , et ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Associative law for triple XOR. (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+theorem hadass (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( hadd ( ph , ps , ch ) ↔ ( ph \/_ ( ps \/_ ch ) ) ) ;;
+}
+
+proof of hadass {
+	step 1 : wff = df-had () |- ( hadd ( ph , ps , ch ) ↔ ( ( ph \/_ ps ) \/_ ch ) ) ;;
+	step 2 : wff = xorass () |- ( ( ( ph \/_ ps ) \/_ ch ) ↔ ( ph \/_ ( ps \/_ ch ) ) ) ;;
+	step 3 : wff = bitri (step 1, step 2) |- ( hadd ( ph , ps , ch ) ↔ ( ph \/_ ( ps \/_ ch ) ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* The half adder is the same as the triple biconditional.  (Contributed by
+     Mario Carneiro, 4-Sep-2016.) */
+
+theorem hadbi (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( hadd ( ph , ps , ch ) ↔ ( ( ph ↔ ps ) ↔ ch ) ) ;;
+}
+
+proof of hadbi {
+	step 1 : wff = df-xor () |- ( ( ( ph \/_ ps ) \/_ ch ) ↔ ¬ ( ( ph \/_ ps ) ↔ ch ) ) ;;
+	step 2 : wff = df-had () |- ( hadd ( ph , ps , ch ) ↔ ( ( ph \/_ ps ) \/_ ch ) ) ;;
+	step 3 : wff = xnor () |- ( ( ph ↔ ps ) ↔ ¬ ( ph \/_ ps ) ) ;;
+	step 4 : wff = bibi1i (step 3) |- ( ( ( ph ↔ ps ) ↔ ch ) ↔ ( ¬ ( ph \/_ ps ) ↔ ch ) ) ;;
+	step 5 : wff = nbbn () |- ( ( ¬ ( ph \/_ ps ) ↔ ch ) ↔ ¬ ( ( ph \/_ ps ) ↔ ch ) ) ;;
+	step 6 : wff = bitri (step 4, step 5) |- ( ( ( ph ↔ ps ) ↔ ch ) ↔ ¬ ( ( ph \/_ ps ) ↔ ch ) ) ;;
+	step 7 : wff = 3bitr4i (step 1, step 2, step 6) |- ( hadd ( ph , ps , ch ) ↔ ( ( ph ↔ ps ) ↔ ch ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Commutative law for triple XOR. (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+theorem hadcoma (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( hadd ( ph , ps , ch ) ↔ hadd ( ps , ph , ch ) ) ;;
+}
+
+proof of hadcoma {
+	step 1 : wff = xorcom () |- ( ( ph \/_ ps ) ↔ ( ps \/_ ph ) ) ;;
+	step 2 : wff = biid () |- ( ch ↔ ch ) ;;
+	step 3 : wff = xorbi12i (step 1, step 2) |- ( ( ( ph \/_ ps ) \/_ ch ) ↔ ( ( ps \/_ ph ) \/_ ch ) ) ;;
+	step 4 : wff = df-had () |- ( hadd ( ph , ps , ch ) ↔ ( ( ph \/_ ps ) \/_ ch ) ) ;;
+	step 5 : wff = df-had () |- ( hadd ( ps , ph , ch ) ↔ ( ( ps \/_ ph ) \/_ ch ) ) ;;
+	step 6 : wff = 3bitr4i (step 3, step 4, step 5) |- ( hadd ( ph , ps , ch ) ↔ hadd ( ps , ph , ch ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Commutative law for triple XOR. (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+theorem hadcomb (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( hadd ( ph , ps , ch ) ↔ hadd ( ph , ch , ps ) ) ;;
+}
+
+proof of hadcomb {
+	step 1 : wff = biid () |- ( ph ↔ ph ) ;;
+	step 2 : wff = xorcom () |- ( ( ps \/_ ch ) ↔ ( ch \/_ ps ) ) ;;
+	step 3 : wff = xorbi12i (step 1, step 2) |- ( ( ph \/_ ( ps \/_ ch ) ) ↔ ( ph \/_ ( ch \/_ ps ) ) ) ;;
+	step 4 : wff = hadass () |- ( hadd ( ph , ps , ch ) ↔ ( ph \/_ ( ps \/_ ch ) ) ) ;;
+	step 5 : wff = hadass () |- ( hadd ( ph , ch , ps ) ↔ ( ph \/_ ( ch \/_ ps ) ) ) ;;
+	step 6 : wff = 3bitr4i (step 3, step 4, step 5) |- ( hadd ( ph , ps , ch ) ↔ hadd ( ph , ch , ps ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Rotation law for triple XOR. (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+theorem hadrot (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( hadd ( ph , ps , ch ) ↔ hadd ( ps , ch , ph ) ) ;;
+}
+
+proof of hadrot {
+	step 1 : wff = hadcoma () |- ( hadd ( ph , ps , ch ) ↔ hadd ( ps , ph , ch ) ) ;;
+	step 2 : wff = hadcomb () |- ( hadd ( ps , ph , ch ) ↔ hadd ( ps , ch , ph ) ) ;;
+	step 3 : wff = bitri (step 1, step 2) |- ( hadd ( ph , ps , ch ) ↔ hadd ( ps , ch , ph ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Write the adder carry in disjunctive normal form.  (Contributed by Mario
+     Carneiro, 4-Sep-2016.) */
+
+theorem cador (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( cadd ( ph , ps , ch ) ↔ ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ) ;;
+}
+
+proof of cador {
+	step 1 : wff = df-cad () |- ( cadd ( ph , ps , ch ) ↔ ( ( ph ∧ ps ) ∨ ( ch ∧ ( ph \/_ ps ) ) ) ) ;;
+	step 2 : wff = xor2 () |- ( ( ph \/_ ps ) ↔ ( ( ph ∨ ps ) ∧ ¬ ( ph ∧ ps ) ) ) ;;
+	step 3 : wff = rbaib (step 2) |- ( ¬ ( ph ∧ ps ) → ( ( ph \/_ ps ) ↔ ( ph ∨ ps ) ) ) ;;
+	step 4 : wff = anbi1d (step 3) |- ( ¬ ( ph ∧ ps ) → ( ( ( ph \/_ ps ) ∧ ch ) ↔ ( ( ph ∨ ps ) ∧ ch ) ) ) ;;
+	step 5 : wff = ancom () |- ( ( ( ph \/_ ps ) ∧ ch ) ↔ ( ch ∧ ( ph \/_ ps ) ) ) ;;
+	step 6 : wff = andir () |- ( ( ( ph ∨ ps ) ∧ ch ) ↔ ( ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ) ;;
+	step 7 : wff = 3bitr3g (step 4, step 5, step 6) |- ( ¬ ( ph ∧ ps ) → ( ( ch ∧ ( ph \/_ ps ) ) ↔ ( ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ) ) ;;
+	step 8 : wff = pm5.74i (step 7) |- ( ( ¬ ( ph ∧ ps ) → ( ch ∧ ( ph \/_ ps ) ) ) ↔ ( ¬ ( ph ∧ ps ) → ( ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ) ) ;;
+	step 9 : wff = df-or () |- ( ( ( ph ∧ ps ) ∨ ( ch ∧ ( ph \/_ ps ) ) ) ↔ ( ¬ ( ph ∧ ps ) → ( ch ∧ ( ph \/_ ps ) ) ) ) ;;
+	step 10 : wff = 3orass () |- ( ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ↔ ( ( ph ∧ ps ) ∨ ( ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ) ) ;;
+	step 11 : wff = df-or () |- ( ( ( ph ∧ ps ) ∨ ( ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ) ↔ ( ¬ ( ph ∧ ps ) → ( ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ) ) ;;
+	step 12 : wff = bitri (step 10, step 11) |- ( ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ↔ ( ¬ ( ph ∧ ps ) → ( ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ) ) ;;
+	step 13 : wff = 3bitr4i (step 8, step 9, step 12) |- ( ( ( ph ∧ ps ) ∨ ( ch ∧ ( ph \/_ ps ) ) ) ↔ ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ) ;;
+	step 14 : wff = bitri (step 1, step 13) |- ( cadd ( ph , ps , ch ) ↔ ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ) ;;
+	qed prop 1 = step 14 ;;
+}
+
+/* Write the adder carry in conjunctive normal form.  (Contributed by Mario
+     Carneiro, 4-Sep-2016.) */
+
+theorem cadan (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( cadd ( ph , ps , ch ) ↔ ( ( ph ∨ ps ) ∧ ( ph ∨ ch ) ∧ ( ps ∨ ch ) ) ) ;;
+}
+
+proof of cadan {
+	step 1 : wff = ordi () |- ( ( ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ∨ ( ps ∧ ch ) ) ↔ ( ( ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ∨ ps ) ∧ ( ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ∨ ch ) ) ) ;;
+	step 2 : wff = ordir () |- ( ( ( ph ∧ ch ) ∨ ps ) ↔ ( ( ph ∨ ps ) ∧ ( ch ∨ ps ) ) ) ;;
+	step 3 : wff = simpr () |- ( ( ph ∧ ps ) → ps ) ;;
+	step 4 : wff = con3i (step 3) |- ( ¬ ps → ¬ ( ph ∧ ps ) ) ;;
+	step 5 : wff = biorf () |- ( ¬ ( ph ∧ ps ) → ( ( ph ∧ ch ) ↔ ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ) ) ;;
+	step 6 : wff = syl (step 4, step 5) |- ( ¬ ps → ( ( ph ∧ ch ) ↔ ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ) ) ;;
+	step 7 : wff = pm5.74i (step 6) |- ( ( ¬ ps → ( ph ∧ ch ) ) ↔ ( ¬ ps → ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ) ) ;;
+	step 8 : wff = df-or () |- ( ( ps ∨ ( ph ∧ ch ) ) ↔ ( ¬ ps → ( ph ∧ ch ) ) ) ;;
+	step 9 : wff = df-or () |- ( ( ps ∨ ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ) ↔ ( ¬ ps → ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ) ) ;;
+	step 10 : wff = 3bitr4i (step 7, step 8, step 9) |- ( ( ps ∨ ( ph ∧ ch ) ) ↔ ( ps ∨ ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ) ) ;;
+	step 11 : wff = orcom () |- ( ( ( ph ∧ ch ) ∨ ps ) ↔ ( ps ∨ ( ph ∧ ch ) ) ) ;;
+	step 12 : wff = orcom () |- ( ( ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ∨ ps ) ↔ ( ps ∨ ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ) ) ;;
+	step 13 : wff = 3bitr4i (step 10, step 11, step 12) |- ( ( ( ph ∧ ch ) ∨ ps ) ↔ ( ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ∨ ps ) ) ;;
+	step 14 : wff = orcom () |- ( ( ch ∨ ps ) ↔ ( ps ∨ ch ) ) ;;
+	step 15 : wff = anbi2i (step 14) |- ( ( ( ph ∨ ps ) ∧ ( ch ∨ ps ) ) ↔ ( ( ph ∨ ps ) ∧ ( ps ∨ ch ) ) ) ;;
+	step 16 : wff = 3bitr3i (step 2, step 13, step 15) |- ( ( ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ∨ ps ) ↔ ( ( ph ∨ ps ) ∧ ( ps ∨ ch ) ) ) ;;
+	step 17 : wff = simpr () |- ( ( ph ∧ ch ) → ch ) ;;
+	step 18 : wff = con3i (step 17) |- ( ¬ ch → ¬ ( ph ∧ ch ) ) ;;
+	step 19 : wff = biorf () |- ( ¬ ( ph ∧ ch ) → ( ( ph ∧ ps ) ↔ ( ( ph ∧ ch ) ∨ ( ph ∧ ps ) ) ) ) ;;
+	step 20 : wff = orcom () |- ( ( ( ph ∧ ch ) ∨ ( ph ∧ ps ) ) ↔ ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ) ;;
+	step 21 : wff = syl6bb (step 19, step 20) |- ( ¬ ( ph ∧ ch ) → ( ( ph ∧ ps ) ↔ ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ) ) ;;
+	step 22 : wff = syl (step 18, step 21) |- ( ¬ ch → ( ( ph ∧ ps ) ↔ ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ) ) ;;
+	step 23 : wff = pm5.74i (step 22) |- ( ( ¬ ch → ( ph ∧ ps ) ) ↔ ( ¬ ch → ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ) ) ;;
+	step 24 : wff = df-or () |- ( ( ch ∨ ( ph ∧ ps ) ) ↔ ( ¬ ch → ( ph ∧ ps ) ) ) ;;
+	step 25 : wff = df-or () |- ( ( ch ∨ ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ) ↔ ( ¬ ch → ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ) ) ;;
+	step 26 : wff = 3bitr4i (step 23, step 24, step 25) |- ( ( ch ∨ ( ph ∧ ps ) ) ↔ ( ch ∨ ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ) ) ;;
+	step 27 : wff = orcom () |- ( ( ( ph ∧ ps ) ∨ ch ) ↔ ( ch ∨ ( ph ∧ ps ) ) ) ;;
+	step 28 : wff = orcom () |- ( ( ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ∨ ch ) ↔ ( ch ∨ ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ) ) ;;
+	step 29 : wff = 3bitr4i (step 26, step 27, step 28) |- ( ( ( ph ∧ ps ) ∨ ch ) ↔ ( ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ∨ ch ) ) ;;
+	step 30 : wff = ordir () |- ( ( ( ph ∧ ps ) ∨ ch ) ↔ ( ( ph ∨ ch ) ∧ ( ps ∨ ch ) ) ) ;;
+	step 31 : wff = bitr3i (step 29, step 30) |- ( ( ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ∨ ch ) ↔ ( ( ph ∨ ch ) ∧ ( ps ∨ ch ) ) ) ;;
+	step 32 : wff = anbi12i (step 16, step 31) |- ( ( ( ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ∨ ps ) ∧ ( ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ∨ ch ) ) ↔ ( ( ( ph ∨ ps ) ∧ ( ps ∨ ch ) ) ∧ ( ( ph ∨ ch ) ∧ ( ps ∨ ch ) ) ) ) ;;
+	step 33 : wff = bitri (step 1, step 32) |- ( ( ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ∨ ( ps ∧ ch ) ) ↔ ( ( ( ph ∨ ps ) ∧ ( ps ∨ ch ) ) ∧ ( ( ph ∨ ch ) ∧ ( ps ∨ ch ) ) ) ) ;;
+	step 34 : wff = df-3or () |- ( ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ↔ ( ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ) ∨ ( ps ∧ ch ) ) ) ;;
+	step 35 : wff = anandir () |- ( ( ( ( ph ∨ ps ) ∧ ( ph ∨ ch ) ) ∧ ( ps ∨ ch ) ) ↔ ( ( ( ph ∨ ps ) ∧ ( ps ∨ ch ) ) ∧ ( ( ph ∨ ch ) ∧ ( ps ∨ ch ) ) ) ) ;;
+	step 36 : wff = 3bitr4i (step 33, step 34, step 35) |- ( ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ↔ ( ( ( ph ∨ ps ) ∧ ( ph ∨ ch ) ) ∧ ( ps ∨ ch ) ) ) ;;
+	step 37 : wff = cador () |- ( cadd ( ph , ps , ch ) ↔ ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ) ;;
+	step 38 : wff = df-3an () |- ( ( ( ph ∨ ps ) ∧ ( ph ∨ ch ) ∧ ( ps ∨ ch ) ) ↔ ( ( ( ph ∨ ps ) ∧ ( ph ∨ ch ) ) ∧ ( ps ∨ ch ) ) ) ;;
+	step 39 : wff = 3bitr4i (step 36, step 37, step 38) |- ( cadd ( ph , ps , ch ) ↔ ( ( ph ∨ ps ) ∧ ( ph ∨ ch ) ∧ ( ps ∨ ch ) ) ) ;;
+	qed prop 1 = step 39 ;;
+}
+
+/* The half adder distributes over negation.  (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+theorem hadnot (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ¬ hadd ( ph , ps , ch ) ↔ hadd ( ¬ ph , ¬ ps , ¬ ch ) ) ;;
+}
+
+proof of hadnot {
+	step 1 : wff = xorneg () |- ( ( ¬ ph \/_ ¬ ps ) ↔ ( ph \/_ ps ) ) ;;
+	step 2 : wff = biid () |- ( ¬ ch ↔ ¬ ch ) ;;
+	step 3 : wff = xorbi12i (step 1, step 2) |- ( ( ( ¬ ph \/_ ¬ ps ) \/_ ¬ ch ) ↔ ( ( ph \/_ ps ) \/_ ¬ ch ) ) ;;
+	step 4 : wff = xorneg2 () |- ( ( ( ph \/_ ps ) \/_ ¬ ch ) ↔ ¬ ( ( ph \/_ ps ) \/_ ch ) ) ;;
+	step 5 : wff = bitr2i (step 3, step 4) |- ( ¬ ( ( ph \/_ ps ) \/_ ch ) ↔ ( ( ¬ ph \/_ ¬ ps ) \/_ ¬ ch ) ) ;;
+	step 6 : wff = df-had () |- ( hadd ( ph , ps , ch ) ↔ ( ( ph \/_ ps ) \/_ ch ) ) ;;
+	step 7 : wff = notbii (step 6) |- ( ¬ hadd ( ph , ps , ch ) ↔ ¬ ( ( ph \/_ ps ) \/_ ch ) ) ;;
+	step 8 : wff = df-had () |- ( hadd ( ¬ ph , ¬ ps , ¬ ch ) ↔ ( ( ¬ ph \/_ ¬ ps ) \/_ ¬ ch ) ) ;;
+	step 9 : wff = 3bitr4i (step 5, step 7, step 8) |- ( ¬ hadd ( ph , ps , ch ) ↔ hadd ( ¬ ph , ¬ ps , ¬ ch ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* The adder carry distributes over negation.  (Contributed by Mario
+     Carneiro, 4-Sep-2016.) */
+
+theorem cadnot (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ¬ cadd ( ph , ps , ch ) ↔ cadd ( ¬ ph , ¬ ps , ¬ ch ) ) ;;
+}
+
+proof of cadnot {
+	step 1 : wff = 3ioran () |- ( ¬ ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ↔ ( ¬ ( ph ∧ ps ) ∧ ¬ ( ph ∧ ch ) ∧ ¬ ( ps ∧ ch ) ) ) ;;
+	step 2 : wff = ianor () |- ( ¬ ( ph ∧ ps ) ↔ ( ¬ ph ∨ ¬ ps ) ) ;;
+	step 3 : wff = ianor () |- ( ¬ ( ph ∧ ch ) ↔ ( ¬ ph ∨ ¬ ch ) ) ;;
+	step 4 : wff = ianor () |- ( ¬ ( ps ∧ ch ) ↔ ( ¬ ps ∨ ¬ ch ) ) ;;
+	step 5 : wff = 3anbi123i (step 2, step 3, step 4) |- ( ( ¬ ( ph ∧ ps ) ∧ ¬ ( ph ∧ ch ) ∧ ¬ ( ps ∧ ch ) ) ↔ ( ( ¬ ph ∨ ¬ ps ) ∧ ( ¬ ph ∨ ¬ ch ) ∧ ( ¬ ps ∨ ¬ ch ) ) ) ;;
+	step 6 : wff = bitri (step 1, step 5) |- ( ¬ ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ↔ ( ( ¬ ph ∨ ¬ ps ) ∧ ( ¬ ph ∨ ¬ ch ) ∧ ( ¬ ps ∨ ¬ ch ) ) ) ;;
+	step 7 : wff = cador () |- ( cadd ( ph , ps , ch ) ↔ ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ) ;;
+	step 8 : wff = notbii (step 7) |- ( ¬ cadd ( ph , ps , ch ) ↔ ¬ ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ) ;;
+	step 9 : wff = cadan () |- ( cadd ( ¬ ph , ¬ ps , ¬ ch ) ↔ ( ( ¬ ph ∨ ¬ ps ) ∧ ( ¬ ph ∨ ¬ ch ) ∧ ( ¬ ps ∨ ¬ ch ) ) ) ;;
+	step 10 : wff = 3bitr4i (step 6, step 8, step 9) |- ( ¬ cadd ( ph , ps , ch ) ↔ cadd ( ¬ ph , ¬ ps , ¬ ch ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Commutative law for adder carry.  (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+theorem cadcoma (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( cadd ( ph , ps , ch ) ↔ cadd ( ps , ph , ch ) ) ;;
+}
+
+proof of cadcoma {
+	step 1 : wff = ancom () |- ( ( ph ∧ ps ) ↔ ( ps ∧ ph ) ) ;;
+	step 2 : wff = xorcom () |- ( ( ph \/_ ps ) ↔ ( ps \/_ ph ) ) ;;
+	step 3 : wff = anbi2i (step 2) |- ( ( ch ∧ ( ph \/_ ps ) ) ↔ ( ch ∧ ( ps \/_ ph ) ) ) ;;
+	step 4 : wff = orbi12i (step 1, step 3) |- ( ( ( ph ∧ ps ) ∨ ( ch ∧ ( ph \/_ ps ) ) ) ↔ ( ( ps ∧ ph ) ∨ ( ch ∧ ( ps \/_ ph ) ) ) ) ;;
+	step 5 : wff = df-cad () |- ( cadd ( ph , ps , ch ) ↔ ( ( ph ∧ ps ) ∨ ( ch ∧ ( ph \/_ ps ) ) ) ) ;;
+	step 6 : wff = df-cad () |- ( cadd ( ps , ph , ch ) ↔ ( ( ps ∧ ph ) ∨ ( ch ∧ ( ps \/_ ph ) ) ) ) ;;
+	step 7 : wff = 3bitr4i (step 4, step 5, step 6) |- ( cadd ( ph , ps , ch ) ↔ cadd ( ps , ph , ch ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Commutative law for adder carry.  (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+theorem cadcomb (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( cadd ( ph , ps , ch ) ↔ cadd ( ph , ch , ps ) ) ;;
+}
+
+proof of cadcomb {
+	step 1 : wff = 3orcoma () |- ( ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ↔ ( ( ph ∧ ch ) ∨ ( ph ∧ ps ) ∨ ( ps ∧ ch ) ) ) ;;
+	step 2 : wff = biid () |- ( ( ph ∧ ch ) ↔ ( ph ∧ ch ) ) ;;
+	step 3 : wff = biid () |- ( ( ph ∧ ps ) ↔ ( ph ∧ ps ) ) ;;
+	step 4 : wff = ancom () |- ( ( ps ∧ ch ) ↔ ( ch ∧ ps ) ) ;;
+	step 5 : wff = 3orbi123i (step 2, step 3, step 4) |- ( ( ( ph ∧ ch ) ∨ ( ph ∧ ps ) ∨ ( ps ∧ ch ) ) ↔ ( ( ph ∧ ch ) ∨ ( ph ∧ ps ) ∨ ( ch ∧ ps ) ) ) ;;
+	step 6 : wff = bitri (step 1, step 5) |- ( ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ↔ ( ( ph ∧ ch ) ∨ ( ph ∧ ps ) ∨ ( ch ∧ ps ) ) ) ;;
+	step 7 : wff = cador () |- ( cadd ( ph , ps , ch ) ↔ ( ( ph ∧ ps ) ∨ ( ph ∧ ch ) ∨ ( ps ∧ ch ) ) ) ;;
+	step 8 : wff = cador () |- ( cadd ( ph , ch , ps ) ↔ ( ( ph ∧ ch ) ∨ ( ph ∧ ps ) ∨ ( ch ∧ ps ) ) ) ;;
+	step 9 : wff = 3bitr4i (step 6, step 7, step 8) |- ( cadd ( ph , ps , ch ) ↔ cadd ( ph , ch , ps ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Rotation law for adder carry.  (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+theorem cadrot (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( cadd ( ph , ps , ch ) ↔ cadd ( ps , ch , ph ) ) ;;
+}
+
+proof of cadrot {
+	step 1 : wff = cadcoma () |- ( cadd ( ph , ps , ch ) ↔ cadd ( ps , ph , ch ) ) ;;
+	step 2 : wff = cadcomb () |- ( cadd ( ps , ph , ch ) ↔ cadd ( ps , ch , ph ) ) ;;
+	step 3 : wff = bitri (step 1, step 2) |- ( cadd ( ph , ps , ch ) ↔ cadd ( ps , ch , ph ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* If one parameter is true, the adder carry is true exactly when at least
+     one of the other parameters is true.  (Contributed by Mario Carneiro,
+     8-Sep-2016.) */
+
+theorem cad1 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ch → ( cadd ( ph , ps , ch ) ↔ ( ph ∨ ps ) ) ) ;;
+}
+
+proof of cad1 {
+	step 1 : wff = ibar () |- ( ch → ( ( ph \/_ ps ) ↔ ( ch ∧ ( ph \/_ ps ) ) ) ) ;;
+	step 2 : wff = bicomd (step 1) |- ( ch → ( ( ch ∧ ( ph \/_ ps ) ) ↔ ( ph \/_ ps ) ) ) ;;
+	step 3 : wff = orbi2d (step 2) |- ( ch → ( ( ( ph ∧ ps ) ∨ ( ch ∧ ( ph \/_ ps ) ) ) ↔ ( ( ph ∧ ps ) ∨ ( ph \/_ ps ) ) ) ) ;;
+	step 4 : wff = df-cad () |- ( cadd ( ph , ps , ch ) ↔ ( ( ph ∧ ps ) ∨ ( ch ∧ ( ph \/_ ps ) ) ) ) ;;
+	step 5 : wff = pm5.63 () |- ( ( ( ph ∧ ps ) ∨ ( ph ∨ ps ) ) ↔ ( ( ph ∧ ps ) ∨ ( ¬ ( ph ∧ ps ) ∧ ( ph ∨ ps ) ) ) ) ;;
+	step 6 : wff = olc () |- ( ( ph ∨ ps ) → ( ( ph ∧ ps ) ∨ ( ph ∨ ps ) ) ) ;;
+	step 7 : wff = orc () |- ( ph → ( ph ∨ ps ) ) ;;
+	step 8 : wff = adantr (step 7) |- ( ( ph ∧ ps ) → ( ph ∨ ps ) ) ;;
+	step 9 : wff = id () |- ( ( ph ∨ ps ) → ( ph ∨ ps ) ) ;;
+	step 10 : wff = jaoi (step 8, step 9) |- ( ( ( ph ∧ ps ) ∨ ( ph ∨ ps ) ) → ( ph ∨ ps ) ) ;;
+	step 11 : wff = impbii (step 6, step 10) |- ( ( ph ∨ ps ) ↔ ( ( ph ∧ ps ) ∨ ( ph ∨ ps ) ) ) ;;
+	step 12 : wff = xor2 () |- ( ( ph \/_ ps ) ↔ ( ( ph ∨ ps ) ∧ ¬ ( ph ∧ ps ) ) ) ;;
+	step 13 : wff = ancom () |- ( ( ( ph ∨ ps ) ∧ ¬ ( ph ∧ ps ) ) ↔ ( ¬ ( ph ∧ ps ) ∧ ( ph ∨ ps ) ) ) ;;
+	step 14 : wff = bitri (step 12, step 13) |- ( ( ph \/_ ps ) ↔ ( ¬ ( ph ∧ ps ) ∧ ( ph ∨ ps ) ) ) ;;
+	step 15 : wff = orbi2i (step 14) |- ( ( ( ph ∧ ps ) ∨ ( ph \/_ ps ) ) ↔ ( ( ph ∧ ps ) ∨ ( ¬ ( ph ∧ ps ) ∧ ( ph ∨ ps ) ) ) ) ;;
+	step 16 : wff = 3bitr4i (step 5, step 11, step 15) |- ( ( ph ∨ ps ) ↔ ( ( ph ∧ ps ) ∨ ( ph \/_ ps ) ) ) ;;
+	step 17 : wff = 3bitr4g (step 3, step 4, step 16) |- ( ch → ( cadd ( ph , ps , ch ) ↔ ( ph ∨ ps ) ) ) ;;
+	qed prop 1 = step 17 ;;
+}
+
+/* If two parameters are true, the adder carry is true.  (Contributed by
+     Mario Carneiro, 4-Sep-2016.) */
+
+theorem cad11 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ( ph ∧ ps ) → cadd ( ph , ps , ch ) ) ;;
+}
+
+proof of cad11 {
+	step 1 : wff = orc () |- ( ( ph ∧ ps ) → ( ( ph ∧ ps ) ∨ ( ch ∧ ( ph \/_ ps ) ) ) ) ;;
+	step 2 : wff = df-cad () |- ( cadd ( ph , ps , ch ) ↔ ( ( ph ∧ ps ) ∨ ( ch ∧ ( ph \/_ ps ) ) ) ) ;;
+	step 3 : wff = sylibr (step 1, step 2) |- ( ( ph ∧ ps ) → cadd ( ph , ps , ch ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* If one parameter is false, the adder carry is true exactly when both of
+     the other two parameters are true.  (Contributed by Mario Carneiro,
+     8-Sep-2016.) */
+
+theorem cad0 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ¬ ch → ( cadd ( ph , ps , ch ) ↔ ( ph ∧ ps ) ) ) ;;
+}
+
+proof of cad0 {
+	step 1 : wff = df-cad () |- ( cadd ( ph , ps , ch ) ↔ ( ( ph ∧ ps ) ∨ ( ch ∧ ( ph \/_ ps ) ) ) ) ;;
+	step 2 : wff = idd () |- ( ¬ ch → ( ( ph ∧ ps ) → ( ph ∧ ps ) ) ) ;;
+	step 3 : wff = pm2.21 () |- ( ¬ ch → ( ch → ( ph ∧ ps ) ) ) ;;
+	step 4 : wff = adantrd (step 3) |- ( ¬ ch → ( ( ch ∧ ( ph \/_ ps ) ) → ( ph ∧ ps ) ) ) ;;
+	step 5 : wff = jaod (step 2, step 4) |- ( ¬ ch → ( ( ( ph ∧ ps ) ∨ ( ch ∧ ( ph \/_ ps ) ) ) → ( ph ∧ ps ) ) ) ;;
+	step 6 : wff = orc () |- ( ( ph ∧ ps ) → ( ( ph ∧ ps ) ∨ ( ch ∧ ( ph \/_ ps ) ) ) ) ;;
+	step 7 : wff = impbid1 (step 5, step 6) |- ( ¬ ch → ( ( ( ph ∧ ps ) ∨ ( ch ∧ ( ph \/_ ps ) ) ) ↔ ( ph ∧ ps ) ) ) ;;
+	step 8 : wff = syl5bb (step 1, step 7) |- ( ¬ ch → ( cadd ( ph , ps , ch ) ↔ ( ph ∧ ps ) ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Rotation law for adder carry.  (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+theorem cadtru (ph : wff)  {
+	prop 1 : wff = |- cadd ( T. , T. , ph ) ;;
+}
+
+proof of cadtru {
+	step 1 : wff = tru () |- T. ;;
+	step 2 : wff = tru () |- T. ;;
+	step 3 : wff = cad11 () |- ( ( T. ∧ T. ) → cadd ( T. , T. , ph ) ) ;;
+	step 4 : wff = mp2an (step 1, step 2, step 3) |- cadd ( T. , T. , ph ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* If the first parameter is true, the half adder is equivalent to the
+     equality of the other two inputs.  (Contributed by Mario Carneiro,
+     4-Sep-2016.) */
+
+theorem had1 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ph → ( hadd ( ph , ps , ch ) ↔ ( ps ↔ ch ) ) ) ;;
+}
+
+proof of had1 {
+	step 1 : wff = hadbi () |- ( hadd ( ph , ps , ch ) ↔ ( ( ph ↔ ps ) ↔ ch ) ) ;;
+	step 2 : wff = biass () |- ( ( ( ph ↔ ps ) ↔ ch ) ↔ ( ph ↔ ( ps ↔ ch ) ) ) ;;
+	step 3 : wff = bitri (step 1, step 2) |- ( hadd ( ph , ps , ch ) ↔ ( ph ↔ ( ps ↔ ch ) ) ) ;;
+	step 4 : wff = id () |- ( ph → ph ) ;;
+	step 5 : wff = biidd () |- ( ph → ( ( ps ↔ ch ) ↔ ( ps ↔ ch ) ) ) ;;
+	step 6 : wff = 2thd (step 4, step 5) |- ( ph → ( ph ↔ ( ( ps ↔ ch ) ↔ ( ps ↔ ch ) ) ) ) ;;
+	step 7 : wff = biass () |- ( ( ( ph ↔ ( ps ↔ ch ) ) ↔ ( ps ↔ ch ) ) ↔ ( ph ↔ ( ( ps ↔ ch ) ↔ ( ps ↔ ch ) ) ) ) ;;
+	step 8 : wff = sylibr (step 6, step 7) |- ( ph → ( ( ph ↔ ( ps ↔ ch ) ) ↔ ( ps ↔ ch ) ) ) ;;
+	step 9 : wff = syl5bb (step 3, step 8) |- ( ph → ( hadd ( ph , ps , ch ) ↔ ( ps ↔ ch ) ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* If the first parameter is false, the half adder is equivalent to the XOR
+     of the other two inputs.  (Contributed by Mario Carneiro, 4-Sep-2016.) */
+
+theorem had0 (ph : wff, ps : wff, ch : wff)  {
+	prop 1 : wff = |- ( ¬ ph → ( hadd ( ph , ps , ch ) ↔ ( ps \/_ ch ) ) ) ;;
+}
+
+proof of had0 {
+	step 1 : wff = had1 () |- ( ¬ ph → ( hadd ( ¬ ph , ¬ ps , ¬ ch ) ↔ ( ¬ ps ↔ ¬ ch ) ) ) ;;
+	step 2 : wff = hadnot () |- ( ¬ hadd ( ph , ps , ch ) ↔ hadd ( ¬ ph , ¬ ps , ¬ ch ) ) ;;
+	step 3 : wff = df-xor () |- ( ( ¬ ps \/_ ¬ ch ) ↔ ¬ ( ¬ ps ↔ ¬ ch ) ) ;;
+	step 4 : wff = xorneg () |- ( ( ¬ ps \/_ ¬ ch ) ↔ ( ps \/_ ch ) ) ;;
+	step 5 : wff = bitr3i (step 3, step 4) |- ( ¬ ( ¬ ps ↔ ¬ ch ) ↔ ( ps \/_ ch ) ) ;;
+	step 6 : wff = con1bii (step 5) |- ( ¬ ( ps \/_ ch ) ↔ ( ¬ ps ↔ ¬ ch ) ) ;;
+	step 7 : wff = 3bitr4g (step 1, step 2, step 6) |- ( ¬ ph → ( ¬ hadd ( ph , ps , ch ) ↔ ¬ ( ps \/_ ch ) ) ) ;;
+	step 8 : wff = con4bid (step 7) |- ( ¬ ph → ( hadd ( ph , ps , ch ) ↔ ( ps \/_ ch ) ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+

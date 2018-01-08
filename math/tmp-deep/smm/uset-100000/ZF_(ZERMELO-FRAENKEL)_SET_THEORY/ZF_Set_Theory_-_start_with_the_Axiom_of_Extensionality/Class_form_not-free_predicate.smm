@@ -1,0 +1,574 @@
+$[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Class_abstractions_(a_k_a__class_builders).smm $]
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Class form not-free predicate
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+$c F/_ $.
+$( Underlined not-free symbol. $)
+$( Extend wff definition to include the not-free predicate for classes. $)
+${
+	$v x A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	awnfc $a wff F/_ x A $.
+$}
+$( Justification theorem for ~ df-nfc .  (Contributed by Mario Carneiro,
+       13-Oct-2016.) $)
+${
+	$v x y z A $.
+	$d x y z $.
+	$d y z A $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	f3 $f class A $.
+	pnfcjust $p |- ( A. y F/ x y e. A <-> A. z F/ x z e. A ) $=
+	f1 acv f2 acv awceq f0 pnfv f1 acv f2 acv f3 peleq1 f1 acv f2 acv awceq f1 acv f3 awcel f2 acv f3 awcel f0 pnfbidf f1 acv f3 awcel f0 awnf f2 acv f3 awcel f0 awnf f1 f2 pcbvalv $.
+$}
+$( Define the not-free predicate for classes.  This is read " ` x ` is not
+       free in ` A ` ".  Not-free means that the value of ` x ` cannot affect
+       the value of ` A ` , e.g., any occurrence of ` x ` in ` A ` is
+       effectively bound by a "for all" or something that expands to one (such
+       as "there exists").  It is defined in terms of the not-free predicate
+       ~ df-nf for wffs; see that definition for more information.
+       (Contributed by Mario Carneiro, 11-Aug-2016.) $)
+${
+	$v x y A $.
+	$d x y $.
+	$d y A $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	adf-nfc $a |- ( F/_ x A <-> A. y F/ x y e. A ) $.
+$}
+$( Deduce that a class ` A ` does not have ` x ` free in it.
+         (Contributed by Mario Carneiro, 11-Aug-2016.) $)
+${
+	$v x y A $.
+	$d x y $.
+	$d y A $.
+	e0 $e |- F/ x y e. A $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	pnfci $p |- F/_ x A $=
+	f0 f1 f2 adf-nfc e0 f0 f2 awnfc f1 acv f2 awcel f0 awnf f1 pmpgbir $.
+$}
+$( Deduce that a class ` A ` does not have ` x ` free in it.
+         (Contributed by Mario Carneiro, 11-Aug-2016.) $)
+${
+	$v x y A $.
+	$d x y $.
+	$d y A $.
+	e0 $e |- ( y e. A -> A. x y e. A ) $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	pnfcii $p |- F/_ x A $=
+	e0 f1 acv f2 awcel f0 pnfi f0 f1 f2 pnfci $.
+$}
+$( Consequence of the not-free predicate.  (Contributed by Mario Carneiro,
+       11-Aug-2016.) $)
+${
+	$v x y A $.
+	$d x y $.
+	$d y A $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	pnfcr $p |- ( F/_ x A -> F/ x y e. A ) $=
+	f0 f1 f2 adf-nfc f1 acv f2 awcel f0 awnf f1 psp f0 f2 awnfc f1 acv f2 awcel f0 awnf f1 awal f1 acv f2 awcel f0 awnf psylbi $.
+$}
+$( Consequence of the not-free predicate.  (Contributed by Mario Carneiro,
+       11-Aug-2016.) $)
+${
+	$v x y z A $.
+	$d x y z $.
+	$d z A $.
+	e0 $e |- F/_ x A $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	i0 $f set z $.
+	pnfcrii $p |- ( y e. A -> A. x y e. A ) $=
+	e0 f0 i0 f2 pnfcr f0 f2 awnfc i0 acv f2 awcel f0 awnf aax-mp i0 acv f2 awcel f0 pnfri f0 i0 f1 f2 phblem $.
+$}
+$( Consequence of the not-free predicate.  (Note that unlike ~ nfcr , this
+       does not require ` y ` and ` A ` to be disjoint.)  (Contributed by Mario
+       Carneiro, 11-Aug-2016.) $)
+${
+	$v x y A $.
+	$d x y $.
+	e0 $e |- F/_ x A $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	pnfcri $p |- F/ x y e. A $=
+	e0 f0 f1 f2 pnfcrii f1 acv f2 awcel f0 pnfi $.
+$}
+$( Deduce that a class ` A ` does not have ` x ` free in it.  (Contributed
+       by Mario Carneiro, 11-Aug-2016.) $)
+${
+	$v ph x y A $.
+	$d x y $.
+	$d y A $.
+	e0 $e |- F/ y ph $.
+	e1 $e |- ( ph -> F/ x y e. A ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	pnfcd $p |- ( ph -> F/_ x A ) $=
+	e0 e1 f0 f2 acv f3 awcel f1 awnf f2 palrimi f1 f2 f3 adf-nfc f0 f2 acv f3 awcel f1 awnf f2 awal f1 f3 awnfc psylibr $.
+$}
+$( Equality theorem for class not-free.  (Contributed by Mario Carneiro,
+       11-Aug-2016.) $)
+${
+	$v x y A B $.
+	$d x y $.
+	$d y A $.
+	$d y B $.
+	e0 $e |- A = B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	i0 $f set y $.
+	pnfceqi $p |- ( F/_ x A <-> F/_ x B ) $=
+	e0 f1 f2 i0 acv peleq2i i0 acv f1 awcel i0 acv f2 awcel f0 pnfbii i0 acv f1 awcel f0 awnf i0 acv f2 awcel f0 awnf i0 palbii f0 i0 f1 adf-nfc f0 i0 f2 adf-nfc i0 acv f1 awcel f0 awnf i0 awal i0 acv f2 awcel f0 awnf i0 awal f0 f1 awnfc f0 f2 awnfc p3bitr4i $.
+$}
+$( A utility lemma to transfer a bound-variable hypothesis builder into a
+         definition.  (Contributed by Mario Carneiro, 11-Aug-2016.) $)
+${
+	$v x A B $.
+	e0 $e |- A = B $.
+	e1 $e |- F/_ x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnfcxfr $p |- F/_ x A $=
+	e1 e0 f0 f1 f2 pnfceqi f0 f1 awnfc f0 f2 awnfc pmpbir $.
+$}
+$( A utility lemma to transfer a bound-variable hypothesis builder into a
+         definition.  (Contributed by Mario Carneiro, 11-Aug-2016.) $)
+${
+	$v ph x A B $.
+	e0 $e |- A = B $.
+	e1 $e |- ( ph -> F/_ x B ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pnfcxfrd $p |- ( ph -> F/_ x A ) $=
+	e1 e0 f1 f2 f3 pnfceqi f0 f1 f3 awnfc f1 f2 awnfc psylibr $.
+$}
+$( An equality theorem for effectively not free.  (Contributed by Mario
+       Carneiro, 14-Oct-2016.) $)
+${
+	$v ph x y A B $.
+	$d x y $.
+	$d A y $.
+	$d B y $.
+	$d ph y $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- ( ph -> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	i0 $f set y $.
+	pnfceqdf $p |- ( ph -> ( F/_ x A <-> F/_ x B ) ) $=
+	e0 e1 f0 f2 f3 i0 acv peleq2d f0 i0 acv f2 awcel i0 acv f3 awcel f1 pnfbidf f0 i0 acv f2 awcel f1 awnf i0 acv f3 awcel f1 awnf i0 palbidv f1 i0 f2 adf-nfc f1 i0 f3 adf-nfc f0 i0 acv f2 awcel f1 awnf i0 awal i0 acv f3 awcel f1 awnf i0 awal f1 f2 awnfc f1 f3 awnfc p3bitr4g $.
+$}
+$( If ` x ` is disjoint from ` A ` , then ` x ` is not free in ` A ` .
+       (Contributed by Mario Carneiro, 11-Aug-2016.) $)
+${
+	$v x y A $.
+	$d x y A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	i0 $f set y $.
+	pnfcv $p |- F/_ x A $=
+	i0 acv f1 awcel f0 pnfv f0 i0 f1 pnfci $.
+$}
+$( If ` x ` is disjoint from ` A ` , then ` x ` is not free in ` A ` .
+       (Contributed by Mario Carneiro, 7-Oct-2016.) $)
+${
+	$v ph x A $.
+	$d x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	pnfcvd $p |- ( ph -> F/_ x A ) $=
+	f1 f2 pnfcv f1 f2 awnfc f0 pa1i $.
+$}
+$( Bound-variable hypothesis builder for a class abstraction.  (Contributed
+       by Mario Carneiro, 11-Aug-2016.) $)
+${
+	$v ph x y $.
+	$d x y $.
+	$d y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	i0 $f set y $.
+	pnfab1 $p |- F/_ x { x | ph } $=
+	f0 f1 i0 pnfsab1 f1 i0 f0 f1 acab pnfci $.
+$}
+$( ` x ` is bound in ` F/_ x A ` .  (Contributed by Mario Carneiro,
+       11-Aug-2016.) $)
+${
+	$v x y A $.
+	$d x y $.
+	$d y A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	i0 $f set y $.
+	pnfnfc1 $p |- F/ x F/_ x A $=
+	f0 i0 f1 adf-nfc i0 acv f1 awcel f0 pnfnf1 i0 acv f1 awcel f0 awnf f0 i0 pnfal f0 f1 awnfc i0 acv f1 awcel f0 awnf i0 awal f0 pnfxfr $.
+$}
+$( Bound-variable hypothesis builder for a class abstraction.  (Contributed
+       by Mario Carneiro, 11-Aug-2016.) $)
+${
+	$v ph x y z $.
+	$d x z $.
+	$d y z $.
+	$d z ph $.
+	e0 $e |- F/ x ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	i0 $f set z $.
+	pnfab $p |- F/_ x { y | ph } $=
+	e0 f0 f1 f2 i0 pnfsab f1 i0 f0 f2 acab pnfci $.
+$}
+$( Bound-variable hypothesis builder for a class abstraction.  (Contributed
+       by Mario Carneiro, 14-Oct-2016.) $)
+${
+	$v ph x y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	pnfaba1 $p |- F/_ x { y | A. x ph } $=
+	f0 f1 pnfa1 f0 f1 awal f1 f2 pnfab $.
+$}
+$( Hypothesis builder for ` F/_ y A ` .  (Contributed by Mario Carneiro,
+       11-Aug-2016.) $)
+${
+	$v x y z A $.
+	$d x z $.
+	$d y z $.
+	$d z A $.
+	e0 $e |- F/_ x A $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	i0 $f set z $.
+	pnfnfc $p |- F/ x F/_ y A $=
+	f1 i0 f2 adf-nfc e0 f0 i0 f2 pnfcri i0 acv f2 awcel f0 f1 pnfnf i0 acv f2 awcel f1 awnf f0 i0 pnfal f1 f2 awnfc i0 acv f2 awcel f1 awnf i0 awal f0 pnfxfr $.
+$}
+$( Hypothesis builder for equality.  (Contributed by Mario Carneiro,
+       11-Aug-2016.) $)
+${
+	$v x z A B $.
+	$d x z $.
+	$d z A $.
+	$d z B $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/_ x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	i0 $f set z $.
+	pnfeq $p |- F/ x A = B $=
+	i0 f1 f2 pdfcleq e0 f0 i0 f1 pnfcri e1 f0 i0 f2 pnfcri i0 acv f1 awcel i0 acv f2 awcel f0 pnfbi i0 acv f1 awcel i0 acv f2 awcel awb f0 i0 pnfal f1 f2 awceq i0 acv f1 awcel i0 acv f2 awcel awb i0 awal f0 pnfxfr $.
+$}
+$( Hypothesis builder for elementhood.  (Contributed by Mario Carneiro,
+       11-Aug-2016.) $)
+${
+	$v x z A B $.
+	$d x z $.
+	$d z A $.
+	$d z B $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/_ x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	i0 $f set z $.
+	pnfel $p |- F/ x A e. B $=
+	i0 f1 f2 adf-clel f0 i0 acv pnfcv e0 f0 i0 acv f1 pnfeq e1 f0 i0 f2 pnfcri i0 acv f1 awceq i0 acv f2 awcel f0 pnfan i0 acv f1 awceq i0 acv f2 awcel awa f0 i0 pnfex f1 f2 awcel i0 acv f1 awceq i0 acv f2 awcel awa i0 awex f0 pnfxfr $.
+$}
+$( Hypothesis builder for equality, special case.  (Contributed by Mario
+       Carneiro, 10-Oct-2016.) $)
+${
+	$v x A B $.
+	$d x B $.
+	e0 $e |- F/_ x A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnfeq1 $p |- F/ x A = B $=
+	e0 f0 f2 pnfcv f0 f1 f2 pnfeq $.
+$}
+$( Hypothesis builder for elementhood, special case.  (Contributed by Mario
+       Carneiro, 10-Oct-2016.) $)
+${
+	$v x A B $.
+	$d x B $.
+	e0 $e |- F/_ x A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnfel1 $p |- F/ x A e. B $=
+	e0 f0 f2 pnfcv f0 f1 f2 pnfel $.
+$}
+$( Hypothesis builder for equality, special case.  (Contributed by Mario
+       Carneiro, 10-Oct-2016.) $)
+${
+	$v x A B $.
+	$d x A $.
+	e0 $e |- F/_ x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnfeq2 $p |- F/ x A = B $=
+	f0 f1 pnfcv e0 f0 f1 f2 pnfeq $.
+$}
+$( Hypothesis builder for elementhood, special case.  (Contributed by Mario
+       Carneiro, 10-Oct-2016.) $)
+${
+	$v x A B $.
+	$d x A $.
+	e0 $e |- F/_ x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnfel2 $p |- F/ x A e. B $=
+	f0 f1 pnfcv e0 f0 f1 f2 pnfel $.
+$}
+$( Consequence of the not-free predicate.  (Contributed by Mario Carneiro,
+       11-Aug-2016.) $)
+${
+	$v ph x y A $.
+	$d x y $.
+	$d y A $.
+	e0 $e |- ( ph -> F/_ x A ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	pnfcrd $p |- ( ph -> F/ x y e. A ) $=
+	e0 f1 f2 f3 pnfcr f0 f1 f3 awnfc f2 acv f3 awcel f1 awnf psyl $.
+$}
+$( Hypothesis builder for equality.  (Contributed by Mario Carneiro,
+       7-Oct-2016.) $)
+${
+	$v ph x y A B $.
+	$d x y $.
+	$d y A $.
+	$d y B $.
+	$d y ph $.
+	e0 $e |- ( ph -> F/_ x A ) $.
+	e1 $e |- ( ph -> F/_ x B ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	i0 $f set y $.
+	pnfeqd $p |- ( ph -> F/ x A = B ) $=
+	i0 f2 f3 pdfcleq f0 i0 pnfv e0 f0 f1 i0 f2 pnfcrd e1 f0 f1 i0 f3 pnfcrd f0 i0 acv f2 awcel i0 acv f3 awcel f1 pnfbid f0 i0 acv f2 awcel i0 acv f3 awcel awb f1 i0 pnfald f2 f3 awceq i0 acv f2 awcel i0 acv f3 awcel awb i0 awal f0 f1 pnfxfrd $.
+$}
+$( Hypothesis builder for elementhood.  (Contributed by Mario Carneiro,
+       7-Oct-2016.) $)
+${
+	$v ph x y A B $.
+	$d x y $.
+	$d y A $.
+	$d y B $.
+	$d y ph $.
+	e0 $e |- ( ph -> F/_ x A ) $.
+	e1 $e |- ( ph -> F/_ x B ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	i0 $f set y $.
+	pnfeld $p |- ( ph -> F/ x A e. B ) $=
+	i0 f2 f3 adf-clel f0 i0 pnfv f0 f1 i0 acv pnfcvd e0 f0 f1 i0 acv f2 pnfeqd e1 f0 f1 i0 f3 pnfcrd f0 i0 acv f2 awceq i0 acv f3 awcel f1 pnfand f0 i0 acv f2 awceq i0 acv f3 awcel awa f1 i0 pnfexd f2 f3 awcel i0 acv f2 awceq i0 acv f3 awcel awa i0 awex f0 f1 pnfxfrd $.
+$}
+$( Formula-building lemma for use with the Distinctor Reduction Theorem.
+       (Contributed by Mario Carneiro, 8-Oct-2016.) $)
+${
+	$v x y w A B $.
+	$d w x $.
+	$d w y $.
+	$d w A $.
+	$d w B $.
+	e0 $e |- ( A. x x = y -> A = B ) $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	i0 $f set w $.
+	pdrnfc1 $p |- ( A. x x = y -> ( F/_ x A <-> F/_ y B ) ) $=
+	e0 f0 acv f1 acv awceq f0 awal f2 f3 i0 acv peleq2d i0 acv f2 awcel i0 acv f3 awcel f0 f1 pdrnf1 i0 acv f2 awcel f0 awnf i0 acv f3 awcel f1 awnf f0 f1 i0 pdral2 f0 i0 f2 adf-nfc f1 i0 f3 adf-nfc f0 acv f1 acv awceq f0 awal i0 acv f2 awcel f0 awnf i0 awal i0 acv f3 awcel f1 awnf i0 awal f0 f2 awnfc f1 f3 awnfc p3bitr4g $.
+$}
+$( Formula-building lemma for use with the Distinctor Reduction Theorem.
+       (Contributed by Mario Carneiro, 8-Oct-2016.) $)
+${
+	$v x y z w A B $.
+	$d w x $.
+	$d w y $.
+	$d w z $.
+	$d w A $.
+	$d w B $.
+	e0 $e |- ( A. x x = y -> A = B ) $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	f3 $f class A $.
+	f4 $f class B $.
+	i0 $f set w $.
+	pdrnfc2 $p |- ( A. x x = y -> ( F/_ z A <-> F/_ z B ) ) $=
+	e0 f0 acv f1 acv awceq f0 awal f3 f4 i0 acv peleq2d i0 acv f3 awcel i0 acv f4 awcel f0 f1 f2 pdrnf2 i0 acv f3 awcel f2 awnf i0 acv f4 awcel f2 awnf f0 f1 i0 pdral2 f2 i0 f3 adf-nfc f2 i0 f4 adf-nfc f0 acv f1 acv awceq f0 awal i0 acv f3 awcel f2 awnf i0 awal i0 acv f4 awcel f2 awnf i0 awal f2 f3 awnfc f2 f4 awnfc p3bitr4g $.
+$}
+$( Bound-variable hypothesis builder for a class abstraction.  (Contributed
+       by Mario Carneiro, 8-Oct-2016.) $)
+${
+	$v ph ps x y z $.
+	$d x z $.
+	$d y z $.
+	$d z ph $.
+	$d z ps $.
+	e0 $e |- F/ y ph $.
+	e1 $e |- ( ( ph /\ -. A. x x = y ) -> F/ x ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	i0 $f set z $.
+	pnfabd2 $p |- ( ph -> F/_ x { y | ps } ) $=
+	f0 f2 acv f3 acv awceq f2 awal awn awa i0 pnfv f1 i0 f3 adf-clab e0 f2 f3 f3 pnfnae f0 f2 acv f3 acv awceq f2 awal awn f3 pnfan e1 f0 f2 acv f3 acv awceq f2 awal awn awa f1 f3 i0 f2 pnfsbd i0 acv f1 f3 acab awcel f1 f3 i0 awsb f0 f2 acv f3 acv awceq f2 awal awn awa f2 pnfxfrd f0 f2 acv f3 acv awceq f2 awal awn awa f2 i0 f1 f3 acab pnfcd f0 f2 acv f3 acv awceq f2 awal awn f2 f1 f3 acab awnfc pex f1 f3 pnfab1 f2 acv f3 acv awceq f2 awal f1 f3 acab peqidd f2 f3 f1 f3 acab f1 f3 acab pdrnfc1 f2 acv f3 acv awceq f2 awal f2 f1 f3 acab awnfc f3 f1 f3 acab awnfc pmpbiri f0 f2 acv f3 acv awceq f2 awal f2 f1 f3 acab awnfc ppm2.61d2 $.
+$}
+$( Bound-variable hypothesis builder for a class abstraction.  (Contributed
+       by Mario Carneiro, 8-Oct-2016.) $)
+${
+	$v ph ps x y $.
+	e0 $e |- F/ y ph $.
+	e1 $e |- ( ph -> F/ x ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	pnfabd $p |- ( ph -> F/_ x { y | ps } ) $=
+	e0 e1 f0 f1 f2 awnf f2 acv f3 acv awceq f2 awal awn padantr f0 f1 f2 f3 pnfabd2 $.
+$}
+$( Deduction form of ~ dvelimc .  (Contributed by Mario Carneiro,
+       8-Oct-2016.) $)
+${
+	$v ph x y z w A B $.
+	$d w x $.
+	$d w y $.
+	$d w z $.
+	$d w A $.
+	$d w B $.
+	$d w ph $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- F/ z ph $.
+	e2 $e |- ( ph -> F/_ x A ) $.
+	e3 $e |- ( ph -> F/_ z B ) $.
+	e4 $e |- ( ph -> ( z = y -> A = B ) ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	f4 $f class A $.
+	f5 $f class B $.
+	i0 $f set w $.
+	pdvelimdc $p |- ( ph -> ( -. A. x x = y -> F/_ x B ) ) $=
+	f0 f1 acv f2 acv awceq f1 awal awn awa i0 pnfv e0 e1 e2 f0 f1 i0 f4 pnfcrd e3 f0 f3 i0 f5 pnfcrd e4 f4 f5 i0 acv peleq2 f0 f3 acv f2 acv awceq f4 f5 awceq i0 acv f4 awcel i0 acv f5 awcel awb psyl6 f0 i0 acv f4 awcel i0 acv f5 awcel f1 f2 f3 pdvelimdf f0 f1 acv f2 acv awceq f1 awal awn i0 acv f5 awcel f1 awnf pimp f0 f1 acv f2 acv awceq f1 awal awn awa f1 i0 f5 pnfcd f0 f1 acv f2 acv awceq f1 awal awn f1 f5 awnfc pex $.
+$}
+$( Version of ~ dvelim for classes.  (Contributed by Mario Carneiro,
+       8-Oct-2016.) $)
+${
+	$v x y z A B $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/_ z B $.
+	e2 $e |- ( z = y -> A = B ) $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	f3 $f class A $.
+	f4 $f class B $.
+	pdvelimc $p |- ( -. A. x x = y -> F/_ x B ) $=
+	f0 pnftru f2 pnftru e0 f0 f3 awnfc awtru pa1i e1 f2 f4 awnfc awtru pa1i e2 f2 acv f1 acv awceq f3 f4 awceq awi awtru pa1i awtru f0 f1 f2 f3 f4 pdvelimdc f0 acv f1 acv awceq f0 awal awn f0 f4 awnfc awi ptrud $.
+$}
+$( If ` x ` and ` y ` are distinct, then ` x ` is not free in ` y ` .
+       (Contributed by Mario Carneiro, 8-Oct-2016.) $)
+${
+	$v x y z $.
+	$d x z $.
+	$d y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	i0 $f set z $.
+	pnfcvf $p |- ( -. A. x x = y -> F/_ x y ) $=
+	f0 i0 acv pnfcv i0 f1 acv pnfcv i0 acv f1 acv awceq pid f0 f1 i0 i0 acv f1 acv pdvelimc $.
+$}
+$( If ` x ` and ` y ` are distinct, then ` y ` is not free in ` x ` .
+       (Contributed by Mario Carneiro, 5-Dec-2016.) $)
+${
+	$v x y $.
+	f0 $f set x $.
+	f1 $f set y $.
+	pnfcvf2 $p |- ( -. A. x x = y -> F/_ y x ) $=
+	f1 f0 pnfcvf f1 f0 acv awnfc f1 f0 pnaecoms $.
+$}
+$( Establish equality between classes, using bound-variable hypotheses
+       instead of distinct variable conditions.  (Contributed by NM,
+       5-Aug-1993.)  (Revised by Mario Carneiro, 7-Oct-2016.) $)
+${
+	$v x y A B $.
+	$d y A $.
+	$d y B $.
+	$d x y $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/_ x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	i0 $f set y $.
+	pcleqf $p |- ( A = B <-> A. x ( x e. A <-> x e. B ) ) $=
+	i0 f1 f2 pdfcleq f0 acv f1 awcel f0 acv f2 awcel awb i0 pnfv e0 f0 i0 f1 pnfcri e1 f0 i0 f2 pnfcri i0 acv f1 awcel i0 acv f2 awcel f0 pnfbi f0 acv i0 acv f1 peleq1 f0 acv i0 acv f2 peleq1 f0 acv i0 acv awceq f0 acv f1 awcel i0 acv f1 awcel f0 acv f2 awcel i0 acv f2 awcel pbibi12d f0 acv f1 awcel f0 acv f2 awcel awb i0 acv f1 awcel i0 acv f2 awcel awb f0 i0 pcbval f1 f2 awceq i0 acv f1 awcel i0 acv f2 awcel awb i0 awal f0 acv f1 awcel f0 acv f2 awcel awb f0 awal pbitr4i $.
+$}
+$( A simplification of class abstraction.  Theorem 5.2 of [Quine] p. 35.
+       (Contributed by NM, 5-Sep-2011.)  (Revised by Mario Carneiro,
+       7-Oct-2016.) $)
+${
+	$v x A $.
+	e0 $e |- F/_ x A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	pabid2f $p |- { x | x e. A } = A $=
+	e0 f0 acv f1 awcel f0 pnfab1 f0 f1 f0 acv f1 awcel f0 acab pcleqf f0 acv f1 awcel f0 pabid f0 acv f0 acv f1 awcel f0 acab awcel f0 acv f1 awcel f0 acv f1 awcel pbibi2i f0 acv f1 awcel f0 acv f0 acv f1 awcel f0 acab awcel awb f0 acv f1 awcel f0 acv f1 awcel awb f0 palbii f1 f0 acv f1 awcel f0 acab awceq f0 acv f1 awcel f0 acv f0 acv f1 awcel f0 acab awcel awb f0 awal f0 acv f1 awcel f0 acv f1 awcel awb f0 awal pbitri f0 acv f1 awcel pbiid f1 f0 acv f1 awcel f0 acab awceq f0 acv f1 awcel f0 acv f1 awcel awb f0 pmpgbir f1 f0 acv f1 awcel f0 acab peqcomi $.
+$}
+$( Theorem to move a substitution in and out of a class abstraction.
+       (Contributed by NM, 27-Sep-2003.)  (Revised by Mario Carneiro,
+       7-Oct-2016.) $)
+${
+	$v ph x y z v A $.
+	$d v A $.
+	$d x z v $.
+	$d y z v $.
+	$d v ph $.
+	e0 $e |- F/_ x A $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	f4 $f class A $.
+	i0 $f set v $.
+	psbabel $p |- ( [ y / x ] { z | ph } e. A <-> { z | [ y / x ] ph } e. A ) $=
+	i0 acv f0 f3 acab awceq i0 acv f4 awcel awa i0 f1 f2 psbex i0 acv f0 f3 acab awceq i0 acv f4 awcel f1 f2 psban f3 acv i0 acv awcel f1 pnfv f3 acv i0 acv awcel f1 f2 psbf f3 acv i0 acv awcel f3 acv i0 acv awcel f0 f1 f2 psbrbis f3 acv i0 acv awcel f0 awb f3 acv i0 acv awcel f0 f1 f2 awsb awb f1 f2 f3 psbalv f0 f3 i0 acv pabeq2 i0 acv f0 f3 acab awceq f3 acv i0 acv awcel f0 awb f3 awal f1 f2 psbbii f0 f1 f2 awsb f3 i0 acv pabeq2 f3 acv i0 acv awcel f0 awb f3 awal f1 f2 awsb f3 acv i0 acv awcel f0 f1 f2 awsb awb f3 awal i0 acv f0 f3 acab awceq f1 f2 awsb i0 acv f0 f1 f2 awsb f3 acab awceq p3bitr4i e0 f1 i0 f4 pnfcri i0 acv f4 awcel f1 f2 psbf i0 acv f0 f3 acab awceq f1 f2 awsb i0 acv f0 f1 f2 awsb f3 acab awceq i0 acv f4 awcel f1 f2 awsb i0 acv f4 awcel panbi12i i0 acv f0 f3 acab awceq i0 acv f4 awcel awa f1 f2 awsb i0 acv f0 f3 acab awceq f1 f2 awsb i0 acv f4 awcel f1 f2 awsb awa i0 acv f0 f1 f2 awsb f3 acab awceq i0 acv f4 awcel awa pbitri i0 acv f0 f3 acab awceq i0 acv f4 awcel awa f1 f2 awsb i0 acv f0 f1 f2 awsb f3 acab awceq i0 acv f4 awcel awa i0 pexbii i0 acv f0 f3 acab awceq i0 acv f4 awcel awa i0 awex f1 f2 awsb i0 acv f0 f3 acab awceq i0 acv f4 awcel awa f1 f2 awsb i0 awex i0 acv f0 f1 f2 awsb f3 acab awceq i0 acv f4 awcel awa i0 awex pbitri i0 f0 f3 acab f4 adf-clel f0 f3 acab f4 awcel i0 acv f0 f3 acab awceq i0 acv f4 awcel awa i0 awex f1 f2 psbbii i0 f0 f1 f2 awsb f3 acab f4 adf-clel i0 acv f0 f3 acab awceq i0 acv f4 awcel awa i0 awex f1 f2 awsb i0 acv f0 f1 f2 awsb f3 acab awceq i0 acv f4 awcel awa i0 awex f0 f3 acab f4 awcel f1 f2 awsb f0 f1 f2 awsb f3 acab f4 awcel p3bitr4i $.
+$}
+

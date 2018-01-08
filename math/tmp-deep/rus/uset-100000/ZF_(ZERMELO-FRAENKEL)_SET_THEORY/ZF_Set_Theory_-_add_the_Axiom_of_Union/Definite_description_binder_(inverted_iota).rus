@@ -1,0 +1,716 @@
+import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Relations.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Definite description binder (inverted iota)
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+constant {
+	symbol iota ;;
+}
+
+/* Extend class notation with Russell's definition description binder
+     (inverted iota). */
+
+rule cio (ph : wff, x : set) {
+	term : class = # ( iota x ph ) ;;
+}
+
+/* Soundness justification theorem for ~ df-iota .  (Contributed by Andrew
+       Salmon, 29-Jun-2011.) */
+
+theorem iotajust (ph : wff, x : set, y : set, z : set) disjointed(w x z, ph w z, ph w y, x y) {
+	prop 1 : wff = |- ⋃ { y | { x | ph } = { y } } = ⋃ { z | { x | ph } = { z } } ;;
+}
+
+proof of iotajust {
+	var w : set;;
+	step 1 : wff = sneq () |- ( y = w → { y } = { w } ) ;;
+	step 2 : wff = eqeq2d (step 1) |- ( y = w → ( { x | ph } = { y } ↔ { x | ph } = { w } ) ) ;;
+	step 3 : wff = cbvabv (step 2) |- { y | { x | ph } = { y } } = { w | { x | ph } = { w } } ;;
+	step 4 : wff = sneq () |- ( w = z → { w } = { z } ) ;;
+	step 5 : wff = eqeq2d (step 4) |- ( w = z → ( { x | ph } = { w } ↔ { x | ph } = { z } ) ) ;;
+	step 6 : wff = cbvabv (step 5) |- { w | { x | ph } = { w } } = { z | { x | ph } = { z } } ;;
+	step 7 : wff = eqtri (step 3, step 6) |- { y | { x | ph } = { y } } = { z | { x | ph } = { z } } ;;
+	step 8 : wff = unieqi (step 7) |- ⋃ { y | { x | ph } = { y } } = ⋃ { z | { x | ph } = { z } } ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Define Russell's definition description binder, which can be read as
+       "the unique ` x ` such that ` ph ` ," where ` ph ` ordinarily contains
+       ` x ` as a free variable.  Our definition is meaningful only when there
+       is exactly one ` x ` such that ` ph ` is true (see ~ iotaval );
+       otherwise, it evaluates to the empty set (see ~ iotanul ).  Russell used
+       the inverted iota symbol ` iota ` to represent the binder.
+
+       Sometimes proofs need to expand an iota-based definition.  That is,
+       given "X = the x for which ... x ... x ..." holds, the proof needs to
+       get to "...  X ...  X ...".  A general strategy to do this is to use
+       ~ riotacl2 (or ~ iotacl for unbounded iota), as demonstrated in the
+       proof of ~ supub .  This can be easier than applying ~ riotasbc or a
+       version that applies an explicit substitution, because substituting an
+       iota into its own property always has a bound variable clash which must
+       be first renamed or else guarded with NF.
+
+       (Contributed by Andrew Salmon, 30-Jun-2011.) */
+
+definition df-iota (ph : wff, x : set, y : set) disjointed(y x, y ph) {
+	defiendum : class = # ( iota x ph ) ;;
+	definiens : class = # ⋃ { y | { x | ph } = { y } } ;;
+	-----------------------
+	prop : wff = |- defiendum = definiens ;;
+}
+
+/* Alternate definition for descriptions.  Definition 8.18 in [Quine]
+       p. 56.  (Contributed by Andrew Salmon, 30-Jun-2011.) */
+
+theorem dfiota2 (ph : wff, x : set, y : set) disjointed(y x, y ph) {
+	prop 1 : wff = |- ( iota x ph ) = ⋃ { y | ∀ x ( ph ↔ x = y ) } ;;
+}
+
+proof of dfiota2 {
+	step 1 : wff = df-iota () |- ( iota x ph ) = ⋃ { y | { x | ph } = { y } } ;;
+	step 2 : wff = df-sn () |- { y } = { x | x = y } ;;
+	step 3 : wff = eqeq2i (step 2) |- ( { x | ph } = { y } ↔ { x | ph } = { x | x = y } ) ;;
+	step 4 : wff = abbi () |- ( ∀ x ( ph ↔ x = y ) ↔ { x | ph } = { x | x = y } ) ;;
+	step 5 : wff = bitr4i (step 3, step 4) |- ( { x | ph } = { y } ↔ ∀ x ( ph ↔ x = y ) ) ;;
+	step 6 : wff = abbii (step 5) |- { y | { x | ph } = { y } } = { y | ∀ x ( ph ↔ x = y ) } ;;
+	step 7 : wff = unieqi (step 6) |- ⋃ { y | { x | ph } = { y } } = ⋃ { y | ∀ x ( ph ↔ x = y ) } ;;
+	step 8 : wff = eqtri (step 1, step 7) |- ( iota x ph ) = ⋃ { y | ∀ x ( ph ↔ x = y ) } ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Bound-variable hypothesis builder for the ` iota ` class.  (Contributed
+       by Andrew Salmon, 11-Jul-2011.)  (Revised by Mario Carneiro,
+       15-Oct-2016.) */
+
+theorem nfiota1 (ph : wff, x : set) disjointed(x y, y ph) {
+	prop 1 : wff = |- F/_ x ( iota x ph ) ;;
+}
+
+proof of nfiota1 {
+	var y : set;;
+	step 1 : wff = dfiota2 () |- ( iota x ph ) = ⋃ { y | ∀ x ( ph ↔ x = y ) } ;;
+	step 2 : wff = nfaba1 () |- F/_ x { y | ∀ x ( ph ↔ x = y ) } ;;
+	step 3 : wff = nfuni (step 2) |- F/_ x ⋃ { y | ∀ x ( ph ↔ x = y ) } ;;
+	step 4 : wff = nfcxfr (step 1, step 3) |- F/_ x ( iota x ph ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Deduction version of ~ nfiota .  (Contributed by NM, 18-Feb-2013.) */
+
+theorem nfiotad (ph : wff, ps : wff, x : set, y : set) disjointed(z ps, z ph, x z, y z) {
+	hyp 1 : wff = |- F/ y ph ;;
+	hyp 2 : wff = |- ( ph → F/ x ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → F/_ x ( iota y ps ) ) ;;
+}
+
+proof of nfiotad {
+	var z : set;;
+	step 1 : wff = dfiota2 () |- ( iota y ps ) = ⋃ { z | ∀ y ( ps ↔ y = z ) } ;;
+	step 2 : wff = nfv () |- F/ z ph ;;
+	step 3 : wff = adantr (hyp 2) |- ( ( ph ∧ ¬ ∀ x x = y ) → F/ x ps ) ;;
+	step 4 : wff = nfcvf () |- ( ¬ ∀ x x = y → F/_ x y ) ;;
+	step 5 : wff = adantl (step 4) |- ( ( ph ∧ ¬ ∀ x x = y ) → F/_ x y ) ;;
+	step 6 : wff = nfcvd () |- ( ( ph ∧ ¬ ∀ x x = y ) → F/_ x z ) ;;
+	step 7 : wff = nfeqd (step 5, step 6) |- ( ( ph ∧ ¬ ∀ x x = y ) → F/ x y = z ) ;;
+	step 8 : wff = nfbid (step 3, step 7) |- ( ( ph ∧ ¬ ∀ x x = y ) → F/ x ( ps ↔ y = z ) ) ;;
+	step 9 : wff = nfald2 (hyp 1, step 8) |- ( ph → F/ x ∀ y ( ps ↔ y = z ) ) ;;
+	step 10 : wff = nfabd (step 2, step 9) |- ( ph → F/_ x { z | ∀ y ( ps ↔ y = z ) } ) ;;
+	step 11 : wff = nfunid (step 10) |- ( ph → F/_ x ⋃ { z | ∀ y ( ps ↔ y = z ) } ) ;;
+	step 12 : wff = nfcxfrd (step 1, step 11) |- ( ph → F/_ x ( iota y ps ) ) ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* Bound-variable hypothesis builder for the ` iota ` class.  (Contributed
+       by NM, 23-Aug-2011.) */
+
+theorem nfiota (ph : wff, x : set, y : set)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- F/_ x ( iota y ph ) ;;
+}
+
+proof of nfiota {
+	step 1 : wff = nftru () |- F/ y T. ;;
+	step 2 : wff = a1i (hyp 1) |- ( T. → F/ x ph ) ;;
+	step 3 : wff = nfiotad (step 1, step 2) |- ( T. → F/_ x ( iota y ph ) ) ;;
+	step 4 : wff = trud (step 3) |- F/_ x ( iota y ph ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Change bound variables in a description binder.  (Contributed by Andrew
+       Salmon, 1-Aug-2011.) */
+
+theorem cbviota (ph : wff, ps : wff, x : set, y : set) disjointed(z w x, z w y, z w ph, z w ps) {
+	hyp 1 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	hyp 2 : wff = |- F/ y ph ;;
+	hyp 3 : wff = |- F/ x ps ;;
+	-----------------------
+	prop 1 : wff = |- ( iota x ph ) = ( iota y ps ) ;;
+}
+
+proof of cbviota {
+	var z : set, w : set;;
+	step 1 : wff = nfv () |- F/ z ( ph ↔ x = w ) ;;
+	step 2 : wff = nfs1v () |- F/ x [ z / x ] ph ;;
+	step 3 : wff = nfv () |- F/ x z = w ;;
+	step 4 : wff = nfbi (step 2, step 3) |- F/ x ( [ z / x ] ph ↔ z = w ) ;;
+	step 5 : wff = sbequ12 () |- ( x = z → ( ph ↔ [ z / x ] ph ) ) ;;
+	step 6 : wff = equequ1 () |- ( x = z → ( x = w ↔ z = w ) ) ;;
+	step 7 : wff = bibi12d (step 5, step 6) |- ( x = z → ( ( ph ↔ x = w ) ↔ ( [ z / x ] ph ↔ z = w ) ) ) ;;
+	step 8 : wff = cbval (step 1, step 4, step 7) |- ( ∀ x ( ph ↔ x = w ) ↔ ∀ z ( [ z / x ] ph ↔ z = w ) ) ;;
+	step 9 : wff = nfsb (hyp 2) |- F/ y [ z / x ] ph ;;
+	step 10 : wff = nfv () |- F/ y z = w ;;
+	step 11 : wff = nfbi (step 9, step 10) |- F/ y ( [ z / x ] ph ↔ z = w ) ;;
+	step 12 : wff = nfv () |- F/ z ( ps ↔ y = w ) ;;
+	step 13 : wff = sbequ () |- ( z = y → ( [ z / x ] ph ↔ [ y / x ] ph ) ) ;;
+	step 14 : wff = sbie (hyp 3, hyp 1) |- ( [ y / x ] ph ↔ ps ) ;;
+	step 15 : wff = syl6bb (step 13, step 14) |- ( z = y → ( [ z / x ] ph ↔ ps ) ) ;;
+	step 16 : wff = equequ1 () |- ( z = y → ( z = w ↔ y = w ) ) ;;
+	step 17 : wff = bibi12d (step 15, step 16) |- ( z = y → ( ( [ z / x ] ph ↔ z = w ) ↔ ( ps ↔ y = w ) ) ) ;;
+	step 18 : wff = cbval (step 11, step 12, step 17) |- ( ∀ z ( [ z / x ] ph ↔ z = w ) ↔ ∀ y ( ps ↔ y = w ) ) ;;
+	step 19 : wff = bitri (step 8, step 18) |- ( ∀ x ( ph ↔ x = w ) ↔ ∀ y ( ps ↔ y = w ) ) ;;
+	step 20 : wff = abbii (step 19) |- { w | ∀ x ( ph ↔ x = w ) } = { w | ∀ y ( ps ↔ y = w ) } ;;
+	step 21 : wff = unieqi (step 20) |- ⋃ { w | ∀ x ( ph ↔ x = w ) } = ⋃ { w | ∀ y ( ps ↔ y = w ) } ;;
+	step 22 : wff = dfiota2 () |- ( iota x ph ) = ⋃ { w | ∀ x ( ph ↔ x = w ) } ;;
+	step 23 : wff = dfiota2 () |- ( iota y ps ) = ⋃ { w | ∀ y ( ps ↔ y = w ) } ;;
+	step 24 : wff = 3eqtr4i (step 21, step 22, step 23) |- ( iota x ph ) = ( iota y ps ) ;;
+	qed prop 1 = step 24 ;;
+}
+
+/* Change bound variables in a description binder.  (Contributed by Andrew
+       Salmon, 1-Aug-2011.) */
+
+theorem cbviotav (ph : wff, ps : wff, x : set, y : set) disjointed(ph y, ps x) {
+	hyp 1 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( iota x ph ) = ( iota y ps ) ;;
+}
+
+proof of cbviotav {
+	step 1 : wff = nfv () |- F/ y ph ;;
+	step 2 : wff = nfv () |- F/ x ps ;;
+	step 3 : wff = cbviota (hyp 1, step 1, step 2) |- ( iota x ph ) = ( iota y ps ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Variable substitution in description binder.  Compare ~ sb8eu .
+       (Contributed by NM, 18-Mar-2013.) */
+
+theorem sb8iota (ph : wff, x : set, y : set) disjointed(w z ph, w z x, w z y) {
+	hyp 1 : wff = |- F/ y ph ;;
+	-----------------------
+	prop 1 : wff = |- ( iota x ph ) = ( iota y [ y / x ] ph ) ;;
+}
+
+proof of sb8iota {
+	var z : set, w : set;;
+	step 1 : wff = nfv () |- F/ w ( ph ↔ x = z ) ;;
+	step 2 : wff = sb8 (step 1) |- ( ∀ x ( ph ↔ x = z ) ↔ ∀ w [ w / x ] ( ph ↔ x = z ) ) ;;
+	step 3 : wff = sbbi () |- ( [ w / x ] ( ph ↔ x = z ) ↔ ( [ w / x ] ph ↔ [ w / x ] x = z ) ) ;;
+	step 4 : wff = nfsb (hyp 1) |- F/ y [ w / x ] ph ;;
+	step 5 : wff = eqsb3 () |- ( [ w / x ] x = z ↔ w = z ) ;;
+	step 6 : wff = nfv () |- F/ y w = z ;;
+	step 7 : wff = nfxfr (step 5, step 6) |- F/ y [ w / x ] x = z ;;
+	step 8 : wff = nfbi (step 4, step 7) |- F/ y ( [ w / x ] ph ↔ [ w / x ] x = z ) ;;
+	step 9 : wff = nfxfr (step 3, step 8) |- F/ y [ w / x ] ( ph ↔ x = z ) ;;
+	step 10 : wff = nfv () |- F/ w [ y / x ] ( ph ↔ x = z ) ;;
+	step 11 : wff = sbequ () |- ( w = y → ( [ w / x ] ( ph ↔ x = z ) ↔ [ y / x ] ( ph ↔ x = z ) ) ) ;;
+	step 12 : wff = cbval (step 9, step 10, step 11) |- ( ∀ w [ w / x ] ( ph ↔ x = z ) ↔ ∀ y [ y / x ] ( ph ↔ x = z ) ) ;;
+	step 13 : wff = equsb3 () |- ( [ y / x ] x = z ↔ y = z ) ;;
+	step 14 : wff = sblbis (step 13) |- ( [ y / x ] ( ph ↔ x = z ) ↔ ( [ y / x ] ph ↔ y = z ) ) ;;
+	step 15 : wff = albii (step 14) |- ( ∀ y [ y / x ] ( ph ↔ x = z ) ↔ ∀ y ( [ y / x ] ph ↔ y = z ) ) ;;
+	step 16 : wff = 3bitri (step 2, step 12, step 15) |- ( ∀ x ( ph ↔ x = z ) ↔ ∀ y ( [ y / x ] ph ↔ y = z ) ) ;;
+	step 17 : wff = abbii (step 16) |- { z | ∀ x ( ph ↔ x = z ) } = { z | ∀ y ( [ y / x ] ph ↔ y = z ) } ;;
+	step 18 : wff = unieqi (step 17) |- ⋃ { z | ∀ x ( ph ↔ x = z ) } = ⋃ { z | ∀ y ( [ y / x ] ph ↔ y = z ) } ;;
+	step 19 : wff = dfiota2 () |- ( iota x ph ) = ⋃ { z | ∀ x ( ph ↔ x = z ) } ;;
+	step 20 : wff = dfiota2 () |- ( iota y [ y / x ] ph ) = ⋃ { z | ∀ y ( [ y / x ] ph ↔ y = z ) } ;;
+	step 21 : wff = 3eqtr4i (step 18, step 19, step 20) |- ( iota x ph ) = ( iota y [ y / x ] ph ) ;;
+	qed prop 1 = step 21 ;;
+}
+
+/* Equality theorem for descriptions.  (Contributed by Andrew Salmon,
+       30-Jun-2011.) */
+
+theorem iotaeq (ph : wff, x : set, y : set) disjointed(y z, x z, ph z) {
+	prop 1 : wff = |- ( ∀ x x = y → ( iota x ph ) = ( iota y ph ) ) ;;
+}
+
+proof of iotaeq {
+	var z : set;;
+	step 1 : wff = drsb1 () |- ( ∀ x x = y → ( [ z / x ] ph ↔ [ z / y ] ph ) ) ;;
+	step 2 : wff = df-clab () |- ( z ∈ { x | ph } ↔ [ z / x ] ph ) ;;
+	step 3 : wff = df-clab () |- ( z ∈ { y | ph } ↔ [ z / y ] ph ) ;;
+	step 4 : wff = 3bitr4g (step 1, step 2, step 3) |- ( ∀ x x = y → ( z ∈ { x | ph } ↔ z ∈ { y | ph } ) ) ;;
+	step 5 : wff = eqrdv (step 4) |- ( ∀ x x = y → { x | ph } = { y | ph } ) ;;
+	step 6 : wff = eqeq1d (step 5) |- ( ∀ x x = y → ( { x | ph } = { z } ↔ { y | ph } = { z } ) ) ;;
+	step 7 : wff = abbidv (step 6) |- ( ∀ x x = y → { z | { x | ph } = { z } } = { z | { y | ph } = { z } } ) ;;
+	step 8 : wff = unieqd (step 7) |- ( ∀ x x = y → ⋃ { z | { x | ph } = { z } } = ⋃ { z | { y | ph } = { z } } ) ;;
+	step 9 : wff = df-iota () |- ( iota x ph ) = ⋃ { z | { x | ph } = { z } } ;;
+	step 10 : wff = df-iota () |- ( iota y ph ) = ⋃ { z | { y | ph } = { z } } ;;
+	step 11 : wff = 3eqtr4g (step 8, step 9, step 10) |- ( ∀ x x = y → ( iota x ph ) = ( iota y ph ) ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* Equivalence theorem for descriptions.  (Contributed by Andrew Salmon,
+       30-Jun-2011.) */
+
+theorem iotabi (ph : wff, ps : wff, x : set) disjointed(ph z, ps z, x z) {
+	prop 1 : wff = |- ( ∀ x ( ph ↔ ps ) → ( iota x ph ) = ( iota x ps ) ) ;;
+}
+
+proof of iotabi {
+	var z : set;;
+	step 1 : wff = abbi () |- ( ∀ x ( ph ↔ ps ) ↔ { x | ph } = { x | ps } ) ;;
+	step 2 : wff = biimpi (step 1) |- ( ∀ x ( ph ↔ ps ) → { x | ph } = { x | ps } ) ;;
+	step 3 : wff = eqeq1d (step 2) |- ( ∀ x ( ph ↔ ps ) → ( { x | ph } = { z } ↔ { x | ps } = { z } ) ) ;;
+	step 4 : wff = abbidv (step 3) |- ( ∀ x ( ph ↔ ps ) → { z | { x | ph } = { z } } = { z | { x | ps } = { z } } ) ;;
+	step 5 : wff = unieqd (step 4) |- ( ∀ x ( ph ↔ ps ) → ⋃ { z | { x | ph } = { z } } = ⋃ { z | { x | ps } = { z } } ) ;;
+	step 6 : wff = df-iota () |- ( iota x ph ) = ⋃ { z | { x | ph } = { z } } ;;
+	step 7 : wff = df-iota () |- ( iota x ps ) = ⋃ { z | { x | ps } = { z } } ;;
+	step 8 : wff = 3eqtr4g (step 5, step 6, step 7) |- ( ∀ x ( ph ↔ ps ) → ( iota x ph ) = ( iota x ps ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Part of Theorem 8.17 in [Quine] p. 56.  This theorem serves as a lemma
+       for the fundamental property of iota.  (Contributed by Andrew Salmon,
+       11-Jul-2011.) */
+
+theorem uniabio (ph : wff, x : set, y : set) disjointed(x y) {
+	prop 1 : wff = |- ( ∀ x ( ph ↔ x = y ) → ⋃ { x | ph } = y ) ;;
+}
+
+proof of uniabio {
+	step 1 : wff = abbi () |- ( ∀ x ( ph ↔ x = y ) ↔ { x | ph } = { x | x = y } ) ;;
+	step 2 : wff = biimpi (step 1) |- ( ∀ x ( ph ↔ x = y ) → { x | ph } = { x | x = y } ) ;;
+	step 3 : wff = df-sn () |- { y } = { x | x = y } ;;
+	step 4 : wff = syl6eqr (step 2, step 3) |- ( ∀ x ( ph ↔ x = y ) → { x | ph } = { y } ) ;;
+	step 5 : wff = unieqd (step 4) |- ( ∀ x ( ph ↔ x = y ) → ⋃ { x | ph } = ⋃ { y } ) ;;
+	step 6 : wff = vex () |- y ∈ _V ;;
+	step 7 : wff = unisn (step 6) |- ⋃ { y } = y ;;
+	step 8 : wff = syl6eq (step 5, step 7) |- ( ∀ x ( ph ↔ x = y ) → ⋃ { x | ph } = y ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Theorem 8.19 in [Quine] p. 57.  This theorem is the fundamental property
+       of iota.  (Contributed by Andrew Salmon, 11-Jul-2011.) */
+
+theorem iotaval (ph : wff, x : set, y : set) disjointed(ph z, x y z) {
+	prop 1 : wff = |- ( ∀ x ( ph ↔ x = y ) → ( iota x ph ) = y ) ;;
+}
+
+proof of iotaval {
+	var z : set;;
+	step 1 : wff = dfiota2 () |- ( iota x ph ) = ⋃ { z | ∀ x ( ph ↔ x = z ) } ;;
+	step 2 : wff = vex () |- y ∈ _V ;;
+	step 3 : wff = sbeqalb () |- ( y ∈ _V → ( ( ∀ x ( ph ↔ x = y ) ∧ ∀ x ( ph ↔ x = z ) ) → y = z ) ) ;;
+	step 4 : wff = equcomi () |- ( y = z → z = y ) ;;
+	step 5 : wff = syl6 (step 3, step 4) |- ( y ∈ _V → ( ( ∀ x ( ph ↔ x = y ) ∧ ∀ x ( ph ↔ x = z ) ) → z = y ) ) ;;
+	step 6 : wff = ax-mp (step 2, step 5) |- ( ( ∀ x ( ph ↔ x = y ) ∧ ∀ x ( ph ↔ x = z ) ) → z = y ) ;;
+	step 7 : wff = ex (step 6) |- ( ∀ x ( ph ↔ x = y ) → ( ∀ x ( ph ↔ x = z ) → z = y ) ) ;;
+	step 8 : wff = equequ2 () |- ( y = z → ( x = y ↔ x = z ) ) ;;
+	step 9 : wff = eqcoms (step 8) |- ( z = y → ( x = y ↔ x = z ) ) ;;
+	step 10 : wff = bibi2d (step 9) |- ( z = y → ( ( ph ↔ x = y ) ↔ ( ph ↔ x = z ) ) ) ;;
+	step 11 : wff = biimpd (step 10) |- ( z = y → ( ( ph ↔ x = y ) → ( ph ↔ x = z ) ) ) ;;
+	step 12 : wff = alimdv (step 11) |- ( z = y → ( ∀ x ( ph ↔ x = y ) → ∀ x ( ph ↔ x = z ) ) ) ;;
+	step 13 : wff = com12 (step 12) |- ( ∀ x ( ph ↔ x = y ) → ( z = y → ∀ x ( ph ↔ x = z ) ) ) ;;
+	step 14 : wff = impbid (step 7, step 13) |- ( ∀ x ( ph ↔ x = y ) → ( ∀ x ( ph ↔ x = z ) ↔ z = y ) ) ;;
+	step 15 : wff = alrimiv (step 14) |- ( ∀ x ( ph ↔ x = y ) → ∀ z ( ∀ x ( ph ↔ x = z ) ↔ z = y ) ) ;;
+	step 16 : wff = uniabio () |- ( ∀ z ( ∀ x ( ph ↔ x = z ) ↔ z = y ) → ⋃ { z | ∀ x ( ph ↔ x = z ) } = y ) ;;
+	step 17 : wff = syl (step 15, step 16) |- ( ∀ x ( ph ↔ x = y ) → ⋃ { z | ∀ x ( ph ↔ x = z ) } = y ) ;;
+	step 18 : wff = syl5eq (step 1, step 17) |- ( ∀ x ( ph ↔ x = y ) → ( iota x ph ) = y ) ;;
+	qed prop 1 = step 18 ;;
+}
+
+/* Equivalence between two different forms of ` iota ` .  (Contributed by
+       Andrew Salmon, 12-Jul-2011.) */
+
+theorem iotauni (ph : wff, x : set) disjointed(ph z, x z) {
+	prop 1 : wff = |- ( ∃! x ph → ( iota x ph ) = ⋃ { x | ph } ) ;;
+}
+
+proof of iotauni {
+	var z : set;;
+	step 1 : wff = df-eu () |- ( ∃! x ph ↔ ∃ z ∀ x ( ph ↔ x = z ) ) ;;
+	step 2 : wff = iotaval () |- ( ∀ x ( ph ↔ x = z ) → ( iota x ph ) = z ) ;;
+	step 3 : wff = uniabio () |- ( ∀ x ( ph ↔ x = z ) → ⋃ { x | ph } = z ) ;;
+	step 4 : wff = eqtr4d (step 2, step 3) |- ( ∀ x ( ph ↔ x = z ) → ( iota x ph ) = ⋃ { x | ph } ) ;;
+	step 5 : wff = exlimiv (step 4) |- ( ∃ z ∀ x ( ph ↔ x = z ) → ( iota x ph ) = ⋃ { x | ph } ) ;;
+	step 6 : wff = sylbi (step 1, step 5) |- ( ∃! x ph → ( iota x ph ) = ⋃ { x | ph } ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Equivalence between two different forms of ` iota ` .  (Contributed by
+       Mario Carneiro, 24-Dec-2016.) */
+
+theorem iotaint (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ∃! x ph → ( iota x ph ) = ⋂ { x | ph } ) ;;
+}
+
+proof of iotaint {
+	step 1 : wff = iotauni () |- ( ∃! x ph → ( iota x ph ) = ⋃ { x | ph } ) ;;
+	step 2 : wff = uniintab () |- ( ∃! x ph ↔ ⋃ { x | ph } = ⋂ { x | ph } ) ;;
+	step 3 : wff = biimpi (step 2) |- ( ∃! x ph → ⋃ { x | ph } = ⋂ { x | ph } ) ;;
+	step 4 : wff = eqtrd (step 1, step 3) |- ( ∃! x ph → ( iota x ph ) = ⋂ { x | ph } ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Property of iota.  (Contributed by NM, 23-Aug-2011.)  (Revised by Mario
+       Carneiro, 23-Dec-2016.) */
+
+theorem iota1 (ph : wff, x : set) disjointed(ph z, x z) {
+	prop 1 : wff = |- ( ∃! x ph → ( ph ↔ ( iota x ph ) = x ) ) ;;
+}
+
+proof of iota1 {
+	var z : set;;
+	step 1 : wff = df-eu () |- ( ∃! x ph ↔ ∃ z ∀ x ( ph ↔ x = z ) ) ;;
+	step 2 : wff = sp () |- ( ∀ x ( ph ↔ x = z ) → ( ph ↔ x = z ) ) ;;
+	step 3 : wff = iotaval () |- ( ∀ x ( ph ↔ x = z ) → ( iota x ph ) = z ) ;;
+	step 4 : wff = eqeq2d (step 3) |- ( ∀ x ( ph ↔ x = z ) → ( x = ( iota x ph ) ↔ x = z ) ) ;;
+	step 5 : wff = bitr4d (step 2, step 4) |- ( ∀ x ( ph ↔ x = z ) → ( ph ↔ x = ( iota x ph ) ) ) ;;
+	step 6 : wff = eqcom () |- ( x = ( iota x ph ) ↔ ( iota x ph ) = x ) ;;
+	step 7 : wff = syl6bb (step 5, step 6) |- ( ∀ x ( ph ↔ x = z ) → ( ph ↔ ( iota x ph ) = x ) ) ;;
+	step 8 : wff = exlimiv (step 7) |- ( ∃ z ∀ x ( ph ↔ x = z ) → ( ph ↔ ( iota x ph ) = x ) ) ;;
+	step 9 : wff = sylbi (step 1, step 8) |- ( ∃! x ph → ( ph ↔ ( iota x ph ) = x ) ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Theorem 8.22 in [Quine] p. 57.  This theorem is the result if there
+       isn't exactly one ` x ` that satisfies ` ph ` .  (Contributed by Andrew
+       Salmon, 11-Jul-2011.) */
+
+theorem iotanul (ph : wff, x : set) disjointed(ph z, x z) {
+	prop 1 : wff = |- ( ¬ ∃! x ph → ( iota x ph ) = ∅ ) ;;
+}
+
+proof of iotanul {
+	var z : set;;
+	step 1 : wff = df-eu () |- ( ∃! x ph ↔ ∃ z ∀ x ( ph ↔ x = z ) ) ;;
+	step 2 : wff = dfiota2 () |- ( iota x ph ) = ⋃ { z | ∀ x ( ph ↔ x = z ) } ;;
+	step 3 : wff = alnex () |- ( ∀ z ¬ ∀ x ( ph ↔ x = z ) ↔ ¬ ∃ z ∀ x ( ph ↔ x = z ) ) ;;
+	step 4 : wff = ax-1 () |- ( ¬ ∀ x ( ph ↔ x = z ) → ( z = z → ¬ ∀ x ( ph ↔ x = z ) ) ) ;;
+	step 5 : wff = eqidd () |- ( ¬ ∀ x ( ph ↔ x = z ) → z = z ) ;;
+	step 6 : wff = impbid1 (step 4, step 5) |- ( ¬ ∀ x ( ph ↔ x = z ) → ( z = z ↔ ¬ ∀ x ( ph ↔ x = z ) ) ) ;;
+	step 7 : wff = con2bid (step 6) |- ( ¬ ∀ x ( ph ↔ x = z ) → ( ∀ x ( ph ↔ x = z ) ↔ ¬ z = z ) ) ;;
+	step 8 : wff = alimi (step 7) |- ( ∀ z ¬ ∀ x ( ph ↔ x = z ) → ∀ z ( ∀ x ( ph ↔ x = z ) ↔ ¬ z = z ) ) ;;
+	step 9 : wff = abbi () |- ( ∀ z ( ∀ x ( ph ↔ x = z ) ↔ ¬ z = z ) ↔ { z | ∀ x ( ph ↔ x = z ) } = { z | ¬ z = z } ) ;;
+	step 10 : wff = sylib (step 8, step 9) |- ( ∀ z ¬ ∀ x ( ph ↔ x = z ) → { z | ∀ x ( ph ↔ x = z ) } = { z | ¬ z = z } ) ;;
+	step 11 : wff = dfnul2 () |- ∅ = { z | ¬ z = z } ;;
+	step 12 : wff = syl6eqr (step 10, step 11) |- ( ∀ z ¬ ∀ x ( ph ↔ x = z ) → { z | ∀ x ( ph ↔ x = z ) } = ∅ ) ;;
+	step 13 : wff = sylbir (step 3, step 12) |- ( ¬ ∃ z ∀ x ( ph ↔ x = z ) → { z | ∀ x ( ph ↔ x = z ) } = ∅ ) ;;
+	step 14 : wff = unieqd (step 13) |- ( ¬ ∃ z ∀ x ( ph ↔ x = z ) → ⋃ { z | ∀ x ( ph ↔ x = z ) } = ⋃ ∅ ) ;;
+	step 15 : wff = uni0 () |- ⋃ ∅ = ∅ ;;
+	step 16 : wff = syl6eq (step 14, step 15) |- ( ¬ ∃ z ∀ x ( ph ↔ x = z ) → ⋃ { z | ∀ x ( ph ↔ x = z ) } = ∅ ) ;;
+	step 17 : wff = syl5eq (step 2, step 16) |- ( ¬ ∃ z ∀ x ( ph ↔ x = z ) → ( iota x ph ) = ∅ ) ;;
+	step 18 : wff = sylnbi (step 1, step 17) |- ( ¬ ∃! x ph → ( iota x ph ) = ∅ ) ;;
+	qed prop 1 = step 18 ;;
+}
+
+/* The ` iota ` class is a subset of the union of all elements satisfying
+       ` ph ` .  (Contributed by Mario Carneiro, 24-Dec-2016.) */
+
+theorem iotassuni (ph : wff, x : set)  {
+	prop 1 : wff = |- ( iota x ph ) ⊆ ⋃ { x | ph } ;;
+}
+
+proof of iotassuni {
+	step 1 : wff = iotauni () |- ( ∃! x ph → ( iota x ph ) = ⋃ { x | ph } ) ;;
+	step 2 : wff = eqimss () |- ( ( iota x ph ) = ⋃ { x | ph } → ( iota x ph ) ⊆ ⋃ { x | ph } ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( ∃! x ph → ( iota x ph ) ⊆ ⋃ { x | ph } ) ;;
+	step 4 : wff = 0ss () |- ∅ ⊆ ⋃ { x | ph } ;;
+	step 5 : wff = iotanul () |- ( ¬ ∃! x ph → ( iota x ph ) = ∅ ) ;;
+	step 6 : wff = sseq1d (step 5) |- ( ¬ ∃! x ph → ( ( iota x ph ) ⊆ ⋃ { x | ph } ↔ ∅ ⊆ ⋃ { x | ph } ) ) ;;
+	step 7 : wff = mpbiri (step 4, step 6) |- ( ¬ ∃! x ph → ( iota x ph ) ⊆ ⋃ { x | ph } ) ;;
+	step 8 : wff = pm2.61i (step 3, step 7) |- ( iota x ph ) ⊆ ⋃ { x | ph } ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Theorem 8.23 in [Quine] p. 58.  This theorem proves the existence of the
+       ` iota ` class under our definition.  (Contributed by Andrew Salmon,
+       11-Jul-2011.) */
+
+theorem iotaex (ph : wff, x : set) disjointed(ph z, x z) {
+	prop 1 : wff = |- ( iota x ph ) ∈ _V ;;
+}
+
+proof of iotaex {
+	var z : set;;
+	step 1 : wff = iotaval () |- ( ∀ x ( ph ↔ x = z ) → ( iota x ph ) = z ) ;;
+	step 2 : wff = eqcomd (step 1) |- ( ∀ x ( ph ↔ x = z ) → z = ( iota x ph ) ) ;;
+	step 3 : wff = eximi (step 2) |- ( ∃ z ∀ x ( ph ↔ x = z ) → ∃ z z = ( iota x ph ) ) ;;
+	step 4 : wff = df-eu () |- ( ∃! x ph ↔ ∃ z ∀ x ( ph ↔ x = z ) ) ;;
+	step 5 : wff = isset () |- ( ( iota x ph ) ∈ _V ↔ ∃ z z = ( iota x ph ) ) ;;
+	step 6 : wff = 3imtr4i (step 3, step 4, step 5) |- ( ∃! x ph → ( iota x ph ) ∈ _V ) ;;
+	step 7 : wff = iotanul () |- ( ¬ ∃! x ph → ( iota x ph ) = ∅ ) ;;
+	step 8 : wff = 0ex () |- ∅ ∈ _V ;;
+	step 9 : wff = syl6eqel (step 7, step 8) |- ( ¬ ∃! x ph → ( iota x ph ) ∈ _V ) ;;
+	step 10 : wff = pm2.61i (step 6, step 9) |- ( iota x ph ) ∈ _V ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Theorem *14.22 in [WhiteheadRussell] p. 190.  (Contributed by Andrew
+       Salmon, 12-Jul-2011.) */
+
+theorem iota4 (ph : wff, x : set) disjointed(ph z, x z) {
+	prop 1 : wff = |- ( ∃! x ph → [. ( iota x ph ) / x ]. ph ) ;;
+}
+
+proof of iota4 {
+	var z : set;;
+	step 1 : wff = df-eu () |- ( ∃! x ph ↔ ∃ z ∀ x ( ph ↔ x = z ) ) ;;
+	step 2 : wff = bi2 () |- ( ( ph ↔ x = z ) → ( x = z → ph ) ) ;;
+	step 3 : wff = alimi (step 2) |- ( ∀ x ( ph ↔ x = z ) → ∀ x ( x = z → ph ) ) ;;
+	step 4 : wff = sb2 () |- ( ∀ x ( x = z → ph ) → [ z / x ] ph ) ;;
+	step 5 : wff = syl (step 3, step 4) |- ( ∀ x ( ph ↔ x = z ) → [ z / x ] ph ) ;;
+	step 6 : wff = iotaval () |- ( ∀ x ( ph ↔ x = z ) → ( iota x ph ) = z ) ;;
+	step 7 : wff = eqcomd (step 6) |- ( ∀ x ( ph ↔ x = z ) → z = ( iota x ph ) ) ;;
+	step 8 : wff = dfsbcq2 () |- ( z = ( iota x ph ) → ( [ z / x ] ph ↔ [. ( iota x ph ) / x ]. ph ) ) ;;
+	step 9 : wff = syl (step 7, step 8) |- ( ∀ x ( ph ↔ x = z ) → ( [ z / x ] ph ↔ [. ( iota x ph ) / x ]. ph ) ) ;;
+	step 10 : wff = mpbid (step 5, step 9) |- ( ∀ x ( ph ↔ x = z ) → [. ( iota x ph ) / x ]. ph ) ;;
+	step 11 : wff = exlimiv (step 10) |- ( ∃ z ∀ x ( ph ↔ x = z ) → [. ( iota x ph ) / x ]. ph ) ;;
+	step 12 : wff = sylbi (step 1, step 11) |- ( ∃! x ph → [. ( iota x ph ) / x ]. ph ) ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* Theorem *14.23 in [WhiteheadRussell] p. 191.  (Contributed by Andrew
+     Salmon, 12-Jul-2011.) */
+
+theorem iota4an (ph : wff, ps : wff, x : set)  {
+	prop 1 : wff = |- ( ∃! x ( ph ∧ ps ) → [. ( iota x ( ph ∧ ps ) ) / x ]. ph ) ;;
+}
+
+proof of iota4an {
+	step 1 : wff = iota4 () |- ( ∃! x ( ph ∧ ps ) → [. ( iota x ( ph ∧ ps ) ) / x ]. ( ph ∧ ps ) ) ;;
+	step 2 : wff = iotaex () |- ( iota x ( ph ∧ ps ) ) ∈ _V ;;
+	step 3 : wff = simpl () |- ( ( ph ∧ ps ) → ph ) ;;
+	step 4 : wff = sbcth (step 3) |- ( ( iota x ( ph ∧ ps ) ) ∈ _V → [. ( iota x ( ph ∧ ps ) ) / x ]. ( ( ph ∧ ps ) → ph ) ) ;;
+	step 5 : wff = ax-mp (step 2, step 4) |- [. ( iota x ( ph ∧ ps ) ) / x ]. ( ( ph ∧ ps ) → ph ) ;;
+	step 6 : wff = iotaex () |- ( iota x ( ph ∧ ps ) ) ∈ _V ;;
+	step 7 : wff = sbcimg () |- ( ( iota x ( ph ∧ ps ) ) ∈ _V → ( [. ( iota x ( ph ∧ ps ) ) / x ]. ( ( ph ∧ ps ) → ph ) ↔ ( [. ( iota x ( ph ∧ ps ) ) / x ]. ( ph ∧ ps ) → [. ( iota x ( ph ∧ ps ) ) / x ]. ph ) ) ) ;;
+	step 8 : wff = ax-mp (step 6, step 7) |- ( [. ( iota x ( ph ∧ ps ) ) / x ]. ( ( ph ∧ ps ) → ph ) ↔ ( [. ( iota x ( ph ∧ ps ) ) / x ]. ( ph ∧ ps ) → [. ( iota x ( ph ∧ ps ) ) / x ]. ph ) ) ;;
+	step 9 : wff = mpbi (step 5, step 8) |- ( [. ( iota x ( ph ∧ ps ) ) / x ]. ( ph ∧ ps ) → [. ( iota x ( ph ∧ ps ) ) / x ]. ph ) ;;
+	step 10 : wff = syl (step 1, step 9) |- ( ∃! x ( ph ∧ ps ) → [. ( iota x ( ph ∧ ps ) ) / x ]. ph ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* A method for computing iota.  (Contributed by NM, 17-Sep-2013.) */
+
+theorem iota5 (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x y A, x V, x ph, y ps) {
+	hyp 1 : wff = |- ( ( ph ∧ A ∈ V ) → ( ps ↔ x = A ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ A ∈ V ) → ( iota x ps ) = A ) ;;
+}
+
+proof of iota5 {
+	var y : set;;
+	step 1 : wff = alrimiv (hyp 1) |- ( ( ph ∧ A ∈ V ) → ∀ x ( ps ↔ x = A ) ) ;;
+	step 2 : wff = eqeq2 () |- ( y = A → ( x = y ↔ x = A ) ) ;;
+	step 3 : wff = bibi2d (step 2) |- ( y = A → ( ( ps ↔ x = y ) ↔ ( ps ↔ x = A ) ) ) ;;
+	step 4 : wff = albidv (step 3) |- ( y = A → ( ∀ x ( ps ↔ x = y ) ↔ ∀ x ( ps ↔ x = A ) ) ) ;;
+	step 5 : wff = eqeq2 () |- ( y = A → ( ( iota x ps ) = y ↔ ( iota x ps ) = A ) ) ;;
+	step 6 : wff = imbi12d (step 4, step 5) |- ( y = A → ( ( ∀ x ( ps ↔ x = y ) → ( iota x ps ) = y ) ↔ ( ∀ x ( ps ↔ x = A ) → ( iota x ps ) = A ) ) ) ;;
+	step 7 : wff = iotaval () |- ( ∀ x ( ps ↔ x = y ) → ( iota x ps ) = y ) ;;
+	step 8 : wff = vtoclg (step 6, step 7) |- ( A ∈ V → ( ∀ x ( ps ↔ x = A ) → ( iota x ps ) = A ) ) ;;
+	step 9 : wff = adantl (step 8) |- ( ( ph ∧ A ∈ V ) → ( ∀ x ( ps ↔ x = A ) → ( iota x ps ) = A ) ) ;;
+	step 10 : wff = mpd (step 1, step 9) |- ( ( ph ∧ A ∈ V ) → ( iota x ps ) = A ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Formula-building deduction rule for iota.  (Contributed by NM,
+       20-Aug-2011.) */
+
+theorem iotabidv (ph : wff, ps : wff, ch : wff, x : set) disjointed(x ph) {
+	hyp 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( iota x ps ) = ( iota x ch ) ) ;;
+}
+
+proof of iotabidv {
+	step 1 : wff = alrimiv (hyp 1) |- ( ph → ∀ x ( ps ↔ ch ) ) ;;
+	step 2 : wff = iotabi () |- ( ∀ x ( ps ↔ ch ) → ( iota x ps ) = ( iota x ch ) ) ;;
+	step 3 : wff = syl (step 1, step 2) |- ( ph → ( iota x ps ) = ( iota x ch ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Formula-building deduction rule for iota.  (Contributed by Mario
+       Carneiro, 2-Oct-2015.) */
+
+theorem iotabii (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- ( ph ↔ ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( iota x ph ) = ( iota x ps ) ;;
+}
+
+proof of iotabii {
+	step 1 : wff = iotabi () |- ( ∀ x ( ph ↔ ps ) → ( iota x ph ) = ( iota x ps ) ) ;;
+	step 2 : wff = mpg (step 1, hyp 1) |- ( iota x ph ) = ( iota x ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Membership law for descriptions.
+
+     This can useful for expanding an unbounded iota-based definition (see
+     ~ df-iota ).  If you have a bounded iota-based definition, ~ riotacl2 may
+     be useful.
+
+     (Contributed by Andrew Salmon, 1-Aug-2011.) */
+
+theorem iotacl (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ∃! x ph → ( iota x ph ) ∈ { x | ph } ) ;;
+}
+
+proof of iotacl {
+	step 1 : wff = iota4 () |- ( ∃! x ph → [. ( iota x ph ) / x ]. ph ) ;;
+	step 2 : wff = df-sbc () |- ( [. ( iota x ph ) / x ]. ph ↔ ( iota x ph ) ∈ { x | ph } ) ;;
+	step 3 : wff = sylib (step 1, step 2) |- ( ∃! x ph → ( iota x ph ) ∈ { x | ph } ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* A condition that allows us to represent "the unique element such that
+         ` ph ` " with a class expression ` A ` .  (Contributed by NM,
+         30-Dec-2014.) */
+
+theorem iota2df (ph : wff, ps : wff, ch : wff, x : set, B : class, V : class)  {
+	hyp 1 : wff = |- ( ph → B ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → ∃! x ps ) ;;
+	hyp 3 : wff = |- ( ( ph ∧ x = B ) → ( ps ↔ ch ) ) ;;
+	hyp 4 : wff = |- F/ x ph ;;
+	hyp 5 : wff = |- ( ph → F/ x ch ) ;;
+	hyp 6 : wff = |- ( ph → F/_ x B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ch ↔ ( iota x ps ) = B ) ) ;;
+}
+
+proof of iota2df {
+	step 1 : wff = nfiota1 () |- F/_ x ( iota x ps ) ;;
+	step 2 : wff = a1i (step 1) |- ( ph → F/_ x ( iota x ps ) ) ;;
+	step 3 : wff = nfeqd (step 2, hyp 6) |- ( ph → F/ x ( iota x ps ) = B ) ;;
+	step 4 : wff = nfbid (hyp 5, step 3) |- ( ph → F/ x ( ch ↔ ( iota x ps ) = B ) ) ;;
+	step 5 : wff = simpr () |- ( ( ph ∧ x = B ) → x = B ) ;;
+	step 6 : wff = eqeq2d (step 5) |- ( ( ph ∧ x = B ) → ( ( iota x ps ) = x ↔ ( iota x ps ) = B ) ) ;;
+	step 7 : wff = bibi12d (hyp 3, step 6) |- ( ( ph ∧ x = B ) → ( ( ps ↔ ( iota x ps ) = x ) ↔ ( ch ↔ ( iota x ps ) = B ) ) ) ;;
+	step 8 : wff = ex (step 7) |- ( ph → ( x = B → ( ( ps ↔ ( iota x ps ) = x ) ↔ ( ch ↔ ( iota x ps ) = B ) ) ) ) ;;
+	step 9 : wff = alrimi (hyp 4, step 8) |- ( ph → ∀ x ( x = B → ( ( ps ↔ ( iota x ps ) = x ) ↔ ( ch ↔ ( iota x ps ) = B ) ) ) ) ;;
+	step 10 : wff = iota1 () |- ( ∃! x ps → ( ps ↔ ( iota x ps ) = x ) ) ;;
+	step 11 : wff = syl (hyp 2, step 10) |- ( ph → ( ps ↔ ( iota x ps ) = x ) ) ;;
+	step 12 : wff = alrimi (hyp 4, step 11) |- ( ph → ∀ x ( ps ↔ ( iota x ps ) = x ) ) ;;
+	step 13 : wff = vtoclgft () |- ( ( ( F/_ x B ∧ F/ x ( ch ↔ ( iota x ps ) = B ) ) ∧ ( ∀ x ( x = B → ( ( ps ↔ ( iota x ps ) = x ) ↔ ( ch ↔ ( iota x ps ) = B ) ) ) ∧ ∀ x ( ps ↔ ( iota x ps ) = x ) ) ∧ B ∈ V ) → ( ch ↔ ( iota x ps ) = B ) ) ;;
+	step 14 : wff = syl221anc (hyp 6, step 4, step 9, step 12, hyp 1, step 13) |- ( ph → ( ch ↔ ( iota x ps ) = B ) ) ;;
+	qed prop 1 = step 14 ;;
+}
+
+/* A condition that allows us to represent "the unique element such that
+       ` ph ` " with a class expression ` A ` .  (Contributed by NM,
+       30-Dec-2014.) */
+
+theorem iota2d (ph : wff, ps : wff, ch : wff, x : set, B : class, V : class) disjointed(x B, x ph, x ch) {
+	hyp 1 : wff = |- ( ph → B ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → ∃! x ps ) ;;
+	hyp 3 : wff = |- ( ( ph ∧ x = B ) → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( ch ↔ ( iota x ps ) = B ) ) ;;
+}
+
+proof of iota2d {
+	step 1 : wff = nfv () |- F/ x ph ;;
+	step 2 : wff = nfvd () |- ( ph → F/ x ch ) ;;
+	step 3 : wff = nfcvd () |- ( ph → F/_ x B ) ;;
+	step 4 : wff = iota2df (hyp 1, hyp 2, hyp 3, step 1, step 2, step 3) |- ( ph → ( ch ↔ ( iota x ps ) = B ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* The unique element such that ` ph ` .  (Contributed by Jeff Madsen,
+       1-Jun-2011.)  (Revised by Mario Carneiro, 23-Dec-2016.) */
+
+theorem iota2 (ph : wff, ps : wff, x : set, A : class, B : class) disjointed(A x, ps x) {
+	hyp 1 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( A ∈ B ∧ ∃! x ph ) → ( ps ↔ ( iota x ph ) = A ) ) ;;
+}
+
+proof of iota2 {
+	step 1 : wff = elex () |- ( A ∈ B → A ∈ _V ) ;;
+	step 2 : wff = simpl () |- ( ( A ∈ _V ∧ ∃! x ph ) → A ∈ _V ) ;;
+	step 3 : wff = simpr () |- ( ( A ∈ _V ∧ ∃! x ph ) → ∃! x ph ) ;;
+	step 4 : wff = adantl (hyp 1) |- ( ( ( A ∈ _V ∧ ∃! x ph ) ∧ x = A ) → ( ph ↔ ps ) ) ;;
+	step 5 : wff = nfv () |- F/ x A ∈ _V ;;
+	step 6 : wff = nfeu1 () |- F/ x ∃! x ph ;;
+	step 7 : wff = nfan (step 5, step 6) |- F/ x ( A ∈ _V ∧ ∃! x ph ) ;;
+	step 8 : wff = nfvd () |- ( ( A ∈ _V ∧ ∃! x ph ) → F/ x ps ) ;;
+	step 9 : wff = nfcvd () |- ( ( A ∈ _V ∧ ∃! x ph ) → F/_ x A ) ;;
+	step 10 : wff = iota2df (step 2, step 3, step 4, step 7, step 8, step 9) |- ( ( A ∈ _V ∧ ∃! x ph ) → ( ps ↔ ( iota x ph ) = A ) ) ;;
+	step 11 : wff = sylan (step 1, step 10) |- ( ( A ∈ B ∧ ∃! x ph ) → ( ps ↔ ( iota x ph ) = A ) ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* A class abstraction with a unique member can be expressed as a singleton.
+     (Contributed by Mario Carneiro, 23-Dec-2016.) */
+
+theorem sniota (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ∃! x ph → { x | ph } = { ( iota x ph ) } ) ;;
+}
+
+proof of sniota {
+	step 1 : wff = nfeu1 () |- F/ x ∃! x ph ;;
+	step 2 : wff = iota1 () |- ( ∃! x ph → ( ph ↔ ( iota x ph ) = x ) ) ;;
+	step 3 : wff = eqcom () |- ( ( iota x ph ) = x ↔ x = ( iota x ph ) ) ;;
+	step 4 : wff = syl6bb (step 2, step 3) |- ( ∃! x ph → ( ph ↔ x = ( iota x ph ) ) ) ;;
+	step 5 : wff = abid () |- ( x ∈ { x | ph } ↔ ph ) ;;
+	step 6 : wff = vex () |- x ∈ _V ;;
+	step 7 : wff = elsnc (step 6) |- ( x ∈ { ( iota x ph ) } ↔ x = ( iota x ph ) ) ;;
+	step 8 : wff = 3bitr4g (step 4, step 5, step 7) |- ( ∃! x ph → ( x ∈ { x | ph } ↔ x ∈ { ( iota x ph ) } ) ) ;;
+	step 9 : wff = alrimi (step 1, step 8) |- ( ∃! x ph → ∀ x ( x ∈ { x | ph } ↔ x ∈ { ( iota x ph ) } ) ) ;;
+	step 10 : wff = nfab1 () |- F/_ x { x | ph } ;;
+	step 11 : wff = nfiota1 () |- F/_ x ( iota x ph ) ;;
+	step 12 : wff = nfsn (step 11) |- F/_ x { ( iota x ph ) } ;;
+	step 13 : wff = cleqf (step 10, step 12) |- ( { x | ph } = { ( iota x ph ) } ↔ ∀ x ( x ∈ { x | ph } ↔ x ∈ { ( iota x ph ) } ) ) ;;
+	step 14 : wff = sylibr (step 9, step 13) |- ( ∃! x ph → { x | ph } = { ( iota x ph ) } ) ;;
+	qed prop 1 = step 14 ;;
+}
+
+/* The ` iota ` operation using the ` if ` operator.  (Contributed by Scott
+       Fenton, 6-Oct-2017.) */
+
+theorem dfiota4 (ph : wff, x : set)  {
+	prop 1 : wff = |- ( iota x ph ) = if ( ∃! x ph , ⋃ { x | ph } , ∅ ) ;;
+}
+
+proof of dfiota4 {
+	step 1 : wff = iotauni () |- ( ∃! x ph → ( iota x ph ) = ⋃ { x | ph } ) ;;
+	step 2 : wff = iftrue () |- ( ∃! x ph → if ( ∃! x ph , ⋃ { x | ph } , ∅ ) = ⋃ { x | ph } ) ;;
+	step 3 : wff = eqtr4d (step 1, step 2) |- ( ∃! x ph → ( iota x ph ) = if ( ∃! x ph , ⋃ { x | ph } , ∅ ) ) ;;
+	step 4 : wff = iotanul () |- ( ¬ ∃! x ph → ( iota x ph ) = ∅ ) ;;
+	step 5 : wff = iffalse () |- ( ¬ ∃! x ph → if ( ∃! x ph , ⋃ { x | ph } , ∅ ) = ∅ ) ;;
+	step 6 : wff = eqtr4d (step 4, step 5) |- ( ¬ ∃! x ph → ( iota x ph ) = if ( ∃! x ph , ⋃ { x | ph } , ∅ ) ) ;;
+	step 7 : wff = pm2.61i (step 3, step 6) |- ( iota x ph ) = if ( ∃! x ph , ⋃ { x | ph } , ∅ ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Class substitution within a description binder.  (Contributed by Scott
+       Fenton, 6-Oct-2017.) */
+
+theorem csbiotag (ph : wff, x : set, y : set, A : class, V : class) disjointed(A y z, x y z, ph z) {
+	prop 1 : wff = |- ( A ∈ V → [_ A / x ]_ ( iota y ph ) = ( iota y [. A / x ]. ph ) ) ;;
+}
+
+proof of csbiotag {
+	var z : set;;
+	step 1 : wff = csbeq1 () |- ( z = A → [_ z / x ]_ ( iota y ph ) = [_ A / x ]_ ( iota y ph ) ) ;;
+	step 2 : wff = dfsbcq2 () |- ( z = A → ( [ z / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 3 : wff = iotabidv (step 2) |- ( z = A → ( iota y [ z / x ] ph ) = ( iota y [. A / x ]. ph ) ) ;;
+	step 4 : wff = eqeq12d (step 1, step 3) |- ( z = A → ( [_ z / x ]_ ( iota y ph ) = ( iota y [ z / x ] ph ) ↔ [_ A / x ]_ ( iota y ph ) = ( iota y [. A / x ]. ph ) ) ) ;;
+	step 5 : wff = vex () |- z ∈ _V ;;
+	step 6 : wff = nfs1v () |- F/ x [ z / x ] ph ;;
+	step 7 : wff = nfiota (step 6) |- F/_ x ( iota y [ z / x ] ph ) ;;
+	step 8 : wff = sbequ12 () |- ( x = z → ( ph ↔ [ z / x ] ph ) ) ;;
+	step 9 : wff = iotabidv (step 8) |- ( x = z → ( iota y ph ) = ( iota y [ z / x ] ph ) ) ;;
+	step 10 : wff = csbief (step 5, step 7, step 9) |- [_ z / x ]_ ( iota y ph ) = ( iota y [ z / x ] ph ) ;;
+	step 11 : wff = vtoclg (step 4, step 10) |- ( A ∈ V → [_ A / x ]_ ( iota y ph ) = ( iota y [. A / x ]. ph ) ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+

@@ -1,0 +1,233 @@
+import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Proper_subset_relation.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                            Iota properties
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* The value of a function that is expressed as an ordered pair
+       abstraction.  (Contributed by NM, 19-Feb-2006.)  (Revised by Mario
+       Carneiro, 11-Sep-2015.) */
+
+theorem fvopab5 (ph : wff, ps : wff, x : set, y : set, A : class, F : class, V : class) disjointed(x y z A, z F, x ps) {
+	hyp 1 : wff = |- F = { 〈 x , y 〉 | ph } ;;
+	hyp 2 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ V → ( F ` A ) = ( iota y ps ) ) ;;
+}
+
+proof of fvopab5 {
+	var z : set;;
+	step 1 : wff = elex () |- ( A ∈ V → A ∈ _V ) ;;
+	step 2 : wff = df-fv () |- ( F ` A ) = ( iota z A F z ) ;;
+	step 3 : wff = breq2 () |- ( z = y → ( A F z ↔ A F y ) ) ;;
+	step 4 : wff = nfcv () |- F/_ y A ;;
+	step 5 : wff = nfopab2 () |- F/_ y { 〈 x , y 〉 | ph } ;;
+	step 6 : wff = nfcxfr (hyp 1, step 5) |- F/_ y F ;;
+	step 7 : wff = nfcv () |- F/_ y z ;;
+	step 8 : wff = nfbr (step 4, step 6, step 7) |- F/ y A F z ;;
+	step 9 : wff = nfv () |- F/ z A F y ;;
+	step 10 : wff = cbviota (step 3, step 8, step 9) |- ( iota z A F z ) = ( iota y A F y ) ;;
+	step 11 : wff = eqtri (step 2, step 10) |- ( F ` A ) = ( iota y A F y ) ;;
+	step 12 : wff = nfcv () |- F/_ x A ;;
+	step 13 : wff = nfcv () |- F/_ x A ;;
+	step 14 : wff = nfopab1 () |- F/_ x { 〈 x , y 〉 | ph } ;;
+	step 15 : wff = nfcxfr (hyp 1, step 14) |- F/_ x F ;;
+	step 16 : wff = nfcv () |- F/_ x y ;;
+	step 17 : wff = nfbr (step 13, step 15, step 16) |- F/ x A F y ;;
+	step 18 : wff = nfv () |- F/ x ps ;;
+	step 19 : wff = nfbi (step 17, step 18) |- F/ x ( A F y ↔ ps ) ;;
+	step 20 : wff = breq1 () |- ( x = A → ( x F y ↔ A F y ) ) ;;
+	step 21 : wff = bibi12d (step 20, hyp 2) |- ( x = A → ( ( x F y ↔ ph ) ↔ ( A F y ↔ ps ) ) ) ;;
+	step 22 : wff = df-br () |- ( x F y ↔ 〈 x , y 〉 ∈ F ) ;;
+	step 23 : wff = eleq2i (hyp 1) |- ( 〈 x , y 〉 ∈ F ↔ 〈 x , y 〉 ∈ { 〈 x , y 〉 | ph } ) ;;
+	step 24 : wff = opabid () |- ( 〈 x , y 〉 ∈ { 〈 x , y 〉 | ph } ↔ ph ) ;;
+	step 25 : wff = 3bitri (step 22, step 23, step 24) |- ( x F y ↔ ph ) ;;
+	step 26 : wff = vtoclgf (step 12, step 19, step 21, step 25) |- ( A ∈ _V → ( A F y ↔ ps ) ) ;;
+	step 27 : wff = iotabidv (step 26) |- ( A ∈ _V → ( iota y A F y ) = ( iota y ps ) ) ;;
+	step 28 : wff = syl5eq (step 11, step 27) |- ( A ∈ _V → ( F ` A ) = ( iota y ps ) ) ;;
+	step 29 : wff = syl (step 1, step 28) |- ( A ∈ V → ( F ` A ) = ( iota y ps ) ) ;;
+	qed prop 1 = step 29 ;;
+}
+
+/* The property of a uniquely specified ordered pair.  (Contributed by
+       Mario Carneiro, 21-May-2015.) */
+
+theorem opiota (ph : wff, ps : wff, ch : wff, x : set, y : set, z : set, A : class, B : class, C : class, D : class, I : class, X : class, Y : class) disjointed(x y z A, x y z B, x y z C, y ch, z ph, x y z D, x ps) {
+	hyp 1 : wff = |- I = ( iota z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) ) ;;
+	hyp 2 : wff = |- X = ( 1st ` I ) ;;
+	hyp 3 : wff = |- Y = ( 2nd ` I ) ;;
+	hyp 4 : wff = |- ( x = C → ( ph ↔ ps ) ) ;;
+	hyp 5 : wff = |- ( y = D → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → ( ( C ∈ A ∧ D ∈ B ∧ ch ) ↔ ( C = X ∧ D = Y ) ) ) ;;
+}
+
+proof of opiota {
+	step 1 : wff = ceqsrex2v (hyp 4, hyp 5) |- ( ( C ∈ A ∧ D ∈ B ) → ( ∃ x ∈ A ∃ y ∈ B ( ( x = C ∧ y = D ) ∧ ph ) ↔ ch ) ) ;;
+	step 2 : wff = bicomd (step 1) |- ( ( C ∈ A ∧ D ∈ B ) → ( ch ↔ ∃ x ∈ A ∃ y ∈ B ( ( x = C ∧ y = D ) ∧ ph ) ) ) ;;
+	step 3 : wff = opex () |- 〈 C , D 〉 ∈ _V ;;
+	step 4 : wff = a1i (step 3) |- ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → 〈 C , D 〉 ∈ _V ) ;;
+	step 5 : wff = id () |- ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) ) ;;
+	step 6 : wff = eqeq1 () |- ( z = 〈 C , D 〉 → ( z = 〈 x , y 〉 ↔ 〈 C , D 〉 = 〈 x , y 〉 ) ) ;;
+	step 7 : wff = eqcom () |- ( 〈 C , D 〉 = 〈 x , y 〉 ↔ 〈 x , y 〉 = 〈 C , D 〉 ) ;;
+	step 8 : wff = vex () |- x ∈ _V ;;
+	step 9 : wff = vex () |- y ∈ _V ;;
+	step 10 : wff = opth (step 8, step 9) |- ( 〈 x , y 〉 = 〈 C , D 〉 ↔ ( x = C ∧ y = D ) ) ;;
+	step 11 : wff = bitri (step 7, step 10) |- ( 〈 C , D 〉 = 〈 x , y 〉 ↔ ( x = C ∧ y = D ) ) ;;
+	step 12 : wff = syl6bb (step 6, step 11) |- ( z = 〈 C , D 〉 → ( z = 〈 x , y 〉 ↔ ( x = C ∧ y = D ) ) ) ;;
+	step 13 : wff = anbi1d (step 12) |- ( z = 〈 C , D 〉 → ( ( z = 〈 x , y 〉 ∧ ph ) ↔ ( ( x = C ∧ y = D ) ∧ ph ) ) ) ;;
+	step 14 : wff = 2rexbidv (step 13) |- ( z = 〈 C , D 〉 → ( ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) ↔ ∃ x ∈ A ∃ y ∈ B ( ( x = C ∧ y = D ) ∧ ph ) ) ) ;;
+	step 15 : wff = adantl (step 14) |- ( ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) ∧ z = 〈 C , D 〉 ) → ( ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) ↔ ∃ x ∈ A ∃ y ∈ B ( ( x = C ∧ y = D ) ∧ ph ) ) ) ;;
+	step 16 : wff = nfeu1 () |- F/ z ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) ;;
+	step 17 : wff = nfvd () |- ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → F/ z ∃ x ∈ A ∃ y ∈ B ( ( x = C ∧ y = D ) ∧ ph ) ) ;;
+	step 18 : wff = nfcvd () |- ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → F/_ z 〈 C , D 〉 ) ;;
+	step 19 : wff = iota2df (step 4, step 5, step 15, step 16, step 17, step 18) |- ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → ( ∃ x ∈ A ∃ y ∈ B ( ( x = C ∧ y = D ) ∧ ph ) ↔ ( iota z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) ) = 〈 C , D 〉 ) ) ;;
+	step 20 : wff = eqcom () |- ( 〈 C , D 〉 = I ↔ I = 〈 C , D 〉 ) ;;
+	step 21 : wff = eqeq1i (hyp 1) |- ( I = 〈 C , D 〉 ↔ ( iota z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) ) = 〈 C , D 〉 ) ;;
+	step 22 : wff = bitri (step 20, step 21) |- ( 〈 C , D 〉 = I ↔ ( iota z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) ) = 〈 C , D 〉 ) ;;
+	step 23 : wff = syl6bbr (step 19, step 22) |- ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → ( ∃ x ∈ A ∃ y ∈ B ( ( x = C ∧ y = D ) ∧ ph ) ↔ 〈 C , D 〉 = I ) ) ;;
+	step 24 : wff = sylan9bbr (step 2, step 23) |- ( ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) ∧ ( C ∈ A ∧ D ∈ B ) ) → ( ch ↔ 〈 C , D 〉 = I ) ) ;;
+	step 25 : wff = pm5.32da (step 24) |- ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → ( ( ( C ∈ A ∧ D ∈ B ) ∧ ch ) ↔ ( ( C ∈ A ∧ D ∈ B ) ∧ 〈 C , D 〉 = I ) ) ) ;;
+	step 26 : wff = opelxpi () |- ( ( x ∈ A ∧ y ∈ B ) → 〈 x , y 〉 ∈ ( A × B ) ) ;;
+	step 27 : wff = simpl () |- ( ( z = 〈 x , y 〉 ∧ ph ) → z = 〈 x , y 〉 ) ;;
+	step 28 : wff = eleq1d (step 27) |- ( ( z = 〈 x , y 〉 ∧ ph ) → ( z ∈ ( A × B ) ↔ 〈 x , y 〉 ∈ ( A × B ) ) ) ;;
+	step 29 : wff = syl5ibrcom (step 26, step 28) |- ( ( x ∈ A ∧ y ∈ B ) → ( ( z = 〈 x , y 〉 ∧ ph ) → z ∈ ( A × B ) ) ) ;;
+	step 30 : wff = rexlimivv (step 29) |- ( ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → z ∈ ( A × B ) ) ;;
+	step 31 : wff = abssi (step 30) |- { z | ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) } ⊆ ( A × B ) ;;
+	step 32 : wff = iotacl () |- ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → ( iota z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) ) ∈ { z | ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) } ) ;;
+	step 33 : wff = sseldi (step 31, step 32) |- ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → ( iota z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) ) ∈ ( A × B ) ) ;;
+	step 34 : wff = syl5eqel (hyp 1, step 33) |- ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → I ∈ ( A × B ) ) ;;
+	step 35 : wff = opelxp () |- ( 〈 C , D 〉 ∈ ( A × B ) ↔ ( C ∈ A ∧ D ∈ B ) ) ;;
+	step 36 : wff = eleq1 () |- ( 〈 C , D 〉 = I → ( 〈 C , D 〉 ∈ ( A × B ) ↔ I ∈ ( A × B ) ) ) ;;
+	step 37 : wff = syl5bbr (step 35, step 36) |- ( 〈 C , D 〉 = I → ( ( C ∈ A ∧ D ∈ B ) ↔ I ∈ ( A × B ) ) ) ;;
+	step 38 : wff = syl5ibrcom (step 34, step 37) |- ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → ( 〈 C , D 〉 = I → ( C ∈ A ∧ D ∈ B ) ) ) ;;
+	step 39 : wff = pm4.71rd (step 38) |- ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → ( 〈 C , D 〉 = I ↔ ( ( C ∈ A ∧ D ∈ B ) ∧ 〈 C , D 〉 = I ) ) ) ;;
+	step 40 : wff = opelxpi () |- ( ( x ∈ A ∧ y ∈ B ) → 〈 x , y 〉 ∈ ( A × B ) ) ;;
+	step 41 : wff = simpl () |- ( ( z = 〈 x , y 〉 ∧ ph ) → z = 〈 x , y 〉 ) ;;
+	step 42 : wff = eleq1d (step 41) |- ( ( z = 〈 x , y 〉 ∧ ph ) → ( z ∈ ( A × B ) ↔ 〈 x , y 〉 ∈ ( A × B ) ) ) ;;
+	step 43 : wff = syl5ibrcom (step 40, step 42) |- ( ( x ∈ A ∧ y ∈ B ) → ( ( z = 〈 x , y 〉 ∧ ph ) → z ∈ ( A × B ) ) ) ;;
+	step 44 : wff = rexlimivv (step 43) |- ( ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → z ∈ ( A × B ) ) ;;
+	step 45 : wff = abssi (step 44) |- { z | ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) } ⊆ ( A × B ) ;;
+	step 46 : wff = iotacl () |- ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → ( iota z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) ) ∈ { z | ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) } ) ;;
+	step 47 : wff = sseldi (step 45, step 46) |- ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → ( iota z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) ) ∈ ( A × B ) ) ;;
+	step 48 : wff = syl5eqel (hyp 1, step 47) |- ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → I ∈ ( A × B ) ) ;;
+	step 49 : wff = 1st2nd2 () |- ( I ∈ ( A × B ) → I = 〈 ( 1st ` I ) , ( 2nd ` I ) 〉 ) ;;
+	step 50 : wff = syl (step 48, step 49) |- ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → I = 〈 ( 1st ` I ) , ( 2nd ` I ) 〉 ) ;;
+	step 51 : wff = eqeq2d (step 50) |- ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → ( 〈 C , D 〉 = I ↔ 〈 C , D 〉 = 〈 ( 1st ` I ) , ( 2nd ` I ) 〉 ) ) ;;
+	step 52 : wff = 3bitr2d (step 25, step 39, step 51) |- ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → ( ( ( C ∈ A ∧ D ∈ B ) ∧ ch ) ↔ 〈 C , D 〉 = 〈 ( 1st ` I ) , ( 2nd ` I ) 〉 ) ) ;;
+	step 53 : wff = df-3an () |- ( ( C ∈ A ∧ D ∈ B ∧ ch ) ↔ ( ( C ∈ A ∧ D ∈ B ) ∧ ch ) ) ;;
+	step 54 : wff = eqeq2i (hyp 2) |- ( C = X ↔ C = ( 1st ` I ) ) ;;
+	step 55 : wff = eqeq2i (hyp 3) |- ( D = Y ↔ D = ( 2nd ` I ) ) ;;
+	step 56 : wff = anbi12i (step 54, step 55) |- ( ( C = X ∧ D = Y ) ↔ ( C = ( 1st ` I ) ∧ D = ( 2nd ` I ) ) ) ;;
+	step 57 : wff = fvex () |- ( 1st ` I ) ∈ _V ;;
+	step 58 : wff = fvex () |- ( 2nd ` I ) ∈ _V ;;
+	step 59 : wff = opth2 (step 57, step 58) |- ( 〈 C , D 〉 = 〈 ( 1st ` I ) , ( 2nd ` I ) 〉 ↔ ( C = ( 1st ` I ) ∧ D = ( 2nd ` I ) ) ) ;;
+	step 60 : wff = bitr4i (step 56, step 59) |- ( ( C = X ∧ D = Y ) ↔ 〈 C , D 〉 = 〈 ( 1st ` I ) , ( 2nd ` I ) 〉 ) ;;
+	step 61 : wff = 3bitr4g (step 52, step 53, step 60) |- ( ∃! z ∃ x ∈ A ∃ y ∈ B ( z = 〈 x , y 〉 ∧ ph ) → ( ( C ∈ A ∧ D ∈ B ∧ ch ) ↔ ( C = X ∧ D = Y ) ) ) ;;
+	qed prop 1 = step 61 ;;
+}
+
+/* Define a function whose value is "the unique ` y ` such that
+       ` ph ( x , y ) ` ".  (Contributed by NM, 19-May-2015.) */
+
+theorem opabiotafun (ph : wff, x : set, y : set, F : class) disjointed(x y z, x y z F, z ph, x z) {
+	hyp 1 : wff = |- F = { 〈 x , y 〉 | { y | ph } = { y } } ;;
+	-----------------------
+	prop 1 : wff = |- Fun F ;;
+}
+
+proof of opabiotafun {
+	var z : set;;
+	step 1 : wff = funopab () |- ( Fun { 〈 x , y 〉 | { y | ph } = { y } } ↔ ∀ x ∃* y { y | ph } = { y } ) ;;
+	step 2 : wff = mo2icl () |- ( ∀ z ( { y | ph } = { z } → z = ⋃ { y | ph } ) → ∃* z { y | ph } = { z } ) ;;
+	step 3 : wff = unieq () |- ( { y | ph } = { z } → ⋃ { y | ph } = ⋃ { z } ) ;;
+	step 4 : wff = vex () |- z ∈ _V ;;
+	step 5 : wff = unisn (step 4) |- ⋃ { z } = z ;;
+	step 6 : wff = syl6req (step 3, step 5) |- ( { y | ph } = { z } → z = ⋃ { y | ph } ) ;;
+	step 7 : wff = mpg (step 2, step 6) |- ∃* z { y | ph } = { z } ;;
+	step 8 : wff = nfv () |- F/ z { y | ph } = { y } ;;
+	step 9 : wff = nfab1 () |- F/_ y { y | ph } ;;
+	step 10 : wff = nfeq1 (step 9) |- F/ y { y | ph } = { z } ;;
+	step 11 : wff = sneq () |- ( y = z → { y } = { z } ) ;;
+	step 12 : wff = eqeq2d (step 11) |- ( y = z → ( { y | ph } = { y } ↔ { y | ph } = { z } ) ) ;;
+	step 13 : wff = cbvmo (step 8, step 10, step 12) |- ( ∃* y { y | ph } = { y } ↔ ∃* z { y | ph } = { z } ) ;;
+	step 14 : wff = mpbir (step 7, step 13) |- ∃* y { y | ph } = { y } ;;
+	step 15 : wff = mpgbir (step 1, step 14) |- Fun { 〈 x , y 〉 | { y | ph } = { y } } ;;
+	step 16 : wff = funeqi (hyp 1) |- ( Fun F ↔ Fun { 〈 x , y 〉 | { y | ph } = { y } } ) ;;
+	step 17 : wff = mpbir (step 15, step 16) |- Fun F ;;
+	qed prop 1 = step 17 ;;
+}
+
+/* Define a function whose value is "the unique ` y ` such that
+       ` ph ( x , y ) ` ".  (Contributed by NM, 16-Nov-2013.) */
+
+theorem opabiotadm (ph : wff, x : set, y : set, F : class) disjointed(x y, x y F) {
+	hyp 1 : wff = |- F = { 〈 x , y 〉 | { y | ph } = { y } } ;;
+	-----------------------
+	prop 1 : wff = |- dom F = { x | ∃! y ph } ;;
+}
+
+proof of opabiotadm {
+	step 1 : wff = dmopab () |- dom { 〈 x , y 〉 | { y | ph } = { y } } = { x | ∃ y { y | ph } = { y } } ;;
+	step 2 : wff = dmeqi (hyp 1) |- dom F = dom { 〈 x , y 〉 | { y | ph } = { y } } ;;
+	step 3 : wff = euabsn () |- ( ∃! y ph ↔ ∃ y { y | ph } = { y } ) ;;
+	step 4 : wff = abbii (step 3) |- { x | ∃! y ph } = { x | ∃ y { y | ph } = { y } } ;;
+	step 5 : wff = 3eqtr4i (step 1, step 2, step 4) |- dom F = { x | ∃! y ph } ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Define a function whose value is "the unique ` y ` such that
+       ` ph ( x , y ) ` ".  (Contributed by NM, 16-Nov-2013.) */
+
+theorem opabiota (ph : wff, ps : wff, x : set, y : set, B : class, F : class) disjointed(x y B, x y F, x ps) {
+	hyp 1 : wff = |- F = { 〈 x , y 〉 | { y | ph } = { y } } ;;
+	hyp 2 : wff = |- ( x = B → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( B ∈ dom F → ( F ` B ) = ( iota y ps ) ) ;;
+}
+
+proof of opabiota {
+	step 1 : wff = fveq2 () |- ( x = B → ( F ` x ) = ( F ` B ) ) ;;
+	step 2 : wff = iotabidv (hyp 2) |- ( x = B → ( iota y ph ) = ( iota y ps ) ) ;;
+	step 3 : wff = eqeq12d (step 1, step 2) |- ( x = B → ( ( F ` x ) = ( iota y ph ) ↔ ( F ` B ) = ( iota y ps ) ) ) ;;
+	step 4 : wff = vex () |- x ∈ _V ;;
+	step 5 : wff = eldm (step 4) |- ( x ∈ dom F ↔ ∃ y x F y ) ;;
+	step 6 : wff = nfopab2 () |- F/_ y { 〈 x , y 〉 | { y | ph } = { y } } ;;
+	step 7 : wff = nfcxfr (hyp 1, step 6) |- F/_ y F ;;
+	step 8 : wff = nfcv () |- F/_ y x ;;
+	step 9 : wff = nffv (step 7, step 8) |- F/_ y ( F ` x ) ;;
+	step 10 : wff = nfiota1 () |- F/_ y ( iota y ph ) ;;
+	step 11 : wff = nfeq (step 9, step 10) |- F/ y ( F ` x ) = ( iota y ph ) ;;
+	step 12 : wff = opabiotafun (hyp 1) |- Fun F ;;
+	step 13 : wff = funbrfv () |- ( Fun F → ( x F y → ( F ` x ) = y ) ) ;;
+	step 14 : wff = ax-mp (step 12, step 13) |- ( x F y → ( F ` x ) = y ) ;;
+	step 15 : wff = df-br () |- ( x F y ↔ 〈 x , y 〉 ∈ F ) ;;
+	step 16 : wff = eleq2i (hyp 1) |- ( 〈 x , y 〉 ∈ F ↔ 〈 x , y 〉 ∈ { 〈 x , y 〉 | { y | ph } = { y } } ) ;;
+	step 17 : wff = opabid () |- ( 〈 x , y 〉 ∈ { 〈 x , y 〉 | { y | ph } = { y } } ↔ { y | ph } = { y } ) ;;
+	step 18 : wff = 3bitri (step 15, step 16, step 17) |- ( x F y ↔ { y | ph } = { y } ) ;;
+	step 19 : wff = vex () |- y ∈ _V ;;
+	step 20 : wff = snid (step 19) |- y ∈ { y } ;;
+	step 21 : wff = id () |- ( { y | ph } = { y } → { y | ph } = { y } ) ;;
+	step 22 : wff = syl5eleqr (step 20, step 21) |- ( { y | ph } = { y } → y ∈ { y | ph } ) ;;
+	step 23 : wff = abid () |- ( y ∈ { y | ph } ↔ ph ) ;;
+	step 24 : wff = sylib (step 22, step 23) |- ( { y | ph } = { y } → ph ) ;;
+	step 25 : wff = sylbi (step 18, step 24) |- ( x F y → ph ) ;;
+	step 26 : wff = vex () |- x ∈ _V ;;
+	step 27 : wff = vex () |- y ∈ _V ;;
+	step 28 : wff = breldm (step 26, step 27) |- ( x F y → x ∈ dom F ) ;;
+	step 29 : wff = opabiotadm (hyp 1) |- dom F = { x | ∃! y ph } ;;
+	step 30 : wff = abeq2i (step 29) |- ( x ∈ dom F ↔ ∃! y ph ) ;;
+	step 31 : wff = sylib (step 28, step 30) |- ( x F y → ∃! y ph ) ;;
+	step 32 : wff = iota1 () |- ( ∃! y ph → ( ph ↔ ( iota y ph ) = y ) ) ;;
+	step 33 : wff = syl (step 31, step 32) |- ( x F y → ( ph ↔ ( iota y ph ) = y ) ) ;;
+	step 34 : wff = mpbid (step 25, step 33) |- ( x F y → ( iota y ph ) = y ) ;;
+	step 35 : wff = eqtr4d (step 14, step 34) |- ( x F y → ( F ` x ) = ( iota y ph ) ) ;;
+	step 36 : wff = exlimi (step 11, step 35) |- ( ∃ y x F y → ( F ` x ) = ( iota y ph ) ) ;;
+	step 37 : wff = sylbi (step 5, step 36) |- ( x ∈ dom F → ( F ` x ) = ( iota y ph ) ) ;;
+	step 38 : wff = vtoclga (step 3, step 37) |- ( B ∈ dom F → ( F ` B ) = ( iota y ps ) ) ;;
+	qed prop 1 = step 38 ;;
+}
+
+

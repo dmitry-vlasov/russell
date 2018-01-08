@@ -1,0 +1,1127 @@
+$[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Older_axiomatization_(1_rule,_14_schemes).smm $]
+$( #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+               Existential uniqueness
+
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+$)
+$( Declare new symbols needed for uniqueness notation. $)
+$c E! $.
+$( Backwards E exclamation point. $)
+$c E* $.
+$( Backwards E superscript *. $)
+$( Extend wff definition to include existential uniqueness ("there exists a
+     unique ` x ` such that ` ph ` "). $)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	aweu $a wff E! x ph $.
+$}
+$( Extend wff definition to include uniqueness ("there exists at most one
+     ` x ` such that ` ph ` "). $)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	awmo $a wff E* x ph $.
+$}
+$( A soundness justification theorem for ~ df-eu , showing that the
+       definition is equivalent to itself with its dummy variable renamed.
+       Note that ` y ` and ` z ` needn't be distinct variables.  See
+       ~ eujustALT for a proof that provides an example of how it can be
+       achieved through the use of ~ dvelim .  (Contributed by NM,
+       11-Mar-2010.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
+${
+	$v ph x y z w $.
+	$d w x y $.
+	$d x z $.
+	$d y ph $.
+	$d w z ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	i0 $f set w $.
+	peujust $p |- ( E. y A. x ( ph <-> x = y ) <-> E. z A. x ( ph <-> x = z ) ) $=
+	f2 i0 f1 pequequ2 f2 acv i0 acv awceq f1 acv f2 acv awceq f1 acv i0 acv awceq f0 pbibi2d f2 acv i0 acv awceq f0 f1 acv f2 acv awceq awb f0 f1 acv i0 acv awceq awb f1 palbidv f0 f1 acv f2 acv awceq awb f1 awal f0 f1 acv i0 acv awceq awb f1 awal f2 i0 pcbvexv i0 f3 f1 pequequ2 i0 acv f3 acv awceq f1 acv i0 acv awceq f1 acv f3 acv awceq f0 pbibi2d i0 acv f3 acv awceq f0 f1 acv i0 acv awceq awb f0 f1 acv f3 acv awceq awb f1 palbidv f0 f1 acv i0 acv awceq awb f1 awal f0 f1 acv f3 acv awceq awb f1 awal i0 f3 pcbvexv f0 f1 acv f2 acv awceq awb f1 awal f2 awex f0 f1 acv i0 acv awceq awb f1 awal i0 awex f0 f1 acv f3 acv awceq awb f1 awal f3 awex pbitri $.
+$}
+$( A soundness justification theorem for ~ df-eu , showing that the
+       definition is equivalent to itself with its dummy variable renamed.
+       Note that ` y ` and ` z ` needn't be distinct variables.  While this
+       isn't strictly necessary for soundness, the proof provides an example of
+       how it can be achieved through the use of ~ dvelim .  (Contributed by
+       NM, 11-Mar-2010.)  (Proof modification is discouraged.)
+       (New usage is discouraged.) $)
+${
+	$v ph x y z w $.
+	$d w x y $.
+	$d x z $.
+	$d y ph $.
+	$d w z ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	i0 $f set w $.
+	peujustALT $p |- ( E. y A. x ( ph <-> x = y ) <-> E. z A. x ( ph <-> x = z ) ) $=
+	f2 f3 f1 pequequ2 f2 f3 pweq f1 f2 pweq f1 f3 pweq f0 pbibi2d f2 f3 pweq f0 f1 f2 pweq awb f0 f1 f3 pweq awb f1 palbidv f2 f3 pweq f0 f1 f2 pweq awb f1 awal f0 f1 f3 pweq awb f1 awal awb f2 psps f0 f1 f2 pweq awb f1 awal f0 f1 f3 pweq awb f1 awal f2 f3 pdrex1 f2 f3 f2 phbnae f2 f3 f3 phbnae f2 f3 pweq f2 awal awn f2 f3 pweq f2 awal awn f3 awal f2 palrimih f0 f1 i0 pweq awb f1 awal awn f3 aax-17 i0 f2 f1 pequequ2 i0 f2 pweq f1 i0 pweq f1 f2 pweq f0 pbibi2d i0 f2 pweq f0 f1 i0 pweq awb f0 f1 f2 pweq awb f1 palbidv i0 f2 pweq f0 f1 i0 pweq awb f1 awal f0 f1 f2 pweq awb f1 awal pnotbid f0 f1 i0 pweq awb f1 awal awn f0 f1 f2 pweq awb f1 awal awn f3 f2 i0 pdvelim f0 f1 f2 pweq awb f1 awal awn f0 f1 f2 pweq awb f1 awal awn f3 awal awi f3 f2 pnaecoms f0 f1 i0 pweq awb f1 awal awn f2 aax-17 i0 f3 f1 pequequ2 i0 f3 pweq f1 i0 pweq f1 f3 pweq f0 pbibi2d i0 f3 pweq f0 f1 i0 pweq awb f0 f1 f3 pweq awb f1 palbidv i0 f3 pweq f0 f1 i0 pweq awb f1 awal f0 f1 f3 pweq awb f1 awal pnotbid f0 f1 i0 pweq awb f1 awal awn f0 f1 f3 pweq awb f1 awal awn f2 f3 i0 pdvelim f2 f3 f1 pequequ2 f2 f3 pweq f1 f2 pweq f1 f3 pweq f0 pbibi2d f2 f3 pweq f0 f1 f2 pweq awb f0 f1 f3 pweq awb f1 palbidv f2 f3 pweq f0 f1 f2 pweq awb f1 awal f0 f1 f3 pweq awb f1 awal pnotbid f2 f3 pweq f0 f1 f2 pweq awb f1 awal awn f0 f1 f3 pweq awb f1 awal awn awb awi f2 f3 pweq f2 awal awn pa1i f2 f3 pweq f2 awal awn f0 f1 f2 pweq awb f1 awal awn f0 f1 f3 pweq awb f1 awal awn f2 f3 pcbv2h f2 f3 pweq f2 awal awn f2 f3 pweq f2 awal awn f3 awal f2 awal f0 f1 f2 pweq awb f1 awal awn f2 awal f0 f1 f3 pweq awb f1 awal awn f3 awal awb psyl f2 f3 pweq f2 awal awn f0 f1 f2 pweq awb f1 awal awn f2 awal f0 f1 f3 pweq awb f1 awal awn f3 awal pnotbid f0 f1 f2 pweq awb f1 awal f2 adf-ex f0 f1 f3 pweq awb f1 awal f3 adf-ex f2 f3 pweq f2 awal awn f0 f1 f2 pweq awb f1 awal awn f2 awal awn f0 f1 f3 pweq awb f1 awal awn f3 awal awn f0 f1 f2 pweq awb f1 awal f2 awex f0 f1 f3 pweq awb f1 awal f3 awex p3bitr4g f2 f3 pweq f2 awal f0 f1 f2 pweq awb f1 awal f2 awex f0 f1 f3 pweq awb f1 awal f3 awex awb ppm2.61i $.
+$}
+$( Define existential uniqueness, i.e.  "there exists exactly one ` x `
+       such that ` ph ` ."  Definition 10.1 of [BellMachover] p. 97; also
+       Definition *14.02 of [WhiteheadRussell] p. 175.  Other possible
+       definitions are given by ~ eu1 , ~ eu2 , ~ eu3 , and ~ eu5 (which in
+       some cases we show with a hypothesis ` ph -> A. y ph ` in place of a
+       distinct variable condition on ` y ` and ` ph ` ).  Double uniqueness is
+       tricky: ` E! x E! y ph ` does not mean "exactly one ` x ` and one
+       ` y ` " (see ~ 2eu4 ).  (Contributed by NM, 12-Aug-1993.) $)
+${
+	$v ph x y $.
+	$d x y $.
+	$d y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	adf-eu $a |- ( E! x ph <-> E. y A. x ( ph <-> x = y ) ) $.
+$}
+$( Define "there exists at most one ` x ` such that ` ph ` ."  Here we define
+     it in terms of existential uniqueness.  Notation of [BellMachover] p. 460,
+     whose definition we show as ~ mo3 .  For other possible definitions see
+     ~ mo2 and ~ mo4 .  (Contributed by NM, 8-Mar-1995.) $)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	adf-mo $a |- ( E* x ph <-> ( E. x ph -> E! x ph ) ) $.
+$}
+$( A version of the existential uniqueness definition with a hypothesis
+       instead of a distinct variable condition.  (Contributed by NM,
+       12-Aug-1993.) $)
+${
+	$v ph x y z $.
+	$d x y z $.
+	$d ph z $.
+	e0 $e |- F/ y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	i0 $f set z $.
+	peuf $p |- ( E! x ph <-> E. y A. x ( ph <-> x = y ) ) $=
+	f0 f1 i0 adf-eu e0 f1 acv i0 acv awceq f2 pnfv f0 f1 acv i0 acv awceq f2 pnfbi f0 f1 acv i0 acv awceq awb f2 f1 pnfal f0 i0 pnfv f1 acv f2 acv awceq i0 pnfv f0 f1 acv f2 acv awceq i0 pnfbi f0 f1 acv f2 acv awceq awb i0 f1 pnfal i0 f2 f1 pequequ2 i0 acv f2 acv awceq f1 acv i0 acv awceq f1 acv f2 acv awceq f0 pbibi2d i0 acv f2 acv awceq f0 f1 acv i0 acv awceq awb f0 f1 acv f2 acv awceq awb f1 palbidv f0 f1 acv i0 acv awceq awb f1 awal f0 f1 acv f2 acv awceq awb f1 awal i0 f2 pcbvex f0 f1 aweu f0 f1 acv i0 acv awceq awb f1 awal i0 awex f0 f1 acv f2 acv awceq awb f1 awal f2 awex pbitri $.
+$}
+$( Formula-building rule for uniqueness quantifier (deduction rule).
+       (Contributed by NM, 9-Jul-1994.) $)
+${
+	$v ph ps ch x y $.
+	$d x y $.
+	$d y ph $.
+	$d y ps $.
+	$d y ch $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	i0 $f set y $.
+	peubid $p |- ( ph -> ( E! x ps <-> E! x ch ) ) $=
+	e0 e1 f0 f1 f2 f3 acv i0 acv awceq pbibi1d f0 f1 f3 acv i0 acv awceq awb f2 f3 acv i0 acv awceq awb f3 palbid f0 f1 f3 acv i0 acv awceq awb f3 awal f2 f3 acv i0 acv awceq awb f3 awal i0 pexbidv f1 f3 i0 adf-eu f2 f3 i0 adf-eu f0 f1 f3 acv i0 acv awceq awb f3 awal i0 awex f2 f3 acv i0 acv awceq awb f3 awal i0 awex f1 f3 aweu f2 f3 aweu p3bitr4g $.
+$}
+$( Formula-building rule for uniqueness quantifier (deduction rule).
+       (Contributed by NM, 9-Jul-1994.) $)
+${
+	$v ph ps ch x $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	peubidv $p |- ( ph -> ( E! x ps <-> E! x ch ) ) $=
+	f0 f3 pnfv e0 f0 f1 f2 f3 peubid $.
+$}
+$( Introduce uniqueness quantifier to both sides of an equivalence.
+       (Contributed by NM, 9-Jul-1994.)  (Revised by Mario Carneiro,
+       6-Oct-2016.) $)
+${
+	$v ph ps x $.
+	e0 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	peubii $p |- ( E! x ph <-> E! x ps ) $=
+	e0 f0 f1 awb awtru pa1i awtru f0 f1 f2 peubidv f0 f2 aweu f1 f2 aweu awb ptrud $.
+$}
+$( Bound-variable hypothesis builder for uniqueness.  (Contributed by NM,
+       9-Jul-1994.)  (Revised by Mario Carneiro, 7-Oct-2016.) $)
+${
+	$v ph x y $.
+	$d x y $.
+	$d y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	i0 $f set y $.
+	pnfeu1 $p |- F/ x E! x ph $=
+	f0 f1 i0 adf-eu f0 f1 acv i0 acv awceq awb f1 pnfa1 f0 f1 acv i0 acv awceq awb f1 awal f1 i0 pnfex f0 f1 aweu f0 f1 acv i0 acv awceq awb f1 awal i0 awex f1 pnfxfr $.
+$}
+$( Bound-variable hypothesis builder for "at most one."  (Contributed by NM,
+     8-Mar-1995.)  (Revised by Mario Carneiro, 7-Oct-2016.) $)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	pnfmo1 $p |- F/ x E* x ph $=
+	f0 f1 adf-mo f0 f1 pnfe1 f0 f1 pnfeu1 f0 f1 awex f0 f1 aweu f1 pnfim f0 f1 awmo f0 f1 awex f0 f1 aweu awi f1 pnfxfr $.
+$}
+$( Bound-variable hypothesis builder for uniqueness.  (Contributed by Mario
+       Carneiro, 14-Nov-2016.) $)
+${
+	$v ph ps x y z $.
+	$d y z $.
+	$d z ph $.
+	$d z ps $.
+	e0 $e |- F/ y ph $.
+	e1 $e |- ( ( ph /\ -. A. x x = y ) -> F/ x ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	i0 $f set z $.
+	pnfeud2 $p |- ( ph -> F/ x E! y ps ) $=
+	f1 f3 i0 adf-eu f0 i0 pnfv e0 f2 i0 f3 pnfnae f0 f2 acv i0 acv awceq f2 awal awn f3 pnfan e1 f0 f2 acv f3 acv awceq f2 awal awn f1 f2 awnf f2 acv i0 acv awceq f2 awal awn padantlr f3 i0 f2 pnfeqf f2 acv f3 acv awceq f2 awal awn f2 acv i0 acv awceq f2 awal awn f3 acv i0 acv awceq f2 awnf pancoms f2 acv i0 acv awceq f2 awal awn f2 acv f3 acv awceq f2 awal awn f3 acv i0 acv awceq f2 awnf f0 padantll f0 f2 acv i0 acv awceq f2 awal awn awa f2 acv f3 acv awceq f2 awal awn awa f1 f3 acv i0 acv awceq f2 pnfbid f0 f2 acv i0 acv awceq f2 awal awn awa f1 f3 acv i0 acv awceq awb f2 f3 pnfald2 f0 f1 f3 acv i0 acv awceq awb f3 awal f2 i0 pnfexd2 f1 f3 aweu f1 f3 acv i0 acv awceq awb f3 awal i0 awex f0 f2 pnfxfrd $.
+$}
+$( Bound-variable hypothesis builder for uniqueness.  (Contributed by Mario
+       Carneiro, 14-Nov-2016.) $)
+${
+	$v ph ps x y $.
+	e0 $e |- F/ y ph $.
+	e1 $e |- ( ( ph /\ -. A. x x = y ) -> F/ x ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	pnfmod2 $p |- ( ph -> F/ x E* y ps ) $=
+	f1 f3 adf-mo e0 e1 f0 f1 f2 f3 pnfexd2 e0 e1 f0 f1 f2 f3 pnfeud2 f0 f1 f3 awex f1 f3 aweu f2 pnfimd f1 f3 awmo f1 f3 awex f1 f3 aweu awi f0 f2 pnfxfrd $.
+$}
+$( Deduction version of ~ nfeu .  (Contributed by NM, 15-Feb-2013.)
+       (Revised by Mario Carneiro, 7-Oct-2016.) $)
+${
+	$v ph ps x y $.
+	e0 $e |- F/ y ph $.
+	e1 $e |- ( ph -> F/ x ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	pnfeud $p |- ( ph -> F/ x E! y ps ) $=
+	e0 e1 f0 f1 f2 awnf f2 acv f3 acv awceq f2 awal awn padantr f0 f1 f2 f3 pnfeud2 $.
+$}
+$( Bound-variable hypothesis builder for "at most one."  (Contributed by
+       Mario Carneiro, 14-Nov-2016.) $)
+${
+	$v ph ps x y $.
+	e0 $e |- F/ y ph $.
+	e1 $e |- ( ph -> F/ x ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	pnfmod $p |- ( ph -> F/ x E* y ps ) $=
+	e0 e1 f0 f1 f2 awnf f2 acv f3 acv awceq f2 awal awn padantr f0 f1 f2 f3 pnfmod2 $.
+$}
+$( Bound-variable hypothesis builder for "at most one."  Note that ` x `
+       and ` y ` needn't be distinct (this makes the proof more difficult).
+       (Contributed by NM, 8-Mar-1995.)  (Revised by Mario Carneiro,
+       7-Oct-2016.) $)
+${
+	$v ph x y $.
+	e0 $e |- F/ x ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	pnfeu $p |- F/ x E! y ph $=
+	f2 pnftru e0 f0 f1 awnf awtru pa1i awtru f0 f1 f2 pnfeud f0 f2 aweu f1 awnf ptrud $.
+$}
+$( Bound-variable hypothesis builder for "at most one."  (Contributed by
+       NM, 9-Mar-1995.) $)
+${
+	$v ph x y $.
+	e0 $e |- F/ x ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	pnfmo $p |- F/ x E* y ph $=
+	f2 pnftru e0 f0 f1 awnf awtru pa1i awtru f0 f1 f2 pnfmod f0 f2 awmo f1 awnf ptrud $.
+$}
+$( Variable substitution in uniqueness quantifier.  (Contributed by NM,
+       7-Aug-1994.)  (Revised by Mario Carneiro, 7-Oct-2016.) $)
+${
+	$v ph x y z w $.
+	$d w y z $.
+	$d ph z w $.
+	$d w x z $.
+	e0 $e |- F/ y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	i0 $f set z $.
+	i1 $f set w $.
+	psb8eu $p |- ( E! x ph <-> E! y [ y / x ] ph ) $=
+	f0 f1 acv i0 acv awceq awb i1 pnfv f0 f1 acv i0 acv awceq awb f1 i1 psb8 f0 f1 acv i0 acv awceq f1 i1 psbbi e0 f0 f1 i1 f2 pnfsb i1 f1 i0 pequsb3 i1 acv i0 acv awceq f2 pnfv f1 acv i0 acv awceq f1 i1 awsb i1 acv i0 acv awceq f2 pnfxfr f0 f1 i1 awsb f1 acv i0 acv awceq f1 i1 awsb f2 pnfbi f0 f1 acv i0 acv awceq awb f1 i1 awsb f0 f1 i1 awsb f1 acv i0 acv awceq f1 i1 awsb awb f2 pnfxfr f0 f1 acv i0 acv awceq awb f1 f2 awsb i1 pnfv f0 f1 acv i0 acv awceq awb i1 f2 f1 psbequ f0 f1 acv i0 acv awceq awb f1 i1 awsb f0 f1 acv i0 acv awceq awb f1 f2 awsb i1 f2 pcbval f2 f1 i0 pequsb3 f1 acv i0 acv awceq f2 acv i0 acv awceq f0 f1 f2 psblbis f0 f1 acv i0 acv awceq awb f1 f2 awsb f0 f1 f2 awsb f2 acv i0 acv awceq awb f2 palbii f0 f1 acv i0 acv awceq awb f1 awal f0 f1 acv i0 acv awceq awb f1 i1 awsb i1 awal f0 f1 acv i0 acv awceq awb f1 f2 awsb f2 awal f0 f1 f2 awsb f2 acv i0 acv awceq awb f2 awal p3bitri f0 f1 acv i0 acv awceq awb f1 awal f0 f1 f2 awsb f2 acv i0 acv awceq awb f2 awal i0 pexbii f0 f1 i0 adf-eu f0 f1 f2 awsb f2 i0 adf-eu f0 f1 acv i0 acv awceq awb f1 awal i0 awex f0 f1 f2 awsb f2 acv i0 acv awceq awb f2 awal i0 awex f0 f1 aweu f0 f1 f2 awsb f2 aweu p3bitr4i $.
+$}
+$( Variable substitution in uniqueness quantifier.  (Contributed by
+       Alexander van der Vekens, 17-Jun-2017.) $)
+${
+	$v ph x y $.
+	e0 $e |- F/ y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	psb8mo $p |- ( E* x ph <-> E* y [ y / x ] ph ) $=
+	e0 f0 f1 f2 psb8e e0 f0 f1 f2 psb8eu f0 f1 awex f0 f1 f2 awsb f2 awex f0 f1 aweu f0 f1 f2 awsb f2 aweu pimbi12i f0 f1 adf-mo f0 f1 f2 awsb f2 adf-mo f0 f1 awex f0 f1 aweu awi f0 f1 f2 awsb f2 awex f0 f1 f2 awsb f2 aweu awi f0 f1 awmo f0 f1 f2 awsb f2 awmo p3bitr4i $.
+$}
+$( Rule used to change bound variables, using implicit substitution.
+       (Contributed by NM, 25-Nov-1994.)  (Revised by Mario Carneiro,
+       7-Oct-2016.) $)
+${
+	$v ph ps x y $.
+	e0 $e |- F/ y ph $.
+	e1 $e |- F/ x ps $.
+	e2 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	pcbveu $p |- ( E! x ph <-> E! y ps ) $=
+	e0 f0 f2 f3 psb8eu e1 e2 f0 f1 f2 f3 psbie f0 f2 f3 awsb f1 f3 peubii f0 f2 aweu f0 f2 f3 awsb f3 aweu f1 f3 aweu pbitri $.
+$}
+$( An alternate way to express uniqueness used by some authors.  Exercise
+       2(b) of [Margaris] p. 110.  (Contributed by NM, 20-Aug-1993.)  (Revised
+       by Mario Carneiro, 7-Oct-2016.) $)
+${
+	$v ph x y $.
+	$d x y $.
+	e0 $e |- F/ y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	peu1 $p |- ( E! x ph <-> E. x ( ph /\ A. y ( [ y / x ] ph -> x = y ) ) ) $=
+	f0 f1 f2 pnfs1v f0 f1 f2 awsb f2 f1 peuf e0 f0 f1 f2 psb8eu f1 f2 pequcom f1 acv f2 acv awceq f2 acv f1 acv awceq f0 f1 f2 awsb pimbi2i f0 f1 f2 awsb f1 acv f2 acv awceq awi f0 f1 f2 awsb f2 acv f1 acv awceq awi f2 palbii e0 f0 f1 f2 psb6rf f0 f1 f2 awsb f1 acv f2 acv awceq awi f2 awal f0 f1 f2 awsb f2 acv f1 acv awceq awi f2 awal f0 f2 acv f1 acv awceq f0 f1 f2 awsb awi f2 awal panbi12i f0 f0 f1 f2 awsb f1 acv f2 acv awceq awi f2 awal pancom f0 f1 f2 awsb f2 acv f1 acv awceq f2 palbiim f0 f1 f2 awsb f1 acv f2 acv awceq awi f2 awal f0 awa f0 f1 f2 awsb f2 acv f1 acv awceq awi f2 awal f2 acv f1 acv awceq f0 f1 f2 awsb awi f2 awal awa f0 f0 f1 f2 awsb f1 acv f2 acv awceq awi f2 awal awa f0 f1 f2 awsb f2 acv f1 acv awceq awb f2 awal p3bitr4i f0 f0 f1 f2 awsb f1 acv f2 acv awceq awi f2 awal awa f0 f1 f2 awsb f2 acv f1 acv awceq awb f2 awal f1 pexbii f0 f1 f2 awsb f2 aweu f0 f1 f2 awsb f2 acv f1 acv awceq awb f2 awal f1 awex f0 f1 aweu f0 f0 f1 f2 awsb f1 acv f2 acv awceq awi f2 awal awa f1 awex p3bitr4i $.
+$}
+$( Equivalent definitions of "there exists at most one."  (Contributed by
+       NM, 7-Aug-1994.)  (Revised by Mario Carneiro, 7-Oct-2016.) $)
+${
+	$v ph x y z $.
+	$d x y z $.
+	$d ph z $.
+	e0 $e |- F/ y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	i0 $f set z $.
+	pmo $p |- ( E. y A. x ( ph -> x = y ) <-> A. x A. y ( ( ph /\ [ y / x ] ph ) -> x = y ) ) $=
+	e0 f1 acv i0 acv awceq f2 pnfv f0 f1 acv i0 acv awceq f2 pnfim f0 f1 acv i0 acv awceq awi f2 f1 pnfal f0 f1 acv f2 acv awceq awi f1 awal i0 pnfv i0 f2 f1 pequequ2 i0 acv f2 acv awceq f1 acv i0 acv awceq f1 acv f2 acv awceq f0 pimbi2d i0 acv f2 acv awceq f0 f1 acv i0 acv awceq awi f0 f1 acv f2 acv awceq awi f1 palbidv f0 f1 acv i0 acv awceq awi f1 awal f0 f1 acv f2 acv awceq awi f1 awal i0 f2 pcbvex e0 f1 acv i0 acv awceq f2 pnfv f0 f1 acv i0 acv awceq f2 pnfim e0 f0 f1 f2 pnfs1 f2 acv i0 acv awceq f1 pnfv f0 f1 f2 awsb f2 acv i0 acv awceq f1 pnfim f0 f1 f2 psbequ2 f1 f2 i0 aax-8 f1 acv f2 acv awceq f0 f1 f2 awsb f0 f1 acv i0 acv awceq f2 acv i0 acv awceq pimim12d f0 f1 acv i0 acv awceq awi f0 f1 f2 awsb f2 acv i0 acv awceq awi f1 f2 pcbv3 f0 f1 acv i0 acv awceq awi f1 awal f0 f1 f2 awsb f2 acv i0 acv awceq awi f2 awal pancli e0 f1 acv i0 acv awceq f2 pnfv f0 f1 acv i0 acv awceq f2 pnfim e0 f0 f1 f2 pnfs1 f2 acv i0 acv awceq f1 pnfv f0 f1 f2 awsb f2 acv i0 acv awceq f1 pnfim f0 f1 acv i0 acv awceq awi f0 f1 f2 awsb f2 acv i0 acv awceq awi f1 f2 paaan f0 f1 acv i0 acv awceq awi f1 awal f0 f1 acv i0 acv awceq awi f1 awal f0 f1 f2 awsb f2 acv i0 acv awceq awi f2 awal awa f0 f1 acv i0 acv awceq awi f0 f1 f2 awsb f2 acv i0 acv awceq awi awa f2 awal f1 awal psylibr f0 f1 acv i0 acv awceq f0 f1 f2 awsb f2 acv i0 acv awceq pprth f1 f2 i0 pequtr2 f0 f1 acv i0 acv awceq awi f0 f1 f2 awsb f2 acv i0 acv awceq awi awa f0 f0 f1 f2 awsb awa f1 acv i0 acv awceq f2 acv i0 acv awceq awa f1 acv f2 acv awceq psyl6 f0 f1 acv i0 acv awceq awi f0 f1 f2 awsb f2 acv i0 acv awceq awi awa f0 f0 f1 f2 awsb awa f1 acv f2 acv awceq awi f1 f2 p2alimi f0 f1 acv i0 acv awceq awi f1 awal f0 f1 acv i0 acv awceq awi f0 f1 f2 awsb f2 acv i0 acv awceq awi awa f2 awal f1 awal f0 f0 f1 f2 awsb awa f1 acv f2 acv awceq awi f2 awal f1 awal psyl f0 f1 acv i0 acv awceq awi f1 awal f0 f0 f1 f2 awsb awa f1 acv f2 acv awceq awi f2 awal f1 awal i0 pexlimiv f0 f1 acv f2 acv awceq awi f1 awal f2 awex f0 f1 acv i0 acv awceq awi f1 awal i0 awex f0 f0 f1 f2 awsb awa f1 acv f2 acv awceq awi f2 awal f1 awal psylbir f0 f0 f1 f2 awsb awa f1 acv f2 acv awceq awi f2 f1 pnfa2 e0 f0 f1 f2 pnfs1 f0 f0 f1 f2 awsb awa f1 acv f2 acv awceq awi f2 psp f0 f0 f1 f2 awsb awa f1 acv f2 acv awceq awi f2 awal f0 f0 f1 f2 awsb f1 acv f2 acv awceq pexp3a f0 f0 f1 f2 awsb awa f1 acv f2 acv awceq awi f2 awal f0 f0 f1 f2 awsb f1 acv f2 acv awceq pcom3r f0 f1 f2 awsb f0 f0 f1 f2 awsb awa f1 acv f2 acv awceq awi f2 awal f0 f1 acv f2 acv awceq awi f1 palimd f0 f1 f2 awsb f0 f0 f1 f2 awsb awa f1 acv f2 acv awceq awi f2 awal f1 awal f0 f1 acv f2 acv awceq awi f1 awal pcom12 f0 f0 f1 f2 awsb awa f1 acv f2 acv awceq awi f2 awal f1 awal f0 f1 f2 awsb f0 f1 acv f2 acv awceq awi f1 awal f2 peximd f0 f1 f2 awsb f2 palnex e0 f0 f1 f2 pnfs1 f0 f1 f2 awsb f1 pnfn e0 f0 f2 pnfn f0 f1 f2 psbequ1 f0 f0 f1 f2 awsb awi f1 f2 pequcoms f2 acv f1 acv awceq f0 f0 f1 f2 awsb pcon3d f0 f1 f2 awsb awn f0 awn f2 f1 pcbv3 f0 f1 acv f2 acv awceq ppm2.21 f0 awn f0 f1 acv f2 acv awceq awi f1 palimi f0 f1 acv f2 acv awceq awi f1 awal f2 p19.8a f0 f1 f2 awsb awn f2 awal f0 awn f1 awal f0 f1 acv f2 acv awceq awi f1 awal f0 f1 acv f2 acv awceq awi f1 awal f2 awex p3syl f0 f1 f2 awsb f2 awex awn f0 f1 f2 awsb awn f2 awal f0 f1 acv f2 acv awceq awi f1 awal f2 awex psylbir f0 f0 f1 f2 awsb awa f1 acv f2 acv awceq awi f2 awal f1 awal f0 f1 f2 awsb f2 awex f0 f1 acv f2 acv awceq awi f1 awal f2 awex ppm2.61d1 f0 f1 acv f2 acv awceq awi f1 awal f2 awex f0 f0 f1 f2 awsb awa f1 acv f2 acv awceq awi f2 awal f1 awal pimpbii $.
+$}
+$( Existential uniqueness implies existence.  (Contributed by NM,
+       15-Sep-1993.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
+${
+	$v ph x y $.
+	$d x y $.
+	$d ph y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	i0 $f set y $.
+	peuex $p |- ( E! x ph -> E. x ph ) $=
+	f0 i0 pnfv f0 f1 i0 peu1 f0 f0 f1 i0 awsb f1 acv i0 acv awceq awi i0 awal f1 pexsimpl f0 f1 aweu f0 f0 f1 i0 awsb f1 acv i0 acv awceq awi i0 awal awa f1 awex f0 f1 awex psylbi $.
+$}
+$( Existential uniqueness implies "at most one."  (Contributed by NM,
+       8-Jul-1994.) $)
+${
+	$v ph x y $.
+	$d x y $.
+	e0 $e |- F/ y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	peumo0 $p |- ( E! x ph -> E. y A. x ( ph -> x = y ) ) $=
+	e0 f0 f1 f2 peuf f0 f1 f2 pweq pbi1 f0 f1 f2 pweq awb f0 f1 f2 pweq awi f1 palimi f0 f1 f2 pweq awb f1 awal f0 f1 f2 pweq awi f1 awal f2 peximi f0 f1 aweu f0 f1 f2 pweq awb f1 awal f2 awex f0 f1 f2 pweq awi f1 awal f2 awex psylbi $.
+$}
+$( An alternate way of defining existential uniqueness.  Definition 6.10 of
+       [TakeutiZaring] p. 26.  (Contributed by NM, 8-Jul-1994.) $)
+${
+	$v ph x y $.
+	$d x y $.
+	e0 $e |- F/ y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	peu2 $p |- ( E! x ph <-> ( E. x ph /\ A. x A. y ( ( ph /\ [ y / x ] ph ) -> x = y ) ) ) $=
+	f0 f1 peuex e0 f0 f1 f2 peumo0 e0 f0 f1 f2 pmo f0 f1 aweu f0 f1 f2 pweq awi f1 awal f2 awex f0 f0 f1 f2 awsb awa f1 f2 pweq awi f2 awal f1 awal psylib f0 f1 aweu f0 f1 awex f0 f0 f1 f2 awsb awa f1 f2 pweq awi f2 awal f1 awal pjca f0 f0 f0 f1 f2 awsb awa f1 f2 pweq awi f2 awal f1 p19.29r f0 f0 f1 f2 awsb f1 f2 pweq pimpexp f0 f0 f1 f2 awsb awa f1 f2 pweq awi f0 f0 f1 f2 awsb f1 f2 pweq awi awi f2 palbii e0 f0 f0 f1 f2 awsb f1 f2 pweq awi f2 p19.21 f0 f0 f1 f2 awsb awa f1 f2 pweq awi f2 awal f0 f0 f1 f2 awsb f1 f2 pweq awi awi f2 awal f0 f0 f1 f2 awsb f1 f2 pweq awi f2 awal awi pbitri f0 f0 f1 f2 awsb awa f1 f2 pweq awi f2 awal f0 f0 f1 f2 awsb f1 f2 pweq awi f2 awal awi f0 panbi2i f0 f0 f1 f2 awsb f1 f2 pweq awi f2 awal pabai f0 f0 f0 f1 f2 awsb awa f1 f2 pweq awi f2 awal awa f0 f0 f0 f1 f2 awsb f1 f2 pweq awi f2 awal awi awa f0 f0 f1 f2 awsb f1 f2 pweq awi f2 awal awa pbitr4i f0 f0 f0 f1 f2 awsb awa f1 f2 pweq awi f2 awal awa f0 f0 f1 f2 awsb f1 f2 pweq awi f2 awal awa f1 pexbii f0 f1 awex f0 f0 f1 f2 awsb awa f1 f2 pweq awi f2 awal f1 awal awa f0 f0 f0 f1 f2 awsb awa f1 f2 pweq awi f2 awal awa f1 awex f0 f0 f1 f2 awsb f1 f2 pweq awi f2 awal awa f1 awex psylib e0 f0 f1 f2 peu1 f0 f1 awex f0 f0 f1 f2 awsb awa f1 f2 pweq awi f2 awal f1 awal awa f0 f0 f1 f2 awsb f1 f2 pweq awi f2 awal awa f1 awex f0 f1 aweu psylibr f0 f1 aweu f0 f1 awex f0 f0 f1 f2 awsb awa f1 f2 pweq awi f2 awal f1 awal awa pimpbii $.
+$}
+$( An alternate way to express existential uniqueness.  (Contributed by NM,
+       8-Jul-1994.) $)
+${
+	$v ph x y $.
+	$d x y $.
+	e0 $e |- F/ y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	peu3 $p |- ( E! x ph <-> ( E. x ph /\ E. y A. x ( ph -> x = y ) ) ) $=
+	e0 f0 f1 f2 peu2 e0 f0 f1 f2 pmo f0 f1 f2 pweq awi f1 awal f2 awex f0 f0 f1 f2 awsb awa f1 f2 pweq awi f2 awal f1 awal f0 f1 awex panbi2i f0 f1 aweu f0 f1 awex f0 f0 f1 f2 awsb awa f1 f2 pweq awi f2 awal f1 awal awa f0 f1 awex f0 f1 f2 pweq awi f1 awal f2 awex awa pbitr4i $.
+$}
+$( Introduce a disjunct into a uniqueness quantifier.  (Contributed by NM,
+       21-Oct-2005.) $)
+${
+	$v ph ps x $.
+	e0 $e |- F/ x ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	peuor $p |- ( ( -. ph /\ E! x ps ) -> E! x ( ph \/ ps ) ) $=
+	e0 f0 f2 pnfn f0 f1 pbiorf f0 awn f1 f0 f1 awo f2 peubid f0 awn f1 f2 aweu f0 f1 awo f2 aweu pbiimpa $.
+$}
+$( Introduce a disjunct into a uniqueness quantifier.  (Contributed by NM,
+       23-Mar-1995.) $)
+${
+	$v ph ps x $.
+	$d x ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	peuorv $p |- ( ( -. ph /\ E! x ps ) -> E! x ( ph \/ ps ) ) $=
+	f0 f2 pnfv f0 f1 f2 peuor $.
+$}
+$( Alternate definition of "at most one."  (Contributed by NM,
+       8-Mar-1995.) $)
+${
+	$v ph x y $.
+	$d x y $.
+	e0 $e |- F/ y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	pmo2 $p |- ( E* x ph <-> E. y A. x ( ph -> x = y ) ) $=
+	f0 f1 adf-mo f0 f1 palnex f0 f1 f2 pweq ppm2.21 f0 awn f0 f1 f2 pweq awi f1 palimi f0 f1 f2 pweq awi f1 awal f2 p19.8a f0 awn f1 awal f0 f1 f2 pweq awi f1 awal f0 f1 f2 pweq awi f1 awal f2 awex psyl f0 f1 awex awn f0 awn f1 awal f0 f1 f2 pweq awi f1 awal f2 awex psylbir e0 f0 f1 f2 peumo0 f0 f1 awex f0 f1 aweu f0 f1 f2 pweq awi f1 awal f2 awex pja e0 f0 f1 f2 peu3 f0 f1 aweu f0 f1 awex f0 f1 f2 pweq awi f1 awal f2 awex psimplbi2com f0 f1 awex f0 f1 aweu awi f0 f1 f2 pweq awi f1 awal f2 awex pimpbii f0 f1 awmo f0 f1 awex f0 f1 aweu awi f0 f1 f2 pweq awi f1 awal f2 awex pbitri $.
+$}
+$( Substitution into "at most one".  (Contributed by Jeff Madsen,
+       2-Sep-2009.) $)
+${
+	$v ph x y z w $.
+	$d w x z $.
+	$d w y z $.
+	$d w ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	i0 $f set w $.
+	psbmo $p |- ( [ y / x ] E* z ph <-> E* z [ y / x ] ph ) $=
+	f0 f3 acv i0 acv awceq awi f3 awal i0 f1 f2 psbex f3 acv i0 acv awceq f1 pnfv f0 f3 acv i0 acv awceq f1 f2 psblim f0 f3 acv i0 acv awceq awi f0 f1 f2 awsb f3 acv i0 acv awceq awi f1 f2 f3 psbalv f0 f3 acv i0 acv awceq awi f3 awal f1 f2 awsb f0 f1 f2 awsb f3 acv i0 acv awceq awi f3 awal i0 pexbii f0 f3 acv i0 acv awceq awi f3 awal i0 awex f1 f2 awsb f0 f3 acv i0 acv awceq awi f3 awal f1 f2 awsb i0 awex f0 f1 f2 awsb f3 acv i0 acv awceq awi f3 awal i0 awex pbitri f0 i0 pnfv f0 f3 i0 pmo2 f0 f3 awmo f0 f3 acv i0 acv awceq awi f3 awal i0 awex f1 f2 psbbii f0 f1 f2 awsb i0 pnfv f0 f1 f2 awsb f3 i0 pmo2 f0 f3 acv i0 acv awceq awi f3 awal i0 awex f1 f2 awsb f0 f1 f2 awsb f3 acv i0 acv awceq awi f3 awal i0 awex f0 f3 awmo f1 f2 awsb f0 f1 f2 awsb f3 awmo p3bitr4i $.
+$}
+$( Alternate definition of "at most one."  Definition of [BellMachover]
+       p. 460, except that definition has the side condition that ` y ` not
+       occur in ` ph ` in place of our hypothesis.  (Contributed by NM,
+       8-Mar-1995.) $)
+${
+	$v ph x y $.
+	$d x y $.
+	e0 $e |- F/ y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	pmo3 $p |- ( E* x ph <-> A. x A. y ( ( ph /\ [ y / x ] ph ) -> x = y ) ) $=
+	e0 f0 f1 f2 pmo2 e0 f0 f1 f2 pmo f0 f1 awmo f0 f1 f2 pweq awi f1 awal f2 awex f0 f0 f1 f2 awsb awa f1 f2 pweq awi f2 awal f1 awal pbitri $.
+$}
+$( "At most one" expressed using implicit substitution.  (Contributed by
+       NM, 10-Apr-2004.) $)
+${
+	$v ph ps x y $.
+	$d x y $.
+	$d y ph $.
+	e0 $e |- F/ x ps $.
+	e1 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	pmo4f $p |- ( E* x ph <-> A. x A. y ( ( ph /\ ps ) -> x = y ) ) $=
+	f0 f3 pnfv f0 f2 f3 pmo3 e0 e1 f0 f1 f2 f3 psbie f0 f2 f3 awsb f1 f0 panbi2i f0 f0 f2 f3 awsb awa f0 f1 awa f2 f3 pweq pimbi1i f0 f0 f2 f3 awsb awa f2 f3 pweq awi f0 f1 awa f2 f3 pweq awi f2 f3 p2albii f0 f2 awmo f0 f0 f2 f3 awsb awa f2 f3 pweq awi f3 awal f2 awal f0 f1 awa f2 f3 pweq awi f3 awal f2 awal pbitri $.
+$}
+$( "At most one" expressed using implicit substitution.  (Contributed by
+       NM, 26-Jul-1995.) $)
+${
+	$v ph ps x y $.
+	$d x y $.
+	$d y ph $.
+	$d x ps $.
+	e0 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	pmo4 $p |- ( E* x ph <-> A. x A. y ( ( ph /\ ps ) -> x = y ) ) $=
+	f1 f2 pnfv e0 f0 f1 f2 f3 pmo4f $.
+$}
+$( Formula-building rule for "at most one" quantifier (deduction rule).
+       (Contributed by NM, 8-Mar-1995.) $)
+${
+	$v ph ps ch x $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	pmobid $p |- ( ph -> ( E* x ps <-> E* x ch ) ) $=
+	e0 e1 f0 f1 f2 f3 pexbid e0 e1 f0 f1 f2 f3 peubid f0 f1 f3 awex f2 f3 awex f1 f3 aweu f2 f3 aweu pimbi12d f1 f3 adf-mo f2 f3 adf-mo f0 f1 f3 awex f1 f3 aweu awi f2 f3 awex f2 f3 aweu awi f1 f3 awmo f2 f3 awmo p3bitr4g $.
+$}
+$( Formula-building rule for "at most one" quantifier (deduction rule).
+       (Contributed by Mario Carneiro, 7-Oct-2016.) $)
+${
+	$v ph ps ch x $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	pmobidv $p |- ( ph -> ( E* x ps <-> E* x ch ) ) $=
+	f0 f3 pnfv e0 f0 f1 f2 f3 pmobid $.
+$}
+$( Formula-building rule for "at most one" quantifier (inference rule).
+       (Contributed by NM, 9-Mar-1995.)  (Revised by Mario Carneiro,
+       17-Oct-2016.) $)
+${
+	$v ps ch x $.
+	e0 $e |- ( ps <-> ch ) $.
+	f0 $f wff ps $.
+	f1 $f wff ch $.
+	f2 $f set x $.
+	pmobii $p |- ( E* x ps <-> E* x ch ) $=
+	e0 f0 f1 awb awtru pa1i awtru f0 f1 f2 pmobidv f0 f2 awmo f1 f2 awmo awb ptrud $.
+$}
+$( Rule used to change bound variables, using implicit substitution.
+       (Contributed by NM, 9-Mar-1995.)  (Revised by Andrew Salmon,
+       8-Jun-2011.) $)
+${
+	$v ph ps x y $.
+	e0 $e |- F/ y ph $.
+	e1 $e |- F/ x ps $.
+	e2 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	pcbvmo $p |- ( E* x ph <-> E* y ps ) $=
+	e0 e1 e2 f0 f1 f2 f3 pcbvex e0 e1 e2 f0 f1 f2 f3 pcbveu f0 f2 awex f1 f3 awex f0 f2 aweu f1 f3 aweu pimbi12i f0 f2 adf-mo f1 f3 adf-mo f0 f2 awex f0 f2 aweu awi f1 f3 awex f1 f3 aweu awi f0 f2 awmo f1 f3 awmo p3bitr4i $.
+$}
+$( Uniqueness in terms of "at most one."  (Contributed by NM,
+       23-Mar-1995.) $)
+${
+	$v ph x y $.
+	$d x y $.
+	$d y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	i0 $f set y $.
+	peu5 $p |- ( E! x ph <-> ( E. x ph /\ E* x ph ) ) $=
+	f0 i0 pnfv f0 f1 i0 peu3 f0 i0 pnfv f0 f1 i0 pmo2 f0 f1 awmo f0 f1 acv i0 acv awceq awi f1 awal i0 awex f0 f1 awex panbi2i f0 f1 aweu f0 f1 awex f0 f1 acv i0 acv awceq awi f1 awal i0 awex awa f0 f1 awex f0 f1 awmo awa pbitr4i $.
+$}
+$( Uniqueness using implicit substitution.  (Contributed by NM,
+       26-Jul-1995.) $)
+${
+	$v ph ps x y $.
+	$d x y $.
+	$d y ph $.
+	$d x ps $.
+	e0 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	peu4 $p |- ( E! x ph <-> ( E. x ph /\ A. x A. y ( ( ph /\ ps ) -> x = y ) ) ) $=
+	f0 f2 peu5 e0 f0 f1 f2 f3 pmo4 f0 f2 awmo f0 f1 awa f2 f3 pweq awi f3 awal f2 awal f0 f2 awex panbi2i f0 f2 aweu f0 f2 awex f0 f2 awmo awa f0 f2 awex f0 f1 awa f2 f3 pweq awi f3 awal f2 awal awa pbitri $.
+$}
+$( Existential uniqueness implies "at most one."  (Contributed by NM,
+     23-Mar-1995.) $)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	peumo $p |- ( E! x ph -> E* x ph ) $=
+	f0 f1 peu5 f0 f1 aweu f0 f1 awex f0 f1 awmo psimprbi $.
+$}
+$( "At most one" inferred from existential uniqueness.  (Contributed by NM,
+       5-Apr-1995.) $)
+${
+	$v ph x $.
+	e0 $e |- E! x ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	peumoi $p |- E* x ph $=
+	e0 f0 f1 peumo f0 f1 aweu f0 f1 awmo aax-mp $.
+$}
+$( Existence in terms of "at most one" and uniqueness.  (Contributed by NM,
+     5-Apr-2004.) $)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	pexmoeu $p |- ( E. x ph <-> ( E* x ph -> E! x ph ) ) $=
+	f0 f1 adf-mo f0 f1 awmo f0 f1 awex f0 f1 aweu awi pbiimpi f0 f1 awmo f0 f1 awex f0 f1 aweu pcom12 f0 f1 adf-mo f0 f1 awmo f0 f1 awex f0 f1 aweu awi pbiimpri f0 f1 peuex f0 f1 awex f0 f1 aweu awi f0 f1 awmo f0 f1 aweu f0 f1 awex pimim12i f0 f1 awex f0 f1 aweu ppeirce f0 f1 awmo f0 f1 aweu awi f0 f1 awex f0 f1 aweu awi f0 f1 awex awi f0 f1 awex psyl f0 f1 awex f0 f1 awmo f0 f1 aweu awi pimpbii $.
+$}
+$( Existence implies "at most one" is equivalent to uniqueness.  (Contributed
+     by NM, 5-Apr-2004.) $)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	pexmoeu2 $p |- ( E. x ph -> ( E* x ph <-> E! x ph ) ) $=
+	f0 f1 peu5 f0 f1 aweu f0 f1 awex f0 f1 awmo pbaibr $.
+$}
+$( Absorption of existence condition by "at most one."  (Contributed by NM,
+     4-Nov-2002.) $)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	pmoabs $p |- ( E* x ph <-> ( E. x ph -> E* x ph ) ) $=
+	f0 f1 awex f0 f1 aweu ppm5.4 f0 f1 adf-mo f0 f1 awmo f0 f1 awex f0 f1 aweu awi f0 f1 awex pimbi2i f0 f1 adf-mo f0 f1 awex f0 f1 awex f0 f1 aweu awi awi f0 f1 awex f0 f1 aweu awi f0 f1 awex f0 f1 awmo awi f0 f1 awmo p3bitr4ri $.
+$}
+$( Something exists or at most one exists.  (Contributed by NM,
+     8-Mar-1995.) $)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	pexmo $p |- ( E. x ph \/ E* x ph ) $=
+	f0 f1 awex f0 f1 aweu ppm2.21 f0 f1 adf-mo f0 f1 awex awn f0 f1 awex f0 f1 aweu awi f0 f1 awmo psylibr f0 f1 awex f0 f1 awmo porri $.
+$}
+$( "At most one" is preserved through implication (notice wff reversal).
+       (Contributed by NM, 22-Apr-1995.) $)
+${
+	$v ph ps x y $.
+	$d x y $.
+	$d y ph $.
+	$d y ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	i0 $f set y $.
+	pmoim $p |- ( A. x ( ph -> ps ) -> ( E* x ps -> E* x ph ) ) $=
+	f0 f1 f2 acv i0 acv awceq pimim1 f0 f1 awi f1 f2 acv i0 acv awceq awi f0 f2 acv i0 acv awceq awi f2 pal2imi f0 f1 awi f2 awal f1 f2 acv i0 acv awceq awi f2 awal f0 f2 acv i0 acv awceq awi f2 awal i0 peximdv f1 i0 pnfv f1 f2 i0 pmo2 f0 i0 pnfv f0 f2 i0 pmo2 f0 f1 awi f2 awal f1 f2 acv i0 acv awceq awi f2 awal i0 awex f0 f2 acv i0 acv awceq awi f2 awal i0 awex f1 f2 awmo f0 f2 awmo p3imtr4g $.
+$}
+$( "At most one" is preserved through implication (notice wff reversal).
+       (Contributed by NM, 15-Feb-2006.) $)
+${
+	$v ph ps x $.
+	e0 $e |- ( ph -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	pmoimi $p |- ( E* x ps -> E* x ph ) $=
+	f0 f1 f2 pmoim e0 f0 f1 awi f1 f2 awmo f0 f2 awmo awi f2 pmpg $.
+$}
+$( Move antecedent outside of "at most one."  (Contributed by NM,
+       28-Jul-1995.) $)
+${
+	$v ph ps x y $.
+	$d x y $.
+	$d x y ph $.
+	$d y ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	i0 $f set y $.
+	pmorimv $p |- ( E* x ( ph -> ps ) -> ( ph -> E* x ps ) ) $=
+	f1 f0 aax-1 f1 f0 f1 awi awi f0 pa1i f0 f1 f0 f1 awi f2 acv i0 acv awceq pimim1d f0 f0 f1 awi f2 acv i0 acv awceq awi f1 f2 acv i0 acv awceq awi f2 palimdv f0 f0 f1 awi f2 acv i0 acv awceq awi f2 awal f1 f2 acv i0 acv awceq awi f2 awal i0 peximdv f0 f1 awi i0 pnfv f0 f1 awi f2 i0 pmo2 f1 i0 pnfv f1 f2 i0 pmo2 f0 f0 f1 awi f2 acv i0 acv awceq awi f2 awal i0 awex f1 f2 acv i0 acv awceq awi f2 awal i0 awex f0 f1 awi f2 awmo f1 f2 awmo p3imtr4g f0 f0 f1 awi f2 awmo f1 f2 awmo pcom12 $.
+$}
+$( Uniqueness implies "at most one" through implication.  (Contributed by NM,
+     22-Apr-1995.) $)
+${
+	$v ph ps x $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	peuimmo $p |- ( A. x ( ph -> ps ) -> ( E! x ps -> E* x ph ) ) $=
+	f1 f2 peumo f0 f1 f2 pmoim f1 f2 aweu f1 f2 awmo f0 f1 awi f2 awal f0 f2 awmo psyl5 $.
+$}
+$( Add existential uniqueness quantifiers to an implication.  Note the
+     reversed implication in the antecedent.  (Contributed by NM,
+     19-Oct-2005.)  (Proof shortened by Andrew Salmon, 14-Jun-2011.) $)
+${
+	$v ph ps x $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	peuim $p |- ( ( E. x ph /\ A. x ( ph -> ps ) ) -> ( E! x ps -> E! x ph ) ) $=
+	f0 f2 awex f1 f2 aweu aax-1 f0 f1 f2 peuimmo f0 f2 awex f1 f2 aweu f0 f2 awex f0 f1 awi f2 awal f0 f2 awmo panim12ii f0 f2 peu5 f0 f2 awex f0 f1 awi f2 awal awa f1 f2 aweu f0 f2 awex f0 f2 awmo awa f0 f2 aweu psyl6ibr $.
+$}
+$( "At most one" is still the case when a conjunct is added.  (Contributed by
+     NM, 22-Apr-1995.) $)
+${
+	$v ph ps x $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	pmoan $p |- ( E* x ph -> E* x ( ps /\ ph ) ) $=
+	f1 f0 psimpr f1 f0 awa f0 f2 pmoimi $.
+$}
+$( "At most one" is still true when a conjunct is added.  (Contributed by
+       NM, 9-Mar-1995.) $)
+${
+	$v ph ps x $.
+	e0 $e |- E* x ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	pmoani $p |- E* x ( ps /\ ph ) $=
+	e0 f0 f1 f2 pmoan f0 f2 awmo f1 f0 awa f2 awmo aax-mp $.
+$}
+$( "At most one" is still the case when a disjunct is removed.  (Contributed
+     by NM, 5-Apr-2004.) $)
+${
+	$v ph ps x $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	pmoor $p |- ( E* x ( ph \/ ps ) -> E* x ph ) $=
+	f0 f1 porc f0 f0 f1 awo f2 pmoimi $.
+$}
+$( "At most one" imports disjunction to conjunction.  (Contributed by NM,
+     5-Apr-2004.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
+${
+	$v ph ps x $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	pmooran1 $p |- ( ( E* x ph \/ E* x ps ) -> E* x ( ph /\ ps ) ) $=
+	f0 f1 psimpl f0 f1 awa f0 f2 pmoimi f1 f0 f2 pmoan f0 f2 awmo f0 f1 awa f2 awmo f1 f2 awmo pjaoi $.
+$}
+$( "At most one" exports disjunction to conjunction.  (Contributed by NM,
+     5-Apr-2004.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
+${
+	$v ph ps x $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	pmooran2 $p |- ( E* x ( ph \/ ps ) -> ( E* x ph /\ E* x ps ) ) $=
+	f0 f1 f2 pmoor f1 f0 polc f1 f0 f1 awo f2 pmoimi f0 f1 awo f2 awmo f0 f2 awmo f1 f2 awmo pjca $.
+$}
+$( Introduction of a conjunct into "at most one" quantifier.  (Contributed
+       by NM, 3-Dec-2001.) $)
+${
+	$v ph ps x y $.
+	$d x y $.
+	$d y ph $.
+	$d y ps $.
+	e0 $e |- F/ x ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	i0 $f set y $.
+	pmoanim $p |- ( E* x ( ph /\ ps ) <-> ( ph -> E* x ps ) ) $=
+	f0 f1 f2 i0 pweq pimpexp f0 f1 awa f2 i0 pweq awi f0 f1 f2 i0 pweq awi awi f2 palbii e0 f0 f1 f2 i0 pweq awi f2 p19.21 f0 f1 awa f2 i0 pweq awi f2 awal f0 f1 f2 i0 pweq awi awi f2 awal f0 f1 f2 i0 pweq awi f2 awal awi pbitri f0 f1 awa f2 i0 pweq awi f2 awal f0 f1 f2 i0 pweq awi f2 awal awi i0 pexbii f0 f1 awa i0 pnfv f0 f1 awa f2 i0 pmo2 f1 i0 pnfv f1 f2 i0 pmo2 f1 f2 awmo f1 f2 i0 pweq awi f2 awal i0 awex f0 pimbi2i f0 f1 f2 i0 pweq awi f2 awal i0 p19.37v f0 f1 f2 awmo awi f0 f1 f2 i0 pweq awi f2 awal i0 awex awi f0 f1 f2 i0 pweq awi f2 awal awi i0 awex pbitr4i f0 f1 awa f2 i0 pweq awi f2 awal i0 awex f0 f1 f2 i0 pweq awi f2 awal awi i0 awex f0 f1 awa f2 awmo f0 f1 f2 awmo awi p3bitr4i $.
+$}
+$( Introduction of a conjunct into uniqueness quantifier.  (Contributed by
+       NM, 19-Feb-2005.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
+${
+	$v ph ps x $.
+	e0 $e |- F/ x ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	peuan $p |- ( E! x ( ph /\ ps ) <-> ( ph /\ E! x ps ) ) $=
+	e0 f0 f1 psimpl f0 f1 awa f0 f2 pexlimi f0 f1 awa f2 awex f0 f0 f1 awa f2 awmo padantr f0 f1 psimpr f0 f1 awa f1 f2 peximi f0 f1 awa f2 awex f1 f2 awex f0 f1 awa f2 awmo padantr f0 f1 awa f2 pnfe1 f0 f1 psimpr e0 f0 f1 psimpl f0 f1 awa f0 f2 pexlimi f0 f1 awa f2 awex f0 f1 pa1d f0 f1 awa f2 awex f1 f0 pancrd f0 f1 awa f2 awex f0 f1 awa f1 pimpbid2 f0 f1 awa f2 awex f0 f1 awa f1 f2 pmobid f0 f1 awa f2 awex f0 f1 awa f2 awmo f1 f2 awmo pbiimpa f0 f1 awa f2 awex f0 f1 awa f2 awmo awa f0 f1 f2 awex f1 f2 awmo pjca32 f0 f1 awa f2 peu5 f1 f2 peu5 f1 f2 aweu f1 f2 awex f1 f2 awmo awa f0 panbi2i f0 f1 awa f2 awex f0 f1 awa f2 awmo awa f0 f1 f2 awex f1 f2 awmo awa awa f0 f1 awa f2 aweu f0 f1 f2 aweu awa p3imtr4i e0 f0 f1 pibar f0 f1 f0 f1 awa f2 peubid f0 f1 f2 aweu f0 f1 awa f2 aweu pbiimpa f0 f1 awa f2 aweu f0 f1 f2 aweu awa pimpbii $.
+$}
+$( Introduction of a conjunct into "at most one" quantifier.  (Contributed
+       by NM, 23-Mar-1995.) $)
+${
+	$v ph ps x $.
+	$d x ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	pmoanimv $p |- ( E* x ( ph /\ ps ) <-> ( ph -> E* x ps ) ) $=
+	f0 f2 pnfv f0 f1 f2 pmoanim $.
+$}
+$( Nested "at most one" and uniqueness quantifiers.  (Contributed by NM,
+     25-Jan-2006.) $)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	pmoaneu $p |- E* x ( ph /\ E! x ph ) $=
+	f0 f1 peumo f0 f1 pnfeu1 f0 f1 aweu f0 f1 pmoanim f0 f1 aweu f0 awa f1 awmo f0 f1 aweu f0 f1 awmo awi pmpbir f0 f0 f1 aweu pancom f0 f0 f1 aweu awa f0 f1 aweu f0 awa f1 pmobii f0 f0 f1 aweu awa f1 awmo f0 f1 aweu f0 awa f1 awmo pmpbir $.
+$}
+$( Nested "at most one" quantifiers.  (Contributed by NM, 25-Jan-2006.) $)
+${
+	$v ph x $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	pmoanmo $p |- E* x ( ph /\ E* x ph ) $=
+	f0 f1 awmo pid f0 f1 pnfmo1 f0 f1 awmo f0 f1 pmoanim f0 f1 awmo f0 awa f1 awmo f0 f1 awmo f0 f1 awmo awi pmpbir f0 f0 f1 awmo pancom f0 f0 f1 awmo awa f0 f1 awmo f0 awa f1 pmobii f0 f0 f1 awmo awa f1 awmo f0 f1 awmo f0 awa f1 awmo pmpbir $.
+$}
+$( Introduction of a conjunct into uniqueness quantifier.  (Contributed by
+       NM, 23-Mar-1995.) $)
+${
+	$v ph ps x $.
+	$d x ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	peuanv $p |- ( E! x ( ph /\ ps ) <-> ( ph /\ E! x ps ) ) $=
+	f0 f2 pnfv f0 f1 f2 peuan $.
+$}
+$( "At most one" picks a variable value, eliminating an existential
+       quantifier.  (Contributed by NM, 27-Jan-1997.) $)
+${
+	$v ph ps x y $.
+	$d x y $.
+	$d y ph $.
+	$d y ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	i0 $f set y $.
+	pmopick $p |- ( ( E* x ph /\ E. x ( ph /\ ps ) ) -> ( ph -> ps ) ) $=
+	f0 f1 awa i0 pnfv f0 f2 i0 pnfs1v f1 f2 i0 pnfs1v f0 f2 i0 awsb f1 f2 i0 awsb f2 pnfan f0 f2 i0 psbequ12 f1 f2 i0 psbequ12 f2 acv i0 acv awceq f0 f0 f2 i0 awsb f1 f1 f2 i0 awsb panbi12d f0 f1 awa f0 f2 i0 awsb f1 f2 i0 awsb awa f2 i0 pcbvex f0 i0 pnfv f0 f2 i0 pmo3 f0 f0 f2 i0 awsb awa f2 acv i0 acv awceq awi i0 psp f0 f0 f2 i0 awsb awa f2 acv i0 acv awceq awi i0 awal f0 f0 f2 i0 awsb awa f2 acv i0 acv awceq awi f2 psps f0 f2 awmo f0 f0 f2 i0 awsb awa f2 acv i0 acv awceq awi i0 awal f2 awal f0 f0 f2 i0 awsb awa f2 acv i0 acv awceq awi psylbi f1 f2 i0 psbequ2 f2 acv i0 acv awceq f1 f2 i0 awsb f1 awi f0 f0 f2 i0 awsb awa pimim2i f0 f0 f2 i0 awsb awa f2 acv i0 acv awceq awi f0 f0 f2 i0 awsb f1 f2 i0 awsb f1 awi pexp3a f0 f0 f2 i0 awsb awa f2 acv i0 acv awceq awi f0 f0 f2 i0 awsb f1 f2 i0 awsb f1 pcom4t f0 f2 i0 awsb f1 f2 i0 awsb f0 f0 f2 i0 awsb awa f2 acv i0 acv awceq awi f0 f1 awi awi pimp f0 f2 awmo f0 f0 f2 i0 awsb awa f2 acv i0 acv awceq awi f0 f2 i0 awsb f1 f2 i0 awsb awa f0 f1 awi psyl5 f0 f2 i0 awsb f1 f2 i0 awsb awa f0 f2 awmo f0 f1 awi awi i0 pexlimiv f0 f1 awa f2 awex f0 f2 i0 awsb f1 f2 i0 awsb awa i0 awex f0 f2 awmo f0 f1 awi awi psylbi f0 f1 awa f2 awex f0 f2 awmo f0 f1 awi pimpcom $.
+$}
+$( Existential uniqueness "picks" a variable value for which another wff is
+     true.  If there is only one thing ` x ` such that ` ph ` is true, and
+     there is also an ` x ` (actually the same one) such that ` ph ` and ` ps `
+     are both true, then ` ph ` implies ` ps ` regardless of ` x ` .  This
+     theorem can be useful for eliminating existential quantifiers in a
+     hypothesis.  Compare Theorem *14.26 in [WhiteheadRussell] p. 192.
+     (Contributed by NM, 10-Jul-1994.) $)
+${
+	$v ph ps x $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	peupick $p |- ( ( E! x ph /\ E. x ( ph /\ ps ) ) -> ( ph -> ps ) ) $=
+	f0 f2 peumo f0 f1 f2 pmopick f0 f2 aweu f0 f2 awmo f0 f1 awa f2 awex f0 f1 awi psylan $.
+$}
+$( Version of ~ eupick with closed formulas.  (Contributed by NM,
+     6-Sep-2008.) $)
+${
+	$v ph ps x $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	peupicka $p |- ( ( E! x ph /\ E. x ( ph /\ ps ) ) -> A. x ( ph -> ps ) ) $=
+	f0 f2 pnfeu1 f0 f1 awa f2 pnfe1 f0 f2 aweu f0 f1 awa f2 awex f2 pnfan f0 f1 f2 peupick f0 f2 aweu f0 f1 awa f2 awex awa f0 f1 awi f2 palrimi $.
+$}
+$( Existential uniqueness "pick" showing wff equivalence.  (Contributed by
+     NM, 25-Nov-1994.) $)
+${
+	$v ph ps x $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	peupickb $p |- ( ( E! x ph /\ E! x ps /\ E. x ( ph /\ ps ) ) -> ( ph <-> ps ) ) $=
+	f0 f1 f2 peupick f0 f2 aweu f0 f1 awa f2 awex f0 f1 awi f1 f2 aweu p3adant2 f0 f2 aweu f1 f2 aweu f0 f1 awa f2 awex p3simpc f0 f1 ppm3.22 f0 f1 awa f1 f0 awa f2 peximi f0 f1 awa f2 awex f1 f0 awa f2 awex f1 f2 aweu panim2i f1 f0 f2 peupick f0 f2 aweu f1 f2 aweu f0 f1 awa f2 awex aw3a f1 f2 aweu f0 f1 awa f2 awex awa f1 f2 aweu f1 f0 awa f2 awex awa f1 f0 awi p3syl f0 f2 aweu f1 f2 aweu f0 f1 awa f2 awex aw3a f0 f1 pimpbid $.
+$}
+$( Theorem *14.26 in [WhiteheadRussell] p. 192.  (Contributed by Andrew
+     Salmon, 11-Jul-2011.) $)
+${
+	$v ph ps x $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	peupickbi $p |- ( E! x ph -> ( E. x ( ph /\ ps ) <-> A. x ( ph -> ps ) ) ) $=
+	f0 f1 f2 peupicka f0 f2 aweu f0 f1 awa f2 awex f0 f1 awi f2 awal pex f0 f1 awi f2 pnfa1 f0 f1 pancl f0 f1 psimpl f0 f1 awi f0 f0 f1 awa pimpbid1 f0 f1 awi f0 f0 f1 awa awb f2 psps f0 f1 awi f2 awal f0 f0 f1 awa f2 peubid f0 f1 awa f2 peuex f0 f1 awi f2 awal f0 f2 aweu f0 f1 awa f2 aweu f0 f1 awa f2 awex psyl6bi f0 f1 awi f2 awal f0 f2 aweu f0 f1 awa f2 awex pcom12 f0 f2 aweu f0 f1 awa f2 awex f0 f1 awi f2 awal pimpbid $.
+$}
+$( "At most one" can show the existence of a common value.  In this case we
+     can infer existence of conjunction from a conjunction of existence, and it
+     is one way to achieve the converse of ~ 19.40 .  (Contributed by NM,
+     5-Apr-2004.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
+${
+	$v ph ps ch x $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	pmopick2 $p |- ( ( E* x ph /\ E. x ( ph /\ ps ) /\ E. x ( ph /\ ch ) ) -> E. x ( ph /\ ps /\ ch ) ) $=
+	f0 f3 pnfmo1 f0 f1 awa f3 pnfe1 f0 f3 awmo f0 f1 awa f3 awex f3 pnfan f0 f1 f3 pmopick f0 f3 awmo f0 f1 awa f3 awex awa f0 f1 pancld f0 f3 awmo f0 f1 awa f3 awex awa f0 f0 f1 awa f2 panim1d f0 f1 f2 adf-3an f0 f3 awmo f0 f1 awa f3 awex awa f0 f2 awa f0 f1 awa f2 awa f0 f1 f2 aw3a psyl6ibr f0 f3 awmo f0 f1 awa f3 awex awa f0 f2 awa f0 f1 f2 aw3a f3 peximd f0 f3 awmo f0 f1 awa f3 awex f0 f2 awa f3 awex f0 f1 f2 aw3a f3 awex p3impia $.
+$}
+$( Introduce or eliminate a disjunct in a uniqueness quantifier.
+     (Contributed by NM, 21-Oct-2005.)  (Proof shortened by Andrew Salmon,
+     9-Jul-2011.) $)
+${
+	$v ph ps x $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	peuor2 $p |- ( -. E. x ph -> ( E! x ( ph \/ ps ) <-> E! x ps ) ) $=
+	f0 f2 pnfe1 f0 f2 awex f2 pnfn f0 f2 p19.8a f0 f0 f2 awex pcon3i f0 f1 porel1 f1 f0 polc f0 awn f0 f1 awo f1 pimpbid1 f0 f2 awex awn f0 awn f0 f1 awo f1 awb psyl f0 f2 awex awn f0 f1 awo f1 f2 peubid $.
+$}
+$( "At most one" double quantification.  (Contributed by NM,
+       3-Dec-2001.) $)
+${
+	$v ph ps x y $.
+	e0 $e |- F/ y ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	pmoexex $p |- ( ( E* x ph /\ A. x E* y ps ) -> E* y E. x ( ph /\ ps ) ) $=
+	f0 f2 pnfmo1 f1 f3 awmo f2 pnfa1 f0 f1 awa f2 pnfe1 f0 f1 awa f2 awex f2 f3 pnfmo f1 f3 awmo f2 awal f0 f1 awa f2 awex f3 awmo f2 pnfim f0 f2 awmo f1 f3 awmo f2 awal f0 f1 awa f2 awex f3 awmo awi f2 pnfim e0 e0 f0 f3 f2 pnfmo f0 f1 f2 pmopick f0 f2 awmo f0 f1 awa f2 awex f0 f1 awi pex f0 f2 awmo f0 f1 awa f2 awex f0 f1 pcom3r f0 f0 f2 awmo f0 f1 awa f2 awex f1 awi f3 palrimd f0 f1 awa f2 awex f1 f3 pmoim f0 f1 awa f2 awex f1 awi f3 awal f1 f3 awmo f0 f1 awa f2 awex f3 awmo f2 pspsd f0 f0 f2 awmo f0 f1 awa f2 awex f1 awi f3 awal f1 f3 awmo f2 awal f0 f1 awa f2 awex f3 awmo awi psyl6 f0 f0 f2 awmo f1 f3 awmo f2 awal f0 f1 awa f2 awex f3 awmo awi awi f2 pexlimi e0 f0 f3 f2 pnfex f0 f1 f2 pexsimpl f0 f1 awa f2 awex f0 f2 awex f3 pexlimi f0 f1 awa f2 awex f3 awex f0 f2 awex pcon3i f0 f1 awa f2 awex f3 pexmo f0 f1 awa f2 awex f3 awex f0 f1 awa f2 awex f3 awmo pori f0 f2 awex awn f0 f1 awa f2 awex f3 awex awn f0 f1 awa f2 awex f3 awmo psyl f0 f2 awex awn f0 f1 awa f2 awex f3 awmo f1 f3 awmo f2 awal pa1d f0 f2 awex awn f1 f3 awmo f2 awal f0 f1 awa f2 awex f3 awmo awi f0 f2 awmo pa1d f0 f2 awex f0 f2 awmo f1 f3 awmo f2 awal f0 f1 awa f2 awex f3 awmo awi awi ppm2.61i f0 f2 awmo f1 f3 awmo f2 awal f0 f1 awa f2 awex f3 awmo pimp $.
+$}
+$( "At most one" double quantification.  (Contributed by NM,
+       26-Jan-1997.) $)
+${
+	$v ph ps x y $.
+	$d y ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	pmoexexv $p |- ( ( E* x ph /\ A. x E* y ps ) -> E* y E. x ( ph /\ ps ) ) $=
+	f0 f3 pnfv f0 f1 f2 f3 pmoexex $.
+$}
+$( Double quantification with "at most one."  (Contributed by NM,
+     3-Dec-2001.) $)
+${
+	$v ph x y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	p2moex $p |- ( E* x E. y ph -> A. y E* x ph ) $=
+	f0 f2 pnfe1 f0 f2 awex f2 f1 pnfmo f0 f2 p19.8a f0 f0 f2 awex f1 pmoimi f0 f2 awex f1 awmo f0 f1 awmo f2 palrimi $.
+$}
+$( Double quantification with existential uniqueness.  (Contributed by NM,
+     3-Dec-2001.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
+${
+	$v ph x y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	p2euex $p |- ( E! x E. y ph -> E. y E! x ph ) $=
+	f0 f2 awex f1 peu5 f0 f1 f2 pexcom f0 f2 pnfe1 f0 f2 awex f2 f1 pnfmo f0 f2 p19.8a f0 f0 f2 awex f1 pmoimi f0 f1 adf-mo f0 f2 awex f1 awmo f0 f1 awmo f0 f1 awex f0 f1 aweu awi psylib f0 f2 awex f1 awmo f0 f1 awex f0 f1 aweu f2 peximd f0 f2 awex f1 awex f0 f1 awex f2 awex f0 f2 awex f1 awmo f0 f1 aweu f2 awex psyl5bi f0 f2 awex f1 awmo f0 f2 awex f1 awex f0 f1 aweu f2 awex pimpcom f0 f2 awex f1 aweu f0 f2 awex f1 awex f0 f2 awex f1 awmo awa f0 f1 aweu f2 awex psylbi $.
+$}
+$( Double quantification with existential uniqueness and "at most one."
+     (Contributed by NM, 3-Dec-2001.) $)
+${
+	$v ph x y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	p2eumo $p |- ( E! x E* y ph -> E* x E! y ph ) $=
+	f0 f2 aweu f0 f2 awmo f1 peuimmo f0 f2 peumo f0 f2 aweu f0 f2 awmo awi f0 f2 awmo f1 aweu f0 f2 aweu f1 awmo awi f1 pmpg $.
+$}
+$( Double existential uniqueness.  (Contributed by NM, 3-Dec-2001.) $)
+${
+	$v ph x y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	p2eu2ex $p |- ( E! x E! y ph -> E. x E. y ph ) $=
+	f0 f2 aweu f1 peuex f0 f2 peuex f0 f2 aweu f0 f2 awex f1 peximi f0 f2 aweu f1 aweu f0 f2 aweu f1 awex f0 f2 awex f1 awex psyl $.
+$}
+$( A condition allowing swap of "at most one" and existential quantifiers.
+     (Contributed by NM, 10-Apr-2004.) $)
+${
+	$v ph x y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	p2moswap $p |- ( A. x E* y ph -> ( E* x E. y ph -> E* y E. x ph ) ) $=
+	f0 f2 pnfe1 f0 f2 awex f0 f1 f2 pmoexex f0 f2 awex f1 awmo f0 f2 awmo f1 awal f0 f2 awex f0 awa f1 awex f2 awmo pexpcom f0 f2 p19.8a f0 f0 f2 awex ppm4.71ri f0 f0 f2 awex f0 awa f1 pexbii f0 f1 awex f0 f2 awex f0 awa f1 awex f2 pmobii f0 f2 awmo f1 awal f0 f2 awex f1 awmo f0 f2 awex f0 awa f1 awex f2 awmo f0 f1 awex f2 awmo psyl6ibr $.
+$}
+$( A condition allowing swap of uniqueness and existential quantifiers.
+     (Contributed by NM, 10-Apr-2004.) $)
+${
+	$v ph x y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	p2euswap $p |- ( A. x E* y ph -> ( E! x E. y ph -> E! y E. x ph ) ) $=
+	f0 f1 f2 pexcomim f0 f2 awex f1 awex f0 f1 awex f2 awex awi f0 f2 awmo f1 awal pa1i f0 f1 f2 p2moswap f0 f2 awmo f1 awal f0 f2 awex f1 awex f0 f1 awex f2 awex f0 f2 awex f1 awmo f0 f1 awex f2 awmo panim12d f0 f2 awex f1 peu5 f0 f1 awex f2 peu5 f0 f2 awmo f1 awal f0 f2 awex f1 awex f0 f2 awex f1 awmo awa f0 f1 awex f2 awex f0 f1 awex f2 awmo awa f0 f2 awex f1 aweu f0 f1 awex f2 aweu p3imtr4g $.
+$}
+$( Double existential uniqueness implies double uniqueness quantification.
+     (Contributed by NM, 3-Dec-2001.)  (Proof shortened by Mario Carneiro,
+     22-Dec-2016.) $)
+${
+	$v ph x y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	p2exeu $p |- ( ( E! x E. y ph /\ E! y E. x ph ) -> E! x E! y ph ) $=
+	f0 f2 awex f1 peumo f0 f2 peuex f0 f2 aweu f0 f2 awex f1 pmoimi f0 f2 awex f1 aweu f0 f2 awex f1 awmo f0 f2 aweu f1 awmo psyl f0 f2 f1 p2euex f0 f2 awex f1 aweu f0 f2 aweu f1 awmo f0 f1 awex f2 aweu f0 f2 aweu f1 awex panim12ci f0 f2 aweu f1 peu5 f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa f0 f2 aweu f1 awex f0 f2 aweu f1 awmo awa f0 f2 aweu f1 aweu psylibr $.
+$}
+$( Two equivalent expressions for double "at most one."  (Contributed by
+       NM, 2-Feb-2005.)  (Revised by Mario Carneiro, 17-Oct-2016.) $)
+${
+	$v ph x y z w v u $.
+	$d x y z w v u $.
+	$d z w v u ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	f4 $f set w $.
+	i0 $f set v $.
+	i1 $f set u $.
+	p2mo $p |- ( E. z E. w A. x A. y ( ph -> ( x = z /\ y = w ) ) <-> A. x A. y A. z A. w ( ( ph /\ [ z / x ] [ w / y ] ph ) -> ( x = z /\ y = w ) ) ) $=
+	i0 f3 f1 pequequ2 i1 f4 f2 pequequ2 i0 acv f3 acv awceq f1 acv i0 acv awceq f1 acv f3 acv awceq i1 acv f4 acv awceq f2 acv i1 acv awceq f2 acv f4 acv awceq pbi2anan9 i0 acv f3 acv awceq i1 acv f4 acv awceq awa f1 acv i0 acv awceq f2 acv i1 acv awceq awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa f0 pimbi2d i0 acv f3 acv awceq i1 acv f4 acv awceq awa f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f1 f2 p2albidv f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f2 awal f1 awal f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal i0 i1 f3 f4 pcbvex2v f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f3 pnfv f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f4 pnfv f0 f2 f4 awsb f1 f3 pnfs1v f3 acv i0 acv awceq f4 acv i1 acv awceq awa f1 pnfv f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa f1 pnfim f0 f2 f4 pnfs1v f0 f2 f4 awsb f1 f3 f2 pnfsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa f2 pnfv f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa f2 pnfim f0 f2 f4 psbequ12 f0 f2 f4 awsb f1 f3 psbequ12 f2 acv f4 acv awceq f0 f0 f2 f4 awsb f1 acv f3 acv awceq f0 f2 f4 awsb f1 f3 awsb psylan9bbr f1 f3 i0 pequequ1 f2 f4 i1 pequequ1 f1 acv f3 acv awceq f1 acv i0 acv awceq f3 acv i0 acv awceq f2 acv f4 acv awceq f2 acv i1 acv awceq f4 acv i1 acv awceq pbi2anan9 f1 acv f3 acv awceq f2 acv f4 acv awceq awa f0 f0 f2 f4 awsb f1 f3 awsb f1 acv i0 acv awceq f2 acv i1 acv awceq awa f3 acv i0 acv awceq f4 acv i1 acv awceq awa pimbi12d f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi f1 f2 f3 f4 pcbval2 f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f2 awal f1 awal f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi f4 awal f3 awal pbiimpi f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f2 awal f1 awal f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi f4 awal f3 awal pancli f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi awa f4 awal f2 f3 palcom f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f4 pnfv f0 f2 f4 pnfs1v f0 f2 f4 awsb f1 f3 f2 pnfsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa f2 pnfv f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa f2 pnfim f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi f2 f4 paaan f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi awa f4 awal f2 awal f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f2 awal f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi f4 awal awa f3 palbii f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi awa f4 awal f3 awal f2 awal f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi awa f4 awal f2 awal f3 awal f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f2 awal f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi f4 awal awa f3 awal pbitri f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi awa f4 awal f3 awal f2 awal f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f2 awal f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi f4 awal awa f3 awal f1 palbii f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f2 awal f3 pnfv f0 f2 f4 awsb f1 f3 pnfs1v f3 acv i0 acv awceq f4 acv i1 acv awceq awa f1 pnfv f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa f1 pnfim f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi f1 f4 pnfal f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f2 awal f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi f4 awal f1 f3 paaan f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi awa f4 awal f3 awal f2 awal f1 awal f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f2 awal f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi f4 awal awa f3 awal f1 awal f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f2 awal f1 awal f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi f4 awal f3 awal awa pbitri f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f2 awal f1 awal f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f2 awal f1 awal f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi f4 awal f3 awal awa f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi awa f4 awal f3 awal f2 awal f1 awal psylibr f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa pprth f1 f3 i0 pequtr2 f2 f4 i1 pequtr2 f1 acv i0 acv awceq f3 acv i0 acv awceq awa f1 acv f3 acv awceq f2 acv i1 acv awceq f4 acv i1 acv awceq awa f2 acv f4 acv awceq panim12i f1 acv i0 acv awceq f3 acv i0 acv awceq f2 acv i1 acv awceq f4 acv i1 acv awceq f1 acv f3 acv awceq f2 acv f4 acv awceq awa pan4s f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi awa f0 f0 f2 f4 awsb f1 f3 awsb awa f1 acv i0 acv awceq f2 acv i1 acv awceq awa f3 acv i0 acv awceq f4 acv i1 acv awceq awa awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa psyl6 f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi awa f0 f0 f2 f4 awsb f1 f3 awsb awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f3 f4 p2alimi f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi awa f4 awal f3 awal f0 f0 f2 f4 awsb f1 f3 awsb awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f4 awal f3 awal f1 f2 p2alimi f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f2 awal f1 awal f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi awa f4 awal f3 awal f2 awal f1 awal f0 f0 f2 f4 awsb f1 f3 awsb awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f4 awal f3 awal f2 awal f1 awal psyl f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f2 awal f1 awal f0 f0 f2 f4 awsb f1 f3 awsb awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f4 awal f3 awal f2 awal f1 awal i0 i1 pexlimivv f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex f3 awex f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f2 awal f1 awal i1 awex i0 awex f0 f0 f2 f4 awsb f1 f3 awsb awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f4 awal f3 awal f2 awal f1 awal psylbir f0 f0 f2 f4 awsb f1 f3 awsb awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f1 f2 f3 f4 palrot4 f0 f2 f4 awsb f1 f3 pnfs1v f0 f2 f4 pnfs1v f0 f2 f4 awsb f1 f3 f2 pnfsb f0 f2 f4 awsb f1 f3 awsb f0 ppm3.21 f0 f2 f4 awsb f1 f3 awsb f0 f0 f0 f2 f4 awsb f1 f3 awsb awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa pimim1d f0 f2 f4 awsb f1 f3 awsb f0 f0 f2 f4 awsb f1 f3 awsb awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 palimd f0 f2 f4 awsb f1 f3 awsb f0 f0 f2 f4 awsb f1 f3 awsb awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 palimd f0 f2 f4 awsb f1 f3 awsb f0 f0 f2 f4 awsb f1 f3 awsb awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal pcom12 f0 f0 f2 f4 awsb f1 f3 awsb awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f0 f2 f4 awsb f1 f3 awsb f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal awi f4 palimi f0 f2 f4 awsb f1 f3 awsb f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 pexim f0 f0 f2 f4 awsb f1 f3 awsb awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awal f0 f2 f4 awsb f1 f3 awsb f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal awi f4 awal f0 f2 f4 awsb f1 f3 awsb f4 awex f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex awi psyl f0 f0 f2 f4 awsb f1 f3 awsb awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awal f0 f2 f4 awsb f1 f3 awsb f4 awex f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex awi f3 palimi f0 f0 f2 f4 awsb f1 f3 awsb awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f4 awal f3 awal f2 awal f1 awal f0 f0 f2 f4 awsb f1 f3 awsb awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awal f3 awal f0 f2 f4 awsb f1 f3 awsb f4 awex f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex awi f3 awal psylbi f0 f2 f4 awsb f1 f3 awsb f4 awex f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex f3 pexim f0 f0 f2 f4 awsb f1 f3 awsb awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f4 awal f3 awal f2 awal f1 awal f0 f2 f4 awsb f1 f3 awsb f4 awex f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex awi f3 awal f0 f2 f4 awsb f1 f3 awsb f4 awex f3 awex f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex f3 awex awi psyl f0 f2 f4 awsb f1 f3 awsb f4 palnex f0 f2 f4 awsb f1 f3 awsb awn f4 awal f0 f2 f4 awsb f1 f3 awsb f4 awex awn f3 palbii f0 f2 f4 awsb f1 f3 awsb f4 awex f3 palnex f0 f2 f4 awsb f1 f3 awsb awn f4 awal f3 awal f0 f2 f4 awsb f1 f3 awsb f4 awex awn f3 awal f0 f2 f4 awsb f1 f3 awsb f4 awex f3 awex awn pbitri f0 awn f3 pnfv f0 awn f4 pnfv f0 f2 f4 awsb f1 f3 pnfs1v f0 f2 f4 awsb f1 f3 awsb f1 pnfn f0 f2 f4 pnfs1v f0 f2 f4 awsb f1 f3 f2 pnfsb f0 f2 f4 awsb f1 f3 awsb f2 pnfn f0 f2 f4 psbequ12 f0 f2 f4 awsb f1 f3 psbequ12 f2 acv f4 acv awceq f0 f0 f2 f4 awsb f1 acv f3 acv awceq f0 f2 f4 awsb f1 f3 awsb psylan9bbr f1 acv f3 acv awceq f2 acv f4 acv awceq awa f0 f0 f2 f4 awsb f1 f3 awsb pnotbid f0 awn f0 f2 f4 awsb f1 f3 awsb awn f1 f2 f3 f4 pcbval2 f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa ppm2.21 f0 awn f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f1 f2 p2alimi f0 f2 f4 awsb f1 f3 awsb awn f4 awal f3 awal f0 awn f2 awal f1 awal f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal psylbir f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex f3 p19.8a f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex f3 awex f4 p19.23bi f0 f2 f4 awsb f1 f3 awsb awn f4 awal f3 awal f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex f3 awex psyl f0 f2 f4 awsb f1 f3 awsb f4 awex f3 awex awn f0 f2 f4 awsb f1 f3 awsb awn f4 awal f3 awal f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex f3 awex psylbir f0 f0 f2 f4 awsb f1 f3 awsb awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f4 awal f3 awal f2 awal f1 awal f0 f2 f4 awsb f1 f3 awsb f4 awex f3 awex f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex f3 awex ppm2.61d1 f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex f3 awex f0 f0 f2 f4 awsb f1 f3 awsb awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f4 awal f3 awal f2 awal f1 awal pimpbii $.
+$}
+$( Double "exists at most one", using implicit substitution.  (Contributed
+       by NM, 10-Feb-2005.) $)
+${
+	$v ph ps x y z w $.
+	$d z w ph $.
+	$d x y ps $.
+	$d x y z w $.
+	e0 $e |- ( ( x = z /\ y = w ) -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f set z $.
+	f5 $f set w $.
+	p2mos $p |- ( E. z E. w A. x A. y ( ph -> ( x = z /\ y = w ) ) <-> A. x A. y A. z A. w ( ( ph /\ ps ) -> ( x = z /\ y = w ) ) ) $=
+	f0 f2 f3 f4 f5 p2mo f1 f2 pnfv f2 acv f4 acv awceq f3 pnfv f2 acv f4 acv awceq f0 f3 f5 psbrim f2 acv f4 acv awceq f1 awi f3 pnfv e0 f2 acv f4 acv awceq f3 acv f5 acv awceq f0 f1 awb pexpcom f3 acv f5 acv awceq f2 acv f4 acv awceq f0 f1 ppm5.74d f2 acv f4 acv awceq f0 awi f2 acv f4 acv awceq f1 awi f3 f5 psbie f2 acv f4 acv awceq f0 f3 f5 awsb awi f2 acv f4 acv awceq f0 awi f3 f5 awsb f2 acv f4 acv awceq f1 awi pbitr3i f2 acv f4 acv awceq f0 f3 f5 awsb f1 ppm5.74ri f0 f3 f5 awsb f1 f2 f4 psbie f0 f3 f5 awsb f2 f4 awsb f1 f0 panbi2i f0 f0 f3 f5 awsb f2 f4 awsb awa f0 f1 awa f2 acv f4 acv awceq f3 acv f5 acv awceq awa pimbi1i f0 f0 f3 f5 awsb f2 f4 awsb awa f2 acv f4 acv awceq f3 acv f5 acv awceq awa awi f0 f1 awa f2 acv f4 acv awceq f3 acv f5 acv awceq awa awi f4 f5 p2albii f0 f0 f3 f5 awsb f2 f4 awsb awa f2 acv f4 acv awceq f3 acv f5 acv awceq awa awi f5 awal f4 awal f0 f1 awa f2 acv f4 acv awceq f3 acv f5 acv awceq awa awi f5 awal f4 awal f2 f3 p2albii f0 f2 acv f4 acv awceq f3 acv f5 acv awceq awa awi f3 awal f2 awal f5 awex f4 awex f0 f0 f3 f5 awsb f2 f4 awsb awa f2 acv f4 acv awceq f3 acv f5 acv awceq awa awi f5 awal f4 awal f3 awal f2 awal f0 f1 awa f2 acv f4 acv awceq f3 acv f5 acv awceq awa awi f5 awal f4 awal f3 awal f2 awal pbitri $.
+$}
+$( Double existential uniqueness.  This theorem shows a condition under which
+     a "naive" definition matches the correct one.  (Contributed by NM,
+     3-Dec-2001.) $)
+${
+	$v ph x y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	p2eu1 $p |- ( A. x E* y ph -> ( E! x E! y ph <-> ( E! x E. y ph /\ E! y E. x ph ) ) ) $=
+	f0 f2 aweu f1 peu5 f0 f2 peu5 f0 f2 aweu f0 f2 awex f0 f2 awmo awa f1 pexbii f0 f2 peu5 f0 f2 aweu f0 f2 awex f0 f2 awmo awa f1 pmobii f0 f2 aweu f1 awex f0 f2 awex f0 f2 awmo awa f1 awex f0 f2 aweu f1 awmo f0 f2 awex f0 f2 awmo awa f1 awmo panbi12i f0 f2 aweu f1 aweu f0 f2 aweu f1 awex f0 f2 aweu f1 awmo awa f0 f2 awex f0 f2 awmo awa f1 awex f0 f2 awex f0 f2 awmo awa f1 awmo awa pbitri f0 f2 aweu f1 aweu f0 f2 awex f0 f2 awmo awa f1 awex f0 f2 awex f0 f2 awmo awa f1 awmo psimprbi f0 f2 awmo f1 psp f0 f2 awmo f1 awal f0 f2 awmo f0 f2 awex panim2i f0 f2 awex f0 f2 awmo f1 awal f0 f2 awex f0 f2 awmo awa pancoms f0 f2 awmo f1 awal f0 f2 awex awa f0 f2 awex f0 f2 awmo awa f1 pmoimi f0 f2 awmo f1 pnfa1 f0 f2 awmo f1 awal f0 f2 awex f1 pmoanim f0 f2 awex f0 f2 awmo awa f1 awmo f0 f2 awmo f1 awal f0 f2 awex awa f1 awmo f0 f2 awmo f1 awal f0 f2 awex f1 awmo awi psylib f0 f2 awex f0 f2 awmo awa f1 awmo f0 f2 awmo f1 awal f0 f2 awex f1 awmo pancrd f0 f1 f2 p2moswap f0 f2 awmo f1 awal f0 f2 awex f1 awmo f0 f1 awex f2 awmo pcom12 f0 f2 awex f1 awmo f0 f2 awmo f1 awal f0 f1 awex f2 awmo pimdistani f0 f2 awex f0 f2 awmo awa f1 awmo f0 f2 awmo f1 awal f0 f2 awex f1 awmo f0 f2 awmo f1 awal awa f0 f2 awex f1 awmo f0 f1 awex f2 awmo awa psyl6 f0 f2 aweu f1 aweu f0 f2 awex f0 f2 awmo awa f1 awmo f0 f2 awmo f1 awal f0 f2 awex f1 awmo f0 f1 awex f2 awmo awa awi psyl f0 f1 f2 p2eu2ex f0 f1 f2 p2eu2ex f0 f1 f2 pexcom f0 f2 aweu f1 aweu f0 f2 awex f1 awex f0 f1 awex f2 awex psylib f0 f2 aweu f1 aweu f0 f2 awex f1 awex f0 f1 awex f2 awex pjca f0 f2 aweu f1 aweu f0 f2 awmo f1 awal f0 f2 awex f1 awmo f0 f1 awex f2 awmo awa f0 f2 awex f1 awex f0 f1 awex f2 awex awa pjctild f0 f2 awex f1 peu5 f0 f1 awex f2 peu5 f0 f2 awex f1 aweu f0 f2 awex f1 awex f0 f2 awex f1 awmo awa f0 f1 awex f2 aweu f0 f1 awex f2 awex f0 f1 awex f2 awmo awa panbi12i f0 f2 awex f1 awex f0 f2 awex f1 awmo f0 f1 awex f2 awex f0 f1 awex f2 awmo pan4 f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa f0 f2 awex f1 awex f0 f2 awex f1 awmo awa f0 f1 awex f2 awex f0 f1 awex f2 awmo awa awa f0 f2 awex f1 awex f0 f1 awex f2 awex awa f0 f2 awex f1 awmo f0 f1 awex f2 awmo awa awa pbitri f0 f2 aweu f1 aweu f0 f2 awmo f1 awal f0 f2 awex f1 awex f0 f1 awex f2 awex awa f0 f2 awex f1 awmo f0 f1 awex f2 awmo awa awa f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa psyl6ibr f0 f2 aweu f1 aweu f0 f2 awmo f1 awal f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa pcom12 f0 f1 f2 p2exeu f0 f2 awmo f1 awal f0 f2 aweu f1 aweu f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa pimpbid1 $.
+$}
+$( Double existential uniqueness.  (Contributed by NM, 3-Dec-2001.) $)
+${
+	$v ph x y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	p2eu2 $p |- ( E! y E. x ph -> ( E! x E! y ph <-> E! x E. y ph ) ) $=
+	f0 f1 awex f2 peumo f0 f2 f1 p2moex f0 f1 f2 p2eu1 f0 f2 awex f1 aweu f0 f1 awex f2 aweu psimpl f0 f2 awmo f1 awal f0 f2 aweu f1 aweu f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa f0 f2 awex f1 aweu psyl6bi f0 f1 awex f2 aweu f0 f1 awex f2 awmo f0 f2 awmo f1 awal f0 f2 aweu f1 aweu f0 f2 awex f1 aweu awi p3syl f0 f1 f2 p2exeu f0 f2 awex f1 aweu f0 f1 awex f2 aweu f0 f2 aweu f1 aweu pexpcom f0 f1 awex f2 aweu f0 f2 aweu f1 aweu f0 f2 awex f1 aweu pimpbid $.
+$}
+$( Double existential uniqueness.  (Contributed by NM, 3-Dec-2001.) $)
+${
+	$v ph x y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	p2eu3 $p |- ( A. x A. y ( E* x ph \/ E* y ph ) -> ( ( E! x E! y ph /\ E! y E! x ph ) <-> ( E! x E. y ph /\ E! y E. x ph ) ) ) $=
+	f0 f2 pnfmo1 f0 f1 awmo f0 f2 awmo f2 p19.31 f0 f1 awmo f0 f2 awmo awo f2 awal f0 f1 awmo f2 awal f0 f2 awmo awo f1 palbii f0 f1 pnfmo1 f0 f1 awmo f1 f2 pnfal f0 f1 awmo f2 awal f0 f2 awmo f1 p19.32 f0 f1 awmo f0 f2 awmo awo f2 awal f1 awal f0 f1 awmo f2 awal f0 f2 awmo awo f1 awal f0 f1 awmo f2 awal f0 f2 awmo f1 awal awo pbitri f0 f2 f1 p2eu1 f0 f1 awmo f2 awal f0 f1 aweu f2 aweu f0 f1 awex f2 aweu f0 f2 awex f1 aweu awa pbiimpd f0 f1 awex f2 aweu f0 f2 awex f1 aweu pancom f0 f1 awmo f2 awal f0 f1 aweu f2 aweu f0 f1 awex f2 aweu f0 f2 awex f1 aweu awa f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa psyl6ib f0 f1 awmo f2 awal f0 f1 aweu f2 aweu f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa f0 f2 aweu f1 aweu padantld f0 f1 f2 p2eu1 f0 f2 awmo f1 awal f0 f2 aweu f1 aweu f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa pbiimpd f0 f2 awmo f1 awal f0 f2 aweu f1 aweu f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa f0 f1 aweu f2 aweu padantrd f0 f1 awmo f2 awal f0 f2 aweu f1 aweu f0 f1 aweu f2 aweu awa f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa awi f0 f2 awmo f1 awal pjaoi f0 f1 f2 p2exeu f0 f2 f1 p2exeu f0 f1 awex f2 aweu f0 f2 awex f1 aweu f0 f1 aweu f2 aweu pancoms f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa f0 f2 aweu f1 aweu f0 f1 aweu f2 aweu pjca f0 f1 awmo f2 awal f0 f2 awmo f1 awal awo f0 f2 aweu f1 aweu f0 f1 aweu f2 aweu awa f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa pimpbid1 f0 f1 awmo f0 f2 awmo awo f2 awal f1 awal f0 f1 awmo f2 awal f0 f2 awmo f1 awal awo f0 f2 aweu f1 aweu f0 f1 aweu f2 aweu awa f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa awb psylbi $.
+$}
+$( This theorem provides us with a definition of double existential
+       uniqueness ("exactly one ` x ` and exactly one ` y ` ").  Naively one
+       might think (incorrectly) that it could be defined by
+       ` E! x E! y ph ` .  See ~ 2eu1 for a condition under which the naive
+       definition holds and ~ 2exeu for a one-way implication.  See ~ 2eu5 and
+       ~ 2eu8 for alternate definitions.  (Contributed by NM, 3-Dec-2001.) $)
+${
+	$v ph x y z w $.
+	$d x y z w $.
+	$d z w ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	f4 $f set w $.
+	p2eu4 $p |- ( ( E! x E. y ph /\ E! y E. x ph ) <-> ( E. x E. y ph /\ E. z E. w A. x A. y ( ph -> ( x = z /\ y = w ) ) ) ) $=
+	f0 f2 awex f3 pnfv f0 f2 awex f1 f3 peu3 f0 f1 awex f4 pnfv f0 f1 awex f2 f4 peu3 f0 f2 awex f1 aweu f0 f2 awex f1 awex f0 f2 awex f1 acv f3 acv awceq awi f1 awal f3 awex awa f0 f1 awex f2 aweu f0 f1 awex f2 awex f0 f1 awex f2 acv f4 acv awceq awi f2 awal f4 awex awa panbi12i f0 f2 awex f1 awex f0 f2 awex f1 acv f3 acv awceq awi f1 awal f3 awex f0 f1 awex f2 awex f0 f1 awex f2 acv f4 acv awceq awi f2 awal f4 awex pan4 f0 f2 f1 pexcom f0 f1 awex f2 awex f0 f2 awex f1 awex f0 f2 awex f1 awex panbi2i f0 f2 awex f1 awex panidm f0 f2 awex f1 awex f0 f1 awex f2 awex awa f0 f2 awex f1 awex f0 f2 awex f1 awex awa f0 f2 awex f1 awex pbitri f0 f1 acv f3 acv awceq awi f2 awal f0 f2 acv f4 acv awceq awi f2 awal f1 awal f1 p19.26 f0 f2 acv f4 acv awceq awi f2 awal f1 pnfa1 f0 f2 acv f4 acv awceq awi f2 awal f1 awal f1 p19.3 f0 f2 acv f4 acv awceq awi f2 awal f1 awal f1 awal f0 f2 acv f4 acv awceq awi f2 awal f1 awal f0 f1 acv f3 acv awceq awi f2 awal f1 awal panbi2i f0 f1 acv f3 acv awceq f2 acv f4 acv awceq pjcab f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f0 f1 acv f3 acv awceq awi f0 f2 acv f4 acv awceq awi awa f2 palbii f0 f1 acv f3 acv awceq awi f0 f2 acv f4 acv awceq awi f2 p19.26 f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f0 f1 acv f3 acv awceq awi f0 f2 acv f4 acv awceq awi awa f2 awal f0 f1 acv f3 acv awceq awi f2 awal f0 f2 acv f4 acv awceq awi f2 awal awa pbitri f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f0 f1 acv f3 acv awceq awi f2 awal f0 f2 acv f4 acv awceq awi f2 awal awa f1 palbii f0 f1 acv f3 acv awceq awi f2 awal f0 f2 acv f4 acv awceq awi f2 awal f1 p19.26 f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f0 f1 acv f3 acv awceq awi f2 awal f0 f2 acv f4 acv awceq awi f2 awal awa f1 awal f0 f1 acv f3 acv awceq awi f2 awal f1 awal f0 f2 acv f4 acv awceq awi f2 awal f1 awal awa pbitri f0 f1 acv f3 acv awceq awi f2 awal f1 awal f0 f2 acv f4 acv awceq awi f2 awal f1 awal f1 awal awa f0 f1 acv f3 acv awceq awi f2 awal f1 awal f0 f2 acv f4 acv awceq awi f2 awal f1 awal awa f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal pbitr4i f0 f1 acv f3 acv awceq awi f2 awal f0 f2 acv f4 acv awceq awi f2 awal f1 awal awa f1 awal f0 f1 acv f3 acv awceq awi f2 awal f1 awal f0 f2 acv f4 acv awceq awi f2 awal f1 awal f1 awal awa f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal pbitr2i f0 f1 acv f3 acv awceq awi f2 awal f0 f2 acv f4 acv awceq awi f1 awal f2 p19.26 f0 f1 acv f3 acv awceq awi f2 pnfa1 f0 f1 acv f3 acv awceq awi f2 awal f2 p19.3 f0 f2 acv f4 acv awceq awi f2 f1 palcom f0 f1 acv f3 acv awceq awi f2 awal f2 awal f0 f1 acv f3 acv awceq awi f2 awal f0 f2 acv f4 acv awceq awi f1 awal f2 awal f0 f2 acv f4 acv awceq awi f2 awal f1 awal panbi12i f0 f1 acv f3 acv awceq awi f2 awal f0 f2 acv f4 acv awceq awi f1 awal awa f2 awal f0 f1 acv f3 acv awceq awi f2 awal f2 awal f0 f2 acv f4 acv awceq awi f1 awal f2 awal awa f0 f1 acv f3 acv awceq awi f2 awal f0 f2 acv f4 acv awceq awi f2 awal f1 awal awa pbitri f0 f1 acv f3 acv awceq awi f2 awal f0 f2 acv f4 acv awceq awi f1 awal awa f2 awal f0 f1 acv f3 acv awceq awi f2 awal f0 f2 acv f4 acv awceq awi f2 awal f1 awal awa f1 palbii f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f0 f1 acv f3 acv awceq awi f2 awal f0 f2 acv f4 acv awceq awi f2 awal f1 awal awa f1 awal f0 f1 acv f3 acv awceq awi f2 awal f0 f2 acv f4 acv awceq awi f1 awal awa f2 awal f1 awal pbitr4i f0 f1 acv f3 acv awceq f2 p19.23v f0 f2 acv f4 acv awceq f1 p19.23v f0 f1 acv f3 acv awceq awi f2 awal f0 f2 awex f1 acv f3 acv awceq awi f0 f2 acv f4 acv awceq awi f1 awal f0 f1 awex f2 acv f4 acv awceq awi panbi12i f0 f1 acv f3 acv awceq awi f2 awal f0 f2 acv f4 acv awceq awi f1 awal awa f0 f2 awex f1 acv f3 acv awceq awi f0 f1 awex f2 acv f4 acv awceq awi awa f1 f2 p2albii f0 f2 pnfe1 f1 acv f3 acv awceq f2 pnfv f0 f2 awex f1 acv f3 acv awceq f2 pnfim f0 f1 pnfe1 f2 acv f4 acv awceq f1 pnfv f0 f1 awex f2 acv f4 acv awceq f1 pnfim f0 f2 awex f1 acv f3 acv awceq awi f0 f1 awex f2 acv f4 acv awceq awi f1 f2 paaan f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f0 f1 acv f3 acv awceq awi f2 awal f0 f2 acv f4 acv awceq awi f1 awal awa f2 awal f1 awal f0 f2 awex f1 acv f3 acv awceq awi f0 f1 awex f2 acv f4 acv awceq awi awa f2 awal f1 awal f0 f2 awex f1 acv f3 acv awceq awi f1 awal f0 f1 awex f2 acv f4 acv awceq awi f2 awal awa p3bitri f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f0 f2 awex f1 acv f3 acv awceq awi f1 awal f0 f1 awex f2 acv f4 acv awceq awi f2 awal awa f3 f4 p2exbii f0 f2 awex f1 acv f3 acv awceq awi f1 awal f0 f1 awex f2 acv f4 acv awceq awi f2 awal f3 f4 peeanv f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex f3 awex f0 f2 awex f1 acv f3 acv awceq awi f1 awal f0 f1 awex f2 acv f4 acv awceq awi f2 awal awa f4 awex f3 awex f0 f2 awex f1 acv f3 acv awceq awi f1 awal f3 awex f0 f1 awex f2 acv f4 acv awceq awi f2 awal f4 awex awa pbitr2i f0 f2 awex f1 awex f0 f1 awex f2 awex awa f0 f2 awex f1 awex f0 f2 awex f1 acv f3 acv awceq awi f1 awal f3 awex f0 f1 awex f2 acv f4 acv awceq awi f2 awal f4 awex awa f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex f3 awex panbi12i f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa f0 f2 awex f1 awex f0 f2 awex f1 acv f3 acv awceq awi f1 awal f3 awex awa f0 f1 awex f2 awex f0 f1 awex f2 acv f4 acv awceq awi f2 awal f4 awex awa awa f0 f2 awex f1 awex f0 f1 awex f2 awex awa f0 f2 awex f1 acv f3 acv awceq awi f1 awal f3 awex f0 f1 awex f2 acv f4 acv awceq awi f2 awal f4 awex awa awa f0 f2 awex f1 awex f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex f3 awex awa p3bitri $.
+$}
+$( An alternate definition of double existential uniqueness (see ~ 2eu4 ).
+       A mistake sometimes made in the literature is to use ` E! x E! y ` to
+       mean "exactly one ` x ` and exactly one ` y ` ."  (For example, see
+       Proposition 7.53 of [TakeutiZaring] p. 53.)  It turns out that this is
+       actually a weaker assertion, as can be seen by expanding out the formal
+       definitions.  This theorem shows that the erroneous definition can be
+       repaired by conjoining ` A. x E* y ph ` as an additional condition.  The
+       correct definition apparently has never been published.  ( ` E* ` means
+       "exists at most one.") (Contributed by NM, 26-Oct-2003.) $)
+${
+	$v ph x y z w $.
+	$d x y z w $.
+	$d z w ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	f4 $f set w $.
+	p2eu5 $p |- ( ( E! x E! y ph /\ A. x E* y ph ) <-> ( E. x E. y ph /\ E. z E. w A. x A. y ( ph -> ( x = z /\ y = w ) ) ) ) $=
+	f0 f1 f2 p2eu1 f0 f2 awmo f1 awal f0 f2 aweu f1 aweu f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa ppm5.32ri f0 f1 awex f2 peumo f0 f1 awex f2 aweu f0 f1 awex f2 awmo f0 f2 awex f1 aweu padantl f0 f2 f1 p2moex f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa f0 f1 awex f2 awmo f0 f2 awmo f1 awal psyl f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa f0 f2 awmo f1 awal ppm4.71i f0 f1 f2 f3 f4 p2eu4 f0 f2 aweu f1 aweu f0 f2 awmo f1 awal awa f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa f0 f2 awmo f1 awal awa f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa f0 f2 awex f1 awex f0 f1 f3 pweq f2 f4 pweq awa awi f2 awal f1 awal f4 awex f3 awex awa p3bitr2i $.
+$}
+$( Two equivalent expressions for double existential uniqueness.
+       (Contributed by NM, 2-Feb-2005.)  (Revised by Mario Carneiro,
+       17-Oct-2016.) $)
+${
+	$v ph x y z w v u $.
+	$d x y z w v u $.
+	$d z w v u ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f set z $.
+	f4 $f set w $.
+	i0 $f set v $.
+	i1 $f set u $.
+	p2eu6 $p |- ( ( E! x E. y ph /\ E! y E. x ph ) <-> E. z E. w A. x A. y ( ph <-> ( x = z /\ y = w ) ) ) $=
+	f0 f1 f2 f3 f4 p2eu4 f0 f3 pnfv f0 f4 pnfv f0 f2 f4 awsb f1 f3 pnfs1v f0 f2 f4 pnfs1v f0 f2 f4 awsb f1 f3 f2 pnfsb f0 f2 f4 psbequ12 f0 f2 f4 awsb f1 f3 psbequ12 f2 acv f4 acv awceq f0 f0 f2 f4 awsb f1 acv f3 acv awceq f0 f2 f4 awsb f1 f3 awsb psylan9bbr f0 f0 f2 f4 awsb f1 f3 awsb f1 f2 f3 f4 pcbvex2 f3 i0 f1 pequequ2 f4 i1 f2 pequequ2 f3 acv i0 acv awceq f1 acv f3 acv awceq f1 acv i0 acv awceq f4 acv i1 acv awceq f2 acv f4 acv awceq f2 acv i1 acv awceq pbi2anan9 f3 acv i0 acv awceq f4 acv i1 acv awceq awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa f1 acv i0 acv awceq f2 acv i1 acv awceq awa f0 pimbi2d f3 acv i0 acv awceq f4 acv i1 acv awceq awa f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f1 f2 p2albidv f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f2 awal f1 awal f3 f4 i0 i1 pcbvex2v f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f3 pnfv f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f4 pnfv f0 f2 f4 awsb f1 f3 pnfs1v f3 acv i0 acv awceq f4 acv i1 acv awceq awa f1 pnfv f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa f1 pnfim f0 f2 f4 pnfs1v f0 f2 f4 awsb f1 f3 f2 pnfsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa f2 pnfv f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa f2 pnfim f0 f2 f4 psbequ12 f0 f2 f4 awsb f1 f3 psbequ12 f2 acv f4 acv awceq f0 f0 f2 f4 awsb f1 acv f3 acv awceq f0 f2 f4 awsb f1 f3 awsb psylan9bbr f1 f3 i0 pequequ1 f2 f4 i1 pequequ1 f1 acv f3 acv awceq f1 acv i0 acv awceq f3 acv i0 acv awceq f2 acv f4 acv awceq f2 acv i1 acv awceq f4 acv i1 acv awceq pbi2anan9 f1 acv f3 acv awceq f2 acv f4 acv awceq awa f0 f0 f2 f4 awsb f1 f3 awsb f1 acv i0 acv awceq f2 acv i1 acv awceq awa f3 acv i0 acv awceq f4 acv i1 acv awceq awa pimbi12d f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi f1 f2 f3 f4 pcbval2 f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f2 awal f1 awal f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi f4 awal f3 awal i0 i1 p2exbii f0 f2 f4 awsb f1 f3 awsb f3 f4 i0 i1 p2mo f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f2 awal f1 awal i1 awex i0 awex f0 f2 f4 awsb f1 f3 awsb f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi f4 awal f3 awal i1 awex i0 awex f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb awa f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi i1 awal i0 awal f4 awal f3 awal pbitri f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex f3 awex f0 f1 acv i0 acv awceq f2 acv i1 acv awceq awa awi f2 awal f1 awal i1 awex i0 awex f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb awa f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi i1 awal i0 awal f4 awal f3 awal pbitri f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb awa f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi i1 awal i0 awal f3 f4 p19.29r2 f0 f2 awex f1 awex f0 f2 f4 awsb f1 f3 awsb f4 awex f3 awex f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb awa f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi i1 awal i0 awal f4 awal f3 awal f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb awa f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi i1 awal i0 awal awa f4 awex f3 awex f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex f3 awex psyl2anb f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa f1 f2 p2albiim f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f1 acv f3 acv awceq f2 acv f4 acv awceq awa f0 awi f2 awal f1 awal pancom f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awb f2 awal f1 awal f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f1 acv f3 acv awceq f2 acv f4 acv awceq awa f0 awi f2 awal f1 awal awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa f0 awi f2 awal f1 awal f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal awa pbitri f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awb f2 awal f1 awal f1 acv f3 acv awceq f2 acv f4 acv awceq awa f0 awi f2 awal f1 awal f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal awa f3 f4 p2exbii f0 f2 f4 awsb f1 f3 awsb f0 awa f3 acv f1 acv awceq f4 acv f2 acv awceq awa awi i0 pnfv f0 f2 f4 awsb f1 f3 awsb f0 awa f3 acv f1 acv awceq f4 acv f2 acv awceq awa awi i1 pnfv f0 f2 f4 awsb f1 f3 pnfs1v f0 f2 f4 awsb f1 f3 pnfs1v f0 f2 f4 awsb f1 f3 awsb f4 i1 f1 pnfsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 f1 pnfsb f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb f1 pnfan f3 acv i0 acv awceq f4 acv i1 acv awceq awa f1 pnfv f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb awa f3 acv i0 acv awceq f4 acv i1 acv awceq awa f1 pnfim f0 f2 f4 pnfs1v f0 f2 f4 awsb f1 f3 f2 pnfsb f0 f2 f4 pnfs1v f0 f2 f4 awsb f1 f3 f2 pnfsb f0 f2 f4 awsb f1 f3 awsb f4 i1 f2 pnfsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 f2 pnfsb f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb f2 pnfan f3 acv i0 acv awceq f4 acv i1 acv awceq awa f2 pnfv f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb awa f3 acv i0 acv awceq f4 acv i1 acv awceq awa f2 pnfim f0 f2 i1 psbequ12 f0 f2 i1 awsb f1 i0 psbequ12 f2 acv i1 acv awceq f0 f0 f2 i1 awsb f1 acv i0 acv awceq f0 f2 i1 awsb f1 i0 awsb psylan9bbr f0 f4 pnfv f0 f2 i1 f4 psbco2 f0 f2 f4 awsb f4 i1 awsb f0 f2 i1 awsb f1 i0 psbbii f0 f2 f4 awsb f4 i1 awsb f3 pnfv f0 f2 f4 awsb f4 i1 awsb f1 i0 f3 psbco2 f0 f2 f4 awsb f4 i1 f1 f3 psbcom2 f0 f2 f4 awsb f4 i1 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 psbbii f0 f2 f4 awsb f4 i1 awsb f1 i0 awsb f0 f2 f4 awsb f4 i1 awsb f1 f3 awsb f3 i0 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb pbitr3i f0 f2 i1 awsb f1 i0 awsb f0 f2 f4 awsb f4 i1 awsb f1 i0 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb pbitr3i f1 acv i0 acv awceq f2 acv i1 acv awceq awa f0 f0 f2 i1 awsb f1 i0 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb psyl6bb f1 acv i0 acv awceq f2 acv i1 acv awceq awa f0 f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb f0 f2 f4 awsb f1 f3 awsb panbi2d f1 i0 f3 pequequ2 f2 i1 f4 pequequ2 f1 acv i0 acv awceq f3 acv f1 acv awceq f3 acv i0 acv awceq f2 acv i1 acv awceq f4 acv f2 acv awceq f4 acv i1 acv awceq pbi2anan9 f1 acv i0 acv awceq f2 acv i1 acv awceq awa f0 f2 f4 awsb f1 f3 awsb f0 awa f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb awa f3 acv f1 acv awceq f4 acv f2 acv awceq awa f3 acv i0 acv awceq f4 acv i1 acv awceq awa pimbi12d f0 f2 f4 awsb f1 f3 awsb f0 awa f3 acv f1 acv awceq f4 acv f2 acv awceq awa awi f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb awa f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi f1 f2 i0 i1 pcbval2 f3 f1 pequcom f4 f2 pequcom f3 acv f1 acv awceq f1 acv f3 acv awceq f4 acv f2 acv awceq f2 acv f4 acv awceq panbi12i f3 acv f1 acv awceq f4 acv f2 acv awceq awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa f0 f2 f4 awsb f1 f3 awsb f0 awa pimbi2i f0 f2 f4 awsb f1 f3 awsb f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa pimpexp f0 f2 f4 awsb f1 f3 awsb f0 awa f3 acv f1 acv awceq f4 acv f2 acv awceq awa awi f0 f2 f4 awsb f1 f3 awsb f0 awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f0 f2 f4 awsb f1 f3 awsb f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi awi pbitri f0 f2 f4 awsb f1 f3 awsb f0 awa f3 acv f1 acv awceq f4 acv f2 acv awceq awa awi f0 f2 f4 awsb f1 f3 awsb f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi awi f1 f2 p2albii f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb awa f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi i1 awal i0 awal f0 f2 f4 awsb f1 f3 awsb f0 awa f3 acv f1 acv awceq f4 acv f2 acv awceq awa awi f2 awal f1 awal f0 f2 f4 awsb f1 f3 awsb f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi awi f2 awal f1 awal pbitr3i f0 f2 f4 awsb f1 f3 pnfs1v f0 f2 f4 pnfs1v f0 f2 f4 awsb f1 f3 f2 pnfsb f0 f2 f4 awsb f1 f3 awsb f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f1 f2 p19.21-2 f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb awa f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi i1 awal i0 awal f0 f2 f4 awsb f1 f3 awsb f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi awi f2 awal f1 awal f0 f2 f4 awsb f1 f3 awsb f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal awi pbitri f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb awa f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi i1 awal i0 awal f0 f2 f4 awsb f1 f3 awsb f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal awi f0 f2 f4 awsb f1 f3 awsb panbi2i f0 f2 f4 awsb f1 f3 awsb f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal pabai f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb awa f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi i1 awal i0 awal awa f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal awi awa f0 f2 f4 awsb f1 f3 awsb f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal awa pbitr4i f0 f1 f2 f3 f4 p2sb6 f0 f2 f4 awsb f1 f3 awsb f1 acv f3 acv awceq f2 acv f4 acv awceq awa f0 awi f2 awal f1 awal f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal panbi1i f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb awa f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi i1 awal i0 awal awa f0 f2 f4 awsb f1 f3 awsb f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa f0 awi f2 awal f1 awal f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal awa pbitri f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb awa f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi i1 awal i0 awal awa f1 acv f3 acv awceq f2 acv f4 acv awceq awa f0 awi f2 awal f1 awal f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal awa f3 f4 p2exbii f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awb f2 awal f1 awal f4 awex f3 awex f1 acv f3 acv awceq f2 acv f4 acv awceq awa f0 awi f2 awal f1 awal f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal awa f4 awex f3 awex f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb awa f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi i1 awal i0 awal awa f4 awex f3 awex pbitr4i f0 f2 awex f1 awex f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex f3 awex awa f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f0 f2 f4 awsb f1 f3 awsb f4 i1 awsb f3 i0 awsb awa f3 acv i0 acv awceq f4 acv i1 acv awceq awa awi i1 awal i0 awal awa f4 awex f3 awex f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awb f2 awal f1 awal f4 awex f3 awex psylibr f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa pbi2 f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awb f1 acv f3 acv awceq f2 acv f4 acv awceq awa f0 awi f1 f2 p2alimi f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awb f2 awal f1 awal f1 acv f3 acv awceq f2 acv f4 acv awceq awa f0 awi f2 awal f1 awal f3 f4 p2eximi f0 f1 f2 f3 f4 p2exsb f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awb f2 awal f1 awal f4 awex f3 awex f1 acv f3 acv awceq f2 acv f4 acv awceq awa f0 awi f2 awal f1 awal f4 awex f3 awex f0 f2 awex f1 awex psylibr f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa pbi1 f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awb f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f1 f2 p2alimi f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awb f2 awal f1 awal f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f3 f4 p2eximi f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awb f2 awal f1 awal f4 awex f3 awex f0 f2 awex f1 awex f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex f3 awex pjca f0 f2 awex f1 awex f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex f3 awex awa f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awb f2 awal f1 awal f4 awex f3 awex pimpbii f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa f0 f2 awex f1 awex f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awi f2 awal f1 awal f4 awex f3 awex awa f0 f1 acv f3 acv awceq f2 acv f4 acv awceq awa awb f2 awal f1 awal f4 awex f3 awex pbitri $.
+$}
+$( Two equivalent expressions for double existential uniqueness.
+     (Contributed by NM, 19-Feb-2005.) $)
+${
+	$v ph x y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	p2eu7 $p |- ( ( E! x E. y ph /\ E! y E. x ph ) <-> E! x E! y ( E. x ph /\ E. y ph ) ) $=
+	f0 f1 pnfe1 f0 f1 awex f1 f2 pnfeu f0 f1 awex f2 aweu f0 f2 awex f1 peuan f0 f1 awex f0 f2 awex pancom f0 f1 awex f0 f2 awex awa f0 f2 awex f0 f1 awex awa f2 peubii f0 f2 pnfe1 f0 f2 awex f0 f1 awex f2 peuan f0 f2 awex f0 f1 awex f2 aweu pancom f0 f1 awex f0 f2 awex awa f2 aweu f0 f2 awex f0 f1 awex awa f2 aweu f0 f2 awex f0 f1 awex f2 aweu awa f0 f1 awex f2 aweu f0 f2 awex awa p3bitri f0 f1 awex f0 f2 awex awa f2 aweu f0 f1 awex f2 aweu f0 f2 awex awa f1 peubii f0 f2 awex f1 aweu f0 f1 awex f2 aweu pancom f0 f1 awex f2 aweu f0 f2 awex awa f1 aweu f0 f1 awex f2 aweu f0 f2 awex f1 aweu awa f0 f1 awex f0 f2 awex awa f2 aweu f1 aweu f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa p3bitr4ri $.
+$}
+$( Two equivalent expressions for double existential uniqueness.  Curiously,
+     we can put ` E! ` on either of the internal conjuncts but not both.  We
+     can also commute ` E! x E! y ` using ~ 2eu7 .  (Contributed by NM,
+     20-Feb-2005.) $)
+${
+	$v ph x y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	p2eu8 $p |- ( E! x E! y ( E. x ph /\ E. y ph ) <-> E! x E! y ( E! x ph /\ E. y ph ) ) $=
+	f0 f2 f1 p2eu2 f0 f2 awex f1 aweu f0 f1 aweu f2 aweu f0 f1 awex f2 aweu ppm5.32i f0 f1 pnfeu1 f0 f1 aweu f1 f2 pnfeu f0 f1 aweu f2 aweu f0 f2 awex f1 peuan f0 f1 aweu f0 f2 awex pancom f0 f1 aweu f0 f2 awex awa f0 f2 awex f0 f1 aweu awa f2 peubii f0 f2 pnfe1 f0 f2 awex f0 f1 aweu f2 peuan f0 f2 awex f0 f1 aweu f2 aweu pancom f0 f1 aweu f0 f2 awex awa f2 aweu f0 f2 awex f0 f1 aweu awa f2 aweu f0 f2 awex f0 f1 aweu f2 aweu awa f0 f1 aweu f2 aweu f0 f2 awex awa p3bitri f0 f1 aweu f0 f2 awex awa f2 aweu f0 f1 aweu f2 aweu f0 f2 awex awa f1 peubii f0 f2 awex f1 aweu f0 f1 aweu f2 aweu pancom f0 f1 aweu f2 aweu f0 f2 awex awa f1 aweu f0 f1 aweu f2 aweu f0 f2 awex f1 aweu awa f0 f1 aweu f0 f2 awex awa f2 aweu f1 aweu f0 f2 awex f1 aweu f0 f1 aweu f2 aweu awa p3bitr4ri f0 f1 f2 p2eu7 f0 f2 awex f1 aweu f0 f1 aweu f2 aweu awa f0 f2 awex f1 aweu f0 f1 awex f2 aweu awa f0 f1 aweu f0 f2 awex awa f2 aweu f1 aweu f0 f1 awex f0 f2 awex awa f2 aweu f1 aweu p3bitr3ri $.
+$}
+$( Equality has existential uniqueness.  Special case of ~ eueq1 proved
+       using only predicate calculus.  (Contributed by Stefan Allan,
+       4-Dec-2008.) $)
+${
+	$v x y z $.
+	$d x y z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	i0 $f set z $.
+	peuequ1 $p |- E! x x = y $=
+	f0 f1 pa9ev f0 i0 f1 pequtr2 f0 f1 pweq i0 f1 pweq awa f0 i0 pweq awi f0 i0 pgen2 f0 i0 f1 pequequ1 f0 f1 pweq i0 f1 pweq f0 i0 peu4 f0 f1 pweq f0 aweu f0 f1 pweq f0 awex f0 f1 pweq i0 f1 pweq awa f0 i0 pweq awi i0 awal f0 awal pmpbir2an $.
+$}
+$( Two ways to express "only one thing exists."  The left-hand side
+       requires only one variable to express this.  Both sides are false in set
+       theory; see theorem ~ dtru .  (Contributed by NM, 5-Apr-2004.) $)
+${
+	$v x y $.
+	$d x y $.
+	f0 $f set x $.
+	f1 $f set y $.
+	pexists1 $p |- ( E! x x = x <-> A. x x = y ) $=
+	f0 acv f0 acv awceq f0 f1 adf-eu f0 pequid f0 acv f0 acv awceq f0 acv f1 acv awceq ptbt f0 acv f1 acv awceq f0 acv f0 acv awceq pbicom f0 acv f1 acv awceq f0 acv f1 acv awceq f0 acv f0 acv awceq awb f0 acv f0 acv awceq f0 acv f1 acv awceq awb pbitri f0 acv f1 acv awceq f0 acv f0 acv awceq f0 acv f1 acv awceq awb f0 palbii f0 acv f1 acv awceq f0 awal f0 acv f0 acv awceq f0 acv f1 acv awceq awb f0 awal f1 pexbii f0 f1 f1 pnfae f0 acv f1 acv awceq f0 awal f1 p19.9 f0 acv f0 acv awceq f0 aweu f0 acv f0 acv awceq f0 acv f1 acv awceq awb f0 awal f1 awex f0 acv f1 acv awceq f0 awal f1 awex f0 acv f1 acv awceq f0 awal p3bitr2i $.
+$}
+$( A condition implying that at least two things exist.  (Contributed by
+       NM, 10-Apr-2004.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
+${
+	$v ph x y $.
+	$d x y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	i0 $f set y $.
+	pexists2 $p |- ( ( E. x ph /\ E. x -. ph ) -> -. E! x x = x ) $=
+	f1 acv f1 acv awceq f1 pnfeu1 f0 f1 pnfa1 f1 i0 pexists1 f0 f1 i0 pax16 f1 acv f1 acv awceq f1 aweu f1 acv i0 acv awceq f1 awal f0 f0 f1 awal awi psylbi f1 acv f1 acv awceq f1 aweu f0 f0 f1 awal f1 pexlimd f1 acv f1 acv awceq f1 aweu f0 f1 awex f0 f1 awal pcom12 f0 f1 palex f0 f1 awex f1 acv f1 acv awceq f1 aweu f0 f1 awal f0 awn f1 awex awn psyl6ib f0 f1 awex f1 acv f1 acv awceq f1 aweu f0 awn f1 awex pcon2d f0 f1 awex f0 awn f1 awex f1 acv f1 acv awceq f1 aweu awn pimp $.
+$}
+

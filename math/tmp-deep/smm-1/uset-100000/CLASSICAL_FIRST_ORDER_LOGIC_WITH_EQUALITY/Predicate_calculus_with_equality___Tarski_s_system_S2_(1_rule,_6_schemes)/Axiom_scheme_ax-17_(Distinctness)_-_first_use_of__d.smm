@@ -1,0 +1,312 @@
+$[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Tarski_s_system_S2_(1_rule,_6_schemes)/Axiom_scheme_ax-5_(Quantified_Implication).smm $]
+$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  Axiom scheme ax-17 (Distinctness) - first use of $d
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+$)
+$( /* Axiom of Distinctness.  This axiom quantifies a variable over a formula
+       in which it does not occur.  Axiom C5 in [Megill] p. 444 (p. 11 of the
+       preprint).  Also appears as Axiom B6 (p. 75) of system S2 of [Tarski]
+       p. 77 and Axiom C5-1 of [Monk2] p. 113.
+
+       (See comments in ~ ax17o about the logical redundancy of ~ ax-17 in the
+       presence of our obsolete axioms.)
+
+       This axiom essentially says that if ` x ` does not occur in ` ph ` ,
+       i.e. ` ph ` does not depend on ` x ` in any way, then we can add the
+       quantifier ` A. x ` to ` ph ` with no further assumptions.  By ~ sp , we
+       can also remove the quantifier (unconditionally).  (Contributed by NM,
+       5-Aug-1993.) */
+
+$)
+${
+	$v ph x $.
+	$d x ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	aax-17 $a |- ( ph -> A. x ph ) $.
+$}
+$( /* ~ ax-17 with antecedent.  Useful in proofs of deduction versions of
+       bound-variable hypothesis builders.  (Contributed by NM, 1-Mar-2013.) */
+
+$)
+${
+	$v ph ps x $.
+	$d x ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	pa17d $p |- ( ph -> ( ps -> A. x ps ) ) $=
+	f1 f2 aax-17 f1 f1 f2 awal awi f0 pa1i $.
+$}
+$( /* If ` x ` is not present in ` ph ` , then ` x ` is not free in ` ph ` .
+       (Contributed by Mario Carneiro, 11-Aug-2016.) */
+
+$)
+${
+	$v ph x $.
+	$d x ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	pnfv $p |- F/ x ph $=
+	f0 f1 aax-17 f0 f1 pnfi $.
+$}
+$( /* ~ nfv with antecedent.  Useful in proofs of deduction versions of
+       bound-variable hypothesis builders such as ~ nfimd .  (Contributed by
+       Mario Carneiro, 6-Oct-2016.) */
+
+$)
+${
+	$v ph ps x $.
+	$d x ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	pnfvd $p |- ( ph -> F/ x ps ) $=
+	f1 f2 pnfv f1 f2 awnf f0 pa1i $.
+$}
+$( /* Deduction from Theorem 19.20 of [Margaris] p. 90.  (Contributed by NM,
+       3-Apr-1994.) */
+
+$)
+${
+	$v ph ps ch x $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	palimdv $p |- ( ph -> ( A. x ps -> A. x ch ) ) $=
+	f0 f3 aax-17 e0 f0 f1 f2 f3 palimdh $.
+$}
+$( /* Deduction from Theorem 19.22 of [Margaris] p. 90.  (Contributed by NM,
+       27-Apr-1994.) */
+
+$)
+${
+	$v ph ps ch x $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	peximdv $p |- ( ph -> ( E. x ps -> E. x ch ) ) $=
+	f0 f3 aax-17 e0 f0 f1 f2 f3 peximdh $.
+$}
+$( /* Deduction from Theorem 19.22 of [Margaris] p. 90.  (Contributed by NM,
+       27-Apr-2004.) */
+
+$)
+${
+	$v ph ps ch x y $.
+	$d x ph $.
+	$d y ph $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	p2alimdv $p |- ( ph -> ( A. x A. y ps -> A. x A. y ch ) ) $=
+	e0 f0 f1 f2 f4 palimdv f0 f1 f4 awal f2 f4 awal f3 palimdv $.
+$}
+$( /* Deduction from Theorem 19.22 of [Margaris] p. 90.  (Contributed by NM,
+       3-Aug-1995.) */
+
+$)
+${
+	$v ph ps ch x y $.
+	$d x ph $.
+	$d y ph $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	p2eximdv $p |- ( ph -> ( E. x E. y ps -> E. x E. y ch ) ) $=
+	e0 f0 f1 f2 f4 peximdv f0 f1 f4 awex f2 f4 awex f3 peximdv $.
+$}
+$( /* Formula-building rule for universal quantifier (deduction rule).
+       (Contributed by NM, 5-Aug-1993.) */
+
+$)
+${
+	$v ph ps ch x $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	palbidv $p |- ( ph -> ( A. x ps <-> A. x ch ) ) $=
+	f0 f3 aax-17 e0 f0 f1 f2 f3 palbidh $.
+$}
+$( /* Formula-building rule for existential quantifier (deduction rule).
+       (Contributed by NM, 5-Aug-1993.) */
+
+$)
+${
+	$v ph ps ch x $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	pexbidv $p |- ( ph -> ( E. x ps <-> E. x ch ) ) $=
+	f0 f3 aax-17 e0 f0 f1 f2 f3 pexbidh $.
+$}
+$( /* Formula-building rule for 2 universal quantifiers (deduction rule).
+       (Contributed by NM, 4-Mar-1997.) */
+
+$)
+${
+	$v ph ps ch x y $.
+	$d x ph $.
+	$d y ph $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	p2albidv $p |- ( ph -> ( A. x A. y ps <-> A. x A. y ch ) ) $=
+	e0 f0 f1 f2 f4 palbidv f0 f1 f4 awal f2 f4 awal f3 palbidv $.
+$}
+$( /* Formula-building rule for 2 existential quantifiers (deduction rule).
+       (Contributed by NM, 1-May-1995.) */
+
+$)
+${
+	$v ph ps ch x y $.
+	$d x ph $.
+	$d y ph $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	p2exbidv $p |- ( ph -> ( E. x E. y ps <-> E. x E. y ch ) ) $=
+	e0 f0 f1 f2 f4 pexbidv f0 f1 f4 awex f2 f4 awex f3 pexbidv $.
+$}
+$( /* Formula-building rule for 3 existential quantifiers (deduction rule).
+       (Contributed by NM, 1-May-1995.) */
+
+$)
+${
+	$v ph ps ch x y z $.
+	$d x ph $.
+	$d y ph $.
+	$d z ph $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f set z $.
+	p3exbidv $p |- ( ph -> ( E. x E. y E. z ps <-> E. x E. y E. z ch ) ) $=
+	e0 f0 f1 f2 f5 pexbidv f0 f1 f5 awex f2 f5 awex f3 f4 p2exbidv $.
+$}
+$( /* Formula-building rule for 4 existential quantifiers (deduction rule).
+       (Contributed by NM, 3-Aug-1995.) */
+
+$)
+${
+	$v ph ps ch x y z w $.
+	$d x ph $.
+	$d y ph $.
+	$d z ph $.
+	$d w ph $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	f4 $f set y $.
+	f5 $f set z $.
+	f6 $f set w $.
+	p4exbidv $p |- ( ph -> ( E. x E. y E. z E. w ps <-> E. x E. y E. z E. w ch ) ) $=
+	e0 f0 f1 f2 f5 f6 p2exbidv f0 f1 f6 awex f5 awex f2 f6 awex f5 awex f3 f4 p2exbidv $.
+$}
+$( /* Inference from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
+       5-Aug-1993.) */
+
+$)
+${
+	$v ph ps x $.
+	$d x ph $.
+	e0 $e |- ( ph -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	palrimiv $p |- ( ph -> A. x ps ) $=
+	f0 f2 aax-17 e0 f0 f1 f2 palrimih $.
+$}
+$( /* Inference from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
+       31-Jul-1995.) */
+
+$)
+${
+	$v ph ps x y $.
+	$d x ph $.
+	$d y ph $.
+	e0 $e |- ( ph -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	palrimivv $p |- ( ph -> A. x A. y ps ) $=
+	e0 f0 f1 f3 palrimiv f0 f1 f3 awal f2 palrimiv $.
+$}
+$( /* Deduction from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
+       10-Feb-1997.) */
+
+$)
+${
+	$v ph ps ch x $.
+	$d x ph $.
+	$d x ps $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f set x $.
+	palrimdv $p |- ( ph -> ( ps -> A. x ch ) ) $=
+	f0 f3 aax-17 f1 f3 aax-17 e0 f0 f1 f2 f3 palrimdh $.
+$}
+$( /* Apply the definition of not-free in a context.  (Contributed by Mario
+       Carneiro, 11-Aug-2016.) */
+
+$)
+${
+	$v ph ps x $.
+	$d x ph $.
+	e0 $e |- ( ph -> ( ps -> A. x ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	pnfdv $p |- ( ph -> F/ x ps ) $=
+	e0 f0 f1 f1 f2 awal awi f2 palrimiv f1 f2 adf-nf f0 f1 f1 f2 awal awi f2 awal f1 f2 awnf psylibr $.
+$}
+$( /* Quantification of two variables over a formula in which they do not
+       occur.  (Contributed by Alan Sare, 12-Apr-2011.) */
+
+$)
+${
+	$v ph x y $.
+	$d x ph $.
+	$d y ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	p2ax17 $p |- ( ph -> A. x A. y ph ) $=
+	f0 pid f0 f0 f1 f2 palrimivv $.
+$}
+

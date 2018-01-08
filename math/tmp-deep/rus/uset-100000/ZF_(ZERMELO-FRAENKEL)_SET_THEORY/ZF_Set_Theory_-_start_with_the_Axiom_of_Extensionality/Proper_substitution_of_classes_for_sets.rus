@@ -1,0 +1,1858 @@
+import uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Russell_s_Paradox.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Proper substitution of classes for sets
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+constant {
+	symbol [. ;;
+}
+
+constant {
+	symbol ]. ;;
+}
+
+/* Extend wff notation to include the proper substitution of a class for a
+     set.  Read this notation as "the proper substitution of class ` A ` for
+     set variable ` x ` in wff ` ph ` ." */
+
+rule wsbc (ph : wff, x : set, A : class) {
+	term : wff = # [. A / x ]. ph ;;
+}
+
+/* Define the proper substitution of a class for a set.
+
+     When ` A ` is a proper class, our definition evaluates to false.  This is
+     somewhat arbitrary: we could have, instead, chosen the conclusion of
+     ~ sbc6 for our definition, which always evaluates to true for proper
+     classes.
+
+     Our definition also does not produce the same results as discussed in the
+     proof of Theorem 6.6 of [Quine] p. 42 (although Theorem 6.6 itself does
+     hold, as shown by ~ dfsbcq below).  For example, if ` A ` is a proper
+     class, Quine's substitution of ` A ` for ` y ` in ` 0 e. y ` evaluates to
+     ` 0 e. A ` rather than our falsehood.  (This can be seen by substituting
+     ` A ` , ` y ` , and ` 0 ` for alpha, beta, and gamma in Subcase 1 of
+     Quine's discussion on p. 42.)  Unfortunately, Quine's definition requires
+     a recursive syntactical breakdown of ` ph ` , and it does not seem
+     possible to express it with a single closed formula.
+
+     If we did not want to commit to any specific proper class behavior, we
+     could use this definition _only_ to prove theorem ~ dfsbcq , which holds
+     for both our definition and Quine's, and from which we can derive a weaker
+     version of ~ df-sbc in the form of ~ sbc8g .  However, the behavior of
+     Quine's definition at proper classes is similarly arbitrary, and for
+     practical reasons (to avoid having to prove sethood of ` A ` in every use
+     of this definition) we allow direct reference to ~ df-sbc and assert that
+     ` [. A / x ]. ph ` is always false when ` A ` is a proper class.
+
+     The theorem ~ sbc2or shows the apparently "strongest" statement we can
+     make regarding behavior at proper classes if we start from ~ dfsbcq .
+
+     The related definition ~ df-csb defines proper substitution into a class
+     variable (as opposed to a wff variable).  (Contributed by NM,
+     14-Apr-1995.)  (Revised by NM, 25-Dec-2016.) */
+
+definition df-sbc (ph : wff, x : set, A : class)  {
+	defiendum : wff = # [. A / x ]. ph ;;
+	definiens : wff = # A ∈ { x | ph } ;;
+	-----------------------
+	prop : wff = |- ( defiendum ↔ definiens ) ;;
+}
+
+/* --- Start of old code before overloading prevention patch. */
+
+/* @( Extend wff notation to include the proper substitution of a class for a
+     set.  This definition "overloads" the previously defined variable
+     substitution ~ wsb (where the first argument is a set variable rather
+     than a class variable).  We take care to ensure that this new definition
+     is a conservative extension.  Read this notation as "the proper
+     substitution of class ` A ` for set variable ` x ` in wff ` ph ` ." @)
+  wsbcSBC @a wff [ A / x ] ph @.
+  */
+
+/* --- End of old code before overloading prevention patch. */
+
+/* This theorem, which is similar to Theorem 6.7 of [Quine] p. 42 and holds
+     under both our definition and Quine's, provides us with a weak definition
+     of the proper substitution of a class for a set.  Since our ~ df-sbc does
+     not result in the same behavior as Quine's for proper classes, if we
+     wished to avoid conflict with Quine's definition we could start with this
+     theorem and ~ dfsbcq2 instead of ~ df-sbc .  ( ~ dfsbcq2 is needed because
+     unlike Quine we do not overload the ~ df-sb syntax.)  As a consequence of
+     these theorems, we can derive ~ sbc8g , which is a weaker version of
+     ~ df-sbc that leaves substitution undefined when ` A ` is a proper class.
+
+     However, it is often a nuisance to have to prove the sethood hypothesis of
+     ~ sbc8g , so we will allow direct use of ~ df-sbc after theorem ~ sbc2or
+     below.  Proper substiution with a proper class is rarely needed, and when
+     it is, we can simply use the expansion of Quine's definition.
+     (Contributed by NM, 14-Apr-1995.) */
+
+theorem dfsbcq (ph : wff, x : set, A : class, B : class)  {
+	prop 1 : wff = |- ( A = B → ( [. A / x ]. ph ↔ [. B / x ]. ph ) ) ;;
+}
+
+proof of dfsbcq {
+	step 1 : wff = eleq1 () |- ( A = B → ( A ∈ { x | ph } ↔ B ∈ { x | ph } ) ) ;;
+	step 2 : wff = df-sbc () |- ( [. A / x ]. ph ↔ A ∈ { x | ph } ) ;;
+	step 3 : wff = df-sbc () |- ( [. B / x ]. ph ↔ B ∈ { x | ph } ) ;;
+	step 4 : wff = 3bitr4g (step 1, step 2, step 3) |- ( A = B → ( [. A / x ]. ph ↔ [. B / x ]. ph ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* This theorem, which is similar to Theorem 6.7 of [Quine] p. 42 and holds
+     under both our definition and Quine's, relates logic substitution ~ df-sb
+     and substitution for class variables ~ df-sbc .  Unlike Quine, we use a
+     different syntax for each in order to avoid overloading it.  See remarks
+     in ~ dfsbcq .  (Contributed by NM, 31-Dec-2016.) */
+
+theorem dfsbcq2 (ph : wff, x : set, y : set, A : class)  {
+	prop 1 : wff = |- ( y = A → ( [ y / x ] ph ↔ [. A / x ]. ph ) ) ;;
+}
+
+proof of dfsbcq2 {
+	step 1 : wff = eleq1 () |- ( y = A → ( y ∈ { x | ph } ↔ A ∈ { x | ph } ) ) ;;
+	step 2 : wff = df-clab () |- ( y ∈ { x | ph } ↔ [ y / x ] ph ) ;;
+	step 3 : wff = df-sbc () |- ( [. A / x ]. ph ↔ A ∈ { x | ph } ) ;;
+	step 4 : wff = bicomi (step 3) |- ( A ∈ { x | ph } ↔ [. A / x ]. ph ) ;;
+	step 5 : wff = 3bitr3g (step 1, step 2, step 4) |- ( y = A → ( [ y / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Show that ~ df-sb and ~ df-sbc are equivalent when the class term ` A ` in
+     ~ df-sbc is a set variable.  This theorem lets us reuse theorems based on
+     ~ df-sb for proofs involving ~ df-sbc .  (Contributed by NM,
+     31-Dec-2016.)  (Proof modification is discouraged.) */
+
+theorem sbsbc (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( [ y / x ] ph ↔ [. y / x ]. ph ) ;;
+}
+
+proof of sbsbc {
+	step 1 : wff = eqid () |- y = y ;;
+	step 2 : wff = dfsbcq2 () |- ( y = y → ( [ y / x ] ph ↔ [. y / x ]. ph ) ) ;;
+	step 3 : wff = ax-mp (step 1, step 2) |- ( [ y / x ] ph ↔ [. y / x ]. ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Equality theorem for class substitution.  (Contributed by Mario
+       Carneiro, 9-Feb-2017.) */
+
+theorem sbceq1d (ph : wff, x : set, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( [. A / x ]. ph ↔ [. B / x ]. ph ) ) ;;
+}
+
+proof of sbceq1d {
+	step 1 : wff = dfsbcq () |- ( A = B → ( [. A / x ]. ph ↔ [. B / x ]. ph ) ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ph → ( [. A / x ]. ph ↔ [. B / x ]. ph ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Equality theorem for class substitution.  (Contributed by Mario
+       Carneiro, 9-Feb-2017.) */
+
+theorem sbceq1dd (ph : wff, x : set, A : class, B : class)  {
+	hyp 1 : wff = |- ( ph → A = B ) ;;
+	hyp 2 : wff = |- ( ph → [. A / x ]. ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → [. B / x ]. ph ) ;;
+}
+
+proof of sbceq1dd {
+	step 1 : wff = sbceq1d (hyp 1) |- ( ph → ( [. A / x ]. ph ↔ [. B / x ]. ph ) ) ;;
+	step 2 : wff = mpbid (hyp 2, step 1) |- ( ph → [. B / x ]. ph ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* This is the closest we can get to ~ df-sbc if we start from ~ dfsbcq
+       (see its comments) and ~ dfsbcq2 .  (Contributed by NM, 18-Nov-2008.)
+       (Proof shortened by Andrew Salmon, 29-Jun-2011.)
+       (Proof modification is discouraged.) */
+
+theorem sbc8g (ph : wff, x : set, A : class, V : class) disjointed(y A, y ph, x y) {
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ph ↔ A ∈ { x | ph } ) ) ;;
+}
+
+proof of sbc8g {
+	var y : set;;
+	step 1 : wff = dfsbcq () |- ( y = A → ( [. y / x ]. ph ↔ [. A / x ]. ph ) ) ;;
+	step 2 : wff = eleq1 () |- ( y = A → ( y ∈ { x | ph } ↔ A ∈ { x | ph } ) ) ;;
+	step 3 : wff = df-clab () |- ( y ∈ { x | ph } ↔ [ y / x ] ph ) ;;
+	step 4 : wff = equid () |- y = y ;;
+	step 5 : wff = dfsbcq2 () |- ( y = y → ( [ y / x ] ph ↔ [. y / x ]. ph ) ) ;;
+	step 6 : wff = ax-mp (step 4, step 5) |- ( [ y / x ] ph ↔ [. y / x ]. ph ) ;;
+	step 7 : wff = bitr2i (step 3, step 6) |- ( [. y / x ]. ph ↔ y ∈ { x | ph } ) ;;
+	step 8 : wff = vtoclbg (step 1, step 2, step 7) |- ( A ∈ V → ( [. A / x ]. ph ↔ A ∈ { x | ph } ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* The disjunction of two equivalences for class substitution does not
+       require a class existence hypothesis.  This theorem tells us that there
+       are only 2 possibilities for ` [ A / x ] ph ` behavior at proper
+       classes, matching the ~ sbc5 (false) and ~ sbc6 (true) conclusions.
+       This is interesting since ~ dfsbcq and ~ dfsbcq2 (from which it is
+       derived) do not appear to say anything obvious about proper class
+       behavior.  Note that this theorem doesn't tell us that it is always one
+       or the other at proper classes; it could "flip" between false (the first
+       disjunct) and true (the second disjunct) as a function of some other
+       variable ` y ` that ` ph ` or ` A ` may contain.  (Contributed by NM,
+       11-Oct-2004.)  (Proof modification is discouraged.) */
+
+theorem sbc2or (ph : wff, x : set, A : class) disjointed(x y A, y ph) {
+	prop 1 : wff = |- ( ( [. A / x ]. ph ↔ ∃ x ( x = A ∧ ph ) ) ∨ ( [. A / x ]. ph ↔ ∀ x ( x = A → ph ) ) ) ;;
+}
+
+proof of sbc2or {
+	var y : set;;
+	step 1 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 2 : wff = eqeq2 () |- ( y = A → ( x = y ↔ x = A ) ) ;;
+	step 3 : wff = anbi1d (step 2) |- ( y = A → ( ( x = y ∧ ph ) ↔ ( x = A ∧ ph ) ) ) ;;
+	step 4 : wff = exbidv (step 3) |- ( y = A → ( ∃ x ( x = y ∧ ph ) ↔ ∃ x ( x = A ∧ ph ) ) ) ;;
+	step 5 : wff = sb5 () |- ( [ y / x ] ph ↔ ∃ x ( x = y ∧ ph ) ) ;;
+	step 6 : wff = vtoclbg (step 1, step 4, step 5) |- ( A ∈ _V → ( [. A / x ]. ph ↔ ∃ x ( x = A ∧ ph ) ) ) ;;
+	step 7 : wff = orcd (step 6) |- ( A ∈ _V → ( ( [. A / x ]. ph ↔ ∃ x ( x = A ∧ ph ) ) ∨ ( [. A / x ]. ph ↔ ∀ x ( x = A → ph ) ) ) ) ;;
+	step 8 : wff = pm5.15 () |- ( ( [. A / x ]. ph ↔ ∃ x ( x = A ∧ ph ) ) ∨ ( [. A / x ]. ph ↔ ¬ ∃ x ( x = A ∧ ph ) ) ) ;;
+	step 9 : wff = vex () |- x ∈ _V ;;
+	step 10 : wff = eleq1 () |- ( x = A → ( x ∈ _V ↔ A ∈ _V ) ) ;;
+	step 11 : wff = mpbii (step 9, step 10) |- ( x = A → A ∈ _V ) ;;
+	step 12 : wff = adantr (step 11) |- ( ( x = A ∧ ph ) → A ∈ _V ) ;;
+	step 13 : wff = con3i (step 12) |- ( ¬ A ∈ _V → ¬ ( x = A ∧ ph ) ) ;;
+	step 14 : wff = nexdv (step 13) |- ( ¬ A ∈ _V → ¬ ∃ x ( x = A ∧ ph ) ) ;;
+	step 15 : wff = vex () |- x ∈ _V ;;
+	step 16 : wff = eleq1 () |- ( x = A → ( x ∈ _V ↔ A ∈ _V ) ) ;;
+	step 17 : wff = mpbii (step 15, step 16) |- ( x = A → A ∈ _V ) ;;
+	step 18 : wff = con3i (step 17) |- ( ¬ A ∈ _V → ¬ x = A ) ;;
+	step 19 : wff = pm2.21d (step 18) |- ( ¬ A ∈ _V → ( x = A → ph ) ) ;;
+	step 20 : wff = alrimiv (step 19) |- ( ¬ A ∈ _V → ∀ x ( x = A → ph ) ) ;;
+	step 21 : wff = 2thd (step 14, step 20) |- ( ¬ A ∈ _V → ( ¬ ∃ x ( x = A ∧ ph ) ↔ ∀ x ( x = A → ph ) ) ) ;;
+	step 22 : wff = bibi2d (step 21) |- ( ¬ A ∈ _V → ( ( [. A / x ]. ph ↔ ¬ ∃ x ( x = A ∧ ph ) ) ↔ ( [. A / x ]. ph ↔ ∀ x ( x = A → ph ) ) ) ) ;;
+	step 23 : wff = orbi2d (step 22) |- ( ¬ A ∈ _V → ( ( ( [. A / x ]. ph ↔ ∃ x ( x = A ∧ ph ) ) ∨ ( [. A / x ]. ph ↔ ¬ ∃ x ( x = A ∧ ph ) ) ) ↔ ( ( [. A / x ]. ph ↔ ∃ x ( x = A ∧ ph ) ) ∨ ( [. A / x ]. ph ↔ ∀ x ( x = A → ph ) ) ) ) ) ;;
+	step 24 : wff = mpbii (step 8, step 23) |- ( ¬ A ∈ _V → ( ( [. A / x ]. ph ↔ ∃ x ( x = A ∧ ph ) ) ∨ ( [. A / x ]. ph ↔ ∀ x ( x = A → ph ) ) ) ) ;;
+	step 25 : wff = pm2.61i (step 7, step 24) |- ( ( [. A / x ]. ph ↔ ∃ x ( x = A ∧ ph ) ) ∨ ( [. A / x ]. ph ↔ ∀ x ( x = A → ph ) ) ) ;;
+	qed prop 1 = step 25 ;;
+}
+
+/* By our definition of proper substitution, it can only be true if the
+     substituted expression is a set.  (Contributed by Mario Carneiro,
+     13-Oct-2016.) */
+
+theorem sbcex (ph : wff, x : set, A : class)  {
+	prop 1 : wff = |- ( [. A / x ]. ph → A ∈ _V ) ;;
+}
+
+proof of sbcex {
+	step 1 : wff = df-sbc () |- ( [. A / x ]. ph ↔ A ∈ { x | ph } ) ;;
+	step 2 : wff = elex () |- ( A ∈ { x | ph } → A ∈ _V ) ;;
+	step 3 : wff = sylbi (step 1, step 2) |- ( [. A / x ]. ph → A ∈ _V ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Equality theorem for class substitution.  Class version of ~ sbequ12 .
+     (Contributed by NM, 26-Sep-2003.) */
+
+theorem sbceq1a (ph : wff, x : set, A : class)  {
+	prop 1 : wff = |- ( x = A → ( ph ↔ [. A / x ]. ph ) ) ;;
+}
+
+proof of sbceq1a {
+	step 1 : wff = sbid () |- ( [ x / x ] ph ↔ ph ) ;;
+	step 2 : wff = dfsbcq2 () |- ( x = A → ( [ x / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 3 : wff = syl5bbr (step 1, step 2) |- ( x = A → ( ph ↔ [. A / x ]. ph ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Equality theorem for class substitution.  Class version of ~ sbequ12r .
+     (Contributed by NM, 4-Jan-2017.) */
+
+theorem sbceq2a (ph : wff, x : set, A : class)  {
+	prop 1 : wff = |- ( A = x → ( [. A / x ]. ph ↔ ph ) ) ;;
+}
+
+proof of sbceq2a {
+	step 1 : wff = sbceq1a () |- ( x = A → ( ph ↔ [. A / x ]. ph ) ) ;;
+	step 2 : wff = eqcoms (step 1) |- ( A = x → ( ph ↔ [. A / x ]. ph ) ) ;;
+	step 3 : wff = bicomd (step 2) |- ( A = x → ( [. A / x ]. ph ↔ ph ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Specialization: if a formula is true for all sets, it is true for any
+       class which is a set.  Similar to Theorem 6.11 of [Quine] p. 44.  See
+       also ~ stdpc4 and ~ rspsbc .  (Contributed by NM, 16-Jan-2004.) */
+
+theorem spsbc (ph : wff, x : set, A : class, V : class) disjointed(ph y, A y, x y) {
+	prop 1 : wff = |- ( A ∈ V → ( ∀ x ph → [. A / x ]. ph ) ) ;;
+}
+
+proof of spsbc {
+	var y : set;;
+	step 1 : wff = stdpc4 () |- ( ∀ x ph → [ y / x ] ph ) ;;
+	step 2 : wff = sbsbc () |- ( [ y / x ] ph ↔ [. y / x ]. ph ) ;;
+	step 3 : wff = sylib (step 1, step 2) |- ( ∀ x ph → [. y / x ]. ph ) ;;
+	step 4 : wff = dfsbcq () |- ( y = A → ( [. y / x ]. ph ↔ [. A / x ]. ph ) ) ;;
+	step 5 : wff = syl5ib (step 3, step 4) |- ( y = A → ( ∀ x ph → [. A / x ]. ph ) ) ;;
+	step 6 : wff = vtocleg (step 5) |- ( A ∈ V → ( ∀ x ph → [. A / x ]. ph ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Specialization: if a formula is true for all sets, it is true for any
+       class which is a set.  Similar to Theorem 6.11 of [Quine] p. 44.  See
+       also ~ stdpc4 and ~ rspsbc .  (Contributed by Mario Carneiro,
+       9-Feb-2017.) */
+
+theorem spsbcd (ph : wff, ps : wff, x : set, A : class, V : class)  {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → ∀ x ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → [. A / x ]. ps ) ;;
+}
+
+proof of spsbcd {
+	step 1 : wff = spsbc () |- ( A ∈ V → ( ∀ x ps → [. A / x ]. ps ) ) ;;
+	step 2 : wff = sylc (hyp 1, hyp 2, step 1) |- ( ph → [. A / x ]. ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A substitution into a theorem remains true (when ` A ` is a set).
+       (Contributed by NM, 5-Nov-2005.) */
+
+theorem sbcth (ph : wff, x : set, A : class, V : class)  {
+	hyp 1 : wff = |- ph ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ V → [. A / x ]. ph ) ;;
+}
+
+proof of sbcth {
+	step 1 : wff = ax-gen (hyp 1) |- ∀ x ph ;;
+	step 2 : wff = spsbc () |- ( A ∈ V → ( ∀ x ph → [. A / x ]. ph ) ) ;;
+	step 3 : wff = mpi (step 1, step 2) |- ( A ∈ V → [. A / x ]. ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Deduction version of ~ sbcth .  (Contributed by NM, 30-Nov-2005.)
+       (Proof shortened by Andrew Salmon, 8-Jun-2011.) */
+
+theorem sbcthdv (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x ph) {
+	hyp 1 : wff = |- ( ph → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ A ∈ V ) → [. A / x ]. ps ) ;;
+}
+
+proof of sbcthdv {
+	step 1 : wff = alrimiv (hyp 1) |- ( ph → ∀ x ps ) ;;
+	step 2 : wff = spsbc () |- ( A ∈ V → ( ∀ x ps → [. A / x ]. ps ) ) ;;
+	step 3 : wff = mpan9 (step 1, step 2) |- ( ( ph ∧ A ∈ V ) → [. A / x ]. ps ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* An identity theorem for substitution.  See ~ sbid .  (Contributed by Mario
+     Carneiro, 18-Feb-2017.) */
+
+theorem sbcid (ph : wff, x : set)  {
+	prop 1 : wff = |- ( [. x / x ]. ph ↔ ph ) ;;
+}
+
+proof of sbcid {
+	step 1 : wff = sbsbc () |- ( [ x / x ] ph ↔ [. x / x ]. ph ) ;;
+	step 2 : wff = sbid () |- ( [ x / x ] ph ↔ ph ) ;;
+	step 3 : wff = bitr3i (step 1, step 2) |- ( [. x / x ]. ph ↔ ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Deduction version of ~ nfsbc1 .  (Contributed by NM, 23-May-2006.)
+       (Revised by Mario Carneiro, 12-Oct-2016.) */
+
+theorem nfsbc1d (ph : wff, ps : wff, x : set, A : class)  {
+	hyp 1 : wff = |- ( ph → F/_ x A ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → F/ x [. A / x ]. ps ) ;;
+}
+
+proof of nfsbc1d {
+	step 1 : wff = df-sbc () |- ( [. A / x ]. ps ↔ A ∈ { x | ps } ) ;;
+	step 2 : wff = nfab1 () |- F/_ x { x | ps } ;;
+	step 3 : wff = a1i (step 2) |- ( ph → F/_ x { x | ps } ) ;;
+	step 4 : wff = nfeld (hyp 1, step 3) |- ( ph → F/ x A ∈ { x | ps } ) ;;
+	step 5 : wff = nfxfrd (step 1, step 4) |- ( ph → F/ x [. A / x ]. ps ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Bound-variable hypothesis builder for class substitution.  (Contributed
+       by Mario Carneiro, 12-Oct-2016.) */
+
+theorem nfsbc1 (ph : wff, x : set, A : class)  {
+	hyp 1 : wff = |- F/_ x A ;;
+	-----------------------
+	prop 1 : wff = |- F/ x [. A / x ]. ph ;;
+}
+
+proof of nfsbc1 {
+	step 1 : wff = a1i (hyp 1) |- ( T. → F/_ x A ) ;;
+	step 2 : wff = nfsbc1d (step 1) |- ( T. → F/ x [. A / x ]. ph ) ;;
+	step 3 : wff = trud (step 2) |- F/ x [. A / x ]. ph ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Bound-variable hypothesis builder for class substitution.  (Contributed
+       by Mario Carneiro, 12-Oct-2016.) */
+
+theorem nfsbc1v (ph : wff, x : set, A : class) disjointed(x A) {
+	prop 1 : wff = |- F/ x [. A / x ]. ph ;;
+}
+
+proof of nfsbc1v {
+	step 1 : wff = nfcv () |- F/_ x A ;;
+	step 2 : wff = nfsbc1 (step 1) |- F/ x [. A / x ]. ph ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Deduction version of ~ nfsbc .  (Contributed by NM, 23-Nov-2005.)
+       (Revised by Mario Carneiro, 12-Oct-2016.) */
+
+theorem nfsbcd (ph : wff, ps : wff, x : set, y : set, A : class)  {
+	hyp 1 : wff = |- F/ y ph ;;
+	hyp 2 : wff = |- ( ph → F/_ x A ) ;;
+	hyp 3 : wff = |- ( ph → F/ x ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → F/ x [. A / y ]. ps ) ;;
+}
+
+proof of nfsbcd {
+	step 1 : wff = df-sbc () |- ( [. A / y ]. ps ↔ A ∈ { y | ps } ) ;;
+	step 2 : wff = nfabd (hyp 1, hyp 3) |- ( ph → F/_ x { y | ps } ) ;;
+	step 3 : wff = nfeld (hyp 2, step 2) |- ( ph → F/ x A ∈ { y | ps } ) ;;
+	step 4 : wff = nfxfrd (step 1, step 3) |- ( ph → F/ x [. A / y ]. ps ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Bound-variable hypothesis builder for class substitution.  (Contributed
+       by NM, 7-Sep-2014.)  (Revised by Mario Carneiro, 12-Oct-2016.) */
+
+theorem nfsbc (ph : wff, x : set, y : set, A : class)  {
+	hyp 1 : wff = |- F/_ x A ;;
+	hyp 2 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- F/ x [. A / y ]. ph ;;
+}
+
+proof of nfsbc {
+	step 1 : wff = nftru () |- F/ y T. ;;
+	step 2 : wff = a1i (hyp 1) |- ( T. → F/_ x A ) ;;
+	step 3 : wff = a1i (hyp 2) |- ( T. → F/ x ph ) ;;
+	step 4 : wff = nfsbcd (step 1, step 2, step 3) |- ( T. → F/ x [. A / y ]. ph ) ;;
+	step 5 : wff = trud (step 4) |- F/ x [. A / y ]. ph ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* A composition law for class substitution.  (Contributed by NM,
+       26-Sep-2003.)  (Revised by Mario Carneiro, 13-Oct-2016.) */
+
+theorem sbcco (ph : wff, x : set, y : set, A : class) disjointed(x z, z A, y z ph) {
+	prop 1 : wff = |- ( [. A / y ]. [. y / x ]. ph ↔ [. A / x ]. ph ) ;;
+}
+
+proof of sbcco {
+	var z : set;;
+	step 1 : wff = sbcex () |- ( [. A / y ]. [. y / x ]. ph → A ∈ _V ) ;;
+	step 2 : wff = sbcex () |- ( [. A / x ]. ph → A ∈ _V ) ;;
+	step 3 : wff = dfsbcq () |- ( z = A → ( [. z / y ]. [. y / x ]. ph ↔ [. A / y ]. [. y / x ]. ph ) ) ;;
+	step 4 : wff = dfsbcq () |- ( z = A → ( [. z / x ]. ph ↔ [. A / x ]. ph ) ) ;;
+	step 5 : wff = sbsbc () |- ( [ y / x ] ph ↔ [. y / x ]. ph ) ;;
+	step 6 : wff = sbbii (step 5) |- ( [ z / y ] [ y / x ] ph ↔ [ z / y ] [. y / x ]. ph ) ;;
+	step 7 : wff = nfv () |- F/ y ph ;;
+	step 8 : wff = sbco2 (step 7) |- ( [ z / y ] [ y / x ] ph ↔ [ z / x ] ph ) ;;
+	step 9 : wff = sbsbc () |- ( [ z / y ] [. y / x ]. ph ↔ [. z / y ]. [. y / x ]. ph ) ;;
+	step 10 : wff = 3bitr3ri (step 6, step 8, step 9) |- ( [. z / y ]. [. y / x ]. ph ↔ [ z / x ] ph ) ;;
+	step 11 : wff = sbsbc () |- ( [ z / x ] ph ↔ [. z / x ]. ph ) ;;
+	step 12 : wff = bitri (step 10, step 11) |- ( [. z / y ]. [. y / x ]. ph ↔ [. z / x ]. ph ) ;;
+	step 13 : wff = vtoclbg (step 3, step 4, step 12) |- ( A ∈ _V → ( [. A / y ]. [. y / x ]. ph ↔ [. A / x ]. ph ) ) ;;
+	step 14 : wff = pm5.21nii (step 1, step 2, step 13) |- ( [. A / y ]. [. y / x ]. ph ↔ [. A / x ]. ph ) ;;
+	qed prop 1 = step 14 ;;
+}
+
+/* A composition law for class substitution.  Importantly, ` x ` may occur
+       free in the class expression substituted for ` A ` .  (Contributed by
+       NM, 5-Sep-2004.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) */
+
+theorem sbcco2 (ph : wff, x : set, y : set, A : class, B : class) disjointed(x y, y ph, A y) {
+	hyp 1 : wff = |- ( x = y → A = B ) ;;
+	-----------------------
+	prop 1 : wff = |- ( [. x / y ]. [. B / x ]. ph ↔ [. A / x ]. ph ) ;;
+}
+
+proof of sbcco2 {
+	step 1 : wff = sbsbc () |- ( [ x / y ] [. B / x ]. ph ↔ [. x / y ]. [. B / x ]. ph ) ;;
+	step 2 : wff = nfv () |- F/ y [. A / x ]. ph ;;
+	step 3 : wff = eqcoms (hyp 1) |- ( y = x → A = B ) ;;
+	step 4 : wff = dfsbcq () |- ( A = B → ( [. A / x ]. ph ↔ [. B / x ]. ph ) ) ;;
+	step 5 : wff = bicomd (step 4) |- ( A = B → ( [. B / x ]. ph ↔ [. A / x ]. ph ) ) ;;
+	step 6 : wff = syl (step 3, step 5) |- ( y = x → ( [. B / x ]. ph ↔ [. A / x ]. ph ) ) ;;
+	step 7 : wff = sbie (step 2, step 6) |- ( [ x / y ] [. B / x ]. ph ↔ [. A / x ]. ph ) ;;
+	step 8 : wff = bitr3i (step 1, step 7) |- ( [. x / y ]. [. B / x ]. ph ↔ [. A / x ]. ph ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* An equivalence for class substitution.  (Contributed by NM,
+       23-Aug-1993.)  (Revised by Mario Carneiro, 12-Oct-2016.) */
+
+theorem sbc5 (ph : wff, x : set, A : class) disjointed(x y A, y ph) {
+	prop 1 : wff = |- ( [. A / x ]. ph ↔ ∃ x ( x = A ∧ ph ) ) ;;
+}
+
+proof of sbc5 {
+	var y : set;;
+	step 1 : wff = sbcex () |- ( [. A / x ]. ph → A ∈ _V ) ;;
+	step 2 : wff = exsimpl () |- ( ∃ x ( x = A ∧ ph ) → ∃ x x = A ) ;;
+	step 3 : wff = isset () |- ( A ∈ _V ↔ ∃ x x = A ) ;;
+	step 4 : wff = sylibr (step 2, step 3) |- ( ∃ x ( x = A ∧ ph ) → A ∈ _V ) ;;
+	step 5 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 6 : wff = eqeq2 () |- ( y = A → ( x = y ↔ x = A ) ) ;;
+	step 7 : wff = anbi1d (step 6) |- ( y = A → ( ( x = y ∧ ph ) ↔ ( x = A ∧ ph ) ) ) ;;
+	step 8 : wff = exbidv (step 7) |- ( y = A → ( ∃ x ( x = y ∧ ph ) ↔ ∃ x ( x = A ∧ ph ) ) ) ;;
+	step 9 : wff = sb5 () |- ( [ y / x ] ph ↔ ∃ x ( x = y ∧ ph ) ) ;;
+	step 10 : wff = vtoclbg (step 5, step 8, step 9) |- ( A ∈ _V → ( [. A / x ]. ph ↔ ∃ x ( x = A ∧ ph ) ) ) ;;
+	step 11 : wff = pm5.21nii (step 1, step 4, step 10) |- ( [. A / x ]. ph ↔ ∃ x ( x = A ∧ ph ) ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* An equivalence for class substitution.  (Contributed by NM,
+       11-Oct-2004.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) */
+
+theorem sbc6g (ph : wff, x : set, A : class, V : class) disjointed(x A) {
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ph ↔ ∀ x ( x = A → ph ) ) ) ;;
+}
+
+proof of sbc6g {
+	step 1 : wff = nfe1 () |- F/ x ∃ x ( x = A ∧ ph ) ;;
+	step 2 : wff = ceqex () |- ( x = A → ( ph ↔ ∃ x ( x = A ∧ ph ) ) ) ;;
+	step 3 : wff = ceqsalg (step 1, step 2) |- ( A ∈ V → ( ∀ x ( x = A → ph ) ↔ ∃ x ( x = A ∧ ph ) ) ) ;;
+	step 4 : wff = sbc5 () |- ( [. A / x ]. ph ↔ ∃ x ( x = A ∧ ph ) ) ;;
+	step 5 : wff = syl6rbbr (step 3, step 4) |- ( A ∈ V → ( [. A / x ]. ph ↔ ∀ x ( x = A → ph ) ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* An equivalence for class substitution.  (Contributed by NM,
+       23-Aug-1993.)  (Proof shortened by Eric Schmidt, 17-Jan-2007.) */
+
+theorem sbc6 (ph : wff, x : set, A : class) disjointed(x A) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	-----------------------
+	prop 1 : wff = |- ( [. A / x ]. ph ↔ ∀ x ( x = A → ph ) ) ;;
+}
+
+proof of sbc6 {
+	step 1 : wff = sbc6g () |- ( A ∈ _V → ( [. A / x ]. ph ↔ ∀ x ( x = A → ph ) ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( [. A / x ]. ph ↔ ∀ x ( x = A → ph ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* An equivalence for class substitution in the spirit of ~ df-clab .  Note
+       that ` x ` and ` A ` don't have to be distinct.  (Contributed by NM,
+       18-Nov-2008.)  (Revised by Mario Carneiro, 13-Oct-2016.) */
+
+theorem sbc7 (ph : wff, x : set, y : set, A : class) disjointed(y A, y ph, x y) {
+	prop 1 : wff = |- ( [. A / x ]. ph ↔ ∃ y ( y = A ∧ [. y / x ]. ph ) ) ;;
+}
+
+proof of sbc7 {
+	step 1 : wff = sbcco () |- ( [. A / y ]. [. y / x ]. ph ↔ [. A / x ]. ph ) ;;
+	step 2 : wff = sbc5 () |- ( [. A / y ]. [. y / x ]. ph ↔ ∃ y ( y = A ∧ [. y / x ]. ph ) ) ;;
+	step 3 : wff = bitr3i (step 1, step 2) |- ( [. A / x ]. ph ↔ ∃ y ( y = A ∧ [. y / x ]. ph ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Change bound variables in a wff substitution.  (Contributed by Jeff
+       Hankins, 19-Sep-2009.)  (Proof shortened by Andrew Salmon,
+       8-Jun-2011.) */
+
+theorem cbvsbc (ph : wff, ps : wff, x : set, y : set, A : class)  {
+	hyp 1 : wff = |- F/ y ph ;;
+	hyp 2 : wff = |- F/ x ps ;;
+	hyp 3 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( [. A / x ]. ph ↔ [. A / y ]. ps ) ;;
+}
+
+proof of cbvsbc {
+	step 1 : wff = cbvab (hyp 1, hyp 2, hyp 3) |- { x | ph } = { y | ps } ;;
+	step 2 : wff = eleq2i (step 1) |- ( A ∈ { x | ph } ↔ A ∈ { y | ps } ) ;;
+	step 3 : wff = df-sbc () |- ( [. A / x ]. ph ↔ A ∈ { x | ph } ) ;;
+	step 4 : wff = df-sbc () |- ( [. A / y ]. ps ↔ A ∈ { y | ps } ) ;;
+	step 5 : wff = 3bitr4i (step 2, step 3, step 4) |- ( [. A / x ]. ph ↔ [. A / y ]. ps ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Change the bound variable of a class substitution using implicit
+       substitution.  (Contributed by NM, 30-Sep-2008.)  (Revised by Mario
+       Carneiro, 13-Oct-2016.) */
+
+theorem cbvsbcv (ph : wff, ps : wff, x : set, y : set, A : class) disjointed(y ph, x ps) {
+	hyp 1 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( [. A / x ]. ph ↔ [. A / y ]. ps ) ;;
+}
+
+proof of cbvsbcv {
+	step 1 : wff = nfv () |- F/ y ph ;;
+	step 2 : wff = nfv () |- F/ x ps ;;
+	step 3 : wff = cbvsbc (step 1, step 2, hyp 1) |- ( [. A / x ]. ph ↔ [. A / y ]. ps ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Conversion of implicit substitution to explicit class substitution,
+       using a bound-variable hypothesis instead of distinct variables.
+       (Closed theorem version of ~ sbciegf .)  (Contributed by NM,
+       10-Nov-2005.)  (Revised by Mario Carneiro, 13-Oct-2016.) */
+
+theorem sbciegft (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x A) {
+	prop 1 : wff = |- ( ( A ∈ V ∧ F/ x ps ∧ ∀ x ( x = A → ( ph ↔ ps ) ) ) → ( [. A / x ]. ph ↔ ps ) ) ;;
+}
+
+proof of sbciegft {
+	step 1 : wff = sbc5 () |- ( [. A / x ]. ph ↔ ∃ x ( x = A ∧ ph ) ) ;;
+	step 2 : wff = bi1 () |- ( ( ph ↔ ps ) → ( ph → ps ) ) ;;
+	step 3 : wff = imim2i (step 2) |- ( ( x = A → ( ph ↔ ps ) ) → ( x = A → ( ph → ps ) ) ) ;;
+	step 4 : wff = imp3a (step 3) |- ( ( x = A → ( ph ↔ ps ) ) → ( ( x = A ∧ ph ) → ps ) ) ;;
+	step 5 : wff = alimi (step 4) |- ( ∀ x ( x = A → ( ph ↔ ps ) ) → ∀ x ( ( x = A ∧ ph ) → ps ) ) ;;
+	step 6 : wff = 19.23t () |- ( F/ x ps → ( ∀ x ( ( x = A ∧ ph ) → ps ) ↔ ( ∃ x ( x = A ∧ ph ) → ps ) ) ) ;;
+	step 7 : wff = biimpa (step 6) |- ( ( F/ x ps ∧ ∀ x ( ( x = A ∧ ph ) → ps ) ) → ( ∃ x ( x = A ∧ ph ) → ps ) ) ;;
+	step 8 : wff = sylan2 (step 5, step 7) |- ( ( F/ x ps ∧ ∀ x ( x = A → ( ph ↔ ps ) ) ) → ( ∃ x ( x = A ∧ ph ) → ps ) ) ;;
+	step 9 : wff = 3adant1 (step 8) |- ( ( A ∈ V ∧ F/ x ps ∧ ∀ x ( x = A → ( ph ↔ ps ) ) ) → ( ∃ x ( x = A ∧ ph ) → ps ) ) ;;
+	step 10 : wff = syl5bi (step 1, step 9) |- ( ( A ∈ V ∧ F/ x ps ∧ ∀ x ( x = A → ( ph ↔ ps ) ) ) → ( [. A / x ]. ph → ps ) ) ;;
+	step 11 : wff = bi2 () |- ( ( ph ↔ ps ) → ( ps → ph ) ) ;;
+	step 12 : wff = imim2i (step 11) |- ( ( x = A → ( ph ↔ ps ) ) → ( x = A → ( ps → ph ) ) ) ;;
+	step 13 : wff = com23 (step 12) |- ( ( x = A → ( ph ↔ ps ) ) → ( ps → ( x = A → ph ) ) ) ;;
+	step 14 : wff = alimi (step 13) |- ( ∀ x ( x = A → ( ph ↔ ps ) ) → ∀ x ( ps → ( x = A → ph ) ) ) ;;
+	step 15 : wff = 19.21t () |- ( F/ x ps → ( ∀ x ( ps → ( x = A → ph ) ) ↔ ( ps → ∀ x ( x = A → ph ) ) ) ) ;;
+	step 16 : wff = biimpa (step 15) |- ( ( F/ x ps ∧ ∀ x ( ps → ( x = A → ph ) ) ) → ( ps → ∀ x ( x = A → ph ) ) ) ;;
+	step 17 : wff = sylan2 (step 14, step 16) |- ( ( F/ x ps ∧ ∀ x ( x = A → ( ph ↔ ps ) ) ) → ( ps → ∀ x ( x = A → ph ) ) ) ;;
+	step 18 : wff = 3adant1 (step 17) |- ( ( A ∈ V ∧ F/ x ps ∧ ∀ x ( x = A → ( ph ↔ ps ) ) ) → ( ps → ∀ x ( x = A → ph ) ) ) ;;
+	step 19 : wff = sbc6g () |- ( A ∈ V → ( [. A / x ]. ph ↔ ∀ x ( x = A → ph ) ) ) ;;
+	step 20 : wff = 3ad2ant1 (step 19) |- ( ( A ∈ V ∧ F/ x ps ∧ ∀ x ( x = A → ( ph ↔ ps ) ) ) → ( [. A / x ]. ph ↔ ∀ x ( x = A → ph ) ) ) ;;
+	step 21 : wff = sylibrd (step 18, step 20) |- ( ( A ∈ V ∧ F/ x ps ∧ ∀ x ( x = A → ( ph ↔ ps ) ) ) → ( ps → [. A / x ]. ph ) ) ;;
+	step 22 : wff = impbid (step 10, step 21) |- ( ( A ∈ V ∧ F/ x ps ∧ ∀ x ( x = A → ( ph ↔ ps ) ) ) → ( [. A / x ]. ph ↔ ps ) ) ;;
+	qed prop 1 = step 22 ;;
+}
+
+/* Conversion of implicit substitution to explicit class substitution.
+       (Contributed by NM, 14-Dec-2005.)  (Revised by Mario Carneiro,
+       13-Oct-2016.) */
+
+theorem sbciegf (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x A) {
+	hyp 1 : wff = |- F/ x ps ;;
+	hyp 2 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ph ↔ ps ) ) ;;
+}
+
+proof of sbciegf {
+	step 1 : wff = ax-gen (hyp 2) |- ∀ x ( x = A → ( ph ↔ ps ) ) ;;
+	step 2 : wff = sbciegft () |- ( ( A ∈ V ∧ F/ x ps ∧ ∀ x ( x = A → ( ph ↔ ps ) ) ) → ( [. A / x ]. ph ↔ ps ) ) ;;
+	step 3 : wff = mp3an23 (hyp 1, step 1, step 2) |- ( A ∈ V → ( [. A / x ]. ph ↔ ps ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Conversion of implicit substitution to explicit class substitution.
+       (Contributed by NM, 10-Nov-2005.) */
+
+theorem sbcieg (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x A, x ps) {
+	hyp 1 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ph ↔ ps ) ) ;;
+}
+
+proof of sbcieg {
+	step 1 : wff = elex () |- ( A ∈ V → A ∈ _V ) ;;
+	step 2 : wff = nfv () |- F/ x ps ;;
+	step 3 : wff = sbciegf (step 2, hyp 1) |- ( A ∈ _V → ( [. A / x ]. ph ↔ ps ) ) ;;
+	step 4 : wff = syl (step 1, step 3) |- ( A ∈ V → ( [. A / x ]. ph ↔ ps ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Conversion of implicit substitution to explicit class substitution.
+       This version of ~ sbcie avoids a disjointness condition on ` x , A ` by
+       substituting twice.  (Contributed by Mario Carneiro, 15-Oct-2016.) */
+
+theorem sbcie2g (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, V : class) disjointed(x y, A y, ch y, ph y, ps x) {
+	hyp 1 : wff = |- ( x = y → ( ph ↔ ps ) ) ;;
+	hyp 2 : wff = |- ( y = A → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ph ↔ ch ) ) ;;
+}
+
+proof of sbcie2g {
+	step 1 : wff = dfsbcq () |- ( y = A → ( [. y / x ]. ph ↔ [. A / x ]. ph ) ) ;;
+	step 2 : wff = sbsbc () |- ( [ y / x ] ph ↔ [. y / x ]. ph ) ;;
+	step 3 : wff = nfv () |- F/ x ps ;;
+	step 4 : wff = sbie (step 3, hyp 1) |- ( [ y / x ] ph ↔ ps ) ;;
+	step 5 : wff = bitr3i (step 2, step 4) |- ( [. y / x ]. ph ↔ ps ) ;;
+	step 6 : wff = vtoclbg (step 1, hyp 2, step 5) |- ( A ∈ V → ( [. A / x ]. ph ↔ ch ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Conversion of implicit substitution to explicit class substitution.
+       (Contributed by NM, 4-Sep-2004.) */
+
+theorem sbcie (ph : wff, ps : wff, x : set, A : class) disjointed(x A, x ps) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- ( x = A → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( [. A / x ]. ph ↔ ps ) ;;
+}
+
+proof of sbcie {
+	step 1 : wff = sbcieg (hyp 2) |- ( A ∈ _V → ( [. A / x ]. ph ↔ ps ) ) ;;
+	step 2 : wff = ax-mp (hyp 1, step 1) |- ( [. A / x ]. ph ↔ ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Conversion of implicit substitution to explicit class substitution,
+         deduction form.  (Contributed by NM, 29-Dec-2014.) */
+
+theorem sbciedf (ph : wff, ps : wff, ch : wff, x : set, A : class, V : class) disjointed(x A) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ( ph ∧ x = A ) → ( ps ↔ ch ) ) ;;
+	hyp 3 : wff = |- F/ x ph ;;
+	hyp 4 : wff = |- ( ph → F/ x ch ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( [. A / x ]. ps ↔ ch ) ) ;;
+}
+
+proof of sbciedf {
+	step 1 : wff = ex (hyp 2) |- ( ph → ( x = A → ( ps ↔ ch ) ) ) ;;
+	step 2 : wff = alrimi (hyp 3, step 1) |- ( ph → ∀ x ( x = A → ( ps ↔ ch ) ) ) ;;
+	step 3 : wff = sbciegft () |- ( ( A ∈ V ∧ F/ x ch ∧ ∀ x ( x = A → ( ps ↔ ch ) ) ) → ( [. A / x ]. ps ↔ ch ) ) ;;
+	step 4 : wff = syl3anc (hyp 1, hyp 4, step 2, step 3) |- ( ph → ( [. A / x ]. ps ↔ ch ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Conversion of implicit substitution to explicit class substitution,
+       deduction form.  (Contributed by NM, 13-Dec-2014.) */
+
+theorem sbcied (ph : wff, ps : wff, ch : wff, x : set, A : class, V : class) disjointed(x A, x ph, x ch) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ( ph ∧ x = A ) → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( [. A / x ]. ps ↔ ch ) ) ;;
+}
+
+proof of sbcied {
+	step 1 : wff = nfv () |- F/ x ph ;;
+	step 2 : wff = nfvd () |- ( ph → F/ x ch ) ;;
+	step 3 : wff = sbciedf (hyp 1, hyp 2, step 1, step 2) |- ( ph → ( [. A / x ]. ps ↔ ch ) ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Conversion of implicit substitution to explicit class substitution,
+       deduction form.  (Contributed by NM, 13-Dec-2014.) */
+
+theorem sbcied2 (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class, V : class) disjointed(x A, x ph, x ch) {
+	hyp 1 : wff = |- ( ph → A ∈ V ) ;;
+	hyp 2 : wff = |- ( ph → A = B ) ;;
+	hyp 3 : wff = |- ( ( ph ∧ x = B ) → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( [. A / x ]. ps ↔ ch ) ) ;;
+}
+
+proof of sbcied2 {
+	step 1 : wff = id () |- ( x = A → x = A ) ;;
+	step 2 : wff = sylan9eqr (step 1, hyp 2) |- ( ( ph ∧ x = A ) → x = B ) ;;
+	step 3 : wff = syldan (step 2, hyp 3) |- ( ( ph ∧ x = A ) → ( ps ↔ ch ) ) ;;
+	step 4 : wff = sbcied (hyp 1, step 3) |- ( ph → ( [. A / x ]. ps ↔ ch ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Membership in a restricted class abstraction, expressed with explicit
+       class substitution.  (The variation ~ elrabf has implicit
+       substitution).  The hypothesis specifies that ` x ` must not be a free
+       variable in ` B ` .  (Contributed by NM, 30-Sep-2003.)  (Proof shortened
+       by Mario Carneiro, 13-Oct-2016.) */
+
+theorem elrabsf (ph : wff, x : set, A : class, B : class) disjointed(y A, y B, y ph, x y) {
+	hyp 1 : wff = |- F/_ x B ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ { x ∈ B | ph } ↔ ( A ∈ B ∧ [. A / x ]. ph ) ) ;;
+}
+
+proof of elrabsf {
+	var y : set;;
+	step 1 : wff = dfsbcq () |- ( y = A → ( [. y / x ]. ph ↔ [. A / x ]. ph ) ) ;;
+	step 2 : wff = nfcv () |- F/_ y B ;;
+	step 3 : wff = nfv () |- F/ y ph ;;
+	step 4 : wff = nfsbc1v () |- F/ x [. y / x ]. ph ;;
+	step 5 : wff = sbceq1a () |- ( x = y → ( ph ↔ [. y / x ]. ph ) ) ;;
+	step 6 : wff = cbvrab (hyp 1, step 2, step 3, step 4, step 5) |- { x ∈ B | ph } = { y ∈ B | [. y / x ]. ph } ;;
+	step 7 : wff = elrab2 (step 1, step 6) |- ( A ∈ { x ∈ B | ph } ↔ ( A ∈ B ∧ [. A / x ]. ph ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Substitution applied to an atomic wff.  Set theory version of ~ eqsb3 .
+       (Contributed by Andrew Salmon, 29-Jun-2011.) */
+
+theorem eqsbc3 (x : set, A : class, B : class, V : class) disjointed(x y B, y A) {
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. x = B ↔ A = B ) ) ;;
+}
+
+proof of eqsbc3 {
+	var y : set;;
+	step 1 : wff = dfsbcq () |- ( y = A → ( [. y / x ]. x = B ↔ [. A / x ]. x = B ) ) ;;
+	step 2 : wff = eqeq1 () |- ( y = A → ( y = B ↔ A = B ) ) ;;
+	step 3 : wff = sbsbc () |- ( [ y / x ] x = B ↔ [. y / x ]. x = B ) ;;
+	step 4 : wff = eqsb3 () |- ( [ y / x ] x = B ↔ y = B ) ;;
+	step 5 : wff = bitr3i (step 3, step 4) |- ( [. y / x ]. x = B ↔ y = B ) ;;
+	step 6 : wff = vtoclbg (step 1, step 2, step 5) |- ( A ∈ V → ( [. A / x ]. x = B ↔ A = B ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Move negation in and out of class substitution.  (Contributed by NM,
+       16-Jan-2004.) */
+
+theorem sbcng (ph : wff, x : set, A : class, V : class) disjointed(x y, y A, y ph) {
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ¬ ph ↔ ¬ [. A / x ]. ph ) ) ;;
+}
+
+proof of sbcng {
+	var y : set;;
+	step 1 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ¬ ph ↔ [. A / x ]. ¬ ph ) ) ;;
+	step 2 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 3 : wff = notbid (step 2) |- ( y = A → ( ¬ [ y / x ] ph ↔ ¬ [. A / x ]. ph ) ) ;;
+	step 4 : wff = sbn () |- ( [ y / x ] ¬ ph ↔ ¬ [ y / x ] ph ) ;;
+	step 5 : wff = vtoclbg (step 1, step 3, step 4) |- ( A ∈ V → ( [. A / x ]. ¬ ph ↔ ¬ [. A / x ]. ph ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Distribution of class substitution over implication.  (Contributed by
+       NM, 16-Jan-2004.) */
+
+theorem sbcimg (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x y, y A, y ph, y ps) {
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ( ph → ps ) ↔ ( [. A / x ]. ph → [. A / x ]. ps ) ) ) ;;
+}
+
+proof of sbcimg {
+	var y : set;;
+	step 1 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ( ph → ps ) ↔ [. A / x ]. ( ph → ps ) ) ) ;;
+	step 2 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 3 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ps ↔ [. A / x ]. ps ) ) ;;
+	step 4 : wff = imbi12d (step 2, step 3) |- ( y = A → ( ( [ y / x ] ph → [ y / x ] ps ) ↔ ( [. A / x ]. ph → [. A / x ]. ps ) ) ) ;;
+	step 5 : wff = sbim () |- ( [ y / x ] ( ph → ps ) ↔ ( [ y / x ] ph → [ y / x ] ps ) ) ;;
+	step 6 : wff = vtoclbg (step 1, step 4, step 5) |- ( A ∈ V → ( [. A / x ]. ( ph → ps ) ↔ ( [. A / x ]. ph → [. A / x ]. ps ) ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Distribution of class substitution over conjunction.  (Contributed by
+       NM, 31-Dec-2016.) */
+
+theorem sbcan (ph : wff, ps : wff, x : set, A : class) disjointed(x y, y A, y ph, y ps) {
+	prop 1 : wff = |- ( [. A / x ]. ( ph ∧ ps ) ↔ ( [. A / x ]. ph ∧ [. A / x ]. ps ) ) ;;
+}
+
+proof of sbcan {
+	var y : set;;
+	step 1 : wff = sbcex () |- ( [. A / x ]. ( ph ∧ ps ) → A ∈ _V ) ;;
+	step 2 : wff = sbcex () |- ( [. A / x ]. ps → A ∈ _V ) ;;
+	step 3 : wff = adantl (step 2) |- ( ( [. A / x ]. ph ∧ [. A / x ]. ps ) → A ∈ _V ) ;;
+	step 4 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ( ph ∧ ps ) ↔ [. A / x ]. ( ph ∧ ps ) ) ) ;;
+	step 5 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 6 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ps ↔ [. A / x ]. ps ) ) ;;
+	step 7 : wff = anbi12d (step 5, step 6) |- ( y = A → ( ( [ y / x ] ph ∧ [ y / x ] ps ) ↔ ( [. A / x ]. ph ∧ [. A / x ]. ps ) ) ) ;;
+	step 8 : wff = sban () |- ( [ y / x ] ( ph ∧ ps ) ↔ ( [ y / x ] ph ∧ [ y / x ] ps ) ) ;;
+	step 9 : wff = vtoclbg (step 4, step 7, step 8) |- ( A ∈ _V → ( [. A / x ]. ( ph ∧ ps ) ↔ ( [. A / x ]. ph ∧ [. A / x ]. ps ) ) ) ;;
+	step 10 : wff = pm5.21nii (step 1, step 3, step 9) |- ( [. A / x ]. ( ph ∧ ps ) ↔ ( [. A / x ]. ph ∧ [. A / x ]. ps ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Distribution of class substitution over conjunction.  (Contributed by
+       NM, 21-May-2004.) */
+
+theorem sbcang (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x y, y A, y ph, y ps) {
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ( ph ∧ ps ) ↔ ( [. A / x ]. ph ∧ [. A / x ]. ps ) ) ) ;;
+}
+
+proof of sbcang {
+	var y : set;;
+	step 1 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ( ph ∧ ps ) ↔ [. A / x ]. ( ph ∧ ps ) ) ) ;;
+	step 2 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 3 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ps ↔ [. A / x ]. ps ) ) ;;
+	step 4 : wff = anbi12d (step 2, step 3) |- ( y = A → ( ( [ y / x ] ph ∧ [ y / x ] ps ) ↔ ( [. A / x ]. ph ∧ [. A / x ]. ps ) ) ) ;;
+	step 5 : wff = sban () |- ( [ y / x ] ( ph ∧ ps ) ↔ ( [ y / x ] ph ∧ [ y / x ] ps ) ) ;;
+	step 6 : wff = vtoclbg (step 1, step 4, step 5) |- ( A ∈ V → ( [. A / x ]. ( ph ∧ ps ) ↔ ( [. A / x ]. ph ∧ [. A / x ]. ps ) ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Distribution of class substitution over disjunction.  (Contributed by
+       NM, 31-Dec-2016.) */
+
+theorem sbcor (ph : wff, ps : wff, x : set, A : class) disjointed(x y, y A, y ph, y ps) {
+	prop 1 : wff = |- ( [. A / x ]. ( ph ∨ ps ) ↔ ( [. A / x ]. ph ∨ [. A / x ]. ps ) ) ;;
+}
+
+proof of sbcor {
+	var y : set;;
+	step 1 : wff = sbcex () |- ( [. A / x ]. ( ph ∨ ps ) → A ∈ _V ) ;;
+	step 2 : wff = sbcex () |- ( [. A / x ]. ph → A ∈ _V ) ;;
+	step 3 : wff = sbcex () |- ( [. A / x ]. ps → A ∈ _V ) ;;
+	step 4 : wff = jaoi (step 2, step 3) |- ( ( [. A / x ]. ph ∨ [. A / x ]. ps ) → A ∈ _V ) ;;
+	step 5 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ( ph ∨ ps ) ↔ [. A / x ]. ( ph ∨ ps ) ) ) ;;
+	step 6 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 7 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ps ↔ [. A / x ]. ps ) ) ;;
+	step 8 : wff = orbi12d (step 6, step 7) |- ( y = A → ( ( [ y / x ] ph ∨ [ y / x ] ps ) ↔ ( [. A / x ]. ph ∨ [. A / x ]. ps ) ) ) ;;
+	step 9 : wff = sbor () |- ( [ y / x ] ( ph ∨ ps ) ↔ ( [ y / x ] ph ∨ [ y / x ] ps ) ) ;;
+	step 10 : wff = vtoclbg (step 5, step 8, step 9) |- ( A ∈ _V → ( [. A / x ]. ( ph ∨ ps ) ↔ ( [. A / x ]. ph ∨ [. A / x ]. ps ) ) ) ;;
+	step 11 : wff = pm5.21nii (step 1, step 4, step 10) |- ( [. A / x ]. ( ph ∨ ps ) ↔ ( [. A / x ]. ph ∨ [. A / x ]. ps ) ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* Distribution of class substitution over disjunction.  (Contributed by
+       NM, 21-May-2004.) */
+
+theorem sbcorg (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x y, y A, y ph, y ps) {
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ( ph ∨ ps ) ↔ ( [. A / x ]. ph ∨ [. A / x ]. ps ) ) ) ;;
+}
+
+proof of sbcorg {
+	var y : set;;
+	step 1 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ( ph ∨ ps ) ↔ [. A / x ]. ( ph ∨ ps ) ) ) ;;
+	step 2 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 3 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ps ↔ [. A / x ]. ps ) ) ;;
+	step 4 : wff = orbi12d (step 2, step 3) |- ( y = A → ( ( [ y / x ] ph ∨ [ y / x ] ps ) ↔ ( [. A / x ]. ph ∨ [. A / x ]. ps ) ) ) ;;
+	step 5 : wff = sbor () |- ( [ y / x ] ( ph ∨ ps ) ↔ ( [ y / x ] ph ∨ [ y / x ] ps ) ) ;;
+	step 6 : wff = vtoclbg (step 1, step 4, step 5) |- ( A ∈ V → ( [. A / x ]. ( ph ∨ ps ) ↔ ( [. A / x ]. ph ∨ [. A / x ]. ps ) ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Distribution of class substitution over biconditional.  (Contributed by
+       Raph Levien, 10-Apr-2004.) */
+
+theorem sbcbig (ph : wff, ps : wff, x : set, A : class, V : class) disjointed(x y, y A, y ph, y ps) {
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ( ph ↔ ps ) ↔ ( [. A / x ]. ph ↔ [. A / x ]. ps ) ) ) ;;
+}
+
+proof of sbcbig {
+	var y : set;;
+	step 1 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ( ph ↔ ps ) ↔ [. A / x ]. ( ph ↔ ps ) ) ) ;;
+	step 2 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 3 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ps ↔ [. A / x ]. ps ) ) ;;
+	step 4 : wff = bibi12d (step 2, step 3) |- ( y = A → ( ( [ y / x ] ph ↔ [ y / x ] ps ) ↔ ( [. A / x ]. ph ↔ [. A / x ]. ps ) ) ) ;;
+	step 5 : wff = sbbi () |- ( [ y / x ] ( ph ↔ ps ) ↔ ( [ y / x ] ph ↔ [ y / x ] ps ) ) ;;
+	step 6 : wff = vtoclbg (step 1, step 4, step 5) |- ( A ∈ V → ( [. A / x ]. ( ph ↔ ps ) ↔ ( [. A / x ]. ph ↔ [. A / x ]. ps ) ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Move universal quantifier in and out of class substitution.
+       (Contributed by NM, 31-Dec-2016.) */
+
+theorem sbcal (ph : wff, x : set, y : set, A : class) disjointed(x z A, x y z, z ph) {
+	prop 1 : wff = |- ( [. A / y ]. ∀ x ph ↔ ∀ x [. A / y ]. ph ) ;;
+}
+
+proof of sbcal {
+	var z : set;;
+	step 1 : wff = sbcex () |- ( [. A / y ]. ∀ x ph → A ∈ _V ) ;;
+	step 2 : wff = sbcex () |- ( [. A / y ]. ph → A ∈ _V ) ;;
+	step 3 : wff = sps (step 2) |- ( ∀ x [. A / y ]. ph → A ∈ _V ) ;;
+	step 4 : wff = dfsbcq2 () |- ( z = A → ( [ z / y ] ∀ x ph ↔ [. A / y ]. ∀ x ph ) ) ;;
+	step 5 : wff = dfsbcq2 () |- ( z = A → ( [ z / y ] ph ↔ [. A / y ]. ph ) ) ;;
+	step 6 : wff = albidv (step 5) |- ( z = A → ( ∀ x [ z / y ] ph ↔ ∀ x [. A / y ]. ph ) ) ;;
+	step 7 : wff = sbal () |- ( [ z / y ] ∀ x ph ↔ ∀ x [ z / y ] ph ) ;;
+	step 8 : wff = vtoclbg (step 4, step 6, step 7) |- ( A ∈ _V → ( [. A / y ]. ∀ x ph ↔ ∀ x [. A / y ]. ph ) ) ;;
+	step 9 : wff = pm5.21nii (step 1, step 3, step 8) |- ( [. A / y ]. ∀ x ph ↔ ∀ x [. A / y ]. ph ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Move universal quantifier in and out of class substitution.
+       (Contributed by NM, 16-Jan-2004.) */
+
+theorem sbcalg (ph : wff, x : set, y : set, A : class, V : class) disjointed(x z A, x y z, z ph) {
+	prop 1 : wff = |- ( A ∈ V → ( [. A / y ]. ∀ x ph ↔ ∀ x [. A / y ]. ph ) ) ;;
+}
+
+proof of sbcalg {
+	var z : set;;
+	step 1 : wff = dfsbcq2 () |- ( z = A → ( [ z / y ] ∀ x ph ↔ [. A / y ]. ∀ x ph ) ) ;;
+	step 2 : wff = dfsbcq2 () |- ( z = A → ( [ z / y ] ph ↔ [. A / y ]. ph ) ) ;;
+	step 3 : wff = albidv (step 2) |- ( z = A → ( ∀ x [ z / y ] ph ↔ ∀ x [. A / y ]. ph ) ) ;;
+	step 4 : wff = sbal () |- ( [ z / y ] ∀ x ph ↔ ∀ x [ z / y ] ph ) ;;
+	step 5 : wff = vtoclbg (step 1, step 3, step 4) |- ( A ∈ V → ( [. A / y ]. ∀ x ph ↔ ∀ x [. A / y ]. ph ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Move existential quantifier in and out of class substitution.
+       (Contributed by NM, 21-May-2004.) */
+
+theorem sbcex2 (ph : wff, x : set, y : set, A : class) disjointed(x z A, x y z, z ph) {
+	prop 1 : wff = |- ( [. A / y ]. ∃ x ph ↔ ∃ x [. A / y ]. ph ) ;;
+}
+
+proof of sbcex2 {
+	var z : set;;
+	step 1 : wff = sbcex () |- ( [. A / y ]. ∃ x ph → A ∈ _V ) ;;
+	step 2 : wff = sbcex () |- ( [. A / y ]. ph → A ∈ _V ) ;;
+	step 3 : wff = exlimiv (step 2) |- ( ∃ x [. A / y ]. ph → A ∈ _V ) ;;
+	step 4 : wff = dfsbcq2 () |- ( z = A → ( [ z / y ] ∃ x ph ↔ [. A / y ]. ∃ x ph ) ) ;;
+	step 5 : wff = dfsbcq2 () |- ( z = A → ( [ z / y ] ph ↔ [. A / y ]. ph ) ) ;;
+	step 6 : wff = exbidv (step 5) |- ( z = A → ( ∃ x [ z / y ] ph ↔ ∃ x [. A / y ]. ph ) ) ;;
+	step 7 : wff = sbex () |- ( [ z / y ] ∃ x ph ↔ ∃ x [ z / y ] ph ) ;;
+	step 8 : wff = vtoclbg (step 4, step 6, step 7) |- ( A ∈ _V → ( [. A / y ]. ∃ x ph ↔ ∃ x [. A / y ]. ph ) ) ;;
+	step 9 : wff = pm5.21nii (step 1, step 3, step 8) |- ( [. A / y ]. ∃ x ph ↔ ∃ x [. A / y ]. ph ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Move existential quantifier in and out of class substitution.
+       (Contributed by NM, 21-May-2004.) */
+
+theorem sbcexg (ph : wff, x : set, y : set, A : class, V : class) disjointed(x z A, x y z, z ph) {
+	prop 1 : wff = |- ( A ∈ V → ( [. A / y ]. ∃ x ph ↔ ∃ x [. A / y ]. ph ) ) ;;
+}
+
+proof of sbcexg {
+	var z : set;;
+	step 1 : wff = dfsbcq2 () |- ( z = A → ( [ z / y ] ∃ x ph ↔ [. A / y ]. ∃ x ph ) ) ;;
+	step 2 : wff = dfsbcq2 () |- ( z = A → ( [ z / y ] ph ↔ [. A / y ]. ph ) ) ;;
+	step 3 : wff = exbidv (step 2) |- ( z = A → ( ∃ x [ z / y ] ph ↔ ∃ x [. A / y ]. ph ) ) ;;
+	step 4 : wff = sbex () |- ( [ z / y ] ∃ x ph ↔ ∃ x [ z / y ] ph ) ;;
+	step 5 : wff = vtoclbg (step 1, step 3, step 4) |- ( A ∈ V → ( [. A / y ]. ∃ x ph ↔ ∃ x [. A / y ]. ph ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Set theory version of ~ sbeqal1 .  (Contributed by Andrew Salmon,
+       28-Jun-2011.) */
+
+theorem sbceqal (x : set, A : class, B : class, V : class) disjointed(x B, x A) {
+	prop 1 : wff = |- ( A ∈ V → ( ∀ x ( x = A → x = B ) → A = B ) ) ;;
+}
+
+proof of sbceqal {
+	step 1 : wff = spsbc () |- ( A ∈ V → ( ∀ x ( x = A → x = B ) → [. A / x ]. ( x = A → x = B ) ) ) ;;
+	step 2 : wff = sbcimg () |- ( A ∈ V → ( [. A / x ]. ( x = A → x = B ) ↔ ( [. A / x ]. x = A → [. A / x ]. x = B ) ) ) ;;
+	step 3 : wff = eqid () |- A = A ;;
+	step 4 : wff = eqsbc3 () |- ( A ∈ V → ( [. A / x ]. x = A ↔ A = A ) ) ;;
+	step 5 : wff = mpbiri (step 3, step 4) |- ( A ∈ V → [. A / x ]. x = A ) ;;
+	step 6 : wff = pm5.5 () |- ( [. A / x ]. x = A → ( ( [. A / x ]. x = A → [. A / x ]. x = B ) ↔ [. A / x ]. x = B ) ) ;;
+	step 7 : wff = syl (step 5, step 6) |- ( A ∈ V → ( ( [. A / x ]. x = A → [. A / x ]. x = B ) ↔ [. A / x ]. x = B ) ) ;;
+	step 8 : wff = eqsbc3 () |- ( A ∈ V → ( [. A / x ]. x = B ↔ A = B ) ) ;;
+	step 9 : wff = 3bitrd (step 2, step 7, step 8) |- ( A ∈ V → ( [. A / x ]. ( x = A → x = B ) ↔ A = B ) ) ;;
+	step 10 : wff = sylibd (step 1, step 9) |- ( A ∈ V → ( ∀ x ( x = A → x = B ) → A = B ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Theorem *14.121 in [WhiteheadRussell] p. 185.  (Contributed by Andrew
+       Salmon, 28-Jun-2011.)  (Proof shortened by Wolf Lammen, 9-May-2013.) */
+
+theorem sbeqalb (ph : wff, x : set, A : class, B : class, V : class) disjointed(x A, x B) {
+	prop 1 : wff = |- ( A ∈ V → ( ( ∀ x ( ph ↔ x = A ) ∧ ∀ x ( ph ↔ x = B ) ) → A = B ) ) ;;
+}
+
+proof of sbeqalb {
+	step 1 : wff = bibi1 () |- ( ( ph ↔ x = A ) → ( ( ph ↔ x = B ) ↔ ( x = A ↔ x = B ) ) ) ;;
+	step 2 : wff = biimpa (step 1) |- ( ( ( ph ↔ x = A ) ∧ ( ph ↔ x = B ) ) → ( x = A ↔ x = B ) ) ;;
+	step 3 : wff = biimpd (step 2) |- ( ( ( ph ↔ x = A ) ∧ ( ph ↔ x = B ) ) → ( x = A → x = B ) ) ;;
+	step 4 : wff = alanimi (step 3) |- ( ( ∀ x ( ph ↔ x = A ) ∧ ∀ x ( ph ↔ x = B ) ) → ∀ x ( x = A → x = B ) ) ;;
+	step 5 : wff = sbceqal () |- ( A ∈ V → ( ∀ x ( x = A → x = B ) → A = B ) ) ;;
+	step 6 : wff = syl5 (step 4, step 5) |- ( A ∈ V → ( ( ∀ x ( ph ↔ x = A ) ∧ ∀ x ( ph ↔ x = B ) ) → A = B ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Formula-building deduction rule for class substitution.  (Contributed by
+       NM, 29-Dec-2014.) */
+
+theorem sbcbid (ph : wff, ps : wff, ch : wff, x : set, A : class)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	hyp 2 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( [. A / x ]. ps ↔ [. A / x ]. ch ) ) ;;
+}
+
+proof of sbcbid {
+	step 1 : wff = abbid (hyp 1, hyp 2) |- ( ph → { x | ps } = { x | ch } ) ;;
+	step 2 : wff = eleq2d (step 1) |- ( ph → ( A ∈ { x | ps } ↔ A ∈ { x | ch } ) ) ;;
+	step 3 : wff = df-sbc () |- ( [. A / x ]. ps ↔ A ∈ { x | ps } ) ;;
+	step 4 : wff = df-sbc () |- ( [. A / x ]. ch ↔ A ∈ { x | ch } ) ;;
+	step 5 : wff = 3bitr4g (step 2, step 3, step 4) |- ( ph → ( [. A / x ]. ps ↔ [. A / x ]. ch ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Formula-building deduction rule for class substitution.  (Contributed by
+       NM, 29-Dec-2014.) */
+
+theorem sbcbidv (ph : wff, ps : wff, ch : wff, x : set, A : class) disjointed(x ph) {
+	hyp 1 : wff = |- ( ph → ( ps ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( [. A / x ]. ps ↔ [. A / x ]. ch ) ) ;;
+}
+
+proof of sbcbidv {
+	step 1 : wff = nfv () |- F/ x ph ;;
+	step 2 : wff = sbcbid (step 1, hyp 1) |- ( ph → ( [. A / x ]. ps ↔ [. A / x ]. ch ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Formula-building inference rule for class substitution.  (Contributed by
+       NM, 11-Nov-2005.) */
+
+theorem sbcbii (ph : wff, ps : wff, x : set, A : class)  {
+	hyp 1 : wff = |- ( ph ↔ ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( [. A / x ]. ph ↔ [. A / x ]. ps ) ;;
+}
+
+proof of sbcbii {
+	step 1 : wff = a1i (hyp 1) |- ( T. → ( ph ↔ ps ) ) ;;
+	step 2 : wff = sbcbidv (step 1) |- ( T. → ( [. A / x ]. ph ↔ [. A / x ]. ps ) ) ;;
+	step 3 : wff = trud (step 2) |- ( [. A / x ]. ph ↔ [. A / x ]. ps ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Formula-building inference rule for class substitution.  (Contributed by
+       NM, 11-Nov-2005.)  (New usage is discouraged.) */
+
+theorem sbcbiiOLD (ph : wff, ps : wff, x : set, A : class, V : class)  {
+	hyp 1 : wff = |- ( ph ↔ ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ph ↔ [. A / x ]. ps ) ) ;;
+}
+
+proof of sbcbiiOLD {
+	step 1 : wff = sbcbii (hyp 1) |- ( [. A / x ]. ph ↔ [. A / x ]. ps ) ;;
+	step 2 : wff = a1i (step 1) |- ( A ∈ V → ( [. A / x ]. ph ↔ [. A / x ]. ps ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* ~ eqsbc3 with set variable on right side of equals sign.  This proof was
+       automatically generated from the virtual deduction proof ~ eqsbc3rVD
+       using a translation program.  (Contributed by Alan Sare,
+       24-Oct-2011.) */
+
+theorem eqsbc3r (x : set, A : class, B : class, C : class) disjointed(x C, x A) {
+	prop 1 : wff = |- ( A ∈ B → ( [. A / x ]. C = x ↔ C = A ) ) ;;
+}
+
+proof of eqsbc3r {
+	step 1 : wff = eqcom () |- ( C = x ↔ x = C ) ;;
+	step 2 : wff = sbcbii (step 1) |- ( [. A / x ]. C = x ↔ [. A / x ]. x = C ) ;;
+	step 3 : wff = biimpi (step 2) |- ( [. A / x ]. C = x → [. A / x ]. x = C ) ;;
+	step 4 : wff = eqsbc3 () |- ( A ∈ B → ( [. A / x ]. x = C ↔ A = C ) ) ;;
+	step 5 : wff = syl5ib (step 3, step 4) |- ( A ∈ B → ( [. A / x ]. C = x → A = C ) ) ;;
+	step 6 : wff = eqcom () |- ( A = C ↔ C = A ) ;;
+	step 7 : wff = syl6ib (step 5, step 6) |- ( A ∈ B → ( [. A / x ]. C = x → C = A ) ) ;;
+	step 8 : wff = idd () |- ( A ∈ B → ( C = A → C = A ) ) ;;
+	step 9 : wff = eqcom () |- ( A = C ↔ C = A ) ;;
+	step 10 : wff = syl6ibr (step 8, step 9) |- ( A ∈ B → ( C = A → A = C ) ) ;;
+	step 11 : wff = eqsbc3 () |- ( A ∈ B → ( [. A / x ]. x = C ↔ A = C ) ) ;;
+	step 12 : wff = sylibrd (step 10, step 11) |- ( A ∈ B → ( C = A → [. A / x ]. x = C ) ) ;;
+	step 13 : wff = eqcom () |- ( C = x ↔ x = C ) ;;
+	step 14 : wff = sbcbii (step 13) |- ( [. A / x ]. C = x ↔ [. A / x ]. x = C ) ;;
+	step 15 : wff = syl6ibr (step 12, step 14) |- ( A ∈ B → ( C = A → [. A / x ]. C = x ) ) ;;
+	step 16 : wff = impbid (step 7, step 15) |- ( A ∈ B → ( [. A / x ]. C = x ↔ C = A ) ) ;;
+	qed prop 1 = step 16 ;;
+}
+
+/* Distribution of class substitution over triple conjunction.
+       (Contributed by NM, 14-Dec-2006.)  (Proof shortened by Andrew Salmon,
+       29-Jun-2011.) */
+
+theorem sbc3ang (ph : wff, ps : wff, ch : wff, x : set, A : class, V : class) disjointed(y ch, y ps, y ph, y A, x y) {
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ( ph ∧ ps ∧ ch ) ↔ ( [. A / x ]. ph ∧ [. A / x ]. ps ∧ [. A / x ]. ch ) ) ) ;;
+}
+
+proof of sbc3ang {
+	var y : set;;
+	step 1 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ( ph ∧ ps ∧ ch ) ↔ [. A / x ]. ( ph ∧ ps ∧ ch ) ) ) ;;
+	step 2 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 3 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ps ↔ [. A / x ]. ps ) ) ;;
+	step 4 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ch ↔ [. A / x ]. ch ) ) ;;
+	step 5 : wff = 3anbi123d (step 2, step 3, step 4) |- ( y = A → ( ( [ y / x ] ph ∧ [ y / x ] ps ∧ [ y / x ] ch ) ↔ ( [. A / x ]. ph ∧ [. A / x ]. ps ∧ [. A / x ]. ch ) ) ) ;;
+	step 6 : wff = sb3an () |- ( [ y / x ] ( ph ∧ ps ∧ ch ) ↔ ( [ y / x ] ph ∧ [ y / x ] ps ∧ [ y / x ] ch ) ) ;;
+	step 7 : wff = vtoclbg (step 1, step 5, step 6) |- ( A ∈ V → ( [. A / x ]. ( ph ∧ ps ∧ ch ) ↔ ( [. A / x ]. ph ∧ [. A / x ]. ps ∧ [. A / x ]. ch ) ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Class substitution into a membership relation.  (Contributed by NM,
+       17-Nov-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) */
+
+theorem sbcel1gv (x : set, A : class, B : class, V : class) disjointed(y A, x y B) {
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. x ∈ B ↔ A ∈ B ) ) ;;
+}
+
+proof of sbcel1gv {
+	var y : set;;
+	step 1 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] x ∈ B ↔ [. A / x ]. x ∈ B ) ) ;;
+	step 2 : wff = eleq1 () |- ( y = A → ( y ∈ B ↔ A ∈ B ) ) ;;
+	step 3 : wff = clelsb3 () |- ( [ y / x ] x ∈ B ↔ y ∈ B ) ;;
+	step 4 : wff = vtoclbg (step 1, step 2, step 3) |- ( A ∈ V → ( [. A / x ]. x ∈ B ↔ A ∈ B ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Class substitution into a membership relation.  (Contributed by NM,
+       17-Nov-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) */
+
+theorem sbcel2gv (x : set, A : class, B : class, V : class) disjointed(y B, x y A) {
+	prop 1 : wff = |- ( B ∈ V → ( [. B / x ]. A ∈ x ↔ A ∈ B ) ) ;;
+}
+
+proof of sbcel2gv {
+	var y : set;;
+	step 1 : wff = dfsbcq2 () |- ( y = B → ( [ y / x ] A ∈ x ↔ [. B / x ]. A ∈ x ) ) ;;
+	step 2 : wff = eleq2 () |- ( y = B → ( A ∈ y ↔ A ∈ B ) ) ;;
+	step 3 : wff = nfv () |- F/ x A ∈ y ;;
+	step 4 : wff = eleq2 () |- ( x = y → ( A ∈ x ↔ A ∈ y ) ) ;;
+	step 5 : wff = sbie (step 3, step 4) |- ( [ y / x ] A ∈ x ↔ A ∈ y ) ;;
+	step 6 : wff = vtoclbg (step 1, step 2, step 5) |- ( B ∈ V → ( [. B / x ]. A ∈ x ↔ A ∈ B ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Substitution analog of Theorem 19.20 of [Margaris] p. 90.  (Contributed
+       by NM, 11-Nov-2005.) */
+
+theorem sbcimdv (ph : wff, ps : wff, ch : wff, x : set, A : class, V : class) disjointed(x ph) {
+	hyp 1 : wff = |- ( ph → ( ps → ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ph ∧ A ∈ V ) → ( [. A / x ]. ps → [. A / x ]. ch ) ) ;;
+}
+
+proof of sbcimdv {
+	step 1 : wff = alrimiv (hyp 1) |- ( ph → ∀ x ( ps → ch ) ) ;;
+	step 2 : wff = spsbc () |- ( A ∈ V → ( ∀ x ( ps → ch ) → [. A / x ]. ( ps → ch ) ) ) ;;
+	step 3 : wff = syl5 (step 1, step 2) |- ( A ∈ V → ( ph → [. A / x ]. ( ps → ch ) ) ) ;;
+	step 4 : wff = sbcimg () |- ( A ∈ V → ( [. A / x ]. ( ps → ch ) ↔ ( [. A / x ]. ps → [. A / x ]. ch ) ) ) ;;
+	step 5 : wff = sylibd (step 3, step 4) |- ( A ∈ V → ( ph → ( [. A / x ]. ps → [. A / x ]. ch ) ) ) ;;
+	step 6 : wff = impcom (step 5) |- ( ( ph ∧ A ∈ V ) → ( [. A / x ]. ps → [. A / x ]. ch ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Substitution for a variable not free in a wff does not affect it.
+       (Contributed by Mario Carneiro, 14-Oct-2016.) */
+
+theorem sbctt (ph : wff, x : set, A : class, V : class) disjointed(x y, y A, y ph) {
+	prop 1 : wff = |- ( ( A ∈ V ∧ F/ x ph ) → ( [. A / x ]. ph ↔ ph ) ) ;;
+}
+
+proof of sbctt {
+	var y : set;;
+	step 1 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 2 : wff = bibi1d (step 1) |- ( y = A → ( ( [ y / x ] ph ↔ ph ) ↔ ( [. A / x ]. ph ↔ ph ) ) ) ;;
+	step 3 : wff = imbi2d (step 2) |- ( y = A → ( ( F/ x ph → ( [ y / x ] ph ↔ ph ) ) ↔ ( F/ x ph → ( [. A / x ]. ph ↔ ph ) ) ) ) ;;
+	step 4 : wff = sbft () |- ( F/ x ph → ( [ y / x ] ph ↔ ph ) ) ;;
+	step 5 : wff = vtoclg (step 3, step 4) |- ( A ∈ V → ( F/ x ph → ( [. A / x ]. ph ↔ ph ) ) ) ;;
+	step 6 : wff = imp (step 5) |- ( ( A ∈ V ∧ F/ x ph ) → ( [. A / x ]. ph ↔ ph ) ) ;;
+	qed prop 1 = step 6 ;;
+}
+
+/* Substitution for a variable not free in a wff does not affect it.
+       (Contributed by NM, 11-Oct-2004.)  (Proof shortened by Andrew Salmon,
+       29-Jun-2011.) */
+
+theorem sbcgf (ph : wff, x : set, A : class, V : class)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ph ↔ ph ) ) ;;
+}
+
+proof of sbcgf {
+	step 1 : wff = sbctt () |- ( ( A ∈ V ∧ F/ x ph ) → ( [. A / x ]. ph ↔ ph ) ) ;;
+	step 2 : wff = mpan2 (hyp 1, step 1) |- ( A ∈ V → ( [. A / x ]. ph ↔ ph ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Substitution for a variable not free in antecedent affects only the
+       consequent.  (Contributed by NM, 11-Oct-2004.) */
+
+theorem sbc19.21g (ph : wff, ps : wff, x : set, A : class, V : class)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ( ph → ps ) ↔ ( ph → [. A / x ]. ps ) ) ) ;;
+}
+
+proof of sbc19.21g {
+	step 1 : wff = sbcimg () |- ( A ∈ V → ( [. A / x ]. ( ph → ps ) ↔ ( [. A / x ]. ph → [. A / x ]. ps ) ) ) ;;
+	step 2 : wff = sbcgf (hyp 1) |- ( A ∈ V → ( [. A / x ]. ph ↔ ph ) ) ;;
+	step 3 : wff = imbi1d (step 2) |- ( A ∈ V → ( ( [. A / x ]. ph → [. A / x ]. ps ) ↔ ( ph → [. A / x ]. ps ) ) ) ;;
+	step 4 : wff = bitrd (step 1, step 3) |- ( A ∈ V → ( [. A / x ]. ( ph → ps ) ↔ ( ph → [. A / x ]. ps ) ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Substitution for a variable not occurring in a wff does not affect it.
+       Distinct variable form of ~ sbcgf .  (Contributed by Alan Sare,
+       10-Nov-2012.) */
+
+theorem sbcg (ph : wff, x : set, A : class, V : class) disjointed(x ph) {
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ph ↔ ph ) ) ;;
+}
+
+proof of sbcg {
+	step 1 : wff = nfv () |- F/ x ph ;;
+	step 2 : wff = sbcgf (step 1) |- ( A ∈ V → ( [. A / x ]. ph ↔ ph ) ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Conversion of implicit substitution to explicit class substitution.
+       (Contributed by Mario Carneiro, 19-Dec-2013.) */
+
+theorem sbc2iegf (ph : wff, ps : wff, x : set, y : set, A : class, B : class, V : class, W : class) disjointed(x y A, y B, x V, y W) {
+	hyp 1 : wff = |- F/ x ps ;;
+	hyp 2 : wff = |- F/ y ps ;;
+	hyp 3 : wff = |- F/ x B ∈ W ;;
+	hyp 4 : wff = |- ( ( x = A ∧ y = B ) → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( A ∈ V ∧ B ∈ W ) → ( [. A / x ]. [. B / y ]. ph ↔ ps ) ) ;;
+}
+
+proof of sbc2iegf {
+	step 1 : wff = simpl () |- ( ( A ∈ V ∧ B ∈ W ) → A ∈ V ) ;;
+	step 2 : wff = simpl () |- ( ( B ∈ W ∧ x = A ) → B ∈ W ) ;;
+	step 3 : wff = adantll (hyp 4) |- ( ( ( B ∈ W ∧ x = A ) ∧ y = B ) → ( ph ↔ ps ) ) ;;
+	step 4 : wff = nfv () |- F/ y ( B ∈ W ∧ x = A ) ;;
+	step 5 : wff = a1i (hyp 2) |- ( ( B ∈ W ∧ x = A ) → F/ y ps ) ;;
+	step 6 : wff = sbciedf (step 2, step 3, step 4, step 5) |- ( ( B ∈ W ∧ x = A ) → ( [. B / y ]. ph ↔ ps ) ) ;;
+	step 7 : wff = adantll (step 6) |- ( ( ( A ∈ V ∧ B ∈ W ) ∧ x = A ) → ( [. B / y ]. ph ↔ ps ) ) ;;
+	step 8 : wff = nfv () |- F/ x A ∈ V ;;
+	step 9 : wff = nfan (step 8, hyp 3) |- F/ x ( A ∈ V ∧ B ∈ W ) ;;
+	step 10 : wff = a1i (hyp 1) |- ( ( A ∈ V ∧ B ∈ W ) → F/ x ps ) ;;
+	step 11 : wff = sbciedf (step 1, step 7, step 9, step 10) |- ( ( A ∈ V ∧ B ∈ W ) → ( [. A / x ]. [. B / y ]. ph ↔ ps ) ) ;;
+	qed prop 1 = step 11 ;;
+}
+
+/* Conversion of implicit substitution to explicit class substitution.
+       (Contributed by NM, 16-Dec-2008.)  (Revised by Mario Carneiro,
+       19-Dec-2013.) */
+
+theorem sbc2ie (ph : wff, ps : wff, x : set, y : set, A : class, B : class) disjointed(x y A, y B, x y ps) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- B ∈ _V ;;
+	hyp 3 : wff = |- ( ( x = A ∧ y = B ) → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( [. A / x ]. [. B / y ]. ph ↔ ps ) ;;
+}
+
+proof of sbc2ie {
+	step 1 : wff = nfv () |- F/ x ps ;;
+	step 2 : wff = nfv () |- F/ y ps ;;
+	step 3 : wff = nfth (hyp 2) |- F/ x B ∈ _V ;;
+	step 4 : wff = sbc2iegf (step 1, step 2, step 3, hyp 3) |- ( ( A ∈ _V ∧ B ∈ _V ) → ( [. A / x ]. [. B / y ]. ph ↔ ps ) ) ;;
+	step 5 : wff = mp2an (hyp 1, hyp 2, step 4) |- ( [. A / x ]. [. B / y ]. ph ↔ ps ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Conversion of implicit substitution to explicit class substitution.
+       (Contributed by NM, 16-Dec-2008.)  (Proof shortened by Mario Carneiro,
+       18-Oct-2016.) */
+
+theorem sbc2iedv (ph : wff, ps : wff, ch : wff, x : set, y : set, A : class, B : class) disjointed(x y A, y B, x y ph, x y ch) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- B ∈ _V ;;
+	hyp 3 : wff = |- ( ph → ( ( x = A ∧ y = B ) → ( ps ↔ ch ) ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ( [. A / x ]. [. B / y ]. ps ↔ ch ) ) ;;
+}
+
+proof of sbc2iedv {
+	step 1 : wff = a1i (hyp 1) |- ( ph → A ∈ _V ) ;;
+	step 2 : wff = a1i (hyp 2) |- ( ( ph ∧ x = A ) → B ∈ _V ) ;;
+	step 3 : wff = impl (hyp 3) |- ( ( ( ph ∧ x = A ) ∧ y = B ) → ( ps ↔ ch ) ) ;;
+	step 4 : wff = sbcied (step 2, step 3) |- ( ( ph ∧ x = A ) → ( [. B / y ]. ps ↔ ch ) ) ;;
+	step 5 : wff = sbcied (step 1, step 4) |- ( ph → ( [. A / x ]. [. B / y ]. ps ↔ ch ) ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* Conversion of implicit substitution to explicit class substitution.
+       (Contributed by Mario Carneiro, 19-Jun-2014.)  (Revised by Mario
+       Carneiro, 29-Dec-2014.) */
+
+theorem sbc3ie (ph : wff, ps : wff, x : set, y : set, z : set, A : class, B : class, C : class) disjointed(x y z A, y z B, z C, x y z ps) {
+	hyp 1 : wff = |- A ∈ _V ;;
+	hyp 2 : wff = |- B ∈ _V ;;
+	hyp 3 : wff = |- C ∈ _V ;;
+	hyp 4 : wff = |- ( ( x = A ∧ y = B ∧ z = C ) → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( [. A / x ]. [. B / y ]. [. C / z ]. ph ↔ ps ) ;;
+}
+
+proof of sbc3ie {
+	step 1 : wff = a1i (hyp 3) |- ( ( x = A ∧ y = B ) → C ∈ _V ) ;;
+	step 2 : wff = 3expa (hyp 4) |- ( ( ( x = A ∧ y = B ) ∧ z = C ) → ( ph ↔ ps ) ) ;;
+	step 3 : wff = sbcied (step 1, step 2) |- ( ( x = A ∧ y = B ) → ( [. C / z ]. ph ↔ ps ) ) ;;
+	step 4 : wff = sbc2ie (hyp 1, hyp 2, step 3) |- ( [. A / x ]. [. B / y ]. [. C / z ]. ph ↔ ps ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Lemma for ~ sbccom .  (Contributed by NM, 14-Nov-2005.)  (Revised by
+       Mario Carneiro, 18-Oct-2016.) */
+
+theorem sbccomlem (ph : wff, x : set, y : set, A : class, B : class) disjointed(x y A, x y B) {
+	prop 1 : wff = |- ( [. A / x ]. [. B / y ]. ph ↔ [. B / y ]. [. A / x ]. ph ) ;;
+}
+
+proof of sbccomlem {
+	step 1 : wff = excom () |- ( ∃ x ∃ y ( x = A ∧ ( y = B ∧ ph ) ) ↔ ∃ y ∃ x ( x = A ∧ ( y = B ∧ ph ) ) ) ;;
+	step 2 : wff = exdistr () |- ( ∃ x ∃ y ( x = A ∧ ( y = B ∧ ph ) ) ↔ ∃ x ( x = A ∧ ∃ y ( y = B ∧ ph ) ) ) ;;
+	step 3 : wff = an12 () |- ( ( x = A ∧ ( y = B ∧ ph ) ) ↔ ( y = B ∧ ( x = A ∧ ph ) ) ) ;;
+	step 4 : wff = exbii (step 3) |- ( ∃ x ( x = A ∧ ( y = B ∧ ph ) ) ↔ ∃ x ( y = B ∧ ( x = A ∧ ph ) ) ) ;;
+	step 5 : wff = 19.42v () |- ( ∃ x ( y = B ∧ ( x = A ∧ ph ) ) ↔ ( y = B ∧ ∃ x ( x = A ∧ ph ) ) ) ;;
+	step 6 : wff = bitri (step 4, step 5) |- ( ∃ x ( x = A ∧ ( y = B ∧ ph ) ) ↔ ( y = B ∧ ∃ x ( x = A ∧ ph ) ) ) ;;
+	step 7 : wff = exbii (step 6) |- ( ∃ y ∃ x ( x = A ∧ ( y = B ∧ ph ) ) ↔ ∃ y ( y = B ∧ ∃ x ( x = A ∧ ph ) ) ) ;;
+	step 8 : wff = 3bitr3i (step 1, step 2, step 7) |- ( ∃ x ( x = A ∧ ∃ y ( y = B ∧ ph ) ) ↔ ∃ y ( y = B ∧ ∃ x ( x = A ∧ ph ) ) ) ;;
+	step 9 : wff = sbc5 () |- ( [. A / x ]. ∃ y ( y = B ∧ ph ) ↔ ∃ x ( x = A ∧ ∃ y ( y = B ∧ ph ) ) ) ;;
+	step 10 : wff = sbc5 () |- ( [. B / y ]. ∃ x ( x = A ∧ ph ) ↔ ∃ y ( y = B ∧ ∃ x ( x = A ∧ ph ) ) ) ;;
+	step 11 : wff = 3bitr4i (step 8, step 9, step 10) |- ( [. A / x ]. ∃ y ( y = B ∧ ph ) ↔ [. B / y ]. ∃ x ( x = A ∧ ph ) ) ;;
+	step 12 : wff = sbc5 () |- ( [. B / y ]. ph ↔ ∃ y ( y = B ∧ ph ) ) ;;
+	step 13 : wff = sbcbii (step 12) |- ( [. A / x ]. [. B / y ]. ph ↔ [. A / x ]. ∃ y ( y = B ∧ ph ) ) ;;
+	step 14 : wff = sbc5 () |- ( [. A / x ]. ph ↔ ∃ x ( x = A ∧ ph ) ) ;;
+	step 15 : wff = sbcbii (step 14) |- ( [. B / y ]. [. A / x ]. ph ↔ [. B / y ]. ∃ x ( x = A ∧ ph ) ) ;;
+	step 16 : wff = 3bitr4i (step 11, step 13, step 15) |- ( [. A / x ]. [. B / y ]. ph ↔ [. B / y ]. [. A / x ]. ph ) ;;
+	qed prop 1 = step 16 ;;
+}
+
+/* Commutative law for double class substitution.  (Contributed by NM,
+       15-Nov-2005.)  (Proof shortened by Mario Carneiro, 18-Oct-2016.) */
+
+theorem sbccom (ph : wff, x : set, y : set, A : class, B : class) disjointed(w y z A, w x z B, w z ph, x y) {
+	prop 1 : wff = |- ( [. A / x ]. [. B / y ]. ph ↔ [. B / y ]. [. A / x ]. ph ) ;;
+}
+
+proof of sbccom {
+	var z : set, w : set;;
+	step 1 : wff = sbccomlem () |- ( [. A / z ]. [. B / w ]. [. w / y ]. [. z / x ]. ph ↔ [. B / w ]. [. A / z ]. [. w / y ]. [. z / x ]. ph ) ;;
+	step 2 : wff = sbccomlem () |- ( [. w / y ]. [. z / x ]. ph ↔ [. z / x ]. [. w / y ]. ph ) ;;
+	step 3 : wff = sbcbii (step 2) |- ( [. B / w ]. [. w / y ]. [. z / x ]. ph ↔ [. B / w ]. [. z / x ]. [. w / y ]. ph ) ;;
+	step 4 : wff = sbccomlem () |- ( [. B / w ]. [. z / x ]. [. w / y ]. ph ↔ [. z / x ]. [. B / w ]. [. w / y ]. ph ) ;;
+	step 5 : wff = bitri (step 3, step 4) |- ( [. B / w ]. [. w / y ]. [. z / x ]. ph ↔ [. z / x ]. [. B / w ]. [. w / y ]. ph ) ;;
+	step 6 : wff = sbcbii (step 5) |- ( [. A / z ]. [. B / w ]. [. w / y ]. [. z / x ]. ph ↔ [. A / z ]. [. z / x ]. [. B / w ]. [. w / y ]. ph ) ;;
+	step 7 : wff = sbccomlem () |- ( [. A / z ]. [. w / y ]. [. z / x ]. ph ↔ [. w / y ]. [. A / z ]. [. z / x ]. ph ) ;;
+	step 8 : wff = sbcbii (step 7) |- ( [. B / w ]. [. A / z ]. [. w / y ]. [. z / x ]. ph ↔ [. B / w ]. [. w / y ]. [. A / z ]. [. z / x ]. ph ) ;;
+	step 9 : wff = 3bitr3i (step 1, step 6, step 8) |- ( [. A / z ]. [. z / x ]. [. B / w ]. [. w / y ]. ph ↔ [. B / w ]. [. w / y ]. [. A / z ]. [. z / x ]. ph ) ;;
+	step 10 : wff = sbcco () |- ( [. A / z ]. [. z / x ]. [. B / w ]. [. w / y ]. ph ↔ [. A / x ]. [. B / w ]. [. w / y ]. ph ) ;;
+	step 11 : wff = sbcco () |- ( [. B / w ]. [. w / y ]. [. A / z ]. [. z / x ]. ph ↔ [. B / y ]. [. A / z ]. [. z / x ]. ph ) ;;
+	step 12 : wff = 3bitr3i (step 9, step 10, step 11) |- ( [. A / x ]. [. B / w ]. [. w / y ]. ph ↔ [. B / y ]. [. A / z ]. [. z / x ]. ph ) ;;
+	step 13 : wff = sbcco () |- ( [. B / w ]. [. w / y ]. ph ↔ [. B / y ]. ph ) ;;
+	step 14 : wff = sbcbii (step 13) |- ( [. A / x ]. [. B / w ]. [. w / y ]. ph ↔ [. A / x ]. [. B / y ]. ph ) ;;
+	step 15 : wff = sbcco () |- ( [. A / z ]. [. z / x ]. ph ↔ [. A / x ]. ph ) ;;
+	step 16 : wff = sbcbii (step 15) |- ( [. B / y ]. [. A / z ]. [. z / x ]. ph ↔ [. B / y ]. [. A / x ]. ph ) ;;
+	step 17 : wff = 3bitr3i (step 12, step 14, step 16) |- ( [. A / x ]. [. B / y ]. ph ↔ [. B / y ]. [. A / x ]. ph ) ;;
+	qed prop 1 = step 17 ;;
+}
+
+/* Interchange class substitution and restricted quantifier.  (Contributed
+       by NM, 1-Mar-2008.)  (Revised by David Abernethy, 22-Feb-2010.) */
+
+theorem sbcralt (ph : wff, x : set, y : set, A : class, B : class, V : class) disjointed(x y z, A z, B x z, V z, ph z) {
+	prop 1 : wff = |- ( ( A ∈ V ∧ F/_ y A ) → ( [. A / x ]. ∀ y ∈ B ph ↔ ∀ y ∈ B [. A / x ]. ph ) ) ;;
+}
+
+proof of sbcralt {
+	var z : set;;
+	step 1 : wff = sbcco () |- ( [. A / z ]. [. z / x ]. ∀ y ∈ B ph ↔ [. A / x ]. ∀ y ∈ B ph ) ;;
+	step 2 : wff = simpl () |- ( ( A ∈ V ∧ F/_ y A ) → A ∈ V ) ;;
+	step 3 : wff = sbsbc () |- ( [ z / x ] ∀ y ∈ B ph ↔ [. z / x ]. ∀ y ∈ B ph ) ;;
+	step 4 : wff = nfcv () |- F/_ x B ;;
+	step 5 : wff = nfs1v () |- F/ x [ z / x ] ph ;;
+	step 6 : wff = nfral (step 4, step 5) |- F/ x ∀ y ∈ B [ z / x ] ph ;;
+	step 7 : wff = sbequ12 () |- ( x = z → ( ph ↔ [ z / x ] ph ) ) ;;
+	step 8 : wff = ralbidv (step 7) |- ( x = z → ( ∀ y ∈ B ph ↔ ∀ y ∈ B [ z / x ] ph ) ) ;;
+	step 9 : wff = sbie (step 6, step 8) |- ( [ z / x ] ∀ y ∈ B ph ↔ ∀ y ∈ B [ z / x ] ph ) ;;
+	step 10 : wff = bitr3i (step 3, step 9) |- ( [. z / x ]. ∀ y ∈ B ph ↔ ∀ y ∈ B [ z / x ] ph ) ;;
+	step 11 : wff = nfnfc1 () |- F/ y F/_ y A ;;
+	step 12 : wff = nfcvd () |- ( F/_ y A → F/_ y z ) ;;
+	step 13 : wff = id () |- ( F/_ y A → F/_ y A ) ;;
+	step 14 : wff = nfeqd (step 12, step 13) |- ( F/_ y A → F/ y z = A ) ;;
+	step 15 : wff = nfan1 (step 11, step 14) |- F/ y ( F/_ y A ∧ z = A ) ;;
+	step 16 : wff = dfsbcq2 () |- ( z = A → ( [ z / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 17 : wff = adantl (step 16) |- ( ( F/_ y A ∧ z = A ) → ( [ z / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 18 : wff = ralbid (step 15, step 17) |- ( ( F/_ y A ∧ z = A ) → ( ∀ y ∈ B [ z / x ] ph ↔ ∀ y ∈ B [. A / x ]. ph ) ) ;;
+	step 19 : wff = adantll (step 18) |- ( ( ( A ∈ V ∧ F/_ y A ) ∧ z = A ) → ( ∀ y ∈ B [ z / x ] ph ↔ ∀ y ∈ B [. A / x ]. ph ) ) ;;
+	step 20 : wff = syl5bb (step 10, step 19) |- ( ( ( A ∈ V ∧ F/_ y A ) ∧ z = A ) → ( [. z / x ]. ∀ y ∈ B ph ↔ ∀ y ∈ B [. A / x ]. ph ) ) ;;
+	step 21 : wff = sbcied (step 2, step 20) |- ( ( A ∈ V ∧ F/_ y A ) → ( [. A / z ]. [. z / x ]. ∀ y ∈ B ph ↔ ∀ y ∈ B [. A / x ]. ph ) ) ;;
+	step 22 : wff = syl5bbr (step 1, step 21) |- ( ( A ∈ V ∧ F/_ y A ) → ( [. A / x ]. ∀ y ∈ B ph ↔ ∀ y ∈ B [. A / x ]. ph ) ) ;;
+	qed prop 1 = step 22 ;;
+}
+
+/* Interchange class substitution and restricted existential quantifier.
+       (Contributed by NM, 1-Mar-2008.)  (Proof shortened by Mario Carneiro,
+       13-Oct-2016.) */
+
+theorem sbcrext (ph : wff, x : set, y : set, A : class, B : class, V : class) disjointed(x y, B x) {
+	prop 1 : wff = |- ( ( A ∈ V ∧ F/_ y A ) → ( [. A / x ]. ∃ y ∈ B ph ↔ ∃ y ∈ B [. A / x ]. ph ) ) ;;
+}
+
+proof of sbcrext {
+	step 1 : wff = elex () |- ( A ∈ V → A ∈ _V ) ;;
+	step 2 : wff = sbcng () |- ( A ∈ _V → ( [. A / x ]. ¬ ∀ y ∈ B ¬ ph ↔ ¬ [. A / x ]. ∀ y ∈ B ¬ ph ) ) ;;
+	step 3 : wff = adantr (step 2) |- ( ( A ∈ _V ∧ F/_ y A ) → ( [. A / x ]. ¬ ∀ y ∈ B ¬ ph ↔ ¬ [. A / x ]. ∀ y ∈ B ¬ ph ) ) ;;
+	step 4 : wff = sbcralt () |- ( ( A ∈ _V ∧ F/_ y A ) → ( [. A / x ]. ∀ y ∈ B ¬ ph ↔ ∀ y ∈ B [. A / x ]. ¬ ph ) ) ;;
+	step 5 : wff = nfnfc1 () |- F/ y F/_ y A ;;
+	step 6 : wff = id () |- ( F/_ y A → F/_ y A ) ;;
+	step 7 : wff = nfcvd () |- ( F/_ y A → F/_ y _V ) ;;
+	step 8 : wff = nfeld (step 6, step 7) |- ( F/_ y A → F/ y A ∈ _V ) ;;
+	step 9 : wff = nfan1 (step 5, step 8) |- F/ y ( F/_ y A ∧ A ∈ _V ) ;;
+	step 10 : wff = sbcng () |- ( A ∈ _V → ( [. A / x ]. ¬ ph ↔ ¬ [. A / x ]. ph ) ) ;;
+	step 11 : wff = adantl (step 10) |- ( ( F/_ y A ∧ A ∈ _V ) → ( [. A / x ]. ¬ ph ↔ ¬ [. A / x ]. ph ) ) ;;
+	step 12 : wff = ralbid (step 9, step 11) |- ( ( F/_ y A ∧ A ∈ _V ) → ( ∀ y ∈ B [. A / x ]. ¬ ph ↔ ∀ y ∈ B ¬ [. A / x ]. ph ) ) ;;
+	step 13 : wff = ancoms (step 12) |- ( ( A ∈ _V ∧ F/_ y A ) → ( ∀ y ∈ B [. A / x ]. ¬ ph ↔ ∀ y ∈ B ¬ [. A / x ]. ph ) ) ;;
+	step 14 : wff = bitrd (step 4, step 13) |- ( ( A ∈ _V ∧ F/_ y A ) → ( [. A / x ]. ∀ y ∈ B ¬ ph ↔ ∀ y ∈ B ¬ [. A / x ]. ph ) ) ;;
+	step 15 : wff = notbid (step 14) |- ( ( A ∈ _V ∧ F/_ y A ) → ( ¬ [. A / x ]. ∀ y ∈ B ¬ ph ↔ ¬ ∀ y ∈ B ¬ [. A / x ]. ph ) ) ;;
+	step 16 : wff = bitrd (step 3, step 15) |- ( ( A ∈ _V ∧ F/_ y A ) → ( [. A / x ]. ¬ ∀ y ∈ B ¬ ph ↔ ¬ ∀ y ∈ B ¬ [. A / x ]. ph ) ) ;;
+	step 17 : wff = dfrex2 () |- ( ∃ y ∈ B ph ↔ ¬ ∀ y ∈ B ¬ ph ) ;;
+	step 18 : wff = sbcbii (step 17) |- ( [. A / x ]. ∃ y ∈ B ph ↔ [. A / x ]. ¬ ∀ y ∈ B ¬ ph ) ;;
+	step 19 : wff = dfrex2 () |- ( ∃ y ∈ B [. A / x ]. ph ↔ ¬ ∀ y ∈ B ¬ [. A / x ]. ph ) ;;
+	step 20 : wff = 3bitr4g (step 16, step 18, step 19) |- ( ( A ∈ _V ∧ F/_ y A ) → ( [. A / x ]. ∃ y ∈ B ph ↔ ∃ y ∈ B [. A / x ]. ph ) ) ;;
+	step 21 : wff = sylan (step 1, step 20) |- ( ( A ∈ V ∧ F/_ y A ) → ( [. A / x ]. ∃ y ∈ B ph ↔ ∃ y ∈ B [. A / x ]. ph ) ) ;;
+	qed prop 1 = step 21 ;;
+}
+
+/* Interchange class substitution and restricted quantifier.  (Contributed
+       by NM, 15-Nov-2005.)  (Proof shortened by Andrew Salmon,
+       29-Jun-2011.) */
+
+theorem sbcralg (ph : wff, x : set, y : set, A : class, B : class, V : class) disjointed(y z A, x B, x y z, ph z, B z) {
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ∀ y ∈ B ph ↔ ∀ y ∈ B [. A / x ]. ph ) ) ;;
+}
+
+proof of sbcralg {
+	var z : set;;
+	step 1 : wff = dfsbcq2 () |- ( z = A → ( [ z / x ] ∀ y ∈ B ph ↔ [. A / x ]. ∀ y ∈ B ph ) ) ;;
+	step 2 : wff = dfsbcq2 () |- ( z = A → ( [ z / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 3 : wff = ralbidv (step 2) |- ( z = A → ( ∀ y ∈ B [ z / x ] ph ↔ ∀ y ∈ B [. A / x ]. ph ) ) ;;
+	step 4 : wff = nfcv () |- F/_ x B ;;
+	step 5 : wff = nfs1v () |- F/ x [ z / x ] ph ;;
+	step 6 : wff = nfral (step 4, step 5) |- F/ x ∀ y ∈ B [ z / x ] ph ;;
+	step 7 : wff = sbequ12 () |- ( x = z → ( ph ↔ [ z / x ] ph ) ) ;;
+	step 8 : wff = ralbidv (step 7) |- ( x = z → ( ∀ y ∈ B ph ↔ ∀ y ∈ B [ z / x ] ph ) ) ;;
+	step 9 : wff = sbie (step 6, step 8) |- ( [ z / x ] ∀ y ∈ B ph ↔ ∀ y ∈ B [ z / x ] ph ) ;;
+	step 10 : wff = vtoclbg (step 1, step 3, step 9) |- ( A ∈ V → ( [. A / x ]. ∀ y ∈ B ph ↔ ∀ y ∈ B [. A / x ]. ph ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Interchange class substitution and restricted existential quantifier.
+       (Contributed by NM, 15-Nov-2005.)  (Proof shortened by Andrew Salmon,
+       29-Jun-2011.) */
+
+theorem sbcrexg (ph : wff, x : set, y : set, A : class, B : class, V : class) disjointed(y z A, x B, x y z, ph z, B z) {
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ∃ y ∈ B ph ↔ ∃ y ∈ B [. A / x ]. ph ) ) ;;
+}
+
+proof of sbcrexg {
+	var z : set;;
+	step 1 : wff = dfsbcq2 () |- ( z = A → ( [ z / x ] ∃ y ∈ B ph ↔ [. A / x ]. ∃ y ∈ B ph ) ) ;;
+	step 2 : wff = dfsbcq2 () |- ( z = A → ( [ z / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 3 : wff = rexbidv (step 2) |- ( z = A → ( ∃ y ∈ B [ z / x ] ph ↔ ∃ y ∈ B [. A / x ]. ph ) ) ;;
+	step 4 : wff = nfcv () |- F/_ x B ;;
+	step 5 : wff = nfs1v () |- F/ x [ z / x ] ph ;;
+	step 6 : wff = nfrex (step 4, step 5) |- F/ x ∃ y ∈ B [ z / x ] ph ;;
+	step 7 : wff = sbequ12 () |- ( x = z → ( ph ↔ [ z / x ] ph ) ) ;;
+	step 8 : wff = rexbidv (step 7) |- ( x = z → ( ∃ y ∈ B ph ↔ ∃ y ∈ B [ z / x ] ph ) ) ;;
+	step 9 : wff = sbie (step 6, step 8) |- ( [ z / x ] ∃ y ∈ B ph ↔ ∃ y ∈ B [ z / x ] ph ) ;;
+	step 10 : wff = vtoclbg (step 1, step 3, step 9) |- ( A ∈ V → ( [. A / x ]. ∃ y ∈ B ph ↔ ∃ y ∈ B [. A / x ]. ph ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Interchange class substitution and restricted uniqueness quantifier.
+       (Contributed by NM, 24-Feb-2013.) */
+
+theorem sbcreug (ph : wff, x : set, y : set, A : class, B : class, V : class) disjointed(y z A, x B, x y z, ph z, B z) {
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. ∃! y ∈ B ph ↔ ∃! y ∈ B [. A / x ]. ph ) ) ;;
+}
+
+proof of sbcreug {
+	var z : set;;
+	step 1 : wff = dfsbcq2 () |- ( z = A → ( [ z / x ] ∃! y ∈ B ph ↔ [. A / x ]. ∃! y ∈ B ph ) ) ;;
+	step 2 : wff = dfsbcq2 () |- ( z = A → ( [ z / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 3 : wff = reubidv (step 2) |- ( z = A → ( ∃! y ∈ B [ z / x ] ph ↔ ∃! y ∈ B [. A / x ]. ph ) ) ;;
+	step 4 : wff = nfcv () |- F/_ x B ;;
+	step 5 : wff = nfs1v () |- F/ x [ z / x ] ph ;;
+	step 6 : wff = nfreu (step 4, step 5) |- F/ x ∃! y ∈ B [ z / x ] ph ;;
+	step 7 : wff = sbequ12 () |- ( x = z → ( ph ↔ [ z / x ] ph ) ) ;;
+	step 8 : wff = reubidv (step 7) |- ( x = z → ( ∃! y ∈ B ph ↔ ∃! y ∈ B [ z / x ] ph ) ) ;;
+	step 9 : wff = sbie (step 6, step 8) |- ( [ z / x ] ∃! y ∈ B ph ↔ ∃! y ∈ B [ z / x ] ph ) ;;
+	step 10 : wff = vtoclbg (step 1, step 3, step 9) |- ( A ∈ V → ( [. A / x ]. ∃! y ∈ B ph ↔ ∃! y ∈ B [. A / x ]. ph ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Interchange class substitution and class abstraction.  (Contributed by
+       NM, 5-Nov-2005.) */
+
+theorem sbcabel (ph : wff, x : set, y : set, A : class, B : class, V : class) disjointed(y w A, w B, w ph, x y, w x) {
+	hyp 1 : wff = |- F/_ x B ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ V → ( [. A / x ]. { y | ph } ∈ B ↔ { y | [. A / x ]. ph } ∈ B ) ) ;;
+}
+
+proof of sbcabel {
+	var w : set;;
+	step 1 : wff = elex () |- ( A ∈ V → A ∈ _V ) ;;
+	step 2 : wff = sbcexg () |- ( A ∈ _V → ( [. A / x ]. ∃ w ( w = { y | ph } ∧ w ∈ B ) ↔ ∃ w [. A / x ]. ( w = { y | ph } ∧ w ∈ B ) ) ) ;;
+	step 3 : wff = sbcang () |- ( A ∈ _V → ( [. A / x ]. ( w = { y | ph } ∧ w ∈ B ) ↔ ( [. A / x ]. w = { y | ph } ∧ [. A / x ]. w ∈ B ) ) ) ;;
+	step 4 : wff = abeq2 () |- ( w = { y | ph } ↔ ∀ y ( y ∈ w ↔ ph ) ) ;;
+	step 5 : wff = sbcbii (step 4) |- ( [. A / x ]. w = { y | ph } ↔ [. A / x ]. ∀ y ( y ∈ w ↔ ph ) ) ;;
+	step 6 : wff = sbcalg () |- ( A ∈ _V → ( [. A / x ]. ∀ y ( y ∈ w ↔ ph ) ↔ ∀ y [. A / x ]. ( y ∈ w ↔ ph ) ) ) ;;
+	step 7 : wff = sbcbig () |- ( A ∈ _V → ( [. A / x ]. ( y ∈ w ↔ ph ) ↔ ( [. A / x ]. y ∈ w ↔ [. A / x ]. ph ) ) ) ;;
+	step 8 : wff = sbcg () |- ( A ∈ _V → ( [. A / x ]. y ∈ w ↔ y ∈ w ) ) ;;
+	step 9 : wff = bibi1d (step 8) |- ( A ∈ _V → ( ( [. A / x ]. y ∈ w ↔ [. A / x ]. ph ) ↔ ( y ∈ w ↔ [. A / x ]. ph ) ) ) ;;
+	step 10 : wff = bitrd (step 7, step 9) |- ( A ∈ _V → ( [. A / x ]. ( y ∈ w ↔ ph ) ↔ ( y ∈ w ↔ [. A / x ]. ph ) ) ) ;;
+	step 11 : wff = albidv (step 10) |- ( A ∈ _V → ( ∀ y [. A / x ]. ( y ∈ w ↔ ph ) ↔ ∀ y ( y ∈ w ↔ [. A / x ]. ph ) ) ) ;;
+	step 12 : wff = bitrd (step 6, step 11) |- ( A ∈ _V → ( [. A / x ]. ∀ y ( y ∈ w ↔ ph ) ↔ ∀ y ( y ∈ w ↔ [. A / x ]. ph ) ) ) ;;
+	step 13 : wff = syl5bb (step 5, step 12) |- ( A ∈ _V → ( [. A / x ]. w = { y | ph } ↔ ∀ y ( y ∈ w ↔ [. A / x ]. ph ) ) ) ;;
+	step 14 : wff = abeq2 () |- ( w = { y | [. A / x ]. ph } ↔ ∀ y ( y ∈ w ↔ [. A / x ]. ph ) ) ;;
+	step 15 : wff = syl6bbr (step 13, step 14) |- ( A ∈ _V → ( [. A / x ]. w = { y | ph } ↔ w = { y | [. A / x ]. ph } ) ) ;;
+	step 16 : wff = nfcri (hyp 1) |- F/ x w ∈ B ;;
+	step 17 : wff = sbcgf (step 16) |- ( A ∈ _V → ( [. A / x ]. w ∈ B ↔ w ∈ B ) ) ;;
+	step 18 : wff = anbi12d (step 15, step 17) |- ( A ∈ _V → ( ( [. A / x ]. w = { y | ph } ∧ [. A / x ]. w ∈ B ) ↔ ( w = { y | [. A / x ]. ph } ∧ w ∈ B ) ) ) ;;
+	step 19 : wff = bitrd (step 3, step 18) |- ( A ∈ _V → ( [. A / x ]. ( w = { y | ph } ∧ w ∈ B ) ↔ ( w = { y | [. A / x ]. ph } ∧ w ∈ B ) ) ) ;;
+	step 20 : wff = exbidv (step 19) |- ( A ∈ _V → ( ∃ w [. A / x ]. ( w = { y | ph } ∧ w ∈ B ) ↔ ∃ w ( w = { y | [. A / x ]. ph } ∧ w ∈ B ) ) ) ;;
+	step 21 : wff = bitrd (step 2, step 20) |- ( A ∈ _V → ( [. A / x ]. ∃ w ( w = { y | ph } ∧ w ∈ B ) ↔ ∃ w ( w = { y | [. A / x ]. ph } ∧ w ∈ B ) ) ) ;;
+	step 22 : wff = df-clel () |- ( { y | ph } ∈ B ↔ ∃ w ( w = { y | ph } ∧ w ∈ B ) ) ;;
+	step 23 : wff = sbcbii (step 22) |- ( [. A / x ]. { y | ph } ∈ B ↔ [. A / x ]. ∃ w ( w = { y | ph } ∧ w ∈ B ) ) ;;
+	step 24 : wff = df-clel () |- ( { y | [. A / x ]. ph } ∈ B ↔ ∃ w ( w = { y | [. A / x ]. ph } ∧ w ∈ B ) ) ;;
+	step 25 : wff = 3bitr4g (step 21, step 23, step 24) |- ( A ∈ _V → ( [. A / x ]. { y | ph } ∈ B ↔ { y | [. A / x ]. ph } ∈ B ) ) ;;
+	step 26 : wff = syl (step 1, step 25) |- ( A ∈ V → ( [. A / x ]. { y | ph } ∈ B ↔ { y | [. A / x ]. ph } ∈ B ) ) ;;
+	qed prop 1 = step 26 ;;
+}
+
+/* Restricted quantifier version of Axiom 4 of [Mendelson] p. 69.  This
+       provides an axiom for a predicate calculus for a restricted domain.
+       This theorem generalizes the unrestricted ~ stdpc4 and ~ spsbc .  See
+       also ~ rspsbca and ~ rspcsbela .  (Contributed by NM, 17-Nov-2006.)
+       (Proof shortened by Mario Carneiro, 13-Oct-2016.) */
+
+theorem rspsbc (ph : wff, x : set, A : class, B : class) disjointed(y A, x y B, y ph) {
+	prop 1 : wff = |- ( A ∈ B → ( ∀ x ∈ B ph → [. A / x ]. ph ) ) ;;
+}
+
+proof of rspsbc {
+	var y : set;;
+	step 1 : wff = cbvralsv () |- ( ∀ x ∈ B ph ↔ ∀ y ∈ B [ y / x ] ph ) ;;
+	step 2 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 3 : wff = rspcv (step 2) |- ( A ∈ B → ( ∀ y ∈ B [ y / x ] ph → [. A / x ]. ph ) ) ;;
+	step 4 : wff = syl5bi (step 1, step 3) |- ( A ∈ B → ( ∀ x ∈ B ph → [. A / x ]. ph ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Restricted quantifier version of Axiom 4 of [Mendelson] p. 69.
+       (Contributed by NM, 14-Dec-2005.) */
+
+theorem rspsbca (ph : wff, x : set, A : class, B : class) disjointed(x B) {
+	prop 1 : wff = |- ( ( A ∈ B ∧ ∀ x ∈ B ph ) → [. A / x ]. ph ) ;;
+}
+
+proof of rspsbca {
+	step 1 : wff = rspsbc () |- ( A ∈ B → ( ∀ x ∈ B ph → [. A / x ]. ph ) ) ;;
+	step 2 : wff = imp (step 1) |- ( ( A ∈ B ∧ ∀ x ∈ B ph ) → [. A / x ]. ph ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Existence form of ~ rspsbca .  (Contributed by NM, 29-Feb-2008.)  (Proof
+       shortened by Mario Carneiro, 13-Oct-2016.) */
+
+theorem rspesbca (ph : wff, x : set, A : class, B : class) disjointed(y A, x y B, y ph) {
+	prop 1 : wff = |- ( ( A ∈ B ∧ [. A / x ]. ph ) → ∃ x ∈ B ph ) ;;
+}
+
+proof of rspesbca {
+	var y : set;;
+	step 1 : wff = dfsbcq2 () |- ( y = A → ( [ y / x ] ph ↔ [. A / x ]. ph ) ) ;;
+	step 2 : wff = rspcev (step 1) |- ( ( A ∈ B ∧ [. A / x ]. ph ) → ∃ y ∈ B [ y / x ] ph ) ;;
+	step 3 : wff = cbvrexsv () |- ( ∃ x ∈ B ph ↔ ∃ y ∈ B [ y / x ] ph ) ;;
+	step 4 : wff = sylibr (step 2, step 3) |- ( ( A ∈ B ∧ [. A / x ]. ph ) → ∃ x ∈ B ph ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* Existence form of ~ spsbc .  (Contributed by Mario Carneiro,
+       18-Nov-2016.) */
+
+theorem spesbc (ph : wff, x : set, A : class)  {
+	prop 1 : wff = |- ( [. A / x ]. ph → ∃ x ph ) ;;
+}
+
+proof of spesbc {
+	step 1 : wff = sbcex () |- ( [. A / x ]. ph → A ∈ _V ) ;;
+	step 2 : wff = rspesbca () |- ( ( A ∈ _V ∧ [. A / x ]. ph ) → ∃ x ∈ _V ph ) ;;
+	step 3 : wff = mpancom (step 1, step 2) |- ( [. A / x ]. ph → ∃ x ∈ _V ph ) ;;
+	step 4 : wff = rexv () |- ( ∃ x ∈ _V ph ↔ ∃ x ph ) ;;
+	step 5 : wff = sylib (step 3, step 4) |- ( [. A / x ]. ph → ∃ x ph ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* form of ~ spsbc .  (Contributed by Mario Carneiro, 9-Feb-2017.) */
+
+theorem spesbcd (ph : wff, ps : wff, x : set, A : class)  {
+	hyp 1 : wff = |- ( ph → [. A / x ]. ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ph → ∃ x ps ) ;;
+}
+
+proof of spesbcd {
+	step 1 : wff = spesbc () |- ( [. A / x ]. ps → ∃ x ps ) ;;
+	step 2 : wff = syl (hyp 1, step 1) |- ( ph → ∃ x ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* A substitution into a theorem.  (Contributed by NM, 1-Mar-2008.)  (Proof
+       shortened by Mario Carneiro, 13-Oct-2016.) */
+
+theorem sbcth2 (ph : wff, x : set, A : class, B : class) disjointed(x B) {
+	hyp 1 : wff = |- ( x ∈ B → ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( A ∈ B → [. A / x ]. ph ) ;;
+}
+
+proof of sbcth2 {
+	step 1 : wff = rgen (hyp 1) |- ∀ x ∈ B ph ;;
+	step 2 : wff = rspsbc () |- ( A ∈ B → ( ∀ x ∈ B ph → [. A / x ]. ph ) ) ;;
+	step 3 : wff = mpi (step 1, step 2) |- ( A ∈ B → [. A / x ]. ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Restricted quantifier version of Axiom 5 of [Mendelson] p. 69.  This is
+       an axiom of a predicate calculus for a restricted domain.  Compare the
+       unrestricted ~ stdpc5 .  (Contributed by NM, 16-Jan-2004.) */
+
+theorem ra5 (ph : wff, ps : wff, x : set, A : class)  {
+	hyp 1 : wff = |- F/ x ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ∈ A ( ph → ps ) → ( ph → ∀ x ∈ A ps ) ) ;;
+}
+
+proof of ra5 {
+	step 1 : wff = df-ral () |- ( ∀ x ∈ A ( ph → ps ) ↔ ∀ x ( x ∈ A → ( ph → ps ) ) ) ;;
+	step 2 : wff = bi2.04 () |- ( ( x ∈ A → ( ph → ps ) ) ↔ ( ph → ( x ∈ A → ps ) ) ) ;;
+	step 3 : wff = albii (step 2) |- ( ∀ x ( x ∈ A → ( ph → ps ) ) ↔ ∀ x ( ph → ( x ∈ A → ps ) ) ) ;;
+	step 4 : wff = bitri (step 1, step 3) |- ( ∀ x ∈ A ( ph → ps ) ↔ ∀ x ( ph → ( x ∈ A → ps ) ) ) ;;
+	step 5 : wff = stdpc5 (hyp 1) |- ( ∀ x ( ph → ( x ∈ A → ps ) ) → ( ph → ∀ x ( x ∈ A → ps ) ) ) ;;
+	step 6 : wff = sylbi (step 4, step 5) |- ( ∀ x ∈ A ( ph → ps ) → ( ph → ∀ x ( x ∈ A → ps ) ) ) ;;
+	step 7 : wff = df-ral () |- ( ∀ x ∈ A ps ↔ ∀ x ( x ∈ A → ps ) ) ;;
+	step 8 : wff = syl6ibr (step 6, step 7) |- ( ∀ x ∈ A ( ph → ps ) → ( ph → ∀ x ∈ A ps ) ) ;;
+	qed prop 1 = step 8 ;;
+}
+
+/* Alternate definition of restricted "at most one."  Note that
+       ` E* x e. A ph ` is not equivalent to
+       ` E. y e. A A. x e. A ( ph -> x = y ) ` (in analogy to ~ reu6 ); to see
+       this, let ` A ` be the empty set.  However, one direction of this
+       pattern holds; see ~ rmo2i .  (Contributed by NM, 17-Jun-2017.) */
+
+theorem rmo2 (ph : wff, x : set, y : set, A : class) disjointed(x y A) {
+	hyp 1 : wff = |- F/ y ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃* x ∈ A ph ↔ ∃ y ∀ x ∈ A ( ph → x = y ) ) ;;
+}
+
+proof of rmo2 {
+	step 1 : wff = df-rmo () |- ( ∃* x ∈ A ph ↔ ∃* x ( x ∈ A ∧ ph ) ) ;;
+	step 2 : wff = nfv () |- F/ y x ∈ A ;;
+	step 3 : wff = nfan (step 2, hyp 1) |- F/ y ( x ∈ A ∧ ph ) ;;
+	step 4 : wff = mo2 (step 3) |- ( ∃* x ( x ∈ A ∧ ph ) ↔ ∃ y ∀ x ( ( x ∈ A ∧ ph ) → x = y ) ) ;;
+	step 5 : wff = impexp () |- ( ( ( x ∈ A ∧ ph ) → x = y ) ↔ ( x ∈ A → ( ph → x = y ) ) ) ;;
+	step 6 : wff = albii (step 5) |- ( ∀ x ( ( x ∈ A ∧ ph ) → x = y ) ↔ ∀ x ( x ∈ A → ( ph → x = y ) ) ) ;;
+	step 7 : wff = df-ral () |- ( ∀ x ∈ A ( ph → x = y ) ↔ ∀ x ( x ∈ A → ( ph → x = y ) ) ) ;;
+	step 8 : wff = bitr4i (step 6, step 7) |- ( ∀ x ( ( x ∈ A ∧ ph ) → x = y ) ↔ ∀ x ∈ A ( ph → x = y ) ) ;;
+	step 9 : wff = exbii (step 8) |- ( ∃ y ∀ x ( ( x ∈ A ∧ ph ) → x = y ) ↔ ∃ y ∀ x ∈ A ( ph → x = y ) ) ;;
+	step 10 : wff = 3bitri (step 1, step 4, step 9) |- ( ∃* x ∈ A ph ↔ ∃ y ∀ x ∈ A ( ph → x = y ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Condition implying restricted "at most one."  (Contributed by NM,
+       17-Jun-2017.) */
+
+theorem rmo2i (ph : wff, x : set, y : set, A : class) disjointed(x y A) {
+	hyp 1 : wff = |- F/ y ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃ y ∈ A ∀ x ∈ A ( ph → x = y ) → ∃* x ∈ A ph ) ;;
+}
+
+proof of rmo2i {
+	step 1 : wff = rexex () |- ( ∃ y ∈ A ∀ x ∈ A ( ph → x = y ) → ∃ y ∀ x ∈ A ( ph → x = y ) ) ;;
+	step 2 : wff = rmo2 (hyp 1) |- ( ∃* x ∈ A ph ↔ ∃ y ∀ x ∈ A ( ph → x = y ) ) ;;
+	step 3 : wff = sylibr (step 1, step 2) |- ( ∃ y ∈ A ∀ x ∈ A ( ph → x = y ) → ∃* x ∈ A ph ) ;;
+	qed prop 1 = step 3 ;;
+}
+
+/* Restricted "at most one" using explicit substitution.  (Contributed by
+       NM, 4-Nov-2012.)  (Revised by NM, 16-Jun-2017.) */
+
+theorem rmo3 (ph : wff, x : set, y : set, A : class) disjointed(x y A) {
+	hyp 1 : wff = |- F/ y ph ;;
+	-----------------------
+	prop 1 : wff = |- ( ∃* x ∈ A ph ↔ ∀ x ∈ A ∀ y ∈ A ( ( ph ∧ [ y / x ] ph ) → x = y ) ) ;;
+}
+
+proof of rmo3 {
+	step 1 : wff = df-rmo () |- ( ∃* x ∈ A ph ↔ ∃* x ( x ∈ A ∧ ph ) ) ;;
+	step 2 : wff = sban () |- ( [ y / x ] ( x ∈ A ∧ ph ) ↔ ( [ y / x ] x ∈ A ∧ [ y / x ] ph ) ) ;;
+	step 3 : wff = clelsb3 () |- ( [ y / x ] x ∈ A ↔ y ∈ A ) ;;
+	step 4 : wff = anbi1i (step 3) |- ( ( [ y / x ] x ∈ A ∧ [ y / x ] ph ) ↔ ( y ∈ A ∧ [ y / x ] ph ) ) ;;
+	step 5 : wff = bitri (step 2, step 4) |- ( [ y / x ] ( x ∈ A ∧ ph ) ↔ ( y ∈ A ∧ [ y / x ] ph ) ) ;;
+	step 6 : wff = anbi2i (step 5) |- ( ( ( x ∈ A ∧ ph ) ∧ [ y / x ] ( x ∈ A ∧ ph ) ) ↔ ( ( x ∈ A ∧ ph ) ∧ ( y ∈ A ∧ [ y / x ] ph ) ) ) ;;
+	step 7 : wff = an4 () |- ( ( ( x ∈ A ∧ ph ) ∧ ( y ∈ A ∧ [ y / x ] ph ) ) ↔ ( ( x ∈ A ∧ y ∈ A ) ∧ ( ph ∧ [ y / x ] ph ) ) ) ;;
+	step 8 : wff = ancom () |- ( ( x ∈ A ∧ y ∈ A ) ↔ ( y ∈ A ∧ x ∈ A ) ) ;;
+	step 9 : wff = anbi1i (step 8) |- ( ( ( x ∈ A ∧ y ∈ A ) ∧ ( ph ∧ [ y / x ] ph ) ) ↔ ( ( y ∈ A ∧ x ∈ A ) ∧ ( ph ∧ [ y / x ] ph ) ) ) ;;
+	step 10 : wff = 3bitri (step 6, step 7, step 9) |- ( ( ( x ∈ A ∧ ph ) ∧ [ y / x ] ( x ∈ A ∧ ph ) ) ↔ ( ( y ∈ A ∧ x ∈ A ) ∧ ( ph ∧ [ y / x ] ph ) ) ) ;;
+	step 11 : wff = imbi1i (step 10) |- ( ( ( ( x ∈ A ∧ ph ) ∧ [ y / x ] ( x ∈ A ∧ ph ) ) → x = y ) ↔ ( ( ( y ∈ A ∧ x ∈ A ) ∧ ( ph ∧ [ y / x ] ph ) ) → x = y ) ) ;;
+	step 12 : wff = impexp () |- ( ( ( ( y ∈ A ∧ x ∈ A ) ∧ ( ph ∧ [ y / x ] ph ) ) → x = y ) ↔ ( ( y ∈ A ∧ x ∈ A ) → ( ( ph ∧ [ y / x ] ph ) → x = y ) ) ) ;;
+	step 13 : wff = impexp () |- ( ( ( y ∈ A ∧ x ∈ A ) → ( ( ph ∧ [ y / x ] ph ) → x = y ) ) ↔ ( y ∈ A → ( x ∈ A → ( ( ph ∧ [ y / x ] ph ) → x = y ) ) ) ) ;;
+	step 14 : wff = 3bitri (step 11, step 12, step 13) |- ( ( ( ( x ∈ A ∧ ph ) ∧ [ y / x ] ( x ∈ A ∧ ph ) ) → x = y ) ↔ ( y ∈ A → ( x ∈ A → ( ( ph ∧ [ y / x ] ph ) → x = y ) ) ) ) ;;
+	step 15 : wff = albii (step 14) |- ( ∀ y ( ( ( x ∈ A ∧ ph ) ∧ [ y / x ] ( x ∈ A ∧ ph ) ) → x = y ) ↔ ∀ y ( y ∈ A → ( x ∈ A → ( ( ph ∧ [ y / x ] ph ) → x = y ) ) ) ) ;;
+	step 16 : wff = df-ral () |- ( ∀ y ∈ A ( x ∈ A → ( ( ph ∧ [ y / x ] ph ) → x = y ) ) ↔ ∀ y ( y ∈ A → ( x ∈ A → ( ( ph ∧ [ y / x ] ph ) → x = y ) ) ) ) ;;
+	step 17 : wff = r19.21v () |- ( ∀ y ∈ A ( x ∈ A → ( ( ph ∧ [ y / x ] ph ) → x = y ) ) ↔ ( x ∈ A → ∀ y ∈ A ( ( ph ∧ [ y / x ] ph ) → x = y ) ) ) ;;
+	step 18 : wff = 3bitr2i (step 15, step 16, step 17) |- ( ∀ y ( ( ( x ∈ A ∧ ph ) ∧ [ y / x ] ( x ∈ A ∧ ph ) ) → x = y ) ↔ ( x ∈ A → ∀ y ∈ A ( ( ph ∧ [ y / x ] ph ) → x = y ) ) ) ;;
+	step 19 : wff = albii (step 18) |- ( ∀ x ∀ y ( ( ( x ∈ A ∧ ph ) ∧ [ y / x ] ( x ∈ A ∧ ph ) ) → x = y ) ↔ ∀ x ( x ∈ A → ∀ y ∈ A ( ( ph ∧ [ y / x ] ph ) → x = y ) ) ) ;;
+	step 20 : wff = nfv () |- F/ y x ∈ A ;;
+	step 21 : wff = nfan (step 20, hyp 1) |- F/ y ( x ∈ A ∧ ph ) ;;
+	step 22 : wff = mo3 (step 21) |- ( ∃* x ( x ∈ A ∧ ph ) ↔ ∀ x ∀ y ( ( ( x ∈ A ∧ ph ) ∧ [ y / x ] ( x ∈ A ∧ ph ) ) → x = y ) ) ;;
+	step 23 : wff = df-ral () |- ( ∀ x ∈ A ∀ y ∈ A ( ( ph ∧ [ y / x ] ph ) → x = y ) ↔ ∀ x ( x ∈ A → ∀ y ∈ A ( ( ph ∧ [ y / x ] ph ) → x = y ) ) ) ;;
+	step 24 : wff = 3bitr4i (step 19, step 22, step 23) |- ( ∃* x ( x ∈ A ∧ ph ) ↔ ∀ x ∈ A ∀ y ∈ A ( ( ph ∧ [ y / x ] ph ) → x = y ) ) ;;
+	step 25 : wff = bitri (step 1, step 24) |- ( ∃* x ∈ A ph ↔ ∀ x ∈ A ∀ y ∈ A ( ( ph ∧ [ y / x ] ph ) → x = y ) ) ;;
+	qed prop 1 = step 25 ;;
+}
+
+/* Consequence of "at most one", using implicit substitution.  (Contributed
+       by NM, 2-Jan-2015.)  (Revised by NM, 16-Jun-2017.) */
+
+theorem rmob (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class, C : class) disjointed(x A, x B, x C, x ps, x ch) {
+	hyp 1 : wff = |- ( x = B → ( ph ↔ ps ) ) ;;
+	hyp 2 : wff = |- ( x = C → ( ph ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ∃* x ∈ A ph ∧ ( B ∈ A ∧ ps ) ) → ( B = C ↔ ( C ∈ A ∧ ch ) ) ) ;;
+}
+
+proof of rmob {
+	step 1 : wff = df-rmo () |- ( ∃* x ∈ A ph ↔ ∃* x ( x ∈ A ∧ ph ) ) ;;
+	step 2 : wff = simprl () |- ( ( ∃* x ( x ∈ A ∧ ph ) ∧ ( B ∈ A ∧ ps ) ) → B ∈ A ) ;;
+	step 3 : wff = eleq1 () |- ( B = C → ( B ∈ A ↔ C ∈ A ) ) ;;
+	step 4 : wff = syl5ibcom (step 2, step 3) |- ( ( ∃* x ( x ∈ A ∧ ph ) ∧ ( B ∈ A ∧ ps ) ) → ( B = C → C ∈ A ) ) ;;
+	step 5 : wff = simpl () |- ( ( C ∈ A ∧ ch ) → C ∈ A ) ;;
+	step 6 : wff = a1i (step 5) |- ( ( ∃* x ( x ∈ A ∧ ph ) ∧ ( B ∈ A ∧ ps ) ) → ( ( C ∈ A ∧ ch ) → C ∈ A ) ) ;;
+	step 7 : wff = simplrl () |- ( ( ( ∃* x ( x ∈ A ∧ ph ) ∧ ( B ∈ A ∧ ps ) ) ∧ C ∈ A ) → B ∈ A ) ;;
+	step 8 : wff = simpr () |- ( ( ( ∃* x ( x ∈ A ∧ ph ) ∧ ( B ∈ A ∧ ps ) ) ∧ C ∈ A ) → C ∈ A ) ;;
+	step 9 : wff = simpll () |- ( ( ( ∃* x ( x ∈ A ∧ ph ) ∧ ( B ∈ A ∧ ps ) ) ∧ C ∈ A ) → ∃* x ( x ∈ A ∧ ph ) ) ;;
+	step 10 : wff = simplrl () |- ( ( ( ∃* x ( x ∈ A ∧ ph ) ∧ ( B ∈ A ∧ ps ) ) ∧ C ∈ A ) → B ∈ A ) ;;
+	step 11 : wff = simplrr () |- ( ( ( ∃* x ( x ∈ A ∧ ph ) ∧ ( B ∈ A ∧ ps ) ) ∧ C ∈ A ) → ps ) ;;
+	step 12 : wff = eleq1 () |- ( x = B → ( x ∈ A ↔ B ∈ A ) ) ;;
+	step 13 : wff = anbi12d (step 12, hyp 1) |- ( x = B → ( ( x ∈ A ∧ ph ) ↔ ( B ∈ A ∧ ps ) ) ) ;;
+	step 14 : wff = eleq1 () |- ( x = C → ( x ∈ A ↔ C ∈ A ) ) ;;
+	step 15 : wff = anbi12d (step 14, hyp 2) |- ( x = C → ( ( x ∈ A ∧ ph ) ↔ ( C ∈ A ∧ ch ) ) ) ;;
+	step 16 : wff = mob (step 13, step 15) |- ( ( ( B ∈ A ∧ C ∈ A ) ∧ ∃* x ( x ∈ A ∧ ph ) ∧ ( B ∈ A ∧ ps ) ) → ( B = C ↔ ( C ∈ A ∧ ch ) ) ) ;;
+	step 17 : wff = syl212anc (step 7, step 8, step 9, step 10, step 11, step 16) |- ( ( ( ∃* x ( x ∈ A ∧ ph ) ∧ ( B ∈ A ∧ ps ) ) ∧ C ∈ A ) → ( B = C ↔ ( C ∈ A ∧ ch ) ) ) ;;
+	step 18 : wff = ex (step 17) |- ( ( ∃* x ( x ∈ A ∧ ph ) ∧ ( B ∈ A ∧ ps ) ) → ( C ∈ A → ( B = C ↔ ( C ∈ A ∧ ch ) ) ) ) ;;
+	step 19 : wff = pm5.21ndd (step 4, step 6, step 18) |- ( ( ∃* x ( x ∈ A ∧ ph ) ∧ ( B ∈ A ∧ ps ) ) → ( B = C ↔ ( C ∈ A ∧ ch ) ) ) ;;
+	step 20 : wff = sylanb (step 1, step 19) |- ( ( ∃* x ∈ A ph ∧ ( B ∈ A ∧ ps ) ) → ( B = C ↔ ( C ∈ A ∧ ch ) ) ) ;;
+	qed prop 1 = step 20 ;;
+}
+
+/* Consequence of "at most one", using implicit substitution.  (Contributed
+       by NM, 4-Nov-2012.)  (Revised by NM, 16-Jun-2017.) */
+
+theorem rmoi (ph : wff, ps : wff, ch : wff, x : set, A : class, B : class, C : class) disjointed(x A, x B, x C, x ps, x ch) {
+	hyp 1 : wff = |- ( x = B → ( ph ↔ ps ) ) ;;
+	hyp 2 : wff = |- ( x = C → ( ph ↔ ch ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ( ∃* x ∈ A ph ∧ ( B ∈ A ∧ ps ) ∧ ( C ∈ A ∧ ch ) ) → B = C ) ;;
+}
+
+proof of rmoi {
+	step 1 : wff = rmob (hyp 1, hyp 2) |- ( ( ∃* x ∈ A ph ∧ ( B ∈ A ∧ ps ) ) → ( B = C ↔ ( C ∈ A ∧ ch ) ) ) ;;
+	step 2 : wff = biimp3ar (step 1) |- ( ( ∃* x ∈ A ph ∧ ( B ∈ A ∧ ps ) ∧ ( C ∈ A ∧ ch ) ) → B = C ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+

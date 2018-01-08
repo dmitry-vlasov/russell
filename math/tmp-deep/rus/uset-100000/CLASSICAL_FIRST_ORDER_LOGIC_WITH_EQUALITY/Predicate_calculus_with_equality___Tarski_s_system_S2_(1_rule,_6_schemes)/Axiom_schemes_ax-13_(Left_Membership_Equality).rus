@@ -1,0 +1,42 @@
+import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Tarski_s_system_S2_(1_rule,_6_schemes)/Membership_predicate.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Axiom schemes ax-13 (Left Membership Equality)
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/* Axiom of Left Membership Equality.  One of the equality and substitution
+     axioms for a non-logical predicate in our predicate calculus with
+     equality.  It substitutes equal variables into the left-hand side of the
+     ` e. ` binary predicate.  This axiom scheme is a sub-scheme of Axiom
+     Scheme B8 of system S2 of [Tarski], p. 75, whose general form cannot be
+     represented with our notation.  Also appears as Axiom scheme C12' in
+     [Megill] p. 448 (p. 16 of the preprint).  "Non-logical" means that the
+     predicate is not a primitive of predicate calculus proper but instead is
+     an extension to it.  "Binary" means that the predicate has two arguments.
+     In a system of predicate calculus with equality, like ours, equality is
+     not usually considered to be a non-logical predicate.  In systems of
+     predicate calculus without equality, it typically would be.  (Contributed
+     by NM, 5-Aug-1993.) */
+
+axiom ax-13 (x : set, y : set, z : set)  {
+	prop 1 : wff = |- ( x = y → ( x ∈ z → y ∈ z ) ) ;;
+}
+
+/* An identity law for the non-logical predicate.  (Contributed by NM,
+     5-Aug-1993.) */
+
+theorem elequ1 (x : set, y : set, z : set)  {
+	prop 1 : wff = |- ( x = y → ( x ∈ z ↔ y ∈ z ) ) ;;
+}
+
+proof of elequ1 {
+	step 1 : wff = ax-13 () |- ( x = y → ( x ∈ z → y ∈ z ) ) ;;
+	step 2 : wff = ax-13 () |- ( y = x → ( y ∈ z → x ∈ z ) ) ;;
+	step 3 : wff = equcoms (step 2) |- ( x = y → ( y ∈ z → x ∈ z ) ) ;;
+	step 4 : wff = impbid (step 1, step 3) |- ( x = y → ( x ∈ z ↔ y ∈ z ) ) ;;
+	qed prop 1 = step 4 ;;
+}
+
+

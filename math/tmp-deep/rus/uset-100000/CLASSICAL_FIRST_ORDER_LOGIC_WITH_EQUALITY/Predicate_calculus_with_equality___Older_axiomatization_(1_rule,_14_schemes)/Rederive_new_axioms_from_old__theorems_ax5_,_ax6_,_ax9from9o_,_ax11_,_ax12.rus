@@ -1,0 +1,270 @@
+import uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Older_axiomatization_(1_rule,_14_schemes)/Obsolete_schemes_ax-5o_ax-4_ax-6o_ax-9o_ax-10o_ax-10_ax-11o_ax-12o_ax-15_ax-16.rus;;
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  Rederive new axioms from old: theorems ax5 , ax6 , ax9from9o , ax11 , ax12
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+  Theorems ~ ax11 and ~ ax12 require some intermediate theorems that are
+  included in this section.
+
+*/
+
+/* This theorem repeats ~ sp under the name ~ ax4 , so that the metamath
+     program's "verify markup" command will check that it matches axiom scheme
+     ~ ax-4 .  It is preferred that references to this theorem use the name
+     ~ sp .  (Contributed by NM, 18-Aug-2017.)  (New usage is discouraged.)
+     (Proof modification is discouraged.) */
+
+theorem ax4 (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ∀ x ph → ph ) ;;
+}
+
+proof of ax4 {
+	step 1 : wff = sp () |- ( ∀ x ph → ph ) ;;
+	qed prop 1 = step 1 ;;
+}
+
+/* Rederivation of axiom ~ ax-5 from ~ ax-5o and other older axioms.  See
+     ~ ax5o for the derivation of ~ ax-5o from ~ ax-5 .  (Contributed by NM,
+     23-May-2008.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem ax5 (ph : wff, ps : wff, x : set)  {
+	prop 1 : wff = |- ( ∀ x ( ph → ps ) → ( ∀ x ph → ∀ x ps ) ) ;;
+}
+
+proof of ax5 {
+	step 1 : wff = ax-5o () |- ( ∀ x ( ∀ x ( ph → ps ) → ( ∀ x ph → ps ) ) → ( ∀ x ( ph → ps ) → ∀ x ( ∀ x ph → ps ) ) ) ;;
+	step 2 : wff = ax-4 () |- ( ∀ x ph → ph ) ;;
+	step 3 : wff = ax-4 () |- ( ∀ x ( ph → ps ) → ( ph → ps ) ) ;;
+	step 4 : wff = syl5 (step 2, step 3) |- ( ∀ x ( ph → ps ) → ( ∀ x ph → ps ) ) ;;
+	step 5 : wff = mpg (step 1, step 4) |- ( ∀ x ( ph → ps ) → ∀ x ( ∀ x ph → ps ) ) ;;
+	step 6 : wff = ax-5o () |- ( ∀ x ( ∀ x ph → ps ) → ( ∀ x ph → ∀ x ps ) ) ;;
+	step 7 : wff = syl (step 5, step 6) |- ( ∀ x ( ph → ps ) → ( ∀ x ph → ∀ x ps ) ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Rederivation of axiom ~ ax-6 from ~ ax-6o and other older axioms.  See
+     ~ ax6o for the derivation of ~ ax-6o from ~ ax-6 .  (Contributed by NM,
+     23-May-2008.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem ax6 (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ¬ ∀ x ph → ∀ x ¬ ∀ x ph ) ;;
+}
+
+proof of ax6 {
+	step 1 : wff = ax-5o () |- ( ∀ x ( ∀ x ¬ ∀ x ∀ x ph → ¬ ∀ x ph ) → ( ∀ x ¬ ∀ x ∀ x ph → ∀ x ¬ ∀ x ph ) ) ;;
+	step 2 : wff = ax-4 () |- ( ∀ x ¬ ∀ x ∀ x ph → ¬ ∀ x ∀ x ph ) ;;
+	step 3 : wff = ax-5o () |- ( ∀ x ( ∀ x ph → ∀ x ph ) → ( ∀ x ph → ∀ x ∀ x ph ) ) ;;
+	step 4 : wff = id () |- ( ∀ x ph → ∀ x ph ) ;;
+	step 5 : wff = mpg (step 3, step 4) |- ( ∀ x ph → ∀ x ∀ x ph ) ;;
+	step 6 : wff = nsyl (step 2, step 5) |- ( ∀ x ¬ ∀ x ∀ x ph → ¬ ∀ x ph ) ;;
+	step 7 : wff = mpg (step 1, step 6) |- ( ∀ x ¬ ∀ x ∀ x ph → ∀ x ¬ ∀ x ph ) ;;
+	step 8 : wff = ax-6o () |- ( ¬ ∀ x ¬ ∀ x ∀ x ph → ∀ x ph ) ;;
+	step 9 : wff = nsyl4 (step 7, step 8) |- ( ¬ ∀ x ph → ∀ x ¬ ∀ x ph ) ;;
+	qed prop 1 = step 9 ;;
+}
+
+/* Rederivation of axiom ~ ax-9 from ~ ax-9o and other older axioms.  See
+     ~ ax9o for the derivation of ~ ax-9o from ~ ax-9 .  Lemma L18 in [Megill]
+     p. 446 (p. 14 of the preprint).  (Contributed by NM, 5-Aug-1993.)
+     (Proof modification is discouraged.)  (New usage is discouraged.) */
+
+theorem ax9from9o (x : set, y : set)  {
+	prop 1 : wff = |- ¬ ∀ x ¬ x = y ;;
+}
+
+proof of ax9from9o {
+	step 1 : wff = ax-9o () |- ( ∀ x ( x = y → ∀ x ¬ ∀ x ¬ x = y ) → ¬ ∀ x ¬ x = y ) ;;
+	step 2 : wff = ax-6o () |- ( ¬ ∀ x ¬ ∀ x ¬ x = y → ¬ x = y ) ;;
+	step 3 : wff = con4i (step 2) |- ( x = y → ∀ x ¬ ∀ x ¬ x = y ) ;;
+	step 4 : wff = mpg (step 1, step 3) |- ¬ ∀ x ¬ x = y ;;
+	qed prop 1 = step 4 ;;
+}
+
+/* ` x ` is not free in ` A. x ph ` .  Example in Appendix in [Megill] p. 450
+     (p. 19 of the preprint).  Also Lemma 22 of [Monk2] p. 114.  (Contributed
+     by NM, 5-Aug-1993.)  (New usage is discouraged.) */
+
+theorem hba1-o (ph : wff, x : set)  {
+	prop 1 : wff = |- ( ∀ x ph → ∀ x ∀ x ph ) ;;
+}
+
+proof of hba1-o {
+	step 1 : wff = ax-4 () |- ( ∀ x ¬ ∀ x ph → ¬ ∀ x ph ) ;;
+	step 2 : wff = con2i (step 1) |- ( ∀ x ph → ¬ ∀ x ¬ ∀ x ph ) ;;
+	step 3 : wff = ax6 () |- ( ¬ ∀ x ¬ ∀ x ph → ∀ x ¬ ∀ x ¬ ∀ x ph ) ;;
+	step 4 : wff = ax6 () |- ( ¬ ∀ x ph → ∀ x ¬ ∀ x ph ) ;;
+	step 5 : wff = con1i (step 4) |- ( ¬ ∀ x ¬ ∀ x ph → ∀ x ph ) ;;
+	step 6 : wff = alimi (step 5) |- ( ∀ x ¬ ∀ x ¬ ∀ x ph → ∀ x ∀ x ph ) ;;
+	step 7 : wff = 3syl (step 2, step 3, step 6) |- ( ∀ x ph → ∀ x ∀ x ph ) ;;
+	qed prop 1 = step 7 ;;
+}
+
+/* Inference version of ~ ax-5o .  (Contributed by NM, 5-Aug-1993.)
+       (New usage is discouraged.) */
+
+theorem a5i-o (ph : wff, ps : wff, x : set)  {
+	hyp 1 : wff = |- ( ∀ x ph → ps ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x ph → ∀ x ps ) ;;
+}
+
+proof of a5i-o {
+	step 1 : wff = hba1-o () |- ( ∀ x ph → ∀ x ∀ x ph ) ;;
+	step 2 : wff = alrimih (step 1, hyp 1) |- ( ∀ x ph → ∀ x ps ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* Commutation law for identical variable specifiers.  The antecedent and
+     consequent are true when ` x ` and ` y ` are substituted with the same
+     variable.  Lemma L12 in [Megill] p. 445 (p. 12 of the preprint).  Version
+     of ~ aecom using ~ ax-10o .  Unlike ~ ax10from10o , this version does not
+     require ~ ax-17 .  (Contributed by NM, 5-Aug-1993.)
+     (New usage is discouraged.) */
+
+theorem aecom-o (x : set, y : set)  {
+	prop 1 : wff = |- ( ∀ x x = y → ∀ y y = x ) ;;
+}
+
+proof of aecom-o {
+	step 1 : wff = ax-10o () |- ( ∀ x x = y → ( ∀ x x = y → ∀ y x = y ) ) ;;
+	step 2 : wff = pm2.43i (step 1) |- ( ∀ x x = y → ∀ y x = y ) ;;
+	step 3 : wff = equcomi () |- ( x = y → y = x ) ;;
+	step 4 : wff = alimi (step 3) |- ( ∀ y x = y → ∀ y y = x ) ;;
+	step 5 : wff = syl (step 2, step 4) |- ( ∀ x x = y → ∀ y y = x ) ;;
+	qed prop 1 = step 5 ;;
+}
+
+/* A commutation rule for identical variable specifiers.  Version of
+       ~ aecoms using ax-10o .  (Contributed by NM, 5-Aug-1993.)
+       (New usage is discouraged.) */
+
+theorem aecoms-o (ph : wff, x : set, y : set)  {
+	hyp 1 : wff = |- ( ∀ x x = y → ph ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ y y = x → ph ) ;;
+}
+
+proof of aecoms-o {
+	step 1 : wff = aecom-o () |- ( ∀ y y = x → ∀ x x = y ) ;;
+	step 2 : wff = syl (step 1, hyp 1) |- ( ∀ y y = x → ph ) ;;
+	qed prop 1 = step 2 ;;
+}
+
+/* All variables are effectively bound in an identical variable specifier.
+     Version of ~ hbae using ~ ax-10o .  (Contributed by NM, 5-Aug-1993.)
+     (Proof modification is disccouraged.)  (New usage is discouraged.) */
+
+theorem hbae-o (x : set, y : set, z : set)  {
+	prop 1 : wff = |- ( ∀ x x = y → ∀ z ∀ x x = y ) ;;
+}
+
+proof of hbae-o {
+	step 1 : wff = ax-4 () |- ( ∀ x x = y → x = y ) ;;
+	step 2 : wff = ax-12o () |- ( ¬ ∀ z z = x → ( ¬ ∀ z z = y → ( x = y → ∀ z x = y ) ) ) ;;
+	step 3 : wff = syl7 (step 1, step 2) |- ( ¬ ∀ z z = x → ( ¬ ∀ z z = y → ( ∀ x x = y → ∀ z x = y ) ) ) ;;
+	step 4 : wff = ax-10o () |- ( ∀ x x = z → ( ∀ x x = y → ∀ z x = y ) ) ;;
+	step 5 : wff = aecoms-o (step 4) |- ( ∀ z z = x → ( ∀ x x = y → ∀ z x = y ) ) ;;
+	step 6 : wff = ax-10o () |- ( ∀ x x = y → ( ∀ x x = y → ∀ y x = y ) ) ;;
+	step 7 : wff = pm2.43i (step 6) |- ( ∀ x x = y → ∀ y x = y ) ;;
+	step 8 : wff = ax-10o () |- ( ∀ y y = z → ( ∀ y x = y → ∀ z x = y ) ) ;;
+	step 9 : wff = syl5 (step 7, step 8) |- ( ∀ y y = z → ( ∀ x x = y → ∀ z x = y ) ) ;;
+	step 10 : wff = aecoms-o (step 9) |- ( ∀ z z = y → ( ∀ x x = y → ∀ z x = y ) ) ;;
+	step 11 : wff = pm2.61ii (step 3, step 5, step 10) |- ( ∀ x x = y → ∀ z x = y ) ;;
+	step 12 : wff = a5i-o (step 11) |- ( ∀ x x = y → ∀ x ∀ z x = y ) ;;
+	step 13 : wff = ax-7 () |- ( ∀ x ∀ z x = y → ∀ z ∀ x x = y ) ;;
+	step 14 : wff = syl (step 12, step 13) |- ( ∀ x x = y → ∀ z ∀ x x = y ) ;;
+	qed prop 1 = step 14 ;;
+}
+
+/* Formula-building lemma for use with the Distinctor Reduction Theorem.
+       Part of Theorem 9.4 of [Megill] p. 448 (p. 16 of preprint).  Version of
+       ~ dral1 using ~ ax-10o .  (Contributed by NM, 24-Nov-1994.)
+       (New usage is discouraged.) */
+
+theorem dral1-o (ph : wff, ps : wff, x : set, y : set)  {
+	hyp 1 : wff = |- ( ∀ x x = y → ( ph ↔ ps ) ) ;;
+	-----------------------
+	prop 1 : wff = |- ( ∀ x x = y → ( ∀ x ph ↔ ∀ y ps ) ) ;;
+}
+
+proof of dral1-o {
+	step 1 : wff = hbae-o () |- ( ∀ x x = y → ∀ x ∀ x x = y ) ;;
+	step 2 : wff = biimpd (hyp 1) |- ( ∀ x x = y → ( ph → ps ) ) ;;
+	step 3 : wff = alimdh (step 1, step 2) |- ( ∀ x x = y → ( ∀ x ph → ∀ x ps ) ) ;;
+	step 4 : wff = ax-10o () |- ( ∀ x x = y → ( ∀ x ps → ∀ y ps ) ) ;;
+	step 5 : wff = syld (step 3, step 4) |- ( ∀ x x = y → ( ∀ x ph → ∀ y ps ) ) ;;
+	step 6 : wff = hbae-o () |- ( ∀ x x = y → ∀ y ∀ x x = y ) ;;
+	step 7 : wff = biimprd (hyp 1) |- ( ∀ x x = y → ( ps → ph ) ) ;;
+	step 8 : wff = alimdh (step 6, step 7) |- ( ∀ x x = y → ( ∀ y ps → ∀ y ph ) ) ;;
+	step 9 : wff = ax-10o () |- ( ∀ y y = x → ( ∀ y ph → ∀ x ph ) ) ;;
+	step 10 : wff = aecoms-o (step 9) |- ( ∀ x x = y → ( ∀ y ph → ∀ x ph ) ) ;;
+	step 11 : wff = syld (step 8, step 10) |- ( ∀ x x = y → ( ∀ y ps → ∀ x ph ) ) ;;
+	step 12 : wff = impbid (step 5, step 11) |- ( ∀ x x = y → ( ∀ x ph ↔ ∀ y ps ) ) ;;
+	qed prop 1 = step 12 ;;
+}
+
+/* Rederivation of axiom ~ ax-11 from ~ ax-11o , ~ ax-10o , and other older
+     axioms.  The proof does not require ~ ax-16 or ~ ax-17 .  See theorem
+     ~ ax11o for the derivation of ~ ax-11o from ~ ax-11 .
+
+     An open problem is whether we can prove this using ~ ax-10 instead of
+     ~ ax-10o .
+
+     This proof uses newer axioms ~ ax-5 and ~ ax-9 , but since these are
+     proved from the older axioms above, this is acceptable and lets us avoid
+     having to reprove several earlier theorems to use ~ ax-5o and ~ ax-9o .
+     (Contributed by NM, 22-Jan-2007.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem ax11 (ph : wff, x : set, y : set)  {
+	prop 1 : wff = |- ( x = y → ( ∀ y ph → ∀ x ( x = y → ph ) ) ) ;;
+}
+
+proof of ax11 {
+	step 1 : wff = biidd () |- ( ∀ x x = y → ( ph ↔ ph ) ) ;;
+	step 2 : wff = dral1-o (step 1) |- ( ∀ x x = y → ( ∀ x ph ↔ ∀ y ph ) ) ;;
+	step 3 : wff = ax-1 () |- ( ph → ( x = y → ph ) ) ;;
+	step 4 : wff = alimi (step 3) |- ( ∀ x ph → ∀ x ( x = y → ph ) ) ;;
+	step 5 : wff = syl6bir (step 2, step 4) |- ( ∀ x x = y → ( ∀ y ph → ∀ x ( x = y → ph ) ) ) ;;
+	step 6 : wff = a1d (step 5) |- ( ∀ x x = y → ( x = y → ( ∀ y ph → ∀ x ( x = y → ph ) ) ) ) ;;
+	step 7 : wff = ax-4 () |- ( ∀ y ph → ph ) ;;
+	step 8 : wff = ax-11o () |- ( ¬ ∀ x x = y → ( x = y → ( ph → ∀ x ( x = y → ph ) ) ) ) ;;
+	step 9 : wff = syl7 (step 7, step 8) |- ( ¬ ∀ x x = y → ( x = y → ( ∀ y ph → ∀ x ( x = y → ph ) ) ) ) ;;
+	step 10 : wff = pm2.61i (step 6, step 9) |- ( x = y → ( ∀ y ph → ∀ x ( x = y → ph ) ) ) ;;
+	qed prop 1 = step 10 ;;
+}
+
+/* Derive ~ ax-12 from ~ ax-12o and other older axioms.
+
+     This proof uses newer axioms ~ ax-5 and ~ ax-9 , but since these are
+     proved from the older axioms above, this is acceptable and lets us avoid
+     having to reprove several earlier theorems to use ~ ax-5o and ~ ax-9o .
+     (Contributed by NM, 21-Dec-2015.)  (Proof modification is discouraged.)
+     (New usage is discouraged.) */
+
+theorem ax12 (x : set, y : set, z : set)  {
+	prop 1 : wff = |- ( ¬ x = y → ( y = z → ∀ x y = z ) ) ;;
+}
+
+proof of ax12 {
+	step 1 : wff = ax-4 () |- ( ∀ x x = y → x = y ) ;;
+	step 2 : wff = con3i (step 1) |- ( ¬ x = y → ¬ ∀ x x = y ) ;;
+	step 3 : wff = adantr (step 2) |- ( ( ¬ x = y ∧ y = z ) → ¬ ∀ x x = y ) ;;
+	step 4 : wff = equtrr () |- ( z = y → ( x = z → x = y ) ) ;;
+	step 5 : wff = equcoms (step 4) |- ( y = z → ( x = z → x = y ) ) ;;
+	step 6 : wff = con3rr3 (step 5) |- ( ¬ x = y → ( y = z → ¬ x = z ) ) ;;
+	step 7 : wff = imp (step 6) |- ( ( ¬ x = y ∧ y = z ) → ¬ x = z ) ;;
+	step 8 : wff = ax-4 () |- ( ∀ x x = z → x = z ) ;;
+	step 9 : wff = nsyl (step 7, step 8) |- ( ( ¬ x = y ∧ y = z ) → ¬ ∀ x x = z ) ;;
+	step 10 : wff = ax-12o () |- ( ¬ ∀ x x = y → ( ¬ ∀ x x = z → ( y = z → ∀ x y = z ) ) ) ;;
+	step 11 : wff = sylc (step 3, step 9, step 10) |- ( ( ¬ x = y ∧ y = z ) → ( y = z → ∀ x y = z ) ) ;;
+	step 12 : wff = ex (step 11) |- ( ¬ x = y → ( y = z → ( y = z → ∀ x y = z ) ) ) ;;
+	step 13 : wff = pm2.43d (step 12) |- ( ¬ x = y → ( y = z → ∀ x y = z ) ) ;;
+	qed prop 1 = step 13 ;;
+}
+
+

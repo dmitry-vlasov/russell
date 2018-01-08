@@ -1,0 +1,1123 @@
+$[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Proper_substitution_of_classes_for_sets.smm $]
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Proper substitution of classes for sets into classes
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$)
+$c [_ $.
+$( Underlined left bracket $)
+$c ]_ $.
+$( Underlined right bracket $)
+$( Extend class notation to include the proper substitution of a class for a
+     set into another class. $)
+${
+	$v x A B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	acsb $a class [_ A / x ]_ B $.
+$}
+$( Define the proper substitution of a class for a set into another class.
+       The underlined brackets distinguish it from the substitution into a wff,
+       ~ wsbc , to prevent ambiguity.  Theorem ~ sbcel1g shows an example of
+       how ambiguity could arise if we didn't use distinguished brackets.
+       Theorem ~ sbccsbg recreates substitution into a wff from this
+       definition.  (Contributed by NM, 10-Nov-2005.) $)
+${
+	$v x y A B $.
+	$d y A $.
+	$d y B $.
+	$d x y $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	adf-csb $a |- [_ A / x ]_ B = { y | [. A / x ]. y e. B } $.
+$}
+$( Alternate expression for the proper substitution into a class, without
+       referencing substitution into a wff.  Note that ` x ` can be free in
+       ` B ` but cannot occur in ` A ` .  (Contributed by NM, 2-Dec-2013.) $)
+${
+	$v x y A B $.
+	$d x y A $.
+	$d y B $.
+	$d x y $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pcsb2 $p |- [_ A / x ]_ B = { y | E. x ( x = A /\ y e. B ) } $=
+	f0 f1 f2 f3 adf-csb f1 acv f3 awcel f0 f2 psbc5 f1 acv f3 awcel f0 f2 awsbc f0 acv f2 awceq f1 acv f3 awcel awa f0 awex f1 pabbii f0 f2 f3 acsb f1 acv f3 awcel f0 f2 awsbc f1 acab f0 acv f2 awceq f1 acv f3 awcel awa f0 awex f1 acab peqtri $.
+$}
+$( Analog of ~ dfsbcq for proper substitution into a class.  (Contributed
+       by NM, 10-Nov-2005.) $)
+${
+	$v x y A B C $.
+	$d x y $.
+	$d y A $.
+	$d y B $.
+	$d y C $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	i0 $f set y $.
+	pcsbeq1 $p |- ( A = B -> [_ A / x ]_ C = [_ B / x ]_ C ) $=
+	i0 acv f3 awcel f0 f1 f2 pdfsbcq f1 f2 awceq i0 acv f3 awcel f0 f1 awsbc i0 acv f3 awcel f0 f2 awsbc i0 pabbidv f0 i0 f1 f3 adf-csb f0 i0 f2 f3 adf-csb f1 f2 awceq i0 acv f3 awcel f0 f1 awsbc i0 acab i0 acv f3 awcel f0 f2 awsbc i0 acab f0 f1 f3 acsb f0 f2 f3 acsb p3eqtr4g $.
+$}
+$( Change bound variables in a class substitution.  Interestingly, this
+       does not require any bound variable conditions on ` A ` .  (Contributed
+       by Jeff Hankins, 13-Sep-2009.)  (Revised by Mario Carneiro,
+       11-Dec-2016.) $)
+${
+	$v x y z A C D $.
+	$d x z $.
+	$d y z $.
+	$d z A $.
+	$d z C $.
+	$d z D $.
+	e0 $e |- F/_ y C $.
+	e1 $e |- F/_ x D $.
+	e2 $e |- ( x = y -> C = D ) $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class C $.
+	f4 $f class D $.
+	i0 $f set z $.
+	pcbvcsb $p |- [_ A / x ]_ C = [_ A / y ]_ D $=
+	e0 f1 i0 f3 pnfcri e1 f0 i0 f4 pnfcri e2 f0 acv f1 acv awceq f3 f4 i0 acv peleq2d i0 acv f3 awcel i0 acv f4 awcel f0 f1 f2 pcbvsbc i0 acv f3 awcel f0 f2 awsbc i0 acv f4 awcel f1 f2 awsbc i0 pabbii f0 i0 f2 f3 adf-csb f1 i0 f2 f4 adf-csb i0 acv f3 awcel f0 f2 awsbc i0 acab i0 acv f4 awcel f1 f2 awsbc i0 acab f0 f2 f3 acsb f1 f2 f4 acsb p3eqtr4i $.
+$}
+$( Change the bound variable of a proper substitution into a class using
+       implicit substitution.  (Contributed by NM, 30-Sep-2008.)  (Revised by
+       Mario Carneiro, 13-Oct-2016.) $)
+${
+	$v x y A B C $.
+	$d x y $.
+	$d y B $.
+	$d x C $.
+	e0 $e |- ( x = y -> B = C ) $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	pcbvcsbv $p |- [_ A / x ]_ B = [_ A / y ]_ C $=
+	f1 f3 pnfcv f0 f4 pnfcv e0 f0 f1 f2 f3 f4 pcbvcsb $.
+$}
+$( Equality deduction for proper substitution into a class.  (Contributed
+       by NM, 3-Dec-2005.) $)
+${
+	$v ph x A B C $.
+	e0 $e |- ( ph -> A = B ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	pcsbeq1d $p |- ( ph -> [_ A / x ]_ C = [_ B / x ]_ C ) $=
+	e0 f1 f2 f3 f4 pcsbeq1 f0 f2 f3 awceq f1 f2 f4 acsb f1 f3 f4 acsb awceq psyl $.
+$}
+$( Analog of ~ sbid for proper substitution into a class.  (Contributed by
+       NM, 10-Nov-2005.) $)
+${
+	$v x y A $.
+	$d x y $.
+	$d y A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	i0 $f set y $.
+	pcsbid $p |- [_ x / x ]_ A = A $=
+	f0 i0 f0 acv f1 adf-csb i0 acv f1 awcel f0 f0 psbsbc i0 acv f1 awcel f0 psbid i0 acv f1 awcel f0 f0 acv awsbc i0 acv f1 awcel f0 f0 awsb i0 acv f1 awcel pbitr3i i0 acv f1 awcel f0 f0 acv awsbc i0 acv f1 awcel i0 pabbii i0 f1 pabid2 f0 f0 acv f1 acsb i0 acv f1 awcel f0 f0 acv awsbc i0 acab i0 acv f1 awcel i0 acab f1 p3eqtri $.
+$}
+$( Equality theorem for proper substitution into a class.  (Contributed by
+       NM, 10-Nov-2005.) $)
+${
+	$v x A B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pcsbeq1a $p |- ( x = A -> B = [_ A / x ]_ B ) $=
+	f0 f2 pcsbid f0 f0 acv f1 f2 pcsbeq1 f0 acv f1 awceq f2 f0 f0 acv f2 acsb f0 f1 f2 acsb psyl5eqr $.
+$}
+$( Composition law for chained substitutions into a class.  (Contributed by
+       NM, 10-Nov-2005.) $)
+${
+	$v x y z A B $.
+	$d z A $.
+	$d y z B $.
+	$d x z $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	i0 $f set z $.
+	pcsbco $p |- [_ A / y ]_ [_ y / x ]_ B = [_ A / x ]_ B $=
+	f0 i0 f1 acv f3 adf-csb i0 acv f3 awcel f0 f1 acv awsbc i0 f0 f1 acv f3 acsb pabeq2i i0 acv f0 f1 acv f3 acsb awcel i0 acv f3 awcel f0 f1 acv awsbc f1 f2 psbcbii i0 acv f3 awcel f0 f1 f2 psbcco i0 acv f0 f1 acv f3 acsb awcel f1 f2 awsbc i0 acv f3 awcel f0 f1 acv awsbc f1 f2 awsbc i0 acv f3 awcel f0 f2 awsbc pbitri i0 acv f0 f1 acv f3 acsb awcel f1 f2 awsbc i0 acv f3 awcel f0 f2 awsbc i0 pabbii f1 i0 f2 f0 f1 acv f3 acsb adf-csb f0 i0 f2 f3 adf-csb i0 acv f0 f1 acv f3 acsb awcel f1 f2 awsbc i0 acab i0 acv f3 awcel f0 f2 awsbc i0 acab f1 f2 f0 f1 acv f3 acsb acsb f0 f2 f3 acsb p3eqtr4i $.
+$}
+$( The existence of proper substitution into a class.  (Contributed by NM,
+       10-Nov-2005.) $)
+${
+	$v x y A B V W $.
+	$d y A $.
+	$d y B $.
+	$d x y $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class V $.
+	f4 $f class W $.
+	i0 $f set y $.
+	pcsbexg $p |- ( ( A e. V /\ A. x B e. W ) -> [_ A / x ]_ B e. _V ) $=
+	f0 i0 f1 f2 adf-csb i0 f2 pabid2 f2 f4 pelex f2 f4 awcel i0 acv f2 awcel i0 acab f2 acvv psyl5eqel f2 f4 awcel i0 acv f2 awcel i0 acab acvv awcel f0 palimi i0 acv f2 awcel i0 acab acvv awcel f0 f1 f3 pspsbc f2 f4 awcel f0 awal i0 acv f2 awcel i0 acab acvv awcel f0 awal f1 f3 awcel i0 acv f2 awcel i0 acab acvv awcel f0 f1 awsbc psyl5 f1 f3 awcel f2 f4 awcel f0 awal i0 acv f2 awcel i0 acab acvv awcel f0 f1 awsbc pimp f0 acvv pnfcv i0 acv f2 awcel f0 i0 f1 acvv f3 psbcabel f1 f3 awcel i0 acv f2 awcel i0 acab acvv awcel f0 f1 awsbc i0 acv f2 awcel f0 f1 awsbc i0 acab acvv awcel awb f2 f4 awcel f0 awal padantr f1 f3 awcel f2 f4 awcel f0 awal awa i0 acv f2 awcel i0 acab acvv awcel f0 f1 awsbc i0 acv f2 awcel f0 f1 awsbc i0 acab acvv awcel pmpbid f1 f3 awcel f2 f4 awcel f0 awal awa f0 f1 f2 acsb i0 acv f2 awcel f0 f1 awsbc i0 acab acvv psyl5eqel $.
+$}
+$( The existence of proper substitution into a class.  (Contributed by NM,
+       7-Aug-2007.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
+${
+	$v x A B $.
+	e0 $e |- A e. _V $.
+	e1 $e |- B e. _V $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pcsbex $p |- [_ A / x ]_ B e. _V $=
+	e0 f0 f1 f2 acvv acvv pcsbexg f1 acvv awcel f2 acvv awcel f0 awal f0 f1 f2 acsb acvv awcel pmpan e1 f2 acvv awcel f0 f1 f2 acsb acvv awcel f0 pmpg $.
+$}
+$( Substitution doesn't affect a constant ` B ` (in which ` x ` is not
+       free).  (Contributed by Mario Carneiro, 14-Oct-2016.) $)
+${
+	$v x y A B V $.
+	$d y A $.
+	$d y B $.
+	$d y V $.
+	$d x y $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class V $.
+	i0 $f set y $.
+	pcsbtt $p |- ( ( A e. V /\ F/_ x B ) -> [_ A / x ]_ B = B ) $=
+	f0 i0 f1 f2 adf-csb f0 i0 f2 pnfcr i0 acv f2 awcel f0 f1 f3 psbctt f0 f2 awnfc f1 f3 awcel i0 acv f2 awcel f0 awnf i0 acv f2 awcel f0 f1 awsbc i0 acv f2 awcel awb psylan2 f1 f3 awcel f0 f2 awnfc awa i0 acv f2 awcel f0 f1 awsbc i0 f2 pabbi1dv f1 f3 awcel f0 f2 awnfc awa f0 f1 f2 acsb i0 acv f2 awcel f0 f1 awsbc i0 acab f2 psyl5eq $.
+$}
+$( Substitution doesn't affect a constant ` B ` (in which ` x ` is not
+       free).  (Contributed by NM, 10-Nov-2005.) $)
+${
+	$v x A B V $.
+	e0 $e |- F/_ x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class V $.
+	pcsbconstgf $p |- ( A e. V -> [_ A / x ]_ B = B ) $=
+	e0 f0 f1 f2 f3 pcsbtt f1 f3 awcel f0 f2 awnfc f0 f1 f2 acsb f2 awceq pmpan2 $.
+$}
+$( Substitution doesn't affect a constant ` B ` (in which ` x ` is not
+       free). ~ csbconstgf with distinct variable requirement.  (Contributed by
+       Alan Sare, 22-Jul-2012.) $)
+${
+	$v x A B V $.
+	$d B x $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class V $.
+	pcsbconstg $p |- ( A e. V -> [_ A / x ]_ B = B ) $=
+	f0 f2 pnfcv f0 f1 f2 f3 pcsbconstgf $.
+$}
+$( Distribute proper substitution through a membership relation.
+       (Contributed by NM, 10-Nov-2005.)  (Proof shortened by Andrew Salmon,
+       29-Jun-2011.) $)
+${
+	$v x y z A B C V $.
+	$d x y z $.
+	$d y z A $.
+	$d y z B $.
+	$d y z C $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class V $.
+	i0 $f set y $.
+	i1 $f set z $.
+	psbcel12g $p |- ( A e. V -> ( [. A / x ]. B e. C <-> [_ A / x ]_ B e. [_ A / x ]_ C ) ) $=
+	f2 f3 awcel f0 i1 f1 pdfsbcq2 i0 acv f2 awcel f0 i1 f1 pdfsbcq2 i1 acv f1 awceq i0 acv f2 awcel f0 i1 awsb i0 acv f2 awcel f0 f1 awsbc i0 pabbidv i0 acv f3 awcel f0 i1 f1 pdfsbcq2 i1 acv f1 awceq i0 acv f3 awcel f0 i1 awsb i0 acv f3 awcel f0 f1 awsbc i0 pabbidv i1 acv f1 awceq i0 acv f2 awcel f0 i1 awsb i0 acab i0 acv f2 awcel f0 f1 awsbc i0 acab i0 acv f3 awcel f0 i1 awsb i0 acab i0 acv f3 awcel f0 f1 awsbc i0 acab peleq12d i0 acv f2 awcel f0 i1 pnfs1v i0 acv f2 awcel f0 i1 awsb f0 i0 pnfab i0 acv f3 awcel f0 i1 pnfs1v i0 acv f3 awcel f0 i1 awsb f0 i0 pnfab f0 i0 acv f2 awcel f0 i1 awsb i0 acab i0 acv f3 awcel f0 i1 awsb i0 acab pnfel f0 i1 i0 f2 psbab f0 i1 i0 f3 psbab f0 i1 pweq f2 i0 acv f2 awcel f0 i1 awsb i0 acab f3 i0 acv f3 awcel f0 i1 awsb i0 acab peleq12d f2 f3 awcel i0 acv f2 awcel f0 i1 awsb i0 acab i0 acv f3 awcel f0 i1 awsb i0 acab awcel f0 i1 psbie f2 f3 awcel f0 i1 awsb i0 acv f2 awcel f0 i1 awsb i0 acab i0 acv f3 awcel f0 i1 awsb i0 acab awcel f2 f3 awcel f0 f1 awsbc i0 acv f2 awcel f0 f1 awsbc i0 acab i0 acv f3 awcel f0 f1 awsbc i0 acab awcel i1 f1 f4 pvtoclbg f0 i0 f1 f2 adf-csb f0 i0 f1 f3 adf-csb f0 f1 f2 acsb i0 acv f2 awcel f0 f1 awsbc i0 acab f0 f1 f3 acsb i0 acv f3 awcel f0 f1 awsbc i0 acab peleq12i f1 f4 awcel f2 f3 awcel f0 f1 awsbc i0 acv f2 awcel f0 f1 awsbc i0 acab i0 acv f3 awcel f0 f1 awsbc i0 acab awcel f0 f1 f2 acsb f0 f1 f3 acsb awcel psyl6bbr $.
+$}
+$( Distribute proper substitution through an equality relation.
+       (Contributed by NM, 10-Nov-2005.)  (Proof shortened by Andrew Salmon,
+       29-Jun-2011.) $)
+${
+	$v x y z A B C V $.
+	$d x y z $.
+	$d y z A $.
+	$d y z B $.
+	$d y z C $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class V $.
+	i0 $f set y $.
+	i1 $f set z $.
+	psbceqg $p |- ( A e. V -> ( [. A / x ]. B = C <-> [_ A / x ]_ B = [_ A / x ]_ C ) ) $=
+	f2 f3 awceq f0 i1 f1 pdfsbcq2 i0 acv f2 awcel f0 i1 f1 pdfsbcq2 i1 acv f1 awceq i0 acv f2 awcel f0 i1 awsb i0 acv f2 awcel f0 f1 awsbc i0 pabbidv i0 acv f3 awcel f0 i1 f1 pdfsbcq2 i1 acv f1 awceq i0 acv f3 awcel f0 i1 awsb i0 acv f3 awcel f0 f1 awsbc i0 pabbidv i1 acv f1 awceq i0 acv f2 awcel f0 i1 awsb i0 acab i0 acv f2 awcel f0 f1 awsbc i0 acab i0 acv f3 awcel f0 i1 awsb i0 acab i0 acv f3 awcel f0 f1 awsbc i0 acab peqeq12d i0 acv f2 awcel f0 i1 pnfs1v i0 acv f2 awcel f0 i1 awsb f0 i0 pnfab i0 acv f3 awcel f0 i1 pnfs1v i0 acv f3 awcel f0 i1 awsb f0 i0 pnfab f0 i0 acv f2 awcel f0 i1 awsb i0 acab i0 acv f3 awcel f0 i1 awsb i0 acab pnfeq f0 i1 i0 f2 psbab f0 i1 i0 f3 psbab f0 i1 pweq f2 i0 acv f2 awcel f0 i1 awsb i0 acab f3 i0 acv f3 awcel f0 i1 awsb i0 acab peqeq12d f2 f3 awceq i0 acv f2 awcel f0 i1 awsb i0 acab i0 acv f3 awcel f0 i1 awsb i0 acab awceq f0 i1 psbie f2 f3 awceq f0 i1 awsb i0 acv f2 awcel f0 i1 awsb i0 acab i0 acv f3 awcel f0 i1 awsb i0 acab awceq f2 f3 awceq f0 f1 awsbc i0 acv f2 awcel f0 f1 awsbc i0 acab i0 acv f3 awcel f0 f1 awsbc i0 acab awceq i1 f1 f4 pvtoclbg f0 i0 f1 f2 adf-csb f0 i0 f1 f3 adf-csb f0 f1 f2 acsb i0 acv f2 awcel f0 f1 awsbc i0 acab f0 f1 f3 acsb i0 acv f3 awcel f0 f1 awsbc i0 acab peqeq12i f1 f4 awcel f2 f3 awceq f0 f1 awsbc i0 acv f2 awcel f0 f1 awsbc i0 acab i0 acv f3 awcel f0 f1 awsbc i0 acab awceq f0 f1 f2 acsb f0 f1 f3 acsb awceq psyl6bbr $.
+$}
+$( Distribute proper substitution through negated membership.  (Contributed
+     by Andrew Salmon, 18-Jun-2011.) $)
+${
+	$v x A B C V $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class V $.
+	psbcnel12g $p |- ( A e. V -> ( [. A / x ]. B e/ C <-> [_ A / x ]_ B e/ [_ A / x ]_ C ) ) $=
+	f2 f3 adf-nel f2 f3 awnel f2 f3 awcel awn f0 f1 psbcbii f2 f3 awnel f0 f1 awsbc f2 f3 awcel awn f0 f1 awsbc awb f1 f4 awcel pa1i f2 f3 awcel f0 f1 f4 psbcng f0 f1 f2 f3 f4 psbcel12g f1 f4 awcel f2 f3 awcel f0 f1 awsbc f0 f1 f2 acsb f0 f1 f3 acsb awcel pnotbid f0 f1 f2 acsb f0 f1 f3 acsb adf-nel f1 f4 awcel f2 f3 awcel f0 f1 awsbc awn f0 f1 f2 acsb f0 f1 f3 acsb awcel awn f0 f1 f2 acsb f0 f1 f3 acsb awnel psyl6bbr f1 f4 awcel f2 f3 awnel f0 f1 awsbc f2 f3 awcel awn f0 f1 awsbc f2 f3 awcel f0 f1 awsbc awn f0 f1 f2 acsb f0 f1 f3 acsb awnel p3bitrd $.
+$}
+$( Distribute proper substitution through an inequality.  (Contributed by
+     Andrew Salmon, 18-Jun-2011.) $)
+${
+	$v x A B C V $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class V $.
+	psbcne12g $p |- ( A e. V -> ( [. A / x ]. B =/= C <-> [_ A / x ]_ B =/= [_ A / x ]_ C ) ) $=
+	f2 f3 pnne f2 f3 awne awn f2 f3 awceq f0 f1 psbcbii f2 f3 awne awn f0 f1 awsbc f2 f3 awceq f0 f1 awsbc awb f1 f4 awcel pa1i f2 f3 awne f0 f1 f4 psbcng f0 f1 f2 f3 f4 psbceqg f0 f1 f2 acsb f0 f1 f3 acsb pnne f1 f4 awcel f2 f3 awceq f0 f1 awsbc f0 f1 f2 acsb f0 f1 f3 acsb awceq f0 f1 f2 acsb f0 f1 f3 acsb awne awn psyl6bbr f1 f4 awcel f2 f3 awne awn f0 f1 awsbc f2 f3 awceq f0 f1 awsbc f2 f3 awne f0 f1 awsbc awn f0 f1 f2 acsb f0 f1 f3 acsb awne awn p3bitr3d f1 f4 awcel f2 f3 awne f0 f1 awsbc f0 f1 f2 acsb f0 f1 f3 acsb awne pcon4bid $.
+$}
+$( Move proper substitution in and out of a membership relation.  Note that
+       the scope of ` [. A / x ]. ` is the wff ` B e. C ` , whereas the scope
+       of ` [_ A / x ]_ ` is the class ` B ` .  (Contributed by NM,
+       10-Nov-2005.) $)
+${
+	$v x A B C V $.
+	$d x C $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class V $.
+	psbcel1g $p |- ( A e. V -> ( [. A / x ]. B e. C <-> [_ A / x ]_ B e. C ) ) $=
+	f0 f1 f2 f3 f4 psbcel12g f0 f1 f3 f4 pcsbconstg f1 f4 awcel f0 f1 f3 acsb f3 f0 f1 f2 acsb peleq2d f1 f4 awcel f2 f3 awcel f0 f1 awsbc f0 f1 f2 acsb f0 f1 f3 acsb awcel f0 f1 f2 acsb f3 awcel pbitrd $.
+$}
+$( Move proper substitution to first argument of an equality.  (Contributed
+       by NM, 30-Nov-2005.) $)
+${
+	$v x A B C V $.
+	$d x C $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class V $.
+	psbceq1g $p |- ( A e. V -> ( [. A / x ]. B = C <-> [_ A / x ]_ B = C ) ) $=
+	f0 f1 f2 f3 f4 psbceqg f0 f1 f3 f4 pcsbconstg f1 f4 awcel f0 f1 f3 acsb f3 f0 f1 f2 acsb peqeq2d f1 f4 awcel f2 f3 awceq f0 f1 awsbc f0 f1 f2 acsb f0 f1 f3 acsb awceq f0 f1 f2 acsb f3 awceq pbitrd $.
+$}
+$( Move proper substitution in and out of a membership relation.
+       (Contributed by NM, 14-Nov-2005.) $)
+${
+	$v x A B C V $.
+	$d x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class V $.
+	psbcel2g $p |- ( A e. V -> ( [. A / x ]. B e. C <-> B e. [_ A / x ]_ C ) ) $=
+	f0 f1 f2 f3 f4 psbcel12g f0 f1 f2 f4 pcsbconstg f1 f4 awcel f0 f1 f2 acsb f2 f0 f1 f3 acsb peleq1d f1 f4 awcel f2 f3 awcel f0 f1 awsbc f0 f1 f2 acsb f0 f1 f3 acsb awcel f2 f0 f1 f3 acsb awcel pbitrd $.
+$}
+$( Move proper substitution to second argument of an equality.
+       (Contributed by NM, 30-Nov-2005.) $)
+${
+	$v x A B C V $.
+	$d x B $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class V $.
+	psbceq2g $p |- ( A e. V -> ( [. A / x ]. B = C <-> B = [_ A / x ]_ C ) ) $=
+	f0 f1 f2 f3 f4 psbceqg f0 f1 f2 f4 pcsbconstg f1 f4 awcel f0 f1 f2 acsb f2 f0 f1 f3 acsb peqeq1d f1 f4 awcel f2 f3 awceq f0 f1 awsbc f0 f1 f2 acsb f0 f1 f3 acsb awceq f2 f0 f1 f3 acsb awceq pbitrd $.
+$}
+$( Commutative law for double substitution into a class.  (Contributed by
+       NM, 14-Nov-2005.) $)
+${
+	$v x y z A B C V W $.
+	$d y z A $.
+	$d x z B $.
+	$d z C $.
+	$d x y $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	f5 $f class V $.
+	f6 $f class W $.
+	i0 $f set z $.
+	pcsbcomg $p |- ( ( A e. V /\ B e. W ) -> [_ A / x ]_ [_ B / y ]_ C = [_ B / y ]_ [_ A / x ]_ C ) $=
+	f2 f5 pelex f3 f6 pelex i0 acv f4 awcel f0 f1 f2 f3 psbccom i0 acv f4 awcel f1 f3 awsbc f0 f2 awsbc i0 acv f4 awcel f0 f2 awsbc f1 f3 awsbc awb f2 acvv awcel f3 acvv awcel awa pa1i f1 f3 i0 acv f4 acvv psbcel2g f3 acvv awcel i0 acv f4 awcel f1 f3 awsbc i0 acv f1 f3 f4 acsb awcel f0 f2 psbcbidv f3 acvv awcel i0 acv f4 awcel f1 f3 awsbc f0 f2 awsbc i0 acv f1 f3 f4 acsb awcel f0 f2 awsbc awb f2 acvv awcel padantl f0 f2 i0 acv f4 acvv psbcel2g f2 acvv awcel i0 acv f4 awcel f0 f2 awsbc i0 acv f0 f2 f4 acsb awcel f1 f3 psbcbidv f2 acvv awcel i0 acv f4 awcel f0 f2 awsbc f1 f3 awsbc i0 acv f0 f2 f4 acsb awcel f1 f3 awsbc awb f3 acvv awcel padantr f2 acvv awcel f3 acvv awcel awa i0 acv f4 awcel f1 f3 awsbc f0 f2 awsbc i0 acv f4 awcel f0 f2 awsbc f1 f3 awsbc i0 acv f1 f3 f4 acsb awcel f0 f2 awsbc i0 acv f0 f2 f4 acsb awcel f1 f3 awsbc p3bitr3d f0 f2 i0 acv f1 f3 f4 acsb acvv psbcel2g f2 acvv awcel i0 acv f1 f3 f4 acsb awcel f0 f2 awsbc i0 acv f0 f2 f1 f3 f4 acsb acsb awcel awb f3 acvv awcel padantr f1 f3 i0 acv f0 f2 f4 acsb acvv psbcel2g f3 acvv awcel i0 acv f0 f2 f4 acsb awcel f1 f3 awsbc i0 acv f1 f3 f0 f2 f4 acsb acsb awcel awb f2 acvv awcel padantl f2 acvv awcel f3 acvv awcel awa i0 acv f1 f3 f4 acsb awcel f0 f2 awsbc i0 acv f0 f2 f4 acsb awcel f1 f3 awsbc i0 acv f0 f2 f1 f3 f4 acsb acsb awcel i0 acv f1 f3 f0 f2 f4 acsb acsb awcel p3bitr3d f2 acvv awcel f3 acvv awcel awa i0 f0 f2 f1 f3 f4 acsb acsb f1 f3 f0 f2 f4 acsb acsb peqrdv f2 f5 awcel f2 acvv awcel f3 acvv awcel f0 f2 f1 f3 f4 acsb acsb f1 f3 f0 f2 f4 acsb acsb awceq f3 f6 awcel psyl2an $.
+$}
+$( Formula-building deduction rule for class substitution.  (Contributed by
+       NM, 22-Nov-2005.)  (Revised by Mario Carneiro, 1-Sep-2015.) $)
+${
+	$v ph x y A B C $.
+	$d x y $.
+	$d y A $.
+	$d y B $.
+	$d y C $.
+	$d y ph $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- ( ph -> B = C ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	i0 $f set y $.
+	pcsbeq2d $p |- ( ph -> [_ A / x ]_ B = [_ A / x ]_ C ) $=
+	e0 e1 f0 f3 f4 i0 acv peleq2d f0 i0 acv f3 awcel i0 acv f4 awcel f1 f2 psbcbid f0 i0 acv f3 awcel f1 f2 awsbc i0 acv f4 awcel f1 f2 awsbc i0 pabbidv f1 i0 f2 f3 adf-csb f1 i0 f2 f4 adf-csb f0 i0 acv f3 awcel f1 f2 awsbc i0 acab i0 acv f4 awcel f1 f2 awsbc i0 acab f1 f2 f3 acsb f1 f2 f4 acsb p3eqtr4g $.
+$}
+$( Formula-building deduction rule for class substitution.  (Contributed by
+       NM, 10-Nov-2005.)  (Revised by Mario Carneiro, 1-Sep-2015.) $)
+${
+	$v ph x A B C $.
+	$d x ph $.
+	e0 $e |- ( ph -> B = C ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	pcsbeq2dv $p |- ( ph -> [_ A / x ]_ B = [_ A / x ]_ C ) $=
+	f0 f1 pnfv e0 f0 f1 f2 f3 f4 pcsbeq2d $.
+$}
+$( Formula-building inference rule for class substitution.  (Contributed by
+       NM, 10-Nov-2005.)  (Revised by Mario Carneiro, 1-Sep-2015.) $)
+${
+	$v x A B C $.
+	e0 $e |- B = C $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pcsbeq2i $p |- [_ A / x ]_ B = [_ A / x ]_ C $=
+	e0 f2 f3 awceq awtru pa1i awtru f0 f1 f2 f3 pcsbeq2dv f0 f1 f2 acsb f0 f1 f3 acsb awceq ptrud $.
+$}
+$( The proper substitution of a class for set variable results in the class
+       (if the class exists).  (Contributed by NM, 10-Nov-2005.) $)
+${
+	$v x y z A V $.
+	$d y z A $.
+	$d x y z $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class V $.
+	i0 $f set y $.
+	i1 $f set z $.
+	pcsbvarg $p |- ( A e. V -> [_ A / x ]_ x = A ) $=
+	f1 f2 pelex i0 pvex f0 i1 i0 acv f0 acv adf-csb f0 i1 acv i0 acv acvv psbcel2gv i0 acv acvv awcel i1 acv f0 acv awcel f0 i0 acv awsbc i1 i0 acv pabbi1dv i0 acv acvv awcel f0 i0 acv f0 acv acsb i1 acv f0 acv awcel f0 i0 acv awsbc i1 acab i0 acv psyl5eq i0 acv acvv awcel f0 i0 acv f0 acv acsb i0 acv awceq aax-mp i0 f1 f0 i0 acv f0 acv acsb i0 acv pcsbeq2i f0 i0 f1 f0 acv pcsbco i0 i1 f1 i0 acv adf-csb i0 f1 f0 i0 acv f0 acv acsb acsb i0 f1 i0 acv acsb f0 f1 f0 acv acsb i1 acv i0 acv awcel i0 f1 awsbc i1 acab p3eqtr3i i0 i1 acv f1 acvv psbcel2gv f1 acvv awcel i1 acv i0 acv awcel i0 f1 awsbc i1 f1 pabbi1dv f1 acvv awcel f0 f1 f0 acv acsb i1 acv i0 acv awcel i0 f1 awsbc i1 acab f1 psyl5eq f1 f2 awcel f1 acvv awcel f0 f1 f0 acv acsb f1 awceq psyl $.
+$}
+$( Substitution into a wff expressed in terms of substitution into a
+       class.  (Contributed by NM, 15-Aug-2007.) $)
+${
+	$v ph x y A V $.
+	$d x y $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class V $.
+	psbccsbg $p |- ( A e. V -> ( [. A / x ]. ph <-> y e. [_ A / x ]_ { y | ph } ) ) $=
+	f0 f2 pabid f2 acv f0 f2 acab awcel f0 f1 f3 psbcbii f1 f3 f2 acv f0 f2 acab f4 psbcel2g f0 f1 f3 awsbc f2 acv f0 f2 acab awcel f1 f3 awsbc f3 f4 awcel f2 acv f1 f3 f0 f2 acab acsb awcel psyl5bbr $.
+$}
+$( Substitution into a wff expressed in using substitution into a class.
+     (Contributed by NM, 27-Nov-2005.) $)
+${
+	$v ph x A V $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class V $.
+	psbccsb2g $p |- ( A e. V -> ( [. A / x ]. ph <-> A e. [_ A / x ]_ { x | ph } ) ) $=
+	f0 f1 pabid f1 acv f0 f1 acab awcel f0 f1 f2 psbcbii f1 f2 f1 acv f0 f1 acab f3 psbcel12g f1 f2 f3 pcsbvarg f2 f3 awcel f1 f2 f1 acv acsb f2 f1 f2 f0 f1 acab acsb peleq1d f2 f3 awcel f1 acv f0 f1 acab awcel f1 f2 awsbc f1 f2 f1 acv acsb f1 f2 f0 f1 acab acsb awcel f2 f1 f2 f0 f1 acab acsb awcel pbitrd f0 f1 f2 awsbc f1 acv f0 f1 acab awcel f1 f2 awsbc f2 f3 awcel f2 f1 f2 f0 f1 acab acsb awcel psyl5bbr $.
+$}
+$( Bound-variable hypothesis builder for substitution into a class.
+       (Contributed by Mario Carneiro, 12-Oct-2016.) $)
+${
+	$v ph x y A B $.
+	$d x y $.
+	$d y A $.
+	$d y B $.
+	$d y ph $.
+	e0 $e |- ( ph -> F/_ x A ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	i0 $f set y $.
+	pnfcsb1d $p |- ( ph -> F/_ x [_ A / x ]_ B ) $=
+	f1 i0 f2 f3 adf-csb f0 i0 pnfv e0 f0 i0 acv f3 awcel f1 f2 pnfsbc1d f0 i0 acv f3 awcel f1 f2 awsbc f1 i0 pnfabd f0 f1 f1 f2 f3 acsb i0 acv f3 awcel f1 f2 awsbc i0 acab pnfcxfrd $.
+$}
+$( Bound-variable hypothesis builder for substitution into a class.
+       (Contributed by Mario Carneiro, 12-Oct-2016.) $)
+${
+	$v x A B $.
+	e0 $e |- F/_ x A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnfcsb1 $p |- F/_ x [_ A / x ]_ B $=
+	e0 f0 f1 awnfc awtru pa1i awtru f0 f1 f2 pnfcsb1d f0 f0 f1 f2 acsb awnfc ptrud $.
+$}
+$( Bound-variable hypothesis builder for substitution into a class.
+       (Contributed by NM, 17-Aug-2006.)  (Revised by Mario Carneiro,
+       12-Oct-2016.) $)
+${
+	$v x A B $.
+	$d x A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	pnfcsb1v $p |- F/_ x [_ A / x ]_ B $=
+	f0 f1 pnfcv f0 f1 f2 pnfcsb1 $.
+$}
+$( Deduction version of ~ nfcsb .  (Contributed by NM, 21-Nov-2005.)
+       (Revised by Mario Carneiro, 12-Oct-2016.) $)
+${
+	$v ph x y z A B $.
+	$d x z $.
+	$d y z $.
+	$d z A $.
+	$d z B $.
+	$d z ph $.
+	e0 $e |- F/ y ph $.
+	e1 $e |- ( ph -> F/_ x A ) $.
+	e2 $e |- ( ph -> F/_ x B ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	i0 $f set z $.
+	pnfcsbd $p |- ( ph -> F/_ x [_ A / y ]_ B ) $=
+	f2 i0 f3 f4 adf-csb f0 i0 pnfv e0 e1 e2 f0 f1 i0 f4 pnfcrd f0 i0 acv f4 awcel f1 f2 f3 pnfsbcd f0 i0 acv f4 awcel f2 f3 awsbc f1 i0 pnfabd f0 f1 f2 f3 f4 acsb i0 acv f4 awcel f2 f3 awsbc i0 acab pnfcxfrd $.
+$}
+$( Bound-variable hypothesis builder for substitution into a class.
+       (Contributed by Mario Carneiro, 12-Oct-2016.) $)
+${
+	$v x y A B $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/_ x B $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	pnfcsb $p |- F/_ x [_ A / y ]_ B $=
+	f1 pnftru e0 f0 f2 awnfc awtru pa1i e1 f0 f3 awnfc awtru pa1i awtru f0 f1 f2 f3 pnfcsbd f0 f1 f2 f3 acsb awnfc ptrud $.
+$}
+$( Introduce an explicit substitution into an implicit substitution
+       hypothesis.  See ~ sbhypf for class substitution version.  (Contributed
+       by NM, 19-Dec-2008.) $)
+${
+	$v x y A B C $.
+	$d x y $.
+	e0 $e |- F/_ x A $.
+	e1 $e |- F/_ x C $.
+	e2 $e |- ( x = A -> B = C ) $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	pcsbhypf $p |- ( y = A -> [_ y / x ]_ B = C ) $=
+	e0 f0 f1 acv f2 pnfeq2 f0 f1 acv f3 pnfcsb1v e1 f0 f0 f1 acv f3 acsb f4 pnfeq f1 acv f2 awceq f0 f1 acv f3 acsb f4 awceq f0 pnfim f0 acv f1 acv f2 peqeq1 f0 f1 acv f3 pcsbeq1a f0 acv f1 acv awceq f3 f0 f1 acv f3 acsb f4 peqeq1d f0 acv f1 acv awceq f0 acv f2 awceq f1 acv f2 awceq f3 f4 awceq f0 f1 acv f3 acsb f4 awceq pimbi12d e2 f0 acv f2 awceq f3 f4 awceq awi f1 acv f2 awceq f0 f1 acv f3 acsb f4 awceq awi f0 f1 pchvar $.
+$}
+$( Conversion of implicit substitution to explicit substitution into a
+       class.  (Closed theorem version of ~ csbiegf .)  (Contributed by NM,
+       11-Nov-2005.) $)
+${
+	$v x A B C V $.
+	$d x A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class V $.
+	pcsbiebt $p |- ( ( A e. V /\ F/_ x C ) -> ( A. x ( x = A -> B = C ) <-> [_ A / x ]_ B = C ) ) $=
+	f1 f4 pelex f0 acv f1 awceq f2 f3 awceq awi f0 f1 acvv pspsbc f1 acvv awcel f0 acv f1 awceq f2 f3 awceq awi f0 awal f0 acv f1 awceq f2 f3 awceq awi f0 f1 awsbc awi f0 f3 awnfc padantr f1 acvv awcel f0 f3 awnfc psimpl f0 acv f1 awceq f2 f3 awceq pbiimt f0 f1 f2 pcsbeq1a f0 acv f1 awceq f2 f0 f1 f2 acsb f3 peqeq1d f0 acv f1 awceq f2 f3 awceq f0 acv f1 awceq f2 f3 awceq awi f0 f1 f2 acsb f3 awceq pbitr3d f0 acv f1 awceq f0 acv f1 awceq f2 f3 awceq awi f0 f1 f2 acsb f3 awceq awb f1 acvv awcel f0 f3 awnfc awa padantl f1 acvv awcel f0 pnfv f0 f3 pnfnfc1 f1 acvv awcel f0 f3 awnfc f0 pnfan f0 f1 f2 pnfcsb1v f0 f0 f1 f2 acsb awnfc f1 acvv awcel f0 f3 awnfc awa pa1i f1 acvv awcel f0 f3 awnfc psimpr f1 acvv awcel f0 f3 awnfc awa f0 f0 f1 f2 acsb f3 pnfeqd f1 acvv awcel f0 f3 awnfc awa f0 acv f1 awceq f2 f3 awceq awi f0 f1 f2 acsb f3 awceq f0 f1 acvv psbciedf f1 acvv awcel f0 f3 awnfc awa f0 acv f1 awceq f2 f3 awceq awi f0 awal f0 acv f1 awceq f2 f3 awceq awi f0 f1 awsbc f0 f1 f2 acsb f3 awceq psylibd f0 f3 pnfnfc1 f0 f1 f2 pnfcsb1v f0 f0 f1 f2 acsb awnfc f0 f3 awnfc pa1i f0 f3 awnfc pid f0 f3 awnfc f0 f0 f1 f2 acsb f3 pnfeqd f0 f3 awnfc f0 f1 f2 acsb f3 awceq f0 pnfan1 f0 f1 f2 pcsbeq1a f0 acv f1 awceq f2 f0 f1 f2 acsb f3 peqeq1d f0 acv f1 awceq f2 f3 awceq f0 f1 f2 acsb f3 awceq pbiimprcd f0 f1 f2 acsb f3 awceq f0 acv f1 awceq f2 f3 awceq awi f0 f3 awnfc padantl f0 f3 awnfc f0 f1 f2 acsb f3 awceq awa f0 acv f1 awceq f2 f3 awceq awi f0 palrimi f0 f3 awnfc f0 f1 f2 acsb f3 awceq f0 acv f1 awceq f2 f3 awceq awi f0 awal pex f0 f3 awnfc f0 f1 f2 acsb f3 awceq f0 acv f1 awceq f2 f3 awceq awi f0 awal awi f1 acvv awcel padantl f1 acvv awcel f0 f3 awnfc awa f0 acv f1 awceq f2 f3 awceq awi f0 awal f0 f1 f2 acsb f3 awceq pimpbid f1 f4 awcel f1 acvv awcel f0 f3 awnfc f0 acv f1 awceq f2 f3 awceq awi f0 awal f0 f1 f2 acsb f3 awceq awb psylan $.
+$}
+$( Conversion of implicit substitution to explicit substitution into a
+       class.  (Contributed by Mario Carneiro, 13-Oct-2016.) $)
+${
+	$v ph x A B C V $.
+	$d x A $.
+	e0 $e |- F/ x ph $.
+	e1 $e |- ( ph -> F/_ x C ) $.
+	e2 $e |- ( ph -> A e. V ) $.
+	e3 $e |- ( ( ph /\ x = A ) -> B = C ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	f5 $f class V $.
+	pcsbiedf $p |- ( ph -> [_ A / x ]_ B = C ) $=
+	e0 e3 f0 f1 acv f2 awceq f3 f4 awceq pex f0 f1 acv f2 awceq f3 f4 awceq awi f1 palrimi e2 e1 f1 f2 f3 f4 f5 pcsbiebt f0 f2 f5 awcel f1 f4 awnfc f1 acv f2 awceq f3 f4 awceq awi f1 awal f1 f2 f3 acsb f4 awceq awb psyl2anc f0 f1 acv f2 awceq f3 f4 awceq awi f1 awal f1 f2 f3 acsb f4 awceq pmpbid $.
+$}
+$( Bidirectional conversion between an implicit class substitution
+       hypothesis ` x = A -> B = C ` and its explicit substitution equivalent.
+       (Contributed by NM, 2-Mar-2008.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	e0 $e |- A e. _V $.
+	e1 $e |- F/_ x C $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pcsbieb $p |- ( A. x ( x = A -> B = C ) <-> [_ A / x ]_ B = C ) $=
+	e0 e1 f0 f1 f2 f3 acvv pcsbiebt f1 acvv awcel f0 f3 awnfc f0 acv f1 awceq f2 f3 awceq awi f0 awal f0 f1 f2 acsb f3 awceq awb pmp2an $.
+$}
+$( Bidirectional conversion between an implicit class substitution
+       hypothesis ` x = A -> B = C ` and its explicit substitution equivalent.
+       (Contributed by NM, 24-Mar-2013.)  (Revised by Mario Carneiro,
+       11-Dec-2016.) $)
+${
+	$v x A B C V a $.
+	$d a x A $.
+	$d a B $.
+	$d a C $.
+	e0 $e |- F/_ x C $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class V $.
+	i0 $f set a $.
+	pcsbiebg $p |- ( A e. V -> ( A. x ( x = A -> B = C ) <-> [_ A / x ]_ B = C ) ) $=
+	i0 acv f1 f0 acv peqeq2 i0 acv f1 awceq f0 acv i0 acv awceq f0 acv f1 awceq f2 f3 awceq pimbi1d i0 acv f1 awceq f0 acv i0 acv awceq f2 f3 awceq awi f0 acv f1 awceq f2 f3 awceq awi f0 palbidv f0 i0 acv f1 f2 pcsbeq1 i0 acv f1 awceq f0 i0 acv f2 acsb f0 f1 f2 acsb f3 peqeq1d i0 pvex e0 f0 i0 acv f2 f3 pcsbieb f0 acv i0 acv awceq f2 f3 awceq awi f0 awal f0 i0 acv f2 acsb f3 awceq f0 acv f1 awceq f2 f3 awceq awi f0 awal f0 f1 f2 acsb f3 awceq i0 f1 f4 pvtoclbg $.
+$}
+$( Conversion of implicit substitution to explicit substitution into a
+       class.  (Contributed by NM, 11-Nov-2005.)  (Revised by Mario Carneiro,
+       13-Oct-2016.) $)
+${
+	$v x A B C V $.
+	$d x A $.
+	$d x V $.
+	e0 $e |- ( A e. V -> F/_ x C ) $.
+	e1 $e |- ( x = A -> B = C ) $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class V $.
+	pcsbiegf $p |- ( A e. V -> [_ A / x ]_ B = C ) $=
+	e1 f0 acv f1 awceq f2 f3 awceq awi f0 aax-gen e0 f0 f1 f2 f3 f4 pcsbiebt f1 f4 awcel f0 f3 awnfc f0 acv f1 awceq f2 f3 awceq awi f0 awal f0 f1 f2 acsb f3 awceq awb pmpdan f1 f4 awcel f0 acv f1 awceq f2 f3 awceq awi f0 awal f0 f1 f2 acsb f3 awceq pmpbii $.
+$}
+$( Conversion of implicit substitution to explicit substitution into a
+       class.  (Contributed by NM, 26-Nov-2005.)  (Revised by Mario Carneiro,
+       13-Oct-2016.) $)
+${
+	$v x A B C $.
+	$d x A $.
+	e0 $e |- A e. _V $.
+	e1 $e |- F/_ x C $.
+	e2 $e |- ( x = A -> B = C ) $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	pcsbief $p |- [_ A / x ]_ B = C $=
+	e0 e1 f0 f3 awnfc f1 acvv awcel pa1i e2 f0 f1 f2 f3 acvv pcsbiegf f1 acvv awcel f0 f1 f2 acsb f3 awceq aax-mp $.
+$}
+$( Conversion of implicit substitution to explicit substitution into a
+       class.  (Contributed by Mario Carneiro, 2-Dec-2014.)  (Revised by Mario
+       Carneiro, 13-Oct-2016.) $)
+${
+	$v ph x A B C V $.
+	$d x A $.
+	$d x C $.
+	$d x ph $.
+	e0 $e |- ( ph -> A e. V ) $.
+	e1 $e |- ( ( ph /\ x = A ) -> B = C ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	f5 $f class V $.
+	pcsbied $p |- ( ph -> [_ A / x ]_ B = C ) $=
+	f0 f1 pnfv f0 f1 f4 pnfcvd e0 e1 f0 f1 f2 f3 f4 f5 pcsbiedf $.
+$}
+$( Conversion of implicit substitution to explicit class substitution,
+       deduction form.  (Contributed by Mario Carneiro, 2-Jan-2017.) $)
+${
+	$v ph x A B C D V $.
+	$d x A $.
+	$d x ph $.
+	$d x D $.
+	e0 $e |- ( ph -> A e. V ) $.
+	e1 $e |- ( ph -> A = B ) $.
+	e2 $e |- ( ( ph /\ x = B ) -> C = D ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	f5 $f class D $.
+	f6 $f class V $.
+	pcsbied2 $p |- ( ph -> [_ A / x ]_ C = D ) $=
+	e0 f1 acv f2 awceq pid e1 f1 acv f2 awceq f0 f1 acv f2 f3 psylan9eqr e2 f0 f1 acv f2 awceq f1 acv f3 awceq f4 f5 awceq psyldan f0 f1 f2 f4 f5 f6 pcsbied $.
+$}
+$( Conversion of implicit substitution to explicit substitution into a
+       class (closed form of ~ csbie2 ).  (Contributed by NM, 3-Sep-2007.)
+       (Revised by Mario Carneiro, 13-Oct-2016.) $)
+${
+	$v x y A B C D $.
+	$d x y A $.
+	$d x y B $.
+	$d x y D $.
+	e0 $e |- A e. _V $.
+	e1 $e |- B e. _V $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	f5 $f class D $.
+	pcsbie2t $p |- ( A. x A. y ( ( x = A /\ y = B ) -> C = D ) -> [_ A / x ]_ [_ B / y ]_ C = D ) $=
+	f0 acv f2 awceq f1 acv f3 awceq awa f4 f5 awceq awi f1 awal f0 pnfa1 f0 acv f2 awceq f1 acv f3 awceq awa f4 f5 awceq awi f1 awal f0 awal f0 f5 pnfcvd e0 f2 acvv awcel f0 acv f2 awceq f1 acv f3 awceq awa f4 f5 awceq awi f1 awal f0 awal pa1i f0 acv f2 awceq f1 acv f3 awceq awa f4 f5 awceq awi f1 f0 pnfa2 f0 acv f2 awceq f1 pnfv f0 acv f2 awceq f1 acv f3 awceq awa f4 f5 awceq awi f1 awal f0 awal f0 acv f2 awceq f1 pnfan f0 acv f2 awceq f1 acv f3 awceq awa f4 f5 awceq awi f1 awal f0 awal f0 acv f2 awceq awa f1 f5 pnfcvd e1 f3 acvv awcel f0 acv f2 awceq f1 acv f3 awceq awa f4 f5 awceq awi f1 awal f0 awal f0 acv f2 awceq awa pa1i f0 acv f2 awceq f1 acv f3 awceq awa f4 f5 awceq awi f1 psp f0 acv f2 awceq f1 acv f3 awceq awa f4 f5 awceq awi f1 awal f0 acv f2 awceq f1 acv f3 awceq awa f4 f5 awceq awi f0 psps f0 acv f2 awceq f1 acv f3 awceq awa f4 f5 awceq awi f1 awal f0 awal f0 acv f2 awceq f1 acv f3 awceq f4 f5 awceq pimpl f0 acv f2 awceq f1 acv f3 awceq awa f4 f5 awceq awi f1 awal f0 awal f0 acv f2 awceq awa f1 f3 f4 f5 acvv pcsbiedf f0 acv f2 awceq f1 acv f3 awceq awa f4 f5 awceq awi f1 awal f0 awal f0 f2 f1 f3 f4 acsb f5 acvv pcsbiedf $.
+$}
+$( Conversion of implicit substitution to explicit substitution into a
+       class.  (Contributed by NM, 27-Aug-2007.) $)
+${
+	$v x y A B C D $.
+	$d x y A $.
+	$d x y B $.
+	$d x y D $.
+	e0 $e |- A e. _V $.
+	e1 $e |- B e. _V $.
+	e2 $e |- ( ( x = A /\ y = B ) -> C = D ) $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	f5 $f class D $.
+	pcsbie2 $p |- [_ A / x ]_ [_ B / y ]_ C = D $=
+	e2 f0 acv f2 awceq f1 acv f3 awceq awa f4 f5 awceq awi f0 f1 pgen2 e0 e1 f0 f1 f2 f3 f4 f5 pcsbie2t f0 acv f2 awceq f1 acv f3 awceq awa f4 f5 awceq awi f1 awal f0 awal f0 f2 f1 f3 f4 acsb acsb f5 awceq aax-mp $.
+$}
+$( Conversion of implicit substitution to explicit class substitution.
+       This version of ~ sbcie avoids a disjointness condition on ` x , A ` by
+       substituting twice.  (Contributed by Mario Carneiro, 11-Nov-2016.) $)
+${
+	$v x y z A B C D V $.
+	$d x y z $.
+	$d A y z $.
+	$d B y z $.
+	$d C x $.
+	$d D y z $.
+	$d V z $.
+	e0 $e |- ( x = y -> B = C ) $.
+	e1 $e |- ( y = A -> C = D ) $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	f5 $f class D $.
+	f6 $f class V $.
+	i0 $f set z $.
+	pcsbie2g $p |- ( A e. V -> [_ A / x ]_ B = D ) $=
+	f0 i0 f2 f3 adf-csb e0 f0 acv f1 acv awceq f3 f4 i0 acv peleq2d e1 f1 acv f2 awceq f4 f5 i0 acv peleq2d i0 acv f3 awcel i0 acv f4 awcel i0 acv f5 awcel f0 f1 f2 f6 psbcie2g f2 f6 awcel i0 acv f3 awcel f0 f2 awsbc i0 f5 pabbi1dv f2 f6 awcel f0 f2 f3 acsb i0 acv f3 awcel f0 f2 awsbc i0 acab f5 psyl5eq $.
+$}
+$( Nest the composition of two substitutions.  (Contributed by Mario
+       Carneiro, 11-Nov-2016.) $)
+${
+	$v ph x y z A B V $.
+	$d x z $.
+	$d y z $.
+	$d z A $.
+	$d z B $.
+	$d z ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	f5 $f class V $.
+	i0 $f set z $.
+	psbcnestgf $p |- ( ( A e. V /\ A. y F/ x ph ) -> ( [. A / x ]. [. B / y ]. ph <-> [. [_ A / x ]_ B / y ]. ph ) ) $=
+	f0 f2 f4 awsbc f1 i0 acv f3 pdfsbcq f1 i0 acv f3 f4 pcsbeq1 f0 f2 f1 i0 acv f4 acsb f1 f3 f4 acsb pdfsbcq i0 acv f3 awceq f1 i0 acv f4 acsb f1 f3 f4 acsb awceq f0 f2 f1 i0 acv f4 acsb awsbc f0 f2 f1 f3 f4 acsb awsbc awb psyl i0 acv f3 awceq f0 f2 f4 awsbc f1 i0 acv awsbc f0 f2 f4 awsbc f1 f3 awsbc f0 f2 f1 i0 acv f4 acsb awsbc f0 f2 f1 f3 f4 acsb awsbc pbibi12d i0 acv f3 awceq f0 f2 f4 awsbc f1 i0 acv awsbc f0 f2 f1 i0 acv f4 acsb awsbc awb f0 f2 f4 awsbc f1 f3 awsbc f0 f2 f1 f3 f4 acsb awsbc awb f0 f1 awnf f2 awal pimbi2d i0 pvex i0 acv acvv awcel f0 f1 awnf f2 awal pa1i f1 i0 acv f4 pcsbeq1a f0 f2 f4 f1 i0 acv f4 acsb pdfsbcq f1 acv i0 acv awceq f4 f1 i0 acv f4 acsb awceq f0 f2 f4 awsbc f0 f2 f1 i0 acv f4 acsb awsbc awb psyl f1 acv i0 acv awceq f0 f2 f4 awsbc f0 f2 f1 i0 acv f4 acsb awsbc awb f0 f1 awnf f2 awal padantl f0 f1 pnfnf1 f0 f1 awnf f1 f2 pnfal f0 f1 awnf f2 pnfa1 f1 i0 acv f4 pnfcsb1v f1 f1 i0 acv f4 acsb awnfc f0 f1 awnf f2 awal pa1i f0 f1 awnf f2 psp f0 f1 awnf f2 awal f0 f1 f2 f1 i0 acv f4 acsb pnfsbcd f0 f1 awnf f2 awal f0 f2 f4 awsbc f0 f2 f1 i0 acv f4 acsb awsbc f1 i0 acv acvv psbciedf f0 f1 awnf f2 awal f0 f2 f4 awsbc f1 i0 acv awsbc f0 f2 f1 i0 acv f4 acsb awsbc awb awi f0 f1 awnf f2 awal f0 f2 f4 awsbc f1 f3 awsbc f0 f2 f1 f3 f4 acsb awsbc awb awi i0 f3 f5 pvtoclg f3 f5 awcel f0 f1 awnf f2 awal f0 f2 f4 awsbc f1 f3 awsbc f0 f2 f1 f3 f4 acsb awsbc awb pimp $.
+$}
+$( Nest the composition of two substitutions.  (Contributed by NM,
+       23-Nov-2005.)  (Proof shortened by Mario Carneiro, 10-Nov-2016.) $)
+${
+	$v x y z A B C V $.
+	$d x z $.
+	$d y z $.
+	$d z A $.
+	$d z B $.
+	$d z C $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	f5 $f class V $.
+	i0 $f set z $.
+	pcsbnestgf $p |- ( ( A e. V /\ A. y F/_ x C ) -> [_ A / x ]_ [_ B / y ]_ C = [_ [_ A / x ]_ B / y ]_ C ) $=
+	f2 f5 pelex f1 i0 f3 f4 adf-csb i0 acv f4 awcel f1 f3 awsbc i0 f1 f3 f4 acsb pabeq2i i0 acv f1 f3 f4 acsb awcel i0 acv f4 awcel f1 f3 awsbc f0 f2 psbcbii f0 i0 f4 pnfcr f0 f4 awnfc i0 acv f4 awcel f0 awnf f1 palimi i0 acv f4 awcel f0 f1 f2 f3 acvv psbcnestgf f0 f4 awnfc f1 awal f2 acvv awcel i0 acv f4 awcel f0 awnf f1 awal i0 acv f4 awcel f1 f3 awsbc f0 f2 awsbc i0 acv f4 awcel f1 f0 f2 f3 acsb awsbc awb psylan2 i0 acv f1 f3 f4 acsb awcel f0 f2 awsbc i0 acv f4 awcel f1 f3 awsbc f0 f2 awsbc f2 acvv awcel f0 f4 awnfc f1 awal awa i0 acv f4 awcel f1 f0 f2 f3 acsb awsbc psyl5bb f2 acvv awcel f0 f4 awnfc f1 awal awa i0 acv f1 f3 f4 acsb awcel f0 f2 awsbc i0 acv f4 awcel f1 f0 f2 f3 acsb awsbc i0 pabbidv f2 f5 awcel f2 acvv awcel f0 f4 awnfc f1 awal i0 acv f1 f3 f4 acsb awcel f0 f2 awsbc i0 acab i0 acv f4 awcel f1 f0 f2 f3 acsb awsbc i0 acab awceq psylan f0 i0 f2 f1 f3 f4 acsb adf-csb f1 i0 f0 f2 f3 acsb f4 adf-csb f2 f5 awcel f0 f4 awnfc f1 awal awa i0 acv f1 f3 f4 acsb awcel f0 f2 awsbc i0 acab i0 acv f4 awcel f1 f0 f2 f3 acsb awsbc i0 acab f0 f2 f1 f3 f4 acsb acsb f1 f0 f2 f3 acsb f4 acsb p3eqtr4g $.
+$}
+$( Nest the composition of two substitutions.  (Contributed by NM,
+       27-Nov-2005.)  (Proof shortened by Mario Carneiro, 11-Nov-2016.) $)
+${
+	$v ph x y A B V $.
+	$d x ph $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	f5 $f class V $.
+	psbcnestg $p |- ( A e. V -> ( [. A / x ]. [. B / y ]. ph <-> [. [_ A / x ]_ B / y ]. ph ) ) $=
+	f0 f1 pnfv f0 f1 awnf f2 aax-gen f0 f1 f2 f3 f4 f5 psbcnestgf f3 f5 awcel f0 f1 awnf f2 awal f0 f2 f4 awsbc f1 f3 awsbc f0 f2 f1 f3 f4 acsb awsbc awb pmpan2 $.
+$}
+$( Nest the composition of two substitutions.  (Contributed by NM,
+       23-Nov-2005.)  (Proof shortened by Mario Carneiro, 10-Nov-2016.) $)
+${
+	$v x y A B C V $.
+	$d x C $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	f5 $f class V $.
+	pcsbnestg $p |- ( A e. V -> [_ A / x ]_ [_ B / y ]_ C = [_ [_ A / x ]_ B / y ]_ C ) $=
+	f0 f4 pnfcv f0 f4 awnfc f1 aax-gen f0 f1 f2 f3 f4 f5 pcsbnestgf f2 f5 awcel f0 f4 awnfc f1 awal f0 f2 f1 f3 f4 acsb acsb f1 f0 f2 f3 acsb f4 acsb awceq pmpan2 $.
+$}
+$( Nest the composition of two substitutions.  (New usage is discouraged.)
+       (Contributed by NM, 23-Nov-2005.) $)
+${
+	$v x y A B C V W $.
+	$d x C $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	f5 $f class V $.
+	f6 $f class W $.
+	pcsbnestgOLD $p |- ( ( A e. V /\ A. x B e. W ) -> [_ A / x ]_ [_ B / y ]_ C = [_ [_ A / x ]_ B / y ]_ C ) $=
+	f0 f1 f2 f3 f4 f5 pcsbnestg f2 f5 awcel f0 f2 f1 f3 f4 acsb acsb f1 f0 f2 f3 acsb f4 acsb awceq f3 f6 awcel f0 awal padantr $.
+$}
+$( Nest the composition of two substitutions.  (Contributed by NM,
+       23-May-2006.)  (Proof shortened by Mario Carneiro, 11-Nov-2016.) $)
+${
+	$v x y A B C V $.
+	$d x y $.
+	$d y C $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class V $.
+	i0 $f set y $.
+	pcsbnest1g $p |- ( A e. V -> [_ A / x ]_ [_ B / x ]_ C = [_ [_ A / x ]_ B / x ]_ C ) $=
+	f0 i0 acv f3 pnfcsb1v f0 f0 i0 acv f3 acsb awnfc i0 aax-gen f0 i0 f1 f2 f0 i0 acv f3 acsb f4 pcsbnestgf f1 f4 awcel f0 f0 i0 acv f3 acsb awnfc i0 awal f0 f1 i0 f2 f0 i0 acv f3 acsb acsb acsb i0 f0 f1 f2 acsb f0 i0 acv f3 acsb acsb awceq pmpan2 f0 i0 f2 f3 pcsbco f0 f1 i0 f2 f0 i0 acv f3 acsb acsb f0 f2 f3 acsb pcsbeq2i f0 i0 f0 f1 f2 acsb f3 pcsbco f1 f4 awcel f0 f1 i0 f2 f0 i0 acv f3 acsb acsb acsb i0 f0 f1 f2 acsb f0 i0 acv f3 acsb acsb f0 f1 f0 f2 f3 acsb acsb f0 f0 f1 f2 acsb f3 acsb p3eqtr3g $.
+$}
+$( Nest the composition of two substitutions.  Obsolete as of 11-Nov-2016.
+       (Contributed by NM, 23-May-2006.)  (New usage is discouraged.) $)
+${
+	$v x A B C V W $.
+	$d x A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class V $.
+	f5 $f class W $.
+	pcsbnest1gOLD $p |- ( ( A e. V /\ A. x B e. W ) -> [_ A / x ]_ [_ B / x ]_ C = [_ [_ A / x ]_ B / x ]_ C ) $=
+	f0 f1 f2 f3 f4 pcsbnest1g f1 f4 awcel f0 f1 f0 f2 f3 acsb acsb f0 f0 f1 f2 acsb f3 acsb awceq f2 f5 awcel f0 awal padantr $.
+$}
+$( Idempotent law for class substitutions.  (Contributed by NM,
+       1-Mar-2008.) $)
+${
+	$v x A B V $.
+	$d x A $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class V $.
+	pcsbidmg $p |- ( A e. V -> [_ A / x ]_ [_ A / x ]_ B = [_ A / x ]_ B ) $=
+	f1 f3 pelex f0 f1 f1 f2 acvv pcsbnest1g f0 f1 f1 acvv pcsbconstg f1 acvv awcel f0 f0 f1 f1 acsb f1 f2 pcsbeq1d f1 acvv awcel f0 f1 f0 f1 f2 acsb acsb f0 f0 f1 f1 acsb f2 acsb f0 f1 f2 acsb peqtrd f1 f3 awcel f1 acvv awcel f0 f1 f0 f1 f2 acsb acsb f0 f1 f2 acsb awceq psyl $.
+$}
+$( Composition of two substitutions.  (Contributed by NM, 27-Nov-2005.)
+       (Revised by Mario Carneiro, 11-Nov-2016.) $)
+${
+	$v ph x y A B C V $.
+	$d x A $.
+	$d x ph $.
+	$d x C $.
+	e0 $e |- ( x = A -> B = C ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	f5 $f class C $.
+	f6 $f class V $.
+	psbcco3g $p |- ( A e. V -> ( [. A / x ]. [. B / y ]. ph <-> [. C / y ]. ph ) ) $=
+	f0 f1 f2 f3 f4 f6 psbcnestg f3 f6 pelex f3 acvv awcel f1 f5 pnfcvd e0 f1 f3 f4 f5 acvv pcsbiegf f0 f2 f1 f3 f4 acsb f5 pdfsbcq f3 f6 awcel f3 acvv awcel f1 f3 f4 acsb f5 awceq f0 f2 f1 f3 f4 acsb awsbc f0 f2 f5 awsbc awb p3syl f3 f6 awcel f0 f2 f4 awsbc f1 f3 awsbc f0 f2 f1 f3 f4 acsb awsbc f0 f2 f5 awsbc pbitrd $.
+$}
+$( Composition of two substitutions.  (Contributed by NM, 27-Nov-2005.)
+       (New usage is discouraged.) $)
+${
+	$v ph x y A B C V W $.
+	$d x A $.
+	$d x ph $.
+	$d x C $.
+	e0 $e |- ( x = A -> B = C ) $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class B $.
+	f5 $f class C $.
+	f6 $f class V $.
+	f7 $f class W $.
+	psbcco3gOLD $p |- ( ( A e. V /\ A. x B e. W ) -> ( [. A / x ]. [. B / y ]. ph <-> [. C / y ]. ph ) ) $=
+	e0 f0 f1 f2 f3 f4 f5 f6 psbcco3g f3 f6 awcel f0 f2 f4 awsbc f1 f3 awsbc f0 f2 f5 awsbc awb f4 f7 awcel f1 awal padantr $.
+$}
+$( Composition of two class substitutions.  (Contributed by NM,
+       27-Nov-2005.)  (Revised by Mario Carneiro, 11-Nov-2016.) $)
+${
+	$v x y A B C D V $.
+	$d x A $.
+	$d x C $.
+	$d x D $.
+	e0 $e |- ( x = A -> B = C ) $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	f5 $f class D $.
+	f6 $f class V $.
+	pcsbco3g $p |- ( A e. V -> [_ A / x ]_ [_ B / y ]_ D = [_ C / y ]_ D ) $=
+	f0 f1 f2 f3 f5 f6 pcsbnestg f2 f6 pelex f2 acvv awcel f0 f4 pnfcvd e0 f0 f2 f3 f4 acvv pcsbiegf f2 f6 awcel f2 acvv awcel f0 f2 f3 acsb f4 awceq psyl f2 f6 awcel f1 f0 f2 f3 acsb f4 f5 pcsbeq1d f2 f6 awcel f0 f2 f1 f3 f5 acsb acsb f1 f0 f2 f3 acsb f5 acsb f1 f4 f5 acsb peqtrd $.
+$}
+$( Composition of two class substitutions.  Obsolete as of 11-Nov-2016.
+       (Contributed by NM, 27-Nov-2005.)  (New usage is discouraged.) $)
+${
+	$v x y A B C D V W $.
+	$d x A $.
+	$d x C $.
+	$d x D $.
+	$d x y $.
+	e0 $e |- ( x = A -> B = D ) $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f class A $.
+	f3 $f class B $.
+	f4 $f class C $.
+	f5 $f class D $.
+	f6 $f class V $.
+	f7 $f class W $.
+	pcsbco3gOLD $p |- ( ( A e. V /\ A. x B e. W ) -> [_ A / x ]_ [_ B / y ]_ C = [_ D / y ]_ C ) $=
+	e0 f0 f1 f2 f3 f5 f4 f6 pcsbco3g f2 f6 awcel f0 f2 f1 f3 f4 acsb acsb f1 f5 f4 acsb awceq f3 f7 awcel f0 awal padantr $.
+$}
+$( Special case related to ~ rspsbc .  (Contributed by NM, 10-Dec-2005.)
+       (Proof shortened by Eric Schmidt, 17-Jan-2007.) $)
+${
+	$v x A B C D $.
+	$d x B $.
+	$d x D $.
+	f0 $f set x $.
+	f1 $f class A $.
+	f2 $f class B $.
+	f3 $f class C $.
+	f4 $f class D $.
+	prspcsbela $p |- ( ( A e. B /\ A. x e. B C e. D ) -> [_ A / x ]_ C e. D ) $=
+	f3 f4 awcel f0 f1 f2 prspsbc f0 f1 f3 f4 f2 psbcel1g f1 f2 awcel f3 f4 awcel f0 f2 awral f3 f4 awcel f0 f1 awsbc f0 f1 f3 acsb f4 awcel psylibd f1 f2 awcel f3 f4 awcel f0 f2 awral f0 f1 f3 acsb f4 awcel pimp $.
+$}
+$( Two ways of expressing " ` x ` is (effectively) not free in ` A ` ."
+       (Contributed by Mario Carneiro, 14-Oct-2016.) $)
+${
+	$v x y z w A $.
+	$d w x y z $.
+	$d w y z A $.
+	f0 $f set x $.
+	f1 $f set y $.
+	f2 $f set z $.
+	f3 $f class A $.
+	i0 $f set w $.
+	psbnfc2 $p |- ( F/_ x A <-> A. y A. z [_ y / x ]_ A = [_ z / x ]_ A ) $=
+	f1 pvex f0 f1 acv f3 acvv pcsbtt f1 acv acvv awcel f0 f3 awnfc f0 f1 acv f3 acsb f3 awceq pmpan f2 pvex f0 f2 acv f3 acvv pcsbtt f2 acv acvv awcel f0 f3 awnfc f0 f2 acv f3 acsb f3 awceq pmpan f0 f3 awnfc f0 f1 acv f3 acsb f3 f0 f2 acv f3 acsb peqtr4d f0 f3 awnfc f0 f1 acv f3 acsb f0 f2 acv f3 acsb awceq f1 f2 palrimivv f0 f1 acv f3 acsb f0 f2 acv f3 acsb awceq f2 awal f1 awal i0 pnfv f0 f1 acv f3 acsb f0 f2 acv f3 acsb i0 acv peleq2 i0 acv f3 awcel f0 f1 psbsbc f1 pvex f0 f1 acv i0 acv f3 acvv psbcel2g f1 acv acvv awcel i0 acv f3 awcel f0 f1 acv awsbc i0 acv f0 f1 acv f3 acsb awcel awb aax-mp i0 acv f3 awcel f0 f1 awsb i0 acv f3 awcel f0 f1 acv awsbc i0 acv f0 f1 acv f3 acsb awcel pbitri i0 acv f3 awcel f0 f2 psbsbc f2 pvex f0 f2 acv i0 acv f3 acvv psbcel2g f2 acv acvv awcel i0 acv f3 awcel f0 f2 acv awsbc i0 acv f0 f2 acv f3 acsb awcel awb aax-mp i0 acv f3 awcel f0 f2 awsb i0 acv f3 awcel f0 f2 acv awsbc i0 acv f0 f2 acv f3 acsb awcel pbitri f0 f1 acv f3 acsb f0 f2 acv f3 acsb awceq i0 acv f0 f1 acv f3 acsb awcel i0 acv f0 f2 acv f3 acsb awcel i0 acv f3 awcel f0 f1 awsb i0 acv f3 awcel f0 f2 awsb p3bitr4g f0 f1 acv f3 acsb f0 f2 acv f3 acsb awceq i0 acv f3 awcel f0 f1 awsb i0 acv f3 awcel f0 f2 awsb awb f1 f2 p2alimi i0 acv f3 awcel f0 f1 f2 psbnf2 f0 f1 acv f3 acsb f0 f2 acv f3 acsb awceq f2 awal f1 awal i0 acv f3 awcel f0 f1 awsb i0 acv f3 awcel f0 f2 awsb awb f2 awal f1 awal i0 acv f3 awcel f0 awnf psylibr f0 f1 acv f3 acsb f0 f2 acv f3 acsb awceq f2 awal f1 awal f0 i0 f3 pnfcd f0 f3 awnfc f0 f1 acv f3 acsb f0 f2 acv f3 acsb awceq f2 awal f1 awal pimpbii $.
+$}
+$( Move substitution into a class abstraction.  (Contributed by NM,
+       13-Dec-2005.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
+${
+	$v ph x y z A V $.
+	$d y z A $.
+	$d z ph $.
+	$d x y z $.
+	$d V z $.
+	f0 $f wff ph $.
+	f1 $f set x $.
+	f2 $f set y $.
+	f3 $f class A $.
+	f4 $f class V $.
+	i0 $f set z $.
+	pcsbabg $p |- ( A e. V -> [_ A / x ]_ { y | ph } = { y | [. A / x ]. ph } ) $=
+	f0 f2 f1 i0 acv f3 psbccom f0 f1 f3 awsbc i0 f2 adf-clab f0 f1 f3 awsbc f2 i0 psbsbc i0 acv f0 f1 f3 awsbc f2 acab awcel f0 f1 f3 awsbc f2 i0 awsb f0 f1 f3 awsbc f2 i0 acv awsbc pbitri f0 i0 f2 adf-clab f0 f2 i0 psbsbc i0 acv f0 f2 acab awcel f0 f2 i0 awsb f0 f2 i0 acv awsbc pbitri i0 acv f0 f2 acab awcel f0 f2 i0 acv awsbc f1 f3 psbcbii f0 f1 f3 awsbc f2 i0 acv awsbc f0 f2 i0 acv awsbc f1 f3 awsbc i0 acv f0 f1 f3 awsbc f2 acab awcel i0 acv f0 f2 acab awcel f1 f3 awsbc p3bitr4i f1 f3 i0 acv f0 f2 acab f4 psbcel2g i0 acv f0 f1 f3 awsbc f2 acab awcel i0 acv f0 f2 acab awcel f1 f3 awsbc f3 f4 awcel i0 acv f1 f3 f0 f2 acab acsb awcel psyl5rbb f3 f4 awcel i0 f1 f3 f0 f2 acab acsb f0 f1 f3 awsbc f2 acab peqrdv $.
+$}
+$( A more general version of ~ cbvralf that doesn't require ` A ` and ` B `
+       to be distinct from ` x ` or ` y ` .  Changes bound variables using
+       implicit substitution.  (Contributed by Andrew Salmon, 13-Jul-2011.) $)
+${
+	$v ph ps x y z v A B $.
+	$d x v z $.
+	$d y v z $.
+	$d A v z $.
+	$d B v z $.
+	$d ph v z $.
+	$d ps v z $.
+	e0 $e |- F/_ y A $.
+	e1 $e |- F/_ x B $.
+	e2 $e |- F/ y ph $.
+	e3 $e |- F/ x ps $.
+	e4 $e |- ( x = y -> A = B ) $.
+	e5 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	i0 $f set z $.
+	i1 $f set v $.
+	pcbvralcsf $p |- ( A. x e. A ph <-> A. y e. B ps ) $=
+	f2 acv f4 awcel f0 awi i0 pnfv f2 i0 acv f4 pnfcsb1v f2 i0 f2 i0 acv f4 acsb pnfcri f0 f2 i0 acv pnfsbc1v i0 acv f2 i0 acv f4 acsb awcel f0 f2 i0 acv awsbc f2 pnfim f2 acv i0 acv awceq pid f2 i0 acv f4 pcsbeq1a f2 acv i0 acv awceq f2 acv i0 acv f4 f2 i0 acv f4 acsb peleq12d f0 f2 i0 acv psbceq1a f2 acv i0 acv awceq f2 acv f4 awcel i0 acv f2 i0 acv f4 acsb awcel f0 f0 f2 i0 acv awsbc pimbi12d f2 acv f4 awcel f0 awi i0 acv f2 i0 acv f4 acsb awcel f0 f2 i0 acv awsbc awi f2 i0 pcbval f3 i0 acv pnfcv e0 f3 f2 i0 acv f4 pnfcsb f3 i0 f2 i0 acv f4 acsb pnfcri f3 i0 acv pnfcv e2 f0 f3 f2 i0 acv pnfsbc i0 acv f2 i0 acv f4 acsb awcel f0 f2 i0 acv awsbc f3 pnfim f3 acv f5 awcel f1 awi i0 pnfv i0 acv f3 acv awceq pid f2 i0 acv f3 acv f4 pcsbeq1 f2 i1 f3 acv f4 adf-csb e1 f2 i1 f5 pnfcri e4 f2 f3 pweq f4 f5 i1 acv peleq2d i1 acv f4 awcel i1 acv f5 awcel f2 f3 psbie i1 acv f4 awcel f2 f3 psbsbc i1 acv f5 awcel i1 acv f4 awcel f2 f3 awsb i1 acv f4 awcel f2 f3 acv awsbc pbitr3i i1 acv f4 awcel f2 f3 acv awsbc i1 f5 pabbi2i f2 f3 acv f4 acsb i1 acv f4 awcel f2 f3 acv awsbc i1 acab f5 peqtr4i i0 acv f3 acv awceq f2 i0 acv f4 acsb f2 f3 acv f4 acsb f5 psyl6eq i0 acv f3 acv awceq i0 acv f3 acv f2 i0 acv f4 acsb f5 peleq12d f0 f2 i0 acv f3 acv pdfsbcq f0 f2 f3 psbsbc e3 e5 f0 f1 f2 f3 psbie f0 f2 f3 acv awsbc f0 f2 f3 awsb f1 pbitr3i i0 acv f3 acv awceq f0 f2 i0 acv awsbc f0 f2 f3 acv awsbc f1 psyl6bb i0 acv f3 acv awceq i0 acv f2 i0 acv f4 acsb awcel f3 acv f5 awcel f0 f2 i0 acv awsbc f1 pimbi12d i0 acv f2 i0 acv f4 acsb awcel f0 f2 i0 acv awsbc awi f3 acv f5 awcel f1 awi i0 f3 pcbval f2 acv f4 awcel f0 awi f2 awal i0 acv f2 i0 acv f4 acsb awcel f0 f2 i0 acv awsbc awi i0 awal f3 acv f5 awcel f1 awi f3 awal pbitri f0 f2 f4 adf-ral f1 f3 f5 adf-ral f2 acv f4 awcel f0 awi f2 awal f3 acv f5 awcel f1 awi f3 awal f0 f2 f4 awral f1 f3 f5 awral p3bitr4i $.
+$}
+$( A more general version of ~ cbvrexf that has no distinct variable
+       restrictions.  Changes bound variables using implicit substitution.
+       (Contributed by Andrew Salmon, 13-Jul-2011.)  (Proof shortened by Mario
+       Carneiro, 7-Dec-2014.) $)
+${
+	$v ph ps x y A B $.
+	e0 $e |- F/_ y A $.
+	e1 $e |- F/_ x B $.
+	e2 $e |- F/ y ph $.
+	e3 $e |- F/ x ps $.
+	e4 $e |- ( x = y -> A = B ) $.
+	e5 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	pcbvrexcsf $p |- ( E. x e. A ph <-> E. y e. B ps ) $=
+	e0 e1 e2 f0 f3 pnfn e3 f1 f2 pnfn e4 e5 f2 acv f3 acv awceq f0 f1 pnotbid f0 awn f1 awn f2 f3 f4 f5 pcbvralcsf f0 awn f2 f4 awral f1 awn f3 f5 awral pnotbii f0 f2 f4 pdfrex2 f1 f3 f5 pdfrex2 f0 awn f2 f4 awral awn f1 awn f3 f5 awral awn f0 f2 f4 awrex f1 f3 f5 awrex p3bitr4i $.
+$}
+$( A more general version of ~ cbvreuv that has no distinct variable
+       rextrictions.  Changes bound variables using implicit substitution.
+       (Contributed by Andrew Salmon, 13-Jul-2011.) $)
+${
+	$v ph ps x y z v A B $.
+	$d x v z $.
+	$d y v z $.
+	$d A v z $.
+	$d B v z $.
+	$d ph v z $.
+	$d ps v z $.
+	e0 $e |- F/_ y A $.
+	e1 $e |- F/_ x B $.
+	e2 $e |- F/ y ph $.
+	e3 $e |- F/ x ps $.
+	e4 $e |- ( x = y -> A = B ) $.
+	e5 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	i0 $f set z $.
+	i1 $f set v $.
+	pcbvreucsf $p |- ( E! x e. A ph <-> E! y e. B ps ) $=
+	f2 acv f4 awcel f0 awa i0 pnfv f2 i0 acv f4 pnfcsb1v f2 i0 f2 i0 acv f4 acsb pnfcri f0 f2 i0 pnfs1v i0 acv f2 i0 acv f4 acsb awcel f0 f2 i0 awsb f2 pnfan f2 acv i0 acv awceq pid f2 i0 acv f4 pcsbeq1a f2 acv i0 acv awceq f2 acv i0 acv f4 f2 i0 acv f4 acsb peleq12d f0 f2 i0 psbequ12 f2 acv i0 acv awceq f2 acv f4 awcel i0 acv f2 i0 acv f4 acsb awcel f0 f0 f2 i0 awsb panbi12d f2 acv f4 awcel f0 awa i0 acv f2 i0 acv f4 acsb awcel f0 f2 i0 awsb awa f2 i0 pcbveu f3 i0 acv pnfcv e0 f3 f2 i0 acv f4 pnfcsb f3 i0 f2 i0 acv f4 acsb pnfcri e2 f0 f2 i0 f3 pnfsb i0 acv f2 i0 acv f4 acsb awcel f0 f2 i0 awsb f3 pnfan f3 acv f5 awcel f1 awa i0 pnfv i0 acv f3 acv awceq pid f2 i0 acv f3 acv f4 pcsbeq1 i1 acv f4 awcel f2 f3 psbsbc i1 acv f4 awcel f2 f3 awsb i1 acv f4 awcel f2 f3 acv awsbc i1 pabbii e1 f2 i1 f5 pnfcri e4 f2 acv f3 acv awceq f4 f5 i1 acv peleq2d i1 acv f4 awcel i1 acv f5 awcel f2 f3 psbie i1 acv f4 awcel f2 f3 awsb i1 acv f5 awcel pbicomi i1 acv f4 awcel f2 f3 awsb i1 f5 pabbi2i f2 i1 f3 acv f4 adf-csb i1 acv f4 awcel f2 f3 awsb i1 acab i1 acv f4 awcel f2 f3 acv awsbc i1 acab f5 f2 f3 acv f4 acsb p3eqtr4ri i0 acv f3 acv awceq f2 i0 acv f4 acsb f2 f3 acv f4 acsb f5 psyl6eq i0 acv f3 acv awceq i0 acv f3 acv f2 i0 acv f4 acsb f5 peleq12d f0 i0 f3 f2 psbequ e3 e5 f0 f1 f2 f3 psbie i0 acv f3 acv awceq f0 f2 i0 awsb f0 f2 f3 awsb f1 psyl6bb i0 acv f3 acv awceq i0 acv f2 i0 acv f4 acsb awcel f3 acv f5 awcel f0 f2 i0 awsb f1 panbi12d i0 acv f2 i0 acv f4 acsb awcel f0 f2 i0 awsb awa f3 acv f5 awcel f1 awa i0 f3 pcbveu f2 acv f4 awcel f0 awa f2 aweu i0 acv f2 i0 acv f4 acsb awcel f0 f2 i0 awsb awa i0 aweu f3 acv f5 awcel f1 awa f3 aweu pbitri f0 f2 f4 adf-reu f1 f3 f5 adf-reu f2 acv f4 awcel f0 awa f2 aweu f3 acv f5 awcel f1 awa f3 aweu f0 f2 f4 awreu f1 f3 f5 awreu p3bitr4i $.
+$}
+$( A more general version of ~ cbvrab with no distinct variable
+       restrictions.  (Contributed by Andrew Salmon, 13-Jul-2011.) $)
+${
+	$v ph ps x y z v A B $.
+	$d x v z $.
+	$d y v z $.
+	$d A v z $.
+	$d B v z $.
+	$d ph v z $.
+	$d ps v z $.
+	e0 $e |- F/_ y A $.
+	e1 $e |- F/_ x B $.
+	e2 $e |- F/ y ph $.
+	e3 $e |- F/ x ps $.
+	e4 $e |- ( x = y -> A = B ) $.
+	e5 $e |- ( x = y -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	i0 $f set z $.
+	i1 $f set v $.
+	pcbvrabcsf $p |- { x e. A | ph } = { y e. B | ps } $=
+	f2 acv f4 awcel f0 awa i0 pnfv f2 i0 acv f4 pnfcsb1v f2 i0 f2 i0 acv f4 acsb pnfcri f0 f2 i0 pnfs1v i0 acv f2 i0 acv f4 acsb awcel f0 f2 i0 awsb f2 pnfan f2 acv i0 acv awceq pid f2 i0 acv f4 pcsbeq1a f2 acv i0 acv awceq f2 acv i0 acv f4 f2 i0 acv f4 acsb peleq12d f0 f2 i0 psbequ12 f2 acv i0 acv awceq f2 acv f4 awcel i0 acv f2 i0 acv f4 acsb awcel f0 f0 f2 i0 awsb panbi12d f2 acv f4 awcel f0 awa i0 acv f2 i0 acv f4 acsb awcel f0 f2 i0 awsb awa f2 i0 pcbvab f3 i0 acv pnfcv e0 f3 f2 i0 acv f4 pnfcsb f3 i0 f2 i0 acv f4 acsb pnfcri e2 f0 f2 i0 f3 pnfsb i0 acv f2 i0 acv f4 acsb awcel f0 f2 i0 awsb f3 pnfan f3 acv f5 awcel f1 awa i0 pnfv i0 acv f3 acv awceq pid f2 i0 acv f3 acv f4 pcsbeq1 f2 i1 f3 acv f4 adf-csb e1 f2 i1 f5 pnfcri e4 f2 f3 pweq f4 f5 i1 acv peleq2d i1 acv f4 awcel i1 acv f5 awcel f2 f3 psbie i1 acv f4 awcel f2 f3 psbsbc i1 acv f5 awcel i1 acv f4 awcel f2 f3 awsb i1 acv f4 awcel f2 f3 acv awsbc pbitr3i i1 acv f4 awcel f2 f3 acv awsbc i1 f5 pabbi2i f2 f3 acv f4 acsb i1 acv f4 awcel f2 f3 acv awsbc i1 acab f5 peqtr4i i0 acv f3 acv awceq f2 i0 acv f4 acsb f2 f3 acv f4 acsb f5 psyl6eq i0 acv f3 acv awceq i0 acv f3 acv f2 i0 acv f4 acsb f5 peleq12d f0 i0 f3 f2 psbequ e3 e5 f0 f1 f2 f3 psbie i0 acv f3 acv awceq f0 f2 i0 awsb f0 f2 f3 awsb f1 psyl6bb i0 acv f3 acv awceq i0 acv f2 i0 acv f4 acsb awcel f3 acv f5 awcel f0 f2 i0 awsb f1 panbi12d i0 acv f2 i0 acv f4 acsb awcel f0 f2 i0 awsb awa f3 acv f5 awcel f1 awa i0 f3 pcbvab f2 acv f4 awcel f0 awa f2 acab i0 acv f2 i0 acv f4 acsb awcel f0 f2 i0 awsb awa i0 acab f3 acv f5 awcel f1 awa f3 acab peqtri f0 f2 f4 adf-rab f1 f3 f5 adf-rab f2 acv f4 awcel f0 awa f2 acab f3 acv f5 awcel f1 awa f3 acab f0 f2 f4 acrab f1 f3 f5 acrab p3eqtr4i $.
+$}
+$( Rule used to change the bound variable in a restricted universal
+       quantifier with implicit substitution which also changes the quantifier
+       domain.  (Contributed by David Moews, 1-May-2017.) $)
+${
+	$v ps ch x y A B $.
+	$d A y $.
+	$d ps y $.
+	$d B x $.
+	$d ch x $.
+	e0 $e |- ( x = y -> ( ps <-> ch ) ) $.
+	e1 $e |- ( x = y -> A = B ) $.
+	f0 $f wff ps $.
+	f1 $f wff ch $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	pcbvralv2 $p |- ( A. x e. A ps <-> A. y e. B ch ) $=
+	f3 f4 pnfcv f2 f5 pnfcv f0 f3 pnfv f1 f2 pnfv e1 e0 f0 f1 f2 f3 f4 f5 pcbvralcsf $.
+$}
+$( Rule used to change the bound variable in a restricted existential
+       quantifier with implicit substitution which also changes the quantifier
+       domain.  (Contributed by David Moews, 1-May-2017.) $)
+${
+	$v ps ch x y A B $.
+	$d A y $.
+	$d ps y $.
+	$d B x $.
+	$d ch x $.
+	e0 $e |- ( x = y -> ( ps <-> ch ) ) $.
+	e1 $e |- ( x = y -> A = B ) $.
+	f0 $f wff ps $.
+	f1 $f wff ch $.
+	f2 $f set x $.
+	f3 $f set y $.
+	f4 $f class A $.
+	f5 $f class B $.
+	pcbvrexv2 $p |- ( E. x e. A ps <-> E. y e. B ch ) $=
+	f3 f4 pnfcv f2 f5 pnfcv f0 f3 pnfv f1 f2 pnfv e1 e0 f0 f1 f2 f3 f4 f5 pcbvrexcsf $.
+$}
+

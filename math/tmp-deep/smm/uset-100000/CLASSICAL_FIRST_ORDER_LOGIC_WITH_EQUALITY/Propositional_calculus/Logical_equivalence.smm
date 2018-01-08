@@ -1,0 +1,2234 @@
+$[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Logical_negation.smm $]
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        Logical equivalence
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+  The definition ~ df-bi in this section is our first definition, which
+  introduces and defines the biconditional connective ` <-> ` . We define a wff
+  of the form ` ( ph <-> ps ) ` as an abbreviation for
+  ` -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) ` .
+
+  Unlike most traditional developments, we have chosen not to have a separate
+  symbol such as "Df." to mean "is defined as."  Instead, we will later use the
+  biconditional connective for this purpose ( ~ df-or is its first use), as it
+  allows us to use logic to manipulate definitions directly.  This greatly
+  simplifies many proofs since it eliminates the need for a separate mechanism
+  for introducing and eliminating definitions.
+$)
+$( Declare the biconditional connective. $)
+$c <-> $.
+$( Double arrow (read:  'if and only if' or
+               'is logically equivalent to') $)
+$( Extend our wff definition to include the biconditional connective. $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	awb $a wff ( ph <-> ps ) $.
+$}
+$( Define the biconditional (logical 'iff').
+
+     The definition ~ df-bi in this section is our first definition, which
+     introduces and defines the biconditional connective ` <-> ` .  We define a
+     wff of the form ` ( ph <-> ps ) ` as an abbreviation for
+     ` -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) ` .
+
+     Unlike most traditional developments, we have chosen not to have a
+     separate symbol such as "Df." to mean "is defined as."  Instead, we will
+     later use the biconditional connective for this purpose ( ~ df-or is its
+     first use), as it allows us to use logic to manipulate definitions
+     directly.  This greatly simplifies many proofs since it eliminates the
+     need for a separate mechanism for introducing and eliminating
+     definitions.  Of course, we cannot use this mechanism to define the
+     biconditional itself, since it hasn't been introduced yet.  Instead, we
+     use a more general form of definition, described as follows.
+
+     In its most general form, a definition is simply an assertion that
+     introduces a new symbol (or a new combination of existing symbols, as in
+     ~ df-3an ) that is eliminable and does not strengthen the existing
+     language.  The latter requirement means that the set of provable
+     statements not containing the new symbol (or new combination) should
+     remain exactly the same after the definition is introduced.  Our
+     definition of the biconditional may look unusual compared to most
+     definitions, but it strictly satisfies these requirements.
+
+     The justification for our definition is that if we mechanically replace
+     ` ( ph <-> ps ) ` (the definiendum i.e. the thing being defined) with
+     ` -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) ` (the definiens i.e. the
+     defining expression) in the definition, the definition becomes the
+     previously proved theorem ~ bijust .  It is impossible to use ~ df-bi to
+     prove any statement expressed in the original language that can't be
+     proved from the original axioms, because if we simply replace each
+     instance of ~ df-bi in the proof with the corresponding ~ bijust instance,
+     we will end up with a proof from the original axioms.
+
+     Note that from Metamath's point of view, a definition is just another
+     axiom - i.e. an assertion we claim to be true - but from our high level
+     point of view, we are not strengthening the language.  To indicate this
+     fact, we prefix definition labels with "df-" instead of "ax-".  (This
+     prefixing is an informal convention that means nothing to the Metamath
+     proof verifier; it is just a naming convention for human readability.)
+
+     After we define the constant true ` T. ` ( ~ df-tru ) and the constant
+     false ` F. ` ( ~ df-fal ), we will be able to prove these truth table
+     values: ` ( ( T. <-> T. ) <-> T. ) ` ( ~ trubitru ),
+     ` ( ( T. <-> F. ) <-> F. ) ` ( ~ trubifal ), ` ( ( F. <-> T. ) <-> F. ) `
+     ( ~ falbitru ), and ` ( ( F. <-> F. ) <-> T. ) ` ( ~ falbifal ).
+
+     See ~ dfbi1 , ~ dfbi2 , and ~ dfbi3 for theorems suggesting typical
+     textbook definitions of ` <-> ` , showing that our definition has the
+     properties we expect.  Theorem ~ dfbi1 is particularly useful if we want
+     to eliminate ` <-> ` from an expression to convert it to primitives.
+     Theorem ~ dfbi shows this definition rewritten in an abbreviated form
+     after conjunction is introduced, for easier understanding.
+
+     Contrast with ` \/ ` ( ~ df-or ), ` -> ` ( ~ wi ), ` -/\ ` ( ~ df-nan ),
+     and ` \/_ ` ( ~ df-xor ) .  In some sense ` <-> ` returns true if two
+     truth values are equal; ` = ` ( ~ df-cleq ) returns true if two classes
+     are equal.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	adf-bi $a |- -. ( ( ( ph <-> ps ) -> -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) ) -> -. ( -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) -> ( ph <-> ps ) ) ) $.
+$}
+$( $j justification 'bijust' for 'df-bi'; $)
+$( Property of the biconditional connective.  (Contributed by NM,
+     11-May-1999.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pbi1 $p |- ( ( ph <-> ps ) -> ( ph -> ps ) ) $=
+	f0 f1 adf-bi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn psimplim f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi aax-mp f0 f1 awi f1 f0 awi awn psimplim f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn f0 f1 awi psyl $.
+$}
+$( Property of the biconditional connective.  (Contributed by NM,
+     11-May-1999.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pbi3 $p |- ( ( ph -> ps ) -> ( ( ps -> ph ) -> ( ph <-> ps ) ) ) $=
+	f0 f1 adf-bi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi psimprim f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi aax-mp f0 f1 awi f1 f0 awi f0 f1 awb pexpi $.
+$}
+$( Infer an equivalence from an implication and its converse.  (Contributed
+       by NM, 5-Aug-1993.) $)
+${
+	$v ph ps $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( ps -> ph ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pimpbii $p |- ( ph <-> ps ) $=
+	e0 e1 f0 f1 pbi3 f0 f1 awi f1 f0 awi f0 f1 awb pmp2 $.
+$}
+$( Deduce an equivalence from two implications.  (Contributed by Rodolfo
+       Medina, 12-Oct-2010.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps -> ( ch -> th ) ) ) $.
+	e1 $e |- ( ph -> ( ps -> ( th -> ch ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pimpbidd $p |- ( ph -> ( ps -> ( ch <-> th ) ) ) $=
+	e0 e1 f2 f3 pbi3 f0 f1 f2 f3 awi f3 f2 awi f2 f3 awb psyl6c $.
+$}
+$( Deduce an equivalence from two implications.  (Contributed by Wolf
+       Lammen, 12-May-2013.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ps -> ( ch -> th ) ) $.
+	e1 $e |- ( ph -> ( th -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pimpbid21d $p |- ( ph -> ( ps -> ( ch <-> th ) ) ) $=
+	e0 f1 f2 f3 awi awi f0 pa1i e1 f0 f3 f2 awi f1 pa1d f0 f1 f2 f3 pimpbidd $.
+$}
+$( Deduce an equivalence from two implications.  (Contributed by NM,
+       5-Aug-1993.)  (Revised by Wolf Lammen, 3-Nov-2012.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1 $e |- ( ph -> ( ch -> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pimpbid $p |- ( ph -> ( ps <-> ch ) ) $=
+	e0 e1 f0 f0 f1 f2 pimpbid21d f0 f1 f2 awb ppm2.43i $.
+$}
+$( Relate the biconditional connective to primitive connectives.  See
+     ~ dfbi1gb for an unusual version proved directly from axioms.
+     (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pdfbi1 $p |- ( ( ph <-> ps ) <-> -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) ) $=
+	f0 f1 adf-bi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn psimplim f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi aax-mp f0 f1 pbi3 f0 f1 awi f1 f0 awi f0 f1 awb pimpi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn pimpbii $.
+$}
+$( This proof of ~ dfbi1 , discovered by Gregory Bush on 8-Mar-2004, has
+     several curious properties.  First, it has only 17 steps directly from the
+     axioms and ~ df-bi , compared to over 800 steps were the proof of ~ dfbi1
+     expanded into axioms.  Second, step 2 demands only the property of "true";
+     any axiom (or theorem) could be used.  It might be thought, therefore,
+     that it is in some sense redundant, but in fact no proof is shorter than
+     this (measured by number of steps).  Third, it illustrates how
+     intermediate steps can "blow up" in size even in short proofs.  Fourth,
+     the compressed proof is only 182 bytes (or 17 bytes in D-proof notation),
+     but the generated web page is over 200kB with intermediate steps that are
+     essentially incomprehensible to humans (other than Gregory Bush).  If
+     there were an obfuscated code contest for proofs, this would be a
+     contender.  This "blowing up" and incomprehensibility of the intermediate
+     steps vividly demonstrate the advantages of using many layered
+     intermediate theorems, since each theorem is easier to understand.
+     (Contributed by Gregory Bush, 10-Mar-2004.)  (New usage is discouraged.)
+     (Proof modification is discouraged.) $)
+${
+	$v ph ps ch th $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	i0 $f wff ch $.
+	i1 $f wff th $.
+	pdfbi1gb $p |- ( ( ph <-> ps ) <-> -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) ) $=
+	f0 f1 adf-bi i0 i1 aax-1 f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn awi aax-1 f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn adf-bi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn awi awn i0 i1 i0 awi awi awn awn aax-1 f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn awi awn i0 i1 i0 awi awi awn awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn awi awn awi aax-mp i0 i1 i0 awi awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn awi aax-3 i0 i1 i0 awi awi awn awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn awi awn awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn awi i0 i1 i0 awi awi awn awi aax-mp f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn awi i0 i1 i0 awi awi awn awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn aax-1 f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn awi i0 i1 i0 awi awi awn awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn awi i0 i1 i0 awi awi awn awi awi aax-mp f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn awi i0 i1 i0 awi awi awn aax-2 f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn awi i0 i1 i0 awi awi awn awi awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn awi awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn i0 i1 i0 awi awi awn awi awi aax-mp f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn awi awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn i0 i1 i0 awi awi awn awi aax-mp f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi i0 i1 i0 awi awi aax-3 f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awn i0 i1 i0 awi awi awn awi i0 i1 i0 awi awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi awi aax-mp i0 i1 i0 awi awi f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb awi aax-mp f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awi f0 f1 awi f1 f0 awi awn awi awn f0 f1 awb awi awn awi awn f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn awb aax-mp $.
+$}
+$( Infer an implication from a logical equivalence.  (Contributed by NM,
+       5-Aug-1993.) $)
+${
+	$v ph ps $.
+	e0 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pbiimpi $p |- ( ph -> ps ) $=
+	e0 f0 f1 pbi1 f0 f1 awb f0 f1 awi aax-mp $.
+$}
+$( A mixed syllogism inference from a biconditional and an implication.
+       Useful for substituting an antecedent with a definition.  (Contributed
+       by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( ps -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	psylbi $p |- ( ph -> ch ) $=
+	e0 f0 f1 pbiimpi e1 f0 f1 f2 psyl $.
+$}
+$( A mixed syllogism inference from an implication and a biconditional.
+       (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( ps <-> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	psylib $p |- ( ph -> ch ) $=
+	e0 e1 f1 f2 pbiimpi f0 f1 f2 psyl $.
+$}
+$( Property of the biconditional connective.  (Contributed by NM,
+     11-May-1999.)  (Proof shortened by Wolf Lammen, 11-Nov-2012.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pbi2 $p |- ( ( ph <-> ps ) -> ( ps -> ph ) ) $=
+	f0 f1 pdfbi1 f0 f1 awi f1 f0 awi psimprim f0 f1 awb f0 f1 awi f1 f0 awi awn awi awn f1 f0 awi psylbi $.
+$}
+$( Commutative law for equivalence.  (Contributed by Wolf Lammen,
+     10-Nov-2012.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pbicom1 $p |- ( ( ph <-> ps ) -> ( ps <-> ph ) ) $=
+	f0 f1 pbi2 f0 f1 pbi1 f0 f1 awb f1 f0 pimpbid $.
+$}
+$( Commutative law for equivalence.  Theorem *4.21 of [WhiteheadRussell]
+     p. 117.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pbicom $p |- ( ( ph <-> ps ) <-> ( ps <-> ph ) ) $=
+	f0 f1 pbicom1 f1 f0 pbicom1 f0 f1 awb f1 f0 awb pimpbii $.
+$}
+$( Commute two sides of a biconditional in a deduction.  (Contributed by
+       NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbicomd $p |- ( ph -> ( ch <-> ps ) ) $=
+	e0 f1 f2 pbicom f0 f1 f2 awb f2 f1 awb psylib $.
+$}
+$( Inference from commutative law for logical equivalence.  (Contributed by
+       NM, 5-Aug-1993.) $)
+${
+	$v ph ps $.
+	e0 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pbicomi $p |- ( ps <-> ph ) $=
+	e0 f0 f1 pbicom1 f0 f1 awb f1 f0 awb aax-mp $.
+$}
+$( Infer an equivalence from two implications.  (Contributed by NM,
+       6-Mar-2007.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1 $e |- ( ch -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pimpbid1 $p |- ( ph -> ( ps <-> ch ) ) $=
+	e0 e1 f2 f1 awi f0 pa1i f0 f1 f2 pimpbid $.
+$}
+$( Infer an equivalence from two implications.  (Contributed by NM,
+       6-Mar-2007.)  (Proof shortened by Wolf Lammen, 27-Sep-2013.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ps -> ch ) $.
+	e1 $e |- ( ph -> ( ch -> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pimpbid2 $p |- ( ph -> ( ps <-> ch ) ) $=
+	e1 e0 f0 f2 f1 pimpbid1 f0 f2 f1 pbicomd $.
+$}
+$( A variation on ~ impbid with contraposition.  (Contributed by Jeff
+       Hankins, 3-Jul-2009.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1 $e |- ( ph -> ( -. ps -> -. ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pimpcon4bid $p |- ( ph -> ( ps <-> ch ) ) $=
+	e0 e1 f0 f1 f2 pcon4d f0 f1 f2 pimpbid $.
+$}
+$( Infer a converse implication from a logical equivalence.  (Contributed
+       by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 16-Sep-2013.) $)
+${
+	$v ph ps $.
+	e0 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pbiimpri $p |- ( ps -> ph ) $=
+	e0 f0 f1 pbicomi f1 f0 pbiimpi $.
+$}
+$( Deduce an implication from a logical equivalence.  (Contributed by NM,
+       5-Aug-1993.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbiimpd $p |- ( ph -> ( ps -> ch ) ) $=
+	e0 f1 f2 pbi1 f0 f1 f2 awb f1 f2 awi psyl $.
+$}
+$( An inference from a biconditional, related to modus ponens.
+       (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps $.
+	e0 $e |- ph $.
+	e1 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pmpbi $p |- ps $=
+	e0 e1 f0 f1 pbiimpi f0 f1 aax-mp $.
+$}
+$( An inference from a biconditional, related to modus ponens.
+       (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps $.
+	e0 $e |- ps $.
+	e1 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pmpbir $p |- ph $=
+	e0 e1 f0 f1 pbiimpri f1 f0 aax-mp $.
+$}
+$( A deduction from a biconditional, related to modus ponens.  (Contributed
+       by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pmpbid $p |- ( ph -> ch ) $=
+	e0 e1 f0 f1 f2 pbiimpd f0 f1 f2 pmpd $.
+$}
+$( An inference from a nested biconditional, related to modus ponens.
+       (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
+       25-Oct-2012.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ps $.
+	e1 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pmpbii $p |- ( ph -> ch ) $=
+	e0 f1 f0 pa1i e1 f0 f1 f2 pmpbid $.
+$}
+$( A mixed syllogism inference from an implication and a biconditional.
+       Useful for substituting a consequent with a definition.  (Contributed by
+       NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( ch <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	psylibr $p |- ( ph -> ch ) $=
+	e0 e1 f2 f1 pbiimpri f0 f1 f2 psyl $.
+$}
+$( A mixed syllogism inference from a biconditional and an implication.
+       (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ps <-> ph ) $.
+	e1 $e |- ( ps -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	psylbir $p |- ( ph -> ch ) $=
+	e0 f1 f0 pbiimpri e1 f0 f1 f2 psyl $.
+$}
+$( A syllogism deduction.  (Contributed by NM, 3-Aug-1994.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1 $e |- ( ph -> ( ch <-> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psylibd $p |- ( ph -> ( ps -> th ) ) $=
+	e0 e1 f0 f2 f3 pbiimpd f0 f1 f2 f3 psyld $.
+$}
+$( A syllogism deduction.  (Contributed by NM, 3-Aug-1994.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ph -> ( ch -> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psylbid $p |- ( ph -> ( ps -> th ) ) $=
+	e0 f0 f1 f2 pbiimpd e1 f0 f1 f2 f3 psyld $.
+$}
+$( A deduction from a biconditional, related to modus ponens.  (Contributed
+       by NM, 9-Aug-1994.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( th -> ( ph -> ps ) ) $.
+	e1 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pmpbidi $p |- ( th -> ( ph -> ch ) ) $=
+	e0 e1 f0 f1 f2 pbiimpd f3 f0 f1 f2 psylcom $.
+$}
+$( A mixed syllogism inference from a nested implication and a
+       biconditional.  Useful for substituting an embedded antecedent with a
+       definition.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( ch -> ( ps -> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psyl5bi $p |- ( ch -> ( ph -> th ) ) $=
+	e0 f0 f1 pbiimpi e1 f0 f1 f2 f3 psyl5 $.
+$}
+$( A mixed syllogism inference from a nested implication and a
+       biconditional.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ps <-> ph ) $.
+	e1 $e |- ( ch -> ( ps -> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psyl5bir $p |- ( ch -> ( ph -> th ) ) $=
+	e0 f1 f0 pbiimpri e1 f0 f1 f2 f3 psyl5 $.
+$}
+$( A mixed syllogism inference.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( ch -> ( ps <-> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psyl5ib $p |- ( ch -> ( ph -> th ) ) $=
+	e0 e1 f2 f1 f3 pbiimpd f0 f1 f2 f3 psyl5 $.
+$}
+$( A mixed syllogism inference.  (Contributed by NM, 19-Jun-2007.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( ch -> ( ps <-> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psyl5ibcom $p |- ( ph -> ( ch -> th ) ) $=
+	e0 e1 f0 f1 f2 f3 psyl5ib f2 f0 f3 pcom12 $.
+$}
+$( A mixed syllogism inference.  (Contributed by NM, 3-Apr-1994.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> th ) $.
+	e1 $e |- ( ch -> ( ps <-> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psyl5ibr $p |- ( ch -> ( ph -> ps ) ) $=
+	e0 e1 f2 f1 f3 pbicomd f0 f3 f2 f1 psyl5ib $.
+$}
+$( A mixed syllogism inference.  (Contributed by NM, 20-Jun-2007.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> th ) $.
+	e1 $e |- ( ch -> ( ps <-> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psyl5ibrcom $p |- ( ph -> ( ch -> ps ) ) $=
+	e0 e1 f0 f1 f2 f3 psyl5ibr f2 f0 f1 pcom12 $.
+$}
+$( Deduce a converse implication from a logical equivalence.  (Contributed
+       by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 22-Sep-2013.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbiimprd $p |- ( ph -> ( ch -> ps ) ) $=
+	f2 pid e0 f2 f1 f0 f2 psyl5ibr $.
+$}
+$( Deduce a commuted implication from a logical equivalence.  (Contributed
+       by NM, 3-May-1994.)  (Proof shortened by Wolf Lammen, 22-Sep-2013.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbiimpcd $p |- ( ps -> ( ph -> ch ) ) $=
+	f1 pid e0 f1 f1 f0 f2 psyl5ibcom $.
+$}
+$( Deduce a converse commuted implication from a logical equivalence.
+       (Contributed by NM, 3-May-1994.)  (Proof shortened by Wolf Lammen,
+       20-Dec-2013.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbiimprcd $p |- ( ch -> ( ph -> ps ) ) $=
+	f2 pid e0 f2 f1 f0 f2 psyl5ibrcom $.
+$}
+$( A mixed syllogism inference from a nested implication and a
+       biconditional.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1 $e |- ( ch <-> th ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psyl6ib $p |- ( ph -> ( ps -> th ) ) $=
+	e0 e1 f2 f3 pbiimpi f0 f1 f2 f3 psyl6 $.
+$}
+$( A mixed syllogism inference from a nested implication and a
+       biconditional.  Useful for substituting an embedded consequent with a
+       definition.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1 $e |- ( th <-> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psyl6ibr $p |- ( ph -> ( ps -> th ) ) $=
+	e0 e1 f3 f2 pbiimpri f0 f1 f2 f3 psyl6 $.
+$}
+$( A mixed syllogism inference.  (Contributed by NM, 2-Jan-1994.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ch -> th ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psyl6bi $p |- ( ph -> ( ps -> th ) ) $=
+	e0 f0 f1 f2 pbiimpd e1 f0 f1 f2 f3 psyl6 $.
+$}
+$( A mixed syllogism inference.  (Contributed by NM, 18-May-1994.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ch <-> ps ) ) $.
+	e1 $e |- ( ch -> th ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psyl6bir $p |- ( ph -> ( ps -> th ) ) $=
+	e0 f0 f2 f1 pbiimprd e1 f0 f1 f2 f3 psyl6 $.
+$}
+$( A mixed syllogism inference from a doubly nested implication and a
+       biconditional.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( ch -> ( th -> ( ps -> ta ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	psyl7bi $p |- ( ch -> ( th -> ( ph -> ta ) ) ) $=
+	e0 f0 f1 pbiimpi e1 f0 f1 f2 f3 f4 psyl7 $.
+$}
+$( A syllogism rule of inference.  The second premise is used to replace
+       the consequent of the first premise.  (Contributed by NM,
+       1-Aug-1994.) $)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps -> ( ch -> th ) ) ) $.
+	e1 $e |- ( th <-> ta ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	psyl8ib $p |- ( ph -> ( ps -> ( ch -> ta ) ) ) $=
+	e0 e1 f3 f4 pbiimpi f0 f1 f2 f3 f4 psyl8 $.
+$}
+$( A deduction from a biconditional, related to modus ponens.  (Contributed
+       by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ch ) $.
+	e1 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pmpbird $p |- ( ph -> ps ) $=
+	e0 e1 f0 f1 f2 pbiimprd f0 f2 f1 pmpd $.
+$}
+$( An inference from a nested biconditional, related to modus ponens.
+       (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
+       25-Oct-2012.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ch $.
+	e1 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pmpbiri $p |- ( ph -> ps ) $=
+	e0 f2 f0 pa1i e1 f0 f1 f2 pmpbird $.
+$}
+$( A syllogism deduction.  (Contributed by NM, 3-Aug-1994.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1 $e |- ( ph -> ( th <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psylibrd $p |- ( ph -> ( ps -> th ) ) $=
+	e0 e1 f0 f3 f2 pbiimprd f0 f1 f2 f3 psyld $.
+$}
+$( A syllogism deduction.  (Contributed by NM, 3-Aug-1994.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ch <-> ps ) ) $.
+	e1 $e |- ( ph -> ( ch -> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psylbird $p |- ( ph -> ( ps -> th ) ) $=
+	e0 f0 f2 f1 pbiimprd e1 f0 f1 f2 f3 psyld $.
+$}
+$( Principle of identity for logical equivalence.  Theorem *4.2 of
+     [WhiteheadRussell] p. 117.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph $.
+	f0 $f wff ph $.
+	pbiid $p |- ( ph <-> ph ) $=
+	f0 pid f0 pid f0 f0 pimpbii $.
+$}
+$( Principle of identity with antecedent.  (Contributed by NM,
+     25-Nov-1995.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pbiidd $p |- ( ph -> ( ps <-> ps ) ) $=
+	f1 pbiid f1 f1 awb f0 pa1i $.
+$}
+$( Two propositions are equivalent if they are both true.  Closed form of
+     ~ 2th .  Equivalent to a ~ bi1 -like version of the xor-connective.  This
+     theorem stays true, no matter how you permute its operands.  This is
+     evident from its sharper version
+     ` ( ph <-> ( ps <-> ( ph <-> ps ) ) ) ` .  (Contributed by Wolf Lammen,
+     12-May-2013.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm5.1im $p |- ( ph -> ( ps -> ( ph <-> ps ) ) ) $=
+	f1 f0 aax-1 f0 f1 aax-1 f0 f1 f0 f1 pimpbid21d $.
+$}
+$( Two truths are equivalent.  (Contributed by NM, 18-Aug-1993.) $)
+${
+	$v ph ps $.
+	e0 $e |- ph $.
+	e1 $e |- ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	p2th $p |- ( ph <-> ps ) $=
+	e1 f1 f0 pa1i e0 f0 f1 pa1i f0 f1 pimpbii $.
+$}
+$( Two truths are equivalent (deduction rule).  (Contributed by NM,
+       3-Jun-2012.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( ph -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	p2thd $p |- ( ph -> ( ps <-> ch ) ) $=
+	e0 e1 f1 f2 ppm5.1im f0 f1 f2 f1 f2 awb psylc $.
+$}
+$( Inference that converts a biconditional implied by one of its arguments,
+       into an implication.  (Contributed by NM, 17-Oct-2003.) $)
+${
+	$v ph ps $.
+	e0 $e |- ( ph -> ( ph <-> ps ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pibi $p |- ( ph -> ps ) $=
+	e0 f0 f0 f1 pbiimpd f0 f1 ppm2.43i $.
+$}
+$( Inference that converts a biconditional implied by one of its arguments,
+       into an implication.  (Contributed by NM, 22-Jul-2004.) $)
+${
+	$v ph ps $.
+	e0 $e |- ( ph -> ( ps <-> ph ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pibir $p |- ( ph -> ps ) $=
+	e0 f0 f1 f0 pbicomd f0 f1 pibi $.
+$}
+$( Deduction that converts a biconditional implied by one of its arguments,
+       into an implication.  (Contributed by NM, 26-Jun-2004.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps -> ( ps <-> ch ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pibd $p |- ( ph -> ( ps -> ch ) ) $=
+	e0 f1 f2 pbi1 f1 f0 f1 f2 awb f2 psyli $.
+$}
+$( Distribution of implication over biconditional.  Theorem *5.74 of
+     [WhiteheadRussell] p. 126.  (Contributed by NM, 1-Aug-1994.)  (Proof
+     shortened by Wolf Lammen, 11-Apr-2013.) $)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm5.74 $p |- ( ( ph -> ( ps <-> ch ) ) <-> ( ( ph -> ps ) <-> ( ph -> ch ) ) ) $=
+	f1 f2 pbi1 f1 f2 awb f1 f2 f0 pimim3i f1 f2 pbi2 f1 f2 awb f2 f1 f0 pimim3i f0 f1 f2 awb awi f0 f1 awi f0 f2 awi pimpbid f0 f1 awi f0 f2 awi pbi1 f0 f1 awi f0 f2 awi awb f0 f1 f2 ppm2.86d f0 f1 awi f0 f2 awi pbi2 f0 f1 awi f0 f2 awi awb f0 f2 f1 ppm2.86d f0 f1 awi f0 f2 awi awb f0 f1 f2 pimpbidd f0 f1 f2 awb awi f0 f1 awi f0 f2 awi awb pimpbii $.
+$}
+$( Distribution of implication over biconditional (inference rule).
+       (Contributed by NM, 1-Aug-1994.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm5.74i $p |- ( ( ph -> ps ) <-> ( ph -> ch ) ) $=
+	e0 f0 f1 f2 ppm5.74 f0 f1 f2 awb awi f0 f1 awi f0 f2 awi awb pmpbi $.
+$}
+$( Distribution of implication over biconditional (reverse inference
+       rule).  (Contributed by NM, 1-Aug-1994.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ( ph -> ps ) <-> ( ph -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm5.74ri $p |- ( ph -> ( ps <-> ch ) ) $=
+	e0 f0 f1 f2 ppm5.74 f0 f1 f2 awb awi f0 f1 awi f0 f2 awi awb pmpbir $.
+$}
+$( Distribution of implication over biconditional (deduction rule).
+       (Contributed by NM, 21-Mar-1996.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps -> ( ch <-> th ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	ppm5.74d $p |- ( ph -> ( ( ps -> ch ) <-> ( ps -> th ) ) ) $=
+	e0 f1 f2 f3 ppm5.74 f0 f1 f2 f3 awb awi f1 f2 awi f1 f3 awi awb psylib $.
+$}
+$( Distribution of implication over biconditional (deduction rule).
+       (Contributed by NM, 19-Mar-1997.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ( ps -> ch ) <-> ( ps -> th ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	ppm5.74rd $p |- ( ph -> ( ps -> ( ch <-> th ) ) ) $=
+	e0 f1 f2 f3 ppm5.74 f0 f1 f2 awi f1 f3 awi awb f1 f2 f3 awb awi psylibr $.
+$}
+$( An inference from transitive law for logical equivalence.  (Contributed
+       by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 13-Oct-2012.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( ps <-> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbitri $p |- ( ph <-> ch ) $=
+	e0 f0 f1 pbiimpi e1 f0 f1 f2 psylib e1 f1 f2 pbiimpri e0 f2 f1 f0 psylibr f0 f2 pimpbii $.
+$}
+$( An inference from transitive law for logical equivalence.  (Contributed
+       by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( ps <-> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbitr2i $p |- ( ch <-> ph ) $=
+	e0 e1 f0 f1 f2 pbitri f0 f2 pbicomi $.
+$}
+$( An inference from transitive law for logical equivalence.  (Contributed
+       by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ps <-> ph ) $.
+	e1 $e |- ( ps <-> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbitr3i $p |- ( ph <-> ch ) $=
+	e0 f1 f0 pbicomi e1 f0 f1 f2 pbitri $.
+$}
+$( An inference from transitive law for logical equivalence.  (Contributed
+       by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( ch <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbitr4i $p |- ( ph <-> ch ) $=
+	e0 e1 f2 f1 pbicomi f0 f1 f2 pbitri $.
+$}
+$( Register '<->' as an equality for its type (wff). $)
+$( $j
+    equality 'wb' from 'biid' 'bicomi' 'bitri';
+    definition 'dfbi1' for 'wb';
+  $)
+$( Deduction form of ~ bitri .  (Contributed by NM, 5-Aug-1993.)  (Proof
+       shortened by Wolf Lammen, 14-Apr-2013.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ph -> ( ch <-> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pbitrd $p |- ( ph -> ( ps <-> th ) ) $=
+	e0 f0 f1 f2 ppm5.74i e1 f0 f2 f3 ppm5.74i f0 f1 awi f0 f2 awi f0 f3 awi pbitri f0 f1 f3 ppm5.74ri $.
+$}
+$( Deduction form of ~ bitr2i .  (Contributed by NM, 9-Jun-2004.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ph -> ( ch <-> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pbitr2d $p |- ( ph -> ( th <-> ps ) ) $=
+	e0 e1 f0 f1 f2 f3 pbitrd f0 f1 f3 pbicomd $.
+$}
+$( Deduction form of ~ bitr3i .  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ph -> ( ps <-> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pbitr3d $p |- ( ph -> ( ch <-> th ) ) $=
+	e0 f0 f1 f2 pbicomd e1 f0 f2 f1 f3 pbitrd $.
+$}
+$( Deduction form of ~ bitr4i .  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ph -> ( th <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pbitr4d $p |- ( ph -> ( ps <-> th ) ) $=
+	e0 e1 f0 f3 f2 pbicomd f0 f1 f2 f3 pbitrd $.
+$}
+$( A syllogism inference from two biconditionals.  (Contributed by NM,
+       5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( ch -> ( ps <-> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psyl5bb $p |- ( ch -> ( ph <-> th ) ) $=
+	e0 f0 f1 awb f2 pa1i e1 f2 f0 f1 f3 pbitrd $.
+$}
+$( A syllogism inference from two biconditionals.  (Contributed by NM,
+       5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( ch -> ( ps <-> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psyl5rbb $p |- ( ch -> ( th <-> ph ) ) $=
+	e0 e1 f0 f1 f2 f3 psyl5bb f2 f0 f3 pbicomd $.
+$}
+$( A syllogism inference from two biconditionals.  (Contributed by NM,
+       5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ps <-> ph ) $.
+	e1 $e |- ( ch -> ( ps <-> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psyl5bbr $p |- ( ch -> ( ph <-> th ) ) $=
+	e0 f1 f0 pbicomi e1 f0 f1 f2 f3 psyl5bb $.
+$}
+$( A syllogism inference from two biconditionals.  (Contributed by NM,
+       25-Nov-1994.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ps <-> ph ) $.
+	e1 $e |- ( ch -> ( ps <-> th ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psyl5rbbr $p |- ( ch -> ( th <-> ph ) ) $=
+	e0 f1 f0 pbicomi e1 f0 f1 f2 f3 psyl5rbb $.
+$}
+$( A syllogism inference from two biconditionals.  (Contributed by NM,
+       5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ch <-> th ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psyl6bb $p |- ( ph -> ( ps <-> th ) ) $=
+	e0 e1 f2 f3 awb f0 pa1i f0 f1 f2 f3 pbitrd $.
+$}
+$( A syllogism inference from two biconditionals.  (Contributed by NM,
+       5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ch <-> th ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psyl6rbb $p |- ( ph -> ( th <-> ps ) ) $=
+	e0 e1 f0 f1 f2 f3 psyl6bb f0 f1 f3 pbicomd $.
+$}
+$( A syllogism inference from two biconditionals.  (Contributed by NM,
+       5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( th <-> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psyl6bbr $p |- ( ph -> ( ps <-> th ) ) $=
+	e0 e1 f3 f2 pbicomi f0 f1 f2 f3 psyl6bb $.
+$}
+$( A syllogism inference from two biconditionals.  (Contributed by NM,
+       25-Nov-1994.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( th <-> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	psyl6rbbr $p |- ( ph -> ( th <-> ps ) ) $=
+	e0 e1 f3 f2 pbicomi f0 f1 f2 f3 psyl6rbb $.
+$}
+$( A mixed syllogism inference, useful for removing a definition from both
+       sides of an implication.  (Contributed by NM, 10-Aug-1994.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( ph <-> ch ) $.
+	e2 $e |- ( ps <-> th ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	p3imtr3i $p |- ( ch -> th ) $=
+	e1 e0 f2 f0 f1 psylbir e2 f2 f1 f3 psylib $.
+$}
+$( A mixed syllogism inference, useful for applying a definition to both
+       sides of an implication.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( ch <-> ph ) $.
+	e2 $e |- ( th <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	p3imtr4i $p |- ( ch -> th ) $=
+	e1 e0 f2 f0 f1 psylbi e2 f2 f1 f3 psylibr $.
+$}
+$( More general version of ~ 3imtr3i .  Useful for converting conditional
+       definitions in a formula.  (Contributed by NM, 8-Apr-1996.) $)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1 $e |- ( ph -> ( ps <-> th ) ) $.
+	e2 $e |- ( ph -> ( ch <-> ta ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	p3imtr3d $p |- ( ph -> ( th -> ta ) ) $=
+	e1 e0 e2 f0 f1 f2 f4 psylibd f0 f3 f1 f4 psylbird $.
+$}
+$( More general version of ~ 3imtr4i .  Useful for converting conditional
+       definitions in a formula.  (Contributed by NM, 26-Oct-1995.) $)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1 $e |- ( ph -> ( th <-> ps ) ) $.
+	e2 $e |- ( ph -> ( ta <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	p3imtr4d $p |- ( ph -> ( th -> ta ) ) $=
+	e1 e0 e2 f0 f1 f2 f4 psylibrd f0 f3 f1 f4 psylbid $.
+$}
+$( More general version of ~ 3imtr3i .  Useful for converting definitions
+       in a formula.  (Contributed by NM, 20-May-1996.)  (Proof shortened by
+       Wolf Lammen, 20-Dec-2013.) $)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1 $e |- ( ps <-> th ) $.
+	e2 $e |- ( ch <-> ta ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	p3imtr3g $p |- ( ph -> ( th -> ta ) ) $=
+	e1 e0 f3 f1 f0 f2 psyl5bir e2 f0 f3 f2 f4 psyl6ib $.
+$}
+$( More general version of ~ 3imtr4i .  Useful for converting definitions
+       in a formula.  (Contributed by NM, 20-May-1996.)  (Proof shortened by
+       Wolf Lammen, 20-Dec-2013.) $)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1 $e |- ( th <-> ps ) $.
+	e2 $e |- ( ta <-> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	p3imtr4g $p |- ( ph -> ( th -> ta ) ) $=
+	e1 e0 f3 f1 f0 f2 psyl5bi e2 f0 f3 f2 f4 psyl6ibr $.
+$}
+$( A chained inference from transitive law for logical equivalence.
+       (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( ps <-> ch ) $.
+	e2 $e |- ( ch <-> th ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	p3bitri $p |- ( ph <-> th ) $=
+	e0 e1 e2 f1 f2 f3 pbitri f0 f1 f3 pbitri $.
+$}
+$( A chained inference from transitive law for logical equivalence.
+       (Contributed by NM, 4-Aug-2006.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( ps <-> ch ) $.
+	e2 $e |- ( ch <-> th ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	p3bitrri $p |- ( th <-> ph ) $=
+	e2 e0 e1 f0 f1 f2 pbitr2i f3 f2 f0 pbitr3i $.
+$}
+$( A chained inference from transitive law for logical equivalence.
+       (Contributed by NM, 4-Aug-2006.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( ch <-> ps ) $.
+	e2 $e |- ( ch <-> th ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	p3bitr2i $p |- ( ph <-> th ) $=
+	e0 e1 f0 f1 f2 pbitr4i e2 f0 f2 f3 pbitri $.
+$}
+$( A chained inference from transitive law for logical equivalence.
+       (Contributed by NM, 4-Aug-2006.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( ch <-> ps ) $.
+	e2 $e |- ( ch <-> th ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	p3bitr2ri $p |- ( th <-> ph ) $=
+	e0 e1 f0 f1 f2 pbitr4i e2 f0 f2 f3 pbitr2i $.
+$}
+$( A chained inference from transitive law for logical equivalence.
+       (Contributed by NM, 19-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( ph <-> ch ) $.
+	e2 $e |- ( ps <-> th ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	p3bitr3i $p |- ( ch <-> th ) $=
+	e1 e0 f2 f0 f1 pbitr3i e2 f2 f1 f3 pbitri $.
+$}
+$( A chained inference from transitive law for logical equivalence.
+       (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( ph <-> ch ) $.
+	e2 $e |- ( ps <-> th ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	p3bitr3ri $p |- ( th <-> ch ) $=
+	e2 e0 e1 f1 f0 f2 pbitr3i f3 f1 f2 pbitr3i $.
+$}
+$( A chained inference from transitive law for logical equivalence.  This
+       inference is frequently used to apply a definition to both sides of a
+       logical equivalence.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( ch <-> ph ) $.
+	e2 $e |- ( th <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	p3bitr4i $p |- ( ch <-> th ) $=
+	e1 e0 e2 f0 f1 f3 pbitr4i f2 f0 f3 pbitri $.
+$}
+$( A chained inference from transitive law for logical equivalence.
+       (Contributed by NM, 2-Sep-1995.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( ch <-> ph ) $.
+	e2 $e |- ( th <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	p3bitr4ri $p |- ( th <-> ch ) $=
+	e1 e0 e2 f0 f1 f3 pbitr4i f2 f0 f3 pbitr2i $.
+$}
+$( Deduction from transitivity of biconditional.  (Contributed by NM,
+       13-Aug-1999.) $)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ph -> ( ch <-> th ) ) $.
+	e2 $e |- ( ph -> ( th <-> ta ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	p3bitrd $p |- ( ph -> ( ps <-> ta ) ) $=
+	e0 e1 f0 f1 f2 f3 pbitrd e2 f0 f1 f3 f4 pbitrd $.
+$}
+$( Deduction from transitivity of biconditional.  (Contributed by NM,
+       4-Aug-2006.) $)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ph -> ( ch <-> th ) ) $.
+	e2 $e |- ( ph -> ( th <-> ta ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	p3bitrrd $p |- ( ph -> ( ta <-> ps ) ) $=
+	e2 e0 e1 f0 f1 f2 f3 pbitr2d f0 f3 f4 f1 pbitr3d $.
+$}
+$( Deduction from transitivity of biconditional.  (Contributed by NM,
+       4-Aug-2006.) $)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ph -> ( th <-> ch ) ) $.
+	e2 $e |- ( ph -> ( th <-> ta ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	p3bitr2d $p |- ( ph -> ( ps <-> ta ) ) $=
+	e0 e1 f0 f1 f2 f3 pbitr4d e2 f0 f1 f3 f4 pbitrd $.
+$}
+$( Deduction from transitivity of biconditional.  (Contributed by NM,
+       4-Aug-2006.) $)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ph -> ( th <-> ch ) ) $.
+	e2 $e |- ( ph -> ( th <-> ta ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	p3bitr2rd $p |- ( ph -> ( ta <-> ps ) ) $=
+	e0 e1 f0 f1 f2 f3 pbitr4d e2 f0 f1 f3 f4 pbitr2d $.
+$}
+$( Deduction from transitivity of biconditional.  Useful for converting
+       conditional definitions in a formula.  (Contributed by NM,
+       24-Apr-1996.) $)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ph -> ( ps <-> th ) ) $.
+	e2 $e |- ( ph -> ( ch <-> ta ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	p3bitr3d $p |- ( ph -> ( th <-> ta ) ) $=
+	e1 e0 f0 f1 f3 f2 pbitr3d e2 f0 f3 f2 f4 pbitrd $.
+$}
+$( Deduction from transitivity of biconditional.  (Contributed by NM,
+       4-Aug-2006.) $)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ph -> ( ps <-> th ) ) $.
+	e2 $e |- ( ph -> ( ch <-> ta ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	p3bitr3rd $p |- ( ph -> ( ta <-> th ) ) $=
+	e2 e0 e1 f0 f1 f2 f3 pbitr3d f0 f2 f4 f3 pbitr3d $.
+$}
+$( Deduction from transitivity of biconditional.  Useful for converting
+       conditional definitions in a formula.  (Contributed by NM,
+       18-Oct-1995.) $)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ph -> ( th <-> ps ) ) $.
+	e2 $e |- ( ph -> ( ta <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	p3bitr4d $p |- ( ph -> ( th <-> ta ) ) $=
+	e1 e0 e2 f0 f1 f2 f4 pbitr4d f0 f3 f1 f4 pbitrd $.
+$}
+$( Deduction from transitivity of biconditional.  (Contributed by NM,
+       4-Aug-2006.) $)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ph -> ( th <-> ps ) ) $.
+	e2 $e |- ( ph -> ( ta <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	p3bitr4rd $p |- ( ph -> ( ta <-> th ) ) $=
+	e2 e0 f0 f4 f2 f1 pbitr4d e1 f0 f4 f1 f3 pbitr4d $.
+$}
+$( More general version of ~ 3bitr3i .  Useful for converting definitions
+       in a formula.  (Contributed by NM, 4-Jun-1995.) $)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ps <-> th ) $.
+	e2 $e |- ( ch <-> ta ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	p3bitr3g $p |- ( ph -> ( th <-> ta ) ) $=
+	e1 e0 f3 f1 f0 f2 psyl5bbr e2 f0 f3 f2 f4 psyl6bb $.
+$}
+$( More general version of ~ 3bitr4i .  Useful for converting definitions
+       in a formula.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( th <-> ps ) $.
+	e2 $e |- ( ta <-> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	p3bitr4g $p |- ( ph -> ( th <-> ta ) ) $=
+	e1 e0 f3 f1 f0 f2 psyl5bb e2 f0 f3 f2 f4 psyl6bbr $.
+$}
+$( Construct a bi-conditional in antecedent position.  (Contributed by Wolf
+       Lammen, 14-May-2013.) $)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	pbi3ant $p |- ( ( ( th -> ta ) -> ph ) -> ( ( ( ta -> th ) -> ps ) -> ( ( th <-> ta ) -> ch ) ) ) $=
+	f3 f4 pbi1 f3 f4 awb f3 f4 awi f0 pimim1i f3 f4 pbi2 f3 f4 awb f4 f3 awi f1 pimim1i e0 f0 f1 f2 f3 f4 awb pimim3i f3 f4 awi f0 awi f3 f4 awb f0 awi f4 f3 awi f1 awi f3 f4 awb f1 awi f3 f4 awb f2 awi psyl2im $.
+$}
+$( Express symmetries of theorems in terms of biconditionals.  (Contributed
+     by Wolf Lammen, 14-May-2013.) $)
+${
+	$v ph ps ch th $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pbisym $p |- ( ( ( ph -> ps ) -> ( ch -> th ) ) -> ( ( ( ps -> ph ) -> ( th -> ch ) ) -> ( ( ph <-> ps ) -> ( ch <-> th ) ) ) ) $=
+	f2 f3 pbi3 f2 f3 awi f3 f2 awi f2 f3 awb f0 f1 pbi3ant $.
+$}
+$( Double negation.  Theorem *4.13 of [WhiteheadRussell] p. 117.
+     (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph $.
+	f0 $f wff ph $.
+	pnotnot $p |- ( ph <-> -. -. ph ) $=
+	f0 pnotnot1 f0 pnotnot2 f0 f0 awn awn pimpbii $.
+$}
+$( Contraposition.  Theorem *4.1 of [WhiteheadRussell] p. 116.  (Contributed
+     by NM, 5-Aug-1993.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pcon34b $p |- ( ( ph -> ps ) <-> ( -. ps -> -. ph ) ) $=
+	f0 f1 pcon3 f1 f0 aax-3 f0 f1 awi f1 awn f0 awn awi pimpbii $.
+$}
+$( A contraposition deduction.  (Contributed by NM, 21-May-1994.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( -. ps <-> -. ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pcon4bid $p |- ( ph -> ( ps <-> ch ) ) $=
+	e0 f0 f1 awn f2 awn pbiimprd f0 f2 f1 pcon4d e0 f0 f1 awn f2 awn pbiimpd f0 f1 f2 pimpcon4bid $.
+$}
+$( Deduction negating both sides of a logical equivalence.  (Contributed by
+       NM, 21-May-1994.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pnotbid $p |- ( ph -> ( -. ps <-> -. ch ) ) $=
+	e0 f1 pnotnot f2 pnotnot f0 f1 f2 f1 awn awn f2 awn awn p3bitr3g f0 f1 awn f2 awn pcon4bid $.
+$}
+$( Contraposition.  Theorem *4.11 of [WhiteheadRussell] p. 117.  (Contributed
+     by NM, 21-May-1994.)  (Proof shortened by Wolf Lammen, 12-Jun-2013.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pnotbi $p |- ( ( ph <-> ps ) <-> ( -. ph <-> -. ps ) ) $=
+	f0 f1 awb pid f0 f1 awb f0 f1 pnotbid f0 awn f1 awn awb pid f0 awn f1 awn awb f0 f1 pcon4bid f0 f1 awb f0 awn f1 awn awb pimpbii $.
+$}
+$( Negate both sides of a logical equivalence.  (Contributed by NM,
+       5-Aug-1993.)  (Proof shortened by Wolf Lammen, 19-May-2013.) $)
+${
+	$v ph ps $.
+	e0 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pnotbii $p |- ( -. ph <-> -. ps ) $=
+	e0 f0 f1 pnotbi f0 f1 awb f0 awn f1 awn awb pmpbi $.
+$}
+$( Theorem notbii is the congruence law for negation. $)
+$( $j congruence 'notbii'; $)
+$( A contraposition inference.  (Contributed by NM, 21-May-1994.) $)
+${
+	$v ph ps $.
+	e0 $e |- ( -. ph <-> -. ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pcon4bii $p |- ( ph <-> ps ) $=
+	e0 f0 f1 pnotbi f0 f1 awb f0 awn f1 awn awb pmpbir $.
+$}
+$( An inference from a biconditional, related to modus tollens.
+       (Contributed by NM, 15-Nov-1994.)  (Proof shortened by Wolf Lammen,
+       25-Oct-2012.) $)
+${
+	$v ph ps $.
+	e0 $e |- -. ph $.
+	e1 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pmtbi $p |- -. ps $=
+	e0 e1 f0 f1 pbiimpri f1 f0 pmto $.
+$}
+$( An inference from a biconditional, related to modus tollens.
+       (Contributed by NM, 15-Nov-1994.)  (Proof shortened by Wolf Lammen,
+       14-Oct-2012.) $)
+${
+	$v ph ps $.
+	e0 $e |- -. ps $.
+	e1 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pmtbir $p |- -. ph $=
+	e0 e1 f0 f1 pbicomi f1 f0 pmtbi $.
+$}
+$( A deduction from a biconditional, similar to modus tollens.
+       (Contributed by NM, 26-Nov-1995.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> -. ps ) $.
+	e1 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pmtbid $p |- ( ph -> -. ch ) $=
+	e0 e1 f0 f1 f2 pbiimprd f0 f2 f1 pmtod $.
+$}
+$( A deduction from a biconditional, similar to modus tollens.
+       (Contributed by NM, 10-May-1994.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> -. ch ) $.
+	e1 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pmtbird $p |- ( ph -> -. ps ) $=
+	e0 e1 f0 f1 f2 pbiimpd f0 f1 f2 pmtod $.
+$}
+$( An inference from a biconditional, similar to modus tollens.
+       (Contributed by NM, 27-Nov-1995.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- -. ps $.
+	e1 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pmtbii $p |- ( ph -> -. ch ) $=
+	e0 e1 f0 f1 f2 pbiimprd f0 f2 f1 pmtoi $.
+$}
+$( An inference from a biconditional, similar to modus tollens.
+       (Contributed by NM, 24-Aug-1995.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- -. ch $.
+	e1 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pmtbiri $p |- ( ph -> -. ps ) $=
+	e0 e1 f0 f1 f2 pbiimpd f0 f1 f2 pmtoi $.
+$}
+$( A mixed syllogism inference from an implication and a biconditional.
+       (Contributed by Wolf Lammen, 16-Dec-2013.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> -. ps ) $.
+	e1 $e |- ( ps <-> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	psylnib $p |- ( ph -> -. ch ) $=
+	e0 e1 f1 f2 awb f0 pa1i f0 f1 f2 pmtbid $.
+$}
+$( A mixed syllogism inference from an implication and a biconditional.
+       Useful for substituting a consequent with a definition.  (Contributed by
+       Wolf Lammen, 16-Dec-2013.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> -. ps ) $.
+	e1 $e |- ( ch <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	psylnibr $p |- ( ph -> -. ch ) $=
+	e0 e1 f2 f1 pbicomi f0 f1 f2 psylnib $.
+$}
+$( A mixed syllogism inference from a biconditional and an implication.
+       Useful for substituting an antecedent with a definition.  (Contributed
+       by Wolf Lammen, 16-Dec-2013.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( -. ps -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	psylnbi $p |- ( -. ph -> ch ) $=
+	e0 f0 f1 pnotbii e1 f0 awn f1 awn f2 psylbi $.
+$}
+$( A mixed syllogism inference from a biconditional and an implication.
+       (Contributed by Wolf Lammen, 16-Dec-2013.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ps <-> ph ) $.
+	e1 $e |- ( -. ps -> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	psylnbir $p |- ( -. ph -> ch ) $=
+	e0 f1 f0 pbicomi e1 f0 f1 f2 psylnbi $.
+$}
+$( Replacement of a subexpression by an equivalent one.  (Contributed by
+       Wolf Lammen, 27-Sep-2014.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( -. ph <-> ps ) $.
+	e1 $e |- ( ph <-> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pxchnxbi $p |- ( -. ch <-> ps ) $=
+	e1 f0 f2 pnotbii e0 f2 awn f0 awn f1 pbitr3i $.
+$}
+$( Replacement of a subexpression by an equivalent one.  (Contributed by
+       Wolf Lammen, 27-Sep-2014.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( -. ph <-> ps ) $.
+	e1 $e |- ( ch <-> ph ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pxchnxbir $p |- ( -. ch <-> ps ) $=
+	e0 e1 f2 f0 pbicomi f0 f1 f2 pxchnxbi $.
+$}
+$( Replacement of a subexpression by an equivalent one.  (Contributed by
+       Wolf Lammen, 27-Sep-2014.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph <-> -. ps ) $.
+	e1 $e |- ( ps <-> ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pxchbinx $p |- ( ph <-> -. ch ) $=
+	e0 e1 f1 f2 pnotbii f0 f1 awn f2 awn pbitri $.
+$}
+$( Replacement of a subexpression by an equivalent one.  (Contributed by
+       Wolf Lammen, 27-Sep-2014.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph <-> -. ps ) $.
+	e1 $e |- ( ch <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pxchbinxr $p |- ( ph <-> -. ch ) $=
+	e0 e1 f2 f1 pbicomi f0 f1 f2 pxchbinx $.
+$}
+$( The next three rules are useful for building up wff's around a
+     definition, in order to make use of the definition. $)
+$( Introduce an antecedent to both sides of a logical equivalence.
+       (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
+       6-Feb-2013.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pimbi2i $p |- ( ( ch -> ph ) <-> ( ch -> ps ) ) $=
+	e0 f0 f1 awb f2 pa1i f2 f0 f1 ppm5.74i $.
+$}
+$( Inference adding a biconditional to the left in an equivalence.
+       (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
+       7-May-2011.)  (Proof shortened by Wolf Lammen, 16-May-2013.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbibi2i $p |- ( ( ch <-> ph ) <-> ( ch <-> ps ) ) $=
+	f2 f0 awb pid e0 f2 f0 awb f2 f0 f1 psyl6bb f2 f1 awb pid e0 f2 f1 awb f2 f1 f0 psyl6bbr f2 f0 awb f2 f1 awb pimpbii $.
+$}
+$( Inference adding a biconditional to the right in an equivalence.
+       (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbibi1i $p |- ( ( ph <-> ch ) <-> ( ps <-> ch ) ) $=
+	f0 f2 pbicom e0 f0 f1 f2 pbibi2i f2 f1 pbicom f0 f2 awb f2 f0 awb f2 f1 awb f1 f2 awb p3bitri $.
+$}
+$( The equivalence of two equivalences.  (Contributed by NM,
+         5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( ch <-> th ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pbibi12i $p |- ( ( ph <-> ch ) <-> ( ps <-> th ) ) $=
+	e1 f2 f3 f0 pbibi2i e0 f0 f1 f3 pbibi1i f0 f2 awb f0 f3 awb f1 f3 awb pbitri $.
+$}
+$( Deduction adding an antecedent to both sides of a logical equivalence.
+       (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pimbi2d $p |- ( ph -> ( ( th -> ps ) <-> ( th -> ch ) ) ) $=
+	e0 f0 f1 f2 awb f3 pa1d f0 f3 f1 f2 ppm5.74d $.
+$}
+$( Deduction adding a consequent to both sides of a logical equivalence.
+       (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
+       17-Sep-2013.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pimbi1d $p |- ( ph -> ( ( ps -> th ) <-> ( ch -> th ) ) ) $=
+	e0 f0 f1 f2 pbiimprd f0 f2 f1 f3 pimim1d e0 f0 f1 f2 pbiimpd f0 f1 f2 f3 pimim1d f0 f1 f3 awi f2 f3 awi pimpbid $.
+$}
+$( Deduction adding a biconditional to the left in an equivalence.
+       (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
+       19-May-2013.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pbibi2d $p |- ( ph -> ( ( th <-> ps ) <-> ( th <-> ch ) ) ) $=
+	e0 f0 f1 f2 ppm5.74i f0 f1 awi f0 f2 awi f0 f3 awi pbibi2i f0 f3 f1 ppm5.74 f0 f3 f2 ppm5.74 f0 f3 awi f0 f1 awi awb f0 f3 awi f0 f2 awi awb f0 f3 f1 awb awi f0 f3 f2 awb awi p3bitr4i f0 f3 f1 awb f3 f2 awb ppm5.74ri $.
+$}
+$( Deduction adding a biconditional to the right in an equivalence.
+       (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pbibi1d $p |- ( ph -> ( ( ps <-> th ) <-> ( ch <-> th ) ) ) $=
+	e0 f0 f1 f2 f3 pbibi2d f1 f3 pbicom f2 f3 pbicom f0 f3 f1 awb f3 f2 awb f1 f3 awb f2 f3 awb p3bitr4g $.
+$}
+$( Deduction joining two equivalences to form equivalence of implications.
+       (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ph -> ( th <-> ta ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	pimbi12d $p |- ( ph -> ( ( ps -> th ) <-> ( ch -> ta ) ) ) $=
+	e0 f0 f1 f2 f3 pimbi1d e1 f0 f3 f4 f2 pimbi2d f0 f1 f3 awi f2 f3 awi f2 f4 awi pbitrd $.
+$}
+$( Deduction joining two equivalences to form equivalence of
+       biconditionals.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch th ta $.
+	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
+	e1 $e |- ( ph -> ( th <-> ta ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	f4 $f wff ta $.
+	pbibi12d $p |- ( ph -> ( ( ps <-> th ) <-> ( ch <-> ta ) ) ) $=
+	e0 f0 f1 f2 f3 pbibi1d e1 f0 f3 f4 f2 pbibi2d f0 f1 f3 awb f2 f3 awb f2 f4 awb pbitrd $.
+$}
+$( Theorem *4.84 of [WhiteheadRussell] p. 122.  (Contributed by NM,
+     3-Jan-2005.) $)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pimbi1 $p |- ( ( ph <-> ps ) -> ( ( ph -> ch ) <-> ( ps -> ch ) ) ) $=
+	f0 f1 awb pid f0 f1 awb f0 f1 f2 pimbi1d $.
+$}
+$( Theorem *4.85 of [WhiteheadRussell] p. 122.  (Contributed by NM,
+     3-Jan-2005.)  (Proof shortened by Wolf Lammen, 19-May-2013.) $)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pimbi2 $p |- ( ( ph <-> ps ) -> ( ( ch -> ph ) <-> ( ch -> ps ) ) ) $=
+	f0 f1 awb pid f0 f1 awb f0 f1 f2 pimbi2d $.
+$}
+$( Introduce a consequent to both sides of a logical equivalence.
+       (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
+       17-Sep-2013.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pimbi1i $p |- ( ( ph -> ch ) <-> ( ps -> ch ) ) $=
+	e0 f0 f1 f2 pimbi1 f0 f1 awb f0 f2 awi f1 f2 awi awb aax-mp $.
+$}
+$( Join two logical equivalences to form equivalence of implications.
+       (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph <-> ps ) $.
+	e1 $e |- ( ch <-> th ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pimbi12i $p |- ( ( ph -> ch ) <-> ( ps -> th ) ) $=
+	e1 f2 f3 f0 pimbi2i e0 f0 f1 f3 pimbi1i f0 f2 awi f0 f3 awi f1 f3 awi pbitri $.
+$}
+$( Theorem imbi12i is the congruence law for implication. $)
+$( $j congruence 'imbi12i'; $)
+$( Theorem *4.86 of [WhiteheadRussell] p. 122.  (Contributed by NM,
+     3-Jan-2005.) $)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbibi1 $p |- ( ( ph <-> ps ) -> ( ( ph <-> ch ) <-> ( ps <-> ch ) ) ) $=
+	f0 f1 awb pid f0 f1 awb f0 f1 f2 pbibi1d $.
+$}
+$( Contraposition.  Theorem *4.12 of [WhiteheadRussell] p. 117.  (Contributed
+     by NM, 15-Apr-1995.)  (Proof shortened by Wolf Lammen, 3-Jan-2013.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pcon2bi $p |- ( ( ph <-> -. ps ) <-> ( ps <-> -. ph ) ) $=
+	f0 f1 awn pnotbi f1 pnotnot f1 f1 awn awn f0 awn pbibi2i f0 awn f1 pbicom f0 f1 awn awb f0 awn f1 awn awn awb f0 awn f1 awb f1 f0 awn awb p3bitr2i $.
+$}
+$( A contraposition deduction.  (Contributed by NM, 15-Apr-1995.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps <-> -. ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pcon2bid $p |- ( ph -> ( ch <-> -. ps ) ) $=
+	e0 f2 f1 pcon2bi f0 f1 f2 awn awb f2 f1 awn awb psylibr $.
+$}
+$( A contraposition deduction.  (Contributed by NM, 9-Oct-1999.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( -. ps <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pcon1bid $p |- ( ph -> ( -. ch <-> ps ) ) $=
+	e0 f0 f1 awn f2 pbicomd f0 f2 f1 pcon2bid f0 f1 f2 awn pbicomd $.
+$}
+$( A contraposition inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
+       shortened by Wolf Lammen, 13-Oct-2012.) $)
+${
+	$v ph ps $.
+	e0 $e |- ( -. ph <-> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pcon1bii $p |- ( -. ps <-> ph ) $=
+	f0 pnotnot e0 f0 f0 awn f1 pxchbinx f0 f1 awn pbicomi $.
+$}
+$( A contraposition inference.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps $.
+	e0 $e |- ( ph <-> -. ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pcon2bii $p |- ( ps <-> -. ph ) $=
+	e0 f0 f1 awn pbicomi f1 f0 pcon1bii f0 awn f1 pbicomi $.
+$}
+$( Contraposition.  Bidirectional version of ~ con1 .  (Contributed by NM,
+     5-Aug-1993.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pcon1b $p |- ( ( -. ph -> ps ) <-> ( -. ps -> ph ) ) $=
+	f0 f1 pcon1 f1 f0 pcon1 f0 awn f1 awi f1 awn f0 awi pimpbii $.
+$}
+$( Contraposition.  Bidirectional version of ~ con2 .  (Contributed by NM,
+     5-Aug-1993.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pcon2b $p |- ( ( ph -> -. ps ) <-> ( ps -> -. ph ) ) $=
+	f0 f1 pcon2 f1 f0 pcon2 f0 f1 awn awi f1 f0 awn awi pimpbii $.
+$}
+$( A wff is equivalent to itself with true antecedent.  (Contributed by NM,
+     28-Jan-1996.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pbiimt $p |- ( ph -> ( ps <-> ( ph -> ps ) ) ) $=
+	f1 f0 aax-1 f0 f1 ppm2.27 f0 f1 f0 f1 awi pimpbid2 $.
+$}
+$( Theorem *5.5 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+     3-Jan-2005.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm5.5 $p |- ( ph -> ( ( ph -> ps ) <-> ps ) ) $=
+	f0 f1 pbiimt f0 f1 f0 f1 awi pbicomd $.
+$}
+$( Inference rule introducing a theorem as an antecedent.  (Contributed by
+       NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 11-Nov-2012.) $)
+${
+	$v ph ps $.
+	e0 $e |- ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pa1bi $p |- ( ps <-> ( ph -> ps ) ) $=
+	e0 f0 f1 pbiimt f0 f1 f0 f1 awi awb aax-mp $.
+$}
+$( A false consequent falsifies an antecedent.  (Contributed by NM,
+       19-Aug-1993.)  (Proof shortened by Wolf Lammen, 12-Nov-2012.) $)
+${
+	$v ph ps $.
+	e0 $e |- ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pmt2bi $p |- ( -. ps <-> ( ps -> -. ph ) ) $=
+	e0 f0 f1 awn pa1bi f0 f1 pcon2b f1 awn f0 f1 awn awi f1 f0 awn awi pbitri $.
+$}
+$( Modus-tollens-like theorem.  (Contributed by NM, 7-Apr-2001.)  (Proof
+     shortened by Wolf Lammen, 12-Nov-2012.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pmtt $p |- ( -. ph -> ( -. ps <-> ( ps -> ph ) ) ) $=
+	f0 awn f1 awn pbiimt f1 f0 pcon34b f0 awn f1 awn f0 awn f1 awn awi f1 f0 awi psyl6bbr $.
+$}
+$( Theorem *5.501 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+     3-Jan-2005.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm5.501 $p |- ( ph -> ( ps <-> ( ph <-> ps ) ) ) $=
+	f0 f1 ppm5.1im f0 f1 pbi1 f0 f1 awb f0 f1 pcom12 f0 f1 f0 f1 awb pimpbid $.
+$}
+$( Implication in terms of implication and biconditional.  (Contributed by
+     NM, 31-Mar-1994.)  (Proof shortened by Wolf Lammen, 24-Jan-2013.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pibib $p |- ( ( ph -> ps ) <-> ( ph -> ( ph <-> ps ) ) ) $=
+	f0 f1 ppm5.501 f0 f1 f0 f1 awb ppm5.74i $.
+$}
+$( Implication in terms of implication and biconditional.  (Contributed by
+     NM, 29-Apr-2005.)  (Proof shortened by Wolf Lammen, 21-Dec-2013.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pibibr $p |- ( ( ph -> ps ) <-> ( ph -> ( ps <-> ph ) ) ) $=
+	f0 f1 ppm5.501 f0 f1 pbicom f0 f1 f0 f1 awb f1 f0 awb psyl6bb f0 f1 f1 f0 awb ppm5.74i $.
+$}
+$( A wff is equivalent to its equivalence with truth.  (Contributed by NM,
+       18-Aug-1993.)  (Proof shortened by Andrew Salmon, 13-May-2011.) $)
+${
+	$v ph ps $.
+	e0 $e |- ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ptbt $p |- ( ps <-> ( ps <-> ph ) ) $=
+	e0 f0 f1 pibibr f0 f1 f1 f0 awb ppm5.74ri f0 f1 f1 f0 awb awb aax-mp $.
+$}
+$( The negation of a wff is equivalent to the wff's equivalence to
+     falsehood.  (Contributed by Juha Arpiainen, 19-Jan-2006.)  (Proof
+     shortened by Wolf Lammen, 28-Jan-2013.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pnbn2 $p |- ( -. ph -> ( -. ps <-> ( ph <-> ps ) ) ) $=
+	f0 awn f1 awn ppm5.501 f0 f1 pnotbi f0 awn f1 awn f0 awn f1 awn awb f0 f1 awb psyl6bbr $.
+$}
+$( Transfer negation via an equivalence.  (Contributed by NM, 3-Oct-2007.)
+     (Proof shortened by Wolf Lammen, 28-Jan-2013.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pbibif $p |- ( -. ps -> ( ( ph <-> ps ) <-> -. ph ) ) $=
+	f1 f0 pnbn2 f1 f0 pbicom f1 awn f0 awn f1 f0 awb f0 f1 awb psyl6rbb $.
+$}
+$( The negation of a wff is equivalent to the wff's equivalence to
+       falsehood.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
+       Lammen, 3-Oct-2013.) $)
+${
+	$v ph ps $.
+	e0 $e |- -. ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pnbn $p |- ( -. ps <-> ( ps <-> ph ) ) $=
+	e0 f1 f0 pbibif f0 awn f1 f0 awb f1 awn awb aax-mp f1 f0 awb f1 awn pbicomi $.
+$}
+$( Transfer falsehood via equivalence.  (Contributed by NM,
+       11-Sep-2006.) $)
+${
+	$v ph ps $.
+	e0 $e |- ph $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pnbn3 $p |- ( -. ps <-> ( ps <-> -. ph ) ) $=
+	e0 f0 pnotnoti f0 awn f1 pnbn $.
+$}
+$( Two propositions are equivalent if they are both false.  Closed form of
+     ~ 2false .  Equivalent to a ~ bi2 -like version of the xor-connective.
+     (Contributed by Wolf Lammen, 13-May-2013.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm5.21im $p |- ( -. ph -> ( -. ps -> ( ph <-> ps ) ) ) $=
+	f0 f1 pnbn2 f0 awn f1 awn f0 f1 awb pbiimpd $.
+$}
+$( Two falsehoods are equivalent.  (Contributed by NM, 4-Apr-2005.)  (Proof
+       shortened by Wolf Lammen, 19-May-2013.) $)
+${
+	$v ph ps $.
+	e0 $e |- -. ph $.
+	e1 $e |- -. ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	p2false $p |- ( ph <-> ps ) $=
+	e0 e1 f0 awn f1 awn p2th f0 f1 pcon4bii $.
+$}
+$( Two falsehoods are equivalent (deduction rule).  (Contributed by NM,
+       11-Oct-2013.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> -. ps ) $.
+	e1 $e |- ( ph -> -. ch ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	p2falsed $p |- ( ph -> ( ps <-> ch ) ) $=
+	e0 f0 f1 f2 ppm2.21d e1 f0 f2 f1 ppm2.21d f0 f1 f2 pimpbid $.
+$}
+$( Two propositions implying a false one are equivalent.  (Contributed by
+       NM, 16-Feb-1996.)  (Proof shortened by Wolf Lammen, 19-May-2013.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( ch -> ps ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm5.21ni $p |- ( -. ps -> ( ph <-> ch ) ) $=
+	e0 f0 f1 pcon3i e1 f2 f1 pcon3i f1 awn f0 f2 p2falsed $.
+$}
+$( Eliminate an antecedent implied by each side of a biconditional.
+         (Contributed by NM, 21-May-1999.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ps ) $.
+	e1 $e |- ( ch -> ps ) $.
+	e2 $e |- ( ps -> ( ph <-> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm5.21nii $p |- ( ph <-> ch ) $=
+	e2 e0 e1 f0 f1 f2 ppm5.21ni f1 f0 f2 awb ppm2.61i $.
+$}
+$( Eliminate an antecedent implied by each side of a biconditional,
+       deduction version.  (Contributed by Paul Chapman, 21-Nov-2012.)  (Proof
+       shortened by Wolf Lammen, 6-Oct-2013.) $)
+${
+	$v ph ps ch th $.
+	e0 $e |- ( ph -> ( ch -> ps ) ) $.
+	e1 $e |- ( ph -> ( th -> ps ) ) $.
+	e2 $e |- ( ph -> ( ps -> ( ch <-> th ) ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	ppm5.21ndd $p |- ( ph -> ( ch <-> th ) ) $=
+	e2 e0 f0 f2 f1 pcon3d e1 f0 f3 f1 pcon3d f2 f3 ppm5.21im f0 f1 awn f2 awn f3 awn f2 f3 awb psyl6c f0 f1 f2 f3 awb ppm2.61d $.
+$}
+$( Combine antecedents into a single bi-conditional.  This inference,
+       reminiscent of ~ ja , is reversible:  The hypotheses can be deduced from
+       the conclusion alone (see ~ pm5.1im and ~ pm5.21im ).  (Contributed by
+       Wolf Lammen, 13-May-2013.) $)
+${
+	$v ph ps ch $.
+	e0 $e |- ( ph -> ( ps -> ch ) ) $.
+	e1 $e |- ( -. ph -> ( -. ps -> ch ) ) $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbija $p |- ( ( ph <-> ps ) -> ch ) $=
+	f0 f1 pbi2 e0 f1 f0 f1 awb f0 f2 psyli f0 f1 pbi1 f0 f1 awb f0 f1 pcon3d e1 f1 awn f0 f1 awb f0 awn f2 psyli f0 f1 awb f1 f2 ppm2.61d $.
+$}
+$( Theorem *5.18 of [WhiteheadRussell] p. 124.  This theorem says that
+     logical equivalence is the same as negated "exclusive-or."  (Contributed
+     by NM, 28-Jun-2002.)  (Proof shortened by Andrew Salmon, 20-Jun-2011.)
+     (Proof shortened by Wolf Lammen, 15-Oct-2013.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm5.18 $p |- ( ( ph <-> ps ) <-> -. ( ph <-> -. ps ) ) $=
+	f0 f1 awn ppm5.501 f0 f1 f0 f1 awn awb pcon1bid f0 f1 ppm5.501 f0 f0 f1 awn awb awn f1 f0 f1 awb pbitr2d f0 f1 awn pnbn2 f0 awn f1 awn f0 f1 awn awb pcon1bid f0 f1 pnbn2 f0 awn f0 f1 awn awb awn f1 awn f0 f1 awb pbitr2d f0 f0 f1 awb f0 f1 awn awb awn awb ppm2.61i $.
+$}
+$( Two ways to express "exclusive or."  (Contributed by NM, 1-Jan-2006.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pxor3 $p |- ( -. ( ph <-> ps ) <-> ( ph <-> -. ps ) ) $=
+	f0 f1 ppm5.18 f0 f1 awb f0 f1 awn awb pcon2bii f0 f1 awn awb f0 f1 awb awn pbicomi $.
+$}
+$( Move negation outside of biconditional.  Compare Theorem *5.18 of
+     [WhiteheadRussell] p. 124.  (Contributed by NM, 27-Jun-2002.)  (Proof
+     shortened by Wolf Lammen, 20-Sep-2013.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	pnbbn $p |- ( ( -. ph <-> ps ) <-> -. ( ph <-> ps ) ) $=
+	f0 f1 pxor3 f0 f1 pcon2bi f1 f0 awn pbicom f0 f1 awb awn f0 f1 awn awb f1 f0 awn awb f0 awn f1 awb p3bitrri $.
+$}
+$( Associative law for the biconditional.  An axiom of system DS in Vladimir
+     Lifschitz, "On calculational proofs", Annals of Pure and Applied Logic,
+     113:207-224, 2002,
+     ~ http://www.cs.utexas.edu/users/ai-lab/pub-view.php?PubID=26805 .
+     Interestingly, this law was not included in _Principia Mathematica_ but
+     was apparently first noted by Jan Lukasiewicz circa 1923.  (Contributed by
+     NM, 8-Jan-2005.)  (Proof shortened by Juha Arpiainen, 19-Jan-2006.)
+     (Proof shortened by Wolf Lammen, 21-Sep-2013.) $)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbiass $p |- ( ( ( ph <-> ps ) <-> ch ) <-> ( ph <-> ( ps <-> ch ) ) ) $=
+	f0 f1 ppm5.501 f0 f1 f0 f1 awb f2 pbibi1d f0 f1 f2 awb ppm5.501 f0 f1 f2 awb f0 f1 awb f2 awb f0 f1 f2 awb awb pbitr3d f1 f2 pnbbn f0 f1 pnbn2 f0 awn f1 awn f0 f1 awb f2 pbibi1d f1 f2 awb awn f1 awn f2 awb f0 awn f0 f1 awb f2 awb psyl5bbr f0 f1 f2 awb pnbn2 f0 awn f1 f2 awb awn f0 f1 awb f2 awb f0 f1 f2 awb awb pbitr3d f0 f0 f1 awb f2 awb f0 f1 f2 awb awb awb ppm2.61i $.
+$}
+$( Theorem *5.19 of [WhiteheadRussell] p. 124.  (Contributed by NM,
+     3-Jan-2005.) $)
+${
+	$v ph $.
+	f0 $f wff ph $.
+	ppm5.19 $p |- -. ( ph <-> -. ph ) $=
+	f0 pbiid f0 f0 ppm5.18 f0 f0 awb f0 f0 awn awb awn pmpbi $.
+$}
+$( Logical equivalence of commuted antecedents.  Part of Theorem *4.87 of
+     [WhiteheadRussell] p. 122.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pbi2.04 $p |- ( ( ph -> ( ps -> ch ) ) <-> ( ps -> ( ph -> ch ) ) ) $=
+	f0 f1 f2 ppm2.04 f1 f0 f2 ppm2.04 f0 f1 f2 awi awi f1 f0 f2 awi awi pimpbii $.
+$}
+$( Antecedent absorption implication.  Theorem *5.4 of [WhiteheadRussell]
+     p. 125.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	ppm5.4 $p |- ( ( ph -> ( ph -> ps ) ) <-> ( ph -> ps ) ) $=
+	f0 f1 ppm2.43 f0 f1 awi f0 aax-1 f0 f0 f1 awi awi f0 f1 awi pimpbii $.
+$}
+$( Distributive law for implication.  Compare Theorem *5.41 of
+     [WhiteheadRussell] p. 125.  (Contributed by NM, 5-Aug-1993.) $)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	pimdi $p |- ( ( ph -> ( ps -> ch ) ) <-> ( ( ph -> ps ) -> ( ph -> ch ) ) ) $=
+	f0 f1 f2 aax-2 f0 f1 f2 ppm2.86 f0 f1 f2 awi awi f0 f1 awi f0 f2 awi awi pimpbii $.
+$}
+$( Theorem *5.41 of [WhiteheadRussell] p. 125.  (Contributed by NM,
+     3-Jan-2005.)  (Proof shortened by Wolf Lammen, 12-Oct-2012.) $)
+${
+	$v ph ps ch $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	ppm5.41 $p |- ( ( ( ph -> ps ) -> ( ph -> ch ) ) <-> ( ph -> ( ps -> ch ) ) ) $=
+	f0 f1 f2 pimdi f0 f1 f2 awi awi f0 f1 awi f0 f2 awi awi pbicomi $.
+$}
+$( Theorem *4.8 of [WhiteheadRussell] p. 122.  (Contributed by NM,
+     3-Jan-2005.) $)
+${
+	$v ph $.
+	f0 $f wff ph $.
+	ppm4.8 $p |- ( ( ph -> -. ph ) <-> -. ph ) $=
+	f0 ppm2.01 f0 awn f0 aax-1 f0 f0 awn awi f0 awn pimpbii $.
+$}
+$( Theorem *4.81 of [WhiteheadRussell] p. 122.  (Contributed by NM,
+     3-Jan-2005.) $)
+${
+	$v ph $.
+	f0 $f wff ph $.
+	ppm4.81 $p |- ( ( -. ph -> ph ) <-> ph ) $=
+	f0 ppm2.18 f0 f0 ppm2.24 f0 awn f0 awi f0 pimpbii $.
+$}
+$( Simplify an implication between two implications when the antecedent of
+     the first is a consequence of the antecedent of the second.  The reverse
+     form is useful in producing the successor step in induction proofs.
+     (Contributed by Paul Chapman, 22-Jun-2011.)  (Proof shortened by Wolf
+     Lammen, 14-Sep-2013.) $)
+${
+	$v ph ps ch th $.
+	f0 $f wff ph $.
+	f1 $f wff ps $.
+	f2 $f wff ch $.
+	f3 $f wff th $.
+	pimim21b $p |- ( ( ps -> ph ) -> ( ( ( ph -> ch ) -> ( ps -> th ) ) <-> ( ps -> ( ch -> th ) ) ) ) $=
+	f0 f2 awi f1 f3 pbi2.04 f0 f2 ppm5.5 f0 f0 f2 awi f2 f3 pimbi1d f0 f0 f2 awi f3 awi f2 f3 awi awb f1 pimim2i f1 f0 awi f1 f0 f2 awi f3 awi f2 f3 awi ppm5.74d f0 f2 awi f1 f3 awi awi f1 f0 f2 awi f3 awi awi f1 f0 awi f1 f2 f3 awi awi psyl5bb $.
+$}
+
