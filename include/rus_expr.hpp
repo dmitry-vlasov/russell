@@ -14,17 +14,52 @@ typedef mdl::Id<Source> Id;
 struct Type;
 struct Rule;
 
-struct Symbol : public mdl::Symbol {
-	Symbol() : mdl::Symbol() { }
-	Symbol(uint l) : mdl::Symbol(l) { }
-	Symbol(uint l, Id i, Kind k) : mdl::Symbol(l), val(i, k) { set_kind(k); }
-	Symbol(const Symbol& s) : mdl::Symbol(s) {
+struct Literal {
+	enum Kind { VAR, CONST, NONE };
+	Literal(): lit(undef()), var(false), cst(false), end(false), rep(false), fin(false) { }
+	Literal(uint l, bool v = false) : lit(l), var(v), cst(false), end(false), rep(false), fin(false) { }
+	Literal(const Literal& s) : lit(s.lit), var(s.var), cst(s.cst), end(s.end), rep(s.rep), fin(s.fin) { }
+
+	bool operator == (const Literal& s) const { return lit == s.lit; }
+	bool operator != (const Literal& s) const { return !operator ==(s); }
+	bool operator < (const Literal& s) const { return lit < s.lit; }
+	bool is_undef() const { return lit == undef(); }
+	static bool is_undef(uint lit) { return lit == undef(); }
+	static uint undef() { return 0x07FFFFFF; }
+	Kind kind() const {
+		if (var && !cst) return VAR;
+		if (cst && !var) return CONST;
+		return NONE;
+	}
+	void set_kind(Kind k) {
+		switch (k) {
+		case VAR:   var = true; cst = false;  rep = true;  break;
+		case CONST: var = false; cst = true;  rep = false; break;
+		default:    var = false; cst = false; rep = false; break;
+		}
+	}
+
+	uint lit:27;
+
+	// Flags
+	bool var:1; //< is variable
+	bool cst:1; //< is constant
+	bool end:1; //< is end of an expression
+	bool rep:1; //< is replaceable variable
+	bool fin:1; //< final node in a tree (in a horizontal iteration)
+};
+
+struct Symbol : public Literal {
+	Symbol() : Literal() { }
+	Symbol(uint l) : Literal(l) { }
+	Symbol(uint l, Id i, Kind k) : Literal(l), val(i, k) { set_kind(k); }
+	Symbol(const Symbol& s) : Literal(s) {
 		if (s.var)
 			val.type = new User<Type>(*s.val.type);
 		else if (s.cst)
 			val.constant = new User<Const>(*s.val.constant);
 	}
-	Symbol(Symbol&& s) : mdl::Symbol(s) {
+	Symbol(Symbol&& s) : Literal(s) {
 		if (s.var)
 			val.type = s.val.type;
 		else if (s.cst)
@@ -37,7 +72,7 @@ struct Symbol : public mdl::Symbol {
 
 	void operator = (const Symbol& s) {
 		clear();
-		mdl::Symbol::operator=(s);
+		Literal::operator=(s);
 		switch (s.kind()) {
 		case VAR:   val.type = new User<Type>(*s.val.type);          break;
 		case CONST: val.constant = new User<Const>(*s.val.constant); break;
@@ -45,7 +80,7 @@ struct Symbol : public mdl::Symbol {
 	}
 	void operator = (Symbol&& s) {
 		clear();
-		mdl::Symbol::operator=(s);
+		Literal::operator=(s);
 		switch (s.kind()) {
 		case VAR:   val.type = s.val.type;         break;
 		case CONST: val.constant = s.val.constant; break;

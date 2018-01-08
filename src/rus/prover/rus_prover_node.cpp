@@ -17,7 +17,7 @@ Node::~Node() {
 
 inline Symbol fresh_var(Symbol v, uint n) {
 	return Symbol(
-		Lex::toInt(show_sy(v) + "_" + to_string(n)),
+		Lex::toInt(Lex::toStr(v.lit) + "_" + to_string(n)),
 		v.type()->id(),
 		Symbol::VAR
 	);

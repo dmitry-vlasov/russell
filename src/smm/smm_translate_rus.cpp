@@ -30,17 +30,17 @@ inline rus::Symbol translate_const(uint s, const State& state) {
 	rus::Const* c = state.constants.at(s);
 	auto p = math_consts().find(s);
 	if (p == math_consts().end())
-		return rus::Symbol(s, c->id(), Symbol::CONST);
+		return rus::Symbol(s, c->id(), rus::Symbol::CONST);
 	else
-		return rus::Symbol((*p).second.symb, c->id(), Symbol::CONST);
+		return rus::Symbol((*p).second.symb, c->id(), rus::Symbol::CONST);
 }
 
 inline rus::Symbol translate_var(uint s, rus::Type* t) {
 	auto p = math_vars().find(s);
 	if (p == math_vars().end())
-		return rus::Symbol(s, t->id(), Symbol::VAR);
+		return rus::Symbol(s, t->id(), rus::Symbol::VAR);
 	else
-		return rus::Symbol((*p).second.var, t->id(), Symbol::VAR);
+		return rus::Symbol((*p).second.var, t->id(), rus::Symbol::VAR);
 }
 
 inline rus::Type* translate_var_type(uint v, const State& state, const Assertion* ass) {
