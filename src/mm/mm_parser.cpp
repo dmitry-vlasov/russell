@@ -3,6 +3,8 @@
 
 namespace mdl { namespace mm { namespace {
 
+#define PARALLEL_PARSE
+
 struct Parser {
 private:
 	struct Context {
@@ -159,8 +161,11 @@ public:
 			Context& c = *context.get<Context*>();
 			uint id = Sys::make_name(sv.token());
 			Source* s = Sys::mod().math.get<Source>().access(id);
-			c.source_stack.top()->include(s);
-			return new Inclusion(id, !s->parsed, c.token(sv));
+			const bool primary = !s->parsed;
+#ifndef PARALLEL_PARSE
+			if (primary) parse(id);
+#endif
+			return new Inclusion(id, primary, c.token(sv));
 		};
 		parser.log = [label](size_t ln, size_t col, const std::string& err_msg) {
 			std::stringstream ss;
@@ -196,6 +201,7 @@ private:
 }
 
 void parse(uint label) {
+#ifdef PARALLEL_PARSE
 	vector<uint> labels;
 	for (auto p : Sys::mod().math.get<Source>())
 		labels.push_back(p.first);
@@ -205,6 +211,9 @@ void parse(uint label) {
 				Parser::parse(labels[i]);
 		}
 	);
+#else
+	Parser::parse(label);
+#endif
 }
 
 }} // mdl::mm

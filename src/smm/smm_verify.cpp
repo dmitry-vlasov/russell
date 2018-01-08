@@ -163,6 +163,14 @@ static void verify_assertion(const Assertion* ass) {
 	const Proof* proof = ass->proof;
 	if (!proof) return;
 	for (auto ref : proof->refs) {
+		if (!ref->is_resolved()) {
+			string msg;
+			msg += "type: " + Ref::showType(ref->type()) + "\n";
+			msg += "label: " + Lex::toStr(ref->label()) + "\n";
+			msg += "at theorem: " + Lex::toStr(ass->id()) + "\n";
+			msg += "source: " + Lex::toStr(ass->token.src()->id()) + "\n";
+			throw Error("Assertion is not resolved", msg);
+		}
 		switch (ref->type()) {
 		case Ref::ESSENTIAL : expr_stack.push(ref->ess()->expr); break;
 		case Ref::FLOATING  : expr_stack.push(ref->flo()->expr); break;
@@ -181,11 +189,25 @@ static void verify_assertion(const Assertion* ass) {
 	}
 }
 
+#define PARALLEL_VERIFY
+
 void verify() {
 	Sys::timer()["verify"].start();
+#ifdef PARALLEL_VERIFY
+	vector<const Assertion*> assertions;
+	for (auto p : Sys::mod().math.get<Assertion>())
+		assertions.push_back(p.second.data);
+	tbb::parallel_for (tbb::blocked_range<size_t>(0, assertions.size()),
+		[assertions] (const tbb::blocked_range<size_t>& r) {
+			for (size_t i = r.begin(); i != r.end(); ++i)
+				verify_assertion(assertions[i]);
+		}
+	);
+#else
 	for (auto& p : Sys::mod().math.get<Assertion>()) {
 		verify_assertion(p.second.data);
 	}
+#endif
 	Sys::timer()["verify"].stop();
 }
 

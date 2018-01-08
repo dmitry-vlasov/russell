@@ -368,7 +368,8 @@ public:
 		return refs.find(a, n) ? a->second.data : nullptr;
 	}
 	bool has(uint n) const {
-		return refs.count(n);
+		typename Refs::const_accessor a;
+		return refs.find(a, n);
 	}
 	void destroy() {
 		static mutex m;
@@ -582,7 +583,7 @@ template<class Src, class Sys>
 struct Source : public Owner<Src, Sys> {
 	typedef Owner<Src, Sys> Owner_;
 	typedef User<Src, Sys> User_;
-	typedef cmap<User_, uint> Map;
+	typedef map<User_, uint> Map;
 
 	Source(uint l) : Owner<Src, Sys>(l, Token<Src>()), parsed(false) { }
 	virtual ~Source() { }
@@ -599,8 +600,7 @@ struct Source : public Owner<Src, Sys> {
 
 	// Transitively closed inclusion relation:
 	bool includes(Src* s) const {
-		typename Map::const_accessor a;
-		return includes_.find(a, User_(s));
+		return includes_.find(User_(s)) != includes_.end();
 	}
 
 	void include(Src* src) {
@@ -629,14 +629,10 @@ struct Source : public Owner<Src, Sys> {
 
 private:
 	void includesAdd(uint s) {
-		typename Map::accessor a;
-		includes_.insert(a, User_(s));
-		a->second = s;
+		includes_[User_(s)] = s;
 	}
 	void includedAdd(uint s) {
-		typename Map::accessor a;
-		included_.insert(a, User_(s));
-		a->second = s;
+		included_[User_(s)] = s;
 	}
 	template<class, class> friend struct Source;
 

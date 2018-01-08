@@ -6,16 +6,19 @@ namespace mdl { namespace smm {
 void read(uint label) {
 	delete Sys::get().math.get<Source>().access(label);
 	queue<uint> to_read;
-	set<uint> read_done;
 	to_read.push(label);
+
+	map<uint, set<uint>> includes;
+	vector<uint> new_sources;
+
 	while (!to_read.empty()) {
 		label = to_read.front(); to_read.pop();
+		if (Sys::get().math.get<Source>().has(label)) continue;
+
 		Source* src = new Source(label);
 		src->read();
 		const string& data = src->data();
-		read_done.insert(label);
-
-		cout << "READING: " << Lex::toStr(label) << endl;
+		new_sources.push_back(label);
 
 		string inc;
 		bool inside_inc = false;
@@ -32,17 +35,22 @@ void read(uint label) {
 					++i;
 					inside_inc = false;
 					boost::trim(inc);
-					label = Lex::toInt(Path::trim_ext(inc));
+					uint inc_label = Lex::toInt(Path::trim_ext(inc));
 					inc.clear();
-					if (read_done.find(label) == read_done.end()) {
-						to_read.push(label);
-					}
+					includes[label].insert(inc_label);
+					to_read.push(inc_label);
 				}
 				if (*i == '(') { ++i; inside_comm = true; }
 				if (*i == ')') { ++i; inside_comm = false; }
 			} else {
 				if (inside_inc) inc += *i;
 			}
+		}
+	}
+	for (auto s : new_sources) {
+		for (auto inc : includes[s]) {
+			auto inc_src = Sys::mod().math.get<Source>().access(inc);
+			Sys::mod().math.get<Source>().access(s)->include(inc_src);
 		}
 	}
 }

@@ -99,6 +99,7 @@ struct Ref {
 		}
 	}
 	bool is_assertion() const { return type_ == THEOREM || type_ == AXIOM; }
+	bool is_resolved() const { return is_assertion() ? *val_.ass : true; }
 	Floating*  flo() { return val_.flo; }
 	Essential* ess() { return val_.ess; }
 	Inner*     inn() { return val_.inn; }
@@ -106,7 +107,7 @@ struct Ref {
 
 	uint label() const {
 		assert(is_assertion() && "must be assertion");
-		return val_.ass->get()->prop->label;
+		return val_.ass->id();
 	}
 	uint index() const {
 		assert(!is_assertion() && "must not be assertion");

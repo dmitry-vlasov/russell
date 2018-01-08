@@ -3,6 +3,8 @@
 
 namespace mdl { namespace smm {
 
+#define PARALLEL_PARSE
+
 struct Parser {
 private:
 	struct Context {
@@ -39,11 +41,6 @@ private:
 		if (ind >= container.size()) {
 			throw Error("array index out of boundaries", to_string(ind) + " >= " + to_string(container.size()));
 		}
-	}
-	template<class T>
-	static void check_table(const Table<T>& table, uint lab) {
-		if (!table.has(lab))
-			throw Error("table doesn't have key", to_string(lab));
 	}
 
 public:
@@ -105,7 +102,6 @@ public:
 			Symbol s = sv[0].get<Symbol>();
 			Constant* constant = new Constant(s);
 			constant->token = c.token(sv);
-			//Sys::mod().math.constants.insert(s);
 			return constant;
 		};
 		parser["VAR"] = [](const peg::SemanticValues& sv, peg::any& context) {
@@ -189,14 +185,14 @@ public:
 				case Ref::Type::ESSENTIAL : check_vector(c.essential, lab); return new Ref(c.essential[lab]);
 				case Ref::Type::FLOATING  : check_vector(c.floating, lab);  return new Ref(c.floating[lab]);
 				case Ref::Type::INNER     : check_vector(c.inner, lab);     return new Ref(c.inner[lab]);
-				case Ref::Type::AXIOM     : check_table(math.get<Assertion>(), lab);  return new Ref(lab, true, c.token(sv));
-				case Ref::Type::THEOREM   : check_table(math.get<Assertion>(), lab);  return new Ref(lab, false, c.token(sv));
+				case Ref::Type::AXIOM     : return new Ref(lab, true, c.token(sv));
+				case Ref::Type::THEOREM   : return new Ref(lab, false, c.token(sv));
 				default  : throw Error("unknown reference type in proof", sv.token());
 				}
 			} catch (Error& err) {
 				string msg = err.msg + "\n";
 				msg += "type: " + Ref::showType(type) + "\n";
-				msg += "label: " + Lex::toStr(lab) + " - " + to_string(lab) + "\n";
+				msg += "index: " + Lex::toStr(lab) + " - " + to_string(lab) + "\n";
 				msg += "at theorem: " + Lex::toStr(c.theorem) + " - " + to_string(c.theorem) + "\n";
 				msg += "source: " + Lex::toStr(c.source->id()) + "\n";
 				throw Error(msg);
@@ -248,8 +244,9 @@ public:
 			uint id = Sys::make_name(sv.token());
 			Source* s = Sys::mod().math.get<Source>().access(id);
 			const bool primary = !s->parsed;
+#ifndef PARALLEL_PARSE
 			if (primary) parse(id);
-			c.source->include(s);
+#endif
 			return new Inclusion(id, primary, c.token(sv));
 		};
 		parser.log = [label](size_t ln, size_t col, const std::string& err_msg) {
@@ -260,7 +257,6 @@ public:
 	}
 
 	static void parse(uint label) {
-		cout << "PARSING: " << Lex::toStr(label) << endl;
 		Path path(Lex::toStr(label), Sys::conf().get("root"), "smm");
 		Context* context = new Context();
 		context->source = Sys::mod().math.get<Source>().access(label);
@@ -297,7 +293,19 @@ private:
 };
 
 void parse(uint label) {
+#ifdef PARALLEL_PARSE
+	vector<uint> labels;
+	for (auto p : Sys::mod().math.get<Source>())
+		labels.push_back(p.first);
+	tbb::parallel_for (tbb::blocked_range<size_t>(0, labels.size()),
+		[labels] (const tbb::blocked_range<size_t>& r) {
+			for (size_t i = r.begin(); i != r.end(); ++i)
+				Parser::parse(labels[i]);
+		}
+	);
+#else
 	Parser::parse(label);
+#endif
 }
 
 }} // mdl::smm
