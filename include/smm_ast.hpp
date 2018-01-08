@@ -14,43 +14,43 @@ struct Constant : public Owner<Constant> {
 };
 
 struct Variables : public Tokenable {
-	Variables(const Vect& e = Vect(), const Token& t = Token()) : Tokenable(t), expr(e) { }
-	Vect expr;
+	Variables(const Expr& e = Expr(), const Token& t = Token()) : Tokenable(t), expr(e) { }
+	Expr expr;
 };
 
 struct Disjointed : public Tokenable {
-	Disjointed(const Vect& e = Vect(), const Token& t = Token()) : Tokenable(t), expr(e) { }
-	Vect expr;
+	Disjointed(const Expr& e = Expr(), const Token& t = Token()) : Tokenable(t), expr(e) { }
+	Expr expr;
 };
 
 struct Essential : public Tokenable {
-	Essential(uint i, const Vect& e, const Token& t = Token()) : Tokenable(t), index(i), expr(e) { }
+	Essential(uint i, const Expr& e, const Token& t = Token()) : Tokenable(t), index(i), expr(e) { }
 	uint index;
-	Vect expr;
+	Expr expr;
 };
 
 struct Floating : public Tokenable {
-	Floating(uint i, const Vect& e = Vect(), const Token& t = Token()) : Tokenable(t), index(i), expr(e) { }
+	Floating(uint i, const Expr& e = Expr(), const Token& t = Token()) : Tokenable(t), index(i), expr(e) { }
 	Symbol type() const { return expr[0]; }
 	Symbol var() const { return expr[1]; }
 	uint index;
-	Vect expr;
+	Expr expr;
 };
 
 struct Inner : public Tokenable {
-	Inner(uint i, const Vect& e = Vect(), const Token& t = Token()) : Tokenable(t), index(i), expr(e) { }
+	Inner(uint i, const Expr& e = Expr(), const Token& t = Token()) : Tokenable(t), index(i), expr(e) { }
 	Symbol type() const { return expr[0]; }
 	Symbol var() const { return expr[1]; }
 	uint index;
-	Vect expr;
+	Expr expr;
 };
 
 struct Proposition : public Tokenable {
-	Proposition(bool ax, uint l, const Vect& e, const Token& t = Token()) :
+	Proposition(bool ax, uint l, const Expr& e, const Token& t = Token()) :
 		Tokenable(t), axiom(ax), label(l), expr(e) { }
 	bool axiom;
 	uint label;
-	Vect expr;
+	Expr expr;
 };
 
 struct Proof;
@@ -206,8 +206,8 @@ inline Proof::~ Proof() {
 	for (auto r : refs) delete r;
 }
 
-typedef map<Symbol, Vect> Subst;
-Vect apply(const Subst& sub, const Vect& expr);
+typedef map<Symbol, Expr> Subst;
+Expr apply(const Subst& sub, const Expr& expr);
 
 ostream& operator << (ostream& os, const Constant& cst);
 ostream& operator << (ostream& os, const Ref& ref);

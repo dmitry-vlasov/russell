@@ -80,7 +80,7 @@ public:
 	Parser(uint label) : parser(smm_syntax()) {
 
 		parser["SYMB"] = [](const peg::SemanticValues& sv) {
-			return Symbol(Lex::toInt(sv.token()));
+			return Symbol(Lex::toInt(sv.token()), false);
 		};
 		parser["LAB"] = [](const peg::SemanticValues& sv) {
 			return Lex::toInt(sv.token());
@@ -89,10 +89,10 @@ public:
 			return (uint)std::stoul(sv.token());
 		};
 		parser["EXPR"] = [](const peg::SemanticValues& sv) {
-			Vect expr;
+			Expr expr;
 			expr.reserve(sv.size());
 			for (auto& s : sv) {
-				if (s.is<Symbol>()) expr += s.get<Symbol>();
+				if (s.is<Symbol>()) expr.push_back(s.get<Symbol>());
 				else delete s.get<Comment*>();
 			}
 			return expr;
@@ -106,42 +106,42 @@ public:
 		};
 		parser["VAR"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Variables* vars = new Variables{sv[0].get<Vect>(), c.token(sv)};
+			Variables* vars = new Variables{sv[0].get<Expr>(), c.token(sv)};
 			c.variables.push_back(vars);
 			return vars;
 		};
 		parser["DISJ"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Disjointed* disj = new Disjointed{sv[0].get<Vect>(), c.token(sv)};
+			Disjointed* disj = new Disjointed{sv[0].get<Expr>(), c.token(sv)};
 			c.disjointed.push_back(disj);
 			return disj;
 		};
 		parser["ESS"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Essential* ess = new Essential{sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv)};
+			Essential* ess = new Essential{sv[0].get<uint>(), sv[1].get<Expr>(), c.token(sv)};
 			c.essential.push_back(ess);
 			return ess;
 		};
 		parser["FLO"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Floating* flo = new Floating{sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv)};
+			Floating* flo = new Floating{sv[0].get<uint>(), sv[1].get<Expr>(), c.token(sv)};
 			c.floating.push_back(flo);
 			return flo;
 		};
 		parser["INNER"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			Inner* inn = new Inner{sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv)};
+			Inner* inn = new Inner{sv[0].get<uint>(), sv[1].get<Expr>(), c.token(sv)};
 			c.inner.push_back(inn);
 			return inn;
 		};
 		parser["AX"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			c.prop = new Proposition(true, sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv));
+			c.prop = new Proposition(true, sv[0].get<uint>(), sv[1].get<Expr>(), c.token(sv));
 		};
 		parser["TH"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
 			c.theorem = sv[0].get<uint>();
-			c.prop = new Proposition(false, sv[0].get<uint>(), sv[1].get<Vect>(), c.token(sv));
+			c.prop = new Proposition(false, sv[0].get<uint>(), sv[1].get<Expr>(), c.token(sv));
 			c.proof = sv[2].get<Proof*>();
 		};
 		parser["PROOF"] = [](const peg::SemanticValues& sv, peg::any& context) {
@@ -271,19 +271,19 @@ public:
 	}
 
 private:
-	static void makeVars(Vect& expr) {
+	static void makeVars(Expr& expr) {
 		for (auto& symb : expr) symb.var = true;
 	}
 	template<typename T>
 	static void makeVars(vector<T*>& vars) {
 		for (auto& v_it : vars) makeVars(v_it->expr);
 	}
-	static void markVars(Vect& ex, const Vect& vars) {
+	static void markVars(Expr& ex, const Expr& vars) {
 		for (auto& s : ex) {
 			if (contains(vars, s.lit)) s.var = true;
 		}
 	}
-	static void markVars(const vector<Variables*>& vars, Vect& expr) {
+	static void markVars(const vector<Variables*>& vars, Expr& expr) {
 		for (auto& v_it : vars) markVars(expr, v_it->expr);
 	}
 	template<class T>

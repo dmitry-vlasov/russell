@@ -156,7 +156,7 @@ Tree* reduce(Tree* tree, const map<uint, Ref*>& red) {
 	}
 }
 
-void gather_expr_vars(set<uint>& vars, const smm::Vect& expr) {
+void gather_expr_vars(set<uint>& vars, const smm::Expr& expr) {
 	for (auto s : expr)
 		if (s.var) vars.insert(uint(s.lit));
 }
@@ -188,11 +188,11 @@ struct Maps {
 // Replace variable sets with single set, which contains only needed variables.
 //
 void reduce_variables(smm::Assertion* ass, const set<uint>& all_vars) {
-	smm::Vect rvars;
+	smm::Expr rvars;
 	for (const smm::Variables* vars : ass->variables) {
 		for (auto v : vars->expr) {
 			if (all_vars.find(v.lit) != all_vars.end())
-				rvars += v;
+				rvars.push_back(v);
 		}
 		delete vars;
 	}
@@ -404,15 +404,15 @@ Scope gather_scope() {
 	return scope;
 }
 
-smm::Vect translate_expr(const Expr& e) {
-	smm::Vect ex; ex.reserve(e.size());
+smm::Expr translate_expr(const Expr& e) {
+	smm::Expr ex; ex.reserve(e.size());
 	for (auto s : e) ex.push_back(mdl::smm::Symbol(s.id(), s.get()->is_var));
 	return ex;
 }
 
 void add(Maps& maps, const Scope& scope, smm::Assertion* ass) {
 	for (auto var : scope.vars)
-		ass->variables.push_back(new smm::Variables{ smm::Vect{mdl::smm::Symbol(var->symb.id(), true)} });
+		ass->variables.push_back(new smm::Variables{ smm::Expr{mdl::smm::Symbol(var->symb.id(), true)} });
 	for (auto dis : scope.disj)
 		ass->disjointed.push_back(new smm::Disjointed{ translate_expr(dis->expr) });
 	for (auto ess : scope.esss) {

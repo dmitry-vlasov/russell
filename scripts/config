@@ -1,9 +1,9 @@
 #!/bin/bash 
  
 ## The relative path to the directory, containing binary executables: 
-# binpath='../build/relWithDebInfo/bin'
+binpath='../build/relWithDebInfo/bin'
 # binpath='../build/debug/bin'
-binpath='../build/release/bin'
+# binpath='../build/release/bin'
  
 ## The relative path to the directory, containing math sources:
 mathpath='../math'

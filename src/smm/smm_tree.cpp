@@ -5,7 +5,7 @@ namespace mdl { namespace smm {
 
 typedef map<uint, uint> Perm;
 typedef map<uint, Perm> Transform;
-typedef map<Symbol, Vect> Subst;
+typedef map<Symbol, Expr> Subst;
 
 
 Tree* to_tree(const Proof* proof) {
@@ -77,9 +77,9 @@ void transform(Tree* tree, const Transform& trans, bool forward) {
 	}
 }
 
-Vect eval(Tree* proof);
+Expr eval(Tree* proof);
 
-Vect eval(Tree::Node& n) {
+Expr eval(Tree::Node& n) {
 	if (!n.expr.size()) {
 		switch (n.type) {
 		case Tree::Node::TREE: n.expr = eval(n.val.tree); break;
@@ -96,7 +96,7 @@ Vect eval(Tree::Node& n) {
 	return n.expr;
 }
 
-Vect eval(Tree* tree) {
+Expr eval(Tree* tree) {
 	Tree::Node& n = tree->nodes.back();
 	if (n.expr.size()) return n.expr;
 	assert(n.type == Tree::Node::REF);

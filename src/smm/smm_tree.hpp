@@ -6,7 +6,7 @@ namespace mdl { namespace smm {
 
 typedef map<uint, uint> Perm;
 typedef map<uint, Perm> Transform;
-typedef map<Symbol, Vect> Subst;
+typedef map<Symbol, Expr> Subst;
 
 inline string show (const Subst& subst) {
 	string str;
@@ -14,16 +14,16 @@ inline string show (const Subst& subst) {
 		str += show_sy(it.first) + " = > " + show_ex(it.second) + "\n";
 	return str;
 }
-Vect apply_subst(const Subst& sub, const Vect& expr);
+Expr apply_subst(const Subst& sub, const Expr& expr);
 /*
-inline void append_expr(Vect& ex_1, const Vect& ex_2) {
+inline void append_expr(Expr& ex_1, const Expr& ex_2) {
 	auto it = ex_2.cbegin();
 	++ it;
 	for (; it != ex_2.cend(); ++ it)
 		ex_1.push_back(*it);
 }
-inline Vect apply_sub(const Subst& sub, const Vect& expr) {
-	Vect ret;
+inline Expr apply_sub(const Subst& sub, const Expr& expr) {
+	Expr ret;
 	for (auto s : expr) {
 		if (s.var) {
 			auto ex = sub.find(s);
@@ -78,7 +78,7 @@ struct Tree {
 		}
 		Type type;
 		Value val;
-		Vect expr;
+		Expr expr;
 	};
 	Tree() = default;
 	Tree(Ref* r) { nodes.push_back(r); }
@@ -105,7 +105,7 @@ struct Tree {
 Tree* to_tree(const Proof*);
 Proof* to_proof(const Tree*);
 void transform(Tree*, const Transform& trans, bool forward = true);
-Vect eval(Tree* proof);
-Vect eval(Ref*);
+Expr eval(Tree* proof);
+Expr eval(Ref*);
 
 }} // mdl::smm

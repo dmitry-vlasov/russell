@@ -48,7 +48,7 @@ Perm create_permutation(uint flos, uint esss) {
 	return perm;
 }
 
-mm::Expr translate_expr(const Vect& e) {
+mm::Expr translate_expr(const Expr& e) {
 	mm::Expr ex; ex.reserve(e.size());
 	for (auto s : e) ex.emplace_back(uint(s.lit));
 	return ex;
@@ -130,7 +130,6 @@ void translate(const Node& node, mm::Block* target, Maps& maps) {
 	default : assert(false && "impossible"); break;
 	}
 }
-
 
 mm::Source* translate_source(const Source* src, Maps& maps, mm::Source* target) {
 	if (maps.sources.count(src)) {

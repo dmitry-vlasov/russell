@@ -66,7 +66,7 @@ inline rus::Symbol translate_symb(uint s, const State& state, const Assertion* a
 		throw Error("symbol not constant nor variable", show_sy(s));
 }
 
-rus::Expr translate_expr(const Vect& ex, const State& state, const Assertion* ass) {
+rus::Expr translate_expr(const Expr& ex, const State& state, const Assertion* ass) {
 	rus::Expr e;
 	for (auto it = ex.begin(); it != ex.end(); ++ it) {
 		// pass the first symbol
@@ -84,7 +84,7 @@ void translate_constant(const Constant* constant, State& state) {
 	rus::Const* c = nullptr;
 	auto p = math_consts().find(s.lit);
 	if (p == math_consts().end())
-		c = new rus::Const(s.lit, Symbol::undef(), Symbol::undef());
+		c = new rus::Const(s.lit, rus::Symbol::undef(), rus::Symbol::undef());
 	else
 		c = new rus::Const(p->second.symb, p->second.ascii, p->second.latex);
 	if (state.constants.count(c->symb))
@@ -204,7 +204,7 @@ bool less_general(const rus::Rule* r1, const rus::Rule* r2) {
 	return n == n_end && m == m_end;
 }
 
-inline bool rule_term_is_super(const Vect& term) {
+inline bool rule_term_is_super(const Expr& term) {
 	return term.size() == 2 && !term[0].var && term[1].var;
 }
 
@@ -284,7 +284,7 @@ inline bool low_depth(uint brack_depth, uint brace_depth) {
 		(brack_depth == 0 && brace_depth <= 1);
 }
 
-vector<Symbol>::const_iterator eq_position(const Vect& ex) {
+vector<Symbol>::const_iterator eq_position(const Expr& ex) {
 	uint brack_depth = 0;
 	uint brace_depth = 0;
 	for (auto it = ex.begin() + 1; it != ex.end(); ++ it) {
@@ -303,7 +303,7 @@ vector<Symbol>::const_iterator eq_position(const Vect& ex) {
 void translate_def(const Assertion* ass, State& state) {
 	rus::Def* def = new rus::Def(ass->prop->label);
 	translate_assertion<rus::Def>(ass, def, state);
-	const Vect& ex = ass->prop->expr;
+	const Expr& ex = ass->prop->expr;
 	auto eq_pos = eq_position(ex);
 
 	auto dfm_beg = ex.begin() + 1;
@@ -340,7 +340,7 @@ void translate_def(const Assertion* ass, State& state) {
 
 bool is_def(const Assertion* ass) {
 	if (Lex::toStr(ass->prop->label).substr(0,3) != "df-") return false;
-	const Vect& ex = ass->prop->expr;
+	const Expr& ex = ass->prop->expr;
 	auto eq_pos = eq_position(ex);
 	return eq_pos != ex.end();
 }

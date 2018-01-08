@@ -26,17 +26,17 @@ inline uint translate_symb(const Symbol& s) {
 		return s.lit;
 }
 
-smm::Vect translate_expr(const Expr& ex, Maps& maps) {
-	smm::Vect expr;
-	expr += maps.turnstile;
-	for (auto& s : ex.symbols) expr += smm::Symbol(translate_symb(s), s.type());
+smm::Expr translate_expr(const Expr& ex, Maps& maps) {
+	smm::Expr expr; expr.reserve(ex.symbols.size() + 1);
+	expr.push_back(maps.turnstile);
+	for (auto& s : ex.symbols) expr.push_back(smm::Symbol(translate_symb(s), s.type()));
 	return expr;
 }
 
-smm::Vect translate_term(const Expr& ex, const Type* tp, Maps& maps) {
-	smm::Vect expr;
-	expr += smm::Symbol(maps.types[tp]);
-	for (auto& s : ex.symbols) expr += smm::Symbol(translate_symb(s), s.type());
+smm::Expr translate_term(const Expr& ex, const Type* tp, Maps& maps) {
+	smm::Expr expr; expr.reserve(ex.symbols.size() + 1);
+	expr.push_back(smm::Symbol(maps.types[tp]));
+	for (auto& s : ex.symbols) expr.push_back(smm::Symbol(translate_symb(s), s.type()));
 	return expr;
 }
 
@@ -56,7 +56,7 @@ smm::Constant* translate_const(const Const* c, Maps& maps) {
 smm::Variables* translate_vars(const Vars& rvars) {
 	smm::Variables* svars = new smm::Variables();
 	for (auto s : rvars.v)
-		svars->expr += smm::Symbol(s.lit, true);
+		svars->expr.push_back(smm::Symbol(s.lit, true));
 	return svars;
 }
 
@@ -65,7 +65,7 @@ vector<smm::Disjointed*> translate_disj(const Disj& rdisj) {
 	for (auto d : rdisj.d) {
 		smm::Disjointed* disj = new smm::Disjointed;
 		for (auto s : d)
-			disj->expr += smm::Symbol(s.lit, true);
+			disj->expr.push_back(smm::Symbol(s.lit, true));
 		disj_vect.push_back(disj);
 	}
 	return disj_vect;
@@ -100,8 +100,9 @@ vector<smm::Floating*> translate_floatings(const Vars& vars, Maps& maps, const A
 	for (uint i = 0; i < vars.v.size(); ++ i) {
 		Symbol v = vars.v[i];
 		smm::Floating* flo = new smm::Floating(i);
-		flo->expr += smm::Symbol(maps.types[v.type()]);
-		flo->expr += smm::Symbol(v.lit, true);
+		flo->expr.reserve(2);
+		flo->expr.push_back(smm::Symbol(maps.types[v.type()]));
+		flo->expr.push_back(smm::Symbol(v.lit, true));
 		flo_vect.push_back(flo);
 		if (ass) maps.floatings[ass][v] = flo;
 	}
@@ -242,8 +243,9 @@ vector<smm::Inner*> translate_inners(const Vars& vars, Maps& maps, const Asserti
 		Symbol v = vars.v[i];
 		smm::Inner* inn = new smm::Inner(i + ind_0);
 		inn->index = i + ind_0;
-		inn->expr += smm::Symbol(maps.types[v.type()]);
-		inn->expr += smm::Symbol(v.lit, true);
+		inn->expr.reserve(2);
+		inn->expr.push_back(smm::Symbol(maps.types[v.type()]));
+		inn->expr.push_back(smm::Symbol(v.lit, true));
 		inn_vect.push_back(inn);
 		smm_vars->expr.push_back(smm::Symbol(v.lit, true));
 		maps.inners[thm][v] = inn;
