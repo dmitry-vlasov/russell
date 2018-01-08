@@ -28,9 +28,9 @@ string show(const Rules& tr) {
 
 string show(Symbol s, bool full) {
 	if (!full || !s.type())
-		return show_sy(s.lit);
+		return Lex::toStr(s.lit);
 	else {
-		return string("<") + show_sy(s.lit) + ":" + show_id(s.type()->id()) + ">";
+		return string("<") + Lex::toStr(s.lit) + ":" + show_id(s.type()->id()) + ">";
 	}
 }
 
@@ -47,9 +47,9 @@ string show(const Comment& c) {
 string show(const Const& c) {
 	string s = "constant {\n";
 	s += "\tsymbol " + Lex::toStr(c.symb) + " " + END_MARKER + "\n";
-	if (!mdl::Symbol::is_undef(c.ascii))
+	if (!Symbol::is_undef(c.ascii))
 		s += "\tascii " + Lex::toStr(c.ascii) + " " + END_MARKER + "\n";
-	if (!mdl::Symbol::is_undef(c.latex))
+	if (!Symbol::is_undef(c.latex))
 		s += "\tlatex " + Lex::toStr(c.latex) + " " + END_MARKER + "\n";
 	s += "}";
 	return s;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common.hpp"
+#include "smm_expr.hpp"
 
 namespace mdl { namespace smm {
 

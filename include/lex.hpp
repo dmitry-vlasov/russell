@@ -40,6 +40,10 @@ private:
 	atomic<uint> counter;
 };
 
+inline string show_id(uint lab) {
+	return Lex::toStr(lab);
+}
+
 } // mdl
 
   

@@ -14,41 +14,41 @@ struct Maps {
 	map<const Rule*, map<Symbol, uint>> rules_args;
 	map<const Source*, smm::Source*> sources;
 	smm::Assertion* thm;
-	mdl::Symbol turnstile;
+	mdl::smm::Symbol turnstile;
 	bool first_time;
 };
 
 inline uint translate_symb(const Symbol& s) {
 	if (s.cst) {
 		const Const* c = s.constant();
-		return mdl::Symbol::is_undef(c->ascii) ? s.lit : c->ascii;
+		return Symbol::is_undef(c->ascii) ? s.lit : c->ascii;
 	} else
 		return s.lit;
 }
 
-mdl::Vect translate_expr(const Expr& ex, Maps& maps) {
-	mdl::Vect expr;
+smm::Vect translate_expr(const Expr& ex, Maps& maps) {
+	smm::Vect expr;
 	expr += maps.turnstile;
-	for (auto& s : ex.symbols) expr += mdl::Symbol(translate_symb(s), s.type());
+	for (auto& s : ex.symbols) expr += smm::Symbol(translate_symb(s), s.type());
 	return expr;
 }
 
-mdl::Vect translate_term(const Expr& ex, const Type* tp, Maps& maps) {
-	mdl::Vect expr;
-	expr += mdl::Symbol(maps.types[tp]);
-	for (auto& s : ex.symbols) expr += mdl::Symbol(translate_symb(s), s.type());
+smm::Vect translate_term(const Expr& ex, const Type* tp, Maps& maps) {
+	smm::Vect expr;
+	expr += smm::Symbol(maps.types[tp]);
+	for (auto& s : ex.symbols) expr += smm::Symbol(translate_symb(s), s.type());
 	return expr;
 }
 
 smm::Constant* translate_turnstile(Maps& maps) {
 	uint ts = Lex::toInt("|-");
-	maps.turnstile = mdl::Symbol(ts);
+	maps.turnstile = smm::Symbol(ts);
 	smm::Constant* constant = new smm::Constant(maps.turnstile);
 	return constant;
 }
 
 smm::Constant* translate_const(const Const* c, Maps& maps) {
-	uint symb = mdl::Symbol::is_undef(c->ascii) ? c->id() : c->ascii;
+	uint symb = Symbol::is_undef(c->ascii) ? c->id() : c->ascii;
 	smm::Constant* constant = new smm::Constant(symb);
 	return constant;
 }
@@ -56,7 +56,7 @@ smm::Constant* translate_const(const Const* c, Maps& maps) {
 smm::Variables* translate_vars(const Vars& rvars) {
 	smm::Variables* svars = new smm::Variables();
 	for (auto s : rvars.v)
-		svars->expr += mdl::Symbol(s.lit, true);
+		svars->expr += smm::Symbol(s.lit, true);
 	return svars;
 }
 
@@ -65,7 +65,7 @@ vector<smm::Disjointed*> translate_disj(const Disj& rdisj) {
 	for (auto d : rdisj.d) {
 		smm::Disjointed* disj = new smm::Disjointed;
 		for (auto s : d)
-			disj->expr += mdl::Symbol(s.lit, true);
+			disj->expr += smm::Symbol(s.lit, true);
 		disj_vect.push_back(disj);
 	}
 	return disj_vect;
@@ -100,8 +100,8 @@ vector<smm::Floating*> translate_floatings(const Vars& vars, Maps& maps, const A
 	for (uint i = 0; i < vars.v.size(); ++ i) {
 		Symbol v = vars.v[i];
 		smm::Floating* flo = new smm::Floating(i);
-		flo->expr += mdl::Symbol(maps.types[v.type()]);
-		flo->expr += mdl::Symbol(v.lit, true);
+		flo->expr += smm::Symbol(maps.types[v.type()]);
+		flo->expr += smm::Symbol(v.lit, true);
 		flo_vect.push_back(flo);
 		if (ass) maps.floatings[ass][v] = flo;
 	}
@@ -242,10 +242,10 @@ vector<smm::Inner*> translate_inners(const Vars& vars, Maps& maps, const Asserti
 		Symbol v = vars.v[i];
 		smm::Inner* inn = new smm::Inner(i + ind_0);
 		inn->index = i + ind_0;
-		inn->expr += mdl::Symbol(maps.types[v.type()]);
-		inn->expr += mdl::Symbol(v.lit, true);
+		inn->expr += smm::Symbol(maps.types[v.type()]);
+		inn->expr += smm::Symbol(v.lit, true);
 		inn_vect.push_back(inn);
-		smm_vars->expr.push_back(mdl::Symbol(v.lit, true));
+		smm_vars->expr.push_back(smm::Symbol(v.lit, true));
 		maps.inners[thm][v] = inn;
 	}
 	return inn_vect;

@@ -1,18 +1,8 @@
-/*****************************************************************************/
-/* Project name:    smm - verifier for the Simplified MetaMath language      */
-/* File name:       expr.hpp                                                 */
-/* Description:     smm symbolic Expr                                        */
-/* Copyright:       (c) 2006-2010 Dmitri Vlasov                              */
-/* Author:          Dmitri Yurievich Vlasov, Novosibirsk, Russia             */
-/* Email:           vlasov at academ.org                                     */
-/* URL:             http://mathdevlanguage.sourceforge.net                   */
-/* Modified by:                                                              */
-/* License:         GNU General Public License Version 3                     */
-/*****************************************************************************/
-
 #pragma once
 
-namespace mdl {
+#include "common.hpp"
+
+namespace mdl { namespace smm {
 
 struct Symbol {
 	enum Kind { VAR, CONST, NONE };
@@ -49,18 +39,18 @@ struct Symbol {
 	bool fin:1; //< final node in a tree (in a horizontal iteration)
 };
 
-} // mdl
+}} // mdl
 
 namespace std {
 	template<>
-	struct hash<mdl::Symbol> {
-		size_t operator()(const mdl::Symbol& s) const noexcept {
+	struct hash<mdl::smm::Symbol> {
+		size_t operator()(const mdl::smm::Symbol& s) const noexcept {
 			return s.lit;
 		}
 	};
 }
 
-namespace mdl {
+namespace mdl { namespace smm {
 
 typedef vector<Symbol> Vect;
 
@@ -86,9 +76,6 @@ inline void operator += (Vect& vect_1, const Vect& vect_2) {
 inline string show_sy(Symbol symb) {
 	return Lex::toStr(symb.lit);
 }
-inline string show_id(uint lab) {
-	return Lex::toStr(lab);
-}
 
 inline string show_ex(const Vect& vect) {
 	string s;
@@ -106,4 +93,4 @@ inline ostream& operator << (ostream& os, const Vect& ex) {
 	return os;
 }
 
-}
+}}

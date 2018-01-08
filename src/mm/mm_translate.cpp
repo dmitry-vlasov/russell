@@ -3,6 +3,7 @@
 #include <mm_ast.hpp>
 #include <mm_sys.hpp>
 #include <smm_ast.hpp>
+#include <smm_expr.hpp>
 
 namespace mdl { namespace mm { namespace {
 
@@ -155,7 +156,7 @@ Tree* reduce(Tree* tree, const map<uint, Ref*>& red) {
 	}
 }
 
-void gather_expr_vars(set<uint>& vars, const Vect& expr) {
+void gather_expr_vars(set<uint>& vars, const smm::Vect& expr) {
 	for (auto s : expr)
 		if (s.var) vars.insert(uint(s.lit));
 }
@@ -187,7 +188,7 @@ struct Maps {
 // Replace variable sets with single set, which contains only needed variables.
 //
 void reduce_variables(smm::Assertion* ass, const set<uint>& all_vars) {
-	Vect rvars;
+	smm::Vect rvars;
 	for (const smm::Variables* vars : ass->variables) {
 		for (auto v : vars->expr) {
 			if (all_vars.find(v.lit) != all_vars.end())
@@ -403,15 +404,15 @@ Scope gather_scope() {
 	return scope;
 }
 
-Vect translate_expr(const Expr& e) {
-	Vect ex; ex.reserve(e.size());
-	for (auto s : e) ex.push_back(mdl::Symbol(s.id(), s.get()->is_var));
+smm::Vect translate_expr(const Expr& e) {
+	smm::Vect ex; ex.reserve(e.size());
+	for (auto s : e) ex.push_back(mdl::smm::Symbol(s.id(), s.get()->is_var));
 	return ex;
 }
 
 void add(Maps& maps, const Scope& scope, smm::Assertion* ass) {
 	for (auto var : scope.vars)
-		ass->variables.push_back(new smm::Variables{ Vect{mdl::Symbol(var->symb.id(), true)} });
+		ass->variables.push_back(new smm::Variables{ smm::Vect{mdl::smm::Symbol(var->symb.id(), true)} });
 	for (auto dis : scope.disj)
 		ass->disjointed.push_back(new smm::Disjointed{ translate_expr(dis->expr) });
 	for (auto ess : scope.esss) {
@@ -487,7 +488,7 @@ void translate_node(Maps& maps, const Node& node, const Block* block, smm::Sourc
 		target->contents.push_back(smm::Node(c));
 	} break;
 	case Node::CONSTANT: {
-		smm::Constant* c = new smm::Constant { mdl::Symbol(node.val.cst->symb.id(), false) };
+		smm::Constant* c = new smm::Constant { mdl::smm::Symbol(node.val.cst->symb.id(), false) };
 		target->contents.push_back(smm::Node(c));
 	} break;
 	case Node::THEOREM:

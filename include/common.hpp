@@ -4,7 +4,6 @@
 #include "location.hpp"
 #include "timer.hpp"
 #include "actions.hpp"
-#include "symbol.hpp"
 #include "lex.hpp"
 #include "io.hpp"
 #include "log.hpp"

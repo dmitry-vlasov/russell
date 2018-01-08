@@ -1,7 +1,7 @@
 #pragma once
 
 #include "common.hpp"
-#include "symbol.hpp"
+#include "smm_expr.hpp"
 
 namespace mdl { namespace mm {
 
