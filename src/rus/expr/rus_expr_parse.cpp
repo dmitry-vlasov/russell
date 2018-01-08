@@ -2,7 +2,7 @@
 
 namespace mdl { namespace rus { namespace expr {
 
-vector<Expr*> queue;
+cvector<Expr*> queue;
 
 struct Action {
 	enum Kind { RET, BREAK, CONT };
@@ -81,83 +81,49 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e) {
 	return nullptr;
 }
 
+cvector<std::exception_ptr> exceptions;
 
-void parse_LL(Expr* ex) {
-	(--ex->symbols.end())->end = true;
-	//cout << "parsing: " << ind << " -- " << show(*ex) << flush;
-	auto it = ex->symbols.begin();
-	if (Tree* tree = parse_LL(it, ex->type.get(), ex)) {
-		ex->tree = std::move(*tree);
-		delete tree;
-	} else {
-		if (const Source* src = ex->token.src()) {
-			cout << src->showInclusionInfo() << endl;
+void parse(Expr* ex) {
+	try {
+		(--ex->symbols.end())->end = true;
+		auto it = ex->symbols.begin();
+		if (Tree* tree = parse_LL(it, ex->type.get(), ex)) {
+			ex->tree = std::move(*tree);
+			delete tree;
 		} else {
-			cout << "Source: " << (void*)(ex->token.src()) << endl;
+			if (const Source* src = ex->token.src()) {
+				cout << src->showInclusionInfo() << endl;
+			} else {
+				cout << "Source: " << (void*)(ex->token.src()) << endl;
+			}
+			parse_LL(it, ex->type.get(), ex);
+			throw Error("parsing", string("expression: ") + show(*ex) + " at: " + ex->token.show());
 		}
-		parse_LL(it, ex->type.get(), ex);
-		throw Error("parsing", string("expression: ") + show(*ex) + " at: " + ex->token.show());
-	}
-	//cout << "done" << endl;
-}
-
-
-
-const uint THREADS = 1; //thread::hardware_concurrency() ? thread::hardware_concurrency() : 1;
-vector<std::exception_ptr> exceptions;
-mutex exc_mutex;
-
-void parse_LL_sequent() {
-	for (auto e : queue) {
-		parse_LL(e);
+	} catch (...) {
+		exceptions.push_back(std::current_exception());
 	}
 }
 
-void parse_LL_concurrent(uint s) {
-	int c = 0;
-	for (auto e : queue) {
-		if (c++ % THREADS != s)
-			continue;
-		if (exceptions.size())
-			break;
-		try {
-			parse_LL(e);
-		} catch (...) {
-			exc_mutex.lock();
-			exceptions.push_back(std::current_exception());
-			exc_mutex.unlock();
+void parse() {
+	for (auto p : Sys::mod().math.get<Rule>()) {
+		Rule* r = p.second.data;
+		Type* tp = r->term.type.get();
+		tp->rules.add(r->term, r->id());
+	}
+	tbb::parallel_for (tbb::blocked_range<size_t>(0, queue.size()),
+		[] (const tbb::blocked_range<size_t>& r) {
+			for (size_t i = r.begin(); i != r.end(); ++i)
+				parse(queue[i]);
 		}
-	}
-}
-
-bool parse_LL() {
-	if (THREADS == 1) {
-		parse_LL_sequent();
-		return true;
-	}
-	thread* thds[THREADS];
-	for (uint i = 0; i < THREADS; ++ i)
-		thds[i] = new std::thread(parse_LL_concurrent, i);
-	for (uint i = 0; i < THREADS; ++ i)
-		thds[i]->join();
-	for (uint i = 0; i < THREADS; ++ i)
-		delete thds[i];
+	);
+	queue.clear();
 	for (auto& ex : exceptions) {
 		if (ex) std::rethrow_exception(ex);
 	}
-	return true;
 }
 
 void enqueue(Expr& ex) {
 	queue.push_back(&ex);
-}
-
-bool parse() {
-	if (parse_LL()) {
-		queue.clear();
-		return true;
-	} else
-		return false;
 }
 
 }}} // namespace mdl::rus::expr

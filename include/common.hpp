@@ -426,11 +426,15 @@ struct Ref {
 	Ref() : count_(0), ptr(nullptr) { }
 	void add_ref (const Tokenable_* p) {
 		if (count_ && p != ptr) {
-			string err = "incorrect ref assignment:\n";
-			err += "count: " + to_string(count_) + "\n";
-			err += "p: " + p->token.show(true) + "\n";
-			err += "ptr: " + ptr->token.show(true) + "\n";
-			throw Error(err);
+			if (ptr == nullptr) {
+				ptr = p;
+			} else {
+				string err = "incorrect ref assignment:\n";
+				err += "count: " + to_string(count_) + "\n";
+				err += "p: " + p->token.show(true) + "\n";
+				err += "ptr: " + ptr->token.show(true) + "\n";
+				throw Error(err);
+			}
 		}
 		ptr = p;
 		++ count_;

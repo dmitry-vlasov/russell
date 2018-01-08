@@ -3,6 +3,11 @@
 
 namespace mdl { namespace rus {
 
+//#define PARALLEL_PARSE
+
+static const Symbol dfm(Lex::toInt("defiendum"));
+static const Symbol dfs(Lex::toInt("definiens"));
+
 struct Parser {
 private:
 	struct Stacks {
@@ -16,24 +21,18 @@ private:
 		}
 		void addVar(Symbol v) {
 			vars.back().v.push_back(v);
-			typing[v.lit] = v.type();
-		}
-		Type* type(uint v) const {
-			if (!typing.count(v)) throw Error("unknown type", Lex::toStr(v));
-			return typing.at(v);
+			typing[v.lit] = v.type_id();
 		}
 		void markType(Symbol& s) const {
 			if (typing.count(s.lit)) s.set_type(typing.at(s.lit));
-			else s.set_const(Sys::mod().math.get<Const>().access(s.lit));
+			else s.set_const();
 		}
 		Symbol makeSymb(uint lit, bool strict, const Token& token) const {
 			Symbol s(lit);
 			if (typing.count(lit)) {
-				s.set_type(typing.at(s.lit));
-			} else if (Sys::mod().math.get<Const>().access(s.lit)) {
-				s.set_const(Sys::mod().math.get<Const>().access(s.lit));
-			} else if (strict) {
-				throw Error("symbol is not a constant nor variable", Lex::toStr(lit));
+				s.set_type(typing.at(lit));
+			} else if (strict || !(lit == dfm.lit || lit == dfs.lit)) {
+				s.set_const();
 			}
 			return s;
 		}
@@ -52,7 +51,7 @@ private:
 	private:
 		vector<Vars>     vars;
 		vector<Proof*>   proofs;
-		map<uint, Type*> typing;
+		map<uint, uint> typing;
 	};
 	struct Context {
 		Context() : ind(0), stacks(), theory(nullptr), source(nullptr) { }
@@ -347,8 +346,6 @@ private:
 			d->dfm  = std::move(sv[4].get<Expr>());
 			d->dfs  = std::move(sv[5].get<Expr>());
 			d->prop = std::move(sv[7].get<Expr>());
-			static Symbol dfm(Lex::toInt("defiendum"));
-			static Symbol dfs(Lex::toInt("definiens"));
 			Prop* prop = new Prop(0);
 			for (auto s : d->prop.symbols) {
 				if (s == dfm) {
@@ -381,7 +378,6 @@ private:
 			Step* s = new Step(ind, Step::ASS, ass, c->stacks.proof(), c->token(sv));
 			s->refs = std::move(refs);
 			s->expr = std::move(Expr(type, std::move(expr), c->token(sv)));
-			//s->expr.parse();
 			expr::enqueue(s->expr);
 			return s;
 		};
@@ -393,7 +389,6 @@ private:
 			vector<Symbol> expr = sv[4].get<vector<Symbol>>();
 			Step* s = new Step(ind, Step::NONE, Id(), c->stacks.proof(), c->token(sv));
 			s->expr = std::move(Expr(type, std::move(expr), c->token(sv)));
-			//s->expr.parse();
 			expr::enqueue(s->expr);
 			return s;
 		};
@@ -542,9 +537,11 @@ private:
 		parser_["IMPORT"] = [](const peg::SemanticValues& sv, peg::any& ctx) {
 			Context* c = ctx.get<Context*>();
 			uint id = sv[0].get<uint>();
-			const bool primary = !Sys::get().math.get<Source>().has(id);
+			Source* s = Sys::mod().math.get<Source>().access(id);
+			const bool primary = !s->parsed;
+#ifndef PARALLEL_PARSE
 			if (primary) parse(id);
-			c->source->include(Sys::mod().math.get<Source>().access(id));
+#endif
 			return new Import(id, primary);
 		};
 	}
@@ -574,8 +571,7 @@ private:
 public:
 	static void parse(uint label) {
 		Context* ctx = new Context();
-		ctx->source = new Source(label);
-		ctx->source->read();
+		ctx->source = Sys::mod().math.get<Source>().access(label);
 		ctx->source->theory = new Theory();
 		ctx->theory = ctx->source->theory;
 		peg::any c(ctx);
@@ -584,12 +580,24 @@ public:
 			throw Error("parsing of " + Lex::toStr(label) + " failed");
 		}
 		delete ctx;
+		ctx->source->parsed = true;
 	}
 };
 
 void parse_peg(uint label) {
-	delete Sys::get().math.get<Source>().access(label);
+#ifdef PARALLEL_PARSE
+	vector<uint> labels;
+	for (auto p : Sys::mod().math.get<Source>())
+		labels.push_back(p.first);
+	tbb::parallel_for (tbb::blocked_range<size_t>(0, labels.size()),
+		[labels] (const tbb::blocked_range<size_t>& r) {
+			for (size_t i = r.begin(); i != r.end(); ++i)
+				Parser::parse(labels[i]);
+		}
+	);
+#else
 	Parser::parse(label);
+#endif
 }
 
 }} // mdl::mm

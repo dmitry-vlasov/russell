@@ -6,6 +6,8 @@ namespace mdl { namespace rus {
 
 void parse_spirit(uint);
 
+#define PARALLEL_PARSE
+
 namespace parser {
 
 namespace qi      = boost::spirit::qi;
@@ -22,7 +24,7 @@ struct MakeString {
 
 struct VarStack {
 	stack<vector<uint>> vstack;
-	map<uint, Type*> mapping;
+	map<uint, uint> mapping;
 };
 
 struct PushVars {
@@ -39,13 +41,13 @@ struct AddVars {
 	void operator()(VarStack& var_stack, Vars& vars) const {
 		for (auto& v : vars.v) {
 			var_stack.vstack.top().push_back(v.lit);
-			var_stack.mapping[v.lit] = v.type();
+			var_stack.mapping[v.lit] = v.type_id();
 		}
 	}
 	void operator()(VarStack& var_stack, User<Assertion>& thm) const {
 		for (auto& v : thm.get()->vars.v) {
 			var_stack.vstack.top().push_back(v.lit);
-			var_stack.mapping[v.lit] = v.type();
+			var_stack.mapping[v.lit] = v.type_id();
 		}
 	}
 };
@@ -64,16 +66,16 @@ struct PopVars {
 static void mark_vars(Expr& ex, VarStack& var_stack) {
 	for (auto& s : ex.symbols) {
 		bool is_var = var_stack.mapping.count(s.lit);
-		bool is_const = Sys::get().math.get<Const>().has(s.lit);
+		/*bool is_const = Sys::get().math.get<Const>().has(s.lit);
 		if (is_const && is_var)
 			throw Error("constant symbol is marked as variable");
 		if (!is_const && !is_var) {
 			string msg = "symbol " + Lex::toStr(s.lit) + " ";
 			msg += " neither constant nor variable";
 			throw Error(msg);
-		}
+		}*/
 		if (is_var) s.set_type(var_stack.mapping[s.lit]);
-		else s.set_const(Sys::mod().math.get<Const>().access(s.lit));
+		else s.set_const();
 	}
 }
 
@@ -160,7 +162,9 @@ struct ParseImport {
 		uint id = Sys::make_name(name);
 		Source* imp_src = Sys::mod().math.get<Source>().access(id);
 		const bool primary = !imp_src->parsed;
+#ifndef PARRALEL_PARSE
 		if (primary) parse_spirit(id);
+#endif
 		return new Import(id, primary);
 	}
 };

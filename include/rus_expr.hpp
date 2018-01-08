@@ -89,6 +89,8 @@ struct Symbol : public Literal {
 		s.val.type = nullptr;
 	}
 
+	uint type_id() { return var ? val.type->id() : UNDEF_UINT; }
+	uint constant_id() { return cst ? val.constant->id() : UNDEF_UINT; }
 	Type* type() { return var ? val.type->get() : nullptr; }
 	Const* constant() { return cst ? val.constant->get() : nullptr; }
 	const Type* type() const { return var ? val.type->get() : nullptr; }
@@ -101,18 +103,18 @@ struct Symbol : public Literal {
 		rep = true;
 	}
 
-	void set_type(Type* t) {
+	void set_type(uint t) {
 		clear();
-		if (!t) return;
+		if (t == UNDEF_UINT) return;
 		val.type = new User<Type>(t);
 		var = true;
 		rep = true;
 	}
 
-	void set_const(Const* c) {
+	void set_const() {
 		clear();
-		if (!c) return;
-		val.constant = new User<Const>(c);
+		if (is_undef()) return;
+		val.constant = new User<Const>(lit);
 		cst = true;
 		rep = false;
 	}
@@ -435,7 +437,7 @@ inline Expr create_non_replaceable(const Expr& e) {
 
 namespace expr {
 	void enqueue(Expr& ex);
-	bool parse();
+	void parse();
 }
 
 string show(const Expr&);

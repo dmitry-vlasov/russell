@@ -42,7 +42,6 @@ Rule::Rule(Id i, const Vars& v, const Expr& e, const Token& t) :
 		if (s.type()) children.push_back(make_unique<Tree>(s));
 	}
 	term.tree = std::move(Tree(i, children));
-	term.type.get()->rules.add(term, i.id);
 }
 
 Assertion::Assertion(Id i, const Token& t) : Owner(i.id, t) { }
@@ -57,10 +56,10 @@ Def::Def(Id id, const Token& t) : Assertion(id, t) { }
 
 Step::Step(uint i, Step::Kind sk, Id id, Proof* p, const Token& t) :
 	Tokenable(t), ind_(i), kind_(sk), proof_(p) {
-	Math& math = Sys::mod().math;
+	/*Math& math = Sys::mod().math;
 	if (!math.get<Assertion>().has(id.id)) {
 		throw Error("unknown assertion", id.toStr());
-	}
+	}*/
 	val_.ass = new User<Assertion>(id);
 }
 Step::~Step() {
