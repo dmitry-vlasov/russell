@@ -40,6 +40,7 @@
 //#include "parser.cpp"
 #include "smm/smm_ast.cpp"
 #include "smm/smm_parser.cpp"
+#include "smm/smm_read.cpp"
 #include "smm/smm_show.cpp"
 #include "smm/smm_translate_mm.cpp"
 #include "smm/smm_translate_rus.cpp"

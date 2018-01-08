@@ -238,12 +238,6 @@ public:
 			}
 			return node;
 		};
-		/*
-		parser["SOURCE"].enter = [label](peg::any& context) {
-			Context& c = *context.get<Context*>();
-			c.source = new Source(label);
-		};
-		*/
 		parser["SOURCE"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
 			c.source->contents = sv.transform<Node>();
@@ -252,9 +246,10 @@ public:
 		parser["INCLUDE"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
 			uint id = Sys::make_name(sv.token());
-			const bool primary = !Sys::get().math.get<Source>().has(id);
+			Source* s = Sys::mod().math.get<Source>().access(id);
+			const bool primary = !s->parsed;
 			if (primary) parse(id);
-			c.source->include(Sys::mod().math.get<Source>().access(id));
+			c.source->include(s);
 			return new Inclusion(id, primary, c.token(sv));
 		};
 		parser.log = [label](size_t ln, size_t col, const std::string& err_msg) {
@@ -265,16 +260,17 @@ public:
 	}
 
 	static void parse(uint label) {
+		cout << "PARSING: " << Lex::toStr(label) << endl;
 		Path path(Lex::toStr(label), Sys::conf().get("root"), "smm");
 		Context* context = new Context();
-		context->source = new Source(label);
-		context->source->read();
+		context->source = Sys::mod().math.get<Source>().access(label);
 		Parser p(label);
 		peg::any c(context);
 		if (!p.parser.parse<Source*>(context->source->data().c_str(), c, context->source)) {
 			delete context;
 			throw Error("parsing of " + Lex::toStr(label) + " failed");
 		}
+		context->source->parsed = true;
 		delete context;
 	}
 
@@ -301,7 +297,6 @@ private:
 };
 
 void parse(uint label) {
-	delete Sys::get().math.get<Source>().access(label);
 	Parser::parse(label);
 }
 

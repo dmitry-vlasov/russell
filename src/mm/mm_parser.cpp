@@ -157,7 +157,7 @@ public:
 		};
 		parser["INCLUDE"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
-			uint id = Sys::make_name(Path::trim_ext(sv.token()));
+			uint id = Sys::make_name(sv.token());
 			Source* s = Sys::mod().math.get<Source>().access(id);
 			c.source_stack.top()->include(s);
 			return new Inclusion(id, !s->parsed, c.token(sv));

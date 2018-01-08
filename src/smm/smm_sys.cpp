@@ -5,7 +5,8 @@
 namespace mdl { namespace smm {
 
 void verify();
-void parse(uint);
+void read(uint src);
+void parse(uint src);
 void translate_to_rus(uint src, uint tgt);
 void translate_to_mm(uint src, uint tgt);
 
@@ -109,7 +110,7 @@ const Sys::Actions& Sys::actions() {
 		{"help",   help()},
 		{"curr",   current()},
 		{"destroy", destroy()},
-		{"read",   Action([](const Args& args) { parse(Sys::make_name(args[0])); return Return(); }, description("read"))},
+		{"read",   Action([](const Args& args) { read(Sys::make_name(args[0])); parse(Sys::make_name(args[0])); return Return(); }, description("read"))},
 		{"clear",  Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Sys::make_name(args[0])); return Return(); }, description("clear"))},
 		{"verify", Action([](const Args& args) { verify(); return Return(); }, description("verify"))},
 		{"transl", Action([](const Args& args) { translate(Sys::make_name(args[0]), Sys::make_name(args[1]), chooseLang(args[2])); return Return(); }, description("transl"))},

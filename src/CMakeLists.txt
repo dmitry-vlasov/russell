@@ -54,6 +54,7 @@ else()
 		smm/smm_ast.cpp 
 		smm/smm_sys.cpp 
 		smm/smm_parser.cpp 
+		smm/smm_read.cpp 
 		smm/smm_show.cpp 
 		smm/smm_translate_mm.cpp 
 		smm/smm_translate_rus.cpp 
