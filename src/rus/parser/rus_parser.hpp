@@ -158,9 +158,9 @@ struct ParseImport {
 	struct result { typedef Import* type; };
 	Import* operator()(string name, Source* src) const {
 		uint id = Sys::make_name(name);
-		const bool primary = !Sys::get().math.get<Source>().has(id);
+		Source* imp_src = Sys::mod().math.get<Source>().access(id);
+		const bool primary = !imp_src->parsed;
 		if (primary) parse_spirit(id);
-		src->include(Sys::mod().math.get<Source>().access(id));
 		return new Import(id, primary);
 	}
 };

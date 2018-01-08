@@ -53,10 +53,11 @@ void verify();
 smm::Source* translate(uint src, uint tgt);
 void parse_peg(uint label);
 void parse_spirit(uint label);
+void read(uint label);
 
 namespace {
 
-void read(uint src) {
+void parse(uint src) {
 	if (Sys::get().config.has("peg-parser")) parse_peg(src);
 	else parse_spirit(src);
 	expr::parse();
@@ -65,10 +66,6 @@ void read(uint src) {
 		prover::add_to_index(p.second.data);
 	for (auto& p : Sys::mod().math.get<Proof>())
 		prover::add_to_index(p.second.data);
-}
-
-void parse_() {
-	//expr::parse();
 }
 
 void verify_(uint src) {
@@ -257,9 +254,9 @@ const Sys::Actions& Sys::actions() {
 		{"help",   help()},
 		{"curr",   current()},
 		{"destroy", destroy()},
-		{"read",   Action([](const Args& args) { read(Sys::make_name(args[0])); return Return(); }, description("read"))},
+		{"read",   Action([](const Args& args) { read(Sys::make_name(args[0])); parse(Sys::make_name(args[0])); return Return(); }, description("read"))},
 		{"clear",  Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Sys::make_name(args[0])); return Return(); }, description("clear"))},
-		{"parse",  Action([](const Args& args) { parse_(); return Return(); }, description("parse"))},
+		{"parse",  Action([](const Args& args) { /*parse_(); */ return Return(); }, description("parse"))},
 		{"verify", Action([](const Args& args) { verify_(Sys::make_name(args[0])); return Return(); }, description("verify"))},
 		{"transl", Action([](const Args& args) { translate_(Sys::make_name(args[0]), Sys::make_name(args[1])); return Return(); }, description("transl"))},
 		{"write",  Action([](const Args& args) { write(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
