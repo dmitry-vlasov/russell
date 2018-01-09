@@ -1,12 +1,10 @@
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Conditional_equality_(experimental).smm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                     Russell's Paradox
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-*/
-
 $)
-$( /* Russell's Paradox.  Proposition 4.14 of [TakeutiZaring] p. 14.
+$( Russell's Paradox.  Proposition 4.14 of [TakeutiZaring] p. 14.
 
        In the late 1800s, Frege's Axiom of (unrestricted) Comprehension,
        expressed in our notation as ` A e. _V ` , asserted that any collection
@@ -62,9 +60,7 @@ $( /* Russell's Paradox.  Proposition 4.14 of [TakeutiZaring] p. 14.
        ~ elirrv (derived from the Axiom of Regularity), so for us the Russell
        class equals the universe ` _V ` (theorem ~ ruv ).  See ~ ruALT for an
        alternate proof of ~ ru derived from that fact.  (Contributed by NM,
-       7-Aug-1994.) */
-
-$)
+       7-Aug-1994.) $)
 ${
 	$v x y $.
 	$d x y $.

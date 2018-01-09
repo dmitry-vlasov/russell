@@ -1,5 +1,5 @@
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Tarski_s_system_S2_(1_rule,_6_schemes)/Axiom_schemes_ax-14_(Right_Membership_Equality).smm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
       Logical redundancy of ax-6 , ax-7 , ax-11 , ax-12
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -95,25 +95,19 @@ $( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   Note that our direct proof ~ sp requires ~ ax-11 , which is not part of
   Tarski's system.
 
-*/
-
 $)
-$( /* Tarski's system uses the weaker ~ ax9v instead of the bundled ~ ax-9 ,
+$( Tarski's system uses the weaker ~ ax9v instead of the bundled ~ ax-9 ,
        so here we show that the degenerate case of ~ ax-9 can be derived.
-       (Contributed by NM, 23-Apr-2017.) */
-
-$)
+       (Contributed by NM, 23-Apr-2017.) $)
 ${
 	$v x $.
 	f0 $f set x $.
 	pax9dgen $p |- -. A. x -. x = x $=
 	f0 pequid f0 pequid f0 asup_set_class f0 asup_set_class awceq pnotnoti f0 asup_set_class f0 asup_set_class awceq awn f0 pspfalw f0 asup_set_class f0 asup_set_class awceq awn f0 awal f0 asup_set_class f0 asup_set_class awceq pmt2 $.
 $}
-$( /* Weak version of ~ ax-6 from which we can prove any ~ ax-6 instance not
+$( Weak version of ~ ax-6 from which we can prove any ~ ax-6 instance not
        involving wff variables or bundling.  Uses only Tarski's FOL axiom
-       schemes.  (Contributed by NM, 9-Apr-2017.) */
-
-$)
+       schemes.  (Contributed by NM, 9-Apr-2017.) $)
 ${
 	$v ph ps x y $.
 	$d y ph $.
@@ -127,12 +121,10 @@ ${
 	pax6w $p |- ( -. A. x ph -> A. x -. A. x ph ) $=
 	e0 f0 f1 f2 f3 phbn1w $.
 $}
-$( /* Weak version of ~ ax-7 from which we can prove any ~ ax-7 instance not
+$( Weak version of ~ ax-7 from which we can prove any ~ ax-7 instance not
        involving wff variables or bundling.  Uses only Tarski's FOL axiom
        schemes.  Unlike ~ ax-7 , this theorem requires that ` x ` and ` y ` be
-       distinct i.e. are not bundled.  (Contributed by NM, 10-Apr-2017.) */
-
-$)
+       distinct i.e. are not bundled.  (Contributed by NM, 10-Apr-2017.) $)
 ${
 	$v ph ps x y z $.
 	$d y z $.
@@ -148,11 +140,9 @@ ${
 	pax7w $p |- ( A. x A. y ph -> A. y A. x ph ) $=
 	e0 f0 f1 f2 f3 f4 palcomiw $.
 $}
-$( /* Degenerate instance of ~ ax-7 where bundled variables ` x ` and ` y ` have
+$( Degenerate instance of ~ ax-7 where bundled variables ` x ` and ` y ` have
      a common substitution.  Uses only Tarski's FOL axiom schemes.
-     (Contributed by NM, 13-Apr-2017.) */
-
-$)
+     (Contributed by NM, 13-Apr-2017.) $)
 ${
 	$v ph x $.
 	f0 $f wff ph $.
@@ -160,11 +150,9 @@ ${
 	pax7dgen $p |- ( A. x A. x ph -> A. x A. x ph ) $=
 	f0 f1 awal f1 awal pid $.
 $}
-$( /* Lemma for weak version of ~ ax-11 .  Uses only Tarski's FOL axiom
+$( Lemma for weak version of ~ ax-11 .  Uses only Tarski's FOL axiom
        schemes.  In some cases, this lemma may lead to shorter proofs than
-       ~ ax11w .  (Contributed by NM, 10-Apr-2017.) */
-
-$)
+       ~ ax11w .  (Contributed by NM, 10-Apr-2017.) $)
 ${
 	$v ph ps x y $.
 	$d x ps $.
@@ -176,13 +164,11 @@ ${
 	pax11wlem $p |- ( x = y -> ( ph -> A. x ( x = y -> ph ) ) ) $=
 	e0 f1 f2 aax-17 f0 f1 f2 f3 pax11i $.
 $}
-$( /* Weak version of ~ ax-11 from which we can prove any ~ ax-11 instance not
+$( Weak version of ~ ax-11 from which we can prove any ~ ax-11 instance not
        involving wff variables or bundling.  Uses only Tarski's FOL axiom
        schemes.  An instance of the first hypothesis will normally require that
        ` x ` and ` y ` be distinct (unless ` x ` does not occur in ` ph ` ).
-       (Contributed by NM, 10-Apr-2017.) */
-
-$)
+       (Contributed by NM, 10-Apr-2017.) $)
 ${
 	$v ph ps ch x y z $.
 	$d y z $.
@@ -200,11 +186,9 @@ ${
 	pax11w $p |- ( x = y -> ( A. y ph -> A. x ( x = y -> ph ) ) ) $=
 	e1 f0 f2 f4 f5 pspw e0 f0 f1 f3 f4 pax11wlem f0 f4 awal f0 f3 asup_set_class f4 asup_set_class awceq f3 asup_set_class f4 asup_set_class awceq f0 awi f3 awal psyl5 $.
 $}
-$( /* Degenerate instance of ~ ax-11 where bundled variables ` x ` and ` y `
+$( Degenerate instance of ~ ax-11 where bundled variables ` x ` and ` y `
      have a common substitution.  Uses only Tarski's FOL axiom schemes.
-     (Contributed by NM, 13-Apr-2017.) */
-
-$)
+     (Contributed by NM, 13-Apr-2017.) $)
 ${
 	$v ph x $.
 	f0 $f wff ph $.
@@ -212,14 +196,12 @@ ${
 	pax11dgen $p |- ( x = x -> ( A. x ph -> A. x ( x = x -> ph ) ) ) $=
 	f0 f1 asup_set_class f1 asup_set_class awceq aax-1 f0 f1 asup_set_class f1 asup_set_class awceq f0 awi f1 palimi f0 f1 awal f1 asup_set_class f1 asup_set_class awceq f0 awi f1 awal awi f1 asup_set_class f1 asup_set_class awceq pa1i $.
 $}
-$( /* Example of an application of ~ ax11w that results in an instance of
+$( Example of an application of ~ ax11w that results in an instance of
        ~ ax-11 for a contrived formula with mixed free and bound variables,
        ` ( x e. y /\ A. x z e. x /\ A. y A. z y e. x ) ` , in place of
        ` ph ` .  The proof illustrates bound variable renaming with ~ cbvalvw
        to obtain fresh variables to avoid distinct variable clashes.  Uses only
-       Tarski's FOL axiom schemes.  (Contributed by NM, 14-Apr-2017.) */
-
-$)
+       Tarski's FOL axiom schemes.  (Contributed by NM, 14-Apr-2017.) $)
 ${
 	$v x y z $.
 	$v w v $.
@@ -232,12 +214,10 @@ ${
 	pax11wdemo $p |- ( x = y -> ( A. y ( x e. y /\ A. x z e. x /\ A. y A. z y e. x ) -> A. x ( x = y -> ( x e. y /\ A. x z e. x /\ A. y A. z y e. x ) ) ) ) $=
 	f0 f1 f1 pelequ1 f0 i0 f2 pelequ2 f2 asup_set_class f0 asup_set_class awcel f2 asup_set_class i0 asup_set_class awcel f0 i0 pcbvalvw f2 asup_set_class f0 asup_set_class awcel f0 awal f2 asup_set_class i0 asup_set_class awcel i0 awal awb f0 asup_set_class f1 asup_set_class awceq pa1i f1 i1 f0 pelequ1 f1 asup_set_class i1 asup_set_class awceq f1 asup_set_class f0 asup_set_class awcel i1 asup_set_class f0 asup_set_class awcel f2 palbidv f1 asup_set_class f0 asup_set_class awcel f2 awal i1 asup_set_class f0 asup_set_class awcel f2 awal f1 i1 pcbvalvw f0 f1 i1 pelequ2 f0 asup_set_class f1 asup_set_class awceq i1 asup_set_class f0 asup_set_class awcel i1 asup_set_class f1 asup_set_class awcel f2 palbidv f0 asup_set_class f1 asup_set_class awceq i1 asup_set_class f0 asup_set_class awcel f2 awal i1 asup_set_class f1 asup_set_class awcel f2 awal i1 palbidv f1 asup_set_class f0 asup_set_class awcel f2 awal f1 awal i1 asup_set_class f0 asup_set_class awcel f2 awal i1 awal f0 asup_set_class f1 asup_set_class awceq i1 asup_set_class f1 asup_set_class awcel f2 awal i1 awal psyl5bb f0 asup_set_class f1 asup_set_class awceq f0 asup_set_class f1 asup_set_class awcel f1 asup_set_class f1 asup_set_class awcel f2 asup_set_class f0 asup_set_class awcel f0 awal f2 asup_set_class i0 asup_set_class awcel i0 awal f1 asup_set_class f0 asup_set_class awcel f2 awal f1 awal i1 asup_set_class f1 asup_set_class awcel f2 awal i1 awal p3anbi123d f1 i1 f0 pelequ2 f1 i1 f0 pelequ1 f1 asup_set_class i1 asup_set_class awceq f1 asup_set_class f0 asup_set_class awcel i1 asup_set_class f0 asup_set_class awcel f2 palbidv f1 asup_set_class f0 asup_set_class awcel f2 awal i1 asup_set_class f0 asup_set_class awcel f2 awal f1 i1 pcbvalvw f1 asup_set_class f0 asup_set_class awcel f2 awal f1 awal i1 asup_set_class f0 asup_set_class awcel f2 awal i1 awal awb f1 asup_set_class i1 asup_set_class awceq pa1i f1 asup_set_class i1 asup_set_class awceq f0 asup_set_class f1 asup_set_class awcel f0 asup_set_class i1 asup_set_class awcel f1 asup_set_class f0 asup_set_class awcel f2 awal f1 awal i1 asup_set_class f0 asup_set_class awcel f2 awal i1 awal f2 asup_set_class f0 asup_set_class awcel f0 awal p3anbi13d f0 asup_set_class f1 asup_set_class awcel f2 asup_set_class f0 asup_set_class awcel f0 awal f1 asup_set_class f0 asup_set_class awcel f2 awal f1 awal aw3a f1 asup_set_class f1 asup_set_class awcel f2 asup_set_class i0 asup_set_class awcel i0 awal i1 asup_set_class f1 asup_set_class awcel f2 awal i1 awal aw3a f0 asup_set_class i1 asup_set_class awcel f2 asup_set_class f0 asup_set_class awcel f0 awal i1 asup_set_class f0 asup_set_class awcel f2 awal i1 awal aw3a f0 f1 i1 pax11w $.
 $}
-$( /* Weak version (principal instance) of ~ ax-12 not involving bundling.
+$( Weak version (principal instance) of ~ ax-12 not involving bundling.
        Uses only Tarski's FOL axiom schemes.  The proof is trivial but is
        included to complete the set ~ ax6w , ~ ax7w , and ~ ax11w .
-       (Contributed by NM, 10-Apr-2017.) */
-
-$)
+       (Contributed by NM, 10-Apr-2017.) $)
 ${
 	$v x y z $.
 	$d x y z $.
@@ -247,11 +227,9 @@ ${
 	pax12w $p |- ( -. x = y -> ( y = z -> A. x y = z ) ) $=
 	f0 asup_set_class f1 asup_set_class awceq awn f1 asup_set_class f2 asup_set_class awceq f0 pa17d $.
 $}
-$( /* Degenerate instance of ~ ax-12 where bundled variables ` x ` and ` y `
+$( Degenerate instance of ~ ax-12 where bundled variables ` x ` and ` y `
      have a common substitution.  Uses only Tarski's FOL axiom schemes.
-     (Contributed by NM, 13-Apr-2017.) */
-
-$)
+     (Contributed by NM, 13-Apr-2017.) $)
 ${
 	$v x z $.
 	f0 $f set x $.
@@ -259,11 +237,9 @@ ${
 	pax12dgen1 $p |- ( -. x = x -> ( x = z -> A. x x = z ) ) $=
 	f0 pequid f0 asup_set_class f0 asup_set_class awceq f0 asup_set_class f1 asup_set_class awceq f0 asup_set_class f1 asup_set_class awceq f0 awal awi ppm2.24i $.
 $}
-$( /* Degenerate instance of ~ ax-12 where bundled variables ` x ` and ` z `
+$( Degenerate instance of ~ ax-12 where bundled variables ` x ` and ` z `
      have a common substitution.  Uses only Tarski's FOL axiom schemes.
-     (Contributed by NM, 13-Apr-2017.) */
-
-$)
+     (Contributed by NM, 13-Apr-2017.) $)
 ${
 	$v x y $.
 	f0 $f set x $.
@@ -271,11 +247,9 @@ ${
 	pax12dgen2 $p |- ( -. x = y -> ( y = x -> A. x y = x ) ) $=
 	f1 f0 pequcomi f0 asup_set_class f1 asup_set_class awceq f1 asup_set_class f0 asup_set_class awceq f0 awal ppm2.21 f1 asup_set_class f0 asup_set_class awceq f0 asup_set_class f1 asup_set_class awceq f0 asup_set_class f1 asup_set_class awceq awn f1 asup_set_class f0 asup_set_class awceq f0 awal psyl5 $.
 $}
-$( /* Degenerate instance of ~ ax-12 where bundled variables ` y ` and ` z `
+$( Degenerate instance of ~ ax-12 where bundled variables ` y ` and ` z `
      have a common substitution.  Uses only Tarski's FOL axiom schemes.
-     (Contributed by NM, 13-Apr-2017.) */
-
-$)
+     (Contributed by NM, 13-Apr-2017.) $)
 ${
 	$v x y $.
 	f0 $f set x $.
@@ -283,11 +257,9 @@ ${
 	pax12dgen3 $p |- ( -. x = y -> ( y = y -> A. x y = y ) ) $=
 	f1 pequid f1 asup_set_class f1 asup_set_class awceq f0 aax-gen f0 asup_set_class f1 asup_set_class awceq awn f1 asup_set_class f1 asup_set_class awceq f1 asup_set_class f1 asup_set_class awceq f0 awal pa1ii $.
 $}
-$( /* Degenerate instance of ~ ax-12 where bundled variables ` x ` , ` y ` , and
+$( Degenerate instance of ~ ax-12 where bundled variables ` x ` , ` y ` , and
      ` z ` have a common substitution.  Uses only Tarski's FOL axiom schemes .
-     (Contributed by NM, 13-Apr-2017.) */
-
-$)
+     (Contributed by NM, 13-Apr-2017.) $)
 ${
 	$v x $.
 	f0 $f set x $.

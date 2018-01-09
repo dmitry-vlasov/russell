@@ -1,46 +1,34 @@
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Ordered-pair_class_abstractions_(class_builders).smm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Transitive classes
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-*/
-
 $)
-$( /* Declare a new symbol. */
-
-$)
+$( Declare a new symbol. $)
 $c Tr $.
-$( /* Transitive predicate (read:  "the following class is
-              transitive") */
-
-$)
-$( /* Extend wff notation to include transitive classes.  Notation from
-     [TakeutiZaring] p. 35. */
-
-$)
+$( Transitive predicate (read:  "the following class is
+              transitive") $)
+$( Extend wff notation to include transitive classes.  Notation from
+     [TakeutiZaring] p. 35. $)
 ${
 	$v A $.
 	f0 $f class A $.
 	awtr $a wff Tr A $.
 $}
-$( /* Define the transitive class predicate.  Not to be confused with a
+$( Define the transitive class predicate.  Not to be confused with a
      transitive relation (see ~ cotr ).  Definition of [Enderton] p. 71
      extended to arbitrary classes.  For alternate definitions, see ~ dftr2
      (which is suggestive of the word "transitive"), ~ dftr3 , ~ dftr4 ,
      ~ dftr5 , and (when ` A ` is a set) ~ unisuc .  The term "complete" is
      used instead of "transitive" in Definition 3 of [Suppes] p. 130.
-     (Contributed by NM, 29-Aug-1993.) */
-
-$)
+     (Contributed by NM, 29-Aug-1993.) $)
 ${
 	$v A $.
 	f0 $f class A $.
 	adf-tr $a |- ( Tr A <-> U. A C_ A ) $.
 $}
-$( /* An alternate way of defining a transitive class.  Exercise 7 of
-       [TakeutiZaring] p. 40.  (Contributed by NM, 24-Apr-1994.) */
-
-$)
+$( An alternate way of defining a transitive class.  Exercise 7 of
+       [TakeutiZaring] p. 40.  (Contributed by NM, 24-Apr-1994.) $)
 ${
 	$v x y A $.
 	$d x y A $.
@@ -50,10 +38,8 @@ ${
 	pdftr2 $p |- ( Tr A <-> A. x A. y ( ( x e. y /\ y e. A ) -> x e. A ) ) $=
 	f0 f2 acuni f2 pdfss2 f2 adf-tr f0 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa f0 asup_set_class f2 awcel f1 p19.23v f1 f0 asup_set_class f2 peluni f0 asup_set_class f2 acuni awcel f0 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa f1 awex f0 asup_set_class f2 awcel pimbi1i f0 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa f0 asup_set_class f2 awcel awi f1 awal f0 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa f1 awex f0 asup_set_class f2 awcel awi f0 asup_set_class f2 acuni awcel f0 asup_set_class f2 awcel awi pbitr4i f0 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa f0 asup_set_class f2 awcel awi f1 awal f0 asup_set_class f2 acuni awcel f0 asup_set_class f2 awcel awi f0 palbii f2 acuni f2 awss f0 asup_set_class f2 acuni awcel f0 asup_set_class f2 awcel awi f0 awal f2 awtr f0 asup_set_class f1 asup_set_class awcel f1 asup_set_class f2 awcel awa f0 asup_set_class f2 awcel awi f1 awal f0 awal p3bitr4i $.
 $}
-$( /* An alternate way of defining a transitive class.  (Contributed by NM,
-       20-Mar-2004.) */
-
-$)
+$( An alternate way of defining a transitive class.  (Contributed by NM,
+       20-Mar-2004.) $)
 ${
 	$v x y A $.
 	$d x y A $.
@@ -63,10 +49,8 @@ ${
 	pdftr5 $p |- ( Tr A <-> A. x e. A A. y e. x y e. A ) $=
 	f1 f0 f2 pdftr2 f1 asup_set_class f0 asup_set_class awcel f0 asup_set_class f2 awcel awa f1 asup_set_class f2 awcel awi f1 f0 palcom f1 asup_set_class f0 asup_set_class awcel f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel pimpexp f1 asup_set_class f0 asup_set_class awcel f0 asup_set_class f2 awcel awa f1 asup_set_class f2 awcel awi f1 asup_set_class f0 asup_set_class awcel f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel awi awi f1 palbii f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel awi f1 f0 asup_set_class adf-ral f1 asup_set_class f0 asup_set_class awcel f0 asup_set_class f2 awcel awa f1 asup_set_class f2 awcel awi f1 awal f1 asup_set_class f0 asup_set_class awcel f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel awi awi f1 awal f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel awi f1 f0 asup_set_class awral pbitr4i f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel f1 f0 asup_set_class pr19.21v f1 asup_set_class f0 asup_set_class awcel f0 asup_set_class f2 awcel awa f1 asup_set_class f2 awcel awi f1 awal f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel awi f1 f0 asup_set_class awral f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel f1 f0 asup_set_class awral awi pbitri f1 asup_set_class f0 asup_set_class awcel f0 asup_set_class f2 awcel awa f1 asup_set_class f2 awcel awi f1 awal f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel f1 f0 asup_set_class awral awi f0 palbii f1 asup_set_class f2 awcel f1 f0 asup_set_class awral f0 f2 adf-ral f1 asup_set_class f0 asup_set_class awcel f0 asup_set_class f2 awcel awa f1 asup_set_class f2 awcel awi f1 awal f0 awal f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel f1 f0 asup_set_class awral awi f0 awal f1 asup_set_class f2 awcel f1 f0 asup_set_class awral f0 f2 awral pbitr4i f1 asup_set_class f0 asup_set_class awcel f0 asup_set_class f2 awcel awa f1 asup_set_class f2 awcel awi f0 awal f1 awal f1 asup_set_class f0 asup_set_class awcel f0 asup_set_class f2 awcel awa f1 asup_set_class f2 awcel awi f1 awal f0 awal f1 asup_set_class f2 awcel f1 f0 asup_set_class awral f0 f2 awral pbitri f2 awtr f1 asup_set_class f0 asup_set_class awcel f0 asup_set_class f2 awcel awa f1 asup_set_class f2 awcel awi f0 awal f1 awal f1 asup_set_class f2 awcel f1 f0 asup_set_class awral f0 f2 awral pbitri $.
 $}
-$( /* An alternate way of defining a transitive class.  Definition 7.1 of
-       [TakeutiZaring] p. 35.  (Contributed by NM, 29-Aug-1993.) */
-
-$)
+$( An alternate way of defining a transitive class.  Definition 7.1 of
+       [TakeutiZaring] p. 35.  (Contributed by NM, 29-Aug-1993.) $)
 ${
 	$v x A $.
 	$v y $.
@@ -77,20 +61,16 @@ ${
 	pdftr3 $p |- ( Tr A <-> A. x e. A x C_ A ) $=
 	f0 i0 f1 pdftr5 i0 f0 asup_set_class f1 pdfss3 f0 asup_set_class f1 awss i0 asup_set_class f1 awcel i0 f0 asup_set_class awral f0 f1 pralbii f1 awtr i0 asup_set_class f1 awcel i0 f0 asup_set_class awral f0 f1 awral f0 asup_set_class f1 awss f0 f1 awral pbitr4i $.
 $}
-$( /* An alternate way of defining a transitive class.  Definition of [Enderton]
-     p. 71.  (Contributed by NM, 29-Aug-1993.) */
-
-$)
+$( An alternate way of defining a transitive class.  Definition of [Enderton]
+     p. 71.  (Contributed by NM, 29-Aug-1993.) $)
 ${
 	$v A $.
 	f0 $f class A $.
 	pdftr4 $p |- ( Tr A <-> A C_ ~P A ) $=
 	f0 adf-tr f0 f0 psspwuni f0 awtr f0 acuni f0 awss f0 f0 acpw awss pbitr4i $.
 $}
-$( /* Equality theorem for the transitive class predicate.  (Contributed by NM,
-     17-Sep-1993.) */
-
-$)
+$( Equality theorem for the transitive class predicate.  (Contributed by NM,
+     17-Sep-1993.) $)
 ${
 	$v A B $.
 	f0 $f class A $.
@@ -98,11 +78,9 @@ ${
 	ptreq $p |- ( A = B -> ( Tr A <-> Tr B ) ) $=
 	f0 f1 punieq f0 f1 awceq f0 acuni f1 acuni f0 psseq1d f0 f1 f1 acuni psseq2 f0 f1 awceq f0 acuni f0 awss f1 acuni f0 awss f1 acuni f1 awss pbitrd f0 adf-tr f1 adf-tr f0 f1 awceq f0 acuni f0 awss f1 acuni f1 awss f0 awtr f1 awtr p3bitr4g $.
 $}
-$( /* In a transitive class, the membership relation is transitive.
+$( In a transitive class, the membership relation is transitive.
        (Contributed by NM, 19-Apr-1994.)  (Proof shortened by Andrew Salmon,
-       9-Jul-2011.) */
-
-$)
+       9-Jul-2011.) $)
 ${
 	$v A B C $.
 	$v x y $.
@@ -117,10 +95,8 @@ ${
 	ptrel $p |- ( Tr A -> ( ( B e. C /\ C e. A ) -> B e. A ) ) $=
 	i1 i0 f0 pdftr2 i1 asup_set_class f1 i0 asup_set_class f2 peleq12 i0 asup_set_class f2 f0 peleq1 i0 asup_set_class f2 awceq i0 asup_set_class f0 awcel f2 f0 awcel awb i1 asup_set_class f1 awceq padantl i1 asup_set_class f1 awceq i0 asup_set_class f2 awceq awa i1 asup_set_class i0 asup_set_class awcel f1 f2 awcel i0 asup_set_class f0 awcel f2 f0 awcel panbi12d i1 asup_set_class f1 f0 peleq1 i1 asup_set_class f1 awceq i1 asup_set_class f0 awcel f1 f0 awcel awb i0 asup_set_class f2 awceq padantr i1 asup_set_class f1 awceq i0 asup_set_class f2 awceq awa i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 awcel awa f1 f2 awcel f2 f0 awcel awa i1 asup_set_class f0 awcel f1 f0 awcel pimbi12d i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 awcel awa i1 asup_set_class f0 awcel awi f1 f2 awcel f2 f0 awcel awa f1 f0 awcel awi i1 i0 f1 f2 f2 f0 pspc2gv i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 awcel awa i1 asup_set_class f0 awcel awi i0 awal i1 awal f1 f2 awcel f2 f0 awcel awa f1 f0 awcel ppm2.43b f0 awtr i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 awcel awa i1 asup_set_class f0 awcel awi i0 awal i1 awal f1 f2 awcel f2 f0 awcel awa f1 f0 awcel awi psylbi $.
 $}
-$( /* In a transitive class, the membership relation is transitive.
-     (Contributed by NM, 19-Apr-1994.) */
-
-$)
+$( In a transitive class, the membership relation is transitive.
+     (Contributed by NM, 19-Apr-1994.) $)
 ${
 	$v A B C D $.
 	f0 $f class A $.
@@ -130,10 +106,8 @@ ${
 	ptrel3 $p |- ( Tr A -> ( ( B e. C /\ C e. D /\ D e. A ) -> B e. A ) ) $=
 	f1 f2 awcel f2 f3 awcel f3 f0 awcel p3anass f0 f2 f3 ptrel f0 awtr f2 f3 awcel f3 f0 awcel awa f2 f0 awcel f1 f2 awcel panim2d f1 f2 awcel f2 f3 awcel f3 f0 awcel aw3a f1 f2 awcel f2 f3 awcel f3 f0 awcel awa awa f0 awtr f1 f2 awcel f2 f0 awcel awa psyl5bi f0 f1 f2 ptrel f0 awtr f1 f2 awcel f2 f3 awcel f3 f0 awcel aw3a f1 f2 awcel f2 f0 awcel awa f1 f0 awcel psyld $.
 $}
-$( /* An element of a transitive class is a subset of the class.  (Contributed
-       by NM, 7-Aug-1994.) */
-
-$)
+$( An element of a transitive class is a subset of the class.  (Contributed
+       by NM, 7-Aug-1994.) $)
 ${
 	$v A B $.
 	$v x $.
@@ -145,10 +119,8 @@ ${
 	ptrss $p |- ( Tr A -> ( B e. A -> B C_ A ) ) $=
 	i0 asup_set_class f1 f0 peleq1 i0 asup_set_class f1 f0 psseq1 i0 asup_set_class f1 awceq i0 asup_set_class f0 awcel f1 f0 awcel i0 asup_set_class f0 awss f1 f0 awss pimbi12d i0 asup_set_class f1 awceq i0 asup_set_class f0 awcel i0 asup_set_class f0 awss awi f1 f0 awcel f1 f0 awss awi f0 awtr pimbi2d i0 f0 pdftr3 i0 asup_set_class f0 awss i0 f0 prsp f0 awtr i0 asup_set_class f0 awss i0 f0 awral i0 asup_set_class f0 awcel i0 asup_set_class f0 awss awi psylbi f0 awtr i0 asup_set_class f0 awcel i0 asup_set_class f0 awss awi awi f0 awtr f1 f0 awcel f1 f0 awss awi awi i0 f1 f0 pvtoclg f0 awtr f1 f0 awcel f1 f0 awss ppm2.43b $.
 $}
-$( /* The intersection of transitive classes is transitive.  (Contributed by
-       NM, 9-May-1994.) */
-
-$)
+$( The intersection of transitive classes is transitive.  (Contributed by
+       NM, 9-May-1994.) $)
 ${
 	$v A B $.
 	$v x $.
@@ -160,24 +132,18 @@ ${
 	ptrin $p |- ( ( Tr A /\ Tr B ) -> Tr ( A i^i B ) ) $=
 	i0 asup_set_class f0 f1 pelin f0 i0 asup_set_class ptrss f1 i0 asup_set_class ptrss f0 awtr i0 asup_set_class f0 awcel i0 asup_set_class f0 awss f1 awtr i0 asup_set_class f1 awcel i0 asup_set_class f1 awss pim2anan9 i0 asup_set_class f0 f1 acin awcel i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awa f0 awtr f1 awtr awa i0 asup_set_class f0 awss i0 asup_set_class f1 awss awa psyl5bi i0 asup_set_class f0 f1 pssin f0 awtr f1 awtr awa i0 asup_set_class f0 f1 acin awcel i0 asup_set_class f0 awss i0 asup_set_class f1 awss awa i0 asup_set_class f0 f1 acin awss psyl6ib f0 awtr f1 awtr awa i0 asup_set_class f0 f1 acin awss i0 f0 f1 acin pralrimiv i0 f0 f1 acin pdftr3 f0 awtr f1 awtr awa i0 asup_set_class f0 f1 acin awss i0 f0 f1 acin awral f0 f1 acin awtr psylibr $.
 $}
-$( /* The empty set is transitive.  (Contributed by NM, 16-Sep-1993.) */
-
-$)
+$( The empty set is transitive.  (Contributed by NM, 16-Sep-1993.) $)
 ${
 	ptr0 $p |- Tr (/) $=
 	ac0 acpw p0ss ac0 pdftr4 ac0 awtr ac0 ac0 acpw awss pmpbir $.
 $}
-$( /* The universe is transitive.  (Contributed by NM, 14-Sep-2003.) */
-
-$)
+$( The universe is transitive.  (Contributed by NM, 14-Sep-2003.) $)
 ${
 	ptrv $p |- Tr _V $=
 	acvv acuni pssv acvv adf-tr acvv awtr acvv acuni acvv awss pmpbir $.
 $}
-$( /* The indexed union of a class of transitive sets is transitive.
-       (Contributed by Mario Carneiro, 16-Nov-2014.) */
-
-$)
+$( The indexed union of a class of transitive sets is transitive.
+       (Contributed by Mario Carneiro, 16-Nov-2014.) $)
 ${
 	$v x A B $.
 	$v y $.
@@ -190,11 +156,9 @@ ${
 	ptriun $p |- ( A. x e. A Tr B -> Tr U_ x e. A B ) $=
 	f0 i0 asup_set_class f1 f2 peliun f2 awtr i0 asup_set_class f2 awcel f0 f1 pr19.29 f0 i0 asup_set_class pnfcv f0 f1 f2 pnfiu1 f0 i0 asup_set_class f0 f1 f2 aciun pnfss f2 i0 asup_set_class ptrss f2 awtr i0 asup_set_class f2 awcel i0 asup_set_class f2 awss pimp f0 f1 f2 pssiun2 i0 asup_set_class f2 f0 f1 f2 aciun psstr2 f0 asup_set_class f1 awcel f2 f0 f1 f2 aciun awss i0 asup_set_class f2 awss i0 asup_set_class f0 f1 f2 aciun awss psyl5com f2 awtr i0 asup_set_class f2 awcel awa i0 asup_set_class f2 awss f0 asup_set_class f1 awcel i0 asup_set_class f0 f1 f2 aciun awss psyl5 f2 awtr i0 asup_set_class f2 awcel awa i0 asup_set_class f0 f1 f2 aciun awss f0 f1 prexlimi f2 awtr f0 f1 awral i0 asup_set_class f2 awcel f0 f1 awrex awa f2 awtr i0 asup_set_class f2 awcel awa f0 f1 awrex i0 asup_set_class f0 f1 f2 aciun awss psyl i0 asup_set_class f0 f1 f2 aciun awcel f2 awtr f0 f1 awral i0 asup_set_class f2 awcel f0 f1 awrex i0 asup_set_class f0 f1 f2 aciun awss psylan2b f2 awtr f0 f1 awral i0 asup_set_class f0 f1 f2 aciun awss i0 f0 f1 f2 aciun pralrimiva i0 f0 f1 f2 aciun pdftr3 f2 awtr f0 f1 awral i0 asup_set_class f0 f1 f2 aciun awss i0 f0 f1 f2 aciun awral f0 f1 f2 aciun awtr psylibr $.
 $}
-$( /* The union of a class of transitive sets is transitive.  Exercise 5(a) of
+$( The union of a class of transitive sets is transitive.  Exercise 5(a) of
        [Enderton] p. 73.  (Contributed by Scott Fenton, 21-Feb-2011.)  (Proof
-       shortened by Mario Carneiro, 26-Apr-2014.) */
-
-$)
+       shortened by Mario Carneiro, 26-Apr-2014.) $)
 ${
 	$v x A $.
 	$d x A $.
@@ -203,11 +167,9 @@ ${
 	ptruni $p |- ( A. x e. A Tr x -> Tr U. A ) $=
 	f0 f1 f0 asup_set_class ptriun f0 f1 puniiun f1 acuni f0 f1 f0 asup_set_class aciun ptreq f1 acuni f0 f1 f0 asup_set_class aciun awceq f1 acuni awtr f0 f1 f0 asup_set_class aciun awtr awb aax-mp f0 asup_set_class awtr f0 f1 awral f0 f1 f0 asup_set_class aciun awtr f1 acuni awtr psylibr $.
 $}
-$( /* The intersection of a class of transitive sets is transitive.  Exercise
+$( The intersection of a class of transitive sets is transitive.  Exercise
        5(b) of [Enderton] p. 73.  (Contributed by Scott Fenton,
-       25-Feb-2011.) */
-
-$)
+       25-Feb-2011.) $)
 ${
 	$v x A $.
 	$v y $.
@@ -218,10 +180,8 @@ ${
 	ptrint $p |- ( A. x e. A Tr x -> Tr |^| A ) $=
 	i0 f0 asup_set_class pdftr3 f0 asup_set_class awtr i0 asup_set_class f0 asup_set_class awss i0 f0 asup_set_class awral f0 f1 pralbii f0 asup_set_class awtr f0 f1 awral i0 asup_set_class f0 asup_set_class awss i0 f0 asup_set_class awral f0 f1 awral pbiimpi i0 asup_set_class f0 asup_set_class awss i0 f0 asup_set_class adf-ral i0 asup_set_class f0 asup_set_class awss i0 f0 asup_set_class awral i0 asup_set_class f0 asup_set_class awcel i0 asup_set_class f0 asup_set_class awss awi i0 awal f0 f1 pralbii i0 asup_set_class f0 asup_set_class awcel i0 asup_set_class f0 asup_set_class awss awi f0 i0 f1 pralcom4 i0 asup_set_class f0 asup_set_class awss i0 f0 asup_set_class awral f0 f1 awral i0 asup_set_class f0 asup_set_class awcel i0 asup_set_class f0 asup_set_class awss awi i0 awal f0 f1 awral i0 asup_set_class f0 asup_set_class awcel i0 asup_set_class f0 asup_set_class awss awi f0 f1 awral i0 awal pbitri f0 asup_set_class awtr f0 f1 awral i0 asup_set_class f0 asup_set_class awss i0 f0 asup_set_class awral f0 f1 awral i0 asup_set_class f0 asup_set_class awcel i0 asup_set_class f0 asup_set_class awss awi f0 f1 awral i0 awal psylib i0 asup_set_class f0 asup_set_class awcel i0 asup_set_class f0 asup_set_class awss f0 f1 pralim i0 asup_set_class f0 asup_set_class awcel i0 asup_set_class f0 asup_set_class awss awi f0 f1 awral i0 asup_set_class f0 asup_set_class awcel f0 f1 awral i0 asup_set_class f0 asup_set_class awss f0 f1 awral awi i0 palimi f0 asup_set_class awtr f0 f1 awral i0 asup_set_class f0 asup_set_class awcel i0 asup_set_class f0 asup_set_class awss awi f0 f1 awral i0 awal i0 asup_set_class f0 asup_set_class awcel f0 f1 awral i0 asup_set_class f0 asup_set_class awss f0 f1 awral awi i0 awal psyl i0 f1 acint pdftr3 i0 asup_set_class f1 acint awss i0 f1 acint adf-ral i0 pvex f0 i0 asup_set_class f1 pelint2 f0 i0 asup_set_class f1 pssint i0 asup_set_class f1 acint awcel i0 asup_set_class f0 asup_set_class awcel f0 f1 awral i0 asup_set_class f1 acint awss i0 asup_set_class f0 asup_set_class awss f0 f1 awral pimbi12i i0 asup_set_class f1 acint awcel i0 asup_set_class f1 acint awss awi i0 asup_set_class f0 asup_set_class awcel f0 f1 awral i0 asup_set_class f0 asup_set_class awss f0 f1 awral awi i0 palbii i0 asup_set_class f1 acint awss i0 f1 acint awral i0 asup_set_class f1 acint awcel i0 asup_set_class f1 acint awss awi i0 awal i0 asup_set_class f0 asup_set_class awcel f0 f1 awral i0 asup_set_class f0 asup_set_class awss f0 f1 awral awi i0 awal pbitri f1 acint awtr i0 asup_set_class f1 acint awss i0 f1 acint awral i0 asup_set_class f0 asup_set_class awcel f0 f1 awral i0 asup_set_class f0 asup_set_class awss f0 f1 awral awi i0 awal pbitri f0 asup_set_class awtr f0 f1 awral i0 asup_set_class f0 asup_set_class awcel f0 f1 awral i0 asup_set_class f0 asup_set_class awss f0 f1 awral awi i0 awal f1 acint awtr psylibr $.
 $}
-$( /* If ` A ` is transitive and non-null, then ` |^| A ` is a subset of
-       ` A ` .  (Contributed by Scott Fenton, 3-Mar-2011.) */
-
-$)
+$( If ` A ` is transitive and non-null, then ` |^| A ` is a subset of
+       ` A ` .  (Contributed by Scott Fenton, 3-Mar-2011.) $)
 ${
 	$v A $.
 	$v x y $.
@@ -232,10 +192,8 @@ ${
 	ptrintss $p |- ( ( A =/= (/) /\ Tr A ) -> |^| A C_ A ) $=
 	i1 pvex i0 i1 asup_set_class f0 pelint2 i1 asup_set_class i0 asup_set_class awcel i0 f0 pr19.2z f0 ac0 awne i1 asup_set_class i0 asup_set_class awcel i0 f0 awral i1 asup_set_class i0 asup_set_class awcel i0 f0 awrex pex f0 i1 asup_set_class i0 asup_set_class ptrel f0 awtr i1 asup_set_class i0 asup_set_class awcel i0 asup_set_class f0 awcel i1 asup_set_class f0 awcel pexp3acom23 f0 awtr i1 asup_set_class i0 asup_set_class awcel i1 asup_set_class f0 awcel i0 f0 prexlimdv f0 ac0 awne i1 asup_set_class i0 asup_set_class awcel i0 f0 awral i1 asup_set_class i0 asup_set_class awcel i0 f0 awrex f0 awtr i1 asup_set_class f0 awcel psylan9 i1 asup_set_class f0 acint awcel i1 asup_set_class i0 asup_set_class awcel i0 f0 awral f0 ac0 awne f0 awtr awa i1 asup_set_class f0 awcel psyl5bi f0 ac0 awne f0 awtr awa i1 f0 acint f0 pssrdv $.
 $}
-$( /* Any non-empty transitive class includes its intersection.  Exercise 2 in
-       [TakeutiZaring] p. 44.  (Contributed by Andrew Salmon, 14-Nov-2011.) */
-
-$)
+$( Any non-empty transitive class includes its intersection.  Exercise 2 in
+       [TakeutiZaring] p. 44.  (Contributed by Andrew Salmon, 14-Nov-2011.) $)
 ${
 	$v A $.
 	$v x $.

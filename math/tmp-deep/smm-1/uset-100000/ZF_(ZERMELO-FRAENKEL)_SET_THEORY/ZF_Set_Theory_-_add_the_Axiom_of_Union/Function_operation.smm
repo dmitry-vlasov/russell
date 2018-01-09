@@ -1,37 +1,29 @@
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/_Maps_to__notation.smm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                              Function operation
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-*/
-
 $)
 $c oF $.
 $c oR $.
-$( /* Extend class notation to include mapping of an operation to a function
-     operation. */
-
-$)
+$( Extend class notation to include mapping of an operation to a function
+     operation. $)
 ${
 	$v R $.
 	f0 $f class R $.
 	acof $a class oF R $.
 $}
-$( /* Extend class notation to include mapping of a binary relation to a
-     function relation. */
-
-$)
+$( Extend class notation to include mapping of a binary relation to a
+     function relation. $)
 ${
 	$v R $.
 	f0 $f class R $.
 	acofr $a class oR R $.
 $}
-$( /* Define the function operation map.  The definition is designed so that
+$( Define the function operation map.  The definition is designed so that
        if ` R ` is a binary operation, then ` oF R ` is the analogous operation
        on functions which corresponds to applying ` R ` pointwise to the values
-       of the functions.  (Contributed by Mario Carneiro, 20-Jul-2014.) */
-
-$)
+       of the functions.  (Contributed by Mario Carneiro, 20-Jul-2014.) $)
 ${
 	$v x R f g $.
 	$d f g x R $.
@@ -41,13 +33,11 @@ ${
 	f3 $f set g $.
 	adf-of $a |- oF R = ( f e. _V , g e. _V |-> ( x e. ( dom f i^i dom g ) |-> ( ( f ` x ) R ( g ` x ) ) ) ) $.
 $}
-$( /* Define the function relation map.  The definition is designed so that if
+$( Define the function relation map.  The definition is designed so that if
        ` R ` is a binary relation, then ` oF R ` is the analogous relation on
        functions which is true when each element of the left function relates
        to the corresponding element of the right function.  (Contributed by
-       Mario Carneiro, 28-Jul-2014.) */
-
-$)
+       Mario Carneiro, 28-Jul-2014.) $)
 ${
 	$v x R f g $.
 	$d f g x R $.
@@ -57,10 +47,8 @@ ${
 	f3 $f set g $.
 	adf-ofr $a |- oR R = { <. f , g >. | A. x e. ( dom f i^i dom g ) ( f ` x ) R ( g ` x ) } $.
 $}
-$( /* Equality theorem for function operation.  (Contributed by Mario
-       Carneiro, 20-Jul-2014.) */
-
-$)
+$( Equality theorem for function operation.  (Contributed by Mario
+       Carneiro, 20-Jul-2014.) $)
 ${
 	$v R S $.
 	$v x f g $.
@@ -74,10 +62,8 @@ ${
 	pofeq $p |- ( R = S -> oF R = oF S ) $=
 	f0 f1 awceq i1 asup_set_class acvv awcel i2 asup_set_class acvv awcel psimp1 f0 f1 awceq i1 asup_set_class acvv awcel i2 asup_set_class acvv awcel aw3a f0 f1 i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv poveqd f0 f1 awceq i1 asup_set_class acvv awcel i2 asup_set_class acvv awcel aw3a i0 i1 asup_set_class acdm i2 asup_set_class acdm acin i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f0 aco i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f1 aco pmpteq2dv f0 f1 awceq i1 i2 acvv acvv i0 i1 asup_set_class acdm i2 asup_set_class acdm acin i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f0 aco acmpt i0 i1 asup_set_class acdm i2 asup_set_class acdm acin i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f1 aco acmpt pmpt2eq3dva i0 f0 i1 i2 adf-of i0 f1 i1 i2 adf-of f0 f1 awceq i1 i2 acvv acvv i0 i1 asup_set_class acdm i2 asup_set_class acdm acin i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f0 aco acmpt acmpt2 i1 i2 acvv acvv i0 i1 asup_set_class acdm i2 asup_set_class acdm acin i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f1 aco acmpt acmpt2 f0 acof f1 acof p3eqtr4g $.
 $}
-$( /* Equality theorem for function relation.  (Contributed by Mario Carneiro,
-       28-Jul-2014.) */
-
-$)
+$( Equality theorem for function relation.  (Contributed by Mario Carneiro,
+       28-Jul-2014.) $)
 ${
 	$v R S $.
 	$v x f g $.
@@ -91,10 +77,8 @@ ${
 	pofreq $p |- ( R = S -> oR R = oR S ) $=
 	i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f0 f1 pbreq f0 f1 awceq i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f0 awbr i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f1 awbr i0 i1 asup_set_class acdm i2 asup_set_class acdm acin pralbidv f0 f1 awceq i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f0 awbr i0 i1 asup_set_class acdm i2 asup_set_class acdm acin awral i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f1 awbr i0 i1 asup_set_class acdm i2 asup_set_class acdm acin awral i1 i2 popabbidv i0 f0 i1 i2 adf-ofr i0 f1 i1 i2 adf-ofr f0 f1 awceq i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f0 awbr i0 i1 asup_set_class acdm i2 asup_set_class acdm acin awral i1 i2 acopab i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f1 awbr i0 i1 asup_set_class acdm i2 asup_set_class acdm acin awral i1 i2 acopab f0 acofr f1 acofr p3eqtr4g $.
 $}
-$( /* A function operation restricted to a set is a set.  (Contributed by NM,
-       28-Jul-2014.) */
-
-$)
+$( A function operation restricted to a set is a set.  (Contributed by NM,
+       28-Jul-2014.) $)
 ${
 	$v A R V $.
 	$v x f g $.
@@ -109,10 +93,8 @@ ${
 	pofexg $p |- ( A e. V -> ( oF R |` A ) e. _V ) $=
 	i0 f1 i1 i2 adf-of i1 i2 acvv acvv i0 i1 asup_set_class acdm i2 asup_set_class acdm acin i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f1 aco acmpt f1 acof pmpt2fun f1 acof f0 f2 presfunexg f1 acof awfun f0 f2 awcel f1 acof f0 acres acvv awcel pmpan $.
 $}
-$( /* Hypothesis builder for function operation.  (Contributed by Mario
-       Carneiro, 20-Jul-2014.) */
-
-$)
+$( Hypothesis builder for function operation.  (Contributed by Mario
+       Carneiro, 20-Jul-2014.) $)
 ${
 	$v x R $.
 	$v y f g $.
@@ -127,10 +109,8 @@ ${
 	pnfof $p |- F/_ x oF R $=
 	i0 f1 i1 i2 adf-of f0 acvv pnfcv f0 acvv pnfcv f0 i1 asup_set_class acdm i2 asup_set_class acdm acin pnfcv f0 i0 asup_set_class i1 asup_set_class acfv pnfcv e0 f0 i0 asup_set_class i2 asup_set_class acfv pnfcv f0 i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f1 pnfov f0 i0 i1 asup_set_class acdm i2 asup_set_class acdm acin i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f1 aco pnfmpt i1 i2 f0 acvv acvv i0 i1 asup_set_class acdm i2 asup_set_class acdm acin i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f1 aco acmpt pnfmpt2 f0 f1 acof i1 i2 acvv acvv i0 i1 asup_set_class acdm i2 asup_set_class acdm acin i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f1 aco acmpt acmpt2 pnfcxfr $.
 $}
-$( /* Hypothesis builder for function relation.  (Contributed by Mario
-       Carneiro, 28-Jul-2014.) */
-
-$)
+$( Hypothesis builder for function relation.  (Contributed by Mario
+       Carneiro, 28-Jul-2014.) $)
 ${
 	$v x R $.
 	$v y f g $.
@@ -145,10 +125,8 @@ ${
 	pnfofr $p |- F/_ x oR R $=
 	i0 f1 i1 i2 adf-ofr f0 i1 asup_set_class acdm i2 asup_set_class acdm acin pnfcv f0 i0 asup_set_class i1 asup_set_class acfv pnfcv e0 f0 i0 asup_set_class i2 asup_set_class acfv pnfcv f0 i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f1 pnfbr i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f1 awbr f0 i0 i1 asup_set_class acdm i2 asup_set_class acdm acin pnfral i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f1 awbr i0 i1 asup_set_class acdm i2 asup_set_class acdm acin awral i1 i2 f0 pnfopab f0 f1 acofr i0 asup_set_class i1 asup_set_class acfv i0 asup_set_class i2 asup_set_class acfv f1 awbr i0 i1 asup_set_class acdm i2 asup_set_class acdm acin awral i1 i2 acopab pnfcxfr $.
 $}
-$( /* Value of an operation applied to two functions.  (Contributed by Mario
-         Carneiro, 20-Jul-2014.) */
-
-$)
+$( Value of an operation applied to two functions.  (Contributed by Mario
+         Carneiro, 20-Jul-2014.) $)
 ${
 	$v ph x A B C D R S F G V W $.
 	$v f g $.
@@ -182,10 +160,8 @@ ${
 	poffval $p |- ( ph -> ( F oF R G ) = ( x e. S |-> ( C R D ) ) ) $=
 	e0 e2 f2 f10 f8 pfnex f0 f8 f2 awfn f2 f10 awcel f8 acvv awcel psyl2anc e1 e3 f3 f11 f9 pfnex f0 f9 f3 awfn f3 f11 awcel f9 acvv awcel psyl2anc e0 f2 f8 pfndm f0 f8 f2 awfn f8 acdm f2 awceq psyl e1 f3 f9 pfndm f0 f9 f3 awfn f9 acdm f3 awceq psyl f0 f8 acdm f2 f9 acdm f3 pineq12d e4 f0 f8 acdm f9 acdm acin f2 f3 acin f7 psyl6eq f1 f8 acdm f9 acdm acin f7 f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 aco pmpteq1 f0 f8 acdm f9 acdm acin f7 awceq f1 f8 acdm f9 acdm acin f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 aco acmpt f1 f7 f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 aco acmpt awceq psyl e2 e4 f2 f3 f10 pinex1g f2 f10 awcel f7 f2 f3 acin acvv psyl5eqelr f1 f7 f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 aco acvv pmptexg f0 f2 f10 awcel f7 acvv awcel f1 f7 f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 aco acmpt acvv awcel p3syl f0 f1 f8 acdm f9 acdm acin f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 aco acmpt f1 f7 f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 aco acmpt acvv peqeltrd i0 asup_set_class f8 pdmeq i1 asup_set_class f9 pdmeq i0 asup_set_class f8 awceq i1 asup_set_class f9 awceq i0 asup_set_class acdm f8 acdm i1 asup_set_class acdm f9 acdm pineqan12d f1 asup_set_class i0 asup_set_class f8 pfveq1 f1 asup_set_class i1 asup_set_class f9 pfveq1 i0 asup_set_class f8 awceq i1 asup_set_class f9 awceq f1 asup_set_class i0 asup_set_class acfv f1 asup_set_class f8 acfv f1 asup_set_class i1 asup_set_class acfv f1 asup_set_class f9 acfv f6 poveqan12d i0 asup_set_class f8 awceq i1 asup_set_class f9 awceq awa f1 i0 asup_set_class acdm i1 asup_set_class acdm acin f1 asup_set_class i0 asup_set_class acfv f1 asup_set_class i1 asup_set_class acfv f6 aco f8 acdm f9 acdm acin f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 aco pmpteq12dv f1 f6 i0 i1 adf-of i0 i1 f8 f9 acvv acvv f1 i0 asup_set_class acdm i1 asup_set_class acdm acin f1 asup_set_class i0 asup_set_class acfv f1 asup_set_class i1 asup_set_class acfv f6 aco acmpt f1 f8 acdm f9 acdm acin f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 aco acmpt f6 acof acvv povmpt2ga f0 f8 acvv awcel f9 acvv awcel f1 f8 acdm f9 acdm acin f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 aco acmpt acvv awcel f8 f9 f6 acof aco f1 f8 acdm f9 acdm acin f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 aco acmpt awceq psyl3anc e0 f2 f8 pfndm f0 f8 f2 awfn f8 acdm f2 awceq psyl e1 f3 f9 pfndm f0 f9 f3 awfn f9 acdm f3 awceq psyl f0 f8 acdm f2 f9 acdm f3 pineq12d e4 f0 f8 acdm f9 acdm acin f2 f3 acin f7 psyl6eq f1 f8 acdm f9 acdm acin f7 f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 aco pmpteq1 f0 f8 acdm f9 acdm acin f7 awceq f1 f8 acdm f9 acdm acin f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 aco acmpt f1 f7 f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 aco acmpt awceq psyl e4 f2 f3 acin f7 f1 asup_set_class peleq2i f1 asup_set_class f2 f3 pelin f1 asup_set_class f7 awcel f1 asup_set_class f2 f3 acin awcel f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awa pbitr3i e5 f0 f1 asup_set_class f2 awcel f1 asup_set_class f8 acfv f4 awceq f1 asup_set_class f3 awcel padantrr e6 f0 f1 asup_set_class f3 awcel f1 asup_set_class f9 acfv f5 awceq f1 asup_set_class f2 awcel padantrl f0 f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awa awa f1 asup_set_class f8 acfv f4 f1 asup_set_class f9 acfv f5 f6 poveq12d f1 asup_set_class f7 awcel f0 f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awa f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 aco f4 f5 f6 aco awceq psylan2b f0 f1 f7 f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 aco f4 f5 f6 aco pmpteq2dva f0 f8 f9 f6 acof aco f1 f8 acdm f9 acdm acin f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 aco acmpt f1 f7 f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 aco acmpt f1 f7 f4 f5 f6 aco acmpt p3eqtrd $.
 $}
-$( /* Value of a relation applied to two functions.  (Contributed by Mario
-         Carneiro, 28-Jul-2014.) */
-
-$)
+$( Value of a relation applied to two functions.  (Contributed by Mario
+         Carneiro, 28-Jul-2014.) $)
 ${
 	$v ph x A B C D R S F G V W $.
 	$v f g $.
@@ -219,10 +195,8 @@ ${
 	pofrfval $p |- ( ph -> ( F oR R G <-> A. x e. S C R D ) ) $=
 	e0 e2 f2 f10 f8 pfnex f0 f8 f2 awfn f2 f10 awcel f8 acvv awcel psyl2anc e1 e3 f3 f11 f9 pfnex f0 f9 f3 awfn f3 f11 awcel f9 acvv awcel psyl2anc i0 asup_set_class f8 pdmeq i1 asup_set_class f9 pdmeq i0 asup_set_class f8 awceq i1 asup_set_class f9 awceq i0 asup_set_class acdm f8 acdm i1 asup_set_class acdm f9 acdm pineqan12d f1 asup_set_class i0 asup_set_class f8 pfveq1 f1 asup_set_class i1 asup_set_class f9 pfveq1 i0 asup_set_class f8 awceq i1 asup_set_class f9 awceq f1 asup_set_class i0 asup_set_class acfv f1 asup_set_class f8 acfv f1 asup_set_class i1 asup_set_class acfv f1 asup_set_class f9 acfv f6 pbreqan12d i0 asup_set_class f8 awceq i1 asup_set_class f9 awceq awa f1 asup_set_class i0 asup_set_class acfv f1 asup_set_class i1 asup_set_class acfv f6 awbr f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 awbr f1 i0 asup_set_class acdm i1 asup_set_class acdm acin f8 acdm f9 acdm acin praleqbidv f1 f6 i0 i1 adf-ofr f1 asup_set_class i0 asup_set_class acfv f1 asup_set_class i1 asup_set_class acfv f6 awbr f1 i0 asup_set_class acdm i1 asup_set_class acdm acin awral f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 awbr f1 f8 acdm f9 acdm acin awral i0 i1 f8 f9 f6 acofr acvv acvv pbrabga f0 f8 acvv awcel f9 acvv awcel f8 f9 f6 acofr awbr f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 awbr f1 f8 acdm f9 acdm acin awral awb psyl2anc e0 f2 f8 pfndm f0 f8 f2 awfn f8 acdm f2 awceq psyl e1 f3 f9 pfndm f0 f9 f3 awfn f9 acdm f3 awceq psyl f0 f8 acdm f2 f9 acdm f3 pineq12d e4 f0 f8 acdm f9 acdm acin f2 f3 acin f7 psyl6eq f0 f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 awbr f1 f8 acdm f9 acdm acin f7 praleqdv e4 f2 f3 pinss1 f7 f2 f3 acin f2 peqsstr3i f7 f2 f1 asup_set_class psseli e5 f1 asup_set_class f7 awcel f0 f1 asup_set_class f2 awcel f1 asup_set_class f8 acfv f4 awceq psylan2 e4 f2 f3 pinss2 f7 f2 f3 acin f3 peqsstr3i f7 f3 f1 asup_set_class psseli e6 f1 asup_set_class f7 awcel f0 f1 asup_set_class f3 awcel f1 asup_set_class f9 acfv f5 awceq psylan2 f0 f1 asup_set_class f7 awcel awa f1 asup_set_class f8 acfv f4 f1 asup_set_class f9 acfv f5 f6 pbreq12d f0 f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 awbr f4 f5 f6 awbr f1 f7 pralbidva f0 f8 f9 f6 acofr awbr f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 awbr f1 f8 acdm f9 acdm acin awral f1 asup_set_class f8 acfv f1 asup_set_class f9 acfv f6 awbr f1 f7 awral f4 f5 f6 awbr f1 f7 awral p3bitrd $.
 $}
-$( /* Evaluate a function operation at a point.  (Contributed by Mario
-         Carneiro, 20-Jul-2014.) */
-
-$)
+$( Evaluate a function operation at a point.  (Contributed by Mario
+         Carneiro, 20-Jul-2014.) $)
 ${
 	$v ph A B C D R S F G V W X $.
 	$v x $.
@@ -256,10 +230,8 @@ ${
 	pofval $p |- ( ( ph /\ X e. S ) -> ( ( F oF R G ) ` X ) = ( C R D ) ) $=
 	e0 e1 e2 e3 e4 f0 i0 asup_set_class f1 awcel awa i0 asup_set_class f7 acfv peqidd f0 i0 asup_set_class f2 awcel awa i0 asup_set_class f8 acfv peqidd f0 i0 f1 f2 i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f5 f6 f7 f8 f9 f10 poffval f0 f11 f7 f8 f5 acof aco i0 f6 i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f5 aco acmpt pfveq1d f0 f11 f7 f8 f5 acof aco acfv f11 i0 f6 i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f5 aco acmpt acfv awceq f11 f6 awcel padantr i0 asup_set_class f11 f7 pfveq2 i0 asup_set_class f11 f8 pfveq2 i0 asup_set_class f11 awceq i0 asup_set_class f7 acfv f11 f7 acfv i0 asup_set_class f8 acfv f11 f8 acfv f5 poveq12d i0 f6 i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f5 aco acmpt peqid f11 f7 acfv f11 f8 acfv f5 povex i0 f11 i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f5 aco f11 f7 acfv f11 f8 acfv f5 aco f6 i0 f6 i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f5 aco acmpt pfvmpt f11 f6 awcel f11 i0 f6 i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f5 aco acmpt acfv f11 f7 acfv f11 f8 acfv f5 aco awceq f0 padantl e4 f1 f2 pinss1 f6 f1 f2 acin f1 peqsstr3i f6 f1 f11 psseli e5 f11 f6 awcel f0 f11 f1 awcel f11 f7 acfv f3 awceq psylan2 e4 f1 f2 pinss2 f6 f1 f2 acin f2 peqsstr3i f6 f2 f11 psseli e6 f11 f6 awcel f0 f11 f2 awcel f11 f8 acfv f4 awceq psylan2 f0 f11 f6 awcel awa f11 f7 acfv f3 f11 f8 acfv f4 f5 poveq12d f0 f11 f6 awcel awa f11 f7 f8 f5 acof aco acfv f11 i0 f6 i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f5 aco acmpt acfv f11 f7 acfv f11 f8 acfv f5 aco f3 f4 f5 aco p3eqtrd $.
 $}
-$( /* Exhibit a function relation at a point.  (Contributed by Mario
-         Carneiro, 28-Jul-2014.) */
-
-$)
+$( Exhibit a function relation at a point.  (Contributed by Mario
+         Carneiro, 28-Jul-2014.) $)
 ${
 	$v ph A B C D R S F G V W X $.
 	$v x $.
@@ -293,10 +265,8 @@ ${
 	pofrval $p |- ( ( ph /\ F oR R G /\ X e. S ) -> C R D ) $=
 	e0 e1 e2 e3 e4 f0 i0 asup_set_class f1 awcel awa i0 asup_set_class f7 acfv peqidd f0 i0 asup_set_class f2 awcel awa i0 asup_set_class f8 acfv peqidd f0 i0 f1 f2 i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f5 f6 f7 f8 f9 f10 pofrfval f0 f7 f8 f5 acofr awbr i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f5 awbr i0 f6 awral pbiimpa i0 asup_set_class f11 f7 pfveq2 i0 asup_set_class f11 f8 pfveq2 i0 asup_set_class f11 awceq i0 asup_set_class f7 acfv f11 f7 acfv i0 asup_set_class f8 acfv f11 f8 acfv f5 pbreq12d i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f5 awbr f11 f7 acfv f11 f8 acfv f5 awbr i0 f11 f6 prspccv f0 f7 f8 f5 acofr awbr awa i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f5 awbr i0 f6 awral f11 f6 awcel f11 f7 acfv f11 f8 acfv f5 awbr awi psyl f0 f7 f8 f5 acofr awbr f11 f6 awcel f11 f7 acfv f11 f8 acfv f5 awbr p3impia f0 f7 f8 f5 acofr awbr f11 f6 awcel psimp1 e4 f1 f2 pinss1 f6 f1 f2 acin f1 peqsstr3i f0 f7 f8 f5 acofr awbr f11 f6 awcel psimp3 f0 f7 f8 f5 acofr awbr f11 f6 awcel aw3a f6 f1 f11 psseldi e5 f0 f7 f8 f5 acofr awbr f11 f6 awcel aw3a f0 f11 f1 awcel f11 f7 acfv f3 awceq psyl2anc f0 f7 f8 f5 acofr awbr f11 f6 awcel psimp1 e4 f1 f2 pinss2 f6 f1 f2 acin f2 peqsstr3i f0 f7 f8 f5 acofr awbr f11 f6 awcel psimp3 f0 f7 f8 f5 acofr awbr f11 f6 awcel aw3a f6 f2 f11 psseldi e6 f0 f7 f8 f5 acofr awbr f11 f6 awcel aw3a f0 f11 f2 awcel f11 f8 acfv f4 awceq psyl2anc f0 f7 f8 f5 acofr awbr f11 f6 awcel aw3a f11 f7 acfv f11 f8 acfv f3 f4 f5 p3brtr3d $.
 $}
-$( /* The function operation produces a function.  (Contributed by Mario
-       Carneiro, 22-Jul-2014.) */
-
-$)
+$( The function operation produces a function.  (Contributed by Mario
+       Carneiro, 22-Jul-2014.) $)
 ${
 	$v ph A B R S F G V W $.
 	$v x $.
@@ -324,10 +294,8 @@ ${
 	poffn $p |- ( ph -> ( F oF R G ) Fn S ) $=
 	i0 asup_set_class f5 acfv i0 asup_set_class f6 acfv f3 povex i0 f4 i0 asup_set_class f5 acfv i0 asup_set_class f6 acfv f3 aco acmpt peqid i0 f4 i0 asup_set_class f5 acfv i0 asup_set_class f6 acfv f3 aco i0 f4 i0 asup_set_class f5 acfv i0 asup_set_class f6 acfv f3 aco acmpt pfnmpti e0 e1 e2 e3 e4 f0 i0 asup_set_class f1 awcel awa i0 asup_set_class f5 acfv peqidd f0 i0 asup_set_class f2 awcel awa i0 asup_set_class f6 acfv peqidd f0 i0 f1 f2 i0 asup_set_class f5 acfv i0 asup_set_class f6 acfv f3 f4 f5 f6 f7 f8 poffval f0 f4 f5 f6 f3 acof aco i0 f4 i0 asup_set_class f5 acfv i0 asup_set_class f6 acfv f3 aco acmpt pfneq1d f0 f5 f6 f3 acof aco f4 awfn i0 f4 i0 asup_set_class f5 acfv i0 asup_set_class f6 acfv f3 aco acmpt f4 awfn pmpbiri $.
 $}
-$( /* Function value of a pointwise composition.  (Contributed by Stefan O'Rear,
-     5-Oct-2014.)  (Proof shortened by Mario Carneiro, 5-Jun-2015.) */
-
-$)
+$( Function value of a pointwise composition.  (Contributed by Stefan O'Rear,
+     5-Oct-2014.)  (Proof shortened by Mario Carneiro, 5-Jun-2015.) $)
 ${
 	$v A R F G V X $.
 	f0 $f class A $.
@@ -339,10 +307,8 @@ ${
 	pfnfvof $p |- ( ( ( F Fn A /\ G Fn A ) /\ ( A e. V /\ X e. A ) ) -> ( ( F oF R G ) ` X ) = ( ( F ` X ) R ( G ` X ) ) ) $=
 	f2 f0 awfn f3 f0 awfn f0 f4 awcel psimpll f2 f0 awfn f3 f0 awfn f0 f4 awcel psimplr f2 f0 awfn f3 f0 awfn awa f0 f4 awcel psimpr f2 f0 awfn f3 f0 awfn awa f0 f4 awcel psimpr f0 pinidm f2 f0 awfn f3 f0 awfn awa f0 f4 awcel awa f5 f0 awcel awa f5 f2 acfv peqidd f2 f0 awfn f3 f0 awfn awa f0 f4 awcel awa f5 f0 awcel awa f5 f3 acfv peqidd f2 f0 awfn f3 f0 awfn awa f0 f4 awcel awa f0 f0 f5 f2 acfv f5 f3 acfv f1 f0 f2 f3 f4 f4 f5 pofval f2 f0 awfn f3 f0 awfn awa f0 f4 awcel f5 f0 awcel f5 f2 f3 f1 acof aco acfv f5 f2 acfv f5 f3 acfv f1 aco awceq panasss $.
 $}
-$( /* General value of ` ( F oF R G ) ` with no assumptions on functionality
-       of ` F ` and ` G ` .  (Contributed by Stefan O'Rear, 24-Jan-2015.) */
-
-$)
+$( General value of ` ( F oF R G ) ` with no assumptions on functionality
+       of ` F ` and ` G ` .  (Contributed by Stefan O'Rear, 24-Jan-2015.) $)
 ${
 	$v x R F G V W $.
 	$v a b $.
@@ -362,10 +328,8 @@ ${
 	poffval3 $p |- ( ( F e. V /\ G e. W ) -> ( F oF R G ) = ( x e. ( dom F i^i dom G ) |-> ( ( F ` x ) R ( G ` x ) ) ) ) $=
 	f2 f4 pelex f2 f4 awcel f2 acvv awcel f3 f5 awcel padantr f3 f5 pelex f3 f5 awcel f3 acvv awcel f2 f4 awcel padantl f2 f4 pdmexg f2 acdm f3 acdm acvv pinex1g f0 f2 acdm f3 acdm acin f0 asup_set_class f2 acfv f0 asup_set_class f3 acfv f1 aco acvv pmptexg f2 f4 awcel f2 acdm acvv awcel f2 acdm f3 acdm acin acvv awcel f0 f2 acdm f3 acdm acin f0 asup_set_class f2 acfv f0 asup_set_class f3 acfv f1 aco acmpt acvv awcel p3syl f2 f4 awcel f0 f2 acdm f3 acdm acin f0 asup_set_class f2 acfv f0 asup_set_class f3 acfv f1 aco acmpt acvv awcel f3 f5 awcel padantr i0 asup_set_class f2 pdmeq i1 asup_set_class f3 pdmeq i0 asup_set_class f2 awceq i1 asup_set_class f3 awceq i0 asup_set_class acdm f2 acdm i1 asup_set_class acdm f3 acdm pineqan12d f0 asup_set_class i0 asup_set_class f2 pfveq1 f0 asup_set_class i1 asup_set_class f3 pfveq1 i0 asup_set_class f2 awceq i1 asup_set_class f3 awceq f0 asup_set_class i0 asup_set_class acfv f0 asup_set_class f2 acfv f0 asup_set_class i1 asup_set_class acfv f0 asup_set_class f3 acfv f1 poveqan12d i0 asup_set_class f2 awceq i1 asup_set_class f3 awceq awa f0 i0 asup_set_class acdm i1 asup_set_class acdm acin f0 asup_set_class i0 asup_set_class acfv f0 asup_set_class i1 asup_set_class acfv f1 aco f2 acdm f3 acdm acin f0 asup_set_class f2 acfv f0 asup_set_class f3 acfv f1 aco pmpteq12dv f0 f1 i0 i1 adf-of i0 i1 f2 f3 acvv acvv f0 i0 asup_set_class acdm i1 asup_set_class acdm acin f0 asup_set_class i0 asup_set_class acfv f0 asup_set_class i1 asup_set_class acfv f1 aco acmpt f0 f2 acdm f3 acdm acin f0 asup_set_class f2 acfv f0 asup_set_class f3 acfv f1 aco acmpt f1 acof acvv povmpt2ga f2 f4 awcel f3 f5 awcel awa f2 acvv awcel f3 acvv awcel f0 f2 acdm f3 acdm acin f0 asup_set_class f2 acfv f0 asup_set_class f3 acfv f1 aco acmpt acvv awcel f2 f3 f1 acof aco f0 f2 acdm f3 acdm acin f0 asup_set_class f2 acfv f0 asup_set_class f3 acfv f1 aco acmpt awceq psyl3anc $.
 $}
-$( /* Pointwise combination commutes with restriction.  (Contributed by Stefan
-       O'Rear, 24-Jan-2015.) */
-
-$)
+$( Pointwise combination commutes with restriction.  (Contributed by Stefan
+       O'Rear, 24-Jan-2015.) $)
 ${
 	$v D R F G V W $.
 	$v x $.
@@ -385,10 +349,8 @@ ${
 	poffres $p |- ( ( F e. V /\ G e. W ) -> ( ( F oF R G ) |` D ) = ( ( F |` D ) oF R ( G |` D ) ) ) $=
 	f2 acdm f3 acdm acin f0 pinss2 f2 acdm f3 acdm acin f0 acin f0 i0 asup_set_class psseli i0 asup_set_class f0 f2 pfvres i0 asup_set_class f0 f3 pfvres i0 asup_set_class f0 awcel i0 asup_set_class f2 f0 acres acfv i0 asup_set_class f2 acfv i0 asup_set_class f3 f0 acres acfv i0 asup_set_class f3 acfv f1 poveq12d i0 asup_set_class f2 acdm f3 acdm acin f0 acin awcel i0 asup_set_class f0 awcel i0 asup_set_class f2 f0 acres acfv i0 asup_set_class f3 f0 acres acfv f1 aco i0 asup_set_class f2 acfv i0 asup_set_class f3 acfv f1 aco awceq psyl i0 f2 acdm f3 acdm acin f0 acin i0 asup_set_class f2 f0 acres acfv i0 asup_set_class f3 f0 acres acfv f1 aco i0 asup_set_class f2 acfv i0 asup_set_class f3 acfv f1 aco pmpteq2ia f0 f2 acdm f3 acdm pinindi f2 acdm f3 acdm acin f0 pincom f2 f0 pdmres f3 f0 pdmres f2 f0 acres acdm f0 f2 acdm acin f3 f0 acres acdm f0 f3 acdm acin pineq12i f0 f2 acdm f3 acdm acin acin f0 f2 acdm acin f0 f3 acdm acin acin f2 acdm f3 acdm acin f0 acin f2 f0 acres acdm f3 f0 acres acdm acin p3eqtr4ri i0 asup_set_class f2 f0 acres acfv i0 asup_set_class f3 f0 acres acfv f1 aco peqid i0 f2 f0 acres acdm f3 f0 acres acdm acin i0 asup_set_class f2 f0 acres acfv i0 asup_set_class f3 f0 acres acfv f1 aco f2 acdm f3 acdm acin f0 acin i0 asup_set_class f2 f0 acres acfv i0 asup_set_class f3 f0 acres acfv f1 aco pmpteq12i i0 f2 acdm f3 acdm acin f0 i0 asup_set_class f2 acfv i0 asup_set_class f3 acfv f1 aco presmpt3 i0 f2 acdm f3 acdm acin f0 acin i0 asup_set_class f2 f0 acres acfv i0 asup_set_class f3 f0 acres acfv f1 aco acmpt i0 f2 acdm f3 acdm acin f0 acin i0 asup_set_class f2 acfv i0 asup_set_class f3 acfv f1 aco acmpt i0 f2 f0 acres acdm f3 f0 acres acdm acin i0 asup_set_class f2 f0 acres acfv i0 asup_set_class f3 f0 acres acfv f1 aco acmpt i0 f2 acdm f3 acdm acin i0 asup_set_class f2 acfv i0 asup_set_class f3 acfv f1 aco acmpt f0 acres p3eqtr4ri i0 f1 f2 f3 f4 f5 poffval3 f2 f4 awcel f3 f5 awcel awa f2 f3 f1 acof aco i0 f2 acdm f3 acdm acin i0 asup_set_class f2 acfv i0 asup_set_class f3 acfv f1 aco acmpt f0 preseq1d f2 f0 f4 presexg f3 f0 f5 presexg i0 f1 f2 f0 acres f3 f0 acres acvv acvv poffval3 f2 f4 awcel f2 f0 acres acvv awcel f3 f0 acres acvv awcel f2 f0 acres f3 f0 acres f1 acof aco i0 f2 f0 acres acdm f3 f0 acres acdm acin i0 asup_set_class f2 f0 acres acfv i0 asup_set_class f3 f0 acres acfv f1 aco acmpt awceq f3 f5 awcel psyl2an f2 f4 awcel f3 f5 awcel awa i0 f2 acdm f3 acdm acin i0 asup_set_class f2 acfv i0 asup_set_class f3 acfv f1 aco acmpt f0 acres i0 f2 f0 acres acdm f3 f0 acres acdm acin i0 asup_set_class f2 f0 acres acfv i0 asup_set_class f3 f0 acres acfv f1 aco acmpt f2 f3 f1 acof aco f0 acres f2 f0 acres f3 f0 acres f1 acof aco p3eqtr4a $.
 $}
-$( /* The function operation produces a function.  (Contributed by Mario
-       Carneiro, 20-Jul-2014.) */
-
-$)
+$( The function operation produces a function.  (Contributed by Mario
+       Carneiro, 20-Jul-2014.) $)
 ${
 	$v ph x y A B C R S T U F G V W $.
 	$v z $.
@@ -425,11 +387,9 @@ ${
 	poff $p |- ( ph -> ( F oF R G ) : C --> U ) $=
 	e1 e5 f3 f4 pinss1 f5 f3 f4 acin f3 peqsstr3i f5 f3 i0 asup_set_class psseli f3 f7 i0 asup_set_class f10 pffvelrn f0 f3 f7 f10 awf i0 asup_set_class f3 awcel i0 asup_set_class f10 acfv f7 awcel i0 asup_set_class f5 awcel psyl2an e2 e5 f3 f4 pinss2 f5 f3 f4 acin f4 peqsstr3i f5 f4 i0 asup_set_class psseli f4 f8 i0 asup_set_class f11 pffvelrn f0 f4 f8 f11 awf i0 asup_set_class f4 awcel i0 asup_set_class f11 acfv f8 awcel i0 asup_set_class f5 awcel psyl2an e0 f0 f1 asup_set_class f2 asup_set_class f6 aco f9 awcel f1 f2 f7 f8 pralrimivva f0 f1 asup_set_class f2 asup_set_class f6 aco f9 awcel f2 f8 awral f1 f7 awral i0 asup_set_class f5 awcel padantr f1 asup_set_class i0 asup_set_class f10 acfv f2 asup_set_class f6 poveq1 f1 asup_set_class i0 asup_set_class f10 acfv awceq f1 asup_set_class f2 asup_set_class f6 aco i0 asup_set_class f10 acfv f2 asup_set_class f6 aco f9 peleq1d f2 asup_set_class i0 asup_set_class f11 acfv i0 asup_set_class f10 acfv f6 poveq2 f2 asup_set_class i0 asup_set_class f11 acfv awceq i0 asup_set_class f10 acfv f2 asup_set_class f6 aco i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f6 aco f9 peleq1d f1 asup_set_class f2 asup_set_class f6 aco f9 awcel i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f6 aco f9 awcel i0 asup_set_class f10 acfv f2 asup_set_class f6 aco f9 awcel f1 f2 i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f7 f8 prspc2va f0 i0 asup_set_class f5 awcel awa i0 asup_set_class f10 acfv f7 awcel i0 asup_set_class f11 acfv f8 awcel f1 asup_set_class f2 asup_set_class f6 aco f9 awcel f2 f8 awral f1 f7 awral i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f6 aco f9 awcel psyl21anc i0 f5 i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f6 aco acmpt peqid f0 i0 f5 i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f6 aco f9 i0 f5 i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f6 aco acmpt pfmptd e1 f3 f7 f10 pffn f0 f3 f7 f10 awf f10 f3 awfn psyl e2 f4 f8 f11 pffn f0 f4 f8 f11 awf f11 f4 awfn psyl e3 e4 e5 f0 i0 asup_set_class f3 awcel awa i0 asup_set_class f10 acfv peqidd f0 i0 asup_set_class f4 awcel awa i0 asup_set_class f11 acfv peqidd f0 i0 f3 f4 i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f6 f5 f10 f11 f12 f13 poffval f0 f5 f9 f10 f11 f6 acof aco i0 f5 i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f6 aco acmpt pfeq1d f0 f5 f9 f10 f11 f6 acof aco awf f5 f9 i0 f5 i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f6 aco acmpt awf pmpbird $.
 $}
-$( /* Restrict the operands of a function operation to the same domain as that
+$( Restrict the operands of a function operation to the same domain as that
        of the operation itself.  (Contributed by Mario Carneiro,
-       15-Sep-2014.) */
-
-$)
+       15-Sep-2014.) $)
 ${
 	$v ph A B C R F G V W $.
 	$v x $.
@@ -457,10 +417,8 @@ ${
 	pofres $p |- ( ph -> ( F oF R G ) = ( ( F |` C ) oF R ( G |` C ) ) ) $=
 	e0 e1 e2 e3 e4 f0 i0 asup_set_class f1 awcel awa i0 asup_set_class f5 acfv peqidd f0 i0 asup_set_class f2 awcel awa i0 asup_set_class f6 acfv peqidd f0 i0 f1 f2 i0 asup_set_class f5 acfv i0 asup_set_class f6 acfv f4 f3 f5 f6 f7 f8 poffval e0 e4 f1 f2 pinss1 f3 f1 f2 acin f1 peqsstr3i f1 f3 f5 pfnssres f0 f5 f1 awfn f3 f1 awss f5 f3 acres f3 awfn psylancl e1 e4 f1 f2 pinss2 f3 f1 f2 acin f2 peqsstr3i f2 f3 f6 pfnssres f0 f6 f2 awfn f3 f2 awss f6 f3 acres f3 awfn psylancl e4 f1 f2 pinss1 f3 f1 f2 acin f1 peqsstr3i e2 f3 f1 f7 pssexg f0 f3 f1 awss f1 f7 awcel f3 acvv awcel psylancr e4 f1 f2 pinss1 f3 f1 f2 acin f1 peqsstr3i e2 f3 f1 f7 pssexg f0 f3 f1 awss f1 f7 awcel f3 acvv awcel psylancr f3 pinidm i0 asup_set_class f3 f5 pfvres i0 asup_set_class f3 awcel i0 asup_set_class f5 f3 acres acfv i0 asup_set_class f5 acfv awceq f0 padantl i0 asup_set_class f3 f6 pfvres i0 asup_set_class f3 awcel i0 asup_set_class f6 f3 acres acfv i0 asup_set_class f6 acfv awceq f0 padantl f0 i0 f3 f3 i0 asup_set_class f5 acfv i0 asup_set_class f6 acfv f4 f3 f5 f3 acres f6 f3 acres acvv acvv poffval f0 f5 f6 f4 acof aco i0 f3 i0 asup_set_class f5 acfv i0 asup_set_class f6 acfv f4 aco acmpt f5 f3 acres f6 f3 acres f4 acof aco peqtr4d $.
 $}
-$( /* The function operation expressed as a mapping.  (Contributed by Mario
-       Carneiro, 20-Jul-2014.) */
-
-$)
+$( The function operation expressed as a mapping.  (Contributed by Mario
+       Carneiro, 20-Jul-2014.) $)
 ${
 	$v ph x A B C R F G V W X $.
 	$v y $.
@@ -491,10 +449,8 @@ ${
 	poffval2 $p |- ( ph -> ( F oF R G ) = ( x e. A |-> ( B R C ) ) ) $=
 	e1 f0 f3 f9 awcel f1 f2 pralrimiva f1 f2 f3 acmpt peqid f1 f2 f3 f1 f2 f3 acmpt f9 pfnmpt f0 f3 f9 awcel f1 f2 awral f1 f2 f3 acmpt f2 awfn psyl e3 f0 f2 f6 f1 f2 f3 acmpt pfneq1d f0 f6 f2 awfn f1 f2 f3 acmpt f2 awfn pmpbird e2 f0 f4 f10 awcel f1 f2 pralrimiva f1 f2 f4 acmpt peqid f1 f2 f4 f1 f2 f4 acmpt f10 pfnmpt f0 f4 f10 awcel f1 f2 awral f1 f2 f4 acmpt f2 awfn psyl e4 f0 f2 f7 f1 f2 f4 acmpt pfneq1d f0 f7 f2 awfn f1 f2 f4 acmpt f2 awfn pmpbird e0 e0 f2 pinidm e3 f0 f6 f1 f2 f3 acmpt awceq i0 asup_set_class f2 awcel padantr f0 i0 asup_set_class f2 awcel awa i0 asup_set_class f6 f1 f2 f3 acmpt pfveq1d e4 f0 f7 f1 f2 f4 acmpt awceq i0 asup_set_class f2 awcel padantr f0 i0 asup_set_class f2 awcel awa i0 asup_set_class f7 f1 f2 f4 acmpt pfveq1d f0 i0 f2 f2 i0 asup_set_class f1 f2 f3 acmpt acfv i0 asup_set_class f1 f2 f4 acmpt acfv f5 f2 f6 f7 f8 f8 poffval f1 f2 f3 pnfmpt1 f1 i0 asup_set_class pnfcv f1 i0 asup_set_class f1 f2 f3 acmpt pnffv f1 f5 pnfcv f1 f2 f4 pnfmpt1 f1 i0 asup_set_class pnfcv f1 i0 asup_set_class f1 f2 f4 acmpt pnffv f1 i0 asup_set_class f1 f2 f3 acmpt acfv i0 asup_set_class f1 f2 f4 acmpt acfv f5 pnfov i0 f1 asup_set_class f1 f2 f3 acmpt acfv f1 asup_set_class f1 f2 f4 acmpt acfv f5 aco pnfcv i0 asup_set_class f1 asup_set_class f1 f2 f3 acmpt pfveq2 i0 asup_set_class f1 asup_set_class f1 f2 f4 acmpt pfveq2 i0 asup_set_class f1 asup_set_class awceq i0 asup_set_class f1 f2 f3 acmpt acfv f1 asup_set_class f1 f2 f3 acmpt acfv i0 asup_set_class f1 f2 f4 acmpt acfv f1 asup_set_class f1 f2 f4 acmpt acfv f5 poveq12d i0 f1 f2 i0 asup_set_class f1 f2 f3 acmpt acfv i0 asup_set_class f1 f2 f4 acmpt acfv f5 aco f1 asup_set_class f1 f2 f3 acmpt acfv f1 asup_set_class f1 f2 f4 acmpt acfv f5 aco pcbvmpt f0 f1 asup_set_class f2 awcel psimpr e1 f1 f2 f3 acmpt peqid f1 f2 f3 f9 f1 f2 f3 acmpt pfvmpt2 f0 f1 asup_set_class f2 awcel awa f1 asup_set_class f2 awcel f3 f9 awcel f1 asup_set_class f1 f2 f3 acmpt acfv f3 awceq psyl2anc f0 f1 asup_set_class f2 awcel psimpr e2 f1 f2 f4 acmpt peqid f1 f2 f4 f10 f1 f2 f4 acmpt pfvmpt2 f0 f1 asup_set_class f2 awcel awa f1 asup_set_class f2 awcel f4 f10 awcel f1 asup_set_class f1 f2 f4 acmpt acfv f4 awceq psyl2anc f0 f1 asup_set_class f2 awcel awa f1 asup_set_class f1 f2 f3 acmpt acfv f3 f1 asup_set_class f1 f2 f4 acmpt acfv f4 f5 poveq12d f0 f1 f2 f1 asup_set_class f1 f2 f3 acmpt acfv f1 asup_set_class f1 f2 f4 acmpt acfv f5 aco f3 f4 f5 aco pmpteq2dva f0 i0 f2 i0 asup_set_class f1 f2 f3 acmpt acfv i0 asup_set_class f1 f2 f4 acmpt acfv f5 aco acmpt f1 f2 f1 asup_set_class f1 f2 f3 acmpt acfv f1 asup_set_class f1 f2 f4 acmpt acfv f5 aco acmpt f1 f2 f3 f4 f5 aco acmpt psyl5eq f0 f6 f7 f5 acof aco i0 f2 i0 asup_set_class f1 f2 f3 acmpt acfv i0 asup_set_class f1 f2 f4 acmpt acfv f5 aco acmpt f1 f2 f3 f4 f5 aco acmpt peqtrd $.
 $}
-$( /* The function relation acting on maps.  (Contributed by Mario Carneiro,
-       20-Jul-2014.) */
-
-$)
+$( The function relation acting on maps.  (Contributed by Mario Carneiro,
+       20-Jul-2014.) $)
 ${
 	$v ph x A B C R F G V W X $.
 	$v y $.
@@ -525,10 +481,8 @@ ${
 	pofrfval2 $p |- ( ph -> ( F oR R G <-> A. x e. A B R C ) ) $=
 	e1 f0 f3 f9 awcel f1 f2 pralrimiva f1 f2 f3 acmpt peqid f1 f2 f3 f1 f2 f3 acmpt f9 pfnmpt f0 f3 f9 awcel f1 f2 awral f1 f2 f3 acmpt f2 awfn psyl e3 f0 f2 f6 f1 f2 f3 acmpt pfneq1d f0 f6 f2 awfn f1 f2 f3 acmpt f2 awfn pmpbird e2 f0 f4 f10 awcel f1 f2 pralrimiva f1 f2 f4 acmpt peqid f1 f2 f4 f1 f2 f4 acmpt f10 pfnmpt f0 f4 f10 awcel f1 f2 awral f1 f2 f4 acmpt f2 awfn psyl e4 f0 f2 f7 f1 f2 f4 acmpt pfneq1d f0 f7 f2 awfn f1 f2 f4 acmpt f2 awfn pmpbird e0 e0 f2 pinidm e3 f0 f6 f1 f2 f3 acmpt awceq i0 asup_set_class f2 awcel padantr f0 i0 asup_set_class f2 awcel awa i0 asup_set_class f6 f1 f2 f3 acmpt pfveq1d e4 f0 f7 f1 f2 f4 acmpt awceq i0 asup_set_class f2 awcel padantr f0 i0 asup_set_class f2 awcel awa i0 asup_set_class f7 f1 f2 f4 acmpt pfveq1d f0 i0 f2 f2 i0 asup_set_class f1 f2 f3 acmpt acfv i0 asup_set_class f1 f2 f4 acmpt acfv f5 f2 f6 f7 f8 f8 pofrfval f1 f2 f3 pnfmpt1 f1 i0 asup_set_class pnfcv f1 i0 asup_set_class f1 f2 f3 acmpt pnffv f1 f5 pnfcv f1 f2 f4 pnfmpt1 f1 i0 asup_set_class pnfcv f1 i0 asup_set_class f1 f2 f4 acmpt pnffv f1 i0 asup_set_class f1 f2 f3 acmpt acfv i0 asup_set_class f1 f2 f4 acmpt acfv f5 pnfbr f1 asup_set_class f1 f2 f3 acmpt acfv f1 asup_set_class f1 f2 f4 acmpt acfv f5 awbr i0 pnfv i0 asup_set_class f1 asup_set_class f1 f2 f3 acmpt pfveq2 i0 asup_set_class f1 asup_set_class f1 f2 f4 acmpt pfveq2 i0 asup_set_class f1 asup_set_class awceq i0 asup_set_class f1 f2 f3 acmpt acfv f1 asup_set_class f1 f2 f3 acmpt acfv i0 asup_set_class f1 f2 f4 acmpt acfv f1 asup_set_class f1 f2 f4 acmpt acfv f5 pbreq12d i0 asup_set_class f1 f2 f3 acmpt acfv i0 asup_set_class f1 f2 f4 acmpt acfv f5 awbr f1 asup_set_class f1 f2 f3 acmpt acfv f1 asup_set_class f1 f2 f4 acmpt acfv f5 awbr i0 f1 f2 pcbvral f0 f1 asup_set_class f2 awcel psimpr e1 f1 f2 f3 acmpt peqid f1 f2 f3 f9 f1 f2 f3 acmpt pfvmpt2 f0 f1 asup_set_class f2 awcel awa f1 asup_set_class f2 awcel f3 f9 awcel f1 asup_set_class f1 f2 f3 acmpt acfv f3 awceq psyl2anc f0 f1 asup_set_class f2 awcel psimpr e2 f1 f2 f4 acmpt peqid f1 f2 f4 f10 f1 f2 f4 acmpt pfvmpt2 f0 f1 asup_set_class f2 awcel awa f1 asup_set_class f2 awcel f4 f10 awcel f1 asup_set_class f1 f2 f4 acmpt acfv f4 awceq psyl2anc f0 f1 asup_set_class f2 awcel awa f1 asup_set_class f1 f2 f3 acmpt acfv f3 f1 asup_set_class f1 f2 f4 acmpt acfv f4 f5 pbreq12d f0 f1 asup_set_class f1 f2 f3 acmpt acfv f1 asup_set_class f1 f2 f4 acmpt acfv f5 awbr f3 f4 f5 awbr f1 f2 pralbidva i0 asup_set_class f1 f2 f3 acmpt acfv i0 asup_set_class f1 f2 f4 acmpt acfv f5 awbr i0 f2 awral f1 asup_set_class f1 f2 f3 acmpt acfv f1 asup_set_class f1 f2 f4 acmpt acfv f5 awbr f1 f2 awral f0 f3 f4 f5 awbr f1 f2 awral psyl5bb f0 f6 f7 f5 acofr awbr i0 asup_set_class f1 f2 f3 acmpt acfv i0 asup_set_class f1 f2 f4 acmpt acfv f5 awbr i0 f2 awral f3 f4 f5 awbr f1 f2 awral pbitrd $.
 $}
-$( /* The composition of a function operation with another function.
-       (Contributed by Mario Carneiro, 19-Dec-2014.) */
-
-$)
+$( The composition of a function operation with another function.
+       (Contributed by Mario Carneiro, 19-Dec-2014.) $)
 ${
 	$v ph A B C D R F G H V W X $.
 	$v x y $.
@@ -564,10 +518,8 @@ ${
 	pofco $p |- ( ph -> ( ( F oF R G ) o. H ) = ( ( F o. H ) oF R ( G o. H ) ) ) $=
 	e2 f4 f3 i0 asup_set_class f8 pffvelrn f0 f4 f3 f8 awf i0 asup_set_class f4 awcel i0 asup_set_class f8 acfv f3 awcel psylan e2 f0 i0 f4 f3 f8 pfeqmptd e0 e1 e3 e4 e6 f0 i1 asup_set_class f1 awcel awa i1 asup_set_class f6 acfv peqidd f0 i1 asup_set_class f2 awcel awa i1 asup_set_class f7 acfv peqidd f0 i1 f1 f2 i1 asup_set_class f6 acfv i1 asup_set_class f7 acfv f5 f3 f6 f7 f9 f10 poffval i1 asup_set_class i0 asup_set_class f8 acfv f6 pfveq2 i1 asup_set_class i0 asup_set_class f8 acfv f7 pfveq2 i1 asup_set_class i0 asup_set_class f8 acfv awceq i1 asup_set_class f6 acfv i0 asup_set_class f8 acfv f6 acfv i1 asup_set_class f7 acfv i0 asup_set_class f8 acfv f7 acfv f5 poveq12d f0 i0 i1 f4 f3 i0 asup_set_class f8 acfv i1 asup_set_class f6 acfv i1 asup_set_class f7 acfv f5 aco i0 asup_set_class f8 acfv f6 acfv i0 asup_set_class f8 acfv f7 acfv f5 aco f8 f6 f7 f5 acof aco pfmptco e0 e2 e6 f1 f2 pinss1 f3 f1 f2 acin f1 peqsstr3i f4 f3 f1 f8 pfss f0 f4 f3 f8 awf f3 f1 awss f4 f1 f8 awf psylancl f1 f4 f6 f8 pfnfco f0 f6 f1 awfn f4 f1 f8 awf f6 f8 accom f4 awfn psyl2anc e1 e2 e6 f1 f2 pinss2 f3 f1 f2 acin f2 peqsstr3i f4 f3 f2 f8 pfss f0 f4 f3 f8 awf f3 f2 awss f4 f2 f8 awf psylancl f2 f4 f7 f8 pfnfco f0 f7 f2 awfn f4 f2 f8 awf f7 f8 accom f4 awfn psyl2anc e5 e5 f4 pinidm e2 f4 f3 f8 pffn f0 f4 f3 f8 awf f8 f4 awfn psyl f4 f6 f8 i0 asup_set_class pfvco2 f0 f8 f4 awfn i0 asup_set_class f4 awcel i0 asup_set_class f6 f8 accom acfv i0 asup_set_class f8 acfv f6 acfv awceq psylan e2 f4 f3 f8 pffn f0 f4 f3 f8 awf f8 f4 awfn psyl f4 f7 f8 i0 asup_set_class pfvco2 f0 f8 f4 awfn i0 asup_set_class f4 awcel i0 asup_set_class f7 f8 accom acfv i0 asup_set_class f8 acfv f7 acfv awceq psylan f0 i0 f4 f4 i0 asup_set_class f8 acfv f6 acfv i0 asup_set_class f8 acfv f7 acfv f5 f4 f6 f8 accom f7 f8 accom f11 f11 poffval f0 f6 f7 f5 acof aco f8 accom i0 f4 i0 asup_set_class f8 acfv f6 acfv i0 asup_set_class f8 acfv f7 acfv f5 aco acmpt f6 f8 accom f7 f8 accom f5 acof aco peqtr4d $.
 $}
-$( /* Convert an identity of the operation to the analogous identity on the
-         function operation.  (Contributed by Mario Carneiro, 24-Jul-2014.) */
-
-$)
+$( Convert an identity of the operation to the analogous identity on the
+         function operation.  (Contributed by Mario Carneiro, 24-Jul-2014.) $)
 ${
 	$v ph x A B C R F G H V $.
 	$d x A $.
@@ -596,11 +548,9 @@ ${
 	poffveq $p |- ( ph -> ( F oF R G ) = H ) $=
 	e1 e2 e0 e0 f2 pinidm f0 f2 f2 f5 f2 f6 f7 f9 f9 poffn e3 e1 e2 e0 e0 f2 pinidm e4 e5 f0 f2 f2 f3 f4 f5 f2 f6 f7 f9 f9 f1 asup_set_class pofval e6 f0 f1 asup_set_class f2 awcel awa f1 asup_set_class f6 f7 f5 acof aco acfv f3 f4 f5 aco f1 asup_set_class f8 acfv peqtrd f0 f1 f2 f6 f7 f5 acof aco f8 peqfnfvd $.
 $}
-$( /* Equivalent expressions for equality with a function operation.
+$( Equivalent expressions for equality with a function operation.
        (Contributed by NM, 9-Oct-2014.)  (Proof shortened by Mario Carneiro,
-       5-Dec-2016.) */
-
-$)
+       5-Dec-2016.) $)
 ${
 	$v ph x A B C R F G H V $.
 	$d x A $.
@@ -629,10 +579,8 @@ ${
 	poffveqb $p |- ( ph -> ( H = ( F oF R G ) <-> A. x e. A ( H ` x ) = ( B R C ) ) ) $=
 	e3 f1 f2 f8 pdffn5 f0 f8 f2 awfn f8 f1 f2 f1 asup_set_class f8 acfv acmpt awceq psylib e1 e2 e0 e0 f2 pinidm e4 e5 f0 f1 f2 f2 f3 f4 f5 f2 f6 f7 f9 f9 poffval f0 f8 f1 f2 f1 asup_set_class f8 acfv acmpt f6 f7 f5 acof aco f1 f2 f3 f4 f5 aco acmpt peqeq12d f1 asup_set_class f8 pfvex f1 asup_set_class f8 acfv acvv awcel f0 pa1i f0 f1 asup_set_class f8 acfv acvv awcel f1 f2 pralrimivw f1 f2 f1 asup_set_class f8 acfv f3 f4 f5 aco acvv pmpteqb f0 f1 asup_set_class f8 acfv acvv awcel f1 f2 awral f1 f2 f1 asup_set_class f8 acfv acmpt f1 f2 f3 f4 f5 aco acmpt awceq f1 asup_set_class f8 acfv f3 f4 f5 aco awceq f1 f2 awral awb psyl f0 f8 f6 f7 f5 acof aco awceq f1 f2 f1 asup_set_class f8 acfv acmpt f1 f2 f3 f4 f5 aco acmpt awceq f1 asup_set_class f8 acfv f3 f4 f5 aco awceq f1 f2 awral pbitrd $.
 $}
-$( /* Left operation by a constant.  (Contributed by Mario Carneiro,
-       24-Jul-2014.) */
-
-$)
+$( Left operation by a constant.  (Contributed by Mario Carneiro,
+       24-Jul-2014.) $)
 ${
 	$v ph A B C R F V W X $.
 	e0 $e |- ( ph -> A e. V ) $.
@@ -651,9 +599,7 @@ ${
 	pofc1 $p |- ( ( ph /\ X e. A ) -> ( ( ( A X. { B } ) oF R F ) ` X ) = ( B R C ) ) $=
 	e1 f1 f2 f7 pfnconstg f0 f2 f7 awcel f1 f2 acsn acxp f1 awfn psyl e2 e0 e0 f1 pinidm e1 f1 f2 f8 f7 pfvconst2g f0 f2 f7 awcel f8 f1 awcel f8 f1 f2 acsn acxp acfv f2 awceq psylan e3 f0 f1 f1 f2 f3 f4 f1 f1 f2 acsn acxp f5 f6 f6 f8 pofval $.
 $}
-$( /* Right operation by a constant.  (Contributed by NM, 7-Oct-2014.) */
-
-$)
+$( Right operation by a constant.  (Contributed by NM, 7-Oct-2014.) $)
 ${
 	$v ph A B C R F V W X $.
 	e0 $e |- ( ph -> A e. V ) $.
@@ -672,10 +618,8 @@ ${
 	pofc2 $p |- ( ( ph /\ X e. A ) -> ( ( F oF R ( A X. { B } ) ) ` X ) = ( C R B ) ) $=
 	e2 e1 f1 f2 f7 pfnconstg f0 f2 f7 awcel f1 f2 acsn acxp f1 awfn psyl e0 e0 f1 pinidm e3 e1 f1 f2 f8 f7 pfvconst2g f0 f2 f7 awcel f8 f1 awcel f8 f1 f2 acsn acxp acfv f2 awceq psylan f0 f1 f1 f3 f2 f4 f1 f5 f1 f2 acsn acxp f6 f6 f8 pofval $.
 $}
-$( /* Function operation on two constant functions.  (Contributed by Mario
-       Carneiro, 28-Jul-2014.) */
-
-$)
+$( Function operation on two constant functions.  (Contributed by Mario
+       Carneiro, 28-Jul-2014.) $)
 ${
 	$v ph A B C R V W X $.
 	$v x $.
@@ -701,10 +645,8 @@ ${
 	pofc12 $p |- ( ph -> ( ( A X. { B } ) oF R ( A X. { C } ) ) = ( A X. { ( B R C ) } ) ) $=
 	e0 e1 f0 f2 f6 awcel i0 asup_set_class f1 awcel padantr e2 f0 f3 f7 awcel i0 asup_set_class f1 awcel padantr i0 f1 f2 pfconstmpt f1 f2 acsn acxp i0 f1 f2 acmpt awceq f0 pa1i i0 f1 f3 pfconstmpt f1 f3 acsn acxp i0 f1 f3 acmpt awceq f0 pa1i f0 i0 f1 f2 f3 f4 f1 f2 acsn acxp f1 f3 acsn acxp f5 f6 f7 poffval2 i0 f1 f2 f3 f4 aco pfconstmpt f0 f1 f2 acsn acxp f1 f3 acsn acxp f4 acof aco i0 f1 f2 f3 f4 aco acmpt f1 f2 f3 f4 aco acsn acxp psyl6eqr $.
 $}
-$( /* Transfer a reflexive law to the function relation.  (Contributed by
-         Mario Carneiro, 28-Jul-2014.) */
-
-$)
+$( Transfer a reflexive law to the function relation.  (Contributed by
+         Mario Carneiro, 28-Jul-2014.) $)
 ${
 	$v ph x A R S F V $.
 	$v w $.
@@ -735,10 +677,8 @@ ${
 	pcaofref $p |- ( ph -> F oR R F ) $=
 	e1 f2 f4 i0 asup_set_class f5 pffvelrn f0 f2 f4 f5 awf i0 asup_set_class f2 awcel i0 asup_set_class f5 acfv f4 awcel psylan e2 f0 f1 asup_set_class f1 asup_set_class f3 awbr f1 f4 pralrimiva f0 f1 asup_set_class f1 asup_set_class f3 awbr f1 f4 awral i0 asup_set_class f2 awcel padantr f1 asup_set_class i0 asup_set_class f5 acfv awceq pid f1 asup_set_class i0 asup_set_class f5 acfv awceq pid f1 asup_set_class i0 asup_set_class f5 acfv awceq f1 asup_set_class i0 asup_set_class f5 acfv f1 asup_set_class i0 asup_set_class f5 acfv f3 pbreq12d f1 asup_set_class f1 asup_set_class f3 awbr i0 asup_set_class f5 acfv i0 asup_set_class f5 acfv f3 awbr f1 i0 asup_set_class f5 acfv f4 prspcv f0 i0 asup_set_class f2 awcel awa i0 asup_set_class f5 acfv f4 awcel f1 asup_set_class f1 asup_set_class f3 awbr f1 f4 awral i0 asup_set_class f5 acfv i0 asup_set_class f5 acfv f3 awbr psylc f0 i0 asup_set_class f5 acfv i0 asup_set_class f5 acfv f3 awbr i0 f2 pralrimiva e1 f2 f4 f5 pffn f0 f2 f4 f5 awf f5 f2 awfn psyl e1 f2 f4 f5 pffn f0 f2 f4 f5 awf f5 f2 awfn psyl e0 e0 f2 pinidm f0 i0 asup_set_class f2 awcel awa i0 asup_set_class f5 acfv peqidd f0 i0 asup_set_class f2 awcel awa i0 asup_set_class f5 acfv peqidd f0 i0 f2 f2 i0 asup_set_class f5 acfv i0 asup_set_class f5 acfv f3 f2 f5 f5 f6 f6 pofrfval f0 f5 f5 f3 acofr awbr i0 asup_set_class f5 acfv i0 asup_set_class f5 acfv f3 awbr i0 f2 awral pmpbird $.
 $}
-$( /* Transfer a left inverse law to the function operation.  (Contributed
-           by NM, 22-Oct-2014.) */
-
-$)
+$( Transfer a left inverse law to the function operation.  (Contributed
+           by NM, 22-Oct-2014.) $)
 ${
 	$v ph x v A B R S F G N V W $.
 	$v w $.
@@ -783,10 +723,8 @@ ${
 	pcaofinvl $p |- ( ph -> ( G oF R F ) = ( A X. { B } ) ) $=
 	e0 e3 f0 f6 f6 f9 awf f2 asup_set_class f3 awcel padantr e1 f3 f6 f2 asup_set_class f7 pffvelrn f0 f3 f6 f7 awf f2 asup_set_class f3 awcel f2 asup_set_class f7 acfv f6 awcel psylan f6 f6 f2 asup_set_class f7 acfv f9 pffvelrn f0 f2 asup_set_class f3 awcel awa f6 f6 f9 awf f2 asup_set_class f7 acfv f6 awcel f2 asup_set_class f7 acfv f9 acfv f6 awcel psyl2anc f2 f3 f2 asup_set_class f7 acfv f9 acfv acmpt peqid f0 f2 f3 f2 asup_set_class f7 acfv f9 acfv f6 f2 f3 f2 asup_set_class f7 acfv f9 acfv acmpt pfmptd e4 f0 f3 f6 f8 f2 f3 f2 asup_set_class f7 acfv f9 acfv acmpt pfeq1d f0 f3 f6 f8 awf f3 f6 f2 f3 f2 asup_set_class f7 acfv f9 acfv acmpt awf pmpbird f3 f6 i0 asup_set_class f8 pffvelrn f0 f3 f6 f8 awf i0 asup_set_class f3 awcel i0 asup_set_class f8 acfv f6 awcel psylan e1 f3 f6 i0 asup_set_class f7 pffvelrn f0 f3 f6 f7 awf i0 asup_set_class f3 awcel i0 asup_set_class f7 acfv f6 awcel psylan f2 asup_set_class f7 acfv f9 pfvex f2 f3 f2 asup_set_class f7 acfv f9 acfv acmpt peqid f2 f3 f2 asup_set_class f7 acfv f9 acfv f2 f3 f2 asup_set_class f7 acfv f9 acfv acmpt pfnmpti e4 f0 f3 f8 f2 f3 f2 asup_set_class f7 acfv f9 acfv acmpt pfneq1d f0 f8 f3 awfn f2 f3 f2 asup_set_class f7 acfv f9 acfv acmpt f3 awfn pmpbiri i0 f3 f8 pdffn5 f0 f8 f3 awfn f8 i0 f3 i0 asup_set_class f8 acfv acmpt awceq psylib e1 f0 i0 f3 f6 f7 pfeqmptd f0 i0 f3 i0 asup_set_class f8 acfv i0 asup_set_class f7 acfv f5 f8 f7 f10 f6 f6 poffval2 e4 f0 i0 asup_set_class f8 f2 f3 f2 asup_set_class f7 acfv f9 acfv acmpt pfveq1d f2 asup_set_class i0 asup_set_class f7 pfveq2 f2 asup_set_class i0 asup_set_class awceq f2 asup_set_class f7 acfv i0 asup_set_class f7 acfv f9 pfveq2d f2 f3 f2 asup_set_class f7 acfv f9 acfv acmpt peqid i0 asup_set_class f7 acfv f9 pfvex f2 i0 asup_set_class f2 asup_set_class f7 acfv f9 acfv i0 asup_set_class f7 acfv f9 acfv f3 f2 f3 f2 asup_set_class f7 acfv f9 acfv acmpt pfvmpt f0 i0 asup_set_class f3 awcel i0 asup_set_class f8 acfv i0 asup_set_class f2 f3 f2 asup_set_class f7 acfv f9 acfv acmpt acfv i0 asup_set_class f7 acfv f9 acfv psylan9eq f0 i0 asup_set_class f3 awcel awa i0 asup_set_class f8 acfv i0 asup_set_class f7 acfv f9 acfv i0 asup_set_class f7 acfv f5 poveq1d e1 f3 f6 i0 asup_set_class f7 pffvelrn f0 f3 f6 f7 awf i0 asup_set_class f3 awcel i0 asup_set_class f7 acfv f6 awcel psylan e5 f0 f1 asup_set_class f9 acfv f1 asup_set_class f5 aco f4 awceq f1 f6 pralrimiva f0 f1 asup_set_class f9 acfv f1 asup_set_class f5 aco f4 awceq f1 f6 awral i0 asup_set_class f3 awcel padantr f1 asup_set_class i0 asup_set_class f7 acfv f9 pfveq2 f1 asup_set_class i0 asup_set_class f7 acfv awceq pid f1 asup_set_class i0 asup_set_class f7 acfv awceq f1 asup_set_class f9 acfv i0 asup_set_class f7 acfv f9 acfv f1 asup_set_class i0 asup_set_class f7 acfv f5 poveq12d f1 asup_set_class i0 asup_set_class f7 acfv awceq f1 asup_set_class f9 acfv f1 asup_set_class f5 aco i0 asup_set_class f7 acfv f9 acfv i0 asup_set_class f7 acfv f5 aco f4 peqeq1d f1 asup_set_class f9 acfv f1 asup_set_class f5 aco f4 awceq i0 asup_set_class f7 acfv f9 acfv i0 asup_set_class f7 acfv f5 aco f4 awceq f1 i0 asup_set_class f7 acfv f6 prspcva f0 i0 asup_set_class f3 awcel awa i0 asup_set_class f7 acfv f6 awcel f1 asup_set_class f9 acfv f1 asup_set_class f5 aco f4 awceq f1 f6 awral i0 asup_set_class f7 acfv f9 acfv i0 asup_set_class f7 acfv f5 aco f4 awceq psyl2anc f0 i0 asup_set_class f3 awcel awa i0 asup_set_class f8 acfv i0 asup_set_class f7 acfv f5 aco i0 asup_set_class f7 acfv f9 acfv i0 asup_set_class f7 acfv f5 aco f4 peqtrd f0 i0 f3 i0 asup_set_class f8 acfv i0 asup_set_class f7 acfv f5 aco f4 pmpteq2dva f0 f8 f7 f5 acof aco i0 f3 i0 asup_set_class f8 acfv i0 asup_set_class f7 acfv f5 aco acmpt i0 f3 f4 acmpt peqtrd i0 f3 f4 pfconstmpt f0 f8 f7 f5 acof aco i0 f3 f4 acmpt f3 f4 acsn acxp psyl6eqr $.
 $}
-$( /* Transfer a left identity law to the function operation.
-           (Contributed by NM, 21-Oct-2014.) */
-
-$)
+$( Transfer a left identity law to the function operation.
+           (Contributed by NM, 21-Oct-2014.) $)
 ${
 	$v ph x A B R S F V W $.
 	$v w $.
@@ -820,10 +758,8 @@ ${
 	pcaofid0l $p |- ( ph -> ( ( A X. { B } ) oF R F ) = F ) $=
 	e0 e2 f2 f3 f8 pfnconstg f0 f3 f8 awcel f2 f3 acsn acxp f2 awfn psyl e1 f2 f5 f6 pffn f0 f2 f5 f6 awf f6 f2 awfn psyl e1 f2 f5 f6 pffn f0 f2 f5 f6 awf f6 f2 awfn psyl e2 f2 f3 i0 asup_set_class f8 pfvconst2g f0 f3 f8 awcel i0 asup_set_class f2 awcel i0 asup_set_class f2 f3 acsn acxp acfv f3 awceq psylan f0 i0 asup_set_class f2 awcel awa i0 asup_set_class f6 acfv peqidd e1 f2 f5 i0 asup_set_class f6 pffvelrn f0 f2 f5 f6 awf i0 asup_set_class f2 awcel i0 asup_set_class f6 acfv f5 awcel psylan e3 f0 f3 f1 asup_set_class f4 aco f1 asup_set_class awceq f1 f5 pralrimiva f1 asup_set_class i0 asup_set_class f6 acfv f3 f4 poveq2 f1 asup_set_class i0 asup_set_class f6 acfv awceq pid f1 asup_set_class i0 asup_set_class f6 acfv awceq f3 f1 asup_set_class f4 aco f3 i0 asup_set_class f6 acfv f4 aco f1 asup_set_class i0 asup_set_class f6 acfv peqeq12d f3 f1 asup_set_class f4 aco f1 asup_set_class awceq f3 i0 asup_set_class f6 acfv f4 aco i0 asup_set_class f6 acfv awceq f1 i0 asup_set_class f6 acfv f5 prspccva f0 f3 f1 asup_set_class f4 aco f1 asup_set_class awceq f1 f5 awral i0 asup_set_class f6 acfv f5 awcel f3 i0 asup_set_class f6 acfv f4 aco i0 asup_set_class f6 acfv awceq psylan f0 i0 asup_set_class f2 awcel i0 asup_set_class f6 acfv f5 awcel f3 i0 asup_set_class f6 acfv f4 aco i0 asup_set_class f6 acfv awceq psyldan f0 i0 f2 f3 i0 asup_set_class f6 acfv f4 f2 f3 acsn acxp f6 f6 f7 poffveq $.
 $}
-$( /* Transfer a right identity law to the function operation.
-           (Contributed by NM, 21-Oct-2014.) */
-
-$)
+$( Transfer a right identity law to the function operation.
+           (Contributed by NM, 21-Oct-2014.) $)
 ${
 	$v ph x A B R S F V W $.
 	$v w $.
@@ -857,10 +793,8 @@ ${
 	pcaofid0r $p |- ( ph -> ( F oF R ( A X. { B } ) ) = F ) $=
 	e0 e1 f2 f5 f6 pffn f0 f2 f5 f6 awf f6 f2 awfn psyl e2 f2 f3 f8 pfnconstg f0 f3 f8 awcel f2 f3 acsn acxp f2 awfn psyl e1 f2 f5 f6 pffn f0 f2 f5 f6 awf f6 f2 awfn psyl f0 i0 asup_set_class f2 awcel awa i0 asup_set_class f6 acfv peqidd e2 f2 f3 i0 asup_set_class f8 pfvconst2g f0 f3 f8 awcel i0 asup_set_class f2 awcel i0 asup_set_class f2 f3 acsn acxp acfv f3 awceq psylan e1 f2 f5 i0 asup_set_class f6 pffvelrn f0 f2 f5 f6 awf i0 asup_set_class f2 awcel i0 asup_set_class f6 acfv f5 awcel psylan e3 f0 f1 asup_set_class f3 f4 aco f1 asup_set_class awceq f1 f5 pralrimiva f1 asup_set_class i0 asup_set_class f6 acfv f3 f4 poveq1 f1 asup_set_class i0 asup_set_class f6 acfv awceq pid f1 asup_set_class i0 asup_set_class f6 acfv awceq f1 asup_set_class f3 f4 aco i0 asup_set_class f6 acfv f3 f4 aco f1 asup_set_class i0 asup_set_class f6 acfv peqeq12d f1 asup_set_class f3 f4 aco f1 asup_set_class awceq i0 asup_set_class f6 acfv f3 f4 aco i0 asup_set_class f6 acfv awceq f1 i0 asup_set_class f6 acfv f5 prspccva f0 f1 asup_set_class f3 f4 aco f1 asup_set_class awceq f1 f5 awral i0 asup_set_class f6 acfv f5 awcel i0 asup_set_class f6 acfv f3 f4 aco i0 asup_set_class f6 acfv awceq psylan f0 i0 asup_set_class f2 awcel i0 asup_set_class f6 acfv f5 awcel i0 asup_set_class f6 acfv f3 f4 aco i0 asup_set_class f6 acfv awceq psyldan f0 i0 f2 i0 asup_set_class f6 acfv f3 f4 f6 f2 f3 acsn acxp f6 f7 poffveq $.
 $}
-$( /* Transfer a right absorption law to the function operation.
-           (Contributed by Mario Carneiro, 28-Jul-2014.) */
-
-$)
+$( Transfer a right absorption law to the function operation.
+           (Contributed by Mario Carneiro, 28-Jul-2014.) $)
 ${
 	$v ph x A B C R S F V W X $.
 	$v w $.
@@ -897,10 +831,8 @@ ${
 	pcaofid1 $p |- ( ph -> ( F oF R ( A X. { B } ) ) = ( A X. { C } ) ) $=
 	e0 e1 f2 f6 f7 pffn f0 f2 f6 f7 awf f7 f2 awfn psyl e2 f2 f3 f9 pfnconstg f0 f3 f9 awcel f2 f3 acsn acxp f2 awfn psyl e3 f2 f4 f10 pfnconstg f0 f4 f10 awcel f2 f4 acsn acxp f2 awfn psyl f0 i0 asup_set_class f2 awcel awa i0 asup_set_class f7 acfv peqidd e2 f2 f3 i0 asup_set_class f9 pfvconst2g f0 f3 f9 awcel i0 asup_set_class f2 awcel i0 asup_set_class f2 f3 acsn acxp acfv f3 awceq psylan e1 f2 f6 i0 asup_set_class f7 pffvelrn f0 f2 f6 f7 awf i0 asup_set_class f2 awcel i0 asup_set_class f7 acfv f6 awcel psylan e4 f0 f1 asup_set_class f3 f5 aco f4 awceq f1 f6 pralrimiva f1 asup_set_class i0 asup_set_class f7 acfv f3 f5 poveq1 f1 asup_set_class i0 asup_set_class f7 acfv awceq f1 asup_set_class f3 f5 aco i0 asup_set_class f7 acfv f3 f5 aco f4 peqeq1d f1 asup_set_class f3 f5 aco f4 awceq i0 asup_set_class f7 acfv f3 f5 aco f4 awceq f1 i0 asup_set_class f7 acfv f6 prspccva f0 f1 asup_set_class f3 f5 aco f4 awceq f1 f6 awral i0 asup_set_class f7 acfv f6 awcel i0 asup_set_class f7 acfv f3 f5 aco f4 awceq psylan f0 i0 asup_set_class f2 awcel i0 asup_set_class f7 acfv f6 awcel i0 asup_set_class f7 acfv f3 f5 aco f4 awceq psyldan e3 f2 f4 i0 asup_set_class f10 pfvconst2g f0 f4 f10 awcel i0 asup_set_class f2 awcel i0 asup_set_class f2 f4 acsn acxp acfv f4 awceq psylan f0 i0 asup_set_class f2 awcel awa i0 asup_set_class f7 acfv f3 f5 aco f4 i0 asup_set_class f2 f4 acsn acxp acfv peqtr4d f0 i0 f2 i0 asup_set_class f7 acfv f3 f5 f7 f2 f3 acsn acxp f2 f4 acsn acxp f8 poffveq $.
 $}
-$( /* Transfer a right absorption law to the function operation.
-         (Contributed by Mario Carneiro, 28-Jul-2014.) */
-
-$)
+$( Transfer a right absorption law to the function operation.
+         (Contributed by Mario Carneiro, 28-Jul-2014.) $)
 ${
 	$v ph x A B C R S F V W X $.
 	$v w $.
@@ -937,10 +869,8 @@ ${
 	pcaofid2 $p |- ( ph -> ( ( A X. { B } ) oF R F ) = ( A X. { C } ) ) $=
 	e0 e2 f2 f3 f9 pfnconstg f0 f3 f9 awcel f2 f3 acsn acxp f2 awfn psyl e1 f2 f6 f7 pffn f0 f2 f6 f7 awf f7 f2 awfn psyl e3 f2 f4 f10 pfnconstg f0 f4 f10 awcel f2 f4 acsn acxp f2 awfn psyl e2 f2 f3 i0 asup_set_class f9 pfvconst2g f0 f3 f9 awcel i0 asup_set_class f2 awcel i0 asup_set_class f2 f3 acsn acxp acfv f3 awceq psylan f0 i0 asup_set_class f2 awcel awa i0 asup_set_class f7 acfv peqidd e1 f2 f6 i0 asup_set_class f7 pffvelrn f0 f2 f6 f7 awf i0 asup_set_class f2 awcel i0 asup_set_class f7 acfv f6 awcel psylan e4 f0 f3 f1 asup_set_class f5 aco f4 awceq f1 f6 pralrimiva f1 asup_set_class i0 asup_set_class f7 acfv f3 f5 poveq2 f1 asup_set_class i0 asup_set_class f7 acfv awceq f3 f1 asup_set_class f5 aco f3 i0 asup_set_class f7 acfv f5 aco f4 peqeq1d f3 f1 asup_set_class f5 aco f4 awceq f3 i0 asup_set_class f7 acfv f5 aco f4 awceq f1 i0 asup_set_class f7 acfv f6 prspccva f0 f3 f1 asup_set_class f5 aco f4 awceq f1 f6 awral i0 asup_set_class f7 acfv f6 awcel f3 i0 asup_set_class f7 acfv f5 aco f4 awceq psylan f0 i0 asup_set_class f2 awcel i0 asup_set_class f7 acfv f6 awcel f3 i0 asup_set_class f7 acfv f5 aco f4 awceq psyldan e3 f2 f4 i0 asup_set_class f10 pfvconst2g f0 f4 f10 awcel i0 asup_set_class f2 awcel i0 asup_set_class f2 f4 acsn acxp acfv f4 awceq psylan f0 i0 asup_set_class f2 awcel awa f3 i0 asup_set_class f7 acfv f5 aco f4 i0 asup_set_class f2 f4 acsn acxp acfv peqtr4d f0 i0 f2 f3 i0 asup_set_class f7 acfv f5 f2 f3 acsn acxp f7 f2 f4 acsn acxp f8 poffveq $.
 $}
-$( /* Transfer a commutative law to the function operation.  (Contributed by
-         Mario Carneiro, 26-Jul-2014.) */
-
-$)
+$( Transfer a commutative law to the function operation.  (Contributed by
+         Mario Carneiro, 26-Jul-2014.) $)
 ${
 	$v ph x y A R S F G V $.
 	$v w $.
@@ -974,10 +904,8 @@ ${
 	pcaofcom $p |- ( ph -> ( F oF R G ) = ( G oF R F ) ) $=
 	e1 f3 f5 i0 asup_set_class f6 pffvelrn f0 f3 f5 f6 awf i0 asup_set_class f3 awcel i0 asup_set_class f6 acfv f5 awcel psylan e2 f3 f5 i0 asup_set_class f7 pffvelrn f0 f3 f5 f7 awf i0 asup_set_class f3 awcel i0 asup_set_class f7 acfv f5 awcel psylan f0 i0 asup_set_class f3 awcel awa i0 asup_set_class f6 acfv f5 awcel i0 asup_set_class f7 acfv f5 awcel pjca e3 f0 f1 f2 i0 asup_set_class f6 acfv i0 asup_set_class f7 acfv f5 f4 pcaovcomg f0 i0 asup_set_class f3 awcel i0 asup_set_class f6 acfv f5 awcel i0 asup_set_class f7 acfv f5 awcel awa i0 asup_set_class f6 acfv i0 asup_set_class f7 acfv f4 aco i0 asup_set_class f7 acfv i0 asup_set_class f6 acfv f4 aco awceq psyldan f0 i0 f3 i0 asup_set_class f6 acfv i0 asup_set_class f7 acfv f4 aco i0 asup_set_class f7 acfv i0 asup_set_class f6 acfv f4 aco pmpteq2dva e0 e1 f3 f5 i0 asup_set_class f6 pffvelrn f0 f3 f5 f6 awf i0 asup_set_class f3 awcel i0 asup_set_class f6 acfv f5 awcel psylan e2 f3 f5 i0 asup_set_class f7 pffvelrn f0 f3 f5 f7 awf i0 asup_set_class f3 awcel i0 asup_set_class f7 acfv f5 awcel psylan e1 f0 i0 f3 f5 f6 pfeqmptd e2 f0 i0 f3 f5 f7 pfeqmptd f0 i0 f3 i0 asup_set_class f6 acfv i0 asup_set_class f7 acfv f4 f6 f7 f8 f5 f5 poffval2 e0 e2 f3 f5 i0 asup_set_class f7 pffvelrn f0 f3 f5 f7 awf i0 asup_set_class f3 awcel i0 asup_set_class f7 acfv f5 awcel psylan e1 f3 f5 i0 asup_set_class f6 pffvelrn f0 f3 f5 f6 awf i0 asup_set_class f3 awcel i0 asup_set_class f6 acfv f5 awcel psylan e2 f0 i0 f3 f5 f7 pfeqmptd e1 f0 i0 f3 f5 f6 pfeqmptd f0 i0 f3 i0 asup_set_class f7 acfv i0 asup_set_class f6 acfv f4 f7 f6 f8 f5 f5 poffval2 f0 i0 f3 i0 asup_set_class f6 acfv i0 asup_set_class f7 acfv f4 aco acmpt i0 f3 i0 asup_set_class f7 acfv i0 asup_set_class f6 acfv f4 aco acmpt f6 f7 f4 acof aco f7 f6 f4 acof aco p3eqtr4d $.
 $}
-$( /* Transfer a relation subset law to the function relation.  (Contributed
-         by Mario Carneiro, 28-Jul-2014.) */
-
-$)
+$( Transfer a relation subset law to the function relation.  (Contributed
+         by Mario Carneiro, 28-Jul-2014.) $)
 ${
 	$v ph x y A R S T F G V $.
 	$v w $.
@@ -1012,10 +940,8 @@ ${
 	pcaofrss $p |- ( ph -> ( F oR R G -> F oR T G ) ) $=
 	e1 f3 f5 i0 asup_set_class f7 pffvelrn f0 f3 f5 f7 awf i0 asup_set_class f3 awcel i0 asup_set_class f7 acfv f5 awcel psylan e2 f3 f5 i0 asup_set_class f8 pffvelrn f0 f3 f5 f8 awf i0 asup_set_class f3 awcel i0 asup_set_class f8 acfv f5 awcel psylan e3 f0 f1 asup_set_class f2 asup_set_class f4 awbr f1 asup_set_class f2 asup_set_class f6 awbr awi f1 f2 f5 f5 pralrimivva f0 f1 asup_set_class f2 asup_set_class f4 awbr f1 asup_set_class f2 asup_set_class f6 awbr awi f2 f5 awral f1 f5 awral i0 asup_set_class f3 awcel padantr f1 asup_set_class i0 asup_set_class f7 acfv f2 asup_set_class f4 pbreq1 f1 asup_set_class i0 asup_set_class f7 acfv f2 asup_set_class f6 pbreq1 f1 asup_set_class i0 asup_set_class f7 acfv awceq f1 asup_set_class f2 asup_set_class f4 awbr i0 asup_set_class f7 acfv f2 asup_set_class f4 awbr f1 asup_set_class f2 asup_set_class f6 awbr i0 asup_set_class f7 acfv f2 asup_set_class f6 awbr pimbi12d f2 asup_set_class i0 asup_set_class f8 acfv i0 asup_set_class f7 acfv f4 pbreq2 f2 asup_set_class i0 asup_set_class f8 acfv i0 asup_set_class f7 acfv f6 pbreq2 f2 asup_set_class i0 asup_set_class f8 acfv awceq i0 asup_set_class f7 acfv f2 asup_set_class f4 awbr i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f4 awbr i0 asup_set_class f7 acfv f2 asup_set_class f6 awbr i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f6 awbr pimbi12d f1 asup_set_class f2 asup_set_class f4 awbr f1 asup_set_class f2 asup_set_class f6 awbr awi i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f4 awbr i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f6 awbr awi i0 asup_set_class f7 acfv f2 asup_set_class f4 awbr i0 asup_set_class f7 acfv f2 asup_set_class f6 awbr awi f1 f2 i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f5 f5 prspc2va f0 i0 asup_set_class f3 awcel awa i0 asup_set_class f7 acfv f5 awcel i0 asup_set_class f8 acfv f5 awcel f1 asup_set_class f2 asup_set_class f4 awbr f1 asup_set_class f2 asup_set_class f6 awbr awi f2 f5 awral f1 f5 awral i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f4 awbr i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f6 awbr awi psyl21anc f0 i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f4 awbr i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f6 awbr i0 f3 pralimdva e1 f3 f5 f7 pffn f0 f3 f5 f7 awf f7 f3 awfn psyl e2 f3 f5 f8 pffn f0 f3 f5 f8 awf f8 f3 awfn psyl e0 e0 f3 pinidm f0 i0 asup_set_class f3 awcel awa i0 asup_set_class f7 acfv peqidd f0 i0 asup_set_class f3 awcel awa i0 asup_set_class f8 acfv peqidd f0 i0 f3 f3 i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f4 f3 f7 f8 f9 f9 pofrfval e1 f3 f5 f7 pffn f0 f3 f5 f7 awf f7 f3 awfn psyl e2 f3 f5 f8 pffn f0 f3 f5 f8 awf f8 f3 awfn psyl e0 e0 f3 pinidm f0 i0 asup_set_class f3 awcel awa i0 asup_set_class f7 acfv peqidd f0 i0 asup_set_class f3 awcel awa i0 asup_set_class f8 acfv peqidd f0 i0 f3 f3 i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f6 f3 f7 f8 f9 f9 pofrfval f0 i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f4 awbr i0 f3 awral i0 asup_set_class f7 acfv i0 asup_set_class f8 acfv f6 awbr i0 f3 awral f7 f8 f4 acofr awbr f7 f8 f6 acofr awbr p3imtr4d $.
 $}
-$( /* Transfer an associative law to the function operation.  (Contributed
-         by Mario Carneiro, 26-Jul-2014.) */
-
-$)
+$( Transfer an associative law to the function operation.  (Contributed
+         by Mario Carneiro, 26-Jul-2014.) $)
 ${
 	$v ph x y z A P R S T F G H O V $.
 	$v w $.
@@ -1055,10 +981,8 @@ ${
 	pcaofass $p |- ( ph -> ( ( F oF R G ) oF T H ) = ( F oF O ( G oF P H ) ) ) $=
 	e4 f0 f1 asup_set_class f2 asup_set_class f6 aco f3 asup_set_class f8 aco f1 asup_set_class f2 asup_set_class f3 asup_set_class f5 aco f12 aco awceq f1 f2 f3 f7 f7 f7 pralrimivvva f0 f1 asup_set_class f2 asup_set_class f6 aco f3 asup_set_class f8 aco f1 asup_set_class f2 asup_set_class f3 asup_set_class f5 aco f12 aco awceq f3 f7 awral f2 f7 awral f1 f7 awral i0 asup_set_class f4 awcel padantr e1 f4 f7 i0 asup_set_class f9 pffvelrn f0 f4 f7 f9 awf i0 asup_set_class f4 awcel i0 asup_set_class f9 acfv f7 awcel psylan e2 f4 f7 i0 asup_set_class f10 pffvelrn f0 f4 f7 f10 awf i0 asup_set_class f4 awcel i0 asup_set_class f10 acfv f7 awcel psylan e3 f4 f7 i0 asup_set_class f11 pffvelrn f0 f4 f7 f11 awf i0 asup_set_class f4 awcel i0 asup_set_class f11 acfv f7 awcel psylan f1 asup_set_class i0 asup_set_class f9 acfv f2 asup_set_class f6 poveq1 f1 asup_set_class i0 asup_set_class f9 acfv awceq f1 asup_set_class f2 asup_set_class f6 aco i0 asup_set_class f9 acfv f2 asup_set_class f6 aco f3 asup_set_class f8 poveq1d f1 asup_set_class i0 asup_set_class f9 acfv f2 asup_set_class f3 asup_set_class f5 aco f12 poveq1 f1 asup_set_class i0 asup_set_class f9 acfv awceq f1 asup_set_class f2 asup_set_class f6 aco f3 asup_set_class f8 aco i0 asup_set_class f9 acfv f2 asup_set_class f6 aco f3 asup_set_class f8 aco f1 asup_set_class f2 asup_set_class f3 asup_set_class f5 aco f12 aco i0 asup_set_class f9 acfv f2 asup_set_class f3 asup_set_class f5 aco f12 aco peqeq12d f2 asup_set_class i0 asup_set_class f10 acfv i0 asup_set_class f9 acfv f6 poveq2 f2 asup_set_class i0 asup_set_class f10 acfv awceq i0 asup_set_class f9 acfv f2 asup_set_class f6 aco i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f6 aco f3 asup_set_class f8 poveq1d f2 asup_set_class i0 asup_set_class f10 acfv f3 asup_set_class f5 poveq1 f2 asup_set_class i0 asup_set_class f10 acfv awceq f2 asup_set_class f3 asup_set_class f5 aco i0 asup_set_class f10 acfv f3 asup_set_class f5 aco i0 asup_set_class f9 acfv f12 poveq2d f2 asup_set_class i0 asup_set_class f10 acfv awceq i0 asup_set_class f9 acfv f2 asup_set_class f6 aco f3 asup_set_class f8 aco i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f6 aco f3 asup_set_class f8 aco i0 asup_set_class f9 acfv f2 asup_set_class f3 asup_set_class f5 aco f12 aco i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f3 asup_set_class f5 aco f12 aco peqeq12d f3 asup_set_class i0 asup_set_class f11 acfv i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f6 aco f8 poveq2 f3 asup_set_class i0 asup_set_class f11 acfv i0 asup_set_class f10 acfv f5 poveq2 f3 asup_set_class i0 asup_set_class f11 acfv awceq i0 asup_set_class f10 acfv f3 asup_set_class f5 aco i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f5 aco i0 asup_set_class f9 acfv f12 poveq2d f3 asup_set_class i0 asup_set_class f11 acfv awceq i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f6 aco f3 asup_set_class f8 aco i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f6 aco i0 asup_set_class f11 acfv f8 aco i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f3 asup_set_class f5 aco f12 aco i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f5 aco f12 aco peqeq12d f1 asup_set_class f2 asup_set_class f6 aco f3 asup_set_class f8 aco f1 asup_set_class f2 asup_set_class f3 asup_set_class f5 aco f12 aco awceq i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f6 aco i0 asup_set_class f11 acfv f8 aco i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f5 aco f12 aco awceq i0 asup_set_class f9 acfv f2 asup_set_class f6 aco f3 asup_set_class f8 aco i0 asup_set_class f9 acfv f2 asup_set_class f3 asup_set_class f5 aco f12 aco awceq i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f6 aco f3 asup_set_class f8 aco i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f3 asup_set_class f5 aco f12 aco awceq f1 f2 f3 i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f7 f7 f7 prspc3v f0 i0 asup_set_class f4 awcel awa i0 asup_set_class f9 acfv f7 awcel i0 asup_set_class f10 acfv f7 awcel i0 asup_set_class f11 acfv f7 awcel f1 asup_set_class f2 asup_set_class f6 aco f3 asup_set_class f8 aco f1 asup_set_class f2 asup_set_class f3 asup_set_class f5 aco f12 aco awceq f3 f7 awral f2 f7 awral f1 f7 awral i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f6 aco i0 asup_set_class f11 acfv f8 aco i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f5 aco f12 aco awceq awi psyl3anc f0 i0 asup_set_class f4 awcel awa f1 asup_set_class f2 asup_set_class f6 aco f3 asup_set_class f8 aco f1 asup_set_class f2 asup_set_class f3 asup_set_class f5 aco f12 aco awceq f3 f7 awral f2 f7 awral f1 f7 awral i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f6 aco i0 asup_set_class f11 acfv f8 aco i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f5 aco f12 aco awceq pmpd f0 i0 f4 i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f6 aco i0 asup_set_class f11 acfv f8 aco i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f5 aco f12 aco pmpteq2dva e0 i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f6 povex i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f6 aco acvv awcel f0 i0 asup_set_class f4 awcel awa pa1i e3 f4 f7 i0 asup_set_class f11 pffvelrn f0 f4 f7 f11 awf i0 asup_set_class f4 awcel i0 asup_set_class f11 acfv f7 awcel psylan e0 e1 f4 f7 i0 asup_set_class f9 pffvelrn f0 f4 f7 f9 awf i0 asup_set_class f4 awcel i0 asup_set_class f9 acfv f7 awcel psylan e2 f4 f7 i0 asup_set_class f10 pffvelrn f0 f4 f7 f10 awf i0 asup_set_class f4 awcel i0 asup_set_class f10 acfv f7 awcel psylan e1 f0 i0 f4 f7 f9 pfeqmptd e2 f0 i0 f4 f7 f10 pfeqmptd f0 i0 f4 i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f6 f9 f10 f13 f7 f7 poffval2 e3 f0 i0 f4 f7 f11 pfeqmptd f0 i0 f4 i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f6 aco i0 asup_set_class f11 acfv f8 f9 f10 f6 acof aco f11 f13 acvv f7 poffval2 e0 e1 f4 f7 i0 asup_set_class f9 pffvelrn f0 f4 f7 f9 awf i0 asup_set_class f4 awcel i0 asup_set_class f9 acfv f7 awcel psylan i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f5 povex i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f5 aco acvv awcel f0 i0 asup_set_class f4 awcel awa pa1i e1 f0 i0 f4 f7 f9 pfeqmptd e0 e2 f4 f7 i0 asup_set_class f10 pffvelrn f0 f4 f7 f10 awf i0 asup_set_class f4 awcel i0 asup_set_class f10 acfv f7 awcel psylan e3 f4 f7 i0 asup_set_class f11 pffvelrn f0 f4 f7 f11 awf i0 asup_set_class f4 awcel i0 asup_set_class f11 acfv f7 awcel psylan e2 f0 i0 f4 f7 f10 pfeqmptd e3 f0 i0 f4 f7 f11 pfeqmptd f0 i0 f4 i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f5 f10 f11 f13 f7 f7 poffval2 f0 i0 f4 i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f5 aco f12 f9 f10 f11 f5 acof aco f13 f7 acvv poffval2 f0 i0 f4 i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f6 aco i0 asup_set_class f11 acfv f8 aco acmpt i0 f4 i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f5 aco f12 aco acmpt f9 f10 f6 acof aco f11 f8 acof aco f9 f10 f11 f5 acof aco f12 acof aco p3eqtr4d $.
 $}
-$( /* Transfer a transitivity law to the function relation.  (Contributed by
-         Mario Carneiro, 28-Jul-2014.) */
-
-$)
+$( Transfer a transitivity law to the function relation.  (Contributed by
+         Mario Carneiro, 28-Jul-2014.) $)
 ${
 	$v ph x y z A R S T U F G H V $.
 	$v w $.
@@ -1097,10 +1021,8 @@ ${
 	pcaoftrn $p |- ( ph -> ( ( F oR R G /\ G oR T H ) -> F oR U H ) ) $=
 	e4 f0 f1 asup_set_class f2 asup_set_class f5 awbr f2 asup_set_class f3 asup_set_class f7 awbr awa f1 asup_set_class f3 asup_set_class f8 awbr awi f1 f2 f3 f6 f6 f6 pralrimivvva f0 f1 asup_set_class f2 asup_set_class f5 awbr f2 asup_set_class f3 asup_set_class f7 awbr awa f1 asup_set_class f3 asup_set_class f8 awbr awi f3 f6 awral f2 f6 awral f1 f6 awral i0 asup_set_class f4 awcel padantr e1 f4 f6 i0 asup_set_class f9 pffvelrn f0 f4 f6 f9 awf i0 asup_set_class f4 awcel i0 asup_set_class f9 acfv f6 awcel psylan e2 f4 f6 i0 asup_set_class f10 pffvelrn f0 f4 f6 f10 awf i0 asup_set_class f4 awcel i0 asup_set_class f10 acfv f6 awcel psylan e3 f4 f6 i0 asup_set_class f11 pffvelrn f0 f4 f6 f11 awf i0 asup_set_class f4 awcel i0 asup_set_class f11 acfv f6 awcel psylan f1 asup_set_class i0 asup_set_class f9 acfv f2 asup_set_class f5 pbreq1 f1 asup_set_class i0 asup_set_class f9 acfv awceq f1 asup_set_class f2 asup_set_class f5 awbr i0 asup_set_class f9 acfv f2 asup_set_class f5 awbr f2 asup_set_class f3 asup_set_class f7 awbr panbi1d f1 asup_set_class i0 asup_set_class f9 acfv f3 asup_set_class f8 pbreq1 f1 asup_set_class i0 asup_set_class f9 acfv awceq f1 asup_set_class f2 asup_set_class f5 awbr f2 asup_set_class f3 asup_set_class f7 awbr awa i0 asup_set_class f9 acfv f2 asup_set_class f5 awbr f2 asup_set_class f3 asup_set_class f7 awbr awa f1 asup_set_class f3 asup_set_class f8 awbr i0 asup_set_class f9 acfv f3 asup_set_class f8 awbr pimbi12d f2 asup_set_class i0 asup_set_class f10 acfv i0 asup_set_class f9 acfv f5 pbreq2 f2 asup_set_class i0 asup_set_class f10 acfv f3 asup_set_class f7 pbreq1 f2 asup_set_class i0 asup_set_class f10 acfv awceq i0 asup_set_class f9 acfv f2 asup_set_class f5 awbr i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 awbr f2 asup_set_class f3 asup_set_class f7 awbr i0 asup_set_class f10 acfv f3 asup_set_class f7 awbr panbi12d f2 asup_set_class i0 asup_set_class f10 acfv awceq i0 asup_set_class f9 acfv f2 asup_set_class f5 awbr f2 asup_set_class f3 asup_set_class f7 awbr awa i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 awbr i0 asup_set_class f10 acfv f3 asup_set_class f7 awbr awa i0 asup_set_class f9 acfv f3 asup_set_class f8 awbr pimbi1d f3 asup_set_class i0 asup_set_class f11 acfv i0 asup_set_class f10 acfv f7 pbreq2 f3 asup_set_class i0 asup_set_class f11 acfv awceq i0 asup_set_class f10 acfv f3 asup_set_class f7 awbr i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f7 awbr i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 awbr panbi2d f3 asup_set_class i0 asup_set_class f11 acfv i0 asup_set_class f9 acfv f8 pbreq2 f3 asup_set_class i0 asup_set_class f11 acfv awceq i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 awbr i0 asup_set_class f10 acfv f3 asup_set_class f7 awbr awa i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 awbr i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f7 awbr awa i0 asup_set_class f9 acfv f3 asup_set_class f8 awbr i0 asup_set_class f9 acfv i0 asup_set_class f11 acfv f8 awbr pimbi12d f1 asup_set_class f2 asup_set_class f5 awbr f2 asup_set_class f3 asup_set_class f7 awbr awa f1 asup_set_class f3 asup_set_class f8 awbr awi i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 awbr i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f7 awbr awa i0 asup_set_class f9 acfv i0 asup_set_class f11 acfv f8 awbr awi i0 asup_set_class f9 acfv f2 asup_set_class f5 awbr f2 asup_set_class f3 asup_set_class f7 awbr awa i0 asup_set_class f9 acfv f3 asup_set_class f8 awbr awi i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 awbr i0 asup_set_class f10 acfv f3 asup_set_class f7 awbr awa i0 asup_set_class f9 acfv f3 asup_set_class f8 awbr awi f1 f2 f3 i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f6 f6 f6 prspc3v f0 i0 asup_set_class f4 awcel awa i0 asup_set_class f9 acfv f6 awcel i0 asup_set_class f10 acfv f6 awcel i0 asup_set_class f11 acfv f6 awcel f1 asup_set_class f2 asup_set_class f5 awbr f2 asup_set_class f3 asup_set_class f7 awbr awa f1 asup_set_class f3 asup_set_class f8 awbr awi f3 f6 awral f2 f6 awral f1 f6 awral i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 awbr i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f7 awbr awa i0 asup_set_class f9 acfv i0 asup_set_class f11 acfv f8 awbr awi awi psyl3anc f0 i0 asup_set_class f4 awcel awa f1 asup_set_class f2 asup_set_class f5 awbr f2 asup_set_class f3 asup_set_class f7 awbr awa f1 asup_set_class f3 asup_set_class f8 awbr awi f3 f6 awral f2 f6 awral f1 f6 awral i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 awbr i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f7 awbr awa i0 asup_set_class f9 acfv i0 asup_set_class f11 acfv f8 awbr awi pmpd f0 i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 awbr i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f7 awbr awa i0 asup_set_class f9 acfv i0 asup_set_class f11 acfv f8 awbr i0 f4 pralimdva e1 f4 f6 f9 pffn f0 f4 f6 f9 awf f9 f4 awfn psyl e2 f4 f6 f10 pffn f0 f4 f6 f10 awf f10 f4 awfn psyl e0 e0 f4 pinidm f0 i0 asup_set_class f4 awcel awa i0 asup_set_class f9 acfv peqidd f0 i0 asup_set_class f4 awcel awa i0 asup_set_class f10 acfv peqidd f0 i0 f4 f4 i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 f4 f9 f10 f12 f12 pofrfval e2 f4 f6 f10 pffn f0 f4 f6 f10 awf f10 f4 awfn psyl e3 f4 f6 f11 pffn f0 f4 f6 f11 awf f11 f4 awfn psyl e0 e0 f4 pinidm f0 i0 asup_set_class f4 awcel awa i0 asup_set_class f10 acfv peqidd f0 i0 asup_set_class f4 awcel awa i0 asup_set_class f11 acfv peqidd f0 i0 f4 f4 i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f7 f4 f10 f11 f12 f12 pofrfval f0 f9 f10 f5 acofr awbr i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 awbr i0 f4 awral f10 f11 f7 acofr awbr i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f7 awbr i0 f4 awral panbi12d i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 awbr i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f7 awbr i0 f4 pr19.26 f0 f9 f10 f5 acofr awbr f10 f11 f7 acofr awbr awa i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 awbr i0 f4 awral i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f7 awbr i0 f4 awral awa i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 awbr i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f7 awbr awa i0 f4 awral psyl6bbr e1 f4 f6 f9 pffn f0 f4 f6 f9 awf f9 f4 awfn psyl e3 f4 f6 f11 pffn f0 f4 f6 f11 awf f11 f4 awfn psyl e0 e0 f4 pinidm f0 i0 asup_set_class f4 awcel awa i0 asup_set_class f9 acfv peqidd f0 i0 asup_set_class f4 awcel awa i0 asup_set_class f11 acfv peqidd f0 i0 f4 f4 i0 asup_set_class f9 acfv i0 asup_set_class f11 acfv f8 f4 f9 f11 f12 f12 pofrfval f0 i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 awbr i0 asup_set_class f10 acfv i0 asup_set_class f11 acfv f7 awbr awa i0 f4 awral i0 asup_set_class f9 acfv i0 asup_set_class f11 acfv f8 awbr i0 f4 awral f9 f10 f5 acofr awbr f10 f11 f7 acofr awbr awa f9 f11 f8 acofr awbr p3imtr4d $.
 $}
-$( /* Transfer a distributive law to the function operation.  (Contributed
-         by Mario Carneiro, 26-Jul-2014.) */
-
-$)
+$( Transfer a distributive law to the function operation.  (Contributed
+         by Mario Carneiro, 26-Jul-2014.) $)
 ${
 	$v ph x y z A R S T F G H K O V $.
 	$v w $.
@@ -1137,10 +1059,8 @@ ${
 	pcaofdi $p |- ( ph -> ( F oF T ( G oF R H ) ) = ( ( F oF T G ) oF O ( F oF T H ) ) ) $=
 	e4 f0 f1 asup_set_class f11 awcel f2 asup_set_class f6 awcel f3 asup_set_class f6 awcel aw3a f1 asup_set_class f2 asup_set_class f3 asup_set_class f5 aco f7 aco f1 asup_set_class f2 asup_set_class f7 aco f1 asup_set_class f3 asup_set_class f7 aco f12 aco awceq i0 asup_set_class f4 awcel padantlr e1 f4 f11 i0 asup_set_class f8 pffvelrn f0 f4 f11 f8 awf i0 asup_set_class f4 awcel i0 asup_set_class f8 acfv f11 awcel psylan e2 f4 f6 i0 asup_set_class f9 pffvelrn f0 f4 f6 f9 awf i0 asup_set_class f4 awcel i0 asup_set_class f9 acfv f6 awcel psylan e3 f4 f6 i0 asup_set_class f10 pffvelrn f0 f4 f6 f10 awf i0 asup_set_class f4 awcel i0 asup_set_class f10 acfv f6 awcel psylan f0 i0 asup_set_class f4 awcel awa f1 f2 f3 i0 asup_set_class f8 acfv i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f6 f5 f7 f12 f11 pcaovdid f0 i0 f4 i0 asup_set_class f8 acfv i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 aco f7 aco i0 asup_set_class f8 acfv i0 asup_set_class f9 acfv f7 aco i0 asup_set_class f8 acfv i0 asup_set_class f10 acfv f7 aco f12 aco pmpteq2dva e0 e1 f4 f11 i0 asup_set_class f8 pffvelrn f0 f4 f11 f8 awf i0 asup_set_class f4 awcel i0 asup_set_class f8 acfv f11 awcel psylan i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 povex i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 aco acvv awcel f0 i0 asup_set_class f4 awcel awa pa1i e1 f0 i0 f4 f11 f8 pfeqmptd e0 e2 f4 f6 i0 asup_set_class f9 pffvelrn f0 f4 f6 f9 awf i0 asup_set_class f4 awcel i0 asup_set_class f9 acfv f6 awcel psylan e3 f4 f6 i0 asup_set_class f10 pffvelrn f0 f4 f6 f10 awf i0 asup_set_class f4 awcel i0 asup_set_class f10 acfv f6 awcel psylan e2 f0 i0 f4 f6 f9 pfeqmptd e3 f0 i0 f4 f6 f10 pfeqmptd f0 i0 f4 i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 f9 f10 f13 f6 f6 poffval2 f0 i0 f4 i0 asup_set_class f8 acfv i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 aco f7 f8 f9 f10 f5 acof aco f13 f11 acvv poffval2 e0 i0 asup_set_class f8 acfv i0 asup_set_class f9 acfv f7 povex i0 asup_set_class f8 acfv i0 asup_set_class f9 acfv f7 aco acvv awcel f0 i0 asup_set_class f4 awcel awa pa1i i0 asup_set_class f8 acfv i0 asup_set_class f10 acfv f7 povex i0 asup_set_class f8 acfv i0 asup_set_class f10 acfv f7 aco acvv awcel f0 i0 asup_set_class f4 awcel awa pa1i e0 e1 f4 f11 i0 asup_set_class f8 pffvelrn f0 f4 f11 f8 awf i0 asup_set_class f4 awcel i0 asup_set_class f8 acfv f11 awcel psylan e2 f4 f6 i0 asup_set_class f9 pffvelrn f0 f4 f6 f9 awf i0 asup_set_class f4 awcel i0 asup_set_class f9 acfv f6 awcel psylan e1 f0 i0 f4 f11 f8 pfeqmptd e2 f0 i0 f4 f6 f9 pfeqmptd f0 i0 f4 i0 asup_set_class f8 acfv i0 asup_set_class f9 acfv f7 f8 f9 f13 f11 f6 poffval2 e0 e1 f4 f11 i0 asup_set_class f8 pffvelrn f0 f4 f11 f8 awf i0 asup_set_class f4 awcel i0 asup_set_class f8 acfv f11 awcel psylan e3 f4 f6 i0 asup_set_class f10 pffvelrn f0 f4 f6 f10 awf i0 asup_set_class f4 awcel i0 asup_set_class f10 acfv f6 awcel psylan e1 f0 i0 f4 f11 f8 pfeqmptd e3 f0 i0 f4 f6 f10 pfeqmptd f0 i0 f4 i0 asup_set_class f8 acfv i0 asup_set_class f10 acfv f7 f8 f10 f13 f11 f6 poffval2 f0 i0 f4 i0 asup_set_class f8 acfv i0 asup_set_class f9 acfv f7 aco i0 asup_set_class f8 acfv i0 asup_set_class f10 acfv f7 aco f12 f8 f9 f7 acof aco f8 f10 f7 acof aco f13 acvv acvv poffval2 f0 i0 f4 i0 asup_set_class f8 acfv i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 aco f7 aco acmpt i0 f4 i0 asup_set_class f8 acfv i0 asup_set_class f9 acfv f7 aco i0 asup_set_class f8 acfv i0 asup_set_class f10 acfv f7 aco f12 aco acmpt f8 f9 f10 f5 acof aco f7 acof aco f8 f9 f7 acof aco f8 f10 f7 acof aco f12 acof aco p3eqtr4d $.
 $}
-$( /* Transfer a reverse distributive law to the function operation.
-         (Contributed by NM, 19-Oct-2014.) */
-
-$)
+$( Transfer a reverse distributive law to the function operation.
+         (Contributed by NM, 19-Oct-2014.) $)
 ${
 	$v ph x y z A R S T F G H K O V $.
 	$v w $.
@@ -1177,10 +1097,8 @@ ${
 	pcaofdir $p |- ( ph -> ( ( G oF R H ) oF T F ) = ( ( G oF T F ) oF O ( H oF T F ) ) ) $=
 	e4 f0 f1 asup_set_class f6 awcel f2 asup_set_class f6 awcel f3 asup_set_class f11 awcel aw3a f1 asup_set_class f2 asup_set_class f5 aco f3 asup_set_class f7 aco f1 asup_set_class f3 asup_set_class f7 aco f2 asup_set_class f3 asup_set_class f7 aco f12 aco awceq i0 asup_set_class f4 awcel padantlr e2 f4 f6 i0 asup_set_class f9 pffvelrn f0 f4 f6 f9 awf i0 asup_set_class f4 awcel i0 asup_set_class f9 acfv f6 awcel psylan e3 f4 f6 i0 asup_set_class f10 pffvelrn f0 f4 f6 f10 awf i0 asup_set_class f4 awcel i0 asup_set_class f10 acfv f6 awcel psylan e1 f4 f11 i0 asup_set_class f8 pffvelrn f0 f4 f11 f8 awf i0 asup_set_class f4 awcel i0 asup_set_class f8 acfv f11 awcel psylan f0 i0 asup_set_class f4 awcel awa f1 f2 f3 i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv i0 asup_set_class f8 acfv f6 f5 f7 f12 f11 pcaovdird f0 i0 f4 i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 aco i0 asup_set_class f8 acfv f7 aco i0 asup_set_class f9 acfv i0 asup_set_class f8 acfv f7 aco i0 asup_set_class f10 acfv i0 asup_set_class f8 acfv f7 aco f12 aco pmpteq2dva e0 i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 povex i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 aco acvv awcel f0 i0 asup_set_class f4 awcel awa pa1i e1 f4 f11 i0 asup_set_class f8 pffvelrn f0 f4 f11 f8 awf i0 asup_set_class f4 awcel i0 asup_set_class f8 acfv f11 awcel psylan e0 e2 f4 f6 i0 asup_set_class f9 pffvelrn f0 f4 f6 f9 awf i0 asup_set_class f4 awcel i0 asup_set_class f9 acfv f6 awcel psylan e3 f4 f6 i0 asup_set_class f10 pffvelrn f0 f4 f6 f10 awf i0 asup_set_class f4 awcel i0 asup_set_class f10 acfv f6 awcel psylan e2 f0 i0 f4 f6 f9 pfeqmptd e3 f0 i0 f4 f6 f10 pfeqmptd f0 i0 f4 i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 f9 f10 f13 f6 f6 poffval2 e1 f0 i0 f4 f11 f8 pfeqmptd f0 i0 f4 i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 aco i0 asup_set_class f8 acfv f7 f9 f10 f5 acof aco f8 f13 acvv f11 poffval2 e0 i0 asup_set_class f9 acfv i0 asup_set_class f8 acfv f7 povex i0 asup_set_class f9 acfv i0 asup_set_class f8 acfv f7 aco acvv awcel f0 i0 asup_set_class f4 awcel awa pa1i i0 asup_set_class f10 acfv i0 asup_set_class f8 acfv f7 povex i0 asup_set_class f10 acfv i0 asup_set_class f8 acfv f7 aco acvv awcel f0 i0 asup_set_class f4 awcel awa pa1i e0 e2 f4 f6 i0 asup_set_class f9 pffvelrn f0 f4 f6 f9 awf i0 asup_set_class f4 awcel i0 asup_set_class f9 acfv f6 awcel psylan e1 f4 f11 i0 asup_set_class f8 pffvelrn f0 f4 f11 f8 awf i0 asup_set_class f4 awcel i0 asup_set_class f8 acfv f11 awcel psylan e2 f0 i0 f4 f6 f9 pfeqmptd e1 f0 i0 f4 f11 f8 pfeqmptd f0 i0 f4 i0 asup_set_class f9 acfv i0 asup_set_class f8 acfv f7 f9 f8 f13 f6 f11 poffval2 e0 e3 f4 f6 i0 asup_set_class f10 pffvelrn f0 f4 f6 f10 awf i0 asup_set_class f4 awcel i0 asup_set_class f10 acfv f6 awcel psylan e1 f4 f11 i0 asup_set_class f8 pffvelrn f0 f4 f11 f8 awf i0 asup_set_class f4 awcel i0 asup_set_class f8 acfv f11 awcel psylan e3 f0 i0 f4 f6 f10 pfeqmptd e1 f0 i0 f4 f11 f8 pfeqmptd f0 i0 f4 i0 asup_set_class f10 acfv i0 asup_set_class f8 acfv f7 f10 f8 f13 f6 f11 poffval2 f0 i0 f4 i0 asup_set_class f9 acfv i0 asup_set_class f8 acfv f7 aco i0 asup_set_class f10 acfv i0 asup_set_class f8 acfv f7 aco f12 f9 f8 f7 acof aco f10 f8 f7 acof aco f13 acvv acvv poffval2 f0 i0 f4 i0 asup_set_class f9 acfv i0 asup_set_class f10 acfv f5 aco i0 asup_set_class f8 acfv f7 aco acmpt i0 f4 i0 asup_set_class f9 acfv i0 asup_set_class f8 acfv f7 aco i0 asup_set_class f10 acfv i0 asup_set_class f8 acfv f7 aco f12 aco acmpt f9 f10 f5 acof aco f8 f7 acof aco f9 f8 f7 acof aco f10 f8 f7 acof aco f12 acof aco p3eqtr4d $.
 $}
-$( /* Transfer ~ nncan -shaped laws to vectors of numbers.  (Contributed by
-       Stefan O'Rear, 27-Mar-2015.) */
-
-$)
+$( Transfer ~ nncan -shaped laws to vectors of numbers.  (Contributed by
+       Stefan O'Rear, 27-Mar-2015.) $)
 ${
 	$v ph x y A B S I M V $.
 	$v z $.
@@ -1207,14 +1125,12 @@ ${
 	pcaonncan $p |- ( ph -> ( A oF M ( A oF M B ) ) = B ) $=
 	e1 f6 f5 i0 asup_set_class f3 pffvelrn f0 f6 f5 f3 awf i0 asup_set_class f6 awcel i0 asup_set_class f3 acfv f5 awcel psylan e2 f6 f5 i0 asup_set_class f4 pffvelrn f0 f6 f5 f4 awf i0 asup_set_class f6 awcel i0 asup_set_class f4 acfv f5 awcel psylan e3 f0 f1 asup_set_class f1 asup_set_class f2 asup_set_class f7 aco f7 aco f2 asup_set_class awceq f1 f2 f5 f5 pralrimivva f0 f1 asup_set_class f1 asup_set_class f2 asup_set_class f7 aco f7 aco f2 asup_set_class awceq f2 f5 awral f1 f5 awral i0 asup_set_class f6 awcel padantr f1 asup_set_class i0 asup_set_class f3 acfv awceq pid f1 asup_set_class i0 asup_set_class f3 acfv f2 asup_set_class f7 poveq1 f1 asup_set_class i0 asup_set_class f3 acfv awceq f1 asup_set_class i0 asup_set_class f3 acfv f1 asup_set_class f2 asup_set_class f7 aco i0 asup_set_class f3 acfv f2 asup_set_class f7 aco f7 poveq12d f1 asup_set_class i0 asup_set_class f3 acfv awceq f1 asup_set_class f1 asup_set_class f2 asup_set_class f7 aco f7 aco i0 asup_set_class f3 acfv i0 asup_set_class f3 acfv f2 asup_set_class f7 aco f7 aco f2 asup_set_class peqeq1d f2 asup_set_class i0 asup_set_class f4 acfv i0 asup_set_class f3 acfv f7 poveq2 f2 asup_set_class i0 asup_set_class f4 acfv awceq i0 asup_set_class f3 acfv f2 asup_set_class f7 aco i0 asup_set_class f3 acfv i0 asup_set_class f4 acfv f7 aco i0 asup_set_class f3 acfv f7 poveq2d f2 asup_set_class i0 asup_set_class f4 acfv awceq pid f2 asup_set_class i0 asup_set_class f4 acfv awceq i0 asup_set_class f3 acfv i0 asup_set_class f3 acfv f2 asup_set_class f7 aco f7 aco i0 asup_set_class f3 acfv i0 asup_set_class f3 acfv i0 asup_set_class f4 acfv f7 aco f7 aco f2 asup_set_class i0 asup_set_class f4 acfv peqeq12d f1 asup_set_class f1 asup_set_class f2 asup_set_class f7 aco f7 aco f2 asup_set_class awceq i0 asup_set_class f3 acfv i0 asup_set_class f3 acfv i0 asup_set_class f4 acfv f7 aco f7 aco i0 asup_set_class f4 acfv awceq i0 asup_set_class f3 acfv i0 asup_set_class f3 acfv f2 asup_set_class f7 aco f7 aco f2 asup_set_class awceq f1 f2 i0 asup_set_class f3 acfv i0 asup_set_class f4 acfv f5 f5 prspc2va f0 i0 asup_set_class f6 awcel awa i0 asup_set_class f3 acfv f5 awcel i0 asup_set_class f4 acfv f5 awcel f1 asup_set_class f1 asup_set_class f2 asup_set_class f7 aco f7 aco f2 asup_set_class awceq f2 f5 awral f1 f5 awral i0 asup_set_class f3 acfv i0 asup_set_class f3 acfv i0 asup_set_class f4 acfv f7 aco f7 aco i0 asup_set_class f4 acfv awceq psyl21anc f0 i0 f6 i0 asup_set_class f3 acfv i0 asup_set_class f3 acfv i0 asup_set_class f4 acfv f7 aco f7 aco i0 asup_set_class f4 acfv pmpteq2dva e0 i0 asup_set_class f3 pfvex i0 asup_set_class f3 acfv acvv awcel f0 i0 asup_set_class f6 awcel awa pa1i i0 asup_set_class f3 acfv i0 asup_set_class f4 acfv f7 povex i0 asup_set_class f3 acfv i0 asup_set_class f4 acfv f7 aco acvv awcel f0 i0 asup_set_class f6 awcel awa pa1i e1 f0 i0 f6 f5 f3 pfeqmptd e0 i0 asup_set_class f3 pfvex i0 asup_set_class f3 acfv acvv awcel f0 i0 asup_set_class f6 awcel awa pa1i i0 asup_set_class f4 pfvex i0 asup_set_class f4 acfv acvv awcel f0 i0 asup_set_class f6 awcel awa pa1i e1 f0 i0 f6 f5 f3 pfeqmptd e2 f0 i0 f6 f5 f4 pfeqmptd f0 i0 f6 i0 asup_set_class f3 acfv i0 asup_set_class f4 acfv f7 f3 f4 f8 acvv acvv poffval2 f0 i0 f6 i0 asup_set_class f3 acfv i0 asup_set_class f3 acfv i0 asup_set_class f4 acfv f7 aco f7 f3 f3 f4 f7 acof aco f8 acvv acvv poffval2 e2 f0 i0 f6 f5 f4 pfeqmptd f0 i0 f6 i0 asup_set_class f3 acfv i0 asup_set_class f3 acfv i0 asup_set_class f4 acfv f7 aco f7 aco acmpt i0 f6 i0 asup_set_class f4 acfv acmpt f3 f3 f4 f7 acof aco f7 acof aco f4 p3eqtr4d $.
 $}
-$( /* Equivalent expressions for a restriction of the function operation map.
+$( Equivalent expressions for a restriction of the function operation map.
        Unlike ` oF R ` which is a proper class, ` ( oF R | `` ( A X. B ) ) `
        can be a set by ~ ofmresex , allowing it to be used as a function or
        structure argument.  By ~ ofmresval , the restricted operation map
        values are the same as the original values, allowing theorems for
-       ` oF R ` to be reused.  (Contributed by NM, 20-Oct-2014.) */
-
-$)
+       ` oF R ` to be reused.  (Contributed by NM, 20-Oct-2014.) $)
 ${
 	$v A B R f g $.
 	$v x $.
@@ -1230,10 +1146,8 @@ ${
 	pofmres $p |- ( oF R |` ( A X. B ) ) = ( f e. A , g e. B |-> ( f oF R g ) ) $=
 	f0 pssv f1 pssv f3 f4 acvv acvv f0 f1 i0 f3 asup_set_class acdm f4 asup_set_class acdm acin i0 asup_set_class f3 asup_set_class acfv i0 asup_set_class f4 asup_set_class acfv f2 aco acmpt presmpt2 f0 acvv awss f1 acvv awss f3 f4 acvv acvv i0 f3 asup_set_class acdm f4 asup_set_class acdm acin i0 asup_set_class f3 asup_set_class acfv i0 asup_set_class f4 asup_set_class acfv f2 aco acmpt acmpt2 f0 f1 acxp acres f3 f4 f0 f1 i0 f3 asup_set_class acdm f4 asup_set_class acdm acin i0 asup_set_class f3 asup_set_class acfv i0 asup_set_class f4 asup_set_class acfv f2 aco acmpt acmpt2 awceq pmp2an i0 f2 f3 f4 adf-of f2 acof f3 f4 acvv acvv i0 f3 asup_set_class acdm f4 asup_set_class acdm acin i0 asup_set_class f3 asup_set_class acfv i0 asup_set_class f4 asup_set_class acfv f2 aco acmpt acmpt2 f0 f1 acxp preseq1i f0 peqid f1 peqid f3 pvex f4 pvex f3 pvex f3 asup_set_class pdmex f3 asup_set_class acdm f4 asup_set_class acdm pinex1 i0 f3 asup_set_class acdm f4 asup_set_class acdm acin i0 asup_set_class f3 asup_set_class acfv i0 asup_set_class f4 asup_set_class acfv f2 aco pmptex i0 f2 f3 f4 adf-of f3 f4 acvv acvv i0 f3 asup_set_class acdm f4 asup_set_class acdm acin i0 asup_set_class f3 asup_set_class acfv i0 asup_set_class f4 asup_set_class acfv f2 aco acmpt f2 acof acvv povmpt4g f3 asup_set_class acvv awcel f4 asup_set_class acvv awcel i0 f3 asup_set_class acdm f4 asup_set_class acdm acin i0 asup_set_class f3 asup_set_class acfv i0 asup_set_class f4 asup_set_class acfv f2 aco acmpt acvv awcel f3 asup_set_class f4 asup_set_class f2 acof aco i0 f3 asup_set_class acdm f4 asup_set_class acdm acin i0 asup_set_class f3 asup_set_class acfv i0 asup_set_class f4 asup_set_class acfv f2 aco acmpt awceq pmp3an f3 f4 f0 f1 f3 asup_set_class f4 asup_set_class f2 acof aco f0 f1 i0 f3 asup_set_class acdm f4 asup_set_class acdm acin i0 asup_set_class f3 asup_set_class acfv i0 asup_set_class f4 asup_set_class acfv f2 aco acmpt pmpt2eq123i f3 f4 acvv acvv i0 f3 asup_set_class acdm f4 asup_set_class acdm acin i0 asup_set_class f3 asup_set_class acfv i0 asup_set_class f4 asup_set_class acfv f2 aco acmpt acmpt2 f0 f1 acxp acres f3 f4 f0 f1 i0 f3 asup_set_class acdm f4 asup_set_class acdm acin i0 asup_set_class f3 asup_set_class acfv i0 asup_set_class f4 asup_set_class acfv f2 aco acmpt acmpt2 f2 acof f0 f1 acxp acres f3 f4 f0 f1 f3 asup_set_class f4 asup_set_class f2 acof aco acmpt2 p3eqtr4i $.
 $}
-$( /* Value of a restriction of the function operation map.  (Contributed by
-       NM, 20-Oct-2014.) */
-
-$)
+$( Value of a restriction of the function operation map.  (Contributed by
+       NM, 20-Oct-2014.) $)
 ${
 	$v ph A B R F G $.
 	e0 $e |- ( ph -> F e. A ) $.
@@ -1247,10 +1161,8 @@ ${
 	pofmresval $p |- ( ph -> ( F ( oF R |` ( A X. B ) ) G ) = ( F oF R G ) ) $=
 	e0 e1 f4 f5 f1 f2 f3 acof povres f0 f4 f1 awcel f5 f2 awcel f4 f5 f3 acof f1 f2 acxp acres aco f4 f5 f3 acof aco awceq psyl2anc $.
 $}
-$( /* Existence of a restriction of the function operation map.  (Contributed
-       by NM, 20-Oct-2014.) */
-
-$)
+$( Existence of a restriction of the function operation map.  (Contributed
+       by NM, 20-Oct-2014.) $)
 ${
 	$v ph A B R V W $.
 	e0 $e |- ( ph -> A e. V ) $.
@@ -1264,10 +1176,8 @@ ${
 	pofmresex $p |- ( ph -> ( oF R |` ( A X. B ) ) e. _V ) $=
 	e0 e1 f1 f2 f4 f5 pxpexg f0 f1 f4 awcel f2 f5 awcel f1 f2 acxp acvv awcel psyl2anc f1 f2 acxp f3 acvv pofexg f0 f1 f2 acxp acvv awcel f3 acof f1 f2 acxp acres acvv awcel psyl $.
 $}
-$( /* Formula building theorem for support restrictions: vector operation with
-       left annihilator.  (Contributed by Stefan O'Rear, 9-Mar-2015.) */
-
-$)
+$( Formula building theorem for support restrictions: vector operation with
+       left annihilator.  (Contributed by Stefan O'Rear, 9-Mar-2015.) $)
 ${
 	$v ph v A B D R L O V W Y Z $.
 	$v x $.

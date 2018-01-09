@@ -1,12 +1,10 @@
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets/Introduce_the_Axiom_of_Power_Sets.smm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                    Derive the Axiom of Pairing
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-*/
-
 $)
-$( /* The Axiom of Pairing of Zermelo-Fraenkel set theory.  Axiom 2 of
+$( The Axiom of Pairing of Zermelo-Fraenkel set theory.  Axiom 2 of
        [TakeutiZaring] p. 15.  In some textbooks this is stated as a separate
        axiom; here we show it is redundant since it can be derived from the
        other axioms.
@@ -14,9 +12,7 @@ $( /* The Axiom of Pairing of Zermelo-Fraenkel set theory.  Axiom 2 of
        This theorem should not be referenced by any proof other than ~ axpr .
        Instead, use ~ zfpair2 below so that the uses of the Axiom of Pairing
        can be more easily identified.  (Contributed by NM, 18-Oct-1995.)
-       (New usage is discouraged.) */
-
-$)
+       (New usage is discouraged.) $)
 ${
 	$v x y z w v $.
 	$d x z w v $.
@@ -29,15 +25,13 @@ ${
 	pzfpair $p |- { x , y } e. _V $=
 	i1 f0 asup_set_class f1 asup_set_class pdfpr2 i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq awa i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq awa i0 p19.43 i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq pprlem2 i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq awa i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq awa awo i0 asup_set_class ac0 awceq i0 asup_set_class ac0 acsn awceq awo i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq awa i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq awa awo awa i0 pexbii p0ex i0 ac0 pisseti i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq i0 p19.41v i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq awa i0 awex i0 asup_set_class ac0 awceq i0 awex i1 asup_set_class f0 asup_set_class awceq pmpbiran pp0ex i0 ac0 acsn pisseti i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq i0 p19.41v i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq awa i0 awex i0 asup_set_class ac0 acsn awceq i0 awex i1 asup_set_class f1 asup_set_class awceq pmpbiran i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq awa i0 awex i1 asup_set_class f0 asup_set_class awceq i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq awa i0 awex i1 asup_set_class f1 asup_set_class awceq porbi12i i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq awa i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq awa awo i0 awex i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq awa i0 awex i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq awa i0 awex awo i0 asup_set_class ac0 awceq i0 asup_set_class ac0 acsn awceq awo i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq awa i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq awa awo awa i0 awex i1 asup_set_class f0 asup_set_class awceq i1 asup_set_class f1 asup_set_class awceq awo p3bitr3ri i1 asup_set_class f0 asup_set_class awceq i1 asup_set_class f1 asup_set_class awceq awo i0 asup_set_class ac0 awceq i0 asup_set_class ac0 acsn awceq awo i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq awa i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq awa awo awa i0 awex i1 pabbii i0 ac0 ac0 acsn pdfpr2 ppp0ex ac0 ac0 acsn acpr i0 asup_set_class ac0 awceq i0 asup_set_class ac0 acsn awceq awo i0 acab acvv peqeltrri i2 f0 i1 pequequ2 i0 asup_set_class p0inp0 i2 asup_set_class f0 asup_set_class awceq i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq i1 asup_set_class i2 asup_set_class awceq pprlem1 i2 asup_set_class f0 asup_set_class awceq i0 asup_set_class ac0 awceq i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq awa i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq awa awo i1 asup_set_class i2 asup_set_class awceq awi i1 palrimdv i0 asup_set_class ac0 awceq i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq awa i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq awa awo i1 asup_set_class i2 asup_set_class awceq awi i1 awal i2 f0 pspimev i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq awa i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq awa porcom i2 f1 i1 pequequ2 i0 asup_set_class p0inp0 i0 asup_set_class ac0 awceq i0 asup_set_class ac0 acsn awceq pcon2i i2 asup_set_class f1 asup_set_class awceq i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq i1 asup_set_class i2 asup_set_class awceq pprlem1 i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq awa i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq awa awo i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq awa i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq awa awo i2 asup_set_class f1 asup_set_class awceq i0 asup_set_class ac0 acsn awceq i1 asup_set_class i2 asup_set_class awceq psyl7bi i2 asup_set_class f1 asup_set_class awceq i0 asup_set_class ac0 acsn awceq i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq awa i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq awa awo i1 asup_set_class i2 asup_set_class awceq awi i1 palrimdv i0 asup_set_class ac0 acsn awceq i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq awa i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq awa awo i1 asup_set_class i2 asup_set_class awceq awi i1 awal i2 f1 pspimev i0 asup_set_class ac0 awceq i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq awa i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq awa awo i1 asup_set_class i2 asup_set_class awceq awi i1 awal i2 awex i0 asup_set_class ac0 acsn awceq pjaoi i0 asup_set_class ac0 awceq i0 asup_set_class ac0 acsn awceq awo i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq awa i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq awa awo i0 i1 i2 pzfrep4 i1 asup_set_class f0 asup_set_class awceq i1 asup_set_class f1 asup_set_class awceq awo i1 acab i0 asup_set_class ac0 awceq i0 asup_set_class ac0 acsn awceq awo i0 asup_set_class ac0 awceq i1 asup_set_class f0 asup_set_class awceq awa i0 asup_set_class ac0 acsn awceq i1 asup_set_class f1 asup_set_class awceq awa awo awa i0 awex i1 acab acvv peqeltri f0 asup_set_class f1 asup_set_class acpr i1 asup_set_class f0 asup_set_class awceq i1 asup_set_class f1 asup_set_class awceq awo i1 acab acvv peqeltri $.
 $}
-$( /* Unabbreviated version of the Axiom of Pairing of ZF set theory, derived
+$( Unabbreviated version of the Axiom of Pairing of ZF set theory, derived
        as a theorem from the other axioms.
 
        This theorem should not be referenced by any proof.  Instead, use
        ~ ax-pr below so that the uses of the Axiom of Pairing can be more
        easily identified.  (Contributed by NM, 14-Nov-2006.)
-       (New usage is discouraged.) */
-
-$)
+       (New usage is discouraged.) $)
 ${
 	$v x y z w $.
 	$d x z w $.
@@ -49,12 +43,10 @@ ${
 	paxpr $p |- E. z A. w ( ( w = x \/ w = y ) -> w e. z ) $=
 	f0 f1 pzfpair f2 f0 asup_set_class f1 asup_set_class acpr pisseti f3 f2 asup_set_class f0 asup_set_class f1 asup_set_class acpr pdfcleq f3 pvex f3 asup_set_class f0 asup_set_class f1 asup_set_class pelpr f3 asup_set_class f0 asup_set_class f1 asup_set_class acpr awcel f3 asup_set_class f0 asup_set_class awceq f3 asup_set_class f1 asup_set_class awceq awo f3 asup_set_class f2 asup_set_class awcel pbibi2i f3 asup_set_class f2 asup_set_class awcel f3 asup_set_class f0 asup_set_class awceq f3 asup_set_class f1 asup_set_class awceq awo pbi2 f3 asup_set_class f2 asup_set_class awcel f3 asup_set_class f0 asup_set_class f1 asup_set_class acpr awcel awb f3 asup_set_class f2 asup_set_class awcel f3 asup_set_class f0 asup_set_class awceq f3 asup_set_class f1 asup_set_class awceq awo awb f3 asup_set_class f0 asup_set_class awceq f3 asup_set_class f1 asup_set_class awceq awo f3 asup_set_class f2 asup_set_class awcel awi psylbi f3 asup_set_class f2 asup_set_class awcel f3 asup_set_class f0 asup_set_class f1 asup_set_class acpr awcel awb f3 asup_set_class f0 asup_set_class awceq f3 asup_set_class f1 asup_set_class awceq awo f3 asup_set_class f2 asup_set_class awcel awi f3 palimi f2 asup_set_class f0 asup_set_class f1 asup_set_class acpr awceq f3 asup_set_class f2 asup_set_class awcel f3 asup_set_class f0 asup_set_class f1 asup_set_class acpr awcel awb f3 awal f3 asup_set_class f0 asup_set_class awceq f3 asup_set_class f1 asup_set_class awceq awo f3 asup_set_class f2 asup_set_class awcel awi f3 awal psylbi f2 asup_set_class f0 asup_set_class f1 asup_set_class acpr awceq f3 asup_set_class f0 asup_set_class awceq f3 asup_set_class f1 asup_set_class awceq awo f3 asup_set_class f2 asup_set_class awcel awi f3 awal f2 peximi f2 asup_set_class f0 asup_set_class f1 asup_set_class acpr awceq f2 awex f3 asup_set_class f0 asup_set_class awceq f3 asup_set_class f1 asup_set_class awceq awo f3 asup_set_class f2 asup_set_class awcel awi f3 awal f2 awex aax-mp $.
 $}
-$( /* The Axiom of Pairing of ZF set theory.  It was derived as theorem ~ axpr
+$( The Axiom of Pairing of ZF set theory.  It was derived as theorem ~ axpr
        above and is therefore redundant, but we state it as a separate axiom
        here so that its uses can be identified more easily.  (Contributed by
-       NM, 14-Nov-2006.) */
-
-$)
+       NM, 14-Nov-2006.) $)
 ${
 	$v x y z w $.
 	$d x z w $.
@@ -65,11 +57,9 @@ ${
 	f3 $f set w $.
 	aax-pr $a |- E. z A. w ( ( w = x \/ w = y ) -> w e. z ) $.
 $}
-$( /* Derive the abbreviated version of the Axiom of Pairing from ~ ax-pr .
+$( Derive the abbreviated version of the Axiom of Pairing from ~ ax-pr .
        See ~ zfpair for its derivation from the other axioms.  (Contributed by
-       NM, 14-Nov-2006.) */
-
-$)
+       NM, 14-Nov-2006.) $)
 ${
 	$v x y z w $.
 	$d x z w $.
@@ -81,12 +71,10 @@ ${
 	pzfpair2 $p |- { x , y } e. _V $=
 	f0 f1 i0 i1 aax-pr i1 asup_set_class f0 asup_set_class awceq i1 asup_set_class f1 asup_set_class awceq awo i0 i1 pbm1.3ii i1 i0 asup_set_class f0 asup_set_class f1 asup_set_class acpr pdfcleq i1 pvex i1 asup_set_class f0 asup_set_class f1 asup_set_class pelpr i1 asup_set_class f0 asup_set_class f1 asup_set_class acpr awcel i1 asup_set_class f0 asup_set_class awceq i1 asup_set_class f1 asup_set_class awceq awo i1 asup_set_class i0 asup_set_class awcel pbibi2i i1 asup_set_class i0 asup_set_class awcel i1 asup_set_class f0 asup_set_class f1 asup_set_class acpr awcel awb i1 asup_set_class i0 asup_set_class awcel i1 asup_set_class f0 asup_set_class awceq i1 asup_set_class f1 asup_set_class awceq awo awb i1 palbii i0 asup_set_class f0 asup_set_class f1 asup_set_class acpr awceq i1 asup_set_class i0 asup_set_class awcel i1 asup_set_class f0 asup_set_class f1 asup_set_class acpr awcel awb i1 awal i1 asup_set_class i0 asup_set_class awcel i1 asup_set_class f0 asup_set_class awceq i1 asup_set_class f1 asup_set_class awceq awo awb i1 awal pbitri i0 asup_set_class f0 asup_set_class f1 asup_set_class acpr awceq i1 asup_set_class i0 asup_set_class awcel i1 asup_set_class f0 asup_set_class awceq i1 asup_set_class f1 asup_set_class awceq awo awb i1 awal i0 pexbii i0 asup_set_class f0 asup_set_class f1 asup_set_class acpr awceq i0 awex i1 asup_set_class i0 asup_set_class awcel i1 asup_set_class f0 asup_set_class awceq i1 asup_set_class f1 asup_set_class awceq awo awb i1 awal i0 awex pmpbir i0 f0 asup_set_class f1 asup_set_class acpr pissetri $.
 $}
-$( /* A singleton is a set.  Theorem 7.13 of [Quine] p. 51, proved using
+$( A singleton is a set.  Theorem 7.13 of [Quine] p. 51, proved using
        Extensionality, Separation, and Pairing.  See also ~ snexALT .
        (Contributed by NM, 7-Aug-1994.)  (Revised by Mario Carneiro,
-       19-May-2013.)  (Proof modification is discouraged.) */
-
-$)
+       19-May-2013.)  (Proof modification is discouraged.) $)
 ${
 	$v x A $.
 	$d x A $.
@@ -95,13 +83,11 @@ ${
 	psnex $p |- { A } e. _V $=
 	f0 pdfsn2 i0 asup_set_class i0 asup_set_class f0 f0 ppreq12 i0 asup_set_class f0 awceq i0 asup_set_class i0 asup_set_class acpr f0 f0 acpr awceq panidms i0 asup_set_class f0 awceq i0 asup_set_class i0 asup_set_class acpr f0 f0 acpr acvv peleq1d i0 i0 pzfpair2 i0 asup_set_class i0 asup_set_class acpr acvv awcel f0 f0 acpr acvv awcel i0 f0 acvv pvtoclg f0 acvv awcel f0 acsn f0 f0 acpr acvv psyl5eqel f0 psnprc f0 acvv awcel awn f0 acsn ac0 awceq pbiimpi p0ex f0 acvv awcel awn f0 acsn ac0 acvv psyl6eqel f0 acvv awcel f0 acsn acvv awcel ppm2.61i $.
 $}
-$( /* The Axiom of Pairing using class variables.  Theorem 7.13 of [Quine]
+$( The Axiom of Pairing using class variables.  Theorem 7.13 of [Quine]
        p. 51.  By virtue of its definition, an unordered pair remains a set
        (even though no longer a pair) even when its components are proper
        classes (see ~ prprc ), so we can dispense with hypotheses requiring
-       them to be sets.  (Contributed by NM, 5-Aug-1993.) */
-
-$)
+       them to be sets.  (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v x y A B $.
 	$d x y A $.
@@ -113,11 +99,9 @@ ${
 	pprex $p |- { A , B } e. _V $=
 	i1 asup_set_class f1 i0 asup_set_class ppreq2 i1 asup_set_class f1 awceq i0 asup_set_class i1 asup_set_class acpr i0 asup_set_class f1 acpr acvv peleq1d i0 i1 pzfpair2 i0 asup_set_class i1 asup_set_class acpr acvv awcel i0 asup_set_class f1 acpr acvv awcel i1 f1 acvv pvtoclg i0 asup_set_class f0 f1 ppreq1 i0 asup_set_class f0 awceq i0 asup_set_class f1 acpr f0 f1 acpr acvv peleq1d f1 acvv awcel i0 asup_set_class f1 acpr acvv awcel i0 asup_set_class f0 awceq f0 f1 acpr acvv awcel psyl5ib f1 acvv awcel f0 f1 acpr acvv awcel awi i0 f0 acvv pvtocleg f0 f1 pprprc1 f1 psnex f0 acvv awcel awn f0 f1 acpr f1 acsn acvv psyl6eqel f0 f1 pprprc2 f0 psnex f1 acvv awcel awn f0 f1 acpr f0 acsn acvv psyl6eqel f0 acvv awcel f1 acvv awcel f0 f1 acpr acvv awcel ppm2.61nii $.
 $}
-$( /* Every set is an element of some other set.  This has a shorter proof
+$( Every set is an element of some other set.  This has a shorter proof
        than ~ el but uses more axioms.  (Contributed by NM, 4-Jan-2002.)
-       (Proof modification is discouraged.)  (New usage is discouraged.) */
-
-$)
+       (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
 	$v x y $.
 	$d x y $.
@@ -126,11 +110,9 @@ ${
 	pelALT $p |- E. y x e. y $=
 	f0 pvex f0 asup_set_class psnid f0 asup_set_class psnex f1 asup_set_class f0 asup_set_class acsn f0 asup_set_class peleq2 f0 asup_set_class f1 asup_set_class awcel f0 asup_set_class f0 asup_set_class acsn awcel f1 f0 asup_set_class acsn pspcev f0 asup_set_class f0 asup_set_class acsn awcel f0 asup_set_class f1 asup_set_class awcel f1 awex aax-mp $.
 $}
-$( /* An alternative proof of ~ dtru ("two things exist") using ~ ax-pr
+$( An alternative proof of ~ dtru ("two things exist") using ~ ax-pr
        instead of ~ ax-pow .  (Contributed by Mario Carneiro, 31-Aug-2015.)
-       (Proof modification is discouraged.)  (New usage is discouraged.) */
-
-$)
+       (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
 	$v x y $.
 	$d x y $.
@@ -139,10 +121,8 @@ ${
 	pdtruALT2 $p |- -. A. x x = y $=
 	f1 asup_set_class p0inp0 ac0 psnex f0 asup_set_class ac0 acsn f1 asup_set_class peqeq2 f0 asup_set_class ac0 acsn awceq f1 asup_set_class f0 asup_set_class awceq f1 asup_set_class ac0 acsn awceq pnotbid f1 asup_set_class f0 asup_set_class awceq awn f1 asup_set_class ac0 acsn awceq awn f0 ac0 acsn pspcev f1 asup_set_class ac0 awceq f1 asup_set_class ac0 acsn awceq awn f1 asup_set_class f0 asup_set_class awceq awn f0 awex psyl p0ex f0 asup_set_class ac0 f1 asup_set_class peqeq2 f0 asup_set_class ac0 awceq f1 asup_set_class f0 asup_set_class awceq f1 asup_set_class ac0 awceq pnotbid f1 asup_set_class f0 asup_set_class awceq awn f1 asup_set_class ac0 awceq awn f0 ac0 pspcev f1 asup_set_class ac0 awceq f1 asup_set_class f0 asup_set_class awceq awn f0 awex ppm2.61i f1 asup_set_class f0 asup_set_class awceq f0 pexnal f1 asup_set_class f0 asup_set_class peqcom f1 asup_set_class f0 asup_set_class awceq f0 asup_set_class f1 asup_set_class awceq f0 palbii f1 asup_set_class f0 asup_set_class awceq awn f0 awex f1 asup_set_class f0 asup_set_class awceq f0 awal f0 asup_set_class f1 asup_set_class awceq f0 awal pxchbinx f1 asup_set_class f0 asup_set_class awceq awn f0 awex f0 asup_set_class f1 asup_set_class awceq f0 awal awn pmpbi $.
 $}
-$( /* A singleton of a set belongs to the power class of a class containing
-       the set.  (Contributed by Alan Sare, 25-Aug-2011.) */
-
-$)
+$( A singleton of a set belongs to the power class of a class containing
+       the set.  (Contributed by Alan Sare, 25-Aug-2011.) $)
 ${
 	$v A B $.
 	f0 $f class A $.
@@ -150,10 +130,8 @@ ${
 	psnelpwi $p |- ( A e. B -> { A } e. ~P B ) $=
 	f0 f1 psnssi f0 psnex f0 acsn f1 pelpw f0 f1 awcel f0 acsn f1 awss f0 acsn f1 acpw awcel psylibr $.
 $}
-$( /* A singleton of a set belongs to the power class of a class containing
-       the set.  (Contributed by NM, 1-Apr-1998.) */
-
-$)
+$( A singleton of a set belongs to the power class of a class containing
+       the set.  (Contributed by NM, 1-Apr-1998.) $)
 ${
 	$v A B $.
 	e0 $e |- A e. _V $.
@@ -162,11 +140,9 @@ ${
 	psnelpw $p |- ( A e. B <-> { A } e. ~P B ) $=
 	e0 f0 f1 psnss f0 psnex f0 acsn f1 pelpw f0 f1 awcel f0 acsn f1 awss f0 acsn f1 acpw awcel pbitr4i $.
 $}
-$( /* A theorem similar to extensionality, requiring the existence of a
+$( A theorem similar to extensionality, requiring the existence of a
        singleton.  Exercise 8 of [TakeutiZaring] p. 16.  (Contributed by NM,
-       10-Aug-1993.) */
-
-$)
+       10-Aug-1993.) $)
 ${
 	$v x y z $.
 	$d x y z $.
@@ -176,11 +152,9 @@ ${
 	prext $p |- ( A. z ( x e. z -> y e. z ) -> x = y ) $=
 	f0 pvex f0 asup_set_class psnid f0 asup_set_class psnex f2 asup_set_class f0 asup_set_class acsn f0 asup_set_class peleq2 f2 asup_set_class f0 asup_set_class acsn f1 asup_set_class peleq2 f2 asup_set_class f0 asup_set_class acsn awceq f0 asup_set_class f2 asup_set_class awcel f0 asup_set_class f0 asup_set_class acsn awcel f1 asup_set_class f2 asup_set_class awcel f1 asup_set_class f0 asup_set_class acsn awcel pimbi12d f0 asup_set_class f2 asup_set_class awcel f1 asup_set_class f2 asup_set_class awcel awi f0 asup_set_class f0 asup_set_class acsn awcel f1 asup_set_class f0 asup_set_class acsn awcel awi f2 f0 asup_set_class acsn pspcv f0 asup_set_class f2 asup_set_class awcel f1 asup_set_class f2 asup_set_class awcel awi f2 awal f0 asup_set_class f0 asup_set_class acsn awcel f1 asup_set_class f0 asup_set_class acsn awcel pmpi f1 f0 asup_set_class pelsn f1 f0 pequcomi f1 asup_set_class f0 asup_set_class acsn awcel f1 asup_set_class f0 asup_set_class awceq f0 asup_set_class f1 asup_set_class awceq psylbi f0 asup_set_class f2 asup_set_class awcel f1 asup_set_class f2 asup_set_class awcel awi f2 awal f1 asup_set_class f0 asup_set_class acsn awcel f0 asup_set_class f1 asup_set_class awceq psyl $.
 $}
-$( /* Classes are subclasses if and only if their power classes are
+$( Classes are subclasses if and only if their power classes are
        subclasses.  Exercise 18 of [TakeutiZaring] p. 18.  (Contributed by NM,
-       13-Oct-1996.) */
-
-$)
+       13-Oct-1996.) $)
 ${
 	$v x A B $.
 	$d A x $.
@@ -191,11 +165,9 @@ ${
 	psspwb $p |- ( A C_ B <-> ~P A C_ ~P B ) $=
 	i0 asup_set_class f0 f1 psstr2 i0 asup_set_class f0 awss f0 f1 awss i0 asup_set_class f1 awss pcom12 i0 pvex i0 asup_set_class f0 pelpw i0 pvex i0 asup_set_class f1 pelpw f0 f1 awss i0 asup_set_class f0 awss i0 asup_set_class f1 awss i0 asup_set_class f0 acpw awcel i0 asup_set_class f1 acpw awcel p3imtr4g f0 f1 awss i0 f0 acpw f1 acpw pssrdv f0 acpw f1 acpw i0 asup_set_class acsn pssel i0 asup_set_class psnex i0 asup_set_class acsn f0 pelpw i0 pvex i0 asup_set_class f0 psnss i0 asup_set_class acsn f0 acpw awcel i0 asup_set_class acsn f0 awss i0 asup_set_class f0 awcel pbitr4i i0 asup_set_class psnex i0 asup_set_class acsn f1 pelpw i0 pvex i0 asup_set_class f1 psnss i0 asup_set_class acsn f1 acpw awcel i0 asup_set_class acsn f1 awss i0 asup_set_class f1 awcel pbitr4i f0 acpw f1 acpw awss i0 asup_set_class acsn f0 acpw awcel i0 asup_set_class acsn f1 acpw awcel i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel p3imtr3g f0 acpw f1 acpw awss i0 f0 f1 pssrdv f0 f1 awss f0 acpw f1 acpw awss pimpbii $.
 $}
-$( /* A class equals the union of its power class.  Exercise 6(a) of
+$( A class equals the union of its power class.  Exercise 6(a) of
        [Enderton] p. 38.  (Contributed by NM, 14-Oct-1996.)  (Proof shortened
-       by Alan Sare, 28-Dec-2008.) */
-
-$)
+       by Alan Sare, 28-Dec-2008.) $)
 ${
 	$v x y A $.
 	$d A x y $.
@@ -205,10 +177,8 @@ ${
 	punipw $p |- U. ~P A = A $=
 	i1 i0 asup_set_class f0 acpw peluni i0 asup_set_class i1 asup_set_class f0 pelelpwi i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 acpw awcel awa i0 asup_set_class f0 awcel i1 pexlimiv i0 asup_set_class f0 acpw acuni awcel i0 asup_set_class i1 asup_set_class awcel i1 asup_set_class f0 acpw awcel awa i1 awex i0 asup_set_class f0 awcel psylbi i0 pvex i0 asup_set_class psnid i0 asup_set_class f0 psnelpwi i0 asup_set_class i0 asup_set_class acsn f0 acpw pelunii i0 asup_set_class f0 awcel i0 asup_set_class i0 asup_set_class acsn awcel i0 asup_set_class acsn f0 acpw awcel i0 asup_set_class f0 acpw acuni awcel psylancr i0 asup_set_class f0 acpw acuni awcel i0 asup_set_class f0 awcel pimpbii i0 f0 acpw acuni f0 peqriv $.
 $}
-$( /* Membership of a power class.  Exercise 10 of [Enderton] p. 26.
-     (Contributed by NM, 13-Jan-2007.) */
-
-$)
+$( Membership of a power class.  Exercise 10 of [Enderton] p. 26.
+     (Contributed by NM, 13-Jan-2007.) $)
 ${
 	$v A B $.
 	f0 $f class A $.
@@ -216,20 +186,16 @@ ${
 	ppwel $p |- ( A e. B -> ~P A e. ~P ~P U. B ) $=
 	f0 f1 pelssuni f0 f1 acuni psspwb f0 f1 awcel f0 f1 acuni awss f0 acpw f1 acuni acpw awss psylib f0 f1 ppwexg f0 acpw f1 acuni acpw acvv pelpwg f0 f1 awcel f0 acpw acvv awcel f0 acpw f1 acuni acpw acpw awcel f0 acpw f1 acuni acpw awss awb psyl f0 f1 awcel f0 acpw f1 acuni acpw acpw awcel f0 acpw f1 acuni acpw awss pmpbird $.
 $}
-$( /* A class is transitive iff its power class is transitive.  (Contributed by
-     Alan Sare, 25-Aug-2011.)  (Revised by Mario Carneiro, 15-Jun-2014.) */
-
-$)
+$( A class is transitive iff its power class is transitive.  (Contributed by
+     Alan Sare, 25-Aug-2011.)  (Revised by Mario Carneiro, 15-Jun-2014.) $)
 ${
 	$v A $.
 	f0 $f class A $.
 	ppwtr $p |- ( Tr A <-> Tr ~P A ) $=
 	f0 punipw f0 acpw acuni f0 f0 acpw psseq1i f0 acpw adf-tr f0 pdftr4 f0 acpw acuni f0 acpw awss f0 f0 acpw awss f0 acpw awtr f0 awtr p3bitr4ri $.
 $}
-$( /* An extensionality-like principle defining subclass in terms of subsets.
-       (Contributed by NM, 30-Jun-2004.) */
-
-$)
+$( An extensionality-like principle defining subclass in terms of subsets.
+       (Contributed by NM, 30-Jun-2004.) $)
 ${
 	$v x A B $.
 	$d A x $.
@@ -240,11 +206,9 @@ ${
 	pssextss $p |- ( A C_ B <-> A. x ( x C_ A -> x C_ B ) ) $=
 	f1 f2 psspwb f0 f1 acpw f2 acpw pdfss2 f0 pvex f0 asup_set_class f1 pelpw f0 pvex f0 asup_set_class f2 pelpw f0 asup_set_class f1 acpw awcel f0 asup_set_class f1 awss f0 asup_set_class f2 acpw awcel f0 asup_set_class f2 awss pimbi12i f0 asup_set_class f1 acpw awcel f0 asup_set_class f2 acpw awcel awi f0 asup_set_class f1 awss f0 asup_set_class f2 awss awi f0 palbii f1 f2 awss f1 acpw f2 acpw awss f0 asup_set_class f1 acpw awcel f0 asup_set_class f2 acpw awcel awi f0 awal f0 asup_set_class f1 awss f0 asup_set_class f2 awss awi f0 awal p3bitri $.
 $}
-$( /* An extensionality-like principle that uses the subset instead of the
+$( An extensionality-like principle that uses the subset instead of the
        membership relation: two classes are equal iff they have the same
-       subsets.  (Contributed by NM, 30-Jun-2004.) */
-
-$)
+       subsets.  (Contributed by NM, 30-Jun-2004.) $)
 ${
 	$v x A B $.
 	$d A x $.
@@ -255,10 +219,8 @@ ${
 	pssext $p |- ( A = B <-> A. x ( x C_ A <-> x C_ B ) ) $=
 	f0 f1 f2 pssextss f0 f2 f1 pssextss f1 f2 awss f0 asup_set_class f1 awss f0 asup_set_class f2 awss awi f0 awal f2 f1 awss f0 asup_set_class f2 awss f0 asup_set_class f1 awss awi f0 awal panbi12i f1 f2 peqss f0 asup_set_class f1 awss f0 asup_set_class f2 awss f0 palbiim f1 f2 awss f2 f1 awss awa f0 asup_set_class f1 awss f0 asup_set_class f2 awss awi f0 awal f0 asup_set_class f2 awss f0 asup_set_class f1 awss awi f0 awal awa f1 f2 awceq f0 asup_set_class f1 awss f0 asup_set_class f2 awss awb f0 awal p3bitr4i $.
 $}
-$( /* Negation of subclass relationship.  Compare ~ nss .  (Contributed by NM,
-       30-Jun-2004.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) */
-
-$)
+$( Negation of subclass relationship.  Compare ~ nss .  (Contributed by NM,
+       30-Jun-2004.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
 	$v x A B $.
 	$d A x $.
@@ -269,10 +231,8 @@ ${
 	pnssss $p |- ( -. A C_ B <-> E. x ( x C_ A /\ -. x C_ B ) ) $=
 	f0 asup_set_class f1 awss f0 asup_set_class f2 awss f0 pexanali f0 f1 f2 pssextss f0 asup_set_class f1 awss f0 asup_set_class f2 awss awn awa f0 awex f0 asup_set_class f1 awss f0 asup_set_class f2 awss awi f0 awal f1 f2 awss pxchbinxr f0 asup_set_class f1 awss f0 asup_set_class f2 awss awn awa f0 awex f1 f2 awss awn pbicomi $.
 $}
-$( /* Classes are equal if and only if their power classes are equal.  Exercise
-     19 of [TakeutiZaring] p. 18.  (Contributed by NM, 13-Oct-1996.) */
-
-$)
+$( Classes are equal if and only if their power classes are equal.  Exercise
+     19 of [TakeutiZaring] p. 18.  (Contributed by NM, 13-Oct-1996.) $)
 ${
 	$v A B $.
 	f0 $f class A $.
@@ -280,10 +240,8 @@ ${
 	ppweqb $p |- ( A = B <-> ~P A = ~P B ) $=
 	f0 f1 psspwb f1 f0 psspwb f0 f1 awss f0 acpw f1 acpw awss f1 f0 awss f1 acpw f0 acpw awss panbi12i f0 f1 peqss f0 acpw f1 acpw peqss f0 f1 awss f1 f0 awss awa f0 acpw f1 acpw awss f1 acpw f0 acpw awss awa f0 f1 awceq f0 acpw f1 acpw awceq p3bitr4i $.
 $}
-$( /* The intersection of all sets to which a set belongs is the singleton of
-       that set.  (Contributed by NM, 5-Jun-2009.) */
-
-$)
+$( The intersection of all sets to which a set belongs is the singleton of
+       that set.  (Contributed by NM, 5-Jun-2009.) $)
 ${
 	$v x A $.
 	$d x A $.
@@ -293,10 +251,8 @@ ${
 	pintid $p |- |^| { x | A e. x } = { A } $=
 	f1 psnex f0 asup_set_class f1 acsn f1 peleq2 e0 f1 psnid f1 f0 asup_set_class awcel f1 f1 acsn awcel f0 f1 acsn acvv pintmin3 f1 acsn acvv awcel f1 f0 asup_set_class awcel f0 acab acint f1 acsn awss aax-mp e0 f1 f0 asup_set_class awcel f0 f1 pelintab f1 f0 asup_set_class awcel pid f1 f1 f0 asup_set_class awcel f0 acab acint awcel f1 f0 asup_set_class awcel f1 f0 asup_set_class awcel awi f0 pmpgbir f1 f1 f0 asup_set_class awcel f0 acab acint psnssi f1 f1 f0 asup_set_class awcel f0 acab acint awcel f1 acsn f1 f0 asup_set_class awcel f0 acab acint awss aax-mp f1 f0 asup_set_class awcel f0 acab acint f1 acsn peqssi $.
 $}
-$( /* "At most one" existence implies a class abstraction exists.
-       (Contributed by NM, 30-Dec-1996.) */
-
-$)
+$( "At most one" existence implies a class abstraction exists.
+       (Contributed by NM, 30-Dec-1996.) $)
 ${
 	$v ph x y $.
 	$d x y $.
@@ -307,10 +263,8 @@ ${
 	pmoabex $p |- ( E* x ph -> { x | ph } e. _V ) $=
 	f0 i0 pnfv f0 f1 i0 pmo2 f0 f1 i0 asup_set_class acsn pabss f1 i0 asup_set_class pelsn f1 asup_set_class i0 asup_set_class acsn awcel f1 asup_set_class i0 asup_set_class awceq f0 pimbi2i f0 f1 asup_set_class i0 asup_set_class acsn awcel awi f0 f1 asup_set_class i0 asup_set_class awceq awi f1 palbii f0 f1 acab i0 asup_set_class acsn awss f0 f1 asup_set_class i0 asup_set_class acsn awcel awi f1 awal f0 f1 asup_set_class i0 asup_set_class awceq awi f1 awal pbitri i0 asup_set_class psnex f0 f1 acab i0 asup_set_class acsn pssex f0 f1 asup_set_class i0 asup_set_class awceq awi f1 awal f0 f1 acab i0 asup_set_class acsn awss f0 f1 acab acvv awcel psylbir f0 f1 asup_set_class i0 asup_set_class awceq awi f1 awal f0 f1 acab acvv awcel i0 pexlimiv f0 f1 awmo f0 f1 asup_set_class i0 asup_set_class awceq awi f1 awal i0 awex f0 f1 acab acvv awcel psylbi $.
 $}
-$( /* Restricted "at most one" existence implies a restricted class abstraction
-     exists.  (Contributed by NM, 17-Jun-2017.) */
-
-$)
+$( Restricted "at most one" existence implies a restricted class abstraction
+     exists.  (Contributed by NM, 17-Jun-2017.) $)
 ${
 	$v ph x A $.
 	f0 $f wff ph $.
@@ -319,10 +273,8 @@ ${
 	prmorabex $p |- ( E* x e. A ph -> { x e. A | ph } e. _V ) $=
 	f1 asup_set_class f2 awcel f0 awa f1 pmoabex f0 f1 f2 adf-rmo f0 f1 f2 adf-rab f0 f1 f2 acrab f1 asup_set_class f2 awcel f0 awa f1 acab acvv peleq1i f1 asup_set_class f2 awcel f0 awa f1 awmo f1 asup_set_class f2 awcel f0 awa f1 acab acvv awcel f0 f1 f2 awrmo f0 f1 f2 acrab acvv awcel p3imtr4i $.
 $}
-$( /* The abstraction of a wff with existential uniqueness exists.  (Contributed
-     by NM, 25-Nov-1994.) */
-
-$)
+$( The abstraction of a wff with existential uniqueness exists.  (Contributed
+     by NM, 25-Nov-1994.) $)
 ${
 	$v ph x $.
 	f0 $f wff ph $.
@@ -330,10 +282,8 @@ ${
 	peuabex $p |- ( E! x ph -> { x | ph } e. _V ) $=
 	f0 f1 peumo f0 f1 pmoabex f0 f1 aweu f0 f1 awmo f0 f1 acab acvv awcel psyl $.
 $}
-$( /* A non-empty class (even if proper) has a non-empty subset.  (Contributed
-       by NM, 23-Aug-2003.) */
-
-$)
+$( A non-empty class (even if proper) has a non-empty subset.  (Contributed
+       by NM, 23-Aug-2003.) $)
 ${
 	$v x y A $.
 	$d x y A $.
@@ -343,10 +293,8 @@ ${
 	pnnullss $p |- ( A =/= (/) -> E. x ( x C_ A /\ x =/= (/) ) ) $=
 	i0 f1 pn0 i0 pvex i0 asup_set_class f1 psnss i0 pvex i0 asup_set_class psnnz i0 asup_set_class psnex f0 asup_set_class i0 asup_set_class acsn f1 psseq1 f0 asup_set_class i0 asup_set_class acsn ac0 pneeq1 f0 asup_set_class i0 asup_set_class acsn awceq f0 asup_set_class f1 awss i0 asup_set_class acsn f1 awss f0 asup_set_class ac0 awne i0 asup_set_class acsn ac0 awne panbi12d f0 asup_set_class f1 awss f0 asup_set_class ac0 awne awa i0 asup_set_class acsn f1 awss i0 asup_set_class acsn ac0 awne awa f0 i0 asup_set_class acsn pspcev i0 asup_set_class acsn f1 awss i0 asup_set_class acsn ac0 awne f0 asup_set_class f1 awss f0 asup_set_class ac0 awne awa f0 awex pmpan2 i0 asup_set_class f1 awcel i0 asup_set_class acsn f1 awss f0 asup_set_class f1 awss f0 asup_set_class ac0 awne awa f0 awex psylbi i0 asup_set_class f1 awcel f0 asup_set_class f1 awss f0 asup_set_class ac0 awne awa f0 awex i0 pexlimiv f1 ac0 awne i0 asup_set_class f1 awcel i0 awex f0 asup_set_class f1 awss f0 asup_set_class ac0 awne awa f0 awex psylbi $.
 $}
-$( /* Restricted existence in a class (even if proper) implies restricted
-       existence in a subset.  (Contributed by NM, 23-Aug-2003.) */
-
-$)
+$( Restricted existence in a class (even if proper) implies restricted
+       existence in a subset.  (Contributed by NM, 23-Aug-2003.) $)
 ${
 	$v ph x y z A $.
 	$d x y z A $.
@@ -359,11 +307,9 @@ ${
 	pexss $p |- ( E. x e. A ph -> E. y ( y C_ A /\ E. x e. y ph ) ) $=
 	f0 f1 f3 adf-rab f0 f1 f3 acrab f1 asup_set_class f3 awcel f0 awa f1 acab ac0 pneeq1i f0 f1 f3 prabn0 i0 f1 asup_set_class f3 awcel f0 awa f1 acab pn0 f0 f1 f3 acrab ac0 awne f1 asup_set_class f3 awcel f0 awa f1 acab ac0 awne f0 f1 f3 awrex i0 asup_set_class f1 asup_set_class f3 awcel f0 awa f1 acab awcel i0 awex p3bitr3i i0 pvex i0 asup_set_class f1 asup_set_class f3 awcel f0 awa f1 acab psnss f0 f1 f3 pssab2 i0 asup_set_class acsn f1 asup_set_class f3 awcel f0 awa f1 acab f3 psstr2 i0 asup_set_class acsn f1 asup_set_class f3 awcel f0 awa f1 acab awss f1 asup_set_class f3 awcel f0 awa f1 acab f3 awss i0 asup_set_class acsn f3 awss pmpi i0 asup_set_class f1 asup_set_class f3 awcel f0 awa f1 acab awcel i0 asup_set_class acsn f1 asup_set_class f3 awcel f0 awa f1 acab awss i0 asup_set_class acsn f3 awss psylbi f1 asup_set_class f3 awcel f1 i0 awsb f0 f1 i0 awsb psimpr f1 i0 pequsb1 f1 i0 asup_set_class pelsn f1 asup_set_class i0 asup_set_class acsn awcel f1 asup_set_class i0 asup_set_class awceq f1 i0 psbbii f1 asup_set_class i0 asup_set_class acsn awcel f1 i0 awsb f1 asup_set_class i0 asup_set_class awceq f1 i0 awsb pmpbir f1 asup_set_class f3 awcel f1 i0 awsb f0 f1 i0 awsb awa f0 f1 i0 awsb f1 asup_set_class i0 asup_set_class acsn awcel f1 i0 awsb pjctil f1 asup_set_class f3 awcel f0 awa i0 f1 adf-clab f1 asup_set_class f3 awcel f0 f1 i0 psban i0 asup_set_class f1 asup_set_class f3 awcel f0 awa f1 acab awcel f1 asup_set_class f3 awcel f0 awa f1 i0 awsb f1 asup_set_class f3 awcel f1 i0 awsb f0 f1 i0 awsb awa pbitri f0 f1 i0 asup_set_class acsn adf-rab f0 f1 i0 asup_set_class acsn acrab f1 asup_set_class i0 asup_set_class acsn awcel f0 awa f1 acab i0 asup_set_class peleq2i f1 asup_set_class i0 asup_set_class acsn awcel f0 awa i0 f1 adf-clab f1 asup_set_class i0 asup_set_class acsn awcel f0 f1 i0 psban i0 asup_set_class f1 asup_set_class i0 asup_set_class acsn awcel f0 awa f1 acab awcel f1 asup_set_class i0 asup_set_class acsn awcel f0 awa f1 i0 awsb f1 asup_set_class i0 asup_set_class acsn awcel f1 i0 awsb f0 f1 i0 awsb awa pbitri i0 asup_set_class f0 f1 i0 asup_set_class acsn acrab awcel i0 asup_set_class f1 asup_set_class i0 asup_set_class acsn awcel f0 awa f1 acab awcel f1 asup_set_class i0 asup_set_class acsn awcel f1 i0 awsb f0 f1 i0 awsb awa pbitri f1 asup_set_class f3 awcel f1 i0 awsb f0 f1 i0 awsb awa f1 asup_set_class i0 asup_set_class acsn awcel f1 i0 awsb f0 f1 i0 awsb awa i0 asup_set_class f1 asup_set_class f3 awcel f0 awa f1 acab awcel i0 asup_set_class f0 f1 i0 asup_set_class acsn acrab awcel p3imtr4i f0 f1 i0 asup_set_class acsn acrab i0 asup_set_class pne0i i0 asup_set_class f1 asup_set_class f3 awcel f0 awa f1 acab awcel i0 asup_set_class f0 f1 i0 asup_set_class acsn acrab awcel f0 f1 i0 asup_set_class acsn acrab ac0 awne psyl f0 f1 i0 asup_set_class acsn prabn0 i0 asup_set_class f1 asup_set_class f3 awcel f0 awa f1 acab awcel f0 f1 i0 asup_set_class acsn acrab ac0 awne f0 f1 i0 asup_set_class acsn awrex psylib i0 asup_set_class psnex f2 asup_set_class i0 asup_set_class acsn f3 psseq1 f0 f1 f2 asup_set_class i0 asup_set_class acsn prexeq f2 asup_set_class i0 asup_set_class acsn awceq f2 asup_set_class f3 awss i0 asup_set_class acsn f3 awss f0 f1 f2 asup_set_class awrex f0 f1 i0 asup_set_class acsn awrex panbi12d f2 asup_set_class f3 awss f0 f1 f2 asup_set_class awrex awa i0 asup_set_class acsn f3 awss f0 f1 i0 asup_set_class acsn awrex awa f2 i0 asup_set_class acsn pspcev i0 asup_set_class f1 asup_set_class f3 awcel f0 awa f1 acab awcel i0 asup_set_class acsn f3 awss f0 f1 i0 asup_set_class acsn awrex f2 asup_set_class f3 awss f0 f1 f2 asup_set_class awrex awa f2 awex psyl2anc i0 asup_set_class f1 asup_set_class f3 awcel f0 awa f1 acab awcel f2 asup_set_class f3 awss f0 f1 f2 asup_set_class awrex awa f2 awex i0 pexlimiv f0 f1 f3 awrex i0 asup_set_class f1 asup_set_class f3 awcel f0 awa f1 acab awcel i0 awex f2 asup_set_class f3 awss f0 f1 f2 asup_set_class awrex awa f2 awex psylbi $.
 $}
-$( /* An ordered pair of classes is a set.  Exercise 7 of [TakeutiZaring]
+$( An ordered pair of classes is a set.  Exercise 7 of [TakeutiZaring]
      p. 16.  (Contributed by NM, 18-Aug-1993.)  (Revised by Mario Carneiro,
-     26-Apr-2015.) */
-
-$)
+     26-Apr-2015.) $)
 ${
 	$v A B $.
 	f0 $f class A $.
@@ -371,10 +317,8 @@ ${
 	popex $p |- <. A , B >. e. _V $=
 	f0 f1 pdfopif f0 acsn f0 f1 acpr pprex p0ex f0 acvv awcel f1 acvv awcel awa f0 acsn f0 f1 acpr acpr ac0 pifex f0 f1 acop f0 acvv awcel f1 acvv awcel awa f0 acsn f0 f1 acpr acpr ac0 acif acvv peqeltri $.
 $}
-$( /* An ordered triple of classes is a set.  (Contributed by NM,
-     3-Apr-2015.) */
-
-$)
+$( An ordered triple of classes is a set.  (Contributed by NM,
+     3-Apr-2015.) $)
 ${
 	$v A B C $.
 	f0 $f class A $.
@@ -383,11 +327,9 @@ ${
 	potex $p |- <. A , B , C >. e. _V $=
 	f0 f1 f2 adf-ot f0 f1 acop f2 popex f0 f1 f2 acotp f0 f1 acop f2 acop acvv peqeltri $.
 $}
-$( /* An ordered pair has two elements.  Exercise 3 of [TakeutiZaring] p. 15.
+$( An ordered pair has two elements.  Exercise 3 of [TakeutiZaring] p. 15.
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
-       26-Apr-2015.) */
-
-$)
+       26-Apr-2015.) $)
 ${
 	$v A B C $.
 	e0 $e |- A e. _V $.
@@ -399,10 +341,8 @@ ${
 	pelop $p |- ( A e. <. B , C >. <-> ( A = { B } \/ A = { B , C } ) ) $=
 	e1 e2 f1 f2 pdfop f1 f2 acop f1 acsn f1 f2 acpr acpr f0 peleq2i e0 f0 f1 acsn f1 f2 acpr pelpr f0 f1 f2 acop awcel f0 f1 acsn f1 f2 acpr acpr awcel f0 f1 acsn awceq f0 f1 f2 acpr awceq awo pbitri $.
 $}
-$( /* One of the two elements in an ordered pair.  (Contributed by NM,
-       5-Aug-1993.)  (Revised by Mario Carneiro, 26-Apr-2015.) */
-
-$)
+$( One of the two elements in an ordered pair.  (Contributed by NM,
+       5-Aug-1993.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
 	$v A B $.
 	e0 $e |- A e. _V $.
@@ -412,10 +352,8 @@ ${
 	popi1 $p |- { A } e. <. A , B >. $=
 	f0 psnex f0 acsn f0 f1 acpr pprid1 e0 e1 f0 f1 pdfop f0 acsn f0 acsn f0 f1 acpr acpr f0 f1 acop peleqtrri $.
 $}
-$( /* One of the two elements of an ordered pair.  (Contributed by NM,
-       5-Aug-1993.)  (Revised by Mario Carneiro, 26-Apr-2015.) */
-
-$)
+$( One of the two elements of an ordered pair.  (Contributed by NM,
+       5-Aug-1993.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
 	$v A B $.
 	e0 $e |- A e. _V $.

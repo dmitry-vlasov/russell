@@ -1,18 +1,14 @@
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_of_classical_propositional_calculus/Derive_the_Tarski-Bernays-Wajsberg_axioms_from_Meredith_s_First_CO_Axiom.smm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   Derive the Tarski-Bernays-Wajsberg axioms from Meredith's Second CO Axiom
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-*/
-
 $)
-$( /* A single axiom for propositional calculus offered by Meredith.
+$( A single axiom for propositional calculus offered by Meredith.
 
      This axiom has 19 symbols, sans auxiliaries.  See notes in ~ merco1 .
      (Contributed by Anthony Hart, 7-Aug-2011.)
-     (Proof modification is discouraged.)  (New usage is discouraged.) */
-
-$)
+     (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -24,11 +20,9 @@ ${
 	pmerco2 $p |- ( ( ( ph -> ps ) -> ( ( F. -> ch ) -> th ) ) -> ( ( th -> ph ) -> ( ta -> ( et -> ph ) ) ) ) $=
 	f2 pfalim f0 f1 awi awfal f2 awi f3 ppm2.04 f0 f1 awi awfal f2 awi f3 awi awi awfal f2 awi f0 f1 awi f3 awi pmpi f0 f1 f3 pjarl f0 f1 awi f3 awi f3 pidd f0 f1 awi f3 awi f0 f3 f3 pjad f0 f3 plooinv f0 f1 awi awfal f2 awi f3 awi awi f0 f1 awi f3 awi f0 f3 awi f3 awi f3 f0 awi f0 awi p3syl f0 f1 awi awfal f2 awi f3 awi awi f3 f0 awi f0 f4 pa1dd f0 f1 awi awfal f2 awi f3 awi awi f3 f0 awi f4 f0 awi awi awi f5 pa1i f5 f0 f1 awi awfal f2 awi f3 awi awi f3 f0 awi f4 f0 pcom4l $.
 $}
-$( /* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
+$( Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
      (Contributed by Anthony Hart, 16-Aug-2011.)
-     (Proof modification is discouraged.)  (New usage is discouraged.) */
-
-$)
+     (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
 	$v ph ps ch th $.
 	f0 $f wff ph $.
@@ -38,11 +32,9 @@ ${
 	pmercolem1 $p |- ( ( ( ph -> ps ) -> ch ) -> ( ps -> ( th -> ch ) ) ) $=
 	f0 f0 f0 f0 f0 f0 pmerco2 f0 f0 f0 f0 f0 f0 pmerco2 f2 f0 f0 f0 f1 awi f1 f3 pmerco2 f1 f3 f2 awi f0 awfal awfal f0 awi f0 pmerco2 f1 f3 f2 awi awi awfal f0 awi awfal awi f1 awfal f0 awi f0 f1 awi awi awfal f0 awi f0 f1 awi f2 awi pmerco2 f1 f3 f2 awi awi awfal f0 awi awfal awi awi awfal f1 awi awfal f0 awi f0 f1 awi awi awi awi awfal f0 awi f0 f1 awi awi f1 f3 f2 awi awi awi awfal f0 awi f0 f1 awi f2 awi f1 f3 f2 awi awi awi awi awi aax-mp awfal f0 awi f0 f1 awi awi f1 f3 f2 awi awi f0 f0 f1 awi f2 awi f1 f3 f2 awi awi awi awfal f0 awi f2 f0 awi pmerco2 awfal f0 awi f0 f1 awi awi f1 f3 f2 awi awi awi awfal f0 awi f0 f1 awi f2 awi f1 f3 f2 awi awi awi awi awi f0 f1 awi f2 awi f1 f3 f2 awi awi awi awfal f0 awi f0 f1 awi awi awi awfal f0 awi f2 f0 awi awfal f0 awi f0 f1 awi awi awi awi awi aax-mp f0 f1 awi f2 awi f1 f3 f2 awi awi awi awfal f0 awi f0 f1 awi awi f0 f2 f0 awi awfal f0 awi f0 f1 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi pmerco2 f0 f1 awi f2 awi f1 f3 f2 awi awi awi awfal f0 awi f0 f1 awi awi awi awfal f0 awi f2 f0 awi awfal f0 awi f0 f1 awi awi awi awi awi f2 f0 awi awfal f0 awi f0 f1 awi awi awi f0 f1 awi f2 awi f1 f3 f2 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 awi f2 awi f1 f3 f2 awi awi awi awi awi awi aax-mp f2 f0 awi awfal f0 awi f0 f1 awi awi awi f0 f1 awi f2 awi f1 f3 f2 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 awi f2 awi f1 f3 f2 awi awi awi awi awi aax-mp f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 awi f2 awi f1 f3 f2 awi awi awi awi aax-mp f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 awi f2 awi f1 f3 f2 awi awi awi aax-mp $.
 $}
-$( /* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
+$( Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
      (Contributed by Anthony Hart, 16-Aug-2011.)
-     (Proof modification is discouraged.)  (New usage is discouraged.) */
-
-$)
+     (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
 	$v ph ps ch th $.
 	f0 $f wff ph $.
@@ -52,11 +44,9 @@ ${
 	pmercolem2 $p |- ( ( ( ph -> ps ) -> ph ) -> ( ch -> ( th -> ph ) ) ) $=
 	f0 f0 f0 f0 f0 f0 pmerco2 f0 f0 f0 f0 f0 f0 pmerco2 f0 f0 f0 f0 f1 awi f2 f3 pmerco2 f0 f1 f0 awfal f2 f3 pmerco2 f0 f1 awi awfal f0 awi awfal awi f0 f2 f3 f0 awi awi awfal f0 awi awfal f0 awi pmerco2 f0 f1 awi awfal f0 awi awfal awi awi awfal f0 awi f2 f3 f0 awi awi awi awi f2 f3 f0 awi awi f0 f1 awi awi awfal f0 awi awfal f0 awi f0 f1 awi awi awi awi aax-mp f2 f3 f0 awi awi f0 f1 awi f0 awfal f0 awi f0 f1 awi awi awfal f0 awi f0 f1 awi f0 awi pmerco2 f2 f3 f0 awi awi f0 f1 awi awi awfal f0 awi awfal f0 awi f0 f1 awi awi awi awi awfal f0 awi f0 f1 awi awi f2 f3 f0 awi awi awi awfal f0 awi f0 f1 awi f0 awi f2 f3 f0 awi awi awi awi awi aax-mp awfal f0 awi f0 f1 awi awi f2 f3 f0 awi awi f0 f0 f1 awi f0 awi f2 f3 f0 awi awi awi awfal f0 awi f0 f0 awi pmerco2 awfal f0 awi f0 f1 awi awi f2 f3 f0 awi awi awi awfal f0 awi f0 f1 awi f0 awi f2 f3 f0 awi awi awi awi awi f0 f1 awi f0 awi f2 f3 f0 awi awi awi awfal f0 awi f0 f1 awi awi awi awfal f0 awi f0 f0 awi awfal f0 awi f0 f1 awi awi awi awi awi aax-mp f0 f1 awi f0 awi f2 f3 f0 awi awi awi awfal f0 awi f0 f1 awi awi f0 f0 f0 awi awfal f0 awi f0 f1 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi pmerco2 f0 f1 awi f0 awi f2 f3 f0 awi awi awi awfal f0 awi f0 f1 awi awi awi awfal f0 awi f0 f0 awi awfal f0 awi f0 f1 awi awi awi awi awi f0 f0 awi awfal f0 awi f0 f1 awi awi awi f0 f1 awi f0 awi f2 f3 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 awi f0 awi f2 f3 f0 awi awi awi awi awi awi aax-mp f0 f0 awi awfal f0 awi f0 f1 awi awi awi f0 f1 awi f0 awi f2 f3 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 awi f0 awi f2 f3 f0 awi awi awi awi awi aax-mp f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 awi f0 awi f2 f3 f0 awi awi awi awi aax-mp f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 awi f0 awi f2 f3 f0 awi awi awi aax-mp $.
 $}
-$( /* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
+$( Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
      (Contributed by Anthony Hart, 16-Aug-2011.)
-     (Proof modification is discouraged.)  (New usage is discouraged.) */
-
-$)
+     (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -65,11 +55,9 @@ ${
 	pmercolem3 $p |- ( ( ps -> ch ) -> ( ps -> ( ph -> ch ) ) ) $=
 	f0 f0 f0 f0 f0 f0 pmerco2 f0 f0 f0 f0 f0 f0 pmerco2 f2 f0 f0 f1 f1 f0 pmerco2 f1 f0 f2 awi awfal f0 awi awfal f0 awi pmercolem2 f1 f0 f2 awi awi f1 f0 awfal f0 awi f1 awi awfal f0 awi f1 f2 awi pmerco2 f1 f0 f2 awi awi f1 awi awfal f0 awi awfal f0 awi f1 awi awi awi awfal f0 awi f1 awi f1 f0 f2 awi awi awi awfal f0 awi f1 f2 awi f1 f0 f2 awi awi awi awi awi aax-mp awfal f0 awi f1 awi f1 f0 f2 awi awi f0 f1 f2 awi f1 f0 f2 awi awi awi awfal f0 awi f2 f0 awi pmerco2 awfal f0 awi f1 awi f1 f0 f2 awi awi awi awfal f0 awi f1 f2 awi f1 f0 f2 awi awi awi awi awi f1 f2 awi f1 f0 f2 awi awi awi awfal f0 awi f1 awi awi awfal f0 awi f2 f0 awi awfal f0 awi f1 awi awi awi awi aax-mp f1 f2 awi f1 f0 f2 awi awi awi awfal f0 awi f1 awi f0 f2 f0 awi awfal f0 awi f1 awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi pmerco2 f1 f2 awi f1 f0 f2 awi awi awi awfal f0 awi f1 awi awi awfal f0 awi f2 f0 awi awfal f0 awi f1 awi awi awi awi f2 f0 awi awfal f0 awi f1 awi awi f1 f2 awi f1 f0 f2 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f1 f2 awi f1 f0 f2 awi awi awi awi awi awi aax-mp f2 f0 awi awfal f0 awi f1 awi awi f1 f2 awi f1 f0 f2 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f1 f2 awi f1 f0 f2 awi awi awi awi awi aax-mp f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f1 f2 awi f1 f0 f2 awi awi awi awi aax-mp f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f1 f2 awi f1 f0 f2 awi awi awi aax-mp $.
 $}
-$( /* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
+$( Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
      (Contributed by Anthony Hart, 16-Aug-2011.)
-     (Proof modification is discouraged.)  (New usage is discouraged.) */
-
-$)
+     (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
 	$v ph ch th ta et $.
 	f0 $f wff ph $.
@@ -80,11 +68,9 @@ ${
 	pmercolem4 $p |- ( ( th -> ( et -> ph ) ) -> ( ( ( th -> ch ) -> ph ) -> ( ta -> ( et -> ph ) ) ) ) $=
 	f0 f0 f0 f0 f0 f0 pmerco2 f0 f0 f0 f0 f0 f0 pmerco2 f4 f0 awi f0 f0 f2 f2 f1 awi f0 awi f3 pmerco2 f0 f0 f0 f2 f1 awi f3 f4 pmerco2 f0 f0 awi awfal f0 awi f2 f1 awi awi f2 f1 awi f0 awi f3 f4 f0 awi awi awi f2 f4 f0 awi awi pmercolem1 f0 f0 awi awfal f0 awi f2 f1 awi awi awi f2 f1 awi f0 awi f3 f4 f0 awi awi awi awi awfal f0 awi f2 f1 awi awi f2 f4 f0 awi awi f2 f1 awi f0 awi f3 f4 f0 awi awi awi awi awi aax-mp awfal f0 awi f2 f1 awi f2 f4 f0 awi awi f2 f1 awi f0 awi f3 f4 f0 awi awi awi awi awfal f0 awi pmercolem1 awfal f0 awi f2 f1 awi awi f2 f4 f0 awi awi f2 f1 awi f0 awi f3 f4 f0 awi awi awi awi awi f2 f1 awi awfal f0 awi f2 f4 f0 awi awi f2 f1 awi f0 awi f3 f4 f0 awi awi awi awi awi awi aax-mp f2 f1 f0 f2 f4 f0 awi awi f2 f1 awi f0 awi f3 f4 f0 awi awi awi awi f4 f0 awi f0 awi awfal f0 awi pmerco2 f2 f1 awi awfal f0 awi f2 f4 f0 awi awi f2 f1 awi f0 awi f3 f4 f0 awi awi awi awi awi awi f2 f4 f0 awi awi f2 f1 awi f0 awi f3 f4 f0 awi awi awi awi f2 awi f4 f0 awi f0 awi awfal f0 awi f2 awi awi awi aax-mp awfal f0 awi f2 f4 f0 awi awi f2 f1 awi f0 awi f3 f4 f0 awi awi awi awi f2 awi f4 f0 awi f0 awi awfal f0 awi f2 awi awi pmercolem3 f2 f4 f0 awi awi f2 f1 awi f0 awi f3 f4 f0 awi awi awi awi f2 awi f4 f0 awi f0 awi awfal f0 awi f2 awi awi awi f2 f4 f0 awi awi f2 f1 awi f0 awi f3 f4 f0 awi awi awi awi f2 awi awfal f0 awi f4 f0 awi f0 awi awfal f0 awi f2 awi awi awi awi aax-mp f2 f4 f0 awi awi f2 f1 awi f0 awi f3 f4 f0 awi awi awi awi f2 f0 f4 f0 awi f0 awi awfal f0 awi f2 awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi pmerco2 f2 f4 f0 awi awi f2 f1 awi f0 awi f3 f4 f0 awi awi awi awi f2 awi awfal f0 awi f4 f0 awi f0 awi awfal f0 awi f2 awi awi awi awi f4 f0 awi f0 awi awfal f0 awi f2 awi awi f2 f4 f0 awi awi f2 f1 awi f0 awi f3 f4 f0 awi awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f2 f4 f0 awi awi f2 f1 awi f0 awi f3 f4 f0 awi awi awi awi awi awi awi aax-mp f4 f0 awi f0 awi awfal f0 awi f2 awi awi f2 f4 f0 awi awi f2 f1 awi f0 awi f3 f4 f0 awi awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f2 f4 f0 awi awi f2 f1 awi f0 awi f3 f4 f0 awi awi awi awi awi awi aax-mp f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f2 f4 f0 awi awi f2 f1 awi f0 awi f3 f4 f0 awi awi awi awi awi aax-mp f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f2 f4 f0 awi awi f2 f1 awi f0 awi f3 f4 f0 awi awi awi awi aax-mp $.
 $}
-$( /* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
+$( Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
      (Contributed by Anthony Hart, 16-Aug-2011.)
-     (Proof modification is discouraged.)  (New usage is discouraged.) */
-
-$)
+     (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
 	$v ph ch th ta $.
 	f0 $f wff ph $.
@@ -94,11 +80,9 @@ ${
 	pmercolem5 $p |- ( th -> ( ( th -> ph ) -> ( ta -> ( ch -> ph ) ) ) ) $=
 	f0 f0 f0 f0 f0 f0 pmerco2 f0 f0 f0 f0 f0 f0 pmerco2 f0 f0 f0 f2 f3 f1 pmerco2 f0 f0 awi awfal f0 awi f2 awi f2 f0 awi f3 f1 f0 awi awi awi f2 pmercolem1 f0 f0 awi awfal f0 awi f2 awi awi f2 f0 awi f3 f1 f0 awi awi awi awi awfal f0 awi f2 awi f2 f2 f0 awi f3 f1 f0 awi awi awi awi awi aax-mp f2 f2 f0 awi f3 f1 f0 awi awi awi awfal f0 awi awfal f0 awi pmercolem2 f2 f2 f0 awi f3 f1 f0 awi awi awi awi f2 f0 awfal f0 awi f2 awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi pmerco2 f2 f2 f0 awi f3 f1 f0 awi awi awi awi f2 awi awfal f0 awi awfal f0 awi f2 awi awi awi awfal f0 awi f2 awi f2 f2 f0 awi f3 f1 f0 awi awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f2 f2 f0 awi f3 f1 f0 awi awi awi awi awi awi awi aax-mp awfal f0 awi f2 awi f2 f2 f0 awi f3 f1 f0 awi awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f2 f2 f0 awi f3 f1 f0 awi awi awi awi awi awi aax-mp f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f2 f2 f0 awi f3 f1 f0 awi awi awi awi awi aax-mp f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f2 f2 f0 awi f3 f1 f0 awi awi awi awi aax-mp $.
 $}
-$( /* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
+$( Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
      (Contributed by Anthony Hart, 16-Aug-2011.)
-     (Proof modification is discouraged.)  (New usage is discouraged.) */
-
-$)
+     (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -107,11 +91,9 @@ ${
 	pmercolem6 $p |- ( ( ph -> ( ps -> ( ph -> ch ) ) ) -> ( ps -> ( ph -> ch ) ) ) $=
 	f0 f0 f0 f0 f0 f0 pmerco2 f0 f0 f0 f0 f0 f0 pmerco2 f0 f0 f0 f0 f0 f0 pmerco2 f0 f0 f0 f0 f0 f0 pmerco2 f0 f0 f1 f0 f2 awi awi awi f0 f2 awi f1 pmercolem1 f0 f0 f1 f0 f2 awi awi awi awi f0 f2 awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi pmercolem1 f0 f0 f1 f0 f2 awi awi awi awi f0 f2 awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi f0 f2 awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi aax-mp f1 f0 f2 awi awi f0 f1 f0 f2 awi awi awi f0 f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi pmercolem5 f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi f2 f0 f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi pmercolem4 f0 f0 f1 f0 f2 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi awi f0 f2 awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi awi awi aax-mp f0 f2 awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi awi aax-mp f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi aax-mp f0 f0 f0 f0 f0 f0 pmerco2 f0 f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi pmercolem1 f0 f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi pmercolem1 f0 f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi awi awi aax-mp f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi pmercolem5 f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi awi f1 f0 f2 awi awi f0 f1 f0 f2 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi pmercolem4 f0 f1 f0 f2 awi awi awi f0 f1 f0 f2 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi awi awi awi awi aax-mp f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi awi awi awi aax-mp f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi awi awi aax-mp f0 f1 f0 f2 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi awi aax-mp f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi awi aax-mp f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi awi aax-mp f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 f0 f2 awi awi awi f1 f0 f2 awi awi awi aax-mp $.
 $}
-$( /* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
+$( Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
      (Contributed by Anthony Hart, 16-Aug-2011.)
-     (Proof modification is discouraged.)  (New usage is discouraged.) */
-
-$)
+     (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
 	$v ph ps ch th $.
 	f0 $f wff ph $.
@@ -121,11 +103,9 @@ ${
 	pmercolem7 $p |- ( ( ph -> ps ) -> ( ( ( ph -> ch ) -> ( th -> ps ) ) -> ( th -> ps ) ) ) $=
 	f0 f0 f0 f0 f0 f0 pmerco2 f0 f2 awi f3 f1 awi awi f0 f2 awi f3 f1 awi pmercolem3 f0 f2 awi f3 f1 awi awi f0 f2 awi f3 f1 awi pmercolem6 f0 f2 awi f3 f1 awi awi f0 f2 awi f0 f2 awi f3 f1 awi awi f3 f1 awi awi awi awi f0 f2 awi f0 f2 awi f3 f1 awi awi f3 f1 awi awi awi aax-mp f1 f3 f0 f0 f2 awi f3 f1 awi awi pmercolem5 f0 f2 awi f3 f1 awi awi f3 f1 awi awi f2 f0 f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 awi pmercolem4 f0 f0 f1 awi f0 f2 awi f3 f1 awi awi f3 f1 awi awi awi awi f0 f2 awi f0 f2 awi f3 f1 awi awi f3 f1 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 awi f0 f2 awi f3 f1 awi awi f3 f1 awi awi awi awi awi aax-mp f0 f2 awi f0 f2 awi f3 f1 awi awi f3 f1 awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 awi f0 f2 awi f3 f1 awi awi f3 f1 awi awi awi awi aax-mp f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 awi f0 f2 awi f3 f1 awi awi f3 f1 awi awi awi aax-mp $.
 $}
-$( /* Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
+$( Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
      (Contributed by Anthony Hart, 16-Aug-2011.)
-     (Proof modification is discouraged.)  (New usage is discouraged.) */
-
-$)
+     (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -136,11 +116,9 @@ ${
 	pmercolem8 $p |- ( ( ph -> ps ) -> ( ( ps -> ( ph -> ch ) ) -> ( ta -> ( th -> ( ph -> ch ) ) ) ) ) $=
 	f0 f0 f0 f0 f0 f0 pmerco2 f0 f0 f0 f0 f0 f0 pmerco2 f0 f2 awi awfal f0 awi f1 awi f0 f1 f4 f3 pmerco2 f0 f1 awi f0 f2 awi awfal f0 awi f1 awi awi awfal f0 awi f1 awi awi f1 f0 f2 awi awi f4 f3 f0 f2 awi awi awi awi pmercolem3 f0 f2 awi awfal f0 awi f1 awi awi awfal f0 awi f1 awi awi f1 f0 f2 awi awi f4 f3 f0 f2 awi awi awi awi awi f0 f2 awi awfal f0 awi f1 awi awi awfal f0 awi f1 awi awi f0 f1 awi f1 f0 f2 awi awi f4 f3 f0 f2 awi awi awi awi awi awi aax-mp f0 f1 f2 awfal f0 awi pmercolem7 f0 f1 awi f0 f2 awi awfal f0 awi f1 awi awi awfal f0 awi f1 awi awi f1 f0 f2 awi awi f4 f3 f0 f2 awi awi awi awi awfal f0 awi pmercolem7 f0 f1 awi f0 f2 awi awfal f0 awi f1 awi awi awfal f0 awi f1 awi awi awi f0 f1 awi f1 f0 f2 awi awi f4 f3 f0 f2 awi awi awi awi awi awfal f0 awi f0 f2 awi awfal f0 awi f1 awi awi awfal f0 awi f1 awi awi awi awi awfal f0 awi f0 f2 awi awfal f0 awi f1 awi awi awfal f0 awi f1 awi awi awi awi aax-mp f0 f1 awi f1 f0 f2 awi awi f4 f3 f0 f2 awi awi awi awi awi awfal f0 awi f0 f2 awi awfal f0 awi f1 awi awi awfal f0 awi f1 awi awi awi f0 f0 f2 awi awfal f0 awi f1 awi awi awfal f0 awi f1 awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi pmerco2 f0 f1 awi f1 f0 f2 awi awi f4 f3 f0 f2 awi awi awi awi awi awfal f0 awi f0 f2 awi awfal f0 awi f1 awi awi awfal f0 awi f1 awi awi awi awi awfal f0 awi f0 f2 awi awfal f0 awi f1 awi awi awfal f0 awi f1 awi awi awi awi f0 f2 awi awfal f0 awi f1 awi awi awfal f0 awi f1 awi awi f0 f1 awi f1 f0 f2 awi awi f4 f3 f0 f2 awi awi awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 awi f1 f0 f2 awi awi f4 f3 f0 f2 awi awi awi awi awi awi awi awi aax-mp f0 f2 awi awfal f0 awi f1 awi awi awfal f0 awi f1 awi awi f0 f1 awi f1 f0 f2 awi awi f4 f3 f0 f2 awi awi awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 awi f1 f0 f2 awi awi f4 f3 f0 f2 awi awi awi awi awi awi awi aax-mp f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 awi f1 f0 f2 awi awi f4 f3 f0 f2 awi awi awi awi awi awi aax-mp f0 f0 awi awfal f0 awi f0 awi awi f0 f0 awi f0 f0 f0 awi awi awi awi f0 f1 awi f1 f0 f2 awi awi f4 f3 f0 f2 awi awi awi awi awi aax-mp $.
 $}
-$( /* ~ tbw-ax1 rederived from ~ merco2 .  (Contributed by Anthony Hart,
+$( ~ tbw-ax1 rederived from ~ merco2 .  (Contributed by Anthony Hart,
      16-Aug-2011.)  (Proof modification is discouraged.)
-     (New usage is discouraged.) */
-
-$)
+     (New usage is discouraged.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -149,11 +127,9 @@ ${
 	pre1tbw1 $p |- ( ( ph -> ps ) -> ( ( ps -> ch ) -> ( ph -> ch ) ) ) $=
 	f0 f1 f2 f1 f2 awi f0 f1 awi pmercolem8 f0 f1 f2 pmercolem3 f0 f1 awi f1 f0 f2 awi awi f1 f2 awi f0 f2 awi awi pmercolem6 f0 f1 awi f1 f0 f2 awi awi f0 f1 awi f1 f2 awi f0 f2 awi awi awi awi awi f1 f2 awi f1 f0 f2 awi awi f0 f1 awi f1 f2 awi f0 f2 awi awi awi pmpsyl f1 f2 awi f0 f1 awi f0 f2 awi pmercolem6 f1 f2 awi f0 f1 awi f1 f2 awi f0 f2 awi awi awi awi f0 f1 awi f1 f2 awi f0 f2 awi awi awi aax-mp $.
 $}
-$( /* ~ tbw-ax2 rederived from ~ merco2 .  (Contributed by Anthony Hart,
+$( ~ tbw-ax2 rederived from ~ merco2 .  (Contributed by Anthony Hart,
      16-Aug-2011.)  (Proof modification is discouraged.)
-     (New usage is discouraged.) */
-
-$)
+     (New usage is discouraged.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
@@ -161,11 +137,9 @@ ${
 	pre1tbw2 $p |- ( ph -> ( ps -> ph ) ) $=
 	f0 f0 f0 f1 pmercolem1 f0 f0 awi f0 f0 f1 f0 awi awi f1 pmercolem1 f0 f0 awi f0 awi f0 f1 f0 awi awi awi f0 f1 f0 f1 f0 awi awi awi awi aax-mp f0 f1 f1 f0 awi pmercolem6 f0 f1 f0 f1 f0 awi awi awi awi f1 f0 f1 f0 awi awi awi aax-mp f1 f0 f0 pmercolem6 f1 f0 f1 f0 awi awi awi f0 f1 f0 awi awi aax-mp $.
 $}
-$( /* ~ tbw-ax3 rederived from ~ merco2 .  (Contributed by Anthony Hart,
+$( ~ tbw-ax3 rederived from ~ merco2 .  (Contributed by Anthony Hart,
      16-Aug-2011.)  (Proof modification is discouraged.)
-     (New usage is discouraged.) */
-
-$)
+     (New usage is discouraged.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
@@ -173,15 +147,13 @@ ${
 	pre1tbw3 $p |- ( ( ( ph -> ps ) -> ph ) -> ph ) $=
 	f0 f0 f0 f0 pmercolem2 f0 f1 f0 f0 awi f0 awi f0 f0 f0 awi awi awi f0 f1 awi f0 awi pmercolem2 f0 f1 awi f0 awi f0 f0 awi f0 awi f0 f0 f0 awi awi awi f0 pmercolem6 f0 f1 awi f0 awi f0 f0 awi f0 awi f0 f0 f0 awi awi awi f0 f1 awi f0 awi f0 awi awi awi f0 f0 awi f0 awi f0 f0 f0 awi awi awi f0 f1 awi f0 awi f0 awi awi aax-mp f0 f0 awi f0 awi f0 f0 f0 awi awi awi f0 f1 awi f0 awi f0 awi aax-mp $.
 $}
-$( /* ~ tbw-ax4 rederived from ~ merco2 .
+$( ~ tbw-ax4 rederived from ~ merco2 .
 
      This theorem, along with ~ re1tbw1 , ~ re1tbw2 , and ~ re1tbw3 , shows
      that ~ merco2 , along with ~ ax-mp , can be used as a complete
      axiomatization of propositional calculus.  (Contributed by Anthony Hart,
      16-Aug-2011.)  (Proof modification is discouraged.)
-     (New usage is discouraged.) */
-
-$)
+     (New usage is discouraged.) $)
 ${
 	$v ph $.
 	f0 $f wff ph $.

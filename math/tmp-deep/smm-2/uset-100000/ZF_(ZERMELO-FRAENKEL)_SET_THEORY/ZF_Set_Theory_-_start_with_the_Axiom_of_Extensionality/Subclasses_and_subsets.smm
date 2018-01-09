@@ -1,31 +1,25 @@
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Define_basic_set_operations_and_relations.smm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Subclasses and subsets
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-*/
-
 $)
-$( /* Define the subclass relationship.  Exercise 9 of [TakeutiZaring] p. 18.
+$( Define the subclass relationship.  Exercise 9 of [TakeutiZaring] p. 18.
      For example, ` { 1 , 2 } C_ { 1 , 2 , 3 } ` ( ~ ex-ss ).  Note that
      ` A C_ A ` (proved in ~ ssid ).  Contrast this relationship with the
      relationship ` A C. B ` (as will be defined in ~ df-pss ).  For a more
      traditional definition, but requiring a dummy variable, see ~ dfss2 .
      Other possible definitions are given by ~ dfss3 , ~ dfss4 , ~ sspss ,
      ~ ssequn1 , ~ ssequn2 , ~ sseqin2 , and ~ ssdif0 .  (Contributed by NM,
-     27-Apr-1994.) */
-
-$)
+     27-Apr-1994.) $)
 ${
 	$v A B $.
 	f0 $f class A $.
 	f1 $f class B $.
 	adf-ss $a |- ( A C_ B <-> ( A i^i B ) = A ) $.
 $}
-$( /* Variant of subclass definition ~ df-ss .  (Contributed by NM,
-     3-Sep-2004.) */
-
-$)
+$( Variant of subclass definition ~ df-ss .  (Contributed by NM,
+     3-Sep-2004.) $)
 ${
 	$v A B $.
 	f0 $f class A $.
@@ -33,25 +27,21 @@ ${
 	pdfss $p |- ( A C_ B <-> A = ( A i^i B ) ) $=
 	f0 f1 adf-ss f0 f1 acin f0 peqcom f0 f1 awss f0 f1 acin f0 awceq f0 f0 f1 acin awceq pbitri $.
 $}
-$( /* Define proper subclass relationship between two classes.  Definition 5.9
+$( Define proper subclass relationship between two classes.  Definition 5.9
      of [TakeutiZaring] p. 17.  For example, ` { 1 , 2 } C. { 1 , 2 , 3 } `
      ( ~ ex-pss ).  Note that ` -. A C. A ` (proved in ~ pssirr ).  Contrast
      this relationship with the relationship ` A C_ B ` (as defined in
      ~ df-ss ).  Other possible definitions are given by ~ dfpss2 and
-     ~ dfpss3 .  (Contributed by NM, 7-Feb-1996.) */
-
-$)
+     ~ dfpss3 .  (Contributed by NM, 7-Feb-1996.) $)
 ${
 	$v A B $.
 	f0 $f class A $.
 	f1 $f class B $.
 	adf-pss $a |- ( A C. B <-> ( A C_ B /\ A =/= B ) ) $.
 $}
-$( /* Alternate definition of the subclass relationship between two classes.
+$( Alternate definition of the subclass relationship between two classes.
        Definition 5.9 of [TakeutiZaring] p. 17.  (Contributed by NM,
-       8-Jan-2002.) */
-
-$)
+       8-Jan-2002.) $)
 ${
 	$v x A B $.
 	$d x A $.
@@ -62,10 +52,8 @@ ${
 	pdfss2 $p |- ( A C_ B <-> A. x ( x e. A -> x e. B ) ) $=
 	f1 f2 pdfss f0 f1 f2 adf-in f1 f2 acin f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awa f0 acab f1 peqeq2i f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awa f0 f1 pabeq2 f1 f2 awss f1 f1 f2 acin awceq f1 f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awa f0 acab awceq f0 asup_set_class f1 awcel f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awa awb f0 awal p3bitri f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel ppm4.71 f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awi f0 asup_set_class f1 awcel f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awa awb f0 palbii f1 f2 awss f0 asup_set_class f1 awcel f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awa awb f0 awal f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awi f0 awal pbitr4i $.
 $}
-$( /* Alternate definition of subclass relationship.  (Contributed by NM,
-       14-Oct-1999.) */
-
-$)
+$( Alternate definition of subclass relationship.  (Contributed by NM,
+       14-Oct-1999.) $)
 ${
 	$v x A B $.
 	$d x A $.
@@ -76,11 +64,9 @@ ${
 	pdfss3 $p |- ( A C_ B <-> A. x e. A x e. B ) $=
 	f0 f1 f2 pdfss2 f0 asup_set_class f2 awcel f0 f1 adf-ral f1 f2 awss f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awi f0 awal f0 asup_set_class f2 awcel f0 f1 awral pbitr4i $.
 $}
-$( /* Equivalence for subclass relation, using bound-variable hypotheses
+$( Equivalence for subclass relation, using bound-variable hypotheses
        instead of distinct variable conditions.  (Contributed by NM,
-       3-Jul-1994.)  (Revised by Andrew Salmon, 27-Aug-2011.) */
-
-$)
+       3-Jul-1994.)  (Revised by Andrew Salmon, 27-Aug-2011.) $)
 ${
 	$v x z A B $.
 	$d z A $.
@@ -95,11 +81,9 @@ ${
 	pdfss2f $p |- ( A C_ B <-> A. x ( x e. A -> x e. B ) ) $=
 	i0 f1 f2 pdfss2 e0 f0 i0 f1 pnfcri e1 f0 i0 f2 pnfcri i0 asup_set_class f1 awcel i0 asup_set_class f2 awcel f0 pnfim f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awi i0 pnfv i0 asup_set_class f0 asup_set_class f1 peleq1 i0 asup_set_class f0 asup_set_class f2 peleq1 i0 asup_set_class f0 asup_set_class awceq i0 asup_set_class f1 awcel f0 asup_set_class f1 awcel i0 asup_set_class f2 awcel f0 asup_set_class f2 awcel pimbi12d i0 asup_set_class f1 awcel i0 asup_set_class f2 awcel awi f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awi i0 f0 pcbval f1 f2 awss i0 asup_set_class f1 awcel i0 asup_set_class f2 awcel awi i0 awal f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awi f0 awal pbitri $.
 $}
-$( /* Equivalence for subclass relation, using bound-variable hypotheses
+$( Equivalence for subclass relation, using bound-variable hypotheses
        instead of distinct variable conditions.  (Contributed by NM,
-       20-Mar-2004.) */
-
-$)
+       20-Mar-2004.) $)
 ${
 	$v x A B $.
 	e0 $e |- F/_ x A $.
@@ -110,10 +94,8 @@ ${
 	pdfss3f $p |- ( A C_ B <-> A. x e. A x e. B ) $=
 	e0 e1 f0 f1 f2 pdfss2f f0 asup_set_class f2 awcel f0 f1 adf-ral f1 f2 awss f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awi f0 awal f0 asup_set_class f2 awcel f0 f1 awral pbitr4i $.
 $}
-$( /* If ` x ` is not free in ` A ` and ` B ` , it is not free in
-       ` A C_ B ` .  (Contributed by NM, 27-Dec-1996.) */
-
-$)
+$( If ` x ` is not free in ` A ` and ` B ` , it is not free in
+       ` A C_ B ` .  (Contributed by NM, 27-Dec-1996.) $)
 ${
 	$v x A B $.
 	e0 $e |- F/_ x A $.
@@ -124,10 +106,8 @@ ${
 	pnfss $p |- F/ x A C_ B $=
 	e0 e1 f0 f1 f2 pdfss3f f0 asup_set_class f2 awcel f0 f1 pnfra1 f1 f2 awss f0 asup_set_class f2 awcel f0 f1 awral f0 pnfxfr $.
 $}
-$( /* Membership relationships follow from a subclass relationship.
-       (Contributed by NM, 5-Aug-1993.) */
-
-$)
+$( Membership relationships follow from a subclass relationship.
+       (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v x A B C $.
 	$d x A $.
@@ -140,10 +120,8 @@ ${
 	pssel $p |- ( A C_ B -> ( C e. A -> C e. B ) ) $=
 	i0 f0 f1 pdfss2 f0 f1 awss i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awi i0 awal pbiimpi f0 f1 awss i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awi i0 p19.21bi f0 f1 awss i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel i0 asup_set_class f2 awceq panim2d f0 f1 awss i0 asup_set_class f2 awceq i0 asup_set_class f0 awcel awa i0 asup_set_class f2 awceq i0 asup_set_class f1 awcel awa i0 peximdv i0 f2 f0 adf-clel i0 f2 f1 adf-clel f0 f1 awss i0 asup_set_class f2 awceq i0 asup_set_class f0 awcel awa i0 awex i0 asup_set_class f2 awceq i0 asup_set_class f1 awcel awa i0 awex f2 f0 awcel f2 f1 awcel p3imtr4g $.
 $}
-$( /* Membership relationships follow from a subclass relationship.
-     (Contributed by NM, 7-Jun-2004.) */
-
-$)
+$( Membership relationships follow from a subclass relationship.
+     (Contributed by NM, 7-Jun-2004.) $)
 ${
 	$v A B C $.
 	f0 $f class A $.
@@ -152,10 +130,8 @@ ${
 	pssel2 $p |- ( ( A C_ B /\ C e. A ) -> C e. B ) $=
 	f0 f1 f2 pssel f0 f1 awss f2 f0 awcel f2 f1 awcel pimp $.
 $}
-$( /* Membership inference from subclass relationship.  (Contributed by NM,
-       5-Aug-1993.) */
-
-$)
+$( Membership inference from subclass relationship.  (Contributed by NM,
+       5-Aug-1993.) $)
 ${
 	$v A B C $.
 	e0 $e |- A C_ B $.
@@ -165,10 +141,8 @@ ${
 	psseli $p |- ( C e. A -> C e. B ) $=
 	e0 f0 f1 f2 pssel f0 f1 awss f2 f0 awcel f2 f1 awcel awi aax-mp $.
 $}
-$( /* Membership inference from subclass relationship.  (Contributed by NM,
-         31-May-1999.) */
-
-$)
+$( Membership inference from subclass relationship.  (Contributed by NM,
+         31-May-1999.) $)
 ${
 	$v A B C $.
 	e0 $e |- A C_ B $.
@@ -179,10 +153,8 @@ ${
 	psselii $p |- C e. B $=
 	e1 e0 f0 f1 f2 psseli f2 f0 awcel f2 f1 awcel aax-mp $.
 $}
-$( /* Membership inference from subclass relationship.  (Contributed by NM,
-         25-Jun-2014.) */
-
-$)
+$( Membership inference from subclass relationship.  (Contributed by NM,
+         25-Jun-2014.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- A C_ B $.
@@ -194,10 +166,8 @@ ${
 	psseldi $p |- ( ph -> C e. B ) $=
 	e1 e0 f1 f2 f3 psseli f0 f3 f1 awcel f3 f2 awcel psyl $.
 $}
-$( /* Membership deduction from subclass relationship.  (Contributed by NM,
-       15-Nov-1995.) */
-
-$)
+$( Membership deduction from subclass relationship.  (Contributed by NM,
+       15-Nov-1995.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A C_ B ) $.
@@ -208,10 +178,8 @@ ${
 	psseld $p |- ( ph -> ( C e. A -> C e. B ) ) $=
 	e0 f1 f2 f3 pssel f0 f1 f2 awss f3 f1 awcel f3 f2 awcel awi psyl $.
 $}
-$( /* Membership deduction from subclass relationship.  (Contributed by NM,
-       26-Jun-2014.) */
-
-$)
+$( Membership deduction from subclass relationship.  (Contributed by NM,
+       26-Jun-2014.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A C_ B ) $.
@@ -222,10 +190,8 @@ ${
 	psselda $p |- ( ( ph /\ C e. A ) -> C e. B ) $=
 	e0 f0 f1 f2 f3 psseld f0 f3 f1 awcel f3 f2 awcel pimp $.
 $}
-$( /* Membership inference from subclass relationship.  (Contributed by NM,
-         14-Dec-2004.) */
-
-$)
+$( Membership inference from subclass relationship.  (Contributed by NM,
+         14-Dec-2004.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A C_ B ) $.
@@ -237,10 +203,8 @@ ${
 	psseldd $p |- ( ph -> C e. B ) $=
 	e1 e0 f0 f1 f2 f3 psseld f0 f3 f1 awcel f3 f2 awcel pmpd $.
 $}
-$( /* If a class is not in another class, it is also not in a subclass of that
-       class.  Deduction form.  (Contributed by David Moews, 1-May-2017.) */
-
-$)
+$( If a class is not in another class, it is also not in a subclass of that
+       class.  Deduction form.  (Contributed by David Moews, 1-May-2017.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A C_ B ) $.
@@ -251,10 +215,8 @@ ${
 	pssneld $p |- ( ph -> ( -. C e. B -> -. C e. A ) ) $=
 	e0 f0 f1 f2 f3 psseld f0 f3 f1 awcel f3 f2 awcel pcon3d $.
 $}
-$( /* If an element is not in a class, it is also not in a subclass of that
-       class.  Deduction form.  (Contributed by David Moews, 1-May-2017.) */
-
-$)
+$( If an element is not in a class, it is also not in a subclass of that
+       class.  Deduction form.  (Contributed by David Moews, 1-May-2017.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A C_ B ) $.
@@ -266,10 +228,8 @@ ${
 	pssneldd $p |- ( ph -> -. C e. A ) $=
 	e1 e0 f0 f1 f2 f3 pssneld f0 f3 f2 awcel awn f3 f1 awcel awn pmpd $.
 $}
-$( /* Inference rule based on subclass definition.  (Contributed by NM,
-       5-Aug-1993.) */
-
-$)
+$( Inference rule based on subclass definition.  (Contributed by NM,
+       5-Aug-1993.) $)
 ${
 	$v x A B $.
 	$d x A $.
@@ -281,10 +241,8 @@ ${
 	pssriv $p |- A C_ B $=
 	f0 f1 f2 pdfss2 e0 f1 f2 awss f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awi f0 pmpgbir $.
 $}
-$( /* Deduction rule based on subclass definition.  (Contributed by NM,
-       15-Nov-1995.) */
-
-$)
+$( Deduction rule based on subclass definition.  (Contributed by NM,
+       15-Nov-1995.) $)
 ${
 	$v ph x A B $.
 	$d x A $.
@@ -298,11 +256,9 @@ ${
 	pssrdv $p |- ( ph -> A C_ B ) $=
 	e0 f0 f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awi f1 palrimiv f1 f2 f3 pdfss2 f0 f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awi f1 awal f2 f3 awss psylibr $.
 $}
-$( /* Transitivity of subclasses.  Exercise 5 of [TakeutiZaring] p. 17.
+$( Transitivity of subclasses.  Exercise 5 of [TakeutiZaring] p. 17.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
-       14-Jun-2011.) */
-
-$)
+       14-Jun-2011.) $)
 ${
 	$v x A B C $.
 	$d x A $.
@@ -315,10 +271,8 @@ ${
 	psstr2 $p |- ( A C_ B -> ( B C_ C -> A C_ C ) ) $=
 	f0 f1 i0 asup_set_class pssel f0 f1 awss i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel i0 asup_set_class f2 awcel pimim1d f0 f1 awss i0 asup_set_class f1 awcel i0 asup_set_class f2 awcel awi i0 asup_set_class f0 awcel i0 asup_set_class f2 awcel awi i0 palimdv i0 f1 f2 pdfss2 i0 f0 f2 pdfss2 f0 f1 awss i0 asup_set_class f1 awcel i0 asup_set_class f2 awcel awi i0 awal i0 asup_set_class f0 awcel i0 asup_set_class f2 awcel awi i0 awal f1 f2 awss f0 f2 awss p3imtr4g $.
 $}
-$( /* Transitivity of subclasses.  Theorem 6 of [Suppes] p. 23.  (Contributed by
-     NM, 5-Sep-2003.) */
-
-$)
+$( Transitivity of subclasses.  Theorem 6 of [Suppes] p. 23.  (Contributed by
+     NM, 5-Sep-2003.) $)
 ${
 	$v A B C $.
 	f0 $f class A $.
@@ -327,9 +281,7 @@ ${
 	psstr $p |- ( ( A C_ B /\ B C_ C ) -> A C_ C ) $=
 	f0 f1 f2 psstr2 f0 f1 awss f1 f2 awss f0 f2 awss pimp $.
 $}
-$( /* Subclass transitivity inference.  (Contributed by NM, 5-May-2000.) */
-
-$)
+$( Subclass transitivity inference.  (Contributed by NM, 5-May-2000.) $)
 ${
 	$v A B C $.
 	e0 $e |- A C_ B $.
@@ -340,9 +292,7 @@ ${
 	psstri $p |- A C_ C $=
 	e0 e1 f0 f1 f2 psstr2 f0 f1 awss f1 f2 awss f0 f2 awss pmp2 $.
 $}
-$( /* Subclass transitivity deduction.  (Contributed by NM, 2-Jun-2004.) */
-
-$)
+$( Subclass transitivity deduction.  (Contributed by NM, 2-Jun-2004.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A C_ B ) $.
@@ -354,9 +304,7 @@ ${
 	psstrd $p |- ( ph -> A C_ C ) $=
 	e0 e1 f1 f2 f3 psstr f0 f1 f2 awss f2 f3 awss f1 f3 awss psyl2anc $.
 $}
-$( /* Subclass transitivity deduction.  (Contributed by NM, 6-Feb-2014.) */
-
-$)
+$( Subclass transitivity deduction.  (Contributed by NM, 6-Feb-2014.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- A C_ B $.
@@ -368,10 +316,8 @@ ${
 	psyl5ss $p |- ( ph -> A C_ C ) $=
 	e0 f1 f2 awss f0 pa1i e1 f0 f1 f2 f3 psstrd $.
 $}
-$( /* Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
-       3-Jun-2011.) */
-
-$)
+$( Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
+       3-Jun-2011.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A C_ B ) $.
@@ -383,10 +329,8 @@ ${
 	psyl6ss $p |- ( ph -> A C_ C ) $=
 	e0 e1 f2 f3 awss f0 pa1i f0 f1 f2 f3 psstrd $.
 $}
-$( /* A subclass transitivity deduction.  (Contributed by NM, 27-Sep-2004.)
-       (Proof shortened by Andrew Salmon, 14-Jun-2011.) */
-
-$)
+$( A subclass transitivity deduction.  (Contributed by NM, 27-Sep-2004.)
+       (Proof shortened by Andrew Salmon, 14-Jun-2011.) $)
 ${
 	$v ph ps A B C $.
 	e0 $e |- ( ph -> A C_ B ) $.
@@ -399,9 +343,7 @@ ${
 	psylan9ss $p |- ( ( ph /\ ps ) -> A C_ C ) $=
 	e0 e1 f2 f3 f4 psstr f0 f2 f3 awss f3 f4 awss f2 f4 awss f1 psyl2an $.
 $}
-$( /* A subclass transitivity deduction.  (Contributed by NM, 27-Sep-2004.) */
-
-$)
+$( A subclass transitivity deduction.  (Contributed by NM, 27-Sep-2004.) $)
 ${
 	$v ph ps A B C $.
 	e0 $e |- ( ph -> A C_ B ) $.
@@ -414,10 +356,8 @@ ${
 	psylan9ssr $p |- ( ( ps /\ ph ) -> A C_ C ) $=
 	e0 e1 f0 f1 f2 f3 f4 psylan9ss f0 f1 f2 f4 awss pancoms $.
 $}
-$( /* The subclass relationship is antisymmetric.  Compare Theorem 4 of
-       [Suppes] p. 22.  (Contributed by NM, 5-Aug-1993.) */
-
-$)
+$( The subclass relationship is antisymmetric.  Compare Theorem 4 of
+       [Suppes] p. 22.  (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v x A B $.
 	$d x A $.
@@ -428,10 +368,8 @@ ${
 	peqss $p |- ( A = B <-> ( A C_ B /\ B C_ A ) ) $=
 	i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel i0 palbiim i0 f0 f1 pdfcleq i0 f0 f1 pdfss2 i0 f1 f0 pdfss2 f0 f1 awss i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awi i0 awal f1 f0 awss i0 asup_set_class f1 awcel i0 asup_set_class f0 awcel awi i0 awal panbi12i i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awb i0 awal i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awi i0 awal i0 asup_set_class f1 awcel i0 asup_set_class f0 awcel awi i0 awal awa f0 f1 awceq f0 f1 awss f1 f0 awss awa p3bitr4i $.
 $}
-$( /* Infer equality from two subclass relationships.  Compare Theorem 4 of
-       [Suppes] p. 22.  (Contributed by NM, 9-Sep-1993.) */
-
-$)
+$( Infer equality from two subclass relationships.  Compare Theorem 4 of
+       [Suppes] p. 22.  (Contributed by NM, 9-Sep-1993.) $)
 ${
 	$v A B $.
 	e0 $e |- A C_ B $.
@@ -441,10 +379,8 @@ ${
 	peqssi $p |- A = B $=
 	e0 e1 f0 f1 peqss f0 f1 awceq f0 f1 awss f1 f0 awss pmpbir2an $.
 $}
-$( /* Equality deduction from two subclass relationships.  Compare Theorem 4
-       of [Suppes] p. 22.  (Contributed by NM, 27-Jun-2004.) */
-
-$)
+$( Equality deduction from two subclass relationships.  Compare Theorem 4
+       of [Suppes] p. 22.  (Contributed by NM, 27-Jun-2004.) $)
 ${
 	$v ph A B $.
 	e0 $e |- ( ph -> A C_ B ) $.
@@ -455,11 +391,9 @@ ${
 	peqssd $p |- ( ph -> A = B ) $=
 	e0 e1 f1 f2 peqss f0 f1 f2 awss f2 f1 awss f1 f2 awceq psylanbrc $.
 $}
-$( /* Any class is a subclass of itself.  Exercise 10 of [TakeutiZaring]
+$( Any class is a subclass of itself.  Exercise 10 of [TakeutiZaring]
        p. 18.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew
-       Salmon, 14-Jun-2011.) */
-
-$)
+       Salmon, 14-Jun-2011.) $)
 ${
 	$v x A $.
 	$d A x $.
@@ -468,10 +402,8 @@ ${
 	pssid $p |- A C_ A $=
 	i0 asup_set_class f0 awcel pid i0 f0 f0 pssriv $.
 $}
-$( /* Any class is a subclass of the universal class.  (Contributed by NM,
-       31-Oct-1995.) */
-
-$)
+$( Any class is a subclass of the universal class.  (Contributed by NM,
+       31-Oct-1995.) $)
 ${
 	$v x A $.
 	$d A x $.
@@ -480,10 +412,8 @@ ${
 	pssv $p |- A C_ _V $=
 	i0 asup_set_class f0 pelex i0 f0 acvv pssriv $.
 $}
-$( /* Equality theorem for subclasses.  (Contributed by NM, 5-Aug-1993.)  (Proof
-     shortened by Andrew Salmon, 21-Jun-2011.) */
-
-$)
+$( Equality theorem for subclasses.  (Contributed by NM, 5-Aug-1993.)  (Proof
+     shortened by Andrew Salmon, 21-Jun-2011.) $)
 ${
 	$v A B C $.
 	f0 $f class A $.
@@ -492,10 +422,8 @@ ${
 	psseq1 $p |- ( A = B -> ( A C_ C <-> B C_ C ) ) $=
 	f0 f1 peqss f1 f0 f2 psstr2 f1 f0 awss f0 f2 awss f1 f2 awss awi f0 f1 awss padantl f0 f1 f2 psstr2 f0 f1 awss f1 f2 awss f0 f2 awss awi f1 f0 awss padantr f0 f1 awss f1 f0 awss awa f0 f2 awss f1 f2 awss pimpbid f0 f1 awceq f0 f1 awss f1 f0 awss awa f0 f2 awss f1 f2 awss awb psylbi $.
 $}
-$( /* Equality theorem for the subclass relationship.  (Contributed by NM,
-     25-Jun-1998.) */
-
-$)
+$( Equality theorem for the subclass relationship.  (Contributed by NM,
+     25-Jun-1998.) $)
 ${
 	$v A B C $.
 	f0 $f class A $.
@@ -504,10 +432,8 @@ ${
 	psseq2 $p |- ( A = B -> ( C C_ A <-> C C_ B ) ) $=
 	f2 f0 f1 psstr2 f2 f0 awss f0 f1 awss f2 f1 awss pcom12 f2 f1 f0 psstr2 f2 f1 awss f1 f0 awss f2 f0 awss pcom12 f0 f1 awss f2 f0 awss f2 f1 awss awi f1 f0 awss f2 f1 awss f2 f0 awss awi panim12i f0 f1 peqss f2 f0 awss f2 f1 awss pdfbi2 f0 f1 awss f1 f0 awss awa f2 f0 awss f2 f1 awss awi f2 f1 awss f2 f0 awss awi awa f0 f1 awceq f2 f0 awss f2 f1 awss awb p3imtr4i $.
 $}
-$( /* Equality theorem for the subclass relationship.  (Contributed by NM,
-     31-May-1999.) */
-
-$)
+$( Equality theorem for the subclass relationship.  (Contributed by NM,
+     31-May-1999.) $)
 ${
 	$v A B C D $.
 	f0 $f class A $.
@@ -517,10 +443,8 @@ ${
 	psseq12 $p |- ( ( A = B /\ C = D ) -> ( A C_ C <-> B C_ D ) ) $=
 	f0 f1 f2 psseq1 f2 f3 f1 psseq2 f0 f1 awceq f0 f2 awss f1 f2 awss f2 f3 awceq f1 f3 awss psylan9bb $.
 $}
-$( /* An equality inference for the subclass relationship.  (Contributed by
-       NM, 18-Aug-1993.) */
-
-$)
+$( An equality inference for the subclass relationship.  (Contributed by
+       NM, 18-Aug-1993.) $)
 ${
 	$v A B C $.
 	e0 $e |- A = B $.
@@ -530,10 +454,8 @@ ${
 	psseq1i $p |- ( A C_ C <-> B C_ C ) $=
 	e0 f0 f1 f2 psseq1 f0 f1 awceq f0 f2 awss f1 f2 awss awb aax-mp $.
 $}
-$( /* An equality inference for the subclass relationship.  (Contributed by
-       NM, 30-Aug-1993.) */
-
-$)
+$( An equality inference for the subclass relationship.  (Contributed by
+       NM, 30-Aug-1993.) $)
 ${
 	$v A B C $.
 	e0 $e |- A = B $.
@@ -543,10 +465,8 @@ ${
 	psseq2i $p |- ( C C_ A <-> C C_ B ) $=
 	e0 f0 f1 f2 psseq2 f0 f1 awceq f2 f0 awss f2 f1 awss awb aax-mp $.
 $}
-$( /* An equality inference for the subclass relationship.  (Contributed by
-         NM, 31-May-1999.)  (Proof shortened by Eric Schmidt, 26-Jan-2007.) */
-
-$)
+$( An equality inference for the subclass relationship.  (Contributed by
+         NM, 31-May-1999.)  (Proof shortened by Eric Schmidt, 26-Jan-2007.) $)
 ${
 	$v A B C D $.
 	e0 $e |- A = B $.
@@ -558,10 +478,8 @@ ${
 	psseq12i $p |- ( A C_ C <-> B C_ D ) $=
 	e0 e1 f0 f1 f2 f3 psseq12 f0 f1 awceq f2 f3 awceq f0 f2 awss f1 f3 awss awb pmp2an $.
 $}
-$( /* An equality deduction for the subclass relationship.  (Contributed by
-       NM, 14-Aug-1994.) */
-
-$)
+$( An equality deduction for the subclass relationship.  (Contributed by
+       NM, 14-Aug-1994.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -572,10 +490,8 @@ ${
 	psseq1d $p |- ( ph -> ( A C_ C <-> B C_ C ) ) $=
 	e0 f1 f2 f3 psseq1 f0 f1 f2 awceq f1 f3 awss f2 f3 awss awb psyl $.
 $}
-$( /* An equality deduction for the subclass relationship.  (Contributed by
-       NM, 14-Aug-1994.) */
-
-$)
+$( An equality deduction for the subclass relationship.  (Contributed by
+       NM, 14-Aug-1994.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -586,10 +502,8 @@ ${
 	psseq2d $p |- ( ph -> ( C C_ A <-> C C_ B ) ) $=
 	e0 f1 f2 f3 psseq2 f0 f1 f2 awceq f3 f1 awss f3 f2 awss awb psyl $.
 $}
-$( /* An equality deduction for the subclass relationship.  (Contributed by
-         NM, 31-May-1999.) */
-
-$)
+$( An equality deduction for the subclass relationship.  (Contributed by
+         NM, 31-May-1999.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -602,10 +516,8 @@ ${
 	psseq12d $p |- ( ph -> ( A C_ C <-> B C_ D ) ) $=
 	e0 f0 f1 f2 f3 psseq1d e1 f0 f3 f4 f2 psseq2d f0 f1 f3 awss f2 f3 awss f2 f4 awss pbitrd $.
 $}
-$( /* Substitution of equality into a subclass relationship.  (Contributed by
-       NM, 16-Jul-1995.) */
-
-$)
+$( Substitution of equality into a subclass relationship.  (Contributed by
+       NM, 16-Jul-1995.) $)
 ${
 	$v A B C $.
 	e0 $e |- A = B $.
@@ -616,10 +528,8 @@ ${
 	peqsstri $p |- A C_ C $=
 	e1 e0 f0 f1 f2 psseq1i f0 f2 awss f1 f2 awss pmpbir $.
 $}
-$( /* Substitution of equality into a subclass relationship.  (Contributed by
-       NM, 19-Oct-1999.) */
-
-$)
+$( Substitution of equality into a subclass relationship.  (Contributed by
+       NM, 19-Oct-1999.) $)
 ${
 	$v A B C $.
 	e0 $e |- B = A $.
@@ -630,10 +540,8 @@ ${
 	peqsstr3i $p |- A C_ C $=
 	e0 f1 f0 peqcomi e1 f0 f1 f2 peqsstri $.
 $}
-$( /* Substitution of equality into a subclass relationship.  (Contributed by
-       NM, 28-Jul-1995.) */
-
-$)
+$( Substitution of equality into a subclass relationship.  (Contributed by
+       NM, 28-Jul-1995.) $)
 ${
 	$v A B C $.
 	e0 $e |- A C_ B $.
@@ -644,10 +552,8 @@ ${
 	psseqtri $p |- A C_ C $=
 	e0 e1 f1 f2 f0 psseq2i f0 f1 awss f0 f2 awss pmpbi $.
 $}
-$( /* Substitution of equality into a subclass relationship.  (Contributed by
-       NM, 4-Apr-1995.) */
-
-$)
+$( Substitution of equality into a subclass relationship.  (Contributed by
+       NM, 4-Apr-1995.) $)
 ${
 	$v A B C $.
 	e0 $e |- A C_ B $.
@@ -658,10 +564,8 @@ ${
 	psseqtr4i $p |- A C_ C $=
 	e0 e1 f2 f1 peqcomi f0 f1 f2 psseqtri $.
 $}
-$( /* Substitution of equality into a subclass relationship.  (Contributed by
-       NM, 25-Apr-2004.) */
-
-$)
+$( Substitution of equality into a subclass relationship.  (Contributed by
+       NM, 25-Apr-2004.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -673,10 +577,8 @@ ${
 	peqsstrd $p |- ( ph -> A C_ C ) $=
 	e1 e0 f0 f1 f2 f3 psseq1d f0 f1 f3 awss f2 f3 awss pmpbird $.
 $}
-$( /* Substitution of equality into a subclass relationship.  (Contributed by
-       NM, 25-Apr-2004.) */
-
-$)
+$( Substitution of equality into a subclass relationship.  (Contributed by
+       NM, 25-Apr-2004.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> B = A ) $.
@@ -688,10 +590,8 @@ ${
 	peqsstr3d $p |- ( ph -> A C_ C ) $=
 	e0 f0 f2 f1 peqcomd e1 f0 f1 f2 f3 peqsstrd $.
 $}
-$( /* Substitution of equality into a subclass relationship.  (Contributed by
-       NM, 25-Apr-2004.) */
-
-$)
+$( Substitution of equality into a subclass relationship.  (Contributed by
+       NM, 25-Apr-2004.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A C_ B ) $.
@@ -703,10 +603,8 @@ ${
 	psseqtrd $p |- ( ph -> A C_ C ) $=
 	e0 e1 f0 f2 f3 f1 psseq2d f0 f1 f2 awss f1 f3 awss pmpbid $.
 $}
-$( /* Substitution of equality into a subclass relationship.  (Contributed by
-       NM, 25-Apr-2004.) */
-
-$)
+$( Substitution of equality into a subclass relationship.  (Contributed by
+       NM, 25-Apr-2004.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A C_ B ) $.
@@ -718,11 +616,9 @@ ${
 	psseqtr4d $p |- ( ph -> A C_ C ) $=
 	e0 e1 f0 f3 f2 peqcomd f0 f1 f2 f3 psseqtrd $.
 $}
-$( /* Substitution of equality in both sides of a subclass relationship.
+$( Substitution of equality in both sides of a subclass relationship.
        (Contributed by NM, 13-Jan-1996.)  (Proof shortened by Eric Schmidt,
-       26-Jan-2007.) */
-
-$)
+       26-Jan-2007.) $)
 ${
 	$v A B C D $.
 	e0 $e |- A C_ B $.
@@ -735,11 +631,9 @@ ${
 	p3sstr3i $p |- C C_ D $=
 	e0 e1 e2 f0 f2 f1 f3 psseq12i f0 f1 awss f2 f3 awss pmpbi $.
 $}
-$( /* Substitution of equality in both sides of a subclass relationship.
+$( Substitution of equality in both sides of a subclass relationship.
        (Contributed by NM, 13-Jan-1996.)  (Proof shortened by Eric Schmidt,
-       26-Jan-2007.) */
-
-$)
+       26-Jan-2007.) $)
 ${
 	$v A B C D $.
 	e0 $e |- A C_ B $.
@@ -752,10 +646,8 @@ ${
 	p3sstr4i $p |- C C_ D $=
 	e0 e1 e2 f2 f0 f3 f1 psseq12i f2 f3 awss f0 f1 awss pmpbir $.
 $}
-$( /* Substitution of equality into both sides of a subclass relationship.
-       (Contributed by NM, 1-Oct-2000.) */
-
-$)
+$( Substitution of equality into both sides of a subclass relationship.
+       (Contributed by NM, 1-Oct-2000.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A C_ B ) $.
@@ -769,11 +661,9 @@ ${
 	p3sstr3g $p |- ( ph -> C C_ D ) $=
 	e0 e1 e2 f1 f3 f2 f4 psseq12i f0 f1 f2 awss f3 f4 awss psylib $.
 $}
-$( /* Substitution of equality into both sides of a subclass relationship.
+$( Substitution of equality into both sides of a subclass relationship.
        (Contributed by NM, 16-Aug-1994.)  (Proof shortened by Eric Schmidt,
-       26-Jan-2007.) */
-
-$)
+       26-Jan-2007.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A C_ B ) $.
@@ -787,10 +677,8 @@ ${
 	p3sstr4g $p |- ( ph -> C C_ D ) $=
 	e0 e1 e2 f3 f1 f4 f2 psseq12i f0 f1 f2 awss f3 f4 awss psylibr $.
 $}
-$( /* Substitution of equality into both sides of a subclass relationship.
-       (Contributed by NM, 1-Oct-2000.) */
-
-$)
+$( Substitution of equality into both sides of a subclass relationship.
+       (Contributed by NM, 1-Oct-2000.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A C_ B ) $.
@@ -804,11 +692,9 @@ ${
 	p3sstr3d $p |- ( ph -> C C_ D ) $=
 	e0 e1 e2 f0 f1 f3 f2 f4 psseq12d f0 f1 f2 awss f3 f4 awss pmpbid $.
 $}
-$( /* Substitution of equality into both sides of a subclass relationship.
+$( Substitution of equality into both sides of a subclass relationship.
        (Contributed by NM, 30-Nov-1995.)  (Proof shortened by Eric Schmidt,
-       26-Jan-2007.) */
-
-$)
+       26-Jan-2007.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A C_ B ) $.
@@ -822,10 +708,8 @@ ${
 	p3sstr4d $p |- ( ph -> C C_ D ) $=
 	e0 e1 e2 f0 f3 f1 f4 f2 psseq12d f0 f3 f4 awss f1 f2 awss pmpbird $.
 $}
-$( /* B chained subclass and equality deduction.  (Contributed by NM,
-       25-Apr-2004.) */
-
-$)
+$( B chained subclass and equality deduction.  (Contributed by NM,
+       25-Apr-2004.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- A = B $.
@@ -837,10 +721,8 @@ ${
 	psyl5eqss $p |- ( ph -> A C_ C ) $=
 	e1 e0 f1 f2 f3 psseq1i f0 f2 f3 awss f1 f3 awss psylibr $.
 $}
-$( /* B chained subclass and equality deduction.  (Contributed by NM,
-       25-Apr-2004.) */
-
-$)
+$( B chained subclass and equality deduction.  (Contributed by NM,
+       25-Apr-2004.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- B = A $.
@@ -852,10 +734,8 @@ ${
 	psyl5eqssr $p |- ( ph -> A C_ C ) $=
 	e0 f2 f1 peqcomi e1 f0 f1 f2 f3 psyl5eqss $.
 $}
-$( /* A chained subclass and equality deduction.  (Contributed by NM,
-       25-Apr-2004.) */
-
-$)
+$( A chained subclass and equality deduction.  (Contributed by NM,
+       25-Apr-2004.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A C_ B ) $.
@@ -867,10 +747,8 @@ ${
 	psyl6sseq $p |- ( ph -> A C_ C ) $=
 	e0 e1 f2 f3 f1 psseq2i f0 f1 f2 awss f1 f3 awss psylib $.
 $}
-$( /* A chained subclass and equality deduction.  (Contributed by NM,
-       25-Apr-2004.) */
-
-$)
+$( A chained subclass and equality deduction.  (Contributed by NM,
+       25-Apr-2004.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A C_ B ) $.
@@ -882,10 +760,8 @@ ${
 	psyl6sseqr $p |- ( ph -> A C_ C ) $=
 	e0 e1 f3 f2 peqcomi f0 f1 f2 f3 psyl6sseq $.
 $}
-$( /* Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
-       3-Jun-2011.) */
-
-$)
+$( Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
+       3-Jun-2011.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- B C_ A $.
@@ -897,10 +773,8 @@ ${
 	psyl5sseq $p |- ( ph -> B C_ C ) $=
 	e1 e0 f1 f3 f2 psseq2 f1 f3 awceq f2 f1 awss f2 f3 awss pbiimpa f0 f1 f3 awceq f2 f1 awss f2 f3 awss psylancl $.
 $}
-$( /* Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
-       3-Jun-2011.) */
-
-$)
+$( Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
+       3-Jun-2011.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- B C_ A $.
@@ -912,10 +786,8 @@ ${
 	psyl5sseqr $p |- ( ph -> B C_ C ) $=
 	e0 f2 f1 awss f0 pa1i e1 f0 f2 f1 f3 psseqtr4d $.
 $}
-$( /* A chained subclass and equality deduction.  (Contributed by Mario
-       Carneiro, 2-Jan-2017.) */
-
-$)
+$( A chained subclass and equality deduction.  (Contributed by Mario
+       Carneiro, 2-Jan-2017.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -927,10 +799,8 @@ ${
 	psyl6eqss $p |- ( ph -> A C_ C ) $=
 	e0 e1 f2 f3 awss f0 pa1i f0 f1 f2 f3 peqsstrd $.
 $}
-$( /* A chained subclass and equality deduction.  (Contributed by Mario
-       Carneiro, 2-Jan-2017.) */
-
-$)
+$( A chained subclass and equality deduction.  (Contributed by Mario
+       Carneiro, 2-Jan-2017.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> B = A ) $.
@@ -942,10 +812,8 @@ ${
 	psyl6eqssr $p |- ( ph -> A C_ C ) $=
 	e0 f0 f2 f1 peqcomd e1 f0 f1 f2 f3 psyl6eqss $.
 $}
-$( /* Equality implies the subclass relation.  (Contributed by NM, 5-Aug-1993.)
-     (Proof shortened by Andrew Salmon, 21-Jun-2011.) */
-
-$)
+$( Equality implies the subclass relation.  (Contributed by NM, 5-Aug-1993.)
+     (Proof shortened by Andrew Salmon, 21-Jun-2011.) $)
 ${
 	$v A B $.
 	f0 $f class A $.
@@ -953,10 +821,8 @@ ${
 	peqimss $p |- ( A = B -> A C_ B ) $=
 	f0 f1 peqss f0 f1 awceq f0 f1 awss f1 f0 awss psimplbi $.
 $}
-$( /* Equality implies the subclass relation.  (Contributed by NM,
-     23-Nov-2003.) */
-
-$)
+$( Equality implies the subclass relation.  (Contributed by NM,
+     23-Nov-2003.) $)
 ${
 	$v A B $.
 	f0 $f class A $.
@@ -964,10 +830,8 @@ ${
 	peqimss2 $p |- ( B = A -> A C_ B ) $=
 	f0 f1 peqimss f0 f1 awss f0 f1 peqcoms $.
 $}
-$( /* Infer subclass relationship from equality.  (Contributed by NM,
-       6-Jan-2007.) */
-
-$)
+$( Infer subclass relationship from equality.  (Contributed by NM,
+       6-Jan-2007.) $)
 ${
 	$v A B $.
 	e0 $e |- A = B $.
@@ -976,10 +840,8 @@ ${
 	peqimssi $p |- A C_ B $=
 	f0 pssid e0 f0 f0 f1 psseqtri $.
 $}
-$( /* Infer subclass relationship from equality.  (Contributed by NM,
-       7-Jan-2007.) */
-
-$)
+$( Infer subclass relationship from equality.  (Contributed by NM,
+       7-Jan-2007.) $)
 ${
 	$v A B $.
 	e0 $e |- A = B $.
@@ -988,10 +850,8 @@ ${
 	peqimss2i $p |- B C_ A $=
 	f1 pssid e0 f1 f1 f0 psseqtr4i $.
 $}
-$( /* Two classes are different if they don't include the same class.
-     (Contributed by NM, 23-Apr-2015.) */
-
-$)
+$( Two classes are different if they don't include the same class.
+     (Contributed by NM, 23-Apr-2015.) $)
 ${
 	$v A B C $.
 	f0 $f class A $.
@@ -1000,10 +860,8 @@ ${
 	pnssne1 $p |- ( ( A C_ B /\ -. A C_ C ) -> B =/= C ) $=
 	f1 f2 f0 psseq2 f1 f2 awceq f0 f1 awss f0 f2 awss pbiimpcd f0 f1 awss f0 f2 awss f1 f2 pnecon3bd f0 f1 awss f0 f2 awss awn f1 f2 awne pimp $.
 $}
-$( /* Two classes are different if they are not subclasses of the same class.
-     (Contributed by NM, 23-Apr-2015.) */
-
-$)
+$( Two classes are different if they are not subclasses of the same class.
+     (Contributed by NM, 23-Apr-2015.) $)
 ${
 	$v A B C $.
 	f0 $f class A $.
@@ -1012,11 +870,9 @@ ${
 	pnssne2 $p |- ( ( A C_ C /\ -. B C_ C ) -> A =/= B ) $=
 	f0 f1 f2 psseq1 f0 f1 awceq f0 f2 awss f1 f2 awss pbiimpcd f0 f2 awss f1 f2 awss f0 f1 pnecon3bd f0 f2 awss f1 f2 awss awn f0 f1 awne pimp $.
 $}
-$( /* Negation of subclass relationship.  Exercise 13 of [TakeutiZaring]
+$( Negation of subclass relationship.  Exercise 13 of [TakeutiZaring]
        p. 18.  (Contributed by NM, 25-Feb-1996.)  (Proof shortened by Andrew
-       Salmon, 21-Jun-2011.) */
-
-$)
+       Salmon, 21-Jun-2011.) $)
 ${
 	$v x A B $.
 	$d x A $.
@@ -1027,10 +883,8 @@ ${
 	pnss $p |- ( -. A C_ B <-> E. x ( x e. A /\ -. x e. B ) ) $=
 	f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel f0 pexanali f0 f1 f2 pdfss2 f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awn awa f0 awex f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awi f0 awal f1 f2 awss pxchbinxr f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awn awa f0 awex f1 f2 awss awn pbicomi $.
 $}
-$( /* Quantification restricted to a subclass.  (Contributed by NM,
-       11-Mar-2006.) */
-
-$)
+$( Quantification restricted to a subclass.  (Contributed by NM,
+       11-Mar-2006.) $)
 ${
 	$v ph x A B $.
 	$d x A $.
@@ -1042,10 +896,8 @@ ${
 	pssralv $p |- ( A C_ B -> ( A. x e. B ph -> A. x e. A ph ) ) $=
 	f2 f3 f1 asup_set_class pssel f2 f3 awss f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel f0 pimim1d f2 f3 awss f0 f0 f1 f3 f2 pralimdv2 $.
 $}
-$( /* Existential quantification restricted to a subclass.  (Contributed by
-       NM, 11-Jan-2007.) */
-
-$)
+$( Existential quantification restricted to a subclass.  (Contributed by
+       NM, 11-Jan-2007.) $)
 ${
 	$v ph x A B $.
 	$d x A $.
@@ -1057,10 +909,8 @@ ${
 	pssrexv $p |- ( A C_ B -> ( E. x e. A ph -> E. x e. B ph ) ) $=
 	f2 f3 f1 asup_set_class pssel f2 f3 awss f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel f0 panim1d f2 f3 awss f0 f0 f1 f2 f3 preximdv2 $.
 $}
-$( /* Restricted universal quantification on a subset in terms of superset.
-       (Contributed by Stefan O'Rear, 3-Apr-2015.) */
-
-$)
+$( Restricted universal quantification on a subset in terms of superset.
+       (Contributed by Stefan O'Rear, 3-Apr-2015.) $)
 ${
 	$v ph x A B $.
 	$d A x $.
@@ -1072,10 +922,8 @@ ${
 	pralss $p |- ( A C_ B -> ( A. x e. A ph <-> A. x e. B ( x e. A -> ph ) ) ) $=
 	f2 f3 f1 asup_set_class pssel f2 f3 awss f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel ppm4.71rd f2 f3 awss f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel f1 asup_set_class f2 awcel awa f0 pimbi1d f1 asup_set_class f3 awcel f1 asup_set_class f2 awcel f0 pimpexp f2 f3 awss f1 asup_set_class f2 awcel f0 awi f1 asup_set_class f3 awcel f1 asup_set_class f2 awcel awa f0 awi f1 asup_set_class f3 awcel f1 asup_set_class f2 awcel f0 awi awi psyl6bb f2 f3 awss f0 f1 asup_set_class f2 awcel f0 awi f1 f2 f3 pralbidv2 $.
 $}
-$( /* Restricted existential quantification on a subset in terms of superset.
-       (Contributed by Stefan O'Rear, 3-Apr-2015.) */
-
-$)
+$( Restricted existential quantification on a subset in terms of superset.
+       (Contributed by Stefan O'Rear, 3-Apr-2015.) $)
 ${
 	$v ph x A B $.
 	$d A x $.
@@ -1087,10 +935,8 @@ ${
 	prexss $p |- ( A C_ B -> ( E. x e. A ph <-> E. x e. B ( x e. A /\ ph ) ) ) $=
 	f2 f3 f1 asup_set_class pssel f2 f3 awss f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel ppm4.71rd f2 f3 awss f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel f1 asup_set_class f2 awcel awa f0 panbi1d f1 asup_set_class f3 awcel f1 asup_set_class f2 awcel f0 panass f2 f3 awss f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f3 awcel f1 asup_set_class f2 awcel awa f0 awa f1 asup_set_class f3 awcel f1 asup_set_class f2 awcel f0 awa awa psyl6bb f2 f3 awss f0 f1 asup_set_class f2 awcel f0 awa f1 f2 f3 prexbidv2 $.
 $}
-$( /* Class abstractions in a subclass relationship.  (Contributed by NM,
-       3-Jul-1994.) */
-
-$)
+$( Class abstractions in a subclass relationship.  (Contributed by NM,
+       3-Jul-1994.) $)
 ${
 	$v ph ps x $.
 	f0 $f wff ph $.
@@ -1099,10 +945,8 @@ ${
 	pss2ab $p |- ( { x | ph } C_ { x | ps } <-> A. x ( ph -> ps ) ) $=
 	f0 f2 pnfab1 f1 f2 pnfab1 f2 f0 f2 acab f1 f2 acab pdfss2f f0 f2 pabid f1 f2 pabid f2 asup_set_class f0 f2 acab awcel f0 f2 asup_set_class f1 f2 acab awcel f1 pimbi12i f2 asup_set_class f0 f2 acab awcel f2 asup_set_class f1 f2 acab awcel awi f0 f1 awi f2 palbii f0 f2 acab f1 f2 acab awss f2 asup_set_class f0 f2 acab awcel f2 asup_set_class f1 f2 acab awcel awi f2 awal f0 f1 awi f2 awal pbitri $.
 $}
-$( /* Class abstraction in a subclass relationship.  (Contributed by NM,
-       16-Aug-2006.) */
-
-$)
+$( Class abstraction in a subclass relationship.  (Contributed by NM,
+       16-Aug-2006.) $)
 ${
 	$v ph x A $.
 	$d x A $.
@@ -1112,9 +956,7 @@ ${
 	pabss $p |- ( { x | ph } C_ A <-> A. x ( ph -> x e. A ) ) $=
 	f1 f2 pabid2 f1 asup_set_class f2 awcel f1 acab f2 f0 f1 acab psseq2i f0 f1 asup_set_class f2 awcel f1 pss2ab f0 f1 acab f2 awss f0 f1 acab f1 asup_set_class f2 awcel f1 acab awss f0 f1 asup_set_class f2 awcel awi f1 awal pbitr3i $.
 $}
-$( /* Subclass of a class abstraction.  (Contributed by NM, 16-Aug-2006.) */
-
-$)
+$( Subclass of a class abstraction.  (Contributed by NM, 16-Aug-2006.) $)
 ${
 	$v ph x A $.
 	$d x A $.
@@ -1124,10 +966,8 @@ ${
 	pssab $p |- ( A C_ { x | ph } <-> A. x ( x e. A -> ph ) ) $=
 	f1 f2 pabid2 f1 asup_set_class f2 awcel f1 acab f2 f0 f1 acab psseq1i f1 asup_set_class f2 awcel f0 f1 pss2ab f2 f0 f1 acab awss f1 asup_set_class f2 awcel f1 acab f0 f1 acab awss f1 asup_set_class f2 awcel f0 awi f1 awal pbitr3i $.
 $}
-$( /* The relation for a subclass of a class abstraction is equivalent to
-       restricted quantification.  (Contributed by NM, 6-Sep-2006.) */
-
-$)
+$( The relation for a subclass of a class abstraction is equivalent to
+       restricted quantification.  (Contributed by NM, 6-Sep-2006.) $)
 ${
 	$v ph x A $.
 	$d x A $.
@@ -1137,10 +977,8 @@ ${
 	pssabral $p |- ( A C_ { x | ph } <-> A. x e. A ph ) $=
 	f0 f1 f2 pssab f0 f1 f2 adf-ral f2 f0 f1 acab awss f1 asup_set_class f2 awcel f0 awi f1 awal f0 f1 f2 awral pbitr4i $.
 $}
-$( /* Inference of abstraction subclass from implication.  (Contributed by NM,
-       31-Mar-1995.) */
-
-$)
+$( Inference of abstraction subclass from implication.  (Contributed by NM,
+       31-Mar-1995.) $)
 ${
 	$v ph ps x $.
 	e0 $e |- ( ph -> ps ) $.
@@ -1150,10 +988,8 @@ ${
 	pss2abi $p |- { x | ph } C_ { x | ps } $=
 	f0 f1 f2 pss2ab e0 f0 f2 acab f1 f2 acab awss f0 f1 awi f2 pmpgbir $.
 $}
-$( /* Deduction of abstraction subclass from implication.  (Contributed by NM,
-       29-Jul-2011.) */
-
-$)
+$( Deduction of abstraction subclass from implication.  (Contributed by NM,
+       29-Jul-2011.) $)
 ${
 	$v ph ps ch x $.
 	$d x ph $.
@@ -1165,10 +1001,8 @@ ${
 	pss2abdv $p |- ( ph -> { x | ps } C_ { x | ch } ) $=
 	e0 f0 f1 f2 awi f3 palrimiv f1 f2 f3 pss2ab f0 f1 f2 awi f3 awal f1 f3 acab f2 f3 acab awss psylibr $.
 $}
-$( /* Deduction of abstraction subclass from implication.  (Contributed by NM,
-       20-Jan-2006.) */
-
-$)
+$( Deduction of abstraction subclass from implication.  (Contributed by NM,
+       20-Jan-2006.) $)
 ${
 	$v ph ps x A $.
 	$d x ph $.
@@ -1181,10 +1015,8 @@ ${
 	pabssdv $p |- ( ph -> { x | ps } C_ A ) $=
 	e0 f0 f1 f2 asup_set_class f3 awcel awi f2 palrimiv f1 f2 f3 pabss f0 f1 f2 asup_set_class f3 awcel awi f2 awal f1 f2 acab f3 awss psylibr $.
 $}
-$( /* Inference of abstraction subclass from implication.  (Contributed by NM,
-       20-Jan-2006.) */
-
-$)
+$( Inference of abstraction subclass from implication.  (Contributed by NM,
+       20-Jan-2006.) $)
 ${
 	$v ph x A $.
 	$d x A $.
@@ -1195,10 +1027,8 @@ ${
 	pabssi $p |- { x | ph } C_ A $=
 	e0 f0 f1 asup_set_class f2 awcel f1 pss2abi f1 f2 pabid2 f0 f1 acab f1 asup_set_class f2 awcel f1 acab f2 psseqtri $.
 $}
-$( /* Restricted abstraction classes in a subclass relationship.  (Contributed
-     by NM, 30-May-1999.) */
-
-$)
+$( Restricted abstraction classes in a subclass relationship.  (Contributed
+     by NM, 30-May-1999.) $)
 ${
 	$v ph ps x A $.
 	f0 $f wff ph $.
@@ -1208,10 +1038,8 @@ ${
 	pss2rab $p |- ( { x e. A | ph } C_ { x e. A | ps } <-> A. x e. A ( ph -> ps ) ) $=
 	f0 f2 f3 adf-rab f1 f2 f3 adf-rab f0 f2 f3 acrab f2 asup_set_class f3 awcel f0 awa f2 acab f1 f2 f3 acrab f2 asup_set_class f3 awcel f1 awa f2 acab psseq12i f2 asup_set_class f3 awcel f0 awa f2 asup_set_class f3 awcel f1 awa f2 pss2ab f0 f1 awi f2 f3 adf-ral f2 asup_set_class f3 awcel f0 f1 pimdistan f2 asup_set_class f3 awcel f0 f1 awi awi f2 asup_set_class f3 awcel f0 awa f2 asup_set_class f3 awcel f1 awa awi f2 palbii f0 f1 awi f2 f3 awral f2 asup_set_class f3 awcel f0 f1 awi awi f2 awal f2 asup_set_class f3 awcel f0 awa f2 asup_set_class f3 awcel f1 awa awi f2 awal pbitr2i f0 f2 f3 acrab f1 f2 f3 acrab awss f2 asup_set_class f3 awcel f0 awa f2 acab f2 asup_set_class f3 awcel f1 awa f2 acab awss f2 asup_set_class f3 awcel f0 awa f2 asup_set_class f3 awcel f1 awa awi f2 awal f0 f1 awi f2 f3 awral p3bitri $.
 $}
-$( /* Restricted class abstraction in a subclass relationship.  (Contributed
-       by NM, 16-Aug-2006.) */
-
-$)
+$( Restricted class abstraction in a subclass relationship.  (Contributed
+       by NM, 16-Aug-2006.) $)
 ${
 	$v ph x A B $.
 	$d x B $.
@@ -1222,10 +1050,8 @@ ${
 	prabss $p |- ( { x e. A | ph } C_ B <-> A. x e. A ( ph -> x e. B ) ) $=
 	f0 f1 f2 adf-rab f0 f1 f2 acrab f1 asup_set_class f2 awcel f0 awa f1 acab f3 psseq1i f1 asup_set_class f2 awcel f0 awa f1 f3 pabss f1 asup_set_class f2 awcel f0 f1 asup_set_class f3 awcel pimpexp f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f3 awcel awi f1 asup_set_class f2 awcel f0 f1 asup_set_class f3 awcel awi awi f1 palbii f0 f1 asup_set_class f3 awcel awi f1 f2 adf-ral f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f3 awcel awi f1 awal f1 asup_set_class f2 awcel f0 f1 asup_set_class f3 awcel awi awi f1 awal f0 f1 asup_set_class f3 awcel awi f1 f2 awral pbitr4i f0 f1 f2 acrab f3 awss f1 asup_set_class f2 awcel f0 awa f1 acab f3 awss f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f3 awcel awi f1 awal f0 f1 asup_set_class f3 awcel awi f1 f2 awral p3bitri $.
 $}
-$( /* Subclass of a restricted class abstraction.  (Contributed by NM,
-       16-Aug-2006.) */
-
-$)
+$( Subclass of a restricted class abstraction.  (Contributed by NM,
+       16-Aug-2006.) $)
 ${
 	$v ph x A B $.
 	$d x A $.
@@ -1237,10 +1063,8 @@ ${
 	pssrab $p |- ( B C_ { x e. A | ph } <-> ( B C_ A /\ A. x e. B ph ) ) $=
 	f0 f1 f2 adf-rab f0 f1 f2 acrab f1 asup_set_class f2 awcel f0 awa f1 acab f3 psseq2i f1 asup_set_class f2 awcel f0 awa f1 f3 pssab f1 f3 f2 pdfss3 f3 f2 awss f1 asup_set_class f2 awcel f1 f3 awral f0 f1 f3 awral panbi1i f1 asup_set_class f2 awcel f0 f1 f3 pr19.26 f1 asup_set_class f2 awcel f0 awa f1 f3 adf-ral f3 f2 awss f0 f1 f3 awral awa f1 asup_set_class f2 awcel f1 f3 awral f0 f1 f3 awral awa f1 asup_set_class f2 awcel f0 awa f1 f3 awral f1 asup_set_class f3 awcel f1 asup_set_class f2 awcel f0 awa awi f1 awal p3bitr2ri f3 f0 f1 f2 acrab awss f3 f1 asup_set_class f2 awcel f0 awa f1 acab awss f1 asup_set_class f3 awcel f1 asup_set_class f2 awcel f0 awa awi f1 awal f3 f2 awss f0 f1 f3 awral awa p3bitri $.
 $}
-$( /* Subclass of a restricted class abstraction (deduction rule).
-       (Contributed by NM, 31-Aug-2006.) */
-
-$)
+$( Subclass of a restricted class abstraction (deduction rule).
+       (Contributed by NM, 31-Aug-2006.) $)
 ${
 	$v ph ps x A B $.
 	$d x A $.
@@ -1256,10 +1080,8 @@ ${
 	pssrabdv $p |- ( ph -> B C_ { x e. A | ps } ) $=
 	e0 e1 f0 f1 f2 f4 pralrimiva f1 f2 f3 f4 pssrab f0 f4 f3 awss f1 f2 f4 awral f4 f1 f2 f3 acrab awss psylanbrc $.
 $}
-$( /* Subclass of a restricted class abstraction (deduction rule).
-       (Contributed by NM, 2-Feb-2015.) */
-
-$)
+$( Subclass of a restricted class abstraction (deduction rule).
+       (Contributed by NM, 2-Feb-2015.) $)
 ${
 	$v ph ps x A B $.
 	$d x B $.
@@ -1273,10 +1095,8 @@ ${
 	prabssdv $p |- ( ph -> { x e. A | ps } C_ B ) $=
 	e0 f0 f2 asup_set_class f3 awcel f1 f2 asup_set_class f4 awcel p3exp f0 f1 f2 asup_set_class f4 awcel awi f2 f3 pralrimiv f1 f2 f3 f4 prabss f0 f1 f2 asup_set_class f4 awcel awi f2 f3 awral f1 f2 f3 acrab f4 awss psylibr $.
 $}
-$( /* Deduction of restricted abstraction subclass from implication.
-       (Contributed by NM, 30-May-2006.) */
-
-$)
+$( Deduction of restricted abstraction subclass from implication.
+       (Contributed by NM, 30-May-2006.) $)
 ${
 	$v ph ps ch x A $.
 	$d x ph $.
@@ -1289,10 +1109,8 @@ ${
 	pss2rabdv $p |- ( ph -> { x e. A | ps } C_ { x e. A | ch } ) $=
 	e0 f0 f1 f2 awi f3 f4 pralrimiva f1 f2 f3 f4 pss2rab f0 f1 f2 awi f3 f4 awral f1 f3 f4 acrab f2 f3 f4 acrab awss psylibr $.
 $}
-$( /* Inference of restricted abstraction subclass from implication.
-       (Contributed by NM, 14-Oct-1999.) */
-
-$)
+$( Inference of restricted abstraction subclass from implication.
+       (Contributed by NM, 14-Oct-1999.) $)
 ${
 	$v ph ps x A $.
 	e0 $e |- ( x e. A -> ( ph -> ps ) ) $.
@@ -1303,10 +1121,8 @@ ${
 	pss2rabi $p |- { x e. A | ph } C_ { x e. A | ps } $=
 	f0 f1 f2 f3 pss2rab e0 f0 f2 f3 acrab f1 f2 f3 acrab awss f0 f1 awi f2 f3 pmprgbir $.
 $}
-$( /* Subclass law for restricted abstraction.  (Contributed by NM,
-       18-Dec-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
-
-$)
+$( Subclass law for restricted abstraction.  (Contributed by NM,
+       18-Dec-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
 	$v ph x A B $.
 	$d x A $.
@@ -1318,10 +1134,8 @@ ${
 	prabss2 $p |- ( A C_ B -> { x e. A | ph } C_ { x e. B | ph } ) $=
 	f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel f0 ppm3.45 f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awi f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f3 awcel f0 awa awi f1 palimi f1 f2 f3 pdfss2 f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f3 awcel f0 awa f1 pss2ab f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awi f1 awal f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f3 awcel f0 awa awi f1 awal f2 f3 awss f1 asup_set_class f2 awcel f0 awa f1 acab f1 asup_set_class f3 awcel f0 awa f1 acab awss p3imtr4i f0 f1 f2 adf-rab f0 f1 f3 adf-rab f2 f3 awss f1 asup_set_class f2 awcel f0 awa f1 acab f1 asup_set_class f3 awcel f0 awa f1 acab f0 f1 f2 acrab f0 f1 f3 acrab p3sstr4g $.
 $}
-$( /* Subclass relation for the restriction of a class abstraction.
-       (Contributed by NM, 31-Mar-1995.) */
-
-$)
+$( Subclass relation for the restriction of a class abstraction.
+       (Contributed by NM, 31-Mar-1995.) $)
 ${
 	$v ph x A $.
 	$d x A $.
@@ -1331,10 +1145,8 @@ ${
 	pssab2 $p |- { x | ( x e. A /\ ph ) } C_ A $=
 	f1 asup_set_class f2 awcel f0 psimpl f1 asup_set_class f2 awcel f0 awa f1 f2 pabssi $.
 $}
-$( /* Subclass relation for a restricted class.  (Contributed by NM,
-       19-Mar-1997.) */
-
-$)
+$( Subclass relation for a restricted class.  (Contributed by NM,
+       19-Mar-1997.) $)
 ${
 	$v ph x A $.
 	$d x A $.
@@ -1344,10 +1156,8 @@ ${
 	pssrab2 $p |- { x e. A | ph } C_ A $=
 	f0 f1 f2 adf-rab f0 f1 f2 pssab2 f0 f1 f2 acrab f1 asup_set_class f2 awcel f0 awa f1 acab f2 peqsstri $.
 $}
-$( /* A restricted class is a subclass of the corresponding unrestricted class.
-     (Contributed by Mario Carneiro, 23-Dec-2016.) */
-
-$)
+$( A restricted class is a subclass of the corresponding unrestricted class.
+     (Contributed by Mario Carneiro, 23-Dec-2016.) $)
 ${
 	$v ph x A $.
 	f0 $f wff ph $.
@@ -1356,12 +1166,10 @@ ${
 	prabssab $p |- { x e. A | ph } C_ { x | ph } $=
 	f0 f1 f2 adf-rab f1 asup_set_class f2 awcel f0 psimpr f1 asup_set_class f2 awcel f0 awa f0 f1 pss2abi f0 f1 f2 acrab f1 asup_set_class f2 awcel f0 awa f1 acab f0 f1 acab peqsstri $.
 $}
-$( /* A subset relationship useful for converting union to indexed union using
+$( A subset relationship useful for converting union to indexed union using
        ~ dfiun2 or ~ dfiun2g and intersection to indexed intersection using
        ~ dfiin2 .  (Contributed by NM, 5-Oct-2006.)  (Proof shortened by Mario
-       Carneiro, 26-Sep-2015.) */
-
-$)
+       Carneiro, 26-Sep-2015.) $)
 ${
 	$v x y z A B C D $.
 	$d x y $.
@@ -1378,10 +1186,8 @@ ${
 	puniiunlem $p |- ( A. x e. A B e. D -> ( A. x e. A B e. C <-> { y | E. x e. A y = B } C_ C ) ) $=
 	f1 asup_set_class i0 asup_set_class f3 peqeq1 f1 asup_set_class i0 asup_set_class awceq f1 asup_set_class f3 awceq i0 asup_set_class f3 awceq f0 f2 prexbidv f1 asup_set_class f3 awceq f0 f2 awrex i0 asup_set_class f3 awceq f0 f2 awrex f1 i0 pcbvabv f1 asup_set_class f3 awceq f0 f2 awrex f1 acab i0 asup_set_class f3 awceq f0 f2 awrex i0 acab f4 psseq1i i0 asup_set_class f3 awceq i0 asup_set_class f4 awcel f0 f2 pr19.23v i0 asup_set_class f3 awceq i0 asup_set_class f4 awcel awi f0 f2 awral i0 asup_set_class f3 awceq f0 f2 awrex i0 asup_set_class f4 awcel awi i0 palbii i0 asup_set_class f3 awceq i0 asup_set_class f4 awcel awi f0 i0 f2 pralcom4 i0 asup_set_class f3 awceq f0 f2 awrex i0 f4 pabss i0 asup_set_class f3 awceq i0 asup_set_class f4 awcel awi f0 f2 awral i0 awal i0 asup_set_class f3 awceq f0 f2 awrex i0 asup_set_class f4 awcel awi i0 awal i0 asup_set_class f3 awceq i0 asup_set_class f4 awcel awi i0 awal f0 f2 awral i0 asup_set_class f3 awceq f0 f2 awrex i0 acab f4 awss p3bitr4i f1 asup_set_class f3 awceq f0 f2 awrex f1 acab f4 awss i0 asup_set_class f3 awceq f0 f2 awrex i0 acab f4 awss i0 asup_set_class f3 awceq i0 asup_set_class f4 awcel awi i0 awal f0 f2 awral pbitr4i f3 f4 awcel i0 pnfv i0 asup_set_class f3 f4 peleq1 i0 asup_set_class f4 awcel f3 f4 awcel i0 f3 f5 pceqsalg f3 f5 awcel i0 asup_set_class f3 awceq i0 asup_set_class f4 awcel awi i0 awal f3 f4 awcel awb f0 f2 pralimi i0 asup_set_class f3 awceq i0 asup_set_class f4 awcel awi i0 awal f3 f4 awcel f0 f2 pralbi f3 f5 awcel f0 f2 awral i0 asup_set_class f3 awceq i0 asup_set_class f4 awcel awi i0 awal f3 f4 awcel awb f0 f2 awral i0 asup_set_class f3 awceq i0 asup_set_class f4 awcel awi i0 awal f0 f2 awral f3 f4 awcel f0 f2 awral awb psyl f1 asup_set_class f3 awceq f0 f2 awrex f1 acab f4 awss i0 asup_set_class f3 awceq i0 asup_set_class f4 awcel awi i0 awal f0 f2 awral f3 f5 awcel f0 f2 awral f3 f4 awcel f0 f2 awral psyl5rbb $.
 $}
-$( /* Alternate definition of proper subclass.  (Contributed by NM,
-     7-Feb-1996.) */
-
-$)
+$( Alternate definition of proper subclass.  (Contributed by NM,
+     7-Feb-1996.) $)
 ${
 	$v A B $.
 	f0 $f class A $.
@@ -1389,10 +1195,8 @@ ${
 	pdfpss2 $p |- ( A C. B <-> ( A C_ B /\ -. A = B ) ) $=
 	f0 f1 adf-pss f0 f1 adf-ne f0 f1 awne f0 f1 awceq awn f0 f1 awss panbi2i f0 f1 awpss f0 f1 awss f0 f1 awne awa f0 f1 awss f0 f1 awceq awn awa pbitri $.
 $}
-$( /* Alternate definition of proper subclass.  (Contributed by NM,
-     7-Feb-1996.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
-
-$)
+$( Alternate definition of proper subclass.  (Contributed by NM,
+     7-Feb-1996.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
 	$v A B $.
 	f0 $f class A $.
@@ -1400,9 +1204,7 @@ ${
 	pdfpss3 $p |- ( A C. B <-> ( A C_ B /\ -. B C_ A ) ) $=
 	f0 f1 pdfpss2 f0 f1 peqss f0 f1 awceq f0 f1 awss f1 f0 awss pbaib f0 f1 awss f0 f1 awceq f1 f0 awss pnotbid f0 f1 awss f0 f1 awceq awn f1 f0 awss awn ppm5.32i f0 f1 awpss f0 f1 awss f0 f1 awceq awn awa f0 f1 awss f1 f0 awss awn awa pbitri $.
 $}
-$( /* Equality theorem for proper subclass.  (Contributed by NM, 7-Feb-1996.) */
-
-$)
+$( Equality theorem for proper subclass.  (Contributed by NM, 7-Feb-1996.) $)
 ${
 	$v A B C $.
 	f0 $f class A $.
@@ -1411,9 +1213,7 @@ ${
 	ppsseq1 $p |- ( A = B -> ( A C. C <-> B C. C ) ) $=
 	f0 f1 f2 psseq1 f0 f1 f2 pneeq1 f0 f1 awceq f0 f2 awss f1 f2 awss f0 f2 awne f1 f2 awne panbi12d f0 f2 adf-pss f1 f2 adf-pss f0 f1 awceq f0 f2 awss f0 f2 awne awa f1 f2 awss f1 f2 awne awa f0 f2 awpss f1 f2 awpss p3bitr4g $.
 $}
-$( /* Equality theorem for proper subclass.  (Contributed by NM, 7-Feb-1996.) */
-
-$)
+$( Equality theorem for proper subclass.  (Contributed by NM, 7-Feb-1996.) $)
 ${
 	$v A B C $.
 	f0 $f class A $.
@@ -1422,10 +1222,8 @@ ${
 	ppsseq2 $p |- ( A = B -> ( C C. A <-> C C. B ) ) $=
 	f0 f1 f2 psseq2 f0 f1 f2 pneeq2 f0 f1 awceq f2 f0 awss f2 f1 awss f2 f0 awne f2 f1 awne panbi12d f2 f0 adf-pss f2 f1 adf-pss f0 f1 awceq f2 f0 awss f2 f0 awne awa f2 f1 awss f2 f1 awne awa f2 f0 awpss f2 f1 awpss p3bitr4g $.
 $}
-$( /* An equality inference for the proper subclass relationship.
-       (Contributed by NM, 9-Jun-2004.) */
-
-$)
+$( An equality inference for the proper subclass relationship.
+       (Contributed by NM, 9-Jun-2004.) $)
 ${
 	$v A B C $.
 	e0 $e |- A = B $.
@@ -1435,10 +1233,8 @@ ${
 	ppsseq1i $p |- ( A C. C <-> B C. C ) $=
 	e0 f0 f1 f2 ppsseq1 f0 f1 awceq f0 f2 awpss f1 f2 awpss awb aax-mp $.
 $}
-$( /* An equality inference for the proper subclass relationship.
-       (Contributed by NM, 9-Jun-2004.) */
-
-$)
+$( An equality inference for the proper subclass relationship.
+       (Contributed by NM, 9-Jun-2004.) $)
 ${
 	$v A B C $.
 	e0 $e |- A = B $.
@@ -1448,10 +1244,8 @@ ${
 	ppsseq2i $p |- ( C C. A <-> C C. B ) $=
 	e0 f0 f1 f2 ppsseq2 f0 f1 awceq f2 f0 awpss f2 f1 awpss awb aax-mp $.
 $}
-$( /* An equality inference for the proper subclass relationship.
-         (Contributed by NM, 9-Jun-2004.) */
-
-$)
+$( An equality inference for the proper subclass relationship.
+         (Contributed by NM, 9-Jun-2004.) $)
 ${
 	$v A B C D $.
 	e0 $e |- A = B $.
@@ -1463,10 +1257,8 @@ ${
 	ppsseq12i $p |- ( A C. C <-> B C. D ) $=
 	e0 f0 f1 f2 ppsseq1i e1 f2 f3 f1 ppsseq2i f0 f2 awpss f1 f2 awpss f1 f3 awpss pbitri $.
 $}
-$( /* An equality deduction for the proper subclass relationship.
-       (Contributed by NM, 9-Jun-2004.) */
-
-$)
+$( An equality deduction for the proper subclass relationship.
+       (Contributed by NM, 9-Jun-2004.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1477,10 +1269,8 @@ ${
 	ppsseq1d $p |- ( ph -> ( A C. C <-> B C. C ) ) $=
 	e0 f1 f2 f3 ppsseq1 f0 f1 f2 awceq f1 f3 awpss f2 f3 awpss awb psyl $.
 $}
-$( /* An equality deduction for the proper subclass relationship.
-       (Contributed by NM, 9-Jun-2004.) */
-
-$)
+$( An equality deduction for the proper subclass relationship.
+       (Contributed by NM, 9-Jun-2004.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1491,10 +1281,8 @@ ${
 	ppsseq2d $p |- ( ph -> ( C C. A <-> C C. B ) ) $=
 	e0 f1 f2 f3 ppsseq2 f0 f1 f2 awceq f3 f1 awpss f3 f2 awpss awb psyl $.
 $}
-$( /* An equality deduction for the proper subclass relationship.
-         (Contributed by NM, 9-Jun-2004.) */
-
-$)
+$( An equality deduction for the proper subclass relationship.
+         (Contributed by NM, 9-Jun-2004.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1507,10 +1295,8 @@ ${
 	ppsseq12d $p |- ( ph -> ( A C. C <-> B C. D ) ) $=
 	e0 f0 f1 f2 f3 ppsseq1d e1 f0 f3 f4 f2 ppsseq2d f0 f1 f3 awpss f2 f3 awpss f2 f4 awpss pbitrd $.
 $}
-$( /* A proper subclass is a subclass.  Theorem 10 of [Suppes] p. 23.
-     (Contributed by NM, 7-Feb-1996.) */
-
-$)
+$( A proper subclass is a subclass.  Theorem 10 of [Suppes] p. 23.
+     (Contributed by NM, 7-Feb-1996.) $)
 ${
 	$v A B $.
 	f0 $f class A $.
@@ -1518,10 +1304,8 @@ ${
 	ppssss $p |- ( A C. B -> A C_ B ) $=
 	f0 f1 adf-pss f0 f1 awpss f0 f1 awss f0 f1 awne psimplbi $.
 $}
-$( /* Two classes in a proper subclass relationship are not equal.  (Contributed
-     by NM, 16-Feb-2015.) */
-
-$)
+$( Two classes in a proper subclass relationship are not equal.  (Contributed
+     by NM, 16-Feb-2015.) $)
 ${
 	$v A B $.
 	f0 $f class A $.
@@ -1529,10 +1313,8 @@ ${
 	ppssne $p |- ( A C. B -> A =/= B ) $=
 	f0 f1 adf-pss f0 f1 awpss f0 f1 awss f0 f1 awne psimprbi $.
 $}
-$( /* Deduce subclass from proper subclass.  (Contributed by NM,
-       29-Feb-1996.) */
-
-$)
+$( Deduce subclass from proper subclass.  (Contributed by NM,
+       29-Feb-1996.) $)
 ${
 	$v ph A B $.
 	e0 $e |- ( ph -> A C. B ) $.
@@ -1542,10 +1324,8 @@ ${
 	ppssssd $p |- ( ph -> A C_ B ) $=
 	e0 f1 f2 ppssss f0 f1 f2 awpss f1 f2 awss psyl $.
 $}
-$( /* Proper subclasses are unequal.  Deduction form of ~ pssne .
-       (Contributed by David Moews, 1-May-2017.) */
-
-$)
+$( Proper subclasses are unequal.  Deduction form of ~ pssne .
+       (Contributed by David Moews, 1-May-2017.) $)
 ${
 	$v ph A B $.
 	e0 $e |- ( ph -> A C. B ) $.
@@ -1555,10 +1335,8 @@ ${
 	ppssned $p |- ( ph -> A =/= B ) $=
 	e0 f1 f2 ppssne f0 f1 f2 awpss f1 f2 awne psyl $.
 $}
-$( /* Subclass in terms of proper subclass.  (Contributed by NM,
-     25-Feb-1996.) */
-
-$)
+$( Subclass in terms of proper subclass.  (Contributed by NM,
+     25-Feb-1996.) $)
 ${
 	$v A B $.
 	f0 $f class A $.
@@ -1566,21 +1344,17 @@ ${
 	psspss $p |- ( A C_ B <-> ( A C. B \/ A = B ) ) $=
 	f0 f1 pdfpss2 f0 f1 awpss f0 f1 awss f0 f1 awceq awn psimplbi2 f0 f1 awss f0 f1 awceq f0 f1 awpss pcon1d f0 f1 awss f0 f1 awpss f0 f1 awceq porrd f0 f1 ppssss f0 f1 peqimss f0 f1 awpss f0 f1 awss f0 f1 awceq pjaoi f0 f1 awss f0 f1 awpss f0 f1 awceq awo pimpbii $.
 $}
-$( /* Proper subclass is irreflexive.  Theorem 7 of [Suppes] p. 23.
-     (Contributed by NM, 7-Feb-1996.) */
-
-$)
+$( Proper subclass is irreflexive.  Theorem 7 of [Suppes] p. 23.
+     (Contributed by NM, 7-Feb-1996.) $)
 ${
 	$v A $.
 	f0 $f class A $.
 	ppssirr $p |- -. A C. A $=
 	f0 f0 awss ppm3.24 f0 f0 pdfpss3 f0 f0 awpss f0 f0 awss f0 f0 awss awn awa pmtbir $.
 $}
-$( /* Proper subclass has no 2-cycle loops.  Compare Theorem 8 of [Suppes]
+$( Proper subclass has no 2-cycle loops.  Compare Theorem 8 of [Suppes]
      p. 23.  (Contributed by NM, 7-Feb-1996.)  (Proof shortened by Andrew
-     Salmon, 26-Jun-2011.) */
-
-$)
+     Salmon, 26-Jun-2011.) $)
 ${
 	$v A B $.
 	f0 $f class A $.
@@ -1588,10 +1362,8 @@ ${
 	ppssn2lp $p |- -. ( A C. B /\ B C. A ) $=
 	f0 f1 pdfpss3 f0 f1 awpss f0 f1 awss f1 f0 awss awn psimprbi f1 f0 ppssss f0 f1 awpss f1 f0 awss f1 f0 awpss pnsyl f0 f1 awpss f1 f0 awpss pimnan f0 f1 awpss f1 f0 awpss awn awi f0 f1 awpss f1 f0 awpss awa awn pmpbi $.
 $}
-$( /* Two ways of stating trichotomy with respect to inclusion.  (Contributed by
-     NM, 12-Aug-2004.) */
-
-$)
+$( Two ways of stating trichotomy with respect to inclusion.  (Contributed by
+     NM, 12-Aug-2004.) $)
 ${
 	$v A B $.
 	f0 $f class A $.
@@ -1599,10 +1371,8 @@ ${
 	psspsstri $p |- ( ( A C_ B \/ B C_ A ) <-> ( A C. B \/ A = B \/ B C. A ) ) $=
 	f0 f1 awpss f1 f0 awpss f0 f1 awceq por32 f0 f1 psspss f1 f0 psspss f1 f0 peqcom f1 f0 awceq f0 f1 awceq f1 f0 awpss porbi2i f1 f0 awss f1 f0 awpss f1 f0 awceq awo f1 f0 awpss f0 f1 awceq awo pbitri f0 f1 awss f0 f1 awpss f0 f1 awceq awo f1 f0 awss f1 f0 awpss f0 f1 awceq awo porbi12i f0 f1 awpss f1 f0 awpss f0 f1 awceq porordir f0 f1 awss f1 f0 awss awo f0 f1 awpss f0 f1 awceq awo f1 f0 awpss f0 f1 awceq awo awo f0 f1 awpss f1 f0 awpss awo f0 f1 awceq awo pbitr4i f0 f1 awpss f0 f1 awceq f1 f0 awpss adf-3or f0 f1 awpss f1 f0 awpss awo f0 f1 awceq awo f0 f1 awpss f0 f1 awceq awo f1 f0 awpss awo f0 f1 awss f1 f0 awss awo f0 f1 awpss f0 f1 awceq f1 f0 awpss aw3o p3bitr4i $.
 $}
-$( /* Partial trichotomy law for subclasses.  (Contributed by NM, 16-May-1996.)
-     (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
-
-$)
+$( Partial trichotomy law for subclasses.  (Contributed by NM, 16-May-1996.)
+     (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
 	$v A B $.
 	f0 $f class A $.
@@ -1610,10 +1380,8 @@ ${
 	pssnpss $p |- ( A C_ B -> -. B C. A ) $=
 	f1 f0 pdfpss3 f1 f0 awpss f1 f0 awss f0 f1 awss awn psimprbi f1 f0 awpss f0 f1 awss pcon2i $.
 $}
-$( /* Transitive law for proper subclass.  Theorem 9 of [Suppes] p. 23.
-     (Contributed by NM, 7-Feb-1996.) */
-
-$)
+$( Transitive law for proper subclass.  Theorem 9 of [Suppes] p. 23.
+     (Contributed by NM, 7-Feb-1996.) $)
 ${
 	$v A B C $.
 	f0 $f class A $.
@@ -1622,10 +1390,8 @@ ${
 	ppsstr $p |- ( ( A C. B /\ B C. C ) -> A C. C ) $=
 	f0 f1 ppssss f1 f2 ppssss f0 f1 awpss f1 f2 awpss f0 f1 f2 psylan9ss f2 f1 ppssn2lp f0 f2 f1 ppsseq1 f0 f2 awceq f0 f1 awpss f2 f1 awpss f1 f2 awpss panbi1d f0 f2 awceq f0 f1 awpss f1 f2 awpss awa f2 f1 awpss f1 f2 awpss awa pmtbiri f0 f2 awceq f0 f1 awpss f1 f2 awpss awa pcon2i f0 f2 pdfpss2 f0 f1 awpss f1 f2 awpss awa f0 f2 awss f0 f2 awceq awn f0 f2 awpss psylanbrc $.
 $}
-$( /* Transitive law for subclass and proper subclass.  (Contributed by NM,
-     3-Apr-1996.) */
-
-$)
+$( Transitive law for subclass and proper subclass.  (Contributed by NM,
+     3-Apr-1996.) $)
 ${
 	$v A B C $.
 	f0 $f class A $.
@@ -1634,10 +1400,8 @@ ${
 	psspsstr $p |- ( ( A C_ B /\ B C. C ) -> A C. C ) $=
 	f0 f1 psspss f0 f1 f2 ppsstr f0 f1 awpss f1 f2 awpss f0 f2 awpss pex f0 f1 f2 ppsseq1 f0 f1 awceq f0 f2 awpss f1 f2 awpss pbiimprd f0 f1 awpss f1 f2 awpss f0 f2 awpss awi f0 f1 awceq pjaoi f0 f1 awpss f0 f1 awceq awo f1 f2 awpss f0 f2 awpss pimp f0 f1 awss f0 f1 awpss f0 f1 awceq awo f1 f2 awpss f0 f2 awpss psylanb $.
 $}
-$( /* Transitive law for subclass and proper subclass.  (Contributed by NM,
-     3-Apr-1996.) */
-
-$)
+$( Transitive law for subclass and proper subclass.  (Contributed by NM,
+     3-Apr-1996.) $)
 ${
 	$v A B C $.
 	f0 $f class A $.
@@ -1646,10 +1410,8 @@ ${
 	ppsssstr $p |- ( ( A C. B /\ B C_ C ) -> A C. C ) $=
 	f1 f2 psspss f0 f1 f2 ppsstr f0 f1 awpss f1 f2 awpss f0 f2 awpss pex f1 f2 f0 ppsseq2 f1 f2 awceq f0 f1 awpss f0 f2 awpss pbiimpcd f0 f1 awpss f1 f2 awpss f0 f2 awpss f1 f2 awceq pjaod f0 f1 awpss f1 f2 awpss f1 f2 awceq awo f0 f2 awpss pimp f1 f2 awss f0 f1 awpss f1 f2 awpss f1 f2 awceq awo f0 f2 awpss psylan2b $.
 $}
-$( /* Proper subclass inclusion is transitive.  Deduction form of ~ psstr .
-       (Contributed by David Moews, 1-May-2017.) */
-
-$)
+$( Proper subclass inclusion is transitive.  Deduction form of ~ psstr .
+       (Contributed by David Moews, 1-May-2017.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A C. B ) $.
@@ -1661,11 +1423,9 @@ ${
 	ppsstrd $p |- ( ph -> A C. C ) $=
 	e0 e1 f1 f2 f3 ppsstr f0 f1 f2 awpss f2 f3 awpss f1 f3 awpss psyl2anc $.
 $}
-$( /* Transitivity involving subclass and proper subclass inclusion.
+$( Transitivity involving subclass and proper subclass inclusion.
        Deduction form of ~ sspsstr .  (Contributed by David Moews,
-       1-May-2017.) */
-
-$)
+       1-May-2017.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A C_ B ) $.
@@ -1677,11 +1437,9 @@ ${
 	psspsstrd $p |- ( ph -> A C. C ) $=
 	e0 e1 f1 f2 f3 psspsstr f0 f1 f2 awss f2 f3 awpss f1 f3 awpss psyl2anc $.
 $}
-$( /* Transitivity involving subclass and proper subclass inclusion.
+$( Transitivity involving subclass and proper subclass inclusion.
        Deduction form of ~ psssstr .  (Contributed by David Moews,
-       1-May-2017.) */
-
-$)
+       1-May-2017.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A C. B ) $.
@@ -1693,11 +1451,9 @@ ${
 	ppsssstrd $p |- ( ph -> A C. C ) $=
 	e0 e1 f1 f2 f3 ppsssstr f0 f1 f2 awpss f2 f3 awss f1 f3 awpss psyl2anc $.
 $}
-$( /* A class is not a proper subclass of another iff it satisfies a
+$( A class is not a proper subclass of another iff it satisfies a
      one-directional form of ~ eqss .  (Contributed by Mario Carneiro,
-     15-May-2015.) */
-
-$)
+     15-May-2015.) $)
 ${
 	$v A B $.
 	f0 $f class A $.

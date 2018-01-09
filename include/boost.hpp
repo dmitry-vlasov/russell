@@ -1,5 +1,4 @@
-#ifndef INCLUDE_BOOST_HPP_
-#define INCLUDE_BOOST_HPP_
+#pragma once
 
 #include <cctype>
 
@@ -17,4 +16,3 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem.hpp>
 
-#endif /* INCLUDE_BOOST_HPP_ */

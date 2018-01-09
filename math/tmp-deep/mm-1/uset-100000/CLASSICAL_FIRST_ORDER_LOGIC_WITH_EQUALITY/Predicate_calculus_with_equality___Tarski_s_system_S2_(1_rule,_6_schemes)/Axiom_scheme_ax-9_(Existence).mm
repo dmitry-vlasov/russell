@@ -1,12 +1,10 @@
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Tarski_s_system_S2_(1_rule,_6_schemes)/Equality_predicate__define_substitution.mm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                 Axiom scheme ax-9 (Existence)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-*/
-
 $)
-$( /* Axiom of Existence.  One of the equality and substitution axioms of
+$( Axiom of Existence.  One of the equality and substitution axioms of
      predicate calculus with equality.  This axiom tells us is that at least
      one thing exists.  In this form (not requiring that ` x ` and ` y ` be
      distinct) it was used in an axiom system of Tarski (see Axiom B7' in
@@ -28,15 +26,13 @@ $( /* Axiom of Existence.  One of the equality and substitution axioms of
 
      Except by ~ ax9v , this axiom should not be referenced directly.  Instead,
      use theorem ~ ax9 .  (Contributed by NM, 5-Aug-1993.)
-     (New usage is discouraged.) */
-
-$)
+     (New usage is discouraged.) $)
 ${
 	fax-9_0 $f set x $.
 	fax-9_1 $f set y $.
 	ax-9 $a |- -. A. x -. x = y $.
 $}
-$( /* Axiom B7 of [Tarski] p. 75, which requires that ` x ` and ` y ` be
+$( Axiom B7 of [Tarski] p. 75, which requires that ` x ` and ` y ` be
        distinct.  This trivial proof is intended merely to weaken axiom ~ ax-9
        by adding a distinct variable restriction.  From here on, ~ ax-9 should
        not be referenced directly by any other proof, so that theorem ~ ax9
@@ -55,32 +51,26 @@ $( /* Axiom B7 of [Tarski] p. 75, which requires that ` x ` and ` y ` be
 
        When possible, use of this theorem rather than ~ ax9 is preferred since
        its derivation from axioms is much shorter.  (Contributed by NM,
-       7-Aug-2015.) */
-
-$)
+       7-Aug-2015.) $)
 ${
 	$d x y $.
 	fax9v_0 $f set x $.
 	fax9v_1 $f set y $.
 	ax9v $p |- -. A. x -. x = y $= fax9v_0 fax9v_1 ax-9 $.
 $}
-$( /* At least one individual exists.  Weaker version of ~ a9e .  When
+$( At least one individual exists.  Weaker version of ~ a9e .  When
        possible, use of this theorem rather than ~ a9e is preferred since its
        derivation from axioms is much shorter.  (Contributed by NM,
-       3-Aug-2017.) */
-
-$)
+       3-Aug-2017.) $)
 ${
 	$d x y $.
 	fa9ev_0 $f set x $.
 	fa9ev_1 $f set y $.
 	a9ev $p |- E. x x = y $= fa9ev_0 sup_set_class fa9ev_1 sup_set_class wceq fa9ev_0 wex fa9ev_0 sup_set_class fa9ev_1 sup_set_class wceq wn fa9ev_0 wal wn fa9ev_0 fa9ev_1 ax9v fa9ev_0 sup_set_class fa9ev_1 sup_set_class wceq fa9ev_0 df-ex mpbir $.
 $}
-$( /* Specialization.  Lemma 8 of [KalishMontague] p. 87.  Uses only Tarski's
+$( Specialization.  Lemma 8 of [KalishMontague] p. 87.  Uses only Tarski's
        FOL axiom schemes.  (Contributed by NM, 19-Apr-2017.)  (Proof shortened
-       by Wolf Lammen, 7-Aug-2017.) */
-
-$)
+       by Wolf Lammen, 7-Aug-2017.) $)
 ${
 	$d x y $.
 	fspimw_0 $f wff ph $.
@@ -91,10 +81,8 @@ ${
 	espimw_1 $e |- ( x = y -> ( ph -> ps ) ) $.
 	spimw $p |- ( A. x ph -> ps ) $= fspimw_2 sup_set_class fspimw_3 sup_set_class wceq wn fspimw_2 wal wn fspimw_0 fspimw_2 wal fspimw_1 wi fspimw_2 fspimw_3 ax9v fspimw_0 fspimw_1 fspimw_2 fspimw_3 espimw_0 espimw_1 spimfw ax-mp $.
 $}
-$( /* Specialization.  Lemma 8 of [KalishMontague] p. 87.  Uses only Tarski's
-       FOL axiom schemes.  (Contributed by NM, 9-Apr-2017.) */
-
-$)
+$( Specialization.  Lemma 8 of [KalishMontague] p. 87.  Uses only Tarski's
+       FOL axiom schemes.  (Contributed by NM, 9-Apr-2017.) $)
 ${
 	$d x y $.
 	$d x ps $.
@@ -105,11 +93,9 @@ ${
 	espimvw_0 $e |- ( x = y -> ( ph -> ps ) ) $.
 	spimvw $p |- ( A. x ph -> ps ) $= fspimvw_0 fspimvw_1 fspimvw_2 fspimvw_3 fspimvw_1 wn fspimvw_2 ax-17 espimvw_0 spimw $.
 $}
-$( /* Weak version of ~ sp .  Uses only Tarski's FOL axiom schemes.
+$( Weak version of ~ sp .  Uses only Tarski's FOL axiom schemes.
        (Contributed by NM, 1-Aug-2017.)  (Proof shortened by Wolf Lammen,
-       13-Aug-2017.) */
-
-$)
+       13-Aug-2017.) $)
 ${
 	$d x y $.
 	$d y ph $.
@@ -119,10 +105,8 @@ ${
 	espnfw_0 $e |- ( -. ph -> A. x -. ph ) $.
 	spnfw $p |- ( A. x ph -> ph ) $= fspnfw_0 fspnfw_0 fspnfw_1 ispnfw_0 espnfw_0 fspnfw_1 sup_set_class ispnfw_0 sup_set_class wceq fspnfw_0 idd spimw $.
 $}
-$( /* Change bound variable.  Uses only Tarski's FOL axiom schemes.  Part of
-       Lemma 7 of [KalishMontague] p. 86.  (Contributed by NM, 19-Apr-2017.) */
-
-$)
+$( Change bound variable.  Uses only Tarski's FOL axiom schemes.  Part of
+       Lemma 7 of [KalishMontague] p. 86.  (Contributed by NM, 19-Apr-2017.) $)
 ${
 	$d x y $.
 	fcbvaliw_0 $f wff ph $.
@@ -134,10 +118,8 @@ ${
 	ecbvaliw_2 $e |- ( x = y -> ( ph -> ps ) ) $.
 	cbvaliw $p |- ( A. x ph -> A. y ps ) $= fcbvaliw_0 fcbvaliw_2 wal fcbvaliw_1 fcbvaliw_3 ecbvaliw_0 fcbvaliw_0 fcbvaliw_1 fcbvaliw_2 fcbvaliw_3 ecbvaliw_1 ecbvaliw_2 spimw alrimih $.
 $}
-$( /* Change bound variable.  Uses only Tarski's FOL axiom schemes.  Part of
-       Lemma 7 of [KalishMontague] p. 86.  (Contributed by NM, 9-Apr-2017.) */
-
-$)
+$( Change bound variable.  Uses only Tarski's FOL axiom schemes.  Part of
+       Lemma 7 of [KalishMontague] p. 86.  (Contributed by NM, 9-Apr-2017.) $)
 ${
 	$d x y $.
 	$d x ps $.

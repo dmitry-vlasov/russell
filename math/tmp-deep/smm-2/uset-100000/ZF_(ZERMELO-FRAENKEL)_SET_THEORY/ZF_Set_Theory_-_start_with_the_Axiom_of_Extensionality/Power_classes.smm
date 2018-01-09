@@ -1,32 +1,22 @@
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/_Weak_deduction_theorem__for_set_theory.smm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                           Power classes
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-*/
-
 $)
-$( /* Declare the symbol for power class. */
-
-$)
+$( Declare the symbol for power class. $)
 $c ~P $.
-$( /* Calligraphic P */
-
-$)
-$( /* Extend class notation to include power class.  (The tilde in the Metamath
-     token is meant to suggest the calligraphic font of the P.) */
-
-$)
+$( Calligraphic P $)
+$( Extend class notation to include power class.  (The tilde in the Metamath
+     token is meant to suggest the calligraphic font of the P.) $)
 ${
 	$v A $.
 	f0 $f class A $.
 	acpw $a class ~P A $.
 $}
-$( /* Soundness justification theorem for ~ df-pw .  (Contributed by Rodolfo
+$( Soundness justification theorem for ~ df-pw .  (Contributed by Rodolfo
        Medina, 28-Apr-2010.)  (Proof shortened by Andrew Salmon,
-       29-Jun-2011.) */
-
-$)
+       29-Jun-2011.) $)
 ${
 	$v x y z A $.
 	$d x A $.
@@ -41,7 +31,7 @@ ${
 	ppwjust $p |- { x | x C_ A } = { y | y C_ A } $=
 	f0 asup_set_class i0 asup_set_class f2 psseq1 f0 asup_set_class f2 awss i0 asup_set_class f2 awss f0 i0 pcbvabv i0 asup_set_class f1 asup_set_class f2 psseq1 i0 asup_set_class f2 awss f1 asup_set_class f2 awss i0 f1 pcbvabv f0 asup_set_class f2 awss f0 acab i0 asup_set_class f2 awss i0 acab f1 asup_set_class f2 awss f1 acab peqtri $.
 $}
-$( /* Define power class.  Definition 5.10 of [TakeutiZaring] p. 17, but we
+$( Define power class.  Definition 5.10 of [TakeutiZaring] p. 17, but we
        also let it apply to proper classes, i.e. those that are not members of
        ` _V ` .  When applied to a set, this produces its power set.  A power
        set of S is the set of all subsets of S, including the empty set and S
@@ -51,9 +41,7 @@ $( /* Define power class.  Definition 5.10 of [TakeutiZaring] p. 17, but we
        introduce the Axiom of Power Sets ~ ax-pow , which can be expressed in
        class notation per ~ pwexg .  Still later we will prove, in ~ hashpw ,
        that the size of the power set of a finite set is 2 raised to the power
-       of the size of the set.  (Contributed by NM, 5-Aug-1993.) */
-
-$)
+       of the size of the set.  (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v x A $.
 	$d x A $.
@@ -61,9 +49,7 @@ ${
 	f1 $f class A $.
 	adf-pw $a |- ~P A = { x | x C_ A } $.
 $}
-$( /* Equality theorem for power class.  (Contributed by NM, 5-Aug-1993.) */
-
-$)
+$( Equality theorem for power class.  (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v x A B $.
 	$d x A $.
@@ -74,10 +60,8 @@ ${
 	ppweq $p |- ( A = B -> ~P A = ~P B ) $=
 	f0 f1 i0 asup_set_class psseq2 f0 f1 awceq i0 asup_set_class f0 awss i0 asup_set_class f1 awss i0 pabbidv i0 f0 adf-pw i0 f1 adf-pw f0 f1 awceq i0 asup_set_class f0 awss i0 acab i0 asup_set_class f1 awss i0 acab f0 acpw f1 acpw p3eqtr4g $.
 $}
-$( /* Equality inference for power class.  (Contributed by NM,
-       27-Nov-2013.) */
-
-$)
+$( Equality inference for power class.  (Contributed by NM,
+       27-Nov-2013.) $)
 ${
 	$v A B $.
 	e0 $e |- A = B $.
@@ -86,10 +70,8 @@ ${
 	ppweqi $p |- ~P A = ~P B $=
 	e0 f0 f1 ppweq f0 f1 awceq f0 acpw f1 acpw awceq aax-mp $.
 $}
-$( /* Equality deduction for power class.  (Contributed by NM,
-       27-Nov-2013.) */
-
-$)
+$( Equality deduction for power class.  (Contributed by NM,
+       27-Nov-2013.) $)
 ${
 	$v ph A B $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -99,10 +81,8 @@ ${
 	ppweqd $p |- ( ph -> ~P A = ~P B ) $=
 	e0 f1 f2 ppweq f0 f1 f2 awceq f1 acpw f2 acpw awceq psyl $.
 $}
-$( /* Membership in a power class.  Theorem 86 of [Suppes] p. 47.
-         (Contributed by NM, 31-Dec-1993.) */
-
-$)
+$( Membership in a power class.  Theorem 86 of [Suppes] p. 47.
+         (Contributed by NM, 31-Dec-1993.) $)
 ${
 	$v x A B $.
 	$d A x $.
@@ -114,10 +94,8 @@ ${
 	pelpw $p |- ( A e. ~P B <-> A C_ B ) $=
 	e0 i0 asup_set_class f0 f1 psseq1 i0 f1 adf-pw i0 asup_set_class f1 awss f0 f1 awss i0 f0 f1 acpw pelab2 $.
 $}
-$( /* Membership in a power class.  Theorem 86 of [Suppes] p. 47.  See also
-       ~ elpw2g .  (Contributed by NM, 6-Aug-2000.) */
-
-$)
+$( Membership in a power class.  Theorem 86 of [Suppes] p. 47.  See also
+       ~ elpw2g .  (Contributed by NM, 6-Aug-2000.) $)
 ${
 	$v x A B V $.
 	$d A x $.
@@ -129,10 +107,8 @@ ${
 	pelpwg $p |- ( A e. V -> ( A e. ~P B <-> A C_ B ) ) $=
 	i0 asup_set_class f0 f1 acpw peleq1 i0 asup_set_class f0 f1 psseq1 i0 pvex i0 asup_set_class f1 pelpw i0 asup_set_class f1 acpw awcel i0 asup_set_class f1 awss f0 f1 acpw awcel f0 f1 awss i0 f0 f2 pvtoclbg $.
 $}
-$( /* Subset relation implied by membership in a power class.  (Contributed by
-     NM, 17-Feb-2007.) */
-
-$)
+$( Subset relation implied by membership in a power class.  (Contributed by
+     NM, 17-Feb-2007.) $)
 ${
 	$v A B $.
 	f0 $f class A $.
@@ -140,10 +116,8 @@ ${
 	pelpwi $p |- ( A e. ~P B -> A C_ B ) $=
 	f0 f1 f1 acpw pelpwg f0 f1 acpw awcel f0 f1 awss pibi $.
 $}
-$( /* An element of a power class is a subclass.  Deduction form of ~ elpwi .
-       (Contributed by David Moews, 1-May-2017.) */
-
-$)
+$( An element of a power class is a subclass.  Deduction form of ~ elpwi .
+       (Contributed by David Moews, 1-May-2017.) $)
 ${
 	$v ph A B $.
 	e0 $e |- ( ph -> A e. ~P B ) $.
@@ -153,10 +127,8 @@ ${
 	pelpwid $p |- ( ph -> A C_ B ) $=
 	e0 f1 f2 pelpwi f0 f1 f2 acpw awcel f1 f2 awss psyl $.
 $}
-$( /* If ` A ` belongs to a part of ` C ` then ` A ` belongs to ` C ` .
-     (Contributed by FL, 3-Aug-2009.) */
-
-$)
+$( If ` A ` belongs to a part of ` C ` then ` A ` belongs to ` C ` .
+     (Contributed by FL, 3-Aug-2009.) $)
 ${
 	$v A B C $.
 	f0 $f class A $.
@@ -165,10 +137,8 @@ ${
 	pelelpwi $p |- ( ( A e. B /\ B e. ~P C ) -> A e. C ) $=
 	f1 f2 pelpwi f1 f2 acpw awcel f1 f2 f0 psseld f1 f2 acpw awcel f0 f1 awcel f0 f2 awcel pimpcom $.
 $}
-$( /* Bound-variable hypothesis builder for power class.  (Contributed by NM,
-       28-Oct-2003.)  (Revised by Mario Carneiro, 13-Oct-2016.) */
-
-$)
+$( Bound-variable hypothesis builder for power class.  (Contributed by NM,
+       28-Oct-2003.)  (Revised by Mario Carneiro, 13-Oct-2016.) $)
 ${
 	$v x y A $.
 	$d y A $.
@@ -180,10 +150,8 @@ ${
 	pnfpw $p |- F/_ x ~P A $=
 	i0 f1 adf-pw f0 i0 asup_set_class pnfcv e0 f0 i0 asup_set_class f1 pnfss i0 asup_set_class f1 awss f0 i0 pnfab f0 f1 acpw i0 asup_set_class f1 awss i0 acab pnfcxfr $.
 $}
-$( /* Membership of the original in a power set.  (Contributed by Stefan O'Rear,
-     1-Feb-2015.) */
-
-$)
+$( Membership of the original in a power set.  (Contributed by Stefan O'Rear,
+     1-Feb-2015.) $)
 ${
 	$v A V $.
 	f0 $f class A $.
@@ -191,10 +159,8 @@ ${
 	ppwidg $p |- ( A e. V -> A e. ~P A ) $=
 	f0 pssid f0 f0 f1 pelpwg f0 f1 awcel f0 f0 acpw awcel f0 f0 awss pmpbiri $.
 $}
-$( /* A set is a member of its power class.  Theorem 87 of [Suppes] p. 47.
-       (Contributed by NM, 5-Aug-1993.) */
-
-$)
+$( A set is a member of its power class.  Theorem 87 of [Suppes] p. 47.
+       (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v A $.
 	e0 $e |- A e. _V $.
@@ -202,10 +168,8 @@ ${
 	ppwid $p |- A e. ~P A $=
 	e0 f0 acvv ppwidg f0 acvv awcel f0 f0 acpw awcel aax-mp $.
 $}
-$( /* Subclass relationship for power class.  (Contributed by NM,
-       21-Jun-2009.) */
-
-$)
+$( Subclass relationship for power class.  (Contributed by NM,
+       21-Jun-2009.) $)
 ${
 	$v x A B $.
 	$d x A $.

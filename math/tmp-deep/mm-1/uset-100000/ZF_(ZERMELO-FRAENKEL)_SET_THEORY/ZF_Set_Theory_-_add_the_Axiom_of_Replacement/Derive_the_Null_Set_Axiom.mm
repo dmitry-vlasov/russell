@@ -1,16 +1,12 @@
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Replacement/Derive_the_Axiom_of_Separation.mm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
               Derive the Null Set Axiom
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-*/
-
 $)
-$( /* Show the uniqueness of the empty set (using the Axiom of Extensionality
+$( Show the uniqueness of the empty set (using the Axiom of Extensionality
        via ~ bm1.1 to strengthen the hypothesis in the form of ~ axnul ).
-       (Contributed by NM, 22-Dec-2007.) */
-
-$)
+       (Contributed by NM, 22-Dec-2007.) $)
 ${
 	$d x y $.
 	fzfnuleu_0 $f set x $.
@@ -18,14 +14,12 @@ ${
 	ezfnuleu_0 $e |- E. x A. y -. y e. x $.
 	zfnuleu $p |- E! x A. y -. y e. x $= fzfnuleu_1 sup_set_class fzfnuleu_0 sup_set_class wcel wn fzfnuleu_1 wal fzfnuleu_0 weu fzfnuleu_1 sup_set_class fzfnuleu_0 sup_set_class wcel wfal wb fzfnuleu_1 wal fzfnuleu_0 weu fzfnuleu_1 sup_set_class fzfnuleu_0 sup_set_class wcel wfal wb fzfnuleu_1 wal fzfnuleu_0 wex fzfnuleu_1 sup_set_class fzfnuleu_0 sup_set_class wcel wfal wb fzfnuleu_1 wal fzfnuleu_0 weu fzfnuleu_1 sup_set_class fzfnuleu_0 sup_set_class wcel wn fzfnuleu_1 wal fzfnuleu_0 wex fzfnuleu_1 sup_set_class fzfnuleu_0 sup_set_class wcel wfal wb fzfnuleu_1 wal fzfnuleu_0 wex ezfnuleu_0 fzfnuleu_1 sup_set_class fzfnuleu_0 sup_set_class wcel wn fzfnuleu_1 wal fzfnuleu_1 sup_set_class fzfnuleu_0 sup_set_class wcel wfal wb fzfnuleu_1 wal fzfnuleu_0 fzfnuleu_1 sup_set_class fzfnuleu_0 sup_set_class wcel wn fzfnuleu_1 sup_set_class fzfnuleu_0 sup_set_class wcel wfal wb fzfnuleu_1 fzfnuleu_1 sup_set_class fzfnuleu_0 sup_set_class wcel nbfal albii exbii mpbi wfal fzfnuleu_0 fzfnuleu_1 wfal fzfnuleu_0 nfv bm1.1 ax-mp fzfnuleu_1 sup_set_class fzfnuleu_0 sup_set_class wcel wn fzfnuleu_1 wal fzfnuleu_1 sup_set_class fzfnuleu_0 sup_set_class wcel wfal wb fzfnuleu_1 wal fzfnuleu_0 fzfnuleu_1 sup_set_class fzfnuleu_0 sup_set_class wcel wn fzfnuleu_1 sup_set_class fzfnuleu_0 sup_set_class wcel wfal wb fzfnuleu_1 fzfnuleu_1 sup_set_class fzfnuleu_0 sup_set_class wcel nbfal albii eubii mpbir $.
 $}
-$( /* Prove ~ axnul directly from ~ ax-rep using none of the equality axioms
+$( Prove ~ axnul directly from ~ ax-rep using none of the equality axioms
        ~ ax-8 through ~ ax-15 provided we accept ~ sp as an axiom.  Replace
        ~ sp with the obsolete ~ ax-4 to see this in 'show trace_back'.
        (Contributed by Jeff Hoffman, 3-Feb-2008.)  (Proof shortened by Mario
        Carneiro, 17-Nov-2016.)  (Proof modification is discouraged.)
-       (New usage is discouraged.) */
-
-$)
+       (New usage is discouraged.) $)
 ${
 	$d x y z w $.
 	iaxnulALT_0 $f set z $.
@@ -34,7 +28,7 @@ ${
 	faxnulALT_1 $f set y $.
 	axnulALT $p |- E. x A. y -. y e. x $= faxnulALT_1 sup_set_class faxnulALT_0 sup_set_class wcel wn faxnulALT_1 wal faxnulALT_0 wex faxnulALT_1 sup_set_class faxnulALT_0 sup_set_class wcel iaxnulALT_1 sup_set_class iaxnulALT_0 sup_set_class wcel wfal faxnulALT_0 wal wa iaxnulALT_1 wex wb faxnulALT_1 wal faxnulALT_0 wex wfal faxnulALT_0 wal faxnulALT_1 sup_set_class faxnulALT_0 sup_set_class wceq wi faxnulALT_1 wal faxnulALT_0 wex faxnulALT_1 sup_set_class faxnulALT_0 sup_set_class wcel iaxnulALT_1 sup_set_class iaxnulALT_0 sup_set_class wcel wfal faxnulALT_0 wal wa iaxnulALT_1 wex wb faxnulALT_1 wal faxnulALT_0 wex iaxnulALT_1 wfal iaxnulALT_0 faxnulALT_0 faxnulALT_1 iaxnulALT_1 ax-rep wfal faxnulALT_0 wal faxnulALT_1 sup_set_class faxnulALT_0 sup_set_class wceq wi wfal faxnulALT_0 wal faxnulALT_1 sup_set_class faxnulALT_0 sup_set_class wceq wi faxnulALT_1 wal faxnulALT_0 wex faxnulALT_1 wfal faxnulALT_0 wal faxnulALT_1 sup_set_class faxnulALT_0 sup_set_class wceq wi faxnulALT_1 wal wfal faxnulALT_0 wal faxnulALT_1 sup_set_class faxnulALT_0 sup_set_class wceq wi faxnulALT_1 wal wn faxnulALT_0 wal wn wfal faxnulALT_0 wal faxnulALT_1 sup_set_class faxnulALT_0 sup_set_class wceq wi faxnulALT_1 wal faxnulALT_0 wex wfal faxnulALT_0 wal faxnulALT_1 sup_set_class faxnulALT_0 sup_set_class wceq wi faxnulALT_1 wal wn faxnulALT_0 wal wfal faxnulALT_0 wal faxnulALT_1 sup_set_class faxnulALT_0 sup_set_class wceq wi faxnulALT_1 wal wfal faxnulALT_0 wal faxnulALT_1 sup_set_class faxnulALT_0 sup_set_class wceq wi faxnulALT_1 wal wn faxnulALT_0 sp con2i wfal faxnulALT_0 wal faxnulALT_1 sup_set_class faxnulALT_0 sup_set_class wceq wi faxnulALT_1 wal faxnulALT_0 df-ex sylibr wfal faxnulALT_0 wal faxnulALT_1 sup_set_class faxnulALT_0 sup_set_class wceq wfal faxnulALT_0 wal wfal fal wfal faxnulALT_0 sp mto pm2.21i mpg mpg faxnulALT_1 sup_set_class faxnulALT_0 sup_set_class wcel wn faxnulALT_1 wal faxnulALT_1 sup_set_class faxnulALT_0 sup_set_class wcel iaxnulALT_1 sup_set_class iaxnulALT_0 sup_set_class wcel wfal faxnulALT_0 wal wa iaxnulALT_1 wex wb faxnulALT_1 wal faxnulALT_0 faxnulALT_1 sup_set_class faxnulALT_0 sup_set_class wcel wn faxnulALT_1 sup_set_class faxnulALT_0 sup_set_class wcel iaxnulALT_1 sup_set_class iaxnulALT_0 sup_set_class wcel wfal faxnulALT_0 wal wa iaxnulALT_1 wex wb faxnulALT_1 iaxnulALT_1 sup_set_class iaxnulALT_0 sup_set_class wcel wfal faxnulALT_0 wal wa iaxnulALT_1 wex faxnulALT_1 sup_set_class faxnulALT_0 sup_set_class wcel iaxnulALT_1 sup_set_class iaxnulALT_0 sup_set_class wcel wfal faxnulALT_0 wal wa iaxnulALT_1 wfal faxnulALT_0 wal iaxnulALT_1 sup_set_class iaxnulALT_0 sup_set_class wcel wfal faxnulALT_0 wal wfal fal wfal faxnulALT_0 sp mto intnan nex nbn albii exbii mpbir $.
 $}
-$( /* The Null Set Axiom of ZF set theory: there exists a set with no
+$( The Null Set Axiom of ZF set theory: there exists a set with no
        elements.  Axiom of Empty Set of [Enderton] p. 18.  In some textbooks,
        this is presented as a separate axiom; here we show it can be derived
        from Separation ~ ax-sep .  This version of the Null Set Axiom tells us
@@ -58,9 +52,7 @@ $( /* The Null Set Axiom of ZF set theory: there exists a set with no
        ~ ax-nul below so that the uses of the Null Set Axiom can be more easily
        identified.  (Contributed by Jeff Hoffman, 3-Feb-2008.)  (Revised by NM,
        4-Feb-2008.)  (New usage is discouraged.)
-       (Proof modification is discouraged.) */
-
-$)
+       (Proof modification is discouraged.) $)
 ${
 	$d x y z $.
 	iaxnul_0 $f set z $.
@@ -68,24 +60,20 @@ ${
 	faxnul_1 $f set y $.
 	axnul $p |- E. x A. y -. y e. x $= faxnul_1 sup_set_class faxnul_0 sup_set_class wcel faxnul_1 sup_set_class iaxnul_0 sup_set_class wcel faxnul_1 sup_set_class faxnul_1 sup_set_class wcel faxnul_1 sup_set_class faxnul_1 sup_set_class wcel wn wa wa wb faxnul_1 wal faxnul_0 wex faxnul_1 sup_set_class faxnul_0 sup_set_class wcel wn faxnul_1 wal faxnul_0 wex faxnul_1 sup_set_class faxnul_1 sup_set_class wcel faxnul_1 sup_set_class faxnul_1 sup_set_class wcel wn wa faxnul_1 faxnul_0 iaxnul_0 ax-sep faxnul_1 sup_set_class faxnul_0 sup_set_class wcel faxnul_1 sup_set_class iaxnul_0 sup_set_class wcel faxnul_1 sup_set_class faxnul_1 sup_set_class wcel faxnul_1 sup_set_class faxnul_1 sup_set_class wcel wn wa wa wb faxnul_1 wal faxnul_1 sup_set_class faxnul_0 sup_set_class wcel wn faxnul_1 wal faxnul_0 faxnul_1 sup_set_class faxnul_0 sup_set_class wcel faxnul_1 sup_set_class iaxnul_0 sup_set_class wcel faxnul_1 sup_set_class faxnul_1 sup_set_class wcel faxnul_1 sup_set_class faxnul_1 sup_set_class wcel wn wa wa wb faxnul_1 sup_set_class faxnul_0 sup_set_class wcel wn faxnul_1 faxnul_1 sup_set_class faxnul_0 sup_set_class wcel faxnul_1 sup_set_class iaxnul_0 sup_set_class wcel faxnul_1 sup_set_class faxnul_1 sup_set_class wcel faxnul_1 sup_set_class faxnul_1 sup_set_class wcel wn wa wa wb faxnul_1 sup_set_class faxnul_0 sup_set_class wcel faxnul_1 sup_set_class iaxnul_0 sup_set_class wcel faxnul_1 sup_set_class faxnul_1 sup_set_class wcel faxnul_1 sup_set_class faxnul_1 sup_set_class wcel wn wa wa faxnul_1 sup_set_class faxnul_1 sup_set_class wcel faxnul_1 sup_set_class faxnul_1 sup_set_class wcel wn wa faxnul_1 sup_set_class iaxnul_0 sup_set_class wcel faxnul_1 sup_set_class faxnul_1 sup_set_class wcel pm3.24 intnan faxnul_1 sup_set_class faxnul_0 sup_set_class wcel faxnul_1 sup_set_class iaxnul_0 sup_set_class wcel faxnul_1 sup_set_class faxnul_1 sup_set_class wcel faxnul_1 sup_set_class faxnul_1 sup_set_class wcel wn wa wa wb id mtbiri alimi eximi ax-mp $.
 $}
-$( /* The Null Set Axiom of ZF set theory.  It was derived as ~ axnul above
+$( The Null Set Axiom of ZF set theory.  It was derived as ~ axnul above
        and is therefore redundant, but we state it as a separate axiom here so
        that its uses can be identified more easily.  (Contributed by NM,
-       7-Aug-2003.) */
-
-$)
+       7-Aug-2003.) $)
 ${
 	$d x y $.
 	fax-nul_0 $f set x $.
 	fax-nul_1 $f set y $.
 	ax-nul $a |- E. x A. y -. y e. x $.
 $}
-$( /* The Null Set Axiom of ZF set theory: the empty set exists.  Corollary
+$( The Null Set Axiom of ZF set theory: the empty set exists.  Corollary
        5.16 of [TakeutiZaring] p. 20.  For the unabbreviated version, see
        ~ ax-nul .  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew
-       Salmon, 9-Jul-2011.) */
-
-$)
+       Salmon, 9-Jul-2011.) $)
 ${
 	$d x y $.
 	i0ex_0 $f set x $.

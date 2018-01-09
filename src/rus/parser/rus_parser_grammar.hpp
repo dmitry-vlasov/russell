@@ -264,17 +264,17 @@ Grammar<Iterator>::Grammar(Source* src) : Grammar::base_type(source, "russell") 
 	comment %= comment_ml | comment_sl;
 
 	source =
-		eps [at_c<0>(_val) = new_<Theory>()]
+		eps [at_c<0>(*_val) = new_<Theory>()]
 		> +(
-			import   [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(qi::labels::_1))] |
-			constant [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(qi::labels::_1))] |
-			type     [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(qi::labels::_1))] |
-			rule     [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(qi::labels::_1))] |
-			axiom    [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(qi::labels::_1))] |
-			def      [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(qi::labels::_1))] |
-			theorem  [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(qi::labels::_1))] |
-			proof    [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(qi::labels::_1))] |
-			comment  [push_back(at_c<1>(*at_c<0>(_val)), phoenix::construct<Node>(qi::labels::_1))]
+			import   [push_back(at_c<1>(*at_c<0>(*_val)), phoenix::construct<Node>(qi::labels::_1))] |
+			constant [push_back(at_c<1>(*at_c<0>(*_val)), phoenix::construct<Node>(qi::labels::_1))] |
+			type     [push_back(at_c<1>(*at_c<0>(*_val)), phoenix::construct<Node>(qi::labels::_1))] |
+			rule     [push_back(at_c<1>(*at_c<0>(*_val)), phoenix::construct<Node>(qi::labels::_1))] |
+			axiom    [push_back(at_c<1>(*at_c<0>(*_val)), phoenix::construct<Node>(qi::labels::_1))] |
+			def      [push_back(at_c<1>(*at_c<0>(*_val)), phoenix::construct<Node>(qi::labels::_1))] |
+			theorem  [push_back(at_c<1>(*at_c<0>(*_val)), phoenix::construct<Node>(qi::labels::_1))] |
+			proof    [push_back(at_c<1>(*at_c<0>(*_val)), phoenix::construct<Node>(qi::labels::_1))] |
+			comment  [push_back(at_c<1>(*at_c<0>(*_val)), phoenix::construct<Node>(qi::labels::_1))]
 		);
 
 	qi::on_success(id,        setToken(_val, qi::labels::_1, qi::labels::_3, phoenix::val(src)));

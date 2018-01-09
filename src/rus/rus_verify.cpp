@@ -7,6 +7,8 @@ void Step::verify() const {
 		claim()->verify();
 		return;
 	}
+	assert(kind_ == Step::ASS);
+	if (!*val_.ass) throw Error("unknown assertion", Lex::toStr(val_.ass->id()));
 	//static int c = 0;
 	//cout << "\tverifying step: " << c++ << " = " << show_id(ass->id) << endl;
 	Substitution ps = unify_forth(ass()->props[0]->expr, expr);

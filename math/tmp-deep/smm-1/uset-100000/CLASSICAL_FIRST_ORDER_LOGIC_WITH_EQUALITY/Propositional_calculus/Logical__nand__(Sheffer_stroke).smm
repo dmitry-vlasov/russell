@@ -1,28 +1,20 @@
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Abbreviated_conjunction_and_disjunction_of_three_wff_s.smm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Logical 'nand' (Sheffer stroke)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-*/
-
 $)
-$( /* Declare connective for alternative denial ('nand'). */
-
-$)
+$( Declare connective for alternative denial ('nand'). $)
 $c -/\ $.
-$( /* Overlined 'wedge' (read:  'nand') */
-
-$)
-$( /* Extend wff definition to include alternative denial ('nand'). */
-
-$)
+$( Overlined 'wedge' (read:  'nand') $)
+$( Extend wff definition to include alternative denial ('nand'). $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
 	f1 $f wff ps $.
 	awnan $a wff ( ph -/\ ps ) $.
 $}
-$( /* Define incompatibility, or alternative denial ('not-and' or 'nand').  This
+$( Define incompatibility, or alternative denial ('not-and' or 'nand').  This
      is also called the Sheffer stroke, represented by a vertical bar, but we
      use a different symbol to avoid ambiguity with other uses of the vertical
      bar.  In the second edition of Principia Mathematica (1927), Russell and
@@ -35,19 +27,15 @@ $( /* Define incompatibility, or alternative denial ('not-and' or 'nand').  This
      ` ( ( F. -/\ T. ) <-> T. ) ` ( ~ falnantru ), and
      ` ( ( F. -/\ F. ) <-> T. ) ` ( ~ falnanfal ).  Contrast with ` /\ `
      ( ~ df-an ), ` \/ ` ( ~ df-or ), ` -> ` ( ~ wi ), and ` \/_ `
-     ( ~ df-xor ) .  (Contributed by Jeff Hoffman, 19-Nov-2007.) */
-
-$)
+     ( ~ df-xor ) .  (Contributed by Jeff Hoffman, 19-Nov-2007.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
 	f1 $f wff ps $.
 	adf-nan $a |- ( ( ph -/\ ps ) <-> -. ( ph /\ ps ) ) $.
 $}
-$( /* Write 'and' in terms of 'nand'.  (Contributed by Mario Carneiro,
-     9-May-2015.) */
-
-$)
+$( Write 'and' in terms of 'nand'.  (Contributed by Mario Carneiro,
+     9-May-2015.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
@@ -55,10 +43,8 @@ ${
 	pnanan $p |- ( ( ph /\ ps ) <-> -. ( ph -/\ ps ) ) $=
 	f0 f1 adf-nan f0 f1 awnan f0 f1 awa pcon2bii $.
 $}
-$( /* The 'nand' operator commutes.  (Contributed by Mario Carneiro,
-     9-May-2015.) */
-
-$)
+$( The 'nand' operator commutes.  (Contributed by Mario Carneiro,
+     9-May-2015.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
@@ -66,10 +52,8 @@ ${
 	pnancom $p |- ( ( ph -/\ ps ) <-> ( ps -/\ ph ) ) $=
 	f0 f1 pancom f0 f1 awa f1 f0 awa pnotbii f0 f1 adf-nan f1 f0 adf-nan f0 f1 awa awn f1 f0 awa awn f0 f1 awnan f1 f0 awnan p3bitr4i $.
 $}
-$( /* Lemma for handling nested 'nand's.  (Contributed by Jeff Hoffman,
-     19-Nov-2007.) */
-
-$)
+$( Lemma for handling nested 'nand's.  (Contributed by Jeff Hoffman,
+     19-Nov-2007.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -78,11 +62,9 @@ ${
 	pnannan $p |- ( ( ph -/\ ( ch -/\ ps ) ) <-> ( ph -> ( ch /\ ps ) ) ) $=
 	f0 f2 f1 awnan adf-nan f2 f1 adf-nan f2 f1 awnan f2 f1 awa awn f0 panbi2i f0 f2 f1 awnan awnan f0 f2 f1 awnan awa f0 f2 f1 awa awn awa pxchbinx f0 f2 f1 awa piman f0 f2 f1 awnan awnan f0 f2 f1 awa awn awa awn f0 f2 f1 awa awi pbitr4i $.
 $}
-$( /* Show equivalence between implication and the Nicod version.  To derive
+$( Show equivalence between implication and the Nicod version.  To derive
      ~ nic-dfim , apply ~ nanbi .  (Contributed by Jeff Hoffman,
-     19-Nov-2007.) */
-
-$)
+     19-Nov-2007.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
@@ -90,21 +72,17 @@ ${
 	pnanim $p |- ( ( ph -> ps ) <-> ( ph -/\ ( ps -/\ ps ) ) ) $=
 	f0 f1 f1 pnannan f0 f1 panidmdbi f0 f1 f1 awnan awnan f0 f1 f1 awa awi f0 f1 awi pbitr2i $.
 $}
-$( /* Show equivalence between negation and the Nicod version.  To derive
+$( Show equivalence between negation and the Nicod version.  To derive
      ~ nic-dfneg , apply ~ nanbi .  (Contributed by Jeff Hoffman,
-     19-Nov-2007.) */
-
-$)
+     19-Nov-2007.) $)
 ${
 	$v ps $.
 	f0 $f wff ps $.
 	pnannot $p |- ( -. ps <-> ( ps -/\ ps ) ) $=
 	f0 f0 adf-nan f0 panidm f0 f0 awnan f0 f0 awa f0 pxchbinx f0 f0 awnan f0 awn pbicomi $.
 $}
-$( /* Show equivalence between the bidirectional and the Nicod version.
-     (Contributed by Jeff Hoffman, 19-Nov-2007.) */
-
-$)
+$( Show equivalence between the bidirectional and the Nicod version.
+     (Contributed by Jeff Hoffman, 19-Nov-2007.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.

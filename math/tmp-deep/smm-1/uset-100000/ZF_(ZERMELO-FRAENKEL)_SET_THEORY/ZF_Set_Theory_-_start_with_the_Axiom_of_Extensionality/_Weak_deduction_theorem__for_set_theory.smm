@@ -1,5 +1,5 @@
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/The_empty_set.smm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
            "Weak deduction theorem" for set theory
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -68,24 +68,14 @@ $( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   From (4) and (5), Lemma 2 yields
     |- Ord A -> Tr A                                               (Q.E.D.)
 
-*/
-
 $)
-$( /* These lemmas are used to convert hypotheses into antecedents,
-     when there is at least one class making the hypothesis true. */
-
-$)
-$( /* Declare new constant symbols. */
-
-$)
+$( These lemmas are used to convert hypotheses into antecedents,
+     when there is at least one class making the hypothesis true. $)
+$( Declare new constant symbols. $)
 $c if $.
-$( /* Conditional operator (was "ded" for "deduction class"). */
-
-$)
-$( /* Extend class notation to include the conditional operator.  See ~ df-if
-     for a description.  (In older databases this was denoted "ded".) */
-
-$)
+$( Conditional operator (was "ded" for "deduction class"). $)
+$( Extend class notation to include the conditional operator.  See ~ df-if
+     for a description.  (In older databases this was denoted "ded".) $)
 ${
 	$v ph A B $.
 	f0 $f wff ph $.
@@ -93,7 +83,7 @@ ${
 	f2 $f class B $.
 	acif $a class if ( ph , A , B ) $.
 $}
-$( /* Define the conditional operator.  Read ` if ( ph , A , B ) ` as "if
+$( Define the conditional operator.  Read ` if ( ph , A , B ) ` as "if
        ` ph ` then ` A ` else ` B ` ."  See ~ iftrue and ~ iffalse for its
        values.  In mathematical literature, this operator is rarely defined
        formally but is implicit in informal definitions such as "let f(x)=0 if
@@ -108,9 +98,7 @@ $( /* Define the conditional operator.  Read ` if ( ph , A , B ) ` as "if
        deduction theorem, ~ elimhyp to eliminate a hypothesis, and ~ keephyp to
        keep a hypothesis.  See the Deduction Theorem link on the Metamath Proof
        Explorer Home Page for a description of the weak deduction theorem.
-       (Contributed by NM, 15-May-1999.) */
-
-$)
+       (Contributed by NM, 15-May-1999.) $)
 ${
 	$v ph x A B $.
 	$d x ph $.
@@ -122,11 +110,9 @@ ${
 	f3 $f class B $.
 	adf-if $a |- if ( ph , A , B ) = { x | ( ( x e. A /\ ph ) \/ ( x e. B /\ -. ph ) ) } $.
 $}
-$( /* An alternate definition of the conditional operator ~ df-if with one
+$( An alternate definition of the conditional operator ~ df-if with one
        fewer connectives (but probably less intuitive to understand).
-       (Contributed by NM, 30-Jan-2006.) */
-
-$)
+       (Contributed by NM, 30-Jan-2006.) $)
 ${
 	$v ph x A B $.
 	$d x ph $.
@@ -139,10 +125,8 @@ ${
 	pdfif2 $p |- if ( ph , A , B ) = { x | ( ( x e. B -> ph ) -> ( x e. A /\ ph ) ) } $=
 	f0 f1 f2 f3 adf-if f1 asup_set_class f3 awcel f0 awn awa f1 asup_set_class f2 awcel f0 awa adf-or f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f3 awcel f0 awn awa porcom f1 asup_set_class f3 awcel f0 piman f1 asup_set_class f3 awcel f0 awi f1 asup_set_class f3 awcel f0 awn awa awn f1 asup_set_class f2 awcel f0 awa pimbi1i f1 asup_set_class f3 awcel f0 awn awa f1 asup_set_class f2 awcel f0 awa awo f1 asup_set_class f3 awcel f0 awn awa awn f1 asup_set_class f2 awcel f0 awa awi f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f3 awcel f0 awn awa awo f1 asup_set_class f3 awcel f0 awi f1 asup_set_class f2 awcel f0 awa awi p3bitr4i f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f3 awcel f0 awn awa awo f1 asup_set_class f3 awcel f0 awi f1 asup_set_class f2 awcel f0 awa awi f1 pabbii f0 f2 f3 acif f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f3 awcel f0 awn awa awo f1 acab f1 asup_set_class f3 awcel f0 awi f1 asup_set_class f2 awcel f0 awa awi f1 acab peqtri $.
 $}
-$( /* An alternate definition of the conditional operator ~ df-if as a simple
-       class abstraction.  (Contributed by Mario Carneiro, 8-Sep-2013.) */
-
-$)
+$( An alternate definition of the conditional operator ~ df-if as a simple
+       class abstraction.  (Contributed by Mario Carneiro, 8-Sep-2013.) $)
 ${
 	$v ph x A B $.
 	$d x ph $.
@@ -155,10 +139,8 @@ ${
 	pdfif6 $p |- if ( ph , A , B ) = ( { x e. A | ph } u. { x e. B | -. ph } ) $=
 	f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f3 awcel f0 awn awa f1 punab f0 f1 f2 adf-rab f0 awn f1 f3 adf-rab f0 f1 f2 acrab f1 asup_set_class f2 awcel f0 awa f1 acab f0 awn f1 f3 acrab f1 asup_set_class f3 awcel f0 awn awa f1 acab puneq12i f0 f1 f2 f3 adf-if f1 asup_set_class f2 awcel f0 awa f1 acab f1 asup_set_class f3 awcel f0 awn awa f1 acab acun f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f3 awcel f0 awn awa awo f1 acab f0 f1 f2 acrab f0 awn f1 f3 acrab acun f0 f2 f3 acif p3eqtr4ri $.
 $}
-$( /* Equality theorem for conditional operator.  (Contributed by NM,
-       1-Sep-2004.)  (Revised by Mario Carneiro, 8-Sep-2013.) */
-
-$)
+$( Equality theorem for conditional operator.  (Contributed by NM,
+       1-Sep-2004.)  (Revised by Mario Carneiro, 8-Sep-2013.) $)
 ${
 	$v ph A B C $.
 	$v x $.
@@ -174,10 +156,8 @@ ${
 	pifeq1 $p |- ( A = B -> if ( ph , A , C ) = if ( ph , B , C ) ) $=
 	f0 i0 f1 f2 prabeq f1 f2 awceq f0 i0 f1 acrab f0 i0 f2 acrab f0 awn i0 f3 acrab puneq1d f0 i0 f1 f3 pdfif6 f0 i0 f2 f3 pdfif6 f1 f2 awceq f0 i0 f1 acrab f0 awn i0 f3 acrab acun f0 i0 f2 acrab f0 awn i0 f3 acrab acun f0 f1 f3 acif f0 f2 f3 acif p3eqtr4g $.
 $}
-$( /* Equality theorem for conditional operator.  (Contributed by NM,
-       1-Sep-2004.)  (Revised by Mario Carneiro, 8-Sep-2013.) */
-
-$)
+$( Equality theorem for conditional operator.  (Contributed by NM,
+       1-Sep-2004.)  (Revised by Mario Carneiro, 8-Sep-2013.) $)
 ${
 	$v ph A B C $.
 	$v x $.
@@ -193,11 +173,9 @@ ${
 	pifeq2 $p |- ( A = B -> if ( ph , C , A ) = if ( ph , C , B ) ) $=
 	f0 awn i0 f1 f2 prabeq f1 f2 awceq f0 awn i0 f1 acrab f0 awn i0 f2 acrab f0 i0 f3 acrab puneq2d f0 i0 f3 f1 pdfif6 f0 i0 f3 f2 pdfif6 f1 f2 awceq f0 i0 f3 acrab f0 awn i0 f1 acrab acun f0 i0 f3 acrab f0 awn i0 f2 acrab acun f0 f3 f1 acif f0 f3 f2 acif p3eqtr4g $.
 $}
-$( /* Value of the conditional operator when its first argument is true.
+$( Value of the conditional operator when its first argument is true.
        (Contributed by NM, 15-May-1999.)  (Proof shortened by Andrew Salmon,
-       26-Jun-2011.) */
-
-$)
+       26-Jun-2011.) $)
 ${
 	$v ph A B $.
 	$v x $.
@@ -211,10 +189,8 @@ ${
 	piftrue $p |- ( ph -> if ( ph , A , B ) = A ) $=
 	f0 i0 asup_set_class f1 awcel i0 asup_set_class f2 awcel pdedlem0a f0 i0 asup_set_class f2 awcel f0 awi i0 asup_set_class f1 awcel f0 awa awi i0 f1 pabbi2dv f0 i0 f1 f2 pdfif2 f0 f1 i0 asup_set_class f2 awcel f0 awi i0 asup_set_class f1 awcel f0 awa awi i0 acab f0 f1 f2 acif psyl6reqr $.
 $}
-$( /* Value of the conditional operator when its first argument is false.
-       (Contributed by NM, 14-Aug-1999.) */
-
-$)
+$( Value of the conditional operator when its first argument is false.
+       (Contributed by NM, 14-Aug-1999.) $)
 ${
 	$v ph A B $.
 	$v x $.
@@ -228,13 +204,11 @@ ${
 	piffalse $p |- ( -. ph -> if ( ph , A , B ) = B ) $=
 	f0 i0 asup_set_class f1 awcel i0 asup_set_class f2 awcel pdedlemb f0 awn i0 asup_set_class f1 awcel f0 awa i0 asup_set_class f2 awcel f0 awn awa awo i0 f2 pabbi2dv f0 i0 f1 f2 adf-if f0 awn f2 i0 asup_set_class f1 awcel f0 awa i0 asup_set_class f2 awcel f0 awn awa awo i0 acab f0 f1 f2 acif psyl6reqr $.
 $}
-$( /* When values are unequal, but an "if" condition checks if they are equal,
+$( When values are unequal, but an "if" condition checks if they are equal,
      then the "false" branch results.  This is a simple utility to provide a
      slight shortening and simplification of proofs vs. applying ~ iffalse
      directly in this case.  It happens, e.g., in ~ oevn0 .  (Contributed by
-     David A. Wheeler, 15-May-2015.) */
-
-$)
+     David A. Wheeler, 15-May-2015.) $)
 ${
 	$v A B C D $.
 	f0 $f class A $.
@@ -244,10 +218,8 @@ ${
 	pifnefalse $p |- ( A =/= B -> if ( A = B , C , D ) = D ) $=
 	f0 f1 adf-ne f0 f1 awceq f2 f3 piffalse f0 f1 awne f0 f1 awceq awn f0 f1 awceq f2 f3 acif f3 awceq psylbi $.
 $}
-$( /* Distribute a function over an if-clause.  (Contributed by Mario
-       Carneiro, 14-Aug-2013.) */
-
-$)
+$( Distribute a function over an if-clause.  (Contributed by Mario
+       Carneiro, 14-Aug-2013.) $)
 ${
 	$v ph A B C D E $.
 	e0 $e |- ( if ( ph , A , B ) = A -> C = D ) $.
@@ -261,12 +233,10 @@ ${
 	pifsb $p |- C = if ( ph , D , E ) $=
 	f0 f1 f2 piftrue e0 f0 f0 f1 f2 acif f1 awceq f3 f4 awceq psyl f0 f4 f5 piftrue f0 f3 f4 f0 f4 f5 acif peqtr4d f0 f1 f2 piffalse e1 f0 awn f0 f1 f2 acif f2 awceq f3 f5 awceq psyl f0 f4 f5 piffalse f0 awn f3 f5 f0 f4 f5 acif peqtr4d f0 f3 f0 f4 f5 acif awceq ppm2.61i $.
 $}
-$( /* Alternate definition of the conditional operator ~ df-if .  Note that
+$( Alternate definition of the conditional operator ~ df-if .  Note that
        ` ph ` is independent of ` x ` i.e. a constant true or false.
        (Contributed by NM, 25-Aug-2013.)  (Revised by Mario Carneiro,
-       8-Sep-2013.) */
-
-$)
+       8-Sep-2013.) $)
 ${
 	$v ph x A B C $.
 	$v y $.
@@ -283,11 +253,9 @@ ${
 	pdfif3 $p |- if ( ph , A , B ) = ( ( A i^i C ) u. ( B i^i ( _V \ C ) ) ) $=
 	f0 i0 f2 f3 pdfif6 e0 f1 asup_set_class i0 asup_set_class awceq f0 pbiidd f0 f0 f1 i0 pcbvabv f4 f0 f1 acab f0 i0 acab peqtri f4 f0 i0 acab f2 pineq2i f0 i0 f2 pdfrab3 f2 f4 acin f2 f0 i0 acab acin f0 i0 f2 acrab peqtr4i f0 awn i0 f3 pdfrab3 f0 i0 pnotab e0 f1 asup_set_class i0 asup_set_class awceq f0 pbiidd f0 f0 f1 i0 pcbvabv f4 f0 f1 acab f0 i0 acab peqtri f4 f0 i0 acab acvv pdifeq2i f0 awn i0 acab acvv f0 i0 acab acdif acvv f4 acdif peqtr4i f0 awn i0 acab acvv f4 acdif f3 pineq2i f0 awn i0 f3 acrab f3 f0 awn i0 acab acin f3 acvv f4 acdif acin peqtr2i f2 f4 acin f0 i0 f2 acrab f3 acvv f4 acdif acin f0 awn i0 f3 acrab puneq12i f0 f2 f3 acif f0 i0 f2 acrab f0 awn i0 f3 acrab acun f2 f4 acin f3 acvv f4 acdif acin acun peqtr4i $.
 $}
-$( /* Alternate definition of the conditional operator ~ df-if .  Note that
+$( Alternate definition of the conditional operator ~ df-if .  Note that
        ` ph ` is independent of ` x ` i.e. a constant true or false.
-       (Contributed by NM, 25-Aug-2013.) */
-
-$)
+       (Contributed by NM, 25-Aug-2013.) $)
 ${
 	$v ph x A B C $.
 	$d x ph $.
@@ -300,11 +268,9 @@ ${
 	pdfif4 $p |- if ( ph , A , B ) = ( ( A u. B ) i^i ( ( A u. ( _V \ C ) ) i^i ( B u. C ) ) ) $=
 	e0 f0 f1 f2 f3 f4 pdfif3 f2 f4 f3 acvv f4 acdif acin pundir f2 f3 acvv f4 acdif pundi f4 f3 acvv f4 acdif pundi f4 f3 puncom f4 pundifv f4 f3 acun f3 f4 acun f4 acvv f4 acdif acun acvv pineq12i f3 f4 acun pinv1 f4 f3 acvv f4 acdif acin acun f4 f3 acun f4 acvv f4 acdif acun acin f3 f4 acun acvv acin f3 f4 acun p3eqtri f2 f3 acvv f4 acdif acin acun f2 f3 acun f2 acvv f4 acdif acun acin f4 f3 acvv f4 acdif acin acun f3 f4 acun pineq12i f2 f3 acun f2 acvv f4 acdif acun f3 f4 acun pinass f2 f3 acvv f4 acdif acin acun f4 f3 acvv f4 acdif acin acun acin f2 f3 acun f2 acvv f4 acdif acun acin f3 f4 acun acin f2 f3 acun f2 acvv f4 acdif acun f3 f4 acun acin acin peqtri f0 f2 f3 acif f2 f4 acin f3 acvv f4 acdif acin acun f2 f3 acvv f4 acdif acin acun f4 f3 acvv f4 acdif acin acun acin f2 f3 acun f2 acvv f4 acdif acun f3 f4 acun acin acin p3eqtri $.
 $}
-$( /* Alternate definition of the conditional operator ~ df-if .  Note that
+$( Alternate definition of the conditional operator ~ df-if .  Note that
        ` ph ` is independent of ` x ` i.e. a constant true or false (see also
-       ~ abvor0 ).  (Contributed by G&eacute;rard Lang, 18-Aug-2013.) */
-
-$)
+       ~ abvor0 ).  (Contributed by G&eacute;rard Lang, 18-Aug-2013.) $)
 ${
 	$v ph x A B C $.
 	$d x ph $.
@@ -317,10 +283,8 @@ ${
 	pdfif5 $p |- if ( ph , A , B ) = ( ( A i^i B ) u. ( ( ( A \ B ) i^i C ) u. ( ( B \ A ) i^i ( _V \ C ) ) ) ) $=
 	f2 f3 acun f2 acvv f4 acdif acun f3 f4 acun pinindi e0 f0 f1 f2 f3 f4 pdfif4 f2 f3 f2 f3 acdif f4 acin f3 f2 acdif acvv f4 acdif acin acun pundir f2 punidm f2 f2 acun f2 f3 acvv f4 acdif acin puneq1i f2 f2 f3 acvv f4 acdif acin punass f2 f3 acvv f4 acdif pundi f2 f2 acun f3 acvv f4 acdif acin acun f2 f3 acvv f4 acdif acin acun f2 f2 f3 acvv f4 acdif acin acun acun f2 f3 acun f2 acvv f4 acdif acun acin p3eqtr3ri f2 f2 f3 acdif f4 pundi f2 f3 pundifabs f2 f2 f3 acdif acun f2 f2 f4 acun pineq1i f2 f4 pinabs f2 f2 f3 acdif acun f2 f4 acun acin f2 f2 f4 acun acin f2 peqtri f2 f2 f3 acdif f4 acin acun f2 f2 f3 acdif acun f2 f4 acun acin f2 peqtri f2 f3 pundif2 f2 f3 f2 acdif acun f2 f3 acun f2 acvv f4 acdif acun pineq1i f2 f3 f2 acdif acvv f4 acdif pundi f2 f3 acvv f4 acdif pundi f2 f3 f2 acdif acun f2 acvv f4 acdif acun acin f2 f3 acun f2 acvv f4 acdif acun acin f2 f3 f2 acdif acvv f4 acdif acin acun f2 f3 acvv f4 acdif acin acun p3eqtr4i f2 f2 f3 acdif f4 acin acun f2 f2 f3 f2 acdif acvv f4 acdif acin acun f2 f3 acvv f4 acdif acin acun puneq12i f2 f3 acun f2 acvv f4 acdif acun acin f2 f2 f3 acvv f4 acdif acin acun acun f2 f2 f3 acdif f4 acin acun f2 f3 f2 acdif acvv f4 acdif acin acun acun peqtr4i f2 f2 f3 acdif f4 acin f3 f2 acdif acvv f4 acdif acin punundi f2 f3 acun f2 acvv f4 acdif acun acin f2 f2 f3 acdif f4 acin acun f2 f3 f2 acdif acvv f4 acdif acin acun acun f2 f2 f3 acdif f4 acin f3 f2 acdif acvv f4 acdif acin acun acun peqtr4i f2 f4 acin f3 f3 punass f3 f2 f4 pundi f2 f4 acin f3 puncom f3 f2 pundif2 f3 f2 f3 acdif acun f3 f2 acun f3 f4 acun pineq1i f3 f2 f4 acin acun f3 f2 acun f3 f4 acun acin f2 f4 acin f3 acun f3 f2 f3 acdif acun f3 f4 acun acin p3eqtr4i f3 f2 f3 acdif f4 pundi f2 f4 acin f3 acun f3 f2 f3 acdif acun f3 f4 acun acin f3 f2 f3 acdif f4 acin acun peqtr4i f3 f3 f2 acdif acvv f4 acdif pundi f3 f2 pundifabs f3 f3 f2 acdif acun f3 f3 acvv f4 acdif acun pineq1i f3 acvv f4 acdif pinabs f3 f3 f2 acdif acvv f4 acdif acin acun f3 f3 f2 acdif acun f3 acvv f4 acdif acun acin f3 f3 acvv f4 acdif acun acin f3 p3eqtrri f2 f4 acin f3 acun f3 f2 f3 acdif f4 acin acun f3 f3 f3 f2 acdif acvv f4 acdif acin acun puneq12i f3 punidm f3 f3 acun f3 f2 f4 acin puneq2i f2 f4 acin f3 acun f3 acun f2 f4 acin f3 f3 acun acun f3 f2 f3 acdif f4 acin acun f3 f3 f2 acdif acvv f4 acdif acin acun acun f2 f4 acin f3 acun p3eqtr3ri f3 f4 puncom f3 f4 acun f4 f3 acun f2 f3 acun pineq2i f2 f4 f3 pundir f2 f3 acun f3 f4 acun acin f2 f3 acun f4 f3 acun acin f2 f4 acin f3 acun peqtr4i f3 f2 f3 acdif f4 acin f3 f2 acdif acvv f4 acdif acin punundi f2 f4 acin f3 acun f3 f2 f3 acdif f4 acin acun f3 f3 f2 acdif acvv f4 acdif acin acun acun f2 f3 acun f3 f4 acun acin f3 f2 f3 acdif f4 acin f3 f2 acdif acvv f4 acdif acin acun acun p3eqtr4i f2 f3 acun f2 acvv f4 acdif acun acin f2 f2 f3 acdif f4 acin f3 f2 acdif acvv f4 acdif acin acun acun f2 f3 acun f3 f4 acun acin f3 f2 f3 acdif f4 acin f3 f2 acdif acvv f4 acdif acin acun acun pineq12i f2 f3 acin f2 f3 acdif f4 acin f3 f2 acdif acvv f4 acdif acin acun acun f2 f2 f3 acdif f4 acin f3 f2 acdif acvv f4 acdif acin acun acun f3 f2 f3 acdif f4 acin f3 f2 acdif acvv f4 acdif acin acun acun acin f2 f3 acun f2 acvv f4 acdif acun acin f2 f3 acun f3 f4 acun acin acin peqtr4i f2 f3 acun f2 acvv f4 acdif acun f3 f4 acun acin acin f2 f3 acun f2 acvv f4 acdif acun acin f2 f3 acun f3 f4 acun acin acin f0 f2 f3 acif f2 f3 acin f2 f3 acdif f4 acin f3 f2 acdif acvv f4 acdif acin acun acun p3eqtr4i $.
 $}
-$( /* Equality theorem for conditional operators.  (Contributed by NM,
-     1-Sep-2004.) */
-
-$)
+$( Equality theorem for conditional operators.  (Contributed by NM,
+     1-Sep-2004.) $)
 ${
 	$v ph A B C D $.
 	f0 $f wff ph $.
@@ -331,10 +295,8 @@ ${
 	pifeq12 $p |- ( ( A = B /\ C = D ) -> if ( ph , A , C ) = if ( ph , B , D ) ) $=
 	f0 f1 f2 f3 pifeq1 f0 f3 f4 f2 pifeq2 f1 f2 awceq f3 f4 awceq f0 f1 f3 acif f0 f2 f3 acif f0 f2 f4 acif psylan9eq $.
 $}
-$( /* Equality deduction for conditional operator.  (Contributed by NM,
-       16-Feb-2005.) */
-
-$)
+$( Equality deduction for conditional operator.  (Contributed by NM,
+       16-Feb-2005.) $)
 ${
 	$v ph ps A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -346,10 +308,8 @@ ${
 	pifeq1d $p |- ( ph -> if ( ps , A , C ) = if ( ps , B , C ) ) $=
 	e0 f1 f2 f3 f4 pifeq1 f0 f2 f3 awceq f1 f2 f4 acif f1 f3 f4 acif awceq psyl $.
 $}
-$( /* Equality deduction for conditional operator.  (Contributed by NM,
-       16-Feb-2005.) */
-
-$)
+$( Equality deduction for conditional operator.  (Contributed by NM,
+       16-Feb-2005.) $)
 ${
 	$v ph ps A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -361,10 +321,8 @@ ${
 	pifeq2d $p |- ( ph -> if ( ps , C , A ) = if ( ps , C , B ) ) $=
 	e0 f1 f2 f3 f4 pifeq2 f0 f2 f3 awceq f1 f4 f2 acif f1 f4 f3 acif awceq psyl $.
 $}
-$( /* Equality deduction for conditional operator.  (Contributed by NM,
-       24-Mar-2015.) */
-
-$)
+$( Equality deduction for conditional operator.  (Contributed by NM,
+       24-Mar-2015.) $)
 ${
 	$v ph ps A B C D $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -378,10 +336,8 @@ ${
 	pifeq12d $p |- ( ph -> if ( ps , A , C ) = if ( ps , B , D ) ) $=
 	e0 f0 f1 f2 f3 f4 pifeq1d e1 f0 f1 f4 f5 f3 pifeq2d f0 f1 f2 f4 acif f1 f3 f4 acif f1 f3 f5 acif peqtrd $.
 $}
-$( /* Equivalence theorem for conditional operators.  (Contributed by Raph
-     Levien, 15-Jan-2004.) */
-
-$)
+$( Equivalence theorem for conditional operators.  (Contributed by Raph
+     Levien, 15-Jan-2004.) $)
 ${
 	$v ph ps A B $.
 	f0 $f wff ph $.
@@ -391,10 +347,8 @@ ${
 	pifbi $p |- ( ( ph <-> ps ) -> if ( ph , A , B ) = if ( ps , A , B ) ) $=
 	f0 f1 pdfbi3 f0 f2 f3 piftrue f1 f2 f3 piftrue f1 f1 f2 f3 acif f2 peqcomd f0 f1 f0 f2 f3 acif f2 f1 f2 f3 acif psylan9eq f0 f2 f3 piffalse f1 f2 f3 piffalse f1 awn f1 f2 f3 acif f3 peqcomd f0 awn f1 awn f0 f2 f3 acif f3 f1 f2 f3 acif psylan9eq f0 f1 awa f0 f2 f3 acif f1 f2 f3 acif awceq f0 awn f1 awn awa pjaoi f0 f1 awb f0 f1 awa f0 awn f1 awn awa awo f0 f2 f3 acif f1 f2 f3 acif awceq psylbi $.
 $}
-$( /* Equivalence deduction for conditional operators.  (Contributed by NM,
-       18-Apr-2005.) */
-
-$)
+$( Equivalence deduction for conditional operators.  (Contributed by NM,
+       18-Apr-2005.) $)
 ${
 	$v ph ps ch A B $.
 	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
@@ -406,10 +360,8 @@ ${
 	pifbid $p |- ( ph -> if ( ps , A , B ) = if ( ch , A , B ) ) $=
 	e0 f1 f2 f3 f4 pifbi f0 f1 f2 awb f1 f3 f4 acif f2 f3 f4 acif awceq psyl $.
 $}
-$( /* Equivalence/equality inference for conditional operators.  (Contributed
-       by Paul Chapman, 22-Jun-2011.) */
-
-$)
+$( Equivalence/equality inference for conditional operators.  (Contributed
+       by Paul Chapman, 22-Jun-2011.) $)
 ${
 	$v ph ps A B C $.
 	e0 $e |- ( ph <-> ps ) $.
@@ -422,10 +374,8 @@ ${
 	pifbieq2i $p |- if ( ph , C , A ) = if ( ps , C , B ) $=
 	e0 f0 f1 f4 f2 pifbi f0 f1 awb f0 f4 f2 acif f1 f4 f2 acif awceq aax-mp e1 f1 f2 f3 f4 pifeq2 f2 f3 awceq f1 f4 f2 acif f1 f4 f3 acif awceq aax-mp f0 f4 f2 acif f1 f4 f2 acif f1 f4 f3 acif peqtri $.
 $}
-$( /* Equivalence/equality deduction for conditional operators.  (Contributed
-       by Paul Chapman, 22-Jun-2011.) */
-
-$)
+$( Equivalence/equality deduction for conditional operators.  (Contributed
+       by Paul Chapman, 22-Jun-2011.) $)
 ${
 	$v ph ps ch A B C $.
 	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
@@ -439,10 +389,8 @@ ${
 	pifbieq2d $p |- ( ph -> if ( ps , C , A ) = if ( ch , C , B ) ) $=
 	e0 f0 f1 f2 f5 f3 pifbid e1 f0 f2 f3 f4 f5 pifeq2d f0 f1 f5 f3 acif f2 f5 f3 acif f2 f5 f4 acif peqtrd $.
 $}
-$( /* Equivalence deduction for conditional operators.  (Contributed by NM,
-       18-Mar-2013.) */
-
-$)
+$( Equivalence deduction for conditional operators.  (Contributed by NM,
+       18-Mar-2013.) $)
 ${
 	$v ph ps A B C D $.
 	e0 $e |- ( ph <-> ps ) $.
@@ -457,10 +405,8 @@ ${
 	pifbieq12i $p |- if ( ph , A , B ) = if ( ps , C , D ) $=
 	e1 f0 f2 f4 f3 pifeq1 f2 f4 awceq f0 f2 f3 acif f0 f4 f3 acif awceq aax-mp e0 e2 f0 f1 f3 f5 f4 pifbieq2i f0 f2 f3 acif f0 f4 f3 acif f1 f4 f5 acif peqtri $.
 $}
-$( /* Equivalence deduction for conditional operators.  (Contributed by Jeff
-       Madsen, 2-Sep-2009.) */
-
-$)
+$( Equivalence deduction for conditional operators.  (Contributed by Jeff
+       Madsen, 2-Sep-2009.) $)
 ${
 	$v ph ps ch A B C D $.
 	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
@@ -476,10 +422,8 @@ ${
 	pifbieq12d $p |- ( ph -> if ( ps , A , B ) = if ( ch , C , D ) ) $=
 	e0 f0 f1 f2 f3 f4 pifbid e1 e2 f0 f2 f3 f5 f4 f6 pifeq12d f0 f1 f3 f4 acif f2 f3 f4 acif f2 f5 f6 acif peqtrd $.
 $}
-$( /* Deduction version of ~ nfif .  (Contributed by NM, 15-Feb-2013.)
-       (Revised by Mario Carneiro, 13-Oct-2016.) */
-
-$)
+$( Deduction version of ~ nfif .  (Contributed by NM, 15-Feb-2013.)
+       (Revised by Mario Carneiro, 13-Oct-2016.) $)
 ${
 	$v ph ps x A B $.
 	$v y $.
@@ -500,11 +444,9 @@ ${
 	pnfifd $p |- ( ph -> F/_ x if ( ps , A , B ) ) $=
 	f1 i0 f3 f4 pdfif2 f0 i0 pnfv e2 f0 f2 i0 f4 pnfcrd e0 f0 i0 asup_set_class f4 awcel f1 f2 pnfimd e1 f0 f2 i0 f3 pnfcrd e0 f0 i0 asup_set_class f3 awcel f1 f2 pnfand f0 i0 asup_set_class f4 awcel f1 awi i0 asup_set_class f3 awcel f1 awa f2 pnfimd f0 i0 asup_set_class f4 awcel f1 awi i0 asup_set_class f3 awcel f1 awa awi f2 i0 pnfabd f0 f2 f1 f3 f4 acif i0 asup_set_class f4 awcel f1 awi i0 asup_set_class f3 awcel f1 awa awi i0 acab pnfcxfrd $.
 $}
-$( /* Bound-variable hypothesis builder for a conditional operator.
+$( Bound-variable hypothesis builder for a conditional operator.
        (Contributed by NM, 16-Feb-2005.)  (Proof shortened by Andrew Salmon,
-       26-Jun-2011.) */
-
-$)
+       26-Jun-2011.) $)
 ${
 	$v ph x A B $.
 	e0 $e |- F/ x ph $.
@@ -517,9 +459,7 @@ ${
 	pnfif $p |- F/_ x if ( ph , A , B ) $=
 	e0 f0 f1 awnf awtru pa1i e1 f1 f2 awnfc awtru pa1i e2 f1 f3 awnfc awtru pa1i awtru f0 f1 f2 f3 pnfifd f1 f0 f2 f3 acif awnfc ptrud $.
 $}
-$( /* Conditional equality.  (Contributed by Jeff Madsen, 2-Sep-2009.) */
-
-$)
+$( Conditional equality.  (Contributed by Jeff Madsen, 2-Sep-2009.) $)
 ${
 	$v ph ps A B C $.
 	e0 $e |- ( ( ph /\ ps ) -> A = B ) $.
@@ -531,9 +471,7 @@ ${
 	pifeq1da $p |- ( ph -> if ( ps , A , C ) = if ( ps , B , C ) ) $=
 	e0 f0 f1 awa f1 f2 f3 f4 pifeq1d f1 f2 f4 piffalse f1 f3 f4 piffalse f1 awn f1 f2 f4 acif f4 f1 f3 f4 acif peqtr4d f1 awn f1 f2 f4 acif f1 f3 f4 acif awceq f0 padantl f0 f1 f1 f2 f4 acif f1 f3 f4 acif awceq ppm2.61dan $.
 $}
-$( /* Conditional equality.  (Contributed by Jeff Madsen, 2-Sep-2009.) */
-
-$)
+$( Conditional equality.  (Contributed by Jeff Madsen, 2-Sep-2009.) $)
 ${
 	$v ph ps A B C $.
 	e0 $e |- ( ( ph /\ -. ps ) -> A = B ) $.
@@ -545,9 +483,7 @@ ${
 	pifeq2da $p |- ( ph -> if ( ps , C , A ) = if ( ps , C , B ) ) $=
 	f1 f4 f2 piftrue f1 f4 f3 piftrue f1 f1 f4 f2 acif f4 f1 f4 f3 acif peqtr4d f1 f1 f4 f2 acif f1 f4 f3 acif awceq f0 padantl e0 f0 f1 awn awa f1 f2 f3 f4 pifeq2d f0 f1 f1 f4 f2 acif f1 f4 f3 acif awceq ppm2.61dan $.
 $}
-$( /* Conditional closure.  (Contributed by Jeff Madsen, 2-Sep-2009.) */
-
-$)
+$( Conditional closure.  (Contributed by Jeff Madsen, 2-Sep-2009.) $)
 ${
 	$v ph ps A B C $.
 	e0 $e |- ( ( ph /\ ps ) -> A e. C ) $.
@@ -560,11 +496,9 @@ ${
 	pifclda $p |- ( ph -> if ( ps , A , B ) e. C ) $=
 	f1 f2 f3 piftrue f1 f1 f2 f3 acif f2 awceq f0 padantl e0 f0 f1 awa f1 f2 f3 acif f2 f4 peqeltrd f1 f2 f3 piffalse f1 awn f1 f2 f3 acif f3 awceq f0 padantl e1 f0 f1 awn awa f1 f2 f3 acif f3 f4 peqeltrd f0 f1 f1 f2 f3 acif f4 awcel ppm2.61dan $.
 $}
-$( /* Distribute proper substitution through the conditional operator.
+$( Distribute proper substitution through the conditional operator.
        (Contributed by NM, 24-Feb-2013.)  (Revised by Mario Carneiro,
-       14-Nov-2016.) */
-
-$)
+       14-Nov-2016.) $)
 ${
 	$v ph x A B C V $.
 	$v y $.
@@ -583,10 +517,8 @@ ${
 	pcsbifg $p |- ( A e. V -> [_ A / x ]_ if ( ph , B , C ) = if ( [. A / x ]. ph , [_ A / x ]_ B , [_ A / x ]_ C ) ) $=
 	f1 i0 asup_set_class f2 f0 f3 f4 acif pcsbeq1 f0 f1 i0 f2 pdfsbcq2 f1 i0 asup_set_class f2 f3 pcsbeq1 f1 i0 asup_set_class f2 f4 pcsbeq1 i0 asup_set_class f2 awceq f0 f1 i0 awsb f0 f1 f2 awsbc f1 i0 asup_set_class f3 acsb f1 i0 asup_set_class f4 acsb f1 f2 f3 acsb f1 f2 f4 acsb pifbieq12d i0 asup_set_class f2 awceq f1 i0 asup_set_class f0 f3 f4 acif acsb f1 f2 f0 f3 f4 acif acsb f0 f1 i0 awsb f1 i0 asup_set_class f3 acsb f1 i0 asup_set_class f4 acsb acif f0 f1 f2 awsbc f1 f2 f3 acsb f1 f2 f4 acsb acif peqeq12d i0 pvex f0 f1 i0 pnfs1v f1 i0 asup_set_class f3 pnfcsb1v f1 i0 asup_set_class f4 pnfcsb1v f0 f1 i0 awsb f1 f1 i0 asup_set_class f3 acsb f1 i0 asup_set_class f4 acsb pnfif f0 f1 i0 psbequ12 f1 i0 asup_set_class f3 pcsbeq1a f1 i0 asup_set_class f4 pcsbeq1a f1 asup_set_class i0 asup_set_class awceq f0 f0 f1 i0 awsb f3 f4 f1 i0 asup_set_class f3 acsb f1 i0 asup_set_class f4 acsb pifbieq12d f1 i0 asup_set_class f0 f3 f4 acif f0 f1 i0 awsb f1 i0 asup_set_class f3 acsb f1 i0 asup_set_class f4 acsb acif pcsbief f1 i0 asup_set_class f0 f3 f4 acif acsb f0 f1 i0 awsb f1 i0 asup_set_class f3 acsb f1 i0 asup_set_class f4 acsb acif awceq f1 f2 f0 f3 f4 acif acsb f0 f1 f2 awsbc f1 f2 f3 acsb f1 f2 f4 acsb acif awceq i0 f2 f5 pvtoclg $.
 $}
-$( /* Elimination of a conditional operator contained in a wff ` ps ` .
-       (Contributed by NM, 15-Feb-2005.) */
-
-$)
+$( Elimination of a conditional operator contained in a wff ` ps ` .
+       (Contributed by NM, 15-Feb-2005.) $)
 ${
 	$v ph ps ch th A B $.
 	e0 $e |- ( if ( ph , A , B ) = A -> ( ps <-> ch ) ) $.
@@ -600,10 +532,8 @@ ${
 	pelimif $p |- ( ps <-> ( ( ph /\ ch ) \/ ( -. ph /\ th ) ) ) $=
 	f0 pexmid f0 f0 awn awo f1 pbiantrur f0 f0 awn f1 pandir f0 f4 f5 piftrue e0 f0 f0 f4 f5 acif f4 awceq f1 f2 awb psyl f0 f1 f2 ppm5.32i f0 f4 f5 piffalse e1 f0 awn f0 f4 f5 acif f5 awceq f1 f3 awb psyl f0 awn f1 f3 ppm5.32i f0 f1 awa f0 f2 awa f0 awn f1 awa f0 awn f3 awa porbi12i f1 f0 f0 awn awo f1 awa f0 f1 awa f0 awn f1 awa awo f0 f2 awa f0 awn f3 awa awo p3bitri $.
 $}
-$( /* A wff ` th ` containing a conditional operator is true when both of
-         its cases are true.  (Contributed by NM, 15-Feb-2015.) */
-
-$)
+$( A wff ` th ` containing a conditional operator is true when both of
+         its cases are true.  (Contributed by NM, 15-Feb-2015.) $)
 ${
 	$v ph ps ch th et A B $.
 	e0 $e |- ( A = if ( ph , A , B ) -> ( ps <-> th ) ) $.
@@ -620,11 +550,9 @@ ${
 	pifbothda $p |- ( et -> th ) $=
 	e2 f0 f5 f6 piftrue f0 f0 f5 f6 acif f5 peqcomd e0 f0 f5 f0 f5 f6 acif awceq f1 f3 awb psyl f0 f1 f3 awb f4 padantl f4 f0 awa f1 f3 pmpbid e3 f0 f5 f6 piffalse f0 awn f0 f5 f6 acif f6 peqcomd e1 f0 awn f6 f0 f5 f6 acif awceq f2 f3 awb psyl f0 awn f2 f3 awb f4 padantl f4 f0 awn awa f2 f3 pmpbid f4 f0 f3 ppm2.61dan $.
 $}
-$( /* A wff ` th ` containing a conditional operator is true when both of its
+$( A wff ` th ` containing a conditional operator is true when both of its
        cases are true.  (Contributed by NM, 3-Sep-2006.)  (Revised by Mario
-       Carneiro, 15-Feb-2015.) */
-
-$)
+       Carneiro, 15-Feb-2015.) $)
 ${
 	$v ph ps ch th A B $.
 	e0 $e |- ( A = if ( ph , A , B ) -> ( ps <-> th ) ) $.
@@ -638,10 +566,8 @@ ${
 	pifboth $p |- ( ( ps /\ ch ) -> th ) $=
 	e0 e1 f1 f2 f0 psimpll f1 f2 f0 awn psimplr f0 f1 f2 f3 f1 f2 awa f4 f5 pifbothda $.
 $}
-$( /* Identical true and false arguments in the conditional operator.
-     (Contributed by NM, 18-Apr-2005.) */
-
-$)
+$( Identical true and false arguments in the conditional operator.
+     (Contributed by NM, 18-Apr-2005.) $)
 ${
 	$v ph A $.
 	f0 $f wff ph $.
@@ -649,10 +575,8 @@ ${
 	pifid $p |- if ( ph , A , A ) = A $=
 	f0 f1 f1 piftrue f0 f1 f1 piffalse f0 f0 f1 f1 acif f1 awceq ppm2.61i $.
 $}
-$( /* Expansion of an equality with a conditional operator.  (Contributed by NM,
-     14-Feb-2005.) */
-
-$)
+$( Expansion of an equality with a conditional operator.  (Contributed by NM,
+     14-Feb-2005.) $)
 ${
 	$v ph A B C $.
 	f0 $f wff ph $.
@@ -662,10 +586,8 @@ ${
 	peqif $p |- ( A = if ( ph , B , C ) <-> ( ( ph /\ A = B ) \/ ( -. ph /\ A = C ) ) ) $=
 	f0 f2 f3 acif f2 f1 peqeq2 f0 f2 f3 acif f3 f1 peqeq2 f0 f1 f0 f2 f3 acif awceq f1 f2 awceq f1 f3 awceq f2 f3 pelimif $.
 $}
-$( /* Membership in a conditional operator.  (Contributed by NM,
-     14-Feb-2005.) */
-
-$)
+$( Membership in a conditional operator.  (Contributed by NM,
+     14-Feb-2005.) $)
 ${
 	$v ph A B C $.
 	f0 $f wff ph $.
@@ -675,10 +597,8 @@ ${
 	pelif $p |- ( A e. if ( ph , B , C ) <-> ( ( ph /\ A e. B ) \/ ( -. ph /\ A e. C ) ) ) $=
 	f0 f2 f3 acif f2 f1 peleq2 f0 f2 f3 acif f3 f1 peleq2 f0 f1 f0 f2 f3 acif awcel f1 f2 awcel f1 f3 awcel f2 f3 pelimif $.
 $}
-$( /* Membership of a conditional operator.  (Contributed by NM,
-     10-Sep-2005.) */
-
-$)
+$( Membership of a conditional operator.  (Contributed by NM,
+     10-Sep-2005.) $)
 ${
 	$v ph A B C $.
 	f0 $f wff ph $.
@@ -688,10 +608,8 @@ ${
 	pifel $p |- ( if ( ph , A , B ) e. C <-> ( ( ph /\ A e. C ) \/ ( -. ph /\ B e. C ) ) ) $=
 	f0 f1 f2 acif f1 f3 peleq1 f0 f1 f2 acif f2 f3 peleq1 f0 f0 f1 f2 acif f3 awcel f1 f3 awcel f2 f3 awcel f1 f2 pelimif $.
 $}
-$( /* Membership (closure) of a conditional operator.  (Contributed by NM,
-     4-Apr-2005.) */
-
-$)
+$( Membership (closure) of a conditional operator.  (Contributed by NM,
+     4-Apr-2005.) $)
 ${
 	$v ph A B C $.
 	f0 $f wff ph $.
@@ -701,10 +619,8 @@ ${
 	pifcl $p |- ( ( A e. C /\ B e. C ) -> if ( ph , A , B ) e. C ) $=
 	f1 f0 f1 f2 acif f3 peleq1 f2 f0 f1 f2 acif f3 peleq1 f0 f1 f3 awcel f2 f3 awcel f0 f1 f2 acif f3 awcel f1 f2 pifboth $.
 $}
-$( /* The possible values of a conditional operator.  (Contributed by NM,
-     17-Jun-2007.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) */
-
-$)
+$( The possible values of a conditional operator.  (Contributed by NM,
+     17-Jun-2007.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
 	$v ph A B $.
 	f0 $f wff ph $.
@@ -713,10 +629,8 @@ ${
 	pifeqor $p |- ( if ( ph , A , B ) = A \/ if ( ph , A , B ) = B ) $=
 	f0 f1 f2 piftrue f0 f0 f1 f2 acif f1 awceq pcon3i f0 f1 f2 piffalse f0 f1 f2 acif f1 awceq awn f0 awn f0 f1 f2 acif f2 awceq psyl f0 f1 f2 acif f1 awceq f0 f1 f2 acif f2 awceq porri $.
 $}
-$( /* Negating the first argument swaps the last two arguments of a conditional
-     operator.  (Contributed by NM, 21-Jun-2007.) */
-
-$)
+$( Negating the first argument swaps the last two arguments of a conditional
+     operator.  (Contributed by NM, 21-Jun-2007.) $)
 ${
 	$v ph A B $.
 	f0 $f wff ph $.
@@ -725,10 +639,8 @@ ${
 	pifnot $p |- if ( -. ph , A , B ) = if ( ph , B , A ) $=
 	f0 pnotnot1 f0 awn f1 f2 piffalse f0 f0 awn awn f0 awn f1 f2 acif f2 awceq psyl f0 f2 f1 piftrue f0 f0 awn f1 f2 acif f2 f0 f2 f1 acif peqtr4d f0 awn f1 f2 piftrue f0 f2 f1 piffalse f0 awn f0 awn f1 f2 acif f1 f0 f2 f1 acif peqtr4d f0 f0 awn f1 f2 acif f0 f2 f1 acif awceq ppm2.61i $.
 $}
-$( /* Rewrite a conjunction in an if statement as two nested conditionals.
-     (Contributed by Mario Carneiro, 28-Jul-2014.) */
-
-$)
+$( Rewrite a conjunction in an if statement as two nested conditionals.
+     (Contributed by Mario Carneiro, 28-Jul-2014.) $)
 ${
 	$v ph ps A B $.
 	f0 $f wff ph $.
@@ -738,10 +650,8 @@ ${
 	pifan $p |- if ( ( ph /\ ps ) , A , B ) = if ( ph , if ( ps , A , B ) , B ) $=
 	f0 f1 f2 f3 acif f3 piftrue f0 f1 pibar f0 f1 f0 f1 awa f2 f3 pifbid f0 f0 f1 f2 f3 acif f3 acif f1 f2 f3 acif f0 f1 awa f2 f3 acif peqtr2d f0 f1 psimpl f0 f1 awa f0 pcon3i f0 f1 awa f2 f3 piffalse f0 awn f0 f1 awa awn f0 f1 awa f2 f3 acif f3 awceq psyl f0 f1 f2 f3 acif f3 piffalse f0 awn f0 f1 awa f2 f3 acif f3 f0 f1 f2 f3 acif f3 acif peqtr4d f0 f0 f1 awa f2 f3 acif f0 f1 f2 f3 acif f3 acif awceq ppm2.61i $.
 $}
-$( /* Rewrite a disjunction in an if statement as two nested conditionals.
-     (Contributed by Mario Carneiro, 28-Jul-2014.) */
-
-$)
+$( Rewrite a disjunction in an if statement as two nested conditionals.
+     (Contributed by Mario Carneiro, 28-Jul-2014.) $)
 ${
 	$v ph ps A B $.
 	f0 $f wff ph $.
@@ -751,7 +661,7 @@ ${
 	pifor $p |- if ( ( ph \/ ps ) , A , B ) = if ( ph , A , if ( ps , A , B ) ) $=
 	f0 f1 awo f2 f3 piftrue f0 f1 f0 f1 awo f2 f3 acif f2 awceq porcs f0 f2 f1 f2 f3 acif piftrue f0 f0 f1 awo f2 f3 acif f2 f0 f2 f1 f2 f3 acif acif peqtr4d f0 f2 f1 f2 f3 acif piffalse f0 f1 pbiorf f0 awn f1 f0 f1 awo f2 f3 pifbid f0 awn f0 f2 f1 f2 f3 acif acif f1 f2 f3 acif f0 f1 awo f2 f3 acif peqtr2d f0 f0 f1 awo f2 f3 acif f0 f2 f1 f2 f3 acif acif awceq ppm2.61i $.
 $}
-$( /* Weak deduction theorem that eliminates a hypothesis ` ph ` , making it
+$( Weak deduction theorem that eliminates a hypothesis ` ph ` , making it
        become an antecedent.  We assume that a proof exists for ` ph ` when the
        class variable ` A ` is replaced with a specific class ` B ` .  The
        hypothesis ` ch ` should be assigned to the inference, and the
@@ -759,9 +669,7 @@ $( /* Weak deduction theorem that eliminates a hypothesis ` ph ` , making it
        other hypotheses with class variable ` A ` , these can be kept by
        assigning ~ keephyp to them.  For more information, see the Deduction
        Theorem ~ http://us.metamath.org/mpeuni/mmdeduction.html .  (Contributed
-       by NM, 15-May-1999.) */
-
-$)
+       by NM, 15-May-1999.) $)
 ${
 	$v ph ps ch A B $.
 	e0 $e |- ( A = if ( ph , A , B ) -> ( ps <-> ch ) ) $.
@@ -774,12 +682,10 @@ ${
 	pdedth $p |- ( ph -> ps ) $=
 	e1 f0 f3 f4 piftrue f0 f0 f3 f4 acif f3 peqcomd e0 f0 f3 f0 f3 f4 acif awceq f1 f2 awb psyl f0 f1 f2 pmpbiri $.
 $}
-$( /* Weak deduction theorem eliminating two hypotheses.  This theorem is
+$( Weak deduction theorem eliminating two hypotheses.  This theorem is
        simpler to use than ~ dedth2v but requires that each hypothesis has
        exactly one class variable.  See also comments in ~ dedth .
-       (Contributed by NM, 15-May-1999.) */
-
-$)
+       (Contributed by NM, 15-May-1999.) $)
 ${
 	$v ph ps ch th ta A B C D $.
 	e0 $e |- ( A = if ( ph , A , C ) -> ( ch <-> th ) ) $.
@@ -797,10 +703,8 @@ ${
 	pdedth2h $p |- ( ( ph /\ ps ) -> ch ) $=
 	e0 f5 f0 f5 f7 acif awceq f2 f3 f1 pimbi2d e1 e2 f1 f3 f4 f6 f8 pdedth f0 f1 f2 awi f1 f3 awi f5 f7 pdedth f0 f1 f2 pimp $.
 $}
-$( /* Weak deduction theorem eliminating three hypotheses.  See comments in
-       ~ dedth2h .  (Contributed by NM, 15-May-1999.) */
-
-$)
+$( Weak deduction theorem eliminating three hypotheses.  See comments in
+       ~ dedth2h .  (Contributed by NM, 15-May-1999.) $)
 ${
 	$v ph ps ch th ta et ze A B C D R S $.
 	e0 $e |- ( A = if ( ph , A , D ) -> ( th <-> ta ) ) $.
@@ -823,10 +727,8 @@ ${
 	pdedth3h $p |- ( ( ph /\ ps /\ ch ) -> th ) $=
 	e0 f7 f0 f7 f10 acif awceq f3 f4 f1 f2 awa pimbi2d e1 e2 e3 f1 f2 f4 f5 f6 f8 f9 f11 f12 pdedth2h f0 f1 f2 awa f3 awi f1 f2 awa f4 awi f7 f10 pdedth f0 f1 f2 f3 p3impib $.
 $}
-$( /* Weak deduction theorem eliminating four hypotheses.  See comments in
-       ~ dedth2h .  (Contributed by NM, 16-May-1999.) */
-
-$)
+$( Weak deduction theorem eliminating four hypotheses.  See comments in
+       ~ dedth2h .  (Contributed by NM, 16-May-1999.) $)
 ${
 	$v ph ps ch th ta et ze si rh A B C D R S F G $.
 	e0 $e |- ( A = if ( ph , A , R ) -> ( ta <-> et ) ) $.
@@ -854,13 +756,11 @@ ${
 	pdedth4h $p |- ( ( ( ph /\ ps ) /\ ( ch /\ th ) ) -> ta ) $=
 	e0 f9 f0 f9 f13 acif awceq f4 f5 f2 f3 awa pimbi2d e1 f10 f1 f10 f14 acif awceq f5 f6 f2 f3 awa pimbi2d e2 e3 e4 f2 f3 f6 f7 f8 f11 f12 f15 f16 pdedth2h f0 f1 f2 f3 awa f4 awi f2 f3 awa f5 awi f2 f3 awa f6 awi f9 f10 f13 f14 pdedth2h f0 f1 awa f2 f3 awa f4 pimp $.
 $}
-$( /* Weak deduction theorem for eliminating a hypothesis with 2 class
+$( Weak deduction theorem for eliminating a hypothesis with 2 class
        variables.  Note: if the hypothesis can be separated into two
        hypotheses, each with one class variable, then ~ dedth2h is simpler to
        use.  See also comments in ~ dedth .  (Contributed by NM, 13-Aug-1999.)
-       (Proof shortened by Eric Schmidt, 28-Jul-2009.) */
-
-$)
+       (Proof shortened by Eric Schmidt, 28-Jul-2009.) $)
 ${
 	$v ph ps ch th A B C D $.
 	e0 $e |- ( A = if ( ph , A , C ) -> ( ps <-> ch ) ) $.
@@ -877,11 +777,9 @@ ${
 	pdedth2v $p |- ( ph -> ps ) $=
 	e0 e1 e2 f0 f0 f1 f2 f3 f4 f5 f6 f7 pdedth2h f0 f1 panidms $.
 $}
-$( /* Weak deduction theorem for eliminating a hypothesis with 3 class
+$( Weak deduction theorem for eliminating a hypothesis with 3 class
        variables.  See comments in ~ dedth2v .  (Contributed by NM,
-       13-Aug-1999.)  (Proof shortened by Eric Schmidt, 28-Jul-2009.) */
-
-$)
+       13-Aug-1999.)  (Proof shortened by Eric Schmidt, 28-Jul-2009.) $)
 ${
 	$v ph ps ch th ta A B C D R S $.
 	e0 $e |- ( A = if ( ph , A , D ) -> ( ps <-> ch ) ) $.
@@ -902,11 +800,9 @@ ${
 	pdedth3v $p |- ( ph -> ps ) $=
 	e0 e1 e2 e3 f0 f0 f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 pdedth3h f0 f0 f1 p3anidm12 f0 f1 panidms $.
 $}
-$( /* Weak deduction theorem for eliminating a hypothesis with 4 class
+$( Weak deduction theorem for eliminating a hypothesis with 4 class
        variables.  See comments in ~ dedth2v .  (Contributed by NM,
-       21-Apr-2007.)  (Proof shortened by Eric Schmidt, 28-Jul-2009.) */
-
-$)
+       21-Apr-2007.)  (Proof shortened by Eric Schmidt, 28-Jul-2009.) $)
 ${
 	$v ph ps ch th ta et A B C D R S T U $.
 	e0 $e |- ( A = if ( ph , A , R ) -> ( ps <-> ch ) ) $.
@@ -931,11 +827,9 @@ ${
 	pdedth4v $p |- ( ph -> ps ) $=
 	e0 e1 e2 e3 e4 f0 f0 f0 f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 f11 f12 f13 pdedth4h f0 f0 awa f1 panidms f0 f1 panidms $.
 $}
-$( /* Eliminate a hypothesis containing class variable ` A ` when it is known
+$( Eliminate a hypothesis containing class variable ` A ` when it is known
        for a specific class ` B ` .  For more information, see comments in
-       ~ dedth .  (Contributed by NM, 15-May-1999.) */
-
-$)
+       ~ dedth .  (Contributed by NM, 15-May-1999.) $)
 ${
 	$v ph ps ch A B $.
 	e0 $e |- ( A = if ( ph , A , B ) -> ( ph <-> ps ) ) $.
@@ -949,10 +843,8 @@ ${
 	pelimhyp $p |- ps $=
 	f0 f3 f4 piftrue f0 f0 f3 f4 acif f3 peqcomd e0 f0 f3 f0 f3 f4 acif awceq f0 f1 awb psyl f0 f1 pibi e2 f0 f3 f4 piffalse f0 awn f0 f3 f4 acif f4 peqcomd e1 f0 awn f4 f0 f3 f4 acif awceq f2 f1 awb psyl f0 awn f2 f1 pmpbii f0 f1 ppm2.61i $.
 $}
-$( /* Eliminate a hypothesis containing 2 class variables.  (Contributed by
-       NM, 14-Aug-1999.) */
-
-$)
+$( Eliminate a hypothesis containing 2 class variables.  (Contributed by
+       NM, 14-Aug-1999.) $)
 ${
 	$v ph ch th ta et A B C D $.
 	e0 $e |- ( A = if ( ph , A , C ) -> ( ph <-> ch ) ) $.
@@ -972,10 +864,8 @@ ${
 	pelimhyp2v $p |- th $=
 	f0 f5 f7 piftrue f0 f0 f5 f7 acif f5 peqcomd e0 f0 f5 f0 f5 f7 acif awceq f0 f1 awb psyl f0 f6 f8 piftrue f0 f0 f6 f8 acif f6 peqcomd e1 f0 f6 f0 f6 f8 acif awceq f1 f2 awb psyl f0 f0 f1 f2 pbitrd f0 f2 pibi e4 f0 f5 f7 piffalse f0 awn f0 f5 f7 acif f7 peqcomd e2 f0 awn f7 f0 f5 f7 acif awceq f3 f4 awb psyl f0 f6 f8 piffalse f0 awn f0 f6 f8 acif f8 peqcomd e3 f0 awn f8 f0 f6 f8 acif awceq f4 f2 awb psyl f0 awn f3 f4 f2 pbitrd f0 awn f3 f2 pmpbii f0 f2 ppm2.61i $.
 $}
-$( /* Eliminate a hypothesis containing 3 class variables.  (Contributed by
-       NM, 14-Aug-1999.) */
-
-$)
+$( Eliminate a hypothesis containing 3 class variables.  (Contributed by
+       NM, 14-Aug-1999.) $)
 ${
 	$v ph ch th ta et ze si A B C D R S $.
 	e0 $e |- ( A = if ( ph , A , D ) -> ( ph <-> ch ) ) $.
@@ -1001,10 +891,8 @@ ${
 	pelimhyp3v $p |- ta $=
 	f0 f7 f10 piftrue f0 f0 f7 f10 acif f7 peqcomd e0 f0 f7 f0 f7 f10 acif awceq f0 f1 awb psyl f0 f8 f11 piftrue f0 f0 f8 f11 acif f8 peqcomd e1 f0 f8 f0 f8 f11 acif awceq f1 f2 awb psyl f0 f9 f12 piftrue f0 f0 f9 f12 acif f9 peqcomd e2 f0 f9 f0 f9 f12 acif awceq f2 f3 awb psyl f0 f0 f1 f2 f3 p3bitrd f0 f3 pibi e6 f0 f7 f10 piffalse f0 awn f0 f7 f10 acif f10 peqcomd e3 f0 awn f10 f0 f7 f10 acif awceq f4 f5 awb psyl f0 f8 f11 piffalse f0 awn f0 f8 f11 acif f11 peqcomd e4 f0 awn f11 f0 f8 f11 acif awceq f5 f6 awb psyl f0 f9 f12 piffalse f0 awn f0 f9 f12 acif f12 peqcomd e5 f0 awn f12 f0 f9 f12 acif awceq f6 f3 awb psyl f0 awn f4 f5 f6 f3 p3bitrd f0 awn f4 f3 pmpbii f0 f3 ppm2.61i $.
 $}
-$( /* Eliminate a hypothesis containing 4 class variables (for use with the
-       weak deduction theorem ~ dedth ).  (Contributed by NM, 16-Apr-2005.) */
-
-$)
+$( Eliminate a hypothesis containing 4 class variables (for use with the
+       weak deduction theorem ~ dedth ).  (Contributed by NM, 16-Apr-2005.) $)
 ${
 	$v ph ps ch th ta et ze si rh A B C D R S F G $.
 	e0 $e |- ( A = if ( ph , A , D ) -> ( ph <-> ch ) ) $.
@@ -1036,11 +924,9 @@ ${
 	pelimhyp4v $p |- ps $=
 	f0 f9 f12 piftrue f0 f0 f9 f12 acif f9 peqcomd e0 f0 f9 f0 f9 f12 acif awceq f0 f2 awb psyl f0 f10 f13 piftrue f0 f0 f10 f13 acif f10 peqcomd e1 f0 f10 f0 f10 f13 acif awceq f2 f3 awb psyl f0 f0 f2 f3 pbitrd f0 f11 f14 piftrue f0 f0 f11 f14 acif f11 peqcomd e2 f0 f11 f0 f11 f14 acif awceq f3 f4 awb psyl f0 f15 f16 piftrue f0 f0 f15 f16 acif f15 peqcomd e3 f0 f15 f0 f15 f16 acif awceq f4 f1 awb psyl f0 f0 f3 f4 f1 p3bitrd f0 f1 pibi e8 f0 f9 f12 piffalse f0 awn f0 f9 f12 acif f12 peqcomd e4 f0 awn f12 f0 f9 f12 acif awceq f5 f6 awb psyl f0 f10 f13 piffalse f0 awn f0 f10 f13 acif f13 peqcomd e5 f0 awn f13 f0 f10 f13 acif awceq f6 f7 awb psyl f0 awn f5 f6 f7 pbitrd f0 f11 f14 piffalse f0 awn f0 f11 f14 acif f14 peqcomd e6 f0 awn f14 f0 f11 f14 acif awceq f7 f8 awb psyl f0 f15 f16 piffalse f0 awn f0 f15 f16 acif f16 peqcomd e7 f0 awn f16 f0 f15 f16 acif awceq f8 f1 awb psyl f0 awn f5 f7 f8 f1 p3bitrd f0 awn f5 f1 pmpbii f0 f1 ppm2.61i $.
 $}
-$( /* Eliminate a membership hypothesis for weak deduction theorem, when
+$( Eliminate a membership hypothesis for weak deduction theorem, when
        special case ` B e. C ` is provable.  (Contributed by NM,
-       15-May-1999.) */
-
-$)
+       15-May-1999.) $)
 ${
 	$v A B C $.
 	e0 $e |- B e. C $.
@@ -1050,11 +936,9 @@ ${
 	pelimel $p |- if ( A e. C , A , B ) e. C $=
 	f0 f0 f2 awcel f0 f1 acif f2 peleq1 f1 f0 f2 awcel f0 f1 acif f2 peleq1 e0 f0 f2 awcel f0 f2 awcel f0 f1 acif f2 awcel f1 f2 awcel f0 f1 pelimhyp $.
 $}
-$( /* Version of ~ elimhyp where the hypothesis is deduced from the final
+$( Version of ~ elimhyp where the hypothesis is deduced from the final
        antecedent.  See ~ ghomgrplem for an example of its use.  (Contributed
-       by Paul Chapman, 25-Mar-2008.) */
-
-$)
+       by Paul Chapman, 25-Mar-2008.) $)
 ${
 	$v ph ps ch th A B $.
 	e0 $e |- ( ph -> ps ) $.
@@ -1070,11 +954,9 @@ ${
 	pelimdhyp $p |- ch $=
 	e0 f0 f4 f5 piftrue f0 f0 f4 f5 acif f4 peqcomd e1 f0 f4 f0 f4 f5 acif awceq f1 f2 awb psyl f0 f1 f2 pmpbid e3 f0 f4 f5 piffalse f0 awn f0 f4 f5 acif f5 peqcomd e2 f0 awn f5 f0 f4 f5 acif awceq f3 f2 awb psyl f0 awn f3 f2 pmpbii f0 f2 ppm2.61i $.
 $}
-$( /* Transform a hypothesis ` ps ` that we want to keep (but contains the
+$( Transform a hypothesis ` ps ` that we want to keep (but contains the
        same class variable ` A ` used in the eliminated hypothesis) for use
-       with the weak deduction theorem.  (Contributed by NM, 15-May-1999.) */
-
-$)
+       with the weak deduction theorem.  (Contributed by NM, 15-May-1999.) $)
 ${
 	$v ph ps ch th A B $.
 	e0 $e |- ( A = if ( ph , A , B ) -> ( ps <-> th ) ) $.
@@ -1090,10 +972,8 @@ ${
 	pkeephyp $p |- th $=
 	e2 e3 e0 e1 f0 f1 f2 f3 f4 f5 pifboth f1 f2 f3 pmp2an $.
 $}
-$( /* Keep a hypothesis containing 2 class variables (for use with the weak
-       deduction theorem ~ dedth ).  (Contributed by NM, 16-Apr-2005.) */
-
-$)
+$( Keep a hypothesis containing 2 class variables (for use with the weak
+       deduction theorem ~ dedth ).  (Contributed by NM, 16-Apr-2005.) $)
 ${
 	$v ph ps ch th ta et A B C D $.
 	e0 $e |- ( A = if ( ph , A , C ) -> ( ps <-> ch ) ) $.
@@ -1115,10 +995,8 @@ ${
 	pkeephyp2v $p |- th $=
 	e4 f0 f6 f8 piftrue f0 f0 f6 f8 acif f6 peqcomd e0 f0 f6 f0 f6 f8 acif awceq f1 f2 awb psyl f0 f7 f9 piftrue f0 f0 f7 f9 acif f7 peqcomd e1 f0 f7 f0 f7 f9 acif awceq f2 f3 awb psyl f0 f1 f2 f3 pbitrd f0 f1 f3 pmpbii e5 f0 f6 f8 piffalse f0 awn f0 f6 f8 acif f8 peqcomd e2 f0 awn f8 f0 f6 f8 acif awceq f4 f5 awb psyl f0 f7 f9 piffalse f0 awn f0 f7 f9 acif f9 peqcomd e3 f0 awn f9 f0 f7 f9 acif awceq f5 f3 awb psyl f0 awn f4 f5 f3 pbitrd f0 awn f4 f3 pmpbii f0 f3 ppm2.61i $.
 $}
-$( /* Keep a hypothesis containing 3 class variables.  (Contributed by NM,
-       27-Sep-1999.) */
-
-$)
+$( Keep a hypothesis containing 3 class variables.  (Contributed by NM,
+       27-Sep-1999.) $)
 ${
 	$v ph ch th ta et ze si rh A B C D R S $.
 	e0 $e |- ( A = if ( ph , A , D ) -> ( rh <-> ch ) ) $.
@@ -1146,10 +1024,8 @@ ${
 	pkeephyp3v $p |- ta $=
 	e6 f0 f8 f11 piftrue f0 f0 f8 f11 acif f8 peqcomd e0 f0 f8 f0 f8 f11 acif awceq f7 f1 awb psyl f0 f9 f12 piftrue f0 f0 f9 f12 acif f9 peqcomd e1 f0 f9 f0 f9 f12 acif awceq f1 f2 awb psyl f0 f10 f13 piftrue f0 f0 f10 f13 acif f10 peqcomd e2 f0 f10 f0 f10 f13 acif awceq f2 f3 awb psyl f0 f7 f1 f2 f3 p3bitrd f0 f7 f3 pmpbii e7 f0 f8 f11 piffalse f0 awn f0 f8 f11 acif f11 peqcomd e3 f0 awn f11 f0 f8 f11 acif awceq f4 f5 awb psyl f0 f9 f12 piffalse f0 awn f0 f9 f12 acif f12 peqcomd e4 f0 awn f12 f0 f9 f12 acif awceq f5 f6 awb psyl f0 f10 f13 piffalse f0 awn f0 f10 f13 acif f13 peqcomd e5 f0 awn f13 f0 f10 f13 acif awceq f6 f3 awb psyl f0 awn f4 f5 f6 f3 p3bitrd f0 awn f4 f3 pmpbii f0 f3 ppm2.61i $.
 $}
-$( /* Keep a membership hypothesis for weak deduction theorem, when special
-       case ` B e. C ` is provable.  (Contributed by NM, 14-Aug-1999.) */
-
-$)
+$( Keep a membership hypothesis for weak deduction theorem, when special
+       case ` B e. C ` is provable.  (Contributed by NM, 14-Aug-1999.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- A e. C $.
@@ -1161,9 +1037,7 @@ ${
 	pkeepel $p |- if ( ph , A , B ) e. C $=
 	f1 f0 f1 f2 acif f3 peleq1 f2 f0 f1 f2 acif f3 peleq1 e0 e1 f0 f1 f3 awcel f2 f3 awcel f0 f1 f2 acif f3 awcel f1 f2 pkeephyp $.
 $}
-$( /* Conditional operator existence.  (Contributed by NM, 2-Sep-2004.) */
-
-$)
+$( Conditional operator existence.  (Contributed by NM, 2-Sep-2004.) $)
 ${
 	$v ph A B $.
 	e0 $e |- A e. _V $.
@@ -1174,9 +1048,7 @@ ${
 	pifex $p |- if ( ph , A , B ) e. _V $=
 	e0 e1 f0 f1 f2 acvv pkeepel $.
 $}
-$( /* Conditional operator existence.  (Contributed by NM, 21-Mar-2011.) */
-
-$)
+$( Conditional operator existence.  (Contributed by NM, 21-Mar-2011.) $)
 ${
 	$v ph A B V W $.
 	$v x y $.

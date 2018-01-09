@@ -1,20 +1,16 @@
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Ordinals_(continued).smm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
           Transfinite induction
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-*/
-
 $)
-$( /* The Principle of Transfinite Induction.  Theorem 7.17 of [TakeutiZaring]
+$( The Principle of Transfinite Induction.  Theorem 7.17 of [TakeutiZaring]
        p. 39.  This principle states that if ` A ` is a class of ordinal
        numbers with the property that every ordinal number included in ` A `
        also belongs to ` A ` , then every ordinal number is in ` A ` .
 
        See theorem ~ tfindes or ~ tfinds for the version involving basis and
-       induction hypotheses.  (Contributed by NM, 18-Feb-2004.) */
-
-$)
+       induction hypotheses.  (Contributed by NM, 18-Feb-2004.) $)
 ${
 	$v x A $.
 	$d x A $.
@@ -23,13 +19,11 @@ ${
 	ptfi $p |- ( ( A C_ On /\ A. x e. On ( x C_ A -> x e. A ) ) -> A = On ) $=
 	f0 asup_set_class acon0 f1 peldifn f0 asup_set_class acon0 f1 acdif awcel f0 asup_set_class f1 awcel awn f0 asup_set_class acon0 awcel f0 asup_set_class f1 awss f0 asup_set_class f1 awcel awi awi padantl f0 asup_set_class acon0 f1 peldifi f0 asup_set_class ponss acon0 f1 f0 asup_set_class pdifin0ss f0 asup_set_class acon0 awcel f0 asup_set_class acon0 awss acon0 f1 acdif f0 asup_set_class acin ac0 awceq f0 asup_set_class f1 awss psyl5com f0 asup_set_class acon0 awcel acon0 f1 acdif f0 asup_set_class acin ac0 awceq f0 asup_set_class f1 awss f0 asup_set_class f1 awcel pimim1d f0 asup_set_class acon0 awcel f0 asup_set_class f1 awss f0 asup_set_class f1 awcel awi acon0 f1 acdif f0 asup_set_class acin ac0 awceq f0 asup_set_class f1 awcel awi pa2i f0 asup_set_class acon0 f1 acdif awcel f0 asup_set_class acon0 awcel f0 asup_set_class acon0 awcel f0 asup_set_class f1 awss f0 asup_set_class f1 awcel awi awi acon0 f1 acdif f0 asup_set_class acin ac0 awceq f0 asup_set_class f1 awcel awi psyl5 f0 asup_set_class acon0 awcel f0 asup_set_class f1 awss f0 asup_set_class f1 awcel awi awi f0 asup_set_class acon0 f1 acdif awcel acon0 f1 acdif f0 asup_set_class acin ac0 awceq f0 asup_set_class f1 awcel awi pimp f0 asup_set_class acon0 awcel f0 asup_set_class f1 awss f0 asup_set_class f1 awcel awi awi f0 asup_set_class acon0 f1 acdif awcel awa acon0 f1 acdif f0 asup_set_class acin ac0 awceq f0 asup_set_class f1 awcel pmtod f0 asup_set_class acon0 awcel f0 asup_set_class f1 awss f0 asup_set_class f1 awcel awi awi f0 asup_set_class acon0 f1 acdif awcel acon0 f1 acdif f0 asup_set_class acin ac0 awceq awn pex f0 asup_set_class f1 awss f0 asup_set_class f1 awcel awi acon0 f1 acdif f0 asup_set_class acin ac0 awceq awn f0 acon0 acon0 f1 acdif pralimi2 acon0 f1 acdif f0 asup_set_class acin ac0 awceq f0 acon0 f1 acdif pralnex f0 asup_set_class f1 awss f0 asup_set_class f1 awcel awi f0 acon0 awral acon0 f1 acdif f0 asup_set_class acin ac0 awceq awn f0 acon0 f1 acdif awral acon0 f1 acdif f0 asup_set_class acin ac0 awceq f0 acon0 f1 acdif awrex awn psylib acon0 f1 pssdif0 acon0 f1 awss acon0 f1 acdif ac0 pnecon3bbii pordon acon0 f1 pdifss f0 acon0 acon0 f1 acdif ptz7.5 acon0 aword acon0 f1 acdif acon0 awss acon0 f1 acdif ac0 awne acon0 f1 acdif f0 asup_set_class acin ac0 awceq f0 acon0 f1 acdif awrex pmp3an12 acon0 f1 awss awn acon0 f1 acdif ac0 awne acon0 f1 acdif f0 asup_set_class acin ac0 awceq f0 acon0 f1 acdif awrex psylbi f0 asup_set_class f1 awss f0 asup_set_class f1 awcel awi f0 acon0 awral acon0 f1 acdif f0 asup_set_class acin ac0 awceq f0 acon0 f1 acdif awrex acon0 f1 awss pnsyl2 f0 asup_set_class f1 awss f0 asup_set_class f1 awcel awi f0 acon0 awral acon0 f1 awss f1 acon0 awss panim2i f1 acon0 peqss f1 acon0 awss f0 asup_set_class f1 awss f0 asup_set_class f1 awcel awi f0 acon0 awral awa f1 acon0 awss acon0 f1 awss awa f1 acon0 awceq psylibr $.
 $}
-$( /* Transfinite Induction Schema.  If all ordinal numbers less than a given
+$( Transfinite Induction Schema.  If all ordinal numbers less than a given
        number ` x ` have a property (induction hypothesis), then all ordinal
        numbers have the property (conclusion).  Exercise 25 of [Enderton]
        p. 200.  (Contributed by NM, 1-Aug-1994.)  (Revised by Mario Carneiro,
-       20-Nov-2016.) */
-
-$)
+       20-Nov-2016.) $)
 ${
 	$v ph x y z w $.
 	$d w y z ph $.
@@ -43,10 +37,8 @@ ${
 	ptfis $p |- ( x e. On -> ph ) $=
 	f0 f1 acon0 pssrab2 f1 i0 asup_set_class pnfcv f1 i0 asup_set_class pnfcv f0 f1 acon0 pnfrab1 f1 i0 asup_set_class f0 f1 acon0 acrab pnfss f0 f1 acon0 pnfrab1 f1 i0 f0 f1 acon0 acrab pnfcri i0 asup_set_class f0 f1 acon0 acrab awss i0 asup_set_class f0 f1 acon0 acrab awcel f1 pnfim f2 f1 asup_set_class f0 f1 acon0 acrab pdfss3 f1 asup_set_class i0 asup_set_class f0 f1 acon0 acrab psseq1 f2 asup_set_class f0 f1 acon0 acrab awcel f2 f1 asup_set_class awral f1 asup_set_class f0 f1 acon0 acrab awss f1 asup_set_class i0 asup_set_class awceq i0 asup_set_class f0 f1 acon0 acrab awss psyl5bbr f0 f1 acon0 prabid f1 asup_set_class i0 asup_set_class f0 f1 acon0 acrab peleq1 f1 asup_set_class acon0 awcel f0 awa f1 asup_set_class f0 f1 acon0 acrab awcel f1 asup_set_class i0 asup_set_class awceq i0 asup_set_class f0 f1 acon0 acrab awcel psyl5bbr f1 asup_set_class i0 asup_set_class awceq f2 asup_set_class f0 f1 acon0 acrab awcel f2 f1 asup_set_class awral i0 asup_set_class f0 f1 acon0 acrab awss f1 asup_set_class acon0 awcel f0 awa i0 asup_set_class f0 f1 acon0 acrab awcel pimbi12d f0 i1 f2 f1 psbequ f1 acon0 pnfcv i1 acon0 pnfcv f0 i1 pnfv f0 f1 i1 pnfs1v f0 f1 i1 psbequ12 f0 f0 f1 i1 awsb f1 i1 acon0 pcbvrab f0 f1 i1 awsb f0 f1 f2 awsb i1 f2 asup_set_class acon0 f0 f1 acon0 acrab pelrab2 f2 asup_set_class f0 f1 acon0 acrab awcel f2 asup_set_class acon0 awcel f0 f1 f2 awsb psimprbi f2 asup_set_class f0 f1 acon0 acrab awcel f0 f1 f2 awsb f2 f1 asup_set_class pralimi e0 f2 asup_set_class f0 f1 acon0 acrab awcel f2 f1 asup_set_class awral f0 f1 f2 awsb f2 f1 asup_set_class awral f1 asup_set_class acon0 awcel f0 psyl5 f1 asup_set_class acon0 awcel f2 asup_set_class f0 f1 acon0 acrab awcel f2 f1 asup_set_class awral f0 panc2li f2 asup_set_class f0 f1 acon0 acrab awcel f2 f1 asup_set_class awral f1 asup_set_class acon0 awcel f0 awa awi i0 asup_set_class f0 f1 acon0 acrab awss i0 asup_set_class f0 f1 acon0 acrab awcel awi f1 i0 asup_set_class acon0 pvtoclgaf i0 asup_set_class f0 f1 acon0 acrab awss i0 asup_set_class f0 f1 acon0 acrab awcel awi i0 acon0 prgen i0 f0 f1 acon0 acrab ptfi f0 f1 acon0 acrab acon0 awss i0 asup_set_class f0 f1 acon0 acrab awss i0 asup_set_class f0 f1 acon0 acrab awcel awi i0 acon0 awral f0 f1 acon0 acrab acon0 awceq pmp2an f0 f1 acon0 acrab acon0 peqcomi f0 f1 acon0 acon0 prabeq2i f1 asup_set_class acon0 awcel f1 asup_set_class acon0 awcel f0 psimprbi $.
 $}
-$( /* Transfinite Induction Schema, using implicit substitution.  (Contributed
-       by NM, 18-Aug-1994.) */
-
-$)
+$( Transfinite Induction Schema, using implicit substitution.  (Contributed
+       by NM, 18-Aug-1994.) $)
 ${
 	$v ph ps x y $.
 	$d y ph $.
@@ -61,10 +53,8 @@ ${
 	ptfis2f $p |- ( x e. On -> ph ) $=
 	e0 e1 f0 f1 f2 f3 psbie f0 f2 f3 awsb f1 f3 f2 asup_set_class pralbii e2 f0 f2 f3 awsb f3 f2 asup_set_class awral f1 f3 f2 asup_set_class awral f2 asup_set_class acon0 awcel f0 psyl5bi f0 f2 f3 ptfis $.
 $}
-$( /* Transfinite Induction Schema, using implicit substitution.  (Contributed
-       by NM, 18-Aug-1994.) */
-
-$)
+$( Transfinite Induction Schema, using implicit substitution.  (Contributed
+       by NM, 18-Aug-1994.) $)
 ${
 	$v ph ps x y $.
 	$d x ps $.
@@ -79,10 +69,8 @@ ${
 	ptfis2 $p |- ( x e. On -> ph ) $=
 	f1 f2 pnfv e0 e1 f0 f1 f2 f3 ptfis2f $.
 $}
-$( /* Transfinite Induction Schema, using implicit substitution.  (Contributed
-       by NM, 4-Nov-2003.) */
-
-$)
+$( Transfinite Induction Schema, using implicit substitution.  (Contributed
+       by NM, 4-Nov-2003.) $)
 ${
 	$v ph ps ch x y A $.
 	$d x ps $.
@@ -102,11 +90,9 @@ ${
 	ptfis3 $p |- ( A e. On -> ch ) $=
 	e1 e0 e2 f0 f1 f3 f4 ptfis2 f0 f2 f3 f5 acon0 pvtoclga $.
 $}
-$( /* A transfinite induction scheme in "implicit" form where the induction is
+$( A transfinite induction scheme in "implicit" form where the induction is
        done on an object derived from the object of interest.  (Contributed by
-       Stefan O'Rear, 24-Aug-2015.) */
-
-$)
+       Stefan O'Rear, 24-Aug-2015.) $)
 ${
 	$v ph ps ch th x y z w A v V R S T $.
 	$d x v w y z T $.
@@ -141,26 +127,16 @@ ${
 	ptfisi $p |- ( ph -> th ) $=
 	f9 pssid f9 peqid e0 e1 i0 asup_set_class i1 asup_set_class f7 peqeq2 i0 asup_set_class i1 asup_set_class f9 psseq1 i0 asup_set_class i1 asup_set_class awceq i0 asup_set_class f9 awss i1 asup_set_class f9 awss f0 panbi2d i0 asup_set_class i1 asup_set_class awceq f0 i0 asup_set_class f9 awss awa f0 i1 asup_set_class f9 awss awa f1 pimbi1d i0 asup_set_class i1 asup_set_class awceq f7 i0 asup_set_class awceq f7 i1 asup_set_class awceq f0 i0 asup_set_class f9 awss awa f1 awi f0 i1 asup_set_class f9 awss awa f1 awi pimbi12d i0 asup_set_class i1 asup_set_class awceq f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa f1 awi awi f7 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f1 awi awi f4 palbidv e5 f4 asup_set_class f5 asup_set_class awceq f7 f8 i1 asup_set_class peqeq1d e3 f4 asup_set_class f5 asup_set_class awceq f1 f2 f0 i1 asup_set_class f9 awss awa pimbi2d f4 asup_set_class f5 asup_set_class awceq f7 i1 asup_set_class awceq f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f1 awi f0 i1 asup_set_class f9 awss awa f2 awi pimbi12d f7 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f1 awi awi f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f4 f5 pcbvalv i0 asup_set_class i1 asup_set_class awceq f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa f1 awi awi f4 awal f7 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f1 awi awi f4 awal f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal psyl6bb i0 asup_set_class f9 f7 peqeq2 i0 asup_set_class f9 f9 psseq1 i0 asup_set_class f9 awceq i0 asup_set_class f9 awss f9 f9 awss f0 panbi2d i0 asup_set_class f9 awceq f0 i0 asup_set_class f9 awss awa f0 f9 f9 awss awa f1 pimbi1d i0 asup_set_class f9 awceq f7 i0 asup_set_class awceq f7 f9 awceq f0 i0 asup_set_class f9 awss awa f1 awi f0 f9 f9 awss awa f1 awi pimbi12d i0 asup_set_class f9 awceq f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa f1 awi awi f7 f9 awceq f0 f9 f9 awss awa f1 awi awi f4 palbidv i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss psimp3l i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa psimp2 i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa psimp1l i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa aw3a f7 i0 asup_set_class acon0 peqeltrd i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa psimp2 i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss psimp3r i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa aw3a f7 i0 asup_set_class f9 peqsstrd f0 i0 asup_set_class f9 awss i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f4 i2 asup_set_class f7 acsb f7 awcel psimpl3l i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa f4 i2 asup_set_class f7 acsb f7 awcel psimpl1l i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa aw3a f4 i2 asup_set_class f7 acsb f7 awcel psimpr i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa f4 i2 asup_set_class f7 acsb f7 awcel psimpl2 i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa aw3a f4 i2 asup_set_class f7 acsb f7 awcel awa f4 i2 asup_set_class f7 acsb f7 i0 asup_set_class peleqtrd i0 asup_set_class f4 i2 asup_set_class f7 acsb ponelss i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa aw3a f4 i2 asup_set_class f7 acsb f7 awcel awa i0 asup_set_class acon0 awcel f4 i2 asup_set_class f7 acsb i0 asup_set_class awcel f4 i2 asup_set_class f7 acsb i0 asup_set_class awss psylc f0 i0 asup_set_class f9 awss i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f4 i2 asup_set_class f7 acsb f7 awcel psimpl3r i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa aw3a f4 i2 asup_set_class f7 acsb f7 awcel awa f4 i2 asup_set_class f7 acsb i0 asup_set_class f9 psstrd i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa aw3a f4 i2 asup_set_class f7 acsb f7 awcel psimpr i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa f4 i2 asup_set_class f7 acsb f7 awcel psimpl2 i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa aw3a f4 i2 asup_set_class f7 acsb f7 awcel awa f4 i2 asup_set_class f7 acsb f7 i0 asup_set_class peleqtrd i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa f4 i2 asup_set_class f7 acsb f7 awcel psimpl1r i1 asup_set_class f4 i2 asup_set_class f7 acsb f8 peqeq2 i1 asup_set_class f4 i2 asup_set_class f7 acsb f9 psseq1 i1 asup_set_class f4 i2 asup_set_class f7 acsb awceq i1 asup_set_class f9 awss f4 i2 asup_set_class f7 acsb f9 awss f0 panbi2d i1 asup_set_class f4 i2 asup_set_class f7 acsb awceq f0 i1 asup_set_class f9 awss awa f0 f4 i2 asup_set_class f7 acsb f9 awss awa f2 pimbi1d i1 asup_set_class f4 i2 asup_set_class f7 acsb awceq f8 i1 asup_set_class awceq f8 f4 i2 asup_set_class f7 acsb awceq f0 i1 asup_set_class f9 awss awa f2 awi f0 f4 i2 asup_set_class f7 acsb f9 awss awa f2 awi pimbi12d i1 asup_set_class f4 i2 asup_set_class f7 acsb awceq f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f8 f4 i2 asup_set_class f7 acsb awceq f0 f4 i2 asup_set_class f7 acsb f9 awss awa f2 awi awi f5 palbidv f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal f8 f4 i2 asup_set_class f7 acsb awceq f0 f4 i2 asup_set_class f7 acsb f9 awss awa f2 awi awi f5 awal i1 f4 i2 asup_set_class f7 acsb i0 asup_set_class prspcva i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa aw3a f4 i2 asup_set_class f7 acsb f7 awcel awa f4 i2 asup_set_class f7 acsb i0 asup_set_class awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral f8 f4 i2 asup_set_class f7 acsb awceq f0 f4 i2 asup_set_class f7 acsb f9 awss awa f2 awi awi f5 awal psyl2anc i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa aw3a f4 i2 asup_set_class f7 acsb f7 awcel awa f4 i2 asup_set_class f7 acsb peqidd f4 f5 asup_set_class pnfcv f4 f8 pnfcv e5 f4 i2 f5 asup_set_class f7 f8 pcsbhypf i2 asup_set_class f5 asup_set_class awceq f4 i2 asup_set_class f7 acsb f8 peqcomd f8 f4 i2 asup_set_class f7 acsb awceq i2 asup_set_class f5 asup_set_class peqcoms f5 asup_set_class i2 asup_set_class awceq f8 f4 i2 asup_set_class f7 acsb f4 i2 asup_set_class f7 acsb peqeq1d f1 i2 f5 f4 psbequ f2 f4 pnfv e3 f1 f2 f4 f5 psbie i2 asup_set_class f5 asup_set_class awceq f1 f4 i2 awsb f1 f4 f5 awsb f2 psyl6bb i2 asup_set_class f5 asup_set_class awceq f1 f4 i2 awsb f2 pbicomd f2 f1 f4 i2 awsb awb i2 asup_set_class f5 asup_set_class peqcoms f5 asup_set_class i2 asup_set_class awceq f2 f1 f4 i2 awsb f0 f4 i2 asup_set_class f7 acsb f9 awss awa pimbi2d f5 asup_set_class i2 asup_set_class awceq f8 f4 i2 asup_set_class f7 acsb awceq f4 i2 asup_set_class f7 acsb f4 i2 asup_set_class f7 acsb awceq f0 f4 i2 asup_set_class f7 acsb f9 awss awa f2 awi f0 f4 i2 asup_set_class f7 acsb f9 awss awa f1 f4 i2 awsb awi pimbi12d f8 f4 i2 asup_set_class f7 acsb awceq f0 f4 i2 asup_set_class f7 acsb f9 awss awa f2 awi awi f4 i2 asup_set_class f7 acsb f4 i2 asup_set_class f7 acsb awceq f0 f4 i2 asup_set_class f7 acsb f9 awss awa f1 f4 i2 awsb awi awi f5 i2 pspv i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa aw3a f4 i2 asup_set_class f7 acsb f7 awcel awa f8 f4 i2 asup_set_class f7 acsb awceq f0 f4 i2 asup_set_class f7 acsb f9 awss awa f2 awi awi f5 awal f4 i2 asup_set_class f7 acsb f4 i2 asup_set_class f7 acsb awceq f0 f4 i2 asup_set_class f7 acsb f9 awss awa f1 f4 i2 awsb awi psylc i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa aw3a f4 i2 asup_set_class f7 acsb f7 awcel awa f0 f4 i2 asup_set_class f7 acsb f9 awss f1 f4 i2 awsb pmp2and i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa aw3a f4 i2 asup_set_class f7 acsb f7 awcel f1 f4 i2 awsb pex i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa aw3a f4 i2 asup_set_class f7 acsb f7 awcel f1 f4 i2 awsb awi i2 palrimiv f4 f5 asup_set_class pnfcv f4 f8 pnfcv e5 f4 i2 f5 asup_set_class f7 f8 pcsbhypf i2 asup_set_class f5 asup_set_class awceq f4 i2 asup_set_class f7 acsb f8 f7 peleq1d f1 i2 f5 f4 psbequ f2 f4 pnfv e3 f1 f2 f4 f5 psbie i2 asup_set_class f5 asup_set_class awceq f1 f4 i2 awsb f1 f4 f5 awsb f2 psyl6bb i2 asup_set_class f5 asup_set_class awceq f4 i2 asup_set_class f7 acsb f7 awcel f8 f7 awcel f1 f4 i2 awsb f2 pimbi12d f4 i2 asup_set_class f7 acsb f7 awcel f1 f4 i2 awsb awi f8 f7 awcel f2 awi i2 f5 pcbvalv i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa aw3a f4 i2 asup_set_class f7 acsb f7 awcel f1 f4 i2 awsb awi i2 awal f8 f7 awcel f2 awi f5 awal psylib e2 i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa aw3a f0 f7 acon0 awcel f7 f9 awss f8 f7 awcel f2 awi f5 awal f1 psyl121anc i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa f1 p3exp i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral awa f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa f1 awi awi f4 palrimiv i0 asup_set_class acon0 awcel f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal i1 i0 asup_set_class awral f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa f1 awi awi f4 awal pex f7 i0 asup_set_class awceq f0 i0 asup_set_class f9 awss awa f1 awi awi f4 awal f8 i1 asup_set_class awceq f0 i1 asup_set_class f9 awss awa f2 awi awi f5 awal f7 f9 awceq f0 f9 f9 awss awa f1 awi awi f4 awal i0 i1 f9 ptfis3 f0 f9 acon0 awcel f7 f9 awceq f0 f9 f9 awss awa f1 awi awi f4 awal psyl e6 f4 asup_set_class f6 awceq f7 f9 f9 peqeq1d e4 f4 asup_set_class f6 awceq f1 f3 f0 f9 f9 awss awa pimbi2d f4 asup_set_class f6 awceq f7 f9 awceq f9 f9 awceq f0 f9 f9 awss awa f1 awi f0 f9 f9 awss awa f3 awi pimbi12d f7 f9 awceq f0 f9 f9 awss awa f1 awi awi f9 f9 awceq f0 f9 f9 awss awa f3 awi awi f4 f6 f10 pspcgv f0 f6 f10 awcel f7 f9 awceq f0 f9 f9 awss awa f1 awi awi f4 awal f9 f9 awceq f0 f9 f9 awss awa f3 awi awi psylc f0 f9 f9 awceq f0 f9 f9 awss awa f3 awi pmpi f0 f0 f9 f9 awss f3 pexp3a f0 f9 f9 awss f3 awi ppm2.43i f0 f9 f9 awss f3 pmpi $.
 $}
-$( /* Substitutions. */
-
-$)
-$( /* Basis. */
-
-$)
-$( /* Induction hypothesis for successors. */
-
-$)
-$( /* Induction hypothesis for limit ordinals. */
-
-$)
-$( /* Principle of Transfinite Induction (inference schema), using implicit
+$( Substitutions. $)
+$( Basis. $)
+$( Induction hypothesis for successors. $)
+$( Induction hypothesis for limit ordinals. $)
+$( Principle of Transfinite Induction (inference schema), using implicit
        substitutions.  The first four hypotheses establish the substitutions we
        need.  The last three are the basis, the induction hypothesis for
        successors, and the induction hypothesis for limit ordinals.  Theorem
        Schema 4 of [Suppes] p. 197.  (Contributed by NM, 16-Apr-1995.)  (Proof
-       shortened by Andrew Salmon, 27-Aug-2011.) */
-
-$)
+       shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
 	$v ph ps ch th ta x y z A $.
 	$d x y z $.
@@ -187,26 +163,16 @@ ${
 	ptfinds $p |- ( A e. On -> ta ) $=
 	e1 e3 f6 f5 asup_set_class pdflim3 f5 asup_set_class awlim f5 asup_set_class aword f5 asup_set_class ac0 awceq f5 asup_set_class f6 asup_set_class acsuc awceq f6 acon0 awrex awo awn awa pnotbii f5 asup_set_class aword f5 asup_set_class ac0 awceq f5 asup_set_class f6 asup_set_class acsuc awceq f6 acon0 awrex awo piman f5 asup_set_class peloni f5 asup_set_class aword f5 asup_set_class ac0 awceq f5 asup_set_class f6 asup_set_class acsuc awceq f6 acon0 awrex awo ppm2.27 f5 asup_set_class acon0 awcel f5 asup_set_class aword f5 asup_set_class aword f5 asup_set_class ac0 awceq f5 asup_set_class f6 asup_set_class acsuc awceq f6 acon0 awrex awo awi f5 asup_set_class ac0 awceq f5 asup_set_class f6 asup_set_class acsuc awceq f6 acon0 awrex awo awi psyl e4 e0 f5 asup_set_class ac0 awceq f0 f1 pmpbiri f5 asup_set_class ac0 awceq f0 f2 f6 f5 asup_set_class awral pa1d f2 f6 f5 asup_set_class pnfra1 f0 f6 pnfv f2 f6 f5 asup_set_class awral f0 f6 pnfim f6 pvex f6 asup_set_class psucid e1 f0 f2 f5 f6 asup_set_class f6 asup_set_class acsuc prspcv f6 asup_set_class f6 asup_set_class acsuc awcel f0 f5 f6 asup_set_class acsuc awral f2 awi aax-mp e5 f0 f5 f6 asup_set_class acsuc awral f2 f6 asup_set_class acon0 awcel f3 psyl5 f0 f5 i0 awsb i0 f5 asup_set_class f6 asup_set_class acsuc praleq f2 f5 pnfv e1 f0 f2 f5 f6 psbie f0 f6 i0 f5 psbequ f2 f0 f5 f6 awsb f6 asup_set_class i0 asup_set_class awceq f0 f5 i0 awsb psyl5bbr f2 f0 f5 i0 awsb f6 i0 f5 asup_set_class pcbvralv f0 f5 i0 f6 asup_set_class acsuc pcbvralsv f5 asup_set_class f6 asup_set_class acsuc awceq f0 f5 i0 awsb i0 f5 asup_set_class awral f0 f5 i0 awsb i0 f6 asup_set_class acsuc awral f2 f6 f5 asup_set_class awral f0 f5 f6 asup_set_class acsuc awral p3bitr4g f5 asup_set_class f6 asup_set_class acsuc awceq f2 f6 f5 asup_set_class awral f0 f5 f6 asup_set_class acsuc awral f3 pimbi1d f6 asup_set_class acon0 awcel f2 f6 f5 asup_set_class awral f3 awi f5 asup_set_class f6 asup_set_class acsuc awceq f0 f5 f6 asup_set_class acsuc awral f3 awi psyl5ibrcom e2 f5 asup_set_class f6 asup_set_class acsuc awceq f0 f3 pbiimprd f5 asup_set_class f6 asup_set_class acsuc awceq f3 f0 awi awi f6 asup_set_class acon0 awcel pa1i f6 asup_set_class acon0 awcel f5 asup_set_class f6 asup_set_class acsuc awceq f2 f6 f5 asup_set_class awral f3 f0 psyldd f5 asup_set_class f6 asup_set_class acsuc awceq f2 f6 f5 asup_set_class awral f0 awi f6 acon0 prexlimi f5 asup_set_class ac0 awceq f2 f6 f5 asup_set_class awral f0 awi f5 asup_set_class f6 asup_set_class acsuc awceq f6 acon0 awrex pjaoi f5 asup_set_class acon0 awcel f5 asup_set_class aword f5 asup_set_class ac0 awceq f5 asup_set_class f6 asup_set_class acsuc awceq f6 acon0 awrex awo awi f5 asup_set_class ac0 awceq f5 asup_set_class f6 asup_set_class acsuc awceq f6 acon0 awrex awo f2 f6 f5 asup_set_class awral f0 awi psyl6 f5 asup_set_class aword f5 asup_set_class ac0 awceq f5 asup_set_class f6 asup_set_class acsuc awceq f6 acon0 awrex awo awn awa awn f5 asup_set_class aword f5 asup_set_class ac0 awceq f5 asup_set_class f6 asup_set_class acsuc awceq f6 acon0 awrex awo awi f5 asup_set_class acon0 awcel f2 f6 f5 asup_set_class awral f0 awi psyl5bir f5 asup_set_class awlim awn f5 asup_set_class aword f5 asup_set_class ac0 awceq f5 asup_set_class f6 asup_set_class acsuc awceq f6 acon0 awrex awo awn awa awn f5 asup_set_class acon0 awcel f2 f6 f5 asup_set_class awral f0 awi psyl5bi e6 f5 asup_set_class acon0 awcel f5 asup_set_class awlim f2 f6 f5 asup_set_class awral f0 awi ppm2.61d2 f0 f2 f4 f5 f6 f7 ptfis3 $.
 $}
-$( /* Substitutions. */
-
-$)
-$( /* Basis. */
-
-$)
-$( /* Induction hypothesis for successor ordinals. */
-
-$)
-$( /* Induction hypothesis for limit ordinals. */
-
-$)
-$( /* Transfinite Induction (inference schema), using implicit substitutions.
+$( Substitutions. $)
+$( Basis. $)
+$( Induction hypothesis for successor ordinals. $)
+$( Induction hypothesis for limit ordinals. $)
+$( Transfinite Induction (inference schema), using implicit substitutions.
        The first four hypotheses establish the substitutions we need.  The last
        three are the basis, the induction hypothesis for successors, and the
        induction hypothesis for limit ordinals.  The basis of this version is
        an arbitrary ordinal ` B ` instead of zero.  Remark in [TakeutiZaring]
-       p. 57.  (Contributed by NM, 5-Mar-2004.) */
-
-$)
+       p. 57.  (Contributed by NM, 5-Mar-2004.) $)
 ${
 	$v ph ps ch th ta x y A B $.
 	$d x A $.
@@ -234,27 +200,17 @@ ${
 	ptfindsg $p |- ( ( ( A e. On /\ B e. On ) /\ B C_ A ) -> ta ) $=
 	f5 asup_set_class ac0 f8 psseq2 f5 asup_set_class ac0 awceq f8 f5 asup_set_class awss f8 ac0 awss awb f8 ac0 awceq padantl f8 ac0 f5 asup_set_class peqeq2 e0 f8 ac0 awceq f5 asup_set_class ac0 awceq f5 asup_set_class f8 awceq f0 f1 awb psyl6bir f8 ac0 awceq f5 asup_set_class ac0 awceq f0 f1 awb pimp f8 ac0 awceq f5 asup_set_class ac0 awceq awa f8 f5 asup_set_class awss f8 ac0 awss f0 f1 pimbi12d f5 asup_set_class ac0 f8 psseq2 f5 asup_set_class ac0 awceq f8 f5 asup_set_class awss f8 ac0 awss f0 pimbi1d f8 pss0 f8 ac0 awss f8 ac0 awceq pcon3i f8 ac0 awceq awn f8 ac0 awss f0 f1 awb ppm2.21d f8 ac0 awceq awn f8 ac0 awss f0 f1 ppm5.74d f5 asup_set_class ac0 awceq f8 f5 asup_set_class awss f0 awi f8 ac0 awss f0 awi f8 ac0 awceq awn f8 ac0 awss f1 awi psylan9bbr f8 ac0 awceq f5 asup_set_class ac0 awceq f8 f5 asup_set_class awss f0 awi f8 ac0 awss f1 awi awb ppm2.61ian f5 asup_set_class ac0 awceq f8 f5 asup_set_class awss f0 awi f8 ac0 awss f1 awi f8 acon0 awcel pimbi2d f5 asup_set_class f6 asup_set_class f8 psseq2 e1 f5 asup_set_class f6 asup_set_class awceq f8 f5 asup_set_class awss f8 f6 asup_set_class awss f0 f2 pimbi12d f5 asup_set_class f6 asup_set_class awceq f8 f5 asup_set_class awss f0 awi f8 f6 asup_set_class awss f2 awi f8 acon0 awcel pimbi2d f5 asup_set_class f6 asup_set_class acsuc f8 psseq2 e2 f5 asup_set_class f6 asup_set_class acsuc awceq f8 f5 asup_set_class awss f8 f6 asup_set_class acsuc awss f0 f3 pimbi12d f5 asup_set_class f6 asup_set_class acsuc awceq f8 f5 asup_set_class awss f0 awi f8 f6 asup_set_class acsuc awss f3 awi f8 acon0 awcel pimbi2d f5 asup_set_class f7 f8 psseq2 e3 f5 asup_set_class f7 awceq f8 f5 asup_set_class awss f8 f7 awss f0 f4 pimbi12d f5 asup_set_class f7 awceq f8 f5 asup_set_class awss f0 awi f8 f7 awss f4 awi f8 acon0 awcel pimbi2d e4 f8 acon0 awcel f1 f8 ac0 awss pa1d f6 pvex f6 asup_set_class psucex f5 f6 asup_set_class acsuc f8 peqvinc e4 e0 f8 acon0 awcel f0 f5 asup_set_class f8 awceq f1 psyl5ibr e2 f5 asup_set_class f6 asup_set_class acsuc awceq f0 f3 pbiimpd f5 asup_set_class f8 awceq f8 acon0 awcel f0 f5 asup_set_class f6 asup_set_class acsuc awceq f3 psylan9r f5 asup_set_class f6 asup_set_class acsuc awceq f5 asup_set_class f8 awceq awa f8 acon0 awcel f3 awi f5 pexlimiv f6 asup_set_class acsuc f8 awceq f5 asup_set_class f6 asup_set_class acsuc awceq f5 asup_set_class f8 awceq awa f5 awex f8 acon0 awcel f3 awi psylbi f8 acon0 awcel f3 awi f6 asup_set_class acsuc f8 peqcoms f8 f6 asup_set_class acsuc awceq f8 acon0 awcel f3 awi f8 f6 asup_set_class acsuc awss pimim2i f8 f6 asup_set_class acsuc awss f8 f6 asup_set_class acsuc awceq awi f8 f6 asup_set_class acsuc awss f8 acon0 awcel f3 awi awi f8 f6 asup_set_class awss f2 awi pa1d f8 f6 asup_set_class acsuc awss f8 f6 asup_set_class acsuc awceq awi f8 f6 asup_set_class awss f2 awi f8 f6 asup_set_class acsuc awss f8 acon0 awcel f3 pcom4r f8 acon0 awcel f8 f6 asup_set_class acsuc awss f8 f6 asup_set_class acsuc awceq awi f8 f6 asup_set_class awss f2 awi f8 f6 asup_set_class acsuc awss f3 awi awi awi f6 asup_set_class acon0 awcel padantl f8 f6 asup_set_class acsuc adf-ne f8 f6 asup_set_class acsuc awne f8 f6 asup_set_class acsuc awceq awn f8 f6 asup_set_class acsuc awss panbi2i f8 f6 asup_set_class acsuc awss f8 f6 asup_set_class acsuc awceq pannim f8 f6 asup_set_class acsuc awss f8 f6 asup_set_class acsuc awne awa f8 f6 asup_set_class acsuc awss f8 f6 asup_set_class acsuc awceq awn awa f8 f6 asup_set_class acsuc awss f8 f6 asup_set_class acsuc awceq awi awn pbitri f8 f6 asup_set_class ponsssuc f6 asup_set_class psuceloni f8 f6 asup_set_class acsuc ponelpss f6 asup_set_class acon0 awcel f8 acon0 awcel f6 asup_set_class acsuc acon0 awcel f8 f6 asup_set_class acsuc awcel f8 f6 asup_set_class acsuc awss f8 f6 asup_set_class acsuc awne awa awb psylan2 f8 acon0 awcel f6 asup_set_class acon0 awcel awa f8 f6 asup_set_class awss f8 f6 asup_set_class acsuc awcel f8 f6 asup_set_class acsuc awss f8 f6 asup_set_class acsuc awne awa pbitrd f8 acon0 awcel f6 asup_set_class acon0 awcel f8 f6 asup_set_class awss f8 f6 asup_set_class acsuc awss f8 f6 asup_set_class acsuc awne awa awb pancoms e5 f6 asup_set_class acon0 awcel f8 acon0 awcel awa f8 f6 asup_set_class awss f2 f3 awi pex f3 f8 f6 asup_set_class acsuc awss aax-1 f6 asup_set_class acon0 awcel f8 acon0 awcel awa f8 f6 asup_set_class awss f2 f3 f8 f6 asup_set_class acsuc awss f3 awi psyl8 f6 asup_set_class acon0 awcel f8 acon0 awcel awa f8 f6 asup_set_class awss f2 f8 f6 asup_set_class acsuc awss f3 awi pa2d f6 asup_set_class acon0 awcel f8 acon0 awcel awa f8 f6 asup_set_class awss f2 awi f8 f6 asup_set_class awss f8 f6 asup_set_class acsuc awss f3 awi pcom23 f6 asup_set_class acon0 awcel f8 acon0 awcel awa f8 f6 asup_set_class acsuc awss f8 f6 asup_set_class acsuc awne awa f8 f6 asup_set_class awss f8 f6 asup_set_class awss f2 awi f8 f6 asup_set_class acsuc awss f3 awi awi psylbird f8 f6 asup_set_class acsuc awss f8 f6 asup_set_class acsuc awceq awi awn f8 f6 asup_set_class acsuc awss f8 f6 asup_set_class acsuc awne awa f6 asup_set_class acon0 awcel f8 acon0 awcel awa f8 f6 asup_set_class awss f2 awi f8 f6 asup_set_class acsuc awss f3 awi awi psyl5bir f6 asup_set_class acon0 awcel f8 acon0 awcel awa f8 f6 asup_set_class acsuc awss f8 f6 asup_set_class acsuc awceq awi f8 f6 asup_set_class awss f2 awi f8 f6 asup_set_class acsuc awss f3 awi awi ppm2.61d f6 asup_set_class acon0 awcel f8 acon0 awcel f8 f6 asup_set_class awss f2 awi f8 f6 asup_set_class acsuc awss f3 awi awi pex f6 asup_set_class acon0 awcel f8 acon0 awcel f8 f6 asup_set_class awss f2 awi f8 f6 asup_set_class acsuc awss f3 awi pa2d f8 acon0 awcel f8 f6 asup_set_class awss f2 awi ppm2.27 f8 acon0 awcel f8 acon0 awcel f8 f6 asup_set_class awss f2 awi awi f8 f6 asup_set_class awss f2 awi f6 f5 asup_set_class pralimdv f8 acon0 awcel f8 acon0 awcel f8 f6 asup_set_class awss f2 awi awi f6 f5 asup_set_class awral f8 f6 asup_set_class awss f2 awi f6 f5 asup_set_class awral awi f5 asup_set_class awlim f8 f5 asup_set_class awss pad2antlr e6 f5 asup_set_class awlim f8 acon0 awcel awa f8 f5 asup_set_class awss awa f8 acon0 awcel f8 f6 asup_set_class awss f2 awi awi f6 f5 asup_set_class awral f8 f6 asup_set_class awss f2 awi f6 f5 asup_set_class awral f0 psyld f5 asup_set_class awlim f8 acon0 awcel f8 f5 asup_set_class awss f8 acon0 awcel f8 f6 asup_set_class awss f2 awi awi f6 f5 asup_set_class awral f0 awi pexp31 f5 asup_set_class awlim f8 acon0 awcel f8 f5 asup_set_class awss f8 acon0 awcel f8 f6 asup_set_class awss f2 awi awi f6 f5 asup_set_class awral f0 awi pcom3l f8 acon0 awcel f8 f5 asup_set_class awss f5 asup_set_class awlim f8 acon0 awcel f8 f6 asup_set_class awss f2 awi awi f6 f5 asup_set_class awral f0 pcom4t f8 acon0 awcel f8 f5 asup_set_class awss f0 awi awi f8 acon0 awcel f8 ac0 awss f1 awi awi f8 acon0 awcel f8 f6 asup_set_class awss f2 awi awi f8 acon0 awcel f8 f6 asup_set_class acsuc awss f3 awi awi f8 acon0 awcel f8 f7 awss f4 awi awi f5 f6 f7 ptfinds f7 acon0 awcel f8 acon0 awcel f8 f7 awss f4 pimp31 $.
 $}
-$( /* Substitutions. */
-
-$)
-$( /* Basis. */
-
-$)
-$( /* Induction hypothesis for successor ordinals. */
-
-$)
-$( /* Induction hypothesis for limit ordinals. */
-
-$)
-$( /* Transfinite Induction (inference schema), using implicit substitutions.
+$( Substitutions. $)
+$( Basis. $)
+$( Induction hypothesis for successor ordinals. $)
+$( Induction hypothesis for limit ordinals. $)
+$( Transfinite Induction (inference schema), using implicit substitutions.
        The first four hypotheses establish the substitutions we need.  The last
        three are the basis, the induction hypothesis for successors, and the
        induction hypothesis for limit ordinals.  The basis of this version is
        an arbitrary ordinal ` suc B ` instead of zero.  (Unnecessary distinct
        variable restrictions were removed by David Abernethy, 19-Jun-2012.)
-       (Contributed by NM, 5-Jan-2005.) */
-
-$)
+       (Contributed by NM, 5-Jan-2005.) $)
 ${
 	$v ph ps ch th ta x y A B $.
 	$d x A $.
@@ -282,12 +238,10 @@ ${
 	ptfindsg2 $p |- ( ( A e. On /\ B e. A ) -> ta ) $=
 	f7 f8 ponelon f8 psucelon f7 acon0 awcel f8 f7 awcel awa f8 acon0 awcel f8 acsuc acon0 awcel psylib f7 peloni f8 f7 pordsucss f7 acon0 awcel f7 aword f8 f7 awcel f8 acsuc f7 awss awi psyl f7 acon0 awcel f8 f7 awcel f8 acsuc f7 awss pimp e0 e1 e2 e3 f8 psucelon e4 f8 acsuc acon0 awcel f8 acon0 awcel f1 psylbir f8 psucelon f6 asup_set_class peloni f8 f6 asup_set_class acon0 pordelsuc f6 asup_set_class acon0 awcel f8 acon0 awcel f6 asup_set_class aword f8 f6 asup_set_class awcel f8 acsuc f6 asup_set_class awss awb psylan2 f8 acon0 awcel f6 asup_set_class acon0 awcel f8 f6 asup_set_class awcel f8 acsuc f6 asup_set_class awss awb pancoms e5 f6 asup_set_class acon0 awcel f8 f6 asup_set_class awcel f2 f3 awi pex f6 asup_set_class acon0 awcel f8 f6 asup_set_class awcel f2 f3 awi awi f8 acon0 awcel padantr f6 asup_set_class acon0 awcel f8 acon0 awcel awa f8 acsuc f6 asup_set_class awss f8 f6 asup_set_class awcel f2 f3 awi psylbird f8 acsuc acon0 awcel f6 asup_set_class acon0 awcel f8 acon0 awcel f8 acsuc f6 asup_set_class awss f2 f3 awi awi psylan2br f6 asup_set_class acon0 awcel f8 acsuc acon0 awcel awa f8 acsuc f6 asup_set_class awss f2 f3 awi pimp f8 psucelon e6 f5 asup_set_class awlim f8 f5 asup_set_class awcel f8 f6 asup_set_class awcel f2 awi f6 f5 asup_set_class awral f0 awi pex f5 asup_set_class awlim f8 f5 asup_set_class awcel f8 f6 asup_set_class awcel f2 awi f6 f5 asup_set_class awral f0 awi awi f8 acon0 awcel padantr f5 pvex f5 asup_set_class acvv plimelon f5 asup_set_class acvv awcel f5 asup_set_class awlim f5 asup_set_class acon0 awcel pmpan f5 asup_set_class peloni f8 f5 asup_set_class acon0 pordelsuc f5 asup_set_class acon0 awcel f8 acon0 awcel f5 asup_set_class aword f8 f5 asup_set_class awcel f8 acsuc f5 asup_set_class awss awb psylan2 f5 asup_set_class f6 asup_set_class ponelon f6 asup_set_class peloni f5 asup_set_class acon0 awcel f6 asup_set_class f5 asup_set_class awcel awa f6 asup_set_class acon0 awcel f6 asup_set_class aword psyl f8 f6 asup_set_class acon0 pordelsuc f5 asup_set_class acon0 awcel f6 asup_set_class f5 asup_set_class awcel awa f8 acon0 awcel f6 asup_set_class aword f8 f6 asup_set_class awcel f8 acsuc f6 asup_set_class awss awb psylan2 f8 acon0 awcel f5 asup_set_class acon0 awcel f6 asup_set_class f5 asup_set_class awcel f8 f6 asup_set_class awcel f8 acsuc f6 asup_set_class awss awb panassrs f8 acon0 awcel f5 asup_set_class acon0 awcel awa f6 asup_set_class f5 asup_set_class awcel awa f8 f6 asup_set_class awcel f8 acsuc f6 asup_set_class awss f2 pimbi1d f8 acon0 awcel f5 asup_set_class acon0 awcel awa f8 f6 asup_set_class awcel f2 awi f8 acsuc f6 asup_set_class awss f2 awi f6 f5 asup_set_class pralbidva f8 acon0 awcel f5 asup_set_class acon0 awcel awa f8 f6 asup_set_class awcel f2 awi f6 f5 asup_set_class awral f8 acsuc f6 asup_set_class awss f2 awi f6 f5 asup_set_class awral f0 pimbi1d f8 acon0 awcel f5 asup_set_class acon0 awcel awa f8 f5 asup_set_class awcel f8 acsuc f5 asup_set_class awss f8 f6 asup_set_class awcel f2 awi f6 f5 asup_set_class awral f0 awi f8 acsuc f6 asup_set_class awss f2 awi f6 f5 asup_set_class awral f0 awi pimbi12d f5 asup_set_class awlim f8 acon0 awcel f5 asup_set_class acon0 awcel f8 f5 asup_set_class awcel f8 f6 asup_set_class awcel f2 awi f6 f5 asup_set_class awral f0 awi awi f8 acsuc f5 asup_set_class awss f8 acsuc f6 asup_set_class awss f2 awi f6 f5 asup_set_class awral f0 awi awi awb psylan2 f8 acon0 awcel f5 asup_set_class awlim f8 f5 asup_set_class awcel f8 f6 asup_set_class awcel f2 awi f6 f5 asup_set_class awral f0 awi awi f8 acsuc f5 asup_set_class awss f8 acsuc f6 asup_set_class awss f2 awi f6 f5 asup_set_class awral f0 awi awi awb pancoms f5 asup_set_class awlim f8 acon0 awcel awa f8 f5 asup_set_class awcel f8 f6 asup_set_class awcel f2 awi f6 f5 asup_set_class awral f0 awi awi f8 acsuc f5 asup_set_class awss f8 acsuc f6 asup_set_class awss f2 awi f6 f5 asup_set_class awral f0 awi awi pmpbid f8 acsuc acon0 awcel f5 asup_set_class awlim f8 acon0 awcel f8 acsuc f5 asup_set_class awss f8 acsuc f6 asup_set_class awss f2 awi f6 f5 asup_set_class awral f0 awi awi psylan2br f5 asup_set_class awlim f8 acsuc acon0 awcel awa f8 acsuc f5 asup_set_class awss f8 acsuc f6 asup_set_class awss f2 awi f6 f5 asup_set_class awral f0 awi pimp f0 f1 f2 f3 f4 f5 f6 f7 f8 acsuc ptfindsg f7 acon0 awcel f8 acsuc acon0 awcel f8 acsuc f7 awss f4 pexpl f7 acon0 awcel f8 acsuc acon0 awcel f8 acsuc f7 awss awa f4 awi f8 f7 awcel padantr f7 acon0 awcel f8 f7 awcel awa f8 acsuc acon0 awcel f8 acsuc f7 awss f4 pmp2and $.
 $}
-$( /* Transfinite Induction with explicit substitution.  The first hypothesis
+$( Transfinite Induction with explicit substitution.  The first hypothesis
        is the basis, the second is the induction hypothesis for successors, and
        the third is the induction hypothesis for limit ordinals.  Theorem
-       Schema 4 of [Suppes] p. 197.  (Contributed by NM, 5-Mar-2004.) */
-
-$)
+       Schema 4 of [Suppes] p. 197.  (Contributed by NM, 5-Mar-2004.) $)
 ${
 	$v ph x y z $.
 	$d x y z $.
@@ -302,26 +256,16 @@ ${
 	ptfindes $p |- ( x e. On -> ph ) $=
 	f0 f1 f2 asup_set_class ac0 pdfsbcq f0 f1 f2 asup_set_class i0 asup_set_class pdfsbcq f0 f1 f2 asup_set_class i0 asup_set_class acsuc pdfsbcq f0 f1 f2 asup_set_class psbceq2a e0 i0 asup_set_class acon0 awcel f1 pnfv f0 f1 i0 asup_set_class pnfsbc1v f0 f1 i0 asup_set_class acsuc pnfsbc1v f0 f1 i0 asup_set_class awsbc f0 f1 i0 asup_set_class acsuc awsbc f1 pnfim i0 asup_set_class acon0 awcel f0 f1 i0 asup_set_class awsbc f0 f1 i0 asup_set_class acsuc awsbc awi f1 pnfim f1 asup_set_class i0 asup_set_class acon0 peleq1 f0 f1 i0 asup_set_class psbceq1a f1 asup_set_class i0 asup_set_class psuceq f0 f1 f1 asup_set_class acsuc i0 asup_set_class acsuc pdfsbcq f1 asup_set_class i0 asup_set_class awceq f1 asup_set_class acsuc i0 asup_set_class acsuc awceq f0 f1 f1 asup_set_class acsuc awsbc f0 f1 i0 asup_set_class acsuc awsbc awb psyl f1 asup_set_class i0 asup_set_class awceq f0 f0 f1 i0 asup_set_class awsbc f0 f1 f1 asup_set_class acsuc awsbc f0 f1 i0 asup_set_class acsuc awsbc pimbi12d f1 asup_set_class i0 asup_set_class awceq f1 asup_set_class acon0 awcel i0 asup_set_class acon0 awcel f0 f0 f1 f1 asup_set_class acsuc awsbc awi f0 f1 i0 asup_set_class awsbc f0 f1 i0 asup_set_class acsuc awsbc awi pimbi12d e1 f1 asup_set_class acon0 awcel f0 f0 f1 f1 asup_set_class acsuc awsbc awi awi i0 asup_set_class acon0 awcel f0 f1 i0 asup_set_class awsbc f0 f1 i0 asup_set_class acsuc awsbc awi awi f1 i0 pchvar f0 f1 i0 f2 asup_set_class pcbvralsv f0 f1 i0 psbsbc f0 f1 i0 awsb f0 f1 i0 asup_set_class awsbc i0 f2 asup_set_class pralbii f0 f1 f2 asup_set_class awral f0 f1 i0 awsb i0 f2 asup_set_class awral f0 f1 i0 asup_set_class awsbc i0 f2 asup_set_class awral pbitri e2 f0 f1 i0 asup_set_class awsbc i0 f2 asup_set_class awral f0 f1 f2 asup_set_class awral f2 asup_set_class awlim f0 f1 f2 asup_set_class awsbc psyl5bir f0 f1 f2 asup_set_class awsbc f0 f1 ac0 awsbc f0 f1 i0 asup_set_class awsbc f0 f1 i0 asup_set_class acsuc awsbc f0 f2 i0 f1 asup_set_class ptfinds $.
 $}
-$( /* Substitutions. */
-
-$)
-$( /* Basis. */
-
-$)
-$( /* Induction hypothesis for successors. */
-
-$)
-$( /* Induction hypothesis for limit ordinals. */
-
-$)
-$( /* Transfinite Induction (inference schema), using implicit substitutions.
+$( Substitutions. $)
+$( Basis. $)
+$( Induction hypothesis for successors. $)
+$( Induction hypothesis for limit ordinals. $)
+$( Transfinite Induction (inference schema), using implicit substitutions.
        The first three hypotheses establish the substitutions we need.  The
        last three are the basis and the induction hypotheses (for successor and
        limit ordinals respectively).  Theorem Schema 4 of [Suppes] p. 197.  The
        wff ` ta ` is an auxiliary antecedent to help shorten proofs using this
-       theorem.  (Contributed by NM, 4-Sep-2004.) */
-
-$)
+       theorem.  (Contributed by NM, 4-Sep-2004.) $)
 ${
 	$v ph ps ch th ta x y $.
 	$d x y ta $.
@@ -345,26 +289,16 @@ ${
 	ptfinds2 $p |- ( x e. On -> ( ta -> ph ) ) $=
 	e3 p0ex e0 f5 asup_set_class ac0 awceq f0 f1 f4 pimbi2d f4 f0 awi f4 f1 awi f5 ac0 psbcie f4 f0 awi f5 ac0 awsbc f4 f1 awi pmpbir f5 pvex e4 f6 asup_set_class acon0 awcel f4 f2 f3 pa2d f6 asup_set_class acon0 awcel f4 f2 awi f4 f3 awi awi awi f6 f5 asup_set_class acvv psbcth f5 asup_set_class acvv awcel f6 asup_set_class acon0 awcel f4 f2 awi f4 f3 awi awi awi f6 f5 asup_set_class awsbc aax-mp f5 pvex f6 asup_set_class acon0 awcel f4 f2 awi f4 f3 awi awi f6 f5 asup_set_class acvv psbcimg f5 asup_set_class acvv awcel f6 asup_set_class acon0 awcel f4 f2 awi f4 f3 awi awi awi f6 f5 asup_set_class awsbc f6 asup_set_class acon0 awcel f6 f5 asup_set_class awsbc f4 f2 awi f4 f3 awi awi f6 f5 asup_set_class awsbc awi awb aax-mp f6 asup_set_class acon0 awcel f4 f2 awi f4 f3 awi awi awi f6 f5 asup_set_class awsbc f6 asup_set_class acon0 awcel f6 f5 asup_set_class awsbc f4 f2 awi f4 f3 awi awi f6 f5 asup_set_class awsbc awi pmpbi f5 pvex f6 f5 asup_set_class acon0 acvv psbcel1gv f5 asup_set_class acvv awcel f6 asup_set_class acon0 awcel f6 f5 asup_set_class awsbc f5 asup_set_class acon0 awcel awb aax-mp f5 pvex f4 f2 awi f4 f3 awi f6 f5 asup_set_class acvv psbcimg f5 asup_set_class acvv awcel f4 f2 awi f4 f3 awi awi f6 f5 asup_set_class awsbc f4 f2 awi f6 f5 asup_set_class awsbc f4 f3 awi f6 f5 asup_set_class awsbc awi awb aax-mp f6 asup_set_class acon0 awcel f6 f5 asup_set_class awsbc f4 f2 awi f4 f3 awi awi f6 f5 asup_set_class awsbc f5 asup_set_class acon0 awcel f4 f2 awi f6 f5 asup_set_class awsbc f4 f3 awi f6 f5 asup_set_class awsbc awi p3imtr3i f5 pvex e1 f5 asup_set_class f6 asup_set_class awceq f0 f2 pbicomd f2 f0 awb f5 f6 pequcoms f6 asup_set_class f5 asup_set_class awceq f2 f0 f4 pimbi2d f4 f2 awi f4 f0 awi f6 f5 asup_set_class psbcie f6 pvex f6 asup_set_class psucex e2 f5 asup_set_class f6 asup_set_class acsuc awceq f0 f3 f4 pimbi2d f4 f0 awi f4 f3 awi f5 f6 asup_set_class acsuc psbcie f4 f0 awi f5 f6 asup_set_class acsuc awsbc f4 f3 awi f6 f5 asup_set_class psbcbii f5 asup_set_class f6 asup_set_class psuceq f4 f0 awi f5 f6 f5 asup_set_class acsuc f6 asup_set_class acsuc psbcco2 f4 f3 awi f6 f5 asup_set_class awsbc f4 f0 awi f5 f6 asup_set_class acsuc awsbc f6 f5 asup_set_class awsbc f4 f0 awi f5 f5 asup_set_class acsuc awsbc pbitr3i f5 asup_set_class acon0 awcel f4 f2 awi f6 f5 asup_set_class awsbc f4 f3 awi f6 f5 asup_set_class awsbc f4 f0 awi f4 f0 awi f5 f5 asup_set_class acsuc awsbc p3imtr3g f4 f2 awi f6 f5 asup_set_class awral f5 f6 psbsbc e1 f5 asup_set_class f6 asup_set_class awceq f0 f2 pbicomd f2 f0 awb f5 f6 pequcoms f6 asup_set_class f5 asup_set_class awceq f2 f0 f4 pimbi2d f4 f2 awi f4 f0 awi f6 f5 psbralie f4 f2 awi f6 f5 asup_set_class awral f5 f6 asup_set_class awsbc f4 f2 awi f6 f5 asup_set_class awral f5 f6 awsb f4 f0 awi f5 f6 asup_set_class awral pbitr3i f6 pvex f4 f2 f6 f5 asup_set_class pr19.21v e5 f5 asup_set_class awlim f4 f2 f6 f5 asup_set_class awral f0 pa2d f4 f2 awi f6 f5 asup_set_class awral f4 f2 f6 f5 asup_set_class awral awi f5 asup_set_class awlim f4 f0 awi psyl5bi f5 asup_set_class awlim f4 f2 awi f6 f5 asup_set_class awral f4 f0 awi awi awi f5 f6 asup_set_class acvv psbcth f6 asup_set_class acvv awcel f5 asup_set_class awlim f4 f2 awi f6 f5 asup_set_class awral f4 f0 awi awi awi f5 f6 asup_set_class awsbc aax-mp f6 pvex f5 asup_set_class awlim f4 f2 awi f6 f5 asup_set_class awral f4 f0 awi awi f5 f6 asup_set_class acvv psbcimg f6 asup_set_class acvv awcel f5 asup_set_class awlim f4 f2 awi f6 f5 asup_set_class awral f4 f0 awi awi awi f5 f6 asup_set_class awsbc f5 asup_set_class awlim f5 f6 asup_set_class awsbc f4 f2 awi f6 f5 asup_set_class awral f4 f0 awi awi f5 f6 asup_set_class awsbc awi awb aax-mp f5 asup_set_class awlim f4 f2 awi f6 f5 asup_set_class awral f4 f0 awi awi awi f5 f6 asup_set_class awsbc f5 asup_set_class awlim f5 f6 asup_set_class awsbc f4 f2 awi f6 f5 asup_set_class awral f4 f0 awi awi f5 f6 asup_set_class awsbc awi pmpbi f6 pvex f5 asup_set_class f6 asup_set_class plimeq f5 asup_set_class awlim f6 asup_set_class awlim f5 f6 asup_set_class psbcie f6 pvex f4 f2 awi f6 f5 asup_set_class awral f4 f0 awi f5 f6 asup_set_class acvv psbcimg f6 asup_set_class acvv awcel f4 f2 awi f6 f5 asup_set_class awral f4 f0 awi awi f5 f6 asup_set_class awsbc f4 f2 awi f6 f5 asup_set_class awral f5 f6 asup_set_class awsbc f4 f0 awi f5 f6 asup_set_class awsbc awi awb aax-mp f5 asup_set_class awlim f5 f6 asup_set_class awsbc f4 f2 awi f6 f5 asup_set_class awral f4 f0 awi awi f5 f6 asup_set_class awsbc f6 asup_set_class awlim f4 f2 awi f6 f5 asup_set_class awral f5 f6 asup_set_class awsbc f4 f0 awi f5 f6 asup_set_class awsbc awi p3imtr3i f4 f0 awi f5 f6 asup_set_class awral f4 f2 awi f6 f5 asup_set_class awral f5 f6 asup_set_class awsbc f6 asup_set_class awlim f4 f0 awi f5 f6 asup_set_class awsbc psyl5bir f4 f0 awi f5 f6 ptfindes $.
 $}
-$( /* Substitutions. */
-
-$)
-$( /* Basis. */
-
-$)
-$( /* Induction hypothesis for successors. */
-
-$)
-$( /* Induction hypothesis for limit ordinals. */
-
-$)
-$( /* Principle of Transfinite Induction (inference schema), using implicit
+$( Substitutions. $)
+$( Basis. $)
+$( Induction hypothesis for successors. $)
+$( Induction hypothesis for limit ordinals. $)
+$( Principle of Transfinite Induction (inference schema), using implicit
        substitutions.  The first four hypotheses establish the substitutions we
        need.  The last three are the basis, the induction hypothesis for
        successors, and the induction hypothesis for limit ordinals.
        (Contributed by NM, 6-Jan-2005.)  (Revised by David Abernethy,
-       21-Jun-2011.) */
-
-$)
+       21-Jun-2011.) $)
 ${
 	$v ph ps ch th ta et x y A $.
 	$d x A $.

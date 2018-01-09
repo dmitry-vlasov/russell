@@ -1,22 +1,16 @@
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union/Cantor_s_Theorem.smm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
       Undefined values and restricted iota (description binder)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-*/
-
 $)
 $c Undef $.
 $c iota_ $.
-$( /* Extend class notation with undefined value function. */
-
-$)
+$( Extend class notation with undefined value function. $)
 ${
 	acund $a class Undef $.
 $}
-$( /* Extend class notation with restricted description binder. */
-
-$)
+$( Extend class notation with restricted description binder. $)
 ${
 	$v ph x A $.
 	f0 $f wff ph $.
@@ -24,20 +18,16 @@ ${
 	f2 $f class A $.
 	acrio $a class ( iota_ x e. A ph ) $.
 $}
-$( /* Define the undefined value function, whose value at set ` s ` is
+$( Define the undefined value function, whose value at set ` s ` is
      guaranteed not to be a member of ` s ` (see ~ pwuninel ).  (Contributed by
-     NM, 15-Sep-2011.) */
-
-$)
+     NM, 15-Sep-2011.) $)
 ${
 	$v s $.
 	f0 $f set s $.
 	adf-undef $a |- Undef = ( s e. _V |-> ~P U. s ) $.
 $}
-$( /* Direct proof of ~ pwuninel avoiding functions and thus several ZF axioms.
-     (Contributed by Stefan O'Rear, 22-Feb-2015.) */
-
-$)
+$( Direct proof of ~ pwuninel avoiding functions and thus several ZF axioms.
+     (Contributed by Stefan O'Rear, 22-Feb-2015.) $)
 ${
 	$v A V $.
 	f0 $f class A $.
@@ -45,23 +35,19 @@ ${
 	ppwuninel2 $p |- ( U. A e. V -> -. ~P U. A e. A ) $=
 	f0 acuni f1 ppwnss f0 acuni acpw f0 pelssuni f0 acuni f1 awcel f0 acuni acpw f0 acuni awss f0 acuni acpw f0 awcel pnsyl $.
 $}
-$( /* The power set of the union of a set does not belong to the set.  This
+$( The power set of the union of a set does not belong to the set.  This
      theorem provides a way of constructing a new set that doesn't belong to a
      given set.  See also ~ pwuninel2 .  (Contributed by NM, 27-Jun-2008.)
-     (Proof shortened by Mario Carneiro, 23-Dec-2016.) */
-
-$)
+     (Proof shortened by Mario Carneiro, 23-Dec-2016.) $)
 ${
 	$v A $.
 	f0 $f class A $.
 	ppwuninel $p |- -. ~P U. A e. A $=
 	f0 acuni acpw f0 pelex f0 acuni ppwexb f0 acuni acpw f0 awcel f0 acuni acpw acvv awcel f0 acuni acvv awcel psylibr f0 acvv ppwuninel2 f0 acuni acpw f0 awcel f0 acuni acvv awcel f0 acuni acpw f0 awcel awn psyl f0 acuni acpw f0 awcel awn pid f0 acuni acpw f0 awcel f0 acuni acpw f0 awcel awn ppm2.61i $.
 $}
-$( /* Value of the undefined value function.  Normally we will not reference
+$( Value of the undefined value function.  Normally we will not reference
        the explicit value but will use ~ undefnel instead.  (Contributed by NM,
-       15-Sep-2011.)  (Revised by Mario Carneiro, 24-Dec-2016.) */
-
-$)
+       15-Sep-2011.)  (Revised by Mario Carneiro, 24-Dec-2016.) $)
 ${
 	$v V S s $.
 	$d s S $.
@@ -71,10 +57,8 @@ ${
 	pundefval $p |- ( S e. V -> ( Undef ` S ) = ~P U. S ) $=
 	f0 f1 pelex f0 f1 puniexg f0 acuni acvv ppwexg f0 f1 awcel f0 acuni acvv awcel f0 acuni acpw acvv awcel psyl i0 asup_set_class f0 punieq i0 asup_set_class f0 awceq i0 asup_set_class acuni f0 acuni ppweqd i0 adf-undef i0 f0 i0 asup_set_class acuni acpw f0 acuni acpw acvv acvv acund pfvmptg f0 f1 awcel f0 acvv awcel f0 acuni acpw acvv awcel f0 acund acfv f0 acuni acpw awceq psyl2anc $.
 $}
-$( /* The undefined value generated from a set is not a member of the set.
-     (Contributed by NM, 15-Sep-2011.) */
-
-$)
+$( The undefined value generated from a set is not a member of the set.
+     (Contributed by NM, 15-Sep-2011.) $)
 ${
 	$v V S $.
 	f0 $f class S $.
@@ -82,10 +66,8 @@ ${
 	pundefnel2 $p |- ( S e. V -> -. ( Undef ` S ) e. S ) $=
 	f0 ppwuninel f0 f1 pundefval f0 f1 awcel f0 acund acfv f0 acuni acpw f0 peleq1d f0 f1 awcel f0 acund acfv f0 awcel f0 acuni acpw f0 awcel pmtbiri $.
 $}
-$( /* The undefined value generated from a set is not a member of the set.
-     (Contributed by NM, 15-Sep-2011.) */
-
-$)
+$( The undefined value generated from a set is not a member of the set.
+     (Contributed by NM, 15-Sep-2011.) $)
 ${
 	$v V S $.
 	f0 $f class S $.
@@ -93,12 +75,10 @@ ${
 	pundefnel $p |- ( S e. V -> ( Undef ` S ) e/ S ) $=
 	f0 f1 pundefnel2 f0 acund acfv f0 adf-nel f0 f1 awcel f0 acund acfv f0 awcel awn f0 acund acfv f0 awnel psylibr $.
 $}
-$( /* Define restricted description binder.  In case it doesn't exist, we
+$( Define restricted description binder.  In case it doesn't exist, we
        return a set which is not a member of the domain of discourse ` A ` .
        See also comments for ~ df-iota .  (Contributed by NM, 15-Sep-2011.)
-       (Revised by Mario Carneiro, 15-Oct-2016.) */
-
-$)
+       (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
 	$v ph x A $.
 	f0 $f wff ph $.
@@ -106,10 +86,8 @@ ${
 	f2 $f class A $.
 	adf-riota $a |- ( iota_ x e. A ph ) = if ( E! x e. A ph , ( iota x ( x e. A /\ ph ) ) , ( Undef ` { x | x e. A } ) ) $.
 $}
-$( /* Formula-building deduction rule for iota.  (Contributed by NM,
-       15-Sep-2011.) */
-
-$)
+$( Formula-building deduction rule for iota.  (Contributed by NM,
+       15-Sep-2011.) $)
 ${
 	$v ph ps x A B $.
 	$d x ph $.
@@ -122,10 +100,8 @@ ${
 	priotaeqdv $p |- ( ph -> ( iota_ x e. A ps ) = ( iota_ x e. B ps ) ) $=
 	e0 f0 f3 f4 f2 asup_set_class peleq2d f0 f2 asup_set_class f3 awcel f2 asup_set_class f4 awcel f1 panbi1d f0 f2 asup_set_class f3 awcel f1 awa f2 asup_set_class f4 awcel f1 awa f2 peubidv f1 f2 f3 adf-reu f1 f2 f4 adf-reu f0 f2 asup_set_class f3 awcel f1 awa f2 aweu f2 asup_set_class f4 awcel f1 awa f2 aweu f1 f2 f3 awreu f1 f2 f4 awreu p3bitr4g e0 f0 f3 f4 f2 asup_set_class peleq2d f0 f2 asup_set_class f3 awcel f2 asup_set_class f4 awcel f1 panbi1d f0 f2 asup_set_class f3 awcel f1 awa f2 asup_set_class f4 awcel f1 awa f2 piotabidv e0 f0 f3 f4 f2 asup_set_class peleq2d f0 f2 asup_set_class f3 awcel f2 asup_set_class f4 awcel f2 pabbidv f0 f2 asup_set_class f3 awcel f2 acab f2 asup_set_class f4 awcel f2 acab acund pfveq2d f0 f1 f2 f3 awreu f1 f2 f4 awreu f2 asup_set_class f3 awcel f1 awa f2 acio f2 asup_set_class f3 awcel f2 acab acund acfv f2 asup_set_class f4 awcel f1 awa f2 acio f2 asup_set_class f4 awcel f2 acab acund acfv pifbieq12d f1 f2 f3 adf-riota f1 f2 f4 adf-riota f0 f1 f2 f3 awreu f2 asup_set_class f3 awcel f1 awa f2 acio f2 asup_set_class f3 awcel f2 acab acund acfv acif f1 f2 f4 awreu f2 asup_set_class f4 awcel f1 awa f2 acio f2 asup_set_class f4 awcel f2 acab acund acfv acif f1 f2 f3 acrio f1 f2 f4 acrio p3eqtr4g $.
 $}
-$( /* Formula-building deduction rule for restricted iota.  (Contributed by
-       NM, 15-Sep-2011.) */
-
-$)
+$( Formula-building deduction rule for restricted iota.  (Contributed by
+       NM, 15-Sep-2011.) $)
 ${
 	$v ph ps ch x A $.
 	$d x ph $.
@@ -138,10 +114,8 @@ ${
 	priotabidv $p |- ( ph -> ( iota_ x e. A ps ) = ( iota_ x e. A ch ) ) $=
 	e0 f0 f1 f2 f3 f4 preubidv e0 f0 f1 f2 f3 asup_set_class f4 awcel panbi2d f0 f3 asup_set_class f4 awcel f1 awa f3 asup_set_class f4 awcel f2 awa f3 piotabidv f0 f3 asup_set_class f4 awcel f3 acab acund acfv peqidd f0 f1 f3 f4 awreu f2 f3 f4 awreu f3 asup_set_class f4 awcel f1 awa f3 acio f3 asup_set_class f4 awcel f3 acab acund acfv f3 asup_set_class f4 awcel f2 awa f3 acio f3 asup_set_class f4 awcel f3 acab acund acfv pifbieq12d f1 f3 f4 adf-riota f2 f3 f4 adf-riota f0 f1 f3 f4 awreu f3 asup_set_class f4 awcel f1 awa f3 acio f3 asup_set_class f4 awcel f3 acab acund acfv acif f2 f3 f4 awreu f3 asup_set_class f4 awcel f2 awa f3 acio f3 asup_set_class f4 awcel f3 acab acund acfv acif f1 f3 f4 acrio f2 f3 f4 acrio p3eqtr4g $.
 $}
-$( /* Equality deduction for restricted universal quantifier.  (Contributed by
-       NM, 15-Sep-2011.) */
-
-$)
+$( Equality deduction for restricted universal quantifier.  (Contributed by
+       NM, 15-Sep-2011.) $)
 ${
 	$v ph ps ch x A B $.
 	$d x ph $.
@@ -156,9 +130,7 @@ ${
 	priotaeqbidv $p |- ( ph -> ( iota_ x e. A ps ) = ( iota_ x e. B ch ) ) $=
 	e1 f0 f1 f2 f3 f4 priotabidv e0 f0 f2 f3 f4 f5 priotaeqdv f0 f1 f3 f4 acrio f2 f3 f4 acrio f2 f3 f5 acrio peqtrd $.
 $}
-$( /* Restricted iota is a set.  (Contributed by NM, 15-Sep-2011.) */
-
-$)
+$( Restricted iota is a set.  (Contributed by NM, 15-Sep-2011.) $)
 ${
 	$v ps x A $.
 	f0 $f wff ps $.
@@ -167,10 +139,8 @@ ${
 	priotaex $p |- ( iota_ x e. A ps ) e. _V $=
 	f0 f1 f2 adf-riota f1 asup_set_class f2 awcel f0 awa f1 piotaex f1 asup_set_class f2 awcel f1 acab acund pfvex f0 f1 f2 awreu f1 asup_set_class f2 awcel f0 awa f1 acio f1 asup_set_class f2 awcel f1 acab acund acfv pifex f0 f1 f2 acrio f0 f1 f2 awreu f1 asup_set_class f2 awcel f0 awa f1 acio f1 asup_set_class f2 awcel f1 acab acund acfv acif acvv peqeltri $.
 $}
-$( /* An iota restricted to the universe is unrestricted.  (Contributed by NM,
-     18-Sep-2011.) */
-
-$)
+$( An iota restricted to the universe is unrestricted.  (Contributed by NM,
+     18-Sep-2011.) $)
 ${
 	$v ph x $.
 	f0 $f wff ph $.
@@ -178,9 +148,7 @@ ${
 	priotav $p |- ( iota_ x e. _V ph ) = ( iota x ph ) $=
 	f0 f1 acvv adf-riota f0 f1 acvv awreu f1 asup_set_class acvv awcel f0 awa f1 acio f1 asup_set_class acvv awcel f1 acab acund acfv piftrue f1 pvex f1 asup_set_class acvv awcel f0 pbiantrur f0 f1 asup_set_class acvv awcel f0 awa f1 piotabii f0 f1 acvv awreu f0 f1 acvv awreu f1 asup_set_class acvv awcel f0 awa f1 acio f1 asup_set_class acvv awcel f1 acab acund acfv acif f1 asup_set_class acvv awcel f0 awa f1 acio f0 f1 acio psyl6reqr f0 f1 preuv f0 f1 piotanul f0 f1 acvv awreu f0 f1 aweu f0 f1 acio ac0 awceq psylnbi f1 acvv pabid2 f1 asup_set_class acvv awcel f1 acab acvv acund pfveq2i pvprc acvv acund pfvprc acvv acvv awcel awn acvv acund acfv ac0 awceq aax-mp f1 asup_set_class acvv awcel f1 acab acund acfv acvv acund acfv ac0 peqtri f0 f1 acvv awreu awn f0 f1 acio ac0 f1 asup_set_class acvv awcel f1 acab acund acfv psyl6eqr f0 f1 acvv awreu f1 asup_set_class acvv awcel f0 awa f1 acio f1 asup_set_class acvv awcel f1 acab acund acfv piffalse f0 f1 acvv awreu awn f0 f1 acio f1 asup_set_class acvv awcel f1 acab acund acfv f0 f1 acvv awreu f1 asup_set_class acvv awcel f0 awa f1 acio f1 asup_set_class acvv awcel f1 acab acund acfv acif peqtr4d f0 f1 acvv awreu f0 f1 acio f0 f1 acvv awreu f1 asup_set_class acvv awcel f0 awa f1 acio f1 asup_set_class acvv awcel f1 acab acund acfv acif awceq ppm2.61i f0 f1 acvv acrio f0 f1 acvv awreu f1 asup_set_class acvv awcel f0 awa f1 acio f1 asup_set_class acvv awcel f1 acab acund acfv acif f0 f1 acio peqtr4i $.
 $}
-$( /* Restricted iota in terms of iota.  (Contributed by NM, 15-Sep-2011.) */
-
-$)
+$( Restricted iota in terms of iota.  (Contributed by NM, 15-Sep-2011.) $)
 ${
 	$v ph x A $.
 	f0 $f wff ph $.
@@ -189,10 +157,8 @@ ${
 	priotaiota $p |- ( E! x e. A ph -> ( iota_ x e. A ph ) = ( iota x ( x e. A /\ ph ) ) ) $=
 	f0 f1 f2 adf-riota f0 f1 f2 awreu f1 asup_set_class f2 awcel f0 awa f1 acio f1 asup_set_class f2 awcel f1 acab acund acfv piftrue f0 f1 f2 awreu f0 f1 f2 acrio f0 f1 f2 awreu f1 asup_set_class f2 awcel f0 awa f1 acio f1 asup_set_class f2 awcel f1 acab acund acfv acif f1 asup_set_class f2 awcel f0 awa f1 acio psyl5eq $.
 $}
-$( /* Restricted iota in terms of class union.  (Contributed by NM,
-     11-Oct-2011.) */
-
-$)
+$( Restricted iota in terms of class union.  (Contributed by NM,
+     11-Oct-2011.) $)
 ${
 	$v ph x A $.
 	f0 $f wff ph $.
@@ -201,11 +167,9 @@ ${
 	priotauni $p |- ( E! x e. A ph -> ( iota_ x e. A ph ) = U. { x e. A | ph } ) $=
 	f0 f1 f2 priotaiota f0 f1 f2 adf-reu f1 asup_set_class f2 awcel f0 awa f1 piotauni f0 f1 f2 awreu f1 asup_set_class f2 awcel f0 awa f1 aweu f1 asup_set_class f2 awcel f0 awa f1 acio f1 asup_set_class f2 awcel f0 awa f1 acab acuni awceq psylbi f0 f1 f2 adf-rab f0 f1 f2 acrab f1 asup_set_class f2 awcel f0 awa f1 acab punieqi f0 f1 f2 awreu f1 asup_set_class f2 awcel f0 awa f1 acio f1 asup_set_class f2 awcel f0 awa f1 acab acuni f0 f1 f2 acrab acuni psyl6eqr f0 f1 f2 awreu f0 f1 f2 acrio f1 asup_set_class f2 awcel f0 awa f1 acio f0 f1 f2 acrab acuni peqtrd $.
 $}
-$( /* The abstraction variable in a restricted iota descriptor isn't free.
+$( The abstraction variable in a restricted iota descriptor isn't free.
        (Contributed by NM, 12-Oct-2011.)  (Revised by Mario Carneiro,
-       15-Oct-2016.) */
-
-$)
+       15-Oct-2016.) $)
 ${
 	$v ph x A $.
 	$d x A $.
@@ -215,10 +179,8 @@ ${
 	pnfriota1 $p |- F/_ x ( iota_ x e. A ph ) $=
 	f0 f1 f2 adf-riota f0 f1 f2 pnfreu1 f1 asup_set_class f2 awcel f0 awa f1 pnfiota1 f1 acund pnfcv f1 asup_set_class f2 awcel f1 pnfab1 f1 f1 asup_set_class f2 awcel f1 acab acund pnffv f0 f1 f2 awreu f1 f1 asup_set_class f2 awcel f0 awa f1 acio f1 asup_set_class f2 awcel f1 acab acund acfv pnfif f1 f0 f1 f2 acrio f0 f1 f2 awreu f1 asup_set_class f2 awcel f0 awa f1 acio f1 asup_set_class f2 awcel f1 acab acund acfv acif pnfcxfr $.
 $}
-$( /* Deduction version of ~ nfriota .  (Contributed by NM, 18-Feb-2013.)
-       (Revised by Mario Carneiro, 15-Oct-2016.) */
-
-$)
+$( Deduction version of ~ nfriota .  (Contributed by NM, 18-Feb-2013.)
+       (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
 	$v ph ps x y A $.
 	e0 $e |- F/ y ph $.
@@ -232,10 +194,8 @@ ${
 	pnfriotad $p |- ( ph -> F/_ x ( iota_ y e. A ps ) ) $=
 	f1 f3 f4 adf-riota e0 e2 e1 f0 f1 f2 f3 f4 pnfreud e0 f2 f3 f3 pnfnae f0 f2 asup_set_class f3 asup_set_class awceq f2 awal awn f3 pnfan f2 f3 pnfcvf f2 asup_set_class f3 asup_set_class awceq f2 awal awn f2 f3 asup_set_class awnfc f0 padantl e2 f0 f2 f4 awnfc f2 asup_set_class f3 asup_set_class awceq f2 awal awn padantr f0 f2 asup_set_class f3 asup_set_class awceq f2 awal awn awa f2 f3 asup_set_class f4 pnfeld e1 f0 f1 f2 awnf f2 asup_set_class f3 asup_set_class awceq f2 awal awn padantr f0 f2 asup_set_class f3 asup_set_class awceq f2 awal awn awa f3 asup_set_class f4 awcel f1 f2 pnfand f0 f2 asup_set_class f3 asup_set_class awceq f2 awal awn awa f3 asup_set_class f4 awcel f1 awa f2 f3 pnfiotad f0 f2 asup_set_class f3 asup_set_class awceq f2 awal awn f2 f3 asup_set_class f4 awcel f1 awa f3 acio awnfc pex f3 asup_set_class f4 awcel f1 awa f3 pnfiota1 f2 asup_set_class f3 asup_set_class awceq f2 awal f3 asup_set_class f4 awcel f1 awa f3 acio peqidd f2 f3 f3 asup_set_class f4 awcel f1 awa f3 acio f3 asup_set_class f4 awcel f1 awa f3 acio pdrnfc1 f2 asup_set_class f3 asup_set_class awceq f2 awal f2 f3 asup_set_class f4 awcel f1 awa f3 acio awnfc f3 f3 asup_set_class f4 awcel f1 awa f3 acio awnfc pmpbiri f0 f2 asup_set_class f3 asup_set_class awceq f2 awal f2 f3 asup_set_class f4 awcel f1 awa f3 acio awnfc ppm2.61d2 f0 f2 acund pnfcvd e0 f2 f3 pnfcvf f2 asup_set_class f3 asup_set_class awceq f2 awal awn f2 f3 asup_set_class awnfc f0 padantl e2 f0 f2 f4 awnfc f2 asup_set_class f3 asup_set_class awceq f2 awal awn padantr f0 f2 asup_set_class f3 asup_set_class awceq f2 awal awn awa f2 f3 asup_set_class f4 pnfeld f0 f3 asup_set_class f4 awcel f2 f3 pnfabd2 f0 f2 f3 asup_set_class f4 awcel f3 acab acund pnffvd f0 f1 f3 f4 awreu f2 f3 asup_set_class f4 awcel f1 awa f3 acio f3 asup_set_class f4 awcel f3 acab acund acfv pnfifd f0 f2 f1 f3 f4 acrio f1 f3 f4 awreu f3 asup_set_class f4 awcel f1 awa f3 acio f3 asup_set_class f4 awcel f3 acab acund acfv acif pnfcxfrd $.
 $}
-$( /* A variable not free in a wff remains so in a restricted iota
-       descriptor.  (Contributed by NM, 12-Oct-2011.) */
-
-$)
+$( A variable not free in a wff remains so in a restricted iota
+       descriptor.  (Contributed by NM, 12-Oct-2011.) $)
 ${
 	$v ph x y A $.
 	$d x y $.
@@ -248,10 +208,8 @@ ${
 	pnfriota $p |- F/_ x ( iota_ y e. A ph ) $=
 	f2 pnftru e0 f0 f1 awnf awtru pa1i e1 f1 f3 awnfc awtru pa1i awtru f0 f1 f2 f3 pnfriotad f1 f0 f2 f3 acrio awnfc ptrud $.
 $}
-$( /* Change bound variable in a restricted description binder.  (Contributed
-       by NM, 18-Mar-2013.)  (Revised by Mario Carneiro, 15-Oct-2016.) */
-
-$)
+$( Change bound variable in a restricted description binder.  (Contributed
+       by NM, 18-Mar-2013.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
 	$v ph ps x y z A $.
 	$d x z A $.
@@ -270,10 +228,8 @@ ${
 	pcbvriota $p |- ( iota_ x e. A ph ) = ( iota_ y e. A ps ) $=
 	e0 e1 e2 f0 f1 f2 f3 f4 pcbvreu f2 asup_set_class i0 asup_set_class f4 peleq1 f0 f2 i0 psbequ12 f2 asup_set_class i0 asup_set_class awceq f2 asup_set_class f4 awcel i0 asup_set_class f4 awcel f0 f0 f2 i0 awsb panbi12d f2 asup_set_class f4 awcel f0 awa i0 pnfv i0 asup_set_class f4 awcel f2 pnfv f0 f2 i0 pnfs1v i0 asup_set_class f4 awcel f0 f2 i0 awsb f2 pnfan f2 asup_set_class f4 awcel f0 awa i0 asup_set_class f4 awcel f0 f2 i0 awsb awa f2 i0 pcbviota i0 asup_set_class f3 asup_set_class f4 peleq1 f0 i0 f3 f2 psbequ e1 e2 f0 f1 f2 f3 psbie i0 asup_set_class f3 asup_set_class awceq f0 f2 i0 awsb f0 f2 f3 awsb f1 psyl6bb i0 asup_set_class f3 asup_set_class awceq i0 asup_set_class f4 awcel f3 asup_set_class f4 awcel f0 f2 i0 awsb f1 panbi12d i0 asup_set_class f4 awcel f3 pnfv e0 f0 f2 i0 f3 pnfsb i0 asup_set_class f4 awcel f0 f2 i0 awsb f3 pnfan f3 asup_set_class f4 awcel f1 awa i0 pnfv i0 asup_set_class f4 awcel f0 f2 i0 awsb awa f3 asup_set_class f4 awcel f1 awa i0 f3 pcbviota f2 asup_set_class f4 awcel f0 awa f2 acio i0 asup_set_class f4 awcel f0 f2 i0 awsb awa i0 acio f3 asup_set_class f4 awcel f1 awa f3 acio peqtri f2 f4 pabid2 f3 f4 pabid2 f2 asup_set_class f4 awcel f2 acab f4 f3 asup_set_class f4 awcel f3 acab peqtr4i f2 asup_set_class f4 awcel f2 acab f3 asup_set_class f4 awcel f3 acab acund pfveq2i f0 f2 f4 awreu f1 f3 f4 awreu f2 asup_set_class f4 awcel f0 awa f2 acio f2 asup_set_class f4 awcel f2 acab acund acfv f3 asup_set_class f4 awcel f1 awa f3 acio f3 asup_set_class f4 awcel f3 acab acund acfv pifbieq12i f0 f2 f4 adf-riota f1 f3 f4 adf-riota f0 f2 f4 awreu f2 asup_set_class f4 awcel f0 awa f2 acio f2 asup_set_class f4 awcel f2 acab acund acfv acif f1 f3 f4 awreu f3 asup_set_class f4 awcel f1 awa f3 acio f3 asup_set_class f4 awcel f3 acab acund acfv acif f0 f2 f4 acrio f1 f3 f4 acrio p3eqtr4i $.
 $}
-$( /* Change bound variable in a restricted description binder.  (Contributed
-       by NM, 18-Mar-2013.)  (Revised by Mario Carneiro, 15-Oct-2016.) */
-
-$)
+$( Change bound variable in a restricted description binder.  (Contributed
+       by NM, 18-Mar-2013.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
 	$v ph ps x y A $.
 	$d x A $.
@@ -289,10 +245,8 @@ ${
 	pcbvriotav $p |- ( iota_ x e. A ph ) = ( iota_ y e. A ps ) $=
 	f0 f3 pnfv f1 f2 pnfv e0 f0 f1 f2 f3 f4 pcbvriota $.
 $}
-$( /* Interchange class substitution and restricted description binder.
-       (Contributed by NM, 24-Feb-2013.) */
-
-$)
+$( Interchange class substitution and restricted description binder.
+       (Contributed by NM, 24-Feb-2013.) $)
 ${
 	$v ph x y z A B V $.
 	$d y z A $.
@@ -309,15 +263,13 @@ ${
 	pcsbriotag $p |- ( A e. V -> [_ A / x ]_ ( iota_ y e. B ph ) = ( iota_ y e. B [. A / x ]. ph ) ) $=
 	f1 i0 asup_set_class f3 f0 f2 f4 acrio pcsbeq1 f0 f1 i0 f3 pdfsbcq2 i0 asup_set_class f3 awceq f0 f1 i0 awsb f0 f1 f3 awsbc f2 f4 priotabidv i0 asup_set_class f3 awceq f1 i0 asup_set_class f0 f2 f4 acrio acsb f1 f3 f0 f2 f4 acrio acsb f0 f1 i0 awsb f2 f4 acrio f0 f1 f3 awsbc f2 f4 acrio peqeq12d i0 pvex f0 f1 i0 pnfs1v f1 f4 pnfcv f0 f1 i0 awsb f1 f2 f4 pnfriota f0 f1 i0 psbequ12 f1 asup_set_class i0 asup_set_class awceq f0 f0 f1 i0 awsb f2 f4 priotabidv f1 i0 asup_set_class f0 f2 f4 acrio f0 f1 i0 awsb f2 f4 acrio pcsbief f1 i0 asup_set_class f0 f2 f4 acrio acsb f0 f1 i0 awsb f2 f4 acrio awceq f1 f3 f0 f2 f4 acrio acsb f0 f1 f3 awsbc f2 f4 acrio awceq i0 f3 f5 pvtoclg $.
 $}
-$( /* Membership law for "the unique element in ` A ` such that ` ph ` ."
+$( Membership law for "the unique element in ` A ` such that ` ph ` ."
 
      This can useful for expanding an iota-based definition (see ~ df-iota ).
      If you have an unbounded iota, ~ iotacl may be useful.
 
      (Contributed by NM, 21-Aug-2011.)  (Revised by Mario Carneiro,
-     23-Dec-2016.) */
-
-$)
+     23-Dec-2016.) $)
 ${
 	$v ph x A $.
 	f0 $f wff ph $.
@@ -326,9 +278,7 @@ ${
 	priotacl2 $p |- ( E! x e. A ph -> ( iota_ x e. A ph ) e. { x e. A | ph } ) $=
 	f0 f1 f2 priotaiota f0 f1 f2 adf-reu f1 asup_set_class f2 awcel f0 awa f1 piotacl f0 f1 f2 awreu f1 asup_set_class f2 awcel f0 awa f1 aweu f1 asup_set_class f2 awcel f0 awa f1 acio f1 asup_set_class f2 awcel f0 awa f1 acab awcel psylbi f0 f1 f2 adf-rab f0 f1 f2 awreu f1 asup_set_class f2 awcel f0 awa f1 acio f1 asup_set_class f2 awcel f0 awa f1 acab f0 f1 f2 acrab psyl6eleqr f0 f1 f2 awreu f0 f1 f2 acrio f1 asup_set_class f2 awcel f0 awa f1 acio f0 f1 f2 acrab peqeltrd $.
 $}
-$( /* Closure of restricted iota.  (Contributed by NM, 21-Aug-2011.) */
-
-$)
+$( Closure of restricted iota.  (Contributed by NM, 21-Aug-2011.) $)
 ${
 	$v ph x A $.
 	$d x A $.
@@ -338,10 +288,8 @@ ${
 	priotacl $p |- ( E! x e. A ph -> ( iota_ x e. A ph ) e. A ) $=
 	f0 f1 f2 pssrab2 f0 f1 f2 priotacl2 f0 f1 f2 awreu f0 f1 f2 acrab f2 f0 f1 f2 acrio psseldi $.
 $}
-$( /* Substitution law for descriptions.  Compare ~ iotasbc .  (Contributed by
-     NM, 23-Aug-2011.)  (Proof shortened by Mario Carneiro, 24-Dec-2016.) */
-
-$)
+$( Substitution law for descriptions.  Compare ~ iotasbc .  (Contributed by
+     NM, 23-Aug-2011.)  (Proof shortened by Mario Carneiro, 24-Dec-2016.) $)
 ${
 	$v ph x A $.
 	f0 $f wff ph $.
@@ -350,10 +298,8 @@ ${
 	priotasbc $p |- ( E! x e. A ph -> [. ( iota_ x e. A ph ) / x ]. ph ) $=
 	f0 f1 f2 prabssab f0 f1 f2 priotacl2 f0 f1 f2 awreu f0 f1 f2 acrab f0 f1 acab f0 f1 f2 acrio psseldi f0 f1 f0 f1 f2 acrio adf-sbc f0 f1 f2 awreu f0 f1 f2 acrio f0 f1 acab awcel f0 f1 f0 f1 f2 acrio awsbc psylibr $.
 $}
-$( /* Equivalent wff's yield equal restricted class abstractions (deduction
-       rule).  ( ~ rabbidva analog.)  (Contributed by NM, 17-Jan-2012.) */
-
-$)
+$( Equivalent wff's yield equal restricted class abstractions (deduction
+       rule).  ( ~ rabbidva analog.)  (Contributed by NM, 17-Jan-2012.) $)
 ${
 	$v ph ps ch x A $.
 	$d x ph $.
@@ -366,10 +312,8 @@ ${
 	priotabidva $p |- ( ph -> ( iota_ x e. A ps ) = ( iota_ x e. A ch ) ) $=
 	e0 f0 f3 asup_set_class f4 awcel f1 f2 ppm5.32da f0 f3 asup_set_class f4 awcel f1 awa f3 asup_set_class f4 awcel f2 awa f3 piotabidv f0 f3 asup_set_class f4 awcel f1 awa f3 acio f3 asup_set_class f4 awcel f2 awa f3 acio awceq f1 f3 f4 awreu padantr f0 f1 f3 f4 awreu f3 asup_set_class f4 awcel f1 awa f3 acio f3 asup_set_class f4 awcel f2 awa f3 acio f3 asup_set_class f4 awcel f3 acab acund acfv pifeq1da e0 f0 f1 f2 f3 f4 preubidva f0 f1 f3 f4 awreu f2 f3 f4 awreu f3 asup_set_class f4 awcel f2 awa f3 acio f3 asup_set_class f4 awcel f3 acab acund acfv pifbid f0 f1 f3 f4 awreu f3 asup_set_class f4 awcel f1 awa f3 acio f3 asup_set_class f4 awcel f3 acab acund acfv acif f1 f3 f4 awreu f3 asup_set_class f4 awcel f2 awa f3 acio f3 asup_set_class f4 awcel f3 acab acund acfv acif f2 f3 f4 awreu f3 asup_set_class f4 awcel f2 awa f3 acio f3 asup_set_class f4 awcel f3 acab acund acfv acif peqtrd f1 f3 f4 adf-riota f2 f3 f4 adf-riota f0 f1 f3 f4 awreu f3 asup_set_class f4 awcel f1 awa f3 acio f3 asup_set_class f4 awcel f3 acab acund acfv acif f2 f3 f4 awreu f3 asup_set_class f4 awcel f2 awa f3 acio f3 asup_set_class f4 awcel f3 acab acund acfv acif f1 f3 f4 acrio f2 f3 f4 acrio p3eqtr4g $.
 $}
-$( /* Equivalent wff's yield equal restricted iotas (inference rule).
-       ( ~ rabbiia analog.)  (Contributed by NM, 16-Jan-2012.) */
-
-$)
+$( Equivalent wff's yield equal restricted iotas (inference rule).
+       ( ~ rabbiia analog.)  (Contributed by NM, 16-Jan-2012.) $)
 ${
 	$v ph ps x A $.
 	e0 $e |- ( x e. A -> ( ph <-> ps ) ) $.
@@ -380,10 +324,8 @@ ${
 	priotabiia $p |- ( iota_ x e. A ph ) = ( iota_ x e. A ps ) $=
 	acvv peqid e0 f2 asup_set_class f3 awcel f0 f1 awb acvv acvv awceq padantl acvv acvv awceq f0 f1 f2 f3 priotabidva acvv acvv awceq f0 f2 f3 acrio f1 f2 f3 acrio awceq aax-mp $.
 $}
-$( /* Property of restricted iota.  Compare ~ iota1 .  (Contributed by Mario
-       Carneiro, 15-Oct-2016.) */
-
-$)
+$( Property of restricted iota.  Compare ~ iota1 .  (Contributed by Mario
+       Carneiro, 15-Oct-2016.) $)
 ${
 	$v ph x A $.
 	$d x A $.
@@ -393,9 +335,7 @@ ${
 	priota1 $p |- ( E! x e. A ph -> ( ( x e. A /\ ph ) <-> ( iota_ x e. A ph ) = x ) ) $=
 	f0 f1 f2 adf-reu f1 asup_set_class f2 awcel f0 awa f1 piota1 f0 f1 f2 awreu f1 asup_set_class f2 awcel f0 awa f1 aweu f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f2 awcel f0 awa f1 acio f1 asup_set_class awceq awb psylbi f0 f1 f2 priotaiota f0 f1 f2 awreu f0 f1 f2 acrio f1 asup_set_class f2 awcel f0 awa f1 acio f1 asup_set_class peqeq1d f0 f1 f2 awreu f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f2 awcel f0 awa f1 acio f1 asup_set_class awceq f0 f1 f2 acrio f1 asup_set_class awceq pbitr4d $.
 $}
-$( /* Property of iota.  (Contributed by NM, 23-Aug-2011.) */
-
-$)
+$( Property of iota.  (Contributed by NM, 23-Aug-2011.) $)
 ${
 	$v ph x A $.
 	f0 $f wff ph $.
@@ -404,10 +344,8 @@ ${
 	priota1a $p |- ( ( x e. A /\ E! x e. A ph ) -> ( ph <-> ( iota x ( x e. A /\ ph ) ) = x ) ) $=
 	f1 asup_set_class f2 awcel f0 pibar f0 f1 f2 adf-reu f1 asup_set_class f2 awcel f0 awa f1 piota1 f0 f1 f2 awreu f1 asup_set_class f2 awcel f0 awa f1 aweu f1 asup_set_class f2 awcel f0 awa f1 asup_set_class f2 awcel f0 awa f1 acio f1 asup_set_class awceq awb psylbi f1 asup_set_class f2 awcel f0 f1 asup_set_class f2 awcel f0 awa f0 f1 f2 awreu f1 asup_set_class f2 awcel f0 awa f1 acio f1 asup_set_class awceq psylan9bb $.
 $}
-$( /* A deduction version of ~ riota2f .  (Contributed by NM, 17-Feb-2013.)
-       (Revised by Mario Carneiro, 15-Oct-2016.) */
-
-$)
+$( A deduction version of ~ riota2f .  (Contributed by NM, 17-Feb-2013.)
+       (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
 	$v ph ps ch x A B $.
 	$d x A $.
@@ -425,11 +363,9 @@ ${
 	priota2df $p |- ( ( ph /\ E! x e. A ps ) -> ( ch <-> ( iota_ x e. A ps ) = B ) ) $=
 	e3 f0 f5 f4 awcel f1 f3 f4 awreu padantr f0 f1 f3 f4 awreu psimpr f1 f3 f4 adf-reu f0 f1 f3 f4 awreu awa f1 f3 f4 awreu f3 asup_set_class f4 awcel f1 awa f3 aweu psylib f0 f1 f3 f4 awreu awa f3 asup_set_class f5 awceq psimpr e3 f0 f5 f4 awcel f1 f3 f4 awreu padantr f0 f1 f3 f4 awreu awa f5 f4 awcel f3 asup_set_class f5 awceq padantr f0 f1 f3 f4 awreu awa f3 asup_set_class f5 awceq awa f3 asup_set_class f5 f4 peqeltrd f0 f1 f3 f4 awreu awa f3 asup_set_class f5 awceq awa f3 asup_set_class f4 awcel f1 pbiantrurd e4 f0 f3 asup_set_class f5 awceq f1 f2 awb f1 f3 f4 awreu padantlr f0 f1 f3 f4 awreu awa f3 asup_set_class f5 awceq awa f1 f3 asup_set_class f4 awcel f1 awa f2 pbitr3d e0 f1 f3 f4 pnfreu1 f0 f1 f3 f4 awreu f3 pnfan e2 f0 f2 f3 awnf f1 f3 f4 awreu padantr e1 f0 f3 f5 awnfc f1 f3 f4 awreu padantr f0 f1 f3 f4 awreu awa f3 asup_set_class f4 awcel f1 awa f2 f3 f5 f4 piota2df f1 f3 f4 priotaiota f1 f3 f4 awreu f1 f3 f4 acrio f3 asup_set_class f4 awcel f1 awa f3 acio awceq f0 padantl f0 f1 f3 f4 awreu awa f1 f3 f4 acrio f3 asup_set_class f4 awcel f1 awa f3 acio f5 peqeq1d f0 f1 f3 f4 awreu awa f2 f3 asup_set_class f4 awcel f1 awa f3 acio f5 awceq f1 f3 f4 acrio f5 awceq pbitr4d $.
 $}
-$( /* This theorem shows a condition that allows us to represent a descriptor
+$( This theorem shows a condition that allows us to represent a descriptor
        with a class expression ` B ` .  (Contributed by NM, 23-Aug-2011.)
-       (Revised by Mario Carneiro, 15-Oct-2016.) */
-
-$)
+       (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
 	$v ph ps x A B $.
 	$d x A $.
@@ -444,11 +380,9 @@ ${
 	priota2f $p |- ( ( B e. A /\ E! x e. A ph ) -> ( ps <-> ( iota_ x e. A ph ) = B ) ) $=
 	e0 f2 f4 f3 pnfel1 e0 f2 f4 awnfc f4 f3 awcel pa1i e1 f1 f2 awnf f4 f3 awcel pa1i f4 f3 awcel pid e2 f2 asup_set_class f4 awceq f0 f1 awb f4 f3 awcel padantl f4 f3 awcel f0 f1 f2 f3 f4 priota2df $.
 $}
-$( /* This theorem shows a condition that allows us to represent a descriptor
+$( This theorem shows a condition that allows us to represent a descriptor
        with a class expression ` B ` .  (Contributed by NM, 23-Aug-2011.)
-       (Revised by Mario Carneiro, 10-Dec-2016.) */
-
-$)
+       (Revised by Mario Carneiro, 10-Dec-2016.) $)
 ${
 	$v ph ps x A B $.
 	$d x ps $.
@@ -463,11 +397,9 @@ ${
 	priota2 $p |- ( ( B e. A /\ E! x e. A ph ) -> ( ps <-> ( iota_ x e. A ph ) = B ) ) $=
 	f2 f4 pnfcv f1 f2 pnfv e0 f0 f1 f2 f3 f4 priota2f $.
 $}
-$( /* Properties of a restricted definite description operator.  Todo: can
+$( Properties of a restricted definite description operator.  Todo: can
        some uses of ~ riota2f be shortened with this?  (Contributed by NM,
-       23-Nov-2013.) */
-
-$)
+       23-Nov-2013.) $)
 ${
 	$v ph ps x A B $.
 	$d x A $.
@@ -482,10 +414,8 @@ ${
 	priotaprop $p |- ( E! x e. A ph -> ( B e. A /\ ps ) ) $=
 	e1 f0 f2 f3 priotacl f0 f2 f3 awreu f4 f0 f2 f3 acrio f3 psyl5eqel e1 f0 f2 f3 priotacl f0 f2 f3 awreu f4 f0 f2 f3 acrio f3 psyl5eqel e1 f4 f0 f2 f3 acrio peqcomi e1 f0 f2 f3 pnfriota1 f2 f4 f0 f2 f3 acrio pnfcxfr e0 e2 f0 f1 f2 f3 f4 priota2f f4 f3 awcel f0 f2 f3 awreu awa f1 f0 f2 f3 acrio f4 awceq pmpbiri f4 f3 awcel f0 f2 f3 awreu f1 pmpancom f0 f2 f3 awreu f4 f3 awcel f1 pjca $.
 $}
-$( /* A method for computing restricted iota.  (Contributed by NM,
-       16-Apr-2013.)  (Revised by Mario Carneiro, 15-Oct-2016.) */
-
-$)
+$( A method for computing restricted iota.  (Contributed by NM,
+       16-Apr-2013.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
 	$v ph ps x y A B $.
 	$d x y A $.
@@ -504,10 +434,8 @@ ${
 	priota5f $p |- ( ph -> ( iota_ x e. A ps ) = B ) $=
 	e2 f0 f1 f2 asup_set_class f4 awceq awb f2 f3 pralrimiva e1 f0 i0 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral awa awa pa1tru f1 f2 f3 i0 asup_set_class preu6i i0 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral awa f1 f2 f3 awreu f0 padantl f0 f2 pnfv i0 asup_set_class f3 awcel f2 pnfv f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 pnfra1 i0 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral f2 pnfan f0 i0 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral awa f2 pnfan f0 i0 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral awa awa f2 i0 asup_set_class pnfcvd f0 i0 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral awa awa awtru f2 pnfvd f0 i0 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral psimprl f0 i0 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral awa awa f2 asup_set_class i0 asup_set_class awceq psimpr f0 i0 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral f2 asup_set_class i0 asup_set_class awceq psimplrr f0 i0 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral awa awa f2 asup_set_class i0 asup_set_class awceq psimpr f0 i0 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral f2 asup_set_class i0 asup_set_class awceq psimplrl f0 i0 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral awa awa f2 asup_set_class i0 asup_set_class awceq awa f2 asup_set_class i0 asup_set_class f3 peqeltrd f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 prsp f0 i0 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral awa awa f2 asup_set_class i0 asup_set_class awceq awa f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral f2 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb psylc f0 i0 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral awa awa f2 asup_set_class i0 asup_set_class awceq awa f1 f2 asup_set_class i0 asup_set_class awceq pmpbird f0 i0 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral awa awa f2 asup_set_class i0 asup_set_class awceq awa pa1tru f0 i0 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral awa awa f2 asup_set_class i0 asup_set_class awceq awa f1 awtru p2thd f0 i0 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral awa awa f1 awtru f2 f3 i0 asup_set_class priota2df f0 i0 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral awa awa f1 f2 f3 awreu awtru f1 f2 f3 acrio i0 asup_set_class awceq awb pmpdan f0 i0 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral awa awa awtru f1 f2 f3 acrio i0 asup_set_class awceq pmpbid f0 i0 asup_set_class f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral f1 f2 f3 acrio i0 asup_set_class awceq pexpr f0 f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral f1 f2 f3 acrio i0 asup_set_class awceq awi i0 f3 pralrimiva f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral f1 f2 f3 acrio i0 asup_set_class awceq awi i0 f4 f3 prspsbc f0 f4 f3 awcel f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral f1 f2 f3 acrio i0 asup_set_class awceq awi i0 f3 awral f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral f1 f2 f3 acrio i0 asup_set_class awceq awi i0 f4 awsbc psylc e1 f0 f2 pnfv f0 f2 i0 asup_set_class pnfcvd e0 f0 f2 i0 asup_set_class f4 pnfeqd f0 i0 asup_set_class f4 awceq f2 pnfan1 f0 i0 asup_set_class f4 awceq psimpr f0 i0 asup_set_class f4 awceq awa i0 asup_set_class f4 f2 asup_set_class peqeq2d f0 i0 asup_set_class f4 awceq awa f2 asup_set_class i0 asup_set_class awceq f2 asup_set_class f4 awceq f1 pbibi2d f0 i0 asup_set_class f4 awceq awa f1 f2 asup_set_class i0 asup_set_class awceq awb f1 f2 asup_set_class f4 awceq awb f2 f3 pralbid f0 i0 asup_set_class f4 awceq psimpr f0 i0 asup_set_class f4 awceq awa i0 asup_set_class f4 f1 f2 f3 acrio peqeq2d f0 i0 asup_set_class f4 awceq awa f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral f1 f2 asup_set_class f4 awceq awb f2 f3 awral f1 f2 f3 acrio i0 asup_set_class awceq f1 f2 f3 acrio f4 awceq pimbi12d f0 f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral f1 f2 f3 acrio i0 asup_set_class awceq awi f1 f2 asup_set_class f4 awceq awb f2 f3 awral f1 f2 f3 acrio f4 awceq awi i0 f4 f3 psbcied f0 f1 f2 asup_set_class i0 asup_set_class awceq awb f2 f3 awral f1 f2 f3 acrio i0 asup_set_class awceq awi i0 f4 awsbc f1 f2 asup_set_class f4 awceq awb f2 f3 awral f1 f2 f3 acrio f4 awceq awi pmpbid f0 f1 f2 asup_set_class f4 awceq awb f2 f3 awral f1 f2 f3 acrio f4 awceq pmpd $.
 $}
-$( /* A method for computing restricted iota.  (Contributed by NM,
-       20-Oct-2011.)  (Revised by Mario Carneiro, 6-Dec-2016.) */
-
-$)
+$( A method for computing restricted iota.  (Contributed by NM,
+       20-Oct-2011.)  (Revised by Mario Carneiro, 6-Dec-2016.) $)
 ${
 	$v ph ps x A B $.
 	$d x A $.
@@ -523,10 +451,8 @@ ${
 	priota5 $p |- ( ph -> ( iota_ x e. A ps ) = B ) $=
 	f0 f2 f4 pnfcvd e0 e1 f0 f1 f2 f3 f4 priota5f $.
 $}
-$( /* A method for computing restricted iota.  (Contributed by NM,
-       20-Oct-2011.)  (New usage is discouraged.) */
-
-$)
+$( A method for computing restricted iota.  (Contributed by NM,
+       20-Oct-2011.)  (New usage is discouraged.) $)
 ${
 	$v ph ps x A B $.
 	$d x A $.
@@ -541,10 +467,8 @@ ${
 	priota5OLD $p |- ( ( ph /\ B e. A ) -> ( iota_ x e. A ps ) = B ) $=
 	f0 f4 f3 awcel psimpr e0 f0 f4 f3 awcel f2 asup_set_class f3 awcel f1 f2 asup_set_class f4 awceq awb p3expa f0 f4 f3 awcel awa f1 f2 f3 f4 priota5 $.
 $}
-$( /* Restriction of a unique element to a smaller class.  (Contributed by NM,
-       21-Aug-2011.)  (Revised by NM, 22-Mar-2013.) */
-
-$)
+$( Restriction of a unique element to a smaller class.  (Contributed by NM,
+       21-Aug-2011.)  (Revised by NM, 22-Mar-2013.) $)
 ${
 	$v ph ps x A B $.
 	$d x A $.
@@ -557,10 +481,8 @@ ${
 	priotass2 $p |- ( ( ( A C_ B /\ A. x e. A ( ph -> ps ) ) /\ ( E. x e. A ph /\ E! x e. B ps ) ) -> ( iota_ x e. A ph ) = ( iota_ x e. B ps ) ) $=
 	f0 f1 f2 f3 f4 preuss2 f3 f4 awss f0 f1 awi f2 f3 awral f0 f2 f3 awrex f1 f2 f4 awreu awa psimplr f0 f2 f3 priotasbc f0 f2 f3 priotacl f0 f1 awi f2 f0 f2 f3 acrio f3 prspsbc f0 f1 f2 f0 f2 f3 acrio f3 psbcimg f0 f2 f3 acrio f3 awcel f0 f1 awi f2 f3 awral f0 f1 awi f2 f0 f2 f3 acrio awsbc f0 f2 f0 f2 f3 acrio awsbc f1 f2 f0 f2 f3 acrio awsbc awi psylibd f0 f2 f3 awreu f0 f2 f3 acrio f3 awcel f0 f1 awi f2 f3 awral f0 f2 f0 f2 f3 acrio awsbc f1 f2 f0 f2 f3 acrio awsbc awi awi psyl f0 f2 f3 awreu f0 f1 awi f2 f3 awral f0 f2 f0 f2 f3 acrio awsbc f1 f2 f0 f2 f3 acrio awsbc pmpid f3 f4 awss f0 f1 awi f2 f3 awral awa f0 f2 f3 awrex f1 f2 f4 awreu awa awa f0 f2 f3 awreu f0 f1 awi f2 f3 awral f1 f2 f0 f2 f3 acrio awsbc psylc f0 f1 f2 f3 f4 preuss2 f0 f2 f3 priotacl f3 f4 awss f0 f1 awi f2 f3 awral awa f0 f2 f3 awrex f1 f2 f4 awreu awa awa f0 f2 f3 awreu f0 f2 f3 acrio f3 awcel psyl f3 f4 f0 f2 f3 acrio pssel f3 f4 awss f0 f2 f3 acrio f3 awcel f0 f2 f3 acrio f4 awcel awi f0 f1 awi f2 f3 awral f0 f2 f3 awrex f1 f2 f4 awreu awa pad2antrr f3 f4 awss f0 f1 awi f2 f3 awral awa f0 f2 f3 awrex f1 f2 f4 awreu awa awa f0 f2 f3 acrio f3 awcel f0 f2 f3 acrio f4 awcel pmpd f3 f4 awss f0 f1 awi f2 f3 awral awa f0 f2 f3 awrex f1 f2 f4 awreu psimprr f0 f2 f3 pnfriota1 f0 f2 f3 pnfriota1 f1 f2 f0 f2 f3 acrio pnfsbc1 f1 f2 f0 f2 f3 acrio psbceq1a f1 f1 f2 f0 f2 f3 acrio awsbc f2 f4 f0 f2 f3 acrio priota2f f3 f4 awss f0 f1 awi f2 f3 awral awa f0 f2 f3 awrex f1 f2 f4 awreu awa awa f0 f2 f3 acrio f4 awcel f1 f2 f4 awreu f1 f2 f0 f2 f3 acrio awsbc f1 f2 f4 acrio f0 f2 f3 acrio awceq awb psyl2anc f3 f4 awss f0 f1 awi f2 f3 awral awa f0 f2 f3 awrex f1 f2 f4 awreu awa awa f1 f2 f0 f2 f3 acrio awsbc f1 f2 f4 acrio f0 f2 f3 acrio awceq pmpbid f3 f4 awss f0 f1 awi f2 f3 awral awa f0 f2 f3 awrex f1 f2 f4 awreu awa awa f1 f2 f4 acrio f0 f2 f3 acrio peqcomd $.
 $}
-$( /* Restriction of a unique element to a smaller class.  (Contributed by NM,
-       19-Oct-2005.)  (Revised by Mario Carneiro, 24-Dec-2016.) */
-
-$)
+$( Restriction of a unique element to a smaller class.  (Contributed by NM,
+       19-Oct-2005.)  (Revised by Mario Carneiro, 24-Dec-2016.) $)
 ${
 	$v ph x A B $.
 	$d x A $.
@@ -572,10 +494,8 @@ ${
 	priotass $p |- ( ( A C_ B /\ E. x e. A ph /\ E! x e. B ph ) -> ( iota_ x e. A ph ) = ( iota_ x e. B ph ) ) $=
 	f0 f1 f2 f3 preuss f0 f1 f2 priotasbc f2 f3 awss f0 f1 f2 awrex f0 f1 f3 awreu aw3a f0 f1 f2 awreu f0 f1 f0 f1 f2 acrio awsbc psyl f2 f3 awss f0 f1 f2 awrex f0 f1 f3 awreu psimp1 f0 f1 f2 f3 preuss f0 f1 f2 priotacl f2 f3 awss f0 f1 f2 awrex f0 f1 f3 awreu aw3a f0 f1 f2 awreu f0 f1 f2 acrio f2 awcel psyl f2 f3 awss f0 f1 f2 awrex f0 f1 f3 awreu aw3a f2 f3 f0 f1 f2 acrio psseldd f2 f3 awss f0 f1 f2 awrex f0 f1 f3 awreu psimp3 f0 f1 f2 pnfriota1 f0 f1 f2 pnfriota1 f0 f1 f0 f1 f2 acrio pnfsbc1 f0 f1 f0 f1 f2 acrio psbceq1a f0 f0 f1 f0 f1 f2 acrio awsbc f1 f3 f0 f1 f2 acrio priota2f f2 f3 awss f0 f1 f2 awrex f0 f1 f3 awreu aw3a f0 f1 f2 acrio f3 awcel f0 f1 f3 awreu f0 f1 f0 f1 f2 acrio awsbc f0 f1 f3 acrio f0 f1 f2 acrio awceq awb psyl2anc f2 f3 awss f0 f1 f2 awrex f0 f1 f3 awreu aw3a f0 f1 f0 f1 f2 acrio awsbc f0 f1 f3 acrio f0 f1 f2 acrio awceq pmpbid f2 f3 awss f0 f1 f2 awrex f0 f1 f3 awreu aw3a f0 f1 f3 acrio f0 f1 f2 acrio peqcomd $.
 $}
-$( /* Restriction of a unique element to a smaller class.  (Contributed by NM,
-       19-Feb-2006.)  (Revised by NM, 16-Jun-2017.) */
-
-$)
+$( Restriction of a unique element to a smaller class.  (Contributed by NM,
+       19-Feb-2006.)  (Revised by NM, 16-Jun-2017.) $)
 ${
 	$v ph x A B $.
 	$d x A $.
@@ -587,10 +507,8 @@ ${
 	pmoriotass $p |- ( ( A C_ B /\ E. x e. A ph /\ E* x e. B ph ) -> ( iota_ x e. A ph ) = ( iota_ x e. B ph ) ) $=
 	f0 f1 f2 f3 pssrexv f2 f3 awss f0 f1 f2 awrex f0 f1 f3 awrex pimp f2 f3 awss f0 f1 f2 awrex f0 f1 f3 awrex f0 f1 f3 awrmo p3adant3 f2 f3 awss f0 f1 f2 awrex f0 f1 f3 awrmo psimp3 f0 f1 f3 preu5 f2 f3 awss f0 f1 f2 awrex f0 f1 f3 awrmo aw3a f0 f1 f3 awrex f0 f1 f3 awrmo f0 f1 f3 awreu psylanbrc f0 f1 f2 f3 priotass f2 f3 awss f0 f1 f2 awrex f0 f1 f3 awrmo f0 f1 f3 awreu f0 f1 f2 acrio f0 f1 f3 acrio awceq psyld3an3 $.
 $}
-$( /* A restricted class abstraction with a unique member can be expressed as
-       a singleton.  (Contributed by NM, 30-May-2006.) */
-
-$)
+$( A restricted class abstraction with a unique member can be expressed as
+       a singleton.  (Contributed by NM, 30-May-2006.) $)
 ${
 	$v ph x A $.
 	f0 $f wff ph $.
@@ -599,12 +517,10 @@ ${
 	psnriota $p |- ( E! x e. A ph -> { x e. A | ph } = { ( iota_ x e. A ph ) } ) $=
 	f0 f1 f2 adf-rab f0 f1 f2 adf-reu f1 asup_set_class f2 awcel f0 awa f1 psniota f0 f1 f2 awreu f1 asup_set_class f2 awcel f0 awa f1 aweu f1 asup_set_class f2 awcel f0 awa f1 acab f1 asup_set_class f2 awcel f0 awa f1 acio acsn awceq psylbi f0 f1 f2 awreu f0 f1 f2 acrab f1 asup_set_class f2 awcel f0 awa f1 acab f1 asup_set_class f2 awcel f0 awa f1 acio acsn psyl5eq f0 f1 f2 priotaiota f0 f1 f2 awreu f0 f1 f2 acrio f1 asup_set_class f2 awcel f0 awa f1 acio psneqd f0 f1 f2 awreu f0 f1 f2 acrab f1 asup_set_class f2 awcel f0 awa f1 acio acsn f0 f1 f2 acrio acsn peqtr4d $.
 $}
-$( /* Change the variable ` x ` in the expression for "the unique ` x ` such
+$( Change the variable ` x ` in the expression for "the unique ` x ` such
        that ` ps ` " to another variable ` y ` contained in expression ` B ` .
        Use ~ reuhypd to eliminate the last hypothesis.  (Contributed by NM,
-       16-Jan-2012.)  (Revised by Mario Carneiro, 15-Oct-2016.) */
-
-$)
+       16-Jan-2012.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
 	$v ph ps ch x y A B C $.
 	$d x B $.
@@ -630,11 +546,9 @@ ${
 	priotaxfrd $p |- ( ( ph /\ E! x e. A ps ) -> ( iota_ x e. A ps ) = C ) $=
 	f1 f3 f5 prabid f3 asup_set_class f1 f3 f5 acrab awcel f3 asup_set_class f5 awcel f1 pbaib f3 asup_set_class f1 f3 f5 acrab awcel f1 f3 f5 priotabiia e1 e5 e3 f0 f1 f2 f3 f4 f6 f5 preuxfrd f2 f4 f5 priotacl2 f2 f4 f5 awreu f2 f4 f5 acrio f2 f4 f5 acrab awcel f0 padantl f2 f4 f5 priotacl f2 f4 f5 pnfriota1 e0 e1 e3 e4 f0 f1 f2 f3 f4 f6 f2 f4 f5 acrio f7 f5 prabxfrd f2 f4 f5 awreu f0 f2 f4 f5 acrio f5 awcel f7 f1 f3 f5 acrab awcel f2 f4 f5 acrio f2 f4 f5 acrab awcel awb psylan2 f0 f2 f4 f5 awreu awa f7 f1 f3 f5 acrab awcel f2 f4 f5 acrio f2 f4 f5 acrab awcel pmpbird f0 f2 f4 f5 awreu f7 f1 f3 f5 acrab awcel pex f0 f1 f3 f5 awreu f2 f4 f5 awreu f7 f1 f3 f5 acrab awcel psylbid f0 f1 f3 f5 awreu f7 f1 f3 f5 acrab awcel pimp e1 e5 e3 f0 f1 f2 f3 f4 f6 f5 preuxfrd f2 f4 f5 priotacl e2 f0 f2 f4 f5 acrio f5 awcel f7 f5 awcel pex f2 f4 f5 awreu f2 f4 f5 acrio f5 awcel f0 f7 f5 awcel psyl5 f0 f1 f3 f5 awreu f2 f4 f5 awreu f7 f5 awcel psylbid f0 f1 f3 f5 awreu f7 f5 awcel pimp f1 f3 f5 prabid f3 asup_set_class f1 f3 f5 acrab awcel f3 asup_set_class f5 awcel f1 pbaibr f1 f3 asup_set_class f1 f3 f5 acrab awcel f3 f5 preubiia f1 f3 f5 awreu f3 asup_set_class f1 f3 f5 acrab awcel f3 f5 awreu pbiimpi f1 f3 f5 awreu f3 asup_set_class f1 f3 f5 acrab awcel f3 f5 awreu f0 padantl f3 f7 pnfcv f1 f3 f5 pnfrab1 f3 f7 f1 f3 f5 acrab pnfel2 f3 asup_set_class f7 f1 f3 f5 acrab peleq1 f3 asup_set_class f1 f3 f5 acrab awcel f7 f1 f3 f5 acrab awcel f3 f5 f7 priota2f f0 f1 f3 f5 awreu awa f7 f5 awcel f3 asup_set_class f1 f3 f5 acrab awcel f3 f5 awreu f7 f1 f3 f5 acrab awcel f3 asup_set_class f1 f3 f5 acrab awcel f3 f5 acrio f7 awceq awb psyl2anc f0 f1 f3 f5 awreu awa f7 f1 f3 f5 acrab awcel f3 asup_set_class f1 f3 f5 acrab awcel f3 f5 acrio f7 awceq pmpbid f0 f1 f3 f5 awreu awa f1 f3 f5 acrio f3 asup_set_class f1 f3 f5 acrab awcel f3 f5 acrio f7 psyl5eqr $.
 $}
-$( /* Specify the same property in two ways when class ` B ( y ) ` is
+$( Specify the same property in two ways when class ` B ( y ) ` is
        single-valued.  (Contributed by NM, 1-Nov-2010.)  (Proof shortened by
-       Mario Carneiro, 24-Dec-2016.) */
-
-$)
+       Mario Carneiro, 24-Dec-2016.) $)
 ${
 	$v x y z A B $.
 	$d x y z A $.
@@ -648,11 +562,9 @@ ${
 	peusvobj2 $p |- ( E! x E. y e. A x = B -> ( E. y e. A x = B <-> A. y e. A x = B ) ) $=
 	f0 asup_set_class f3 awceq f1 f2 awrex f0 i0 peuabsn2 f0 asup_set_class f3 awceq f1 f2 awrex f0 acab i0 asup_set_class acsn f0 asup_set_class peleq2 f0 asup_set_class f3 awceq f1 f2 awrex f0 pabid f0 i0 asup_set_class pelsn f0 asup_set_class f3 awceq f1 f2 awrex f0 acab i0 asup_set_class acsn awceq f0 asup_set_class f0 asup_set_class f3 awceq f1 f2 awrex f0 acab awcel f0 asup_set_class i0 asup_set_class acsn awcel f0 asup_set_class f3 awceq f1 f2 awrex f0 asup_set_class i0 asup_set_class awceq p3bitr3g f0 asup_set_class f3 awceq f1 f2 pnfre1 f0 asup_set_class f3 awceq f1 f2 awrex f1 f0 pnfab f1 f0 asup_set_class f3 awceq f1 f2 awrex f0 acab i0 asup_set_class acsn pnfeq1 e0 f1 f0 f2 f3 pelabrex f0 asup_set_class f3 awceq f1 f2 awrex f0 acab i0 asup_set_class acsn f3 peleq2 e0 f3 i0 asup_set_class pelsnc f3 i0 asup_set_class peqcom f3 i0 asup_set_class acsn awcel f3 i0 asup_set_class awceq i0 asup_set_class f3 awceq pbitri f0 asup_set_class f3 awceq f1 f2 awrex f0 acab i0 asup_set_class acsn awceq f3 f0 asup_set_class f3 awceq f1 f2 awrex f0 acab awcel f3 i0 asup_set_class acsn awcel i0 asup_set_class f3 awceq psyl6bb f1 asup_set_class f2 awcel f3 f0 asup_set_class f3 awceq f1 f2 awrex f0 acab awcel f0 asup_set_class f3 awceq f1 f2 awrex f0 acab i0 asup_set_class acsn awceq i0 asup_set_class f3 awceq psyl5ib f0 asup_set_class f3 awceq f1 f2 awrex f0 acab i0 asup_set_class acsn awceq i0 asup_set_class f3 awceq f1 f2 pralrimi f0 asup_set_class i0 asup_set_class f3 peqeq1 f0 asup_set_class i0 asup_set_class awceq f0 asup_set_class f3 awceq i0 asup_set_class f3 awceq f1 f2 pralbidv f0 asup_set_class f3 awceq f1 f2 awrex f0 acab i0 asup_set_class acsn awceq f0 asup_set_class f3 awceq f1 f2 awral f0 asup_set_class i0 asup_set_class awceq i0 asup_set_class f3 awceq f1 f2 awral psyl5ibrcom f0 asup_set_class f3 awceq f1 f2 awrex f0 acab i0 asup_set_class acsn awceq f0 asup_set_class f3 awceq f1 f2 awrex f0 asup_set_class i0 asup_set_class awceq f0 asup_set_class f3 awceq f1 f2 awral psylbid f0 asup_set_class f3 awceq f1 f2 awrex f0 acab i0 asup_set_class acsn awceq f0 asup_set_class f3 awceq f1 f2 awrex f0 asup_set_class f3 awceq f1 f2 awral awi i0 pexlimiv f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu f0 asup_set_class f3 awceq f1 f2 awrex f0 acab i0 asup_set_class acsn awceq i0 awex f0 asup_set_class f3 awceq f1 f2 awrex f0 asup_set_class f3 awceq f1 f2 awral awi psylbi f0 asup_set_class f3 awceq f1 f2 awrex f0 peuex f0 asup_set_class f3 awceq f1 f2 prexn0 f0 asup_set_class f3 awceq f1 f2 awrex f2 ac0 awne f0 pexlimiv f0 asup_set_class f3 awceq f1 f2 pr19.2z f2 ac0 awne f0 asup_set_class f3 awceq f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex pex f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu f0 asup_set_class f3 awceq f1 f2 awrex f0 awex f2 ac0 awne f0 asup_set_class f3 awceq f1 f2 awral f0 asup_set_class f3 awceq f1 f2 awrex awi p3syl f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu f0 asup_set_class f3 awceq f1 f2 awrex f0 asup_set_class f3 awceq f1 f2 awral pimpbid $.
 $}
-$( /* Specify the same object in two ways when class ` B ( y ) ` is
+$( Specify the same object in two ways when class ` B ( y ) ` is
        single-valued.  (Contributed by NM, 1-Nov-2010.)  (Proof shortened by
-       Mario Carneiro, 19-Nov-2016.) */
-
-$)
+       Mario Carneiro, 19-Nov-2016.) $)
 ${
 	$v x y A B $.
 	$d x y A $.
@@ -665,10 +577,8 @@ ${
 	peusvobj1 $p |- ( E! x E. y e. A x = B -> ( iota x E. y e. A x = B ) = ( iota x A. y e. A x = B ) ) $=
 	f0 asup_set_class f3 awceq f1 f2 awrex f0 pnfeu1 e0 f0 f1 f2 f3 peusvobj2 f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu f0 asup_set_class f3 awceq f1 f2 awrex f0 asup_set_class f3 awceq f1 f2 awral awb f0 palrimi f0 asup_set_class f3 awceq f1 f2 awrex f0 asup_set_class f3 awceq f1 f2 awral f0 piotabi f0 asup_set_class f3 awceq f1 f2 awrex f0 aweu f0 asup_set_class f3 awceq f1 f2 awrex f0 asup_set_class f3 awceq f1 f2 awral awb f0 awal f0 asup_set_class f3 awceq f1 f2 awrex f0 acio f0 asup_set_class f3 awceq f1 f2 awral f0 acio awceq psyl $.
 $}
-$( /* There is one domain element for each value of a one-to-one onto
-       function.  (Contributed by NM, 26-May-2006.) */
-
-$)
+$( There is one domain element for each value of a one-to-one onto
+       function.  (Contributed by NM, 26-May-2006.) $)
 ${
 	$v x A B C F $.
 	$d x A $.
@@ -683,10 +593,8 @@ ${
 	pf1ofveu $p |- ( ( F : A -1-1-onto-> B /\ C e. B ) -> E! x e. A ( F ` x ) = C ) $=
 	f1 f2 f4 pf1ocnv f2 f1 f4 accnv pf1of f1 f2 f4 awf1o f2 f1 f4 accnv awf1o f2 f1 f4 accnv awf psyl f0 f2 f1 f3 f4 accnv pfeu f1 f2 f4 awf1o f2 f1 f4 accnv awf f3 f2 awcel f3 f0 asup_set_class acop f4 accnv awcel f0 f1 awreu psylan f1 f2 f0 asup_set_class f3 f4 pf1ocnvfvb f1 f2 f4 awf1o f0 asup_set_class f1 awcel f3 f2 awcel f0 asup_set_class f4 acfv f3 awceq f3 f4 accnv acfv f0 asup_set_class awceq awb p3com23 f1 f2 f4 pdff1o4 f1 f2 f4 awf1o f4 f1 awfn f4 accnv f2 awfn psimprbi f2 f3 f0 asup_set_class f4 accnv pfnopfvb f4 accnv f2 awfn f3 f2 awcel f3 f4 accnv acfv f0 asup_set_class awceq f3 f0 asup_set_class acop f4 accnv awcel awb f0 asup_set_class f1 awcel p3adant3 f1 f2 f4 awf1o f4 accnv f2 awfn f3 f2 awcel f0 asup_set_class f1 awcel f3 f4 accnv acfv f0 asup_set_class awceq f3 f0 asup_set_class acop f4 accnv awcel awb psyl3an1 f1 f2 f4 awf1o f3 f2 awcel f0 asup_set_class f1 awcel aw3a f0 asup_set_class f4 acfv f3 awceq f3 f4 accnv acfv f0 asup_set_class awceq f3 f0 asup_set_class acop f4 accnv awcel pbitrd f1 f2 f4 awf1o f3 f2 awcel f0 asup_set_class f1 awcel f0 asup_set_class f4 acfv f3 awceq f3 f0 asup_set_class acop f4 accnv awcel awb p3expa f1 f2 f4 awf1o f3 f2 awcel awa f0 asup_set_class f4 acfv f3 awceq f3 f0 asup_set_class acop f4 accnv awcel f0 f1 preubidva f1 f2 f4 awf1o f3 f2 awcel awa f0 asup_set_class f4 acfv f3 awceq f0 f1 awreu f3 f0 asup_set_class acop f4 accnv awcel f0 f1 awreu pmpbird $.
 $}
-$( /* Value of the converse of a one-to-one onto function.  (Contributed by
-       NM, 26-May-2006.)  (Proof shortened by Mario Carneiro, 24-Dec-2016.) */
-
-$)
+$( Value of the converse of a one-to-one onto function.  (Contributed by
+       NM, 26-May-2006.)  (Proof shortened by Mario Carneiro, 24-Dec-2016.) $)
 ${
 	$v x A B C F $.
 	$d x A $.
@@ -701,11 +609,9 @@ ${
 	pf1ocnvfv3 $p |- ( ( F : A -1-1-onto-> B /\ C e. B ) -> ( `' F ` C ) = ( iota_ x e. A ( F ` x ) = C ) ) $=
 	f1 f2 f3 f4 pf1ocnvdm f1 f2 f0 asup_set_class f3 f4 pf1ocnvfvb f1 f2 f4 awf1o f0 asup_set_class f1 awcel f3 f2 awcel f0 asup_set_class f4 acfv f3 awceq f3 f4 accnv acfv f0 asup_set_class awceq awb p3expa f1 f2 f4 awf1o f0 asup_set_class f1 awcel f3 f2 awcel f0 asup_set_class f4 acfv f3 awceq f3 f4 accnv acfv f0 asup_set_class awceq awb pan32s f0 asup_set_class f3 f4 accnv acfv peqcom f1 f2 f4 awf1o f3 f2 awcel awa f0 asup_set_class f1 awcel awa f0 asup_set_class f4 acfv f3 awceq f3 f4 accnv acfv f0 asup_set_class awceq f0 asup_set_class f3 f4 accnv acfv awceq psyl6bbr f1 f2 f4 awf1o f3 f2 awcel awa f0 asup_set_class f4 acfv f3 awceq f0 f1 f3 f4 accnv acfv priota5 f1 f2 f4 awf1o f3 f2 awcel awa f0 asup_set_class f4 acfv f3 awceq f0 f1 acrio f3 f4 accnv acfv peqcomd $.
 $}
-$( /* Restricted iota equals the undefined value of its domain of discourse
+$( Restricted iota equals the undefined value of its domain of discourse
        ` A ` when not meaningful.  (Contributed by NM, 16-Jan-2012.)  (Revised
-       by Mario Carneiro, 15-Oct-2016.) */
-
-$)
+       by Mario Carneiro, 15-Oct-2016.) $)
 ${
 	$v ph x A $.
 	$d x A $.
@@ -715,10 +621,8 @@ ${
 	priotaund $p |- ( -. E! x e. A ph -> ( iota_ x e. A ph ) = ( Undef ` A ) ) $=
 	f0 f1 f2 awreu f1 asup_set_class f2 awcel f0 awa f1 acio f1 asup_set_class f2 awcel f1 acab acund acfv piffalse f0 f1 f2 adf-riota f1 f2 pabid2 f1 asup_set_class f2 awcel f1 acab f2 peqcomi f2 f1 asup_set_class f2 awcel f1 acab acund pfveq2i f0 f1 f2 awreu awn f0 f1 f2 awreu f1 asup_set_class f2 awcel f0 awa f1 acio f1 asup_set_class f2 awcel f1 acab acund acfv acif f1 asup_set_class f2 awcel f1 acab acund acfv f0 f1 f2 acrio f2 acund acfv p3eqtr4g $.
 $}
-$( /* For proper classes, restricted and unrestricted iota are the same.
-       (Contributed by NM, 15-Sep-2011.) */
-
-$)
+$( For proper classes, restricted and unrestricted iota are the same.
+       (Contributed by NM, 15-Sep-2011.) $)
 ${
 	$v ph x A $.
 	$d x A $.
@@ -728,10 +632,8 @@ ${
 	priotaprc $p |- ( -. A e. _V -> ( iota_ x e. A ph ) = ( iota x ( x e. A /\ ph ) ) ) $=
 	f2 acund pfvprc f2 acvv awcel awn f2 acund acfv ac0 awceq f0 f1 f2 awreu awn padantr f0 f1 f2 priotaund f0 f1 f2 awreu awn f0 f1 f2 acrio f2 acund acfv awceq f2 acvv awcel awn padantl f0 f1 f2 adf-reu f1 asup_set_class f2 awcel f0 awa f1 piotanul f0 f1 f2 awreu f1 asup_set_class f2 awcel f0 awa f1 aweu f1 asup_set_class f2 awcel f0 awa f1 acio ac0 awceq psylnbi f0 f1 f2 awreu awn f1 asup_set_class f2 awcel f0 awa f1 acio ac0 awceq f2 acvv awcel awn padantl f2 acvv awcel awn f0 f1 f2 awreu awn awa f2 acund acfv ac0 f0 f1 f2 acrio f1 asup_set_class f2 awcel f0 awa f1 acio p3eqtr4d f2 acvv awcel awn f0 f1 f2 awreu awn f0 f1 f2 acrio f1 asup_set_class f2 awcel f0 awa f1 acio awceq pex f0 f1 f2 priotaiota f2 acvv awcel awn f0 f1 f2 awreu f0 f1 f2 acrio f1 asup_set_class f2 awcel f0 awa f1 acio awceq ppm2.61d2 $.
 $}
-$( /* The restricted iota class is limited in size by the base set.
-       (Contributed by Mario Carneiro, 24-Dec-2016.) */
-
-$)
+$( The restricted iota class is limited in size by the base set.
+       (Contributed by Mario Carneiro, 24-Dec-2016.) $)
 ${
 	$v ph x A $.
 	$d x A $.
@@ -741,10 +643,8 @@ ${
 	priotassuni $p |- ( iota_ x e. A ph ) C_ ( ~P U. A u. U. A ) $=
 	f0 f1 f2 priotauni f0 f1 f2 pssrab2 f0 f1 f2 acrab f2 puniss f0 f1 f2 acrab f2 awss f0 f1 f2 acrab acuni f2 acuni awss aax-mp f2 acuni f2 acuni acpw pssun2 f0 f1 f2 acrab acuni f2 acuni f2 acuni acpw f2 acuni acun psstri f0 f1 f2 acrab acuni f2 acuni acpw f2 acuni acun awss f0 f1 f2 awreu pa1i f0 f1 f2 awreu f0 f1 f2 acrio f0 f1 f2 acrab acuni f2 acuni acpw f2 acuni acun peqsstrd f0 f1 f2 priotaund f2 acvv pundefval f2 acvv awcel f2 acund acfv f2 acuni acpw awceq f0 f1 f2 awreu awn padantl f2 acuni acpw f2 acuni pssun1 f2 acuni acpw f2 acuni acpw f2 acuni acun awss f0 f1 f2 awreu awn f2 acvv awcel awa pa1i f0 f1 f2 awreu awn f2 acvv awcel awa f2 acund acfv f2 acuni acpw f2 acuni acpw f2 acuni acun peqsstrd f2 acund pfvprc f2 acvv awcel awn f2 acund acfv ac0 awceq f0 f1 f2 awreu awn padantl f2 acuni acpw f2 acuni acun p0ss ac0 f2 acuni acpw f2 acuni acun awss f0 f1 f2 awreu awn f2 acvv awcel awn awa pa1i f0 f1 f2 awreu awn f2 acvv awcel awn awa f2 acund acfv ac0 f2 acuni acpw f2 acuni acun peqsstrd f0 f1 f2 awreu awn f2 acvv awcel f2 acund acfv f2 acuni acpw f2 acuni acun awss ppm2.61dan f0 f1 f2 awreu awn f0 f1 f2 acrio f2 acund acfv f2 acuni acpw f2 acuni acun peqsstrd f0 f1 f2 awreu f0 f1 f2 acrio f2 acuni acpw f2 acuni acun awss ppm2.61i $.
 $}
-$( /* Closure of restricted iota.  (Contributed by NM, 28-Feb-2013.)  (Revised
-       by Mario Carneiro, 24-Dec-2016.) */
-
-$)
+$( Closure of restricted iota.  (Contributed by NM, 28-Feb-2013.)  (Revised
+       by Mario Carneiro, 24-Dec-2016.) $)
 ${
 	$v ph x A V $.
 	$d x A $.
@@ -755,9 +655,7 @@ ${
 	priotaclbg $p |- ( A e. V -> ( E! x e. A ph <-> ( iota_ x e. A ph ) e. A ) ) $=
 	f0 f1 f2 priotacl f2 f3 pundefnel2 f0 f1 f2 priotaund f0 f1 f2 awreu awn f0 f1 f2 acrio f2 acund acfv f2 peleq1d f0 f1 f2 awreu awn f0 f1 f2 acrio f2 awcel f2 acund acfv f2 awcel pnotbid f2 f3 awcel f0 f1 f2 acrio f2 awcel awn f0 f1 f2 awreu awn f2 acund acfv f2 awcel awn psyl5ibrcom f2 f3 awcel f0 f1 f2 awreu f0 f1 f2 acrio f2 awcel pcon4d f2 f3 awcel f0 f1 f2 awreu f0 f1 f2 acrio f2 awcel pimpbid2 $.
 $}
-$( /* Closure of restricted iota.  (Contributed by NM, 15-Sep-2011.) */
-
-$)
+$( Closure of restricted iota.  (Contributed by NM, 15-Sep-2011.) $)
 ${
 	$v ph x A $.
 	$d x A $.
@@ -768,10 +666,8 @@ ${
 	priotaclb $p |- ( E! x e. A ph <-> ( iota_ x e. A ph ) e. A ) $=
 	e0 f0 f1 f2 acvv priotaclbg f2 acvv awcel f0 f1 f2 awreu f0 f1 f2 acrio f2 awcel awb aax-mp $.
 $}
-$( /* Restricted iota equals the undefined value of its domain of discourse
-       ` A ` when not meaningful.  (Contributed by NM, 26-Sep-2011.) */
-
-$)
+$( Restricted iota equals the undefined value of its domain of discourse
+       ` A ` when not meaningful.  (Contributed by NM, 26-Sep-2011.) $)
 ${
 	$v ph x A $.
 	$d x A $.
@@ -782,10 +678,8 @@ ${
 	priotaundb $p |- ( -. E! x e. A ph <-> ( iota_ x e. A ph ) = ( Undef ` A ) ) $=
 	f0 f1 f2 priotaund f0 f1 f2 priotacl e0 f2 acvv pundefnel2 f2 acvv awcel f2 acund acfv f2 awcel awn aax-mp f0 f1 f2 acrio f2 acund acfv f2 pnelne2 f0 f1 f2 awreu f0 f1 f2 acrio f2 awcel f2 acund acfv f2 awcel awn f0 f1 f2 acrio f2 acund acfv awne psylancl f0 f1 f2 awreu f0 f1 f2 acrio f2 acund acfv pnecon2bi f0 f1 f2 awreu awn f0 f1 f2 acrio f2 acund acfv awceq pimpbii $.
 $}
-$( /* Deduction version of ~ riotasv .  (Contributed by NM, 4-Mar-2013.)
-       (Revised by Mario Carneiro, 15-Oct-2016.) */
-
-$)
+$( Deduction version of ~ riotasv .  (Contributed by NM, 4-Mar-2013.)
+       (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
 	$v ph ps x y z A B C D V $.
 	$d x y z A $.
@@ -809,10 +703,8 @@ ${
 	priotasvd $p |- ( ( ph /\ A e. V ) -> ( ( y e. B /\ ps ) -> D = C ) ) $=
 	e0 f0 f7 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio awceq f4 f8 awcel padantr e1 f0 f7 f4 awcel f4 f8 awcel padantr f0 f4 f8 awcel awa f7 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f4 peqeltrrd f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 f8 priotaclbg f4 f8 awcel f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 awreu f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f4 awcel awb f0 padantl f0 f4 f8 awcel awa f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 awreu f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f4 awcel pmpbird f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 priotasbc f0 f4 f8 awcel awa f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 awreu f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio awsbc psyl e0 f0 f7 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio awceq f4 f8 awcel padantr e1 f0 f7 f4 awcel f4 f8 awcel padantr f0 f4 f8 awcel awa f7 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f4 peqeltrrd f2 asup_set_class i0 asup_set_class f6 peqeq1 f2 asup_set_class i0 asup_set_class awceq f2 asup_set_class f6 awceq i0 asup_set_class f6 awceq f1 pimbi2d f2 asup_set_class i0 asup_set_class awceq f1 f2 asup_set_class f6 awceq awi f1 i0 asup_set_class f6 awceq awi f3 f5 pralbidv f1 f2 asup_set_class f6 awceq awi f3 f5 pnfra1 f3 f4 pnfcv f1 f2 asup_set_class f6 awceq awi f3 f5 awral f3 f2 f4 pnfriota f3 i0 asup_set_class f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio pnfeq2 i0 asup_set_class f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f6 peqeq1 i0 asup_set_class f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio awceq i0 asup_set_class f6 awceq f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f6 awceq f1 pimbi2d i0 asup_set_class f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio awceq f1 i0 asup_set_class f6 awceq awi f1 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f6 awceq awi f3 f5 pralbid f1 f2 asup_set_class f6 awceq awi f3 f5 awral f1 i0 asup_set_class f6 awceq awi f3 f5 awral f1 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f6 awceq awi f3 f5 awral f2 i0 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f4 psbcie2g f0 f4 f8 awcel awa f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f4 awcel f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio awsbc f1 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f6 awceq awi f3 f5 awral awb psyl f0 f4 f8 awcel awa f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio awsbc f1 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f6 awceq awi f3 f5 awral pmpbid f1 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f6 awceq awi f3 f5 prsp f0 f4 f8 awcel awa f1 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f6 awceq awi f3 f5 awral f3 asup_set_class f5 awcel f1 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f6 awceq awi awi psyl f0 f4 f8 awcel awa f3 asup_set_class f5 awcel f1 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f6 awceq pimp3a e0 f0 f7 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio awceq f4 f8 awcel padantr f0 f4 f8 awcel awa f7 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f6 peqeq1d f0 f4 f8 awcel awa f3 asup_set_class f5 awcel f1 awa f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f6 awceq f7 f6 awceq psylibrd $.
 $}
-$( /* Deduction version of ~ riotasv .  (Contributed by NM, 1-Feb-2013.)
-       (Proof modification is discouraged.)  (New usage is discouraged.) */
-
-$)
+$( Deduction version of ~ riotasv .  (Contributed by NM, 1-Feb-2013.)
+       (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
 	$v ph ps x y A B C D V $.
 	$d x y A $.
@@ -834,11 +726,9 @@ ${
 	priotasvdOLD $p |- ( ( ( ph /\ A e. V ) /\ D e. A /\ ( y e. B /\ ps ) ) -> D = C ) $=
 	e2 f0 f7 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio peqcomd f0 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f7 awceq f4 f8 awcel f7 f4 awcel pad2antrr e2 f0 f7 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f4 peleq1d f0 f7 f4 awcel f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f4 awcel awb f4 f8 awcel padantr f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 f8 priotaclbg f4 f8 awcel f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 awreu f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f4 awcel awb f0 padantl f0 f4 f8 awcel awa f7 f4 awcel f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f4 awcel f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 awreu pbitr4d f0 f4 f8 awcel awa f7 f4 awcel f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 awreu pbiimpa e0 f0 f2 pnfi f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 pnfriota1 e0 f0 f2 pnfi e2 f0 f2 f7 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio pnfceqdf f0 f2 f7 awnfc f2 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio awnfc pmpbiri f0 f2 f4 pnfcvd f0 f2 f7 f4 pnfeld f0 f7 f4 awcel f2 pnfan1 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 pnfriota1 e0 f0 f2 pnfi e2 f0 f2 f7 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio pnfceqdf f0 f2 f7 awnfc f2 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio awnfc pmpbiri f0 f2 f7 awnfc f7 f4 awcel padantr e1 f0 f3 pnfi f1 f2 asup_set_class f6 awceq awi f3 f5 pnfra1 f3 f4 pnfcv f1 f2 asup_set_class f6 awceq awi f3 f5 awral f3 f2 f4 pnfriota e1 f0 f3 pnfi e2 f0 f3 f7 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio pnfceqdf f0 f3 f7 awnfc f3 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio awnfc pmpbiri f0 f3 f4 pnfcvd f0 f3 f7 f4 pnfeld f0 f7 f4 awcel f3 pnfan1 f0 f7 f4 awcel awa f2 f5 pnfcvd f0 f7 f4 awcel awa f1 f2 pnfvd f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 pnfriota1 e0 f0 f2 pnfi e2 f0 f2 f7 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio pnfceqdf f0 f2 f7 awnfc f2 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio awnfc pmpbiri f0 f2 f7 awnfc f7 f4 awcel padantr f0 f7 f4 awcel awa f2 f6 pnfcvd f0 f7 f4 awcel awa f2 f7 f6 pnfeqd f0 f7 f4 awcel awa f1 f7 f6 awceq f2 pnfimd f0 f7 f4 awcel awa f1 f7 f6 awceq awi f2 f3 f5 pnfrald f0 f7 f4 awcel psimpr e1 f0 f3 pnfi f0 f3 f2 asup_set_class pnfcvd f1 f2 asup_set_class f6 awceq awi f3 f5 pnfra1 f3 f4 pnfcv f1 f2 asup_set_class f6 awceq awi f3 f5 awral f3 f2 f4 pnfriota e1 f0 f3 pnfi e2 f0 f3 f7 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio pnfceqdf f0 f3 f7 awnfc f3 f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio awnfc pmpbiri f0 f3 f2 asup_set_class f7 pnfeqd f0 f2 asup_set_class f7 awceq f3 pnfan1 f2 asup_set_class f7 f6 peqeq1 f2 asup_set_class f7 awceq f2 asup_set_class f6 awceq f7 f6 awceq awb f0 padantl f0 f2 asup_set_class f7 awceq awa f2 asup_set_class f6 awceq f7 f6 awceq f1 pimbi2d f0 f2 asup_set_class f7 awceq awa f1 f2 asup_set_class f6 awceq awi f1 f7 f6 awceq awi f3 f5 pralbid f0 f2 asup_set_class f7 awceq f1 f2 asup_set_class f6 awceq awi f3 f5 awral f1 f7 f6 awceq awi f3 f5 awral awb f7 f4 awcel padantlr f0 f7 f4 awcel awa f1 f2 asup_set_class f6 awceq awi f3 f5 awral f1 f7 f6 awceq awi f3 f5 awral f2 f4 f7 priota2df f0 f7 f4 awcel f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 awreu f1 f7 f6 awceq awi f3 f5 awral f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f7 awceq awb f4 f8 awcel padantllr f0 f4 f8 awcel awa f7 f4 awcel awa f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 awreu f1 f7 f6 awceq awi f3 f5 awral f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f7 awceq awb pmpdan f0 f4 f8 awcel awa f7 f4 awcel awa f1 f7 f6 awceq awi f3 f5 awral f1 f2 asup_set_class f6 awceq awi f3 f5 awral f2 f4 acrio f7 awceq pmpbird f0 f4 f8 awcel awa f7 f4 awcel f1 f7 f6 awceq awi f3 f5 awral pex f1 f7 f6 awceq awi f3 f5 prsp f0 f4 f8 awcel awa f7 f4 awcel f1 f7 f6 awceq awi f3 f5 awral f3 asup_set_class f5 awcel f1 f7 f6 awceq awi awi psyl6 f0 f4 f8 awcel awa f7 f4 awcel f3 asup_set_class f5 awcel f1 f7 f6 awceq pimp4a f0 f4 f8 awcel awa f7 f4 awcel f3 asup_set_class f5 awcel f1 awa f7 f6 awceq p3imp $.
 $}
-$( /* Value of description binder ` D ` for a single-valued class expression
+$( Value of description binder ` D ` for a single-valued class expression
        ` C ( y ) ` (as in e.g. ~ reusv2 ).  Special case of ~ riota2f .
-       (Contributed by NM, 2-Mar-2013.) */
-
-$)
+       (Contributed by NM, 2-Mar-2013.) $)
 ${
 	$v ph ps ch x y A B C D F E V $.
 	$d x y A $.
@@ -870,12 +760,10 @@ ${
 	priotasv2d $p |- ( ( ph /\ A e. V ) -> D = F ) $=
 	f5 f11 pelex e7 f0 f9 f6 awcel f5 acvv awcel padantr e8 f0 f2 f5 acvv awcel padantr e7 f0 f9 f6 awcel f5 acvv awcel padantr f4 asup_set_class f9 f6 peleq1 f4 asup_set_class f9 awceq f4 asup_set_class f6 awcel f9 f6 awcel awb f0 padantl e4 f0 f4 asup_set_class f9 awceq awa f4 asup_set_class f6 awcel f9 f6 awcel f1 f2 panbi12d e5 f0 f4 asup_set_class f9 awceq awa f7 f10 f8 peqeq2d f0 f4 asup_set_class f9 awceq awa f4 asup_set_class f6 awcel f1 awa f9 f6 awcel f2 awa f8 f7 awceq f8 f10 awceq pimbi12d f0 f4 asup_set_class f9 awceq f4 asup_set_class f6 awcel f1 awa f8 f7 awceq awi f9 f6 awcel f2 awa f8 f10 awceq awi awb f5 acvv awcel padantlr e3 e6 f0 f1 f3 f4 f5 f6 f7 f8 acvv priotasvd e0 f5 acvv awcel f4 pnfv f0 f5 acvv awcel f4 pnfan f0 f5 acvv awcel awa f4 f9 pnfcvd f0 f9 f6 awcel f4 pnfvd e2 f0 f9 f6 awcel f2 f4 pnfand f1 f3 asup_set_class f7 awceq awi f4 f6 pnfra1 f4 f5 pnfcv f1 f3 asup_set_class f7 awceq awi f4 f6 awral f4 f3 f5 pnfriota e0 e3 f0 f4 f8 f1 f3 asup_set_class f7 awceq awi f4 f6 awral f3 f5 acrio pnfceqdf f0 f4 f8 awnfc f4 f1 f3 asup_set_class f7 awceq awi f4 f6 awral f3 f5 acrio awnfc pmpbiri e1 f0 f4 f8 f10 pnfeqd f0 f9 f6 awcel f2 awa f8 f10 awceq f4 pnfimd f0 f9 f6 awcel f2 awa f8 f10 awceq awi f4 awnf f5 acvv awcel padantr f0 f5 acvv awcel awa f4 asup_set_class f6 awcel f1 awa f8 f7 awceq awi f9 f6 awcel f2 awa f8 f10 awceq awi f4 f9 f6 pvtocldf f0 f5 acvv awcel awa f9 f6 awcel f2 f8 f10 awceq pmp2and f5 f11 awcel f0 f5 acvv awcel f8 f10 awceq psylan2 $.
 $}
-$( /* Value of description binder ` D ` for a single-valued class expression
+$( Value of description binder ` D ` for a single-valued class expression
        ` C ( y ) ` (as in e.g. ~ reusv2 ).  Special case of ~ riota2f .
        (Contributed by NM, 1-Feb-2013.)  (Proof modification is discouraged.)
-       (New usage is discouraged.) */
-
-$)
+       (New usage is discouraged.) $)
 ${
 	$v ph ps ch x y z A B C D F E V $.
 	$d x y z A $.
@@ -909,12 +797,10 @@ ${
 	priotasv2dOLD $p |- ( ( ( ph /\ A e. V ) /\ ( D e. A /\ E e. B /\ ch ) ) -> D = F ) $=
 	f6 f12 pelex f0 f6 acvv awcel awa f10 f7 awcel awa f4 f10 pnfcvd f1 f3 asup_set_class f8 awceq awi f4 f7 pnfra1 f4 f6 pnfcv f1 f3 asup_set_class f8 awceq awi f4 f7 awral f4 f3 f6 pnfriota e1 f0 f4 pnfi f6 acvv awcel f4 pnfv f0 f6 acvv awcel f4 pnfan f10 f7 awcel f4 pnfv f0 f6 acvv awcel awa f10 f7 awcel f4 pnfan e4 f0 f9 f1 f3 asup_set_class f8 awceq awi f4 f7 awral f3 f6 acrio awceq f6 acvv awcel f10 f7 awcel pad2antrr f0 f6 acvv awcel awa f10 f7 awcel awa f4 f9 f1 f3 asup_set_class f8 awceq awi f4 f7 awral f3 f6 acrio pnfceqdf f0 f6 acvv awcel awa f10 f7 awcel awa f4 f9 awnfc f4 f1 f3 asup_set_class f8 awceq awi f4 f7 awral f3 f6 acrio awnfc pmpbiri f0 f6 acvv awcel awa f10 f7 awcel awa f4 f6 pnfcvd f0 f6 acvv awcel awa f10 f7 awcel awa f4 f9 f6 pnfeld f0 f6 acvv awcel awa f10 f7 awcel awa f10 f7 awcel f4 pnfvd e1 f0 f4 pnfi e3 f0 f2 f4 pnfd f0 f2 f4 awnf f6 acvv awcel f10 f7 awcel pad2antrr f0 f6 acvv awcel awa f10 f7 awcel awa f9 f6 awcel f10 f7 awcel f2 f4 pnf3and f1 f3 asup_set_class f8 awceq awi f4 f7 pnfra1 f4 f6 pnfcv f1 f3 asup_set_class f8 awceq awi f4 f7 awral f4 f3 f6 pnfriota e1 f0 f4 pnfi f6 acvv awcel f4 pnfv f0 f6 acvv awcel f4 pnfan f10 f7 awcel f4 pnfv f0 f6 acvv awcel awa f10 f7 awcel f4 pnfan e4 f0 f9 f1 f3 asup_set_class f8 awceq awi f4 f7 awral f3 f6 acrio awceq f6 acvv awcel f10 f7 awcel pad2antrr f0 f6 acvv awcel awa f10 f7 awcel awa f4 f9 f1 f3 asup_set_class f8 awceq awi f4 f7 awral f3 f6 acrio pnfceqdf f0 f6 acvv awcel awa f10 f7 awcel awa f4 f9 awnfc f4 f1 f3 asup_set_class f8 awceq awi f4 f7 awral f3 f6 acrio awnfc pmpbiri f0 f5 pnfv e1 f0 f4 pnfi e2 f0 f5 asup_set_class f11 awcel f4 pnfd f0 f4 f5 f11 pnfcd f0 f4 f11 awnfc f6 acvv awcel f10 f7 awcel pad2antrr f0 f6 acvv awcel awa f10 f7 awcel awa f4 f9 f11 pnfeqd f0 f6 acvv awcel awa f10 f7 awcel awa f9 f6 awcel f10 f7 awcel f2 aw3a f9 f11 awceq f4 pnfimd e1 f0 f4 pnfi f6 acvv awcel f4 pnfv f0 f6 acvv awcel f4 pnfan f10 f7 awcel f4 pnfv f0 f6 acvv awcel awa f10 f7 awcel f4 pnfan f4 asup_set_class f10 f7 peleq1 f4 asup_set_class f10 awceq f4 asup_set_class f7 awcel f10 f7 awcel awb f0 padantl e5 f0 f4 asup_set_class f10 awceq f1 f2 awb pimp f0 f4 asup_set_class f10 awceq awa f4 asup_set_class f7 awcel f10 f7 awcel f1 f2 f9 f6 awcel p3anbi23d e6 f0 f4 asup_set_class f10 awceq f8 f11 awceq pimp f0 f4 asup_set_class f10 awceq awa f8 f11 f9 peqeq2d f0 f4 asup_set_class f10 awceq awa f9 f6 awcel f4 asup_set_class f7 awcel f1 aw3a f9 f6 awcel f10 f7 awcel f2 aw3a f9 f8 awceq f9 f11 awceq pimbi12d f0 f4 asup_set_class f10 awceq f9 f6 awcel f4 asup_set_class f7 awcel f1 aw3a f9 f8 awceq awi f9 f6 awcel f10 f7 awcel f2 aw3a f9 f11 awceq awi awb pex f0 f4 asup_set_class f10 awceq f9 f6 awcel f4 asup_set_class f7 awcel f1 aw3a f9 f8 awceq awi f9 f6 awcel f10 f7 awcel f2 aw3a f9 f11 awceq awi awb awi f6 acvv awcel f10 f7 awcel pad2antrr f0 f6 acvv awcel awa f10 f7 awcel awa f4 asup_set_class f10 awceq f9 f6 awcel f4 asup_set_class f7 awcel f1 aw3a f9 f8 awceq awi f9 f6 awcel f10 f7 awcel f2 aw3a f9 f11 awceq awi awb awi f4 palrimi e1 f0 f4 pnfi f6 acvv awcel f4 pnfv f0 f6 acvv awcel f4 pnfan e0 e1 e4 f0 f1 f3 f4 f6 f7 f8 f9 acvv priotasvdOLD f0 f6 acvv awcel awa f9 f6 awcel f4 asup_set_class f7 awcel f1 awa f9 f8 awceq p3exp f0 f6 acvv awcel awa f9 f6 awcel f4 asup_set_class f7 awcel f1 f9 f8 awceq pexp4a f0 f6 acvv awcel awa f9 f6 awcel f4 asup_set_class f7 awcel f1 f9 f8 awceq p3impd f0 f6 acvv awcel awa f9 f6 awcel f4 asup_set_class f7 awcel f1 aw3a f9 f8 awceq awi f4 palrimi f0 f6 acvv awcel awa f9 f6 awcel f4 asup_set_class f7 awcel f1 aw3a f9 f8 awceq awi f4 awal f10 f7 awcel padantr f0 f6 acvv awcel awa f10 f7 awcel psimpr f9 f6 awcel f4 asup_set_class f7 awcel f1 aw3a f9 f8 awceq awi f9 f6 awcel f10 f7 awcel f2 aw3a f9 f11 awceq awi f4 f10 f7 pvtoclgft f0 f6 acvv awcel awa f10 f7 awcel awa f4 f10 awnfc f9 f6 awcel f10 f7 awcel f2 aw3a f9 f11 awceq awi f4 awnf f4 asup_set_class f10 awceq f9 f6 awcel f4 asup_set_class f7 awcel f1 aw3a f9 f8 awceq awi f9 f6 awcel f10 f7 awcel f2 aw3a f9 f11 awceq awi awb awi f4 awal f9 f6 awcel f4 asup_set_class f7 awcel f1 aw3a f9 f8 awceq awi f4 awal f10 f7 awcel f9 f6 awcel f10 f7 awcel f2 aw3a f9 f11 awceq awi psyl221anc f0 f6 acvv awcel awa f10 f7 awcel awa f9 f6 awcel f10 f7 awcel f2 f9 f11 awceq p3expd f0 f6 acvv awcel awa f10 f7 awcel awa f9 f6 awcel f10 f7 awcel f2 f9 f11 awceq awi pcom23 f0 f6 acvv awcel awa f10 f7 awcel f10 f7 awcel f9 f6 awcel f2 f9 f11 awceq awi awi awi pex f0 f6 acvv awcel awa f10 f7 awcel f9 f6 awcel f2 f9 f11 awceq awi awi ppm2.43d f0 f6 acvv awcel awa f10 f7 awcel f9 f6 awcel f2 f9 f11 awceq awi pcom23 f0 f6 acvv awcel awa f9 f6 awcel f10 f7 awcel f2 f9 f11 awceq p3imp2 f6 f12 awcel f0 f6 acvv awcel f9 f6 awcel f10 f7 awcel f2 aw3a f9 f11 awceq psylanl2 $.
 $}
-$( /* The value of description binder ` D ` for a single-valued class
+$( The value of description binder ` D ` for a single-valued class
        expression ` C ( y ) ` (as in e.g. ~ reusv2 ) in the form of a
        substitution instance.  Special case of ~ riota2f .  (Contributed by NM,
-       3-Mar-2013.)  (Proof shortened by Mario Carneiro, 6-Dec-2016.) */
-
-$)
+       3-Mar-2013.)  (Proof shortened by Mario Carneiro, 6-Dec-2016.) $)
 ${
 	$v ph x y A B C D E V $.
 	$d x y A $.
@@ -935,12 +821,10 @@ ${
 	priotasv2s $p |- ( ( A e. V /\ D e. A /\ ( E e. B /\ [. E / y ]. ph ) ) -> D = [_ E / y ]_ C ) $=
 	f3 f8 awcel f6 f3 awcel f7 f4 awcel f0 f2 f7 awsbc awa p3simpc f3 f8 awcel f6 f3 awcel f7 f4 awcel f0 f2 f7 awsbc awa psimp1 e0 f0 f1 asup_set_class f5 awceq awi f2 f4 pnfra1 f2 f3 pnfcv f0 f1 asup_set_class f5 awceq awi f2 f4 awral f2 f1 f3 pnfriota f2 f6 f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 f3 acrio pnfcxfr f2 f6 f3 pnfel1 f7 f4 awcel f2 pnfv f0 f2 f7 pnfsbc1v f7 f4 awcel f0 f2 f7 awsbc f2 pnfan f6 f3 awcel f7 f4 awcel f0 f2 f7 awsbc awa f2 pnfan f2 f7 f5 pnfcsb1v f2 f2 f7 f5 acsb awnfc f6 f3 awcel f7 f4 awcel f0 f2 f7 awsbc awa awa pa1i f0 f2 f7 pnfsbc1v f0 f2 f7 awsbc f2 awnf f6 f3 awcel f7 f4 awcel f0 f2 f7 awsbc awa awa pa1i e0 f6 f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 f3 acrio awceq f6 f3 awcel f7 f4 awcel f0 f2 f7 awsbc awa awa pa1i f0 f2 f7 psbceq1a f2 asup_set_class f7 awceq f0 f0 f2 f7 awsbc awb f6 f3 awcel f7 f4 awcel f0 f2 f7 awsbc awa awa padantl f2 f7 f5 pcsbeq1a f2 asup_set_class f7 awceq f5 f2 f7 f5 acsb awceq f6 f3 awcel f7 f4 awcel f0 f2 f7 awsbc awa awa padantl f6 f3 awcel f7 f4 awcel f0 f2 f7 awsbc awa psimpl f6 f3 awcel f7 f4 awcel f0 f2 f7 awsbc psimprl f6 f3 awcel f7 f4 awcel f0 f2 f7 awsbc psimprr f6 f3 awcel f7 f4 awcel f0 f2 f7 awsbc awa awa f0 f0 f2 f7 awsbc f1 f2 f3 f4 f5 f6 f7 f2 f7 f5 acsb f8 priotasv2d f3 f8 awcel f6 f3 awcel f7 f4 awcel f0 f2 f7 awsbc awa aw3a f6 f3 awcel f7 f4 awcel f0 f2 f7 awsbc awa awa f3 f8 awcel f6 f2 f7 f5 acsb awceq psyl2anc $.
 $}
-$( /* Value of description binder ` D ` for a single-valued class expression
+$( Value of description binder ` D ` for a single-valued class expression
        ` C ( y ) ` (as in e.g. ~ reusv2 ).  Special case of ~ riota2f .
        (Contributed by NM, 26-Jan-2013.)  (Proof shortened by Mario Carneiro,
-       6-Dec-2016.) */
-
-$)
+       6-Dec-2016.) $)
 ${
 	$v ph x y A B C D $.
 	$d x y A $.
@@ -959,13 +843,11 @@ ${
 	priotasv $p |- ( ( D e. A /\ y e. B /\ ph ) -> D = C ) $=
 	e0 e1 f6 f0 f1 asup_set_class f5 awceq awi f2 f4 awral f1 f3 acrio awceq f6 f3 awcel pa1i f6 f3 awcel pid f6 f3 awcel f0 f1 f2 f3 f4 f5 f6 acvv priotasvd f6 f3 awcel f3 acvv awcel f2 asup_set_class f4 awcel f0 awa f6 f5 awceq awi pmpan2 f6 f3 awcel f2 asup_set_class f4 awcel f0 f6 f5 awceq p3impib $.
 $}
-$( /* A property ` ch ` holding for a representative of a single-valued class
+$( A property ` ch ` holding for a representative of a single-valued class
        expression ` C ( y ) ` (see e.g. ~ reusv2 ) also holds for its
        description binder ` D ` (in the form of property ` th ` ).
        (Contributed by NM, 5-Mar-2013.)  (Revised by Mario Carneiro,
-       15-Oct-2016.) */
-
-$)
+       15-Oct-2016.) $)
 ${
 	$v ph ps ch th x y A B C D V $.
 	$d x y A $.
@@ -993,13 +875,11 @@ ${
 	priotasv3d $p |- ( ( ph /\ A e. V ) -> th ) $=
 	f6 f10 pelex e6 f0 f1 f5 f7 awrex f6 acvv awcel padantr e0 f6 acvv awcel f5 pnfv e4 f0 f5 asup_set_class f7 awcel f1 awa f2 pimp f0 f5 asup_set_class f7 awcel f1 awa f2 f6 acvv awcel padantrl e2 e5 f0 f1 f4 f5 f6 f7 f8 f9 acvv priotasvd f0 f6 acvv awcel f5 asup_set_class f7 awcel f1 awa f9 f8 awceq pimpr f0 f6 acvv awcel f5 asup_set_class f7 awcel f1 awa awa awa f9 f8 peqcomd e3 f0 f6 acvv awcel f5 asup_set_class f7 awcel f1 awa awa f8 f9 awceq f2 f3 awb psyldan f0 f6 acvv awcel f5 asup_set_class f7 awcel f1 awa awa awa f2 f3 pmpbid f0 f6 acvv awcel f5 asup_set_class f7 awcel f1 f3 pexp45 f0 f6 acvv awcel f1 f3 awi f5 f7 pralrimd e1 f1 f3 f5 f7 pr19.23t f0 f3 f5 awnf f1 f3 awi f5 f7 awral f1 f5 f7 awrex f3 awi awb psyl f0 f6 acvv awcel f1 f3 awi f5 f7 awral f1 f5 f7 awrex f3 awi psylibd f0 f6 acvv awcel f1 f5 f7 awrex f3 awi pimp f0 f6 acvv awcel awa f1 f5 f7 awrex f3 pmpd f6 f10 awcel f0 f6 acvv awcel f3 psylan2 $.
 $}
-$( /* A property ` ch ` holding for a representative of a single-valued class
+$( A property ` ch ` holding for a representative of a single-valued class
        expression ` C ( y ) ` (see e.g. ~ reusv2 ) also holds for its
        description binder ` D ` (in the form of property ` th ` ).
        (Contributed by NM, 1-Feb-2013.)  (Proof modification is discouraged.)
-       (New usage is discouraged.) */
-
-$)
+       (New usage is discouraged.) $)
 ${
 	$v ph ps ch th x y A B C D V $.
 	$d x y A $.

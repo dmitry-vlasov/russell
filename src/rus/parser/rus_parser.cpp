@@ -7,8 +7,9 @@ void parse_src(uint label) {
 
 	LocationIter iter(src->data().begin(), label);
 	LocationIter end(src->data().end(), label);
+	parser::Grammar<LocationIter> grammar(src);
 
-	if (!parser::Grammar<LocationIter>::parse(iter, end, parser::unicode::space, *src) || iter != end) {
+	if (!parser::qi::phrase_parse(iter, end, grammar, parser::unicode::space, src)|| iter != end) {
 		throw Error("parsing failed", Lex::toStr(label));
 	}
 	src->parsed = true;

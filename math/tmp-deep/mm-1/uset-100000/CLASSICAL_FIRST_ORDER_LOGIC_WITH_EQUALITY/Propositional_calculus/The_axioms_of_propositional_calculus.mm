@@ -1,5 +1,5 @@
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Recursively_define_primitive_wffs_for_propositional_calculus.mm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         The axioms of propositional calculus
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -30,32 +30,26 @@ $( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   the number of variables, and the much shorter proofs that we show here were
   found manually.
 
-*/
-
 $)
-$( /* Axiom _Simp_.  Axiom A1 of [Margaris] p. 49.  One of the 3 axioms of
+$( Axiom _Simp_.  Axiom A1 of [Margaris] p. 49.  One of the 3 axioms of
      propositional calculus.  The 3 axioms are also given as Definition 2.1 of
      [Hamilton] p. 28.  This axiom is called _Simp_ or "the principle of
      simplification" in _Principia Mathematica_ (Theorem *2.02 of
      [WhiteheadRussell] p. 100) because "it enables us to pass from the joint
      assertion of ` ph ` and ` ps ` to the assertion of ` ph ` simply."
-     (Contributed by NM, 5-Aug-1993.) */
-
-$)
+     (Contributed by NM, 5-Aug-1993.) $)
 ${
 	fax-1_0 $f wff ph $.
 	fax-1_1 $f wff ps $.
 	ax-1 $a |- ( ph -> ( ps -> ph ) ) $.
 $}
-$( /* Axiom _Frege_.  Axiom A2 of [Margaris] p. 49.  One of the 3 axioms of
+$( Axiom _Frege_.  Axiom A2 of [Margaris] p. 49.  One of the 3 axioms of
      propositional calculus.  It "distributes" an antecedent over two
      consequents.  This axiom was part of Frege's original system and is known
      as _Frege_ in the literature.  It is also proved as Theorem *2.77 of
      [WhiteheadRussell] p. 108.  The other direction of this axiom also turns
      out to be true, as demonstrated by ~ pm5.41 .  (Contributed by NM,
-     5-Aug-1993.) */
-
-$)
+     5-Aug-1993.) $)
 $v ch $.
 ${
 	fax-2_0 $f wff ph $.
@@ -63,7 +57,7 @@ ${
 	fax-2_2 $f wff ch $.
 	ax-2 $a |- ( ( ph -> ( ps -> ch ) ) -> ( ( ph -> ps ) -> ( ph -> ch ) ) ) $.
 $}
-$( /* Axiom _Transp_.  Axiom A3 of [Margaris] p. 49.  One of the 3 axioms of
+$( Axiom _Transp_.  Axiom A3 of [Margaris] p. 49.  One of the 3 axioms of
      propositional calculus.  It swaps or "transposes" the order of the
      consequents when negation is removed.  An informal example is that the
      statement "if there are no clouds in the sky, it is not raining" implies
@@ -72,25 +66,17 @@ $( /* Axiom _Transp_.  Axiom A3 of [Margaris] p. 49.  One of the 3 axioms of
      Mathematica_ (Theorem *2.17 of [WhiteheadRussell] p. 103).  We will also
      use the term "contraposition" for this principle, although the reader is
      advised that in the field of philosophical logic, "contraposition" has a
-     different technical meaning.  (Contributed by NM, 5-Aug-1993.) */
-
-$)
+     different technical meaning.  (Contributed by NM, 5-Aug-1993.) $)
 ${
 	fax-3_0 $f wff ph $.
 	fax-3_1 $f wff ps $.
 	ax-3 $a |- ( ( -. ph -> -. ps ) -> ( ps -> ph ) ) $.
 $}
-$( /* Postulate the modus ponens rule of inference.
-  */
-
-$)
-$( /* Minor premise for modus ponens. */
-
-$)
-$( /* Major premise for modus ponens. */
-
-$)
-$( /* Rule of Modus Ponens.  The postulated inference rule of propositional
+$( Postulate the modus ponens rule of inference.
+  $)
+$( Minor premise for modus ponens. $)
+$( Major premise for modus ponens. $)
+$( Rule of Modus Ponens.  The postulated inference rule of propositional
        calculus.  See e.g.  Rule 1 of [Hamilton] p. 73.  The rule says, "if
        ` ph ` is true, and ` ph ` implies ` ps ` , then ` ps ` must also be
        true."  This rule is sometimes called "detachment," since it detaches
@@ -103,9 +89,7 @@ $( /* Rule of Modus Ponens.  The postulated inference rule of propositional
        "&" and "=>" informally indicate the relationship between the hypotheses
        and the assertion (conclusion), abbreviating the English words "and" and
        "implies."  They are not part of the formal language.  (Contributed by
-       NM, 5-Aug-1993.) */
-
-$)
+       NM, 5-Aug-1993.) $)
 ${
 	fax-mp_0 $f wff ph $.
 	fax-mp_1 $f wff ps $.

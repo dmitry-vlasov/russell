@@ -6,7 +6,7 @@ $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Older_axiomatization_(1_rule,_14_schemes).smm $]
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Existential_uniqueness.smm $]
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_related_to_classical_predicate_calculus.smm $]
-$( /* ###############################################################################
+$( ###############################################################################
             CLASSICAL FIRST ORDER LOGIC WITH EQUALITY
 
 ###############################################################################
@@ -35,9 +35,6 @@ $( /* ##########################################################################
   it introduces the symbols ` = ` ("equals"), ` e. ` ("is a member of"), and `
   A. ` ("for all").  The first two are called "predicates."  A predicate
   specifies a true or false relationship between its two arguments.
-
-*/
-
 
 $)
 

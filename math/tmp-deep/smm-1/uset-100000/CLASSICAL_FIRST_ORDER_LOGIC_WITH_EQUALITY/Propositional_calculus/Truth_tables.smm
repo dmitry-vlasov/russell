@@ -1,5 +1,5 @@
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/True_and_false_constants.smm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Truth tables
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -15,199 +15,145 @@ $( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   ` <-> ` (logical equivalence) ~ df-bi ,
   ` -/\ ` (nand aka Sheffer stroke) ~ df-nan , and
   ` \/_ ` (exclusive or) ~ df-xor .
-*/
-
 $)
-$( /* A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
-
-$)
+$( A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
 ${
 	ptruantru $p |- ( ( T. /\ T. ) <-> T. ) $=
 	awtru panidm $.
 $}
-$( /* A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
-
-$)
+$( A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
 ${
 	ptruanfal $p |- ( ( T. /\ F. ) <-> F. ) $=
 	pfal awfal awtru pintnan awtru awfal awa pbifal $.
 $}
-$( /* A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
-
-$)
+$( A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
 ${
 	pfalantru $p |- ( ( F. /\ T. ) <-> F. ) $=
 	pfal awfal awtru pintnanr awfal awtru awa pbifal $.
 $}
-$( /* A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
-
-$)
+$( A ` /\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
 ${
 	pfalanfal $p |- ( ( F. /\ F. ) <-> F. ) $=
 	awfal panidm $.
 $}
-$( /* A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
-     shortened by Andrew Salmon, 13-May-2011.) */
-
-$)
+$( A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) $)
 ${
 	ptruortru $p |- ( ( T. \/ T. ) <-> T. ) $=
 	awtru poridm $.
 $}
-$( /* A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
-
-$)
+$( A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
 ${
 	ptruorfal $p |- ( ( T. \/ F. ) <-> T. ) $=
 	ptru awtru awfal porci awtru awfal awo pbitru $.
 $}
-$( /* A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
-
-$)
+$( A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
 ${
 	pfalortru $p |- ( ( F. \/ T. ) <-> T. ) $=
 	ptru awtru awfal polci awfal awtru awo pbitru $.
 $}
-$( /* A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
-     shortened by Andrew Salmon, 13-May-2011.) */
-
-$)
+$( A ` \/ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) $)
 ${
 	pfalorfal $p |- ( ( F. \/ F. ) <-> F. ) $=
 	awfal poridm $.
 $}
-$( /* A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
-
-$)
+$( A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
 ${
 	ptruimtru $p |- ( ( T. -> T. ) <-> T. ) $=
 	awtru pid awtru awtru awi pbitru $.
 $}
-$( /* A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
-     shortened by Andrew Salmon, 13-May-2011.) */
-
-$)
+$( A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) $)
 ${
 	ptruimfal $p |- ( ( T. -> F. ) <-> F. ) $=
 	ptru awtru awfal pa1bi awfal awtru awfal awi pbicomi $.
 $}
-$( /* A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
-
-$)
+$( A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
 ${
 	pfalimtru $p |- ( ( F. -> T. ) <-> T. ) $=
 	awtru pfalim awfal awtru awi pbitru $.
 $}
-$( /* A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
-
-$)
+$( A ` -> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
 ${
 	pfalimfal $p |- ( ( F. -> F. ) <-> T. ) $=
 	awfal pid awfal awfal awi pbitru $.
 $}
-$( /* A ` -. ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) */
-
-$)
+$( A ` -. ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.) $)
 ${
 	pnottru $p |- ( -. T. <-> F. ) $=
 	adf-fal awfal awtru awn pbicomi $.
 $}
-$( /* A ` -. ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
-     shortened by Andrew Salmon, 13-May-2011.) */
-
-$)
+$( A ` -. ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) $)
 ${
 	pnotfal $p |- ( -. F. <-> T. ) $=
 	pfal awfal awn pbitru $.
 $}
-$( /* A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
-     shortened by Andrew Salmon, 13-May-2011.) */
-
-$)
+$( A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) $)
 ${
 	ptrubitru $p |- ( ( T. <-> T. ) <-> T. ) $=
 	awtru pbiid awtru awtru awb pbitru $.
 $}
-$( /* A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
-     shortened by Andrew Salmon, 13-May-2011.) */
-
-$)
+$( A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) $)
 ${
 	ptrubifal $p |- ( ( T. <-> F. ) <-> F. ) $=
 	pnottru awtru awfal pnbbn awtru awn awfal awb awtru awfal awb awn pmpbi awtru awfal awb pbifal $.
 $}
-$( /* A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
-     shortened by Andrew Salmon, 13-May-2011.) */
-
-$)
+$( A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) $)
 ${
 	pfalbitru $p |- ( ( F. <-> T. ) <-> F. ) $=
 	awfal awtru pbicom ptrubifal awfal awtru awb awtru awfal awb awfal pbitri $.
 $}
-$( /* A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
-     shortened by Andrew Salmon, 13-May-2011.) */
-
-$)
+$( A ` <-> ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) $)
 ${
 	pfalbifal $p |- ( ( F. <-> F. ) <-> T. ) $=
 	awfal pbiid awfal awfal awb pbitru $.
 $}
-$( /* A ` -/\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
-     shortened by Andrew Salmon, 13-May-2011.) */
-
-$)
+$( A ` -/\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) $)
 ${
 	ptrunantru $p |- ( ( T. -/\ T. ) <-> F. ) $=
 	awtru pnannot pnottru awtru awtru awnan awtru awn awfal pbitr3i $.
 $}
-$( /* A ` -/\ ` identity.  (Contributed by Anthony Hart, 23-Oct-2010.)  (Proof
-     shortened by Andrew Salmon, 13-May-2011.) */
-
-$)
+$( A ` -/\ ` identity.  (Contributed by Anthony Hart, 23-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) $)
 ${
 	ptrunanfal $p |- ( ( T. -/\ F. ) <-> T. ) $=
 	awtru awfal adf-nan ptruanfal awtru awfal awa awfal pnotbii pnotfal awtru awfal awnan awtru awfal awa awn awfal awn awtru p3bitri $.
 $}
-$( /* A ` -/\ ` identity.  (Contributed by Anthony Hart, 23-Oct-2010.)  (Proof
-     shortened by Andrew Salmon, 13-May-2011.) */
-
-$)
+$( A ` -/\ ` identity.  (Contributed by Anthony Hart, 23-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) $)
 ${
 	pfalnantru $p |- ( ( F. -/\ T. ) <-> T. ) $=
 	awfal awtru pnancom ptrunanfal awfal awtru awnan awtru awfal awnan awtru pbitri $.
 $}
-$( /* A ` -/\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
-     shortened by Andrew Salmon, 13-May-2011.) */
-
-$)
+$( A ` -/\ ` identity.  (Contributed by Anthony Hart, 22-Oct-2010.)  (Proof
+     shortened by Andrew Salmon, 13-May-2011.) $)
 ${
 	pfalnanfal $p |- ( ( F. -/\ F. ) <-> T. ) $=
 	awfal pnannot pnotfal awfal awfal awnan awfal awn awtru pbitr3i $.
 $}
-$( /* A ` \/_ ` identity.  (Contributed by David A. Wheeler, 8-May-2015.) */
-
-$)
+$( A ` \/_ ` identity.  (Contributed by David A. Wheeler, 8-May-2015.) $)
 ${
 	ptruxortru $p |- ( ( T. \/_ T. ) <-> F. ) $=
 	awtru awtru adf-xor ptrubitru awtru awtru awxo awtru awtru awb awtru pxchbinx pnottru awtru awtru awxo awtru awn awfal pbitri $.
 $}
-$( /* A ` \/_ ` identity.  (Contributed by David A. Wheeler, 8-May-2015.) */
-
-$)
+$( A ` \/_ ` identity.  (Contributed by David A. Wheeler, 8-May-2015.) $)
 ${
 	ptruxorfal $p |- ( ( T. \/_ F. ) <-> T. ) $=
 	awtru awfal adf-xor ptrubifal awtru awfal awxo awtru awfal awb awfal pxchbinx pnotfal awtru awfal awxo awfal awn awtru pbitri $.
 $}
-$( /* A ` \/_ ` identity.  (Contributed by David A. Wheeler, 9-May-2015.) */
-
-$)
+$( A ` \/_ ` identity.  (Contributed by David A. Wheeler, 9-May-2015.) $)
 ${
 	pfalxortru $p |- ( ( F. \/_ T. ) <-> T. ) $=
 	awfal awtru adf-xor pfalbitru awfal awtru awb awfal pnotbii pnotfal awfal awtru awxo awfal awtru awb awn awfal awn awtru p3bitri $.
 $}
-$( /* A ` \/_ ` identity.  (Contributed by David A. Wheeler, 9-May-2015.) */
-
-$)
+$( A ` \/_ ` identity.  (Contributed by David A. Wheeler, 9-May-2015.) $)
 ${
 	pfalxorfal $p |- ( ( F. \/_ F. ) <-> F. ) $=
 	awfal awfal adf-xor pfalbifal awfal awfal awxo awfal awfal awb awtru pxchbinx pnottru awfal awfal awxo awtru awn awfal pbitri $.

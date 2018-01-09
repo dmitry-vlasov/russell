@@ -3,7 +3,7 @@
 
 namespace mdl { namespace rus {
 
-//#define PARALLEL_PARSE
+#define PARALLEL_PARSE
 
 static const Symbol dfm(Lex::toInt("defiendum"));
 static const Symbol dfs(Lex::toInt("definiens"));

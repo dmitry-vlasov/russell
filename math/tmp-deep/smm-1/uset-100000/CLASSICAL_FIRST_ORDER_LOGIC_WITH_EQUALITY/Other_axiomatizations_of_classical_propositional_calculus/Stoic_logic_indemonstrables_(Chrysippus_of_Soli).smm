@@ -1,5 +1,5 @@
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_of_classical_propositional_calculus/Derive_the_Lukasiewicz_axioms_from_the_The_Russell-Bernays_Axioms.smm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                 Stoic logic indemonstrables (Chrysippus of Soli)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -41,23 +41,15 @@ $( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   to an inclusive-or variation, which is proved in ~ mtp-or .
   This set of indemonstrables is not the entire system of Stoic logic.
 
-*/
-
 $)
-$( /* Minor premise for modus ponendo tollens 1. */
-
-$)
-$( /* Major premise for modus ponendo tollens 1. */
-
-$)
-$( /* Modus ponendo tollens 1, one of the "indemonstrables" in Stoic logic.
+$( Minor premise for modus ponendo tollens 1. $)
+$( Major premise for modus ponendo tollens 1. $)
+$( Modus ponendo tollens 1, one of the "indemonstrables" in Stoic logic.
        See rule 1 on [Lopez-Astorga] p. 12 , rule 1 on [Sanford] p. 40, and
        rule A3 in [Hitchcock] p. 5.  Sanford describes this rule second (after
        ~ mpto2 ) as a "safer, and these days much more common" version of modus
        ponendo tollens because it avoids confusion between inclusive-or and
-       exclusive-or.  (Contributed by David A. Wheeler, 3-Jul-2016.) */
-
-$)
+       exclusive-or.  (Contributed by David A. Wheeler, 3-Jul-2016.) $)
 ${
 	$v ph ps $.
 	e0 $e |- ph $.
@@ -67,19 +59,13 @@ ${
 	pmpto1 $p |- -. ps $=
 	e0 e1 f0 f1 pimnani f0 f1 awn aax-mp $.
 $}
-$( /* Minor premise for modus ponendo tollens 2. */
-
-$)
-$( /* Major premise for modus ponendo tollens 2. */
-
-$)
-$( /* Modus ponendo tollens 2, one of the "indemonstrables" in Stoic logic.
+$( Minor premise for modus ponendo tollens 2. $)
+$( Major premise for modus ponendo tollens 2. $)
+$( Modus ponendo tollens 2, one of the "indemonstrables" in Stoic logic.
        Note that this uses exclusive-or ` \/_ ` .  See rule 2 on
        [Lopez-Astorga] p. 12 , rule 4 on [Sanford] p. 39 and rule A4 in
        [Hitchcock] p. 5 .  (Contributed by David A. Wheeler, 3-Jul-2016.)
-       (Proof shortened by Wolf Lammen, 12-Nov-2017.) */
-
-$)
+       (Proof shortened by Wolf Lammen, 12-Nov-2017.) $)
 ${
 	$v ph ps $.
 	e0 $e |- ph $.
@@ -89,19 +75,13 @@ ${
 	pmpto2 $p |- -. ps $=
 	e0 e1 f0 f1 adf-xor f0 f1 awxo f0 f1 awb awn pmpbi f0 f1 pxor3 f0 f1 awb awn f0 f1 awn awb pmpbi f0 f1 awn pmpbi $.
 $}
-$( /* Minor premise for modus ponendo tollens 2. */
-
-$)
-$( /* Major premise for modus ponendo tollens 2. */
-
-$)
-$( /* Modus ponendo tollens 2, one of the "indemonstrables" in Stoic logic.
+$( Minor premise for modus ponendo tollens 2. $)
+$( Major premise for modus ponendo tollens 2. $)
+$( Modus ponendo tollens 2, one of the "indemonstrables" in Stoic logic.
        Note that this uses exclusive-or ` \/_ ` .  See rule 2 on
        [Lopez-Astorga] p. 12 , rule 4 on [Sanford] p. 39 and rule A4 in
        [Hitchcock] p. 5 .  (Contributed by David A. Wheeler, 3-Jul-2016.)
-       (New usage is discouraged.)  (Proof modification is discouraged.) */
-
-$)
+       (New usage is discouraged.)  (Proof modification is discouraged.) $)
 ${
 	$v ph ps $.
 	e0 $e |- ph $.
@@ -111,15 +91,11 @@ ${
 	pmpto2OLD $p |- -. ps $=
 	e0 e1 f0 f1 adf-xor f0 f1 awxo f0 f1 awb awn pmpbi f0 f1 pnbbn f0 awn f1 awb f0 f1 awb awn pmpbir f0 f1 pcon1bii f1 awn f0 pmpbir $.
 $}
-$( /* Minor premise for modus tollendo ponens (original exclusive-or version).
-    */
-
-$)
-$( /* Major premise for modus tollendo ponens (original exclusive-or version).
-    */
-
-$)
-$( /* Modus tollendo ponens (original exclusive-or version), aka disjunctive
+$( Minor premise for modus tollendo ponens (original exclusive-or version).
+    $)
+$( Major premise for modus tollendo ponens (original exclusive-or version).
+    $)
+$( Modus tollendo ponens (original exclusive-or version), aka disjunctive
        syllogism, one of the five "indemonstrables" in Stoic logic.  The rule
        says, "if ` ph ` is not true, and either ` ph ` or ` ps ` (exclusively)
        are true, then ` ps ` must be true."  Today the name "modus tollendo
@@ -130,9 +106,7 @@ $( /* Modus tollendo ponens (original exclusive-or version), aka disjunctive
        is used but it appears to be in the same sense as ~ mpto2 ), and rule A5
        in [Hitchcock] p. 5 (exclusive-or is expressly used).  (Contributed by
        David A. Wheeler, 4-Jul-2016.)  (Proof shortened by Wolf Lammen,
-       11-Nov-2017.) */
-
-$)
+       11-Nov-2017.) $)
 ${
 	$v ph ps $.
 	e0 $e |- -. ph $.
@@ -142,11 +116,9 @@ ${
 	pmtp-xor $p |- ps $=
 	e0 e1 f0 f1 pxorneg f0 awn f1 awn awxo f0 f1 awxo pmpbir f0 awn f1 awn pmpto2 f1 pnotnotri $.
 $}
-$( /* Obsolete version of ~ mtp-xor as of 11-Nov-2017.  (Contributed by David
+$( Obsolete version of ~ mtp-xor as of 11-Nov-2017.  (Contributed by David
        A. Wheeler, 4-Jul-2016.)  (New usage is discouraged.)
-       (Proof modification is discouraged.) */
-
-$)
+       (Proof modification is discouraged.) $)
 ${
 	$v ph ps $.
 	e0 $e |- -. ph $.
@@ -156,13 +128,9 @@ ${
 	pmtp-xorOLD $p |- ps $=
 	e0 e1 f0 f1 adf-xor f0 f1 awxo f0 f1 awb awn pmpbi f0 f1 pbicom f0 f1 awb f1 f0 awb pmtbi f1 f0 pxor3 f1 f0 awb awn f1 f0 awn awb pmpbi f1 f0 awn pmpbir $.
 $}
-$( /* Minor premise for modus tollendo ponens (inclusive-or version). */
-
-$)
-$( /* Major premise for modus tollendo ponens (inclusive-or version). */
-
-$)
-$( /* Modus tollendo ponens (inclusive-or version), aka disjunctive
+$( Minor premise for modus tollendo ponens (inclusive-or version). $)
+$( Major premise for modus tollendo ponens (inclusive-or version). $)
+$( Modus tollendo ponens (inclusive-or version), aka disjunctive
        syllogism.  This is similar to ~ mtp-xor , one of the five original
        "indemonstrables" in Stoic logic.  However, in Stoic logic this rule
        used exclusive-or, while the name modus tollendo ponens often refers to
@@ -172,9 +140,7 @@ $( /* Modus tollendo ponens (inclusive-or version), aka disjunctive
        the impossible, whatever remains, no matter how improbable, must be the
        truth." -- Sherlock Holmes (Sir Arthur Conan Doyle, 1890:  The Sign of
        the Four, ch. 6).  (Contributed by David A. Wheeler, 3-Jul-2016.)
-       (Proof shortened by Wolf Lammen, 11-Nov-2017.) */
-
-$)
+       (Proof shortened by Wolf Lammen, 11-Nov-2017.) $)
 ${
 	$v ph ps $.
 	e0 $e |- -. ph $.
@@ -184,11 +150,9 @@ ${
 	pmtp-or $p |- ps $=
 	e0 e1 f0 f1 pori f0 awn f1 aax-mp $.
 $}
-$( /* Obsolete version of ~ mtp-or as of 11-Nov-2017.  (Contributed by David
+$( Obsolete version of ~ mtp-or as of 11-Nov-2017.  (Contributed by David
        A. Wheeler, 3-Jul-2016.)  (New usage is discouraged.)
-       (Proof modification is discouraged.) */
-
-$)
+       (Proof modification is discouraged.) $)
 ${
 	$v ph ps $.
 	e0 $e |- -. ph $.

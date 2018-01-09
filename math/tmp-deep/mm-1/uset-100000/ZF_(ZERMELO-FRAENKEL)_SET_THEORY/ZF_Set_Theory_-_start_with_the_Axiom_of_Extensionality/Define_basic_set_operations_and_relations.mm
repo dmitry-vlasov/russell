@@ -1,84 +1,58 @@
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Proper_substitution_of_classes_for_sets_into_classes.mm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Define basic set operations and relations
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-*/
-
 $)
-$( /* Declare new symbols. */
-
-$)
+$( Declare new symbols. $)
 $c \  $.
-$( /* Backslash (difference) */
-
-$)
+$( Backslash (difference) $)
 $c u.  $.
-$( /* Cup (union) */
-
-$)
+$( Cup (union) $)
 $c i^i  $.
-$( /* Cap (intersection) */
-
-$)
+$( Cap (intersection) $)
 $c C_  $.
-$( /* Subclass or subset symbol */
-
-$)
+$( Subclass or subset symbol $)
 $c C.  $.
-$( /* Proper subclass or subset symbol */
-
-$)
-$( /* Extend class notation to include class difference (read:  " ` A ` minus
-     ` B ` "). */
-
-$)
+$( Proper subclass or subset symbol $)
+$( Extend class notation to include class difference (read:  " ` A ` minus
+     ` B ` "). $)
 ${
 	fcdif_0 $f class A $.
 	fcdif_1 $f class B $.
 	cdif $a class ( A \ B ) $.
 $}
-$( /* Extend class notation to include union of two classes (read:  " ` A `
-     union ` B ` "). */
-
-$)
+$( Extend class notation to include union of two classes (read:  " ` A `
+     union ` B ` "). $)
 ${
 	fcun_0 $f class A $.
 	fcun_1 $f class B $.
 	cun $a class ( A u. B ) $.
 $}
-$( /* Extend class notation to include the intersection of two classes
-     (read:  " ` A ` intersect ` B ` "). */
-
-$)
+$( Extend class notation to include the intersection of two classes
+     (read:  " ` A ` intersect ` B ` "). $)
 ${
 	fcin_0 $f class A $.
 	fcin_1 $f class B $.
 	cin $a class ( A i^i B ) $.
 $}
-$( /* Extend wff notation to include the subclass relation.  This is
+$( Extend wff notation to include the subclass relation.  This is
      read " ` A ` is a subclass of ` B ` " or " ` B ` includes ` A ` ."  When
-     ` A ` exists as a set, it is also read " ` A ` is a subset of ` B ` ." */
-
-$)
+     ` A ` exists as a set, it is also read " ` A ` is a subset of ` B ` ." $)
 ${
 	fwss_0 $f class A $.
 	fwss_1 $f class B $.
 	wss $a wff A C_ B $.
 $}
-$( /* Extend wff notation with proper subclass relation. */
-
-$)
+$( Extend wff notation with proper subclass relation. $)
 ${
 	fwpss_0 $f class A $.
 	fwpss_1 $f class B $.
 	wpss $a wff A C. B $.
 $}
-$( /* Soundness justification theorem for ~ df-dif .  (Contributed by Rodolfo
+$( Soundness justification theorem for ~ df-dif .  (Contributed by Rodolfo
        Medina, 27-Apr-2010.)  (Proof shortened by Andrew Salmon,
-       9-Jul-2011.) */
-
-$)
+       9-Jul-2011.) $)
 ${
 	$d x A $.
 	$d x B $.
@@ -95,7 +69,7 @@ ${
 	fdifjust_3 $f class B $.
 	difjust $p |- { x | ( x e. A /\ -. x e. B ) } = { y | ( y e. A /\ -. y e. B ) } $= fdifjust_0 sup_set_class fdifjust_2 wcel fdifjust_0 sup_set_class fdifjust_3 wcel wn wa fdifjust_0 cab idifjust_0 sup_set_class fdifjust_2 wcel idifjust_0 sup_set_class fdifjust_3 wcel wn wa idifjust_0 cab fdifjust_1 sup_set_class fdifjust_2 wcel fdifjust_1 sup_set_class fdifjust_3 wcel wn wa fdifjust_1 cab fdifjust_0 sup_set_class fdifjust_2 wcel fdifjust_0 sup_set_class fdifjust_3 wcel wn wa idifjust_0 sup_set_class fdifjust_2 wcel idifjust_0 sup_set_class fdifjust_3 wcel wn wa fdifjust_0 idifjust_0 fdifjust_0 sup_set_class idifjust_0 sup_set_class wceq fdifjust_0 sup_set_class fdifjust_2 wcel idifjust_0 sup_set_class fdifjust_2 wcel fdifjust_0 sup_set_class fdifjust_3 wcel wn idifjust_0 sup_set_class fdifjust_3 wcel wn fdifjust_0 sup_set_class idifjust_0 sup_set_class fdifjust_2 eleq1 fdifjust_0 sup_set_class idifjust_0 sup_set_class wceq fdifjust_0 sup_set_class fdifjust_3 wcel idifjust_0 sup_set_class fdifjust_3 wcel fdifjust_0 sup_set_class idifjust_0 sup_set_class fdifjust_3 eleq1 notbid anbi12d cbvabv idifjust_0 sup_set_class fdifjust_2 wcel idifjust_0 sup_set_class fdifjust_3 wcel wn wa fdifjust_1 sup_set_class fdifjust_2 wcel fdifjust_1 sup_set_class fdifjust_3 wcel wn wa idifjust_0 fdifjust_1 idifjust_0 sup_set_class fdifjust_1 sup_set_class wceq idifjust_0 sup_set_class fdifjust_2 wcel fdifjust_1 sup_set_class fdifjust_2 wcel idifjust_0 sup_set_class fdifjust_3 wcel wn fdifjust_1 sup_set_class fdifjust_3 wcel wn idifjust_0 sup_set_class fdifjust_1 sup_set_class fdifjust_2 eleq1 idifjust_0 sup_set_class fdifjust_1 sup_set_class wceq idifjust_0 sup_set_class fdifjust_3 wcel fdifjust_1 sup_set_class fdifjust_3 wcel idifjust_0 sup_set_class fdifjust_1 sup_set_class fdifjust_3 eleq1 notbid anbi12d cbvabv eqtri $.
 $}
-$( /* Define class difference, also called relative complement.  Definition
+$( Define class difference, also called relative complement.  Definition
        5.12 of [TakeutiZaring] p. 20.  For example,
        ` ( { 1 , 3 } \ { 1 , 8 } ) = { 3 } ` ( ~ ex-dif ).  Contrast this
        operation with union ` ( A u. B ) ` ( ~ df-un ) and intersection
@@ -106,9 +80,7 @@ $( /* Define class difference, also called relative complement.  Definition
        terminology " ` A ` excludes ` B ` " to mean ` A \ B ` .  We will
        use " ` B ` is removed from ` A ` " to mean ` A \ { B } ` i.e. the
        removal of an element or equivalently the exclusion of a singleton.
-       (Contributed by NM, 29-Apr-1994.) */
-
-$)
+       (Contributed by NM, 29-Apr-1994.) $)
 ${
 	$d x A $.
 	$d x B $.
@@ -117,11 +89,9 @@ ${
 	fdf-dif_2 $f class B $.
 	df-dif $a |- ( A \ B ) = { x | ( x e. A /\ -. x e. B ) } $.
 $}
-$( /* Soundness justification theorem for ~ df-un .  (Contributed by Rodolfo
+$( Soundness justification theorem for ~ df-un .  (Contributed by Rodolfo
        Medina, 28-Apr-2010.)  (Proof shortened by Andrew Salmon,
-       9-Jul-2011.) */
-
-$)
+       9-Jul-2011.) $)
 ${
 	$d x A $.
 	$d x B $.
@@ -138,15 +108,13 @@ ${
 	funjust_3 $f class B $.
 	unjust $p |- { x | ( x e. A \/ x e. B ) } = { y | ( y e. A \/ y e. B ) } $= funjust_0 sup_set_class funjust_2 wcel funjust_0 sup_set_class funjust_3 wcel wo funjust_0 cab iunjust_0 sup_set_class funjust_2 wcel iunjust_0 sup_set_class funjust_3 wcel wo iunjust_0 cab funjust_1 sup_set_class funjust_2 wcel funjust_1 sup_set_class funjust_3 wcel wo funjust_1 cab funjust_0 sup_set_class funjust_2 wcel funjust_0 sup_set_class funjust_3 wcel wo iunjust_0 sup_set_class funjust_2 wcel iunjust_0 sup_set_class funjust_3 wcel wo funjust_0 iunjust_0 funjust_0 sup_set_class iunjust_0 sup_set_class wceq funjust_0 sup_set_class funjust_2 wcel iunjust_0 sup_set_class funjust_2 wcel funjust_0 sup_set_class funjust_3 wcel iunjust_0 sup_set_class funjust_3 wcel funjust_0 sup_set_class iunjust_0 sup_set_class funjust_2 eleq1 funjust_0 sup_set_class iunjust_0 sup_set_class funjust_3 eleq1 orbi12d cbvabv iunjust_0 sup_set_class funjust_2 wcel iunjust_0 sup_set_class funjust_3 wcel wo funjust_1 sup_set_class funjust_2 wcel funjust_1 sup_set_class funjust_3 wcel wo iunjust_0 funjust_1 iunjust_0 sup_set_class funjust_1 sup_set_class wceq iunjust_0 sup_set_class funjust_2 wcel funjust_1 sup_set_class funjust_2 wcel iunjust_0 sup_set_class funjust_3 wcel funjust_1 sup_set_class funjust_3 wcel iunjust_0 sup_set_class funjust_1 sup_set_class funjust_2 eleq1 iunjust_0 sup_set_class funjust_1 sup_set_class funjust_3 eleq1 orbi12d cbvabv eqtri $.
 $}
-$( /* Define the union of two classes.  Definition 5.6 of [TakeutiZaring]
+$( Define the union of two classes.  Definition 5.6 of [TakeutiZaring]
        p. 16.  For example, ` ( { 1 , 3 } u. { 1 , 8 } ) = { 1 , 3 , 8 } `
        ( ~ ex-un ).  Contrast this operation with difference ` ( A \ B ) `
        ( ~ df-dif ) and intersection ` ( A i^i B ) ` ( ~ df-in ).  For an
        alternate definition in terms of class difference, requiring no dummy
        variables, see ~ dfun2 .  For union defined in terms of intersection,
-       see ~ dfun3 .  (Contributed by NM, 23-Aug-1993.) */
-
-$)
+       see ~ dfun3 .  (Contributed by NM, 23-Aug-1993.) $)
 ${
 	$d x A $.
 	$d x B $.
@@ -155,11 +123,9 @@ ${
 	fdf-un_2 $f class B $.
 	df-un $a |- ( A u. B ) = { x | ( x e. A \/ x e. B ) } $.
 $}
-$( /* Soundness justification theorem for ~ df-in .  (Contributed by Rodolfo
+$( Soundness justification theorem for ~ df-in .  (Contributed by Rodolfo
        Medina, 28-Apr-2010.)  (Proof shortened by Andrew Salmon,
-       9-Jul-2011.) */
-
-$)
+       9-Jul-2011.) $)
 ${
 	$d x A $.
 	$d x B $.
@@ -176,16 +142,14 @@ ${
 	finjust_3 $f class B $.
 	injust $p |- { x | ( x e. A /\ x e. B ) } = { y | ( y e. A /\ y e. B ) } $= finjust_0 sup_set_class finjust_2 wcel finjust_0 sup_set_class finjust_3 wcel wa finjust_0 cab iinjust_0 sup_set_class finjust_2 wcel iinjust_0 sup_set_class finjust_3 wcel wa iinjust_0 cab finjust_1 sup_set_class finjust_2 wcel finjust_1 sup_set_class finjust_3 wcel wa finjust_1 cab finjust_0 sup_set_class finjust_2 wcel finjust_0 sup_set_class finjust_3 wcel wa iinjust_0 sup_set_class finjust_2 wcel iinjust_0 sup_set_class finjust_3 wcel wa finjust_0 iinjust_0 finjust_0 sup_set_class iinjust_0 sup_set_class wceq finjust_0 sup_set_class finjust_2 wcel iinjust_0 sup_set_class finjust_2 wcel finjust_0 sup_set_class finjust_3 wcel iinjust_0 sup_set_class finjust_3 wcel finjust_0 sup_set_class iinjust_0 sup_set_class finjust_2 eleq1 finjust_0 sup_set_class iinjust_0 sup_set_class finjust_3 eleq1 anbi12d cbvabv iinjust_0 sup_set_class finjust_2 wcel iinjust_0 sup_set_class finjust_3 wcel wa finjust_1 sup_set_class finjust_2 wcel finjust_1 sup_set_class finjust_3 wcel wa iinjust_0 finjust_1 iinjust_0 sup_set_class finjust_1 sup_set_class wceq iinjust_0 sup_set_class finjust_2 wcel finjust_1 sup_set_class finjust_2 wcel iinjust_0 sup_set_class finjust_3 wcel finjust_1 sup_set_class finjust_3 wcel iinjust_0 sup_set_class finjust_1 sup_set_class finjust_2 eleq1 iinjust_0 sup_set_class finjust_1 sup_set_class finjust_3 eleq1 anbi12d cbvabv eqtri $.
 $}
-$( /* Define the intersection of two classes.  Definition 5.6 of
+$( Define the intersection of two classes.  Definition 5.6 of
        [TakeutiZaring] p. 16.  For example,
        ` ( { 1 , 3 } i^i { 1 , 8 } ) = { 1 } ` ( ~ ex-in ).  Contrast this
        operation with union ` ( A u. B ) ` ( ~ df-un ) and difference
        ` ( A \ B ) ` ( ~ df-dif ).  For alternate definitions in terms of class
        difference, requiring no dummy variables, see ~ dfin2 and ~ dfin4 .  For
        intersection defined in terms of union, see ~ dfin3 .  (Contributed by
-       NM, 29-Apr-1994.) */
-
-$)
+       NM, 29-Apr-1994.) $)
 ${
 	$d x A $.
 	$d x B $.
@@ -194,10 +158,8 @@ ${
 	fdf-in_2 $f class B $.
 	df-in $a |- ( A i^i B ) = { x | ( x e. A /\ x e. B ) } $.
 $}
-$( /* Alternate definition for the intersection of two classes.  (Contributed
-       by NM, 6-Jul-2005.) */
-
-$)
+$( Alternate definition for the intersection of two classes.  (Contributed
+       by NM, 6-Jul-2005.) $)
 ${
 	$d x A $.
 	$d x B $.
@@ -206,10 +168,8 @@ ${
 	fdfin5_2 $f class B $.
 	dfin5 $p |- ( A i^i B ) = { x e. A | x e. B } $= fdfin5_1 fdfin5_2 cin fdfin5_0 sup_set_class fdfin5_1 wcel fdfin5_0 sup_set_class fdfin5_2 wcel wa fdfin5_0 cab fdfin5_0 sup_set_class fdfin5_2 wcel fdfin5_0 fdfin5_1 crab fdfin5_0 fdfin5_1 fdfin5_2 df-in fdfin5_0 sup_set_class fdfin5_2 wcel fdfin5_0 fdfin5_1 df-rab eqtr4i $.
 $}
-$( /* Alternate definition of class difference.  (Contributed by NM,
-       25-Mar-2004.) */
-
-$)
+$( Alternate definition of class difference.  (Contributed by NM,
+       25-Mar-2004.) $)
 ${
 	$d x A $.
 	$d x B $.
@@ -218,10 +178,8 @@ ${
 	fdfdif2_2 $f class B $.
 	dfdif2 $p |- ( A \ B ) = { x e. A | -. x e. B } $= fdfdif2_1 fdfdif2_2 cdif fdfdif2_0 sup_set_class fdfdif2_1 wcel fdfdif2_0 sup_set_class fdfdif2_2 wcel wn wa fdfdif2_0 cab fdfdif2_0 sup_set_class fdfdif2_2 wcel wn fdfdif2_0 fdfdif2_1 crab fdfdif2_0 fdfdif2_1 fdfdif2_2 df-dif fdfdif2_0 sup_set_class fdfdif2_2 wcel wn fdfdif2_0 fdfdif2_1 df-rab eqtr4i $.
 $}
-$( /* Expansion of membership in a class difference.  (Contributed by NM,
-       29-Apr-1994.) */
-
-$)
+$( Expansion of membership in a class difference.  (Contributed by NM,
+       29-Apr-1994.) $)
 ${
 	$d x A $.
 	$d x B $.
@@ -232,11 +190,9 @@ ${
 	feldif_2 $f class C $.
 	eldif $p |- ( A e. ( B \ C ) <-> ( A e. B /\ -. A e. C ) ) $= feldif_0 feldif_1 feldif_2 cdif wcel feldif_0 cvv wcel feldif_0 feldif_1 wcel feldif_0 feldif_2 wcel wn wa feldif_0 feldif_1 feldif_2 cdif elex feldif_0 feldif_1 wcel feldif_0 cvv wcel feldif_0 feldif_2 wcel wn feldif_0 feldif_1 elex adantr ieldif_0 sup_set_class feldif_1 wcel ieldif_0 sup_set_class feldif_2 wcel wn wa feldif_0 feldif_1 wcel feldif_0 feldif_2 wcel wn wa ieldif_0 feldif_0 feldif_1 feldif_2 cdif cvv ieldif_0 sup_set_class feldif_0 wceq ieldif_0 sup_set_class feldif_1 wcel feldif_0 feldif_1 wcel ieldif_0 sup_set_class feldif_2 wcel wn feldif_0 feldif_2 wcel wn ieldif_0 sup_set_class feldif_0 feldif_1 eleq1 ieldif_0 sup_set_class feldif_0 wceq ieldif_0 sup_set_class feldif_2 wcel feldif_0 feldif_2 wcel ieldif_0 sup_set_class feldif_0 feldif_2 eleq1 notbid anbi12d ieldif_0 feldif_1 feldif_2 df-dif elab2g pm5.21nii $.
 $}
-$( /* If a class is in one class and not another, it is also in their
+$( If a class is in one class and not another, it is also in their
        difference.  One-way deduction form of ~ eldif .  (Contributed by David
-       Moews, 1-May-2017.) */
-
-$)
+       Moews, 1-May-2017.) $)
 ${
 	feldifd_0 $f wff ph $.
 	feldifd_1 $f class A $.
@@ -246,11 +202,9 @@ ${
 	eeldifd_1 $e |- ( ph -> -. A e. C ) $.
 	eldifd $p |- ( ph -> A e. ( B \ C ) ) $= feldifd_0 feldifd_1 feldifd_2 wcel feldifd_1 feldifd_3 wcel wn feldifd_1 feldifd_2 feldifd_3 cdif wcel eeldifd_0 eeldifd_1 feldifd_1 feldifd_2 feldifd_3 eldif sylanbrc $.
 $}
-$( /* If a class is in the difference of two classes, it is also in the
+$( If a class is in the difference of two classes, it is also in the
        minuend.  One-way deduction form of ~ eldif .  (Contributed by David
-       Moews, 1-May-2017.) */
-
-$)
+       Moews, 1-May-2017.) $)
 ${
 	feldifad_0 $f wff ph $.
 	feldifad_1 $f class A $.
@@ -259,11 +213,9 @@ ${
 	eeldifad_0 $e |- ( ph -> A e. ( B \ C ) ) $.
 	eldifad $p |- ( ph -> A e. B ) $= feldifad_0 feldifad_1 feldifad_2 wcel feldifad_1 feldifad_3 wcel wn feldifad_0 feldifad_1 feldifad_2 feldifad_3 cdif wcel feldifad_1 feldifad_2 wcel feldifad_1 feldifad_3 wcel wn wa eeldifad_0 feldifad_1 feldifad_2 feldifad_3 eldif sylib simpld $.
 $}
-$( /* If a class is in the difference of two classes, it is not in the
+$( If a class is in the difference of two classes, it is not in the
        subtrahend.  One-way deduction form of ~ eldif .  (Contributed by David
-       Moews, 1-May-2017.) */
-
-$)
+       Moews, 1-May-2017.) $)
 ${
 	feldifbd_0 $f wff ph $.
 	feldifbd_1 $f class A $.

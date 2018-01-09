@@ -1,3 +1,5 @@
+#define PARALLEL_PARSE
+
 #include <rus_ast.hpp>
 #include "boost.hpp"
 #include "rus_parser_adaptors.hpp"
@@ -5,8 +7,6 @@
 namespace mdl { namespace rus {
 
 void parse_spirit(uint);
-
-#define PARALLEL_PARSE
 
 namespace parser {
 
@@ -162,7 +162,7 @@ struct ParseImport {
 		uint id = Sys::make_name(name);
 		Source* imp_src = Sys::mod().math.get<Source>().access(id);
 		const bool primary = !imp_src->parsed;
-#ifndef PARRALEL_PARSE
+#ifndef PARALLEL_PARSE
 		if (primary) parse_spirit(id);
 #endif
 		return new Import(id, primary);
@@ -233,12 +233,13 @@ struct SetToken {
     }
 };
 
+static Symbol dfm(Lex::toInt("defiendum"));
+static Symbol dfs(Lex::toInt("definiens"));
+
 struct AssembleDef {
 	template <typename T1, typename T2>
 	struct result { typedef void type; };
 	void operator()(Def* d, VarStack& varsStack) const {
-		static Symbol dfm(Lex::toInt("defiendum"));
-		static Symbol dfs(Lex::toInt("definiens"));
 		Prop* prop = new Prop(0);
 		for (auto s : d->prop.symbols) {
 			if (s == dfm) {
@@ -267,7 +268,7 @@ struct AppendComment {
 };
 
 template <typename Iterator>
-struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
+struct Grammar : qi::grammar<Iterator, rus::Source*(), unicode::space_type> {
 	Grammar(Source*);
 	void initNames();
 
@@ -303,11 +304,7 @@ struct Grammar : qi::grammar<Iterator, rus::Source(), unicode::space_type> {
 	qi::rule<Iterator, Comment*(), qi::unused_type> comment_ml;
 	qi::rule<Iterator, Comment*(), qi::unused_type> comment_sl;
 	qi::rule<Iterator, Comment*(), qi::unused_type> comment;
-	qi::rule<Iterator, Source(), unicode::space_type> source;
-
-	static bool parse(Iterator& beg, Iterator& end, auto space, Source& src) {
-		return qi::phrase_parse(beg, end, Grammar(&src), space, src);
-	}
+	qi::rule<Iterator, Source*(), unicode::space_type> source;
 };
 
 template <typename Iterator>

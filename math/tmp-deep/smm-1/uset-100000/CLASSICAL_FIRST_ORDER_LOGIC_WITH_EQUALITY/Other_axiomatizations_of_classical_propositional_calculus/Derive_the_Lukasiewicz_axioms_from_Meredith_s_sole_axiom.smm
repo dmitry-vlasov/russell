@@ -1,12 +1,10 @@
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus.smm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
       Derive the Lukasiewicz axioms from Meredith's sole axiom
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-*/
-
 $)
-$( /* Carew Meredith's sole axiom for propositional calculus.  This amazing
+$( Carew Meredith's sole axiom for propositional calculus.  This amazing
      formula is thought to be the shortest possible single axiom for
      propositional calculus with inference rule ~ ax-mp , where negation and
      implication are primitive.  Here we prove Meredith's axiom from ~ ax-1 ,
@@ -27,9 +25,7 @@ $( /* Carew Meredith's sole axiom for propositional calculus.  This amazing
      within reach, he would use the inside of cigarette packs to write proofs
      for logical colleagues."  (Contributed by NM, 14-Dec-2002.)  (Proof
      shortened by Andrew Salmon, 25-Jul-2011.)  (Proof shortened by Wolf
-     Lammen, 28-May-2013.) */
-
-$)
+     Lammen, 28-May-2013.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -40,11 +36,9 @@ ${
 	pmeredith $p |- ( ( ( ( ( ph -> ps ) -> ( -. ch -> -. th ) ) -> ch ) -> ta ) -> ( ( ta -> ph ) -> ( th -> ph ) ) ) $=
 	f0 f1 ppm2.21 f2 f3 aax-3 f0 awn f0 f1 awi f2 awn f3 awn awi f3 f2 awi pimim12i f0 f1 awi f2 awn f3 awn awi awi f0 awn f3 f2 pcom13 f3 f0 f0 f1 awi f2 awn f3 awn awi awi f2 awi pcon1d f3 f0 f1 awi f2 awn f3 awn awi awi f2 awi awn f0 pcom12 f0 f1 awi f2 awn f3 awn awi awi f2 awi awn f3 f0 awi f4 f0 awi pa1d f4 f3 aax-1 f4 f3 f4 f0 pimim1d f0 f1 awi f2 awn f3 awn awi awi f2 awi f4 f4 f0 awi f3 f0 awi awi pja $.
 $}
-$( /* Alias for ~ meredith which "verify markup *" will match to
+$( Alias for ~ meredith which "verify markup *" will match to
      ~ ax-meredith .  (Contributed by NM, 21-Aug-2017.)
-     (New usage is discouraged.) */
-
-$)
+     (New usage is discouraged.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -55,14 +49,12 @@ ${
 	paxmeredith $p |- ( ( ( ( ( ph -> ps ) -> ( -. ch -> -. th ) ) -> ch ) -> ta ) -> ( ( ta -> ph ) -> ( th -> ph ) ) ) $=
 	f0 f1 f2 f3 f4 pmeredith $.
 $}
-$( /* Theorem ~ meredith restated as an axiom.  This will allow us to ensure
+$( Theorem ~ meredith restated as an axiom.  This will allow us to ensure
      that the rederivation of ~ ax1 , ~ ax2 , and ~ ax3 below depend only on
      Meredith's sole axiom and not accidentally on a previous theorem above.
      Outside of this section, we will not make use of this axiom.  (Contributed
      by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
-     (New usage is discouraged.) */
-
-$)
+     (New usage is discouraged.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -72,12 +64,10 @@ ${
 	f4 $f wff ta $.
 	aax-meredith $a |- ( ( ( ( ( ph -> ps ) -> ( -. ch -> -. th ) ) -> ch ) -> ta ) -> ( ( ta -> ph ) -> ( th -> ph ) ) ) $.
 $}
-$( /* Step 3 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+$( Step 3 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (The step numbers refer to Meredith's original paper.)  (Contributed by
      NM, 14-Dec-2002.)  (Proof modification is discouraged.)
-     (New usage is discouraged.) */
-
-$)
+     (New usage is discouraged.) $)
 ${
 	$v ph ps ch ta $.
 	f0 $f wff ph $.
@@ -87,11 +77,9 @@ ${
 	pmerlem1 $p |- ( ( ( ch -> ( -. ph -> ps ) ) -> ta ) -> ( ph -> ta ) ) $=
 	f0 awn f1 f3 awn f2 awn awi f0 awn f1 awi awn f3 aax-meredith f0 awn f1 awi f3 awn f2 awn awi awn f0 awn f1 awi awn awn awi f3 f2 f3 f0 awn awi f0 awn f1 awi awn f0 awn awi awi aax-meredith f0 awn f1 awi f3 awn f2 awn awi awn f0 awn f1 awi awn awn awi awi f3 awn f2 awn awi awi f3 awi f3 f0 awn awi f0 awn f1 awi awn f0 awn awi awi awi f3 f0 awn awi f0 awn f1 awi awn f0 awn awi awi f0 awn f1 awi awi f2 f0 awn f1 awi awi awi aax-mp f3 f0 awn f0 awn f1 awi f0 f2 f0 awn f1 awi awi aax-meredith f3 f0 awn awi f0 awn f1 awi awn f0 awn awi awi f0 awn f1 awi awi f2 f0 awn f1 awi awi awi f2 f0 awn f1 awi awi f3 awi f0 f3 awi awi aax-mp $.
 $}
-$( /* Step 4 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+$( Step 4 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
-     (New usage is discouraged.) */
-
-$)
+     (New usage is discouraged.) $)
 ${
 	$v ph ch th $.
 	f0 $f wff ph $.
@@ -100,11 +88,9 @@ ${
 	pmerlem2 $p |- ( ( ( ph -> ph ) -> ch ) -> ( th -> ch ) ) $=
 	f0 f2 awn f1 f1 awi f0 pmerlem1 f1 f1 f0 f2 f0 f0 awi aax-meredith f1 f1 awi f0 awn f2 awn awi awi f0 awi f0 f0 awi awi f0 f0 awi f1 awi f2 f1 awi awi aax-mp $.
 $}
-$( /* Step 7 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+$( Step 7 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
-     (New usage is discouraged.) */
-
-$)
+     (New usage is discouraged.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -113,11 +99,9 @@ ${
 	pmerlem3 $p |- ( ( ( ps -> ch ) -> ph ) -> ( ch -> ph ) ) $=
 	f2 awn f2 awn f2 awn awi f0 f0 awi pmerlem2 f2 awn f2 awn awi f0 f0 awi f2 awn f2 awn awi awi f2 f0 awi f1 awn f1 awn awi awi f1 awi pmerlem2 f2 awn f2 awn awi f2 awn f2 awn awi awi f0 f0 awi f2 awn f2 awn awi awi awi f2 f0 awi f1 awn f1 awn awi awi f1 awi f0 f0 awi f2 awn f2 awn awi awi awi aax-mp f2 f0 f1 f1 f0 f0 awi f2 awn f2 awn awi awi aax-meredith f2 f0 awi f1 awn f1 awn awi awi f1 awi f0 f0 awi f2 awn f2 awn awi awi awi f0 f0 awi f2 awn f2 awn awi awi f2 awi f1 f2 awi awi aax-mp f0 f0 f2 f2 f1 f2 awi aax-meredith f0 f0 awi f2 awn f2 awn awi awi f2 awi f1 f2 awi awi f1 f2 awi f0 awi f2 f0 awi awi aax-mp $.
 $}
-$( /* Step 8 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+$( Step 8 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
-     (New usage is discouraged.) */
-
-$)
+     (New usage is discouraged.) $)
 ${
 	$v ph th ta $.
 	f0 $f wff ph $.
@@ -126,11 +110,9 @@ ${
 	pmerlem4 $p |- ( ta -> ( ( ta -> ph ) -> ( th -> ph ) ) ) $=
 	f0 f0 f1 f1 f2 aax-meredith f2 f0 awi f1 f0 awi awi f0 f0 awi f1 awn f1 awn awi awi f1 awi f2 pmerlem3 f0 f0 awi f1 awn f1 awn awi awi f1 awi f2 awi f2 f0 awi f1 f0 awi awi awi f2 f2 f0 awi f1 f0 awi awi awi aax-mp $.
 $}
-$( /* Step 11 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+$( Step 11 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
-     (New usage is discouraged.) */
-
-$)
+     (New usage is discouraged.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
@@ -138,11 +120,9 @@ ${
 	pmerlem5 $p |- ( ( ph -> ps ) -> ( -. -. ph -> ps ) ) $=
 	f1 f1 f1 f1 f1 aax-meredith f1 f1 f1 f0 awn awn f0 aax-meredith f0 awn f1 f0 f1 awi f1 f1 awi f1 awn f1 awn awi awi f1 awi f1 awi f1 f1 awi f1 f1 awi awi awi awn pmerlem1 f0 f1 f1 awi f1 awn f0 awn awn awn awi awi f1 awi f0 f1 awi f0 awn awn f1 awi awi f1 f1 awi f1 awn f1 awn awi awi f1 awi f1 awi f1 f1 awi f1 f1 awi awi awi awn awi f0 awn f1 f1 awi f1 awn f1 awn awi awi f1 awi f1 awi f1 f1 awi f1 f1 awi awi awi awn awi awi pmerlem4 f0 f1 awi f0 awn awn f1 awi awi f1 f1 awi f1 awn f1 awn awi awi f1 awi f1 awi f1 f1 awi f1 f1 awi awi awi awn awi f0 awn f1 f1 awi f1 awn f1 awn awi awi f1 awi f1 awi f1 f1 awi f1 f1 awi awi awi awn awi awi f0 f1 awi f0 awn awn f1 awi awi f1 f1 awi f1 awn f1 awn awi awi f1 awi f1 awi f1 f1 awi f1 f1 awi awi awi awn awi f0 awn f1 f1 awi f1 awn f1 awn awi awi f1 awi f1 awi f1 f1 awi f1 f1 awi awi awi awn awi awi f0 awi f1 f1 awi f1 awn f0 awn awn awn awi awi f1 awi f0 awi awi aax-mp f0 f1 awi f0 awn awn f1 awi awi f1 f1 awi f1 awn f1 awn awi awi f1 awi f1 awi f1 f1 awi f1 f1 awi awi awi awn f0 f1 f1 awi f1 awn f1 awn awi awi f1 awi f1 awi f1 f1 awi f1 f1 awi awi awi f1 f1 awi f1 awn f0 awn awn awn awi awi f1 awi f0 awi aax-meredith f0 f1 awi f0 awn awn f1 awi awi f1 f1 awi f1 awn f1 awn awi awi f1 awi f1 awi f1 f1 awi f1 f1 awi awi awi awn awi f0 awn f1 f1 awi f1 awn f1 awn awi awi f1 awi f1 awi f1 f1 awi f1 f1 awi awi awi awn awi awi f0 awi f1 f1 awi f1 awn f0 awn awn awn awi awi f1 awi f0 awi awi f1 f1 awi f1 awn f0 awn awn awn awi awi f1 awi f0 awi f0 f1 awi f0 awn awn f1 awi awi awi f1 f1 awi f1 awn f1 awn awi awi f1 awi f1 awi f1 f1 awi f1 f1 awi awi awi f0 f1 awi f0 awn awn f1 awi awi awi awi aax-mp f1 f1 awi f1 awn f0 awn awn awn awi awi f1 awi f0 awi f0 f1 awi f0 awn awn f1 awi awi awi f1 f1 awi f1 awn f1 awn awi awi f1 awi f1 awi f1 f1 awi f1 f1 awi awi awi f0 f1 awi f0 awn awn f1 awi awi awi aax-mp f1 f1 awi f1 awn f1 awn awi awi f1 awi f1 awi f1 f1 awi f1 f1 awi awi awi f0 f1 awi f0 awn awn f1 awi awi aax-mp $.
 $}
-$( /* Step 12 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+$( Step 12 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
-     (New usage is discouraged.) */
-
-$)
+     (New usage is discouraged.) $)
 ${
 	$v ph ps ch th $.
 	f0 $f wff ph $.
@@ -152,11 +132,9 @@ ${
 	pmerlem6 $p |- ( ch -> ( ( ( ps -> ch ) -> ph ) -> ( th -> ph ) ) ) $=
 	f0 f3 f1 f2 awi pmerlem4 f1 f2 awi f0 awi f3 f0 awi awi f1 f2 pmerlem3 f1 f2 awi f1 f2 awi f0 awi f3 f0 awi awi awi f2 f1 f2 awi f0 awi f3 f0 awi awi awi aax-mp $.
 $}
-$( /* Between steps 14 and 15 of Meredith's proof of Lukasiewicz axioms from his
+$( Between steps 14 and 15 of Meredith's proof of Lukasiewicz axioms from his
      sole axiom.  (Contributed by NM, 22-Dec-2002.)
-     (Proof modification is discouraged.)  (New usage is discouraged.) */
-
-$)
+     (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -167,11 +145,9 @@ ${
 	pmerlem7 $p |- ( ph -> ( ( ( ps -> ch ) -> th ) -> ( ( ( ch -> ta ) -> ( -. th -> -. ps ) ) -> th ) ) ) $=
 	f3 f2 f4 awi f3 awn f1 awn awi awi f1 f2 awi pmerlem4 f0 awn f1 f2 awi f3 awi f2 f4 awi f3 awn f1 awn awi awi f3 awi f2 awn pmerlem6 f2 f4 f3 f1 f1 f2 awi f3 awi f2 f4 awi f3 awn f1 awn awi awi f3 awi awi f0 awn awi f2 awn f0 awn awi awi aax-meredith f2 f4 awi f3 awn f1 awn awi awi f3 awi f1 f2 awi f3 awi f2 f4 awi f3 awn f1 awn awi awi f3 awi awi f0 awn awi f2 awn f0 awn awi awi awi f1 f2 awi f3 awi f2 f4 awi f3 awn f1 awn awi awi f3 awi awi f0 awn awi f2 awn f0 awn awi awi f2 awi f1 f2 awi awi aax-mp f1 f2 awi f3 awi f2 f4 awi f3 awn f1 awn awi awi f3 awi awi f0 awn f2 f0 f1 f2 awi aax-meredith f1 f2 awi f3 awi f2 f4 awi f3 awn f1 awn awi awi f3 awi awi f0 awn awi f2 awn f0 awn awi awi f2 awi f1 f2 awi awi f1 f2 awi f1 f2 awi f3 awi f2 f4 awi f3 awn f1 awn awi awi f3 awi awi awi f0 f1 f2 awi f3 awi f2 f4 awi f3 awn f1 awn awi awi f3 awi awi awi awi aax-mp f1 f2 awi f1 f2 awi f3 awi f2 f4 awi f3 awn f1 awn awi awi f3 awi awi awi f0 f1 f2 awi f3 awi f2 f4 awi f3 awn f1 awn awi awi f3 awi awi awi aax-mp $.
 $}
-$( /* Step 15 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+$( Step 15 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 22-Dec-2002.)  (Proof modification is discouraged.)
-     (New usage is discouraged.) */
-
-$)
+     (New usage is discouraged.) $)
 ${
 	$v ps ch th ta $.
 	$v ph $.
@@ -183,11 +159,9 @@ ${
 	pmerlem8 $p |- ( ( ( ps -> ch ) -> th ) -> ( ( ( ch -> ta ) -> ( -. th -> -. ps ) ) -> th ) ) $=
 	i0 i0 i0 i0 i0 aax-meredith i0 i0 awi i0 awn i0 awn awi awi i0 awi i0 awi i0 i0 awi i0 i0 awi awi awi f0 f1 f2 f3 pmerlem7 i0 i0 awi i0 awn i0 awn awi awi i0 awi i0 awi i0 i0 awi i0 i0 awi awi awi f0 f1 awi f2 awi f1 f3 awi f2 awn f0 awn awi awi f2 awi awi aax-mp $.
 $}
-$( /* Step 18 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+$( Step 18 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 22-Dec-2002.)  (Proof modification is discouraged.)
-     (New usage is discouraged.) */
-
-$)
+     (New usage is discouraged.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -199,11 +173,9 @@ ${
 	pmerlem9 $p |- ( ( ( ph -> ps ) -> ( ch -> ( th -> ( ps -> ta ) ) ) ) -> ( et -> ( ch -> ( th -> ( ps -> ta ) ) ) ) ) $=
 	f5 awn f2 f3 f1 f4 awi awi f1 awn pmerlem6 f3 f1 f4 awi f2 f3 f1 f4 awi awi awi f5 awn awi f1 awn f5 awn awi awi f2 f3 f1 f4 awi awi awi f5 awn awi f1 awn f5 awn awi awi awn f3 awn awi awn f0 awn awi pmerlem8 f3 f1 f4 awi awi f2 f3 f1 f4 awi awi awi f5 awn awi f1 awn f5 awn awi awi awi f1 f4 awi f2 f3 f1 f4 awi awi awi f5 awn awi f1 awn f5 awn awi awi awn f3 awn awi awn f0 awn awi awi f2 f3 f1 f4 awi awi awi f5 awn awi f1 awn f5 awn awi awi awn f3 awn awi awi f2 f3 f1 f4 awi awi awi f5 awn awi f1 awn f5 awn awi awi awi aax-mp f1 f4 f2 f3 f1 f4 awi awi awi f5 awn awi f1 awn f5 awn awi awi awn f3 awn awi f0 f2 f3 f1 f4 awi awi awi f5 awn awi f1 awn f5 awn awi awi aax-meredith f1 f4 awi f2 f3 f1 f4 awi awi awi f5 awn awi f1 awn f5 awn awi awi awn f3 awn awi awn f0 awn awi awi f2 f3 f1 f4 awi awi awi f5 awn awi f1 awn f5 awn awi awi awn f3 awn awi awi f2 f3 f1 f4 awi awi awi f5 awn awi f1 awn f5 awn awi awi awi f2 f3 f1 f4 awi awi awi f5 awn awi f1 awn f5 awn awi awi f1 awi f0 f1 awi awi aax-mp f2 f3 f1 f4 awi awi awi f5 awn f1 f5 f0 f1 awi aax-meredith f2 f3 f1 f4 awi awi awi f5 awn awi f1 awn f5 awn awi awi f1 awi f0 f1 awi awi f0 f1 awi f2 f3 f1 f4 awi awi awi awi f5 f2 f3 f1 f4 awi awi awi awi awi aax-mp $.
 $}
-$( /* Step 19 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+$( Step 19 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
-     (New usage is discouraged.) */
-
-$)
+     (New usage is discouraged.) $)
 ${
 	$v ph ps th $.
 	f0 $f wff ph $.
@@ -212,11 +184,9 @@ ${
 	pmerlem10 $p |- ( ( ph -> ( ph -> ps ) ) -> ( th -> ( ph -> ps ) ) ) $=
 	f0 f0 f0 f0 f0 aax-meredith f0 f1 awi f0 f0 f2 f0 aax-meredith f0 f1 awi f0 awi f0 awn f2 awn awi awi f0 awi f0 f0 f0 f1 awi awi f2 f1 f0 f0 awi f0 awn f0 awn awi awi f0 awi f0 awi f0 f0 awi f0 f0 awi awi awi pmerlem9 f0 f1 awi f0 awi f0 awn f2 awn awi awi f0 awi f0 awi f0 f0 f1 awi awi f2 f0 f1 awi awi awi awi f0 f0 awi f0 awn f0 awn awi awi f0 awi f0 awi f0 f0 awi f0 f0 awi awi awi f0 f0 f1 awi awi f2 f0 f1 awi awi awi awi aax-mp f0 f0 awi f0 awn f0 awn awi awi f0 awi f0 awi f0 f0 awi f0 f0 awi awi awi f0 f0 f1 awi awi f2 f0 f1 awi awi awi aax-mp $.
 $}
-$( /* Step 20 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+$( Step 20 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
-     (New usage is discouraged.) */
-
-$)
+     (New usage is discouraged.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
@@ -224,11 +194,9 @@ ${
 	pmerlem11 $p |- ( ( ph -> ( ph -> ps ) ) -> ( ph -> ps ) ) $=
 	f0 f0 f0 f0 f0 aax-meredith f0 f1 f0 f0 f1 awi awi pmerlem10 f0 f0 f1 awi awi f0 f1 awi f0 f0 awi f0 awn f0 awn awi awi f0 awi f0 awi f0 f0 awi f0 f0 awi awi awi pmerlem10 f0 f0 f1 awi awi f0 f0 f1 awi awi f0 f1 awi awi awi f0 f0 awi f0 awn f0 awn awi awi f0 awi f0 awi f0 f0 awi f0 f0 awi awi awi f0 f0 f1 awi awi f0 f1 awi awi awi aax-mp f0 f0 awi f0 awn f0 awn awi awi f0 awi f0 awi f0 f0 awi f0 f0 awi awi awi f0 f0 f1 awi awi f0 f1 awi awi aax-mp $.
 $}
-$( /* Step 28 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+$( Step 28 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
-     (New usage is discouraged.) */
-
-$)
+     (New usage is discouraged.) $)
 ${
 	$v ph ch th $.
 	f0 $f wff ph $.
@@ -237,11 +205,9 @@ ${
 	pmerlem12 $p |- ( ( ( th -> ( -. -. ch -> ch ) ) -> ph ) -> ph ) $=
 	f1 f1 pmerlem5 f1 f1 awn awn f1 awi f2 pmerlem2 f1 f1 awi f1 awn awn f1 awi awi f2 f1 awn awn f1 awi awi aax-mp f0 f2 f1 awn awn f1 awi awi f0 awi f2 f1 awn awn f1 awi awi pmerlem4 f2 f1 awn awn f1 awi awi f2 f1 awn awn f1 awi awi f0 awi f2 f1 awn awn f1 awi awi f0 awi f0 awi awi aax-mp f2 f1 awn awn f1 awi awi f0 awi f0 pmerlem11 f2 f1 awn awn f1 awi awi f0 awi f2 f1 awn awn f1 awi awi f0 awi f0 awi awi f2 f1 awn awn f1 awi awi f0 awi f0 awi aax-mp $.
 $}
-$( /* Step 35 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
+$( Step 35 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
-     (New usage is discouraged.) */
-
-$)
+     (New usage is discouraged.) $)
 ${
 	$v ph ps ch th $.
 	f0 $f wff ph $.
@@ -251,11 +217,9 @@ ${
 	pmerlem13 $p |- ( ( ph -> ps ) -> ( ( ( th -> ( -. -. ch -> ch ) ) -> -. -. ph ) -> ps ) ) $=
 	f3 f2 awn awn f2 awi awi f0 awn awn awi awn f2 f3 pmerlem12 f0 awn awn f2 f3 pmerlem12 f3 f2 awn awn f2 awi awi f0 awn awn awi f0 awn awn pmerlem5 f3 f2 awn awn f2 awi awi f0 awn awn awi f0 awn awn awi f3 f2 awn awn f2 awi awi f0 awn awn awi awn awn f0 awn awn awi aax-mp f3 f2 awn awn f2 awi awi f0 awn awn awi awn f3 f2 awn awn f2 awi awi f0 awn awn awi awn f1 awi f3 f2 awn awn f2 awi awi f0 awn awn awi awn awn f0 awn awn awi f3 f2 awn awn f2 awi awi pmerlem6 f3 f2 awn awn f2 awi awi f0 awn awn awi awn awn f0 awn awn awi f3 f2 awn awn f2 awi awi f0 awn awn awi awn f1 awi f3 f2 awn awn f2 awi awi f0 awn awn awi awn awn f0 awn awn awi awi f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi f3 f2 awn awn f2 awi awi f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi awi aax-mp f3 f2 awn awn f2 awi awi f0 awn awn awi awn f1 f3 f2 awn awn f2 awi awi f0 awn awn awi awn f0 awn f3 f2 awn awn f2 awi awi f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi aax-meredith f3 f2 awn awn f2 awi awi f0 awn awn awi awn f1 awi f3 f2 awn awn f2 awi awi f0 awn awn awi awn awn f0 awn awn awi awi f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi f3 f2 awn awn f2 awi awi f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi awi f3 f2 awn awn f2 awi awi f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi f0 awn f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi awi aax-mp f3 f2 awn awn f2 awi awi f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi f0 awn f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi aax-mp f0 f1 f1 awi f0 awn f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi f1 f1 awi f0 awn f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi awi f0 awi pmerlem6 f0 awn f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi f1 f1 awi f0 awn f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi awi f0 awi f1 f1 awi f0 awn f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi awi f0 awi f0 awi awi aax-mp f1 f1 awi f0 awn f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi awi f0 awi f0 pmerlem11 f1 f1 awi f0 awn f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi awi f0 awi f1 f1 awi f0 awn f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi awi f0 awi f0 awi awi f1 f1 awi f0 awn f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi awi f0 awi f0 awi aax-mp f1 f1 f0 f3 f2 awn awn f2 awi awi f0 awn awn awi f0 aax-meredith f1 f1 awi f0 awn f3 f2 awn awn f2 awi awi f0 awn awn awi awn awi awi f0 awi f0 awi f0 f1 awi f3 f2 awn awn f2 awi awi f0 awn awn awi f1 awi awi aax-mp $.
 $}
-$( /* 1 of 3 axioms for propositional calculus due to Lukasiewicz, derived from
+$( 1 of 3 axioms for propositional calculus due to Lukasiewicz, derived from
      Meredith's sole axiom.  (Contributed by NM, 14-Dec-2002.)
-     (Proof modification is discouraged.)  (New usage is discouraged.) */
-
-$)
+     (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -264,22 +228,18 @@ ${
 	pluk-1 $p |- ( ( ph -> ps ) -> ( ( ps -> ch ) -> ( ph -> ch ) ) ) $=
 	f2 f2 f0 awn awn f0 f1 aax-meredith f0 f1 f0 awn f2 f2 awi pmerlem13 f0 f1 awi f2 f2 awi f0 awn awn awn f0 awn awi awi f0 awn awn awi f1 awi f0 f1 awi awn f1 f2 awi f0 f2 awi awi f0 awi pmerlem13 f0 f1 awi f2 f2 awi f0 awn awn awn f0 awn awi awi f0 awn awn awi f1 awi awi f1 f2 awi f0 f2 awi awi f0 awi f0 f1 awi awn awn awn f0 f1 awi awn awi awi f0 f1 awi awn awn awi f2 f2 awi f0 awn awn awn f0 awn awi awi f0 awn awn awi f1 awi awi aax-mp f1 f2 awi f0 f2 awi awi f0 f0 f1 awi awn awn f0 f1 awi f2 f2 awi f0 awn awn awn f0 awn awi awi f0 awn awn awi f1 awi aax-meredith f1 f2 awi f0 f2 awi awi f0 awi f0 f1 awi awn awn awn f0 f1 awi awn awi awi f0 f1 awi awn awn awi f2 f2 awi f0 awn awn awn f0 awn awi awi f0 awn awn awi f1 awi awi f2 f2 awi f0 awn awn awn f0 awn awi awi f0 awn awn awi f1 awi f1 f2 awi f0 f2 awi awi awi f0 f1 awi f1 f2 awi f0 f2 awi awi awi awi aax-mp f2 f2 awi f0 awn awn awn f0 awn awi awi f0 awn awn awi f1 awi f1 f2 awi f0 f2 awi awi awi f0 f1 awi f1 f2 awi f0 f2 awi awi awi aax-mp $.
 $}
-$( /* 2 of 3 axioms for propositional calculus due to Lukasiewicz, derived from
+$( 2 of 3 axioms for propositional calculus due to Lukasiewicz, derived from
      Meredith's sole axiom.  (Contributed by NM, 14-Dec-2002.)
-     (Proof modification is discouraged.)  (New usage is discouraged.) */
-
-$)
+     (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
 	$v ph $.
 	f0 $f wff ph $.
 	pluk-2 $p |- ( ( -. ph -> ph ) -> ph ) $=
 	f0 f0 awn f0 awi awn pmerlem5 f0 awn f0 f0 awn f0 awi awn awi f0 awn awn f0 awn f0 awi awn awi awi f0 awn awi f0 f0 awn f0 awi awn awi f0 awn awn f0 awn f0 awi awn awi awi pmerlem4 f0 f0 awn f0 awi awn awi f0 awn awn f0 awn f0 awi awn awi awi f0 f0 awn f0 awi awn awi f0 awn awn f0 awn f0 awi awn awi awi f0 awn awi f0 f0 awn f0 awi awn awi f0 awn awn f0 awn f0 awi awn awi awi f0 awn awi f0 awn awi awi aax-mp f0 f0 awn f0 awi awn awi f0 awn awn f0 awn f0 awi awn awi awi f0 awn awi f0 awn pmerlem11 f0 f0 awn f0 awi awn awi f0 awn awn f0 awn f0 awi awn awi awi f0 awn awi f0 f0 awn f0 awi awn awi f0 awn awn f0 awn f0 awi awn awi awi f0 awn awi f0 awn awi awi f0 f0 awn f0 awi awn awi f0 awn awn f0 awn f0 awi awn awi awi f0 awn awi f0 awn awi aax-mp f0 f0 awn f0 awi awn f0 awn f0 awn f0 awi f0 awn aax-meredith f0 f0 awn f0 awi awn awi f0 awn awn f0 awn f0 awi awn awi awi f0 awn awi f0 awn awi f0 awn f0 awi f0 awn f0 awi f0 awi awi aax-mp f0 awn f0 awi f0 pmerlem11 f0 awn f0 awi f0 awn f0 awi f0 awi awi f0 awn f0 awi f0 awi aax-mp $.
 $}
-$( /* 3 of 3 axioms for propositional calculus due to Lukasiewicz, derived from
+$( 3 of 3 axioms for propositional calculus due to Lukasiewicz, derived from
      Meredith's sole axiom.  (Contributed by NM, 14-Dec-2002.)
-     (Proof modification is discouraged.)  (New usage is discouraged.) */
-
-$)
+     (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.

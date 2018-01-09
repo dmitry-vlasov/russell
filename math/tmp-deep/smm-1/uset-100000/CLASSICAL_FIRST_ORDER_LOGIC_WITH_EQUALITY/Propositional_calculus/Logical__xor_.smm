@@ -1,28 +1,20 @@
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Logical__nand__(Sheffer_stroke).smm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Logical 'xor'
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-*/
-
 $)
-$( /* Declare connective for exclusive disjunction ('xor'). */
-
-$)
+$( Declare connective for exclusive disjunction ('xor'). $)
 $c \/_ $.
-$( /* Underlined 'vee' (read:  'xor') */
-
-$)
-$( /* Extend wff definition to include exclusive disjunction ('xor'). */
-
-$)
+$( Underlined 'vee' (read:  'xor') $)
+$( Extend wff definition to include exclusive disjunction ('xor'). $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
 	f1 $f wff ps $.
 	awxo $a wff ( ph \/_ ps ) $.
 $}
-$( /* Define exclusive disjunction (logical 'xor').  Return true if either the
+$( Define exclusive disjunction (logical 'xor').  Return true if either the
      left or right, but not both, are true.  After we define the constant true
      ` T. ` ( ~ df-tru ) and the constant false ` F. ` ( ~ df-fal ), we will be
      able to prove these truth table values: ` ( ( T. \/_ T. ) <-> F. ) `
@@ -30,18 +22,14 @@ $( /* Define exclusive disjunction (logical 'xor').  Return true if either the
      ` ( ( F. \/_ T. ) <-> T. ) ` ( ~ falxortru ), and
      ` ( ( F. \/_ F. ) <-> F. ) ` ( ~ falxorfal ).  Contrast with ` /\ `
      ( ~ df-an ), ` \/ ` ( ~ df-or ), ` -> ` ( ~ wi ), and ` -/\ `
-     ( ~ df-nan ) .  (Contributed by FL, 22-Nov-2010.) */
-
-$)
+     ( ~ df-nan ) .  (Contributed by FL, 22-Nov-2010.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
 	f1 $f wff ps $.
 	adf-xor $a |- ( ( ph \/_ ps ) <-> -. ( ph <-> ps ) ) $.
 $}
-$( /* Two ways to write XNOR. (Contributed by Mario Carneiro, 4-Sep-2016.) */
-
-$)
+$( Two ways to write XNOR. (Contributed by Mario Carneiro, 4-Sep-2016.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
@@ -49,9 +37,7 @@ ${
 	pxnor $p |- ( ( ph <-> ps ) <-> -. ( ph \/_ ps ) ) $=
 	f0 f1 adf-xor f0 f1 awxo f0 f1 awb pcon2bii $.
 $}
-$( /* ` \/_ ` is commutative.  (Contributed by Mario Carneiro, 4-Sep-2016.) */
-
-$)
+$( ` \/_ ` is commutative.  (Contributed by Mario Carneiro, 4-Sep-2016.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
@@ -59,10 +45,8 @@ ${
 	pxorcom $p |- ( ( ph \/_ ps ) <-> ( ps \/_ ph ) ) $=
 	f0 f1 pbicom f0 f1 awb f1 f0 awb pnotbii f0 f1 adf-xor f1 f0 adf-xor f0 f1 awb awn f1 f0 awb awn f0 f1 awxo f1 f0 awxo p3bitr4i $.
 $}
-$( /* ` \/_ ` is associative.  (Contributed by FL, 22-Nov-2010.)  (Proof
-     shortened by Andrew Salmon, 8-Jun-2011.) */
-
-$)
+$( ` \/_ ` is associative.  (Contributed by FL, 22-Nov-2010.)  (Proof
+     shortened by Andrew Salmon, 8-Jun-2011.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -71,10 +55,8 @@ ${
 	pxorass $p |- ( ( ( ph \/_ ps ) \/_ ch ) <-> ( ph \/_ ( ps \/_ ch ) ) ) $=
 	f0 f1 f2 pbiass f0 f1 awb f2 awb f0 f1 f2 awb awb pnotbii f0 f1 awb f2 pnbbn f0 f1 f2 awb ppm5.18 f0 f1 f2 awb awb f0 f1 f2 awb awn awb pcon2bii f0 f1 awb f2 awb awn f0 f1 f2 awb awb awn f0 f1 awb awn f2 awb f0 f1 f2 awb awn awb p3bitr4i f0 f1 adf-xor f0 f1 awxo f0 f1 awb awn f2 pbibi1i f1 f2 adf-xor f1 f2 awxo f1 f2 awb awn f0 pbibi2i f0 f1 awb awn f2 awb f0 f1 f2 awb awn awb f0 f1 awxo f2 awb f0 f1 f2 awxo awb p3bitr4i f0 f1 awxo f2 awb f0 f1 f2 awxo awb pnotbii f0 f1 awxo f2 adf-xor f0 f1 f2 awxo adf-xor f0 f1 awxo f2 awb awn f0 f1 f2 awxo awb awn f0 f1 awxo f2 awxo f0 f1 f2 awxo awxo p3bitr4i $.
 $}
-$( /* This tautology shows that xor is really exclusive.  (Contributed by FL,
-     22-Nov-2010.) */
-
-$)
+$( This tautology shows that xor is really exclusive.  (Contributed by FL,
+     22-Nov-2010.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
@@ -82,10 +64,8 @@ ${
 	pexcxor $p |- ( ( ph \/_ ps ) <-> ( ( ph /\ -. ps ) \/ ( -. ph /\ ps ) ) ) $=
 	f0 f1 adf-xor f0 f1 pxor f1 f0 awn pancom f1 f0 awn awa f0 awn f1 awa f0 f1 awn awa porbi2i f0 f1 awxo f0 f1 awb awn f0 f1 awn awa f1 f0 awn awa awo f0 f1 awn awa f0 awn f1 awa awo p3bitri $.
 $}
-$( /* Two ways to express "exclusive or."  (Contributed by Mario Carneiro,
-     4-Sep-2016.) */
-
-$)
+$( Two ways to express "exclusive or."  (Contributed by Mario Carneiro,
+     4-Sep-2016.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
@@ -93,10 +73,8 @@ ${
 	pxor2 $p |- ( ( ph \/_ ps ) <-> ( ( ph \/ ps ) /\ -. ( ph /\ ps ) ) ) $=
 	f0 f1 adf-xor f0 f1 pnbi2 f0 f1 awxo f0 f1 awb awn f0 f1 awo f0 f1 awa awn awa pbitri $.
 $}
-$( /* ` \/_ ` is negated under negation of one argument.  (Contributed by Mario
-     Carneiro, 4-Sep-2016.) */
-
-$)
+$( ` \/_ ` is negated under negation of one argument.  (Contributed by Mario
+     Carneiro, 4-Sep-2016.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
@@ -104,10 +82,8 @@ ${
 	pxorneg1 $p |- ( ( -. ph \/_ ps ) <-> -. ( ph \/_ ps ) ) $=
 	f0 awn f1 adf-xor f0 f1 pnbbn f0 awn f1 awb f0 f1 awb pcon2bii f0 f1 pxnor f0 awn f1 awxo f0 awn f1 awb awn f0 f1 awb f0 f1 awxo awn p3bitr2i $.
 $}
-$( /* ` \/_ ` is negated under negation of one argument.  (Contributed by Mario
-     Carneiro, 4-Sep-2016.) */
-
-$)
+$( ` \/_ ` is negated under negation of one argument.  (Contributed by Mario
+     Carneiro, 4-Sep-2016.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
@@ -115,10 +91,8 @@ ${
 	pxorneg2 $p |- ( ( ph \/_ -. ps ) <-> -. ( ph \/_ ps ) ) $=
 	f1 f0 pxorneg1 f0 f1 awn pxorcom f0 f1 pxorcom f0 f1 awxo f1 f0 awxo pnotbii f1 awn f0 awxo f1 f0 awxo awn f0 f1 awn awxo f0 f1 awxo awn p3bitr4i $.
 $}
-$( /* ` \/_ ` is unchanged under negation of both arguments.  (Contributed by
-     Mario Carneiro, 4-Sep-2016.) */
-
-$)
+$( ` \/_ ` is unchanged under negation of both arguments.  (Contributed by
+     Mario Carneiro, 4-Sep-2016.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
@@ -126,10 +100,8 @@ ${
 	pxorneg $p |- ( ( -. ph \/_ -. ps ) <-> ( ph \/_ ps ) ) $=
 	f0 f1 awn pxorneg1 f0 f1 pxorneg2 f0 f1 awn awxo f0 f1 awxo pcon2bii f0 awn f1 awn awxo f0 f1 awn awxo awn f0 f1 awxo pbitr4i $.
 $}
-$( /* Equality property for XOR. (Contributed by Mario Carneiro,
-       4-Sep-2016.) */
-
-$)
+$( Equality property for XOR. (Contributed by Mario Carneiro,
+       4-Sep-2016.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph <-> ps ) $.
@@ -141,10 +113,8 @@ ${
 	pxorbi12i $p |- ( ( ph \/_ ch ) <-> ( ps \/_ th ) ) $=
 	e0 e1 f0 f1 f2 f3 pbibi12i f0 f2 awb f1 f3 awb pnotbii f0 f2 adf-xor f1 f3 adf-xor f0 f2 awb awn f1 f3 awb awn f0 f2 awxo f1 f3 awxo p3bitr4i $.
 $}
-$( /* Equality property for XOR. (Contributed by Mario Carneiro,
-       4-Sep-2016.) */
-
-$)
+$( Equality property for XOR. (Contributed by Mario Carneiro,
+       4-Sep-2016.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps <-> ch ) ) $.

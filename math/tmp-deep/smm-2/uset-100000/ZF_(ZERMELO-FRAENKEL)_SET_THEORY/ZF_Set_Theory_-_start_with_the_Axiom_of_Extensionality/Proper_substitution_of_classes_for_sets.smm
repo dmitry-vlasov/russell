@@ -1,18 +1,14 @@
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Russell_s_Paradox.smm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Proper substitution of classes for sets
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-*/
-
 $)
 $c [. $.
 $c ]. $.
-$( /* Extend wff notation to include the proper substitution of a class for a
+$( Extend wff notation to include the proper substitution of a class for a
      set.  Read this notation as "the proper substitution of class ` A ` for
-     set variable ` x ` in wff ` ph ` ." */
-
-$)
+     set variable ` x ` in wff ` ph ` ." $)
 ${
 	$v ph x A $.
 	f0 $f wff ph $.
@@ -20,7 +16,7 @@ ${
 	f2 $f class A $.
 	awsbc $a wff [. A / x ]. ph $.
 $}
-$( /* Define the proper substitution of a class for a set.
+$( Define the proper substitution of a class for a set.
 
      When ` A ` is a proper class, our definition evaluates to false.  This is
      somewhat arbitrary: we could have, instead, chosen the conclusion of
@@ -51,9 +47,7 @@ $( /* Define the proper substitution of a class for a set.
 
      The related definition ~ df-csb defines proper substitution into a class
      variable (as opposed to a wff variable).  (Contributed by NM,
-     14-Apr-1995.)  (Revised by NM, 25-Dec-2016.) */
-
-$)
+     14-Apr-1995.)  (Revised by NM, 25-Dec-2016.) $)
 ${
 	$v ph x A $.
 	f0 $f wff ph $.
@@ -61,23 +55,17 @@ ${
 	f2 $f class A $.
 	adf-sbc $a |- ( [. A / x ]. ph <-> A e. { x | ph } ) $.
 $}
-$( /* --- Start of old code before overloading prevention patch. */
-
-$)
-$( /* @( Extend wff notation to include the proper substitution of a class for a
+$( --- Start of old code before overloading prevention patch. $)
+$( @( Extend wff notation to include the proper substitution of a class for a
      set.  This definition "overloads" the previously defined variable
      substitution ~ wsb (where the first argument is a set variable rather
      than a class variable).  We take care to ensure that this new definition
      is a conservative extension.  Read this notation as "the proper
      substitution of class ` A ` for set variable ` x ` in wff ` ph ` ." @)
   wsbcSBC @a wff [ A / x ] ph @.
-  */
-
-$)
-$( /* --- End of old code before overloading prevention patch. */
-
-$)
-$( /* This theorem, which is similar to Theorem 6.7 of [Quine] p. 42 and holds
+  $)
+$( --- End of old code before overloading prevention patch. $)
+$( This theorem, which is similar to Theorem 6.7 of [Quine] p. 42 and holds
      under both our definition and Quine's, provides us with a weak definition
      of the proper substitution of a class for a set.  Since our ~ df-sbc does
      not result in the same behavior as Quine's for proper classes, if we
@@ -91,9 +79,7 @@ $( /* This theorem, which is similar to Theorem 6.7 of [Quine] p. 42 and holds
      ~ sbc8g , so we will allow direct use of ~ df-sbc after theorem ~ sbc2or
      below.  Proper substiution with a proper class is rarely needed, and when
      it is, we can simply use the expansion of Quine's definition.
-     (Contributed by NM, 14-Apr-1995.) */
-
-$)
+     (Contributed by NM, 14-Apr-1995.) $)
 ${
 	$v ph x A B $.
 	f0 $f wff ph $.
@@ -103,13 +89,11 @@ ${
 	pdfsbcq $p |- ( A = B -> ( [. A / x ]. ph <-> [. B / x ]. ph ) ) $=
 	f2 f3 f0 f1 acab peleq1 f0 f1 f2 adf-sbc f0 f1 f3 adf-sbc f2 f3 awceq f2 f0 f1 acab awcel f3 f0 f1 acab awcel f0 f1 f2 awsbc f0 f1 f3 awsbc p3bitr4g $.
 $}
-$( /* This theorem, which is similar to Theorem 6.7 of [Quine] p. 42 and holds
+$( This theorem, which is similar to Theorem 6.7 of [Quine] p. 42 and holds
      under both our definition and Quine's, relates logic substitution ~ df-sb
      and substitution for class variables ~ df-sbc .  Unlike Quine, we use a
      different syntax for each in order to avoid overloading it.  See remarks
-     in ~ dfsbcq .  (Contributed by NM, 31-Dec-2016.) */
-
-$)
+     in ~ dfsbcq .  (Contributed by NM, 31-Dec-2016.) $)
 ${
 	$v ph x y A $.
 	f0 $f wff ph $.
@@ -119,12 +103,10 @@ ${
 	pdfsbcq2 $p |- ( y = A -> ( [ y / x ] ph <-> [. A / x ]. ph ) ) $=
 	f2 asup_set_class f3 f0 f1 acab peleq1 f0 f2 f1 adf-clab f0 f1 f3 adf-sbc f0 f1 f3 awsbc f3 f0 f1 acab awcel pbicomi f2 asup_set_class f3 awceq f2 asup_set_class f0 f1 acab awcel f3 f0 f1 acab awcel f0 f1 f2 awsb f0 f1 f3 awsbc p3bitr3g $.
 $}
-$( /* Show that ~ df-sb and ~ df-sbc are equivalent when the class term ` A ` in
+$( Show that ~ df-sb and ~ df-sbc are equivalent when the class term ` A ` in
      ~ df-sbc is a set variable.  This theorem lets us reuse theorems based on
      ~ df-sb for proofs involving ~ df-sbc .  (Contributed by NM,
-     31-Dec-2016.)  (Proof modification is discouraged.) */
-
-$)
+     31-Dec-2016.)  (Proof modification is discouraged.) $)
 ${
 	$v ph x y $.
 	f0 $f wff ph $.
@@ -133,10 +115,8 @@ ${
 	psbsbc $p |- ( [ y / x ] ph <-> [. y / x ]. ph ) $=
 	f2 asup_set_class peqid f0 f1 f2 f2 asup_set_class pdfsbcq2 f2 asup_set_class f2 asup_set_class awceq f0 f1 f2 awsb f0 f1 f2 asup_set_class awsbc awb aax-mp $.
 $}
-$( /* Equality theorem for class substitution.  (Contributed by Mario
-       Carneiro, 9-Feb-2017.) */
-
-$)
+$( Equality theorem for class substitution.  (Contributed by Mario
+       Carneiro, 9-Feb-2017.) $)
 ${
 	$v ph x A B $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -147,10 +127,8 @@ ${
 	psbceq1d $p |- ( ph -> ( [. A / x ]. ph <-> [. B / x ]. ph ) ) $=
 	e0 f0 f1 f2 f3 pdfsbcq f0 f2 f3 awceq f0 f1 f2 awsbc f0 f1 f3 awsbc awb psyl $.
 $}
-$( /* Equality theorem for class substitution.  (Contributed by Mario
-       Carneiro, 9-Feb-2017.) */
-
-$)
+$( Equality theorem for class substitution.  (Contributed by Mario
+       Carneiro, 9-Feb-2017.) $)
 ${
 	$v ph x A B $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -162,12 +140,10 @@ ${
 	psbceq1dd $p |- ( ph -> [. B / x ]. ph ) $=
 	e1 e0 f0 f1 f2 f3 psbceq1d f0 f0 f1 f2 awsbc f0 f1 f3 awsbc pmpbid $.
 $}
-$( /* This is the closest we can get to ~ df-sbc if we start from ~ dfsbcq
+$( This is the closest we can get to ~ df-sbc if we start from ~ dfsbcq
        (see its comments) and ~ dfsbcq2 .  (Contributed by NM, 18-Nov-2008.)
        (Proof shortened by Andrew Salmon, 29-Jun-2011.)
-       (Proof modification is discouraged.) */
-
-$)
+       (Proof modification is discouraged.) $)
 ${
 	$v ph x y A V $.
 	$d y A $.
@@ -181,7 +157,7 @@ ${
 	psbc8g $p |- ( A e. V -> ( [. A / x ]. ph <-> A e. { x | ph } ) ) $=
 	f0 f1 i0 asup_set_class f2 pdfsbcq i0 asup_set_class f2 f0 f1 acab peleq1 f0 i0 f1 adf-clab i0 pequid f0 f1 i0 i0 asup_set_class pdfsbcq2 i0 asup_set_class i0 asup_set_class awceq f0 f1 i0 awsb f0 f1 i0 asup_set_class awsbc awb aax-mp i0 asup_set_class f0 f1 acab awcel f0 f1 i0 awsb f0 f1 i0 asup_set_class awsbc pbitr2i f0 f1 i0 asup_set_class awsbc i0 asup_set_class f0 f1 acab awcel f0 f1 f2 awsbc f2 f0 f1 acab awcel i0 f2 f3 pvtoclbg $.
 $}
-$( /* The disjunction of two equivalences for class substitution does not
+$( The disjunction of two equivalences for class substitution does not
        require a class existence hypothesis.  This theorem tells us that there
        are only 2 possibilities for ` [ A / x ] ph ` behavior at proper
        classes, matching the ~ sbc5 (false) and ~ sbc6 (true) conclusions.
@@ -191,9 +167,7 @@ $( /* The disjunction of two equivalences for class substitution does not
        or the other at proper classes; it could "flip" between false (the first
        disjunct) and true (the second disjunct) as a function of some other
        variable ` y ` that ` ph ` or ` A ` may contain.  (Contributed by NM,
-       11-Oct-2004.)  (Proof modification is discouraged.) */
-
-$)
+       11-Oct-2004.)  (Proof modification is discouraged.) $)
 ${
 	$v ph x y A $.
 	$d x y A $.
@@ -205,11 +179,9 @@ ${
 	psbc2or $p |- ( ( [. A / x ]. ph <-> E. x ( x = A /\ ph ) ) \/ ( [. A / x ]. ph <-> A. x ( x = A -> ph ) ) ) $=
 	f0 f1 i0 f2 pdfsbcq2 i0 asup_set_class f2 f1 asup_set_class peqeq2 i0 asup_set_class f2 awceq f1 asup_set_class i0 asup_set_class awceq f1 asup_set_class f2 awceq f0 panbi1d i0 asup_set_class f2 awceq f1 asup_set_class i0 asup_set_class awceq f0 awa f1 asup_set_class f2 awceq f0 awa f1 pexbidv f0 f1 i0 psb5 f0 f1 i0 awsb f1 asup_set_class i0 asup_set_class awceq f0 awa f1 awex f0 f1 f2 awsbc f1 asup_set_class f2 awceq f0 awa f1 awex i0 f2 acvv pvtoclbg f2 acvv awcel f0 f1 f2 awsbc f1 asup_set_class f2 awceq f0 awa f1 awex awb f0 f1 f2 awsbc f1 asup_set_class f2 awceq f0 awi f1 awal awb porcd f0 f1 f2 awsbc f1 asup_set_class f2 awceq f0 awa f1 awex ppm5.15 f1 pvex f1 asup_set_class f2 acvv peleq1 f1 asup_set_class f2 awceq f1 asup_set_class acvv awcel f2 acvv awcel pmpbii f1 asup_set_class f2 awceq f2 acvv awcel f0 padantr f1 asup_set_class f2 awceq f0 awa f2 acvv awcel pcon3i f2 acvv awcel awn f1 asup_set_class f2 awceq f0 awa f1 pnexdv f1 pvex f1 asup_set_class f2 acvv peleq1 f1 asup_set_class f2 awceq f1 asup_set_class acvv awcel f2 acvv awcel pmpbii f1 asup_set_class f2 awceq f2 acvv awcel pcon3i f2 acvv awcel awn f1 asup_set_class f2 awceq f0 ppm2.21d f2 acvv awcel awn f1 asup_set_class f2 awceq f0 awi f1 palrimiv f2 acvv awcel awn f1 asup_set_class f2 awceq f0 awa f1 awex awn f1 asup_set_class f2 awceq f0 awi f1 awal p2thd f2 acvv awcel awn f1 asup_set_class f2 awceq f0 awa f1 awex awn f1 asup_set_class f2 awceq f0 awi f1 awal f0 f1 f2 awsbc pbibi2d f2 acvv awcel awn f0 f1 f2 awsbc f1 asup_set_class f2 awceq f0 awa f1 awex awn awb f0 f1 f2 awsbc f1 asup_set_class f2 awceq f0 awi f1 awal awb f0 f1 f2 awsbc f1 asup_set_class f2 awceq f0 awa f1 awex awb porbi2d f2 acvv awcel awn f0 f1 f2 awsbc f1 asup_set_class f2 awceq f0 awa f1 awex awb f0 f1 f2 awsbc f1 asup_set_class f2 awceq f0 awa f1 awex awn awb awo f0 f1 f2 awsbc f1 asup_set_class f2 awceq f0 awa f1 awex awb f0 f1 f2 awsbc f1 asup_set_class f2 awceq f0 awi f1 awal awb awo pmpbii f2 acvv awcel f0 f1 f2 awsbc f1 asup_set_class f2 awceq f0 awa f1 awex awb f0 f1 f2 awsbc f1 asup_set_class f2 awceq f0 awi f1 awal awb awo ppm2.61i $.
 $}
-$( /* By our definition of proper substitution, it can only be true if the
+$( By our definition of proper substitution, it can only be true if the
      substituted expression is a set.  (Contributed by Mario Carneiro,
-     13-Oct-2016.) */
-
-$)
+     13-Oct-2016.) $)
 ${
 	$v ph x A $.
 	f0 $f wff ph $.
@@ -218,10 +190,8 @@ ${
 	psbcex $p |- ( [. A / x ]. ph -> A e. _V ) $=
 	f0 f1 f2 adf-sbc f2 f0 f1 acab pelex f0 f1 f2 awsbc f2 f0 f1 acab awcel f2 acvv awcel psylbi $.
 $}
-$( /* Equality theorem for class substitution.  Class version of ~ sbequ12 .
-     (Contributed by NM, 26-Sep-2003.) */
-
-$)
+$( Equality theorem for class substitution.  Class version of ~ sbequ12 .
+     (Contributed by NM, 26-Sep-2003.) $)
 ${
 	$v ph x A $.
 	f0 $f wff ph $.
@@ -230,10 +200,8 @@ ${
 	psbceq1a $p |- ( x = A -> ( ph <-> [. A / x ]. ph ) ) $=
 	f0 f1 psbid f0 f1 f1 f2 pdfsbcq2 f0 f0 f1 f1 awsb f1 asup_set_class f2 awceq f0 f1 f2 awsbc psyl5bbr $.
 $}
-$( /* Equality theorem for class substitution.  Class version of ~ sbequ12r .
-     (Contributed by NM, 4-Jan-2017.) */
-
-$)
+$( Equality theorem for class substitution.  Class version of ~ sbequ12r .
+     (Contributed by NM, 4-Jan-2017.) $)
 ${
 	$v ph x A $.
 	f0 $f wff ph $.
@@ -242,11 +210,9 @@ ${
 	psbceq2a $p |- ( A = x -> ( [. A / x ]. ph <-> ph ) ) $=
 	f0 f1 f2 psbceq1a f0 f0 f1 f2 awsbc awb f1 asup_set_class f2 peqcoms f2 f1 asup_set_class awceq f0 f0 f1 f2 awsbc pbicomd $.
 $}
-$( /* Specialization: if a formula is true for all sets, it is true for any
+$( Specialization: if a formula is true for all sets, it is true for any
        class which is a set.  Similar to Theorem 6.11 of [Quine] p. 44.  See
-       also ~ stdpc4 and ~ rspsbc .  (Contributed by NM, 16-Jan-2004.) */
-
-$)
+       also ~ stdpc4 and ~ rspsbc .  (Contributed by NM, 16-Jan-2004.) $)
 ${
 	$v ph x y A V $.
 	$d ph y $.
@@ -260,12 +226,10 @@ ${
 	pspsbc $p |- ( A e. V -> ( A. x ph -> [. A / x ]. ph ) ) $=
 	f0 f1 i0 pstdpc4 f0 f1 i0 psbsbc f0 f1 awal f0 f1 i0 awsb f0 f1 i0 asup_set_class awsbc psylib f0 f1 i0 asup_set_class f2 pdfsbcq f0 f1 awal f0 f1 i0 asup_set_class awsbc i0 asup_set_class f2 awceq f0 f1 f2 awsbc psyl5ib f0 f1 awal f0 f1 f2 awsbc awi i0 f2 f3 pvtocleg $.
 $}
-$( /* Specialization: if a formula is true for all sets, it is true for any
+$( Specialization: if a formula is true for all sets, it is true for any
        class which is a set.  Similar to Theorem 6.11 of [Quine] p. 44.  See
        also ~ stdpc4 and ~ rspsbc .  (Contributed by Mario Carneiro,
-       9-Feb-2017.) */
-
-$)
+       9-Feb-2017.) $)
 ${
 	$v ph ps x A V $.
 	e0 $e |- ( ph -> A e. V ) $.
@@ -278,10 +242,8 @@ ${
 	pspsbcd $p |- ( ph -> [. A / x ]. ps ) $=
 	e0 e1 f1 f2 f3 f4 pspsbc f0 f3 f4 awcel f1 f2 awal f1 f2 f3 awsbc psylc $.
 $}
-$( /* A substitution into a theorem remains true (when ` A ` is a set).
-       (Contributed by NM, 5-Nov-2005.) */
-
-$)
+$( A substitution into a theorem remains true (when ` A ` is a set).
+       (Contributed by NM, 5-Nov-2005.) $)
 ${
 	$v ph x A V $.
 	e0 $e |- ph $.
@@ -292,10 +254,8 @@ ${
 	psbcth $p |- ( A e. V -> [. A / x ]. ph ) $=
 	e0 f0 f1 aax-gen f0 f1 f2 f3 pspsbc f2 f3 awcel f0 f1 awal f0 f1 f2 awsbc pmpi $.
 $}
-$( /* Deduction version of ~ sbcth .  (Contributed by NM, 30-Nov-2005.)
-       (Proof shortened by Andrew Salmon, 8-Jun-2011.) */
-
-$)
+$( Deduction version of ~ sbcth .  (Contributed by NM, 30-Nov-2005.)
+       (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
 ${
 	$v ph ps x A V $.
 	$d x ph $.
@@ -308,10 +268,8 @@ ${
 	psbcthdv $p |- ( ( ph /\ A e. V ) -> [. A / x ]. ps ) $=
 	e0 f0 f1 f2 palrimiv f1 f2 f3 f4 pspsbc f0 f1 f2 awal f3 f4 awcel f1 f2 f3 awsbc pmpan9 $.
 $}
-$( /* An identity theorem for substitution.  See ~ sbid .  (Contributed by Mario
-     Carneiro, 18-Feb-2017.) */
-
-$)
+$( An identity theorem for substitution.  See ~ sbid .  (Contributed by Mario
+     Carneiro, 18-Feb-2017.) $)
 ${
 	$v ph x $.
 	f0 $f wff ph $.
@@ -319,10 +277,8 @@ ${
 	psbcid $p |- ( [. x / x ]. ph <-> ph ) $=
 	f0 f1 f1 psbsbc f0 f1 psbid f0 f1 f1 asup_set_class awsbc f0 f1 f1 awsb f0 pbitr3i $.
 $}
-$( /* Deduction version of ~ nfsbc1 .  (Contributed by NM, 23-May-2006.)
-       (Revised by Mario Carneiro, 12-Oct-2016.) */
-
-$)
+$( Deduction version of ~ nfsbc1 .  (Contributed by NM, 23-May-2006.)
+       (Revised by Mario Carneiro, 12-Oct-2016.) $)
 ${
 	$v ph ps x A $.
 	e0 $e |- ( ph -> F/_ x A ) $.
@@ -333,10 +289,8 @@ ${
 	pnfsbc1d $p |- ( ph -> F/ x [. A / x ]. ps ) $=
 	f1 f2 f3 adf-sbc e0 f1 f2 pnfab1 f2 f1 f2 acab awnfc f0 pa1i f0 f2 f3 f1 f2 acab pnfeld f1 f2 f3 awsbc f3 f1 f2 acab awcel f0 f2 pnfxfrd $.
 $}
-$( /* Bound-variable hypothesis builder for class substitution.  (Contributed
-       by Mario Carneiro, 12-Oct-2016.) */
-
-$)
+$( Bound-variable hypothesis builder for class substitution.  (Contributed
+       by Mario Carneiro, 12-Oct-2016.) $)
 ${
 	$v ph x A $.
 	e0 $e |- F/_ x A $.
@@ -346,10 +300,8 @@ ${
 	pnfsbc1 $p |- F/ x [. A / x ]. ph $=
 	e0 f1 f2 awnfc awtru pa1i awtru f0 f1 f2 pnfsbc1d f0 f1 f2 awsbc f1 awnf ptrud $.
 $}
-$( /* Bound-variable hypothesis builder for class substitution.  (Contributed
-       by Mario Carneiro, 12-Oct-2016.) */
-
-$)
+$( Bound-variable hypothesis builder for class substitution.  (Contributed
+       by Mario Carneiro, 12-Oct-2016.) $)
 ${
 	$v ph x A $.
 	$d x A $.
@@ -359,10 +311,8 @@ ${
 	pnfsbc1v $p |- F/ x [. A / x ]. ph $=
 	f1 f2 pnfcv f0 f1 f2 pnfsbc1 $.
 $}
-$( /* Deduction version of ~ nfsbc .  (Contributed by NM, 23-Nov-2005.)
-       (Revised by Mario Carneiro, 12-Oct-2016.) */
-
-$)
+$( Deduction version of ~ nfsbc .  (Contributed by NM, 23-Nov-2005.)
+       (Revised by Mario Carneiro, 12-Oct-2016.) $)
 ${
 	$v ph ps x y A $.
 	e0 $e |- F/ y ph $.
@@ -376,10 +326,8 @@ ${
 	pnfsbcd $p |- ( ph -> F/ x [. A / y ]. ps ) $=
 	f1 f3 f4 adf-sbc e1 e0 e2 f0 f1 f2 f3 pnfabd f0 f2 f4 f1 f3 acab pnfeld f1 f3 f4 awsbc f4 f1 f3 acab awcel f0 f2 pnfxfrd $.
 $}
-$( /* Bound-variable hypothesis builder for class substitution.  (Contributed
-       by NM, 7-Sep-2014.)  (Revised by Mario Carneiro, 12-Oct-2016.) */
-
-$)
+$( Bound-variable hypothesis builder for class substitution.  (Contributed
+       by NM, 7-Sep-2014.)  (Revised by Mario Carneiro, 12-Oct-2016.) $)
 ${
 	$v ph x y A $.
 	e0 $e |- F/_ x A $.
@@ -391,10 +339,8 @@ ${
 	pnfsbc $p |- F/ x [. A / y ]. ph $=
 	f2 pnftru e0 f1 f3 awnfc awtru pa1i e1 f0 f1 awnf awtru pa1i awtru f0 f1 f2 f3 pnfsbcd f0 f2 f3 awsbc f1 awnf ptrud $.
 $}
-$( /* A composition law for class substitution.  (Contributed by NM,
-       26-Sep-2003.)  (Revised by Mario Carneiro, 13-Oct-2016.) */
-
-$)
+$( A composition law for class substitution.  (Contributed by NM,
+       26-Sep-2003.)  (Revised by Mario Carneiro, 13-Oct-2016.) $)
 ${
 	$v ph x y z A $.
 	$d x z $.
@@ -408,11 +354,9 @@ ${
 	psbcco $p |- ( [. A / y ]. [. y / x ]. ph <-> [. A / x ]. ph ) $=
 	f0 f1 f2 asup_set_class awsbc f2 f3 psbcex f0 f1 f3 psbcex f0 f1 f2 asup_set_class awsbc f2 i0 asup_set_class f3 pdfsbcq f0 f1 i0 asup_set_class f3 pdfsbcq f0 f1 f2 psbsbc f0 f1 f2 awsb f0 f1 f2 asup_set_class awsbc f2 i0 psbbii f0 f2 pnfv f0 f1 i0 f2 psbco2 f0 f1 f2 asup_set_class awsbc f2 i0 psbsbc f0 f1 f2 awsb f2 i0 awsb f0 f1 f2 asup_set_class awsbc f2 i0 awsb f0 f1 i0 awsb f0 f1 f2 asup_set_class awsbc f2 i0 asup_set_class awsbc p3bitr3ri f0 f1 i0 psbsbc f0 f1 f2 asup_set_class awsbc f2 i0 asup_set_class awsbc f0 f1 i0 awsb f0 f1 i0 asup_set_class awsbc pbitri f0 f1 f2 asup_set_class awsbc f2 i0 asup_set_class awsbc f0 f1 i0 asup_set_class awsbc f0 f1 f2 asup_set_class awsbc f2 f3 awsbc f0 f1 f3 awsbc i0 f3 acvv pvtoclbg f0 f1 f2 asup_set_class awsbc f2 f3 awsbc f3 acvv awcel f0 f1 f3 awsbc ppm5.21nii $.
 $}
-$( /* A composition law for class substitution.  Importantly, ` x ` may occur
+$( A composition law for class substitution.  Importantly, ` x ` may occur
        free in the class expression substituted for ` A ` .  (Contributed by
-       NM, 5-Sep-2004.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) */
-
-$)
+       NM, 5-Sep-2004.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
 ${
 	$v ph x y A B $.
 	$d x y $.
@@ -427,10 +371,8 @@ ${
 	psbcco2 $p |- ( [. x / y ]. [. B / x ]. ph <-> [. A / x ]. ph ) $=
 	f0 f1 f4 awsbc f2 f1 psbsbc f0 f1 f3 awsbc f2 pnfv e0 f3 f4 awceq f1 asup_set_class f2 asup_set_class peqcoms f0 f1 f3 f4 pdfsbcq f3 f4 awceq f0 f1 f3 awsbc f0 f1 f4 awsbc pbicomd f2 asup_set_class f1 asup_set_class awceq f3 f4 awceq f0 f1 f4 awsbc f0 f1 f3 awsbc awb psyl f0 f1 f4 awsbc f0 f1 f3 awsbc f2 f1 psbie f0 f1 f4 awsbc f2 f1 asup_set_class awsbc f0 f1 f4 awsbc f2 f1 awsb f0 f1 f3 awsbc pbitr3i $.
 $}
-$( /* An equivalence for class substitution.  (Contributed by NM,
-       23-Aug-1993.)  (Revised by Mario Carneiro, 12-Oct-2016.) */
-
-$)
+$( An equivalence for class substitution.  (Contributed by NM,
+       23-Aug-1993.)  (Revised by Mario Carneiro, 12-Oct-2016.) $)
 ${
 	$v ph x y A $.
 	$d x y A $.
@@ -442,10 +384,8 @@ ${
 	psbc5 $p |- ( [. A / x ]. ph <-> E. x ( x = A /\ ph ) ) $=
 	f0 f1 f2 psbcex f1 asup_set_class f2 awceq f0 f1 pexsimpl f1 f2 pisset f1 asup_set_class f2 awceq f0 awa f1 awex f1 asup_set_class f2 awceq f1 awex f2 acvv awcel psylibr f0 f1 i0 f2 pdfsbcq2 i0 asup_set_class f2 f1 asup_set_class peqeq2 i0 asup_set_class f2 awceq f1 asup_set_class i0 asup_set_class awceq f1 asup_set_class f2 awceq f0 panbi1d i0 asup_set_class f2 awceq f1 asup_set_class i0 asup_set_class awceq f0 awa f1 asup_set_class f2 awceq f0 awa f1 pexbidv f0 f1 i0 psb5 f0 f1 i0 awsb f1 asup_set_class i0 asup_set_class awceq f0 awa f1 awex f0 f1 f2 awsbc f1 asup_set_class f2 awceq f0 awa f1 awex i0 f2 acvv pvtoclbg f0 f1 f2 awsbc f2 acvv awcel f1 asup_set_class f2 awceq f0 awa f1 awex ppm5.21nii $.
 $}
-$( /* An equivalence for class substitution.  (Contributed by NM,
-       11-Oct-2004.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) */
-
-$)
+$( An equivalence for class substitution.  (Contributed by NM,
+       11-Oct-2004.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
 ${
 	$v ph x A V $.
 	$d x A $.
@@ -456,10 +396,8 @@ ${
 	psbc6g $p |- ( A e. V -> ( [. A / x ]. ph <-> A. x ( x = A -> ph ) ) ) $=
 	f1 asup_set_class f2 awceq f0 awa f1 pnfe1 f0 f1 f2 pceqex f0 f1 asup_set_class f2 awceq f0 awa f1 awex f1 f2 f3 pceqsalg f0 f1 f2 psbc5 f2 f3 awcel f1 asup_set_class f2 awceq f0 awi f1 awal f1 asup_set_class f2 awceq f0 awa f1 awex f0 f1 f2 awsbc psyl6rbbr $.
 $}
-$( /* An equivalence for class substitution.  (Contributed by NM,
-       23-Aug-1993.)  (Proof shortened by Eric Schmidt, 17-Jan-2007.) */
-
-$)
+$( An equivalence for class substitution.  (Contributed by NM,
+       23-Aug-1993.)  (Proof shortened by Eric Schmidt, 17-Jan-2007.) $)
 ${
 	$v ph x A $.
 	$d x A $.
@@ -470,11 +408,9 @@ ${
 	psbc6 $p |- ( [. A / x ]. ph <-> A. x ( x = A -> ph ) ) $=
 	e0 f0 f1 f2 acvv psbc6g f2 acvv awcel f0 f1 f2 awsbc f1 asup_set_class f2 awceq f0 awi f1 awal awb aax-mp $.
 $}
-$( /* An equivalence for class substitution in the spirit of ~ df-clab .  Note
+$( An equivalence for class substitution in the spirit of ~ df-clab .  Note
        that ` x ` and ` A ` don't have to be distinct.  (Contributed by NM,
-       18-Nov-2008.)  (Revised by Mario Carneiro, 13-Oct-2016.) */
-
-$)
+       18-Nov-2008.)  (Revised by Mario Carneiro, 13-Oct-2016.) $)
 ${
 	$v ph x y A $.
 	$d y A $.
@@ -487,11 +423,9 @@ ${
 	psbc7 $p |- ( [. A / x ]. ph <-> E. y ( y = A /\ [. y / x ]. ph ) ) $=
 	f0 f1 f2 f3 psbcco f0 f1 f2 asup_set_class awsbc f2 f3 psbc5 f0 f1 f3 awsbc f0 f1 f2 asup_set_class awsbc f2 f3 awsbc f2 asup_set_class f3 awceq f0 f1 f2 asup_set_class awsbc awa f2 awex pbitr3i $.
 $}
-$( /* Change bound variables in a wff substitution.  (Contributed by Jeff
+$( Change bound variables in a wff substitution.  (Contributed by Jeff
        Hankins, 19-Sep-2009.)  (Proof shortened by Andrew Salmon,
-       8-Jun-2011.) */
-
-$)
+       8-Jun-2011.) $)
 ${
 	$v ph ps x y A $.
 	e0 $e |- F/ y ph $.
@@ -505,11 +439,9 @@ ${
 	pcbvsbc $p |- ( [. A / x ]. ph <-> [. A / y ]. ps ) $=
 	e0 e1 e2 f0 f1 f2 f3 pcbvab f0 f2 acab f1 f3 acab f4 peleq2i f0 f2 f4 adf-sbc f1 f3 f4 adf-sbc f4 f0 f2 acab awcel f4 f1 f3 acab awcel f0 f2 f4 awsbc f1 f3 f4 awsbc p3bitr4i $.
 $}
-$( /* Change the bound variable of a class substitution using implicit
+$( Change the bound variable of a class substitution using implicit
        substitution.  (Contributed by NM, 30-Sep-2008.)  (Revised by Mario
-       Carneiro, 13-Oct-2016.) */
-
-$)
+       Carneiro, 13-Oct-2016.) $)
 ${
 	$v ph ps x y A $.
 	$d y ph $.
@@ -523,12 +455,10 @@ ${
 	pcbvsbcv $p |- ( [. A / x ]. ph <-> [. A / y ]. ps ) $=
 	f0 f3 pnfv f1 f2 pnfv e0 f0 f1 f2 f3 f4 pcbvsbc $.
 $}
-$( /* Conversion of implicit substitution to explicit class substitution,
+$( Conversion of implicit substitution to explicit class substitution,
        using a bound-variable hypothesis instead of distinct variables.
        (Closed theorem version of ~ sbciegf .)  (Contributed by NM,
-       10-Nov-2005.)  (Revised by Mario Carneiro, 13-Oct-2016.) */
-
-$)
+       10-Nov-2005.)  (Revised by Mario Carneiro, 13-Oct-2016.) $)
 ${
 	$v ph ps x A V $.
 	$d x A $.
@@ -540,11 +470,9 @@ ${
 	psbciegft $p |- ( ( A e. V /\ F/ x ps /\ A. x ( x = A -> ( ph <-> ps ) ) ) -> ( [. A / x ]. ph <-> ps ) ) $=
 	f0 f2 f3 psbc5 f0 f1 pbi1 f0 f1 awb f0 f1 awi f2 asup_set_class f3 awceq pimim2i f2 asup_set_class f3 awceq f0 f1 awb awi f2 asup_set_class f3 awceq f0 f1 pimp3a f2 asup_set_class f3 awceq f0 f1 awb awi f2 asup_set_class f3 awceq f0 awa f1 awi f2 palimi f2 asup_set_class f3 awceq f0 awa f1 f2 p19.23t f1 f2 awnf f2 asup_set_class f3 awceq f0 awa f1 awi f2 awal f2 asup_set_class f3 awceq f0 awa f2 awex f1 awi pbiimpa f2 asup_set_class f3 awceq f0 f1 awb awi f2 awal f1 f2 awnf f2 asup_set_class f3 awceq f0 awa f1 awi f2 awal f2 asup_set_class f3 awceq f0 awa f2 awex f1 awi psylan2 f1 f2 awnf f2 asup_set_class f3 awceq f0 f1 awb awi f2 awal f2 asup_set_class f3 awceq f0 awa f2 awex f1 awi f3 f4 awcel p3adant1 f0 f2 f3 awsbc f2 asup_set_class f3 awceq f0 awa f2 awex f3 f4 awcel f1 f2 awnf f2 asup_set_class f3 awceq f0 f1 awb awi f2 awal aw3a f1 psyl5bi f0 f1 pbi2 f0 f1 awb f1 f0 awi f2 asup_set_class f3 awceq pimim2i f2 asup_set_class f3 awceq f0 f1 awb awi f2 asup_set_class f3 awceq f1 f0 pcom23 f2 asup_set_class f3 awceq f0 f1 awb awi f1 f2 asup_set_class f3 awceq f0 awi awi f2 palimi f1 f2 asup_set_class f3 awceq f0 awi f2 p19.21t f1 f2 awnf f1 f2 asup_set_class f3 awceq f0 awi awi f2 awal f1 f2 asup_set_class f3 awceq f0 awi f2 awal awi pbiimpa f2 asup_set_class f3 awceq f0 f1 awb awi f2 awal f1 f2 awnf f1 f2 asup_set_class f3 awceq f0 awi awi f2 awal f1 f2 asup_set_class f3 awceq f0 awi f2 awal awi psylan2 f1 f2 awnf f2 asup_set_class f3 awceq f0 f1 awb awi f2 awal f1 f2 asup_set_class f3 awceq f0 awi f2 awal awi f3 f4 awcel p3adant1 f0 f2 f3 f4 psbc6g f3 f4 awcel f1 f2 awnf f0 f2 f3 awsbc f2 asup_set_class f3 awceq f0 awi f2 awal awb f2 asup_set_class f3 awceq f0 f1 awb awi f2 awal p3ad2ant1 f3 f4 awcel f1 f2 awnf f2 asup_set_class f3 awceq f0 f1 awb awi f2 awal aw3a f1 f2 asup_set_class f3 awceq f0 awi f2 awal f0 f2 f3 awsbc psylibrd f3 f4 awcel f1 f2 awnf f2 asup_set_class f3 awceq f0 f1 awb awi f2 awal aw3a f0 f2 f3 awsbc f1 pimpbid $.
 $}
-$( /* Conversion of implicit substitution to explicit class substitution.
+$( Conversion of implicit substitution to explicit class substitution.
        (Contributed by NM, 14-Dec-2005.)  (Revised by Mario Carneiro,
-       13-Oct-2016.) */
-
-$)
+       13-Oct-2016.) $)
 ${
 	$v ph ps x A V $.
 	$d x A $.
@@ -558,10 +486,8 @@ ${
 	psbciegf $p |- ( A e. V -> ( [. A / x ]. ph <-> ps ) ) $=
 	e0 e1 f2 asup_set_class f3 awceq f0 f1 awb awi f2 aax-gen f0 f1 f2 f3 f4 psbciegft f3 f4 awcel f1 f2 awnf f2 asup_set_class f3 awceq f0 f1 awb awi f2 awal f0 f2 f3 awsbc f1 awb pmp3an23 $.
 $}
-$( /* Conversion of implicit substitution to explicit class substitution.
-       (Contributed by NM, 10-Nov-2005.) */
-
-$)
+$( Conversion of implicit substitution to explicit class substitution.
+       (Contributed by NM, 10-Nov-2005.) $)
 ${
 	$v ph ps x A V $.
 	$d x A $.
@@ -575,11 +501,9 @@ ${
 	psbcieg $p |- ( A e. V -> ( [. A / x ]. ph <-> ps ) ) $=
 	f3 f4 pelex f1 f2 pnfv e0 f0 f1 f2 f3 acvv psbciegf f3 f4 awcel f3 acvv awcel f0 f2 f3 awsbc f1 awb psyl $.
 $}
-$( /* Conversion of implicit substitution to explicit class substitution.
+$( Conversion of implicit substitution to explicit class substitution.
        This version of ~ sbcie avoids a disjointness condition on ` x , A ` by
-       substituting twice.  (Contributed by Mario Carneiro, 15-Oct-2016.) */
-
-$)
+       substituting twice.  (Contributed by Mario Carneiro, 15-Oct-2016.) $)
 ${
 	$v ph ps ch x y A V $.
 	$d x y $.
@@ -599,10 +523,8 @@ ${
 	psbcie2g $p |- ( A e. V -> ( [. A / x ]. ph <-> ch ) ) $=
 	f0 f3 f4 asup_set_class f5 pdfsbcq e1 f0 f3 f4 psbsbc f1 f3 pnfv e0 f0 f1 f3 f4 psbie f0 f3 f4 asup_set_class awsbc f0 f3 f4 awsb f1 pbitr3i f0 f3 f4 asup_set_class awsbc f1 f0 f3 f5 awsbc f2 f4 f5 f6 pvtoclbg $.
 $}
-$( /* Conversion of implicit substitution to explicit class substitution.
-       (Contributed by NM, 4-Sep-2004.) */
-
-$)
+$( Conversion of implicit substitution to explicit class substitution.
+       (Contributed by NM, 4-Sep-2004.) $)
 ${
 	$v ph ps x A $.
 	$d x A $.
@@ -616,10 +538,8 @@ ${
 	psbcie $p |- ( [. A / x ]. ph <-> ps ) $=
 	e0 e1 f0 f1 f2 f3 acvv psbcieg f3 acvv awcel f0 f2 f3 awsbc f1 awb aax-mp $.
 $}
-$( /* Conversion of implicit substitution to explicit class substitution,
-         deduction form.  (Contributed by NM, 29-Dec-2014.) */
-
-$)
+$( Conversion of implicit substitution to explicit class substitution,
+         deduction form.  (Contributed by NM, 29-Dec-2014.) $)
 ${
 	$v ph ps ch x A V $.
 	$d x A $.
@@ -636,10 +556,8 @@ ${
 	psbciedf $p |- ( ph -> ( [. A / x ]. ps <-> ch ) ) $=
 	e0 e3 e2 e1 f0 f3 asup_set_class f4 awceq f1 f2 awb pex f0 f3 asup_set_class f4 awceq f1 f2 awb awi f3 palrimi f1 f2 f3 f4 f5 psbciegft f0 f4 f5 awcel f2 f3 awnf f3 asup_set_class f4 awceq f1 f2 awb awi f3 awal f1 f3 f4 awsbc f2 awb psyl3anc $.
 $}
-$( /* Conversion of implicit substitution to explicit class substitution,
-       deduction form.  (Contributed by NM, 13-Dec-2014.) */
-
-$)
+$( Conversion of implicit substitution to explicit class substitution,
+       deduction form.  (Contributed by NM, 13-Dec-2014.) $)
 ${
 	$v ph ps ch x A V $.
 	$d x A $.
@@ -656,10 +574,8 @@ ${
 	psbcied $p |- ( ph -> ( [. A / x ]. ps <-> ch ) ) $=
 	e0 e1 f0 f3 pnfv f0 f2 f3 pnfvd f0 f1 f2 f3 f4 f5 psbciedf $.
 $}
-$( /* Conversion of implicit substitution to explicit class substitution,
-       deduction form.  (Contributed by NM, 13-Dec-2014.) */
-
-$)
+$( Conversion of implicit substitution to explicit class substitution,
+       deduction form.  (Contributed by NM, 13-Dec-2014.) $)
 ${
 	$v ph ps ch x A B V $.
 	$d x A $.
@@ -678,13 +594,11 @@ ${
 	psbcied2 $p |- ( ph -> ( [. A / x ]. ps <-> ch ) ) $=
 	e0 f3 asup_set_class f4 awceq pid e1 f3 asup_set_class f4 awceq f0 f3 asup_set_class f4 f5 psylan9eqr e2 f0 f3 asup_set_class f4 awceq f3 asup_set_class f5 awceq f1 f2 awb psyldan f0 f1 f2 f3 f4 f6 psbcied $.
 $}
-$( /* Membership in a restricted class abstraction, expressed with explicit
+$( Membership in a restricted class abstraction, expressed with explicit
        class substitution.  (The variation ~ elrabf has implicit
        substitution).  The hypothesis specifies that ` x ` must not be a free
        variable in ` B ` .  (Contributed by NM, 30-Sep-2003.)  (Proof shortened
-       by Mario Carneiro, 13-Oct-2016.) */
-
-$)
+       by Mario Carneiro, 13-Oct-2016.) $)
 ${
 	$v ph x y A B $.
 	$d y A $.
@@ -700,10 +614,8 @@ ${
 	pelrabsf $p |- ( A e. { x e. B | ph } <-> ( A e. B /\ [. A / x ]. ph ) ) $=
 	f0 f1 i0 asup_set_class f2 pdfsbcq e0 i0 f3 pnfcv f0 i0 pnfv f0 f1 i0 asup_set_class pnfsbc1v f0 f1 i0 asup_set_class psbceq1a f0 f0 f1 i0 asup_set_class awsbc f1 i0 f3 pcbvrab f0 f1 i0 asup_set_class awsbc f0 f1 f2 awsbc i0 f2 f3 f0 f1 f3 acrab pelrab2 $.
 $}
-$( /* Substitution applied to an atomic wff.  Set theory version of ~ eqsb3 .
-       (Contributed by Andrew Salmon, 29-Jun-2011.) */
-
-$)
+$( Substitution applied to an atomic wff.  Set theory version of ~ eqsb3 .
+       (Contributed by Andrew Salmon, 29-Jun-2011.) $)
 ${
 	$v x y A B V $.
 	$d x y B $.
@@ -716,10 +628,8 @@ ${
 	peqsbc3 $p |- ( A e. V -> ( [. A / x ]. x = B <-> A = B ) ) $=
 	f0 asup_set_class f2 awceq f0 i0 asup_set_class f1 pdfsbcq i0 asup_set_class f1 f2 peqeq1 f0 asup_set_class f2 awceq f0 i0 psbsbc i0 f0 f2 peqsb3 f0 asup_set_class f2 awceq f0 i0 asup_set_class awsbc f0 asup_set_class f2 awceq f0 i0 awsb i0 asup_set_class f2 awceq pbitr3i f0 asup_set_class f2 awceq f0 i0 asup_set_class awsbc i0 asup_set_class f2 awceq f0 asup_set_class f2 awceq f0 f1 awsbc f1 f2 awceq i0 f1 f3 pvtoclbg $.
 $}
-$( /* Move negation in and out of class substitution.  (Contributed by NM,
-       16-Jan-2004.) */
-
-$)
+$( Move negation in and out of class substitution.  (Contributed by NM,
+       16-Jan-2004.) $)
 ${
 	$v ph x y A V $.
 	$d x y $.
@@ -733,10 +643,8 @@ ${
 	psbcng $p |- ( A e. V -> ( [. A / x ]. -. ph <-> -. [. A / x ]. ph ) ) $=
 	f0 awn f1 i0 f2 pdfsbcq2 f0 f1 i0 f2 pdfsbcq2 i0 asup_set_class f2 awceq f0 f1 i0 awsb f0 f1 f2 awsbc pnotbid f0 f1 i0 psbn f0 awn f1 i0 awsb f0 f1 i0 awsb awn f0 awn f1 f2 awsbc f0 f1 f2 awsbc awn i0 f2 f3 pvtoclbg $.
 $}
-$( /* Distribution of class substitution over implication.  (Contributed by
-       NM, 16-Jan-2004.) */
-
-$)
+$( Distribution of class substitution over implication.  (Contributed by
+       NM, 16-Jan-2004.) $)
 ${
 	$v ph ps x y A V $.
 	$d x y $.
@@ -752,10 +660,8 @@ ${
 	psbcimg $p |- ( A e. V -> ( [. A / x ]. ( ph -> ps ) <-> ( [. A / x ]. ph -> [. A / x ]. ps ) ) ) $=
 	f0 f1 awi f2 i0 f3 pdfsbcq2 f0 f2 i0 f3 pdfsbcq2 f1 f2 i0 f3 pdfsbcq2 i0 asup_set_class f3 awceq f0 f2 i0 awsb f0 f2 f3 awsbc f1 f2 i0 awsb f1 f2 f3 awsbc pimbi12d f0 f1 f2 i0 psbim f0 f1 awi f2 i0 awsb f0 f2 i0 awsb f1 f2 i0 awsb awi f0 f1 awi f2 f3 awsbc f0 f2 f3 awsbc f1 f2 f3 awsbc awi i0 f3 f4 pvtoclbg $.
 $}
-$( /* Distribution of class substitution over conjunction.  (Contributed by
-       NM, 31-Dec-2016.) */
-
-$)
+$( Distribution of class substitution over conjunction.  (Contributed by
+       NM, 31-Dec-2016.) $)
 ${
 	$v ph ps x y A $.
 	$d x y $.
@@ -770,10 +676,8 @@ ${
 	psbcan $p |- ( [. A / x ]. ( ph /\ ps ) <-> ( [. A / x ]. ph /\ [. A / x ]. ps ) ) $=
 	f0 f1 awa f2 f3 psbcex f1 f2 f3 psbcex f1 f2 f3 awsbc f3 acvv awcel f0 f2 f3 awsbc padantl f0 f1 awa f2 i0 f3 pdfsbcq2 f0 f2 i0 f3 pdfsbcq2 f1 f2 i0 f3 pdfsbcq2 i0 asup_set_class f3 awceq f0 f2 i0 awsb f0 f2 f3 awsbc f1 f2 i0 awsb f1 f2 f3 awsbc panbi12d f0 f1 f2 i0 psban f0 f1 awa f2 i0 awsb f0 f2 i0 awsb f1 f2 i0 awsb awa f0 f1 awa f2 f3 awsbc f0 f2 f3 awsbc f1 f2 f3 awsbc awa i0 f3 acvv pvtoclbg f0 f1 awa f2 f3 awsbc f3 acvv awcel f0 f2 f3 awsbc f1 f2 f3 awsbc awa ppm5.21nii $.
 $}
-$( /* Distribution of class substitution over conjunction.  (Contributed by
-       NM, 21-May-2004.) */
-
-$)
+$( Distribution of class substitution over conjunction.  (Contributed by
+       NM, 21-May-2004.) $)
 ${
 	$v ph ps x y A V $.
 	$d x y $.
@@ -789,10 +693,8 @@ ${
 	psbcang $p |- ( A e. V -> ( [. A / x ]. ( ph /\ ps ) <-> ( [. A / x ]. ph /\ [. A / x ]. ps ) ) ) $=
 	f0 f1 awa f2 i0 f3 pdfsbcq2 f0 f2 i0 f3 pdfsbcq2 f1 f2 i0 f3 pdfsbcq2 i0 asup_set_class f3 awceq f0 f2 i0 awsb f0 f2 f3 awsbc f1 f2 i0 awsb f1 f2 f3 awsbc panbi12d f0 f1 f2 i0 psban f0 f1 awa f2 i0 awsb f0 f2 i0 awsb f1 f2 i0 awsb awa f0 f1 awa f2 f3 awsbc f0 f2 f3 awsbc f1 f2 f3 awsbc awa i0 f3 f4 pvtoclbg $.
 $}
-$( /* Distribution of class substitution over disjunction.  (Contributed by
-       NM, 31-Dec-2016.) */
-
-$)
+$( Distribution of class substitution over disjunction.  (Contributed by
+       NM, 31-Dec-2016.) $)
 ${
 	$v ph ps x y A $.
 	$d x y $.
@@ -807,10 +709,8 @@ ${
 	psbcor $p |- ( [. A / x ]. ( ph \/ ps ) <-> ( [. A / x ]. ph \/ [. A / x ]. ps ) ) $=
 	f0 f1 awo f2 f3 psbcex f0 f2 f3 psbcex f1 f2 f3 psbcex f0 f2 f3 awsbc f3 acvv awcel f1 f2 f3 awsbc pjaoi f0 f1 awo f2 i0 f3 pdfsbcq2 f0 f2 i0 f3 pdfsbcq2 f1 f2 i0 f3 pdfsbcq2 i0 asup_set_class f3 awceq f0 f2 i0 awsb f0 f2 f3 awsbc f1 f2 i0 awsb f1 f2 f3 awsbc porbi12d f0 f1 f2 i0 psbor f0 f1 awo f2 i0 awsb f0 f2 i0 awsb f1 f2 i0 awsb awo f0 f1 awo f2 f3 awsbc f0 f2 f3 awsbc f1 f2 f3 awsbc awo i0 f3 acvv pvtoclbg f0 f1 awo f2 f3 awsbc f3 acvv awcel f0 f2 f3 awsbc f1 f2 f3 awsbc awo ppm5.21nii $.
 $}
-$( /* Distribution of class substitution over disjunction.  (Contributed by
-       NM, 21-May-2004.) */
-
-$)
+$( Distribution of class substitution over disjunction.  (Contributed by
+       NM, 21-May-2004.) $)
 ${
 	$v ph ps x y A V $.
 	$d x y $.
@@ -826,10 +726,8 @@ ${
 	psbcorg $p |- ( A e. V -> ( [. A / x ]. ( ph \/ ps ) <-> ( [. A / x ]. ph \/ [. A / x ]. ps ) ) ) $=
 	f0 f1 awo f2 i0 f3 pdfsbcq2 f0 f2 i0 f3 pdfsbcq2 f1 f2 i0 f3 pdfsbcq2 i0 asup_set_class f3 awceq f0 f2 i0 awsb f0 f2 f3 awsbc f1 f2 i0 awsb f1 f2 f3 awsbc porbi12d f0 f1 f2 i0 psbor f0 f1 awo f2 i0 awsb f0 f2 i0 awsb f1 f2 i0 awsb awo f0 f1 awo f2 f3 awsbc f0 f2 f3 awsbc f1 f2 f3 awsbc awo i0 f3 f4 pvtoclbg $.
 $}
-$( /* Distribution of class substitution over biconditional.  (Contributed by
-       Raph Levien, 10-Apr-2004.) */
-
-$)
+$( Distribution of class substitution over biconditional.  (Contributed by
+       Raph Levien, 10-Apr-2004.) $)
 ${
 	$v ph ps x y A V $.
 	$d x y $.
@@ -845,10 +743,8 @@ ${
 	psbcbig $p |- ( A e. V -> ( [. A / x ]. ( ph <-> ps ) <-> ( [. A / x ]. ph <-> [. A / x ]. ps ) ) ) $=
 	f0 f1 awb f2 i0 f3 pdfsbcq2 f0 f2 i0 f3 pdfsbcq2 f1 f2 i0 f3 pdfsbcq2 i0 asup_set_class f3 awceq f0 f2 i0 awsb f0 f2 f3 awsbc f1 f2 i0 awsb f1 f2 f3 awsbc pbibi12d f0 f1 f2 i0 psbbi f0 f1 awb f2 i0 awsb f0 f2 i0 awsb f1 f2 i0 awsb awb f0 f1 awb f2 f3 awsbc f0 f2 f3 awsbc f1 f2 f3 awsbc awb i0 f3 f4 pvtoclbg $.
 $}
-$( /* Move universal quantifier in and out of class substitution.
-       (Contributed by NM, 31-Dec-2016.) */
-
-$)
+$( Move universal quantifier in and out of class substitution.
+       (Contributed by NM, 31-Dec-2016.) $)
 ${
 	$v ph x y z A $.
 	$d x z A $.
@@ -862,10 +758,8 @@ ${
 	psbcal $p |- ( [. A / y ]. A. x ph <-> A. x [. A / y ]. ph ) $=
 	f0 f1 awal f2 f3 psbcex f0 f2 f3 psbcex f0 f2 f3 awsbc f3 acvv awcel f1 psps f0 f1 awal f2 i0 f3 pdfsbcq2 f0 f2 i0 f3 pdfsbcq2 i0 asup_set_class f3 awceq f0 f2 i0 awsb f0 f2 f3 awsbc f1 palbidv f0 f1 f2 i0 psbal f0 f1 awal f2 i0 awsb f0 f2 i0 awsb f1 awal f0 f1 awal f2 f3 awsbc f0 f2 f3 awsbc f1 awal i0 f3 acvv pvtoclbg f0 f1 awal f2 f3 awsbc f3 acvv awcel f0 f2 f3 awsbc f1 awal ppm5.21nii $.
 $}
-$( /* Move universal quantifier in and out of class substitution.
-       (Contributed by NM, 16-Jan-2004.) */
-
-$)
+$( Move universal quantifier in and out of class substitution.
+       (Contributed by NM, 16-Jan-2004.) $)
 ${
 	$v ph x y z A V $.
 	$d x z A $.
@@ -880,10 +774,8 @@ ${
 	psbcalg $p |- ( A e. V -> ( [. A / y ]. A. x ph <-> A. x [. A / y ]. ph ) ) $=
 	f0 f1 awal f2 i0 f3 pdfsbcq2 f0 f2 i0 f3 pdfsbcq2 i0 asup_set_class f3 awceq f0 f2 i0 awsb f0 f2 f3 awsbc f1 palbidv f0 f1 f2 i0 psbal f0 f1 awal f2 i0 awsb f0 f2 i0 awsb f1 awal f0 f1 awal f2 f3 awsbc f0 f2 f3 awsbc f1 awal i0 f3 f4 pvtoclbg $.
 $}
-$( /* Move existential quantifier in and out of class substitution.
-       (Contributed by NM, 21-May-2004.) */
-
-$)
+$( Move existential quantifier in and out of class substitution.
+       (Contributed by NM, 21-May-2004.) $)
 ${
 	$v ph x y z A $.
 	$d x z A $.
@@ -897,10 +789,8 @@ ${
 	psbcex2 $p |- ( [. A / y ]. E. x ph <-> E. x [. A / y ]. ph ) $=
 	f0 f1 awex f2 f3 psbcex f0 f2 f3 psbcex f0 f2 f3 awsbc f3 acvv awcel f1 pexlimiv f0 f1 awex f2 i0 f3 pdfsbcq2 f0 f2 i0 f3 pdfsbcq2 i0 asup_set_class f3 awceq f0 f2 i0 awsb f0 f2 f3 awsbc f1 pexbidv f0 f1 f2 i0 psbex f0 f1 awex f2 i0 awsb f0 f2 i0 awsb f1 awex f0 f1 awex f2 f3 awsbc f0 f2 f3 awsbc f1 awex i0 f3 acvv pvtoclbg f0 f1 awex f2 f3 awsbc f3 acvv awcel f0 f2 f3 awsbc f1 awex ppm5.21nii $.
 $}
-$( /* Move existential quantifier in and out of class substitution.
-       (Contributed by NM, 21-May-2004.) */
-
-$)
+$( Move existential quantifier in and out of class substitution.
+       (Contributed by NM, 21-May-2004.) $)
 ${
 	$v ph x y z A V $.
 	$d x z A $.
@@ -915,10 +805,8 @@ ${
 	psbcexg $p |- ( A e. V -> ( [. A / y ]. E. x ph <-> E. x [. A / y ]. ph ) ) $=
 	f0 f1 awex f2 i0 f3 pdfsbcq2 f0 f2 i0 f3 pdfsbcq2 i0 asup_set_class f3 awceq f0 f2 i0 awsb f0 f2 f3 awsbc f1 pexbidv f0 f1 f2 i0 psbex f0 f1 awex f2 i0 awsb f0 f2 i0 awsb f1 awex f0 f1 awex f2 f3 awsbc f0 f2 f3 awsbc f1 awex i0 f3 f4 pvtoclbg $.
 $}
-$( /* Set theory version of ~ sbeqal1 .  (Contributed by Andrew Salmon,
-       28-Jun-2011.) */
-
-$)
+$( Set theory version of ~ sbeqal1 .  (Contributed by Andrew Salmon,
+       28-Jun-2011.) $)
 ${
 	$v x A B V $.
 	$d x B $.
@@ -930,10 +818,8 @@ ${
 	psbceqal $p |- ( A e. V -> ( A. x ( x = A -> x = B ) -> A = B ) ) $=
 	f0 asup_set_class f1 awceq f0 asup_set_class f2 awceq awi f0 f1 f3 pspsbc f0 asup_set_class f1 awceq f0 asup_set_class f2 awceq f0 f1 f3 psbcimg f1 peqid f0 f1 f1 f3 peqsbc3 f1 f3 awcel f0 asup_set_class f1 awceq f0 f1 awsbc f1 f1 awceq pmpbiri f0 asup_set_class f1 awceq f0 f1 awsbc f0 asup_set_class f2 awceq f0 f1 awsbc ppm5.5 f1 f3 awcel f0 asup_set_class f1 awceq f0 f1 awsbc f0 asup_set_class f1 awceq f0 f1 awsbc f0 asup_set_class f2 awceq f0 f1 awsbc awi f0 asup_set_class f2 awceq f0 f1 awsbc awb psyl f0 f1 f2 f3 peqsbc3 f1 f3 awcel f0 asup_set_class f1 awceq f0 asup_set_class f2 awceq awi f0 f1 awsbc f0 asup_set_class f1 awceq f0 f1 awsbc f0 asup_set_class f2 awceq f0 f1 awsbc awi f0 asup_set_class f2 awceq f0 f1 awsbc f1 f2 awceq p3bitrd f1 f3 awcel f0 asup_set_class f1 awceq f0 asup_set_class f2 awceq awi f0 awal f0 asup_set_class f1 awceq f0 asup_set_class f2 awceq awi f0 f1 awsbc f1 f2 awceq psylibd $.
 $}
-$( /* Theorem *14.121 in [WhiteheadRussell] p. 185.  (Contributed by Andrew
-       Salmon, 28-Jun-2011.)  (Proof shortened by Wolf Lammen, 9-May-2013.) */
-
-$)
+$( Theorem *14.121 in [WhiteheadRussell] p. 185.  (Contributed by Andrew
+       Salmon, 28-Jun-2011.)  (Proof shortened by Wolf Lammen, 9-May-2013.) $)
 ${
 	$v ph x A B V $.
 	$d x A $.
@@ -946,10 +832,8 @@ ${
 	psbeqalb $p |- ( A e. V -> ( ( A. x ( ph <-> x = A ) /\ A. x ( ph <-> x = B ) ) -> A = B ) ) $=
 	f0 f1 asup_set_class f2 awceq f1 asup_set_class f3 awceq pbibi1 f0 f1 asup_set_class f2 awceq awb f0 f1 asup_set_class f3 awceq awb f1 asup_set_class f2 awceq f1 asup_set_class f3 awceq awb pbiimpa f0 f1 asup_set_class f2 awceq awb f0 f1 asup_set_class f3 awceq awb awa f1 asup_set_class f2 awceq f1 asup_set_class f3 awceq pbiimpd f0 f1 asup_set_class f2 awceq awb f0 f1 asup_set_class f3 awceq awb f1 asup_set_class f2 awceq f1 asup_set_class f3 awceq awi f1 palanimi f1 f2 f3 f4 psbceqal f0 f1 asup_set_class f2 awceq awb f1 awal f0 f1 asup_set_class f3 awceq awb f1 awal awa f1 asup_set_class f2 awceq f1 asup_set_class f3 awceq awi f1 awal f2 f4 awcel f2 f3 awceq psyl5 $.
 $}
-$( /* Formula-building deduction rule for class substitution.  (Contributed by
-       NM, 29-Dec-2014.) */
-
-$)
+$( Formula-building deduction rule for class substitution.  (Contributed by
+       NM, 29-Dec-2014.) $)
 ${
 	$v ph ps ch x A $.
 	e0 $e |- F/ x ph $.
@@ -962,10 +846,8 @@ ${
 	psbcbid $p |- ( ph -> ( [. A / x ]. ps <-> [. A / x ]. ch ) ) $=
 	e0 e1 f0 f1 f2 f3 pabbid f0 f1 f3 acab f2 f3 acab f4 peleq2d f1 f3 f4 adf-sbc f2 f3 f4 adf-sbc f0 f4 f1 f3 acab awcel f4 f2 f3 acab awcel f1 f3 f4 awsbc f2 f3 f4 awsbc p3bitr4g $.
 $}
-$( /* Formula-building deduction rule for class substitution.  (Contributed by
-       NM, 29-Dec-2014.) */
-
-$)
+$( Formula-building deduction rule for class substitution.  (Contributed by
+       NM, 29-Dec-2014.) $)
 ${
 	$v ph ps ch x A $.
 	$d x ph $.
@@ -978,10 +860,8 @@ ${
 	psbcbidv $p |- ( ph -> ( [. A / x ]. ps <-> [. A / x ]. ch ) ) $=
 	f0 f3 pnfv e0 f0 f1 f2 f3 f4 psbcbid $.
 $}
-$( /* Formula-building inference rule for class substitution.  (Contributed by
-       NM, 11-Nov-2005.) */
-
-$)
+$( Formula-building inference rule for class substitution.  (Contributed by
+       NM, 11-Nov-2005.) $)
 ${
 	$v ph ps x A $.
 	e0 $e |- ( ph <-> ps ) $.
@@ -992,10 +872,8 @@ ${
 	psbcbii $p |- ( [. A / x ]. ph <-> [. A / x ]. ps ) $=
 	e0 f0 f1 awb awtru pa1i awtru f0 f1 f2 f3 psbcbidv f0 f2 f3 awsbc f1 f2 f3 awsbc awb ptrud $.
 $}
-$( /* Formula-building inference rule for class substitution.  (Contributed by
-       NM, 11-Nov-2005.)  (New usage is discouraged.) */
-
-$)
+$( Formula-building inference rule for class substitution.  (Contributed by
+       NM, 11-Nov-2005.)  (New usage is discouraged.) $)
 ${
 	$v ph ps x A V $.
 	e0 $e |- ( ph <-> ps ) $.
@@ -1007,12 +885,10 @@ ${
 	psbcbiiOLD $p |- ( A e. V -> ( [. A / x ]. ph <-> [. A / x ]. ps ) ) $=
 	e0 f0 f1 f2 f3 psbcbii f0 f2 f3 awsbc f1 f2 f3 awsbc awb f3 f4 awcel pa1i $.
 $}
-$( /* ~ eqsbc3 with set variable on right side of equals sign.  This proof was
+$( ~ eqsbc3 with set variable on right side of equals sign.  This proof was
        automatically generated from the virtual deduction proof ~ eqsbc3rVD
        using a translation program.  (Contributed by Alan Sare,
-       24-Oct-2011.) */
-
-$)
+       24-Oct-2011.) $)
 ${
 	$v x A B C $.
 	$d x C $.
@@ -1024,11 +900,9 @@ ${
 	peqsbc3r $p |- ( A e. B -> ( [. A / x ]. C = x <-> C = A ) ) $=
 	f3 f0 asup_set_class peqcom f3 f0 asup_set_class awceq f0 asup_set_class f3 awceq f0 f1 psbcbii f3 f0 asup_set_class awceq f0 f1 awsbc f0 asup_set_class f3 awceq f0 f1 awsbc pbiimpi f0 f1 f3 f2 peqsbc3 f3 f0 asup_set_class awceq f0 f1 awsbc f0 asup_set_class f3 awceq f0 f1 awsbc f1 f2 awcel f1 f3 awceq psyl5ib f1 f3 peqcom f1 f2 awcel f3 f0 asup_set_class awceq f0 f1 awsbc f1 f3 awceq f3 f1 awceq psyl6ib f1 f2 awcel f3 f1 awceq pidd f1 f3 peqcom f1 f2 awcel f3 f1 awceq f3 f1 awceq f1 f3 awceq psyl6ibr f0 f1 f3 f2 peqsbc3 f1 f2 awcel f3 f1 awceq f1 f3 awceq f0 asup_set_class f3 awceq f0 f1 awsbc psylibrd f3 f0 asup_set_class peqcom f3 f0 asup_set_class awceq f0 asup_set_class f3 awceq f0 f1 psbcbii f1 f2 awcel f3 f1 awceq f0 asup_set_class f3 awceq f0 f1 awsbc f3 f0 asup_set_class awceq f0 f1 awsbc psyl6ibr f1 f2 awcel f3 f0 asup_set_class awceq f0 f1 awsbc f3 f1 awceq pimpbid $.
 $}
-$( /* Distribution of class substitution over triple conjunction.
+$( Distribution of class substitution over triple conjunction.
        (Contributed by NM, 14-Dec-2006.)  (Proof shortened by Andrew Salmon,
-       29-Jun-2011.) */
-
-$)
+       29-Jun-2011.) $)
 ${
 	$v ph ps ch x y A V $.
 	$d y ch $.
@@ -1046,10 +920,8 @@ ${
 	psbc3ang $p |- ( A e. V -> ( [. A / x ]. ( ph /\ ps /\ ch ) <-> ( [. A / x ]. ph /\ [. A / x ]. ps /\ [. A / x ]. ch ) ) ) $=
 	f0 f1 f2 aw3a f3 i0 f4 pdfsbcq2 f0 f3 i0 f4 pdfsbcq2 f1 f3 i0 f4 pdfsbcq2 f2 f3 i0 f4 pdfsbcq2 i0 asup_set_class f4 awceq f0 f3 i0 awsb f0 f3 f4 awsbc f1 f3 i0 awsb f1 f3 f4 awsbc f2 f3 i0 awsb f2 f3 f4 awsbc p3anbi123d f0 f1 f2 f3 i0 psb3an f0 f1 f2 aw3a f3 i0 awsb f0 f3 i0 awsb f1 f3 i0 awsb f2 f3 i0 awsb aw3a f0 f1 f2 aw3a f3 f4 awsbc f0 f3 f4 awsbc f1 f3 f4 awsbc f2 f3 f4 awsbc aw3a i0 f4 f5 pvtoclbg $.
 $}
-$( /* Class substitution into a membership relation.  (Contributed by NM,
-       17-Nov-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) */
-
-$)
+$( Class substitution into a membership relation.  (Contributed by NM,
+       17-Nov-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
 ${
 	$v x y A B V $.
 	$d y A $.
@@ -1062,10 +934,8 @@ ${
 	psbcel1gv $p |- ( A e. V -> ( [. A / x ]. x e. B <-> A e. B ) ) $=
 	f0 asup_set_class f2 awcel f0 i0 f1 pdfsbcq2 i0 asup_set_class f1 f2 peleq1 i0 f0 f2 pclelsb3 f0 asup_set_class f2 awcel f0 i0 awsb i0 asup_set_class f2 awcel f0 asup_set_class f2 awcel f0 f1 awsbc f1 f2 awcel i0 f1 f3 pvtoclbg $.
 $}
-$( /* Class substitution into a membership relation.  (Contributed by NM,
-       17-Nov-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) */
-
-$)
+$( Class substitution into a membership relation.  (Contributed by NM,
+       17-Nov-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
 ${
 	$v x y A B V $.
 	$d y B $.
@@ -1078,10 +948,8 @@ ${
 	psbcel2gv $p |- ( B e. V -> ( [. B / x ]. A e. x <-> A e. B ) ) $=
 	f1 f0 asup_set_class awcel f0 i0 f2 pdfsbcq2 i0 asup_set_class f2 f1 peleq2 f1 i0 asup_set_class awcel f0 pnfv f0 asup_set_class i0 asup_set_class f1 peleq2 f1 f0 asup_set_class awcel f1 i0 asup_set_class awcel f0 i0 psbie f1 f0 asup_set_class awcel f0 i0 awsb f1 i0 asup_set_class awcel f1 f0 asup_set_class awcel f0 f2 awsbc f1 f2 awcel i0 f2 f3 pvtoclbg $.
 $}
-$( /* Substitution analog of Theorem 19.20 of [Margaris] p. 90.  (Contributed
-       by NM, 11-Nov-2005.) */
-
-$)
+$( Substitution analog of Theorem 19.20 of [Margaris] p. 90.  (Contributed
+       by NM, 11-Nov-2005.) $)
 ${
 	$v ph ps ch x A V $.
 	$d x ph $.
@@ -1095,10 +963,8 @@ ${
 	psbcimdv $p |- ( ( ph /\ A e. V ) -> ( [. A / x ]. ps -> [. A / x ]. ch ) ) $=
 	e0 f0 f1 f2 awi f3 palrimiv f1 f2 awi f3 f4 f5 pspsbc f0 f1 f2 awi f3 awal f4 f5 awcel f1 f2 awi f3 f4 awsbc psyl5 f1 f2 f3 f4 f5 psbcimg f4 f5 awcel f0 f1 f2 awi f3 f4 awsbc f1 f3 f4 awsbc f2 f3 f4 awsbc awi psylibd f4 f5 awcel f0 f1 f3 f4 awsbc f2 f3 f4 awsbc awi pimpcom $.
 $}
-$( /* Substitution for a variable not free in a wff does not affect it.
-       (Contributed by Mario Carneiro, 14-Oct-2016.) */
-
-$)
+$( Substitution for a variable not free in a wff does not affect it.
+       (Contributed by Mario Carneiro, 14-Oct-2016.) $)
 ${
 	$v ph x y A V $.
 	$d x y $.
@@ -1112,11 +978,9 @@ ${
 	psbctt $p |- ( ( A e. V /\ F/ x ph ) -> ( [. A / x ]. ph <-> ph ) ) $=
 	f0 f1 i0 f2 pdfsbcq2 i0 asup_set_class f2 awceq f0 f1 i0 awsb f0 f1 f2 awsbc f0 pbibi1d i0 asup_set_class f2 awceq f0 f1 i0 awsb f0 awb f0 f1 f2 awsbc f0 awb f0 f1 awnf pimbi2d f0 f1 i0 psbft f0 f1 awnf f0 f1 i0 awsb f0 awb awi f0 f1 awnf f0 f1 f2 awsbc f0 awb awi i0 f2 f3 pvtoclg f2 f3 awcel f0 f1 awnf f0 f1 f2 awsbc f0 awb pimp $.
 $}
-$( /* Substitution for a variable not free in a wff does not affect it.
+$( Substitution for a variable not free in a wff does not affect it.
        (Contributed by NM, 11-Oct-2004.)  (Proof shortened by Andrew Salmon,
-       29-Jun-2011.) */
-
-$)
+       29-Jun-2011.) $)
 ${
 	$v ph x A V $.
 	e0 $e |- F/ x ph $.
@@ -1127,10 +991,8 @@ ${
 	psbcgf $p |- ( A e. V -> ( [. A / x ]. ph <-> ph ) ) $=
 	e0 f0 f1 f2 f3 psbctt f2 f3 awcel f0 f1 awnf f0 f1 f2 awsbc f0 awb pmpan2 $.
 $}
-$( /* Substitution for a variable not free in antecedent affects only the
-       consequent.  (Contributed by NM, 11-Oct-2004.) */
-
-$)
+$( Substitution for a variable not free in antecedent affects only the
+       consequent.  (Contributed by NM, 11-Oct-2004.) $)
 ${
 	$v ph ps x A V $.
 	e0 $e |- F/ x ph $.
@@ -1142,11 +1004,9 @@ ${
 	psbc19.21g $p |- ( A e. V -> ( [. A / x ]. ( ph -> ps ) <-> ( ph -> [. A / x ]. ps ) ) ) $=
 	f0 f1 f2 f3 f4 psbcimg e0 f0 f2 f3 f4 psbcgf f3 f4 awcel f0 f2 f3 awsbc f0 f1 f2 f3 awsbc pimbi1d f3 f4 awcel f0 f1 awi f2 f3 awsbc f0 f2 f3 awsbc f1 f2 f3 awsbc awi f0 f1 f2 f3 awsbc awi pbitrd $.
 $}
-$( /* Substitution for a variable not occurring in a wff does not affect it.
+$( Substitution for a variable not occurring in a wff does not affect it.
        Distinct variable form of ~ sbcgf .  (Contributed by Alan Sare,
-       10-Nov-2012.) */
-
-$)
+       10-Nov-2012.) $)
 ${
 	$v ph x A V $.
 	$d x ph $.
@@ -1157,10 +1017,8 @@ ${
 	psbcg $p |- ( A e. V -> ( [. A / x ]. ph <-> ph ) ) $=
 	f0 f1 pnfv f0 f1 f2 f3 psbcgf $.
 $}
-$( /* Conversion of implicit substitution to explicit class substitution.
-       (Contributed by Mario Carneiro, 19-Dec-2013.) */
-
-$)
+$( Conversion of implicit substitution to explicit class substitution.
+       (Contributed by Mario Carneiro, 19-Dec-2013.) $)
 ${
 	$v ph ps x y A B V W $.
 	$d x y A $.
@@ -1182,11 +1040,9 @@ ${
 	psbc2iegf $p |- ( ( A e. V /\ B e. W ) -> ( [. A / x ]. [. B / y ]. ph <-> ps ) ) $=
 	f4 f6 awcel f5 f7 awcel psimpl f5 f7 awcel f2 asup_set_class f4 awceq psimpl e3 f2 asup_set_class f4 awceq f3 asup_set_class f5 awceq f0 f1 awb f5 f7 awcel padantll f5 f7 awcel f2 asup_set_class f4 awceq awa f3 pnfv e1 f1 f3 awnf f5 f7 awcel f2 asup_set_class f4 awceq awa pa1i f5 f7 awcel f2 asup_set_class f4 awceq awa f0 f1 f3 f5 f7 psbciedf f5 f7 awcel f2 asup_set_class f4 awceq f0 f3 f5 awsbc f1 awb f4 f6 awcel padantll f4 f6 awcel f2 pnfv e2 f4 f6 awcel f5 f7 awcel f2 pnfan e0 f1 f2 awnf f4 f6 awcel f5 f7 awcel awa pa1i f4 f6 awcel f5 f7 awcel awa f0 f3 f5 awsbc f1 f2 f4 f6 psbciedf $.
 $}
-$( /* Conversion of implicit substitution to explicit class substitution.
+$( Conversion of implicit substitution to explicit class substitution.
        (Contributed by NM, 16-Dec-2008.)  (Revised by Mario Carneiro,
-       19-Dec-2013.) */
-
-$)
+       19-Dec-2013.) $)
 ${
 	$v ph ps x y A B $.
 	$d x y A $.
@@ -1204,11 +1060,9 @@ ${
 	psbc2ie $p |- ( [. A / x ]. [. B / y ]. ph <-> ps ) $=
 	e0 e1 f1 f2 pnfv f1 f3 pnfv e1 f5 acvv awcel f2 pnfth e2 f0 f1 f2 f3 f4 f5 acvv acvv psbc2iegf f4 acvv awcel f5 acvv awcel f0 f3 f5 awsbc f2 f4 awsbc f1 awb pmp2an $.
 $}
-$( /* Conversion of implicit substitution to explicit class substitution.
+$( Conversion of implicit substitution to explicit class substitution.
        (Contributed by NM, 16-Dec-2008.)  (Proof shortened by Mario Carneiro,
-       18-Oct-2016.) */
-
-$)
+       18-Oct-2016.) $)
 ${
 	$v ph ps ch x y A B $.
 	$d x y A $.
@@ -1228,11 +1082,9 @@ ${
 	psbc2iedv $p |- ( ph -> ( [. A / x ]. [. B / y ]. ps <-> ch ) ) $=
 	e0 f5 acvv awcel f0 pa1i e1 f6 acvv awcel f0 f3 asup_set_class f5 awceq awa pa1i e2 f0 f3 asup_set_class f5 awceq f4 asup_set_class f6 awceq f1 f2 awb pimpl f0 f3 asup_set_class f5 awceq awa f1 f2 f4 f6 acvv psbcied f0 f1 f4 f6 awsbc f2 f3 f5 acvv psbcied $.
 $}
-$( /* Conversion of implicit substitution to explicit class substitution.
+$( Conversion of implicit substitution to explicit class substitution.
        (Contributed by Mario Carneiro, 19-Jun-2014.)  (Revised by Mario
-       Carneiro, 29-Dec-2014.) */
-
-$)
+       Carneiro, 29-Dec-2014.) $)
 ${
 	$v ph ps x y z A B C $.
 	$d x y z A $.
@@ -1254,10 +1106,8 @@ ${
 	psbc3ie $p |- ( [. A / x ]. [. B / y ]. [. C / z ]. ph <-> ps ) $=
 	e0 e1 e2 f7 acvv awcel f2 asup_set_class f5 awceq f3 asup_set_class f6 awceq awa pa1i e3 f2 asup_set_class f5 awceq f3 asup_set_class f6 awceq f4 asup_set_class f7 awceq f0 f1 awb p3expa f2 asup_set_class f5 awceq f3 asup_set_class f6 awceq awa f0 f1 f4 f7 acvv psbcied f0 f4 f7 awsbc f1 f2 f3 f5 f6 psbc2ie $.
 $}
-$( /* Lemma for ~ sbccom .  (Contributed by NM, 14-Nov-2005.)  (Revised by
-       Mario Carneiro, 18-Oct-2016.) */
-
-$)
+$( Lemma for ~ sbccom .  (Contributed by NM, 14-Nov-2005.)  (Revised by
+       Mario Carneiro, 18-Oct-2016.) $)
 ${
 	$v ph x y A B $.
 	$d x y A $.
@@ -1270,10 +1120,8 @@ ${
 	psbccomlem $p |- ( [. A / x ]. [. B / y ]. ph <-> [. B / y ]. [. A / x ]. ph ) $=
 	f1 asup_set_class f3 awceq f2 asup_set_class f4 awceq f0 awa awa f1 f2 pexcom f1 asup_set_class f3 awceq f2 asup_set_class f4 awceq f0 awa f1 f2 pexdistr f1 asup_set_class f3 awceq f2 asup_set_class f4 awceq f0 pan12 f1 asup_set_class f3 awceq f2 asup_set_class f4 awceq f0 awa awa f2 asup_set_class f4 awceq f1 asup_set_class f3 awceq f0 awa awa f1 pexbii f2 asup_set_class f4 awceq f1 asup_set_class f3 awceq f0 awa f1 p19.42v f1 asup_set_class f3 awceq f2 asup_set_class f4 awceq f0 awa awa f1 awex f2 asup_set_class f4 awceq f1 asup_set_class f3 awceq f0 awa awa f1 awex f2 asup_set_class f4 awceq f1 asup_set_class f3 awceq f0 awa f1 awex awa pbitri f1 asup_set_class f3 awceq f2 asup_set_class f4 awceq f0 awa awa f1 awex f2 asup_set_class f4 awceq f1 asup_set_class f3 awceq f0 awa f1 awex awa f2 pexbii f1 asup_set_class f3 awceq f2 asup_set_class f4 awceq f0 awa awa f2 awex f1 awex f1 asup_set_class f3 awceq f2 asup_set_class f4 awceq f0 awa awa f1 awex f2 awex f1 asup_set_class f3 awceq f2 asup_set_class f4 awceq f0 awa f2 awex awa f1 awex f2 asup_set_class f4 awceq f1 asup_set_class f3 awceq f0 awa f1 awex awa f2 awex p3bitr3i f2 asup_set_class f4 awceq f0 awa f2 awex f1 f3 psbc5 f1 asup_set_class f3 awceq f0 awa f1 awex f2 f4 psbc5 f1 asup_set_class f3 awceq f2 asup_set_class f4 awceq f0 awa f2 awex awa f1 awex f2 asup_set_class f4 awceq f1 asup_set_class f3 awceq f0 awa f1 awex awa f2 awex f2 asup_set_class f4 awceq f0 awa f2 awex f1 f3 awsbc f1 asup_set_class f3 awceq f0 awa f1 awex f2 f4 awsbc p3bitr4i f0 f2 f4 psbc5 f0 f2 f4 awsbc f2 asup_set_class f4 awceq f0 awa f2 awex f1 f3 psbcbii f0 f1 f3 psbc5 f0 f1 f3 awsbc f1 asup_set_class f3 awceq f0 awa f1 awex f2 f4 psbcbii f2 asup_set_class f4 awceq f0 awa f2 awex f1 f3 awsbc f1 asup_set_class f3 awceq f0 awa f1 awex f2 f4 awsbc f0 f2 f4 awsbc f1 f3 awsbc f0 f1 f3 awsbc f2 f4 awsbc p3bitr4i $.
 $}
-$( /* Commutative law for double class substitution.  (Contributed by NM,
-       15-Nov-2005.)  (Proof shortened by Mario Carneiro, 18-Oct-2016.) */
-
-$)
+$( Commutative law for double class substitution.  (Contributed by NM,
+       15-Nov-2005.)  (Proof shortened by Mario Carneiro, 18-Oct-2016.) $)
 ${
 	$v ph x y z w A B $.
 	$d w y z A $.
@@ -1290,10 +1138,8 @@ ${
 	psbccom $p |- ( [. A / x ]. [. B / y ]. ph <-> [. B / y ]. [. A / x ]. ph ) $=
 	f0 f1 i0 asup_set_class awsbc f2 i1 asup_set_class awsbc i0 i1 f3 f4 psbccomlem f0 f2 f1 i1 asup_set_class i0 asup_set_class psbccomlem f0 f1 i0 asup_set_class awsbc f2 i1 asup_set_class awsbc f0 f2 i1 asup_set_class awsbc f1 i0 asup_set_class awsbc i1 f4 psbcbii f0 f2 i1 asup_set_class awsbc i1 f1 f4 i0 asup_set_class psbccomlem f0 f1 i0 asup_set_class awsbc f2 i1 asup_set_class awsbc i1 f4 awsbc f0 f2 i1 asup_set_class awsbc f1 i0 asup_set_class awsbc i1 f4 awsbc f0 f2 i1 asup_set_class awsbc i1 f4 awsbc f1 i0 asup_set_class awsbc pbitri f0 f1 i0 asup_set_class awsbc f2 i1 asup_set_class awsbc i1 f4 awsbc f0 f2 i1 asup_set_class awsbc i1 f4 awsbc f1 i0 asup_set_class awsbc i0 f3 psbcbii f0 f1 i0 asup_set_class awsbc i0 f2 f3 i1 asup_set_class psbccomlem f0 f1 i0 asup_set_class awsbc f2 i1 asup_set_class awsbc i0 f3 awsbc f0 f1 i0 asup_set_class awsbc i0 f3 awsbc f2 i1 asup_set_class awsbc i1 f4 psbcbii f0 f1 i0 asup_set_class awsbc f2 i1 asup_set_class awsbc i1 f4 awsbc i0 f3 awsbc f0 f1 i0 asup_set_class awsbc f2 i1 asup_set_class awsbc i0 f3 awsbc i1 f4 awsbc f0 f2 i1 asup_set_class awsbc i1 f4 awsbc f1 i0 asup_set_class awsbc i0 f3 awsbc f0 f1 i0 asup_set_class awsbc i0 f3 awsbc f2 i1 asup_set_class awsbc i1 f4 awsbc p3bitr3i f0 f2 i1 asup_set_class awsbc i1 f4 awsbc f1 i0 f3 psbcco f0 f1 i0 asup_set_class awsbc i0 f3 awsbc f2 i1 f4 psbcco f0 f2 i1 asup_set_class awsbc i1 f4 awsbc f1 i0 asup_set_class awsbc i0 f3 awsbc f0 f1 i0 asup_set_class awsbc i0 f3 awsbc f2 i1 asup_set_class awsbc i1 f4 awsbc f0 f2 i1 asup_set_class awsbc i1 f4 awsbc f1 f3 awsbc f0 f1 i0 asup_set_class awsbc i0 f3 awsbc f2 f4 awsbc p3bitr3i f0 f2 i1 f4 psbcco f0 f2 i1 asup_set_class awsbc i1 f4 awsbc f0 f2 f4 awsbc f1 f3 psbcbii f0 f1 i0 f3 psbcco f0 f1 i0 asup_set_class awsbc i0 f3 awsbc f0 f1 f3 awsbc f2 f4 psbcbii f0 f2 i1 asup_set_class awsbc i1 f4 awsbc f1 f3 awsbc f0 f1 i0 asup_set_class awsbc i0 f3 awsbc f2 f4 awsbc f0 f2 f4 awsbc f1 f3 awsbc f0 f1 f3 awsbc f2 f4 awsbc p3bitr3i $.
 $}
-$( /* Interchange class substitution and restricted quantifier.  (Contributed
-       by NM, 1-Mar-2008.)  (Revised by David Abernethy, 22-Feb-2010.) */
-
-$)
+$( Interchange class substitution and restricted quantifier.  (Contributed
+       by NM, 1-Mar-2008.)  (Revised by David Abernethy, 22-Feb-2010.) $)
 ${
 	$v ph x y z A B V $.
 	$d x y z $.
@@ -1311,11 +1157,9 @@ ${
 	psbcralt $p |- ( ( A e. V /\ F/_ y A ) -> ( [. A / x ]. A. y e. B ph <-> A. y e. B [. A / x ]. ph ) ) $=
 	f0 f2 f4 awral f1 i0 f3 psbcco f3 f5 awcel f2 f3 awnfc psimpl f0 f2 f4 awral f1 i0 psbsbc f1 f4 pnfcv f0 f1 i0 pnfs1v f0 f1 i0 awsb f1 f2 f4 pnfral f0 f1 i0 psbequ12 f1 asup_set_class i0 asup_set_class awceq f0 f0 f1 i0 awsb f2 f4 pralbidv f0 f2 f4 awral f0 f1 i0 awsb f2 f4 awral f1 i0 psbie f0 f2 f4 awral f1 i0 asup_set_class awsbc f0 f2 f4 awral f1 i0 awsb f0 f1 i0 awsb f2 f4 awral pbitr3i f2 f3 pnfnfc1 f2 f3 awnfc f2 i0 asup_set_class pnfcvd f2 f3 awnfc pid f2 f3 awnfc f2 i0 asup_set_class f3 pnfeqd f2 f3 awnfc i0 asup_set_class f3 awceq f2 pnfan1 f0 f1 i0 f3 pdfsbcq2 i0 asup_set_class f3 awceq f0 f1 i0 awsb f0 f1 f3 awsbc awb f2 f3 awnfc padantl f2 f3 awnfc i0 asup_set_class f3 awceq awa f0 f1 i0 awsb f0 f1 f3 awsbc f2 f4 pralbid f2 f3 awnfc i0 asup_set_class f3 awceq f0 f1 i0 awsb f2 f4 awral f0 f1 f3 awsbc f2 f4 awral awb f3 f5 awcel padantll f0 f2 f4 awral f1 i0 asup_set_class awsbc f0 f1 i0 awsb f2 f4 awral f3 f5 awcel f2 f3 awnfc awa i0 asup_set_class f3 awceq awa f0 f1 f3 awsbc f2 f4 awral psyl5bb f3 f5 awcel f2 f3 awnfc awa f0 f2 f4 awral f1 i0 asup_set_class awsbc f0 f1 f3 awsbc f2 f4 awral i0 f3 f5 psbcied f0 f2 f4 awral f1 f3 awsbc f0 f2 f4 awral f1 i0 asup_set_class awsbc i0 f3 awsbc f3 f5 awcel f2 f3 awnfc awa f0 f1 f3 awsbc f2 f4 awral psyl5bbr $.
 $}
-$( /* Interchange class substitution and restricted existential quantifier.
+$( Interchange class substitution and restricted existential quantifier.
        (Contributed by NM, 1-Mar-2008.)  (Proof shortened by Mario Carneiro,
-       13-Oct-2016.) */
-
-$)
+       13-Oct-2016.) $)
 ${
 	$v ph x y A B V $.
 	$d x y $.
@@ -1329,11 +1173,9 @@ ${
 	psbcrext $p |- ( ( A e. V /\ F/_ y A ) -> ( [. A / x ]. E. y e. B ph <-> E. y e. B [. A / x ]. ph ) ) $=
 	f3 f5 pelex f0 awn f2 f4 awral f1 f3 acvv psbcng f3 acvv awcel f0 awn f2 f4 awral awn f1 f3 awsbc f0 awn f2 f4 awral f1 f3 awsbc awn awb f2 f3 awnfc padantr f0 awn f1 f2 f3 f4 acvv psbcralt f2 f3 pnfnfc1 f2 f3 awnfc pid f2 f3 awnfc f2 acvv pnfcvd f2 f3 awnfc f2 f3 acvv pnfeld f2 f3 awnfc f3 acvv awcel f2 pnfan1 f0 f1 f3 acvv psbcng f3 acvv awcel f0 awn f1 f3 awsbc f0 f1 f3 awsbc awn awb f2 f3 awnfc padantl f2 f3 awnfc f3 acvv awcel awa f0 awn f1 f3 awsbc f0 f1 f3 awsbc awn f2 f4 pralbid f2 f3 awnfc f3 acvv awcel f0 awn f1 f3 awsbc f2 f4 awral f0 f1 f3 awsbc awn f2 f4 awral awb pancoms f3 acvv awcel f2 f3 awnfc awa f0 awn f2 f4 awral f1 f3 awsbc f0 awn f1 f3 awsbc f2 f4 awral f0 f1 f3 awsbc awn f2 f4 awral pbitrd f3 acvv awcel f2 f3 awnfc awa f0 awn f2 f4 awral f1 f3 awsbc f0 f1 f3 awsbc awn f2 f4 awral pnotbid f3 acvv awcel f2 f3 awnfc awa f0 awn f2 f4 awral awn f1 f3 awsbc f0 awn f2 f4 awral f1 f3 awsbc awn f0 f1 f3 awsbc awn f2 f4 awral awn pbitrd f0 f2 f4 pdfrex2 f0 f2 f4 awrex f0 awn f2 f4 awral awn f1 f3 psbcbii f0 f1 f3 awsbc f2 f4 pdfrex2 f3 acvv awcel f2 f3 awnfc awa f0 awn f2 f4 awral awn f1 f3 awsbc f0 f1 f3 awsbc awn f2 f4 awral awn f0 f2 f4 awrex f1 f3 awsbc f0 f1 f3 awsbc f2 f4 awrex p3bitr4g f3 f5 awcel f3 acvv awcel f2 f3 awnfc f0 f2 f4 awrex f1 f3 awsbc f0 f1 f3 awsbc f2 f4 awrex awb psylan $.
 $}
-$( /* Interchange class substitution and restricted quantifier.  (Contributed
+$( Interchange class substitution and restricted quantifier.  (Contributed
        by NM, 15-Nov-2005.)  (Proof shortened by Andrew Salmon,
-       29-Jun-2011.) */
-
-$)
+       29-Jun-2011.) $)
 ${
 	$v ph x y z A B V $.
 	$d y z A $.
@@ -1351,11 +1193,9 @@ ${
 	psbcralg $p |- ( A e. V -> ( [. A / x ]. A. y e. B ph <-> A. y e. B [. A / x ]. ph ) ) $=
 	f0 f2 f4 awral f1 i0 f3 pdfsbcq2 f0 f1 i0 f3 pdfsbcq2 i0 asup_set_class f3 awceq f0 f1 i0 awsb f0 f1 f3 awsbc f2 f4 pralbidv f1 f4 pnfcv f0 f1 i0 pnfs1v f0 f1 i0 awsb f1 f2 f4 pnfral f0 f1 i0 psbequ12 f1 asup_set_class i0 asup_set_class awceq f0 f0 f1 i0 awsb f2 f4 pralbidv f0 f2 f4 awral f0 f1 i0 awsb f2 f4 awral f1 i0 psbie f0 f2 f4 awral f1 i0 awsb f0 f1 i0 awsb f2 f4 awral f0 f2 f4 awral f1 f3 awsbc f0 f1 f3 awsbc f2 f4 awral i0 f3 f5 pvtoclbg $.
 $}
-$( /* Interchange class substitution and restricted existential quantifier.
+$( Interchange class substitution and restricted existential quantifier.
        (Contributed by NM, 15-Nov-2005.)  (Proof shortened by Andrew Salmon,
-       29-Jun-2011.) */
-
-$)
+       29-Jun-2011.) $)
 ${
 	$v ph x y z A B V $.
 	$d y z A $.
@@ -1373,10 +1213,8 @@ ${
 	psbcrexg $p |- ( A e. V -> ( [. A / x ]. E. y e. B ph <-> E. y e. B [. A / x ]. ph ) ) $=
 	f0 f2 f4 awrex f1 i0 f3 pdfsbcq2 f0 f1 i0 f3 pdfsbcq2 i0 asup_set_class f3 awceq f0 f1 i0 awsb f0 f1 f3 awsbc f2 f4 prexbidv f1 f4 pnfcv f0 f1 i0 pnfs1v f0 f1 i0 awsb f1 f2 f4 pnfrex f0 f1 i0 psbequ12 f1 asup_set_class i0 asup_set_class awceq f0 f0 f1 i0 awsb f2 f4 prexbidv f0 f2 f4 awrex f0 f1 i0 awsb f2 f4 awrex f1 i0 psbie f0 f2 f4 awrex f1 i0 awsb f0 f1 i0 awsb f2 f4 awrex f0 f2 f4 awrex f1 f3 awsbc f0 f1 f3 awsbc f2 f4 awrex i0 f3 f5 pvtoclbg $.
 $}
-$( /* Interchange class substitution and restricted uniqueness quantifier.
-       (Contributed by NM, 24-Feb-2013.) */
-
-$)
+$( Interchange class substitution and restricted uniqueness quantifier.
+       (Contributed by NM, 24-Feb-2013.) $)
 ${
 	$v ph x y z A B V $.
 	$d y z A $.
@@ -1394,10 +1232,8 @@ ${
 	psbcreug $p |- ( A e. V -> ( [. A / x ]. E! y e. B ph <-> E! y e. B [. A / x ]. ph ) ) $=
 	f0 f2 f4 awreu f1 i0 f3 pdfsbcq2 f0 f1 i0 f3 pdfsbcq2 i0 asup_set_class f3 awceq f0 f1 i0 awsb f0 f1 f3 awsbc f2 f4 preubidv f1 f4 pnfcv f0 f1 i0 pnfs1v f0 f1 i0 awsb f1 f2 f4 pnfreu f0 f1 i0 psbequ12 f1 asup_set_class i0 asup_set_class awceq f0 f0 f1 i0 awsb f2 f4 preubidv f0 f2 f4 awreu f0 f1 i0 awsb f2 f4 awreu f1 i0 psbie f0 f2 f4 awreu f1 i0 awsb f0 f1 i0 awsb f2 f4 awreu f0 f2 f4 awreu f1 f3 awsbc f0 f1 f3 awsbc f2 f4 awreu i0 f3 f5 pvtoclbg $.
 $}
-$( /* Interchange class substitution and class abstraction.  (Contributed by
-       NM, 5-Nov-2005.) */
-
-$)
+$( Interchange class substitution and class abstraction.  (Contributed by
+       NM, 5-Nov-2005.) $)
 ${
 	$v ph x y w A B V $.
 	$d y w A $.
@@ -1416,13 +1252,11 @@ ${
 	psbcabel $p |- ( A e. V -> ( [. A / x ]. { y | ph } e. B <-> { y | [. A / x ]. ph } e. B ) ) $=
 	f3 f5 pelex i0 asup_set_class f0 f2 acab awceq i0 asup_set_class f4 awcel awa i0 f1 f3 acvv psbcexg i0 asup_set_class f0 f2 acab awceq i0 asup_set_class f4 awcel f1 f3 acvv psbcang f0 f2 i0 asup_set_class pabeq2 i0 asup_set_class f0 f2 acab awceq f2 asup_set_class i0 asup_set_class awcel f0 awb f2 awal f1 f3 psbcbii f2 asup_set_class i0 asup_set_class awcel f0 awb f2 f1 f3 acvv psbcalg f2 asup_set_class i0 asup_set_class awcel f0 f1 f3 acvv psbcbig f2 asup_set_class i0 asup_set_class awcel f1 f3 acvv psbcg f3 acvv awcel f2 asup_set_class i0 asup_set_class awcel f1 f3 awsbc f2 asup_set_class i0 asup_set_class awcel f0 f1 f3 awsbc pbibi1d f3 acvv awcel f2 asup_set_class i0 asup_set_class awcel f0 awb f1 f3 awsbc f2 asup_set_class i0 asup_set_class awcel f1 f3 awsbc f0 f1 f3 awsbc awb f2 asup_set_class i0 asup_set_class awcel f0 f1 f3 awsbc awb pbitrd f3 acvv awcel f2 asup_set_class i0 asup_set_class awcel f0 awb f1 f3 awsbc f2 asup_set_class i0 asup_set_class awcel f0 f1 f3 awsbc awb f2 palbidv f3 acvv awcel f2 asup_set_class i0 asup_set_class awcel f0 awb f2 awal f1 f3 awsbc f2 asup_set_class i0 asup_set_class awcel f0 awb f1 f3 awsbc f2 awal f2 asup_set_class i0 asup_set_class awcel f0 f1 f3 awsbc awb f2 awal pbitrd i0 asup_set_class f0 f2 acab awceq f1 f3 awsbc f2 asup_set_class i0 asup_set_class awcel f0 awb f2 awal f1 f3 awsbc f3 acvv awcel f2 asup_set_class i0 asup_set_class awcel f0 f1 f3 awsbc awb f2 awal psyl5bb f0 f1 f3 awsbc f2 i0 asup_set_class pabeq2 f3 acvv awcel i0 asup_set_class f0 f2 acab awceq f1 f3 awsbc f2 asup_set_class i0 asup_set_class awcel f0 f1 f3 awsbc awb f2 awal i0 asup_set_class f0 f1 f3 awsbc f2 acab awceq psyl6bbr e0 f1 i0 f4 pnfcri i0 asup_set_class f4 awcel f1 f3 acvv psbcgf f3 acvv awcel i0 asup_set_class f0 f2 acab awceq f1 f3 awsbc i0 asup_set_class f0 f1 f3 awsbc f2 acab awceq i0 asup_set_class f4 awcel f1 f3 awsbc i0 asup_set_class f4 awcel panbi12d f3 acvv awcel i0 asup_set_class f0 f2 acab awceq i0 asup_set_class f4 awcel awa f1 f3 awsbc i0 asup_set_class f0 f2 acab awceq f1 f3 awsbc i0 asup_set_class f4 awcel f1 f3 awsbc awa i0 asup_set_class f0 f1 f3 awsbc f2 acab awceq i0 asup_set_class f4 awcel awa pbitrd f3 acvv awcel i0 asup_set_class f0 f2 acab awceq i0 asup_set_class f4 awcel awa f1 f3 awsbc i0 asup_set_class f0 f1 f3 awsbc f2 acab awceq i0 asup_set_class f4 awcel awa i0 pexbidv f3 acvv awcel i0 asup_set_class f0 f2 acab awceq i0 asup_set_class f4 awcel awa i0 awex f1 f3 awsbc i0 asup_set_class f0 f2 acab awceq i0 asup_set_class f4 awcel awa f1 f3 awsbc i0 awex i0 asup_set_class f0 f1 f3 awsbc f2 acab awceq i0 asup_set_class f4 awcel awa i0 awex pbitrd i0 f0 f2 acab f4 adf-clel f0 f2 acab f4 awcel i0 asup_set_class f0 f2 acab awceq i0 asup_set_class f4 awcel awa i0 awex f1 f3 psbcbii i0 f0 f1 f3 awsbc f2 acab f4 adf-clel f3 acvv awcel i0 asup_set_class f0 f2 acab awceq i0 asup_set_class f4 awcel awa i0 awex f1 f3 awsbc i0 asup_set_class f0 f1 f3 awsbc f2 acab awceq i0 asup_set_class f4 awcel awa i0 awex f0 f2 acab f4 awcel f1 f3 awsbc f0 f1 f3 awsbc f2 acab f4 awcel p3bitr4g f3 f5 awcel f3 acvv awcel f0 f2 acab f4 awcel f1 f3 awsbc f0 f1 f3 awsbc f2 acab f4 awcel awb psyl $.
 $}
-$( /* Restricted quantifier version of Axiom 4 of [Mendelson] p. 69.  This
+$( Restricted quantifier version of Axiom 4 of [Mendelson] p. 69.  This
        provides an axiom for a predicate calculus for a restricted domain.
        This theorem generalizes the unrestricted ~ stdpc4 and ~ spsbc .  See
        also ~ rspsbca and ~ rspcsbela .  (Contributed by NM, 17-Nov-2006.)
-       (Proof shortened by Mario Carneiro, 13-Oct-2016.) */
-
-$)
+       (Proof shortened by Mario Carneiro, 13-Oct-2016.) $)
 ${
 	$v ph x y A B $.
 	$d y A $.
@@ -1436,10 +1270,8 @@ ${
 	prspsbc $p |- ( A e. B -> ( A. x e. B ph -> [. A / x ]. ph ) ) $=
 	f0 f1 i0 f3 pcbvralsv f0 f1 i0 f2 pdfsbcq2 f0 f1 i0 awsb f0 f1 f2 awsbc i0 f2 f3 prspcv f0 f1 f3 awral f0 f1 i0 awsb i0 f3 awral f2 f3 awcel f0 f1 f2 awsbc psyl5bi $.
 $}
-$( /* Restricted quantifier version of Axiom 4 of [Mendelson] p. 69.
-       (Contributed by NM, 14-Dec-2005.) */
-
-$)
+$( Restricted quantifier version of Axiom 4 of [Mendelson] p. 69.
+       (Contributed by NM, 14-Dec-2005.) $)
 ${
 	$v ph x A B $.
 	$d x B $.
@@ -1450,10 +1282,8 @@ ${
 	prspsbca $p |- ( ( A e. B /\ A. x e. B ph ) -> [. A / x ]. ph ) $=
 	f0 f1 f2 f3 prspsbc f2 f3 awcel f0 f1 f3 awral f0 f1 f2 awsbc pimp $.
 $}
-$( /* Existence form of ~ rspsbca .  (Contributed by NM, 29-Feb-2008.)  (Proof
-       shortened by Mario Carneiro, 13-Oct-2016.) */
-
-$)
+$( Existence form of ~ rspsbca .  (Contributed by NM, 29-Feb-2008.)  (Proof
+       shortened by Mario Carneiro, 13-Oct-2016.) $)
 ${
 	$v ph x y A B $.
 	$d y A $.
@@ -1467,10 +1297,8 @@ ${
 	prspesbca $p |- ( ( A e. B /\ [. A / x ]. ph ) -> E. x e. B ph ) $=
 	f0 f1 i0 f2 pdfsbcq2 f0 f1 i0 awsb f0 f1 f2 awsbc i0 f2 f3 prspcev f0 f1 i0 f3 pcbvrexsv f2 f3 awcel f0 f1 f2 awsbc awa f0 f1 i0 awsb i0 f3 awrex f0 f1 f3 awrex psylibr $.
 $}
-$( /* Existence form of ~ spsbc .  (Contributed by Mario Carneiro,
-       18-Nov-2016.) */
-
-$)
+$( Existence form of ~ spsbc .  (Contributed by Mario Carneiro,
+       18-Nov-2016.) $)
 ${
 	$v ph x A $.
 	f0 $f wff ph $.
@@ -1479,9 +1307,7 @@ ${
 	pspesbc $p |- ( [. A / x ]. ph -> E. x ph ) $=
 	f0 f1 f2 psbcex f0 f1 f2 acvv prspesbca f2 acvv awcel f0 f1 f2 awsbc f0 f1 acvv awrex pmpancom f0 f1 prexv f0 f1 f2 awsbc f0 f1 acvv awrex f0 f1 awex psylib $.
 $}
-$( /* form of ~ spsbc .  (Contributed by Mario Carneiro, 9-Feb-2017.) */
-
-$)
+$( form of ~ spsbc .  (Contributed by Mario Carneiro, 9-Feb-2017.) $)
 ${
 	$v ph ps x A $.
 	e0 $e |- ( ph -> [. A / x ]. ps ) $.
@@ -1492,10 +1318,8 @@ ${
 	pspesbcd $p |- ( ph -> E. x ps ) $=
 	e0 f1 f2 f3 pspesbc f0 f1 f2 f3 awsbc f1 f2 awex psyl $.
 $}
-$( /* A substitution into a theorem.  (Contributed by NM, 1-Mar-2008.)  (Proof
-       shortened by Mario Carneiro, 13-Oct-2016.) */
-
-$)
+$( A substitution into a theorem.  (Contributed by NM, 1-Mar-2008.)  (Proof
+       shortened by Mario Carneiro, 13-Oct-2016.) $)
 ${
 	$v ph x A B $.
 	$d x B $.
@@ -1507,11 +1331,9 @@ ${
 	psbcth2 $p |- ( A e. B -> [. A / x ]. ph ) $=
 	e0 f0 f1 f3 prgen f0 f1 f2 f3 prspsbc f2 f3 awcel f0 f1 f3 awral f0 f1 f2 awsbc pmpi $.
 $}
-$( /* Restricted quantifier version of Axiom 5 of [Mendelson] p. 69.  This is
+$( Restricted quantifier version of Axiom 5 of [Mendelson] p. 69.  This is
        an axiom of a predicate calculus for a restricted domain.  Compare the
-       unrestricted ~ stdpc5 .  (Contributed by NM, 16-Jan-2004.) */
-
-$)
+       unrestricted ~ stdpc5 .  (Contributed by NM, 16-Jan-2004.) $)
 ${
 	$v ph ps x A $.
 	e0 $e |- F/ x ph $.
@@ -1522,13 +1344,11 @@ ${
 	pra5 $p |- ( A. x e. A ( ph -> ps ) -> ( ph -> A. x e. A ps ) ) $=
 	f0 f1 awi f2 f3 adf-ral f2 asup_set_class f3 awcel f0 f1 pbi2.04 f2 asup_set_class f3 awcel f0 f1 awi awi f0 f2 asup_set_class f3 awcel f1 awi awi f2 palbii f0 f1 awi f2 f3 awral f2 asup_set_class f3 awcel f0 f1 awi awi f2 awal f0 f2 asup_set_class f3 awcel f1 awi awi f2 awal pbitri e0 f0 f2 asup_set_class f3 awcel f1 awi f2 pstdpc5 f0 f1 awi f2 f3 awral f0 f2 asup_set_class f3 awcel f1 awi awi f2 awal f0 f2 asup_set_class f3 awcel f1 awi f2 awal awi psylbi f1 f2 f3 adf-ral f0 f1 awi f2 f3 awral f0 f2 asup_set_class f3 awcel f1 awi f2 awal f1 f2 f3 awral psyl6ibr $.
 $}
-$( /* Alternate definition of restricted "at most one."  Note that
+$( Alternate definition of restricted "at most one."  Note that
        ` E* x e. A ph ` is not equivalent to
        ` E. y e. A A. x e. A ( ph -> x = y ) ` (in analogy to ~ reu6 ); to see
        this, let ` A ` be the empty set.  However, one direction of this
-       pattern holds; see ~ rmo2i .  (Contributed by NM, 17-Jun-2017.) */
-
-$)
+       pattern holds; see ~ rmo2i .  (Contributed by NM, 17-Jun-2017.) $)
 ${
 	$v ph x y A $.
 	$d x y A $.
@@ -1540,10 +1360,8 @@ ${
 	prmo2 $p |- ( E* x e. A ph <-> E. y A. x e. A ( ph -> x = y ) ) $=
 	f0 f1 f3 adf-rmo f1 asup_set_class f3 awcel f2 pnfv e0 f1 asup_set_class f3 awcel f0 f2 pnfan f1 asup_set_class f3 awcel f0 awa f1 f2 pmo2 f1 asup_set_class f3 awcel f0 f1 asup_set_class f2 asup_set_class awceq pimpexp f1 asup_set_class f3 awcel f0 awa f1 asup_set_class f2 asup_set_class awceq awi f1 asup_set_class f3 awcel f0 f1 asup_set_class f2 asup_set_class awceq awi awi f1 palbii f0 f1 asup_set_class f2 asup_set_class awceq awi f1 f3 adf-ral f1 asup_set_class f3 awcel f0 awa f1 asup_set_class f2 asup_set_class awceq awi f1 awal f1 asup_set_class f3 awcel f0 f1 asup_set_class f2 asup_set_class awceq awi awi f1 awal f0 f1 asup_set_class f2 asup_set_class awceq awi f1 f3 awral pbitr4i f1 asup_set_class f3 awcel f0 awa f1 asup_set_class f2 asup_set_class awceq awi f1 awal f0 f1 asup_set_class f2 asup_set_class awceq awi f1 f3 awral f2 pexbii f0 f1 f3 awrmo f1 asup_set_class f3 awcel f0 awa f1 awmo f1 asup_set_class f3 awcel f0 awa f1 asup_set_class f2 asup_set_class awceq awi f1 awal f2 awex f0 f1 asup_set_class f2 asup_set_class awceq awi f1 f3 awral f2 awex p3bitri $.
 $}
-$( /* Condition implying restricted "at most one."  (Contributed by NM,
-       17-Jun-2017.) */
-
-$)
+$( Condition implying restricted "at most one."  (Contributed by NM,
+       17-Jun-2017.) $)
 ${
 	$v ph x y A $.
 	$d x y A $.
@@ -1555,10 +1373,8 @@ ${
 	prmo2i $p |- ( E. y e. A A. x e. A ( ph -> x = y ) -> E* x e. A ph ) $=
 	f0 f1 asup_set_class f2 asup_set_class awceq awi f1 f3 awral f2 f3 prexex e0 f0 f1 f2 f3 prmo2 f0 f1 asup_set_class f2 asup_set_class awceq awi f1 f3 awral f2 f3 awrex f0 f1 asup_set_class f2 asup_set_class awceq awi f1 f3 awral f2 awex f0 f1 f3 awrmo psylibr $.
 $}
-$( /* Restricted "at most one" using explicit substitution.  (Contributed by
-       NM, 4-Nov-2012.)  (Revised by NM, 16-Jun-2017.) */
-
-$)
+$( Restricted "at most one" using explicit substitution.  (Contributed by
+       NM, 4-Nov-2012.)  (Revised by NM, 16-Jun-2017.) $)
 ${
 	$v ph x y A $.
 	$d x y A $.
@@ -1570,10 +1386,8 @@ ${
 	prmo3 $p |- ( E* x e. A ph <-> A. x e. A A. y e. A ( ( ph /\ [ y / x ] ph ) -> x = y ) ) $=
 	f0 f1 f3 adf-rmo f1 asup_set_class f3 awcel f0 f1 f2 psban f2 f1 f3 pclelsb3 f1 asup_set_class f3 awcel f1 f2 awsb f2 asup_set_class f3 awcel f0 f1 f2 awsb panbi1i f1 asup_set_class f3 awcel f0 awa f1 f2 awsb f1 asup_set_class f3 awcel f1 f2 awsb f0 f1 f2 awsb awa f2 asup_set_class f3 awcel f0 f1 f2 awsb awa pbitri f1 asup_set_class f3 awcel f0 awa f1 f2 awsb f2 asup_set_class f3 awcel f0 f1 f2 awsb awa f1 asup_set_class f3 awcel f0 awa panbi2i f1 asup_set_class f3 awcel f0 f2 asup_set_class f3 awcel f0 f1 f2 awsb pan4 f1 asup_set_class f3 awcel f2 asup_set_class f3 awcel pancom f1 asup_set_class f3 awcel f2 asup_set_class f3 awcel awa f2 asup_set_class f3 awcel f1 asup_set_class f3 awcel awa f0 f0 f1 f2 awsb awa panbi1i f1 asup_set_class f3 awcel f0 awa f1 asup_set_class f3 awcel f0 awa f1 f2 awsb awa f1 asup_set_class f3 awcel f0 awa f2 asup_set_class f3 awcel f0 f1 f2 awsb awa awa f1 asup_set_class f3 awcel f2 asup_set_class f3 awcel awa f0 f0 f1 f2 awsb awa awa f2 asup_set_class f3 awcel f1 asup_set_class f3 awcel awa f0 f0 f1 f2 awsb awa awa p3bitri f1 asup_set_class f3 awcel f0 awa f1 asup_set_class f3 awcel f0 awa f1 f2 awsb awa f2 asup_set_class f3 awcel f1 asup_set_class f3 awcel awa f0 f0 f1 f2 awsb awa awa f1 asup_set_class f2 asup_set_class awceq pimbi1i f2 asup_set_class f3 awcel f1 asup_set_class f3 awcel awa f0 f0 f1 f2 awsb awa f1 asup_set_class f2 asup_set_class awceq pimpexp f2 asup_set_class f3 awcel f1 asup_set_class f3 awcel f0 f0 f1 f2 awsb awa f1 asup_set_class f2 asup_set_class awceq awi pimpexp f1 asup_set_class f3 awcel f0 awa f1 asup_set_class f3 awcel f0 awa f1 f2 awsb awa f1 asup_set_class f2 asup_set_class awceq awi f2 asup_set_class f3 awcel f1 asup_set_class f3 awcel awa f0 f0 f1 f2 awsb awa awa f1 asup_set_class f2 asup_set_class awceq awi f2 asup_set_class f3 awcel f1 asup_set_class f3 awcel awa f0 f0 f1 f2 awsb awa f1 asup_set_class f2 asup_set_class awceq awi awi f2 asup_set_class f3 awcel f1 asup_set_class f3 awcel f0 f0 f1 f2 awsb awa f1 asup_set_class f2 asup_set_class awceq awi awi awi p3bitri f1 asup_set_class f3 awcel f0 awa f1 asup_set_class f3 awcel f0 awa f1 f2 awsb awa f1 asup_set_class f2 asup_set_class awceq awi f2 asup_set_class f3 awcel f1 asup_set_class f3 awcel f0 f0 f1 f2 awsb awa f1 asup_set_class f2 asup_set_class awceq awi awi awi f2 palbii f1 asup_set_class f3 awcel f0 f0 f1 f2 awsb awa f1 asup_set_class f2 asup_set_class awceq awi awi f2 f3 adf-ral f1 asup_set_class f3 awcel f0 f0 f1 f2 awsb awa f1 asup_set_class f2 asup_set_class awceq awi f2 f3 pr19.21v f1 asup_set_class f3 awcel f0 awa f1 asup_set_class f3 awcel f0 awa f1 f2 awsb awa f1 asup_set_class f2 asup_set_class awceq awi f2 awal f2 asup_set_class f3 awcel f1 asup_set_class f3 awcel f0 f0 f1 f2 awsb awa f1 asup_set_class f2 asup_set_class awceq awi awi awi f2 awal f1 asup_set_class f3 awcel f0 f0 f1 f2 awsb awa f1 asup_set_class f2 asup_set_class awceq awi awi f2 f3 awral f1 asup_set_class f3 awcel f0 f0 f1 f2 awsb awa f1 asup_set_class f2 asup_set_class awceq awi f2 f3 awral awi p3bitr2i f1 asup_set_class f3 awcel f0 awa f1 asup_set_class f3 awcel f0 awa f1 f2 awsb awa f1 asup_set_class f2 asup_set_class awceq awi f2 awal f1 asup_set_class f3 awcel f0 f0 f1 f2 awsb awa f1 asup_set_class f2 asup_set_class awceq awi f2 f3 awral awi f1 palbii f1 asup_set_class f3 awcel f2 pnfv e0 f1 asup_set_class f3 awcel f0 f2 pnfan f1 asup_set_class f3 awcel f0 awa f1 f2 pmo3 f0 f0 f1 f2 awsb awa f1 asup_set_class f2 asup_set_class awceq awi f2 f3 awral f1 f3 adf-ral f1 asup_set_class f3 awcel f0 awa f1 asup_set_class f3 awcel f0 awa f1 f2 awsb awa f1 asup_set_class f2 asup_set_class awceq awi f2 awal f1 awal f1 asup_set_class f3 awcel f0 f0 f1 f2 awsb awa f1 asup_set_class f2 asup_set_class awceq awi f2 f3 awral awi f1 awal f1 asup_set_class f3 awcel f0 awa f1 awmo f0 f0 f1 f2 awsb awa f1 asup_set_class f2 asup_set_class awceq awi f2 f3 awral f1 f3 awral p3bitr4i f0 f1 f3 awrmo f1 asup_set_class f3 awcel f0 awa f1 awmo f0 f0 f1 f2 awsb awa f1 asup_set_class f2 asup_set_class awceq awi f2 f3 awral f1 f3 awral pbitri $.
 $}
-$( /* Consequence of "at most one", using implicit substitution.  (Contributed
-       by NM, 2-Jan-2015.)  (Revised by NM, 16-Jun-2017.) */
-
-$)
+$( Consequence of "at most one", using implicit substitution.  (Contributed
+       by NM, 2-Jan-2015.)  (Revised by NM, 16-Jun-2017.) $)
 ${
 	$v ph ps ch x A B C $.
 	$d x A $.
@@ -1593,10 +1407,8 @@ ${
 	prmob $p |- ( ( E* x e. A ph /\ ( B e. A /\ ps ) ) -> ( B = C <-> ( C e. A /\ ch ) ) ) $=
 	f0 f3 f4 adf-rmo f3 asup_set_class f4 awcel f0 awa f3 awmo f5 f4 awcel f1 psimprl f5 f6 f4 peleq1 f3 asup_set_class f4 awcel f0 awa f3 awmo f5 f4 awcel f1 awa awa f5 f4 awcel f5 f6 awceq f6 f4 awcel psyl5ibcom f6 f4 awcel f2 psimpl f6 f4 awcel f2 awa f6 f4 awcel awi f3 asup_set_class f4 awcel f0 awa f3 awmo f5 f4 awcel f1 awa awa pa1i f3 asup_set_class f4 awcel f0 awa f3 awmo f5 f4 awcel f1 f6 f4 awcel psimplrl f3 asup_set_class f4 awcel f0 awa f3 awmo f5 f4 awcel f1 awa awa f6 f4 awcel psimpr f3 asup_set_class f4 awcel f0 awa f3 awmo f5 f4 awcel f1 awa f6 f4 awcel psimpll f3 asup_set_class f4 awcel f0 awa f3 awmo f5 f4 awcel f1 f6 f4 awcel psimplrl f3 asup_set_class f4 awcel f0 awa f3 awmo f5 f4 awcel f1 f6 f4 awcel psimplrr f3 asup_set_class f5 f4 peleq1 e0 f3 asup_set_class f5 awceq f3 asup_set_class f4 awcel f5 f4 awcel f0 f1 panbi12d f3 asup_set_class f6 f4 peleq1 e1 f3 asup_set_class f6 awceq f3 asup_set_class f4 awcel f6 f4 awcel f0 f2 panbi12d f3 asup_set_class f4 awcel f0 awa f5 f4 awcel f1 awa f6 f4 awcel f2 awa f3 f5 f6 f4 f4 pmob f3 asup_set_class f4 awcel f0 awa f3 awmo f5 f4 awcel f1 awa awa f6 f4 awcel awa f5 f4 awcel f6 f4 awcel f3 asup_set_class f4 awcel f0 awa f3 awmo f5 f4 awcel f1 f5 f6 awceq f6 f4 awcel f2 awa awb psyl212anc f3 asup_set_class f4 awcel f0 awa f3 awmo f5 f4 awcel f1 awa awa f6 f4 awcel f5 f6 awceq f6 f4 awcel f2 awa awb pex f3 asup_set_class f4 awcel f0 awa f3 awmo f5 f4 awcel f1 awa awa f6 f4 awcel f5 f6 awceq f6 f4 awcel f2 awa ppm5.21ndd f0 f3 f4 awrmo f3 asup_set_class f4 awcel f0 awa f3 awmo f5 f4 awcel f1 awa f5 f6 awceq f6 f4 awcel f2 awa awb psylanb $.
 $}
-$( /* Consequence of "at most one", using implicit substitution.  (Contributed
-       by NM, 4-Nov-2012.)  (Revised by NM, 16-Jun-2017.) */
-
-$)
+$( Consequence of "at most one", using implicit substitution.  (Contributed
+       by NM, 4-Nov-2012.)  (Revised by NM, 16-Jun-2017.) $)
 ${
 	$v ph ps ch x A B C $.
 	$d x A $.

@@ -1,14 +1,10 @@
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/Miscellaneous_theorems_of_propositional_calculus.smm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Abbreviated conjunction and disjunction of three wff's
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-*/
-
 $)
-$( /* Extend wff definition to include 3-way disjunction ('or'). */
-
-$)
+$( Extend wff definition to include 3-way disjunction ('or'). $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -16,9 +12,7 @@ ${
 	f2 $f wff ch $.
 	aw3o $a wff ( ph \/ ps \/ ch ) $.
 $}
-$( /* Extend wff definition to include 3-way conjunction ('and'). */
-
-$)
+$( Extend wff definition to include 3-way conjunction ('and'). $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -26,16 +20,12 @@ ${
 	f2 $f wff ch $.
 	aw3a $a wff ( ph /\ ps /\ ch ) $.
 $}
-$( /* These abbreviations help eliminate parentheses to aid readability. */
-
-$)
-$( /* Define disjunction ('or') of three wff's.  Definition *2.33 of
+$( These abbreviations help eliminate parentheses to aid readability. $)
+$( Define disjunction ('or') of three wff's.  Definition *2.33 of
      [WhiteheadRussell] p. 105.  This abbreviation reduces the number of
      parentheses and emphasizes that the order of bracketing is not important
      by virtue of the associative law ~ orass .  (Contributed by NM,
-     8-Apr-1994.) */
-
-$)
+     8-Apr-1994.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -43,13 +33,11 @@ ${
 	f2 $f wff ch $.
 	adf-3or $a |- ( ( ph \/ ps \/ ch ) <-> ( ( ph \/ ps ) \/ ch ) ) $.
 $}
-$( /* Define conjunction ('and') of three wff's.  Definition *4.34 of
+$( Define conjunction ('and') of three wff's.  Definition *4.34 of
      [WhiteheadRussell] p. 118.  This abbreviation reduces the number of
      parentheses and emphasizes that the order of bracketing is not important
      by virtue of the associative law ~ anass .  (Contributed by NM,
-     8-Apr-1994.) */
-
-$)
+     8-Apr-1994.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -57,10 +45,8 @@ ${
 	f2 $f wff ch $.
 	adf-3an $a |- ( ( ph /\ ps /\ ch ) <-> ( ( ph /\ ps ) /\ ch ) ) $.
 $}
-$( /* Associative law for triple disjunction.  (Contributed by NM,
-     8-Apr-1994.) */
-
-$)
+$( Associative law for triple disjunction.  (Contributed by NM,
+     8-Apr-1994.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -69,10 +55,8 @@ ${
 	p3orass $p |- ( ( ph \/ ps \/ ch ) <-> ( ph \/ ( ps \/ ch ) ) ) $=
 	f0 f1 f2 adf-3or f0 f1 f2 porass f0 f1 f2 aw3o f0 f1 awo f2 awo f0 f1 f2 awo awo pbitri $.
 $}
-$( /* Associative law for triple conjunction.  (Contributed by NM,
-     8-Apr-1994.) */
-
-$)
+$( Associative law for triple conjunction.  (Contributed by NM,
+     8-Apr-1994.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -81,9 +65,7 @@ ${
 	p3anass $p |- ( ( ph /\ ps /\ ch ) <-> ( ph /\ ( ps /\ ch ) ) ) $=
 	f0 f1 f2 adf-3an f0 f1 f2 panass f0 f1 f2 aw3a f0 f1 awa f2 awa f0 f1 f2 awa awa pbitri $.
 $}
-$( /* Rotation law for triple conjunction.  (Contributed by NM, 8-Apr-1994.) */
-
-$)
+$( Rotation law for triple conjunction.  (Contributed by NM, 8-Apr-1994.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -92,9 +74,7 @@ ${
 	p3anrot $p |- ( ( ph /\ ps /\ ch ) <-> ( ps /\ ch /\ ph ) ) $=
 	f0 f1 f2 awa pancom f0 f1 f2 p3anass f1 f2 f0 adf-3an f0 f1 f2 awa awa f1 f2 awa f0 awa f0 f1 f2 aw3a f1 f2 f0 aw3a p3bitr4i $.
 $}
-$( /* Rotation law for triple disjunction.  (Contributed by NM, 4-Apr-1995.) */
-
-$)
+$( Rotation law for triple disjunction.  (Contributed by NM, 4-Apr-1995.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -103,10 +83,8 @@ ${
 	p3orrot $p |- ( ( ph \/ ps \/ ch ) <-> ( ps \/ ch \/ ph ) ) $=
 	f0 f1 f2 awo porcom f0 f1 f2 p3orass f1 f2 f0 adf-3or f0 f1 f2 awo awo f1 f2 awo f0 awo f0 f1 f2 aw3o f1 f2 f0 aw3o p3bitr4i $.
 $}
-$( /* Commutation law for triple conjunction.  (Contributed by NM,
-     21-Apr-1994.) */
-
-$)
+$( Commutation law for triple conjunction.  (Contributed by NM,
+     21-Apr-1994.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -115,10 +93,8 @@ ${
 	p3ancoma $p |- ( ( ph /\ ps /\ ch ) <-> ( ps /\ ph /\ ch ) ) $=
 	f0 f1 pancom f0 f1 awa f1 f0 awa f2 panbi1i f0 f1 f2 adf-3an f1 f0 f2 adf-3an f0 f1 awa f2 awa f1 f0 awa f2 awa f0 f1 f2 aw3a f1 f0 f2 aw3a p3bitr4i $.
 $}
-$( /* Commutation law for triple disjunction.  (Contributed by Mario Carneiro,
-     4-Sep-2016.) */
-
-$)
+$( Commutation law for triple disjunction.  (Contributed by Mario Carneiro,
+     4-Sep-2016.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -127,10 +103,8 @@ ${
 	p3orcoma $p |- ( ( ph \/ ps \/ ch ) <-> ( ps \/ ph \/ ch ) ) $=
 	f0 f1 f2 por12 f0 f1 f2 p3orass f1 f0 f2 p3orass f0 f1 f2 awo awo f1 f0 f2 awo awo f0 f1 f2 aw3o f1 f0 f2 aw3o p3bitr4i $.
 $}
-$( /* Commutation law for triple conjunction.  (Contributed by NM,
-     21-Apr-1994.) */
-
-$)
+$( Commutation law for triple conjunction.  (Contributed by NM,
+     21-Apr-1994.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -139,10 +113,8 @@ ${
 	p3ancomb $p |- ( ( ph /\ ps /\ ch ) <-> ( ph /\ ch /\ ps ) ) $=
 	f0 f1 f2 p3ancoma f1 f0 f2 p3anrot f0 f1 f2 aw3a f1 f0 f2 aw3a f0 f2 f1 aw3a pbitri $.
 $}
-$( /* Commutation law for triple disjunction.  (Contributed by Scott Fenton,
-     20-Apr-2011.) */
-
-$)
+$( Commutation law for triple disjunction.  (Contributed by Scott Fenton,
+     20-Apr-2011.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -151,9 +123,7 @@ ${
 	p3orcomb $p |- ( ( ph \/ ps \/ ch ) <-> ( ph \/ ch \/ ps ) ) $=
 	f1 f2 porcom f1 f2 awo f2 f1 awo f0 porbi2i f0 f1 f2 p3orass f0 f2 f1 p3orass f0 f1 f2 awo awo f0 f2 f1 awo awo f0 f1 f2 aw3o f0 f2 f1 aw3o p3bitr4i $.
 $}
-$( /* Reversal law for triple conjunction.  (Contributed by NM, 21-Apr-1994.) */
-
-$)
+$( Reversal law for triple conjunction.  (Contributed by NM, 21-Apr-1994.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -162,10 +132,8 @@ ${
 	p3anrev $p |- ( ( ph /\ ps /\ ch ) <-> ( ch /\ ps /\ ph ) ) $=
 	f0 f1 f2 p3ancoma f2 f1 f0 p3anrot f0 f1 f2 aw3a f1 f0 f2 aw3a f2 f1 f0 aw3a pbitr4i $.
 $}
-$( /* Convert triple conjunction to conjunction, then commute.  (Contributed by
-     Jonathan Ben-Naim, 3-Jun-2011.) */
-
-$)
+$( Convert triple conjunction to conjunction, then commute.  (Contributed by
+     Jonathan Ben-Naim, 3-Jun-2011.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -174,11 +142,9 @@ ${
 	p3anan32 $p |- ( ( ph /\ ps /\ ch ) <-> ( ( ph /\ ch ) /\ ps ) ) $=
 	f0 f1 f2 adf-3an f0 f1 f2 pan32 f0 f1 f2 aw3a f0 f1 awa f2 awa f0 f2 awa f1 awa pbitri $.
 $}
-$( /* Convert triple conjunction to conjunction, then commute.  (Contributed by
+$( Convert triple conjunction to conjunction, then commute.  (Contributed by
      Jonathan Ben-Naim, 3-Jun-2011.)  (Proof shortened by Andrew Salmon,
-     14-Jun-2011.) */
-
-$)
+     14-Jun-2011.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -187,10 +153,8 @@ ${
 	p3anan12 $p |- ( ( ph /\ ps /\ ch ) <-> ( ps /\ ( ph /\ ch ) ) ) $=
 	f0 f1 f2 p3ancoma f1 f0 f2 p3anass f0 f1 f2 aw3a f1 f0 f2 aw3a f1 f0 f2 awa awa pbitri $.
 $}
-$( /* Triple conjunction expressed in terms of triple disjunction.  (Contributed
-     by Jeff Hankins, 15-Aug-2009.) */
-
-$)
+$( Triple conjunction expressed in terms of triple disjunction.  (Contributed
+     by Jeff Hankins, 15-Aug-2009.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -199,11 +163,9 @@ ${
 	p3anor $p |- ( ( ph /\ ps /\ ch ) <-> -. ( -. ph \/ -. ps \/ -. ch ) ) $=
 	f0 f1 f2 adf-3an f0 f1 awa f2 panor f0 f1 pianor f0 f1 awa awn f0 awn f1 awn awo f2 awn porbi1i f0 f1 awa f2 awa f0 f1 awa awn f2 awn awo f0 awn f1 awn awo f2 awn awo pxchbinx f0 awn f1 awn f2 awn adf-3or f0 f1 awa f2 awa f0 awn f1 awn awo f2 awn awo f0 awn f1 awn f2 awn aw3o pxchbinxr f0 f1 f2 aw3a f0 f1 awa f2 awa f0 awn f1 awn f2 awn aw3o awn pbitri $.
 $}
-$( /* Negated triple conjunction expressed in terms of triple disjunction.
+$( Negated triple conjunction expressed in terms of triple disjunction.
      (Contributed by Jeff Hankins, 15-Aug-2009.)  (Proof shortened by Andrew
-     Salmon, 13-May-2011.) */
-
-$)
+     Salmon, 13-May-2011.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -212,10 +174,8 @@ ${
 	p3ianor $p |- ( -. ( ph /\ ps /\ ch ) <-> ( -. ph \/ -. ps \/ -. ch ) ) $=
 	f0 f1 f2 p3anor f0 f1 f2 aw3a f0 awn f1 awn f2 awn aw3o pcon2bii f0 awn f1 awn f2 awn aw3o f0 f1 f2 aw3a awn pbicomi $.
 $}
-$( /* Negated triple disjunction as triple conjunction.  (Contributed by Scott
-     Fenton, 19-Apr-2011.) */
-
-$)
+$( Negated triple disjunction as triple conjunction.  (Contributed by Scott
+     Fenton, 19-Apr-2011.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -224,10 +184,8 @@ ${
 	p3ioran $p |- ( -. ( ph \/ ps \/ ch ) <-> ( -. ph /\ -. ps /\ -. ch ) ) $=
 	f0 f1 pioran f0 f1 awo awn f0 awn f1 awn awa f2 awn panbi1i f0 f1 awo f2 pioran f0 f1 f2 adf-3or f0 f1 awo f2 awo f0 f1 awo awn f2 awn awa f0 f1 f2 aw3o pxchnxbir f0 awn f1 awn f2 awn adf-3an f0 f1 awo awn f2 awn awa f0 awn f1 awn awa f2 awn awa f0 f1 f2 aw3o awn f0 awn f1 awn f2 awn aw3a p3bitr4i $.
 $}
-$( /* Triple disjunction in terms of triple conjunction.  (Contributed by NM,
-     8-Oct-2012.) */
-
-$)
+$( Triple disjunction in terms of triple conjunction.  (Contributed by NM,
+     8-Oct-2012.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -236,10 +194,8 @@ ${
 	p3oran $p |- ( ( ph \/ ps \/ ch ) <-> -. ( -. ph /\ -. ps /\ -. ch ) ) $=
 	f0 f1 f2 p3ioran f0 f1 f2 aw3o f0 awn f1 awn f2 awn aw3a pcon1bii f0 awn f1 awn f2 awn aw3a awn f0 f1 f2 aw3o pbicomi $.
 $}
-$( /* Simplification of triple conjunction.  (Contributed by NM,
-     21-Apr-1994.) */
-
-$)
+$( Simplification of triple conjunction.  (Contributed by NM,
+     21-Apr-1994.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -248,10 +204,8 @@ ${
 	p3simpa $p |- ( ( ph /\ ps /\ ch ) -> ( ph /\ ps ) ) $=
 	f0 f1 f2 adf-3an f0 f1 f2 aw3a f0 f1 awa f2 psimplbi $.
 $}
-$( /* Simplification of triple conjunction.  (Contributed by NM,
-     21-Apr-1994.) */
-
-$)
+$( Simplification of triple conjunction.  (Contributed by NM,
+     21-Apr-1994.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -260,10 +214,8 @@ ${
 	p3simpb $p |- ( ( ph /\ ps /\ ch ) -> ( ph /\ ch ) ) $=
 	f0 f1 f2 p3ancomb f0 f2 f1 p3simpa f0 f1 f2 aw3a f0 f2 f1 aw3a f0 f2 awa psylbi $.
 $}
-$( /* Simplification of triple conjunction.  (Contributed by NM, 21-Apr-1994.)
-     (Proof shortened by Andrew Salmon, 13-May-2011.) */
-
-$)
+$( Simplification of triple conjunction.  (Contributed by NM, 21-Apr-1994.)
+     (Proof shortened by Andrew Salmon, 13-May-2011.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -272,10 +224,8 @@ ${
 	p3simpc $p |- ( ( ph /\ ps /\ ch ) -> ( ps /\ ch ) ) $=
 	f0 f1 f2 p3anrot f1 f2 f0 p3simpa f0 f1 f2 aw3a f1 f2 f0 aw3a f1 f2 awa psylbi $.
 $}
-$( /* Simplification of triple conjunction.  (Contributed by NM,
-     21-Apr-1994.) */
-
-$)
+$( Simplification of triple conjunction.  (Contributed by NM,
+     21-Apr-1994.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -284,10 +234,8 @@ ${
 	psimp1 $p |- ( ( ph /\ ps /\ ch ) -> ph ) $=
 	f0 f1 f2 p3simpa f0 f1 f2 aw3a f0 f1 psimpld $.
 $}
-$( /* Simplification of triple conjunction.  (Contributed by NM,
-     21-Apr-1994.) */
-
-$)
+$( Simplification of triple conjunction.  (Contributed by NM,
+     21-Apr-1994.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -296,10 +244,8 @@ ${
 	psimp2 $p |- ( ( ph /\ ps /\ ch ) -> ps ) $=
 	f0 f1 f2 p3simpa f0 f1 f2 aw3a f0 f1 psimprd $.
 $}
-$( /* Simplification of triple conjunction.  (Contributed by NM,
-     21-Apr-1994.) */
-
-$)
+$( Simplification of triple conjunction.  (Contributed by NM,
+     21-Apr-1994.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -308,9 +254,7 @@ ${
 	psimp3 $p |- ( ( ph /\ ps /\ ch ) -> ch ) $=
 	f0 f1 f2 p3simpc f0 f1 f2 aw3a f1 f2 psimprd $.
 $}
-$( /* Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) */
-
-$)
+$( Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) $)
 ${
 	$v ph ps ch th $.
 	f0 $f wff ph $.
@@ -320,9 +264,7 @@ ${
 	psimpl1 $p |- ( ( ( ph /\ ps /\ ch ) /\ th ) -> ph ) $=
 	f0 f1 f2 psimp1 f0 f1 f2 aw3a f0 f3 padantr $.
 $}
-$( /* Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) */
-
-$)
+$( Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) $)
 ${
 	$v ph ps ch th $.
 	f0 $f wff ph $.
@@ -332,9 +274,7 @@ ${
 	psimpl2 $p |- ( ( ( ph /\ ps /\ ch ) /\ th ) -> ps ) $=
 	f0 f1 f2 psimp2 f0 f1 f2 aw3a f1 f3 padantr $.
 $}
-$( /* Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) */
-
-$)
+$( Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) $)
 ${
 	$v ph ps ch th $.
 	f0 $f wff ph $.
@@ -344,9 +284,7 @@ ${
 	psimpl3 $p |- ( ( ( ph /\ ps /\ ch ) /\ th ) -> ch ) $=
 	f0 f1 f2 psimp3 f0 f1 f2 aw3a f2 f3 padantr $.
 $}
-$( /* Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) */
-
-$)
+$( Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) $)
 ${
 	$v ph ps ch th $.
 	f0 $f wff ph $.
@@ -356,9 +294,7 @@ ${
 	psimpr1 $p |- ( ( ph /\ ( ps /\ ch /\ th ) ) -> ps ) $=
 	f1 f2 f3 psimp1 f1 f2 f3 aw3a f1 f0 padantl $.
 $}
-$( /* Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) */
-
-$)
+$( Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) $)
 ${
 	$v ph ps ch th $.
 	f0 $f wff ph $.
@@ -368,9 +304,7 @@ ${
 	psimpr2 $p |- ( ( ph /\ ( ps /\ ch /\ th ) ) -> ch ) $=
 	f1 f2 f3 psimp2 f1 f2 f3 aw3a f2 f0 padantl $.
 $}
-$( /* Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) */
-
-$)
+$( Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) $)
 ${
 	$v ph ps ch th $.
 	f0 $f wff ph $.
@@ -380,10 +314,8 @@ ${
 	psimpr3 $p |- ( ( ph /\ ( ps /\ ch /\ th ) ) -> th ) $=
 	f1 f2 f3 psimp3 f1 f2 f3 aw3a f3 f0 padantl $.
 $}
-$( /* Infer a conjunct from a triple conjunction.  (Contributed by NM,
-       19-Apr-2005.) */
-
-$)
+$( Infer a conjunct from a triple conjunction.  (Contributed by NM,
+       19-Apr-2005.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ( ph /\ ps /\ ch ) $.
@@ -393,10 +325,8 @@ ${
 	psimp1i $p |- ph $=
 	e0 f0 f1 f2 psimp1 f0 f1 f2 aw3a f0 aax-mp $.
 $}
-$( /* Infer a conjunct from a triple conjunction.  (Contributed by NM,
-       19-Apr-2005.) */
-
-$)
+$( Infer a conjunct from a triple conjunction.  (Contributed by NM,
+       19-Apr-2005.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ( ph /\ ps /\ ch ) $.
@@ -406,10 +336,8 @@ ${
 	psimp2i $p |- ps $=
 	e0 f0 f1 f2 psimp2 f0 f1 f2 aw3a f1 aax-mp $.
 $}
-$( /* Infer a conjunct from a triple conjunction.  (Contributed by NM,
-       19-Apr-2005.) */
-
-$)
+$( Infer a conjunct from a triple conjunction.  (Contributed by NM,
+       19-Apr-2005.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ( ph /\ ps /\ ch ) $.
@@ -419,10 +347,8 @@ ${
 	psimp3i $p |- ch $=
 	e0 f0 f1 f2 psimp3 f0 f1 f2 aw3a f2 aax-mp $.
 $}
-$( /* Deduce a conjunct from a triple conjunction.  (Contributed by NM,
-       4-Sep-2005.) */
-
-$)
+$( Deduce a conjunct from a triple conjunction.  (Contributed by NM,
+       4-Sep-2005.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ( ps /\ ch /\ th ) ) $.
@@ -433,10 +359,8 @@ ${
 	psimp1d $p |- ( ph -> ps ) $=
 	e0 f1 f2 f3 psimp1 f0 f1 f2 f3 aw3a f1 psyl $.
 $}
-$( /* Deduce a conjunct from a triple conjunction.  (Contributed by NM,
-       4-Sep-2005.) */
-
-$)
+$( Deduce a conjunct from a triple conjunction.  (Contributed by NM,
+       4-Sep-2005.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ( ps /\ ch /\ th ) ) $.
@@ -447,10 +371,8 @@ ${
 	psimp2d $p |- ( ph -> ch ) $=
 	e0 f1 f2 f3 psimp2 f0 f1 f2 f3 aw3a f2 psyl $.
 $}
-$( /* Deduce a conjunct from a triple conjunction.  (Contributed by NM,
-       4-Sep-2005.) */
-
-$)
+$( Deduce a conjunct from a triple conjunction.  (Contributed by NM,
+       4-Sep-2005.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ( ps /\ ch /\ th ) ) $.
@@ -461,10 +383,8 @@ ${
 	psimp3d $p |- ( ph -> th ) $=
 	e0 f1 f2 f3 psimp3 f0 f1 f2 f3 aw3a f3 psyl $.
 $}
-$( /* Deduce a conjunct from a triple conjunction.  (Contributed by Jonathan
-       Ben-Naim, 3-Jun-2011.) */
-
-$)
+$( Deduce a conjunct from a triple conjunction.  (Contributed by Jonathan
+       Ben-Naim, 3-Jun-2011.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph <-> ( ps /\ ch /\ th ) ) $.
@@ -475,10 +395,8 @@ ${
 	psimp1bi $p |- ( ph -> ps ) $=
 	e0 f0 f1 f2 f3 aw3a pbiimpi f0 f1 f2 f3 psimp1d $.
 $}
-$( /* Deduce a conjunct from a triple conjunction.  (Contributed by Jonathan
-       Ben-Naim, 3-Jun-2011.) */
-
-$)
+$( Deduce a conjunct from a triple conjunction.  (Contributed by Jonathan
+       Ben-Naim, 3-Jun-2011.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph <-> ( ps /\ ch /\ th ) ) $.
@@ -489,10 +407,8 @@ ${
 	psimp2bi $p |- ( ph -> ch ) $=
 	e0 f0 f1 f2 f3 aw3a pbiimpi f0 f1 f2 f3 psimp2d $.
 $}
-$( /* Deduce a conjunct from a triple conjunction.  (Contributed by Jonathan
-       Ben-Naim, 3-Jun-2011.) */
-
-$)
+$( Deduce a conjunct from a triple conjunction.  (Contributed by Jonathan
+       Ben-Naim, 3-Jun-2011.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph <-> ( ps /\ ch /\ th ) ) $.
@@ -503,10 +419,8 @@ ${
 	psimp3bi $p |- ( ph -> th ) $=
 	e0 f0 f1 f2 f3 aw3a pbiimpi f0 f1 f2 f3 psimp3d $.
 $}
-$( /* Deduction adding a conjunct to antecedent.  (Contributed by NM,
-       16-Jul-1995.) */
-
-$)
+$( Deduction adding a conjunct to antecedent.  (Contributed by NM,
+       16-Jul-1995.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ph /\ ps ) -> ch ) $.
@@ -517,10 +431,8 @@ ${
 	p3adant1 $p |- ( ( th /\ ph /\ ps ) -> ch ) $=
 	f3 f0 f1 p3simpc e0 f3 f0 f1 aw3a f0 f1 awa f2 psyl $.
 $}
-$( /* Deduction adding a conjunct to antecedent.  (Contributed by NM,
-       16-Jul-1995.) */
-
-$)
+$( Deduction adding a conjunct to antecedent.  (Contributed by NM,
+       16-Jul-1995.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ph /\ ps ) -> ch ) $.
@@ -531,10 +443,8 @@ ${
 	p3adant2 $p |- ( ( ph /\ th /\ ps ) -> ch ) $=
 	f0 f3 f1 p3simpb e0 f0 f3 f1 aw3a f0 f1 awa f2 psyl $.
 $}
-$( /* Deduction adding a conjunct to antecedent.  (Contributed by NM,
-       16-Jul-1995.) */
-
-$)
+$( Deduction adding a conjunct to antecedent.  (Contributed by NM,
+       16-Jul-1995.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ph /\ ps ) -> ch ) $.
@@ -545,10 +455,8 @@ ${
 	p3adant3 $p |- ( ( ph /\ ps /\ th ) -> ch ) $=
 	f0 f1 f3 p3simpa e0 f0 f1 f3 aw3a f0 f1 awa f2 psyl $.
 $}
-$( /* Deduction adding conjuncts to an antecedent.  (Contributed by NM,
-       21-Apr-2005.) */
-
-$)
+$( Deduction adding conjuncts to an antecedent.  (Contributed by NM,
+       21-Apr-2005.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ch ) $.
@@ -559,10 +467,8 @@ ${
 	p3ad2ant1 $p |- ( ( ph /\ ps /\ th ) -> ch ) $=
 	e0 f0 f2 f3 padantr f0 f3 f2 f1 p3adant2 $.
 $}
-$( /* Deduction adding conjuncts to an antecedent.  (Contributed by NM,
-       21-Apr-2005.) */
-
-$)
+$( Deduction adding conjuncts to an antecedent.  (Contributed by NM,
+       21-Apr-2005.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ch ) $.
@@ -573,10 +479,8 @@ ${
 	p3ad2ant2 $p |- ( ( ps /\ ph /\ th ) -> ch ) $=
 	e0 f0 f2 f3 padantr f0 f3 f2 f1 p3adant1 $.
 $}
-$( /* Deduction adding conjuncts to an antecedent.  (Contributed by NM,
-       21-Apr-2005.) */
-
-$)
+$( Deduction adding conjuncts to an antecedent.  (Contributed by NM,
+       21-Apr-2005.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ch ) $.
@@ -587,9 +491,7 @@ ${
 	p3ad2ant3 $p |- ( ( ps /\ th /\ ph ) -> ch ) $=
 	e0 f0 f2 f3 padantl f3 f0 f2 f1 p3adant1 $.
 $}
-$( /* Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) */
-
-$)
+$( Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) $)
 ${
 	$v ph ps ch th $.
 	f0 $f wff ph $.
@@ -599,9 +501,7 @@ ${
 	psimp1l $p |- ( ( ( ph /\ ps ) /\ ch /\ th ) -> ph ) $=
 	f0 f1 psimpl f0 f1 awa f2 f0 f3 p3ad2ant1 $.
 $}
-$( /* Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) */
-
-$)
+$( Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) $)
 ${
 	$v ph ps ch th $.
 	f0 $f wff ph $.
@@ -611,9 +511,7 @@ ${
 	psimp1r $p |- ( ( ( ph /\ ps ) /\ ch /\ th ) -> ps ) $=
 	f0 f1 psimpr f0 f1 awa f2 f1 f3 p3ad2ant1 $.
 $}
-$( /* Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) */
-
-$)
+$( Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) $)
 ${
 	$v ph ps ch th $.
 	f0 $f wff ph $.
@@ -623,9 +521,7 @@ ${
 	psimp2l $p |- ( ( ph /\ ( ps /\ ch ) /\ th ) -> ps ) $=
 	f1 f2 psimpl f1 f2 awa f0 f1 f3 p3ad2ant2 $.
 $}
-$( /* Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) */
-
-$)
+$( Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) $)
 ${
 	$v ph ps ch th $.
 	f0 $f wff ph $.
@@ -635,9 +531,7 @@ ${
 	psimp2r $p |- ( ( ph /\ ( ps /\ ch ) /\ th ) -> ch ) $=
 	f1 f2 psimpr f1 f2 awa f0 f2 f3 p3ad2ant2 $.
 $}
-$( /* Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) */
-
-$)
+$( Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) $)
 ${
 	$v ph ps ch th $.
 	f0 $f wff ph $.
@@ -647,9 +541,7 @@ ${
 	psimp3l $p |- ( ( ph /\ ps /\ ( ch /\ th ) ) -> ch ) $=
 	f2 f3 psimpl f2 f3 awa f0 f2 f1 p3ad2ant3 $.
 $}
-$( /* Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) */
-
-$)
+$( Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) $)
 ${
 	$v ph ps ch th $.
 	f0 $f wff ph $.
@@ -659,10 +551,8 @@ ${
 	psimp3r $p |- ( ( ph /\ ps /\ ( ch /\ th ) ) -> th ) $=
 	f2 f3 psimpr f2 f3 awa f0 f3 f1 p3ad2ant3 $.
 $}
-$( /* Simplification of doubly triple conjunction.  (Contributed by NM,
-     17-Nov-2011.) */
-
-$)
+$( Simplification of doubly triple conjunction.  (Contributed by NM,
+     17-Nov-2011.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -673,10 +563,8 @@ ${
 	psimp11 $p |- ( ( ( ph /\ ps /\ ch ) /\ th /\ ta ) -> ph ) $=
 	f0 f1 f2 psimp1 f0 f1 f2 aw3a f3 f0 f4 p3ad2ant1 $.
 $}
-$( /* Simplification of doubly triple conjunction.  (Contributed by NM,
-     17-Nov-2011.) */
-
-$)
+$( Simplification of doubly triple conjunction.  (Contributed by NM,
+     17-Nov-2011.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -687,10 +575,8 @@ ${
 	psimp12 $p |- ( ( ( ph /\ ps /\ ch ) /\ th /\ ta ) -> ps ) $=
 	f0 f1 f2 psimp2 f0 f1 f2 aw3a f3 f1 f4 p3ad2ant1 $.
 $}
-$( /* Simplification of doubly triple conjunction.  (Contributed by NM,
-     17-Nov-2011.) */
-
-$)
+$( Simplification of doubly triple conjunction.  (Contributed by NM,
+     17-Nov-2011.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -701,10 +587,8 @@ ${
 	psimp13 $p |- ( ( ( ph /\ ps /\ ch ) /\ th /\ ta ) -> ch ) $=
 	f0 f1 f2 psimp3 f0 f1 f2 aw3a f3 f2 f4 p3ad2ant1 $.
 $}
-$( /* Simplification of doubly triple conjunction.  (Contributed by NM,
-     17-Nov-2011.) */
-
-$)
+$( Simplification of doubly triple conjunction.  (Contributed by NM,
+     17-Nov-2011.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -715,10 +599,8 @@ ${
 	psimp21 $p |- ( ( ph /\ ( ps /\ ch /\ th ) /\ ta ) -> ps ) $=
 	f1 f2 f3 psimp1 f1 f2 f3 aw3a f0 f1 f4 p3ad2ant2 $.
 $}
-$( /* Simplification of doubly triple conjunction.  (Contributed by NM,
-     17-Nov-2011.) */
-
-$)
+$( Simplification of doubly triple conjunction.  (Contributed by NM,
+     17-Nov-2011.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -729,10 +611,8 @@ ${
 	psimp22 $p |- ( ( ph /\ ( ps /\ ch /\ th ) /\ ta ) -> ch ) $=
 	f1 f2 f3 psimp2 f1 f2 f3 aw3a f0 f2 f4 p3ad2ant2 $.
 $}
-$( /* Simplification of doubly triple conjunction.  (Contributed by NM,
-     17-Nov-2011.) */
-
-$)
+$( Simplification of doubly triple conjunction.  (Contributed by NM,
+     17-Nov-2011.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -743,10 +623,8 @@ ${
 	psimp23 $p |- ( ( ph /\ ( ps /\ ch /\ th ) /\ ta ) -> th ) $=
 	f1 f2 f3 psimp3 f1 f2 f3 aw3a f0 f3 f4 p3ad2ant2 $.
 $}
-$( /* Simplification of doubly triple conjunction.  (Contributed by NM,
-     17-Nov-2011.) */
-
-$)
+$( Simplification of doubly triple conjunction.  (Contributed by NM,
+     17-Nov-2011.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -757,10 +635,8 @@ ${
 	psimp31 $p |- ( ( ph /\ ps /\ ( ch /\ th /\ ta ) ) -> ch ) $=
 	f2 f3 f4 psimp1 f2 f3 f4 aw3a f0 f2 f1 p3ad2ant3 $.
 $}
-$( /* Simplification of doubly triple conjunction.  (Contributed by NM,
-     17-Nov-2011.) */
-
-$)
+$( Simplification of doubly triple conjunction.  (Contributed by NM,
+     17-Nov-2011.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -771,10 +647,8 @@ ${
 	psimp32 $p |- ( ( ph /\ ps /\ ( ch /\ th /\ ta ) ) -> th ) $=
 	f2 f3 f4 psimp2 f2 f3 f4 aw3a f0 f3 f1 p3ad2ant3 $.
 $}
-$( /* Simplification of doubly triple conjunction.  (Contributed by NM,
-     17-Nov-2011.) */
-
-$)
+$( Simplification of doubly triple conjunction.  (Contributed by NM,
+     17-Nov-2011.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -785,9 +659,7 @@ ${
 	psimp33 $p |- ( ( ph /\ ps /\ ( ch /\ th /\ ta ) ) -> ta ) $=
 	f2 f3 f4 psimp3 f2 f3 f4 aw3a f0 f4 f1 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -798,9 +670,7 @@ ${
 	psimpll1 $p |- ( ( ( ( ph /\ ps /\ ch ) /\ th ) /\ ta ) -> ph ) $=
 	f0 f1 f2 f3 psimpl1 f0 f1 f2 aw3a f3 awa f0 f4 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -811,9 +681,7 @@ ${
 	psimpll2 $p |- ( ( ( ( ph /\ ps /\ ch ) /\ th ) /\ ta ) -> ps ) $=
 	f0 f1 f2 f3 psimpl2 f0 f1 f2 aw3a f3 awa f1 f4 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -824,9 +692,7 @@ ${
 	psimpll3 $p |- ( ( ( ( ph /\ ps /\ ch ) /\ th ) /\ ta ) -> ch ) $=
 	f0 f1 f2 f3 psimpl3 f0 f1 f2 aw3a f3 awa f2 f4 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -837,9 +703,7 @@ ${
 	psimplr1 $p |- ( ( ( th /\ ( ph /\ ps /\ ch ) ) /\ ta ) -> ph ) $=
 	f3 f0 f1 f2 psimpr1 f3 f0 f1 f2 aw3a awa f0 f4 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -850,9 +714,7 @@ ${
 	psimplr2 $p |- ( ( ( th /\ ( ph /\ ps /\ ch ) ) /\ ta ) -> ps ) $=
 	f3 f0 f1 f2 psimpr2 f3 f0 f1 f2 aw3a awa f1 f4 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -863,9 +725,7 @@ ${
 	psimplr3 $p |- ( ( ( th /\ ( ph /\ ps /\ ch ) ) /\ ta ) -> ch ) $=
 	f3 f0 f1 f2 psimpr3 f3 f0 f1 f2 aw3a awa f2 f4 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -876,9 +736,7 @@ ${
 	psimprl1 $p |- ( ( ta /\ ( ( ph /\ ps /\ ch ) /\ th ) ) -> ph ) $=
 	f0 f1 f2 f3 psimpl1 f0 f1 f2 aw3a f3 awa f0 f4 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -889,9 +747,7 @@ ${
 	psimprl2 $p |- ( ( ta /\ ( ( ph /\ ps /\ ch ) /\ th ) ) -> ps ) $=
 	f0 f1 f2 f3 psimpl2 f0 f1 f2 aw3a f3 awa f1 f4 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -902,9 +758,7 @@ ${
 	psimprl3 $p |- ( ( ta /\ ( ( ph /\ ps /\ ch ) /\ th ) ) -> ch ) $=
 	f0 f1 f2 f3 psimpl3 f0 f1 f2 aw3a f3 awa f2 f4 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -915,9 +769,7 @@ ${
 	psimprr1 $p |- ( ( ta /\ ( th /\ ( ph /\ ps /\ ch ) ) ) -> ph ) $=
 	f3 f0 f1 f2 psimpr1 f3 f0 f1 f2 aw3a awa f0 f4 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -928,9 +780,7 @@ ${
 	psimprr2 $p |- ( ( ta /\ ( th /\ ( ph /\ ps /\ ch ) ) ) -> ps ) $=
 	f3 f0 f1 f2 psimpr2 f3 f0 f1 f2 aw3a awa f1 f4 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -941,9 +791,7 @@ ${
 	psimprr3 $p |- ( ( ta /\ ( th /\ ( ph /\ ps /\ ch ) ) ) -> ch ) $=
 	f3 f0 f1 f2 psimpr3 f3 f0 f1 f2 aw3a awa f2 f4 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -954,9 +802,7 @@ ${
 	psimpl1l $p |- ( ( ( ( ph /\ ps ) /\ ch /\ th ) /\ ta ) -> ph ) $=
 	f0 f1 f2 f3 psimp1l f0 f1 awa f2 f3 aw3a f0 f4 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -967,9 +813,7 @@ ${
 	psimpl1r $p |- ( ( ( ( ph /\ ps ) /\ ch /\ th ) /\ ta ) -> ps ) $=
 	f0 f1 f2 f3 psimp1r f0 f1 awa f2 f3 aw3a f1 f4 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -980,9 +824,7 @@ ${
 	psimpl2l $p |- ( ( ( ch /\ ( ph /\ ps ) /\ th ) /\ ta ) -> ph ) $=
 	f2 f0 f1 f3 psimp2l f2 f0 f1 awa f3 aw3a f0 f4 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -993,9 +835,7 @@ ${
 	psimpl2r $p |- ( ( ( ch /\ ( ph /\ ps ) /\ th ) /\ ta ) -> ps ) $=
 	f2 f0 f1 f3 psimp2r f2 f0 f1 awa f3 aw3a f1 f4 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -1006,9 +846,7 @@ ${
 	psimpl3l $p |- ( ( ( ch /\ th /\ ( ph /\ ps ) ) /\ ta ) -> ph ) $=
 	f2 f3 f0 f1 psimp3l f2 f3 f0 f1 awa aw3a f0 f4 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -1019,9 +857,7 @@ ${
 	psimpl3r $p |- ( ( ( ch /\ th /\ ( ph /\ ps ) ) /\ ta ) -> ps ) $=
 	f2 f3 f0 f1 psimp3r f2 f3 f0 f1 awa aw3a f1 f4 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -1032,9 +868,7 @@ ${
 	psimpr1l $p |- ( ( ta /\ ( ( ph /\ ps ) /\ ch /\ th ) ) -> ph ) $=
 	f0 f1 f2 f3 psimp1l f0 f1 awa f2 f3 aw3a f0 f4 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -1045,9 +879,7 @@ ${
 	psimpr1r $p |- ( ( ta /\ ( ( ph /\ ps ) /\ ch /\ th ) ) -> ps ) $=
 	f0 f1 f2 f3 psimp1r f0 f1 awa f2 f3 aw3a f1 f4 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -1058,9 +890,7 @@ ${
 	psimpr2l $p |- ( ( ta /\ ( ch /\ ( ph /\ ps ) /\ th ) ) -> ph ) $=
 	f2 f0 f1 f3 psimp2l f2 f0 f1 awa f3 aw3a f0 f4 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -1071,9 +901,7 @@ ${
 	psimpr2r $p |- ( ( ta /\ ( ch /\ ( ph /\ ps ) /\ th ) ) -> ps ) $=
 	f2 f0 f1 f3 psimp2r f2 f0 f1 awa f3 aw3a f1 f4 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -1084,9 +912,7 @@ ${
 	psimpr3l $p |- ( ( ta /\ ( ch /\ th /\ ( ph /\ ps ) ) ) -> ph ) $=
 	f2 f3 f0 f1 psimp3l f2 f3 f0 f1 awa aw3a f0 f4 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -1097,9 +923,7 @@ ${
 	psimpr3r $p |- ( ( ta /\ ( ch /\ th /\ ( ph /\ ps ) ) ) -> ps ) $=
 	f2 f3 f0 f1 psimp3r f2 f3 f0 f1 awa aw3a f1 f4 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -1110,9 +934,7 @@ ${
 	psimp1ll $p |- ( ( ( ( ph /\ ps ) /\ ch ) /\ th /\ ta ) -> ph ) $=
 	f0 f1 f2 psimpll f0 f1 awa f2 awa f3 f0 f4 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -1123,9 +945,7 @@ ${
 	psimp1lr $p |- ( ( ( ( ph /\ ps ) /\ ch ) /\ th /\ ta ) -> ps ) $=
 	f0 f1 f2 psimplr f0 f1 awa f2 awa f3 f1 f4 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -1136,9 +956,7 @@ ${
 	psimp1rl $p |- ( ( ( ch /\ ( ph /\ ps ) ) /\ th /\ ta ) -> ph ) $=
 	f2 f0 f1 psimprl f2 f0 f1 awa awa f3 f0 f4 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -1149,9 +967,7 @@ ${
 	psimp1rr $p |- ( ( ( ch /\ ( ph /\ ps ) ) /\ th /\ ta ) -> ps ) $=
 	f2 f0 f1 psimprr f2 f0 f1 awa awa f3 f1 f4 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -1162,9 +978,7 @@ ${
 	psimp2ll $p |- ( ( th /\ ( ( ph /\ ps ) /\ ch ) /\ ta ) -> ph ) $=
 	f0 f1 f2 psimpll f0 f1 awa f2 awa f3 f0 f4 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -1175,9 +989,7 @@ ${
 	psimp2lr $p |- ( ( th /\ ( ( ph /\ ps ) /\ ch ) /\ ta ) -> ps ) $=
 	f0 f1 f2 psimplr f0 f1 awa f2 awa f3 f1 f4 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -1188,9 +1000,7 @@ ${
 	psimp2rl $p |- ( ( th /\ ( ch /\ ( ph /\ ps ) ) /\ ta ) -> ph ) $=
 	f2 f0 f1 psimprl f2 f0 f1 awa awa f3 f0 f4 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -1201,9 +1011,7 @@ ${
 	psimp2rr $p |- ( ( th /\ ( ch /\ ( ph /\ ps ) ) /\ ta ) -> ps ) $=
 	f2 f0 f1 psimprr f2 f0 f1 awa awa f3 f1 f4 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -1214,9 +1022,7 @@ ${
 	psimp3ll $p |- ( ( th /\ ta /\ ( ( ph /\ ps ) /\ ch ) ) -> ph ) $=
 	f0 f1 f2 psimpll f0 f1 awa f2 awa f3 f0 f4 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -1227,9 +1033,7 @@ ${
 	psimp3lr $p |- ( ( th /\ ta /\ ( ( ph /\ ps ) /\ ch ) ) -> ps ) $=
 	f0 f1 f2 psimplr f0 f1 awa f2 awa f3 f1 f4 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -1240,9 +1044,7 @@ ${
 	psimp3rl $p |- ( ( th /\ ta /\ ( ch /\ ( ph /\ ps ) ) ) -> ph ) $=
 	f2 f0 f1 psimprl f2 f0 f1 awa awa f3 f0 f4 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	f0 $f wff ph $.
@@ -1253,9 +1055,7 @@ ${
 	psimp3rr $p |- ( ( th /\ ta /\ ( ch /\ ( ph /\ ps ) ) ) -> ps ) $=
 	f2 f0 f1 psimprr f2 f0 f1 awa awa f3 f1 f4 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1267,9 +1067,7 @@ ${
 	psimpl11 $p |- ( ( ( ( ph /\ ps /\ ch ) /\ th /\ ta ) /\ et ) -> ph ) $=
 	f0 f1 f2 f3 f4 psimp11 f0 f1 f2 aw3a f3 f4 aw3a f0 f5 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1281,9 +1079,7 @@ ${
 	psimpl12 $p |- ( ( ( ( ph /\ ps /\ ch ) /\ th /\ ta ) /\ et ) -> ps ) $=
 	f0 f1 f2 f3 f4 psimp12 f0 f1 f2 aw3a f3 f4 aw3a f1 f5 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1295,9 +1091,7 @@ ${
 	psimpl13 $p |- ( ( ( ( ph /\ ps /\ ch ) /\ th /\ ta ) /\ et ) -> ch ) $=
 	f0 f1 f2 f3 f4 psimp13 f0 f1 f2 aw3a f3 f4 aw3a f2 f5 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1309,9 +1103,7 @@ ${
 	psimpl21 $p |- ( ( ( th /\ ( ph /\ ps /\ ch ) /\ ta ) /\ et ) -> ph ) $=
 	f3 f0 f1 f2 f4 psimp21 f3 f0 f1 f2 aw3a f4 aw3a f0 f5 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1323,9 +1115,7 @@ ${
 	psimpl22 $p |- ( ( ( th /\ ( ph /\ ps /\ ch ) /\ ta ) /\ et ) -> ps ) $=
 	f3 f0 f1 f2 f4 psimp22 f3 f0 f1 f2 aw3a f4 aw3a f1 f5 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1337,9 +1127,7 @@ ${
 	psimpl23 $p |- ( ( ( th /\ ( ph /\ ps /\ ch ) /\ ta ) /\ et ) -> ch ) $=
 	f3 f0 f1 f2 f4 psimp23 f3 f0 f1 f2 aw3a f4 aw3a f2 f5 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1351,9 +1139,7 @@ ${
 	psimpl31 $p |- ( ( ( th /\ ta /\ ( ph /\ ps /\ ch ) ) /\ et ) -> ph ) $=
 	f3 f4 f0 f1 f2 psimp31 f3 f4 f0 f1 f2 aw3a aw3a f0 f5 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1365,9 +1151,7 @@ ${
 	psimpl32 $p |- ( ( ( th /\ ta /\ ( ph /\ ps /\ ch ) ) /\ et ) -> ps ) $=
 	f3 f4 f0 f1 f2 psimp32 f3 f4 f0 f1 f2 aw3a aw3a f1 f5 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1379,9 +1163,7 @@ ${
 	psimpl33 $p |- ( ( ( th /\ ta /\ ( ph /\ ps /\ ch ) ) /\ et ) -> ch ) $=
 	f3 f4 f0 f1 f2 psimp33 f3 f4 f0 f1 f2 aw3a aw3a f2 f5 padantr $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1393,9 +1175,7 @@ ${
 	psimpr11 $p |- ( ( et /\ ( ( ph /\ ps /\ ch ) /\ th /\ ta ) ) -> ph ) $=
 	f0 f1 f2 f3 f4 psimp11 f0 f1 f2 aw3a f3 f4 aw3a f0 f5 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1407,9 +1187,7 @@ ${
 	psimpr12 $p |- ( ( et /\ ( ( ph /\ ps /\ ch ) /\ th /\ ta ) ) -> ps ) $=
 	f0 f1 f2 f3 f4 psimp12 f0 f1 f2 aw3a f3 f4 aw3a f1 f5 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1421,9 +1199,7 @@ ${
 	psimpr13 $p |- ( ( et /\ ( ( ph /\ ps /\ ch ) /\ th /\ ta ) ) -> ch ) $=
 	f0 f1 f2 f3 f4 psimp13 f0 f1 f2 aw3a f3 f4 aw3a f2 f5 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1435,9 +1211,7 @@ ${
 	psimpr21 $p |- ( ( et /\ ( th /\ ( ph /\ ps /\ ch ) /\ ta ) ) -> ph ) $=
 	f3 f0 f1 f2 f4 psimp21 f3 f0 f1 f2 aw3a f4 aw3a f0 f5 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1449,9 +1223,7 @@ ${
 	psimpr22 $p |- ( ( et /\ ( th /\ ( ph /\ ps /\ ch ) /\ ta ) ) -> ps ) $=
 	f3 f0 f1 f2 f4 psimp22 f3 f0 f1 f2 aw3a f4 aw3a f1 f5 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1463,9 +1235,7 @@ ${
 	psimpr23 $p |- ( ( et /\ ( th /\ ( ph /\ ps /\ ch ) /\ ta ) ) -> ch ) $=
 	f3 f0 f1 f2 f4 psimp23 f3 f0 f1 f2 aw3a f4 aw3a f2 f5 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1477,9 +1247,7 @@ ${
 	psimpr31 $p |- ( ( et /\ ( th /\ ta /\ ( ph /\ ps /\ ch ) ) ) -> ph ) $=
 	f3 f4 f0 f1 f2 psimp31 f3 f4 f0 f1 f2 aw3a aw3a f0 f5 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1491,9 +1259,7 @@ ${
 	psimpr32 $p |- ( ( et /\ ( th /\ ta /\ ( ph /\ ps /\ ch ) ) ) -> ps ) $=
 	f3 f4 f0 f1 f2 psimp32 f3 f4 f0 f1 f2 aw3a aw3a f1 f5 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1505,9 +1271,7 @@ ${
 	psimpr33 $p |- ( ( et /\ ( th /\ ta /\ ( ph /\ ps /\ ch ) ) ) -> ch ) $=
 	f3 f4 f0 f1 f2 psimp33 f3 f4 f0 f1 f2 aw3a aw3a f2 f5 padantl $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1519,9 +1283,7 @@ ${
 	psimp1l1 $p |- ( ( ( ( ph /\ ps /\ ch ) /\ th ) /\ ta /\ et ) -> ph ) $=
 	f0 f1 f2 f3 psimpl1 f0 f1 f2 aw3a f3 awa f4 f0 f5 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1533,9 +1295,7 @@ ${
 	psimp1l2 $p |- ( ( ( ( ph /\ ps /\ ch ) /\ th ) /\ ta /\ et ) -> ps ) $=
 	f0 f1 f2 f3 psimpl2 f0 f1 f2 aw3a f3 awa f4 f1 f5 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1547,9 +1307,7 @@ ${
 	psimp1l3 $p |- ( ( ( ( ph /\ ps /\ ch ) /\ th ) /\ ta /\ et ) -> ch ) $=
 	f0 f1 f2 f3 psimpl3 f0 f1 f2 aw3a f3 awa f4 f2 f5 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1561,9 +1319,7 @@ ${
 	psimp1r1 $p |- ( ( ( th /\ ( ph /\ ps /\ ch ) ) /\ ta /\ et ) -> ph ) $=
 	f3 f0 f1 f2 psimpr1 f3 f0 f1 f2 aw3a awa f4 f0 f5 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1575,9 +1331,7 @@ ${
 	psimp1r2 $p |- ( ( ( th /\ ( ph /\ ps /\ ch ) ) /\ ta /\ et ) -> ps ) $=
 	f3 f0 f1 f2 psimpr2 f3 f0 f1 f2 aw3a awa f4 f1 f5 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1589,9 +1343,7 @@ ${
 	psimp1r3 $p |- ( ( ( th /\ ( ph /\ ps /\ ch ) ) /\ ta /\ et ) -> ch ) $=
 	f3 f0 f1 f2 psimpr3 f3 f0 f1 f2 aw3a awa f4 f2 f5 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1603,9 +1355,7 @@ ${
 	psimp2l1 $p |- ( ( ta /\ ( ( ph /\ ps /\ ch ) /\ th ) /\ et ) -> ph ) $=
 	f0 f1 f2 f3 psimpl1 f0 f1 f2 aw3a f3 awa f4 f0 f5 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1617,9 +1367,7 @@ ${
 	psimp2l2 $p |- ( ( ta /\ ( ( ph /\ ps /\ ch ) /\ th ) /\ et ) -> ps ) $=
 	f0 f1 f2 f3 psimpl2 f0 f1 f2 aw3a f3 awa f4 f1 f5 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1631,9 +1379,7 @@ ${
 	psimp2l3 $p |- ( ( ta /\ ( ( ph /\ ps /\ ch ) /\ th ) /\ et ) -> ch ) $=
 	f0 f1 f2 f3 psimpl3 f0 f1 f2 aw3a f3 awa f4 f2 f5 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1645,9 +1391,7 @@ ${
 	psimp2r1 $p |- ( ( ta /\ ( th /\ ( ph /\ ps /\ ch ) ) /\ et ) -> ph ) $=
 	f3 f0 f1 f2 psimpr1 f3 f0 f1 f2 aw3a awa f4 f0 f5 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1659,9 +1403,7 @@ ${
 	psimp2r2 $p |- ( ( ta /\ ( th /\ ( ph /\ ps /\ ch ) ) /\ et ) -> ps ) $=
 	f3 f0 f1 f2 psimpr2 f3 f0 f1 f2 aw3a awa f4 f1 f5 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1673,9 +1415,7 @@ ${
 	psimp2r3 $p |- ( ( ta /\ ( th /\ ( ph /\ ps /\ ch ) ) /\ et ) -> ch ) $=
 	f3 f0 f1 f2 psimpr3 f3 f0 f1 f2 aw3a awa f4 f2 f5 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1687,9 +1427,7 @@ ${
 	psimp3l1 $p |- ( ( ta /\ et /\ ( ( ph /\ ps /\ ch ) /\ th ) ) -> ph ) $=
 	f0 f1 f2 f3 psimpl1 f0 f1 f2 aw3a f3 awa f4 f0 f5 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1701,9 +1439,7 @@ ${
 	psimp3l2 $p |- ( ( ta /\ et /\ ( ( ph /\ ps /\ ch ) /\ th ) ) -> ps ) $=
 	f0 f1 f2 f3 psimpl2 f0 f1 f2 aw3a f3 awa f4 f1 f5 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1715,9 +1451,7 @@ ${
 	psimp3l3 $p |- ( ( ta /\ et /\ ( ( ph /\ ps /\ ch ) /\ th ) ) -> ch ) $=
 	f0 f1 f2 f3 psimpl3 f0 f1 f2 aw3a f3 awa f4 f2 f5 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1729,9 +1463,7 @@ ${
 	psimp3r1 $p |- ( ( ta /\ et /\ ( th /\ ( ph /\ ps /\ ch ) ) ) -> ph ) $=
 	f3 f0 f1 f2 psimpr1 f3 f0 f1 f2 aw3a awa f4 f0 f5 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1743,9 +1475,7 @@ ${
 	psimp3r2 $p |- ( ( ta /\ et /\ ( th /\ ( ph /\ ps /\ ch ) ) ) -> ps ) $=
 	f3 f0 f1 f2 psimpr2 f3 f0 f1 f2 aw3a awa f4 f1 f5 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1757,9 +1487,7 @@ ${
 	psimp3r3 $p |- ( ( ta /\ et /\ ( th /\ ( ph /\ ps /\ ch ) ) ) -> ch ) $=
 	f3 f0 f1 f2 psimpr3 f3 f0 f1 f2 aw3a awa f4 f2 f5 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1771,9 +1499,7 @@ ${
 	psimp11l $p |- ( ( ( ( ph /\ ps ) /\ ch /\ th ) /\ ta /\ et ) -> ph ) $=
 	f0 f1 f2 f3 psimp1l f0 f1 awa f2 f3 aw3a f4 f0 f5 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1785,9 +1511,7 @@ ${
 	psimp11r $p |- ( ( ( ( ph /\ ps ) /\ ch /\ th ) /\ ta /\ et ) -> ps ) $=
 	f0 f1 f2 f3 psimp1r f0 f1 awa f2 f3 aw3a f4 f1 f5 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1799,9 +1523,7 @@ ${
 	psimp12l $p |- ( ( ( ch /\ ( ph /\ ps ) /\ th ) /\ ta /\ et ) -> ph ) $=
 	f2 f0 f1 f3 psimp2l f2 f0 f1 awa f3 aw3a f4 f0 f5 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1813,9 +1535,7 @@ ${
 	psimp12r $p |- ( ( ( ch /\ ( ph /\ ps ) /\ th ) /\ ta /\ et ) -> ps ) $=
 	f2 f0 f1 f3 psimp2r f2 f0 f1 awa f3 aw3a f4 f1 f5 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1827,9 +1547,7 @@ ${
 	psimp13l $p |- ( ( ( ch /\ th /\ ( ph /\ ps ) ) /\ ta /\ et ) -> ph ) $=
 	f2 f3 f0 f1 psimp3l f2 f3 f0 f1 awa aw3a f4 f0 f5 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1841,9 +1559,7 @@ ${
 	psimp13r $p |- ( ( ( ch /\ th /\ ( ph /\ ps ) ) /\ ta /\ et ) -> ps ) $=
 	f2 f3 f0 f1 psimp3r f2 f3 f0 f1 awa aw3a f4 f1 f5 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1855,9 +1571,7 @@ ${
 	psimp21l $p |- ( ( ta /\ ( ( ph /\ ps ) /\ ch /\ th ) /\ et ) -> ph ) $=
 	f0 f1 f2 f3 psimp1l f0 f1 awa f2 f3 aw3a f4 f0 f5 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1869,9 +1583,7 @@ ${
 	psimp21r $p |- ( ( ta /\ ( ( ph /\ ps ) /\ ch /\ th ) /\ et ) -> ps ) $=
 	f0 f1 f2 f3 psimp1r f0 f1 awa f2 f3 aw3a f4 f1 f5 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1883,9 +1595,7 @@ ${
 	psimp22l $p |- ( ( ta /\ ( ch /\ ( ph /\ ps ) /\ th ) /\ et ) -> ph ) $=
 	f2 f0 f1 f3 psimp2l f2 f0 f1 awa f3 aw3a f4 f0 f5 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1897,9 +1607,7 @@ ${
 	psimp22r $p |- ( ( ta /\ ( ch /\ ( ph /\ ps ) /\ th ) /\ et ) -> ps ) $=
 	f2 f0 f1 f3 psimp2r f2 f0 f1 awa f3 aw3a f4 f1 f5 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1911,9 +1619,7 @@ ${
 	psimp23l $p |- ( ( ta /\ ( ch /\ th /\ ( ph /\ ps ) ) /\ et ) -> ph ) $=
 	f2 f3 f0 f1 psimp3l f2 f3 f0 f1 awa aw3a f4 f0 f5 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1925,9 +1631,7 @@ ${
 	psimp23r $p |- ( ( ta /\ ( ch /\ th /\ ( ph /\ ps ) ) /\ et ) -> ps ) $=
 	f2 f3 f0 f1 psimp3r f2 f3 f0 f1 awa aw3a f4 f1 f5 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1939,9 +1643,7 @@ ${
 	psimp31l $p |- ( ( ta /\ et /\ ( ( ph /\ ps ) /\ ch /\ th ) ) -> ph ) $=
 	f0 f1 f2 f3 psimp1l f0 f1 awa f2 f3 aw3a f4 f0 f5 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1953,9 +1655,7 @@ ${
 	psimp31r $p |- ( ( ta /\ et /\ ( ( ph /\ ps ) /\ ch /\ th ) ) -> ps ) $=
 	f0 f1 f2 f3 psimp1r f0 f1 awa f2 f3 aw3a f4 f1 f5 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1967,9 +1667,7 @@ ${
 	psimp32l $p |- ( ( ta /\ et /\ ( ch /\ ( ph /\ ps ) /\ th ) ) -> ph ) $=
 	f2 f0 f1 f3 psimp2l f2 f0 f1 awa f3 aw3a f4 f0 f5 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1981,9 +1679,7 @@ ${
 	psimp32r $p |- ( ( ta /\ et /\ ( ch /\ ( ph /\ ps ) /\ th ) ) -> ps ) $=
 	f2 f0 f1 f3 psimp2r f2 f0 f1 awa f3 aw3a f4 f1 f5 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -1995,9 +1691,7 @@ ${
 	psimp33l $p |- ( ( ta /\ et /\ ( ch /\ th /\ ( ph /\ ps ) ) ) -> ph ) $=
 	f2 f3 f0 f1 psimp3l f2 f3 f0 f1 awa aw3a f4 f0 f5 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -2009,9 +1703,7 @@ ${
 	psimp33r $p |- ( ( ta /\ et /\ ( ch /\ th /\ ( ph /\ ps ) ) ) -> ps ) $=
 	f2 f3 f0 f1 psimp3r f2 f3 f0 f1 awa aw3a f4 f1 f5 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2024,9 +1716,7 @@ ${
 	psimp111 $p |- ( ( ( ( ph /\ ps /\ ch ) /\ th /\ ta ) /\ et /\ ze ) -> ph ) $=
 	f0 f1 f2 f3 f4 psimp11 f0 f1 f2 aw3a f3 f4 aw3a f5 f0 f6 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2039,9 +1729,7 @@ ${
 	psimp112 $p |- ( ( ( ( ph /\ ps /\ ch ) /\ th /\ ta ) /\ et /\ ze ) -> ps ) $=
 	f0 f1 f2 f3 f4 psimp12 f0 f1 f2 aw3a f3 f4 aw3a f5 f1 f6 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2054,9 +1742,7 @@ ${
 	psimp113 $p |- ( ( ( ( ph /\ ps /\ ch ) /\ th /\ ta ) /\ et /\ ze ) -> ch ) $=
 	f0 f1 f2 f3 f4 psimp13 f0 f1 f2 aw3a f3 f4 aw3a f5 f2 f6 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2069,9 +1755,7 @@ ${
 	psimp121 $p |- ( ( ( th /\ ( ph /\ ps /\ ch ) /\ ta ) /\ et /\ ze ) -> ph ) $=
 	f3 f0 f1 f2 f4 psimp21 f3 f0 f1 f2 aw3a f4 aw3a f5 f0 f6 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2084,9 +1768,7 @@ ${
 	psimp122 $p |- ( ( ( th /\ ( ph /\ ps /\ ch ) /\ ta ) /\ et /\ ze ) -> ps ) $=
 	f3 f0 f1 f2 f4 psimp22 f3 f0 f1 f2 aw3a f4 aw3a f5 f1 f6 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2099,9 +1781,7 @@ ${
 	psimp123 $p |- ( ( ( th /\ ( ph /\ ps /\ ch ) /\ ta ) /\ et /\ ze ) -> ch ) $=
 	f3 f0 f1 f2 f4 psimp23 f3 f0 f1 f2 aw3a f4 aw3a f5 f2 f6 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2114,9 +1794,7 @@ ${
 	psimp131 $p |- ( ( ( th /\ ta /\ ( ph /\ ps /\ ch ) ) /\ et /\ ze ) -> ph ) $=
 	f3 f4 f0 f1 f2 psimp31 f3 f4 f0 f1 f2 aw3a aw3a f5 f0 f6 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2129,9 +1807,7 @@ ${
 	psimp132 $p |- ( ( ( th /\ ta /\ ( ph /\ ps /\ ch ) ) /\ et /\ ze ) -> ps ) $=
 	f3 f4 f0 f1 f2 psimp32 f3 f4 f0 f1 f2 aw3a aw3a f5 f1 f6 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2144,9 +1820,7 @@ ${
 	psimp133 $p |- ( ( ( th /\ ta /\ ( ph /\ ps /\ ch ) ) /\ et /\ ze ) -> ch ) $=
 	f3 f4 f0 f1 f2 psimp33 f3 f4 f0 f1 f2 aw3a aw3a f5 f2 f6 p3ad2ant1 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2159,9 +1833,7 @@ ${
 	psimp211 $p |- ( ( et /\ ( ( ph /\ ps /\ ch ) /\ th /\ ta ) /\ ze ) -> ph ) $=
 	f0 f1 f2 f3 f4 psimp11 f0 f1 f2 aw3a f3 f4 aw3a f5 f0 f6 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2174,9 +1846,7 @@ ${
 	psimp212 $p |- ( ( et /\ ( ( ph /\ ps /\ ch ) /\ th /\ ta ) /\ ze ) -> ps ) $=
 	f0 f1 f2 f3 f4 psimp12 f0 f1 f2 aw3a f3 f4 aw3a f5 f1 f6 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2189,9 +1859,7 @@ ${
 	psimp213 $p |- ( ( et /\ ( ( ph /\ ps /\ ch ) /\ th /\ ta ) /\ ze ) -> ch ) $=
 	f0 f1 f2 f3 f4 psimp13 f0 f1 f2 aw3a f3 f4 aw3a f5 f2 f6 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2204,9 +1872,7 @@ ${
 	psimp221 $p |- ( ( et /\ ( th /\ ( ph /\ ps /\ ch ) /\ ta ) /\ ze ) -> ph ) $=
 	f3 f0 f1 f2 f4 psimp21 f3 f0 f1 f2 aw3a f4 aw3a f5 f0 f6 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2219,9 +1885,7 @@ ${
 	psimp222 $p |- ( ( et /\ ( th /\ ( ph /\ ps /\ ch ) /\ ta ) /\ ze ) -> ps ) $=
 	f3 f0 f1 f2 f4 psimp22 f3 f0 f1 f2 aw3a f4 aw3a f5 f1 f6 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2234,9 +1898,7 @@ ${
 	psimp223 $p |- ( ( et /\ ( th /\ ( ph /\ ps /\ ch ) /\ ta ) /\ ze ) -> ch ) $=
 	f3 f0 f1 f2 f4 psimp23 f3 f0 f1 f2 aw3a f4 aw3a f5 f2 f6 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2249,9 +1911,7 @@ ${
 	psimp231 $p |- ( ( et /\ ( th /\ ta /\ ( ph /\ ps /\ ch ) ) /\ ze ) -> ph ) $=
 	f3 f4 f0 f1 f2 psimp31 f3 f4 f0 f1 f2 aw3a aw3a f5 f0 f6 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2264,9 +1924,7 @@ ${
 	psimp232 $p |- ( ( et /\ ( th /\ ta /\ ( ph /\ ps /\ ch ) ) /\ ze ) -> ps ) $=
 	f3 f4 f0 f1 f2 psimp32 f3 f4 f0 f1 f2 aw3a aw3a f5 f1 f6 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2279,9 +1937,7 @@ ${
 	psimp233 $p |- ( ( et /\ ( th /\ ta /\ ( ph /\ ps /\ ch ) ) /\ ze ) -> ch ) $=
 	f3 f4 f0 f1 f2 psimp33 f3 f4 f0 f1 f2 aw3a aw3a f5 f2 f6 p3ad2ant2 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2294,9 +1950,7 @@ ${
 	psimp311 $p |- ( ( et /\ ze /\ ( ( ph /\ ps /\ ch ) /\ th /\ ta ) ) -> ph ) $=
 	f0 f1 f2 f3 f4 psimp11 f0 f1 f2 aw3a f3 f4 aw3a f5 f0 f6 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2309,9 +1963,7 @@ ${
 	psimp312 $p |- ( ( et /\ ze /\ ( ( ph /\ ps /\ ch ) /\ th /\ ta ) ) -> ps ) $=
 	f0 f1 f2 f3 f4 psimp12 f0 f1 f2 aw3a f3 f4 aw3a f5 f1 f6 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2324,9 +1976,7 @@ ${
 	psimp313 $p |- ( ( et /\ ze /\ ( ( ph /\ ps /\ ch ) /\ th /\ ta ) ) -> ch ) $=
 	f0 f1 f2 f3 f4 psimp13 f0 f1 f2 aw3a f3 f4 aw3a f5 f2 f6 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2339,9 +1989,7 @@ ${
 	psimp321 $p |- ( ( et /\ ze /\ ( th /\ ( ph /\ ps /\ ch ) /\ ta ) ) -> ph ) $=
 	f3 f0 f1 f2 f4 psimp21 f3 f0 f1 f2 aw3a f4 aw3a f5 f0 f6 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2354,9 +2002,7 @@ ${
 	psimp322 $p |- ( ( et /\ ze /\ ( th /\ ( ph /\ ps /\ ch ) /\ ta ) ) -> ps ) $=
 	f3 f0 f1 f2 f4 psimp22 f3 f0 f1 f2 aw3a f4 aw3a f5 f1 f6 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2369,9 +2015,7 @@ ${
 	psimp323 $p |- ( ( et /\ ze /\ ( th /\ ( ph /\ ps /\ ch ) /\ ta ) ) -> ch ) $=
 	f3 f0 f1 f2 f4 psimp23 f3 f0 f1 f2 aw3a f4 aw3a f5 f2 f6 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2384,9 +2028,7 @@ ${
 	psimp331 $p |- ( ( et /\ ze /\ ( th /\ ta /\ ( ph /\ ps /\ ch ) ) ) -> ph ) $=
 	f3 f4 f0 f1 f2 psimp31 f3 f4 f0 f1 f2 aw3a aw3a f5 f0 f6 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2399,9 +2041,7 @@ ${
 	psimp332 $p |- ( ( et /\ ze /\ ( th /\ ta /\ ( ph /\ ps /\ ch ) ) ) -> ps ) $=
 	f3 f4 f0 f1 f2 psimp32 f3 f4 f0 f1 f2 aw3a aw3a f5 f1 f6 p3ad2ant3 $.
 $}
-$( /* Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) */
-
-$)
+$( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	f0 $f wff ph $.
@@ -2414,10 +2054,8 @@ ${
 	psimp333 $p |- ( ( et /\ ze /\ ( th /\ ta /\ ( ph /\ ps /\ ch ) ) ) -> ch ) $=
 	f3 f4 f0 f1 f2 psimp33 f3 f4 f0 f1 f2 aw3a aw3a f5 f2 f6 p3ad2ant3 $.
 $}
-$( /* Deduction adding a conjunct to antecedent.  (Contributed by NM,
-       24-Feb-2005.) */
-
-$)
+$( Deduction adding a conjunct to antecedent.  (Contributed by NM,
+       24-Feb-2005.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ( ph /\ ps ) /\ ch ) -> th ) $.
@@ -2429,10 +2067,8 @@ ${
 	p3adantl1 $p |- ( ( ( ta /\ ph /\ ps ) /\ ch ) -> th ) $=
 	f4 f0 f1 p3simpc e0 f4 f0 f1 aw3a f0 f1 awa f2 f3 psylan $.
 $}
-$( /* Deduction adding a conjunct to antecedent.  (Contributed by NM,
-       24-Feb-2005.) */
-
-$)
+$( Deduction adding a conjunct to antecedent.  (Contributed by NM,
+       24-Feb-2005.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ( ph /\ ps ) /\ ch ) -> th ) $.
@@ -2444,10 +2080,8 @@ ${
 	p3adantl2 $p |- ( ( ( ph /\ ta /\ ps ) /\ ch ) -> th ) $=
 	f0 f4 f1 p3simpb e0 f0 f4 f1 aw3a f0 f1 awa f2 f3 psylan $.
 $}
-$( /* Deduction adding a conjunct to antecedent.  (Contributed by NM,
-       24-Feb-2005.) */
-
-$)
+$( Deduction adding a conjunct to antecedent.  (Contributed by NM,
+       24-Feb-2005.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ( ph /\ ps ) /\ ch ) -> th ) $.
@@ -2459,10 +2093,8 @@ ${
 	p3adantl3 $p |- ( ( ( ph /\ ps /\ ta ) /\ ch ) -> th ) $=
 	f0 f1 f4 p3simpa e0 f0 f1 f4 aw3a f0 f1 awa f2 f3 psylan $.
 $}
-$( /* Deduction adding a conjunct to antecedent.  (Contributed by NM,
-       27-Apr-2005.) */
-
-$)
+$( Deduction adding a conjunct to antecedent.  (Contributed by NM,
+       27-Apr-2005.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ( ps /\ ch ) ) -> th ) $.
@@ -2474,10 +2106,8 @@ ${
 	p3adantr1 $p |- ( ( ph /\ ( ta /\ ps /\ ch ) ) -> th ) $=
 	f4 f1 f2 p3simpc e0 f4 f1 f2 aw3a f0 f1 f2 awa f3 psylan2 $.
 $}
-$( /* Deduction adding a conjunct to antecedent.  (Contributed by NM,
-       27-Apr-2005.) */
-
-$)
+$( Deduction adding a conjunct to antecedent.  (Contributed by NM,
+       27-Apr-2005.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ( ps /\ ch ) ) -> th ) $.
@@ -2489,10 +2119,8 @@ ${
 	p3adantr2 $p |- ( ( ph /\ ( ps /\ ta /\ ch ) ) -> th ) $=
 	f1 f4 f2 p3simpb e0 f1 f4 f2 aw3a f0 f1 f2 awa f3 psylan2 $.
 $}
-$( /* Deduction adding a conjunct to antecedent.  (Contributed by NM,
-       27-Apr-2005.) */
-
-$)
+$( Deduction adding a conjunct to antecedent.  (Contributed by NM,
+       27-Apr-2005.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ( ps /\ ch ) ) -> th ) $.
@@ -2504,10 +2132,8 @@ ${
 	p3adantr3 $p |- ( ( ph /\ ( ps /\ ch /\ ta ) ) -> th ) $=
 	f1 f2 f4 p3simpa e0 f1 f2 f4 aw3a f0 f1 f2 awa f3 psylan2 $.
 $}
-$( /* Deduction adding conjuncts to antecedent.  (Contributed by NM,
-       4-Aug-2007.) */
-
-$)
+$( Deduction adding conjuncts to antecedent.  (Contributed by NM,
+       4-Aug-2007.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ch ) -> th ) $.
@@ -2519,10 +2145,8 @@ ${
 	p3ad2antl1 $p |- ( ( ( ph /\ ps /\ ta ) /\ ch ) -> th ) $=
 	e0 f0 f2 f3 f4 padantlr f0 f4 f2 f3 f1 p3adantl2 $.
 $}
-$( /* Deduction adding conjuncts to antecedent.  (Contributed by NM,
-       4-Aug-2007.) */
-
-$)
+$( Deduction adding conjuncts to antecedent.  (Contributed by NM,
+       4-Aug-2007.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ch ) -> th ) $.
@@ -2534,10 +2158,8 @@ ${
 	p3ad2antl2 $p |- ( ( ( ps /\ ph /\ ta ) /\ ch ) -> th ) $=
 	e0 f0 f2 f3 f4 padantlr f0 f4 f2 f3 f1 p3adantl1 $.
 $}
-$( /* Deduction adding conjuncts to antecedent.  (Contributed by NM,
-       4-Aug-2007.) */
-
-$)
+$( Deduction adding conjuncts to antecedent.  (Contributed by NM,
+       4-Aug-2007.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ch ) -> th ) $.
@@ -2549,10 +2171,8 @@ ${
 	p3ad2antl3 $p |- ( ( ( ps /\ ta /\ ph ) /\ ch ) -> th ) $=
 	e0 f0 f2 f3 f4 padantll f4 f0 f2 f3 f1 p3adantl1 $.
 $}
-$( /* Deduction adding conjuncts to antecedent.  (Contributed by NM,
-       25-Dec-2007.) */
-
-$)
+$( Deduction adding conjuncts to antecedent.  (Contributed by NM,
+       25-Dec-2007.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ch ) -> th ) $.
@@ -2564,10 +2184,8 @@ ${
 	p3ad2antr1 $p |- ( ( ph /\ ( ch /\ ps /\ ta ) ) -> th ) $=
 	e0 f0 f2 f3 f1 padantrr f0 f2 f1 f3 f4 p3adantr3 $.
 $}
-$( /* Deduction adding conjuncts to antecedent.  (Contributed by NM,
-       27-Dec-2007.) */
-
-$)
+$( Deduction adding conjuncts to antecedent.  (Contributed by NM,
+       27-Dec-2007.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ch ) -> th ) $.
@@ -2579,10 +2197,8 @@ ${
 	p3ad2antr2 $p |- ( ( ph /\ ( ps /\ ch /\ ta ) ) -> th ) $=
 	e0 f0 f2 f3 f1 padantrl f0 f1 f2 f3 f4 p3adantr3 $.
 $}
-$( /* Deduction adding conjuncts to antecedent.  (Contributed by NM,
-       30-Dec-2007.) */
-
-$)
+$( Deduction adding conjuncts to antecedent.  (Contributed by NM,
+       30-Dec-2007.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ch ) -> th ) $.
@@ -2594,10 +2210,8 @@ ${
 	p3ad2antr3 $p |- ( ( ph /\ ( ps /\ ta /\ ch ) ) -> th ) $=
 	e0 f0 f2 f3 f4 padantrl f0 f4 f2 f3 f1 p3adantr1 $.
 $}
-$( /* Remove a hypothesis from the second member of a biimplication.
-       (Contributed by FL, 22-Jul-2008.) */
-
-$)
+$( Remove a hypothesis from the second member of a biimplication.
+       (Contributed by FL, 22-Jul-2008.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> ( th <-> ( ch /\ ta ) ) ) $.
@@ -2609,9 +2223,7 @@ ${
 	p3anibar $p |- ( ( ph /\ ps /\ ch ) -> ( th <-> ta ) ) $=
 	e0 f0 f1 f2 psimp3 f0 f1 f2 aw3a f2 f4 pbiantrurd f0 f1 f2 aw3a f3 f2 f4 awa f4 pbitr4d $.
 $}
-$( /* Introduction in triple disjunction.  (Contributed by NM, 4-Apr-1995.) */
-
-$)
+$( Introduction in triple disjunction.  (Contributed by NM, 4-Apr-1995.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -2620,9 +2232,7 @@ ${
 	p3mix1 $p |- ( ph -> ( ph \/ ps \/ ch ) ) $=
 	f0 f1 f2 awo porc f0 f1 f2 p3orass f0 f0 f1 f2 awo awo f0 f1 f2 aw3o psylibr $.
 $}
-$( /* Introduction in triple disjunction.  (Contributed by NM, 4-Apr-1995.) */
-
-$)
+$( Introduction in triple disjunction.  (Contributed by NM, 4-Apr-1995.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -2631,9 +2241,7 @@ ${
 	p3mix2 $p |- ( ph -> ( ps \/ ph \/ ch ) ) $=
 	f0 f2 f1 p3mix1 f1 f0 f2 p3orrot f0 f0 f2 f1 aw3o f1 f0 f2 aw3o psylibr $.
 $}
-$( /* Introduction in triple disjunction.  (Contributed by NM, 4-Apr-1995.) */
-
-$)
+$( Introduction in triple disjunction.  (Contributed by NM, 4-Apr-1995.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -2642,10 +2250,8 @@ ${
 	p3mix3 $p |- ( ph -> ( ps \/ ch \/ ph ) ) $=
 	f0 f1 f2 p3mix1 f0 f1 f2 p3orrot f0 f0 f1 f2 aw3o f1 f2 f0 aw3o psylib $.
 $}
-$( /* Introduction in triple disjunction.  (Contributed by Mario Carneiro,
-       6-Oct-2014.) */
-
-$)
+$( Introduction in triple disjunction.  (Contributed by Mario Carneiro,
+       6-Oct-2014.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ph $.
@@ -2655,10 +2261,8 @@ ${
 	p3mix1i $p |- ( ph \/ ps \/ ch ) $=
 	e0 f0 f1 f2 p3mix1 f0 f0 f1 f2 aw3o aax-mp $.
 $}
-$( /* Introduction in triple disjunction.  (Contributed by Mario Carneiro,
-       6-Oct-2014.) */
-
-$)
+$( Introduction in triple disjunction.  (Contributed by Mario Carneiro,
+       6-Oct-2014.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ph $.
@@ -2668,10 +2272,8 @@ ${
 	p3mix2i $p |- ( ps \/ ph \/ ch ) $=
 	e0 f0 f1 f2 p3mix2 f0 f1 f0 f2 aw3o aax-mp $.
 $}
-$( /* Introduction in triple disjunction.  (Contributed by Mario Carneiro,
-       6-Oct-2014.) */
-
-$)
+$( Introduction in triple disjunction.  (Contributed by Mario Carneiro,
+       6-Oct-2014.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ph $.
@@ -2681,9 +2283,7 @@ ${
 	p3mix3i $p |- ( ps \/ ch \/ ph ) $=
 	e0 f0 f1 f2 p3mix3 f0 f1 f2 f0 aw3o aax-mp $.
 $}
-$( /* Infer conjunction of premises.  (Contributed by NM, 10-Feb-1995.) */
-
-$)
+$( Infer conjunction of premises.  (Contributed by NM, 10-Feb-1995.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ph $.
@@ -2695,10 +2295,8 @@ ${
 	p3pm3.2i $p |- ( ph /\ ps /\ ch ) $=
 	e0 e1 f0 f1 ppm3.2i e2 f0 f1 f2 adf-3an f0 f1 f2 aw3a f0 f1 awa f2 pmpbir2an $.
 $}
-$( /* ~ pm3.2 for a triple conjunction.  (Contributed by Alan Sare,
-       24-Oct-2011.) */
-
-$)
+$( ~ pm3.2 for a triple conjunction.  (Contributed by Alan Sare,
+       24-Oct-2011.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -2707,9 +2305,7 @@ ${
 	ppm3.2an3 $p |- ( ph -> ( ps -> ( ch -> ( ph /\ ps /\ ch ) ) ) ) $=
 	f0 f1 awa f2 ppm3.2 f0 f1 f2 f0 f1 awa f2 awa awi pex f0 f1 f2 adf-3an f0 f1 f2 aw3a f0 f1 awa f2 awa pbicomi f0 f1 f2 f0 f1 awa f2 awa f0 f1 f2 aw3a psyl8ib $.
 $}
-$( /* Join consequents with conjunction.  (Contributed by NM, 9-Apr-1994.) */
-
-$)
+$( Join consequents with conjunction.  (Contributed by NM, 9-Apr-1994.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ps ) $.
@@ -2722,10 +2318,8 @@ ${
 	p3jca $p |- ( ph -> ( ps /\ ch /\ th ) ) $=
 	e0 e1 e2 f0 f1 f2 f3 pjca31 f1 f2 f3 adf-3an f0 f1 f2 awa f3 awa f1 f2 f3 aw3a psylibr $.
 $}
-$( /* Deduction conjoining the consequents of three implications.
-       (Contributed by NM, 25-Sep-2005.) */
-
-$)
+$( Deduction conjoining the consequents of three implications.
+       (Contributed by NM, 25-Sep-2005.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -2739,10 +2333,8 @@ ${
 	p3jcad $p |- ( ph -> ( ps -> ( ch /\ th /\ ta ) ) ) $=
 	e0 f0 f1 f2 pimp e1 f0 f1 f3 pimp e2 f0 f1 f4 pimp f0 f1 awa f2 f3 f4 p3jca f0 f1 f2 f3 f4 aw3a pex $.
 $}
-$( /* Detach a conjunction of truths in a biconditional.  (Contributed by NM,
-       16-Sep-2011.) */
-
-$)
+$( Detach a conjunction of truths in a biconditional.  (Contributed by NM,
+       16-Sep-2011.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ps $.
@@ -2756,11 +2348,9 @@ ${
 	pmpbir3an $p |- ph $=
 	e0 e1 e2 f1 f2 f3 p3pm3.2i e3 f0 f1 f2 f3 aw3a pmpbir $.
 $}
-$( /* Detach a conjunction of truths in a biconditional.  (Contributed by
+$( Detach a conjunction of truths in a biconditional.  (Contributed by
        Mario Carneiro, 11-May-2014.)  (Revised by Mario Carneiro,
-       9-Jan-2015.) */
-
-$)
+       9-Jan-2015.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ch ) $.
@@ -2775,9 +2365,7 @@ ${
 	pmpbir3and $p |- ( ph -> ps ) $=
 	e0 e1 e2 f0 f2 f3 f4 p3jca e3 f0 f1 f2 f3 f4 aw3a pmpbird $.
 $}
-$( /* Syllogism inference.  (Contributed by Mario Carneiro, 11-May-2014.) */
-
-$)
+$( Syllogism inference.  (Contributed by Mario Carneiro, 11-May-2014.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ps ) $.
@@ -2792,10 +2380,8 @@ ${
 	psyl3anbrc $p |- ( ph -> ta ) $=
 	e0 e1 e2 f0 f1 f2 f3 p3jca e3 f0 f1 f2 f3 aw3a f4 psylibr $.
 $}
-$( /* Join antecedents and consequents with conjunction.  (Contributed by NM,
-       8-Apr-1994.) */
-
-$)
+$( Join antecedents and consequents with conjunction.  (Contributed by NM,
+       8-Apr-1994.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ps ) $.
@@ -2810,10 +2396,8 @@ ${
 	p3anim123i $p |- ( ( ph /\ ch /\ ta ) -> ( ps /\ th /\ et ) ) $=
 	e0 f0 f2 f1 f4 p3ad2ant1 e1 f2 f0 f3 f4 p3ad2ant2 e2 f4 f0 f5 f2 p3ad2ant3 f0 f2 f4 aw3a f1 f3 f5 p3jca $.
 $}
-$( /* Add two conjuncts to antecedent and consequent.  (Contributed by Jeff
-       Hankins, 16-Aug-2009.) */
-
-$)
+$( Add two conjuncts to antecedent and consequent.  (Contributed by Jeff
+       Hankins, 16-Aug-2009.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ps ) $.
@@ -2824,10 +2408,8 @@ ${
 	p3anim1i $p |- ( ( ph /\ ch /\ th ) -> ( ps /\ ch /\ th ) ) $=
 	e0 f2 pid f3 pid f0 f1 f2 f2 f3 f3 p3anim123i $.
 $}
-$( /* Add two conjuncts to antecedent and consequent.  (Contributed by Jeff
-       Hankins, 19-Aug-2009.) */
-
-$)
+$( Add two conjuncts to antecedent and consequent.  (Contributed by Jeff
+       Hankins, 19-Aug-2009.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ps ) $.
@@ -2838,10 +2420,8 @@ ${
 	p3anim3i $p |- ( ( ch /\ th /\ ph ) -> ( ch /\ th /\ ps ) ) $=
 	f2 pid f3 pid e0 f2 f2 f3 f3 f0 f1 p3anim123i $.
 $}
-$( /* Join 3 biconditionals with conjunction.  (Contributed by NM,
-       21-Apr-1994.) */
-
-$)
+$( Join 3 biconditionals with conjunction.  (Contributed by NM,
+       21-Apr-1994.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph <-> ps ) $.
@@ -2856,10 +2436,8 @@ ${
 	p3anbi123i $p |- ( ( ph /\ ch /\ ta ) <-> ( ps /\ th /\ et ) ) $=
 	e0 e1 f0 f1 f2 f3 panbi12i e2 f0 f2 awa f1 f3 awa f4 f5 panbi12i f0 f2 f4 adf-3an f1 f3 f5 adf-3an f0 f2 awa f4 awa f1 f3 awa f5 awa f0 f2 f4 aw3a f1 f3 f5 aw3a p3bitr4i $.
 $}
-$( /* Join 3 biconditionals with disjunction.  (Contributed by NM,
-       17-May-1994.) */
-
-$)
+$( Join 3 biconditionals with disjunction.  (Contributed by NM,
+       17-May-1994.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph <-> ps ) $.
@@ -2874,10 +2452,8 @@ ${
 	p3orbi123i $p |- ( ( ph \/ ch \/ ta ) <-> ( ps \/ th \/ et ) ) $=
 	e0 e1 f0 f1 f2 f3 porbi12i e2 f0 f2 awo f1 f3 awo f4 f5 porbi12i f0 f2 f4 adf-3or f1 f3 f5 adf-3or f0 f2 awo f4 awo f1 f3 awo f5 awo f0 f2 f4 aw3o f1 f3 f5 aw3o p3bitr4i $.
 $}
-$( /* Inference adding two conjuncts to each side of a biconditional.
-       (Contributed by NM, 8-Sep-2006.) */
-
-$)
+$( Inference adding two conjuncts to each side of a biconditional.
+       (Contributed by NM, 8-Sep-2006.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph <-> ps ) $.
@@ -2888,10 +2464,8 @@ ${
 	p3anbi1i $p |- ( ( ph /\ ch /\ th ) <-> ( ps /\ ch /\ th ) ) $=
 	e0 f2 pbiid f3 pbiid f0 f1 f2 f2 f3 f3 p3anbi123i $.
 $}
-$( /* Inference adding two conjuncts to each side of a biconditional.
-       (Contributed by NM, 8-Sep-2006.) */
-
-$)
+$( Inference adding two conjuncts to each side of a biconditional.
+       (Contributed by NM, 8-Sep-2006.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph <-> ps ) $.
@@ -2902,10 +2476,8 @@ ${
 	p3anbi2i $p |- ( ( ch /\ ph /\ th ) <-> ( ch /\ ps /\ th ) ) $=
 	f2 pbiid e0 f3 pbiid f2 f2 f0 f1 f3 f3 p3anbi123i $.
 $}
-$( /* Inference adding two conjuncts to each side of a biconditional.
-       (Contributed by NM, 8-Sep-2006.) */
-
-$)
+$( Inference adding two conjuncts to each side of a biconditional.
+       (Contributed by NM, 8-Sep-2006.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph <-> ps ) $.
@@ -2916,9 +2488,7 @@ ${
 	p3anbi3i $p |- ( ( ch /\ th /\ ph ) <-> ( ch /\ th /\ ps ) ) $=
 	f2 pbiid f3 pbiid e0 f2 f2 f3 f3 f0 f1 p3anbi123i $.
 $}
-$( /* Importation inference.  (Contributed by NM, 8-Apr-1994.) */
-
-$)
+$( Importation inference.  (Contributed by NM, 8-Apr-1994.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> th ) ) ) $.
@@ -2929,10 +2499,8 @@ ${
 	p3imp $p |- ( ( ph /\ ps /\ ch ) -> th ) $=
 	f0 f1 f2 adf-3an e0 f0 f1 f2 f3 pimp31 f0 f1 f2 aw3a f0 f1 awa f2 awa f3 psylbi $.
 $}
-$( /* Importation from double to triple conjunction.  (Contributed by NM,
-       20-Aug-1995.) */
-
-$)
+$( Importation from double to triple conjunction.  (Contributed by NM,
+       20-Aug-1995.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ( ph /\ ps ) /\ ch ) -> th ) $.
@@ -2943,10 +2511,8 @@ ${
 	p3impa $p |- ( ( ph /\ ps /\ ch ) -> th ) $=
 	e0 f0 f1 f2 f3 pexp31 f0 f1 f2 f3 p3imp $.
 $}
-$( /* Importation from double to triple conjunction.  (Contributed by NM,
-       20-Aug-1995.) */
-
-$)
+$( Importation from double to triple conjunction.  (Contributed by NM,
+       20-Aug-1995.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ph /\ ( ps /\ ch ) ) -> th ) $.
@@ -2957,9 +2523,7 @@ ${
 	p3impb $p |- ( ( ph /\ ps /\ ch ) -> th ) $=
 	e0 f0 f1 f2 f3 pexp32 f0 f1 f2 f3 p3imp $.
 $}
-$( /* Importation to triple conjunction.  (Contributed by NM, 13-Jun-2006.) */
-
-$)
+$( Importation to triple conjunction.  (Contributed by NM, 13-Jun-2006.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ph /\ ps ) -> ( ch -> th ) ) $.
@@ -2970,9 +2534,7 @@ ${
 	p3impia $p |- ( ( ph /\ ps /\ ch ) -> th ) $=
 	e0 f0 f1 f2 f3 awi pex f0 f1 f2 f3 p3imp $.
 $}
-$( /* Importation to triple conjunction.  (Contributed by NM, 13-Jun-2006.) */
-
-$)
+$( Importation to triple conjunction.  (Contributed by NM, 13-Jun-2006.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ( ( ps /\ ch ) -> th ) ) $.
@@ -2983,9 +2545,7 @@ ${
 	p3impib $p |- ( ( ph /\ ps /\ ch ) -> th ) $=
 	e0 f0 f1 f2 f3 pexp3a f0 f1 f2 f3 p3imp $.
 $}
-$( /* Exportation inference.  (Contributed by NM, 30-May-1994.) */
-
-$)
+$( Exportation inference.  (Contributed by NM, 30-May-1994.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> th ) $.
@@ -2996,10 +2556,8 @@ ${
 	p3exp $p |- ( ph -> ( ps -> ( ch -> th ) ) ) $=
 	f0 f1 f2 ppm3.2an3 e0 f0 f1 f2 f0 f1 f2 aw3a f3 psyl8 $.
 $}
-$( /* Exportation from triple to double conjunction.  (Contributed by NM,
-       20-Aug-1995.) */
-
-$)
+$( Exportation from triple to double conjunction.  (Contributed by NM,
+       20-Aug-1995.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> th ) $.
@@ -3010,10 +2568,8 @@ ${
 	p3expa $p |- ( ( ( ph /\ ps ) /\ ch ) -> th ) $=
 	e0 f0 f1 f2 f3 p3exp f0 f1 f2 f3 pimp31 $.
 $}
-$( /* Exportation from triple to double conjunction.  (Contributed by NM,
-       20-Aug-1995.) */
-
-$)
+$( Exportation from triple to double conjunction.  (Contributed by NM,
+       20-Aug-1995.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> th ) $.
@@ -3024,10 +2580,8 @@ ${
 	p3expb $p |- ( ( ph /\ ( ps /\ ch ) ) -> th ) $=
 	e0 f0 f1 f2 f3 p3exp f0 f1 f2 f3 pimp32 $.
 $}
-$( /* Exportation from triple conjunction.  (Contributed by NM,
-       19-May-2007.) */
-
-$)
+$( Exportation from triple conjunction.  (Contributed by NM,
+       19-May-2007.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> th ) $.
@@ -3038,10 +2592,8 @@ ${
 	p3expia $p |- ( ( ph /\ ps ) -> ( ch -> th ) ) $=
 	e0 f0 f1 f2 f3 p3exp f0 f1 f2 f3 awi pimp $.
 $}
-$( /* Exportation from triple conjunction.  (Contributed by NM,
-       19-May-2007.) */
-
-$)
+$( Exportation from triple conjunction.  (Contributed by NM,
+       19-May-2007.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> th ) $.
@@ -3052,10 +2604,8 @@ ${
 	p3expib $p |- ( ph -> ( ( ps /\ ch ) -> th ) ) $=
 	e0 f0 f1 f2 f3 p3exp f0 f1 f2 f3 pimp3a $.
 $}
-$( /* Commutation in antecedent.  Swap 1st and 3rd.  (Contributed by NM,
-       28-Jan-1996.)  (Proof shortened by Andrew Salmon, 13-May-2011.) */
-
-$)
+$( Commutation in antecedent.  Swap 1st and 3rd.  (Contributed by NM,
+       28-Jan-1996.)  (Proof shortened by Andrew Salmon, 13-May-2011.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> th ) $.
@@ -3066,10 +2616,8 @@ ${
 	p3com12 $p |- ( ( ps /\ ph /\ ch ) -> th ) $=
 	f1 f0 f2 p3ancoma e0 f1 f0 f2 aw3a f0 f1 f2 aw3a f3 psylbi $.
 $}
-$( /* Commutation in antecedent.  Swap 1st and 3rd.  (Contributed by NM,
-       28-Jan-1996.) */
-
-$)
+$( Commutation in antecedent.  Swap 1st and 3rd.  (Contributed by NM,
+       28-Jan-1996.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> th ) $.
@@ -3080,10 +2628,8 @@ ${
 	p3com13 $p |- ( ( ch /\ ps /\ ph ) -> th ) $=
 	f2 f1 f0 p3anrev e0 f2 f1 f0 aw3a f0 f1 f2 aw3a f3 psylbi $.
 $}
-$( /* Commutation in antecedent.  Swap 2nd and 3rd.  (Contributed by NM,
-       28-Jan-1996.) */
-
-$)
+$( Commutation in antecedent.  Swap 2nd and 3rd.  (Contributed by NM,
+       28-Jan-1996.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> th ) $.
@@ -3094,10 +2640,8 @@ ${
 	p3com23 $p |- ( ( ph /\ ch /\ ps ) -> th ) $=
 	e0 f0 f1 f2 f3 p3exp f0 f1 f2 f3 pcom23 f0 f2 f1 f3 p3imp $.
 $}
-$( /* Commutation in antecedent.  Rotate left.  (Contributed by NM,
-       28-Jan-1996.) */
-
-$)
+$( Commutation in antecedent.  Rotate left.  (Contributed by NM,
+       28-Jan-1996.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> th ) $.
@@ -3108,10 +2652,8 @@ ${
 	p3coml $p |- ( ( ps /\ ch /\ ph ) -> th ) $=
 	e0 f0 f1 f2 f3 p3com23 f0 f2 f1 f3 p3com13 $.
 $}
-$( /* Commutation in antecedent.  Rotate right.  (Contributed by NM,
-       28-Jan-1996.) */
-
-$)
+$( Commutation in antecedent.  Rotate right.  (Contributed by NM,
+       28-Jan-1996.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> th ) $.
@@ -3122,10 +2664,8 @@ ${
 	p3comr $p |- ( ( ch /\ ph /\ ps ) -> th ) $=
 	e0 f0 f1 f2 f3 p3coml f1 f2 f0 f3 p3coml $.
 $}
-$( /* Deduction adding a conjunct to antecedent.  (Contributed by NM,
-       16-Feb-2008.) */
-
-$)
+$( Deduction adding a conjunct to antecedent.  (Contributed by NM,
+       16-Feb-2008.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> th ) $.
@@ -3137,10 +2677,8 @@ ${
 	p3adant3r1 $p |- ( ( ph /\ ( ta /\ ps /\ ch ) ) -> th ) $=
 	e0 f0 f1 f2 f3 p3expb f0 f1 f2 f3 f4 p3adantr1 $.
 $}
-$( /* Deduction adding a conjunct to antecedent.  (Contributed by NM,
-       17-Feb-2008.) */
-
-$)
+$( Deduction adding a conjunct to antecedent.  (Contributed by NM,
+       17-Feb-2008.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> th ) $.
@@ -3152,10 +2690,8 @@ ${
 	p3adant3r2 $p |- ( ( ph /\ ( ps /\ ta /\ ch ) ) -> th ) $=
 	e0 f0 f1 f2 f3 p3expb f0 f1 f2 f3 f4 p3adantr2 $.
 $}
-$( /* Deduction adding a conjunct to antecedent.  (Contributed by NM,
-       18-Feb-2008.) */
-
-$)
+$( Deduction adding a conjunct to antecedent.  (Contributed by NM,
+       18-Feb-2008.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> th ) $.
@@ -3167,9 +2703,7 @@ ${
 	p3adant3r3 $p |- ( ( ph /\ ( ps /\ ch /\ ta ) ) -> th ) $=
 	e0 f0 f1 f2 f3 p3expb f0 f1 f2 f3 f4 p3adantr3 $.
 $}
-$( /* Swap conjuncts.  (Contributed by NM, 16-Dec-2007.) */
-
-$)
+$( Swap conjuncts.  (Contributed by NM, 16-Dec-2007.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ( ph /\ ps /\ ch ) /\ th ) -> ta ) $.
@@ -3181,10 +2715,8 @@ ${
 	p3an1rs $p |- ( ( ( ph /\ ps /\ th ) /\ ch ) -> ta ) $=
 	e0 f0 f1 f2 aw3a f3 f4 pex f0 f1 f2 f3 f4 awi p3exp f0 f1 f2 f3 f4 pcom34 f0 f1 f3 f2 f4 awi p3imp f0 f1 f3 aw3a f2 f4 pimp $.
 $}
-$( /* Importation to left triple conjunction.  (Contributed by NM,
-       24-Feb-2005.) */
-
-$)
+$( Importation to left triple conjunction.  (Contributed by NM,
+       24-Feb-2005.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> ( th -> ta ) ) ) ) $.
@@ -3196,10 +2728,8 @@ ${
 	p3imp1 $p |- ( ( ( ph /\ ps /\ ch ) /\ th ) -> ta ) $=
 	e0 f0 f1 f2 f3 f4 awi p3imp f0 f1 f2 aw3a f3 f4 pimp $.
 $}
-$( /* Importation deduction for triple conjunction.  (Contributed by NM,
-       26-Oct-2006.) */
-
-$)
+$( Importation deduction for triple conjunction.  (Contributed by NM,
+       26-Oct-2006.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> ( th -> ta ) ) ) ) $.
@@ -3211,10 +2741,8 @@ ${
 	p3impd $p |- ( ph -> ( ( ps /\ ch /\ th ) -> ta ) ) $=
 	e0 f0 f1 f2 f3 f4 pcom4l f1 f2 f3 f0 f4 awi p3imp f1 f2 f3 aw3a f0 f4 pcom12 $.
 $}
-$( /* Importation to right triple conjunction.  (Contributed by NM,
-       26-Oct-2006.) */
-
-$)
+$( Importation to right triple conjunction.  (Contributed by NM,
+       26-Oct-2006.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> ( th -> ta ) ) ) ) $.
@@ -3226,10 +2754,8 @@ ${
 	p3imp2 $p |- ( ( ph /\ ( ps /\ ch /\ th ) ) -> ta ) $=
 	e0 f0 f1 f2 f3 f4 p3impd f0 f1 f2 f3 aw3a f4 pimp $.
 $}
-$( /* Exportation from left triple conjunction.  (Contributed by NM,
-       24-Feb-2005.) */
-
-$)
+$( Exportation from left triple conjunction.  (Contributed by NM,
+       24-Feb-2005.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ( ph /\ ps /\ ch ) /\ th ) -> ta ) $.
@@ -3241,10 +2767,8 @@ ${
 	p3exp1 $p |- ( ph -> ( ps -> ( ch -> ( th -> ta ) ) ) ) $=
 	e0 f0 f1 f2 aw3a f3 f4 pex f0 f1 f2 f3 f4 awi p3exp $.
 $}
-$( /* Exportation deduction for triple conjunction.  (Contributed by NM,
-       26-Oct-2006.) */
-
-$)
+$( Exportation deduction for triple conjunction.  (Contributed by NM,
+       26-Oct-2006.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ( ps /\ ch /\ th ) -> ta ) ) $.
@@ -3256,10 +2780,8 @@ ${
 	p3expd $p |- ( ph -> ( ps -> ( ch -> ( th -> ta ) ) ) ) $=
 	e0 f0 f1 f2 f3 aw3a f4 pcom12 f1 f2 f3 f0 f4 awi p3exp f1 f2 f3 f0 f4 pcom4r $.
 $}
-$( /* Exportation from right triple conjunction.  (Contributed by NM,
-       26-Oct-2006.) */
-
-$)
+$( Exportation from right triple conjunction.  (Contributed by NM,
+       26-Oct-2006.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ( ps /\ ch /\ th ) ) -> ta ) $.
@@ -3271,10 +2793,8 @@ ${
 	p3exp2 $p |- ( ph -> ( ps -> ( ch -> ( th -> ta ) ) ) ) $=
 	e0 f0 f1 f2 f3 aw3a f4 pex f0 f1 f2 f3 f4 p3expd $.
 $}
-$( /* A triple exportation inference.  (Contributed by Jeff Hankins,
-       8-Jul-2009.) */
-
-$)
+$( A triple exportation inference.  (Contributed by Jeff Hankins,
+       8-Jul-2009.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> ( ( th /\ ta ) -> et ) ) $.
@@ -3287,10 +2807,8 @@ ${
 	pexp5o $p |- ( ph -> ( ps -> ( ch -> ( th -> ( ta -> et ) ) ) ) ) $=
 	e0 f0 f1 f2 aw3a f3 f4 f5 pexp3a f0 f1 f2 f3 f4 f5 awi awi p3exp $.
 $}
-$( /* A triple exportation inference.  (Contributed by Jeff Hankins,
-       8-Jul-2009.) */
-
-$)
+$( A triple exportation inference.  (Contributed by Jeff Hankins,
+       8-Jul-2009.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ( ( ph /\ ( ps /\ ch /\ th ) ) /\ ta ) -> et ) $.
@@ -3303,10 +2821,8 @@ ${
 	pexp516 $p |- ( ph -> ( ps -> ( ch -> ( th -> ( ta -> et ) ) ) ) ) $=
 	e0 f0 f1 f2 f3 aw3a f4 f5 pexp31 f0 f1 f2 f3 f4 f5 awi p3expd $.
 $}
-$( /* A triple exportation inference.  (Contributed by Jeff Hankins,
-       8-Jul-2009.) */
-
-$)
+$( A triple exportation inference.  (Contributed by Jeff Hankins,
+       8-Jul-2009.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ( ( ph /\ ps /\ ch ) /\ ( th /\ ta ) ) -> et ) $.
@@ -3319,10 +2835,8 @@ ${
 	pexp520 $p |- ( ph -> ( ps -> ( ch -> ( th -> ( ta -> et ) ) ) ) ) $=
 	e0 f0 f1 f2 aw3a f3 f4 awa f5 pex f0 f1 f2 f3 f4 f5 pexp5o $.
 $}
-$( /* Associative law for conjunction applied to antecedent (eliminates
-       syllogism).  (Contributed by Mario Carneiro, 4-Jan-2017.) */
-
-$)
+$( Associative law for conjunction applied to antecedent (eliminates
+       syllogism).  (Contributed by Mario Carneiro, 4-Jan-2017.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ( ps /\ ch /\ th ) ) -> ta ) $.
@@ -3334,10 +2848,8 @@ ${
 	p3anassrs $p |- ( ( ( ( ph /\ ps ) /\ ch ) /\ th ) -> ta ) $=
 	e0 f0 f1 f2 f3 f4 p3exp2 f0 f1 f2 f3 f4 pimp41 $.
 $}
-$( /* Deduction adding a conjunct to antecedent.  (Contributed by NM,
-       8-Jan-2006.) */
-
-$)
+$( Deduction adding a conjunct to antecedent.  (Contributed by NM,
+       8-Jan-2006.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> th ) $.
@@ -3349,10 +2861,8 @@ ${
 	p3adant1l $p |- ( ( ( ta /\ ph ) /\ ps /\ ch ) -> th ) $=
 	e0 f0 f1 f2 f3 p3expb f0 f1 f2 awa f3 f4 padantll f4 f0 awa f1 f2 f3 p3impb $.
 $}
-$( /* Deduction adding a conjunct to antecedent.  (Contributed by NM,
-       8-Jan-2006.) */
-
-$)
+$( Deduction adding a conjunct to antecedent.  (Contributed by NM,
+       8-Jan-2006.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> th ) $.
@@ -3364,10 +2874,8 @@ ${
 	p3adant1r $p |- ( ( ( ph /\ ta ) /\ ps /\ ch ) -> th ) $=
 	e0 f0 f1 f2 f3 p3expb f0 f1 f2 awa f3 f4 padantlr f0 f4 awa f1 f2 f3 p3impb $.
 $}
-$( /* Deduction adding a conjunct to antecedent.  (Contributed by NM,
-       8-Jan-2006.) */
-
-$)
+$( Deduction adding a conjunct to antecedent.  (Contributed by NM,
+       8-Jan-2006.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> th ) $.
@@ -3379,10 +2887,8 @@ ${
 	p3adant2l $p |- ( ( ph /\ ( ta /\ ps ) /\ ch ) -> th ) $=
 	e0 f0 f1 f2 f3 p3com12 f1 f0 f2 f3 f4 p3adant1l f4 f1 awa f0 f2 f3 p3com12 $.
 $}
-$( /* Deduction adding a conjunct to antecedent.  (Contributed by NM,
-       8-Jan-2006.) */
-
-$)
+$( Deduction adding a conjunct to antecedent.  (Contributed by NM,
+       8-Jan-2006.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> th ) $.
@@ -3394,10 +2900,8 @@ ${
 	p3adant2r $p |- ( ( ph /\ ( ps /\ ta ) /\ ch ) -> th ) $=
 	e0 f0 f1 f2 f3 p3com12 f1 f0 f2 f3 f4 p3adant1r f1 f4 awa f0 f2 f3 p3com12 $.
 $}
-$( /* Deduction adding a conjunct to antecedent.  (Contributed by NM,
-       8-Jan-2006.) */
-
-$)
+$( Deduction adding a conjunct to antecedent.  (Contributed by NM,
+       8-Jan-2006.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> th ) $.
@@ -3409,10 +2913,8 @@ ${
 	p3adant3l $p |- ( ( ph /\ ps /\ ( ta /\ ch ) ) -> th ) $=
 	e0 f0 f1 f2 f3 p3com13 f2 f1 f0 f3 f4 p3adant1l f4 f2 awa f1 f0 f3 p3com13 $.
 $}
-$( /* Deduction adding a conjunct to antecedent.  (Contributed by NM,
-       8-Jan-2006.) */
-
-$)
+$( Deduction adding a conjunct to antecedent.  (Contributed by NM,
+       8-Jan-2006.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> th ) $.
@@ -3424,10 +2926,8 @@ ${
 	p3adant3r $p |- ( ( ph /\ ps /\ ( ch /\ ta ) ) -> th ) $=
 	e0 f0 f1 f2 f3 p3com13 f2 f1 f0 f3 f4 p3adant1r f2 f4 awa f1 f0 f3 p3com13 $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by Jeff Hankins,
-         1-Aug-2009.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by Jeff Hankins,
+         1-Aug-2009.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3442,10 +2942,8 @@ ${
 	psyl12anc $p |- ( ph -> ta ) $=
 	e0 e1 e2 f0 f1 f2 f3 pjca32 e3 f0 f1 f2 f3 awa awa f4 psyl $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by Jeff Hankins,
-         1-Aug-2009.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by Jeff Hankins,
+         1-Aug-2009.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3460,10 +2958,8 @@ ${
 	psyl21anc $p |- ( ph -> ta ) $=
 	e0 e1 e2 f0 f1 f2 f3 pjca31 e3 f0 f1 f2 awa f3 awa f4 psyl $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3478,10 +2974,8 @@ ${
 	psyl3anc $p |- ( ph -> ta ) $=
 	e0 e1 e2 f0 f1 f2 f3 p3jca e3 f0 f1 f2 f3 aw3a f4 psyl $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3498,10 +2992,8 @@ ${
 	psyl22anc $p |- ( ph -> et ) $=
 	e0 e1 f0 f1 f2 pjca e2 e3 e4 f0 f1 f2 awa f3 f4 f5 psyl12anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3518,10 +3010,8 @@ ${
 	psyl13anc $p |- ( ph -> et ) $=
 	e0 e1 e2 e3 f0 f2 f3 f4 p3jca e4 f0 f1 f2 f3 f4 aw3a f5 psyl2anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3538,10 +3028,8 @@ ${
 	psyl31anc $p |- ( ph -> et ) $=
 	e0 e1 e2 f0 f1 f2 f3 p3jca e3 e4 f0 f1 f2 f3 aw3a f4 f5 psyl2anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3558,10 +3046,8 @@ ${
 	psyl112anc $p |- ( ph -> et ) $=
 	e0 e1 e2 e3 f0 f3 f4 pjca e4 f0 f1 f2 f3 f4 awa f5 psyl3anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3578,10 +3064,8 @@ ${
 	psyl121anc $p |- ( ph -> et ) $=
 	e0 e1 e2 f0 f2 f3 pjca e3 e4 f0 f1 f2 f3 awa f4 f5 psyl3anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3598,10 +3082,8 @@ ${
 	psyl211anc $p |- ( ph -> et ) $=
 	e0 e1 f0 f1 f2 pjca e2 e3 e4 f0 f1 f2 awa f3 f4 f5 psyl3anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3620,10 +3102,8 @@ ${
 	psyl23anc $p |- ( ph -> ze ) $=
 	e0 e1 f0 f1 f2 pjca e2 e3 e4 e5 f0 f1 f2 awa f3 f4 f5 f6 psyl13anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3642,10 +3122,8 @@ ${
 	psyl32anc $p |- ( ph -> ze ) $=
 	e0 e1 e2 e3 e4 f0 f4 f5 pjca e5 f0 f1 f2 f3 f4 f5 awa f6 psyl31anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3664,10 +3142,8 @@ ${
 	psyl122anc $p |- ( ph -> ze ) $=
 	e0 e1 e2 e3 e4 f0 f4 f5 pjca e5 f0 f1 f2 f3 f4 f5 awa f6 psyl121anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3686,10 +3162,8 @@ ${
 	psyl212anc $p |- ( ph -> ze ) $=
 	e0 e1 e2 e3 e4 f0 f4 f5 pjca e5 f0 f1 f2 f3 f4 f5 awa f6 psyl211anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3708,10 +3182,8 @@ ${
 	psyl221anc $p |- ( ph -> ze ) $=
 	e0 e1 e2 e3 f0 f3 f4 pjca e4 e5 f0 f1 f2 f3 f4 awa f5 f6 psyl211anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3730,10 +3202,8 @@ ${
 	psyl113anc $p |- ( ph -> ze ) $=
 	e0 e1 e2 e3 e4 f0 f3 f4 f5 p3jca e5 f0 f1 f2 f3 f4 f5 aw3a f6 psyl3anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3752,10 +3222,8 @@ ${
 	psyl131anc $p |- ( ph -> ze ) $=
 	e0 e1 e2 e3 f0 f2 f3 f4 p3jca e4 e5 f0 f1 f2 f3 f4 aw3a f5 f6 psyl3anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3774,10 +3242,8 @@ ${
 	psyl311anc $p |- ( ph -> ze ) $=
 	e0 e1 e2 f0 f1 f2 f3 p3jca e3 e4 e5 f0 f1 f2 f3 aw3a f4 f5 f6 psyl3anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze si $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3798,10 +3264,8 @@ ${
 	psyl33anc $p |- ( ph -> si ) $=
 	e0 e1 e2 f0 f1 f2 f3 p3jca e3 e4 e5 e6 f0 f1 f2 f3 aw3a f4 f5 f6 f7 psyl13anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze si $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3822,10 +3286,8 @@ ${
 	psyl222anc $p |- ( ph -> si ) $=
 	e0 e1 e2 e3 e4 e5 f0 f5 f6 pjca e6 f0 f1 f2 f3 f4 f5 f6 awa f7 psyl221anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze si $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3846,10 +3308,8 @@ ${
 	psyl123anc $p |- ( ph -> si ) $=
 	e0 e1 e2 f0 f2 f3 pjca e3 e4 e5 e6 f0 f1 f2 f3 awa f4 f5 f6 f7 psyl113anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Jul-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Jul-2012.) $)
 ${
 	$v ph ps ch th ta et ze si $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3870,10 +3330,8 @@ ${
 	psyl132anc $p |- ( ph -> si ) $=
 	e0 e1 e2 e3 e4 e5 f0 f5 f6 pjca e6 f0 f1 f2 f3 f4 f5 f6 awa f7 psyl131anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze si $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3894,10 +3352,8 @@ ${
 	psyl213anc $p |- ( ph -> si ) $=
 	e0 e1 f0 f1 f2 pjca e2 e3 e4 e5 e6 f0 f1 f2 awa f3 f4 f5 f6 f7 psyl113anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze si $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3918,10 +3374,8 @@ ${
 	psyl231anc $p |- ( ph -> si ) $=
 	e0 e1 f0 f1 f2 pjca e2 e3 e4 e5 e6 f0 f1 f2 awa f3 f4 f5 f6 f7 psyl131anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Jul-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Jul-2012.) $)
 ${
 	$v ph ps ch th ta et ze si $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3942,10 +3396,8 @@ ${
 	psyl312anc $p |- ( ph -> si ) $=
 	e0 e1 e2 e3 e4 e5 f0 f5 f6 pjca e6 f0 f1 f2 f3 f4 f5 f6 awa f7 psyl311anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Jul-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Jul-2012.) $)
 ${
 	$v ph ps ch th ta et ze si $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3966,10 +3418,8 @@ ${
 	psyl321anc $p |- ( ph -> si ) $=
 	e0 e1 e2 e3 e4 f0 f4 f5 pjca e5 e6 f0 f1 f2 f3 f4 f5 awa f6 f7 psyl311anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze si rh $.
 	e0 $e |- ( ph -> ps ) $.
@@ -3992,10 +3442,8 @@ ${
 	psyl133anc $p |- ( ph -> rh ) $=
 	e0 e1 e2 e3 e4 e5 e6 f0 f5 f6 f7 p3jca e7 f0 f1 f2 f3 f4 f5 f6 f7 aw3a f8 psyl131anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze si rh $.
 	e0 $e |- ( ph -> ps ) $.
@@ -4018,10 +3466,8 @@ ${
 	psyl313anc $p |- ( ph -> rh ) $=
 	e0 e1 e2 e3 e4 e5 e6 f0 f5 f6 f7 p3jca e7 f0 f1 f2 f3 f4 f5 f6 f7 aw3a f8 psyl311anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze si rh $.
 	e0 $e |- ( ph -> ps ) $.
@@ -4044,10 +3490,8 @@ ${
 	psyl331anc $p |- ( ph -> rh ) $=
 	e0 e1 e2 e3 e4 e5 f0 f4 f5 f6 p3jca e6 e7 f0 f1 f2 f3 f4 f5 f6 aw3a f7 f8 psyl311anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze si rh $.
 	e0 $e |- ( ph -> ps ) $.
@@ -4070,10 +3514,8 @@ ${
 	psyl223anc $p |- ( ph -> rh ) $=
 	e0 e1 e2 e3 f0 f3 f4 pjca e4 e5 e6 e7 f0 f1 f2 f3 f4 awa f5 f6 f7 f8 psyl213anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze si rh $.
 	e0 $e |- ( ph -> ps ) $.
@@ -4096,10 +3538,8 @@ ${
 	psyl232anc $p |- ( ph -> rh ) $=
 	e0 e1 e2 e3 e4 e5 e6 f0 f6 f7 pjca e7 f0 f1 f2 f3 f4 f5 f6 f7 awa f8 psyl231anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze si rh $.
 	e0 $e |- ( ph -> ps ) $.
@@ -4122,10 +3562,8 @@ ${
 	psyl322anc $p |- ( ph -> rh ) $=
 	e0 e1 e2 e3 e4 e5 e6 f0 f6 f7 pjca e7 f0 f1 f2 f3 f4 f5 f6 f7 awa f8 psyl321anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze si rh mu $.
 	e0 $e |- ( ph -> ps ) $.
@@ -4150,10 +3588,8 @@ ${
 	psyl233anc $p |- ( ph -> mu ) $=
 	e0 e1 f0 f1 f2 pjca e2 e3 e4 e5 e6 e7 e8 f0 f1 f2 awa f3 f4 f5 f6 f7 f8 f9 psyl133anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze si rh mu $.
 	e0 $e |- ( ph -> ps ) $.
@@ -4178,10 +3614,8 @@ ${
 	psyl323anc $p |- ( ph -> mu ) $=
 	e0 e1 e2 e3 e4 f0 f4 f5 pjca e5 e6 e7 e8 f0 f1 f2 f3 f4 f5 awa f6 f7 f8 f9 psyl313anc $.
 $}
-$( /* Syllogism combined with contraction.  (Contributed by NM,
-         11-Mar-2012.) */
-
-$)
+$( Syllogism combined with contraction.  (Contributed by NM,
+         11-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze si rh mu $.
 	e0 $e |- ( ph -> ps ) $.
@@ -4206,10 +3640,8 @@ ${
 	psyl332anc $p |- ( ph -> mu ) $=
 	e0 e1 e2 e3 e4 e5 e6 e7 f0 f7 f8 pjca e8 f0 f1 f2 f3 f4 f5 f6 f7 f8 awa f9 psyl331anc $.
 $}
-$( /* A syllogism inference combined with contraction.  (Contributed by NM,
-         10-Mar-2012.) */
-
-$)
+$( A syllogism inference combined with contraction.  (Contributed by NM,
+         10-Mar-2012.) $)
 ${
 	$v ph ps ch th ta et ze si rh mu la $.
 	e0 $e |- ( ph -> ps ) $.
@@ -4236,9 +3668,7 @@ ${
 	psyl333anc $p |- ( ph -> la ) $=
 	e0 e1 e2 e3 e4 e5 e6 e7 e8 f0 f7 f8 f9 p3jca e9 f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 aw3a f10 psyl331anc $.
 $}
-$( /* A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
-
-$)
+$( A syllogism inference.  (Contributed by NM, 22-Aug-1995.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ps ) $.
@@ -4251,9 +3681,7 @@ ${
 	psyl3an1 $p |- ( ( ph /\ ch /\ th ) -> ta ) $=
 	e0 f0 f1 f2 f3 p3anim1i e1 f0 f2 f3 aw3a f1 f2 f3 aw3a f4 psyl $.
 $}
-$( /* A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
-
-$)
+$( A syllogism inference.  (Contributed by NM, 22-Aug-1995.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ch ) $.
@@ -4266,9 +3694,7 @@ ${
 	psyl3an2 $p |- ( ( ps /\ ph /\ th ) -> ta ) $=
 	e0 e1 f1 f2 f3 f4 p3exp f0 f2 f1 f3 f4 awi psyl5 f1 f0 f3 f4 p3imp $.
 $}
-$( /* A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
-
-$)
+$( A syllogism inference.  (Contributed by NM, 22-Aug-1995.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> th ) $.
@@ -4281,9 +3707,7 @@ ${
 	psyl3an3 $p |- ( ( ps /\ ch /\ ph ) -> ta ) $=
 	e0 e1 f1 f2 f3 f4 p3exp f0 f3 f1 f2 f4 psyl7 f1 f2 f0 f4 p3imp $.
 $}
-$( /* A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
-
-$)
+$( A syllogism inference.  (Contributed by NM, 22-Aug-1995.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph <-> ps ) $.
@@ -4296,9 +3720,7 @@ ${
 	psyl3an1b $p |- ( ( ph /\ ch /\ th ) -> ta ) $=
 	e0 f0 f1 pbiimpi e1 f0 f1 f2 f3 f4 psyl3an1 $.
 $}
-$( /* A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
-
-$)
+$( A syllogism inference.  (Contributed by NM, 22-Aug-1995.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph <-> ch ) $.
@@ -4311,9 +3733,7 @@ ${
 	psyl3an2b $p |- ( ( ps /\ ph /\ th ) -> ta ) $=
 	e0 f0 f2 pbiimpi e1 f0 f1 f2 f3 f4 psyl3an2 $.
 $}
-$( /* A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
-
-$)
+$( A syllogism inference.  (Contributed by NM, 22-Aug-1995.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph <-> th ) $.
@@ -4326,9 +3746,7 @@ ${
 	psyl3an3b $p |- ( ( ps /\ ch /\ ph ) -> ta ) $=
 	e0 f0 f3 pbiimpi e1 f0 f1 f2 f3 f4 psyl3an3 $.
 $}
-$( /* A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
-
-$)
+$( A syllogism inference.  (Contributed by NM, 22-Aug-1995.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ps <-> ph ) $.
@@ -4341,9 +3759,7 @@ ${
 	psyl3an1br $p |- ( ( ph /\ ch /\ th ) -> ta ) $=
 	e0 f1 f0 pbiimpri e1 f0 f1 f2 f3 f4 psyl3an1 $.
 $}
-$( /* A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
-
-$)
+$( A syllogism inference.  (Contributed by NM, 22-Aug-1995.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ch <-> ph ) $.
@@ -4356,9 +3772,7 @@ ${
 	psyl3an2br $p |- ( ( ps /\ ph /\ th ) -> ta ) $=
 	e0 f2 f0 pbiimpri e1 f0 f1 f2 f3 f4 psyl3an2 $.
 $}
-$( /* A syllogism inference.  (Contributed by NM, 22-Aug-1995.) */
-
-$)
+$( A syllogism inference.  (Contributed by NM, 22-Aug-1995.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( th <-> ph ) $.
@@ -4371,9 +3785,7 @@ ${
 	psyl3an3br $p |- ( ( ps /\ ch /\ ph ) -> ta ) $=
 	e0 f3 f0 pbiimpri e1 f0 f1 f2 f3 f4 psyl3an3 $.
 $}
-$( /* A triple syllogism inference.  (Contributed by NM, 13-May-2004.) */
-
-$)
+$( A triple syllogism inference.  (Contributed by NM, 13-May-2004.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	e0 $e |- ( ph -> ps ) $.
@@ -4390,9 +3802,7 @@ ${
 	psyl3an $p |- ( ( ph /\ ch /\ ta ) -> ze ) $=
 	e0 e1 e2 f0 f1 f2 f3 f4 f5 p3anim123i e3 f0 f2 f4 aw3a f1 f3 f5 aw3a f6 psyl $.
 $}
-$( /* A triple syllogism inference.  (Contributed by NM, 15-Oct-2005.) */
-
-$)
+$( A triple syllogism inference.  (Contributed by NM, 15-Oct-2005.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	e0 $e |- ( ph <-> ps ) $.
@@ -4409,9 +3819,7 @@ ${
 	psyl3anb $p |- ( ( ph /\ ch /\ ta ) -> ze ) $=
 	e0 e1 e2 f0 f1 f2 f3 f4 f5 p3anbi123i e3 f0 f2 f4 aw3a f1 f3 f5 aw3a f6 psylbi $.
 $}
-$( /* A triple syllogism inference.  (Contributed by NM, 29-Dec-2011.) */
-
-$)
+$( A triple syllogism inference.  (Contributed by NM, 29-Dec-2011.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	e0 $e |- ( ps <-> ph ) $.
@@ -4428,9 +3836,7 @@ ${
 	psyl3anbr $p |- ( ( ph /\ ch /\ ta ) -> ze ) $=
 	e0 f1 f0 pbicomi e1 f3 f2 pbicomi e2 f5 f4 pbicomi e3 f0 f1 f2 f3 f4 f5 f6 psyl3anb $.
 $}
-$( /* A syllogism inference.  (Contributed by NM, 20-May-2007.) */
-
-$)
+$( A syllogism inference.  (Contributed by NM, 20-May-2007.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ps /\ ch ) -> th ) $.
@@ -4443,9 +3849,7 @@ ${
 	psyld3an3 $p |- ( ( ph /\ ps /\ ch ) -> ta ) $=
 	f0 f1 f2 psimp1 f0 f1 f2 psimp2 e0 e1 f0 f1 f2 aw3a f0 f1 f3 f4 psyl3anc $.
 $}
-$( /* A syllogism inference.  (Contributed by NM, 7-Jul-2008.) */
-
-$)
+$( A syllogism inference.  (Contributed by NM, 7-Jul-2008.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ch /\ ps /\ th ) -> ph ) $.
@@ -4458,9 +3862,7 @@ ${
 	psyld3an1 $p |- ( ( ch /\ ps /\ th ) -> ta ) $=
 	e0 f2 f1 f3 f0 p3com13 e1 f0 f1 f3 f4 p3com13 f3 f1 f2 f0 f4 psyld3an3 f3 f1 f2 f4 p3com13 $.
 $}
-$( /* A syllogism inference.  (Contributed by NM, 20-May-2007.) */
-
-$)
+$( A syllogism inference.  (Contributed by NM, 20-May-2007.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ch /\ th ) -> ps ) $.
@@ -4473,9 +3875,7 @@ ${
 	psyld3an2 $p |- ( ( ph /\ ch /\ th ) -> ta ) $=
 	e0 f0 f2 f3 f1 p3com23 e1 f0 f1 f3 f4 p3com23 f0 f3 f2 f1 f4 psyld3an3 f0 f3 f2 f4 p3com23 $.
 $}
-$( /* A syllogism inference.  (Contributed by NM, 24-Feb-2005.) */
-
-$)
+$( A syllogism inference.  (Contributed by NM, 24-Feb-2005.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ps ) $.
@@ -4489,9 +3889,7 @@ ${
 	psyl3anl1 $p |- ( ( ( ph /\ ch /\ th ) /\ ta ) -> et ) $=
 	e0 f0 f1 f2 f3 p3anim1i e1 f0 f2 f3 aw3a f1 f2 f3 aw3a f4 f5 psylan $.
 $}
-$( /* A syllogism inference.  (Contributed by NM, 24-Feb-2005.) */
-
-$)
+$( A syllogism inference.  (Contributed by NM, 24-Feb-2005.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ch ) $.
@@ -4505,9 +3903,7 @@ ${
 	psyl3anl2 $p |- ( ( ( ps /\ ph /\ th ) /\ ta ) -> et ) $=
 	e0 e1 f1 f2 f3 aw3a f4 f5 pex f0 f1 f2 f3 f4 f5 awi psyl3an2 f1 f0 f3 aw3a f4 f5 pimp $.
 $}
-$( /* A syllogism inference.  (Contributed by NM, 24-Feb-2005.) */
-
-$)
+$( A syllogism inference.  (Contributed by NM, 24-Feb-2005.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> th ) $.
@@ -4521,9 +3917,7 @@ ${
 	psyl3anl3 $p |- ( ( ( ps /\ ch /\ ph ) /\ ta ) -> et ) $=
 	e0 f0 f3 f1 f2 p3anim3i e1 f1 f2 f0 aw3a f1 f2 f3 aw3a f4 f5 psylan $.
 $}
-$( /* A triple syllogism inference.  (Contributed by NM, 24-Dec-2006.) */
-
-$)
+$( A triple syllogism inference.  (Contributed by NM, 24-Dec-2006.) $)
 ${
 	$v ph ps ch th ta et ze si $.
 	e0 $e |- ( ph -> ps ) $.
@@ -4541,9 +3935,7 @@ ${
 	psyl3anl $p |- ( ( ( ph /\ ch /\ ta ) /\ ze ) -> si ) $=
 	e0 e1 e2 f0 f1 f2 f3 f4 f5 p3anim123i e3 f0 f2 f4 aw3a f1 f3 f5 aw3a f6 f7 psylan $.
 $}
-$( /* A syllogism inference.  (Contributed by NM, 31-Jul-2007.) */
-
-$)
+$( A syllogism inference.  (Contributed by NM, 31-Jul-2007.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ps ) $.
@@ -4557,9 +3949,7 @@ ${
 	psyl3anr1 $p |- ( ( ch /\ ( ph /\ th /\ ta ) ) -> et ) $=
 	e0 f0 f1 f3 f4 p3anim1i e1 f0 f3 f4 aw3a f2 f1 f3 f4 aw3a f5 psylan2 $.
 $}
-$( /* A syllogism inference.  (Contributed by NM, 1-Aug-2007.) */
-
-$)
+$( A syllogism inference.  (Contributed by NM, 1-Aug-2007.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> th ) $.
@@ -4573,9 +3963,7 @@ ${
 	psyl3anr2 $p |- ( ( ch /\ ( ps /\ ph /\ ta ) ) -> et ) $=
 	e0 e1 f2 f1 f3 f4 aw3a f5 pancoms f0 f1 f3 f4 f2 f5 psyl3anl2 f1 f0 f4 aw3a f2 f5 pancoms $.
 $}
-$( /* A syllogism inference.  (Contributed by NM, 23-Aug-2007.) */
-
-$)
+$( A syllogism inference.  (Contributed by NM, 23-Aug-2007.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ta ) $.
@@ -4589,10 +3977,8 @@ ${
 	psyl3anr3 $p |- ( ( ch /\ ( ps /\ th /\ ph ) ) -> et ) $=
 	e0 f0 f4 f1 f3 p3anim3i e1 f1 f3 f0 aw3a f2 f1 f3 f4 aw3a f5 psylan2 $.
 $}
-$( /* Importation inference (undistribute conjunction).  (Contributed by NM,
-       14-Aug-1995.) */
-
-$)
+$( Importation inference (undistribute conjunction).  (Contributed by NM,
+       14-Aug-1995.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ( ph /\ ps ) /\ ( ph /\ ch ) ) -> th ) $.
@@ -4603,10 +3989,8 @@ ${
 	p3impdi $p |- ( ( ph /\ ps /\ ch ) -> th ) $=
 	e0 f0 f1 f2 f3 panandis f0 f1 f2 f3 p3impb $.
 $}
-$( /* Importation inference (undistribute conjunction).  (Contributed by NM,
-       20-Aug-1995.) */
-
-$)
+$( Importation inference (undistribute conjunction).  (Contributed by NM,
+       20-Aug-1995.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ( ph /\ ps ) /\ ( ch /\ ps ) ) -> th ) $.
@@ -4617,10 +4001,8 @@ ${
 	p3impdir $p |- ( ( ph /\ ch /\ ps ) -> th ) $=
 	e0 f0 f2 f1 f3 panandirs f0 f2 f1 f3 p3impa $.
 $}
-$( /* Inference from idempotent law for conjunction.  (Contributed by NM,
-       7-Mar-2008.) */
-
-$)
+$( Inference from idempotent law for conjunction.  (Contributed by NM,
+       7-Mar-2008.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ( ( ph /\ ph /\ ps ) -> ch ) $.
@@ -4630,10 +4012,8 @@ ${
 	p3anidm12 $p |- ( ( ph /\ ps ) -> ch ) $=
 	e0 f0 f0 f1 f2 p3expib f0 f1 f2 panabsi5 $.
 $}
-$( /* Inference from idempotent law for conjunction.  (Contributed by NM,
-       7-Mar-2008.) */
-
-$)
+$( Inference from idempotent law for conjunction.  (Contributed by NM,
+       7-Mar-2008.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ( ( ph /\ ps /\ ph ) -> ch ) $.
@@ -4643,10 +4023,8 @@ ${
 	p3anidm13 $p |- ( ( ph /\ ps ) -> ch ) $=
 	e0 f0 f1 f0 f2 p3com23 f0 f1 f2 p3anidm12 $.
 $}
-$( /* Inference from idempotent law for conjunction.  (Contributed by NM,
-       1-Feb-2007.) */
-
-$)
+$( Inference from idempotent law for conjunction.  (Contributed by NM,
+       1-Feb-2007.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ( ( ph /\ ps /\ ps ) -> ch ) $.
@@ -4656,10 +4034,8 @@ ${
 	p3anidm23 $p |- ( ( ph /\ ps ) -> ch ) $=
 	e0 f0 f1 f1 f2 p3expa f0 f1 f2 panabss3 $.
 $}
-$( /* Infer implication from triple disjunction.  (Contributed by NM,
-       26-Sep-2006.) */
-
-$)
+$( Infer implication from triple disjunction.  (Contributed by NM,
+       26-Sep-2006.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ( ph \/ ps \/ ch ) $.
@@ -4669,9 +4045,7 @@ ${
 	p3ori $p |- ( ( -. ph /\ -. ps ) -> ch ) $=
 	f0 f1 pioran e0 f0 f1 f2 adf-3or f0 f1 f2 aw3o f0 f1 awo f2 awo pmpbi f0 f1 awo f2 pori f0 awn f1 awn awa f0 f1 awo awn f2 psylbir $.
 $}
-$( /* Disjunction of 3 antecedents.  (Contributed by NM, 8-Apr-1994.) */
-
-$)
+$( Disjunction of 3 antecedents.  (Contributed by NM, 8-Apr-1994.) $)
 ${
 	$v ph ps ch th $.
 	f0 $f wff ph $.
@@ -4681,9 +4055,7 @@ ${
 	p3jao $p |- ( ( ( ph -> ps ) /\ ( ch -> ps ) /\ ( th -> ps ) ) -> ( ( ph \/ ch \/ th ) -> ps ) ) $=
 	f0 f2 f3 adf-3or f0 f1 f2 pjao f0 f2 awo f1 f3 pjao f0 f1 awi f2 f1 awi f0 f2 awo f1 awi f3 f1 awi f0 f2 awo f3 awo f1 awi awi psyl6 f0 f1 awi f2 f1 awi f3 f1 awi f0 f2 awo f3 awo f1 awi p3imp f0 f2 f3 aw3o f0 f2 awo f3 awo f0 f1 awi f2 f1 awi f3 f1 awi aw3a f1 psyl5bi $.
 $}
-$( /* Disjunction of 3 antecedents.  (Contributed by NM, 13-Sep-2011.) */
-
-$)
+$( Disjunction of 3 antecedents.  (Contributed by NM, 13-Sep-2011.) $)
 ${
 	$v ph ps ch th $.
 	f0 $f wff ph $.
@@ -4693,10 +4065,8 @@ ${
 	p3jaob $p |- ( ( ( ph \/ ch \/ th ) -> ps ) <-> ( ( ph -> ps ) /\ ( ch -> ps ) /\ ( th -> ps ) ) ) $=
 	f0 f2 f3 p3mix1 f0 f0 f2 f3 aw3o f1 pimim1i f2 f0 f3 p3mix2 f2 f0 f2 f3 aw3o f1 pimim1i f3 f0 f2 p3mix3 f3 f0 f2 f3 aw3o f1 pimim1i f0 f2 f3 aw3o f1 awi f0 f1 awi f2 f1 awi f3 f1 awi p3jca f0 f1 f2 f3 p3jao f0 f2 f3 aw3o f1 awi f0 f1 awi f2 f1 awi f3 f1 awi aw3a pimpbii $.
 $}
-$( /* Disjunction of 3 antecedents (inference).  (Contributed by NM,
-       12-Sep-1995.) */
-
-$)
+$( Disjunction of 3 antecedents (inference).  (Contributed by NM,
+       12-Sep-1995.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ps ) $.
@@ -4709,10 +4079,8 @@ ${
 	p3jaoi $p |- ( ( ph \/ ch \/ th ) -> ps ) $=
 	e0 e1 e2 f0 f1 awi f2 f1 awi f3 f1 awi p3pm3.2i f0 f1 f2 f3 p3jao f0 f1 awi f2 f1 awi f3 f1 awi aw3a f0 f2 f3 aw3o f1 awi aax-mp $.
 $}
-$( /* Disjunction of 3 antecedents (deduction).  (Contributed by NM,
-       14-Oct-2005.) */
-
-$)
+$( Disjunction of 3 antecedents (deduction).  (Contributed by NM,
+       14-Oct-2005.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -4726,10 +4094,8 @@ ${
 	p3jaod $p |- ( ph -> ( ( ps \/ th \/ ta ) -> ch ) ) $=
 	e0 e1 e2 f1 f2 f3 f4 p3jao f0 f1 f2 awi f3 f2 awi f4 f2 awi f1 f3 f4 aw3o f2 awi psyl3anc $.
 $}
-$( /* Disjunction of 3 antecedents (inference).  (Contributed by NM,
-       14-Oct-2005.) */
-
-$)
+$( Disjunction of 3 antecedents (inference).  (Contributed by NM,
+       14-Oct-2005.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ps ) -> ch ) $.
@@ -4743,10 +4109,8 @@ ${
 	p3jaoian $p |- ( ( ( ph \/ th \/ ta ) /\ ps ) -> ch ) $=
 	e0 f0 f1 f2 pex e1 f3 f1 f2 pex e2 f4 f1 f2 pex f0 f1 f2 awi f3 f4 p3jaoi f0 f3 f4 aw3o f1 f2 pimp $.
 $}
-$( /* Disjunction of 3 antecedents (deduction).  (Contributed by NM,
-       14-Oct-2005.) */
-
-$)
+$( Disjunction of 3 antecedents (deduction).  (Contributed by NM,
+       14-Oct-2005.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ph /\ ps ) -> ch ) $.
@@ -4760,11 +4124,9 @@ ${
 	p3jaodan $p |- ( ( ph /\ ( ps \/ th \/ ta ) ) -> ch ) $=
 	e0 f0 f1 f2 pex e1 f0 f3 f2 pex e2 f0 f4 f2 pex f0 f1 f2 f3 f4 p3jaod f0 f1 f3 f4 aw3o f2 pimp $.
 $}
-$( /* Inference conjoining and disjoining the antecedents of three
+$( Inference conjoining and disjoining the antecedents of three
        implications.  (Contributed by Jeff Hankins, 15-Aug-2009.)  (Proof
-       shortened by Andrew Salmon, 13-May-2011.) */
-
-$)
+       shortened by Andrew Salmon, 13-May-2011.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -4780,10 +4142,8 @@ ${
 	p3jaao $p |- ( ( ph /\ th /\ et ) -> ( ( ps \/ ta \/ ze ) -> ch ) ) $=
 	e0 f0 f3 f1 f2 awi f5 p3ad2ant1 e1 f3 f0 f4 f2 awi f5 p3ad2ant2 e2 f5 f0 f6 f2 awi f3 p3ad2ant3 f0 f3 f5 aw3a f1 f2 f4 f6 p3jaod $.
 $}
-$( /* Nested syllogism inference conjoining 3 dissimilar antecedents.
-       (Contributed by NM, 1-May-1995.) */
-
-$)
+$( Nested syllogism inference conjoining 3 dissimilar antecedents.
+       (Contributed by NM, 1-May-1995.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
@@ -4799,10 +4159,8 @@ ${
 	psyl3an9b $p |- ( ( ph /\ th /\ et ) -> ( ps <-> ze ) ) $=
 	e0 e1 f0 f1 f2 f3 f4 psylan9bb e2 f0 f3 awa f1 f4 f5 f6 psylan9bb f0 f3 f5 f1 f6 awb p3impa $.
 $}
-$( /* Deduction joining 3 equivalences to form equivalence of disjunctions.
-       (Contributed by NM, 20-Apr-1994.) */
-
-$)
+$( Deduction joining 3 equivalences to form equivalence of disjunctions.
+       (Contributed by NM, 20-Apr-1994.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
@@ -4818,10 +4176,8 @@ ${
 	p3orbi123d $p |- ( ph -> ( ( ps \/ th \/ et ) <-> ( ch \/ ta \/ ze ) ) ) $=
 	e0 e1 f0 f1 f2 f3 f4 porbi12d e2 f0 f1 f3 awo f2 f4 awo f5 f6 porbi12d f1 f3 f5 adf-3or f2 f4 f6 adf-3or f0 f1 f3 awo f5 awo f2 f4 awo f6 awo f1 f3 f5 aw3o f2 f4 f6 aw3o p3bitr4g $.
 $}
-$( /* Deduction joining 3 equivalences to form equivalence of conjunctions.
-       (Contributed by NM, 22-Apr-1994.) */
-
-$)
+$( Deduction joining 3 equivalences to form equivalence of conjunctions.
+       (Contributed by NM, 22-Apr-1994.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
@@ -4837,10 +4193,8 @@ ${
 	p3anbi123d $p |- ( ph -> ( ( ps /\ th /\ et ) <-> ( ch /\ ta /\ ze ) ) ) $=
 	e0 e1 f0 f1 f2 f3 f4 panbi12d e2 f0 f1 f3 awa f2 f4 awa f5 f6 panbi12d f1 f3 f5 adf-3an f2 f4 f6 adf-3an f0 f1 f3 awa f5 awa f2 f4 awa f6 awa f1 f3 f5 aw3a f2 f4 f6 aw3a p3bitr4g $.
 $}
-$( /* Deduction conjoining and adding a conjunct to equivalences.
-       (Contributed by NM, 8-Sep-2006.) */
-
-$)
+$( Deduction conjoining and adding a conjunct to equivalences.
+       (Contributed by NM, 8-Sep-2006.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
@@ -4854,10 +4208,8 @@ ${
 	p3anbi12d $p |- ( ph -> ( ( ps /\ th /\ et ) <-> ( ch /\ ta /\ et ) ) ) $=
 	e0 e1 f0 f5 pbiidd f0 f1 f2 f3 f4 f5 f5 p3anbi123d $.
 $}
-$( /* Deduction conjoining and adding a conjunct to equivalences.
-       (Contributed by NM, 8-Sep-2006.) */
-
-$)
+$( Deduction conjoining and adding a conjunct to equivalences.
+       (Contributed by NM, 8-Sep-2006.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
@@ -4871,10 +4223,8 @@ ${
 	p3anbi13d $p |- ( ph -> ( ( ps /\ et /\ th ) <-> ( ch /\ et /\ ta ) ) ) $=
 	e0 f0 f5 pbiidd e1 f0 f1 f2 f5 f5 f3 f4 p3anbi123d $.
 $}
-$( /* Deduction conjoining and adding a conjunct to equivalences.
-       (Contributed by NM, 8-Sep-2006.) */
-
-$)
+$( Deduction conjoining and adding a conjunct to equivalences.
+       (Contributed by NM, 8-Sep-2006.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
@@ -4888,10 +4238,8 @@ ${
 	p3anbi23d $p |- ( ph -> ( ( et /\ ps /\ th ) <-> ( et /\ ch /\ ta ) ) ) $=
 	f0 f5 pbiidd e0 e1 f0 f5 f5 f1 f2 f3 f4 p3anbi123d $.
 $}
-$( /* Deduction adding conjuncts to an equivalence.  (Contributed by NM,
-       8-Sep-2006.) */
-
-$)
+$( Deduction adding conjuncts to an equivalence.  (Contributed by NM,
+       8-Sep-2006.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
@@ -4903,10 +4251,8 @@ ${
 	p3anbi1d $p |- ( ph -> ( ( ps /\ th /\ ta ) <-> ( ch /\ th /\ ta ) ) ) $=
 	e0 f0 f3 pbiidd f0 f1 f2 f3 f3 f4 p3anbi12d $.
 $}
-$( /* Deduction adding conjuncts to an equivalence.  (Contributed by NM,
-       8-Sep-2006.) */
-
-$)
+$( Deduction adding conjuncts to an equivalence.  (Contributed by NM,
+       8-Sep-2006.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
@@ -4918,10 +4264,8 @@ ${
 	p3anbi2d $p |- ( ph -> ( ( th /\ ps /\ ta ) <-> ( th /\ ch /\ ta ) ) ) $=
 	f0 f3 pbiidd e0 f0 f3 f3 f1 f2 f4 p3anbi12d $.
 $}
-$( /* Deduction adding conjuncts to an equivalence.  (Contributed by NM,
-       8-Sep-2006.) */
-
-$)
+$( Deduction adding conjuncts to an equivalence.  (Contributed by NM,
+       8-Sep-2006.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps <-> ch ) ) $.
@@ -4933,10 +4277,8 @@ ${
 	p3anbi3d $p |- ( ph -> ( ( th /\ ta /\ ps ) <-> ( th /\ ta /\ ch ) ) ) $=
 	f0 f3 pbiidd e0 f0 f3 f3 f1 f2 f4 p3anbi13d $.
 $}
-$( /* Deduction joining 3 implications to form implication of conjunctions.
-       (Contributed by NM, 24-Feb-2005.) */
-
-$)
+$( Deduction joining 3 implications to form implication of conjunctions.
+       (Contributed by NM, 24-Feb-2005.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -4952,10 +4294,8 @@ ${
 	p3anim123d $p |- ( ph -> ( ( ps /\ th /\ et ) -> ( ch /\ ta /\ ze ) ) ) $=
 	e0 e1 f0 f1 f2 f3 f4 panim12d e2 f0 f1 f3 awa f2 f4 awa f5 f6 panim12d f1 f3 f5 adf-3an f2 f4 f6 adf-3an f0 f1 f3 awa f5 awa f2 f4 awa f6 awa f1 f3 f5 aw3a f2 f4 f6 aw3a p3imtr4g $.
 $}
-$( /* Deduction joining 3 implications to form implication of disjunctions.
-       (Contributed by NM, 4-Apr-1997.) */
-
-$)
+$( Deduction joining 3 implications to form implication of disjunctions.
+       (Contributed by NM, 4-Apr-1997.) $)
 ${
 	$v ph ps ch th ta et ze $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -4971,9 +4311,7 @@ ${
 	p3orim123d $p |- ( ph -> ( ( ps \/ th \/ et ) -> ( ch \/ ta \/ ze ) ) ) $=
 	e0 e1 f0 f1 f2 f3 f4 porim12d e2 f0 f1 f3 awo f2 f4 awo f5 f6 porim12d f1 f3 f5 adf-3or f2 f4 f6 adf-3or f0 f1 f3 awo f5 awo f2 f4 awo f6 awo f1 f3 f5 aw3o f2 f4 f6 aw3o p3imtr4g $.
 $}
-$( /* Rearrangement of 6 conjuncts.  (Contributed by NM, 13-Mar-1995.) */
-
-$)
+$( Rearrangement of 6 conjuncts.  (Contributed by NM, 13-Mar-1995.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -4985,10 +4323,8 @@ ${
 	pan6 $p |- ( ( ( ph /\ ps /\ ch ) /\ ( th /\ ta /\ et ) ) <-> ( ( ph /\ th ) /\ ( ps /\ ta ) /\ ( ch /\ et ) ) ) $=
 	f0 f1 awa f2 f3 f4 awa f5 pan4 f0 f1 f3 f4 pan4 f0 f1 awa f3 f4 awa awa f0 f3 awa f1 f4 awa awa f2 f5 awa panbi1i f0 f1 awa f2 awa f3 f4 awa f5 awa awa f0 f1 awa f3 f4 awa awa f2 f5 awa awa f0 f3 awa f1 f4 awa awa f2 f5 awa awa pbitri f0 f1 f2 adf-3an f3 f4 f5 adf-3an f0 f1 f2 aw3a f0 f1 awa f2 awa f3 f4 f5 aw3a f3 f4 awa f5 awa panbi12i f0 f3 awa f1 f4 awa f2 f5 awa adf-3an f0 f1 awa f2 awa f3 f4 awa f5 awa awa f0 f3 awa f1 f4 awa awa f2 f5 awa awa f0 f1 f2 aw3a f3 f4 f5 aw3a awa f0 f3 awa f1 f4 awa f2 f5 awa aw3a p3bitr4i $.
 $}
-$( /* Analog of ~ an4 for triple conjunction.  (Contributed by Scott Fenton,
-     16-Mar-2011.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
-
-$)
+$( Analog of ~ an4 for triple conjunction.  (Contributed by Scott Fenton,
+     16-Mar-2011.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -5000,10 +4336,8 @@ ${
 	p3an6 $p |- ( ( ( ph /\ ps ) /\ ( ch /\ th ) /\ ( ta /\ et ) ) <-> ( ( ph /\ ch /\ ta ) /\ ( ps /\ th /\ et ) ) ) $=
 	f0 f2 f4 f1 f3 f5 pan6 f0 f2 f4 aw3a f1 f3 f5 aw3a awa f0 f1 awa f2 f3 awa f4 f5 awa aw3a pbicomi $.
 $}
-$( /* Analog of ~ or4 for triple conjunction.  (Contributed by Scott Fenton,
-     16-Mar-2011.) */
-
-$)
+$( Analog of ~ or4 for triple conjunction.  (Contributed by Scott Fenton,
+     16-Mar-2011.) $)
 ${
 	$v ph ps ch th ta et $.
 	f0 $f wff ph $.
@@ -5015,10 +4349,8 @@ ${
 	p3or6 $p |- ( ( ( ph \/ ps ) \/ ( ch \/ th ) \/ ( ta \/ et ) ) <-> ( ( ph \/ ch \/ ta ) \/ ( ps \/ th \/ et ) ) ) $=
 	f0 f2 awo f4 f1 f3 awo f5 por4 f0 f2 f1 f3 por4 f0 f2 awo f1 f3 awo awo f0 f1 awo f2 f3 awo awo f4 f5 awo porbi1i f0 f2 awo f4 awo f1 f3 awo f5 awo awo f0 f2 awo f1 f3 awo awo f4 f5 awo awo f0 f1 awo f2 f3 awo awo f4 f5 awo awo pbitr2i f0 f1 awo f2 f3 awo f4 f5 awo adf-3or f0 f2 f4 adf-3or f1 f3 f5 adf-3or f0 f2 f4 aw3o f0 f2 awo f4 awo f1 f3 f5 aw3o f1 f3 awo f5 awo porbi12i f0 f1 awo f2 f3 awo awo f4 f5 awo awo f0 f2 awo f4 awo f1 f3 awo f5 awo awo f0 f1 awo f2 f3 awo f4 f5 awo aw3o f0 f2 f4 aw3o f1 f3 f5 aw3o awo p3bitr4i $.
 $}
-$( /* An inference based on modus ponens.  (Contributed by NM,
-       21-Nov-1994.) */
-
-$)
+$( An inference based on modus ponens.  (Contributed by NM,
+       21-Nov-1994.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ph $.
@@ -5030,10 +4362,8 @@ ${
 	pmp3an1 $p |- ( ( ps /\ ch ) -> th ) $=
 	e0 e1 f0 f1 f2 f3 p3expb f0 f1 f2 awa f3 pmpan $.
 $}
-$( /* An inference based on modus ponens.  (Contributed by NM,
-       21-Nov-1994.) */
-
-$)
+$( An inference based on modus ponens.  (Contributed by NM,
+       21-Nov-1994.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ps $.
@@ -5045,10 +4375,8 @@ ${
 	pmp3an2 $p |- ( ( ph /\ ch ) -> th ) $=
 	e0 e1 f0 f1 f2 f3 p3expa f0 f1 f2 f3 pmpanl2 $.
 $}
-$( /* An inference based on modus ponens.  (Contributed by NM,
-       21-Nov-1994.) */
-
-$)
+$( An inference based on modus ponens.  (Contributed by NM,
+       21-Nov-1994.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ch $.
@@ -5060,10 +4388,8 @@ ${
 	pmp3an3 $p |- ( ( ph /\ ps ) -> th ) $=
 	e0 e1 f0 f1 f2 f3 p3expia f0 f1 awa f2 f3 pmpi $.
 $}
-$( /* An inference based on modus ponens.  (Contributed by NM,
-       13-Jul-2005.) */
-
-$)
+$( An inference based on modus ponens.  (Contributed by NM,
+       13-Jul-2005.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ph $.
@@ -5076,10 +4402,8 @@ ${
 	pmp3an12 $p |- ( ch -> th ) $=
 	e1 e0 e2 f0 f1 f2 f3 pmp3an1 f1 f2 f3 pmpan $.
 $}
-$( /* An inference based on modus ponens.  (Contributed by NM,
-       14-Jul-2005.) */
-
-$)
+$( An inference based on modus ponens.  (Contributed by NM,
+       14-Jul-2005.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ph $.
@@ -5092,10 +4416,8 @@ ${
 	pmp3an13 $p |- ( ps -> th ) $=
 	e0 e1 e2 f0 f1 f2 f3 pmp3an3 f0 f1 f3 pmpan $.
 $}
-$( /* An inference based on modus ponens.  (Contributed by NM,
-       14-Jul-2005.) */
-
-$)
+$( An inference based on modus ponens.  (Contributed by NM,
+       14-Jul-2005.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ps $.
@@ -5108,9 +4430,7 @@ ${
 	pmp3an23 $p |- ( ph -> th ) $=
 	e0 e1 e2 f0 f1 f2 f3 pmp3an3 f0 f1 f3 pmpan2 $.
 $}
-$( /* An inference based on modus ponens.  (Contributed by NM, 5-Jul-2005.) */
-
-$)
+$( An inference based on modus ponens.  (Contributed by NM, 5-Jul-2005.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ps $.
@@ -5123,10 +4443,8 @@ ${
 	pmp3an1i $p |- ( ph -> ( ( ch /\ th ) -> ta ) ) $=
 	e0 e1 f0 f1 f2 f3 aw3a f4 pcom12 f1 f2 f3 f0 f4 awi pmp3an1 f2 f3 awa f0 f4 pcom12 $.
 $}
-$( /* An inference based on modus ponens.  (Contributed by NM,
-       24-Feb-2005.) */
-
-$)
+$( An inference based on modus ponens.  (Contributed by NM,
+       24-Feb-2005.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ph $.
@@ -5139,10 +4457,8 @@ ${
 	pmp3anl1 $p |- ( ( ( ps /\ ch ) /\ th ) -> ta ) $=
 	e0 e1 f0 f1 f2 aw3a f3 f4 pex f0 f1 f2 f3 f4 awi pmp3an1 f1 f2 awa f3 f4 pimp $.
 $}
-$( /* An inference based on modus ponens.  (Contributed by NM,
-       24-Feb-2005.) */
-
-$)
+$( An inference based on modus ponens.  (Contributed by NM,
+       24-Feb-2005.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ps $.
@@ -5155,10 +4471,8 @@ ${
 	pmp3anl2 $p |- ( ( ( ph /\ ch ) /\ th ) -> ta ) $=
 	e0 e1 f0 f1 f2 aw3a f3 f4 pex f0 f1 f2 f3 f4 awi pmp3an2 f0 f2 awa f3 f4 pimp $.
 $}
-$( /* An inference based on modus ponens.  (Contributed by NM,
-       24-Feb-2005.) */
-
-$)
+$( An inference based on modus ponens.  (Contributed by NM,
+       24-Feb-2005.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ch $.
@@ -5171,9 +4485,7 @@ ${
 	pmp3anl3 $p |- ( ( ( ph /\ ps ) /\ th ) -> ta ) $=
 	e0 e1 f0 f1 f2 aw3a f3 f4 pex f0 f1 f2 f3 f4 awi pmp3an3 f0 f1 awa f3 f4 pimp $.
 $}
-$( /* An inference based on modus ponens.  (Contributed by NM, 4-Nov-2006.) */
-
-$)
+$( An inference based on modus ponens.  (Contributed by NM, 4-Nov-2006.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ps $.
@@ -5186,10 +4498,8 @@ ${
 	pmp3anr1 $p |- ( ( ph /\ ( ch /\ th ) ) -> ta ) $=
 	e0 e1 f0 f1 f2 f3 aw3a f4 pancoms f1 f2 f3 f0 f4 pmp3anl1 f2 f3 awa f0 f4 pancoms $.
 $}
-$( /* An inference based on modus ponens.  (Contributed by NM,
-       24-Nov-2006.) */
-
-$)
+$( An inference based on modus ponens.  (Contributed by NM,
+       24-Nov-2006.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ch $.
@@ -5202,10 +4512,8 @@ ${
 	pmp3anr2 $p |- ( ( ph /\ ( ps /\ th ) ) -> ta ) $=
 	e0 e1 f0 f1 f2 f3 aw3a f4 pancoms f1 f2 f3 f0 f4 pmp3anl2 f1 f3 awa f0 f4 pancoms $.
 $}
-$( /* An inference based on modus ponens.  (Contributed by NM,
-       19-Oct-2007.) */
-
-$)
+$( An inference based on modus ponens.  (Contributed by NM,
+       19-Oct-2007.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- th $.
@@ -5218,10 +4526,8 @@ ${
 	pmp3anr3 $p |- ( ( ph /\ ( ps /\ ch ) ) -> ta ) $=
 	e0 e1 f0 f1 f2 f3 aw3a f4 pancoms f1 f2 f3 f0 f4 pmp3anl3 f1 f2 awa f0 f4 pancoms $.
 $}
-$( /* An inference based on modus ponens.  (Contributed by NM,
-       14-May-1999.) */
-
-$)
+$( An inference based on modus ponens.  (Contributed by NM,
+       14-May-1999.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ph $.
@@ -5235,9 +4541,7 @@ ${
 	pmp3an $p |- th $=
 	e1 e2 e0 e3 f0 f1 f2 f3 pmp3an1 f1 f2 f3 pmp2an $.
 $}
-$( /* An inference based on modus ponens.  (Contributed by NM, 8-Nov-2007.) */
-
-$)
+$( An inference based on modus ponens.  (Contributed by NM, 8-Nov-2007.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ph /\ ps ) -> ch ) $.
@@ -5249,9 +4553,7 @@ ${
 	pmpd3an3 $p |- ( ( ph /\ ps ) -> th ) $=
 	e0 e1 f0 f1 f2 f3 p3expa f0 f1 awa f2 f3 pmpdan $.
 $}
-$( /* An inference based on modus ponens.  (Contributed by NM, 4-Dec-2006.) */
-
-$)
+$( An inference based on modus ponens.  (Contributed by NM, 4-Dec-2006.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ps ) $.
@@ -5264,10 +4566,8 @@ ${
 	pmpd3an23 $p |- ( ph -> th ) $=
 	f0 pid e0 e1 e2 f0 f0 f1 f2 f3 psyl3anc $.
 $}
-$( /* A deduction based on modus ponens.  (Contributed by Mario Carneiro,
-       24-Dec-2016.) */
-
-$)
+$( A deduction based on modus ponens.  (Contributed by Mario Carneiro,
+       24-Dec-2016.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ps ) $.
@@ -5282,10 +4582,8 @@ ${
 	pmp3and $p |- ( ph -> ta ) $=
 	e0 e1 e2 f0 f1 f2 f3 p3jca e3 f0 f1 f2 f3 aw3a f4 pmpd $.
 $}
-$( /* Infer implication from a logical equivalence.  Similar to ~ biimpa .
-       (Contributed by NM, 4-Sep-2005.) */
-
-$)
+$( Infer implication from a logical equivalence.  Similar to ~ biimpa .
+       (Contributed by NM, 4-Sep-2005.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ph /\ ps ) -> ( ch <-> th ) ) $.
@@ -5296,10 +4594,8 @@ ${
 	pbiimp3a $p |- ( ( ph /\ ps /\ ch ) -> th ) $=
 	e0 f0 f1 awa f2 f3 pbiimpa f0 f1 f2 f3 p3impa $.
 $}
-$( /* Infer implication from a logical equivalence.  Similar to ~ biimpar .
-       (Contributed by NM, 2-Jan-2009.) */
-
-$)
+$( Infer implication from a logical equivalence.  Similar to ~ biimpar .
+       (Contributed by NM, 2-Jan-2009.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ( ph /\ ps ) -> ( ch <-> th ) ) $.
@@ -5310,10 +4606,8 @@ ${
 	pbiimp3ar $p |- ( ( ph /\ ps /\ th ) -> ch ) $=
 	e0 f0 f1 f2 f3 pexbiri f0 f1 f3 f2 p3imp $.
 $}
-$( /* Inference that undistributes a triple conjunction in the antecedent.
-       (Contributed by NM, 18-Apr-2007.) */
-
-$)
+$( Inference that undistributes a triple conjunction in the antecedent.
+       (Contributed by NM, 18-Apr-2007.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ( ph /\ ps ) /\ ( ph /\ ch ) /\ ( ph /\ th ) ) -> ta ) $.
@@ -5325,10 +4619,8 @@ ${
 	p3anandis $p |- ( ( ph /\ ( ps /\ ch /\ th ) ) -> ta ) $=
 	f0 f1 f2 f3 aw3a psimpl f0 f1 f2 f3 psimpr1 f0 f1 f2 f3 aw3a psimpl f0 f1 f2 f3 psimpr2 f0 f1 f2 f3 aw3a psimpl f0 f1 f2 f3 psimpr3 e0 f0 f1 f2 f3 aw3a awa f0 f1 f0 f2 f0 f3 f4 psyl222anc $.
 $}
-$( /* Inference that undistributes a triple conjunction in the antecedent.
-       (Contributed by NM, 25-Jul-2006.) */
-
-$)
+$( Inference that undistributes a triple conjunction in the antecedent.
+       (Contributed by NM, 25-Jul-2006.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ( ( ph /\ th ) /\ ( ps /\ th ) /\ ( ch /\ th ) ) -> ta ) $.
@@ -5340,10 +4632,8 @@ ${
 	p3anandirs $p |- ( ( ( ph /\ ps /\ ch ) /\ th ) -> ta ) $=
 	f0 f1 f2 f3 psimpl1 f0 f1 f2 aw3a f3 psimpr f0 f1 f2 f3 psimpl2 f0 f1 f2 aw3a f3 psimpr f0 f1 f2 f3 psimpl3 f0 f1 f2 aw3a f3 psimpr e0 f0 f1 f2 aw3a f3 awa f0 f3 f1 f3 f2 f3 f4 psyl222anc $.
 $}
-$( /* Deduction for elimination by cases.  (Contributed by NM,
-       22-Apr-1994.) */
-
-$)
+$( Deduction for elimination by cases.  (Contributed by NM,
+       22-Apr-1994.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> -. ch ) $.
@@ -5356,10 +4646,8 @@ ${
 	pecase23d $p |- ( ph -> ps ) $=
 	e0 e1 f2 f3 pioran f0 f2 awn f3 awn f2 f3 awo awn psylanbrc e2 f1 f2 f3 p3orass f0 f1 f2 f3 aw3o f1 f2 f3 awo awo psylib f0 f1 f2 f3 awo pord f0 f1 f2 f3 awo pmt3d $.
 $}
-$( /* Inference for elimination by cases.  (Contributed by NM,
-       13-Jul-2005.) */
-
-$)
+$( Inference for elimination by cases.  (Contributed by NM,
+       13-Jul-2005.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( -. ph -> th ) $.

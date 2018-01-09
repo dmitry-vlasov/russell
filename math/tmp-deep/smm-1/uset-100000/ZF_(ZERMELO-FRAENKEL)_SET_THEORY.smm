@@ -3,7 +3,7 @@ $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_A
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Replacement.smm $]
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Power_Sets.smm $]
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_add_the_Axiom_of_Union.smm $]
-$( /* ###############################################################################
+$( ###############################################################################
                 ZF (ZERMELO-FRAENKEL) SET THEORY
 
 ###############################################################################
@@ -30,9 +30,6 @@ $( /* ##########################################################################
   be restated this way as shown by ~ axext2 .) The individual axiom links
   provide more detailed descriptions.  We derive the redundant ZF axioms of
   Separation, Null Set, and Pairing from the others as theorems.
-
-*/
-
 
 $)
 

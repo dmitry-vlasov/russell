@@ -1,305 +1,127 @@
 $[ uset-100000/ZF_(ZERMELO-FRAENKEL)_SET_THEORY/ZF_Set_Theory_-_start_with_the_Axiom_of_Extensionality/Introduce_the_Axiom_of_Extensionality.smm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                    Class abstractions (a.k.a. class builders)
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-*/
-
 $)
-$( /* Declare new constants use in class definition. */
-
-$)
+$( Declare new constants use in class definition. $)
 $c { $.
-$( /* Left brace */
-
-$)
+$( Left brace $)
 $c | $.
-$( /* Vertical bar */
-
-$)
+$( Vertical bar $)
 $c } $.
-$( /* Right brace */
-
-$)
-$( /* --- Start of old code before overloading prevention patch. */
-
-$)
-$( /* @c class @. @( Class variable type @)
-  */
-
-$)
-$( /* --- End of old code before overloading prevention patch. */
-
-$)
-$( /* Declare symbols as variables */
-
-$)
-$( /* Declare variable symbols that will be used to represent classes.  Note
+$( Right brace $)
+$( --- Start of old code before overloading prevention patch. $)
+$( @c class @. @( Class variable type @)
+  $)
+$( --- End of old code before overloading prevention patch. $)
+$( Declare symbols as variables $)
+$( Declare variable symbols that will be used to represent classes.  Note
      that later on ` R ` , ` S ` , ` F ` and ` G ` denote relations and
      functions, but these letters serve as mnemonics only and in fact behave
-     no differently from the variables ` A ` through ` D ` . */
-
-$)
-$( /* Introduce the class builder or class abstraction notation ("the class of
+     no differently from the variables ` A ` through ` D ` . $)
+$( Introduce the class builder or class abstraction notation ("the class of
      sets ` x ` such that ` ph ` is true").  Our class variables ` A ` ,
      ` B ` , etc. range over class builders (implicitly in the case of defined
      class terms such as ~ df-nul ).  Note that a set variable can be expressed
      as a class builder per theorem ~ cvjust , justifying the assignment of set
-     variables to class variables via the use of ~ cv . */
-
-$)
+     variables to class variables via the use of ~ cv . $)
 ${
 	$v ph x $.
 	f0 $f wff ph $.
 	f1 $f set x $.
 	acab $a class { x | ph } $.
 $}
-$( /* --- Start of old code before overloading prevention patch. */
-
-$)
-$( /* @( A set variable is a class expression.  The syntax " ` class x ` " can be
+$( --- Start of old code before overloading prevention patch. $)
+$( @( A set variable is a class expression.  The syntax " ` class x ` " can be
      viewed as an abbreviation for " ` class { y | y e. x } ` " (a special case
      of ~ cab ), where ` y ` is distinct from ` x ` .  See the discussion under
      the definition of class in [Jech] p. 4.  Note that ` { y | y e. x } = x `
      by ~ cvjust . @)
   cv @a class x @.
-  */
-
-$)
-$( /* --- End of old code before overloading prevention patch. */
-
-$)
-$( /* $j primitive 'cv' 'wceq' 'wcel' 'cab'; */
-
-$)
-$( /* Let ` A ` be a class variable. */
-
-$)
-$( /* Let ` B ` be a class variable. */
-
-$)
-$( /* Let ` C ` be a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Let ` D ` be a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Let ` P ` be a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Let ` Q ` be a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Let ` R ` be a class variable. */
-
-$)
-$( /* Let ` S ` be a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Let ` T ` be a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Let ` U ` be a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Let ` e ` be an individual variable. */
-
-$)
-$( /* Let ` f ` be an individual variable. */
-
-$)
-$( /* Let ` g ` be an individual variable. */
-
-$)
-$( /* Let ` h ` be an individual variable. */
-
-$)
-$( /* Let ` i ` be an individual variable. */
-
-$)
-$( /* Let ` j ` be an individual variable. */
-
-$)
-$( /* Let ` k ` be an individual variable. */
-
-$)
-$( /* Let ` m ` be an individual variable. */
-
-$)
-$( /* Let ` n ` be an individual variable. */
-
-$)
-$( /* Let ` o ` be an individual variable. */
-
-$)
-$( /* Let ` E ` be a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Let ` F ` be a class variable. */
-
-$)
-$( /* Let ` G ` be a class variable. */
-
-$)
-$( /* Let ` H ` be a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Let ` I ` be a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Let ` J ` be a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Let ` K ` be a class variable. */
-
-$)
-$( /* Let ` L ` be a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Let ` M ` be a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Let ` N ` be a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Let ` O ` be a class variable. */
-
-$)
-$( /* Let ` V ` be a class variable. */
-
-$)
-$( /* Let ` W ` be a class variable. */
-
-$)
-$( /* Let ` X ` be a class variable. */
-
-$)
-$( /* Let ` Y ` be a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Define a connective symbol for use as a class variable. */
-
-$)
-$( /* Let ` Z ` be a class variable. */
-
-$)
-$( /* Let ` s ` be an individual variable. */
-
-$)
-$( /* Let ` r ` be an individual variable. */
-
-$)
-$( /* Let ` q ` be an individual variable. */
-
-$)
-$( /* Let ` p ` be an individual variable. */
-
-$)
-$( /* Let ` a ` be an individual variable. */
-
-$)
-$( /* Let ` b ` be an individual variable. */
-
-$)
-$( /* Let ` c ` be an individual variable. */
-
-$)
-$( /* Let ` d ` be an individual variable. */
-
-$)
-$( /* Let ` l ` be an individual variable. */
-
-$)
-$( /* --- Start of old code before overloading prevention patch. */
-
-$)
-$( /* @( Extend wff definition to include class equality. @)
+  $)
+$( --- End of old code before overloading prevention patch. $)
+$( $j primitive 'cv' 'wceq' 'wcel' 'cab'; $)
+$( Let ` A ` be a class variable. $)
+$( Let ` B ` be a class variable. $)
+$( Let ` C ` be a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Let ` D ` be a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Let ` P ` be a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Let ` Q ` be a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Let ` R ` be a class variable. $)
+$( Let ` S ` be a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Let ` T ` be a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Let ` U ` be a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Let ` e ` be an individual variable. $)
+$( Let ` f ` be an individual variable. $)
+$( Let ` g ` be an individual variable. $)
+$( Let ` h ` be an individual variable. $)
+$( Let ` i ` be an individual variable. $)
+$( Let ` j ` be an individual variable. $)
+$( Let ` k ` be an individual variable. $)
+$( Let ` m ` be an individual variable. $)
+$( Let ` n ` be an individual variable. $)
+$( Let ` o ` be an individual variable. $)
+$( Let ` E ` be a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Let ` F ` be a class variable. $)
+$( Let ` G ` be a class variable. $)
+$( Let ` H ` be a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Let ` I ` be a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Let ` J ` be a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Let ` K ` be a class variable. $)
+$( Let ` L ` be a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Let ` M ` be a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Let ` N ` be a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Let ` O ` be a class variable. $)
+$( Let ` V ` be a class variable. $)
+$( Let ` W ` be a class variable. $)
+$( Let ` X ` be a class variable. $)
+$( Let ` Y ` be a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Define a connective symbol for use as a class variable. $)
+$( Let ` Z ` be a class variable. $)
+$( Let ` s ` be an individual variable. $)
+$( Let ` r ` be an individual variable. $)
+$( Let ` q ` be an individual variable. $)
+$( Let ` p ` be an individual variable. $)
+$( Let ` a ` be an individual variable. $)
+$( Let ` b ` be an individual variable. $)
+$( Let ` c ` be an individual variable. $)
+$( Let ` d ` be an individual variable. $)
+$( Let ` l ` be an individual variable. $)
+$( --- Start of old code before overloading prevention patch. $)
+$( @( Extend wff definition to include class equality. @)
   wceq @a wff A = B @.
-  */
-
-$)
-$( /* --- End of old code before overloading prevention patch. */
-
-$)
-$( /* --- Start of old code before overloading prevention patch. */
-
-$)
-$( /* @( Extend wff definition to include the membership connective between
+  $)
+$( --- End of old code before overloading prevention patch. $)
+$( --- Start of old code before overloading prevention patch. $)
+$( @( Extend wff definition to include the membership connective between
      classes. @)
   wcel @a wff A e. B @.
-  */
-
-$)
-$( /* --- End of old code before overloading prevention patch. */
-
-$)
-$( /* Define class abstraction notation (so-called by Quine), also called a
+  $)
+$( --- End of old code before overloading prevention patch. $)
+$( Define class abstraction notation (so-called by Quine), also called a
      "class builder" in the literature. ` x ` and ` y ` need not be distinct.
      Definition 2.1 of [Quine] p. 16.  Typically, ` ph ` will have ` y ` as a
      free variable, and " ` { y | ph } ` " is read "the class of all sets ` y `
@@ -332,9 +154,7 @@ $( /* Define class abstraction notation (so-called by Quine), also called a
 
      For a general discussion of the theory of classes, see
      ~ http://us.metamath.org/mpeuni/mmset.html#class .  (Contributed by NM,
-     5-Aug-1993.) */
-
-$)
+     5-Aug-1993.) $)
 ${
 	$v ph x y $.
 	f0 $f wff ph $.
@@ -342,10 +162,8 @@ ${
 	f2 $f set y $.
 	adf-clab $a |- ( x e. { y | ph } <-> [ x / y ] ph ) $.
 $}
-$( /* Simplification of class abstraction notation when the free and bound
-     variables are identical.  (Contributed by NM, 5-Aug-1993.) */
-
-$)
+$( Simplification of class abstraction notation when the free and bound
+     variables are identical.  (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v ph x $.
 	f0 $f wff ph $.
@@ -353,10 +171,8 @@ ${
 	pabid $p |- ( x e. { x | ph } <-> ph ) $=
 	f0 f1 f1 adf-clab f0 f1 psbid f1 asup_set_class f0 f1 acab awcel f0 f1 f1 awsb f0 pbitri $.
 $}
-$( /* Bound-variable hypothesis builder for a class abstraction.  (Contributed
-       by NM, 5-Aug-1993.) */
-
-$)
+$( Bound-variable hypothesis builder for a class abstraction.  (Contributed
+       by NM, 5-Aug-1993.) $)
 ${
 	$v ph x y $.
 	$d x y $.
@@ -366,10 +182,8 @@ ${
 	phbab1 $p |- ( y e. { x | ph } -> A. x y e. { x | ph } ) $=
 	f0 f2 f1 adf-clab f0 f1 f2 phbs1 f2 asup_set_class f0 f1 acab awcel f0 f1 f2 awsb f1 phbxfrbi $.
 $}
-$( /* Bound-variable hypothesis builder for a class abstraction.  (Contributed
-       by Mario Carneiro, 11-Aug-2016.) */
-
-$)
+$( Bound-variable hypothesis builder for a class abstraction.  (Contributed
+       by Mario Carneiro, 11-Aug-2016.) $)
 ${
 	$v ph x y $.
 	$d x y $.
@@ -379,10 +193,8 @@ ${
 	pnfsab1 $p |- F/ x y e. { x | ph } $=
 	f0 f1 f2 phbab1 f2 asup_set_class f0 f1 acab awcel f1 pnfi $.
 $}
-$( /* Bound-variable hypothesis builder for a class abstraction.  (Contributed
-       by NM, 1-Mar-1995.) */
-
-$)
+$( Bound-variable hypothesis builder for a class abstraction.  (Contributed
+       by NM, 1-Mar-1995.) $)
 ${
 	$v ph x y z $.
 	$d x z $.
@@ -394,10 +206,8 @@ ${
 	phbab $p |- ( z e. { y | ph } -> A. x z e. { y | ph } ) $=
 	f0 f3 f2 adf-clab e0 f0 f2 f3 f1 phbsb f3 asup_set_class f0 f2 acab awcel f0 f2 f3 awsb f1 phbxfrbi $.
 $}
-$( /* Bound-variable hypothesis builder for a class abstraction.  (Contributed
-       by Mario Carneiro, 11-Aug-2016.) */
-
-$)
+$( Bound-variable hypothesis builder for a class abstraction.  (Contributed
+       by Mario Carneiro, 11-Aug-2016.) $)
 ${
 	$v ph x y z $.
 	$d x z $.
@@ -409,7 +219,7 @@ ${
 	pnfsab $p |- F/ x z e. { y | ph } $=
 	e0 f0 f1 pnfri f0 f1 f2 f3 phbab f3 asup_set_class f0 f2 acab awcel f1 pnfi $.
 $}
-$( /* Define the equality connective between classes.  Definition 2.7 of
+$( Define the equality connective between classes.  Definition 2.7 of
        [Quine] p. 18.  Also Definition 4.5 of [TakeutiZaring] p. 13; Chapter 4
        provides its justification and methods for eliminating it.  Note that
        its elimination will not necessarily result in a single wff in the
@@ -446,9 +256,7 @@ $( /* Define the equality connective between classes.  Definition 2.7 of
 
        For a general discussion of the theory of classes, see
        ~ http://us.metamath.org/mpeuni/mmset.html#class .  (Contributed by NM,
-       15-Sep-1993.) */
-
-$)
+       15-Sep-1993.) $)
 ${
 	$v x y z A B $.
 	$d x A $.
@@ -462,10 +270,8 @@ ${
 	f4 $f class B $.
 	adf-cleq $a |- ( A = B <-> A. x ( x e. A <-> x e. B ) ) $.
 $}
-$( /* The same as ~ df-cleq with the hypothesis removed using the Axiom of
-       Extensionality ~ ax-ext .  (Contributed by NM, 15-Sep-1993.) */
-
-$)
+$( The same as ~ df-cleq with the hypothesis removed using the Axiom of
+       Extensionality ~ ax-ext .  (Contributed by NM, 15-Sep-1993.) $)
 ${
 	$v x y z A B $.
 	$d x A $.
@@ -479,7 +285,7 @@ ${
 	pdfcleq $p |- ( A = B <-> A. x ( x e. A <-> x e. B ) ) $=
 	i0 i1 f0 aax-ext f0 i0 i1 f1 f2 adf-cleq $.
 $}
-$( /* Every set is a class.  Proposition 4.9 of [TakeutiZaring] p. 13.  This
+$( Every set is a class.  Proposition 4.9 of [TakeutiZaring] p. 13.  This
        theorem shows that a set variable can be expressed as a class
        abstraction.  This provides a motivation for the class syntax
        construction ~ cv , which allows us to substitute a set variable for a
@@ -489,9 +295,7 @@ $( /* Every set is a class.  Proposition 4.9 of [TakeutiZaring] p. 13.  This
        formalism of Metamath, for example as is done in Chapter 4 of Takeuti
        and Zaring.  See also the discussion under the definition of class in
        [Jech] p. 4 showing that "Every set can be considered to be a class."
-       (Contributed by NM, 7-Nov-2006.) */
-
-$)
+       (Contributed by NM, 7-Nov-2006.) $)
 ${
 	$v x y z $.
 	$d x y z $.
@@ -501,7 +305,7 @@ ${
 	pcvjust $p |- x = { y | y e. x } $=
 	i0 f0 asup_set_class f1 asup_set_class f0 asup_set_class awcel f1 acab pdfcleq f1 asup_set_class f0 asup_set_class awcel i0 f1 adf-clab i0 f1 f0 pelsb3 i0 asup_set_class f1 asup_set_class f0 asup_set_class awcel f1 acab awcel f1 asup_set_class f0 asup_set_class awcel f1 i0 awsb i0 asup_set_class f0 asup_set_class awcel pbitr2i f0 asup_set_class f1 asup_set_class f0 asup_set_class awcel f1 acab awceq i0 asup_set_class f0 asup_set_class awcel i0 asup_set_class f1 asup_set_class f0 asup_set_class awcel f1 acab awcel awb i0 pmpgbir $.
 $}
-$( /* Define the membership connective between classes.  Theorem 6.3 of
+$( Define the membership connective between classes.  Theorem 6.3 of
        [Quine] p. 41, or Proposition 4.6 of [TakeutiZaring] p. 13, which we
        adopt as a definition.  See these references for its metalogical
        justification.  Note that like ~ df-cleq it extends or "overloads" the
@@ -519,9 +323,7 @@ $( /* Define the membership connective between classes.  Theorem 6.3 of
 
        For a general discussion of the theory of classes, see
        ~ http://us.metamath.org/mpeuni/mmset.html#class .  (Contributed by NM,
-       5-Aug-1993.) */
-
-$)
+       5-Aug-1993.) $)
 ${
 	$v x A B $.
 	$d x A $.
@@ -531,10 +333,8 @@ ${
 	f2 $f class B $.
 	adf-clel $a |- ( A e. B <-> E. x ( x = A /\ x e. B ) ) $.
 $}
-$( /* Infer equality of classes from equivalence of membership.  (Contributed
-       by NM, 5-Aug-1993.) */
-
-$)
+$( Infer equality of classes from equivalence of membership.  (Contributed
+       by NM, 5-Aug-1993.) $)
 ${
 	$v x A B $.
 	$d x A $.
@@ -546,10 +346,8 @@ ${
 	peqriv $p |- A = B $=
 	f0 f1 f2 pdfcleq e0 f1 f2 awceq f0 asup_set_class f1 awcel f0 asup_set_class f2 awcel awb f0 pmpgbir $.
 $}
-$( /* Deduce equality of classes from equivalence of membership.  (Contributed
-       by NM, 17-Mar-1996.) */
-
-$)
+$( Deduce equality of classes from equivalence of membership.  (Contributed
+       by NM, 17-Mar-1996.) $)
 ${
 	$v ph x A B $.
 	$d x A $.
@@ -563,10 +361,8 @@ ${
 	peqrdv $p |- ( ph -> A = B ) $=
 	e0 f0 f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awb f1 palrimiv f1 f2 f3 pdfcleq f0 f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awb f1 awal f2 f3 awceq psylibr $.
 $}
-$( /* Deduce equality of classes from an equivalence of membership that
-       depends on the membership variable.  (Contributed by NM, 7-Nov-2008.) */
-
-$)
+$( Deduce equality of classes from an equivalence of membership that
+       depends on the membership variable.  (Contributed by NM, 7-Nov-2008.) $)
 ${
 	$v ph x A B C $.
 	$d x A $.
@@ -583,7 +379,7 @@ ${
 	peqrdav $p |- ( ph -> A = B ) $=
 	e0 e2 f0 f1 asup_set_class f4 awcel awa f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel pbiimpd f0 f1 asup_set_class f4 awcel f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel pimpancom f0 f1 asup_set_class f2 awcel awa f1 asup_set_class f4 awcel f1 asup_set_class f3 awcel pmpd e1 e2 f0 f1 asup_set_class f4 awcel f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel pexbiri f0 f1 asup_set_class f4 awcel f1 asup_set_class f3 awcel f1 asup_set_class f2 awcel pcom23 f0 f1 asup_set_class f3 awcel f1 asup_set_class f4 awcel f1 asup_set_class f2 awcel awi pimp f0 f1 asup_set_class f3 awcel awa f1 asup_set_class f4 awcel f1 asup_set_class f2 awcel pmpd f0 f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel pimpbida f0 f1 f2 f3 peqrdv $.
 $}
-$( /* Law of identity (reflexivity of class equality).  Theorem 6.4 of [Quine]
+$( Law of identity (reflexivity of class equality).  Theorem 6.4 of [Quine]
        p. 41.
 
        This law is thought to have originated with Aristotle (_Metaphysics_,
@@ -592,9 +388,7 @@ $( /* Law of identity (reflexivity of class equality).  Theorem 6.4 of [Quine]
        the sole reasoning and the sole cause, in every case, to the question of
        why the man is man or the musician musician.").  (Thanks to Stefan Allan
        and Beno&icirc;t Jubin for this information.)  (Contributed by NM,
-       5-Aug-1993.)  (Revised by Beno&icirc;t Jubin, 14-Oct-2017.) */
-
-$)
+       5-Aug-1993.)  (Revised by Beno&icirc;t Jubin, 14-Oct-2017.) $)
 ${
 	$v x A $.
 	$d x A $.
@@ -603,9 +397,7 @@ ${
 	peqid $p |- A = A $=
 	i0 asup_set_class f0 awcel pbiid i0 f0 f0 peqriv $.
 $}
-$( /* Class identity law with antecedent.  (Contributed by NM, 21-Aug-2008.) */
-
-$)
+$( Class identity law with antecedent.  (Contributed by NM, 21-Aug-2008.) $)
 ${
 	$v ph A $.
 	f0 $f wff ph $.
@@ -613,10 +405,8 @@ ${
 	peqidd $p |- ( ph -> A = A ) $=
 	f1 peqid f1 f1 awceq f0 pa1i $.
 $}
-$( /* Commutative law for class equality.  Theorem 6.5 of [Quine] p. 41.
-       (Contributed by NM, 5-Aug-1993.) */
-
-$)
+$( Commutative law for class equality.  Theorem 6.5 of [Quine] p. 41.
+       (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v x A B $.
 	$d x A $.
@@ -627,10 +417,8 @@ ${
 	peqcom $p |- ( A = B <-> B = A ) $=
 	i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel pbicom i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awb i0 asup_set_class f1 awcel i0 asup_set_class f0 awcel awb i0 palbii i0 f0 f1 pdfcleq i0 f1 f0 pdfcleq i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awb i0 awal i0 asup_set_class f1 awcel i0 asup_set_class f0 awcel awb i0 awal f0 f1 awceq f1 f0 awceq p3bitr4i $.
 $}
-$( /* Inference applying commutative law for class equality to an antecedent.
-       (Contributed by NM, 5-Aug-1993.) */
-
-$)
+$( Inference applying commutative law for class equality to an antecedent.
+       (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v ph A B $.
 	e0 $e |- ( A = B -> ph ) $.
@@ -640,10 +428,8 @@ ${
 	peqcoms $p |- ( B = A -> ph ) $=
 	f2 f1 peqcom e0 f2 f1 awceq f1 f2 awceq f0 psylbi $.
 $}
-$( /* Inference from commutative law for class equality.  (Contributed by NM,
-       5-Aug-1993.) */
-
-$)
+$( Inference from commutative law for class equality.  (Contributed by NM,
+       5-Aug-1993.) $)
 ${
 	$v A B $.
 	e0 $e |- A = B $.
@@ -652,10 +438,8 @@ ${
 	peqcomi $p |- B = A $=
 	e0 f0 f1 peqcom f0 f1 awceq f1 f0 awceq pmpbi $.
 $}
-$( /* Deduction from commutative law for class equality.  (Contributed by NM,
-       15-Aug-1994.) */
-
-$)
+$( Deduction from commutative law for class equality.  (Contributed by NM,
+       15-Aug-1994.) $)
 ${
 	$v ph A B $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -665,10 +449,8 @@ ${
 	peqcomd $p |- ( ph -> B = A ) $=
 	e0 f1 f2 peqcom f0 f1 f2 awceq f2 f1 awceq psylib $.
 $}
-$( /* Equality implies equivalence of equalities.  (Contributed by NM,
-       5-Aug-1993.) */
-
-$)
+$( Equality implies equivalence of equalities.  (Contributed by NM,
+       5-Aug-1993.) $)
 ${
 	$v x A B C $.
 	$d x A $.
@@ -681,10 +463,8 @@ ${
 	peqeq1 $p |- ( A = B -> ( A = C <-> B = C ) ) $=
 	i0 f0 f1 pdfcleq f0 f1 awceq i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awb i0 awal pbiimpi f0 f1 awceq i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awb i0 p19.21bi f0 f1 awceq i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel i0 asup_set_class f2 awcel pbibi1d f0 f1 awceq i0 asup_set_class f0 awcel i0 asup_set_class f2 awcel awb i0 asup_set_class f1 awcel i0 asup_set_class f2 awcel awb i0 palbidv i0 f0 f2 pdfcleq i0 f1 f2 pdfcleq f0 f1 awceq i0 asup_set_class f0 awcel i0 asup_set_class f2 awcel awb i0 awal i0 asup_set_class f1 awcel i0 asup_set_class f2 awcel awb i0 awal f0 f2 awceq f1 f2 awceq p3bitr4g $.
 $}
-$( /* Inference from equality to equivalence of equalities.  (Contributed by
-       NM, 5-Aug-1993.) */
-
-$)
+$( Inference from equality to equivalence of equalities.  (Contributed by
+       NM, 5-Aug-1993.) $)
 ${
 	$v A B C $.
 	e0 $e |- A = B $.
@@ -694,10 +474,8 @@ ${
 	peqeq1i $p |- ( A = C <-> B = C ) $=
 	e0 f0 f1 f2 peqeq1 f0 f1 awceq f0 f2 awceq f1 f2 awceq awb aax-mp $.
 $}
-$( /* Deduction from equality to equivalence of equalities.  (Contributed by
-       NM, 27-Dec-1993.) */
-
-$)
+$( Deduction from equality to equivalence of equalities.  (Contributed by
+       NM, 27-Dec-1993.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -708,10 +486,8 @@ ${
 	peqeq1d $p |- ( ph -> ( A = C <-> B = C ) ) $=
 	e0 f1 f2 f3 peqeq1 f0 f1 f2 awceq f1 f3 awceq f2 f3 awceq awb psyl $.
 $}
-$( /* Equality implies equivalence of equalities.  (Contributed by NM,
-     5-Aug-1993.) */
-
-$)
+$( Equality implies equivalence of equalities.  (Contributed by NM,
+     5-Aug-1993.) $)
 ${
 	$v A B C $.
 	f0 $f class A $.
@@ -720,10 +496,8 @@ ${
 	peqeq2 $p |- ( A = B -> ( C = A <-> C = B ) ) $=
 	f0 f1 f2 peqeq1 f2 f0 peqcom f2 f1 peqcom f0 f1 awceq f0 f2 awceq f1 f2 awceq f2 f0 awceq f2 f1 awceq p3bitr4g $.
 $}
-$( /* Inference from equality to equivalence of equalities.  (Contributed by
-       NM, 5-Aug-1993.) */
-
-$)
+$( Inference from equality to equivalence of equalities.  (Contributed by
+       NM, 5-Aug-1993.) $)
 ${
 	$v A B C $.
 	e0 $e |- A = B $.
@@ -733,10 +507,8 @@ ${
 	peqeq2i $p |- ( C = A <-> C = B ) $=
 	e0 f0 f1 f2 peqeq2 f0 f1 awceq f2 f0 awceq f2 f1 awceq awb aax-mp $.
 $}
-$( /* Deduction from equality to equivalence of equalities.  (Contributed by
-       NM, 27-Dec-1993.) */
-
-$)
+$( Deduction from equality to equivalence of equalities.  (Contributed by
+       NM, 27-Dec-1993.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -747,10 +519,8 @@ ${
 	peqeq2d $p |- ( ph -> ( C = A <-> C = B ) ) $=
 	e0 f1 f2 f3 peqeq2 f0 f1 f2 awceq f3 f1 awceq f3 f2 awceq awb psyl $.
 $}
-$( /* Equality relationship among 4 classes.  (Contributed by NM,
-     3-Aug-1994.) */
-
-$)
+$( Equality relationship among 4 classes.  (Contributed by NM,
+     3-Aug-1994.) $)
 ${
 	$v A B C D $.
 	f0 $f class A $.
@@ -760,11 +530,9 @@ ${
 	peqeq12 $p |- ( ( A = B /\ C = D ) -> ( A = C <-> B = D ) ) $=
 	f0 f1 f2 peqeq1 f2 f3 f1 peqeq2 f0 f1 awceq f0 f2 awceq f1 f2 awceq f2 f3 awceq f1 f3 awceq psylan9bb $.
 $}
-$( /* A useful inference for substituting definitions into an equality.
+$( A useful inference for substituting definitions into an equality.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
-       25-May-2011.) */
-
-$)
+       25-May-2011.) $)
 ${
 	$v A B C D $.
 	e0 $e |- A = B $.
@@ -776,17 +544,11 @@ ${
 	peqeq12i $p |- ( A = C <-> B = D ) $=
 	e0 e1 f0 f1 f2 f3 peqeq12 f0 f1 awceq f2 f3 awceq f0 f2 awceq f1 f3 awceq awb pmp2an $.
 $}
-$( /* Theorem eqeq12i is the congruence law for equality. */
-
-$)
-$( /* $j congruence 'eqeq12i'; */
-
-$)
-$( /* A useful inference for substituting definitions into an equality.
+$( Theorem eqeq12i is the congruence law for equality. $)
+$( $j congruence 'eqeq12i'; $)
+$( A useful inference for substituting definitions into an equality.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
-       25-May-2011.) */
-
-$)
+       25-May-2011.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -799,11 +561,9 @@ ${
 	peqeq12d $p |- ( ph -> ( A = C <-> B = D ) ) $=
 	e0 e1 f1 f2 f3 f4 peqeq12 f0 f1 f2 awceq f3 f4 awceq f1 f3 awceq f2 f4 awceq awb psyl2anc $.
 $}
-$( /* A useful inference for substituting definitions into an equality.
+$( A useful inference for substituting definitions into an equality.
        (Contributed by NM, 9-Aug-1994.)  (Proof shortened by Andrew Salmon,
-       25-May-2011.) */
-
-$)
+       25-May-2011.) $)
 ${
 	$v ph ps A B C D $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -817,10 +577,8 @@ ${
 	peqeqan12d $p |- ( ( ph /\ ps ) -> ( A = C <-> B = D ) ) $=
 	e0 e1 f2 f3 f4 f5 peqeq12 f0 f2 f3 awceq f4 f5 awceq f2 f4 awceq f3 f5 awceq awb f1 psyl2an $.
 $}
-$( /* A useful inference for substituting definitions into an equality.
-       (Contributed by NM, 9-Aug-1994.) */
-
-$)
+$( A useful inference for substituting definitions into an equality.
+       (Contributed by NM, 9-Aug-1994.) $)
 ${
 	$v ph ps A B C D $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -834,10 +592,8 @@ ${
 	peqeqan12rd $p |- ( ( ps /\ ph ) -> ( A = C <-> B = D ) ) $=
 	e0 e1 f0 f1 f2 f3 f4 f5 peqeqan12d f0 f1 f2 f4 awceq f3 f5 awceq awb pancoms $.
 $}
-$( /* Transitive law for class equality.  Proposition 4.7(3) of [TakeutiZaring]
-     p. 13.  (Contributed by NM, 25-Jan-2004.) */
-
-$)
+$( Transitive law for class equality.  Proposition 4.7(3) of [TakeutiZaring]
+     p. 13.  (Contributed by NM, 25-Jan-2004.) $)
 ${
 	$v A B C $.
 	f0 $f class A $.
@@ -846,10 +602,8 @@ ${
 	peqtr $p |- ( ( A = B /\ B = C ) -> A = C ) $=
 	f0 f1 f2 peqeq1 f0 f1 awceq f0 f2 awceq f1 f2 awceq pbiimpar $.
 $}
-$( /* A transitive law for class equality.  (Contributed by NM, 20-May-2005.)
-     (Proof shortened by Andrew Salmon, 25-May-2011.) */
-
-$)
+$( A transitive law for class equality.  (Contributed by NM, 20-May-2005.)
+     (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
 	$v A B C $.
 	f0 $f class A $.
@@ -858,9 +612,7 @@ ${
 	peqtr2 $p |- ( ( A = B /\ A = C ) -> B = C ) $=
 	f0 f1 peqcom f1 f0 f2 peqtr f0 f1 awceq f1 f0 awceq f0 f2 awceq f1 f2 awceq psylanb $.
 $}
-$( /* A transitive law for class equality.  (Contributed by NM, 20-May-2005.) */
-
-$)
+$( A transitive law for class equality.  (Contributed by NM, 20-May-2005.) $)
 ${
 	$v A B C $.
 	f0 $f class A $.
@@ -869,9 +621,7 @@ ${
 	peqtr3 $p |- ( ( A = C /\ B = C ) -> A = B ) $=
 	f1 f2 peqcom f0 f2 f1 peqtr f1 f2 awceq f0 f2 awceq f2 f1 awceq f0 f1 awceq psylan2b $.
 $}
-$( /* An equality transitivity inference.  (Contributed by NM, 5-Aug-1993.) */
-
-$)
+$( An equality transitivity inference.  (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v A B C $.
 	e0 $e |- A = B $.
@@ -882,10 +632,8 @@ ${
 	peqtri $p |- A = C $=
 	e0 e1 f1 f2 f0 peqeq2i f0 f1 awceq f0 f2 awceq pmpbi $.
 $}
-$( /* An equality transitivity inference.  (Contributed by NM,
-       21-Feb-1995.) */
-
-$)
+$( An equality transitivity inference.  (Contributed by NM,
+       21-Feb-1995.) $)
 ${
 	$v A B C $.
 	e0 $e |- A = B $.
@@ -896,9 +644,7 @@ ${
 	peqtr2i $p |- C = A $=
 	e0 e1 f0 f1 f2 peqtri f0 f2 peqcomi $.
 $}
-$( /* An equality transitivity inference.  (Contributed by NM, 6-May-1994.) */
-
-$)
+$( An equality transitivity inference.  (Contributed by NM, 6-May-1994.) $)
 ${
 	$v A B C $.
 	e0 $e |- A = B $.
@@ -909,9 +655,7 @@ ${
 	peqtr3i $p |- B = C $=
 	e0 f0 f1 peqcomi e1 f1 f0 f2 peqtri $.
 $}
-$( /* An equality transitivity inference.  (Contributed by NM, 5-Aug-1993.) */
-
-$)
+$( An equality transitivity inference.  (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v A B C $.
 	e0 $e |- A = B $.
@@ -922,16 +666,10 @@ ${
 	peqtr4i $p |- A = C $=
 	e0 e1 f2 f1 peqcomi f0 f1 f2 peqtri $.
 $}
-$( /* Register '=' as an equality for its type (class). */
-
-$)
-$( /* $j equality 'wceq' from 'eqid' 'eqcomi' 'eqtri'; */
-
-$)
-$( /* An inference from three chained equalities.  (Contributed by NM,
-       29-Aug-1993.) */
-
-$)
+$( Register '=' as an equality for its type (class). $)
+$( $j equality 'wceq' from 'eqid' 'eqcomi' 'eqtri'; $)
+$( An inference from three chained equalities.  (Contributed by NM,
+       29-Aug-1993.) $)
 ${
 	$v A B C D $.
 	e0 $e |- A = B $.
@@ -944,10 +682,8 @@ ${
 	p3eqtri $p |- A = D $=
 	e0 e1 e2 f1 f2 f3 peqtri f0 f1 f3 peqtri $.
 $}
-$( /* An inference from three chained equalities.  (Contributed by NM,
-       3-Aug-2006.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
-
-$)
+$( An inference from three chained equalities.  (Contributed by NM,
+       3-Aug-2006.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
 	$v A B C D $.
 	e0 $e |- A = B $.
@@ -960,10 +696,8 @@ ${
 	p3eqtrri $p |- D = A $=
 	e0 e1 f0 f1 f2 peqtri e2 f0 f2 f3 peqtr2i $.
 $}
-$( /* An inference from three chained equalities.  (Contributed by NM,
-       3-Aug-2006.) */
-
-$)
+$( An inference from three chained equalities.  (Contributed by NM,
+       3-Aug-2006.) $)
 ${
 	$v A B C D $.
 	e0 $e |- A = B $.
@@ -976,10 +710,8 @@ ${
 	p3eqtr2i $p |- A = D $=
 	e0 e1 f0 f1 f2 peqtr4i e2 f0 f2 f3 peqtri $.
 $}
-$( /* An inference from three chained equalities.  (Contributed by NM,
-       3-Aug-2006.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
-
-$)
+$( An inference from three chained equalities.  (Contributed by NM,
+       3-Aug-2006.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
 	$v A B C D $.
 	e0 $e |- A = B $.
@@ -992,10 +724,8 @@ ${
 	p3eqtr2ri $p |- D = A $=
 	e0 e1 f0 f1 f2 peqtr4i e2 f0 f2 f3 peqtr2i $.
 $}
-$( /* An inference from three chained equalities.  (Contributed by NM,
-       6-May-1994.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
-
-$)
+$( An inference from three chained equalities.  (Contributed by NM,
+       6-May-1994.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
 	$v A B C D $.
 	e0 $e |- A = B $.
@@ -1008,10 +738,8 @@ ${
 	p3eqtr3i $p |- C = D $=
 	e0 e1 f0 f1 f2 peqtr3i e2 f1 f2 f3 peqtr3i $.
 $}
-$( /* An inference from three chained equalities.  (Contributed by NM,
-       15-Aug-2004.) */
-
-$)
+$( An inference from three chained equalities.  (Contributed by NM,
+       15-Aug-2004.) $)
 ${
 	$v A B C D $.
 	e0 $e |- A = B $.
@@ -1024,10 +752,8 @@ ${
 	p3eqtr3ri $p |- D = C $=
 	e2 e0 e1 f0 f1 f2 peqtr3i f1 f3 f2 peqtr3i $.
 $}
-$( /* An inference from three chained equalities.  (Contributed by NM,
-       5-Aug-1993.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
-
-$)
+$( An inference from three chained equalities.  (Contributed by NM,
+       5-Aug-1993.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
 	$v A B C D $.
 	e0 $e |- A = B $.
@@ -1040,10 +766,8 @@ ${
 	p3eqtr4i $p |- C = D $=
 	e1 e2 e0 f3 f1 f0 peqtr4i f2 f0 f3 peqtr4i $.
 $}
-$( /* An inference from three chained equalities.  (Contributed by NM,
-       2-Sep-1995.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
-
-$)
+$( An inference from three chained equalities.  (Contributed by NM,
+       2-Sep-1995.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
 	$v A B C D $.
 	e0 $e |- A = B $.
@@ -1056,9 +780,7 @@ ${
 	p3eqtr4ri $p |- D = C $=
 	e2 e0 f3 f1 f0 peqtr4i e1 f3 f0 f2 peqtr4i $.
 $}
-$( /* An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) */
-
-$)
+$( An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1070,10 +792,8 @@ ${
 	peqtrd $p |- ( ph -> A = C ) $=
 	e0 e1 f0 f2 f3 f1 peqeq2d f0 f1 f2 awceq f1 f3 awceq pmpbid $.
 $}
-$( /* An equality transitivity deduction.  (Contributed by NM,
-       18-Oct-1999.) */
-
-$)
+$( An equality transitivity deduction.  (Contributed by NM,
+       18-Oct-1999.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1085,10 +805,8 @@ ${
 	peqtr2d $p |- ( ph -> C = A ) $=
 	e0 e1 f0 f1 f2 f3 peqtrd f0 f1 f3 peqcomd $.
 $}
-$( /* An equality transitivity equality deduction.  (Contributed by NM,
-       18-Jul-1995.) */
-
-$)
+$( An equality transitivity equality deduction.  (Contributed by NM,
+       18-Jul-1995.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1100,10 +818,8 @@ ${
 	peqtr3d $p |- ( ph -> B = C ) $=
 	e0 f0 f1 f2 peqcomd e1 f0 f2 f1 f3 peqtrd $.
 $}
-$( /* An equality transitivity equality deduction.  (Contributed by NM,
-       18-Jul-1995.) */
-
-$)
+$( An equality transitivity equality deduction.  (Contributed by NM,
+       18-Jul-1995.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1115,10 +831,8 @@ ${
 	peqtr4d $p |- ( ph -> A = C ) $=
 	e0 e1 f0 f3 f2 peqcomd f0 f1 f2 f3 peqtrd $.
 $}
-$( /* A deduction from three chained equalities.  (Contributed by NM,
-       29-Oct-1995.) */
-
-$)
+$( A deduction from three chained equalities.  (Contributed by NM,
+       29-Oct-1995.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1132,10 +846,8 @@ ${
 	p3eqtrd $p |- ( ph -> A = D ) $=
 	e0 e1 e2 f0 f2 f3 f4 peqtrd f0 f1 f2 f4 peqtrd $.
 $}
-$( /* A deduction from three chained equalities.  (Contributed by NM,
-       4-Aug-2006.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
-
-$)
+$( A deduction from three chained equalities.  (Contributed by NM,
+       4-Aug-2006.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1149,10 +861,8 @@ ${
 	p3eqtrrd $p |- ( ph -> D = A ) $=
 	e0 e1 f0 f1 f2 f3 peqtrd e2 f0 f1 f3 f4 peqtr2d $.
 $}
-$( /* A deduction from three chained equalities.  (Contributed by NM,
-       4-Aug-2006.) */
-
-$)
+$( A deduction from three chained equalities.  (Contributed by NM,
+       4-Aug-2006.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1166,10 +876,8 @@ ${
 	p3eqtr2d $p |- ( ph -> A = D ) $=
 	e0 e1 f0 f1 f2 f3 peqtr4d e2 f0 f1 f3 f4 peqtrd $.
 $}
-$( /* A deduction from three chained equalities.  (Contributed by NM,
-       4-Aug-2006.) */
-
-$)
+$( A deduction from three chained equalities.  (Contributed by NM,
+       4-Aug-2006.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1183,10 +891,8 @@ ${
 	p3eqtr2rd $p |- ( ph -> D = A ) $=
 	e0 e1 f0 f1 f2 f3 peqtr4d e2 f0 f1 f3 f4 peqtr2d $.
 $}
-$( /* A deduction from three chained equalities.  (Contributed by NM,
-       4-Aug-1995.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
-
-$)
+$( A deduction from three chained equalities.  (Contributed by NM,
+       4-Aug-1995.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1200,10 +906,8 @@ ${
 	p3eqtr3d $p |- ( ph -> C = D ) $=
 	e0 e1 f0 f1 f2 f3 peqtr3d e2 f0 f2 f3 f4 peqtr3d $.
 $}
-$( /* A deduction from three chained equalities.  (Contributed by NM,
-       14-Jan-2006.) */
-
-$)
+$( A deduction from three chained equalities.  (Contributed by NM,
+       14-Jan-2006.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1217,10 +921,8 @@ ${
 	p3eqtr3rd $p |- ( ph -> D = C ) $=
 	e2 e0 e1 f0 f1 f2 f3 peqtr3d f0 f2 f4 f3 peqtr3d $.
 $}
-$( /* A deduction from three chained equalities.  (Contributed by NM,
-       4-Aug-1995.)  (Proof shortened by Andrew Salmon, 25-May-2011.) */
-
-$)
+$( A deduction from three chained equalities.  (Contributed by NM,
+       4-Aug-1995.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1234,10 +936,8 @@ ${
 	p3eqtr4d $p |- ( ph -> C = D ) $=
 	e1 e2 e0 f0 f4 f2 f1 peqtr4d f0 f3 f1 f4 peqtr4d $.
 $}
-$( /* A deduction from three chained equalities.  (Contributed by NM,
-       21-Sep-1995.) */
-
-$)
+$( A deduction from three chained equalities.  (Contributed by NM,
+       21-Sep-1995.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1251,9 +951,7 @@ ${
 	p3eqtr4rd $p |- ( ph -> D = C ) $=
 	e2 e0 f0 f4 f2 f1 peqtr4d e1 f0 f4 f1 f3 peqtr4d $.
 $}
-$( /* An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) */
-
-$)
+$( An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- A = B $.
@@ -1265,10 +963,8 @@ ${
 	psyl5eq $p |- ( ph -> A = C ) $=
 	e0 f1 f2 awceq f0 pa1i e1 f0 f1 f2 f3 peqtrd $.
 $}
-$( /* An equality transitivity deduction.  (Contributed by NM,
-       29-Mar-1998.) */
-
-$)
+$( An equality transitivity deduction.  (Contributed by NM,
+       29-Mar-1998.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- A = B $.
@@ -1280,9 +976,7 @@ ${
 	psyl5req $p |- ( ph -> C = A ) $=
 	e0 e1 f0 f1 f2 f3 psyl5eq f0 f1 f3 peqcomd $.
 $}
-$( /* An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) */
-
-$)
+$( An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- B = A $.
@@ -1294,10 +988,8 @@ ${
 	psyl5eqr $p |- ( ph -> A = C ) $=
 	e0 f2 f1 peqcomi e1 f0 f1 f2 f3 psyl5eq $.
 $}
-$( /* An equality transitivity deduction.  (Contributed by NM,
-       29-Mar-1998.) */
-
-$)
+$( An equality transitivity deduction.  (Contributed by NM,
+       29-Mar-1998.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- B = A $.
@@ -1309,9 +1001,7 @@ ${
 	psyl5reqr $p |- ( ph -> C = A ) $=
 	e0 f2 f1 peqcomi e1 f0 f1 f2 f3 psyl5req $.
 $}
-$( /* An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) */
-
-$)
+$( An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1323,10 +1013,8 @@ ${
 	psyl6eq $p |- ( ph -> A = C ) $=
 	e0 e1 f2 f3 awceq f0 pa1i f0 f1 f2 f3 peqtrd $.
 $}
-$( /* An equality transitivity deduction.  (Contributed by NM,
-       29-Mar-1998.) */
-
-$)
+$( An equality transitivity deduction.  (Contributed by NM,
+       29-Mar-1998.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1338,9 +1026,7 @@ ${
 	psyl6req $p |- ( ph -> C = A ) $=
 	e0 e1 f0 f1 f2 f3 psyl6eq f0 f1 f3 peqcomd $.
 $}
-$( /* An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) */
-
-$)
+$( An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1352,10 +1038,8 @@ ${
 	psyl6eqr $p |- ( ph -> A = C ) $=
 	e0 e1 f3 f2 peqcomi f0 f1 f2 f3 psyl6eq $.
 $}
-$( /* An equality transitivity deduction.  (Contributed by NM,
-       29-Mar-1998.) */
-
-$)
+$( An equality transitivity deduction.  (Contributed by NM,
+       29-Mar-1998.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1367,10 +1051,8 @@ ${
 	psyl6reqr $p |- ( ph -> C = A ) $=
 	e0 e1 f3 f2 peqcomi f0 f1 f2 f3 psyl6req $.
 $}
-$( /* An equality transitivity deduction.  (Contributed by NM, 8-May-1994.)
-       (Proof shortened by Andrew Salmon, 25-May-2011.) */
-
-$)
+$( An equality transitivity deduction.  (Contributed by NM, 8-May-1994.)
+       (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
 	$v ph ps A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1383,10 +1065,8 @@ ${
 	psylan9eq $p |- ( ( ph /\ ps ) -> A = C ) $=
 	e0 e1 f2 f3 f4 peqtr f0 f2 f3 awceq f3 f4 awceq f2 f4 awceq f1 psyl2an $.
 $}
-$( /* An equality transitivity deduction.  (Contributed by NM,
-       23-Jun-2007.) */
-
-$)
+$( An equality transitivity deduction.  (Contributed by NM,
+       23-Jun-2007.) $)
 ${
 	$v ph ps A B C $.
 	e0 $e |- ( ph -> B = A ) $.
@@ -1399,9 +1079,7 @@ ${
 	psylan9req $p |- ( ( ph /\ ps ) -> A = C ) $=
 	e0 f0 f3 f2 peqcomd e1 f0 f1 f2 f3 f4 psylan9eq $.
 $}
-$( /* An equality transitivity deduction.  (Contributed by NM, 8-May-1994.) */
-
-$)
+$( An equality transitivity deduction.  (Contributed by NM, 8-May-1994.) $)
 ${
 	$v ph ps A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1414,10 +1092,8 @@ ${
 	psylan9eqr $p |- ( ( ps /\ ph ) -> A = C ) $=
 	e0 e1 f0 f1 f2 f3 f4 psylan9eq f0 f1 f2 f4 awceq pancoms $.
 $}
-$( /* A chained equality inference, useful for converting from definitions.
-       (Contributed by NM, 15-Nov-1994.) */
-
-$)
+$( A chained equality inference, useful for converting from definitions.
+       (Contributed by NM, 15-Nov-1994.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1431,10 +1107,8 @@ ${
 	p3eqtr3g $p |- ( ph -> C = D ) $=
 	e1 e0 f0 f3 f1 f2 psyl5eqr e2 f0 f3 f2 f4 psyl6eq $.
 $}
-$( /* A chained equality inference, useful for converting from definitions.
-       (Contributed by Mario Carneiro, 6-Nov-2015.) */
-
-$)
+$( A chained equality inference, useful for converting from definitions.
+       (Contributed by Mario Carneiro, 6-Nov-2015.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- A = B $.
@@ -1448,10 +1122,8 @@ ${
 	p3eqtr3a $p |- ( ph -> C = D ) $=
 	e1 e0 e2 f0 f1 f2 f4 psyl5eq f0 f1 f3 f4 peqtr3d $.
 $}
-$( /* A chained equality inference, useful for converting to definitions.
-       (Contributed by NM, 5-Aug-1993.) */
-
-$)
+$( A chained equality inference, useful for converting to definitions.
+       (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1465,11 +1137,9 @@ ${
 	p3eqtr4g $p |- ( ph -> C = D ) $=
 	e1 e0 f0 f3 f1 f2 psyl5eq e2 f0 f3 f2 f4 psyl6eqr $.
 $}
-$( /* A chained equality inference, useful for converting to definitions.
+$( A chained equality inference, useful for converting to definitions.
        (Contributed by NM, 2-Feb-2007.)  (Proof shortened by Andrew Salmon,
-       25-May-2011.) */
-
-$)
+       25-May-2011.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- A = B $.
@@ -1483,10 +1153,8 @@ ${
 	p3eqtr4a $p |- ( ph -> C = D ) $=
 	e1 e0 f0 f3 f1 f2 psyl6eq e2 f0 f3 f2 f4 peqtr4d $.
 $}
-$( /* A compound transitive inference for class equality.  (Contributed by NM,
-       22-Jan-2004.) */
-
-$)
+$( A compound transitive inference for class equality.  (Contributed by NM,
+       22-Jan-2004.) $)
 ${
 	$v A B C D F G $.
 	e0 $e |- ( A = C -> D = F ) $.
@@ -1500,10 +1168,8 @@ ${
 	peq2tri $p |- ( ( A = C /\ B = F ) <-> ( B = D /\ A = G ) ) $=
 	f0 f2 awceq f1 f3 awceq pancom e0 f0 f2 awceq f3 f4 f1 peqeq2d f0 f2 awceq f1 f3 awceq f1 f4 awceq ppm5.32i e1 f1 f3 awceq f2 f5 f0 peqeq2d f1 f3 awceq f0 f2 awceq f0 f5 awceq ppm5.32i f0 f2 awceq f1 f3 awceq awa f1 f3 awceq f0 f2 awceq awa f0 f2 awceq f1 f4 awceq awa f1 f3 awceq f0 f5 awceq awa p3bitr3i $.
 $}
-$( /* Equality implies equivalence of membership.  (Contributed by NM,
-       5-Aug-1993.) */
-
-$)
+$( Equality implies equivalence of membership.  (Contributed by NM,
+       5-Aug-1993.) $)
 ${
 	$v x A B C $.
 	$d x A $.
@@ -1516,10 +1182,8 @@ ${
 	peleq1 $p |- ( A = B -> ( A e. C <-> B e. C ) ) $=
 	f0 f1 i0 asup_set_class peqeq2 f0 f1 awceq i0 asup_set_class f0 awceq i0 asup_set_class f1 awceq i0 asup_set_class f2 awcel panbi1d f0 f1 awceq i0 asup_set_class f0 awceq i0 asup_set_class f2 awcel awa i0 asup_set_class f1 awceq i0 asup_set_class f2 awcel awa i0 pexbidv i0 f0 f2 adf-clel i0 f1 f2 adf-clel f0 f1 awceq i0 asup_set_class f0 awceq i0 asup_set_class f2 awcel awa i0 awex i0 asup_set_class f1 awceq i0 asup_set_class f2 awcel awa i0 awex f0 f2 awcel f1 f2 awcel p3bitr4g $.
 $}
-$( /* Equality implies equivalence of membership.  (Contributed by NM,
-       5-Aug-1993.) */
-
-$)
+$( Equality implies equivalence of membership.  (Contributed by NM,
+       5-Aug-1993.) $)
 ${
 	$v x A B C $.
 	$d x A $.
@@ -1532,10 +1196,8 @@ ${
 	peleq2 $p |- ( A = B -> ( C e. A <-> C e. B ) ) $=
 	i0 f0 f1 pdfcleq f0 f1 awceq i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awb i0 awal pbiimpi f0 f1 awceq i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel awb i0 p19.21bi f0 f1 awceq i0 asup_set_class f0 awcel i0 asup_set_class f1 awcel i0 asup_set_class f2 awceq panbi2d f0 f1 awceq i0 asup_set_class f2 awceq i0 asup_set_class f0 awcel awa i0 asup_set_class f2 awceq i0 asup_set_class f1 awcel awa i0 pexbidv i0 f2 f0 adf-clel i0 f2 f1 adf-clel f0 f1 awceq i0 asup_set_class f2 awceq i0 asup_set_class f0 awcel awa i0 awex i0 asup_set_class f2 awceq i0 asup_set_class f1 awcel awa i0 awex f2 f0 awcel f2 f1 awcel p3bitr4g $.
 $}
-$( /* Equality implies equivalence of membership.  (Contributed by NM,
-     31-May-1999.) */
-
-$)
+$( Equality implies equivalence of membership.  (Contributed by NM,
+     31-May-1999.) $)
 ${
 	$v A B C D $.
 	f0 $f class A $.
@@ -1545,10 +1207,8 @@ ${
 	peleq12 $p |- ( ( A = B /\ C = D ) -> ( A e. C <-> B e. D ) ) $=
 	f0 f1 f2 peleq1 f2 f3 f1 peleq2 f0 f1 awceq f0 f2 awcel f1 f2 awcel f2 f3 awceq f1 f3 awcel psylan9bb $.
 $}
-$( /* Inference from equality to equivalence of membership.  (Contributed by
-       NM, 5-Aug-1993.) */
-
-$)
+$( Inference from equality to equivalence of membership.  (Contributed by
+       NM, 5-Aug-1993.) $)
 ${
 	$v A B C $.
 	e0 $e |- A = B $.
@@ -1558,10 +1218,8 @@ ${
 	peleq1i $p |- ( A e. C <-> B e. C ) $=
 	e0 f0 f1 f2 peleq1 f0 f1 awceq f0 f2 awcel f1 f2 awcel awb aax-mp $.
 $}
-$( /* Inference from equality to equivalence of membership.  (Contributed by
-       NM, 5-Aug-1993.) */
-
-$)
+$( Inference from equality to equivalence of membership.  (Contributed by
+       NM, 5-Aug-1993.) $)
 ${
 	$v A B C $.
 	e0 $e |- A = B $.
@@ -1571,10 +1229,8 @@ ${
 	peleq2i $p |- ( C e. A <-> C e. B ) $=
 	e0 f0 f1 f2 peleq2 f0 f1 awceq f2 f0 awcel f2 f1 awcel awb aax-mp $.
 $}
-$( /* Inference from equality to equivalence of membership.  (Contributed by
-         NM, 31-May-1994.) */
-
-$)
+$( Inference from equality to equivalence of membership.  (Contributed by
+         NM, 31-May-1994.) $)
 ${
 	$v A B C D $.
 	e0 $e |- A = B $.
@@ -1586,16 +1242,10 @@ ${
 	peleq12i $p |- ( A e. C <-> B e. D ) $=
 	e1 f2 f3 f0 peleq2i e0 f0 f1 f3 peleq1i f0 f2 awcel f0 f3 awcel f1 f3 awcel pbitri $.
 $}
-$( /* Theorem eleq12i is the congruence law for elementhood. */
-
-$)
-$( /* $j congruence 'eleq12i'; */
-
-$)
-$( /* Deduction from equality to equivalence of membership.  (Contributed by
-       NM, 5-Aug-1993.) */
-
-$)
+$( Theorem eleq12i is the congruence law for elementhood. $)
+$( $j congruence 'eleq12i'; $)
+$( Deduction from equality to equivalence of membership.  (Contributed by
+       NM, 5-Aug-1993.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1606,10 +1256,8 @@ ${
 	peleq1d $p |- ( ph -> ( A e. C <-> B e. C ) ) $=
 	e0 f1 f2 f3 peleq1 f0 f1 f2 awceq f1 f3 awcel f2 f3 awcel awb psyl $.
 $}
-$( /* Deduction from equality to equivalence of membership.  (Contributed by
-       NM, 27-Dec-1993.) */
-
-$)
+$( Deduction from equality to equivalence of membership.  (Contributed by
+       NM, 27-Dec-1993.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1620,10 +1268,8 @@ ${
 	peleq2d $p |- ( ph -> ( C e. A <-> C e. B ) ) $=
 	e0 f1 f2 f3 peleq2 f0 f1 f2 awceq f3 f1 awcel f3 f2 awcel awb psyl $.
 $}
-$( /* Deduction from equality to equivalence of membership.  (Contributed by
-         NM, 31-May-1994.) */
-
-$)
+$( Deduction from equality to equivalence of membership.  (Contributed by
+         NM, 31-May-1994.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1636,10 +1282,8 @@ ${
 	peleq12d $p |- ( ph -> ( A e. C <-> B e. D ) ) $=
 	e1 f0 f3 f4 f1 peleq2d e0 f0 f1 f2 f4 peleq1d f0 f1 f3 awcel f1 f4 awcel f2 f4 awcel pbitrd $.
 $}
-$( /* A transitive-type law relating membership and equality.  (Contributed by
-     NM, 9-Apr-1994.) */
-
-$)
+$( A transitive-type law relating membership and equality.  (Contributed by
+     NM, 9-Apr-1994.) $)
 ${
 	$v A B C $.
 	f0 $f class A $.
@@ -1648,10 +1292,8 @@ ${
 	peleq1a $p |- ( A e. B -> ( C = A -> C e. B ) ) $=
 	f2 f0 f1 peleq1 f2 f0 awceq f2 f1 awcel f0 f1 awcel pbiimprcd $.
 $}
-$( /* Substitution of equal classes into membership relation.  (Contributed by
-       NM, 5-Aug-1993.) */
-
-$)
+$( Substitution of equal classes into membership relation.  (Contributed by
+       NM, 5-Aug-1993.) $)
 ${
 	$v A B C $.
 	e0 $e |- A = B $.
@@ -1662,10 +1304,8 @@ ${
 	peqeltri $p |- A e. C $=
 	e1 e0 f0 f1 f2 peleq1i f0 f2 awcel f1 f2 awcel pmpbir $.
 $}
-$( /* Substitution of equal classes into membership relation.  (Contributed by
-       NM, 5-Aug-1993.) */
-
-$)
+$( Substitution of equal classes into membership relation.  (Contributed by
+       NM, 5-Aug-1993.) $)
 ${
 	$v A B C $.
 	e0 $e |- A = B $.
@@ -1676,10 +1316,8 @@ ${
 	peqeltrri $p |- B e. C $=
 	e0 f0 f1 peqcomi e1 f1 f0 f2 peqeltri $.
 $}
-$( /* Substitution of equal classes into membership relation.  (Contributed by
-       NM, 5-Aug-1993.) */
-
-$)
+$( Substitution of equal classes into membership relation.  (Contributed by
+       NM, 5-Aug-1993.) $)
 ${
 	$v A B C $.
 	e0 $e |- A e. B $.
@@ -1690,10 +1328,8 @@ ${
 	peleqtri $p |- A e. C $=
 	e0 e1 f1 f2 f0 peleq2i f0 f1 awcel f0 f2 awcel pmpbi $.
 $}
-$( /* Substitution of equal classes into membership relation.  (Contributed by
-       NM, 5-Aug-1993.) */
-
-$)
+$( Substitution of equal classes into membership relation.  (Contributed by
+       NM, 5-Aug-1993.) $)
 ${
 	$v A B C $.
 	e0 $e |- A e. B $.
@@ -1704,10 +1340,8 @@ ${
 	peleqtrri $p |- A e. C $=
 	e0 e1 f2 f1 peqcomi f0 f1 f2 peleqtri $.
 $}
-$( /* Substitution of equal classes into membership relation, deduction form.
-       (Contributed by Raph Levien, 10-Dec-2002.) */
-
-$)
+$( Substitution of equal classes into membership relation, deduction form.
+       (Contributed by Raph Levien, 10-Dec-2002.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1719,10 +1353,8 @@ ${
 	peqeltrd $p |- ( ph -> A e. C ) $=
 	e1 e0 f0 f1 f2 f3 peleq1d f0 f1 f3 awcel f2 f3 awcel pmpbird $.
 $}
-$( /* Deduction that substitutes equal classes into membership.  (Contributed
-       by NM, 14-Dec-2004.) */
-
-$)
+$( Deduction that substitutes equal classes into membership.  (Contributed
+       by NM, 14-Dec-2004.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1734,10 +1366,8 @@ ${
 	peqeltrrd $p |- ( ph -> B e. C ) $=
 	e0 f0 f1 f2 peqcomd e1 f0 f2 f1 f3 peqeltrd $.
 $}
-$( /* Deduction that substitutes equal classes into membership.  (Contributed
-       by NM, 14-Dec-2004.) */
-
-$)
+$( Deduction that substitutes equal classes into membership.  (Contributed
+       by NM, 14-Dec-2004.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A e. B ) $.
@@ -1749,10 +1379,8 @@ ${
 	peleqtrd $p |- ( ph -> A e. C ) $=
 	e0 e1 f0 f2 f3 f1 peleq2d f0 f1 f2 awcel f1 f3 awcel pmpbid $.
 $}
-$( /* Deduction that substitutes equal classes into membership.  (Contributed
-       by NM, 14-Dec-2004.) */
-
-$)
+$( Deduction that substitutes equal classes into membership.  (Contributed
+       by NM, 14-Dec-2004.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A e. B ) $.
@@ -1764,10 +1392,8 @@ ${
 	peleqtrrd $p |- ( ph -> A e. C ) $=
 	e0 e1 f0 f3 f2 peqcomd f0 f1 f2 f3 peleqtrd $.
 $}
-$( /* Substitution of equal classes into membership relation.  (Contributed by
-       Mario Carneiro, 6-Jan-2017.) */
-
-$)
+$( Substitution of equal classes into membership relation.  (Contributed by
+       Mario Carneiro, 6-Jan-2017.) $)
 ${
 	$v A B C D $.
 	e0 $e |- A e. B $.
@@ -1780,10 +1406,8 @@ ${
 	p3eltr3i $p |- C e. D $=
 	e1 e0 e2 f0 f1 f3 peleqtri f0 f2 f3 peqeltrri $.
 $}
-$( /* Substitution of equal classes into membership relation.  (Contributed by
-       Mario Carneiro, 6-Jan-2017.) */
-
-$)
+$( Substitution of equal classes into membership relation.  (Contributed by
+       Mario Carneiro, 6-Jan-2017.) $)
 ${
 	$v A B C D $.
 	e0 $e |- A e. B $.
@@ -1796,10 +1420,8 @@ ${
 	p3eltr4i $p |- C e. D $=
 	e1 e0 e2 f0 f1 f3 peleqtrri f2 f0 f3 peqeltri $.
 $}
-$( /* Substitution of equal classes into membership relation.  (Contributed by
-       Mario Carneiro, 6-Jan-2017.) */
-
-$)
+$( Substitution of equal classes into membership relation.  (Contributed by
+       Mario Carneiro, 6-Jan-2017.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A e. B ) $.
@@ -1813,10 +1435,8 @@ ${
 	p3eltr3d $p |- ( ph -> C e. D ) $=
 	e1 e0 e2 f0 f1 f2 f4 peleqtrd f0 f1 f3 f4 peqeltrrd $.
 $}
-$( /* Substitution of equal classes into membership relation.  (Contributed by
-       Mario Carneiro, 6-Jan-2017.) */
-
-$)
+$( Substitution of equal classes into membership relation.  (Contributed by
+       Mario Carneiro, 6-Jan-2017.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A e. B ) $.
@@ -1830,10 +1450,8 @@ ${
 	p3eltr4d $p |- ( ph -> C e. D ) $=
 	e1 e0 e2 f0 f1 f2 f4 peleqtrrd f0 f3 f1 f4 peqeltrd $.
 $}
-$( /* Substitution of equal classes into membership relation.  (Contributed by
-       Mario Carneiro, 6-Jan-2017.) */
-
-$)
+$( Substitution of equal classes into membership relation.  (Contributed by
+       Mario Carneiro, 6-Jan-2017.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A e. B ) $.
@@ -1847,10 +1465,8 @@ ${
 	p3eltr3g $p |- ( ph -> C e. D ) $=
 	e0 e1 e2 f1 f3 f2 f4 peleq12i f0 f1 f2 awcel f3 f4 awcel psylib $.
 $}
-$( /* Substitution of equal classes into membership relation.  (Contributed by
-       Mario Carneiro, 6-Jan-2017.) */
-
-$)
+$( Substitution of equal classes into membership relation.  (Contributed by
+       Mario Carneiro, 6-Jan-2017.) $)
 ${
 	$v ph A B C D $.
 	e0 $e |- ( ph -> A e. B ) $.
@@ -1864,10 +1480,8 @@ ${
 	p3eltr4g $p |- ( ph -> C e. D ) $=
 	e0 e1 e2 f3 f1 f4 f2 peleq12i f0 f1 f2 awcel f3 f4 awcel psylibr $.
 $}
-$( /* B membership and equality inference.  (Contributed by NM,
-       4-Jan-2006.) */
-
-$)
+$( B membership and equality inference.  (Contributed by NM,
+       4-Jan-2006.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- A = B $.
@@ -1879,10 +1493,8 @@ ${
 	psyl5eqel $p |- ( ph -> A e. C ) $=
 	e0 f1 f2 awceq f0 pa1i e1 f0 f1 f2 f3 peqeltrd $.
 $}
-$( /* B membership and equality inference.  (Contributed by NM,
-       4-Jan-2006.) */
-
-$)
+$( B membership and equality inference.  (Contributed by NM,
+       4-Jan-2006.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- B = A $.
@@ -1894,10 +1506,8 @@ ${
 	psyl5eqelr $p |- ( ph -> A e. C ) $=
 	e0 f2 f1 peqcomi e1 f0 f1 f2 f3 psyl5eqel $.
 $}
-$( /* B membership and equality inference.  (Contributed by NM,
-       4-Jan-2006.) */
-
-$)
+$( B membership and equality inference.  (Contributed by NM,
+       4-Jan-2006.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- A e. B $.
@@ -1909,10 +1519,8 @@ ${
 	psyl5eleq $p |- ( ph -> A e. C ) $=
 	e0 f1 f2 awcel f0 pa1i e1 f0 f1 f2 f3 peleqtrd $.
 $}
-$( /* B membership and equality inference.  (Contributed by NM,
-       4-Jan-2006.) */
-
-$)
+$( B membership and equality inference.  (Contributed by NM,
+       4-Jan-2006.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- A e. B $.
@@ -1924,10 +1532,8 @@ ${
 	psyl5eleqr $p |- ( ph -> A e. C ) $=
 	e0 e1 f0 f3 f2 peqcomd f0 f1 f2 f3 psyl5eleq $.
 $}
-$( /* A membership and equality inference.  (Contributed by NM,
-       4-Jan-2006.) */
-
-$)
+$( A membership and equality inference.  (Contributed by NM,
+       4-Jan-2006.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -1939,10 +1545,8 @@ ${
 	psyl6eqel $p |- ( ph -> A e. C ) $=
 	e0 e1 f2 f3 awcel f0 pa1i f0 f1 f2 f3 peqeltrd $.
 $}
-$( /* A membership and equality inference.  (Contributed by NM,
-       4-Jan-2006.) */
-
-$)
+$( A membership and equality inference.  (Contributed by NM,
+       4-Jan-2006.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> B = A ) $.
@@ -1954,10 +1558,8 @@ ${
 	psyl6eqelr $p |- ( ph -> A e. C ) $=
 	e0 f0 f2 f1 peqcomd e1 f0 f1 f2 f3 psyl6eqel $.
 $}
-$( /* A membership and equality inference.  (Contributed by NM,
-       4-Jan-2006.) */
-
-$)
+$( A membership and equality inference.  (Contributed by NM,
+       4-Jan-2006.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A e. B ) $.
@@ -1969,10 +1571,8 @@ ${
 	psyl6eleq $p |- ( ph -> A e. C ) $=
 	e0 e1 f2 f3 awceq f0 pa1i f0 f1 f2 f3 peleqtrd $.
 $}
-$( /* A membership and equality inference.  (Contributed by NM,
-       24-Apr-2005.) */
-
-$)
+$( A membership and equality inference.  (Contributed by NM,
+       24-Apr-2005.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A e. B ) $.
@@ -1984,10 +1584,8 @@ ${
 	psyl6eleqr $p |- ( ph -> A e. C ) $=
 	e0 e1 f3 f2 peqcomi f0 f1 f2 f3 psyl6eleq $.
 $}
-$( /* Substitution of equal classes into a membership antecedent.
-       (Contributed by Jonathan Ben-Naim, 3-Jun-2011.) */
-
-$)
+$( Substitution of equal classes into a membership antecedent.
+       (Contributed by Jonathan Ben-Naim, 3-Jun-2011.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( A e. B -> ph ) $.
@@ -1999,11 +1597,9 @@ ${
 	peleq2s $p |- ( A e. C -> ph ) $=
 	e1 f3 f2 f1 peleq2i e0 f1 f3 awcel f1 f2 awcel f0 psylbi $.
 $}
-$( /* If a class is not an element of another class, an equal class is also
+$( If a class is not an element of another class, an equal class is also
        not an element.  Deduction form.  (Contributed by David Moews,
-       1-May-2017.) */
-
-$)
+       1-May-2017.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -2015,11 +1611,9 @@ ${
 	peqneltrd $p |- ( ph -> -. A e. C ) $=
 	e1 e0 f0 f1 f2 f3 peleq1d f0 f1 f3 awcel f2 f3 awcel pmtbird $.
 $}
-$( /* If a class is not an element of another class, an equal class is also
+$( If a class is not an element of another class, an equal class is also
        not an element.  Deduction form.  (Contributed by David Moews,
-       1-May-2017.) */
-
-$)
+       1-May-2017.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> A = B ) $.
@@ -2031,11 +1625,9 @@ ${
 	peqneltrrd $p |- ( ph -> -. B e. C ) $=
 	e1 e0 f0 f1 f2 f3 peleq1d f0 f1 f3 awcel f2 f3 awcel pmtbid $.
 $}
-$( /* If a class is not an element of another class, it is also not an element
+$( If a class is not an element of another class, it is also not an element
        of an equal class.  Deduction form.  (Contributed by David Moews,
-       1-May-2017.) */
-
-$)
+       1-May-2017.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> -. C e. A ) $.
@@ -2047,11 +1639,9 @@ ${
 	pneleqtrd $p |- ( ph -> -. C e. B ) $=
 	e0 e1 f0 f1 f2 f3 peleq2d f0 f3 f1 awcel f3 f2 awcel pmtbid $.
 $}
-$( /* If a class is not an element of another class, it is also not an element
+$( If a class is not an element of another class, it is also not an element
        of an equal class.  Deduction form.  (Contributed by David Moews,
-       1-May-2017.) */
-
-$)
+       1-May-2017.) $)
 ${
 	$v ph A B C $.
 	e0 $e |- ( ph -> -. C e. B ) $.
@@ -2063,11 +1653,9 @@ ${
 	pneleqtrrd $p |- ( ph -> -. C e. A ) $=
 	e0 e1 f0 f1 f2 f3 peleq2d f0 f3 f1 awcel f3 f2 awcel pmtbird $.
 $}
-$( /* Establish equality between classes, using bound-variable hypotheses
+$( Establish equality between classes, using bound-variable hypotheses
        instead of distinct variable conditions.  (Contributed by NM,
-       5-Aug-1993.) */
-
-$)
+       5-Aug-1993.) $)
 ${
 	$v x y A B $.
 	$d y A $.
@@ -2082,10 +1670,8 @@ ${
 	pcleqh $p |- ( A = B <-> A. x ( x e. A <-> x e. B ) ) $=
 	f1 f2 f3 pdfcleq f0 asup_set_class f2 awcel f0 asup_set_class f3 awcel awb f1 aax-17 f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel pdfbi2 e0 e1 f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel f0 phbim e1 e0 f1 asup_set_class f3 awcel f1 asup_set_class f2 awcel f0 phbim f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awi f1 asup_set_class f3 awcel f1 asup_set_class f2 awcel awi f0 phban f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awb f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awi f1 asup_set_class f3 awcel f1 asup_set_class f2 awcel awi awa f0 phbxfrbi f0 asup_set_class f1 asup_set_class f2 peleq1 f0 asup_set_class f1 asup_set_class f3 peleq1 f0 asup_set_class f1 asup_set_class awceq f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel f0 asup_set_class f3 awcel f1 asup_set_class f3 awcel pbibi12d f0 asup_set_class f1 asup_set_class awceq f0 asup_set_class f2 awcel f0 asup_set_class f3 awcel awb f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awb pbiimpd f0 asup_set_class f2 awcel f0 asup_set_class f3 awcel awb f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awb f0 f1 pcbv3h f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel pdfbi2 e0 e1 f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel f0 phbim e1 e0 f1 asup_set_class f3 awcel f1 asup_set_class f2 awcel f0 phbim f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awi f1 asup_set_class f3 awcel f1 asup_set_class f2 awcel awi f0 phban f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awb f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awi f1 asup_set_class f3 awcel f1 asup_set_class f2 awcel awi awa f0 phbxfrbi f0 asup_set_class f2 awcel f0 asup_set_class f3 awcel awb f1 aax-17 f0 asup_set_class f1 asup_set_class f2 peleq1 f0 asup_set_class f1 asup_set_class f3 peleq1 f0 asup_set_class f1 asup_set_class awceq f0 asup_set_class f2 awcel f1 asup_set_class f2 awcel f0 asup_set_class f3 awcel f1 asup_set_class f3 awcel pbibi12d f0 asup_set_class f2 awcel f0 asup_set_class f3 awcel awb f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awb awb f0 f1 pequcoms f1 asup_set_class f0 asup_set_class awceq f0 asup_set_class f2 awcel f0 asup_set_class f3 awcel awb f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awb pbiimprd f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awb f0 asup_set_class f2 awcel f0 asup_set_class f3 awcel awb f1 f0 pcbv3h f0 asup_set_class f2 awcel f0 asup_set_class f3 awcel awb f0 awal f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awb f1 awal pimpbii f2 f3 awceq f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel awb f1 awal f0 asup_set_class f2 awcel f0 asup_set_class f3 awcel awb f0 awal pbitr4i $.
 $}
-$( /* A way of showing two classes are not equal.  (Contributed by NM,
-     1-Apr-1997.) */
-
-$)
+$( A way of showing two classes are not equal.  (Contributed by NM,
+     1-Apr-1997.) $)
 ${
 	$v A B C $.
 	f0 $f class A $.
@@ -2094,10 +1680,8 @@ ${
 	pnelneq $p |- ( ( A e. C /\ -. B e. C ) -> -. A = B ) $=
 	f0 f1 f2 peleq1 f0 f1 awceq f0 f2 awcel f1 f2 awcel pbiimpcd f0 f2 awcel f0 f1 awceq f1 f2 awcel pcon3and $.
 $}
-$( /* A way of showing two classes are not equal.  (Contributed by NM,
-     12-Jan-2002.) */
-
-$)
+$( A way of showing two classes are not equal.  (Contributed by NM,
+     12-Jan-2002.) $)
 ${
 	$v A B C $.
 	f0 $f class A $.
@@ -2106,10 +1690,8 @@ ${
 	pnelneq2 $p |- ( ( A e. B /\ -. A e. C ) -> -. B = C ) $=
 	f1 f2 f0 peleq2 f1 f2 awceq f0 f1 awcel f0 f2 awcel pbiimpcd f0 f1 awcel f1 f2 awceq f0 f2 awcel pcon3and $.
 $}
-$( /* Lemma for ~ eqsb3 .  (Contributed by Rodolfo Medina, 28-Apr-2010.)
-       (Proof shortened by Andrew Salmon, 14-Jun-2011.) */
-
-$)
+$( Lemma for ~ eqsb3 .  (Contributed by Rodolfo Medina, 28-Apr-2010.)
+       (Proof shortened by Andrew Salmon, 14-Jun-2011.) $)
 ${
 	$v x y A $.
 	$d x y $.
@@ -2120,10 +1702,8 @@ ${
 	peqsb3lem $p |- ( [ x / y ] y = A <-> x = A ) $=
 	f0 asup_set_class f2 awceq f1 pnfv f1 asup_set_class f0 asup_set_class f2 peqeq1 f1 asup_set_class f2 awceq f0 asup_set_class f2 awceq f1 f0 psbie $.
 $}
-$( /* Substitution applied to an atomic wff (class version of ~ equsb3 ).
-       (Contributed by Rodolfo Medina, 28-Apr-2010.) */
-
-$)
+$( Substitution applied to an atomic wff (class version of ~ equsb3 ).
+       (Contributed by Rodolfo Medina, 28-Apr-2010.) $)
 ${
 	$v x y w A $.
 	$d y A $.
@@ -2137,11 +1717,9 @@ ${
 	peqsb3 $p |- ( [ x / y ] y = A <-> x = A ) $=
 	i0 f1 f2 peqsb3lem f1 asup_set_class f2 awceq f1 i0 awsb i0 asup_set_class f2 awceq i0 f0 psbbii f1 asup_set_class f2 awceq i0 pnfv f1 asup_set_class f2 awceq f1 f0 i0 psbco2 f0 i0 f2 peqsb3lem f1 asup_set_class f2 awceq f1 i0 awsb i0 f0 awsb i0 asup_set_class f2 awceq i0 f0 awsb f1 asup_set_class f2 awceq f1 f0 awsb f0 asup_set_class f2 awceq p3bitr3i $.
 $}
-$( /* Substitution applied to an atomic wff (class version of ~ elsb3 ).
+$( Substitution applied to an atomic wff (class version of ~ elsb3 ).
        (Contributed by Rodolfo Medina, 28-Apr-2010.)  (Proof shortened by
-       Andrew Salmon, 14-Jun-2011.) */
-
-$)
+       Andrew Salmon, 14-Jun-2011.) $)
 ${
 	$v x y w A $.
 	$d y A $.
@@ -2155,11 +1733,9 @@ ${
 	pclelsb3 $p |- ( [ x / y ] y e. A <-> x e. A ) $=
 	i0 asup_set_class f2 awcel f1 pnfv i0 asup_set_class f2 awcel i0 f0 f1 psbco2 f1 asup_set_class f2 awcel i0 pnfv i0 asup_set_class f1 asup_set_class f2 peleq1 i0 asup_set_class f2 awcel f1 asup_set_class f2 awcel i0 f1 psbie i0 asup_set_class f2 awcel i0 f1 awsb f1 asup_set_class f2 awcel f1 f0 psbbii f0 asup_set_class f2 awcel i0 pnfv i0 asup_set_class f0 asup_set_class f2 peleq1 i0 asup_set_class f2 awcel f0 asup_set_class f2 awcel i0 f0 psbie i0 asup_set_class f2 awcel i0 f1 awsb f1 f0 awsb i0 asup_set_class f2 awcel i0 f0 awsb f1 asup_set_class f2 awcel f1 f0 awsb f0 asup_set_class f2 awcel p3bitr3i $.
 $}
-$( /* A utility lemma to transfer a bound-variable hypothesis builder into a
+$( A utility lemma to transfer a bound-variable hypothesis builder into a
        definition.  See ~ hbxfrbi for equivalence version.  (Contributed by NM,
-       21-Aug-2007.) */
-
-$)
+       21-Aug-2007.) $)
 ${
 	$v x y A B $.
 	e0 $e |- A = B $.
@@ -2171,11 +1747,9 @@ ${
 	phbxfreq $p |- ( y e. A -> A. x y e. A ) $=
 	e0 f2 f3 f1 asup_set_class peleq2i e1 f1 asup_set_class f2 awcel f1 asup_set_class f3 awcel f0 phbxfrbi $.
 $}
-$( /* Change the free variable of a hypothesis builder.  Lemma for ~ nfcrii .
+$( Change the free variable of a hypothesis builder.  Lemma for ~ nfcrii .
        (Contributed by NM, 5-Aug-1993.)  (Revised by Andrew Salmon,
-       11-Jul-2011.) */
-
-$)
+       11-Jul-2011.) $)
 ${
 	$v x y z A $.
 	$d y A $.
@@ -2188,7 +1762,7 @@ ${
 	phblem $p |- ( z e. A -> A. x z e. A ) $=
 	e0 f1 asup_set_class f3 awcel f1 f2 f0 phbsb f2 f1 f3 pclelsb3 f2 f1 f3 pclelsb3 f1 asup_set_class f3 awcel f1 f2 awsb f2 asup_set_class f3 awcel f0 palbii f1 asup_set_class f3 awcel f1 f2 awsb f1 asup_set_class f3 awcel f1 f2 awsb f0 awal f2 asup_set_class f3 awcel f2 asup_set_class f3 awcel f0 awal p3imtr3i $.
 $}
-$( /* Equality of a class variable and a class abstraction (also called a
+$( Equality of a class variable and a class abstraction (also called a
        class builder).  Theorem 5.1 of [Quine] p. 34.  This theorem shows the
        relationship between expressions with class abstractions and expressions
        with class variables.  Note that ~ abbi and its relatives are among
@@ -2211,9 +1785,7 @@ $( /* Equality of a class variable and a class abstraction (also called a
        substitution instances of the class variables in its equivalent
        formulation ~ cplem2 .  For more information on class variables, see
        Quine pp. 15-21 and/or Takeuti and Zaring pp. 10-13.  (Contributed by
-       NM, 5-Aug-1993.) */
-
-$)
+       NM, 5-Aug-1993.) $)
 ${
 	$v ph x y A $.
 	$d x A y $.
@@ -2225,10 +1797,8 @@ ${
 	pabeq2 $p |- ( A = { x | ph } <-> A. x ( x e. A <-> ph ) ) $=
 	i0 asup_set_class f2 awcel f1 aax-17 f0 f1 i0 phbab1 f1 i0 f2 f0 f1 acab pcleqh f0 f1 pabid f1 asup_set_class f0 f1 acab awcel f0 f1 asup_set_class f2 awcel pbibi2i f1 asup_set_class f2 awcel f1 asup_set_class f0 f1 acab awcel awb f1 asup_set_class f2 awcel f0 awb f1 palbii f2 f0 f1 acab awceq f1 asup_set_class f2 awcel f1 asup_set_class f0 f1 acab awcel awb f1 awal f1 asup_set_class f2 awcel f0 awb f1 awal pbitri $.
 $}
-$( /* Equality of a class variable and a class abstraction.  (Contributed by
-       NM, 20-Aug-1993.) */
-
-$)
+$( Equality of a class variable and a class abstraction.  (Contributed by
+       NM, 20-Aug-1993.) $)
 ${
 	$v ph x A $.
 	$d x A $.
@@ -2238,10 +1808,8 @@ ${
 	pabeq1 $p |- ( { x | ph } = A <-> A. x ( ph <-> x e. A ) ) $=
 	f0 f1 f2 pabeq2 f0 f1 acab f2 peqcom f0 f1 asup_set_class f2 awcel pbicom f0 f1 asup_set_class f2 awcel awb f1 asup_set_class f2 awcel f0 awb f1 palbii f2 f0 f1 acab awceq f1 asup_set_class f2 awcel f0 awb f1 awal f0 f1 acab f2 awceq f0 f1 asup_set_class f2 awcel awb f1 awal p3bitr4i $.
 $}
-$( /* Equality of a class variable and a class abstraction (inference rule).
-       (Contributed by NM, 3-Apr-1996.) */
-
-$)
+$( Equality of a class variable and a class abstraction (inference rule).
+       (Contributed by NM, 3-Apr-1996.) $)
 ${
 	$v ph x A $.
 	e0 $e |- A = { x | ph } $.
@@ -2251,10 +1819,8 @@ ${
 	pabeq2i $p |- ( x e. A <-> ph ) $=
 	e0 f2 f0 f1 acab f1 asup_set_class peleq2i f0 f1 pabid f1 asup_set_class f2 awcel f1 asup_set_class f0 f1 acab awcel f0 pbitri $.
 $}
-$( /* Equality of a class variable and a class abstraction (inference rule).
-       (Contributed by NM, 31-Jul-1994.) */
-
-$)
+$( Equality of a class variable and a class abstraction (inference rule).
+       (Contributed by NM, 31-Jul-1994.) $)
 ${
 	$v ph x A $.
 	e0 $e |- { x | ph } = A $.
@@ -2264,10 +1830,8 @@ ${
 	pabeq1i $p |- ( ph <-> x e. A ) $=
 	f0 f1 pabid e0 f0 f1 acab f2 f1 asup_set_class peleq2i f0 f1 asup_set_class f0 f1 acab awcel f1 asup_set_class f2 awcel pbitr3i $.
 $}
-$( /* Equality of a class variable and a class abstraction (deduction).
-       (Contributed by NM, 16-Nov-1995.) */
-
-$)
+$( Equality of a class variable and a class abstraction (deduction).
+       (Contributed by NM, 16-Nov-1995.) $)
 ${
 	$v ph ps x A $.
 	e0 $e |- ( ph -> A = { x | ps } ) $.
@@ -2278,10 +1842,8 @@ ${
 	pabeq2d $p |- ( ph -> ( x e. A <-> ps ) ) $=
 	e0 f0 f3 f1 f2 acab f2 asup_set_class peleq2d f1 f2 pabid f0 f2 asup_set_class f3 awcel f2 asup_set_class f1 f2 acab awcel f1 psyl6bb $.
 $}
-$( /* Equivalent wff's correspond to equal class abstractions.  (Contributed
-       by NM, 25-Nov-2013.)  (Revised by Mario Carneiro, 11-Aug-2016.) */
-
-$)
+$( Equivalent wff's correspond to equal class abstractions.  (Contributed
+       by NM, 25-Nov-2013.)  (Revised by Mario Carneiro, 11-Aug-2016.) $)
 ${
 	$v ph ps x y $.
 	$d ph y $.
@@ -2294,10 +1856,8 @@ ${
 	pabbi $p |- ( A. x ( ph <-> ps ) <-> { x | ph } = { x | ps } ) $=
 	i0 f0 f2 acab f1 f2 acab pdfcleq f0 f2 i0 pnfsab1 f1 f2 i0 pnfsab1 i0 asup_set_class f0 f2 acab awcel i0 asup_set_class f1 f2 acab awcel f2 pnfbi f0 f1 awb i0 pnfv f0 i0 f2 adf-clab f0 i0 f2 psbequ12r i0 asup_set_class f0 f2 acab awcel f0 f2 i0 awsb i0 asup_set_class f2 asup_set_class awceq f0 psyl5bb f1 i0 f2 adf-clab f1 i0 f2 psbequ12r i0 asup_set_class f1 f2 acab awcel f1 f2 i0 awsb i0 asup_set_class f2 asup_set_class awceq f1 psyl5bb i0 asup_set_class f2 asup_set_class awceq i0 asup_set_class f0 f2 acab awcel f0 i0 asup_set_class f1 f2 acab awcel f1 pbibi12d i0 asup_set_class f0 f2 acab awcel i0 asup_set_class f1 f2 acab awcel awb f0 f1 awb i0 f2 pcbval f0 f2 acab f1 f2 acab awceq i0 asup_set_class f0 f2 acab awcel i0 asup_set_class f1 f2 acab awcel awb i0 awal f0 f1 awb f2 awal pbitr2i $.
 $}
-$( /* Equality of a class variable and a class abstraction (inference rule).
-       (Contributed by NM, 5-Aug-1993.) */
-
-$)
+$( Equality of a class variable and a class abstraction (inference rule).
+       (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v ph x A $.
 	$d x A $.
@@ -2308,10 +1868,8 @@ ${
 	pabbi2i $p |- A = { x | ph } $=
 	f0 f1 f2 pabeq2 e0 f2 f0 f1 acab awceq f1 asup_set_class f2 awcel f0 awb f1 pmpgbir $.
 $}
-$( /* Equivalent wff's yield equal class abstractions (inference rule).
-       (Contributed by NM, 5-Aug-1993.) */
-
-$)
+$( Equivalent wff's yield equal class abstractions (inference rule).
+       (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v ph ps x $.
 	e0 $e |- ( ph <-> ps ) $.
@@ -2321,20 +1879,12 @@ ${
 	pabbii $p |- { x | ph } = { x | ps } $=
 	f0 f1 f2 pabbi e0 f0 f1 awb f0 f2 acab f1 f2 acab awceq f2 pmpgbi $.
 $}
-$( /* Theorem abbii is the congruence law for class abstraction. */
-
-$)
-$( /* $j congruence 'abbii'; */
-
-$)
-$( /* ` y ` is a dummy var. */
-
-$)
-$( /* Equivalent wff's yield equal class abstractions (deduction rule).
+$( Theorem abbii is the congruence law for class abstraction. $)
+$( $j congruence 'abbii'; $)
+$( ` y ` is a dummy var. $)
+$( Equivalent wff's yield equal class abstractions (deduction rule).
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
-       7-Oct-2016.) */
-
-$)
+       7-Oct-2016.) $)
 ${
 	$v ph ps ch x $.
 	e0 $e |- F/ x ph $.
@@ -2346,10 +1896,8 @@ ${
 	pabbid $p |- ( ph -> { x | ps } = { x | ch } ) $=
 	e0 e1 f0 f1 f2 awb f3 palrimi f1 f2 f3 pabbi f0 f1 f2 awb f3 awal f1 f3 acab f2 f3 acab awceq psylib $.
 $}
-$( /* Equivalent wff's yield equal class abstractions (deduction rule).
-       (Contributed by NM, 10-Aug-1993.) */
-
-$)
+$( Equivalent wff's yield equal class abstractions (deduction rule).
+       (Contributed by NM, 10-Aug-1993.) $)
 ${
 	$v ph ps ch x $.
 	$d x ph $.
@@ -2361,13 +1909,9 @@ ${
 	pabbidv $p |- ( ph -> { x | ps } = { x | ch } ) $=
 	f0 f3 pnfv e0 f0 f1 f2 f3 pabbid $.
 $}
-$( /* ` y ` is a dummy var. */
-
-$)
-$( /* Deduction from a wff to a class abstraction.  (Contributed by NM,
-       9-Jul-1994.) */
-
-$)
+$( ` y ` is a dummy var. $)
+$( Deduction from a wff to a class abstraction.  (Contributed by NM,
+       9-Jul-1994.) $)
 ${
 	$v ph ps x A $.
 	$d x A $.
@@ -2380,13 +1924,9 @@ ${
 	pabbi2dv $p |- ( ph -> A = { x | ps } ) $=
 	e0 f0 f2 asup_set_class f3 awcel f1 awb f2 palrimiv f1 f2 f3 pabeq2 f0 f2 asup_set_class f3 awcel f1 awb f2 awal f3 f1 f2 acab awceq psylibr $.
 $}
-$( /* ` y ` is a dummy var. */
-
-$)
-$( /* Deduction from a wff to a class abstraction.  (Contributed by NM,
-       9-Jul-1994.) */
-
-$)
+$( ` y ` is a dummy var. $)
+$( Deduction from a wff to a class abstraction.  (Contributed by NM,
+       9-Jul-1994.) $)
 ${
 	$v ph ps x A $.
 	$d x A $.
@@ -2399,10 +1939,8 @@ ${
 	pabbi1dv $p |- ( ph -> { x | ps } = A ) $=
 	e0 f0 f1 f2 asup_set_class f3 awcel awb f2 palrimiv f1 f2 f3 pabeq1 f0 f1 f2 asup_set_class f3 awcel awb f2 awal f1 f2 acab f3 awceq psylibr $.
 $}
-$( /* A simplification of class abstraction.  Theorem 5.2 of [Quine] p. 35.
-       (Contributed by NM, 26-Dec-1993.) */
-
-$)
+$( A simplification of class abstraction.  Theorem 5.2 of [Quine] p. 35.
+       (Contributed by NM, 26-Dec-1993.) $)
 ${
 	$v x A $.
 	$d x A $.
@@ -2411,10 +1949,8 @@ ${
 	pabid2 $p |- { x | x e. A } = A $=
 	f0 asup_set_class f1 awcel pbiid f0 asup_set_class f1 awcel f0 f1 pabbi2i f1 f0 asup_set_class f1 awcel f0 acab peqcomi $.
 $}
-$( /* Rule used to change bound variables, using implicit substitution.
-       (Contributed by Andrew Salmon, 11-Jul-2011.) */
-
-$)
+$( Rule used to change bound variables, using implicit substitution.
+       (Contributed by Andrew Salmon, 11-Jul-2011.) $)
 ${
 	$v ph ps x y z $.
 	$d x z $.
@@ -2432,10 +1968,8 @@ ${
 	pcbvab $p |- { x | ph } = { y | ps } $=
 	e1 f1 f3 i0 f2 pnfsb e0 e2 f0 f1 awb f2 f3 pequcoms f3 asup_set_class f2 asup_set_class awceq f0 f1 pbicomd f1 f0 f3 f2 psbie f1 f2 i0 f3 psbequ f0 f1 f3 f2 awsb f2 asup_set_class i0 asup_set_class awceq f1 f3 i0 awsb psyl5bbr f0 f1 f3 i0 awsb f2 i0 psbie f0 i0 f2 adf-clab f1 i0 f3 adf-clab f0 f2 i0 awsb f1 f3 i0 awsb i0 asup_set_class f0 f2 acab awcel i0 asup_set_class f1 f3 acab awcel p3bitr4i i0 f0 f2 acab f1 f3 acab peqriv $.
 $}
-$( /* Rule used to change bound variables, using implicit substitution.
-       (Contributed by NM, 26-May-1999.) */
-
-$)
+$( Rule used to change bound variables, using implicit substitution.
+       (Contributed by NM, 26-May-1999.) $)
 ${
 	$v ph ps x y $.
 	$d y ph $.
@@ -2448,10 +1982,8 @@ ${
 	pcbvabv $p |- { x | ph } = { y | ps } $=
 	f0 f3 pnfv f1 f2 pnfv e0 f0 f1 f2 f3 pcbvab $.
 $}
-$( /* Membership of a class variable in a class abstraction.  (Contributed by
-       NM, 23-Dec-1993.) */
-
-$)
+$( Membership of a class variable in a class abstraction.  (Contributed by
+       NM, 23-Dec-1993.) $)
 ${
 	$v ph x y A $.
 	$d x A y $.
@@ -2463,10 +1995,8 @@ ${
 	pclelab $p |- ( A e. { x | ph } <-> E. x ( x = A /\ ph ) ) $=
 	f0 i0 f1 adf-clab i0 asup_set_class f0 f1 acab awcel f0 f1 i0 awsb i0 asup_set_class f2 awceq panbi2i i0 asup_set_class f2 awceq i0 asup_set_class f0 f1 acab awcel awa i0 asup_set_class f2 awceq f0 f1 i0 awsb awa i0 pexbii i0 f2 f0 f1 acab adf-clel f1 asup_set_class f2 awceq f0 awa i0 pnfv i0 asup_set_class f2 awceq f1 pnfv f0 f1 i0 pnfs1v i0 asup_set_class f2 awceq f0 f1 i0 awsb f1 pnfan f1 asup_set_class i0 asup_set_class f2 peqeq1 f0 f1 i0 psbequ12 f1 asup_set_class i0 asup_set_class awceq f1 asup_set_class f2 awceq i0 asup_set_class f2 awceq f0 f0 f1 i0 awsb panbi12d f1 asup_set_class f2 awceq f0 awa i0 asup_set_class f2 awceq f0 f1 i0 awsb awa f1 i0 pcbvex i0 asup_set_class f2 awceq i0 asup_set_class f0 f1 acab awcel awa i0 awex i0 asup_set_class f2 awceq f0 f1 i0 awsb awa i0 awex f2 f0 f1 acab awcel f1 asup_set_class f2 awceq f0 awa f1 awex p3bitr4i $.
 $}
-$( /* Membership of a class abstraction in another class.  (Contributed by NM,
-       17-Jan-2006.) */
-
-$)
+$( Membership of a class abstraction in another class.  (Contributed by NM,
+       17-Jan-2006.) $)
 ${
 	$v ph x y A $.
 	$d y A $.
@@ -2479,11 +2009,9 @@ ${
 	pclabel $p |- ( { x | ph } e. A <-> E. y ( y e. A /\ A. x ( x e. y <-> ph ) ) ) $=
 	f2 f0 f1 acab f3 adf-clel f0 f1 f2 asup_set_class pabeq2 f2 asup_set_class f0 f1 acab awceq f1 asup_set_class f2 asup_set_class awcel f0 awb f1 awal f2 asup_set_class f3 awcel panbi2ci f2 asup_set_class f0 f1 acab awceq f2 asup_set_class f3 awcel awa f2 asup_set_class f3 awcel f1 asup_set_class f2 asup_set_class awcel f0 awb f1 awal awa f2 pexbii f0 f1 acab f3 awcel f2 asup_set_class f0 f1 acab awceq f2 asup_set_class f3 awcel awa f2 awex f2 asup_set_class f3 awcel f1 asup_set_class f2 asup_set_class awcel f0 awb f1 awal awa f2 awex pbitri $.
 $}
-$( /* The right-hand side of the second equality is a way of representing
+$( The right-hand side of the second equality is a way of representing
        proper substitution of ` y ` for ` x ` into a class variable.
-       (Contributed by NM, 14-Sep-2003.) */
-
-$)
+       (Contributed by NM, 14-Sep-2003.) $)
 ${
 	$v x y z A $.
 	$d z A $.

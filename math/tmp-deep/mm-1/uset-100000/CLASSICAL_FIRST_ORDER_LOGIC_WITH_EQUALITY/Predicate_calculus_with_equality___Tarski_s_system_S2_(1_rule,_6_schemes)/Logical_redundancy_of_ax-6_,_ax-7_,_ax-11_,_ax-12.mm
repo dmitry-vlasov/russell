@@ -1,5 +1,5 @@
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Tarski_s_system_S2_(1_rule,_6_schemes)/Axiom_schemes_ax-14_(Right_Membership_Equality).mm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
       Logical redundancy of ax-6 , ax-7 , ax-11 , ax-12
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -95,23 +95,17 @@ $( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   Note that our direct proof ~ sp requires ~ ax-11 , which is not part of
   Tarski's system.
 
-*/
-
 $)
-$( /* Tarski's system uses the weaker ~ ax9v instead of the bundled ~ ax-9 ,
+$( Tarski's system uses the weaker ~ ax9v instead of the bundled ~ ax-9 ,
        so here we show that the degenerate case of ~ ax-9 can be derived.
-       (Contributed by NM, 23-Apr-2017.) */
-
-$)
+       (Contributed by NM, 23-Apr-2017.) $)
 ${
 	fax9dgen_0 $f set x $.
 	ax9dgen $p |- -. A. x -. x = x $= fax9dgen_0 sup_set_class fax9dgen_0 sup_set_class wceq wn fax9dgen_0 wal fax9dgen_0 sup_set_class fax9dgen_0 sup_set_class wceq fax9dgen_0 equid fax9dgen_0 sup_set_class fax9dgen_0 sup_set_class wceq wn fax9dgen_0 fax9dgen_0 sup_set_class fax9dgen_0 sup_set_class wceq fax9dgen_0 equid notnoti spfalw mt2 $.
 $}
-$( /* Weak version of ~ ax-6 from which we can prove any ~ ax-6 instance not
+$( Weak version of ~ ax-6 from which we can prove any ~ ax-6 instance not
        involving wff variables or bundling.  Uses only Tarski's FOL axiom
-       schemes.  (Contributed by NM, 9-Apr-2017.) */
-
-$)
+       schemes.  (Contributed by NM, 9-Apr-2017.) $)
 ${
 	$d y ph $.
 	$d x ps $.
@@ -123,12 +117,10 @@ ${
 	eax6w_0 $e |- ( x = y -> ( ph <-> ps ) ) $.
 	ax6w $p |- ( -. A. x ph -> A. x -. A. x ph ) $= fax6w_0 fax6w_1 fax6w_2 fax6w_3 eax6w_0 hbn1w $.
 $}
-$( /* Weak version of ~ ax-7 from which we can prove any ~ ax-7 instance not
+$( Weak version of ~ ax-7 from which we can prove any ~ ax-7 instance not
        involving wff variables or bundling.  Uses only Tarski's FOL axiom
        schemes.  Unlike ~ ax-7 , this theorem requires that ` x ` and ` y ` be
-       distinct i.e. are not bundled.  (Contributed by NM, 10-Apr-2017.) */
-
-$)
+       distinct i.e. are not bundled.  (Contributed by NM, 10-Apr-2017.) $)
 ${
 	$d y z $.
 	$d x y $.
@@ -142,21 +134,17 @@ ${
 	eax7w_0 $e |- ( y = z -> ( ph <-> ps ) ) $.
 	ax7w $p |- ( A. x A. y ph -> A. y A. x ph ) $= fax7w_0 fax7w_1 fax7w_2 fax7w_3 fax7w_4 eax7w_0 alcomiw $.
 $}
-$( /* Degenerate instance of ~ ax-7 where bundled variables ` x ` and ` y ` have
+$( Degenerate instance of ~ ax-7 where bundled variables ` x ` and ` y ` have
      a common substitution.  Uses only Tarski's FOL axiom schemes.
-     (Contributed by NM, 13-Apr-2017.) */
-
-$)
+     (Contributed by NM, 13-Apr-2017.) $)
 ${
 	fax7dgen_0 $f wff ph $.
 	fax7dgen_1 $f set x $.
 	ax7dgen $p |- ( A. x A. x ph -> A. x A. x ph ) $= fax7dgen_0 fax7dgen_1 wal fax7dgen_1 wal id $.
 $}
-$( /* Lemma for weak version of ~ ax-11 .  Uses only Tarski's FOL axiom
+$( Lemma for weak version of ~ ax-11 .  Uses only Tarski's FOL axiom
        schemes.  In some cases, this lemma may lead to shorter proofs than
-       ~ ax11w .  (Contributed by NM, 10-Apr-2017.) */
-
-$)
+       ~ ax11w .  (Contributed by NM, 10-Apr-2017.) $)
 ${
 	$d x ps $.
 	fax11wlem_0 $f wff ph $.
@@ -166,13 +154,11 @@ ${
 	eax11wlem_0 $e |- ( x = y -> ( ph <-> ps ) ) $.
 	ax11wlem $p |- ( x = y -> ( ph -> A. x ( x = y -> ph ) ) ) $= fax11wlem_0 fax11wlem_1 fax11wlem_2 fax11wlem_3 eax11wlem_0 fax11wlem_1 fax11wlem_2 ax-17 ax11i $.
 $}
-$( /* Weak version of ~ ax-11 from which we can prove any ~ ax-11 instance not
+$( Weak version of ~ ax-11 from which we can prove any ~ ax-11 instance not
        involving wff variables or bundling.  Uses only Tarski's FOL axiom
        schemes.  An instance of the first hypothesis will normally require that
        ` x ` and ` y ` be distinct (unless ` x ` does not occur in ` ph ` ).
-       (Contributed by NM, 10-Apr-2017.) */
-
-$)
+       (Contributed by NM, 10-Apr-2017.) $)
 ${
 	$d y z $.
 	$d x ps $.
@@ -188,24 +174,20 @@ ${
 	eax11w_1 $e |- ( y = z -> ( ph <-> ch ) ) $.
 	ax11w $p |- ( x = y -> ( A. y ph -> A. x ( x = y -> ph ) ) ) $= fax11w_0 fax11w_4 wal fax11w_0 fax11w_3 sup_set_class fax11w_4 sup_set_class wceq fax11w_3 sup_set_class fax11w_4 sup_set_class wceq fax11w_0 wi fax11w_3 wal fax11w_0 fax11w_2 fax11w_4 fax11w_5 eax11w_1 spw fax11w_0 fax11w_1 fax11w_3 fax11w_4 eax11w_0 ax11wlem syl5 $.
 $}
-$( /* Degenerate instance of ~ ax-11 where bundled variables ` x ` and ` y `
+$( Degenerate instance of ~ ax-11 where bundled variables ` x ` and ` y `
      have a common substitution.  Uses only Tarski's FOL axiom schemes.
-     (Contributed by NM, 13-Apr-2017.) */
-
-$)
+     (Contributed by NM, 13-Apr-2017.) $)
 ${
 	fax11dgen_0 $f wff ph $.
 	fax11dgen_1 $f set x $.
 	ax11dgen $p |- ( x = x -> ( A. x ph -> A. x ( x = x -> ph ) ) ) $= fax11dgen_0 fax11dgen_1 wal fax11dgen_1 sup_set_class fax11dgen_1 sup_set_class wceq fax11dgen_0 wi fax11dgen_1 wal wi fax11dgen_1 sup_set_class fax11dgen_1 sup_set_class wceq fax11dgen_0 fax11dgen_1 sup_set_class fax11dgen_1 sup_set_class wceq fax11dgen_0 wi fax11dgen_1 fax11dgen_0 fax11dgen_1 sup_set_class fax11dgen_1 sup_set_class wceq ax-1 alimi a1i $.
 $}
-$( /* Example of an application of ~ ax11w that results in an instance of
+$( Example of an application of ~ ax11w that results in an instance of
        ~ ax-11 for a contrived formula with mixed free and bound variables,
        ` ( x e. y /\ A. x z e. x /\ A. y A. z y e. x ) ` , in place of
        ` ph ` .  The proof illustrates bound variable renaming with ~ cbvalvw
        to obtain fresh variables to avoid distinct variable clashes.  Uses only
-       Tarski's FOL axiom schemes.  (Contributed by NM, 14-Apr-2017.) */
-
-$)
+       Tarski's FOL axiom schemes.  (Contributed by NM, 14-Apr-2017.) $)
 $v v $.
 ${
 	$d x y z w v $.
@@ -216,12 +198,10 @@ ${
 	fax11wdemo_2 $f set z $.
 	ax11wdemo $p |- ( x = y -> ( A. y ( x e. y /\ A. x z e. x /\ A. y A. z y e. x ) -> A. x ( x = y -> ( x e. y /\ A. x z e. x /\ A. y A. z y e. x ) ) ) ) $= fax11wdemo_0 sup_set_class fax11wdemo_1 sup_set_class wcel fax11wdemo_2 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_0 wal fax11wdemo_1 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_2 wal fax11wdemo_1 wal w3a fax11wdemo_1 sup_set_class fax11wdemo_1 sup_set_class wcel fax11wdemo_2 sup_set_class iax11wdemo_0 sup_set_class wcel iax11wdemo_0 wal iax11wdemo_1 sup_set_class fax11wdemo_1 sup_set_class wcel fax11wdemo_2 wal iax11wdemo_1 wal w3a fax11wdemo_0 sup_set_class iax11wdemo_1 sup_set_class wcel fax11wdemo_2 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_0 wal iax11wdemo_1 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_2 wal iax11wdemo_1 wal w3a fax11wdemo_0 fax11wdemo_1 iax11wdemo_1 fax11wdemo_0 sup_set_class fax11wdemo_1 sup_set_class wceq fax11wdemo_0 sup_set_class fax11wdemo_1 sup_set_class wcel fax11wdemo_1 sup_set_class fax11wdemo_1 sup_set_class wcel fax11wdemo_2 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_0 wal fax11wdemo_2 sup_set_class iax11wdemo_0 sup_set_class wcel iax11wdemo_0 wal fax11wdemo_1 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_2 wal fax11wdemo_1 wal iax11wdemo_1 sup_set_class fax11wdemo_1 sup_set_class wcel fax11wdemo_2 wal iax11wdemo_1 wal fax11wdemo_0 fax11wdemo_1 fax11wdemo_1 elequ1 fax11wdemo_2 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_0 wal fax11wdemo_2 sup_set_class iax11wdemo_0 sup_set_class wcel iax11wdemo_0 wal wb fax11wdemo_0 sup_set_class fax11wdemo_1 sup_set_class wceq fax11wdemo_2 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_2 sup_set_class iax11wdemo_0 sup_set_class wcel fax11wdemo_0 iax11wdemo_0 fax11wdemo_0 iax11wdemo_0 fax11wdemo_2 elequ2 cbvalvw a1i fax11wdemo_1 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_2 wal fax11wdemo_1 wal iax11wdemo_1 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_2 wal iax11wdemo_1 wal fax11wdemo_0 sup_set_class fax11wdemo_1 sup_set_class wceq iax11wdemo_1 sup_set_class fax11wdemo_1 sup_set_class wcel fax11wdemo_2 wal iax11wdemo_1 wal fax11wdemo_1 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_2 wal iax11wdemo_1 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_2 wal fax11wdemo_1 iax11wdemo_1 fax11wdemo_1 sup_set_class iax11wdemo_1 sup_set_class wceq fax11wdemo_1 sup_set_class fax11wdemo_0 sup_set_class wcel iax11wdemo_1 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_2 fax11wdemo_1 iax11wdemo_1 fax11wdemo_0 elequ1 albidv cbvalvw fax11wdemo_0 sup_set_class fax11wdemo_1 sup_set_class wceq iax11wdemo_1 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_2 wal iax11wdemo_1 sup_set_class fax11wdemo_1 sup_set_class wcel fax11wdemo_2 wal iax11wdemo_1 fax11wdemo_0 sup_set_class fax11wdemo_1 sup_set_class wceq iax11wdemo_1 sup_set_class fax11wdemo_0 sup_set_class wcel iax11wdemo_1 sup_set_class fax11wdemo_1 sup_set_class wcel fax11wdemo_2 fax11wdemo_0 fax11wdemo_1 iax11wdemo_1 elequ2 albidv albidv syl5bb 3anbi123d fax11wdemo_1 sup_set_class iax11wdemo_1 sup_set_class wceq fax11wdemo_0 sup_set_class fax11wdemo_1 sup_set_class wcel fax11wdemo_0 sup_set_class iax11wdemo_1 sup_set_class wcel fax11wdemo_1 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_2 wal fax11wdemo_1 wal iax11wdemo_1 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_2 wal iax11wdemo_1 wal fax11wdemo_2 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_0 wal fax11wdemo_1 iax11wdemo_1 fax11wdemo_0 elequ2 fax11wdemo_1 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_2 wal fax11wdemo_1 wal iax11wdemo_1 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_2 wal iax11wdemo_1 wal wb fax11wdemo_1 sup_set_class iax11wdemo_1 sup_set_class wceq fax11wdemo_1 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_2 wal iax11wdemo_1 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_2 wal fax11wdemo_1 iax11wdemo_1 fax11wdemo_1 sup_set_class iax11wdemo_1 sup_set_class wceq fax11wdemo_1 sup_set_class fax11wdemo_0 sup_set_class wcel iax11wdemo_1 sup_set_class fax11wdemo_0 sup_set_class wcel fax11wdemo_2 fax11wdemo_1 iax11wdemo_1 fax11wdemo_0 elequ1 albidv cbvalvw a1i 3anbi13d ax11w $.
 $}
-$( /* Weak version (principal instance) of ~ ax-12 not involving bundling.
+$( Weak version (principal instance) of ~ ax-12 not involving bundling.
        Uses only Tarski's FOL axiom schemes.  The proof is trivial but is
        included to complete the set ~ ax6w , ~ ax7w , and ~ ax11w .
-       (Contributed by NM, 10-Apr-2017.) */
-
-$)
+       (Contributed by NM, 10-Apr-2017.) $)
 ${
 	$d x y z $.
 	fax12w_0 $f set x $.
@@ -229,41 +209,33 @@ ${
 	fax12w_2 $f set z $.
 	ax12w $p |- ( -. x = y -> ( y = z -> A. x y = z ) ) $= fax12w_0 sup_set_class fax12w_1 sup_set_class wceq wn fax12w_1 sup_set_class fax12w_2 sup_set_class wceq fax12w_0 a17d $.
 $}
-$( /* Degenerate instance of ~ ax-12 where bundled variables ` x ` and ` y `
+$( Degenerate instance of ~ ax-12 where bundled variables ` x ` and ` y `
      have a common substitution.  Uses only Tarski's FOL axiom schemes.
-     (Contributed by NM, 13-Apr-2017.) */
-
-$)
+     (Contributed by NM, 13-Apr-2017.) $)
 ${
 	fax12dgen1_0 $f set x $.
 	fax12dgen1_1 $f set z $.
 	ax12dgen1 $p |- ( -. x = x -> ( x = z -> A. x x = z ) ) $= fax12dgen1_0 sup_set_class fax12dgen1_0 sup_set_class wceq fax12dgen1_0 sup_set_class fax12dgen1_1 sup_set_class wceq fax12dgen1_0 sup_set_class fax12dgen1_1 sup_set_class wceq fax12dgen1_0 wal wi fax12dgen1_0 equid pm2.24i $.
 $}
-$( /* Degenerate instance of ~ ax-12 where bundled variables ` x ` and ` z `
+$( Degenerate instance of ~ ax-12 where bundled variables ` x ` and ` z `
      have a common substitution.  Uses only Tarski's FOL axiom schemes.
-     (Contributed by NM, 13-Apr-2017.) */
-
-$)
+     (Contributed by NM, 13-Apr-2017.) $)
 ${
 	fax12dgen2_0 $f set x $.
 	fax12dgen2_1 $f set y $.
 	ax12dgen2 $p |- ( -. x = y -> ( y = x -> A. x y = x ) ) $= fax12dgen2_1 sup_set_class fax12dgen2_0 sup_set_class wceq fax12dgen2_0 sup_set_class fax12dgen2_1 sup_set_class wceq fax12dgen2_0 sup_set_class fax12dgen2_1 sup_set_class wceq wn fax12dgen2_1 sup_set_class fax12dgen2_0 sup_set_class wceq fax12dgen2_0 wal fax12dgen2_1 fax12dgen2_0 equcomi fax12dgen2_0 sup_set_class fax12dgen2_1 sup_set_class wceq fax12dgen2_1 sup_set_class fax12dgen2_0 sup_set_class wceq fax12dgen2_0 wal pm2.21 syl5 $.
 $}
-$( /* Degenerate instance of ~ ax-12 where bundled variables ` y ` and ` z `
+$( Degenerate instance of ~ ax-12 where bundled variables ` y ` and ` z `
      have a common substitution.  Uses only Tarski's FOL axiom schemes.
-     (Contributed by NM, 13-Apr-2017.) */
-
-$)
+     (Contributed by NM, 13-Apr-2017.) $)
 ${
 	fax12dgen3_0 $f set x $.
 	fax12dgen3_1 $f set y $.
 	ax12dgen3 $p |- ( -. x = y -> ( y = y -> A. x y = y ) ) $= fax12dgen3_0 sup_set_class fax12dgen3_1 sup_set_class wceq wn fax12dgen3_1 sup_set_class fax12dgen3_1 sup_set_class wceq fax12dgen3_1 sup_set_class fax12dgen3_1 sup_set_class wceq fax12dgen3_0 wal fax12dgen3_1 sup_set_class fax12dgen3_1 sup_set_class wceq fax12dgen3_0 fax12dgen3_1 equid ax-gen a1ii $.
 $}
-$( /* Degenerate instance of ~ ax-12 where bundled variables ` x ` , ` y ` , and
+$( Degenerate instance of ~ ax-12 where bundled variables ` x ` , ` y ` , and
      ` z ` have a common substitution.  Uses only Tarski's FOL axiom schemes .
-     (Contributed by NM, 13-Apr-2017.) */
-
-$)
+     (Contributed by NM, 13-Apr-2017.) $)
 ${
 	fax12dgen4_0 $f set x $.
 	ax12dgen4 $p |- ( -. x = x -> ( x = x -> A. x x = x ) ) $= fax12dgen4_0 fax12dgen4_0 ax12dgen1 $.

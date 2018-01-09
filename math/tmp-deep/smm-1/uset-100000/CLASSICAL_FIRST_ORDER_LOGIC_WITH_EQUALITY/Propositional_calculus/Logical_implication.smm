@@ -1,5 +1,5 @@
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Propositional_calculus/The_axioms_of_propositional_calculus.smm $]
-$( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+$( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         Logical implication
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -13,13 +13,9 @@ $( /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   hypotheses.  A "deduction" is an inference in which the hypotheses and the
   conclusion share the same antecedent.
 
-*/
-
 $)
-$( /* A double modus ponens inference.  (Contributed by Mario Carneiro,
-       24-Jan-2013.) */
-
-$)
+$( A double modus ponens inference.  (Contributed by Mario Carneiro,
+       24-Jan-2013.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ph $.
@@ -31,14 +27,10 @@ ${
 	pmp2b $p |- ch $=
 	e0 e1 f0 f1 aax-mp e2 f1 f2 aax-mp $.
 $}
-$( /* Premise for ~ a1i . */
-
-$)
-$( /* Inference derived from axiom ~ ax-1 .  See ~ a1d for an explanation of
+$( Premise for ~ a1i . $)
+$( Inference derived from axiom ~ ax-1 .  See ~ a1d for an explanation of
        our informal use of the terms "inference" and "deduction."  See also the
-       comment in ~ syld .  (Contributed by NM, 5-Aug-1993.) */
-
-$)
+       comment in ~ syld .  (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v ph ps $.
 	e0 $e |- ph $.
@@ -47,10 +39,8 @@ ${
 	pa1i $p |- ( ps -> ph ) $=
 	e0 f0 f1 aax-1 f0 f1 f0 awi aax-mp $.
 $}
-$( /* Drop and replace an antecedent.  (Contributed by Stefan O'Rear,
-       29-Jan-2015.) */
-
-$)
+$( Drop and replace an antecedent.  (Contributed by Stefan O'Rear,
+       29-Jan-2015.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ph $.
@@ -61,13 +51,9 @@ ${
 	pmp1i $p |- ( ch -> ps ) $=
 	e0 e1 f0 f1 aax-mp f1 f2 pa1i $.
 $}
-$( /* Premise for ~ a2i . */
-
-$)
-$( /* Inference derived from axiom ~ ax-2 .  (Contributed by NM,
-       5-Aug-1993.) */
-
-$)
+$( Premise for ~ a2i . $)
+$( Inference derived from axiom ~ ax-2 .  (Contributed by NM,
+       5-Aug-1993.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -77,10 +63,8 @@ ${
 	pa2i $p |- ( ( ph -> ps ) -> ( ph -> ch ) ) $=
 	e0 f0 f1 f2 aax-2 f0 f1 f2 awi awi f0 f1 awi f0 f2 awi awi aax-mp $.
 $}
-$( /* Inference adding common antecedents in an implication.  (Contributed by
-       NM, 5-Aug-1993.) */
-
-$)
+$( Inference adding common antecedents in an implication.  (Contributed by
+       NM, 5-Aug-1993.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ( ph -> ps ) $.
@@ -90,11 +74,9 @@ ${
 	pimim2i $p |- ( ( ch -> ph ) -> ( ch -> ps ) ) $=
 	e0 f0 f1 awi f2 pa1i f2 f0 f1 pa2i $.
 $}
-$( /* A modus ponens deduction.  A translation of natural deduction rule
+$( A modus ponens deduction.  A translation of natural deduction rule
        ` -> ` E ( ` -> ` elimination), see ~ natded .  (Contributed by NM,
-       5-Aug-1993.) */
-
-$)
+       5-Aug-1993.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ( ph -> ps ) $.
@@ -105,13 +87,9 @@ ${
 	pmpd $p |- ( ph -> ch ) $=
 	e0 e1 f0 f1 f2 pa2i f0 f1 awi f0 f2 awi aax-mp $.
 $}
-$( /* First of 2 premises for ~ syl . */
-
-$)
-$( /* Second of 2 premises for ~ syl . */
-
-$)
-$( /* An inference version of the transitive laws for implication ~ imim2 and
+$( First of 2 premises for ~ syl . $)
+$( Second of 2 premises for ~ syl . $)
+$( An inference version of the transitive laws for implication ~ imim2 and
        ~ imim1 , which Russell and Whitehead call "the principle of the
        syllogism...because...the syllogism in Barbara is derived from them"
        (quote after Theorem *2.06 of [WhiteheadRussell] p. 101).  Some authors
@@ -122,9 +100,7 @@ $( /* An inference version of the transitive laws for implication ~ imim2 and
        ~ adantr , ~ syl3anc , and ~ ax-mp .  The Metamath program command 'show
        usage' shows the number of references.)  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by O'Cat, 20-Oct-2011.)  (Proof shortened
-       by Wolf Lammen, 26-Jul-2012.) */
-
-$)
+       by Wolf Lammen, 26-Jul-2012.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ( ph -> ps ) $.
@@ -135,10 +111,8 @@ ${
 	psyl $p |- ( ph -> ch ) $=
 	e0 e1 f1 f2 awi f0 pa1i f0 f1 f2 pmpd $.
 $}
-$( /* A nested modus ponens inference.  (Contributed by NM, 5-Aug-1993.)
-       (Proof shortened by Stefan Allan, 20-Mar-2006.) */
-
-$)
+$( A nested modus ponens inference.  (Contributed by NM, 5-Aug-1993.)
+       (Proof shortened by Stefan Allan, 20-Mar-2006.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ps $.
@@ -149,10 +123,8 @@ ${
 	pmpi $p |- ( ph -> ch ) $=
 	e0 f1 f0 pa1i e1 f0 f1 f2 pmpd $.
 $}
-$( /* A double modus ponens inference.  (Contributed by NM, 5-Apr-1994.)
-       (Proof shortened by Wolf Lammen, 23-Jul-2013.) */
-
-$)
+$( A double modus ponens inference.  (Contributed by NM, 5-Apr-1994.)
+       (Proof shortened by Wolf Lammen, 23-Jul-2013.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ph $.
@@ -164,9 +136,7 @@ ${
 	pmp2 $p |- ch $=
 	e0 e1 e2 f0 f1 f2 pmpi f0 f2 aax-mp $.
 $}
-$( /* Inference chaining two syllogisms.  (Contributed by NM, 5-Aug-1993.) */
-
-$)
+$( Inference chaining two syllogisms.  (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ps ) $.
@@ -179,19 +149,17 @@ ${
 	p3syl $p |- ( ph -> th ) $=
 	e0 e1 f0 f1 f2 psyl e2 f0 f2 f3 psyl $.
 $}
-$( /* Principle of identity.  Theorem *2.08 of [WhiteheadRussell] p. 101.  For
+$( Principle of identity.  Theorem *2.08 of [WhiteheadRussell] p. 101.  For
      another version of the proof directly from axioms, see ~ id1 .
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Stefan Allan,
-     20-Mar-2006.) */
-
-$)
+     20-Mar-2006.) $)
 ${
 	$v ph $.
 	f0 $f wff ph $.
 	pid $p |- ( ph -> ph ) $=
 	f0 f0 aax-1 f0 f0 f0 awi aax-1 f0 f0 f0 awi f0 pmpd $.
 $}
-$( /* Principle of identity.  Theorem *2.08 of [WhiteheadRussell] p. 101.  This
+$( Principle of identity.  Theorem *2.08 of [WhiteheadRussell] p. 101.  This
      version is proved directly from the axioms for demonstration purposes.
      This proof is a popular example in the literature and is identical, step
      for step, to the proofs of Theorem 1 of [Margaris] p. 51, Example 2.7(a)
@@ -201,19 +169,15 @@ $( /* Principle of identity.  Theorem *2.08 of [WhiteheadRussell] p. 101.  This
      ~ http://www.mathsci.appstate.edu/~~hirstjl/primer/hirst.pdf .  For a
      shorter version of the proof that takes advantage of previously proved
      theorems, see ~ id .  (Contributed by NM, 5-Aug-1993.)
-     (New usage is discouraged.)  (Proof modification is discouraged.) */
-
-$)
+     (New usage is discouraged.)  (Proof modification is discouraged.) $)
 ${
 	$v ph $.
 	f0 $f wff ph $.
 	pid1 $p |- ( ph -> ph ) $=
 	f0 f0 aax-1 f0 f0 f0 awi aax-1 f0 f0 f0 awi f0 aax-2 f0 f0 f0 awi f0 awi awi f0 f0 f0 awi awi f0 f0 awi awi aax-mp f0 f0 f0 awi awi f0 f0 awi aax-mp $.
 $}
-$( /* Principle of identity with antecedent.  (Contributed by NM,
-     26-Nov-1995.) */
-
-$)
+$( Principle of identity with antecedent.  (Contributed by NM,
+     26-Nov-1995.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
@@ -221,7 +185,7 @@ ${
 	pidd $p |- ( ph -> ( ps -> ps ) ) $=
 	f1 pid f1 f1 awi f0 pa1i $.
 $}
-$( /* Deduction introducing an embedded antecedent.
+$( Deduction introducing an embedded antecedent.
 
        _Naming convention_:  We often call a theorem a "deduction" and suffix
        its label with "d" whenever the hypotheses and conclusion are each
@@ -238,9 +202,7 @@ $( /* Deduction introducing an embedded antecedent.
        by eliminating an "is a set" hypothesis, we sometimes suffix the theorem
        form with "g" (for "more general") as in ~ uniex vs. ~ uniexg .
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Stefan Allan,
-       20-Mar-2006.) */
-
-$)
+       20-Mar-2006.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ( ph -> ps ) $.
@@ -250,10 +212,8 @@ ${
 	pa1d $p |- ( ph -> ( ch -> ps ) ) $=
 	e0 f1 f2 aax-1 f0 f1 f2 f1 awi psyl $.
 $}
-$( /* Deduction distributing an embedded antecedent.  (Contributed by NM,
-       23-Jun-1994.) */
-
-$)
+$( Deduction distributing an embedded antecedent.  (Contributed by NM,
+       23-Jun-1994.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> th ) ) ) $.
@@ -264,10 +224,8 @@ ${
 	pa2d $p |- ( ph -> ( ( ps -> ch ) -> ( ps -> th ) ) ) $=
 	e0 f1 f2 f3 aax-2 f0 f1 f2 f3 awi awi f1 f2 awi f1 f3 awi awi psyl $.
 $}
-$( /* Add two antecedents to a wff.  (Contributed by Jeff Hankins,
-       4-Aug-2009.)  (Proof shortened by Wolf Lammen, 23-Jul-2013.) */
-
-$)
+$( Add two antecedents to a wff.  (Contributed by Jeff Hankins,
+       4-Aug-2009.)  (Proof shortened by Wolf Lammen, 23-Jul-2013.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ch $.
@@ -277,11 +235,9 @@ ${
 	pa1ii $p |- ( ph -> ( ps -> ch ) ) $=
 	e0 f2 f0 pa1i f0 f2 f1 pa1d $.
 $}
-$( /* Syllogism inference with commutation of antecedents.  (Contributed by
+$( Syllogism inference with commutation of antecedents.  (Contributed by
        NM, 29-Aug-2004.)  (Proof shortened by O'Cat, 2-Feb-2006.)  (Proof
-       shortened by Stefan Allan, 23-Feb-2006.) */
-
-$)
+       shortened by Stefan Allan, 23-Feb-2006.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -293,10 +249,8 @@ ${
 	psylcom $p |- ( ph -> ( ps -> th ) ) $=
 	e0 e1 f1 f2 f3 pa2i f0 f1 f2 awi f1 f3 awi psyl $.
 $}
-$( /* Syllogism inference with commuted antecedents.  (Contributed by NM,
-       24-May-2005.) */
-
-$)
+$( Syllogism inference with commuted antecedents.  (Contributed by NM,
+       24-May-2005.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ps ) $.
@@ -308,14 +262,10 @@ ${
 	psyl5com $p |- ( ph -> ( ch -> th ) ) $=
 	e0 f0 f1 f2 pa1d e1 f0 f2 f1 f3 psylcom $.
 $}
-$( /* Premise for ~ com12 .  See ~ pm2.04 for the theorem form. */
-
-$)
-$( /* Inference that swaps (commutes) antecedents in an implication.
+$( Premise for ~ com12 .  See ~ pm2.04 for the theorem form. $)
+$( Inference that swaps (commutes) antecedents in an implication.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
-       4-Aug-2012.) */
-
-$)
+       4-Aug-2012.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -325,11 +275,9 @@ ${
 	pcom12 $p |- ( ps -> ( ph -> ch ) ) $=
 	f1 pid e0 f1 f1 f0 f2 psyl5com $.
 $}
-$( /* A syllogism rule of inference.  The first premise is used to replace the
+$( A syllogism rule of inference.  The first premise is used to replace the
        second antecedent of the second premise.  (Contributed by NM,
-       5-Aug-1993.)  (Proof shortened by Wolf Lammen, 25-May-2013.) */
-
-$)
+       5-Aug-1993.)  (Proof shortened by Wolf Lammen, 25-May-2013.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ps ) $.
@@ -341,11 +289,9 @@ ${
 	psyl5 $p |- ( ch -> ( ph -> th ) ) $=
 	e0 e1 f0 f1 f2 f3 psyl5com f0 f2 f3 pcom12 $.
 $}
-$( /* A syllogism rule of inference.  The second premise is used to replace
+$( A syllogism rule of inference.  The second premise is used to replace
        the consequent of the first premise.  (Contributed by NM, 5-Aug-1993.)
-       (Proof shortened by Wolf Lammen, 30-Jul-2012.) */
-
-$)
+       (Proof shortened by Wolf Lammen, 30-Jul-2012.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -357,9 +303,7 @@ ${
 	psyl6 $p |- ( ph -> ( ps -> th ) ) $=
 	e0 e1 f2 f3 awi f1 pa1i f0 f1 f2 f3 psylcom $.
 $}
-$( /* Combine ~ syl5 and ~ syl6 .  (Contributed by NM, 14-Nov-2013.) */
-
-$)
+$( Combine ~ syl5 and ~ syl6 .  (Contributed by NM, 14-Nov-2013.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ps ) $.
@@ -373,10 +317,8 @@ ${
 	psyl56 $p |- ( ch -> ( ph -> ta ) ) $=
 	e0 e1 e2 f2 f1 f3 f4 psyl6 f0 f1 f2 f4 psyl5 $.
 $}
-$( /* Syllogism inference with commuted antecedents.  (Contributed by NM,
-       25-May-2005.) */
-
-$)
+$( Syllogism inference with commuted antecedents.  (Contributed by NM,
+       25-May-2005.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -388,10 +330,8 @@ ${
 	psyl6com $p |- ( ps -> ( ph -> th ) ) $=
 	e0 e1 f0 f1 f2 f3 psyl6 f0 f1 f3 pcom12 $.
 $}
-$( /* Modus ponens inference with commutation of antecedents.  (Contributed by
-       NM, 17-Mar-1996.) */
-
-$)
+$( Modus ponens inference with commutation of antecedents.  (Contributed by
+       NM, 17-Mar-1996.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ( ps -> ph ) $.
@@ -402,10 +342,8 @@ ${
 	pmpcom $p |- ( ps -> ch ) $=
 	e0 e1 f0 f1 f2 pcom12 f1 f0 f2 pmpd $.
 $}
-$( /* Syllogism inference with common nested antecedent.  (Contributed by NM,
-       4-Nov-2004.) */
-
-$)
+$( Syllogism inference with common nested antecedent.  (Contributed by NM,
+       4-Nov-2004.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ps -> ( ph -> ch ) ) $.
@@ -417,10 +355,8 @@ ${
 	psyli $p |- ( ps -> ( ph -> th ) ) $=
 	e0 e1 f2 f0 f3 pcom12 f1 f0 f2 f3 psylcom $.
 $}
-$( /* Replace two antecedents.  Implication-only version of ~ syl2an .
-       (Contributed by Wolf Lammen, 14-May-2013.) */
-
-$)
+$( Replace two antecedents.  Implication-only version of ~ syl2an .
+       (Contributed by Wolf Lammen, 14-May-2013.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ps ) $.
@@ -434,11 +370,9 @@ ${
 	psyl2im $p |- ( ph -> ( ch -> ta ) ) $=
 	e0 e1 e2 f2 f3 f1 f4 psyl5 f0 f1 f2 f4 awi psyl $.
 $}
-$( /* This theorem, called "Assertion," can be thought of as closed form of
+$( This theorem, called "Assertion," can be thought of as closed form of
      modus ponens ~ ax-mp .  Theorem *2.27 of [WhiteheadRussell] p. 104.
-     (Contributed by NM, 5-Aug-1993.) */
-
-$)
+     (Contributed by NM, 5-Aug-1993.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
@@ -446,9 +380,7 @@ ${
 	ppm2.27 $p |- ( ph -> ( ( ph -> ps ) -> ps ) ) $=
 	f0 f1 awi pid f0 f1 awi f0 f1 pcom12 $.
 $}
-$( /* A nested modus ponens deduction.  (Contributed by NM, 12-Dec-2004.) */
-
-$)
+$( A nested modus ponens deduction.  (Contributed by NM, 12-Dec-2004.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -460,9 +392,7 @@ ${
 	pmpdd $p |- ( ph -> ( ps -> th ) ) $=
 	e0 e1 f0 f1 f2 f3 pa2d f0 f1 f2 awi f1 f3 awi pmpd $.
 $}
-$( /* A nested modus ponens deduction.  (Contributed by NM, 14-Dec-2004.) */
-
-$)
+$( A nested modus ponens deduction.  (Contributed by NM, 14-Dec-2004.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ch ) $.
@@ -474,10 +404,8 @@ ${
 	pmpid $p |- ( ph -> ( ps -> th ) ) $=
 	e0 f0 f2 f1 pa1d e1 f0 f1 f2 f3 pmpdd $.
 $}
-$( /* A nested modus ponens deduction.  (Contributed by NM, 16-Apr-2005.)
-       (Proof shortened by O'Cat, 15-Jan-2008.) */
-
-$)
+$( A nested modus ponens deduction.  (Contributed by NM, 16-Apr-2005.)
+       (Proof shortened by O'Cat, 15-Jan-2008.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ps -> ch ) $.
@@ -489,10 +417,8 @@ ${
 	pmpdi $p |- ( ph -> ( ps -> th ) ) $=
 	e0 f1 f2 awi f0 pa1i e1 f0 f1 f2 f3 pmpdd $.
 $}
-$( /* A doubly nested modus ponens inference.  (Contributed by NM,
-       31-Dec-1993.)  (Proof shortened by Wolf Lammen, 31-Jul-2012.) */
-
-$)
+$( A doubly nested modus ponens inference.  (Contributed by NM,
+       31-Dec-1993.)  (Proof shortened by Wolf Lammen, 31-Jul-2012.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ch $.
@@ -504,7 +430,7 @@ ${
 	pmpii $p |- ( ph -> ( ps -> th ) ) $=
 	e0 f2 f1 pa1i e1 f0 f1 f2 f3 pmpdi $.
 $}
-$( /* Syllogism deduction.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened
+$( Syllogism deduction.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened
        by O'Cat, 19-Feb-2008.)  (Proof shortened by Wolf Lammen, 3-Aug-2012.)
 
        Notice that ~ syld has the same form as ~ syl with ` ph ` added in front
@@ -513,9 +439,7 @@ $( /* Syllogism deduction.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened
        of the proof, allowing the hypothesis to be eliminated with ~ id and
        become an antecedent.  The Deduction Theorem for propositional calculus,
        e.g.  Theorem 3 in [Margaris] p. 56, tells us that this procedure is
-       always possible. */
-
-$)
+       always possible. $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -527,10 +451,8 @@ ${
 	psyld $p |- ( ph -> ( ps -> th ) ) $=
 	e0 e1 f0 f2 f3 awi f1 pa1d f0 f1 f2 f3 pmpdd $.
 $}
-$( /* A double modus ponens deduction.  (Contributed by NM, 23-May-2013.)
-       (Proof shortened by Wolf Lammen, 23-Jul-2013.) */
-
-$)
+$( A double modus ponens deduction.  (Contributed by NM, 23-May-2013.)
+       (Proof shortened by Wolf Lammen, 23-Jul-2013.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ps ) $.
@@ -543,10 +465,8 @@ ${
 	pmp2d $p |- ( ph -> th ) $=
 	e0 e1 e2 f0 f1 f2 f3 pmpid f0 f1 f3 pmpd $.
 $}
-$( /* Deduction introducing a nested embedded antecedent.  (Contributed by NM,
-       17-Dec-2004.)  (Proof shortened by O'Cat, 15-Jan-2008.) */
-
-$)
+$( Deduction introducing a nested embedded antecedent.  (Contributed by NM,
+       17-Dec-2004.)  (Proof shortened by O'Cat, 15-Jan-2008.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -557,10 +477,8 @@ ${
 	pa1dd $p |- ( ph -> ( ps -> ( th -> ch ) ) ) $=
 	e0 f2 f3 aax-1 f0 f1 f2 f3 f2 awi psyl6 $.
 $}
-$( /* Inference absorbing redundant antecedent.  (Contributed by NM,
-       5-Aug-1993.)  (Proof shortened by O'Cat, 28-Nov-2008.) */
-
-$)
+$( Inference absorbing redundant antecedent.  (Contributed by NM,
+       5-Aug-1993.)  (Proof shortened by O'Cat, 28-Nov-2008.) $)
 ${
 	$v ph ps $.
 	e0 $e |- ( ph -> ( ph -> ps ) ) $.
@@ -569,10 +487,8 @@ ${
 	ppm2.43i $p |- ( ph -> ps ) $=
 	f0 pid e0 f0 f0 f1 pmpd $.
 $}
-$( /* Deduction absorbing redundant antecedent.  (Contributed by NM,
-       18-Aug-1993.)  (Proof shortened by O'Cat, 28-Nov-2008.) */
-
-$)
+$( Deduction absorbing redundant antecedent.  (Contributed by NM,
+       18-Aug-1993.)  (Proof shortened by O'Cat, 28-Nov-2008.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ( ph -> ( ps -> ( ps -> ch ) ) ) $.
@@ -582,10 +498,8 @@ ${
 	ppm2.43d $p |- ( ph -> ( ps -> ch ) ) $=
 	f1 pid e0 f0 f1 f1 f2 pmpdi $.
 $}
-$( /* Inference absorbing redundant antecedent.  (Contributed by NM,
-       7-Nov-1995.)  (Proof shortened by O'Cat, 28-Nov-2008.) */
-
-$)
+$( Inference absorbing redundant antecedent.  (Contributed by NM,
+       7-Nov-1995.)  (Proof shortened by O'Cat, 28-Nov-2008.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ( ps -> ( ph -> ( ps -> ch ) ) ) $.
@@ -595,10 +509,8 @@ ${
 	ppm2.43a $p |- ( ps -> ( ph -> ch ) ) $=
 	f1 pid e0 f1 f0 f1 f2 pmpid $.
 $}
-$( /* Inference absorbing redundant antecedent.  (Contributed by NM,
-       31-Oct-1995.) */
-
-$)
+$( Inference absorbing redundant antecedent.  (Contributed by NM,
+       31-Oct-1995.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ( ps -> ( ph -> ( ps -> ch ) ) ) $.
@@ -608,12 +520,10 @@ ${
 	ppm2.43b $p |- ( ph -> ( ps -> ch ) ) $=
 	e0 f0 f1 f2 ppm2.43a f1 f0 f2 pcom12 $.
 $}
-$( /* Absorption of redundant antecedent.  Also called the "Contraction" or
+$( Absorption of redundant antecedent.  Also called the "Contraction" or
      "Hilbert" axiom.  Theorem *2.43 of [WhiteheadRussell] p. 106.
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by O'Cat,
-     15-Aug-2004.) */
-
-$)
+     15-Aug-2004.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
@@ -621,10 +531,8 @@ ${
 	ppm2.43 $p |- ( ( ph -> ( ph -> ps ) ) -> ( ph -> ps ) ) $=
 	f0 f1 ppm2.27 f0 f0 f1 awi f1 pa2i $.
 $}
-$( /* Deduction adding nested antecedents.  (Contributed by NM,
-       5-Aug-1993.) */
-
-$)
+$( Deduction adding nested antecedents.  (Contributed by NM,
+       5-Aug-1993.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -635,11 +543,9 @@ ${
 	pimim2d $p |- ( ph -> ( ( th -> ps ) -> ( th -> ch ) ) ) $=
 	e0 f0 f1 f2 awi f3 pa1d f0 f3 f1 f2 pa2d $.
 $}
-$( /* A closed form of syllogism (see ~ syl ).  Theorem *2.05 of
+$( A closed form of syllogism (see ~ syl ).  Theorem *2.05 of
      [WhiteheadRussell] p. 100.  (Contributed by NM, 5-Aug-1993.)  (Proof
-     shortened by Wolf Lammen, 6-Sep-2012.) */
-
-$)
+     shortened by Wolf Lammen, 6-Sep-2012.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -648,10 +554,8 @@ ${
 	pimim2 $p |- ( ( ph -> ps ) -> ( ( ch -> ph ) -> ( ch -> ps ) ) ) $=
 	f0 f1 awi pid f0 f1 awi f0 f1 f2 pimim2d $.
 $}
-$( /* Deduction embedding an antecedent.  (Contributed by Wolf Lammen,
-       4-Oct-2013.) */
-
-$)
+$( Deduction embedding an antecedent.  (Contributed by Wolf Lammen,
+       4-Oct-2013.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ps ) $.
@@ -663,10 +567,8 @@ ${
 	pembantd $p |- ( ph -> ( ( ps -> ch ) -> th ) ) $=
 	e0 e1 f0 f2 f3 f1 pimim2d f0 f1 f2 awi f1 f3 pmpid $.
 $}
-$( /* Triple syllogism deduction.  (Contributed by Jeff Hankins,
-       4-Aug-2009.) */
-
-$)
+$( Triple syllogism deduction.  (Contributed by Jeff Hankins,
+       4-Aug-2009.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -680,10 +582,8 @@ ${
 	p3syld $p |- ( ph -> ( ps -> ta ) ) $=
 	e0 e1 f0 f1 f2 f3 psyld e2 f0 f1 f3 f4 psyld $.
 $}
-$( /* Virtual deduction rule ~ e12 without virtual deduction symbols.
-       (Contributed by Alan Sare, 20-Apr-2011.) */
-
-$)
+$( Virtual deduction rule ~ e12 without virtual deduction symbols.
+       (Contributed by Alan Sare, 20-Apr-2011.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ps ) $.
@@ -697,10 +597,8 @@ ${
 	psylsyld $p |- ( ph -> ( ch -> ta ) ) $=
 	e1 e0 e2 f0 f1 f3 f4 awi psyl f0 f2 f3 f4 psyld $.
 $}
-$( /* Inference joining two implications.  (Contributed by NM, 5-Aug-1993.)
-       (Proof shortened by O'Cat, 29-Oct-2011.) */
-
-$)
+$( Inference joining two implications.  (Contributed by NM, 5-Aug-1993.)
+       (Proof shortened by O'Cat, 29-Oct-2011.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ps ) $.
@@ -712,11 +610,9 @@ ${
 	pimim12i $p |- ( ( ps -> ch ) -> ( ph -> th ) ) $=
 	e0 e1 f2 f3 f1 pimim2i f0 f1 f1 f2 awi f3 psyl5 $.
 $}
-$( /* Inference adding common consequents in an implication, thereby
+$( Inference adding common consequents in an implication, thereby
        interchanging the original antecedent and consequent.  (Contributed by
-       NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 4-Aug-2012.) */
-
-$)
+       NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 4-Aug-2012.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ( ph -> ps ) $.
@@ -726,10 +622,8 @@ ${
 	pimim1i $p |- ( ( ps -> ch ) -> ( ph -> ch ) ) $=
 	e0 f2 pid f0 f1 f2 f2 pimim12i $.
 $}
-$( /* Inference adding three nested antecedents.  (Contributed by NM,
-       19-Dec-2006.) */
-
-$)
+$( Inference adding three nested antecedents.  (Contributed by NM,
+       19-Dec-2006.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -740,10 +634,8 @@ ${
 	pimim3i $p |- ( ( th -> ph ) -> ( ( th -> ps ) -> ( th -> ch ) ) ) $=
 	e0 f0 f1 f2 awi f3 pimim2i f3 f0 awi f3 f1 f2 pa2d $.
 $}
-$( /* A syllogism inference combined with contraction.  (Contributed by NM,
-       4-May-1994.)  (Revised by NM, 13-Jul-2013.) */
-
-$)
+$( A syllogism inference combined with contraction.  (Contributed by NM,
+       4-May-1994.)  (Revised by NM, 13-Jul-2013.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ps ) $.
@@ -756,10 +648,8 @@ ${
 	psylc $p |- ( ph -> th ) $=
 	e0 e1 e2 f0 f1 f0 f2 f3 psyl2im f0 f3 ppm2.43i $.
 $}
-$( /* A syllogism inference combined with contraction. ~ e111 without virtual
-       deductions.  (Contributed by Alan Sare, 7-Jul-2011.) */
-
-$)
+$( A syllogism inference combined with contraction. ~ e111 without virtual
+       deductions.  (Contributed by Alan Sare, 7-Jul-2011.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ps ) $.
@@ -774,10 +664,8 @@ ${
 	psyl3c $p |- ( ph -> ta ) $=
 	e2 e0 e1 e3 f0 f1 f2 f3 f4 awi psylc f0 f3 f4 pmpd $.
 $}
-$( /* ~ e20 without virtual deductions.  (Contributed by Alan Sare,
-       8-Jul-2011.)  (Proof shortened by Wolf Lammen, 13-Sep-2012.) */
-
-$)
+$( ~ e20 without virtual deductions.  (Contributed by Alan Sare,
+       8-Jul-2011.)  (Proof shortened by Wolf Lammen, 13-Sep-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -791,10 +679,8 @@ ${
 	psyl6mpi $p |- ( ph -> ( ps -> ta ) ) $=
 	e0 e1 e2 f2 f3 f4 pmpi f0 f1 f2 f4 psyl6 $.
 $}
-$( /* Modus ponens combined with a syllogism inference.  (Contributed by Alan
-       Sare, 20-Apr-2011.) */
-
-$)
+$( Modus ponens combined with a syllogism inference.  (Contributed by Alan
+       Sare, 20-Apr-2011.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ph $.
@@ -807,10 +693,8 @@ ${
 	pmpsyl $p |- ( ps -> th ) $=
 	e0 f0 f1 pa1i e1 e2 f1 f0 f2 f3 psylc $.
 $}
-$( /* Inference combining ~ syl6 with contraction.  (Contributed by Alan Sare,
-       2-May-2011.) */
-
-$)
+$( Inference combining ~ syl6 with contraction.  (Contributed by Alan Sare,
+       2-May-2011.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -824,10 +708,8 @@ ${
 	psyl6c $p |- ( ph -> ( ps -> ta ) ) $=
 	e1 e0 e2 f0 f1 f2 f3 f4 awi psyl6 f0 f1 f3 f4 pmpdd $.
 $}
-$( /* Nested syllogism deduction.  (Contributed by NM, 12-Dec-2004.)  (Proof
-       shortened by Wolf Lammen, 11-May-2013.) */
-
-$)
+$( Nested syllogism deduction.  (Contributed by NM, 12-Dec-2004.)  (Proof
+       shortened by Wolf Lammen, 11-May-2013.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> th ) ) ) $.
@@ -840,11 +722,9 @@ ${
 	psyldd $p |- ( ph -> ( ps -> ( ch -> ta ) ) ) $=
 	e1 e0 f3 f4 f2 pimim2 f0 f1 f3 f4 awi f2 f3 awi f2 f4 awi psyl6c $.
 $}
-$( /* A nested syllogism deduction.  (Contributed by NM, 5-Aug-1993.)  (Proof
+$( A nested syllogism deduction.  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by Josh Purinton, 29-Dec-2000.)  (Proof shortened by O'Cat,
-       2-Feb-2006.) */
-
-$)
+       2-Feb-2006.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -857,11 +737,9 @@ ${
 	psyl5d $p |- ( ph -> ( th -> ( ps -> ta ) ) ) $=
 	e0 f0 f1 f2 awi f3 pa1d e1 f0 f3 f1 f2 f4 psyldd $.
 $}
-$( /* A syllogism rule of inference.  The first premise is used to replace the
+$( A syllogism rule of inference.  The first premise is used to replace the
        third antecedent of the second premise.  (Contributed by NM,
-       5-Aug-1993.)  (Proof shortened by Wolf Lammen, 3-Aug-2012.) */
-
-$)
+       5-Aug-1993.)  (Proof shortened by Wolf Lammen, 3-Aug-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ps ) $.
@@ -874,11 +752,9 @@ ${
 	psyl7 $p |- ( ch -> ( th -> ( ph -> ta ) ) ) $=
 	e0 f0 f1 awi f2 pa1i e1 f2 f0 f1 f3 f4 psyl5d $.
 $}
-$( /* A nested syllogism deduction.  (Contributed by NM, 5-Aug-1993.)  (Proof
+$( A nested syllogism deduction.  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by Josh Purinton, 29-Dec-2000.)  (Proof shortened by O'Cat,
-       2-Feb-2006.) */
-
-$)
+       2-Feb-2006.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> th ) ) ) $.
@@ -891,11 +767,9 @@ ${
 	psyl6d $p |- ( ph -> ( ps -> ( ch -> ta ) ) ) $=
 	e0 e1 f0 f3 f4 awi f1 pa1d f0 f1 f2 f3 f4 psyldd $.
 $}
-$( /* A syllogism rule of inference.  The second premise is used to replace
+$( A syllogism rule of inference.  The second premise is used to replace
        the consequent of the first premise.  (Contributed by NM, 1-Aug-1994.)
-       (Proof shortened by Wolf Lammen, 3-Aug-2012.) */
-
-$)
+       (Proof shortened by Wolf Lammen, 3-Aug-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> th ) ) ) $.
@@ -908,10 +782,8 @@ ${
 	psyl8 $p |- ( ph -> ( ps -> ( ch -> ta ) ) ) $=
 	e0 e1 f3 f4 awi f0 pa1i f0 f1 f2 f3 f4 psyl6d $.
 $}
-$( /* A nested syllogism inference with different antecedents.  (Contributed
-       by NM, 5-Aug-1993.)  (Proof shortened by Josh Purinton, 29-Dec-2000.) */
-
-$)
+$( A nested syllogism inference with different antecedents.  (Contributed
+       by NM, 5-Aug-1993.)  (Proof shortened by Josh Purinton, 29-Dec-2000.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -924,10 +796,8 @@ ${
 	psyl9 $p |- ( ph -> ( th -> ( ps -> ta ) ) ) $=
 	e0 e1 f3 f2 f4 awi awi f0 pa1i f0 f1 f2 f3 f4 psyl5d $.
 $}
-$( /* A nested syllogism inference with different antecedents.  (Contributed
-       by NM, 5-Aug-1993.) */
-
-$)
+$( A nested syllogism inference with different antecedents.  (Contributed
+       by NM, 5-Aug-1993.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -940,10 +810,8 @@ ${
 	psyl9r $p |- ( th -> ( ph -> ( ps -> ta ) ) ) $=
 	e0 e1 f0 f1 f2 f3 f4 psyl9 f0 f3 f1 f4 awi pcom12 $.
 $}
-$( /* Deduction combining antecedents and consequents.  (Contributed by NM,
-       7-Aug-1994.)  (Proof shortened by O'Cat, 30-Oct-2011.) */
-
-$)
+$( Deduction combining antecedents and consequents.  (Contributed by NM,
+       7-Aug-1994.)  (Proof shortened by O'Cat, 30-Oct-2011.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -956,10 +824,8 @@ ${
 	pimim12d $p |- ( ph -> ( ( ch -> th ) -> ( ps -> ta ) ) ) $=
 	e0 e1 f0 f3 f4 f2 pimim2d f0 f1 f2 f2 f3 awi f4 psyl5d $.
 $}
-$( /* Deduction adding nested consequents.  (Contributed by NM, 3-Apr-1994.)
-       (Proof shortened by Wolf Lammen, 12-Sep-2012.) */
-
-$)
+$( Deduction adding nested consequents.  (Contributed by NM, 3-Apr-1994.)
+       (Proof shortened by Wolf Lammen, 12-Sep-2012.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ( ps -> ch ) ) $.
@@ -970,11 +836,9 @@ ${
 	pimim1d $p |- ( ph -> ( ( ch -> th ) -> ( ps -> th ) ) ) $=
 	e0 f0 f3 pidd f0 f1 f2 f3 f3 pimim12d $.
 $}
-$( /* A closed form of syllogism (see ~ syl ).  Theorem *2.06 of
+$( A closed form of syllogism (see ~ syl ).  Theorem *2.06 of
      [WhiteheadRussell] p. 100.  (Contributed by NM, 5-Aug-1993.)  (Proof
-     shortened by Wolf Lammen, 25-May-2013.) */
-
-$)
+     shortened by Wolf Lammen, 25-May-2013.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -983,10 +847,8 @@ ${
 	pimim1 $p |- ( ( ph -> ps ) -> ( ( ps -> ch ) -> ( ph -> ch ) ) ) $=
 	f0 f1 awi pid f0 f1 awi f0 f1 f2 pimim1d $.
 $}
-$( /* Theorem *2.83 of [WhiteheadRussell] p. 108.  (Contributed by NM,
-     3-Jan-2005.) */
-
-$)
+$( Theorem *2.83 of [WhiteheadRussell] p. 108.  (Contributed by NM,
+     3-Jan-2005.) $)
 ${
 	$v ph ps ch th $.
 	f0 $f wff ph $.
@@ -996,10 +858,8 @@ ${
 	ppm2.83 $p |- ( ( ph -> ( ps -> ch ) ) -> ( ( ph -> ( ch -> th ) ) -> ( ph -> ( ps -> th ) ) ) ) $=
 	f1 f2 f3 pimim1 f1 f2 awi f2 f3 awi f1 f3 awi f0 pimim3i $.
 $}
-$( /* Commutation of antecedents.  Swap 2nd and 3rd.  (Contributed by NM,
-       5-Aug-1993.)  (Proof shortened by Wolf Lammen, 4-Aug-2012.) */
-
-$)
+$( Commutation of antecedents.  Swap 2nd and 3rd.  (Contributed by NM,
+       5-Aug-1993.)  (Proof shortened by Wolf Lammen, 4-Aug-2012.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> th ) ) ) $.
@@ -1010,10 +870,8 @@ ${
 	pcom23 $p |- ( ph -> ( ch -> ( ps -> th ) ) ) $=
 	e0 f2 f3 ppm2.27 f0 f1 f2 f3 awi f2 f3 psyl9 $.
 $}
-$( /* Commutation of antecedents.  Rotate right.  (Contributed by NM,
-       25-Apr-1994.) */
-
-$)
+$( Commutation of antecedents.  Rotate right.  (Contributed by NM,
+       25-Apr-1994.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> th ) ) ) $.
@@ -1024,10 +882,8 @@ ${
 	pcom3r $p |- ( ch -> ( ph -> ( ps -> th ) ) ) $=
 	e0 f0 f1 f2 f3 pcom23 f0 f2 f1 f3 awi pcom12 $.
 $}
-$( /* Commutation of antecedents.  Swap 1st and 3rd.  (Contributed by NM,
-       25-Apr-1994.)  (Proof shortened by Wolf Lammen, 28-Jul-2012.) */
-
-$)
+$( Commutation of antecedents.  Swap 1st and 3rd.  (Contributed by NM,
+       25-Apr-1994.)  (Proof shortened by Wolf Lammen, 28-Jul-2012.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> th ) ) ) $.
@@ -1038,10 +894,8 @@ ${
 	pcom13 $p |- ( ch -> ( ps -> ( ph -> th ) ) ) $=
 	e0 f0 f1 f2 f3 pcom3r f2 f0 f1 f3 pcom23 $.
 $}
-$( /* Commutation of antecedents.  Rotate left.  (Contributed by NM,
-       25-Apr-1994.)  (Proof shortened by Wolf Lammen, 28-Jul-2012.) */
-
-$)
+$( Commutation of antecedents.  Rotate left.  (Contributed by NM,
+       25-Apr-1994.)  (Proof shortened by Wolf Lammen, 28-Jul-2012.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> th ) ) ) $.
@@ -1052,11 +906,9 @@ ${
 	pcom3l $p |- ( ps -> ( ch -> ( ph -> th ) ) ) $=
 	e0 f0 f1 f2 f3 pcom3r f2 f0 f1 f3 pcom3r $.
 $}
-$( /* Swap antecedents.  Theorem *2.04 of [WhiteheadRussell] p. 100.
+$( Swap antecedents.  Theorem *2.04 of [WhiteheadRussell] p. 100.
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
-     12-Sep-2012.) */
-
-$)
+     12-Sep-2012.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -1065,10 +917,8 @@ ${
 	ppm2.04 $p |- ( ( ph -> ( ps -> ch ) ) -> ( ps -> ( ph -> ch ) ) ) $=
 	f0 f1 f2 awi awi pid f0 f1 f2 awi awi f0 f1 f2 pcom23 $.
 $}
-$( /* Commutation of antecedents.  Swap 3rd and 4th.  (Contributed by NM,
-       25-Apr-1994.) */
-
-$)
+$( Commutation of antecedents.  Swap 3rd and 4th.  (Contributed by NM,
+       25-Apr-1994.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> ( th -> ta ) ) ) ) $.
@@ -1080,10 +930,8 @@ ${
 	pcom34 $p |- ( ph -> ( ps -> ( th -> ( ch -> ta ) ) ) ) $=
 	e0 f2 f3 f4 ppm2.04 f0 f1 f2 f3 f4 awi awi f3 f2 f4 awi awi psyl6 $.
 $}
-$( /* Commutation of antecedents.  Rotate left.  (Contributed by NM,
-       25-Apr-1994.)  (Proof shortened by O'Cat, 15-Aug-2004.) */
-
-$)
+$( Commutation of antecedents.  Rotate left.  (Contributed by NM,
+       25-Apr-1994.)  (Proof shortened by O'Cat, 15-Aug-2004.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> ( th -> ta ) ) ) ) $.
@@ -1095,10 +943,8 @@ ${
 	pcom4l $p |- ( ps -> ( ch -> ( th -> ( ph -> ta ) ) ) ) $=
 	e0 f0 f1 f2 f3 f4 awi pcom3l f1 f2 f0 f3 f4 pcom34 $.
 $}
-$( /* Commutation of antecedents.  Rotate twice.  (Contributed by NM,
-       25-Apr-1994.) */
-
-$)
+$( Commutation of antecedents.  Rotate twice.  (Contributed by NM,
+       25-Apr-1994.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> ( th -> ta ) ) ) ) $.
@@ -1110,10 +956,8 @@ ${
 	pcom4t $p |- ( ch -> ( th -> ( ph -> ( ps -> ta ) ) ) ) $=
 	e0 f0 f1 f2 f3 f4 pcom4l f1 f2 f3 f0 f4 pcom4l $.
 $}
-$( /* Commutation of antecedents.  Rotate right.  (Contributed by NM,
-       25-Apr-1994.) */
-
-$)
+$( Commutation of antecedents.  Rotate right.  (Contributed by NM,
+       25-Apr-1994.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> ( th -> ta ) ) ) ) $.
@@ -1125,10 +969,8 @@ ${
 	pcom4r $p |- ( th -> ( ph -> ( ps -> ( ch -> ta ) ) ) ) $=
 	e0 f0 f1 f2 f3 f4 pcom4t f2 f3 f0 f1 f4 pcom4l $.
 $}
-$( /* Commutation of antecedents.  Swap 2nd and 4th.  (Contributed by NM,
-       25-Apr-1994.)  (Proof shortened by Wolf Lammen, 28-Jul-2012.) */
-
-$)
+$( Commutation of antecedents.  Swap 2nd and 4th.  (Contributed by NM,
+       25-Apr-1994.)  (Proof shortened by Wolf Lammen, 28-Jul-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> ( th -> ta ) ) ) ) $.
@@ -1140,10 +982,8 @@ ${
 	pcom24 $p |- ( ph -> ( th -> ( ch -> ( ps -> ta ) ) ) ) $=
 	e0 f0 f1 f2 f3 f4 pcom4t f2 f3 f0 f1 f4 awi pcom13 $.
 $}
-$( /* Commutation of antecedents.  Swap 1st and 4th.  (Contributed by NM,
-       25-Apr-1994.)  (Proof shortened by Wolf Lammen, 28-Jul-2012.) */
-
-$)
+$( Commutation of antecedents.  Swap 1st and 4th.  (Contributed by NM,
+       25-Apr-1994.)  (Proof shortened by Wolf Lammen, 28-Jul-2012.) $)
 ${
 	$v ph ps ch th ta $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> ( th -> ta ) ) ) ) $.
@@ -1155,10 +995,8 @@ ${
 	pcom14 $p |- ( th -> ( ps -> ( ch -> ( ph -> ta ) ) ) ) $=
 	e0 f0 f1 f2 f3 f4 pcom4l f1 f2 f3 f0 f4 awi pcom3r $.
 $}
-$( /* Commutation of antecedents.  Swap 4th and 5th.  (Contributed by Jeff
-       Hankins, 28-Jun-2009.) */
-
-$)
+$( Commutation of antecedents.  Swap 4th and 5th.  (Contributed by Jeff
+       Hankins, 28-Jun-2009.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> ( th -> ( ta -> et ) ) ) ) ) $.
@@ -1171,10 +1009,8 @@ ${
 	pcom45 $p |- ( ph -> ( ps -> ( ch -> ( ta -> ( th -> et ) ) ) ) ) $=
 	e0 f3 f4 f5 ppm2.04 f0 f1 f2 f3 f4 f5 awi awi f4 f3 f5 awi awi psyl8 $.
 $}
-$( /* Commutation of antecedents.  Swap 3rd and 5th.  (Contributed by Jeff
-       Hankins, 28-Jun-2009.) */
-
-$)
+$( Commutation of antecedents.  Swap 3rd and 5th.  (Contributed by Jeff
+       Hankins, 28-Jun-2009.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> ( th -> ( ta -> et ) ) ) ) ) $.
@@ -1187,10 +1023,8 @@ ${
 	pcom35 $p |- ( ph -> ( ps -> ( ta -> ( th -> ( ch -> et ) ) ) ) ) $=
 	e0 f0 f1 f2 f3 f4 f5 awi pcom34 f0 f1 f3 f2 f4 f5 pcom45 f0 f1 f3 f4 f2 f5 awi pcom34 $.
 $}
-$( /* Commutation of antecedents.  Swap 2nd and 5th.  (Contributed by Jeff
-       Hankins, 28-Jun-2009.) */
-
-$)
+$( Commutation of antecedents.  Swap 2nd and 5th.  (Contributed by Jeff
+       Hankins, 28-Jun-2009.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> ( th -> ( ta -> et ) ) ) ) ) $.
@@ -1203,10 +1037,8 @@ ${
 	pcom25 $p |- ( ph -> ( ta -> ( ch -> ( th -> ( ps -> et ) ) ) ) ) $=
 	e0 f0 f1 f2 f3 f4 f5 awi pcom24 f0 f3 f2 f1 f4 f5 pcom45 f0 f3 f2 f4 f1 f5 awi pcom24 $.
 $}
-$( /* Commutation of antecedents.  Rotate left.  (Contributed by Jeff Hankins,
-       28-Jun-2009.)  (Proof shortened by Wolf Lammen, 29-Jul-2012.) */
-
-$)
+$( Commutation of antecedents.  Rotate left.  (Contributed by Jeff Hankins,
+       28-Jun-2009.)  (Proof shortened by Wolf Lammen, 29-Jul-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> ( th -> ( ta -> et ) ) ) ) ) $.
@@ -1219,11 +1051,9 @@ ${
 	pcom5l $p |- ( ps -> ( ch -> ( th -> ( ta -> ( ph -> et ) ) ) ) ) $=
 	e0 f0 f1 f2 f3 f4 f5 awi pcom4l f1 f2 f3 f0 f4 f5 pcom45 $.
 $}
-$( /* Commutation of antecedents.  Swap 1st and 5th.  (Contributed by Jeff
+$( Commutation of antecedents.  Swap 1st and 5th.  (Contributed by Jeff
        Hankins, 28-Jun-2009.)  (Proof shortened by Wolf Lammen,
-       29-Jul-2012.) */
-
-$)
+       29-Jul-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> ( th -> ( ta -> et ) ) ) ) ) $.
@@ -1236,10 +1066,8 @@ ${
 	pcom15 $p |- ( ta -> ( ps -> ( ch -> ( th -> ( ph -> et ) ) ) ) ) $=
 	e0 f0 f1 f2 f3 f4 f5 pcom5l f1 f2 f3 f4 f0 f5 awi pcom4r $.
 $}
-$( /* Commutation of antecedents.  Rotate left twice.  (Contributed by Jeff
-       Hankins, 28-Jun-2009.) */
-
-$)
+$( Commutation of antecedents.  Rotate left twice.  (Contributed by Jeff
+       Hankins, 28-Jun-2009.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> ( th -> ( ta -> et ) ) ) ) ) $.
@@ -1252,10 +1080,8 @@ ${
 	pcom52l $p |- ( ch -> ( th -> ( ta -> ( ph -> ( ps -> et ) ) ) ) ) $=
 	e0 f0 f1 f2 f3 f4 f5 pcom5l f1 f2 f3 f4 f0 f5 pcom5l $.
 $}
-$( /* Commutation of antecedents.  Rotate right twice.  (Contributed by Jeff
-       Hankins, 28-Jun-2009.) */
-
-$)
+$( Commutation of antecedents.  Rotate right twice.  (Contributed by Jeff
+       Hankins, 28-Jun-2009.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> ( th -> ( ta -> et ) ) ) ) ) $.
@@ -1268,10 +1094,8 @@ ${
 	pcom52r $p |- ( th -> ( ta -> ( ph -> ( ps -> ( ch -> et ) ) ) ) ) $=
 	e0 f0 f1 f2 f3 f4 f5 pcom52l f2 f3 f4 f0 f1 f5 pcom5l $.
 $}
-$( /* Commutation of antecedents.  Rotate right.  (Contributed by Wolf Lammen,
-       29-Jul-2012.) */
-
-$)
+$( Commutation of antecedents.  Rotate right.  (Contributed by Wolf Lammen,
+       29-Jul-2012.) $)
 ${
 	$v ph ps ch th ta et $.
 	e0 $e |- ( ph -> ( ps -> ( ch -> ( th -> ( ta -> et ) ) ) ) ) $.
@@ -1284,10 +1108,8 @@ ${
 	pcom5r $p |- ( ta -> ( ph -> ( ps -> ( ch -> ( th -> et ) ) ) ) ) $=
 	e0 f0 f1 f2 f3 f4 f5 pcom52l f2 f3 f4 f0 f1 f5 pcom52l $.
 $}
-$( /* Elimination of a nested antecedent as a kind of reversal of inference
-     ~ ja .  (Contributed by Wolf Lammen, 9-May-2013.) */
-
-$)
+$( Elimination of a nested antecedent as a kind of reversal of inference
+     ~ ja .  (Contributed by Wolf Lammen, 9-May-2013.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -1296,10 +1118,8 @@ ${
 	pjarr $p |- ( ( ( ph -> ps ) -> ch ) -> ( ps -> ch ) ) $=
 	f1 f0 aax-1 f1 f0 f1 awi f2 pimim1i $.
 $}
-$( /* Inference based on ~ pm2.86 .  (Contributed by NM, 5-Aug-1993.)  (Proof
-       shortened by Wolf Lammen, 3-Apr-2013.) */
-
-$)
+$( Inference based on ~ pm2.86 .  (Contributed by NM, 5-Aug-1993.)  (Proof
+       shortened by Wolf Lammen, 3-Apr-2013.) $)
 ${
 	$v ph ps ch $.
 	e0 $e |- ( ( ph -> ps ) -> ( ph -> ch ) ) $.
@@ -1309,10 +1129,8 @@ ${
 	ppm2.86i $p |- ( ph -> ( ps -> ch ) ) $=
 	f1 f0 aax-1 e0 f1 f0 f1 awi f0 f2 awi psyl f1 f0 f2 pcom12 $.
 $}
-$( /* Deduction based on ~ pm2.86 .  (Contributed by NM, 29-Jun-1995.)  (Proof
-       shortened by Wolf Lammen, 3-Apr-2013.) */
-
-$)
+$( Deduction based on ~ pm2.86 .  (Contributed by NM, 29-Jun-1995.)  (Proof
+       shortened by Wolf Lammen, 3-Apr-2013.) $)
 ${
 	$v ph ps ch th $.
 	e0 $e |- ( ph -> ( ( ps -> ch ) -> ( ps -> th ) ) ) $.
@@ -1323,11 +1141,9 @@ ${
 	ppm2.86d $p |- ( ph -> ( ps -> ( ch -> th ) ) ) $=
 	f2 f1 aax-1 e0 f2 f1 f2 awi f0 f1 f3 awi psyl5 f0 f2 f1 f3 pcom23 $.
 $}
-$( /* Converse of axiom ~ ax-2 .  Theorem *2.86 of [WhiteheadRussell] p. 108.
+$( Converse of axiom ~ ax-2 .  Theorem *2.86 of [WhiteheadRussell] p. 108.
      (Contributed by NM, 25-Apr-1994.)  (Proof shortened by Wolf Lammen,
-     3-Apr-2013.) */
-
-$)
+     3-Apr-2013.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.
@@ -1336,13 +1152,11 @@ ${
 	ppm2.86 $p |- ( ( ( ph -> ps ) -> ( ph -> ch ) ) -> ( ph -> ( ps -> ch ) ) ) $=
 	f0 f1 awi f0 f2 awi awi pid f0 f1 awi f0 f2 awi awi f0 f1 f2 ppm2.86d $.
 $}
-$( /* The Linearity Axiom of the infinite-valued sentential logic (L-infinity)
+$( The Linearity Axiom of the infinite-valued sentential logic (L-infinity)
      of Lukasiewicz.  This version of ~ loolin does not use ~ ax-3 , meaning
      that this theorem is intuitionistically valid.  (Contributed by O'Cat,
      12-Aug-2004.)  (New usage is discouraged.)
-     (Proof modification is discouraged.) */
-
-$)
+     (Proof modification is discouraged.) $)
 ${
 	$v ph ps $.
 	f0 $f wff ph $.
@@ -1350,12 +1164,10 @@ ${
 	ploolinALT $p |- ( ( ( ph -> ps ) -> ( ps -> ph ) ) -> ( ps -> ph ) ) $=
 	f0 f1 f1 f0 awi pjarr f0 f1 awi f1 f0 awi awi f1 f0 ppm2.43d $.
 $}
-$( /* An alternate for the Linearity Axiom of the infinite-valued sentential
+$( An alternate for the Linearity Axiom of the infinite-valued sentential
      logic (L-infinity) of Lukasiewicz, due to Barbara Wozniakowska, _Reports
      on Mathematical Logic_ 10, 129-137 (1978).  (Contributed by O'Cat,
-     8-Aug-2004.) */
-
-$)
+     8-Aug-2004.) $)
 ${
 	$v ph ps ch $.
 	f0 $f wff ph $.

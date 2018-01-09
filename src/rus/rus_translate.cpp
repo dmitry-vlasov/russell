@@ -117,15 +117,14 @@ smm::Assertion* translate_rule(const Rule* rule, Maps& maps) {
 		ra->variables.push_back(translate_vars(rule->vars));
 	ra->floating = translate_floatings(rule->vars, maps);
 	ra->prop = new smm::Proposition(true, rule_lab, translate_term(rule->term, rule->term.type.get(), maps));
-	//ra->prop.axiom = true;
-	//ra->prop.expr  = translate_term(rule->term, rule->type.get(), maps);
-	//ra->prop.label = rule_lab;
 	maps.rules[rule] = ra;
 	for (auto v : rule->vars.v) {
 		uint i = 0;
+		bool found = false;
 		for (auto& ch : rule->term.tree.children()) {
 			if (ch->kind == Tree::VAR && *ch->var() == v) {
 				maps.rules_args[rule][v] = i;
+				found = true;
 				break;
 			}
 			++ i;
@@ -149,9 +148,6 @@ vector<smm::Node> translate_assertion(const Assertion* ass, Maps& maps) {
 		ra->floating = translate_floatings(ass->vars, maps, ass);
 		ra->essential= translate_essentials(ass, maps);
 		ra->prop = new smm::Proposition(false, ass_lab, translate_expr(prop->expr, maps));
-		//ra->prop.expr  = translate_expr(prop->expr, maps);
-		//ra->prop.label = ass_lab;
-		//ra->prop.axiom = false;
 		ra_vect.push_back(ra);
 		maps.assertions[ass] = ra;
 	}
@@ -175,7 +171,6 @@ vector<smm::Node> translate_def(const Def* def, Maps& maps) {
 	}
 	return asss;
 }
-
 
 void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps);
 
