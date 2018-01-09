@@ -8,7 +8,6 @@
 namespace mdl { namespace mm { namespace {
 
 typedef map<uint, uint> Perm;
-typedef map<uint, Perm> Transform;
 
 struct Tree {
 	struct Node {
@@ -114,7 +113,7 @@ Proof* to_proof(const Tree* tree) {
 	return proof;
 }
 
-void transform(Tree* tree, const Transform& trans, bool forward = true) {
+void transform(Tree* tree, const map<uint, Perm>& trans, bool forward = true) {
 	for (uint i = 0; i < tree->nodes.size() - 1; ++ i) {
 		if (tree->nodes[i].type == Tree::Node::TREE)
 			transform(tree->nodes[i].val.tree, trans, forward);
@@ -182,7 +181,7 @@ struct Maps {
 	map<const mm::Floating*,  smm::Inner*>     inners;
 	map<const mm::Source*,    smm::Source*>    sources;
 	map<uint, Ref*> redundant;
-	Transform transform;
+	map<uint, Perm> transform;
 };
 
 // Replace variable sets with single set, which contains only needed variables.
