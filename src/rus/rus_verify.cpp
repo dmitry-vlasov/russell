@@ -92,13 +92,27 @@ void verify(uint src) {
 	source->theory->verify();
 }
 
+#define PARALLEL_VERIFY
+
 void verify() {
+	vector<const Proof*> proofs;
 	for (const auto& a : Sys::mod().math.get<Assertion>()) {
 		if (const Theorem* t = dynamic_cast<const Theorem*>(a.second.data)) {
 			if (!t->proofs.size()) throw Error("Theorem is not proved", show_id(t->id()));
-			for (const User<Proof>& p : t->proofs) p.get()->verify();
+			for (const User<Proof>& p : t->proofs)
+				proofs.push_back(p.get());
 		}
 	}
+#ifdef PARALLEL_VERIFY
+	tbb::parallel_for (tbb::blocked_range<size_t>(0, proofs.size()),
+		[proofs] (const tbb::blocked_range<size_t>& r) {
+			for (size_t i = r.begin(); i != r.end(); ++i)
+				proofs[i]->verify();
+		}
+	);
+#else
+	for (auto p : proofs) p->verify();
+#endif
 }
 
 }} // mdl::rus
