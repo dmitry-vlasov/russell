@@ -385,11 +385,13 @@ public:
 	iterator begin() { return refs.begin(); }
 	iterator end() { return refs.end(); }
 
-	const_iterator cbegin() const { return refs.cbegin(); }
-	const_iterator cend() const { return refs.cend(); }
+	const_iterator begin() const { return refs.begin(); }
+	const_iterator end() const { return refs.end(); }
 
 	template<class, class> friend class Owner;
 	template<class, class> friend class User;
+
+	void rehash() { refs.rehash(); }
 };
 
 inline string xml_sys_id(uint sys, uint id) {

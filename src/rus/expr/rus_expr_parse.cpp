@@ -91,11 +91,11 @@ void parse(Expr* ex) {
 			ex->tree = std::move(*tree);
 			delete tree;
 		} else {
-			if (const Source* src = ex->token.src()) {
+			/*if (const Source* src = ex->token.src()) {
 				cout << src->showInclusionInfo() << endl;
 			} else {
 				cout << "Source: " << (void*)(ex->token.src()) << endl;
-			}
+			}*/
 			parse_LL(it, ex->type.get(), ex);
 			throw Error("parsing", string("expression: ") + show(*ex) + " at: " + ex->token.show());
 		}
@@ -105,7 +105,8 @@ void parse(Expr* ex) {
 }
 
 void parse() {
-	for (auto p : Sys::mod().math.get<Rule>()) {
+	Sys::mod().math.get<Rule>().rehash();
+	for (const auto& p : Sys::get().math.get<Rule>()) {
 		Rule* r = p.second.data;
 		Type* tp = r->term.type.get();
 		tp->rules.add(r->term, r->id());

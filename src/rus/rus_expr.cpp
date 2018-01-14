@@ -29,7 +29,12 @@ void Rules::add(const Expr& ex, uint id) {
 			m = &n->tree;
 		}
 	}
-	if (n->rule) throw Error("rule already exists", show(ex));
+	if (n->rule) {
+		string msg;
+		msg += show(ex) + " - new one, ";
+		msg += show(*n->rule.get()) + " - old one";
+		throw Error("rule already exists", msg);
+	}
 	n->rule.use(id);
 }
 
