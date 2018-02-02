@@ -326,15 +326,20 @@ struct Rules {
 	struct Node;
 	typedef vector<Node*> Map;
 	void add(const Expr& ex, uint id);
+	void sort();
+	vector<string> show() const;
 	~Rules();
 	Map map;
 };
 
 struct Rules::Node {
-	Node(Symbol s) : symb(s) { }
+	Node(Symbol s, Node* p) : symb(s), parent(p), min_dist(-1) { }
+	vector<string> show() const;
 	Symbol     symb;
 	Rules      tree;
 	User<Rule> rule;
+	Node*      parent;
+	uint       min_dist;
 };
 
 

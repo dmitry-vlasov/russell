@@ -96,6 +96,10 @@ void read(uint label) {
 			Sys::mod().math.get<Source>().access(s)->include(inc_src);
 		}
 	}
+	for (auto s : new_sources) {
+		Source* src = Sys::mod().math.get<Source>().access(s);
+		src->transitive_closure();
+	}
 }
 
 }}

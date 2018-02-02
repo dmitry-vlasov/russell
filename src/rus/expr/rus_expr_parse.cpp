@@ -11,22 +11,29 @@ struct Action {
 	Action(Kind k, Rule* r = nullptr) : kind(k), rule(r) { }
 };
 
-inline Action act(auto& n, auto& m, Symbols::iterator ch, const Expr* e) {
+template<bool trace>
+inline Action act(auto& n, auto& m, Symbols::iterator ch, const Expr* e, Symbols::iterator beg) {
 	if (User<Rule>& r = (*n.top())->rule) {
-		if (r.get()->token.preceeds(e->token))
+		if (r.get()->token.preceeds(e->token)) {
+			if (trace) cout << Indent(ch - beg) << "Act: Rule MATCHES: " << Lex::toStr(r.id()) << " = " << show(r.get()->term) <<  endl;
 			return Action(Action::RET, r.get());
-		else
+		} else {
+			if (trace) cout << Indent(ch - beg) << "Act: Rule follows: " << Lex::toStr(r.id()) << endl;
 			return Action::BREAK;
-	} else if (ch->end)
+		}
+	} else if (ch->end) {
+		if (trace) cout << Indent(ch - beg) << "Act: end of expression: " << endl;
 		return Action::BREAK;
-	else {
+	} else {
+		if (trace) cout << Indent(ch - beg) << "Act: go forward one step ..." << endl;
 		n.push((*n.top())->tree.map.begin());
 		m.push(++ch);
 	}
 	return Action::CONT;
 }
 
-Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e) {
+template<bool trace>
+Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e, Symbols::iterator beg) {
 	if (type->rules.map.size()) {
 		typedef Rules::Map::const_iterator MapIter;
 		Tree::Children children;
@@ -38,10 +45,13 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e) {
 		while (!n.empty() && !m.empty()) {
 			auto ch = m.top();
 			if (const Type* tp = (*n.top())->symb.type()) {
+				if (trace) cout << Indent(ch - beg) << "Expr symbol: " << *m.top() << endl;
+				if (trace) cout << Indent(ch - beg) << "Parse: variable " << (*n.top())->symb << " of type: " << Lex::toStr(tp->id()) << endl;
 				childnodes.push(n.top());
-				if (Tree* child = parse_LL(ch, tp, e)) {
+				if (Tree* child = parse_LL<trace>(ch, tp, e, beg)) {
+					if (trace) cout << Indent(ch - beg) << "Parse: subexpression " << show(*child) << " - success " << endl;
 					children.push_back(unique_ptr<Tree>(child));
-					Action a = act(n, m, ch, e);
+					Action a = act<trace>(n, m, ch, e, beg);
 					switch (a.kind) {
 					case Action::RET  : x = ch; return new Tree(a.rule->id(), children);
 					case Action::BREAK: goto out;
@@ -51,7 +61,9 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e) {
 					childnodes.pop();
 				}
 			} else if ((*n.top())->symb == *m.top()) {
-				Action a = act(n, m, ch, e);
+				if (trace) cout << Indent(ch - beg) << "Expr symbol: " << *m.top() << endl;
+				if (trace) cout << Indent(ch - beg) << "Parse: constant " << (*n.top())->symb << " - success " << endl;
+				Action a = act<trace>(n, m, ch, e, beg);
 				switch (a.kind) {
 				case Action::RET  : x = ch; return new Tree(a.rule->id(), children);
 				case Action::BREAK: goto out;
@@ -81,22 +93,19 @@ Tree* parse_LL(Symbols::iterator& x, const Type* type, const Expr* e) {
 	return nullptr;
 }
 
+
 cvector<std::exception_ptr> exceptions;
 
 void parse(Expr* ex) {
 	try {
 		(--ex->symbols.end())->end = true;
 		auto it = ex->symbols.begin();
-		if (Tree* tree = parse_LL(it, ex->type.get(), ex)) {
+		if (Tree* tree = parse_LL<false>(it, ex->type.get(), ex, ex->symbols.begin())) {
 			ex->tree = std::move(*tree);
 			delete tree;
 		} else {
-			/*if (const Source* src = ex->token.src()) {
-				cout << src->showInclusionInfo() << endl;
-			} else {
-				cout << "Source: " << (void*)(ex->token.src()) << endl;
-			}*/
-			parse_LL(it, ex->type.get(), ex);
+ 			cout << "parsing expr: " <<  show(*ex)  << endl << endl;
+			parse_LL<true>(it, ex->type.get(), ex, ex->symbols.begin());
 			throw Error("parsing", string("expression: ") + show(*ex) + " at: " + ex->token.show());
 		}
 	} catch (...) {
@@ -111,6 +120,12 @@ void parse() {
 		Type* tp = r->term.type.get();
 		tp->rules.add(r->term, r->id());
 	}
+	Sys::mod().math.get<Type>().rehash();
+	for (const auto& p : Sys::get().math.get<Type>()) {
+		Type* tp = p.second.data;
+		tp->rules.sort();
+	}
+	for (auto e : queue) parse(e);
 	tbb::parallel_for (tbb::blocked_range<size_t>(0, queue.size()),
 		[] (const tbb::blocked_range<size_t>& r) {
 			for (size_t i = r.begin(); i != r.end(); ++i)

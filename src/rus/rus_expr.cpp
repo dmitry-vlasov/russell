@@ -23,7 +23,7 @@ void Rules::add(const Expr& ex, uint id) {
 		}
 		if (new_symb) {
 			if (m->map.size()) m->map.back()->symb.fin = false;
-			m->map.push_back(new Node(s));
+			m->map.push_back(new Node(s, n));
 			n = m->map.back();
 			n->symb.fin = true;
 			m = &n->tree;
@@ -31,11 +31,49 @@ void Rules::add(const Expr& ex, uint id) {
 	}
 	if (n->rule) {
 		string msg;
-		msg += show(ex) + " - new one, ";
-		msg += show(*n->rule.get()) + " - old one";
+		msg += rus::show(ex) + " - new one, ";
+		msg += rus::show(*n->rule.get()) + " - old one";
 		throw Error("rule already exists", msg);
 	}
 	n->rule.use(id);
+	uint min_dist = 0;
+	while (n) {
+		n->min_dist = min_dist < n->min_dist ? min_dist : n->min_dist;
+		n = n->parent;
+		min_dist++;
+	}
+}
+
+void Rules::sort() {
+	if (!map.size()) return;
+	map.back()->symb.fin = false;
+	std::sort(
+		map.begin(),
+		map.end(),
+		[](Node* n1, Node* n2) { return n1->min_dist > n2->min_dist; }
+	);
+	map.back()->symb.fin = true;
+	for (Node* p : map) p->tree.sort();
+}
+
+vector<string> Rules::show() const {
+	vector<string> ret;
+	for (const auto& n : map)
+		for (const auto& s : n->show())
+			ret.push_back(s);
+	return ret;
+}
+
+vector<string> Rules::Node::show() const {
+	vector<string> ret;
+	if (rule) {
+		auto src = rule.get()->token.src();
+		ret.push_back(rus::show(symb) + " -> " + Lex::toStr(rule.id()) + " from " + (src ? Lex::toStr(src->id()) : "NULL" ));
+	}
+	vector<string> strs = tree.show();
+	for (const auto& s : strs)
+		ret.push_back(rus::show(symb) + " " + s);
+	return ret;
 }
 
 Tree::Node::Node(Id i) : rule(i), children() { }

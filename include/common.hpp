@@ -588,9 +588,9 @@ template<class Src, class Sys>
 struct Source : public Owner<Src, Sys> {
 	typedef Owner<Src, Sys> Owner_;
 	typedef User<Src, Sys> User_;
-	typedef map<User_, uint> Map;
+	typedef set<User_>     SrcSet;
 
-	Source(uint l) : Owner<Src, Sys>(l, Token<Src>()), parsed(false) { }
+	Source(uint l) : Owner<Src, Sys>(l, Token<Src>()), parsed(false), closure_done(false) { }
 	virtual ~Source() { }
 
 	const string& data() { return data_; }
@@ -609,40 +609,34 @@ struct Source : public Owner<Src, Sys> {
 	}
 
 	void include(Src* src) {
-		this->includesAdd(src->id());
-		src->includedAdd(Owner_::id());
-		for (auto& des : src->includes_) {
-			this->includesAdd(des.second);
-			const_cast<Src*>(des.first.get())->includedAdd(Owner_::id());
-			for (auto& ded : included_) {
-				const_cast<Src*>(ded.first.get())->includesAdd(des.second);
-				const_cast<Src*>(des.first.get())->includedAdd(ded.second);
-			}
-		}
+		includes_.insert(src);
 	}
 	string showInclusionInfo() const {
 		string str;
 		str += string("Source: ") + Lex::toStr(Owner_::id()) + "\n\n";
-		str += "includeS:\n";
-		for (auto s : includes_) str += Lex::toStr(s.second) + "\n";
-		str += "\nincludeD:\n";
-		for (auto s : included_) str += Lex::toStr(s.second) + "\n";
+		str += "\nincludes_:\n";
+		for (auto s : includes_) str += Lex::toStr(s.get()->id()) + "\n";
 		return str;
 	}
 
 	bool parsed;
 
+	void transitive_closure() {
+		if (closure_done) return;
+		for (auto s : includes_) {
+			s.get()->transitive_closure();
+			for (auto inc : s.get()->includes_) {
+				includes_.insert(inc);
+			}
+		}
+		closure_done = true;
+	}
+
 private:
-	void includesAdd(uint s) {
-		includes_[User_(s)] = s;
-	}
-	void includedAdd(uint s) {
-		included_[User_(s)] = s;
-	}
 	template<class, class> friend struct Source;
 
-	Map includes_;
-	Map included_;
+	bool   closure_done;
+	SrcSet includes_;
 	string data_;
 };
 
