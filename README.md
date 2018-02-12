@@ -20,7 +20,8 @@ The package contains folowing programs:
 Dependencies
 ------------
 mdl uses some boost libraries: spirit, string algos, filesystem. To be sure all of these
-are avaliable, install libboost-all-dev (linux).
+are avaliable, install libboost-all-dev (linux). Also Intel Threading Building Blocks (tbb) library
+is used, libtbb-dev (Ubuntu). 
 
 Building and translation tests
 ------------------------------
