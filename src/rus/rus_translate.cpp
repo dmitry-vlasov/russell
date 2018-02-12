@@ -35,8 +35,8 @@ smm::Expr translate_expr(const Expr& ex, Maps& maps) {
 
 smm::Expr translate_term(const Expr& ex, const Type* tp, Maps& maps) {
 	smm::Expr expr; expr.reserve(ex.symbols.size() + 1);
-	expr.push_back(smm::Symbol(maps.types[tp]));
-	for (auto& s : ex.symbols) expr.push_back(smm::Symbol(translate_symb(s), s.type()));
+	expr.emplace_back(maps.types[tp]);
+	for (auto& s : ex.symbols) expr.emplace_back(translate_symb(s), s.type());
 	return expr;
 }
 

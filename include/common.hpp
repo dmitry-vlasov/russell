@@ -604,7 +604,7 @@ struct Source : public Owner<Src, Sys> {
 	void write() const { path().write(data_); }
 
 	// Transitively closed inclusion relation:
-	bool includes(Src* s) const {
+	bool includes(const Src* s) const {
 		return includes_.find(User_(s)) != includes_.end();
 	}
 
@@ -635,9 +635,10 @@ struct Source : public Owner<Src, Sys> {
 private:
 	template<class, class> friend struct Source;
 
-	bool   closure_done;
-	SrcSet includes_;
-	string data_;
+	bool      closure_done;
+	SrcSet    includes_;
+	set<uint> incs;
+	string    data_;
 };
 
 Return execute_command(const string& command);

@@ -51,16 +51,18 @@ template const Table<Assertion>& Math::get<Assertion>() const;
 void verify(uint src);
 void verify();
 smm::Source* translate(uint src, uint tgt);
-void parse_peg(uint label);
-void parse_spirit(uint label);
+void parse_src_peg();
+void parse_src_spirit();
 void read(uint label);
 
 namespace {
 
-void parse(uint src) {
-	if (Sys::get().config.has("peg-parser")) parse_peg(src);
-	else parse_spirit(src);
+void parse_src() {
+	if (Sys::get().config.has("peg-parser")) parse_src_peg();
+	else parse_src_spirit();
+}
 
+void parse_expr() {
 	expr::parse();
 
 	for (auto& p : Sys::mod().math.get<Assertion>())
@@ -68,6 +70,7 @@ void parse(uint src) {
 	for (auto& p : Sys::mod().math.get<Proof>())
 		prover::add_to_index(p.second.data);
 }
+
 
 void verify_(uint src) {
 	if (src == -1) rus::verify(); else rus::verify(src);
@@ -206,18 +209,20 @@ Return options(const Args& args) {
 
 static Descr description(string name) {
 	static map<string, Descr> m = {
-		{"read",   Descr("read the source",      Descr::Arg("in", "file"))},
-		{"clear",  Descr("clear the source",     Descr::Arg("in", "file"))},
-		{"transl", Descr("translate the source", Descr::Arg("in", "file"), Descr::Arg("out", "file"))},
-		{"write",  Descr("write the source",     Descr::Arg("in", "file"), Descr::Arg("deep", "true|false", true, "false"))},
-		{"parse",  Descr("parse all expressions")},
-		{"verify", Descr("verify all theorems",  Descr::Arg("in", "file", true, ""))},
-		{"info",   Descr("info about math")},
-		{"show",   Descr("show entity")},
-		{"test",   Descr("test prover",          Descr::Arg("mode", "oracle", true, "oracle"))},
-		{"lookup", Descr("lookup a symbol",      Descr::Arg("in", "file"), Descr::Arg("line", "row"), Descr::Arg("col", "column"), Descr::Arg("what", "loc|def"))},
-		{"outline", Descr("make an xml outline", Descr::Arg("in", "file"), Descr::Arg("what", "import,const,type,rule,axiom,def,theorem,proof,theory,problem"))},
-		{"struct",  Descr("global xml structure", Descr::Arg("what", "import,const,type,rule,axiom,def,theory"))},
+		{"read",       Descr("read the source",      Descr::Arg("in", "file"))},
+		{"clear",      Descr("clear the source",     Descr::Arg("in", "file"))},
+		{"transl",     Descr("translate the source", Descr::Arg("in", "file"), Descr::Arg("out", "file"))},
+		{"write",      Descr("write the source",     Descr::Arg("in", "file"), Descr::Arg("deep", "true|false", true, "false"))},
+		{"parse",      Descr("parse all unparsed sources and expressions")},
+		{"parse_src",  Descr("parse all unparsed sources")},
+		{"parse_expr", Descr("parse all unparsed expressions")},
+		{"verify",     Descr("verify all theorems",  Descr::Arg("in", "file", true, ""))},
+		{"info",       Descr("info about math")},
+		{"show",       Descr("show entity")},
+		{"test",       Descr("test prover",          Descr::Arg("mode", "oracle", true, "oracle"))},
+		{"lookup",     Descr("lookup a symbol",      Descr::Arg("in", "file"), Descr::Arg("line", "row"), Descr::Arg("col", "column"), Descr::Arg("what", "loc|def"))},
+		{"outline",    Descr("make an xml outline",  Descr::Arg("in", "file"), Descr::Arg("what", "import,const,type,rule,axiom,def,theorem,proof,theory,problem"))},
+		{"struct",     Descr("global xml structure", Descr::Arg("what", "import,const,type,rule,axiom,def,theory"))},
 		{"prove_start",  Descr(
 			"start proving theorem",
 			Descr::Arg("in", "file"),
@@ -252,22 +257,24 @@ static Descr description(string name) {
 const Sys::Actions& Sys::actions() {
 	static Actions actions = {
 		{"systems", systems()},
-		{"help",   help()},
-		{"curr",   current()},
-		{"destroy", destroy()},
-		{"read",   Action([](const Args& args) { read(Sys::make_name(args[0])); parse(Sys::make_name(args[0])); return Return(); }, description("read"))},
-		{"clear",  Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Sys::make_name(args[0])); return Return(); }, description("clear"))},
-		{"parse",  Action([](const Args& args) { /*parse_(); */ return Return(); }, description("parse"))},
-		{"verify", Action([](const Args& args) { verify_(Sys::make_name(args[0])); return Return(); }, description("verify"))},
-		{"transl", Action([](const Args& args) { translate_(Sys::make_name(args[0]), Sys::make_name(args[1])); return Return(); }, description("transl"))},
-		{"write",  Action([](const Args& args) { write(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
-		{"info",   Action([](const Args& args) { info(); return Return(); }, description("info"))},
-		{"show",   Action([](const Args& args) { info(); return Return(); }, description("show"))},
-		{"test",   Action([](const Args& args) { Return ret = test(args[0]); return ret; }, description("test"))},
-		{"opts",   Action([](const Args& args) { conf().read(args); return Return(); }, conf().descr())},
-		{"lookup", Action([](const Args& args) { Return ret = lookup(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3]); return ret; }, description("lookup"))},
-		{"outline", Action([](const Args& args) { Return ret = outline(Sys::make_name(args[0]), xml_bits(args[1])); return ret; }, description("outline"))},
-		{"struct",  Action([](const Args& args) { Return ret = structure(xml_bits(args[0])); return ret; }, description("struct"))},
+		{"help",       help()},
+		{"curr",       current()},
+		{"destroy",    destroy()},
+		{"read",       Action([](const Args& args) { read(Sys::make_name(args[0])); return Return(); }, description("read"))},
+		{"clear",      Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Sys::make_name(args[0])); return Return(); }, description("clear"))},
+		{"parse",      Action([](const Args& args) { parse_src(); parse_expr(); return Return(); }, description("parse"))},
+		{"parse_src",  Action([](const Args& args) { parse_src(); return Return(); }, description("parse_src"))},
+		{"parse_expr", Action([](const Args& args) { parse_expr(); return Return(); }, description("parse_expr"))},
+		{"verify",     Action([](const Args& args) { verify_(Sys::make_name(args[0])); return Return(); }, description("verify"))},
+		{"transl",     Action([](const Args& args) { translate_(Sys::make_name(args[0]), Sys::make_name(args[1])); return Return(); }, description("transl"))},
+		{"write",      Action([](const Args& args) { write(Sys::make_name(args[0]), args[1] == "true"); return Return(); }, description("write"))},
+		{"info",       Action([](const Args& args) { info(); return Return(); }, description("info"))},
+		{"show",       Action([](const Args& args) { info(); return Return(); }, description("show"))},
+		{"test",       Action([](const Args& args) { Return ret = test(args[0]); return ret; }, description("test"))},
+		{"opts",       Action([](const Args& args) { conf().read(args); return Return(); }, conf().descr())},
+		{"lookup",     Action([](const Args& args) { Return ret = lookup(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3]); return ret; }, description("lookup"))},
+		{"outline",    Action([](const Args& args) { Return ret = outline(Sys::make_name(args[0]), xml_bits(args[1])); return ret; }, description("outline"))},
+		{"struct",     Action([](const Args& args) { Return ret = structure(xml_bits(args[0])); return ret; }, description("struct"))},
 
 		{"prove_start", Action([](const Args& args) { Return ret = prove_start(Sys::make_name(args[0]), stoul(args[1]), stoul(args[2]), args[3], args[4]); return ret; }, description("prove_start"))},
 		/*{"prove_step",  Action([](const Args& args) { Return ret = prove_step(stoul(args[0])); return ret; }, description("prove_step"))},

@@ -72,7 +72,8 @@ run "${binpath}/mdl -c -v
     \"smm transl lang=rus in=${file}.smm out=${file}.rus\" 
     \"rus write in=${file}.rus\"
     \"rus read in=${file}.rus \" 
-    \"rus parse \" 
+    \"rus parse_src \"
+    \"rus parse_expr \"
     \"rus verify \"
     
     \"smm curr proj=B\"

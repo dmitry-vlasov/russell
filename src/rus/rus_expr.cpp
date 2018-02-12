@@ -50,7 +50,7 @@ void Rules::sort() {
 	std::sort(
 		map.begin(),
 		map.end(),
-		[](Node* n1, Node* n2) { return n1->min_dist > n2->min_dist; }
+		[](Node* n1, Node* n2) { return n1->min_dist < n2->min_dist; }
 	);
 	map.back()->symb.fin = true;
 	for (Node* p : map) p->tree.sort();

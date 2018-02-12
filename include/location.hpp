@@ -347,13 +347,13 @@ struct Token {
 	Token(Source* s, const char* b, const char* e) : storage(s, b, e) { }
 	Token(const Token& t) : storage(t.storage) { }
 
-	bool preceeds (const Token<S>& t) {
+	bool preceeds (const Token<S>& t) const {
 		if (!src() || !t.src()) return false;
 		if (t.src()->includes(src())) return true;
 		if (t.src() == src()) return end() <= t.beg();
 		return false;
 	}
-	bool includes (const Token<S>& t) {
+	bool includes (const Token<S>& t) const {
 		if (!src() || !t.src() || t.src() != src()) return false;
 		return beg() <= t.beg() && t.end() <= end();
 	}

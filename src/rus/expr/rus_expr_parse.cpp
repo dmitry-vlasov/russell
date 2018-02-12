@@ -7,13 +7,13 @@ cvector<Expr*> queue;
 struct Action {
 	enum Kind { RET, BREAK, CONT };
 	Kind  kind;
-	Rule* rule;
-	Action(Kind k, Rule* r = nullptr) : kind(k), rule(r) { }
+	const Rule* rule;
+	Action(Kind k, const Rule* r = nullptr) : kind(k), rule(r) { }
 };
 
 template<bool trace>
 inline Action act(auto& n, auto& m, Symbols::iterator ch, const Expr* e, Symbols::iterator beg) {
-	if (User<Rule>& r = (*n.top())->rule) {
+	if (const User<Rule>& r = (*n.top())->rule) {
 		if (r.get()->token.preceeds(e->token)) {
 			if (trace) cout << Indent(ch - beg) << "Act: Rule MATCHES: " << Lex::toStr(r.id()) << " = " << show(r.get()->term) <<  endl;
 			return Action(Action::RET, r.get());
@@ -120,12 +120,10 @@ void parse() {
 		Type* tp = r->term.type.get();
 		tp->rules.add(r->term, r->id());
 	}
-	Sys::mod().math.get<Type>().rehash();
 	for (const auto& p : Sys::get().math.get<Type>()) {
 		Type* tp = p.second.data;
 		tp->rules.sort();
 	}
-	for (auto e : queue) parse(e);
 	tbb::parallel_for (tbb::blocked_range<size_t>(0, queue.size()),
 		[] (const tbb::blocked_range<size_t>& r) {
 			for (size_t i = r.begin(); i != r.end(); ++i)

@@ -584,7 +584,7 @@ public:
 	}
 };
 
-void parse_peg(uint label) {
+void parse_src_peg() {
 #ifdef PARALLEL_PARSE
 	vector<uint> labels;
 	for (auto p : Sys::mod().math.get<Source>())
@@ -596,7 +596,7 @@ void parse_peg(uint label) {
 		}
 	);
 #else
-	Parser::parse(label);
+	for (auto p : Sys::mod().math.get<Source>()) Parser::parse(p.first);
 #endif
 }
 

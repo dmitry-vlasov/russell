@@ -91,7 +91,7 @@ void translate_constant(const Constant* constant, State& state) {
 		delete c;
 	else {
 		state.constants[s.lit] = c;
-		state.theory.top()->nodes.push_back(rus::Node(c));
+		state.theory.top()->nodes.emplace_back(c);
 	}
 }
 

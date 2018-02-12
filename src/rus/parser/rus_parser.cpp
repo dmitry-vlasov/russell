@@ -17,7 +17,7 @@ void parse_src(uint label) {
 
 }
 
-void parse_spirit(uint label) {
+void parse_src_spirit() {
 #ifdef PARALLEL_PARSE
 	vector<uint> labels;
 	for (auto p : Sys::mod().math.get<Source>())
@@ -29,7 +29,7 @@ void parse_spirit(uint label) {
 		}
 	);
 #else
-	parse_src(label);
+	for (auto p : Sys::mod().math.get<Source>()) parse_src(p.first);
 #endif
 }
 
