@@ -247,7 +247,9 @@ struct Sys {
 			if (timer()[args[0]].isNegligible())
 				Io::io().out() << endl;
 			else
-				Io::io().out() << "done in " << timer()[args[0]] << endl;
+				Io::io().out() << "done in " << timer()[args[0]] << ". ";
+				if (!ret.success()) Io::io().out() << "Failed, code: " << ret.code;
+				Io::io().out() << endl;
 		}
 		if (!ret && ret.msg.size())
 			Io::io().err() << ret.msg << endl;

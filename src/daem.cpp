@@ -21,10 +21,14 @@ inline bool get_nonempty_line(string& ss, string& arg) {
 }
 
 static string receive_string(boost::asio::ip::tcp::socket& socket, bool& close) {
+	enum { BUFFER_MAX_SIZE = 1024 * 64 };
 	close = true;
 	boost::system::error_code error;
 	uint msg_len;
 	size_t read_len = socket.read_some(boost::asio::buffer(&msg_len, sizeof(uint)), error);
+	if (read_len > BUFFER_MAX_SIZE) {
+		throw Error("received corrupted message", to_string(read_len) + " is too large");
+	}
 	char buffer[msg_len];
 	read_len = socket.read_some(boost::asio::buffer(buffer, msg_len), error);
 	if (error == boost::asio::error::eof) {
