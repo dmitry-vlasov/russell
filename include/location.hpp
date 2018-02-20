@@ -125,15 +125,14 @@ template<class S>
 struct TokenStorage<S, TokenType::FULL> {
 	typedef S Source;
 	TokenStorage() : src_(nullptr), beg_(nullptr), end_(nullptr) { }
-	TokenStorage(Source* s) : src_(s), beg_(nullptr), end_(nullptr) { }
-	TokenStorage(Source* s, const char* b, const char* e) :
+	TokenStorage(const Source* s) : src_(s), beg_(nullptr), end_(nullptr) { }
+	TokenStorage(const Source* s, const char* b, const char* e) :
 	src_(s), beg_(b), end_(e) { }
 
-	Source* src() { return src_; }
 	const Source* src() const { return src_; }
 	const char* beg() const { return beg_; }
 	const char* end() const { return end_; }
-	void set(Source* s, const char* b, const char* e) {
+	void set(const Source* s, const char* b, const char* e) {
 		src_ = s; beg_ = b; end_ = e;
 	}
 	bool operator < (const TokenStorage& t) const {
@@ -142,6 +141,9 @@ struct TokenStorage<S, TokenType::FULL> {
 		else if (end_ < t.end_) return true;
 		else if (end_ > t.end_) return false;
 		else return beg_ < t.beg_;
+	}
+	bool operator == (const TokenStorage& t) const {
+		return (src_ == t.src_) && (end_ < t.end_) && (beg_ < t.beg_);
 	}
 	struct HashCompare {
 		static size_t hash(const TokenStorage& s) {
@@ -153,23 +155,22 @@ struct TokenStorage<S, TokenType::FULL> {
 	};
 
 private:
-	Source*     src_;
-	const char* beg_;
-	const char* end_;
+	const Source* src_;
+	const char*   beg_;
+	const char*   end_;
 };
 
 template<class S>
 struct TokenStorage<S, TokenType::NONE> {
 	typedef S Source;
 	TokenStorage() { }
-	TokenStorage(Source* s) { }
-	TokenStorage(Source* s, const char* b, const char* e) { }
+	TokenStorage(const Source* s) { }
+	TokenStorage(const Source* s, const char* b, const char* e) { }
 
-	Source* src() { return nullptr; }
 	const Source* src() const { return nullptr; }
 	const char* beg() const { return nullptr; }
 	const char* end() const { return nullptr; }
-	void set(Source* s, const char* b, const char* e) { }
+	void set(const Source* s, const char* b, const char* e) { }
 
 	struct HashCompare {
 		static size_t hash(const TokenStorage& s) {
@@ -185,15 +186,10 @@ template<class S>
 struct TokenStorage<S, TokenType::SEMI> {
 	typedef S Source;
 	TokenStorage() { }
-	TokenStorage(Source* s) { bits.setSrc(set_src(s)); }
-	TokenStorage(Source* s, const char* b, const char* e) { set(s, b, e); }
+	TokenStorage(const Source* s) { bits.setSrc(set_src(s)); }
+	TokenStorage(const Source* s, const char* b, const char* e) { set(s, b, e); }
 	TokenStorage(const TokenStorage& s) : bits(s.bits) { }
 
-	Source* src() {
-		if (!bits.srcIsDef()) return nullptr;
-		Src src = get_src();
-		return Source::Sys::mod(src.sys_).math.template get<Source>().access(src.src_);
-	}
 	const Source* src() const {
 		if (!bits.srcIsDef()) return nullptr;
 		Src src = get_src();
@@ -205,7 +201,7 @@ struct TokenStorage<S, TokenType::SEMI> {
 	const char* end() const {
 		return src() ? (bits.endIsDef() ? src()->data().c_str() + bits.end() : nullptr) : nullptr;
 	}
-	void set(Source* s, const char* b, const char* e) {
+	void set(const Source* s, const char* b, const char* e) {
 		uint src_ = set_src(s);
 		assert(b >= s->data().c_str());
 		assert(e > s->data().c_str());
@@ -244,6 +240,9 @@ struct TokenStorage<S, TokenType::SEMI> {
 	bool operator < (const TokenStorage<S>& t) const {
 		return bits < t.bits;
 	}
+	bool operator == (const TokenStorage<S>& t) const {
+		return bits == t.bits;
+	}
 	struct HashCompare {
 		static size_t hash(const TokenStorage& s) {
 			return s.bits.bits();
@@ -277,7 +276,7 @@ private:
 		assert(src_ind()[bits.src()].src_ != -1);
 		return src_ind()[bits.src()];
 	}
-	uint set_src(Source* s) {
+	uint set_src(const Source* s) {
 		Src src = Src(s->id(), s->sys());
 		typename SrcMap::accessor a;
 		if (src_map().insert(a, src)) {
@@ -321,6 +320,9 @@ private:
 		bool operator < (const Bits& b) const {
 			return bits_ < b.bits_;
 		}
+		bool operator == (const Bits& b) const {
+			return bits_ == b.bits_;
+		}
 
 	private:
 		enum {
@@ -343,8 +345,8 @@ struct Token {
 	typedef TokenStorage<Source> Storage;
 
 	Token() { }
-	Token(Source* s) : storage(s) { }
-	Token(Source* s, const char* b, const char* e) : storage(s, b, e) { }
+	Token(const Source* s) : storage(s) { }
+	Token(const Source* s, const char* b, const char* e) : storage(s, b, e) { }
 	Token(const Token& t) : storage(t.storage) { }
 
 	bool preceeds (const Token<S>& t) const {
@@ -390,12 +392,14 @@ struct Token {
 	bool operator < (const Token<S>& r) const {
 		return storage < r.storage;
 	}
+	bool operator == (const Token<S>& r) const {
+		return storage == r.storage;
+	}
 	void operator = (const Token& t) {
 		storage = t.storage;
 	}
 
 	void set(Source* s, const char* b, const char* e) { storage.set(s, b, e); }
-	Source* src() { return storage.src(); }
 	const Source* src() const { return storage.src(); }
 	const char* beg() const { return storage.beg(); }
 	const char* end() const { return storage.end(); }
@@ -421,6 +425,7 @@ struct Tokenable {
 	virtual ~Tokenable() { }
 	void operator = (const Tokenable& t) { token = t.token; }
 	Token<S> token;
+	virtual const Tokenable* ref() const { return nullptr; }
 };
 
 template<class S>
@@ -484,6 +489,7 @@ inline ostream& operator << (ostream& os, const Location& loc) {
 	os << "col: " << to_string(loc.col + 1);
 	return os;
 }
+
 inline string show(const Location& loc) {
 	ostringstream os;
 	os << loc;
@@ -492,6 +498,12 @@ inline string show(const Location& loc) {
 
 inline ostream& operator << (ostream& os, const LocationIter& it){
 	os << show(it.loc);
+	return os;
+}
+
+template<class S>
+inline ostream& operator << (ostream& os, const Token<S>& t) {
+	os << t.str();
 	return os;
 }
 

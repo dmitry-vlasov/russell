@@ -296,7 +296,7 @@ void parse(uint label) {
 #ifdef PARALLEL_PARSE
 	vector<uint> labels;
 	for (auto p : Sys::mod().math.get<Source>())
-		labels.push_back(p.first);
+		if (!p.second.data->parsed) labels.push_back(p.first);
 	tbb::parallel_for (tbb::blocked_range<size_t>(0, labels.size()),
 		[labels] (const tbb::blocked_range<size_t>& r) {
 			for (size_t i = r.begin(); i != r.end(); ++i)
@@ -304,7 +304,8 @@ void parse(uint label) {
 		}
 	);
 #else
-	Parser::parse(label);
+	for (auto p : Sys::mod().math.get<Source>())
+		if (!p.second.data->parsed) Parser::parse(p.first);
 #endif
 }
 

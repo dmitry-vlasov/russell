@@ -30,17 +30,21 @@ void Rules::add(const Expr& ex, uint id) {
 		}
 	}
 	if (n->rule) {
-		string msg;
-		msg += rus::show(ex) + " - new one, ";
-		msg += rus::show(*n->rule.get()) + " - old one";
-		throw Error("rule already exists", msg);
-	}
-	n->rule.use(id);
-	uint min_dist = 0;
-	while (n) {
-		n->min_dist = min_dist < n->min_dist ? min_dist : n->min_dist;
-		n = n->parent;
-		min_dist++;
+		if (n->rule.id() != id) {
+			string msg;
+			msg += rus::show(ex) + " - term, ";
+			msg += Lex::toStr(id) + " - new id, ";
+			msg += Lex::toStr(n->rule.id()) + " - old id";
+			throw Error("rule already exists", msg);
+		}
+	} else {
+		n->rule.use(id);
+		uint min_dist = 0;
+		while (n) {
+			n->min_dist = min_dist < n->min_dist ? min_dist : n->min_dist;
+			n = n->parent;
+			min_dist++;
+		}
 	}
 }
 

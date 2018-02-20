@@ -368,7 +368,7 @@ public:
 	}
 	bool has(uint n) const {
 		typename Refs::const_accessor a;
-		return refs.find(a, n);
+		return refs.find(a, n) && a->second.data;
 	}
 	void destroy() {
 		static mutex m;
@@ -412,52 +412,12 @@ public:
 	Owner(uint i, const Token<Src>& t) : Tokenable<Src>(t), sys_(Sys::get().id), id_(i) {
 		Sys::mod().math.template get<T>().add(id_, static_cast<T*>(this));
 	}
-	virtual ~Owner() { Sys::mod(sys_).math.template get<T>().del(id_); }
+	virtual ~Owner() {
+		Sys::mod(sys_).math.template get<T>().del(id_);
+	}
 	uint id() const { return id_; }
 	uint sys() const { return sys_; }
 	string xml_id() const { return xml_sys_id(sys_, id_); }
-};
-
-template<class S>
-struct Ref {
-	typedef S Sys;
-	typedef typename S::Src Src;
-	typedef Token<Src> Token_;
-	typedef Tokenable<Src> Tokenable_;
-
-	Ref() : count_(0), ptr(nullptr) { }
-	void add_ref (const Tokenable_* p) {
-		if (count_ && p != ptr) {
-			if (ptr == nullptr) {
-				ptr = p;
-			} else {
-				string err = "incorrect ref assignment:\n";
-				err += "count: " + to_string(count_) + "\n";
-				err += "p: " + p->token.show(true) + "\n";
-				err += "ptr: " + ptr->token.show(true) + "\n";
-				throw Error(err);
-			}
-		}
-		ptr = p;
-		++ count_;
-	}
-	bool del_ref() {
-		if (!count_) {
-			string err;
-			err += "incorrect ref deletion: \n";
-			err += "count: " + to_string(count_) + "\n";
-			err += "ptr: " + (ptr ? ptr->token.show(true) : "null") + "\n";
-			throw Error(err);
-		}
-		return --count_ == 0;
-	}
-	const Tokenable_* get() { return ptr; }
-	uint count() const { return count_; }
-	string str() const { return to_string(count_) + ": " + (ptr ? ptr->token.str() : "<none>"); }
-private:
-	uint count_;
-	const Tokenable_* ptr;
-
 };
 
 template<class S>
@@ -466,30 +426,32 @@ class Refs {
 	typedef typename S::Src Src;
 	typedef Token<Src> Token_;
 	typedef Tokenable<Src> Tokenable_;
-	typedef Ref<Sys> Ref_;
-	typedef cmap<Token_, Ref_, typename Token_::HashCompare> Refs_;
+	typedef cmap<Token_, const Tokenable_*, typename Token_::HashCompare> Refs_;
 	typedef typename Refs_::accessor Accessor;
+	typedef typename Refs_::const_accessor ConstAccessor;
 
 public:
 
-	static void add(const Token_& t, const Tokenable_* r) {
+	static void add(const Token_& tk, const Tokenable_* r) {
+		Token_ t = normalize(tk);
 		try {
 			if (t.is_defined()) {
 				Accessor a;
 				refs().insert(a, t);
-				a->second.add_ref(r);
+				a->second = r;
 			}
 		} catch (Error& err) {
 			err.msg += "token: " + t.show(true) + "\n";
 			throw err;
 		}
 	}
-	static void del(const Token_& t) {
+	static void del(const Token_& tk) {
+		Token_ t = normalize(tk);
 		try {
 			if (t.is_defined()) {
 				Accessor a;
 				if (!refs().insert(a, t)) {
-					a->second.del_ref();
+					a->second = nullptr;
 				}
 				refs().erase(a);
 			}
@@ -502,11 +464,27 @@ public:
 		Src* s = Sys::mod().math.template get<Src>().access(src);
 		const char* c = locate_position(line, col, s->data().c_str());
 		Token_ t(s, c, c);
-		Accessor a;
-		return refs().find(a, t) ? a->second.get() : nullptr;
+		refs().rehash();
+		ConstAccessor a;
+		return refs().find(a, t) ? (a->second ? a->second->ref() : nullptr) : nullptr;
 	}
 
 private:
+	static Token_ normalize(const Token_& t) {
+		static auto idchar = [](char c) { return isalnum(c) || c == '_' || c == '-' || c == '.'; };
+		const char* b = t.beg();
+		if (b) {
+			while (isspace(*b)) ++b;
+			while (idchar(*(b - 1))) --b;
+		}
+		const char* e = t.end();
+		if (e) {
+			while (isspace(*e)) --e;
+			while (idchar(*(e + 1))) ++e;
+		}
+		return Token_(t.src(), b, e);
+	}
+
 	Refs() { }
 	static Refs_& refs() {
 		static Refs_ r; return r;
@@ -564,6 +542,7 @@ public:
 	uint id() const { return id_; }
 	uint sys() const { return sys_; }
 	void set(Id_ i) { Tokenable_::token = i.token; use(i.id); }
+	const Tokenable_* ref() const override { return ptr; }
 
 	void use(uint id) {
 		unuse();
@@ -571,7 +550,7 @@ public:
 		id_ = id;
 		if (id_ != -1) {
 			Sys::mod(sys_).math.template get<T>().use(id_, ptr);
-			Refs_::add(Tokenable_::token, ptr);
+			Refs_::add(Tokenable_::token, this);
 		}
 	}
 	void unuse() {

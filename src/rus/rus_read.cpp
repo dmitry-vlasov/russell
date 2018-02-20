@@ -5,6 +5,7 @@ namespace mdl { namespace rus {
 
 void read(uint label) {
 	delete Sys::get().math.get<Source>().access(label);
+
 	queue<uint> to_read;
 	to_read.push(label);
 
