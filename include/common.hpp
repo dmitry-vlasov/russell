@@ -468,7 +468,7 @@ public:
 		Token_ t(s, c, c);
 		refs().rehash();
 		ConstAccessor a;
-		return refs().find(a, t) ? (a->second ? a->second->ref() : nullptr) : nullptr;
+		return refs().find(a, normalize(t)) ? (a->second ? a->second->ref() : nullptr) : nullptr;
 	}
 
 private:
