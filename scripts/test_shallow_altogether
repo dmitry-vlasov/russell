@@ -68,9 +68,9 @@ run "${binpath}/mdl -c -v
     \"mm  curr proj=B\"
     \"mm  opts verbose\" 
     
-    \"smm transl lang=mm in=${file}.smm out=${file}-0.mm\" 
+    \"smm transl in=${file}.smm out=${file}-0.mm\" 
     \"mm  write in=${file}-0.mm\"
-    \"smm transl lang=rus in=${file}.smm out=${file}.rus\" 
+    \"smm transl in=${file}.smm out=${file}.rus\" 
     \"rus write in=${file}.rus\"
     \"rus read in=${file}.rus \" 
     \"rus parse_src \"
@@ -89,7 +89,7 @@ run "${binpath}/mdl -c -v
     \"mm  curr proj=C\" 
     \"mm  opts verbose\" 
     
-    \"smm transl lang=mm in=${file}-1.smm out=${file}-1.mm\" 
+    \"smm transl in=${file}-1.smm out=${file}-1.mm\" 
     \"mm  write in=${file}-1.mm\"
     \"mm  read in=${file}-1.mm \"  
     \"mm parse \"

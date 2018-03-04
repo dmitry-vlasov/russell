@@ -9,9 +9,15 @@ namespace mdl {
 enum class Lang { NONE, MM, SMM, RUS };
 
 inline Lang chooseLang(const string& lang) {
-	if (lang == "rus") return Lang::RUS;
-	if (lang == "smm") return Lang::SMM;
-	if (lang == "mm")  return Lang::MM;
+	if (lang.length() >= 2) {
+		if (lang.length() >= 3) {
+			auto lastThreeChars = lang.substr(lang.length() - 3);
+			if (lastThreeChars == "rus") return Lang::RUS;
+			if (lastThreeChars == "smm") return Lang::SMM;
+		}
+		auto lastTwoChars = lang.substr(lang.length() - 2);
+		if (lastTwoChars == "mm") return Lang::MM;
+	}
 	return Lang::NONE;
 }
 

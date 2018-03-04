@@ -77,7 +77,7 @@ check "${binpath}/mdl
     \"rus opts verbose root=rus\" 
     \"smm read in=${file}.smm\"
     \"smm parse \"
-    \"smm transl lang=rus in=${file}.mm out=${file}.rus\"
+    \"smm transl in=${file}.mm out=${file}.rus\"
     \"rus write in=${file}.rus deep=true\"
     exit"
 echo -e 'done\n\n'

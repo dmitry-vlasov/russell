@@ -82,11 +82,11 @@ run "${binpath}/mdl -c -v
     
     \"smm read in=${file}.smm\"
     \"smm parse \"
-    \"smm transl lang=mm in=${file}.smm out=${file}.mm\" 
+    \"smm transl in=${file}.smm out=${file}.mm\" 
     \"mm write in=${file}.mm deep=true\"
     \"mm merge in=${file}.mm out=${file}-0.mm out-root=\"
 
-    \"smm transl lang=rus in=${file}.mm out=${file}.rus\" 
+    \"smm transl in=${file}.mm out=${file}.rus\" 
     \"rus write in=${file}.rus deep=true\"
     \"rus curr proj=B\"
     \"rus opts verbose root=rus\" 
@@ -108,7 +108,7 @@ run "${binpath}/mdl -c -v
     
     \"mm  curr proj=E\" 
     \"mm  opts verbose root=mm-1\" 
-    \"smm transl lang=mm in=${file}.smm out=${file}.mm\" 
+    \"smm transl in=${file}.smm out=${file}.mm\" 
     \"mm write in=${file}.mm deep=true\"
     
     \"smm curr proj=E\"

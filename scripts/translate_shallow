@@ -64,7 +64,7 @@ check "${binpath}/mdl
     \"smm opts verbose\"     
     \"smm read in=${file}.smm\"
     \"smm parse \"  
-    \"smm transl lang=rus in=${file}.smm out=${file}.rus\" 
+    \"smm transl in=${file}.smm out=${file}.rus\" 
     \"rus write in=${file}.rus\"
     exit"
 echo -e 'done\n\n'

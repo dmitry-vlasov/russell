@@ -70,7 +70,7 @@ check "${binpath}/mdl
     \"smm opts verbose root=smm\" 
     \"smm read in=${file}.smm\"
     \"smm parse \"
-    \"smm transl lang=mm in=${file}.smm out=${file}.mm\" 
+    \"smm transl in=${file}.smm out=${file}.mm\" 
     \"mm write in=${file}.mm deep=true\"
     exit"
 echo -e 'done\n\n'
@@ -102,7 +102,7 @@ check "${binpath}/mdl
     \"rus opts verbose root=rus\" 
     \"smm read in=${file}.smm\"
     \"smm parse \"
-    \"smm transl lang=rus in=${file}.mm out=${file}.rus\"
+    \"smm transl in=${file}.mm out=${file}.rus\"
     \"rus write in=${file}.rus deep=true\"
     exit"
 echo -e 'done\n\n'
@@ -138,7 +138,7 @@ check "${binpath}/mdl
     \"mm  opts verbose root=mm-1\" 
     \"smm read in=${file}.smm\"
     \"smm parse \"
-    \"smm transl lang=mm in=${file}.smm out=${file}.mm\" 
+    \"smm transl in=${file}.smm out=${file}.mm\" 
     \"mm  write in=${file}.mm deep=true\"
     exit"
 echo -e 'done\n\n'
