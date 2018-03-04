@@ -74,6 +74,7 @@ target_link_libraries(mdl
 	${Boost_LOG}
 	${Boost_LOG_SETUP}
 	${CMAKE_THREAD_LIBS_INIT}
+	stdc++fs
 	tbb
 )
 

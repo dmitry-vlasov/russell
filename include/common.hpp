@@ -581,7 +581,11 @@ struct Source : public Owner<Src, Sys> {
 	string name() const { return Lex::toStr(Owner_::id()); }
 	string dir() const { return path().dir(); }
 
-	void read(const vector<Patch>* patches = nullptr) { path().read(data_, patches); }
+	void read(const vector<Patch>* patches = nullptr) {
+		path().read(data_, patches);
+		timestamp_ = efs::last_write_time(path().path());
+		parsed = false;
+	}
 	void write() const { path().write(data_); }
 
 	// Transitively closed inclusion relation:
@@ -613,6 +617,10 @@ struct Source : public Owner<Src, Sys> {
 		closure_done = true;
 	}
 
+	bool has_changed() const {
+		return timestamp_ != efs::last_write_time(path().path());
+	}
+
 private:
 	template<class, class> friend struct Source;
 
@@ -620,6 +628,7 @@ private:
 	SrcSet    includes_;
 	set<uint> incs;
 	string    data_;
+	efs::file_time_type timestamp_;
 };
 
 Return execute_command(const string& command);

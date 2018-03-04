@@ -4,7 +4,13 @@
 namespace mdl { namespace smm {
 
 void read(uint label) {
-	delete Sys::get().math.get<Source>().access(label);
+	if (const Source* src = Sys::get().math.get<Source>().access(label)) {
+		if (src->has_changed()) {
+			delete src;
+		} else {
+			return; // Aready is read.
+		}
+	}
 	queue<uint> to_read;
 	to_read.push(label);
 

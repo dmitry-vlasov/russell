@@ -62,6 +62,8 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#include <experimental/filesystem>
+
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/any.hpp>
@@ -129,6 +131,7 @@ namespace mdl {
 	using boost::any;
 
 	namespace po = boost::program_options;
+	namespace efs = std::experimental::filesystem;
 
 	template<typename K, typename T, typename H = tbb::tbb_hash_compare<K>, typename A = tbb::tbb_allocator<std::pair<K, T>>>
 	using cmap = tbb::interface5::concurrent_hash_map<K, T, H, A>;
