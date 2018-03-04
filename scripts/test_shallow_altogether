@@ -60,7 +60,8 @@ run "${binpath}/mdl -c -v
     \"smm opts verbose\" 
     \"rus opts verbose\" 
     
-    \"mm  read in=${file}.mm\"  
+    \"mm  read in=${file}.mm\"
+    \"mm  parse \"  
     \"mm  transl in=${file}.mm out=${file}.smm\" 
     \"smm write in=${file}.smm\"
     
@@ -82,6 +83,7 @@ run "${binpath}/mdl -c -v
     \"rus transl in=${file}.rus out=${file}-1.smm\" 
     \"smm write  in=${file}-1.smm\"
     \"smm read   in=${file}-1.smm\"
+    \"smm parse \"
     \"smm verify in=${file}-1.smm\"
     
     \"mm  curr proj=C\" 
@@ -90,6 +92,7 @@ run "${binpath}/mdl -c -v
     \"smm transl lang=mm in=${file}-1.smm out=${file}-1.mm\" 
     \"mm  write in=${file}-1.mm\"
     \"mm  read in=${file}-1.mm \"  
+    \"mm parse \"
     
     \"smm curr proj=C\"
     \"smm opts verbose\"
@@ -97,6 +100,7 @@ run "${binpath}/mdl -c -v
     \"mm  transl in=${file}-1.mm out=$file-2.smm\" 
     \"smm write in=$file-2.smm\"
     \"smm read in=${file}-2.smm \" 
+    \"smm parse \"
     \"smm verify in=${file}-2.smm\"
     \"daemon exit\" 
     exit

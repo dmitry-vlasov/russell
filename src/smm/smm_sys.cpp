@@ -6,7 +6,7 @@ namespace mdl { namespace smm {
 
 void verify();
 void read(uint src);
-void parse(uint src);
+void parse();
 void translate_to_rus(uint src, uint tgt);
 void translate_to_mm(uint src, uint tgt);
 
@@ -93,6 +93,7 @@ Return lookup(uint src, uint line, uint col, string what) {
 static Descr description(string name) {
 	static const map<string, Descr> m = {
 		{"read",   Descr("read the source",      Descr::Arg("in", "file"))},
+		{"parse",  Descr("parse all unparsed sources")},
 		{"clear",  Descr("clear the source",     Descr::Arg("in", "file"))},
 		{"transl", Descr("translate the source", Descr::Arg("in", "file"), Descr::Arg("out", "file"), Descr::Arg("lang", "mm|rus"))},
 		{"write",  Descr("write the source",     Descr::Arg("in", "file"), Descr::Arg("deep", "true|false", true, "false"))},
@@ -110,7 +111,8 @@ const Sys::Actions& Sys::actions() {
 		{"help",   help()},
 		{"curr",   current()},
 		{"destroy", destroy()},
-		{"read",   Action([](const Args& args) { read(Sys::make_name(args[0])); parse(Sys::make_name(args[0])); return Return(); }, description("read"))},
+		{"read",   Action([](const Args& args) { read(Sys::make_name(args[0])); return Return(); }, description("read"))},
+		{"parse",  Action([](const Args& args) { parse(); return Return(); }, description("parse"))},
 		{"clear",  Action([](const Args& args) { delete Sys::get().math.get<Source>().access(Sys::make_name(args[0])); return Return(); }, description("clear"))},
 		{"verify", Action([](const Args& args) { verify(); return Return(); }, description("verify"))},
 		{"transl", Action([](const Args& args) { translate(Sys::make_name(args[0]), Sys::make_name(args[1]), chooseLang(args[2])); return Return(); }, description("transl"))},

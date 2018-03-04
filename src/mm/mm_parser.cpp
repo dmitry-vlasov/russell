@@ -200,7 +200,7 @@ private:
 
 }
 
-void parse(uint label) {
+void parse() {
 #ifdef PARALLEL_PARSE
 	vector<uint> labels;
 	for (auto p : Sys::mod().math.get<Source>())
