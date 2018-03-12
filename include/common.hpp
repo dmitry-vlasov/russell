@@ -187,19 +187,21 @@ struct Sys {
 
 	static Action help() {
 		return Action([](const Args&) {
-			for (uint s : Lib<System>::get().contents())
-				Io::io().out() << Lex::toStr(s) << " ";
-			Io::io().out() << endl;
-			return Return();
-		}, Descr("show available systems"));
-	}
-	static Action systems() {
-		return Action([](const Args&) {
 			Io::io().out() << endl << System::lang() << " actions:" << endl;
 			for (auto& a : System::actions())
 				Io::io().out() << "\t" << a.first << ": " << a.second.show() << endl;
 			return Return();
 		}, Descr("show available actions"));
+	}
+	static Action systems() {
+		return Action([](const Args&) {
+			for (uint s : Lib<System>::get().contents()) {
+				Io::io().out() << Lex::toStr(s) << ":" << endl;
+				Io::io().out() << get(s).config.show() << endl;
+			}
+			Io::io().out() << endl;
+			return Return();
+		}, Descr("show available systems"));
 	}
 	static Action current() {
 		return Action([](const Args& args) {
@@ -243,7 +245,7 @@ struct Sys {
 		if (verbose)
 			Io::io().out() << System::lang() << " doing: " << args << " ... " << flush;
 		Return ret = exec(args);
-		if (verbose) {
+		if (verbose && !args.empty()) {
 			if (timer()[args[0]].isNegligible())
 				Io::io().out() << endl;
 			else
@@ -284,7 +286,7 @@ struct Sys {
 
 private:
 	static uint choose(uint s) { if (s != -1) return s; else return curr_(); }
-	static uint& curr_() { static uint curr; return curr; }
+	static uint& curr_() { static uint curr = Lex::toInt("default_project"); return curr; }
 };
 
 template<class T>

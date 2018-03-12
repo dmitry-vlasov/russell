@@ -63,6 +63,14 @@ public :
 		return d;
 	}
 
+	string show() const {
+		string str;
+		for (const auto& p : opts) {
+			str += "\t" + p.first + "=" + p.second + "\n";
+		}
+		return str;
+	}
+
 private:
 	map<string, string> opts;
 };

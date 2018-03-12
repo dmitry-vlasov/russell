@@ -74,7 +74,13 @@ Return execute_command(const string& command) {
 	case Lang::RUS : ret = rus::Sys::exec_and_show(args); break;
 	case Lang::SMM : ret = smm::Sys::exec_and_show(args); break;
 	case Lang::MM  : ret =  mm::Sys::exec_and_show(args); break;
-	case Lang::NONE: return Return("unknown language, command: " + command, false);
+	case Lang::NONE: {
+		if (command == "help" || command == "systems" || command == "current" || command == "destroy") {
+			execute_command("rus " + command);
+			execute_command("smm " + command);
+			execute_command("mm " + command);
+		} else return Return("unknown language, command: " + command, false);
+	}
 	}
 	return ret;
 }
