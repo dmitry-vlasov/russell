@@ -273,7 +273,7 @@ vector<smm::Node> translate_proof(const Proof* proof, Maps& maps) {
 	return nodes;
 }
 
-smm::Source* translate_source(const Source* src, Maps& maps, smm::Source* target = nullptr);
+smm::Source* translate_source(const Source* src, Maps& maps, uint target = -1);
 
 inline smm::Inclusion* translate_import(const Import* imp, Maps& maps) {
 	const smm::Source* src = translate_source(imp->source.get(), maps);
@@ -304,13 +304,20 @@ vector<smm::Node> translate_theory(const Theory* thy, Maps& maps) {
 	return nodes;
 }
 
-smm::Source* translate_source(const Source* src, Maps& maps, smm::Source* target) {
+smm::Source* translate_source(const Source* src, Maps& maps, uint tgt) {
 	if (maps.sources.count(src)) {
 		return maps.sources[src];
 	} else {
-		if (!target) {
-			delete smm::Sys::get().math.get<smm::Source>().access(src->id());
-			target = new smm::Source(src->id());
+		smm::Source* target = smm::Sys::mod().math.get<smm::Source>().access(src->id());
+		if (target) {
+			if (target->has_changed_compared_to(src)) {
+				delete target;
+				target = new smm::Source(tgt == -1 ? src->id() : tgt);
+			} else {
+				return target;
+			}
+		} else {
+			target = new smm::Source(tgt == -1 ? src->id() : tgt);
 		}
 		maps.sources[src] = target;
 		target->contents = translate_theory(src->theory, maps);
@@ -322,12 +329,8 @@ smm::Source* translate_source(const Source* src, Maps& maps, smm::Source* target
 
 smm::Source* translate(uint src, uint tgt) {
 	const Source* source = Sys::get().math.get<Source>().access(src);
-	if (!source) throw Error("no source", Lex::toStr(src));
-	delete smm::Sys::get().math.get<smm::Source>().access(tgt);
-	smm::Source* target = new smm::Source(tgt);
-	Maps maps;
-	maps.thm = nullptr;
-	return translate_source(source, maps, target);
+	if (!source) throw Error("no source", Lex::toStr(src));;
+	return translate_source(source, maps, tgt);
 }
 
 }} // mdl::rus

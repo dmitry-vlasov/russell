@@ -623,6 +623,11 @@ struct Source : public Owner<Src, Sys> {
 		return timestamp_ != efs::last_write_time(path().path());
 	}
 
+	template<class S1, class S2>
+	bool has_changed_compared_to(const Source<S1, S2>* s) const {
+		return timestamp_ != s->timestamp_;
+	}
+
 private:
 	template<class, class> friend struct Source;
 
