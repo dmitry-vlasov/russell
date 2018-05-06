@@ -8,7 +8,6 @@ struct Maps {
 	map<const Assertion*, map<const Hyp*, smm::Essential*>> essentials;
 	map<const Assertion*, map<Symbol, smm::Floating*>> floatings;
 	map<const Assertion*, map<Symbol, smm::Inner*>> inners;
-	map<const Assertion*, smm::Assertion*> assertions;
 	map<const Rule*, smm::Assertion*> rules;
 	map<const Rule*, map<Symbol, uint>> rules_args;
 	map<const Source*, smm::Source*> sources;
@@ -145,7 +144,6 @@ vector<smm::Node> translate_assertion(const Assertion* ass, Maps& maps) {
 		ra->essential= translate_essentials(ass, maps);
 		ra->prop = new smm::Proposition(false, ass_lab, translate_expr(prop->expr, maps));
 		ra_vect.push_back(ra);
-		maps.assertions[ass] = ra;
 	}
 	return ra_vect;
 }
@@ -205,8 +203,9 @@ void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref*>& smm
 		translate_proof(st->proof(), thm, smm_proof, maps);
 		return;
 	}
-	for (auto ref : st->refs)
+	for (auto ref : st->refs) {
 		translate_ref(ref, thm, smm_proof, maps);
+	}
 	const Assertion* ass = st->ass();
 	Substitution ps = unify_forth(ass->props[0]->expr, st->expr);
 	if (!ps) throw Error("proposition unification failed");
@@ -215,12 +214,10 @@ void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref*>& smm
 		if (!hs) throw Error("hypothesis unification failed");
 		if (!ps.join(hs)) throw Error("substitution join failed");
 	}
-	for (auto v : st->ass()->vars.v)
+	for (auto v : ass->vars.v) {
 		translate_term(ps.sub().at(v), thm, smm_proof, maps);
-	if (!maps.assertions.count(ass))
-		throw Error("undefined reference to assertion");
-	assert(maps.assertions.count(ass));
-	smm_proof.push_back(new smm::Ref(maps.assertions[ass]->prop->label, st->ass()->kind() != Assertion::THM));
+	}
+	smm_proof.push_back(new smm::Ref(ass->id(), ass->kind() != Assertion::THM));
 }
 
 vector<smm::Inner*> translate_inners(const Vars& vars, Maps& maps, const Assertion* thm, uint ind_0) {
