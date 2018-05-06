@@ -1,3 +1,4 @@
+$[ turnstile_special_source.mm $]
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Predicate_calculus_with_equality___Auxiliary_axiom_schemes_(4_schemes).mm $]
 $( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  Obsolete schemes ax-5o ax-4 ax-6o ax-9o ax-10o ax-10 ax-11o ax-12o ax-15 ax-16

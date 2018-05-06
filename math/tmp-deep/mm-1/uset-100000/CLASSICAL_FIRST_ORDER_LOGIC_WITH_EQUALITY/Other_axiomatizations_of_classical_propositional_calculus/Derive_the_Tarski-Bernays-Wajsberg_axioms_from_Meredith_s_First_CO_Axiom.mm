@@ -1,3 +1,4 @@
+$[ turnstile_special_source.mm $]
 $[ uset-100000/CLASSICAL_FIRST_ORDER_LOGIC_WITH_EQUALITY/Other_axiomatizations_of_classical_propositional_calculus/Derive_the_Lukasiewicz_Axioms_from_the_Tarski-Bernays-Wajsberg_Axioms.mm $]
 $( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   Derive the Tarski-Bernays-Wajsberg axioms from Meredith's First CO Axiom
