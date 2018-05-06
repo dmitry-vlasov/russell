@@ -75,9 +75,9 @@ static void checkSymbols(const Assertion* ass, const Expr& expr) {
 			}
 		}
 		if (is_const && is_var)
-			throw Error("constant symbol is marked as variable", ass->token);
+			throw Error("constant symbol is marked as variable", Lex::toStr(s.lit), ass->token);
 		if (!is_const && !is_var)
-			throw Error("symbol neither constant nor variable", ass->token);
+			throw Error("symbol neither constant nor variable", Lex::toStr(s.lit), ass->token);
 	}
 }
 
