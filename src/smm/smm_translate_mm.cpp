@@ -7,8 +7,6 @@ namespace mdl { namespace smm { namespace {
 
 
 struct Maps {
-	map<const smm::Assertion*, mm::Theorem*>   theorems;
-	map<const smm::Assertion*, mm::Axiom*>     axioms;
 	map<const smm::Source*,    mm::Source*>    sources;
 	set<uint>                                  variables;
 	Transform                                  transform;
@@ -34,8 +32,8 @@ mm::Proof* translate(Maps& maps, const Proof* proof) {
 	for (auto r : rpn->refs) {
 		mm::Ref* ref = nullptr;
 		switch (r->type()) {
-		case Ref::AXIOM:     ref = new mm::Ref(maps.axioms[r->ass()]->id());     break;
-		case Ref::THEOREM:   ref = new mm::Ref(maps.theorems[r->ass()]->id());   break;
+		case Ref::AXIOM:     ref = new mm::Ref(r->ass()->id()); break;
+		case Ref::THEOREM:   ref = new mm::Ref(r->ass()->id()); break;
 		case Ref::FLOATING:  ref = new mm::Ref(translate_floating_id(r->flo(), proof->theorem));  break;
 		case Ref::INNER:     ref = new mm::Ref(translate_inner_id(r->inn(), proof->theorem));     break;
 		case Ref::ESSENTIAL: ref = new mm::Ref(translate_essential_id(r->ess(), proof->theorem)); break;
@@ -98,15 +96,9 @@ void translate(const Node& node, mm::Block* target, Maps& maps) {
 		}
 		if (ass->proof) {
 			mm::Proof* pr = translate(maps, ass->proof);
-			mm::Theorem* th = new mm::Theorem(ass->prop->label, std::move(translate_expr(ass->prop->expr)), pr);
-			block->contents.emplace_back(th);
-			assert(!maps.theorems.count(ass));
-			maps.theorems[ass] = th;
+			block->contents.emplace_back(new mm::Theorem(ass->prop->label, std::move(translate_expr(ass->prop->expr)), pr));
 		} else {
-			mm::Axiom* ax = new mm::Axiom(ass->prop->label, std::move(translate_expr(ass->prop->expr)));
-			block->contents.emplace_back(ax);
-			assert(!maps.axioms.count(ass));
-			maps.axioms[ass] = ax;
+			block->contents.emplace_back(new mm::Axiom(ass->prop->label, std::move(translate_expr(ass->prop->expr))));
 		}
 		block->parent = target;
 		target->contents.emplace_back(block);
