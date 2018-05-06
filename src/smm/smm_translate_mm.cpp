@@ -9,13 +9,22 @@ namespace mdl { namespace smm { namespace {
 struct Maps {
 	map<const smm::Assertion*, mm::Theorem*>   theorems;
 	map<const smm::Assertion*, mm::Axiom*>     axioms;
-	map<const smm::Essential*, mm::Essential*> essentials;
-	map<const smm::Floating*,  mm::Floating*>  floatings;
-	map<const smm::Inner*,     mm::Floating*>  inners;
 	map<const smm::Source*,    mm::Source*>    sources;
 	set<uint>                                  variables;
 	Transform                                  transform;
 };
+
+inline uint translate_floating_id(const Floating* flo, const Assertion* ass) {
+	return Lex::toInt(string("f") + Lex::toStr(ass->id()) + "_" + to_string(flo->index));
+}
+
+inline uint translate_essential_id(const Essential* ess, const Assertion* ass) {
+	return Lex::toInt(string("e") + Lex::toStr(ass->id()) + "_" + to_string(ess->index));
+}
+
+inline uint translate_inner_id(const Inner* inn, const Assertion* ass) {
+	return Lex::toInt(string("i") + Lex::toStr(ass->id()) + "_" + to_string(inn->index));
+}
 
 mm::Proof* translate(Maps& maps, const Proof* proof) {
 	Tree* tree = to_tree(proof);
@@ -27,9 +36,9 @@ mm::Proof* translate(Maps& maps, const Proof* proof) {
 		switch (r->type()) {
 		case Ref::AXIOM:     ref = new mm::Ref(maps.axioms[r->ass()]->id());     break;
 		case Ref::THEOREM:   ref = new mm::Ref(maps.theorems[r->ass()]->id());   break;
-		case Ref::FLOATING:  ref = new mm::Ref(maps.floatings[r->flo()]->id());  break;
-		case Ref::INNER:     ref = new mm::Ref(maps.inners[r->inn()]->id());     break;
-		case Ref::ESSENTIAL: ref = new mm::Ref(maps.essentials[r->ess()]->id()); break;
+		case Ref::FLOATING:  ref = new mm::Ref(translate_floating_id(r->flo(), proof->theorem));  break;
+		case Ref::INNER:     ref = new mm::Ref(translate_inner_id(r->inn(), proof->theorem));     break;
+		case Ref::ESSENTIAL: ref = new mm::Ref(translate_essential_id(r->ess(), proof->theorem)); break;
 		default : assert(false && "impossible"); break;
 		}
 		pr->refs.push_back(ref);
@@ -75,28 +84,17 @@ void translate(const Node& node, mm::Block* target, Maps& maps) {
 				}
 			}
 		}
-		for (auto& disj : ass->disjointed)
+		for (auto& disj : ass->disjointed) {
 			block->contents.emplace_back(new mm::Disjointed(std::move(translate_expr(disj->expr))));
+		}
 		for (auto& inn : ass->inner) {
-			string label = "i" + name + "_" + to_string(inn->index);
-			uint new_index = Lex::toInt(label);
-			mm::Floating* mm_flo = new mm::Floating(new_index, std::move(translate_expr(inn->expr)));
-			block->contents.emplace_back(mm_flo);
-			maps.inners[inn] = mm_flo;
+			block->contents.emplace_back(new mm::Floating(translate_inner_id(inn, ass), std::move(translate_expr(inn->expr))));
 		}
 		for (auto& flo : ass->floating) {
-			string label = "f" + name + "_" + to_string(flo->index);
-			uint new_index = Lex::toInt(label);
-			mm::Floating* mm_flo = new mm::Floating(new_index, std::move(translate_expr(flo->expr)));
-			block->contents.emplace_back(mm_flo);
-			maps.floatings[flo] = mm_flo;
+			block->contents.emplace_back(new mm::Floating(translate_floating_id(flo, ass), std::move(translate_expr(flo->expr))));
 		}
 		for (auto& ess : ass->essential) {
-			string label = "e" + name + "_" + to_string(ess->index);
-			uint new_index = Lex::toInt(label);
-			mm::Essential* mm_ess = new mm::Essential(new_index, std::move(translate_expr(ess->expr)));
-			block->contents.emplace_back(mm_ess);
-			maps.essentials[ess] = mm_ess;
+			block->contents.emplace_back(new mm::Essential(translate_essential_id(ess, ass), std::move(translate_expr(ess->expr))));
 		}
 		if (ass->proof) {
 			mm::Proof* pr = translate(maps, ass->proof);

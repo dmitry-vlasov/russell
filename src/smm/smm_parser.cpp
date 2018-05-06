@@ -137,6 +137,7 @@ public:
 		parser["AX"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
 			c.prop = new Proposition(true, sv[0].get<uint>(), sv[1].get<Expr>(), c.token(sv));
+			c.proof = nullptr;
 		};
 		parser["TH"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context& c = *context.get<Context*>();
@@ -209,6 +210,7 @@ public:
 			ass->proof      = c.proof;
 			ass->prop       = c.prop;
 			ass->token      = c.token(sv);
+			if (c.proof) c.proof->theorem = ass;
 			c.clear();
 			makeVars(ass->variables);
 			makeVars(ass->disjointed);
