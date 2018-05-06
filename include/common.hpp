@@ -594,9 +594,11 @@ struct Source : public Owner<Src, Sys> {
 	bool includes(const Src* s) const {
 		return includes_.find(User_(s)) != includes_.end();
 	}
-
 	void include(Src* src) {
 		includes_.insert(src);
+	}
+	const set<uint>& includeSet() const {
+		return incs;
 	}
 	string showInclusionInfo() const {
 		string str;

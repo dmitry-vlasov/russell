@@ -9,7 +9,6 @@ struct Maps {
 	map<const Assertion*, map<Symbol, smm::Floating*>> floatings;
 	map<const Assertion*, map<Symbol, smm::Inner*>> inners;
 	map<const Assertion*, smm::Assertion*> assertions;
-	map<const Type*, uint> types;
 	map<const Rule*, smm::Assertion*> rules;
 	map<const Rule*, map<Symbol, uint>> rules_args;
 	map<const Source*, smm::Source*> sources;
@@ -35,7 +34,7 @@ smm::Expr translate_expr(const Expr& ex, Maps& maps) {
 
 smm::Expr translate_term(const Expr& ex, const Type* tp, Maps& maps) {
 	smm::Expr expr; expr.reserve(ex.symbols.size() + 1);
-	expr.emplace_back(maps.types[tp]);
+	expr.emplace_back(tp->id());
 	for (auto& s : ex.symbols) expr.emplace_back(translate_symb(s), s.type());
 	return expr;
 }
@@ -74,10 +73,7 @@ vector<smm::Disjointed*> translate_disj(const Disj& rdisj) {
 smm::Assertion* translate_rule(const Rule* rule, Maps& maps);
 
 vector<smm::Node> translate_type(const Type* type, Maps& maps) {
-	string type_str = Lex::toStr(type->id());
-	uint type_sy = Lex::toInt(type_str);
-	maps.types[type] = type_sy;
-	smm::Constant* constant = new smm::Constant(type_sy);
+	smm::Constant* constant = new smm::Constant(type->id());
 	vector<smm::Node> ret;
 	ret.push_back(constant);
 	for (auto p : type->supers)
@@ -101,7 +97,7 @@ vector<smm::Floating*> translate_floatings(const Vars& vars, Maps& maps, const A
 		Symbol v = vars.v[i];
 		smm::Floating* flo = new smm::Floating(i);
 		flo->expr.reserve(2);
-		flo->expr.push_back(smm::Symbol(maps.types[v.type()]));
+		flo->expr.push_back(smm::Symbol(v.type()->id()));
 		flo->expr.push_back(smm::Symbol(v.lit, true));
 		flo_vect.push_back(flo);
 		if (ass) maps.floatings[ass][v] = flo;
@@ -239,7 +235,7 @@ vector<smm::Inner*> translate_inners(const Vars& vars, Maps& maps, const Asserti
 		smm::Inner* inn = new smm::Inner(i + ind_0);
 		inn->index = i + ind_0;
 		inn->expr.reserve(2);
-		inn->expr.push_back(smm::Symbol(maps.types[v.type()]));
+		inn->expr.push_back(smm::Symbol(v.type()->id()));
 		inn->expr.push_back(smm::Symbol(v.lit, true));
 		inn_vect.push_back(inn);
 		smm_vars->expr.push_back(smm::Symbol(v.lit, true));
@@ -325,11 +321,40 @@ smm::Source* translate_source(const Source* src, Maps& maps, uint tgt) {
 	}
 }
 
+
+vector<uint> find_dependencies(uint src) {
+	const Source* source = Sys::get().math.get<Source>().access(src);
+	vector<uint> ret;
+	for (uint inc : source->includeSet()) {
+		const smm::Source* incTarg = smm::Sys::mod().math.get<smm::Source>().access(inc);
+		const Source* incSrc = Sys::get().math.get<Source>().access(inc);
+		if (incSrc->has_changed() || !incTarg) {
+			ret.push_back(inc);
+		}
+	}
+	return ret;
+}
+
 }
 
 smm::Source* translate(uint src, uint tgt) {
 	const Source* source = Sys::get().math.get<Source>().access(src);
-	if (!source) throw Error("no source", Lex::toStr(src));;
+	if (!source) throw Error("no source", Lex::toStr(src));
+	Maps maps;
+/*
+#ifdef PARALLEL_PARSE
+	vector<uint> deps = find_dependencies(src);
+	tbb::parallel_for (tbb::blocked_range<size_t>(0, deps.size()),
+		[deps] (const tbb::blocked_range<size_t>& r) {
+			for (size_t i = r.begin(); i != r.end(); ++i)
+				parse_src(labels[i]);
+		}
+	);
+#else
+	for (auto p : Sys::mod().math.get<Source>())
+		if (!p.second.data->parsed) parse_src(p.first);
+#endif
+*/
 	return translate_source(source, maps, tgt);
 }
 
