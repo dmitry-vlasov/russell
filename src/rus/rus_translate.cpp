@@ -61,13 +61,6 @@ smm::Expr translate_term(const Expr& ex, const Type* tp, Maps& maps) {
 	return expr;
 }
 
-smm::Constant* translate_turnstile(Maps& maps) {
-	uint ts = Lex::toInt("|-");
-	maps.global.turnstile = smm::Symbol(ts);
-	smm::Constant* constant = new smm::Constant(maps.global.turnstile);
-	return constant;
-}
-
 smm::Constant* translate_const(const Const* c) {
 	uint symb = Symbol::is_undef(c->ascii) ? c->id() : c->ascii;
 	smm::Constant* constant = new smm::Constant(symb);
