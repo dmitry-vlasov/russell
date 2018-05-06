@@ -4,16 +4,23 @@
 namespace mdl { namespace rus { namespace {
 
 struct Maps {
-	Maps() : thm(nullptr), first_time(true) { }
-	map<const Assertion*, map<const Hyp*, smm::Essential*>> essentials;
-	map<const Assertion*, map<Symbol, smm::Floating*>> floatings;
-	map<const Assertion*, map<Symbol, smm::Inner*>> inners;
-	map<const Rule*, smm::Assertion*> rules;
-	map<const Rule*, map<Symbol, uint>> rules_args;
-	map<const Source*, smm::Source*> sources;
-	smm::Assertion* thm;
-	mdl::smm::Symbol turnstile;
-	bool first_time;
+	struct Global {
+		Global() : first_time(true) { }
+		map<const Rule*, smm::Assertion*> rules;
+		map<const Rule*, map<Symbol, uint>> rules_args;
+		map<const Source*, smm::Source*> sources;
+		mdl::smm::Symbol turnstile;
+		bool first_time;
+	};
+	struct Local {
+		Local() : thm(nullptr) { }
+		map<const Assertion*, map<const Hyp*, smm::Essential*>> essentials;
+		map<const Assertion*, map<Symbol, smm::Floating*>> floatings;
+		map<const Assertion*, map<Symbol, smm::Inner*>> inners;
+		smm::Assertion* thm;
+	};
+	Global global;
+	Local  local;
 };
 
 inline uint translate_symb(const Symbol& s) {
@@ -26,7 +33,7 @@ inline uint translate_symb(const Symbol& s) {
 
 smm::Expr translate_expr(const Expr& ex, Maps& maps) {
 	smm::Expr expr; expr.reserve(ex.symbols.size() + 1);
-	expr.push_back(maps.turnstile);
+	expr.push_back(maps.global.turnstile);
 	for (auto& s : ex.symbols) expr.push_back(smm::Symbol(translate_symb(s), s.type()));
 	return expr;
 }
@@ -40,8 +47,8 @@ smm::Expr translate_term(const Expr& ex, const Type* tp, Maps& maps) {
 
 smm::Constant* translate_turnstile(Maps& maps) {
 	uint ts = Lex::toInt("|-");
-	maps.turnstile = smm::Symbol(ts);
-	smm::Constant* constant = new smm::Constant(maps.turnstile);
+	maps.global.turnstile = smm::Symbol(ts);
+	smm::Constant* constant = new smm::Constant(maps.global.turnstile);
 	return constant;
 }
 
@@ -85,7 +92,7 @@ vector<smm::Essential*> translate_essentials(const Assertion* ass, Maps& maps) {
 	for (auto hyp : ass->hyps) {
 		smm::Essential* ess = new smm::Essential(hyp->ind, translate_expr(hyp->expr, maps));
 		ess_vect.push_back(ess);
-		maps.essentials[ass][hyp] = ess;
+		maps.local.essentials[ass][hyp] = ess;
 	}
 	return ess_vect;
 }
@@ -99,7 +106,7 @@ vector<smm::Floating*> translate_floatings(const Vars& vars, Maps& maps, const A
 		flo->expr.push_back(smm::Symbol(v.type()->id()));
 		flo->expr.push_back(smm::Symbol(v.lit, true));
 		flo_vect.push_back(flo);
-		if (ass) maps.floatings[ass][v] = flo;
+		if (ass) maps.local.floatings[ass][v] = flo;
 	}
 	return flo_vect;
 }
@@ -112,13 +119,13 @@ smm::Assertion* translate_rule(const Rule* rule, Maps& maps) {
 		ra->variables.push_back(translate_vars(rule->vars));
 	ra->floating = translate_floatings(rule->vars, maps);
 	ra->prop = new smm::Proposition(true, rule_lab, translate_term(rule->term, rule->term.type.get(), maps));
-	maps.rules[rule] = ra;
+	maps.global.rules[rule] = ra;
 	for (auto v : rule->vars.v) {
 		uint i = 0;
 		bool found = false;
 		for (auto& ch : rule->term.tree.children()) {
 			if (ch->kind == Tree::VAR && *ch->var() == v) {
-				maps.rules_args[rule][v] = i;
+				maps.global.rules_args[rule][v] = i;
 				found = true;
 				break;
 			}
@@ -170,7 +177,7 @@ void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref*>& smm
 
 void translate_ref(Ref* ref, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps) {
 	switch (ref->kind) {
-	case Ref::HYP:  smm_proof.push_back(new smm::Ref(maps.essentials[thm][ref->val.hyp])); break;
+	case Ref::HYP:  smm_proof.push_back(new smm::Ref(maps.local.essentials[thm][ref->val.hyp])); break;
 	case Ref::PROP: break;
 	case Ref::STEP: translate_step(ref->val.step, thm, smm_proof, maps); break;
 	default : assert(false); break;
@@ -179,20 +186,20 @@ void translate_ref(Ref* ref, const Assertion* thm, vector<smm::Ref*>& smm_proof,
 
 void translate_term(const Tree& t, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps) {
 	if (t.kind == Tree::VAR) {
-		if (maps.floatings[thm].count(*t.var()))
-			smm_proof.push_back(new smm::Ref(maps.floatings[thm][*t.var()]));
-		else if (maps.inners[thm].count(*t.var()))
-			smm_proof.push_back(new smm::Ref(maps.inners[thm][*t.var()]));
+		if (maps.local.floatings[thm].count(*t.var()))
+			smm_proof.push_back(new smm::Ref(maps.local.floatings[thm][*t.var()]));
+		else if (maps.local.inners[thm].count(*t.var()))
+			smm_proof.push_back(new smm::Ref(maps.local.inners[thm][*t.var()]));
 		else
 			throw Error("undeclared variable", show(*t.var()));
 	} else {
 		for (auto v : t.rule()->vars.v)
-			translate_term(*t.children()[maps.rules_args[t.rule()][v]], thm, smm_proof, maps);
+			translate_term(*t.children()[maps.global.rules_args[t.rule()][v]], thm, smm_proof, maps);
 	}
 	if (t.kind == Tree::NODE) {
-		if (!maps.rules.count(t.rule()))
+		if (!maps.global.rules.count(t.rule()))
 			throw Error("undefined reference to rule");
-		smm_proof.push_back(new smm::Ref(maps.rules[t.rule()]->prop->label, true));
+		smm_proof.push_back(new smm::Ref(maps.global.rules[t.rule()]->prop->label, true));
 	}
 }
 
@@ -224,8 +231,8 @@ vector<smm::Inner*> translate_inners(const Vars& vars, Maps& maps, const Asserti
 	vector<smm::Inner*> inn_vect;
 	smm::Variables* smm_vars = nullptr;
 	if (vars.v.size()) {
-		maps.thm->variables.push_back(new smm::Variables);
-		smm_vars = maps.thm->variables.back();
+		maps.local.thm->variables.push_back(new smm::Variables);
+		smm_vars = maps.local.thm->variables.back();
 	}
 	for (uint i = 0; i < vars.v.size(); ++ i) {
 		Symbol v = vars.v[i];
@@ -236,13 +243,13 @@ vector<smm::Inner*> translate_inners(const Vars& vars, Maps& maps, const Asserti
 		inn->expr.push_back(smm::Symbol(v.lit, true));
 		inn_vect.push_back(inn);
 		smm_vars->expr.push_back(smm::Symbol(v.lit, true));
-		maps.inners[thm][v] = inn;
+		maps.local.inners[thm][v] = inn;
 	}
 	return inn_vect;
 }
 
 void translate_proof(const Proof* proof, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps, uint ind) {
-	join(maps.thm->inner, translate_inners(proof->vars, maps, thm, maps.thm->inner.size()));
+	join(maps.local.thm->inner, translate_inners(proof->vars, maps, thm, maps.local.thm->inner.size()));
 	for (auto el : proof->elems) {
 		if (el.kind == Proof::Elem::QED && el.val.qed->prop->ind == ind) {
 			translate_step(el.val.qed->step, thm, smm_proof, maps);
@@ -258,9 +265,9 @@ vector<smm::Node> translate_proof(const Proof* proof, Maps& maps) {
 		// TODO ? WTF??
 	}
 	for (uint i = 0; i < asss.size(); ++ i) {
-		maps.thm = asss[i].val.ass;
-		maps.thm->proof = new smm::Proof();
-		translate_proof(proof, proof->thm.get(), maps.thm->proof->refs, maps, i);
+		maps.local.thm = asss[i].val.ass;
+		maps.local.thm->proof = new smm::Proof();
+		translate_proof(proof, proof->thm.get(), maps.local.thm->proof->refs, maps, i);
 	}
 	join(nodes, asss);
 	return nodes;
@@ -275,9 +282,9 @@ inline smm::Inclusion* translate_import(const Import* imp, Maps& maps) {
 
 vector<smm::Node> translate_theory(const Theory* thy, Maps& maps) {
 	vector<smm::Node> nodes;
-	if (maps.first_time) {
+	if (maps.global.first_time) {
 		nodes.push_back(translate_turnstile(maps));
-		maps.first_time = false;
+		maps.global.first_time = false;
 	}
 	for (auto n : thy->nodes) {
 		switch (n.kind) {
@@ -298,8 +305,8 @@ vector<smm::Node> translate_theory(const Theory* thy, Maps& maps) {
 }
 
 smm::Source* translate_source(const Source* src, Maps& maps, uint tgt) {
-	if (maps.sources.count(src)) {
-		return maps.sources[src];
+	if (maps.global.sources.count(src)) {
+		return maps.global.sources[src];
 	} else {
 		smm::Source* target = smm::Sys::mod().math.get<smm::Source>().access(src->id());
 		if (target) {
@@ -312,7 +319,7 @@ smm::Source* translate_source(const Source* src, Maps& maps, uint tgt) {
 		} else {
 			target = new smm::Source(tgt == -1 ? src->id() : tgt);
 		}
-		maps.sources[src] = target;
+		maps.global.sources[src] = target;
 		target->contents = translate_theory(src->theory, maps);
 		return target;
 	}
