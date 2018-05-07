@@ -99,7 +99,7 @@ check "${binpath}/mdl
     \"rus parse_expr \"
     \"rus verify \"
     \"rus transl in=${file}.rus out=${file}-1.smm\" 
-    \"smm write in=${file}-1.smm\"
+    \"smm write in=${file}-1.smm deep=true\"
     exit"
 echo -e 'done\n\n'
 
@@ -120,8 +120,8 @@ check "${binpath}/mdl
     \"smm opts verbose\"     
     \"smm read in=${file}-1.smm\"
     \"smm parse \"  
-    \"smm lang=mm in=${file}-1.smm out=${file}-1.mm\" 
-    \"mm  write in=${file}-1.mm\"
+    \"smm transl in=${file}-1.smm out=${file}-1.mm\" 
+    \"mm  write in=${file}-1.mm deep=true\"
     exit"
 echo -e 'done\n\n'
 
@@ -131,9 +131,9 @@ check "${binpath}/mdl
     \"mm  opts verbose\" 
     \"smm opts verbose\"     
     \"mm  read in=${file}-1.mm\"  
-    \"mm parse \"
+    \"mm  parse \"
     \"mm  transl in=${file}-1.mm out=${file}-2.smm\" 
-    \"smm write in=${file}-2.smm\"
+    \"smm write in=${file}-2.smm deep=true\"
     exit"
 echo -e 'done\n'
 
