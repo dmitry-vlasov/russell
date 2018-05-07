@@ -14,7 +14,7 @@ struct Maps {
 	map<Symbol, rus::Type*>              types;
 	map<Symbol, rus::Const*>             constants;
 	set<rus::Rule*>                      rules;
-	map<const void*, uint>               inds;
+	map<const rus::Type*, uint>          inds;
 
 	rus::Type*    type_wff;
 	rus::Type*    type_set;
