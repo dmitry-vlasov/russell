@@ -330,7 +330,6 @@ smm::Source* translate_source(uint src, Maps maps, uint tgt = -1) {
 	return target;
 }
 
-
 static void find_dependencies(uint src, set<uint>& deps, set<uint>& visited) {
 	visited.insert(src);
 	const Source* source = Sys::get().math.get<Source>().access(src);

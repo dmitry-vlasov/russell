@@ -58,15 +58,15 @@ Proof* to_proof(const Tree* tree) {
 	return proof;
 }
 
-void transform(Tree* tree, const Transform& trans, bool forward) {
+void transform(Tree* tree, bool forward) {
 	for (uint i = 0; i < tree->nodes.size() - 1; ++ i) {
 		if (tree->nodes[i].type == Tree::Node::TREE)
-			transform(tree->nodes[i].val.tree, trans, forward);
+			transform(tree->nodes[i].val.tree, forward);
 	}
 	assert(tree->nodes.back().type == Tree::Node::REF);
 	Ref* op = tree->nodes.back().val.ref;
 	if (op->is_assertion()) {
-		Perm perm = trans.at(op->label());
+		Perm perm = compute_permutation(op->ass());
 		assert(perm.size() + 1 == tree->nodes.size());
 		vector<Tree::Node> new_nodes = tree->nodes;
 		for (uint i = 0; i < new_nodes.size() - 1; ++ i) {

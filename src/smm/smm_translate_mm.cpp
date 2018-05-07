@@ -4,14 +4,6 @@
 
 namespace mdl { namespace smm { namespace {
 
-
-
-struct Maps {
-	map<const smm::Source*,    mm::Source*>    sources;
-	set<uint>                                  variables;
-	Transform                                  transform;
-};
-
 inline uint translate_floating_id(const Floating* flo, const Assertion* ass) {
 	return Lex::toInt(string("f") + Lex::toStr(ass->id()) + "_" + to_string(flo->index));
 }
@@ -24,9 +16,9 @@ inline uint translate_inner_id(const Inner* inn, const Assertion* ass) {
 	return Lex::toInt(string("i") + Lex::toStr(ass->id()) + "_" + to_string(inn->index));
 }
 
-mm::Proof* translate(Maps& maps, const Proof* proof) {
+mm::Proof* translate(const Proof* proof) {
 	Tree* tree = to_tree(proof);
-	transform(tree, maps.transform);
+	transform(tree);
 	Proof* rpn = to_proof(tree);
 	mm::Proof* pr = new mm::Proof();
 	for (auto r : rpn->refs) {
@@ -46,28 +38,16 @@ mm::Proof* translate(Maps& maps, const Proof* proof) {
 	return pr;
 }
 
-Perm create_permutation(uint flos, uint esss) {
-	Perm perm;
-	for (uint i = 0; i < esss; ++ i)
-		perm[i] = i + flos;
-	for (uint i = 0; i < flos; ++ i)
-		perm[i + esss] = i;
-	return perm;
-}
-
 mm::Expr translate_expr(const Expr& e) {
 	mm::Expr ex; ex.reserve(e.size());
 	for (auto s : e) ex.emplace_back(uint(s.lit));
 	return ex;
 }
 
-mm::Source* translate_source(const Source* src, Maps& maps, mm::Source* target = nullptr);
-
-void translate(const Node& node, mm::Block* target, Maps& maps) {
+void translate(const Node& node, mm::Block* target) {
 	switch(node.type) {
 	case Node::CONSTANT: {
-		mm::Constant* c = new mm::Constant(uint(node.val.cst->symb.lit));
-		target->contents.emplace_back(c);
+		target->contents.emplace_back(new mm::Constant(uint(node.val.cst->symb.lit)));
 	} break;
 	case Node::ASSERTION: {
 		mm::Block* block = new mm::Block();
@@ -75,11 +55,7 @@ void translate(const Node& node, mm::Block* target, Maps& maps) {
 		string name = Lex::toStr(ass->prop->label);
 		for (const auto& vars : ass->variables) {
 			for (const auto& var : vars->expr) {
-				if (maps.variables.find(var.lit) == maps.variables.end()) {
-					auto smm_var = new mm::Variable(var.lit);
-					target->contents.emplace_back(smm_var);
-					maps.variables.insert(var.lit);
-				}
+				block->contents.emplace_back(new mm::Variable(var.lit));
 			}
 		}
 		for (auto& disj : ass->disjointed) {
@@ -95,58 +71,90 @@ void translate(const Node& node, mm::Block* target, Maps& maps) {
 			block->contents.emplace_back(new mm::Essential(translate_essential_id(ess, ass), std::move(translate_expr(ess->expr))));
 		}
 		if (ass->proof) {
-			mm::Proof* pr = translate(maps, ass->proof);
+			mm::Proof* pr = translate(ass->proof);
 			block->contents.emplace_back(new mm::Theorem(ass->prop->label, std::move(translate_expr(ass->prop->expr)), pr));
 		} else {
 			block->contents.emplace_back(new mm::Axiom(ass->prop->label, std::move(translate_expr(ass->prop->expr))));
 		}
 		block->parent = target;
 		target->contents.emplace_back(block);
-		Perm perm = create_permutation(
-			ass->floating.size(),
-			ass->essential.size()
-		);
-		maps.transform[ass->prop->label] = perm;
 	}	break;
 	case Node::INCLUSION: {
-		mm::Source* s = translate_source(node.val.inc->source.get(), maps);
-		mm::Inclusion* i = new mm::Inclusion(s->id(), node.val.inc->primary);
-		target->contents.emplace_back(i);
+		target->contents.emplace_back(new mm::Inclusion(node.val.inc->source.id(), node.val.inc->primary));
 	} 	break;
 	case Node::COMMENT: {
-		mm::Comment* c = new mm::Comment(node.val.com->text);
-		target->contents.emplace_back(c);
+		target->contents.emplace_back(new mm::Comment(node.val.com->text));
 	} 	break;
 	default : assert(false && "impossible"); break;
 	}
 }
 
-mm::Source* translate_source(const Source* src, Maps& maps, mm::Source* target) {
-	if (maps.sources.count(src)) {
-		return maps.sources[src];
-	} else {
-		if (!target) {
-			delete mm::Sys::get().math.get<mm::Source>().access(src->id());
-			target = new mm::Source(src->id());
-			target->block = new mm::Block;
+mm::Source* translate_source(uint src, uint tgt = -1) {
+	tgt = (tgt == -1) ? src : tgt;
+	const smm::Source* source = Sys::get().math.get<Source>().access(src);
+	mm::Source* target = mm::Sys::mod().math.get<mm::Source>().access(tgt);
+	if (target) {
+		delete target;
+	}
+	target = new mm::Source(tgt);
+	target->block = new mm::Block;
+	for (const auto& node : source->contents) {
+		translate(node, target->block);
+	}
+	return target;
+}
+
+static void find_dependencies(uint src, set<uint>& deps, set<uint>& visited) {
+	visited.insert(src);
+	const Source* source = Sys::get().math.get<Source>().access(src);
+	for (const auto& n : source->contents) {
+		if (n.type == Node::INCLUSION) {
+			uint inc = n.val.inc->source.id();
+			if (!visited.count(inc)) {
+				find_dependencies(inc, deps, visited);
+			}
+			const mm::Source* incTarg = mm::Sys::mod().math.get<mm::Source>().access(inc);
+			const Source* incSrc = Sys::get().math.get<Source>().access(inc);
+			if (incSrc->has_changed() || !incTarg) {
+				deps.insert(inc);
+			}
 		}
-		maps.sources[src] = target;
-		for (auto& node : src->contents)
-			translate(node, target->block, maps);
-		return target;
 	}
 }
 
+static vector<uint> find_dependencies(uint src) {
+	set<uint> visited;
+	set<uint> deps;
+	find_dependencies(src, deps, visited);
+	vector<uint> ret;
+	ret.reserve(deps.size());
+	for (uint s : deps) ret.push_back(s);
+	return ret;
 }
 
-void translate_to_mm(uint src, uint tgt) {
+}
+
+#define PARALLEL_TRANSLATE
+
+mm::Source* translate_to_mm(uint src, uint tgt) {
 	const Source* source = Sys::get().math.get<Source>().access(src);
 	if (!source) throw Error("no source", Lex::toStr(src));
-	delete mm::Sys::get().math.get<mm::Source>().access(tgt);
-	mm::Source* target = new mm::Source(tgt);
-	target->block = new mm::Block;
-	Maps maps;
-	translate_source(source, maps, target);
+	vector<uint> deps = find_dependencies(src);
+#ifdef PARALLEL_TRANSLATE
+	tbb::parallel_for (tbb::blocked_range<size_t>(0, deps.size()),
+		[deps] (const tbb::blocked_range<size_t>& r) {
+			for (size_t i = r.begin(); i != r.end(); ++i) {
+				translate_source(deps[i]);
+			}
+		}
+	);
+#else
+	for (uint s : deps) {
+		translate_source(s);
+	}
+#endif
+	return translate_source(src, tgt);
 }
+
 
 }} // mdl::smm

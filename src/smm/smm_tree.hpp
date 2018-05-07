@@ -15,28 +15,21 @@ inline string show (const Subst& subst) {
 	return str;
 }
 Expr apply_subst(const Subst& sub, const Expr& expr);
-/*
-inline void append_expr(Expr& ex_1, const Expr& ex_2) {
-	auto it = ex_2.cbegin();
-	++ it;
-	for (; it != ex_2.cend(); ++ it)
-		ex_1.push_back(*it);
-}
-inline Expr apply_sub(const Subst& sub, const Expr& expr) {
-	Expr ret;
-	for (auto s : expr) {
-		if (s.var) {
-			auto ex = sub.find(s);
-			if (ex == sub.cend())
-				ret.push_back(s);
-			else
-				append_expr(ret, ex->second);
-		} else
-			ret += s;
+
+inline Perm create_permutation(uint flos, uint esss) {
+	Perm perm;
+	for (uint i = 0; i < esss; ++ i) {
+		perm[i] = i + flos;
 	}
-	return  ret;
+	for (uint i = 0; i < flos; ++ i) {
+		perm[i + esss] = i;
+	}
+	return perm;
 }
-*/
+
+inline Perm compute_permutation(const Assertion* ass) {
+	return create_permutation(ass->floating.size(), ass->essential.size());
+}
 
 struct Tree {
 	struct Node {
@@ -104,7 +97,7 @@ struct Tree {
 
 Tree* to_tree(const Proof*);
 Proof* to_proof(const Tree*);
-void transform(Tree*, const Transform& trans, bool forward = true);
+void transform(Tree*, bool forward = true);
 Expr eval(Tree* proof);
 Expr eval(Ref*);
 
