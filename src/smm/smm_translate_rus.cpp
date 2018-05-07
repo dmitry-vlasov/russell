@@ -8,18 +8,18 @@ namespace mdl { namespace smm { namespace {
 typedef vector<rus::Node>::iterator NodeIter;
 
 struct Maps {
-	map<const rus::Rule*, rus::Theory*>  rule_theory;
-	map<const rus::Type*, rus::Theory*>  type_theory;
-	map<const Source*,    rus::Source*>  sources;
-	map<Symbol, rus::Type*>              types;
-	map<Symbol, rus::Const*>             constants;
+	map<const rus::Rule*,  rus::Theory*> rule_theory;
+	map<const rus::Type*,  rus::Theory*> type_theory;
+	map<const smm::Source*,rus::Source*> sources;
+	map<smm::Symbol, rus::Type*>         types;
+	map<smm::Symbol, rus::Const*>        constants;
 	set<rus::Rule*>                      rules;
 	map<const rus::Type*, uint>          inds;
 
-	rus::Type*    type_wff;
-	rus::Type*    type_set;
-	rus::Type*    type_class;
-	set<Symbol>   redundant_consts;
+	rus::Type*  type_wff;
+	rus::Type*  type_set;
+	rus::Type*  type_class;
+	set<Symbol> redundant_consts;
 	stack<rus::Theory*>  theory;
 };
 
@@ -151,8 +151,6 @@ rus::Type* translate_type(Symbol type_sy, Maps& state) {
 	}
 }
 
-inline
-
 void translate_super(const Assertion* ass, Maps& state) {
 	Symbol super_sy = ass->prop->expr[0];
 	Symbol infer_sy = ass->floating[0]->type();
@@ -258,15 +256,14 @@ void translate_axiom(const Assertion* ass, Maps& state) {
 	state.theory.top()->nodes.push_back(ax);
 }
 
-
-inline Symbol open_brace() { Symbol s(Lex::toInt("{")); return s; }
-inline Symbol close_brace() {Symbol s(Lex::toInt("}")); return s; }
-inline Symbol open_brack() { Symbol s(Lex::toInt("(")); return s; }
-inline Symbol close_brack() { Symbol s(Lex::toInt(")")); return s; }
-inline Symbol eqty() { Symbol s(Lex::toInt("=")); return s; }
-inline Symbol eqiv() { Symbol s(Lex::toInt("<->")); return s; }
-inline Symbol dfm() { Symbol s(Lex::toInt("defiendum")); return s; }
-inline Symbol dfs() { Symbol s(Lex::toInt("definiens")); return s; }
+inline Symbol open_brace() { return Symbol(Lex::toInt("{")); }
+inline Symbol close_brace() {return Symbol(Lex::toInt("}")); }
+inline Symbol open_brack() { return Symbol(Lex::toInt("(")); }
+inline Symbol close_brack() { return Symbol(Lex::toInt(")")); }
+inline Symbol eqty() { return Symbol(Lex::toInt("=")); }
+inline Symbol eqiv() { return Symbol(Lex::toInt("<->")); }
+inline Symbol dfm() { return Symbol(Lex::toInt("defiendum")); }
+inline Symbol dfs() { return Symbol(Lex::toInt("definiens")); }
 
 inline void count_br(Symbol s, uint& brack_depth, uint& brace_depth) {
 	if (s == open_brace())  ++ brace_depth;
