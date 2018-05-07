@@ -174,8 +174,6 @@ void gather_inner_vars(const set<uint>& fvars, set<uint>& ivars, set<uint>& avar
 }
 
 struct Maps {
-	map<const mm::Theorem*,   smm::Assertion*> theorems;
-	map<const mm::Axiom*,     smm::Assertion*> axioms;
 	map<const mm::Essential*, smm::Essential*> essentials;
 	map<const mm::Floating*,  smm::Floating*>  floatings;
 	map<const mm::Floating*,  smm::Inner*>     inners;
@@ -335,9 +333,9 @@ smm::Proof* translate_proof(Maps& maps, const Proof* mproof) {
 		case Ref::ESSENTIAL:
 			sproof->refs.push_back(new smm::Ref(maps.essentials[r->ess()])); break;
 		case Ref::AXIOM:
-			sproof->refs.push_back(new smm::Ref(maps.axioms[r->axm()]->prop->label, true)); break;
+			sproof->refs.push_back(new smm::Ref(r->axm()->id(), true)); break;
 		case Ref::THEOREM:
-			sproof->refs.push_back(new smm::Ref(maps.theorems[r->thm()]->prop->label, false)); break;
+			sproof->refs.push_back(new smm::Ref(r->thm()->id(), false)); break;
 		default : assert(false && "impossible"); break;
 		}
 	}
@@ -468,11 +466,7 @@ smm::Assertion* translate_ass(Maps& maps, const Node& n, const Block* block)  {
 			maps.redundant[n.label()] = n.proof()->refs[0];
 			delete ass;
 			ass = nullptr;
-		} else {
-			maps.theorems[n.val.th] = ass;
 		}
-	} else {
-		maps.axioms[n.val.ax] = ass;
 	}
 	return ass;
 }
