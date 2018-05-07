@@ -248,7 +248,7 @@ $}
 $( Variation of ~ nfcdeq for classes.  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
-	$v x y z A B $.
+	$v x y A B z $.
 	$d x z B $.
 	$d y z A $.
 	e0 $e |- F/_ x A $.

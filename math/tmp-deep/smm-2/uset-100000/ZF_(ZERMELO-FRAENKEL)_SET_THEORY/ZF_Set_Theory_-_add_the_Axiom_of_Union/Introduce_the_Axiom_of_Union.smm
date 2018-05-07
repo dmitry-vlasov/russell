@@ -66,7 +66,7 @@ $( The Axiom of Union in class notation.  This says that if ` A ` is a set
        Same as Axiom 3 of [TakeutiZaring] p. 16.  (Contributed by NM,
        11-Aug-1993.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	e0 $e |- A e. _V $.
 	f0 $f class A $.
@@ -82,7 +82,7 @@ $( The ZF Axiom of Union in class notation, in the form of a theorem
        substitution for class variable ` V ` .  (Contributed by NM,
        25-Nov-1994.) $)
 ${
-	$v x A V $.
+	$v A V x $.
 	$d x A $.
 	f0 $f class A $.
 	f1 $f class V $.
@@ -113,7 +113,7 @@ $}
 $( Existence of union is equivalent to existence of its components.
        (Contributed by NM, 11-Jun-1998.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -193,7 +193,7 @@ $}
 $( Expression for double union that moves union into a class builder.
        (Contributed by FL, 28-May-2007.) $)
 ${
-	$v x y z A v u $.
+	$v x y A z v u $.
 	$d A x y v z $.
 	$d A x y u z $.
 	f0 $f set x $.
@@ -208,7 +208,7 @@ $}
 $( Two ways to express single-valuedness of a class expression
        ` A ( x ) ` .  (Contributed by NM, 14-Oct-2010.) $)
 ${
-	$v x y z A $.
+	$v x y A z $.
 	$d x y z $.
 	$d A y z $.
 	f0 $f set x $.
@@ -222,7 +222,7 @@ $( Even if ` x ` is free in ` A ` , it is effectively bound when
        ` A ( x ) ` is single-valued.  (Contributed by NM, 14-Oct-2010.)
        (Revised by Mario Carneiro, 14-Oct-2016.) $)
 ${
-	$v x y z w A $.
+	$v x y A z w $.
 	$d x y z w $.
 	$d A y z w $.
 	f0 $f set x $.
@@ -320,7 +320,7 @@ $}
 $( Lemma for ~ reusv2 .  (Contributed by NM, 27-Oct-2010.)  (Proof
        shortened by Mario Carneiro, 19-Nov-2016.) $)
 ${
-	$v x y z A B $.
+	$v x y A B z $.
 	$d x y z A $.
 	$d x z B $.
 	$d x z $.
@@ -348,7 +348,7 @@ ${
 $}
 $( Lemma for ~ reusv2 .  (Contributed by NM, 13-Dec-2012.) $)
 ${
-	$v ph x y z A B C $.
+	$v ph x y A B C z $.
 	$d x y z A $.
 	$d x z B $.
 	$d x z C $.
@@ -385,7 +385,7 @@ $( Two ways to express single-valuedness of a class expression ` C ( y ) `
        evaluated for at least one ` y ` .  (Contributed by NM, 4-Jan-2013.)
        (Proof shortened by Mario Carneiro, 19-Nov-2016.) $)
 ${
-	$v ph x y z A B C $.
+	$v ph x y A B C z $.
 	$d x y z A $.
 	$d x z B $.
 	$d x z C $.
@@ -485,7 +485,7 @@ $( Two ways to express single-valuedness of a class expression
        30-Oct-2010.)  (Proof shortened by Mario Carneiro, 24-Dec-2016.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
-	$v x y z A B C $.
+	$v x y A B C z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x z C $.
@@ -926,7 +926,7 @@ $}
 $( Membership in an extension of a power class.  (Contributed by NM,
        26-Mar-2007.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -954,7 +954,7 @@ $( An indexed union of a power class in terms of the power class of the
        union of its index.  Part of Exercise 24(b) of [Enderton] p. 33.
        (Contributed by NM, 29-Nov-2003.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d x y A $.
 	e0 $e |- A e. _V $.
 	f0 $f set x $.
@@ -967,7 +967,7 @@ $( A well-founded relation has no 3-cycle loops.  Special case of
        Proposition 6.23 of [TakeutiZaring] p. 30.  (Contributed by NM,
        10-Apr-1994.)  (Revised by Mario Carneiro, 22-Jun-2015.) $)
 ${
-	$v x y A B C D R $.
+	$v A B C D R x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -998,7 +998,7 @@ $( Alternate definition of well-ordering.  Definition 6.24(2) of
        [TakeutiZaring] p. 30.  (Contributed by NM, 16-Mar-1997.)  (Proof
        shortened by Andrew Salmon, 12-Aug-2011.) $)
 ${
-	$v x y z A R $.
+	$v x y A R z $.
 	$d x y z R $.
 	$d x y z A $.
 	f0 $f set x $.

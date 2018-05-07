@@ -274,7 +274,7 @@ $}
 $( The same as ~ df-cleq with the hypothesis removed using the Axiom of
        Extensionality ~ ax-ext .  (Contributed by NM, 15-Sep-1993.) $)
 ${
-	$v x y z A B $.
+	$v x A B y z $.
 	$d x A $.
 	$d x B $.
 	$d x y z $.
@@ -391,7 +391,7 @@ $( Law of identity (reflexivity of class equality).  Theorem 6.4 of [Quine]
        and Beno&icirc;t Jubin for this information.)  (Contributed by NM,
        5-Aug-1993.)  (Revised by Beno&icirc;t Jubin, 14-Oct-2017.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -409,7 +409,7 @@ $}
 $( Commutative law for class equality.  Theorem 6.5 of [Quine] p. 41.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -453,7 +453,7 @@ $}
 $( Equality implies equivalence of equalities.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1172,7 +1172,7 @@ $}
 $( Equality implies equivalence of membership.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1186,7 +1186,7 @@ $}
 $( Equality implies equivalence of membership.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1706,7 +1706,7 @@ $}
 $( Substitution applied to an atomic wff (class version of ~ equsb3 ).
        (Contributed by Rodolfo Medina, 28-Apr-2010.) $)
 ${
-	$v x y w A $.
+	$v x y A w $.
 	$d y A $.
 	$d w y $.
 	$d w A $.
@@ -1722,7 +1722,7 @@ $( Substitution applied to an atomic wff (class version of ~ elsb3 ).
        (Contributed by Rodolfo Medina, 28-Apr-2010.)  (Proof shortened by
        Andrew Salmon, 14-Jun-2011.) $)
 ${
-	$v x y w A $.
+	$v x y A w $.
 	$d y A $.
 	$d w y $.
 	$d w A $.
@@ -1788,7 +1788,7 @@ $( Equality of a class variable and a class abstraction (also called a
        Quine pp. 15-21 and/or Takeuti and Zaring pp. 10-13.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
-	$v ph x y A $.
+	$v ph x A y $.
 	$d x A y $.
 	$d ph y $.
 	f0 $f wff ph $.
@@ -1986,7 +1986,7 @@ $}
 $( Membership of a class variable in a class abstraction.  (Contributed by
        NM, 23-Dec-1993.) $)
 ${
-	$v ph x y A $.
+	$v ph x A y $.
 	$d x A y $.
 	$d ph y $.
 	f0 $f wff ph $.

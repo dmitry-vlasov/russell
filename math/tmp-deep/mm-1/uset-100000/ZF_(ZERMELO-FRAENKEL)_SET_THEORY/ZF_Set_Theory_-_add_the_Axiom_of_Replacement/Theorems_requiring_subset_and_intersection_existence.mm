@@ -8,6 +8,9 @@ $)
 $( No set contains all sets.  Theorem 41 of [Suppes] p. 30.  (Contributed
        by NM, 23-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	inalset_0 $f set z $.
 	fnalset_0 $f set x $.
@@ -18,6 +21,8 @@ $( The universal class is not a member of itself (and thus is not a set).
        Proposition 5.21 of [TakeutiZaring] p. 21; our proof, however, does not
        depend on the Axiom of Regularity.  (Contributed by NM, 23-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	ivprc_0 $f set x $.
 	ivprc_1 $f set y $.
@@ -26,17 +31,23 @@ $}
 $( The universal class doesn't belong to any class.  (Contributed by FL,
      31-Dec-2006.) $)
 ${
+	$v A $.
 	fnvel_0 $f class A $.
 	nvel $p |- -. _V e. A $= cvv fnvel_0 wcel cvv cvv wcel vprc cvv fnvel_0 elex mto $.
 $}
 $( The universal class does not exist.  (Contributed by NM, 4-Jul-2005.) $)
 ${
+	$v x $.
 	fvnex_0 $f set x $.
 	vnex $p |- -. E. x x = _V $= cvv cvv wcel fvnex_0 sup_set_class cvv wceq fvnex_0 wex vprc fvnex_0 cvv isset mtbi $.
 $}
 $( Separation Scheme (Aussonderung) using class notation.  Compare Exercise
        4 of [TakeutiZaring] p. 22.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
+	$v y $.
 	$d A x y $.
 	$d B x y $.
 	iinex1_0 $f set x $.
@@ -49,6 +60,8 @@ $}
 $( Separation Scheme (Aussonderung) using class notation.  (Contributed by
        NM, 27-Apr-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	finex2_0 $f class A $.
 	finex2_1 $f class B $.
 	einex2_0 $e |- A e. _V $.
@@ -57,6 +70,10 @@ $}
 $( Closed-form, generalized Separation Scheme.  (Contributed by NM,
        7-Apr-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	iinex1g_0 $f set x $.
@@ -69,6 +86,8 @@ $( The subset of a set is also a set.  Exercise 3 of [TakeutiZaring]
        p. 22.  This is one way to express the Axiom of Separation ~ ax-sep
        (a.k.a.  Subset Axiom).  (Contributed by NM, 27-Apr-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	fssex_0 $f class A $.
 	fssex_1 $f class B $.
 	essex_0 $e |- B e. _V $.
@@ -76,6 +95,8 @@ ${
 $}
 $( The subset of a set is also a set.  (Contributed by NM, 9-Sep-1993.) $)
 ${
+	$v A $.
+	$v B $.
 	fssexi_0 $f class A $.
 	fssexi_1 $f class B $.
 	essexi_0 $e |- B e. _V $.
@@ -85,6 +106,10 @@ $}
 $( The subset of a set is also a set.  Exercise 3 of [TakeutiZaring] p. 22
        (generalized).  (Contributed by NM, 14-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	issexg_0 $f set x $.
@@ -96,6 +121,10 @@ $}
 $( A subclass of a set is a set.  Deduction form of ~ ssexg .  (Contributed
        by David Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fssexd_0 $f wff ph $.
 	fssexd_1 $f class A $.
 	fssexd_2 $f class B $.
@@ -106,6 +135,9 @@ ${
 $}
 $( Existence of a difference.  (Contributed by NM, 26-May-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
 	fdifexg_0 $f class A $.
 	fdifexg_1 $f class B $.
 	fdifexg_2 $f class V $.
@@ -114,6 +146,9 @@ $}
 $( Separation Scheme (Aussonderung) in terms of a class abstraction.
        (Contributed by NM, 8-Jun-1994.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fzfausab_0 $f wff ph $.
 	fzfausab_1 $f set x $.
@@ -124,6 +159,10 @@ $}
 $( Separation Scheme in terms of a restricted class abstraction.
        (Contributed by NM, 23-Oct-1999.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	frabexg_0 $f wff ph $.
 	frabexg_1 $f set x $.
@@ -134,6 +173,9 @@ $}
 $( Separation Scheme in terms of a restricted class abstraction.
        (Contributed by NM, 19-Jul-1996.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	frabex_0 $f wff ph $.
 	frabex_1 $f set x $.
@@ -144,6 +186,12 @@ $}
 $( Membership in a class abstraction involving a subset.  Unlike ~ elabg ,
        ` A ` does not have to be a set.  (Contributed by NM, 29-Aug-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d x A $.
 	$d x B $.
 	$d x ps $.
@@ -160,6 +208,8 @@ $( The intersection of a non-empty class exists.  Exercise 5 of
        [TakeutiZaring] p. 44 and its converse.  (Contributed by NM,
        13-Aug-2002.) $)
 ${
+	$v A $.
+	$v x $.
 	$d x A $.
 	iintex_0 $f set x $.
 	fintex_0 $f class A $.
@@ -168,12 +218,15 @@ $}
 $( If a class intersection is not a set, it must be the universe.
      (Contributed by NM, 3-Jul-2005.) $)
 ${
+	$v A $.
 	fintnex_0 $f class A $.
 	intnex $p |- ( -. |^| A e. _V <-> |^| A = _V ) $= fintnex_0 cint cvv wcel wn fintnex_0 cint cvv wceq fintnex_0 cint cvv wcel wn fintnex_0 c0 wceq fintnex_0 cint cvv wceq fintnex_0 cint cvv wcel fintnex_0 c0 fintnex_0 intex necon1bbii fintnex_0 c0 wceq fintnex_0 cint c0 cint cvv fintnex_0 c0 inteq int0 syl6eq sylbi fintnex_0 cint cvv wceq fintnex_0 cint cvv wcel cvv cvv wcel vprc fintnex_0 cint cvv cvv eleq1 mtbiri impbii $.
 $}
 $( The intersection of a non-empty class abstraction exists.  (Contributed
        by NM, 21-Oct-2003.) $)
 ${
+	$v ph $.
+	$v x $.
 	fintexab_0 $f wff ph $.
 	fintexab_1 $f set x $.
 	intexab $p |- ( E. x ph <-> |^| { x | ph } e. _V ) $= fintexab_0 fintexab_1 wex fintexab_0 fintexab_1 cab c0 wne fintexab_0 fintexab_1 cab cint cvv wcel fintexab_0 fintexab_1 abn0 fintexab_0 fintexab_1 cab intex bitr3i $.
@@ -181,6 +234,9 @@ $}
 $( The intersection of a non-empty restricted class abstraction exists.
      (Contributed by NM, 21-Oct-2003.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fintexrab_0 $f wff ph $.
 	fintexrab_1 $f set x $.
 	fintexrab_2 $f class A $.
@@ -190,6 +246,11 @@ $( The existence of an indexed union. ` x ` is normally a free-variable
        parameter in ` B ` , which should be read ` B ( x ) ` .  (Contributed by
        FL, 19-Sep-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d A x y $.
 	$d B y $.
 	iiinexg_0 $f set y $.
@@ -202,6 +263,12 @@ $}
 $( Absorption of a redundant conjunct in the intersection of a class
        abstraction.  (Contributed by NM, 3-Jul-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d x A $.
 	$d y ph $.
@@ -222,6 +289,11 @@ $( The intersection of a union ` U. A ` with a class ` B ` is equal to the
        union of the intersections of each element of ` A ` with ` B ` .
        (Contributed by FL, 24-Mar-2007.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v z $.
 	$d A x y z $.
 	$d B x y z $.
 	iinuni_0 $f set z $.
@@ -234,6 +306,9 @@ $}
 $( Membership in a power class.  Theorem 86 of [Suppes] p. 47.  (Contributed
      by NM, 7-Aug-2000.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
 	felpw2g_0 $f class A $.
 	felpw2g_1 $f class B $.
 	felpw2g_2 $f class V $.
@@ -242,6 +317,8 @@ $}
 $( Membership in a power class.  Theorem 86 of [Suppes] p. 47.
        (Contributed by NM, 11-Oct-2007.) $)
 ${
+	$v A $.
+	$v B $.
 	felpw2_0 $f class A $.
 	felpw2_1 $f class B $.
 	eelpw2_0 $e |- B e. _V $.
@@ -250,6 +327,10 @@ $}
 $( The power set of a set is never a subset.  (Contributed by Stefan
        O'Rear, 22-Feb-2015.) $)
 ${
+	$v A $.
+	$v V $.
+	$v x $.
+	$v y $.
 	$d A x y $.
 	$d V x y $.
 	ipwnss_0 $f set x $.
@@ -262,6 +343,8 @@ $( No set equals its power set.  The sethood antecedent is necessary; compare
      ~ pwv .  (Contributed by NM, 17-Nov-2008.)  (Proof shortened by Mario
      Carneiro, 23-Dec-2016.) $)
 ${
+	$v A $.
+	$v V $.
 	fpwne_0 $f class A $.
 	fpwne_1 $f class V $.
 	pwne $p |- ( A e. V -> ~P A =/= A ) $= fpwne_0 fpwne_1 wcel fpwne_0 cpw fpwne_0 wss wn fpwne_0 cpw fpwne_0 wne fpwne_0 fpwne_1 pwnss fpwne_0 cpw fpwne_0 wss fpwne_0 cpw fpwne_0 fpwne_0 cpw fpwne_0 eqimss necon3bi syl $.

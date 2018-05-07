@@ -8,6 +8,10 @@ $( Eliminate an antecedent implied by each side of a biconditional.
        (Contributed by NM, 20-Nov-2005.)  (Proof shortened by Wolf Lammen,
        4-Nov-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fpm5.21nd_0 $f wff ph $.
 	fpm5.21nd_1 $f wff ps $.
 	fpm5.21nd_2 $f wff ch $.
@@ -20,6 +24,9 @@ $}
 $( Theorem *5.35 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm5.35_0 $f wff ph $.
 	fpm5.35_1 $f wff ps $.
 	fpm5.35_2 $f wff ch $.
@@ -28,6 +35,8 @@ $}
 $( Theorem *5.54 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 7-Nov-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm5.54_0 $f wff ph $.
 	fpm5.54_1 $f wff ps $.
 	pm5.54 $p |- ( ( ( ph /\ ps ) <-> ph ) \/ ( ( ph /\ ps ) <-> ps ) ) $= fpm5.54_0 fpm5.54_1 wa fpm5.54_0 wb fpm5.54_0 fpm5.54_1 wa fpm5.54_1 wb fpm5.54_0 fpm5.54_1 wa fpm5.54_0 fpm5.54_1 wa fpm5.54_0 wb fpm5.54_1 fpm5.54_1 fpm5.54_0 fpm5.54_1 wa fpm5.54_0 wb fpm5.54_0 fpm5.54_1 fpm5.54_0 fpm5.54_0 fpm5.54_1 wa fpm5.54_1 fpm5.54_0 iba bicomd adantl fpm5.54_1 fpm5.54_0 fpm5.54_0 fpm5.54_1 wa fpm5.54_1 fpm5.54_0 iba bicomd pm5.21ni orri $.
@@ -35,6 +44,9 @@ $}
 $( Move conjunction outside of biconditional.  (Contributed by NM,
        13-May-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbaib_0 $f wff ph $.
 	fbaib_1 $f wff ps $.
 	fbaib_2 $f wff ch $.
@@ -44,6 +56,9 @@ $}
 $( Move conjunction outside of biconditional.  (Contributed by NM,
        11-Jul-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbaibr_0 $f wff ph $.
 	fbaibr_1 $f wff ps $.
 	fbaibr_2 $f wff ch $.
@@ -53,6 +68,9 @@ $}
 $( Move conjunction outside of biconditional.  (Contributed by Mario
        Carneiro, 11-Sep-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	frbaib_0 $f wff ph $.
 	frbaib_1 $f wff ps $.
 	frbaib_2 $f wff ch $.
@@ -62,6 +80,9 @@ $}
 $( Move conjunction outside of biconditional.  (Contributed by Mario
        Carneiro, 11-Sep-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	frbaibr_0 $f wff ph $.
 	frbaibr_1 $f wff ps $.
 	frbaibr_2 $f wff ch $.
@@ -71,6 +92,10 @@ $}
 $( Move conjunction outside of biconditional.  (Contributed by Mario
        Carneiro, 11-Sep-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fbaibd_0 $f wff ph $.
 	fbaibd_1 $f wff ps $.
 	fbaibd_2 $f wff ch $.
@@ -81,6 +106,10 @@ $}
 $( Move conjunction outside of biconditional.  (Contributed by Mario
        Carneiro, 11-Sep-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	frbaibd_0 $f wff ph $.
 	frbaibd_1 $f wff ps $.
 	frbaibd_2 $f wff ch $.
@@ -91,6 +120,9 @@ $}
 $( Theorem *5.44 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm5.44_0 $f wff ph $.
 	fpm5.44_1 $f wff ps $.
 	fpm5.44_2 $f wff ch $.
@@ -99,6 +131,9 @@ $}
 $( Conjunction in antecedent versus disjunction in consequent.  Theorem *5.6
      of [WhiteheadRussell] p. 125.  (Contributed by NM, 8-Jun-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm5.6_0 $f wff ph $.
 	fpm5.6_1 $f wff ps $.
 	fpm5.6_2 $f wff ch $.
@@ -107,6 +142,9 @@ $}
 $( Change disjunction in consequent to conjunction in antecedent.
        (Contributed by NM, 8-Jun-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	forcanai_0 $f wff ph $.
 	forcanai_1 $f wff ps $.
 	forcanai_2 $f wff ch $.
@@ -116,6 +154,8 @@ $}
 $( Introduction of conjunct inside of a contradiction.  (Contributed by NM,
        16-Sep-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fintnan_0 $f wff ph $.
 	fintnan_1 $f wff ps $.
 	eintnan_0 $e |- -. ph $.
@@ -124,6 +164,8 @@ $}
 $( Introduction of conjunct inside of a contradiction.  (Contributed by NM,
        3-Apr-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fintnanr_0 $f wff ph $.
 	fintnanr_1 $f wff ps $.
 	eintnanr_0 $e |- -. ph $.
@@ -132,6 +174,9 @@ $}
 $( Introduction of conjunct inside of a contradiction.  (Contributed by NM,
        10-Jul-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fintnand_0 $f wff ph $.
 	fintnand_1 $f wff ps $.
 	fintnand_2 $f wff ch $.
@@ -141,6 +186,9 @@ $}
 $( Introduction of conjunct inside of a contradiction.  (Contributed by NM,
        10-Jul-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fintnanrd_0 $f wff ph $.
 	fintnanrd_1 $f wff ps $.
 	fintnanrd_2 $f wff ch $.
@@ -150,6 +198,9 @@ $}
 $( Detach truth from conjunction in biconditional.  (Contributed by NM,
        27-Feb-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmpbiran_0 $f wff ph $.
 	fmpbiran_1 $f wff ps $.
 	fmpbiran_2 $f wff ch $.
@@ -160,6 +211,9 @@ $}
 $( Detach truth from conjunction in biconditional.  (Contributed by NM,
        22-Feb-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmpbiran2_0 $f wff ph $.
 	fmpbiran2_1 $f wff ps $.
 	fmpbiran2_2 $f wff ch $.
@@ -170,6 +224,9 @@ $}
 $( Detach a conjunction of truths in a biconditional.  (Contributed by NM,
        10-May-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmpbir2an_0 $f wff ph $.
 	fmpbir2an_1 $f wff ps $.
 	fmpbir2an_2 $f wff ch $.
@@ -181,6 +238,10 @@ $}
 $( Detach a conjunction of truths in a biconditional.  (Contributed by NM,
        6-Nov-2011.)  (Proof shortened by Wolf Lammen, 24-Nov-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmpbi2and_0 $f wff ph $.
 	fmpbi2and_1 $f wff ps $.
 	fmpbi2and_2 $f wff ch $.
@@ -193,6 +254,10 @@ $}
 $( Detach a conjunction of truths in a biconditional.  (Contributed by NM,
        6-Nov-2011.)  (Proof shortened by Wolf Lammen, 24-Nov-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmpbir2and_0 $f wff ph $.
 	fmpbir2and_1 $f wff ps $.
 	fmpbir2and_2 $f wff ch $.
@@ -205,6 +270,8 @@ $}
 $( Theorem *5.62 of [WhiteheadRussell] p. 125.  (Contributed by Roy F.
      Longton, 21-Jun-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm5.62_0 $f wff ph $.
 	fpm5.62_1 $f wff ps $.
 	pm5.62 $p |- ( ( ( ph /\ ps ) \/ -. ps ) <-> ( ph \/ -. ps ) ) $= fpm5.62_0 fpm5.62_1 wa fpm5.62_1 wn wo fpm5.62_0 fpm5.62_1 wn wo fpm5.62_1 fpm5.62_1 wn wo fpm5.62_1 exmid fpm5.62_0 fpm5.62_1 fpm5.62_1 wn ordir mpbiran2 $.
@@ -212,6 +279,8 @@ $}
 $( Theorem *5.63 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 25-Dec-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm5.63_0 $f wff ph $.
 	fpm5.63_1 $f wff ps $.
 	pm5.63 $p |- ( ( ph \/ ps ) <-> ( ph \/ ( -. ph /\ ps ) ) ) $= fpm5.63_0 fpm5.63_0 wn fpm5.63_1 wa wo fpm5.63_0 fpm5.63_1 wo fpm5.63_0 fpm5.63_0 wn fpm5.63_1 wa wo fpm5.63_0 fpm5.63_0 wn wo fpm5.63_0 fpm5.63_1 wo fpm5.63_0 exmid fpm5.63_0 fpm5.63_0 wn fpm5.63_1 ordi mpbiran bicomi $.
@@ -219,6 +288,8 @@ $}
 $( A wff conjoined with falsehood is false.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Wolf Lammen, 26-Nov-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fbianfi_0 $f wff ph $.
 	fbianfi_1 $f wff ps $.
 	ebianfi_0 $e |- -. ph $.
@@ -227,6 +298,9 @@ $}
 $( A wff conjoined with falsehood is false.  (Contributed by NM,
        27-Mar-1995.)  (Proof shortened by Wolf Lammen, 5-Nov-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbianfd_0 $f wff ph $.
 	fbianfd_1 $f wff ps $.
 	fbianfd_2 $f wff ch $.
@@ -236,6 +310,8 @@ $}
 $( Theorem *4.43 of [WhiteheadRussell] p. 119.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 26-Nov-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm4.43_0 $f wff ph $.
 	fpm4.43_1 $f wff ps $.
 	pm4.43 $p |- ( ph <-> ( ( ph \/ ps ) /\ ( ph \/ -. ps ) ) ) $= fpm4.43_0 fpm4.43_0 fpm4.43_1 fpm4.43_1 wn wa wo fpm4.43_0 fpm4.43_1 wo fpm4.43_0 fpm4.43_1 wn wo wa fpm4.43_1 fpm4.43_1 wn wa fpm4.43_0 fpm4.43_1 pm3.24 biorfi fpm4.43_0 fpm4.43_1 fpm4.43_1 wn ordi bitri $.
@@ -243,6 +319,8 @@ $}
 $( Theorem *4.82 of [WhiteheadRussell] p. 122.  (Contributed by NM,
      3-Jan-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm4.82_0 $f wff ph $.
 	fpm4.82_1 $f wff ps $.
 	pm4.82 $p |- ( ( ( ph -> ps ) /\ ( ph -> -. ps ) ) <-> -. ph ) $= fpm4.82_0 fpm4.82_1 wi fpm4.82_0 fpm4.82_1 wn wi wa fpm4.82_0 wn fpm4.82_0 fpm4.82_1 wi fpm4.82_0 fpm4.82_1 wn wi fpm4.82_0 wn fpm4.82_0 fpm4.82_1 pm2.65 imp fpm4.82_0 wn fpm4.82_0 fpm4.82_1 wi fpm4.82_0 fpm4.82_1 wn wi fpm4.82_0 fpm4.82_1 pm2.21 fpm4.82_0 fpm4.82_1 wn pm2.21 jca impbii $.
@@ -250,6 +328,8 @@ $}
 $( Theorem *4.83 of [WhiteheadRussell] p. 122.  (Contributed by NM,
      3-Jan-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm4.83_0 $f wff ph $.
 	fpm4.83_1 $f wff ps $.
 	pm4.83 $p |- ( ( ( ph -> ps ) /\ ( -. ph -> ps ) ) <-> ps ) $= fpm4.83_1 fpm4.83_0 fpm4.83_0 wn wo fpm4.83_1 wi fpm4.83_0 fpm4.83_1 wi fpm4.83_0 wn fpm4.83_1 wi wa fpm4.83_0 fpm4.83_0 wn wo fpm4.83_1 fpm4.83_0 exmid a1bi fpm4.83_0 fpm4.83_1 fpm4.83_0 wn jaob bitr2i $.
@@ -257,6 +337,8 @@ $}
 $( Negation inferred from embedded conjunct.  (Contributed by NM,
      20-Aug-1993.)  (Proof shortened by Wolf Lammen, 25-Nov-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpclem6_0 $f wff ph $.
 	fpclem6_1 $f wff ps $.
 	pclem6 $p |- ( ( ph <-> ( ps /\ -. ph ) ) -> -. ps ) $= fpclem6_1 fpclem6_0 fpclem6_1 fpclem6_0 wn wa wb fpclem6_1 fpclem6_0 wn fpclem6_1 fpclem6_0 wn wa wb fpclem6_0 fpclem6_1 fpclem6_0 wn wa wb wn fpclem6_1 fpclem6_0 wn ibar fpclem6_0 fpclem6_1 fpclem6_0 wn wa nbbn sylib con2i $.
@@ -264,6 +346,9 @@ $}
 $( A transitive law of equivalence.  Compare Theorem *4.22 of
      [WhiteheadRussell] p. 117.  (Contributed by NM, 18-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbiantr_0 $f wff ph $.
 	fbiantr_1 $f wff ps $.
 	fbiantr_2 $f wff ch $.
@@ -275,6 +360,9 @@ $( Disjunction distributes over the biconditional.  An axiom of system DS in
      (Contributed by NM, 8-Jan-2005.)  (Proof shortened by Wolf Lammen,
      4-Feb-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	forbidi_0 $f wff ph $.
 	forbidi_1 $f wff ps $.
 	forbidi_2 $f wff ch $.
@@ -284,6 +372,9 @@ $( Lukasiewicz's shortest axiom for equivalential calculus.  Storrs McCall,
      ed., _Polish Logic 1920-1939_ (Oxford, 1967), p. 96.  (Contributed by NM,
      10-Jan-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbiluk_0 $f wff ph $.
 	fbiluk_1 $f wff ps $.
 	fbiluk_2 $f wff ch $.
@@ -293,6 +384,9 @@ $( Disjunction distributes over the biconditional.  Theorem *5.7 of
      [WhiteheadRussell] p. 125.  This theorem is similar to ~ orbidi .
      (Contributed by Roy F. Longton, 21-Jun-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm5.7_0 $f wff ph $.
 	fpm5.7_1 $f wff ps $.
 	fpm5.7_2 $f wff ch $.
@@ -301,6 +395,8 @@ $}
 $( Dijkstra-Scholten's Golden Rule for calculational proofs.  (Contributed by
      NM, 10-Jan-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fbigolden_0 $f wff ph $.
 	fbigolden_1 $f wff ps $.
 	bigolden $p |- ( ( ( ph /\ ps ) <-> ph ) <-> ( ps <-> ( ph \/ ps ) ) ) $= fbigolden_0 fbigolden_1 wi fbigolden_0 fbigolden_0 fbigolden_1 wa wb fbigolden_1 fbigolden_0 fbigolden_1 wo wb fbigolden_0 fbigolden_1 wa fbigolden_0 wb fbigolden_0 fbigolden_1 pm4.71 fbigolden_0 fbigolden_1 pm4.72 fbigolden_0 fbigolden_0 fbigolden_1 wa bicom 3bitr3ri $.
@@ -308,6 +404,9 @@ $}
 $( Theorem *5.71 of [WhiteheadRussell] p. 125.  (Contributed by Roy F.
      Longton, 23-Jun-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm5.71_0 $f wff ph $.
 	fpm5.71_1 $f wff ps $.
 	fpm5.71_2 $f wff ch $.
@@ -317,6 +416,9 @@ $( Theorem *5.75 of [WhiteheadRussell] p. 126.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Andrew Salmon, 7-May-2011.)  (Proof
      shortened by Wolf Lammen, 23-Dec-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm5.75_0 $f wff ph $.
 	fpm5.75_1 $f wff ps $.
 	fpm5.75_2 $f wff ch $.
@@ -325,6 +427,9 @@ $}
 $( Removal of conjunct from one side of an equivalence.  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbimsc1_0 $f wff ph $.
 	fbimsc1_1 $f wff ps $.
 	fbimsc1_2 $f wff ch $.
@@ -334,6 +439,8 @@ $( The disjunction of the four possible combinations of two wffs and their
      negations is always true.  (Contributed by David Abernethy,
      28-Jan-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
 	f4exmid_0 $f wff ph $.
 	f4exmid_1 $f wff ps $.
 	4exmid $p |- ( ( ( ph /\ ps ) \/ ( -. ph /\ -. ps ) ) \/ ( ( ph /\ -. ps ) \/ ( ps /\ -. ph ) ) ) $= f4exmid_0 f4exmid_1 wb f4exmid_0 f4exmid_1 wb wn wo f4exmid_0 f4exmid_1 wa f4exmid_0 wn f4exmid_1 wn wa wo f4exmid_0 f4exmid_1 wn wa f4exmid_1 f4exmid_0 wn wa wo wo f4exmid_0 f4exmid_1 wb exmid f4exmid_0 f4exmid_1 wb f4exmid_0 f4exmid_1 wa f4exmid_0 wn f4exmid_1 wn wa wo f4exmid_0 f4exmid_1 wb wn f4exmid_0 f4exmid_1 wn wa f4exmid_1 f4exmid_0 wn wa wo f4exmid_0 f4exmid_1 dfbi3 f4exmid_0 f4exmid_1 xor orbi12i mpbi $.
@@ -341,6 +448,11 @@ $}
 $( Deduction for elimination by cases.  (Contributed by NM, 21-Apr-1994.)
        (Proof shortened by Wolf Lammen, 22-Dec-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fecase2d_0 $f wff ph $.
 	fecase2d_1 $f wff ps $.
 	fecase2d_2 $f wff ch $.
@@ -355,6 +467,9 @@ $}
 $( Inference for elimination by cases.  (Contributed by NM, 23-Mar-1995.)
        (Proof shortened by Wolf Lammen, 26-Nov-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fecase3_0 $f wff ph $.
 	fecase3_1 $f wff ps $.
 	fecase3_2 $f wff ch $.
@@ -366,6 +481,9 @@ $}
 $( Inference for elimination by cases.  (Contributed by NM,
        13-Jul-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fecase_0 $f wff ph $.
 	fecase_1 $f wff ps $.
 	fecase_2 $f wff ch $.
@@ -377,6 +495,10 @@ $}
 $( Deduction for elimination by cases.  (Contributed by NM, 2-May-1996.)
        (Proof shortened by Andrew Salmon, 7-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fecase3d_0 $f wff ph $.
 	fecase3d_1 $f wff ps $.
 	fecase3d_2 $f wff ch $.
@@ -388,6 +510,10 @@ ${
 $}
 $( Deduction for elimination by cases.  (Contributed by NM, 8-Oct-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fecased_0 $f wff ph $.
 	fecased_1 $f wff ps $.
 	fecased_2 $f wff ch $.
@@ -400,6 +526,10 @@ $}
 $( Deduction for elimination by cases.  (Contributed by NM,
        24-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fecase3ad_0 $f wff ph $.
 	fecase3ad_1 $f wff ps $.
 	fecase3ad_2 $f wff ch $.
@@ -412,6 +542,11 @@ $}
 $( Inference for combining cases.  (Contributed by NM, 29-Jul-1999.)
        (Proof shortened by Wolf Lammen, 6-Jan-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fccase_0 $f wff ph $.
 	fccase_1 $f wff ps $.
 	fccase_2 $f wff ch $.
@@ -425,6 +560,12 @@ ${
 $}
 $( Deduction for combining cases.  (Contributed by NM, 9-May-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fccased_0 $f wff ph $.
 	fccased_1 $f wff ps $.
 	fccased_2 $f wff ch $.
@@ -439,6 +580,11 @@ ${
 $}
 $( Inference for combining cases.  (Contributed by NM, 29-Jul-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fccase2_0 $f wff ph $.
 	fccase2_1 $f wff ps $.
 	fccase2_2 $f wff ch $.
@@ -453,6 +599,9 @@ $( Inference eliminating two antecedents from the four possible cases that
        result from their true/false combinations.  (Contributed by NM,
        25-Oct-2003.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f4cases_0 $f wff ph $.
 	f4cases_1 $f wff ps $.
 	f4cases_2 $f wff ch $.
@@ -466,6 +615,10 @@ $( Deduction eliminating two antecedents from the four possible cases that
        result from their true/false combinations.  (Contributed by NM,
        19-Mar-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f4casesdan_0 $f wff ph $.
 	f4casesdan_1 $f wff ps $.
 	f4casesdan_2 $f wff ch $.
@@ -479,6 +632,9 @@ $}
 $( Miscellaneous inference relating falsehoods.  (Contributed by NM,
        31-Mar-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fniabn_0 $f wff ph $.
 	fniabn_1 $f wff ps $.
 	fniabn_2 $f wff ch $.
@@ -489,6 +645,9 @@ $( Lemma for an alternate version of weak deduction theorem.  (Contributed by
      NM, 2-Apr-1994.)  (Proof shortened by Andrew Salmon, 7-May-2011.)  (Proof
      shortened by Wolf Lammen, 4-Dec-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fdedlem0a_0 $f wff ph $.
 	fdedlem0a_1 $f wff ps $.
 	fdedlem0a_2 $f wff ch $.
@@ -497,6 +656,9 @@ $}
 $( Lemma for an alternate version of weak deduction theorem.  (Contributed by
      NM, 2-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fdedlem0b_0 $f wff ph $.
 	fdedlem0b_1 $f wff ps $.
 	fdedlem0b_2 $f wff ch $.
@@ -505,6 +667,9 @@ $}
 $( Lemma for weak deduction theorem.  (Contributed by NM, 26-Jun-2002.)
      (Proof shortened by Andrew Salmon, 7-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fdedlema_0 $f wff ph $.
 	fdedlema_1 $f wff ps $.
 	fdedlema_2 $f wff ch $.
@@ -513,6 +678,9 @@ $}
 $( Lemma for weak deduction theorem.  (Contributed by NM, 15-May-1999.)
      (Proof shortened by Andrew Salmon, 7-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fdedlemb_0 $f wff ph $.
 	fdedlemb_1 $f wff ps $.
 	fdedlemb_2 $f wff ch $.
@@ -522,6 +690,11 @@ $( Hypothesis builder for weak deduction theorem.  For more information,
        see the Deduction Theorem link on the Metamath Proof Explorer home
        page.  (Contributed by NM, 26-Jun-2002.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	felimh_0 $f wff ph $.
 	felimh_1 $f wff ps $.
 	felimh_2 $f wff ch $.
@@ -536,6 +709,11 @@ $( The weak deduction theorem.  For more information, see the Deduction
        Theorem link on the Metamath Proof Explorer home page.  (Contributed by
        NM, 26-Jun-2002.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fdedt_0 $f wff ph $.
 	fdedt_1 $f wff ps $.
 	fdedt_2 $f wff ch $.
@@ -550,6 +728,8 @@ $( Contraposition.  Theorem *2.16 of [WhiteheadRussell] p. 103.  This version
      derive it from ~ con3i .  (Contributed by NM, 27-Jun-2002.)
      (Proof modification is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fcon3th_0 $f wff ph $.
 	fcon3th_1 $f wff ps $.
 	con3th $p |- ( ( ph -> ps ) -> ( -. ps -> -. ph ) ) $= fcon3th_1 fcon3th_0 fcon3th_0 fcon3th_1 wi fcon3th_1 wn fcon3th_0 wn wi fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo wn fcon3th_0 wn wi fcon3th_1 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo wb fcon3th_1 wn fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo wn fcon3th_0 wn fcon3th_1 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo wb fcon3th_1 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo fcon3th_1 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo wb id notbid imbi1d fcon3th_0 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo fcon3th_1 fcon3th_0 fcon3th_0 fcon3th_1 wi fcon3th_0 fcon3th_0 wi fcon3th_0 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo wi fcon3th_1 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo wb fcon3th_1 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo fcon3th_0 fcon3th_1 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo wb id imbi2d fcon3th_0 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo wb fcon3th_0 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo fcon3th_0 fcon3th_0 fcon3th_1 fcon3th_0 fcon3th_1 wi wa fcon3th_0 fcon3th_0 fcon3th_1 wi wn wa wo wb id imbi2d fcon3th_0 id elimh con3i dedt $.
@@ -561,6 +741,9 @@ $( The consensus theorem.  This theorem and its dual (with ` \/ ` and ` /\ `
      NM, 16-May-2003.)  (Proof shortened by Andrew Salmon, 13-May-2011.)
      (Proof shortened by Wolf Lammen, 20-Jan-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fconsensus_0 $f wff ph $.
 	fconsensus_1 $f wff ps $.
 	fconsensus_2 $f wff ch $.
@@ -569,6 +752,8 @@ $}
 $( Theorem *4.42 of [WhiteheadRussell] p. 119.  (Contributed by Roy F.
      Longton, 21-Jun-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm4.42_0 $f wff ph $.
 	fpm4.42_1 $f wff ps $.
 	pm4.42 $p |- ( ph <-> ( ( ph /\ ps ) \/ ( ph /\ -. ps ) ) ) $= fpm4.42_1 fpm4.42_0 fpm4.42_0 fpm4.42_1 wa fpm4.42_0 fpm4.42_1 wn wa wo wb fpm4.42_1 fpm4.42_0 fpm4.42_0 dedlema fpm4.42_1 fpm4.42_0 fpm4.42_0 dedlemb pm2.61i $.
@@ -576,6 +761,9 @@ $}
 $( Miscellaneous inference relating falsehoods.  (Contributed by NM,
        31-Mar-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fninba_0 $f wff ph $.
 	fninba_1 $f wff ps $.
 	fninba_2 $f wff ch $.
@@ -586,6 +774,12 @@ $( A specialized lemma for set theory (to derive the Axiom of Pairing).
        (Contributed by NM, 18-Oct-1995.)  (Proof shortened by Andrew Salmon,
        13-May-2011.)  (Proof shortened by Wolf Lammen, 5-Jan-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fprlem1_0 $f wff ph $.
 	fprlem1_1 $f wff ps $.
 	fprlem1_2 $f wff ch $.
@@ -600,6 +794,10 @@ $( A specialized lemma for set theory (to derive the Axiom of Pairing).
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
      13-May-2011.)  (Proof shortened by Wolf Lammen, 9-Dec-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fprlem2_0 $f wff ph $.
 	fprlem2_1 $f wff ps $.
 	fprlem2_2 $f wff ch $.
@@ -609,6 +807,11 @@ $}
 $( A specialized lemma for set theory (ordered pair theorem).  (Contributed
        by NM, 18-Oct-1995.)  (Proof shortened by Wolf Lammen, 8-Dec-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	foplem1_0 $f wff ph $.
 	foplem1_1 $f wff ps $.
 	foplem1_2 $f wff ch $.
@@ -623,6 +826,10 @@ $}
 $( Lemma used in construction of real numbers.  (Contributed by NM,
      4-Sep-1995.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	frnlem_0 $f wff ph $.
 	frnlem_1 $f wff ps $.
 	frnlem_2 $f wff ch $.
@@ -634,6 +841,10 @@ $( A single axiom for Boolean algebra known as DN_1.  See
      (Contributed by Jeffrey Hankins, 3-Jul-2009.)  (Proof shortened by Andrew
      Salmon, 13-May-2011.)  (Proof shortened by Wolf Lammen, 6-Jan-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fdn1_0 $f wff ph $.
 	fdn1_1 $f wff ps $.
 	fdn1_2 $f wff ch $.

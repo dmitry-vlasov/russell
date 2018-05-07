@@ -10,6 +10,9 @@ $( Extend wff notation to include the proper substitution of a class for a
      set.  Read this notation as "the proper substitution of class ` A ` for
      set variable ` x ` in wff ` ph ` ." $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fwsbc_0 $f wff ph $.
 	fwsbc_1 $f set x $.
 	fwsbc_2 $f class A $.
@@ -48,6 +51,9 @@ $( Define the proper substitution of a class for a set.
      variable (as opposed to a wff variable).  (Contributed by NM,
      14-Apr-1995.)  (Revised by NM, 25-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fdf-sbc_0 $f wff ph $.
 	fdf-sbc_1 $f set x $.
 	fdf-sbc_2 $f class A $.
@@ -79,6 +85,10 @@ $( This theorem, which is similar to Theorem 6.7 of [Quine] p. 42 and holds
      it is, we can simply use the expansion of Quine's definition.
      (Contributed by NM, 14-Apr-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	fdfsbcq_0 $f wff ph $.
 	fdfsbcq_1 $f set x $.
 	fdfsbcq_2 $f class A $.
@@ -91,6 +101,10 @@ $( This theorem, which is similar to Theorem 6.7 of [Quine] p. 42 and holds
      different syntax for each in order to avoid overloading it.  See remarks
      in ~ dfsbcq .  (Contributed by NM, 31-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	fdfsbcq2_0 $f wff ph $.
 	fdfsbcq2_1 $f set x $.
 	fdfsbcq2_2 $f set y $.
@@ -102,6 +116,9 @@ $( Show that ~ df-sb and ~ df-sbc are equivalent when the class term ` A ` in
      ~ df-sb for proofs involving ~ df-sbc .  (Contributed by NM,
      31-Dec-2016.)  (Proof modification is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsbsbc_0 $f wff ph $.
 	fsbsbc_1 $f set x $.
 	fsbsbc_2 $f set y $.
@@ -110,6 +127,10 @@ $}
 $( Equality theorem for class substitution.  (Contributed by Mario
        Carneiro, 9-Feb-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	fsbceq1d_0 $f wff ph $.
 	fsbceq1d_1 $f set x $.
 	fsbceq1d_2 $f class A $.
@@ -120,6 +141,10 @@ $}
 $( Equality theorem for class substitution.  (Contributed by Mario
        Carneiro, 9-Feb-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	fsbceq1dd_0 $f wff ph $.
 	fsbceq1dd_1 $f set x $.
 	fsbceq1dd_2 $f class A $.
@@ -133,6 +158,11 @@ $( This is the closest we can get to ~ df-sbc if we start from ~ dfsbcq
        (Proof shortened by Andrew Salmon, 29-Jun-2011.)
        (Proof modification is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v V $.
 	$d y A $.
 	$d y ph $.
 	$d x y $.
@@ -155,6 +185,10 @@ $( The disjunction of two equivalences for class substitution does not
        variable ` y ` that ` ph ` or ` A ` may contain.  (Contributed by NM,
        11-Oct-2004.)  (Proof modification is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d y ph $.
 	isbc2or_0 $f set y $.
@@ -167,6 +201,9 @@ $( By our definition of proper substitution, it can only be true if the
      substituted expression is a set.  (Contributed by Mario Carneiro,
      13-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fsbcex_0 $f wff ph $.
 	fsbcex_1 $f set x $.
 	fsbcex_2 $f class A $.
@@ -175,6 +212,9 @@ $}
 $( Equality theorem for class substitution.  Class version of ~ sbequ12 .
      (Contributed by NM, 26-Sep-2003.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fsbceq1a_0 $f wff ph $.
 	fsbceq1a_1 $f set x $.
 	fsbceq1a_2 $f class A $.
@@ -183,6 +223,9 @@ $}
 $( Equality theorem for class substitution.  Class version of ~ sbequ12r .
      (Contributed by NM, 4-Jan-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fsbceq2a_0 $f wff ph $.
 	fsbceq2a_1 $f set x $.
 	fsbceq2a_2 $f class A $.
@@ -192,6 +235,11 @@ $( Specialization: if a formula is true for all sets, it is true for any
        class which is a set.  Similar to Theorem 6.11 of [Quine] p. 44.  See
        also ~ stdpc4 and ~ rspsbc .  (Contributed by NM, 16-Jan-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v V $.
 	$d ph y $.
 	$d A y $.
 	$d x y $.
@@ -207,6 +255,11 @@ $( Specialization: if a formula is true for all sets, it is true for any
        also ~ stdpc4 and ~ rspsbc .  (Contributed by Mario Carneiro,
        9-Feb-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	fspsbcd_0 $f wff ph $.
 	fspsbcd_1 $f wff ps $.
 	fspsbcd_2 $f set x $.
@@ -219,6 +272,10 @@ $}
 $( A substitution into a theorem remains true (when ` A ` is a set).
        (Contributed by NM, 5-Nov-2005.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v V $.
 	fsbcth_0 $f wff ph $.
 	fsbcth_1 $f set x $.
 	fsbcth_2 $f class A $.
@@ -229,6 +286,11 @@ $}
 $( Deduction version of ~ sbcth .  (Contributed by NM, 30-Nov-2005.)
        (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x ph $.
 	fsbcthdv_0 $f wff ph $.
 	fsbcthdv_1 $f wff ps $.
@@ -241,6 +303,8 @@ $}
 $( An identity theorem for substitution.  See ~ sbid .  (Contributed by Mario
      Carneiro, 18-Feb-2017.) $)
 ${
+	$v ph $.
+	$v x $.
 	fsbcid_0 $f wff ph $.
 	fsbcid_1 $f set x $.
 	sbcid $p |- ( [. x / x ]. ph <-> ph ) $= fsbcid_0 fsbcid_1 fsbcid_1 cv wsbc fsbcid_0 fsbcid_1 fsbcid_1 wsb fsbcid_0 fsbcid_0 fsbcid_1 fsbcid_1 sbsbc fsbcid_0 fsbcid_1 sbid bitr3i $.
@@ -248,6 +312,10 @@ $}
 $( Deduction version of ~ nfsbc1 .  (Contributed by NM, 23-May-2006.)
        (Revised by Mario Carneiro, 12-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fnfsbc1d_0 $f wff ph $.
 	fnfsbc1d_1 $f wff ps $.
 	fnfsbc1d_2 $f set x $.
@@ -258,6 +326,9 @@ $}
 $( Bound-variable hypothesis builder for class substitution.  (Contributed
        by Mario Carneiro, 12-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fnfsbc1_0 $f wff ph $.
 	fnfsbc1_1 $f set x $.
 	fnfsbc1_2 $f class A $.
@@ -267,6 +338,9 @@ $}
 $( Bound-variable hypothesis builder for class substitution.  (Contributed
        by Mario Carneiro, 12-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fnfsbc1v_0 $f wff ph $.
 	fnfsbc1v_1 $f set x $.
@@ -276,6 +350,11 @@ $}
 $( Deduction version of ~ nfsbc .  (Contributed by NM, 23-Nov-2005.)
        (Revised by Mario Carneiro, 12-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	fnfsbcd_0 $f wff ph $.
 	fnfsbcd_1 $f wff ps $.
 	fnfsbcd_2 $f set x $.
@@ -289,6 +368,10 @@ $}
 $( Bound-variable hypothesis builder for class substitution.  (Contributed
        by NM, 7-Sep-2014.)  (Revised by Mario Carneiro, 12-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	fnfsbc_0 $f wff ph $.
 	fnfsbc_1 $f set x $.
 	fnfsbc_2 $f set y $.
@@ -300,6 +383,11 @@ $}
 $( A composition law for class substitution.  (Contributed by NM,
        26-Sep-2003.)  (Revised by Mario Carneiro, 13-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x z $.
 	$d z A $.
 	$d y z ph $.
@@ -314,6 +402,11 @@ $( A composition law for class substitution.  Importantly, ` x ` may occur
        free in the class expression substituted for ` A ` .  (Contributed by
        NM, 5-Sep-2004.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	$d y ph $.
 	$d A y $.
@@ -328,6 +421,10 @@ $}
 $( An equivalence for class substitution.  (Contributed by NM,
        23-Aug-1993.)  (Revised by Mario Carneiro, 12-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d y ph $.
 	isbc5_0 $f set y $.
@@ -339,6 +436,10 @@ $}
 $( An equivalence for class substitution.  (Contributed by NM,
        11-Oct-2004.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	fsbc6g_0 $f wff ph $.
 	fsbc6g_1 $f set x $.
@@ -349,6 +450,9 @@ $}
 $( An equivalence for class substitution.  (Contributed by NM,
        23-Aug-1993.)  (Proof shortened by Eric Schmidt, 17-Jan-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fsbc6_0 $f wff ph $.
 	fsbc6_1 $f set x $.
@@ -360,6 +464,10 @@ $( An equivalence for class substitution in the spirit of ~ df-clab .  Note
        that ` x ` and ` A ` don't have to be distinct.  (Contributed by NM,
        18-Nov-2008.)  (Revised by Mario Carneiro, 13-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d y A $.
 	$d y ph $.
 	$d x y $.
@@ -373,6 +481,11 @@ $( Change bound variables in a wff substitution.  (Contributed by Jeff
        Hankins, 19-Sep-2009.)  (Proof shortened by Andrew Salmon,
        8-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	fcbvsbc_0 $f wff ph $.
 	fcbvsbc_1 $f wff ps $.
 	fcbvsbc_2 $f set x $.
@@ -387,6 +500,11 @@ $( Change the bound variable of a class substitution using implicit
        substitution.  (Contributed by NM, 30-Sep-2008.)  (Revised by Mario
        Carneiro, 13-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d y ph $.
 	$d x ps $.
 	fcbvsbcv_0 $f wff ph $.
@@ -402,6 +520,11 @@ $( Conversion of implicit substitution to explicit class substitution,
        (Closed theorem version of ~ sbciegf .)  (Contributed by NM,
        10-Nov-2005.)  (Revised by Mario Carneiro, 13-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	fsbciegft_0 $f wff ph $.
 	fsbciegft_1 $f wff ps $.
@@ -414,6 +537,11 @@ $( Conversion of implicit substitution to explicit class substitution.
        (Contributed by NM, 14-Dec-2005.)  (Revised by Mario Carneiro,
        13-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	fsbciegf_0 $f wff ph $.
 	fsbciegf_1 $f wff ps $.
@@ -427,6 +555,11 @@ $}
 $( Conversion of implicit substitution to explicit class substitution.
        (Contributed by NM, 10-Nov-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	$d x ps $.
 	fsbcieg_0 $f wff ph $.
@@ -441,6 +574,13 @@ $( Conversion of implicit substitution to explicit class substitution.
        This version of ~ sbcie avoids a disjointness condition on ` x , A ` by
        substituting twice.  (Contributed by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v V $.
 	$d x y $.
 	$d A y $.
 	$d ch y $.
@@ -460,6 +600,10 @@ $}
 $( Conversion of implicit substitution to explicit class substitution.
        (Contributed by NM, 4-Sep-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	$d x ps $.
 	fsbcie_0 $f wff ph $.
@@ -473,6 +617,12 @@ $}
 $( Conversion of implicit substitution to explicit class substitution,
          deduction form.  (Contributed by NM, 29-Dec-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	fsbciedf_0 $f wff ph $.
 	fsbciedf_1 $f wff ps $.
@@ -489,6 +639,12 @@ $}
 $( Conversion of implicit substitution to explicit class substitution,
        deduction form.  (Contributed by NM, 13-Dec-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	$d x ph $.
 	$d x ch $.
@@ -505,6 +661,13 @@ $}
 $( Conversion of implicit substitution to explicit class substitution,
        deduction form.  (Contributed by NM, 13-Dec-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d x A $.
 	$d x ph $.
 	$d x ch $.
@@ -526,6 +689,11 @@ $( Membership in a restricted class abstraction, expressed with explicit
        variable in ` B ` .  (Contributed by NM, 30-Sep-2003.)  (Proof shortened
        by Mario Carneiro, 13-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d y A $.
 	$d y B $.
 	$d y ph $.
@@ -541,6 +709,11 @@ $}
 $( Substitution applied to an atomic wff.  Set theory version of ~ eqsb3 .
        (Contributed by Andrew Salmon, 29-Jun-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d x y B $.
 	$d y A $.
 	ieqsbc3_0 $f set y $.
@@ -553,6 +726,11 @@ $}
 $( Move negation in and out of class substitution.  (Contributed by NM,
        16-Jan-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v V $.
 	$d x y $.
 	$d y A $.
 	$d y ph $.
@@ -566,6 +744,12 @@ $}
 $( Distribution of class substitution over implication.  (Contributed by
        NM, 16-Jan-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v V $.
 	$d x y $.
 	$d y A $.
 	$d y ph $.
@@ -581,6 +765,11 @@ $}
 $( Distribution of class substitution over conjunction.  (Contributed by
        NM, 31-Dec-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d y A $.
 	$d y ph $.
@@ -595,6 +784,12 @@ $}
 $( Distribution of class substitution over conjunction.  (Contributed by
        NM, 21-May-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v V $.
 	$d x y $.
 	$d y A $.
 	$d y ph $.
@@ -610,6 +805,11 @@ $}
 $( Distribution of class substitution over disjunction.  (Contributed by
        NM, 31-Dec-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d y A $.
 	$d y ph $.
@@ -624,6 +824,12 @@ $}
 $( Distribution of class substitution over disjunction.  (Contributed by
        NM, 21-May-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v V $.
 	$d x y $.
 	$d y A $.
 	$d y ph $.
@@ -639,6 +845,12 @@ $}
 $( Distribution of class substitution over biconditional.  (Contributed by
        Raph Levien, 10-Apr-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v V $.
 	$d x y $.
 	$d y A $.
 	$d y ph $.
@@ -654,6 +866,11 @@ $}
 $( Move universal quantifier in and out of class substitution.
        (Contributed by NM, 31-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x z A $.
 	$d x y z $.
 	$d z ph $.
@@ -667,6 +884,12 @@ $}
 $( Move universal quantifier in and out of class substitution.
        (Contributed by NM, 16-Jan-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v V $.
 	$d x z A $.
 	$d x y z $.
 	$d z ph $.
@@ -681,6 +904,11 @@ $}
 $( Move existential quantifier in and out of class substitution.
        (Contributed by NM, 21-May-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x z A $.
 	$d x y z $.
 	$d z ph $.
@@ -694,6 +922,12 @@ $}
 $( Move existential quantifier in and out of class substitution.
        (Contributed by NM, 21-May-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v V $.
 	$d x z A $.
 	$d x y z $.
 	$d z ph $.
@@ -708,6 +942,10 @@ $}
 $( Set theory version of ~ sbeqal1 .  (Contributed by Andrew Salmon,
        28-Jun-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d x B $.
 	$d x A $.
 	fsbceqal_0 $f set x $.
@@ -719,6 +957,11 @@ $}
 $( Theorem *14.121 in [WhiteheadRussell] p. 185.  (Contributed by Andrew
        Salmon, 28-Jun-2011.)  (Proof shortened by Wolf Lammen, 9-May-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d x A $.
 	$d x B $.
 	fsbeqalb_0 $f wff ph $.
@@ -731,6 +974,11 @@ $}
 $( Formula-building deduction rule for class substitution.  (Contributed by
        NM, 29-Dec-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	fsbcbid_0 $f wff ph $.
 	fsbcbid_1 $f wff ps $.
 	fsbcbid_2 $f wff ch $.
@@ -743,6 +991,11 @@ $}
 $( Formula-building deduction rule for class substitution.  (Contributed by
        NM, 29-Dec-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	fsbcbidv_0 $f wff ph $.
 	fsbcbidv_1 $f wff ps $.
@@ -755,6 +1008,10 @@ $}
 $( Formula-building inference rule for class substitution.  (Contributed by
        NM, 11-Nov-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fsbcbii_0 $f wff ph $.
 	fsbcbii_1 $f wff ps $.
 	fsbcbii_2 $f set x $.
@@ -765,6 +1022,11 @@ $}
 $( Formula-building inference rule for class substitution.  (Contributed by
        NM, 11-Nov-2005.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	fsbcbiiOLD_0 $f wff ph $.
 	fsbcbiiOLD_1 $f wff ps $.
 	fsbcbiiOLD_2 $f set x $.
@@ -778,6 +1040,10 @@ $( ~ eqsbc3 with set variable on right side of equals sign.  This proof was
        using a translation program.  (Contributed by Alan Sare,
        24-Oct-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x C $.
 	$d x A $.
 	feqsbc3r_0 $f set x $.
@@ -790,6 +1056,13 @@ $( Distribution of class substitution over triple conjunction.
        (Contributed by NM, 14-Dec-2006.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v V $.
 	$d y ch $.
 	$d y ps $.
 	$d y ph $.
@@ -807,6 +1080,11 @@ $}
 $( Class substitution into a membership relation.  (Contributed by NM,
        17-Nov-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d y A $.
 	$d x y B $.
 	isbcel1gv_0 $f set y $.
@@ -819,6 +1097,11 @@ $}
 $( Class substitution into a membership relation.  (Contributed by NM,
        17-Nov-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d y B $.
 	$d x y A $.
 	isbcel2gv_0 $f set y $.
@@ -831,6 +1114,12 @@ $}
 $( Substitution analog of Theorem 19.20 of [Margaris] p. 90.  (Contributed
        by NM, 11-Nov-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x ph $.
 	fsbcimdv_0 $f wff ph $.
 	fsbcimdv_1 $f wff ps $.
@@ -844,6 +1133,11 @@ $}
 $( Substitution for a variable not free in a wff does not affect it.
        (Contributed by Mario Carneiro, 14-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v V $.
 	$d x y $.
 	$d y A $.
 	$d y ph $.
@@ -858,6 +1152,10 @@ $( Substitution for a variable not free in a wff does not affect it.
        (Contributed by NM, 11-Oct-2004.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v V $.
 	fsbcgf_0 $f wff ph $.
 	fsbcgf_1 $f set x $.
 	fsbcgf_2 $f class A $.
@@ -868,6 +1166,11 @@ $}
 $( Substitution for a variable not free in antecedent affects only the
        consequent.  (Contributed by NM, 11-Oct-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	fsbc19.21g_0 $f wff ph $.
 	fsbc19.21g_1 $f wff ps $.
 	fsbc19.21g_2 $f set x $.
@@ -880,6 +1183,10 @@ $( Substitution for a variable not occurring in a wff does not affect it.
        Distinct variable form of ~ sbcgf .  (Contributed by Alan Sare,
        10-Nov-2012.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x ph $.
 	fsbcg_0 $f wff ph $.
 	fsbcg_1 $f set x $.
@@ -890,6 +1197,14 @@ $}
 $( Conversion of implicit substitution to explicit class substitution.
        (Contributed by Mario Carneiro, 19-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	$d x y A $.
 	$d y B $.
 	$d x V $.
@@ -912,6 +1227,12 @@ $( Conversion of implicit substitution to explicit class substitution.
        (Contributed by NM, 16-Dec-2008.)  (Revised by Mario Carneiro,
        19-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d y B $.
 	$d x y ps $.
@@ -930,6 +1251,13 @@ $( Conversion of implicit substitution to explicit class substitution.
        (Contributed by NM, 16-Dec-2008.)  (Proof shortened by Mario Carneiro,
        18-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d y B $.
 	$d x y ph $.
@@ -950,6 +1278,14 @@ $( Conversion of implicit substitution to explicit class substitution.
        (Contributed by Mario Carneiro, 19-Jun-2014.)  (Revised by Mario
        Carneiro, 29-Dec-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y z A $.
 	$d y z B $.
 	$d z C $.
@@ -971,6 +1307,11 @@ $}
 $( Lemma for ~ sbccom .  (Contributed by NM, 14-Nov-2005.)  (Revised by
        Mario Carneiro, 18-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	fsbccomlem_0 $f wff ph $.
@@ -983,6 +1324,13 @@ $}
 $( Commutative law for double class substitution.  (Contributed by NM,
        15-Nov-2005.)  (Proof shortened by Mario Carneiro, 18-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
 	$d w y z A $.
 	$d w x z B $.
 	$d w z ph $.
@@ -999,6 +1347,13 @@ $}
 $( Interchange class substitution and restricted quantifier.  (Contributed
        by NM, 1-Mar-2008.)  (Revised by David Abernethy, 22-Feb-2010.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d x y z $.
 	$d A z $.
 	$d B x z $.
@@ -1017,6 +1372,12 @@ $( Interchange class substitution and restricted existential quantifier.
        (Contributed by NM, 1-Mar-2008.)  (Proof shortened by Mario Carneiro,
        13-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d x y $.
 	$d B x $.
 	fsbcrext_0 $f wff ph $.
@@ -1031,6 +1392,13 @@ $( Interchange class substitution and restricted quantifier.  (Contributed
        by NM, 15-Nov-2005.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d y z A $.
 	$d x B $.
 	$d x y z $.
@@ -1049,6 +1417,13 @@ $( Interchange class substitution and restricted existential quantifier.
        (Contributed by NM, 15-Nov-2005.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d y z A $.
 	$d x B $.
 	$d x y z $.
@@ -1066,6 +1441,13 @@ $}
 $( Interchange class substitution and restricted uniqueness quantifier.
        (Contributed by NM, 24-Feb-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d y z A $.
 	$d x B $.
 	$d x y z $.
@@ -1083,6 +1465,13 @@ $}
 $( Interchange class substitution and class abstraction.  (Contributed by
        NM, 5-Nov-2005.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d y w A $.
 	$d w B $.
 	$d w ph $.
@@ -1104,6 +1493,11 @@ $( Restricted quantifier version of Axiom 4 of [Mendelson] p. 69.  This
        also ~ rspsbca and ~ rspcsbela .  (Contributed by NM, 17-Nov-2006.)
        (Proof shortened by Mario Carneiro, 13-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d y A $.
 	$d x y B $.
 	$d y ph $.
@@ -1117,6 +1511,10 @@ $}
 $( Restricted quantifier version of Axiom 4 of [Mendelson] p. 69.
        (Contributed by NM, 14-Dec-2005.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x B $.
 	frspsbca_0 $f wff ph $.
 	frspsbca_1 $f set x $.
@@ -1127,6 +1525,11 @@ $}
 $( Existence form of ~ rspsbca .  (Contributed by NM, 29-Feb-2008.)  (Proof
        shortened by Mario Carneiro, 13-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d y A $.
 	$d x y B $.
 	$d y ph $.
@@ -1140,6 +1543,9 @@ $}
 $( Existence form of ~ spsbc .  (Contributed by Mario Carneiro,
        18-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fspesbc_0 $f wff ph $.
 	fspesbc_1 $f set x $.
 	fspesbc_2 $f class A $.
@@ -1147,6 +1553,10 @@ ${
 $}
 $( form of ~ spsbc .  (Contributed by Mario Carneiro, 9-Feb-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fspesbcd_0 $f wff ph $.
 	fspesbcd_1 $f wff ps $.
 	fspesbcd_2 $f set x $.
@@ -1157,6 +1567,10 @@ $}
 $( A substitution into a theorem.  (Contributed by NM, 1-Mar-2008.)  (Proof
        shortened by Mario Carneiro, 13-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x B $.
 	fsbcth2_0 $f wff ph $.
 	fsbcth2_1 $f set x $.
@@ -1169,6 +1583,10 @@ $( Restricted quantifier version of Axiom 5 of [Mendelson] p. 69.  This is
        an axiom of a predicate calculus for a restricted domain.  Compare the
        unrestricted ~ stdpc5 .  (Contributed by NM, 16-Jan-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fra5_0 $f wff ph $.
 	fra5_1 $f wff ps $.
 	fra5_2 $f set x $.
@@ -1182,6 +1600,10 @@ $( Alternate definition of restricted "at most one."  Note that
        this, let ` A ` be the empty set.  However, one direction of this
        pattern holds; see ~ rmo2i .  (Contributed by NM, 17-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	frmo2_0 $f wff ph $.
 	frmo2_1 $f set x $.
@@ -1193,6 +1615,10 @@ $}
 $( Condition implying restricted "at most one."  (Contributed by NM,
        17-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	frmo2i_0 $f wff ph $.
 	frmo2i_1 $f set x $.
@@ -1204,6 +1630,10 @@ $}
 $( Restricted "at most one" using explicit substitution.  (Contributed by
        NM, 4-Nov-2012.)  (Revised by NM, 16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	frmo3_0 $f wff ph $.
 	frmo3_1 $f set x $.
@@ -1215,6 +1645,13 @@ $}
 $( Consequence of "at most one", using implicit substitution.  (Contributed
        by NM, 2-Jan-2015.)  (Revised by NM, 16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1234,6 +1671,13 @@ $}
 $( Consequence of "at most one", using implicit substitution.  (Contributed
        by NM, 4-Nov-2012.)  (Revised by NM, 16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x C $.

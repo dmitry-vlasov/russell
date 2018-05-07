@@ -15,6 +15,8 @@ $( This theorem repeats ~ sp under the name ~ ax4 , so that the metamath
      ~ sp .  (Contributed by NM, 18-Aug-2017.)  (New usage is discouraged.)
      (Proof modification is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
 	fax4_0 $f wff ph $.
 	fax4_1 $f set x $.
 	ax4 $p |- ( A. x ph -> ph ) $= fax4_0 fax4_1 sp $.
@@ -24,6 +26,9 @@ $( Rederivation of axiom ~ ax-5 from ~ ax-5o and other older axioms.  See
      23-May-2008.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fax5_0 $f wff ph $.
 	fax5_1 $f wff ps $.
 	fax5_2 $f set x $.
@@ -34,6 +39,8 @@ $( Rederivation of axiom ~ ax-6 from ~ ax-6o and other older axioms.  See
      23-May-2008.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
 	fax6_0 $f wff ph $.
 	fax6_1 $f set x $.
 	ax6 $p |- ( -. A. x ph -> A. x -. A. x ph ) $= fax6_0 fax6_1 wal fax6_1 wal wn fax6_1 wal fax6_0 fax6_1 wal wn fax6_1 wal fax6_0 fax6_1 wal fax6_0 fax6_1 wal fax6_1 wal wn fax6_1 wal fax6_0 fax6_1 wal wn wi fax6_0 fax6_1 wal fax6_1 wal wn fax6_1 wal fax6_0 fax6_1 wal wn fax6_1 wal wi fax6_1 fax6_0 fax6_1 wal fax6_1 wal wn fax6_0 fax6_1 wal wn fax6_1 ax-5o fax6_0 fax6_1 wal fax6_1 wal wn fax6_1 wal fax6_0 fax6_1 wal fax6_1 wal fax6_0 fax6_1 wal fax6_0 fax6_1 wal fax6_1 wal wn fax6_1 ax-4 fax6_0 fax6_1 wal fax6_0 fax6_1 wal wi fax6_0 fax6_1 wal fax6_0 fax6_1 wal fax6_1 wal wi fax6_1 fax6_0 fax6_0 fax6_1 wal fax6_1 ax-5o fax6_0 fax6_1 wal id mpg nsyl mpg fax6_0 fax6_1 wal fax6_1 ax-6o nsyl4 $.
@@ -43,6 +50,8 @@ $( Rederivation of axiom ~ ax-9 from ~ ax-9o and other older axioms.  See
      p. 446 (p. 14 of the preprint).  (Contributed by NM, 5-Aug-1993.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
 	fax9from9o_0 $f set x $.
 	fax9from9o_1 $f set y $.
 	ax9from9o $p |- -. A. x -. x = y $= fax9from9o_0 sup_set_class fax9from9o_1 sup_set_class wceq fax9from9o_0 sup_set_class fax9from9o_1 sup_set_class wceq wn fax9from9o_0 wal wn fax9from9o_0 wal wi fax9from9o_0 sup_set_class fax9from9o_1 sup_set_class wceq wn fax9from9o_0 wal wn fax9from9o_0 fax9from9o_0 sup_set_class fax9from9o_1 sup_set_class wceq wn fax9from9o_0 wal wn fax9from9o_0 fax9from9o_1 ax-9o fax9from9o_0 sup_set_class fax9from9o_1 sup_set_class wceq wn fax9from9o_0 wal wn fax9from9o_0 wal fax9from9o_0 sup_set_class fax9from9o_1 sup_set_class wceq fax9from9o_0 sup_set_class fax9from9o_1 sup_set_class wceq wn fax9from9o_0 ax-6o con4i mpg $.
@@ -51,6 +60,8 @@ $( ` x ` is not free in ` A. x ph ` .  Example in Appendix in [Megill] p. 450
      (p. 19 of the preprint).  Also Lemma 22 of [Monk2] p. 114.  (Contributed
      by NM, 5-Aug-1993.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
 	fhba1-o_0 $f wff ph $.
 	fhba1-o_1 $f set x $.
 	hba1-o $p |- ( A. x ph -> A. x A. x ph ) $= fhba1-o_0 fhba1-o_1 wal fhba1-o_0 fhba1-o_1 wal wn fhba1-o_1 wal wn fhba1-o_0 fhba1-o_1 wal wn fhba1-o_1 wal wn fhba1-o_1 wal fhba1-o_0 fhba1-o_1 wal fhba1-o_1 wal fhba1-o_0 fhba1-o_1 wal wn fhba1-o_1 wal fhba1-o_0 fhba1-o_1 wal fhba1-o_0 fhba1-o_1 wal wn fhba1-o_1 ax-4 con2i fhba1-o_0 fhba1-o_1 wal wn fhba1-o_1 ax6 fhba1-o_0 fhba1-o_1 wal wn fhba1-o_1 wal wn fhba1-o_0 fhba1-o_1 wal fhba1-o_1 fhba1-o_0 fhba1-o_1 wal fhba1-o_0 fhba1-o_1 wal wn fhba1-o_1 wal fhba1-o_0 fhba1-o_1 ax6 con1i alimi 3syl $.
@@ -58,6 +69,9 @@ $}
 $( Inference version of ~ ax-5o .  (Contributed by NM, 5-Aug-1993.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fa5i-o_0 $f wff ph $.
 	fa5i-o_1 $f wff ps $.
 	fa5i-o_2 $f set x $.
@@ -71,6 +85,8 @@ $( Commutation law for identical variable specifiers.  The antecedent and
      require ~ ax-17 .  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
 	faecom-o_0 $f set x $.
 	faecom-o_1 $f set y $.
 	aecom-o $p |- ( A. x x = y -> A. y y = x ) $= faecom-o_0 sup_set_class faecom-o_1 sup_set_class wceq faecom-o_0 wal faecom-o_0 sup_set_class faecom-o_1 sup_set_class wceq faecom-o_1 wal faecom-o_1 sup_set_class faecom-o_0 sup_set_class wceq faecom-o_1 wal faecom-o_0 sup_set_class faecom-o_1 sup_set_class wceq faecom-o_0 wal faecom-o_0 sup_set_class faecom-o_1 sup_set_class wceq faecom-o_1 wal faecom-o_0 sup_set_class faecom-o_1 sup_set_class wceq faecom-o_0 faecom-o_1 ax-10o pm2.43i faecom-o_0 sup_set_class faecom-o_1 sup_set_class wceq faecom-o_1 sup_set_class faecom-o_0 sup_set_class wceq faecom-o_1 faecom-o_0 faecom-o_1 equcomi alimi syl $.
@@ -79,6 +95,9 @@ $( A commutation rule for identical variable specifiers.  Version of
        ~ aecoms using ax-10o .  (Contributed by NM, 5-Aug-1993.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	faecoms-o_0 $f wff ph $.
 	faecoms-o_1 $f set x $.
 	faecoms-o_2 $f set y $.
@@ -89,6 +108,9 @@ $( All variables are effectively bound in an identical variable specifier.
      Version of ~ hbae using ~ ax-10o .  (Contributed by NM, 5-Aug-1993.)
      (Proof modification is disccouraged.)  (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fhbae-o_0 $f set x $.
 	fhbae-o_1 $f set y $.
 	fhbae-o_2 $f set z $.
@@ -99,6 +121,10 @@ $( Formula-building lemma for use with the Distinctor Reduction Theorem.
        ~ dral1 using ~ ax-10o .  (Contributed by NM, 24-Nov-1994.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fdral1-o_0 $f wff ph $.
 	fdral1-o_1 $f wff ps $.
 	fdral1-o_2 $f set x $.
@@ -119,6 +145,9 @@ $( Rederivation of axiom ~ ax-11 from ~ ax-11o , ~ ax-10o , and other older
      (Contributed by NM, 22-Jan-2007.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fax11_0 $f wff ph $.
 	fax11_1 $f set x $.
 	fax11_2 $f set y $.
@@ -132,6 +161,9 @@ $( Derive ~ ax-12 from ~ ax-12o and other older axioms.
      (Contributed by NM, 21-Dec-2015.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fax12_0 $f set x $.
 	fax12_1 $f set y $.
 	fax12_2 $f set z $.

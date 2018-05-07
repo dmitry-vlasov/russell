@@ -34,7 +34,7 @@ $( The epsilon relation and membership are the same.  General version of
        ~ epel .  (Contributed by Scott Fenton, 27-Mar-2011.)  (Revised by Mario
        Carneiro, 28-Apr-2015.) $)
 ${
-	$v x y A B V $.
+	$v A B V x y $.
 	$d A x y $.
 	$d B x y $.
 	f0 $f class A $.

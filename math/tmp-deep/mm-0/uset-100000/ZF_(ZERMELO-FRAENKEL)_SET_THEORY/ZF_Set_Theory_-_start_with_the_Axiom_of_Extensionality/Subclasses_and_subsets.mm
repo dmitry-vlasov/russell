@@ -13,6 +13,8 @@ $( Define the subclass relationship.  Exercise 9 of [TakeutiZaring] p. 18.
      ~ ssequn1 , ~ ssequn2 , ~ sseqin2 , and ~ ssdif0 .  (Contributed by NM,
      27-Apr-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	fdf-ss_0 $f class A $.
 	fdf-ss_1 $f class B $.
 	df-ss $a |- ( A C_ B <-> ( A i^i B ) = A ) $.
@@ -20,6 +22,8 @@ $}
 $( Variant of subclass definition ~ df-ss .  (Contributed by NM,
      3-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	fdfss_0 $f class A $.
 	fdfss_1 $f class B $.
 	dfss $p |- ( A C_ B <-> A = ( A i^i B ) ) $= fdfss_0 fdfss_1 wss fdfss_0 fdfss_1 cin fdfss_0 wceq fdfss_0 fdfss_0 fdfss_1 cin wceq fdfss_0 fdfss_1 df-ss fdfss_0 fdfss_1 cin fdfss_0 eqcom bitri $.
@@ -31,6 +35,8 @@ $( Define proper subclass relationship between two classes.  Definition 5.9
      ~ df-ss ).  Other possible definitions are given by ~ dfpss2 and
      ~ dfpss3 .  (Contributed by NM, 7-Feb-1996.) $)
 ${
+	$v A $.
+	$v B $.
 	fdf-pss_0 $f class A $.
 	fdf-pss_1 $f class B $.
 	df-pss $a |- ( A C. B <-> ( A C_ B /\ A =/= B ) ) $.
@@ -39,6 +45,9 @@ $( Alternate definition of the subclass relationship between two classes.
        Definition 5.9 of [TakeutiZaring] p. 17.  (Contributed by NM,
        8-Jan-2002.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fdfss2_0 $f set x $.
@@ -49,6 +58,9 @@ $}
 $( Alternate definition of subclass relationship.  (Contributed by NM,
        14-Oct-1999.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fdfss3_0 $f set x $.
@@ -60,6 +72,10 @@ $( Equivalence for subclass relation, using bound-variable hypotheses
        instead of distinct variable conditions.  (Contributed by NM,
        3-Jul-1994.)  (Revised by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d z A $.
 	$d z B $.
 	$d x z $.
@@ -75,6 +91,9 @@ $( Equivalence for subclass relation, using bound-variable hypotheses
        instead of distinct variable conditions.  (Contributed by NM,
        20-Mar-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	fdfss3f_0 $f set x $.
 	fdfss3f_1 $f class A $.
 	fdfss3f_2 $f class B $.
@@ -85,6 +104,9 @@ $}
 $( If ` x ` is not free in ` A ` and ` B ` , it is not free in
        ` A C_ B ` .  (Contributed by NM, 27-Dec-1996.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	fnfss_0 $f set x $.
 	fnfss_1 $f class A $.
 	fnfss_2 $f class B $.
@@ -95,6 +117,10 @@ $}
 $( Membership relationships follow from a subclass relationship.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -107,6 +133,9 @@ $}
 $( Membership relationships follow from a subclass relationship.
      (Contributed by NM, 7-Jun-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fssel2_0 $f class A $.
 	fssel2_1 $f class B $.
 	fssel2_2 $f class C $.
@@ -115,6 +144,9 @@ $}
 $( Membership inference from subclass relationship.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fsseli_0 $f class A $.
 	fsseli_1 $f class B $.
 	fsseli_2 $f class C $.
@@ -124,6 +156,9 @@ $}
 $( Membership inference from subclass relationship.  (Contributed by NM,
          31-May-1999.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fsselii_0 $f class A $.
 	fsselii_1 $f class B $.
 	fsselii_2 $f class C $.
@@ -134,6 +169,10 @@ $}
 $( Membership inference from subclass relationship.  (Contributed by NM,
          25-Jun-2014.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsseldi_0 $f wff ph $.
 	fsseldi_1 $f class A $.
 	fsseldi_2 $f class B $.
@@ -145,6 +184,10 @@ $}
 $( Membership deduction from subclass relationship.  (Contributed by NM,
        15-Nov-1995.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsseld_0 $f wff ph $.
 	fsseld_1 $f class A $.
 	fsseld_2 $f class B $.
@@ -155,6 +198,10 @@ $}
 $( Membership deduction from subclass relationship.  (Contributed by NM,
        26-Jun-2014.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsselda_0 $f wff ph $.
 	fsselda_1 $f class A $.
 	fsselda_2 $f class B $.
@@ -165,6 +212,10 @@ $}
 $( Membership inference from subclass relationship.  (Contributed by NM,
          14-Dec-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsseldd_0 $f wff ph $.
 	fsseldd_1 $f class A $.
 	fsseldd_2 $f class B $.
@@ -176,6 +227,10 @@ $}
 $( If a class is not in another class, it is also not in a subclass of that
        class.  Deduction form.  (Contributed by David Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fssneld_0 $f wff ph $.
 	fssneld_1 $f class A $.
 	fssneld_2 $f class B $.
@@ -186,6 +241,10 @@ $}
 $( If an element is not in a class, it is also not in a subclass of that
        class.  Deduction form.  (Contributed by David Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fssneldd_0 $f wff ph $.
 	fssneldd_1 $f class A $.
 	fssneldd_2 $f class B $.
@@ -197,6 +256,9 @@ $}
 $( Inference rule based on subclass definition.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fssriv_0 $f set x $.
@@ -208,6 +270,10 @@ $}
 $( Deduction rule based on subclass definition.  (Contributed by NM,
        15-Nov-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ph $.
@@ -222,6 +288,10 @@ $( Transitivity of subclasses.  Exercise 5 of [TakeutiZaring] p. 17.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
        14-Jun-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -234,6 +304,9 @@ $}
 $( Transitivity of subclasses.  Theorem 6 of [Suppes] p. 23.  (Contributed by
      NM, 5-Sep-2003.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fsstr_0 $f class A $.
 	fsstr_1 $f class B $.
 	fsstr_2 $f class C $.
@@ -241,6 +314,9 @@ ${
 $}
 $( Subclass transitivity inference.  (Contributed by NM, 5-May-2000.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fsstri_0 $f class A $.
 	fsstri_1 $f class B $.
 	fsstri_2 $f class C $.
@@ -250,6 +326,10 @@ ${
 $}
 $( Subclass transitivity deduction.  (Contributed by NM, 2-Jun-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsstrd_0 $f wff ph $.
 	fsstrd_1 $f class A $.
 	fsstrd_2 $f class B $.
@@ -260,6 +340,10 @@ ${
 $}
 $( Subclass transitivity deduction.  (Contributed by NM, 6-Feb-2014.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl5ss_0 $f wff ph $.
 	fsyl5ss_1 $f class A $.
 	fsyl5ss_2 $f class B $.
@@ -271,6 +355,10 @@ $}
 $( Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
        3-Jun-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl6ss_0 $f wff ph $.
 	fsyl6ss_1 $f class A $.
 	fsyl6ss_2 $f class B $.
@@ -282,6 +370,11 @@ $}
 $( A subclass transitivity deduction.  (Contributed by NM, 27-Sep-2004.)
        (Proof shortened by Andrew Salmon, 14-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsylan9ss_0 $f wff ph $.
 	fsylan9ss_1 $f wff ps $.
 	fsylan9ss_2 $f class A $.
@@ -293,6 +386,11 @@ ${
 $}
 $( A subclass transitivity deduction.  (Contributed by NM, 27-Sep-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsylan9ssr_0 $f wff ph $.
 	fsylan9ssr_1 $f wff ps $.
 	fsylan9ssr_2 $f class A $.
@@ -305,6 +403,9 @@ $}
 $( The subclass relationship is antisymmetric.  Compare Theorem 4 of
        [Suppes] p. 22.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	ieqss_0 $f set x $.
@@ -315,6 +416,8 @@ $}
 $( Infer equality from two subclass relationships.  Compare Theorem 4 of
        [Suppes] p. 22.  (Contributed by NM, 9-Sep-1993.) $)
 ${
+	$v A $.
+	$v B $.
 	feqssi_0 $f class A $.
 	feqssi_1 $f class B $.
 	eeqssi_0 $e |- A C_ B $.
@@ -324,6 +427,9 @@ $}
 $( Equality deduction from two subclass relationships.  Compare Theorem 4
        of [Suppes] p. 22.  (Contributed by NM, 27-Jun-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	feqssd_0 $f wff ph $.
 	feqssd_1 $f class A $.
 	feqssd_2 $f class B $.
@@ -335,6 +441,8 @@ $( Any class is a subclass of itself.  Exercise 10 of [TakeutiZaring]
        p. 18.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew
        Salmon, 14-Jun-2011.) $)
 ${
+	$v x $.
+	$v A $.
 	$d A x $.
 	issid_0 $f set x $.
 	fssid_0 $f class A $.
@@ -343,6 +451,8 @@ $}
 $( Any class is a subclass of the universal class.  (Contributed by NM,
        31-Oct-1995.) $)
 ${
+	$v x $.
+	$v A $.
 	$d A x $.
 	issv_0 $f set x $.
 	fssv_0 $f class A $.
@@ -351,6 +461,9 @@ $}
 $( Equality theorem for subclasses.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Andrew Salmon, 21-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fsseq1_0 $f class A $.
 	fsseq1_1 $f class B $.
 	fsseq1_2 $f class C $.
@@ -359,6 +472,9 @@ $}
 $( Equality theorem for the subclass relationship.  (Contributed by NM,
      25-Jun-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fsseq2_0 $f class A $.
 	fsseq2_1 $f class B $.
 	fsseq2_2 $f class C $.
@@ -367,6 +483,10 @@ $}
 $( Equality theorem for the subclass relationship.  (Contributed by NM,
      31-May-1999.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fsseq12_0 $f class A $.
 	fsseq12_1 $f class B $.
 	fsseq12_2 $f class C $.
@@ -376,6 +496,9 @@ $}
 $( An equality inference for the subclass relationship.  (Contributed by
        NM, 18-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fsseq1i_0 $f class A $.
 	fsseq1i_1 $f class B $.
 	fsseq1i_2 $f class C $.
@@ -385,6 +508,9 @@ $}
 $( An equality inference for the subclass relationship.  (Contributed by
        NM, 30-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fsseq2i_0 $f class A $.
 	fsseq2i_1 $f class B $.
 	fsseq2i_2 $f class C $.
@@ -394,6 +520,10 @@ $}
 $( An equality inference for the subclass relationship.  (Contributed by
          NM, 31-May-1999.)  (Proof shortened by Eric Schmidt, 26-Jan-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fsseq12i_0 $f class A $.
 	fsseq12i_1 $f class B $.
 	fsseq12i_2 $f class C $.
@@ -405,6 +535,10 @@ $}
 $( An equality deduction for the subclass relationship.  (Contributed by
        NM, 14-Aug-1994.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsseq1d_0 $f wff ph $.
 	fsseq1d_1 $f class A $.
 	fsseq1d_2 $f class B $.
@@ -415,6 +549,10 @@ $}
 $( An equality deduction for the subclass relationship.  (Contributed by
        NM, 14-Aug-1994.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsseq2d_0 $f wff ph $.
 	fsseq2d_1 $f class A $.
 	fsseq2d_2 $f class B $.
@@ -425,6 +563,11 @@ $}
 $( An equality deduction for the subclass relationship.  (Contributed by
          NM, 31-May-1999.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fsseq12d_0 $f wff ph $.
 	fsseq12d_1 $f class A $.
 	fsseq12d_2 $f class B $.
@@ -437,6 +580,9 @@ $}
 $( Substitution of equality into a subclass relationship.  (Contributed by
        NM, 16-Jul-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feqsstri_0 $f class A $.
 	feqsstri_1 $f class B $.
 	feqsstri_2 $f class C $.
@@ -447,6 +593,9 @@ $}
 $( Substitution of equality into a subclass relationship.  (Contributed by
        NM, 19-Oct-1999.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feqsstr3i_0 $f class A $.
 	feqsstr3i_1 $f class B $.
 	feqsstr3i_2 $f class C $.
@@ -457,6 +606,9 @@ $}
 $( Substitution of equality into a subclass relationship.  (Contributed by
        NM, 28-Jul-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fsseqtri_0 $f class A $.
 	fsseqtri_1 $f class B $.
 	fsseqtri_2 $f class C $.
@@ -467,6 +619,9 @@ $}
 $( Substitution of equality into a subclass relationship.  (Contributed by
        NM, 4-Apr-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fsseqtr4i_0 $f class A $.
 	fsseqtr4i_1 $f class B $.
 	fsseqtr4i_2 $f class C $.
@@ -477,6 +632,10 @@ $}
 $( Substitution of equality into a subclass relationship.  (Contributed by
        NM, 25-Apr-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feqsstrd_0 $f wff ph $.
 	feqsstrd_1 $f class A $.
 	feqsstrd_2 $f class B $.
@@ -488,6 +647,10 @@ $}
 $( Substitution of equality into a subclass relationship.  (Contributed by
        NM, 25-Apr-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feqsstr3d_0 $f wff ph $.
 	feqsstr3d_1 $f class A $.
 	feqsstr3d_2 $f class B $.
@@ -499,6 +662,10 @@ $}
 $( Substitution of equality into a subclass relationship.  (Contributed by
        NM, 25-Apr-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsseqtrd_0 $f wff ph $.
 	fsseqtrd_1 $f class A $.
 	fsseqtrd_2 $f class B $.
@@ -510,6 +677,10 @@ $}
 $( Substitution of equality into a subclass relationship.  (Contributed by
        NM, 25-Apr-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsseqtr4d_0 $f wff ph $.
 	fsseqtr4d_1 $f class A $.
 	fsseqtr4d_2 $f class B $.
@@ -522,6 +693,10 @@ $( Substitution of equality in both sides of a subclass relationship.
        (Contributed by NM, 13-Jan-1996.)  (Proof shortened by Eric Schmidt,
        26-Jan-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3sstr3i_0 $f class A $.
 	f3sstr3i_1 $f class B $.
 	f3sstr3i_2 $f class C $.
@@ -535,6 +710,10 @@ $( Substitution of equality in both sides of a subclass relationship.
        (Contributed by NM, 13-Jan-1996.)  (Proof shortened by Eric Schmidt,
        26-Jan-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3sstr4i_0 $f class A $.
 	f3sstr4i_1 $f class B $.
 	f3sstr4i_2 $f class C $.
@@ -547,6 +726,11 @@ $}
 $( Substitution of equality into both sides of a subclass relationship.
        (Contributed by NM, 1-Oct-2000.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3sstr3g_0 $f wff ph $.
 	f3sstr3g_1 $f class A $.
 	f3sstr3g_2 $f class B $.
@@ -561,6 +745,11 @@ $( Substitution of equality into both sides of a subclass relationship.
        (Contributed by NM, 16-Aug-1994.)  (Proof shortened by Eric Schmidt,
        26-Jan-2007.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3sstr4g_0 $f wff ph $.
 	f3sstr4g_1 $f class A $.
 	f3sstr4g_2 $f class B $.
@@ -574,6 +763,11 @@ $}
 $( Substitution of equality into both sides of a subclass relationship.
        (Contributed by NM, 1-Oct-2000.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3sstr3d_0 $f wff ph $.
 	f3sstr3d_1 $f class A $.
 	f3sstr3d_2 $f class B $.
@@ -588,6 +782,11 @@ $( Substitution of equality into both sides of a subclass relationship.
        (Contributed by NM, 30-Nov-1995.)  (Proof shortened by Eric Schmidt,
        26-Jan-2007.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3sstr4d_0 $f wff ph $.
 	f3sstr4d_1 $f class A $.
 	f3sstr4d_2 $f class B $.
@@ -601,6 +800,10 @@ $}
 $( B chained subclass and equality deduction.  (Contributed by NM,
        25-Apr-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl5eqss_0 $f wff ph $.
 	fsyl5eqss_1 $f class A $.
 	fsyl5eqss_2 $f class B $.
@@ -612,6 +815,10 @@ $}
 $( B chained subclass and equality deduction.  (Contributed by NM,
        25-Apr-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl5eqssr_0 $f wff ph $.
 	fsyl5eqssr_1 $f class A $.
 	fsyl5eqssr_2 $f class B $.
@@ -623,6 +830,10 @@ $}
 $( A chained subclass and equality deduction.  (Contributed by NM,
        25-Apr-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl6sseq_0 $f wff ph $.
 	fsyl6sseq_1 $f class A $.
 	fsyl6sseq_2 $f class B $.
@@ -634,6 +845,10 @@ $}
 $( A chained subclass and equality deduction.  (Contributed by NM,
        25-Apr-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl6sseqr_0 $f wff ph $.
 	fsyl6sseqr_1 $f class A $.
 	fsyl6sseqr_2 $f class B $.
@@ -645,6 +860,10 @@ $}
 $( Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
        3-Jun-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl5sseq_0 $f wff ph $.
 	fsyl5sseq_1 $f class A $.
 	fsyl5sseq_2 $f class B $.
@@ -656,6 +875,10 @@ $}
 $( Subclass transitivity deduction.  (Contributed by Jonathan Ben-Naim,
        3-Jun-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl5sseqr_0 $f wff ph $.
 	fsyl5sseqr_1 $f class A $.
 	fsyl5sseqr_2 $f class B $.
@@ -667,6 +890,10 @@ $}
 $( A chained subclass and equality deduction.  (Contributed by Mario
        Carneiro, 2-Jan-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl6eqss_0 $f wff ph $.
 	fsyl6eqss_1 $f class A $.
 	fsyl6eqss_2 $f class B $.
@@ -678,6 +905,10 @@ $}
 $( A chained subclass and equality deduction.  (Contributed by Mario
        Carneiro, 2-Jan-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl6eqssr_0 $f wff ph $.
 	fsyl6eqssr_1 $f class A $.
 	fsyl6eqssr_2 $f class B $.
@@ -689,6 +920,8 @@ $}
 $( Equality implies the subclass relation.  (Contributed by NM, 5-Aug-1993.)
      (Proof shortened by Andrew Salmon, 21-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
 	feqimss_0 $f class A $.
 	feqimss_1 $f class B $.
 	eqimss $p |- ( A = B -> A C_ B ) $= feqimss_0 feqimss_1 wceq feqimss_0 feqimss_1 wss feqimss_1 feqimss_0 wss feqimss_0 feqimss_1 eqss simplbi $.
@@ -696,6 +929,8 @@ $}
 $( Equality implies the subclass relation.  (Contributed by NM,
      23-Nov-2003.) $)
 ${
+	$v A $.
+	$v B $.
 	feqimss2_0 $f class A $.
 	feqimss2_1 $f class B $.
 	eqimss2 $p |- ( B = A -> A C_ B ) $= feqimss2_0 feqimss2_1 wss feqimss2_0 feqimss2_1 feqimss2_0 feqimss2_1 eqimss eqcoms $.
@@ -703,6 +938,8 @@ $}
 $( Infer subclass relationship from equality.  (Contributed by NM,
        6-Jan-2007.) $)
 ${
+	$v A $.
+	$v B $.
 	feqimssi_0 $f class A $.
 	feqimssi_1 $f class B $.
 	eeqimssi_0 $e |- A = B $.
@@ -711,6 +948,8 @@ $}
 $( Infer subclass relationship from equality.  (Contributed by NM,
        7-Jan-2007.) $)
 ${
+	$v A $.
+	$v B $.
 	feqimss2i_0 $f class A $.
 	feqimss2i_1 $f class B $.
 	eeqimss2i_0 $e |- A = B $.
@@ -719,6 +958,9 @@ $}
 $( Two classes are different if they don't include the same class.
      (Contributed by NM, 23-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fnssne1_0 $f class A $.
 	fnssne1_1 $f class B $.
 	fnssne1_2 $f class C $.
@@ -727,6 +969,9 @@ $}
 $( Two classes are different if they are not subclasses of the same class.
      (Contributed by NM, 23-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fnssne2_0 $f class A $.
 	fnssne2_1 $f class B $.
 	fnssne2_2 $f class C $.
@@ -736,6 +981,9 @@ $( Negation of subclass relationship.  Exercise 13 of [TakeutiZaring]
        p. 18.  (Contributed by NM, 25-Feb-1996.)  (Proof shortened by Andrew
        Salmon, 21-Jun-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fnss_0 $f set x $.
@@ -746,6 +994,10 @@ $}
 $( Quantification restricted to a subclass.  (Contributed by NM,
        11-Mar-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fssralv_0 $f wff ph $.
@@ -757,6 +1009,10 @@ $}
 $( Existential quantification restricted to a subclass.  (Contributed by
        NM, 11-Jan-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fssrexv_0 $f wff ph $.
@@ -768,6 +1024,10 @@ $}
 $( Restricted universal quantification on a subset in terms of superset.
        (Contributed by Stefan O'Rear, 3-Apr-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d A x $.
 	$d B x $.
 	fralss_0 $f wff ph $.
@@ -779,6 +1039,10 @@ $}
 $( Restricted existential quantification on a subset in terms of superset.
        (Contributed by Stefan O'Rear, 3-Apr-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d A x $.
 	$d B x $.
 	frexss_0 $f wff ph $.
@@ -790,6 +1054,9 @@ $}
 $( Class abstractions in a subclass relationship.  (Contributed by NM,
        3-Jul-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fss2ab_0 $f wff ph $.
 	fss2ab_1 $f wff ps $.
 	fss2ab_2 $f set x $.
@@ -798,6 +1065,9 @@ $}
 $( Class abstraction in a subclass relationship.  (Contributed by NM,
        16-Aug-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fabss_0 $f wff ph $.
 	fabss_1 $f set x $.
@@ -806,6 +1076,9 @@ ${
 $}
 $( Subclass of a class abstraction.  (Contributed by NM, 16-Aug-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fssab_0 $f wff ph $.
 	fssab_1 $f set x $.
@@ -815,6 +1088,9 @@ $}
 $( The relation for a subclass of a class abstraction is equivalent to
        restricted quantification.  (Contributed by NM, 6-Sep-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fssabral_0 $f wff ph $.
 	fssabral_1 $f set x $.
@@ -824,6 +1100,9 @@ $}
 $( Inference of abstraction subclass from implication.  (Contributed by NM,
        31-Mar-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fss2abi_0 $f wff ph $.
 	fss2abi_1 $f wff ps $.
 	fss2abi_2 $f set x $.
@@ -833,6 +1112,10 @@ $}
 $( Deduction of abstraction subclass from implication.  (Contributed by NM,
        29-Jul-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	$d x ph $.
 	fss2abdv_0 $f wff ph $.
 	fss2abdv_1 $f wff ps $.
@@ -844,6 +1127,10 @@ $}
 $( Deduction of abstraction subclass from implication.  (Contributed by NM,
        20-Jan-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	$d x A $.
 	fabssdv_0 $f wff ph $.
@@ -856,6 +1143,9 @@ $}
 $( Inference of abstraction subclass from implication.  (Contributed by NM,
        20-Jan-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fabssi_0 $f wff ph $.
 	fabssi_1 $f set x $.
@@ -866,6 +1156,10 @@ $}
 $( Restricted abstraction classes in a subclass relationship.  (Contributed
      by NM, 30-May-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fss2rab_0 $f wff ph $.
 	fss2rab_1 $f wff ps $.
 	fss2rab_2 $f set x $.
@@ -875,6 +1169,10 @@ $}
 $( Restricted class abstraction in a subclass relationship.  (Contributed
        by NM, 16-Aug-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x B $.
 	frabss_0 $f wff ph $.
 	frabss_1 $f set x $.
@@ -885,6 +1183,10 @@ $}
 $( Subclass of a restricted class abstraction.  (Contributed by NM,
        16-Aug-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fssrab_0 $f wff ph $.
@@ -896,6 +1198,11 @@ $}
 $( Subclass of a restricted class abstraction (deduction rule).
        (Contributed by NM, 31-Aug-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ph $.
@@ -911,6 +1218,11 @@ $}
 $( Subclass of a restricted class abstraction (deduction rule).
        (Contributed by NM, 2-Feb-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x B $.
 	$d x ph $.
 	frabssdv_0 $f wff ph $.
@@ -924,6 +1236,11 @@ $}
 $( Deduction of restricted abstraction subclass from implication.
        (Contributed by NM, 30-May-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	fss2rabdv_0 $f wff ph $.
 	fss2rabdv_1 $f wff ps $.
@@ -936,6 +1253,10 @@ $}
 $( Inference of restricted abstraction subclass from implication.
        (Contributed by NM, 14-Oct-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fss2rabi_0 $f wff ph $.
 	fss2rabi_1 $f wff ps $.
 	fss2rabi_2 $f set x $.
@@ -946,6 +1267,10 @@ $}
 $( Subclass law for restricted abstraction.  (Contributed by NM,
        18-Dec-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	frabss2_0 $f wff ph $.
@@ -957,6 +1282,9 @@ $}
 $( Subclass relation for the restriction of a class abstraction.
        (Contributed by NM, 31-Mar-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fssab2_0 $f wff ph $.
 	fssab2_1 $f set x $.
@@ -966,6 +1294,9 @@ $}
 $( Subclass relation for a restricted class.  (Contributed by NM,
        19-Mar-1997.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fssrab2_0 $f wff ph $.
 	fssrab2_1 $f set x $.
@@ -975,6 +1306,9 @@ $}
 $( A restricted class is a subclass of the corresponding unrestricted class.
      (Contributed by Mario Carneiro, 23-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	frabssab_0 $f wff ph $.
 	frabssab_1 $f set x $.
 	frabssab_2 $f class A $.
@@ -985,6 +1319,13 @@ $( A subset relationship useful for converting union to indexed union using
        ~ dfiin2 .  (Contributed by NM, 5-Oct-2006.)  (Proof shortened by Mario
        Carneiro, 26-Sep-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y $.
 	$d y z A $.
 	$d y z B $.
@@ -1001,6 +1342,8 @@ $}
 $( Alternate definition of proper subclass.  (Contributed by NM,
      7-Feb-1996.) $)
 ${
+	$v A $.
+	$v B $.
 	fdfpss2_0 $f class A $.
 	fdfpss2_1 $f class B $.
 	dfpss2 $p |- ( A C. B <-> ( A C_ B /\ -. A = B ) ) $= fdfpss2_0 fdfpss2_1 wpss fdfpss2_0 fdfpss2_1 wss fdfpss2_0 fdfpss2_1 wne wa fdfpss2_0 fdfpss2_1 wss fdfpss2_0 fdfpss2_1 wceq wn wa fdfpss2_0 fdfpss2_1 df-pss fdfpss2_0 fdfpss2_1 wne fdfpss2_0 fdfpss2_1 wceq wn fdfpss2_0 fdfpss2_1 wss fdfpss2_0 fdfpss2_1 df-ne anbi2i bitri $.
@@ -1008,12 +1351,17 @@ $}
 $( Alternate definition of proper subclass.  (Contributed by NM,
      7-Feb-1996.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
 	fdfpss3_0 $f class A $.
 	fdfpss3_1 $f class B $.
 	dfpss3 $p |- ( A C. B <-> ( A C_ B /\ -. B C_ A ) ) $= fdfpss3_0 fdfpss3_1 wpss fdfpss3_0 fdfpss3_1 wss fdfpss3_0 fdfpss3_1 wceq wn wa fdfpss3_0 fdfpss3_1 wss fdfpss3_1 fdfpss3_0 wss wn wa fdfpss3_0 fdfpss3_1 dfpss2 fdfpss3_0 fdfpss3_1 wss fdfpss3_0 fdfpss3_1 wceq wn fdfpss3_1 fdfpss3_0 wss wn fdfpss3_0 fdfpss3_1 wss fdfpss3_0 fdfpss3_1 wceq fdfpss3_1 fdfpss3_0 wss fdfpss3_0 fdfpss3_1 wceq fdfpss3_0 fdfpss3_1 wss fdfpss3_1 fdfpss3_0 wss fdfpss3_0 fdfpss3_1 eqss baib notbid pm5.32i bitri $.
 $}
 $( Equality theorem for proper subclass.  (Contributed by NM, 7-Feb-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fpsseq1_0 $f class A $.
 	fpsseq1_1 $f class B $.
 	fpsseq1_2 $f class C $.
@@ -1021,6 +1369,9 @@ ${
 $}
 $( Equality theorem for proper subclass.  (Contributed by NM, 7-Feb-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fpsseq2_0 $f class A $.
 	fpsseq2_1 $f class B $.
 	fpsseq2_2 $f class C $.
@@ -1029,6 +1380,9 @@ $}
 $( An equality inference for the proper subclass relationship.
        (Contributed by NM, 9-Jun-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fpsseq1i_0 $f class A $.
 	fpsseq1i_1 $f class B $.
 	fpsseq1i_2 $f class C $.
@@ -1038,6 +1392,9 @@ $}
 $( An equality inference for the proper subclass relationship.
        (Contributed by NM, 9-Jun-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fpsseq2i_0 $f class A $.
 	fpsseq2i_1 $f class B $.
 	fpsseq2i_2 $f class C $.
@@ -1047,6 +1404,10 @@ $}
 $( An equality inference for the proper subclass relationship.
          (Contributed by NM, 9-Jun-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fpsseq12i_0 $f class A $.
 	fpsseq12i_1 $f class B $.
 	fpsseq12i_2 $f class C $.
@@ -1058,6 +1419,10 @@ $}
 $( An equality deduction for the proper subclass relationship.
        (Contributed by NM, 9-Jun-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fpsseq1d_0 $f wff ph $.
 	fpsseq1d_1 $f class A $.
 	fpsseq1d_2 $f class B $.
@@ -1068,6 +1433,10 @@ $}
 $( An equality deduction for the proper subclass relationship.
        (Contributed by NM, 9-Jun-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fpsseq2d_0 $f wff ph $.
 	fpsseq2d_1 $f class A $.
 	fpsseq2d_2 $f class B $.
@@ -1078,6 +1447,11 @@ $}
 $( An equality deduction for the proper subclass relationship.
          (Contributed by NM, 9-Jun-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fpsseq12d_0 $f wff ph $.
 	fpsseq12d_1 $f class A $.
 	fpsseq12d_2 $f class B $.
@@ -1090,6 +1464,8 @@ $}
 $( A proper subclass is a subclass.  Theorem 10 of [Suppes] p. 23.
      (Contributed by NM, 7-Feb-1996.) $)
 ${
+	$v A $.
+	$v B $.
 	fpssss_0 $f class A $.
 	fpssss_1 $f class B $.
 	pssss $p |- ( A C. B -> A C_ B ) $= fpssss_0 fpssss_1 wpss fpssss_0 fpssss_1 wss fpssss_0 fpssss_1 wne fpssss_0 fpssss_1 df-pss simplbi $.
@@ -1097,6 +1473,8 @@ $}
 $( Two classes in a proper subclass relationship are not equal.  (Contributed
      by NM, 16-Feb-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	fpssne_0 $f class A $.
 	fpssne_1 $f class B $.
 	pssne $p |- ( A C. B -> A =/= B ) $= fpssne_0 fpssne_1 wpss fpssne_0 fpssne_1 wss fpssne_0 fpssne_1 wne fpssne_0 fpssne_1 df-pss simprbi $.
@@ -1104,6 +1482,9 @@ $}
 $( Deduce subclass from proper subclass.  (Contributed by NM,
        29-Feb-1996.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fpssssd_0 $f wff ph $.
 	fpssssd_1 $f class A $.
 	fpssssd_2 $f class B $.
@@ -1113,6 +1494,9 @@ $}
 $( Proper subclasses are unequal.  Deduction form of ~ pssne .
        (Contributed by David Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fpssned_0 $f wff ph $.
 	fpssned_1 $f class A $.
 	fpssned_2 $f class B $.
@@ -1122,6 +1506,8 @@ $}
 $( Subclass in terms of proper subclass.  (Contributed by NM,
      25-Feb-1996.) $)
 ${
+	$v A $.
+	$v B $.
 	fsspss_0 $f class A $.
 	fsspss_1 $f class B $.
 	sspss $p |- ( A C_ B <-> ( A C. B \/ A = B ) ) $= fsspss_0 fsspss_1 wss fsspss_0 fsspss_1 wpss fsspss_0 fsspss_1 wceq wo fsspss_0 fsspss_1 wss fsspss_0 fsspss_1 wpss fsspss_0 fsspss_1 wceq fsspss_0 fsspss_1 wss fsspss_0 fsspss_1 wceq fsspss_0 fsspss_1 wpss fsspss_0 fsspss_1 wpss fsspss_0 fsspss_1 wss fsspss_0 fsspss_1 wceq wn fsspss_0 fsspss_1 dfpss2 simplbi2 con1d orrd fsspss_0 fsspss_1 wpss fsspss_0 fsspss_1 wss fsspss_0 fsspss_1 wceq fsspss_0 fsspss_1 pssss fsspss_0 fsspss_1 eqimss jaoi impbii $.
@@ -1129,6 +1515,7 @@ $}
 $( Proper subclass is irreflexive.  Theorem 7 of [Suppes] p. 23.
      (Contributed by NM, 7-Feb-1996.) $)
 ${
+	$v A $.
 	fpssirr_0 $f class A $.
 	pssirr $p |- -. A C. A $= fpssirr_0 fpssirr_0 wpss fpssirr_0 fpssirr_0 wss fpssirr_0 fpssirr_0 wss wn wa fpssirr_0 fpssirr_0 wss pm3.24 fpssirr_0 fpssirr_0 dfpss3 mtbir $.
 $}
@@ -1136,6 +1523,8 @@ $( Proper subclass has no 2-cycle loops.  Compare Theorem 8 of [Suppes]
      p. 23.  (Contributed by NM, 7-Feb-1996.)  (Proof shortened by Andrew
      Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
 	fpssn2lp_0 $f class A $.
 	fpssn2lp_1 $f class B $.
 	pssn2lp $p |- -. ( A C. B /\ B C. A ) $= fpssn2lp_0 fpssn2lp_1 wpss fpssn2lp_1 fpssn2lp_0 wpss wn wi fpssn2lp_0 fpssn2lp_1 wpss fpssn2lp_1 fpssn2lp_0 wpss wa wn fpssn2lp_0 fpssn2lp_1 wpss fpssn2lp_1 fpssn2lp_0 wss fpssn2lp_1 fpssn2lp_0 wpss fpssn2lp_0 fpssn2lp_1 wpss fpssn2lp_0 fpssn2lp_1 wss fpssn2lp_1 fpssn2lp_0 wss wn fpssn2lp_0 fpssn2lp_1 dfpss3 simprbi fpssn2lp_1 fpssn2lp_0 pssss nsyl fpssn2lp_0 fpssn2lp_1 wpss fpssn2lp_1 fpssn2lp_0 wpss imnan mpbi $.
@@ -1143,6 +1532,8 @@ $}
 $( Two ways of stating trichotomy with respect to inclusion.  (Contributed by
      NM, 12-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	fsspsstri_0 $f class A $.
 	fsspsstri_1 $f class B $.
 	sspsstri $p |- ( ( A C_ B \/ B C_ A ) <-> ( A C. B \/ A = B \/ B C. A ) ) $= fsspsstri_0 fsspsstri_1 wpss fsspsstri_1 fsspsstri_0 wpss wo fsspsstri_0 fsspsstri_1 wceq wo fsspsstri_0 fsspsstri_1 wpss fsspsstri_0 fsspsstri_1 wceq wo fsspsstri_1 fsspsstri_0 wpss wo fsspsstri_0 fsspsstri_1 wss fsspsstri_1 fsspsstri_0 wss wo fsspsstri_0 fsspsstri_1 wpss fsspsstri_0 fsspsstri_1 wceq fsspsstri_1 fsspsstri_0 wpss w3o fsspsstri_0 fsspsstri_1 wpss fsspsstri_1 fsspsstri_0 wpss fsspsstri_0 fsspsstri_1 wceq or32 fsspsstri_0 fsspsstri_1 wss fsspsstri_1 fsspsstri_0 wss wo fsspsstri_0 fsspsstri_1 wpss fsspsstri_0 fsspsstri_1 wceq wo fsspsstri_1 fsspsstri_0 wpss fsspsstri_0 fsspsstri_1 wceq wo wo fsspsstri_0 fsspsstri_1 wpss fsspsstri_1 fsspsstri_0 wpss wo fsspsstri_0 fsspsstri_1 wceq wo fsspsstri_0 fsspsstri_1 wss fsspsstri_0 fsspsstri_1 wpss fsspsstri_0 fsspsstri_1 wceq wo fsspsstri_1 fsspsstri_0 wss fsspsstri_1 fsspsstri_0 wpss fsspsstri_0 fsspsstri_1 wceq wo fsspsstri_0 fsspsstri_1 sspss fsspsstri_1 fsspsstri_0 wss fsspsstri_1 fsspsstri_0 wpss fsspsstri_1 fsspsstri_0 wceq wo fsspsstri_1 fsspsstri_0 wpss fsspsstri_0 fsspsstri_1 wceq wo fsspsstri_1 fsspsstri_0 sspss fsspsstri_1 fsspsstri_0 wceq fsspsstri_0 fsspsstri_1 wceq fsspsstri_1 fsspsstri_0 wpss fsspsstri_1 fsspsstri_0 eqcom orbi2i bitri orbi12i fsspsstri_0 fsspsstri_1 wpss fsspsstri_1 fsspsstri_0 wpss fsspsstri_0 fsspsstri_1 wceq orordir bitr4i fsspsstri_0 fsspsstri_1 wpss fsspsstri_0 fsspsstri_1 wceq fsspsstri_1 fsspsstri_0 wpss df-3or 3bitr4i $.
@@ -1150,6 +1541,8 @@ $}
 $( Partial trichotomy law for subclasses.  (Contributed by NM, 16-May-1996.)
      (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
 	fssnpss_0 $f class A $.
 	fssnpss_1 $f class B $.
 	ssnpss $p |- ( A C_ B -> -. B C. A ) $= fssnpss_1 fssnpss_0 wpss fssnpss_0 fssnpss_1 wss fssnpss_1 fssnpss_0 wpss fssnpss_1 fssnpss_0 wss fssnpss_0 fssnpss_1 wss wn fssnpss_1 fssnpss_0 dfpss3 simprbi con2i $.
@@ -1157,6 +1550,9 @@ $}
 $( Transitive law for proper subclass.  Theorem 9 of [Suppes] p. 23.
      (Contributed by NM, 7-Feb-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fpsstr_0 $f class A $.
 	fpsstr_1 $f class B $.
 	fpsstr_2 $f class C $.
@@ -1165,6 +1561,9 @@ $}
 $( Transitive law for subclass and proper subclass.  (Contributed by NM,
      3-Apr-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fsspsstr_0 $f class A $.
 	fsspsstr_1 $f class B $.
 	fsspsstr_2 $f class C $.
@@ -1173,6 +1572,9 @@ $}
 $( Transitive law for subclass and proper subclass.  (Contributed by NM,
      3-Apr-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fpsssstr_0 $f class A $.
 	fpsssstr_1 $f class B $.
 	fpsssstr_2 $f class C $.
@@ -1181,6 +1583,10 @@ $}
 $( Proper subclass inclusion is transitive.  Deduction form of ~ psstr .
        (Contributed by David Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fpsstrd_0 $f wff ph $.
 	fpsstrd_1 $f class A $.
 	fpsstrd_2 $f class B $.
@@ -1193,6 +1599,10 @@ $( Transitivity involving subclass and proper subclass inclusion.
        Deduction form of ~ sspsstr .  (Contributed by David Moews,
        1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsspsstrd_0 $f wff ph $.
 	fsspsstrd_1 $f class A $.
 	fsspsstrd_2 $f class B $.
@@ -1205,6 +1615,10 @@ $( Transitivity involving subclass and proper subclass inclusion.
        Deduction form of ~ psssstr .  (Contributed by David Moews,
        1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fpsssstrd_0 $f wff ph $.
 	fpsssstrd_1 $f class A $.
 	fpsssstrd_2 $f class B $.
@@ -1217,6 +1631,8 @@ $( A class is not a proper subclass of another iff it satisfies a
      one-directional form of ~ eqss .  (Contributed by Mario Carneiro,
      15-May-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	fnpss_0 $f class A $.
 	fnpss_1 $f class B $.
 	npss $p |- ( -. A C. B <-> ( A C_ B -> A = B ) ) $= fnpss_0 fnpss_1 wss fnpss_0 fnpss_1 wceq wi fnpss_0 fnpss_1 wpss fnpss_0 fnpss_1 wss fnpss_0 fnpss_1 wceq wi wn fnpss_0 fnpss_1 wss fnpss_0 fnpss_1 wceq wn wa fnpss_0 fnpss_1 wpss fnpss_0 fnpss_1 wss fnpss_0 fnpss_1 wceq pm4.61 fnpss_0 fnpss_1 dfpss2 bitr4i con1bii $.

@@ -14,6 +14,10 @@ $( This alternative axiom for propositional calculus using the Sheffer Stroke
      (Contributed by Anthony Hart, 31-Jul-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	flukshef-ax1_0 $f wff ph $.
 	flukshef-ax1_1 $f wff ps $.
 	flukshef-ax1_2 $f wff ch $.
@@ -23,6 +27,11 @@ $}
 $( Lemma for ~ renicax .  (Contributed by NM, 31-Jul-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	flukshefth1_0 $f wff ph $.
 	flukshefth1_1 $f wff ps $.
 	flukshefth1_2 $f wff ch $.
@@ -33,6 +42,11 @@ $}
 $( Lemma for ~ renicax .  (Contributed by NM, 31-Jul-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	ilukshefth2_0 $f wff ph $.
 	ilukshefth2_1 $f wff ps $.
 	ilukshefth2_2 $f wff ch $.
@@ -45,6 +59,11 @@ $( A rederivation of ~ nic-ax from ~ lukshef-ax1 , proving that ~ lukshef-ax1
      calculus.  (Contributed by Anthony Hart, 31-Jul-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	frenicax_0 $f wff ph $.
 	frenicax_1 $f wff ps $.
 	frenicax_2 $f wff ch $.

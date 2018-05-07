@@ -15,8 +15,8 @@ $( If ` ph ` is a wff, so is ` -. ph ` or "not ` ph ` ."  Part of the
      wff.  Later, in predicate calculus, we will extend the basic wff
      definition by including atomic wffs ( ~ weq and ~ wel ). $)
 $c wff  $.
-$v ph $.
 ${
+	$v ph $.
 	fwn_0 $f wff ph $.
 	wn $a wff -. ph $.
 $}
@@ -55,8 +55,9 @@ $( If ` ph ` and ` ps ` are wff's, so is ` ( ph -> ps ) ` or " ` ph ` implies
      material implication has a very specific technical definition, and
      misunderstandings of it are sometimes called "paradoxes of logical
      implication." $)
-$v ps $.
 ${
+	$v ph $.
+	$v ps $.
 	fwi_0 $f wff ph $.
 	fwi_1 $f wff ps $.
 	wi $a wff ( ph -> ps ) $.

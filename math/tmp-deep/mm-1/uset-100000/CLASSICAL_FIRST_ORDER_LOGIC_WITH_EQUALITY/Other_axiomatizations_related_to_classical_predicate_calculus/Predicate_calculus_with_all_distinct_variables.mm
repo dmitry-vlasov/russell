@@ -8,6 +8,9 @@ $)
 $( Distinct variable version of ~ ax-7 .  (Contributed by Mario Carneiro,
        14-Aug-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fax-7d_0 $f wff ph $.
 	fax-7d_1 $f set x $.
@@ -17,6 +20,9 @@ $}
 $( Distinct variable version of ~ ax-8 .  (Contributed by Mario Carneiro,
        14-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	fax-8d_0 $f set x $.
 	fax-8d_1 $f set y $.
@@ -26,12 +32,15 @@ $}
 $( Distinct variable version of ~ ax9 , equal variables case.  (Contributed
        by Mario Carneiro, 14-Aug-2015.) $)
 ${
+	$v x $.
 	fax-9d1_0 $f set x $.
 	ax-9d1 $a |- -. A. x -. x = x $.
 $}
 $( Distinct variable version of ~ ax9 , distinct variables case.
        (Contributed by Mario Carneiro, 14-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	fax-9d2_0 $f set x $.
 	fax-9d2_1 $f set y $.
@@ -40,6 +49,8 @@ $}
 $( Distinct variable version of ~ ax10 .  (Contributed by Mario Carneiro,
        14-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	fax-10d_0 $f set x $.
 	fax-10d_1 $f set y $.
@@ -48,6 +59,9 @@ $}
 $( Distinct variable version of ~ ax-11 .  (Contributed by Mario Carneiro,
        14-Aug-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fax-11d_0 $f wff ph $.
 	fax-11d_1 $f set x $.

@@ -6,6 +6,9 @@ $( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
 $( Extend wff definition to include 3-way disjunction ('or'). $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fw3o_0 $f wff ph $.
 	fw3o_1 $f wff ps $.
 	fw3o_2 $f wff ch $.
@@ -13,6 +16,9 @@ ${
 $}
 $( Extend wff definition to include 3-way conjunction ('and'). $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fw3a_0 $f wff ph $.
 	fw3a_1 $f wff ps $.
 	fw3a_2 $f wff ch $.
@@ -25,6 +31,9 @@ $( Define disjunction ('or') of three wff's.  Definition *2.33 of
      by virtue of the associative law ~ orass .  (Contributed by NM,
      8-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fdf-3or_0 $f wff ph $.
 	fdf-3or_1 $f wff ps $.
 	fdf-3or_2 $f wff ch $.
@@ -36,6 +45,9 @@ $( Define conjunction ('and') of three wff's.  Definition *4.34 of
      by virtue of the associative law ~ anass .  (Contributed by NM,
      8-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fdf-3an_0 $f wff ph $.
 	fdf-3an_1 $f wff ps $.
 	fdf-3an_2 $f wff ch $.
@@ -44,6 +56,9 @@ $}
 $( Associative law for triple disjunction.  (Contributed by NM,
      8-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3orass_0 $f wff ph $.
 	f3orass_1 $f wff ps $.
 	f3orass_2 $f wff ch $.
@@ -52,6 +67,9 @@ $}
 $( Associative law for triple conjunction.  (Contributed by NM,
      8-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3anass_0 $f wff ph $.
 	f3anass_1 $f wff ps $.
 	f3anass_2 $f wff ch $.
@@ -59,6 +77,9 @@ ${
 $}
 $( Rotation law for triple conjunction.  (Contributed by NM, 8-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3anrot_0 $f wff ph $.
 	f3anrot_1 $f wff ps $.
 	f3anrot_2 $f wff ch $.
@@ -66,6 +87,9 @@ ${
 $}
 $( Rotation law for triple disjunction.  (Contributed by NM, 4-Apr-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3orrot_0 $f wff ph $.
 	f3orrot_1 $f wff ps $.
 	f3orrot_2 $f wff ch $.
@@ -74,6 +98,9 @@ $}
 $( Commutation law for triple conjunction.  (Contributed by NM,
      21-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3ancoma_0 $f wff ph $.
 	f3ancoma_1 $f wff ps $.
 	f3ancoma_2 $f wff ch $.
@@ -82,6 +109,9 @@ $}
 $( Commutation law for triple disjunction.  (Contributed by Mario Carneiro,
      4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3orcoma_0 $f wff ph $.
 	f3orcoma_1 $f wff ps $.
 	f3orcoma_2 $f wff ch $.
@@ -90,6 +120,9 @@ $}
 $( Commutation law for triple conjunction.  (Contributed by NM,
      21-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3ancomb_0 $f wff ph $.
 	f3ancomb_1 $f wff ps $.
 	f3ancomb_2 $f wff ch $.
@@ -98,6 +131,9 @@ $}
 $( Commutation law for triple disjunction.  (Contributed by Scott Fenton,
      20-Apr-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3orcomb_0 $f wff ph $.
 	f3orcomb_1 $f wff ps $.
 	f3orcomb_2 $f wff ch $.
@@ -105,6 +141,9 @@ ${
 $}
 $( Reversal law for triple conjunction.  (Contributed by NM, 21-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3anrev_0 $f wff ph $.
 	f3anrev_1 $f wff ps $.
 	f3anrev_2 $f wff ch $.
@@ -113,6 +152,9 @@ $}
 $( Convert triple conjunction to conjunction, then commute.  (Contributed by
      Jonathan Ben-Naim, 3-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3anan32_0 $f wff ph $.
 	f3anan32_1 $f wff ps $.
 	f3anan32_2 $f wff ch $.
@@ -122,6 +164,9 @@ $( Convert triple conjunction to conjunction, then commute.  (Contributed by
      Jonathan Ben-Naim, 3-Jun-2011.)  (Proof shortened by Andrew Salmon,
      14-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3anan12_0 $f wff ph $.
 	f3anan12_1 $f wff ps $.
 	f3anan12_2 $f wff ch $.
@@ -130,6 +175,9 @@ $}
 $( Triple conjunction expressed in terms of triple disjunction.  (Contributed
      by Jeff Hankins, 15-Aug-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3anor_0 $f wff ph $.
 	f3anor_1 $f wff ps $.
 	f3anor_2 $f wff ch $.
@@ -139,6 +187,9 @@ $( Negated triple conjunction expressed in terms of triple disjunction.
      (Contributed by Jeff Hankins, 15-Aug-2009.)  (Proof shortened by Andrew
      Salmon, 13-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3ianor_0 $f wff ph $.
 	f3ianor_1 $f wff ps $.
 	f3ianor_2 $f wff ch $.
@@ -147,6 +198,9 @@ $}
 $( Negated triple disjunction as triple conjunction.  (Contributed by Scott
      Fenton, 19-Apr-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3ioran_0 $f wff ph $.
 	f3ioran_1 $f wff ps $.
 	f3ioran_2 $f wff ch $.
@@ -155,6 +209,9 @@ $}
 $( Triple disjunction in terms of triple conjunction.  (Contributed by NM,
      8-Oct-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3oran_0 $f wff ph $.
 	f3oran_1 $f wff ps $.
 	f3oran_2 $f wff ch $.
@@ -163,6 +220,9 @@ $}
 $( Simplification of triple conjunction.  (Contributed by NM,
      21-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3simpa_0 $f wff ph $.
 	f3simpa_1 $f wff ps $.
 	f3simpa_2 $f wff ch $.
@@ -171,6 +231,9 @@ $}
 $( Simplification of triple conjunction.  (Contributed by NM,
      21-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3simpb_0 $f wff ph $.
 	f3simpb_1 $f wff ps $.
 	f3simpb_2 $f wff ch $.
@@ -179,6 +242,9 @@ $}
 $( Simplification of triple conjunction.  (Contributed by NM, 21-Apr-1994.)
      (Proof shortened by Andrew Salmon, 13-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3simpc_0 $f wff ph $.
 	f3simpc_1 $f wff ps $.
 	f3simpc_2 $f wff ch $.
@@ -187,6 +253,9 @@ $}
 $( Simplification of triple conjunction.  (Contributed by NM,
      21-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fsimp1_0 $f wff ph $.
 	fsimp1_1 $f wff ps $.
 	fsimp1_2 $f wff ch $.
@@ -195,6 +264,9 @@ $}
 $( Simplification of triple conjunction.  (Contributed by NM,
      21-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fsimp2_0 $f wff ph $.
 	fsimp2_1 $f wff ps $.
 	fsimp2_2 $f wff ch $.
@@ -203,6 +275,9 @@ $}
 $( Simplification of triple conjunction.  (Contributed by NM,
      21-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fsimp3_0 $f wff ph $.
 	fsimp3_1 $f wff ps $.
 	fsimp3_2 $f wff ch $.
@@ -210,6 +285,10 @@ ${
 $}
 $( Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsimpl1_0 $f wff ph $.
 	fsimpl1_1 $f wff ps $.
 	fsimpl1_2 $f wff ch $.
@@ -218,6 +297,10 @@ ${
 $}
 $( Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsimpl2_0 $f wff ph $.
 	fsimpl2_1 $f wff ps $.
 	fsimpl2_2 $f wff ch $.
@@ -226,6 +309,10 @@ ${
 $}
 $( Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsimpl3_0 $f wff ph $.
 	fsimpl3_1 $f wff ps $.
 	fsimpl3_2 $f wff ch $.
@@ -234,6 +321,10 @@ ${
 $}
 $( Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsimpr1_0 $f wff ph $.
 	fsimpr1_1 $f wff ps $.
 	fsimpr1_2 $f wff ch $.
@@ -242,6 +333,10 @@ ${
 $}
 $( Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsimpr2_0 $f wff ph $.
 	fsimpr2_1 $f wff ps $.
 	fsimpr2_2 $f wff ch $.
@@ -250,6 +345,10 @@ ${
 $}
 $( Simplification rule.  (Contributed by Jeff Hankins, 17-Nov-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsimpr3_0 $f wff ph $.
 	fsimpr3_1 $f wff ps $.
 	fsimpr3_2 $f wff ch $.
@@ -259,6 +358,9 @@ $}
 $( Infer a conjunct from a triple conjunction.  (Contributed by NM,
        19-Apr-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fsimp1i_0 $f wff ph $.
 	fsimp1i_1 $f wff ps $.
 	fsimp1i_2 $f wff ch $.
@@ -268,6 +370,9 @@ $}
 $( Infer a conjunct from a triple conjunction.  (Contributed by NM,
        19-Apr-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fsimp2i_0 $f wff ph $.
 	fsimp2i_1 $f wff ps $.
 	fsimp2i_2 $f wff ch $.
@@ -277,6 +382,9 @@ $}
 $( Infer a conjunct from a triple conjunction.  (Contributed by NM,
        19-Apr-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fsimp3i_0 $f wff ph $.
 	fsimp3i_1 $f wff ps $.
 	fsimp3i_2 $f wff ch $.
@@ -286,6 +394,10 @@ $}
 $( Deduce a conjunct from a triple conjunction.  (Contributed by NM,
        4-Sep-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsimp1d_0 $f wff ph $.
 	fsimp1d_1 $f wff ps $.
 	fsimp1d_2 $f wff ch $.
@@ -296,6 +408,10 @@ $}
 $( Deduce a conjunct from a triple conjunction.  (Contributed by NM,
        4-Sep-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsimp2d_0 $f wff ph $.
 	fsimp2d_1 $f wff ps $.
 	fsimp2d_2 $f wff ch $.
@@ -306,6 +422,10 @@ $}
 $( Deduce a conjunct from a triple conjunction.  (Contributed by NM,
        4-Sep-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsimp3d_0 $f wff ph $.
 	fsimp3d_1 $f wff ps $.
 	fsimp3d_2 $f wff ch $.
@@ -316,6 +436,10 @@ $}
 $( Deduce a conjunct from a triple conjunction.  (Contributed by Jonathan
        Ben-Naim, 3-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsimp1bi_0 $f wff ph $.
 	fsimp1bi_1 $f wff ps $.
 	fsimp1bi_2 $f wff ch $.
@@ -326,6 +450,10 @@ $}
 $( Deduce a conjunct from a triple conjunction.  (Contributed by Jonathan
        Ben-Naim, 3-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsimp2bi_0 $f wff ph $.
 	fsimp2bi_1 $f wff ps $.
 	fsimp2bi_2 $f wff ch $.
@@ -336,6 +464,10 @@ $}
 $( Deduce a conjunct from a triple conjunction.  (Contributed by Jonathan
        Ben-Naim, 3-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsimp3bi_0 $f wff ph $.
 	fsimp3bi_1 $f wff ps $.
 	fsimp3bi_2 $f wff ch $.
@@ -346,6 +478,10 @@ $}
 $( Deduction adding a conjunct to antecedent.  (Contributed by NM,
        16-Jul-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3adant1_0 $f wff ph $.
 	f3adant1_1 $f wff ps $.
 	f3adant1_2 $f wff ch $.
@@ -356,6 +492,10 @@ $}
 $( Deduction adding a conjunct to antecedent.  (Contributed by NM,
        16-Jul-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3adant2_0 $f wff ph $.
 	f3adant2_1 $f wff ps $.
 	f3adant2_2 $f wff ch $.
@@ -366,6 +506,10 @@ $}
 $( Deduction adding a conjunct to antecedent.  (Contributed by NM,
        16-Jul-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3adant3_0 $f wff ph $.
 	f3adant3_1 $f wff ps $.
 	f3adant3_2 $f wff ch $.
@@ -376,6 +520,10 @@ $}
 $( Deduction adding conjuncts to an antecedent.  (Contributed by NM,
        21-Apr-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3ad2ant1_0 $f wff ph $.
 	f3ad2ant1_1 $f wff ps $.
 	f3ad2ant1_2 $f wff ch $.
@@ -386,6 +534,10 @@ $}
 $( Deduction adding conjuncts to an antecedent.  (Contributed by NM,
        21-Apr-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3ad2ant2_0 $f wff ph $.
 	f3ad2ant2_1 $f wff ps $.
 	f3ad2ant2_2 $f wff ch $.
@@ -396,6 +548,10 @@ $}
 $( Deduction adding conjuncts to an antecedent.  (Contributed by NM,
        21-Apr-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3ad2ant3_0 $f wff ph $.
 	f3ad2ant3_1 $f wff ps $.
 	f3ad2ant3_2 $f wff ch $.
@@ -405,6 +561,10 @@ ${
 $}
 $( Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsimp1l_0 $f wff ph $.
 	fsimp1l_1 $f wff ps $.
 	fsimp1l_2 $f wff ch $.
@@ -413,6 +573,10 @@ ${
 $}
 $( Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsimp1r_0 $f wff ph $.
 	fsimp1r_1 $f wff ps $.
 	fsimp1r_2 $f wff ch $.
@@ -421,6 +585,10 @@ ${
 $}
 $( Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsimp2l_0 $f wff ph $.
 	fsimp2l_1 $f wff ps $.
 	fsimp2l_2 $f wff ch $.
@@ -429,6 +597,10 @@ ${
 $}
 $( Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsimp2r_0 $f wff ph $.
 	fsimp2r_1 $f wff ps $.
 	fsimp2r_2 $f wff ch $.
@@ -437,6 +609,10 @@ ${
 $}
 $( Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsimp3l_0 $f wff ph $.
 	fsimp3l_1 $f wff ps $.
 	fsimp3l_2 $f wff ch $.
@@ -445,6 +621,10 @@ ${
 $}
 $( Simplification of triple conjunction.  (Contributed by NM, 9-Nov-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsimp3r_0 $f wff ph $.
 	fsimp3r_1 $f wff ps $.
 	fsimp3r_2 $f wff ch $.
@@ -454,6 +634,11 @@ $}
 $( Simplification of doubly triple conjunction.  (Contributed by NM,
      17-Nov-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp11_0 $f wff ph $.
 	fsimp11_1 $f wff ps $.
 	fsimp11_2 $f wff ch $.
@@ -464,6 +649,11 @@ $}
 $( Simplification of doubly triple conjunction.  (Contributed by NM,
      17-Nov-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp12_0 $f wff ph $.
 	fsimp12_1 $f wff ps $.
 	fsimp12_2 $f wff ch $.
@@ -474,6 +664,11 @@ $}
 $( Simplification of doubly triple conjunction.  (Contributed by NM,
      17-Nov-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp13_0 $f wff ph $.
 	fsimp13_1 $f wff ps $.
 	fsimp13_2 $f wff ch $.
@@ -484,6 +679,11 @@ $}
 $( Simplification of doubly triple conjunction.  (Contributed by NM,
      17-Nov-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp21_0 $f wff ph $.
 	fsimp21_1 $f wff ps $.
 	fsimp21_2 $f wff ch $.
@@ -494,6 +694,11 @@ $}
 $( Simplification of doubly triple conjunction.  (Contributed by NM,
      17-Nov-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp22_0 $f wff ph $.
 	fsimp22_1 $f wff ps $.
 	fsimp22_2 $f wff ch $.
@@ -504,6 +709,11 @@ $}
 $( Simplification of doubly triple conjunction.  (Contributed by NM,
      17-Nov-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp23_0 $f wff ph $.
 	fsimp23_1 $f wff ps $.
 	fsimp23_2 $f wff ch $.
@@ -514,6 +724,11 @@ $}
 $( Simplification of doubly triple conjunction.  (Contributed by NM,
      17-Nov-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp31_0 $f wff ph $.
 	fsimp31_1 $f wff ps $.
 	fsimp31_2 $f wff ch $.
@@ -524,6 +739,11 @@ $}
 $( Simplification of doubly triple conjunction.  (Contributed by NM,
      17-Nov-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp32_0 $f wff ph $.
 	fsimp32_1 $f wff ps $.
 	fsimp32_2 $f wff ch $.
@@ -534,6 +754,11 @@ $}
 $( Simplification of doubly triple conjunction.  (Contributed by NM,
      17-Nov-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp33_0 $f wff ph $.
 	fsimp33_1 $f wff ps $.
 	fsimp33_2 $f wff ch $.
@@ -543,6 +768,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimpll1_0 $f wff ph $.
 	fsimpll1_1 $f wff ps $.
 	fsimpll1_2 $f wff ch $.
@@ -552,6 +782,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimpll2_0 $f wff ph $.
 	fsimpll2_1 $f wff ps $.
 	fsimpll2_2 $f wff ch $.
@@ -561,6 +796,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimpll3_0 $f wff ph $.
 	fsimpll3_1 $f wff ps $.
 	fsimpll3_2 $f wff ch $.
@@ -570,6 +810,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimplr1_0 $f wff ph $.
 	fsimplr1_1 $f wff ps $.
 	fsimplr1_2 $f wff ch $.
@@ -579,6 +824,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimplr2_0 $f wff ph $.
 	fsimplr2_1 $f wff ps $.
 	fsimplr2_2 $f wff ch $.
@@ -588,6 +838,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimplr3_0 $f wff ph $.
 	fsimplr3_1 $f wff ps $.
 	fsimplr3_2 $f wff ch $.
@@ -597,6 +852,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimprl1_0 $f wff ph $.
 	fsimprl1_1 $f wff ps $.
 	fsimprl1_2 $f wff ch $.
@@ -606,6 +866,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimprl2_0 $f wff ph $.
 	fsimprl2_1 $f wff ps $.
 	fsimprl2_2 $f wff ch $.
@@ -615,6 +880,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimprl3_0 $f wff ph $.
 	fsimprl3_1 $f wff ps $.
 	fsimprl3_2 $f wff ch $.
@@ -624,6 +894,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimprr1_0 $f wff ph $.
 	fsimprr1_1 $f wff ps $.
 	fsimprr1_2 $f wff ch $.
@@ -633,6 +908,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimprr2_0 $f wff ph $.
 	fsimprr2_1 $f wff ps $.
 	fsimprr2_2 $f wff ch $.
@@ -642,6 +922,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimprr3_0 $f wff ph $.
 	fsimprr3_1 $f wff ps $.
 	fsimprr3_2 $f wff ch $.
@@ -651,6 +936,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimpl1l_0 $f wff ph $.
 	fsimpl1l_1 $f wff ps $.
 	fsimpl1l_2 $f wff ch $.
@@ -660,6 +950,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimpl1r_0 $f wff ph $.
 	fsimpl1r_1 $f wff ps $.
 	fsimpl1r_2 $f wff ch $.
@@ -669,6 +964,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimpl2l_0 $f wff ph $.
 	fsimpl2l_1 $f wff ps $.
 	fsimpl2l_2 $f wff ch $.
@@ -678,6 +978,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimpl2r_0 $f wff ph $.
 	fsimpl2r_1 $f wff ps $.
 	fsimpl2r_2 $f wff ch $.
@@ -687,6 +992,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimpl3l_0 $f wff ph $.
 	fsimpl3l_1 $f wff ps $.
 	fsimpl3l_2 $f wff ch $.
@@ -696,6 +1006,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimpl3r_0 $f wff ph $.
 	fsimpl3r_1 $f wff ps $.
 	fsimpl3r_2 $f wff ch $.
@@ -705,6 +1020,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimpr1l_0 $f wff ph $.
 	fsimpr1l_1 $f wff ps $.
 	fsimpr1l_2 $f wff ch $.
@@ -714,6 +1034,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimpr1r_0 $f wff ph $.
 	fsimpr1r_1 $f wff ps $.
 	fsimpr1r_2 $f wff ch $.
@@ -723,6 +1048,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimpr2l_0 $f wff ph $.
 	fsimpr2l_1 $f wff ps $.
 	fsimpr2l_2 $f wff ch $.
@@ -732,6 +1062,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimpr2r_0 $f wff ph $.
 	fsimpr2r_1 $f wff ps $.
 	fsimpr2r_2 $f wff ch $.
@@ -741,6 +1076,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimpr3l_0 $f wff ph $.
 	fsimpr3l_1 $f wff ps $.
 	fsimpr3l_2 $f wff ch $.
@@ -750,6 +1090,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimpr3r_0 $f wff ph $.
 	fsimpr3r_1 $f wff ps $.
 	fsimpr3r_2 $f wff ch $.
@@ -759,6 +1104,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp1ll_0 $f wff ph $.
 	fsimp1ll_1 $f wff ps $.
 	fsimp1ll_2 $f wff ch $.
@@ -768,6 +1118,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp1lr_0 $f wff ph $.
 	fsimp1lr_1 $f wff ps $.
 	fsimp1lr_2 $f wff ch $.
@@ -777,6 +1132,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp1rl_0 $f wff ph $.
 	fsimp1rl_1 $f wff ps $.
 	fsimp1rl_2 $f wff ch $.
@@ -786,6 +1146,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp1rr_0 $f wff ph $.
 	fsimp1rr_1 $f wff ps $.
 	fsimp1rr_2 $f wff ch $.
@@ -795,6 +1160,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp2ll_0 $f wff ph $.
 	fsimp2ll_1 $f wff ps $.
 	fsimp2ll_2 $f wff ch $.
@@ -804,6 +1174,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp2lr_0 $f wff ph $.
 	fsimp2lr_1 $f wff ps $.
 	fsimp2lr_2 $f wff ch $.
@@ -813,6 +1188,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp2rl_0 $f wff ph $.
 	fsimp2rl_1 $f wff ps $.
 	fsimp2rl_2 $f wff ch $.
@@ -822,6 +1202,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp2rr_0 $f wff ph $.
 	fsimp2rr_1 $f wff ps $.
 	fsimp2rr_2 $f wff ch $.
@@ -831,6 +1216,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp3ll_0 $f wff ph $.
 	fsimp3ll_1 $f wff ps $.
 	fsimp3ll_2 $f wff ch $.
@@ -840,6 +1230,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp3lr_0 $f wff ph $.
 	fsimp3lr_1 $f wff ps $.
 	fsimp3lr_2 $f wff ch $.
@@ -849,6 +1244,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp3rl_0 $f wff ph $.
 	fsimp3rl_1 $f wff ps $.
 	fsimp3rl_2 $f wff ch $.
@@ -858,6 +1258,11 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsimp3rr_0 $f wff ph $.
 	fsimp3rr_1 $f wff ps $.
 	fsimp3rr_2 $f wff ch $.
@@ -867,6 +1272,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimpl11_0 $f wff ph $.
 	fsimpl11_1 $f wff ps $.
 	fsimpl11_2 $f wff ch $.
@@ -877,6 +1288,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimpl12_0 $f wff ph $.
 	fsimpl12_1 $f wff ps $.
 	fsimpl12_2 $f wff ch $.
@@ -887,6 +1304,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimpl13_0 $f wff ph $.
 	fsimpl13_1 $f wff ps $.
 	fsimpl13_2 $f wff ch $.
@@ -897,6 +1320,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimpl21_0 $f wff ph $.
 	fsimpl21_1 $f wff ps $.
 	fsimpl21_2 $f wff ch $.
@@ -907,6 +1336,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimpl22_0 $f wff ph $.
 	fsimpl22_1 $f wff ps $.
 	fsimpl22_2 $f wff ch $.
@@ -917,6 +1352,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimpl23_0 $f wff ph $.
 	fsimpl23_1 $f wff ps $.
 	fsimpl23_2 $f wff ch $.
@@ -927,6 +1368,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimpl31_0 $f wff ph $.
 	fsimpl31_1 $f wff ps $.
 	fsimpl31_2 $f wff ch $.
@@ -937,6 +1384,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimpl32_0 $f wff ph $.
 	fsimpl32_1 $f wff ps $.
 	fsimpl32_2 $f wff ch $.
@@ -947,6 +1400,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimpl33_0 $f wff ph $.
 	fsimpl33_1 $f wff ps $.
 	fsimpl33_2 $f wff ch $.
@@ -957,6 +1416,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimpr11_0 $f wff ph $.
 	fsimpr11_1 $f wff ps $.
 	fsimpr11_2 $f wff ch $.
@@ -967,6 +1432,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimpr12_0 $f wff ph $.
 	fsimpr12_1 $f wff ps $.
 	fsimpr12_2 $f wff ch $.
@@ -977,6 +1448,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimpr13_0 $f wff ph $.
 	fsimpr13_1 $f wff ps $.
 	fsimpr13_2 $f wff ch $.
@@ -987,6 +1464,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimpr21_0 $f wff ph $.
 	fsimpr21_1 $f wff ps $.
 	fsimpr21_2 $f wff ch $.
@@ -997,6 +1480,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimpr22_0 $f wff ph $.
 	fsimpr22_1 $f wff ps $.
 	fsimpr22_2 $f wff ch $.
@@ -1007,6 +1496,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimpr23_0 $f wff ph $.
 	fsimpr23_1 $f wff ps $.
 	fsimpr23_2 $f wff ch $.
@@ -1017,6 +1512,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimpr31_0 $f wff ph $.
 	fsimpr31_1 $f wff ps $.
 	fsimpr31_2 $f wff ch $.
@@ -1027,6 +1528,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimpr32_0 $f wff ph $.
 	fsimpr32_1 $f wff ps $.
 	fsimpr32_2 $f wff ch $.
@@ -1037,6 +1544,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimpr33_0 $f wff ph $.
 	fsimpr33_1 $f wff ps $.
 	fsimpr33_2 $f wff ch $.
@@ -1047,6 +1560,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp1l1_0 $f wff ph $.
 	fsimp1l1_1 $f wff ps $.
 	fsimp1l1_2 $f wff ch $.
@@ -1057,6 +1576,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp1l2_0 $f wff ph $.
 	fsimp1l2_1 $f wff ps $.
 	fsimp1l2_2 $f wff ch $.
@@ -1067,6 +1592,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp1l3_0 $f wff ph $.
 	fsimp1l3_1 $f wff ps $.
 	fsimp1l3_2 $f wff ch $.
@@ -1077,6 +1608,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp1r1_0 $f wff ph $.
 	fsimp1r1_1 $f wff ps $.
 	fsimp1r1_2 $f wff ch $.
@@ -1087,6 +1624,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp1r2_0 $f wff ph $.
 	fsimp1r2_1 $f wff ps $.
 	fsimp1r2_2 $f wff ch $.
@@ -1097,6 +1640,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp1r3_0 $f wff ph $.
 	fsimp1r3_1 $f wff ps $.
 	fsimp1r3_2 $f wff ch $.
@@ -1107,6 +1656,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp2l1_0 $f wff ph $.
 	fsimp2l1_1 $f wff ps $.
 	fsimp2l1_2 $f wff ch $.
@@ -1117,6 +1672,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp2l2_0 $f wff ph $.
 	fsimp2l2_1 $f wff ps $.
 	fsimp2l2_2 $f wff ch $.
@@ -1127,6 +1688,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp2l3_0 $f wff ph $.
 	fsimp2l3_1 $f wff ps $.
 	fsimp2l3_2 $f wff ch $.
@@ -1137,6 +1704,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp2r1_0 $f wff ph $.
 	fsimp2r1_1 $f wff ps $.
 	fsimp2r1_2 $f wff ch $.
@@ -1147,6 +1720,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp2r2_0 $f wff ph $.
 	fsimp2r2_1 $f wff ps $.
 	fsimp2r2_2 $f wff ch $.
@@ -1157,6 +1736,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp2r3_0 $f wff ph $.
 	fsimp2r3_1 $f wff ps $.
 	fsimp2r3_2 $f wff ch $.
@@ -1167,6 +1752,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp3l1_0 $f wff ph $.
 	fsimp3l1_1 $f wff ps $.
 	fsimp3l1_2 $f wff ch $.
@@ -1177,6 +1768,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp3l2_0 $f wff ph $.
 	fsimp3l2_1 $f wff ps $.
 	fsimp3l2_2 $f wff ch $.
@@ -1187,6 +1784,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp3l3_0 $f wff ph $.
 	fsimp3l3_1 $f wff ps $.
 	fsimp3l3_2 $f wff ch $.
@@ -1197,6 +1800,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp3r1_0 $f wff ph $.
 	fsimp3r1_1 $f wff ps $.
 	fsimp3r1_2 $f wff ch $.
@@ -1207,6 +1816,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp3r2_0 $f wff ph $.
 	fsimp3r2_1 $f wff ps $.
 	fsimp3r2_2 $f wff ch $.
@@ -1217,6 +1832,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp3r3_0 $f wff ph $.
 	fsimp3r3_1 $f wff ps $.
 	fsimp3r3_2 $f wff ch $.
@@ -1227,6 +1848,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp11l_0 $f wff ph $.
 	fsimp11l_1 $f wff ps $.
 	fsimp11l_2 $f wff ch $.
@@ -1237,6 +1864,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp11r_0 $f wff ph $.
 	fsimp11r_1 $f wff ps $.
 	fsimp11r_2 $f wff ch $.
@@ -1247,6 +1880,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp12l_0 $f wff ph $.
 	fsimp12l_1 $f wff ps $.
 	fsimp12l_2 $f wff ch $.
@@ -1257,6 +1896,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp12r_0 $f wff ph $.
 	fsimp12r_1 $f wff ps $.
 	fsimp12r_2 $f wff ch $.
@@ -1267,6 +1912,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp13l_0 $f wff ph $.
 	fsimp13l_1 $f wff ps $.
 	fsimp13l_2 $f wff ch $.
@@ -1277,6 +1928,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp13r_0 $f wff ph $.
 	fsimp13r_1 $f wff ps $.
 	fsimp13r_2 $f wff ch $.
@@ -1287,6 +1944,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp21l_0 $f wff ph $.
 	fsimp21l_1 $f wff ps $.
 	fsimp21l_2 $f wff ch $.
@@ -1297,6 +1960,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp21r_0 $f wff ph $.
 	fsimp21r_1 $f wff ps $.
 	fsimp21r_2 $f wff ch $.
@@ -1307,6 +1976,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp22l_0 $f wff ph $.
 	fsimp22l_1 $f wff ps $.
 	fsimp22l_2 $f wff ch $.
@@ -1317,6 +1992,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp22r_0 $f wff ph $.
 	fsimp22r_1 $f wff ps $.
 	fsimp22r_2 $f wff ch $.
@@ -1327,6 +2008,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp23l_0 $f wff ph $.
 	fsimp23l_1 $f wff ps $.
 	fsimp23l_2 $f wff ch $.
@@ -1337,6 +2024,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp23r_0 $f wff ph $.
 	fsimp23r_1 $f wff ps $.
 	fsimp23r_2 $f wff ch $.
@@ -1347,6 +2040,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp31l_0 $f wff ph $.
 	fsimp31l_1 $f wff ps $.
 	fsimp31l_2 $f wff ch $.
@@ -1357,6 +2056,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp31r_0 $f wff ph $.
 	fsimp31r_1 $f wff ps $.
 	fsimp31r_2 $f wff ch $.
@@ -1367,6 +2072,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp32l_0 $f wff ph $.
 	fsimp32l_1 $f wff ps $.
 	fsimp32l_2 $f wff ch $.
@@ -1377,6 +2088,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp32r_0 $f wff ph $.
 	fsimp32r_1 $f wff ps $.
 	fsimp32r_2 $f wff ch $.
@@ -1387,6 +2104,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp33l_0 $f wff ph $.
 	fsimp33l_1 $f wff ps $.
 	fsimp33l_2 $f wff ch $.
@@ -1397,6 +2120,12 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsimp33r_0 $f wff ph $.
 	fsimp33r_1 $f wff ps $.
 	fsimp33r_2 $f wff ch $.
@@ -1407,6 +2136,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp111_0 $f wff ph $.
 	fsimp111_1 $f wff ps $.
 	fsimp111_2 $f wff ch $.
@@ -1418,6 +2154,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp112_0 $f wff ph $.
 	fsimp112_1 $f wff ps $.
 	fsimp112_2 $f wff ch $.
@@ -1429,6 +2172,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp113_0 $f wff ph $.
 	fsimp113_1 $f wff ps $.
 	fsimp113_2 $f wff ch $.
@@ -1440,6 +2190,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp121_0 $f wff ph $.
 	fsimp121_1 $f wff ps $.
 	fsimp121_2 $f wff ch $.
@@ -1451,6 +2208,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp122_0 $f wff ph $.
 	fsimp122_1 $f wff ps $.
 	fsimp122_2 $f wff ch $.
@@ -1462,6 +2226,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp123_0 $f wff ph $.
 	fsimp123_1 $f wff ps $.
 	fsimp123_2 $f wff ch $.
@@ -1473,6 +2244,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp131_0 $f wff ph $.
 	fsimp131_1 $f wff ps $.
 	fsimp131_2 $f wff ch $.
@@ -1484,6 +2262,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp132_0 $f wff ph $.
 	fsimp132_1 $f wff ps $.
 	fsimp132_2 $f wff ch $.
@@ -1495,6 +2280,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp133_0 $f wff ph $.
 	fsimp133_1 $f wff ps $.
 	fsimp133_2 $f wff ch $.
@@ -1506,6 +2298,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp211_0 $f wff ph $.
 	fsimp211_1 $f wff ps $.
 	fsimp211_2 $f wff ch $.
@@ -1517,6 +2316,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp212_0 $f wff ph $.
 	fsimp212_1 $f wff ps $.
 	fsimp212_2 $f wff ch $.
@@ -1528,6 +2334,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp213_0 $f wff ph $.
 	fsimp213_1 $f wff ps $.
 	fsimp213_2 $f wff ch $.
@@ -1539,6 +2352,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp221_0 $f wff ph $.
 	fsimp221_1 $f wff ps $.
 	fsimp221_2 $f wff ch $.
@@ -1550,6 +2370,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp222_0 $f wff ph $.
 	fsimp222_1 $f wff ps $.
 	fsimp222_2 $f wff ch $.
@@ -1561,6 +2388,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp223_0 $f wff ph $.
 	fsimp223_1 $f wff ps $.
 	fsimp223_2 $f wff ch $.
@@ -1572,6 +2406,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp231_0 $f wff ph $.
 	fsimp231_1 $f wff ps $.
 	fsimp231_2 $f wff ch $.
@@ -1583,6 +2424,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp232_0 $f wff ph $.
 	fsimp232_1 $f wff ps $.
 	fsimp232_2 $f wff ch $.
@@ -1594,6 +2442,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp233_0 $f wff ph $.
 	fsimp233_1 $f wff ps $.
 	fsimp233_2 $f wff ch $.
@@ -1605,6 +2460,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp311_0 $f wff ph $.
 	fsimp311_1 $f wff ps $.
 	fsimp311_2 $f wff ch $.
@@ -1616,6 +2478,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp312_0 $f wff ph $.
 	fsimp312_1 $f wff ps $.
 	fsimp312_2 $f wff ch $.
@@ -1627,6 +2496,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp313_0 $f wff ph $.
 	fsimp313_1 $f wff ps $.
 	fsimp313_2 $f wff ch $.
@@ -1638,6 +2514,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp321_0 $f wff ph $.
 	fsimp321_1 $f wff ps $.
 	fsimp321_2 $f wff ch $.
@@ -1649,6 +2532,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp322_0 $f wff ph $.
 	fsimp322_1 $f wff ps $.
 	fsimp322_2 $f wff ch $.
@@ -1660,6 +2550,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp323_0 $f wff ph $.
 	fsimp323_1 $f wff ps $.
 	fsimp323_2 $f wff ch $.
@@ -1671,6 +2568,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp331_0 $f wff ph $.
 	fsimp331_1 $f wff ps $.
 	fsimp331_2 $f wff ch $.
@@ -1682,6 +2586,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp332_0 $f wff ph $.
 	fsimp332_1 $f wff ps $.
 	fsimp332_2 $f wff ch $.
@@ -1693,6 +2604,13 @@ ${
 $}
 $( Simplification of conjunction.  (Contributed by NM, 9-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsimp333_0 $f wff ph $.
 	fsimp333_1 $f wff ps $.
 	fsimp333_2 $f wff ch $.
@@ -1705,6 +2623,11 @@ $}
 $( Deduction adding a conjunct to antecedent.  (Contributed by NM,
        24-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3adantl1_0 $f wff ph $.
 	f3adantl1_1 $f wff ps $.
 	f3adantl1_2 $f wff ch $.
@@ -1716,6 +2639,11 @@ $}
 $( Deduction adding a conjunct to antecedent.  (Contributed by NM,
        24-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3adantl2_0 $f wff ph $.
 	f3adantl2_1 $f wff ps $.
 	f3adantl2_2 $f wff ch $.
@@ -1727,6 +2655,11 @@ $}
 $( Deduction adding a conjunct to antecedent.  (Contributed by NM,
        24-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3adantl3_0 $f wff ph $.
 	f3adantl3_1 $f wff ps $.
 	f3adantl3_2 $f wff ch $.
@@ -1738,6 +2671,11 @@ $}
 $( Deduction adding a conjunct to antecedent.  (Contributed by NM,
        27-Apr-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3adantr1_0 $f wff ph $.
 	f3adantr1_1 $f wff ps $.
 	f3adantr1_2 $f wff ch $.
@@ -1749,6 +2687,11 @@ $}
 $( Deduction adding a conjunct to antecedent.  (Contributed by NM,
        27-Apr-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3adantr2_0 $f wff ph $.
 	f3adantr2_1 $f wff ps $.
 	f3adantr2_2 $f wff ch $.
@@ -1760,6 +2703,11 @@ $}
 $( Deduction adding a conjunct to antecedent.  (Contributed by NM,
        27-Apr-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3adantr3_0 $f wff ph $.
 	f3adantr3_1 $f wff ps $.
 	f3adantr3_2 $f wff ch $.
@@ -1771,6 +2719,11 @@ $}
 $( Deduction adding conjuncts to antecedent.  (Contributed by NM,
        4-Aug-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3ad2antl1_0 $f wff ph $.
 	f3ad2antl1_1 $f wff ps $.
 	f3ad2antl1_2 $f wff ch $.
@@ -1782,6 +2735,11 @@ $}
 $( Deduction adding conjuncts to antecedent.  (Contributed by NM,
        4-Aug-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3ad2antl2_0 $f wff ph $.
 	f3ad2antl2_1 $f wff ps $.
 	f3ad2antl2_2 $f wff ch $.
@@ -1793,6 +2751,11 @@ $}
 $( Deduction adding conjuncts to antecedent.  (Contributed by NM,
        4-Aug-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3ad2antl3_0 $f wff ph $.
 	f3ad2antl3_1 $f wff ps $.
 	f3ad2antl3_2 $f wff ch $.
@@ -1804,6 +2767,11 @@ $}
 $( Deduction adding conjuncts to antecedent.  (Contributed by NM,
        25-Dec-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3ad2antr1_0 $f wff ph $.
 	f3ad2antr1_1 $f wff ps $.
 	f3ad2antr1_2 $f wff ch $.
@@ -1815,6 +2783,11 @@ $}
 $( Deduction adding conjuncts to antecedent.  (Contributed by NM,
        27-Dec-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3ad2antr2_0 $f wff ph $.
 	f3ad2antr2_1 $f wff ps $.
 	f3ad2antr2_2 $f wff ch $.
@@ -1826,6 +2799,11 @@ $}
 $( Deduction adding conjuncts to antecedent.  (Contributed by NM,
        30-Dec-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3ad2antr3_0 $f wff ph $.
 	f3ad2antr3_1 $f wff ps $.
 	f3ad2antr3_2 $f wff ch $.
@@ -1837,6 +2815,11 @@ $}
 $( Remove a hypothesis from the second member of a biimplication.
        (Contributed by FL, 22-Jul-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3anibar_0 $f wff ph $.
 	f3anibar_1 $f wff ps $.
 	f3anibar_2 $f wff ch $.
@@ -1847,6 +2830,9 @@ ${
 $}
 $( Introduction in triple disjunction.  (Contributed by NM, 4-Apr-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3mix1_0 $f wff ph $.
 	f3mix1_1 $f wff ps $.
 	f3mix1_2 $f wff ch $.
@@ -1854,6 +2840,9 @@ ${
 $}
 $( Introduction in triple disjunction.  (Contributed by NM, 4-Apr-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3mix2_0 $f wff ph $.
 	f3mix2_1 $f wff ps $.
 	f3mix2_2 $f wff ch $.
@@ -1861,6 +2850,9 @@ ${
 $}
 $( Introduction in triple disjunction.  (Contributed by NM, 4-Apr-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3mix3_0 $f wff ph $.
 	f3mix3_1 $f wff ps $.
 	f3mix3_2 $f wff ch $.
@@ -1869,6 +2861,9 @@ $}
 $( Introduction in triple disjunction.  (Contributed by Mario Carneiro,
        6-Oct-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3mix1i_0 $f wff ph $.
 	f3mix1i_1 $f wff ps $.
 	f3mix1i_2 $f wff ch $.
@@ -1878,6 +2873,9 @@ $}
 $( Introduction in triple disjunction.  (Contributed by Mario Carneiro,
        6-Oct-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3mix2i_0 $f wff ph $.
 	f3mix2i_1 $f wff ps $.
 	f3mix2i_2 $f wff ch $.
@@ -1887,6 +2885,9 @@ $}
 $( Introduction in triple disjunction.  (Contributed by Mario Carneiro,
        6-Oct-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3mix3i_0 $f wff ph $.
 	f3mix3i_1 $f wff ps $.
 	f3mix3i_2 $f wff ch $.
@@ -1895,6 +2896,9 @@ ${
 $}
 $( Infer conjunction of premises.  (Contributed by NM, 10-Feb-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3pm3.2i_0 $f wff ph $.
 	f3pm3.2i_1 $f wff ps $.
 	f3pm3.2i_2 $f wff ch $.
@@ -1906,6 +2910,9 @@ $}
 $( ~ pm3.2 for a triple conjunction.  (Contributed by Alan Sare,
        24-Oct-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm3.2an3_0 $f wff ph $.
 	fpm3.2an3_1 $f wff ps $.
 	fpm3.2an3_2 $f wff ch $.
@@ -1913,6 +2920,10 @@ ${
 $}
 $( Join consequents with conjunction.  (Contributed by NM, 9-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3jca_0 $f wff ph $.
 	f3jca_1 $f wff ps $.
 	f3jca_2 $f wff ch $.
@@ -1925,6 +2936,11 @@ $}
 $( Deduction conjoining the consequents of three implications.
        (Contributed by NM, 25-Sep-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3jcad_0 $f wff ph $.
 	f3jcad_1 $f wff ps $.
 	f3jcad_2 $f wff ch $.
@@ -1938,6 +2954,10 @@ $}
 $( Detach a conjunction of truths in a biconditional.  (Contributed by NM,
        16-Sep-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmpbir3an_0 $f wff ph $.
 	fmpbir3an_1 $f wff ps $.
 	fmpbir3an_2 $f wff ch $.
@@ -1952,6 +2972,11 @@ $( Detach a conjunction of truths in a biconditional.  (Contributed by
        Mario Carneiro, 11-May-2014.)  (Revised by Mario Carneiro,
        9-Jan-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fmpbir3and_0 $f wff ph $.
 	fmpbir3and_1 $f wff ps $.
 	fmpbir3and_2 $f wff ch $.
@@ -1965,6 +2990,11 @@ ${
 $}
 $( Syllogism inference.  (Contributed by Mario Carneiro, 11-May-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl3anbrc_0 $f wff ph $.
 	fsyl3anbrc_1 $f wff ps $.
 	fsyl3anbrc_2 $f wff ch $.
@@ -1979,6 +3009,12 @@ $}
 $( Join antecedents and consequents with conjunction.  (Contributed by NM,
        8-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	f3anim123i_0 $f wff ph $.
 	f3anim123i_1 $f wff ps $.
 	f3anim123i_2 $f wff ch $.
@@ -1993,6 +3029,10 @@ $}
 $( Add two conjuncts to antecedent and consequent.  (Contributed by Jeff
        Hankins, 16-Aug-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3anim1i_0 $f wff ph $.
 	f3anim1i_1 $f wff ps $.
 	f3anim1i_2 $f wff ch $.
@@ -2003,6 +3043,10 @@ $}
 $( Add two conjuncts to antecedent and consequent.  (Contributed by Jeff
        Hankins, 19-Aug-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3anim3i_0 $f wff ph $.
 	f3anim3i_1 $f wff ps $.
 	f3anim3i_2 $f wff ch $.
@@ -2013,6 +3057,12 @@ $}
 $( Join 3 biconditionals with conjunction.  (Contributed by NM,
        21-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	f3anbi123i_0 $f wff ph $.
 	f3anbi123i_1 $f wff ps $.
 	f3anbi123i_2 $f wff ch $.
@@ -2027,6 +3077,12 @@ $}
 $( Join 3 biconditionals with disjunction.  (Contributed by NM,
        17-May-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	f3orbi123i_0 $f wff ph $.
 	f3orbi123i_1 $f wff ps $.
 	f3orbi123i_2 $f wff ch $.
@@ -2041,6 +3097,10 @@ $}
 $( Inference adding two conjuncts to each side of a biconditional.
        (Contributed by NM, 8-Sep-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3anbi1i_0 $f wff ph $.
 	f3anbi1i_1 $f wff ps $.
 	f3anbi1i_2 $f wff ch $.
@@ -2051,6 +3111,10 @@ $}
 $( Inference adding two conjuncts to each side of a biconditional.
        (Contributed by NM, 8-Sep-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3anbi2i_0 $f wff ph $.
 	f3anbi2i_1 $f wff ps $.
 	f3anbi2i_2 $f wff ch $.
@@ -2061,6 +3125,10 @@ $}
 $( Inference adding two conjuncts to each side of a biconditional.
        (Contributed by NM, 8-Sep-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3anbi3i_0 $f wff ph $.
 	f3anbi3i_1 $f wff ps $.
 	f3anbi3i_2 $f wff ch $.
@@ -2070,6 +3138,10 @@ ${
 $}
 $( Importation inference.  (Contributed by NM, 8-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3imp_0 $f wff ph $.
 	f3imp_1 $f wff ps $.
 	f3imp_2 $f wff ch $.
@@ -2080,6 +3152,10 @@ $}
 $( Importation from double to triple conjunction.  (Contributed by NM,
        20-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3impa_0 $f wff ph $.
 	f3impa_1 $f wff ps $.
 	f3impa_2 $f wff ch $.
@@ -2090,6 +3166,10 @@ $}
 $( Importation from double to triple conjunction.  (Contributed by NM,
        20-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3impb_0 $f wff ph $.
 	f3impb_1 $f wff ps $.
 	f3impb_2 $f wff ch $.
@@ -2099,6 +3179,10 @@ ${
 $}
 $( Importation to triple conjunction.  (Contributed by NM, 13-Jun-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3impia_0 $f wff ph $.
 	f3impia_1 $f wff ps $.
 	f3impia_2 $f wff ch $.
@@ -2108,6 +3192,10 @@ ${
 $}
 $( Importation to triple conjunction.  (Contributed by NM, 13-Jun-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3impib_0 $f wff ph $.
 	f3impib_1 $f wff ps $.
 	f3impib_2 $f wff ch $.
@@ -2117,6 +3205,10 @@ ${
 $}
 $( Exportation inference.  (Contributed by NM, 30-May-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3exp_0 $f wff ph $.
 	f3exp_1 $f wff ps $.
 	f3exp_2 $f wff ch $.
@@ -2127,6 +3219,10 @@ $}
 $( Exportation from triple to double conjunction.  (Contributed by NM,
        20-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3expa_0 $f wff ph $.
 	f3expa_1 $f wff ps $.
 	f3expa_2 $f wff ch $.
@@ -2137,6 +3233,10 @@ $}
 $( Exportation from triple to double conjunction.  (Contributed by NM,
        20-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3expb_0 $f wff ph $.
 	f3expb_1 $f wff ps $.
 	f3expb_2 $f wff ch $.
@@ -2147,6 +3247,10 @@ $}
 $( Exportation from triple conjunction.  (Contributed by NM,
        19-May-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3expia_0 $f wff ph $.
 	f3expia_1 $f wff ps $.
 	f3expia_2 $f wff ch $.
@@ -2157,6 +3261,10 @@ $}
 $( Exportation from triple conjunction.  (Contributed by NM,
        19-May-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3expib_0 $f wff ph $.
 	f3expib_1 $f wff ps $.
 	f3expib_2 $f wff ch $.
@@ -2167,6 +3275,10 @@ $}
 $( Commutation in antecedent.  Swap 1st and 3rd.  (Contributed by NM,
        28-Jan-1996.)  (Proof shortened by Andrew Salmon, 13-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3com12_0 $f wff ph $.
 	f3com12_1 $f wff ps $.
 	f3com12_2 $f wff ch $.
@@ -2177,6 +3289,10 @@ $}
 $( Commutation in antecedent.  Swap 1st and 3rd.  (Contributed by NM,
        28-Jan-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3com13_0 $f wff ph $.
 	f3com13_1 $f wff ps $.
 	f3com13_2 $f wff ch $.
@@ -2187,6 +3303,10 @@ $}
 $( Commutation in antecedent.  Swap 2nd and 3rd.  (Contributed by NM,
        28-Jan-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3com23_0 $f wff ph $.
 	f3com23_1 $f wff ps $.
 	f3com23_2 $f wff ch $.
@@ -2197,6 +3317,10 @@ $}
 $( Commutation in antecedent.  Rotate left.  (Contributed by NM,
        28-Jan-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3coml_0 $f wff ph $.
 	f3coml_1 $f wff ps $.
 	f3coml_2 $f wff ch $.
@@ -2207,6 +3331,10 @@ $}
 $( Commutation in antecedent.  Rotate right.  (Contributed by NM,
        28-Jan-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3comr_0 $f wff ph $.
 	f3comr_1 $f wff ps $.
 	f3comr_2 $f wff ch $.
@@ -2217,6 +3345,11 @@ $}
 $( Deduction adding a conjunct to antecedent.  (Contributed by NM,
        16-Feb-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3adant3r1_0 $f wff ph $.
 	f3adant3r1_1 $f wff ps $.
 	f3adant3r1_2 $f wff ch $.
@@ -2228,6 +3361,11 @@ $}
 $( Deduction adding a conjunct to antecedent.  (Contributed by NM,
        17-Feb-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3adant3r2_0 $f wff ph $.
 	f3adant3r2_1 $f wff ps $.
 	f3adant3r2_2 $f wff ch $.
@@ -2239,6 +3377,11 @@ $}
 $( Deduction adding a conjunct to antecedent.  (Contributed by NM,
        18-Feb-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3adant3r3_0 $f wff ph $.
 	f3adant3r3_1 $f wff ps $.
 	f3adant3r3_2 $f wff ch $.
@@ -2249,6 +3392,11 @@ ${
 $}
 $( Swap conjuncts.  (Contributed by NM, 16-Dec-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3an1rs_0 $f wff ph $.
 	f3an1rs_1 $f wff ps $.
 	f3an1rs_2 $f wff ch $.
@@ -2260,6 +3408,11 @@ $}
 $( Importation to left triple conjunction.  (Contributed by NM,
        24-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3imp1_0 $f wff ph $.
 	f3imp1_1 $f wff ps $.
 	f3imp1_2 $f wff ch $.
@@ -2271,6 +3424,11 @@ $}
 $( Importation deduction for triple conjunction.  (Contributed by NM,
        26-Oct-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3impd_0 $f wff ph $.
 	f3impd_1 $f wff ps $.
 	f3impd_2 $f wff ch $.
@@ -2282,6 +3440,11 @@ $}
 $( Importation to right triple conjunction.  (Contributed by NM,
        26-Oct-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3imp2_0 $f wff ph $.
 	f3imp2_1 $f wff ps $.
 	f3imp2_2 $f wff ch $.
@@ -2293,6 +3456,11 @@ $}
 $( Exportation from left triple conjunction.  (Contributed by NM,
        24-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3exp1_0 $f wff ph $.
 	f3exp1_1 $f wff ps $.
 	f3exp1_2 $f wff ch $.
@@ -2304,6 +3472,11 @@ $}
 $( Exportation deduction for triple conjunction.  (Contributed by NM,
        26-Oct-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3expd_0 $f wff ph $.
 	f3expd_1 $f wff ps $.
 	f3expd_2 $f wff ch $.
@@ -2315,6 +3488,11 @@ $}
 $( Exportation from right triple conjunction.  (Contributed by NM,
        26-Oct-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3exp2_0 $f wff ph $.
 	f3exp2_1 $f wff ps $.
 	f3exp2_2 $f wff ch $.
@@ -2326,6 +3504,12 @@ $}
 $( A triple exportation inference.  (Contributed by Jeff Hankins,
        8-Jul-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fexp5o_0 $f wff ph $.
 	fexp5o_1 $f wff ps $.
 	fexp5o_2 $f wff ch $.
@@ -2338,6 +3522,12 @@ $}
 $( A triple exportation inference.  (Contributed by Jeff Hankins,
        8-Jul-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fexp516_0 $f wff ph $.
 	fexp516_1 $f wff ps $.
 	fexp516_2 $f wff ch $.
@@ -2350,6 +3540,12 @@ $}
 $( A triple exportation inference.  (Contributed by Jeff Hankins,
        8-Jul-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fexp520_0 $f wff ph $.
 	fexp520_1 $f wff ps $.
 	fexp520_2 $f wff ch $.
@@ -2362,6 +3558,11 @@ $}
 $( Associative law for conjunction applied to antecedent (eliminates
        syllogism).  (Contributed by Mario Carneiro, 4-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3anassrs_0 $f wff ph $.
 	f3anassrs_1 $f wff ps $.
 	f3anassrs_2 $f wff ch $.
@@ -2373,6 +3574,11 @@ $}
 $( Deduction adding a conjunct to antecedent.  (Contributed by NM,
        8-Jan-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3adant1l_0 $f wff ph $.
 	f3adant1l_1 $f wff ps $.
 	f3adant1l_2 $f wff ch $.
@@ -2384,6 +3590,11 @@ $}
 $( Deduction adding a conjunct to antecedent.  (Contributed by NM,
        8-Jan-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3adant1r_0 $f wff ph $.
 	f3adant1r_1 $f wff ps $.
 	f3adant1r_2 $f wff ch $.
@@ -2395,6 +3606,11 @@ $}
 $( Deduction adding a conjunct to antecedent.  (Contributed by NM,
        8-Jan-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3adant2l_0 $f wff ph $.
 	f3adant2l_1 $f wff ps $.
 	f3adant2l_2 $f wff ch $.
@@ -2406,6 +3622,11 @@ $}
 $( Deduction adding a conjunct to antecedent.  (Contributed by NM,
        8-Jan-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3adant2r_0 $f wff ph $.
 	f3adant2r_1 $f wff ps $.
 	f3adant2r_2 $f wff ch $.
@@ -2417,6 +3638,11 @@ $}
 $( Deduction adding a conjunct to antecedent.  (Contributed by NM,
        8-Jan-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3adant3l_0 $f wff ph $.
 	f3adant3l_1 $f wff ps $.
 	f3adant3l_2 $f wff ch $.
@@ -2428,6 +3654,11 @@ $}
 $( Deduction adding a conjunct to antecedent.  (Contributed by NM,
        8-Jan-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3adant3r_0 $f wff ph $.
 	f3adant3r_1 $f wff ps $.
 	f3adant3r_2 $f wff ch $.
@@ -2439,6 +3670,11 @@ $}
 $( Syllogism combined with contraction.  (Contributed by Jeff Hankins,
          1-Aug-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl12anc_0 $f wff ph $.
 	fsyl12anc_1 $f wff ps $.
 	fsyl12anc_2 $f wff ch $.
@@ -2453,6 +3689,11 @@ $}
 $( Syllogism combined with contraction.  (Contributed by Jeff Hankins,
          1-Aug-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl21anc_0 $f wff ph $.
 	fsyl21anc_1 $f wff ps $.
 	fsyl21anc_2 $f wff ch $.
@@ -2467,6 +3708,11 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl3anc_0 $f wff ph $.
 	fsyl3anc_1 $f wff ps $.
 	fsyl3anc_2 $f wff ch $.
@@ -2481,6 +3727,12 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsyl22anc_0 $f wff ph $.
 	fsyl22anc_1 $f wff ps $.
 	fsyl22anc_2 $f wff ch $.
@@ -2497,6 +3749,12 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsyl13anc_0 $f wff ph $.
 	fsyl13anc_1 $f wff ps $.
 	fsyl13anc_2 $f wff ch $.
@@ -2513,6 +3771,12 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsyl31anc_0 $f wff ph $.
 	fsyl31anc_1 $f wff ps $.
 	fsyl31anc_2 $f wff ch $.
@@ -2529,6 +3793,12 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsyl112anc_0 $f wff ph $.
 	fsyl112anc_1 $f wff ps $.
 	fsyl112anc_2 $f wff ch $.
@@ -2545,6 +3815,12 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsyl121anc_0 $f wff ph $.
 	fsyl121anc_1 $f wff ps $.
 	fsyl121anc_2 $f wff ch $.
@@ -2561,6 +3837,12 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsyl211anc_0 $f wff ph $.
 	fsyl211anc_1 $f wff ps $.
 	fsyl211anc_2 $f wff ch $.
@@ -2577,6 +3859,13 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsyl23anc_0 $f wff ph $.
 	fsyl23anc_1 $f wff ps $.
 	fsyl23anc_2 $f wff ch $.
@@ -2595,6 +3884,13 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsyl32anc_0 $f wff ph $.
 	fsyl32anc_1 $f wff ps $.
 	fsyl32anc_2 $f wff ch $.
@@ -2613,6 +3909,13 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsyl122anc_0 $f wff ph $.
 	fsyl122anc_1 $f wff ps $.
 	fsyl122anc_2 $f wff ch $.
@@ -2631,6 +3934,13 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsyl212anc_0 $f wff ph $.
 	fsyl212anc_1 $f wff ps $.
 	fsyl212anc_2 $f wff ch $.
@@ -2649,6 +3959,13 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsyl221anc_0 $f wff ph $.
 	fsyl221anc_1 $f wff ps $.
 	fsyl221anc_2 $f wff ch $.
@@ -2667,6 +3984,13 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsyl113anc_0 $f wff ph $.
 	fsyl113anc_1 $f wff ps $.
 	fsyl113anc_2 $f wff ch $.
@@ -2685,6 +4009,13 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsyl131anc_0 $f wff ph $.
 	fsyl131anc_1 $f wff ps $.
 	fsyl131anc_2 $f wff ch $.
@@ -2703,6 +4034,13 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsyl311anc_0 $f wff ph $.
 	fsyl311anc_1 $f wff ps $.
 	fsyl311anc_2 $f wff ch $.
@@ -2721,6 +4059,14 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
 	fsyl33anc_0 $f wff ph $.
 	fsyl33anc_1 $f wff ps $.
 	fsyl33anc_2 $f wff ch $.
@@ -2741,6 +4087,14 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
 	fsyl222anc_0 $f wff ph $.
 	fsyl222anc_1 $f wff ps $.
 	fsyl222anc_2 $f wff ch $.
@@ -2761,6 +4115,14 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
 	fsyl123anc_0 $f wff ph $.
 	fsyl123anc_1 $f wff ps $.
 	fsyl123anc_2 $f wff ch $.
@@ -2781,6 +4143,14 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Jul-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
 	fsyl132anc_0 $f wff ph $.
 	fsyl132anc_1 $f wff ps $.
 	fsyl132anc_2 $f wff ch $.
@@ -2801,6 +4171,14 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
 	fsyl213anc_0 $f wff ph $.
 	fsyl213anc_1 $f wff ps $.
 	fsyl213anc_2 $f wff ch $.
@@ -2821,6 +4199,14 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
 	fsyl231anc_0 $f wff ph $.
 	fsyl231anc_1 $f wff ps $.
 	fsyl231anc_2 $f wff ch $.
@@ -2841,6 +4227,14 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Jul-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
 	fsyl312anc_0 $f wff ph $.
 	fsyl312anc_1 $f wff ps $.
 	fsyl312anc_2 $f wff ch $.
@@ -2861,6 +4255,14 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Jul-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
 	fsyl321anc_0 $f wff ph $.
 	fsyl321anc_1 $f wff ps $.
 	fsyl321anc_2 $f wff ch $.
@@ -2881,6 +4283,15 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
+	$v rh $.
 	fsyl133anc_0 $f wff ph $.
 	fsyl133anc_1 $f wff ps $.
 	fsyl133anc_2 $f wff ch $.
@@ -2903,6 +4314,15 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
+	$v rh $.
 	fsyl313anc_0 $f wff ph $.
 	fsyl313anc_1 $f wff ps $.
 	fsyl313anc_2 $f wff ch $.
@@ -2925,6 +4345,15 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
+	$v rh $.
 	fsyl331anc_0 $f wff ph $.
 	fsyl331anc_1 $f wff ps $.
 	fsyl331anc_2 $f wff ch $.
@@ -2947,6 +4376,15 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
+	$v rh $.
 	fsyl223anc_0 $f wff ph $.
 	fsyl223anc_1 $f wff ps $.
 	fsyl223anc_2 $f wff ch $.
@@ -2969,6 +4407,15 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
+	$v rh $.
 	fsyl232anc_0 $f wff ph $.
 	fsyl232anc_1 $f wff ps $.
 	fsyl232anc_2 $f wff ch $.
@@ -2991,6 +4438,15 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
+	$v rh $.
 	fsyl322anc_0 $f wff ph $.
 	fsyl322anc_1 $f wff ps $.
 	fsyl322anc_2 $f wff ch $.
@@ -3013,6 +4469,16 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
+	$v rh $.
+	$v mu $.
 	fsyl233anc_0 $f wff ph $.
 	fsyl233anc_1 $f wff ps $.
 	fsyl233anc_2 $f wff ch $.
@@ -3037,6 +4503,16 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
+	$v rh $.
+	$v mu $.
 	fsyl323anc_0 $f wff ph $.
 	fsyl323anc_1 $f wff ps $.
 	fsyl323anc_2 $f wff ch $.
@@ -3061,6 +4537,16 @@ $}
 $( Syllogism combined with contraction.  (Contributed by NM,
          11-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
+	$v rh $.
+	$v mu $.
 	fsyl332anc_0 $f wff ph $.
 	fsyl332anc_1 $f wff ps $.
 	fsyl332anc_2 $f wff ch $.
@@ -3085,6 +4571,17 @@ $}
 $( A syllogism inference combined with contraction.  (Contributed by NM,
          10-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
+	$v rh $.
+	$v mu $.
+	$v la $.
 	fsyl333anc_0 $f wff ph $.
 	fsyl333anc_1 $f wff ps $.
 	fsyl333anc_2 $f wff ch $.
@@ -3110,6 +4607,11 @@ ${
 $}
 $( A syllogism inference.  (Contributed by NM, 22-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl3an1_0 $f wff ph $.
 	fsyl3an1_1 $f wff ps $.
 	fsyl3an1_2 $f wff ch $.
@@ -3121,6 +4623,11 @@ ${
 $}
 $( A syllogism inference.  (Contributed by NM, 22-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl3an2_0 $f wff ph $.
 	fsyl3an2_1 $f wff ps $.
 	fsyl3an2_2 $f wff ch $.
@@ -3132,6 +4639,11 @@ ${
 $}
 $( A syllogism inference.  (Contributed by NM, 22-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl3an3_0 $f wff ph $.
 	fsyl3an3_1 $f wff ps $.
 	fsyl3an3_2 $f wff ch $.
@@ -3143,6 +4655,11 @@ ${
 $}
 $( A syllogism inference.  (Contributed by NM, 22-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl3an1b_0 $f wff ph $.
 	fsyl3an1b_1 $f wff ps $.
 	fsyl3an1b_2 $f wff ch $.
@@ -3154,6 +4671,11 @@ ${
 $}
 $( A syllogism inference.  (Contributed by NM, 22-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl3an2b_0 $f wff ph $.
 	fsyl3an2b_1 $f wff ps $.
 	fsyl3an2b_2 $f wff ch $.
@@ -3165,6 +4687,11 @@ ${
 $}
 $( A syllogism inference.  (Contributed by NM, 22-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl3an3b_0 $f wff ph $.
 	fsyl3an3b_1 $f wff ps $.
 	fsyl3an3b_2 $f wff ch $.
@@ -3176,6 +4703,11 @@ ${
 $}
 $( A syllogism inference.  (Contributed by NM, 22-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl3an1br_0 $f wff ph $.
 	fsyl3an1br_1 $f wff ps $.
 	fsyl3an1br_2 $f wff ch $.
@@ -3187,6 +4719,11 @@ ${
 $}
 $( A syllogism inference.  (Contributed by NM, 22-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl3an2br_0 $f wff ph $.
 	fsyl3an2br_1 $f wff ps $.
 	fsyl3an2br_2 $f wff ch $.
@@ -3198,6 +4735,11 @@ ${
 $}
 $( A syllogism inference.  (Contributed by NM, 22-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl3an3br_0 $f wff ph $.
 	fsyl3an3br_1 $f wff ps $.
 	fsyl3an3br_2 $f wff ch $.
@@ -3209,6 +4751,13 @@ ${
 $}
 $( A triple syllogism inference.  (Contributed by NM, 13-May-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsyl3an_0 $f wff ph $.
 	fsyl3an_1 $f wff ps $.
 	fsyl3an_2 $f wff ch $.
@@ -3224,6 +4773,13 @@ ${
 $}
 $( A triple syllogism inference.  (Contributed by NM, 15-Oct-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsyl3anb_0 $f wff ph $.
 	fsyl3anb_1 $f wff ps $.
 	fsyl3anb_2 $f wff ch $.
@@ -3239,6 +4795,13 @@ ${
 $}
 $( A triple syllogism inference.  (Contributed by NM, 29-Dec-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsyl3anbr_0 $f wff ph $.
 	fsyl3anbr_1 $f wff ps $.
 	fsyl3anbr_2 $f wff ch $.
@@ -3254,6 +4817,11 @@ ${
 $}
 $( A syllogism inference.  (Contributed by NM, 20-May-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyld3an3_0 $f wff ph $.
 	fsyld3an3_1 $f wff ps $.
 	fsyld3an3_2 $f wff ch $.
@@ -3265,6 +4833,11 @@ ${
 $}
 $( A syllogism inference.  (Contributed by NM, 7-Jul-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyld3an1_0 $f wff ph $.
 	fsyld3an1_1 $f wff ps $.
 	fsyld3an1_2 $f wff ch $.
@@ -3276,6 +4849,11 @@ ${
 $}
 $( A syllogism inference.  (Contributed by NM, 20-May-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyld3an2_0 $f wff ph $.
 	fsyld3an2_1 $f wff ps $.
 	fsyld3an2_2 $f wff ch $.
@@ -3287,6 +4865,12 @@ ${
 $}
 $( A syllogism inference.  (Contributed by NM, 24-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsyl3anl1_0 $f wff ph $.
 	fsyl3anl1_1 $f wff ps $.
 	fsyl3anl1_2 $f wff ch $.
@@ -3299,6 +4883,12 @@ ${
 $}
 $( A syllogism inference.  (Contributed by NM, 24-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsyl3anl2_0 $f wff ph $.
 	fsyl3anl2_1 $f wff ps $.
 	fsyl3anl2_2 $f wff ch $.
@@ -3311,6 +4901,12 @@ ${
 $}
 $( A syllogism inference.  (Contributed by NM, 24-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsyl3anl3_0 $f wff ph $.
 	fsyl3anl3_1 $f wff ps $.
 	fsyl3anl3_2 $f wff ch $.
@@ -3323,6 +4919,14 @@ ${
 $}
 $( A triple syllogism inference.  (Contributed by NM, 24-Dec-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
 	fsyl3anl_0 $f wff ph $.
 	fsyl3anl_1 $f wff ps $.
 	fsyl3anl_2 $f wff ch $.
@@ -3339,6 +4943,12 @@ ${
 $}
 $( A syllogism inference.  (Contributed by NM, 31-Jul-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsyl3anr1_0 $f wff ph $.
 	fsyl3anr1_1 $f wff ps $.
 	fsyl3anr1_2 $f wff ch $.
@@ -3351,6 +4961,12 @@ ${
 $}
 $( A syllogism inference.  (Contributed by NM, 1-Aug-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsyl3anr2_0 $f wff ph $.
 	fsyl3anr2_1 $f wff ps $.
 	fsyl3anr2_2 $f wff ch $.
@@ -3363,6 +4979,12 @@ ${
 $}
 $( A syllogism inference.  (Contributed by NM, 23-Aug-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fsyl3anr3_0 $f wff ph $.
 	fsyl3anr3_1 $f wff ps $.
 	fsyl3anr3_2 $f wff ch $.
@@ -3376,6 +4998,10 @@ $}
 $( Importation inference (undistribute conjunction).  (Contributed by NM,
        14-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3impdi_0 $f wff ph $.
 	f3impdi_1 $f wff ps $.
 	f3impdi_2 $f wff ch $.
@@ -3386,6 +5012,10 @@ $}
 $( Importation inference (undistribute conjunction).  (Contributed by NM,
        20-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3impdir_0 $f wff ph $.
 	f3impdir_1 $f wff ps $.
 	f3impdir_2 $f wff ch $.
@@ -3396,6 +5026,9 @@ $}
 $( Inference from idempotent law for conjunction.  (Contributed by NM,
        7-Mar-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3anidm12_0 $f wff ph $.
 	f3anidm12_1 $f wff ps $.
 	f3anidm12_2 $f wff ch $.
@@ -3405,6 +5038,9 @@ $}
 $( Inference from idempotent law for conjunction.  (Contributed by NM,
        7-Mar-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3anidm13_0 $f wff ph $.
 	f3anidm13_1 $f wff ps $.
 	f3anidm13_2 $f wff ch $.
@@ -3414,6 +5050,9 @@ $}
 $( Inference from idempotent law for conjunction.  (Contributed by NM,
        1-Feb-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3anidm23_0 $f wff ph $.
 	f3anidm23_1 $f wff ps $.
 	f3anidm23_2 $f wff ch $.
@@ -3423,6 +5062,9 @@ $}
 $( Infer implication from triple disjunction.  (Contributed by NM,
        26-Sep-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f3ori_0 $f wff ph $.
 	f3ori_1 $f wff ps $.
 	f3ori_2 $f wff ch $.
@@ -3431,6 +5073,10 @@ ${
 $}
 $( Disjunction of 3 antecedents.  (Contributed by NM, 8-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3jao_0 $f wff ph $.
 	f3jao_1 $f wff ps $.
 	f3jao_2 $f wff ch $.
@@ -3439,6 +5085,10 @@ ${
 $}
 $( Disjunction of 3 antecedents.  (Contributed by NM, 13-Sep-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3jaob_0 $f wff ph $.
 	f3jaob_1 $f wff ps $.
 	f3jaob_2 $f wff ch $.
@@ -3448,6 +5098,10 @@ $}
 $( Disjunction of 3 antecedents (inference).  (Contributed by NM,
        12-Sep-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3jaoi_0 $f wff ph $.
 	f3jaoi_1 $f wff ps $.
 	f3jaoi_2 $f wff ch $.
@@ -3460,6 +5114,11 @@ $}
 $( Disjunction of 3 antecedents (deduction).  (Contributed by NM,
        14-Oct-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3jaod_0 $f wff ph $.
 	f3jaod_1 $f wff ps $.
 	f3jaod_2 $f wff ch $.
@@ -3473,6 +5132,11 @@ $}
 $( Disjunction of 3 antecedents (inference).  (Contributed by NM,
        14-Oct-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3jaoian_0 $f wff ph $.
 	f3jaoian_1 $f wff ps $.
 	f3jaoian_2 $f wff ch $.
@@ -3486,6 +5150,11 @@ $}
 $( Disjunction of 3 antecedents (deduction).  (Contributed by NM,
        14-Oct-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3jaodan_0 $f wff ph $.
 	f3jaodan_1 $f wff ps $.
 	f3jaodan_2 $f wff ch $.
@@ -3500,6 +5169,13 @@ $( Inference conjoining and disjoining the antecedents of three
        implications.  (Contributed by Jeff Hankins, 15-Aug-2009.)  (Proof
        shortened by Andrew Salmon, 13-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	f3jaao_0 $f wff ph $.
 	f3jaao_1 $f wff ps $.
 	f3jaao_2 $f wff ch $.
@@ -3515,6 +5191,13 @@ $}
 $( Nested syllogism inference conjoining 3 dissimilar antecedents.
        (Contributed by NM, 1-May-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fsyl3an9b_0 $f wff ph $.
 	fsyl3an9b_1 $f wff ps $.
 	fsyl3an9b_2 $f wff ch $.
@@ -3530,6 +5213,13 @@ $}
 $( Deduction joining 3 equivalences to form equivalence of disjunctions.
        (Contributed by NM, 20-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	f3orbi123d_0 $f wff ph $.
 	f3orbi123d_1 $f wff ps $.
 	f3orbi123d_2 $f wff ch $.
@@ -3545,6 +5235,13 @@ $}
 $( Deduction joining 3 equivalences to form equivalence of conjunctions.
        (Contributed by NM, 22-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	f3anbi123d_0 $f wff ph $.
 	f3anbi123d_1 $f wff ps $.
 	f3anbi123d_2 $f wff ch $.
@@ -3560,6 +5257,12 @@ $}
 $( Deduction conjoining and adding a conjunct to equivalences.
        (Contributed by NM, 8-Sep-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	f3anbi12d_0 $f wff ph $.
 	f3anbi12d_1 $f wff ps $.
 	f3anbi12d_2 $f wff ch $.
@@ -3573,6 +5276,12 @@ $}
 $( Deduction conjoining and adding a conjunct to equivalences.
        (Contributed by NM, 8-Sep-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	f3anbi13d_0 $f wff ph $.
 	f3anbi13d_1 $f wff ps $.
 	f3anbi13d_2 $f wff ch $.
@@ -3586,6 +5295,12 @@ $}
 $( Deduction conjoining and adding a conjunct to equivalences.
        (Contributed by NM, 8-Sep-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	f3anbi23d_0 $f wff ph $.
 	f3anbi23d_1 $f wff ps $.
 	f3anbi23d_2 $f wff ch $.
@@ -3599,6 +5314,11 @@ $}
 $( Deduction adding conjuncts to an equivalence.  (Contributed by NM,
        8-Sep-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3anbi1d_0 $f wff ph $.
 	f3anbi1d_1 $f wff ps $.
 	f3anbi1d_2 $f wff ch $.
@@ -3610,6 +5330,11 @@ $}
 $( Deduction adding conjuncts to an equivalence.  (Contributed by NM,
        8-Sep-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3anbi2d_0 $f wff ph $.
 	f3anbi2d_1 $f wff ps $.
 	f3anbi2d_2 $f wff ch $.
@@ -3621,6 +5346,11 @@ $}
 $( Deduction adding conjuncts to an equivalence.  (Contributed by NM,
        8-Sep-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3anbi3d_0 $f wff ph $.
 	f3anbi3d_1 $f wff ps $.
 	f3anbi3d_2 $f wff ch $.
@@ -3632,6 +5362,13 @@ $}
 $( Deduction joining 3 implications to form implication of conjunctions.
        (Contributed by NM, 24-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	f3anim123d_0 $f wff ph $.
 	f3anim123d_1 $f wff ps $.
 	f3anim123d_2 $f wff ch $.
@@ -3647,6 +5384,13 @@ $}
 $( Deduction joining 3 implications to form implication of disjunctions.
        (Contributed by NM, 4-Apr-1997.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	f3orim123d_0 $f wff ph $.
 	f3orim123d_1 $f wff ps $.
 	f3orim123d_2 $f wff ch $.
@@ -3661,6 +5405,12 @@ ${
 $}
 $( Rearrangement of 6 conjuncts.  (Contributed by NM, 13-Mar-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fan6_0 $f wff ph $.
 	fan6_1 $f wff ps $.
 	fan6_2 $f wff ch $.
@@ -3672,6 +5422,12 @@ $}
 $( Analog of ~ an4 for triple conjunction.  (Contributed by Scott Fenton,
      16-Mar-2011.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	f3an6_0 $f wff ph $.
 	f3an6_1 $f wff ps $.
 	f3an6_2 $f wff ch $.
@@ -3683,6 +5439,12 @@ $}
 $( Analog of ~ or4 for triple conjunction.  (Contributed by Scott Fenton,
      16-Mar-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	f3or6_0 $f wff ph $.
 	f3or6_1 $f wff ps $.
 	f3or6_2 $f wff ch $.
@@ -3694,6 +5456,10 @@ $}
 $( An inference based on modus ponens.  (Contributed by NM,
        21-Nov-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmp3an1_0 $f wff ph $.
 	fmp3an1_1 $f wff ps $.
 	fmp3an1_2 $f wff ch $.
@@ -3705,6 +5471,10 @@ $}
 $( An inference based on modus ponens.  (Contributed by NM,
        21-Nov-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmp3an2_0 $f wff ph $.
 	fmp3an2_1 $f wff ps $.
 	fmp3an2_2 $f wff ch $.
@@ -3716,6 +5486,10 @@ $}
 $( An inference based on modus ponens.  (Contributed by NM,
        21-Nov-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmp3an3_0 $f wff ph $.
 	fmp3an3_1 $f wff ps $.
 	fmp3an3_2 $f wff ch $.
@@ -3727,6 +5501,10 @@ $}
 $( An inference based on modus ponens.  (Contributed by NM,
        13-Jul-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmp3an12_0 $f wff ph $.
 	fmp3an12_1 $f wff ps $.
 	fmp3an12_2 $f wff ch $.
@@ -3739,6 +5517,10 @@ $}
 $( An inference based on modus ponens.  (Contributed by NM,
        14-Jul-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmp3an13_0 $f wff ph $.
 	fmp3an13_1 $f wff ps $.
 	fmp3an13_2 $f wff ch $.
@@ -3751,6 +5533,10 @@ $}
 $( An inference based on modus ponens.  (Contributed by NM,
        14-Jul-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmp3an23_0 $f wff ph $.
 	fmp3an23_1 $f wff ps $.
 	fmp3an23_2 $f wff ch $.
@@ -3762,6 +5548,11 @@ ${
 $}
 $( An inference based on modus ponens.  (Contributed by NM, 5-Jul-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fmp3an1i_0 $f wff ph $.
 	fmp3an1i_1 $f wff ps $.
 	fmp3an1i_2 $f wff ch $.
@@ -3774,6 +5565,11 @@ $}
 $( An inference based on modus ponens.  (Contributed by NM,
        24-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fmp3anl1_0 $f wff ph $.
 	fmp3anl1_1 $f wff ps $.
 	fmp3anl1_2 $f wff ch $.
@@ -3786,6 +5582,11 @@ $}
 $( An inference based on modus ponens.  (Contributed by NM,
        24-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fmp3anl2_0 $f wff ph $.
 	fmp3anl2_1 $f wff ps $.
 	fmp3anl2_2 $f wff ch $.
@@ -3798,6 +5599,11 @@ $}
 $( An inference based on modus ponens.  (Contributed by NM,
        24-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fmp3anl3_0 $f wff ph $.
 	fmp3anl3_1 $f wff ps $.
 	fmp3anl3_2 $f wff ch $.
@@ -3809,6 +5615,11 @@ ${
 $}
 $( An inference based on modus ponens.  (Contributed by NM, 4-Nov-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fmp3anr1_0 $f wff ph $.
 	fmp3anr1_1 $f wff ps $.
 	fmp3anr1_2 $f wff ch $.
@@ -3821,6 +5632,11 @@ $}
 $( An inference based on modus ponens.  (Contributed by NM,
        24-Nov-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fmp3anr2_0 $f wff ph $.
 	fmp3anr2_1 $f wff ps $.
 	fmp3anr2_2 $f wff ch $.
@@ -3833,6 +5649,11 @@ $}
 $( An inference based on modus ponens.  (Contributed by NM,
        19-Oct-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fmp3anr3_0 $f wff ph $.
 	fmp3anr3_1 $f wff ps $.
 	fmp3anr3_2 $f wff ch $.
@@ -3845,6 +5666,10 @@ $}
 $( An inference based on modus ponens.  (Contributed by NM,
        14-May-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmp3an_0 $f wff ph $.
 	fmp3an_1 $f wff ps $.
 	fmp3an_2 $f wff ch $.
@@ -3857,6 +5682,10 @@ ${
 $}
 $( An inference based on modus ponens.  (Contributed by NM, 8-Nov-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmpd3an3_0 $f wff ph $.
 	fmpd3an3_1 $f wff ps $.
 	fmpd3an3_2 $f wff ch $.
@@ -3867,6 +5696,10 @@ ${
 $}
 $( An inference based on modus ponens.  (Contributed by NM, 4-Dec-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmpd3an23_0 $f wff ph $.
 	fmpd3an23_1 $f wff ps $.
 	fmpd3an23_2 $f wff ch $.
@@ -3879,6 +5712,11 @@ $}
 $( A deduction based on modus ponens.  (Contributed by Mario Carneiro,
        24-Dec-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fmp3and_0 $f wff ph $.
 	fmp3and_1 $f wff ps $.
 	fmp3and_2 $f wff ch $.
@@ -3893,6 +5731,10 @@ $}
 $( Infer implication from a logical equivalence.  Similar to ~ biimpa .
        (Contributed by NM, 4-Sep-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fbiimp3a_0 $f wff ph $.
 	fbiimp3a_1 $f wff ps $.
 	fbiimp3a_2 $f wff ch $.
@@ -3903,6 +5745,10 @@ $}
 $( Infer implication from a logical equivalence.  Similar to ~ biimpar .
        (Contributed by NM, 2-Jan-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fbiimp3ar_0 $f wff ph $.
 	fbiimp3ar_1 $f wff ps $.
 	fbiimp3ar_2 $f wff ch $.
@@ -3913,6 +5759,11 @@ $}
 $( Inference that undistributes a triple conjunction in the antecedent.
        (Contributed by NM, 18-Apr-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3anandis_0 $f wff ph $.
 	f3anandis_1 $f wff ps $.
 	f3anandis_2 $f wff ch $.
@@ -3924,6 +5775,11 @@ $}
 $( Inference that undistributes a triple conjunction in the antecedent.
        (Contributed by NM, 25-Jul-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3anandirs_0 $f wff ph $.
 	f3anandirs_1 $f wff ps $.
 	f3anandirs_2 $f wff ch $.
@@ -3935,6 +5791,10 @@ $}
 $( Deduction for elimination by cases.  (Contributed by NM,
        22-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fecase23d_0 $f wff ph $.
 	fecase23d_1 $f wff ps $.
 	fecase23d_2 $f wff ch $.
@@ -3947,6 +5807,10 @@ $}
 $( Inference for elimination by cases.  (Contributed by NM,
        13-Jul-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3ecase_0 $f wff ph $.
 	f3ecase_1 $f wff ps $.
 	f3ecase_2 $f wff ch $.

@@ -36,7 +36,7 @@ $}
 $( The proper subset relation on sets is the same as class proper
        subsethood.  (Contributed by Stefan O'Rear, 2-Nov-2014.) $)
 ${
-	$v x y A B V $.
+	$v A B V x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -60,7 +60,7 @@ $}
 $( Every class is partially ordered by proper subsets.  (Contributed by
        Stefan O'Rear, 2-Nov-2014.) $)
 ${
-	$v x y z A $.
+	$v A x y z $.
 	$d x y z A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -135,7 +135,7 @@ $}
 $( The componentwise complement of a chain of sets is also a chain of
        sets.  (Contributed by Stefan O'Rear, 2-Nov-2014.) $)
 ${
-	$v x y A u Y $.
+	$v u A Y x y $.
 	$d Y x y $.
 	$d A x y $.
 	$d Y u $.

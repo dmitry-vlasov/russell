@@ -10,6 +10,8 @@ $( Construct, from any class ` A ` , a set equal to it when the class
        theorem shows that the constructed set always exists.  (Contributed by
        NM, 16-Oct-2003.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	fclass2set_0 $f set x $.
 	fclass2set_1 $f class A $.
@@ -18,6 +20,9 @@ $}
 $( Equality theorem based on ~ class2set .  (Contributed by NM,
        13-Dec-2005.)  (Proof shortened by Raph Levien, 30-Jun-2006.) $)
 ${
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	fclass2seteq_0 $f set x $.
 	fclass2seteq_1 $f class A $.
@@ -27,6 +32,7 @@ $}
 $( Every power class contains the empty set.  (Contributed by NM,
      25-Oct-2007.) $)
 ${
+	$v A $.
 	f0elpw_0 $f class A $.
 	0elpw $p |- (/) e. ~P A $= c0 f0elpw_0 cpw wcel c0 f0elpw_0 wss f0elpw_0 0ss c0 f0elpw_0 0ex elpw mpbir $.
 $}
@@ -38,18 +44,22 @@ $}
 $( Something cannot be equal to both the null set and the power set of the
      null set.  (Contributed by NM, 30-Sep-2003.) $)
 ${
+	$v A $.
 	f0inp0_0 $f class A $.
 	0inp0 $p |- ( A = (/) -> -. A = { (/) } ) $= f0inp0_0 c0 wceq f0inp0_0 c0 csn f0inp0_0 c0 wceq f0inp0_0 c0 csn wne c0 c0 csn wne 0nep0 f0inp0_0 c0 c0 csn neeq1 mpbiri neneqd $.
 $}
 $( The removal of the empty set from a class does not affect its union.
      (Contributed by NM, 22-Mar-2004.) $)
 ${
+	$v A $.
 	funidif0_0 $f class A $.
 	unidif0 $p |- U. ( A \ { (/) } ) = U. A $= funidif0_0 c0 csn cdif cuni c0 funidif0_0 cuni cun funidif0_0 cuni c0 cun funidif0_0 cuni funidif0_0 c0 csn cdif cuni c0 csn funidif0_0 cun cuni c0 csn cuni funidif0_0 cuni cun c0 funidif0_0 cuni cun funidif0_0 c0 csn cdif c0 csn cun cuni funidif0_0 c0 csn cdif cuni c0 csn cuni cun c0 csn funidif0_0 cun cuni funidif0_0 c0 csn cdif cuni funidif0_0 c0 csn cdif c0 csn uniun c0 csn funidif0_0 cun funidif0_0 c0 csn cdif c0 csn cun funidif0_0 c0 csn cdif c0 csn cun funidif0_0 c0 csn cun c0 csn funidif0_0 cun funidif0_0 c0 csn undif1 funidif0_0 c0 csn uncom eqtr2i unieqi funidif0_0 c0 csn cdif cuni c0 csn cuni cun funidif0_0 c0 csn cdif cuni c0 cun funidif0_0 c0 csn cdif cuni c0 csn cuni c0 funidif0_0 c0 csn cdif cuni c0 0ex unisn uneq2i funidif0_0 c0 csn cdif cuni un0 eqtr2i 3eqtr4ri c0 csn funidif0_0 uniun c0 csn cuni c0 funidif0_0 cuni c0 0ex unisn uneq1i 3eqtri c0 funidif0_0 cuni uncom funidif0_0 cuni un0 3eqtri $.
 $}
 $( An indexed intersection of the empty set, with a non-empty index set, is
        empty.  (Contributed by NM, 20-Oct-2005.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	fiin0_0 $f set x $.
 	fiin0_1 $f class A $.
@@ -60,6 +70,10 @@ $( In the Separation Scheme ~ zfauscl , we require that ` y ` not occur in
        special cases of ` A ` and ` ph ` that result in a contradiction by
        violating this requirement.  (Contributed by NM, 8-Feb-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x A $.
 	fnotzfaus_0 $f wff ph $.
 	fnotzfaus_1 $f set x $.
@@ -77,6 +91,10 @@ $}
 $( Two equivalent ways to express the Power Set Axiom.  Note that ~ ax-pow
        is not used by the proof.  (Contributed by NM, 22-Jun-2009.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z A $.
 	faxpweq_0 $f set x $.
 	faxpweq_1 $f set y $.

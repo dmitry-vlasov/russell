@@ -11,6 +11,7 @@ $( Calligraphic P $)
 $( Extend class notation to include power class.  (The tilde in the Metamath
      token is meant to suggest the calligraphic font of the P.) $)
 ${
+	$v A $.
 	fcpw_0 $f class A $.
 	cpw $a class ~P A $.
 $}
@@ -18,6 +19,10 @@ $( Soundness justification theorem for ~ df-pw .  (Contributed by Rodolfo
        Medina, 28-Apr-2010.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v z $.
 	$d x A $.
 	$d y A $.
 	$d z x $.
@@ -41,6 +46,8 @@ $( Define power class.  Definition 5.10 of [TakeutiZaring] p. 17, but we
        that the size of the power set of a finite set is 2 raised to the power
        of the size of the set.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	fdf-pw_0 $f set x $.
 	fdf-pw_1 $f class A $.
@@ -48,6 +55,9 @@ ${
 $}
 $( Equality theorem for power class.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	ipweq_0 $f set x $.
@@ -58,6 +68,8 @@ $}
 $( Equality inference for power class.  (Contributed by NM,
        27-Nov-2013.) $)
 ${
+	$v A $.
+	$v B $.
 	fpweqi_0 $f class A $.
 	fpweqi_1 $f class B $.
 	epweqi_0 $e |- A = B $.
@@ -66,6 +78,9 @@ $}
 $( Equality deduction for power class.  (Contributed by NM,
        27-Nov-2013.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fpweqd_0 $f wff ph $.
 	fpweqd_1 $f class A $.
 	fpweqd_2 $f class B $.
@@ -75,6 +90,9 @@ $}
 $( Membership in a power class.  Theorem 86 of [Suppes] p. 47.
          (Contributed by NM, 31-Dec-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d A x $.
 	$d B x $.
 	ielpw_0 $f set x $.
@@ -86,6 +104,10 @@ $}
 $( Membership in a power class.  Theorem 86 of [Suppes] p. 47.  See also
        ~ elpw2g .  (Contributed by NM, 6-Aug-2000.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v x $.
 	$d A x $.
 	$d B x $.
 	ielpwg_0 $f set x $.
@@ -97,6 +119,8 @@ $}
 $( Subset relation implied by membership in a power class.  (Contributed by
      NM, 17-Feb-2007.) $)
 ${
+	$v A $.
+	$v B $.
 	felpwi_0 $f class A $.
 	felpwi_1 $f class B $.
 	elpwi $p |- ( A e. ~P B -> A C_ B ) $= felpwi_0 felpwi_1 cpw wcel felpwi_0 felpwi_1 wss felpwi_0 felpwi_1 felpwi_1 cpw elpwg ibi $.
@@ -104,6 +128,9 @@ $}
 $( An element of a power class is a subclass.  Deduction form of ~ elpwi .
        (Contributed by David Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	felpwid_0 $f wff ph $.
 	felpwid_1 $f class A $.
 	felpwid_2 $f class B $.
@@ -113,6 +140,9 @@ $}
 $( If ` A ` belongs to a part of ` C ` then ` A ` belongs to ` C ` .
      (Contributed by FL, 3-Aug-2009.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	felelpwi_0 $f class A $.
 	felelpwi_1 $f class B $.
 	felelpwi_2 $f class C $.
@@ -121,6 +151,9 @@ $}
 $( Bound-variable hypothesis builder for power class.  (Contributed by NM,
        28-Oct-2003.)  (Revised by Mario Carneiro, 13-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v y $.
 	$d y A $.
 	$d x y $.
 	infpw_0 $f set y $.
@@ -132,6 +165,8 @@ $}
 $( Membership of the original in a power set.  (Contributed by Stefan O'Rear,
      1-Feb-2015.) $)
 ${
+	$v A $.
+	$v V $.
 	fpwidg_0 $f class A $.
 	fpwidg_1 $f class V $.
 	pwidg $p |- ( A e. V -> A e. ~P A ) $= fpwidg_0 fpwidg_1 wcel fpwidg_0 fpwidg_0 cpw wcel fpwidg_0 fpwidg_0 wss fpwidg_0 ssid fpwidg_0 fpwidg_0 fpwidg_1 elpwg mpbiri $.
@@ -139,6 +174,7 @@ $}
 $( A set is a member of its power class.  Theorem 87 of [Suppes] p. 47.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
 	fpwid_0 $f class A $.
 	epwid_0 $e |- A e. _V $.
 	pwid $p |- A e. ~P A $= fpwid_0 cvv wcel fpwid_0 fpwid_0 cpw wcel epwid_0 fpwid_0 cvv pwidg ax-mp $.
@@ -146,6 +182,9 @@ $}
 $( Subclass relationship for power class.  (Contributed by NM,
        21-Jun-2009.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fpwss_0 $f set x $.

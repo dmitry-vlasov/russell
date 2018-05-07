@@ -23,6 +23,8 @@ $( Extend wff definition to include the membership connective between
        otherwise not used in predicate calculus.  See ~ df-clab for more
        information on the set theory usage of ~ wcel .) $)
 ${
+	$v A $.
+	$v B $.
 	fwcel_0 $f class A $.
 	fwcel_1 $f class B $.
 	wcel $a wff A e. B $.
@@ -56,6 +58,8 @@ $( Extend wff definition to include atomic formulas with the epsilon
      proof wel /all" in the Metamath program.)  (Contributed by NM,
      24-Jan-2006.) $)
 ${
+	$v x $.
+	$v y $.
 	fwel_0 $f set x $.
 	fwel_1 $f set y $.
 	wel $p wff x e. y $= fwel_0 cv fwel_1 cv wcel $.

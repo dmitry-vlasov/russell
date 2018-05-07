@@ -15,14 +15,18 @@ $( Rule of Generalization.  The postulated inference rule of pure predicate
        beginning of any theorem as required.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
 	fax-gen_0 $f wff ph $.
 	fax-gen_1 $f set x $.
 	eax-gen_0 $e |- ph $.
 	ax-gen $a |- A. x ph $.
 $}
 $( Generalization applied twice.  (Contributed by NM, 30-Apr-1998.) $)
-$v y $.
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fgen2_0 $f wff ph $.
 	fgen2_1 $f set x $.
 	fgen2_2 $f set y $.
@@ -32,6 +36,9 @@ $}
 $( Modus ponens combined with generalization.  (Contributed by NM,
        24-May-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fmpg_0 $f wff ph $.
 	fmpg_1 $f wff ps $.
 	fmpg_2 $f set x $.
@@ -43,6 +50,9 @@ $( Modus ponens on biconditional combined with generalization.
        (Contributed by NM, 24-May-1994.)  (Proof shortened by Stefan Allan,
        28-Oct-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fmpgbi_0 $f wff ph $.
 	fmpgbi_1 $f wff ps $.
 	fmpgbi_2 $f set x $.
@@ -54,6 +64,9 @@ $( Modus ponens on biconditional combined with generalization.
        (Contributed by NM, 24-May-1994.)  (Proof shortened by Stefan Allan,
        28-Oct-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fmpgbir_0 $f wff ph $.
 	fmpgbir_1 $f wff ps $.
 	fmpgbir_2 $f set x $.
@@ -64,6 +77,8 @@ $}
 $( Deduce that ` x ` is not free in ` ph ` from the definition.
        (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	fnfi_0 $f wff ph $.
 	fnfi_1 $f set x $.
 	enfi_0 $e |- ( ph -> A. x ph ) $.
@@ -77,6 +92,8 @@ $( No variable is (effectively) free in a theorem.
        useful for constructing hypotheses that state " ` x ` is (effectively)
        not free in ` ph ` ."  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
 	fhbth_0 $f wff ph $.
 	fhbth_1 $f set x $.
 	ehbth_0 $e |- ph $.
@@ -85,6 +102,8 @@ $}
 $( No variable is (effectively) free in a theorem.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	fnfth_0 $f wff ph $.
 	fnfth_1 $f set x $.
 	enfth_0 $e |- ph $.
@@ -94,12 +113,15 @@ $( The true constant has no free variables.  (This can also be proven in one
      step with ~ nfv , but this proof does not use ~ ax-17 .)  (Contributed by
      Mario Carneiro, 6-Oct-2016.) $)
 ${
+	$v x $.
 	fnftru_0 $f set x $.
 	nftru $p |- F/ x T. $= wtru fnftru_0 tru nfth $.
 $}
 $( Generalization rule for negated wff.  (Contributed by NM,
        18-May-1994.) $)
 ${
+	$v ph $.
+	$v x $.
 	fnex_0 $f wff ph $.
 	fnex_1 $f set x $.
 	enex_0 $e |- -. ph $.
@@ -108,6 +130,8 @@ $}
 $( No variable is (effectively) free in a non-theorem.  (Contributed by
        Mario Carneiro, 6-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	fnfnth_0 $f wff ph $.
 	fnfnth_1 $f set x $.
 	enfnth_0 $e |- -. ph $.

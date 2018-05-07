@@ -45,7 +45,7 @@ $}
 $( Separation Scheme (Aussonderung) using class notation.  Compare Exercise
        4 of [TakeutiZaring] p. 22.  (Contributed by NM, 5-Aug-1993.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d A x y $.
 	$d B x y $.
 	e0 $e |- A e. _V $.
@@ -69,7 +69,7 @@ $}
 $( Closed-form, generalized Separation Scheme.  (Contributed by NM,
        7-Apr-1995.) $)
 ${
-	$v x A B V $.
+	$v A B V x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -103,7 +103,7 @@ $}
 $( The subset of a set is also a set.  Exercise 3 of [TakeutiZaring] p. 22
        (generalized).  (Contributed by NM, 14-Aug-1994.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -192,7 +192,7 @@ $( The intersection of a non-empty class exists.  Exercise 5 of
        [TakeutiZaring] p. 44 and its converse.  (Contributed by NM,
        13-Aug-2002.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -230,7 +230,7 @@ $( The existence of an indexed union. ` x ` is normally a free-variable
        parameter in ` B ` , which should be read ` B ( x ) ` .  (Contributed by
        FL, 19-Sep-2011.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d A x y $.
 	$d B y $.
 	f0 $f set x $.
@@ -266,7 +266,7 @@ $( The intersection of a union ` U. A ` with a class ` B ` is equal to the
        union of the intersections of each element of ` A ` with ` B ` .
        (Contributed by FL, 24-Mar-2007.) $)
 ${
-	$v x y z A B $.
+	$v x y A B z $.
 	$d A x y z $.
 	$d B x y z $.
 	f0 $f set x $.
@@ -300,7 +300,7 @@ $}
 $( The power set of a set is never a subset.  (Contributed by Stefan
        O'Rear, 22-Feb-2015.) $)
 ${
-	$v x y A V $.
+	$v A V x y $.
 	$d A x y $.
 	$d V x y $.
 	f0 $f class A $.

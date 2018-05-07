@@ -21,12 +21,15 @@ $}
 $( Alternate definition of the empty set.  Definition 5.14 of [TakeutiZaring]
      p. 20.  (Contributed by NM, 26-Dec-1996.) $)
 ${
+	$v x $.
 	fdfnul2_0 $f set x $.
 	dfnul2 $p |- (/) = { x | -. x = x } $= fdfnul2_0 sup_set_class fdfnul2_0 sup_set_class wceq wn fdfnul2_0 c0 fdfnul2_0 sup_set_class c0 wcel fdfnul2_0 sup_set_class cvv cvv cdif wcel fdfnul2_0 sup_set_class cvv wcel fdfnul2_0 sup_set_class cvv wcel wn wa fdfnul2_0 sup_set_class fdfnul2_0 sup_set_class wceq wn c0 cvv cvv cdif fdfnul2_0 sup_set_class df-nul eleq2i fdfnul2_0 sup_set_class cvv cvv eldif fdfnul2_0 sup_set_class fdfnul2_0 sup_set_class wceq fdfnul2_0 sup_set_class cvv wcel fdfnul2_0 sup_set_class cvv wcel wn wa fdfnul2_0 sup_set_class fdfnul2_0 sup_set_class wceq fdfnul2_0 sup_set_class cvv wcel fdfnul2_0 sup_set_class cvv wcel wn wa wn fdfnul2_0 sup_set_class eqid fdfnul2_0 sup_set_class cvv wcel pm3.24 2th con2bii 3bitri abbi2i $.
 $}
 $( Alternate definition of the empty set.  (Contributed by NM,
      25-Mar-2004.) $)
 ${
+	$v x $.
+	$v A $.
 	fdfnul3_0 $f set x $.
 	fdfnul3_1 $f class A $.
 	dfnul3 $p |- (/) = { x e. A | -. x e. A } $= fdfnul3_0 sup_set_class fdfnul3_0 sup_set_class wceq wn fdfnul3_0 cab fdfnul3_0 sup_set_class fdfnul3_1 wcel fdfnul3_0 sup_set_class fdfnul3_1 wcel wn wa fdfnul3_0 cab c0 fdfnul3_0 sup_set_class fdfnul3_1 wcel wn fdfnul3_0 fdfnul3_1 crab fdfnul3_0 sup_set_class fdfnul3_0 sup_set_class wceq wn fdfnul3_0 sup_set_class fdfnul3_1 wcel fdfnul3_0 sup_set_class fdfnul3_1 wcel wn wa fdfnul3_0 fdfnul3_0 sup_set_class fdfnul3_1 wcel fdfnul3_0 sup_set_class fdfnul3_1 wcel wn wa fdfnul3_0 sup_set_class fdfnul3_0 sup_set_class wceq fdfnul3_0 sup_set_class fdfnul3_1 wcel fdfnul3_0 sup_set_class fdfnul3_1 wcel wn wa wn fdfnul3_0 sup_set_class fdfnul3_0 sup_set_class wceq fdfnul3_0 sup_set_class fdfnul3_1 wcel pm3.24 fdfnul3_0 sup_set_class eqid 2th con1bii abbii fdfnul3_0 dfnul2 fdfnul3_0 sup_set_class fdfnul3_1 wcel wn fdfnul3_0 fdfnul3_1 df-rab 3eqtr4i $.
@@ -35,12 +38,15 @@ $( The empty set has no elements.  Theorem 6.14 of [Quine] p. 44.
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Mario Carneiro,
      1-Sep-2015.) $)
 ${
+	$v A $.
 	fnoel_0 $f class A $.
 	noel $p |- -. A e. (/) $= fnoel_0 c0 wcel fnoel_0 cvv cvv cdif wcel fnoel_0 cvv cvv cdif wcel fnoel_0 cvv wcel fnoel_0 cvv cvv eldifi fnoel_0 cvv cvv eldifn pm2.65i c0 cvv cvv cdif fnoel_0 df-nul eleq2i mtbir $.
 $}
 $( If a set has elements, it is not empty.  (Contributed by NM,
      31-Dec-1993.) $)
 ${
+	$v A $.
+	$v B $.
 	fn0i_0 $f class A $.
 	fn0i_1 $f class B $.
 	n0i $p |- ( B e. A -> -. A = (/) ) $= fn0i_0 c0 wceq fn0i_1 fn0i_0 wcel fn0i_0 c0 wceq fn0i_1 fn0i_0 wcel fn0i_1 c0 wcel fn0i_1 noel fn0i_0 c0 fn0i_1 eleq2 mtbiri con2i $.
@@ -48,6 +54,8 @@ $}
 $( If a set has elements, it is not empty.  (Contributed by NM,
      31-Dec-1993.) $)
 ${
+	$v A $.
+	$v B $.
 	fne0i_0 $f class A $.
 	fne0i_1 $f class B $.
 	ne0i $p |- ( B e. A -> A =/= (/) ) $= fne0i_1 fne0i_0 wcel fne0i_0 c0 wceq wn fne0i_0 c0 wne fne0i_0 fne0i_1 n0i fne0i_0 c0 df-ne sylibr $.
@@ -55,6 +63,7 @@ $}
 $( The universal class is not equal to the empty set.  (Contributed by NM,
      11-Sep-2008.) $)
 ${
+	$v x $.
 	ivn0_0 $f set x $.
 	vn0 $p |- _V =/= (/) $= ivn0_0 sup_set_class cvv wcel cvv c0 wne ivn0_0 vex cvv ivn0_0 sup_set_class ne0i ax-mp $.
 $}
@@ -63,6 +72,8 @@ $( A nonempty class has at least one element.  Proposition 5.17(1) of
        not be free in, rather than not occur in, ` A ` .  (Contributed by NM,
        17-Oct-2003.) $)
 ${
+	$v x $.
+	$v A $.
 	fn0f_0 $f set x $.
 	fn0f_1 $f class A $.
 	en0f_0 $e |- F/_ x A $.
@@ -71,6 +82,8 @@ $}
 $( A nonempty class has at least one element.  Proposition 5.17(1) of
        [TakeutiZaring] p. 20.  (Contributed by NM, 29-Sep-2006.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	fn0_0 $f set x $.
 	fn0_1 $f class A $.
@@ -79,6 +92,8 @@ $}
 $( A nonempty class has at least one element.  Proposition 5.17(1) of
        [TakeutiZaring] p. 20.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	fneq0_0 $f set x $.
 	fneq0_1 $f class A $.
@@ -87,6 +102,10 @@ $}
 $( Restricted existence deduced from non-empty class.  (Contributed by NM,
        1-Feb-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	$d x ph $.
 	freximdva0_0 $f wff ph $.
@@ -99,6 +118,8 @@ $}
 $( A case of equivalence of "at most one" and "only one".  (Contributed by
        FL, 6-Dec-2010.) $)
 ${
+	$v x $.
+	$v A $.
 	$d A x $.
 	fn0moeu_0 $f set x $.
 	fn0moeu_1 $f class A $.
@@ -107,6 +128,8 @@ $}
 $( Vacuous existential quantification is false.  (Contributed by NM,
      15-Oct-2003.) $)
 ${
+	$v ph $.
+	$v x $.
 	frex0_0 $f wff ph $.
 	frex0_1 $f set x $.
 	rex0 $p |- -. E. x e. (/) ph $= frex0_0 frex0_1 c0 frex0_1 sup_set_class c0 wcel frex0_0 wn frex0_1 sup_set_class noel pm2.21i nrex $.
@@ -114,6 +137,8 @@ $}
 $( The empty set has no elements.  Theorem 2 of [Suppes] p. 22.
        (Contributed by NM, 29-Aug-1993.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	feq0_0 $f set x $.
 	feq0_1 $f class A $.
@@ -121,6 +146,8 @@ ${
 $}
 $( The universe contains every set.  (Contributed by NM, 11-Sep-2006.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	feqv_0 $f set x $.
 	feqv_1 $f class A $.
@@ -129,6 +156,9 @@ $}
 $( Membership of the empty set in another class.  (Contributed by NM,
        29-Jun-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x A $.
 	$d x y $.
 	f0el_0 $f set x $.
@@ -140,6 +170,8 @@ $( The class builder of a wff not containing the abstraction variable is
        either the universal class or the empty set.  (Contributed by Mario
        Carneiro, 29-Aug-2013.) $)
 ${
+	$v ph $.
+	$v x $.
 	$d x ph $.
 	fabvor0_0 $f wff ph $.
 	fabvor0_1 $f set x $.
@@ -148,6 +180,8 @@ $}
 $( Nonempty class abstraction.  (Contributed by NM, 26-Dec-1996.)  (Proof
        shortened by Mario Carneiro, 11-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	fabn0_0 $f wff ph $.
 	fabn0_1 $f set x $.
 	abn0 $p |- ( { x | ph } =/= (/) <-> E. x ph ) $= fabn0_0 fabn0_1 cab c0 wne fabn0_1 sup_set_class fabn0_0 fabn0_1 cab wcel fabn0_1 wex fabn0_0 fabn0_1 wex fabn0_1 fabn0_0 fabn0_1 cab fabn0_0 fabn0_1 nfab1 n0f fabn0_1 sup_set_class fabn0_0 fabn0_1 cab wcel fabn0_0 fabn0_1 fabn0_0 fabn0_1 abid exbii bitri $.
@@ -155,6 +189,9 @@ $}
 $( Non-empty restricted class abstraction.  (Contributed by NM,
      29-Aug-1999.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	frabn0_0 $f wff ph $.
 	frabn0_1 $f set x $.
 	frabn0_2 $f class A $.
@@ -164,6 +201,8 @@ $( Any restricted class abstraction restricted to the empty set is empty.
      (Contributed by NM, 15-Oct-2003.)  (Proof shortened by Andrew Salmon,
      26-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
 	frab0_0 $f wff ph $.
 	frab0_1 $f set x $.
 	rab0 $p |- { x e. (/) | ph } = (/) $= frab0_1 sup_set_class c0 wcel frab0_0 wa frab0_1 cab frab0_1 sup_set_class frab0_1 sup_set_class wceq wn frab0_1 cab frab0_0 frab0_1 c0 crab c0 frab0_1 sup_set_class c0 wcel frab0_0 wa frab0_1 sup_set_class frab0_1 sup_set_class wceq wn frab0_1 frab0_1 sup_set_class frab0_1 sup_set_class wceq frab0_1 sup_set_class c0 wcel frab0_0 wa frab0_1 sup_set_class frab0_1 sup_set_class wceq frab0_1 sup_set_class c0 wcel frab0_0 wa wn frab0_1 equid frab0_1 sup_set_class c0 wcel frab0_0 frab0_1 sup_set_class noel intnanr 2th con2bii abbii frab0_0 frab0_1 c0 df-rab frab0_1 dfnul2 3eqtr4i $.
@@ -171,6 +210,9 @@ $}
 $( Condition for a restricted class abstraction to be empty.  (Contributed by
      Jeff Madsen, 7-Jun-2010.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	frabeq0_0 $f wff ph $.
 	frabeq0_1 $f set x $.
 	frabeq0_2 $f class A $.
@@ -179,6 +221,9 @@ $}
 $( Law of excluded middle, in terms of restricted class abstractions.
        (Contributed by Jeff Madsen, 20-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d A x $.
 	frabxm_0 $f wff ph $.
 	frabxm_1 $f set x $.
@@ -188,6 +233,9 @@ $}
 $( Law of noncontradiction, in terms of restricted class abstractions.
        (Contributed by Jeff Madsen, 20-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d A x $.
 	frabnc_0 $f wff ph $.
 	frabnc_1 $f set x $.
@@ -197,6 +245,8 @@ $}
 $( The union of a class with the empty set is itself.  Theorem 24 of
        [Suppes] p. 27.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v x $.
 	$d x A $.
 	iun0_0 $f set x $.
 	fun0_0 $f class A $.
@@ -205,6 +255,8 @@ $}
 $( The intersection of a class with the empty set is the empty set.
        Theorem 16 of [Suppes] p. 26.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v x $.
 	$d x A $.
 	iin0_0 $f set x $.
 	fin0_0 $f class A $.
@@ -213,6 +265,7 @@ $}
 $( The intersection of a class with the universal class is itself.  Exercise
      4.10(k) of [Mendelson] p. 231.  (Contributed by NM, 17-May-1998.) $)
 ${
+	$v A $.
 	finv1_0 $f class A $.
 	inv1 $p |- ( A i^i _V ) = A $= finv1_0 cvv cin finv1_0 finv1_0 cvv inss1 finv1_0 finv1_0 cvv finv1_0 ssid finv1_0 ssv ssini eqssi $.
 $}
@@ -220,12 +273,15 @@ $( The union of a class with the universal class is the universal class.
      Exercise 4.10(l) of [Mendelson] p. 231.  (Contributed by NM,
      17-May-1998.) $)
 ${
+	$v A $.
 	funv_0 $f class A $.
 	unv $p |- ( A u. _V ) = _V $= funv_0 cvv cun cvv funv_0 cvv cun ssv cvv funv_0 ssun2 eqssi $.
 $}
 $( The null set is a subset of any class.  Part of Exercise 1 of
        [TakeutiZaring] p. 22.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v x $.
 	$d A x $.
 	i0ss_0 $f set x $.
 	f0ss_0 $f class A $.
@@ -234,18 +290,22 @@ $}
 $( Any subset of the empty set is empty.  Theorem 5 of [Suppes] p. 23 and its
      converse.  (Contributed by NM, 17-Sep-2003.) $)
 ${
+	$v A $.
 	fss0b_0 $f class A $.
 	ss0b $p |- ( A C_ (/) <-> A = (/) ) $= fss0b_0 c0 wceq fss0b_0 c0 wss fss0b_0 c0 wceq fss0b_0 c0 wss c0 fss0b_0 wss fss0b_0 0ss fss0b_0 c0 eqss mpbiran2 bicomi $.
 $}
 $( Any subset of the empty set is empty.  Theorem 5 of [Suppes] p. 23.
      (Contributed by NM, 13-Aug-1994.) $)
 ${
+	$v A $.
 	fss0_0 $f class A $.
 	ss0 $p |- ( A C_ (/) -> A = (/) ) $= fss0_0 c0 wss fss0_0 c0 wceq fss0_0 ss0b biimpi $.
 $}
 $( A subclass of an empty class is empty.  (Contributed by NM, 7-Mar-2007.)
      (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
 	fsseq0_0 $f class A $.
 	fsseq0_1 $f class B $.
 	sseq0 $p |- ( ( A C_ B /\ B = (/) ) -> A = (/) ) $= fsseq0_1 c0 wceq fsseq0_0 fsseq0_1 wss fsseq0_0 c0 wceq fsseq0_1 c0 wceq fsseq0_0 fsseq0_1 wss fsseq0_0 c0 wss fsseq0_0 c0 wceq fsseq0_1 c0 fsseq0_0 sseq2 fsseq0_0 ss0 syl6bi impcom $.
@@ -253,6 +313,8 @@ $}
 $( A class with a nonempty subclass is nonempty.  (Contributed by NM,
      17-Feb-2007.) $)
 ${
+	$v A $.
+	$v B $.
 	fssn0_0 $f class A $.
 	fssn0_1 $f class B $.
 	ssn0 $p |- ( ( A C_ B /\ A =/= (/) ) -> B =/= (/) ) $= fssn0_0 fssn0_1 wss fssn0_0 c0 wne fssn0_1 c0 wne fssn0_0 fssn0_1 wss fssn0_1 c0 fssn0_0 c0 fssn0_0 fssn0_1 wss fssn0_1 c0 wceq fssn0_0 c0 wceq fssn0_0 fssn0_1 sseq0 ex necon3d imp $.
@@ -260,6 +322,8 @@ $}
 $( A class builder with a false argument is empty.  (Contributed by NM,
        20-Jan-2012.) $)
 ${
+	$v ph $.
+	$v x $.
 	fabf_0 $f wff ph $.
 	fabf_1 $f set x $.
 	eabf_0 $e |- -. ph $.
@@ -268,6 +332,9 @@ $}
 $( Deduction rule for equality to the empty set.  (Contributed by NM,
        11-Jul-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	$d x ph $.
 	feq0rdv_0 $f wff ph $.
@@ -279,6 +346,8 @@ $}
 $( Two classes are empty iff their union is empty.  (Contributed by NM,
      11-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	fun00_0 $f class A $.
 	fun00_1 $f class B $.
 	un00 $p |- ( ( A = (/) /\ B = (/) ) <-> ( A u. B ) = (/) ) $= fun00_0 c0 wceq fun00_1 c0 wceq wa fun00_0 fun00_1 cun c0 wceq fun00_0 c0 wceq fun00_1 c0 wceq wa fun00_0 fun00_1 cun c0 c0 cun c0 fun00_0 c0 fun00_1 c0 uneq12 c0 un0 syl6eq fun00_0 fun00_1 cun c0 wceq fun00_0 c0 wceq fun00_1 c0 wceq fun00_0 fun00_1 cun c0 wceq fun00_0 c0 wss fun00_0 c0 wceq fun00_0 fun00_1 cun c0 wceq fun00_0 fun00_0 fun00_1 cun wss fun00_0 c0 wss fun00_0 fun00_1 ssun1 fun00_0 fun00_1 cun c0 fun00_0 sseq2 mpbii fun00_0 ss0b sylib fun00_0 fun00_1 cun c0 wceq fun00_1 c0 wss fun00_1 c0 wceq fun00_0 fun00_1 cun c0 wceq fun00_1 fun00_0 fun00_1 cun wss fun00_1 c0 wss fun00_1 fun00_0 ssun2 fun00_0 fun00_1 cun c0 fun00_1 sseq2 mpbii fun00_1 ss0b sylib jca impbii $.
@@ -287,30 +356,37 @@ $( Only the universal class has the universal class as a subclass.
      (Contributed by NM, 17-Sep-2003.)  (Proof shortened by Andrew Salmon,
      26-Jun-2011.) $)
 ${
+	$v A $.
 	fvss_0 $f class A $.
 	vss $p |- ( _V C_ A <-> A = _V ) $= cvv fvss_0 wss fvss_0 cvv wss cvv fvss_0 wss wa fvss_0 cvv wceq fvss_0 cvv wss cvv fvss_0 wss fvss_0 ssv biantrur fvss_0 cvv eqss bitr4i $.
 $}
 $( The null set is a proper subset of any non-empty set.  (Contributed by NM,
      27-Feb-1996.) $)
 ${
+	$v A $.
 	f0pss_0 $f class A $.
 	0pss $p |- ( (/) C. A <-> A =/= (/) ) $= c0 f0pss_0 wpss c0 f0pss_0 wne f0pss_0 c0 wne c0 f0pss_0 wpss c0 f0pss_0 wss c0 f0pss_0 wne f0pss_0 0ss c0 f0pss_0 df-pss mpbiran c0 f0pss_0 necom bitri $.
 $}
 $( No set is a proper subset of the empty set.  (Contributed by NM,
      17-Jun-1998.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
 	fnpss0_0 $f class A $.
 	npss0 $p |- -. A C. (/) $= fnpss0_0 c0 wpss fnpss0_0 c0 wss c0 fnpss0_0 wss wn wa fnpss0_0 c0 wss c0 fnpss0_0 wss wi fnpss0_0 c0 wss c0 fnpss0_0 wss wn wa wn c0 fnpss0_0 wss fnpss0_0 c0 wss fnpss0_0 0ss a1i fnpss0_0 c0 wss c0 fnpss0_0 wss iman mpbi fnpss0_0 c0 dfpss3 mtbir $.
 $}
 $( Any non-universal class is a proper subclass of the universal class.
      (Contributed by NM, 17-May-1998.) $)
 ${
+	$v A $.
 	fpssv_0 $f class A $.
 	pssv $p |- ( A C. _V <-> -. A = _V ) $= fpssv_0 cvv wpss fpssv_0 cvv wss fpssv_0 cvv wceq wn fpssv_0 ssv fpssv_0 cvv dfpss2 mpbiran $.
 $}
 $( Two ways of saying that two classes are disjoint (have no members in
        common).  (Contributed by NM, 17-Feb-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fdisj_0 $f set x $.
@@ -321,6 +397,9 @@ $}
 $( Two ways of saying that two classes are disjoint.  (Contributed by Jeff
        Madsen, 19-Jun-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fdisjr_0 $f set x $.
@@ -331,6 +410,9 @@ $}
 $( Two ways of saying that two classes are disjoint (have no members in
        common).  (Contributed by NM, 19-Aug-1993.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fdisj1_0 $f set x $.
@@ -342,6 +424,10 @@ $( Two ways of saying that two classes are disjoint, using the complement
        of ` B ` relative to a universe ` C ` .  (Contributed by NM,
        15-Feb-2007.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -354,6 +440,9 @@ $}
 $( Two ways of saying that two classes are disjoint.  (Contributed by NM,
        19-May-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	idisj3_0 $f set x $.
@@ -364,6 +453,11 @@ $}
 $( Members of disjoint sets are not equal.  (Contributed by NM,
        28-Mar-2007.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -377,6 +471,9 @@ $}
 $( A set can't belong to both members of disjoint classes.  (Contributed by
      NM, 28-Feb-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fdisjel_0 $f class A $.
 	fdisjel_1 $f class B $.
 	fdisjel_2 $f class C $.
@@ -385,6 +482,8 @@ $}
 $( Two ways of saying that two classes are disjoint.  (Contributed by NM,
      17-May-1998.) $)
 ${
+	$v A $.
+	$v B $.
 	fdisj2_0 $f class A $.
 	fdisj2_1 $f class B $.
 	disj2 $p |- ( ( A i^i B ) = (/) <-> A C_ ( _V \ B ) ) $= fdisj2_0 cvv wss fdisj2_0 fdisj2_1 cin c0 wceq fdisj2_0 cvv fdisj2_1 cdif wss wb fdisj2_0 ssv fdisj2_0 fdisj2_1 cvv reldisj ax-mp $.
@@ -392,6 +491,8 @@ $}
 $( Two ways of saying that two classes are disjoint.  (Contributed by NM,
      21-Mar-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	fdisj4_0 $f class A $.
 	fdisj4_1 $f class B $.
 	disj4 $p |- ( ( A i^i B ) = (/) <-> -. ( A \ B ) C. A ) $= fdisj4_0 fdisj4_1 cin c0 wceq fdisj4_0 fdisj4_0 fdisj4_1 cdif wceq fdisj4_0 fdisj4_1 cdif fdisj4_0 wceq fdisj4_0 fdisj4_1 cdif fdisj4_0 wpss wn fdisj4_0 fdisj4_1 disj3 fdisj4_0 fdisj4_0 fdisj4_1 cdif eqcom fdisj4_0 fdisj4_1 cdif fdisj4_0 wpss fdisj4_0 fdisj4_1 cdif fdisj4_0 wceq fdisj4_0 fdisj4_1 cdif fdisj4_0 wpss fdisj4_0 fdisj4_1 cdif fdisj4_0 wss fdisj4_0 fdisj4_1 cdif fdisj4_0 wceq wn fdisj4_0 fdisj4_1 difss fdisj4_0 fdisj4_1 cdif fdisj4_0 dfpss2 mpbiran con2bii 3bitri $.
@@ -399,6 +500,9 @@ $}
 $( Intersection with a subclass of a disjoint class.  (Contributed by FL,
      24-Jan-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fssdisj_0 $f class A $.
 	fssdisj_1 $f class B $.
 	fssdisj_2 $f class C $.
@@ -407,6 +511,8 @@ $}
 $( A class is a proper subset of its union with a disjoint nonempty class.
      (Contributed by NM, 15-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	fdisjpss_0 $f class A $.
 	fdisjpss_1 $f class B $.
 	disjpss $p |- ( ( ( A i^i B ) = (/) /\ B =/= (/) ) -> A C. ( A u. B ) ) $= fdisjpss_0 fdisjpss_1 cin c0 wceq fdisjpss_1 c0 wne wa fdisjpss_1 fdisjpss_0 wss wn fdisjpss_0 fdisjpss_0 fdisjpss_1 cun wpss fdisjpss_0 fdisjpss_1 cin c0 wceq fdisjpss_1 c0 wne fdisjpss_1 fdisjpss_0 wss wn fdisjpss_0 fdisjpss_1 cin c0 wceq fdisjpss_1 fdisjpss_0 wss fdisjpss_1 c0 fdisjpss_0 fdisjpss_1 cin c0 wceq fdisjpss_1 fdisjpss_0 wss fdisjpss_1 c0 wss fdisjpss_1 c0 wceq fdisjpss_1 fdisjpss_0 wss fdisjpss_1 fdisjpss_0 fdisjpss_1 cin wss fdisjpss_0 fdisjpss_1 cin c0 wceq fdisjpss_1 c0 wss fdisjpss_1 fdisjpss_0 wss fdisjpss_1 fdisjpss_0 wss fdisjpss_1 fdisjpss_1 wss wa fdisjpss_1 fdisjpss_0 fdisjpss_1 cin wss fdisjpss_1 fdisjpss_1 wss fdisjpss_1 fdisjpss_0 wss fdisjpss_1 ssid biantru fdisjpss_1 fdisjpss_0 fdisjpss_1 ssin bitri fdisjpss_0 fdisjpss_1 cin c0 fdisjpss_1 sseq2 syl5bb fdisjpss_1 ss0 syl6bi necon3ad imp fdisjpss_1 fdisjpss_0 wss wn fdisjpss_0 fdisjpss_1 fdisjpss_0 cun wpss fdisjpss_0 fdisjpss_0 fdisjpss_1 cun wpss fdisjpss_1 fdisjpss_0 nsspssun fdisjpss_1 fdisjpss_0 cun fdisjpss_0 fdisjpss_1 cun fdisjpss_0 fdisjpss_1 fdisjpss_0 uncom psseq2i bitri sylib $.
@@ -414,6 +520,9 @@ $}
 $( The union of disjoint classes is disjoint.  (Contributed by NM,
      26-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fundisj1_0 $f class A $.
 	fundisj1_1 $f class B $.
 	fundisj1_2 $f class C $.
@@ -422,6 +531,9 @@ $}
 $( The union of disjoint classes is disjoint.  (Contributed by NM,
      13-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fundisj2_0 $f class A $.
 	fundisj2_1 $f class B $.
 	fundisj2_2 $f class C $.
@@ -430,6 +542,8 @@ $}
 $( Subclass expressed in terms of intersection with difference from the
      universal class.  (Contributed by NM, 17-Sep-2003.) $)
 ${
+	$v A $.
+	$v B $.
 	fssindif0_0 $f class A $.
 	fssindif0_1 $f class B $.
 	ssindif0 $p |- ( A C_ B <-> ( A i^i ( _V \ B ) ) = (/) ) $= fssindif0_0 cvv fssindif0_1 cdif cin c0 wceq fssindif0_0 cvv cvv fssindif0_1 cdif cdif wss fssindif0_0 fssindif0_1 wss fssindif0_0 cvv fssindif0_1 cdif disj2 cvv cvv fssindif0_1 cdif cdif fssindif0_1 fssindif0_0 fssindif0_1 ddif sseq2i bitr2i $.
@@ -437,6 +551,9 @@ $}
 $( The intersection of classes with a common member is nonempty.
      (Contributed by NM, 7-Apr-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	finelcm_0 $f class A $.
 	finelcm_1 $f class B $.
 	finelcm_2 $f class C $.
@@ -445,6 +562,9 @@ $}
 $( A minimum element of a class has no elements in common with the class.
      (Contributed by NM, 22-Jun-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fminel_0 $f class A $.
 	fminel_1 $f class B $.
 	fminel_2 $f class C $.
@@ -453,6 +573,10 @@ $}
 $( Distribute union over difference.  (Contributed by NM, 17-May-1998.)
        (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -465,6 +589,9 @@ $}
 $( Subset relation for disjoint classes.  (Contributed by NM,
        25-Oct-2005.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fdisjssun_0 $f class A $.
 	fdisjssun_1 $f class B $.
 	fdisjssun_2 $f class C $.
@@ -473,6 +600,9 @@ $}
 $( Subclass expressed in terms of difference.  Exercise 7 of
        [TakeutiZaring] p. 22.  (Contributed by NM, 29-Apr-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	issdif0_0 $f set x $.
@@ -483,12 +613,15 @@ $}
 $( Universal class equality in terms of empty difference.  (Contributed by
      NM, 17-Sep-2003.) $)
 ${
+	$v A $.
 	fvdif0_0 $f class A $.
 	vdif0 $p |- ( A = _V <-> ( _V \ A ) = (/) ) $= fvdif0_0 cvv wceq cvv fvdif0_0 wss cvv fvdif0_0 cdif c0 wceq fvdif0_0 vss cvv fvdif0_0 ssdif0 bitr3i $.
 $}
 $( A proper subclass has a nonempty difference.  (Contributed by NM,
      3-May-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	fpssdifn0_0 $f class A $.
 	fpssdifn0_1 $f class B $.
 	pssdifn0 $p |- ( ( A C_ B /\ A =/= B ) -> ( B \ A ) =/= (/) ) $= fpssdifn0_0 fpssdifn0_1 wss fpssdifn0_0 fpssdifn0_1 wne fpssdifn0_1 fpssdifn0_0 cdif c0 wne fpssdifn0_0 fpssdifn0_1 wss fpssdifn0_1 fpssdifn0_0 cdif c0 fpssdifn0_0 fpssdifn0_1 fpssdifn0_1 fpssdifn0_0 cdif c0 wceq fpssdifn0_1 fpssdifn0_0 wss fpssdifn0_0 fpssdifn0_1 wss fpssdifn0_0 fpssdifn0_1 wceq fpssdifn0_1 fpssdifn0_0 ssdif0 fpssdifn0_0 fpssdifn0_1 wceq fpssdifn0_0 fpssdifn0_1 wss fpssdifn0_1 fpssdifn0_0 wss fpssdifn0_0 fpssdifn0_1 eqss simplbi2 syl5bir necon3d imp $.
@@ -496,6 +629,8 @@ $}
 $( A proper subclass has a nonempty difference.  (Contributed by Mario
      Carneiro, 27-Apr-2016.) $)
 ${
+	$v A $.
+	$v B $.
 	fpssdif_0 $f class A $.
 	fpssdif_1 $f class B $.
 	pssdif $p |- ( A C. B -> ( B \ A ) =/= (/) ) $= fpssdif_0 fpssdif_1 wpss fpssdif_0 fpssdif_1 wss fpssdif_0 fpssdif_1 wne wa fpssdif_1 fpssdif_0 cdif c0 wne fpssdif_0 fpssdif_1 df-pss fpssdif_0 fpssdif_1 pssdifn0 sylbi $.
@@ -503,6 +638,9 @@ $}
 $( A subclass missing a member is a proper subclass.  (Contributed by NM,
      12-Jan-2002.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fssnelpss_0 $f class A $.
 	fssnelpss_1 $f class B $.
 	fssnelpss_2 $f class C $.
@@ -512,6 +650,10 @@ $( Subclass inclusion with one element of the superclass missing is proper
        subclass inclusion.  Deduction form of ~ ssnelpss .  (Contributed by
        David Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fssnelpssd_0 $f wff ph $.
 	fssnelpssd_1 $f class A $.
 	fssnelpssd_2 $f class B $.
@@ -524,6 +666,9 @@ $}
 $( A proper subclass has a member in one argument that's not in both.
        (Contributed by NM, 29-Feb-1996.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fpssnel_0 $f set x $.
@@ -534,6 +679,10 @@ $}
 $( Difference, intersection, and subclass relationship.  (Contributed by
        NM, 30-Apr-1994.)  (Proof shortened by Wolf Lammen, 30-Sep-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -547,6 +696,10 @@ $( Intersection, subclass, and difference relationship.  (Contributed by
        NM, 27-Oct-1996.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.)
        (Proof shortened by Wolf Lammen, 30-Sep-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -560,6 +713,7 @@ $( The difference between a class and itself is the empty set.  Proposition
      5.15 of [TakeutiZaring] p. 20.  Also Theorem 32 of [Suppes] p. 28.
      (Contributed by NM, 22-Apr-2004.) $)
 ${
+	$v A $.
 	fdifid_0 $f class A $.
 	difid $p |- ( A \ A ) = (/) $= fdifid_0 fdifid_0 wss fdifid_0 fdifid_0 cdif c0 wceq fdifid_0 ssid fdifid_0 fdifid_0 ssdif0 mpbi $.
 $}
@@ -569,6 +723,8 @@ $( The difference between a class and itself is the empty set.  Proposition
        17-Jun-2012.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v A $.
+	$v x $.
 	$d x A $.
 	idifidALT_0 $f set x $.
 	fdifidALT_0 $f class A $.
@@ -577,18 +733,22 @@ $}
 $( The difference between a class and the empty set.  Part of Exercise 4.4 of
      [Stoll] p. 16.  (Contributed by NM, 17-Aug-2004.) $)
 ${
+	$v A $.
 	fdif0_0 $f class A $.
 	dif0 $p |- ( A \ (/) ) = A $= fdif0_0 fdif0_0 fdif0_0 cdif cdif fdif0_0 c0 cdif fdif0_0 fdif0_0 fdif0_0 cdif c0 fdif0_0 fdif0_0 difid difeq2i fdif0_0 fdif0_0 difdif eqtr3i $.
 $}
 $( The difference between the empty set and a class.  Part of Exercise 4.4 of
      [Stoll] p. 16.  (Contributed by NM, 17-Aug-2004.) $)
 ${
+	$v A $.
 	f0dif_0 $f class A $.
 	0dif $p |- ( (/) \ A ) = (/) $= c0 f0dif_0 cdif c0 wss c0 f0dif_0 cdif c0 wceq c0 f0dif_0 difss c0 f0dif_0 cdif ss0 ax-mp $.
 $}
 $( A class and its relative complement are disjoint.  Theorem 38 of [Suppes]
      p. 29.  (Contributed by NM, 24-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
 	fdisjdif_0 $f class A $.
 	fdisjdif_1 $f class B $.
 	disjdif $p |- ( A i^i ( B \ A ) ) = (/) $= fdisjdif_0 fdisjdif_1 cin fdisjdif_0 wss fdisjdif_0 fdisjdif_1 fdisjdif_0 cdif cin c0 wceq fdisjdif_0 fdisjdif_1 inss1 fdisjdif_0 fdisjdif_1 fdisjdif_0 inssdif0 mpbi $.
@@ -597,6 +757,8 @@ $( The difference of a class from its intersection is empty.  Theorem 37 of
      [Suppes] p. 29.  (Contributed by NM, 17-Aug-2004.)  (Proof shortened by
      Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
 	fdifin0_0 $f class A $.
 	fdifin0_1 $f class B $.
 	difin0 $p |- ( ( A i^i B ) \ B ) = (/) $= fdifin0_0 fdifin0_1 cin fdifin0_1 wss fdifin0_0 fdifin0_1 cin fdifin0_1 cdif c0 wceq fdifin0_0 fdifin0_1 inss2 fdifin0_0 fdifin0_1 cin fdifin0_1 ssdif0 mpbi $.
@@ -604,6 +766,7 @@ $}
 $( The union of a class and its complement is the universe.  Theorem 5.1(5)
      of [Stoll] p. 17.  (Contributed by NM, 17-Aug-2004.) $)
 ${
+	$v A $.
 	fundifv_0 $f class A $.
 	undifv $p |- ( A u. ( _V \ A ) ) = _V $= fundifv_0 cvv fundifv_0 cdif cun cvv cvv fundifv_0 cdif cvv cvv fundifv_0 cdif cdif cin cdif cvv c0 cdif cvv fundifv_0 cvv fundifv_0 cdif dfun3 cvv fundifv_0 cdif cvv cvv fundifv_0 cdif cdif cin c0 cvv cvv fundifv_0 cdif cvv disjdif difeq2i cvv dif0 3eqtri $.
 $}
@@ -611,6 +774,8 @@ $( Absorption of difference by union.  This decomposes a union into two
      disjoint classes (see ~ disjdif ).  Theorem 35 of [Suppes] p. 29.
      (Contributed by NM, 19-May-1998.) $)
 ${
+	$v A $.
+	$v B $.
 	fundif1_0 $f class A $.
 	fundif1_1 $f class B $.
 	undif1 $p |- ( ( A \ B ) u. B ) = ( A u. B ) $= fundif1_0 cvv fundif1_1 cdif cin fundif1_1 cun fundif1_0 fundif1_1 cun cvv fundif1_1 cdif fundif1_1 cun cin fundif1_0 fundif1_1 cdif fundif1_1 cun fundif1_0 fundif1_1 cun fundif1_0 cvv fundif1_1 cdif fundif1_1 undir fundif1_0 cvv fundif1_1 cdif cin fundif1_0 fundif1_1 cdif fundif1_1 fundif1_0 fundif1_1 invdif uneq1i fundif1_0 fundif1_1 cun cvv fundif1_1 cdif fundif1_1 cun cin fundif1_0 fundif1_1 cun cvv cin fundif1_0 fundif1_1 cun cvv fundif1_1 cdif fundif1_1 cun cvv fundif1_0 fundif1_1 cun cvv fundif1_1 cdif fundif1_1 cun fundif1_1 cvv fundif1_1 cdif cun cvv cvv fundif1_1 cdif fundif1_1 uncom fundif1_1 undifv eqtri ineq2i fundif1_0 fundif1_1 cun inv1 eqtri 3eqtr3i $.
@@ -619,12 +784,16 @@ $( Absorption of difference by union.  This decomposes a union into two
      disjoint classes (see ~ disjdif ).  Part of proof of Corollary 6K of
      [Enderton] p. 144.  (Contributed by NM, 19-May-1998.) $)
 ${
+	$v A $.
+	$v B $.
 	fundif2_0 $f class A $.
 	fundif2_1 $f class B $.
 	undif2 $p |- ( A u. ( B \ A ) ) = ( A u. B ) $= fundif2_0 fundif2_1 fundif2_0 cdif cun fundif2_1 fundif2_0 cdif fundif2_0 cun fundif2_1 fundif2_0 cun fundif2_0 fundif2_1 cun fundif2_0 fundif2_1 fundif2_0 cdif uncom fundif2_1 fundif2_0 undif1 fundif2_1 fundif2_0 uncom 3eqtri $.
 $}
 $( Absorption of difference by union.  (Contributed by NM, 18-Aug-2013.) $)
 ${
+	$v A $.
+	$v B $.
 	fundifabs_0 $f class A $.
 	fundifabs_1 $f class B $.
 	undifabs $p |- ( A u. ( A \ B ) ) = A $= fundifabs_0 fundifabs_0 fundifabs_1 cdif cun fundifabs_0 fundifabs_0 cun fundifabs_1 fundifabs_0 cdif cdif fundifabs_0 fundifabs_1 fundifabs_0 cdif cdif fundifabs_0 fundifabs_0 fundifabs_0 fundifabs_1 undif3 fundifabs_0 fundifabs_0 cun fundifabs_0 fundifabs_1 fundifabs_0 cdif fundifabs_0 unidm difeq1i fundifabs_0 fundifabs_1 difdif 3eqtri $.
@@ -633,6 +802,9 @@ $( The intersection and class difference of a class with another class
        unite to give the original class.  (Contributed by Paul Chapman,
        5-Jun-2009.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	iinundif_0 $f set x $.
@@ -643,6 +815,8 @@ $}
 $( Absorption of union by difference.  Theorem 36 of [Suppes] p. 29.
      (Contributed by NM, 19-May-1998.) $)
 ${
+	$v A $.
+	$v B $.
 	fdifun2_0 $f class A $.
 	fdifun2_1 $f class B $.
 	difun2 $p |- ( ( A u. B ) \ B ) = ( A \ B ) $= fdifun2_0 fdifun2_1 cun fdifun2_1 cdif fdifun2_0 fdifun2_1 cdif fdifun2_1 fdifun2_1 cdif cun fdifun2_0 fdifun2_1 cdif c0 cun fdifun2_0 fdifun2_1 cdif fdifun2_0 fdifun2_1 fdifun2_1 difundir fdifun2_1 fdifun2_1 cdif c0 fdifun2_0 fdifun2_1 cdif fdifun2_1 difid uneq2i fdifun2_0 fdifun2_1 cdif un0 3eqtri $.
@@ -650,6 +824,8 @@ $}
 $( Union of complementary parts into whole.  (Contributed by NM,
      22-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
 	fundif_0 $f class A $.
 	fundif_1 $f class B $.
 	undif $p |- ( A C_ B <-> ( A u. ( B \ A ) ) = B ) $= fundif_0 fundif_1 wss fundif_0 fundif_1 cun fundif_1 wceq fundif_0 fundif_1 fundif_0 cdif cun fundif_1 wceq fundif_0 fundif_1 ssequn1 fundif_0 fundif_1 fundif_0 cdif cun fundif_0 fundif_1 cun fundif_1 fundif_0 fundif_1 undif2 eqeq1i bitr4i $.
@@ -658,6 +834,9 @@ $( A subset of a difference does not intersect the subtrahend.  (Contributed
      by Jeff Hankins, 1-Sep-2013.)  (Proof shortened by Mario Carneiro,
      24-Aug-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fssdifin0_0 $f class A $.
 	fssdifin0_1 $f class B $.
 	fssdifin0_2 $f class C $.
@@ -666,6 +845,8 @@ $}
 $( A class is a subclass of itself subtracted from another iff it is the
      empty set.  (Contributed by Steve Rodriguez, 20-Nov-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	fssdifeq0_0 $f class A $.
 	fssdifeq0_1 $f class B $.
 	ssdifeq0 $p |- ( A C_ ( B \ A ) <-> A = (/) ) $= fssdifeq0_0 fssdifeq0_1 fssdifeq0_0 cdif wss fssdifeq0_0 c0 wceq fssdifeq0_0 fssdifeq0_1 fssdifeq0_0 cdif wss fssdifeq0_0 fssdifeq0_0 fssdifeq0_0 cin c0 fssdifeq0_0 inidm fssdifeq0_0 fssdifeq0_1 fssdifeq0_0 ssdifin0 syl5eqr fssdifeq0_0 c0 wceq fssdifeq0_0 fssdifeq0_1 fssdifeq0_0 cdif wss c0 fssdifeq0_1 c0 cdif wss fssdifeq0_1 c0 cdif 0ss fssdifeq0_0 c0 wceq fssdifeq0_0 c0 fssdifeq0_1 fssdifeq0_0 cdif fssdifeq0_1 c0 cdif fssdifeq0_0 c0 wceq id fssdifeq0_0 c0 fssdifeq0_1 difeq2 sseq12d mpbiri impbii $.
@@ -673,6 +854,10 @@ $}
 $( A condition equivalent to inclusion in the union of two classes.
        (Contributed by NM, 26-Mar-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -685,6 +870,9 @@ $}
 $( Swap the arguments of a class difference.  (Contributed by NM,
      29-Mar-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fdifcom_0 $f class A $.
 	fdifcom_1 $f class B $.
 	fdifcom_2 $f class C $.
@@ -693,6 +881,9 @@ $}
 $( Two ways to express overlapping subsets.  (Contributed by Stefan O'Rear,
      31-Oct-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fpssdifcom1_0 $f class A $.
 	fpssdifcom1_1 $f class B $.
 	fpssdifcom1_2 $f class C $.
@@ -701,6 +892,9 @@ $}
 $( Two ways to express non-covering pairs of subsets.  (Contributed by Stefan
      O'Rear, 31-Oct-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fpssdifcom2_0 $f class A $.
 	fpssdifcom2_1 $f class B $.
 	fpssdifcom2_2 $f class C $.
@@ -709,6 +903,9 @@ $}
 $( Distributive law for class difference.  Exercise 4.8 of [Stoll] p. 16.
      (Contributed by NM, 18-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fdifdifdir_0 $f class A $.
 	fdifdifdir_1 $f class B $.
 	fdifdifdir_2 $f class C $.
@@ -718,6 +915,9 @@ $( Two ways to say that ` A ` and ` B ` partition ` C ` (when ` A ` and ` B `
      don't overlap and ` A ` is a part of ` C ` ).  (Contributed by FL,
      17-Nov-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	funeqdifeq_0 $f class A $.
 	funeqdifeq_1 $f class B $.
 	funeqdifeq_2 $f class C $.
@@ -727,6 +927,9 @@ $( Theorem 19.2 of [Margaris] p. 89 with restricted quantifiers (compare
        ~ 19.2 ).  The restricted version is valid only when the domain of
        quantification is not empty.  (Contributed by NM, 15-Nov-2003.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fr19.2z_0 $f wff ph $.
 	fr19.2z_1 $f set x $.
@@ -737,6 +940,9 @@ $( A response to the notion that the condition ` A =/= (/) ` can be removed
        in ~ r19.2z .  Interestingly enough, ` ph ` does not figure in the
        left-hand side.  (Contributed by Jeff Hankins, 24-Aug-2009.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fr19.2zb_0 $f wff ph $.
 	fr19.2zb_1 $f set x $.
@@ -746,6 +952,9 @@ $}
 $( Restricted quantification of wff not containing quantified variable.
        (Contributed by FL, 3-Jan-2008.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fr19.3rz_0 $f wff ph $.
 	fr19.3rz_1 $f set x $.
@@ -757,6 +966,10 @@ $( Restricted quantifier version of Theorem 19.28 of [Margaris] p. 90.  It
        is valid only when the domain of quantification is not empty.
        (Contributed by NM, 26-Oct-2010.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fr19.28z_0 $f wff ph $.
 	fr19.28z_1 $f wff ps $.
@@ -768,6 +981,9 @@ $}
 $( Restricted quantification of wff not containing quantified variable.
        (Contributed by NM, 10-Mar-1997.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	$d x ph $.
 	fr19.3rzv_0 $f wff ph $.
@@ -778,6 +994,9 @@ $}
 $( Restricted quantification of wff not containing quantified variable.
        (Contributed by NM, 27-May-1998.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	$d x ph $.
 	fr19.9rzv_0 $f wff ph $.
@@ -789,6 +1008,10 @@ $( Restricted quantifier version of Theorem 19.28 of [Margaris] p. 90.  It
        is valid only when the domain of quantification is not empty.
        (Contributed by NM, 19-Aug-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	$d x ph $.
 	fr19.28zv_0 $f wff ph $.
@@ -801,6 +1024,10 @@ $( Restricted quantifier version of Theorem 19.37 of [Margaris] p. 90.  It
        is valid only when the domain of quantification is not empty.
        (Contributed by Paul Chapman, 8-Oct-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	$d x ph $.
 	fr19.37zv_0 $f wff ph $.
@@ -812,6 +1039,10 @@ $}
 $( Restricted version of Theorem 19.45 of [Margaris] p. 90.  (Contributed
        by NM, 27-May-1998.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	$d x ph $.
 	fr19.45zv_0 $f wff ph $.
@@ -824,6 +1055,10 @@ $( Restricted quantifier version of Theorem 19.27 of [Margaris] p. 90.  It
        is valid only when the domain of quantification is not empty.
        (Contributed by NM, 26-Oct-2010.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fr19.27z_0 $f wff ph $.
 	fr19.27z_1 $f wff ps $.
@@ -836,6 +1071,10 @@ $( Restricted quantifier version of Theorem 19.27 of [Margaris] p. 90.  It
        is valid only when the domain of quantification is not empty.
        (Contributed by NM, 19-Aug-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	$d x ps $.
 	fr19.27zv_0 $f wff ph $.
@@ -848,6 +1087,10 @@ $( Restricted quantifier version of Theorem 19.36 of [Margaris] p. 90.  It
        is valid only when the domain of quantification is not empty.
        (Contributed by NM, 20-Sep-2003.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	$d x ps $.
 	fr19.36zv_0 $f wff ph $.
@@ -859,6 +1102,9 @@ $}
 $( Vacuous quantification is always true.  (Contributed by NM,
        11-Mar-1997.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	frzal_0 $f wff ph $.
 	frzal_1 $f set x $.
@@ -868,6 +1114,9 @@ $}
 $( Restricted existential quantification implies its restriction is
        nonempty.  (Contributed by Szymon Jaroszewicz, 3-Apr-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	frexn0_0 $f wff ph $.
 	frexn0_1 $f set x $.
@@ -877,6 +1126,9 @@ $}
 $( Idempotent law for restricted quantifier.  (Contributed by NM,
        28-Mar-1997.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fralidm_0 $f wff ph $.
 	fralidm_1 $f set x $.
@@ -886,6 +1138,8 @@ $}
 $( Vacuous universal quantification is always true.  (Contributed by NM,
      20-Oct-2005.) $)
 ${
+	$v ph $.
+	$v x $.
 	fral0_0 $f wff ph $.
 	fral0_1 $f set x $.
 	ral0 $p |- A. x e. (/) ph $= fral0_0 fral0_1 c0 fral0_1 sup_set_class c0 wcel fral0_0 fral0_1 sup_set_class noel pm2.21i rgen $.
@@ -893,6 +1147,9 @@ $}
 $( Generalization rule that eliminates a non-zero class requirement.
        (Contributed by NM, 8-Dec-2012.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	frgenz_0 $f wff ph $.
 	frgenz_1 $f set x $.
@@ -903,6 +1160,9 @@ $}
 $( The quantification of a falsehood is vacuous when true.  (Contributed by
        NM, 26-Nov-2005.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fralf0_0 $f wff ph $.
 	fralf0_1 $f set x $.
@@ -913,6 +1173,11 @@ $}
 $( TODO - shorten r19.3zv, r19.27zv, r19.28zv, raaanv w/ non-v $)
 $( Rearrange restricted quantifiers.  (Contributed by NM, 26-Oct-2010.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fraaan_0 $f wff ph $.
 	fraaan_1 $f wff ps $.
@@ -925,6 +1190,11 @@ ${
 $}
 $( Rearrange restricted quantifiers.  (Contributed by NM, 11-Mar-1997.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d y ph $.
 	$d x ps $.
 	$d x y A $.
@@ -939,6 +1209,10 @@ $( Set substitution into the first argument of a subset relation.
        (Contributed by Rodolfo Medina, 7-Jul-2010.)  (Proof shortened by Mario
        Carneiro, 14-Nov-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v z $.
 	$d z y $.
 	$d z x A $.
 	isbss_0 $f set z $.
@@ -951,6 +1225,12 @@ $( Distribute proper substitution through a subclass relation.
        (Contributed by Alan Sare, 22-Jul-2012.)  (Proof shortened by Alexander
        van der Vekens, 23-Jul-2017.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v y $.
 	$d A y $.
 	$d B y $.
 	$d C y $.

@@ -67,7 +67,7 @@ $( A version of isset that does not require x and A to be distinct.
        (Contributed by Andrew Salmon, 6-Jun-2011.)  (Revised by Mario Carneiro,
        10-Oct-2016.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d A y $.
 	$d x y $.
 	e0 $e |- F/_ x A $.
@@ -103,7 +103,7 @@ $( If a class is a member of another class, it is a set.  Theorem 6.12 of
        [Quine] p. 44.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by
        Andrew Salmon, 8-Jun-2011.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -405,7 +405,7 @@ $}
 $( Implicit substitution for class with embedded variable.  (Contributed by
        NM, 17-May-1996.) $)
 ${
-	$v ph ps ch th x y z A B C D F G R S $.
+	$v ph ps ch th x y z A B C D R S F G $.
 	$d x y z $.
 	$d y z D $.
 	$d z F $.
@@ -647,7 +647,7 @@ $}
 $( Elimination of six existential quantifiers, using implicit
        substitution.  (Contributed by NM, 21-Sep-2011.) $)
 ${
-	$v ph ps ch th ta et ze x y z w A B v u C D F E $.
+	$v ph ps ch th ta et ze x y z w v u A B C D E F $.
 	$d x y z w v u A $.
 	$d x y z w v u B $.
 	$d x y z w v u C $.
@@ -697,7 +697,7 @@ $}
 $( Elimination of eight existential quantifiers, using implicit
        substitution.  (Contributed by NM, 23-Sep-2011.) $)
 ${
-	$v ph ps ch th ta et ze si rh x y z w A B v u t C D F G E H s $.
+	$v ph ps ch th ta et ze si rh x y z w v u t A B C D E F G H s $.
 	$d x y z w v u t s A $.
 	$d x y z w v u t s B $.
 	$d x y z w v u t s C $.
@@ -847,7 +847,7 @@ $}
 $( Closed theorem form of ~ vtoclgf .  (Contributed by NM, 17-Feb-2013.)
        (Revised by Mario Carneiro, 12-Oct-2016.) $)
 ${
-	$v ph ps x z A V $.
+	$v ph ps x A V z $.
 	$d z A $.
 	$d x z $.
 	f0 $f wff ph $.
@@ -2041,7 +2041,7 @@ $( A variable introduction law for class equality, using bound-variable
        hypotheses instead of distinct variable conditions.  (Contributed by NM,
        14-Sep-2003.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d A y $.
 	$d B y $.
 	$d x y $.
@@ -2058,7 +2058,7 @@ $}
 $( Two ways to express substitution of ` A ` for ` x ` in ` ph ` .
        (Contributed by NM, 2-Mar-1995.) $)
 ${
-	$v ph x y A $.
+	$v ph x A y $.
 	$d x A y $.
 	$d ph y $.
 	e0 $e |- A e. _V $.
@@ -2072,7 +2072,7 @@ $}
 $( Equality implies equivalence with substitution.  (Contributed by NM,
        2-Mar-1995.) $)
 ${
-	$v ph x y A $.
+	$v ph x A y $.
 	$d x A y $.
 	$d ph y $.
 	f0 $f wff ph $.
@@ -2224,7 +2224,7 @@ $}
 $( Compare theorem *13.183 in [WhiteheadRussell] p. 178.  Only ` A ` is
        required to be a set.  (Contributed by Andrew Salmon, 3-Jun-2011.) $)
 ${
-	$v y z A B V $.
+	$v z A B V y $.
 	$d y A z $.
 	$d y B z $.
 	f0 $f set z $.
@@ -2678,7 +2678,7 @@ $}
 $( A condition which implies existential uniqueness.  (Contributed by Jeff
        Hankins, 8-Sep-2009.) $)
 ${
-	$v ph ps x y A B $.
+	$v ph ps x A B y $.
 	$d y ph $.
 	$d x y ps $.
 	$d x y A $.
@@ -2695,7 +2695,7 @@ $}
 $( Equality has existential uniqueness.  (Contributed by NM,
        25-Nov-1994.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d x y A $.
 	f0 $f set x $.
 	f1 $f class A $.
@@ -2767,7 +2767,7 @@ $( "At most one" property of equality (split into 3 cases).  (The first 2
        hypotheses could be eliminated with longer proof.)  (Contributed by NM,
        23-Apr-1995.) $)
 ${
-	$v ph ps x y A B C $.
+	$v ph ps x A B C y $.
 	$d x y ph $.
 	$d x y ps $.
 	$d x y A $.
@@ -2802,7 +2802,7 @@ $}
 $( Theorem for inferring "at most one."  (Contributed by NM,
        17-Oct-1996.) $)
 ${
-	$v ph x y A $.
+	$v ph x A y $.
 	$d x y A $.
 	$d y ph $.
 	f0 $f wff ph $.
@@ -2814,7 +2814,7 @@ ${
 $}
 $( Consequence of "at most one."  (Contributed by NM, 2-Jan-2015.) $)
 ${
-	$v ph ps x y A B $.
+	$v ph ps x A B y $.
 	$d x y A $.
 	$d y ph $.
 	$d x y ps $.
@@ -2937,7 +2937,7 @@ $}
 $( Existential uniqueness via an indirect equality.  (Contributed by NM,
        11-Oct-2010.) $)
 ${
-	$v ph ps x y z w A B $.
+	$v ph ps x y z A B w $.
 	$d y z w ph $.
 	$d x z ps $.
 	$d y z w A $.
@@ -3002,7 +3002,7 @@ $}
 $( A condition which implies existential uniqueness.  (Contributed by Mario
        Carneiro, 2-Oct-2015.) $)
 ${
-	$v ph x y A B $.
+	$v ph x A B y $.
 	$d x y A $.
 	$d x y B $.
 	$d y ph $.
@@ -3065,7 +3065,7 @@ $}
 $( Restricted uniqueness using implicit substitution.  (Contributed by NM,
        24-Oct-2006.) $)
 ${
-	$v ph ps x y z A $.
+	$v ph ps x y A z $.
 	$d x y z A $.
 	$d y z ph $.
 	$d x z ps $.
@@ -3172,7 +3172,7 @@ $}
 $( Existential uniqueness via an indirect equality.  (Contributed by NM,
        16-Oct-2010.) $)
 ${
-	$v ph ps x y z w A B C $.
+	$v ph ps x y z A B C w $.
 	$d w y z A $.
 	$d x z B $.
 	$d w x y z C $.

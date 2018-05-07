@@ -6,6 +6,9 @@ $( =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $)
 $( Extend wff notation to include restricted universal quantification. $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fwral_0 $f wff ph $.
 	fwral_1 $f set x $.
 	fwral_2 $f class A $.
@@ -13,6 +16,9 @@ ${
 $}
 $( Extend wff notation to include restricted existential quantification. $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fwrex_0 $f wff ph $.
 	fwrex_1 $f set x $.
 	fwrex_2 $f class A $.
@@ -20,6 +26,9 @@ ${
 $}
 $( Extend wff notation to include restricted existential uniqueness. $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fwreu_0 $f wff ph $.
 	fwreu_1 $f set x $.
 	fwreu_2 $f class A $.
@@ -27,6 +36,9 @@ ${
 $}
 $( Extend wff notation to include restricted "at most one." $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fwrmo_0 $f wff ph $.
 	fwrmo_1 $f set x $.
 	fwrmo_2 $f class A $.
@@ -35,6 +47,9 @@ $}
 $( Extend class notation to include the restricted class abstraction (class
      builder). $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fcrab_0 $f wff ph $.
 	fcrab_1 $f set x $.
 	fcrab_2 $f class A $.
@@ -43,6 +58,9 @@ $}
 $( Define restricted universal quantification.  Special case of Definition
      4.15(3) of [TakeutiZaring] p. 22.  (Contributed by NM, 19-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fdf-ral_0 $f wff ph $.
 	fdf-ral_1 $f set x $.
 	fdf-ral_2 $f class A $.
@@ -51,6 +69,9 @@ $}
 $( Define restricted existential quantification.  Special case of Definition
      4.15(4) of [TakeutiZaring] p. 22.  (Contributed by NM, 30-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fdf-rex_0 $f wff ph $.
 	fdf-rex_1 $f set x $.
 	fdf-rex_2 $f class A $.
@@ -59,6 +80,9 @@ $}
 $( Define restricted existential uniqueness.  (Contributed by NM,
      22-Nov-1994.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fdf-reu_0 $f wff ph $.
 	fdf-reu_1 $f set x $.
 	fdf-reu_2 $f class A $.
@@ -66,6 +90,9 @@ ${
 $}
 $( Define restricted "at most one".  (Contributed by NM, 16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fdf-rmo_0 $f wff ph $.
 	fdf-rmo_1 $f set x $.
 	fdf-rmo_2 $f class A $.
@@ -75,6 +102,9 @@ $( Define a restricted class abstraction (class builder), which is the class
      of all ` x ` in ` A ` such that ` ph ` is true.  Definition of
      [TakeutiZaring] p. 20.  (Contributed by NM, 22-Nov-1994.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fdf-rab_0 $f wff ph $.
 	fdf-rab_1 $f set x $.
 	fdf-rab_2 $f class A $.
@@ -83,6 +113,9 @@ $}
 $( Relationship between restricted universal and existential quantifiers.
      (Contributed by NM, 21-Jan-1997.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fralnex_0 $f wff ph $.
 	fralnex_1 $f set x $.
 	fralnex_2 $f class A $.
@@ -91,6 +124,9 @@ $}
 $( Relationship between restricted universal and existential quantifiers.
      (Contributed by NM, 21-Jan-1997.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	frexnal_0 $f wff ph $.
 	frexnal_1 $f set x $.
 	frexnal_2 $f class A $.
@@ -99,6 +135,9 @@ $}
 $( Relationship between restricted universal and existential quantifiers.
      (Contributed by NM, 21-Jan-1997.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fdfral2_0 $f wff ph $.
 	fdfral2_1 $f set x $.
 	fdfral2_2 $f class A $.
@@ -107,6 +146,9 @@ $}
 $( Relationship between restricted universal and existential quantifiers.
      (Contributed by NM, 21-Jan-1997.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fdfrex2_0 $f wff ph $.
 	fdfrex2_1 $f set x $.
 	fdfrex2_2 $f class A $.
@@ -115,6 +157,11 @@ $}
 $( Formula-building rule for restricted universal quantifier (deduction
        rule).  (Contributed by NM, 6-Oct-2003.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	fralbida_0 $f wff ph $.
 	fralbida_1 $f wff ps $.
 	fralbida_2 $f wff ch $.
@@ -127,6 +174,11 @@ $}
 $( Formula-building rule for restricted existential quantifier (deduction
        rule).  (Contributed by NM, 6-Oct-2003.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	frexbida_0 $f wff ph $.
 	frexbida_1 $f wff ps $.
 	frexbida_2 $f wff ch $.
@@ -139,6 +191,11 @@ $}
 $( Formula-building rule for restricted universal quantifier (deduction
        rule).  (Contributed by NM, 4-Mar-1997.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	fralbidva_0 $f wff ph $.
 	fralbidva_1 $f wff ps $.
@@ -151,6 +208,11 @@ $}
 $( Formula-building rule for restricted existential quantifier (deduction
        rule).  (Contributed by NM, 9-Mar-1997.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	frexbidva_0 $f wff ph $.
 	frexbidva_1 $f wff ps $.
@@ -163,6 +225,11 @@ $}
 $( Formula-building rule for restricted universal quantifier (deduction
        rule).  (Contributed by NM, 27-Jun-1998.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	fralbid_0 $f wff ph $.
 	fralbid_1 $f wff ps $.
 	fralbid_2 $f wff ch $.
@@ -175,6 +242,11 @@ $}
 $( Formula-building rule for restricted existential quantifier (deduction
        rule).  (Contributed by NM, 27-Jun-1998.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	frexbid_0 $f wff ph $.
 	frexbid_1 $f wff ps $.
 	frexbid_2 $f wff ch $.
@@ -187,6 +259,11 @@ $}
 $( Formula-building rule for restricted universal quantifier (deduction
        rule).  (Contributed by NM, 20-Nov-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	fralbidv_0 $f wff ph $.
 	fralbidv_1 $f wff ps $.
@@ -199,6 +276,11 @@ $}
 $( Formula-building rule for restricted existential quantifier (deduction
        rule).  (Contributed by NM, 20-Nov-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	frexbidv_0 $f wff ph $.
 	frexbidv_1 $f wff ps $.
@@ -211,6 +293,12 @@ $}
 $( Formula-building rule for restricted universal quantifier (deduction
        rule).  (Contributed by NM, 6-Apr-1997.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x ph $.
 	fralbidv2_0 $f wff ph $.
 	fralbidv2_1 $f wff ps $.
@@ -224,6 +312,12 @@ $}
 $( Formula-building rule for restricted existential quantifier (deduction
        rule).  (Contributed by NM, 22-May-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x ph $.
 	frexbidv2_0 $f wff ph $.
 	frexbidv2_1 $f wff ps $.
@@ -238,6 +332,10 @@ $( Inference adding restricted universal quantifier to both sides of an
        equivalence.  (Contributed by NM, 23-Nov-1994.)  (Revised by Mario
        Carneiro, 17-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fralbii_0 $f wff ph $.
 	fralbii_1 $f wff ps $.
 	fralbii_2 $f set x $.
@@ -249,6 +347,10 @@ $( Inference adding restricted existential quantifier to both sides of an
        equivalence.  (Contributed by NM, 23-Nov-1994.)  (Revised by Mario
        Carneiro, 17-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	frexbii_0 $f wff ph $.
 	frexbii_1 $f wff ps $.
 	frexbii_2 $f set x $.
@@ -259,6 +361,12 @@ $}
 $( Inference adding two restricted universal quantifiers to both sides of
        an equivalence.  (Contributed by NM, 1-Aug-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	f2ralbii_0 $f wff ph $.
 	f2ralbii_1 $f wff ps $.
 	f2ralbii_2 $f set x $.
@@ -271,6 +379,12 @@ $}
 $( Inference adding two restricted existential quantifiers to both sides of
        an equivalence.  (Contributed by NM, 11-Nov-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	f2rexbii_0 $f wff ph $.
 	f2rexbii_1 $f wff ps $.
 	f2rexbii_2 $f set x $.
@@ -283,6 +397,11 @@ $}
 $( Inference adding different restricted universal quantifiers to each side
        of an equivalence.  (Contributed by NM, 15-Aug-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	fralbii2_0 $f wff ph $.
 	fralbii2_1 $f wff ps $.
 	fralbii2_2 $f set x $.
@@ -294,6 +413,11 @@ $}
 $( Inference adding different restricted existential quantifiers to each
        side of an equivalence.  (Contributed by NM, 4-Feb-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	frexbii2_0 $f wff ph $.
 	frexbii2_1 $f wff ps $.
 	frexbii2_2 $f set x $.
@@ -306,6 +430,11 @@ $( Equality deduction for restricted universal quantifier, changing both
        formula and quantifier domain.  Inference form.  (Contributed by David
        Moews, 1-May-2017.) $)
 ${
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	fraleqbii_0 $f wff ps $.
 	fraleqbii_1 $f wff ch $.
 	fraleqbii_2 $f set x $.
@@ -319,6 +448,11 @@ $( Equality deduction for restricted existential quantifier, changing both
        formula and quantifier domain.  Inference form.  (Contributed by David
        Moews, 1-May-2017.) $)
 ${
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	frexeqbii_0 $f wff ps $.
 	frexeqbii_1 $f wff ch $.
 	frexeqbii_2 $f set x $.
@@ -331,6 +465,10 @@ $}
 $( Inference adding restricted universal quantifier to both sides of an
        equivalence.  (Contributed by NM, 26-Nov-2000.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fralbiia_0 $f wff ph $.
 	fralbiia_1 $f wff ps $.
 	fralbiia_2 $f set x $.
@@ -341,6 +479,10 @@ $}
 $( Inference adding restricted existential quantifier to both sides of an
        equivalence.  (Contributed by NM, 26-Oct-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	frexbiia_0 $f wff ph $.
 	frexbiia_1 $f wff ps $.
 	frexbiia_2 $f set x $.
@@ -351,6 +493,12 @@ $}
 $( Inference adding two restricted existential quantifiers to both sides of
        an equivalence.  (Contributed by NM, 1-Aug-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	$d y A $.
 	f2rexbiia_0 $f wff ph $.
@@ -365,6 +513,11 @@ $}
 $( Double restricted universal quantification.  (Contributed by Mario
        Carneiro, 14-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	fr2alf_0 $f wff ph $.
 	fr2alf_1 $f set x $.
@@ -377,6 +530,11 @@ $}
 $( Double restricted existential quantification.  (Contributed by Mario
        Carneiro, 14-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	fr2exf_0 $f wff ph $.
 	fr2exf_1 $f set x $.
@@ -389,6 +547,11 @@ $}
 $( Double restricted universal quantification.  (Contributed by NM,
        19-Nov-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	$d y A $.
 	fr2al_0 $f wff ph $.
@@ -401,6 +564,11 @@ $}
 $( Double restricted existential quantification.  (Contributed by NM,
        11-Nov-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	$d y A $.
 	fr2ex_0 $f wff ph $.
@@ -413,6 +581,13 @@ $}
 $( Formula-building rule for restricted universal quantifier (deduction
        rule).  (Contributed by NM, 24-Feb-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	$d y A $.
 	f2ralbida_0 $f wff ph $.
@@ -430,6 +605,13 @@ $}
 $( Formula-building rule for restricted universal quantifiers (deduction
        rule).  (Contributed by NM, 4-Mar-1997.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y ph $.
 	$d y A $.
 	f2ralbidva_0 $f wff ph $.
@@ -445,6 +627,13 @@ $}
 $( Formula-building rule for restricted existential quantifiers (deduction
        rule).  (Contributed by NM, 15-Dec-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y ph $.
 	$d y A $.
 	f2rexbidva_0 $f wff ph $.
@@ -461,6 +650,13 @@ $( Formula-building rule for restricted universal quantifiers (deduction
        rule).  (Contributed by NM, 28-Jan-2006.)  (Revised by Szymon
        Jaroszewicz, 16-Mar-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x ph $.
 	$d y ph $.
 	f2ralbidv_0 $f wff ph $.
@@ -476,6 +672,13 @@ $}
 $( Formula-building rule for restricted existential quantifiers (deduction
        rule).  (Contributed by NM, 28-Jan-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x ph $.
 	$d y ph $.
 	f2rexbidv_0 $f wff ph $.
@@ -491,6 +694,13 @@ $}
 $( Formula-building rule for restricted quantifiers (deduction rule).
        (Contributed by NM, 28-Jan-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x ph $.
 	$d y ph $.
 	frexralbidv_0 $f wff ph $.
@@ -506,6 +716,10 @@ $}
 $( A transformation of restricted quantifiers and logical connectives.
      (Contributed by NM, 4-Sep-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fralinexa_0 $f wff ph $.
 	fralinexa_1 $f wff ps $.
 	fralinexa_2 $f set x $.
@@ -515,6 +729,10 @@ $}
 $( A transformation of restricted quantifiers and logical connectives.
      (Contributed by NM, 4-Sep-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	frexanali_0 $f wff ph $.
 	frexanali_1 $f wff ps $.
 	frexanali_2 $f set x $.
@@ -524,6 +742,9 @@ $}
 $( Two ways to say " ` A ` belongs to ` B ` ."  (Contributed by NM,
        22-Nov-1994.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	frisset_0 $f set x $.
@@ -535,6 +756,10 @@ $( Bound-variable hypothesis builder for restricted quantification.
        (Contributed by NM, 1-Sep-1999.)  (Revised by David Abernethy,
        13-Dec-2009.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	fhbral_0 $f wff ph $.
 	fhbral_1 $f set x $.
 	fhbral_2 $f set y $.
@@ -546,6 +771,9 @@ $}
 $( ` x ` is not free in ` A. x e. A ph ` .  (Contributed by NM,
      18-Oct-1996.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fhbra1_0 $f wff ph $.
 	fhbra1_1 $f set x $.
 	fhbra1_2 $f class A $.
@@ -554,6 +782,9 @@ $}
 $( ` x ` is not free in ` A. x e. A ph ` .  (Contributed by NM,
      18-Oct-1996.)  (Revised by Mario Carneiro, 7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fnfra1_0 $f wff ph $.
 	fnfra1_1 $f set x $.
 	fnfra1_2 $f class A $.
@@ -562,6 +793,11 @@ $}
 $( Deduction version of ~ nfral .  (Contributed by NM, 15-Feb-2013.)
        (Revised by Mario Carneiro, 7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	fnfrald_0 $f wff ph $.
 	fnfrald_1 $f wff ps $.
 	fnfrald_2 $f set x $.
@@ -575,6 +811,11 @@ $}
 $( Deduction version of ~ nfrex .  (Contributed by Mario Carneiro,
        14-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	fnfrexd_0 $f wff ph $.
 	fnfrexd_1 $f wff ps $.
 	fnfrexd_2 $f set x $.
@@ -589,6 +830,10 @@ $( Bound-variable hypothesis builder for restricted quantification.
        (Contributed by NM, 1-Sep-1999.)  (Revised by Mario Carneiro,
        7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	fnfral_0 $f wff ph $.
 	fnfral_1 $f set x $.
 	fnfral_2 $f set y $.
@@ -602,6 +847,11 @@ $( Similar to Lemma 24 of [Monk2] p. 114, except the quantification of the
        Contributed by Alan Sare 31-Dec-2011.  (Contributed by NM,
        31-Dec-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d A y $.
 	fnfra2_0 $f wff ph $.
 	fnfra2_1 $f set x $.
@@ -614,6 +864,10 @@ $( Bound-variable hypothesis builder for restricted quantification.
        (Contributed by NM, 1-Sep-1999.)  (Revised by Mario Carneiro,
        7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	fnfrex_0 $f wff ph $.
 	fnfrex_1 $f set x $.
 	fnfrex_2 $f set y $.
@@ -625,6 +879,9 @@ $}
 $( ` x ` is not free in ` E. x e. A ph ` .  (Contributed by NM,
      19-Mar-1997.)  (Revised by Mario Carneiro, 7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fnfre1_0 $f wff ph $.
 	fnfre1_1 $f set x $.
 	fnfre1_2 $f class A $.
@@ -633,6 +890,13 @@ $}
 $( Triple restricted universal quantification.  (Contributed by NM,
        19-Nov-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y z $.
 	$d y z A $.
 	$d z B $.
@@ -648,6 +912,9 @@ $}
 $( Universal quantification implies restricted quantification.  (Contributed
      by NM, 20-Oct-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	falral_0 $f wff ph $.
 	falral_1 $f set x $.
 	falral_2 $f class A $.
@@ -656,6 +923,9 @@ $}
 $( Restricted existence implies existence.  (Contributed by NM,
      11-Nov-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	frexex_0 $f wff ph $.
 	frexex_1 $f set x $.
 	frexex_2 $f class A $.
@@ -663,6 +933,9 @@ ${
 $}
 $( Restricted specialization.  (Contributed by NM, 17-Oct-1996.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	frsp_0 $f wff ph $.
 	frsp_1 $f set x $.
 	frsp_2 $f class A $.
@@ -670,6 +943,9 @@ ${
 $}
 $( Restricted specialization.  (Contributed by NM, 12-Oct-1999.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	frspe_0 $f wff ph $.
 	frspe_1 $f set x $.
 	frspe_2 $f class A $.
@@ -677,6 +953,11 @@ ${
 $}
 $( Restricted specialization.  (Contributed by NM, 11-Feb-1997.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	frsp2_0 $f wff ph $.
 	frsp2_1 $f set x $.
 	frsp2_2 $f set y $.
@@ -686,6 +967,11 @@ ${
 $}
 $( Restricted specialization.  (Contributed by FL, 4-Jun-2012.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	frsp2e_0 $f wff ph $.
 	frsp2e_1 $f set x $.
 	frsp2e_2 $f set y $.
@@ -696,6 +982,9 @@ $}
 $( Specialization rule for restricted quantification.  (Contributed by NM,
        19-Nov-1994.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	frspec_0 $f wff ph $.
 	frspec_1 $f set x $.
 	frspec_2 $f class A $.
@@ -705,6 +994,9 @@ $}
 $( Generalization rule for restricted quantification.  (Contributed by NM,
        19-Nov-1994.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	frgen_0 $f wff ph $.
 	frgen_1 $f set x $.
 	frgen_2 $f class A $.
@@ -716,6 +1008,11 @@ $( Generalization rule for restricted quantification.  Note that ` x ` and
        (Contributed by NM, 23-Nov-1994.)  (Proof shortened by Andrew Salmon,
        25-May-2011.)  (Proof modification is discouraged. $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d y z A $.
 	$d x z $.
 	irgen2a_0 $f set z $.
@@ -729,6 +1026,9 @@ $}
 $( Generalization rule for restricted quantification.  (Contributed by NM,
        18-Jun-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	frgenw_0 $f wff ph $.
 	frgenw_1 $f set x $.
 	frgenw_2 $f class A $.
@@ -738,6 +1038,11 @@ $}
 $( Generalization rule for restricted quantification.  Note that ` x ` and
        ` y ` needn't be distinct.  (Contributed by NM, 18-Jun-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	frgen2w_0 $f wff ph $.
 	frgen2w_1 $f set x $.
 	frgen2w_2 $f set y $.
@@ -749,6 +1054,10 @@ $}
 $( Modus ponens combined with restricted generalization.  (Contributed by
        NM, 10-Aug-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fmprg_0 $f wff ph $.
 	fmprg_1 $f wff ps $.
 	fmprg_2 $f set x $.
@@ -760,6 +1069,10 @@ $}
 $( Modus ponens on biconditional combined with restricted generalization.
        (Contributed by NM, 21-Mar-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fmprgbir_0 $f wff ph $.
 	fmprgbir_1 $f wff ps $.
 	fmprgbir_2 $f set x $.
@@ -771,6 +1084,10 @@ $}
 $( Distribution of restricted quantification over implication.  (Contributed
      by NM, 9-Feb-1997.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fralim_0 $f wff ph $.
 	fralim_1 $f wff ps $.
 	fralim_2 $f set x $.
@@ -780,6 +1097,11 @@ $}
 $( Inference quantifying both antecedent and consequent.  (Contributed by
        NM, 22-Feb-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	fralimi2_0 $f wff ph $.
 	fralimi2_1 $f wff ps $.
 	fralimi2_2 $f set x $.
@@ -791,6 +1113,10 @@ $}
 $( Inference quantifying both antecedent and consequent.  (Contributed by
        NM, 19-Jul-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fralimia_0 $f wff ph $.
 	fralimia_1 $f wff ps $.
 	fralimia_2 $f set x $.
@@ -801,6 +1127,10 @@ $}
 $( Inference quantifying both antecedent and consequent.  (Contributed by
        NM, 4-Aug-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fralimiaa_0 $f wff ph $.
 	fralimiaa_1 $f wff ps $.
 	fralimiaa_2 $f set x $.
@@ -811,6 +1141,10 @@ $}
 $( Inference quantifying both antecedent and consequent, with strong
        hypothesis.  (Contributed by NM, 4-Mar-1997.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fralimi_0 $f wff ph $.
 	fralimi_1 $f wff ps $.
 	fralimi_2 $f set x $.
@@ -821,6 +1155,11 @@ $}
 $( Inference quantifying antecedent, nested antecedent, and consequent,
        with a strong hypothesis.  (Contributed by NM, 19-Dec-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	fral2imi_0 $f wff ph $.
 	fral2imi_1 $f wff ps $.
 	fral2imi_2 $f wff ch $.
@@ -832,6 +1171,11 @@ $}
 $( Deduction quantifying both antecedent and consequent, based on Theorem
        19.20 of [Margaris] p. 90.  (Contributed by NM, 22-Sep-2003.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	fralimdaa_0 $f wff ph $.
 	fralimdaa_1 $f wff ps $.
 	fralimdaa_2 $f wff ch $.
@@ -844,6 +1188,11 @@ $}
 $( Deduction quantifying both antecedent and consequent, based on Theorem
        19.20 of [Margaris] p. 90.  (Contributed by NM, 22-May-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	fralimdva_0 $f wff ph $.
 	fralimdva_1 $f wff ps $.
@@ -856,6 +1205,11 @@ $}
 $( Deduction quantifying both antecedent and consequent, based on Theorem
        19.20 of [Margaris] p. 90.  (Contributed by NM, 8-Oct-2003.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	fralimdv_0 $f wff ph $.
 	fralimdv_1 $f wff ps $.
@@ -868,6 +1222,12 @@ $}
 $( Inference quantifying both antecedent and consequent.  (Contributed by
        NM, 1-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x ph $.
 	fralimdv2_0 $f wff ph $.
 	fralimdv2_1 $f wff ps $.
@@ -881,6 +1241,10 @@ $}
 $( Inference from Theorem 19.21 of [Margaris] p. 90 (restricted quantifier
        version).  (Contributed by NM, 10-Oct-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fralrimi_0 $f wff ph $.
 	fralrimi_1 $f wff ps $.
 	fralrimi_2 $f set x $.
@@ -892,6 +1256,10 @@ $}
 $( Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
        quantifier version.)  (Contributed by NM, 22-Nov-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	fralrimiv_0 $f wff ph $.
 	fralrimiv_1 $f wff ps $.
@@ -903,6 +1271,10 @@ $}
 $( Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
        quantifier version.)  (Contributed by NM, 2-Jan-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	fralrimiva_0 $f wff ph $.
 	fralrimiva_1 $f wff ps $.
@@ -914,6 +1286,10 @@ $}
 $( Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
        quantifier version.)  (Contributed by NM, 18-Jun-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	fralrimivw_0 $f wff ph $.
 	fralrimivw_1 $f wff ps $.
@@ -925,6 +1301,10 @@ $}
 $( Theorem 19.21 of [Margaris] p. 90 with restricted quantifiers (closed
        theorem version).  (Contributed by NM, 1-Mar-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fr19.21t_0 $f wff ph $.
 	fr19.21t_1 $f wff ps $.
 	fr19.21t_2 $f set x $.
@@ -934,6 +1314,10 @@ $}
 $( Theorem 19.21 of [Margaris] p. 90 with restricted quantifiers.
        (Contributed by Scott Fenton, 30-Mar-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fr19.21_0 $f wff ph $.
 	fr19.21_1 $f wff ps $.
 	fr19.21_2 $f set x $.
@@ -945,6 +1329,10 @@ $( Theorem 19.21 of [Margaris] p. 90 with restricted quantifiers.
        (Contributed by NM, 15-Oct-2003.)  (Proof shortened by Andrew Salmon,
        30-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	fr19.21v_0 $f wff ph $.
 	fr19.21v_1 $f wff ps $.
@@ -955,6 +1343,11 @@ $}
 $( Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
        quantifier version.)  (Contributed by NM, 16-Feb-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	fralrimd_0 $f wff ph $.
 	fralrimd_1 $f wff ps $.
 	fralrimd_2 $f wff ch $.
@@ -968,6 +1361,11 @@ $}
 $( Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
        quantifier version.)  (Contributed by NM, 27-May-1998.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	$d x ps $.
 	fralrimdv_0 $f wff ph $.
@@ -981,6 +1379,11 @@ $}
 $( Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
        quantifier version.)  (Contributed by NM, 2-Feb-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	$d x ps $.
 	fralrimdva_0 $f wff ph $.
@@ -995,6 +1398,12 @@ $( Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
        quantifier version with double quantification.)  (Contributed by NM,
        24-Jul-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y ph $.
 	$d y A $.
 	fralrimivv_0 $f wff ph $.
@@ -1010,6 +1419,12 @@ $( Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
        quantifier version with double quantification.)  (Contributed by Jeff
        Madsen, 19-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d ph x y $.
 	$d A y $.
 	fralrimivva_0 $f wff ph $.
@@ -1025,6 +1440,14 @@ $( Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
        quantifier version with triple quantification.)  (Contributed by Mario
        Carneiro, 9-Jul-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d ph x y z $.
 	$d A y z $.
 	$d B z $.
@@ -1043,6 +1466,13 @@ $( Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
        quantifier version with double quantification.)  (Contributed by NM,
        1-Jun-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y ph $.
 	$d x y ps $.
 	$d y A $.
@@ -1060,6 +1490,13 @@ $( Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
        quantifier version with double quantification.)  (Contributed by NM,
        2-Feb-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y ph $.
 	$d x y ps $.
 	$d y A $.
@@ -1076,6 +1513,11 @@ $}
 $( Generalization rule for restricted quantification.  (Contributed by NM,
        30-May-1999.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	$d y A $.
 	frgen2_0 $f wff ph $.
@@ -1089,6 +1531,13 @@ $}
 $( Generalization rule for restricted quantification.  (Contributed by NM,
        12-Jan-2008.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d y z A $.
 	$d z B $.
 	$d x y z $.
@@ -1105,6 +1554,10 @@ $}
 $( Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
        quantifier version.)  (Contributed by NM, 20-Nov-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fr19.21bi_0 $f wff ph $.
 	fr19.21bi_1 $f wff ps $.
 	fr19.21bi_2 $f set x $.
@@ -1115,6 +1568,11 @@ $}
 $( Specialization rule for restricted quantification.  (Contributed by NM,
        20-Nov-1994.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	frspec2_0 $f wff ph $.
 	frspec2_1 $f set x $.
 	frspec2_2 $f set y $.
@@ -1126,6 +1584,13 @@ $}
 $( Specialization rule for restricted quantification.  (Contributed by NM,
        20-Nov-1994.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	frspec3_0 $f wff ph $.
 	frspec3_1 $f set x $.
 	frspec3_2 $f set y $.
@@ -1139,6 +1604,10 @@ $}
 $( Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
        quantifier version.)  (Contributed by NM, 21-Nov-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fr19.21be_0 $f wff ph $.
 	fr19.21be_1 $f wff ps $.
 	fr19.21be_2 $f set x $.
@@ -1149,6 +1618,9 @@ $}
 $( Inference adding restricted existential quantifier to negated wff.
        (Contributed by NM, 16-Oct-2003.) $)
 ${
+	$v ps $.
+	$v x $.
+	$v A $.
 	fnrex_0 $f wff ps $.
 	fnrex_1 $f set x $.
 	fnrex_2 $f class A $.
@@ -1158,6 +1630,10 @@ $}
 $( Deduction adding restricted existential quantifier to negated wff.
        (Contributed by NM, 16-Oct-2003.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	fnrexdv_0 $f wff ph $.
 	fnrexdv_1 $f wff ps $.
@@ -1170,6 +1646,10 @@ $( Theorem 19.22 of [Margaris] p. 90.  (Restricted quantifier version.)
      (Contributed by NM, 22-Nov-1994.)  (Proof shortened by Andrew Salmon,
      30-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	frexim_0 $f wff ph $.
 	frexim_1 $f wff ps $.
 	frexim_2 $f set x $.
@@ -1179,6 +1659,10 @@ $}
 $( Inference quantifying both antecedent and consequent.  (Contributed by
        NM, 10-Feb-1997.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	freximia_0 $f wff ph $.
 	freximia_1 $f wff ps $.
 	freximia_2 $f set x $.
@@ -1189,6 +1673,11 @@ $}
 $( Inference quantifying both antecedent and consequent, based on Theorem
        19.22 of [Margaris] p. 90.  (Contributed by NM, 8-Nov-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	freximi2_0 $f wff ph $.
 	freximi2_1 $f wff ps $.
 	freximi2_2 $f set x $.
@@ -1200,6 +1689,10 @@ $}
 $( Inference quantifying both antecedent and consequent.  (Contributed by
        NM, 18-Oct-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	freximi_0 $f wff ph $.
 	freximi_1 $f wff ps $.
 	freximi_2 $f set x $.
@@ -1210,6 +1703,11 @@ $}
 $( Deduction from Theorem 19.22 of [Margaris] p. 90.  (Restricted
        quantifier version.)  (Contributed by NM, 31-Aug-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	freximdai_0 $f wff ph $.
 	freximdai_1 $f wff ps $.
 	freximdai_2 $f wff ch $.
@@ -1222,6 +1720,12 @@ $}
 $( Deduction quantifying both antecedent and consequent, based on Theorem
        19.22 of [Margaris] p. 90.  (Contributed by NM, 17-Sep-2003.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x ph $.
 	freximdv2_0 $f wff ph $.
 	freximdv2_1 $f wff ps $.
@@ -1235,6 +1739,11 @@ $}
 $( Deduction quantifying both antecedent and consequent, based on Theorem
        19.22 of [Margaris] p. 90.  (Contributed by NM, 14-Nov-2002.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	freximdvai_0 $f wff ph $.
 	freximdvai_1 $f wff ps $.
@@ -1248,6 +1757,11 @@ $( Deduction from Theorem 19.22 of [Margaris] p. 90.  (Restricted
        quantifier version with strong hypothesis.)  (Contributed by NM,
        24-Jun-1998.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	freximdv_0 $f wff ph $.
 	freximdv_1 $f wff ps $.
@@ -1260,6 +1774,11 @@ $}
 $( Deduction quantifying both antecedent and consequent, based on Theorem
        19.22 of [Margaris] p. 90.  (Contributed by NM, 22-May-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	freximdva_0 $f wff ph $.
 	freximdva_1 $f wff ps $.
@@ -1273,6 +1792,11 @@ $( Theorem 19.12 of [Margaris] p. 89 with restricted quantifiers.
        (Contributed by NM, 15-Oct-2003.)  (Proof shortened by Andrew Salmon,
        30-May-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	$d y A $.
 	$d x B $.
@@ -1286,6 +1810,10 @@ $}
 $( Closed theorem form of ~ r19.23 .  (Contributed by NM, 4-Mar-2013.)
      (Revised by Mario Carneiro, 8-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fr19.23t_0 $f wff ph $.
 	fr19.23t_1 $f wff ps $.
 	fr19.23t_2 $f set x $.
@@ -1296,6 +1824,10 @@ $( Theorem 19.23 of [Margaris] p. 90 with restricted quantifiers.
        (Contributed by NM, 22-Oct-2010.)  (Proof shortened by Mario Carneiro,
        8-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fr19.23_0 $f wff ph $.
 	fr19.23_1 $f wff ps $.
 	fr19.23_2 $f set x $.
@@ -1306,6 +1838,10 @@ $}
 $( Theorem 19.23 of [Margaris] p. 90 with restricted quantifiers.
        (Contributed by NM, 31-Aug-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x ps $.
 	fr19.23v_0 $f wff ph $.
 	fr19.23v_1 $f wff ps $.
@@ -1317,6 +1853,10 @@ $( Inference from Theorem 19.21 of [Margaris] p. 90.  (Restricted
        quantifier version.)  (Contributed by NM, 30-Nov-2003.)  (Proof
        shortened by Andrew Salmon, 30-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	frexlimi_0 $f wff ph $.
 	frexlimi_1 $f wff ps $.
 	frexlimi_2 $f set x $.
@@ -1328,6 +1868,10 @@ $}
 $( Inference from Theorem 19.23 of [Margaris] p. 90.  (Restricted
        quantifier version.)  (Contributed by NM, 20-Nov-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x ps $.
 	frexlimiv_0 $f wff ph $.
 	frexlimiv_1 $f wff ps $.
@@ -1339,6 +1883,10 @@ $}
 $( Inference from Theorem 19.23 of [Margaris] p. 90 (restricted quantifier
        version).  (Contributed by NM, 18-Dec-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x ps $.
 	frexlimiva_0 $f wff ph $.
 	frexlimiva_1 $f wff ps $.
@@ -1349,6 +1897,10 @@ ${
 $}
 $( Weaker version of ~ rexlimiv .  (Contributed by FL, 19-Sep-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d ps x $.
 	frexlimivw_0 $f wff ph $.
 	frexlimivw_1 $f wff ps $.
@@ -1361,6 +1913,11 @@ $( Deduction from Theorem 19.23 of [Margaris] p. 90 (restricted quantifier
        version).  (Contributed by NM, 27-May-1998.)  (Proof shortened by Andrew
        Salmon, 30-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	frexlimd_0 $f wff ph $.
 	frexlimd_1 $f wff ps $.
 	frexlimd_2 $f wff ch $.
@@ -1375,6 +1932,11 @@ $( Version of ~ rexlimd with deduction version of second hypothesis.
        (Contributed by NM, 21-Jul-2013.)  (Revised by Mario Carneiro,
        8-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	frexlimd2_0 $f wff ph $.
 	frexlimd2_1 $f wff ps $.
 	frexlimd2_2 $f wff ch $.
@@ -1389,6 +1951,11 @@ $( Inference from Theorem 19.23 of [Margaris] p. 90 (restricted quantifier
        version).  (Contributed by NM, 14-Nov-2002.)  (Proof shortened by Eric
        Schmidt, 22-Dec-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	$d x ch $.
 	frexlimdv_0 $f wff ph $.
@@ -1402,6 +1969,11 @@ $}
 $( Inference from Theorem 19.23 of [Margaris] p. 90 (restricted quantifier
        version).  (Contributed by NM, 20-Jan-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	$d x ch $.
 	frexlimdva_0 $f wff ph $.
@@ -1415,6 +1987,11 @@ $}
 $( Inference from Theorem 19.23 of [Margaris] p. 90 (restricted quantifier
        version).  (Contributed by Mario Carneiro, 15-Jun-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	$d x ch $.
 	frexlimdvaa_0 $f wff ph $.
@@ -1429,6 +2006,11 @@ $( Inference from Theorem 19.23 of [Margaris] p. 90 (restricted quantifier
        version).  Frequently-used variant of ~ rexlimdv .  (Contributed by NM,
        7-Jun-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	$d x ch $.
 	frexlimdv3a_0 $f wff ph $.
@@ -1442,6 +2024,11 @@ $}
 $( Inference from Theorem 19.23 of [Margaris] p. 90 (restricted quantifier
        version).  (Contributed by NM, 18-Jun-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	$d x ch $.
 	frexlimdvw_0 $f wff ph $.
@@ -1455,6 +2042,11 @@ $}
 $( Restricted existential elimination rule of natural deduction.
        (Contributed by Mario Carneiro, 15-Jun-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	$d x ch $.
 	frexlimddv_0 $f wff ph $.
@@ -1469,6 +2061,12 @@ $}
 $( Inference from Theorem 19.23 of [Margaris] p. 90 (restricted quantifier
        version).  (Contributed by NM, 17-Feb-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y ps $.
 	$d y A $.
 	frexlimivv_0 $f wff ph $.
@@ -1483,6 +2081,13 @@ $}
 $( Inference from Theorem 19.23 of [Margaris] p. 90.  (Restricted
        quantifier version.)  (Contributed by NM, 22-Jul-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y ph $.
 	$d x y ch $.
 	$d y A $.
@@ -1499,6 +2104,13 @@ $}
 $( Inference from Theorem 19.23 of [Margaris] p. 90.  (Restricted
        quantifier version.)  (Contributed by NM, 18-Jun-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y ph $.
 	$d x y ch $.
 	$d y A $.
@@ -1516,6 +2128,10 @@ $( Theorem 19.26 of [Margaris] p. 90 with restricted quantifiers.
      (Contributed by NM, 28-Jan-1997.)  (Proof shortened by Andrew Salmon,
      30-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fr19.26_0 $f wff ph $.
 	fr19.26_1 $f wff ps $.
 	fr19.26_2 $f set x $.
@@ -1525,6 +2141,12 @@ $}
 $( Theorem 19.26 of [Margaris] p. 90 with 2 restricted quantifiers.
      (Contributed by NM, 10-Aug-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	fr19.26-2_0 $f wff ph $.
 	fr19.26-2_1 $f wff ps $.
 	fr19.26-2_2 $f set x $.
@@ -1536,6 +2158,11 @@ $}
 $( Theorem 19.26 of [Margaris] p. 90 with 3 restricted quantifiers.
      (Contributed by FL, 22-Nov-2010.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	fr19.26-3_0 $f wff ph $.
 	fr19.26-3_1 $f wff ps $.
 	fr19.26-3_2 $f wff ch $.
@@ -1546,6 +2173,11 @@ $}
 $( Theorem 19.26 of [Margaris] p. 90 with mixed quantifiers.  (Contributed by
      NM, 22-Feb-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	fr19.26m_0 $f wff ph $.
 	fr19.26m_1 $f wff ps $.
 	fr19.26m_2 $f set x $.
@@ -1557,6 +2189,10 @@ $( Distribute a restricted universal quantifier over a biconditional.
      Theorem 19.15 of [Margaris] p. 90 with restricted quantification.
      (Contributed by NM, 6-Oct-2003.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fralbi_0 $f wff ph $.
 	fralbi_1 $f wff ps $.
 	fralbi_2 $f set x $.
@@ -1566,6 +2202,10 @@ $}
 $( Split a biconditional and distribute quantifier.  (Contributed by NM,
      3-Jun-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fralbiim_0 $f wff ph $.
 	fralbiim_1 $f wff ps $.
 	fralbiim_2 $f set x $.
@@ -1577,6 +2217,10 @@ $( Restricted version of one direction of Theorem 19.27 of [Margaris]
        (Contributed by NM, 3-Jun-2004.)  (Proof shortened by Andrew Salmon,
        30-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x ps $.
 	fr19.27av_0 $f wff ph $.
 	fr19.27av_1 $f wff ps $.
@@ -1588,6 +2232,10 @@ $( Restricted version of one direction of Theorem 19.28 of [Margaris]
        p. 90.  (The other direction doesn't hold when ` A ` is empty.)
        (Contributed by NM, 2-Apr-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	fr19.28av_0 $f wff ph $.
 	fr19.28av_1 $f wff ps $.
@@ -1599,6 +2247,10 @@ $( Theorem 19.29 of [Margaris] p. 90 with restricted quantifiers.
      (Contributed by NM, 31-Aug-1999.)  (Proof shortened by Andrew Salmon,
      30-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fr19.29_0 $f wff ph $.
 	fr19.29_1 $f wff ps $.
 	fr19.29_2 $f set x $.
@@ -1608,6 +2260,10 @@ $}
 $( Variation of Theorem 19.29 of [Margaris] p. 90 with restricted
      quantifiers.  (Contributed by NM, 31-Aug-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fr19.29r_0 $f wff ph $.
 	fr19.29r_1 $f wff ps $.
 	fr19.29r_2 $f set x $.
@@ -1617,6 +2273,10 @@ $}
 $( Theorem 19.30 of [Margaris] p. 90 with restricted quantifiers.
      (Contributed by Scott Fenton, 25-Feb-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fr19.30_0 $f wff ph $.
 	fr19.30_1 $f wff ps $.
 	fr19.30_2 $f set x $.
@@ -1626,6 +2286,10 @@ $}
 $( Theorem 19.32 of [Margaris] p. 90 with restricted quantifiers.
        (Contributed by NM, 25-Nov-2003.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	fr19.32v_0 $f wff ph $.
 	fr19.32v_1 $f wff ps $.
@@ -1636,6 +2300,10 @@ $}
 $( Restricted quantifier version of Theorem 19.35 of [Margaris] p. 90.
      (Contributed by NM, 20-Sep-2003.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fr19.35_0 $f wff ph $.
 	fr19.35_1 $f wff ps $.
 	fr19.35_2 $f set x $.
@@ -1646,6 +2314,10 @@ $( One direction of a restricted quantifier version of Theorem 19.36 of
        [Margaris] p. 90.  The other direction doesn't hold when ` A ` is
        empty.  (Contributed by NM, 22-Oct-2003.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x ps $.
 	fr19.36av_0 $f wff ph $.
 	fr19.36av_1 $f wff ps $.
@@ -1658,6 +2330,10 @@ $( Restricted version of one direction of Theorem 19.37 of [Margaris]
        (Contributed by FL, 13-May-2012.)  (Revised by Mario Carneiro,
        11-Dec-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fr19.37_0 $f wff ph $.
 	fr19.37_1 $f wff ps $.
 	fr19.37_2 $f set x $.
@@ -1669,6 +2345,10 @@ $( Restricted version of one direction of Theorem 19.37 of [Margaris]
        p. 90.  (The other direction doesn't hold when ` A ` is empty.)
        (Contributed by NM, 2-Apr-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	fr19.37av_0 $f wff ph $.
 	fr19.37av_1 $f wff ps $.
@@ -1679,6 +2359,10 @@ $}
 $( Restricted quantifier version of Theorem 19.40 of [Margaris] p. 90.
      (Contributed by NM, 2-Apr-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fr19.40_0 $f wff ph $.
 	fr19.40_1 $f wff ps $.
 	fr19.40_2 $f set x $.
@@ -1688,6 +2372,10 @@ $}
 $( Restricted quantifier version of Theorem 19.41 of [Margaris] p. 90.
        (Contributed by NM, 1-Nov-2010.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fr19.41_0 $f wff ph $.
 	fr19.41_1 $f wff ps $.
 	fr19.41_2 $f set x $.
@@ -1698,6 +2386,10 @@ $}
 $( Restricted quantifier version of Theorem 19.41 of [Margaris] p. 90.
        (Contributed by NM, 17-Dec-2003.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x ps $.
 	fr19.41v_0 $f wff ph $.
 	fr19.41v_1 $f wff ps $.
@@ -1708,6 +2400,10 @@ $}
 $( Restricted version of Theorem 19.42 of [Margaris] p. 90.  (Contributed
        by NM, 27-May-1998.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	fr19.42v_0 $f wff ph $.
 	fr19.42v_1 $f wff ps $.
@@ -1718,6 +2414,10 @@ $}
 $( Restricted version of Theorem 19.43 of [Margaris] p. 90.  (Contributed by
      NM, 27-May-1998.)  (Proof shortened by Andrew Salmon, 30-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fr19.43_0 $f wff ph $.
 	fr19.43_1 $f wff ps $.
 	fr19.43_2 $f set x $.
@@ -1728,6 +2428,10 @@ $( One direction of a restricted quantifier version of Theorem 19.44 of
        [Margaris] p. 90.  The other direction doesn't hold when ` A ` is
        empty.  (Contributed by NM, 2-Apr-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x ps $.
 	fr19.44av_0 $f wff ph $.
 	fr19.44av_1 $f wff ps $.
@@ -1739,6 +2443,10 @@ $( Restricted version of one direction of Theorem 19.45 of [Margaris]
        p. 90.  (The other direction doesn't hold when ` A ` is empty.)
        (Contributed by NM, 2-Apr-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	fr19.45av_0 $f wff ph $.
 	fr19.45av_1 $f wff ps $.
@@ -1749,6 +2457,11 @@ $}
 $( Commutation of restricted quantifiers.  (Contributed by Mario Carneiro,
        14-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	fralcomf_0 $f wff ph $.
 	fralcomf_1 $f set x $.
@@ -1762,6 +2475,11 @@ $}
 $( Commutation of restricted quantifiers.  (Contributed by Mario Carneiro,
        14-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	frexcomf_0 $f wff ph $.
 	frexcomf_1 $f set x $.
@@ -1775,6 +2493,11 @@ $}
 $( Commutation of restricted quantifiers.  (Contributed by NM,
        13-Oct-1999.)  (Revised by Mario Carneiro, 14-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	$d x B $.
 	$d y A $.
@@ -1788,6 +2511,11 @@ $}
 $( Commutation of restricted quantifiers.  (Contributed by NM,
        19-Nov-1995.)  (Revised by Mario Carneiro, 14-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	$d x B $.
 	$d y A $.
@@ -1801,6 +2529,13 @@ $}
 $( Swap 1st and 3rd restricted existential quantifiers.  (Contributed by
        NM, 8-Apr-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d y z A $.
 	$d x z B $.
 	$d x y C $.
@@ -1816,6 +2551,15 @@ $}
 $( Rotate existential restricted quantifiers twice.  (Contributed by NM,
        8-Apr-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d w z A $.
 	$d w z B $.
 	$d w x y C $.
@@ -1835,6 +2579,10 @@ $( Commutation of restricted quantifiers.  Note that ` x ` and ` y `
        needn't be distinct (this makes the proof longer).  (Contributed by NM,
        24-Nov-1994.)  (Proof shortened by Mario Carneiro, 17-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d y A $.
 	$d x A $.
 	fralcom2_0 $f wff ph $.
@@ -1846,6 +2594,10 @@ $}
 $( A commutative law for restricted quantifiers that swaps the domain of
        the restriction.  (Contributed by NM, 22-Feb-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	fralcom3_0 $f wff ph $.
 	fralcom3_1 $f set x $.
 	fralcom3_2 $f class A $.
@@ -1855,6 +2607,12 @@ $}
 $( Rearrange existential quantifiers.  (Contributed by NM, 27-Oct-2010.)
        (Proof shortened by Andrew Salmon, 30-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d y A $.
 	$d x B $.
 	$d x y $.
@@ -1870,6 +2628,12 @@ ${
 $}
 $( Rearrange existential quantifiers.  (Contributed by NM, 9-May-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d y ph $.
 	$d x ps $.
 	$d x y $.
@@ -1886,6 +2650,15 @@ $}
 $( Rearrange three existential quantifiers.  (Contributed by Jeff Madsen,
        11-Jun-2010.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d ph y z $.
 	$d ps x z $.
 	$d ch x y $.
@@ -1906,6 +2679,12 @@ $}
 $( Distribute quantification over "or".  (Contributed by Jeff Madsen,
        19-Jun-2010.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d ph y $.
 	$d ps x $.
 	$d A y $.
@@ -1922,6 +2701,9 @@ $}
 $( ` x ` is not free in ` E! x e. A ph ` .  (Contributed by NM,
      19-Mar-1997.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fnfreu1_0 $f wff ph $.
 	fnfreu1_1 $f set x $.
 	fnfreu1_2 $f class A $.
@@ -1930,6 +2712,9 @@ $}
 $( ` x ` is not free in ` E* x e. A ph ` .  (Contributed by NM,
      16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fnfrmo1_0 $f wff ph $.
 	fnfrmo1_1 $f set x $.
 	fnfrmo1_2 $f class A $.
@@ -1938,6 +2723,11 @@ $}
 $( Deduction version of ~ nfreu .  (Contributed by NM, 15-Feb-2013.)
        (Revised by Mario Carneiro, 8-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	fnfreud_0 $f wff ph $.
 	fnfreud_1 $f wff ps $.
 	fnfreud_2 $f set x $.
@@ -1950,6 +2740,11 @@ ${
 $}
 $( Deduction version of ~ nfrmo .  (Contributed by NM, 17-Jun-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	fnfrmod_0 $f wff ph $.
 	fnfrmod_1 $f wff ps $.
 	fnfrmod_2 $f set x $.
@@ -1964,6 +2759,10 @@ $( Bound-variable hypothesis builder for restricted uniqueness.
        (Contributed by NM, 30-Oct-2010.)  (Revised by Mario Carneiro,
        8-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	fnfreu_0 $f wff ph $.
 	fnfreu_1 $f set x $.
 	fnfreu_2 $f set y $.
@@ -1975,6 +2774,10 @@ $}
 $( Bound-variable hypothesis builder for restricted uniqueness.
        (Contributed by NM, 16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	fnfrmo_0 $f wff ph $.
 	fnfrmo_1 $f set x $.
 	fnfrmo_2 $f set y $.
@@ -1986,6 +2789,9 @@ $}
 $( An "identity" law of concretion for restricted abstraction.  Special case
      of Definition 2.1 of [Quine] p. 16.  (Contributed by NM, 9-Oct-2003.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	frabid_0 $f wff ph $.
 	frabid_1 $f set x $.
 	frabid_2 $f class A $.
@@ -1994,6 +2800,9 @@ $}
 $( An "identity" law for restricted class abstraction.  (Contributed by NM,
        9-Oct-2003.)  (Proof shortened by Andrew Salmon, 30-May-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	frabid2_0 $f wff ph $.
 	frabid2_1 $f set x $.
@@ -2004,6 +2813,10 @@ $( Equivalent wff's correspond to equal restricted class abstractions.
        Closed theorem form of ~ rabbidva .  (Contributed by NM,
        25-Nov-2013.) $)
 ${
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	frabbi_0 $f wff ps $.
 	frabbi_1 $f wff ch $.
 	frabbi_2 $f set x $.
@@ -2013,6 +2826,9 @@ $}
 $( Swap with a membership relation in a restricted class abstraction.
      (Contributed by NM, 4-Jul-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	frabswap_0 $f set x $.
 	frabswap_1 $f class A $.
 	frabswap_2 $f class B $.
@@ -2021,6 +2837,9 @@ $}
 $( The abstraction variable in a restricted class abstraction isn't free.
        (Contributed by NM, 19-Mar-1997.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fnfrab1_0 $f wff ph $.
 	fnfrab1_1 $f set x $.
 	fnfrab1_2 $f class A $.
@@ -2030,6 +2849,11 @@ $( A variable not free in a wff remains so in a restricted class
        abstraction.  (Contributed by NM, 13-Oct-2003.)  (Revised by Mario
        Carneiro, 9-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x z $.
 	$d y z $.
 	$d z A $.
@@ -2045,6 +2869,11 @@ $}
 $( Formula-building rule for restricted existential quantifier (deduction
        rule).  (Contributed by Mario Carneiro, 19-Nov-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	freubida_0 $f wff ph $.
 	freubida_1 $f wff ps $.
 	freubida_2 $f wff ch $.
@@ -2057,6 +2886,11 @@ $}
 $( Formula-building rule for restricted existential quantifier (deduction
        rule).  (Contributed by NM, 13-Nov-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	freubidva_0 $f wff ph $.
 	freubidva_1 $f wff ps $.
@@ -2069,6 +2903,11 @@ $}
 $( Formula-building rule for restricted existential quantifier (deduction
        rule).  (Contributed by NM, 17-Oct-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	freubidv_0 $f wff ph $.
 	freubidv_1 $f wff ps $.
@@ -2081,6 +2920,10 @@ $}
 $( Formula-building rule for restricted existential quantifier (inference
        rule).  (Contributed by NM, 14-Nov-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	freubiia_0 $f wff ph $.
 	freubiia_1 $f wff ps $.
 	freubiia_2 $f set x $.
@@ -2091,6 +2934,10 @@ $}
 $( Formula-building rule for restricted existential quantifier (inference
        rule).  (Contributed by NM, 22-Oct-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	freubii_0 $f wff ph $.
 	freubii_1 $f wff ps $.
 	freubii_2 $f set x $.
@@ -2101,6 +2948,11 @@ $}
 $( Formula-building rule for restricted existential quantifier (deduction
        rule).  (Contributed by NM, 16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	frmobida_0 $f wff ph $.
 	frmobida_1 $f wff ps $.
 	frmobida_2 $f wff ch $.
@@ -2113,6 +2965,11 @@ $}
 $( Formula-building rule for restricted existential quantifier (deduction
        rule).  (Contributed by NM, 16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	frmobidva_0 $f wff ph $.
 	frmobidva_1 $f wff ps $.
@@ -2125,6 +2982,11 @@ $}
 $( Formula-building rule for restricted existential quantifier (deduction
        rule).  (Contributed by NM, 16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	frmobidv_0 $f wff ph $.
 	frmobidv_1 $f wff ps $.
@@ -2137,6 +2999,10 @@ $}
 $( Formula-building rule for restricted existential quantifier (inference
        rule).  (Contributed by NM, 16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	frmobiia_0 $f wff ph $.
 	frmobiia_1 $f wff ps $.
 	frmobiia_2 $f set x $.
@@ -2147,6 +3013,10 @@ $}
 $( Formula-building rule for restricted existential quantifier (inference
        rule).  (Contributed by NM, 16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	frmobii_0 $f wff ph $.
 	frmobii_1 $f wff ps $.
 	frmobii_2 $f set x $.
@@ -2159,6 +3029,10 @@ $( Equality theorem for restricted universal quantifier, with
        (Contributed by NM, 7-Mar-2004.)  (Revised by Andrew Salmon,
        11-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	fraleqf_0 $f wff ph $.
 	fraleqf_1 $f set x $.
 	fraleqf_2 $f class A $.
@@ -2172,6 +3046,10 @@ $( Equality theorem for restricted existential quantifier, with
        (Contributed by NM, 9-Oct-2003.)  (Revised by Andrew Salmon,
        11-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	frexeqf_0 $f wff ph $.
 	frexeqf_1 $f set x $.
 	frexeqf_2 $f class A $.
@@ -2185,6 +3063,10 @@ $( Equality theorem for restricted uniqueness quantifier, with
        (Contributed by NM, 5-Apr-2004.)  (Revised by Andrew Salmon,
        11-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	freueq1f_0 $f wff ph $.
 	freueq1f_1 $f set x $.
 	freueq1f_2 $f class A $.
@@ -2197,6 +3079,10 @@ $( Equality theorem for restricted uniqueness quantifier, with
        bound-variable hypotheses instead of distinct variable restrictions.
        (Contributed by Alexander van der Vekens, 17-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	frmoeq1f_0 $f wff ph $.
 	frmoeq1f_1 $f set x $.
 	frmoeq1f_2 $f class A $.
@@ -2208,6 +3094,10 @@ $}
 $( Equality theorem for restricted universal quantifier.  (Contributed by
        NM, 16-Nov-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fraleq_0 $f wff ph $.
@@ -2219,6 +3109,10 @@ $}
 $( Equality theorem for restricted existential quantifier.  (Contributed by
        NM, 29-Oct-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	frexeq_0 $f wff ph $.
@@ -2230,6 +3124,10 @@ $}
 $( Equality theorem for restricted uniqueness quantifier.  (Contributed by
        NM, 5-Apr-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	freueq1_0 $f wff ph $.
@@ -2241,6 +3139,10 @@ $}
 $( Equality theorem for restricted uniqueness quantifier.  (Contributed by
        Alexander van der Vekens, 17-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	frmoeq1_0 $f wff ph $.
@@ -2252,6 +3154,10 @@ $}
 $( Equality inference for restricted universal qualifier.  (Contributed by
        Paul Chapman, 22-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d A x $.
 	$d B x $.
 	fraleqi_0 $f wff ph $.
@@ -2264,6 +3170,10 @@ $}
 $( Equality inference for restricted existential qualifier.  (Contributed
        by Mario Carneiro, 23-Apr-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d A x $.
 	$d B x $.
 	frexeqi_0 $f wff ph $.
@@ -2276,6 +3186,11 @@ $}
 $( Equality deduction for restricted universal quantifier.  (Contributed by
        NM, 13-Nov-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fraleqdv_0 $f wff ph $.
@@ -2289,6 +3204,11 @@ $}
 $( Equality deduction for restricted existential quantifier.  (Contributed
        by NM, 14-Jan-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	frexeqdv_0 $f wff ph $.
@@ -2302,6 +3222,11 @@ $}
 $( Equality deduction for restricted universal quantifier.  (Contributed by
        NM, 16-Nov-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fraleqbi1dv_0 $f wff ph $.
@@ -2315,6 +3240,11 @@ $}
 $( Equality deduction for restricted existential quantifier.  (Contributed
        by NM, 18-Mar-1997.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	frexeqbi1dv_0 $f wff ph $.
@@ -2328,6 +3258,11 @@ $}
 $( Equality deduction for restricted uniqueness quantifier.  (Contributed
        by NM, 5-Apr-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	freueqd_0 $f wff ph $.
@@ -2341,6 +3276,11 @@ $}
 $( Equality deduction for restricted uniqueness quantifier.  (Contributed
        by Alexander van der Vekens, 17-Jun-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	frmoeqd_0 $f wff ph $.
@@ -2354,6 +3294,12 @@ $}
 $( Equality deduction for restricted universal quantifier.  (Contributed by
        NM, 6-Nov-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ph $.
@@ -2370,6 +3316,12 @@ $}
 $( Equality deduction for restricted universal quantifier.  (Contributed by
        NM, 6-Nov-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ph $.
@@ -2386,6 +3338,12 @@ $}
 $( Equality deduction for restricted universal quantifier.  (Contributed by
        Mario Carneiro, 5-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ph $.
@@ -2402,6 +3360,12 @@ $}
 $( Equality deduction for restricted universal quantifier.  (Contributed by
        Mario Carneiro, 5-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ph $.
@@ -2418,6 +3382,9 @@ $}
 $( Unrestricted "at most one" implies restricted "at most one".  (Contributed
      by NM, 16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fmormo_0 $f wff ph $.
 	fmormo_1 $f set x $.
 	fmormo_2 $f class A $.
@@ -2426,6 +3393,9 @@ $}
 $( Restricted uniqueness in terms of "at most one."  (Contributed by NM,
      23-May-1999.)  (Revised by NM, 16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	freu5_0 $f wff ph $.
 	freu5_1 $f set x $.
 	freu5_2 $f class A $.
@@ -2434,6 +3404,9 @@ $}
 $( Restricted unique existence implies restricted existence.  (Contributed by
      NM, 19-Aug-1999.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	freurex_0 $f wff ph $.
 	freurex_1 $f set x $.
 	freurex_2 $f class A $.
@@ -2442,6 +3415,9 @@ $}
 $( Restricted existential uniqueness implies restricted "at most one."
      (Contributed by NM, 16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	freurmo_0 $f wff ph $.
 	freurmo_1 $f set x $.
 	freurmo_2 $f class A $.
@@ -2450,6 +3426,9 @@ $}
 $( Restricted "at most one" in term of uniqueness.  (Contributed by NM,
      16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	frmo5_0 $f wff ph $.
 	frmo5_1 $f set x $.
 	frmo5_2 $f class A $.
@@ -2458,6 +3437,9 @@ $}
 $( Nonexistence implies restricted "at most one".  (Contributed by NM,
      17-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fnrexrmo_0 $f wff ph $.
 	fnrexrmo_1 $f set x $.
 	fnrexrmo_2 $f class A $.
@@ -2467,6 +3449,12 @@ $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 7-Mar-2004.)  (Revised by Mario Carneiro,
        9-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x z $.
 	$d y z $.
 	$d z A $.
@@ -2489,6 +3477,11 @@ $( Rule used to change bound variables, using implicit substitution.
        (Contributed by FL, 27-Apr-2008.)  (Revised by Mario Carneiro,
        9-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	fcbvrexf_0 $f wff ph $.
 	fcbvrexf_1 $f wff ps $.
 	fcbvrexf_2 $f set x $.
@@ -2504,6 +3497,11 @@ $}
 $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 31-Jul-2003.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x A $.
 	$d y A $.
 	fcbvral_0 $f wff ph $.
@@ -2520,6 +3518,11 @@ $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 31-Jul-2003.)  (Proof shortened by Andrew Salmon,
        8-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x A $.
 	$d y A $.
 	fcbvrex_0 $f wff ph $.
@@ -2535,6 +3538,12 @@ $}
 $( Change the bound variable of a restricted uniqueness quantifier using
        implicit substitution.  (Contributed by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x z A $.
 	$d y z A $.
 	$d z ph $.
@@ -2553,6 +3562,11 @@ $}
 $( Change the bound variable of restricted "at most one" using implicit
        substitution.  (Contributed by NM, 16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x A $.
 	$d y A $.
 	fcbvrmo_0 $f wff ph $.
@@ -2568,6 +3582,11 @@ $}
 $( Change the bound variable of a restricted universal quantifier using
        implicit substitution.  (Contributed by NM, 28-Jan-1997.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x A $.
 	$d y A $.
 	$d y ph $.
@@ -2583,6 +3602,11 @@ $}
 $( Change the bound variable of a restricted existential quantifier using
        implicit substitution.  (Contributed by NM, 2-Jun-1998.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x A $.
 	$d y A $.
 	$d y ph $.
@@ -2599,6 +3623,11 @@ $( Change the bound variable of a restricted uniqueness quantifier using
        implicit substitution.  (Contributed by NM, 5-Apr-2004.)  (Revised by
        Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x A $.
 	$d y A $.
 	$d y ph $.
@@ -2615,6 +3644,11 @@ $( Change the bound variable of a restricted uniqueness quantifier using
        implicit substitution.  (Contributed by Alexander van der Vekens,
        17-Jun-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x A $.
 	$d y A $.
 	$d y ph $.
@@ -2631,6 +3665,13 @@ $( Rule used to change the bound variable in a restricted universal
        quantifier with implicit substitution which also changes the quantifier
        domain.  Deduction form.  (Contributed by David Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d A y $.
 	$d ps y $.
 	$d B x $.
@@ -2651,6 +3692,13 @@ $( Rule used to change the bound variable in a restricted existential
        quantifier with implicit substitution which also changes the quantifier
        domain.  Deduction form.  (Contributed by David Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d A y $.
 	$d ps y $.
 	$d B x $.
@@ -2671,6 +3719,12 @@ $( Rule used to change the bound variable in a restricted universal
        quantifier with implicit substitution.  Deduction form.  (Contributed by
        David Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d ps y $.
 	$d ch x $.
 	$d A x y $.
@@ -2688,6 +3742,12 @@ $( Rule used to change the bound variable in a restricted existential
        quantifier with implicit substitution.  Deduction form.  (Contributed by
        David Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d ps y $.
 	$d ch x $.
 	$d A x y $.
@@ -2704,6 +3764,15 @@ $}
 $( Change bound variables of double restricted universal quantification,
        using implicit substitution.  (Contributed by NM, 10-Aug-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d z A $.
 	$d x y B $.
@@ -2729,6 +3798,15 @@ $}
 $( Change bound variables of double restricted universal quantification,
        using implicit substitution.  (Contributed by FL, 2-Jul-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
 	$d A x $.
 	$d A z $.
 	$d B w $.
@@ -2754,6 +3832,19 @@ $}
 $( Change bound variables of triple restricted universal quantification,
        using implicit substitution.  (Contributed by NM, 10-May-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d w ph $.
 	$d z ps $.
 	$d x ch $.
@@ -2791,6 +3882,11 @@ $}
 $( Change bound variable by using a substitution.  (Contributed by NM,
        20-Nov-2005.)  (Revised by Andrew Salmon, 11-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d z x A $.
 	$d y A $.
 	$d z y ph $.
@@ -2804,6 +3900,11 @@ $}
 $( Change bound variable by using a substitution.  (Contributed by NM,
        2-Mar-2008.)  (Revised by Andrew Salmon, 11-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d z x A $.
 	$d y z ph $.
 	$d y A $.
@@ -2817,6 +3918,11 @@ $}
 $( Implicit to explicit substitution that swaps variables in a quantified
        expression.  (Contributed by NM, 5-Sep-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	$d y z ph $.
 	$d x z ps $.
@@ -2831,6 +3937,10 @@ $}
 $( Equivalent wff's yield equal restricted class abstractions (inference
        rule).  (Contributed by NM, 22-May-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	frabbiia_0 $f wff ph $.
 	frabbiia_1 $f wff ps $.
 	frabbiia_2 $f set x $.
@@ -2841,6 +3951,11 @@ $}
 $( Equivalent wff's yield equal restricted class abstractions (deduction
        rule).  (Contributed by NM, 28-Nov-2003.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	frabbidva_0 $f wff ph $.
 	frabbidva_1 $f wff ps $.
@@ -2853,6 +3968,11 @@ $}
 $( Equivalent wff's yield equal restricted class abstractions (deduction
        rule).  (Contributed by NM, 10-Feb-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	frabbidv_0 $f wff ph $.
 	frabbidv_1 $f wff ps $.
@@ -2866,6 +3986,10 @@ $( Equality theorem for restricted class abstractions, with bound-variable
        hypotheses instead of distinct variable restrictions.  (Contributed by
        NM, 7-Mar-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	frabeqf_0 $f wff ph $.
 	frabeqf_1 $f set x $.
 	frabeqf_2 $f class A $.
@@ -2877,6 +4001,10 @@ $}
 $( Equality theorem for restricted class abstractions.  (Contributed by NM,
        15-Oct-2003.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	frabeq_0 $f wff ph $.
@@ -2888,6 +4016,12 @@ $}
 $( Equality of restricted class abstractions.  (Contributed by Jeff Madsen,
        1-Dec-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d A x $.
 	$d B x $.
 	$d ph x $.
@@ -2904,6 +4038,12 @@ $}
 $( Equality of restricted class abstractions.  (Contributed by Mario
        Carneiro, 26-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d A x $.
 	$d B x $.
 	$d ph x $.
@@ -2920,6 +4060,10 @@ $}
 $( Inference rule from equality of a class variable and a restricted class
        abstraction.  (Contributed by NM, 16-Feb-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	frabeq2i_0 $f wff ph $.
 	frabeq2i_1 $f set x $.
 	frabeq2i_2 $f class A $.
@@ -2932,6 +4076,12 @@ $( Rule to change the bound variable in a restricted class abstraction,
        in place of distinct variable conditions.  (Contributed by Andrew
        Salmon, 11-Jul-2011.)  (Revised by Mario Carneiro, 9-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x z $.
 	$d y z $.
 	$d A z $.
@@ -2953,6 +4103,11 @@ $}
 $( Rule to change the bound variable in a restricted class abstraction,
        using implicit substitution.  (Contributed by NM, 26-May-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d y ph $.
 	$d x ps $.

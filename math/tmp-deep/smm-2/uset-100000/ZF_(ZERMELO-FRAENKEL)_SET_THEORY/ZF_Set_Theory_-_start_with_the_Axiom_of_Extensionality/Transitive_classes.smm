@@ -53,7 +53,7 @@ $}
 $( An alternate way of defining a transitive class.  Definition 7.1 of
        [TakeutiZaring] p. 35.  (Contributed by NM, 29-Aug-1993.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d x y A $.
 	f0 $f set x $.
 	f1 $f class A $.
@@ -82,7 +82,7 @@ $( In a transitive class, the membership relation is transitive.
        (Contributed by NM, 19-Apr-1994.)  (Proof shortened by Andrew Salmon,
        9-Jul-2011.) $)
 ${
-	$v x y A B C $.
+	$v A B C x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -108,7 +108,7 @@ $}
 $( An element of a transitive class is a subset of the class.  (Contributed
        by NM, 7-Aug-1994.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -120,7 +120,7 @@ $}
 $( The intersection of transitive classes is transitive.  (Contributed by
        NM, 9-May-1994.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -142,7 +142,7 @@ $}
 $( The indexed union of a class of transitive sets is transitive.
        (Contributed by Mario Carneiro, 16-Nov-2014.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y A $.
 	$d y B $.
 	f0 $f set x $.
@@ -167,7 +167,7 @@ $( The intersection of a class of transitive sets is transitive.  Exercise
        5(b) of [Enderton] p. 73.  (Contributed by Scott Fenton,
        25-Feb-2011.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d x y A $.
 	f0 $f set x $.
 	f1 $f class A $.
@@ -178,7 +178,7 @@ $}
 $( If ` A ` is transitive and non-null, then ` |^| A ` is a subset of
        ` A ` .  (Contributed by Scott Fenton, 3-Mar-2011.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -189,7 +189,7 @@ $}
 $( Any non-empty transitive class includes its intersection.  Exercise 2 in
        [TakeutiZaring] p. 44.  (Contributed by Andrew Salmon, 14-Nov-2011.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.

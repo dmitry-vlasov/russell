@@ -13,6 +13,8 @@ $( Backwards E superscript *. $)
 $( Extend wff definition to include existential uniqueness ("there exists a
      unique ` x ` such that ` ph ` "). $)
 ${
+	$v ph $.
+	$v x $.
 	fweu_0 $f wff ph $.
 	fweu_1 $f set x $.
 	weu $a wff E! x ph $.
@@ -20,6 +22,8 @@ $}
 $( Extend wff definition to include uniqueness ("there exists at most one
      ` x ` such that ` ph ` "). $)
 ${
+	$v ph $.
+	$v x $.
 	fwmo_0 $f wff ph $.
 	fwmo_1 $f set x $.
 	wmo $a wff E* x ph $.
@@ -31,6 +35,11 @@ $( A soundness justification theorem for ~ df-eu , showing that the
        achieved through the use of ~ dvelim .  (Contributed by NM,
        11-Mar-2010.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x y $.
 	$d x z $.
 	$d y ph $.
@@ -50,6 +59,11 @@ $( A soundness justification theorem for ~ df-eu , showing that the
        NM, 11-Mar-2010.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x y $.
 	$d x z $.
 	$d y ph $.
@@ -70,6 +84,9 @@ $( Define existential uniqueness, i.e.  "there exists exactly one ` x `
        tricky: ` E! x E! y ph ` does not mean "exactly one ` x ` and one
        ` y ` " (see ~ 2eu4 ).  (Contributed by NM, 12-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	fdf-eu_0 $f wff ph $.
@@ -82,6 +99,8 @@ $( Define "there exists at most one ` x ` such that ` ph ` ."  Here we define
      whose definition we show as ~ mo3 .  For other possible definitions see
      ~ mo2 and ~ mo4 .  (Contributed by NM, 8-Mar-1995.) $)
 ${
+	$v ph $.
+	$v x $.
 	fdf-mo_0 $f wff ph $.
 	fdf-mo_1 $f set x $.
 	df-mo $a |- ( E* x ph <-> ( E. x ph -> E! x ph ) ) $.
@@ -90,6 +109,10 @@ $( A version of the existential uniqueness definition with a hypothesis
        instead of a distinct variable condition.  (Contributed by NM,
        12-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	$d ph z $.
 	ieuf_0 $f set z $.
@@ -102,6 +125,11 @@ $}
 $( Formula-building rule for uniqueness quantifier (deduction rule).
        (Contributed by NM, 9-Jul-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	$d y ps $.
@@ -118,6 +146,10 @@ $}
 $( Formula-building rule for uniqueness quantifier (deduction rule).
        (Contributed by NM, 9-Jul-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	$d x ph $.
 	feubidv_0 $f wff ph $.
 	feubidv_1 $f wff ps $.
@@ -130,6 +162,9 @@ $( Introduce uniqueness quantifier to both sides of an equivalence.
        (Contributed by NM, 9-Jul-1994.)  (Revised by Mario Carneiro,
        6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	feubii_0 $f wff ph $.
 	feubii_1 $f wff ps $.
 	feubii_2 $f set x $.
@@ -139,6 +174,9 @@ $}
 $( Bound-variable hypothesis builder for uniqueness.  (Contributed by NM,
        9-Jul-1994.)  (Revised by Mario Carneiro, 7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	infeu1_0 $f set y $.
@@ -149,6 +187,8 @@ $}
 $( Bound-variable hypothesis builder for "at most one."  (Contributed by NM,
      8-Mar-1995.)  (Revised by Mario Carneiro, 7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	fnfmo1_0 $f wff ph $.
 	fnfmo1_1 $f set x $.
 	nfmo1 $p |- F/ x E* x ph $= fnfmo1_0 fnfmo1_1 wmo fnfmo1_0 fnfmo1_1 wex fnfmo1_0 fnfmo1_1 weu wi fnfmo1_1 fnfmo1_0 fnfmo1_1 df-mo fnfmo1_0 fnfmo1_1 wex fnfmo1_0 fnfmo1_1 weu fnfmo1_1 fnfmo1_0 fnfmo1_1 nfe1 fnfmo1_0 fnfmo1_1 nfeu1 nfim nfxfr $.
@@ -156,6 +196,11 @@ $}
 $( Bound-variable hypothesis builder for uniqueness.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d y z $.
 	$d z ph $.
 	$d z ps $.
@@ -171,6 +216,10 @@ $}
 $( Bound-variable hypothesis builder for uniqueness.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fnfmod2_0 $f wff ph $.
 	fnfmod2_1 $f wff ps $.
 	fnfmod2_2 $f set x $.
@@ -182,6 +231,10 @@ $}
 $( Deduction version of ~ nfeu .  (Contributed by NM, 15-Feb-2013.)
        (Revised by Mario Carneiro, 7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fnfeud_0 $f wff ph $.
 	fnfeud_1 $f wff ps $.
 	fnfeud_2 $f set x $.
@@ -193,6 +246,10 @@ $}
 $( Bound-variable hypothesis builder for "at most one."  (Contributed by
        Mario Carneiro, 14-Nov-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fnfmod_0 $f wff ph $.
 	fnfmod_1 $f wff ps $.
 	fnfmod_2 $f set x $.
@@ -206,6 +263,9 @@ $( Bound-variable hypothesis builder for "at most one."  Note that ` x `
        (Contributed by NM, 8-Mar-1995.)  (Revised by Mario Carneiro,
        7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fnfeu_0 $f wff ph $.
 	fnfeu_1 $f set x $.
 	fnfeu_2 $f set y $.
@@ -215,6 +275,9 @@ $}
 $( Bound-variable hypothesis builder for "at most one."  (Contributed by
        NM, 9-Mar-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fnfmo_0 $f wff ph $.
 	fnfmo_1 $f set x $.
 	fnfmo_2 $f set y $.
@@ -224,6 +287,11 @@ $}
 $( Variable substitution in uniqueness quantifier.  (Contributed by NM,
        7-Aug-1994.)  (Revised by Mario Carneiro, 7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w y z $.
 	$d ph z w $.
 	$d w x z $.
@@ -238,6 +306,9 @@ $}
 $( Variable substitution in uniqueness quantifier.  (Contributed by
        Alexander van der Vekens, 17-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsb8mo_0 $f wff ph $.
 	fsb8mo_1 $f set x $.
 	fsb8mo_2 $f set y $.
@@ -248,6 +319,10 @@ $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 25-Nov-1994.)  (Revised by Mario Carneiro,
        7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fcbveu_0 $f wff ph $.
 	fcbveu_1 $f wff ps $.
 	fcbveu_2 $f set x $.
@@ -261,6 +336,9 @@ $( An alternate way to express uniqueness used by some authors.  Exercise
        2(b) of [Margaris] p. 110.  (Contributed by NM, 20-Aug-1993.)  (Revised
        by Mario Carneiro, 7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	feu1_0 $f wff ph $.
 	feu1_1 $f set x $.
@@ -271,6 +349,10 @@ $}
 $( Equivalent definitions of "there exists at most one."  (Contributed by
        NM, 7-Aug-1994.)  (Revised by Mario Carneiro, 7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	$d ph z $.
 	imo_0 $f set z $.
@@ -283,6 +365,9 @@ $}
 $( Existential uniqueness implies existence.  (Contributed by NM,
        15-Sep-1993.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d ph y $.
 	ieuex_0 $f set y $.
@@ -293,6 +378,9 @@ $}
 $( Existential uniqueness implies "at most one."  (Contributed by NM,
        8-Jul-1994.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	feumo0_0 $f wff ph $.
 	feumo0_1 $f set x $.
@@ -303,6 +391,9 @@ $}
 $( An alternate way of defining existential uniqueness.  Definition 6.10 of
        [TakeutiZaring] p. 26.  (Contributed by NM, 8-Jul-1994.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	feu2_0 $f wff ph $.
 	feu2_1 $f set x $.
@@ -313,6 +404,9 @@ $}
 $( An alternate way to express existential uniqueness.  (Contributed by NM,
        8-Jul-1994.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	feu3_0 $f wff ph $.
 	feu3_1 $f set x $.
@@ -323,6 +417,9 @@ $}
 $( Introduce a disjunct into a uniqueness quantifier.  (Contributed by NM,
        21-Oct-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	feuor_0 $f wff ph $.
 	feuor_1 $f wff ps $.
 	feuor_2 $f set x $.
@@ -332,6 +429,9 @@ $}
 $( Introduce a disjunct into a uniqueness quantifier.  (Contributed by NM,
        23-Mar-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	$d x ph $.
 	feuorv_0 $f wff ph $.
 	feuorv_1 $f wff ps $.
@@ -341,6 +441,9 @@ $}
 $( Alternate definition of "at most one."  (Contributed by NM,
        8-Mar-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fmo2_0 $f wff ph $.
 	fmo2_1 $f set x $.
@@ -351,6 +454,11 @@ $}
 $( Substitution into "at most one".  (Contributed by Jeff Madsen,
        2-Sep-2009.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x z $.
 	$d w y z $.
 	$d w ph $.
@@ -366,6 +474,9 @@ $( Alternate definition of "at most one."  Definition of [BellMachover]
        occur in ` ph ` in place of our hypothesis.  (Contributed by NM,
        8-Mar-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fmo3_0 $f wff ph $.
 	fmo3_1 $f set x $.
@@ -376,6 +487,10 @@ $}
 $( "At most one" expressed using implicit substitution.  (Contributed by
        NM, 10-Apr-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	fmo4f_0 $f wff ph $.
@@ -389,6 +504,10 @@ $}
 $( "At most one" expressed using implicit substitution.  (Contributed by
        NM, 26-Jul-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	$d x ps $.
@@ -402,6 +521,10 @@ $}
 $( Formula-building rule for "at most one" quantifier (deduction rule).
        (Contributed by NM, 8-Mar-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fmobid_0 $f wff ph $.
 	fmobid_1 $f wff ps $.
 	fmobid_2 $f wff ch $.
@@ -413,6 +536,10 @@ $}
 $( Formula-building rule for "at most one" quantifier (deduction rule).
        (Contributed by Mario Carneiro, 7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	$d x ph $.
 	fmobidv_0 $f wff ph $.
 	fmobidv_1 $f wff ps $.
@@ -425,6 +552,9 @@ $( Formula-building rule for "at most one" quantifier (inference rule).
        (Contributed by NM, 9-Mar-1995.)  (Revised by Mario Carneiro,
        17-Oct-2016.) $)
 ${
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fmobii_0 $f wff ps $.
 	fmobii_1 $f wff ch $.
 	fmobii_2 $f set x $.
@@ -435,6 +565,10 @@ $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 9-Mar-1995.)  (Revised by Andrew Salmon,
        8-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fcbvmo_0 $f wff ph $.
 	fcbvmo_1 $f wff ps $.
 	fcbvmo_2 $f set x $.
@@ -447,6 +581,9 @@ $}
 $( Uniqueness in terms of "at most one."  (Contributed by NM,
        23-Mar-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	ieu5_0 $f set y $.
@@ -457,6 +594,10 @@ $}
 $( Uniqueness using implicit substitution.  (Contributed by NM,
        26-Jul-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	$d x ps $.
@@ -470,6 +611,8 @@ $}
 $( Existential uniqueness implies "at most one."  (Contributed by NM,
      23-Mar-1995.) $)
 ${
+	$v ph $.
+	$v x $.
 	feumo_0 $f wff ph $.
 	feumo_1 $f set x $.
 	eumo $p |- ( E! x ph -> E* x ph ) $= feumo_0 feumo_1 weu feumo_0 feumo_1 wex feumo_0 feumo_1 wmo feumo_0 feumo_1 eu5 simprbi $.
@@ -477,6 +620,8 @@ $}
 $( "At most one" inferred from existential uniqueness.  (Contributed by NM,
        5-Apr-1995.) $)
 ${
+	$v ph $.
+	$v x $.
 	feumoi_0 $f wff ph $.
 	feumoi_1 $f set x $.
 	eeumoi_0 $e |- E! x ph $.
@@ -485,6 +630,8 @@ $}
 $( Existence in terms of "at most one" and uniqueness.  (Contributed by NM,
      5-Apr-2004.) $)
 ${
+	$v ph $.
+	$v x $.
 	fexmoeu_0 $f wff ph $.
 	fexmoeu_1 $f set x $.
 	exmoeu $p |- ( E. x ph <-> ( E* x ph -> E! x ph ) ) $= fexmoeu_0 fexmoeu_1 wex fexmoeu_0 fexmoeu_1 wmo fexmoeu_0 fexmoeu_1 weu wi fexmoeu_0 fexmoeu_1 wmo fexmoeu_0 fexmoeu_1 wex fexmoeu_0 fexmoeu_1 weu fexmoeu_0 fexmoeu_1 wmo fexmoeu_0 fexmoeu_1 wex fexmoeu_0 fexmoeu_1 weu wi fexmoeu_0 fexmoeu_1 df-mo biimpi com12 fexmoeu_0 fexmoeu_1 wmo fexmoeu_0 fexmoeu_1 weu wi fexmoeu_0 fexmoeu_1 wex fexmoeu_0 fexmoeu_1 weu wi fexmoeu_0 fexmoeu_1 wex wi fexmoeu_0 fexmoeu_1 wex fexmoeu_0 fexmoeu_1 wex fexmoeu_0 fexmoeu_1 weu wi fexmoeu_0 fexmoeu_1 wmo fexmoeu_0 fexmoeu_1 weu fexmoeu_0 fexmoeu_1 wex fexmoeu_0 fexmoeu_1 wmo fexmoeu_0 fexmoeu_1 wex fexmoeu_0 fexmoeu_1 weu wi fexmoeu_0 fexmoeu_1 df-mo biimpri fexmoeu_0 fexmoeu_1 euex imim12i fexmoeu_0 fexmoeu_1 wex fexmoeu_0 fexmoeu_1 weu peirce syl impbii $.
@@ -492,6 +639,8 @@ $}
 $( Existence implies "at most one" is equivalent to uniqueness.  (Contributed
      by NM, 5-Apr-2004.) $)
 ${
+	$v ph $.
+	$v x $.
 	fexmoeu2_0 $f wff ph $.
 	fexmoeu2_1 $f set x $.
 	exmoeu2 $p |- ( E. x ph -> ( E* x ph <-> E! x ph ) ) $= fexmoeu2_0 fexmoeu2_1 weu fexmoeu2_0 fexmoeu2_1 wex fexmoeu2_0 fexmoeu2_1 wmo fexmoeu2_0 fexmoeu2_1 eu5 baibr $.
@@ -499,6 +648,8 @@ $}
 $( Absorption of existence condition by "at most one."  (Contributed by NM,
      4-Nov-2002.) $)
 ${
+	$v ph $.
+	$v x $.
 	fmoabs_0 $f wff ph $.
 	fmoabs_1 $f set x $.
 	moabs $p |- ( E* x ph <-> ( E. x ph -> E* x ph ) ) $= fmoabs_0 fmoabs_1 wex fmoabs_0 fmoabs_1 wex fmoabs_0 fmoabs_1 weu wi wi fmoabs_0 fmoabs_1 wex fmoabs_0 fmoabs_1 weu wi fmoabs_0 fmoabs_1 wex fmoabs_0 fmoabs_1 wmo wi fmoabs_0 fmoabs_1 wmo fmoabs_0 fmoabs_1 wex fmoabs_0 fmoabs_1 weu pm5.4 fmoabs_0 fmoabs_1 wmo fmoabs_0 fmoabs_1 wex fmoabs_0 fmoabs_1 weu wi fmoabs_0 fmoabs_1 wex fmoabs_0 fmoabs_1 df-mo imbi2i fmoabs_0 fmoabs_1 df-mo 3bitr4ri $.
@@ -506,6 +657,8 @@ $}
 $( Something exists or at most one exists.  (Contributed by NM,
      8-Mar-1995.) $)
 ${
+	$v ph $.
+	$v x $.
 	fexmo_0 $f wff ph $.
 	fexmo_1 $f set x $.
 	exmo $p |- ( E. x ph \/ E* x ph ) $= fexmo_0 fexmo_1 wex fexmo_0 fexmo_1 wmo fexmo_0 fexmo_1 wex wn fexmo_0 fexmo_1 wex fexmo_0 fexmo_1 weu wi fexmo_0 fexmo_1 wmo fexmo_0 fexmo_1 wex fexmo_0 fexmo_1 weu pm2.21 fexmo_0 fexmo_1 df-mo sylibr orri $.
@@ -513,6 +666,10 @@ $}
 $( "At most one" is preserved through implication (notice wff reversal).
        (Contributed by NM, 22-Apr-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	$d y ps $.
@@ -525,6 +682,9 @@ $}
 $( "At most one" is preserved through implication (notice wff reversal).
        (Contributed by NM, 15-Feb-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fmoimi_0 $f wff ph $.
 	fmoimi_1 $f wff ps $.
 	fmoimi_2 $f set x $.
@@ -534,6 +694,10 @@ $}
 $( Move antecedent outside of "at most one."  (Contributed by NM,
        28-Jul-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d x y ph $.
 	$d y ps $.
@@ -546,6 +710,9 @@ $}
 $( Uniqueness implies "at most one" through implication.  (Contributed by NM,
      22-Apr-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	feuimmo_0 $f wff ph $.
 	feuimmo_1 $f wff ps $.
 	feuimmo_2 $f set x $.
@@ -555,6 +722,9 @@ $( Add existential uniqueness quantifiers to an implication.  Note the
      reversed implication in the antecedent.  (Contributed by NM,
      19-Oct-2005.)  (Proof shortened by Andrew Salmon, 14-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	feuim_0 $f wff ph $.
 	feuim_1 $f wff ps $.
 	feuim_2 $f set x $.
@@ -563,6 +733,9 @@ $}
 $( "At most one" is still the case when a conjunct is added.  (Contributed by
      NM, 22-Apr-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fmoan_0 $f wff ph $.
 	fmoan_1 $f wff ps $.
 	fmoan_2 $f set x $.
@@ -571,6 +744,9 @@ $}
 $( "At most one" is still true when a conjunct is added.  (Contributed by
        NM, 9-Mar-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fmoani_0 $f wff ph $.
 	fmoani_1 $f wff ps $.
 	fmoani_2 $f set x $.
@@ -580,6 +756,9 @@ $}
 $( "At most one" is still the case when a disjunct is removed.  (Contributed
      by NM, 5-Apr-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fmoor_0 $f wff ph $.
 	fmoor_1 $f wff ps $.
 	fmoor_2 $f set x $.
@@ -588,6 +767,9 @@ $}
 $( "At most one" imports disjunction to conjunction.  (Contributed by NM,
      5-Apr-2004.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fmooran1_0 $f wff ph $.
 	fmooran1_1 $f wff ps $.
 	fmooran1_2 $f set x $.
@@ -596,6 +778,9 @@ $}
 $( "At most one" exports disjunction to conjunction.  (Contributed by NM,
      5-Apr-2004.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fmooran2_0 $f wff ph $.
 	fmooran2_1 $f wff ps $.
 	fmooran2_2 $f set x $.
@@ -604,6 +789,10 @@ $}
 $( Introduction of a conjunct into "at most one" quantifier.  (Contributed
        by NM, 3-Dec-2001.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	$d y ps $.
@@ -617,6 +806,9 @@ $}
 $( Introduction of a conjunct into uniqueness quantifier.  (Contributed by
        NM, 19-Feb-2005.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	feuan_0 $f wff ph $.
 	feuan_1 $f wff ps $.
 	feuan_2 $f set x $.
@@ -626,6 +818,9 @@ $}
 $( Introduction of a conjunct into "at most one" quantifier.  (Contributed
        by NM, 23-Mar-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	$d x ph $.
 	fmoanimv_0 $f wff ph $.
 	fmoanimv_1 $f wff ps $.
@@ -635,12 +830,16 @@ $}
 $( Nested "at most one" and uniqueness quantifiers.  (Contributed by NM,
      25-Jan-2006.) $)
 ${
+	$v ph $.
+	$v x $.
 	fmoaneu_0 $f wff ph $.
 	fmoaneu_1 $f set x $.
 	moaneu $p |- E* x ( ph /\ E! x ph ) $= fmoaneu_0 fmoaneu_0 fmoaneu_1 weu wa fmoaneu_1 wmo fmoaneu_0 fmoaneu_1 weu fmoaneu_0 wa fmoaneu_1 wmo fmoaneu_0 fmoaneu_1 weu fmoaneu_0 wa fmoaneu_1 wmo fmoaneu_0 fmoaneu_1 weu fmoaneu_0 fmoaneu_1 wmo wi fmoaneu_0 fmoaneu_1 eumo fmoaneu_0 fmoaneu_1 weu fmoaneu_0 fmoaneu_1 fmoaneu_0 fmoaneu_1 nfeu1 moanim mpbir fmoaneu_0 fmoaneu_0 fmoaneu_1 weu wa fmoaneu_0 fmoaneu_1 weu fmoaneu_0 wa fmoaneu_1 fmoaneu_0 fmoaneu_0 fmoaneu_1 weu ancom mobii mpbir $.
 $}
 $( Nested "at most one" quantifiers.  (Contributed by NM, 25-Jan-2006.) $)
 ${
+	$v ph $.
+	$v x $.
 	fmoanmo_0 $f wff ph $.
 	fmoanmo_1 $f set x $.
 	moanmo $p |- E* x ( ph /\ E* x ph ) $= fmoanmo_0 fmoanmo_0 fmoanmo_1 wmo wa fmoanmo_1 wmo fmoanmo_0 fmoanmo_1 wmo fmoanmo_0 wa fmoanmo_1 wmo fmoanmo_0 fmoanmo_1 wmo fmoanmo_0 wa fmoanmo_1 wmo fmoanmo_0 fmoanmo_1 wmo fmoanmo_0 fmoanmo_1 wmo wi fmoanmo_0 fmoanmo_1 wmo id fmoanmo_0 fmoanmo_1 wmo fmoanmo_0 fmoanmo_1 fmoanmo_0 fmoanmo_1 nfmo1 moanim mpbir fmoanmo_0 fmoanmo_0 fmoanmo_1 wmo wa fmoanmo_0 fmoanmo_1 wmo fmoanmo_0 wa fmoanmo_1 fmoanmo_0 fmoanmo_0 fmoanmo_1 wmo ancom mobii mpbir $.
@@ -648,6 +847,9 @@ $}
 $( Introduction of a conjunct into uniqueness quantifier.  (Contributed by
        NM, 23-Mar-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	$d x ph $.
 	feuanv_0 $f wff ph $.
 	feuanv_1 $f wff ps $.
@@ -657,6 +859,10 @@ $}
 $( "At most one" picks a variable value, eliminating an existential
        quantifier.  (Contributed by NM, 27-Jan-1997.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	$d y ps $.
@@ -674,6 +880,9 @@ $( Existential uniqueness "picks" a variable value for which another wff is
      hypothesis.  Compare Theorem *14.26 in [WhiteheadRussell] p. 192.
      (Contributed by NM, 10-Jul-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	feupick_0 $f wff ph $.
 	feupick_1 $f wff ps $.
 	feupick_2 $f set x $.
@@ -682,6 +891,9 @@ $}
 $( Version of ~ eupick with closed formulas.  (Contributed by NM,
      6-Sep-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	feupicka_0 $f wff ph $.
 	feupicka_1 $f wff ps $.
 	feupicka_2 $f set x $.
@@ -690,6 +902,9 @@ $}
 $( Existential uniqueness "pick" showing wff equivalence.  (Contributed by
      NM, 25-Nov-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	feupickb_0 $f wff ph $.
 	feupickb_1 $f wff ps $.
 	feupickb_2 $f set x $.
@@ -698,6 +913,9 @@ $}
 $( Theorem *14.26 in [WhiteheadRussell] p. 192.  (Contributed by Andrew
      Salmon, 11-Jul-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	feupickbi_0 $f wff ph $.
 	feupickbi_1 $f wff ps $.
 	feupickbi_2 $f set x $.
@@ -708,6 +926,10 @@ $( "At most one" can show the existence of a common value.  In this case we
      is one way to achieve the converse of ~ 19.40 .  (Contributed by NM,
      5-Apr-2004.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fmopick2_0 $f wff ph $.
 	fmopick2_1 $f wff ps $.
 	fmopick2_2 $f wff ch $.
@@ -718,6 +940,9 @@ $( Introduce or eliminate a disjunct in a uniqueness quantifier.
      (Contributed by NM, 21-Oct-2005.)  (Proof shortened by Andrew Salmon,
      9-Jul-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	feuor2_0 $f wff ph $.
 	feuor2_1 $f wff ps $.
 	feuor2_2 $f set x $.
@@ -726,6 +951,10 @@ $}
 $( "At most one" double quantification.  (Contributed by NM,
        3-Dec-2001.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fmoexex_0 $f wff ph $.
 	fmoexex_1 $f wff ps $.
 	fmoexex_2 $f set x $.
@@ -736,6 +965,10 @@ $}
 $( "At most one" double quantification.  (Contributed by NM,
        26-Jan-1997.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d y ph $.
 	fmoexexv_0 $f wff ph $.
 	fmoexexv_1 $f wff ps $.
@@ -746,6 +979,9 @@ $}
 $( Double quantification with "at most one."  (Contributed by NM,
      3-Dec-2001.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	f2moex_0 $f wff ph $.
 	f2moex_1 $f set x $.
 	f2moex_2 $f set y $.
@@ -754,6 +990,9 @@ $}
 $( Double quantification with existential uniqueness.  (Contributed by NM,
      3-Dec-2001.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	f2euex_0 $f wff ph $.
 	f2euex_1 $f set x $.
 	f2euex_2 $f set y $.
@@ -762,6 +1001,9 @@ $}
 $( Double quantification with existential uniqueness and "at most one."
      (Contributed by NM, 3-Dec-2001.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	f2eumo_0 $f wff ph $.
 	f2eumo_1 $f set x $.
 	f2eumo_2 $f set y $.
@@ -769,6 +1011,9 @@ ${
 $}
 $( Double existential uniqueness.  (Contributed by NM, 3-Dec-2001.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	f2eu2ex_0 $f wff ph $.
 	f2eu2ex_1 $f set x $.
 	f2eu2ex_2 $f set y $.
@@ -777,6 +1022,9 @@ $}
 $( A condition allowing swap of "at most one" and existential quantifiers.
      (Contributed by NM, 10-Apr-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	f2moswap_0 $f wff ph $.
 	f2moswap_1 $f set x $.
 	f2moswap_2 $f set y $.
@@ -785,6 +1033,9 @@ $}
 $( A condition allowing swap of uniqueness and existential quantifiers.
      (Contributed by NM, 10-Apr-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	f2euswap_0 $f wff ph $.
 	f2euswap_1 $f set x $.
 	f2euswap_2 $f set y $.
@@ -794,6 +1045,9 @@ $( Double existential uniqueness implies double uniqueness quantification.
      (Contributed by NM, 3-Dec-2001.)  (Proof shortened by Mario Carneiro,
      22-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	f2exeu_0 $f wff ph $.
 	f2exeu_1 $f set x $.
 	f2exeu_2 $f set y $.
@@ -802,6 +1056,13 @@ $}
 $( Two equivalent expressions for double "at most one."  (Contributed by
        NM, 2-Feb-2005.)  (Revised by Mario Carneiro, 17-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
 	$d x y z w v u $.
 	$d z w v u ph $.
 	i2mo_0 $f set v $.
@@ -816,6 +1077,12 @@ $}
 $( Double "exists at most one", using implicit substitution.  (Contributed
        by NM, 10-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d z w ph $.
 	$d x y ps $.
 	$d x y z w $.
@@ -832,6 +1099,9 @@ $( Double existential uniqueness.  This theorem shows a condition under which
      a "naive" definition matches the correct one.  (Contributed by NM,
      3-Dec-2001.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	f2eu1_0 $f wff ph $.
 	f2eu1_1 $f set x $.
 	f2eu1_2 $f set y $.
@@ -839,6 +1109,9 @@ ${
 $}
 $( Double existential uniqueness.  (Contributed by NM, 3-Dec-2001.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	f2eu2_0 $f wff ph $.
 	f2eu2_1 $f set x $.
 	f2eu2_2 $f set y $.
@@ -846,6 +1119,9 @@ ${
 $}
 $( Double existential uniqueness.  (Contributed by NM, 3-Dec-2001.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	f2eu3_0 $f wff ph $.
 	f2eu3_1 $f set x $.
 	f2eu3_2 $f set y $.
@@ -858,6 +1134,11 @@ $( This theorem provides us with a definition of double existential
        definition holds and ~ 2exeu for a one-way implication.  See ~ 2eu5 and
        ~ 2eu8 for alternate definitions.  (Contributed by NM, 3-Dec-2001.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z w $.
 	$d z w ph $.
 	f2eu4_0 $f wff ph $.
@@ -877,6 +1158,11 @@ $( An alternate definition of double existential uniqueness (see ~ 2eu4 ).
        correct definition apparently has never been published.  ( ` E* ` means
        "exists at most one.") (Contributed by NM, 26-Oct-2003.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z w $.
 	$d z w ph $.
 	f2eu5_0 $f wff ph $.
@@ -890,6 +1176,13 @@ $( Two equivalent expressions for double existential uniqueness.
        (Contributed by NM, 2-Feb-2005.)  (Revised by Mario Carneiro,
        17-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
 	$d x y z w v u $.
 	$d z w v u ph $.
 	i2eu6_0 $f set v $.
@@ -904,6 +1197,9 @@ $}
 $( Two equivalent expressions for double existential uniqueness.
      (Contributed by NM, 19-Feb-2005.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	f2eu7_0 $f wff ph $.
 	f2eu7_1 $f set x $.
 	f2eu7_2 $f set y $.
@@ -914,6 +1210,9 @@ $( Two equivalent expressions for double existential uniqueness.  Curiously,
      can also commute ` E! x E! y ` using ~ 2eu7 .  (Contributed by NM,
      20-Feb-2005.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	f2eu8_0 $f wff ph $.
 	f2eu8_1 $f set x $.
 	f2eu8_2 $f set y $.
@@ -923,6 +1222,9 @@ $( Equality has existential uniqueness.  Special case of ~ eueq1 proved
        using only predicate calculus.  (Contributed by Stefan Allan,
        4-Dec-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	ieuequ1_0 $f set z $.
 	feuequ1_0 $f set x $.
@@ -933,6 +1235,8 @@ $( Two ways to express "only one thing exists."  The left-hand side
        requires only one variable to express this.  Both sides are false in set
        theory; see theorem ~ dtru .  (Contributed by NM, 5-Apr-2004.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	fexists1_0 $f set x $.
 	fexists1_1 $f set y $.
@@ -941,6 +1245,9 @@ $}
 $( A condition implying that at least two things exist.  (Contributed by
        NM, 10-Apr-2004.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	iexists2_0 $f set y $.
 	fexists2_0 $f wff ph $.

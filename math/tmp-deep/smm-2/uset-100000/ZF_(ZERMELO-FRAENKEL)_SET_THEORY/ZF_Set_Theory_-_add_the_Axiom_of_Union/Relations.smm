@@ -198,7 +198,7 @@ ${
 $}
 $( Equality theorem for cross product.  (Contributed by NM, 4-Jul-1994.) $)
 ${
-	$v x y A B C $.
+	$v A B C x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -212,7 +212,7 @@ ${
 $}
 $( Equality theorem for cross product.  (Contributed by NM, 5-Jul-1994.) $)
 ${
-	$v x y A B C $.
+	$v A B C x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -227,7 +227,7 @@ $}
 $( Membership in a cross product.  Uses fewer axioms than ~ elxp .
        (Contributed by NM, 4-Jul-1994.) $)
 ${
-	$v x y z A B C $.
+	$v x y A B C z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -354,7 +354,7 @@ $}
 $( Bound-variable hypothesis builder for cross product.  (Contributed by
        NM, 15-Sep-2003.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
-	$v x y z A B $.
+	$v x A B y z $.
 	$d y z A $.
 	$d y z B $.
 	$d x y z $.
@@ -371,7 +371,7 @@ $}
 $( Distribute proper substitution through the cross product of two
        classes.  (Contributed by Alan Sare, 10-Nov-2012.) $)
 ${
-	$v x y z w A B C D $.
+	$v x A B C D y z w $.
 	$d A w y z $.
 	$d B w y z $.
 	$d C w y z $.
@@ -391,7 +391,7 @@ $}
 $( The empty set is not a member of a cross product.  (Contributed by NM,
        2-May-1996.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -405,7 +405,7 @@ $}
 $( A member of a cross product (ordered pair) doesn't contain the empty
        set.  (Contributed by NM, 15-Dec-2008.) $)
 ${
-	$v x y A B C $.
+	$v A B C x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -421,7 +421,7 @@ $( Ordered pair membership in a cross product.  (Contributed by NM,
        15-Nov-1994.)  (Proof shortened by Andrew Salmon, 12-Aug-2011.)
        (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
-	$v x y A B C D $.
+	$v A B C D x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -586,7 +586,7 @@ $( Representation of a constant function using the mapping operation.
        (Note that ` x ` cannot appear free in ` B ` .)  (Contributed by NM,
        12-Oct-1999.)  (Revised by Mario Carneiro, 16-Nov-2013.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f set x $.
@@ -645,7 +645,7 @@ $( Justification theorem for an ordered pair definition that works for any
        reader will not object to our use of a pair of classes."  (Contributed
        by NM, 28-Sep-2003.) $)
 ${
-	$v x A B C D $.
+	$v A B C D x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -712,7 +712,7 @@ $}
 $( Membership in a union of cross products.  (Contributed by Mario
        Carneiro, 29-Dec-2014.)  (Revised by Mario Carneiro, 1-Jan-2017.) $)
 ${
-	$v x y z A B C $.
+	$v x A B C y z $.
 	$d y z A $.
 	$d y z B $.
 	$d y z C $.
@@ -729,7 +729,7 @@ $}
 $( Distributive law for cross product over union.  Theorem 103 of [Suppes]
        p. 52.  (Contributed by NM, 12-Aug-2004.) $)
 ${
-	$v x y A B C $.
+	$v A B C x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -744,7 +744,7 @@ $}
 $( Distributive law for cross product over union.  Similar to Theorem 103
        of [Suppes] p. 52.  (Contributed by NM, 30-Sep-2002.) $)
 ${
-	$v x y A B C $.
+	$v A B C x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -759,7 +759,7 @@ $}
 $( Distributive law for cross product over indexed union.  (Contributed by
        Mario Carneiro, 27-Apr-2014.) $)
 ${
-	$v x y z w A B C $.
+	$v x A B C y z w $.
 	$d w y z A $.
 	$d w y z B $.
 	$d w x y z C $.
@@ -776,7 +776,7 @@ $}
 $( Distributive law for cross product over indexed union.  (Contributed by
        Mario Carneiro, 27-Apr-2014.) $)
 ${
-	$v x y z w A B C $.
+	$v x A B C y z w $.
 	$d w y z A $.
 	$d w y z B $.
 	$d w x y z C $.
@@ -840,7 +840,7 @@ $}
 $( Membership in universal class of ordered triples.  (Contributed by NM,
        17-Dec-2008.) $)
 ${
-	$v x y z w A $.
+	$v x y z A w $.
 	$d w x y z A $.
 	f0 $f set x $.
 	f1 $f set y $.
@@ -853,7 +853,7 @@ $}
 $( An ordered pair contains its union.  (Contributed by NM,
        16-Sep-2006.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -888,7 +888,7 @@ $}
 $( Intersection of partial order with cross product of its field.
        (Contributed by Mario Carneiro, 10-Jul-2014.) $)
 ${
-	$v x y z A R $.
+	$v A R x y z $.
 	$d x y z A $.
 	$d x y z R $.
 	f0 $f class A $.
@@ -902,7 +902,7 @@ $}
 $( Intersection of total order with cross product of its field.
        (Contributed by Mario Carneiro, 10-Jul-2014.) $)
 ${
-	$v x y A R $.
+	$v A R x y $.
 	$d x y A $.
 	$d x y R $.
 	f0 $f class A $.
@@ -915,7 +915,7 @@ $}
 $( Intersection of well-founded relation with cross product of its field.
        (Contributed by Mario Carneiro, 10-Jul-2014.) $)
 ${
-	$v x y z A R $.
+	$v A R x y z $.
 	$d x y z A $.
 	$d x y z R $.
 	f0 $f class A $.
@@ -929,7 +929,7 @@ $}
 $( Intersection of set-like relation with cross product of its field.
        (Contributed by Mario Carneiro, 22-Jun-2015.) $)
 ${
-	$v x y A R $.
+	$v A R x y $.
 	$d x y A $.
 	$d x y R $.
 	f0 $f class A $.
@@ -952,7 +952,7 @@ $}
 $( Partial ordering of a singleton.  (Contributed by NM, 27-Apr-2009.)
        (Revised by Mario Carneiro, 23-Apr-2015.) $)
 ${
-	$v x y z A R $.
+	$v A R x y z $.
 	$d x y z A $.
 	$d x y z R $.
 	f0 $f class A $.
@@ -966,7 +966,7 @@ $}
 $( Strict ordering on a singleton.  (Contributed by Mario Carneiro,
        28-Dec-2014.) $)
 ${
-	$v x y A R $.
+	$v A R x y $.
 	$d x y A $.
 	$d x y R $.
 	f0 $f class A $.
@@ -979,7 +979,7 @@ $}
 $( Founded relation on a singleton.  (Contributed by Mario Carneiro,
        28-Dec-2014.)  (Revised by Mario Carneiro, 23-Apr-2015.) $)
 ${
-	$v x y z A R $.
+	$v A R x y z $.
 	$d x y z A $.
 	$d x y z R $.
 	f0 $f class A $.
@@ -1092,7 +1092,7 @@ $}
 $( Implicit substitution of classes for ordered pairs.  (Contributed by NM,
        12-Mar-1995.) $)
 ${
-	$v ph ps ch th x y z w A B v u C D F R $.
+	$v ph ps ch th x y z w v u A B C D R F $.
 	$d x y z w v u A $.
 	$d z w v u B $.
 	$d v u C $.
@@ -1129,7 +1129,7 @@ $}
 $( Ordered pair membership in a relation.  Special case.  (Contributed by
        NM, 5-Aug-1995.) $)
 ${
-	$v ph ps x y z w A B v u C D R S $.
+	$v ph ps x y z w v u A B C D R S $.
 	$d x y z w v u A $.
 	$d x y z w v u B $.
 	$d x y z w v u C $.
@@ -1159,7 +1159,7 @@ $}
 $( The cross product with the empty set is empty.  Part of Theorem 3.13(ii)
        of [Monk1] p. 37.  (Contributed by NM, 4-Jul-1994.) $)
 ${
-	$v x y z A $.
+	$v A x y z $.
 	$d x y z A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -1238,7 +1238,7 @@ $( A subclass relationship depends only on a relation's ordered pairs.
        Theorem 3.2(i) of [Monk1] p. 33.  (Contributed by NM, 2-Aug-1994.)
        (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
-	$v x y z A B $.
+	$v x y A B z $.
 	$d x y z A $.
 	$d x y z B $.
 	f0 $f set x $.
@@ -1419,7 +1419,7 @@ $( A subclass relationship determined by ordered triples.  Use ~ relrelss
        (Contributed by NM, 17-Dec-2008.)  (Proof shortened by Andrew Salmon,
        27-Aug-2011.) $)
 ${
-	$v x y z w A B $.
+	$v x y z A B w $.
 	$d w x y z A $.
 	$d w x y z B $.
 	f0 $f set x $.
@@ -1483,7 +1483,7 @@ $( Subset theorem for cross product.  Generalization of Theorem 101 of
        [Suppes] p. 52.  (Contributed by NM, 26-Aug-1995.)  (Proof shortened by
        Andrew Salmon, 27-Aug-2011.) $)
 ${
-	$v x y A B C D $.
+	$v A B C D x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -1538,7 +1538,7 @@ $}
 $( A cross product is included in the power of the power of the union of
        its arguments.  (Contributed by NM, 13-Sep-2006.) $)
 ${
-	$v x y z A B $.
+	$v A B x y z $.
 	$d A x y z $.
 	$d B x y z $.
 	f0 $f class A $.
@@ -1553,7 +1553,7 @@ $( A cross product is included in the power of the power of the union of
        its arguments.  (Contributed by NM, 13-Sep-2006.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -1634,7 +1634,7 @@ $}
 $( An indexed union is a relation iff each member of its indexed family is
        a relation.  (Contributed by NM, 19-Dec-2008.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -1684,7 +1684,7 @@ $}
 $( A class of ordered pairs is a relation.  (Contributed by Mario Carneiro,
        21-Dec-2013.) $)
 ${
-	$v ph x y z A $.
+	$v ph x y A z $.
 	$d ph z $.
 	$d x z $.
 	$d y z $.
@@ -1738,7 +1738,7 @@ $}
 $( A relation expressed as an ordered pair abstraction.  (Contributed by
        NM, 11-Dec-2006.) $)
 ${
-	$v x y z w A $.
+	$v x y A z w $.
 	$d w x y z A $.
 	$d x y $.
 	$d x y $.
@@ -1795,7 +1795,7 @@ $( The intersection of two cross products.  Exercise 9 of [TakeutiZaring]
        p. 25.  (Contributed by NM, 3-Aug-1994.)  (Proof shortened by Andrew
        Salmon, 27-Aug-2011.) $)
 ${
-	$v x y A B C D $.
+	$v A B C D x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -1832,7 +1832,7 @@ $}
 $( Distributive law for cross product over indexed intersection.
        (Contributed by Mario Carneiro, 21-Mar-2015.) $)
 ${
-	$v x y z A B C $.
+	$v x A B C y z $.
 	$d x y z A $.
 	$d x y z C $.
 	$d y z B $.
@@ -1991,7 +1991,7 @@ $}
 $( Version of ~ ralxp with bound-variable hypotheses.  (Contributed by NM,
        18-Aug-2006.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
-	$v ph ps x y z w A B v u $.
+	$v ph ps x y z A B w v u $.
 	$d u v w x y A $.
 	$d u v w x y z B $.
 	$d u v w ph $.
@@ -2037,7 +2037,7 @@ $( Indexed union on a cross product is equals a double indexed union.  The
        hypothesis specifies an implicit substitution.  (Contributed by NM,
        19-Dec-2008.) $)
 ${
-	$v x y z w A B C D $.
+	$v x y z A B C D w $.
 	$d w x y A $.
 	$d w x y z B $.
 	$d w C $.
@@ -2076,7 +2076,7 @@ $}
 $( A necessary and sufficient condition for a Kuratowski ordered pair to be
        a relation.  (Contributed by NM, 3-Jun-2008.) $)
 ${
-	$v x y z w A B v $.
+	$v x y A B z w v $.
 	$d v w x y z A $.
 	$d v w x y z B $.
 	e0 $e |- A e. _V $.
@@ -2095,7 +2095,7 @@ $( For sets, the identity relation is the same as equality.  (Contributed
        by NM, 30-Apr-2004.)  (Proof shortened by Andrew Salmon,
        27-Aug-2011.) $)
 ${
-	$v x y A B V $.
+	$v A B V x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -2136,7 +2136,7 @@ ${
 $}
 $( Subclass theorem for composition.  (Contributed by FL, 30-Dec-2010.) $)
 ${
-	$v x y z A B C $.
+	$v A B C x y z $.
 	$d A x y z $.
 	$d B x y z $.
 	$d C x y z $.
@@ -2151,7 +2151,7 @@ ${
 $}
 $( Subclass theorem for composition.  (Contributed by NM, 5-Apr-2013.) $)
 ${
-	$v x y z A B C $.
+	$v A B C x y z $.
 	$d A x y z $.
 	$d B x y z $.
 	$d C x y z $.
@@ -2260,7 +2260,7 @@ $}
 $( Bound-variable hypothesis builder for function value.  (Contributed by
        NM, 1-Sep-1999.) $)
 ${
-	$v x y z w A B $.
+	$v x A B y z w $.
 	$d w x y z $.
 	$d y z w A $.
 	$d y z w B $.
@@ -2278,7 +2278,7 @@ $}
 $( Ordered pair membership in a composition.  (Contributed by NM,
        24-Feb-2015.) $)
 ${
-	$v x y z A B C D V W $.
+	$v x A B C D V W y z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -2351,7 +2351,7 @@ ${
 $}
 $( Subset theorem for converse.  (Contributed by NM, 22-Mar-1998.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -2417,7 +2417,7 @@ $}
 $( Bound-variable hypothesis builder for converse.  (Contributed by NM,
        31-Jan-2004.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
-	$v x y z A $.
+	$v x A y z $.
 	$d y z A $.
 	$d x y z $.
 	e0 $e |- F/_ x A $.
@@ -2431,7 +2431,7 @@ $}
 $( Ordered-pair membership in converse.  (Contributed by NM, 13-May-1999.)
        (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
-	$v x y A B C D R $.
+	$v A B C D R x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -2485,7 +2485,7 @@ $( Distributive law of converse over class composition.  Theorem 26 of
        [Suppes] p. 64.  (Contributed by NM, 19-Mar-1998.)  (Proof shortened by
        Andrew Salmon, 27-Aug-2011.) $)
 ${
-	$v x y z A B $.
+	$v A B x y z $.
 	$d x y z A $.
 	$d x y z B $.
 	f0 $f class A $.
@@ -2499,7 +2499,7 @@ $}
 $( The converse of a class union is the (indexed) union of the converses of
        its members.  (Contributed by NM, 11-Aug-2004.) $)
 ${
-	$v x y z w A $.
+	$v x A y z w $.
 	$d x y z w A $.
 	f0 $f set x $.
 	f1 $f class A $.
@@ -2544,7 +2544,7 @@ ${
 $}
 $( Membership in a range.  (Contributed by Scott Fenton, 2-Feb-2011.) $)
 ${
-	$v x y A B V $.
+	$v x A B V y $.
 	$d A x y $.
 	$d B x y $.
 	f0 $f set x $.
@@ -2569,7 +2569,7 @@ ${
 $}
 $( Alternate definition of domain.  (Contributed by NM, 28-Dec-1996.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -2581,7 +2581,7 @@ $( Definition of domain, using bound-variable hypotheses instead of
        distinct variable conditions.  (Contributed by NM, 8-Mar-1995.)
        (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
-	$v x y w A v $.
+	$v x y A w v $.
 	$d x y w v $.
 	$d w v A $.
 	e0 $e |- F/_ x A $.
@@ -2597,7 +2597,7 @@ $}
 $( Domain membership.  Theorem 4 of [Suppes] p. 59.  (Contributed by Mario
        Carneiro, 9-Jul-2014.) $)
 ${
-	$v x y A B V $.
+	$v y A B V x $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f set y $.
@@ -2649,7 +2649,7 @@ ${
 $}
 $( Subset theorem for domain.  (Contributed by NM, 11-Aug-1994.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -2689,7 +2689,7 @@ $}
 $( Membership of first of an ordered pair in a domain.  (Contributed by NM,
        30-Jul-1995.) $)
 ${
-	$v y A B C $.
+	$v A B C y $.
 	$d y A $.
 	$d y B $.
 	$d y C $.
@@ -2717,7 +2717,7 @@ $}
 $( Membership of first of a binary relation in a domain.  (Contributed by
        NM, 21-Mar-2007.) $)
 ${
-	$v x A B C D R $.
+	$v A B C D R x $.
 	$d x A $.
 	$d x B $.
 	$d x R $.
@@ -2734,7 +2734,7 @@ $( The domain of a union is the union of domains.  Exercise 56(a) of
        [Enderton] p. 65.  (Contributed by NM, 12-Aug-1994.)  (Proof shortened
        by Andrew Salmon, 27-Aug-2011.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -2747,7 +2747,7 @@ $}
 $( The domain of an intersection belong to the intersection of domains.
        Theorem 6 of [Suppes] p. 60.  (Contributed by NM, 15-Sep-2004.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -2760,7 +2760,7 @@ $}
 $( The domain of an indexed union.  (Contributed by Mario Carneiro,
        26-Apr-2016.) $)
 ${
-	$v x y z A B $.
+	$v x A B y z $.
 	$d x y z $.
 	$d y z A $.
 	$d y z B $.
@@ -2775,7 +2775,7 @@ $}
 $( The domain of a union.  Part of Exercise 8 of [Enderton] p. 41.
        (Contributed by NM, 3-Feb-2004.) $)
 ${
-	$v x y z A $.
+	$v x A y z $.
 	$d x y z $.
 	$d y z A $.
 	$d y z $.
@@ -2852,7 +2852,7 @@ $}
 $( An empty domain implies an empty range.  (Contributed by NM,
        21-May-1998.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -2863,7 +2863,7 @@ $}
 $( A relation is empty iff its domain is empty.  (Contributed by NM,
        15-Sep-2004.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -2875,7 +2875,7 @@ $( The domain of a cross product.  Part of Theorem 3.13(x) of [Monk1]
        p. 37.  (Contributed by NM, 28-Jul-1995.)  (Proof shortened by Andrew
        Salmon, 27-Aug-2011.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -2930,7 +2930,7 @@ $}
 $( The first member of an ordered pair in a relation belongs to the domain
        of the relation.  (Contributed by NM, 28-Jul-2004.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -3079,7 +3079,7 @@ $( Definition of range, using bound-variable hypotheses instead of distinct
        variable conditions.  (Contributed by NM, 14-Aug-1995.)  (Revised by
        Mario Carneiro, 15-Oct-2016.) $)
 ${
-	$v x y w A v $.
+	$v x y A w v $.
 	$d x y w v $.
 	$d w v A $.
 	e0 $e |- F/_ x A $.
@@ -3094,7 +3094,7 @@ ${
 $}
 $( Membership in a range.  (Contributed by NM, 10-Jul-1994.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y A $.
 	$d x y B $.
 	e0 $e |- A e. _V $.
@@ -3120,7 +3120,7 @@ $}
 $( Bound-variable hypothesis builder for domain.  (Contributed by NM,
        30-Jan-2004.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
-	$v x y z A $.
+	$v x A y z $.
 	$d x y z $.
 	$d y z A $.
 	e0 $e |- F/_ x A $.
@@ -3153,7 +3153,7 @@ $}
 $( Distribute proper substitution through the range of a class.
        (Contributed by Alan Sare, 10-Nov-2012.) $)
 ${
-	$v x y w A B V $.
+	$v x A B V y w $.
 	$d A w y $.
 	$d B w y $.
 	$d V w y $.
@@ -3197,7 +3197,7 @@ $}
 $( The range of a function in maps-to notation.  (Contributed by Mario
        Carneiro, 20-Feb-2015.) $)
 ${
-	$v x y A B C F V $.
+	$v x A B C F V y $.
 	$d y A $.
 	$d y B $.
 	$d x y C $.
@@ -3234,7 +3234,7 @@ $}
 $( Elementhood in an image set.  (Contributed by Mario Carneiro,
        31-Aug-2015.) $)
 ${
-	$v x y z A B F V $.
+	$v x A B F V y z $.
 	$d y z A $.
 	$d y z B $.
 	$d x y z $.
@@ -3252,7 +3252,7 @@ $}
 $( Membership in the range of a function.  (Contributed by NM,
        27-Aug-2007.)  (Revised by Mario Carneiro, 31-Aug-2015.) $)
 ${
-	$v x y A B C F V $.
+	$v x A B C F V y $.
 	$d y A $.
 	$d y B $.
 	$d x y C $.
@@ -3285,7 +3285,7 @@ $}
 $( Alternate definition of indexed union when ` B ` is a set.  (Contributed
        by Mario Carneiro, 31-Aug-2015.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -3300,7 +3300,7 @@ $}
 $( Alternate definition of indexed intersection when ` B ` is a set.
        (Contributed by Mario Carneiro, 31-Aug-2015.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -3337,7 +3337,7 @@ $}
 $( Express a relative indexed intersection as an intersection.
        (Contributed by Stefan O'Rear, 22-Feb-2015.) $)
 ${
-	$v V S X k I $.
+	$v S k I V X $.
 	$d V k $.
 	$d X k $.
 	f0 $f class S $.
@@ -3365,7 +3365,7 @@ $}
 $( The domain and range of a class are included in its double union.
        (Contributed by NM, 13-May-2008.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -3422,7 +3422,7 @@ $}
 $( Domain of a composition.  Theorem 21 of [Suppes] p. 63.  (Contributed by
        NM, 19-Mar-1998.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
-	$v x y z A B $.
+	$v A B x y z $.
 	$d x y z A $.
 	$d x y z B $.
 	f0 $f class A $.
@@ -3444,7 +3444,7 @@ $}
 $( Domain of a composition.  (Contributed by NM, 28-May-1998.)  (Proof
        shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
-	$v x y z A B $.
+	$v A B x y z $.
 	$d x y z A $.
 	$d x y z B $.
 	f0 $f class A $.
@@ -3621,7 +3621,7 @@ $}
 $( Ordered pair membership in a restriction.  Exercise 13 of
        [TakeutiZaring] p. 25.  (Contributed by NM, 14-Oct-2005.) $)
 ${
-	$v y A B C D V $.
+	$v A B C D V y $.
 	$d y A $.
 	$d y B $.
 	$d y C $.
@@ -3663,7 +3663,7 @@ $}
 $( A restricted identity relation is equivalent to equality in its domain.
        (Contributed by NM, 30-Apr-2004.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -3782,7 +3782,7 @@ $}
 $( The domain of a restriction.  Exercise 14 of [TakeutiZaring] p. 25.
        (Contributed by NM, 1-Aug-1994.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -3930,7 +3930,7 @@ $}
 $( Memebership in restriction to a singleton.  (Contributed by Scott
          Fenton, 17-Mar-2011.) $)
 ${
-	$v x y A B C $.
+	$v y A B C x $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -3946,7 +3946,7 @@ $}
 $( Simplification law for restriction.  (Contributed by NM,
        16-Aug-1994.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -4001,7 +4001,7 @@ $( The existence of a restricted identity function, proved without using
        the Axiom of Replacement (unlike ~ resfunexg ).  (Contributed by NM,
        13-Jan-2007.) $)
 ${
-	$v x y A V $.
+	$v A V x y $.
 	$d x y A $.
 	f0 $f class A $.
 	f1 $f class V $.
@@ -4014,7 +4014,7 @@ $( A subclass of the identity function is the identity function restricted
        to its domain.  (Contributed by NM, 13-Dec-2003.)  (Proof shortened by
        Andrew Salmon, 27-Aug-2011.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -4039,7 +4039,7 @@ $}
 $( Restriction of the mapping operation.  (Contributed by Mario Carneiro,
        15-Jul-2013.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -4068,7 +4068,7 @@ $}
 $( Alternate definition of the restriction operation.  (Contributed by
        Mario Carneiro, 5-Nov-2013.) $)
 ${
-	$v x y z w A R $.
+	$v x y A R z w $.
 	$d w x y z A $.
 	$d w x y z R $.
 	f0 $f set x $.
@@ -4094,7 +4094,7 @@ $}
 $( The restricted identity expressed with the "maps to" notation.
        (Contributed by FL, 25-Apr-2012.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d A x y $.
 	f0 $f set x $.
 	f1 $f class A $.
@@ -4224,7 +4224,7 @@ $}
 $( Membership in an image.  Theorem 34 of [Suppes] p. 65.  (Contributed by
        NM, 20-Jan-2007.) $)
 ${
-	$v x y A B C V $.
+	$v x A B C V y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -4298,7 +4298,7 @@ $( Deduction version of bound-variable hypothesis builder ~ nfima .
        (Contributed by FL, 15-Dec-2006.)  (Revised by Mario Carneiro,
        15-Oct-2016.) $)
 ${
-	$v ph x z A B $.
+	$v ph x A B z $.
 	$d x z $.
 	$d B z $.
 	$d A z $.
@@ -4316,7 +4316,7 @@ $( Move class substitution in and out of the image of a function.
        (Contributed by FL, 15-Dec-2006.)  (Proof shortened by Mario Carneiro,
        4-Dec-2016.) $)
 ${
-	$v x y A B C F $.
+	$v x A B C F y $.
 	$d A y $.
 	$d B y $.
 	$d C y $.
@@ -4350,7 +4350,7 @@ $}
 $( The image of the domain of a class is the range of the class.
        (Contributed by NM, 14-Aug-1994.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	$d x y $.
 	f0 $f class A $.
@@ -4362,7 +4362,7 @@ $}
 $( The image of a class is a subset of its range.  Theorem 3.16(xi) of
        [Monk1] p. 39.  (Contributed by NM, 31-Mar-1995.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -4385,7 +4385,7 @@ $}
 $( Image under the identity relation.  Theorem 3.16(viii) of [Monk1]
        p. 38.  (Contributed by NM, 30-Apr-1998.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -4453,7 +4453,7 @@ ${
 $}
 $( The image of a singleton.  (Contributed by NM, 8-May-2005.) $)
 ${
-	$v x y A B R $.
+	$v y A B R x $.
 	$d x y A $.
 	$d x B $.
 	$d x y R $.
@@ -4479,7 +4479,7 @@ $}
 $( Elementhood in the image of a singleton.  (Contributed by Mario
        Carneiro, 3-Nov-2015.) $)
 ${
-	$v x A B R $.
+	$v A B R x $.
 	$d x A $.
 	$d x B $.
 	$d x R $.
@@ -4493,7 +4493,7 @@ $}
 $( Membership in an image of a singleton.  (Contributed by NM,
        15-Mar-2004.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -4509,7 +4509,7 @@ $}
 $( Membership in an image of a singleton.  (Contributed by Raph Levien,
        21-Oct-2006.) $)
 ${
-	$v y z A B C V W $.
+	$v A B C V W y z $.
 	$d A y z $.
 	$d B y z $.
 	$d C y z $.
@@ -4567,7 +4567,7 @@ $}
 $( Any set is equal to its preimage under the converse epsilon relation.
        (Contributed by Mario Carneiro, 9-Mar-2013.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d A x $.
 	e0 $e |- A e. _V $.
 	f0 $f class A $.
@@ -4593,7 +4593,7 @@ $( Alternate definition of well-founded relation.  Definition 6.21 of
        [TakeutiZaring] p. 30.  (Contributed by NM, 23-Apr-2004.)  (Revised by
        Mario Carneiro, 23-Jun-2015.) $)
 ${
-	$v x y z A R $.
+	$v x y A R z $.
 	$d x y z A $.
 	$d x y z R $.
 	f0 $f set x $.
@@ -4607,7 +4607,7 @@ $}
 $( Alternate definition of set-like relation.  (Contributed by Mario
        Carneiro, 23-Jun-2015.) $)
 ${
-	$v x y A R $.
+	$v x A R y $.
 	$d x y A $.
 	$d x y R $.
 	f0 $f set x $.
@@ -4620,7 +4620,7 @@ $}
 $( Any set relation is set-like.  (Contributed by Mario Carneiro,
        22-Jun-2015.) $)
 ${
-	$v x y A V R $.
+	$v A R V x y $.
 	$d x y A $.
 	$d x y R $.
 	$d x V $.
@@ -4663,7 +4663,7 @@ $}
 $( A converse is a relation.  Theorem 12 of [Suppes] p. 62.  (Contributed
        by NM, 29-Oct-1996.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -4721,7 +4721,7 @@ $}
 $( Two ways to state a relation is reflexive.  Adapted from Tarski.
        (Contributed by FL, 15-Jan-2012.)  (Revised by NM, 30-Mar-2016.) $)
 ${
-	$v x y z A R $.
+	$v x A R y z $.
 	$d x y z A $.
 	$d x y z $.
 	$d x y z R $.
@@ -4798,7 +4798,7 @@ $( Two ways of saying a relation is irreflexive.  Definition of
        irreflexivity in [Schechter] p. 51.  (Contributed by NM, 9-Sep-2004.)
        (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
-	$v x y R $.
+	$v x R y $.
 	$d x y $.
 	$d x y $.
 	$d x y R $.
@@ -4812,7 +4812,7 @@ $}
 $( Two ways of saying that two elements have an upper bound.  (Contributed
        by Mario Carneiro, 3-Nov-2015.) $)
 ${
-	$v z A B V R W $.
+	$v z A B R V W $.
 	$d z A $.
 	$d z B $.
 	$d z R $.
@@ -4863,7 +4863,7 @@ $}
 $( A square cross product ` ( A X. A ) ` is a transitive relation.
        (Contributed by FL, 31-Jul-2009.) $)
 ${
-	$v x y z A $.
+	$v A x y z $.
 	$d x y z A $.
 	$d x y z $.
 	$d x y z $.
@@ -4878,7 +4878,7 @@ $}
 $( The intersection of two transitive classes is transitive.  (Contributed
        by FL, 31-Jul-2009.) $)
 ${
-	$v x y z R S $.
+	$v R S x y z $.
 	$d x y z $.
 	$d x y z $.
 	$d x y z R $.
@@ -4894,7 +4894,7 @@ $}
 $( A partial order relation is irreflexive.  (Contributed by Mario
        Carneiro, 2-Nov-2015.) $)
 ${
-	$v x y A R $.
+	$v A R x y $.
 	$d x y A $.
 	$d x y $.
 	$d x y R $.
@@ -5035,7 +5035,7 @@ $}
 $( Express "less than or equals" for general strict orders.  (Contributed by
      Stefan O'Rear, 17-Jan-2015.) $)
 ${
-	$v A B V R $.
+	$v A B R V $.
 	f0 $f class A $.
 	f1 $f class B $.
 	f2 $f class R $.
@@ -5138,7 +5138,7 @@ $( The converse of a union is the union of converses.  Theorem 16 of
        [Suppes] p. 62.  (Contributed by NM, 25-Mar-1998.)  (Proof shortened by
        Andrew Salmon, 27-Aug-2011.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -5151,7 +5151,7 @@ $}
 $( Distributive law for converse over set difference.  (Contributed by
        Mario Carneiro, 26-Jun-2014.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -5192,7 +5192,7 @@ $}
 $( The range of an indexed union.  (Contributed by Mario Carneiro,
        29-May-2015.) $)
 ${
-	$v x y z A B $.
+	$v x A B y z $.
 	$d x y z $.
 	$d y z A $.
 	$d y z B $.
@@ -5238,7 +5238,7 @@ $( An upper bound for intersection with a domain.  Theorem 40 of [Suppes]
        p. 66, who calls it "somewhat surprising."  (Contributed by NM,
        11-Aug-2004.) $)
 ${
-	$v x y A R $.
+	$v A R x y $.
 	$d x y A $.
 	$d x y $.
 	$d x y R $.
@@ -5252,7 +5252,7 @@ $}
 $( An upper bound for intersection with an image.  Theorem 41 of [Suppes]
        p. 66.  (Contributed by NM, 11-Aug-2004.) $)
 ${
-	$v x y A B R $.
+	$v A B R x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -5268,7 +5268,7 @@ $( The converse of a cross product.  Exercise 11 of [Suppes] p. 67.
        (Contributed by NM, 14-Aug-1999.)  (Proof shortened by Andrew Salmon,
        27-Aug-2011.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -5290,7 +5290,7 @@ $( The cross product of nonempty classes is nonempty.  (Variation of a
        theorem contributed by Raph Levien, 30-Jun-2006.)  (Contributed by NM,
        30-Jun-2006.) $)
 ${
-	$v x y z A B $.
+	$v A B x y z $.
 	$d x y z A $.
 	$d x y z B $.
 	f0 $f class A $.
@@ -5466,7 +5466,7 @@ $}
 $( Subset of the range of a restriction.  (Contributed by NM,
        16-Jan-2006.) $)
 ${
-	$v x y A B C $.
+	$v A B C x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -5523,7 +5523,7 @@ $( The base set of a strict order is contained in the field of the
        relation, except possibly for one element (note that
        ` (/) Or { B } ` ).  (Contributed by Mario Carneiro, 27-Apr-2015.) $)
 ${
-	$v x A B R $.
+	$v A B R x $.
 	$d x A $.
 	$d x B $.
 	$d x R $.
@@ -5537,7 +5537,7 @@ $}
 $( The base set of a nonempty strict order is the same as the field of the
        relation.  (Contributed by Mario Carneiro, 15-May-2015.) $)
 ${
-	$v x y A R $.
+	$v A R x y $.
 	$d x y A $.
 	$d x y R $.
 	f0 $f class A $.
@@ -5550,7 +5550,7 @@ $}
 $( If the relation in a strict order is a set, then the base field is also
        a set.  (Contributed by Mario Carneiro, 27-Apr-2015.) $)
 ${
-	$v x A V R $.
+	$v A R V x $.
 	$d x A $.
 	$d x R $.
 	$d x V $.
@@ -5575,7 +5575,7 @@ $}
 $( Alternate definition of relation.  Exercise 2 of [TakeutiZaring] p. 25.
        (Contributed by NM, 29-Dec-1996.) $)
 ${
-	$v x y R $.
+	$v R x y $.
 	$d x y R $.
 	f0 $f class R $.
 	i0 $f set x $.
@@ -5697,7 +5697,7 @@ $( The domain of a singleton is nonzero iff the singleton argument is an
        ordered pair.  (Contributed by NM, 14-Dec-2008.)  (Proof shortened by
        Andrew Salmon, 27-Aug-2011.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -5745,7 +5745,7 @@ $}
 $( The domain of a singleton of an ordered pair is the singleton of the
        first member.  (Contributed by Mario Carneiro, 26-Apr-2015.) $)
 ${
-	$v x y A B V $.
+	$v A B V x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x V $.
@@ -5808,7 +5808,7 @@ $}
 $( The domain of an unordered triple of ordered pairs.  (Contributed by NM,
        14-Sep-2011.) $)
 ${
-	$v A B C D F E $.
+	$v A B C D E F $.
 	e0 $e |- B e. _V $.
 	e1 $e |- D e. _V $.
 	e2 $e |- F e. _V $.
@@ -5825,7 +5825,7 @@ $( Double converse of a singleton of an ordered pair.  (Unlike ~ cnvsn ,
        this does not need any sethood assumptions on ` A ` and ` B ` .)
        (Contributed by Mario Carneiro, 26-Apr-2015.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -5839,7 +5839,7 @@ $( The domain of the singleton of the singleton of a singleton.
        (Contributed by NM, 15-Sep-2004.)  (Revised by Mario Carneiro,
        26-Apr-2015.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -5920,7 +5920,7 @@ $}
 $( Converse of a singleton of an ordered pair.  (Contributed by NM,
        23-Jan-2015.) $)
 ${
-	$v x y A B V W $.
+	$v A B V W x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -5946,7 +5946,7 @@ $( Membership in a cross product.  This version requires no quantifiers or
        dummy variables.  See also ~ elxp5 , ~ elxp6 , and ~ elxp7 .
        (Contributed by NM, 17-Feb-2004.) $)
 ${
-	$v x y A B C $.
+	$v A B C x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -5963,7 +5963,7 @@ $( Membership in a cross product requiring no quantifiers or dummy
        double intersection does not create class existence problems (caused by
        ~ int0 ).  (Contributed by NM, 1-Aug-2004.) $)
 ${
-	$v x y A B C $.
+	$v A B C x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -5978,7 +5978,7 @@ $}
 $( An image under the converse of a restriction.  (Contributed by Jeff
        Hankins, 12-Jul-2009.) $)
 ${
-	$v A B t F s $.
+	$v A B F t s $.
 	$d s t A $.
 	$d s t B $.
 	$d s t F $.
@@ -6019,7 +6019,7 @@ $}
 $( The preimage of a function in maps-to notation.  (Contributed by Stefan
        O'Rear, 25-Jan-2015.) $)
 ${
-	$v x y A B C F $.
+	$v x A B C F y $.
 	$d x y C $.
 	$d y A $.
 	$d y B $.
@@ -6091,7 +6091,7 @@ $}
 $( A composition is a relation.  Exercise 24 of [TakeutiZaring] p. 25.
        (Contributed by NM, 26-Jan-1997.) $)
 ${
-	$v x y z A B $.
+	$v A B x y z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z $.
@@ -6106,7 +6106,7 @@ $}
 $( Alternate definition of a class composition, using only one bound
        variable.  (Contributed by NM, 19-Dec-2008.) $)
 ${
-	$v x y z A B $.
+	$v x A B y z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z $.
@@ -6122,7 +6122,7 @@ $( Generalization of ~ dfco2 , where ` C ` can have any value between
        ` dom A i^i ran B ` and ` _V ` .  (Contributed by NM, 21-Dec-2008.)
        (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
-	$v x y z w A B C $.
+	$v x A B C y z w $.
 	$d w x y z A $.
 	$d w x y z B $.
 	$d w x y z C $.
@@ -6139,7 +6139,7 @@ $}
 $( Class composition distributes over union.  (Contributed by NM,
        21-Dec-2008.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
-	$v x y z A B C $.
+	$v A B C x y z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -6155,7 +6155,7 @@ $}
 $( Class composition distributes over union.  (Contributed by NM,
        21-Dec-2008.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
-	$v x y z A B C $.
+	$v A B C x y z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -6171,7 +6171,7 @@ $}
 $( Restricted first member of a class composition.  (Contributed by NM,
        12-Oct-2004.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
-	$v x y z A B C $.
+	$v A B C x y z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -6187,7 +6187,7 @@ $}
 $( Associative law for the restriction of a composition.  (Contributed by
        NM, 12-Dec-2006.) $)
 ${
-	$v x y z A B C $.
+	$v A B C x y z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -6203,7 +6203,7 @@ $}
 $( Image of the composition of two classes.  (Contributed by Jason
        Orendorff, 12-Dec-2006.) $)
 ${
-	$v x y z A B C $.
+	$v A B C x y z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -6219,7 +6219,7 @@ $}
 $( The range of the composition of two classes.  (Contributed by NM,
        12-Dec-2006.) $)
 ${
-	$v x y z A B $.
+	$v A B x y z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z $.
@@ -6251,7 +6251,7 @@ ${
 $}
 $( Composition with an indexed union.  (Contributed by NM, 21-Dec-2008.) $)
 ${
-	$v x y z w A B C $.
+	$v x A B C y z w $.
 	$d w x y z A $.
 	$d w y z B $.
 	$d w y z C $.
@@ -6296,7 +6296,7 @@ $}
 $( Composition with the empty set.  Theorem 20 of [Suppes] p. 63.
        (Contributed by NM, 24-Apr-2004.) $)
 ${
-	$v x y z A $.
+	$v A x y z $.
 	$d x y z A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -6315,7 +6315,7 @@ $}
 $( Composition with the identity relation.  Part of Theorem 3.7(i) of
        [Monk1] p. 36.  (Contributed by NM, 22-Apr-2004.) $)
 ${
-	$v x y z A $.
+	$v A x y z $.
 	$d x y z A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -6346,7 +6346,7 @@ $( Associative law for class composition.  Theorem 27 of [Suppes] p. 64.
        any classes whatsoever, not just functions or even relations.
        (Contributed by NM, 27-Jan-1997.) $)
 ${
-	$v x y z w A B C $.
+	$v A B C x y z w $.
 	$d x y z w A $.
 	$d x y z w B $.
 	$d x y z w C $.
@@ -6372,7 +6372,7 @@ $( A relation is included in the cross product of its domain and range.
        Exercise 4.12(t) of [Mendelson] p. 235.  (Contributed by NM,
        3-Aug-1994.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -6408,7 +6408,7 @@ $}
 $( The membership relation for a relation is inherited by class union.
        (Contributed by NM, 17-Sep-2006.) $)
 ${
-	$v x y A R $.
+	$v A R x y $.
 	$d x y A $.
 	$d x y R $.
 	f0 $f class A $.
@@ -6486,7 +6486,7 @@ $}
 $( A cross product is empty iff its union is empty.  (Contributed by NM,
        20-Sep-2006.) $)
 ${
-	$v x y z A B $.
+	$v A B x y z $.
 	$d x y z A $.
 	$d x y z B $.
 	f0 $f class A $.
@@ -6533,7 +6533,7 @@ $}
 $( Restriction of a class to a singleton.  (Contributed by Mario Carneiro,
        28-Dec-2014.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -6560,7 +6560,7 @@ $}
 $( The converse of a partial order relation is a partial order relation.
        (Contributed by NM, 15-Jun-2005.) $)
 ${
-	$v x y z A R $.
+	$v A R x y z $.
 	$d x y z A $.
 	$d x y z R $.
 	f0 $f class A $.
@@ -6574,7 +6574,7 @@ $}
 $( The converse of a strict order relation is a strict order relation.
        (Contributed by NM, 15-Jun-2005.) $)
 ${
-	$v x y A R $.
+	$v A R x y $.
 	$d x y A $.
 	$d x y R $.
 	f0 $f class A $.

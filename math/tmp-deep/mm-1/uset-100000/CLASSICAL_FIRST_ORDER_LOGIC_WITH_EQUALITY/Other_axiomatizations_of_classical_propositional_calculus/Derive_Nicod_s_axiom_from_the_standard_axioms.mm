@@ -14,6 +14,8 @@ $( Define implication in terms of 'nand'.  Analogous to
      a definition ($a statement).  (Contributed by NM, 11-Dec-2008.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fnic-dfim_0 $f wff ph $.
 	fnic-dfim_1 $f wff ps $.
 	nic-dfim $p |- ( ( ( ph -/\ ( ps -/\ ps ) ) -/\ ( ph -> ps ) ) -/\ ( ( ( ph -/\ ( ps -/\ ps ) ) -/\ ( ph -/\ ( ps -/\ ps ) ) ) -/\ ( ( ph -> ps ) -/\ ( ph -> ps ) ) ) ) $= fnic-dfim_0 fnic-dfim_1 fnic-dfim_1 wnan wnan fnic-dfim_0 fnic-dfim_1 wi wb fnic-dfim_0 fnic-dfim_1 fnic-dfim_1 wnan wnan fnic-dfim_0 fnic-dfim_1 wi wnan fnic-dfim_0 fnic-dfim_1 fnic-dfim_1 wnan wnan fnic-dfim_0 fnic-dfim_1 fnic-dfim_1 wnan wnan wnan fnic-dfim_0 fnic-dfim_1 wi fnic-dfim_0 fnic-dfim_1 wi wnan wnan wnan fnic-dfim_0 fnic-dfim_1 wi fnic-dfim_0 fnic-dfim_1 fnic-dfim_1 wnan wnan fnic-dfim_0 fnic-dfim_1 nanim bicomi fnic-dfim_0 fnic-dfim_1 fnic-dfim_1 wnan wnan fnic-dfim_0 fnic-dfim_1 wi nanbi mpbi $.
@@ -24,6 +26,7 @@ $( Define negation in terms of 'nand'.  Analogous to
      statement).  (Contributed by NM, 11-Dec-2008.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
 	fnic-dfneg_0 $f wff ph $.
 	nic-dfneg $p |- ( ( ( ph -/\ ph ) -/\ -. ph ) -/\ ( ( ( ph -/\ ph ) -/\ ( ph -/\ ph ) ) -/\ ( -. ph -/\ -. ph ) ) ) $= fnic-dfneg_0 fnic-dfneg_0 wnan fnic-dfneg_0 wn wb fnic-dfneg_0 fnic-dfneg_0 wnan fnic-dfneg_0 wn wnan fnic-dfneg_0 fnic-dfneg_0 wnan fnic-dfneg_0 fnic-dfneg_0 wnan wnan fnic-dfneg_0 wn fnic-dfneg_0 wn wnan wnan wnan fnic-dfneg_0 wn fnic-dfneg_0 fnic-dfneg_0 wnan fnic-dfneg_0 nannot bicomi fnic-dfneg_0 fnic-dfneg_0 wnan fnic-dfneg_0 wn nanbi mpbi $.
 $}
@@ -37,6 +40,9 @@ $( Derive Nicod's rule of modus ponens using 'nand', from the standard
        19-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fnic-mp_0 $f wff ph $.
 	fnic-mp_1 $f wff ps $.
 	fnic-mp_2 $f wff ch $.
@@ -47,6 +53,9 @@ $}
 $( A direct proof of ~ nic-mp .  (Contributed by NM, 30-Dec-2008.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fnic-mpALT_0 $f wff ph $.
 	fnic-mpALT_1 $f wff ps $.
 	fnic-mpALT_2 $f wff ch $.
@@ -64,6 +73,11 @@ $( Nicod's axiom derived from the standard ones.  See _Intro. to Math.
      an axiom ($a statement).  (Contributed by Jeff Hoffman, 19-Nov-2007.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fnic-ax_0 $f wff ph $.
 	fnic-ax_1 $f wff ps $.
 	fnic-ax_2 $f wff ch $.
@@ -74,6 +88,11 @@ $}
 $( A direct proof of ~ nic-ax .  (Contributed by NM, 11-Dec-2008.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fnic-axALT_0 $f wff ph $.
 	fnic-axALT_1 $f wff ps $.
 	fnic-axALT_2 $f wff ch $.

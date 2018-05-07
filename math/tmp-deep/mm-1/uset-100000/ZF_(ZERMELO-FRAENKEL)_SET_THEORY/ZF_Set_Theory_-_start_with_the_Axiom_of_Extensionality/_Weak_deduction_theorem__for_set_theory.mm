@@ -78,6 +78,9 @@ $( Conditional operator (was "ded" for "deduction class"). $)
 $( Extend class notation to include the conditional operator.  See ~ df-if
      for a description.  (In older databases this was denoted "ded".) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fcif_0 $f wff ph $.
 	fcif_1 $f class A $.
 	fcif_2 $f class B $.
@@ -100,6 +103,10 @@ $( Define the conditional operator.  Read ` if ( ph , A , B ) ` as "if
        Explorer Home Page for a description of the weak deduction theorem.
        (Contributed by NM, 15-May-1999.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x ph $.
 	$d x A $.
 	$d x B $.
@@ -113,6 +120,10 @@ $( An alternate definition of the conditional operator ~ df-if with one
        fewer connectives (but probably less intuitive to understand).
        (Contributed by NM, 30-Jan-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x ph $.
 	$d x A $.
 	$d x B $.
@@ -125,6 +136,10 @@ $}
 $( An alternate definition of the conditional operator ~ df-if as a simple
        class abstraction.  (Contributed by Mario Carneiro, 8-Sep-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x ph $.
 	$d x A $.
 	$d x B $.
@@ -137,6 +152,11 @@ $}
 $( Equality theorem for conditional operator.  (Contributed by NM,
        1-Sep-2004.)  (Revised by Mario Carneiro, 8-Sep-2013.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x ph $.
 	$d x A $.
 	$d x B $.
@@ -151,6 +171,11 @@ $}
 $( Equality theorem for conditional operator.  (Contributed by NM,
        1-Sep-2004.)  (Revised by Mario Carneiro, 8-Sep-2013.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x ph $.
 	$d x A $.
 	$d x B $.
@@ -166,6 +191,10 @@ $( Value of the conditional operator when its first argument is true.
        (Contributed by NM, 15-May-1999.)  (Proof shortened by Andrew Salmon,
        26-Jun-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x ph $.
 	$d x A $.
 	$d x B $.
@@ -178,6 +207,10 @@ $}
 $( Value of the conditional operator when its first argument is false.
        (Contributed by NM, 14-Aug-1999.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x ph $.
 	$d x A $.
 	$d x B $.
@@ -193,6 +226,10 @@ $( When values are unequal, but an "if" condition checks if they are equal,
      directly in this case.  It happens, e.g., in ~ oevn0 .  (Contributed by
      David A. Wheeler, 15-May-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fifnefalse_0 $f class A $.
 	fifnefalse_1 $f class B $.
 	fifnefalse_2 $f class C $.
@@ -202,6 +239,12 @@ $}
 $( Distribute a function over an if-clause.  (Contributed by Mario
        Carneiro, 14-Aug-2013.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
 	fifsb_0 $f wff ph $.
 	fifsb_1 $f class A $.
 	fifsb_2 $f class B $.
@@ -217,6 +260,12 @@ $( Alternate definition of the conditional operator ~ df-if .  Note that
        (Contributed by NM, 25-Aug-2013.)  (Revised by Mario Carneiro,
        8-Sep-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d y A $.
 	$d y B $.
 	$d x y ph $.
@@ -233,6 +282,11 @@ $( Alternate definition of the conditional operator ~ df-if .  Note that
        ` ph ` is independent of ` x ` i.e. a constant true or false.
        (Contributed by NM, 25-Aug-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x ph $.
 	fdfif4_0 $f wff ph $.
 	fdfif4_1 $f set x $.
@@ -246,6 +300,11 @@ $( Alternate definition of the conditional operator ~ df-if .  Note that
        ` ph ` is independent of ` x ` i.e. a constant true or false (see also
        ~ abvor0 ).  (Contributed by G&eacute;rard Lang, 18-Aug-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x ph $.
 	fdfif5_0 $f wff ph $.
 	fdfif5_1 $f set x $.
@@ -258,6 +317,11 @@ $}
 $( Equality theorem for conditional operators.  (Contributed by NM,
      1-Sep-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fifeq12_0 $f wff ph $.
 	fifeq12_1 $f class A $.
 	fifeq12_2 $f class B $.
@@ -268,6 +332,11 @@ $}
 $( Equality deduction for conditional operator.  (Contributed by NM,
        16-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fifeq1d_0 $f wff ph $.
 	fifeq1d_1 $f wff ps $.
 	fifeq1d_2 $f class A $.
@@ -279,6 +348,11 @@ $}
 $( Equality deduction for conditional operator.  (Contributed by NM,
        16-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fifeq2d_0 $f wff ph $.
 	fifeq2d_1 $f wff ps $.
 	fifeq2d_2 $f class A $.
@@ -290,6 +364,12 @@ $}
 $( Equality deduction for conditional operator.  (Contributed by NM,
        24-Mar-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fifeq12d_0 $f wff ph $.
 	fifeq12d_1 $f wff ps $.
 	fifeq12d_2 $f class A $.
@@ -303,6 +383,10 @@ $}
 $( Equivalence theorem for conditional operators.  (Contributed by Raph
      Levien, 15-Jan-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fifbi_0 $f wff ph $.
 	fifbi_1 $f wff ps $.
 	fifbi_2 $f class A $.
@@ -312,6 +396,11 @@ $}
 $( Equivalence deduction for conditional operators.  (Contributed by NM,
        18-Apr-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v A $.
+	$v B $.
 	fifbid_0 $f wff ph $.
 	fifbid_1 $f wff ps $.
 	fifbid_2 $f wff ch $.
@@ -323,6 +412,11 @@ $}
 $( Equivalence/equality inference for conditional operators.  (Contributed
        by Paul Chapman, 22-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fifbieq2i_0 $f wff ph $.
 	fifbieq2i_1 $f wff ps $.
 	fifbieq2i_2 $f class A $.
@@ -335,6 +429,12 @@ $}
 $( Equivalence/equality deduction for conditional operators.  (Contributed
        by Paul Chapman, 22-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fifbieq2d_0 $f wff ph $.
 	fifbieq2d_1 $f wff ps $.
 	fifbieq2d_2 $f wff ch $.
@@ -348,6 +448,12 @@ $}
 $( Equivalence deduction for conditional operators.  (Contributed by NM,
        18-Mar-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fifbieq12i_0 $f wff ph $.
 	fifbieq12i_1 $f wff ps $.
 	fifbieq12i_2 $f class A $.
@@ -362,6 +468,13 @@ $}
 $( Equivalence deduction for conditional operators.  (Contributed by Jeff
        Madsen, 2-Sep-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fifbieq12d_0 $f wff ph $.
 	fifbieq12d_1 $f wff ps $.
 	fifbieq12d_2 $f wff ch $.
@@ -377,6 +490,12 @@ $}
 $( Deduction version of ~ nfif .  (Contributed by NM, 15-Feb-2013.)
        (Revised by Mario Carneiro, 13-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -397,6 +516,10 @@ $( Bound-variable hypothesis builder for a conditional operator.
        (Contributed by NM, 16-Feb-2005.)  (Proof shortened by Andrew Salmon,
        26-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	fnfif_0 $f wff ph $.
 	fnfif_1 $f set x $.
 	fnfif_2 $f class A $.
@@ -408,6 +531,11 @@ ${
 $}
 $( Conditional equality.  (Contributed by Jeff Madsen, 2-Sep-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fifeq1da_0 $f wff ph $.
 	fifeq1da_1 $f wff ps $.
 	fifeq1da_2 $f class A $.
@@ -418,6 +546,11 @@ ${
 $}
 $( Conditional equality.  (Contributed by Jeff Madsen, 2-Sep-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fifeq2da_0 $f wff ph $.
 	fifeq2da_1 $f wff ps $.
 	fifeq2da_2 $f class A $.
@@ -428,6 +561,11 @@ ${
 $}
 $( Conditional closure.  (Contributed by Jeff Madsen, 2-Sep-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fifclda_0 $f wff ph $.
 	fifclda_1 $f wff ps $.
 	fifclda_2 $f class A $.
@@ -441,6 +579,13 @@ $( Distribute proper substitution through the conditional operator.
        (Contributed by NM, 24-Feb-2013.)  (Revised by Mario Carneiro,
        14-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v y $.
 	$d y A $.
 	$d y B $.
 	$d y C $.
@@ -458,6 +603,12 @@ $}
 $( Elimination of a conditional operator contained in a wff ` ps ` .
        (Contributed by NM, 15-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v A $.
+	$v B $.
 	felimif_0 $f wff ph $.
 	felimif_1 $f wff ps $.
 	felimif_2 $f wff ch $.
@@ -471,6 +622,13 @@ $}
 $( A wff ` th ` containing a conditional operator is true when both of
          its cases are true.  (Contributed by NM, 15-Feb-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v et $.
+	$v A $.
+	$v B $.
 	fifbothda_0 $f wff ph $.
 	fifbothda_1 $f wff ps $.
 	fifbothda_2 $f wff ch $.
@@ -488,6 +646,12 @@ $( A wff ` th ` containing a conditional operator is true when both of its
        cases are true.  (Contributed by NM, 3-Sep-2006.)  (Revised by Mario
        Carneiro, 15-Feb-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v A $.
+	$v B $.
 	fifboth_0 $f wff ph $.
 	fifboth_1 $f wff ps $.
 	fifboth_2 $f wff ch $.
@@ -501,6 +665,8 @@ $}
 $( Identical true and false arguments in the conditional operator.
      (Contributed by NM, 18-Apr-2005.) $)
 ${
+	$v ph $.
+	$v A $.
 	fifid_0 $f wff ph $.
 	fifid_1 $f class A $.
 	ifid $p |- if ( ph , A , A ) = A $= fifid_0 fifid_0 fifid_1 fifid_1 cif fifid_1 wceq fifid_0 fifid_1 fifid_1 iftrue fifid_0 fifid_1 fifid_1 iffalse pm2.61i $.
@@ -508,6 +674,10 @@ $}
 $( Expansion of an equality with a conditional operator.  (Contributed by NM,
      14-Feb-2005.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feqif_0 $f wff ph $.
 	feqif_1 $f class A $.
 	feqif_2 $f class B $.
@@ -517,6 +687,10 @@ $}
 $( Membership in a conditional operator.  (Contributed by NM,
      14-Feb-2005.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	felif_0 $f wff ph $.
 	felif_1 $f class A $.
 	felif_2 $f class B $.
@@ -526,6 +700,10 @@ $}
 $( Membership of a conditional operator.  (Contributed by NM,
      10-Sep-2005.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fifel_0 $f wff ph $.
 	fifel_1 $f class A $.
 	fifel_2 $f class B $.
@@ -535,6 +713,10 @@ $}
 $( Membership (closure) of a conditional operator.  (Contributed by NM,
      4-Apr-2005.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fifcl_0 $f wff ph $.
 	fifcl_1 $f class A $.
 	fifcl_2 $f class B $.
@@ -544,6 +726,9 @@ $}
 $( The possible values of a conditional operator.  (Contributed by NM,
      17-Jun-2007.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fifeqor_0 $f wff ph $.
 	fifeqor_1 $f class A $.
 	fifeqor_2 $f class B $.
@@ -552,6 +737,9 @@ $}
 $( Negating the first argument swaps the last two arguments of a conditional
      operator.  (Contributed by NM, 21-Jun-2007.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fifnot_0 $f wff ph $.
 	fifnot_1 $f class A $.
 	fifnot_2 $f class B $.
@@ -560,6 +748,10 @@ $}
 $( Rewrite a conjunction in an if statement as two nested conditionals.
      (Contributed by Mario Carneiro, 28-Jul-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fifan_0 $f wff ph $.
 	fifan_1 $f wff ps $.
 	fifan_2 $f class A $.
@@ -569,6 +761,10 @@ $}
 $( Rewrite a disjunction in an if statement as two nested conditionals.
      (Contributed by Mario Carneiro, 28-Jul-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fifor_0 $f wff ph $.
 	fifor_1 $f wff ps $.
 	fifor_2 $f class A $.
@@ -585,6 +781,11 @@ $( Weak deduction theorem that eliminates a hypothesis ` ph ` , making it
        Theorem ~ http://us.metamath.org/mpeuni/mmdeduction.html .  (Contributed
        by NM, 15-May-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v A $.
+	$v B $.
 	fdedth_0 $f wff ph $.
 	fdedth_1 $f wff ps $.
 	fdedth_2 $f wff ch $.
@@ -599,6 +800,15 @@ $( Weak deduction theorem eliminating two hypotheses.  This theorem is
        exactly one class variable.  See also comments in ~ dedth .
        (Contributed by NM, 15-May-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fdedth2h_0 $f wff ph $.
 	fdedth2h_1 $f wff ps $.
 	fdedth2h_2 $f wff ch $.
@@ -616,6 +826,19 @@ $}
 $( Weak deduction theorem eliminating three hypotheses.  See comments in
        ~ dedth2h .  (Contributed by NM, 15-May-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
 	fdedth3h_0 $f wff ph $.
 	fdedth3h_1 $f wff ps $.
 	fdedth3h_2 $f wff ch $.
@@ -638,6 +861,23 @@ $}
 $( Weak deduction theorem eliminating four hypotheses.  See comments in
        ~ dedth2h .  (Contributed by NM, 16-May-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
+	$v rh $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v G $.
 	fdedth4h_0 $f wff ph $.
 	fdedth4h_1 $f wff ps $.
 	fdedth4h_2 $f wff ch $.
@@ -668,6 +908,14 @@ $( Weak deduction theorem for eliminating a hypothesis with 2 class
        use.  See also comments in ~ dedth .  (Contributed by NM, 13-Aug-1999.)
        (Proof shortened by Eric Schmidt, 28-Jul-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fdedth2v_0 $f wff ph $.
 	fdedth2v_1 $f wff ps $.
 	fdedth2v_2 $f wff ch $.
@@ -685,6 +933,17 @@ $( Weak deduction theorem for eliminating a hypothesis with 3 class
        variables.  See comments in ~ dedth2v .  (Contributed by NM,
        13-Aug-1999.)  (Proof shortened by Eric Schmidt, 28-Jul-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
 	fdedth3v_0 $f wff ph $.
 	fdedth3v_1 $f wff ps $.
 	fdedth3v_2 $f wff ch $.
@@ -705,8 +964,21 @@ $}
 $( Weak deduction theorem for eliminating a hypothesis with 4 class
        variables.  See comments in ~ dedth2v .  (Contributed by NM,
        21-Apr-2007.)  (Proof shortened by Eric Schmidt, 28-Jul-2009.) $)
-$v U $.
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v T $.
+	$v U $.
 	fdedth4v_0 $f wff ph $.
 	fdedth4v_1 $f wff ps $.
 	fdedth4v_2 $f wff ch $.
@@ -732,6 +1004,11 @@ $( Eliminate a hypothesis containing class variable ` A ` when it is known
        for a specific class ` B ` .  For more information, see comments in
        ~ dedth .  (Contributed by NM, 15-May-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v A $.
+	$v B $.
 	felimhyp_0 $f wff ph $.
 	felimhyp_1 $f wff ps $.
 	felimhyp_2 $f wff ch $.
@@ -745,6 +1022,15 @@ $}
 $( Eliminate a hypothesis containing 2 class variables.  (Contributed by
        NM, 14-Aug-1999.) $)
 ${
+	$v ph $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	felimhyp2v_0 $f wff ph $.
 	felimhyp2v_1 $f wff ch $.
 	felimhyp2v_2 $f wff th $.
@@ -764,6 +1050,19 @@ $}
 $( Eliminate a hypothesis containing 3 class variables.  (Contributed by
        NM, 14-Aug-1999.) $)
 ${
+	$v ph $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
 	felimhyp3v_0 $f wff ph $.
 	felimhyp3v_1 $f wff ch $.
 	felimhyp3v_2 $f wff th $.
@@ -789,6 +1088,23 @@ $}
 $( Eliminate a hypothesis containing 4 class variables (for use with the
        weak deduction theorem ~ dedth ).  (Contributed by NM, 16-Apr-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
+	$v rh $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v G $.
 	felimhyp4v_0 $f wff ph $.
 	felimhyp4v_1 $f wff ps $.
 	felimhyp4v_2 $f wff ch $.
@@ -821,6 +1137,9 @@ $( Eliminate a membership hypothesis for weak deduction theorem, when
        special case ` B e. C ` is provable.  (Contributed by NM,
        15-May-1999.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	felimel_0 $f class A $.
 	felimel_1 $f class B $.
 	felimel_2 $f class C $.
@@ -831,6 +1150,12 @@ $( Version of ~ elimhyp where the hypothesis is deduced from the final
        antecedent.  See ~ ghomgrplem for an example of its use.  (Contributed
        by Paul Chapman, 25-Mar-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v A $.
+	$v B $.
 	felimdhyp_0 $f wff ph $.
 	felimdhyp_1 $f wff ps $.
 	felimdhyp_2 $f wff ch $.
@@ -847,6 +1172,12 @@ $( Transform a hypothesis ` ps ` that we want to keep (but contains the
        same class variable ` A ` used in the eliminated hypothesis) for use
        with the weak deduction theorem.  (Contributed by NM, 15-May-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v A $.
+	$v B $.
 	fkeephyp_0 $f wff ph $.
 	fkeephyp_1 $f wff ps $.
 	fkeephyp_2 $f wff ch $.
@@ -862,6 +1193,16 @@ $}
 $( Keep a hypothesis containing 2 class variables (for use with the weak
        deduction theorem ~ dedth ).  (Contributed by NM, 16-Apr-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fkeephyp2v_0 $f wff ph $.
 	fkeephyp2v_1 $f wff ps $.
 	fkeephyp2v_2 $f wff ch $.
@@ -883,6 +1224,20 @@ $}
 $( Keep a hypothesis containing 3 class variables.  (Contributed by NM,
        27-Sep-1999.) $)
 ${
+	$v ph $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
+	$v rh $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
 	fkeephyp3v_0 $f wff ph $.
 	fkeephyp3v_1 $f wff ch $.
 	fkeephyp3v_2 $f wff th $.
@@ -910,6 +1265,10 @@ $}
 $( Keep a membership hypothesis for weak deduction theorem, when special
        case ` B e. C ` is provable.  (Contributed by NM, 14-Aug-1999.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fkeepel_0 $f wff ph $.
 	fkeepel_1 $f class A $.
 	fkeepel_2 $f class B $.
@@ -920,6 +1279,9 @@ ${
 $}
 $( Conditional operator existence.  (Contributed by NM, 2-Sep-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fifex_0 $f wff ph $.
 	fifex_1 $f class A $.
 	fifex_2 $f class B $.
@@ -929,6 +1291,13 @@ ${
 $}
 $( Conditional operator existence.  (Contributed by NM, 21-Mar-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
+	$v x $.
+	$v y $.
 	$d A x y $.
 	$d B y $.
 	$d ph x y $.

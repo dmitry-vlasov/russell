@@ -11,6 +11,10 @@ $( Axiom of Power Sets.  An axiom of Zermelo-Fraenkel set theory.  It
        uses explicit subset notation.  A version using class notation is
        ~ pwex .  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z w $.
 	fax-pow_0 $f set x $.
 	fax-pow_1 $f set y $.
@@ -21,6 +25,10 @@ $}
 $( Axiom of Power Sets expressed with the fewest number of different
        variables.  (Contributed by NM, 14-Aug-2003.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z w $.
 	izfpow_0 $f set w $.
 	fzfpow_0 $f set x $.
@@ -31,6 +39,10 @@ $}
 $( A variant of the Axiom of Power Sets ~ ax-pow using subset notation.
        Problem in {BellMachover] p. 466.  (Contributed by NM, 4-Jun-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z w $.
 	iaxpow2_0 $f set w $.
 	faxpow2_0 $f set x $.
@@ -43,6 +55,9 @@ $( A variant of the Axiom of Power Sets ~ ax-pow .  For any set ` x ` ,
        i.e. the power set of ` x ` .  Axiom Pow of [BellMachover] p. 466.
        (Contributed by NM, 4-Jun-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	faxpow3_0 $f set x $.
 	faxpow3_1 $f set y $.
@@ -53,6 +68,9 @@ $( Every set is an element of some other set.  See ~ elALT for a shorter
        proof using more axioms.  (Contributed by NM, 4-Jan-2002.)  (Proof
        shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	iel_0 $f set z $.
 	fel_0 $f set x $.
@@ -63,6 +81,10 @@ $( Power set axiom expressed in class notation.  Axiom 4 of [TakeutiZaring]
        p. 17.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew
        Salmon, 25-Jul-2011.) $)
 ${
+	$v A $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d A x y z $.
 	ipwex_0 $f set x $.
 	ipwex_1 $f set y $.
@@ -75,6 +97,9 @@ $( Power set axiom expressed in class notation, with the sethood
        requirement as an antecedent.  Axiom 4 of [TakeutiZaring] p. 17.
        (Contributed by NM, 30-Oct-2003.) $)
 ${
+	$v A $.
+	$v V $.
+	$v x $.
 	$d x A $.
 	ipwexg_0 $f set x $.
 	fpwexg_0 $f class A $.
@@ -84,6 +109,10 @@ $}
 $( Existence of a class of subsets.  (Contributed by NM, 15-Jul-2006.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	fabssexg_0 $f wff ph $.
 	fabssexg_1 $f set x $.
@@ -97,6 +126,7 @@ $( A singleton is a set.  Theorem 7.13 of [Quine] p. 51, but proved using
        (Proof shortened by Andrew Salmon, 25-Jul-2011.)  See also ~ snex .
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v A $.
 	fsnexALT_0 $f class A $.
 	snexALT $p |- { A } e. _V $= fsnexALT_0 cpw cvv wcel fsnexALT_0 csn cvv wcel fsnexALT_0 csn fsnexALT_0 cpw wss fsnexALT_0 cpw cvv wcel fsnexALT_0 csn cvv wcel fsnexALT_0 snsspw fsnexALT_0 csn fsnexALT_0 cpw cvv ssexg mpan fsnexALT_0 cpw cvv wcel wn fsnexALT_0 cvv wcel wn fsnexALT_0 csn cvv wcel fsnexALT_0 cvv wcel fsnexALT_0 cpw cvv wcel fsnexALT_0 cvv pwexg con3i fsnexALT_0 cvv wcel wn fsnexALT_0 csn c0 cvv fsnexALT_0 cvv wcel wn fsnexALT_0 csn c0 wceq fsnexALT_0 snprc biimpi 0ex syl6eqel syl pm2.61i $.
 $}
@@ -139,6 +169,10 @@ $( At least two sets exist (or in terms of first-order logic, the universe
        on the web page (i.e. doesn't appear in the "Distinct variable group").
        (Contributed by NM, 7-Nov-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x y z $.
 	idtru_0 $f set z $.
 	idtru_1 $f set w $.
@@ -152,6 +186,9 @@ $( This theorem shows that axiom ~ ax-16 is redundant in the presence of
        ~ http://us.metamath.org/mpeuni/mmzfcnd.html#twoness (which links to
        this theorem).  (Contributed by NM, 7-Nov-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fax16b_0 $f wff ph $.
 	fax16b_1 $f set x $.
@@ -161,6 +198,9 @@ $}
 $( Existential uniqueness implies there is a value for which the wff
        argument is false.  (Contributed by NM, 24-Oct-2010.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	ieunex_0 $f set y $.
@@ -172,6 +212,10 @@ $( A set variable is not free from itself.  The proof relies on ~ dtru ,
        that is, it is not true in a one-element domain.  (Contributed by Mario
        Carneiro, 8-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x y z $.
 	infnid_0 $f set y $.
 	infnid_1 $f set z $.
@@ -185,6 +229,8 @@ $( The "distinctor" expression ` -. A. x x = y ` , stating that ` x ` and
        because then ` F/_ x y ` and ` A. x x = y ` will both be true.
        (Contributed by Mario Carneiro, 8-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	fnfcvb_0 $f set x $.
 	fnfcvb_1 $f set y $.
@@ -193,6 +239,8 @@ $}
 $( A class is a subclass of the power class of its union.  Exercise 6(b) of
        [Enderton] p. 38.  (Contributed by NM, 14-Oct-1996.) $)
 ${
+	$v A $.
+	$v x $.
 	$d A x $.
 	ipwuni_0 $f set x $.
 	fpwuni_0 $f class A $.
@@ -212,6 +260,8 @@ $( A version of ~ dtru ("two things exist") with a shorter proof that uses
        by NM, 15-Jul-1994.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	fdtruALT_0 $f set x $.
 	fdtruALT_1 $f set y $.
@@ -222,6 +272,8 @@ $( Corollary of ~ dtru .  This example illustrates the danger of blindly
        variables: the theorem form of this deduction is not valid, as shown by
        ~ dtrucor2 .  (Contributed by NM, 27-Jun-2002.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	fdtrucor_0 $f set x $.
 	fdtrucor_1 $f set y $.
@@ -233,6 +285,9 @@ $( The theorem form of the deduction ~ dtrucor leads to a contradiction, as
        ~ http://us.metamath.org/mpeuni/mmdeduction.html#bad .  (Contributed by
        NM, 20-Oct-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fdtrucor2_0 $f wff ph $.
 	fdtrucor2_1 $f set x $.
 	fdtrucor2_2 $f set y $.
@@ -245,6 +300,9 @@ $( Demonstration of a theorem (scheme) that requires (meta)variables ` x `
        ~ dvdemo2 .  ("Bundles" is a term introduced by Raph Levien.)
        (Contributed by NM, 1-Dec-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y $.
 	fdvdemo1_0 $f set x $.
 	fdvdemo1_1 $f set y $.
@@ -256,6 +314,9 @@ $( Demonstration of a theorem (scheme) that requires (meta)variables ` x `
        ` E. x ( x = x -> z e. x ) ` and ` E. x ( x = y -> y e. x ) ` .  Compare
        ~ dvdemo1 .  (Contributed by NM, 1-Dec-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	fdvdemo2_0 $f set x $.
 	fdvdemo2_1 $f set y $.

@@ -9,6 +9,9 @@ $c Disj_  $.
 $( Extend wff notation to include the statement that a family of classes
      ` B ( x ) ` , for ` x e. A ` , is a disjoint family. $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	fwdisj_0 $f set x $.
 	fwdisj_1 $f class A $.
 	fwdisj_2 $f class B $.
@@ -18,6 +21,10 @@ $( A collection of classes ` B ( x ) ` is disjoint when for each element
        ` y ` , it is in ` B ( x ) ` for at most one ` x ` .  (Contributed by
        Mario Carneiro, 14-Nov-2016.)  (Revised by NM, 16-Jun-2017.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -30,6 +37,10 @@ $}
 $( Alternate definition for disjoint classes.  (Contributed by NM,
        17-Jun-2017.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -43,6 +54,11 @@ $( If each element of a collection is contained in a disjoint collection,
        the original collection is also disjoint.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -57,6 +73,10 @@ $}
 $( Equality theorem for disjoint collection.  (Contributed by Mario Carneiro,
      14-Nov-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fdisjeq2_0 $f set x $.
 	fdisjeq2_1 $f class A $.
 	fdisjeq2_2 $f class B $.
@@ -66,6 +86,11 @@ $}
 $( Equality deduction for disjoint collection.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x ph $.
 	fdisjeq2dv_0 $f wff ph $.
 	fdisjeq2dv_1 $f set x $.
@@ -78,6 +103,11 @@ $}
 $( A subset of a disjoint collection is disjoint.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -91,6 +121,10 @@ $}
 $( Equality theorem for disjoint collection.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	fdisjeq1_0 $f set x $.
@@ -102,6 +136,11 @@ $}
 $( Equality theorem for disjoint collection.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	fdisjeq1d_0 $f wff ph $.
@@ -115,6 +154,12 @@ $}
 $( Equality theorem for disjoint collection.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x A $.
 	$d x B $.
 	$d x ph $.
@@ -131,6 +176,12 @@ $}
 $( Change bound variables in a disjoint collection.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v z $.
 	$d x y z A $.
 	$d z B $.
 	$d z C $.
@@ -148,6 +199,11 @@ $}
 $( Change bound variables in a disjoint collection.  (Contributed by Mario
        Carneiro, 11-Dec-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d y B $.
 	$d x C $.
@@ -162,6 +218,11 @@ $}
 $( Bound-variable hypothesis builder for disjoint collection.  (Contributed
        by Mario Carneiro, 14-Nov-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v z $.
 	$d z A $.
 	$d z B $.
 	$d x z $.
@@ -178,6 +239,10 @@ $}
 $( Bound-variable hypothesis builder for disjoint collection.  (Contributed
        by Mario Carneiro, 14-Nov-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -190,9 +255,13 @@ $}
 $( Two ways to say that a collection ` B ( i ) ` for ` i e. A ` is
        disjoint.  (Contributed by Mario Carneiro, 26-Mar-2015.)  (Revised by
        Mario Carneiro, 14-Nov-2016.) $)
-$v i $.
-$v j $.
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v i $.
+	$v j $.
+	$v x $.
 	$d i j x A $.
 	$d j x B $.
 	$d i x C $.
@@ -209,6 +278,12 @@ $( Two ways to say that a collection ` B ( i ) ` for ` i e. A ` is
        disjoint.  (Contributed by Mario Carneiro, 26-Mar-2015.)
        (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v i $.
+	$v j $.
 	$d i j x A $.
 	$d j x B $.
 	$d i x C $.
@@ -224,6 +299,11 @@ $}
 $( Two ways to say that a collection ` B ( i ) ` for ` i e. A ` is
        disjoint.  (Contributed by Mario Carneiro, 14-Nov-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v i $.
+	$v j $.
 	$d i j x A $.
 	$d i j B $.
 	fdisjors_0 $f set x $.
@@ -237,6 +317,15 @@ $( Property of a disjoint collection: if ` B ( X ) = C ` and
        ` B ( Y ) = D ` , and ` X =/= Y ` , then ` C ` and ` D ` are disjoint.
        (Contributed by Mario Carneiro, 14-Nov-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v X $.
+	$v Y $.
+	$v y $.
+	$v z $.
 	$d x y z A $.
 	$d y z B $.
 	$d x y z C $.
@@ -259,8 +348,15 @@ $}
 $( Property of a disjoint collection: if ` B ( X ) = C ` and
        ` B ( Y ) = D ` have a common element ` Z ` , then ` X = Y ` .
        (Contributed by Mario Carneiro, 14-Nov-2016.) $)
-$v Z $.
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v X $.
+	$v Y $.
+	$v Z $.
 	$d x A $.
 	$d x C $.
 	$d x D $.
@@ -282,6 +378,11 @@ $( If there is a function ` C ( y ) ` such that ` C ( y ) = x ` for all
        ` y e. B ( x ) ` , then the sets ` B ( x ) ` for distinct ` x e. A ` are
        disjoint.  (Contributed by Mario Carneiro, 10-Dec-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -297,6 +398,13 @@ $( A disjoint collection yields disjoint indexed unions for disjoint index
        sets.  (Contributed by Mario Carneiro, 26-Mar-2015.)  (Revised by Mario
        Carneiro, 14-Nov-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v y $.
+	$v z $.
 	$d x y z A $.
 	$d y z B $.
 	$d x y z C $.
@@ -314,6 +422,12 @@ $( A disjoint collection yields disjoint indexed unions for disjoint index
        sets.  (Contributed by Mario Carneiro, 26-Mar-2015.)
        (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y A $.
 	$d y B $.
 	$d x y C $.
@@ -329,6 +443,9 @@ $}
 $( Any collection of singletons is disjoint.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x y $.
 	$d y A $.
 	isndisj_0 $f set y $.
@@ -339,6 +456,8 @@ $}
 $( Any collection of empty sets is disjoint.  (Contributed by Mario Carneiro,
      14-Nov-2016.) $)
 ${
+	$v x $.
+	$v A $.
 	f0disj_0 $f set x $.
 	f0disj_1 $f class A $.
 	0disj $p |- Disj_ x e. A (/) $= c0 f0disj_0 sup_set_class csn wss f0disj_0 f0disj_1 wral f0disj_0 f0disj_1 f0disj_0 sup_set_class csn wdisj f0disj_0 f0disj_1 c0 wdisj c0 f0disj_0 sup_set_class csn wss f0disj_0 f0disj_1 f0disj_0 sup_set_class csn 0ss rgenw f0disj_0 f0disj_1 sndisj f0disj_0 f0disj_1 c0 f0disj_0 sup_set_class csn disjss2 mp2 $.
@@ -346,6 +465,10 @@ $}
 $( A singleton collection is disjoint.  (Contributed by Mario Carneiro,
        14-Nov-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x y A $.
 	$d y B $.
 	idisjxsn_0 $f set y $.
@@ -357,6 +480,8 @@ $}
 $( An empty collection is disjoint.  (Contributed by Mario Carneiro,
        14-Nov-2016.) $)
 ${
+	$v x $.
+	$v B $.
 	fdisjx0_0 $f set x $.
 	fdisjx0_1 $f class B $.
 	disjx0 $p |- Disj_ x e. (/) B $= c0 c0 csn wss fdisjx0_0 c0 csn fdisjx0_1 wdisj fdisjx0_0 c0 fdisjx0_1 wdisj c0 csn 0ss fdisjx0_0 c0 fdisjx0_1 disjxsn fdisjx0_0 c0 c0 csn fdisjx0_1 disjss1 mp2 $.
@@ -364,6 +489,15 @@ $}
 $( A pair collection is disjoint iff the two sets in the family have empty
        intersection.  (Contributed by Mario Carneiro, 14-Nov-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v V $.
+	$v y $.
+	$v z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d y z C $.
@@ -387,8 +521,17 @@ $( An indexed union of a disjoint collection of disjoint collections is
        collection are also disjoint.  Note that ` B ( y ) ` and ` C ( x ) ` may
        have the displayed free variables.  (Contributed by Mario Carneiro,
        14-Nov-2016.) $)
-$v r $.
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v z $.
+	$v v $.
+	$v u $.
+	$v s $.
+	$v r $.
 	$d r s u v x y z A $.
 	$d r s u v x z B $.
 	$d r s u v y z C $.
@@ -407,6 +550,14 @@ $}
 $( The union of two disjoint collections.  (Contributed by Mario Carneiro,
        14-Nov-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v z $.
+	$v w $.
 	$d w x y z A $.
 	$d w x y z B $.
 	$d w y z C $.
@@ -425,6 +576,11 @@ $}
 $( Expand a disjoint collection with any number of empty sets.
        (Contributed by Mario Carneiro, 15-Nov-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.

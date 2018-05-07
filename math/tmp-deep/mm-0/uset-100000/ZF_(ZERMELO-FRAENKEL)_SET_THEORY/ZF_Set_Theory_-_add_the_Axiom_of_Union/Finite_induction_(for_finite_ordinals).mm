@@ -13,6 +13,8 @@ $( The Principle of Finite Induction (mathematical induction).  Corollary
        (Contributed by NM, 22-Feb-2004.)  (Proof shortened by Andrew Salmon,
        27-Aug-2011.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	ffind_0 $f set x $.
 	ffind_1 $f class A $.
@@ -27,6 +29,14 @@ $( Principle of Finite Induction (inference schema), using implicit
        need.  The last two are the basis and the induction hypothesis.  Theorem
        Schema 22 of [Suppes] p. 136.  (Contributed by NM, 14-Apr-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d x A $.
 	$d x ps $.
@@ -59,6 +69,15 @@ $( Principle of Finite Induction (inference schema), using implicit
        basis of this version is an arbitrary natural number ` B ` instead of
        zero.  (Contributed by NM, 16-Sep-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x y B $.
 	$d x ps $.
@@ -92,6 +111,13 @@ $( Principle of Finite Induction (inference schema), using implicit
        Theorem Schema 22 of [Suppes] p. 136.  (Contributed by NM,
        29-Nov-2002.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v x $.
+	$v y $.
 	$d x y ta $.
 	$d x ps $.
 	$d x ch $.
@@ -120,6 +146,12 @@ $( Principle of Finite Induction (inference schema), using implicit
        Theorem Schema 22 of [Suppes] p. 136.  (Contributed by NM,
        22-Mar-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d x ps $.
 	$d x ch $.
@@ -143,6 +175,10 @@ $( Finite induction with explicit substitution.  The first hypothesis is
        of [Suppes] p. 136.  See ~ tfindes for the transfinite version.
        (Contributed by Raph Levien, 9-Jul-2003.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	$d y z ph $.
 	ifindes_0 $f set y $.

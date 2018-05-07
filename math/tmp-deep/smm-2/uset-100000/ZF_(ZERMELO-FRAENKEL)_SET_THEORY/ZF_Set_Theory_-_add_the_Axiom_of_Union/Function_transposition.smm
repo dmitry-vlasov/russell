@@ -26,7 +26,7 @@ $}
 $( Subset theorem for transposition.  (Contributed by Mario Carneiro,
        10-Sep-2015.) $)
 ${
-	$v x F G $.
+	$v F G x $.
 	$d x F $.
 	$d x G $.
 	f0 $f class F $.
@@ -58,7 +58,7 @@ $}
 $( The transposition is a subset of a cross product.  (Contributed by Mario
        Carneiro, 12-Jan-2017.) $)
 ${
-	$v x F $.
+	$v F x $.
 	$d x F $.
 	f0 $f class F $.
 	i0 $f set x $.
@@ -76,7 +76,7 @@ $}
 $( Value of the transposition at a pair ` <. A , B >. ` .  (Contributed by
        Mario Carneiro, 10-Sep-2015.) $)
 ${
-	$v x y A B F V $.
+	$v A B F V x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y F $.
@@ -105,7 +105,7 @@ $}
 $( Necessary and sufficient condition for ` dom tpos F ` to be a relation.
        (Contributed by Mario Carneiro, 10-Sep-2015.) $)
 ${
-	$v x y F $.
+	$v F x y $.
 	$d x y $.
 	$d x y $.
 	$d x y F $.
@@ -153,7 +153,7 @@ $}
 $( The domain of ` tpos F ` when ` dom F ` is a relation.  (Contributed by
        Mario Carneiro, 10-Sep-2015.) $)
 ${
-	$v x y z F $.
+	$v F x y z $.
 	$d x y $.
 	$d x y $.
 	$d x y z F $.
@@ -167,7 +167,7 @@ $}
 $( The range of ` tpos F ` when ` dom F ` is a relation.  (Contributed by
        Mario Carneiro, 10-Sep-2015.) $)
 ${
-	$v x y z w F $.
+	$v F x y z w $.
 	$d x y $.
 	$d x y $.
 	$d w x y z F $.
@@ -194,7 +194,7 @@ $( The transposition swaps the arguments in a two-argument function.  When
        transposition of ` F ` , which is where the name comes from.
        (Contributed by Mario Carneiro, 10-Sep-2015.) $)
 ${
-	$v y A B F $.
+	$v A B F y $.
 	$d y A $.
 	$d y B $.
 	$d y F $.
@@ -208,7 +208,7 @@ $}
 $( The transposition of a function is a function.  (Contributed by Mario
        Carneiro, 10-Sep-2015.) $)
 ${
-	$v x F $.
+	$v F x $.
 	$d x F $.
 	f0 $f class F $.
 	i0 $f set x $.
@@ -228,7 +228,7 @@ $}
 $( Alternate definition of ` tpos ` when ` F ` has relational domain.
        Compare ~ df-cnv .  (Contributed by Mario Carneiro, 10-Sep-2015.) $)
 ${
-	$v x y z w F $.
+	$v x y z F w $.
 	$d x y $.
 	$d x y $.
 	$d w x y z F $.
@@ -243,7 +243,7 @@ $}
 $( Alternate definition of ` tpos ` .  (Contributed by Mario Carneiro,
        4-Oct-2015.) $)
 ${
-	$v x y z w F $.
+	$v x F y z w $.
 	$d x y $.
 	$d x y $.
 	$d w x y z F $.
@@ -258,7 +258,7 @@ $}
 $( Value of the double transposition for a general class ` F ` .
        (Contributed by Mario Carneiro, 16-Sep-2015.) $)
 ${
-	$v x y z w F $.
+	$v F x y z w $.
 	$d x y $.
 	$d x y $.
 	$d w x y z F $.
@@ -309,7 +309,7 @@ $}
 $( Condition for an injective transposition.  (Contributed by NM,
        10-Sep-2015.) $)
 ${
-	$v x A B F $.
+	$v A B F x $.
 	$d x A $.
 	$d x B $.
 	$d x F $.
@@ -370,7 +370,7 @@ $}
 $( Transposition of a composition.  (Contributed by Mario Carneiro,
        4-Oct-2015.) $)
 ${
-	$v x F G $.
+	$v F G x $.
 	$d x F $.
 	$d x G $.
 	f0 $f class F $.
@@ -415,7 +415,7 @@ $}
 $( Hypothesis builder for transposition.  (Contributed by Mario Carneiro,
        10-Sep-2015.) $)
 ${
-	$v x y F $.
+	$v x F y $.
 	$d x y $.
 	$d y F $.
 	e0 $e |- F/_ x F $.
@@ -446,7 +446,7 @@ $}
 $( Transposition of a two-argument mapping.  (Contributed by Mario
        Carneiro, 10-Sep-2015.) $)
 ${
-	$v x y z A B C F $.
+	$v x y A B C F z $.
 	$d x y z $.
 	$d z A $.
 	$d z B $.

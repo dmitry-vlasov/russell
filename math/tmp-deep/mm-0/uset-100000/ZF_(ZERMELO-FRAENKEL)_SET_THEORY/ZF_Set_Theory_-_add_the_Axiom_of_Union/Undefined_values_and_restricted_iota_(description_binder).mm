@@ -12,6 +12,9 @@ ${
 $}
 $( Extend class notation with restricted description binder. $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fcrio_0 $f wff ph $.
 	fcrio_1 $f set x $.
 	fcrio_2 $f class A $.
@@ -21,12 +24,15 @@ $( Define the undefined value function, whose value at set ` s ` is
      guaranteed not to be a member of ` s ` (see ~ pwuninel ).  (Contributed by
      NM, 15-Sep-2011.) $)
 ${
+	$v s $.
 	fdf-undef_0 $f set s $.
 	df-undef $a |- Undef = ( s e. _V |-> ~P U. s ) $.
 $}
 $( Direct proof of ~ pwuninel avoiding functions and thus several ZF axioms.
      (Contributed by Stefan O'Rear, 22-Feb-2015.) $)
 ${
+	$v A $.
+	$v V $.
 	fpwuninel2_0 $f class A $.
 	fpwuninel2_1 $f class V $.
 	pwuninel2 $p |- ( U. A e. V -> -. ~P U. A e. A ) $= fpwuninel2_0 cuni fpwuninel2_1 wcel fpwuninel2_0 cuni cpw fpwuninel2_0 cuni wss fpwuninel2_0 cuni cpw fpwuninel2_0 wcel fpwuninel2_0 cuni fpwuninel2_1 pwnss fpwuninel2_0 cuni cpw fpwuninel2_0 elssuni nsyl $.
@@ -36,6 +42,7 @@ $( The power set of the union of a set does not belong to the set.  This
      given set.  See also ~ pwuninel2 .  (Contributed by NM, 27-Jun-2008.)
      (Proof shortened by Mario Carneiro, 23-Dec-2016.) $)
 ${
+	$v A $.
 	fpwuninel_0 $f class A $.
 	pwuninel $p |- -. ~P U. A e. A $= fpwuninel_0 cuni cpw fpwuninel_0 wcel fpwuninel_0 cuni cpw fpwuninel_0 wcel wn fpwuninel_0 cuni cpw fpwuninel_0 wcel fpwuninel_0 cuni cvv wcel fpwuninel_0 cuni cpw fpwuninel_0 wcel wn fpwuninel_0 cuni cpw fpwuninel_0 wcel fpwuninel_0 cuni cpw cvv wcel fpwuninel_0 cuni cvv wcel fpwuninel_0 cuni cpw fpwuninel_0 elex fpwuninel_0 cuni pwexb sylibr fpwuninel_0 cvv pwuninel2 syl fpwuninel_0 cuni cpw fpwuninel_0 wcel wn id pm2.61i $.
 $}
@@ -43,6 +50,9 @@ $( Value of the undefined value function.  Normally we will not reference
        the explicit value but will use ~ undefnel instead.  (Contributed by NM,
        15-Sep-2011.)  (Revised by Mario Carneiro, 24-Dec-2016.) $)
 ${
+	$v S $.
+	$v V $.
+	$v s $.
 	$d s S $.
 	iundefval_0 $f set s $.
 	fundefval_0 $f class S $.
@@ -52,6 +62,8 @@ $}
 $( The undefined value generated from a set is not a member of the set.
      (Contributed by NM, 15-Sep-2011.) $)
 ${
+	$v S $.
+	$v V $.
 	fundefnel2_0 $f class S $.
 	fundefnel2_1 $f class V $.
 	undefnel2 $p |- ( S e. V -> -. ( Undef ` S ) e. S ) $= fundefnel2_0 fundefnel2_1 wcel fundefnel2_0 cund cfv fundefnel2_0 wcel fundefnel2_0 cuni cpw fundefnel2_0 wcel fundefnel2_0 pwuninel fundefnel2_0 fundefnel2_1 wcel fundefnel2_0 cund cfv fundefnel2_0 cuni cpw fundefnel2_0 fundefnel2_0 fundefnel2_1 undefval eleq1d mtbiri $.
@@ -59,6 +71,8 @@ $}
 $( The undefined value generated from a set is not a member of the set.
      (Contributed by NM, 15-Sep-2011.) $)
 ${
+	$v S $.
+	$v V $.
 	fundefnel_0 $f class S $.
 	fundefnel_1 $f class V $.
 	undefnel $p |- ( S e. V -> ( Undef ` S ) e/ S ) $= fundefnel_0 fundefnel_1 wcel fundefnel_0 cund cfv fundefnel_0 wcel wn fundefnel_0 cund cfv fundefnel_0 wnel fundefnel_0 fundefnel_1 undefnel2 fundefnel_0 cund cfv fundefnel_0 df-nel sylibr $.
@@ -68,6 +82,9 @@ $( Define restricted description binder.  In case it doesn't exist, we
        See also comments for ~ df-iota .  (Contributed by NM, 15-Sep-2011.)
        (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fdf-riota_0 $f wff ph $.
 	fdf-riota_1 $f set x $.
 	fdf-riota_2 $f class A $.
@@ -76,6 +93,11 @@ $}
 $( Formula-building deduction rule for iota.  (Contributed by NM,
        15-Sep-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x ph $.
 	friotaeqdv_0 $f wff ph $.
 	friotaeqdv_1 $f wff ps $.
@@ -88,6 +110,11 @@ $}
 $( Formula-building deduction rule for restricted iota.  (Contributed by
        NM, 15-Sep-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	friotabidv_0 $f wff ph $.
 	friotabidv_1 $f wff ps $.
@@ -100,6 +127,12 @@ $}
 $( Equality deduction for restricted universal quantifier.  (Contributed by
        NM, 15-Sep-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x ph $.
 	friotaeqbidv_0 $f wff ph $.
 	friotaeqbidv_1 $f wff ps $.
@@ -113,6 +146,9 @@ ${
 $}
 $( Restricted iota is a set.  (Contributed by NM, 15-Sep-2011.) $)
 ${
+	$v ps $.
+	$v x $.
+	$v A $.
 	friotaex_0 $f wff ps $.
 	friotaex_1 $f set x $.
 	friotaex_2 $f class A $.
@@ -121,12 +157,17 @@ $}
 $( An iota restricted to the universe is unrestricted.  (Contributed by NM,
      18-Sep-2011.) $)
 ${
+	$v ph $.
+	$v x $.
 	friotav_0 $f wff ph $.
 	friotav_1 $f set x $.
 	riotav $p |- ( iota_ x e. _V ph ) = ( iota x ph ) $= friotav_0 friotav_1 cvv crio friotav_0 friotav_1 cvv wreu friotav_1 cv cvv wcel friotav_0 wa friotav_1 cio friotav_1 cv cvv wcel friotav_1 cab cund cfv cif friotav_0 friotav_1 cio friotav_0 friotav_1 cvv df-riota friotav_0 friotav_1 cvv wreu friotav_0 friotav_1 cio friotav_0 friotav_1 cvv wreu friotav_1 cv cvv wcel friotav_0 wa friotav_1 cio friotav_1 cv cvv wcel friotav_1 cab cund cfv cif wceq friotav_0 friotav_1 cvv wreu friotav_0 friotav_1 cvv wreu friotav_1 cv cvv wcel friotav_0 wa friotav_1 cio friotav_1 cv cvv wcel friotav_1 cab cund cfv cif friotav_1 cv cvv wcel friotav_0 wa friotav_1 cio friotav_0 friotav_1 cio friotav_0 friotav_1 cvv wreu friotav_1 cv cvv wcel friotav_0 wa friotav_1 cio friotav_1 cv cvv wcel friotav_1 cab cund cfv iftrue friotav_0 friotav_1 cv cvv wcel friotav_0 wa friotav_1 friotav_1 cv cvv wcel friotav_0 friotav_1 vex biantrur iotabii syl6reqr friotav_0 friotav_1 cvv wreu wn friotav_0 friotav_1 cio friotav_1 cv cvv wcel friotav_1 cab cund cfv friotav_0 friotav_1 cvv wreu friotav_1 cv cvv wcel friotav_0 wa friotav_1 cio friotav_1 cv cvv wcel friotav_1 cab cund cfv cif friotav_0 friotav_1 cvv wreu wn friotav_0 friotav_1 cio c0 friotav_1 cv cvv wcel friotav_1 cab cund cfv friotav_0 friotav_1 cvv wreu friotav_0 friotav_1 weu friotav_0 friotav_1 cio c0 wceq friotav_0 friotav_1 reuv friotav_0 friotav_1 iotanul sylnbi friotav_1 cv cvv wcel friotav_1 cab cund cfv cvv cund cfv c0 friotav_1 cv cvv wcel friotav_1 cab cvv cund friotav_1 cvv abid2 fveq2i cvv cvv wcel wn cvv cund cfv c0 wceq vprc cvv cund fvprc ax-mp eqtri syl6eqr friotav_0 friotav_1 cvv wreu friotav_1 cv cvv wcel friotav_0 wa friotav_1 cio friotav_1 cv cvv wcel friotav_1 cab cund cfv iffalse eqtr4d pm2.61i eqtr4i $.
 $}
 $( Restricted iota in terms of iota.  (Contributed by NM, 15-Sep-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	friotaiota_0 $f wff ph $.
 	friotaiota_1 $f set x $.
 	friotaiota_2 $f class A $.
@@ -135,6 +176,9 @@ $}
 $( Restricted iota in terms of class union.  (Contributed by NM,
      11-Oct-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	friotauni_0 $f wff ph $.
 	friotauni_1 $f set x $.
 	friotauni_2 $f class A $.
@@ -144,6 +188,9 @@ $( The abstraction variable in a restricted iota descriptor isn't free.
        (Contributed by NM, 12-Oct-2011.)  (Revised by Mario Carneiro,
        15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fnfriota1_0 $f wff ph $.
 	fnfriota1_1 $f set x $.
@@ -153,6 +200,11 @@ $}
 $( Deduction version of ~ nfriota .  (Contributed by NM, 18-Feb-2013.)
        (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	fnfriotad_0 $f wff ph $.
 	fnfriotad_1 $f wff ps $.
 	fnfriotad_2 $f set x $.
@@ -166,6 +218,10 @@ $}
 $( A variable not free in a wff remains so in a restricted iota
        descriptor.  (Contributed by NM, 12-Oct-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	fnfriota_0 $f wff ph $.
 	fnfriota_1 $f set x $.
@@ -178,6 +234,12 @@ $}
 $( Change bound variable in a restricted description binder.  (Contributed
        by NM, 18-Mar-2013.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x z A $.
 	$d y z A $.
 	$d z ph $.
@@ -196,6 +258,11 @@ $}
 $( Change bound variable in a restricted description binder.  (Contributed
        by NM, 18-Mar-2013.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x A $.
 	$d y A $.
 	$d y ph $.
@@ -211,6 +278,13 @@ $}
 $( Interchange class substitution and restricted description binder.
        (Contributed by NM, 24-Feb-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d y z A $.
 	$d x z B $.
 	$d z ph $.
@@ -232,6 +306,9 @@ $( Membership law for "the unique element in ` A ` such that ` ph ` ."
      (Contributed by NM, 21-Aug-2011.)  (Revised by Mario Carneiro,
      23-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	friotacl2_0 $f wff ph $.
 	friotacl2_1 $f set x $.
 	friotacl2_2 $f class A $.
@@ -239,6 +316,9 @@ ${
 $}
 $( Closure of restricted iota.  (Contributed by NM, 21-Aug-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	friotacl_0 $f wff ph $.
 	friotacl_1 $f set x $.
@@ -248,6 +328,9 @@ $}
 $( Substitution law for descriptions.  Compare ~ iotasbc .  (Contributed by
      NM, 23-Aug-2011.)  (Proof shortened by Mario Carneiro, 24-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	friotasbc_0 $f wff ph $.
 	friotasbc_1 $f set x $.
 	friotasbc_2 $f class A $.
@@ -256,6 +339,11 @@ $}
 $( Equivalent wff's yield equal restricted class abstractions (deduction
        rule).  ( ~ rabbidva analog.)  (Contributed by NM, 17-Jan-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
 	$d x ph $.
 	friotabidva_0 $f wff ph $.
 	friotabidva_1 $f wff ps $.
@@ -268,6 +356,10 @@ $}
 $( Equivalent wff's yield equal restricted iotas (inference rule).
        ( ~ rabbiia analog.)  (Contributed by NM, 16-Jan-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	friotabiia_0 $f wff ph $.
 	friotabiia_1 $f wff ps $.
 	friotabiia_2 $f set x $.
@@ -278,6 +370,9 @@ $}
 $( Property of restricted iota.  Compare ~ iota1 .  (Contributed by Mario
        Carneiro, 15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	friota1_0 $f wff ph $.
 	friota1_1 $f set x $.
@@ -286,6 +381,9 @@ ${
 $}
 $( Property of iota.  (Contributed by NM, 23-Aug-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	friota1a_0 $f wff ph $.
 	friota1a_1 $f set x $.
 	friota1a_2 $f class A $.
@@ -294,6 +392,12 @@ $}
 $( A deduction version of ~ riota2f .  (Contributed by NM, 17-Feb-2013.)
        (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	friota2df_0 $f wff ph $.
 	friota2df_1 $f wff ps $.
@@ -312,6 +416,11 @@ $( This theorem shows a condition that allows us to represent a descriptor
        with a class expression ` B ` .  (Contributed by NM, 23-Aug-2011.)
        (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	friota2f_0 $f wff ph $.
 	friota2f_1 $f wff ps $.
@@ -327,6 +436,11 @@ $( This theorem shows a condition that allows us to represent a descriptor
        with a class expression ` B ` .  (Contributed by NM, 23-Aug-2011.)
        (Revised by Mario Carneiro, 10-Dec-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x ps $.
 	$d x A $.
 	$d x B $.
@@ -342,6 +456,11 @@ $( Properties of a restricted definite description operator.  Todo: can
        some uses of ~ riota2f be shortened with this?  (Contributed by NM,
        23-Nov-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	friotaprop_0 $f wff ph $.
 	friotaprop_1 $f wff ps $.
@@ -356,6 +475,12 @@ $}
 $( A method for computing restricted iota.  (Contributed by NM,
        16-Apr-2013.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d y B $.
 	$d x y ph $.
@@ -374,6 +499,11 @@ $}
 $( A method for computing restricted iota.  (Contributed by NM,
        20-Oct-2011.)  (Revised by Mario Carneiro, 6-Dec-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ph $.
@@ -389,6 +519,11 @@ $}
 $( A method for computing restricted iota.  (Contributed by NM,
        20-Oct-2011.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ph $.
@@ -403,6 +538,11 @@ $}
 $( Restriction of a unique element to a smaller class.  (Contributed by NM,
        21-Aug-2011.)  (Revised by NM, 22-Mar-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	friotass2_0 $f wff ph $.
@@ -415,6 +555,10 @@ $}
 $( Restriction of a unique element to a smaller class.  (Contributed by NM,
        19-Oct-2005.)  (Revised by Mario Carneiro, 24-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	friotass_0 $f wff ph $.
@@ -426,6 +570,10 @@ $}
 $( Restriction of a unique element to a smaller class.  (Contributed by NM,
        19-Feb-2006.)  (Revised by NM, 16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fmoriotass_0 $f wff ph $.
@@ -437,6 +585,9 @@ $}
 $( A restricted class abstraction with a unique member can be expressed as
        a singleton.  (Contributed by NM, 30-May-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fsnriota_0 $f wff ph $.
 	fsnriota_1 $f set x $.
 	fsnriota_2 $f class A $.
@@ -447,6 +598,14 @@ $( Change the variable ` x ` in the expression for "the unique ` x ` such
        Use ~ reuhypd to eliminate the last hypothesis.  (Contributed by NM,
        16-Jan-2012.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x B $.
 	$d x C $.
 	$d x y A $.
@@ -473,6 +632,11 @@ $( Specify the same property in two ways when class ` B ( y ) ` is
        single-valued.  (Contributed by NM, 1-Nov-2010.)  (Proof shortened by
        Mario Carneiro, 24-Dec-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x z B $.
 	ieusvobj2_0 $f set z $.
@@ -487,6 +651,10 @@ $( Specify the same object in two ways when class ` B ( y ) ` is
        single-valued.  (Contributed by NM, 1-Nov-2010.)  (Proof shortened by
        Mario Carneiro, 19-Nov-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x B $.
 	feusvobj1_0 $f set x $.
@@ -499,6 +667,11 @@ $}
 $( There is one domain element for each value of a one-to-one onto
        function.  (Contributed by NM, 26-May-2006.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -513,6 +686,11 @@ $}
 $( Value of the converse of a one-to-one onto function.  (Contributed by
        NM, 26-May-2006.)  (Proof shortened by Mario Carneiro, 24-Dec-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -528,6 +706,9 @@ $( Restricted iota equals the undefined value of its domain of discourse
        ` A ` when not meaningful.  (Contributed by NM, 16-Jan-2012.)  (Revised
        by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	friotaund_0 $f wff ph $.
 	friotaund_1 $f set x $.
@@ -537,6 +718,9 @@ $}
 $( For proper classes, restricted and unrestricted iota are the same.
        (Contributed by NM, 15-Sep-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	friotaprc_0 $f wff ph $.
 	friotaprc_1 $f set x $.
@@ -546,6 +730,9 @@ $}
 $( The restricted iota class is limited in size by the base set.
        (Contributed by Mario Carneiro, 24-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	friotassuni_0 $f wff ph $.
 	friotassuni_1 $f set x $.
@@ -555,6 +742,10 @@ $}
 $( Closure of restricted iota.  (Contributed by NM, 28-Feb-2013.)  (Revised
        by Mario Carneiro, 24-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	friotaclbg_0 $f wff ph $.
 	friotaclbg_1 $f set x $.
@@ -564,6 +755,9 @@ ${
 $}
 $( Closure of restricted iota.  (Contributed by NM, 15-Sep-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	friotaclb_0 $f wff ph $.
 	friotaclb_1 $f set x $.
@@ -574,6 +768,9 @@ $}
 $( Restricted iota equals the undefined value of its domain of discourse
        ` A ` when not meaningful.  (Contributed by NM, 26-Sep-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	friotaundb_0 $f wff ph $.
 	friotaundb_1 $f set x $.
@@ -584,6 +781,16 @@ $}
 $( Deduction version of ~ riotasv .  (Contributed by NM, 4-Mar-2013.)
        (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v V $.
 	$d x y z A $.
 	$d x z B $.
 	$d x z C $.
@@ -607,6 +814,15 @@ $}
 $( Deduction version of ~ riotasv .  (Contributed by NM, 1-Feb-2013.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v V $.
 	$d x y A $.
 	$d x B $.
 	$d x C $.
@@ -629,6 +845,18 @@ $( Value of description binder ` D ` for a single-valued class expression
        ` C ( y ) ` (as in e.g. ~ reusv2 ).  Special case of ~ riota2f .
        (Contributed by NM, 2-Mar-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
+	$v V $.
 	$d x y A $.
 	$d x y B $.
 	$d x C $.
@@ -662,6 +890,19 @@ $( Value of description binder ` D ` for a single-valued class expression
        (Contributed by NM, 1-Feb-2013.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
+	$v V $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x z C $.
@@ -697,6 +938,15 @@ $( The value of description binder ` D ` for a single-valued class
        substitution instance.  Special case of ~ riota2f .  (Contributed by NM,
        3-Mar-2013.)  (Proof shortened by Mario Carneiro, 6-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v V $.
 	$d x y A $.
 	$d x y B $.
 	$d x C $.
@@ -719,6 +969,13 @@ $( Value of description binder ` D ` for a single-valued class expression
        (Contributed by NM, 26-Jan-2013.)  (Proof shortened by Mario Carneiro,
        6-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y A $.
 	$d x B $.
 	$d x C $.
@@ -740,6 +997,17 @@ $( A property ` ch ` holding for a representative of a single-valued class
        (Contributed by NM, 5-Mar-2013.)  (Revised by Mario Carneiro,
        15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v V $.
 	$d x y A $.
 	$d x B $.
 	$d x C $.
@@ -770,6 +1038,17 @@ $( A property ` ch ` holding for a representative of a single-valued class
        (Contributed by NM, 1-Feb-2013.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v V $.
 	$d x y A $.
 	$d x B $.
 	$d x C $.

@@ -14,6 +14,8 @@ $( Define a relation which corresponds to proper subsethood ~ df-pss on
        that require relations, such as strict ordering, see ~ sorpss .
        (Contributed by Stefan O'Rear, 2-Nov-2014.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d x y $.
 	fdf-rpss_0 $f set x $.
@@ -23,6 +25,8 @@ $}
 $( The proper subset relation is a relation.  (Contributed by Stefan
        O'Rear, 2-Nov-2014.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d x y $.
 	irelrpss_0 $f set x $.
@@ -32,6 +36,11 @@ $}
 $( The proper subset relation on sets is the same as class proper
        subsethood.  (Contributed by Stefan O'Rear, 2-Nov-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d x y A $.
 	$d x y B $.
 	ibrrpssg_0 $f set x $.
@@ -44,6 +53,8 @@ $}
 $( The proper subset relation on sets is the same as class proper
        subsethood.  (Contributed by Stefan O'Rear, 2-Nov-2014.) $)
 ${
+	$v A $.
+	$v B $.
 	fbrrpss_0 $f class A $.
 	fbrrpss_1 $f class B $.
 	ebrrpss_0 $e |- B e. _V $.
@@ -52,6 +63,10 @@ $}
 $( Every class is partially ordered by proper subsets.  (Contributed by
        Stefan O'Rear, 2-Nov-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z A $.
 	iporpss_0 $f set x $.
 	iporpss_1 $f set y $.
@@ -62,6 +77,9 @@ $}
 $( Express strict ordering under proper subsets, i.e. the notion of a chain
        of sets.  (Contributed by Stefan O'Rear, 2-Nov-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fsorpss_0 $f set x $.
 	fsorpss_1 $f set y $.
@@ -71,6 +89,9 @@ $}
 $( Property of a chain of sets.  (Contributed by Stefan O'Rear,
      2-Nov-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fsorpssi_0 $f class A $.
 	fsorpssi_1 $f class B $.
 	fsorpssi_2 $f class C $.
@@ -79,6 +100,9 @@ $}
 $( A chain of sets is closed under binary union.  (Contributed by Mario
      Carneiro, 16-May-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fsorpssun_0 $f class A $.
 	fsorpssun_1 $f class B $.
 	fsorpssun_2 $f class C $.
@@ -87,6 +111,9 @@ $}
 $( A chain of sets is closed under binary intersection.  (Contributed by
      Mario Carneiro, 16-May-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fsorpssin_0 $f class A $.
 	fsorpssin_1 $f class B $.
 	fsorpssin_2 $f class C $.
@@ -95,6 +122,9 @@ $}
 $( In a chain of sets, a maximal element is the union of the chain.
        (Contributed by Stefan O'Rear, 2-Nov-2014.) $)
 ${
+	$v v $.
+	$v u $.
+	$v Y $.
 	$d Y u v $.
 	fsorpssuni_0 $f set v $.
 	fsorpssuni_1 $f set u $.
@@ -104,6 +134,9 @@ $}
 $( In a chain of sets, a minimal element is the intersection of the chain.
        (Contributed by Stefan O'Rear, 2-Nov-2014.) $)
 ${
+	$v v $.
+	$v u $.
+	$v Y $.
 	$d Y u v $.
 	fsorpssint_0 $f set v $.
 	fsorpssint_1 $f set u $.
@@ -113,6 +146,11 @@ $}
 $( The componentwise complement of a chain of sets is also a chain of
        sets.  (Contributed by Stefan O'Rear, 2-Nov-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v u $.
+	$v A $.
+	$v Y $.
 	$d Y x y $.
 	$d A x y $.
 	$d Y u $.

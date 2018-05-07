@@ -23,6 +23,8 @@ $( Double arrow (read:  'if and only if' or
                'is logically equivalent to') $)
 $( Extend our wff definition to include the biconditional connective. $)
 ${
+	$v ph $.
+	$v ps $.
 	fwb_0 $f wff ph $.
 	fwb_1 $f wff ps $.
 	wb $a wff ( ph <-> ps ) $.
@@ -88,6 +90,8 @@ $( Define the biconditional (logical 'iff').
      truth values are equal; ` = ` ( ~ df-cleq ) returns true if two classes
      are equal.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fdf-bi_0 $f wff ph $.
 	fdf-bi_1 $f wff ps $.
 	df-bi $a |- -. ( ( ( ph <-> ps ) -> -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) ) -> -. ( -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) -> ( ph <-> ps ) ) ) $.
@@ -96,6 +100,8 @@ $( $j justification 'bijust' for 'df-bi'; $)
 $( Property of the biconditional connective.  (Contributed by NM,
      11-May-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fbi1_0 $f wff ph $.
 	fbi1_1 $f wff ps $.
 	bi1 $p |- ( ( ph <-> ps ) -> ( ph -> ps ) ) $= fbi1_0 fbi1_1 wb fbi1_0 fbi1_1 wi fbi1_1 fbi1_0 wi wn wi wn fbi1_0 fbi1_1 wi fbi1_0 fbi1_1 wb fbi1_0 fbi1_1 wi fbi1_1 fbi1_0 wi wn wi wn wi fbi1_0 fbi1_1 wi fbi1_1 fbi1_0 wi wn wi wn fbi1_0 fbi1_1 wb wi wn wi wn fbi1_0 fbi1_1 wb fbi1_0 fbi1_1 wi fbi1_1 fbi1_0 wi wn wi wn wi fbi1_0 fbi1_1 df-bi fbi1_0 fbi1_1 wb fbi1_0 fbi1_1 wi fbi1_1 fbi1_0 wi wn wi wn wi fbi1_0 fbi1_1 wi fbi1_1 fbi1_0 wi wn wi wn fbi1_0 fbi1_1 wb wi wn simplim ax-mp fbi1_0 fbi1_1 wi fbi1_1 fbi1_0 wi wn simplim syl $.
@@ -103,6 +109,8 @@ $}
 $( Property of the biconditional connective.  (Contributed by NM,
      11-May-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fbi3_0 $f wff ph $.
 	fbi3_1 $f wff ps $.
 	bi3 $p |- ( ( ph -> ps ) -> ( ( ps -> ph ) -> ( ph <-> ps ) ) ) $= fbi3_0 fbi3_1 wi fbi3_1 fbi3_0 wi fbi3_0 fbi3_1 wb fbi3_0 fbi3_1 wb fbi3_0 fbi3_1 wi fbi3_1 fbi3_0 wi wn wi wn wi fbi3_0 fbi3_1 wi fbi3_1 fbi3_0 wi wn wi wn fbi3_0 fbi3_1 wb wi wn wi wn fbi3_0 fbi3_1 wi fbi3_1 fbi3_0 wi wn wi wn fbi3_0 fbi3_1 wb wi fbi3_0 fbi3_1 df-bi fbi3_0 fbi3_1 wb fbi3_0 fbi3_1 wi fbi3_1 fbi3_0 wi wn wi wn wi fbi3_0 fbi3_1 wi fbi3_1 fbi3_0 wi wn wi wn fbi3_0 fbi3_1 wb wi simprim ax-mp expi $.
@@ -110,6 +118,8 @@ $}
 $( Infer an equivalence from an implication and its converse.  (Contributed
        by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fimpbii_0 $f wff ph $.
 	fimpbii_1 $f wff ps $.
 	eimpbii_0 $e |- ( ph -> ps ) $.
@@ -119,6 +129,10 @@ $}
 $( Deduce an equivalence from two implications.  (Contributed by Rodolfo
        Medina, 12-Oct-2010.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fimpbidd_0 $f wff ph $.
 	fimpbidd_1 $f wff ps $.
 	fimpbidd_2 $f wff ch $.
@@ -130,6 +144,10 @@ $}
 $( Deduce an equivalence from two implications.  (Contributed by Wolf
        Lammen, 12-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fimpbid21d_0 $f wff ph $.
 	fimpbid21d_1 $f wff ps $.
 	fimpbid21d_2 $f wff ch $.
@@ -141,6 +159,9 @@ $}
 $( Deduce an equivalence from two implications.  (Contributed by NM,
        5-Aug-1993.)  (Revised by Wolf Lammen, 3-Nov-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fimpbid_0 $f wff ph $.
 	fimpbid_1 $f wff ps $.
 	fimpbid_2 $f wff ch $.
@@ -152,6 +173,8 @@ $( Relate the biconditional connective to primitive connectives.  See
      ~ dfbi1gb for an unusual version proved directly from axioms.
      (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fdfbi1_0 $f wff ph $.
 	fdfbi1_1 $f wff ps $.
 	dfbi1 $p |- ( ( ph <-> ps ) <-> -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) ) $= fdfbi1_0 fdfbi1_1 wb fdfbi1_0 fdfbi1_1 wi fdfbi1_1 fdfbi1_0 wi wn wi wn fdfbi1_0 fdfbi1_1 wb fdfbi1_0 fdfbi1_1 wi fdfbi1_1 fdfbi1_0 wi wn wi wn wi fdfbi1_0 fdfbi1_1 wi fdfbi1_1 fdfbi1_0 wi wn wi wn fdfbi1_0 fdfbi1_1 wb wi wn wi wn fdfbi1_0 fdfbi1_1 wb fdfbi1_0 fdfbi1_1 wi fdfbi1_1 fdfbi1_0 wi wn wi wn wi fdfbi1_0 fdfbi1_1 df-bi fdfbi1_0 fdfbi1_1 wb fdfbi1_0 fdfbi1_1 wi fdfbi1_1 fdfbi1_0 wi wn wi wn wi fdfbi1_0 fdfbi1_1 wi fdfbi1_1 fdfbi1_0 wi wn wi wn fdfbi1_0 fdfbi1_1 wb wi wn simplim ax-mp fdfbi1_0 fdfbi1_1 wi fdfbi1_1 fdfbi1_0 wi fdfbi1_0 fdfbi1_1 wb fdfbi1_0 fdfbi1_1 bi3 impi impbii $.
@@ -174,6 +197,10 @@ $( This proof of ~ dfbi1 , discovered by Gregory Bush on 8-Mar-2004, has
      (Contributed by Gregory Bush, 10-Mar-2004.)  (New usage is discouraged.)
      (Proof modification is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	idfbi1gb_0 $f wff ch $.
 	idfbi1gb_1 $f wff th $.
 	fdfbi1gb_0 $f wff ph $.
@@ -183,6 +210,8 @@ $}
 $( Infer an implication from a logical equivalence.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fbiimpi_0 $f wff ph $.
 	fbiimpi_1 $f wff ps $.
 	ebiimpi_0 $e |- ( ph <-> ps ) $.
@@ -192,6 +221,9 @@ $( A mixed syllogism inference from a biconditional and an implication.
        Useful for substituting an antecedent with a definition.  (Contributed
        by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fsylbi_0 $f wff ph $.
 	fsylbi_1 $f wff ps $.
 	fsylbi_2 $f wff ch $.
@@ -202,6 +234,9 @@ $}
 $( A mixed syllogism inference from an implication and a biconditional.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fsylib_0 $f wff ph $.
 	fsylib_1 $f wff ps $.
 	fsylib_2 $f wff ch $.
@@ -212,6 +247,8 @@ $}
 $( Property of the biconditional connective.  (Contributed by NM,
      11-May-1999.)  (Proof shortened by Wolf Lammen, 11-Nov-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fbi2_0 $f wff ph $.
 	fbi2_1 $f wff ps $.
 	bi2 $p |- ( ( ph <-> ps ) -> ( ps -> ph ) ) $= fbi2_0 fbi2_1 wb fbi2_0 fbi2_1 wi fbi2_1 fbi2_0 wi wn wi wn fbi2_1 fbi2_0 wi fbi2_0 fbi2_1 dfbi1 fbi2_0 fbi2_1 wi fbi2_1 fbi2_0 wi simprim sylbi $.
@@ -219,6 +256,8 @@ $}
 $( Commutative law for equivalence.  (Contributed by Wolf Lammen,
      10-Nov-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fbicom1_0 $f wff ph $.
 	fbicom1_1 $f wff ps $.
 	bicom1 $p |- ( ( ph <-> ps ) -> ( ps <-> ph ) ) $= fbicom1_0 fbicom1_1 wb fbicom1_1 fbicom1_0 fbicom1_0 fbicom1_1 bi2 fbicom1_0 fbicom1_1 bi1 impbid $.
@@ -226,6 +265,8 @@ $}
 $( Commutative law for equivalence.  Theorem *4.21 of [WhiteheadRussell]
      p. 117.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fbicom_0 $f wff ph $.
 	fbicom_1 $f wff ps $.
 	bicom $p |- ( ( ph <-> ps ) <-> ( ps <-> ph ) ) $= fbicom_0 fbicom_1 wb fbicom_1 fbicom_0 wb fbicom_0 fbicom_1 bicom1 fbicom_1 fbicom_0 bicom1 impbii $.
@@ -233,6 +274,9 @@ $}
 $( Commute two sides of a biconditional in a deduction.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbicomd_0 $f wff ph $.
 	fbicomd_1 $f wff ps $.
 	fbicomd_2 $f wff ch $.
@@ -242,6 +286,8 @@ $}
 $( Inference from commutative law for logical equivalence.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fbicomi_0 $f wff ph $.
 	fbicomi_1 $f wff ps $.
 	ebicomi_0 $e |- ( ph <-> ps ) $.
@@ -250,6 +296,9 @@ $}
 $( Infer an equivalence from two implications.  (Contributed by NM,
        6-Mar-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fimpbid1_0 $f wff ph $.
 	fimpbid1_1 $f wff ps $.
 	fimpbid1_2 $f wff ch $.
@@ -260,6 +309,9 @@ $}
 $( Infer an equivalence from two implications.  (Contributed by NM,
        6-Mar-2007.)  (Proof shortened by Wolf Lammen, 27-Sep-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fimpbid2_0 $f wff ph $.
 	fimpbid2_1 $f wff ps $.
 	fimpbid2_2 $f wff ch $.
@@ -270,6 +322,9 @@ $}
 $( A variation on ~ impbid with contraposition.  (Contributed by Jeff
        Hankins, 3-Jul-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fimpcon4bid_0 $f wff ph $.
 	fimpcon4bid_1 $f wff ps $.
 	fimpcon4bid_2 $f wff ch $.
@@ -280,6 +335,8 @@ $}
 $( Infer a converse implication from a logical equivalence.  (Contributed
        by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 16-Sep-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fbiimpri_0 $f wff ph $.
 	fbiimpri_1 $f wff ps $.
 	ebiimpri_0 $e |- ( ph <-> ps ) $.
@@ -288,6 +345,9 @@ $}
 $( Deduce an implication from a logical equivalence.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbiimpd_0 $f wff ph $.
 	fbiimpd_1 $f wff ps $.
 	fbiimpd_2 $f wff ch $.
@@ -297,6 +357,8 @@ $}
 $( An inference from a biconditional, related to modus ponens.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fmpbi_0 $f wff ph $.
 	fmpbi_1 $f wff ps $.
 	empbi_0 $e |- ph $.
@@ -306,6 +368,8 @@ $}
 $( An inference from a biconditional, related to modus ponens.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fmpbir_0 $f wff ph $.
 	fmpbir_1 $f wff ps $.
 	empbir_0 $e |- ps $.
@@ -315,6 +379,9 @@ $}
 $( A deduction from a biconditional, related to modus ponens.  (Contributed
        by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmpbid_0 $f wff ph $.
 	fmpbid_1 $f wff ps $.
 	fmpbid_2 $f wff ch $.
@@ -326,6 +393,9 @@ $( An inference from a nested biconditional, related to modus ponens.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
        25-Oct-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmpbii_0 $f wff ph $.
 	fmpbii_1 $f wff ps $.
 	fmpbii_2 $f wff ch $.
@@ -337,6 +407,9 @@ $( A mixed syllogism inference from an implication and a biconditional.
        Useful for substituting a consequent with a definition.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fsylibr_0 $f wff ph $.
 	fsylibr_1 $f wff ps $.
 	fsylibr_2 $f wff ch $.
@@ -347,6 +420,9 @@ $}
 $( A mixed syllogism inference from a biconditional and an implication.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fsylbir_0 $f wff ph $.
 	fsylbir_1 $f wff ps $.
 	fsylbir_2 $f wff ch $.
@@ -356,6 +432,10 @@ ${
 $}
 $( A syllogism deduction.  (Contributed by NM, 3-Aug-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsylibd_0 $f wff ph $.
 	fsylibd_1 $f wff ps $.
 	fsylibd_2 $f wff ch $.
@@ -366,6 +446,10 @@ ${
 $}
 $( A syllogism deduction.  (Contributed by NM, 3-Aug-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsylbid_0 $f wff ph $.
 	fsylbid_1 $f wff ps $.
 	fsylbid_2 $f wff ch $.
@@ -377,6 +461,10 @@ $}
 $( A deduction from a biconditional, related to modus ponens.  (Contributed
        by NM, 9-Aug-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmpbidi_0 $f wff ph $.
 	fmpbidi_1 $f wff ps $.
 	fmpbidi_2 $f wff ch $.
@@ -389,6 +477,10 @@ $( A mixed syllogism inference from a nested implication and a
        biconditional.  Useful for substituting an embedded antecedent with a
        definition.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl5bi_0 $f wff ph $.
 	fsyl5bi_1 $f wff ps $.
 	fsyl5bi_2 $f wff ch $.
@@ -400,6 +492,10 @@ $}
 $( A mixed syllogism inference from a nested implication and a
        biconditional.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl5bir_0 $f wff ph $.
 	fsyl5bir_1 $f wff ps $.
 	fsyl5bir_2 $f wff ch $.
@@ -410,6 +506,10 @@ ${
 $}
 $( A mixed syllogism inference.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl5ib_0 $f wff ph $.
 	fsyl5ib_1 $f wff ps $.
 	fsyl5ib_2 $f wff ch $.
@@ -420,6 +520,10 @@ ${
 $}
 $( A mixed syllogism inference.  (Contributed by NM, 19-Jun-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl5ibcom_0 $f wff ph $.
 	fsyl5ibcom_1 $f wff ps $.
 	fsyl5ibcom_2 $f wff ch $.
@@ -430,6 +534,10 @@ ${
 $}
 $( A mixed syllogism inference.  (Contributed by NM, 3-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl5ibr_0 $f wff ph $.
 	fsyl5ibr_1 $f wff ps $.
 	fsyl5ibr_2 $f wff ch $.
@@ -440,6 +548,10 @@ ${
 $}
 $( A mixed syllogism inference.  (Contributed by NM, 20-Jun-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl5ibrcom_0 $f wff ph $.
 	fsyl5ibrcom_1 $f wff ps $.
 	fsyl5ibrcom_2 $f wff ch $.
@@ -451,6 +563,9 @@ $}
 $( Deduce a converse implication from a logical equivalence.  (Contributed
        by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 22-Sep-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbiimprd_0 $f wff ph $.
 	fbiimprd_1 $f wff ps $.
 	fbiimprd_2 $f wff ch $.
@@ -460,6 +575,9 @@ $}
 $( Deduce a commuted implication from a logical equivalence.  (Contributed
        by NM, 3-May-1994.)  (Proof shortened by Wolf Lammen, 22-Sep-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbiimpcd_0 $f wff ph $.
 	fbiimpcd_1 $f wff ps $.
 	fbiimpcd_2 $f wff ch $.
@@ -470,6 +588,9 @@ $( Deduce a converse commuted implication from a logical equivalence.
        (Contributed by NM, 3-May-1994.)  (Proof shortened by Wolf Lammen,
        20-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbiimprcd_0 $f wff ph $.
 	fbiimprcd_1 $f wff ps $.
 	fbiimprcd_2 $f wff ch $.
@@ -479,6 +600,10 @@ $}
 $( A mixed syllogism inference from a nested implication and a
        biconditional.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl6ib_0 $f wff ph $.
 	fsyl6ib_1 $f wff ps $.
 	fsyl6ib_2 $f wff ch $.
@@ -491,6 +616,10 @@ $( A mixed syllogism inference from a nested implication and a
        biconditional.  Useful for substituting an embedded consequent with a
        definition.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl6ibr_0 $f wff ph $.
 	fsyl6ibr_1 $f wff ps $.
 	fsyl6ibr_2 $f wff ch $.
@@ -501,6 +630,10 @@ ${
 $}
 $( A mixed syllogism inference.  (Contributed by NM, 2-Jan-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl6bi_0 $f wff ph $.
 	fsyl6bi_1 $f wff ps $.
 	fsyl6bi_2 $f wff ch $.
@@ -511,6 +644,10 @@ ${
 $}
 $( A mixed syllogism inference.  (Contributed by NM, 18-May-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl6bir_0 $f wff ph $.
 	fsyl6bir_1 $f wff ps $.
 	fsyl6bir_2 $f wff ch $.
@@ -522,6 +659,11 @@ $}
 $( A mixed syllogism inference from a doubly nested implication and a
        biconditional.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl7bi_0 $f wff ph $.
 	fsyl7bi_1 $f wff ps $.
 	fsyl7bi_2 $f wff ch $.
@@ -535,6 +677,11 @@ $( A syllogism rule of inference.  The second premise is used to replace
        the consequent of the first premise.  (Contributed by NM,
        1-Aug-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl8ib_0 $f wff ph $.
 	fsyl8ib_1 $f wff ps $.
 	fsyl8ib_2 $f wff ch $.
@@ -547,6 +694,9 @@ $}
 $( A deduction from a biconditional, related to modus ponens.  (Contributed
        by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmpbird_0 $f wff ph $.
 	fmpbird_1 $f wff ps $.
 	fmpbird_2 $f wff ch $.
@@ -558,6 +708,9 @@ $( An inference from a nested biconditional, related to modus ponens.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
        25-Oct-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmpbiri_0 $f wff ph $.
 	fmpbiri_1 $f wff ps $.
 	fmpbiri_2 $f wff ch $.
@@ -567,6 +720,10 @@ ${
 $}
 $( A syllogism deduction.  (Contributed by NM, 3-Aug-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsylibrd_0 $f wff ph $.
 	fsylibrd_1 $f wff ps $.
 	fsylibrd_2 $f wff ch $.
@@ -577,6 +734,10 @@ ${
 $}
 $( A syllogism deduction.  (Contributed by NM, 3-Aug-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsylbird_0 $f wff ph $.
 	fsylbird_1 $f wff ps $.
 	fsylbird_2 $f wff ch $.
@@ -588,12 +749,15 @@ $}
 $( Principle of identity for logical equivalence.  Theorem *4.2 of
      [WhiteheadRussell] p. 117.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
 	fbiid_0 $f wff ph $.
 	biid $p |- ( ph <-> ph ) $= fbiid_0 fbiid_0 fbiid_0 id fbiid_0 id impbii $.
 $}
 $( Principle of identity with antecedent.  (Contributed by NM,
      25-Nov-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fbiidd_0 $f wff ph $.
 	fbiidd_1 $f wff ps $.
 	biidd $p |- ( ph -> ( ps <-> ps ) ) $= fbiidd_1 fbiidd_1 wb fbiidd_0 fbiidd_1 biid a1i $.
@@ -605,12 +769,16 @@ $( Two propositions are equivalent if they are both true.  Closed form of
      ` ( ph <-> ( ps <-> ( ph <-> ps ) ) ) ` .  (Contributed by Wolf Lammen,
      12-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm5.1im_0 $f wff ph $.
 	fpm5.1im_1 $f wff ps $.
 	pm5.1im $p |- ( ph -> ( ps -> ( ph <-> ps ) ) ) $= fpm5.1im_0 fpm5.1im_1 fpm5.1im_0 fpm5.1im_1 fpm5.1im_1 fpm5.1im_0 ax-1 fpm5.1im_0 fpm5.1im_1 ax-1 impbid21d $.
 $}
 $( Two truths are equivalent.  (Contributed by NM, 18-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	f2th_0 $f wff ph $.
 	f2th_1 $f wff ps $.
 	e2th_0 $e |- ph $.
@@ -620,6 +788,9 @@ $}
 $( Two truths are equivalent (deduction rule).  (Contributed by NM,
        3-Jun-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f2thd_0 $f wff ph $.
 	f2thd_1 $f wff ps $.
 	f2thd_2 $f wff ch $.
@@ -630,6 +801,8 @@ $}
 $( Inference that converts a biconditional implied by one of its arguments,
        into an implication.  (Contributed by NM, 17-Oct-2003.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fibi_0 $f wff ph $.
 	fibi_1 $f wff ps $.
 	eibi_0 $e |- ( ph -> ( ph <-> ps ) ) $.
@@ -638,6 +811,8 @@ $}
 $( Inference that converts a biconditional implied by one of its arguments,
        into an implication.  (Contributed by NM, 22-Jul-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fibir_0 $f wff ph $.
 	fibir_1 $f wff ps $.
 	eibir_0 $e |- ( ph -> ( ps <-> ph ) ) $.
@@ -646,6 +821,9 @@ $}
 $( Deduction that converts a biconditional implied by one of its arguments,
        into an implication.  (Contributed by NM, 26-Jun-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fibd_0 $f wff ph $.
 	fibd_1 $f wff ps $.
 	fibd_2 $f wff ch $.
@@ -656,6 +834,9 @@ $( Distribution of implication over biconditional.  Theorem *5.74 of
      [WhiteheadRussell] p. 126.  (Contributed by NM, 1-Aug-1994.)  (Proof
      shortened by Wolf Lammen, 11-Apr-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm5.74_0 $f wff ph $.
 	fpm5.74_1 $f wff ps $.
 	fpm5.74_2 $f wff ch $.
@@ -664,6 +845,9 @@ $}
 $( Distribution of implication over biconditional (inference rule).
        (Contributed by NM, 1-Aug-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm5.74i_0 $f wff ph $.
 	fpm5.74i_1 $f wff ps $.
 	fpm5.74i_2 $f wff ch $.
@@ -673,6 +857,9 @@ $}
 $( Distribution of implication over biconditional (reverse inference
        rule).  (Contributed by NM, 1-Aug-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm5.74ri_0 $f wff ph $.
 	fpm5.74ri_1 $f wff ps $.
 	fpm5.74ri_2 $f wff ch $.
@@ -682,6 +869,10 @@ $}
 $( Distribution of implication over biconditional (deduction rule).
        (Contributed by NM, 21-Mar-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fpm5.74d_0 $f wff ph $.
 	fpm5.74d_1 $f wff ps $.
 	fpm5.74d_2 $f wff ch $.
@@ -692,6 +883,10 @@ $}
 $( Distribution of implication over biconditional (deduction rule).
        (Contributed by NM, 19-Mar-1997.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fpm5.74rd_0 $f wff ph $.
 	fpm5.74rd_1 $f wff ps $.
 	fpm5.74rd_2 $f wff ch $.
@@ -702,6 +897,9 @@ $}
 $( An inference from transitive law for logical equivalence.  (Contributed
        by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 13-Oct-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbitri_0 $f wff ph $.
 	fbitri_1 $f wff ps $.
 	fbitri_2 $f wff ch $.
@@ -712,6 +910,9 @@ $}
 $( An inference from transitive law for logical equivalence.  (Contributed
        by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbitr2i_0 $f wff ph $.
 	fbitr2i_1 $f wff ps $.
 	fbitr2i_2 $f wff ch $.
@@ -722,6 +923,9 @@ $}
 $( An inference from transitive law for logical equivalence.  (Contributed
        by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbitr3i_0 $f wff ph $.
 	fbitr3i_1 $f wff ps $.
 	fbitr3i_2 $f wff ch $.
@@ -732,6 +936,9 @@ $}
 $( An inference from transitive law for logical equivalence.  (Contributed
        by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbitr4i_0 $f wff ph $.
 	fbitr4i_1 $f wff ps $.
 	fbitr4i_2 $f wff ch $.
@@ -747,6 +954,10 @@ $( $j
 $( Deduction form of ~ bitri .  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by Wolf Lammen, 14-Apr-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fbitrd_0 $f wff ph $.
 	fbitrd_1 $f wff ps $.
 	fbitrd_2 $f wff ch $.
@@ -757,6 +968,10 @@ ${
 $}
 $( Deduction form of ~ bitr2i .  (Contributed by NM, 9-Jun-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fbitr2d_0 $f wff ph $.
 	fbitr2d_1 $f wff ps $.
 	fbitr2d_2 $f wff ch $.
@@ -767,6 +982,10 @@ ${
 $}
 $( Deduction form of ~ bitr3i .  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fbitr3d_0 $f wff ph $.
 	fbitr3d_1 $f wff ps $.
 	fbitr3d_2 $f wff ch $.
@@ -777,6 +996,10 @@ ${
 $}
 $( Deduction form of ~ bitr4i .  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fbitr4d_0 $f wff ph $.
 	fbitr4d_1 $f wff ps $.
 	fbitr4d_2 $f wff ch $.
@@ -788,6 +1011,10 @@ $}
 $( A syllogism inference from two biconditionals.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl5bb_0 $f wff ph $.
 	fsyl5bb_1 $f wff ps $.
 	fsyl5bb_2 $f wff ch $.
@@ -799,6 +1026,10 @@ $}
 $( A syllogism inference from two biconditionals.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl5rbb_0 $f wff ph $.
 	fsyl5rbb_1 $f wff ps $.
 	fsyl5rbb_2 $f wff ch $.
@@ -810,6 +1041,10 @@ $}
 $( A syllogism inference from two biconditionals.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl5bbr_0 $f wff ph $.
 	fsyl5bbr_1 $f wff ps $.
 	fsyl5bbr_2 $f wff ch $.
@@ -821,6 +1056,10 @@ $}
 $( A syllogism inference from two biconditionals.  (Contributed by NM,
        25-Nov-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl5rbbr_0 $f wff ph $.
 	fsyl5rbbr_1 $f wff ps $.
 	fsyl5rbbr_2 $f wff ch $.
@@ -832,6 +1071,10 @@ $}
 $( A syllogism inference from two biconditionals.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl6bb_0 $f wff ph $.
 	fsyl6bb_1 $f wff ps $.
 	fsyl6bb_2 $f wff ch $.
@@ -843,6 +1086,10 @@ $}
 $( A syllogism inference from two biconditionals.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl6rbb_0 $f wff ph $.
 	fsyl6rbb_1 $f wff ps $.
 	fsyl6rbb_2 $f wff ch $.
@@ -854,6 +1101,10 @@ $}
 $( A syllogism inference from two biconditionals.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl6bbr_0 $f wff ph $.
 	fsyl6bbr_1 $f wff ps $.
 	fsyl6bbr_2 $f wff ch $.
@@ -865,6 +1116,10 @@ $}
 $( A syllogism inference from two biconditionals.  (Contributed by NM,
        25-Nov-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl6rbbr_0 $f wff ph $.
 	fsyl6rbbr_1 $f wff ps $.
 	fsyl6rbbr_2 $f wff ch $.
@@ -876,6 +1131,10 @@ $}
 $( A mixed syllogism inference, useful for removing a definition from both
        sides of an implication.  (Contributed by NM, 10-Aug-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3imtr3i_0 $f wff ph $.
 	f3imtr3i_1 $f wff ps $.
 	f3imtr3i_2 $f wff ch $.
@@ -888,6 +1147,10 @@ $}
 $( A mixed syllogism inference, useful for applying a definition to both
        sides of an implication.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3imtr4i_0 $f wff ph $.
 	f3imtr4i_1 $f wff ps $.
 	f3imtr4i_2 $f wff ch $.
@@ -900,6 +1163,11 @@ $}
 $( More general version of ~ 3imtr3i .  Useful for converting conditional
        definitions in a formula.  (Contributed by NM, 8-Apr-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3imtr3d_0 $f wff ph $.
 	f3imtr3d_1 $f wff ps $.
 	f3imtr3d_2 $f wff ch $.
@@ -913,6 +1181,11 @@ $}
 $( More general version of ~ 3imtr4i .  Useful for converting conditional
        definitions in a formula.  (Contributed by NM, 26-Oct-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3imtr4d_0 $f wff ph $.
 	f3imtr4d_1 $f wff ps $.
 	f3imtr4d_2 $f wff ch $.
@@ -927,6 +1200,11 @@ $( More general version of ~ 3imtr3i .  Useful for converting definitions
        in a formula.  (Contributed by NM, 20-May-1996.)  (Proof shortened by
        Wolf Lammen, 20-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3imtr3g_0 $f wff ph $.
 	f3imtr3g_1 $f wff ps $.
 	f3imtr3g_2 $f wff ch $.
@@ -941,6 +1219,11 @@ $( More general version of ~ 3imtr4i .  Useful for converting definitions
        in a formula.  (Contributed by NM, 20-May-1996.)  (Proof shortened by
        Wolf Lammen, 20-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3imtr4g_0 $f wff ph $.
 	f3imtr4g_1 $f wff ps $.
 	f3imtr4g_2 $f wff ch $.
@@ -954,6 +1237,10 @@ $}
 $( A chained inference from transitive law for logical equivalence.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3bitri_0 $f wff ph $.
 	f3bitri_1 $f wff ps $.
 	f3bitri_2 $f wff ch $.
@@ -966,6 +1253,10 @@ $}
 $( A chained inference from transitive law for logical equivalence.
        (Contributed by NM, 4-Aug-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3bitrri_0 $f wff ph $.
 	f3bitrri_1 $f wff ps $.
 	f3bitrri_2 $f wff ch $.
@@ -978,6 +1269,10 @@ $}
 $( A chained inference from transitive law for logical equivalence.
        (Contributed by NM, 4-Aug-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3bitr2i_0 $f wff ph $.
 	f3bitr2i_1 $f wff ps $.
 	f3bitr2i_2 $f wff ch $.
@@ -990,6 +1285,10 @@ $}
 $( A chained inference from transitive law for logical equivalence.
        (Contributed by NM, 4-Aug-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3bitr2ri_0 $f wff ph $.
 	f3bitr2ri_1 $f wff ps $.
 	f3bitr2ri_2 $f wff ch $.
@@ -1002,6 +1301,10 @@ $}
 $( A chained inference from transitive law for logical equivalence.
        (Contributed by NM, 19-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3bitr3i_0 $f wff ph $.
 	f3bitr3i_1 $f wff ps $.
 	f3bitr3i_2 $f wff ch $.
@@ -1014,6 +1317,10 @@ $}
 $( A chained inference from transitive law for logical equivalence.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3bitr3ri_0 $f wff ph $.
 	f3bitr3ri_1 $f wff ps $.
 	f3bitr3ri_2 $f wff ch $.
@@ -1027,6 +1334,10 @@ $( A chained inference from transitive law for logical equivalence.  This
        inference is frequently used to apply a definition to both sides of a
        logical equivalence.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3bitr4i_0 $f wff ph $.
 	f3bitr4i_1 $f wff ps $.
 	f3bitr4i_2 $f wff ch $.
@@ -1039,6 +1350,10 @@ $}
 $( A chained inference from transitive law for logical equivalence.
        (Contributed by NM, 2-Sep-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3bitr4ri_0 $f wff ph $.
 	f3bitr4ri_1 $f wff ps $.
 	f3bitr4ri_2 $f wff ch $.
@@ -1051,6 +1366,11 @@ $}
 $( Deduction from transitivity of biconditional.  (Contributed by NM,
        13-Aug-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3bitrd_0 $f wff ph $.
 	f3bitrd_1 $f wff ps $.
 	f3bitrd_2 $f wff ch $.
@@ -1064,6 +1384,11 @@ $}
 $( Deduction from transitivity of biconditional.  (Contributed by NM,
        4-Aug-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3bitrrd_0 $f wff ph $.
 	f3bitrrd_1 $f wff ps $.
 	f3bitrrd_2 $f wff ch $.
@@ -1077,6 +1402,11 @@ $}
 $( Deduction from transitivity of biconditional.  (Contributed by NM,
        4-Aug-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3bitr2d_0 $f wff ph $.
 	f3bitr2d_1 $f wff ps $.
 	f3bitr2d_2 $f wff ch $.
@@ -1090,6 +1420,11 @@ $}
 $( Deduction from transitivity of biconditional.  (Contributed by NM,
        4-Aug-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3bitr2rd_0 $f wff ph $.
 	f3bitr2rd_1 $f wff ps $.
 	f3bitr2rd_2 $f wff ch $.
@@ -1104,6 +1439,11 @@ $( Deduction from transitivity of biconditional.  Useful for converting
        conditional definitions in a formula.  (Contributed by NM,
        24-Apr-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3bitr3d_0 $f wff ph $.
 	f3bitr3d_1 $f wff ps $.
 	f3bitr3d_2 $f wff ch $.
@@ -1117,6 +1457,11 @@ $}
 $( Deduction from transitivity of biconditional.  (Contributed by NM,
        4-Aug-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3bitr3rd_0 $f wff ph $.
 	f3bitr3rd_1 $f wff ps $.
 	f3bitr3rd_2 $f wff ch $.
@@ -1131,6 +1476,11 @@ $( Deduction from transitivity of biconditional.  Useful for converting
        conditional definitions in a formula.  (Contributed by NM,
        18-Oct-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3bitr4d_0 $f wff ph $.
 	f3bitr4d_1 $f wff ps $.
 	f3bitr4d_2 $f wff ch $.
@@ -1144,6 +1494,11 @@ $}
 $( Deduction from transitivity of biconditional.  (Contributed by NM,
        4-Aug-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3bitr4rd_0 $f wff ph $.
 	f3bitr4rd_1 $f wff ps $.
 	f3bitr4rd_2 $f wff ch $.
@@ -1157,6 +1512,11 @@ $}
 $( More general version of ~ 3bitr3i .  Useful for converting definitions
        in a formula.  (Contributed by NM, 4-Jun-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3bitr3g_0 $f wff ph $.
 	f3bitr3g_1 $f wff ps $.
 	f3bitr3g_2 $f wff ch $.
@@ -1170,6 +1530,11 @@ $}
 $( More general version of ~ 3bitr4i .  Useful for converting definitions
        in a formula.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3bitr4g_0 $f wff ph $.
 	f3bitr4g_1 $f wff ps $.
 	f3bitr4g_2 $f wff ch $.
@@ -1183,6 +1548,11 @@ $}
 $( Construct a bi-conditional in antecedent position.  (Contributed by Wolf
        Lammen, 14-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fbi3ant_0 $f wff ph $.
 	fbi3ant_1 $f wff ps $.
 	fbi3ant_2 $f wff ch $.
@@ -1194,6 +1564,10 @@ $}
 $( Express symmetries of theorems in terms of biconditionals.  (Contributed
      by Wolf Lammen, 14-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fbisym_0 $f wff ph $.
 	fbisym_1 $f wff ps $.
 	fbisym_2 $f wff ch $.
@@ -1203,18 +1577,24 @@ $}
 $( Double negation.  Theorem *4.13 of [WhiteheadRussell] p. 117.
      (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
 	fnotnot_0 $f wff ph $.
 	notnot $p |- ( ph <-> -. -. ph ) $= fnotnot_0 fnotnot_0 wn wn fnotnot_0 notnot1 fnotnot_0 notnot2 impbii $.
 $}
 $( Contraposition.  Theorem *4.1 of [WhiteheadRussell] p. 116.  (Contributed
      by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fcon34b_0 $f wff ph $.
 	fcon34b_1 $f wff ps $.
 	con34b $p |- ( ( ph -> ps ) <-> ( -. ps -> -. ph ) ) $= fcon34b_0 fcon34b_1 wi fcon34b_1 wn fcon34b_0 wn wi fcon34b_0 fcon34b_1 con3 fcon34b_1 fcon34b_0 ax-3 impbii $.
 $}
 $( A contraposition deduction.  (Contributed by NM, 21-May-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fcon4bid_0 $f wff ph $.
 	fcon4bid_1 $f wff ps $.
 	fcon4bid_2 $f wff ch $.
@@ -1224,6 +1604,9 @@ $}
 $( Deduction negating both sides of a logical equivalence.  (Contributed by
        NM, 21-May-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fnotbid_0 $f wff ph $.
 	fnotbid_1 $f wff ps $.
 	fnotbid_2 $f wff ch $.
@@ -1233,6 +1616,8 @@ $}
 $( Contraposition.  Theorem *4.11 of [WhiteheadRussell] p. 117.  (Contributed
      by NM, 21-May-1994.)  (Proof shortened by Wolf Lammen, 12-Jun-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fnotbi_0 $f wff ph $.
 	fnotbi_1 $f wff ps $.
 	notbi $p |- ( ( ph <-> ps ) <-> ( -. ph <-> -. ps ) ) $= fnotbi_0 fnotbi_1 wb fnotbi_0 wn fnotbi_1 wn wb fnotbi_0 fnotbi_1 wb fnotbi_0 fnotbi_1 fnotbi_0 fnotbi_1 wb id notbid fnotbi_0 wn fnotbi_1 wn wb fnotbi_0 fnotbi_1 fnotbi_0 wn fnotbi_1 wn wb id con4bid impbii $.
@@ -1240,6 +1625,8 @@ $}
 $( Negate both sides of a logical equivalence.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Wolf Lammen, 19-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fnotbii_0 $f wff ph $.
 	fnotbii_1 $f wff ps $.
 	enotbii_0 $e |- ( ph <-> ps ) $.
@@ -1249,6 +1636,8 @@ $( Theorem notbii is the congruence law for negation. $)
 $( $j congruence 'notbii'; $)
 $( A contraposition inference.  (Contributed by NM, 21-May-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fcon4bii_0 $f wff ph $.
 	fcon4bii_1 $f wff ps $.
 	econ4bii_0 $e |- ( -. ph <-> -. ps ) $.
@@ -1258,6 +1647,8 @@ $( An inference from a biconditional, related to modus tollens.
        (Contributed by NM, 15-Nov-1994.)  (Proof shortened by Wolf Lammen,
        25-Oct-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fmtbi_0 $f wff ph $.
 	fmtbi_1 $f wff ps $.
 	emtbi_0 $e |- -. ph $.
@@ -1268,6 +1659,8 @@ $( An inference from a biconditional, related to modus tollens.
        (Contributed by NM, 15-Nov-1994.)  (Proof shortened by Wolf Lammen,
        14-Oct-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fmtbir_0 $f wff ph $.
 	fmtbir_1 $f wff ps $.
 	emtbir_0 $e |- -. ps $.
@@ -1277,6 +1670,9 @@ $}
 $( A deduction from a biconditional, similar to modus tollens.
        (Contributed by NM, 26-Nov-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmtbid_0 $f wff ph $.
 	fmtbid_1 $f wff ps $.
 	fmtbid_2 $f wff ch $.
@@ -1287,6 +1683,9 @@ $}
 $( A deduction from a biconditional, similar to modus tollens.
        (Contributed by NM, 10-May-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmtbird_0 $f wff ph $.
 	fmtbird_1 $f wff ps $.
 	fmtbird_2 $f wff ch $.
@@ -1297,6 +1696,9 @@ $}
 $( An inference from a biconditional, similar to modus tollens.
        (Contributed by NM, 27-Nov-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmtbii_0 $f wff ph $.
 	fmtbii_1 $f wff ps $.
 	fmtbii_2 $f wff ch $.
@@ -1307,6 +1709,9 @@ $}
 $( An inference from a biconditional, similar to modus tollens.
        (Contributed by NM, 24-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmtbiri_0 $f wff ph $.
 	fmtbiri_1 $f wff ps $.
 	fmtbiri_2 $f wff ch $.
@@ -1317,6 +1722,9 @@ $}
 $( A mixed syllogism inference from an implication and a biconditional.
        (Contributed by Wolf Lammen, 16-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fsylnib_0 $f wff ph $.
 	fsylnib_1 $f wff ps $.
 	fsylnib_2 $f wff ch $.
@@ -1328,6 +1736,9 @@ $( A mixed syllogism inference from an implication and a biconditional.
        Useful for substituting a consequent with a definition.  (Contributed by
        Wolf Lammen, 16-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fsylnibr_0 $f wff ph $.
 	fsylnibr_1 $f wff ps $.
 	fsylnibr_2 $f wff ch $.
@@ -1339,6 +1750,9 @@ $( A mixed syllogism inference from a biconditional and an implication.
        Useful for substituting an antecedent with a definition.  (Contributed
        by Wolf Lammen, 16-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fsylnbi_0 $f wff ph $.
 	fsylnbi_1 $f wff ps $.
 	fsylnbi_2 $f wff ch $.
@@ -1349,6 +1763,9 @@ $}
 $( A mixed syllogism inference from a biconditional and an implication.
        (Contributed by Wolf Lammen, 16-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fsylnbir_0 $f wff ph $.
 	fsylnbir_1 $f wff ps $.
 	fsylnbir_2 $f wff ch $.
@@ -1359,6 +1776,9 @@ $}
 $( Replacement of a subexpression by an equivalent one.  (Contributed by
        Wolf Lammen, 27-Sep-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fxchnxbi_0 $f wff ph $.
 	fxchnxbi_1 $f wff ps $.
 	fxchnxbi_2 $f wff ch $.
@@ -1369,6 +1789,9 @@ $}
 $( Replacement of a subexpression by an equivalent one.  (Contributed by
        Wolf Lammen, 27-Sep-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fxchnxbir_0 $f wff ph $.
 	fxchnxbir_1 $f wff ps $.
 	fxchnxbir_2 $f wff ch $.
@@ -1379,6 +1802,9 @@ $}
 $( Replacement of a subexpression by an equivalent one.  (Contributed by
        Wolf Lammen, 27-Sep-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fxchbinx_0 $f wff ph $.
 	fxchbinx_1 $f wff ps $.
 	fxchbinx_2 $f wff ch $.
@@ -1389,6 +1815,9 @@ $}
 $( Replacement of a subexpression by an equivalent one.  (Contributed by
        Wolf Lammen, 27-Sep-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fxchbinxr_0 $f wff ph $.
 	fxchbinxr_1 $f wff ps $.
 	fxchbinxr_2 $f wff ch $.
@@ -1402,6 +1831,9 @@ $( Introduce an antecedent to both sides of a logical equivalence.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
        6-Feb-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fimbi2i_0 $f wff ph $.
 	fimbi2i_1 $f wff ps $.
 	fimbi2i_2 $f wff ch $.
@@ -1412,6 +1844,9 @@ $( Inference adding a biconditional to the left in an equivalence.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
        7-May-2011.)  (Proof shortened by Wolf Lammen, 16-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbibi2i_0 $f wff ph $.
 	fbibi2i_1 $f wff ps $.
 	fbibi2i_2 $f wff ch $.
@@ -1421,6 +1856,9 @@ $}
 $( Inference adding a biconditional to the right in an equivalence.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbibi1i_0 $f wff ph $.
 	fbibi1i_1 $f wff ps $.
 	fbibi1i_2 $f wff ch $.
@@ -1430,6 +1868,10 @@ $}
 $( The equivalence of two equivalences.  (Contributed by NM,
          5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fbibi12i_0 $f wff ph $.
 	fbibi12i_1 $f wff ps $.
 	fbibi12i_2 $f wff ch $.
@@ -1441,6 +1883,10 @@ $}
 $( Deduction adding an antecedent to both sides of a logical equivalence.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fimbi2d_0 $f wff ph $.
 	fimbi2d_1 $f wff ps $.
 	fimbi2d_2 $f wff ch $.
@@ -1452,6 +1898,10 @@ $( Deduction adding a consequent to both sides of a logical equivalence.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
        17-Sep-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fimbi1d_0 $f wff ph $.
 	fimbi1d_1 $f wff ps $.
 	fimbi1d_2 $f wff ch $.
@@ -1463,6 +1913,10 @@ $( Deduction adding a biconditional to the left in an equivalence.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
        19-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fbibi2d_0 $f wff ph $.
 	fbibi2d_1 $f wff ps $.
 	fbibi2d_2 $f wff ch $.
@@ -1473,6 +1927,10 @@ $}
 $( Deduction adding a biconditional to the right in an equivalence.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fbibi1d_0 $f wff ph $.
 	fbibi1d_1 $f wff ps $.
 	fbibi1d_2 $f wff ch $.
@@ -1483,6 +1941,11 @@ $}
 $( Deduction joining two equivalences to form equivalence of implications.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fimbi12d_0 $f wff ph $.
 	fimbi12d_1 $f wff ps $.
 	fimbi12d_2 $f wff ch $.
@@ -1495,6 +1958,11 @@ $}
 $( Deduction joining two equivalences to form equivalence of
        biconditionals.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fbibi12d_0 $f wff ph $.
 	fbibi12d_1 $f wff ps $.
 	fbibi12d_2 $f wff ch $.
@@ -1507,6 +1975,9 @@ $}
 $( Theorem *4.84 of [WhiteheadRussell] p. 122.  (Contributed by NM,
      3-Jan-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fimbi1_0 $f wff ph $.
 	fimbi1_1 $f wff ps $.
 	fimbi1_2 $f wff ch $.
@@ -1515,6 +1986,9 @@ $}
 $( Theorem *4.85 of [WhiteheadRussell] p. 122.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 19-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fimbi2_0 $f wff ph $.
 	fimbi2_1 $f wff ps $.
 	fimbi2_2 $f wff ch $.
@@ -1524,6 +1998,9 @@ $( Introduce a consequent to both sides of a logical equivalence.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
        17-Sep-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fimbi1i_0 $f wff ph $.
 	fimbi1i_1 $f wff ps $.
 	fimbi1i_2 $f wff ch $.
@@ -1533,6 +2010,10 @@ $}
 $( Join two logical equivalences to form equivalence of implications.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fimbi12i_0 $f wff ph $.
 	fimbi12i_1 $f wff ps $.
 	fimbi12i_2 $f wff ch $.
@@ -1546,6 +2027,9 @@ $( $j congruence 'imbi12i'; $)
 $( Theorem *4.86 of [WhiteheadRussell] p. 122.  (Contributed by NM,
      3-Jan-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbibi1_0 $f wff ph $.
 	fbibi1_1 $f wff ps $.
 	fbibi1_2 $f wff ch $.
@@ -1554,12 +2038,17 @@ $}
 $( Contraposition.  Theorem *4.12 of [WhiteheadRussell] p. 117.  (Contributed
      by NM, 15-Apr-1995.)  (Proof shortened by Wolf Lammen, 3-Jan-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fcon2bi_0 $f wff ph $.
 	fcon2bi_1 $f wff ps $.
 	con2bi $p |- ( ( ph <-> -. ps ) <-> ( ps <-> -. ph ) ) $= fcon2bi_0 fcon2bi_1 wn wb fcon2bi_0 wn fcon2bi_1 wn wn wb fcon2bi_0 wn fcon2bi_1 wb fcon2bi_1 fcon2bi_0 wn wb fcon2bi_0 fcon2bi_1 wn notbi fcon2bi_1 fcon2bi_1 wn wn fcon2bi_0 wn fcon2bi_1 notnot bibi2i fcon2bi_0 wn fcon2bi_1 bicom 3bitr2i $.
 $}
 $( A contraposition deduction.  (Contributed by NM, 15-Apr-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fcon2bid_0 $f wff ph $.
 	fcon2bid_1 $f wff ps $.
 	fcon2bid_2 $f wff ch $.
@@ -1568,6 +2057,9 @@ ${
 $}
 $( A contraposition deduction.  (Contributed by NM, 9-Oct-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fcon1bid_0 $f wff ph $.
 	fcon1bid_1 $f wff ps $.
 	fcon1bid_2 $f wff ch $.
@@ -1577,6 +2069,8 @@ $}
 $( A contraposition inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by Wolf Lammen, 13-Oct-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fcon1bii_0 $f wff ph $.
 	fcon1bii_1 $f wff ps $.
 	econ1bii_0 $e |- ( -. ph <-> ps ) $.
@@ -1584,6 +2078,8 @@ ${
 $}
 $( A contraposition inference.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fcon2bii_0 $f wff ph $.
 	fcon2bii_1 $f wff ps $.
 	econ2bii_0 $e |- ( ph <-> -. ps ) $.
@@ -1592,6 +2088,8 @@ $}
 $( Contraposition.  Bidirectional version of ~ con1 .  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fcon1b_0 $f wff ph $.
 	fcon1b_1 $f wff ps $.
 	con1b $p |- ( ( -. ph -> ps ) <-> ( -. ps -> ph ) ) $= fcon1b_0 wn fcon1b_1 wi fcon1b_1 wn fcon1b_0 wi fcon1b_0 fcon1b_1 con1 fcon1b_1 fcon1b_0 con1 impbii $.
@@ -1599,6 +2097,8 @@ $}
 $( Contraposition.  Bidirectional version of ~ con2 .  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fcon2b_0 $f wff ph $.
 	fcon2b_1 $f wff ps $.
 	con2b $p |- ( ( ph -> -. ps ) <-> ( ps -> -. ph ) ) $= fcon2b_0 fcon2b_1 wn wi fcon2b_1 fcon2b_0 wn wi fcon2b_0 fcon2b_1 con2 fcon2b_1 fcon2b_0 con2 impbii $.
@@ -1606,6 +2106,8 @@ $}
 $( A wff is equivalent to itself with true antecedent.  (Contributed by NM,
      28-Jan-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fbiimt_0 $f wff ph $.
 	fbiimt_1 $f wff ps $.
 	biimt $p |- ( ph -> ( ps <-> ( ph -> ps ) ) ) $= fbiimt_0 fbiimt_1 fbiimt_0 fbiimt_1 wi fbiimt_1 fbiimt_0 ax-1 fbiimt_0 fbiimt_1 pm2.27 impbid2 $.
@@ -1613,6 +2115,8 @@ $}
 $( Theorem *5.5 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm5.5_0 $f wff ph $.
 	fpm5.5_1 $f wff ps $.
 	pm5.5 $p |- ( ph -> ( ( ph -> ps ) <-> ps ) ) $= fpm5.5_0 fpm5.5_1 fpm5.5_0 fpm5.5_1 wi fpm5.5_0 fpm5.5_1 biimt bicomd $.
@@ -1620,6 +2124,8 @@ $}
 $( Inference rule introducing a theorem as an antecedent.  (Contributed by
        NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 11-Nov-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fa1bi_0 $f wff ph $.
 	fa1bi_1 $f wff ps $.
 	ea1bi_0 $e |- ph $.
@@ -1628,6 +2134,8 @@ $}
 $( A false consequent falsifies an antecedent.  (Contributed by NM,
        19-Aug-1993.)  (Proof shortened by Wolf Lammen, 12-Nov-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fmt2bi_0 $f wff ph $.
 	fmt2bi_1 $f wff ps $.
 	emt2bi_0 $e |- ph $.
@@ -1636,6 +2144,8 @@ $}
 $( Modus-tollens-like theorem.  (Contributed by NM, 7-Apr-2001.)  (Proof
      shortened by Wolf Lammen, 12-Nov-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fmtt_0 $f wff ph $.
 	fmtt_1 $f wff ps $.
 	mtt $p |- ( -. ph -> ( -. ps <-> ( ps -> ph ) ) ) $= fmtt_0 wn fmtt_1 wn fmtt_0 wn fmtt_1 wn wi fmtt_1 fmtt_0 wi fmtt_0 wn fmtt_1 wn biimt fmtt_1 fmtt_0 con34b syl6bbr $.
@@ -1643,6 +2153,8 @@ $}
 $( Theorem *5.501 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm5.501_0 $f wff ph $.
 	fpm5.501_1 $f wff ps $.
 	pm5.501 $p |- ( ph -> ( ps <-> ( ph <-> ps ) ) ) $= fpm5.501_0 fpm5.501_1 fpm5.501_0 fpm5.501_1 wb fpm5.501_0 fpm5.501_1 pm5.1im fpm5.501_0 fpm5.501_1 wb fpm5.501_0 fpm5.501_1 fpm5.501_0 fpm5.501_1 bi1 com12 impbid $.
@@ -1650,6 +2162,8 @@ $}
 $( Implication in terms of implication and biconditional.  (Contributed by
      NM, 31-Mar-1994.)  (Proof shortened by Wolf Lammen, 24-Jan-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fibib_0 $f wff ph $.
 	fibib_1 $f wff ps $.
 	ibib $p |- ( ( ph -> ps ) <-> ( ph -> ( ph <-> ps ) ) ) $= fibib_0 fibib_1 fibib_0 fibib_1 wb fibib_0 fibib_1 pm5.501 pm5.74i $.
@@ -1657,6 +2171,8 @@ $}
 $( Implication in terms of implication and biconditional.  (Contributed by
      NM, 29-Apr-2005.)  (Proof shortened by Wolf Lammen, 21-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fibibr_0 $f wff ph $.
 	fibibr_1 $f wff ps $.
 	ibibr $p |- ( ( ph -> ps ) <-> ( ph -> ( ps <-> ph ) ) ) $= fibibr_0 fibibr_1 fibibr_1 fibibr_0 wb fibibr_0 fibibr_1 fibibr_0 fibibr_1 wb fibibr_1 fibibr_0 wb fibibr_0 fibibr_1 pm5.501 fibibr_0 fibibr_1 bicom syl6bb pm5.74i $.
@@ -1664,6 +2180,8 @@ $}
 $( A wff is equivalent to its equivalence with truth.  (Contributed by NM,
        18-Aug-1993.)  (Proof shortened by Andrew Salmon, 13-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
 	ftbt_0 $f wff ph $.
 	ftbt_1 $f wff ps $.
 	etbt_0 $e |- ph $.
@@ -1673,6 +2191,8 @@ $( The negation of a wff is equivalent to the wff's equivalence to
      falsehood.  (Contributed by Juha Arpiainen, 19-Jan-2006.)  (Proof
      shortened by Wolf Lammen, 28-Jan-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fnbn2_0 $f wff ph $.
 	fnbn2_1 $f wff ps $.
 	nbn2 $p |- ( -. ph -> ( -. ps <-> ( ph <-> ps ) ) ) $= fnbn2_0 wn fnbn2_1 wn fnbn2_0 wn fnbn2_1 wn wb fnbn2_0 fnbn2_1 wb fnbn2_0 wn fnbn2_1 wn pm5.501 fnbn2_0 fnbn2_1 notbi syl6bbr $.
@@ -1680,6 +2200,8 @@ $}
 $( Transfer negation via an equivalence.  (Contributed by NM, 3-Oct-2007.)
      (Proof shortened by Wolf Lammen, 28-Jan-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fbibif_0 $f wff ph $.
 	fbibif_1 $f wff ps $.
 	bibif $p |- ( -. ps -> ( ( ph <-> ps ) <-> -. ph ) ) $= fbibif_1 wn fbibif_0 wn fbibif_1 fbibif_0 wb fbibif_0 fbibif_1 wb fbibif_1 fbibif_0 nbn2 fbibif_1 fbibif_0 bicom syl6rbb $.
@@ -1688,6 +2210,8 @@ $( The negation of a wff is equivalent to the wff's equivalence to
        falsehood.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
        Lammen, 3-Oct-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fnbn_0 $f wff ph $.
 	fnbn_1 $f wff ps $.
 	enbn_0 $e |- -. ph $.
@@ -1696,6 +2220,8 @@ $}
 $( Transfer falsehood via equivalence.  (Contributed by NM,
        11-Sep-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fnbn3_0 $f wff ph $.
 	fnbn3_1 $f wff ps $.
 	enbn3_0 $e |- ph $.
@@ -1705,6 +2231,8 @@ $( Two propositions are equivalent if they are both false.  Closed form of
      ~ 2false .  Equivalent to a ~ bi2 -like version of the xor-connective.
      (Contributed by Wolf Lammen, 13-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm5.21im_0 $f wff ph $.
 	fpm5.21im_1 $f wff ps $.
 	pm5.21im $p |- ( -. ph -> ( -. ps -> ( ph <-> ps ) ) ) $= fpm5.21im_0 wn fpm5.21im_1 wn fpm5.21im_0 fpm5.21im_1 wb fpm5.21im_0 fpm5.21im_1 nbn2 biimpd $.
@@ -1712,6 +2240,8 @@ $}
 $( Two falsehoods are equivalent.  (Contributed by NM, 4-Apr-2005.)  (Proof
        shortened by Wolf Lammen, 19-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	f2false_0 $f wff ph $.
 	f2false_1 $f wff ps $.
 	e2false_0 $e |- -. ph $.
@@ -1721,6 +2251,9 @@ $}
 $( Two falsehoods are equivalent (deduction rule).  (Contributed by NM,
        11-Oct-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	f2falsed_0 $f wff ph $.
 	f2falsed_1 $f wff ps $.
 	f2falsed_2 $f wff ch $.
@@ -1731,6 +2264,9 @@ $}
 $( Two propositions implying a false one are equivalent.  (Contributed by
        NM, 16-Feb-1996.)  (Proof shortened by Wolf Lammen, 19-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm5.21ni_0 $f wff ph $.
 	fpm5.21ni_1 $f wff ps $.
 	fpm5.21ni_2 $f wff ch $.
@@ -1741,6 +2277,9 @@ $}
 $( Eliminate an antecedent implied by each side of a biconditional.
          (Contributed by NM, 21-May-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm5.21nii_0 $f wff ph $.
 	fpm5.21nii_1 $f wff ps $.
 	fpm5.21nii_2 $f wff ch $.
@@ -1753,6 +2292,10 @@ $( Eliminate an antecedent implied by each side of a biconditional,
        deduction version.  (Contributed by Paul Chapman, 21-Nov-2012.)  (Proof
        shortened by Wolf Lammen, 6-Oct-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fpm5.21ndd_0 $f wff ph $.
 	fpm5.21ndd_1 $f wff ps $.
 	fpm5.21ndd_2 $f wff ch $.
@@ -1767,6 +2310,9 @@ $( Combine antecedents into a single bi-conditional.  This inference,
        the conclusion alone (see ~ pm5.1im and ~ pm5.21im ).  (Contributed by
        Wolf Lammen, 13-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbija_0 $f wff ph $.
 	fbija_1 $f wff ps $.
 	fbija_2 $f wff ch $.
@@ -1779,12 +2325,16 @@ $( Theorem *5.18 of [WhiteheadRussell] p. 124.  This theorem says that
      by NM, 28-Jun-2002.)  (Proof shortened by Andrew Salmon, 20-Jun-2011.)
      (Proof shortened by Wolf Lammen, 15-Oct-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm5.18_0 $f wff ph $.
 	fpm5.18_1 $f wff ps $.
 	pm5.18 $p |- ( ( ph <-> ps ) <-> -. ( ph <-> -. ps ) ) $= fpm5.18_0 fpm5.18_0 fpm5.18_1 wb fpm5.18_0 fpm5.18_1 wn wb wn wb fpm5.18_0 fpm5.18_0 fpm5.18_1 wn wb wn fpm5.18_1 fpm5.18_0 fpm5.18_1 wb fpm5.18_0 fpm5.18_1 fpm5.18_0 fpm5.18_1 wn wb fpm5.18_0 fpm5.18_1 wn pm5.501 con1bid fpm5.18_0 fpm5.18_1 pm5.501 bitr2d fpm5.18_0 wn fpm5.18_0 fpm5.18_1 wn wb wn fpm5.18_1 wn fpm5.18_0 fpm5.18_1 wb fpm5.18_0 wn fpm5.18_1 wn fpm5.18_0 fpm5.18_1 wn wb fpm5.18_0 fpm5.18_1 wn nbn2 con1bid fpm5.18_0 fpm5.18_1 nbn2 bitr2d pm2.61i $.
 $}
 $( Two ways to express "exclusive or."  (Contributed by NM, 1-Jan-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fxor3_0 $f wff ph $.
 	fxor3_1 $f wff ps $.
 	xor3 $p |- ( -. ( ph <-> ps ) <-> ( ph <-> -. ps ) ) $= fxor3_0 fxor3_1 wn wb fxor3_0 fxor3_1 wb wn fxor3_0 fxor3_1 wb fxor3_0 fxor3_1 wn wb fxor3_0 fxor3_1 pm5.18 con2bii bicomi $.
@@ -1793,6 +2343,8 @@ $( Move negation outside of biconditional.  Compare Theorem *5.18 of
      [WhiteheadRussell] p. 124.  (Contributed by NM, 27-Jun-2002.)  (Proof
      shortened by Wolf Lammen, 20-Sep-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fnbbn_0 $f wff ph $.
 	fnbbn_1 $f wff ps $.
 	nbbn $p |- ( ( -. ph <-> ps ) <-> -. ( ph <-> ps ) ) $= fnbbn_0 fnbbn_1 wb wn fnbbn_0 fnbbn_1 wn wb fnbbn_1 fnbbn_0 wn wb fnbbn_0 wn fnbbn_1 wb fnbbn_0 fnbbn_1 xor3 fnbbn_0 fnbbn_1 con2bi fnbbn_1 fnbbn_0 wn bicom 3bitrri $.
@@ -1806,6 +2358,9 @@ $( Associative law for the biconditional.  An axiom of system DS in Vladimir
      NM, 8-Jan-2005.)  (Proof shortened by Juha Arpiainen, 19-Jan-2006.)
      (Proof shortened by Wolf Lammen, 21-Sep-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbiass_0 $f wff ph $.
 	fbiass_1 $f wff ps $.
 	fbiass_2 $f wff ch $.
@@ -1814,12 +2369,16 @@ $}
 $( Theorem *5.19 of [WhiteheadRussell] p. 124.  (Contributed by NM,
      3-Jan-2005.) $)
 ${
+	$v ph $.
 	fpm5.19_0 $f wff ph $.
 	pm5.19 $p |- -. ( ph <-> -. ph ) $= fpm5.19_0 fpm5.19_0 wb fpm5.19_0 fpm5.19_0 wn wb wn fpm5.19_0 biid fpm5.19_0 fpm5.19_0 pm5.18 mpbi $.
 $}
 $( Logical equivalence of commuted antecedents.  Part of Theorem *4.87 of
      [WhiteheadRussell] p. 122.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fbi2.04_0 $f wff ph $.
 	fbi2.04_1 $f wff ps $.
 	fbi2.04_2 $f wff ch $.
@@ -1828,6 +2387,8 @@ $}
 $( Antecedent absorption implication.  Theorem *5.4 of [WhiteheadRussell]
      p. 125.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm5.4_0 $f wff ph $.
 	fpm5.4_1 $f wff ps $.
 	pm5.4 $p |- ( ( ph -> ( ph -> ps ) ) <-> ( ph -> ps ) ) $= fpm5.4_0 fpm5.4_0 fpm5.4_1 wi wi fpm5.4_0 fpm5.4_1 wi fpm5.4_0 fpm5.4_1 pm2.43 fpm5.4_0 fpm5.4_1 wi fpm5.4_0 ax-1 impbii $.
@@ -1835,6 +2396,9 @@ $}
 $( Distributive law for implication.  Compare Theorem *5.41 of
      [WhiteheadRussell] p. 125.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fimdi_0 $f wff ph $.
 	fimdi_1 $f wff ps $.
 	fimdi_2 $f wff ch $.
@@ -1843,6 +2407,9 @@ $}
 $( Theorem *5.41 of [WhiteheadRussell] p. 125.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 12-Oct-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm5.41_0 $f wff ph $.
 	fpm5.41_1 $f wff ps $.
 	fpm5.41_2 $f wff ch $.
@@ -1851,12 +2418,14 @@ $}
 $( Theorem *4.8 of [WhiteheadRussell] p. 122.  (Contributed by NM,
      3-Jan-2005.) $)
 ${
+	$v ph $.
 	fpm4.8_0 $f wff ph $.
 	pm4.8 $p |- ( ( ph -> -. ph ) <-> -. ph ) $= fpm4.8_0 fpm4.8_0 wn wi fpm4.8_0 wn fpm4.8_0 pm2.01 fpm4.8_0 wn fpm4.8_0 ax-1 impbii $.
 $}
 $( Theorem *4.81 of [WhiteheadRussell] p. 122.  (Contributed by NM,
      3-Jan-2005.) $)
 ${
+	$v ph $.
 	fpm4.81_0 $f wff ph $.
 	pm4.81 $p |- ( ( -. ph -> ph ) <-> ph ) $= fpm4.81_0 wn fpm4.81_0 wi fpm4.81_0 fpm4.81_0 pm2.18 fpm4.81_0 fpm4.81_0 pm2.24 impbii $.
 $}
@@ -1866,6 +2435,10 @@ $( Simplify an implication between two implications when the antecedent of
      (Contributed by Paul Chapman, 22-Jun-2011.)  (Proof shortened by Wolf
      Lammen, 14-Sep-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fimim21b_0 $f wff ph $.
 	fimim21b_1 $f wff ps $.
 	fimim21b_2 $f wff ch $.

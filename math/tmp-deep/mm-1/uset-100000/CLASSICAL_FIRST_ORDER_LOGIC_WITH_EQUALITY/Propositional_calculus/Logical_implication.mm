@@ -18,6 +18,9 @@ $)
 $( A double modus ponens inference.  (Contributed by Mario Carneiro,
        24-Jan-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmp2b_0 $f wff ph $.
 	fmp2b_1 $f wff ps $.
 	fmp2b_2 $f wff ch $.
@@ -31,6 +34,8 @@ $( Inference derived from axiom ~ ax-1 .  See ~ a1d for an explanation of
        our informal use of the terms "inference" and "deduction."  See also the
        comment in ~ syld .  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fa1i_0 $f wff ph $.
 	fa1i_1 $f wff ps $.
 	ea1i_0 $e |- ph $.
@@ -39,6 +44,9 @@ $}
 $( Drop and replace an antecedent.  (Contributed by Stefan O'Rear,
        29-Jan-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmp1i_0 $f wff ph $.
 	fmp1i_1 $f wff ps $.
 	fmp1i_2 $f wff ch $.
@@ -50,6 +58,9 @@ $( Premise for ~ a2i . $)
 $( Inference derived from axiom ~ ax-2 .  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fa2i_0 $f wff ph $.
 	fa2i_1 $f wff ps $.
 	fa2i_2 $f wff ch $.
@@ -59,6 +70,9 @@ $}
 $( Inference adding common antecedents in an implication.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fimim2i_0 $f wff ph $.
 	fimim2i_1 $f wff ps $.
 	fimim2i_2 $f wff ch $.
@@ -69,6 +83,9 @@ $( A modus ponens deduction.  A translation of natural deduction rule
        ` -> ` E ( ` -> ` elimination), see ~ natded .  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmpd_0 $f wff ph $.
 	fmpd_1 $f wff ps $.
 	fmpd_2 $f wff ch $.
@@ -91,6 +108,9 @@ $( An inference version of the transitive laws for implication ~ imim2 and
        5-Aug-1993.)  (Proof shortened by O'Cat, 20-Oct-2011.)  (Proof shortened
        by Wolf Lammen, 26-Jul-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fsyl_0 $f wff ph $.
 	fsyl_1 $f wff ps $.
 	fsyl_2 $f wff ch $.
@@ -101,6 +121,9 @@ $}
 $( A nested modus ponens inference.  (Contributed by NM, 5-Aug-1993.)
        (Proof shortened by Stefan Allan, 20-Mar-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmpi_0 $f wff ph $.
 	fmpi_1 $f wff ps $.
 	fmpi_2 $f wff ch $.
@@ -111,6 +134,9 @@ $}
 $( A double modus ponens inference.  (Contributed by NM, 5-Apr-1994.)
        (Proof shortened by Wolf Lammen, 23-Jul-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmp2_0 $f wff ph $.
 	fmp2_1 $f wff ps $.
 	fmp2_2 $f wff ch $.
@@ -120,8 +146,11 @@ ${
 	mp2 $p |- ch $= fmp2_0 fmp2_2 emp2_0 fmp2_0 fmp2_1 fmp2_2 emp2_1 emp2_2 mpi ax-mp $.
 $}
 $( Inference chaining two syllogisms.  (Contributed by NM, 5-Aug-1993.) $)
-$v th $.
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3syl_0 $f wff ph $.
 	f3syl_1 $f wff ps $.
 	f3syl_2 $f wff ch $.
@@ -136,6 +165,7 @@ $( Principle of identity.  Theorem *2.08 of [WhiteheadRussell] p. 101.  For
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Stefan Allan,
      20-Mar-2006.) $)
 ${
+	$v ph $.
 	fid_0 $f wff ph $.
 	id $p |- ( ph -> ph ) $= fid_0 fid_0 fid_0 wi fid_0 fid_0 fid_0 ax-1 fid_0 fid_0 fid_0 wi ax-1 mpd $.
 $}
@@ -151,12 +181,15 @@ $( Principle of identity.  Theorem *2.08 of [WhiteheadRussell] p. 101.  This
      theorems, see ~ id .  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.)  (Proof modification is discouraged.) $)
 ${
+	$v ph $.
 	fid1_0 $f wff ph $.
 	id1 $p |- ( ph -> ph ) $= fid1_0 fid1_0 fid1_0 wi wi fid1_0 fid1_0 wi fid1_0 fid1_0 ax-1 fid1_0 fid1_0 fid1_0 wi fid1_0 wi wi fid1_0 fid1_0 fid1_0 wi wi fid1_0 fid1_0 wi wi fid1_0 fid1_0 fid1_0 wi ax-1 fid1_0 fid1_0 fid1_0 wi fid1_0 ax-2 ax-mp ax-mp $.
 $}
 $( Principle of identity with antecedent.  (Contributed by NM,
      26-Nov-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fidd_0 $f wff ph $.
 	fidd_1 $f wff ps $.
 	idd $p |- ( ph -> ( ps -> ps ) ) $= fidd_1 fidd_1 wi fidd_0 fidd_1 id a1i $.
@@ -180,6 +213,9 @@ $( Deduction introducing an embedded antecedent.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Stefan Allan,
        20-Mar-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fa1d_0 $f wff ph $.
 	fa1d_1 $f wff ps $.
 	fa1d_2 $f wff ch $.
@@ -189,6 +225,10 @@ $}
 $( Deduction distributing an embedded antecedent.  (Contributed by NM,
        23-Jun-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fa2d_0 $f wff ph $.
 	fa2d_1 $f wff ps $.
 	fa2d_2 $f wff ch $.
@@ -199,6 +239,9 @@ $}
 $( Add two antecedents to a wff.  (Contributed by Jeff Hankins,
        4-Aug-2009.)  (Proof shortened by Wolf Lammen, 23-Jul-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fa1ii_0 $f wff ph $.
 	fa1ii_1 $f wff ps $.
 	fa1ii_2 $f wff ch $.
@@ -209,6 +252,10 @@ $( Syllogism inference with commutation of antecedents.  (Contributed by
        NM, 29-Aug-2004.)  (Proof shortened by O'Cat, 2-Feb-2006.)  (Proof
        shortened by Stefan Allan, 23-Feb-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsylcom_0 $f wff ph $.
 	fsylcom_1 $f wff ps $.
 	fsylcom_2 $f wff ch $.
@@ -220,6 +267,10 @@ $}
 $( Syllogism inference with commuted antecedents.  (Contributed by NM,
        24-May-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl5com_0 $f wff ph $.
 	fsyl5com_1 $f wff ps $.
 	fsyl5com_2 $f wff ch $.
@@ -233,6 +284,9 @@ $( Inference that swaps (commutes) antecedents in an implication.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
        4-Aug-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fcom12_0 $f wff ph $.
 	fcom12_1 $f wff ps $.
 	fcom12_2 $f wff ch $.
@@ -243,6 +297,10 @@ $( A syllogism rule of inference.  The first premise is used to replace the
        second antecedent of the second premise.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Wolf Lammen, 25-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl5_0 $f wff ph $.
 	fsyl5_1 $f wff ps $.
 	fsyl5_2 $f wff ch $.
@@ -255,6 +313,10 @@ $( A syllogism rule of inference.  The second premise is used to replace
        the consequent of the first premise.  (Contributed by NM, 5-Aug-1993.)
        (Proof shortened by Wolf Lammen, 30-Jul-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl6_0 $f wff ph $.
 	fsyl6_1 $f wff ps $.
 	fsyl6_2 $f wff ch $.
@@ -264,8 +326,12 @@ ${
 	syl6 $p |- ( ph -> ( ps -> th ) ) $= fsyl6_0 fsyl6_1 fsyl6_2 fsyl6_3 esyl6_0 fsyl6_2 fsyl6_3 wi fsyl6_1 esyl6_1 a1i sylcom $.
 $}
 $( Combine ~ syl5 and ~ syl6 .  (Contributed by NM, 14-Nov-2013.) $)
-$v ta $.
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl56_0 $f wff ph $.
 	fsyl56_1 $f wff ps $.
 	fsyl56_2 $f wff ch $.
@@ -279,6 +345,10 @@ $}
 $( Syllogism inference with commuted antecedents.  (Contributed by NM,
        25-May-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyl6com_0 $f wff ph $.
 	fsyl6com_1 $f wff ps $.
 	fsyl6com_2 $f wff ch $.
@@ -290,6 +360,9 @@ $}
 $( Modus ponens inference with commutation of antecedents.  (Contributed by
        NM, 17-Mar-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmpcom_0 $f wff ph $.
 	fmpcom_1 $f wff ps $.
 	fmpcom_2 $f wff ch $.
@@ -300,6 +373,10 @@ $}
 $( Syllogism inference with common nested antecedent.  (Contributed by NM,
        4-Nov-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyli_0 $f wff ph $.
 	fsyli_1 $f wff ps $.
 	fsyli_2 $f wff ch $.
@@ -311,6 +388,11 @@ $}
 $( Replace two antecedents.  Implication-only version of ~ syl2an .
        (Contributed by Wolf Lammen, 14-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl2im_0 $f wff ph $.
 	fsyl2im_1 $f wff ps $.
 	fsyl2im_2 $f wff ch $.
@@ -325,12 +407,18 @@ $( This theorem, called "Assertion," can be thought of as closed form of
      modus ponens ~ ax-mp .  Theorem *2.27 of [WhiteheadRussell] p. 104.
      (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm2.27_0 $f wff ph $.
 	fpm2.27_1 $f wff ps $.
 	pm2.27 $p |- ( ph -> ( ( ph -> ps ) -> ps ) ) $= fpm2.27_0 fpm2.27_1 wi fpm2.27_0 fpm2.27_1 fpm2.27_0 fpm2.27_1 wi id com12 $.
 $}
 $( A nested modus ponens deduction.  (Contributed by NM, 12-Dec-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmpdd_0 $f wff ph $.
 	fmpdd_1 $f wff ps $.
 	fmpdd_2 $f wff ch $.
@@ -341,6 +429,10 @@ ${
 $}
 $( A nested modus ponens deduction.  (Contributed by NM, 14-Dec-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmpid_0 $f wff ph $.
 	fmpid_1 $f wff ps $.
 	fmpid_2 $f wff ch $.
@@ -352,6 +444,10 @@ $}
 $( A nested modus ponens deduction.  (Contributed by NM, 16-Apr-2005.)
        (Proof shortened by O'Cat, 15-Jan-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmpdi_0 $f wff ph $.
 	fmpdi_1 $f wff ps $.
 	fmpdi_2 $f wff ch $.
@@ -363,6 +459,10 @@ $}
 $( A doubly nested modus ponens inference.  (Contributed by NM,
        31-Dec-1993.)  (Proof shortened by Wolf Lammen, 31-Jul-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmpii_0 $f wff ph $.
 	fmpii_1 $f wff ps $.
 	fmpii_2 $f wff ch $.
@@ -382,6 +482,10 @@ $( Syllogism deduction.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened
        e.g.  Theorem 3 in [Margaris] p. 56, tells us that this procedure is
        always possible. $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsyld_0 $f wff ph $.
 	fsyld_1 $f wff ps $.
 	fsyld_2 $f wff ch $.
@@ -393,6 +497,10 @@ $}
 $( A double modus ponens deduction.  (Contributed by NM, 23-May-2013.)
        (Proof shortened by Wolf Lammen, 23-Jul-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmp2d_0 $f wff ph $.
 	fmp2d_1 $f wff ps $.
 	fmp2d_2 $f wff ch $.
@@ -405,6 +513,10 @@ $}
 $( Deduction introducing a nested embedded antecedent.  (Contributed by NM,
        17-Dec-2004.)  (Proof shortened by O'Cat, 15-Jan-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fa1dd_0 $f wff ph $.
 	fa1dd_1 $f wff ps $.
 	fa1dd_2 $f wff ch $.
@@ -415,6 +527,8 @@ $}
 $( Inference absorbing redundant antecedent.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by O'Cat, 28-Nov-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm2.43i_0 $f wff ph $.
 	fpm2.43i_1 $f wff ps $.
 	epm2.43i_0 $e |- ( ph -> ( ph -> ps ) ) $.
@@ -423,6 +537,9 @@ $}
 $( Deduction absorbing redundant antecedent.  (Contributed by NM,
        18-Aug-1993.)  (Proof shortened by O'Cat, 28-Nov-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm2.43d_0 $f wff ph $.
 	fpm2.43d_1 $f wff ps $.
 	fpm2.43d_2 $f wff ch $.
@@ -432,6 +549,9 @@ $}
 $( Inference absorbing redundant antecedent.  (Contributed by NM,
        7-Nov-1995.)  (Proof shortened by O'Cat, 28-Nov-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm2.43a_0 $f wff ph $.
 	fpm2.43a_1 $f wff ps $.
 	fpm2.43a_2 $f wff ch $.
@@ -441,6 +561,9 @@ $}
 $( Inference absorbing redundant antecedent.  (Contributed by NM,
        31-Oct-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm2.43b_0 $f wff ph $.
 	fpm2.43b_1 $f wff ps $.
 	fpm2.43b_2 $f wff ch $.
@@ -452,6 +575,8 @@ $( Absorption of redundant antecedent.  Also called the "Contraction" or
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by O'Cat,
      15-Aug-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm2.43_0 $f wff ph $.
 	fpm2.43_1 $f wff ps $.
 	pm2.43 $p |- ( ( ph -> ( ph -> ps ) ) -> ( ph -> ps ) ) $= fpm2.43_0 fpm2.43_0 fpm2.43_1 wi fpm2.43_1 fpm2.43_0 fpm2.43_1 pm2.27 a2i $.
@@ -459,6 +584,10 @@ $}
 $( Deduction adding nested antecedents.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fimim2d_0 $f wff ph $.
 	fimim2d_1 $f wff ps $.
 	fimim2d_2 $f wff ch $.
@@ -470,6 +599,9 @@ $( A closed form of syllogism (see ~ syl ).  Theorem *2.05 of
      [WhiteheadRussell] p. 100.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Wolf Lammen, 6-Sep-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fimim2_0 $f wff ph $.
 	fimim2_1 $f wff ps $.
 	fimim2_2 $f wff ch $.
@@ -478,6 +610,10 @@ $}
 $( Deduction embedding an antecedent.  (Contributed by Wolf Lammen,
        4-Oct-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fembantd_0 $f wff ph $.
 	fembantd_1 $f wff ps $.
 	fembantd_2 $f wff ch $.
@@ -489,6 +625,11 @@ $}
 $( Triple syllogism deduction.  (Contributed by Jeff Hankins,
        4-Aug-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3syld_0 $f wff ph $.
 	f3syld_1 $f wff ps $.
 	f3syld_2 $f wff ch $.
@@ -502,6 +643,11 @@ $}
 $( Virtual deduction rule ~ e12 without virtual deduction symbols.
        (Contributed by Alan Sare, 20-Apr-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsylsyld_0 $f wff ph $.
 	fsylsyld_1 $f wff ps $.
 	fsylsyld_2 $f wff ch $.
@@ -515,6 +661,10 @@ $}
 $( Inference joining two implications.  (Contributed by NM, 5-Aug-1993.)
        (Proof shortened by O'Cat, 29-Oct-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fimim12i_0 $f wff ph $.
 	fimim12i_1 $f wff ps $.
 	fimim12i_2 $f wff ch $.
@@ -527,6 +677,9 @@ $( Inference adding common consequents in an implication, thereby
        interchanging the original antecedent and consequent.  (Contributed by
        NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 4-Aug-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fimim1i_0 $f wff ph $.
 	fimim1i_1 $f wff ps $.
 	fimim1i_2 $f wff ch $.
@@ -536,6 +689,10 @@ $}
 $( Inference adding three nested antecedents.  (Contributed by NM,
        19-Dec-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fimim3i_0 $f wff ph $.
 	fimim3i_1 $f wff ps $.
 	fimim3i_2 $f wff ch $.
@@ -546,6 +703,10 @@ $}
 $( A syllogism inference combined with contraction.  (Contributed by NM,
        4-May-1994.)  (Revised by NM, 13-Jul-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fsylc_0 $f wff ph $.
 	fsylc_1 $f wff ps $.
 	fsylc_2 $f wff ch $.
@@ -558,6 +719,11 @@ $}
 $( A syllogism inference combined with contraction. ~ e111 without virtual
        deductions.  (Contributed by Alan Sare, 7-Jul-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl3c_0 $f wff ph $.
 	fsyl3c_1 $f wff ps $.
 	fsyl3c_2 $f wff ch $.
@@ -572,6 +738,11 @@ $}
 $( ~ e20 without virtual deductions.  (Contributed by Alan Sare,
        8-Jul-2011.)  (Proof shortened by Wolf Lammen, 13-Sep-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl6mpi_0 $f wff ph $.
 	fsyl6mpi_1 $f wff ps $.
 	fsyl6mpi_2 $f wff ch $.
@@ -585,6 +756,10 @@ $}
 $( Modus ponens combined with a syllogism inference.  (Contributed by Alan
        Sare, 20-Apr-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmpsyl_0 $f wff ph $.
 	fmpsyl_1 $f wff ps $.
 	fmpsyl_2 $f wff ch $.
@@ -597,6 +772,11 @@ $}
 $( Inference combining ~ syl6 with contraction.  (Contributed by Alan Sare,
        2-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl6c_0 $f wff ph $.
 	fsyl6c_1 $f wff ps $.
 	fsyl6c_2 $f wff ch $.
@@ -610,6 +790,11 @@ $}
 $( Nested syllogism deduction.  (Contributed by NM, 12-Dec-2004.)  (Proof
        shortened by Wolf Lammen, 11-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyldd_0 $f wff ph $.
 	fsyldd_1 $f wff ps $.
 	fsyldd_2 $f wff ch $.
@@ -623,6 +808,11 @@ $( A nested syllogism deduction.  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by Josh Purinton, 29-Dec-2000.)  (Proof shortened by O'Cat,
        2-Feb-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl5d_0 $f wff ph $.
 	fsyl5d_1 $f wff ps $.
 	fsyl5d_2 $f wff ch $.
@@ -636,6 +826,11 @@ $( A syllogism rule of inference.  The first premise is used to replace the
        third antecedent of the second premise.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Wolf Lammen, 3-Aug-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl7_0 $f wff ph $.
 	fsyl7_1 $f wff ps $.
 	fsyl7_2 $f wff ch $.
@@ -649,6 +844,11 @@ $( A nested syllogism deduction.  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by Josh Purinton, 29-Dec-2000.)  (Proof shortened by O'Cat,
        2-Feb-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl6d_0 $f wff ph $.
 	fsyl6d_1 $f wff ps $.
 	fsyl6d_2 $f wff ch $.
@@ -662,6 +862,11 @@ $( A syllogism rule of inference.  The second premise is used to replace
        the consequent of the first premise.  (Contributed by NM, 1-Aug-1994.)
        (Proof shortened by Wolf Lammen, 3-Aug-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl8_0 $f wff ph $.
 	fsyl8_1 $f wff ps $.
 	fsyl8_2 $f wff ch $.
@@ -674,6 +879,11 @@ $}
 $( A nested syllogism inference with different antecedents.  (Contributed
        by NM, 5-Aug-1993.)  (Proof shortened by Josh Purinton, 29-Dec-2000.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl9_0 $f wff ph $.
 	fsyl9_1 $f wff ps $.
 	fsyl9_2 $f wff ch $.
@@ -686,6 +896,11 @@ $}
 $( A nested syllogism inference with different antecedents.  (Contributed
        by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fsyl9r_0 $f wff ph $.
 	fsyl9r_1 $f wff ps $.
 	fsyl9r_2 $f wff ch $.
@@ -698,6 +913,11 @@ $}
 $( Deduction combining antecedents and consequents.  (Contributed by NM,
        7-Aug-1994.)  (Proof shortened by O'Cat, 30-Oct-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fimim12d_0 $f wff ph $.
 	fimim12d_1 $f wff ps $.
 	fimim12d_2 $f wff ch $.
@@ -710,6 +930,10 @@ $}
 $( Deduction adding nested consequents.  (Contributed by NM, 3-Apr-1994.)
        (Proof shortened by Wolf Lammen, 12-Sep-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fimim1d_0 $f wff ph $.
 	fimim1d_1 $f wff ps $.
 	fimim1d_2 $f wff ch $.
@@ -721,6 +945,9 @@ $( A closed form of syllogism (see ~ syl ).  Theorem *2.06 of
      [WhiteheadRussell] p. 100.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Wolf Lammen, 25-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fimim1_0 $f wff ph $.
 	fimim1_1 $f wff ps $.
 	fimim1_2 $f wff ch $.
@@ -729,6 +956,10 @@ $}
 $( Theorem *2.83 of [WhiteheadRussell] p. 108.  (Contributed by NM,
      3-Jan-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fpm2.83_0 $f wff ph $.
 	fpm2.83_1 $f wff ps $.
 	fpm2.83_2 $f wff ch $.
@@ -738,6 +969,10 @@ $}
 $( Commutation of antecedents.  Swap 2nd and 3rd.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Wolf Lammen, 4-Aug-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fcom23_0 $f wff ph $.
 	fcom23_1 $f wff ps $.
 	fcom23_2 $f wff ch $.
@@ -748,6 +983,10 @@ $}
 $( Commutation of antecedents.  Rotate right.  (Contributed by NM,
        25-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fcom3r_0 $f wff ph $.
 	fcom3r_1 $f wff ps $.
 	fcom3r_2 $f wff ch $.
@@ -758,6 +997,10 @@ $}
 $( Commutation of antecedents.  Swap 1st and 3rd.  (Contributed by NM,
        25-Apr-1994.)  (Proof shortened by Wolf Lammen, 28-Jul-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fcom13_0 $f wff ph $.
 	fcom13_1 $f wff ps $.
 	fcom13_2 $f wff ch $.
@@ -768,6 +1011,10 @@ $}
 $( Commutation of antecedents.  Rotate left.  (Contributed by NM,
        25-Apr-1994.)  (Proof shortened by Wolf Lammen, 28-Jul-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fcom3l_0 $f wff ph $.
 	fcom3l_1 $f wff ps $.
 	fcom3l_2 $f wff ch $.
@@ -779,6 +1026,9 @@ $( Swap antecedents.  Theorem *2.04 of [WhiteheadRussell] p. 100.
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
      12-Sep-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm2.04_0 $f wff ph $.
 	fpm2.04_1 $f wff ps $.
 	fpm2.04_2 $f wff ch $.
@@ -787,6 +1037,11 @@ $}
 $( Commutation of antecedents.  Swap 3rd and 4th.  (Contributed by NM,
        25-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fcom34_0 $f wff ph $.
 	fcom34_1 $f wff ps $.
 	fcom34_2 $f wff ch $.
@@ -798,6 +1053,11 @@ $}
 $( Commutation of antecedents.  Rotate left.  (Contributed by NM,
        25-Apr-1994.)  (Proof shortened by O'Cat, 15-Aug-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fcom4l_0 $f wff ph $.
 	fcom4l_1 $f wff ps $.
 	fcom4l_2 $f wff ch $.
@@ -809,6 +1069,11 @@ $}
 $( Commutation of antecedents.  Rotate twice.  (Contributed by NM,
        25-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fcom4t_0 $f wff ph $.
 	fcom4t_1 $f wff ps $.
 	fcom4t_2 $f wff ch $.
@@ -820,6 +1085,11 @@ $}
 $( Commutation of antecedents.  Rotate right.  (Contributed by NM,
        25-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fcom4r_0 $f wff ph $.
 	fcom4r_1 $f wff ps $.
 	fcom4r_2 $f wff ch $.
@@ -831,6 +1101,11 @@ $}
 $( Commutation of antecedents.  Swap 2nd and 4th.  (Contributed by NM,
        25-Apr-1994.)  (Proof shortened by Wolf Lammen, 28-Jul-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fcom24_0 $f wff ph $.
 	fcom24_1 $f wff ps $.
 	fcom24_2 $f wff ch $.
@@ -842,6 +1117,11 @@ $}
 $( Commutation of antecedents.  Swap 1st and 4th.  (Contributed by NM,
        25-Apr-1994.)  (Proof shortened by Wolf Lammen, 28-Jul-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fcom14_0 $f wff ph $.
 	fcom14_1 $f wff ps $.
 	fcom14_2 $f wff ch $.
@@ -852,8 +1132,13 @@ ${
 $}
 $( Commutation of antecedents.  Swap 4th and 5th.  (Contributed by Jeff
        Hankins, 28-Jun-2009.) $)
-$v et $.
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fcom45_0 $f wff ph $.
 	fcom45_1 $f wff ps $.
 	fcom45_2 $f wff ch $.
@@ -866,6 +1151,12 @@ $}
 $( Commutation of antecedents.  Swap 3rd and 5th.  (Contributed by Jeff
        Hankins, 28-Jun-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fcom35_0 $f wff ph $.
 	fcom35_1 $f wff ps $.
 	fcom35_2 $f wff ch $.
@@ -878,6 +1169,12 @@ $}
 $( Commutation of antecedents.  Swap 2nd and 5th.  (Contributed by Jeff
        Hankins, 28-Jun-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fcom25_0 $f wff ph $.
 	fcom25_1 $f wff ps $.
 	fcom25_2 $f wff ch $.
@@ -890,6 +1187,12 @@ $}
 $( Commutation of antecedents.  Rotate left.  (Contributed by Jeff Hankins,
        28-Jun-2009.)  (Proof shortened by Wolf Lammen, 29-Jul-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fcom5l_0 $f wff ph $.
 	fcom5l_1 $f wff ps $.
 	fcom5l_2 $f wff ch $.
@@ -903,6 +1206,12 @@ $( Commutation of antecedents.  Swap 1st and 5th.  (Contributed by Jeff
        Hankins, 28-Jun-2009.)  (Proof shortened by Wolf Lammen,
        29-Jul-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fcom15_0 $f wff ph $.
 	fcom15_1 $f wff ps $.
 	fcom15_2 $f wff ch $.
@@ -915,6 +1224,12 @@ $}
 $( Commutation of antecedents.  Rotate left twice.  (Contributed by Jeff
        Hankins, 28-Jun-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fcom52l_0 $f wff ph $.
 	fcom52l_1 $f wff ps $.
 	fcom52l_2 $f wff ch $.
@@ -927,6 +1242,12 @@ $}
 $( Commutation of antecedents.  Rotate right twice.  (Contributed by Jeff
        Hankins, 28-Jun-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fcom52r_0 $f wff ph $.
 	fcom52r_1 $f wff ps $.
 	fcom52r_2 $f wff ch $.
@@ -939,6 +1260,12 @@ $}
 $( Commutation of antecedents.  Rotate right.  (Contributed by Wolf Lammen,
        29-Jul-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fcom5r_0 $f wff ph $.
 	fcom5r_1 $f wff ps $.
 	fcom5r_2 $f wff ch $.
@@ -951,6 +1278,9 @@ $}
 $( Elimination of a nested antecedent as a kind of reversal of inference
      ~ ja .  (Contributed by Wolf Lammen, 9-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fjarr_0 $f wff ph $.
 	fjarr_1 $f wff ps $.
 	fjarr_2 $f wff ch $.
@@ -959,6 +1289,9 @@ $}
 $( Inference based on ~ pm2.86 .  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by Wolf Lammen, 3-Apr-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm2.86i_0 $f wff ph $.
 	fpm2.86i_1 $f wff ps $.
 	fpm2.86i_2 $f wff ch $.
@@ -968,6 +1301,10 @@ $}
 $( Deduction based on ~ pm2.86 .  (Contributed by NM, 29-Jun-1995.)  (Proof
        shortened by Wolf Lammen, 3-Apr-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fpm2.86d_0 $f wff ph $.
 	fpm2.86d_1 $f wff ps $.
 	fpm2.86d_2 $f wff ch $.
@@ -979,6 +1316,9 @@ $( Converse of axiom ~ ax-2 .  Theorem *2.86 of [WhiteheadRussell] p. 108.
      (Contributed by NM, 25-Apr-1994.)  (Proof shortened by Wolf Lammen,
      3-Apr-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm2.86_0 $f wff ph $.
 	fpm2.86_1 $f wff ps $.
 	fpm2.86_2 $f wff ch $.
@@ -990,6 +1330,8 @@ $( The Linearity Axiom of the infinite-valued sentential logic (L-infinity)
      12-Aug-2004.)  (New usage is discouraged.)
      (Proof modification is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	floolinALT_0 $f wff ph $.
 	floolinALT_1 $f wff ps $.
 	loolinALT $p |- ( ( ( ph -> ps ) -> ( ps -> ph ) ) -> ( ps -> ph ) ) $= floolinALT_0 floolinALT_1 wi floolinALT_1 floolinALT_0 wi wi floolinALT_1 floolinALT_0 floolinALT_0 floolinALT_1 floolinALT_1 floolinALT_0 wi jarr pm2.43d $.
@@ -999,6 +1341,9 @@ $( An alternate for the Linearity Axiom of the infinite-valued sentential
      on Mathematical Logic_ 10, 129-137 (1978).  (Contributed by O'Cat,
      8-Aug-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	floowoz_0 $f wff ph $.
 	floowoz_1 $f wff ps $.
 	floowoz_2 $f wff ch $.

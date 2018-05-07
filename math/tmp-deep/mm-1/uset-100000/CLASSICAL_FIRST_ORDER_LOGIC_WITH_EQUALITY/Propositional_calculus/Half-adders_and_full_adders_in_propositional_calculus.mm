@@ -17,6 +17,9 @@ $( Comma (also used for unordered pair notation later) $)
 $( Define the half adder (triple XOR).  (Contributed by Mario Carneiro,
      4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fwhad_0 $f wff ph $.
 	fwhad_1 $f wff ps $.
 	fwhad_2 $f wff ch $.
@@ -25,6 +28,9 @@ $}
 $( Define the half adder carry.  (Contributed by Mario Carneiro,
      4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fwcad_0 $f wff ph $.
 	fwcad_1 $f wff ps $.
 	fwcad_2 $f wff ch $.
@@ -33,6 +39,9 @@ $}
 $( Define the half adder (triple XOR).  (Contributed by Mario Carneiro,
      4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fdf-had_0 $f wff ph $.
 	fdf-had_1 $f wff ps $.
 	fdf-had_2 $f wff ch $.
@@ -41,6 +50,9 @@ $}
 $( Define the half adder carry, which is true when at least two arguments are
      true.  (Contributed by Mario Carneiro, 4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fdf-cad_0 $f wff ph $.
 	fdf-cad_1 $f wff ps $.
 	fdf-cad_2 $f wff ch $.
@@ -49,6 +61,13 @@ $}
 $( Equality theorem for half adder.  (Contributed by Mario Carneiro,
        4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fhadbi123d_0 $f wff ph $.
 	fhadbi123d_1 $f wff ps $.
 	fhadbi123d_2 $f wff ch $.
@@ -64,6 +83,13 @@ $}
 $( Equality theorem for adder carry.  (Contributed by Mario Carneiro,
        4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
 	fcadbi123d_0 $f wff ph $.
 	fcadbi123d_1 $f wff ps $.
 	fcadbi123d_2 $f wff ch $.
@@ -79,6 +105,12 @@ $}
 $( Equality theorem for half adder.  (Contributed by Mario Carneiro,
        4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fhadbi123i_0 $f wff ph $.
 	fhadbi123i_1 $f wff ps $.
 	fhadbi123i_2 $f wff ch $.
@@ -93,6 +125,12 @@ $}
 $( Equality theorem for adder carry.  (Contributed by Mario Carneiro,
        4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fcadbi123i_0 $f wff ph $.
 	fcadbi123i_1 $f wff ps $.
 	fcadbi123i_2 $f wff ch $.
@@ -107,6 +145,9 @@ $}
 $( Associative law for triple XOR. (Contributed by Mario Carneiro,
      4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fhadass_0 $f wff ph $.
 	fhadass_1 $f wff ps $.
 	fhadass_2 $f wff ch $.
@@ -115,6 +156,9 @@ $}
 $( The half adder is the same as the triple biconditional.  (Contributed by
      Mario Carneiro, 4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fhadbi_0 $f wff ph $.
 	fhadbi_1 $f wff ps $.
 	fhadbi_2 $f wff ch $.
@@ -123,6 +167,9 @@ $}
 $( Commutative law for triple XOR. (Contributed by Mario Carneiro,
      4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fhadcoma_0 $f wff ph $.
 	fhadcoma_1 $f wff ps $.
 	fhadcoma_2 $f wff ch $.
@@ -131,6 +178,9 @@ $}
 $( Commutative law for triple XOR. (Contributed by Mario Carneiro,
      4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fhadcomb_0 $f wff ph $.
 	fhadcomb_1 $f wff ps $.
 	fhadcomb_2 $f wff ch $.
@@ -139,6 +189,9 @@ $}
 $( Rotation law for triple XOR. (Contributed by Mario Carneiro,
      4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fhadrot_0 $f wff ph $.
 	fhadrot_1 $f wff ps $.
 	fhadrot_2 $f wff ch $.
@@ -147,6 +200,9 @@ $}
 $( Write the adder carry in disjunctive normal form.  (Contributed by Mario
      Carneiro, 4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fcador_0 $f wff ph $.
 	fcador_1 $f wff ps $.
 	fcador_2 $f wff ch $.
@@ -155,6 +211,9 @@ $}
 $( Write the adder carry in conjunctive normal form.  (Contributed by Mario
      Carneiro, 4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fcadan_0 $f wff ph $.
 	fcadan_1 $f wff ps $.
 	fcadan_2 $f wff ch $.
@@ -163,6 +222,9 @@ $}
 $( The half adder distributes over negation.  (Contributed by Mario Carneiro,
      4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fhadnot_0 $f wff ph $.
 	fhadnot_1 $f wff ps $.
 	fhadnot_2 $f wff ch $.
@@ -171,6 +233,9 @@ $}
 $( The adder carry distributes over negation.  (Contributed by Mario
      Carneiro, 4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fcadnot_0 $f wff ph $.
 	fcadnot_1 $f wff ps $.
 	fcadnot_2 $f wff ch $.
@@ -179,6 +244,9 @@ $}
 $( Commutative law for adder carry.  (Contributed by Mario Carneiro,
      4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fcadcoma_0 $f wff ph $.
 	fcadcoma_1 $f wff ps $.
 	fcadcoma_2 $f wff ch $.
@@ -187,6 +255,9 @@ $}
 $( Commutative law for adder carry.  (Contributed by Mario Carneiro,
      4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fcadcomb_0 $f wff ph $.
 	fcadcomb_1 $f wff ps $.
 	fcadcomb_2 $f wff ch $.
@@ -195,6 +266,9 @@ $}
 $( Rotation law for adder carry.  (Contributed by Mario Carneiro,
      4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fcadrot_0 $f wff ph $.
 	fcadrot_1 $f wff ps $.
 	fcadrot_2 $f wff ch $.
@@ -204,6 +278,9 @@ $( If one parameter is true, the adder carry is true exactly when at least
      one of the other parameters is true.  (Contributed by Mario Carneiro,
      8-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fcad1_0 $f wff ph $.
 	fcad1_1 $f wff ps $.
 	fcad1_2 $f wff ch $.
@@ -212,6 +289,9 @@ $}
 $( If two parameters are true, the adder carry is true.  (Contributed by
      Mario Carneiro, 4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fcad11_0 $f wff ph $.
 	fcad11_1 $f wff ps $.
 	fcad11_2 $f wff ch $.
@@ -221,6 +301,9 @@ $( If one parameter is false, the adder carry is true exactly when both of
      the other two parameters are true.  (Contributed by Mario Carneiro,
      8-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fcad0_0 $f wff ph $.
 	fcad0_1 $f wff ps $.
 	fcad0_2 $f wff ch $.
@@ -229,6 +312,7 @@ $}
 $( Rotation law for adder carry.  (Contributed by Mario Carneiro,
      4-Sep-2016.) $)
 ${
+	$v ph $.
 	fcadtru_0 $f wff ph $.
 	cadtru $p |- cadd ( T. , T. , ph ) $= wtru wtru wtru wtru fcadtru_0 wcad tru tru wtru wtru fcadtru_0 cad11 mp2an $.
 $}
@@ -236,6 +320,9 @@ $( If the first parameter is true, the half adder is equivalent to the
      equality of the other two inputs.  (Contributed by Mario Carneiro,
      4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fhad1_0 $f wff ph $.
 	fhad1_1 $f wff ps $.
 	fhad1_2 $f wff ch $.
@@ -244,6 +331,9 @@ $}
 $( If the first parameter is false, the half adder is equivalent to the XOR
      of the other two inputs.  (Contributed by Mario Carneiro, 4-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fhad0_0 $f wff ph $.
 	fhad0_1 $f wff ps $.
 	fhad0_2 $f wff ch $.

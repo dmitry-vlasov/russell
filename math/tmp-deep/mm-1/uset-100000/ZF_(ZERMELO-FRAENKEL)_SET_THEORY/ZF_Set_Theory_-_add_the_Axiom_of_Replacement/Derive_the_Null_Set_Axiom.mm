@@ -9,6 +9,8 @@ $( Show the uniqueness of the empty set (using the Axiom of Extensionality
        via ~ bm1.1 to strengthen the hypothesis in the form of ~ axnul ).
        (Contributed by NM, 22-Dec-2007.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	fzfnuleu_0 $f set x $.
 	fzfnuleu_1 $f set y $.
@@ -22,6 +24,10 @@ $( Prove ~ axnul directly from ~ ax-rep using none of the equality axioms
        Carneiro, 17-Nov-2016.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z w $.
 	iaxnulALT_0 $f set z $.
 	iaxnulALT_1 $f set w $.
@@ -55,6 +61,9 @@ $( The Null Set Axiom of ZF set theory: there exists a set with no
        4-Feb-2008.)  (New usage is discouraged.)
        (Proof modification is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	iaxnul_0 $f set z $.
 	faxnul_0 $f set x $.
@@ -66,6 +75,8 @@ $( The Null Set Axiom of ZF set theory.  It was derived as ~ axnul above
        that its uses can be identified more easily.  (Contributed by NM,
        7-Aug-2003.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	fax-nul_0 $f set x $.
 	fax-nul_1 $f set y $.
@@ -76,6 +87,8 @@ $( The Null Set Axiom of ZF set theory: the empty set exists.  Corollary
        ~ ax-nul .  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew
        Salmon, 9-Jul-2011.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	i0ex_0 $f set x $.
 	i0ex_1 $f set y $.

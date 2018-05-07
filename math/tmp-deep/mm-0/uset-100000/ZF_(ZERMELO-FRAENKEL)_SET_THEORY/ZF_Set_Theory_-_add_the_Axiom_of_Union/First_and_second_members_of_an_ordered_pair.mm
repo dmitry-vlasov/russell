@@ -24,6 +24,7 @@ $( Define a function that extracts the first member, or abscissa, of an
      [Monk1] p. 52 (compare ~ op1sta and ~ op1stb ).  The notation is the same
      as Monk's.  (Contributed by NM, 9-Oct-2004.) $)
 ${
+	$v x $.
 	fdf-1st_0 $f set x $.
 	df-1st $a |- 1st = ( x e. _V |-> U. dom { x } ) $.
 $}
@@ -33,6 +34,7 @@ $( Define a function that extracts the second member, or ordinate, of an
      [Monk1] p. 52 (compare ~ op2nda and ~ op2ndb ).  The notation is the same
      as Monk's.  (Contributed by NM, 9-Oct-2004.) $)
 ${
+	$v x $.
 	fdf-2nd_0 $f set x $.
 	df-2nd $a |- 2nd = ( x e. _V |-> U. ran { x } ) $.
 $}
@@ -40,6 +42,8 @@ $( The value of the function that extracts the first member of an ordered
        pair.  (Contributed by NM, 9-Oct-2004.)  (Revised by Mario Carneiro,
        8-Sep-2013.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	i1stval_0 $f set x $.
 	f1stval_0 $f class A $.
@@ -49,6 +53,8 @@ $( The value of the function that extracts the second member of an ordered
        pair.  (Contributed by NM, 9-Oct-2004.)  (Revised by Mario Carneiro,
        8-Sep-2013.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	i2ndval_0 $f set x $.
 	f2ndval_0 $f class A $.
@@ -67,6 +73,8 @@ $}
 $( Extract the first member of an ordered pair.  (Contributed by NM,
        5-Oct-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	fop1st_0 $f class A $.
 	fop1st_1 $f class B $.
 	eop1st_0 $e |- A e. _V $.
@@ -76,6 +84,8 @@ $}
 $( Extract the second member of an ordered pair.  (Contributed by NM,
        5-Oct-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	fop2nd_0 $f class A $.
 	fop2nd_1 $f class B $.
 	eop2nd_0 $e |- A e. _V $.
@@ -85,6 +95,9 @@ $}
 $( Extract the first member of an ordered pair.  (Contributed by Mario
        Carneiro, 31-Aug-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fop1std_0 $f class A $.
 	fop1std_1 $f class B $.
 	fop1std_2 $f class C $.
@@ -95,6 +108,9 @@ $}
 $( Extract the second member of an ordered pair.  (Contributed by Mario
        Carneiro, 31-Aug-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fop2ndd_0 $f class A $.
 	fop2ndd_1 $f class B $.
 	fop2ndd_2 $f class C $.
@@ -105,6 +121,12 @@ $}
 $( Extract the first member of an ordered pair.  (Contributed by NM,
        19-Jul-2005.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	$d x y A $.
 	$d x y B $.
 	iop1stg_0 $f set x $.
@@ -118,6 +140,12 @@ $}
 $( Extract the second member of an ordered pair.  (Contributed by NM,
        19-Jul-2005.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	$d x y A $.
 	$d x y B $.
 	iop2ndg_0 $f set x $.
@@ -134,6 +162,12 @@ $( Extract the first member of an ordered triple.  (Due to infrequent
        ~ ot2ndg , ~ ot3rdg .)  (Contributed by NM, 3-Apr-2015.)  (Revised by
        Mario Carneiro, 2-May-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v W $.
+	$v X $.
 	fot1stg_0 $f class A $.
 	fot1stg_1 $f class B $.
 	fot1stg_2 $f class C $.
@@ -146,6 +180,12 @@ $( Extract the second member of an ordered triple.  (See ~ ot1stg
        comment.)  (Contributed by NM, 3-Apr-2015.)  (Revised by Mario Carneiro,
        2-May-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v W $.
+	$v X $.
 	fot2ndg_0 $f class A $.
 	fot2ndg_1 $f class B $.
 	fot2ndg_2 $f class C $.
@@ -157,6 +197,10 @@ $}
 $( Extract the third member of an ordered triple.  (See ~ ot1stg comment.)
        (Contributed by NM, 3-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
 	fot3rdg_0 $f class A $.
 	fot3rdg_1 $f class B $.
 	fot3rdg_2 $f class C $.
@@ -167,6 +211,9 @@ $( Alternate value of the function that extracts the first member of an
        ordered pair.  Definition 5.13 (i) of [Monk1] p. 52.  (Contributed by
        NM, 18-Aug-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d x y $.
 	i1stval2_0 $f set x $.
@@ -178,6 +225,9 @@ $( Alternate value of the function that extracts the second member of an
        ordered pair.  Definition 5.13 (ii) of [Monk1] p. 52.  (Contributed by
        NM, 18-Aug-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d x y $.
 	i2ndval2_0 $f set x $.
@@ -188,6 +238,8 @@ $}
 $( The ` 1st ` function maps the universe onto the universe.  (Contributed
        by NM, 14-Oct-2004.)  (Revised by Mario Carneiro, 8-Sep-2013.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d x y $.
 	$d x y $.
@@ -198,6 +250,8 @@ $}
 $( The ` 2nd ` function maps the universe onto the universe.  (Contributed
        by NM, 14-Oct-2004.)  (Revised by Mario Carneiro, 8-Sep-2013.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d x y $.
 	$d x y $.
@@ -212,6 +266,11 @@ $( Mapping of a restriction of the ` 1st ` (first member of an ordered
        pair) function.  (Contributed by NM, 11-Oct-2004.)  (Revised by Mario
        Carneiro, 8-Sep-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z $.
@@ -229,6 +288,11 @@ $( Mapping of a restriction of the ` 2nd ` (second member of an ordered
        pair) function.  (Contributed by NM, 7-Aug-2006.)  (Revised by Mario
        Carneiro, 8-Sep-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z $.
@@ -245,6 +309,10 @@ $}
 $( Onto mapping of a restriction of the ` 1st ` (first member of an ordered
        pair) function.  (Contributed by NM, 14-Dec-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -260,6 +328,10 @@ $}
 $( Onto mapping of a restriction of the ` 2nd ` (second member of an
        ordered pair) function.  (Contributed by NM, 14-Dec-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -275,6 +347,12 @@ $}
 $( Value of an alternate definition of the ` 1st ` function.  (Contributed
        by NM, 14-Oct-2004.)  (Revised by Mario Carneiro, 30-Dec-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v A $.
 	$d x y z w v $.
 	$d v w A $.
 	i1st2val_0 $f set w $.
@@ -288,6 +366,12 @@ $}
 $( Value of an alternate definition of the ` 2nd ` function.  (Contributed
        by NM, 10-Aug-2006.)  (Revised by Mario Carneiro, 30-Dec-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v A $.
 	$d x y z w v $.
 	$d v w A $.
 	i2nd2val_0 $f set w $.
@@ -301,6 +385,10 @@ $}
 $( Composition of the first member function with another function.
      (Contributed by NM, 12-Oct-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	f1stcof_0 $f class A $.
 	f1stcof_1 $f class B $.
 	f1stcof_2 $f class C $.
@@ -310,6 +398,10 @@ $}
 $( Composition of the first member function with another function.
      (Contributed by FL, 15-Oct-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	f2ndcof_0 $f class A $.
 	f2ndcof_1 $f class B $.
 	f2ndcof_2 $f class C $.
@@ -319,6 +411,11 @@ $}
 $( Location of the first element of a Cartesian product.  (Contributed by
        Jeff Madsen, 2-Sep-2009.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v b $.
+	$v c $.
 	$d A b c $.
 	$d B b c $.
 	$d C b c $.
@@ -332,6 +429,11 @@ $}
 $( Location of the second element of a Cartesian product.  (Contributed by
        Jeff Madsen, 2-Sep-2009.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v b $.
+	$v c $.
 	$d A b c $.
 	$d B b c $.
 	$d C b c $.
@@ -345,6 +447,9 @@ $}
 $( Membership in a cross product.  This version requires no quantifiers or
      dummy variables.  See also ~ elxp4 .  (Contributed by NM, 9-Oct-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	felxp6_0 $f class A $.
 	felxp6_1 $f class B $.
 	felxp6_2 $f class C $.
@@ -353,6 +458,9 @@ $}
 $( Membership in a cross product.  This version requires no quantifiers or
      dummy variables.  See also ~ elxp4 .  (Contributed by NM, 19-Aug-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	felxp7_0 $f class A $.
 	felxp7_1 $f class B $.
 	felxp7_2 $f class C $.
@@ -362,6 +470,12 @@ $( Difference of Cartesian products, expressed in terms of a union of
        Cartesian products of differences.  (Contributed by Jeff Madsen,
        2-Sep-2009.)  (Revised by Mario Carneiro, 26-Jun-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d A x y $.
 	$d B x y $.
 	$d C x y $.
@@ -377,6 +491,9 @@ $}
 $( Difference law for cross product.  (Contributed by Scott Fenton,
      18-Feb-2013.)  (Revised by Mario Carneiro, 26-Jun-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fdifxp1_0 $f class A $.
 	fdifxp1_1 $f class B $.
 	fdifxp1_2 $f class C $.
@@ -385,6 +502,9 @@ $}
 $( Difference law for cross product.  (Contributed by Scott Fenton,
      18-Feb-2013.)  (Revised by Mario Carneiro, 26-Jun-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fdifxp2_0 $f class A $.
 	fdifxp2_1 $f class B $.
 	fdifxp2_2 $f class C $.
@@ -393,6 +513,11 @@ $}
 $( Equality with an ordered pair.  (Contributed by NM, 15-Dec-2008.)
      (Revised by Mario Carneiro, 23-Feb-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v W $.
 	feqopi_0 $f class A $.
 	feqopi_1 $f class B $.
 	feqopi_2 $f class C $.
@@ -403,6 +528,9 @@ $}
 $( Representation of cross product based on ordered pair component
        functions.  (Contributed by NM, 16-Sep-2006.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fxp2_0 $f set x $.
@@ -413,6 +541,10 @@ $}
 $( The membership relation for a cross product is inherited by union.
        (Contributed by NM, 16-Sep-2006.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -425,6 +557,9 @@ $}
 $( Reconstruction of a member of a cross product in terms of its ordered pair
      components.  (Contributed by NM, 20-Oct-2013.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	f1st2nd2_0 $f class A $.
 	f1st2nd2_1 $f class B $.
 	f1st2nd2_2 $f class C $.
@@ -433,12 +568,19 @@ $}
 $( Reconstruction of an ordered pair in terms of its components.
      (Contributed by NM, 25-Feb-2014.) $)
 ${
+	$v A $.
 	f1st2ndb_0 $f class A $.
 	1st2ndb $p |- ( A e. ( _V X. _V ) <-> A = <. ( 1st ` A ) , ( 2nd ` A ) >. ) $= f1st2ndb_0 cvv cvv cxp wcel f1st2ndb_0 f1st2ndb_0 c1st cfv f1st2ndb_0 c2nd cfv cop wceq f1st2ndb_0 cvv cvv 1st2nd2 f1st2ndb_0 f1st2ndb_0 c1st cfv f1st2ndb_0 c2nd cfv cop wceq f1st2ndb_0 f1st2ndb_0 c1st cfv f1st2ndb_0 c2nd cfv cop cvv cvv cxp f1st2ndb_0 f1st2ndb_0 c1st cfv f1st2ndb_0 c2nd cfv cop wceq id f1st2ndb_0 c1st cfv f1st2ndb_0 c2nd cfv f1st2ndb_0 c1st fvex f1st2ndb_0 c2nd fvex opelvv syl6eqel impbii $.
 $}
 $( An ordered pair theorem for members of cross products.  (Contributed by
      NM, 20-Jun-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
 	fxpopth_0 $f class A $.
 	fxpopth_1 $f class B $.
 	fxpopth_2 $f class C $.
@@ -450,6 +592,11 @@ $}
 $( Two ways to express equality with an ordered pair.  (Contributed by NM,
      3-Sep-2007.)  (Proof shortened by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v W $.
 	feqop_0 $f class A $.
 	feqop_1 $f class B $.
 	feqop_2 $f class C $.
@@ -460,6 +607,9 @@ $}
 $( Two ways to express equality with an ordered pair.  (Contributed by NM,
        25-Feb-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feqop2_0 $f class A $.
 	feqop2_1 $f class B $.
 	feqop2_2 $f class C $.
@@ -471,6 +621,11 @@ $( Two ways of expressing that an element is the first member of an ordered
        pair.  (Contributed by NM, 22-Sep-2013.)  (Revised by Mario Carneiro,
        23-Feb-2014.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	$d x A $.
 	$d x B $.
 	fop1steq_0 $f set x $.
@@ -482,6 +637,9 @@ ${
 $}
 $( Swap the members of an ordered pair.  (Contributed by NM, 31-Dec-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	f2nd1st_0 $f class A $.
 	f2nd1st_1 $f class B $.
 	f2nd1st_2 $f class C $.
@@ -490,6 +648,8 @@ $}
 $( Reconstruction of a member of a relation in terms of its ordered pair
      components.  (Contributed by NM, 29-Aug-2006.) $)
 ${
+	$v A $.
+	$v B $.
 	f1st2nd_0 $f class A $.
 	f1st2nd_1 $f class B $.
 	1st2nd $p |- ( ( Rel B /\ A e. B ) -> A = <. ( 1st ` A ) , ( 2nd ` A ) >. ) $= f1st2nd_1 wrel f1st2nd_0 f1st2nd_1 wcel wa f1st2nd_0 cvv cvv cxp wcel f1st2nd_0 f1st2nd_0 c1st cfv f1st2nd_0 c2nd cfv cop wceq f1st2nd_1 wrel f1st2nd_1 cvv cvv cxp wss f1st2nd_0 f1st2nd_1 wcel f1st2nd_0 cvv cvv cxp wcel f1st2nd_1 df-rel f1st2nd_1 cvv cvv cxp f1st2nd_0 ssel2 sylanb f1st2nd_0 cvv cvv 1st2nd2 syl $.
@@ -497,6 +657,8 @@ $}
 $( The first ordered pair component of a member of a relation belongs to the
      domain of the relation.  (Contributed by NM, 17-Sep-2006.) $)
 ${
+	$v A $.
+	$v R $.
 	f1stdm_0 $f class A $.
 	f1stdm_1 $f class R $.
 	1stdm $p |- ( ( Rel R /\ A e. R ) -> ( 1st ` A ) e. dom R ) $= f1stdm_1 wrel f1stdm_0 f1stdm_1 wcel wa f1stdm_0 c1st cfv f1stdm_0 cint cint f1stdm_1 cdm f1stdm_1 wrel f1stdm_0 f1stdm_1 wcel wa f1stdm_0 cvv cvv cxp wcel f1stdm_0 c1st cfv f1stdm_0 cint cint wceq f1stdm_1 wrel f1stdm_1 cvv cvv cxp f1stdm_0 f1stdm_1 wrel f1stdm_1 cvv cvv cxp wss f1stdm_1 df-rel biimpi sselda f1stdm_0 1stval2 syl f1stdm_1 f1stdm_0 elreldm eqeltrd $.
@@ -504,6 +666,8 @@ $}
 $( The second ordered pair component of a member of a relation belongs to the
      range of the relation.  (Contributed by NM, 17-Sep-2006.) $)
 ${
+	$v A $.
+	$v R $.
 	f2ndrn_0 $f class A $.
 	f2ndrn_1 $f class R $.
 	2ndrn $p |- ( ( Rel R /\ A e. R ) -> ( 2nd ` A ) e. ran R ) $= f2ndrn_1 wrel f2ndrn_0 f2ndrn_1 wcel wa f2ndrn_0 c1st cfv f2ndrn_0 c2nd cfv cop f2ndrn_1 wcel f2ndrn_0 c2nd cfv f2ndrn_1 crn wcel f2ndrn_1 wrel f2ndrn_0 f2ndrn_1 wcel wa f2ndrn_0 f2ndrn_0 c1st cfv f2ndrn_0 c2nd cfv cop f2ndrn_1 f2ndrn_0 f2ndrn_1 1st2nd f2ndrn_1 wrel f2ndrn_0 f2ndrn_1 wcel simpr eqeltrrd f2ndrn_0 c1st cfv f2ndrn_0 c2nd cfv f2ndrn_1 f2ndrn_0 c1st fvex f2ndrn_0 c2nd fvex opelrn syl $.
@@ -511,6 +675,8 @@ $}
 $( Express an element of a relation as a relationship between first and
      second components.  (Contributed by Mario Carneiro, 22-Jun-2016.) $)
 ${
+	$v A $.
+	$v B $.
 	f1st2ndbr_0 $f class A $.
 	f1st2ndbr_1 $f class B $.
 	1st2ndbr $p |- ( ( Rel B /\ A e. B ) -> ( 1st ` A ) B ( 2nd ` A ) ) $= f1st2ndbr_1 wrel f1st2ndbr_0 f1st2ndbr_1 wcel wa f1st2ndbr_0 c1st cfv f1st2ndbr_0 c2nd cfv cop f1st2ndbr_1 wcel f1st2ndbr_0 c1st cfv f1st2ndbr_0 c2nd cfv f1st2ndbr_1 wbr f1st2ndbr_1 wrel f1st2ndbr_0 f1st2ndbr_1 wcel wa f1st2ndbr_0 f1st2ndbr_0 c1st cfv f1st2ndbr_0 c2nd cfv cop f1st2ndbr_1 f1st2ndbr_0 f1st2ndbr_1 1st2nd f1st2ndbr_1 wrel f1st2ndbr_0 f1st2ndbr_1 wcel simpr eqeltrrd f1st2ndbr_0 c1st cfv f1st2ndbr_0 c2nd cfv f1st2ndbr_1 df-br sylibr $.
@@ -518,6 +684,10 @@ $}
 $( Two ways of expressing membership in the domain of a relation.
        (Contributed by NM, 22-Sep-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	ireleldm2_0 $f set y $.
@@ -529,6 +699,10 @@ $}
 $( An expression for the domain of a relation.  (Contributed by NM,
        22-Sep-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z A $.
 	ireldm_0 $f set y $.
 	ireldm_1 $f set z $.
@@ -541,6 +715,10 @@ $( Equality theorem for substitution of a class for an ordered pair (analog
      (Contributed by NM, 19-Aug-2006.)  (Revised by Mario Carneiro,
      31-Aug-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	fsbcopeq1a_0 $f wff ph $.
 	fsbcopeq1a_1 $f set x $.
 	fsbcopeq1a_2 $f set y $.
@@ -551,6 +729,10 @@ $( Equality theorem for substitution of a class ` A ` for an ordered pair
      ` <. x , y >. ` in ` B ` (analog of ~ csbeq1a ).  (Contributed by NM,
      19-Aug-2006.)  (Revised by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	fcsbopeq1a_0 $f set x $.
 	fcsbopeq1a_1 $f set y $.
 	fcsbopeq1a_2 $f class A $.
@@ -561,6 +743,10 @@ $( A way to define an ordered-pair class abstraction without using
        existential quantifiers.  (Contributed by NM, 18-Aug-2006.)  (Revised by
        Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d z ph $.
 	$d x y z $.
 	fdfopab2_0 $f wff ph $.
@@ -573,6 +759,11 @@ $( A way to define an operation class abstraction without using existential
        quantifiers.  (Contributed by NM, 18-Aug-2006.)  (Revised by Mario
        Carneiro, 31-Aug-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w ph $.
 	$d x y z w $.
 	fdfoprab3s_0 $f wff ph $.
@@ -585,6 +776,12 @@ $}
 $( Operation class abstraction expressed without existential quantifiers.
        (Contributed by NM, 16-Dec-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y ph $.
 	$d w ps $.
 	$d x y z w $.
@@ -601,6 +798,14 @@ $( Operation class abstraction expressed without existential quantifiers.
        (Contributed by NM, 3-Sep-2007.)  (Revised by Mario Carneiro,
        31-Aug-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
 	$d w x y A $.
 	$d w x y B $.
 	$d x y ph $.
@@ -622,6 +827,16 @@ $( Operation class abstraction expressed without existential quantifiers.
        Abernethy, 19-Jun-2012.)  (Contributed by NM, 20-Dec-2008.)  (Revised by
        Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v u $.
+	$v t $.
+	$v A $.
+	$v B $.
 	$d t u w x y z $.
 	$d t u w x y A $.
 	$d t u w x y B $.
@@ -646,6 +861,13 @@ $( Define the cross product of three classes.  Compare ~ df-xp .
        (Contributed by FL, 6-Nov-2013.)  (Proof shortened by Mario Carneiro,
        3-Nov-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v u $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y z u A $.
 	$d x y z u B $.
 	$d x y z u C $.
@@ -661,6 +883,11 @@ $}
 $( Implicit substitution inference for ordered pairs.  Compare
        ~ copsex2ga .  (Contributed by NM, 12-Mar-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d x y ph $.
 	fcopsex2gb_0 $f wff ph $.
@@ -675,6 +902,13 @@ $( Implicit substitution inference for ordered pairs.  Compare
        ~ copsex2g .  (Contributed by NM, 26-Feb-2014.)  (Proof shortened by
        Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v V $.
+	$v W $.
 	$d x y A $.
 	$d x y ph $.
 	fcopsex2ga_0 $f wff ph $.
@@ -690,6 +924,11 @@ $}
 $( Membership in an ordered pair class builder.  (Contributed by NM,
        25-Feb-2014.)  (Revised by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d x y ph $.
 	felopaba_0 $f wff ph $.
@@ -704,6 +943,11 @@ $( Transfer ordered-pair existence from/to single variable existence.
        (Contributed by NM, 26-Feb-2014.)  (Proof shortened by Mario Carneiro,
        31-Aug-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d y z ph $.
 	$d x ps $.
 	$d x y z $.
@@ -718,6 +962,12 @@ $}
 $( Transfer ordered-pair existence from/to single variable existence.
        (Contributed by NM, 26-Feb-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z A $.
 	$d y z ph $.
 	$d x ps $.
@@ -733,6 +983,12 @@ $}
 $( A consequence of membership in an ordered-pair class abstraction, using
        ordered pair extractors.  (Contributed by NM, 29-Aug-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d x y ch $.
 	felopabi_0 $f wff ph $.
@@ -749,6 +1005,15 @@ $( A consequence of membership in an operation class abstraction, using
        ordered pair extractors.  (Contributed by NM, 6-Nov-2006.)  (Revised by
        David Abernethy, 19-Jun-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
 	$d w x y z A $.
 	$d w ph $.
 	$d x y z th $.
@@ -769,6 +1034,14 @@ $}
 $( Express a two-argument function as a one-argument function, or
        vice-versa.  (Contributed by Mario Carneiro, 24-Dec-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v v $.
+	$v u $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d u v x y z A $.
 	$d u v y z B $.
 	$d u v z C $.
@@ -785,6 +1058,12 @@ $}
 $( Express a two-argument function as a one-argument function, or
        vice-versa.  (Contributed by Mario Carneiro, 24-Sep-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y z A $.
 	$d y z B $.
 	$d z C $.
@@ -800,6 +1079,15 @@ $}
 $( The domain of a mapping is a subset of its base class.  (Contributed by
        Mario Carneiro, 9-Feb-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v v $.
+	$v u $.
+	$v t $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d t u v x y A $.
 	$d t u v y B $.
 	$d t u v C $.
@@ -820,6 +1108,16 @@ $( Functionality, domain and codomain of a class given by the "maps to"
        notation, where ` B ( x ) ` is not constant but depends on ` x ` .
        (Contributed by NM, 29-Dec-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d v w x y z A $.
 	$d v w y z B $.
 	$d v w z C $.
@@ -840,6 +1138,13 @@ $}
 $( Functionality, domain and range of a class given by the "maps to"
        notation.  (Contributed by FL, 17-May-2010.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d A x y $.
 	$d B x y $.
 	$d D x y $.
@@ -856,6 +1161,13 @@ $}
 $( Functionality and domain of a class given by the "maps to" notation.
        (Contributed by FL, 17-May-2010.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v V $.
 	$d A x y $.
 	$d B x y $.
 	$d x y $.
@@ -872,6 +1184,12 @@ $}
 $( Functionality and domain of a class given by the "maps to" notation.
        (Contributed by FL, 17-May-2010.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d A x y $.
 	$d B x y $.
 	$d x y $.
@@ -888,6 +1206,12 @@ $}
 $( Domain of a class given by the "maps to" notation.  (Contributed by FL,
        17-May-2010.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d A x y $.
 	$d B x y $.
 	$d x y $.
@@ -904,6 +1228,14 @@ $}
 $( Existence of an operation class abstraction (version for dependent
        domains).  (Contributed by Mario Carneiro, 30-Dec-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v F $.
 	$d A x y $.
 	$d B y $.
 	fmpt2exxg_0 $f set x $.
@@ -921,6 +1253,14 @@ $( Existence of an operation class abstraction (special case).
        (Contributed by FL, 17-May-2010.)  (Revised by Mario Carneiro,
        1-Sep-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v F $.
 	$d A x y $.
 	$d B y $.
 	$d x B $.
@@ -938,6 +1278,13 @@ $}
 $( If the domain of a function given by maps-to notation is a set, the
        function is a set.  (Contributed by NM, 12-Sep-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v W $.
 	$d x y A $.
 	$d x y B $.
 	fmpt2exga_0 $f set x $.
@@ -952,6 +1299,11 @@ $}
 $( If the domain of a function given by maps-to notation is a set, the
        function is a set.  (Contributed by Mario Carneiro, 20-Dec-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d y B $.
 	fmpt2ex_0 $f set x $.
@@ -966,6 +1318,12 @@ $}
 $( A mapping operation with empty domain.  (Contributed by Stefan O'Rear,
        29-Jan-2015.)  (Revised by Mario Carneiro, 15-May-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v B $.
+	$v C $.
 	$d w x z $.
 	$d w y z $.
 	$d w z B $.
@@ -982,6 +1340,18 @@ $( If all the values of the mapping are subsets of a class ` X ` , then so
        is any evaluation of the mapping.  (Contributed by Mario Carneiro,
        24-Dec-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v v $.
+	$v u $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v E $.
+	$v F $.
+	$v G $.
+	$v X $.
 	$d u v x y z A $.
 	$d u v y z B $.
 	$d u v z C $.
@@ -1004,6 +1374,16 @@ $}
 $( Any function to sets of ordered pairs produces a relation on function
        value unconditionally.  (Contributed by Mario Carneiro, 9-Feb-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d w x y z $.
 	$d y B $.
 	$d x y A $.
@@ -1024,6 +1404,21 @@ $( Composition of two functions.  Variation of ~ fmptco when the second
        function has two arguments.  (Contributed by Mario Carneiro,
        8-Feb-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v T $.
+	$v F $.
+	$v G $.
 	$d u v w x y B $.
 	$d u w x y z C $.
 	$d x y ph $.
@@ -1056,6 +1451,16 @@ $( Composition of a function with an operator abstraction.  (Contributed by
        Jeff Madsen, 2-Sep-2009.)  (Proof shortened by Mario Carneiro,
        26-Sep-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v G $.
+	$v H $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z D $.
@@ -1079,6 +1484,17 @@ $}
 $( Composition of operator abstractions.  (Contributed by Jeff Madsen,
        2-Sep-2009.)  (Revised by David Abernethy, 23-Apr-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v G $.
+	$v M $.
 	$d x y A $.
 	$d x y B $.
 	$d x y M $.
@@ -1104,6 +1520,10 @@ $}
 $( An alternate possible definition of the ` 1st ` function.  (Contributed
        by NM, 14-Oct-2004.)  (Revised by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x y z $.
 	idf1st2_0 $f set w $.
 	fdf1st2_0 $f set x $.
@@ -1114,6 +1534,10 @@ $}
 $( An alternate possible definition of the ` 2nd ` function.  (Contributed
        by NM, 10-Aug-2006.)  (Revised by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x y z $.
 	idf2nd2_0 $f set w $.
 	fdf2nd2_0 $f set x $.
@@ -1124,6 +1548,11 @@ $}
 $( The mapping of a restriction of the ` 1st ` function to a constant
        function.  (Contributed by NM, 14-Dec-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d x y A $.
 	$d x y B $.
 	$d x y V $.
@@ -1137,6 +1566,11 @@ $}
 $( The mapping of a restriction of the ` 2nd ` function to a converse
        constant function.  (Contributed by NM, 27-Mar-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d x y A $.
 	$d x y B $.
 	$d x y V $.
@@ -1151,6 +1585,12 @@ $( Alternate definition for the "maps to" notation ~ df-mpt2 (although it
        requires that ` C ` be a set).  (Contributed by NM, 19-Dec-2008.)
        (Revised by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d w x y A $.
 	$d w x y B $.
 	$d w C $.
@@ -1169,6 +1609,12 @@ $( Composition with ` ``' ( 2nd |`` ( { C } X. _V ) ) ` turns any binary
        (Contributed by NM, 28-Mar-2008.)  (Revised by Mario Carneiro,
        26-Dec-2014.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v G $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1187,6 +1633,13 @@ $( The value of a curried function with a constant first argument.
        (Contributed by NM, 28-Mar-2008.)  (Revised by Mario Carneiro,
        26-Apr-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v G $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1206,6 +1659,13 @@ $}
 $( Functionality of a curried function with a constant first argument.
        (Contributed by NM, 29-Mar-2008.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v G $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1228,6 +1688,12 @@ $( Composition with ` ``' ( 1st |`` ( _V X. { C } ) ) ` turns any binary
        this becomes frequently used, we can introduce a new notation for the
        hypothesis.)  (Contributed by NM, 16-Dec-2008.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v G $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1245,6 +1711,13 @@ $}
 $( Functionality of a curried function with a constant second argument.
        (Contributed by NM, 16-Dec-2008.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v G $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1264,6 +1737,13 @@ $}
 $( The value of a curried function with a constant second argument.
        (Contributed by NM, 16-Dec-2008.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v G $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1282,6 +1762,9 @@ ${
 $}
 $( Lemma for ~ cnvf1o .  (Contributed by Mario Carneiro, 27-Apr-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fcnvf1olem_0 $f class A $.
 	fcnvf1olem_1 $f class B $.
 	fcnvf1olem_2 $f class C $.
@@ -1290,6 +1773,9 @@ $}
 $( Describe a function that maps the elements of a set to its converse
        bijectively.  (Contributed by Mario Carneiro, 27-Apr-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	icnvf1o_0 $f set y $.
 	fcnvf1o_0 $f set x $.
@@ -1299,6 +1785,8 @@ $}
 $( Lemma for ~ fpar .  (Contributed by NM, 22-Dec-2008.)  (Revised by Mario
        Carneiro, 28-Apr-2015.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d x y $.
 	$d x y $.
@@ -1309,6 +1797,8 @@ $}
 $( Lemma for ~ fpar .  (Contributed by NM, 22-Dec-2008.)  (Revised by Mario
        Carneiro, 28-Apr-2015.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d x y $.
 	$d x y $.
@@ -1319,6 +1809,10 @@ $}
 $( Lemma for ~ fpar .  (Contributed by NM, 22-Dec-2008.)  (Revised by Mario
        Carneiro, 28-Apr-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v F $.
 	$d x A $.
 	$d x y F $.
 	$d x y $.
@@ -1332,6 +1826,10 @@ $}
 $( Lemma for ~ fpar .  (Contributed by NM, 22-Dec-2008.)  (Revised by Mario
        Carneiro, 28-Apr-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v B $.
+	$v G $.
 	$d y B $.
 	$d x y $.
 	$d x y G $.
@@ -1347,6 +1845,13 @@ $( Merge two functions in parallel.  Use as the second argument of a
        as ` z = ( ( sqr `` x ) + ( abs `` y ) ) ` .  (Contributed by NM,
        17-Sep-2007.)  (Proof shortened by Mario Carneiro, 28-Apr-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
+	$v H $.
 	$d x y A $.
 	$d x y B $.
 	$d x y F $.
@@ -1367,6 +1872,9 @@ $( A function that can be used to feed a common value to both operands of
        ` y = ( ( sqr `` x ) + ( abs `` x ) ) ` .  (Contributed by NM,
        17-Sep-2007.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	ifsplit_0 $f set y $.
 	ifsplit_1 $f set z $.
@@ -1376,6 +1884,9 @@ $}
 $( Lemma for ~ algrf and related theorems.  (Contributed by Mario Carneiro,
        28-May-2014.)  (Revised by Mario Carneiro, 30-Apr-2015.) $)
 ${
+	$v B $.
+	$v C $.
+	$v F $.
 	falgrflem_0 $f class B $.
 	falgrflem_1 $f class C $.
 	falgrflem_2 $f class F $.
@@ -1387,6 +1898,23 @@ $( A lexicographical ordering of two well-founded classes.  (Contributed by
        Scott Fenton, 17-Mar-2011.)  (Revised by Mario Carneiro, 7-Mar-2013.)
        (Proof shortened by Wolf Lammen, 4-Oct-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
+	$v t $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v T $.
+	$v s $.
+	$v a $.
+	$v b $.
+	$v c $.
+	$v d $.
 	$d A a b c s v w x y z $.
 	$d B a b d s v w x y z $.
 	$d R a b c s v w x y $.
@@ -1415,6 +1943,17 @@ $}
 $( Lemma for lexicographical ordering theorems.  (Contributed by Scott
        Fenton, 16-Mar-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v T $.
+	$v a $.
+	$v b $.
+	$v c $.
+	$v d $.
 	$d A x y $.
 	$d B x y $.
 	$d R x y $.
@@ -1440,6 +1979,22 @@ $}
 $( A lexicographical ordering of two posets.  (Contributed by Scott Fenton,
        16-Mar-2011.)  (Revised by Mario Carneiro, 7-Mar-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v v $.
+	$v u $.
+	$v t $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v T $.
+	$v e $.
+	$v f $.
+	$v a $.
+	$v b $.
+	$v c $.
+	$v d $.
 	$d A a b c d e f t u v x y $.
 	$d B a b c d e f t u v x y $.
 	$d R a b c d e f t u v x y $.
@@ -1468,6 +2023,19 @@ $( A lexicographical ordering of two strictly ordered classes.
        (Contributed by Scott Fenton, 17-Mar-2011.)  (Revised by Mario Carneiro,
        7-Mar-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v u $.
+	$v t $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v T $.
+	$v a $.
+	$v b $.
+	$v c $.
+	$v d $.
 	$d A a b c d t u x y $.
 	$d B a b c d t u x y $.
 	$d R a b c d t u x y $.
@@ -1492,6 +2060,13 @@ $}
 $( A lexicographical ordering of two well-ordered classes.  (Contributed by
        Scott Fenton, 17-Mar-2011.)  (Revised by Mario Carneiro, 7-Mar-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v T $.
 	$d A x y $.
 	$d B x y $.
 	$d R x y $.
@@ -1508,8 +2083,22 @@ ${
 $}
 $( Lemma for ~ fnwe .  (Contributed by Mario Carneiro, 10-Mar-2013.)
          (Revised by Mario Carneiro, 18-Nov-2014.) $)
-$v Q $.
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
+	$v A $.
+	$v B $.
+	$v Q $.
+	$v R $.
+	$v S $.
+	$v T $.
+	$v F $.
+	$v G $.
 	$d u v w x y z A $.
 	$d u v w x y z B $.
 	$d w x y G $.
@@ -1548,6 +2137,19 @@ $( A variant on lexicographic order, which sorts first by some function of
        value is equal on both elements.  (Contributed by Mario Carneiro,
        10-Mar-2013.)  (Revised by Mario Carneiro, 18-Nov-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v T $.
+	$v F $.
 	$d u v w x y z A $.
 	$d u v w x y z B $.
 	$d w x y $.
@@ -1580,6 +2182,18 @@ $}
 $( Condition for the well-order in ~ fnwe to be set-like.  (Contributed by
        Mario Carneiro, 25-Jun-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v u $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v T $.
+	$v F $.
 	$d x y z A $.
 	$d u w B $.
 	$d u w x y F $.

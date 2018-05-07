@@ -10,6 +10,11 @@ $( Inference for ~ nic-mp using ~ nic-ax as major premise.  (Contributed by
        Jeff Hoffman, 17-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	inic-imp_0 $f wff ta $.
 	fnic-imp_0 $f wff ph $.
 	fnic-imp_1 $f wff ps $.
@@ -21,6 +26,11 @@ $}
 $( Lemma for ~ nic-id .  (Contributed by Jeff Hoffman, 17-Nov-2007.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fnic-idlem1_0 $f wff ph $.
 	fnic-idlem1_1 $f wff ps $.
 	fnic-idlem1_2 $f wff ch $.
@@ -32,6 +42,12 @@ $( Lemma for ~ nic-id .  Inference used by ~ nic-id .  (Contributed by Jeff
        Hoffman, 17-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fnic-idlem2_0 $f wff ph $.
 	fnic-idlem2_1 $f wff ps $.
 	fnic-idlem2_2 $f wff ch $.
@@ -45,6 +61,11 @@ $( Theorem ~ id expressed with ` -/\ ` .  (Contributed by Jeff Hoffman,
      17-Nov-2007.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ta $.
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	inic-id_0 $f wff ph $.
 	inic-id_1 $f wff ps $.
 	inic-id_2 $f wff ch $.
@@ -55,6 +76,9 @@ $}
 $( ` -/\ ` is symmetric.  (Contributed by Jeff Hoffman, 17-Nov-2007.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v th $.
+	$v ta $.
 	inic-swap_0 $f wff ta $.
 	fnic-swap_0 $f wff ph $.
 	fnic-swap_1 $f wff th $.
@@ -64,6 +88,8 @@ $( Inference version of ~ nic-swap .  (Contributed by Jeff Hoffman,
        17-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v th $.
 	fnic-isw1_0 $f wff ph $.
 	fnic-isw1_1 $f wff th $.
 	enic-isw1_0 $e |- ( th -/\ ph ) $.
@@ -73,6 +99,9 @@ $( Inference for swapping nested terms.  (Contributed by Jeff Hoffman,
        17-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v th $.
 	fnic-isw2_0 $f wff ph $.
 	fnic-isw2_1 $f wff ps $.
 	fnic-isw2_2 $f wff th $.
@@ -83,6 +112,10 @@ $( Inference version of ~ nic-imp using right-handed term.  (Contributed by
        Jeff Hoffman, 17-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fnic-iimp1_0 $f wff ph $.
 	fnic-iimp1_1 $f wff ps $.
 	fnic-iimp1_2 $f wff ch $.
@@ -95,6 +128,10 @@ $( Inference version of ~ nic-imp using left-handed term.  (Contributed by
        Jeff Hoffman, 17-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fnic-iimp2_0 $f wff ph $.
 	fnic-iimp2_1 $f wff ps $.
 	fnic-iimp2_2 $f wff ch $.
@@ -107,6 +144,9 @@ $( Inference to remove the trailing term.  (Contributed by Jeff Hoffman,
        17-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fnic-idel_0 $f wff ph $.
 	fnic-idel_1 $f wff ps $.
 	fnic-idel_2 $f wff ch $.
@@ -116,6 +156,9 @@ $}
 $( Chained inference.  (Contributed by Jeff Hoffman, 17-Nov-2007.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fnic-ich_0 $f wff ph $.
 	fnic-ich_1 $f wff ps $.
 	fnic-ich_2 $f wff ch $.
@@ -128,6 +171,8 @@ $( Double the terms.  Since doubling is the same as negation, this can be
        17-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fnic-idbl_0 $f wff ph $.
 	fnic-idbl_1 $f wff ps $.
 	enic-idbl_0 $e |- ( ph -/\ ( ps -/\ ps ) ) $.
@@ -144,6 +189,7 @@ $( For nic-* definitions, the biconditional connective is not used.  Instead,
      implication.  (Contributed by Jeff Hoffman, 18-Nov-2007.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ta $.
 	fnic-bijust_0 $f wff ta $.
 	nic-bijust $p |- ( ( ta -/\ ta ) -/\ ( ( ta -/\ ta ) -/\ ( ta -/\ ta ) ) ) $= fnic-bijust_0 fnic-bijust_0 nic-swap $.
 $}
@@ -152,6 +198,8 @@ $( Inference to extract one side of an implication from a definition.
        (Contributed by Jeff Hoffman, 18-Nov-2007.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fnic-bi1_0 $f wff ph $.
 	fnic-bi1_1 $f wff ps $.
 	enic-bi1_0 $e |- ( ( ph -/\ ps ) -/\ ( ( ph -/\ ph ) -/\ ( ps -/\ ps ) ) ) $.
@@ -163,6 +211,8 @@ $( Inference to extract the other side of an implication from a
        18-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fnic-bi2_0 $f wff ph $.
 	fnic-bi2_1 $f wff ps $.
 	enic-bi2_0 $e |- ( ( ph -/\ ps ) -/\ ( ( ph -/\ ph ) -/\ ( ps -/\ ps ) ) ) $.
@@ -179,6 +229,8 @@ $( Derive the standard modus ponens from ~ nic-mp .  (Contributed by Jeff
        Hoffman, 18-Nov-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fnic-stdmp_0 $f wff ph $.
 	fnic-stdmp_1 $f wff ps $.
 	enic-stdmp_0 $e |- ph $.
@@ -191,6 +243,10 @@ $( Proof of ~ luk-1 from ~ nic-ax and ~ nic-mp (and definitions ~ nic-dfim
      and ~ ax3 .  (Contributed by Jeff Hoffman, 18-Nov-2007.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v ta $.
 	inic-luk1_0 $f wff ta $.
 	fnic-luk1_0 $f wff ph $.
 	fnic-luk1_1 $f wff ps $.
@@ -201,6 +257,7 @@ $( Proof of ~ luk-2 from ~ nic-ax and ~ nic-mp .  (Contributed by Jeff
      Hoffman, 18-Nov-2007.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
 	fnic-luk2_0 $f wff ph $.
 	nic-luk2 $p |- ( ( -. ph -> ph ) -> ph ) $= fnic-luk2_0 wn fnic-luk2_0 wi fnic-luk2_0 fnic-luk2_0 wnan wnan fnic-luk2_0 wn fnic-luk2_0 wi fnic-luk2_0 wi fnic-luk2_0 wn fnic-luk2_0 wi fnic-luk2_0 wi fnic-luk2_0 wn fnic-luk2_0 wi fnic-luk2_0 fnic-luk2_0 wnan fnic-luk2_0 wn fnic-luk2_0 wi fnic-luk2_0 wn fnic-luk2_0 fnic-luk2_0 wnan wnan fnic-luk2_0 wn fnic-luk2_0 fnic-luk2_0 wnan wnan fnic-luk2_0 fnic-luk2_0 wnan fnic-luk2_0 wn fnic-luk2_0 fnic-luk2_0 wnan wnan fnic-luk2_0 wn fnic-luk2_0 wi fnic-luk2_0 wn fnic-luk2_0 nic-dfim nic-bi2 fnic-luk2_0 wn fnic-luk2_0 fnic-luk2_0 wnan fnic-luk2_0 fnic-luk2_0 wnan fnic-luk2_0 fnic-luk2_0 wnan fnic-luk2_0 wn wnan fnic-luk2_0 wn fnic-luk2_0 wn wnan fnic-luk2_0 fnic-luk2_0 wnan fnic-luk2_0 fnic-luk2_0 wnan wnan fnic-luk2_0 fnic-luk2_0 wnan fnic-luk2_0 nic-dfneg fnic-luk2_0 fnic-luk2_0 wnan nic-id nic-iimp1 nic-isw2 nic-iimp1 nic-isw1 fnic-luk2_0 wn fnic-luk2_0 wi fnic-luk2_0 fnic-luk2_0 wnan wnan fnic-luk2_0 wn fnic-luk2_0 wi fnic-luk2_0 wi fnic-luk2_0 wn fnic-luk2_0 wi fnic-luk2_0 nic-dfim nic-bi1 nic-mp $.
 $}
@@ -208,6 +265,8 @@ $( Proof of ~ luk-3 from ~ nic-ax and ~ nic-mp .  (Contributed by Jeff
      Hoffman, 18-Nov-2007.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fnic-luk3_0 $f wff ph $.
 	fnic-luk3_1 $f wff ps $.
 	nic-luk3 $p |- ( ph -> ( -. ph -> ps ) ) $= fnic-luk3_0 fnic-luk3_0 wn fnic-luk3_1 wi fnic-luk3_0 wn fnic-luk3_1 wi wnan wnan fnic-luk3_0 fnic-luk3_0 wn fnic-luk3_1 wi wi fnic-luk3_0 fnic-luk3_0 wn fnic-luk3_1 wi wi fnic-luk3_0 wn fnic-luk3_1 fnic-luk3_1 wnan fnic-luk3_0 wn fnic-luk3_1 wi fnic-luk3_0 fnic-luk3_0 wn fnic-luk3_1 fnic-luk3_1 wnan wnan fnic-luk3_0 wn fnic-luk3_1 wi fnic-luk3_0 wn fnic-luk3_1 nic-dfim nic-bi1 fnic-luk3_0 wn fnic-luk3_0 fnic-luk3_0 wnan fnic-luk3_0 fnic-luk3_0 wnan fnic-luk3_0 fnic-luk3_0 fnic-luk3_0 wnan fnic-luk3_0 wn fnic-luk3_0 nic-dfneg nic-bi2 fnic-luk3_0 nic-id nic-iimp1 nic-iimp2 fnic-luk3_0 fnic-luk3_0 wn fnic-luk3_1 wi fnic-luk3_0 wn fnic-luk3_1 wi wnan wnan fnic-luk3_0 fnic-luk3_0 wn fnic-luk3_1 wi wi fnic-luk3_0 fnic-luk3_0 wn fnic-luk3_1 wi nic-dfim nic-bi1 nic-mp $.

@@ -154,6 +154,10 @@ $( "Barbara", one of the fundamental syllogisms of Aristotelian logic.  All
        ~ https://en.wikipedia.org/wiki/Syllogism .  (Contributed by David A.
        Wheeler, 24-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fbarbara_0 $f wff ph $.
 	fbarbara_1 $f wff ps $.
 	fbarbara_2 $f wff ch $.
@@ -173,6 +177,10 @@ $( "Celarent", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ~ https://en.wikipedia.org/wiki/Syllogism .  (Contributed by David A.
        Wheeler, 24-Aug-2016.)  (Revised by David A. Wheeler, 2-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fcelarent_0 $f wff ph $.
 	fcelarent_1 $f wff ps $.
 	fcelarent_2 $f wff ch $.
@@ -192,6 +200,10 @@ $( "Darii", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        ~ https://en.wikipedia.org/wiki/Syllogism .  (Contributed by David A.
        Wheeler, 24-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fdarii_0 $f wff ph $.
 	fdarii_1 $f wff ps $.
 	fdarii_2 $f wff ch $.
@@ -212,6 +224,10 @@ $( "Ferio" ("Ferioque"), one of the syllogisms of Aristotelian logic.  No
        ~ https://en.wikipedia.org/wiki/Syllogism .  (Contributed by David A.
        Wheeler, 24-Aug-2016.)  (Revised by David A. Wheeler, 2-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fferio_0 $f wff ph $.
 	fferio_1 $f wff ps $.
 	fferio_2 $f wff ch $.
@@ -234,6 +250,10 @@ $( "Barbari", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        A. Wheeler, 27-Aug-2016.)  (Revised by David A. Wheeler,
        30-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fbarbari_0 $f wff ph $.
 	fbarbari_1 $f wff ps $.
 	fbarbari_2 $f wff ch $.
@@ -256,6 +276,10 @@ $( "Celaront", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ~ https://en.wikipedia.org/wiki/Syllogism .  (Contributed by David A.
        Wheeler, 27-Aug-2016.)  (Revised by David A. Wheeler, 2-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fcelaront_0 $f wff ph $.
 	fcelaront_1 $f wff ps $.
 	fcelaront_2 $f wff ch $.
@@ -274,6 +298,10 @@ $( "Cesare", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ~ celarent .  (Contributed by David A. Wheeler, 27-Aug-2016.)  (Revised
        by David A. Wheeler, 13-Nov-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fcesare_0 $f wff ph $.
 	fcesare_1 $f wff ps $.
 	fcesare_2 $f wff ch $.
@@ -290,6 +318,10 @@ $( "Camestres", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        by David A. Wheeler, 28-Aug-2016.)  (Revised by David A. Wheeler,
        2-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fcamestres_0 $f wff ph $.
 	fcamestres_1 $f wff ps $.
 	fcamestres_2 $f wff ch $.
@@ -305,6 +337,10 @@ $( "Festino", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        ` ph ` .  (In Aristotelian notation, EIO-2:  PeM and SiM therefore SoP.)
        (Contributed by David A. Wheeler, 25-Nov-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	ffestino_0 $f wff ph $.
 	ffestino_1 $f wff ps $.
 	ffestino_2 $f wff ch $.
@@ -322,6 +358,10 @@ $( "Baroco", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        useful", therefore "Some websites are not informative."  (Contributed by
        David A. Wheeler, 28-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fbaroco_0 $f wff ph $.
 	fbaroco_1 $f wff ps $.
 	fbaroco_2 $f wff ch $.
@@ -339,6 +379,10 @@ $( "Cesaro", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        therefore SoP.) (Contributed by David A. Wheeler, 28-Aug-2016.)
        (Revised by David A. Wheeler, 2-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fcesaro_0 $f wff ph $.
 	fcesaro_1 $f wff ps $.
 	fcesaro_2 $f wff ch $.
@@ -359,6 +403,10 @@ $( "Camestros", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        (Contributed by David A. Wheeler, 28-Aug-2016.)  (Revised by David A.
        Wheeler, 2-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fcamestros_0 $f wff ph $.
 	fcamestros_1 $f wff ps $.
 	fcamestros_2 $f wff ch $.
@@ -376,6 +424,10 @@ $( "Datisi", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        (In Aristotelian notation, AII-3:  MaP and MiS therefore SiP.)
        (Contributed by David A. Wheeler, 28-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fdatisi_0 $f wff ph $.
 	fdatisi_1 $f wff ps $.
 	fdatisi_2 $f wff ch $.
@@ -391,6 +443,10 @@ $( "Disamis", one of the syllogisms of Aristotelian logic.  Some ` ph ` is
        (In Aristotelian notation, IAI-3:  MiP and MaS therefore SiP.)
        (Contributed by David A. Wheeler, 28-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fdisamis_0 $f wff ph $.
 	fdisamis_1 $f wff ps $.
 	fdisamis_2 $f wff ch $.
@@ -407,6 +463,10 @@ $( "Ferison", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        (Contributed by David A. Wheeler, 28-Aug-2016.)  (Revised by David A.
        Wheeler, 2-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fferison_0 $f wff ph $.
 	fferison_1 $f wff ps $.
 	fferison_2 $f wff ch $.
@@ -425,6 +485,10 @@ $( "Bocardo", one of the syllogisms of Aristotelian logic.  Some ` ph ` is
        using that instead.  (Contributed by David A. Wheeler, 28-Aug-2016.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fbocardo_0 $f wff ph $.
 	fbocardo_1 $f wff ps $.
 	fbocardo_2 $f wff ch $.
@@ -444,6 +508,10 @@ $( "Felapton", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        David A. Wheeler, 28-Aug-2016.)  (Revised by David A. Wheeler,
        2-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	ffelapton_0 $f wff ph $.
 	ffelapton_1 $f wff ps $.
 	ffelapton_2 $f wff ch $.
@@ -463,6 +531,10 @@ $( "Darapti", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        squares are rhombuses", therefore "Some rhombuses are rectangles".
        (Contributed by David A. Wheeler, 28-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fdarapti_0 $f wff ph $.
 	fdarapti_1 $f wff ps $.
 	fdarapti_2 $f wff ch $.
@@ -481,6 +553,10 @@ $( "Calemes", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        by David A. Wheeler, 28-Aug-2016.)  (Revised by David A. Wheeler,
        2-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fcalemes_0 $f wff ph $.
 	fcalemes_1 $f wff ps $.
 	fcalemes_2 $f wff ch $.
@@ -498,6 +574,10 @@ $( "Dimatis", one of the syllogisms of Aristotelian logic.  Some ` ph ` is
        "Some fur bearing animals are pets".  Like ~ darii with positions
        interchanged.  (Contributed by David A. Wheeler, 28-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fdimatis_0 $f wff ph $.
 	fdimatis_1 $f wff ps $.
 	fdimatis_2 $f wff ch $.
@@ -514,6 +594,10 @@ $( "Fresison", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        therefore SoP.) (Contributed by David A. Wheeler, 28-Aug-2016.)
        (Revised by David A. Wheeler, 2-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	ffresison_0 $f wff ph $.
 	ffresison_1 $f wff ps $.
 	ffresison_2 $f wff ch $.
@@ -531,6 +615,10 @@ $( "Calemos", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        and MeS therefore SoP.) (Contributed by David A. Wheeler, 28-Aug-2016.)
        (Revised by David A. Wheeler, 2-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fcalemos_0 $f wff ph $.
 	fcalemos_1 $f wff ps $.
 	fcalemos_2 $f wff ch $.
@@ -549,6 +637,10 @@ $( "Fesapo", one of the syllogisms of Aristotelian logic.  No ` ph ` is
        therefore SoP.) (Contributed by David A. Wheeler, 28-Aug-2016.)
        (Revised by David A. Wheeler, 2-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	ffesapo_0 $f wff ph $.
 	ffesapo_1 $f wff ps $.
 	ffesapo_2 $f wff ch $.
@@ -567,6 +659,10 @@ $( "Bamalip", one of the syllogisms of Aristotelian logic.  All ` ph ` is
        SiP.) Like ~ barbari .  (Contributed by David A. Wheeler,
        28-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fbamalip_0 $f wff ph $.
 	fbamalip_1 $f wff ps $.
 	fbamalip_2 $f wff ch $.

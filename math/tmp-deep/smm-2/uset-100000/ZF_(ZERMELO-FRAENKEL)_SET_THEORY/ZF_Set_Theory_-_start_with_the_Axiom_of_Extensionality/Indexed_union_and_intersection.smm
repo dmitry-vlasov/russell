@@ -82,7 +82,7 @@ ${
 $}
 $( Membership in indexed union.  (Contributed by NM, 3-Sep-2003.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d x y A $.
 	$d y B $.
 	$d y C $.
@@ -96,7 +96,7 @@ ${
 $}
 $( Membership in indexed intersection.  (Contributed by NM, 3-Sep-2003.) $)
 ${
-	$v x y A B C V $.
+	$v x A B C V y $.
 	$d x y A $.
 	$d y B $.
 	$d y C $.
@@ -111,7 +111,7 @@ ${
 $}
 $( Commutation of indexed unions.  (Contributed by NM, 18-Dec-2008.) $)
 ${
-	$v x y z A B C $.
+	$v x y A B C z $.
 	$d y z A $.
 	$d x z B $.
 	$d z C $.
@@ -128,7 +128,7 @@ $}
 $( Commutation of union with indexed union.  (Contributed by Mario
        Carneiro, 18-Jan-2014.) $)
 ${
-	$v x y z A B $.
+	$v x A B y z $.
 	$d y z A $.
 	$d y z B $.
 	$d x y z $.
@@ -144,7 +144,7 @@ $( Indexed union of a constant class, i.e. where ` B ` does not depend on
        ` x ` .  (Contributed by NM, 5-Sep-2004.)  (Proof shortened by Andrew
        Salmon, 25-Jul-2011.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f set x $.
@@ -157,7 +157,7 @@ $}
 $( Indexed intersection of a constant class, i.e. where ` B ` does not
        depend on ` x ` .  (Contributed by Mario Carneiro, 6-Feb-2015.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f set x $.
@@ -173,7 +173,7 @@ $( Law combining indexed union with indexed intersection.  Eq. 14 in
        (Contributed by NM, 17-Aug-2004.)  (Proof shortened by Andrew Salmon,
        25-Jul-2011.) $)
 ${
-	$v x y z A B C $.
+	$v x y A B C z $.
 	$d x y $.
 	$d y z A $.
 	$d x z B $.
@@ -190,7 +190,7 @@ $}
 $( Subclass theorem for indexed union.  (Contributed by NM, 10-Dec-2004.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -205,7 +205,7 @@ $}
 $( Subclass theorem for indexed union.  (Contributed by NM,
        24-Jan-2012.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -233,7 +233,7 @@ $}
 $( Equality theorem for restricted existential quantifier.  (Contributed by
        NM, 27-Jun-1998.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -248,7 +248,7 @@ $}
 $( Subclass theorem for indexed union.  (Contributed by NM, 26-Nov-2003.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -275,7 +275,7 @@ $}
 $( Equality theorem for indexed intersection.  (Contributed by NM,
        22-Oct-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -405,7 +405,7 @@ $}
 $( Bound-variable hypothesis builder for indexed union.  (Contributed by
        Mario Carneiro, 25-Jan-2014.) $)
 ${
-	$v x y z A B $.
+	$v x y A B z $.
 	$d z A $.
 	$d z B $.
 	$d x z $.
@@ -423,7 +423,7 @@ $}
 $( Bound-variable hypothesis builder for indexed intersection.
        (Contributed by Mario Carneiro, 25-Jan-2014.) $)
 ${
-	$v x y z A B $.
+	$v x y A B z $.
 	$d z A $.
 	$d z B $.
 	$d x z $.
@@ -441,7 +441,7 @@ $}
 $( Bound-variable hypothesis builder for indexed union.  (Contributed by
        NM, 12-Oct-2003.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -455,7 +455,7 @@ $}
 $( Bound-variable hypothesis builder for indexed intersection.
        (Contributed by NM, 15-Oct-2003.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -470,7 +470,7 @@ $( Alternate definition of indexed union when ` B ` is a set.  Definition
        15(a) of [Suppes] p. 44.  (Contributed by NM, 23-Mar-2006.)  (Proof
        shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
-	$v x y z A B C $.
+	$v x y A B C z $.
 	$d y z A $.
 	$d y z B $.
 	$d C z $.
@@ -487,7 +487,7 @@ $}
 $( Alternate definition of indexed intersection when ` B ` is a set.
        (Contributed by Jeff Hankins, 27-Aug-2009.) $)
 ${
-	$v x y z w A B C $.
+	$v x y A B C z w $.
 	$d y z w A $.
 	$d y z w B $.
 	$d w C z $.
@@ -538,7 +538,7 @@ $( Rule used to change the bound variables in an indexed union, with the
        substitution specified implicitly by the hypothesis.  (Contributed by
        NM, 26-Mar-2006.)  (Revised by Andrew Salmon, 25-Jul-2011.) $)
 ${
-	$v x y z A B C $.
+	$v x y A B C z $.
 	$d z y A $.
 	$d z x A $.
 	$d z B $.
@@ -558,7 +558,7 @@ $}
 $( Change bound variables in an indexed intersection.  (Contributed by Jeff
        Hankins, 26-Aug-2009.)  (Revised by Mario Carneiro, 14-Oct-2016.) $)
 ${
-	$v x y z A B C $.
+	$v x y A B C z $.
 	$d z y A $.
 	$d z x A $.
 	$d z B $.
@@ -613,7 +613,7 @@ $}
 $( Subset theorem for an indexed union.  (Contributed by NM, 13-Sep-2003.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d x y C $.
 	$d y A $.
 	$d y B $.
@@ -628,7 +628,7 @@ $}
 $( Subset implication for an indexed union.  (Contributed by NM,
        3-Sep-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d x y C $.
 	$d y A $.
 	$d y B $.
@@ -643,7 +643,7 @@ $}
 $( Identity law for subset of an indexed union.  (Contributed by NM,
        12-Oct-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -738,7 +738,7 @@ $}
 $( Subset theorem for an indexed intersection.  (Contributed by FL,
        15-Oct-2012.)  (Proof shortened by Mario Carneiro, 14-Oct-2016.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d y A $.
 	$d y B $.
 	$d y C $.
@@ -767,7 +767,7 @@ $}
 $( Subset implication for an indexed intersection.  (Contributed by NM,
        15-Oct-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d x y C $.
 	$d y A $.
 	$d y B $.
@@ -782,7 +782,7 @@ $}
 $( An indexed intersection is included in any of its members.  (Contributed
        by FL, 15-Oct-2012.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d A y $.
 	$d B y $.
 	$d x y $.
@@ -796,7 +796,7 @@ $}
 $( Class union in terms of indexed union.  Definition in [Stoll] p. 43.
        (Contributed by NM, 28-Jun-1998.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d x y A $.
 	f0 $f set x $.
 	f1 $f class A $.
@@ -807,7 +807,7 @@ $}
 $( Class intersection in terms of indexed intersection.  Definition in
        [Stoll] p. 44.  (Contributed by NM, 28-Jun-1998.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d x y A $.
 	f0 $f set x $.
 	f1 $f class A $.
@@ -818,7 +818,7 @@ $}
 $( An indexed union of singletons recovers the index set.  (Contributed by
        NM, 6-Sep-2005.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d x y A $.
 	f0 $f set x $.
 	f1 $f class A $.
@@ -829,7 +829,7 @@ $}
 $( An indexed union of the empty set is empty.  (Contributed by NM,
        26-Mar-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d x y $.
 	$d y A $.
 	f0 $f set x $.
@@ -841,7 +841,7 @@ $}
 $( An empty indexed union is empty.  (Contributed by NM, 4-Dec-2004.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d x y $.
 	$d y A $.
 	f0 $f set x $.
@@ -853,7 +853,7 @@ $}
 $( An empty indexed intersection is the universal class.  (Contributed by
        NM, 20-Oct-2005.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d x y $.
 	$d y A $.
 	f0 $f set x $.
@@ -880,7 +880,7 @@ $( There is a non-empty class in an indexed collection ` B ( x ) ` iff the
        indexed union of them is non-empty.  (Contributed by NM, 15-Oct-2003.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y A $.
 	$d y B $.
 	f0 $f set x $.
@@ -940,7 +940,7 @@ $( Indexed union of intersection.  Generalization of half of theorem
        "Distributive laws" in [Enderton] p. 30.  Use ~ uniiun to recover
        Enderton's theorem.  (Contributed by NM, 26-Mar-2004.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d y A $.
 	$d x y B $.
 	$d y C $.
@@ -969,7 +969,7 @@ $( Indexed intersection of union.  Generalization of half of theorem
        "Distributive laws" in [Enderton] p. 30.  Use ~ intiin to recover
        Enderton's theorem.  (Contributed by NM, 19-Aug-2004.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d y A $.
 	$d x y B $.
 	$d y C $.
@@ -985,7 +985,7 @@ $( Indexed union of class difference.  Generalization of half of theorem
        "De Morgan's laws" in [Enderton] p. 31.  Use ~ intiin to recover
        Enderton's theorem.  (Contributed by NM, 19-Aug-2004.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d y A $.
 	$d x y B $.
 	$d y C $.
@@ -1018,7 +1018,7 @@ $( Indexed intersection of class difference.  Generalization of half of
        theorem "De Morgan's laws" in [Enderton] p. 31.  Use ~ uniiun to recover
        Enderton's theorem.  (Contributed by NM, 5-Oct-2006.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -1034,7 +1034,7 @@ $( Indexed intersection of intersection.  Generalization of half of theorem
        "Distributive laws" in [Enderton] p. 30.  Use ~ intiin to recover
        Enderton's theorem.  (Contributed by Mario Carneiro, 19-Mar-2015.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -1119,7 +1119,7 @@ $( A singleton index picks out an instance of an indexed intersection's
        argument.  (Contributed by NM, 15-Jan-2012.)  (Proof shortened by Mario
        Carneiro, 17-Nov-2016.) $)
 ${
-	$v x y A B C V $.
+	$v x A B C V y $.
 	$d x y A $.
 	$d y B $.
 	$d x y C $.
@@ -1137,7 +1137,7 @@ $}
 $( Indexed intersection with an unordered pair index.  (Contributed by NM,
        25-Jan-2012.) $)
 ${
-	$v x y A B C D E V W $.
+	$v x A B C D E V W y $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -1162,7 +1162,7 @@ $}
 $( A singleton index picks out an instance of an indexed union's argument.
        (Contributed by Mario Carneiro, 25-Jun-2016.) $)
 ${
-	$v x y A B C V $.
+	$v x A B C V y $.
 	$d x y A $.
 	$d y B $.
 	$d x y C $.
@@ -1196,7 +1196,7 @@ $}
 $( Separate a union in an indexed union.  (Contributed by NM,
        27-Dec-2004.)  (Proof shortened by Mario Carneiro, 17-Nov-2016.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -1212,7 +1212,7 @@ $}
 $( Separate a union in the index of an indexed union.  (Contributed by NM,
        26-Mar-2004.)  (Proof shortened by Mario Carneiro, 17-Nov-2016.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -1228,7 +1228,7 @@ $}
 $( Separate an indexed union in the index of an indexed union.
        (Contributed by Mario Carneiro, 5-Dec-2016.) $)
 ${
-	$v x y z A B C $.
+	$v x y A B C z $.
 	$d x y z $.
 	$d x z A $.
 	$d z B $.
@@ -1246,7 +1246,7 @@ $( A relationship involving union and indexed intersection.  Exercise 23 of
        [Enderton] p. 33.  (Contributed by NM, 25-Nov-2003.)  (Proof shortened
        by Mario Carneiro, 17-Nov-2016.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f set x $.
@@ -1272,7 +1272,7 @@ $}
 $( Subclass relationship for power class and union.  (Contributed by NM,
        18-Jul-2006.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -1306,7 +1306,7 @@ $( The power class of an intersection in terms of indexed intersection.
        Exercise 24(a) of [Enderton] p. 33.  (Contributed by NM,
        29-Nov-2003.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d x y A $.
 	f0 $f set x $.
 	f1 $f class A $.
@@ -1318,7 +1318,7 @@ $( Inclusion of an indexed union of a power class in the power class of the
        union of its index.  Part of Exercise 24(b) of [Enderton] p. 33.
        (Contributed by NM, 25-Nov-2003.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d x y A $.
 	f0 $f set x $.
 	f1 $f class A $.

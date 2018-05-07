@@ -146,7 +146,7 @@ $( This is the closest we can get to ~ df-sbc if we start from ~ dfsbcq
        (Proof shortened by Andrew Salmon, 29-Jun-2011.)
        (Proof modification is discouraged.) $)
 ${
-	$v ph x y A V $.
+	$v ph x A V y $.
 	$d y A $.
 	$d y ph $.
 	$d x y $.
@@ -170,7 +170,7 @@ $( The disjunction of two equivalences for class substitution does not
        variable ` y ` that ` ph ` or ` A ` may contain.  (Contributed by NM,
        11-Oct-2004.)  (Proof modification is discouraged.) $)
 ${
-	$v ph x y A $.
+	$v ph x A y $.
 	$d x y A $.
 	$d y ph $.
 	f0 $f wff ph $.
@@ -215,7 +215,7 @@ $( Specialization: if a formula is true for all sets, it is true for any
        class which is a set.  Similar to Theorem 6.11 of [Quine] p. 44.  See
        also ~ stdpc4 and ~ rspsbc .  (Contributed by NM, 16-Jan-2004.) $)
 ${
-	$v ph x y A V $.
+	$v ph x A V y $.
 	$d ph y $.
 	$d A y $.
 	$d x y $.
@@ -343,7 +343,7 @@ $}
 $( A composition law for class substitution.  (Contributed by NM,
        26-Sep-2003.)  (Revised by Mario Carneiro, 13-Oct-2016.) $)
 ${
-	$v ph x y z A $.
+	$v ph x y A z $.
 	$d x z $.
 	$d z A $.
 	$d y z ph $.
@@ -375,7 +375,7 @@ $}
 $( An equivalence for class substitution.  (Contributed by NM,
        23-Aug-1993.)  (Revised by Mario Carneiro, 12-Oct-2016.) $)
 ${
-	$v ph x y A $.
+	$v ph x A y $.
 	$d x y A $.
 	$d y ph $.
 	f0 $f wff ph $.
@@ -601,7 +601,7 @@ $( Membership in a restricted class abstraction, expressed with explicit
        variable in ` B ` .  (Contributed by NM, 30-Sep-2003.)  (Proof shortened
        by Mario Carneiro, 13-Oct-2016.) $)
 ${
-	$v ph x y A B $.
+	$v ph x A B y $.
 	$d y A $.
 	$d y B $.
 	$d y ph $.
@@ -618,7 +618,7 @@ $}
 $( Substitution applied to an atomic wff.  Set theory version of ~ eqsb3 .
        (Contributed by Andrew Salmon, 29-Jun-2011.) $)
 ${
-	$v x y A B V $.
+	$v x A B V y $.
 	$d x y B $.
 	$d y A $.
 	f0 $f set x $.
@@ -632,7 +632,7 @@ $}
 $( Move negation in and out of class substitution.  (Contributed by NM,
        16-Jan-2004.) $)
 ${
-	$v ph x y A V $.
+	$v ph x A V y $.
 	$d x y $.
 	$d y A $.
 	$d y ph $.
@@ -647,7 +647,7 @@ $}
 $( Distribution of class substitution over implication.  (Contributed by
        NM, 16-Jan-2004.) $)
 ${
-	$v ph ps x y A V $.
+	$v ph ps x A V y $.
 	$d x y $.
 	$d y A $.
 	$d y ph $.
@@ -664,7 +664,7 @@ $}
 $( Distribution of class substitution over conjunction.  (Contributed by
        NM, 31-Dec-2016.) $)
 ${
-	$v ph ps x y A $.
+	$v ph ps x A y $.
 	$d x y $.
 	$d y A $.
 	$d y ph $.
@@ -680,7 +680,7 @@ $}
 $( Distribution of class substitution over conjunction.  (Contributed by
        NM, 21-May-2004.) $)
 ${
-	$v ph ps x y A V $.
+	$v ph ps x A V y $.
 	$d x y $.
 	$d y A $.
 	$d y ph $.
@@ -697,7 +697,7 @@ $}
 $( Distribution of class substitution over disjunction.  (Contributed by
        NM, 31-Dec-2016.) $)
 ${
-	$v ph ps x y A $.
+	$v ph ps x A y $.
 	$d x y $.
 	$d y A $.
 	$d y ph $.
@@ -713,7 +713,7 @@ $}
 $( Distribution of class substitution over disjunction.  (Contributed by
        NM, 21-May-2004.) $)
 ${
-	$v ph ps x y A V $.
+	$v ph ps x A V y $.
 	$d x y $.
 	$d y A $.
 	$d y ph $.
@@ -730,7 +730,7 @@ $}
 $( Distribution of class substitution over biconditional.  (Contributed by
        Raph Levien, 10-Apr-2004.) $)
 ${
-	$v ph ps x y A V $.
+	$v ph ps x A V y $.
 	$d x y $.
 	$d y A $.
 	$d y ph $.
@@ -747,7 +747,7 @@ $}
 $( Move universal quantifier in and out of class substitution.
        (Contributed by NM, 31-Dec-2016.) $)
 ${
-	$v ph x y z A $.
+	$v ph x y A z $.
 	$d x z A $.
 	$d x y z $.
 	$d z ph $.
@@ -762,7 +762,7 @@ $}
 $( Move universal quantifier in and out of class substitution.
        (Contributed by NM, 16-Jan-2004.) $)
 ${
-	$v ph x y z A V $.
+	$v ph x y A V z $.
 	$d x z A $.
 	$d x y z $.
 	$d z ph $.
@@ -778,7 +778,7 @@ $}
 $( Move existential quantifier in and out of class substitution.
        (Contributed by NM, 21-May-2004.) $)
 ${
-	$v ph x y z A $.
+	$v ph x y A z $.
 	$d x z A $.
 	$d x y z $.
 	$d z ph $.
@@ -793,7 +793,7 @@ $}
 $( Move existential quantifier in and out of class substitution.
        (Contributed by NM, 21-May-2004.) $)
 ${
-	$v ph x y z A V $.
+	$v ph x y A V z $.
 	$d x z A $.
 	$d x y z $.
 	$d z ph $.
@@ -905,7 +905,7 @@ $( Distribution of class substitution over triple conjunction.
        (Contributed by NM, 14-Dec-2006.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
-	$v ph ps ch x y A V $.
+	$v ph ps ch x A V y $.
 	$d y ch $.
 	$d y ps $.
 	$d y ph $.
@@ -924,7 +924,7 @@ $}
 $( Class substitution into a membership relation.  (Contributed by NM,
        17-Nov-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
 ${
-	$v x y A B V $.
+	$v x A B V y $.
 	$d y A $.
 	$d x y B $.
 	f0 $f set x $.
@@ -938,7 +938,7 @@ $}
 $( Class substitution into a membership relation.  (Contributed by NM,
        17-Nov-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
 ${
-	$v x y A B V $.
+	$v x A B V y $.
 	$d y B $.
 	$d x y A $.
 	f0 $f set x $.
@@ -967,7 +967,7 @@ $}
 $( Substitution for a variable not free in a wff does not affect it.
        (Contributed by Mario Carneiro, 14-Oct-2016.) $)
 ${
-	$v ph x y A V $.
+	$v ph x A V y $.
 	$d x y $.
 	$d y A $.
 	$d y ph $.
@@ -1124,7 +1124,7 @@ $}
 $( Commutative law for double class substitution.  (Contributed by NM,
        15-Nov-2005.)  (Proof shortened by Mario Carneiro, 18-Oct-2016.) $)
 ${
-	$v ph x y z w A B $.
+	$v ph x y A B z w $.
 	$d w y z A $.
 	$d w x z B $.
 	$d w z ph $.
@@ -1142,7 +1142,7 @@ $}
 $( Interchange class substitution and restricted quantifier.  (Contributed
        by NM, 1-Mar-2008.)  (Revised by David Abernethy, 22-Feb-2010.) $)
 ${
-	$v ph x y z A B V $.
+	$v ph x y A B V z $.
 	$d x y z $.
 	$d A z $.
 	$d B x z $.
@@ -1178,7 +1178,7 @@ $( Interchange class substitution and restricted quantifier.  (Contributed
        by NM, 15-Nov-2005.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
-	$v ph x y z A B V $.
+	$v ph x y A B V z $.
 	$d y z A $.
 	$d x B $.
 	$d x y z $.
@@ -1198,7 +1198,7 @@ $( Interchange class substitution and restricted existential quantifier.
        (Contributed by NM, 15-Nov-2005.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
-	$v ph x y z A B V $.
+	$v ph x y A B V z $.
 	$d y z A $.
 	$d x B $.
 	$d x y z $.
@@ -1217,7 +1217,7 @@ $}
 $( Interchange class substitution and restricted uniqueness quantifier.
        (Contributed by NM, 24-Feb-2013.) $)
 ${
-	$v ph x y z A B V $.
+	$v ph x y A B V z $.
 	$d y z A $.
 	$d x B $.
 	$d x y z $.
@@ -1236,7 +1236,7 @@ $}
 $( Interchange class substitution and class abstraction.  (Contributed by
        NM, 5-Nov-2005.) $)
 ${
-	$v ph x y w A B V $.
+	$v ph x y A B V w $.
 	$d y w A $.
 	$d w B $.
 	$d w ph $.
@@ -1259,7 +1259,7 @@ $( Restricted quantifier version of Axiom 4 of [Mendelson] p. 69.  This
        also ~ rspsbca and ~ rspcsbela .  (Contributed by NM, 17-Nov-2006.)
        (Proof shortened by Mario Carneiro, 13-Oct-2016.) $)
 ${
-	$v ph x y A B $.
+	$v ph x A B y $.
 	$d y A $.
 	$d x y B $.
 	$d y ph $.
@@ -1286,7 +1286,7 @@ $}
 $( Existence form of ~ rspsbca .  (Contributed by NM, 29-Feb-2008.)  (Proof
        shortened by Mario Carneiro, 13-Oct-2016.) $)
 ${
-	$v ph x y A B $.
+	$v ph x A B y $.
 	$d y A $.
 	$d x y B $.
 	$d y ph $.

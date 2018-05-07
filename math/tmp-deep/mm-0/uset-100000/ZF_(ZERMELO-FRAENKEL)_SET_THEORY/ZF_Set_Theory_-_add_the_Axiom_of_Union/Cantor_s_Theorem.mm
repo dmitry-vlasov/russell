@@ -12,6 +12,10 @@ $( No set ` A ` is equinumerous to its power set (Cantor's theorem), i.e.
        you want the form ` -. E. f f : A -onto-> ~P A ` .)  (Contributed by NM,
        7-Aug-1994.)  (Proof shortened by Mario Carneiro, 7-Jun-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v F $.
 	$d x y A $.
 	$d x y F $.
 	icanth_0 $f set x $.

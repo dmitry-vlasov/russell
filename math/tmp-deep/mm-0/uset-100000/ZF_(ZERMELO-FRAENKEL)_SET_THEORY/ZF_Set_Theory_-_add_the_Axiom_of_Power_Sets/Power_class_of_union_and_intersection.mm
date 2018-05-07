@@ -8,6 +8,9 @@ $( The power class of the intersection of two classes is the intersection
        of their power classes.  Exercise 4.12(j) of [Mendelson] p. 235.
        (Contributed by NM, 23-Nov-2003.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d A x $.
 	$d B x $.
 	ipwin_0 $f set x $.
@@ -19,6 +22,9 @@ $( The power class of the union of two classes includes the union of their
        power classes.  Exercise 4.12(k) of [Mendelson] p. 235.  (Contributed by
        NM, 23-Nov-2003.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d A x $.
 	$d B x $.
 	ipwunss_0 $f set x $.
@@ -30,6 +36,10 @@ $( The power class of the union of two classes is a subset of the union of
        their power classes, iff one class is a subclass of the other.  Exercise
        4.12(l) of [Mendelson] p. 235.  (Contributed by NM, 23-Nov-2003.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d A x y $.
 	$d B x y $.
 	ipwssun_0 $f set x $.
@@ -42,6 +52,8 @@ $( Break up the power class of a union into a union of smaller classes.
        (Contributed by NM, 25-Mar-2007.)  (Proof shortened by Thierry Arnoux,
        20-Dec-2016.) $)
 ${
+	$v A $.
+	$v B $.
 	fpwundif_0 $f class A $.
 	fpwundif_1 $f class B $.
 	pwundif $p |- ~P ( A u. B ) = ( ( ~P ( A u. B ) \ ~P A ) u. ~P A ) $= fpwundif_0 fpwundif_1 cun cpw fpwundif_0 cpw cdif fpwundif_0 cpw cun fpwundif_0 fpwundif_1 cun cpw fpwundif_0 cpw cun fpwundif_0 fpwundif_1 cun cpw fpwundif_0 fpwundif_1 cun cpw fpwundif_0 cpw undif1 fpwundif_0 cpw fpwundif_0 fpwundif_1 cun cpw wss fpwundif_0 fpwundif_1 cun cpw fpwundif_0 cpw cun fpwundif_0 fpwundif_1 cun cpw wceq fpwundif_0 cpw fpwundif_0 fpwundif_1 cun cpw wss fpwundif_1 cpw fpwundif_0 fpwundif_1 cun cpw wss fpwundif_0 cpw fpwundif_0 fpwundif_1 cun cpw wss fpwundif_1 cpw fpwundif_0 fpwundif_1 cun cpw wss wa fpwundif_0 cpw fpwundif_1 cpw cun fpwundif_0 fpwundif_1 cun cpw wss fpwundif_0 fpwundif_1 pwunss fpwundif_0 cpw fpwundif_1 cpw fpwundif_0 fpwundif_1 cun cpw unss mpbir simpli fpwundif_0 cpw fpwundif_0 fpwundif_1 cun cpw ssequn2 mpbi eqtr2i $.
@@ -50,6 +62,9 @@ $( Break up the power class of a union into a union of smaller classes.
        Obsolete as of 20-Dec-2016.  (Contributed by NM, 25-Mar-2007.)
        (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d A x $.
 	$d B x $.
 	ipwundifOLD_0 $f set x $.
@@ -61,6 +76,8 @@ $( The power class of the union of two classes equals the union of their
      power classes, iff one class is a subclass of the other.  Part of Exercise
      7(b) of [Enderton] p. 28.  (Contributed by NM, 23-Nov-2003.) $)
 ${
+	$v A $.
+	$v B $.
 	fpwun_0 $f class A $.
 	fpwun_1 $f class B $.
 	pwun $p |- ( ( A C_ B \/ B C_ A ) <-> ~P ( A u. B ) = ( ~P A u. ~P B ) ) $= fpwun_0 fpwun_1 cun cpw fpwun_0 cpw fpwun_1 cpw cun wss fpwun_0 fpwun_1 cun cpw fpwun_0 cpw fpwun_1 cpw cun wss fpwun_0 cpw fpwun_1 cpw cun fpwun_0 fpwun_1 cun cpw wss wa fpwun_0 fpwun_1 wss fpwun_1 fpwun_0 wss wo fpwun_0 fpwun_1 cun cpw fpwun_0 cpw fpwun_1 cpw cun wceq fpwun_0 cpw fpwun_1 cpw cun fpwun_0 fpwun_1 cun cpw wss fpwun_0 fpwun_1 cun cpw fpwun_0 cpw fpwun_1 cpw cun wss fpwun_0 fpwun_1 pwunss biantru fpwun_0 fpwun_1 pwssun fpwun_0 fpwun_1 cun cpw fpwun_0 cpw fpwun_1 cpw cun eqss 3bitr4i $.

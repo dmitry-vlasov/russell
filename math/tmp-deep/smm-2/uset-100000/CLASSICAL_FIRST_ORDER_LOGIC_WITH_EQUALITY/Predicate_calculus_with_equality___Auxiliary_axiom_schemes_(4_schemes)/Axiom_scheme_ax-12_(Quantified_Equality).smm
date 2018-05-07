@@ -247,7 +247,7 @@ $}
 $( Lemma for ~ ax10 .  Change bound variable.  (Contributed by NM,
        8-Jul-2016.) $)
 ${
-	$v x y z w $.
+	$v x y w z $.
 	$d w z x $.
 	$d w z y $.
 	f0 $f set x $.

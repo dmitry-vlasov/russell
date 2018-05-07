@@ -16,6 +16,9 @@ $( Extend class notation to include indexed union.  Note:  Historically
      new syntax uses as distinguished symbol ` U_ ` instead of ` U. ` and does
      allow LALR parsing.  Thanks to Peter Backes for suggesting this change. $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	fciun_0 $f set x $.
 	fciun_1 $f class A $.
 	fciun_2 $f class B $.
@@ -29,6 +32,9 @@ $( Extend class notation to include indexed intersection.  Note:
      symbol ` |^|_ ` instead of ` |^| ` and does allow LALR parsing.  Thanks to
      Peter Backes for suggesting this change. $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	fciin_0 $f set x $.
 	fciin_1 $f class A $.
 	fciin_2 $f class B $.
@@ -51,6 +57,10 @@ $( Define indexed union.  Definition indexed union in [Stoll] p. 45.  In
        ~ fniunfv and ~ funiunfv are useful when ` B ` is a function.
        (Contributed by NM, 27-Jun-1998.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -67,6 +77,10 @@ $( Define indexed intersection.  Definition of [Stoll] p. 45.  See the
        intersection in terms of indexed intersection.  (Contributed by NM,
        27-Jun-1998.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -78,6 +92,11 @@ ${
 $}
 $( Membership in indexed union.  (Contributed by NM, 3-Sep-2003.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d x y A $.
 	$d y B $.
 	$d y C $.
@@ -90,6 +109,12 @@ ${
 $}
 $( Membership in indexed intersection.  (Contributed by NM, 3-Sep-2003.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v y $.
 	$d x y A $.
 	$d y B $.
 	$d y C $.
@@ -103,6 +128,12 @@ ${
 $}
 $( Commutation of indexed unions.  (Contributed by NM, 18-Dec-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v z $.
 	$d y z A $.
 	$d x z B $.
 	$d z C $.
@@ -118,6 +149,11 @@ $}
 $( Commutation of union with indexed union.  (Contributed by Mario
        Carneiro, 18-Jan-2014.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
+	$v z $.
 	$d y z A $.
 	$d y z B $.
 	$d x y z $.
@@ -132,6 +168,10 @@ $( Indexed union of a constant class, i.e. where ` B ` does not depend on
        ` x ` .  (Contributed by NM, 5-Sep-2004.)  (Proof shortened by Andrew
        Salmon, 25-Jul-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	iiunconst_0 $f set y $.
@@ -143,6 +183,10 @@ $}
 $( Indexed intersection of a constant class, i.e. where ` B ` does not
        depend on ` x ` .  (Contributed by Mario Carneiro, 6-Feb-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	iiinconst_0 $f set y $.
@@ -157,6 +201,12 @@ $( Law combining indexed union with indexed intersection.  Eq. 14 in
        (Contributed by NM, 17-Aug-2004.)  (Proof shortened by Andrew Salmon,
        25-Jul-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v z $.
 	$d x y $.
 	$d y z A $.
 	$d x z B $.
@@ -172,6 +222,11 @@ $}
 $( Subclass theorem for indexed union.  (Contributed by NM, 10-Dec-2004.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -185,6 +240,11 @@ $}
 $( Subclass theorem for indexed union.  (Contributed by NM,
        24-Jan-2012.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -198,6 +258,10 @@ $}
 $( Equality theorem for indexed union.  (Contributed by NM,
        27-Jun-1998.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	fiuneq1_0 $f set x $.
@@ -209,6 +273,11 @@ $}
 $( Equality theorem for restricted existential quantifier.  (Contributed by
        NM, 27-Jun-1998.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -222,6 +291,11 @@ $}
 $( Subclass theorem for indexed union.  (Contributed by NM, 26-Nov-2003.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -236,6 +310,10 @@ $}
 $( Equality theorem for indexed union.  (Contributed by NM,
        22-Oct-2003.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fiuneq2_0 $f set x $.
 	fiuneq2_1 $f class A $.
 	fiuneq2_2 $f class B $.
@@ -245,6 +323,11 @@ $}
 $( Equality theorem for indexed intersection.  (Contributed by NM,
        22-Oct-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -259,6 +342,10 @@ $}
 $( Equality inference for indexed union.  (Contributed by NM,
        22-Oct-2003.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fiuneq2i_0 $f set x $.
 	fiuneq2i_1 $f class A $.
 	fiuneq2i_2 $f class B $.
@@ -269,6 +356,10 @@ $}
 $( Equality inference for indexed intersection.  (Contributed by NM,
        22-Oct-2003.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fiineq2i_0 $f set x $.
 	fiineq2i_1 $f class A $.
 	fiineq2i_2 $f class B $.
@@ -279,6 +370,11 @@ $}
 $( Equality deduction for indexed intersection.  (Contributed by NM,
        7-Dec-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fiineq2d_0 $f wff ph $.
 	fiineq2d_1 $f set x $.
 	fiineq2d_2 $f class A $.
@@ -291,6 +387,11 @@ $}
 $( Equality deduction for indexed union.  (Contributed by NM,
        3-Aug-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x ph $.
 	fiuneq2dv_0 $f wff ph $.
 	fiuneq2dv_1 $f set x $.
@@ -303,6 +404,11 @@ $}
 $( Equality deduction for indexed intersection.  (Contributed by NM,
        3-Aug-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x ph $.
 	fiineq2dv_0 $f wff ph $.
 	fiineq2dv_1 $f set x $.
@@ -315,6 +421,11 @@ $}
 $( Equality theorem for indexed union, deduction version.  (Contributed by
        Drahflow, 22-Oct-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	fiuneq1d_0 $f wff ph $.
@@ -328,6 +439,12 @@ $}
 $( Equality deduction for indexed union, deduction version.  (Contributed
          by Drahflow, 22-Oct-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x A $.
 	$d x B $.
 	$d x ph $.
@@ -344,6 +461,11 @@ $}
 $( Equality deduction for indexed union.  (Contributed by Drahflow,
        22-Oct-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x ph $.
 	$d x A $.
 	fiuneq2d_0 $f wff ph $.
@@ -357,6 +479,11 @@ $}
 $( Bound-variable hypothesis builder for indexed union.  (Contributed by
        Mario Carneiro, 25-Jan-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v z $.
 	$d z A $.
 	$d z B $.
 	$d x z $.
@@ -373,6 +500,11 @@ $}
 $( Bound-variable hypothesis builder for indexed intersection.
        (Contributed by Mario Carneiro, 25-Jan-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v z $.
 	$d z A $.
 	$d z B $.
 	$d x z $.
@@ -389,6 +521,10 @@ $}
 $( Bound-variable hypothesis builder for indexed union.  (Contributed by
        NM, 12-Oct-2003.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -401,6 +537,10 @@ $}
 $( Bound-variable hypothesis builder for indexed intersection.
        (Contributed by NM, 15-Oct-2003.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -414,6 +554,12 @@ $( Alternate definition of indexed union when ` B ` is a set.  Definition
        15(a) of [Suppes] p. 44.  (Contributed by NM, 23-Mar-2006.)  (Proof
        shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v z $.
 	$d y z A $.
 	$d y z B $.
 	$d C z $.
@@ -429,6 +575,13 @@ $}
 $( Alternate definition of indexed intersection when ` B ` is a set.
        (Contributed by Jeff Hankins, 27-Aug-2009.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v z $.
+	$v w $.
 	$d y z w A $.
 	$d y z w B $.
 	$d w C z $.
@@ -446,6 +599,10 @@ $( Alternate definition of indexed union when ` B ` is a set.  Definition
        15(a) of [Suppes] p. 44.  (Contributed by NM, 27-Jun-1998.)  (Revised by
        David Abernethy, 19-Jun-2012.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -460,6 +617,10 @@ $( Alternate definition of indexed intersection when ` B ` is a set.
        Definition 15(b) of [Suppes] p. 44.  (Contributed by NM, 28-Jun-1998.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -474,6 +635,12 @@ $( Rule used to change the bound variables in an indexed union, with the
        substitution specified implicitly by the hypothesis.  (Contributed by
        NM, 26-Mar-2006.)  (Revised by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v z $.
 	$d z y A $.
 	$d z x A $.
 	$d z B $.
@@ -492,6 +659,12 @@ $}
 $( Change bound variables in an indexed intersection.  (Contributed by Jeff
        Hankins, 26-Aug-2009.)  (Revised by Mario Carneiro, 14-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v z $.
 	$d z y A $.
 	$d z x A $.
 	$d z B $.
@@ -511,6 +684,11 @@ $( Rule used to change the bound variables in an indexed union, with the
        substitution specified implicitly by the hypothesis.  (Contributed by
        NM, 15-Sep-2003.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d y A $.
 	$d y B $.
@@ -526,6 +704,11 @@ $}
 $( Change bound variables in an indexed intersection.  (Contributed by Jeff
        Hankins, 26-Aug-2009.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d y A $.
 	$d y B $.
@@ -541,6 +724,11 @@ $}
 $( Subset theorem for an indexed union.  (Contributed by NM, 13-Sep-2003.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d x y C $.
 	$d y A $.
 	$d y B $.
@@ -554,6 +742,11 @@ $}
 $( Subset implication for an indexed union.  (Contributed by NM,
        3-Sep-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d x y C $.
 	$d y A $.
 	$d y B $.
@@ -567,6 +760,10 @@ $}
 $( Identity law for subset of an indexed union.  (Contributed by NM,
        12-Oct-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -579,6 +776,11 @@ $}
 $( Subset relationship for an indexed union.  (Contributed by NM,
        26-Oct-2003.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x A $.
 	$d x C $.
 	$d x D $.
@@ -595,6 +797,12 @@ $( A subclass condition on the members of two indexed classes ` C ( x ) `
        unions.  Generalization of Proposition 8.6 of [TakeutiZaring] p. 59.
        Compare ~ uniss2 .  (Contributed by NM, 9-Dec-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y $.
 	$d x B $.
 	$d y C $.
@@ -610,6 +818,10 @@ $}
 $( The indexed union of a class abstraction.  (Contributed by NM,
        27-Dec-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d y A $.
 	$d x y $.
 	fiunab_0 $f wff ph $.
@@ -621,6 +833,11 @@ $}
 $( The indexed union of a restricted class abstraction.  (Contributed by
        NM, 3-Jan-2004.)  (Proof shortened by Mario Carneiro, 14-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d y A $.
 	$d x y $.
 	$d x B $.
@@ -634,6 +851,12 @@ $}
 $( Indexed union with a class difference as its index.  (Contributed by NM,
        10-Dec-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -650,6 +873,11 @@ $}
 $( Subset theorem for an indexed intersection.  (Contributed by FL,
        15-Oct-2012.)  (Proof shortened by Mario Carneiro, 14-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d y A $.
 	$d y B $.
 	$d y C $.
@@ -665,6 +893,10 @@ $}
 $( Subset theorem for an indexed intersection.  (Contributed by NM,
        15-Oct-2003.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x C $.
 	fssiin_0 $f set x $.
 	fssiin_1 $f class A $.
@@ -675,6 +907,11 @@ $}
 $( Subset implication for an indexed intersection.  (Contributed by NM,
        15-Oct-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d x y C $.
 	$d y A $.
 	$d y B $.
@@ -688,6 +925,10 @@ $}
 $( An indexed intersection is included in any of its members.  (Contributed
        by FL, 15-Oct-2012.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d A y $.
 	$d B y $.
 	$d x y $.
@@ -700,6 +941,9 @@ $}
 $( Class union in terms of indexed union.  Definition in [Stoll] p. 43.
        (Contributed by NM, 28-Jun-1998.) $)
 ${
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x y A $.
 	iuniiun_0 $f set y $.
 	funiiun_0 $f set x $.
@@ -709,6 +953,9 @@ $}
 $( Class intersection in terms of indexed intersection.  Definition in
        [Stoll] p. 44.  (Contributed by NM, 28-Jun-1998.) $)
 ${
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x y A $.
 	iintiin_0 $f set y $.
 	fintiin_0 $f set x $.
@@ -718,6 +965,9 @@ $}
 $( An indexed union of singletons recovers the index set.  (Contributed by
        NM, 6-Sep-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x y A $.
 	iiunid_0 $f set y $.
 	fiunid_0 $f set x $.
@@ -727,6 +977,9 @@ $}
 $( An indexed union of the empty set is empty.  (Contributed by NM,
        26-Mar-2003.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x y $.
 	$d y A $.
 	iiun0_0 $f set y $.
@@ -737,6 +990,9 @@ $}
 $( An empty indexed union is empty.  (Contributed by NM, 4-Dec-2004.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x y $.
 	$d y A $.
 	i0iun_0 $f set y $.
@@ -747,6 +1003,9 @@ $}
 $( An empty indexed intersection is the universal class.  (Contributed by
        NM, 20-Oct-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x y $.
 	$d y A $.
 	i0iin_0 $f set y $.
@@ -759,6 +1018,9 @@ $( Indexed intersection with a universal index class.  When ` A ` doesn't
        ` A = x ` , this evaluates to ` (/) ` by ~ intiin and ~ intv .
        (Contributed by NM, 11-Sep-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d y A $.
 	fviin_0 $f set x $.
@@ -770,6 +1032,10 @@ $( There is a non-empty class in an indexed collection ` B ( x ) ` iff the
        indexed union of them is non-empty.  (Contributed by NM, 15-Oct-2003.)
        (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x y A $.
 	$d y B $.
 	iiunn0_0 $f set y $.
@@ -781,6 +1047,10 @@ $}
 $( Indexed intersection of a class builder.  (Contributed by NM,
        6-Dec-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d y A $.
 	$d x y $.
 	fiinab_0 $f wff ph $.
@@ -792,6 +1062,11 @@ $}
 $( Indexed intersection of a restricted class builder.  (Contributed by NM,
        6-Dec-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d y A $.
 	$d x y $.
 	$d x A $.
@@ -806,6 +1081,11 @@ $}
 $( Indexed intersection of a restricted class builder.  (Contributed by NM,
        6-Dec-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d y A $.
 	$d x y $.
 	$d x A $.
@@ -822,6 +1102,11 @@ $( Indexed union of intersection.  Generalization of half of theorem
        "Distributive laws" in [Enderton] p. 30.  Use ~ uniiun to recover
        Enderton's theorem.  (Contributed by NM, 26-Mar-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d y A $.
 	$d x y B $.
 	$d y C $.
@@ -836,6 +1121,10 @@ $( Indexed union of intersection.  Generalization of half of theorem
        "Distributive laws" in [Enderton] p. 30.  Use ~ uniiun to recover
        Enderton's theorem.  (Contributed by Mario Carneiro, 30-Aug-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x B $.
 	fiunin1_0 $f set x $.
 	fiunin1_1 $f class A $.
@@ -847,6 +1136,11 @@ $( Indexed intersection of union.  Generalization of half of theorem
        "Distributive laws" in [Enderton] p. 30.  Use ~ intiin to recover
        Enderton's theorem.  (Contributed by NM, 19-Aug-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d y A $.
 	$d x y B $.
 	$d y C $.
@@ -861,6 +1155,11 @@ $( Indexed union of class difference.  Generalization of half of theorem
        "De Morgan's laws" in [Enderton] p. 31.  Use ~ intiin to recover
        Enderton's theorem.  (Contributed by NM, 19-Aug-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d y A $.
 	$d x y B $.
 	$d y C $.
@@ -874,6 +1173,12 @@ $}
 $( Rearrange indexed unions over intersection.  (Contributed by NM,
        18-Dec-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x B $.
 	$d y C $.
 	$d x D $.
@@ -890,6 +1195,11 @@ $( Indexed intersection of class difference.  Generalization of half of
        theorem "De Morgan's laws" in [Enderton] p. 31.  Use ~ uniiun to recover
        Enderton's theorem.  (Contributed by NM, 5-Oct-2006.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -904,6 +1214,11 @@ $( Indexed intersection of intersection.  Generalization of half of theorem
        "Distributive laws" in [Enderton] p. 30.  Use ~ intiin to recover
        Enderton's theorem.  (Contributed by Mario Carneiro, 19-Mar-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -918,6 +1233,10 @@ $( Indexed intersection of intersection.  Generalization of half of theorem
        "Distributive laws" in [Enderton] p. 30.  Use ~ intiin to recover
        Enderton's theorem.  (Contributed by Mario Carneiro, 19-Mar-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	fiinin1_0 $f set x $.
@@ -929,6 +1248,11 @@ $}
 $( Elementhood in a relative intersection.  (Contributed by Mario Carneiro,
        30-Dec-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v S $.
+	$v X $.
 	$d A x $.
 	$d X x $.
 	$d B x $.
@@ -942,6 +1266,10 @@ $}
 $( Relative intersection of an empty family.  (Contributed by Stefan
        O'Rear, 3-Apr-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v S $.
+	$v X $.
 	$d A x $.
 	$d X x $.
 	friin0_0 $f set x $.
@@ -953,6 +1281,10 @@ $}
 $( Relative intersection of a nonempty family.  (Contributed by Stefan
        O'Rear, 3-Apr-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v S $.
+	$v X $.
 	$d A x $.
 	$d X x $.
 	friinn0_0 $f set x $.
@@ -964,6 +1296,11 @@ $}
 $( Relative intersection of a relative abstraction.  (Contributed by Stefan
        O'Rear, 3-Apr-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v X $.
 	$d A x y $.
 	$d X x y $.
 	friinrab_0 $f wff ph $.
@@ -977,6 +1314,12 @@ $( A singleton index picks out an instance of an indexed intersection's
        argument.  (Contributed by NM, 15-Jan-2012.)  (Proof shortened by Mario
        Carneiro, 17-Nov-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v y $.
 	$d x y A $.
 	$d y B $.
 	$d x y C $.
@@ -993,6 +1336,15 @@ $}
 $( Indexed intersection with an unordered pair index.  (Contributed by NM,
        25-Jan-2012.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v V $.
+	$v W $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -1016,6 +1368,12 @@ $}
 $( A singleton index picks out an instance of an indexed union's argument.
        (Contributed by Mario Carneiro, 25-Jun-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v y $.
 	$d x y A $.
 	$d y B $.
 	$d x y C $.
@@ -1033,6 +1391,10 @@ $( A singleton index picks out an instance of an indexed union's argument.
        (Contributed by NM, 26-Mar-2004.)  (Proof shortened by Mario Carneiro,
        25-Jun-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x C $.
 	fiunxsn_0 $f set x $.
@@ -1046,6 +1408,11 @@ $}
 $( Separate a union in an indexed union.  (Contributed by NM,
        27-Dec-2004.)  (Proof shortened by Mario Carneiro, 17-Nov-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -1060,6 +1427,11 @@ $}
 $( Separate a union in the index of an indexed union.  (Contributed by NM,
        26-Mar-2004.)  (Proof shortened by Mario Carneiro, 17-Nov-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -1074,6 +1446,12 @@ $}
 $( Separate an indexed union in the index of an indexed union.
        (Contributed by Mario Carneiro, 5-Dec-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v z $.
 	$d x y z $.
 	$d x z A $.
 	$d z B $.
@@ -1090,6 +1468,10 @@ $( A relationship involving union and indexed intersection.  Exercise 23 of
        [Enderton] p. 33.  (Contributed by NM, 25-Nov-2003.)  (Proof shortened
        by Mario Carneiro, 17-Nov-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	iiinuni_0 $f set y $.
@@ -1102,6 +1484,9 @@ $( A relationship involving union and indexed union.  Exercise 25 of
        [Enderton] p. 33.  (Contributed by NM, 25-Nov-2003.)  (Proof shortened
        by Mario Carneiro, 17-Nov-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fiununi_0 $f set x $.
@@ -1112,6 +1497,9 @@ $}
 $( Subclass relationship for power class and union.  (Contributed by NM,
        18-Jul-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	isspwuni_0 $f set x $.
@@ -1122,6 +1510,9 @@ $}
 $( Two ways to express a collection of subclasses.  (Contributed by NM,
        19-Jul-2006.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fpwssb_0 $f set x $.
@@ -1132,6 +1523,8 @@ $}
 $( Relationship for power class and union.  (Contributed by NM,
      18-Jul-2006.) $)
 ${
+	$v A $.
+	$v B $.
 	felpwuni_0 $f class A $.
 	felpwuni_1 $f class B $.
 	elpwuni $p |- ( B e. A -> ( A C_ ~P B <-> U. A = B ) ) $= felpwuni_0 felpwuni_1 cpw wss felpwuni_0 cuni felpwuni_1 wss felpwuni_1 felpwuni_0 wcel felpwuni_0 cuni felpwuni_1 wceq felpwuni_0 felpwuni_1 sspwuni felpwuni_1 felpwuni_0 wcel felpwuni_0 cuni felpwuni_1 wss felpwuni_0 cuni felpwuni_1 wceq felpwuni_0 cuni felpwuni_1 wss felpwuni_1 felpwuni_0 wcel felpwuni_0 cuni felpwuni_1 wceq felpwuni_0 felpwuni_1 unissel expcom felpwuni_0 cuni felpwuni_1 eqimss impbid1 syl5bb $.
@@ -1140,6 +1533,9 @@ $( The power class of an intersection in terms of indexed intersection.
        Exercise 24(a) of [Enderton] p. 33.  (Contributed by NM,
        29-Nov-2003.) $)
 ${
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x y A $.
 	iiinpw_0 $f set y $.
 	fiinpw_0 $f set x $.
@@ -1150,6 +1546,9 @@ $( Inclusion of an indexed union of a power class in the power class of the
        union of its index.  Part of Exercise 24(b) of [Enderton] p. 33.
        (Contributed by NM, 25-Nov-2003.) $)
 ${
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x y A $.
 	iiunpwss_0 $f set y $.
 	fiunpwss_0 $f set x $.
@@ -1159,6 +1558,8 @@ $}
 $( Relative intersection of a nonempty set.  (Contributed by Stefan O'Rear,
      3-Apr-2015.)  (Revised by Mario Carneiro, 5-Jun-2015.) $)
 ${
+	$v A $.
+	$v X $.
 	frintn0_0 $f class A $.
 	frintn0_1 $f class X $.
 	rintn0 $p |- ( ( X C_ ~P A /\ X =/= (/) ) -> ( A i^i |^| X ) = |^| X ) $= frintn0_1 frintn0_0 cpw wss frintn0_1 c0 wne wa frintn0_0 frintn0_1 cint cin frintn0_1 cint frintn0_0 cin frintn0_1 cint frintn0_0 frintn0_1 cint incom frintn0_1 frintn0_0 cpw wss frintn0_1 c0 wne wa frintn0_1 cint frintn0_0 wss frintn0_1 cint frintn0_0 cin frintn0_1 cint wceq frintn0_1 frintn0_0 cpw wss frintn0_1 c0 wne wa frintn0_1 cint frintn0_0 cpw cuni frintn0_0 frintn0_1 frintn0_0 cpw intssuni2 frintn0_0 cpw frintn0_0 cpw wss frintn0_0 cpw cuni frintn0_0 wss frintn0_0 cpw ssid frintn0_0 cpw frintn0_0 sspwuni mpbi syl6ss frintn0_1 cint frintn0_0 df-ss sylib syl5eq $.

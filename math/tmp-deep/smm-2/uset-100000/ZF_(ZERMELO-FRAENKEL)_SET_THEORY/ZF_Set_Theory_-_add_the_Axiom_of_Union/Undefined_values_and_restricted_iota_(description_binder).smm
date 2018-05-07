@@ -50,7 +50,7 @@ $( Value of the undefined value function.  Normally we will not reference
        the explicit value but will use ~ undefnel instead.  (Contributed by NM,
        15-Sep-2011.)  (Revised by Mario Carneiro, 24-Dec-2016.) $)
 ${
-	$v V S s $.
+	$v S V s $.
 	$d s S $.
 	f0 $f class S $.
 	f1 $f class V $.
@@ -61,7 +61,7 @@ $}
 $( The undefined value generated from a set is not a member of the set.
      (Contributed by NM, 15-Sep-2011.) $)
 ${
-	$v V S $.
+	$v S V $.
 	f0 $f class S $.
 	f1 $f class V $.
 	pundefnel2 $p |- ( S e. V -> -. ( Undef ` S ) e. S ) $=
@@ -70,7 +70,7 @@ $}
 $( The undefined value generated from a set is not a member of the set.
      (Contributed by NM, 15-Sep-2011.) $)
 ${
-	$v V S $.
+	$v S V $.
 	f0 $f class S $.
 	f1 $f class V $.
 	pundefnel $p |- ( S e. V -> ( Undef ` S ) e/ S ) $=
@@ -212,7 +212,7 @@ $}
 $( Change bound variable in a restricted description binder.  (Contributed
        by NM, 18-Mar-2013.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
-	$v ph ps x y z A $.
+	$v ph ps x y A z $.
 	$d x z A $.
 	$d y z A $.
 	$d z ph $.
@@ -249,7 +249,7 @@ $}
 $( Interchange class substitution and restricted description binder.
        (Contributed by NM, 24-Feb-2013.) $)
 ${
-	$v ph x y z A B V $.
+	$v ph x y A B V z $.
 	$d y z A $.
 	$d x z B $.
 	$d z ph $.
@@ -418,7 +418,7 @@ $}
 $( A method for computing restricted iota.  (Contributed by NM,
        16-Apr-2013.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
-	$v ph ps x y A B $.
+	$v ph ps x A B y $.
 	$d x y A $.
 	$d y B $.
 	$d x y ph $.
@@ -551,7 +551,7 @@ $( Specify the same property in two ways when class ` B ( y ) ` is
        single-valued.  (Contributed by NM, 1-Nov-2010.)  (Proof shortened by
        Mario Carneiro, 24-Dec-2016.) $)
 ${
-	$v x y z A B $.
+	$v x y A B z $.
 	$d x y z A $.
 	$d x z B $.
 	e0 $e |- B e. _V $.
@@ -682,7 +682,7 @@ $}
 $( Deduction version of ~ riotasv .  (Contributed by NM, 4-Mar-2013.)
        (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
-	$v ph ps x y z A B C D V $.
+	$v ph ps x y A B C D V z $.
 	$d x y z A $.
 	$d x z B $.
 	$d x z C $.
@@ -731,7 +731,7 @@ $( Value of description binder ` D ` for a single-valued class expression
        ` C ( y ) ` (as in e.g. ~ reusv2 ).  Special case of ~ riota2f .
        (Contributed by NM, 2-Mar-2013.) $)
 ${
-	$v ph ps ch x y A B C D F E V $.
+	$v ph ps ch x y A B C D E F V $.
 	$d x y A $.
 	$d x y B $.
 	$d x C $.
@@ -766,7 +766,7 @@ $( Value of description binder ` D ` for a single-valued class expression
        (Contributed by NM, 1-Feb-2013.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
-	$v ph ps ch x y z A B C D F E V $.
+	$v ph ps ch x y z A B C D E F V $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x z C $.

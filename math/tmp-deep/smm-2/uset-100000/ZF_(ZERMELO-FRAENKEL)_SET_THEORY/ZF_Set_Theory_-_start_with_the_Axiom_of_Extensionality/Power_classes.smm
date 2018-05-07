@@ -19,7 +19,7 @@ $( Soundness justification theorem for ~ df-pw .  (Contributed by Rodolfo
        Medina, 28-Apr-2010.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
-	$v x y z A $.
+	$v x y A z $.
 	$d x A $.
 	$d y A $.
 	$d z x $.
@@ -52,7 +52,7 @@ ${
 $}
 $( Equality theorem for power class.  (Contributed by NM, 5-Aug-1993.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -85,7 +85,7 @@ $}
 $( Membership in a power class.  Theorem 86 of [Suppes] p. 47.
          (Contributed by NM, 31-Dec-1993.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d A x $.
 	$d B x $.
 	e0 $e |- A e. _V $.
@@ -98,7 +98,7 @@ $}
 $( Membership in a power class.  Theorem 86 of [Suppes] p. 47.  See also
        ~ elpw2g .  (Contributed by NM, 6-Aug-2000.) $)
 ${
-	$v x A B V $.
+	$v A B V x $.
 	$d A x $.
 	$d B x $.
 	f0 $f class A $.
@@ -141,7 +141,7 @@ $}
 $( Bound-variable hypothesis builder for power class.  (Contributed by NM,
        28-Oct-2003.)  (Revised by Mario Carneiro, 13-Oct-2016.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d y A $.
 	$d x y $.
 	e0 $e |- F/_ x A $.

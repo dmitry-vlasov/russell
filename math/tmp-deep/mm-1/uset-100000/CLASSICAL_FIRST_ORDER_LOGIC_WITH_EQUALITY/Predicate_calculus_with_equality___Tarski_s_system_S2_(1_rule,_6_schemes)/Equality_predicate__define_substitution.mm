@@ -57,9 +57,9 @@ $( Extend wff definition to include class equality.
        temporarily for the purpose of this definition but otherwise not used in
        predicate calculus.  See ~ df-cleq for more information on the set
        theory usage of ~ wceq .) $)
-$v A $.
-$v B $.
 ${
+	$v A $.
+	$v B $.
 	fwceq_0 $f class A $.
 	fwceq_1 $f class B $.
 	wceq $a wff A = B $.
@@ -90,6 +90,9 @@ $( --- End of old code before overloading prevention patch. $)
 $( Lemma used in proofs of substitution properties.  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fequs3_0 $f wff ph $.
 	fequs3_1 $f set x $.
 	fequs3_2 $f set y $.
@@ -99,6 +102,10 @@ $( Specialization, with additional weakening to allow bundling of ` x ` and
        ` y ` .  Uses only Tarski's FOL axiom schemes.  (Contributed by NM,
        23-Apr-2017.)  (Proof shortened by Wolf Lammen, 5-Aug-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fspeimfw_0 $f wff ph $.
 	fspeimfw_1 $f wff ps $.
 	fspeimfw_2 $f set x $.
@@ -110,6 +117,10 @@ $( Specialization, with additional weakening to allow bundling of ` x ` and
        ` y ` .  Uses only Tarski's FOL axiom schemes.  (Contributed by NM,
        23-Apr-1017.)  (Proof shortened by Wolf Lammen, 7-Aug-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fspimfw_0 $f wff ph $.
 	fspimfw_1 $f wff ps $.
 	fspimfw_2 $f set x $.
@@ -123,6 +134,10 @@ $( Inference that has ~ ax-11 (without ` A. y ` ) as its conclusion.  Uses
        without one or more of these axioms in special cases.  Proof similar to
        Lemma 16 of [Tarski] p. 70.  (Contributed by NM, 20-May-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fax11i_0 $f wff ph $.
 	fax11i_1 $f wff ps $.
 	fax11i_2 $f set x $.
@@ -141,6 +156,9 @@ $( Extend wff definition to include proper substitution (read "the wff that
      results when ` y ` is properly substituted for ` x ` in wff ` ph ` ").
      (Contributed by NM, 24-Jan-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fwsb_0 $f wff ph $.
 	fwsb_1 $f set x $.
 	fwsb_2 $f set y $.
@@ -181,6 +199,9 @@ $( Define proper substitution.  Remark 9.1 in [Megill] p. 447 (p. 15 of the
      There are no restrictions on any of the variables, including what
      variables may occur in wff ` ph ` .  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fdf-sb_0 $f wff ph $.
 	fdf-sb_1 $f set x $.
 	fdf-sb_2 $f set y $.
@@ -188,6 +209,9 @@ ${
 $}
 $( An equality theorem for substitution.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsbequ2_0 $f wff ph $.
 	fsbequ2_1 $f set x $.
 	fsbequ2_2 $f set y $.
@@ -196,6 +220,9 @@ $}
 $( One direction of a simplified definition of substitution.  (Contributed by
      NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsb1_0 $f wff ph $.
 	fsb1_1 $f set x $.
 	fsb1_2 $f set y $.
@@ -204,6 +231,10 @@ $}
 $( Infer substitution into antecedent and consequent of an implication.
        (Contributed by NM, 25-Jun-1998.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fsbimi_0 $f wff ph $.
 	fsbimi_1 $f wff ps $.
 	fsbimi_2 $f set x $.
@@ -214,6 +245,10 @@ $}
 $( Infer substitution into both sides of a logical equivalence.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fsbbii_0 $f wff ph $.
 	fsbbii_1 $f wff ps $.
 	fsbbii_2 $f set x $.

@@ -51,7 +51,7 @@ $( Theorem ~ id expressed with ` -/\ ` .  (Contributed by Jeff Hoffman,
      17-Nov-2007.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
-	$v ph ps ch th ta $.
+	$v ta ph ps ch th $.
 	f0 $f wff ta $.
 	i0 $f wff ph $.
 	i1 $f wff ps $.

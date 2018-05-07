@@ -28,6 +28,8 @@ $( Axiom of Existence.  One of the equality and substitution axioms of
      use theorem ~ ax9 .  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
 	fax-9_0 $f set x $.
 	fax-9_1 $f set y $.
 	ax-9 $a |- -. A. x -. x = y $.
@@ -53,6 +55,8 @@ $( Axiom B7 of [Tarski] p. 75, which requires that ` x ` and ` y ` be
        its derivation from axioms is much shorter.  (Contributed by NM,
        7-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	fax9v_0 $f set x $.
 	fax9v_1 $f set y $.
@@ -63,6 +67,8 @@ $( At least one individual exists.  Weaker version of ~ a9e .  When
        derivation from axioms is much shorter.  (Contributed by NM,
        3-Aug-2017.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	fa9ev_0 $f set x $.
 	fa9ev_1 $f set y $.
@@ -72,6 +78,10 @@ $( Specialization.  Lemma 8 of [KalishMontague] p. 87.  Uses only Tarski's
        FOL axiom schemes.  (Contributed by NM, 19-Apr-2017.)  (Proof shortened
        by Wolf Lammen, 7-Aug-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fspimw_0 $f wff ph $.
 	fspimw_1 $f wff ps $.
@@ -84,6 +94,10 @@ $}
 $( Specialization.  Lemma 8 of [KalishMontague] p. 87.  Uses only Tarski's
        FOL axiom schemes.  (Contributed by NM, 9-Apr-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d x ps $.
 	fspimvw_0 $f wff ph $.
@@ -97,6 +111,9 @@ $( Weak version of ~ sp .  Uses only Tarski's FOL axiom schemes.
        (Contributed by NM, 1-Aug-2017.)  (Proof shortened by Wolf Lammen,
        13-Aug-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	ispnfw_0 $f set y $.
@@ -108,6 +125,10 @@ $}
 $( Change bound variable.  Uses only Tarski's FOL axiom schemes.  Part of
        Lemma 7 of [KalishMontague] p. 86.  (Contributed by NM, 19-Apr-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fcbvaliw_0 $f wff ph $.
 	fcbvaliw_1 $f wff ps $.
@@ -121,6 +142,10 @@ $}
 $( Change bound variable.  Uses only Tarski's FOL axiom schemes.  Part of
        Lemma 7 of [KalishMontague] p. 86.  (Contributed by NM, 9-Apr-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d x ps $.
 	$d y ph $.

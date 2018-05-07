@@ -63,6 +63,8 @@ $( Russell's Paradox.  Proposition 4.14 of [TakeutiZaring] p. 14.
        alternate proof of ~ ru derived from that fact.  (Contributed by NM,
        7-Aug-1994.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	iru_0 $f set y $.
 	fru_0 $f set x $.

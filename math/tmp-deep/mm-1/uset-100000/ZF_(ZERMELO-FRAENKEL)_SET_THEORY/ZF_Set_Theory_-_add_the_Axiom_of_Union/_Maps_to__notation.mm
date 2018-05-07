@@ -8,6 +8,16 @@ $)
 $( If a two-parameter class is not empty, constrain the implicit pair.
        (Contributed by Stefan O'Rear, 7-Mar-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v S $.
+	$v T $.
+	$v F $.
+	$v X $.
+	$v z $.
 	$d A x y z $.
 	$d B x y z $.
 	$d C z $.
@@ -28,6 +38,15 @@ $( If a two-parameter class is not empty, the first argument is in its
        nominal domain.  (Contributed by FL, 15-Oct-2012.)  (Revised by Stefan
        O'Rear, 7-Mar-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v S $.
+	$v T $.
+	$v F $.
+	$v X $.
 	$d A x y $.
 	$d B x y $.
 	felmpt2cl1_0 $f set x $.
@@ -46,6 +65,15 @@ $( If a two-parameter class is not empty, the second argument is in its
        nominal domain.  (Contributed by FL, 15-Oct-2012.)  (Revised by Stefan
        O'Rear, 7-Mar-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v S $.
+	$v T $.
+	$v F $.
+	$v X $.
 	$d A x y $.
 	$d B x y $.
 	felmpt2cl2_0 $f set x $.
@@ -65,6 +93,16 @@ $( Utility lemma for two-parameter classes.
        _EDITORIAL_: can simplify ~ isghm , ~ islmhm .  (Contributed by Stefan
        O'Rear, 21-Jan-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
+	$v X $.
+	$v Y $.
+	$v a $.
+	$v b $.
 	$d A a b $.
 	$d B a b $.
 	$d E a b $.
@@ -91,6 +129,13 @@ $( Any function to sets of ordered pairs produces a relation on function
        value unconditionally.  (Contributed by Mario Carneiro, 7-Aug-2014.)
        (Proof shortened by Mario Carneiro, 24-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x A $.
 	frelmptopab_0 $f wff ph $.
 	frelmptopab_1 $f set x $.
@@ -105,6 +150,16 @@ $}
 $( Describe an implicit one-to-one onto function.  (Contributed by Mario
          Carneiro, 30-Apr-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v W $.
+	$v X $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -129,6 +184,16 @@ $}
 $( Describe an implicit one-to-one onto function.  (Contributed by Mario
          Carneiro, 12-May-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v W $.
+	$v X $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -153,6 +218,14 @@ $}
 $( Describe an implicit one-to-one onto function.  (Contributed by Mario
        Carneiro, 30-Apr-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -175,6 +248,14 @@ $}
 $( Describe an implicit one-to-one onto function.  (Contributed by Mario
        Carneiro, 12-May-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -200,6 +281,12 @@ $( The cross product of two sets is a set.  Proposition 6.2 of
        (Contributed by Mario Carneiro, 20-May-2013.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
+	$v x $.
+	$v y $.
 	$d A x y $.
 	$d B x y $.
 	$d V y $.
@@ -215,6 +302,12 @@ $( A one-to-one mapping induces a one-to-one mapping on power sets.  This
        version of ~ f1opw avoids the Axiom of Replacement.  (Contributed by
        Mario Carneiro, 26-Jun-2015.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v a $.
+	$v b $.
 	$d a b A $.
 	$d a b B $.
 	$d a b F $.
@@ -234,6 +327,11 @@ $( A one-to-one mapping induces a one-to-one mapping on power sets.
        (Contributed by Stefan O'Rear, 18-Nov-2014.)  (Revised by Mario
        Carneiro, 26-Jun-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v b $.
+	$v a $.
 	$d a b A $.
 	$d a b B $.
 	$d a b F $.
@@ -248,6 +346,12 @@ $( Show that the support of a function is contained in a set.  (Contributed
        by Mario Carneiro, 19-Dec-2014.)  (Revised by Mario Carneiro,
        22-Mar-2015.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v k $.
+	$v W $.
+	$v Z $.
 	$d k A $.
 	$d k ph $.
 	$d k W $.
@@ -264,6 +368,15 @@ $}
 $( Formula building theorem for support restriction, on a function which
        preserves zero.  (Contributed by Stefan O'Rear, 9-Mar-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v D $.
+	$v F $.
+	$v L $.
+	$v V $.
+	$v Y $.
+	$v Z $.
 	$d ph x $.
 	$d Y x $.
 	$d Z x $.
@@ -284,6 +397,18 @@ $}
 $( Formula building theorem for support restrictions: operator with left
        annihilator.  (Contributed by Stefan O'Rear, 9-Mar-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v v $.
+	$v A $.
+	$v B $.
+	$v D $.
+	$v R $.
+	$v L $.
+	$v O $.
+	$v V $.
+	$v Y $.
+	$v Z $.
 	$d ph v $.
 	$d ph x $.
 	$d B v $.

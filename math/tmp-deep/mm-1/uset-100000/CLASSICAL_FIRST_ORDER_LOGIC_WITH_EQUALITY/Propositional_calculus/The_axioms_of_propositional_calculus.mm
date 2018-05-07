@@ -40,6 +40,8 @@ $( Axiom _Simp_.  Axiom A1 of [Margaris] p. 49.  One of the 3 axioms of
      assertion of ` ph ` and ` ps ` to the assertion of ` ph ` simply."
      (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fax-1_0 $f wff ph $.
 	fax-1_1 $f wff ps $.
 	ax-1 $a |- ( ph -> ( ps -> ph ) ) $.
@@ -51,8 +53,10 @@ $( Axiom _Frege_.  Axiom A2 of [Margaris] p. 49.  One of the 3 axioms of
      [WhiteheadRussell] p. 108.  The other direction of this axiom also turns
      out to be true, as demonstrated by ~ pm5.41 .  (Contributed by NM,
      5-Aug-1993.) $)
-$v ch $.
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fax-2_0 $f wff ph $.
 	fax-2_1 $f wff ps $.
 	fax-2_2 $f wff ch $.
@@ -69,6 +73,8 @@ $( Axiom _Transp_.  Axiom A3 of [Margaris] p. 49.  One of the 3 axioms of
      advised that in the field of philosophical logic, "contraposition" has a
      different technical meaning.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fax-3_0 $f wff ph $.
 	fax-3_1 $f wff ps $.
 	ax-3 $a |- ( ( -. ph -> -. ps ) -> ( ps -> ph ) ) $.
@@ -92,6 +98,8 @@ $( Rule of Modus Ponens.  The postulated inference rule of propositional
        "implies."  They are not part of the formal language.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fax-mp_0 $f wff ph $.
 	fax-mp_1 $f wff ps $.
 	eax-mp_0 $e |- ph $.

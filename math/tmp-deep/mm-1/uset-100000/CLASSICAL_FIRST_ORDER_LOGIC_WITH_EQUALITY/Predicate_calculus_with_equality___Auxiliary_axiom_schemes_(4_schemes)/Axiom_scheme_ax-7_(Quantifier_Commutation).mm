@@ -13,6 +13,9 @@ $( Axiom of Quantifier Commutation.  This axiom says universal quantifiers
      axiom to achieve metalogical completeness.  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fax-7_0 $f wff ph $.
 	fax-7_1 $f set x $.
 	fax-7_2 $f set y $.
@@ -20,6 +23,10 @@ ${
 $}
 $( Swap quantifiers in an antecedent.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fa7s_0 $f wff ph $.
 	fa7s_1 $f wff ps $.
 	fa7s_2 $f set x $.
@@ -30,6 +37,9 @@ $}
 $( If ` x ` is not free in ` ph ` , it is not free in ` A. y ph ` .
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fhbal_0 $f wff ph $.
 	fhbal_1 $f set x $.
 	fhbal_2 $f set y $.
@@ -38,6 +48,9 @@ ${
 $}
 $( Theorem 19.5 of [Margaris] p. 89.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	falcom_0 $f wff ph $.
 	falcom_1 $f set x $.
 	falcom_2 $f set y $.
@@ -46,6 +59,10 @@ $}
 $( Theorem *11.21 in [WhiteheadRussell] p. 160.  (Contributed by Andrew
      Salmon, 24-May-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	falrot3_0 $f wff ph $.
 	falrot3_1 $f set x $.
 	falrot3_2 $f set y $.
@@ -55,6 +72,11 @@ $}
 $( Rotate 4 universal quantifiers twice.  (Contributed by NM, 2-Feb-2005.)
      (Proof shortened by Fan Zheng, 6-Jun-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	falrot4_0 $f wff ph $.
 	falrot4_1 $f set x $.
 	falrot4_2 $f set y $.
@@ -65,6 +87,10 @@ $}
 $( Deduction form of bound-variable hypothesis builder ~ hbal .
        (Contributed by NM, 2-Jan-2002.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fhbald_0 $f wff ph $.
 	fhbald_1 $f wff ps $.
 	fhbald_2 $f set x $.

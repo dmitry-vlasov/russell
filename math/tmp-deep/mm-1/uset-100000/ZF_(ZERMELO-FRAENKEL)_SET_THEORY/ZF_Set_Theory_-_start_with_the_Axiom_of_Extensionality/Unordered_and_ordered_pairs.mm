@@ -12,17 +12,23 @@ $c >.  $.
 $( Bracket (the period distinguishes it from 'greater than') $)
 $( Extend class notation to include singleton. $)
 ${
+	$v A $.
 	fcsn_0 $f class A $.
 	csn $a class { A } $.
 $}
 $( Extend class notation to include unordered pair. $)
 ${
+	$v A $.
+	$v B $.
 	fcpr_0 $f class A $.
 	fcpr_1 $f class B $.
 	cpr $a class { A , B } $.
 $}
 $( Extend class notation to include unordered triplet. $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fctp_0 $f class A $.
 	fctp_1 $f class B $.
 	fctp_2 $f class C $.
@@ -30,12 +36,17 @@ ${
 $}
 $( Extend class notation to include ordered pair. $)
 ${
+	$v A $.
+	$v B $.
 	fcop_0 $f class A $.
 	fcop_1 $f class B $.
 	cop $a class <. A , B >. $.
 $}
 $( Extend class notation to include ordered triple. $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fcotp_0 $f class A $.
 	fcotp_1 $f class B $.
 	fcotp_2 $f class C $.
@@ -45,6 +56,10 @@ $( Soundness justification theorem for ~ df-sn .  (Contributed by Rodolfo
        Medina, 28-Apr-2010.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v z $.
 	$d x A $.
 	$d y A $.
 	$d z x $.
@@ -62,6 +77,8 @@ $( Define the singleton of a class.  Definition 7.1 of [Quine] p. 48.  For
        case.  For an alternate definition see ~ dfsn2 .  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	fdf-sn_0 $f set x $.
 	fdf-sn_1 $f class A $.
@@ -73,6 +90,8 @@ $( Define unordered pair of classes.  Definition 7.1 of [Quine] p. 48.  For
      traditional definition, but requiring a dummy variable, see ~ dfpr2 .
      (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
 	fdf-pr_0 $f class A $.
 	fdf-pr_1 $f class B $.
 	df-pr $a |- { A , B } = ( { A } u. { B } ) $.
@@ -80,6 +99,9 @@ $}
 $( Define unordered triple of classes.  Definition of [Enderton] p. 19.
      (Contributed by NM, 9-Apr-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fdf-tp_0 $f class A $.
 	fdf-tp_1 $f class B $.
 	fdf-tp_2 $f class C $.
@@ -116,6 +138,9 @@ $( Definition of an ordered pair, equivalent to Kuratowski's definition
        represented by a complex number as shown by ~ cru .  (Contributed by NM,
        28-May-1995.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fdf-op_0 $f set x $.
@@ -126,6 +151,9 @@ $}
 $( Define ordered triple of classes.  Definition of ordered triple in [Stoll]
      p. 25.  (Contributed by NM, 3-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fdf-ot_0 $f class A $.
 	fdf-ot_1 $f class B $.
 	fdf-ot_2 $f class C $.
@@ -134,6 +162,9 @@ $}
 $( Equality theorem for singletons.  Part of Exercise 4 of [TakeutiZaring]
        p. 15.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	isneq_0 $f set x $.
@@ -143,6 +174,8 @@ ${
 $}
 $( Equality inference for singletons.  (Contributed by NM, 22-Jan-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	fsneqi_0 $f class A $.
 	fsneqi_1 $f class B $.
 	esneqi_0 $e |- A = B $.
@@ -150,6 +183,9 @@ ${
 $}
 $( Equality deduction for singletons.  (Contributed by NM, 22-Jan-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fsneqd_0 $f wff ph $.
 	fsneqd_1 $f class A $.
 	fsneqd_2 $f class B $.
@@ -159,12 +195,15 @@ $}
 $( Alternate definition of singleton.  Definition 5.1 of [TakeutiZaring]
      p. 15.  (Contributed by NM, 24-Apr-1994.) $)
 ${
+	$v A $.
 	fdfsn2_0 $f class A $.
 	dfsn2 $p |- { A } = { A , A } $= fdfsn2_0 fdfsn2_0 cpr fdfsn2_0 csn fdfsn2_0 csn cun fdfsn2_0 csn fdfsn2_0 fdfsn2_0 df-pr fdfsn2_0 csn unidm eqtr2i $.
 $}
 $( There is only one element in a singleton.  Exercise 2 of [TakeutiZaring]
        p. 15.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	felsn_0 $f set x $.
 	felsn_1 $f class A $.
@@ -173,6 +212,9 @@ $}
 $( Alternate definition of unordered pair.  Definition 5.1 of
        [TakeutiZaring] p. 15.  (Contributed by NM, 24-Apr-1994.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fdfpr2_0 $f set x $.
@@ -184,6 +226,11 @@ $( A member of an unordered pair of classes is one or the other of them.
        Exercise 1 of [TakeutiZaring] p. 15, generalized.  (Contributed by NM,
        13-Sep-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -198,6 +245,9 @@ $( A member of an unordered pair of classes is one or the other of them.
        Exercise 1 of [TakeutiZaring] p. 15.  (Contributed by NM,
        13-Sep-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	felpr_0 $f class A $.
 	felpr_1 $f class B $.
 	felpr_2 $f class C $.
@@ -208,6 +258,9 @@ $( A member of an unordered pair of classes is one or the other of them.
        Exercise 1 of [TakeutiZaring] p. 15.  (Contributed by NM,
        14-Oct-2005.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	felpr2_0 $f class A $.
 	felpr2_1 $f class B $.
 	felpr2_2 $f class C $.
@@ -218,6 +271,9 @@ $}
 $( If a class is an element of a pair, then it is one of the two paired
      elements.  (Contributed by Scott Fenton, 1-Apr-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	felpri_0 $f class A $.
 	felpri_1 $f class B $.
 	felpri_2 $f class C $.
@@ -226,6 +282,9 @@ $}
 $( If an element doesn't match the items in an unordered pair, it is not in
        the unordered pair.  (Contributed by David A. Wheeler, 10-May-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fnelpri_0 $f class A $.
 	fnelpri_1 $f class B $.
 	fnelpri_2 $f class C $.
@@ -237,6 +296,10 @@ $( There is only one element in a singleton.  Exercise 2 of [TakeutiZaring]
        p. 15 (generalized).  (Contributed by NM, 13-Sep-1995.)  (Proof
        shortened by Andrew Salmon, 29-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v x $.
 	$d A x $.
 	$d B x $.
 	ielsncg_0 $f set x $.
@@ -248,6 +311,8 @@ $}
 $( There is only one element in a singleton.  Exercise 2 of [TakeutiZaring]
        p. 15.  (Contributed by NM, 13-Sep-1995.) $)
 ${
+	$v A $.
+	$v B $.
 	felsnc_0 $f class A $.
 	felsnc_1 $f class B $.
 	eelsnc_0 $e |- A e. _V $.
@@ -256,6 +321,8 @@ $}
 $( There is only one element in a singleton.  (Contributed by NM,
      5-Jun-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	felsni_0 $f class A $.
 	felsni_1 $f class B $.
 	elsni $p |- ( A e. { B } -> A = B ) $= felsni_0 felsni_1 csn wcel felsni_0 felsni_1 wceq felsni_0 felsni_1 felsni_1 csn elsncg ibi $.
@@ -263,6 +330,8 @@ $}
 $( A set is a member of its singleton.  Part of Theorem 7.6 of [Quine]
      p. 49.  (Contributed by NM, 28-Oct-2003.) $)
 ${
+	$v A $.
+	$v V $.
 	fsnidg_0 $f class A $.
 	fsnidg_1 $f class V $.
 	snidg $p |- ( A e. V -> A e. { A } ) $= fsnidg_0 fsnidg_1 wcel fsnidg_0 fsnidg_0 csn wcel fsnidg_0 fsnidg_0 wceq fsnidg_0 eqid fsnidg_0 fsnidg_0 fsnidg_1 elsncg mpbiri $.
@@ -270,12 +339,14 @@ $}
 $( A class is a set iff it is a member of its singleton.  (Contributed by NM,
      5-Apr-2004.) $)
 ${
+	$v A $.
 	fsnidb_0 $f class A $.
 	snidb $p |- ( A e. _V <-> A e. { A } ) $= fsnidb_0 cvv wcel fsnidb_0 fsnidb_0 csn wcel fsnidb_0 cvv snidg fsnidb_0 fsnidb_0 csn elex impbii $.
 $}
 $( A set is a member of its singleton.  Part of Theorem 7.6 of [Quine]
        p. 49.  (Contributed by NM, 31-Dec-1993.) $)
 ${
+	$v A $.
 	fsnid_0 $f class A $.
 	esnid_0 $e |- A e. _V $.
 	snid $p |- A e. { A } $= fsnid_0 cvv wcel fsnid_0 fsnid_0 csn wcel esnid_0 fsnid_0 snidb mpbi $.
@@ -284,6 +355,9 @@ $( There is only one element in a singleton.  Exercise 2 of [TakeutiZaring]
      p. 15.  This variation requires only that ` B ` , rather than ` A ` , be a
      set.  (Contributed by NM, 28-Oct-2003.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
 	felsnc2g_0 $f class A $.
 	felsnc2g_1 $f class B $.
 	felsnc2g_2 $f class V $.
@@ -293,6 +367,8 @@ $( There is only one element in a singleton.  Exercise 2 of [TakeutiZaring]
        p. 15.  This variation requires only that ` B ` , rather than ` A ` , be
        a set.  (Contributed by NM, 12-Jun-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	felsnc2_0 $f class A $.
 	felsnc2_1 $f class B $.
 	eelsnc2_0 $e |- B e. _V $.
@@ -301,6 +377,10 @@ $}
 $( Substitution expressed in terms of quantification over a singleton.
        (Contributed by Mario Carneiro, 23-Apr-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d A x $.
 	fralsns_0 $f wff ph $.
 	fralsns_1 $f set x $.
@@ -311,6 +391,10 @@ $}
 $( Restricted existential quantification over a singleton.  (Contributed by
        Mario Carneiro, 23-Apr-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d A x $.
 	frexsns_0 $f wff ph $.
 	frexsns_1 $f set x $.
@@ -322,6 +406,11 @@ $( Substitution expressed in terms of quantification over a singleton.
        (Contributed by NM, 14-Dec-2005.)  (Revised by Mario Carneiro,
        23-Apr-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d A x $.
 	$d ps x $.
 	fralsng_0 $f wff ph $.
@@ -335,6 +424,11 @@ $}
 $( Restricted existential quantification over a singleton.  (Contributed by
        NM, 29-Jan-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d A x $.
 	$d ps x $.
 	frexsng_0 $f wff ph $.
@@ -348,6 +442,10 @@ $}
 $( Convert a quantification over a singleton to a substitution.
        (Contributed by NM, 27-Apr-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d A x $.
 	$d ps x $.
 	fralsn_0 $f wff ph $.
@@ -361,6 +459,10 @@ $}
 $( Restricted existential quantification over a singleton.  (Contributed by
        Jeff Madsen, 5-Jan-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d A x $.
 	$d ps x $.
 	frexsn_0 $f wff ph $.
@@ -374,6 +476,11 @@ $}
 $( Members of an unordered triple of classes.  (Contributed by FL,
        2-Feb-2014.)  (Proof shortened by Mario Carneiro, 11-Feb-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v V $.
 	feltpg_0 $f class A $.
 	feltpg_1 $f class B $.
 	feltpg_2 $f class C $.
@@ -384,6 +491,10 @@ $}
 $( A member of an unordered triple of classes is one of them.  (Contributed
        by Mario Carneiro, 11-Feb-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	feltpi_0 $f class A $.
 	feltpi_1 $f class B $.
 	feltpi_2 $f class C $.
@@ -394,6 +505,10 @@ $( A member of an unordered triple of classes is one of them.  Special case
        of Exercise 1 of [TakeutiZaring] p. 17.  (Contributed by NM,
        8-Apr-1994.)  (Revised by Mario Carneiro, 11-Feb-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	feltp_0 $f class A $.
 	feltp_1 $f class B $.
 	feltp_2 $f class C $.
@@ -405,6 +520,10 @@ $( Alternate definition of unordered triple of classes.  Special case of
        Definition 5.3 of [TakeutiZaring] p. 16.  (Contributed by NM,
        8-Apr-1994.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -417,6 +536,10 @@ $}
 $( Bound-variable hypothesis builder for unordered pairs.  (Contributed by
        NM, 14-Nov-1995.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -431,6 +554,11 @@ $}
 $( Membership of a conditional operator in an unordered pair.  (Contributed
      by NM, 17-Jun-2007.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fifpr_0 $f wff ph $.
 	fifpr_1 $f class A $.
 	fifpr_2 $f class B $.
@@ -441,6 +569,14 @@ $}
 $( Convert a quantification over a pair to a conjunction.  (Contributed by
        NM, 17-Sep-2011.)  (Revised by Mario Carneiro, 23-Apr-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	$d x A $.
 	$d x B $.
 	$d x ps $.
@@ -460,6 +596,14 @@ $}
 $( Convert a quantification over a pair to a disjunction.  (Contributed by
        NM, 17-Sep-2011.)  (Revised by Mario Carneiro, 23-Apr-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	$d x A $.
 	$d x B $.
 	$d x ps $.
@@ -479,6 +623,17 @@ $}
 $( Convert a quantification over a triple to a conjunction.  (Contributed
        by NM, 17-Sep-2011.)  (Revised by Mario Carneiro, 23-Apr-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v W $.
+	$v X $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -504,6 +659,17 @@ $}
 $( Convert a quantification over a triple to a disjunction.  (Contributed
        by Mario Carneiro, 23-Apr-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v W $.
+	$v X $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -529,6 +695,12 @@ $}
 $( Convert a quantification over a pair to a conjunction.  (Contributed by
        NM, 3-Jun-2007.)  (Revised by Mario Carneiro, 23-Apr-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ps $.
@@ -549,6 +721,12 @@ $( Convert an existential quantification over a pair to a disjunction.
        (Contributed by NM, 3-Jun-2007.)  (Revised by Mario Carneiro,
        23-Apr-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ps $.
@@ -568,6 +746,14 @@ $}
 $( Convert a quantification over a triple to a conjunction.  (Contributed
        by NM, 13-Sep-2011.)  (Revised by Mario Carneiro, 23-Apr-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -593,6 +779,14 @@ $}
 $( Convert a quantification over a triple to a disjunction.  (Contributed
        by Mario Carneiro, 23-Apr-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -621,6 +815,10 @@ $( Substitution expressed in terms of quantification over a singleton.
        (Contributed by NM, 14-Dec-2005.)  (Revised by Mario Carneiro,
        23-Apr-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	fsbcsng_0 $f wff ph $.
 	fsbcsng_1 $f set x $.
@@ -631,6 +829,8 @@ $}
 $( Bound-variable hypothesis builder for singletons.  (Contributed by NM,
        14-Nov-1995.) $)
 ${
+	$v x $.
+	$v A $.
 	fnfsn_0 $f set x $.
 	fnfsn_1 $f class A $.
 	enfsn_0 $e |- F/_ x A $.
@@ -640,6 +840,11 @@ $( Distribute proper substitution through the singleton of a class.
        ~ csbsng is derived from the virtual deduction proof ~ csbsngVD .
        (Contributed by Alan Sare, 10-Nov-2012.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v y $.
 	$d A y $.
 	$d B y $.
 	$d V y $.
@@ -655,6 +860,9 @@ $( Intersection with the singleton of a non-member is disjoint.
        (Contributed by NM, 22-May-1998.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.)  (Proof shortened by Wolf Lammen, 30-Sep-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	idisjsn_0 $f set x $.
@@ -665,6 +873,8 @@ $}
 $( Intersection of distinct singletons is disjoint.  (Contributed by NM,
      25-May-1998.) $)
 ${
+	$v A $.
+	$v B $.
 	fdisjsn2_0 $f class A $.
 	fdisjsn2_1 $f class B $.
 	disjsn2 $p |- ( A =/= B -> ( { A } i^i { B } ) = (/) ) $= fdisjsn2_0 fdisjsn2_1 wne fdisjsn2_1 fdisjsn2_0 csn wcel wn fdisjsn2_0 csn fdisjsn2_1 csn cin c0 wceq fdisjsn2_1 fdisjsn2_0 csn wcel fdisjsn2_0 fdisjsn2_1 fdisjsn2_1 fdisjsn2_0 csn wcel fdisjsn2_1 fdisjsn2_0 fdisjsn2_1 fdisjsn2_0 elsni eqcomd necon3ai fdisjsn2_0 csn fdisjsn2_1 disjsn sylibr $.
@@ -672,6 +882,8 @@ $}
 $( The singleton of a proper class (one that doesn't exist) is the empty
        set.  Theorem 7.2 of [Quine] p. 48.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v x $.
 	$d x A $.
 	isnprc_0 $f set x $.
 	fsnprc_0 $f class A $.
@@ -680,6 +892,11 @@ $}
 $( Special case of ~ r19.12 where its converse holds.  (Contributed by NM,
        19-May-2008.)  (Revised by Mario Carneiro, 23-Apr-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x B $.
 	fr19.12sn_0 $f wff ph $.
@@ -693,6 +910,9 @@ $}
 $( Condition where a restricted class abstraction is a singleton.
        (Contributed by NM, 28-May-2006.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	frabsn_0 $f set x $.
@@ -704,6 +924,9 @@ $( Another way to express existential uniqueness of a wff: its class
        abstraction is a singleton.  (Contributed by Mario Carneiro,
        14-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	feuabsn2_0 $f wff ph $.
@@ -714,6 +937,9 @@ $}
 $( Another way to express existential uniqueness of a wff: its class
        abstraction is a singleton.  (Contributed by NM, 22-Feb-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	ieuabsn_0 $f set y $.
@@ -725,6 +951,10 @@ $( A way to express restricted existential uniqueness of a wff: its
        restricted class abstraction is a singleton.  (Contributed by NM,
        30-May-2006.)  (Proof shortened by Mario Carneiro, 14-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d y ph $.
 	$d y A $.
@@ -737,6 +967,11 @@ $}
 $( Restricted existential uniqueness determined by a singleton.
        (Contributed by NM, 29-May-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v V $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	$d y A $.
@@ -751,6 +986,11 @@ $( Restricted existential uniqueness determined by a singleton.
        (Contributed by NM, 29-May-2006.)  (Revised by Mario Carneiro,
        23-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
 	frabsneu_0 $f wff ph $.
 	frabsneu_1 $f set x $.
 	frabsneu_2 $f class A $.
@@ -761,6 +1001,8 @@ $}
 $( Two ways to express " ` A ` is a singleton."  (Contributed by NM,
        30-Oct-2010.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	feusn_0 $f set x $.
 	feusn_1 $f class A $.
@@ -770,6 +1012,11 @@ $( Truth implied by equality of a restricted class abstraction and a
        singleton.  (Contributed by NM, 29-May-2006.)  (Proof shortened by Mario
        Carneiro, 23-Dec-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ps $.
@@ -784,6 +1031,8 @@ ${
 $}
 $( Commutative law for unordered pairs.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
 	fprcom_0 $f class A $.
 	fprcom_1 $f class B $.
 	prcom $p |- { A , B } = { B , A } $= fprcom_0 csn fprcom_1 csn cun fprcom_1 csn fprcom_0 csn cun fprcom_0 fprcom_1 cpr fprcom_1 fprcom_0 cpr fprcom_0 csn fprcom_1 csn uncom fprcom_0 fprcom_1 df-pr fprcom_1 fprcom_0 df-pr 3eqtr4i $.
@@ -791,6 +1040,9 @@ $}
 $( Equality theorem for unordered pairs.  (Contributed by NM,
      29-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fpreq1_0 $f class A $.
 	fpreq1_1 $f class B $.
 	fpreq1_2 $f class C $.
@@ -798,6 +1050,9 @@ ${
 $}
 $( Equality theorem for unordered pairs.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fpreq2_0 $f class A $.
 	fpreq2_1 $f class B $.
 	fpreq2_2 $f class C $.
@@ -806,6 +1061,10 @@ $}
 $( Equality theorem for unordered pairs.  (Contributed by NM,
      19-Oct-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fpreq12_0 $f class A $.
 	fpreq12_1 $f class B $.
 	fpreq12_2 $f class C $.
@@ -815,6 +1074,9 @@ $}
 $( Equality inference for unordered pairs.  (Contributed by NM,
        19-Oct-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fpreq1i_0 $f class A $.
 	fpreq1i_1 $f class B $.
 	fpreq1i_2 $f class C $.
@@ -824,6 +1086,9 @@ $}
 $( Equality inference for unordered pairs.  (Contributed by NM,
        19-Oct-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fpreq2i_0 $f class A $.
 	fpreq2i_1 $f class B $.
 	fpreq2i_2 $f class C $.
@@ -833,6 +1098,10 @@ $}
 $( Equality inference for unordered pairs.  (Contributed by NM,
          19-Oct-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fpreq12i_0 $f class A $.
 	fpreq12i_1 $f class B $.
 	fpreq12i_2 $f class C $.
@@ -844,6 +1113,10 @@ $}
 $( Equality deduction for unordered pairs.  (Contributed by NM,
        19-Oct-2012.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fpreq1d_0 $f wff ph $.
 	fpreq1d_1 $f class A $.
 	fpreq1d_2 $f class B $.
@@ -854,6 +1127,10 @@ $}
 $( Equality deduction for unordered pairs.  (Contributed by NM,
        19-Oct-2012.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fpreq2d_0 $f wff ph $.
 	fpreq2d_1 $f class A $.
 	fpreq2d_2 $f class B $.
@@ -864,6 +1141,11 @@ $}
 $( Equality deduction for unordered pairs.  (Contributed by NM,
        19-Oct-2012.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fpreq12d_0 $f wff ph $.
 	fpreq12d_1 $f class A $.
 	fpreq12d_2 $f class B $.
@@ -876,6 +1158,10 @@ $}
 $( Equality theorem for unordered triples.  (Contributed by NM,
      13-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	ftpeq1_0 $f class A $.
 	ftpeq1_1 $f class B $.
 	ftpeq1_2 $f class C $.
@@ -885,6 +1171,10 @@ $}
 $( Equality theorem for unordered triples.  (Contributed by NM,
      13-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	ftpeq2_0 $f class A $.
 	ftpeq2_1 $f class B $.
 	ftpeq2_2 $f class C $.
@@ -894,6 +1184,10 @@ $}
 $( Equality theorem for unordered triples.  (Contributed by NM,
      13-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	ftpeq3_0 $f class A $.
 	ftpeq3_1 $f class B $.
 	ftpeq3_2 $f class C $.
@@ -903,6 +1197,11 @@ $}
 $( Equality theorem for unordered triples.  (Contributed by NM,
        22-Jun-2014.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	ftpeq1d_0 $f wff ph $.
 	ftpeq1d_1 $f class A $.
 	ftpeq1d_2 $f class B $.
@@ -914,6 +1213,11 @@ $}
 $( Equality theorem for unordered triples.  (Contributed by NM,
        22-Jun-2014.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	ftpeq2d_0 $f wff ph $.
 	ftpeq2d_1 $f class A $.
 	ftpeq2d_2 $f class B $.
@@ -925,6 +1229,11 @@ $}
 $( Equality theorem for unordered triples.  (Contributed by NM,
        22-Jun-2014.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	ftpeq3d_0 $f wff ph $.
 	ftpeq3d_1 $f class A $.
 	ftpeq3d_2 $f class B $.
@@ -936,6 +1245,13 @@ $}
 $( Equality theorem for unordered triples.  (Contributed by NM,
        22-Jun-2014.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
 	ftpeq123d_0 $f wff ph $.
 	ftpeq123d_1 $f class A $.
 	ftpeq123d_2 $f class B $.
@@ -951,6 +1267,10 @@ $}
 $( Rotation of the elements of an unordered triple.  (Contributed by Alan
        Sare, 24-Oct-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -963,6 +1283,9 @@ $}
 $( Swap 1st and 2nd members of an undordered triple.  (Contributed by NM,
      22-May-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	ftpcoma_0 $f class A $.
 	ftpcoma_1 $f class B $.
 	ftpcoma_2 $f class C $.
@@ -971,6 +1294,9 @@ $}
 $( Swap 2nd and 3rd members of an undordered triple.  (Contributed by NM,
      22-May-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	ftpcomb_0 $f class A $.
 	ftpcomb_1 $f class B $.
 	ftpcomb_2 $f class C $.
@@ -979,6 +1305,9 @@ $}
 $( Split off the first element of an unordered triple.  (Contributed by Mario
      Carneiro, 5-Jan-2016.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	ftpass_0 $f class A $.
 	ftpass_1 $f class B $.
 	ftpass_2 $f class C $.
@@ -987,6 +1316,10 @@ $}
 $( Two ways to write an unordered quadruple.  (Contributed by Mario Carneiro,
      5-Jan-2016.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fqdass_0 $f class A $.
 	fqdass_1 $f class B $.
 	fqdass_2 $f class C $.
@@ -996,6 +1329,10 @@ $}
 $( Two ways to write an unordered quadruple.  (Contributed by Mario Carneiro,
      5-Jan-2016.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fqdassr_0 $f class A $.
 	fqdassr_1 $f class B $.
 	fqdassr_2 $f class C $.
@@ -1005,6 +1342,8 @@ $}
 $( Unordered triple ` { A , A , B } ` is just an overlong way to write
      ` { A , B } ` .  (Contributed by David A. Wheeler, 10-May-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	ftpidm12_0 $f class A $.
 	ftpidm12_1 $f class B $.
 	tpidm12 $p |- { A , A , B } = { A , B } $= ftpidm12_0 csn ftpidm12_1 csn cun ftpidm12_0 ftpidm12_0 cpr ftpidm12_1 csn cun ftpidm12_0 ftpidm12_1 cpr ftpidm12_0 ftpidm12_0 ftpidm12_1 ctp ftpidm12_0 csn ftpidm12_0 ftpidm12_0 cpr ftpidm12_1 csn ftpidm12_0 dfsn2 uneq1i ftpidm12_0 ftpidm12_1 df-pr ftpidm12_0 ftpidm12_0 ftpidm12_1 df-tp 3eqtr4ri $.
@@ -1012,6 +1351,8 @@ $}
 $( Unordered triple ` { A , B , A } ` is just an overlong way to write
      ` { A , B } ` .  (Contributed by David A. Wheeler, 10-May-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	ftpidm13_0 $f class A $.
 	ftpidm13_1 $f class B $.
 	tpidm13 $p |- { A , B , A } = { A , B } $= ftpidm13_0 ftpidm13_0 ftpidm13_1 ctp ftpidm13_0 ftpidm13_1 ftpidm13_0 ctp ftpidm13_0 ftpidm13_1 cpr ftpidm13_0 ftpidm13_0 ftpidm13_1 tprot ftpidm13_0 ftpidm13_1 tpidm12 eqtr3i $.
@@ -1019,6 +1360,8 @@ $}
 $( Unordered triple ` { A , B , B } ` is just an overlong way to write
      ` { A , B } ` .  (Contributed by David A. Wheeler, 10-May-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	ftpidm23_0 $f class A $.
 	ftpidm23_1 $f class B $.
 	tpidm23 $p |- { A , B , B } = { A , B } $= ftpidm23_0 ftpidm23_1 ftpidm23_1 ctp ftpidm23_1 ftpidm23_1 ftpidm23_0 ctp ftpidm23_1 ftpidm23_0 cpr ftpidm23_0 ftpidm23_1 cpr ftpidm23_0 ftpidm23_1 ftpidm23_1 tprot ftpidm23_1 ftpidm23_0 tpidm12 ftpidm23_1 ftpidm23_0 prcom 3eqtri $.
@@ -1026,12 +1369,16 @@ $}
 $( Unordered triple ` { A , A , A } ` is just an overlong way to write
      ` { A } ` .  (Contributed by David A. Wheeler, 10-May-2015.) $)
 ${
+	$v A $.
 	ftpidm_0 $f class A $.
 	tpidm $p |- { A , A , A } = { A } $= ftpidm_0 ftpidm_0 ftpidm_0 ctp ftpidm_0 ftpidm_0 cpr ftpidm_0 csn ftpidm_0 ftpidm_0 tpidm12 ftpidm_0 dfsn2 eqtr4i $.
 $}
 $( An unordered pair contains its first member.  Part of Theorem 7.6 of
      [Quine] p. 49.  (Contributed by Stefan Allan, 8-Nov-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
 	fprid1g_0 $f class A $.
 	fprid1g_1 $f class B $.
 	fprid1g_2 $f class V $.
@@ -1040,6 +1387,9 @@ $}
 $( An unordered pair contains its second member.  Part of Theorem 7.6 of
      [Quine] p. 49.  (Contributed by Stefan Allan, 8-Nov-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
 	fprid2g_0 $f class A $.
 	fprid2g_1 $f class B $.
 	fprid2g_2 $f class V $.
@@ -1048,6 +1398,8 @@ $}
 $( An unordered pair contains its first member.  Part of Theorem 7.6 of
        [Quine] p. 49.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
 	fprid1_0 $f class A $.
 	fprid1_1 $f class B $.
 	eprid1_0 $e |- A e. _V $.
@@ -1056,6 +1408,8 @@ $}
 $( An unordered pair contains its second member.  Part of Theorem 7.6 of
        [Quine] p. 49.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
 	fprid2_0 $f class A $.
 	fprid2_1 $f class B $.
 	eprid2_0 $e |- B e. _V $.
@@ -1064,6 +1418,8 @@ $}
 $( A proper class vanishes in an unordered pair.  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
 	fprprc1_0 $f class A $.
 	fprprc1_1 $f class B $.
 	prprc1 $p |- ( -. A e. _V -> { A , B } = { B } ) $= fprprc1_0 cvv wcel wn fprprc1_0 csn c0 wceq fprprc1_0 fprprc1_1 cpr fprprc1_1 csn wceq fprprc1_0 snprc fprprc1_0 csn c0 wceq fprprc1_0 csn fprprc1_1 csn cun c0 fprprc1_1 csn cun fprprc1_0 fprprc1_1 cpr fprprc1_1 csn fprprc1_0 csn c0 fprprc1_1 csn uneq1 fprprc1_0 fprprc1_1 df-pr c0 fprprc1_1 csn cun fprprc1_1 csn c0 cun fprprc1_1 csn c0 fprprc1_1 csn uncom fprprc1_1 csn un0 eqtr2i 3eqtr4g sylbi $.
@@ -1071,6 +1427,8 @@ $}
 $( A proper class vanishes in an unordered pair.  (Contributed by NM,
      22-Mar-2006.) $)
 ${
+	$v A $.
+	$v B $.
 	fprprc2_0 $f class A $.
 	fprprc2_1 $f class B $.
 	prprc2 $p |- ( -. B e. _V -> { A , B } = { A } ) $= fprprc2_1 cvv wcel wn fprprc2_0 fprprc2_1 cpr fprprc2_1 fprprc2_0 cpr fprprc2_0 csn fprprc2_0 fprprc2_1 prcom fprprc2_1 fprprc2_0 prprc1 syl5eq $.
@@ -1078,6 +1436,8 @@ $}
 $( An unordered pair containing two proper classes is the empty set.
      (Contributed by NM, 22-Mar-2006.) $)
 ${
+	$v A $.
+	$v B $.
 	fprprc_0 $f class A $.
 	fprprc_1 $f class B $.
 	prprc $p |- ( ( -. A e. _V /\ -. B e. _V ) -> { A , B } = (/) ) $= fprprc_0 cvv wcel wn fprprc_1 cvv wcel wn fprprc_0 fprprc_1 cpr fprprc_1 csn c0 fprprc_0 fprprc_1 prprc1 fprprc_1 cvv wcel wn fprprc_1 csn c0 wceq fprprc_1 snprc biimpi sylan9eq $.
@@ -1085,6 +1445,9 @@ $}
 $( One of the three elements of an unordered triple.  (Contributed by NM,
        7-Apr-1994.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	ftpid1_0 $f class A $.
 	ftpid1_1 $f class B $.
 	ftpid1_2 $f class C $.
@@ -1094,6 +1457,9 @@ $}
 $( One of the three elements of an unordered triple.  (Contributed by NM,
        7-Apr-1994.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	ftpid2_0 $f class A $.
 	ftpid2_1 $f class B $.
 	ftpid2_2 $f class C $.
@@ -1104,6 +1470,11 @@ $( Closed theorem form of ~ tpid3 .  This proof was automatically generated
        from the virtual deduction proof ~ tpid3gVD using a translation
        program.  (Contributed by Alan Sare, 24-Oct-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1118,6 +1489,9 @@ $}
 $( One of the three elements of an unordered triple.  (Contributed by NM,
        7-Apr-1994.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	ftpid3_0 $f class A $.
 	ftpid3_1 $f class B $.
 	ftpid3_2 $f class C $.
@@ -1126,6 +1500,8 @@ ${
 $}
 $( The singleton of a set is not empty.  (Contributed by NM, 14-Dec-2008.) $)
 ${
+	$v A $.
+	$v V $.
 	fsnnzg_0 $f class A $.
 	fsnnzg_1 $f class V $.
 	snnzg $p |- ( A e. V -> { A } =/= (/) ) $= fsnnzg_0 fsnnzg_1 wcel fsnnzg_0 fsnnzg_0 csn wcel fsnnzg_0 csn c0 wne fsnnzg_0 fsnnzg_1 snidg fsnnzg_0 csn fsnnzg_0 ne0i syl $.
@@ -1133,6 +1509,7 @@ $}
 $( The singleton of a set is not empty.  (Contributed by NM,
        10-Apr-1994.) $)
 ${
+	$v A $.
 	fsnnz_0 $f class A $.
 	esnnz_0 $e |- A e. _V $.
 	snnz $p |- { A } =/= (/) $= fsnnz_0 cvv wcel fsnnz_0 csn c0 wne esnnz_0 fsnnz_0 cvv snnzg ax-mp $.
@@ -1140,6 +1517,8 @@ $}
 $( A pair containing a set is not empty.  (Contributed by NM,
        9-Apr-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	fprnz_0 $f class A $.
 	fprnz_1 $f class B $.
 	eprnz_0 $e |- A e. _V $.
@@ -1148,6 +1527,10 @@ $}
 $( A pair containing a set is not empty.  (Contributed by FL,
        19-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	iprnzg_0 $f set x $.
@@ -1159,6 +1542,9 @@ $}
 $( A triplet containing a set is not empty.  (Contributed by NM,
        10-Apr-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	ftpnz_0 $f class A $.
 	ftpnz_1 $f class B $.
 	ftpnz_2 $f class C $.
@@ -1168,6 +1554,9 @@ $}
 $( The singleton of an element of a class is a subset of the class.
        Theorem 7.4 of [Quine] p. 49.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d A x $.
 	$d B x $.
 	isnss_0 $f set x $.
@@ -1179,6 +1568,9 @@ $}
 $( Membership in a set with an element removed.  (Contributed by NM,
      10-Oct-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feldifsn_0 $f class A $.
 	feldifsn_1 $f class B $.
 	feldifsn_2 $f class C $.
@@ -1187,6 +1579,9 @@ $}
 $( Membership in a set with an element removed.  (Contributed by NM,
      10-Mar-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feldifsni_0 $f class A $.
 	feldifsni_1 $f class B $.
 	feldifsni_2 $f class C $.
@@ -1195,6 +1590,8 @@ $}
 $( ` A ` is not in ` ( B \ { A } ) ` .  (Contributed by David Moews,
      1-May-2017.) $)
 ${
+	$v A $.
+	$v B $.
 	fneldifsn_0 $f class A $.
 	fneldifsn_1 $f class B $.
 	neldifsn $p |- -. A e. ( B \ { A } ) $= fneldifsn_0 fneldifsn_1 fneldifsn_0 csn cdif wcel fneldifsn_0 fneldifsn_0 wne fneldifsn_0 neirr fneldifsn_0 fneldifsn_1 fneldifsn_0 eldifsni mto $.
@@ -1202,6 +1599,9 @@ $}
 $( ` A ` is not in ` ( B \ { A } ) ` .  Deduction form.  (Contributed by
      David Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fneldifsnd_0 $f wff ph $.
 	fneldifsnd_1 $f class A $.
 	fneldifsnd_2 $f class B $.
@@ -1210,6 +1610,10 @@ $}
 $( Restricted existential quantification over a set with an element removed.
      (Contributed by NM, 4-Feb-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	frexdifsn_0 $f wff ph $.
 	frexdifsn_1 $f set x $.
 	frexdifsn_2 $f class A $.
@@ -1219,6 +1623,10 @@ $}
 $( The singleton of an element of a class is a subset of the class.
        Theorem 7.4 of [Quine] p. 49.  (Contributed by NM, 22-Jul-2001.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v x $.
 	$d A x $.
 	$d B x $.
 	isnssg_0 $f set x $.
@@ -1231,6 +1639,9 @@ $( An element not in a set can be removed without affecting the set.
        (Contributed by NM, 16-Mar-2006.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d A x $.
 	$d B x $.
 	idifsn_0 $f set x $.
@@ -1241,6 +1652,9 @@ $}
 $( Removal of a singleton from an unordered pair.  (Contributed by NM,
        16-Mar-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d A x $.
 	$d B x $.
 	idifprsn_0 $f set x $.
@@ -1252,6 +1666,8 @@ $( ` ( B \ { A } ) ` equals ` B ` if and only if ` A ` is not a member of
      ` B ` .  Generalization of ~ difsn .  (Contributed by David Moews,
      1-May-2017.) $)
 ${
+	$v A $.
+	$v B $.
 	fdifsneq_0 $f class A $.
 	fdifsneq_1 $f class B $.
 	difsneq $p |- ( -. A e. B <-> ( B \ { A } ) = B ) $= fdifsneq_0 fdifsneq_1 wcel wn fdifsneq_1 fdifsneq_0 csn cdif fdifsneq_1 wceq fdifsneq_0 fdifsneq_1 difsn fdifsneq_0 fdifsneq_1 wcel fdifsneq_1 fdifsneq_0 csn cdif fdifsneq_1 fdifsneq_0 fdifsneq_1 wcel fdifsneq_1 fdifsneq_1 fdifsneq_0 csn cdif fdifsneq_0 fdifsneq_1 wcel fdifsneq_0 fdifsneq_1 fdifsneq_0 csn cdif wcel wn fdifsneq_1 fdifsneq_1 fdifsneq_0 csn cdif wne fdifsneq_0 fdifsneq_1 wcel fdifsneq_0 fdifsneq_1 neldifsnd fdifsneq_0 fdifsneq_1 fdifsneq_1 fdifsneq_0 csn cdif nelne1 mpdan necomd necon2bi impbii $.
@@ -1259,6 +1675,8 @@ $}
 $( ` ( B \ { A } ) ` is a proper subclass of ` B ` if and only if ` A ` is a
      member of ` B ` .  (Contributed by David Moews, 1-May-2017.) $)
 ${
+	$v A $.
+	$v B $.
 	fdifsnpss_0 $f class A $.
 	fdifsnpss_1 $f class B $.
 	difsnpss $p |- ( A e. B <-> ( B \ { A } ) C. B ) $= fdifsnpss_0 fdifsnpss_1 wcel fdifsnpss_0 fdifsnpss_1 wcel wn wn fdifsnpss_1 fdifsnpss_0 csn cdif fdifsnpss_1 wpss fdifsnpss_0 fdifsnpss_1 wcel notnot fdifsnpss_1 fdifsnpss_0 csn cdif fdifsnpss_1 wne fdifsnpss_1 fdifsnpss_0 csn cdif fdifsnpss_1 wss fdifsnpss_1 fdifsnpss_0 csn cdif fdifsnpss_1 wne wa fdifsnpss_0 fdifsnpss_1 wcel wn wn fdifsnpss_1 fdifsnpss_0 csn cdif fdifsnpss_1 wpss fdifsnpss_1 fdifsnpss_0 csn cdif fdifsnpss_1 wss fdifsnpss_1 fdifsnpss_0 csn cdif fdifsnpss_1 wne fdifsnpss_1 fdifsnpss_0 csn difss biantrur fdifsnpss_0 fdifsnpss_1 wcel wn fdifsnpss_1 fdifsnpss_0 csn cdif fdifsnpss_1 fdifsnpss_0 fdifsnpss_1 difsneq necon3bbii fdifsnpss_1 fdifsnpss_0 csn cdif fdifsnpss_1 df-pss 3bitr4i bitri $.
@@ -1266,6 +1684,8 @@ $}
 $( The singleton of an element of a class is a subset of the class.
      (Contributed by NM, 6-Jun-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	fsnssi_0 $f class A $.
 	fsnssi_1 $f class B $.
 	snssi $p |- ( A e. B -> { A } C_ B ) $= fsnssi_0 fsnssi_1 wcel fsnssi_0 csn fsnssi_1 wss fsnssi_0 fsnssi_1 fsnssi_1 snssg ibi $.
@@ -1273,6 +1693,9 @@ $}
 $( The singleton of an element of a class is a subset of the class
        (deduction rule).  (Contributed by Jonathan Ben-Naim, 3-Jun-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fsnssd_0 $f wff ph $.
 	fsnssd_1 $f class A $.
 	fsnssd_2 $f class B $.
@@ -1282,6 +1705,8 @@ $}
 $( If we remove a single element from a class then put it back in, we end up
      with the original class.  (Contributed by NM, 2-Oct-2006.) $)
 ${
+	$v A $.
+	$v B $.
 	fdifsnid_0 $f class A $.
 	fdifsnid_1 $f class B $.
 	difsnid $p |- ( B e. A -> ( ( A \ { B } ) u. { B } ) = A ) $= fdifsnid_1 fdifsnid_0 wcel fdifsnid_0 fdifsnid_1 csn cdif fdifsnid_1 csn cun fdifsnid_1 csn fdifsnid_0 fdifsnid_1 csn cdif cun fdifsnid_0 fdifsnid_0 fdifsnid_1 csn cdif fdifsnid_1 csn uncom fdifsnid_1 fdifsnid_0 wcel fdifsnid_1 csn fdifsnid_0 wss fdifsnid_1 csn fdifsnid_0 fdifsnid_1 csn cdif cun fdifsnid_0 wceq fdifsnid_1 fdifsnid_0 snssi fdifsnid_1 csn fdifsnid_0 undif sylib syl5eq $.
@@ -1291,6 +1716,7 @@ $( Compute the power set of the empty set.  Theorem 89 of [Suppes] p. 47.
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
      29-Jun-2011.) $)
 ${
+	$v x $.
 	ipw0_0 $f set x $.
 	pw0 $p |- ~P (/) = { (/) } $= ipw0_0 sup_set_class c0 wss ipw0_0 cab ipw0_0 sup_set_class c0 wceq ipw0_0 cab c0 cpw c0 csn ipw0_0 sup_set_class c0 wss ipw0_0 sup_set_class c0 wceq ipw0_0 ipw0_0 sup_set_class ss0b abbii ipw0_0 c0 df-pw ipw0_0 c0 df-sn 3eqtr4i $.
 $}
@@ -1299,6 +1725,8 @@ $( Compute the power set of the power set of the empty set.  (See ~ pw0 for
        Although this theorem is a special case of ~ pwsn , we have chosen to
        show a direct elementary proof.  (Contributed by NM, 7-Aug-1994.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	ipwpw0_0 $f set x $.
 	ipwpw0_1 $f set y $.
@@ -1307,6 +1735,8 @@ $}
 $( A singleton is a subset of an unordered pair containing its member.
      (Contributed by NM, 27-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	fsnsspr1_0 $f class A $.
 	fsnsspr1_1 $f class B $.
 	snsspr1 $p |- { A } C_ { A , B } $= fsnsspr1_0 csn fsnsspr1_0 csn fsnsspr1_1 csn cun fsnsspr1_0 fsnsspr1_1 cpr fsnsspr1_0 csn fsnsspr1_1 csn ssun1 fsnsspr1_0 fsnsspr1_1 df-pr sseqtr4i $.
@@ -1314,6 +1744,8 @@ $}
 $( A singleton is a subset of an unordered pair containing its member.
      (Contributed by NM, 2-May-2009.) $)
 ${
+	$v A $.
+	$v B $.
 	fsnsspr2_0 $f class A $.
 	fsnsspr2_1 $f class B $.
 	snsspr2 $p |- { B } C_ { A , B } $= fsnsspr2_1 csn fsnsspr2_0 csn fsnsspr2_1 csn cun fsnsspr2_0 fsnsspr2_1 cpr fsnsspr2_1 csn fsnsspr2_0 csn ssun2 fsnsspr2_0 fsnsspr2_1 df-pr sseqtr4i $.
@@ -1321,6 +1753,9 @@ $}
 $( A singleton is a subset of an unordered triple containing its member.
      (Contributed by NM, 9-Oct-2013.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fsnsstp1_0 $f class A $.
 	fsnsstp1_1 $f class B $.
 	fsnsstp1_2 $f class C $.
@@ -1329,6 +1764,9 @@ $}
 $( A singleton is a subset of an unordered triple containing its member.
      (Contributed by NM, 9-Oct-2013.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fsnsstp2_0 $f class A $.
 	fsnsstp2_1 $f class B $.
 	fsnsstp2_2 $f class C $.
@@ -1337,6 +1775,9 @@ $}
 $( A singleton is a subset of an unordered triple containing its member.
      (Contributed by NM, 9-Oct-2013.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fsnsstp3_0 $f class A $.
 	fsnsstp3_1 $f class B $.
 	fsnsstp3_2 $f class C $.
@@ -1346,6 +1787,9 @@ $( A pair of elements of a class is a subset of the class.  Theorem 7.5 of
        [Quine] p. 49.  (Contributed by NM, 30-May-1994.)  (Proof shortened by
        Andrew Salmon, 29-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fprss_0 $f class A $.
 	fprss_1 $f class B $.
 	fprss_2 $f class C $.
@@ -1357,6 +1801,11 @@ $( A pair of elements of a class is a subset of the class.  Theorem 7.5 of
        [Quine] p. 49.  (Contributed by NM, 22-Mar-2006.)  (Proof shortened by
        Andrew Salmon, 29-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v W $.
 	fprssg_0 $f class A $.
 	fprssg_1 $f class B $.
 	fprssg_2 $f class C $.
@@ -1367,6 +1816,9 @@ $}
 $( A pair of elements of a class is a subset of the class.  (Contributed by
      NM, 16-Jan-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fprssi_0 $f class A $.
 	fprssi_1 $f class B $.
 	fprssi_2 $f class C $.
@@ -1374,6 +1826,9 @@ ${
 $}
 $( The subsets of a singleton.  (Contributed by NM, 24-Apr-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	isssn_0 $f set x $.
@@ -1386,6 +1841,10 @@ $( The property of being sandwiched between two sets naturally splits under
        determination of large powersets such as ~ pwtp .  (Contributed by Mario
        Carneiro, 2-Jul-2016.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fssunsn2_0 $f class A $.
 	fssunsn2_1 $f class B $.
 	fssunsn2_2 $f class C $.
@@ -1395,6 +1854,9 @@ $}
 $( Possible values for a set sandwiched between another set and it plus a
        singleton.  (Contributed by Mario Carneiro, 2-Jul-2016.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fssunsn_0 $f class A $.
 	fssunsn_1 $f class B $.
 	fssunsn_2 $f class C $.
@@ -1403,6 +1865,9 @@ $}
 $( Two ways to express that a nonempty set equals a singleton.
        (Contributed by NM, 15-Dec-2007.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	feqsn_0 $f set x $.
@@ -1413,6 +1878,10 @@ $}
 $( Possible values for a set sandwiched between another set and it plus a
        singleton.  (Contributed by Mario Carneiro, 2-Jul-2016.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fssunpr_0 $f class A $.
 	fssunpr_1 $f class B $.
 	fssunpr_2 $f class C $.
@@ -1422,6 +1891,9 @@ $}
 $( The subsets of a pair.  (Contributed by NM, 16-Mar-2006.)  (Proof
        shortened by Mario Carneiro, 2-Jul-2016.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fsspr_0 $f class A $.
 	fsspr_1 $f class B $.
 	fsspr_2 $f class C $.
@@ -1430,6 +1902,10 @@ $}
 $( The subsets of a triple.  (Contributed by Mario Carneiro,
        2-Jul-2016.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fsstp_0 $f class A $.
 	fsstp_1 $f class B $.
 	fsstp_2 $f class C $.
@@ -1439,6 +1915,10 @@ $}
 $( A triplet of elements of a class is a subset of the class.  (Contributed
        by NM, 9-Apr-1994.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	ftpss_0 $f class A $.
 	ftpss_1 $f class B $.
 	ftpss_2 $f class C $.
@@ -1452,6 +1932,8 @@ $( If the singletons of two sets are equal, the two sets are equal.  Part
        of Exercise 4 of [TakeutiZaring] p. 15.  (Contributed by NM,
        27-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
 	fsneqr_0 $f class A $.
 	fsneqr_1 $f class B $.
 	esneqr_0 $e |- A e. _V $.
@@ -1460,6 +1942,8 @@ $}
 $( If a singleton is a subset of another, their members are equal.
        (Contributed by NM, 28-May-2006.) $)
 ${
+	$v A $.
+	$v B $.
 	fsnsssn_0 $f class A $.
 	fsnsssn_1 $f class B $.
 	esnsssn_0 $e |- A e. _V $.
@@ -1467,6 +1951,10 @@ ${
 $}
 $( Closed form of ~ sneqr .  (Contributed by Scott Fenton, 1-Apr-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	isneqrg_0 $f set x $.
@@ -1478,6 +1966,9 @@ $}
 $( Two singletons of sets are equal iff their elements are equal.
      (Contributed by Scott Fenton, 16-Apr-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
 	fsneqbg_0 $f class A $.
 	fsneqbg_1 $f class B $.
 	fsneqbg_2 $f class V $.
@@ -1486,6 +1977,8 @@ $}
 $( The singleton of a class is a subset of its power class.  (Contributed
        by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v x $.
 	$d x A $.
 	isnsspw_0 $f set x $.
 	fsnsspw_0 $f class A $.
@@ -1495,6 +1988,9 @@ $( An unordered pair belongs to the power class of a class iff each member
        belongs to the class.  (Contributed by NM, 10-Dec-2003.)  (Proof
        shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fprsspw_0 $f class A $.
 	fprsspw_1 $f class B $.
 	fprsspw_2 $f class C $.
@@ -1506,6 +2002,9 @@ $( Reverse equality lemma for unordered pairs.  If two unordered pairs have
        the same second element, the first elements are equal.  (Contributed by
        NM, 18-Oct-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fpreqr1_0 $f class A $.
 	fpreqr1_1 $f class B $.
 	fpreqr1_2 $f class C $.
@@ -1517,6 +2016,9 @@ $( Reverse equality lemma for unordered pairs.  If two unordered pairs have
        the same first element, the second elements are equal.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fpreqr2_0 $f class A $.
 	fpreqr2_1 $f class B $.
 	fpreqr2_2 $f class C $.
@@ -1527,6 +2029,10 @@ $}
 $( Equality relationship for two unordered pairs.  (Contributed by NM,
        17-Oct-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fpreq12b_0 $f class A $.
 	fpreq12b_1 $f class B $.
 	fpreq12b_2 $f class C $.
@@ -1539,6 +2045,10 @@ ${
 $}
 $( Equality of two unordered pairs.  (Contributed by NM, 17-Oct-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fprel12_0 $f class A $.
 	fprel12_1 $f class B $.
 	fprel12_2 $f class C $.
@@ -1552,6 +2062,10 @@ $}
 $( A way to represent ordered pairs using unordered pairs with distinct
        members.  (Contributed by NM, 27-Mar-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fopthpr_0 $f class A $.
 	fopthpr_1 $f class B $.
 	fopthpr_2 $f class C $.
@@ -1564,8 +2078,19 @@ ${
 $}
 $( Closed form of ~ preq12b .  (Contributed by Scott Fenton,
        28-Mar-2014.) $)
-$v Y $.
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v V $.
+	$v W $.
+	$v X $.
+	$v Y $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d A x y z w $.
 	$d B x y z w $.
 	$d C x y z w $.
@@ -1591,6 +2116,9 @@ $}
 $( Equivalence for a pair equal to a singleton.  (Contributed by NM,
        3-Jun-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fpreqsn_0 $f class A $.
 	fpreqsn_1 $f class B $.
 	fpreqsn_2 $f class C $.
@@ -1603,6 +2131,9 @@ $( Rewrite ~ df-op using ` if ` .  When both arguments are sets, it reduces
        to the standard Kuratowski definition; otherwise, it is defined to be
        the empty set.  (Contributed by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	idfopif_0 $f set x $.
@@ -1613,6 +2144,10 @@ $}
 $( Value of the ordered pair when the arguments are sets.  (Contributed by
      Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	fdfopg_0 $f class A $.
 	fdfopg_1 $f class B $.
 	fdfopg_2 $f class V $.
@@ -1623,6 +2158,8 @@ $( Value of an ordered pair when the arguments are sets, with the
        conclusion corresponding to Kuratowski's original definition.
        (Contributed by NM, 25-Jun-1998.) $)
 ${
+	$v A $.
+	$v B $.
 	fdfop_0 $f class A $.
 	fdfop_1 $f class B $.
 	edfop_0 $e |- A e. _V $.
@@ -1632,6 +2169,9 @@ $}
 $( Equality theorem for ordered pairs.  (Contributed by NM, 25-Jun-1998.)
      (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fopeq1_0 $f class A $.
 	fopeq1_1 $f class B $.
 	fopeq1_2 $f class C $.
@@ -1640,6 +2180,9 @@ $}
 $( Equality theorem for ordered pairs.  (Contributed by NM, 25-Jun-1998.)
      (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fopeq2_0 $f class A $.
 	fopeq2_1 $f class B $.
 	fopeq2_2 $f class C $.
@@ -1647,6 +2190,10 @@ ${
 $}
 $( Equality theorem for ordered pairs.  (Contributed by NM, 28-May-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fopeq12_0 $f class A $.
 	fopeq12_1 $f class B $.
 	fopeq12_2 $f class C $.
@@ -1656,6 +2203,9 @@ $}
 $( Equality inference for ordered pairs.  (Contributed by NM,
        16-Dec-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fopeq1i_0 $f class A $.
 	fopeq1i_1 $f class B $.
 	fopeq1i_2 $f class C $.
@@ -1665,6 +2215,9 @@ $}
 $( Equality inference for ordered pairs.  (Contributed by NM,
        16-Dec-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fopeq2i_0 $f class A $.
 	fopeq2i_1 $f class B $.
 	fopeq2i_2 $f class C $.
@@ -1674,6 +2227,10 @@ $}
 $( Equality inference for ordered pairs.  (Contributed by NM,
          16-Dec-2006.)  (Proof shortened by Eric Schmidt, 4-Apr-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fopeq12i_0 $f class A $.
 	fopeq12i_1 $f class B $.
 	fopeq12i_2 $f class C $.
@@ -1685,6 +2242,10 @@ $}
 $( Equality deduction for ordered pairs.  (Contributed by NM,
        16-Dec-2006.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fopeq1d_0 $f wff ph $.
 	fopeq1d_1 $f class A $.
 	fopeq1d_2 $f class B $.
@@ -1695,6 +2256,10 @@ $}
 $( Equality deduction for ordered pairs.  (Contributed by NM,
        16-Dec-2006.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fopeq2d_0 $f wff ph $.
 	fopeq2d_1 $f class A $.
 	fopeq2d_2 $f class B $.
@@ -1705,6 +2270,11 @@ $}
 $( Equality deduction for ordered pairs.  (Contributed by NM,
        16-Dec-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fopeq12d_0 $f wff ph $.
 	fopeq12d_1 $f class A $.
 	fopeq12d_2 $f class B $.
@@ -1716,6 +2286,10 @@ ${
 $}
 $( Equality theorem for ordered triples.  (Contributed by NM, 3-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	foteq1_0 $f class A $.
 	foteq1_1 $f class B $.
 	foteq1_2 $f class C $.
@@ -1724,6 +2298,10 @@ ${
 $}
 $( Equality theorem for ordered triples.  (Contributed by NM, 3-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	foteq2_0 $f class A $.
 	foteq2_1 $f class B $.
 	foteq2_2 $f class C $.
@@ -1732,6 +2310,10 @@ ${
 $}
 $( Equality theorem for ordered triples.  (Contributed by NM, 3-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	foteq3_0 $f class A $.
 	foteq3_1 $f class B $.
 	foteq3_2 $f class C $.
@@ -1741,6 +2323,11 @@ $}
 $( Equality deduction for ordered triples.  (Contributed by Mario Carneiro,
        11-Jan-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	foteq1d_0 $f wff ph $.
 	foteq1d_1 $f class A $.
 	foteq1d_2 $f class B $.
@@ -1752,6 +2339,11 @@ $}
 $( Equality deduction for ordered triples.  (Contributed by Mario Carneiro,
        11-Jan-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	foteq2d_0 $f wff ph $.
 	foteq2d_1 $f class A $.
 	foteq2d_2 $f class B $.
@@ -1763,6 +2355,11 @@ $}
 $( Equality deduction for ordered triples.  (Contributed by Mario Carneiro,
        11-Jan-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	foteq3d_0 $f wff ph $.
 	foteq3d_1 $f class A $.
 	foteq3d_2 $f class B $.
@@ -1774,6 +2371,13 @@ $}
 $( Equality deduction for ordered triples.  (Contributed by Mario Carneiro,
        11-Jan-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
 	foteq123d_0 $f wff ph $.
 	foteq123d_1 $f class A $.
 	foteq123d_2 $f class B $.
@@ -1789,6 +2393,9 @@ $}
 $( Bound-variable hypothesis builder for ordered pairs.  (Contributed by
        NM, 14-Nov-1995.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	fnfop_0 $f set x $.
 	fnfop_1 $f class A $.
 	fnfop_2 $f class B $.
@@ -1801,6 +2408,11 @@ $( Deduction version of bound-variable hypothesis builder ~ nfop .  This
        be created from the corresponding not-free inference theorem.
        (Contributed by NM, 4-Feb-2008.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v z $.
 	$d z B $.
 	$d z A $.
 	$d x z $.
@@ -1816,6 +2428,7 @@ $}
 $( The ordered pair ` <. A , A >. ` in Kuratowski's representation.
        (Contributed by FL, 28-Dec-2011.) $)
 ${
+	$v A $.
 	fopid_0 $f class A $.
 	eopid_0 $e |- A e. _V $.
 	opid $p |- <. A , A >. = { { A } } $= fopid_0 csn fopid_0 fopid_0 cpr cpr fopid_0 csn fopid_0 csn cpr fopid_0 fopid_0 cop fopid_0 csn csn fopid_0 fopid_0 cpr fopid_0 csn fopid_0 csn fopid_0 csn fopid_0 fopid_0 cpr fopid_0 dfsn2 eqcomi preq2i fopid_0 fopid_0 eopid_0 eopid_0 dfop fopid_0 csn dfsn2 3eqtr4i $.
@@ -1824,6 +2437,12 @@ $( Restricted quantification over the union of a set and a singleton, using
        implicit substitution.  (Contributed by Paul Chapman, 17-Nov-2012.)
        (Revised by Mario Carneiro, 23-Apr-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d B x $.
 	$d ps x $.
 	fralunsn_0 $f wff ph $.
@@ -1839,6 +2458,15 @@ $( Double restricted quantification over the union of a set and a
        singleton, using implicit substitution.  (Contributed by Paul Chapman,
        17-Nov-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d A x $.
 	$d B x y $.
 	$d C x $.
@@ -1862,6 +2490,8 @@ $}
 $( Expansion of an ordered pair when either member is a proper class.
      (Contributed by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	fopprc_0 $f class A $.
 	fopprc_1 $f class B $.
 	opprc $p |- ( -. ( A e. _V /\ B e. _V ) -> <. A , B >. = (/) ) $= fopprc_0 cvv wcel fopprc_1 cvv wcel wa wn fopprc_0 fopprc_1 cop fopprc_0 cvv wcel fopprc_1 cvv wcel wa fopprc_0 csn fopprc_0 fopprc_1 cpr cpr c0 cif c0 fopprc_0 fopprc_1 dfopif fopprc_0 cvv wcel fopprc_1 cvv wcel wa fopprc_0 csn fopprc_0 fopprc_1 cpr cpr c0 iffalse syl5eq $.
@@ -1870,6 +2500,8 @@ $( Expansion of an ordered pair when the first member is a proper class.  See
      also ~ opprc .  (Contributed by NM, 10-Apr-2004.)  (Revised by Mario
      Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	fopprc1_0 $f class A $.
 	fopprc1_1 $f class B $.
 	opprc1 $p |- ( -. A e. _V -> <. A , B >. = (/) ) $= fopprc1_0 cvv wcel wn fopprc1_0 cvv wcel fopprc1_1 cvv wcel wa wn fopprc1_0 fopprc1_1 cop c0 wceq fopprc1_0 cvv wcel fopprc1_1 cvv wcel wa fopprc1_0 cvv wcel fopprc1_0 cvv wcel fopprc1_1 cvv wcel simpl con3i fopprc1_0 fopprc1_1 opprc syl $.
@@ -1878,6 +2510,8 @@ $( Expansion of an ordered pair when the second member is a proper class.
      See also ~ opprc .  (Contributed by NM, 15-Nov-1994.)  (Revised by Mario
      Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	fopprc2_0 $f class A $.
 	fopprc2_1 $f class B $.
 	opprc2 $p |- ( -. B e. _V -> <. A , B >. = (/) ) $= fopprc2_1 cvv wcel wn fopprc2_0 cvv wcel fopprc2_1 cvv wcel wa wn fopprc2_0 fopprc2_1 cop c0 wceq fopprc2_0 cvv wcel fopprc2_1 cvv wcel wa fopprc2_1 cvv wcel fopprc2_0 cvv wcel fopprc2_1 cvv wcel simpr con3i fopprc2_0 fopprc2_1 opprc syl $.
@@ -1885,6 +2519,9 @@ $}
 $( If an ordered pair has an element, then its arguments are sets.
      (Contributed by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	foprcl_0 $f class A $.
 	foprcl_1 $f class B $.
 	foprcl_2 $f class C $.
@@ -1892,6 +2529,8 @@ ${
 $}
 $( The power set of a singleton.  (Contributed by NM, 5-Jun-2006.) $)
 ${
+	$v A $.
+	$v x $.
 	$d x A $.
 	ipwsn_0 $f set x $.
 	fpwsn_0 $f class A $.
@@ -1901,6 +2540,9 @@ $( The power set of a singleton (direct proof).  TO DO - should we keep
        this?  (Contributed by NM, 5-Jun-2006.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v A $.
+	$v x $.
+	$v y $.
 	$d x A $.
 	$d x y $.
 	$d y A $.
@@ -1911,6 +2553,9 @@ ${
 $}
 $( The power set of an unordered pair.  (Contributed by NM, 1-May-2009.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	ipwpr_0 $f set x $.
@@ -1921,6 +2566,10 @@ $}
 $( The power set of an unordered triple.  (Contributed by Mario Carneiro,
        2-Jul-2016.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1939,6 +2588,7 @@ $}
 $( The power class of the universe is the universe.  Exercise 4.12(d) of
        [Mendelson] p. 235.  (Contributed by NM, 14-Sep-2003.) $)
 ${
+	$v x $.
 	ipwv_0 $f set x $.
 	pwv $p |- ~P _V = _V $= ipwv_0 cvv cpw cvv ipwv_0 sup_set_class cvv cpw wcel ipwv_0 sup_set_class cvv wcel ipwv_0 sup_set_class cvv cpw wcel ipwv_0 sup_set_class cvv wss ipwv_0 sup_set_class ssv ipwv_0 sup_set_class cvv ipwv_0 vex elpw mpbir ipwv_0 vex 2th eqriv $.
 $}

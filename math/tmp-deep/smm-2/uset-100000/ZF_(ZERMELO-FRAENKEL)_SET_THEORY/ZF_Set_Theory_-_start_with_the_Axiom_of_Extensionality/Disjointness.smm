@@ -47,7 +47,7 @@ $( If each element of a collection is contained in a disjoint collection,
        the original collection is also disjoint.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -88,7 +88,7 @@ $}
 $( A subset of a disjoint collection is disjoint.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -149,7 +149,7 @@ $}
 $( Change bound variables in a disjoint collection.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) $)
 ${
-	$v x y z A B C $.
+	$v x y A B C z $.
 	$d x y z A $.
 	$d z B $.
 	$d z C $.
@@ -184,7 +184,7 @@ $}
 $( Bound-variable hypothesis builder for disjoint collection.  (Contributed
        by Mario Carneiro, 14-Nov-2016.) $)
 ${
-	$v x y z A B $.
+	$v x y A B z $.
 	$d z A $.
 	$d z B $.
 	$d x z $.
@@ -202,7 +202,7 @@ $}
 $( Bound-variable hypothesis builder for disjoint collection.  (Contributed
        by Mario Carneiro, 14-Nov-2016.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -217,7 +217,7 @@ $( Two ways to say that a collection ` B ( i ) ` for ` i e. A ` is
        disjoint.  (Contributed by Mario Carneiro, 26-Mar-2015.)  (Revised by
        Mario Carneiro, 14-Nov-2016.) $)
 ${
-	$v x A B C i j $.
+	$v A B C i j x $.
 	$d i j x A $.
 	$d j x B $.
 	$d i x C $.
@@ -267,7 +267,7 @@ $( Property of a disjoint collection: if ` B ( X ) = C ` and
        ` B ( Y ) = D ` , and ` X =/= Y ` , then ` C ` and ` D ` are disjoint.
        (Contributed by Mario Carneiro, 14-Nov-2016.) $)
 ${
-	$v x y z A B C D X Y $.
+	$v x A B C D X Y y z $.
 	$d x y z A $.
 	$d y z B $.
 	$d x y z C $.
@@ -332,7 +332,7 @@ $( A disjoint collection yields disjoint indexed unions for disjoint index
        sets.  (Contributed by Mario Carneiro, 26-Mar-2015.)  (Revised by Mario
        Carneiro, 14-Nov-2016.) $)
 ${
-	$v x y z A B C D $.
+	$v x A B C D y z $.
 	$d x y z A $.
 	$d y z B $.
 	$d x y z C $.
@@ -368,7 +368,7 @@ $}
 $( Any collection of singletons is disjoint.  (Contributed by Mario
        Carneiro, 14-Nov-2016.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d x y $.
 	$d y A $.
 	f0 $f set x $.
@@ -389,7 +389,7 @@ $}
 $( A singleton collection is disjoint.  (Contributed by Mario Carneiro,
        14-Nov-2016.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y A $.
 	$d y B $.
 	f0 $f set x $.
@@ -411,7 +411,7 @@ $}
 $( A pair collection is disjoint iff the two sets in the family have empty
        intersection.  (Contributed by Mario Carneiro, 14-Nov-2016.) $)
 ${
-	$v x y z A B C D E V $.
+	$v x A B C D E V y z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d y z C $.
@@ -437,7 +437,7 @@ $( An indexed union of a disjoint collection of disjoint collections is
        have the displayed free variables.  (Contributed by Mario Carneiro,
        14-Nov-2016.) $)
 ${
-	$v x y z A B v u C s r $.
+	$v x y A B C z v u s r $.
 	$d r s u v x y z A $.
 	$d r s u v x z B $.
 	$d r s u v y z C $.
@@ -457,7 +457,7 @@ $}
 $( The union of two disjoint collections.  (Contributed by Mario Carneiro,
        14-Nov-2016.) $)
 ${
-	$v x y z w A B C D $.
+	$v x y A B C D z w $.
 	$d w x y z A $.
 	$d w x y z B $.
 	$d w y z C $.
@@ -477,7 +477,7 @@ $}
 $( Expand a disjoint collection with any number of empty sets.
        (Contributed by Mario Carneiro, 15-Nov-2016.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.

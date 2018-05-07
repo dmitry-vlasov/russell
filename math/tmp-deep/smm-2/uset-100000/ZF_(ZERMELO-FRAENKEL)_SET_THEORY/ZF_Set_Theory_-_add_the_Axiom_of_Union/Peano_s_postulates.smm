@@ -51,7 +51,7 @@ $( The induction postulate: any class containing zero and closed under the
        schema, with a basis and an induction hypothesis, is derived from this
        theorem as theorem ~ findes .  (Contributed by NM, 18-Feb-2004.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d x y A $.
 	f0 $f set x $.
 	f1 $f class A $.

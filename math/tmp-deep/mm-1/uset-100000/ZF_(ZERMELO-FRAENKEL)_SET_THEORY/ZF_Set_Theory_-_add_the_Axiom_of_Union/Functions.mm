@@ -27,12 +27,15 @@ $( Isomorphism $)
 $( Extend the definition of a wff to include the function predicate.  (Read:
      ` A ` is a function.) $)
 ${
+	$v A $.
 	fwfun_0 $f class A $.
 	wfun $a wff Fun A $.
 $}
 $( Extend the definition of a wff to include the function predicate with a
      domain.  (Read: ` A ` is a function on ` B ` .) $)
 ${
+	$v A $.
+	$v B $.
 	fwfn_0 $f class A $.
 	fwfn_1 $f class B $.
 	wfn $a wff A Fn B $.
@@ -40,6 +43,9 @@ $}
 $( Extend the definition of a wff to include the function predicate with
      domain and codomain.  (Read: ` F ` maps ` A ` into ` B ` .) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fwf_0 $f class A $.
 	fwf_1 $f class B $.
 	fwf_2 $f class F $.
@@ -49,6 +55,9 @@ $( Extend the definition of a wff to include one-to-one functions.  (Read:
      ` F ` maps ` A ` one-to-one into ` B ` .)  The notation ("1-1" above the
      arrow) is from Definition 6.15(5) of [TakeutiZaring] p. 27. $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fwf1_0 $f class A $.
 	fwf1_1 $f class B $.
 	fwf1_2 $f class F $.
@@ -58,6 +67,9 @@ $( Extend the definition of a wff to include onto functions.  (Read: ` F `
      maps ` A ` onto ` B ` .)  The notation ("onto" below the arrow) is from
      Definition 6.15(4) of [TakeutiZaring] p. 27. $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fwfo_0 $f class A $.
 	fwfo_1 $f class B $.
 	fwfo_2 $f class F $.
@@ -68,6 +80,9 @@ $( Extend the definition of a wff to include one-to-one onto functions.
      above the arrow and "onto" below the arrow) is from Definition 6.15(6) of
      [TakeutiZaring] p. 27. $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fwf1o_0 $f class A $.
 	fwf1o_1 $f class B $.
 	fwf1o_2 $f class F $.
@@ -76,6 +91,8 @@ $}
 $( Extend the definition of a class to include the value of a function.
      (Read:  The value of ` F ` at ` A ` , or " ` F ` of ` A ` .") $)
 ${
+	$v A $.
+	$v F $.
 	fcfv_0 $f class A $.
 	fcfv_1 $f class F $.
 	cfv $a class ( F ` A ) $.
@@ -83,6 +100,11 @@ $}
 $( Extend the definition of a wff to include the isomorphism property.
      (Read: ` H ` is an ` R ` , ` S ` isomorphism of ` A ` onto ` B ` .) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
 	fwiso_0 $f class A $.
 	fwiso_1 $f class B $.
 	fwiso_2 $f class R $.
@@ -103,6 +125,7 @@ $( Define predicate that determines if some class ` A ` is a function.
        ~ dffun4 , ~ dffun5 , ~ dffun6 , ~ dffun7 , ~ dffun8 , and ~ dffun9 .
        (Contributed by NM, 1-Aug-1994.) $)
 ${
+	$v A $.
 	fdf-fun_0 $f class A $.
 	df-fun $a |- ( Fun A <-> ( Rel A /\ ( A o. `' A ) C_ _I ) ) $.
 $}
@@ -110,6 +133,8 @@ $( Define a function with domain.  Definition 6.15(1) of [TakeutiZaring]
        p. 27.  For alternate definitions, see ~ dffn2 , ~ dffn3 , ~ dffn4 , and
        ~ dffn5 .  (Contributed by NM, 1-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	fdf-fn_0 $f class A $.
 	fdf-fn_1 $f class B $.
 	df-fn $a |- ( A Fn B <-> ( Fun A /\ dom A = B ) ) $.
@@ -118,6 +143,9 @@ $( Define a function (mapping) with domain and codomain.  Definition
        6.15(3) of [TakeutiZaring] p. 27.  For alternate definitions, see
        ~ dff2 , ~ dff3 , and ~ dff4 .  (Contributed by NM, 1-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fdf-f_0 $f class A $.
 	fdf-f_1 $f class B $.
 	fdf-f_2 $f class F $.
@@ -128,6 +156,9 @@ $( Define a one-to-one function.  For equivalent definitions see ~ dff12
        use their notation ("1-1" above the arrow).  (Contributed by NM,
        1-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fdf-f1_0 $f class A $.
 	fdf-f1_1 $f class B $.
 	fdf-f1_2 $f class F $.
@@ -138,6 +169,9 @@ $( Define an onto function.  Definition 6.15(4) of [TakeutiZaring] p. 27.
        definitions, see ~ dffo2 , ~ dffo3 , ~ dffo4 , and ~ dffo5 .
        (Contributed by NM, 1-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fdf-fo_0 $f class A $.
 	fdf-fo_1 $f class B $.
 	fdf-fo_2 $f class F $.
@@ -149,6 +183,9 @@ $( Define a one-to-one onto function.  For equivalent definitions see
        the arrow and "onto" below the arrow).  (Contributed by NM,
        1-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fdf-f1o_0 $f class A $.
 	fdf-f1o_1 $f class B $.
 	fdf-f1o_2 $f class F $.
@@ -176,6 +213,9 @@ $( Define the value of a function, ` ( F `` A ) ` , also known as function
        definition of function value in terms of ordered pair membership, see
        ~ funopfvb .  (Contributed by Scott Fenton, 6-Oct-2017.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
 	$d x A $.
 	$d x F $.
 	fdf-fv_0 $f set x $.
@@ -189,6 +229,13 @@ $( Define the isomorphism predicate.  We read this as " ` H ` is an ` R ` ,
        [TakeutiZaring] p. 32, whose notation is the same as ours except that
        ` R ` and ` S ` are subscripts.  (Contributed by NM, 4-Mar-1997.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -206,6 +253,10 @@ $}
 $( Alternate definition of a function.  (Contributed by NM,
        29-Dec-1996.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z A $.
 	fdffun2_0 $f set x $.
 	fdffun2_1 $f set y $.
@@ -215,6 +266,10 @@ ${
 $}
 $( Alternate definition of function.  (Contributed by NM, 29-Dec-1996.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z A $.
 	fdffun3_0 $f set x $.
 	fdffun3_1 $f set y $.
@@ -225,6 +280,10 @@ $}
 $( Alternate definition of a function.  Definition 6.4(4) of
        [TakeutiZaring] p. 24.  (Contributed by NM, 29-Dec-1996.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z A $.
 	fdffun4_0 $f set x $.
 	fdffun4_1 $f set y $.
@@ -234,6 +293,10 @@ ${
 $}
 $( Alternate definition of function.  (Contributed by NM, 29-Dec-1996.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z A $.
 	fdffun5_0 $f set x $.
 	fdffun5_1 $f set y $.
@@ -245,6 +308,12 @@ $( Definition of function, using bound-variable hypotheses instead of
        distinct variable conditions.  (Contributed by NM, 9-Mar-1995.)
        (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v w $.
+	$v v $.
+	$v u $.
 	$d x y w v u $.
 	$d A w v u $.
 	idffun6f_0 $f set w $.
@@ -260,6 +329,9 @@ $}
 $( Alternate definition of a function using "at most one" notation.
        (Contributed by NM, 9-Mar-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v F $.
 	$d x y $.
 	$d x y F $.
 	fdffun6_0 $f set x $.
@@ -270,6 +342,10 @@ $}
 $( A function has at most one value for each argument.  (Contributed by NM,
        24-May-1998.) $)
 ${
+	$v y $.
+	$v A $.
+	$v F $.
+	$v x $.
 	$d x y A $.
 	$d x y F $.
 	ifunmo_0 $f set x $.
@@ -280,12 +356,15 @@ ${
 $}
 $( A function is a relation.  (Contributed by NM, 1-Aug-1994.) $)
 ${
+	$v A $.
 	ffunrel_0 $f class A $.
 	funrel $p |- ( Fun A -> Rel A ) $= ffunrel_0 wfun ffunrel_0 wrel ffunrel_0 ffunrel_0 ccnv ccom cid wss ffunrel_0 df-fun simplbi $.
 $}
 $( Subclass theorem for function predicate.  (Contributed by NM,
        16-Aug-1994.)  (Proof shortened by Mario Carneiro, 24-Jun-2014.) $)
 ${
+	$v A $.
+	$v B $.
 	ffunss_0 $f class A $.
 	ffunss_1 $f class B $.
 	funss $p |- ( A C_ B -> ( Fun B -> Fun A ) ) $= ffunss_0 ffunss_1 wss ffunss_1 wrel ffunss_1 ffunss_1 ccnv ccom cid wss wa ffunss_0 wrel ffunss_0 ffunss_0 ccnv ccom cid wss wa ffunss_1 wfun ffunss_0 wfun ffunss_0 ffunss_1 wss ffunss_1 wrel ffunss_0 wrel ffunss_1 ffunss_1 ccnv ccom cid wss ffunss_0 ffunss_0 ccnv ccom cid wss ffunss_0 ffunss_1 relss ffunss_0 ffunss_1 wss ffunss_0 ffunss_0 ccnv ccom ffunss_1 ffunss_1 ccnv ccom wss ffunss_1 ffunss_1 ccnv ccom cid wss ffunss_0 ffunss_0 ccnv ccom cid wss wi ffunss_0 ffunss_1 wss ffunss_0 ffunss_0 ccnv ccom ffunss_1 ffunss_0 ccnv ccom ffunss_1 ffunss_1 ccnv ccom ffunss_0 ffunss_1 ffunss_0 ccnv coss1 ffunss_0 ffunss_1 wss ffunss_0 ccnv ffunss_1 ccnv wss ffunss_1 ffunss_0 ccnv ccom ffunss_1 ffunss_1 ccnv ccom wss ffunss_0 ffunss_1 cnvss ffunss_0 ccnv ffunss_1 ccnv ffunss_1 coss2 syl sstrd ffunss_0 ffunss_0 ccnv ccom ffunss_1 ffunss_1 ccnv ccom cid sstr2 syl anim12d ffunss_1 df-fun ffunss_0 df-fun 3imtr4g $.
@@ -293,6 +372,8 @@ $}
 $( Equality theorem for function predicate.  (Contributed by NM,
      16-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	ffuneq_0 $f class A $.
 	ffuneq_1 $f class B $.
 	funeq $p |- ( A = B -> ( Fun A <-> Fun B ) ) $= ffuneq_0 ffuneq_1 wceq ffuneq_0 wfun ffuneq_1 wfun ffuneq_0 ffuneq_1 wceq ffuneq_1 ffuneq_0 wss ffuneq_0 wfun ffuneq_1 wfun wi ffuneq_1 ffuneq_0 eqimss2 ffuneq_1 ffuneq_0 funss syl ffuneq_0 ffuneq_1 wceq ffuneq_0 ffuneq_1 wss ffuneq_1 wfun ffuneq_0 wfun wi ffuneq_0 ffuneq_1 eqimss ffuneq_0 ffuneq_1 funss syl impbid $.
@@ -300,6 +381,8 @@ $}
 $( Equality inference for the function predicate.  (Contributed by Jonathan
        Ben-Naim, 3-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
 	ffuneqi_0 $f class A $.
 	ffuneqi_1 $f class B $.
 	efuneqi_0 $e |- A = B $.
@@ -308,6 +391,9 @@ $}
 $( Equality deduction for the function predicate.  (Contributed by NM,
        23-Feb-2013.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	ffuneqd_0 $f wff ph $.
 	ffuneqd_1 $f class A $.
 	ffuneqd_2 $f class B $.
@@ -317,6 +403,8 @@ $}
 $( Bound-variable hypothesis builder for a function.  (Contributed by NM,
        30-Jan-2004.) $)
 ${
+	$v x $.
+	$v F $.
 	fnffun_0 $f set x $.
 	fnffun_1 $f class F $.
 	enffun_0 $e |- F/_ x F $.
@@ -325,6 +413,10 @@ $}
 $( There is exactly one value of a function.  (Contributed by NM,
        22-Apr-2004.)  (Proof shortened by Andrew Salmon, 17-Sep-2011.) $)
 ${
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d y A $.
 	$d y F $.
 	ffuneu_0 $f set y $.
@@ -336,6 +428,10 @@ $}
 $( There is exactly one value of a function.  (Contributed by NM,
        3-Aug-1994.) $)
 ${
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d y A $.
 	$d y F $.
 	ffuneu2_0 $f set y $.
@@ -350,6 +446,9 @@ $( Alternate definition of a function.  One possibility for the definition
        "there is exactly one."  However, ~ dffun8 shows that it doesn't matter
        which meaning we pick.)  (Contributed by NM, 4-Nov-2002.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fdffun7_0 $f set x $.
 	fdffun7_1 $f set y $.
@@ -360,6 +459,9 @@ $( Alternate definition of a function.  One possibility for the definition
        of a function in [Enderton] p. 42.  Compare ~ dffun7 .  (Contributed by
        NM, 4-Nov-2002.)  (Proof shortened by Andrew Salmon, 17-Sep-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fdffun8_0 $f set x $.
 	fdffun8_1 $f set y $.
@@ -369,6 +471,9 @@ $}
 $( Alternate definition of a function.  (Contributed by NM, 28-Mar-2007.)
        (Revised by NM, 16-Jun-2017.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fdffun9_0 $f set x $.
 	fdffun9_1 $f set y $.
@@ -378,6 +483,7 @@ $}
 $( An equivalence for the function predicate.  (Contributed by NM,
      13-Aug-2004.) $)
 ${
+	$v A $.
 	ffunfn_0 $f class A $.
 	funfn $p |- ( Fun A <-> A Fn dom A ) $= ffunfn_0 wfun ffunfn_0 wfun ffunfn_0 cdm ffunfn_0 cdm wceq wa ffunfn_0 ffunfn_0 cdm wfn ffunfn_0 cdm ffunfn_0 cdm wceq ffunfn_0 wfun ffunfn_0 cdm eqid biantru ffunfn_0 ffunfn_0 cdm df-fn bitr4i $.
 $}
@@ -395,6 +501,17 @@ $( A Kuratowski ordered pair is a function only if its components are
        equal.  (Contributed by NM, 5-Jun-2008.)  (Revised by Mario Carneiro,
        26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
+	$v t $.
 	$d t u v w x y z A $.
 	$d t u v w x y z B $.
 	ifunopg_0 $f set x $.
@@ -413,6 +530,9 @@ $}
 $( A class of ordered pairs is a function when there is at most one second
        member for each pair.  (Contributed by NM, 16-May-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	ffunopab_0 $f wff ph $.
 	ffunopab_1 $f set x $.
@@ -422,6 +542,9 @@ $}
 $( A class of ordered pairs of values is a function.  (Contributed by NM,
        14-Nov-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d y A $.
 	ffunopabeq_0 $f set x $.
@@ -432,6 +555,10 @@ $}
 $( A class of ordered pairs of values in the form used by ~ df-mpt is a
        function.  (Contributed by NM, 17-Feb-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d y A $.
 	ffunopab4_0 $f wff ph $.
@@ -443,6 +570,10 @@ $}
 $( A function in maps-to notation is a function.  (Contributed by Mario
        Carneiro, 13-Jan-2013.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d A y $.
 	$d B y $.
 	$d x y $.
@@ -455,6 +586,10 @@ $}
 $( Functionality of a class given by a "maps to" notation.  (Contributed by
        FL, 17-Feb-2008.)  (Revised by Mario Carneiro, 31-May-2014.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	ffunmpt2_0 $f set x $.
 	ffunmpt2_1 $f class A $.
 	ffunmpt2_2 $f class B $.
@@ -466,6 +601,11 @@ $( The composition of two functions is a function.  Exercise 29 of
        [TakeutiZaring] p. 25.  (Contributed by NM, 26-Jan-1997.)  (Proof
        shortened by Andrew Salmon, 17-Sep-2011.) $)
 ${
+	$v F $.
+	$v G $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z F $.
 	$d x y z G $.
 	ifunco_0 $f set x $.
@@ -478,6 +618,8 @@ $}
 $( A restriction of a function is a function.  Compare Exercise 18 of
      [TakeutiZaring] p. 25.  (Contributed by NM, 16-Aug-1994.) $)
 ${
+	$v A $.
+	$v F $.
 	ffunres_0 $f class A $.
 	ffunres_1 $f class F $.
 	funres $p |- ( Fun F -> Fun ( F |` A ) ) $= ffunres_1 ffunres_0 cres ffunres_1 wss ffunres_1 wfun ffunres_1 ffunres_0 cres wfun wi ffunres_1 ffunres_0 resss ffunres_1 ffunres_0 cres ffunres_1 funss ax-mp $.
@@ -485,6 +627,10 @@ $}
 $( The restriction of a function to the domain of a subclass equals the
        subclass.  (Contributed by NM, 15-Aug-1994.) $)
 ${
+	$v F $.
+	$v G $.
+	$v x $.
+	$v y $.
 	$d x y F $.
 	$d x y G $.
 	$d x y $.
@@ -497,6 +643,9 @@ $}
 $( Equality of restrictions of a function and a subclass.  (Contributed by
      NM, 16-Aug-1994.) $)
 ${
+	$v A $.
+	$v F $.
+	$v G $.
 	ffun2ssres_0 $f class A $.
 	ffun2ssres_1 $f class F $.
 	ffun2ssres_2 $f class G $.
@@ -505,6 +654,11 @@ $}
 $( The union of functions with disjoint domains is a function.  Theorem 4.6
        of [Monk1] p. 43.  (Contributed by NM, 12-Aug-1994.) $)
 ${
+	$v F $.
+	$v G $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z F $.
 	$d x y z G $.
 	ifunun_0 $f set x $.
@@ -519,6 +673,10 @@ $( The converse singleton of an ordered pair is a function.  This is
        skip the sethood assumptions on ` A ` and ` B ` .  (Contributed by NM,
        30-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	ifuncnvsn_0 $f set x $.
@@ -530,6 +688,10 @@ $}
 $( A singleton of an ordered pair is a function.  Theorem 10.5 of [Quine]
        p. 65.  (Contributed by NM, 28-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	ffunsng_0 $f class A $.
 	ffunsng_1 $f class B $.
 	ffunsng_2 $f class V $.
@@ -539,6 +701,10 @@ $}
 $( Functionality and domain of the singleton of an ordered pair.
        (Contributed by Mario Carneiro, 30-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	ffnsng_0 $f class A $.
 	ffnsng_1 $f class B $.
 	ffnsng_2 $f class V $.
@@ -548,6 +714,8 @@ $}
 $( A singleton of an ordered pair is a function.  Theorem 10.5 of [Quine]
        p. 65.  (Contributed by NM, 12-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	ffunsn_0 $f class A $.
 	ffunsn_1 $f class B $.
 	efunsn_0 $e |- A e. _V $.
@@ -557,6 +725,14 @@ $}
 $( A set of two pairs is a function if their first members are different.
      (Contributed by FL, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v V $.
+	$v W $.
+	$v X $.
+	$v Y $.
 	ffunprg_0 $f class A $.
 	ffunprg_1 $f class B $.
 	ffunprg_2 $f class C $.
@@ -570,6 +746,10 @@ $}
 $( A function with a domain of two elements.  (Contributed by Jeff Madsen,
        20-Jun-2010.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	ffunpr_0 $f class A $.
 	ffunpr_1 $f class B $.
 	ffunpr_2 $f class C $.
@@ -583,6 +763,12 @@ $}
 $( A function with a domain of three elements.  (Contributed by NM,
        14-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
 	ffuntp_0 $f class A $.
 	ffuntp_1 $f class B $.
 	ffuntp_2 $f class C $.
@@ -600,6 +786,8 @@ $}
 $( Functionality and domain of the singleton of an ordered pair.
        (Contributed by Jonathan Ben-Naim, 3-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
 	ffnsn_0 $f class A $.
 	ffnsn_1 $f class B $.
 	efnsn_0 $e |- A e. _V $.
@@ -610,6 +798,14 @@ $( Domain of a function with a domain of two different values.
        (Contributed by FL, 26-Jun-2011.)  (Revised by Mario Carneiro,
        26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v V $.
+	$v W $.
+	$v X $.
+	$v Y $.
 	ffnprg_0 $f class A $.
 	ffnprg_1 $f class B $.
 	ffnprg_2 $f class C $.
@@ -623,6 +819,12 @@ $}
 $( A function with a domain of three elements.  (Contributed by NM,
        14-Sep-2011.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
 	ffntp_0 $f class A $.
 	ffntp_1 $f class B $.
 	ffntp_2 $f class C $.
@@ -645,12 +847,16 @@ $}
 $( The double converse of a function is a function.  (Contributed by NM,
      21-Sep-2004.) $)
 ${
+	$v A $.
 	ffuncnvcnv_0 $f class A $.
 	funcnvcnv $p |- ( Fun A -> Fun `' `' A ) $= ffuncnvcnv_0 ccnv ccnv ffuncnvcnv_0 wss ffuncnvcnv_0 wfun ffuncnvcnv_0 ccnv ccnv wfun wi ffuncnvcnv_0 cnvcnvss ffuncnvcnv_0 ccnv ccnv ffuncnvcnv_0 funss ax-mp $.
 $}
 $( A simpler equivalence for single-rooted (see ~ funcnv ).  (Contributed
        by NM, 9-Aug-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d x y $.
 	$d x y $.
@@ -665,6 +871,9 @@ $( The converse of a class is a function iff the class is single-rooted,
        [Enderton] p. 43.  See ~ funcnv2 for a simpler version.  (Contributed by
        NM, 13-Aug-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d x y $.
 	$d x y $.
@@ -676,6 +885,9 @@ $}
 $( A condition showing a class is single-rooted.  (See ~ funcnv ).
        (Contributed by NM, 26-May-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d x y $.
 	$d x y $.
@@ -690,6 +902,9 @@ $( The double converse of a class is a function iff the class is
        Note that ` A ` is not necessarily a function.  (Contributed by NM,
        13-Aug-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d x y $.
 	$d x y $.
@@ -702,6 +917,9 @@ $( A single-valued relation is a function.  (See ~ fun2cnv for
        "single-valued.") Definition 6.4(4) of [TakeutiZaring] p. 24.
        (Contributed by NM, 17-Jan-2006.) $)
 ${
+	$v A $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y $.
 	$d x y $.
@@ -713,6 +931,11 @@ $}
 $( Single-rootedness (see ~ funcnv ) of a class cut down by a cross
        product.  (Contributed by NM, 5-Mar-2007.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -728,6 +951,11 @@ $( Two ways of stating that ` A ` is one-to-one (but not necessarily a
        [TakeutiZaring] p. 24, who use the notation "Un_2 (A)" for one-to-one
        (but not necessarily a function).  (Contributed by NM, 17-Jan-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
 	$d x y z w A $.
 	$d x y $.
 	$d x y $.
@@ -741,6 +969,14 @@ $}
 $( The union of a chain (with respect to inclusion) of functions is a
        function.  (Contributed by NM, 10-Aug-2004.) $)
 ${
+	$v A $.
+	$v f $.
+	$v g $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
 	$d f g x y z w v A $.
 	$d x y $.
 	$d x y $.
@@ -758,6 +994,14 @@ $( The union of a chain (with respect to inclusion) of single-rooted sets
        is single-rooted.  (See ~ funcnv for "single-rooted" definition.)
        (Contributed by NM, 11-Aug-2004.) $)
 ${
+	$v A $.
+	$v f $.
+	$v g $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
 	$d f g x y z w v A $.
 	$d x y $.
 	$d x y $.
@@ -774,6 +1018,9 @@ $}
 $( The union of a chain (with respect to inclusion) of one-to-one functions
        is a one-to-one function.  (Contributed by NM, 11-Aug-2004.) $)
 ${
+	$v A $.
+	$v f $.
+	$v g $.
 	$d f g A $.
 	ffun11uni_0 $f class A $.
 	ffun11uni_1 $f set f $.
@@ -784,6 +1031,8 @@ $( The intersection with a function is a function.  Exercise 14(a) of
        [Enderton] p. 53.  (Contributed by NM, 19-Mar-2004.)  (Proof shortened
        by Andrew Salmon, 17-Sep-2011.) $)
 ${
+	$v F $.
+	$v G $.
 	ffunin_0 $f class F $.
 	ffunin_1 $f class G $.
 	funin $p |- ( Fun F -> Fun ( F i^i G ) ) $= ffunin_0 ffunin_1 cin ffunin_0 wss ffunin_0 wfun ffunin_0 ffunin_1 cin wfun wi ffunin_0 ffunin_1 inss1 ffunin_0 ffunin_1 cin ffunin_0 funss ax-mp $.
@@ -791,6 +1040,8 @@ $}
 $( The restriction of a one-to-one function is one-to-one.  (Contributed by
      NM, 25-Mar-1998.) $)
 ${
+	$v A $.
+	$v F $.
 	ffunres11_0 $f class A $.
 	ffunres11_1 $f class F $.
 	funres11 $p |- ( Fun `' F -> Fun `' ( F |` A ) ) $= ffunres11_1 ffunres11_0 cres ffunres11_1 wss ffunres11_1 ffunres11_0 cres ccnv ffunres11_1 ccnv wss ffunres11_1 ccnv wfun ffunres11_1 ffunres11_0 cres ccnv wfun wi ffunres11_1 ffunres11_0 resss ffunres11_1 ffunres11_0 cres ffunres11_1 cnvss ffunres11_1 ffunres11_0 cres ccnv ffunres11_1 ccnv funss mp2b $.
@@ -798,6 +1049,8 @@ $}
 $( The converse of a restricted function.  (Contributed by NM,
      27-Mar-1998.) $)
 ${
+	$v A $.
+	$v F $.
 	ffuncnvres_0 $f class A $.
 	ffuncnvres_1 $f class F $.
 	funcnvres $p |- ( Fun `' F -> `' ( F |` A ) = ( `' F |` ( F " A ) ) ) $= ffuncnvres_1 ccnv wfun ffuncnvres_1 ccnv ffuncnvres_1 ffuncnvres_0 cima cres ffuncnvres_1 ccnv ffuncnvres_1 ffuncnvres_0 cres ccnv cdm cres ffuncnvres_1 ffuncnvres_0 cres ccnv ffuncnvres_1 ffuncnvres_0 cima ffuncnvres_1 ffuncnvres_0 cres ccnv cdm ffuncnvres_1 ccnv ffuncnvres_1 ffuncnvres_0 cima ffuncnvres_1 ffuncnvres_0 cres crn ffuncnvres_1 ffuncnvres_0 cres ccnv cdm ffuncnvres_1 ffuncnvres_0 df-ima ffuncnvres_1 ffuncnvres_0 cres df-rn eqtri reseq2i ffuncnvres_1 ccnv wfun ffuncnvres_1 ffuncnvres_0 cres ccnv ffuncnvres_1 ccnv wss ffuncnvres_1 ccnv ffuncnvres_1 ffuncnvres_0 cres ccnv cdm cres ffuncnvres_1 ffuncnvres_0 cres ccnv wceq ffuncnvres_1 ffuncnvres_0 cres ffuncnvres_1 wss ffuncnvres_1 ffuncnvres_0 cres ccnv ffuncnvres_1 ccnv wss ffuncnvres_1 ffuncnvres_0 resss ffuncnvres_1 ffuncnvres_0 cres ffuncnvres_1 cnvss ax-mp ffuncnvres_1 ccnv ffuncnvres_1 ffuncnvres_0 cres ccnv funssres mpan2 syl5req $.
@@ -805,6 +1058,7 @@ $}
 $( Converse of a restricted identity function.  (Contributed by FL,
      4-Mar-2007.) $)
 ${
+	$v A $.
 	fcnvresid_0 $f class A $.
 	cnvresid $p |- `' ( _I |` A ) = ( _I |` A ) $= cid cid ccnv wceq cid ccnv wfun cid fcnvresid_0 cres ccnv cid fcnvresid_0 cres wceq cid ccnv cid cnvi eqcomi cid cid ccnv wceq cid wfun cid ccnv wfun funi cid cid ccnv funeq mpbii cid ccnv wfun cid fcnvresid_0 cres ccnv cid ccnv cid fcnvresid_0 cima cres cid fcnvresid_0 cres fcnvresid_0 cid funcnvres cid ccnv cid cid fcnvresid_0 cima fcnvresid_0 cnvi fcnvresid_0 imai reseq12i syl6eq mp2b $.
 $}
@@ -812,6 +1066,8 @@ $( The converse of a restriction of the converse of a function equals the
      function restricted to the image of its converse.  (Contributed by NM,
      4-May-2005.) $)
 ${
+	$v A $.
+	$v F $.
 	ffuncnvres2_0 $f class A $.
 	ffuncnvres2_1 $f class F $.
 	funcnvres2 $p |- ( Fun F -> `' ( `' F |` A ) = ( F |` ( `' F " A ) ) ) $= ffuncnvres2_1 wfun ffuncnvres2_1 ccnv ffuncnvres2_0 cres ccnv ffuncnvres2_1 ccnv ccnv ffuncnvres2_1 ccnv ffuncnvres2_0 cima cres ffuncnvres2_1 ffuncnvres2_1 ccnv ffuncnvres2_0 cima cres ffuncnvres2_1 wfun ffuncnvres2_1 ccnv ccnv wfun ffuncnvres2_1 ccnv ffuncnvres2_0 cres ccnv ffuncnvres2_1 ccnv ccnv ffuncnvres2_1 ccnv ffuncnvres2_0 cima cres wceq ffuncnvres2_1 funcnvcnv ffuncnvres2_0 ffuncnvres2_1 ccnv funcnvres syl ffuncnvres2_1 wfun ffuncnvres2_1 ccnv ccnv ffuncnvres2_1 ffuncnvres2_1 ccnv ffuncnvres2_0 cima ffuncnvres2_1 wfun ffuncnvres2_1 wrel ffuncnvres2_1 ccnv ccnv ffuncnvres2_1 wceq ffuncnvres2_1 funrel ffuncnvres2_1 dfrel2 sylib reseq1d eqtrd $.
@@ -819,6 +1075,8 @@ $}
 $( The image of the preimage of a function.  (Contributed by NM,
      25-May-2004.) $)
 ${
+	$v A $.
+	$v F $.
 	ffunimacnv_0 $f class A $.
 	ffunimacnv_1 $f class F $.
 	funimacnv $p |- ( Fun F -> ( F " ( `' F " A ) ) = ( A i^i ran F ) ) $= ffunimacnv_1 wfun ffunimacnv_1 ffunimacnv_1 ccnv ffunimacnv_0 cima cima ffunimacnv_1 ccnv ffunimacnv_0 cres ccnv crn ffunimacnv_0 ffunimacnv_1 crn cin ffunimacnv_1 wfun ffunimacnv_1 ccnv ffunimacnv_0 cres ccnv crn ffunimacnv_1 ffunimacnv_1 ccnv ffunimacnv_0 cima cres crn ffunimacnv_1 ffunimacnv_1 ccnv ffunimacnv_0 cima cima ffunimacnv_1 wfun ffunimacnv_1 ccnv ffunimacnv_0 cres ccnv ffunimacnv_1 ffunimacnv_1 ccnv ffunimacnv_0 cima cres ffunimacnv_0 ffunimacnv_1 funcnvres2 rneqd ffunimacnv_1 ffunimacnv_1 ccnv ffunimacnv_0 cima df-ima syl6reqr ffunimacnv_0 ffunimacnv_1 crn cin ffunimacnv_0 ffunimacnv_1 ccnv cdm cin ffunimacnv_1 ccnv ffunimacnv_0 cres cdm ffunimacnv_1 ccnv ffunimacnv_0 cres ccnv crn ffunimacnv_1 crn ffunimacnv_1 ccnv cdm ffunimacnv_0 ffunimacnv_1 df-rn ineq2i ffunimacnv_1 ccnv ffunimacnv_0 dmres ffunimacnv_1 ccnv ffunimacnv_0 cres dfdm4 3eqtr2ri syl6eq $.
@@ -826,6 +1084,9 @@ $}
 $( A kind of contraposition law that infers a subclass of an image from a
      preimage subclass.  (Contributed by NM, 25-May-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffunimass1_0 $f class A $.
 	ffunimass1_1 $f class B $.
 	ffunimass1_2 $f class F $.
@@ -834,6 +1095,9 @@ $}
 $( A kind of contraposition law that infers an image subclass from a subclass
      of a preimage.  (Contributed by NM, 25-May-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffunimass2_0 $f class A $.
 	ffunimass2_1 $f class B $.
 	ffunimass2_2 $f class F $.
@@ -842,6 +1106,11 @@ $}
 $( The image of a difference is the difference of images.  (Contributed by
        NM, 24-May-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y F $.
@@ -855,6 +1124,9 @@ $}
 $( The image of an intersection is the intersection of images.  (Contributed
      by Paul Chapman, 11-Apr-2009.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fimain_0 $f class A $.
 	fimain_1 $f class B $.
 	fimain_2 $f class F $.
@@ -864,6 +1136,13 @@ $( Axiom of Replacement using abbreviations.  Axiom 39(vi) of [Quine]
        p. 284.  Compare Exercise 9 of [TakeutiZaring] p. 29.  (Contributed by
        NM, 10-Sep-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w B $.
 	$d x y z w A $.
 	ifunimaexg_0 $f set x $.
@@ -880,6 +1159,8 @@ $( The image of a set under any function is also a set.  Equivalent of
        Compare Exercise 9 of [TakeutiZaring] p. 29.  (Contributed by NM,
        17-Nov-2002.) $)
 ${
+	$v A $.
+	$v B $.
 	ffunimaex_0 $f class A $.
 	ffunimaex_1 $f class B $.
 	efunimaex_0 $e |- B e. _V $.
@@ -894,6 +1175,12 @@ $( Part of a study of the Axiom of Replacement used by the Isabelle
        (Contributed by NM, 26-Oct-2006.)  (Proof shortened by Mario Carneiro,
        4-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v b $.
+	$v z $.
 	$d x z A $.
 	$d b x y z $.
 	$d z ph $.
@@ -914,6 +1201,12 @@ $( Part of a study of the Axiom of Replacement used by the Isabelle
        Replacement in the form ~ funimaex .  (Contributed by NM,
        26-Oct-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
 	$d w x y A $.
 	$d x y $.
 	$d y z $.
@@ -932,6 +1225,9 @@ $}
 $( Equality theorem for function predicate with domain.  (Contributed by NM,
      1-Aug-1994.) $)
 ${
+	$v A $.
+	$v F $.
+	$v G $.
 	ffneq1_0 $f class A $.
 	ffneq1_1 $f class F $.
 	ffneq1_2 $f class G $.
@@ -940,6 +1236,9 @@ $}
 $( Equality theorem for function predicate with domain.  (Contributed by NM,
      1-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffneq2_0 $f class A $.
 	ffneq2_1 $f class B $.
 	ffneq2_2 $f class F $.
@@ -948,6 +1247,10 @@ $}
 $( Equality deduction for function predicate with domain.  (Contributed by
        Paul Chapman, 22-Jun-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v F $.
+	$v G $.
 	ffneq1d_0 $f wff ph $.
 	ffneq1d_1 $f class A $.
 	ffneq1d_2 $f class F $.
@@ -958,6 +1261,10 @@ $}
 $( Equality deduction for function predicate with domain.  (Contributed by
        Paul Chapman, 22-Jun-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v F $.
 	ffneq2d_0 $f wff ph $.
 	ffneq2d_1 $f class A $.
 	ffneq2d_2 $f class B $.
@@ -968,6 +1275,11 @@ $}
 $( Equality deduction for function predicate with domain.  (Contributed by
        NM, 26-Jun-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	ffneq12d_0 $f wff ph $.
 	ffneq12d_1 $f class A $.
 	ffneq12d_2 $f class B $.
@@ -980,6 +1292,9 @@ $}
 $( Equality inference for function predicate with domain.  (Contributed by
        Paul Chapman, 22-Jun-2011.) $)
 ${
+	$v A $.
+	$v F $.
+	$v G $.
 	ffneq1i_0 $f class A $.
 	ffneq1i_1 $f class F $.
 	ffneq1i_2 $f class G $.
@@ -989,6 +1304,9 @@ $}
 $( Equality inference for function predicate with domain.  (Contributed by
        NM, 4-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffneq2i_0 $f class A $.
 	ffneq2i_1 $f class B $.
 	ffneq2i_2 $f class F $.
@@ -998,6 +1316,9 @@ $}
 $( Bound-variable hypothesis builder for a function with domain.
        (Contributed by NM, 30-Jan-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
 	fnffn_0 $f set x $.
 	fnffn_1 $f class A $.
 	fnffn_2 $f class F $.
@@ -1007,18 +1328,24 @@ ${
 $}
 $( A function with domain is a function.  (Contributed by NM, 1-Aug-1994.) $)
 ${
+	$v A $.
+	$v F $.
 	ffnfun_0 $f class A $.
 	ffnfun_1 $f class F $.
 	fnfun $p |- ( F Fn A -> Fun F ) $= ffnfun_1 ffnfun_0 wfn ffnfun_1 wfun ffnfun_1 cdm ffnfun_0 wceq ffnfun_1 ffnfun_0 df-fn simplbi $.
 $}
 $( A function with domain is a relation.  (Contributed by NM, 1-Aug-1994.) $)
 ${
+	$v A $.
+	$v F $.
 	ffnrel_0 $f class A $.
 	ffnrel_1 $f class F $.
 	fnrel $p |- ( F Fn A -> Rel F ) $= ffnrel_1 ffnrel_0 wfn ffnrel_1 wfun ffnrel_1 wrel ffnrel_0 ffnrel_1 fnfun ffnrel_1 funrel syl $.
 $}
 $( The domain of a function.  (Contributed by NM, 2-Aug-1994.) $)
 ${
+	$v A $.
+	$v F $.
 	ffndm_0 $f class A $.
 	ffndm_1 $f class F $.
 	fndm $p |- ( F Fn A -> dom F = A ) $= ffndm_1 ffndm_0 wfn ffndm_1 wfun ffndm_1 cdm ffndm_0 wceq ffndm_1 ffndm_0 df-fn simprbi $.
@@ -1026,6 +1353,10 @@ $}
 $( Inference to convert a function and domain antecedent.  (Contributed by
        NM, 22-Apr-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v F $.
 	ffunfni_0 $f wff ph $.
 	ffunfni_1 $f class A $.
 	ffunfni_2 $f class B $.
@@ -1035,6 +1366,9 @@ ${
 $}
 $( A function has a unique domain.  (Contributed by NM, 11-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffndmu_0 $f class A $.
 	ffndmu_1 $f class B $.
 	ffndmu_2 $f class F $.
@@ -1043,6 +1377,10 @@ $}
 $( The first argument of binary relation on a function belongs to the
      function's domain.  (Contributed by NM, 7-May-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ffnbr_0 $f class A $.
 	ffnbr_1 $f class B $.
 	ffnbr_2 $f class C $.
@@ -1052,6 +1390,10 @@ $}
 $( The first argument of an ordered pair in a function belongs to the
      function's domain.  (Contributed by NM, 8-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ffnop_0 $f class A $.
 	ffnop_1 $f class B $.
 	ffnop_2 $f class C $.
@@ -1061,6 +1403,10 @@ $}
 $( There is exactly one value of a function.  (Contributed by NM,
        22-Apr-2004.)  (Proof shortened by Andrew Salmon, 17-Sep-2011.) $)
 ${
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d y F $.
 	$d y B $.
 	ffneu_0 $f set y $.
@@ -1072,6 +1418,10 @@ $}
 $( There is exactly one value of a function.  (Contributed by NM,
        7-Nov-1995.) $)
 ${
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d y F $.
 	$d y B $.
 	ffneu2_0 $f set y $.
@@ -1083,6 +1433,10 @@ $}
 $( The union of two functions with disjoint domains.  (Contributed by NM,
      22-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	ffnun_0 $f class A $.
 	ffnun_1 $f class B $.
 	ffnun_2 $f class F $.
@@ -1092,6 +1446,13 @@ $}
 $( Extension of a function with a new ordered pair.  (Contributed by NM,
        28-Sep-2013.)  (Revised by Mario Carneiro, 30-Apr-2015.) $)
 ${
+	$v ph $.
+	$v D $.
+	$v E $.
+	$v F $.
+	$v G $.
+	$v X $.
+	$v Y $.
 	ffnunsn_0 $f wff ph $.
 	ffnunsn_1 $f class D $.
 	ffnunsn_2 $f class E $.
@@ -1109,6 +1470,10 @@ ${
 $}
 $( Composition of two functions.  (Contributed by NM, 22-May-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	ffnco_0 $f class A $.
 	ffnco_1 $f class B $.
 	ffnco_2 $f class F $.
@@ -1118,6 +1483,8 @@ $}
 $( A function does not change when restricted to its domain.  (Contributed by
      NM, 5-Sep-2004.) $)
 ${
+	$v A $.
+	$v F $.
 	ffnresdm_0 $f class A $.
 	ffnresdm_1 $f class F $.
 	fnresdm $p |- ( F Fn A -> ( F |` A ) = F ) $= ffnresdm_1 ffnresdm_0 wfn ffnresdm_1 wrel ffnresdm_1 cdm ffnresdm_0 wss ffnresdm_1 ffnresdm_0 cres ffnresdm_1 wceq ffnresdm_0 ffnresdm_1 fnrel ffnresdm_1 ffnresdm_0 wfn ffnresdm_1 cdm ffnresdm_0 wceq ffnresdm_1 cdm ffnresdm_0 wss ffnresdm_0 ffnresdm_1 fndm ffnresdm_1 cdm ffnresdm_0 eqimss syl ffnresdm_1 ffnresdm_0 relssres syl2anc $.
@@ -1125,6 +1492,9 @@ $}
 $( A function restricted to a class disjoint with its domain is empty.
      (Contributed by NM, 23-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffnresdisj_0 $f class A $.
 	ffnresdisj_1 $f class B $.
 	ffnresdisj_2 $f class F $.
@@ -1133,6 +1503,13 @@ $}
 $( Membership in two functions restricted by each other's domain.
      (Contributed by NM, 8-Aug-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	f2elresin_0 $f set x $.
 	f2elresin_1 $f set y $.
 	f2elresin_2 $f set z $.
@@ -1145,6 +1522,9 @@ $}
 $( Restriction of a function with a subclass of its domain.  (Contributed by
      NM, 10-Oct-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffnssresb_0 $f class A $.
 	ffnssresb_1 $f class B $.
 	ffnssresb_2 $f class F $.
@@ -1153,6 +1533,9 @@ $}
 $( Restriction of a function with a subclass of its domain.  (Contributed by
      NM, 2-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffnssres_0 $f class A $.
 	ffnssres_1 $f class B $.
 	ffnssres_2 $f class F $.
@@ -1161,6 +1544,9 @@ $}
 $( Restriction of a function's domain with an intersection.  (Contributed by
      NM, 9-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffnresin1_0 $f class A $.
 	ffnresin1_1 $f class B $.
 	ffnresin1_2 $f class F $.
@@ -1169,6 +1555,9 @@ $}
 $( Restriction of a function's domain with an intersection.  (Contributed by
      NM, 9-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffnresin2_0 $f class A $.
 	ffnresin2_1 $f class B $.
 	ffnresin2_2 $f class F $.
@@ -1177,6 +1566,10 @@ $}
 $( An equivalence for functionality of a restriction.  Compare ~ dffun8 .
        (Contributed by Mario Carneiro, 20-May-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v F $.
 	$d x y A $.
 	$d x y F $.
 	ffnres_0 $f set x $.
@@ -1188,12 +1581,15 @@ $}
 $( Functionality and domain of restricted identity.  (Contributed by NM,
      27-Aug-2004.) $)
 ${
+	$v A $.
 	ffnresi_0 $f class A $.
 	fnresi $p |- ( _I |` A ) Fn A $= cid ffnresi_0 cres ffnresi_0 wfn cid ffnresi_0 cres wfun cid ffnresi_0 cres cdm ffnresi_0 wceq cid wfun cid ffnresi_0 cres wfun funi ffnresi_0 cid funres ax-mp ffnresi_0 dmresi cid ffnresi_0 cres ffnresi_0 df-fn mpbir2an $.
 $}
 $( The image of a function's domain is its range.  (Contributed by NM,
      4-Nov-2004.)  (Proof shortened by Andrew Salmon, 17-Sep-2011.) $)
 ${
+	$v A $.
+	$v F $.
 	ffnima_0 $f class A $.
 	ffnima_1 $f class F $.
 	fnima $p |- ( F Fn A -> ( F " A ) = ran F ) $= ffnima_1 ffnima_0 wfn ffnima_1 ffnima_0 cima ffnima_1 ffnima_0 cres crn ffnima_1 crn ffnima_1 ffnima_0 df-ima ffnima_1 ffnima_0 wfn ffnima_1 ffnima_0 cres ffnima_1 ffnima_0 ffnima_1 fnresdm rneqd syl5eq $.
@@ -1201,12 +1597,16 @@ $}
 $( A function with empty domain is empty.  (Contributed by NM,
        15-Apr-1998.)  (Proof shortened by Andrew Salmon, 17-Sep-2011.) $)
 ${
+	$v F $.
 	ffn0_0 $f class F $.
 	fn0 $p |- ( F Fn (/) <-> F = (/) ) $= ffn0_0 c0 wfn ffn0_0 c0 wceq ffn0_0 c0 wfn ffn0_0 wrel ffn0_0 cdm c0 wceq ffn0_0 c0 wceq c0 ffn0_0 fnrel c0 ffn0_0 fndm ffn0_0 wrel ffn0_0 c0 wceq ffn0_0 cdm c0 wceq ffn0_0 reldm0 biimpar syl2anc ffn0_0 c0 wceq ffn0_0 c0 wfn c0 c0 wfn c0 c0 wfn c0 wfun c0 cdm c0 wceq fun0 dm0 c0 c0 df-fn mpbir2an c0 ffn0_0 c0 fneq1 mpbiri impbii $.
 $}
 $( A class that is disjoint with the domain of a function has an empty image
      under the function.  (Contributed by FL, 24-Jan-2007.) $)
 ${
+	$v A $.
+	$v C $.
+	$v F $.
 	ffnimadisj_0 $f class A $.
 	ffnimadisj_1 $f class C $.
 	ffnimadisj_2 $f class F $.
@@ -1216,6 +1616,9 @@ $( Images under a function never map nonempty sets to empty sets.
      _EDITORIAL_: usable in ~ fnwe2lem2 .  (Contributed by Stefan O'Rear,
      21-Jan-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffnimaeq0_0 $f class A $.
 	ffnimaeq0_1 $f class B $.
 	ffnimaeq0_2 $f class F $.
@@ -1224,6 +1627,11 @@ $}
 $( Alternate definition for the "maps to" notation ~ df-mpt .  (Contributed
        by Mario Carneiro, 30-Dec-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
+	$v z $.
 	$d y z A $.
 	$d y z B $.
 	$d x y z $.
@@ -1238,6 +1646,11 @@ $( Functionality and domain of an ordered-pair class abstraction.
        (Contributed by NM, 30-Jan-2004.)  (Proof shortened by Mario Carneiro,
        4-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v F $.
 	$d x y A $.
 	$d x y $.
 	ffnopabg_0 $f wff ph $.
@@ -1251,6 +1664,11 @@ $}
 $( Functionality and domain of an ordered-pair class abstraction.
        (Contributed by NM, 5-Mar-1996.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v F $.
 	$d x y A $.
 	ffnopab_0 $f wff ph $.
 	ffnopab_1 $f set x $.
@@ -1264,6 +1682,11 @@ $}
 $( The maps-to notation defines a function with domain.  (Contributed by
        Scott Fenton, 21-Mar-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v y $.
 	$d x y A $.
 	$d y B $.
 	imptfng_0 $f set y $.
@@ -1277,6 +1700,11 @@ $}
 $( The maps-to notation defines a function with domain.  (Contributed by
        NM, 9-Apr-2013.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v V $.
 	$d x A $.
 	ffnmpt_0 $f set x $.
 	ffnmpt_1 $f class A $.
@@ -1289,6 +1717,8 @@ $}
 $( A mapping operation with empty domain.  (Contributed by Mario Carneiro,
      28-Dec-2014.) $)
 ${
+	$v x $.
+	$v A $.
 	fmpt0_0 $f set x $.
 	fmpt0_1 $f class A $.
 	mpt0 $p |- ( x e. (/) |-> A ) = (/) $= fmpt0_0 c0 fmpt0_1 cmpt c0 wfn fmpt0_0 c0 fmpt0_1 cmpt c0 wceq fmpt0_1 cvv wcel fmpt0_0 c0 wral fmpt0_0 c0 fmpt0_1 cmpt c0 wfn fmpt0_1 cvv wcel fmpt0_0 ral0 fmpt0_0 c0 fmpt0_1 fmpt0_0 c0 fmpt0_1 cmpt cvv fmpt0_0 c0 fmpt0_1 cmpt eqid fnmpt ax-mp fmpt0_0 c0 fmpt0_1 cmpt fn0 mpbi $.
@@ -1297,6 +1727,10 @@ $( Functionality and domain of an ordered-pair class abstraction.
        (Contributed by NM, 29-Jan-2004.)  (Revised by Mario Carneiro,
        31-Aug-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x A $.
 	ffnmpti_0 $f set x $.
 	ffnmpti_1 $f class A $.
@@ -1310,6 +1744,10 @@ $( Domain of an ordered-pair class abstraction that specifies a function.
        (Contributed by NM, 6-Sep-2005.)  (Revised by Mario Carneiro,
        31-Aug-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x A $.
 	fdmmpti_0 $f set x $.
 	fdmmpti_1 $f class A $.
@@ -1322,6 +1760,11 @@ $}
 $( Union of mappings which are mutually compatible.  (Contributed by Mario
        Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -1335,6 +1778,10 @@ ${
 $}
 $( Equality theorem for functions.  (Contributed by NM, 1-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	ffeq1_0 $f class A $.
 	ffeq1_1 $f class B $.
 	ffeq1_2 $f class F $.
@@ -1343,6 +1790,10 @@ ${
 $}
 $( Equality theorem for functions.  (Contributed by NM, 1-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ffeq2_0 $f class A $.
 	ffeq2_1 $f class B $.
 	ffeq2_2 $f class C $.
@@ -1351,6 +1802,10 @@ ${
 $}
 $( Equality theorem for functions.  (Contributed by NM, 1-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ffeq3_0 $f class A $.
 	ffeq3_1 $f class B $.
 	ffeq3_2 $f class C $.
@@ -1360,6 +1815,11 @@ $}
 $( Equality theorem for functions.  (Contributed by FL, 14-Jul-2007.)  (Proof
      shortened by Andrew Salmon, 17-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	ffeq23_0 $f class A $.
 	ffeq23_1 $f class B $.
 	ffeq23_2 $f class C $.
@@ -1369,6 +1829,11 @@ ${
 $}
 $( Equality deduction for functions.  (Contributed by NM, 19-Feb-2008.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	ffeq1d_0 $f wff ph $.
 	ffeq1d_1 $f class A $.
 	ffeq1d_2 $f class B $.
@@ -1380,6 +1845,11 @@ $}
 $( Equality deduction for functions.  (Contributed by Paul Chapman,
        22-Jun-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ffeq2d_0 $f wff ph $.
 	ffeq2d_1 $f class A $.
 	ffeq2d_2 $f class B $.
@@ -1391,6 +1861,12 @@ $}
 $( Equality deduction for functions.  (Contributed by Paul Chapman,
        22-Jun-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v G $.
 	ffeq12d_0 $f wff ph $.
 	ffeq12d_1 $f class A $.
 	ffeq12d_2 $f class B $.
@@ -1404,6 +1880,13 @@ $}
 $( Equality deduction for functions.  (Contributed by Paul Chapman,
        22-Jun-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v G $.
 	ffeq123d_0 $f wff ph $.
 	ffeq123d_1 $f class A $.
 	ffeq123d_2 $f class B $.
@@ -1419,6 +1902,10 @@ $}
 $( Equality inference for functions.  (Contributed by Paul Chapman,
        22-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	ffeq1i_0 $f class A $.
 	ffeq1i_1 $f class B $.
 	ffeq1i_2 $f class F $.
@@ -1428,6 +1915,10 @@ ${
 $}
 $( Equality inference for functions.  (Contributed by NM, 5-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ffeq2i_0 $f class A $.
 	ffeq2i_1 $f class B $.
 	ffeq2i_2 $f class C $.
@@ -1438,6 +1929,11 @@ $}
 $( Equality inference for functions.  (Contributed by Paul Chapman,
        22-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	ffeq23i_0 $f class A $.
 	ffeq23i_1 $f class B $.
 	ffeq23i_2 $f class C $.
@@ -1449,6 +1945,12 @@ ${
 $}
 $( Equality deduction for functions.  (Contributed by NM, 8-Jun-2013.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	ffeq23d_0 $f wff ph $.
 	ffeq23d_1 $f class A $.
 	ffeq23d_2 $f class B $.
@@ -1462,6 +1964,10 @@ $}
 $( Bound-variable hypothesis builder for a mapping.  (Contributed by NM,
        29-Jan-2004.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	fnff_0 $f set x $.
 	fnff_1 $f class A $.
 	fnff_2 $f class B $.
@@ -1476,6 +1982,10 @@ $( Eliminate a mapping hypothesis for the weak deduction theorem ~ dedth ,
        ` F : A --> B ` from a hypothesis to an antecedent.  (Contributed by NM,
        24-Aug-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	felimf_0 $f class A $.
 	felimf_1 $f class B $.
 	felimf_2 $f class F $.
@@ -1485,6 +1995,9 @@ ${
 $}
 $( A mapping is a function.  (Contributed by NM, 2-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fffn_0 $f class A $.
 	fffn_1 $f class B $.
 	fffn_2 $f class F $.
@@ -1493,12 +2006,17 @@ $}
 $( Any function is a mapping into ` _V ` .  (Contributed by NM,
      31-Oct-1995.)  (Proof shortened by Andrew Salmon, 17-Sep-2011.) $)
 ${
+	$v A $.
+	$v F $.
 	fdffn2_0 $f class A $.
 	fdffn2_1 $f class F $.
 	dffn2 $p |- ( F Fn A <-> F : A --> _V ) $= fdffn2_1 fdffn2_0 wfn fdffn2_1 fdffn2_0 wfn fdffn2_1 crn cvv wss wa fdffn2_0 cvv fdffn2_1 wf fdffn2_1 crn cvv wss fdffn2_1 fdffn2_0 wfn fdffn2_1 crn ssv biantru fdffn2_0 cvv fdffn2_1 df-f bitr4i $.
 $}
 $( A mapping is a function.  (Contributed by NM, 3-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fffun_0 $f class A $.
 	fffun_1 $f class B $.
 	fffun_2 $f class F $.
@@ -1506,6 +2024,9 @@ ${
 $}
 $( A mapping is a relation.  (Contributed by NM, 3-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffrel_0 $f class A $.
 	ffrel_1 $f class B $.
 	ffrel_2 $f class F $.
@@ -1513,6 +2034,9 @@ ${
 $}
 $( The domain of a mapping.  (Contributed by NM, 2-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffdm_0 $f class A $.
 	ffdm_1 $f class B $.
 	ffdm_2 $f class F $.
@@ -1520,6 +2044,9 @@ ${
 $}
 $( The domain of a mapping.  (Contributed by NM, 28-Jul-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffdmi_0 $f class A $.
 	ffdmi_1 $f class B $.
 	ffdmi_2 $f class F $.
@@ -1528,6 +2055,9 @@ ${
 $}
 $( The range of a mapping.  (Contributed by NM, 3-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffrn_0 $f class A $.
 	ffrn_1 $f class B $.
 	ffrn_2 $f class F $.
@@ -1535,6 +2065,8 @@ ${
 $}
 $( A function maps to its range.  (Contributed by NM, 1-Sep-1999.) $)
 ${
+	$v A $.
+	$v F $.
 	fdffn3_0 $f class A $.
 	fdffn3_1 $f class F $.
 	dffn3 $p |- ( F Fn A <-> F : A --> ran F ) $= fdffn3_1 fdffn3_0 wfn fdffn3_1 fdffn3_0 wfn fdffn3_1 crn fdffn3_1 crn wss wa fdffn3_0 fdffn3_1 crn fdffn3_1 wf fdffn3_1 crn fdffn3_1 crn wss fdffn3_1 fdffn3_0 wfn fdffn3_1 crn ssid biantru fdffn3_0 fdffn3_1 crn fdffn3_1 df-f bitr4i $.
@@ -1542,6 +2074,10 @@ $}
 $( Expanding the codomain of a mapping.  (Contributed by NM, 10-May-1998.)
      (Proof shortened by Andrew Salmon, 17-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ffss_0 $f class A $.
 	ffss_1 $f class B $.
 	ffss_2 $f class C $.
@@ -1551,6 +2087,11 @@ $}
 $( Composition of two mappings.  (Contributed by NM, 29-Aug-1999.)  (Proof
      shortened by Andrew Salmon, 17-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v G $.
 	ffco_0 $f class A $.
 	ffco_1 $f class B $.
 	ffco_2 $f class C $.
@@ -1561,6 +2102,11 @@ $}
 $( Functionality of a composition with weakened out of domain condition on
      the first argument.  (Contributed by Stefan O'Rear, 11-Mar-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v G $.
 	ffco2_0 $f class A $.
 	ffco2_1 $f class B $.
 	ffco2_2 $f class C $.
@@ -1571,6 +2117,9 @@ $}
 $( A mapping is a class of ordered pairs.  (Contributed by NM, 3-Aug-1994.)
      (Proof shortened by Andrew Salmon, 17-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffssxp_0 $f class A $.
 	ffssxp_1 $f class B $.
 	ffssxp_2 $f class F $.
@@ -1580,6 +2129,11 @@ $( A function with bounded domain and range is a set.  This version of ~ fex
      is proven without the Axiom of Replacement.  (Contributed by Mario
      Carneiro, 24-Jun-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v V $.
+	$v W $.
 	ffex2_0 $f class A $.
 	ffex2_1 $f class B $.
 	ffex2_2 $f class F $.
@@ -1590,6 +2144,9 @@ $}
 $( Two ways of specifying a partial function from ` A ` to ` B ` .
      (Contributed by NM, 13-Nov-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffunssxp_0 $f class A $.
 	ffunssxp_1 $f class B $.
 	ffunssxp_2 $f class F $.
@@ -1597,6 +2154,9 @@ ${
 $}
 $( A mapping is a partial function.  (Contributed by NM, 25-Nov-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fffdm_0 $f class A $.
 	fffdm_1 $f class B $.
 	fffdm_2 $f class F $.
@@ -1606,6 +2166,11 @@ $( The members of an ordered pair element of a mapping belong to the
      mapping's domain and codomain.  (Contributed by NM, 10-Dec-2003.)
      (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	fopelf_0 $f class A $.
 	fopelf_1 $f class B $.
 	fopelf_2 $f class C $.
@@ -1616,6 +2181,12 @@ $}
 $( The union of two functions with disjoint domains.  (Contributed by NM,
      22-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v G $.
 	ffun_0 $f class A $.
 	ffun_1 $f class B $.
 	ffun_2 $f class C $.
@@ -1627,6 +2198,11 @@ $}
 $( The union of two functions with disjoint domains.  (Contributed by Mario
      Carneiro, 12-Mar-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v G $.
 	ffun2_0 $f class A $.
 	ffun2_1 $f class B $.
 	ffun2_2 $f class C $.
@@ -1636,6 +2212,10 @@ ${
 $}
 $( Composition of two functions.  (Contributed by NM, 22-May-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	ffnfco_0 $f class A $.
 	ffnfco_1 $f class B $.
 	ffnfco_2 $f class F $.
@@ -1645,6 +2225,10 @@ $}
 $( Restriction of a function with a subclass of its domain.  (Contributed by
      NM, 23-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ffssres_0 $f class A $.
 	ffssres_1 $f class B $.
 	ffssres_2 $f class C $.
@@ -1654,6 +2238,10 @@ $}
 $( Restriction of a restricted function with a subclass of its domain.
      (Contributed by NM, 21-Jul-2005.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ffssres2_0 $f class A $.
 	ffssres2_1 $f class B $.
 	ffssres2_2 $f class C $.
@@ -1664,6 +2252,10 @@ $( An identity for the mapping relationship under restriction.  (Contributed
      by Scott Fenton, 4-Sep-2011.)  (Proof shortened by Mario Carneiro,
      26-May-2016.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v X $.
 	ffresin_0 $f class A $.
 	ffresin_1 $f class B $.
 	ffresin_2 $f class F $.
@@ -1674,6 +2266,10 @@ $( If two functions agree on their common domain, express their union as a
      union of three functions with pairwise disjoint domains.  (Contributed by
      Stefan O'Rear, 9-Oct-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	fresasplit_0 $f class A $.
 	fresasplit_1 $f class B $.
 	fresasplit_2 $f class F $.
@@ -1683,6 +2279,11 @@ $}
 $( The union of two functions which agree on their common domain is a
      function.  (Contributed by Stefan O'Rear, 9-Oct-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v G $.
 	ffresaun_0 $f class A $.
 	ffresaun_1 $f class B $.
 	ffresaun_2 $f class C $.
@@ -1694,6 +2295,11 @@ $( From the union of two functions that agree on the domain overlap, either
      component can be recovered by restriction.  (Contributed by Stefan O'Rear,
      9-Oct-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v G $.
 	ffresaunres2_0 $f class A $.
 	ffresaunres2_1 $f class B $.
 	ffresaunres2_2 $f class C $.
@@ -1705,6 +2311,11 @@ $( From the union of two functions that agree on the domain overlap, either
      component can be recovered by restriction.  (Contributed by Mario
      Carneiro, 16-Feb-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v G $.
 	ffresaunres1_0 $f class A $.
 	ffresaunres1_1 $f class B $.
 	ffresaunres1_2 $f class C $.
@@ -1715,6 +2326,9 @@ $}
 $( Composition of a mapping and restricted identity.  (Contributed by NM,
        13-Dec-2003.)  (Proof shortened by Andrew Salmon, 17-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffcoi1_0 $f class A $.
 	ffcoi1_1 $f class B $.
 	ffcoi1_2 $f class F $.
@@ -1723,6 +2337,9 @@ $}
 $( Composition of restricted identity and a mapping.  (Contributed by NM,
        13-Dec-2003.)  (Proof shortened by Andrew Salmon, 17-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffcoi2_0 $f class A $.
 	ffcoi2_1 $f class B $.
 	ffcoi2_2 $f class F $.
@@ -1731,6 +2348,11 @@ $}
 $( There is exactly one value of a function in its codomain.  (Contributed
        by NM, 10-Dec-2003.) $)
 ${
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d y F $.
 	$d y A $.
 	$d y B $.
@@ -1745,6 +2367,11 @@ $}
 $( The converse of a restriction of a function.  (Contributed by NM,
        26-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v x $.
+	$v y $.
 	$d x y F $.
 	$d x y A $.
 	$d x y B $.
@@ -1758,6 +2385,10 @@ $}
 $( The preimage of a class disjoint with a mapping's codomain is empty.
      (Contributed by FL, 24-Jan-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ffimacnvdisj_0 $f class A $.
 	ffimacnvdisj_1 $f class B $.
 	ffimacnvdisj_2 $f class C $.
@@ -1767,6 +2398,10 @@ $}
 $( Function into an intersection.  (Contributed by NM, 14-Oct-1999.)
        (Proof shortened by Andrew Salmon, 17-Sep-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x A $.
 	$d x B $.
 	$d x F $.
@@ -1780,6 +2415,10 @@ $}
 $( Mapping into an intersection.  (Contributed by NM, 14-Sep-1999.)  (Proof
      shortened by Andrew Salmon, 17-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ffin_0 $f class A $.
 	ffin_1 $f class B $.
 	ffin_2 $f class C $.
@@ -1789,6 +2428,13 @@ $}
 $( Existence of a set of functions.  (Contributed by Paul Chapman,
        25-Feb-2008.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d A x $.
 	$d B x $.
 	ffabexg_0 $f wff ph $.
@@ -1803,6 +2449,11 @@ ${
 $}
 $( Existence of a set of functions.  (Contributed by NM, 3-Dec-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x A $.
 	$d x B $.
 	ffabex_0 $f wff ph $.
@@ -1818,6 +2469,10 @@ $}
 $( If a mapping is a set, its domain is a set.  (Contributed by NM,
      27-Aug-2006.)  (Proof shortened by Andrew Salmon, 17-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	fdmfex_0 $f class A $.
 	fdmfex_1 $f class B $.
 	fdmfex_2 $f class C $.
@@ -1826,12 +2481,15 @@ ${
 $}
 $( The empty function.  (Contributed by NM, 14-Aug-1999.) $)
 ${
+	$v A $.
 	ff0_0 $f class A $.
 	f0 $p |- (/) : (/) --> A $= c0 ff0_0 c0 wf c0 c0 wfn c0 crn ff0_0 wss c0 c0 wfn c0 c0 wceq c0 eqid c0 fn0 mpbir c0 crn c0 ff0_0 rn0 ff0_0 0ss eqsstri c0 ff0_0 c0 df-f mpbir2an $.
 $}
 $( A class is a function with empty codomain iff it and its domain are
      empty.  (Contributed by NM, 10-Dec-2003.) $)
 ${
+	$v A $.
+	$v F $.
 	ff00_0 $f class A $.
 	ff00_1 $f class F $.
 	f00 $p |- ( F : A --> (/) <-> ( F = (/) /\ A = (/) ) ) $= ff00_0 c0 ff00_1 wf ff00_1 c0 wceq ff00_0 c0 wceq wa ff00_0 c0 ff00_1 wf ff00_1 c0 wceq ff00_0 c0 wceq ff00_0 c0 ff00_1 wf ff00_1 c0 wfn ff00_1 c0 wceq ff00_0 c0 ff00_1 wf ff00_1 wfun ff00_1 cdm c0 wceq ff00_1 c0 wfn ff00_0 c0 ff00_1 ffun ff00_0 c0 ff00_1 wf ff00_1 crn c0 wceq ff00_1 cdm c0 wceq ff00_0 c0 ff00_1 wf ff00_1 crn c0 wss ff00_1 crn c0 wceq ff00_0 c0 ff00_1 frn ff00_1 crn ss0 syl ff00_1 dm0rn0 sylibr ff00_1 c0 df-fn sylanbrc ff00_1 fn0 sylib ff00_0 c0 ff00_1 wf ff00_1 cdm ff00_0 c0 ff00_0 c0 ff00_1 fdm ff00_0 c0 ff00_1 wf ff00_1 crn c0 wceq ff00_1 cdm c0 wceq ff00_0 c0 ff00_1 wf ff00_1 crn c0 wss ff00_1 crn c0 wceq ff00_0 c0 ff00_1 frn ff00_1 crn ss0 syl ff00_1 dm0rn0 sylibr eqtr3d jca ff00_1 c0 wceq ff00_0 c0 wceq wa ff00_0 c0 ff00_1 wf c0 c0 c0 wf c0 f0 ff00_1 c0 wceq ff00_0 c0 ff00_1 wf ff00_0 c0 c0 wf ff00_0 c0 wceq c0 c0 c0 wf ff00_0 c0 ff00_1 c0 feq1 ff00_0 c0 c0 c0 feq2 sylan9bb mpbiri impbii $.
@@ -1840,6 +2498,9 @@ $( A cross product with a singleton is a constant function.  (Contributed
        by NM, 14-Aug-1999.)  (Proof shortened by Andrew Salmon,
        17-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	ifconst_0 $f set x $.
@@ -1851,6 +2512,10 @@ $}
 $( A cross product with a singleton is a constant function.  (Contributed
        by NM, 19-Oct-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	ifconstg_0 $f set x $.
@@ -1862,6 +2527,9 @@ $}
 $( A cross product with a singleton is a constant function.  (Contributed by
      NM, 24-Jul-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
 	ffnconstg_0 $f class A $.
 	ffnconstg_1 $f class B $.
 	ffnconstg_2 $f class V $.
@@ -1870,6 +2538,9 @@ $}
 $( Constant function with loose range.  (Contributed by Stefan O'Rear,
      1-Feb-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	ffconst6g_0 $f class A $.
 	ffconst6g_1 $f class B $.
 	ffconst6g_2 $f class C $.
@@ -1878,6 +2549,9 @@ $}
 $( A constant function as a mapping.  (Contributed by Jeff Madsen,
        30-Nov-2009.)  (Revised by Mario Carneiro, 22-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	ffconst6_0 $f class A $.
 	ffconst6_1 $f class B $.
 	ffconst6_2 $f class C $.
@@ -1887,6 +2561,10 @@ $}
 $( Equality theorem for one-to-one functions.  (Contributed by NM,
      10-Feb-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	ff1eq1_0 $f class A $.
 	ff1eq1_1 $f class B $.
 	ff1eq1_2 $f class F $.
@@ -1896,6 +2574,10 @@ $}
 $( Equality theorem for one-to-one functions.  (Contributed by NM,
      10-Feb-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ff1eq2_0 $f class A $.
 	ff1eq2_1 $f class B $.
 	ff1eq2_2 $f class C $.
@@ -1905,6 +2587,10 @@ $}
 $( Equality theorem for one-to-one functions.  (Contributed by NM,
      10-Feb-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ff1eq3_0 $f class A $.
 	ff1eq3_1 $f class B $.
 	ff1eq3_2 $f class C $.
@@ -1914,6 +2600,10 @@ $}
 $( Bound-variable hypothesis builder for a one-to-one function.
        (Contributed by NM, 16-May-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	fnff1_0 $f set x $.
 	fnff1_1 $f class A $.
 	fnff1_2 $f class B $.
@@ -1926,6 +2616,11 @@ $}
 $( Alternate definition of a one-to-one function.  (Contributed by NM,
        31-Dec-1996.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x y F $.
 	fdff12_0 $f set x $.
 	fdff12_1 $f set y $.
@@ -1936,6 +2631,9 @@ ${
 $}
 $( A one-to-one mapping is a mapping.  (Contributed by NM, 31-Dec-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ff1f_0 $f class A $.
 	ff1f_1 $f class B $.
 	ff1f_2 $f class F $.
@@ -1944,6 +2642,9 @@ $}
 $( A one-to-one mapping is a function on its domain.  (Contributed by NM,
      8-Mar-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ff1fn_0 $f class A $.
 	ff1fn_1 $f class B $.
 	ff1fn_2 $f class F $.
@@ -1951,6 +2652,9 @@ ${
 $}
 $( A one-to-one mapping is a function.  (Contributed by NM, 8-Mar-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ff1fun_0 $f class A $.
 	ff1fun_1 $f class B $.
 	ff1fun_2 $f class F $.
@@ -1959,6 +2663,9 @@ $}
 $( A one-to-one onto mapping is a relation.  (Contributed by NM,
      8-Mar-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ff1rel_0 $f class A $.
 	ff1rel_1 $f class B $.
 	ff1rel_2 $f class F $.
@@ -1966,6 +2673,9 @@ ${
 $}
 $( The domain of a one-to-one mapping.  (Contributed by NM, 8-Mar-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ff1dm_0 $f class A $.
 	ff1dm_1 $f class B $.
 	ff1dm_2 $f class F $.
@@ -1974,6 +2684,10 @@ $}
 $( A function that is one-to-one is also one-to-one on some superset of its
      range.  (Contributed by Mario Carneiro, 12-Jan-2013.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ff1ss_0 $f class A $.
 	ff1ss_1 $f class B $.
 	ff1ss_2 $f class C $.
@@ -1983,6 +2697,10 @@ $}
 $( Combine a one-to-one function with a restriction on the domain.
      (Contributed by Stefan O'Rear, 20-Feb-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ff1ssr_0 $f class A $.
 	ff1ssr_1 $f class B $.
 	ff1ssr_2 $f class C $.
@@ -1992,6 +2710,10 @@ $}
 $( A function that is one-to-one is also one-to-one on some aubset of its
      domain.  (Contributed by Mario Carneiro, 17-Jan-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ff1ssres_0 $f class A $.
 	ff1ssres_1 $f class B $.
 	ff1ssres_2 $f class C $.
@@ -2004,12 +2726,18 @@ $( Two ways to express that a set ` A ` (not necessarily a function) is
      do not introduce a separate notation since we rarely use it.  (Contributed
      by NM, 13-Aug-2004.) $)
 ${
+	$v A $.
 	ff1cnvcnv_0 $f class A $.
 	f1cnvcnv $p |- ( `' `' A : dom A -1-1-> _V <-> ( Fun `' A /\ Fun `' `' A ) ) $= ff1cnvcnv_0 cdm cvv ff1cnvcnv_0 ccnv ccnv wf1 ff1cnvcnv_0 cdm cvv ff1cnvcnv_0 ccnv ccnv wf ff1cnvcnv_0 ccnv ccnv ccnv wfun wa ff1cnvcnv_0 ccnv wfun ff1cnvcnv_0 ccnv ccnv wfun wa ff1cnvcnv_0 cdm cvv ff1cnvcnv_0 ccnv ccnv df-f1 ff1cnvcnv_0 cdm cvv ff1cnvcnv_0 ccnv ccnv wf ff1cnvcnv_0 ccnv ccnv wfun ff1cnvcnv_0 ccnv ccnv ccnv wfun ff1cnvcnv_0 ccnv wfun ff1cnvcnv_0 cdm cvv ff1cnvcnv_0 ccnv ccnv wf ff1cnvcnv_0 ccnv ccnv ff1cnvcnv_0 cdm wfn ff1cnvcnv_0 ccnv ccnv wfun ff1cnvcnv_0 cdm ff1cnvcnv_0 ccnv ccnv dffn2 ff1cnvcnv_0 ccnv ccnv ff1cnvcnv_0 cdm wfn ff1cnvcnv_0 ccnv ccnv wfun ff1cnvcnv_0 ccnv ccnv cdm ff1cnvcnv_0 cdm wceq ff1cnvcnv_0 dmcnvcnv ff1cnvcnv_0 ccnv ccnv ff1cnvcnv_0 cdm df-fn mpbiran2 bitr3i ff1cnvcnv_0 ccnv ccnv ccnv ff1cnvcnv_0 ccnv ff1cnvcnv_0 ccnv wrel ff1cnvcnv_0 ccnv ccnv ccnv ff1cnvcnv_0 ccnv wceq ff1cnvcnv_0 relcnv ff1cnvcnv_0 ccnv dfrel2 mpbi funeqi anbi12ci bitri $.
 $}
 $( Composition of one-to-one functions.  Exercise 30 of [TakeutiZaring]
      p. 25.  (Contributed by NM, 28-May-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v G $.
 	ff1co_0 $f class A $.
 	ff1co_1 $f class B $.
 	ff1co_2 $f class C $.
@@ -2019,6 +2747,10 @@ ${
 $}
 $( Equality theorem for onto functions.  (Contributed by NM, 1-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	ffoeq1_0 $f class A $.
 	ffoeq1_1 $f class B $.
 	ffoeq1_2 $f class F $.
@@ -2027,6 +2759,10 @@ ${
 $}
 $( Equality theorem for onto functions.  (Contributed by NM, 1-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ffoeq2_0 $f class A $.
 	ffoeq2_1 $f class B $.
 	ffoeq2_2 $f class C $.
@@ -2035,6 +2771,10 @@ ${
 $}
 $( Equality theorem for onto functions.  (Contributed by NM, 1-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ffoeq3_0 $f class A $.
 	ffoeq3_1 $f class B $.
 	ffoeq3_2 $f class C $.
@@ -2044,6 +2784,10 @@ $}
 $( Bound-variable hypothesis builder for an onto function.  (Contributed by
        NM, 16-May-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	fnffo_0 $f set x $.
 	fnffo_1 $f class A $.
 	fnffo_2 $f class B $.
@@ -2055,6 +2799,9 @@ ${
 $}
 $( An onto mapping is a mapping.  (Contributed by NM, 3-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffof_0 $f class A $.
 	ffof_1 $f class B $.
 	ffof_2 $f class F $.
@@ -2062,6 +2809,9 @@ ${
 $}
 $( An onto mapping is a function.  (Contributed by NM, 29-Mar-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffofun_0 $f class A $.
 	ffofun_1 $f class B $.
 	ffofun_2 $f class F $.
@@ -2070,6 +2820,9 @@ $}
 $( An onto mapping is a function on its domain.  (Contributed by NM,
      16-Dec-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffofn_0 $f class A $.
 	ffofn_1 $f class B $.
 	ffofn_2 $f class F $.
@@ -2078,6 +2831,9 @@ $}
 $( The codomain of an onto function is its range.  (Contributed by NM,
      3-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fforn_0 $f class A $.
 	fforn_1 $f class B $.
 	fforn_2 $f class F $.
@@ -2086,6 +2842,9 @@ $}
 $( Alternate definition of an onto function.  (Contributed by NM,
      22-Mar-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fdffo2_0 $f class A $.
 	fdffo2_1 $f class B $.
 	fdffo2_2 $f class F $.
@@ -2094,6 +2853,9 @@ $}
 $( The image of the domain of an onto function.  (Contributed by NM,
      29-Nov-2002.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffoima_0 $f class A $.
 	ffoima_1 $f class B $.
 	ffoima_2 $f class F $.
@@ -2101,6 +2863,8 @@ ${
 $}
 $( A function maps onto its range.  (Contributed by NM, 10-May-1998.) $)
 ${
+	$v A $.
+	$v F $.
 	fdffn4_0 $f class A $.
 	fdffn4_1 $f class F $.
 	dffn4 $p |- ( F Fn A <-> F : A -onto-> ran F ) $= fdffn4_1 fdffn4_0 wfn fdffn4_1 fdffn4_0 wfn fdffn4_1 crn fdffn4_1 crn wceq wa fdffn4_0 fdffn4_1 crn fdffn4_1 wfo fdffn4_1 crn fdffn4_1 crn wceq fdffn4_1 fdffn4_0 wfn fdffn4_1 crn eqid biantru fdffn4_0 fdffn4_1 crn fdffn4_1 df-fo bitr4i $.
@@ -2108,12 +2872,18 @@ $}
 $( A function maps its domain onto its range.  (Contributed by NM,
      23-Jul-2004.) $)
 ${
+	$v A $.
 	ffunforn_0 $f class A $.
 	funforn $p |- ( Fun A <-> A : dom A -onto-> ran A ) $= ffunforn_0 wfun ffunforn_0 ffunforn_0 cdm wfn ffunforn_0 cdm ffunforn_0 crn ffunforn_0 wfo ffunforn_0 funfn ffunforn_0 cdm ffunforn_0 dffn4 bitri $.
 $}
 $( An onto function has unique domain and range.  (Contributed by NM,
      5-Nov-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	ffodmrnu_0 $f class A $.
 	ffodmrnu_1 $f class B $.
 	ffodmrnu_2 $f class C $.
@@ -2123,12 +2893,19 @@ ${
 $}
 $( Restriction of a function.  (Contributed by NM, 4-Mar-1997.) $)
 ${
+	$v A $.
+	$v F $.
 	ffores_0 $f class A $.
 	ffores_1 $f class F $.
 	fores $p |- ( ( Fun F /\ A C_ dom F ) -> ( F |` A ) : A -onto-> ( F " A ) ) $= ffores_1 wfun ffores_0 ffores_1 cdm wss wa ffores_1 ffores_0 cres wfun ffores_0 ffores_1 cdm wss wa ffores_0 ffores_1 ffores_0 cima ffores_1 ffores_0 cres wfo ffores_1 wfun ffores_1 ffores_0 cres wfun ffores_0 ffores_1 cdm wss ffores_0 ffores_1 funres anim1i ffores_1 ffores_0 cres ffores_0 wfn ffores_1 ffores_0 cres wfun ffores_1 ffores_0 cres cdm ffores_0 wceq wa ffores_0 ffores_1 ffores_0 cima ffores_1 ffores_0 cres wfo ffores_1 ffores_0 cres wfun ffores_0 ffores_1 cdm wss wa ffores_1 ffores_0 cres ffores_0 df-fn ffores_0 ffores_1 ffores_0 cima ffores_1 ffores_0 cres wfo ffores_1 ffores_0 cres ffores_0 wfn ffores_1 ffores_0 cres crn ffores_1 ffores_0 cima wceq ffores_1 ffores_0 cima ffores_1 ffores_0 cres crn ffores_1 ffores_0 df-ima eqcomi ffores_0 ffores_1 ffores_0 cima ffores_1 ffores_0 cres df-fo mpbiran2 ffores_0 ffores_1 cdm wss ffores_1 ffores_0 cres cdm ffores_0 wceq ffores_1 ffores_0 cres wfun ffores_0 ffores_1 ssdmres anbi2i 3bitr4i sylibr $.
 $}
 $( Composition of onto functions.  (Contributed by NM, 22-Mar-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v G $.
 	ffoco_0 $f class A $.
 	ffoco_1 $f class B $.
 	ffoco_2 $f class C $.
@@ -2138,6 +2915,9 @@ ${
 $}
 $( A nonzero constant function is onto.  (Contributed by NM, 12-Jan-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffoconst_0 $f class A $.
 	ffoconst_1 $f class B $.
 	ffoconst_2 $f class F $.
@@ -2146,6 +2926,10 @@ $}
 $( Equality theorem for one-to-one onto functions.  (Contributed by NM,
      10-Feb-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	ff1oeq1_0 $f class A $.
 	ff1oeq1_1 $f class B $.
 	ff1oeq1_2 $f class F $.
@@ -2155,6 +2939,10 @@ $}
 $( Equality theorem for one-to-one onto functions.  (Contributed by NM,
      10-Feb-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ff1oeq2_0 $f class A $.
 	ff1oeq2_1 $f class B $.
 	ff1oeq2_2 $f class C $.
@@ -2164,6 +2952,10 @@ $}
 $( Equality theorem for one-to-one onto functions.  (Contributed by NM,
      10-Feb-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ff1oeq3_0 $f class A $.
 	ff1oeq3_1 $f class B $.
 	ff1oeq3_2 $f class C $.
@@ -2173,6 +2965,11 @@ $}
 $( Equality theorem for one-to-one onto functions.  (Contributed by FL,
      14-Jul-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	ff1oeq23_0 $f class A $.
 	ff1oeq23_1 $f class B $.
 	ff1oeq23_2 $f class C $.
@@ -2183,6 +2980,13 @@ $}
 $( Equality deduction for one-to-one functions.  (Contributed by Mario
        Carneiro, 27-Jan-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v G $.
 	ff1eq123d_0 $f wff ph $.
 	ff1eq123d_1 $f class A $.
 	ff1eq123d_2 $f class B $.
@@ -2198,6 +3002,13 @@ $}
 $( Equality deduction for onto functions.  (Contributed by Mario Carneiro,
        27-Jan-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v G $.
 	ffoeq123d_0 $f wff ph $.
 	ffoeq123d_1 $f class A $.
 	ffoeq123d_2 $f class B $.
@@ -2213,6 +3024,13 @@ $}
 $( Equality deduction for one-to-one onto functions.  (Contributed by Mario
        Carneiro, 27-Jan-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v G $.
 	ff1oeq123d_0 $f wff ph $.
 	ff1oeq123d_1 $f class A $.
 	ff1oeq123d_2 $f class B $.
@@ -2228,6 +3046,10 @@ $}
 $( Bound-variable hypothesis builder for a one-to-one onto function.
        (Contributed by NM, 16-May-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	fnff1o_0 $f set x $.
 	fnff1o_1 $f class A $.
 	fnff1o_2 $f class B $.
@@ -2240,6 +3062,9 @@ $}
 $( A one-to-one onto mapping is a one-to-one mapping.  (Contributed by NM,
      12-Dec-2003.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ff1of1_0 $f class A $.
 	ff1of1_1 $f class B $.
 	ff1of1_2 $f class F $.
@@ -2248,6 +3073,9 @@ $}
 $( A one-to-one onto mapping is a mapping.  (Contributed by NM,
      12-Dec-2003.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ff1of_0 $f class A $.
 	ff1of_1 $f class B $.
 	ff1of_2 $f class F $.
@@ -2256,6 +3084,9 @@ $}
 $( A one-to-one onto mapping is function on its domain.  (Contributed by NM,
      12-Dec-2003.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ff1ofn_0 $f class A $.
 	ff1ofn_1 $f class B $.
 	ff1ofn_2 $f class F $.
@@ -2264,6 +3095,9 @@ $}
 $( A one-to-one onto mapping is a function.  (Contributed by NM,
      12-Dec-2003.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ff1ofun_0 $f class A $.
 	ff1ofun_1 $f class B $.
 	ff1ofun_2 $f class F $.
@@ -2272,6 +3106,9 @@ $}
 $( A one-to-one onto mapping is a relation.  (Contributed by NM,
      13-Dec-2003.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ff1orel_0 $f class A $.
 	ff1orel_1 $f class B $.
 	ff1orel_2 $f class F $.
@@ -2280,6 +3117,9 @@ $}
 $( The domain of a one-to-one onto mapping.  (Contributed by NM,
      8-Mar-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ff1odm_0 $f class A $.
 	ff1odm_1 $f class B $.
 	ff1odm_2 $f class F $.
@@ -2288,6 +3128,9 @@ $}
 $( Alternate definition of one-to-one onto function.  (Contributed by NM,
      10-Feb-1997.)  (Proof shortened by Andrew Salmon, 22-Oct-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fdff1o2_0 $f class A $.
 	fdff1o2_1 $f class B $.
 	fdff1o2_2 $f class F $.
@@ -2296,6 +3139,9 @@ $}
 $( Alternate definition of one-to-one onto function.  (Contributed by NM,
      25-Mar-1998.)  (Proof shortened by Andrew Salmon, 22-Oct-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fdff1o3_0 $f class A $.
 	fdff1o3_1 $f class B $.
 	fdff1o3_2 $f class F $.
@@ -2304,6 +3150,9 @@ $}
 $( A one-to-one onto function is an onto function.  (Contributed by NM,
      28-Apr-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ff1ofo_0 $f class A $.
 	ff1ofo_1 $f class B $.
 	ff1ofo_2 $f class F $.
@@ -2312,6 +3161,9 @@ $}
 $( Alternate definition of one-to-one onto function.  (Contributed by NM,
      25-Mar-1998.)  (Proof shortened by Andrew Salmon, 22-Oct-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fdff1o4_0 $f class A $.
 	fdff1o4_1 $f class B $.
 	fdff1o4_2 $f class F $.
@@ -2320,6 +3172,9 @@ $}
 $( Alternate definition of one-to-one onto function.  (Contributed by NM,
      10-Dec-2003.)  (Proof shortened by Andrew Salmon, 22-Oct-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fdff1o5_0 $f class A $.
 	fdff1o5_1 $f class B $.
 	fdff1o5_2 $f class F $.
@@ -2328,6 +3183,8 @@ $}
 $( A one-to-one function maps onto its range.  (Contributed by NM,
      13-Aug-2004.) $)
 ${
+	$v A $.
+	$v F $.
 	ff1orn_0 $f class A $.
 	ff1orn_1 $f class F $.
 	f1orn $p |- ( F : A -1-1-onto-> ran F <-> ( F Fn A /\ Fun `' F ) ) $= ff1orn_0 ff1orn_1 crn ff1orn_1 wf1o ff1orn_1 ff1orn_0 wfn ff1orn_1 ccnv wfun ff1orn_1 crn ff1orn_1 crn wceq w3a ff1orn_1 ff1orn_0 wfn ff1orn_1 ccnv wfun wa ff1orn_0 ff1orn_1 crn ff1orn_1 dff1o2 ff1orn_1 ff1orn_0 wfn ff1orn_1 ccnv wfun ff1orn_1 crn ff1orn_1 crn wceq w3a ff1orn_1 ff1orn_0 wfn ff1orn_1 ccnv wfun wa ff1orn_1 crn ff1orn_1 crn wceq ff1orn_1 crn eqid ff1orn_1 ff1orn_0 wfn ff1orn_1 ccnv wfun ff1orn_1 crn ff1orn_1 crn wceq df-3an mpbiran2 bitri $.
@@ -2335,6 +3192,9 @@ $}
 $( A one-to-one function maps one-to-one onto its range.  (Contributed by NM,
      4-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ff1f1orn_0 $f class A $.
 	ff1f1orn_1 $f class B $.
 	ff1f1orn_2 $f class F $.
@@ -2343,6 +3203,13 @@ $}
 $( The class of all 1-1-onto functions mapping one set to another is a
        set.  (Contributed by Paul Chapman, 25-Feb-2008.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v f $.
+	$v F $.
 	$d A f $.
 	$d B f $.
 	ff1oabexg_0 $f wff ph $.
@@ -2359,6 +3226,9 @@ $( The converse of a one-to-one onto function is also one-to-one onto.
      (Contributed by NM, 11-Feb-1997.)  (Proof shortened by Andrew Salmon,
      22-Oct-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ff1ocnv_0 $f class A $.
 	ff1ocnv_1 $f class B $.
 	ff1ocnv_2 $f class F $.
@@ -2368,6 +3238,9 @@ $( A relation is a one-to-one onto function iff its converse is a one-to-one
      onto function with domain and range interchanged.  (Contributed by NM,
      8-Dec-2003.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ff1ocnvb_0 $f class A $.
 	ff1ocnvb_1 $f class B $.
 	ff1ocnvb_2 $f class F $.
@@ -2376,6 +3249,10 @@ $}
 $( The restriction of a one-to-one function maps one-to-one onto the image.
      (Contributed by NM, 25-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ff1ores_0 $f class A $.
 	ff1ores_1 $f class B $.
 	ff1ores_2 $f class C $.
@@ -2384,8 +3261,10 @@ ${
 $}
 $( The converse of a one-to-one-onto restricted function.  (Contributed by
      Paul Chapman, 21-Apr-2008.) $)
-$v P $.
 ${
+	$v P $.
+	$v R $.
+	$v F $.
 	ff1orescnv_0 $f class P $.
 	ff1orescnv_1 $f class R $.
 	ff1orescnv_2 $f class F $.
@@ -2393,6 +3272,10 @@ ${
 $}
 $( Preimage of an image.  (Contributed by NM, 30-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ff1imacnv_0 $f class A $.
 	ff1imacnv_1 $f class B $.
 	ff1imacnv_2 $f class C $.
@@ -2402,6 +3285,10 @@ $}
 $( A reverse version of ~ f1imacnv .  (Contributed by Jeffrey Hankins,
      16-Jul-2009.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ffoimacnv_0 $f class A $.
 	ffoimacnv_1 $f class B $.
 	ffoimacnv_2 $f class C $.
@@ -2411,6 +3298,12 @@ $}
 $( The union of two onto functions with disjoint domains is an onto
      function.  (Contributed by Mario Carneiro, 22-Jun-2016.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v G $.
 	ffoun_0 $f class A $.
 	ffoun_1 $f class B $.
 	ffoun_2 $f class C $.
@@ -2422,6 +3315,12 @@ $}
 $( The union of two one-to-one onto functions with disjoint domains and
      ranges.  (Contributed by NM, 26-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v G $.
 	ff1oun_0 $f class A $.
 	ff1oun_1 $f class B $.
 	ff1oun_2 $f class C $.
@@ -2434,6 +3333,16 @@ $( The union of a chain (with respect to inclusion) of one-to-one functions
        is a one-to-one function.  (Contributed by Mario Carneiro,
        20-May-2013.)  (Revised by Mario Carneiro, 24-Jun-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v S $.
+	$v z $.
+	$v v $.
+	$v u $.
 	$d A u v x z $.
 	$d A u v y $.
 	$d B u v y $.
@@ -2459,6 +3368,11 @@ $( The restriction of a one-to-one onto function to a difference maps onto
      the difference of the images.  (Contributed by Paul Chapman,
      11-Apr-2009.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	fresdif_0 $f class A $.
 	fresdif_1 $f class B $.
 	fresdif_2 $f class C $.
@@ -2470,6 +3384,11 @@ $( The restriction of a one-to-one onto function to an intersection maps onto
      the intersection of the images.  (Contributed by Paul Chapman,
      11-Apr-2009.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	fresin_0 $f class A $.
 	fresin_1 $f class B $.
 	fresin_2 $f class C $.
@@ -2480,6 +3399,11 @@ $}
 $( Composition of one-to-one onto functions.  (Contributed by NM,
      19-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v G $.
 	ff1oco_0 $f class A $.
 	ff1oco_1 $f class B $.
 	ff1oco_2 $f class C $.
@@ -2490,6 +3414,9 @@ $}
 $( The converse of an injective function is bijective.  (Contributed by FL,
      11-Nov-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ff1cnv_0 $f class A $.
 	ff1cnv_1 $f class B $.
 	ff1cnv_2 $f class F $.
@@ -2498,12 +3425,16 @@ $}
 $( Composition with the converse.  (Contributed by Jeff Madsen,
      2-Sep-2009.) $)
 ${
+	$v F $.
 	ffuncocnv2_0 $f class F $.
 	funcocnv2 $p |- ( Fun F -> ( F o. `' F ) = ( _I |` ran F ) ) $= ffuncocnv2_0 wfun ffuncocnv2_0 ffuncocnv2_0 ccnv ccom cid wss ffuncocnv2_0 ffuncocnv2_0 ccnv ccom cid ffuncocnv2_0 crn cres wceq ffuncocnv2_0 wfun ffuncocnv2_0 wrel ffuncocnv2_0 ffuncocnv2_0 ccnv ccom cid wss ffuncocnv2_0 df-fun simprbi ffuncocnv2_0 ffuncocnv2_0 ccnv ccom cid wss ffuncocnv2_0 ffuncocnv2_0 ccnv ccom cid ffuncocnv2_0 ffuncocnv2_0 ccnv ccom cdm cres wceq ffuncocnv2_0 wfun ffuncocnv2_0 ffuncocnv2_0 ccnv ccom cid ffuncocnv2_0 crn cres wceq ffuncocnv2_0 ffuncocnv2_0 ccnv ccom iss ffuncocnv2_0 wfun cid ffuncocnv2_0 ffuncocnv2_0 ccnv ccom cdm cres cid ffuncocnv2_0 crn cres ffuncocnv2_0 ffuncocnv2_0 ccnv ccom ffuncocnv2_0 wfun ffuncocnv2_0 ffuncocnv2_0 ccnv ccom cdm ffuncocnv2_0 crn cid ffuncocnv2_0 ffuncocnv2_0 ccnv ccom cdm ffuncocnv2_0 crn wceq ffuncocnv2_0 wfun ffuncocnv2_0 ffuncocnv2_0 ccnv ccom cdm ffuncocnv2_0 ccnv cdm ffuncocnv2_0 crn ffuncocnv2_0 cdm ffuncocnv2_0 ccnv crn wceq ffuncocnv2_0 ffuncocnv2_0 ccnv ccom cdm ffuncocnv2_0 ccnv cdm wceq ffuncocnv2_0 dfdm4 ffuncocnv2_0 ffuncocnv2_0 ccnv dmcoeq ax-mp ffuncocnv2_0 df-rn eqtr4i a1i reseq2d eqeq2d syl5bb mpbid $.
 $}
 $( The composition of an onto function and its converse.  (Contributed by
      Stefan O'Rear, 12-Feb-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffococnv2_0 $f class A $.
 	ffococnv2_1 $f class B $.
 	ffococnv2_2 $f class F $.
@@ -2513,6 +3444,9 @@ $( The composition of a one-to-one onto function and its converse equals the
      identity relation restricted to the function's range.  (Contributed by NM,
      13-Dec-2003.)  (Proof shortened by Stefan O'Rear, 12-Feb-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ff1ococnv2_0 $f class A $.
 	ff1ococnv2_1 $f class B $.
 	ff1ococnv2_2 $f class F $.
@@ -2521,6 +3455,9 @@ $}
 $( Composition of an injective function with its converse.  (Contributed by
      FL, 11-Nov-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ff1cocnv2_0 $f class A $.
 	ff1cocnv2_1 $f class B $.
 	ff1cocnv2_2 $f class F $.
@@ -2530,6 +3467,9 @@ $( The composition of a one-to-one onto function's converse and itself equals
      the identity relation restricted to the function's domain.  (Contributed
      by NM, 13-Dec-2003.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ff1ococnv1_0 $f class A $.
 	ff1ococnv1_1 $f class B $.
 	ff1ococnv1_2 $f class F $.
@@ -2538,6 +3478,9 @@ $}
 $( Composition of an injective function with its converse.  (Contributed by
      FL, 11-Nov-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ff1cocnv1_0 $f class A $.
 	ff1cocnv1_1 $f class B $.
 	ff1cocnv1_2 $f class F $.
@@ -2546,6 +3489,9 @@ $}
 $( Re-express a constraint on a composition as a constraint on the
      composand.  (Contributed by Stefan O'Rear, 7-Mar-2015.) $)
 ${
+	$v F $.
+	$v G $.
+	$v H $.
 	ffuncoeqres_0 $f class F $.
 	ffuncoeqres_1 $f class G $.
 	ffuncoeqres_2 $f class H $.
@@ -2554,6 +3500,10 @@ $}
 $( Relationship between a mapping and an onto mapping.  Figure 38 of
        [Enderton] p. 145.  (Contributed by NM, 10-May-1998.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x F $.
 	$d x A $.
 	$d x B $.
@@ -2567,6 +3517,10 @@ $}
 $( Relationship between one-to-one and one-to-one onto function.
        (Contributed by NM, 4-Apr-1998.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x F $.
 	$d x A $.
 	$d x B $.
@@ -2580,18 +3534,23 @@ $}
 $( The empty set maps one-to-one into any class.  (Contributed by NM,
      7-Apr-1998.) $)
 ${
+	$v A $.
 	ff10_0 $f class A $.
 	f10 $p |- (/) : (/) -1-1-> A $= c0 ff10_0 c0 wf1 c0 ff10_0 c0 wf c0 ccnv wfun ff10_0 f0 c0 ccnv wfun c0 wfun fun0 c0 ccnv c0 cnv0 funeqi mpbir c0 ff10_0 c0 df-f1 mpbir2an $.
 $}
 $( One-to-one onto mapping of the empty set.  (Contributed by NM,
      15-Apr-1998.) $)
 ${
+	$v A $.
+	$v F $.
 	ff1o00_0 $f class A $.
 	ff1o00_1 $f class F $.
 	f1o00 $p |- ( F : (/) -1-1-onto-> A <-> ( F = (/) /\ A = (/) ) ) $= c0 ff1o00_0 ff1o00_1 wf1o ff1o00_1 c0 wfn ff1o00_1 ccnv ff1o00_0 wfn wa ff1o00_1 c0 wceq ff1o00_0 c0 wceq wa c0 ff1o00_0 ff1o00_1 dff1o4 ff1o00_1 c0 wfn ff1o00_1 ccnv ff1o00_0 wfn wa ff1o00_1 c0 wceq ff1o00_0 c0 wceq wa ff1o00_1 c0 wfn ff1o00_1 ccnv ff1o00_0 wfn wa ff1o00_1 c0 wceq ff1o00_0 c0 wceq ff1o00_1 c0 wfn ff1o00_1 c0 wceq ff1o00_1 ccnv ff1o00_0 wfn ff1o00_1 c0 wfn ff1o00_1 c0 wceq ff1o00_1 fn0 biimpi adantr ff1o00_1 c0 wfn ff1o00_1 ccnv ff1o00_0 wfn wa c0 c0 cdm ff1o00_0 dm0 ff1o00_1 c0 wfn ff1o00_1 ccnv ff1o00_0 wfn wa c0 ff1o00_0 wfn c0 cdm ff1o00_0 wceq ff1o00_1 c0 wfn ff1o00_1 ccnv ff1o00_0 wfn c0 ff1o00_0 wfn ff1o00_1 c0 wfn ff1o00_0 ff1o00_1 ccnv c0 ff1o00_1 c0 wfn ff1o00_1 c0 wceq ff1o00_1 ccnv c0 wceq ff1o00_1 fn0 ff1o00_1 c0 wceq ff1o00_1 ccnv c0 ccnv c0 ff1o00_1 c0 cnveq cnv0 syl6eq sylbi fneq1d biimpa ff1o00_0 c0 fndm syl syl5reqr jca ff1o00_1 c0 wceq ff1o00_0 c0 wceq wa ff1o00_1 c0 wfn ff1o00_1 ccnv ff1o00_0 wfn ff1o00_1 c0 wceq ff1o00_1 c0 wfn ff1o00_0 c0 wceq ff1o00_1 c0 wfn ff1o00_1 c0 wceq ff1o00_1 fn0 biimpri adantr ff1o00_1 c0 wceq ff1o00_0 c0 wceq wa ff1o00_1 ccnv ff1o00_0 wfn c0 c0 wfn c0 c0 wfn c0 c0 wceq c0 eqid c0 fn0 mpbir ff1o00_1 c0 wceq ff1o00_1 ccnv ff1o00_0 wfn c0 ff1o00_0 wfn ff1o00_0 c0 wceq c0 c0 wfn ff1o00_1 c0 wceq ff1o00_0 ff1o00_1 ccnv c0 ff1o00_1 c0 wceq ff1o00_1 ccnv c0 ccnv c0 ff1o00_1 c0 cnveq cnv0 syl6eq fneq1d ff1o00_0 c0 c0 fneq2 sylan9bb mpbiri jca impbii bitri $.
 $}
 $( Onto mapping of the empty set.  (Contributed by NM, 22-Mar-2006.) $)
 ${
+	$v A $.
+	$v F $.
 	ffo00_0 $f class A $.
 	ffo00_1 $f class F $.
 	fo00 $p |- ( F : (/) -onto-> A <-> ( F = (/) /\ A = (/) ) ) $= c0 ffo00_0 ffo00_1 wfo c0 ffo00_0 ffo00_1 wf1o ffo00_1 c0 wceq ffo00_0 c0 wceq wa c0 ffo00_0 ffo00_1 wfo c0 ffo00_0 ffo00_1 wf1o c0 ffo00_0 ffo00_1 wfo c0 ffo00_0 ffo00_1 wf1 c0 ffo00_0 ffo00_1 wfo wa c0 ffo00_0 ffo00_1 wf1o c0 ffo00_0 ffo00_1 wfo c0 ffo00_0 ffo00_1 wf1 c0 ffo00_0 ffo00_1 wfo ffo00_1 c0 wfn c0 ffo00_0 ffo00_1 wf1 c0 ffo00_0 ffo00_1 fofn ffo00_1 c0 wfn ffo00_1 c0 wceq c0 ffo00_0 ffo00_1 wf1 ffo00_1 fn0 ffo00_1 c0 wceq c0 ffo00_0 ffo00_1 wf1 c0 ffo00_0 c0 wf1 ffo00_0 f10 c0 ffo00_0 ffo00_1 c0 f1eq1 mpbiri sylbi syl ancri c0 ffo00_0 ffo00_1 df-f1o sylibr c0 ffo00_0 ffo00_1 f1ofo impbii ffo00_0 ffo00_1 f1o00 bitri $.
@@ -2605,6 +3564,7 @@ $( A restriction of the identity relation is a one-to-one onto function.
      (Contributed by NM, 30-Apr-1998.)  (Proof shortened by Andrew Salmon,
      22-Oct-2011.) $)
 ${
+	$v A $.
 	ff1oi_0 $f class A $.
 	f1oi $p |- ( _I |` A ) : A -1-1-onto-> A $= ff1oi_0 ff1oi_0 cid ff1oi_0 cres wf1o cid ff1oi_0 cres ff1oi_0 wfn cid ff1oi_0 cres ccnv ff1oi_0 wfn ff1oi_0 fnresi cid ff1oi_0 cres ccnv ff1oi_0 wfn cid ff1oi_0 cres ff1oi_0 wfn ff1oi_0 fnresi ff1oi_0 cid ff1oi_0 cres ccnv cid ff1oi_0 cres ff1oi_0 cnvresid fneq1i mpbir ff1oi_0 ff1oi_0 cid ff1oi_0 cres dff1o4 mpbir2an $.
 $}
@@ -2617,6 +3577,8 @@ $( A singleton of an ordered pair is one-to-one onto function.
        (Contributed by NM, 18-May-1998.)  (Proof shortened by Andrew Salmon,
        22-Oct-2011.) $)
 ${
+	$v A $.
+	$v B $.
 	ff1osn_0 $f class A $.
 	ff1osn_1 $f class B $.
 	ef1osn_0 $e |- A e. _V $.
@@ -2626,6 +3588,12 @@ $}
 $( A singleton of an ordered pair is one-to-one onto function.
        (Contributed by Mario Carneiro, 12-Jan-2013.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
+	$v a $.
+	$v b $.
 	$d A a b $.
 	$d B b $.
 	if1osng_0 $f set a $.
@@ -2639,6 +3607,10 @@ $}
 $( A two-element swap is a bijection on a pair.  (Contributed by Mario
        Carneiro, 23-Jan-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	ff1oprswap_0 $f class A $.
 	ff1oprswap_1 $f class B $.
 	ff1oprswap_2 $f class V $.
@@ -2649,6 +3621,9 @@ $( Function value when ` F ` is not a function.  Theorem 6.12(2) of
        [TakeutiZaring] p. 27.  (Contributed by NM, 30-Apr-2004.)  (Proof
        shortened by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
 	$d x F $.
 	$d x A $.
 	ftz6.12-2_0 $f set x $.
@@ -2659,6 +3634,9 @@ $}
 $( The value of a function at a unique point.  (Contributed by Scott
        Fenton, 6-Oct-2017.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
 	$d x F $.
 	$d x A $.
 	ffveu_0 $f set x $.
@@ -2670,6 +3648,10 @@ $( If ` A ` is a proper class, then there is no unique binary relationship
        with ` A ` as the first element.  (Contributed by Scott Fenton,
        7-Oct-2017.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
+	$v y $.
 	$d x y A $.
 	$d x y F $.
 	ibrprcneu_0 $f set y $.
@@ -2681,6 +3663,9 @@ $}
 $( A function's value at a proper class is the empty set.  (Contributed by
        NM, 20-May-1998.) $)
 ${
+	$v A $.
+	$v F $.
+	$v x $.
 	$d x A $.
 	$d x F $.
 	ifvprc_0 $f set x $.
@@ -2692,6 +3677,10 @@ $( Alternate definition of function value.  Definition 10.11 of [Quine]
        p. 68.  (Contributed by NM, 30-Apr-2004.)  (Proof shortened by Andrew
        Salmon, 17-Sep-2011.)  (Revised by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v F $.
 	$d x y A $.
 	$d x y F $.
 	ffv2_0 $f set x $.
@@ -2703,6 +3692,9 @@ $}
 $( A definition of function value in terms of iota.  (Contributed by Scott
        Fenton, 19-Feb-2013.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
 	$d F x $.
 	$d A x $.
 	fdffv3_0 $f set x $.
@@ -2716,6 +3708,10 @@ $( The previous definition of function value, from before the ` iota `
        apparently does not appear in the literature.  (Contributed by NM,
        1-Aug-1994.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
+	$v y $.
 	$d x y A $.
 	$d x y F $.
 	idffv4_0 $f set y $.
@@ -2726,6 +3722,11 @@ ${
 $}
 $( Membership in a function value.  (Contributed by NM, 30-Apr-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x A $.
 	$d x y B $.
 	$d x y F $.
@@ -2739,6 +3740,10 @@ $}
 $( Equality theorem for function value.  (Contributed by NM,
        29-Dec-1996.) $)
 ${
+	$v A $.
+	$v F $.
+	$v G $.
+	$v x $.
 	$d x A $.
 	$d x F $.
 	$d x G $.
@@ -2751,6 +3756,10 @@ $}
 $( Equality theorem for function value.  (Contributed by NM,
        29-Dec-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x F $.
@@ -2763,6 +3772,9 @@ $}
 $( Equality inference for function value.  (Contributed by NM,
        2-Sep-2003.) $)
 ${
+	$v A $.
+	$v F $.
+	$v G $.
 	ffveq1i_0 $f class A $.
 	ffveq1i_1 $f class F $.
 	ffveq1i_2 $f class G $.
@@ -2772,6 +3784,10 @@ $}
 $( Equality deduction for function value.  (Contributed by NM,
        2-Sep-2003.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v F $.
+	$v G $.
 	ffveq1d_0 $f wff ph $.
 	ffveq1d_1 $f class A $.
 	ffveq1d_2 $f class F $.
@@ -2782,6 +3798,9 @@ $}
 $( Equality inference for function value.  (Contributed by NM,
        28-Jul-1999.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffveq2i_0 $f class A $.
 	ffveq2i_1 $f class B $.
 	ffveq2i_2 $f class F $.
@@ -2791,6 +3810,10 @@ $}
 $( Equality deduction for function value.  (Contributed by NM,
        29-May-1999.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v F $.
 	ffveq2d_0 $f wff ph $.
 	ffveq2d_1 $f class A $.
 	ffveq2d_2 $f class B $.
@@ -2801,6 +3824,10 @@ $}
 $( Equality deduction for function value.  (Contributed by FL,
        27-Jun-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	ffveq12i_0 $f class A $.
 	ffveq12i_1 $f class B $.
 	ffveq12i_2 $f class F $.
@@ -2812,6 +3839,11 @@ $}
 $( Equality deduction for function value.  (Contributed by FL,
        22-Dec-2008.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	ffveq12d_0 $f wff ph $.
 	ffveq12d_1 $f class A $.
 	ffveq12d_2 $f class B $.
@@ -2824,6 +3856,10 @@ $}
 $( Bound-variable hypothesis builder for function value.  (Contributed by
        NM, 14-Nov-1995.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
+	$v y $.
 	$d y F $.
 	$d y A $.
 	$d x y $.
@@ -2838,6 +3874,10 @@ $}
 $( Bound-variable hypothesis builder for mapping, special case.
        (Contributed by Mario Carneiro, 25-Dec-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x C $.
 	fnffvmpt1_0 $f set x $.
 	fnffvmpt1_1 $f class A $.
@@ -2849,6 +3889,11 @@ $( Deduction version of bound-variable hypothesis builder ~ nffv .
        (Contributed by NM, 10-Nov-2005.)  (Revised by Mario Carneiro,
        15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v F $.
+	$v z $.
 	$d z A $.
 	$d z F $.
 	$d x z $.
@@ -2864,6 +3909,12 @@ $}
 $( Move class substitution in and out of a function value.  (Contributed by
        NM, 11-Nov-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v y $.
 	$d y A $.
 	$d y B $.
 	$d y C $.
@@ -2885,6 +3936,12 @@ $( Move class substitution in and out of a function value.(This is
        (Contributed by NM, 10-Nov-2012.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v y $.
 	$d A y $.
 	$d F y $.
 	$d B y $.
@@ -2901,6 +3958,11 @@ $}
 $( Move class substitution in and out of a function value.  (Contributed by
        NM, 10-Nov-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d x F $.
 	fcsbfv2g_0 $f set x $.
 	fcsbfv2g_1 $f class A $.
@@ -2911,6 +3973,10 @@ ${
 $}
 $( Substitution for a function value.  (Contributed by NM, 1-Jan-2006.) $)
 ${
+	$v x $.
+	$v A $.
+	$v C $.
+	$v F $.
 	$d x F $.
 	fcsbfvg_0 $f set x $.
 	fcsbfvg_1 $f class A $.
@@ -2921,6 +3987,9 @@ $}
 $( The value of a class exists.  Corollary 6.13 of [TakeutiZaring] p. 27.
        (Contributed by NM, 30-Dec-1996.) $)
 ${
+	$v A $.
+	$v F $.
+	$v x $.
 	$d x A $.
 	$d x F $.
 	ifvex_0 $f set x $.
@@ -2931,6 +4000,10 @@ $}
 $( Move a conditional outside of a function.  (Contributed by Jeff Madsen,
      2-Sep-2009.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v F $.
 	ffvif_0 $f wff ph $.
 	ffvif_1 $f class A $.
 	ffvif_2 $f class B $.
@@ -2941,6 +4014,11 @@ $( Alternate definition of the value of a function.  Definition 6.11 of
        [TakeutiZaring] p. 26.  (Contributed by NM, 30-Apr-2004.)  (Revised by
        Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v F $.
+	$v z $.
 	$d x y z F $.
 	$d x y z A $.
 	ifv3_0 $f set z $.
@@ -2952,6 +4030,10 @@ ${
 $}
 $( The value of a restricted function.  (Contributed by NM, 2-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v x $.
 	$d x F $.
 	$d x A $.
 	$d x B $.
@@ -2964,6 +4046,9 @@ $}
 $( The value of a member of the domain of a subclass of a function.
      (Contributed by NM, 15-Aug-1994.) $)
 ${
+	$v A $.
+	$v F $.
+	$v G $.
 	ffunssfv_0 $f class A $.
 	ffunssfv_1 $f class F $.
 	ffunssfv_2 $f class G $.
@@ -2972,6 +4057,9 @@ $}
 $( Function value.  Theorem 6.12(1) of [TakeutiZaring] p. 27.  (Contributed
        by NM, 30-Apr-2004.) $)
 ${
+	$v y $.
+	$v A $.
+	$v F $.
 	$d y F $.
 	$d y A $.
 	ftz6.12-1_0 $f set y $.
@@ -2982,6 +4070,9 @@ $}
 $( Function value.  Theorem 6.12(1) of [TakeutiZaring] p. 27.  (Contributed
        by NM, 10-Jul-1994.) $)
 ${
+	$v y $.
+	$v A $.
+	$v F $.
 	$d y F $.
 	$d y A $.
 	ftz6.12_0 $f set y $.
@@ -2992,6 +4083,10 @@ $}
 $( Function value, using bound-variable hypotheses instead of distinct
        variable conditions.  (Contributed by NM, 30-Aug-1999.) $)
 ${
+	$v y $.
+	$v A $.
+	$v F $.
+	$v z $.
 	$d A y z $.
 	$d z F $.
 	itz6.12f_0 $f set z $.
@@ -3004,6 +4099,9 @@ $}
 $( Corollary of Theorem 6.12(1) of [TakeutiZaring] p. 27.  (Contributed by
        NM, 30-Apr-2004.) $)
 ${
+	$v y $.
+	$v A $.
+	$v F $.
 	$d y F $.
 	$d y A $.
 	ftz6.12c_0 $f set y $.
@@ -3014,6 +4112,10 @@ $}
 $( Corollary of Theorem 6.12(2) of [TakeutiZaring] p. 27.  (Contributed by
        Mario Carneiro, 17-Nov-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v y $.
 	$d y F $.
 	$d y A $.
 	$d y B $.
@@ -3027,6 +4129,8 @@ $( Two possibilities for the behavior of a function value.  (Contributed by
      Stefan O'Rear, 2-Nov-2014.)  (Proof shortened by Mario Carneiro,
      31-Aug-2015.) $)
 ${
+	$v F $.
+	$v X $.
 	ffvbr0_0 $f class F $.
 	ffvbr0_1 $f class X $.
 	fvbr0 $p |- ( X F ( F ` X ) \/ ( F ` X ) = (/) ) $= ffvbr0_1 ffvbr0_1 ffvbr0_0 cfv ffvbr0_0 wbr ffvbr0_1 ffvbr0_0 cfv c0 wceq ffvbr0_1 ffvbr0_1 ffvbr0_0 cfv ffvbr0_0 wbr ffvbr0_1 ffvbr0_0 cfv c0 ffvbr0_1 ffvbr0_0 cfv c0 wne ffvbr0_1 ffvbr0_0 cfv ffvbr0_1 ffvbr0_0 cfv wceq ffvbr0_1 ffvbr0_1 ffvbr0_0 cfv ffvbr0_0 wbr ffvbr0_1 ffvbr0_0 cfv eqid ffvbr0_1 ffvbr0_1 ffvbr0_0 cfv ffvbr0_0 tz6.12i mpi necon1bi orri $.
@@ -3034,6 +4138,8 @@ $}
 $( A function value is a member of the range plus null.  (Contributed by
      Scott Fenton, 8-Jun-2011.)  (Revised by Stefan O'Rear, 3-Jan-2015.) $)
 ${
+	$v F $.
+	$v X $.
 	ffvrn0_0 $f class F $.
 	ffvrn0_1 $f class X $.
 	fvrn0 $p |- ( F ` X ) e. ( ran F u. { (/) } ) $= ffvrn0_1 ffvrn0_0 cfv c0 wceq ffvrn0_1 ffvrn0_0 cfv ffvrn0_0 crn c0 csn cun wcel ffvrn0_1 ffvrn0_0 cfv c0 wceq ffvrn0_1 ffvrn0_0 cfv c0 ffvrn0_0 crn c0 csn cun ffvrn0_1 ffvrn0_0 cfv c0 wceq id c0 csn ffvrn0_0 crn c0 csn cun c0 c0 csn ffvrn0_0 crn ssun2 c0 0ex snid sselii syl6eqel ffvrn0_1 ffvrn0_0 cfv c0 wceq wn ffvrn0_0 crn ffvrn0_0 crn c0 csn cun ffvrn0_1 ffvrn0_0 cfv ffvrn0_0 crn c0 csn ssun1 ffvrn0_1 ffvrn0_0 cfv c0 wceq wn ffvrn0_1 cvv wcel ffvrn0_1 ffvrn0_0 cfv cvv wcel ffvrn0_1 ffvrn0_1 ffvrn0_0 cfv ffvrn0_0 wbr ffvrn0_1 ffvrn0_0 cfv ffvrn0_0 crn wcel ffvrn0_1 cvv wcel ffvrn0_1 ffvrn0_0 cfv c0 wceq ffvrn0_1 ffvrn0_0 fvprc con1i ffvrn0_1 ffvrn0_0 cfv cvv wcel ffvrn0_1 ffvrn0_0 cfv c0 wceq wn ffvrn0_1 ffvrn0_0 fvex a1i ffvrn0_1 ffvrn0_1 ffvrn0_0 cfv ffvrn0_0 wbr ffvrn0_1 ffvrn0_0 cfv c0 wceq ffvrn0_1 ffvrn0_1 ffvrn0_0 cfv ffvrn0_0 wbr ffvrn0_1 ffvrn0_0 cfv c0 wceq ffvrn0_0 ffvrn0_1 fvbr0 ori con1i ffvrn0_1 ffvrn0_1 ffvrn0_0 cfv ffvrn0_0 cvv cvv brelrng syl3anc sseldi pm2.61i $.
@@ -3042,6 +4148,8 @@ $( The result of a function value is always a subset of the union of the
      range, even if it is invalid and thus empty.  (Contributed by Stefan
      O'Rear, 2-Nov-2014.)  (Revised by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v F $.
+	$v X $.
 	ffvssunirn_0 $f class F $.
 	ffvssunirn_1 $f class X $.
 	fvssunirn $p |- ( F ` X ) C_ U. ran F $= ffvssunirn_1 ffvssunirn_0 cfv ffvssunirn_0 crn c0 csn cun cuni ffvssunirn_0 crn cuni ffvssunirn_1 ffvssunirn_0 cfv ffvssunirn_0 crn c0 csn cun wcel ffvssunirn_1 ffvssunirn_0 cfv ffvssunirn_0 crn c0 csn cun cuni wss ffvssunirn_0 ffvssunirn_1 fvrn0 ffvssunirn_1 ffvssunirn_0 cfv ffvssunirn_0 crn c0 csn cun elssuni ax-mp ffvssunirn_0 crn c0 csn cun cuni ffvssunirn_0 crn cuni c0 csn cuni cun ffvssunirn_0 crn cuni c0 cun ffvssunirn_0 crn cuni ffvssunirn_0 crn c0 csn uniun c0 csn cuni c0 ffvssunirn_0 crn cuni c0 0ex unisn uneq2i ffvssunirn_0 crn cuni un0 3eqtri sseqtri $.
@@ -3049,6 +4157,9 @@ $}
 $( The value of a class outside its domain is the empty set.  (Contributed
        by NM, 24-Aug-1995.) $)
 ${
+	$v A $.
+	$v F $.
+	$v x $.
 	$d x A $.
 	$d x F $.
 	indmfv_0 $f set x $.
@@ -3059,6 +4170,9 @@ $}
 $( Reverse closure law for function with the empty set not in its domain.
        (Contributed by NM, 26-Apr-1996.) $)
 ${
+	$v A $.
+	$v S $.
+	$v F $.
 	fndmfvrcl_0 $f class A $.
 	fndmfvrcl_1 $f class S $.
 	fndmfvrcl_2 $f class F $.
@@ -3069,6 +4183,9 @@ $}
 $( If a function value has a member, the argument belongs to the domain.
      (Contributed by NM, 12-Feb-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	felfvdm_0 $f class A $.
 	felfvdm_1 $f class B $.
 	felfvdm_2 $f class F $.
@@ -3077,6 +4194,9 @@ $}
 $( If a function value has a member, the argument is a set.  (Contributed by
      Mario Carneiro, 6-Nov-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	felfvex_0 $f class A $.
 	felfvex_1 $f class B $.
 	felfvex_2 $f class F $.
@@ -3085,6 +4205,10 @@ $}
 $( If a function value is nonempty, its argument is a set.  Deduction form
        of ~ elfvex .  (Contributed by David Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	felfvexd_0 $f wff ph $.
 	felfvexd_1 $f class A $.
 	felfvexd_2 $f class B $.
@@ -3095,6 +4219,9 @@ $}
 $( The value of a non-member of a restriction is the empty set.  (Contributed
      by NM, 13-Nov-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fnfvres_0 $f class A $.
 	fnfvres_1 $f class B $.
 	fnfvres_2 $f class F $.
@@ -3104,6 +4231,10 @@ $( If the restriction of a class to a singleton is not a function, its
        value is the empty set.  (Contributed by NM, 8-Aug-2010.)  (Proof
        shortened by Andrew Salmon, 22-Oct-2011.) $)
 ${
+	$v A $.
+	$v F $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y F $.
 	infunsn_0 $f set x $.
@@ -3115,12 +4246,17 @@ $}
 $( Function value of the empty set.  (Contributed by Stefan O'Rear,
      26-Nov-2014.) $)
 ${
+	$v A $.
 	ffv01_0 $f class A $.
 	fv01 $p |- ( (/) ` A ) = (/) $= ffv01_0 c0 cdm wcel wn ffv01_0 c0 cfv c0 wceq ffv01_0 c0 cdm wcel ffv01_0 c0 wcel ffv01_0 noel c0 cdm c0 ffv01_0 dm0 eleq2i mtbir ffv01_0 c0 ndmfv ax-mp $.
 $}
 $( Equal values imply equal values in a restriction.  (Contributed by NM,
      13-Nov-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	ffveqres_0 $f class A $.
 	ffveqres_1 $f class B $.
 	ffveqres_2 $f class F $.
@@ -3131,6 +4267,10 @@ $( The second argument of a binary relation on a function is the function's
        value.  (Contributed by NM, 30-Apr-2004.)  (Revised by Mario Carneiro,
        28-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v y $.
 	$d y A $.
 	$d y F $.
 	$d y B $.
@@ -3143,6 +4283,9 @@ $}
 $( The second element in an ordered pair member of a function is the
        function's value.  (Contributed by NM, 19-Jul-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffunopfv_0 $f class A $.
 	ffunopfv_1 $f class B $.
 	ffunopfv_2 $f class F $.
@@ -3151,6 +4294,11 @@ $}
 $( Equivalence of function value and binary relation.  (Contributed by NM,
        19-Apr-2004.)  (Revised by Mario Carneiro, 28-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v x $.
 	$d x F $.
 	$d x A $.
 	$d x B $.
@@ -3165,6 +4313,10 @@ $}
 $( Equivalence of function value and ordered pair membership.  (Contributed
        by NM, 7-Nov-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ffnopfvb_0 $f class A $.
 	ffnopfvb_1 $f class B $.
 	ffnopfvb_2 $f class C $.
@@ -3174,6 +4326,9 @@ $}
 $( Equivalence of function value and binary relation.  (Contributed by NM,
        26-Mar-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffunbrfvb_0 $f class A $.
 	ffunbrfvb_1 $f class B $.
 	ffunbrfvb_2 $f class F $.
@@ -3182,6 +4337,9 @@ $}
 $( Equivalence of function value and ordered pair membership.  Theorem
        4.3(ii) of [Monk1] p. 42.  (Contributed by NM, 26-Jan-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffunopfvb_0 $f class A $.
 	ffunopfvb_1 $f class B $.
 	ffunopfvb_2 $f class F $.
@@ -3190,6 +4348,9 @@ $}
 $( Function value in terms of a binary relation.  (Contributed by Mario
        Carneiro, 19-Mar-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffunbrfv2b_0 $f class A $.
 	ffunbrfv2b_1 $f class B $.
 	ffunbrfv2b_2 $f class F $.
@@ -3198,6 +4359,10 @@ $}
 $( Representation of a function in terms of its values.  (Contributed by
        FL, 14-Sep-2013.)  (Proof shortened by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
+	$v y $.
 	$d x y A $.
 	$d x y $.
 	$d x y F $.
@@ -3212,6 +4377,10 @@ $( The range of a function expressed as a collection of the function's
        values.  (Contributed by NM, 20-Oct-2005.)  (Proof shortened by Mario
        Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v F $.
 	$d x y A $.
 	$d x y $.
 	$d x y F $.
@@ -3225,6 +4394,11 @@ $}
 $( A member of a function's range is a value of the function.  (Contributed
        by NM, 31-Oct-1995.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y F $.
@@ -3239,6 +4413,10 @@ $}
 $( Alternate definition of the image of a function.  (Contributed by Raph
        Levien, 20-Nov-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v F $.
 	$d x y A $.
 	$d x y $.
 	$d x y F $.
@@ -3253,6 +4431,10 @@ $( Alternate definition of the image of a function as an indexed union of
        singletons of function values.  (Contributed by Raph Levien,
        20-Nov-2006.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
+	$v y $.
 	$d x y A $.
 	$d x y $.
 	$d x y F $.
@@ -3266,6 +4448,11 @@ $}
 $( Membership relation for the values of a function whose image is a
        subclass.  (Contributed by Raph Levien, 20-Nov-2006.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y F $.
@@ -3281,6 +4468,10 @@ $( Function value in an image.  Part of Theorem 4.4(iii) of [Monk1] p. 42.
        (Contributed by NM, 29-Apr-2004.)  (Proof shortened by Andrew Salmon,
        22-Oct-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x A $.
 	$d x B $.
 	$d x F $.
@@ -3293,6 +4484,11 @@ $}
 $( Deduction form of ~ dffn5 .  (Contributed by Mario Carneiro,
        8-Jan-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x A $.
 	$d x F $.
 	ffeqmptd_0 $f wff ph $.
@@ -3306,6 +4502,12 @@ $}
 $( Express a restricted function as a mapping.  (Contributed by Mario
        Carneiro, 18-May-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d x A $.
 	$d x C $.
 	$d x F $.
@@ -3322,6 +4524,10 @@ $}
 $( Representation of a function in terms of its values.  (Contributed by
        Mario Carneiro, 3-Jul-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
+	$v z $.
 	$d x z $.
 	$d x z A $.
 	$d z F $.
@@ -3336,6 +4542,12 @@ $( Function value in an image.  (Contributed by NM, 20-Jan-2007.)  (Proof
        shortened by Andrew Salmon, 22-Oct-2011.)  (Revised by David Abernethy,
        17-Dec-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v y $.
 	$d y A $.
 	$d x y B $.
 	$d x y C $.
@@ -3351,6 +4563,8 @@ $}
 $( The value of the identity function.  (Contributed by NM, 1-May-2004.)
      (Revised by Mario Carneiro, 28-Apr-2015.) $)
 ${
+	$v A $.
+	$v V $.
 	ffvi_0 $f class A $.
 	ffvi_1 $f class V $.
 	fvi $p |- ( A e. V -> ( _I ` A ) = A ) $= cid wfun ffvi_0 ffvi_1 wcel ffvi_0 ffvi_0 cid wbr ffvi_0 cid cfv ffvi_0 wceq funi ffvi_0 ffvi_1 ididg ffvi_0 ffvi_0 cid funbrfv mpsyl $.
@@ -3358,6 +4572,8 @@ $}
 $( The value of the identity function is a subset of the argument.
        (Contributed by Mario Carneiro, 27-Feb-2016.) $)
 ${
+	$v A $.
+	$v x $.
 	$d x A $.
 	ifviss_0 $f set x $.
 	ffviss_0 $f class A $.
@@ -3366,6 +4582,10 @@ $}
 $( The indexed intersection of a function's values is the intersection of
        its range.  (Contributed by NM, 20-Oct-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
+	$v y $.
 	$d x y A $.
 	$d x y F $.
 	ifniinfv_0 $f set y $.
@@ -3376,6 +4596,10 @@ ${
 $}
 $( Singleton of function value.  (Contributed by NM, 22-May-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v y $.
 	$d y A $.
 	$d y B $.
 	$d y F $.
@@ -3388,6 +4612,10 @@ $}
 $( The image of a pair under a funtion.  (Contributed by Jeff Madsen,
      6-Jan-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ffnimapr_0 $f class A $.
 	ffnimapr_1 $f class B $.
 	ffnimapr_2 $f class C $.
@@ -3396,6 +4624,13 @@ ${
 $}
 $( The existence of a subimage.  (Contributed by NM, 8-Apr-2007.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x y z A $.
 	$d w x y z B $.
 	$d w x y z F $.
@@ -3411,6 +4646,12 @@ ${
 $}
 $( The existence of a subimage.  (Contributed by FL, 15-Apr-2007.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v y $.
 	$d A x y $.
 	$d B x y $.
 	$d F x y $.
@@ -3425,6 +4666,8 @@ $}
 $( A simplified expression for the value of a function when we know it's a
      function.  (Contributed by NM, 22-May-1998.) $)
 ${
+	$v A $.
+	$v F $.
 	ffunfv_0 $f class A $.
 	ffunfv_1 $f class F $.
 	funfv $p |- ( Fun F -> ( F ` A ) = U. ( F " { A } ) ) $= ffunfv_1 wfun ffunfv_0 ffunfv_1 cdm wcel ffunfv_0 ffunfv_1 cfv ffunfv_1 ffunfv_0 csn cima cuni wceq ffunfv_1 wfun ffunfv_0 ffunfv_1 cdm wcel ffunfv_0 ffunfv_1 cfv ffunfv_1 ffunfv_0 csn cima cuni wceq ffunfv_1 wfun ffunfv_0 ffunfv_1 cdm wcel wa ffunfv_0 ffunfv_1 cfv ffunfv_0 ffunfv_1 cfv csn cuni ffunfv_1 ffunfv_0 csn cima cuni ffunfv_0 ffunfv_1 cfv ffunfv_0 ffunfv_1 fvex unisn ffunfv_1 wfun ffunfv_0 ffunfv_1 cdm wcel wa ffunfv_0 ffunfv_1 cfv csn ffunfv_1 ffunfv_0 csn cima ffunfv_1 wfun ffunfv_1 ffunfv_1 cdm wfn ffunfv_0 ffunfv_1 cdm wcel ffunfv_0 ffunfv_1 cfv csn ffunfv_1 ffunfv_0 csn cima wceq ffunfv_1 ffunfv_1 cdm wfn ffunfv_1 wfun ffunfv_1 cdm ffunfv_1 cdm wceq ffunfv_1 cdm eqid ffunfv_1 ffunfv_1 cdm df-fn mpbiran2 ffunfv_1 cdm ffunfv_0 ffunfv_1 fnsnfv sylanbr unieqd syl5eqr ex ffunfv_0 ffunfv_1 cdm wcel wn ffunfv_0 ffunfv_1 cfv c0 ffunfv_1 ffunfv_0 csn cima cuni ffunfv_0 ffunfv_1 ndmfv ffunfv_0 ffunfv_1 cdm wcel wn ffunfv_1 ffunfv_0 csn cima cuni c0 cuni c0 ffunfv_0 ffunfv_1 cdm wcel wn ffunfv_1 ffunfv_0 csn cima c0 ffunfv_0 ffunfv_1 ndmima unieqd uni0 syl6eq eqtr4d pm2.61d1 $.
@@ -3432,6 +4675,9 @@ $}
 $( The value of a function.  Definition of function value in [Enderton]
        p. 43.  (Contributed by NM, 22-May-1998.) $)
 ${
+	$v y $.
+	$v A $.
+	$v F $.
 	$d y A $.
 	$d y F $.
 	ffunfv2_0 $f set y $.
@@ -3443,6 +4689,10 @@ $( The value of a function.  Version of ~ funfv2 using a bound-variable
        hypotheses instead of distinct variable conditions.  (Contributed by NM,
        19-Feb-2006.) $)
 ${
+	$v y $.
+	$v A $.
+	$v F $.
+	$v w $.
 	$d w A $.
 	$d w F $.
 	$d w y $.
@@ -3457,6 +4707,9 @@ $}
 $( Value of the union of two functions when the domains are separate.
      (Contributed by FL, 7-Nov-2011.) $)
 ${
+	$v A $.
+	$v F $.
+	$v G $.
 	ffvun_0 $f class A $.
 	ffvun_1 $f class F $.
 	ffvun_2 $f class G $.
@@ -3465,6 +4718,11 @@ $}
 $( The value of a union when the argument is in the first domain.
        (Contributed by Scott Fenton, 29-Jun-2013.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
+	$v X $.
 	ffvun1_0 $f class A $.
 	ffvun1_1 $f class B $.
 	ffvun1_2 $f class F $.
@@ -3475,6 +4733,11 @@ $}
 $( The value of a union when the argument is in the second domain.
      (Contributed by Scott Fenton, 29-Jun-2013.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
+	$v X $.
 	ffvun2_0 $f class A $.
 	ffvun2_1 $f class B $.
 	ffvun2_2 $f class F $.
@@ -3485,6 +4748,11 @@ $}
 $( Alternate definition of function value ~ df-fv that doesn't require
        dummy variables.  (Contributed by NM, 4-Aug-2010.) $)
 ${
+	$v A $.
+	$v F $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z A $.
 	$d x y z F $.
 	idffv2_0 $f set x $.
@@ -3496,6 +4764,11 @@ ${
 $}
 $( Domains of a function composition.  (Contributed by NM, 27-Jan-1997.) $)
 ${
+	$v A $.
+	$v F $.
+	$v G $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y F $.
 	$d x y G $.
@@ -3511,6 +4784,11 @@ $( Value of a function composition.  Similar to second part of Theorem 3H
        by Andrew Salmon, 22-Oct-2011.)  (Revised by Stefan O'Rear,
        16-Oct-2014.) $)
 ${
+	$v A $.
+	$v F $.
+	$v G $.
+	$v X $.
+	$v x $.
 	$d x A $.
 	$d x F $.
 	$d x G $.
@@ -3526,6 +4804,9 @@ $( Value of a function composition.  Similar to Exercise 5 of [TakeutiZaring]
      p. 28.  (Contributed by NM, 22-Apr-2006.)  (Proof shortened by Mario
      Carneiro, 26-Dec-2014.) $)
 ${
+	$v A $.
+	$v F $.
+	$v G $.
 	ffvco_0 $f class A $.
 	ffvco_1 $f class F $.
 	ffvco_2 $f class G $.
@@ -3534,6 +4815,11 @@ $}
 $( Value of a function composition.  (Contributed by NM, 3-Jan-2004.)
      (Revised by Mario Carneiro, 26-Dec-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v G $.
 	ffvco3_0 $f class A $.
 	ffvco3_1 $f class B $.
 	ffvco3_2 $f class C $.
@@ -3544,6 +4830,9 @@ $}
 $( Conditions for a composition to be expandable without conditions on the
        argument.  (Contributed by Stefan O'Rear, 31-Mar-2015.) $)
 ${
+	$v F $.
+	$v G $.
+	$v X $.
 	ffvco4i_0 $f class F $.
 	ffvco4i_1 $f class G $.
 	ffvco4i_2 $f class X $.
@@ -3555,6 +4844,16 @@ $( Value of a function given by ordered-pair class abstraction.
        (Contributed by NM, 6-Mar-1996.)  (Revised by Mario Carneiro,
        28-Apr-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -3578,6 +4877,16 @@ $}
 $( Value of a function given by ordered-pair class abstraction.
        (Contributed by NM, 23-Oct-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -3601,6 +4910,14 @@ $}
 $( Value of a function given in maps-to notation.  (Contributed by NM,
        2-Oct-2007.)  (Revised by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v F $.
+	$v y $.
 	$d x y A $.
 	$d y B $.
 	$d x C y $.
@@ -3620,6 +4937,12 @@ $}
 $( Value of a function given in maps-to notation.  (Contributed by Mario
        Carneiro, 23-Apr-2014.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d x A $.
 	$d x C $.
 	$d x D $.
@@ -3636,6 +4959,12 @@ $}
 $( Value of a function given in maps-to notation.  (Contributed by NM,
          17-Aug-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d x A $.
 	$d x C $.
 	$d x D $.
@@ -3654,6 +4983,13 @@ $( Value of a function given in maps-to notation, using explicit class
        substitution.  (Contributed by Scott Fenton, 17-Jul-2013.)  (Revised by
        Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v V $.
+	$v y $.
 	$d y A $.
 	$d y B $.
 	$d x y C $.
@@ -3671,6 +5007,13 @@ $( Value of a function given in maps-to notation, with a slightly
          different sethood condition.  (Contributed by Stefan O'Rear,
          30-Jan-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v V $.
 	$d x A $.
 	$d x C $.
 	$d x D $.
@@ -3690,6 +5033,12 @@ $}
 $( Value of a function given in maps-to notation, with a slightly different
        sethood condition.  (Contributed by Mario Carneiro, 11-Sep-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d x A $.
 	$d x C $.
 	$d x D $.
@@ -3707,6 +5056,14 @@ $}
 $( Deduction version of ~ fvmpt .  (Contributed by Scott Fenton,
        18-Feb-2013.)  (Revised by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v V $.
 	$d x A $.
 	$d x C $.
 	$d x D $.
@@ -3728,6 +5085,11 @@ $}
 $( Value of a function given by the "maps to" notation.  (Contributed by
        Mario Carneiro, 23-Apr-2014.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v y $.
 	$d x y A $.
 	$d y B $.
 	$d y F $.
@@ -3742,6 +5104,11 @@ $}
 $( Value of a function given by the "maps to" notation.  (Contributed by
        FL, 21-Jun-2010.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d x A $.
 	ffvmpt2_0 $f set x $.
 	ffvmpt2_1 $f class A $.
@@ -3755,6 +5122,13 @@ $( If all the values of the mapping are subsets of a class ` C ` , then so
        is any evaluation of the mapping, even if ` D ` is not in the base set
        ` A ` .  (Contributed by Mario Carneiro, 13-Feb-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v y $.
 	$d x y A $.
 	$d y B $.
 	$d y D $.
@@ -3780,6 +5154,13 @@ $( Express a function ` F ` whose value ` B ` may not always be a set in
        to be the empty set.  (Contributed by Mario Carneiro, 14-Jul-2013.)
        (Revised by Mario Carneiro, 23-Apr-2014.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v G $.
+	$v y $.
 	$d x y A $.
 	$d y B $.
 	$d y C $.
@@ -3797,6 +5178,14 @@ $}
 $( Alternate deduction version of ~ fvmpt , suitable for iteration.
          (Contributed by Mario Carneiro, 7-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v D $.
+	$v F $.
+	$v V $.
 	$d x A $.
 	$d x D $.
 	$d x ph $.
@@ -3818,6 +5207,14 @@ $}
 $( Alternate deduction version of ~ fvmpt , suitable for iteration.
        (Contributed by Mario Carneiro, 7-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v D $.
+	$v F $.
+	$v V $.
 	$d x A $.
 	$d x D $.
 	$d x ph $.
@@ -3839,6 +5236,14 @@ $}
 $( Alternate deduction version of ~ fvmpt , suitable for iteration.
        (Contributed by Mario Carneiro, 7-Jan-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v V $.
 	$d x A $.
 	$d x C $.
 	$d x D $.
@@ -3859,6 +5264,11 @@ $}
 $( Bidirectional equality theorem for a mapping abstraction.  Equivalent to
        ~ eqfnfv .  (Contributed by Mario Carneiro, 14-Nov-2014.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
 	$d x A $.
 	fmpteqb_0 $f set x $.
 	fmpteqb_1 $f class A $.
@@ -3870,6 +5280,13 @@ $}
 $( Closed theorem form of ~ fvmpt .  (Contributed by Scott Fenton,
        21-Feb-2013.)  (Revised by Mario Carneiro, 11-Sep-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v V $.
 	$d x A $.
 	$d x C $.
 	$d x D $.
@@ -3887,6 +5304,13 @@ $( Value of a function given by an ordered-pair class abstraction.  This
        variable conditions.  (Contributed by NM, 8-Nov-2005.)  (Revised by
        Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v V $.
 	$d x D $.
 	ffvmptf_0 $f set x $.
 	ffvmptf_1 $f class A $.
@@ -3907,6 +5331,12 @@ $( The value of a function given by an ordered-pair class abstraction is
        of distinct variable conditions.  (Contributed by NM, 21-Oct-2003.)
        (Revised by Mario Carneiro, 11-Sep-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d x D $.
 	ffvmptnf_0 $f set x $.
 	ffvmptnf_1 $f class A $.
@@ -3927,6 +5357,12 @@ $( This somewhat non-intuitive theorem tells us the value of its function
        (Contributed by NM, 21-Oct-2003.)  (Revised by Mario Carneiro,
        9-Sep-2013.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d x A $.
 	$d x C $.
 	$d x D $.
@@ -3944,6 +5380,12 @@ $( A mapping always evaluates to a subset of the substituted expression in
        the mapping, even if this is a proper class, or we are out of the
        domain.  (Contributed by Mario Carneiro, 13-Feb-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d x A $.
 	$d x C $.
 	$d x D $.
@@ -3960,6 +5402,12 @@ $}
 $( Value of a function given by an ordered-pair class abstraction, outside
        of its domain.  (Contributed by NM, 28-Mar-2008.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x y A $.
 	ffvopab4ndm_0 $f wff ph $.
 	ffvopab4ndm_1 $f set x $.
@@ -3974,6 +5422,16 @@ $( Value of a function given by ordered-pair class abstraction.
        (Contributed by Jeff Madsen, 2-Sep-2009.)  (Revised by Mario Carneiro,
        11-Sep-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v F $.
 	$d A x y $.
 	$d ps x y $.
 	$d B y $.
@@ -3998,6 +5456,10 @@ $( Equality of functions is determined by their values.  Special case of
        (Contributed by NM, 3-Aug-1994.)  (Proof shortened by Andrew Salmon,
        22-Oct-2011.)  (Proof shortened by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
+	$v G $.
 	$d x A $.
 	$d x F $.
 	$d x G $.
@@ -4011,6 +5473,11 @@ $( Equality of functions is determined by their values.  Exercise 4 of
        [TakeutiZaring] p. 28.  (Contributed by NM, 3-Aug-1994.)  (Revised by
        Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	$d x A $.
 	$d x F $.
 	$d x G $.
@@ -4024,6 +5491,11 @@ $}
 $( Derive equality of functions from equality of their values.
        (Contributed by Jeff Madsen, 2-Sep-2009.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	$d x A $.
 	$d x F $.
 	$d x G $.
@@ -4038,6 +5510,11 @@ $}
 $( Deduction for equality of functions.  (Contributed by Mario Carneiro,
        24-Jul-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v F $.
+	$v G $.
 	$d x A $.
 	$d x F $.
 	$d x G $.
@@ -4057,6 +5534,11 @@ $( Equality of functions is determined by their values.  Special case of
        This version of ~ eqfnfv uses bound-variable hypotheses instead of
        distinct variable conditions.  (Contributed by NM, 29-Jan-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
+	$v G $.
+	$v z $.
 	$d x z A $.
 	$d z F $.
 	$d z G $.
@@ -4072,6 +5554,9 @@ $}
 $( Equality of functions is determined by their values.  (Contributed by
        Scott Fenton, 19-Jun-2011.) $)
 ${
+	$v x $.
+	$v F $.
+	$v G $.
 	$d F x $.
 	$d G x $.
 	feqfunfv_0 $f set x $.
@@ -4082,6 +5567,11 @@ $}
 $( Equality of restricted functions is determined by their values.
        (Contributed by NM, 3-Aug-1994.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	$d x B $.
 	$d x F $.
 	$d x G $.
@@ -4095,6 +5585,11 @@ $}
 $( Two ways to express the locus of differences between two functions.
        (Contributed by Stefan O'Rear, 17-Jan-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
+	$v G $.
+	$v y $.
 	$d F x y $.
 	$d G x y $.
 	$d A x y $.
@@ -4108,6 +5603,10 @@ $}
 $( The difference set between two functions is commutative.  (Contributed
        by Stefan O'Rear, 17-Jan-2015.) $)
 ${
+	$v A $.
+	$v F $.
+	$v G $.
+	$v x $.
 	$d F x $.
 	$d G x $.
 	$d A x $.
@@ -4120,6 +5619,10 @@ $}
 $( The difference set of two functions is empty if and only if the
        functions are equal.  (Contributed by Stefan O'Rear, 17-Jan-2015.) $)
 ${
+	$v A $.
+	$v F $.
+	$v G $.
+	$v x $.
 	$d F x $.
 	$d G x $.
 	$d A x $.
@@ -4132,6 +5635,11 @@ $}
 $( Two ways to express the locus of equality between two functions.
        (Contributed by Stefan O'Rear, 17-Jan-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
+	$v G $.
+	$v y $.
 	$d F x y $.
 	$d G x y $.
 	$d A x y $.
@@ -4145,6 +5653,10 @@ $}
 $( Two functions are equal iff their equalizer is the whole domain.
        (Contributed by Stefan O'Rear, 7-Mar-2015.) $)
 ${
+	$v A $.
+	$v F $.
+	$v G $.
+	$v x $.
 	$d F x $.
 	$d G x $.
 	$d A x $.
@@ -4157,6 +5669,9 @@ $}
 $( Two functions are equal iff their equalizer contains the whole domain.
        (Contributed by Stefan O'Rear, 9-Mar-2015.) $)
 ${
+	$v A $.
+	$v F $.
+	$v G $.
 	ffneqeql2_0 $f class A $.
 	ffneqeql2_1 $f class F $.
 	ffneqeql2_2 $f class G $.
@@ -4165,6 +5680,10 @@ $}
 $( Two functions are equal on a subset iff their equalizer contains that
        subset.  (Contributed by Stefan O'Rear, 7-Mar-2015.) $)
 ${
+	$v A $.
+	$v F $.
+	$v G $.
+	$v X $.
 	ffnreseql_0 $f class A $.
 	ffnreseql_1 $f class F $.
 	ffnreseql_2 $f class G $.
@@ -4175,6 +5694,10 @@ $( The range of a choice function (a function that chooses an element from
        each member of its domain) is included in the union of its domain.
        (Contributed by NM, 31-Aug-1999.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
+	$v y $.
 	$d x y A $.
 	$d x y F $.
 	ichfnrn_0 $f set y $.
@@ -4186,6 +5709,8 @@ $}
 $( Ordered pair with function value.  Part of Theorem 4.3(i) of [Monk1]
        p. 41.  (Contributed by NM, 14-Oct-1996.) $)
 ${
+	$v A $.
+	$v F $.
 	ffunfvop_0 $f class A $.
 	ffunfvop_1 $f class F $.
 	funfvop $p |- ( ( Fun F /\ A e. dom F ) -> <. A , ( F ` A ) >. e. F ) $= ffunfvop_1 wfun ffunfvop_0 ffunfvop_1 cdm wcel wa ffunfvop_0 ffunfvop_1 cfv ffunfvop_0 ffunfvop_1 cfv wceq ffunfvop_0 ffunfvop_0 ffunfvop_1 cfv cop ffunfvop_1 wcel ffunfvop_0 ffunfvop_1 cfv eqid ffunfvop_0 ffunfvop_0 ffunfvop_1 cfv ffunfvop_1 funopfvb mpbii $.
@@ -4193,6 +5718,8 @@ $}
 $( Two ways to say that ` A ` is in the domain of ` F ` .  (Contributed by
      Mario Carneiro, 1-May-2014.) $)
 ${
+	$v A $.
+	$v F $.
 	ffunfvbrb_0 $f class A $.
 	ffunfvbrb_1 $f class F $.
 	funfvbrb $p |- ( Fun F -> ( A e. dom F <-> A F ( F ` A ) ) ) $= ffunfvbrb_1 wfun ffunfvbrb_0 ffunfvbrb_1 cdm wcel ffunfvbrb_0 ffunfvbrb_0 ffunfvbrb_1 cfv ffunfvbrb_1 wbr ffunfvbrb_1 wfun ffunfvbrb_0 ffunfvbrb_1 cdm wcel wa ffunfvbrb_0 ffunfvbrb_0 ffunfvbrb_1 cfv cop ffunfvbrb_1 wcel ffunfvbrb_0 ffunfvbrb_0 ffunfvbrb_1 cfv ffunfvbrb_1 wbr ffunfvbrb_0 ffunfvbrb_1 funfvop ffunfvbrb_0 ffunfvbrb_0 ffunfvbrb_1 cfv ffunfvbrb_1 df-br sylibr ffunfvbrb_1 wfun ffunfvbrb_1 wrel ffunfvbrb_0 ffunfvbrb_0 ffunfvbrb_1 cfv ffunfvbrb_1 wbr ffunfvbrb_0 ffunfvbrb_1 cdm wcel ffunfvbrb_1 funrel ffunfvbrb_0 ffunfvbrb_0 ffunfvbrb_1 cfv ffunfvbrb_1 releldm sylan impbida $.
@@ -4200,6 +5727,9 @@ $}
 $( A member of a preimage is a function value argument.  (Contributed by NM,
      4-May-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffvimacnvi_0 $f class A $.
 	ffvimacnvi_1 $f class B $.
 	ffvimacnvi_2 $f class F $.
@@ -4211,6 +5741,9 @@ $( The argument of a function value belongs to the preimage of any class
      strengthened to a biconditional."  (Contributed by Raph Levien,
      20-Nov-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffvimacnv_0 $f class A $.
 	ffvimacnv_1 $f class B $.
 	ffvimacnv_2 $f class F $.
@@ -4222,6 +5755,10 @@ $( A kind of contraposition law that infers an image subclass from a
        a singleton, but it works this way round too."  (Contributed by Raph
        Levien, 20-Nov-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v x $.
 	$d F x $.
 	$d A x $.
 	$d B x $.
@@ -4234,6 +5771,10 @@ $}
 $( A subclass of a preimage in terms of function values.  (Contributed by
        NM, 15-May-2007.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d F x $.
 	$d A x $.
 	$d B x $.
@@ -4246,6 +5787,10 @@ $}
 $( Two ways of specifying that a function is constant on a subdomain.
        (Contributed by NM, 8-Mar-2007.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d F x $.
 	$d A x $.
 	$d B x $.
@@ -4261,6 +5806,9 @@ $( Another proof of ~ fvimacnv , based on ~ funimass3 .  If ~ funimass3 is
      Raph Levien, 20-Nov-2006.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffvimacnvALT_0 $f class A $.
 	ffvimacnvALT_1 $f class B $.
 	ffvimacnvALT_2 $f class F $.
@@ -4269,6 +5817,10 @@ $}
 $( Membership in the preimage of a set under a function.  (Contributed by
      Jeff Madsen, 2-Sep-2009.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	felpreima_0 $f class A $.
 	felpreima_1 $f class B $.
 	felpreima_2 $f class C $.
@@ -4279,6 +5831,10 @@ $( Membership in the preimage of a singleton, under a function.
        (Contributed by Mario Carneiro, 12-May-2014.)  (Proof shortened by Mario
        Carneiro, 28-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ffniniseg_0 $f class A $.
 	ffniniseg_1 $f class B $.
 	ffniniseg_2 $f class C $.
@@ -4288,6 +5844,10 @@ $}
 $( Inverse images under functions expressed as abstractions.  (Contributed
        by Stefan O'Rear, 1-Feb-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x A $.
 	$d x F $.
 	$d x B $.
@@ -4300,6 +5860,10 @@ $}
 $( Inverse point images under functions expressed as abstractions.
        (Contributed by Stefan O'Rear, 1-Feb-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x A $.
 	$d x F $.
 	$d x B $.
@@ -4312,6 +5876,10 @@ $}
 $( Support sets of functions expressed as abstractions.  (Contributed by
        Stefan O'Rear, 1-Feb-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x A $.
 	$d x F $.
 	$d x B $.
@@ -4324,6 +5892,11 @@ $}
 $( Existential quantification restricted to a support.  (Contributed by
        Stefan O'Rear, 23-Mar-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v F $.
+	$v Z $.
 	$d F x $.
 	$d A x $.
 	frexsupp_0 $f wff ph $.
@@ -4335,6 +5908,10 @@ ${
 $}
 $( Preimage of a union.  (Contributed by Jeff Madsen, 2-Sep-2009.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v x $.
 	$d x F $.
 	$d x A $.
 	$d x B $.
@@ -4347,6 +5924,9 @@ $}
 $( Preimage of an intersection.  (Contributed by Jeff Madsen, 2-Sep-2009.)
        (Proof shortened by Mario Carneiro, 14-Jun-2016.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	finpreima_0 $f class A $.
 	finpreima_1 $f class B $.
 	finpreima_2 $f class F $.
@@ -4355,6 +5935,9 @@ $}
 $( Preimage of a difference.  (Contributed by Mario Carneiro,
        14-Jun-2016.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fdifpreima_0 $f class A $.
 	fdifpreima_1 $f class B $.
 	fdifpreima_2 $f class F $.
@@ -4363,6 +5946,10 @@ $}
 $( The preimage of a restricted function.  (Contributed by Jeff Madsen,
        2-Sep-2009.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v x $.
 	$d x F $.
 	$d x A $.
 	$d x B $.
@@ -4374,6 +5961,11 @@ ${
 $}
 $( Preimage of an intersection.  (Contributed by FL, 16-Apr-2012.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v y $.
 	$d A x y $.
 	$d B y $.
 	$d F x y $.
@@ -4386,6 +5978,9 @@ ${
 $}
 $( Preimage of an intersection.  (Contributed by FL, 28-Apr-2012.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
 	$d A x $.
 	$d F x $.
 	fintpreima_0 $f set x $.
@@ -4396,6 +5991,9 @@ $}
 $( The preimage of the codomain of a mapping is the mapping's domain.
      (Contributed by FL, 25-Jan-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffimacnv_0 $f class A $.
 	ffimacnv_1 $f class B $.
 	ffimacnv_2 $f class F $.
@@ -4404,6 +6002,13 @@ $}
 $( Show that the support of a function is contained in a set.  (Contributed
        by Mario Carneiro, 19-Dec-2014.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v k $.
+	$v F $.
+	$v W $.
+	$v Z $.
 	$d k F $.
 	$d k ph $.
 	$d k W $.
@@ -4422,6 +6027,13 @@ $}
 $( A function is zero outside its support.  (Contributed by Mario Carneiro,
        19-Dec-2014.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v W $.
+	$v X $.
+	$v Z $.
 	fsuppssr_0 $f wff ph $.
 	fsuppssr_1 $f class A $.
 	fsuppssr_2 $f class B $.
@@ -4436,6 +6048,9 @@ $}
 $( Ordered pair with function value.  Part of Theorem 4.3(i) of [Monk1]
      p. 41.  (Contributed by NM, 30-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffnopfv_0 $f class A $.
 	ffnopfv_1 $f class B $.
 	ffnopfv_2 $f class F $.
@@ -4444,6 +6059,10 @@ $}
 $( A function's value belongs to its range.  (Contributed by NM,
        14-Oct-1996.) $)
 ${
+	$v A $.
+	$v F $.
+	$v x $.
+	$v y $.
 	$d x y F $.
 	$d x A $.
 	ifvelrn_0 $f set x $.
@@ -4455,6 +6074,9 @@ $}
 $( A function's value belongs to its range.  (Contributed by NM,
      15-Oct-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffnfvelrn_0 $f class A $.
 	ffnfvelrn_1 $f class B $.
 	ffnfvelrn_2 $f class F $.
@@ -4463,6 +6085,10 @@ $}
 $( A function's value belongs to its codomain.  (Contributed by NM,
      12-Aug-1999.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	fffvelrn_0 $f class A $.
 	fffvelrn_1 $f class B $.
 	fffvelrn_2 $f class C $.
@@ -4472,6 +6098,10 @@ $}
 $( A function's value belongs to its codomain.  (Contributed by NM,
        6-Apr-2005.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	fffvelrni_0 $f class A $.
 	fffvelrni_1 $f class B $.
 	fffvelrni_2 $f class C $.
@@ -4482,6 +6112,11 @@ $}
 $( A function's value belongs to its codomain.  (Contributed by Mario
        Carneiro, 29-Dec-2016.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	fffvelrnda_0 $f wff ph $.
 	fffvelrnda_1 $f class A $.
 	fffvelrnda_2 $f class B $.
@@ -4493,6 +6128,11 @@ $}
 $( A function's value belongs to its codomain.  (Contributed by Mario
        Carneiro, 29-Dec-2016.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	fffvelrnd_0 $f wff ph $.
 	fffvelrnd_1 $f class A $.
 	fffvelrnd_2 $f class B $.
@@ -4506,6 +6146,12 @@ $( Restricted existential quantification over the range of a function.
        (Contributed by Mario Carneiro, 24-Dec-2013.)  (Revised by Mario
        Carneiro, 20-Aug-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v F $.
 	$d x y A $.
 	$d x y F $.
 	$d x ps $.
@@ -4523,6 +6169,12 @@ $( Restricted universal quantification over the range of a function.
        (Contributed by Mario Carneiro, 24-Dec-2013.)  (Revised by Mario
        Carneiro, 20-Aug-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v F $.
 	$d x y A $.
 	$d x y F $.
 	$d x ps $.
@@ -4539,6 +6191,16 @@ $}
 $( A restricted quantifier over an image set.  (Contributed by Mario
        Carneiro, 20-Aug-2015.) $)
 ${
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v V $.
+	$v z $.
+	$v w $.
 	$d w x z A $.
 	$d y B $.
 	$d y ch $.
@@ -4561,6 +6223,14 @@ $}
 $( A restricted quantifier over an image set.  (Contributed by Mario
        Carneiro, 20-Aug-2015.) $)
 ${
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v V $.
 	$d x A $.
 	$d y B $.
 	$d y ch $.
@@ -4581,6 +6251,10 @@ $}
 $( Unconditional closure of a function when the range includes the empty
        set.  (Contributed by Mario Carneiro, 12-Sep-2013.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ff0cli_0 $f class A $.
 	ff0cli_1 $f class B $.
 	ff0cli_2 $f class C $.
@@ -4591,6 +6265,9 @@ ${
 $}
 $( Alternate definition of a mapping.  (Contributed by NM, 14-Nov-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fdff2_0 $f class A $.
 	fdff2_1 $f class B $.
 	fdff2_2 $f class F $.
@@ -4598,6 +6275,12 @@ ${
 $}
 $( Alternate definition of a mapping.  (Contributed by NM, 20-Mar-2007.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z F $.
@@ -4611,6 +6294,11 @@ ${
 $}
 $( Alternate definition of a mapping.  (Contributed by NM, 20-Mar-2007.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x y A $.
 	$d x y B $.
 	$d x y F $.
@@ -4624,6 +6312,11 @@ $}
 $( An onto mapping expressed in terms of function values.  (Contributed by
        NM, 29-Oct-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x y A $.
 	$d x y B $.
 	$d x y F $.
@@ -4637,6 +6330,11 @@ $}
 $( Alternate definition of an onto mapping.  (Contributed by NM,
        20-Mar-2007.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x y A $.
 	$d x y B $.
 	$d x y F $.
@@ -4650,6 +6348,11 @@ $}
 $( Alternate definition of an onto mapping.  (Contributed by NM,
        20-Mar-2007.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x y A $.
 	$d x y B $.
 	$d x y F $.
@@ -4664,6 +6367,12 @@ $( A relation equivalent to the existence of an onto mapping.  The
        right-hand ` f ` is not necessarily a function.  (Contributed by NM,
        20-Mar-2007.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v f $.
+	$v g $.
 	$d f g x y A $.
 	$d f g x y B $.
 	$d x y $.
@@ -4678,6 +6387,12 @@ $}
 $( Property of a surjective function.  (Contributed by Jeff Madsen,
        4-Jan-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v y $.
 	$d F x y $.
 	$d A x y $.
 	$d B x y $.
@@ -4693,6 +6408,14 @@ $}
 $( If a composition of two functions is surjective, then the function on
        the left is surjective.  (Contributed by Jeff Madsen, 16-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v G $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d F x y z $.
 	$d G x y z $.
 	$d A y z $.
@@ -4711,6 +6434,12 @@ $}
 $( Functionality of the mapping operation.  (Contributed by Mario Carneiro,
        26-Jul-2013.)  (Revised by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -4727,6 +6456,13 @@ $}
 $( Express bijection for a mapping operation.  (Contributed by Mario
        Carneiro, 30-May-2015.)  (Revised by Mario Carneiro, 4-Dec-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d y z C $.
@@ -4744,6 +6480,11 @@ $}
 $( Functionality of the mapping operation.  (Contributed by NM,
        19-Mar-2005.)  (Revised by Mario Carneiro, 1-Sep-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d x A $.
 	$d x B $.
 	ffmpti_0 $f set x $.
@@ -4758,6 +6499,12 @@ $}
 $( Domain and codomain of the mapping operation; deduction form.
        (Contributed by Mario Carneiro, 13-Jan-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d x A $.
 	$d x C $.
 	$d x ph $.
@@ -4774,6 +6521,11 @@ $}
 $( A function maps to a class to which all values belong.  (Contributed by
        NM, 3-Dec-2003.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y F $.
@@ -4788,6 +6540,11 @@ $( A function maps to a class to which all values belong.  This version of
        ~ ffnfv uses bound-variable hypotheses instead of distinct variable
        conditions.  (Contributed by NM, 28-Sep-2006.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v z $.
 	$d z A $.
 	$d z B $.
 	$d z F $.
@@ -4805,6 +6562,10 @@ $}
 $( An upper bound for range determined by function values.  (Contributed by
        NM, 8-Oct-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x A $.
 	$d x B $.
 	$d x F $.
@@ -4817,6 +6578,14 @@ $}
 $( Domain and codomain of the mapping operation; deduction form.
        (Contributed by NM, 27-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v V $.
 	$d x A $.
 	$d y A $.
 	$d y C $.
@@ -4840,6 +6609,14 @@ $( Domain and codomain of the mapping operation; deduction form.
        (Contributed by NM, 9-Apr-2013.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v V $.
 	$d x y A $.
 	$d y C $.
 	$d y F $.
@@ -4860,6 +6637,10 @@ $}
 $( A necessary and sufficient condition for a restricted function.
        (Contributed by Mario Carneiro, 14-Nov-2013.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x A $.
 	$d x B $.
 	$d x F $.
@@ -4875,6 +6656,20 @@ $( Composition of two functions expressed as ordered-pair class
        ` ( 3 * ( x + 2 ) ) ` .  (Contributed by FL, 21-Jun-2012.)  (Revised by
        Mario Carneiro, 24-Jul-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v T $.
+	$v F $.
+	$v G $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
 	$d u v w x z A $.
 	$d u x y B $.
 	$d u w z F $.
@@ -4906,6 +6701,18 @@ $}
 $( Version of ~ fmptco where ` ph ` needn't be distinct from ` x ` .
          (Contributed by NM, 27-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v T $.
+	$v F $.
+	$v G $.
+	$v z $.
+	$v w $.
 	$d w x y z B $.
 	$d w y z R $.
 	$d w x z S $.
@@ -4934,6 +6741,16 @@ $( Composition of two functions expressed as mapping abstractions.
        (Contributed by NM, 22-May-2006.)  (Revised by Mario Carneiro,
        31-Aug-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v G $.
+	$v z $.
 	$d x y z B $.
 	$d y z R $.
 	$d x z S $.
@@ -4959,6 +6776,13 @@ $( Express composition of two functions as a maps-to applying both in
        sequence.  (Contributed by Stefan O'Rear, 5-Oct-2014.)  (Proof shortened
        by Mario Carneiro, 27-Dec-2014.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x C $.
@@ -4976,6 +6800,12 @@ $}
 $( Composition with a constant function.  (Contributed by Stefan O'Rear,
        11-Mar-2015.) $)
 ${
+	$v F $.
+	$v I $.
+	$v X $.
+	$v Y $.
+	$v x $.
+	$v y $.
 	$d F x y $.
 	$d I x $.
 	$d X x y $.
@@ -4991,6 +6821,11 @@ $}
 $( A function maps a singleton to a singleton iff it is the singleton of an
        ordered pair.  (Contributed by NM, 10-Dec-2003.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y F $.
@@ -5006,6 +6841,13 @@ $}
 $( A function maps a singleton to a singleton iff it is the singleton of an
        ordered pair.  (Contributed by NM, 26-Oct-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v a $.
+	$v b $.
 	$d A a b $.
 	$d B b $.
 	$d F a b $.
@@ -5021,6 +6863,9 @@ $}
 $( A function that maps a singleton to a class is the singleton of an
        ordered pair.  (Contributed by NM, 19-May-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffsn2_0 $f class A $.
 	ffsn2_1 $f class B $.
 	ffsn2_2 $f class F $.
@@ -5030,6 +6875,10 @@ $}
 $( The cross product of two singletons.  (Contributed by Mario Carneiro,
      30-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	fxpsng_0 $f class A $.
 	fxpsng_1 $f class B $.
 	fxpsng_2 $f class V $.
@@ -5039,6 +6888,8 @@ $}
 $( The cross product of two singletons.  (Contributed by NM,
        4-Nov-2006.) $)
 ${
+	$v A $.
+	$v B $.
 	fxpsn_0 $f class A $.
 	fxpsn_1 $f class B $.
 	expsn_0 $e |- A e. _V $.
@@ -5049,6 +6900,9 @@ $( Alternate definition for the "maps to" notation ~ df-mpt (although it
        requires that ` B ` be a set).  (Contributed by NM, 24-Aug-2010.)
        (Revised by Mario Carneiro, 30-Dec-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	fdfmpt_0 $f set x $.
 	fdfmpt_1 $f class A $.
 	fdfmpt_2 $f class B $.
@@ -5059,6 +6913,10 @@ $( A function expressed as the range of another function.  (Contributed by
        Mario Carneiro, 22-Jun-2013.)  (Proof shortened by Mario Carneiro,
        31-Aug-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -5073,6 +6931,9 @@ $( If ` A ` is not in ` C ` , then the restriction of a singleton of
      ` <. A , B >. ` to ` C ` is null.  (Contributed by Scott Fenton,
      15-Apr-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fressnop0_0 $f class A $.
 	fressnop0_1 $f class B $.
 	fressnop0_2 $f class C $.
@@ -5081,6 +6942,10 @@ $}
 $( A function with a domain of two elements.  (Contributed by Jeff Madsen,
        20-Jun-2010.)  (Proof shortened by Andrew Salmon, 22-Oct-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	ffpr_0 $f class A $.
 	ffpr_1 $f class B $.
 	ffpr_2 $f class C $.
@@ -5094,6 +6959,10 @@ $}
 $( A function restricted to a singleton.  (Contributed by NM,
        9-Oct-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x F $.
@@ -5106,6 +6975,8 @@ $}
 $( A function restricted to a singleton.  (Contributed by Mario Carneiro,
        16-Nov-2014.) $)
 ${
+	$v B $.
+	$v F $.
 	ffunressn_0 $f class B $.
 	ffunressn_1 $f class F $.
 	funressn $p |- ( Fun F -> ( F |` { B } ) C_ { <. B , ( F ` B ) >. } ) $= ffunressn_1 wfun ffunressn_0 ffunressn_1 cdm wcel ffunressn_1 ffunressn_0 csn cres ffunressn_0 ffunressn_0 ffunressn_1 cfv cop csn wss ffunressn_1 wfun ffunressn_0 ffunressn_1 cdm wcel wa ffunressn_1 ffunressn_0 csn cres ffunressn_0 ffunressn_0 ffunressn_1 cfv cop csn wceq ffunressn_1 ffunressn_0 csn cres ffunressn_0 ffunressn_0 ffunressn_1 cfv cop csn wss ffunressn_1 wfun ffunressn_1 ffunressn_1 cdm wfn ffunressn_0 ffunressn_1 cdm wcel ffunressn_1 ffunressn_0 csn cres ffunressn_0 ffunressn_0 ffunressn_1 cfv cop csn wceq ffunressn_1 funfn ffunressn_1 cdm ffunressn_0 ffunressn_1 fnressn sylanb ffunressn_1 ffunressn_0 csn cres ffunressn_0 ffunressn_0 ffunressn_1 cfv cop csn eqimss syl ffunressn_1 wfun ffunressn_0 ffunressn_1 cdm wcel wn wa ffunressn_1 ffunressn_0 csn cres c0 ffunressn_0 ffunressn_0 ffunressn_1 cfv cop csn ffunressn_1 wfun ffunressn_0 ffunressn_1 cdm wcel wn ffunressn_1 ffunressn_0 csn cres c0 wceq ffunressn_0 ffunressn_1 cdm wcel wn ffunressn_1 cdm ffunressn_0 csn cin c0 wceq ffunressn_1 wfun ffunressn_1 ffunressn_0 csn cres c0 wceq ffunressn_1 cdm ffunressn_0 disjsn ffunressn_1 wfun ffunressn_1 ffunressn_1 cdm wfn ffunressn_1 cdm ffunressn_0 csn cin c0 wceq ffunressn_1 ffunressn_0 csn cres c0 wceq wb ffunressn_1 funfn ffunressn_1 cdm ffunressn_0 csn ffunressn_1 fnresdisj sylbi syl5bbr biimpa c0 ffunressn_0 ffunressn_0 ffunressn_1 cfv cop csn wss ffunressn_1 wfun ffunressn_0 ffunressn_1 cdm wcel wn wa ffunressn_0 ffunressn_0 ffunressn_1 cfv cop csn 0ss a1i eqsstrd pm2.61dan $.
@@ -5113,6 +6984,11 @@ $}
 $( The value of a function restricted to a singleton.  (Contributed by NM,
        9-Oct-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -5126,6 +7002,10 @@ ${
 $}
 $( The value of a constant function.  (Contributed by NM, 30-May-1999.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ffvconst_0 $f class A $.
 	ffvconst_1 $f class B $.
 	ffvconst_2 $f class C $.
@@ -5136,6 +7016,11 @@ $( Express a singleton function in maps-to notation.  (Contributed by NM,
        6-Jun-2006.)  (Proof shortened by Andrew Salmon, 22-Oct-2011.)  (Revised
        by Stefan O'Rear, 28-Feb-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	$d x A $.
 	$d x B $.
 	ffmptsn_0 $f set x $.
@@ -5148,6 +7033,12 @@ $}
 $( Append an additional value to a function.  (Contributed by NM,
        6-Jun-2006.)  (Revised by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
 	$d x A $.
 	$d x B $.
 	$d x R $.
@@ -5167,6 +7058,8 @@ $}
 $( The value of a restricted identity function.  (Contributed by NM,
      19-May-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	ffvresi_0 $f class A $.
 	ffvresi_1 $f class B $.
 	fvresi $p |- ( B e. A -> ( ( _I |` A ) ` B ) = B ) $= ffvresi_1 ffvresi_0 wcel ffvresi_1 cid ffvresi_0 cres cfv ffvresi_1 cid cfv ffvresi_1 ffvresi_1 ffvresi_0 cid fvres ffvresi_1 ffvresi_0 fvi eqtrd $.
@@ -5175,6 +7068,10 @@ $( Remove an ordered pair not participating in a function value.
      (Contributed by NM, 1-Oct-2013.)  (Revised by Mario Carneiro,
      28-May-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	ffvunsn_0 $f class A $.
 	ffvunsn_1 $f class B $.
 	ffvunsn_2 $f class C $.
@@ -5184,6 +7081,8 @@ $}
 $( The value of a singleton of an ordered pair is the second member.
        (Contributed by NM, 12-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	ffvsn_0 $f class A $.
 	ffvsn_1 $f class B $.
 	efvsn_0 $e |- A e. _V $.
@@ -5193,6 +7092,12 @@ $}
 $( The value of a singleton of an ordered pair is the second member.
        (Contributed by NM, 26-Oct-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
+	$v a $.
+	$v b $.
 	$d A a b $.
 	$d B b $.
 	ifvsng_0 $f set a $.
@@ -5207,6 +7112,11 @@ $( The value of a function with one of its ordered pairs replaced, at the
        replaced ordered pair.  See also ~ fvsnun2 .  (Contributed by NM,
        23-Sep-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v G $.
 	ffvsnun1_0 $f class A $.
 	ffvsnun1_1 $f class B $.
 	ffvsnun1_2 $f class C $.
@@ -5221,6 +7131,12 @@ $( The value of a function with one of its ordered pairs replaced, at
        arguments other than the replaced one.  See also ~ fvsnun1 .
        (Contributed by NM, 23-Sep-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v G $.
 	ffvsnun2_0 $f class A $.
 	ffvsnun2_1 $f class B $.
 	ffvsnun2_2 $f class C $.
@@ -5235,6 +7151,9 @@ $}
 $( Split a function into a single point and all the rest.  (Contributed by
      Stefan O'Rear, 27-Feb-2015.) $)
 ${
+	$v A $.
+	$v F $.
+	$v X $.
 	ffnsnsplit_0 $f class A $.
 	ffnsnsplit_1 $f class F $.
 	ffnsnsplit_2 $f class X $.
@@ -5243,6 +7162,12 @@ $}
 $( Adjoining a point to a function gives a function.  (Contributed by Stefan
      O'Rear, 28-Feb-2015.) $)
 ${
+	$v S $.
+	$v T $.
+	$v F $.
+	$v V $.
+	$v X $.
+	$v Y $.
 	ffsnunf_0 $f class S $.
 	ffsnunf_1 $f class T $.
 	ffsnunf_2 $f class F $.
@@ -5254,6 +7179,11 @@ $}
 $( Adjoining a point to a punctured function gives a function.  (Contributed
      by Stefan O'Rear, 28-Feb-2015.) $)
 ${
+	$v S $.
+	$v T $.
+	$v F $.
+	$v X $.
+	$v Y $.
 	ffsnunf2_0 $f class S $.
 	ffsnunf2_1 $f class T $.
 	ffsnunf2_2 $f class F $.
@@ -5264,6 +7194,11 @@ $}
 $( Recover the added point from a point-added function.  (Contributed by
      Stefan O'Rear, 28-Feb-2015.)  (Revised by NM, 18-May-2017.) $)
 ${
+	$v F $.
+	$v V $.
+	$v W $.
+	$v X $.
+	$v Y $.
 	ffsnunfv_0 $f class F $.
 	ffsnunfv_1 $f class V $.
 	ffsnunfv_2 $f class W $.
@@ -5274,6 +7209,10 @@ $}
 $( Recover the original function from a point-added function.  (Contributed
      by Stefan O'Rear, 28-Feb-2015.) $)
 ${
+	$v S $.
+	$v F $.
+	$v X $.
+	$v Y $.
 	ffsnunres_0 $f class S $.
 	ffsnunres_1 $f class F $.
 	ffsnunres_2 $f class X $.
@@ -5283,6 +7222,10 @@ $}
 $( The value of a function with a domain of two elements.  (Contributed by
        Jeff Madsen, 20-Jun-2010.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	ffvpr1_0 $f class A $.
 	ffvpr1_1 $f class B $.
 	ffvpr1_2 $f class C $.
@@ -5294,6 +7237,10 @@ $}
 $( The value of a function with a domain of two elements.  (Contributed by
        Jeff Madsen, 20-Jun-2010.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	ffvpr2_0 $f class A $.
 	ffvpr2_1 $f class B $.
 	ffvpr2_2 $f class C $.
@@ -5305,6 +7252,12 @@ $}
 $( The first value of a function with a domain of three elements.
        (Contributed by NM, 14-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
 	ffvtp1_0 $f class A $.
 	ffvtp1_1 $f class B $.
 	ffvtp1_2 $f class C $.
@@ -5318,6 +7271,12 @@ $}
 $( The second value of a function with a domain of three elements.
        (Contributed by NM, 14-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
 	ffvtp2_0 $f class A $.
 	ffvtp2_1 $f class B $.
 	ffvtp2_2 $f class C $.
@@ -5331,6 +7290,12 @@ $}
 $( The third value of a function with a domain of three elements.
        (Contributed by NM, 14-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
 	ffvtp3_0 $f class A $.
 	ffvtp3_1 $f class B $.
 	ffvtp3_2 $f class C $.
@@ -5343,6 +7308,10 @@ ${
 $}
 $( The value of a constant function.  (Contributed by NM, 20-Aug-2005.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	ffvconst2g_0 $f class A $.
 	ffvconst2g_1 $f class B $.
 	ffvconst2g_2 $f class C $.
@@ -5352,6 +7321,11 @@ $}
 $( A constant function expressed as a cross product.  (Contributed by NM,
        27-Nov-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -5365,6 +7339,9 @@ ${
 $}
 $( The value of a constant function.  (Contributed by NM, 16-Apr-2005.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	ffvconst2_0 $f class A $.
 	ffvconst2_1 $f class B $.
 	ffvconst2_2 $f class C $.
@@ -5374,6 +7351,9 @@ $}
 $( A constant function expressed as a cross product.  (Contributed by NM,
        20-Aug-1999.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffconst2_0 $f class A $.
 	ffconst2_1 $f class B $.
 	ffconst2_2 $f class F $.
@@ -5383,6 +7363,9 @@ $}
 $( Two ways to express that a function is constant.  (Contributed by NM,
      27-Nov-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffconst5_0 $f class A $.
 	ffconst5_1 $f class B $.
 	ffconst5_2 $f class F $.
@@ -5391,6 +7374,12 @@ $}
 $( Two ways to express restriction of a support set.  (Contributed by
        Stefan O'Rear, 5-Feb-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v V $.
+	$v Z $.
+	$v a $.
 	$d F a $.
 	$d V a $.
 	$d A a $.
@@ -5407,6 +7396,10 @@ $}
 $( The support of a function is empty iff it is identically zero.
        (Contributed by Stefan O'Rear, 22-Mar-2015.) $)
 ${
+	$v A $.
+	$v F $.
+	$v V $.
+	$v Z $.
 	ffnsuppeq0_0 $f class A $.
 	ffnsuppeq0_1 $f class F $.
 	ffnsuppeq0_2 $f class V $.
@@ -5416,6 +7409,12 @@ $}
 $( A constant function expressed in terms of its functionality, domain, and
        value.  See also ~ fconst2 .  (Contributed by NM, 27-Aug-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v y $.
+	$v z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z F $.
@@ -5430,6 +7429,10 @@ $}
 $( Two ways to express a constant function.  (Contributed by NM,
        15-Mar-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x F $.
@@ -5442,6 +7445,9 @@ $}
 $( Two ways to express a constant function.  (Contributed by NM,
      8-Mar-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffconst4_0 $f class A $.
 	ffconst4_1 $f class B $.
 	ffconst4_2 $f class F $.
@@ -5451,6 +7457,10 @@ $( The restriction of a function to a set exists.  Compare Proposition 6.17
        of [TakeutiZaring] p. 28.  (Contributed by NM, 7-Apr-1995.)  (Revised by
        Mario Carneiro, 22-Jun-2013.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	iresfunexg_0 $f set x $.
@@ -5464,6 +7474,9 @@ $( The restriction of a function to a set exists.  Compare Proposition 6.17
      ~ resfunexg but requires ~ ax-pow .  (Contributed by NM, 7-Apr-1995.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fresfunexgALT_0 $f class A $.
 	fresfunexgALT_1 $f class B $.
 	fresfunexgALT_2 $f class C $.
@@ -5472,6 +7485,9 @@ $}
 $( Existence of a composition when the first member is a function.
      (Contributed by NM, 8-Oct-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fcofunexg_0 $f class A $.
 	fcofunexg_1 $f class B $.
 	fcofunexg_2 $f class C $.
@@ -5480,6 +7496,9 @@ $}
 $( Existence of a composition when the second member is one-to-one.
      (Contributed by NM, 8-Oct-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
 	fcofunex2g_0 $f class A $.
 	fcofunex2g_1 $f class B $.
 	fcofunex2g_2 $f class V $.
@@ -5491,6 +7510,9 @@ $( If the domain of a function is a set, the function is a set.  Theorem
      proof.  (Contributed by NM, 14-Aug-1994.)  (Proof shortened by Andrew
      Salmon, 17-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffnex_0 $f class A $.
 	ffnex_1 $f class B $.
 	ffnex_2 $f class F $.
@@ -5502,6 +7524,9 @@ $( If the domain of a function is a set, the function is a set.  Theorem
      ~ ax-pow , whereas ~ fnex does not.  (Contributed by NM, 14-Aug-1994.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffnexALT_0 $f class A $.
 	ffnexALT_1 $f class B $.
 	ffnexALT_2 $f class F $.
@@ -5513,6 +7538,8 @@ $( If the domain of a function exists, so the function.  Part of Theorem
      F.U.N.E.X. and "Have You Any Eggs" is purely a coincidence originated by
      Swedish chefs.)  (Contributed by NM, 11-Nov-1995.) $)
 ${
+	$v B $.
+	$v F $.
 	ffunex_0 $f class B $.
 	ffunex_1 $f class F $.
 	funex $p |- ( ( Fun F /\ dom F e. B ) -> F e. _V ) $= ffunex_1 wfun ffunex_1 ffunex_1 cdm wfn ffunex_1 cdm ffunex_0 wcel ffunex_1 cvv wcel ffunex_1 funfn ffunex_1 cdm ffunex_0 ffunex_1 fnex sylanb $.
@@ -5520,6 +7547,10 @@ $}
 $( Existence of a function expressed as class of ordered pairs.
        (Contributed by NM, 21-Jul-1996.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fopabex_0 $f wff ph $.
 	fopabex_1 $f set x $.
@@ -5533,6 +7564,10 @@ $( If the domain of a function given by maps-to notation is a set, the
        function is a set.  (Contributed by FL, 6-Jun-2011.)  (Revised by Mario
        Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d x A $.
 	fmptexg_0 $f set x $.
 	fmptexg_1 $f class A $.
@@ -5544,6 +7579,9 @@ $( If the domain of a function given by maps-to notation is a set, the
        function is a set.  (Contributed by NM, 22-Apr-2005.)  (Revised by Mario
        Carneiro, 20-Dec-2013.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	fmptex_0 $f set x $.
 	fmptex_1 $f class A $.
@@ -5555,6 +7593,8 @@ $( If the domain of a function exists, so does its range.  Part of Theorem
      4.15(v) of [Monk1] p. 46.  This theorem is derived using the Axiom of
      Replacement in the form of ~ funex .  (Contributed by NM, 11-Nov-1995.) $)
 ${
+	$v B $.
+	$v F $.
 	ffunrnex_0 $f class B $.
 	ffunrnex_1 $f class F $.
 	funrnex $p |- ( dom F e. B -> ( Fun F -> ran F e. _V ) ) $= ffunrnex_1 wfun ffunrnex_1 cdm ffunrnex_0 wcel ffunrnex_1 cvv wcel ffunrnex_1 crn cvv wcel ffunrnex_1 wfun ffunrnex_1 cdm ffunrnex_0 wcel ffunrnex_1 cvv wcel ffunrnex_0 ffunrnex_1 funex ex ffunrnex_1 cvv rnexg syl6com $.
@@ -5565,6 +7605,11 @@ $( A version of the Axiom of Replacement.  Normally ` ph ` would have free
        as a separate axiom in an axiom system (such as Kunen's) that uses this
        version in place of our ~ ax-rep .  (Contributed by NM, 10-Oct-2003.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d ph w $.
 	$d x y z w $.
 	fzfrep6_0 $f wff ph $.
@@ -5577,6 +7622,10 @@ $}
 $( If the domain of a mapping is a set, the function is a set.  (Contributed
      by NM, 3-Oct-1999.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ffex_0 $f class A $.
 	ffex_1 $f class B $.
 	ffex_2 $f class C $.
@@ -5586,6 +7635,10 @@ $}
 $( If the domain of an onto function exists, so does its codomain.
      (Contributed by NM, 23-Jul-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ffornex_0 $f class A $.
 	ffornex_1 $f class B $.
 	ffornex_2 $f class C $.
@@ -5596,6 +7649,10 @@ $( If the codomain of a one-to-one function exists, so does its domain.  This
      theorem is equivalent to the Axiom of Replacement ~ ax-rep .  (Contributed
      by NM, 4-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ff1dmex_0 $f class A $.
 	ff1dmex_1 $f class B $.
 	ff1dmex_2 $f class C $.
@@ -5605,6 +7662,11 @@ $}
 $( A function is uniquely determined by its values.  (Contributed by NM,
        31-Aug-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v f $.
+	$v z $.
 	$d f x z A $.
 	$d f z B $.
 	ieufnfv_0 $f set z $.
@@ -5619,6 +7681,9 @@ $}
 $( A function's value in a preimage belongs to the image.  (Contributed by
      NM, 23-Sep-2003.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffunfvima_0 $f class A $.
 	ffunfvima_1 $f class B $.
 	ffunfvima_2 $f class F $.
@@ -5627,6 +7692,9 @@ $}
 $( A function's value in an included preimage belongs to the image.
      (Contributed by NM, 3-Feb-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ffunfvima2_0 $f class A $.
 	ffunfvima2_1 $f class B $.
 	ffunfvima2_2 $f class F $.
@@ -5635,6 +7703,10 @@ $}
 $( A class including a function contains the function's value in the image
        of the singleton of the argument.  (Contributed by NM, 23-Mar-2004.) $)
 ${
+	$v A $.
+	$v F $.
+	$v G $.
+	$v x $.
 	$d x A $.
 	$d x F $.
 	$d x G $.
@@ -5648,6 +7720,10 @@ $( The function value of an operand in a set is contained in the image of
      that set, using the ` Fn ` abbreviation.  (Contributed by Stefan O'Rear,
      10-Mar-2015.) $)
 ${
+	$v A $.
+	$v S $.
+	$v F $.
+	$v X $.
 	ffnfvima_0 $f class A $.
 	ffnfvima_1 $f class S $.
 	ffnfvima_2 $f class F $.
@@ -5657,6 +7733,13 @@ $}
 $( Existential quantification under an image in terms of the base set.
        (Contributed by Stefan O'Rear, 21-Jan-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d ph y $.
 	$d ps x $.
 	$d F x y $.
@@ -5675,6 +7758,13 @@ $}
 $( Universal quantification under an image in terms of the base set.
        (Contributed by Stefan O'Rear, 21-Jan-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d ph y $.
 	$d ps x $.
 	$d F x y $.
@@ -5697,6 +7787,9 @@ $( TODO:  This is the same as ~ issref (which has a much longer proof).
        (Contributed by FL, 15-Jan-2012.)  (Proof shortened by Mario Carneiro,
        3-Nov-2015.)  (Proof modification is discouraged.) $)
 ${
+	$v x $.
+	$v A $.
+	$v R $.
 	$d A x $.
 	$d R x $.
 	fidref_0 $f set x $.
@@ -5707,6 +7800,9 @@ $}
 $( Upper bound for the class of values of a class.  (Contributed by NM,
        9-Nov-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v F $.
 	$d x y F $.
 	ffvclss_0 $f set x $.
 	ffvclss_1 $f set y $.
@@ -5716,6 +7812,9 @@ $}
 $( Existence of the class of values of a set.  (Contributed by NM,
        9-Nov-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v F $.
 	$d x y F $.
 	ffvclex_0 $f set x $.
 	ffvclex_1 $f set y $.
@@ -5726,6 +7825,11 @@ $}
 $( Existence of the class of values of a restricted class.  (Contributed by
        NM, 14-Nov-1995.)  (Revised by Mario Carneiro, 11-Sep-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v F $.
+	$v z $.
 	$d x y z A $.
 	$d x y z F $.
 	ifvresex_0 $f set z $.
@@ -5745,6 +7849,10 @@ $( Existence of a class abstraction of existentially restricted sets. ` x `
        ~ funimaexg .  See also ~ abrexex2 .  (Contributed by NM, 16-Oct-2003.)
        (Proof shortened by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d y B $.
 	fabrexex_0 $f set x $.
@@ -5758,6 +7866,11 @@ $( Existence of a class abstraction of existentially restricted sets. ` x `
        is normally a free-variable parameter in ` B ` .  The antecedent assures
        us that ` A ` is a set.  (Contributed by NM, 3-Nov-2003.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d x y A $.
 	$d y B $.
 	fabrexexg_0 $f set x $.
@@ -5770,6 +7883,11 @@ $}
 $( Elementhood in an image set.  (Contributed by Mario Carneiro,
        14-Jan-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v z $.
 	$d y z B $.
 	$d x y z A $.
 	ielabrex_0 $f set z $.
@@ -5783,6 +7901,14 @@ $}
 $( Composition of two image maps ` C ( y ) ` and ` B ( w ) ` .
        (Contributed by NM, 27-May-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d A y z $.
 	$d B y z $.
 	$d C w $.
@@ -5804,6 +7930,12 @@ $}
 $( The existence of an indexed union. ` x ` is normally a free-variable
        parameter in ` B ` .  (Contributed by NM, 23-Mar-2006.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
+	$v y $.
 	$d x y A $.
 	$d y B $.
 	iiunexg_0 $f set y $.
@@ -5817,6 +7949,13 @@ $}
 $( Existence of an existentially restricted class abstraction.
        (Contributed by Jeff Madsen, 2-Sep-2009.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v V $.
+	$v W $.
+	$v z $.
 	$d A x y z $.
 	$d V x y z $.
 	$d W x y z $.
@@ -5833,6 +7972,13 @@ $}
 $( Existence of an ordered pair abstraction.  (Contributed by Jeff Madsen,
        2-Sep-2009.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v z $.
+	$v w $.
+	$v v $.
 	$d A x y v w z $.
 	$d ph v w z $.
 	iopabex3_0 $f set z $.
@@ -5850,6 +7996,9 @@ $( The existence of an indexed union. ` x ` is normally a free-variable
        parameter in the class expression substituted for ` B ` , which can be
        read informally as ` B ( x ) ` .  (Contributed by NM, 13-Oct-2003.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	fiunex_0 $f set x $.
 	fiunex_1 $f class A $.
@@ -5861,6 +8010,12 @@ $}
 $( The image of an indexed union is the indexed union of the images.
        (Contributed by Mario Carneiro, 18-Jun-2014.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
+	$v z $.
 	$d x y z A $.
 	$d y z B $.
 	$d y z C $.
@@ -5876,6 +8031,9 @@ $( The image of a union is the indexed union of the images.  Theorem 3K(a)
        of [Enderton] p. 50.  (Contributed by NM, 9-Aug-2004.)  (Proof shortened
        by Mario Carneiro, 18-Jun-2014.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fimauni_0 $f set x $.
@@ -5887,6 +8045,10 @@ $( The indexed union of a function's values is the union of its range.
        Compare Definition 5.4 of [Monk1] p. 50.  (Contributed by NM,
        27-Sep-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
+	$v y $.
 	$d x y A $.
 	$d x y F $.
 	ifniunfv_0 $f set y $.
@@ -5904,6 +8066,9 @@ $( The indexed union of a function's values is the union of its image under
        (Contributed by NM, 26-Mar-2006.)  (Proof shortened by Mario Carneiro,
        31-Aug-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
 	$d x A $.
 	$d x F $.
 	ffuniunfv_0 $f set x $.
@@ -5916,6 +8081,10 @@ $( The indexed union of a function's values is the union of its image under
        hypothesis in place of a distinct variable condition.  (Contributed by
        NM, 26-Mar-2006.)  (Revised by David Abernethy, 15-Apr-2013.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
+	$v z $.
 	$d x z A $.
 	$d z F $.
 	ifuniunfvf_0 $f set z $.
@@ -5928,6 +8097,10 @@ $}
 $( Membership in the union of an image of a function.  (Contributed by NM,
        28-Sep-2006.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x A $.
 	$d x B $.
 	$d x F $.
@@ -5940,6 +8113,9 @@ $}
 $( Membership in the union of the range of a function.  See ~ elunirnALT
        for alternate proof.  (Contributed by NM, 24-Sep-2006.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
 	$d x A $.
 	$d x F $.
 	felunirn_0 $f set x $.
@@ -5950,6 +8126,10 @@ $}
 $( Membership in a union of some function-defined family of sets.
        (Contributed by Stefan O'Rear, 30-Jan-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
+	$v I $.
 	$d x A $.
 	$d x I $.
 	$d x F $.
@@ -5964,6 +8144,10 @@ $( Membership in the union of the range of a function, proved directly.
        (Contributed by NM, 24-Sep-2006.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v A $.
+	$v F $.
+	$v y $.
 	$d x y A $.
 	$d x y F $.
 	ielunirnALT_0 $f set y $.
@@ -5976,6 +8160,11 @@ $( Existence of an existentially restricted class abstraction. ` ph ` is
        normally has free-variable parameters ` x ` and ` y ` .  See also
        ~ abrexex .  (Contributed by NM, 12-Sep-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v z $.
 	$d x y z A $.
 	$d z ph $.
 	iabrexex2_0 $f set z $.
@@ -5991,6 +8180,10 @@ $( Existence of a class abstraction with an existentially quantified
        expression.  Both ` x ` and ` y ` can be free in ` ph ` .  (Contributed
        by NM, 29-Jul-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fabexssex_0 $f wff ph $.
 	fabexssex_1 $f set x $.
@@ -6003,6 +8196,10 @@ $}
 $( A condition where a class builder continues to exist after its wff is
        existentially quantified.  (Contributed by NM, 4-Mar-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fabexex_0 $f wff ph $.
 	fabexex_1 $f set x $.
@@ -6016,6 +8213,12 @@ $}
 $( A one-to-one function in terms of function values.  Compare Theorem
        4.8(iv) of [Monk1] p. 43.  (Contributed by NM, 29-Oct-1996.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v z $.
 	$d x y z A $.
 	$d z B $.
 	$d x y z F $.
@@ -6030,6 +8233,13 @@ $}
 $( A one-to-one function in terms of function values.  Compare Theorem
        4.8(iv) of [Monk1] p. 43.  (Contributed by NM, 31-Jul-2003.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v w $.
+	$v v $.
 	$d x y w v A $.
 	$d w v B $.
 	$d w v F $.
@@ -6048,6 +8258,13 @@ $}
 $( Express injection for a mapping operation.  (Contributed by Mario
        Carneiro, 2-Jan-2017.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -6067,6 +8284,13 @@ $}
 $( Equality of function values for a one-to-one function.  (Contributed by
        NM, 11-Feb-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -6084,6 +8308,12 @@ $}
 $( Membership in the image of a 1-1 map.  (Contributed by Jeff Madsen,
        2-Sep-2009.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v X $.
+	$v Y $.
+	$v z $.
 	$d F z $.
 	$d A z $.
 	$d Y z $.
@@ -6100,6 +8330,12 @@ $}
 $( Taking images under a one-to-one function preserves subsets.
        (Contributed by Stefan O'Rear, 30-Oct-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v a $.
 	$d F a $.
 	$d A a $.
 	$d B a $.
@@ -6116,6 +8352,11 @@ $}
 $( Taking images under a one-to-one function preserves equality.
        (Contributed by Stefan O'Rear, 30-Oct-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	ff1imaeq_0 $f class A $.
 	ff1imaeq_1 $f class B $.
 	ff1imaeq_2 $f class C $.
@@ -6126,6 +8367,11 @@ $}
 $( Taking images under a one-to-one function preserves proper subsets.
        (Contributed by Stefan O'Rear, 30-Oct-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	ff1imapss_0 $f class A $.
 	ff1imapss_1 $f class B $.
 	ff1imapss_2 $f class C $.
@@ -6136,6 +8382,11 @@ $}
 $( A one-to-one onto function in terms of function values.  (Contributed by
        NM, 29-Mar-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x y A $.
 	$d x y F $.
 	fdff1o6_0 $f set x $.
@@ -6148,6 +8399,10 @@ $}
 $( The converse value of the value of a one-to-one onto function.
      (Contributed by NM, 20-May-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ff1ocnvfv1_0 $f class A $.
 	ff1ocnvfv1_1 $f class B $.
 	ff1ocnvfv1_2 $f class C $.
@@ -6157,6 +8412,10 @@ $}
 $( The value of the converse value of a one-to-one onto function.
      (Contributed by NM, 20-May-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ff1ocnvfv2_0 $f class A $.
 	ff1ocnvfv2_1 $f class B $.
 	ff1ocnvfv2_2 $f class C $.
@@ -6166,6 +8425,11 @@ $}
 $( Relationship between the value of a one-to-one onto function and the value
      of its converse.  (Contributed by Raph Levien, 10-Apr-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	ff1ocnvfv_0 $f class A $.
 	ff1ocnvfv_1 $f class B $.
 	ff1ocnvfv_2 $f class C $.
@@ -6176,6 +8440,11 @@ $}
 $( Relationship between the value of a one-to-one onto function and the value
      of its converse.  (Contributed by NM, 20-May-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	ff1ocnvfvb_0 $f class A $.
 	ff1ocnvfvb_1 $f class B $.
 	ff1ocnvfvb_2 $f class C $.
@@ -6186,6 +8455,10 @@ $}
 $( The value of the converse of a one-to-one onto function belongs to its
      domain.  (Contributed by NM, 26-May-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ff1ocnvdm_0 $f class A $.
 	ff1ocnvdm_1 $f class B $.
 	ff1ocnvdm_2 $f class C $.
@@ -6196,6 +8469,12 @@ $( An application is injective if a retraction exists.  Proposition 8 of
        [BourbakiEns] p.  E.II.18.  (Contributed by FL, 11-Nov-2011.)  (Revised
        by Mario Carneiro, 27-Dec-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v F $.
+	$v x $.
+	$v y $.
 	$d A x y $.
 	$d B x y $.
 	$d F x y $.
@@ -6212,6 +8491,12 @@ $( An application is surjective if a section exists.  Proposition 8 of
        [BourbakiEns] p.  E.II.18.  (Contributed by FL, 17-Nov-2011.)  (Proof
        shortened by Mario Carneiro, 27-Dec-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v S $.
+	$v F $.
+	$v x $.
+	$v y $.
 	$d A x y $.
 	$d B x y $.
 	$d F x y $.
@@ -6228,6 +8513,13 @@ $( Change bound variable between domain and range of function.
        (Contributed by NM, 23-Feb-1997.)  (Proof shortened by Mario Carneiro,
        21-Mar-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x y A $.
 	$d y B $.
 	$d x y F $.
@@ -6246,6 +8538,13 @@ $}
 $( Change bound variable between domain and range of function.
        (Contributed by NM, 23-Feb-1997.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x y A $.
 	$d y B $.
 	$d x y F $.
@@ -6263,8 +8562,14 @@ ${
 $}
 $( An injection is left-cancelable.  (Contributed by FL, 2-Aug-2009.)
        (Revised by Mario Carneiro, 21-Mar-2015.) $)
-$v K $.
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v H $.
+	$v K $.
+	$v x $.
 	$d A x $.
 	$d B x $.
 	$d C x $.
@@ -6283,6 +8588,13 @@ $}
 $( A surjection is right-cancelable.  (Contributed by FL, 21-Nov-2011.)
        (Proof shortened by Mario Carneiro, 21-Mar-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v H $.
+	$v K $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y F $.
@@ -6300,6 +8612,10 @@ $}
 $( Show that two functions are inverse to each other by computing their
        compositions.  (Contributed by Mario Carneiro, 21-Mar-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	ffcof1o_0 $f class A $.
 	ffcof1o_1 $f class B $.
 	ffcof1o_2 $f class F $.
@@ -6310,6 +8626,12 @@ $( Condition for function equality in terms of vanishing of the composition
        with the converse. _EDITORIAL_:  Is there a relation-algebraic proof of
        this?  (Contributed by Stefan O'Rear, 12-Feb-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
+	$v x $.
+	$v y $.
 	$d F x y $.
 	$d G x y $.
 	$d A x y $.
@@ -6325,6 +8647,12 @@ $}
 $( Condition for function equality in terms of vanishing of the composition
        with the inverse.  (Contributed by Stefan O'Rear, 12-Feb-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
+	$v x $.
+	$v y $.
 	$d F x y $.
 	$d G x y $.
 	$d A x y $.
@@ -6341,6 +8669,12 @@ $( Given a bijection ` F ` , produce another bijection ` G ` which
        additionally maps two specified points.  (Contributed by Mario Carneiro,
        30-May-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v G $.
 	ffveqf1o_0 $f class A $.
 	ffveqf1o_1 $f class B $.
 	ffveqf1o_2 $f class C $.
@@ -6353,6 +8687,14 @@ $}
 $( ` F ` , a function lift, is a subset of ` R X. S ` .  (Contributed by
        Mario Carneiro, 23-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v X $.
 	$d x R $.
 	$d x ph $.
 	$d x X $.
@@ -6373,6 +8715,16 @@ $}
 $( Elementhood in the relation ` F ` .  (Contributed by Mario Carneiro,
        23-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v X $.
 	$d x C $.
 	$d x R $.
 	$d x D $.
@@ -6397,6 +8749,14 @@ $}
 $( Elementhood in the relation ` F ` .  (Contributed by Mario Carneiro,
        23-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v X $.
 	$d x R $.
 	$d x ph $.
 	$d x X $.
@@ -6417,6 +8777,16 @@ $}
 $( Converse of the relation ` F ` .  (Contributed by Mario Carneiro,
        23-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v X $.
+	$v y $.
+	$v z $.
 	$d y z A $.
 	$d y z B $.
 	$d x z $.
@@ -6445,6 +8815,20 @@ $( The function ` F ` is the unique function defined by ` F `` A = B ` ,
          provided that the well-definedness condition holds.  (Contributed by
          Mario Carneiro, 23-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v X $.
+	$v z $.
+	$v v $.
+	$v u $.
 	$d u v y z A $.
 	$d u v y z B $.
 	$d u v x z C $.
@@ -6479,6 +8863,17 @@ $( The function ` F ` is the unique function defined by ` F `` A = B ` ,
          provided that the well-definedness condition holds.  (Contributed by
          Mario Carneiro, 23-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v X $.
 	$d y A $.
 	$d y B $.
 	$d x C $.
@@ -6511,6 +8906,16 @@ $( The function ` F ` is the unique function defined by ` F `` A = B ` ,
        provided that the well-definedness condition holds.  (Contributed by
        Mario Carneiro, 23-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v X $.
 	$d y z A $.
 	$d y z B $.
 	$d x z $.
@@ -6538,6 +8943,16 @@ $}
 $( The domain and range of the function ` F ` .  (Contributed by Mario
        Carneiro, 23-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v X $.
+	$v y $.
+	$v z $.
 	$d y z A $.
 	$d y z B $.
 	$d x z $.
@@ -6565,6 +8980,17 @@ $}
 $( The value of the function ` F ` .  (Contributed by Mario Carneiro,
        23-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v X $.
+	$v Y $.
 	$d x C $.
 	$d x R $.
 	$d x Y $.
@@ -6593,6 +9019,14 @@ ${
 $}
 $( Equality theorem for isomorphisms.  (Contributed by NM, 17-May-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v G $.
+	$v H $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -6613,6 +9047,14 @@ ${
 $}
 $( Equality theorem for isomorphisms.  (Contributed by NM, 17-May-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v T $.
+	$v H $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -6633,6 +9075,14 @@ ${
 $}
 $( Equality theorem for isomorphisms.  (Contributed by NM, 17-May-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v T $.
+	$v H $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -6653,6 +9103,14 @@ ${
 $}
 $( Equality theorem for isomorphisms.  (Contributed by NM, 17-May-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -6673,6 +9131,14 @@ ${
 $}
 $( Equality theorem for isomorphisms.  (Contributed by NM, 17-May-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -6694,6 +9160,14 @@ $}
 $( Bound-variable hypothesis builder for an isomorphism.  (Contributed by
        NM, 17-May-2004.)  (Proof shortened by Andrew Salmon, 22-Oct-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v y $.
+	$v z $.
 	$d y z H $.
 	$d y z R $.
 	$d y z S $.
@@ -6718,6 +9192,13 @@ $}
 $( An isomorphism is a one-to-one onto function.  (Contributed by NM,
        27-Apr-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -6735,6 +9216,15 @@ $}
 $( An isomorphism connects binary relations via its function values.
        (Contributed by NM, 27-Apr-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -6757,6 +9247,16 @@ $( Express the condition of isomorphism on two strict orders for a
        function's restriction.  (Contributed by Mario Carneiro,
        22-Jan-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v z $.
+	$v w $.
 	$d w x y z A $.
 	$d w z B $.
 	$d w z C $.
@@ -6778,6 +9278,15 @@ $}
 $( Infer isomorphism from one direction of an order proof for isomorphisms
        between strict orders.  (Contributed by Stefan O'Rear, 2-Nov-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v a $.
+	$v b $.
 	$d R x y a b $.
 	$d S x y a b $.
 	$d H x y a b $.
@@ -6797,6 +9306,10 @@ $}
 $( Identity law for isomorphism.  Proposition 6.30(1) of [TakeutiZaring]
        p. 33.  (Contributed by NM, 27-Apr-2004.) $)
 ${
+	$v A $.
+	$v R $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y R $.
 	iisoid_0 $f set x $.
@@ -6808,6 +9321,15 @@ $}
 $( Converse law for isomorphism.  Proposition 6.30(2) of [TakeutiZaring]
        p. 33.  (Contributed by NM, 27-Apr-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x y z A $.
 	$d w x y z B $.
 	$d x y $.
@@ -6829,6 +9351,13 @@ $}
 $( Converse law for isomorphism.  (Contributed by Mario Carneiro,
        30-Jan-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -6848,6 +9377,15 @@ $}
 $( Complementation law for isomorphism.  (Contributed by Mario Carneiro,
        9-Sep-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -6871,6 +9409,13 @@ $}
 $( An isomorphism from one well-order to another can be restricted on
        either well-order.  (Contributed by Mario Carneiro, 15-Jan-2013.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v x $.
+	$v y $.
 	$d A x y $.
 	$d B x y $.
 	$d H x y $.
@@ -6888,6 +9433,11 @@ $}
 $( An isomorphism from one well-order to another can be restricted on
        either well-order.  (Contributed by Mario Carneiro, 15-Jan-2013.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
 	fisores1_0 $f class A $.
 	fisores1_1 $f class B $.
 	fisores1_2 $f class R $.
@@ -6898,6 +9448,15 @@ $}
 $( Induced isomorphism on a subset.  (Contributed by Stefan O'Rear,
        5-Nov-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v K $.
+	$v X $.
+	$v a $.
+	$v b $.
 	$d H a b $.
 	$d R a b $.
 	$d S a b $.
@@ -6920,6 +9479,18 @@ $( Composition (transitive) law for isomorphism.  Proposition 6.30(3) of
        [TakeutiZaring] p. 33.  (Contributed by NM, 27-Apr-2004.)  (Proof
        shortened by Mario Carneiro, 5-Dec-2016.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v T $.
+	$v G $.
+	$v H $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z w A $.
 	$d x y z w B $.
 	$d x y z w C $.
@@ -6947,6 +9518,15 @@ $( Isomorphisms preserve minimal elements.  Note that ` ( ``' R " { D } ) `
        ` { x | x R D } ` .  Proposition 6.31(1) of [TakeutiZaring] p. 33.
        (Contributed by NM, 19-Apr-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -6968,6 +9548,14 @@ $}
 $( Isomorphisms preserve initial segments.  Proposition 6.31(2) of
        [TakeutiZaring] p. 33.  (Contributed by NM, 20-Apr-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -6987,6 +9575,16 @@ $}
 $( Isomorphisms are isomorphisms on their initial segments.  (Contributed
        by Mario Carneiro, 29-Mar-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v X $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -7011,6 +9609,16 @@ $}
 $( Lemma for ~ isofr .  (Contributed by NM, 29-Apr-2004.)  (Revised by
        Mario Carneiro, 18-Nov-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x y z A $.
 	$d w x y z B $.
 	$d w x y z H $.
@@ -7033,6 +9641,15 @@ ${
 $}
 $( Lemma for ~ isose .  (Contributed by Mario Carneiro, 23-Jun-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v y $.
+	$v z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z H $.
@@ -7056,6 +9673,12 @@ $( An isomorphism preserves well-foundedness.  Proposition 6.32(1) of
        [TakeutiZaring] p. 33.  (Contributed by NM, 30-Apr-2004.)  (Revised by
        Mario Carneiro, 18-Nov-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x H $.
@@ -7072,6 +9695,12 @@ $}
 $( An isomorphism preserves set-like relations.  (Contributed by Mario
        Carneiro, 23-Jun-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x H $.
@@ -7088,6 +9717,13 @@ $}
 $( A weak form of ~ isofr that does not need Replacement.  (Contributed by
        Mario Carneiro, 18-Nov-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v V $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x H $.
@@ -7104,9 +9740,18 @@ ${
 	isofr2 $p |- ( ( H Isom R , S ( A , B ) /\ B e. V ) -> ( S Fr B -> R Fr A ) ) $= fisofr2_0 fisofr2_1 fisofr2_2 fisofr2_3 fisofr2_4 wiso fisofr2_1 fisofr2_5 wcel wa iisofr2_0 fisofr2_0 fisofr2_1 fisofr2_2 fisofr2_3 fisofr2_4 fisofr2_0 fisofr2_1 fisofr2_2 fisofr2_3 fisofr2_4 wiso fisofr2_1 fisofr2_5 wcel simpl fisofr2_0 fisofr2_1 fisofr2_2 fisofr2_3 fisofr2_4 wiso fisofr2_4 iisofr2_0 sup_set_class cima fisofr2_1 wss fisofr2_1 fisofr2_5 wcel fisofr2_4 iisofr2_0 sup_set_class cima cvv wcel fisofr2_0 fisofr2_1 fisofr2_2 fisofr2_3 fisofr2_4 wiso fisofr2_4 iisofr2_0 sup_set_class cima fisofr2_4 crn fisofr2_1 fisofr2_4 iisofr2_0 sup_set_class imassrn fisofr2_0 fisofr2_1 fisofr2_2 fisofr2_3 fisofr2_4 wiso fisofr2_0 fisofr2_1 fisofr2_4 wf1o fisofr2_0 fisofr2_1 fisofr2_4 wf fisofr2_4 crn fisofr2_1 wss fisofr2_0 fisofr2_1 fisofr2_2 fisofr2_3 fisofr2_4 isof1o fisofr2_0 fisofr2_1 fisofr2_4 f1of fisofr2_0 fisofr2_1 fisofr2_4 frn 3syl syl5ss fisofr2_4 iisofr2_0 sup_set_class cima fisofr2_1 fisofr2_5 ssexg sylan isofrlem $.
 $}
 $( Lemma for ~ isopo .  (Contributed by Stefan O'Rear, 16-Nov-2014.) $)
-$v e $.
-$v d $.
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v e $.
+	$v f $.
+	$v a $.
+	$v b $.
+	$v c $.
+	$v d $.
 	$d H a b c d e f $.
 	$d R a b c d e f $.
 	$d S a b c d e f $.
@@ -7128,6 +9773,11 @@ $}
 $( An isomorphism preserves partial ordering.  (Contributed by Stefan
        O'Rear, 16-Nov-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
 	fisopo_0 $f class A $.
 	fisopo_1 $f class B $.
 	fisopo_2 $f class R $.
@@ -7137,6 +9787,15 @@ ${
 $}
 $( Lemma for ~ isoso .  (Contributed by Stefan O'Rear, 16-Nov-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v a $.
+	$v b $.
+	$v c $.
+	$v d $.
 	$d H a b c d $.
 	$d R a b c d $.
 	$d S a b c d $.
@@ -7156,6 +9815,11 @@ $}
 $( An isomorphism preserves strict ordering.  (Contributed by Stefan
        O'Rear, 16-Nov-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
 	fisoso_0 $f class A $.
 	fisoso_1 $f class B $.
 	fisoso_2 $f class R $.
@@ -7167,6 +9831,11 @@ $( An isomorphism preserves well-ordering.  Proposition 6.32(3) of
        [TakeutiZaring] p. 33.  (Contributed by NM, 30-Apr-2004.)  (Revised by
        Mario Carneiro, 18-Nov-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
 	fisowe_0 $f class A $.
 	fisowe_1 $f class B $.
 	fisowe_2 $f class R $.
@@ -7177,6 +9846,13 @@ $}
 $( A weak form of ~ isowe that does not need Replacement.  (Contributed by
        Mario Carneiro, 18-Nov-2014.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -7195,6 +9871,17 @@ $( Any one-to-one onto function determines an isomorphism with an induced
        relation ` S ` .  Proposition 6.33 of [TakeutiZaring] p. 34.
        (Contributed by NM, 30-Apr-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v v $.
+	$v u $.
 	$d x y z w v u A $.
 	$d x y v u B $.
 	$d x y z w v u H $.
@@ -7216,6 +9903,15 @@ $}
 $( Any one-to-one onto function determines an isomorphism with an induced
        relation ` S ` .  (Contributed by Mario Carneiro, 9-Mar-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v H $.
+	$v z $.
+	$v w $.
 	$d A w x y z $.
 	$d B w x y z $.
 	$d H w x y z $.
@@ -7235,6 +9931,15 @@ $}
 $( Well-ordering of isomorphic relations.  (Contributed by NM,
        4-Mar-1997.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v z $.
+	$v w $.
 	$d z w R $.
 	$d x y z w S $.
 	$d z w A $.
@@ -7257,6 +9962,18 @@ $( Well-ordering of isomorphic relations.  (This version is proved directly
        4-Mar-1997.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
+	$v f $.
 	$d z w v u f R $.
 	$d x y z w v u f S $.
 	$d z w v u f A $.
@@ -7281,6 +9998,12 @@ $( A set-like well-ordering has no nontrivial automorphisms.  (Contributed
        by Stefan O'Rear, 16-Nov-2014.)  (Revised by Mario Carneiro,
        25-Jun-2015.) $)
 ${
+	$v A $.
+	$v R $.
+	$v F $.
+	$v a $.
+	$v b $.
+	$v c $.
 	$d A a b c $.
 	$d R b c $.
 	$d F a b c $.
@@ -7296,6 +10019,12 @@ $( Thus, there is at most one isomorphism between any two set-like
        well-ordered classes.  Class version of ~ wemoiso .  (Contributed by
        Mario Carneiro, 25-Jun-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v G $.
 	fweisoeq_0 $f class A $.
 	fweisoeq_1 $f class B $.
 	fweisoeq_2 $f class R $.
@@ -7308,6 +10037,12 @@ $( Thus, there is at most one isomorphism between any two set-like
        well-ordered classes.  Class version of ~ wemoiso2 .  (Contributed by
        Mario Carneiro, 25-Jun-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v G $.
 	fweisoeq2_0 $f class A $.
 	fweisoeq2_1 $f class B $.
 	fweisoeq2_2 $f class R $.
@@ -7320,6 +10055,12 @@ $( Thus, there is at most one isomorphism between any two well-ordered
        sets.  TODO:  Shorten ~ finnisoeu .  (Contributed by Stefan O'Rear,
        12-Feb-2015.)  (Revised by Mario Carneiro, 25-Jun-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v f $.
+	$v g $.
 	$d R f g $.
 	$d A f g $.
 	$d S f g $.
@@ -7336,6 +10077,12 @@ $( Thus, there is at most one isomorphism between any two well-ordered
        sets.  (Contributed by Stefan O'Rear, 12-Feb-2015.)  (Revised by Mario
        Carneiro, 25-Jun-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v f $.
+	$v g $.
 	$d R f g $.
 	$d A f g $.
 	$d S f g $.
@@ -7353,6 +10100,14 @@ $( The Knaster-Tarski theorem says that every monotone function over a
        theorem to the case when the lattice is the powerset lattice ` ~P A ` .
        (Contributed by Mario Carneiro, 11-Jun-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v F $.
+	$v V $.
+	$v X $.
+	$v w $.
 	$d w x y z A $.
 	$d w x y z F $.
 	$d w V $.

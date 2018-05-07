@@ -51,6 +51,8 @@ $( Modus ponendo tollens 1, one of the "indemonstrables" in Stoic logic.
        ponendo tollens because it avoids confusion between inclusive-or and
        exclusive-or.  (Contributed by David A. Wheeler, 3-Jul-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fmpto1_0 $f wff ph $.
 	fmpto1_1 $f wff ps $.
 	empto1_0 $e |- ph $.
@@ -65,6 +67,8 @@ $( Modus ponendo tollens 2, one of the "indemonstrables" in Stoic logic.
        [Hitchcock] p. 5 .  (Contributed by David A. Wheeler, 3-Jul-2016.)
        (Proof shortened by Wolf Lammen, 12-Nov-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fmpto2_0 $f wff ph $.
 	fmpto2_1 $f wff ps $.
 	empto2_0 $e |- ph $.
@@ -79,6 +83,8 @@ $( Modus ponendo tollens 2, one of the "indemonstrables" in Stoic logic.
        [Hitchcock] p. 5 .  (Contributed by David A. Wheeler, 3-Jul-2016.)
        (New usage is discouraged.)  (Proof modification is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fmpto2OLD_0 $f wff ph $.
 	fmpto2OLD_1 $f wff ps $.
 	empto2OLD_0 $e |- ph $.
@@ -102,6 +108,8 @@ $( Modus tollendo ponens (original exclusive-or version), aka disjunctive
        David A. Wheeler, 4-Jul-2016.)  (Proof shortened by Wolf Lammen,
        11-Nov-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fmtp-xor_0 $f wff ph $.
 	fmtp-xor_1 $f wff ps $.
 	emtp-xor_0 $e |- -. ph $.
@@ -112,6 +120,8 @@ $( Obsolete version of ~ mtp-xor as of 11-Nov-2017.  (Contributed by David
        A. Wheeler, 4-Jul-2016.)  (New usage is discouraged.)
        (Proof modification is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fmtp-xorOLD_0 $f wff ph $.
 	fmtp-xorOLD_1 $f wff ps $.
 	emtp-xorOLD_0 $e |- -. ph $.
@@ -132,6 +142,8 @@ $( Modus tollendo ponens (inclusive-or version), aka disjunctive
        the Four, ch. 6).  (Contributed by David A. Wheeler, 3-Jul-2016.)
        (Proof shortened by Wolf Lammen, 11-Nov-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fmtp-or_0 $f wff ph $.
 	fmtp-or_1 $f wff ps $.
 	emtp-or_0 $e |- -. ph $.
@@ -142,6 +154,8 @@ $( Obsolete version of ~ mtp-or as of 11-Nov-2017.  (Contributed by David
        A. Wheeler, 3-Jul-2016.)  (New usage is discouraged.)
        (Proof modification is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fmtp-orOLD_0 $f wff ph $.
 	fmtp-orOLD_1 $f wff ps $.
 	emtp-orOLD_0 $e |- -. ph $.

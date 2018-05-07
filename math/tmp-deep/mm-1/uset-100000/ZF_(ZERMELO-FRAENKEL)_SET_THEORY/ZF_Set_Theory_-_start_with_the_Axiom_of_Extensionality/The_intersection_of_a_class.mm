@@ -11,6 +11,7 @@ $( Big cap $)
 $( Extend class notation to include the intersection of a class (read:
      'intersect ` A ` '). $)
 ${
+	$v A $.
 	fcint_0 $f class A $.
 	cint $a class |^| A $.
 $}
@@ -19,6 +20,9 @@ $( Define the intersection of a class.  Definition 7.35 of [TakeutiZaring]
        Compare this with the intersection of two classes, ~ df-in .
        (Contributed by NM, 18-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fdf-int_0 $f set x $.
 	fdf-int_1 $f set y $.
@@ -28,6 +32,9 @@ $}
 $( Alternate definition of class intersection.  (Contributed by NM,
        28-Jun-1998.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fdfint2_0 $f set x $.
 	fdfint2_1 $f set y $.
@@ -36,6 +43,10 @@ ${
 $}
 $( Equality law for intersection.  (Contributed by NM, 13-Sep-1999.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	iinteq_0 $f set x $.
@@ -47,6 +58,8 @@ $}
 $( Equality inference for class intersection.  (Contributed by NM,
        2-Sep-2003.) $)
 ${
+	$v A $.
+	$v B $.
 	finteqi_0 $f class A $.
 	finteqi_1 $f class B $.
 	einteqi_0 $e |- A = B $.
@@ -55,6 +68,9 @@ $}
 $( Equality deduction for class intersection.  (Contributed by NM,
        2-Sep-2003.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	finteqd_0 $f wff ph $.
 	finteqd_1 $f class A $.
 	finteqd_2 $f class B $.
@@ -63,6 +79,10 @@ ${
 $}
 $( Membership in class intersection.  (Contributed by NM, 21-May-1994.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x A y $.
 	$d x B y $.
 	ielint_0 $f set y $.
@@ -74,6 +94,9 @@ ${
 $}
 $( Membership in class intersection.  (Contributed by NM, 14-Oct-1999.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	felint2_0 $f set x $.
@@ -85,6 +108,11 @@ $}
 $( Membership in class intersection, with the sethood requirement expressed
        as an antecedent.  (Contributed by NM, 20-Nov-2003.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	ielintg_0 $f set y $.
@@ -97,6 +125,10 @@ $}
 $( Membership in class intersection.  (Contributed by NM, 14-Oct-1999.)
        (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -109,6 +141,10 @@ $}
 $( Bound-variable hypothesis builder for intersection.  (Contributed by NM,
        2-Feb-1997.)  (Proof shortened by Andrew Salmon, 12-Aug-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v y $.
+	$v z $.
 	$d y z A $.
 	$d x y z $.
 	infint_0 $f set y $.
@@ -121,6 +157,10 @@ $}
 $( Membership in the intersection of a class abstraction.  (Contributed by
        NM, 30-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v y $.
 	$d A x y $.
 	$d ph y $.
 	ielintab_0 $f set y $.
@@ -133,6 +173,10 @@ $}
 $( Membership in the intersection of a class abstraction.  (Contributed by
        NM, 17-Oct-1999.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d A x $.
 	felintrab_0 $f wff ph $.
 	felintrab_1 $f set x $.
@@ -144,6 +188,12 @@ $}
 $( Membership in the intersection of a class abstraction.  (Contributed by
        NM, 17-Feb-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v y $.
 	$d x y A $.
 	$d y B $.
 	$d y ph $.
@@ -158,6 +208,8 @@ $}
 $( The intersection of the empty set is the universal class.  Exercise 2 of
        [TakeutiZaring] p. 44.  (Contributed by NM, 18-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	iint0_0 $f set x $.
 	iint0_1 $f set y $.
@@ -167,6 +219,10 @@ $( An element of a class includes the intersection of the class.  Exercise
        4 of [TakeutiZaring] p. 44 (with correction), generalized to classes.
        (Contributed by NM, 18-Nov-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	iintss1_0 $f set x $.
@@ -178,6 +234,10 @@ $}
 $( Subclass of a class intersection.  Theorem 5.11(viii) of [Monk1] p. 52
        and its converse.  (Contributed by NM, 14-Oct-1999.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	issint_0 $f set y $.
@@ -189,6 +249,10 @@ $}
 $( Subclass of the intersection of a class abstraction.  (Contributed by
        NM, 31-Jul-2006.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x y A $.
 	$d x y $.
 	$d y ph $.
@@ -200,6 +264,10 @@ ${
 $}
 $( Subclass of the least upper bound.  (Contributed by NM, 8-Aug-2000.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	issintub_0 $f set y $.
@@ -211,6 +279,9 @@ $}
 $( Subclass of the minimum value of class of supersets.  (Contributed by
        NM, 10-Aug-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fssmin_0 $f wff ph $.
 	fssmin_1 $f set x $.
@@ -221,6 +292,10 @@ $( Any member of a class is the smallest of those members that include it.
        (Contributed by NM, 13-Aug-2002.)  (Proof shortened by Andrew Salmon,
        9-Jul-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	iintmin_0 $f set y $.
@@ -231,6 +306,10 @@ ${
 $}
 $( Intersection of subclasses.  (Contributed by NM, 14-Oct-1999.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	iintss_0 $f set x $.
@@ -242,6 +321,9 @@ $}
 $( The intersection of a nonempty set is a subclass of its union.
        (Contributed by NM, 29-Jul-2006.) $)
 ${
+	$v A $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y $.
 	iintssuni_0 $f set x $.
@@ -252,6 +334,10 @@ $}
 $( Subclass of the intersection of a restricted class builder.
        (Contributed by NM, 30-Jan-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	fssintrab_0 $f wff ph $.
 	fssintrab_1 $f set x $.
@@ -263,12 +349,15 @@ $( If the union of a class is included in its intersection, the class is
      either the empty set or a singleton ( ~ uniintsn ).  (Contributed by NM,
      30-Oct-2010.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v A $.
 	funissint_0 $f class A $.
 	unissint $p |- ( U. A C_ |^| A <-> ( A = (/) \/ U. A = |^| A ) ) $= funissint_0 cuni funissint_0 cint wss funissint_0 c0 wceq funissint_0 cuni funissint_0 cint wceq wo funissint_0 cuni funissint_0 cint wss funissint_0 c0 wceq funissint_0 cuni funissint_0 cint wceq funissint_0 cuni funissint_0 cint wss funissint_0 c0 wceq wn funissint_0 cuni funissint_0 cint wceq funissint_0 cuni funissint_0 cint wss funissint_0 c0 wceq wn wa funissint_0 cuni funissint_0 cint funissint_0 cuni funissint_0 cint wss funissint_0 c0 wceq wn simpl funissint_0 c0 wceq wn funissint_0 cint funissint_0 cuni wss funissint_0 cuni funissint_0 cint wss funissint_0 c0 wceq wn funissint_0 c0 wne funissint_0 cint funissint_0 cuni wss funissint_0 c0 df-ne funissint_0 intssuni sylbir adantl eqssd ex orrd funissint_0 c0 wceq funissint_0 cuni funissint_0 cint wss funissint_0 cuni funissint_0 cint wceq funissint_0 c0 wceq c0 cint funissint_0 cuni funissint_0 cint funissint_0 cuni cvv c0 cint funissint_0 cuni ssv int0 sseqtr4i funissint_0 c0 inteq syl5sseqr funissint_0 cuni funissint_0 cint eqimss jaoi impbii $.
 $}
 $( Subclass relationship for intersection and union.  (Contributed by NM,
      29-Jul-2006.) $)
 ${
+	$v A $.
+	$v B $.
 	fintssuni2_0 $f class A $.
 	fintssuni2_1 $f class B $.
 	intssuni2 $p |- ( ( A C_ B /\ A =/= (/) ) -> |^| A C_ U. B ) $= fintssuni2_0 c0 wne fintssuni2_0 fintssuni2_1 wss fintssuni2_0 cint fintssuni2_0 cuni fintssuni2_1 cuni fintssuni2_0 intssuni fintssuni2_0 fintssuni2_1 uniss sylan9ssr $.
@@ -277,6 +366,11 @@ $( Under subset ordering, the intersection of a restricted class
        abstraction is less than or equal to any of its members.  (Contributed
        by NM, 7-Sep-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ps $.
@@ -291,6 +385,8 @@ $}
 $( Any set is the smallest of all sets that include it.  (Contributed by
        NM, 20-Sep-2003.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	fintmin2_0 $f set x $.
 	fintmin2_1 $f class A $.
@@ -301,6 +397,11 @@ $( Under subset ordering, the intersection of a class abstraction is less
        than or equal to any of its members.  (Contributed by NM,
        3-Jul-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	$d x ps $.
 	fintmin3_0 $f wff ph $.
@@ -315,6 +416,10 @@ $}
 $( Elimination of a conjunct in a class intersection.  (Contributed by NM,
        31-Jul-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x y A $.
 	$d y ph $.
 	iintmin4_0 $f set y $.
@@ -329,6 +434,11 @@ $( The intersection of a special case of a class abstraction. ` y ` may be
        satisfy the second hypothesis.  (Contributed by NM, 28-Jul-2006.)
        (Proof shortened by Mario Carneiro, 14-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v z $.
 	$d x z A $.
 	$d x z ph $.
 	$d x y z $.
@@ -344,12 +454,17 @@ $}
 $( The intersection of a class containing the empty set is empty.
      (Contributed by NM, 24-Apr-2004.) $)
 ${
+	$v A $.
 	fint0el_0 $f class A $.
 	int0el $p |- ( (/) e. A -> |^| A = (/) ) $= c0 fint0el_0 wcel fint0el_0 cint c0 c0 fint0el_0 intss1 c0 fint0el_0 cint wss c0 fint0el_0 wcel fint0el_0 cint 0ss a1i eqssd $.
 $}
 $( The class intersection of the union of two classes.  Theorem 78 of
        [Suppes] p. 42.  (Contributed by NM, 22-Sep-2002.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	iintun_0 $f set x $.
@@ -361,6 +476,10 @@ $}
 $( The intersection of a pair is the intersection of its members.  Theorem
        71 of [Suppes] p. 42.  (Contributed by NM, 14-Oct-1999.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	iintpr_0 $f set x $.
@@ -375,6 +494,12 @@ $( The intersection of a pair is the intersection of its members.  Closed
        form of ~ intpr .  Theorem 71 of [Suppes] p. 42.  (Contributed by FL,
        27-Apr-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d y B $.
 	iintprg_0 $f set x $.
@@ -388,6 +513,8 @@ $}
 $( Intersection of a singleton.  (Contributed by Stefan O'Rear,
      22-Feb-2015.) $)
 ${
+	$v A $.
+	$v V $.
 	fintsng_0 $f class A $.
 	fintsng_1 $f class V $.
 	intsng $p |- ( A e. V -> |^| { A } = A ) $= fintsng_0 fintsng_1 wcel fintsng_0 csn cint fintsng_0 fintsng_0 cpr cint fintsng_0 fintsng_0 csn fintsng_0 fintsng_0 cpr fintsng_0 dfsn2 inteqi fintsng_0 fintsng_1 wcel fintsng_0 fintsng_0 cpr cint fintsng_0 fintsng_0 cin fintsng_0 fintsng_0 fintsng_1 wcel fintsng_0 fintsng_0 cpr cint fintsng_0 fintsng_0 cin wceq fintsng_0 fintsng_0 fintsng_1 fintsng_1 intprg anidms fintsng_0 inidm syl6eq syl5eq $.
@@ -395,6 +522,7 @@ $}
 $( The intersection of a singleton is its member.  Theorem 70 of [Suppes]
        p. 41.  (Contributed by NM, 29-Sep-2002.) $)
 ${
+	$v A $.
 	fintsn_0 $f class A $.
 	eintsn_0 $e |- A e. _V $.
 	intsn $p |- |^| { A } = A $= fintsn_0 cvv wcel fintsn_0 csn cint fintsn_0 wceq eintsn_0 fintsn_0 cvv intsng ax-mp $.
@@ -402,6 +530,9 @@ $}
 $( Two ways to express " ` A ` is a singleton."  See also ~ en1 , ~ en1b ,
        ~ card1 , and ~ eusn .  (Contributed by NM, 2-Aug-2010.) $)
 ${
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x y A $.
 	iuniintsn_0 $f set y $.
 	funiintsn_0 $f set x $.
@@ -412,6 +543,9 @@ $( The union and the intersection of a class abstraction are equal exactly
        when there is a unique satisfying value of ` ph ( x ) ` .  (Contributed
        by Mario Carneiro, 24-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	iuniintab_0 $f set y $.
@@ -422,6 +556,8 @@ $}
 $( Theorem joining a singleton to an intersection.  (Contributed by NM,
        29-Sep-2002.) $)
 ${
+	$v A $.
+	$v B $.
 	fintunsn_0 $f class A $.
 	fintunsn_1 $f class B $.
 	eintunsn_0 $e |- B e. _V $.
@@ -430,6 +566,8 @@ $}
 $( Relative intersection of an empty set.  (Contributed by Stefan O'Rear,
      3-Apr-2015.) $)
 ${
+	$v A $.
+	$v X $.
 	frint0_0 $f class A $.
 	frint0_1 $f class X $.
 	rint0 $p |- ( X = (/) -> ( A i^i |^| X ) = A ) $= frint0_1 c0 wceq frint0_0 frint0_1 cint cin frint0_0 c0 cint cin frint0_0 frint0_1 c0 wceq frint0_1 cint c0 cint frint0_0 frint0_1 c0 inteq ineq2d frint0_0 c0 cint cin frint0_0 cvv cin frint0_0 c0 cint cvv frint0_0 int0 ineq2i frint0_0 inv1 eqtri syl6eq $.
@@ -437,6 +575,10 @@ $}
 $( Membership in a restricted intersection.  (Contributed by Stefan O'Rear,
        3-Apr-2015.) $)
 ${
+	$v y $.
+	$v A $.
+	$v B $.
+	$v X $.
 	$d B y $.
 	$d X y $.
 	felrint_0 $f set y $.
@@ -448,6 +590,10 @@ $}
 $( Membership in a restricted intersection.  (Contributed by Stefan O'Rear,
        3-Apr-2015.) $)
 ${
+	$v y $.
+	$v A $.
+	$v B $.
+	$v X $.
 	$d B y $.
 	$d X y $.
 	felrint2_0 $f set y $.

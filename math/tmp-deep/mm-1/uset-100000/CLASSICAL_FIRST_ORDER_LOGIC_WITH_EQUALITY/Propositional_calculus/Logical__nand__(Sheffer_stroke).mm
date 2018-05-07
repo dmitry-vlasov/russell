@@ -10,6 +10,8 @@ $c -/\  $.
 $( Overlined 'wedge' (read:  'nand') $)
 $( Extend wff definition to include alternative denial ('nand'). $)
 ${
+	$v ph $.
+	$v ps $.
 	fwnan_0 $f wff ph $.
 	fwnan_1 $f wff ps $.
 	wnan $a wff ( ph -/\ ps ) $.
@@ -29,6 +31,8 @@ $( Define incompatibility, or alternative denial ('not-and' or 'nand').  This
      ( ~ df-an ), ` \/ ` ( ~ df-or ), ` -> ` ( ~ wi ), and ` \/_ `
      ( ~ df-xor ) .  (Contributed by Jeff Hoffman, 19-Nov-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fdf-nan_0 $f wff ph $.
 	fdf-nan_1 $f wff ps $.
 	df-nan $a |- ( ( ph -/\ ps ) <-> -. ( ph /\ ps ) ) $.
@@ -36,6 +40,8 @@ $}
 $( Write 'and' in terms of 'nand'.  (Contributed by Mario Carneiro,
      9-May-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fnanan_0 $f wff ph $.
 	fnanan_1 $f wff ps $.
 	nanan $p |- ( ( ph /\ ps ) <-> -. ( ph -/\ ps ) ) $= fnanan_0 fnanan_1 wnan fnanan_0 fnanan_1 wa fnanan_0 fnanan_1 df-nan con2bii $.
@@ -43,6 +49,8 @@ $}
 $( The 'nand' operator commutes.  (Contributed by Mario Carneiro,
      9-May-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fnancom_0 $f wff ph $.
 	fnancom_1 $f wff ps $.
 	nancom $p |- ( ( ph -/\ ps ) <-> ( ps -/\ ph ) ) $= fnancom_0 fnancom_1 wa wn fnancom_1 fnancom_0 wa wn fnancom_0 fnancom_1 wnan fnancom_1 fnancom_0 wnan fnancom_0 fnancom_1 wa fnancom_1 fnancom_0 wa fnancom_0 fnancom_1 ancom notbii fnancom_0 fnancom_1 df-nan fnancom_1 fnancom_0 df-nan 3bitr4i $.
@@ -50,6 +58,9 @@ $}
 $( Lemma for handling nested 'nand's.  (Contributed by Jeff Hoffman,
      19-Nov-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fnannan_0 $f wff ph $.
 	fnannan_1 $f wff ps $.
 	fnannan_2 $f wff ch $.
@@ -59,6 +70,8 @@ $( Show equivalence between implication and the Nicod version.  To derive
      ~ nic-dfim , apply ~ nanbi .  (Contributed by Jeff Hoffman,
      19-Nov-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fnanim_0 $f wff ph $.
 	fnanim_1 $f wff ps $.
 	nanim $p |- ( ( ph -> ps ) <-> ( ph -/\ ( ps -/\ ps ) ) ) $= fnanim_0 fnanim_1 fnanim_1 wnan wnan fnanim_0 fnanim_1 fnanim_1 wa wi fnanim_0 fnanim_1 wi fnanim_0 fnanim_1 fnanim_1 nannan fnanim_0 fnanim_1 anidmdbi bitr2i $.
@@ -67,12 +80,15 @@ $( Show equivalence between negation and the Nicod version.  To derive
      ~ nic-dfneg , apply ~ nanbi .  (Contributed by Jeff Hoffman,
      19-Nov-2007.) $)
 ${
+	$v ps $.
 	fnannot_0 $f wff ps $.
 	nannot $p |- ( -. ps <-> ( ps -/\ ps ) ) $= fnannot_0 fnannot_0 wnan fnannot_0 wn fnannot_0 fnannot_0 wnan fnannot_0 fnannot_0 wa fnannot_0 fnannot_0 fnannot_0 df-nan fnannot_0 anidm xchbinx bicomi $.
 $}
 $( Show equivalence between the bidirectional and the Nicod version.
      (Contributed by Jeff Hoffman, 19-Nov-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fnanbi_0 $f wff ph $.
 	fnanbi_1 $f wff ps $.
 	nanbi $p |- ( ( ph <-> ps ) <-> ( ( ph -/\ ps ) -/\ ( ( ph -/\ ph ) -/\ ( ps -/\ ps ) ) ) ) $= fnanbi_0 fnanbi_1 wa wn fnanbi_0 wn fnanbi_1 wn wa wn wa wn fnanbi_0 fnanbi_1 wa fnanbi_0 wn fnanbi_1 wn wa wo fnanbi_0 fnanbi_1 wnan fnanbi_0 fnanbi_0 wnan fnanbi_1 fnanbi_1 wnan wnan wnan fnanbi_0 fnanbi_1 wb fnanbi_0 fnanbi_1 wa fnanbi_0 wn fnanbi_1 wn wa pm4.57 fnanbi_0 fnanbi_1 wnan fnanbi_0 fnanbi_0 wnan fnanbi_1 fnanbi_1 wnan wnan wnan fnanbi_0 fnanbi_1 wnan fnanbi_0 fnanbi_0 wnan fnanbi_1 fnanbi_1 wnan wnan wa fnanbi_0 fnanbi_1 wa wn fnanbi_0 wn fnanbi_1 wn wa wn wa fnanbi_0 fnanbi_1 wnan fnanbi_0 fnanbi_0 wnan fnanbi_1 fnanbi_1 wnan wnan df-nan fnanbi_0 fnanbi_1 wnan fnanbi_0 fnanbi_1 wa wn fnanbi_0 fnanbi_0 wnan fnanbi_1 fnanbi_1 wnan wnan fnanbi_0 wn fnanbi_1 wn wa wn fnanbi_0 fnanbi_1 df-nan fnanbi_0 fnanbi_0 wnan fnanbi_1 fnanbi_1 wnan wnan fnanbi_0 fnanbi_0 wnan fnanbi_1 fnanbi_1 wnan wa fnanbi_0 wn fnanbi_1 wn wa fnanbi_0 fnanbi_0 wnan fnanbi_1 fnanbi_1 wnan df-nan fnanbi_0 wn fnanbi_0 fnanbi_0 wnan fnanbi_1 wn fnanbi_1 fnanbi_1 wnan fnanbi_0 nannot fnanbi_1 nannot anbi12i xchbinxr anbi12i xchbinx fnanbi_0 fnanbi_1 dfbi3 3bitr4ri $.

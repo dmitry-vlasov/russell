@@ -12,6 +12,8 @@ $( The Principle of Transfinite Induction.  Theorem 7.17 of [TakeutiZaring]
        See theorem ~ tfindes or ~ tfinds for the version involving basis and
        induction hypotheses.  (Contributed by NM, 18-Feb-2004.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	ftfi_0 $f set x $.
 	ftfi_1 $f class A $.
@@ -23,6 +25,11 @@ $( Transfinite Induction Schema.  If all ordinal numbers less than a given
        p. 200.  (Contributed by NM, 1-Aug-1994.)  (Revised by Mario Carneiro,
        20-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w y z ph $.
 	$d w x y z $.
 	itfis_0 $f set z $.
@@ -36,6 +43,10 @@ $}
 $( Transfinite Induction Schema, using implicit substitution.  (Contributed
        by NM, 18-Aug-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d y ph $.
 	$d x y $.
 	ftfis2f_0 $f wff ph $.
@@ -50,6 +61,10 @@ $}
 $( Transfinite Induction Schema, using implicit substitution.  (Contributed
        by NM, 18-Aug-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x ps $.
 	$d y ph $.
 	$d x y $.
@@ -64,6 +79,12 @@ $}
 $( Transfinite Induction Schema, using implicit substitution.  (Contributed
        by NM, 4-Nov-2003.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x ps $.
 	$d y ph $.
 	$d x ch $.
@@ -84,6 +105,20 @@ $( A transfinite induction scheme in "implicit" form where the induction is
        done on an object derived from the object of interest.  (Contributed by
        Stefan O'Rear, 24-Aug-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v A $.
+	$v R $.
+	$v S $.
+	$v T $.
+	$v V $.
 	$d x v w y z T $.
 	$d v w y z R $.
 	$d x v w z S $.
@@ -126,6 +161,15 @@ $( Principle of Transfinite Induction (inference schema), using implicit
        Schema 4 of [Suppes] p. 197.  (Contributed by NM, 16-Apr-1995.)  (Proof
        shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z $.
 	$d x A $.
 	$d x z ch $.
@@ -160,6 +204,15 @@ $( Transfinite Induction (inference schema), using implicit substitutions.
        an arbitrary ordinal ` B ` instead of zero.  Remark in [TakeutiZaring]
        p. 57.  (Contributed by NM, 5-Mar-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x y B $.
 	$d x ch $.
@@ -196,6 +249,15 @@ $( Transfinite Induction (inference schema), using implicit substitutions.
        variable restrictions were removed by David Abernethy, 19-Jun-2012.)
        (Contributed by NM, 5-Jan-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x y B $.
 	$d x ch $.
@@ -225,6 +287,10 @@ $( Transfinite Induction with explicit substitution.  The first hypothesis
        the third is the induction hypothesis for limit ordinals.  Theorem
        Schema 4 of [Suppes] p. 197.  (Contributed by NM, 5-Mar-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	$d y z ph $.
 	itfindes_0 $f set z $.
@@ -247,6 +313,13 @@ $( Transfinite Induction (inference schema), using implicit substitutions.
        wff ` ta ` is an auxiliary antecedent to help shorten proofs using this
        theorem.  (Contributed by NM, 4-Sep-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v x $.
+	$v y $.
 	$d x y ta $.
 	$d x ps $.
 	$d x ch $.
@@ -278,6 +351,15 @@ $( Principle of Transfinite Induction (inference schema), using implicit
        (Contributed by NM, 6-Jan-2005.)  (Revised by David Abernethy,
        21-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x A $.
 	$d y ph $.
 	$d x ch $.

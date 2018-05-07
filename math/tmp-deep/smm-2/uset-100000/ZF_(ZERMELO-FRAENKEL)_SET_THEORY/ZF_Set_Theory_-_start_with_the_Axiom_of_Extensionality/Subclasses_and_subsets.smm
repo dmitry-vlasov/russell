@@ -69,7 +69,7 @@ $( Equivalence for subclass relation, using bound-variable hypotheses
        instead of distinct variable conditions.  (Contributed by NM,
        3-Jul-1994.)  (Revised by Andrew Salmon, 27-Aug-2011.) $)
 ${
-	$v x z A B $.
+	$v x A B z $.
 	$d z A $.
 	$d z B $.
 	$d x z $.
@@ -110,7 +110,7 @@ $}
 $( Membership relationships follow from a subclass relationship.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -261,7 +261,7 @@ $( Transitivity of subclasses.  Exercise 5 of [TakeutiZaring] p. 17.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
        14-Jun-2011.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -360,7 +360,7 @@ $}
 $( The subclass relationship is antisymmetric.  Compare Theorem 4 of
        [Suppes] p. 22.  (Contributed by NM, 5-Aug-1993.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -396,7 +396,7 @@ $( Any class is a subclass of itself.  Exercise 10 of [TakeutiZaring]
        p. 18.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew
        Salmon, 14-Jun-2011.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d A x $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -406,7 +406,7 @@ $}
 $( Any class is a subclass of the universal class.  (Contributed by NM,
        31-Oct-1995.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d A x $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -1172,7 +1172,7 @@ $( A subset relationship useful for converting union to indexed union using
        ~ dfiin2 .  (Contributed by NM, 5-Oct-2006.)  (Proof shortened by Mario
        Carneiro, 26-Sep-2015.) $)
 ${
-	$v x y z A B C D $.
+	$v x y A B C D z $.
 	$d x y $.
 	$d y z A $.
 	$d y z B $.

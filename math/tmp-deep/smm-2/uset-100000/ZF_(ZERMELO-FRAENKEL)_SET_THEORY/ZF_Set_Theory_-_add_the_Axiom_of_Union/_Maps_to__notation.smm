@@ -8,7 +8,7 @@ $)
 $( If a two-parameter class is not empty, constrain the implicit pair.
        (Contributed by Stefan O'Rear, 7-Mar-2015.) $)
 ${
-	$v x y z A B C F S X T $.
+	$v x y A B C S T F X z $.
 	$d A x y z $.
 	$d B x y z $.
 	$d C z $.
@@ -30,7 +30,7 @@ $( If a two-parameter class is not empty, the first argument is in its
        nominal domain.  (Contributed by FL, 15-Oct-2012.)  (Revised by Stefan
        O'Rear, 7-Mar-2015.) $)
 ${
-	$v x y A B C F S X T $.
+	$v x y A B C S T F X $.
 	$d A x y $.
 	$d B x y $.
 	e0 $e |- F = ( x e. A , y e. B |-> C ) $.
@@ -50,7 +50,7 @@ $( If a two-parameter class is not empty, the second argument is in its
        nominal domain.  (Contributed by FL, 15-Oct-2012.)  (Revised by Stefan
        O'Rear, 7-Mar-2015.) $)
 ${
-	$v x y A B C F S X T $.
+	$v x y A B C S T F X $.
 	$d A x y $.
 	$d B x y $.
 	e0 $e |- F = ( x e. A , y e. B |-> C ) $.
@@ -71,7 +71,7 @@ $( Utility lemma for two-parameter classes.
        _EDITORIAL_: can simplify ~ isghm , ~ islmhm .  (Contributed by Stefan
        O'Rear, 21-Jan-2015.) $)
 ${
-	$v A B C D F E X a Y b $.
+	$v A B C D E F X Y a b $.
 	$d A a b $.
 	$d B a b $.
 	$d E a b $.
@@ -218,7 +218,7 @@ $( The cross product of two sets is a set.  Proposition 6.2 of
        (Contributed by Mario Carneiro, 20-May-2013.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
-	$v x y A B V W $.
+	$v A B V W x y $.
 	$d A x y $.
 	$d B x y $.
 	$d V y $.
@@ -256,7 +256,7 @@ $( A one-to-one mapping induces a one-to-one mapping on power sets.
        (Contributed by Stefan O'Rear, 18-Nov-2014.)  (Revised by Mario
        Carneiro, 26-Jun-2015.) $)
 ${
-	$v A B F a b $.
+	$v A B F b a $.
 	$d a b A $.
 	$d a b B $.
 	$d a b F $.
@@ -272,7 +272,7 @@ $( Show that the support of a function is contained in a set.  (Contributed
        by Mario Carneiro, 19-Dec-2014.)  (Revised by Mario Carneiro,
        22-Mar-2015.) $)
 ${
-	$v ph A B W Z k $.
+	$v ph A B k W Z $.
 	$d k A $.
 	$d k ph $.
 	$d k W $.
@@ -290,7 +290,7 @@ $}
 $( Formula building theorem for support restriction, on a function which
        preserves zero.  (Contributed by Stefan O'Rear, 9-Mar-2015.) $)
 ${
-	$v ph x A D F V Y Z L $.
+	$v ph x A D F L V Y Z $.
 	$d ph x $.
 	$d Y x $.
 	$d Z x $.
@@ -312,7 +312,7 @@ $}
 $( Formula building theorem for support restrictions: operator with left
        annihilator.  (Contributed by Stefan O'Rear, 9-Mar-2015.) $)
 ${
-	$v ph x A B v D V R Y Z L O $.
+	$v ph x v A B D R L O V Y Z $.
 	$d ph v $.
 	$d ph x $.
 	$d B v $.

@@ -44,7 +44,7 @@ $( The ordered pair theorem.  If two ordered pairs are equal, their first
        sets due our specific ordered pair definition.  (Contributed by NM,
        28-May-1995.) $)
 ${
-	$v x A B C D $.
+	$v A B C D x $.
 	$d x B $.
 	$d x C $.
 	$d x D $.
@@ -62,7 +62,7 @@ $( Ordered pair theorem. ` C ` and ` D ` are not required to be sets under
        our specific ordered pair definition.  (Contributed by NM,
        14-Oct-2005.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
-	$v x y A B C D V W $.
+	$v A B C D V W x y $.
 	$d x y A $.
 	$d y B $.
 	$d x y C $.
@@ -157,7 +157,7 @@ $( Substitution of class ` A ` for ordered pair ` <. x , y >. ` .
        (Contributed by NM, 27-Dec-1996.)  (Revised by Andrew Salmon,
        11-Jul-2011.) $)
 ${
-	$v ph x y z w A $.
+	$v ph x y A z w $.
 	$d x z w A $.
 	$d y z w A $.
 	$d z w ph $.
@@ -295,7 +295,7 @@ $}
 $( "At most one" property of an ordered pair.  (Contributed by NM,
        11-Apr-2004.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y A $.
 	$d y B $.
 	e0 $e |- B e. _V $.
@@ -379,7 +379,7 @@ $}
 $( Prove existential uniqueness for an ordered triple.  (Contributed by
        Mario Carneiro, 20-May-2015.) $)
 ${
-	$v ph ps x y A B C a b c $.
+	$v ph ps x A B C a b c y $.
 	$d a b c x y A $.
 	$d a b c x y B $.
 	$d a b c x y C $.

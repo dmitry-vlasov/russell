@@ -60,7 +60,7 @@ $( Soundness justification theorem for ~ df-dif .  (Contributed by Rodolfo
        Medina, 27-Apr-2010.)  (Proof shortened by Andrew Salmon,
        9-Jul-2011.) $)
 ${
-	$v x y z A B $.
+	$v x y A B z $.
 	$d x A $.
 	$d x B $.
 	$d y A $.
@@ -102,7 +102,7 @@ $( Soundness justification theorem for ~ df-un .  (Contributed by Rodolfo
        Medina, 28-Apr-2010.)  (Proof shortened by Andrew Salmon,
        9-Jul-2011.) $)
 ${
-	$v x y z A B $.
+	$v x y A B z $.
 	$d x A $.
 	$d x B $.
 	$d y A $.
@@ -139,7 +139,7 @@ $( Soundness justification theorem for ~ df-in .  (Contributed by Rodolfo
        Medina, 28-Apr-2010.)  (Proof shortened by Andrew Salmon,
        9-Jul-2011.) $)
 ${
-	$v x y z A B $.
+	$v x y A B z $.
 	$d x A $.
 	$d x B $.
 	$d y A $.
@@ -200,7 +200,7 @@ $}
 $( Expansion of membership in a class difference.  (Contributed by NM,
        29-Apr-1994.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.

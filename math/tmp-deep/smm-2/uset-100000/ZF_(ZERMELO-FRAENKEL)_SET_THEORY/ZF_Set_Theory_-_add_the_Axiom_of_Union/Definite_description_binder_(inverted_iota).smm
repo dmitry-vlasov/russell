@@ -304,7 +304,7 @@ ${
 $}
 $( A method for computing iota.  (Contributed by NM, 17-Sep-2013.) $)
 ${
-	$v ph ps x y A V $.
+	$v ph ps x A V y $.
 	$d x y A $.
 	$d x V $.
 	$d x ph $.
@@ -433,7 +433,7 @@ $}
 $( Class substitution within a description binder.  (Contributed by Scott
        Fenton, 6-Oct-2017.) $)
 ${
-	$v ph x y z A V $.
+	$v ph x y A V z $.
 	$d A y z $.
 	$d x y z $.
 	$d ph z $.

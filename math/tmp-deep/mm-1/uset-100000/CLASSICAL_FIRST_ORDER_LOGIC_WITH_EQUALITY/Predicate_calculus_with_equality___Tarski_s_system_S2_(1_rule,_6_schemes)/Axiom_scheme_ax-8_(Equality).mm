@@ -23,6 +23,9 @@ $( Axiom of Equality.  One of the equality and substitution axioms of
      of this, we say that these three variables are "bundled" (a term coined by
      Raph Levien).  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fax-8_0 $f set x $.
 	fax-8_1 $f set y $.
 	fax-8_2 $f set z $.
@@ -32,6 +35,8 @@ $( Identity law for equality.  Lemma 2 of [KalishMontague] p. 85.  See also
        Lemma 6 of [Tarski] p. 68.  (Contributed by NM, 1-Apr-2005.)  (Revised
        by NM, 9-Apr-2017.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	iequid_0 $f set y $.
 	fequid_0 $f set x $.
@@ -43,6 +48,8 @@ $( Bound-variable hypothesis builder for ` x = x ` .  This theorem tells us
      traditional definition of free variable.  (Contributed by NM,
      13-Jan-2011.)  (Revised by NM, 21-Aug-2017.) $)
 ${
+	$v x $.
+	$v y $.
 	fnfequid_0 $f set x $.
 	fnfequid_1 $f set y $.
 	nfequid $p |- F/ y x = x $= fnfequid_0 sup_set_class fnfequid_0 sup_set_class wceq fnfequid_1 fnfequid_0 equid nfth $.
@@ -51,12 +58,16 @@ $( Commutative law for equality.  Lemma 3 of [KalishMontague] p. 85.  See
        also Lemma 7 of [Tarski] p. 69.  (Contributed by NM, 5-Aug-1993.)
        (Revised by NM, 9-Apr-2017.) $)
 ${
+	$v x $.
+	$v y $.
 	fequcomi_0 $f set x $.
 	fequcomi_1 $f set y $.
 	equcomi $p |- ( x = y -> y = x ) $= fequcomi_0 sup_set_class fequcomi_1 sup_set_class wceq fequcomi_0 sup_set_class fequcomi_0 sup_set_class wceq fequcomi_1 sup_set_class fequcomi_0 sup_set_class wceq fequcomi_0 equid fequcomi_0 fequcomi_1 fequcomi_0 ax-8 mpi $.
 $}
 $( Commutative law for equality.  (Contributed by NM, 20-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
 	fequcom_0 $f set x $.
 	fequcom_1 $f set y $.
 	equcom $p |- ( x = y <-> y = x ) $= fequcom_0 sup_set_class fequcom_1 sup_set_class wceq fequcom_1 sup_set_class fequcom_0 sup_set_class wceq fequcom_0 fequcom_1 equcomi fequcom_1 fequcom_0 equcomi impbii $.
@@ -64,6 +75,9 @@ $}
 $( An inference commuting equality in antecedent.  Used to eliminate the
        need for a syllogism.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fequcoms_0 $f wff ph $.
 	fequcoms_1 $f set x $.
 	fequcoms_2 $f set y $.
@@ -73,6 +87,9 @@ $}
 $( An equivalence law for equality.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Wolf Lammen, 12-Nov-2017.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fequequ1_0 $f set x $.
 	fequequ1_1 $f set y $.
 	fequequ1_2 $f set z $.
@@ -81,6 +98,9 @@ $}
 $( An equivalence law for equality.  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.)  (Proof modification is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fequequ1OLD_0 $f set x $.
 	fequequ1OLD_1 $f set y $.
 	fequequ1OLD_2 $f set z $.
@@ -89,6 +109,9 @@ $}
 $( An equivalence law for equality.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Wolf Lammen, 4-Aug-2017.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fequequ2_0 $f set x $.
 	fequequ2_1 $f set y $.
 	fequequ2_2 $f set z $.
@@ -100,11 +123,15 @@ $( One of the two equality axioms of standard predicate calculus, called
      quantifier, but it was probably to be compatible with free logic (which is
      valid in the empty domain).  (Contributed by NM, 16-Feb-2005.) $)
 ${
+	$v x $.
 	fstdpc6_0 $f set x $.
 	stdpc6 $p |- A. x x = x $= fstdpc6_0 sup_set_class fstdpc6_0 sup_set_class wceq fstdpc6_0 fstdpc6_0 equid ax-gen $.
 $}
 $( A transitive law for equality.  (Contributed by NM, 23-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fequtr_0 $f set x $.
 	fequtr_1 $f set y $.
 	fequtr_2 $f set z $.
@@ -113,6 +140,9 @@ $}
 $( A transitive law for equality.  Lemma L17 in [Megill] p. 446 (p. 14 of the
      preprint).  (Contributed by NM, 23-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fequtrr_0 $f set x $.
 	fequtrr_1 $f set y $.
 	fequtrr_2 $f set z $.
@@ -121,6 +151,9 @@ $}
 $( A transitive law for equality.  (Contributed by NM, 12-Aug-1993.)  (Proof
      shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fequtr2_0 $f set x $.
 	fequtr2_1 $f set y $.
 	fequtr2_2 $f set z $.
@@ -130,6 +163,9 @@ $( Two equivalent ways of expressing ~ ax-12 .  See the comment for
      ~ ax-12 .  (Contributed by NM, 2-May-2017.)  (Proof shortened by Wolf
      Lammen, 12-Aug-2017.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fax12b_0 $f set x $.
 	fax12b_1 $f set y $.
 	fax12b_2 $f set z $.
@@ -138,6 +174,9 @@ $}
 $( Obsolete version of ~ ax12b as of 12-Aug-2017.  (Contributed by NM,
      2-May-2017.)  (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fax12bOLD_0 $f set x $.
 	fax12bOLD_1 $f set y $.
 	fax12bOLD_2 $f set z $.
@@ -148,6 +187,10 @@ $( Weak version of ~ sp .  Uses only Tarski's FOL axiom schemes.  Lemma 9
        distinct variable conditions.  TO DO:  Do we need this theorem?  If not,
        maybe it should be deleted.  (Contributed by NM, 19-Apr-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fspfw_0 $f wff ph $.
 	fspfw_1 $f wff ps $.
@@ -163,6 +206,9 @@ $( Weak version of ~ sp .  Uses only Tarski's FOL axiom schemes.  Obsolete
        version of ~ spnfw as of 13-Aug-2017.  (Contributed by NM, 1-Aug-2017.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	ispnfwOLD_0 $f set y $.
@@ -174,6 +220,8 @@ $}
 $( Weak version of ~ 19.8a .  Uses only Tarski's FOL axiom schemes.
        (Contributed by NM, 1-Aug-2017.) $)
 ${
+	$v ph $.
+	$v x $.
 	f19.8w_0 $f wff ph $.
 	f19.8w_1 $f set x $.
 	e19.8w_0 $e |- ( ph -> A. x ph ) $.
@@ -190,6 +238,10 @@ $( Weak version of specialization scheme ~ sp .  Lemma 9 of
        ~ sptruw (when ` ph ` is true), and ~ spfalw (when ` ph ` is false).
        (Contributed by NM, 9-Apr-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d x ps $.
 	$d y ph $.
@@ -204,6 +256,9 @@ $( Version of ~ sp when ` x ` does not occur in ` ph ` .  This provides the
        other direction of ~ ax-17 .  Uses only Tarski's FOL axiom schemes.
        (Contributed by NM, 10-Apr-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y ph $.
 	ispvw_0 $f set y $.
 	fspvw_0 $f wff ph $.
@@ -213,6 +268,8 @@ $}
 $( Special case of Theorem 19.3 of [Margaris] p. 89.  (Contributed by NM,
        1-Aug-2017.) $)
 ${
+	$v ph $.
+	$v x $.
 	$d x ph $.
 	f19.3v_0 $f wff ph $.
 	f19.3v_1 $f set x $.
@@ -221,6 +278,8 @@ $}
 $( Special case of Theorem 19.9 of [Margaris] p. 89.  (Contributed by NM,
        28-May-1995.)  (Revised by NM, 1-Aug-2017.) $)
 ${
+	$v ph $.
+	$v x $.
 	$d x ph $.
 	f19.9v_0 $f wff ph $.
 	f19.9v_1 $f set x $.
@@ -229,6 +288,10 @@ $}
 $( Deduction from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
        27-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	$d x ch $.
 	$d x ph $.
 	fexlimdv_0 $f wff ph $.
@@ -241,6 +304,10 @@ $}
 $( Existential elimination rule of natural deduction.  (Contributed by
        Mario Carneiro, 15-Jun-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	$d x ch $.
 	$d x ph $.
 	fexlimddv_0 $f wff ph $.
@@ -278,6 +345,9 @@ $( Inference from Theorem 19.23 of [Margaris] p. 90.
        prove ` E. x ph ` and detach it with modus ponens ~ ax-mp to arrive at
        the final theorem ` ps ` .  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	$d x ps $.
 	fexlimiv_0 $f wff ph $.
 	fexlimiv_1 $f wff ps $.
@@ -288,6 +358,10 @@ $}
 $( Inference from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
        1-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x ps $.
 	$d y ps $.
 	fexlimivv_0 $f wff ph $.
@@ -300,6 +374,11 @@ $}
 $( Deduction from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
        31-Jul-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	$d x ch $.
 	$d x ph $.
 	$d y ch $.
@@ -315,6 +394,8 @@ $}
 $( Version of ~ sp when ` ph ` is true.  Uses only Tarski's FOL axiom
        schemes.  (Contributed by NM, 23-Apr-1017.) $)
 ${
+	$v ph $.
+	$v x $.
 	fsptruw_0 $f wff ph $.
 	fsptruw_1 $f set x $.
 	esptruw_0 $e |- ph $.
@@ -323,6 +404,9 @@ $}
 $( Version of ~ sp when ` ph ` is false.  Uses only Tarski's FOL axiom
        schemes.  (Contributed by NM, 23-Apr-1017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	ispfalw_0 $f set y $.
@@ -336,12 +420,17 @@ $( Theorem 19.2 of [Margaris] p. 89.  Note:  This proof is very different
      at this point.  See the later ~ 19.2g for a more conventional proof.
      (Contributed by NM, 2-Aug-2017.) $)
 ${
+	$v ph $.
+	$v x $.
 	f19.2_0 $f wff ph $.
 	f19.2_1 $f set x $.
 	19.2 $p |- ( A. x ph -> E. x ph ) $= f19.2_1 sup_set_class f19.2_1 sup_set_class wceq wn f19.2_1 wal wn f19.2_0 f19.2_1 wal f19.2_0 f19.2_1 wex wi f19.2_1 sup_set_class f19.2_1 sup_set_class wceq wn f19.2_1 wal f19.2_1 sup_set_class f19.2_1 sup_set_class wceq f19.2_1 equid f19.2_1 sup_set_class f19.2_1 sup_set_class wceq wn f19.2_1 f19.2_1 sup_set_class f19.2_1 sup_set_class wceq f19.2_1 equid notnoti spfalw mt2 f19.2_0 f19.2_0 f19.2_1 f19.2_1 f19.2_1 sup_set_class f19.2_1 sup_set_class wceq f19.2_0 idd speimfw ax-mp $.
 $}
 $( Theorem 19.39 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.39_0 $f wff ph $.
 	f19.39_1 $f wff ps $.
 	f19.39_2 $f set x $.
@@ -349,6 +438,9 @@ ${
 $}
 $( Theorem 19.24 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.24_0 $f wff ph $.
 	f19.24_1 $f wff ps $.
 	f19.24_2 $f set x $.
@@ -356,6 +448,9 @@ ${
 $}
 $( Theorem 19.34 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.34_0 $f wff ph $.
 	f19.34_1 $f wff ps $.
 	f19.34_2 $f set x $.
@@ -364,6 +459,10 @@ $}
 $( Change bound variable.  Uses only Tarski's FOL axiom schemes.
        (Contributed by NM, 9-Apr-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fcbvalw_0 $f wff ph $.
 	fcbvalw_1 $f wff ps $.
@@ -379,6 +478,10 @@ $}
 $( Change bound variable.  Uses only Tarski's FOL axiom schemes.
        (Contributed by NM, 9-Apr-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d x ps $.
 	$d y ph $.
@@ -392,6 +495,10 @@ $}
 $( Change bound variable.  Uses only Tarski's FOL axiom schemes.
        (Contributed by NM, 19-Apr-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d x ps $.
 	$d y ph $.
@@ -405,6 +512,11 @@ $}
 $( Weak version of ~ alcom .  Uses only Tarski's FOL axiom schemes.
        (Contributed by NM, 10-Apr-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d y z $.
 	$d x y $.
 	$d z ph $.
@@ -421,6 +533,10 @@ $( Weak version of ~ ax-6 from which we can prove any ~ ax-6 instance not
        involving wff variables or bundling.  Uses only Tarski's FOL axiom
        schemes.  (Contributed by NM, 19-Apr-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fhbn1fw_0 $f wff ph $.
 	fhbn1fw_1 $f wff ps $.
@@ -437,6 +553,10 @@ $}
 $( Weak version of ~ hbn1 .  Uses only Tarski's FOL axiom schemes.
        (Contributed by NM, 9-Apr-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d y ph $.
 	$d x ps $.
 	$d x y $.
@@ -450,6 +570,10 @@ $}
 $( Weak version of ~ hba1 .  See comments for ~ ax6w .  Uses only Tarski's
        FOL axiom schemes.  (Contributed by NM, 9-Apr-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d y ph $.
 	$d x ps $.
 	$d x y $.
@@ -463,6 +587,10 @@ $}
 $( Weak version of ~ hbe1 .  See comments for ~ ax6w .  Uses only Tarski's
        FOL axiom schemes.  (Contributed by NM, 19-Apr-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d y ph $.
 	$d x ps $.
 	$d x y $.
@@ -477,6 +605,11 @@ $( Weak version of ~ hbal .  Uses only Tarski's FOL axiom schemes.  Unlike
        ~ hbal , this theorem requires that ` x ` and ` y ` be distinct i.e. are
        not bundled.  (Contributed by NM, 19-Apr-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d x y $.
 	$d z ph $.

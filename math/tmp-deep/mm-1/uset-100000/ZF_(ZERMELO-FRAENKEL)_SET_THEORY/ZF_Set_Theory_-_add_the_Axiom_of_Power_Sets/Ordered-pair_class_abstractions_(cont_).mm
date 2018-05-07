@@ -9,6 +9,10 @@ $( The law of concretion.  Special case of Theorem 9.5 of [Quine] p. 61.
        (Contributed by NM, 14-Apr-1995.)  (Proof shortened by Andrew Salmon,
        25-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d ph z $.
@@ -21,6 +25,11 @@ $}
 $( Membership in a class abstraction of pairs.  (Contributed by NM,
        24-Mar-1998.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v z $.
 	$d x z A $.
 	$d y z A $.
 	$d z ph $.
@@ -35,6 +44,11 @@ $( The law of concretion in terms of substitutions.  (Contributed by NM,
        30-Sep-2002.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z $.
 	$d x y w $.
 	fopelopabsbOLD_0 $f wff ph $.
@@ -47,6 +61,12 @@ $}
 $( The law of concretion in terms of substitutions.  (Contributed by NM,
        17-Mar-2008.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v R $.
 	$d x y z $.
 	$d x y w $.
 	fbrabsbOLD_0 $f wff ph $.
@@ -61,6 +81,13 @@ $}
 $( The law of concretion in terms of substitutions.  (Contributed by NM,
        30-Sep-2002.)  (Revised by Mario Carneiro, 18-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v z $.
+	$v w $.
 	$d x y z w $.
 	$d w z A $.
 	$d w x B $.
@@ -77,6 +104,12 @@ $}
 $( The law of concretion in terms of substitutions.  (Contributed by NM,
        17-Mar-2008.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
 	$d x y $.
 	$d x B $.
 	fbrabsb_0 $f wff ph $.
@@ -91,6 +124,15 @@ $}
 $( Closed theorem form of ~ opelopab .  (Contributed by NM,
        19-Feb-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	$d x y A $.
 	$d x y B $.
 	$d x y ch $.
@@ -108,6 +150,14 @@ $}
 $( The law of concretion.  Theorem 9.5 of [Quine] p. 61.  (Contributed by
        Mario Carneiro, 19-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	$d x y A $.
 	$d x y B $.
 	$d x y ps $.
@@ -125,6 +175,15 @@ $}
 $( The law of concretion for a binary relation.  (Contributed by Mario
          Carneiro, 19-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v V $.
+	$v W $.
 	$d x y A $.
 	$d x y B $.
 	$d x y ps $.
@@ -144,6 +203,14 @@ $}
 $( Ordered pair membership in an ordered pair class abstraction.
        (Contributed by Mario Carneiro, 19-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y A $.
 	$d x y B $.
 	$d x y ps $.
@@ -163,6 +230,12 @@ $}
 $( The law of concretion.  Theorem 9.5 of [Quine] p. 61.  (Contributed by
        Mario Carneiro, 19-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	$d x y ps $.
@@ -180,6 +253,13 @@ $}
 $( The law of concretion for a binary relation.  (Contributed by NM,
          19-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
 	$d x y A $.
 	$d x y B $.
 	$d x y ps $.
@@ -199,6 +279,15 @@ $}
 $( The law of concretion.  Theorem 9.5 of [Quine] p. 61.  (Contributed by
        NM, 28-May-1995.)  (Revised by Mario Carneiro, 19-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	$d x y A $.
 	$d x y B $.
 	$d x y ch $.
@@ -218,6 +307,16 @@ $}
 $( The law of concretion for a binary relation.  (Contributed by NM,
          16-Aug-1999.)  (Revised by Mario Carneiro, 19-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	$d x y A $.
 	$d x y B $.
 	$d x y ch $.
@@ -240,6 +339,15 @@ $( Ordered pair membership in an ordered pair class abstraction.
        (Contributed by NM, 14-Oct-2007.)  (Revised by Mario Carneiro,
        19-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -261,6 +369,13 @@ $}
 $( The law of concretion.  Theorem 9.5 of [Quine] p. 61.  (Contributed by
        NM, 16-May-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	$d x y ch $.
@@ -280,6 +395,14 @@ $}
 $( The law of concretion for a binary relation.  (Contributed by NM,
          16-Aug-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
 	$d x y A $.
 	$d x y B $.
 	$d x y ch $.
@@ -303,6 +426,12 @@ $( The law of concretion.  Theorem 9.5 of [Quine] p. 61.  This version of
        conditions."  (Contributed by Mario Carneiro, 19-Dec-2013.)  (Proof
        shortened by Mario Carneiro, 18-Nov-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	fopelopabaf_0 $f wff ph $.
@@ -322,6 +451,13 @@ $( The law of concretion.  Theorem 9.5 of [Quine] p. 61.  This version of
        ~ opelopab uses bound-variable hypotheses in place of distinct variable
        conditions."  (Contributed by NM, 19-Dec-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	fopelopabf_0 $f wff ph $.
@@ -343,6 +479,11 @@ $( Equivalence of ordered pair abstraction subclass and implication.
        (Contributed by NM, 27-Dec-1996.)  (Revised by Mario Carneiro,
        19-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d ph z $.
 	$d ps z $.
 	$d x z $.
@@ -358,6 +499,10 @@ $( Equivalence of ordered pair abstraction subclass and implication.
        (Contributed by NM, 27-Dec-1996.)  (Proof shortened by Mario Carneiro,
        18-Nov-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fssopab2b_0 $f wff ph $.
 	fssopab2b_1 $f wff ps $.
 	fssopab2b_2 $f set x $.
@@ -367,6 +512,10 @@ $}
 $( Inference of ordered pair abstraction subclass from implication.
        (Contributed by NM, 5-Apr-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fssopab2i_0 $f wff ph $.
 	fssopab2i_1 $f wff ps $.
 	fssopab2i_2 $f set x $.
@@ -378,6 +527,11 @@ $( Inference of ordered pair abstraction subclass from implication.
        (Contributed by NM, 19-Jan-2014.)  (Revised by Mario Carneiro,
        24-Jun-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	$d x ph $.
 	$d y ph $.
 	fssopab2dv_0 $f wff ph $.
@@ -391,6 +545,10 @@ $}
 $( Equivalence of ordered pair abstraction equality and biconditional.
        (Contributed by Mario Carneiro, 4-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	feqopab2b_0 $f wff ph $.
 	feqopab2b_1 $f wff ps $.
 	feqopab2b_2 $f set x $.
@@ -400,6 +558,10 @@ $}
 $( Non-empty ordered pair class abstraction.  (Contributed by NM,
        10-Oct-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d z ph $.
 	$d z x $.
 	$d z y $.
@@ -412,6 +574,12 @@ $}
 $( Move indexed union inside an ordered-pair abstraction.  (Contributed by
        Stefan O'Rear, 20-Feb-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v w $.
 	$d ph w $.
 	$d A w x $.
 	$d A y $.

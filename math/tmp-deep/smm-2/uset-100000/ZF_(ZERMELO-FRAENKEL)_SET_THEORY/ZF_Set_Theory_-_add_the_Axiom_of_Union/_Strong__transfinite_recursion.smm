@@ -69,7 +69,7 @@ $( A technical lemma for transfinite recursion.  Compare Lemma 1 of
        [TakeutiZaring] p. 47.  (Contributed by NM, 23-Mar-1995.)  (Revised by
        David Abernethy, 19-Jun-2012.) $)
 ${
-	$v x y z w A B F G $.
+	$v x A B F G y z w $.
 	$d x y z A $.
 	$d y z B $.
 	$d x y z w F $.

@@ -8,6 +8,8 @@ $( Justification for ~ rb-imdf .  (Contributed by Anthony Hart,
      17-Aug-2011.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	frb-bijust_0 $f wff ph $.
 	frb-bijust_1 $f wff ps $.
 	rb-bijust $p |- ( ( ph <-> ps ) <-> -. ( -. ( -. ph \/ ps ) \/ -. ( -. ps \/ ph ) ) ) $= frb-bijust_0 frb-bijust_1 wb frb-bijust_0 frb-bijust_1 wi frb-bijust_1 frb-bijust_0 wi wn wi wn frb-bijust_0 wn frb-bijust_1 wo frb-bijust_1 wn frb-bijust_0 wo wn wi wn frb-bijust_0 wn frb-bijust_1 wo wn frb-bijust_1 wn frb-bijust_0 wo wn wo wn frb-bijust_0 frb-bijust_1 dfbi1 frb-bijust_0 frb-bijust_1 wi frb-bijust_1 frb-bijust_0 wi wn wi frb-bijust_0 wn frb-bijust_1 wo frb-bijust_1 wn frb-bijust_0 wo wn wi frb-bijust_0 frb-bijust_1 wi frb-bijust_0 wn frb-bijust_1 wo frb-bijust_1 frb-bijust_0 wi wn frb-bijust_1 wn frb-bijust_0 wo wn frb-bijust_0 frb-bijust_1 imor frb-bijust_1 frb-bijust_0 wi frb-bijust_1 wn frb-bijust_0 wo frb-bijust_1 frb-bijust_0 imor notbii imbi12i notbii frb-bijust_0 wn frb-bijust_1 wo frb-bijust_1 wn frb-bijust_0 wo wn wi frb-bijust_0 wn frb-bijust_1 wo wn frb-bijust_1 wn frb-bijust_0 wo wn wo frb-bijust_0 wn frb-bijust_1 wo frb-bijust_1 wn frb-bijust_0 wo pm4.62 notbii 3bitri $.
@@ -16,6 +18,8 @@ $( The definition of implication, in terms of ` \/ ` and ` -. ` .
      (Contributed by Anthony Hart, 17-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	frb-imdf_0 $f wff ph $.
 	frb-imdf_1 $f wff ps $.
 	rb-imdf $p |- -. ( -. ( -. ( ph -> ps ) \/ ( -. ph \/ ps ) ) \/ -. ( -. ( -. ph \/ ps ) \/ ( ph -> ps ) ) ) $= frb-imdf_0 frb-imdf_1 wi frb-imdf_0 wn frb-imdf_1 wo wb frb-imdf_0 frb-imdf_1 wi wn frb-imdf_0 wn frb-imdf_1 wo wo wn frb-imdf_0 wn frb-imdf_1 wo wn frb-imdf_0 frb-imdf_1 wi wo wn wo wn frb-imdf_0 frb-imdf_1 imor frb-imdf_0 frb-imdf_1 wi frb-imdf_0 wn frb-imdf_1 wo rb-bijust mpbi $.
@@ -24,6 +28,8 @@ $( Modus ponens for ` \/ ` ` -. ` axiom systems.  (Contributed by Anthony
        Hart, 12-Aug-2011.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fanmp_0 $f wff ph $.
 	fanmp_1 $f wff ps $.
 	eanmp_0 $e |- ph $.
@@ -34,6 +40,9 @@ $( The first of four axioms in the Russell-Bernays axiom system.
      (Contributed by Anthony Hart, 13-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	frb-ax1_0 $f wff ph $.
 	frb-ax1_1 $f wff ps $.
 	frb-ax1_2 $f wff ch $.
@@ -43,6 +52,8 @@ $( The second of four axioms in the Russell-Bernays axiom system.
      (Contributed by Anthony Hart, 13-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	frb-ax2_0 $f wff ph $.
 	frb-ax2_1 $f wff ps $.
 	rb-ax2 $p |- ( -. ( ph \/ ps ) \/ ( ps \/ ph ) ) $= frb-ax2_0 frb-ax2_1 wo wn frb-ax2_1 frb-ax2_0 wo frb-ax2_1 frb-ax2_0 wo frb-ax2_0 frb-ax2_1 wo wn frb-ax2_0 frb-ax2_1 wo frb-ax2_1 frb-ax2_0 wo frb-ax2_0 frb-ax2_1 pm1.4 con3i con1i orri $.
@@ -51,6 +62,8 @@ $( The third of four axioms in the Russell-Bernays axiom system.
      (Contributed by Anthony Hart, 13-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	frb-ax3_0 $f wff ph $.
 	frb-ax3_1 $f wff ps $.
 	rb-ax3 $p |- ( -. ph \/ ( ps \/ ph ) ) $= frb-ax3_0 wn frb-ax3_1 frb-ax3_0 wo frb-ax3_1 frb-ax3_0 wo frb-ax3_0 wn frb-ax3_1 frb-ax3_0 pm2.46 con1i orri $.
@@ -59,6 +72,7 @@ $( The fourth of four axioms in the Russell-Bernays axiom system.
      (Contributed by Anthony Hart, 13-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
 	frb-ax4_0 $f wff ph $.
 	rb-ax4 $p |- ( -. ( ph \/ ph ) \/ ph ) $= frb-ax4_0 frb-ax4_0 wo wn frb-ax4_0 frb-ax4_0 frb-ax4_0 frb-ax4_0 wo wn frb-ax4_0 frb-ax4_0 wo frb-ax4_0 frb-ax4_0 pm1.2 con3i con1i orri $.
 $}
@@ -66,6 +80,9 @@ $( Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
        (Contributed by Anthony Hart, 18-Aug-2011.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	frbsyl_0 $f wff ph $.
 	frbsyl_1 $f wff ps $.
 	frbsyl_2 $f wff ch $.
@@ -77,6 +94,10 @@ $( Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
        (Contributed by Anthony Hart, 18-Aug-2011.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	frblem1_0 $f wff ph $.
 	frblem1_1 $f wff ps $.
 	frblem1_2 $f wff ch $.
@@ -89,6 +110,9 @@ $( Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
      (Contributed by Anthony Hart, 18-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	frblem2_0 $f wff ph $.
 	frblem2_1 $f wff ps $.
 	frblem2_2 $f wff ch $.
@@ -98,6 +122,9 @@ $( Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
      (Contributed by Anthony Hart, 18-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	frblem3_0 $f wff ph $.
 	frblem3_1 $f wff ps $.
 	frblem3_2 $f wff ch $.
@@ -107,6 +134,12 @@ $( Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
        (Contributed by Anthony Hart, 18-Aug-2011.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	frblem4_0 $f wff ph $.
 	frblem4_1 $f wff ps $.
 	frblem4_2 $f wff ch $.
@@ -122,6 +155,8 @@ $( Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
      (Contributed by Anthony Hart, 19-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	frblem5_0 $f wff ph $.
 	frblem5_1 $f wff ps $.
 	rblem5 $p |- ( -. ( -. -. ph \/ ps ) \/ ( -. -. ps \/ ph ) ) $= frblem5_0 wn wn frblem5_1 wo wn frblem5_0 frblem5_1 wn wn wo frblem5_1 wn wn frblem5_0 wo frblem5_0 frblem5_1 wn wn rb-ax2 frblem5_0 wn wn frblem5_0 frblem5_1 frblem5_1 wn wn frblem5_0 wn frblem5_0 wo frblem5_0 wn wn wn frblem5_0 wo frblem5_0 wn frblem5_0 frblem5_0 wo frblem5_0 frblem5_0 rb-ax4 frblem5_0 frblem5_0 rb-ax3 rbsyl frblem5_0 wn frblem5_0 wn wn wn frblem5_0 frblem5_0 frblem5_0 wn wn wn frblem5_0 wn wn wo frblem5_0 wn wn frblem5_0 wn wn wn wo frblem5_0 wn wn wn frblem5_0 wn wn frblem5_0 wn wn wo frblem5_0 wn wn frblem5_0 wn wn rb-ax4 frblem5_0 wn wn frblem5_0 wn wn rb-ax3 rbsyl frblem5_0 wn wn wn frblem5_0 wn wn rb-ax2 anmp frblem5_0 wn frblem5_0 frblem5_0 wo frblem5_0 frblem5_0 rb-ax4 frblem5_0 frblem5_0 rb-ax3 rbsyl rblem1 anmp frblem5_1 wn wn frblem5_1 wn wo frblem5_1 wn frblem5_1 wn wn wo frblem5_1 wn wn frblem5_1 wn frblem5_1 wn wo frblem5_1 wn frblem5_1 wn rb-ax4 frblem5_1 wn frblem5_1 wn rb-ax3 rbsyl frblem5_1 wn wn frblem5_1 wn rb-ax2 anmp rblem1 rbsyl $.
@@ -130,6 +165,8 @@ $( Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
        (Contributed by Anthony Hart, 19-Aug-2011.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	frblem6_0 $f wff ph $.
 	frblem6_1 $f wff ps $.
 	erblem6_0 $e |- -. ( -. ( -. ph \/ ps ) \/ -. ( -. ps \/ ph ) ) $.
@@ -139,6 +176,8 @@ $( Used to rederive the Lukasiewicz axioms from Russell-Bernays'.
        (Contributed by Anthony Hart, 19-Aug-2011.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	frblem7_0 $f wff ph $.
 	frblem7_1 $f wff ps $.
 	erblem7_0 $e |- -. ( -. ( -. ph \/ ps ) \/ -. ( -. ps \/ ph ) ) $.
@@ -148,6 +187,8 @@ $( ~ ax-mp derived from Russell-Bernays'.  (Contributed by Anthony Hart,
        19-Aug-2011.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fre1axmp_0 $f wff ph $.
 	fre1axmp_1 $f wff ps $.
 	ere1axmp_0 $e |- ph $.
@@ -158,6 +199,9 @@ $( ~ luk-1 derived from Russell-Bernays'.  (Contributed by Anthony Hart,
      19-Aug-2011.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fre2luk1_0 $f wff ph $.
 	fre2luk1_1 $f wff ps $.
 	fre2luk1_2 $f wff ch $.
@@ -167,6 +211,7 @@ $( ~ luk-2 derived from Russell-Bernays'.  (Contributed by Anthony Hart,
      19-Aug-2011.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
 	fre2luk2_0 $f wff ph $.
 	re2luk2 $p |- ( ( -. ph -> ph ) -> ph ) $= fre2luk2_0 wn fre2luk2_0 wi wn fre2luk2_0 wo fre2luk2_0 wn fre2luk2_0 wi fre2luk2_0 wi fre2luk2_0 wn fre2luk2_0 wi wn fre2luk2_0 wn wn fre2luk2_0 wo fre2luk2_0 fre2luk2_0 wn wn fre2luk2_0 wo wn fre2luk2_0 fre2luk2_0 wo fre2luk2_0 fre2luk2_0 rb-ax4 fre2luk2_0 wn wn fre2luk2_0 fre2luk2_0 fre2luk2_0 fre2luk2_0 wn fre2luk2_0 wo fre2luk2_0 wn wn wn fre2luk2_0 wo fre2luk2_0 wn fre2luk2_0 fre2luk2_0 wo fre2luk2_0 fre2luk2_0 rb-ax4 fre2luk2_0 fre2luk2_0 rb-ax3 rbsyl fre2luk2_0 wn fre2luk2_0 wn wn wn fre2luk2_0 fre2luk2_0 fre2luk2_0 wn wn wn fre2luk2_0 wn wn wo fre2luk2_0 wn wn fre2luk2_0 wn wn wn wo fre2luk2_0 wn wn wn fre2luk2_0 wn wn fre2luk2_0 wn wn wo fre2luk2_0 wn wn fre2luk2_0 wn wn rb-ax4 fre2luk2_0 wn wn fre2luk2_0 wn wn rb-ax3 rbsyl fre2luk2_0 wn wn wn fre2luk2_0 wn wn rb-ax2 anmp fre2luk2_0 wn fre2luk2_0 fre2luk2_0 wo fre2luk2_0 fre2luk2_0 rb-ax4 fre2luk2_0 fre2luk2_0 rb-ax3 rbsyl rblem1 anmp fre2luk2_0 wn fre2luk2_0 fre2luk2_0 wo fre2luk2_0 fre2luk2_0 rb-ax4 fre2luk2_0 fre2luk2_0 rb-ax3 rbsyl rblem1 rbsyl fre2luk2_0 wn fre2luk2_0 wi fre2luk2_0 wn wn fre2luk2_0 wo fre2luk2_0 wn fre2luk2_0 rb-imdf rblem6 rbsyl fre2luk2_0 wn fre2luk2_0 wi fre2luk2_0 wi fre2luk2_0 wn fre2luk2_0 wi wn fre2luk2_0 wo fre2luk2_0 wn fre2luk2_0 wi fre2luk2_0 rb-imdf rblem7 anmp $.
 $}
@@ -178,6 +223,8 @@ $( ~ luk-3 derived from Russell-Bernays'.
      by Anthony Hart, 19-Aug-2011.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fre2luk3_0 $f wff ph $.
 	fre2luk3_1 $f wff ps $.
 	re2luk3 $p |- ( ph -> ( -. ph -> ps ) ) $= fre2luk3_0 wn fre2luk3_0 wn fre2luk3_1 wi wo fre2luk3_0 fre2luk3_0 wn fre2luk3_1 wi wi fre2luk3_0 wn fre2luk3_0 wn wn fre2luk3_1 wo fre2luk3_0 wn fre2luk3_1 wi fre2luk3_0 wn fre2luk3_1 wi fre2luk3_0 wn wn fre2luk3_1 wo fre2luk3_0 wn fre2luk3_1 rb-imdf rblem7 fre2luk3_0 wn fre2luk3_0 wn wn wo fre2luk3_0 wn fre2luk3_0 wn wn fre2luk3_1 wo wo fre2luk3_0 wn wn fre2luk3_0 wn wo fre2luk3_0 wn fre2luk3_0 wn wn wo fre2luk3_0 wn wn fre2luk3_0 wn fre2luk3_0 wn wo fre2luk3_0 wn fre2luk3_0 wn rb-ax4 fre2luk3_0 wn fre2luk3_0 wn rb-ax3 rbsyl fre2luk3_0 wn wn fre2luk3_0 wn rb-ax2 anmp fre2luk3_0 wn wn fre2luk3_1 fre2luk3_0 wn rblem2 anmp rbsyl fre2luk3_0 fre2luk3_0 wn fre2luk3_1 wi wi fre2luk3_0 wn fre2luk3_0 wn fre2luk3_1 wi wo fre2luk3_0 fre2luk3_0 wn fre2luk3_1 wi rb-imdf rblem7 anmp $.

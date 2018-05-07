@@ -19,6 +19,8 @@ $( Axiom of Distinctness.  This axiom quantifies a variable over a formula
        can also remove the quantifier (unconditionally).  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
 	$d x ph $.
 	fax-17_0 $f wff ph $.
 	fax-17_1 $f set x $.
@@ -27,6 +29,9 @@ $}
 $( ~ ax-17 with antecedent.  Useful in proofs of deduction versions of
        bound-variable hypothesis builders.  (Contributed by NM, 1-Mar-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	$d x ps $.
 	fa17d_0 $f wff ph $.
 	fa17d_1 $f wff ps $.
@@ -36,6 +41,8 @@ $}
 $( If ` x ` is not present in ` ph ` , then ` x ` is not free in ` ph ` .
        (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	$d x ph $.
 	fnfv_0 $f wff ph $.
 	fnfv_1 $f set x $.
@@ -45,6 +52,9 @@ $( ~ nfv with antecedent.  Useful in proofs of deduction versions of
        bound-variable hypothesis builders such as ~ nfimd .  (Contributed by
        Mario Carneiro, 6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	$d x ps $.
 	fnfvd_0 $f wff ph $.
 	fnfvd_1 $f wff ps $.
@@ -54,6 +64,10 @@ $}
 $( Deduction from Theorem 19.20 of [Margaris] p. 90.  (Contributed by NM,
        3-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	$d x ph $.
 	falimdv_0 $f wff ph $.
 	falimdv_1 $f wff ps $.
@@ -65,6 +79,10 @@ $}
 $( Deduction from Theorem 19.22 of [Margaris] p. 90.  (Contributed by NM,
        27-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	$d x ph $.
 	feximdv_0 $f wff ph $.
 	feximdv_1 $f wff ps $.
@@ -76,6 +94,11 @@ $}
 $( Deduction from Theorem 19.22 of [Margaris] p. 90.  (Contributed by NM,
        27-Apr-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	$d x ph $.
 	$d y ph $.
 	f2alimdv_0 $f wff ph $.
@@ -89,6 +112,11 @@ $}
 $( Deduction from Theorem 19.22 of [Margaris] p. 90.  (Contributed by NM,
        3-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	$d x ph $.
 	$d y ph $.
 	f2eximdv_0 $f wff ph $.
@@ -102,6 +130,10 @@ $}
 $( Formula-building rule for universal quantifier (deduction rule).
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	$d x ph $.
 	falbidv_0 $f wff ph $.
 	falbidv_1 $f wff ps $.
@@ -113,6 +145,10 @@ $}
 $( Formula-building rule for existential quantifier (deduction rule).
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	$d x ph $.
 	fexbidv_0 $f wff ph $.
 	fexbidv_1 $f wff ps $.
@@ -124,6 +160,11 @@ $}
 $( Formula-building rule for 2 universal quantifiers (deduction rule).
        (Contributed by NM, 4-Mar-1997.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	$d x ph $.
 	$d y ph $.
 	f2albidv_0 $f wff ph $.
@@ -137,6 +178,11 @@ $}
 $( Formula-building rule for 2 existential quantifiers (deduction rule).
        (Contributed by NM, 1-May-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	$d x ph $.
 	$d y ph $.
 	f2exbidv_0 $f wff ph $.
@@ -150,6 +196,12 @@ $}
 $( Formula-building rule for 3 existential quantifiers (deduction rule).
        (Contributed by NM, 1-May-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x ph $.
 	$d y ph $.
 	$d z ph $.
@@ -164,8 +216,14 @@ ${
 $}
 $( Formula-building rule for 4 existential quantifiers (deduction rule).
        (Contributed by NM, 3-Aug-1995.) $)
-$v w $.
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x ph $.
 	$d y ph $.
 	$d z ph $.
@@ -183,6 +241,9 @@ $}
 $( Inference from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	$d x ph $.
 	falrimiv_0 $f wff ph $.
 	falrimiv_1 $f wff ps $.
@@ -193,6 +254,10 @@ $}
 $( Inference from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
        31-Jul-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x ph $.
 	$d y ph $.
 	falrimivv_0 $f wff ph $.
@@ -205,6 +270,10 @@ $}
 $( Deduction from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
        10-Feb-1997.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	$d x ph $.
 	$d x ps $.
 	falrimdv_0 $f wff ph $.
@@ -217,6 +286,9 @@ $}
 $( Apply the definition of not-free in a context.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	$d x ph $.
 	fnfdv_0 $f wff ph $.
 	fnfdv_1 $f wff ps $.
@@ -227,6 +299,9 @@ $}
 $( Quantification of two variables over a formula in which they do not
        occur.  (Contributed by Alan Sare, 12-Apr-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x ph $.
 	$d y ph $.
 	f2ax17_0 $f wff ph $.

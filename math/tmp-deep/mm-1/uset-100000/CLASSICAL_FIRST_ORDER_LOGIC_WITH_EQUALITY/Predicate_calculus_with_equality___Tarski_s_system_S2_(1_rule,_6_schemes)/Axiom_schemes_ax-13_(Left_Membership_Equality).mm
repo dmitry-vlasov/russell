@@ -19,6 +19,9 @@ $( Axiom of Left Membership Equality.  One of the equality and substitution
      predicate calculus without equality, it typically would be.  (Contributed
      by NM, 5-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fax-13_0 $f set x $.
 	fax-13_1 $f set y $.
 	fax-13_2 $f set z $.
@@ -27,6 +30,9 @@ $}
 $( An identity law for the non-logical predicate.  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	felequ1_0 $f set x $.
 	felequ1_1 $f set y $.
 	felequ1_2 $f set z $.

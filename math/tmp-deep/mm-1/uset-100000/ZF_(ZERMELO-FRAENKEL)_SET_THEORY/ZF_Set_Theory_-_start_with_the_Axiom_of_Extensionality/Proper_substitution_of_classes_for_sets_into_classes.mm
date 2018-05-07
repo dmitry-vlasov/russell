@@ -12,6 +12,9 @@ $( Underlined right bracket $)
 $( Extend class notation to include the proper substitution of a class for a
      set into another class. $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	fcsb_0 $f set x $.
 	fcsb_1 $f class A $.
 	fcsb_2 $f class B $.
@@ -24,6 +27,10 @@ $( Define the proper substitution of a class for a set into another class.
        Theorem ~ sbccsbg recreates substitution into a wff from this
        definition.  (Contributed by NM, 10-Nov-2005.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -37,6 +44,10 @@ $( Alternate expression for the proper substitution into a class, without
        referencing substitution into a wff.  Note that ` x ` can be free in
        ` B ` but cannot occur in ` A ` .  (Contributed by NM, 2-Dec-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d y B $.
 	$d x y $.
@@ -49,6 +60,11 @@ $}
 $( Analog of ~ dfsbcq for proper substitution into a class.  (Contributed
        by NM, 10-Nov-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -65,6 +81,12 @@ $( Change bound variables in a class substitution.  Interestingly, this
        by Jeff Hankins, 13-Sep-2009.)  (Revised by Mario Carneiro,
        11-Dec-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v C $.
+	$v D $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d z A $.
@@ -85,6 +107,11 @@ $( Change the bound variable of a proper substitution into a class using
        implicit substitution.  (Contributed by NM, 30-Sep-2008.)  (Revised by
        Mario Carneiro, 13-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y $.
 	$d y B $.
 	$d x C $.
@@ -99,6 +126,11 @@ $}
 $( Equality deduction for proper substitution into a class.  (Contributed
        by NM, 3-Dec-2005.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fcsbeq1d_0 $f wff ph $.
 	fcsbeq1d_1 $f set x $.
 	fcsbeq1d_2 $f class A $.
@@ -110,6 +142,9 @@ $}
 $( Analog of ~ sbid for proper substitution into a class.  (Contributed by
        NM, 10-Nov-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x y $.
 	$d y A $.
 	icsbid_0 $f set y $.
@@ -120,6 +155,9 @@ $}
 $( Equality theorem for proper substitution into a class.  (Contributed by
        NM, 10-Nov-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	fcsbeq1a_0 $f set x $.
 	fcsbeq1a_1 $f class A $.
 	fcsbeq1a_2 $f class B $.
@@ -128,6 +166,11 @@ $}
 $( Composition law for chained substitutions into a class.  (Contributed by
        NM, 10-Nov-2005.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v z $.
 	$d z A $.
 	$d y z B $.
 	$d x z $.
@@ -141,6 +184,12 @@ $}
 $( The existence of proper substitution into a class.  (Contributed by NM,
        10-Nov-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
+	$v y $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -155,6 +204,9 @@ $}
 $( The existence of proper substitution into a class.  (Contributed by NM,
        7-Aug-2007.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	fcsbex_0 $f set x $.
 	fcsbex_1 $f class A $.
 	fcsbex_2 $f class B $.
@@ -165,6 +217,11 @@ $}
 $( Substitution doesn't affect a constant ` B ` (in which ` x ` is not
        free).  (Contributed by Mario Carneiro, 14-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v y $.
 	$d y A $.
 	$d y B $.
 	$d y V $.
@@ -179,6 +236,10 @@ $}
 $( Substitution doesn't affect a constant ` B ` (in which ` x ` is not
        free).  (Contributed by NM, 10-Nov-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
 	fcsbconstgf_0 $f set x $.
 	fcsbconstgf_1 $f class A $.
 	fcsbconstgf_2 $f class B $.
@@ -190,6 +251,10 @@ $( Substitution doesn't affect a constant ` B ` (in which ` x ` is not
        free). ~ csbconstgf with distinct variable requirement.  (Contributed by
        Alan Sare, 22-Jul-2012.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d B x $.
 	fcsbconstg_0 $f set x $.
 	fcsbconstg_1 $f class A $.
@@ -201,6 +266,13 @@ $( Distribute proper substitution through a membership relation.
        (Contributed by NM, 10-Nov-2005.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	$d y z A $.
 	$d y z B $.
@@ -218,6 +290,13 @@ $( Distribute proper substitution through an equality relation.
        (Contributed by NM, 10-Nov-2005.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	$d y z A $.
 	$d y z B $.
@@ -234,6 +313,11 @@ $}
 $( Distribute proper substitution through negated membership.  (Contributed
      by Andrew Salmon, 18-Jun-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
 	fsbcnel12g_0 $f set x $.
 	fsbcnel12g_1 $f class A $.
 	fsbcnel12g_2 $f class B $.
@@ -244,6 +328,11 @@ $}
 $( Distribute proper substitution through an inequality.  (Contributed by
      Andrew Salmon, 18-Jun-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
 	fsbcne12g_0 $f set x $.
 	fsbcne12g_1 $f class A $.
 	fsbcne12g_2 $f class B $.
@@ -256,6 +345,11 @@ $( Move proper substitution in and out of a membership relation.  Note that
        of ` [_ A / x ]_ ` is the class ` B ` .  (Contributed by NM,
        10-Nov-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
 	$d x C $.
 	fsbcel1g_0 $f set x $.
 	fsbcel1g_1 $f class A $.
@@ -267,6 +361,11 @@ $}
 $( Move proper substitution to first argument of an equality.  (Contributed
        by NM, 30-Nov-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
 	$d x C $.
 	fsbceq1g_0 $f set x $.
 	fsbceq1g_1 $f class A $.
@@ -278,6 +377,11 @@ $}
 $( Move proper substitution in and out of a membership relation.
        (Contributed by NM, 14-Nov-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
 	$d x B $.
 	fsbcel2g_0 $f set x $.
 	fsbcel2g_1 $f class A $.
@@ -289,6 +393,11 @@ $}
 $( Move proper substitution to second argument of an equality.
        (Contributed by NM, 30-Nov-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
 	$d x B $.
 	fsbceq2g_0 $f set x $.
 	fsbceq2g_1 $f class A $.
@@ -300,6 +409,14 @@ $}
 $( Commutative law for double substitution into a class.  (Contributed by
        NM, 14-Nov-2005.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v W $.
+	$v z $.
 	$d y z A $.
 	$d x z B $.
 	$d z C $.
@@ -317,6 +434,12 @@ $}
 $( Formula-building deduction rule for class substitution.  (Contributed by
        NM, 22-Nov-2005.)  (Revised by Mario Carneiro, 1-Sep-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -335,6 +458,11 @@ $}
 $( Formula-building deduction rule for class substitution.  (Contributed by
        NM, 10-Nov-2005.)  (Revised by Mario Carneiro, 1-Sep-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x ph $.
 	fcsbeq2dv_0 $f wff ph $.
 	fcsbeq2dv_1 $f set x $.
@@ -347,6 +475,10 @@ $}
 $( Formula-building inference rule for class substitution.  (Contributed by
        NM, 10-Nov-2005.)  (Revised by Mario Carneiro, 1-Sep-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fcsbeq2i_0 $f set x $.
 	fcsbeq2i_1 $f class A $.
 	fcsbeq2i_2 $f class B $.
@@ -357,6 +489,11 @@ $}
 $( The proper substitution of a class for set variable results in the class
        (if the class exists).  (Contributed by NM, 10-Nov-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v V $.
+	$v y $.
+	$v z $.
 	$d y z A $.
 	$d x y z $.
 	icsbvarg_0 $f set y $.
@@ -369,6 +506,11 @@ $}
 $( Substitution into a wff expressed in terms of substitution into a
        class.  (Contributed by NM, 15-Aug-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v V $.
 	$d x y $.
 	fsbccsbg_0 $f wff ph $.
 	fsbccsbg_1 $f set x $.
@@ -380,6 +522,10 @@ $}
 $( Substitution into a wff expressed in using substitution into a class.
      (Contributed by NM, 27-Nov-2005.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v V $.
 	fsbccsb2g_0 $f wff ph $.
 	fsbccsb2g_1 $f set x $.
 	fsbccsb2g_2 $f class A $.
@@ -389,6 +535,11 @@ $}
 $( Bound-variable hypothesis builder for substitution into a class.
        (Contributed by Mario Carneiro, 12-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -404,6 +555,9 @@ $}
 $( Bound-variable hypothesis builder for substitution into a class.
        (Contributed by Mario Carneiro, 12-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	fnfcsb1_0 $f set x $.
 	fnfcsb1_1 $f class A $.
 	fnfcsb1_2 $f class B $.
@@ -414,6 +568,9 @@ $( Bound-variable hypothesis builder for substitution into a class.
        (Contributed by NM, 17-Aug-2006.)  (Revised by Mario Carneiro,
        12-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	fnfcsb1v_0 $f set x $.
 	fnfcsb1v_1 $f class A $.
@@ -423,6 +580,12 @@ $}
 $( Deduction version of ~ nfcsb .  (Contributed by NM, 21-Nov-2005.)
        (Revised by Mario Carneiro, 12-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d z A $.
@@ -442,6 +605,10 @@ $}
 $( Bound-variable hypothesis builder for substitution into a class.
        (Contributed by Mario Carneiro, 12-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	fnfcsb_0 $f set x $.
 	fnfcsb_1 $f set y $.
 	fnfcsb_2 $f class A $.
@@ -454,6 +621,11 @@ $( Introduce an explicit substitution into an implicit substitution
        hypothesis.  See ~ sbhypf for class substitution version.  (Contributed
        by NM, 19-Dec-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y $.
 	fcsbhypf_0 $f set x $.
 	fcsbhypf_1 $f set y $.
@@ -469,6 +641,11 @@ $( Conversion of implicit substitution to explicit substitution into a
        class.  (Closed theorem version of ~ csbiegf .)  (Contributed by NM,
        11-Nov-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
 	$d x A $.
 	fcsbiebt_0 $f set x $.
 	fcsbiebt_1 $f class A $.
@@ -480,6 +657,12 @@ $}
 $( Conversion of implicit substitution to explicit substitution into a
        class.  (Contributed by Mario Carneiro, 13-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
 	$d x A $.
 	fcsbiedf_0 $f wff ph $.
 	fcsbiedf_1 $f set x $.
@@ -497,6 +680,10 @@ $( Bidirectional conversion between an implicit class substitution
        hypothesis ` x = A -> B = C ` and its explicit substitution equivalent.
        (Contributed by NM, 2-Mar-2008.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	fcsbieb_0 $f set x $.
 	fcsbieb_1 $f class A $.
@@ -510,8 +697,13 @@ $( Bidirectional conversion between an implicit class substitution
        hypothesis ` x = A -> B = C ` and its explicit substitution equivalent.
        (Contributed by NM, 24-Mar-2013.)  (Revised by Mario Carneiro,
        11-Dec-2016.) $)
-$v a $.
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v a $.
 	$d a x A $.
 	$d a B $.
 	$d a C $.
@@ -528,6 +720,11 @@ $( Conversion of implicit substitution to explicit substitution into a
        class.  (Contributed by NM, 11-Nov-2005.)  (Revised by Mario Carneiro,
        13-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
 	$d x A $.
 	$d x V $.
 	fcsbiegf_0 $f set x $.
@@ -543,6 +740,10 @@ $( Conversion of implicit substitution to explicit substitution into a
        class.  (Contributed by NM, 26-Nov-2005.)  (Revised by Mario Carneiro,
        13-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	fcsbief_0 $f set x $.
 	fcsbief_1 $f class A $.
@@ -557,6 +758,12 @@ $( Conversion of implicit substitution to explicit substitution into a
        class.  (Contributed by Mario Carneiro, 2-Dec-2014.)  (Revised by Mario
        Carneiro, 13-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
 	$d x A $.
 	$d x C $.
 	$d x ph $.
@@ -573,6 +780,13 @@ $}
 $( Conversion of implicit substitution to explicit class substitution,
        deduction form.  (Contributed by Mario Carneiro, 2-Jan-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v V $.
 	$d x A $.
 	$d x ph $.
 	$d x D $.
@@ -592,6 +806,12 @@ $( Conversion of implicit substitution to explicit substitution into a
        class (closed form of ~ csbie2 ).  (Contributed by NM, 3-Sep-2007.)
        (Revised by Mario Carneiro, 13-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y A $.
 	$d x y B $.
 	$d x y D $.
@@ -608,6 +828,12 @@ $}
 $( Conversion of implicit substitution to explicit substitution into a
        class.  (Contributed by NM, 27-Aug-2007.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y A $.
 	$d x y B $.
 	$d x y D $.
@@ -626,6 +852,14 @@ $( Conversion of implicit substitution to explicit class substitution.
        This version of ~ sbcie avoids a disjointness condition on ` x , A ` by
        substituting twice.  (Contributed by Mario Carneiro, 11-Nov-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v V $.
+	$v z $.
 	$d x y z $.
 	$d A y z $.
 	$d B y z $.
@@ -647,6 +881,13 @@ $}
 $( Nest the composition of two substitutions.  (Contributed by Mario
        Carneiro, 11-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d z A $.
@@ -664,6 +905,13 @@ $}
 $( Nest the composition of two substitutions.  (Contributed by NM,
        23-Nov-2005.)  (Proof shortened by Mario Carneiro, 10-Nov-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d z A $.
@@ -681,6 +929,12 @@ $}
 $( Nest the composition of two substitutions.  (Contributed by NM,
        27-Nov-2005.)  (Proof shortened by Mario Carneiro, 11-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d x ph $.
 	fsbcnestg_0 $f wff ph $.
 	fsbcnestg_1 $f set x $.
@@ -693,6 +947,12 @@ $}
 $( Nest the composition of two substitutions.  (Contributed by NM,
        23-Nov-2005.)  (Proof shortened by Mario Carneiro, 10-Nov-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
 	$d x C $.
 	fcsbnestg_0 $f set x $.
 	fcsbnestg_1 $f set y $.
@@ -705,6 +965,13 @@ $}
 $( Nest the composition of two substitutions.  (New usage is discouraged.)
        (Contributed by NM, 23-Nov-2005.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v W $.
 	$d x C $.
 	fcsbnestgOLD_0 $f set x $.
 	fcsbnestgOLD_1 $f set y $.
@@ -718,6 +985,12 @@ $}
 $( Nest the composition of two substitutions.  (Contributed by NM,
        23-May-2006.)  (Proof shortened by Mario Carneiro, 11-Nov-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v y $.
 	$d x y $.
 	$d y C $.
 	icsbnest1g_0 $f set y $.
@@ -731,6 +1004,12 @@ $}
 $( Nest the composition of two substitutions.  Obsolete as of 11-Nov-2016.
        (Contributed by NM, 23-May-2006.)  (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v W $.
 	$d x A $.
 	fcsbnest1gOLD_0 $f set x $.
 	fcsbnest1gOLD_1 $f class A $.
@@ -743,6 +1022,10 @@ $}
 $( Idempotent law for class substitutions.  (Contributed by NM,
        1-Mar-2008.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d x A $.
 	fcsbidmg_0 $f set x $.
 	fcsbidmg_1 $f class A $.
@@ -753,6 +1036,13 @@ $}
 $( Composition of two substitutions.  (Contributed by NM, 27-Nov-2005.)
        (Revised by Mario Carneiro, 11-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
 	$d x A $.
 	$d x ph $.
 	$d x C $.
@@ -769,6 +1059,14 @@ $}
 $( Composition of two substitutions.  (Contributed by NM, 27-Nov-2005.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v W $.
 	$d x A $.
 	$d x ph $.
 	$d x C $.
@@ -786,6 +1084,13 @@ $}
 $( Composition of two class substitutions.  (Contributed by NM,
        27-Nov-2005.)  (Revised by Mario Carneiro, 11-Nov-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v V $.
 	$d x A $.
 	$d x C $.
 	$d x D $.
@@ -802,6 +1107,14 @@ $}
 $( Composition of two class substitutions.  Obsolete as of 11-Nov-2016.
        (Contributed by NM, 27-Nov-2005.)  (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v V $.
+	$v W $.
 	$d x A $.
 	$d x C $.
 	$d x D $.
@@ -820,6 +1133,11 @@ $}
 $( Special case related to ~ rspsbc .  (Contributed by NM, 10-Dec-2005.)
        (Proof shortened by Eric Schmidt, 17-Jan-2007.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x B $.
 	$d x D $.
 	frspcsbela_0 $f set x $.
@@ -832,6 +1150,11 @@ $}
 $( Two ways of expressing " ` x ` is (effectively) not free in ` A ` ."
        (Contributed by Mario Carneiro, 14-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v w $.
 	$d w x y z $.
 	$d w y z A $.
 	isbnfc2_0 $f set w $.
@@ -844,6 +1167,12 @@ $}
 $( Move substitution into a class abstraction.  (Contributed by NM,
        13-Dec-2005.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v V $.
+	$v z $.
 	$d y z A $.
 	$d z ph $.
 	$d x y z $.
@@ -860,6 +1189,14 @@ $( A more general version of ~ cbvralf that doesn't require ` A ` and ` B `
        to be distinct from ` x ` or ` y ` .  Changes bound variables using
        implicit substitution.  (Contributed by Andrew Salmon, 13-Jul-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v z $.
+	$v v $.
 	$d x v z $.
 	$d y v z $.
 	$d A v z $.
@@ -887,6 +1224,12 @@ $( A more general version of ~ cbvrexf that has no distinct variable
        (Contributed by Andrew Salmon, 13-Jul-2011.)  (Proof shortened by Mario
        Carneiro, 7-Dec-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	fcbvrexcsf_0 $f wff ph $.
 	fcbvrexcsf_1 $f wff ps $.
 	fcbvrexcsf_2 $f set x $.
@@ -905,6 +1248,14 @@ $( A more general version of ~ cbvreuv that has no distinct variable
        rextrictions.  Changes bound variables using implicit substitution.
        (Contributed by Andrew Salmon, 13-Jul-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v z $.
+	$v v $.
 	$d x v z $.
 	$d y v z $.
 	$d A v z $.
@@ -930,6 +1281,14 @@ $}
 $( A more general version of ~ cbvrab with no distinct variable
        restrictions.  (Contributed by Andrew Salmon, 13-Jul-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v z $.
+	$v v $.
 	$d x v z $.
 	$d y v z $.
 	$d A v z $.
@@ -956,6 +1315,12 @@ $( Rule used to change the bound variable in a restricted universal
        quantifier with implicit substitution which also changes the quantifier
        domain.  (Contributed by David Moews, 1-May-2017.) $)
 ${
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d A y $.
 	$d ps y $.
 	$d B x $.
@@ -974,6 +1339,12 @@ $( Rule used to change the bound variable in a restricted existential
        quantifier with implicit substitution which also changes the quantifier
        domain.  (Contributed by David Moews, 1-May-2017.) $)
 ${
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d A y $.
 	$d ps y $.
 	$d B x $.

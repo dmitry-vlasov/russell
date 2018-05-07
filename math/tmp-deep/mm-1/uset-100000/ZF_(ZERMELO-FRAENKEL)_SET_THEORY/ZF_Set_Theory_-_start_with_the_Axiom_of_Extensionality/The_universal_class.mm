@@ -15,6 +15,9 @@ $}
 $( Soundness justification theorem for ~ df-v .  (Contributed by Rodolfo
        Medina, 27-Apr-2010.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d z x $.
 	$d z y $.
 	ivjust_0 $f set z $.
@@ -25,12 +28,14 @@ $}
 $( Define the universal class.  Definition 5.20 of [TakeutiZaring] p. 21.
      Also Definition 2.9 of [Quine] p. 19.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v x $.
 	fdf-v_0 $f set x $.
 	df-v $a |- _V = { x | x = x } $.
 $}
 $( All set variables are sets (see ~ isset ).  Theorem 6.8 of [Quine] p. 43.
      (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v x $.
 	fvex_0 $f set x $.
 	vex $p |- x e. _V $= fvex_0 sup_set_class cvv wcel fvex_0 sup_set_class fvex_0 sup_set_class wceq fvex_0 sup_set_class eqid fvex_0 sup_set_class fvex_0 sup_set_class wceq fvex_0 cvv fvex_0 df-v abeq2i mpbir $.
 $}
@@ -51,6 +56,8 @@ $( Two ways to say " ` A ` is a set":  A class ` A ` is a member of the
        constants in the distinct variable list.)  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	fisset_0 $f set x $.
 	fisset_1 $f class A $.
@@ -60,6 +67,9 @@ $( A version of isset that does not require x and A to be distinct.
        (Contributed by Andrew Salmon, 6-Jun-2011.)  (Revised by Mario Carneiro,
        10-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v y $.
 	$d A y $.
 	$d x y $.
 	iissetf_0 $f set y $.
@@ -71,6 +81,8 @@ $}
 $( A way to say " ` A ` is a set" (inference rule).  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	fisseti_0 $f set x $.
 	fisseti_1 $f class A $.
@@ -80,6 +92,8 @@ $}
 $( A way to say " ` A ` is a set" (inference rule).  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	fissetri_0 $f set x $.
 	fissetri_1 $f class A $.
@@ -90,6 +104,9 @@ $( If a class is a member of another class, it is a set.  Theorem 6.12 of
        [Quine] p. 44.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by
        Andrew Salmon, 8-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	ielex_0 $f set x $.
@@ -100,14 +117,18 @@ $}
 $( If a class is a member of another class, it is a set.  (Contributed by
        NM, 11-Jun-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	felexi_0 $f class A $.
 	felexi_1 $f class B $.
 	eelexi_0 $e |- A e. B $.
 	elexi $p |- A e. _V $= felexi_0 felexi_1 wcel felexi_0 cvv wcel eelexi_0 felexi_0 felexi_1 elex ax-mp $.
 $}
 $( An element of a class exists.  (Contributed by NM, 1-May-1995.) $)
-$v V $.
 ${
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	felisset_0 $f set x $.
 	felisset_1 $f class A $.
@@ -117,6 +138,10 @@ $}
 $( If two classes each contain another class, then both contain some set.
        (Contributed by Alan Sare, 24-Oct-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -129,6 +154,9 @@ $}
 $( If a class contains another class, then it contains some set.
        (Contributed by Alan Sare, 25-Sep-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	felex2_0 $f set x $.
@@ -139,6 +167,8 @@ $}
 $( A universal quantifier restricted to the universe is unrestricted.
      (Contributed by NM, 26-Mar-2004.) $)
 ${
+	$v ph $.
+	$v x $.
 	fralv_0 $f wff ph $.
 	fralv_1 $f set x $.
 	ralv $p |- ( A. x e. _V ph <-> A. x ph ) $= fralv_0 fralv_1 cvv wral fralv_1 sup_set_class cvv wcel fralv_0 wi fralv_1 wal fralv_0 fralv_1 wal fralv_0 fralv_1 cvv df-ral fralv_0 fralv_1 sup_set_class cvv wcel fralv_0 wi fralv_1 fralv_1 sup_set_class cvv wcel fralv_0 fralv_1 vex a1bi albii bitr4i $.
@@ -146,6 +176,8 @@ $}
 $( An existential quantifier restricted to the universe is unrestricted.
      (Contributed by NM, 26-Mar-2004.) $)
 ${
+	$v ph $.
+	$v x $.
 	frexv_0 $f wff ph $.
 	frexv_1 $f set x $.
 	rexv $p |- ( E. x e. _V ph <-> E. x ph ) $= frexv_0 frexv_1 cvv wrex frexv_1 sup_set_class cvv wcel frexv_0 wa frexv_1 wex frexv_0 frexv_1 wex frexv_0 frexv_1 cvv df-rex frexv_0 frexv_1 sup_set_class cvv wcel frexv_0 wa frexv_1 frexv_1 sup_set_class cvv wcel frexv_0 frexv_1 vex biantrur exbii bitr4i $.
@@ -153,6 +185,8 @@ $}
 $( A uniqueness quantifier restricted to the universe is unrestricted.
      (Contributed by NM, 1-Nov-2010.) $)
 ${
+	$v ph $.
+	$v x $.
 	freuv_0 $f wff ph $.
 	freuv_1 $f set x $.
 	reuv $p |- ( E! x e. _V ph <-> E! x ph ) $= freuv_0 freuv_1 cvv wreu freuv_1 sup_set_class cvv wcel freuv_0 wa freuv_1 weu freuv_0 freuv_1 weu freuv_0 freuv_1 cvv df-reu freuv_0 freuv_1 sup_set_class cvv wcel freuv_0 wa freuv_1 freuv_1 sup_set_class cvv wcel freuv_0 freuv_1 vex biantrur eubii bitr4i $.
@@ -160,6 +194,8 @@ $}
 $( A uniqueness quantifier restricted to the universe is unrestricted.
      (Contributed by Alexander van der Vekens, 17-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
 	frmov_0 $f wff ph $.
 	frmov_1 $f set x $.
 	rmov $p |- ( E* x e. _V ph <-> E* x ph ) $= frmov_0 frmov_1 cvv wrmo frmov_1 sup_set_class cvv wcel frmov_0 wa frmov_1 wmo frmov_0 frmov_1 wmo frmov_0 frmov_1 cvv df-rmo frmov_0 frmov_1 sup_set_class cvv wcel frmov_0 wa frmov_1 frmov_1 sup_set_class cvv wcel frmov_0 frmov_1 vex biantrur mobii bitr4i $.
@@ -168,6 +204,8 @@ $( A class abstraction restricted to the universe is unrestricted.
      (Contributed by NM, 27-Dec-2004.)  (Proof shortened by Andrew Salmon,
      8-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
 	frabab_0 $f wff ph $.
 	frabab_1 $f set x $.
 	rabab $p |- { x e. _V | ph } = { x | ph } $= frabab_0 frabab_1 cvv crab frabab_1 sup_set_class cvv wcel frabab_0 wa frabab_1 cab frabab_0 frabab_1 cab frabab_0 frabab_1 cvv df-rab frabab_0 frabab_1 sup_set_class cvv wcel frabab_0 wa frabab_1 frabab_1 sup_set_class cvv wcel frabab_0 frabab_1 vex biantrur abbii eqtr4i $.
@@ -176,6 +214,10 @@ $( Commutation of restricted and unrestricted universal quantifiers.
        (Contributed by NM, 26-Mar-2004.)  (Proof shortened by Andrew Salmon,
        8-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d y A $.
 	fralcom4_0 $f wff ph $.
@@ -188,6 +230,10 @@ $( Commutation of restricted and unrestricted existential quantifiers.
        (Contributed by NM, 12-Apr-2004.)  (Proof shortened by Andrew Salmon,
        8-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d y A $.
 	frexcom4_0 $f wff ph $.
@@ -199,6 +245,11 @@ $}
 $( Specialized existential commutation lemma.  (Contributed by Jeff Madsen,
        1-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d A x $.
 	$d x y $.
 	$d ph x $.
@@ -212,6 +263,11 @@ $}
 $( Specialized existential commutation lemma.  (Contributed by Jeff Madsen,
        1-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d A x $.
 	$d x y $.
 	$d ph x $.
@@ -227,6 +283,11 @@ $}
 $( Closed theorem version of ~ ceqsalg .  (Contributed by NM,
        28-Feb-2013.)  (Revised by Mario Carneiro, 10-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	fceqsalt_0 $f wff ph $.
 	fceqsalt_1 $f wff ps $.
@@ -238,6 +299,11 @@ $}
 $( Restricted quantifier version of ~ ceqsalt .  (Contributed by NM,
        28-Feb-2013.)  (Revised by Mario Carneiro, 10-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fceqsralt_0 $f wff ph $.
@@ -251,6 +317,11 @@ $( A representation of explicit substitution of a class for a variable,
        inferred from an implicit substitution hypothesis.  (Contributed by NM,
        29-Oct-2003.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	fceqsalg_0 $f wff ph $.
 	fceqsalg_1 $f wff ps $.
@@ -265,6 +336,10 @@ $( A representation of explicit substitution of a class for a variable,
        inferred from an implicit substitution hypothesis.  (Contributed by NM,
        18-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fceqsal_0 $f wff ph $.
 	fceqsal_1 $f wff ps $.
@@ -279,6 +354,10 @@ $( A representation of explicit substitution of a class for a variable,
        inferred from an implicit substitution hypothesis.  (Contributed by NM,
        18-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	$d x ps $.
 	fceqsalv_0 $f wff ph $.
@@ -292,6 +371,11 @@ $}
 $( Restricted quantifier version of ~ ceqsalv .  (Contributed by NM,
        21-Jun-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ps $.
@@ -306,6 +390,13 @@ $}
 $( Implicit substitution for class with embedded variable.  (Contributed by
        NM, 17-May-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x ps $.
 	fgencl_0 $f wff ph $.
 	fgencl_1 $f wff ps $.
@@ -321,9 +412,18 @@ ${
 $}
 $( Implicit substitution for class with embedded variable.  (Contributed by
        NM, 17-May-1996.) $)
-$v R $.
-$v S $.
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
 	$d x y $.
 	$d x R $.
 	$d x ps $.
@@ -351,6 +451,21 @@ $}
 $( Implicit substitution for class with embedded variable.  (Contributed by
        NM, 17-May-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v G $.
 	$d x y z $.
 	$d y z D $.
 	$d z F $.
@@ -386,6 +501,12 @@ $}
 $( Implicit substitution inference for general classes.  (Contributed by
        NM, 26-Aug-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	$d x ps $.
 	fcgsexg_0 $f wff ph $.
@@ -400,8 +521,16 @@ ${
 $}
 $( Implicit substitution inference for general classes.  (Contributed by
        NM, 26-Jul-1995.) $)
-$v W $.
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	$d x y ps $.
 	$d x y A $.
 	$d x y B $.
@@ -421,6 +550,19 @@ $}
 $( An implicit substitution inference for 4 general classes.  (Contributed
        by NM, 5-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
 	$d x y z w A $.
 	$d x y z w B $.
 	$d x y z w C $.
@@ -447,6 +589,10 @@ $( Elimination of an existential quantifier, using implicit substitution.
        (Contributed by NM, 2-Mar-1995.)  (Revised by Mario Carneiro,
        10-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fceqsex_0 $f wff ph $.
 	fceqsex_1 $f wff ps $.
@@ -460,6 +606,10 @@ $}
 $( Elimination of an existential quantifier, using implicit substitution.
        (Contributed by NM, 2-Mar-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	$d x ps $.
 	fceqsexv_0 $f wff ph $.
@@ -473,6 +623,13 @@ $}
 $( Elimination of two existential quantifiers, using implicit
        substitution.  (Contributed by Scott Fenton, 7-Jun-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	fceqsex2_0 $f wff ph $.
@@ -493,6 +650,13 @@ $}
 $( Elimination of two existential quantifiers, using implicit
        substitution.  (Contributed by Scott Fenton, 7-Jun-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	$d x ps $.
@@ -513,6 +677,16 @@ $}
 $( Elimination of three existential quantifiers, using implicit
        substitution.  (Contributed by NM, 16-Aug-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -540,6 +714,19 @@ $}
 $( Elimination of four existential quantifiers, using implicit
        substitution.  (Contributed by NM, 23-Sep-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y z w A $.
 	$d x y z w B $.
 	$d x y z w C $.
@@ -574,6 +761,25 @@ $}
 $( Elimination of six existential quantifiers, using implicit
        substitution.  (Contributed by NM, 21-Sep-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
 	$d x y z w v u A $.
 	$d x y z w v u B $.
 	$d x y z w v u C $.
@@ -621,9 +827,32 @@ ${
 $}
 $( Elimination of eight existential quantifiers, using implicit
        substitution.  (Contributed by NM, 23-Sep-2011.) $)
-$v H $.
-$v s $.
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
+	$v ze $.
+	$v si $.
+	$v rh $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
+	$v t $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
+	$v G $.
+	$v H $.
+	$v s $.
 	$d x y z w v u t s A $.
 	$d x y z w v u t s B $.
 	$d x y z w v u t s C $.
@@ -686,6 +915,13 @@ $}
 $( Change of bound variable using implicit substitution.  (Contributed by
        NM, 17-May-1996.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x ps $.
 	$d y ph $.
 	$d x th $.
@@ -707,6 +943,13 @@ $}
 $( Restatement of ~ gencbvex with weaker hypotheses.  (Contributed by
        Jeffrey Hankins, 6-Dec-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x ps $.
 	$d y ph $.
 	$d x th $.
@@ -728,6 +971,13 @@ $}
 $( Change of bound variable using implicit substitution.  (Contributed by
        NM, 17-May-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x ps $.
 	$d y ph $.
 	$d x th $.
@@ -750,6 +1000,11 @@ $( Introduce an explicit substitution into an implicit substitution
        hypothesis.  See also ~ csbhypf .  (Contributed by Raph Levien,
        10-Apr-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d A x $.
 	$d x y $.
 	fsbhypf_0 $f wff ph $.
@@ -764,6 +1019,12 @@ $}
 $( Closed theorem form of ~ vtoclgf .  (Contributed by NM, 17-Feb-2013.)
        (Revised by Mario Carneiro, 12-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
+	$v z $.
 	$d z A $.
 	$d x z $.
 	ivtoclgft_0 $f set z $.
@@ -777,6 +1038,12 @@ $}
 $( Implicit substitution of a class for a set variable.  (Contributed by
          Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v V $.
 	fvtocldf_0 $f wff ph $.
 	fvtocldf_1 $f wff ps $.
 	fvtocldf_2 $f wff ch $.
@@ -794,6 +1061,12 @@ $}
 $( Implicit substitution of a class for a set variable.  (Contributed by
        Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	$d x ph $.
 	$d x ch $.
@@ -811,6 +1084,10 @@ $}
 $( Implicit substitution of a class for a set variable.  This is a
        generalization of ~ chvar .  (Contributed by NM, 30-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fvtoclf_0 $f wff ph $.
 	fvtoclf_1 $f wff ps $.
@@ -825,6 +1102,10 @@ $}
 $( Implicit substitution of a class for a set variable.  (Contributed by
        NM, 30-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	$d x ps $.
 	fvtocl_0 $f wff ph $.
@@ -839,6 +1120,12 @@ $}
 $( Implicit substitution of classes for set variables.  (Contributed by NM,
        26-Jul-1995.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	$d x y ps $.
@@ -857,6 +1144,14 @@ $}
 $( Implicit substitution of classes for set variables.  (Contributed by NM,
        3-Jun-1995.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -879,6 +1174,12 @@ $}
 $( Implicit substitution of a class for a set variable.  (Contributed by
        NM, 23-Dec-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	$d x ch $.
 	$d x th $.
@@ -898,6 +1199,11 @@ $( Implicit substitution of a class for a set variable, with bound-variable
        hypotheses in place of distinct variable restrictions.  (Contributed by
        NM, 21-Sep-2003.)  (Proof shortened by Mario Carneiro, 10-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	fvtoclgf_0 $f wff ph $.
 	fvtoclgf_1 $f wff ps $.
 	fvtoclgf_2 $f set x $.
@@ -912,6 +1218,11 @@ $}
 $( Implicit substitution of a class expression for a set variable.
        (Contributed by NM, 17-Apr-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	$d x ps $.
 	fvtoclg_0 $f wff ph $.
@@ -926,6 +1237,13 @@ $}
 $( Implicit substitution of a class for a set variable.  (Contributed by
        NM, 29-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	$d x ch $.
 	$d x th $.
@@ -944,6 +1262,15 @@ $}
 $( Implicit substitution of a class for a set variable.  (Contributed by
        NM, 25-Apr-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	fvtocl2gf_0 $f wff ph $.
 	fvtocl2gf_1 $f wff ps $.
 	fvtocl2gf_2 $f wff ch $.
@@ -965,8 +1292,20 @@ ${
 $}
 $( Implicit substitution of a class for a set variable.  (Contributed by
        NM, 10-Aug-2013.)  (Revised by Mario Carneiro, 10-Oct-2016.) $)
-$v X $.
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v W $.
+	$v X $.
 	fvtocl3gf_0 $f wff ph $.
 	fvtocl3gf_1 $f wff ps $.
 	fvtocl3gf_2 $f wff ch $.
@@ -998,6 +1337,15 @@ $}
 $( Implicit substitution of 2 classes for 2 set variables.  (Contributed by
        NM, 25-Apr-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	$d x A $.
 	$d y A $.
 	$d y B $.
@@ -1020,6 +1368,11 @@ $}
 $( Implicit substitution of a class for a set variable.  (Contributed by
        NM, 17-Feb-2006.)  (Revised by Mario Carneiro, 10-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x B $.
 	fvtoclgaf_0 $f wff ph $.
 	fvtoclgaf_1 $f wff ps $.
@@ -1035,6 +1388,11 @@ $}
 $( Implicit substitution of a class for a set variable.  (Contributed by
        NM, 20-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ps $.
@@ -1050,6 +1408,15 @@ $}
 $( Implicit substitution of 2 classes for 2 set variables.  (Contributed by
        NM, 10-Aug-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y C $.
 	$d x y D $.
 	fvtocl2gaf_0 $f wff ph $.
@@ -1074,6 +1441,15 @@ $}
 $( Implicit substitution of 2 classes for 2 set variables.  (Contributed by
        NM, 20-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y A $.
 	$d y B $.
 	$d x y C $.
@@ -1096,8 +1472,20 @@ ${
 $}
 $( Implicit substitution of 3 classes for 3 set variables.  (Contributed by
        NM, 10-Aug-2013.)  (Revised by Mario Carneiro, 11-Oct-2016.) $)
-$v T $.
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v T $.
 	$d x y z R $.
 	$d x y z S $.
 	$d x y z T $.
@@ -1132,6 +1520,19 @@ $}
 $( Implicit substitution of 3 classes for 3 set variables.  (Contributed by
        NM, 20-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
 	$d x y z A $.
 	$d y z B $.
 	$d z C $.
@@ -1163,6 +1564,10 @@ $}
 $( Implicit substitution of a class for a set variable.  (Contributed by
        NM, 10-Jan-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	$d x ph $.
 	fvtocleg_0 $f wff ph $.
@@ -1176,6 +1581,10 @@ $( Implicit substitution of a class for a set variable.  (Closed theorem
        version of ~ vtoclef .)  (Contributed by NM, 7-Nov-2005.)  (Revised by
        Mario Carneiro, 11-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	fvtoclegft_0 $f wff ph $.
 	fvtoclegft_1 $f set x $.
@@ -1186,6 +1595,9 @@ $}
 $( Implicit substitution of a class for a set variable.  (Contributed by
        NM, 18-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fvtoclef_0 $f wff ph $.
 	fvtoclef_1 $f set x $.
@@ -1198,6 +1610,9 @@ $}
 $( Implicit substitution of a class for a set variable.  (Contributed by
        NM, 9-Sep-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	$d x ph $.
 	fvtocle_0 $f wff ph $.
@@ -1210,6 +1625,11 @@ $}
 $( Implicit substitution of a class for a set variable.  (Contributed by
        NM, 21-Nov-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ps $.
@@ -1225,6 +1645,11 @@ $}
 $( A closed version of ~ spcimgf .  (Contributed by Mario Carneiro,
        4-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	fspcimgft_0 $f wff ph $.
 	fspcimgft_1 $f wff ps $.
 	fspcimgft_2 $f set x $.
@@ -1237,6 +1662,11 @@ $}
 $( A closed version of ~ spcgf .  (Contributed by Andrew Salmon,
        6-Jun-2011.)  (Revised by Mario Carneiro, 4-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	fspcgft_0 $f wff ph $.
 	fspcgft_1 $f wff ps $.
 	fspcgft_2 $f set x $.
@@ -1249,6 +1679,11 @@ $}
 $( Rule of specialization, using implicit substitution.  Compare Theorem
          7.3 of [Quine] p. 44.  (Contributed by Mario Carneiro, 4-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	fspcimgf_0 $f wff ph $.
 	fspcimgf_1 $f wff ps $.
 	fspcimgf_2 $f set x $.
@@ -1262,6 +1697,11 @@ $}
 $( Existential specialization, using implicit substitution.  (Contributed
        by Mario Carneiro, 4-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	fspcimegf_0 $f wff ph $.
 	fspcimegf_1 $f wff ps $.
 	fspcimegf_2 $f set x $.
@@ -1276,6 +1716,11 @@ $( Rule of specialization, using implicit substitution.  Compare Theorem
        7.3 of [Quine] p. 44.  (Contributed by NM, 2-Feb-1997.)  (Revised by
        Andrew Salmon, 12-Aug-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	fspcgf_0 $f wff ph $.
 	fspcgf_1 $f wff ps $.
 	fspcgf_2 $f set x $.
@@ -1289,6 +1734,11 @@ $}
 $( Existential specialization, using implicit substitution.  (Contributed
        by NM, 2-Feb-1997.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	fspcegf_0 $f wff ph $.
 	fspcegf_1 $f wff ps $.
 	fspcegf_2 $f set x $.
@@ -1302,6 +1752,12 @@ $}
 $( Restricted specialization, using implicit substitution.  (Contributed
          by Mario Carneiro, 4-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x ph $.
 	$d x ch $.
@@ -1318,6 +1774,12 @@ $}
 $( Rule of specialization, using implicit substitution.  Analogous to
          ~ rspcdv .  (Contributed by David Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x ph $.
 	$d x ch $.
@@ -1334,6 +1796,12 @@ $}
 $( Restricted existential specialization, using implicit substitution.
        (Contributed by Mario Carneiro, 4-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x ph $.
 	$d x ch $.
@@ -1350,6 +1818,11 @@ $}
 $( Rule of specialization, using implicit substitution.  Compare Theorem
        7.3 of [Quine] p. 44.  (Contributed by NM, 22-Jun-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x ps $.
 	$d x A $.
 	fspcgv_0 $f wff ph $.
@@ -1363,6 +1836,11 @@ $}
 $( Existential specialization, using implicit substitution.  (Contributed
        by NM, 14-Aug-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x ps $.
 	$d x A $.
 	fspcegv_0 $f wff ph $.
@@ -1376,6 +1854,14 @@ $}
 $( Existential specialization with 2 quantifiers, using implicit
        substitution.  (Contributed by NM, 3-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	$d x y A $.
 	$d x y B $.
 	$d x y ps $.
@@ -1393,6 +1879,14 @@ $}
 $( Specialization with 2 quantifiers, using implicit substitution.
        (Contributed by NM, 27-Apr-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	$d x y A $.
 	$d x y B $.
 	$d x y ps $.
@@ -1410,6 +1904,17 @@ $}
 $( Existential specialization with 3 quantifiers, using implicit
        substitution.  (Contributed by NM, 12-May-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v W $.
+	$v X $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -1431,6 +1936,17 @@ $}
 $( Specialization with 3 quantifiers, using implicit substitution.
        (Contributed by NM, 12-May-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v W $.
+	$v X $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -1452,6 +1968,10 @@ $}
 $( Rule of specialization, using implicit substitution.  (Contributed by
        NM, 22-Jun-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	$d x ps $.
 	fspcv_0 $f wff ph $.
@@ -1465,6 +1985,10 @@ $}
 $( Existential specialization, using implicit substitution.  (Contributed
        by NM, 31-Dec-1993.)  (Proof shortened by Eric Schmidt, 22-Dec-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	$d x ps $.
 	fspcev_0 $f wff ph $.
@@ -1478,6 +2002,12 @@ $}
 $( Existential specialization, using implicit substitution.  (Contributed
        by NM, 3-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	$d x y ps $.
@@ -1495,6 +2025,11 @@ $}
 $( A closed version of ~ rspc .  (Contributed by Andrew Salmon,
        6-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	frspct_0 $f wff ph $.
@@ -1508,6 +2043,11 @@ $}
 $( Restricted specialization, using implicit substitution.  (Contributed by
        NM, 19-Apr-2005.)  (Revised by Mario Carneiro, 11-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	frspc_0 $f wff ph $.
@@ -1523,6 +2063,11 @@ $( Restricted existential specialization, using implicit substitution.
        (Contributed by NM, 26-May-1998.)  (Revised by Mario Carneiro,
        11-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	frspce_0 $f wff ph $.
@@ -1537,6 +2082,11 @@ $}
 $( Restricted specialization, using implicit substitution.  (Contributed by
        NM, 26-May-1998.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ps $.
@@ -1551,6 +2101,11 @@ $}
 $( Restricted specialization, using implicit substitution.  (Contributed by
        NM, 2-Feb-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ps $.
@@ -1565,6 +2120,11 @@ $}
 $( Restricted specialization, using implicit substitution.  (Contributed by
        NM, 13-Sep-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ps $.
@@ -1579,6 +2139,11 @@ $}
 $( Restricted specialization, using implicit substitution.  (Contributed by
        NM, 26-Jul-2006.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ps $.
@@ -1593,6 +2158,11 @@ $}
 $( Restricted existential specialization, using implicit substitution.
        (Contributed by NM, 26-May-1998.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ps $.
@@ -1607,6 +2177,12 @@ $}
 $( Restricted specialization, using implicit substitution.  (Contributed
          by Mario Carneiro, 4-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ph $.
@@ -1624,6 +2200,12 @@ $}
 $( Restricted existential specialization, using implicit substitution.
        (Contributed by Mario Carneiro, 4-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ph $.
@@ -1641,6 +2223,12 @@ $}
 $( Restricted specialization, using implicit substitution.  (Contributed by
        NM, 17-Feb-2007.)  (Revised by Mario Carneiro, 4-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ph $.
@@ -1659,6 +2247,12 @@ $( Restricted existential specialization, using implicit substitution.
        (Contributed by FL, 17-Apr-2007.)  (Revised by Mario Carneiro,
        4-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ph $.
@@ -1676,6 +2270,15 @@ $}
 $( 2-variable restricted specialization, using implicit substitution.
        (Contributed by NM, 9-Nov-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y A $.
 	$d y B $.
 	$d x C $.
@@ -1698,6 +2301,15 @@ $}
 $( 2-variable restricted specialization, using implicit substitution.
        (Contributed by NM, 13-Sep-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y A $.
 	$d y B $.
 	$d x C $.
@@ -1720,6 +2332,15 @@ $}
 $( 2-variable restricted specialization, using implicit substitution.
        (Contributed by NM, 18-Jun-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y A $.
 	$d y B $.
 	$d x C $.
@@ -1742,6 +2363,15 @@ $}
 $( 2-variable restricted existential specialization, using implicit
        substitution.  (Contributed by NM, 16-Oct-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y A $.
 	$d y B $.
 	$d x C $.
@@ -1764,6 +2394,19 @@ $}
 $( 3-variable restricted specialization, using implicit substitution.
        (Contributed by NM, 10-May-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v T $.
 	$d z ps $.
 	$d x ch $.
 	$d y th $.
@@ -1794,6 +2437,19 @@ $}
 $( 3-variable restricted existentional specialization, using implicit
        substitution.  (Contributed by NM, 25-Jul-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v T $.
 	$d z ps $.
 	$d x ch $.
 	$d y th $.
@@ -1824,6 +2480,9 @@ $}
 $( A variable introduction law for class equality.  (Contributed by NM,
        14-Apr-1995.)  (Proof shortened by Andrew Salmon, 8-Jun-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	feqvinc_0 $f set x $.
@@ -1836,6 +2495,10 @@ $( A variable introduction law for class equality, using bound-variable
        hypotheses instead of distinct variable conditions.  (Contributed by NM,
        14-Sep-2003.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d A y $.
 	$d B y $.
 	$d x y $.
@@ -1851,6 +2514,10 @@ $}
 $( Two ways to express substitution of ` A ` for ` x ` in ` ph ` .
        (Contributed by NM, 2-Mar-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x A y $.
 	$d ph y $.
 	ialexeq_0 $f set y $.
@@ -1863,6 +2530,10 @@ $}
 $( Equality implies equivalence with substitution.  (Contributed by NM,
        2-Mar-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x A y $.
 	$d ph y $.
 	iceqex_0 $f set y $.
@@ -1875,6 +2546,11 @@ $( A representation of explicit substitution of a class for a variable,
        inferred from an implicit substitution hypothesis.  (Contributed by NM,
        11-Oct-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	fceqsexg_0 $f wff ph $.
 	fceqsexg_1 $f wff ps $.
@@ -1888,6 +2564,11 @@ $}
 $( Elimination of an existential quantifier, using implicit substitution.
        (Contributed by NM, 29-Dec-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	$d x ps $.
 	fceqsexgv_0 $f wff ph $.
@@ -1901,6 +2582,11 @@ $}
 $( Elimination of a restricted existential quantifier, using implicit
        substitution.  (Contributed by NM, 30-Apr-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ps $.
@@ -1915,6 +2601,11 @@ $}
 $( Elimination of a restricted existential quantifier, using implicit
        substitution.  (Contributed by Mario Carneiro, 14-Mar-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ps $.
@@ -1929,6 +2620,15 @@ $}
 $( Elimination of a restricted existential quantifier, using implicit
        substitution.  (Contributed by NM, 29-Oct-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y A $.
 	$d x y B $.
 	$d x C $.
@@ -1951,6 +2651,9 @@ $}
 $( An alternate definition of class membership when the class is a set.
        (Contributed by NM, 18-Aug-1993.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fclel2_0 $f set x $.
@@ -1962,6 +2665,10 @@ $}
 $( An alternate definition of class membership when the class is a set.
        (Contributed by NM, 13-Aug-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d x A $.
 	$d x B $.
 	fclel3g_0 $f set x $.
@@ -1973,6 +2680,9 @@ $}
 $( An alternate definition of class membership when the class is a set.
        (Contributed by NM, 18-Aug-1993.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fclel3_0 $f set x $.
@@ -1984,6 +2694,9 @@ $}
 $( An alternate definition of class membership when the class is a set.
        (Contributed by NM, 18-Aug-1993.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fclel4_0 $f set x $.
@@ -1995,6 +2708,11 @@ $}
 $( Compare theorem *13.183 in [WhiteheadRussell] p. 178.  Only ` A ` is
        required to be a set.  (Contributed by Andrew Salmon, 3-Jun-2011.) $)
 ${
+	$v z $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v y $.
 	$d y A z $.
 	$d y B z $.
 	ipm13.183_0 $f set y $.
@@ -2008,6 +2726,10 @@ $( Restricted quantifier version of Theorem 19.3 of [Margaris] p. 89.  We
        don't need the non-empty class condition of ~ r19.3rzv when there is an
        outer quantifier.  (Contributed by NM, 25-Oct-2012.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d y A $.
 	$d x y $.
 	$d y ph $.
@@ -2021,6 +2743,11 @@ $( Restricted quantifier version of Theorem 19.28 of [Margaris] p. 90.  We
        don't need the non-empty class condition of ~ r19.28zv when there is an
        outer quantifier.  (Contributed by NM, 29-Oct-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d y A $.
 	$d x y $.
 	$d y ph $.
@@ -2035,6 +2762,11 @@ $( Membership in a class abstraction, using implicit substitution.  (Closed
        theorem version of ~ elabg .)  (Contributed by NM, 7-Nov-2005.)  (Proof
        shortened by Andrew Salmon, 8-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x ps $.
 	felabgt_0 $f wff ph $.
@@ -2049,6 +2781,11 @@ $( Membership in a class abstraction, using implicit substitution.  Compare
        hypotheses in place of distinct variable restrictions.  (Contributed by
        NM, 21-Sep-2003.)  (Revised by Mario Carneiro, 12-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	felabgf_0 $f wff ph $.
 	felabgf_1 $f wff ps $.
 	felabgf_2 $f set x $.
@@ -2063,6 +2800,10 @@ $( Membership in a class abstraction, using implicit substitution.
        (Contributed by NM, 1-Aug-1994.)  (Revised by Mario Carneiro,
        12-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	felabf_0 $f wff ph $.
 	felabf_1 $f wff ps $.
@@ -2076,6 +2817,10 @@ $}
 $( Membership in a class abstraction, using implicit substitution.  Compare
        Theorem 6.13 of [Quine] p. 44.  (Contributed by NM, 1-Aug-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x ps $.
 	$d x A $.
 	felab_0 $f wff ph $.
@@ -2089,6 +2834,11 @@ $}
 $( Membership in a class abstraction, using implicit substitution.  Compare
        Theorem 6.13 of [Quine] p. 44.  (Contributed by NM, 14-Apr-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x ps $.
 	$d x A $.
 	felabg_0 $f wff ph $.
@@ -2102,6 +2852,12 @@ $}
 $( Membership in a class abstraction, using implicit substitution.
        (Contributed by NM, 13-Sep-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d x ps $.
 	$d x A $.
 	felab2g_0 $f wff ph $.
@@ -2117,6 +2873,11 @@ $}
 $( Membership in a class abstraction, using implicit substitution.
        (Contributed by NM, 13-Sep-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x ps $.
 	$d x A $.
 	felab2_0 $f wff ph $.
@@ -2132,6 +2893,11 @@ $}
 $( Membership in a class abstraction, using implicit substitution.
        (Contributed by NM, 17-Oct-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x ps $.
 	$d x A $.
 	felab4g_0 $f wff ph $.
@@ -2146,6 +2912,11 @@ $}
 $( Membership in a class abstraction, with a weaker antecedent than
        ~ elabgf .  (Contributed by NM, 6-Sep-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	felab3gf_0 $f wff ph $.
 	felab3gf_1 $f wff ps $.
 	felab3gf_2 $f set x $.
@@ -2159,6 +2930,11 @@ $}
 $( Membership in a class abstraction, with a weaker antecedent than
        ~ elabg .  (Contributed by NM, 29-Aug-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x ps $.
 	$d x A $.
 	felab3g_0 $f wff ph $.
@@ -2172,6 +2948,10 @@ $}
 $( Membership in a class abstraction using implicit substitution.
        (Contributed by NM, 10-Nov-2000.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x ps $.
 	$d x A $.
 	felab3_0 $f wff ph $.
@@ -2186,6 +2966,11 @@ $( Membership in a restricted class abstraction, using implicit
        substitution.  This version has bound-variable hypotheses in place of
        distinct variable restrictions.  (Contributed by NM, 21-Sep-2003.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	felrabf_0 $f wff ph $.
 	felrabf_1 $f wff ps $.
 	felrabf_2 $f set x $.
@@ -2200,6 +2985,11 @@ $}
 $( Membership in a restricted class abstraction, using implicit
        substitution.  (Contributed by NM, 21-May-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x ps $.
 	$d x A $.
 	$d x B $.
@@ -2214,6 +3004,11 @@ $}
 $( Membership in a restricted class abstraction, using implicit
        substitution.  (Contributed by NM, 5-Oct-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x ps $.
 	$d x A $.
 	$d x B $.
@@ -2228,6 +3023,12 @@ $}
 $( Membership in a class abstraction, using implicit substitution.
        (Contributed by NM, 2-Nov-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x ps $.
 	$d x A $.
 	$d x B $.
@@ -2244,6 +3045,11 @@ $}
 $( Universal quantification over a class abstraction.  (Contributed by Jeff
        Madsen, 10-Jun-2010.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ps $.
 	fralab_0 $f wff ph $.
@@ -2257,6 +3063,12 @@ $}
 $( Universal quantification over a restricted class abstraction.
        (Contributed by Jeff Madsen, 10-Jun-2010.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d y A $.
 	$d y ps $.
@@ -2273,6 +3085,11 @@ $( Existential quantification over a class abstraction.  (Contributed by
        Mario Carneiro, 23-Jan-2014.)  (Revised by Mario Carneiro,
        3-Sep-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ps $.
 	frexab_0 $f wff ph $.
@@ -2286,6 +3103,12 @@ $}
 $( Existential quantification over a class abstraction.  (Contributed by
        Jeff Madsen, 17-Jun-2011.)  (Revised by Mario Carneiro, 3-Sep-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d y A $.
 	$d y ps $.
@@ -2301,6 +3124,11 @@ $}
 $( Universal quantification over a class abstraction.  (Contributed by
        Mario Carneiro, 3-Sep-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d x ch $.
 	$d x ph $.
@@ -2316,6 +3144,12 @@ $}
 $( Universal quantification over a restricted class abstraction.
        (Contributed by Mario Carneiro, 3-Sep-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d x A $.
 	$d x ch $.
@@ -2333,6 +3167,11 @@ $}
 $( Existential quantification over a class abstraction.  (Contributed by
        Mario Carneiro, 3-Sep-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d x ch $.
 	$d x ph $.
@@ -2348,6 +3187,12 @@ $}
 $( Existential quantification over a class abstraction.  (Contributed by
        Mario Carneiro, 3-Sep-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d x A $.
 	$d x ch $.
@@ -2366,6 +3211,9 @@ $( Identity used to create closed-form versions of bound-variable
        hypothesis builders for class expressions.  (Contributed by NM,
        10-Nov-2005.)  (Proof shortened by Mario Carneiro, 12-Oct-2016.) $)
 ${
+	$v x $.
+	$v z $.
+	$v A $.
 	$d x z $.
 	$d A z $.
 	fabidnf_0 $f set x $.
@@ -2379,6 +3227,11 @@ $( A deduction theorem for converting the inference ` |- F/_ x A ` =>
        converting the inference form into a deduction form, ~ abidnf is
        useful.  (Contributed by NM, 8-Dec-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v z $.
+	$v A $.
 	$d x z $.
 	$d z A $.
 	fdedhb_0 $f wff ph $.
@@ -2393,6 +3246,12 @@ $}
 $( A condition which implies existential uniqueness.  (Contributed by Jeff
        Hankins, 8-Sep-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d y ph $.
 	$d x y ps $.
 	$d x y A $.
@@ -2408,6 +3267,9 @@ $}
 $( Equality has existential uniqueness.  (Contributed by NM,
        25-Nov-1994.) $)
 ${
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x y A $.
 	ieueq_0 $f set y $.
 	feueq_0 $f set x $.
@@ -2417,6 +3279,8 @@ $}
 $( Equality has existential uniqueness.  (Contributed by NM,
        5-Apr-1995.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	feueq1_0 $f set x $.
 	feueq1_1 $f class A $.
@@ -2426,6 +3290,10 @@ $}
 $( Equality has existential uniqueness (split into 2 cases).  (Contributed
        by NM, 5-Apr-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x ph $.
 	$d x A $.
 	$d x B $.
@@ -2441,6 +3309,12 @@ $( Equality has existential uniqueness (split into 3 cases).  (Contributed
        by NM, 5-Apr-1995.)  (Proof shortened by Mario Carneiro,
        28-Sep-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x ph $.
 	$d x ps $.
 	$d x A $.
@@ -2461,6 +3335,8 @@ $}
 $( There is at most one set equal to a class.  (Contributed by NM,
        8-Mar-1995.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	fmoeq_0 $f set x $.
 	fmoeq_1 $f class A $.
@@ -2470,6 +3346,13 @@ $( "At most one" property of equality (split into 3 cases).  (The first 2
        hypotheses could be eliminated with longer proof.)  (Contributed by NM,
        23-Apr-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v y $.
 	$d x y ph $.
 	$d x y ps $.
 	$d x y A $.
@@ -2490,6 +3373,10 @@ $}
 $( "At most one" remains true after substitution.  (Contributed by NM,
        9-Mar-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fmosub_0 $f wff ph $.
 	fmosub_1 $f set x $.
@@ -2501,6 +3388,10 @@ $}
 $( Theorem for inferring "at most one."  (Contributed by NM,
        17-Oct-1996.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x y A $.
 	$d y ph $.
 	imo2icl_0 $f set y $.
@@ -2511,6 +3402,12 @@ ${
 $}
 $( Consequence of "at most one."  (Contributed by NM, 2-Jan-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x y A $.
 	$d y ph $.
 	$d x y ps $.
@@ -2525,6 +3422,11 @@ ${
 $}
 $( Consequence of "at most one."  (Contributed by NM, 29-Jun-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x ps $.
 	fmoi2_0 $f wff ph $.
@@ -2537,6 +3439,14 @@ ${
 $}
 $( Equality implied by "at most one."  (Contributed by NM, 18-Feb-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x A $.
 	$d x B $.
 	$d x ch $.
@@ -2555,6 +3465,14 @@ ${
 $}
 $( Equality implied by "at most one."  (Contributed by NM, 18-Feb-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x A $.
 	$d x B $.
 	$d x ch $.
@@ -2574,6 +3492,11 @@ $}
 $( Derive membership from uniqueness.  (Contributed by Jeff Madsen,
        2-Sep-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d B x $.
 	$d A x $.
 	$d ps x $.
@@ -2590,6 +3513,10 @@ $( Transfer existential uniqueness from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  (Contributed by NM,
        14-Nov-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x ph $.
 	$d x A $.
 	feuxfr2_0 $f wff ph $.
@@ -2604,6 +3531,11 @@ $( Transfer existential uniqueness from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  (Contributed by NM,
        14-Nov-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x ps $.
 	$d y ph $.
 	$d x A $.
@@ -2620,6 +3552,14 @@ $}
 $( Existential uniqueness via an indirect equality.  (Contributed by NM,
        11-Oct-2010.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v w $.
 	$d y z w ph $.
 	$d x z ps $.
 	$d y z w A $.
@@ -2641,6 +3581,10 @@ $}
 $( A way to express restricted uniqueness.  (Contributed by NM,
        22-Nov-1994.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d x y $.
 	$d y ph $.
@@ -2653,6 +3597,10 @@ $}
 $( A way to express restricted uniqueness.  (Contributed by NM,
        20-Oct-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d x y $.
 	$d y ph $.
@@ -2665,6 +3613,10 @@ $}
 $( A way to express restricted uniqueness.  (Contributed by NM,
        24-Oct-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d x y $.
 	$d y ph $.
@@ -2677,6 +3629,11 @@ $}
 $( A condition which implies existential uniqueness.  (Contributed by Mario
        Carneiro, 2-Oct-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d y ph $.
@@ -2690,6 +3647,11 @@ $}
 $( A condition which implies existential uniqueness.  (Contributed by Mario
        Carneiro, 2-Oct-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ps $.
@@ -2704,6 +3666,11 @@ $}
 $( Restricted "at most one" using implicit substitution.  (Contributed by
        NM, 24-Oct-2006.)  (Revised by NM, 16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d y ph $.
 	$d x ps $.
@@ -2718,6 +3685,11 @@ $}
 $( Restricted uniqueness using implicit substitution.  (Contributed by NM,
        23-Nov-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d y ph $.
 	$d x ps $.
@@ -2732,6 +3704,12 @@ $}
 $( Restricted uniqueness using implicit substitution.  (Contributed by NM,
        24-Oct-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v z $.
 	$d x y z A $.
 	$d y z ph $.
 	$d x z ps $.
@@ -2747,6 +3725,11 @@ $}
 $( Restricted uniqueness using implicit substitution.  (Contributed by NM,
        24-Oct-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d y ph $.
 	$d x ps $.
@@ -2761,6 +3744,9 @@ $}
 $( Equality has existential uniqueness.  (Contributed by Mario Carneiro,
        1-Sep-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	freueq_0 $f set x $.
@@ -2771,6 +3757,10 @@ $}
 $( Restricted "at most one" still holds when a conjunct is added.
      (Contributed by NM, 16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	frmoan_0 $f wff ph $.
 	frmoan_1 $f wff ps $.
 	frmoan_2 $f set x $.
@@ -2780,6 +3770,10 @@ $}
 $( Restricted "at most one" is preserved through implication (note wff
      reversal).  (Contributed by Alexander van der Vekens, 17-Jun-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	frmoim_0 $f wff ph $.
 	frmoim_1 $f wff ps $.
 	frmoim_2 $f set x $.
@@ -2789,6 +3783,10 @@ $}
 $( Restricted "at most one" is preserved through implication (note wff
        reversal).  (Contributed by Alexander van der Vekens, 17-Jun-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	frmoimia_0 $f wff ph $.
 	frmoimia_1 $f wff ps $.
 	frmoimia_2 $f set x $.
@@ -2799,6 +3797,11 @@ $}
 $( Restricted "at most one" is preserved through implication (note wff
        reversal).  (Contributed by Alexander van der Vekens, 17-Jun-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	frmoimi2_0 $f wff ph $.
 	frmoimi2_1 $f wff ps $.
 	frmoimi2_2 $f set x $.
@@ -2811,6 +3814,11 @@ $( A condition allowing swap of uniqueness and existential quantifiers.
        (Contributed by Thierry Arnoux, 7-Apr-2017.)  (Revised by NM,
        16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x B $.
 	f2reuswap_0 $f wff ph $.
@@ -2823,6 +3831,15 @@ $}
 $( Existential uniqueness via an indirect equality.  (Contributed by NM,
        16-Oct-2010.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v w $.
 	$d w y z A $.
 	$d x z B $.
 	$d w x y z C $.
@@ -2844,6 +3861,11 @@ $}
 $( Double restricted quantification with "at most one," analogous to
        ~ 2moex .  (Contributed by Alexander van der Vekens, 17-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d y A $.
 	$d x B $.
 	$d x y $.
@@ -2859,6 +3881,11 @@ $( Lemma for ~ 2reu5 .  Note that ` E! x e. A E! y e. B ph ` does not mean
        that ` ph ` holds;" see comment for ~ 2eu5 .  (Contributed by Alexander
        van der Vekens, 17-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d y A $.
 	$d x B $.
 	$d x y $.
@@ -2872,6 +3899,11 @@ $}
 $( Lemma for ~ 2reu5 .  (Contributed by Alexander van der Vekens,
        17-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d y A $.
 	$d x B $.
 	$d x y $.
@@ -2887,6 +3919,13 @@ $( Lemma for ~ 2reu5 .  This lemma is interesting in its own right, showing
        part) is optional; compare ~ rmo2 .  (Contributed by Alexander van der
        Vekens, 17-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
 	$d w y z A $.
 	$d w x z B $.
 	$d x y $.
@@ -2906,6 +3945,13 @@ $( Double restricted existential uniqueness in terms of restricted
        analogous to ~ 2eu5 and ~ reu3 .  (Contributed by Alexander van der
        Vekens, 17-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
 	$d w y z A $.
 	$d w x z B $.
 	$d x y $.

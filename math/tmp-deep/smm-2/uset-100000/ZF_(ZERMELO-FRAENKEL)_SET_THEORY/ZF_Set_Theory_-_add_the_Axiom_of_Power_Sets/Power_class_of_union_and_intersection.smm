@@ -9,7 +9,7 @@ $( The power class of the intersection of two classes is the intersection
        of their power classes.  Exercise 4.12(j) of [Mendelson] p. 235.
        (Contributed by NM, 23-Nov-2003.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d A x $.
 	$d B x $.
 	f0 $f class A $.
@@ -22,7 +22,7 @@ $( The power class of the union of two classes includes the union of their
        power classes.  Exercise 4.12(k) of [Mendelson] p. 235.  (Contributed by
        NM, 23-Nov-2003.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d A x $.
 	$d B x $.
 	f0 $f class A $.
@@ -35,7 +35,7 @@ $( The power class of the union of two classes is a subset of the union of
        their power classes, iff one class is a subclass of the other.  Exercise
        4.12(l) of [Mendelson] p. 235.  (Contributed by NM, 23-Nov-2003.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d A x y $.
 	$d B x y $.
 	f0 $f class A $.
@@ -59,7 +59,7 @@ $( Break up the power class of a union into a union of smaller classes.
        Obsolete as of 20-Dec-2016.  (Contributed by NM, 25-Mar-2007.)
        (New usage is discouraged.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d A x $.
 	$d B x $.
 	f0 $f class A $.

@@ -8,6 +8,9 @@ $)
 $( Axiom of Quantified Implication.  Axiom C4 of [Monk2] p. 105.
      (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fax-5_0 $f wff ph $.
 	fax-5_1 $f wff ps $.
 	fax-5_2 $f set x $.
@@ -16,6 +19,9 @@ $}
 $( Theorem 19.20 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
      (Proof shortened by O'Cat, 30-Mar-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	falim_0 $f wff ph $.
 	falim_1 $f wff ps $.
 	falim_2 $f set x $.
@@ -24,6 +30,9 @@ $}
 $( Inference quantifying both antecedent and consequent.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	falimi_0 $f wff ph $.
 	falimi_1 $f wff ps $.
 	falimi_2 $f set x $.
@@ -33,6 +42,10 @@ $}
 $( Inference doubly quantifying both antecedent and consequent.
        (Contributed by NM, 3-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	f2alimi_0 $f wff ph $.
 	f2alimi_1 $f wff ps $.
 	f2alimi_2 $f set x $.
@@ -43,6 +56,10 @@ $}
 $( Inference quantifying antecedent, nested antecedent, and consequent.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fal2imi_0 $f wff ph $.
 	fal2imi_1 $f wff ps $.
 	fal2imi_2 $f wff ch $.
@@ -53,6 +70,10 @@ $}
 $( Variant of ~ al2imi with conjunctive antecedent.  (Contributed by Andrew
        Salmon, 8-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	falanimi_0 $f wff ph $.
 	falanimi_1 $f wff ps $.
 	falanimi_2 $f wff ch $.
@@ -63,6 +84,10 @@ $}
 $( Deduction from Theorem 19.20 of [Margaris] p. 90.  (Contributed by NM,
        4-Jan-2002.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	falimdh_0 $f wff ph $.
 	falimdh_1 $f wff ps $.
 	falimdh_2 $f wff ch $.
@@ -73,6 +98,9 @@ ${
 $}
 $( Theorem 19.15 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	falbi_0 $f wff ph $.
 	falbi_1 $f wff ps $.
 	falbi_2 $f set x $.
@@ -81,6 +109,9 @@ $}
 $( Inference from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	falrimih_0 $f wff ph $.
 	falrimih_1 $f wff ps $.
 	falrimih_2 $f set x $.
@@ -91,6 +122,9 @@ $}
 $( Inference adding universal quantifier to both sides of an equivalence.
        (Contributed by NM, 7-Aug-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	falbii_0 $f wff ph $.
 	falbii_1 $f wff ps $.
 	falbii_2 $f set x $.
@@ -102,6 +136,10 @@ $( $j congruence 'albii'; $)
 $( Inference adding two universal quantifiers to both sides of an
        equivalence.  (Contributed by NM, 9-Mar-1997.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	f2albii_0 $f wff ph $.
 	f2albii_1 $f wff ps $.
 	f2albii_2 $f set x $.
@@ -113,6 +151,9 @@ $( A utility lemma to transfer a bound-variable hypothesis builder into a
        definition.  See ~ hbxfreq for equality version.  (Contributed by
        Jonathan Ben-Naim, 3-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fhbxfrbi_0 $f wff ph $.
 	fhbxfrbi_1 $f wff ps $.
 	fhbxfrbi_2 $f set x $.
@@ -123,6 +164,9 @@ $}
 $( Equality theorem for not-free.  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fnfbii_0 $f wff ph $.
 	fnfbii_1 $f wff ps $.
 	fnfbii_2 $f set x $.
@@ -132,6 +176,9 @@ $}
 $( A utility lemma to transfer a bound-variable hypothesis builder into a
          definition.  (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fnfxfr_0 $f wff ph $.
 	fnfxfr_1 $f wff ps $.
 	fnfxfr_2 $f set x $.
@@ -142,6 +189,10 @@ $}
 $( A utility lemma to transfer a bound-variable hypothesis builder into a
          definition.  (Contributed by Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fnfxfrd_0 $f wff ph $.
 	fnfxfrd_1 $f wff ps $.
 	fnfxfrd_2 $f wff ch $.
@@ -152,6 +203,8 @@ ${
 $}
 $( Theorem 19.6 of [Margaris] p. 89.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
 	falex_0 $f wff ph $.
 	falex_1 $f set x $.
 	alex $p |- ( A. x ph <-> -. E. x -. ph ) $= falex_0 falex_1 wal falex_0 wn wn falex_1 wal falex_0 wn falex_1 wex wn falex_0 falex_0 wn wn falex_1 falex_0 notnot albii falex_0 wn falex_1 alnex bitri $.
@@ -159,6 +212,9 @@ $}
 $( Part of theorem *11.5 in [WhiteheadRussell] p. 164.  (Contributed by
      Andrew Salmon, 24-May-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	f2nalexn_0 $f wff ph $.
 	f2nalexn_1 $f set x $.
 	f2nalexn_2 $f set y $.
@@ -166,6 +222,8 @@ ${
 $}
 $( Theorem 19.14 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
 	fexnal_0 $f wff ph $.
 	fexnal_1 $f set x $.
 	exnal $p |- ( E. x -. ph <-> -. A. x ph ) $= fexnal_0 fexnal_1 wal fexnal_0 wn fexnal_1 wex fexnal_0 fexnal_1 alex con2bii $.
@@ -173,6 +231,9 @@ $}
 $( Theorem 19.22 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
      (Proof shortened by Wolf Lammen, 4-Jul-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fexim_0 $f wff ph $.
 	fexim_1 $f wff ps $.
 	fexim_2 $f set x $.
@@ -181,6 +242,9 @@ $}
 $( Inference adding existential quantifier to antecedent and consequent.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	feximi_0 $f wff ph $.
 	feximi_1 $f wff ps $.
 	feximi_2 $f set x $.
@@ -190,6 +254,10 @@ $}
 $( Inference adding two existential quantifiers to antecedent and
        consequent.  (Contributed by NM, 3-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	f2eximi_0 $f wff ph $.
 	f2eximi_1 $f wff ps $.
 	f2eximi_2 $f set x $.
@@ -200,6 +268,9 @@ $}
 $( A transformation of quantifiers and logical connectives.  (Contributed by
      NM, 19-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	falinexa_0 $f wff ph $.
 	falinexa_1 $f wff ps $.
 	falinexa_2 $f set x $.
@@ -208,6 +279,9 @@ $}
 $( A relationship between two quantifiers and negation.  (Contributed by NM,
      18-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	falexn_0 $f wff ph $.
 	falexn_1 $f set x $.
 	falexn_2 $f set y $.
@@ -216,6 +290,9 @@ $}
 $( Theorem *11.51 in [WhiteheadRussell] p. 164.  (Contributed by Andrew
      Salmon, 24-May-2011.)  (Proof shortened by Wolf Lammen, 25-Sep-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	f2exnexn_0 $f wff ph $.
 	f2exnexn_1 $f set x $.
 	f2exnexn_2 $f set y $.
@@ -223,6 +300,9 @@ ${
 $}
 $( Theorem 19.18 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fexbi_0 $f wff ph $.
 	fexbi_1 $f wff ps $.
 	fexbi_2 $f set x $.
@@ -231,6 +311,9 @@ $}
 $( Inference adding existential quantifier to both sides of an
        equivalence.  (Contributed by NM, 24-May-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fexbii_0 $f wff ph $.
 	fexbii_1 $f wff ps $.
 	fexbii_2 $f set x $.
@@ -240,6 +323,10 @@ $}
 $( Inference adding two existential quantifiers to both sides of an
        equivalence.  (Contributed by NM, 16-Mar-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	f2exbii_0 $f wff ph $.
 	f2exbii_1 $f wff ps $.
 	f2exbii_2 $f set x $.
@@ -249,8 +336,12 @@ ${
 $}
 $( Inference adding 3 existential quantifiers to both sides of an
        equivalence.  (Contributed by NM, 2-May-1995.) $)
-$v z $.
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	f3exbii_0 $f wff ph $.
 	f3exbii_1 $f wff ps $.
 	f3exbii_2 $f set x $.
@@ -262,6 +353,9 @@ $}
 $( A transformation of quantifiers and logical connectives.  (Contributed by
      NM, 25-Mar-1996.)  (Proof shortened by Wolf Lammen, 4-Sep-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fexanali_0 $f wff ph $.
 	fexanali_1 $f wff ps $.
 	fexanali_2 $f set x $.
@@ -270,6 +364,9 @@ $}
 $( Commutation of conjunction inside an existential quantifier.  (Contributed
      by NM, 18-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fexancom_0 $f wff ph $.
 	fexancom_1 $f wff ps $.
 	fexancom_2 $f set x $.
@@ -278,6 +375,10 @@ $}
 $( Deduction from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
        10-Feb-1997.)  (Proof shortened by Andrew Salmon, 13-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	falrimdh_0 $f wff ph $.
 	falrimdh_1 $f wff ps $.
 	falrimdh_2 $f wff ch $.
@@ -290,6 +391,10 @@ $}
 $( Deduction from Theorem 19.22 of [Margaris] p. 90.  (Contributed by NM,
        20-May-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	feximdh_0 $f wff ph $.
 	feximdh_1 $f wff ps $.
 	feximdh_2 $f wff ch $.
@@ -301,6 +406,9 @@ $}
 $( Deduction for generalization rule for negated wff.  (Contributed by NM,
        2-Jan-2002.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fnexdh_0 $f wff ph $.
 	fnexdh_1 $f wff ps $.
 	fnexdh_2 $f set x $.
@@ -311,6 +419,10 @@ $}
 $( Formula-building rule for universal quantifier (deduction rule).
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	falbidh_0 $f wff ph $.
 	falbidh_1 $f wff ps $.
 	falbidh_2 $f wff ch $.
@@ -322,6 +434,10 @@ $}
 $( Formula-building rule for existential quantifier (deduction rule).
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fexbidh_0 $f wff ph $.
 	fexbidh_1 $f wff ps $.
 	fexbidh_2 $f wff ch $.
@@ -334,6 +450,9 @@ $( Simplification of an existentially quantified conjunction.  (Contributed
      by Rodolfo Medina, 25-Sep-2010.)  (Proof shortened by Andrew Salmon,
      29-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fexsimpl_0 $f wff ph $.
 	fexsimpl_1 $f wff ps $.
 	fexsimpl_2 $f set x $.
@@ -343,6 +462,9 @@ $( Theorem 19.26 of [Margaris] p. 90.  Also Theorem *10.22 of
      [WhiteheadRussell] p. 147.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Wolf Lammen, 4-Jul-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.26_0 $f wff ph $.
 	f19.26_1 $f wff ps $.
 	f19.26_2 $f set x $.
@@ -351,6 +473,10 @@ $}
 $( Theorem 19.26 of [Margaris] p. 90 with two quantifiers.  (Contributed by
      NM, 3-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	f19.26-2_0 $f wff ph $.
 	f19.26-2_1 $f wff ps $.
 	f19.26-2_2 $f set x $.
@@ -360,6 +486,10 @@ $}
 $( Theorem 19.26 of [Margaris] p. 90 with triple conjunction.  (Contributed
      by NM, 13-Sep-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	f19.26-3an_0 $f wff ph $.
 	f19.26-3an_1 $f wff ps $.
 	f19.26-3an_2 $f wff ch $.
@@ -369,6 +499,9 @@ $}
 $( Theorem 19.29 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
      (Proof shortened by Andrew Salmon, 13-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.29_0 $f wff ph $.
 	f19.29_1 $f wff ps $.
 	f19.29_2 $f set x $.
@@ -377,6 +510,9 @@ $}
 $( Variation of Theorem 19.29 of [Margaris] p. 90.  (Contributed by NM,
      18-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.29r_0 $f wff ph $.
 	f19.29r_1 $f wff ps $.
 	f19.29r_2 $f set x $.
@@ -385,6 +521,10 @@ $}
 $( Variation of Theorem 19.29 of [Margaris] p. 90 with double
      quantification.  (Contributed by NM, 3-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	f19.29r2_0 $f wff ph $.
 	f19.29r2_1 $f wff ps $.
 	f19.29r2_2 $f set x $.
@@ -394,6 +534,10 @@ $}
 $( Variation of Theorem 19.29 of [Margaris] p. 90 with mixed quantification.
      (Contributed by NM, 11-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	f19.29x_0 $f wff ph $.
 	f19.29x_1 $f wff ps $.
 	f19.29x_2 $f set x $.
@@ -405,6 +549,9 @@ $( Theorem 19.35 of [Margaris] p. 90.  This theorem is useful for moving an
      single existential quantifier.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Wolf Lammen, 27-Jun-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.35_0 $f wff ph $.
 	f19.35_1 $f wff ps $.
 	f19.35_2 $f set x $.
@@ -413,6 +560,9 @@ $}
 $( Inference from Theorem 19.35 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.35i_0 $f wff ph $.
 	f19.35i_1 $f wff ps $.
 	f19.35i_2 $f set x $.
@@ -422,6 +572,9 @@ $}
 $( Inference from Theorem 19.35 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.35ri_0 $f wff ph $.
 	f19.35ri_1 $f wff ps $.
 	f19.35ri_2 $f set x $.
@@ -430,6 +583,10 @@ ${
 $}
 $( Theorem 19.25 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	f19.25_0 $f wff ph $.
 	f19.25_1 $f wff ps $.
 	f19.25_2 $f set x $.
@@ -439,6 +596,9 @@ $}
 $( Theorem 19.30 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
      (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.30_0 $f wff ph $.
 	f19.30_1 $f wff ps $.
 	f19.30_2 $f set x $.
@@ -447,6 +607,9 @@ $}
 $( Theorem 19.43 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
      (Proof shortened by Wolf Lammen, 27-Jun-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.43_0 $f wff ph $.
 	f19.43_1 $f wff ps $.
 	f19.43_2 $f set x $.
@@ -456,6 +619,9 @@ $( Obsolete proof of ~ 19.43 as of 3-May-2016.  Leave this in for the example
      on the mmrecent.html page.  (Contributed by NM, 5-Aug-1993.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.43OLD_0 $f wff ph $.
 	f19.43OLD_1 $f wff ps $.
 	f19.43OLD_2 $f set x $.
@@ -463,6 +629,9 @@ ${
 $}
 $( Theorem 19.33 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.33_0 $f wff ph $.
 	f19.33_1 $f wff ps $.
 	f19.33_2 $f set x $.
@@ -473,6 +642,9 @@ $( The antecedent provides a condition implying the converse of ~ 19.33 .
      27-Mar-2004.)  (Proof shortened by Andrew Salmon, 25-May-2011.)  (Proof
      shortened by Wolf Lammen, 5-Jul-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.33b_0 $f wff ph $.
 	f19.33b_1 $f wff ps $.
 	f19.33b_2 $f set x $.
@@ -480,6 +652,9 @@ ${
 $}
 $( Theorem 19.40 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.40_0 $f wff ph $.
 	f19.40_1 $f wff ps $.
 	f19.40_2 $f set x $.
@@ -488,6 +663,10 @@ $}
 $( Theorem *11.42 in [WhiteheadRussell] p. 163.  Theorem 19.40 of [Margaris]
      p. 90 with 2 quantifiers.  (Contributed by Andrew Salmon, 24-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	f19.40-2_0 $f wff ph $.
 	f19.40-2_1 $f wff ps $.
 	f19.40-2_2 $f set x $.
@@ -497,6 +676,9 @@ $}
 $( Split a biconditional and distribute quantifier.  (Contributed by NM,
      18-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	falbiim_0 $f wff ph $.
 	falbiim_1 $f wff ps $.
 	falbiim_2 $f set x $.
@@ -505,6 +687,10 @@ $}
 $( Split a biconditional and distribute 2 quantifiers.  (Contributed by NM,
      3-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	f2albiim_0 $f wff ph $.
 	f2albiim_1 $f wff ps $.
 	f2albiim_2 $f set x $.
@@ -514,6 +700,9 @@ $}
 $( Add/remove a conjunct in the scope of an existential quantifier.
      (Contributed by Raph Levien, 3-Jul-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fexintrbi_0 $f wff ph $.
 	fexintrbi_1 $f wff ps $.
 	fexintrbi_2 $f set x $.
@@ -522,6 +711,9 @@ $}
 $( Introduce a conjunct in the scope of an existential quantifier.
      (Contributed by NM, 11-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fexintr_0 $f wff ph $.
 	fexintr_1 $f wff ps $.
 	fexintr_2 $f set x $.
@@ -530,6 +722,10 @@ $}
 $( Theorem *10.3 in [WhiteheadRussell] p. 150.  (Contributed by Andrew
      Salmon, 8-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	falsyl_0 $f wff ph $.
 	falsyl_1 $f wff ps $.
 	falsyl_2 $f wff ch $.

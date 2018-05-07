@@ -23,7 +23,7 @@ $}
 $( Membership in a class abstraction of pairs.  (Contributed by NM,
        24-Mar-1998.) $)
 ${
-	$v ph x y z A $.
+	$v ph x y A z $.
 	$d x z A $.
 	$d y z A $.
 	$d z ph $.
@@ -69,7 +69,7 @@ $}
 $( The law of concretion in terms of substitutions.  (Contributed by NM,
        30-Sep-2002.)  (Revised by Mario Carneiro, 18-Nov-2016.) $)
 ${
-	$v ph x y z w A B $.
+	$v ph x y A B z w $.
 	$d x y z w $.
 	$d w z A $.
 	$d w x B $.
@@ -141,7 +141,7 @@ $}
 $( The law of concretion for a binary relation.  (Contributed by Mario
          Carneiro, 19-Dec-2013.) $)
 ${
-	$v ph ps x y A B V R W $.
+	$v ph ps x y A B R V W $.
 	$d x y A $.
 	$d x y B $.
 	$d x y ps $.
@@ -462,7 +462,7 @@ $}
 $( Move indexed union inside an ordered-pair abstraction.  (Contributed by
        Stefan O'Rear, 20-Feb-2015.) $)
 ${
-	$v ph x y z w A $.
+	$v ph x y z A w $.
 	$d ph w $.
 	$d A w x $.
 	$d A y $.

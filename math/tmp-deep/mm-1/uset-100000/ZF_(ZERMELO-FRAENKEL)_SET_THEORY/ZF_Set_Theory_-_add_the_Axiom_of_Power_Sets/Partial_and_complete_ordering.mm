@@ -18,6 +18,8 @@ $( Strict complete ordering predicate symbol (read: 'orders'). $)
 $( Extend wff notation to include the strict partial ordering predicate.
      Read:  ' ` R ` is a partial order on ` A ` .' $)
 ${
+	$v A $.
+	$v R $.
 	fwpo_0 $f class A $.
 	fwpo_1 $f class R $.
 	wpo $a wff R Po A $.
@@ -25,6 +27,8 @@ $}
 $( Extend wff notation to include the strict complete ordering predicate.
      Read:  ' ` R ` orders ` A ` .' $)
 ${
+	$v A $.
+	$v R $.
 	fwor_0 $f class A $.
 	fwor_1 $f class R $.
 	wor $a wff R Or A $.
@@ -34,6 +38,11 @@ $( Define the strict partial order predicate.  Definition of [Enderton]
        ` A ` .  For example, ` < Po RR ` is true, while ` <_ Po RR ` is false
        ( ~ ex-po ).  (Contributed by NM, 16-Mar-1997.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v R $.
 	$d x y z R $.
 	$d x y z A $.
 	fdf-po_0 $f set x $.
@@ -48,6 +57,10 @@ $( Define the strict complete (linear) order predicate.  The expression
        ` < Or RR ` is true ( ~ ltso ).  Equivalent to Definition 6.19(1) of
        [TakeutiZaring] p. 29.  (Contributed by NM, 21-Jan-1996.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v R $.
 	$d x y R $.
 	$d x y A $.
 	fdf-so_0 $f set x $.
@@ -59,6 +72,12 @@ $}
 $( Subset theorem for the partial ordering predicate.  (Contributed by NM,
        27-Mar-1997.)  (Proof shortened by Mario Carneiro, 18-Nov-2016.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z R $.
 	$d x y z A $.
 	$d x y z B $.
@@ -73,6 +92,12 @@ $}
 $( Equality theorem for partial ordering predicate.  (Contributed by NM,
        27-Mar-1997.) $)
 ${
+	$v A $.
+	$v R $.
+	$v S $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z R $.
 	$d x y z S $.
 	$d x y z A $.
@@ -87,6 +112,9 @@ $}
 $( Equality theorem for partial ordering predicate.  (Contributed by NM,
      27-Mar-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	fpoeq2_0 $f class A $.
 	fpoeq2_1 $f class B $.
 	fpoeq2_2 $f class R $.
@@ -95,6 +123,12 @@ $}
 $( Bound-variable hypothesis builder for partial orders.  (Contributed by
        Stefan O'Rear, 20-Jan-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v R $.
+	$v a $.
+	$v b $.
+	$v c $.
 	$d R a b c $.
 	$d A a b c $.
 	$d x a b c $.
@@ -111,6 +145,11 @@ $}
 $( Bound-variable hypothesis builder for total orders.  (Contributed by
        Stefan O'Rear, 20-Jan-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v R $.
+	$v a $.
+	$v b $.
 	$d R a b $.
 	$d A a b $.
 	$d x a b $.
@@ -126,6 +165,14 @@ $}
 $( Properties of partial order relation in class notation.  (Contributed by
        NM, 27-Mar-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z R $.
 	$d x y z A $.
 	$d x y z B $.
@@ -144,6 +191,12 @@ $}
 $( Sufficient conditions for a partial order.  (Contributed by NM,
        9-Jul-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v R $.
 	$d x y z A $.
 	$d x y z R $.
 	$d x y z ph $.
@@ -160,6 +213,15 @@ $}
 $( Perform the substitutions into the strict weak ordering law.
        (Contributed by Mario Carneiro, 31-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v R $.
+	$v X $.
+	$v Y $.
+	$v Z $.
 	$d x y z A $.
 	$d x y z ph $.
 	$d x y z R $.
@@ -181,6 +243,12 @@ $}
 $( A strict weak order is a partial order.  (Contributed by Mario Carneiro,
        9-Jul-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v R $.
 	$d x y z A $.
 	$d x y z R $.
 	$d x y z ph $.
@@ -197,6 +265,9 @@ $}
 $( A partial order relation is irreflexive.  (Contributed by NM,
      27-Mar-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	fpoirr_0 $f class A $.
 	fpoirr_1 $f class B $.
 	fpoirr_2 $f class R $.
@@ -205,6 +276,11 @@ $}
 $( A partial order relation is a transitive relation.  (Contributed by NM,
      27-Mar-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	fpotr_0 $f class A $.
 	fpotr_1 $f class B $.
 	fpotr_2 $f class C $.
@@ -215,6 +291,10 @@ $}
 $( A partial order relation has no 2-cycle loops.  (Contributed by NM,
      27-Mar-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fpo2nr_0 $f class A $.
 	fpo2nr_1 $f class B $.
 	fpo2nr_2 $f class C $.
@@ -224,6 +304,11 @@ $}
 $( A partial order relation has no 3-cycle loops.  (Contributed by NM,
      27-Mar-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	fpo3nr_0 $f class A $.
 	fpo3nr_1 $f class B $.
 	fpo3nr_2 $f class C $.
@@ -234,6 +319,10 @@ $}
 $( Any relation is a partial ordering of the empty set.  (Contributed by
        NM, 28-Mar-1997.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v R $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z R $.
 	ipo0_0 $f set x $.
 	ipo0_1 $f set y $.
@@ -244,6 +333,17 @@ $}
 $( A function preserves a partial order relation.  (Contributed by Jeff
        Madsen, 18-Jun-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v X $.
+	$v Y $.
+	$v z $.
+	$v w $.
+	$v v $.
 	$d R v w x y z $.
 	$d S v w z $.
 	$d X v w y z $.
@@ -268,6 +368,10 @@ $}
 $( A strict linear order is a strict partial order.  (Contributed by NM,
        28-Mar-1997.) $)
 ${
+	$v A $.
+	$v R $.
+	$v x $.
+	$v y $.
 	$d x y R $.
 	$d x y A $.
 	isopo_0 $f set x $.
@@ -279,6 +383,11 @@ $}
 $( Subset theorem for the strict ordering predicate.  (Contributed by NM,
        16-Mar-1997.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v x $.
+	$v y $.
 	$d x y R $.
 	$d x y A $.
 	$d x y B $.
@@ -292,6 +401,11 @@ $}
 $( Equality theorem for the strict ordering predicate.  (Contributed by NM,
        16-Mar-1997.) $)
 ${
+	$v A $.
+	$v R $.
+	$v S $.
+	$v x $.
+	$v y $.
 	$d x y R $.
 	$d x y S $.
 	$d x y A $.
@@ -305,6 +419,9 @@ $}
 $( Equality theorem for the strict ordering predicate.  (Contributed by NM,
      16-Mar-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	fsoeq2_0 $f class A $.
 	fsoeq2_1 $f class B $.
 	fsoeq2_2 $f class R $.
@@ -313,6 +430,9 @@ $}
 $( A strict order relation is irreflexive.  (Contributed by NM,
      24-Nov-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	fsonr_0 $f class A $.
 	fsonr_1 $f class B $.
 	fsonr_2 $f class R $.
@@ -321,6 +441,11 @@ $}
 $( A strict order relation is a transitive relation.  (Contributed by NM,
      21-Jan-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	fsotr_0 $f class A $.
 	fsotr_1 $f class B $.
 	fsotr_2 $f class C $.
@@ -331,6 +456,12 @@ $}
 $( A strict order relation is linear (satisfies trichotomy).  (Contributed
        by NM, 21-Jan-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -346,6 +477,10 @@ $}
 $( A strict order relation has no 2-cycle loops.  (Contributed by NM,
      21-Jan-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fso2nr_0 $f class A $.
 	fso2nr_1 $f class B $.
 	fso2nr_2 $f class C $.
@@ -355,6 +490,11 @@ $}
 $( A strict order relation has no 3-cycle loops.  (Contributed by NM,
      21-Jan-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	fso3nr_0 $f class A $.
 	fso3nr_1 $f class B $.
 	fso3nr_2 $f class C $.
@@ -365,6 +505,10 @@ $}
 $( A strict order relation satisfies strict trichotomy.  (Contributed by NM,
      19-Feb-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fsotric_0 $f class A $.
 	fsotric_1 $f class B $.
 	fsotric_2 $f class C $.
@@ -374,6 +518,10 @@ $}
 $( Trichotomy law for strict order relation.  (Contributed by NM,
      9-Apr-1996.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fsotrieq_0 $f class A $.
 	fsotrieq_1 $f class B $.
 	fsotrieq_2 $f class C $.
@@ -383,6 +531,10 @@ $}
 $( Trichotomy law for strict order relation.  (Contributed by NM,
      5-May-1999.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fsotrieq2_0 $f class A $.
 	fsotrieq2_1 $f class B $.
 	fsotrieq2_2 $f class C $.
@@ -392,6 +544,11 @@ $}
 $( A transitivity relation.  (Read ` B <_ C ` and ` C < D ` implies
      ` B < D ` .)  (Contributed by Mario Carneiro, 10-May-2013.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	fsotr2_0 $f class A $.
 	fsotr2_1 $f class B $.
 	fsotr2_2 $f class C $.
@@ -403,6 +560,11 @@ $( An irreflexive, transitive, linear relation is a strict ordering.
        (Contributed by NM, 21-Jan-1996.)  (Revised by Mario Carneiro,
        9-Jul-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v R $.
 	$d x y R $.
 	$d x y A $.
 	$d x y ph $.
@@ -419,6 +581,11 @@ $( An irreflexive, transitive, linear relation is a strict ordering.
        (Contributed by NM, 21-Jan-1996.)  (Revised by Mario Carneiro,
        9-Jul-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v R $.
 	$d x y z R $.
 	$d x y z A $.
 	fissoi_0 $f set x $.
@@ -434,6 +601,11 @@ $}
 $( Deduce strict ordering from its properties.  (Contributed by NM,
        29-Jan-1996.)  (Revised by Mario Carneiro, 9-Jul-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v R $.
 	$d x y z R $.
 	$d x y z A $.
 	fisso2i_0 $f set x $.
@@ -448,6 +620,9 @@ $}
 $( Any relation is a strict ordering of the empty set.  (Contributed by NM,
        16-Mar-1997.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v R $.
+	$v x $.
+	$v y $.
 	$d x y R $.
 	iso0_0 $f set x $.
 	iso0_1 $f set y $.
@@ -457,6 +632,11 @@ $}
 $( A totally ordered set has at most one minimal element.  (Contributed by
        Mario Carneiro, 24-Jun-2015.)  (Revised by NM, 16-Jun-2017.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v R $.
+	$v z $.
 	$d x y z A $.
 	$d x y z R $.
 	isomo_0 $f set z $.

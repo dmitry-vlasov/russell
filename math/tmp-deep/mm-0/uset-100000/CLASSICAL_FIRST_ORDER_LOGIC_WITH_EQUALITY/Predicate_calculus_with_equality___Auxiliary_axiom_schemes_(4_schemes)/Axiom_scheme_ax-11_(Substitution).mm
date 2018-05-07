@@ -26,6 +26,9 @@ $( Axiom of Substitution.  One of the 5 equality axioms of predicate
      auxiliary axiom to achieve metalogical completeness.  (Contributed by NM,
      22-Jan-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fax-11_0 $f wff ph $.
 	fax-11_1 $f set x $.
 	fax-11_2 $f set y $.
@@ -48,6 +51,9 @@ $( Specialization.  A universally quantified wff implies the wff without a
        we can do using only Tarski's axioms is ~ spw .  (Contributed by NM,
        21-May-2008.)  (Proof shortened by Scott Fenton, 24-Jan-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v w $.
 	$d x w $.
 	$d w ph $.
 	isp_0 $f set w $.
@@ -61,6 +67,9 @@ $( Show that the original axiom ~ ax-5o can be derived from ~ ax-5 and
      Part of the proof is based on the proof of Lemma 22 of [Monk2] p. 114.
      (Contributed by NM, 21-May-2008.)  (Proof modification is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fax5o_0 $f wff ph $.
 	fax5o_1 $f wff ps $.
 	fax5o_2 $f set x $.
@@ -69,6 +78,8 @@ $}
 $( If a wff is true, it is true for at least one instance.  Special case of
      Theorem 19.8 of [Margaris] p. 89.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
 	f19.8a_0 $f wff ph $.
 	f19.8a_1 $f set x $.
 	19.8a $p |- ( ph -> E. x ph ) $= f19.8a_0 f19.8a_0 wn f19.8a_1 wal wn f19.8a_0 f19.8a_1 wex f19.8a_0 wn f19.8a_1 wal f19.8a_0 f19.8a_0 wn f19.8a_1 sp con2i f19.8a_0 f19.8a_1 df-ex sylibr $.
@@ -77,6 +88,8 @@ $( ` x ` is not free in ` A. x ph ` .  Example in Appendix in [Megill] p. 450
      (p. 19 of the preprint).  Also Lemma 22 of [Monk2] p. 114.  (Contributed
      by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
 	fhba1_0 $f wff ph $.
 	fhba1_1 $f set x $.
 	hba1 $p |- ( A. x ph -> A. x A. x ph ) $= fhba1_0 fhba1_1 wal fhba1_0 fhba1_1 wal wn fhba1_1 wal wn fhba1_0 fhba1_1 wal wn fhba1_1 wal wn fhba1_1 wal fhba1_0 fhba1_1 wal fhba1_1 wal fhba1_0 fhba1_1 wal wn fhba1_1 wal fhba1_0 fhba1_1 wal fhba1_0 fhba1_1 wal wn fhba1_1 sp con2i fhba1_0 fhba1_1 wal wn fhba1_1 hbn1 fhba1_0 fhba1_1 wal wn fhba1_1 wal wn fhba1_0 fhba1_1 wal fhba1_1 fhba1_0 fhba1_1 wal fhba1_0 fhba1_1 wal wn fhba1_1 wal fhba1_0 fhba1_1 hbn1 con1i alimi 3syl $.
@@ -84,6 +97,8 @@ $}
 $( If ` x ` is not free in ` ph ` , it is not free in ` -. ph ` .
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
 	fhbn_0 $f wff ph $.
 	fhbn_1 $f set x $.
 	ehbn_0 $e |- ( ph -> A. x ph ) $.
@@ -92,6 +107,10 @@ $}
 $( Deduction form of bound-variable hypothesis builder ~ hbim .
        (Contributed by NM, 1-Jan-2002.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fhbimd_0 $f wff ph $.
 	fhbimd_1 $f wff ps $.
 	fhbimd_2 $f wff ch $.
@@ -104,6 +123,10 @@ $}
 $( Existential introduction, using implicit substitution.  Compare Lemma 14
        of [Tarski] p. 70.  (Contributed by NM, 7-Aug-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v z $.
 	$d x z $.
 	fspimeh_0 $f wff ph $.
 	fspimeh_1 $f wff ps $.
@@ -120,6 +143,8 @@ $( Show that the original axiom ~ ax-6o can be derived from ~ ax-6 and
      specifically studying the latter's properties.  (Contributed by NM,
      21-May-2008.) $)
 ${
+	$v ph $.
+	$v x $.
 	fax6o_0 $f wff ph $.
 	fax6o_1 $f set x $.
 	ax6o $p |- ( -. A. x -. A. x ph -> ph ) $= fax6o_0 fax6o_1 wal fax6o_0 fax6o_0 fax6o_1 wal wn fax6o_1 wal fax6o_0 fax6o_1 sp fax6o_0 fax6o_1 ax-6 nsyl4 $.
@@ -127,6 +152,8 @@ $}
 $( Closed theorem version of bound-variable hypothesis builder ~ hbn .
      (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
 	fhbnt_0 $f wff ph $.
 	fhbnt_1 $f set x $.
 	hbnt $p |- ( A. x ( ph -> A. x ph ) -> ( -. ph -> A. x -. ph ) ) $= fhbnt_0 wn fhbnt_0 fhbnt_1 wal wn fhbnt_1 wal fhbnt_0 fhbnt_0 fhbnt_1 wal wi fhbnt_1 wal fhbnt_0 wn fhbnt_1 wal fhbnt_0 fhbnt_1 wal wn fhbnt_1 wal fhbnt_0 fhbnt_0 fhbnt_1 ax6o con1i fhbnt_0 fhbnt_0 fhbnt_1 wal wi fhbnt_0 fhbnt_1 wal wn fhbnt_0 wn fhbnt_1 fhbnt_0 fhbnt_0 fhbnt_1 wal con3 al2imi syl5 $.
@@ -135,6 +162,9 @@ $( If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
        ` ( ph -> ps ) ` .  (Contributed by NM, 5-Aug-1993.)  (Proof shortened
        by O'Cat, 3-Mar-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fhbim_0 $f wff ph $.
 	fhbim_1 $f wff ps $.
 	fhbim_2 $f set x $.
@@ -144,6 +174,8 @@ ${
 $}
 $( A closed version of ~ 19.9 .  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
 	f19.9ht_0 $f wff ph $.
 	f19.9ht_1 $f set x $.
 	19.9ht $p |- ( A. x ( ph -> A. x ph ) -> ( E. x ph -> ph ) ) $= f19.9ht_0 f19.9ht_1 wex f19.9ht_0 wn f19.9ht_1 wal wn f19.9ht_0 f19.9ht_0 f19.9ht_1 wal wi f19.9ht_1 wal f19.9ht_0 f19.9ht_0 f19.9ht_1 df-ex f19.9ht_0 f19.9ht_0 f19.9ht_1 wal wi f19.9ht_1 wal f19.9ht_0 f19.9ht_0 wn f19.9ht_1 wal f19.9ht_0 f19.9ht_1 hbnt con1d syl5bi $.
@@ -151,6 +183,8 @@ $}
 $( A wff may be existentially quantified with a variable not free in it.
        Theorem 19.9 of [Margaris] p. 89.  (Contributed by FL, 24-Mar-2007.) $)
 ${
+	$v ph $.
+	$v x $.
 	f19.9h_0 $f wff ph $.
 	f19.9h_1 $f set x $.
 	e19.9h_0 $e |- ( ph -> A. x ph ) $.
@@ -159,6 +193,9 @@ $}
 $( Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
        (Revised by Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.23h_0 $f wff ph $.
 	f19.23h_1 $f wff ps $.
 	f19.23h_2 $f set x $.
@@ -168,6 +205,9 @@ $}
 $( Inference from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Andrew Salmon, 13-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fexlimih_0 $f wff ph $.
 	fexlimih_1 $f wff ps $.
 	fexlimih_2 $f set x $.
@@ -178,6 +218,10 @@ $}
 $( Weaker version of ~ equsalh (requiring distinct variables) without using
        ~ ax-12 .  (Contributed by NM, 29-Nov-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fequsalhw_0 $f wff ph $.
 	fequsalhw_1 $f wff ps $.
@@ -190,6 +234,9 @@ $}
 $( Theorem 19.21 of [Margaris] p. 90.  The hypothesis can be thought of
        as " ` x ` is not free in ` ph ` ."  (Contributed by NM, 1-Aug-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.21h_0 $f wff ph $.
 	f19.21h_1 $f wff ps $.
 	f19.21h_2 $f set x $.
@@ -198,6 +245,9 @@ ${
 $}
 $( A closed form of ~ hbim .  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fhbim1_0 $f wff ph $.
 	fhbim1_1 $f wff ps $.
 	fhbim1_2 $f set x $.
@@ -208,6 +258,9 @@ $}
 $( If ` x ` is not free in ` ph ` , it is not free in ` E. y ph ` .
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fhbex_0 $f wff ph $.
 	fhbex_1 $f set x $.
 	fhbex_2 $f set y $.
@@ -218,6 +271,9 @@ $( Theorem 19.12 of [Margaris] p. 89.  Assuming the converse is a mistake
      sometimes made by beginners!  But sometimes the converse does hold, as in
      ~ 19.12vv and ~ r19.12sn .  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	f19.12_0 $f wff ph $.
 	f19.12_1 $f set x $.
 	f19.12_2 $f set y $.
@@ -228,6 +284,11 @@ $( Proof of ~ dvelimh without using ~ ax-12 but with additional distinct
        variable conditions.  (Contributed by Andrew Salmon, 21-Jul-2011.)
        (Revised by NM, 1-Aug-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	fdvelimhw_0 $f wff ph $.
@@ -244,6 +305,9 @@ $}
 $( If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
        ` ( ph /\ ps ) ` .  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fhban_0 $f wff ph $.
 	fhban_1 $f wff ps $.
 	fhban_2 $f set x $.
@@ -254,6 +318,10 @@ $}
 $( Lemma for ~ ax10 .  Similar to ~ cbv3h .  Requires distinct variables
        but avoids ~ ax-12 .  (Contributed by NM, 25-Jul-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fcbv3hv_0 $f wff ph $.
 	fcbv3hv_1 $f wff ps $.
@@ -267,6 +335,8 @@ $}
 $( Inference rule reversing generalization.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
 	fspi_0 $f wff ph $.
 	fspi_1 $f set x $.
 	espi_0 $e |- A. x ph $.
@@ -274,6 +344,9 @@ ${
 $}
 $( Generalization of antecedent.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fsps_0 $f wff ph $.
 	fsps_1 $f wff ps $.
 	fsps_2 $f set x $.
@@ -282,6 +355,10 @@ ${
 $}
 $( Deduction generalizing antecedent.  (Contributed by NM, 17-Aug-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fspsd_0 $f wff ph $.
 	fspsd_1 $f wff ps $.
 	fspsd_2 $f wff ch $.
@@ -292,6 +369,8 @@ $}
 $( Consequence of the definition of not-free.  (Contributed by Mario
      Carneiro, 26-Sep-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	fnfr_0 $f wff ph $.
 	fnfr_1 $f set x $.
 	nfr $p |- ( F/ x ph -> ( ph -> A. x ph ) ) $= fnfr_0 fnfr_1 wnf fnfr_0 fnfr_0 fnfr_1 wal wi fnfr_1 wal fnfr_0 fnfr_0 fnfr_1 wal wi fnfr_0 fnfr_1 df-nf fnfr_0 fnfr_0 fnfr_1 wal wi fnfr_1 sp sylbi $.
@@ -299,6 +378,8 @@ $}
 $( Consequence of the definition of not-free.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	fnfri_0 $f wff ph $.
 	fnfri_1 $f set x $.
 	enfri_0 $e |- F/ x ph $.
@@ -307,6 +388,9 @@ $}
 $( Consequence of the definition of not-free in a context.  (Contributed by
        Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fnfrd_0 $f wff ph $.
 	fnfrd_1 $f wff ps $.
 	fnfrd_2 $f set x $.
@@ -316,6 +400,10 @@ $}
 $( Deduction from Theorem 19.20 of [Margaris] p. 90.  (Contributed by Mario
        Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	falimd_0 $f wff ph $.
 	falimd_1 $f wff ps $.
 	falimd_2 $f wff ch $.
@@ -327,6 +415,9 @@ $}
 $( Inference from Theorem 19.21 of [Margaris] p. 90.  (Contributed by Mario
        Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	falrimi_0 $f wff ph $.
 	falrimi_1 $f wff ps $.
 	falrimi_2 $f set x $.
@@ -337,6 +428,9 @@ $}
 $( Deduce that ` x ` is not free in ` ph ` in a context.  (Contributed by
        Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fnfd_0 $f wff ph $.
 	fnfd_1 $f wff ps $.
 	fnfd_2 $f set x $.
@@ -347,6 +441,9 @@ $}
 $( Deduce that ` x ` is not free in ` ph ` in a context.  (Contributed by
        Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fnfdh_0 $f wff ph $.
 	fnfdh_1 $f wff ps $.
 	fnfdh_2 $f set x $.
@@ -357,6 +454,10 @@ $}
 $( Deduction from Theorem 19.21 of [Margaris] p. 90.  (Contributed by Mario
        Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	falrimdd_0 $f wff ph $.
 	falrimdd_1 $f wff ps $.
 	falrimdd_2 $f wff ch $.
@@ -369,6 +470,10 @@ $}
 $( Deduction from Theorem 19.21 of [Margaris] p. 90.  (Contributed by Mario
        Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	falrimd_0 $f wff ph $.
 	falrimd_1 $f wff ps $.
 	falrimd_2 $f wff ch $.
@@ -381,6 +486,10 @@ $}
 $( Deduction from Theorem 19.22 of [Margaris] p. 90.  (Contributed by Mario
        Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	feximd_0 $f wff ph $.
 	feximd_1 $f wff ps $.
 	feximd_2 $f wff ch $.
@@ -392,6 +501,9 @@ $}
 $( Deduction for generalization rule for negated wff.  (Contributed by
        Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fnexd_0 $f wff ph $.
 	fnexd_1 $f wff ps $.
 	fnexd_2 $f set x $.
@@ -402,6 +514,10 @@ $}
 $( Formula-building rule for universal quantifier (deduction rule).
        (Contributed by Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	falbid_0 $f wff ph $.
 	falbid_1 $f wff ps $.
 	falbid_2 $f wff ch $.
@@ -413,6 +529,10 @@ $}
 $( Formula-building rule for existential quantifier (deduction rule).
        (Contributed by Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fexbid_0 $f wff ph $.
 	fexbid_1 $f wff ps $.
 	fexbid_2 $f wff ch $.
@@ -424,6 +544,10 @@ $}
 $( An equality theorem for effectively not free.  (Contributed by Mario
        Carneiro, 4-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fnfbidf_0 $f wff ph $.
 	fnfbidf_1 $f wff ps $.
 	fnfbidf_2 $f wff ch $.
@@ -434,6 +558,8 @@ ${
 $}
 $( Abbreviated version of ~ ax6o .  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
 	fa6e_0 $f wff ph $.
 	fa6e_1 $f set x $.
 	a6e $p |- ( E. x A. x ph -> ph ) $= fa6e_0 fa6e_1 wal fa6e_1 wex fa6e_0 fa6e_1 wal wn fa6e_1 wal wn fa6e_0 fa6e_0 fa6e_1 wal fa6e_1 df-ex fa6e_0 fa6e_1 ax6o sylbi $.
@@ -441,6 +567,8 @@ $}
 $( ` x ` is not free in ` A. x ph ` .  (Contributed by Mario Carneiro,
      11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	fnfa1_0 $f wff ph $.
 	fnfa1_1 $f set x $.
 	nfa1 $p |- F/ x A. x ph $= fnfa1_0 fnfa1_1 wal fnfa1_1 fnfa1_0 fnfa1_1 hba1 nfi $.
@@ -448,12 +576,17 @@ $}
 $( ` x ` is not free in ` F/ x ph ` .  (Contributed by Mario Carneiro,
      11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	fnfnf1_0 $f wff ph $.
 	fnfnf1_1 $f set x $.
 	nfnf1 $p |- F/ x F/ x ph $= fnfnf1_0 fnfnf1_1 wnf fnfnf1_0 fnfnf1_0 fnfnf1_1 wal wi fnfnf1_1 wal fnfnf1_1 fnfnf1_0 fnfnf1_1 df-nf fnfnf1_0 fnfnf1_0 fnfnf1_1 wal wi fnfnf1_1 nfa1 nfxfr $.
 $}
 $( Inference version of ~ ax5o .  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fa5i_0 $f wff ph $.
 	fa5i_1 $f wff ps $.
 	fa5i_2 $f set x $.
@@ -463,6 +596,10 @@ $}
 $( If ` x ` is not free in ` ph ` , ` ps ` , and ` ch ` , it is not free in
        ` ( ph /\ ps /\ ch ) ` .  (Contributed by NM, 14-Sep-2003.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fhb3an_0 $f wff ph $.
 	fhb3an_1 $f wff ps $.
 	fhb3an_2 $f wff ch $.
@@ -475,6 +612,9 @@ $}
 $( If ` x ` is not free in ` ph ` , it is not free in ` -. ph ` .
        (Contributed by Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fnfnd_0 $f wff ph $.
 	fnfnd_1 $f wff ps $.
 	fnfnd_2 $f set x $.
@@ -484,6 +624,10 @@ $}
 $( If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
        ` ( ph -> ps ) ` .  (Contributed by Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fnfimd_0 $f wff ph $.
 	fnfimd_1 $f wff ps $.
 	fnfimd_2 $f wff ch $.
@@ -495,6 +639,10 @@ $}
 $( If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
        ` ( ph -> ps ) ` .  (Contributed by Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fnfbid_0 $f wff ph $.
 	fnfbid_1 $f wff ps $.
 	fnfbid_2 $f wff ch $.
@@ -506,6 +654,10 @@ $}
 $( If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
        ` ( ph /\ ps ) ` .  (Contributed by Mario Carneiro, 7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fnfand_0 $f wff ph $.
 	fnfand_1 $f wff ps $.
 	fnfand_2 $f wff ch $.
@@ -518,6 +670,11 @@ $( Deduction form of bound-variable hypothesis builder ~ nf3an .
        (Contributed by NM, 17-Feb-2013.)  (Revised by Mario Carneiro,
        16-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
 	fnf3and_0 $f wff ph $.
 	fnf3and_1 $f wff ps $.
 	fnf3and_2 $f wff ch $.
@@ -531,6 +688,8 @@ $}
 $( If ` x ` is not free in ` ph ` , it is not free in ` -. ph ` .
        (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	fnfn_0 $f wff ph $.
 	fnfn_1 $f set x $.
 	enfn_0 $e |- F/ x ph $.
@@ -539,6 +698,9 @@ $}
 $( If ` x ` is not free in ` ph ` , it is not free in ` A. y ph ` .
        (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fnfal_0 $f wff ph $.
 	fnfal_1 $f set x $.
 	fnfal_2 $f set y $.
@@ -548,6 +710,9 @@ $}
 $( If ` x ` is not free in ` ph ` , it is not free in ` E. y ph ` .
        (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fnfex_0 $f wff ph $.
 	fnfex_1 $f set x $.
 	fnfex_2 $f set y $.
@@ -557,6 +722,9 @@ $}
 $( If ` x ` is not free in ` ph ` , it is not free in ` F/ y ph ` .
        (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fnfnf_0 $f wff ph $.
 	fnfnf_1 $f set x $.
 	fnfnf_2 $f set y $.
@@ -566,6 +734,9 @@ $}
 $( If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
        ` ( ph -> ps ) ` .  (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fnfim_0 $f wff ph $.
 	fnfim_1 $f wff ps $.
 	fnfim_2 $f set x $.
@@ -576,6 +747,9 @@ $}
 $( If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
        ` ( ph \/ ps ) ` .  (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fnfor_0 $f wff ph $.
 	fnfor_1 $f wff ps $.
 	fnfor_2 $f set x $.
@@ -586,6 +760,9 @@ $}
 $( If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
        ` ( ph /\ ps ) ` .  (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fnfan_0 $f wff ph $.
 	fnfan_1 $f wff ps $.
 	fnfan_2 $f set x $.
@@ -596,6 +773,9 @@ $}
 $( If ` x ` is not free in ` ph ` and ` ps ` , it is not free in
        ` ( ph <-> ps ) ` .  (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fnfbi_0 $f wff ph $.
 	fnfbi_1 $f wff ps $.
 	fnfbi_2 $f set x $.
@@ -607,6 +787,10 @@ $( If ` x ` is not free in ` ph ` , ` ps ` , and ` ch ` , it is not free in
        ` ( ph \/ ps \/ ch ) ` .  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fnf3or_0 $f wff ph $.
 	fnf3or_1 $f wff ps $.
 	fnf3or_2 $f wff ch $.
@@ -620,6 +804,10 @@ $( If ` x ` is not free in ` ph ` , ` ps ` , and ` ch ` , it is not free in
        ` ( ph /\ ps /\ ch ) ` .  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fnf3an_0 $f wff ph $.
 	fnf3an_1 $f wff ps $.
 	fnf3an_2 $f wff ch $.
@@ -632,6 +820,10 @@ $}
 $( If ` x ` is not free in ` ph ` , it is not free in ` A. y ph ` .
        (Contributed by Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fnfald_0 $f wff ph $.
 	fnfald_1 $f wff ps $.
 	fnfald_2 $f set x $.
@@ -643,6 +835,10 @@ $}
 $( If ` x ` is not free in ` ph ` , it is not free in ` E. y ph ` .
        (Contributed by Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fnfexd_0 $f wff ph $.
 	fnfexd_1 $f wff ps $.
 	fnfexd_2 $f set x $.
@@ -654,6 +850,9 @@ $}
 $( Lemma 24 of [Monk2] p. 114.  (Contributed by Mario Carneiro,
      24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fnfa2_0 $f wff ph $.
 	fnfa2_1 $f set x $.
 	fnfa2_2 $f set y $.
@@ -662,6 +861,9 @@ $}
 $( Lemma 23 of [Monk2] p. 114.  (Contributed by Mario Carneiro,
      24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fnfia1_0 $f wff ph $.
 	fnfia1_1 $f wff ps $.
 	fnfia1_2 $f set x $.
@@ -670,6 +872,8 @@ $}
 $( The analog in our "pure" predicate calculus of the Brouwer axiom (B) of
      modal logic S5.  (Contributed by NM, 5-Oct-2005.) $)
 ${
+	$v ph $.
+	$v x $.
 	fmodal-b_0 $f wff ph $.
 	fmodal-b_1 $f set x $.
 	modal-b $p |- ( ph -> A. x -. A. x -. ph ) $= fmodal-b_0 wn fmodal-b_1 wal wn fmodal-b_1 wal fmodal-b_0 fmodal-b_0 wn fmodal-b_1 ax6o con4i $.
@@ -677,6 +881,9 @@ $}
 $( Theorem 19.2 of [Margaris] p. 89, generalized to use two set variables.
      (Contributed by O'Cat, 31-Mar-2008.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	f19.2g_0 $f wff ph $.
 	f19.2g_1 $f set x $.
 	f19.2g_2 $f set y $.
@@ -686,6 +893,8 @@ $( A wff may be quantified with a variable not free in it.  Theorem 19.3 of
        [Margaris] p. 89.  (Contributed by NM, 5-Aug-1993.)  (Revised by Mario
        Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	f19.3_0 $f wff ph $.
 	f19.3_1 $f set x $.
 	e19.3_0 $e |- F/ x ph $.
@@ -694,6 +903,8 @@ $}
 $( A closed version of ~ 19.9 .  (Contributed by NM, 5-Aug-1993.)  (Revised
      by Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	f19.9t_0 $f wff ph $.
 	f19.9t_1 $f set x $.
 	19.9t $p |- ( F/ x ph -> ( E. x ph <-> ph ) ) $= f19.9t_0 f19.9t_1 wnf f19.9t_0 f19.9t_1 wex f19.9t_0 f19.9t_0 f19.9t_1 wex f19.9t_0 wn f19.9t_1 wal wn f19.9t_0 f19.9t_1 wnf f19.9t_0 f19.9t_0 f19.9t_1 df-ex f19.9t_0 f19.9t_1 wnf f19.9t_0 f19.9t_0 wn f19.9t_1 wal f19.9t_0 f19.9t_1 wnf f19.9t_0 wn f19.9t_1 f19.9t_0 f19.9t_1 wnf f19.9t_0 f19.9t_1 f19.9t_0 f19.9t_1 wnf id nfnd nfrd con1d syl5bi f19.9t_0 f19.9t_1 19.8a impbid1 $.
@@ -702,6 +913,8 @@ $( A wff may be existentially quantified with a variable not free in it.
        Theorem 19.9 of [Margaris] p. 89.  (Contributed by FL, 24-Mar-2007.)
        (Revised by Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	f19.9_0 $f wff ph $.
 	f19.9_1 $f set x $.
 	e19.9_0 $e |- F/ x ph $.
@@ -710,6 +923,9 @@ $}
 $( A deduction version of one direction of ~ 19.9 .  (Contributed by NM,
        5-Aug-1993.)  (Revised by Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.9d_0 $f wff ph $.
 	f19.9d_1 $f wff ps $.
 	f19.9d_2 $f set x $.
@@ -719,6 +935,9 @@ $}
 $( One direction of Theorem 19.11 of [Margaris] p. 89.  (Contributed by NM,
      5-Aug-1993.)  (Revised by Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fexcomim_0 $f wff ph $.
 	fexcomim_1 $f set x $.
 	fexcomim_2 $f set y $.
@@ -726,6 +945,9 @@ ${
 $}
 $( Theorem 19.11 of [Margaris] p. 89.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fexcom_0 $f wff ph $.
 	fexcom_1 $f set x $.
 	fexcom_2 $f set y $.
@@ -733,6 +955,9 @@ ${
 $}
 $( Theorem 19.16 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.16_0 $f wff ph $.
 	f19.16_1 $f wff ps $.
 	f19.16_2 $f set x $.
@@ -741,6 +966,9 @@ ${
 $}
 $( Theorem 19.17 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.17_0 $f wff ph $.
 	f19.17_1 $f wff ps $.
 	f19.17_2 $f set x $.
@@ -749,6 +977,9 @@ ${
 $}
 $( Theorem 19.19 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.19_0 $f wff ph $.
 	f19.19_1 $f wff ps $.
 	f19.19_2 $f set x $.
@@ -758,6 +989,9 @@ $}
 $( Closed form of Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
      27-May-1997.)  (Revised by Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.21t_0 $f wff ph $.
 	f19.21t_1 $f wff ps $.
 	f19.21t_2 $f set x $.
@@ -767,6 +1001,9 @@ $( Theorem 19.21 of [Margaris] p. 90.  The hypothesis can be thought of
        as " ` x ` is not free in ` ph ` ."  (Contributed by NM, 5-Aug-1993.)
        (Revised by Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.21_0 $f wff ph $.
 	f19.21_1 $f wff ps $.
 	f19.21_2 $f set x $.
@@ -776,6 +1013,10 @@ $}
 $( Theorem 19.21 of [Margaris] p. 90 but with 2 quantifiers.  (Contributed
        by NM, 4-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	f19.21-2_0 $f wff ph $.
 	f19.21-2_1 $f wff ps $.
 	f19.21-2_2 $f set x $.
@@ -794,6 +1035,9 @@ $( An axiom scheme of standard predicate calculus that emulates Axiom 5 of
        Axiom 5.  (Contributed by NM, 22-Sep-1993.)  (Revised by Mario Carneiro,
        12-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fstdpc5_0 $f wff ph $.
 	fstdpc5_1 $f wff ps $.
 	fstdpc5_2 $f set x $.
@@ -803,6 +1047,9 @@ $}
 $( Inference from Theorem 19.21 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.21bi_0 $f wff ph $.
 	f19.21bi_1 $f wff ps $.
 	f19.21bi_2 $f set x $.
@@ -812,6 +1059,10 @@ $}
 $( Inference removing double quantifier.  (Contributed by NM,
        20-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	f19.21bbi_0 $f wff ph $.
 	f19.21bbi_1 $f wff ps $.
 	f19.21bbi_2 $f set x $.
@@ -822,6 +1073,9 @@ $}
 $( Closed form of Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
      7-Nov-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.23t_0 $f wff ph $.
 	f19.23t_1 $f wff ps $.
 	f19.23t_2 $f set x $.
@@ -830,6 +1084,9 @@ $}
 $( Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
        (Revised by Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.23_0 $f wff ph $.
 	f19.23_1 $f wff ps $.
 	f19.23_2 $f set x $.
@@ -840,6 +1097,8 @@ $( An alternative definition of ~ df-nf , which does not involve nested
      quantifiers on the same variable.  (Contributed by Mario Carneiro,
      24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	fnf2_0 $f wff ph $.
 	fnf2_1 $f set x $.
 	nf2 $p |- ( F/ x ph <-> ( E. x ph -> A. x ph ) ) $= fnf2_0 fnf2_1 wnf fnf2_0 fnf2_0 fnf2_1 wal wi fnf2_1 wal fnf2_0 fnf2_1 wex fnf2_0 fnf2_1 wal wi fnf2_0 fnf2_1 df-nf fnf2_0 fnf2_0 fnf2_1 wal fnf2_1 fnf2_0 fnf2_1 nfa1 19.23 bitri $.
@@ -847,6 +1106,8 @@ $}
 $( An alternative definition of ~ df-nf .  (Contributed by Mario Carneiro,
      24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	fnf3_0 $f wff ph $.
 	fnf3_1 $f set x $.
 	nf3 $p |- ( F/ x ph <-> A. x ( E. x ph -> ph ) ) $= fnf3_0 fnf3_1 wnf fnf3_0 fnf3_1 wex fnf3_0 fnf3_1 wal wi fnf3_0 fnf3_1 wex fnf3_0 wi fnf3_1 wal fnf3_0 fnf3_1 nf2 fnf3_0 fnf3_1 wex fnf3_0 fnf3_1 fnf3_0 fnf3_1 nfe1 19.21 bitr4i $.
@@ -854,6 +1115,8 @@ $}
 $( Variable ` x ` is effectively not free in ` ph ` iff ` ph ` is always true
      or always false.  (Contributed by Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	fnf4_0 $f wff ph $.
 	fnf4_1 $f set x $.
 	nf4 $p |- ( F/ x ph <-> ( A. x ph \/ A. x -. ph ) ) $= fnf4_0 fnf4_1 wnf fnf4_0 fnf4_1 wex fnf4_0 fnf4_1 wal wi fnf4_0 fnf4_1 wex wn fnf4_0 fnf4_1 wal wo fnf4_0 fnf4_1 wal fnf4_0 wn fnf4_1 wal wo fnf4_0 fnf4_1 nf2 fnf4_0 fnf4_1 wex fnf4_0 fnf4_1 wal imor fnf4_0 fnf4_1 wex wn fnf4_0 fnf4_1 wal wo fnf4_0 fnf4_1 wal fnf4_0 fnf4_1 wex wn wo fnf4_0 fnf4_1 wal fnf4_0 wn fnf4_1 wal wo fnf4_0 fnf4_1 wex wn fnf4_0 fnf4_1 wal orcom fnf4_0 wn fnf4_1 wal fnf4_0 fnf4_1 wex wn fnf4_0 fnf4_1 wal fnf4_0 fnf4_1 alnex orbi2i bitr4i 3bitri $.
@@ -861,6 +1124,9 @@ $}
 $( Inference from Theorem 19.23 of [Margaris] p. 90.  (Contributed by Mario
        Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fexlimi_0 $f wff ph $.
 	fexlimi_1 $f wff ps $.
 	fexlimi_2 $f set x $.
@@ -871,6 +1137,9 @@ $}
 $( Inference from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.23bi_0 $f wff ph $.
 	f19.23bi_1 $f wff ps $.
 	f19.23bi_2 $f set x $.
@@ -880,6 +1149,10 @@ $}
 $( Deduction from Theorem 19.23 of [Margaris] p. 90.  (Contributed by Mario
        Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fexlimd_0 $f wff ph $.
 	fexlimd_1 $f wff ps $.
 	fexlimd_2 $f wff ch $.
@@ -892,6 +1165,10 @@ $}
 $( Deduction from Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
        28-Jan-1997.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fexlimdh_0 $f wff ph $.
 	fexlimdh_1 $f wff ps $.
 	fexlimdh_2 $f wff ch $.
@@ -903,6 +1180,9 @@ ${
 $}
 $( Theorem 19.27 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.27_0 $f wff ph $.
 	f19.27_1 $f wff ps $.
 	f19.27_2 $f set x $.
@@ -911,6 +1191,9 @@ ${
 $}
 $( Theorem 19.28 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.28_0 $f wff ph $.
 	f19.28_1 $f wff ps $.
 	f19.28_2 $f set x $.
@@ -919,6 +1202,9 @@ ${
 $}
 $( Theorem 19.36 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.36_0 $f wff ph $.
 	f19.36_1 $f wff ps $.
 	f19.36_2 $f set x $.
@@ -928,6 +1214,9 @@ $}
 $( Inference from Theorem 19.36 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.36i_0 $f wff ph $.
 	f19.36i_1 $f wff ps $.
 	f19.36i_2 $f set x $.
@@ -937,6 +1226,9 @@ ${
 $}
 $( Theorem 19.37 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.37_0 $f wff ph $.
 	f19.37_1 $f wff ps $.
 	f19.37_2 $f set x $.
@@ -945,6 +1237,9 @@ ${
 $}
 $( Theorem 19.38 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.38_0 $f wff ph $.
 	f19.38_1 $f wff ps $.
 	f19.38_2 $f set x $.
@@ -953,6 +1248,9 @@ $}
 $( Theorem 19.32 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
        (Revised by Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.32_0 $f wff ph $.
 	f19.32_1 $f wff ps $.
 	f19.32_2 $f set x $.
@@ -961,6 +1259,9 @@ ${
 $}
 $( Theorem 19.31 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.31_0 $f wff ph $.
 	f19.31_1 $f wff ps $.
 	f19.31_2 $f set x $.
@@ -969,6 +1270,9 @@ ${
 $}
 $( Theorem 19.44 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.44_0 $f wff ph $.
 	f19.44_1 $f wff ps $.
 	f19.44_2 $f set x $.
@@ -977,6 +1281,9 @@ ${
 $}
 $( Theorem 19.45 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.45_0 $f wff ph $.
 	f19.45_1 $f wff ps $.
 	f19.45_2 $f set x $.
@@ -986,6 +1293,9 @@ $}
 $( Theorem 19.41 of [Margaris] p. 90.  (Contributed by NM, 5-Aug-1993.)
        (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.41_0 $f wff ph $.
 	f19.41_1 $f wff ps $.
 	f19.41_2 $f set x $.
@@ -994,6 +1304,9 @@ ${
 $}
 $( Theorem 19.42 of [Margaris] p. 90.  (Contributed by NM, 18-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	f19.42_0 $f wff ph $.
 	f19.42_1 $f wff ps $.
 	f19.42_2 $f set x $.
@@ -1003,6 +1316,10 @@ $}
 $( Swap 1st and 3rd existential quantifiers.  (Contributed by NM,
      9-Mar-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fexcom13_0 $f wff ph $.
 	fexcom13_1 $f set x $.
 	fexcom13_2 $f set y $.
@@ -1011,6 +1328,10 @@ ${
 $}
 $( Rotate existential quantifiers.  (Contributed by NM, 17-Mar-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fexrot3_0 $f wff ph $.
 	fexrot3_1 $f set x $.
 	fexrot3_2 $f set y $.
@@ -1019,6 +1340,11 @@ ${
 $}
 $( Rotate existential quantifiers twice.  (Contributed by NM, 9-Mar-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	fexrot4_0 $f wff ph $.
 	fexrot4_1 $f set x $.
 	fexrot4_2 $f set y $.
@@ -1028,6 +1354,8 @@ ${
 $}
 $( Inference from ~ 19.8a .  (Contributed by Jeff Hankins, 26-Jul-2009.) $)
 ${
+	$v ph $.
+	$v x $.
 	fnexr_0 $f wff ph $.
 	fnexr_1 $f set x $.
 	enexr_0 $e |- -. E. x ph $.
@@ -1036,6 +1364,9 @@ $}
 $( A closed form of ~ nfim .  (Contributed by NM, 5-Aug-1993.)  (Revised by
        Mario Carneiro, 24-Sep-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fnfim1_0 $f wff ph $.
 	fnfim1_1 $f wff ps $.
 	fnfim1_2 $f set x $.
@@ -1046,6 +1377,9 @@ $}
 $( A closed form of ~ nfan .  (Contributed by Mario Carneiro,
        3-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fnfan1_0 $f wff ph $.
 	fnfan1_1 $f wff ps $.
 	fnfan1_2 $f set x $.
@@ -1057,6 +1391,9 @@ $( Place a conjunct in the scope of an existential quantifier.
        (Contributed by NM, 18-Aug-1993.)  (Proof shortened by Andrew Salmon,
        25-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fexan_0 $f wff ph $.
 	fexan_1 $f wff ps $.
 	fexan_2 $f set x $.
@@ -1066,6 +1403,9 @@ $}
 $( Deduction form of bound-variable hypothesis builder ~ hbn .
        (Contributed by NM, 3-Jan-2002.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fhbnd_0 $f wff ph $.
 	fhbnd_1 $f wff ps $.
 	fhbnd_2 $f set x $.
@@ -1075,6 +1415,10 @@ ${
 $}
 $( Rearrange universal quantifiers.  (Contributed by NM, 12-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	faaan_0 $f wff ph $.
 	faaan_1 $f wff ps $.
 	faaan_2 $f set x $.
@@ -1085,6 +1429,10 @@ ${
 $}
 $( Rearrange existential quantifiers.  (Contributed by NM, 8-Aug-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	feeor_0 $f wff ph $.
 	feeor_1 $f wff ps $.
 	feeor_2 $f set x $.
@@ -1096,6 +1444,8 @@ $}
 $( Quantified "excluded middle."  Exercise 9.2a of Boolos, p. 111,
      _Computability and Logic_.  (Contributed by NM, 10-Dec-2000.) $)
 ${
+	$v ph $.
+	$v x $.
 	fqexmid_0 $f wff ph $.
 	fqexmid_1 $f set x $.
 	qexmid $p |- E. x ( ph -> A. x ph ) $= fqexmid_0 fqexmid_0 fqexmid_1 wal fqexmid_1 fqexmid_0 fqexmid_1 wal fqexmid_1 19.8a 19.35ri $.
@@ -1103,6 +1453,9 @@ $}
 $( A property related to substitution that unlike ~ equs5 doesn't require a
      distinctor antecedent.  (Contributed by NM, 2-Feb-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fequs5a_0 $f wff ph $.
 	fequs5a_1 $f set x $.
 	fequs5a_2 $f set y $.
@@ -1111,6 +1464,9 @@ $}
 $( A property related to substitution that unlike ~ equs5 doesn't require a
      distinctor antecedent.  (Contributed by NM, 2-Feb-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fequs5e_0 $f wff ph $.
 	fequs5e_1 $f set x $.
 	fequs5e_2 $f set y $.
@@ -1119,6 +1475,10 @@ $}
 $( Existential elimination rule of natural deduction.  (Contributed by
        Mario Carneiro, 9-Feb-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fexlimdd_0 $f wff ph $.
 	fexlimdd_1 $f wff ps $.
 	fexlimdd_2 $f wff ch $.
@@ -1139,6 +1499,9 @@ $( Special case of Theorem 19.21 of [Margaris] p. 90. _Notational
        which is less restrictive than "does not occur in."  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	$d x ph $.
 	f19.21v_0 $f wff ph $.
 	f19.21v_1 $f wff ps $.
@@ -1148,6 +1511,9 @@ $}
 $( Special case of Theorem 19.23 of [Margaris] p. 90.  (Contributed by NM,
        28-Jun-1998.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	$d x ps $.
 	f19.23v_0 $f wff ph $.
 	f19.23v_1 $f wff ps $.
@@ -1157,6 +1523,10 @@ $}
 $( Theorem 19.23 of [Margaris] p. 90 extended to two variables.
        (Contributed by NM, 10-Aug-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x ps $.
 	$d y ps $.
 	f19.23vv_0 $f wff ph $.
@@ -1168,6 +1538,10 @@ $}
 $( Theorem *11.53 in [WhiteheadRussell] p. 164.  (Contributed by Andrew
        Salmon, 24-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d ph y $.
 	$d ps x $.
 	fpm11.53_0 $f wff ph $.
@@ -1178,6 +1552,9 @@ ${
 $}
 $( Theorem 19.27 of [Margaris] p. 90.  (Contributed by NM, 3-Jun-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	$d x ps $.
 	f19.27v_0 $f wff ph $.
 	f19.27v_1 $f wff ps $.
@@ -1186,6 +1563,9 @@ ${
 $}
 $( Theorem 19.28 of [Margaris] p. 90.  (Contributed by NM, 25-Mar-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	$d x ph $.
 	f19.28v_0 $f wff ph $.
 	f19.28v_1 $f wff ps $.
@@ -1195,6 +1575,9 @@ $}
 $( Special case of Theorem 19.36 of [Margaris] p. 90.  (Contributed by NM,
        18-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	$d x ps $.
 	f19.36v_0 $f wff ph $.
 	f19.36v_1 $f wff ps $.
@@ -1204,6 +1587,9 @@ $}
 $( Inference from Theorem 19.36 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	$d x ps $.
 	f19.36aiv_0 $f wff ph $.
 	f19.36aiv_1 $f wff ps $.
@@ -1214,6 +1600,10 @@ $}
 $( Special case of ~ 19.12 where its converse holds.  (Contributed by NM,
        18-Jul-2001.)  (Revised by Andrew Salmon, 11-Jul-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x ps $.
 	$d y ph $.
 	f19.12vv_0 $f wff ph $.
@@ -1225,6 +1615,9 @@ $}
 $( Special case of Theorem 19.37 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	$d x ph $.
 	f19.37v_0 $f wff ph $.
 	f19.37v_1 $f wff ps $.
@@ -1234,6 +1627,9 @@ $}
 $( Inference from Theorem 19.37 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	$d x ph $.
 	f19.37aiv_0 $f wff ph $.
 	f19.37aiv_1 $f wff ps $.
@@ -1244,6 +1640,9 @@ $}
 $( Special case of Theorem 19.41 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	$d x ps $.
 	f19.41v_0 $f wff ph $.
 	f19.41v_1 $f wff ps $.
@@ -1253,6 +1652,10 @@ $}
 $( Theorem 19.41 of [Margaris] p. 90 with 2 quantifiers.  (Contributed by
        NM, 30-Apr-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x ps $.
 	$d y ps $.
 	f19.41vv_0 $f wff ph $.
@@ -1264,6 +1667,11 @@ $}
 $( Theorem 19.41 of [Margaris] p. 90 with 3 quantifiers.  (Contributed by
        NM, 30-Apr-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x ps $.
 	$d y ps $.
 	$d z ps $.
@@ -1277,6 +1685,12 @@ $}
 $( Theorem 19.41 of [Margaris] p. 90 with 4 quantifiers.  (Contributed by
        FL, 14-Jul-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w ps $.
 	$d x ps $.
 	$d y ps $.
@@ -1292,6 +1706,9 @@ $}
 $( Special case of Theorem 19.42 of [Margaris] p. 90.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	$d x ph $.
 	f19.42v_0 $f wff ph $.
 	f19.42v_1 $f wff ps $.
@@ -1301,6 +1718,10 @@ $}
 $( Distribution of existential quantifiers.  (Contributed by NM,
        9-Mar-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d y ph $.
 	fexdistr_0 $f wff ph $.
 	fexdistr_1 $f wff ps $.
@@ -1311,6 +1732,10 @@ $}
 $( Theorem 19.42 of [Margaris] p. 90 with 2 quantifiers.  (Contributed by
        NM, 16-Mar-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x ph $.
 	$d y ph $.
 	f19.42vv_0 $f wff ph $.
@@ -1322,6 +1747,11 @@ $}
 $( Theorem 19.42 of [Margaris] p. 90 with 3 quantifiers.  (Contributed by
        NM, 21-Sep-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x ph $.
 	$d y ph $.
 	$d z ph $.
@@ -1335,6 +1765,11 @@ $}
 $( Distribution of existential quantifiers.  (Contributed by NM,
        17-Mar-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d y ph $.
 	$d z ph $.
 	fexdistr2_0 $f wff ph $.
@@ -1347,6 +1782,12 @@ $}
 $( Distribution of existential quantifiers.  (Contributed by NM,
        9-Mar-1995.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d y ph $.
 	$d z ph $.
 	$d z ps $.
@@ -1361,6 +1802,14 @@ $}
 $( Distribution of existential quantifiers.  (Contributed by NM,
        9-Mar-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d y ph $.
 	$d z ph $.
 	$d w ph $.
@@ -1380,6 +1829,10 @@ $}
 $( Rearrange existential quantifiers.  (Contributed by NM, 27-Oct-2010.)
        (Revised by Mario Carneiro, 6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	feean_0 $f wff ph $.
 	feean_1 $f wff ps $.
 	feean_2 $f set x $.
@@ -1390,6 +1843,10 @@ ${
 $}
 $( Rearrange existential quantifiers.  (Contributed by NM, 26-Jul-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d y ph $.
 	$d x ps $.
 	feeanv_0 $f wff ph $.
@@ -1401,6 +1858,12 @@ $}
 $( Rearrange existential quantifiers.  (Contributed by NM, 26-Jul-1995.)
        (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d y ph $.
 	$d z ph $.
 	$d x z ps $.
@@ -1415,6 +1878,12 @@ ${
 $}
 $( Rearrange existential quantifiers.  (Contributed by NM, 31-Jul-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d z ph $.
 	$d w ph $.
 	$d x ps $.
@@ -1432,6 +1901,9 @@ $}
 $( Deduction for generalization rule for negated wff.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	$d x ph $.
 	fnexdv_0 $f wff ph $.
 	fnexdv_1 $f wff ps $.
@@ -1446,6 +1918,9 @@ $( One of the two equality axioms of standard predicate calculus, called
      ` y ` is free for ` x ` in ` ph ( x , x ) ` ."  Axiom 7 of [Mendelson]
      p. 95.  (Contributed by NM, 15-Feb-2005.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fstdpc7_0 $f wff ph $.
 	fstdpc7_1 $f set x $.
 	fstdpc7_2 $f set y $.
@@ -1453,6 +1928,9 @@ ${
 $}
 $( An equality theorem for substitution.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsbequ1_0 $f wff ph $.
 	fsbequ1_1 $f set x $.
 	fsbequ1_2 $f set y $.
@@ -1460,6 +1938,9 @@ ${
 $}
 $( An equality theorem for substitution.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsbequ12_0 $f wff ph $.
 	fsbequ12_1 $f set x $.
 	fsbequ12_2 $f set y $.
@@ -1468,6 +1949,9 @@ $}
 $( An equality theorem for substitution.  (Contributed by NM, 6-Oct-2004.)
      (Proof shortened by Andrew Salmon, 21-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsbequ12r_0 $f wff ph $.
 	fsbequ12r_1 $f set x $.
 	fsbequ12r_2 $f set y $.
@@ -1475,6 +1959,9 @@ ${
 $}
 $( An equality theorem for substitution.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsbequ12a_0 $f wff ph $.
 	fsbequ12a_1 $f set x $.
 	fsbequ12a_2 $f set y $.
@@ -1483,6 +1970,8 @@ $}
 $( An identity theorem for substitution.  Remark 9.1 in [Megill] p. 447 (p.
      15 of the preprint).  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
 	fsbid_0 $f wff ph $.
 	fsbid_1 $f set x $.
 	sbid $p |- ( [ x / x ] ph <-> ph ) $= fsbid_0 fsbid_0 fsbid_1 fsbid_1 wsb fsbid_1 fsbid_1 weq fsbid_0 fsbid_0 fsbid_1 fsbid_1 wsb wb fsbid_1 equid fsbid_0 fsbid_1 fsbid_1 sbequ12 ax-mp bicomi $.
@@ -1490,6 +1979,9 @@ $}
 $( A version of ~ sb4 that doesn't require a distinctor antecedent.
      (Contributed by NM, 2-Feb-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsb4a_0 $f wff ph $.
 	fsb4a_1 $f set x $.
 	fsb4a_2 $f set y $.
@@ -1499,6 +1991,9 @@ $( One direction of a simplified definition of substitution that unlike ~ sb4
      doesn't require a distinctor antecedent.  (Contributed by NM,
      2-Feb-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsb4e_0 $f wff ph $.
 	fsb4e_1 $f set x $.
 	fsb4e_2 $f set y $.

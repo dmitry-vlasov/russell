@@ -8,6 +8,8 @@ $)
 $( An ordered pair is nonempty iff the arguments are sets.  (Contributed by
        NM, 24-Jan-2004.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	fopnz_0 $f class A $.
 	fopnz_1 $f class B $.
 	opnz $p |- ( <. A , B >. =/= (/) <-> ( A e. _V /\ B e. _V ) ) $= fopnz_0 fopnz_1 cop c0 wne fopnz_0 cvv wcel fopnz_1 cvv wcel wa fopnz_0 cvv wcel fopnz_1 cvv wcel wa fopnz_0 fopnz_1 cop c0 fopnz_0 fopnz_1 opprc necon1ai fopnz_0 cvv wcel fopnz_1 cvv wcel wa fopnz_0 fopnz_1 cop fopnz_0 csn fopnz_0 fopnz_1 cpr cpr c0 fopnz_0 fopnz_1 cvv cvv dfopg fopnz_0 csn fopnz_0 fopnz_1 cpr cpr c0 wne fopnz_0 cvv wcel fopnz_1 cvv wcel wa fopnz_0 csn fopnz_0 fopnz_1 cpr fopnz_0 snex prnz a1i eqnetrd impbii $.
@@ -15,6 +17,8 @@ $}
 $( An ordered pair is nonempty if the arguments are sets.  (Contributed by
        Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	fopnzi_0 $f class A $.
 	fopnzi_1 $f class B $.
 	eopnzi_0 $e |- A e. _V $.
@@ -24,6 +28,10 @@ $}
 $( Equality of the first members of equal ordered pairs.  (Contributed by
        NM, 28-May-2008.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fopth1_0 $f class A $.
 	fopth1_1 $f class B $.
 	fopth1_2 $f class C $.
@@ -38,6 +46,11 @@ $( The ordered pair theorem.  If two ordered pairs are equal, their first
        sets due our specific ordered pair definition.  (Contributed by NM,
        28-May-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v x $.
 	$d x B $.
 	$d x C $.
 	$d x D $.
@@ -54,6 +67,14 @@ $( Ordered pair theorem. ` C ` and ` D ` are not required to be sets under
        our specific ordered pair definition.  (Contributed by NM,
        14-Oct-2005.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v V $.
+	$v W $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d y B $.
 	$d x y C $.
@@ -71,6 +92,12 @@ $}
 $( Ordered pair theorem.  (Contributed by NM, 14-Oct-2005.)  (Revised by
        Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v V $.
+	$v W $.
 	fopthg2_0 $f class A $.
 	fopthg2_1 $f class B $.
 	fopthg2_2 $f class C $.
@@ -81,6 +108,10 @@ ${
 $}
 $( Ordered pair theorem.  (Contributed by NM, 21-Sep-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fopth2_0 $f class A $.
 	fopth2_1 $f class B $.
 	fopth2_2 $f class C $.
@@ -93,6 +124,12 @@ $( Ordered triple theorem, with triple express with ordered pairs.
        (Contributed by NM, 1-May-1995.)  (Revised by Mario Carneiro,
        26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
 	fotth2_0 $f class A $.
 	fotth2_1 $f class B $.
 	fotth2_2 $f class C $.
@@ -107,6 +144,12 @@ $}
 $( Ordered triple theorem.  (Contributed by NM, 25-Sep-2014.)  (Revised by
        Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
 	fotth_0 $f class A $.
 	fotth_1 $f class B $.
 	fotth_2 $f class C $.
@@ -121,6 +164,11 @@ $}
 $( A variable introduction law for ordered pairs.  Analog of Lemma 15 of
        [Monk2] p. 109.  (Contributed by NM, 28-May-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -137,6 +185,12 @@ $( Substitution of class ` A ` for ordered pair ` <. x , y >. ` .
        (Contributed by NM, 27-Dec-1996.)  (Revised by Andrew Salmon,
        11-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v z $.
+	$v w $.
 	$d x z w A $.
 	$d y z w A $.
 	$d z w ph $.
@@ -151,6 +205,14 @@ $}
 $( Closed theorem form of ~ copsex2g .  (Contributed by NM,
        17-Feb-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	$d x y ps $.
 	$d x y A $.
 	$d x y B $.
@@ -167,6 +229,14 @@ $}
 $( Implicit substitution inference for ordered pairs.  (Contributed by NM,
        28-May-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	$d x y ps $.
 	$d x y A $.
 	$d x y B $.
@@ -184,6 +254,18 @@ $}
 $( An implicit substitution inference for 2 ordered pairs.  (Contributed by
        NM, 5-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
 	$d x y z w A $.
 	$d x y z w B $.
 	$d x y z w C $.
@@ -209,6 +291,8 @@ $}
 $( A property of ordered pairs.  (Contributed by Mario Carneiro,
      26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	f0nelop_0 $f class A $.
 	f0nelop_1 $f class B $.
 	0nelop $p |- -. (/) e. <. A , B >. $= c0 f0nelop_0 f0nelop_1 cop wcel c0 f0nelop_0 csn wceq c0 f0nelop_0 f0nelop_1 cpr wceq wo c0 f0nelop_0 f0nelop_1 cop wcel c0 f0nelop_0 csn f0nelop_0 f0nelop_1 cpr cpr wcel c0 f0nelop_0 csn wceq c0 f0nelop_0 f0nelop_1 cpr wceq wo c0 f0nelop_0 f0nelop_1 cop wcel c0 f0nelop_0 f0nelop_1 cop f0nelop_0 csn f0nelop_0 f0nelop_1 cpr cpr c0 f0nelop_0 f0nelop_1 cop wcel id c0 f0nelop_0 f0nelop_1 cop wcel f0nelop_0 cvv wcel f0nelop_1 cvv wcel wa f0nelop_0 f0nelop_1 cop f0nelop_0 csn f0nelop_0 f0nelop_1 cpr cpr wceq f0nelop_0 f0nelop_1 c0 oprcl f0nelop_0 f0nelop_1 cvv cvv dfopg syl eleqtrd c0 f0nelop_0 csn f0nelop_0 f0nelop_1 cpr elpri syl c0 f0nelop_0 f0nelop_1 cop wcel c0 f0nelop_0 csn wne c0 f0nelop_0 f0nelop_1 cpr wne wa c0 f0nelop_0 csn wceq c0 f0nelop_0 f0nelop_1 cpr wceq wo wn c0 f0nelop_0 f0nelop_1 cop wcel c0 f0nelop_0 csn wne c0 f0nelop_0 f0nelop_1 cpr wne c0 f0nelop_0 f0nelop_1 cop wcel f0nelop_0 csn c0 c0 f0nelop_0 f0nelop_1 cop wcel f0nelop_0 cvv wcel f0nelop_0 csn c0 wne c0 f0nelop_0 f0nelop_1 cop wcel f0nelop_0 cvv wcel f0nelop_1 cvv wcel f0nelop_0 f0nelop_1 c0 oprcl simpld f0nelop_0 cvv snnzg syl necomd c0 f0nelop_0 f0nelop_1 cop wcel f0nelop_0 f0nelop_1 cpr c0 c0 f0nelop_0 f0nelop_1 cop wcel f0nelop_0 cvv wcel f0nelop_0 f0nelop_1 cpr c0 wne c0 f0nelop_0 f0nelop_1 cop wcel f0nelop_0 cvv wcel f0nelop_1 cvv wcel f0nelop_0 f0nelop_1 c0 oprcl simpld f0nelop_0 f0nelop_1 cvv prnzg syl necomd jca c0 f0nelop_0 csn c0 f0nelop_0 f0nelop_1 cpr neanior sylib pm2.65i $.
@@ -216,6 +300,10 @@ $}
 $( Equivalence of existence implied by equality of ordered pairs.
      (Contributed by NM, 28-May-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fopeqex_0 $f class A $.
 	fopeqex_1 $f class B $.
 	fopeqex_2 $f class C $.
@@ -225,6 +313,12 @@ $}
 $( Equivalence of existence implied by equality of ordered triples.
      (Contributed by NM, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v T $.
 	foteqex2_0 $f class A $.
 	foteqex2_1 $f class B $.
 	foteqex2_2 $f class C $.
@@ -237,6 +331,12 @@ $( Equivalence of existence implied by equality of ordered triples.
      (Contributed by NM, 28-May-2008.)  (Revised by Mario Carneiro,
      26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v T $.
 	foteqex_0 $f class A $.
 	foteqex_1 $f class B $.
 	foteqex_2 $f class C $.
@@ -248,6 +348,8 @@ $}
 $( An ordered pair commutes iff its members are equal.  (Contributed by NM,
        28-May-2009.) $)
 ${
+	$v A $.
+	$v B $.
 	fopcom_0 $f class A $.
 	fopcom_1 $f class B $.
 	eopcom_0 $e |- A e. _V $.
@@ -257,6 +359,10 @@ $}
 $( "At most one" property of an ordered pair.  (Contributed by NM,
        11-Apr-2004.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x y A $.
 	$d y B $.
 	imoop2_0 $f set y $.
@@ -269,6 +375,9 @@ $}
 $( Equivalence for an ordered pair equal to a singleton.  (Contributed by
        NM, 3-Jun-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fopeqsn_0 $f class A $.
 	fopeqsn_1 $f class B $.
 	fopeqsn_2 $f class C $.
@@ -280,6 +389,10 @@ $}
 $( Equivalence for an ordered pair equal to an unordered pair.
        (Contributed by NM, 3-Jun-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fopeqpr_0 $f class A $.
 	fopeqpr_1 $f class B $.
 	fopeqpr_2 $f class C $.
@@ -293,6 +406,11 @@ $}
 $( "At most one" remains true inside ordered pair quantification.
        (Contributed by NM, 28-Aug-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z A $.
 	fmosubopt_0 $f wff ph $.
 	fmosubopt_1 $f set x $.
@@ -304,6 +422,11 @@ $}
 $( "At most one" remains true inside ordered pair quantification.
        (Contributed by NM, 28-May-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z A $.
 	fmosubop_0 $f wff ph $.
 	fmosubop_1 $f set x $.
@@ -316,6 +439,10 @@ $}
 $( Transfer existential uniqueness to second member of an ordered pair.
        (Contributed by NM, 10-Apr-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x ph $.
 	$d x A $.
 	$d x y $.
@@ -328,9 +455,17 @@ ${
 $}
 $( Prove existential uniqueness for an ordered triple.  (Contributed by
        Mario Carneiro, 20-May-2015.) $)
-$v b $.
-$v c $.
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v a $.
+	$v b $.
+	$v c $.
+	$v y $.
 	$d a b c x y A $.
 	$d a b c x y B $.
 	$d a b c x y C $.
@@ -360,6 +495,10 @@ $( Justification theorem for the ordered pair definition in Norbert Wiener,
        not proper classes).  See ~ df-op for other ordered pair definitions.
        (Contributed by NM, 28-Sep-2003.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fopthwiener_0 $f class A $.
 	fopthwiener_1 $f class B $.
 	fopthwiener_2 $f class C $.
@@ -372,6 +511,8 @@ $( The union of an ordered pair.  Theorem 65 of [Suppes] p. 39.
        (Contributed by NM, 17-Aug-2004.)  (Revised by Mario Carneiro,
        26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	funiop_0 $f class A $.
 	funiop_1 $f class B $.
 	euniop_0 $e |- A e. _V $.
@@ -381,6 +522,9 @@ $}
 $( Ordered pair membership is inherited by class union.  (Contributed by
        NM, 13-May-2008.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	funiopel_0 $f class A $.
 	funiopel_1 $f class B $.
 	funiopel_2 $f class C $.

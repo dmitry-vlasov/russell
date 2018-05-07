@@ -53,7 +53,7 @@ $}
 $( Analog of ~ dfsbcq for proper substitution into a class.  (Contributed
        by NM, 10-Nov-2005.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -71,7 +71,7 @@ $( Change bound variables in a class substitution.  Interestingly, this
        by Jeff Hankins, 13-Sep-2009.)  (Revised by Mario Carneiro,
        11-Dec-2016.) $)
 ${
-	$v x y z A C D $.
+	$v x y A C D z $.
 	$d x z $.
 	$d y z $.
 	$d z A $.
@@ -122,7 +122,7 @@ $}
 $( Analog of ~ sbid for proper substitution into a class.  (Contributed by
        NM, 10-Nov-2005.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d x y $.
 	$d y A $.
 	f0 $f set x $.
@@ -144,7 +144,7 @@ $}
 $( Composition law for chained substitutions into a class.  (Contributed by
        NM, 10-Nov-2005.) $)
 ${
-	$v x y z A B $.
+	$v x y A B z $.
 	$d z A $.
 	$d y z B $.
 	$d x z $.
@@ -159,7 +159,7 @@ $}
 $( The existence of proper substitution into a class.  (Contributed by NM,
        10-Nov-2005.) $)
 ${
-	$v x y A B V W $.
+	$v x A B V W y $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -187,7 +187,7 @@ $}
 $( Substitution doesn't affect a constant ` B ` (in which ` x ` is not
        free).  (Contributed by Mario Carneiro, 14-Oct-2016.) $)
 ${
-	$v x y A B V $.
+	$v x A B V y $.
 	$d y A $.
 	$d y B $.
 	$d y V $.
@@ -229,7 +229,7 @@ $( Distribute proper substitution through a membership relation.
        (Contributed by NM, 10-Nov-2005.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
-	$v x y z A B C V $.
+	$v x A B C V y z $.
 	$d x y z $.
 	$d y z A $.
 	$d y z B $.
@@ -248,7 +248,7 @@ $( Distribute proper substitution through an equality relation.
        (Contributed by NM, 10-Nov-2005.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
-	$v x y z A B C V $.
+	$v x A B C V y z $.
 	$d x y z $.
 	$d y z A $.
 	$d y z B $.
@@ -344,7 +344,7 @@ $}
 $( Commutative law for double substitution into a class.  (Contributed by
        NM, 14-Nov-2005.) $)
 ${
-	$v x y z A B C V W $.
+	$v x y A B C V W z $.
 	$d y z A $.
 	$d x z B $.
 	$d z C $.
@@ -363,7 +363,7 @@ $}
 $( Formula-building deduction rule for class substitution.  (Contributed by
        NM, 22-Nov-2005.)  (Revised by Mario Carneiro, 1-Sep-2015.) $)
 ${
-	$v ph x y A B C $.
+	$v ph x A B C y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -409,7 +409,7 @@ $}
 $( The proper substitution of a class for set variable results in the class
        (if the class exists).  (Contributed by NM, 10-Nov-2005.) $)
 ${
-	$v x y z A V $.
+	$v x A V y z $.
 	$d y z A $.
 	$d x y z $.
 	f0 $f set x $.
@@ -447,7 +447,7 @@ $}
 $( Bound-variable hypothesis builder for substitution into a class.
        (Contributed by Mario Carneiro, 12-Oct-2016.) $)
 ${
-	$v ph x y A B $.
+	$v ph x A B y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -487,7 +487,7 @@ $}
 $( Deduction version of ~ nfcsb .  (Contributed by NM, 21-Nov-2005.)
        (Revised by Mario Carneiro, 12-Oct-2016.) $)
 ${
-	$v ph x y z A B $.
+	$v ph x y A B z $.
 	$d x z $.
 	$d y z $.
 	$d z A $.
@@ -715,7 +715,7 @@ $( Conversion of implicit substitution to explicit class substitution.
        This version of ~ sbcie avoids a disjointness condition on ` x , A ` by
        substituting twice.  (Contributed by Mario Carneiro, 11-Nov-2016.) $)
 ${
-	$v x y z A B C D V $.
+	$v x y A B C D V z $.
 	$d x y z $.
 	$d A y z $.
 	$d B y z $.
@@ -738,7 +738,7 @@ $}
 $( Nest the composition of two substitutions.  (Contributed by Mario
        Carneiro, 11-Nov-2016.) $)
 ${
-	$v ph x y z A B V $.
+	$v ph x y A B V z $.
 	$d x z $.
 	$d y z $.
 	$d z A $.
@@ -757,7 +757,7 @@ $}
 $( Nest the composition of two substitutions.  (Contributed by NM,
        23-Nov-2005.)  (Proof shortened by Mario Carneiro, 10-Nov-2016.) $)
 ${
-	$v x y z A B C V $.
+	$v x y A B C V z $.
 	$d x z $.
 	$d y z $.
 	$d z A $.
@@ -819,7 +819,7 @@ $}
 $( Nest the composition of two substitutions.  (Contributed by NM,
        23-May-2006.)  (Proof shortened by Mario Carneiro, 11-Nov-2016.) $)
 ${
-	$v x y A B C V $.
+	$v x A B C V y $.
 	$d x y $.
 	$d y C $.
 	f0 $f set x $.
@@ -949,7 +949,7 @@ $}
 $( Two ways of expressing " ` x ` is (effectively) not free in ` A ` ."
        (Contributed by Mario Carneiro, 14-Oct-2016.) $)
 ${
-	$v x y z w A $.
+	$v x y z A w $.
 	$d w x y z $.
 	$d w y z A $.
 	f0 $f set x $.
@@ -963,7 +963,7 @@ $}
 $( Move substitution into a class abstraction.  (Contributed by NM,
        13-Dec-2005.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
 ${
-	$v ph x y z A V $.
+	$v ph x y A V z $.
 	$d y z A $.
 	$d z ph $.
 	$d x y z $.
@@ -981,7 +981,7 @@ $( A more general version of ~ cbvralf that doesn't require ` A ` and ` B `
        to be distinct from ` x ` or ` y ` .  Changes bound variables using
        implicit substitution.  (Contributed by Andrew Salmon, 13-Jul-2011.) $)
 ${
-	$v ph ps x y z A B v $.
+	$v ph ps x y A B z v $.
 	$d x v z $.
 	$d y v z $.
 	$d A v z $.
@@ -1030,7 +1030,7 @@ $( A more general version of ~ cbvreuv that has no distinct variable
        rextrictions.  Changes bound variables using implicit substitution.
        (Contributed by Andrew Salmon, 13-Jul-2011.) $)
 ${
-	$v ph ps x y z A B v $.
+	$v ph ps x y A B z v $.
 	$d x v z $.
 	$d y v z $.
 	$d A v z $.
@@ -1057,7 +1057,7 @@ $}
 $( A more general version of ~ cbvrab with no distinct variable
        restrictions.  (Contributed by Andrew Salmon, 13-Jul-2011.) $)
 ${
-	$v ph ps x y z A B v $.
+	$v ph ps x y A B z v $.
 	$d x v z $.
 	$d y v z $.
 	$d A v z $.

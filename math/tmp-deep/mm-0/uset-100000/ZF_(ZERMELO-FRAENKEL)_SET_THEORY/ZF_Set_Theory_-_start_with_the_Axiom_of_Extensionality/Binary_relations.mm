@@ -11,6 +11,9 @@ $( Extend wff notation to include the general binary relation predicate.
      syntax could become ambiguous if we are not careful, see the comment in
      ~ cneg .) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	fwbr_0 $f class A $.
 	fwbr_1 $f class B $.
 	fwbr_2 $f class R $.
@@ -30,6 +33,9 @@ $( Define a general binary relation.  Note that the syntax is simply three
      On the other hand, we often find uses for this definition when ` R ` is a
      proper class.  (Contributed by NM, 31-Dec-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	fdf-br_0 $f class A $.
 	fdf-br_1 $f class B $.
 	fdf-br_2 $f class R $.
@@ -38,6 +44,10 @@ $}
 $( Equality theorem for binary relations.  (Contributed by NM,
      4-Jun-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
 	fbreq_0 $f class A $.
 	fbreq_1 $f class B $.
 	fbreq_2 $f class R $.
@@ -47,6 +57,10 @@ $}
 $( Equality theorem for a binary relation.  (Contributed by NM,
      31-Dec-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fbreq1_0 $f class A $.
 	fbreq1_1 $f class B $.
 	fbreq1_2 $f class C $.
@@ -56,6 +70,10 @@ $}
 $( Equality theorem for a binary relation.  (Contributed by NM,
      31-Dec-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fbreq2_0 $f class A $.
 	fbreq2_1 $f class B $.
 	fbreq2_2 $f class C $.
@@ -65,6 +83,11 @@ $}
 $( Equality theorem for a binary relation.  (Contributed by NM,
      8-Feb-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	fbreq12_0 $f class A $.
 	fbreq12_1 $f class B $.
 	fbreq12_2 $f class C $.
@@ -75,6 +98,10 @@ $}
 $( Equality inference for binary relations.  (Contributed by NM,
        19-Feb-2005.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
 	fbreqi_0 $f class A $.
 	fbreqi_1 $f class B $.
 	fbreqi_2 $f class R $.
@@ -85,6 +112,10 @@ $}
 $( Equality inference for a binary relation.  (Contributed by NM,
        8-Feb-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fbreq1i_0 $f class A $.
 	fbreq1i_1 $f class B $.
 	fbreq1i_2 $f class C $.
@@ -95,6 +126,10 @@ $}
 $( Equality inference for a binary relation.  (Contributed by NM,
        8-Feb-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fbreq2i_0 $f class A $.
 	fbreq2i_1 $f class B $.
 	fbreq2i_2 $f class C $.
@@ -105,6 +140,11 @@ $}
 $( Equality inference for a binary relation.  (Contributed by NM,
          8-Feb-1996.)  (Proof shortened by Eric Schmidt, 4-Apr-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	fbreq12i_0 $f class A $.
 	fbreq12i_1 $f class B $.
 	fbreq12i_2 $f class C $.
@@ -117,6 +157,11 @@ $}
 $( Equality deduction for a binary relation.  (Contributed by NM,
        8-Feb-1996.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fbreq1d_0 $f wff ph $.
 	fbreq1d_1 $f class A $.
 	fbreq1d_2 $f class B $.
@@ -128,6 +173,11 @@ $}
 $( Equality deduction for a binary relation.  (Contributed by NM,
        29-Oct-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fbreqd_0 $f wff ph $.
 	fbreqd_1 $f class A $.
 	fbreqd_2 $f class B $.
@@ -139,6 +189,11 @@ $}
 $( Equality deduction for a binary relation.  (Contributed by NM,
        8-Feb-1996.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fbreq2d_0 $f wff ph $.
 	fbreq2d_1 $f class A $.
 	fbreq2d_2 $f class B $.
@@ -150,6 +205,12 @@ $}
 $( Equality deduction for a binary relation.  (Contributed by NM,
          8-Feb-1996.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	fbreq12d_0 $f wff ph $.
 	fbreq12d_1 $f class A $.
 	fbreq12d_2 $f class B $.
@@ -163,6 +224,13 @@ $}
 $( Equality deduction for a binary relation.  (Contributed by NM,
          29-Oct-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
 	fbreq123d_0 $f wff ph $.
 	fbreq123d_1 $f class A $.
 	fbreq123d_2 $f class B $.
@@ -178,6 +246,13 @@ $}
 $( Equality deduction for a binary relation.  (Contributed by NM,
          8-Feb-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	fbreqan12d_0 $f wff ph $.
 	fbreqan12d_1 $f wff ps $.
 	fbreqan12d_2 $f class A $.
@@ -192,6 +267,13 @@ $}
 $( Equality deduction for a binary relation.  (Contributed by NM,
          8-Feb-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	fbreqan12rd_0 $f wff ph $.
 	fbreqan12rd_1 $f wff ps $.
 	fbreqan12rd_2 $f class A $.
@@ -206,6 +288,10 @@ $}
 $( Two classes are different if they don't have the same relationship to a
      third class.  (Contributed by NM, 3-Jun-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fnbrne1_0 $f class A $.
 	fnbrne1_1 $f class B $.
 	fnbrne1_2 $f class C $.
@@ -215,6 +301,10 @@ $}
 $( Two classes are different if they don't have the same relationship to a
      third class.  (Contributed by NM, 3-Jun-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fnbrne2_0 $f class A $.
 	fnbrne2_1 $f class B $.
 	fnbrne2_2 $f class C $.
@@ -224,6 +314,10 @@ $}
 $( Substitution of equal classes into a binary relation.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	feqbrtri_0 $f class A $.
 	feqbrtri_1 $f class B $.
 	feqbrtri_2 $f class C $.
@@ -235,6 +329,11 @@ $}
 $( Substitution of equal classes into a binary relation.  (Contributed by
        NM, 8-Oct-1999.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	feqbrtrd_0 $f wff ph $.
 	feqbrtrd_1 $f class A $.
 	feqbrtrd_2 $f class B $.
@@ -247,6 +346,10 @@ $}
 $( Substitution of equal classes into a binary relation.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	feqbrtrri_0 $f class A $.
 	feqbrtrri_1 $f class B $.
 	feqbrtrri_2 $f class C $.
@@ -258,6 +361,11 @@ $}
 $( Substitution of equal classes into a binary relation.  (Contributed by
        NM, 24-Oct-1999.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	feqbrtrrd_0 $f wff ph $.
 	feqbrtrrd_1 $f class A $.
 	feqbrtrrd_2 $f class B $.
@@ -270,6 +378,10 @@ $}
 $( Substitution of equal classes into a binary relation.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fbreqtri_0 $f class A $.
 	fbreqtri_1 $f class B $.
 	fbreqtri_2 $f class C $.
@@ -281,6 +393,11 @@ $}
 $( Substitution of equal classes into a binary relation.  (Contributed by
        NM, 24-Oct-1999.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fbreqtrd_0 $f wff ph $.
 	fbreqtrd_1 $f class A $.
 	fbreqtrd_2 $f class B $.
@@ -293,6 +410,10 @@ $}
 $( Substitution of equal classes into a binary relation.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fbreqtrri_0 $f class A $.
 	fbreqtrri_1 $f class B $.
 	fbreqtrri_2 $f class C $.
@@ -304,6 +425,11 @@ $}
 $( Substitution of equal classes into a binary relation.  (Contributed by
        NM, 24-Oct-1999.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fbreqtrrd_0 $f wff ph $.
 	fbreqtrrd_1 $f class A $.
 	fbreqtrrd_2 $f class B $.
@@ -316,6 +442,11 @@ $}
 $( Substitution of equality into both sides of a binary relation.
        (Contributed by NM, 11-Aug-1999.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	f3brtr3i_0 $f class A $.
 	f3brtr3i_1 $f class B $.
 	f3brtr3i_2 $f class C $.
@@ -329,6 +460,11 @@ $}
 $( Substitution of equality into both sides of a binary relation.
        (Contributed by NM, 11-Aug-1999.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	f3brtr4i_0 $f class A $.
 	f3brtr4i_1 $f class B $.
 	f3brtr4i_2 $f class C $.
@@ -342,6 +478,12 @@ $}
 $( Substitution of equality into both sides of a binary relation.
        (Contributed by NM, 18-Oct-1999.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	f3brtr3d_0 $f wff ph $.
 	f3brtr3d_1 $f class A $.
 	f3brtr3d_2 $f class B $.
@@ -356,6 +498,12 @@ $}
 $( Substitution of equality into both sides of a binary relation.
        (Contributed by NM, 21-Feb-2005.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	f3brtr4d_0 $f wff ph $.
 	f3brtr4d_1 $f class A $.
 	f3brtr4d_2 $f class B $.
@@ -370,6 +518,12 @@ $}
 $( Substitution of equality into both sides of a binary relation.
        (Contributed by NM, 16-Jan-1997.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	f3brtr3g_0 $f wff ph $.
 	f3brtr3g_1 $f class A $.
 	f3brtr3g_2 $f class B $.
@@ -384,6 +538,12 @@ $}
 $( Substitution of equality into both sides of a binary relation.
        (Contributed by NM, 16-Jan-1997.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	f3brtr4g_0 $f wff ph $.
 	f3brtr4g_1 $f class A $.
 	f3brtr4g_2 $f class B $.
@@ -398,6 +558,11 @@ $}
 $( B chained equality inference for a binary relation.  (Contributed by NM,
        11-Oct-1999.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fsyl5eqbr_0 $f wff ph $.
 	fsyl5eqbr_1 $f class A $.
 	fsyl5eqbr_2 $f class B $.
@@ -410,6 +575,11 @@ $}
 $( B chained equality inference for a binary relation.  (Contributed by NM,
        17-Sep-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fsyl5eqbrr_0 $f wff ph $.
 	fsyl5eqbrr_1 $f class A $.
 	fsyl5eqbrr_2 $f class B $.
@@ -422,6 +592,11 @@ $}
 $( B chained equality inference for a binary relation.  (Contributed by NM,
        11-Oct-1999.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fsyl5breq_0 $f wff ph $.
 	fsyl5breq_1 $f class A $.
 	fsyl5breq_2 $f class B $.
@@ -434,6 +609,11 @@ $}
 $( B chained equality inference for a binary relation.  (Contributed by NM,
        24-Apr-2005.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fsyl5breqr_0 $f wff ph $.
 	fsyl5breqr_1 $f class A $.
 	fsyl5breqr_2 $f class B $.
@@ -446,6 +626,11 @@ $}
 $( A chained equality inference for a binary relation.  (Contributed by NM,
        12-Oct-1999.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fsyl6eqbr_0 $f wff ph $.
 	fsyl6eqbr_1 $f class A $.
 	fsyl6eqbr_2 $f class B $.
@@ -458,6 +643,11 @@ $}
 $( A chained equality inference for a binary relation.  (Contributed by NM,
        4-Jan-2006.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fsyl6eqbrr_0 $f wff ph $.
 	fsyl6eqbrr_1 $f class A $.
 	fsyl6eqbrr_2 $f class B $.
@@ -470,6 +660,11 @@ $}
 $( A chained equality inference for a binary relation.  (Contributed by NM,
        11-Oct-1999.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fsyl6breq_0 $f wff ph $.
 	fsyl6breq_1 $f class A $.
 	fsyl6breq_2 $f class B $.
@@ -482,6 +677,11 @@ $}
 $( A chained equality inference for a binary relation.  (Contributed by NM,
        24-Apr-2005.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	fsyl6breqr_0 $f wff ph $.
 	fsyl6breqr_1 $f class A $.
 	fsyl6breqr_2 $f class B $.
@@ -494,6 +694,11 @@ $}
 $( Deduction from a subclass relationship of binary relations.
        (Contributed by NM, 30-Apr-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fssbrd_0 $f wff ph $.
 	fssbrd_1 $f class A $.
 	fssbrd_2 $f class B $.
@@ -506,6 +711,10 @@ $( Inference from a subclass relationship of binary relations.
        (Contributed by NM, 28-Mar-2007.)  (Revised by Mario Carneiro,
        8-Feb-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fssbri_0 $f class A $.
 	fssbri_1 $f class B $.
 	fssbri_2 $f class C $.
@@ -517,6 +726,11 @@ $( Deduction version of bound-variable hypothesis builder ~ nfbr .
        (Contributed by NM, 13-Dec-2005.)  (Revised by Mario Carneiro,
        14-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v R $.
 	fnfbrd_0 $f wff ph $.
 	fnfbrd_1 $f set x $.
 	fnfbrd_2 $f class A $.
@@ -530,6 +744,10 @@ $}
 $( Bound-variable hypothesis builder for binary relation.  (Contributed by
        NM, 1-Sep-1999.)  (Revised by Mario Carneiro, 14-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v R $.
 	fnfbr_0 $f set x $.
 	fnfbr_1 $f class A $.
 	fnfbr_2 $f class B $.
@@ -542,6 +760,11 @@ $}
 $( Relationship between a binary relation and a class abstraction.
        (Contributed by Andrew Salmon, 8-Jul-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v R $.
 	$d x y $.
 	$d y z A $.
 	$d y z R $.
@@ -554,6 +777,10 @@ ${
 $}
 $( The union of two binary relations.  (Contributed by NM, 21-Dec-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
 	fbrun_0 $f class A $.
 	fbrun_1 $f class B $.
 	fbrun_2 $f class R $.
@@ -562,6 +789,10 @@ ${
 $}
 $( The intersection of two relations.  (Contributed by FL, 7-Oct-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
 	fbrin_0 $f class A $.
 	fbrin_1 $f class B $.
 	fbrin_2 $f class R $.
@@ -571,6 +802,10 @@ $}
 $( The difference of two binary relations.  (Contributed by Scott Fenton,
      11-Apr-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
 	fbrdif_0 $f class A $.
 	fbrdif_1 $f class B $.
 	fbrdif_2 $f class R $.
@@ -580,6 +815,13 @@ $}
 $( Move substitution in and out of a binary relation.  (Contributed by NM,
        13-Dec-2005.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	$d y A $.
 	$d y B $.
 	$d y C $.
@@ -598,6 +840,12 @@ $}
 $( Move substitution in and out of a binary relation.  (Contributed by NM,
        13-Dec-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	$d x R $.
 	fsbcbr12g_0 $f set x $.
 	fsbcbr12g_1 $f class A $.
@@ -610,6 +858,12 @@ $}
 $( Move substitution in and out of a binary relation.  (Contributed by NM,
        13-Dec-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	$d x C $.
 	$d x R $.
 	fsbcbr1g_0 $f set x $.
@@ -623,6 +877,12 @@ $}
 $( Move substitution in and out of a binary relation.  (Contributed by NM,
        13-Dec-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	$d x B $.
 	$d x R $.
 	fsbcbr2g_0 $f set x $.

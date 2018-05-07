@@ -24,6 +24,8 @@ $( Define the epsilon relation.  Similar to Definition 6.22 of
        ~ epelg .  Thus, ` 5 _E { 1 , 5 } ` ( ~ ex-eprel ).  (Contributed by NM,
        13-Aug-1995.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	fdf-eprel_0 $f set x $.
 	fdf-eprel_1 $f set y $.
@@ -33,6 +35,11 @@ $( The epsilon relation and membership are the same.  General version of
        ~ epel .  (Contributed by Scott Fenton, 27-Mar-2011.)  (Revised by Mario
        Carneiro, 28-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v x $.
+	$v y $.
 	$d A x y $.
 	$d B x y $.
 	iepelg_0 $f set x $.
@@ -45,6 +52,8 @@ $}
 $( The epsilon relationship and the membership relation are the same.
        (Contributed by Scott Fenton, 11-Apr-2012.) $)
 ${
+	$v A $.
+	$v B $.
 	fepelc_0 $f class A $.
 	fepelc_1 $f class B $.
 	eepelc_0 $e |- B e. _V $.
@@ -53,6 +62,8 @@ $}
 $( The epsilon relation and the membership relation are the same.
      (Contributed by NM, 13-Aug-1995.) $)
 ${
+	$v x $.
+	$v y $.
 	fepel_0 $f set x $.
 	fepel_1 $f set y $.
 	epel $p |- ( x _E y <-> x e. y ) $= fepel_0 sup_set_class fepel_1 sup_set_class fepel_1 vex epelc $.
@@ -61,6 +72,8 @@ $( Define the identity relation.  Definition 9.15 of [Quine] p. 64.  For
        example, ` 5 _I 5 ` and ` -. 4 _I 5 ` ( ~ ex-id ).  (Contributed by NM,
        13-Aug-1995.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	fdf-id_0 $f set x $.
 	fdf-id_1 $f set y $.
@@ -74,6 +87,10 @@ $( A stronger version of ~ df-id that doesn't require ` x ` and ` y ` to be
        that is not necessarily obvious.  (Contributed by NM, 5-Feb-2008.)
        (Revised by Mario Carneiro, 18-Nov-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w z x $.
 	$d w z y $.
 	idfid3_0 $f set z $.
@@ -85,6 +102,7 @@ $}
 $( Alternate definition of the identity relation.  (Contributed by NM,
      15-Mar-2007.) $)
 ${
+	$v x $.
 	fdfid2_0 $f set x $.
 	dfid2 $p |- _I = { <. x , x >. | x = x } $= fdfid2_0 fdfid2_0 dfid3 $.
 $}

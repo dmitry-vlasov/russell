@@ -45,6 +45,9 @@ $( Axiom of Quantified Equality.  One of the equality and substitution axioms
      auxiliary axiom to achieve metalogical completeness.  (Contributed by NM,
      21-Dec-2015.)  (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fax-12_0 $f set x $.
 	fax-12_1 $f set y $.
 	fax-12_2 $f set z $.
@@ -55,6 +58,9 @@ $( A weaker version of ~ ax-12 with distinct variable restrictions on pairs
        adequate, this should be the only theorem referencing ~ ax-12 directly.
        (Contributed by NM, 30-Jun-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	fax12v_0 $f set x $.
@@ -65,6 +71,9 @@ $}
 $( Lemma for ~ ax12o .  Similar to ~ equvin but with a negated equality.
        (Contributed by NM, 24-Dec-2015.) $)
 ${
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w y $.
 	$d w z $.
 	fax12olem1_0 $f set y $.
@@ -75,6 +84,10 @@ $}
 $( Lemma for ~ ax12o .  Negate the equalities in ~ ax-12 , shown as the
        hypothesis.  (Contributed by NM, 24-Dec-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x z $.
 	$d w y $.
 	fax12olem2_0 $f set x $.
@@ -88,6 +101,9 @@ $( Lemma for ~ ax12o .  Show the equivalence of an intermediate equivalent to
      ~ ax12o with the conjunction of ~ ax-12 and a variant with negated
      equalities.  (Contributed by NM, 24-Dec-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fax12olem3_0 $f set x $.
 	fax12olem3_1 $f set y $.
 	fax12olem3_2 $f set z $.
@@ -96,6 +112,10 @@ $}
 $( Lemma for ~ ax12o .  Construct an intermediate equivalent to ~ ax-12
        from two instances of ~ ax-12 .  (Contributed by NM, 24-Dec-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x z $.
 	$d w y z $.
 	fax12olem4_0 $f set x $.
@@ -109,6 +129,9 @@ $}
 $( Lemma for ~ ax12o .  See ~ ax12olem6 for derivation of ~ ax12o from the
        conclusion.  (Contributed by NM, 24-Dec-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fax12olem5_0 $f set x $.
 	fax12olem5_1 $f set y $.
 	fax12olem5_2 $f set z $.
@@ -119,6 +142,10 @@ $( Lemma for ~ ax12o .  Derivation of ~ ax12o from the hypotheses, without
        using ~ ax12o .  (Contributed by Andrew Salmon, 21-Jul-2011.)  (Revised
        by NM, 24-Dec-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x $.
 	$d w y $.
 	$d w z $.
@@ -133,6 +160,10 @@ $}
 $( Lemma for ~ ax12o .  Derivation of ~ ax12o from the hypotheses, without
        using ~ ax12o .  (Contributed by NM, 24-Dec-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x $.
 	$d w y $.
 	$d w z $.
@@ -147,6 +178,11 @@ $}
 $( Derive set.mm's original ~ ax-12o from the shorter ~ ax-12 .
        (Contributed by NM, 29-Nov-2015.)  (Revised by NM, 24-Dec-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
 	$d x w v $.
 	$d y w v $.
 	$d z w v $.
@@ -160,6 +196,10 @@ $}
 $( Lemma for ~ ax10 .  Change bound variable.  (Contributed by NM,
        22-Jul-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v w $.
+	$v v $.
 	$d x v w $.
 	$d y v w $.
 	iax10lem1_0 $f set v $.
@@ -171,6 +211,9 @@ $}
 $( Lemma for ~ ax10 .  Change free variable.  (Contributed by NM,
        25-Jul-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y $.
 	$d x z $.
 	fax10lem2_0 $f set x $.
@@ -181,6 +224,10 @@ $}
 $( Lemma for ~ ax10 .  Similar to ~ ax-10 but with distinct variables.
        (Contributed by NM, 25-Jul-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x y $.
 	$d w x z $.
 	iax10lem3_0 $f set z $.
@@ -192,6 +239,11 @@ $}
 $( Similar to ~ dvelim with first hypothesis replaced by distinct variable
        condition.  (Contributed by NM, 25-Jul-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d z ps $.
@@ -207,6 +259,10 @@ $}
 $( Quantifier introduction when one pair of variables is distinct.
        (Contributed by NM, 2-Jan-2002.)  (Revised by NM, 20-Jul-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w z x $.
 	$d w y $.
 	idveeq2_0 $f set w $.
@@ -218,6 +274,10 @@ $}
 $( Lemma for ~ ax10 .  Change bound variable.  (Contributed by NM,
        8-Jul-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v w $.
+	$v z $.
 	$d w z x $.
 	$d w z y $.
 	iax10lem4_0 $f set z $.
@@ -228,8 +288,13 @@ ${
 $}
 $( Lemma for ~ ax10 .  Change free and bound variables.  (Contributed by
        NM, 22-Jul-2015.) $)
-$v u $.
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
 	$d w z $.
 	$d u v w $.
 	$d v x $.
@@ -245,6 +310,9 @@ $}
 $( Lemma for ~ ax10 .  Similar to ~ ax10o but with reversed antecedent.
      (Contributed by NM, 25-Jul-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fax10lem6_0 $f wff ph $.
 	fax10lem6_1 $f set x $.
 	fax10lem6_2 $f set y $.
@@ -253,6 +321,9 @@ $}
 $( Derive set.mm's original ~ ax-10 from others.  (Contributed by NM,
        25-Jul-2015.)  (Revised by NM, 7-Nov-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	iax10_0 $f set z $.
@@ -262,6 +333,11 @@ ${
 $}
 $( Generalization of ~ ax16 .  (Contributed by NM, 25-Jul-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y $.
 	$d w ph $.
 	$d w z $.
@@ -277,6 +353,8 @@ $( Commutation law for identical variable specifiers.  The antecedent and
      variable.  Lemma L12 in [Megill] p. 445 (p. 12 of the preprint).
      (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
 	faecom_0 $f set x $.
 	faecom_1 $f set y $.
 	aecom $p |- ( A. x x = y -> A. y y = x ) $= faecom_0 faecom_1 ax10 $.
@@ -284,6 +362,9 @@ $}
 $( A commutation rule for identical variable specifiers.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	faecoms_0 $f wff ph $.
 	faecoms_1 $f set x $.
 	faecoms_2 $f set y $.
@@ -293,6 +374,9 @@ $}
 $( A commutation rule for distinct variable specifiers.  (Contributed by
        NM, 2-Jan-2002.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fnaecoms_0 $f wff ph $.
 	fnaecoms_1 $f set x $.
 	fnaecoms_2 $f set y $.
@@ -308,6 +392,9 @@ $( Theorem showing that ~ ax-9 follows from the weaker version ~ ax9v .
        can be traced back to ~ ax9v .  (Contributed by NM, 12-Nov-2013.)
        (Revised by NM, 25-Jul-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v v $.
 	$d x v $.
 	$d y v $.
 	iax9_0 $f set v $.
@@ -322,6 +409,9 @@ $( Show that the original axiom ~ ax-9o can be derived from ~ ax9 and
      specifically studying the latter's properties.  (Contributed by NM,
      5-Aug-1993.)  (Proof modification is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fax9o_0 $f wff ph $.
 	fax9o_1 $f set x $.
 	fax9o_2 $f set y $.
@@ -335,6 +425,8 @@ $( At least one individual exists.  This is not a theorem of free logic,
      without ~ ax9 is probably not complete in free logic.  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
 	fa9e_0 $f set x $.
 	fa9e_1 $f set y $.
 	a9e $p |- E. x x = y $= fa9e_0 sup_set_class fa9e_1 sup_set_class wceq fa9e_0 wex fa9e_0 sup_set_class fa9e_1 sup_set_class wceq wn fa9e_0 wal wn fa9e_0 fa9e_1 ax9 fa9e_0 sup_set_class fa9e_1 sup_set_class wceq fa9e_0 df-ex mpbir $.
@@ -344,6 +436,9 @@ $( Show that ~ ax-10o can be derived from ~ ax-10 in the form of ~ ax10 .
      specifically studying the latter's properties.  (Contributed by NM,
      16-May-2008.)  (Proof modification is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fax10o_0 $f wff ph $.
 	fax10o_1 $f set x $.
 	fax10o_2 $f set y $.
@@ -352,6 +447,9 @@ $}
 $( All variables are effectively bound in an identical variable specifier.
      (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fhbae_0 $f set x $.
 	fhbae_1 $f set y $.
 	fhbae_2 $f set z $.
@@ -360,6 +458,9 @@ $}
 $( All variables are effectively bound in an identical variable specifier.
      (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fnfae_0 $f set x $.
 	fnfae_1 $f set y $.
 	fnfae_2 $f set z $.
@@ -369,6 +470,9 @@ $( All variables are effectively bound in a distinct variable specifier.
      Lemma L19 in [Megill] p. 446 (p. 14 of the preprint).  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fhbnae_0 $f set x $.
 	fhbnae_1 $f set y $.
 	fhbnae_2 $f set z $.
@@ -377,6 +481,9 @@ $}
 $( All variables are effectively bound in a distinct variable specifier.
      (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fnfnae_0 $f set x $.
 	fnfnae_1 $f set y $.
 	fnfnae_2 $f set z $.
@@ -385,6 +492,10 @@ $}
 $( Rule that applies ~ hbnae to antecedent.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fhbnaes_0 $f wff ph $.
 	fhbnaes_1 $f set x $.
 	fhbnaes_2 $f set y $.
@@ -396,6 +507,9 @@ $( A variable is effectively not free in an equality if it is not either of
      the involved variables. ` F/ ` version of ~ ax-12o .  (Contributed by
      Mario Carneiro, 6-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fnfeqf_0 $f set x $.
 	fnfeqf_1 $f set y $.
 	fnfeqf_2 $f set z $.
@@ -404,6 +518,9 @@ $}
 $( Lemma used in proofs of substitution properties.  (Contributed by NM,
      5-Aug-1993.)  (Proof shortened by Mario Carneiro, 20-May-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fequs4_0 $f wff ph $.
 	fequs4_1 $f set x $.
 	fequs4_2 $f set y $.
@@ -413,6 +530,10 @@ $( A useful equivalence related to substitution.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Andrew Salmon, 12-Aug-2011.)  (Revised
        by Mario Carneiro, 3-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fequsal_0 $f wff ph $.
 	fequsal_1 $f wff ps $.
 	fequsal_2 $f set x $.
@@ -424,6 +545,10 @@ $}
 $( A useful equivalence related to substitution.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fequsalh_0 $f wff ph $.
 	fequsalh_1 $f wff ps $.
 	fequsalh_2 $f set x $.
@@ -435,6 +560,10 @@ $}
 $( A useful equivalence related to substitution.  (Contributed by NM,
        5-Aug-1993.)  (Revised by Mario Carneiro, 3-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fequsex_0 $f wff ph $.
 	fequsex_1 $f wff ps $.
 	fequsex_2 $f set x $.
@@ -446,6 +575,10 @@ $}
 $( A useful equivalence related to substitution.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fequsexh_0 $f wff ph $.
 	fequsexh_1 $f wff ps $.
 	fequsexh_2 $f set x $.
@@ -457,6 +590,11 @@ $}
 $( Version of ~ dvelim without any variable restrictions.  (Contributed by
        NM, 1-Oct-2002.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fdvelimh_0 $f wff ph $.
 	fdvelimh_1 $f wff ps $.
 	fdvelimh_2 $f set x $.
@@ -471,6 +609,10 @@ $( Formula-building lemma for use with the Distinctor Reduction Theorem.
        Part of Theorem 9.4 of [Megill] p. 448 (p. 16 of preprint).
        (Contributed by NM, 24-Nov-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fdral1_0 $f wff ph $.
 	fdral1_1 $f wff ps $.
 	fdral1_2 $f set x $.
@@ -482,6 +624,11 @@ $( Formula-building lemma for use with the Distinctor Reduction Theorem.
        Part of Theorem 9.4 of [Megill] p. 448 (p. 16 of preprint).
        (Contributed by NM, 27-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fdral2_0 $f wff ph $.
 	fdral2_1 $f wff ps $.
 	fdral2_2 $f set x $.
@@ -494,6 +641,10 @@ $( Formula-building lemma for use with the Distinctor Reduction Theorem.
        Part of Theorem 9.4 of [Megill] p. 448 (p. 16 of preprint).
        (Contributed by NM, 27-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fdrex1_0 $f wff ph $.
 	fdrex1_1 $f wff ps $.
 	fdrex1_2 $f set x $.
@@ -505,6 +656,11 @@ $( Formula-building lemma for use with the Distinctor Reduction Theorem.
        Part of Theorem 9.4 of [Megill] p. 448 (p. 16 of preprint).
        (Contributed by NM, 27-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fdrex2_0 $f wff ph $.
 	fdrex2_1 $f wff ps $.
 	fdrex2_2 $f set x $.
@@ -516,6 +672,10 @@ $}
 $( Formula-building lemma for use with the Distinctor Reduction Theorem.
        (Contributed by Mario Carneiro, 4-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fdrnf1_0 $f wff ph $.
 	fdrnf1_1 $f wff ps $.
 	fdrnf1_2 $f set x $.
@@ -526,6 +686,11 @@ $}
 $( Formula-building lemma for use with the Distinctor Reduction Theorem.
        (Contributed by Mario Carneiro, 4-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fdrnf2_0 $f wff ph $.
 	fdrnf2_1 $f wff ps $.
 	fdrnf2_2 $f set x $.
@@ -539,6 +704,10 @@ $( Distribution of existential quantifiers, with a bound-variable
        free in ` ph ` (and there is no distinct variable condition on ` x ` and
        ` y ` ).  (Contributed by Mario Carneiro, 20-Mar-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fexdistrf_0 $f wff ph $.
 	fexdistrf_1 $f wff ps $.
 	fexdistrf_2 $f set x $.
@@ -550,6 +719,10 @@ $( Variation on ~ nfald which adds the hypothesis that ` x ` and ` y ` are
        distinct in the inner subproof.  (Contributed by Mario Carneiro,
        8-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fnfald2_0 $f wff ph $.
 	fnfald2_1 $f wff ps $.
 	fnfald2_2 $f set x $.
@@ -562,6 +735,10 @@ $( Variation on ~ nfexd which adds the hypothesis that ` x ` and ` y ` are
        distinct in the inner subproof.  (Contributed by Mario Carneiro,
        8-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fnfexd2_0 $f wff ph $.
 	fnfexd2_1 $f wff ps $.
 	fnfexd2_2 $f set x $.
@@ -573,6 +750,10 @@ $}
 $( Closed theorem form of ~ spim .  (Contributed by NM, 15-Jan-2008.)
      (Revised by Mario Carneiro, 17-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fspimt_0 $f wff ph $.
 	fspimt_1 $f wff ps $.
 	fspimt_2 $f set x $.
@@ -584,6 +765,10 @@ $( Specialization, using implicit substitution.  Compare Lemma 14 of
        direction of the substitution hypothesis hold.  (Contributed by NM,
        5-Aug-1993.)  (Revised by Mario Carneiro, 3-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fspim_0 $f wff ph $.
 	fspim_1 $f wff ps $.
 	fspim_2 $f set x $.
@@ -596,6 +781,10 @@ $( Existential introduction, using implicit substitution.  Compare Lemma 14
        of [Tarski] p. 70.  (Contributed by NM, 7-Aug-1994.)  (Revised by Mario
        Carneiro, 3-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fspime_0 $f wff ph $.
 	fspime_1 $f wff ps $.
 	fspime_2 $f set x $.
@@ -607,6 +796,11 @@ $}
 $( Deduction version of ~ spime .  (Contributed by NM, 5-Aug-1993.)
        (Revised by Mario Carneiro, 3-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	fspimed_0 $f wff ph $.
 	fspimed_1 $f wff ps $.
 	fspimed_2 $f wff ch $.
@@ -619,6 +813,11 @@ $}
 $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	fcbv1h_0 $f wff ph $.
 	fcbv1h_1 $f wff ps $.
 	fcbv1h_2 $f wff ch $.
@@ -633,6 +832,11 @@ $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        3-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	fcbv1_0 $f wff ph $.
 	fcbv1_1 $f wff ps $.
 	fcbv1_2 $f wff ch $.
@@ -646,6 +850,11 @@ $}
 $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	fcbv2h_0 $f wff ph $.
 	fcbv2h_1 $f wff ps $.
 	fcbv2h_2 $f wff ch $.
@@ -660,6 +869,11 @@ $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        3-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	fcbv2_0 $f wff ph $.
 	fcbv2_1 $f wff ps $.
 	fcbv2_2 $f wff ch $.
@@ -673,6 +887,10 @@ $}
 $( Rule used to change bound variables, using implicit substitution, that
        does not use ~ ax-12o .  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fcbv3_0 $f wff ph $.
 	fcbv3_1 $f wff ps $.
 	fcbv3_2 $f set x $.
@@ -686,6 +904,10 @@ $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
        25-May-2011.)  (Proof modification is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fcbv3h_0 $f wff ph $.
 	fcbv3h_1 $f wff ps $.
 	fcbv3h_2 $f set x $.
@@ -699,6 +921,10 @@ $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        3-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fcbval_0 $f wff ph $.
 	fcbval_1 $f wff ps $.
 	fcbval_2 $f set x $.
@@ -711,6 +937,10 @@ $}
 $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fcbvex_0 $f wff ph $.
 	fcbvex_1 $f wff ps $.
 	fcbvex_2 $f set x $.
@@ -724,6 +954,10 @@ $( Implicit substitution of ` y ` for ` x ` into a theorem.  (Contributed
        by Raph Levien, 9-Jul-2003.)  (Revised by Mario Carneiro,
        3-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fchvar_0 $f wff ph $.
 	fchvar_1 $f wff ps $.
 	fchvar_2 $f set x $.
@@ -738,6 +972,9 @@ $( A variable introduction law for equality.  Lemma 15 of [Monk2] p. 109,
      (making the proof longer).  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fequvini_0 $f set x $.
 	fequvini_1 $f set y $.
 	fequvini_2 $f set z $.
@@ -747,6 +984,9 @@ $( A variable elimination law for equality with no distinct variable
      requirements.  (Compare ~ equvini .)  (Contributed by NM, 1-Mar-2013.)
      (Proof shortened by Mario Carneiro, 17-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fequveli_0 $f set x $.
 	fequveli_1 $f set y $.
 	fequveli_2 $f set z $.
@@ -756,6 +996,9 @@ $( Two ways of expressing substitution when ` y ` is not free in ` ph ` .
        (Contributed by NM, 25-Apr-2008.)  (Revised by Mario Carneiro,
        4-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fequs45f_0 $f wff ph $.
 	fequs45f_1 $f set x $.
 	fequs45f_2 $f set y $.
@@ -765,6 +1008,10 @@ $}
 $( A version of ~ spim with a distinct variable requirement instead of a
        bound variable hypothesis.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x ps $.
 	fspimv_0 $f wff ph $.
 	fspimv_1 $f wff ps $.
@@ -776,6 +1023,12 @@ $}
 $( A "distinctor elimination" lemma with no restrictions on variables in
        the consequent.  (Contributed by NM, 8-Nov-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
 	$d u v $.
 	$d u x y $.
 	$d u w $.
@@ -791,6 +1044,10 @@ $( Recovery of ~ ax-11o from ~ ax11v .  This proof uses ~ ax-10 and
        ~ ax-11 .  TODO: figure out if this is useful, or if it should be
        simplified or eliminated.  (Contributed by NM, 2-Feb-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d z ph $.
@@ -806,6 +1063,10 @@ $( Derive ~ ax-11o from a hypothesis in the form of ~ ax-11 . ~ ax-10 and
        figure out if this is useful, or if it should be simplified or
        eliminated.  (Contributed by NM, 2-Feb-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d z ph $.
@@ -832,6 +1093,10 @@ $( Derivation of set.mm's original ~ ax-11o from ~ ax-10 and the shorter
        theorems specifically studying the latter's properties.  (Contributed by
        NM, 3-Feb-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d z ph $.
@@ -843,6 +1108,9 @@ ${
 $}
 $( A bidirectional version of ~ ax11o .  (Contributed by NM, 30-Jun-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fax11b_0 $f wff ph $.
 	fax11b_1 $f set x $.
 	fax11b_2 $f set y $.
@@ -851,6 +1119,9 @@ $}
 $( Lemma used in proofs of substitution properties.  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fequs5_0 $f wff ph $.
 	fequs5_1 $f set x $.
 	fequs5_2 $f set y $.
@@ -859,6 +1130,11 @@ $}
 $( Version of ~ dvelimv without any variable restrictions.  (Contributed by
        NM, 1-Oct-2002.)  (Revised by Mario Carneiro, 6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fdvelimf_0 $f wff ph $.
 	fdvelimf_1 $f wff ps $.
 	fdvelimf_2 $f set x $.
@@ -872,6 +1148,10 @@ $}
 $( Specialization, using implicit substitution.  (Contributed by NM,
        30-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x ps $.
 	fspv_0 $f wff ph $.
 	fspv_1 $f wff ps $.
@@ -883,6 +1163,10 @@ $}
 $( Distinct-variable version of ~ spime .  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x ph $.
 	fspimev_0 $f wff ph $.
 	fspimev_1 $f wff ps $.
@@ -894,6 +1178,10 @@ $}
 $( Inference from existential specialization, using implicit substitution.
        (Contributed by NM, 19-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x ps $.
 	fspeiv_0 $f wff ph $.
 	fspeiv_1 $f wff ps $.
@@ -906,6 +1194,9 @@ $}
 $( A variable introduction law for equality.  Lemma 15 of [Monk2] p. 109.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	fequvin_0 $f set x $.
@@ -916,6 +1207,10 @@ $}
 $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d y ph $.
 	$d x ps $.
 	fcbvalv_0 $f wff ph $.
@@ -928,6 +1223,10 @@ $}
 $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d y ph $.
 	$d x ps $.
 	fcbvexv_0 $f wff ph $.
@@ -941,6 +1240,12 @@ $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 22-Dec-2003.)  (Revised by Mario Carneiro,
        6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d y x $.
 	$d y z $.
 	$d w x $.
@@ -962,6 +1267,12 @@ $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 14-Sep-2003.)  (Revised by Mario Carneiro,
        6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d y x $.
 	$d y z $.
 	$d w x $.
@@ -982,6 +1293,12 @@ $}
 $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 4-Feb-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d z w ph $.
 	$d x y ps $.
 	$d x w $.
@@ -998,6 +1315,12 @@ $}
 $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 26-Jul-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d z w ph $.
 	$d x y ps $.
 	$d x w $.
@@ -1015,6 +1338,11 @@ $( Deduction used to change bound variables, using implicit substitution,
        particularly useful in conjunction with ~ dvelim .  (Contributed by NM,
        2-Jan-2002.)  (Revised by Mario Carneiro, 6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	$d x ph $.
 	$d x ch $.
 	fcbvald_0 $f wff ph $.
@@ -1031,6 +1359,11 @@ $( Deduction used to change bound variables, using implicit substitution,
        particularly useful in conjunction with ~ dvelim .  (Contributed by NM,
        2-Jan-2002.)  (Revised by Mario Carneiro, 6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	$d x ph $.
 	$d x ch $.
 	fcbvexd_0 $f wff ph $.
@@ -1047,6 +1380,11 @@ $( Rule used to change the bound variable in a universal quantifier with
        implicit substitution.  Deduction form.  (Contributed by David Moews,
        1-May-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	$d ps y $.
 	$d ch x $.
 	$d ph x $.
@@ -1063,6 +1401,11 @@ $( Rule used to change the bound variable in an existential quantifier with
        implicit substitution.  Deduction form.  (Contributed by David Moews,
        1-May-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	$d ps y $.
 	$d ch x $.
 	$d ph x $.
@@ -1078,9 +1421,18 @@ $}
 $( Define temporary individual variables. $)
 $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 26-Jul-1995.) $)
-$v f $.
-$v g $.
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
+	$v f $.
+	$v g $.
 	$d w z ch $.
 	$d u v ph $.
 	$d x y ps $.
@@ -1106,6 +1458,10 @@ $}
 $( Implicit substitution of ` y ` for ` x ` into a theorem.  (Contributed
        by NM, 20-Apr-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x ps $.
 	fchvarv_0 $f wff ph $.
 	fchvarv_1 $f wff ps $.
@@ -1123,6 +1479,9 @@ $( When the class variables in definition ~ df-clel are replaced with set
        Proof Explorer Home Page and shouldn't be changed.  (Contributed by NM,
        28-Jan-2004.)  (Proof modification is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	fcleljust_0 $f set x $.
@@ -1137,6 +1496,9 @@ $( When the class variables in definition ~ df-clel are replaced with set
        variables in ~ wcel .  (Contributed by NM, 28-Jan-2004.)  (Revised by
        Mario Carneiro, 21-Dec-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	fcleljustALT_0 $f set x $.
@@ -1159,6 +1521,11 @@ $( This theorem can be used to eliminate a distinct variable restriction on
        restrictions), ~ dvelimhw (that avoids ~ ax-12 ), and ~ dvelimALT (that
        avoids ~ ax-10 ).  (Contributed by NM, 23-Nov-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d z ps $.
 	fdvelim_0 $f wff ph $.
 	fdvelim_1 $f wff ps $.
@@ -1172,6 +1539,11 @@ $}
 $( Version of ~ dvelim using "not free" notation.  (Contributed by Mario
        Carneiro, 9-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d z ps $.
 	fdvelimnf_0 $f wff ph $.
 	fdvelimnf_1 $f wff ps $.
@@ -1185,6 +1557,10 @@ $}
 $( Quantifier introduction when one pair of variables is distinct.
        (Contributed by NM, 2-Jan-2002.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w z x $.
 	$d w y $.
 	idveeq1_0 $f set w $.
@@ -1196,6 +1572,10 @@ $}
 $( Quantifier introduction when one pair of variables is distinct.
        (Contributed by NM, 2-Jan-2002.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w z x $.
 	$d w y $.
 	idveel1_0 $f set w $.
@@ -1207,6 +1587,10 @@ $}
 $( Quantifier introduction when one pair of variables is distinct.
        (Contributed by NM, 2-Jan-2002.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w z x $.
 	$d w y $.
 	idveel2_0 $f set w $.
@@ -1227,6 +1611,10 @@ $( Axiom ~ ax-15 is redundant if we assume ~ ax-17 .  Remark 9.6 in
        distinct variable requirements.  (Contributed by NM, 29-Jun-1995.)
        (Proof modification is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w y $.
 	$d w z $.
 	$d w x $.
@@ -1240,6 +1628,10 @@ $( Formula-building lemma for use with the Distinctor Reduction Theorem.
      Part of Theorem 9.4 of [Megill] p. 448 (p. 16 of preprint).  (Contributed
      by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fdrsb1_0 $f wff ph $.
 	fdrsb1_1 $f set x $.
 	fdrsb1_2 $f set y $.
@@ -1249,6 +1641,9 @@ $}
 $( One direction of a simplified definition of substitution.  (Contributed by
      NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsb2_0 $f wff ph $.
 	fsb2_1 $f set x $.
 	fsb2_2 $f set y $.
@@ -1262,6 +1657,9 @@ $( The specialization axiom of standard predicate calculus.  It states that
      [Mendelson] p. 69.  See also ~ spsbc and ~ rspsbc .  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fstdpc4_0 $f wff ph $.
 	fstdpc4_1 $f set x $.
 	fstdpc4_2 $f set y $.
@@ -1270,6 +1668,9 @@ $}
 $( Substitution has no effect on a non-free variable.  (Contributed by NM,
      30-May-2009.)  (Revised by Mario Carneiro, 12-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsbft_0 $f wff ph $.
 	fsbft_1 $f set x $.
 	fsbft_2 $f set y $.
@@ -1279,6 +1680,9 @@ $( Substitution for a variable not free in a wff does not affect it.
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        4-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsbf_0 $f wff ph $.
 	fsbf_1 $f set x $.
 	fsbf_2 $f set y $.
@@ -1288,6 +1692,9 @@ $}
 $( Substitution for a variable not free in a wff does not affect it.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsbh_0 $f wff ph $.
 	fsbh_1 $f set x $.
 	fsbh_2 $f set y $.
@@ -1297,6 +1704,9 @@ $}
 $( Substitution has no effect on a bound variable.  (Contributed by NM,
      1-Jul-2005.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsbf2_0 $f wff ph $.
 	fsbf2_1 $f set x $.
 	fsbf2_2 $f set y $.
@@ -1306,6 +1716,9 @@ $( Equivalence involving substitution for a variable not free.
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        4-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsb6x_0 $f wff ph $.
 	fsb6x_1 $f set x $.
 	fsb6x_2 $f set y $.
@@ -1315,6 +1728,9 @@ $}
 $( If ` x ` is not free in ` ph ` , it is not free in ` [ y / x ] ph ` .
        (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fnfs1f_0 $f wff ph $.
 	fnfs1f_1 $f set x $.
 	fnfs1f_2 $f set y $.
@@ -1324,6 +1740,10 @@ $}
 $( Substitution does not change an identical variable specifier.
      (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	fsbequ5_0 $f set x $.
 	fsbequ5_1 $f set y $.
 	fsbequ5_2 $f set z $.
@@ -1333,6 +1753,10 @@ $}
 $( Substitution does not change a distinctor.  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	fsbequ6_0 $f set x $.
 	fsbequ6_1 $f set y $.
 	fsbequ6_2 $f set z $.
@@ -1343,6 +1767,9 @@ $( A substitution into a theorem remains true.  (See ~ chvar and ~ chvarv
        for versions using implicit substitution.)  (Contributed by NM,
        21-Jan-2004.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsbt_0 $f wff ph $.
 	fsbt_1 $f set x $.
 	fsbt_2 $f set y $.
@@ -1352,6 +1779,8 @@ $}
 $( Substitution applied to an atomic wff.  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
 	fequsb1_0 $f set x $.
 	fequsb1_1 $f set y $.
 	equsb1 $p |- [ y / x ] x = y $= fequsb1_0 sup_set_class fequsb1_1 sup_set_class wceq fequsb1_0 sup_set_class fequsb1_1 sup_set_class wceq wi fequsb1_0 sup_set_class fequsb1_1 sup_set_class wceq fequsb1_0 fequsb1_1 wsb fequsb1_0 fequsb1_0 sup_set_class fequsb1_1 sup_set_class wceq fequsb1_0 fequsb1_1 sb2 fequsb1_0 sup_set_class fequsb1_1 sup_set_class wceq id mpg $.
@@ -1359,6 +1788,8 @@ $}
 $( Substitution applied to an atomic wff.  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
 	fequsb2_0 $f set x $.
 	fequsb2_1 $f set y $.
 	equsb2 $p |- [ y / x ] y = x $= fequsb2_0 sup_set_class fequsb2_1 sup_set_class wceq fequsb2_1 sup_set_class fequsb2_0 sup_set_class wceq wi fequsb2_1 sup_set_class fequsb2_0 sup_set_class wceq fequsb2_0 fequsb2_1 wsb fequsb2_0 fequsb2_1 sup_set_class fequsb2_0 sup_set_class wceq fequsb2_0 fequsb2_1 sb2 fequsb2_0 fequsb2_1 equcomi mpg $.
@@ -1367,6 +1798,11 @@ $( Conversion of implicit substitution to explicit substitution (deduction
        version of ~ sbie ).  (Contributed by NM, 30-Jun-1994.)  (Revised by
        Mario Carneiro, 4-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	fsbied_0 $f wff ph $.
 	fsbied_1 $f wff ps $.
 	fsbied_2 $f wff ch $.
@@ -1380,6 +1816,11 @@ $}
 $( Conversion of implicit substitution to explicit substitution (deduction
        version of ~ sbie ).  (Contributed by NM, 7-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	$d x ph $.
 	$d x ch $.
 	fsbiedv_0 $f wff ph $.
@@ -1394,6 +1835,10 @@ $( Conversion of implicit substitution to explicit substitution.
        (Contributed by NM, 30-Jun-1994.)  (Revised by Mario Carneiro,
        4-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fsbie_0 $f wff ph $.
 	fsbie_1 $f wff ps $.
 	fsbie_2 $f set x $.
@@ -1406,6 +1851,9 @@ $( Equivalence for substitution when ` y ` is not free in ` ph ` .
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        4-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsb6f_0 $f wff ph $.
 	fsb6f_1 $f set x $.
 	fsb6f_2 $f set y $.
@@ -1416,6 +1864,9 @@ $( Equivalence for substitution when ` y ` is not free in ` ph ` .
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        4-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsb5f_0 $f wff ph $.
 	fsb5f_1 $f set x $.
 	fsb5f_2 $f set y $.
@@ -1425,6 +1876,9 @@ $}
 $( Special case of a bound-variable hypothesis builder for substitution.
      (Contributed by NM, 2-Feb-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fhbsb2a_0 $f wff ph $.
 	fhbsb2a_1 $f set x $.
 	fhbsb2a_2 $f set y $.
@@ -1433,6 +1887,9 @@ $}
 $( Special case of a bound-variable hypothesis builder for substitution.
      (Contributed by NM, 2-Feb-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fhbsb2e_0 $f wff ph $.
 	fhbsb2e_1 $f set x $.
 	fhbsb2e_2 $f set y $.
@@ -1441,6 +1898,9 @@ $}
 $( If ` y ` is not free in ` ph ` , ` x ` is not free in
        ` [ y / x ] ph ` .  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fhbsb3_0 $f wff ph $.
 	fhbsb3_1 $f set x $.
 	fhbsb3_2 $f set y $.
@@ -1450,6 +1910,9 @@ $}
 $( If ` y ` is not free in ` ph ` , ` x ` is not free in
        ` [ y / x ] ph ` .  (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fnfs1_0 $f wff ph $.
 	fnfs1_1 $f set x $.
 	fnfs1_2 $f set y $.
@@ -1459,6 +1922,9 @@ $}
 $( Proof of older axiom ~ ax-16 .  (Contributed by NM, 8-Nov-2006.)
        (Revised by NM, 22-Sep-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fax16_0 $f wff ph $.
 	fax16_1 $f set x $.
@@ -1468,6 +1934,11 @@ $}
 $( Inference with ~ ax16 as its conclusion.  (Contributed by NM,
        20-May-2008.)  (Proof modification is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	$d z ph $.
 	fax16i_0 $f wff ph $.
@@ -1482,6 +1953,10 @@ $}
 $( Alternate proof of ~ ax16 .  (Contributed by NM, 17-May-2008.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	$d z ph $.
 	iax16ALT_0 $f set z $.
@@ -1493,6 +1968,10 @@ $}
 $( Alternate proof of ~ ax16 .  (Contributed by NM, 8-Nov-2006.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y $.
 	$d z ph $.
 	iax16ALT2_0 $f set z $.
@@ -1506,6 +1985,10 @@ $( A generalization of axiom ~ ax-16 .  Alternate proof of ~ a16g that uses
        Salmon, 25-May-2011.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y $.
 	fa16gALT_0 $f wff ph $.
 	fa16gALT_1 $f set x $.
@@ -1515,6 +1998,10 @@ ${
 $}
 $( A generalization of axiom ~ ax-16 .  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y $.
 	fa16gb_0 $f wff ph $.
 	fa16gb_1 $f set x $.
@@ -1526,6 +2013,10 @@ $( If ~ dtru is false, then there is only one element in the universe, so
        everything satisfies ` F/ ` .  (Contributed by Mario Carneiro,
        7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y $.
 	fa16nf_0 $f wff ph $.
 	fa16nf_1 $f set x $.
@@ -1536,6 +2027,9 @@ $}
 $( One direction of a simplified definition of substitution when variables
      are distinct.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsb3_0 $f wff ph $.
 	fsb3_1 $f set x $.
 	fsb3_2 $f set y $.
@@ -1544,6 +2038,9 @@ $}
 $( One direction of a simplified definition of substitution when variables
      are distinct.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsb4_0 $f wff ph $.
 	fsb4_1 $f set x $.
 	fsb4_2 $f set y $.
@@ -1552,6 +2049,9 @@ $}
 $( Simplified definition of substitution when variables are distinct.
      (Contributed by NM, 27-May-1997.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsb4b_0 $f wff ph $.
 	fsb4b_1 $f set x $.
 	fsb4b_2 $f set y $.
@@ -1561,6 +2061,9 @@ $( An alternate definition of proper substitution that, like ~ df-sb , mixes
      free and bound variables to avoid distinct variable requirements.
      (Contributed by NM, 17-Feb-2005.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fdfsb2_0 $f wff ph $.
 	fdfsb2_1 $f set x $.
 	fdfsb2_2 $f set y $.
@@ -1570,6 +2073,9 @@ $( An alternate definition of proper substitution ~ df-sb that uses only
      primitive connectives (no defined terms) on the right-hand side.
      (Contributed by NM, 6-Mar-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fdfsb3_0 $f wff ph $.
 	fdfsb3_1 $f set x $.
 	fdfsb3_2 $f set y $.
@@ -1578,6 +2084,9 @@ $}
 $( Bound-variable hypothesis builder for substitution.  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fhbsb2_0 $f wff ph $.
 	fhbsb2_1 $f set x $.
 	fhbsb2_2 $f set y $.
@@ -1586,6 +2095,9 @@ $}
 $( Bound-variable hypothesis builder for substitution.  (Contributed by Mario
      Carneiro, 4-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fnfsb2_0 $f wff ph $.
 	fnfsb2_1 $f set x $.
 	fnfsb2_2 $f set y $.
@@ -1593,6 +2105,10 @@ ${
 $}
 $( An equality theorem for substitution.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fsbequi_0 $f wff ph $.
 	fsbequi_1 $f set x $.
 	fsbequi_2 $f set y $.
@@ -1603,6 +2119,10 @@ $( An equality theorem for substitution.  Used in proof of Theorem 9.7 in
      [Megill] p. 449 (p. 16 of the preprint).  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fsbequ_0 $f wff ph $.
 	fsbequ_1 $f set x $.
 	fsbequ_2 $f set y $.
@@ -1613,6 +2133,10 @@ $( Formula-building lemma for use with the Distinctor Reduction Theorem.
      Part of Theorem 9.4 of [Megill] p. 448 (p. 16 of preprint).  (Contributed
      by NM, 27-Feb-2005.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fdrsb2_0 $f wff ph $.
 	fdrsb2_1 $f set x $.
 	fdrsb2_2 $f set y $.
@@ -1622,6 +2146,9 @@ $}
 $( Negation inside and outside of substitution are equivalent.  (Contributed
      by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsbn_0 $f wff ph $.
 	fsbn_1 $f set x $.
 	fsbn_2 $f set y $.
@@ -1630,6 +2157,10 @@ $}
 $( Removal of implication from substitution.  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fsbi1_0 $f wff ph $.
 	fsbi1_1 $f wff ps $.
 	fsbi1_2 $f set x $.
@@ -1639,6 +2170,10 @@ $}
 $( Introduction of implication into substitution.  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fsbi2_0 $f wff ph $.
 	fsbi2_1 $f wff ps $.
 	fsbi2_2 $f set x $.
@@ -1648,6 +2183,10 @@ $}
 $( Implication inside and outside of substitution are equivalent.
      (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fsbim_0 $f wff ph $.
 	fsbim_1 $f wff ps $.
 	fsbim_2 $f set x $.
@@ -1657,6 +2196,10 @@ $}
 $( Logical OR inside and outside of substitution are equivalent.
      (Contributed by NM, 29-Sep-2002.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fsbor_0 $f wff ph $.
 	fsbor_1 $f wff ps $.
 	fsbor_2 $f set x $.
@@ -1667,6 +2210,10 @@ $( Substitution with a variable not free in antecedent affects only the
        consequent.  (Contributed by NM, 5-Aug-1993.)  (Revised by Mario
        Carneiro, 4-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fsbrim_0 $f wff ph $.
 	fsbrim_1 $f wff ps $.
 	fsbrim_2 $f set x $.
@@ -1678,6 +2225,10 @@ $( Substitution with a variable not free in consequent affects only the
        antecedent.  (Contributed by NM, 14-Nov-2013.)  (Revised by Mario
        Carneiro, 4-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fsblim_0 $f wff ph $.
 	fsblim_1 $f wff ps $.
 	fsblim_2 $f set x $.
@@ -1688,6 +2239,10 @@ $}
 $( Conjunction inside and outside of a substitution are equivalent.
      (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fsban_0 $f wff ph $.
 	fsban_1 $f wff ps $.
 	fsban_2 $f set x $.
@@ -1697,6 +2252,11 @@ $}
 $( Conjunction inside and outside of a substitution are equivalent.
      (Contributed by NM, 14-Dec-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	fsb3an_0 $f wff ph $.
 	fsb3an_1 $f wff ps $.
 	fsb3an_2 $f wff ch $.
@@ -1707,6 +2267,10 @@ $}
 $( Equivalence inside and outside of a substitution are equivalent.
      (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fsbbi_0 $f wff ph $.
 	fsbbi_1 $f wff ps $.
 	fsbbi_2 $f set x $.
@@ -1716,6 +2280,11 @@ $}
 $( Introduce left biconditional inside of a substitution.  (Contributed by
        NM, 19-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	fsblbis_0 $f wff ph $.
 	fsblbis_1 $f wff ps $.
 	fsblbis_2 $f wff ch $.
@@ -1727,6 +2296,11 @@ $}
 $( Introduce right biconditional inside of a substitution.  (Contributed by
        NM, 18-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	fsbrbis_0 $f wff ph $.
 	fsbrbis_1 $f wff ps $.
 	fsbrbis_2 $f wff ch $.
@@ -1738,6 +2312,11 @@ $}
 $( Introduce right biconditional inside of a substitution.  (Contributed by
        NM, 18-Aug-1993.)  (Revised by Mario Carneiro, 4-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	fsbrbif_0 $f wff ph $.
 	fsbrbif_1 $f wff ps $.
 	fsbrbif_2 $f wff ch $.
@@ -1749,6 +2328,9 @@ ${
 $}
 $( A specialization theorem.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fspsbe_0 $f wff ph $.
 	fspsbe_1 $f set x $.
 	fspsbe_2 $f set y $.
@@ -1757,6 +2339,10 @@ $}
 $( Specialization of implication.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fspsbim_0 $f wff ph $.
 	fspsbim_1 $f wff ps $.
 	fspsbim_2 $f set x $.
@@ -1765,6 +2351,10 @@ ${
 $}
 $( Specialization of biconditional.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fspsbbi_0 $f wff ph $.
 	fspsbbi_1 $f wff ps $.
 	fspsbbi_2 $f set x $.
@@ -1774,6 +2364,11 @@ $}
 $( Deduction substituting both sides of a biconditional.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	fsbbid_0 $f wff ph $.
 	fsbbid_1 $f wff ps $.
 	fsbbid_2 $f wff ch $.
@@ -1786,6 +2381,9 @@ $}
 $( Elimination of equality from antecedent after substitution.  (Contributed
      by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsbequ8_0 $f wff ph $.
 	fsbequ8_1 $f set x $.
 	fsbequ8_2 $f set y $.
@@ -1795,6 +2393,10 @@ $( A variable not free remains so after substitution with a distinct variable
      (closed form of ~ nfsb4 ).  (Contributed by NM, 7-Apr-2004.)  (Revised by
      Mario Carneiro, 4-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fnfsb4t_0 $f wff ph $.
 	fnfsb4t_1 $f set x $.
 	fnfsb4t_2 $f set y $.
@@ -1805,6 +2407,10 @@ $( A variable not free remains so after substitution with a distinct
        variable.  (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        4-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fnfsb4_0 $f wff ph $.
 	fnfsb4_1 $f set x $.
 	fnfsb4_2 $f set y $.
@@ -1816,6 +2422,12 @@ $( Deduction form of ~ dvelimf .  This version may be useful if we want to
        avoid ~ ax-17 and use ~ ax-16 instead.  (Contributed by NM,
        7-Apr-2004.)  (Revised by Mario Carneiro, 6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fdvelimdf_0 $f wff ph $.
 	fdvelimdf_1 $f wff ps $.
 	fdvelimdf_2 $f wff ch $.
@@ -1831,6 +2443,9 @@ ${
 $}
 $( A composition law for substitution.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsbco_0 $f wff ph $.
 	fsbco_1 $f set x $.
 	fsbco_2 $f set y $.
@@ -1839,6 +2454,9 @@ $}
 $( An identity law for substitution.  (Contributed by NM, 5-Aug-1993.)
        (Revised by Mario Carneiro, 6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsbid2_0 $f wff ph $.
 	fsbid2_1 $f set x $.
 	fsbid2_2 $f set y $.
@@ -1848,6 +2466,9 @@ $}
 $( An idempotent law for substitution.  (Contributed by NM, 30-Jun-1994.)
      (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsbidm_0 $f wff ph $.
 	fsbidm_1 $f set x $.
 	fsbidm_2 $f set y $.
@@ -1856,6 +2477,10 @@ $}
 $( A composition law for substitution.  (Contributed by NM, 30-Jun-1994.)
        (Revised by Mario Carneiro, 6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fsbco2_0 $f wff ph $.
 	fsbco2_1 $f set x $.
 	fsbco2_2 $f set y $.
@@ -1866,6 +2491,11 @@ $}
 $( A composition law for substitution.  (Contributed by NM, 5-Aug-1993.)
        (Revised by Mario Carneiro, 6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fsbco2d_0 $f wff ph $.
 	fsbco2d_1 $f wff ps $.
 	fsbco2d_2 $f set x $.
@@ -1878,6 +2508,10 @@ ${
 $}
 $( A composition law for substitution.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fsbco3_0 $f wff ph $.
 	fsbco3_1 $f set x $.
 	fsbco3_2 $f set y $.
@@ -1887,6 +2521,10 @@ $}
 $( A commutativity law for substitution.  (Contributed by NM,
      27-May-1997.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fsbcom_0 $f wff ph $.
 	fsbcom_1 $f set x $.
 	fsbcom_2 $f set y $.
@@ -1896,6 +2534,9 @@ $}
 $( Reversed substitution.  (Contributed by NM, 3-Feb-2005.)  (Revised by
        Mario Carneiro, 6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsb5rf_0 $f wff ph $.
 	fsb5rf_1 $f set x $.
 	fsb5rf_2 $f set y $.
@@ -1905,6 +2546,9 @@ $}
 $( Reversed substitution.  (Contributed by NM, 5-Aug-1993.)  (Revised by
        Mario Carneiro, 6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsb6rf_0 $f wff ph $.
 	fsb6rf_1 $f set x $.
 	fsb6rf_2 $f set y $.
@@ -1914,6 +2558,9 @@ $}
 $( Substitution of variable in universal quantifier.  (Contributed by NM,
        5-Aug-1993.)  (Revised by Mario Carneiro, 6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsb8_0 $f wff ph $.
 	fsb8_1 $f set x $.
 	fsb8_2 $f set y $.
@@ -1923,6 +2570,9 @@ $}
 $( Substitution of variable in existential quantifier.  (Contributed by NM,
        12-Aug-1993.)  (Revised by Mario Carneiro, 6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsb8e_0 $f wff ph $.
 	fsb8e_1 $f set x $.
 	fsb8e_2 $f set y $.
@@ -1932,6 +2582,9 @@ $}
 $( Commutation of quantification and substitution variables.  (Contributed by
      NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsb9i_0 $f wff ph $.
 	fsb9i_1 $f set x $.
 	fsb9i_2 $f set y $.
@@ -1940,6 +2593,9 @@ $}
 $( Commutation of quantification and substitution variables.  (Contributed by
      NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fsb9_0 $f wff ph $.
 	fsb9_1 $f set x $.
 	fsb9_2 $f set y $.
@@ -1949,6 +2605,9 @@ $( This is a version of ~ ax-11o when the variables are distinct.  Axiom
        (C8) of [Monk2] p. 105.  See theorem ~ ax11v2 for the rederivation of
        ~ ax-11o from this theorem.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fax11v_0 $f wff ph $.
 	fax11v_1 $f set x $.
@@ -1960,6 +2619,9 @@ $( Two equivalent ways of expressing the proper substitution of ` y ` for
        [Quine] p. 40.  The proof does not involve ~ df-sb .  (Contributed by
        NM, 14-Apr-2008.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fsb56_0 $f wff ph $.
 	fsb56_1 $f set x $.
@@ -1970,6 +2632,9 @@ $( Equivalence for substitution.  Compare Theorem 6.2 of [Quine] p. 40.
        Also proved as Lemmas 16 and 17 of [Tarski] p. 70.  (Contributed by NM,
        18-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fsb6_0 $f wff ph $.
 	fsb6_1 $f set x $.
@@ -1979,6 +2644,9 @@ $}
 $( Equivalence for substitution.  Similar to Theorem 6.1 of [Quine] p. 40.
        (Contributed by NM, 18-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fsb5_0 $f wff ph $.
 	fsb5_1 $f set x $.
@@ -1988,6 +2656,9 @@ $}
 $( Lemma for ~ equsb3 .  (Contributed by Raph Levien and FL, 4-Dec-2005.)
        (Proof shortened by Andrew Salmon, 14-Jun-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d y z $.
 	$d x y $.
 	fequsb3lem_0 $f set x $.
@@ -1998,6 +2669,10 @@ $}
 $( Substitution applied to an atomic wff.  (Contributed by Raph Levien and
        FL, 4-Dec-2005.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w y z $.
 	$d w x $.
 	iequsb3_0 $f set w $.
@@ -2009,6 +2684,10 @@ $}
 $( Substitution applied to an atomic membership wff.  (Contributed by NM,
        7-Nov-2006.)  (Proof shortened by Andrew Salmon, 14-Jun-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w y z $.
 	$d w x $.
 	ielsb3_0 $f set w $.
@@ -2021,6 +2700,10 @@ $( Substitution applied to an atomic membership wff.  (Contributed by
        Rodolfo Medina, 3-Apr-2010.)  (Proof shortened by Andrew Salmon,
        14-Jun-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w y z $.
 	$d w x $.
 	ielsb4_0 $f set w $.
@@ -2032,6 +2715,9 @@ $}
 $( ` x ` is not free in ` [ y / x ] ph ` when ` x ` and ` y ` are
        distinct.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fhbs1_0 $f wff ph $.
 	fhbs1_1 $f set x $.
@@ -2041,6 +2727,9 @@ $}
 $( ` x ` is not free in ` [ y / x ] ph ` when ` x ` and ` y ` are
        distinct.  (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fnfs1v_0 $f wff ph $.
 	fnfs1v_1 $f set x $.
@@ -2050,6 +2739,9 @@ $}
 $( Two ways of expressing " ` x ` is (effectively) not free in ` ph ` ."
        (Contributed by NM, 29-May-2009.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d y ph $.
 	fsbhb_0 $f wff ph $.
 	fsbhb_1 $f set x $.
@@ -2060,6 +2752,10 @@ $( Two ways of expressing " ` x ` is (effectively) not free in ` ph ` ."
        (Contributed by G&eacute;rard Lang, 14-Nov-2013.)  (Revised by Mario
        Carneiro, 6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	$d y z ph $.
 	fsbnf2_0 $f wff ph $.
@@ -2072,6 +2768,10 @@ $( If ` z ` is not free in ` ph ` , it is not free in ` [ y / x ] ph ` when
        ` y ` and ` z ` are distinct.  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d y z $.
 	fnfsb_0 $f wff ph $.
 	fnfsb_1 $f set x $.
@@ -2083,6 +2783,10 @@ $}
 $( If ` z ` is not free in ` ph ` , it is not free in ` [ y / x ] ph ` when
        ` y ` and ` z ` are distinct.  (Contributed by NM, 12-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d y z $.
 	fhbsb_0 $f wff ph $.
 	fhbsb_1 $f set x $.
@@ -2093,6 +2797,11 @@ ${
 $}
 $( Deduction version of ~ nfsb .  (Contributed by NM, 15-Feb-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d y z $.
 	fnfsbd_0 $f wff ph $.
 	fnfsbd_1 $f wff ps $.
@@ -2106,6 +2815,11 @@ $}
 $( Equivalence for double substitution.  (Contributed by NM,
        3-Feb-2005.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z $.
 	$d w y $.
 	f2sb5_0 $f wff ph $.
@@ -2118,6 +2832,11 @@ $}
 $( Equivalence for double substitution.  (Contributed by NM,
        3-Feb-2005.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z $.
 	$d w y $.
 	f2sb6_0 $f wff ph $.
@@ -2131,6 +2850,11 @@ $( Commutativity law for substitution.  Used in proof of Theorem 9.7 of
        [Megill] p. 449 (p. 16 of the preprint).  (Contributed by NM,
        27-May-1997.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x z $.
 	$d x w $.
 	$d y z $.
@@ -2144,6 +2868,11 @@ $}
 $( Theorem *11.07 in [WhiteheadRussell] p. 159.  (Contributed by Andrew
        Salmon, 17-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d ph x y z $.
 	$d w x z $.
 	fpm11.07_0 $f wff ph $.
@@ -2155,6 +2884,9 @@ ${
 $}
 $( Equivalence for substitution.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fsb6a_0 $f wff ph $.
 	fsb6a_1 $f set x $.
@@ -2164,6 +2896,11 @@ $}
 $( Reversed double substitution.  (Contributed by NM, 3-Feb-2005.)
        (Revised by Mario Carneiro, 6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y $.
 	$d x w $.
 	$d y z $.
@@ -2180,6 +2917,11 @@ $}
 $( Reversed double substitution.  (Contributed by NM, 3-Feb-2005.)
        (Revised by Mario Carneiro, 6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y $.
 	$d x w $.
 	$d y z $.
@@ -2204,6 +2946,10 @@ $( An alternate definition of proper substitution ~ df-sb .  By introducing
        ~ sb7h provides a version where ` ph ` and ` z ` don't have to be
        distinct.  (Contributed by NM, 28-Jan-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d z ph $.
@@ -2221,6 +2967,10 @@ $( This version of ~ dfsb7 does not require that ` ph ` and ` z ` be
        is distasteful to some logicians.)  (Contributed by NM, 26-Jul-2006.)
        (Revised by Mario Carneiro, 6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	fsb7f_0 $f wff ph $.
@@ -2238,6 +2988,10 @@ $( This version of ~ dfsb7 does not require that ` ph ` and ` z ` be
        is distasteful to some logicians.)  (Contributed by NM, 26-Jul-2006.)
        (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	fsb7h_0 $f wff ph $.
@@ -2252,6 +3006,10 @@ $( Hao Wang's identity axiom P6 in Irving Copi, _Symbolic Logic_ (5th ed.,
        for identity from which the usual ones can be derived.  (Contributed by
        NM, 9-May-2005.)  (Revised by Mario Carneiro, 6-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y $.
 	fsb10f_0 $f wff ph $.
 	fsb10f_1 $f set x $.
@@ -2264,6 +3022,9 @@ $( An identity law for substitution.  Used in proof of Theorem 9.7 of
        [Megill] p. 449 (p. 16 of the preprint).  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x ph $.
 	fsbid2v_0 $f wff ph $.
 	fsbid2v_1 $f set x $.
@@ -2272,6 +3033,9 @@ ${
 $}
 $( Elimination of substitution.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d x ph $.
 	fsbelx_0 $f wff ph $.
@@ -2284,6 +3048,11 @@ $( Note:  A more general case could also be proved with
        difficulty. $)
 $( Elimination of double substitution.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z $.
 	$d w y $.
 	$d x y ph $.
@@ -2298,6 +3067,10 @@ $( A theorem used in elimination of disjoint variable restriction on ` x `
        and ` y ` by replacing it with a distinctor ` -. A. x x = z ` .
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y $.
 	fsbal1_0 $f wff ph $.
 	fsbal1_1 $f set x $.
@@ -2308,6 +3081,10 @@ $}
 $( Move universal quantifier in and out of substitution.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y $.
 	$d x z $.
 	fsbal_0 $f wff ph $.
@@ -2319,6 +3096,10 @@ $}
 $( Move existential quantifier in and out of substitution.  (Contributed by
        NM, 27-Sep-2003.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y $.
 	$d x z $.
 	fsbex_0 $f wff ph $.
@@ -2330,6 +3111,11 @@ $}
 $( Quantify with new variable inside substitution.  (Contributed by NM,
        18-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	fsbalv_0 $f wff ph $.
@@ -2343,6 +3129,9 @@ $}
 $( An equivalent expression for existence.  (Contributed by NM,
        2-Feb-2005.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	fexsb_0 $f wff ph $.
@@ -2353,6 +3142,9 @@ $}
 $( An equivalent expression for existence.  Obsolete as of 19-Jun-2017.
        (Contributed by NM, 2-Feb-2005.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	fexsbOLD_0 $f wff ph $.
@@ -2363,6 +3155,11 @@ $}
 $( An equivalent expression for double existence.  (Contributed by NM,
        2-Feb-2005.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z $.
 	$d y w $.
 	$d z w ph $.
@@ -2377,6 +3174,11 @@ $( Version of ~ dvelim that doesn't use ~ ax-10 .  (See ~ dvelimh for a
        version that doesn't use ~ ax-11 .)  (Contributed by NM, 17-May-2008.)
        (New usage is discouraged.)  (Proof modification is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d z ps $.
 	$d x z $.
 	$d y z $.
@@ -2392,6 +3194,10 @@ $}
 $( Move quantifier in and out of substitution.  (Contributed by NM,
        2-Jan-2002.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d z y $.
 	$d z x $.
 	fsbal2_0 $f wff ph $.

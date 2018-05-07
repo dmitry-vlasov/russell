@@ -9,6 +9,9 @@ $( Maps-to symbol $)
 $( Extend class notation to include ordered-pair class abstraction (class
      builder). $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fcopab_0 $f wff ph $.
 	fcopab_1 $f set x $.
 	fcopab_2 $f set y $.
@@ -17,6 +20,9 @@ $}
 $( Extend the definition of a class to include maps-to notation for defining
      a function via a rule. $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	fcmpt_0 $f set x $.
 	fcmpt_1 $f class A $.
 	fcmpt_2 $f class B $.
@@ -32,6 +38,10 @@ $( Define the class abstraction of a collection of ordered pairs.
 ` R = { <. x , y >. | ( x e. CC /\ y e. CC /\ ( x + 1 ) = y ) } -> 3 R 4 `
        ( ~ ex-opab ).  (Contributed by NM, 4-Jul-1994.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d z ph $.
@@ -49,6 +59,10 @@ $( Define maps-to notation for defining a function via a rule.  Read as
        Similar to the definition of mapping in [ChoquetDD] p. 2.  (Contributed
        by NM, 17-Feb-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -62,6 +76,10 @@ $( The collection of ordered pairs in a class is a subclass of it.
        (Contributed by NM, 27-Dec-1996.)  (Proof shortened by Andrew Salmon,
        9-Jul-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v R $.
 	$d x z R $.
 	$d y z R $.
 	iopabss_0 $f set z $.
@@ -74,6 +92,12 @@ $( Equivalent wff's yield equal ordered-pair class abstractions (deduction
        rule).  (Contributed by NM, 21-Feb-2004.)  (Proof shortened by Andrew
        Salmon, 9-Jul-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d z ph $.
@@ -93,6 +117,11 @@ $}
 $( Equivalent wff's yield equal ordered-pair class abstractions (deduction
        rule).  (Contributed by NM, 15-May-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
 	$d x ph $.
 	$d y ph $.
 	fopabbidv_0 $f wff ph $.
@@ -106,6 +135,11 @@ $}
 $( Equivalent wff's yield equal class abstractions.  (Contributed by NM,
        15-May-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d z ph $.
@@ -122,6 +156,11 @@ $( Bound-variable hypothesis builder for class abstraction.  (Contributed
        by NM, 1-Sep-1999.)  (Unnecessary distinct variable restrictions were
        removed by Andrew Salmon, 11-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x z w $.
 	$d y z w $.
 	$d ph w $.
@@ -137,6 +176,10 @@ $( The first abstraction variable in an ordered-pair class abstraction
        (class builder) is effectively not free.  (Contributed by NM,
        16-May-1995.)  (Revised by Mario Carneiro, 14-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d z ph $.
@@ -150,6 +193,10 @@ $( The second abstraction variable in an ordered-pair class abstraction
        (class builder) is effectively not free.  (Contributed by NM,
        16-May-1995.)  (Revised by Mario Carneiro, 14-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d z ph $.
@@ -163,6 +210,13 @@ $( Rule used to change bound variables in an ordered-pair class
        abstraction, using implicit substitution.  (Contributed by NM,
        14-Sep-2003.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
 	$d x y z w v $.
 	$d v ph $.
 	$d v ps $.
@@ -184,6 +238,12 @@ $( Rule used to change bound variables in an ordered-pair class
        abstraction, using implicit substitution.  (Contributed by NM,
        15-Oct-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z w $.
 	$d z w ph $.
 	$d x y ps $.
@@ -200,6 +260,13 @@ $( Change first bound variable in an ordered-pair class abstraction, using
        explicit substitution.  (Contributed by NM, 6-Oct-2004.)  (Revised by
        Mario Carneiro, 14-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
 	$d v w x y $.
 	$d v w y z $.
 	$d v w ph $.
@@ -219,6 +286,12 @@ $}
 $( Change second bound variable in an ordered-pair class abstraction, using
        explicit substitution.  (Contributed by NM, 22-Aug-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x y z $.
 	$d w ph $.
 	$d w ps $.
@@ -236,6 +309,11 @@ $}
 $( Change first bound variable in an ordered-pair class abstraction, using
        explicit substitution.  (Contributed by NM, 31-Jul-2003.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z w $.
 	$d z w ph $.
 	icbvopab1s_0 $f set w $.
@@ -249,6 +327,11 @@ $( Rule used to change the first bound variable in an ordered pair
        abstraction, using implicit substitution.  (Contributed by NM,
        31-Jul-2003.)  (Proof shortened by Eric Schmidt, 4-Apr-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y $.
 	$d y z $.
 	$d z ph $.
@@ -265,6 +348,12 @@ $( Rule used to change the second bound variable in an ordered pair
        abstraction, using implicit substitution.  (Contributed by NM,
        2-Sep-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z w $.
 	$d z w ph $.
 	$d y w ps $.
@@ -280,6 +369,13 @@ $}
 $( Move substitution into a class abstraction.  (Contributed by NM,
        6-Aug-2007.)  (Proof shortened by Mario Carneiro, 17-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v V $.
 	$d w y z A $.
 	$d w ph $.
 	$d w x y z $.
@@ -295,6 +391,11 @@ $}
 $( Union of two ordered pair class abstractions.  (Contributed by NM,
        30-Sep-2002.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d ph z $.
@@ -309,6 +410,12 @@ $}
 $( An equality theorem for the maps to notation.  (Contributed by Mario
        Carneiro, 16-Dec-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -325,6 +432,12 @@ $}
 $( An equality inference for the maps to notation.  (Contributed by Mario
          Carneiro, 26-Jan-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x ph $.
 	fmpteq12dva_0 $f wff ph $.
 	fmpteq12dva_1 $f set x $.
@@ -339,6 +452,12 @@ $}
 $( An equality inference for the maps to notation.  (Contributed by NM,
        24-Aug-2011.)  (Revised by Mario Carneiro, 16-Dec-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x ph $.
 	fmpteq12dv_0 $f wff ph $.
 	fmpteq12dv_1 $f set x $.
@@ -353,6 +472,11 @@ $}
 $( An equality theorem for the maps to notation.  (Contributed by NM,
        16-Dec-2013.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x A $.
 	$d x C $.
 	fmpteq12_0 $f set x $.
@@ -365,6 +489,10 @@ $}
 $( An equality theorem for the maps to notation.  (Contributed by Mario
        Carneiro, 16-Dec-2013.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	fmpteq1_0 $f set x $.
@@ -376,6 +504,11 @@ $}
 $( An equality theorem for the maps to notation.  (Contributed by Mario
        Carneiro, 11-Jun-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	fmpteq1d_0 $f wff ph $.
@@ -389,6 +522,10 @@ $}
 $( An equality inference for the maps to notation.  (Contributed by Mario
        Carneiro, 16-Dec-2013.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fmpteq2ia_0 $f set x $.
 	fmpteq2ia_1 $f class A $.
 	fmpteq2ia_2 $f class B $.
@@ -399,6 +536,10 @@ $}
 $( An equality inference for the maps to notation.  (Contributed by Mario
        Carneiro, 16-Dec-2013.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fmpteq2i_0 $f set x $.
 	fmpteq2i_1 $f class A $.
 	fmpteq2i_2 $f class B $.
@@ -409,6 +550,11 @@ $}
 $( An equality inference for the maps to notation.  (Contributed by Scott
        Fenton, 27-Oct-2010.)  (Revised by Mario Carneiro, 16-Dec-2013.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fmpteq12i_0 $f set x $.
 	fmpteq12i_1 $f class A $.
 	fmpteq12i_2 $f class B $.
@@ -422,6 +568,11 @@ $( Slightly more general equality inference for the maps to notation.
        (Contributed by FL, 14-Sep-2013.)  (Revised by Mario Carneiro,
        16-Dec-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fmpteq2da_0 $f wff ph $.
 	fmpteq2da_1 $f set x $.
 	fmpteq2da_2 $f class A $.
@@ -434,6 +585,11 @@ $}
 $( Slightly more general equality inference for the maps to notation.
        (Contributed by Scott Fenton, 25-Apr-2012.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x ph $.
 	fmpteq2dva_0 $f wff ph $.
 	fmpteq2dva_1 $f set x $.
@@ -446,6 +602,11 @@ $}
 $( An equality inference for the maps to notation.  (Contributed by Mario
        Carneiro, 23-Aug-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x ph $.
 	fmpteq2dv_0 $f wff ph $.
 	fmpteq2dv_1 $f set x $.
@@ -458,6 +619,11 @@ $}
 $( Bound-variable hypothesis builder for the maps-to notation.
        (Contributed by NM, 20-Feb-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d z A $.
 	$d z B $.
 	$d x y z $.
@@ -473,6 +639,10 @@ $}
 $( Bound-variable hypothesis builder for the maps-to notation.
        (Contributed by FL, 17-Feb-2008.) $)
 ${
+	$v x $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d A z $.
 	$d B z $.
 	$d x z $.
@@ -486,6 +656,13 @@ $( Rule to change the bound variable in a maps-to function, using implicit
        substitution.  This version has bound-variable hypotheses in place of
        distinct variable conditions.  (Contributed by NM, 11-Sep-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d w z x A $.
 	$d w z y A $.
 	$d w z B $.
@@ -505,6 +682,11 @@ $}
 $( Rule to change the bound variable in a maps-to function, using implicit
        substitution.  (Contributed by Mario Carneiro, 19-Feb-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d A x $.
 	$d A y $.
 	$d B y $.
@@ -520,6 +702,9 @@ $}
 $( Function with universal domain in maps-to notation.  (Contributed by NM,
        16-Aug-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v B $.
 	$d x y $.
 	$d y B $.
 	fmptv_0 $f set x $.

@@ -143,7 +143,7 @@ $}
 $( Equality theorem for conditional operator.  (Contributed by NM,
        1-Sep-2004.)  (Revised by Mario Carneiro, 8-Sep-2013.) $)
 ${
-	$v ph x A B C $.
+	$v ph A B C x $.
 	$d x ph $.
 	$d x A $.
 	$d x B $.
@@ -159,7 +159,7 @@ $}
 $( Equality theorem for conditional operator.  (Contributed by NM,
        1-Sep-2004.)  (Revised by Mario Carneiro, 8-Sep-2013.) $)
 ${
-	$v ph x A B C $.
+	$v ph A B C x $.
 	$d x ph $.
 	$d x A $.
 	$d x B $.
@@ -176,7 +176,7 @@ $( Value of the conditional operator when its first argument is true.
        (Contributed by NM, 15-May-1999.)  (Proof shortened by Andrew Salmon,
        26-Jun-2011.) $)
 ${
-	$v ph x A B $.
+	$v ph A B x $.
 	$d x ph $.
 	$d x A $.
 	$d x B $.
@@ -190,7 +190,7 @@ $}
 $( Value of the conditional operator when its first argument is false.
        (Contributed by NM, 14-Aug-1999.) $)
 ${
-	$v ph x A B $.
+	$v ph A B x $.
 	$d x ph $.
 	$d x A $.
 	$d x B $.
@@ -235,7 +235,7 @@ $( Alternate definition of the conditional operator ~ df-if .  Note that
        (Contributed by NM, 25-Aug-2013.)  (Revised by Mario Carneiro,
        8-Sep-2013.) $)
 ${
-	$v ph x y A B C $.
+	$v ph x A B C y $.
 	$d y A $.
 	$d y B $.
 	$d x y ph $.
@@ -421,7 +421,7 @@ $}
 $( Deduction version of ~ nfif .  (Contributed by NM, 15-Feb-2013.)
        (Revised by Mario Carneiro, 13-Oct-2016.) $)
 ${
-	$v ph ps x y A B $.
+	$v ph ps x A B y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -495,7 +495,7 @@ $( Distribute proper substitution through the conditional operator.
        (Contributed by NM, 24-Feb-2013.)  (Revised by Mario Carneiro,
        14-Nov-2016.) $)
 ${
-	$v ph x y A B C V $.
+	$v ph x A B C V y $.
 	$d y A $.
 	$d y B $.
 	$d y C $.
@@ -724,7 +724,7 @@ $}
 $( Weak deduction theorem eliminating four hypotheses.  See comments in
        ~ dedth2h .  (Contributed by NM, 16-May-1999.) $)
 ${
-	$v ph ps ch th ta et ze si rh A B C D F G R S $.
+	$v ph ps ch th ta et ze si rh A B C D R S F G $.
 	e0 $e |- ( A = if ( ph , A , R ) -> ( ta <-> et ) ) $.
 	e1 $e |- ( B = if ( ps , B , S ) -> ( et <-> ze ) ) $.
 	e2 $e |- ( C = if ( ch , C , F ) -> ( ze <-> si ) ) $.
@@ -888,7 +888,7 @@ $}
 $( Eliminate a hypothesis containing 4 class variables (for use with the
        weak deduction theorem ~ dedth ).  (Contributed by NM, 16-Apr-2005.) $)
 ${
-	$v ph ps ch th ta et ze si rh A B C D F G R S $.
+	$v ph ps ch th ta et ze si rh A B C D R S F G $.
 	e0 $e |- ( A = if ( ph , A , D ) -> ( ph <-> ch ) ) $.
 	e1 $e |- ( B = if ( ph , B , R ) -> ( ch <-> th ) ) $.
 	e2 $e |- ( C = if ( ph , C , S ) -> ( th <-> ta ) ) $.
@@ -1044,7 +1044,7 @@ ${
 $}
 $( Conditional operator existence.  (Contributed by NM, 21-Mar-2011.) $)
 ${
-	$v ph x y A B V W $.
+	$v ph A B V W x y $.
 	$d A x y $.
 	$d B y $.
 	$d ph x y $.

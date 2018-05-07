@@ -95,7 +95,7 @@ $( A transfinite induction scheme in "implicit" form where the induction is
        done on an object derived from the object of interest.  (Contributed by
        Stefan O'Rear, 24-Aug-2015.) $)
 ${
-	$v ph ps ch th x y z w A v V R S T $.
+	$v ph ps ch th x y A R S T V z w v $.
 	$d x v w y z T $.
 	$d v w y z R $.
 	$d x v w z S $.
@@ -139,7 +139,7 @@ $( Principle of Transfinite Induction (inference schema), using implicit
        Schema 4 of [Suppes] p. 197.  (Contributed by NM, 16-Apr-1995.)  (Proof
        shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
-	$v ph ps ch th ta x y z A $.
+	$v ph ps ch th ta x y A z $.
 	$d x y z $.
 	$d x A $.
 	$d x z ch $.

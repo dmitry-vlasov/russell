@@ -12,6 +12,9 @@ $)
 $( Deduction derived from axiom ~ ax-3 .  (Contributed by NM,
        26-Mar-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fcon4d_0 $f wff ph $.
 	fcon4d_1 $f wff ps $.
 	fcon4d_2 $f wff ch $.
@@ -21,6 +24,9 @@ $}
 $( A contradiction implies anything.  Deduction from ~ pm2.21 .
        (Contributed by NM, 10-Feb-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm2.21d_0 $f wff ph $.
 	fpm2.21d_1 $f wff ps $.
 	fpm2.21d_2 $f wff ch $.
@@ -30,6 +36,9 @@ $}
 $( A contradiction implies anything.  Deduction from ~ pm2.21 .
        (Contributed by Mario Carneiro, 9-Feb-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm2.21dd_0 $f wff ph $.
 	fpm2.21dd_1 $f wff ps $.
 	fpm2.21dd_2 $f wff ch $.
@@ -41,6 +50,8 @@ $( From a wff and its negation, anything is true.  Theorem *2.21 of
      [WhiteheadRussell] p. 104.  Also called the Duns Scotus law.  (Contributed
      by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 14-Sep-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm2.21_0 $f wff ph $.
 	fpm2.21_1 $f wff ps $.
 	pm2.21 $p |- ( -. ph -> ( ph -> ps ) ) $= fpm2.21_0 wn fpm2.21_0 fpm2.21_1 fpm2.21_0 wn id pm2.21d $.
@@ -48,6 +59,8 @@ $}
 $( Theorem *2.24 of [WhiteheadRussell] p. 104.  (Contributed by NM,
      3-Jan-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm2.24_0 $f wff ph $.
 	fpm2.24_1 $f wff ps $.
 	pm2.24 $p |- ( ph -> ( -. ph -> ps ) ) $= fpm2.24_0 wn fpm2.24_0 fpm2.24_1 fpm2.24_0 fpm2.24_1 pm2.21 com12 $.
@@ -55,12 +68,15 @@ $}
 $( Proof by contradiction.  Theorem *2.18 of [WhiteheadRussell] p. 103.  Also
      called the Law of Clavius.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
 	fpm2.18_0 $f wff ph $.
 	pm2.18 $p |- ( ( -. ph -> ph ) -> ph ) $= fpm2.18_0 wn fpm2.18_0 wi fpm2.18_0 fpm2.18_0 wn fpm2.18_0 wi fpm2.18_0 fpm2.18_0 wn fpm2.18_0 wi fpm2.18_0 wn fpm2.18_0 fpm2.18_0 wn fpm2.18_0 wi wn fpm2.18_0 fpm2.18_0 wn fpm2.18_0 wi wn pm2.21 a2i con4d pm2.43i $.
 $}
 $( Deduction based on reductio ad absurdum.  (Contributed by FL,
        12-Jul-2009.)  (Proof shortened by Andrew Salmon, 7-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm2.18d_0 $f wff ph $.
 	fpm2.18d_1 $f wff ps $.
 	epm2.18d_0 $e |- ( ph -> ( -. ps -> ps ) ) $.
@@ -70,6 +86,7 @@ $( Converse of double negation.  Theorem *2.14 of [WhiteheadRussell] p. 102.
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by David Harvey,
      5-Sep-1999.)  (Proof shortened by Josh Purinton, 29-Dec-2000.) $)
 ${
+	$v ph $.
 	fnotnot2_0 $f wff ph $.
 	notnot2 $p |- ( -. -. ph -> ph ) $= fnotnot2_0 wn wn fnotnot2_0 fnotnot2_0 wn fnotnot2_0 pm2.21 pm2.18d $.
 $}
@@ -80,6 +97,8 @@ $( Deduction converting double-negation into the original wff, aka the
        logic (which MPE uses), but not intuitionistic logic.  (Contributed by
        DAW, 8-Feb-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fnotnotrd_0 $f wff ph $.
 	fnotnotrd_1 $f wff ps $.
 	enotnotrd_0 $e |- ( ph -> -. -. ps ) $.
@@ -87,12 +106,16 @@ ${
 $}
 $( Inference from double negation.  (Contributed by NM, 27-Feb-2008.) $)
 ${
+	$v ph $.
 	fnotnotri_0 $f wff ph $.
 	enotnotri_0 $e |- -. -. ph $.
 	notnotri $p |- ph $= fnotnotri_0 wn wn fnotnotri_0 enotnotri_0 fnotnotri_0 notnot2 ax-mp $.
 $}
 $( A contraposition deduction.  (Contributed by NM, 19-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fcon2d_0 $f wff ph $.
 	fcon2d_1 $f wff ps $.
 	fcon2d_2 $f wff ch $.
@@ -102,12 +125,17 @@ $}
 $( Contraposition.  Theorem *2.03 of [WhiteheadRussell] p. 100.  (Contributed
      by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 12-Feb-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fcon2_0 $f wff ph $.
 	fcon2_1 $f wff ps $.
 	con2 $p |- ( ( ph -> -. ps ) -> ( ps -> -. ph ) ) $= fcon2_0 fcon2_1 wn wi fcon2_0 fcon2_1 fcon2_0 fcon2_1 wn wi id con2d $.
 $}
 $( Modus tollens deduction.  (Contributed by NM, 4-Jul-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmt2d_0 $f wff ph $.
 	fmt2d_1 $f wff ps $.
 	fmt2d_2 $f wff ch $.
@@ -118,6 +146,9 @@ $}
 $( Modus tollens inference.  (Contributed by NM, 26-Mar-1995.)  (Proof
        shortened by Wolf Lammen, 15-Sep-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmt2i_0 $f wff ph $.
 	fmt2i_1 $f wff ps $.
 	fmt2i_2 $f wff ch $.
@@ -127,6 +158,9 @@ ${
 $}
 $( A negated syllogism inference.  (Contributed by NM, 1-Dec-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fnsyl3_0 $f wff ph $.
 	fnsyl3_1 $f wff ps $.
 	fnsyl3_2 $f wff ch $.
@@ -138,6 +172,8 @@ $( A contraposition inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by O'Cat, 28-Nov-2008.)  (Proof shortened by Wolf Lammen,
        13-Jun-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fcon2i_0 $f wff ph $.
 	fcon2i_1 $f wff ps $.
 	econ2i_0 $e |- ( ph -> -. ps ) $.
@@ -146,6 +182,9 @@ $}
 $( A negated syllogism inference.  (Contributed by NM, 31-Dec-1993.)
        (Proof shortened by Wolf Lammen, 2-Mar-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fnsyl_0 $f wff ph $.
 	fnsyl_1 $f wff ps $.
 	fnsyl_2 $f wff ch $.
@@ -157,17 +196,22 @@ $( Converse of double negation.  Theorem *2.12 of [WhiteheadRussell] p. 101.
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
      2-Mar-2013.) $)
 ${
+	$v ph $.
 	fnotnot1_0 $f wff ph $.
 	notnot1 $p |- ( ph -> -. -. ph ) $= fnotnot1_0 wn fnotnot1_0 fnotnot1_0 wn id con2i $.
 $}
 $( Infer double negation.  (Contributed by NM, 27-Feb-2008.) $)
 ${
+	$v ph $.
 	fnotnoti_0 $f wff ph $.
 	enotnoti_0 $e |- ph $.
 	notnoti $p |- -. -. ph $= fnotnoti_0 fnotnoti_0 wn wn enotnoti_0 fnotnoti_0 notnot1 ax-mp $.
 $}
 $( A contraposition deduction.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fcon1d_0 $f wff ph $.
 	fcon1d_1 $f wff ps $.
 	fcon1d_2 $f wff ch $.
@@ -176,6 +220,9 @@ ${
 $}
 $( Modus tollens deduction.  (Contributed by NM, 26-Mar-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmt3d_0 $f wff ph $.
 	fmt3d_1 $f wff ps $.
 	fmt3d_2 $f wff ch $.
@@ -186,6 +233,9 @@ $}
 $( Modus tollens inference.  (Contributed by NM, 26-Mar-1995.)  (Proof
        shortened by Wolf Lammen, 15-Sep-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmt3i_0 $f wff ph $.
 	fmt3i_1 $f wff ps $.
 	fmt3i_2 $f wff ch $.
@@ -195,6 +245,9 @@ ${
 $}
 $( A negated syllogism inference.  (Contributed by NM, 26-Jun-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fnsyl2_0 $f wff ph $.
 	fnsyl2_1 $f wff ps $.
 	fnsyl2_2 $f wff ch $.
@@ -205,6 +258,8 @@ $}
 $( Contraposition.  Theorem *2.15 of [WhiteheadRussell] p. 102.  (Contributed
      by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 12-Feb-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fcon1_0 $f wff ph $.
 	fcon1_1 $f wff ps $.
 	con1 $p |- ( ( -. ph -> ps ) -> ( -. ps -> ph ) ) $= fcon1_0 wn fcon1_1 wi fcon1_0 fcon1_1 fcon1_0 wn fcon1_1 wi id con1d $.
@@ -213,6 +268,8 @@ $( A contraposition inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by O'Cat, 28-Nov-2008.)  (Proof shortened by Wolf Lammen,
        19-Jun-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fcon1i_0 $f wff ph $.
 	fcon1i_1 $f wff ps $.
 	econ1i_0 $e |- ( -. ph -> ps ) $.
@@ -221,6 +278,8 @@ $}
 $( Inference rule derived from axiom ~ ax-3 .  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Wolf Lammen, 21-Jun-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fcon4i_0 $f wff ph $.
 	fcon4i_1 $f wff ps $.
 	econ4i_0 $e |- ( -. ph -> -. ps ) $.
@@ -229,6 +288,8 @@ $}
 $( A contradiction implies anything.  Inference from ~ pm2.21 .
        (Contributed by NM, 16-Sep-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm2.21i_0 $f wff ph $.
 	fpm2.21i_1 $f wff ps $.
 	epm2.21i_0 $e |- -. ph $.
@@ -237,6 +298,8 @@ $}
 $( A contradiction implies anything.  Inference from ~ pm2.24 .
        (Contributed by NM, 27-Feb-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm2.24ii_0 $f wff ph $.
 	fpm2.24ii_1 $f wff ps $.
 	epm2.24ii_0 $e |- ph $.
@@ -245,6 +308,9 @@ ${
 $}
 $( A contraposition deduction.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fcon3d_0 $f wff ph $.
 	fcon3d_1 $f wff ps $.
 	fcon3d_2 $f wff ch $.
@@ -254,6 +320,8 @@ $}
 $( Contraposition.  Theorem *2.16 of [WhiteheadRussell] p. 103.  (Contributed
      by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen, 13-Feb-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fcon3_0 $f wff ph $.
 	fcon3_1 $f wff ps $.
 	con3 $p |- ( ( ph -> ps ) -> ( -. ps -> -. ph ) ) $= fcon3_0 fcon3_1 wi fcon3_0 fcon3_1 fcon3_0 fcon3_1 wi id con3d $.
@@ -261,6 +329,8 @@ $}
 $( A contraposition inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by Wolf Lammen, 20-Jun-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fcon3i_0 $f wff ph $.
 	fcon3i_1 $f wff ps $.
 	econ3i_0 $e |- ( ph -> ps ) $.
@@ -269,6 +339,9 @@ $}
 $( Rotate through consequent right.  (Contributed by Wolf Lammen,
        3-Nov-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fcon3rr3_0 $f wff ph $.
 	fcon3rr3_1 $f wff ps $.
 	fcon3rr3_2 $f wff ch $.
@@ -278,6 +351,8 @@ $}
 $( The rule of modus tollens.  (Contributed by Wolf Lammen,
        12-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fmt4_0 $f wff ph $.
 	fmt4_1 $f wff ps $.
 	emt4_0 $e |- ph $.
@@ -286,6 +361,9 @@ ${
 $}
 $( Modus tollens deduction.  (Contributed by NM, 9-Jun-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmt4d_0 $f wff ph $.
 	fmt4d_1 $f wff ps $.
 	fmt4d_2 $f wff ch $.
@@ -295,6 +373,9 @@ ${
 $}
 $( Modus tollens inference.  (Contributed by Wolf Lammen, 12-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmt4i_0 $f wff ph $.
 	fmt4i_1 $f wff ps $.
 	fmt4i_2 $f wff ch $.
@@ -304,6 +385,10 @@ ${
 $}
 $( A negated syllogism deduction.  (Contributed by NM, 9-Apr-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v ta $.
 	fnsyld_0 $f wff ph $.
 	fnsyld_1 $f wff ps $.
 	fnsyld_2 $f wff ch $.
@@ -314,6 +399,10 @@ ${
 $}
 $( A negated syllogism inference.  (Contributed by NM, 3-May-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fnsyli_0 $f wff ph $.
 	fnsyli_1 $f wff ps $.
 	fnsyli_2 $f wff ch $.
@@ -324,6 +413,9 @@ ${
 $}
 $( A negated syllogism inference.  (Contributed by NM, 15-Feb-1996.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fnsyl4_0 $f wff ph $.
 	fnsyl4_1 $f wff ps $.
 	fnsyl4_2 $f wff ch $.
@@ -333,6 +425,9 @@ ${
 $}
 $( Deduction version of ~ pm2.24 .  (Contributed by NM, 30-Jan-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm2.24d_0 $f wff ph $.
 	fpm2.24d_1 $f wff ps $.
 	fpm2.24d_2 $f wff ch $.
@@ -341,6 +436,8 @@ ${
 $}
 $( Inference version of ~ pm2.24 .  (Contributed by NM, 20-Aug-2001.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm2.24i_0 $f wff ph $.
 	fpm2.24i_1 $f wff ps $.
 	epm2.24i_0 $e |- ph $.
@@ -350,6 +447,8 @@ $( Theorem *3.2 of [WhiteheadRussell] p. 111, expressed with primitive
      connectives.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Josh
      Purinton, 29-Dec-2000.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm3.2im_0 $f wff ph $.
 	fpm3.2im_1 $f wff ps $.
 	pm3.2im $p |- ( ph -> ( ps -> -. ( ph -> -. ps ) ) ) $= fpm3.2im_0 fpm3.2im_0 fpm3.2im_1 wn wi fpm3.2im_1 fpm3.2im_0 fpm3.2im_1 wn pm2.27 con2d $.
@@ -357,6 +456,8 @@ $}
 $( Theorem 8 of [Margaris] p. 60.  (Contributed by NM, 5-Aug-1993.)  (Proof
      shortened by Josh Purinton, 29-Dec-2000.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fmth8_0 $f wff ph $.
 	fmth8_1 $f wff ps $.
 	mth8 $p |- ( ph -> ( -. ps -> -. ( ph -> ps ) ) ) $= fmth8_0 fmth8_0 fmth8_1 wi fmth8_1 fmth8_0 fmth8_1 pm2.27 con3d $.
@@ -364,6 +465,9 @@ $}
 $( Inference joining the consequents of two premises.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fjc_0 $f wff ph $.
 	fjc_1 $f wff ps $.
 	fjc_2 $f wff ch $.
@@ -374,6 +478,9 @@ $}
 $( An importation inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by Wolf Lammen, 20-Jul-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fimpi_0 $f wff ph $.
 	fimpi_1 $f wff ps $.
 	fimpi_2 $f wff ch $.
@@ -383,6 +490,9 @@ $}
 $( An exportation inference.  (Contributed by NM, 5-Aug-1993.)  (Proof
        shortened by O'Cat, 28-Nov-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fexpi_0 $f wff ph $.
 	fexpi_1 $f wff ps $.
 	fexpi_2 $f wff ch $.
@@ -393,6 +503,8 @@ $( Simplification.  Similar to Theorem *3.27 (Simp) of [WhiteheadRussell]
      p. 112.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
      Lammen, 13-Nov-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fsimprim_0 $f wff ph $.
 	fsimprim_1 $f wff ps $.
 	simprim $p |- ( -. ( ph -> -. ps ) -> ps ) $= fsimprim_0 fsimprim_1 fsimprim_1 fsimprim_0 fsimprim_1 idd impi $.
@@ -401,6 +513,8 @@ $( Simplification.  Similar to Theorem *3.26 (Simp) of [WhiteheadRussell]
      p. 112.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
      Lammen, 21-Jul-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fsimplim_0 $f wff ph $.
 	fsimplim_1 $f wff ps $.
 	simplim $p |- ( -. ( ph -> ps ) -> ph ) $= fsimplim_0 fsimplim_0 fsimplim_1 wi fsimplim_0 fsimplim_1 pm2.21 con1i $.
@@ -408,6 +522,8 @@ $}
 $( Theorem *2.5 of [WhiteheadRussell] p. 107.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 9-Oct-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm2.5_0 $f wff ph $.
 	fpm2.5_1 $f wff ps $.
 	pm2.5 $p |- ( -. ( ph -> ps ) -> ( -. ph -> ps ) ) $= fpm2.5_0 fpm2.5_1 wi wn fpm2.5_0 fpm2.5_1 fpm2.5_0 fpm2.5_1 simplim pm2.24d $.
@@ -415,6 +531,8 @@ $}
 $( Theorem *2.51 of [WhiteheadRussell] p. 107.  (Contributed by NM,
      3-Jan-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm2.51_0 $f wff ph $.
 	fpm2.51_1 $f wff ps $.
 	pm2.51 $p |- ( -. ( ph -> ps ) -> ( ph -> -. ps ) ) $= fpm2.51_0 fpm2.51_1 wi wn fpm2.51_1 wn fpm2.51_0 fpm2.51_1 fpm2.51_0 fpm2.51_1 wi fpm2.51_1 fpm2.51_0 ax-1 con3i a1d $.
@@ -422,6 +540,8 @@ $}
 $( Theorem *2.521 of [WhiteheadRussell] p. 107.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 8-Oct-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm2.521_0 $f wff ph $.
 	fpm2.521_1 $f wff ps $.
 	pm2.521 $p |- ( -. ( ph -> ps ) -> ( ps -> ph ) ) $= fpm2.521_0 fpm2.521_1 wi wn fpm2.521_0 fpm2.521_1 fpm2.521_0 fpm2.521_1 simplim a1d $.
@@ -429,6 +549,8 @@ $}
 $( Theorem *2.52 of [WhiteheadRussell] p. 107.  (Contributed by NM,
      3-Jan-2005.)  (Proof shortened by Wolf Lammen, 8-Oct-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm2.52_0 $f wff ph $.
 	fpm2.52_1 $f wff ps $.
 	pm2.52 $p |- ( -. ( ph -> ps ) -> ( -. ph -> -. ps ) ) $= fpm2.52_0 fpm2.52_1 wi wn fpm2.52_1 fpm2.52_0 fpm2.52_0 fpm2.52_1 pm2.521 con3d $.
@@ -436,6 +558,9 @@ $}
 $( Exportation theorem expressed with primitive connectives.  (Contributed by
      NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fexpt_0 $f wff ph $.
 	fexpt_1 $f wff ps $.
 	fexpt_2 $f wff ch $.
@@ -444,6 +569,9 @@ $}
 $( Importation theorem expressed with primitive connectives.  (Contributed by
      NM, 25-Apr-1994.)  (Proof shortened by Wolf Lammen, 20-Jul-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fimpt_0 $f wff ph $.
 	fimpt_1 $f wff ps $.
 	fimpt_2 $f wff ch $.
@@ -452,6 +580,9 @@ $}
 $( Deduction eliminating an antecedent.  (Contributed by NM, 27-Apr-1994.)
        (Proof shortened by Wolf Lammen, 12-Sep-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm2.61d_0 $f wff ph $.
 	fpm2.61d_1 $f wff ps $.
 	fpm2.61d_2 $f wff ch $.
@@ -462,6 +593,9 @@ $}
 $( Inference eliminating an antecedent.  (Contributed by NM,
        15-Jul-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm2.61d1_0 $f wff ph $.
 	fpm2.61d1_1 $f wff ps $.
 	fpm2.61d1_2 $f wff ch $.
@@ -472,6 +606,9 @@ $}
 $( Inference eliminating an antecedent.  (Contributed by NM,
        18-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm2.61d2_0 $f wff ph $.
 	fpm2.61d2_1 $f wff ps $.
 	fpm2.61d2_2 $f wff ch $.
@@ -482,6 +619,9 @@ $}
 $( Inference joining the antecedents of two premises.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by O'Cat, 19-Feb-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fja_0 $f wff ph $.
 	fja_1 $f wff ps $.
 	fja_2 $f wff ch $.
@@ -492,6 +632,10 @@ $}
 $( Deduction form of ~ ja .  (Contributed by Scott Fenton, 13-Dec-2010.)
        (Proof shortened by Andrew Salmon, 17-Sep-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fjad_0 $f wff ph $.
 	fjad_1 $f wff ps $.
 	fjad_2 $f wff ch $.
@@ -503,6 +647,9 @@ $}
 $( Elimination of a nested antecedent as a kind of reversal of inference
      ~ ja .  (Contributed by Wolf Lammen, 10-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fjarl_0 $f wff ph $.
 	fjarl_1 $f wff ps $.
 	fjarl_2 $f wff ch $.
@@ -511,6 +658,8 @@ $}
 $( Inference eliminating an antecedent.  (Contributed by NM, 5-Apr-1994.)
        (Proof shortened by Wolf Lammen, 12-Sep-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm2.61i_0 $f wff ph $.
 	fpm2.61i_1 $f wff ps $.
 	epm2.61i_0 $e |- ( ph -> ps ) $.
@@ -520,6 +669,9 @@ $}
 $( Inference eliminating two antecedents.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Josh Purinton, 29-Dec-2000.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm2.61ii_0 $f wff ph $.
 	fpm2.61ii_1 $f wff ps $.
 	fpm2.61ii_2 $f wff ch $.
@@ -532,6 +684,9 @@ $( Inference eliminating two antecedents.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Andrew Salmon, 25-May-2011.)  (Proof
        shortened by Wolf Lammen, 13-Nov-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm2.61nii_0 $f wff ph $.
 	fpm2.61nii_1 $f wff ps $.
 	fpm2.61nii_2 $f wff ch $.
@@ -543,6 +698,10 @@ $}
 $( Inference eliminating three antecedents.  (Contributed by NM,
        2-Jan-2002.)  (Proof shortened by Wolf Lammen, 22-Sep-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fpm2.61iii_0 $f wff ph $.
 	fpm2.61iii_1 $f wff ps $.
 	fpm2.61iii_2 $f wff ch $.
@@ -557,12 +716,15 @@ $( Reductio ad absurdum.  Theorem *2.01 of [WhiteheadRussell] p. 100.
      (Contributed by NM, 18-Aug-1993.)  (Proof shortened by O'Cat,
      21-Nov-2008.)  (Proof shortened by Wolf Lammen, 31-Oct-2012.) $)
 ${
+	$v ph $.
 	fpm2.01_0 $f wff ph $.
 	pm2.01 $p |- ( ( ph -> -. ph ) -> -. ph ) $= fpm2.01_0 fpm2.01_0 wn fpm2.01_0 wn fpm2.01_0 wn id fpm2.01_0 wn id ja $.
 $}
 $( Deduction based on reductio ad absurdum.  (Contributed by NM,
        18-Aug-1993.)  (Proof shortened by Wolf Lammen, 5-Mar-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm2.01d_0 $f wff ph $.
 	fpm2.01d_1 $f wff ps $.
 	epm2.01d_0 $e |- ( ph -> ( ps -> -. ps ) ) $.
@@ -571,6 +733,8 @@ $}
 $( Theorem *2.6 of [WhiteheadRussell] p. 107.  (Contributed by NM,
      3-Jan-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm2.6_0 $f wff ph $.
 	fpm2.6_1 $f wff ps $.
 	pm2.6 $p |- ( ( -. ph -> ps ) -> ( ( ph -> ps ) -> ps ) ) $= fpm2.6_0 wn fpm2.6_1 wi fpm2.6_0 fpm2.6_1 fpm2.6_1 fpm2.6_0 wn fpm2.6_1 wi id fpm2.6_0 wn fpm2.6_1 wi fpm2.6_1 idd jad $.
@@ -579,6 +743,8 @@ $( Theorem *2.61 of [WhiteheadRussell] p. 107.  Useful for eliminating an
      antecedent.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf
      Lammen, 22-Sep-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm2.61_0 $f wff ph $.
 	fpm2.61_1 $f wff ps $.
 	pm2.61 $p |- ( ( ph -> ps ) -> ( ( -. ph -> ps ) -> ps ) ) $= fpm2.61_0 wn fpm2.61_1 wi fpm2.61_0 fpm2.61_1 wi fpm2.61_1 fpm2.61_0 fpm2.61_1 pm2.6 com12 $.
@@ -587,6 +753,8 @@ $( Theorem *2.65 of [WhiteheadRussell] p. 107.  Proof by contradiction.
      (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Wolf Lammen,
      8-Mar-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm2.65_0 $f wff ph $.
 	fpm2.65_1 $f wff ps $.
 	pm2.65 $p |- ( ( ph -> ps ) -> ( ( ph -> -. ps ) -> -. ph ) ) $= fpm2.65_0 fpm2.65_1 wi fpm2.65_0 fpm2.65_1 wn fpm2.65_0 wn fpm2.65_0 fpm2.65_1 wi fpm2.65_0 wn idd fpm2.65_0 fpm2.65_1 con3 jad $.
@@ -594,6 +762,8 @@ $}
 $( Inference rule for proof by contradiction.  (Contributed by NM,
        18-May-1994.)  (Proof shortened by Wolf Lammen, 11-Sep-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpm2.65i_0 $f wff ph $.
 	fpm2.65i_1 $f wff ps $.
 	epm2.65i_0 $e |- ( ph -> ps ) $.
@@ -603,6 +773,9 @@ $}
 $( Deduction rule for proof by contradiction.  (Contributed by NM,
        26-Jun-1994.)  (Proof shortened by Wolf Lammen, 26-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fpm2.65d_0 $f wff ph $.
 	fpm2.65d_1 $f wff ps $.
 	fpm2.65d_2 $f wff ch $.
@@ -618,6 +791,8 @@ $( The rule of modus tollens.  The rule says, "if ` ps ` is not true, and
        ponens ~ ax-mp .  (Contributed by NM, 19-Aug-1993.)  (Proof shortened by
        Wolf Lammen, 11-Sep-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fmto_0 $f wff ph $.
 	fmto_1 $f wff ps $.
 	emto_0 $e |- -. ps $.
@@ -627,6 +802,9 @@ $}
 $( Modus tollens deduction.  (Contributed by NM, 3-Apr-1994.)  (Proof
        shortened by Wolf Lammen, 11-Sep-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmtod_0 $f wff ph $.
 	fmtod_1 $f wff ps $.
 	fmtod_2 $f wff ch $.
@@ -637,6 +815,9 @@ $}
 $( Modus tollens inference.  (Contributed by NM, 5-Jul-1994.)  (Proof
        shortened by Wolf Lammen, 15-Sep-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmtoi_0 $f wff ph $.
 	fmtoi_1 $f wff ps $.
 	fmtoi_2 $f wff ch $.
@@ -647,6 +828,8 @@ $}
 $( A rule similar to modus tollens.  (Contributed by NM, 19-Aug-1993.)
        (Proof shortened by Wolf Lammen, 10-Sep-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fmt2_0 $f wff ph $.
 	fmt2_1 $f wff ps $.
 	emt2_0 $e |- ps $.
@@ -656,6 +839,8 @@ $}
 $( A rule similar to modus tollens.  (Contributed by NM, 18-May-1994.)
        (Proof shortened by Wolf Lammen, 11-Sep-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fmt3_0 $f wff ph $.
 	fmt3_1 $f wff ps $.
 	emt3_0 $e |- -. ps $.
@@ -671,6 +856,8 @@ $( Peirce's axiom.  This odd-looking theorem is the "difference" between an
      connectives in it.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by
      Wolf Lammen, 9-Oct-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fpeirce_0 $f wff ph $.
 	fpeirce_1 $f wff ps $.
 	peirce $p |- ( ( ( ph -> ps ) -> ph ) -> ph ) $= fpeirce_0 fpeirce_1 wi fpeirce_0 fpeirce_0 fpeirce_0 fpeirce_1 simplim fpeirce_0 id ja $.
@@ -680,6 +867,8 @@ $( The Linearity Axiom of the infinite-valued sentential logic (L-infinity)
      (Contributed by O'Cat, 12-Aug-2004.)  (Proof shortened by Wolf Lammen,
      2-Nov-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
 	floolin_0 $f wff ph $.
 	floolin_1 $f wff ps $.
 	loolin $p |- ( ( ( ph -> ps ) -> ( ps -> ph ) ) -> ( ps -> ph ) ) $= floolin_0 floolin_1 wi floolin_1 floolin_0 wi floolin_1 floolin_0 wi floolin_0 floolin_1 pm2.521 floolin_1 floolin_0 wi id ja $.
@@ -689,6 +878,8 @@ $( The Inversion Axiom of the infinite-valued sentential logic (L-infinity)
      expresses "disjunction commutes."  Theorem *2.69 of [WhiteheadRussell]
      p. 108.  (Contributed by NM, 12-Aug-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
 	flooinv_0 $f wff ph $.
 	flooinv_1 $f wff ps $.
 	looinv $p |- ( ( ( ph -> ps ) -> ps ) -> ( ( ps -> ph ) -> ph ) ) $= flooinv_0 flooinv_1 wi flooinv_1 wi flooinv_1 flooinv_0 wi flooinv_0 flooinv_1 wi flooinv_0 wi flooinv_0 flooinv_0 flooinv_1 wi flooinv_1 flooinv_0 imim1 flooinv_0 flooinv_1 peirce syl6 $.
@@ -697,6 +888,8 @@ $( Theorem used to justify definition of biconditional ~ df-bi .
      (Contributed by NM, 11-May-1999.)  (Proof shortened by Josh Purinton,
      29-Dec-2000.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fbijust_0 $f wff ph $.
 	fbijust_1 $f wff ps $.
 	bijust $p |- -. ( ( -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) -> -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) ) -> -. ( -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) -> -. ( ( ph -> ps ) -> -. ( ps -> ph ) ) ) ) $= fbijust_0 fbijust_1 wi fbijust_1 fbijust_0 wi wn wi wn fbijust_0 fbijust_1 wi fbijust_1 fbijust_0 wi wn wi wn wi fbijust_0 fbijust_1 wi fbijust_1 fbijust_0 wi wn wi wn fbijust_0 fbijust_1 wi fbijust_1 fbijust_0 wi wn wi wn wi wn wi fbijust_0 fbijust_1 wi fbijust_1 fbijust_0 wi wn wi wn fbijust_0 fbijust_1 wi fbijust_1 fbijust_0 wi wn wi wn wi fbijust_0 fbijust_1 wi fbijust_1 fbijust_0 wi wn wi wn id fbijust_0 fbijust_1 wi fbijust_1 fbijust_0 wi wn wi wn fbijust_0 fbijust_1 wi fbijust_1 fbijust_0 wi wn wi wn wi pm2.01 mt2 $.

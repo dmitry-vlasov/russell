@@ -8,6 +8,7 @@ $c tpos  $.
 $( Function transposition $)
 $( The transposition of a function. $)
 ${
+	$v F $.
 	fctpos_0 $f class F $.
 	ctpos $a class tpos F $.
 $}
@@ -15,6 +16,8 @@ $( Define the transposition of a function, which is a function
        ` G = tpos F ` satisfying ` G ( x , y ) = F ( y , x ) ` .  (Contributed
        by Mario Carneiro, 10-Sep-2015.) $)
 ${
+	$v x $.
+	$v F $.
 	$d F x $.
 	fdf-tpos_0 $f set x $.
 	fdf-tpos_1 $f class F $.
@@ -23,6 +26,9 @@ $}
 $( Subset theorem for transposition.  (Contributed by Mario Carneiro,
        10-Sep-2015.) $)
 ${
+	$v x $.
+	$v F $.
+	$v G $.
 	$d x F $.
 	$d x G $.
 	itposss_0 $f set x $.
@@ -33,6 +39,8 @@ $}
 $( Equality theorem for transposition.  (Contributed by Mario Carneiro,
        10-Sep-2015.) $)
 ${
+	$v F $.
+	$v G $.
 	ftposeq_0 $f class F $.
 	ftposeq_1 $f class G $.
 	tposeq $p |- ( F = G -> tpos F = tpos G ) $= ftposeq_0 ftposeq_1 wceq ftposeq_0 ctpos ftposeq_1 ctpos ftposeq_0 ftposeq_1 wceq ftposeq_0 ftposeq_1 wss ftposeq_0 ctpos ftposeq_1 ctpos wss ftposeq_0 ftposeq_1 eqimss ftposeq_0 ftposeq_1 tposss syl ftposeq_0 ftposeq_1 wceq ftposeq_1 ftposeq_0 wss ftposeq_1 ctpos ftposeq_0 ctpos wss ftposeq_1 ftposeq_0 eqimss2 ftposeq_1 ftposeq_0 tposss syl eqssd $.
@@ -40,6 +48,9 @@ $}
 $( Equality theorem for transposition.  (Contributed by Mario Carneiro,
          7-Jan-2017.) $)
 ${
+	$v ph $.
+	$v F $.
+	$v G $.
 	ftposeqd_0 $f wff ph $.
 	ftposeqd_1 $f class F $.
 	ftposeqd_2 $f class G $.
@@ -49,6 +60,8 @@ $}
 $( The transposition is a subset of a cross product.  (Contributed by Mario
        Carneiro, 12-Jan-2017.) $)
 ${
+	$v x $.
+	$v F $.
 	$d x F $.
 	itposssxp_0 $f set x $.
 	ftposssxp_0 $f class F $.
@@ -57,12 +70,19 @@ $}
 $( The transposition is a relation.  (Contributed by Mario Carneiro,
        10-Sep-2015.) $)
 ${
+	$v F $.
 	freltpos_0 $f class F $.
 	reltpos $p |- Rel tpos F $= freltpos_0 ctpos freltpos_0 cdm ccnv c0 csn cun freltpos_0 crn cxp wss freltpos_0 cdm ccnv c0 csn cun freltpos_0 crn cxp wrel freltpos_0 ctpos wrel freltpos_0 tposssxp freltpos_0 cdm ccnv c0 csn cun freltpos_0 crn relxp freltpos_0 ctpos freltpos_0 cdm ccnv c0 csn cun freltpos_0 crn cxp relss mp2 $.
 $}
 $( Value of the transposition at a pair ` <. A , B >. ` .  (Contributed by
        Mario Carneiro, 10-Sep-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v V $.
 	$d x y A $.
 	$d x y B $.
 	$d x y F $.
@@ -80,6 +100,9 @@ $( The behavior of ` tpos ` when the left argument is the empty set (which
        sethood hypotheses on ` A , B ` in ~ brtpos .  (Contributed by Mario
        Carneiro, 10-Sep-2015.) $)
 ${
+	$v A $.
+	$v F $.
+	$v V $.
 	fbrtpos0_0 $f class A $.
 	fbrtpos0_1 $f class F $.
 	fbrtpos0_2 $f class V $.
@@ -88,6 +111,9 @@ $}
 $( Necessary and sufficient condition for ` dom tpos F ` to be a relation.
        (Contributed by Mario Carneiro, 10-Sep-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v F $.
 	$d x y $.
 	$d x y $.
 	$d x y F $.
@@ -99,6 +125,11 @@ $}
 $( The transposition swaps arguments of a three-parameter relation.
        (Contributed by Mario Carneiro, 10-Sep-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v V $.
 	fbrtpos_0 $f class A $.
 	fbrtpos_1 $f class B $.
 	fbrtpos_2 $f class C $.
@@ -109,6 +140,11 @@ $}
 $( The transposition swaps the first two elements in a collection of
        ordered triples.  (Contributed by Mario Carneiro, 1-Dec-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v V $.
 	fottpos_0 $f class A $.
 	fottpos_1 $f class B $.
 	fottpos_2 $f class C $.
@@ -119,6 +155,10 @@ $}
 $( The transposition swaps arguments of a three-parameter relation.
        (Contributed by Mario Carneiro, 3-Nov-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	frelbrtpos_0 $f class A $.
 	frelbrtpos_1 $f class B $.
 	frelbrtpos_2 $f class C $.
@@ -128,6 +168,10 @@ $}
 $( The domain of ` tpos F ` when ` dom F ` is a relation.  (Contributed by
        Mario Carneiro, 10-Sep-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v F $.
 	$d x y $.
 	$d x y $.
 	$d x y z F $.
@@ -140,6 +184,11 @@ $}
 $( The range of ` tpos F ` when ` dom F ` is a relation.  (Contributed by
        Mario Carneiro, 10-Sep-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v F $.
 	$d x y $.
 	$d x y $.
 	$d w x y z F $.
@@ -153,6 +202,8 @@ $}
 $( The transposition of a set is a set.  (Contributed by Mario Carneiro,
        10-Sep-2015.) $)
 ${
+	$v F $.
+	$v V $.
 	ftposexg_0 $f class F $.
 	ftposexg_1 $f class V $.
 	tposexg $p |- ( F e. V -> tpos F e. _V ) $= ftposexg_0 ftposexg_1 wcel ftposexg_0 ctpos ftposexg_0 cdm ccnv c0 csn cun ftposexg_0 crn cxp wss ftposexg_0 cdm ccnv c0 csn cun ftposexg_0 crn cxp cvv wcel ftposexg_0 ctpos cvv wcel ftposexg_0 tposssxp ftposexg_0 ftposexg_1 wcel ftposexg_0 cdm ccnv c0 csn cun cvv wcel ftposexg_0 crn cvv wcel ftposexg_0 cdm ccnv c0 csn cun ftposexg_0 crn cxp cvv wcel ftposexg_0 ftposexg_1 wcel ftposexg_0 cdm ccnv cvv wcel c0 csn cvv wcel ftposexg_0 cdm ccnv c0 csn cun cvv wcel ftposexg_0 ftposexg_1 wcel ftposexg_0 cdm cvv wcel ftposexg_0 cdm ccnv cvv wcel ftposexg_0 ftposexg_1 dmexg ftposexg_0 cdm cvv cnvexg syl c0 snex ftposexg_0 cdm ccnv c0 csn cvv cvv unexg sylancl ftposexg_0 ftposexg_1 rnexg ftposexg_0 cdm ccnv c0 csn cun ftposexg_0 crn cvv cvv xpexg syl2anc ftposexg_0 ctpos ftposexg_0 cdm ccnv c0 csn cun ftposexg_0 crn cxp cvv ssexg sylancr $.
@@ -163,6 +214,10 @@ $( The transposition swaps the arguments in a two-argument function.  When
        transposition of ` F ` , which is where the name comes from.
        (Contributed by Mario Carneiro, 10-Sep-2015.) $)
 ${
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d y A $.
 	$d y B $.
 	$d y F $.
@@ -175,6 +230,8 @@ $}
 $( The transposition of a function is a function.  (Contributed by Mario
        Carneiro, 10-Sep-2015.) $)
 ${
+	$v x $.
+	$v F $.
 	$d x F $.
 	itposfun_0 $f set x $.
 	ftposfun_0 $f class F $.
@@ -183,6 +240,8 @@ $}
 $( Alternate definition of ` tpos ` when ` F ` has relational domain.
        (Contributed by Mario Carneiro, 10-Sep-2015.) $)
 ${
+	$v x $.
+	$v F $.
 	$d x F $.
 	fdftpos2_0 $f set x $.
 	fdftpos2_1 $f class F $.
@@ -191,6 +250,11 @@ $}
 $( Alternate definition of ` tpos ` when ` F ` has relational domain.
        Compare ~ df-cnv .  (Contributed by Mario Carneiro, 10-Sep-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v F $.
 	$d x y $.
 	$d x y $.
 	$d w x y z F $.
@@ -204,6 +268,11 @@ $}
 $( Alternate definition of ` tpos ` .  (Contributed by Mario Carneiro,
        4-Oct-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v F $.
 	$d x y $.
 	$d x y $.
 	$d w x y z F $.
@@ -217,6 +286,11 @@ $}
 $( Value of the double transposition for a general class ` F ` .
        (Contributed by Mario Carneiro, 16-Sep-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v F $.
 	$d x y $.
 	$d x y $.
 	$d w x y z F $.
@@ -230,11 +304,14 @@ $}
 $( Value of the double transposition for a relation on triples.
        (Contributed by Mario Carneiro, 16-Sep-2015.) $)
 ${
+	$v F $.
 	ftpostpos2_0 $f class F $.
 	tpostpos2 $p |- ( ( Rel F /\ Rel dom F ) -> tpos tpos F = F ) $= ftpostpos2_0 wrel ftpostpos2_0 cdm wrel wa ftpostpos2_0 ctpos ctpos ftpostpos2_0 cvv cvv cxp c0 csn cun cvv cxp cin ftpostpos2_0 ftpostpos2_0 tpostpos ftpostpos2_0 wrel ftpostpos2_0 cdm wrel wa ftpostpos2_0 cvv cvv cxp c0 csn cun cvv cxp wss ftpostpos2_0 cvv cvv cxp c0 csn cun cvv cxp cin ftpostpos2_0 wceq ftpostpos2_0 wrel ftpostpos2_0 cdm wrel wa ftpostpos2_0 cvv cvv cxp cvv cxp wss ftpostpos2_0 cvv cvv cxp c0 csn cun cvv cxp wss ftpostpos2_0 relrelss ftpostpos2_0 cvv cvv cxp cvv cxp wss cvv cvv cxp cvv cxp cvv cvv cxp c0 csn cun cvv cxp wss ftpostpos2_0 cvv cvv cxp c0 csn cun cvv cxp wss cvv cvv cxp cvv cvv cxp c0 csn cun wss cvv cvv cxp cvv cxp cvv cvv cxp c0 csn cun cvv cxp wss cvv cvv cxp c0 csn ssun1 cvv cvv cxp cvv cvv cxp c0 csn cun cvv xpss1 ax-mp ftpostpos2_0 cvv cvv cxp cvv cxp cvv cvv cxp c0 csn cun cvv cxp sstr mpan2 sylbi ftpostpos2_0 cvv cvv cxp c0 csn cun cvv cxp df-ss sylib syl5eq $.
 $}
 $( The domain of a transposition.  (Contributed by NM, 10-Sep-2015.) $)
 ${
+	$v A $.
+	$v F $.
 	ftposfn2_0 $f class A $.
 	ftposfn2_1 $f class F $.
 	tposfn2 $p |- ( Rel A -> ( F Fn A -> tpos F Fn `' A ) ) $= ftposfn2_0 wrel ftposfn2_1 wfun ftposfn2_1 cdm ftposfn2_0 wceq wa ftposfn2_1 ctpos wfun ftposfn2_1 ctpos cdm ftposfn2_0 ccnv wceq wa ftposfn2_1 ftposfn2_0 wfn ftposfn2_1 ctpos ftposfn2_0 ccnv wfn ftposfn2_0 wrel ftposfn2_1 wfun ftposfn2_1 ctpos wfun ftposfn2_1 cdm ftposfn2_0 wceq ftposfn2_1 ctpos cdm ftposfn2_0 ccnv wceq ftposfn2_1 wfun ftposfn2_1 ctpos wfun wi ftposfn2_0 wrel ftposfn2_1 tposfun a1i ftposfn2_1 cdm ftposfn2_0 wceq ftposfn2_0 wrel ftposfn2_1 ctpos cdm ftposfn2_0 ccnv wceq ftposfn2_1 cdm ftposfn2_0 wceq ftposfn2_1 cdm wrel ftposfn2_1 ctpos cdm ftposfn2_1 cdm ccnv wceq ftposfn2_0 wrel ftposfn2_1 ctpos cdm ftposfn2_0 ccnv wceq ftposfn2_1 cdm wrel ftposfn2_1 ctpos cdm ftposfn2_1 cdm ccnv wceq wi ftposfn2_1 cdm ftposfn2_0 wceq ftposfn2_1 dmtpos a1i ftposfn2_1 cdm ftposfn2_0 releq ftposfn2_1 cdm ftposfn2_0 wceq ftposfn2_1 cdm ccnv ftposfn2_0 ccnv ftposfn2_1 ctpos cdm ftposfn2_1 cdm ftposfn2_0 cnveq eqeq2d 3imtr3d com12 anim12d ftposfn2_1 ftposfn2_0 df-fn ftposfn2_1 ctpos ftposfn2_0 ccnv df-fn 3imtr4g $.
@@ -242,6 +319,9 @@ $}
 $( Condition for a surjective transposition.  (Contributed by NM,
        10-Sep-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ftposfo2_0 $f class A $.
 	ftposfo2_1 $f class B $.
 	ftposfo2_2 $f class F $.
@@ -250,6 +330,9 @@ $}
 $( The domain and range of a transposition.  (Contributed by NM,
        10-Sep-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ftposf2_0 $f class A $.
 	ftposf2_1 $f class B $.
 	ftposf2_2 $f class F $.
@@ -258,6 +341,10 @@ $}
 $( Condition for an injective transposition.  (Contributed by NM,
        10-Sep-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x A $.
 	$d x B $.
 	$d x F $.
@@ -270,6 +357,9 @@ $}
 $( Condition of a bijective transposition.  (Contributed by NM,
        10-Sep-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ftposf1o2_0 $f class A $.
 	ftposf1o2_1 $f class B $.
 	ftposf1o2_2 $f class F $.
@@ -278,6 +368,10 @@ $}
 $( The domain and range of a transposition.  (Contributed by NM,
        10-Sep-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ftposfo_0 $f class A $.
 	ftposfo_1 $f class B $.
 	ftposfo_2 $f class C $.
@@ -287,6 +381,10 @@ $}
 $( The domain and range of a transposition.  (Contributed by NM,
        10-Sep-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	ftposf_0 $f class A $.
 	ftposf_1 $f class B $.
 	ftposf_2 $f class C $.
@@ -296,6 +394,9 @@ $}
 $( Functionality of a transposition.  (Contributed by Mario Carneiro,
        4-Oct-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	ftposfn_0 $f class A $.
 	ftposfn_1 $f class B $.
 	ftposfn_2 $f class F $.
@@ -308,6 +409,9 @@ $}
 $( Transposition of a composition.  (Contributed by Mario Carneiro,
        4-Oct-2015.) $)
 ${
+	$v x $.
+	$v F $.
+	$v G $.
 	$d x F $.
 	$d x G $.
 	itposco_0 $f set x $.
@@ -318,6 +422,10 @@ $}
 $( Two ways to say a function is symmetric.  (Contributed by Mario
        Carneiro, 4-Oct-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v F $.
 	$d x y A $.
 	$d x y $.
 	$d x y F $.
@@ -330,6 +438,8 @@ $}
 $( Equality theorem for transposition.  (Contributed by Mario Carneiro,
        10-Sep-2015.) $)
 ${
+	$v F $.
+	$v G $.
 	ftposeqi_0 $f class F $.
 	ftposeqi_1 $f class G $.
 	etposeqi_0 $e |- F = G $.
@@ -338,6 +448,7 @@ $}
 $( A transposition is a set.  (Contributed by Mario Carneiro,
        10-Sep-2015.) $)
 ${
+	$v F $.
 	ftposex_0 $f class F $.
 	etposex_0 $e |- F e. _V $.
 	tposex $p |- tpos F e. _V $= ftposex_0 cvv wcel ftposex_0 ctpos cvv wcel etposex_0 ftposex_0 cvv tposexg ax-mp $.
@@ -345,6 +456,9 @@ $}
 $( Hypothesis builder for transposition.  (Contributed by Mario Carneiro,
        10-Sep-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v F $.
 	$d x y $.
 	$d y F $.
 	inftpos_0 $f set y $.
@@ -356,6 +470,14 @@ $}
 $( Transposition of a class of ordered triples.  (Contributed by Mario
        Carneiro, 10-Sep-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v F $.
+	$v a $.
+	$v b $.
+	$v c $.
 	$d a b c x y z $.
 	$d a b c ph $.
 	itposoprab_0 $f set a $.
@@ -372,6 +494,13 @@ $}
 $( Transposition of a two-argument mapping.  (Contributed by Mario
        Carneiro, 10-Sep-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d x y z $.
 	$d z A $.
 	$d z B $.

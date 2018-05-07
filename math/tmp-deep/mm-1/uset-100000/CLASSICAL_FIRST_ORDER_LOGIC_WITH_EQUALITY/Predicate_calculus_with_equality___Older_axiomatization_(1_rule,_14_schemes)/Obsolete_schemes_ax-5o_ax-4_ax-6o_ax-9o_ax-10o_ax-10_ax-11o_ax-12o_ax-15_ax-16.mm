@@ -39,6 +39,8 @@ $( Axiom of Specialization.  A quantified wff implies the wff without a
      as theorem ~ sp .  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
 	fax-4_0 $f wff ph $.
 	fax-4_1 $f set x $.
 	ax-4 $a |- ( A. x ph -> ph ) $.
@@ -56,6 +58,9 @@ $( Axiom of Quantified Implication.  This axiom moves a quantifier from
      as theorem ~ ax5o .  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fax-5o_0 $f wff ph $.
 	fax-5o_1 $f wff ps $.
 	fax-5o_2 $f set x $.
@@ -71,6 +76,8 @@ $( Axiom of Quantified Negation.  This axiom is used to manipulate negated
      as theorem ~ ax6o .  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
 	fax-6o_0 $f wff ph $.
 	fax-6o_1 $f set x $.
 	ax-6o $a |- ( -. A. x -. A. x ph -> ph ) $.
@@ -82,6 +89,9 @@ $( A variant of ~ ax9 .  Axiom scheme C10' in [Megill] p. 448 (p. 16 of the
      as theorem ~ ax9o .  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fax-9o_0 $f wff ph $.
 	fax-9o_1 $f set x $.
 	fax-9o_2 $f set y $.
@@ -96,6 +106,9 @@ $( Axiom ~ ax-10o ("o" for "old") was the original version of ~ ax-10 ,
      as theorem ~ ax10o .  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fax-10o_0 $f wff ph $.
 	fax-10o_1 $f set x $.
 	fax-10o_2 $f set y $.
@@ -116,6 +129,8 @@ $( Axiom of Quantifier Substitution.  One of the equality and substitution
      as theorem ~ ax10 .  (Contributed by NM, 16-May-2008.)
      (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
 	fax-10_0 $f set x $.
 	fax-10_1 $f set y $.
 	ax-10 $a |- ( A. x x = y -> A. y y = x ) $.
@@ -147,6 +162,9 @@ $( Axiom ~ ax-11o ("o" for "old") was the original version of ~ ax-11 ,
      as theorem ~ ax11o .  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fax-11o_0 $f wff ph $.
 	fax-11o_1 $f set x $.
 	fax-11o_2 $f set y $.
@@ -165,6 +183,9 @@ $( Axiom of Quantifier Introduction.  One of the equality and substitution
      as theorem ~ ax12o .  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fax-12o_0 $f set x $.
 	fax-12o_1 $f set y $.
 	fax-12o_2 $f set z $.
@@ -184,6 +205,9 @@ $( Axiom of Quantifier Introduction.  One of the equality and substitution
      as theorem ~ ax15 .  (Contributed by NM, 5-Aug-1993.)
      (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fax-15_0 $f set x $.
 	fax-15_1 $f set y $.
 	fax-15_2 $f set z $.
@@ -211,6 +235,9 @@ $( Axiom of Distinct Variables.  The only axiom of predicate calculus
        as theorem ~ ax16 .  (Contributed by NM, 5-Aug-1993.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fax-16_0 $f wff ph $.
 	fax-16_1 $f set x $.

@@ -15,6 +15,8 @@ $( Well-ordering predicate symbol (read: 'well-orders') $)
 $( Extend wff notation to include the well-founded predicate.  Read:  ' ` R `
      is a well-founded relation on ` A ` .' $)
 ${
+	$v A $.
+	$v R $.
 	fwfr_0 $f class A $.
 	fwfr_1 $f class R $.
 	wfr $a wff R Fr A $.
@@ -22,6 +24,8 @@ $}
 $( Extend wff notation to include the set-like predicate.  Read:  ' ` R ` is
      set-like on ` A ` .' $)
 ${
+	$v A $.
+	$v R $.
 	fwse_0 $f class A $.
 	fwse_1 $f class R $.
 	wse $a wff R Se A $.
@@ -29,6 +33,8 @@ $}
 $( Extend wff notation to include the well-ordering predicate.
      Read:  ' ` R ` well-orders ` A ` .' $)
 ${
+	$v A $.
+	$v R $.
 	fwwe_0 $f class A $.
 	fwwe_1 $f class R $.
 	wwe $a wff R We A $.
@@ -37,6 +43,11 @@ $( Define the well-founded relation predicate.  Definition 6.24(1) of
        [TakeutiZaring] p. 30.  For alternate definitions, see ~ dffr2 and
        ~ dffr3 .  (Contributed by NM, 3-Apr-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v R $.
 	$d x y z R $.
 	$d x y z A $.
 	fdf-fr_0 $f set x $.
@@ -49,6 +60,10 @@ $}
 $( Define the set-like predicate.  (Contributed by Mario Carneiro,
        19-Nov-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v R $.
 	$d x y R $.
 	$d x y A $.
 	fdf-se_0 $f set x $.
@@ -60,6 +75,8 @@ $}
 $( Define the well-ordering predicate.  For an alternate definition, see
      ~ dfwe2 .  (Contributed by NM, 3-Apr-1994.) $)
 ${
+	$v A $.
+	$v R $.
 	fdf-we_0 $f class A $.
 	fdf-we_1 $f class R $.
 	df-we $a |- ( R We A <-> ( R Fr A /\ R Or A ) ) $.
@@ -67,6 +84,13 @@ $}
 $( Property of well-founded relation (one direction of definition).
        (Contributed by NM, 18-Mar-1997.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z R $.
@@ -83,6 +107,11 @@ $}
 $( The ` R ` -preimage of an element of the base set in a set-like relation
        is a set.  (Contributed by Mario Carneiro, 19-Nov-2014.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -97,6 +126,11 @@ $}
 $( Any relation on a set is set-like on it.  (Contributed by Mario
        Carneiro, 22-Jun-2015.) $)
 ${
+	$v A $.
+	$v R $.
+	$v V $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y $.
 	$d x y R $.
@@ -113,6 +147,11 @@ $( Alternate definition of well-founded relation.  Similar to Definition
        (Proof shortened by Andrew Salmon, 27-Aug-2011.)  (Proof shortened by
        Mario Carneiro, 23-Jun-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v R $.
 	$d x y z A $.
 	$d x y z R $.
 	fdffr2_0 $f set x $.
@@ -126,6 +165,11 @@ $( Property of well-founded relation (one direction of definition using
        class variables).  (Contributed by NM, 17-Feb-2004.)  (Revised by Mario
        Carneiro, 19-Nov-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -141,6 +185,12 @@ $( Subset theorem for the well-founded predicate.  Exercise 1 of
        [TakeutiZaring] p. 31.  (Contributed by NM, 3-Apr-1994.)  (Proof
        shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z R $.
@@ -156,6 +206,11 @@ $}
 $( Subset theorem for the set-like predicate.  (Contributed by Mario
        Carneiro, 24-Jun-2015.) $)
 ${
+	$v A $.
+	$v R $.
+	$v S $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y $.
 	$d x y R $.
@@ -170,6 +225,11 @@ $}
 $( Subset theorem for the set-like predicate.  (Contributed by Mario
        Carneiro, 24-Jun-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -184,6 +244,12 @@ $}
 $( Equality theorem for the well-founded predicate.  (Contributed by NM,
        9-Mar-1997.) $)
 ${
+	$v A $.
+	$v R $.
+	$v S $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z R $.
 	$d x y z S $.
 	$d x y z A $.
@@ -198,6 +264,9 @@ $}
 $( Equality theorem for the well-founded predicate.  (Contributed by NM,
      3-Apr-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	ffreq2_0 $f class A $.
 	ffreq2_1 $f class B $.
 	ffreq2_2 $f class R $.
@@ -206,6 +275,9 @@ $}
 $( Equality theorem for the set-like predicate.  (Contributed by Mario
      Carneiro, 24-Jun-2015.) $)
 ${
+	$v A $.
+	$v R $.
+	$v S $.
 	fseeq1_0 $f class A $.
 	fseeq1_1 $f class R $.
 	fseeq1_2 $f class S $.
@@ -214,6 +286,9 @@ $}
 $( Equality theorem for the set-like predicate.  (Contributed by Mario
      Carneiro, 24-Jun-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	fseeq2_0 $f class A $.
 	fseeq2_1 $f class B $.
 	fseeq2_2 $f class R $.
@@ -223,6 +298,12 @@ $( Bound-variable hypothesis builder for well-founded relations.
        (Contributed by Stefan O'Rear, 20-Jan-2015.)  (Revised by Mario
        Carneiro, 14-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v R $.
+	$v a $.
+	$v b $.
+	$v c $.
 	$d R a b c $.
 	$d A a b c $.
 	$d x a b c $.
@@ -240,6 +321,11 @@ $( Bound-variable hypothesis builder for set-like relations.  (Contributed
        by Mario Carneiro, 24-Jun-2015.)  (Revised by Mario Carneiro,
        14-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v R $.
+	$v a $.
+	$v b $.
 	$d R a b $.
 	$d A a b $.
 	$d x a b $.
@@ -256,6 +342,9 @@ $( Bound-variable hypothesis builder for well-orderings.  (Contributed by
        Stefan O'Rear, 20-Jan-2015.)  (Revised by Mario Carneiro,
        14-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v R $.
 	fnfwe_0 $f set x $.
 	fnfwe_1 $f class A $.
 	fnfwe_2 $f class R $.
@@ -267,6 +356,11 @@ $( A well-founded relation is irreflexive.  Special case of Proposition
        6.23 of [TakeutiZaring] p. 30.  (Contributed by NM, 2-Jan-1994.)
        (Revised by Mario Carneiro, 22-Jun-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -281,6 +375,12 @@ $( A well-founded relation has no 2-cycle loops.  Special case of
        Proposition 6.23 of [TakeutiZaring] p. 30.  (Contributed by NM,
        30-May-1994.)  (Revised by Mario Carneiro, 22-Jun-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -296,6 +396,10 @@ $}
 $( Any relation is well-founded on the empty set.  (Contributed by NM,
        17-Sep-1993.) $)
 ${
+	$v R $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z R $.
 	ifr0_0 $f set x $.
 	ifr0_1 $f set y $.
@@ -308,6 +412,13 @@ $( If an element of a well-founded set satisfies a property ` ph ` , then
        Madsen, 18-Jun-2010.)  (Proof shortened by Mario Carneiro,
        18-Nov-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v R $.
+	$v z $.
 	$d A x y z $.
 	$d R x y z $.
 	$d ph y z $.
@@ -327,12 +438,16 @@ $( Irreflexivity of the epsilon relation: a class founded by epsilon is not
        a member of itself.  (Contributed by NM, 18-Apr-1994.)  (Revised by
        Mario Carneiro, 22-Jun-2015.) $)
 ${
+	$v A $.
 	fefrirr_0 $f class A $.
 	efrirr $p |- ( _E Fr A -> -. A e. A ) $= fefrirr_0 cep wfr fefrirr_0 fefrirr_0 wcel fefrirr_0 cep wfr fefrirr_0 fefrirr_0 wcel fefrirr_0 fefrirr_0 wcel wn fefrirr_0 cep wfr fefrirr_0 fefrirr_0 wcel wa fefrirr_0 fefrirr_0 cep wbr fefrirr_0 fefrirr_0 wcel fefrirr_0 fefrirr_0 cep frirr fefrirr_0 fefrirr_0 wcel fefrirr_0 fefrirr_0 cep wbr fefrirr_0 fefrirr_0 wcel wb fefrirr_0 cep wfr fefrirr_0 fefrirr_0 fefrirr_0 epelg adantl mtbid ex pm2.01d $.
 $}
 $( A set founded by epsilon contains no 2-cycle loops.  (Contributed by NM,
      19-Apr-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fefrn2lp_0 $f class A $.
 	fefrn2lp_1 $f class B $.
 	fefrn2lp_2 $f class C $.
@@ -343,6 +458,9 @@ $( The epsilon relation is set-like on any class.  (This is the origin of
        relation of sets and their elements.)  (Contributed by Mario Carneiro,
        22-Jun-2015.) $)
 ${
+	$v A $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	iepse_0 $f set x $.
 	iepse_1 $f set y $.
@@ -353,6 +471,8 @@ $( Similar to Theorem 7.2 of [TakeutiZaring] p. 35, of except that the Axiom
      of Regularity is not required due to antecedent ` _E Fr A ` .
      (Contributed by NM, 4-May-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	ftz7.2_0 $f class A $.
 	ftz7.2_1 $f class B $.
 	tz7.2 $p |- ( ( Tr A /\ _E Fr A /\ B e. A ) -> ( B C_ A /\ B =/= A ) ) $= ftz7.2_0 wtr ftz7.2_0 cep wfr ftz7.2_1 ftz7.2_0 wcel ftz7.2_1 ftz7.2_0 wss ftz7.2_1 ftz7.2_0 wne wa ftz7.2_0 wtr ftz7.2_1 ftz7.2_0 wcel ftz7.2_1 ftz7.2_0 wss ftz7.2_0 cep wfr ftz7.2_1 ftz7.2_0 wne ftz7.2_0 ftz7.2_1 trss ftz7.2_0 cep wfr ftz7.2_1 ftz7.2_0 wcel ftz7.2_1 ftz7.2_0 ftz7.2_0 cep wfr ftz7.2_1 ftz7.2_0 wcel wn ftz7.2_1 ftz7.2_0 wceq ftz7.2_0 ftz7.2_0 wcel wn ftz7.2_0 efrirr ftz7.2_1 ftz7.2_0 wceq ftz7.2_1 ftz7.2_0 wcel ftz7.2_0 ftz7.2_0 wcel ftz7.2_1 ftz7.2_0 ftz7.2_0 eleq1 notbid syl5ibrcom necon2ad anim12ii 3impia $.
@@ -361,6 +481,10 @@ $( An alternate way of saying that the epsilon relation is well-founded.
        (Contributed by NM, 17-Feb-2004.)  (Revised by Mario Carneiro,
        23-Jun-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v z $.
 	$d x y z A $.
 	idfepfr_0 $f set z $.
 	fdfepfr_0 $f set x $.
@@ -372,6 +496,10 @@ $( A subset of an epsilon-founded class has a minimal element.
        (Contributed by NM, 17-Feb-2004.)  (Revised by David Abernethy,
        22-Feb-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	iepfrc_0 $f set y $.
@@ -384,6 +512,9 @@ $}
 $( Subset theorem for the well-ordering predicate.  Exercise 4 of
      [TakeutiZaring] p. 31.  (Contributed by NM, 19-Apr-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	fwess_0 $f class A $.
 	fwess_1 $f class B $.
 	fwess_2 $f class R $.
@@ -392,6 +523,9 @@ $}
 $( Equality theorem for the well-ordering predicate.  (Contributed by NM,
      9-Mar-1997.) $)
 ${
+	$v A $.
+	$v R $.
+	$v S $.
 	fweeq1_0 $f class A $.
 	fweeq1_1 $f class R $.
 	fweeq1_2 $f class S $.
@@ -400,6 +534,9 @@ $}
 $( Equality theorem for the well-ordering predicate.  (Contributed by NM,
      3-Apr-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	fweeq2_0 $f class A $.
 	fweeq2_1 $f class B $.
 	fweeq2_2 $f class R $.
@@ -407,6 +544,8 @@ ${
 $}
 $( A well-ordering is well-founded.  (Contributed by NM, 22-Apr-1994.) $)
 ${
+	$v A $.
+	$v R $.
 	fwefr_0 $f class A $.
 	fwefr_1 $f class R $.
 	wefr $p |- ( R We A -> R Fr A ) $= fwefr_0 fwefr_1 wwe fwefr_0 fwefr_1 wfr fwefr_0 fwefr_1 wor fwefr_0 fwefr_1 df-we simplbi $.
@@ -414,6 +553,8 @@ $}
 $( A well-ordering is a strict ordering.  (Contributed by NM,
      16-Mar-1997.) $)
 ${
+	$v A $.
+	$v R $.
 	fweso_0 $f class A $.
 	fweso_1 $f class R $.
 	weso $p |- ( R We A -> R Or A ) $= fweso_0 fweso_1 wwe fweso_0 fweso_1 wfr fweso_0 fweso_1 wor fweso_0 fweso_1 df-we simprbi $.
@@ -421,6 +562,9 @@ $}
 $( The elements of an epsilon well-ordering are comparable.  (Contributed by
      NM, 17-May-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	fwecmpep_0 $f set x $.
 	fwecmpep_1 $f set y $.
 	fwecmpep_2 $f class A $.
@@ -429,6 +573,10 @@ $}
 $( An epsilon well-ordering is a transitive relation.  (Contributed by NM,
      22-Apr-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	fwetrep_0 $f set x $.
 	fwetrep_1 $f set y $.
 	fwetrep_2 $f set z $.
@@ -439,6 +587,11 @@ $( A non-empty (possibly proper) subclass of a class well-ordered by ` _E `
        has a minimal element.  Special case of Proposition 6.26 of
        [TakeutiZaring] p. 31.  (Contributed by NM, 17-Feb-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	$d y z A $.
 	$d x y z B $.
@@ -452,6 +605,7 @@ $}
 $( Any relation is a well-ordering of the empty set.  (Contributed by NM,
      16-Mar-1997.) $)
 ${
+	$v R $.
 	fwe0_0 $f class R $.
 	we0 $p |- R We (/) $= c0 fwe0_0 wwe c0 fwe0_0 wfr c0 fwe0_0 wor fwe0_0 fr0 fwe0_0 so0 c0 fwe0_0 df-we mpbir2an $.
 $}
@@ -459,6 +613,12 @@ $( A subset of a well-ordered set has a unique minimal element.
        (Contributed by NM, 18-Mar-1997.)  (Revised by Mario Carneiro,
        28-Apr-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v V $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -475,6 +635,13 @@ $( All nonempty (possibly proper) subclasses of ` A ` , which has a
        6.26 of [TakeutiZaring] p. 31.  (Contributed by Scott Fenton,
        29-Jan-2011.)  (Revised by Mario Carneiro, 24-Jun-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v z $.
+	$v w $.
 	$d x y z A $.
 	$d w x y z B $.
 	$d w x y z R $.

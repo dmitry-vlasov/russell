@@ -93,7 +93,7 @@ $( Separation Scheme (Aussonderung) using a class variable.  To derive this
        derive a contradiction, as ~ notzfaus shows.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
-	$v ph x y z A $.
+	$v ph x y A z $.
 	$d x y A z $.
 	$d y ph z $.
 	e0 $e |- A e. _V $.

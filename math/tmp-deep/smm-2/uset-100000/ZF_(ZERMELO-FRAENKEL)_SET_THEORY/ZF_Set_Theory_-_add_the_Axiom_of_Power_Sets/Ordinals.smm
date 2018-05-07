@@ -93,7 +93,7 @@ $}
 $( An ordinal number is an ordinal set.  (Contributed by NM,
        5-Jun-1994.) $)
 ${
-	$v x A V $.
+	$v A V x $.
 	$d x A $.
 	f0 $f class A $.
 	f1 $f class V $.
@@ -219,7 +219,7 @@ $}
 $( An element of an ordinal class is ordinal.  Proposition 7.6 of
        [TakeutiZaring] p. 36.  (Contributed by NM, 23-Apr-1994.) $)
 ${
-	$v x y z A B $.
+	$v A B x y z $.
 	$d x y z A $.
 	$d x y z B $.
 	f0 $f class A $.
@@ -261,7 +261,7 @@ $}
 $( Proposition 7.7 of [TakeutiZaring] p. 37.  (Contributed by NM,
        5-May-1994.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -469,7 +469,7 @@ $}
 $( The union of an ordinal stays the same if a subset equal to one of its
        elements is removed.  (Contributed by NM, 10-Dec-2004.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -483,7 +483,7 @@ $( If ` B ` is smaller than ` A ` , then it equals the intersection of the
        difference.  Exercise 11 in [TakeutiZaring] p. 44.  (Contributed by
        Andrew Salmon, 14-Nov-2011.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -789,7 +789,7 @@ $}
 $( The successor of a transtive class is transitive.  (Contributed by Alan
        Sare, 11-Apr-2009.) $)
 ${
-	$v y z A $.
+	$v A y z $.
 	$d z y A $.
 	f0 $f class A $.
 	i0 $f set y $.
@@ -812,7 +812,7 @@ $( Obsolete proof of ~ suctr as of 5-Apr-2016.  The successor of a
        21-Feb-2011.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -861,7 +861,7 @@ $( When its successor is subtracted from a class of ordinal numbers, an
        ordinal number is less than the minimum of the resulting subclass.
        (Contributed by NM, 1-Dec-2003.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -983,7 +983,7 @@ $}
 $( A subclass relationship for union and successor of ordinal classes.
        (Contributed by NM, 28-Nov-2003.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.

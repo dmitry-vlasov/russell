@@ -13,6 +13,9 @@ $( Axiom of Right Membership Equality.  One of the equality and substitution
      [Megill] p. 448 (p. 16 of the preprint).  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fax-14_0 $f set x $.
 	fax-14_1 $f set y $.
 	fax-14_2 $f set z $.
@@ -21,6 +24,9 @@ $}
 $( An identity law for the non-logical predicate.  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	felequ2_0 $f set x $.
 	felequ2_1 $f set y $.
 	felequ2_2 $f set z $.

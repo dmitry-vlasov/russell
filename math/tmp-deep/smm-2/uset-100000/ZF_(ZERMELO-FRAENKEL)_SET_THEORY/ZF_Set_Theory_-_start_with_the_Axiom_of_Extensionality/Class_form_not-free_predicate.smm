@@ -84,7 +84,7 @@ $}
 $( Consequence of the not-free predicate.  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
-	$v x y z A $.
+	$v x y A z $.
 	$d x y z $.
 	$d z A $.
 	e0 $e |- F/_ x A $.
@@ -126,7 +126,7 @@ $}
 $( Equality theorem for class not-free.  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -166,7 +166,7 @@ $}
 $( An equality theorem for effectively not free.  (Contributed by Mario
        Carneiro, 14-Oct-2016.) $)
 ${
-	$v ph x y A B $.
+	$v ph x A B y $.
 	$d x y $.
 	$d A y $.
 	$d B y $.
@@ -184,7 +184,7 @@ $}
 $( If ` x ` is disjoint from ` A ` , then ` x ` is not free in ` A ` .
        (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d x y A $.
 	f0 $f set x $.
 	f1 $f class A $.
@@ -218,7 +218,7 @@ $}
 $( ` x ` is bound in ` F/_ x A ` .  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d x y $.
 	$d y A $.
 	f0 $f set x $.
@@ -255,7 +255,7 @@ $}
 $( Hypothesis builder for ` F/_ y A ` .  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
-	$v x y z A $.
+	$v x y A z $.
 	$d x z $.
 	$d y z $.
 	$d z A $.
@@ -270,7 +270,7 @@ $}
 $( Hypothesis builder for equality.  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
-	$v x z A B $.
+	$v x A B z $.
 	$d x z $.
 	$d z A $.
 	$d z B $.
@@ -286,7 +286,7 @@ $}
 $( Hypothesis builder for elementhood.  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
-	$v x z A B $.
+	$v x A B z $.
 	$d x z $.
 	$d z A $.
 	$d z B $.
@@ -364,7 +364,7 @@ $}
 $( Hypothesis builder for equality.  (Contributed by Mario Carneiro,
        7-Oct-2016.) $)
 ${
-	$v ph x y A B $.
+	$v ph x A B y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -382,7 +382,7 @@ $}
 $( Hypothesis builder for elementhood.  (Contributed by Mario Carneiro,
        7-Oct-2016.) $)
 ${
-	$v ph x y A B $.
+	$v ph x A B y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -400,7 +400,7 @@ $}
 $( Formula-building lemma for use with the Distinctor Reduction Theorem.
        (Contributed by Mario Carneiro, 8-Oct-2016.) $)
 ${
-	$v x y w A B $.
+	$v x y A B w $.
 	$d w x $.
 	$d w y $.
 	$d w A $.
@@ -417,7 +417,7 @@ $}
 $( Formula-building lemma for use with the Distinctor Reduction Theorem.
        (Contributed by Mario Carneiro, 8-Oct-2016.) $)
 ${
-	$v x y z w A B $.
+	$v x y z A B w $.
 	$d w x $.
 	$d w y $.
 	$d w z $.
@@ -467,7 +467,7 @@ $}
 $( Deduction form of ~ dvelimc .  (Contributed by Mario Carneiro,
        8-Oct-2016.) $)
 ${
-	$v ph x y z w A B $.
+	$v ph x y z A B w $.
 	$d w x $.
 	$d w y $.
 	$d w z $.
@@ -529,7 +529,7 @@ $( Establish equality between classes, using bound-variable hypotheses
        instead of distinct variable conditions.  (Contributed by NM,
        5-Aug-1993.)  (Revised by Mario Carneiro, 7-Oct-2016.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d y A $.
 	$d y B $.
 	$d x y $.

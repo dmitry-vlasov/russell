@@ -23,28 +23,35 @@ $c Rel  $.
 $( Relation predicate $)
 $( Extend the definition of a class to include the cross product. $)
 ${
+	$v A $.
+	$v B $.
 	fcxp_0 $f class A $.
 	fcxp_1 $f class B $.
 	cxp $a class ( A X. B ) $.
 $}
 $( Extend the definition of a class to include the converse of a class. $)
 ${
+	$v A $.
 	fccnv_0 $f class A $.
 	ccnv $a class `' A $.
 $}
 $( Extend the definition of a class to include the domain of a class. $)
 ${
+	$v A $.
 	fcdm_0 $f class A $.
 	cdm $a class dom A $.
 $}
 $( Extend the definition of a class to include the range of a class. $)
 ${
+	$v A $.
 	fcrn_0 $f class A $.
 	crn $a class ran A $.
 $}
 $( Extend the definition of a class to include the restriction of a class.
      (Read:  The restriction of ` A ` to ` B ` .) $)
 ${
+	$v A $.
+	$v B $.
 	fcres_0 $f class A $.
 	fcres_1 $f class B $.
 	cres $a class ( A |` B ) $.
@@ -52,6 +59,8 @@ $}
 $( Extend the definition of a class to include the image of a class.  (Read:
      The image of ` B ` under ` A ` .) $)
 ${
+	$v A $.
+	$v B $.
 	fcima_0 $f class A $.
 	fcima_1 $f class B $.
 	cima $a class ( A " B ) $.
@@ -59,6 +68,8 @@ $}
 $( Extend the definition of a class to include the composition of two
      classes.  (Read:  The composition of ` A ` and ` B ` .) $)
 ${
+	$v A $.
+	$v B $.
 	fccom_0 $f class A $.
 	fccom_1 $f class B $.
 	ccom $a class ( A o. B ) $.
@@ -66,6 +77,7 @@ $}
 $( Extend the definition of a wff to include the relation predicate.  (Read:
      ` A ` is a relation.) $)
 ${
+	$v A $.
 	fwrel_0 $f class A $.
 	wrel $a wff Rel A $.
 $}
@@ -78,6 +90,10 @@ $( Define the cross product of two classes.  Definition 9.11 of [Quine]
        and bottom (natural) numbers of a fraction.  (Contributed by NM,
        4-Jul-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	fdf-xp_0 $f set x $.
@@ -90,6 +106,7 @@ $( Define the relation predicate.  Definition 6.4(1) of [TakeutiZaring]
        p. 23.  For alternate definitions, see ~ dfrel2 and ~ dfrel3 .
        (Contributed by NM, 1-Aug-1994.) $)
 ${
+	$v A $.
 	fdf-rel_0 $f class A $.
 	df-rel $a |- ( Rel A <-> A C_ ( _V X. _V ) ) $.
 $}
@@ -105,6 +122,9 @@ $( Define the converse of a class.  Definition 9.12 of [Quine] p. 64.  The
        "inverse," especially when the argument is a function.  (Contributed by
        NM, 4-Jul-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d x y $.
 	fdf-cnv_0 $f set x $.
@@ -120,6 +140,11 @@ $( Define the composition of two classes.  Definition 6.6(3) of
        calls the operation "relative product."  (Contributed by NM,
        4-Jul-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x y z B $.
 	fdf-co_0 $f set x $.
@@ -138,6 +163,9 @@ $( Define the domain of a class.  Definition 3 of [Suppes] p. 59.  For
        notation " ` dom ` " is used by Enderton; other authors sometimes use
        script D. (Contributed by NM, 1-Aug-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d x y $.
 	fdf-dm_0 $f set x $.
@@ -152,6 +180,7 @@ $( Define the range of a class.  For example,
        by Enderton; other authors sometimes use script R or script W.
        (Contributed by NM, 1-Aug-1994.) $)
 ${
+	$v A $.
 	fdf-rn_0 $f class A $.
 	df-rn $a |- ran A = dom `' A $.
 $}
@@ -164,6 +193,8 @@ $( Define the restriction of a class.  Definition 6.6(1) of [TakeutiZaring]
        ` /\ B = { 1 , 2 } ) -> ( F |`` B ) = { <. 2 , 6 >. } ` ( ~ ex-res ).
        (Contributed by NM, 2-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	fdf-res_0 $f class A $.
 	fdf-res_1 $f class B $.
 	df-res $a |- ( A |` B ) = ( A i^i ( B X. _V ) ) $.
@@ -175,12 +206,19 @@ $( Define the image of a class (as restricted by another class).
        ( ~ df-rn ).  For an alternate definition, see ~ dfima2 .  (Contributed
        by NM, 2-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	fdf-ima_0 $f class A $.
 	fdf-ima_1 $f class B $.
 	df-ima $a |- ( A " B ) = ran ( A |` B ) $.
 $}
 $( Equality theorem for cross product.  (Contributed by NM, 4-Jul-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -193,6 +231,11 @@ ${
 $}
 $( Equality theorem for cross product.  (Contributed by NM, 5-Jul-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -206,6 +249,12 @@ $}
 $( Membership in a cross product.  Uses fewer axioms than ~ elxp .
        (Contributed by NM, 4-Jul-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -219,6 +268,11 @@ ${
 $}
 $( Membership in a cross product.  (Contributed by NM, 4-Jul-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -231,6 +285,11 @@ ${
 $}
 $( Membership in a cross product.  (Contributed by NM, 23-Feb-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -243,6 +302,10 @@ ${
 $}
 $( Equality theorem for cross product.  (Contributed by FL, 31-Aug-2009.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fxpeq12_0 $f class A $.
 	fxpeq12_1 $f class B $.
 	fxpeq12_2 $f class C $.
@@ -252,6 +315,9 @@ $}
 $( Equality inference for cross product.  (Contributed by NM,
        21-Dec-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fxpeq1i_0 $f class A $.
 	fxpeq1i_1 $f class B $.
 	fxpeq1i_2 $f class C $.
@@ -261,6 +327,9 @@ $}
 $( Equality inference for cross product.  (Contributed by NM,
        21-Dec-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fxpeq2i_0 $f class A $.
 	fxpeq2i_1 $f class B $.
 	fxpeq2i_2 $f class C $.
@@ -270,6 +339,10 @@ $}
 $( Equality inference for cross product.  (Contributed by FL,
        31-Aug-2009.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fxpeq12i_0 $f class A $.
 	fxpeq12i_1 $f class B $.
 	fxpeq12i_2 $f class C $.
@@ -281,6 +354,10 @@ $}
 $( Equality deduction for cross product.  (Contributed by Jeff Madsen,
        17-Jun-2010.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fxpeq1d_0 $f wff ph $.
 	fxpeq1d_1 $f class A $.
 	fxpeq1d_2 $f class B $.
@@ -291,6 +368,10 @@ $}
 $( Equality deduction for cross product.  (Contributed by Jeff Madsen,
        17-Jun-2010.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fxpeq2d_0 $f wff ph $.
 	fxpeq2d_1 $f class A $.
 	fxpeq2d_2 $f class B $.
@@ -301,6 +382,11 @@ $}
 $( Equality deduction for cross product.  (Contributed by NM,
        8-Dec-2013.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fxpeq12d_0 $f wff ph $.
 	fxpeq12d_1 $f class A $.
 	fxpeq12d_2 $f class B $.
@@ -313,6 +399,11 @@ $}
 $( Bound-variable hypothesis builder for cross product.  (Contributed by
        NM, 15-Sep-2003.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d y z A $.
 	$d y z B $.
 	$d x y z $.
@@ -328,6 +419,14 @@ $}
 $( Distribute proper substitution through the cross product of two
        classes.  (Contributed by Alan Sare, 10-Nov-2012.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d A w y z $.
 	$d B w y z $.
 	$d C w y z $.
@@ -346,6 +445,10 @@ $}
 $( The empty set is not a member of a cross product.  (Contributed by NM,
        2-May-1996.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -358,6 +461,11 @@ $}
 $( A member of a cross product (ordered pair) doesn't contain the empty
        set.  (Contributed by NM, 15-Dec-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -372,6 +480,12 @@ $( Ordered pair membership in a cross product.  (Contributed by NM,
        15-Nov-1994.)  (Proof shortened by Andrew Salmon, 12-Aug-2011.)
        (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -387,6 +501,10 @@ $}
 $( Binary relation on a cross product.  (Contributed by NM,
        22-Apr-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fbrxp_0 $f class A $.
 	fbrxp_1 $f class B $.
 	fbrxp_2 $f class C $.
@@ -396,6 +514,10 @@ $}
 $( Ordered pair membership in a cross product (implication).  (Contributed by
      NM, 28-May-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fopelxpi_0 $f class A $.
 	fopelxpi_1 $f class B $.
 	fopelxpi_2 $f class C $.
@@ -406,6 +528,10 @@ $( The first member of an ordered pair of classes in a cross product belongs
      to first cross product argument.  (Contributed by NM, 28-May-2008.)
      (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fopelxp1_0 $f class A $.
 	fopelxp1_1 $f class B $.
 	fopelxp1_2 $f class C $.
@@ -416,6 +542,10 @@ $( The second member of an ordered pair of classes in a cross product belongs
      to second cross product argument.  (Contributed by Mario Carneiro,
      26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fopelxp2_0 $f class A $.
 	fopelxp2_1 $f class B $.
 	fopelxp2_2 $f class C $.
@@ -426,6 +556,12 @@ $( The first member of an ordered triple of classes in a cross product
      belongs to first cross product argument.  (Contributed by NM,
      28-May-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v T $.
 	fotelxp1_0 $f class A $.
 	fotelxp1_1 $f class B $.
 	fotelxp1_2 $f class C $.
@@ -437,6 +573,13 @@ $}
 $( Membership in a class builder restricted to a cross product.
        (Contributed by NM, 20-Feb-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x y z B $.
 	$d y z ph $.
@@ -455,6 +598,9 @@ $( A true binary relation on a relation implies the arguments are sets.
      (This is a property of our ordered pair definition.)  (Contributed by
      Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	fbrrelex12_0 $f class A $.
 	fbrrelex12_1 $f class B $.
 	fbrrelex12_2 $f class R $.
@@ -464,6 +610,9 @@ $( A true binary relation on a relation implies the first argument is a set.
      (This is a property of our ordered pair definition.)  (Contributed by NM,
      18-May-2004.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	fbrrelex_0 $f class A $.
 	fbrrelex_1 $f class B $.
 	fbrrelex_2 $f class R $.
@@ -473,6 +622,9 @@ $( A true binary relation on a relation implies the second argument is a
      set.  (This is a property of our ordered pair definition.)  (Contributed
      by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	fbrrelex2_0 $f class A $.
 	fbrrelex2_1 $f class B $.
 	fbrrelex2_2 $f class R $.
@@ -481,6 +633,9 @@ $}
 $( The first argument of a binary relation exists.  (An artifact of our
        ordered pair definition.)  (Contributed by NM, 4-Jun-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	fbrrelexi_0 $f class A $.
 	fbrrelexi_1 $f class B $.
 	fbrrelexi_2 $f class R $.
@@ -491,6 +646,9 @@ $( The second argument of a binary relation exists.  (An artifact of our
        ordered pair definition.)  (Contributed by Mario Carneiro,
        26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	fbrrelex2i_0 $f class A $.
 	fbrrelex2i_1 $f class B $.
 	fbrrelex2i_2 $f class R $.
@@ -500,6 +658,9 @@ $}
 $( No proper class is related to anything via any relation.  (Contributed
        by Roy F. Longton, 30-Jul-2005.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	fnprrel_0 $f class A $.
 	fnprrel_1 $f class B $.
 	fnprrel_2 $f class R $.
@@ -511,6 +672,10 @@ $( Representation of a constant function using the mapping operation.
        (Note that ` x ` cannot appear free in ` B ` .)  (Contributed by NM,
        12-Oct-1999.)  (Revised by Mario Carneiro, 16-Nov-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	ifconstmpt_0 $f set y $.
@@ -522,6 +687,13 @@ $}
 $( Variable to class conversion of transitive relation.  (Contributed by
        NM, 9-Jun-1998.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
 	$d x y A $.
 	$d y B $.
 	$d x y z C $.
@@ -540,6 +712,10 @@ $}
 $( Ordered pair membership in the universal class of ordered pairs.
      (Contributed by Mario Carneiro, 3-May-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	fopelvvg_0 $f class A $.
 	fopelvvg_1 $f class B $.
 	fopelvvg_2 $f class V $.
@@ -550,6 +726,8 @@ $( Ordered pair membership in the universal class of ordered pairs.
        (Contributed by NM, 22-Aug-2013.)  (Revised by Mario Carneiro,
        26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	fopelvv_0 $f class A $.
 	fopelvv_1 $f class B $.
 	eopelvv_0 $e |- A e. _V $.
@@ -562,6 +740,11 @@ $( Justification theorem for an ordered pair definition that works for any
        reader will not object to our use of a pair of classes."  (Contributed
        by NM, 28-Sep-2003.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -577,6 +760,11 @@ $( Two things in a binary relation belong to the relation's domain.
        (Contributed by NM, 17-May-1996.)  (Revised by Mario Carneiro,
        26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	fbrel_0 $f class A $.
 	fbrel_1 $f class B $.
 	fbrel_2 $f class C $.
@@ -588,6 +776,15 @@ $}
 $( Ordered pair membership in an ordered pair class abstraction.
        (Contributed by Mario Carneiro, 9-Nov-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -608,6 +805,11 @@ ${
 $}
 $( Membership in a cross product.  (Contributed by NM, 5-Mar-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -621,6 +823,12 @@ $}
 $( Membership in a union of cross products.  (Contributed by Mario
        Carneiro, 29-Dec-2014.)  (Revised by Mario Carneiro, 1-Jan-2017.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d y z A $.
 	$d y z B $.
 	$d y z C $.
@@ -636,6 +844,11 @@ $}
 $( Distributive law for cross product over union.  Theorem 103 of [Suppes]
        p. 52.  (Contributed by NM, 12-Aug-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -649,6 +862,11 @@ $}
 $( Distributive law for cross product over union.  Similar to Theorem 103
        of [Suppes] p. 52.  (Contributed by NM, 30-Sep-2002.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -662,6 +880,13 @@ $}
 $( Distributive law for cross product over indexed union.  (Contributed by
        Mario Carneiro, 27-Apr-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d w y z A $.
 	$d w y z B $.
 	$d w x y z C $.
@@ -677,6 +902,13 @@ $}
 $( Distributive law for cross product over indexed union.  (Contributed by
        Mario Carneiro, 27-Apr-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d w y z A $.
 	$d w y z B $.
 	$d w x y z C $.
@@ -694,6 +926,10 @@ $( Obsolete proof of ~ resiun2 as of 5-Apr-2016.  Distributive law for
        11-Nov-2014.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x F $.
 	fresiundiOLD_0 $f set x $.
 	fresiundiOLD_1 $f class A $.
@@ -704,6 +940,9 @@ $}
 $( Membership in a union of cross products when the second factor is
        constant.  (Contributed by Mario Carneiro, 29-Dec-2014.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fiunxpconst_0 $f set x $.
@@ -713,6 +952,10 @@ ${
 $}
 $( The cross product of two unions.  (Contributed by NM, 12-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fxpun_0 $f class A $.
 	fxpun_1 $f class B $.
 	fxpun_2 $f class C $.
@@ -722,6 +965,9 @@ $}
 $( Membership in universal class of ordered pairs.  (Contributed by NM,
        4-Jul-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	felvv_0 $f set x $.
 	felvv_1 $f set y $.
@@ -731,6 +977,11 @@ $}
 $( Membership in universal class of ordered triples.  (Contributed by NM,
        17-Dec-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
 	$d w x y z A $.
 	ielvvv_0 $f set w $.
 	felvvv_0 $f set x $.
@@ -742,6 +993,9 @@ $}
 $( An ordered pair contains its union.  (Contributed by NM,
        16-Sep-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	ielvvuni_0 $f set x $.
 	ielvvuni_1 $f set y $.
@@ -751,6 +1005,11 @@ $}
 $( Intersection of binary relation with cross product.  (Contributed by NM,
      3-Mar-2007.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	fbrinxp2_0 $f class A $.
 	fbrinxp2_1 $f class B $.
 	fbrinxp2_2 $f class C $.
@@ -761,6 +1020,11 @@ $}
 $( Intersection of binary relation with cross product.  (Contributed by NM,
      9-Mar-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	fbrinxp_0 $f class A $.
 	fbrinxp_1 $f class B $.
 	fbrinxp_2 $f class C $.
@@ -771,6 +1035,11 @@ $}
 $( Intersection of partial order with cross product of its field.
        (Contributed by Mario Carneiro, 10-Jul-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v R $.
 	$d x y z A $.
 	$d x y z R $.
 	ipoinxp_0 $f set x $.
@@ -783,6 +1052,10 @@ $}
 $( Intersection of total order with cross product of its field.
        (Contributed by Mario Carneiro, 10-Jul-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v R $.
 	$d x y A $.
 	$d x y R $.
 	isoinxp_0 $f set x $.
@@ -794,6 +1067,11 @@ $}
 $( Intersection of well-founded relation with cross product of its field.
        (Contributed by Mario Carneiro, 10-Jul-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v R $.
 	$d x y z A $.
 	$d x y z R $.
 	ifrinxp_0 $f set x $.
@@ -806,6 +1084,10 @@ $}
 $( Intersection of set-like relation with cross product of its field.
        (Contributed by Mario Carneiro, 22-Jun-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v R $.
 	$d x y A $.
 	$d x y R $.
 	iseinxp_0 $f set x $.
@@ -818,6 +1100,8 @@ $( Intersection of well-ordering with cross product of its field.
        (Contributed by NM, 9-Mar-1997.)  (Revised by Mario Carneiro,
        10-Jul-2014.) $)
 ${
+	$v A $.
+	$v R $.
 	fweinxp_0 $f class A $.
 	fweinxp_1 $f class R $.
 	weinxp $p |- ( R We A <-> ( R i^i ( A X. A ) ) We A ) $= fweinxp_0 fweinxp_1 wfr fweinxp_0 fweinxp_1 wor wa fweinxp_0 fweinxp_1 fweinxp_0 fweinxp_0 cxp cin wfr fweinxp_0 fweinxp_1 fweinxp_0 fweinxp_0 cxp cin wor wa fweinxp_0 fweinxp_1 wwe fweinxp_0 fweinxp_1 fweinxp_0 fweinxp_0 cxp cin wwe fweinxp_0 fweinxp_1 wfr fweinxp_0 fweinxp_1 fweinxp_0 fweinxp_0 cxp cin wfr fweinxp_0 fweinxp_1 wor fweinxp_0 fweinxp_1 fweinxp_0 fweinxp_0 cxp cin wor fweinxp_0 fweinxp_1 frinxp fweinxp_0 fweinxp_1 soinxp anbi12i fweinxp_0 fweinxp_1 df-we fweinxp_0 fweinxp_1 fweinxp_0 fweinxp_0 cxp cin df-we 3bitr4i $.
@@ -825,6 +1109,11 @@ $}
 $( Partial ordering of a singleton.  (Contributed by NM, 27-Apr-2009.)
        (Revised by Mario Carneiro, 23-Apr-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v R $.
 	$d x y z A $.
 	$d x y z R $.
 	iposn_0 $f set x $.
@@ -837,6 +1126,10 @@ $}
 $( Strict ordering on a singleton.  (Contributed by Mario Carneiro,
        28-Dec-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v R $.
 	$d x y A $.
 	$d x y R $.
 	isosn_0 $f set x $.
@@ -848,6 +1141,11 @@ $}
 $( Founded relation on a singleton.  (Contributed by Mario Carneiro,
        28-Dec-2014.)  (Revised by Mario Carneiro, 23-Apr-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v R $.
 	$d x y z A $.
 	$d x y z R $.
 	ifrsn_0 $f set x $.
@@ -860,6 +1158,8 @@ $}
 $( Well-ordering of a singleton.  (Contributed by Mario Carneiro,
        28-Dec-2014.) $)
 ${
+	$v A $.
+	$v R $.
 	fwesn_0 $f class A $.
 	fwesn_1 $f class R $.
 	wesn $p |- ( Rel R -> ( R We { A } <-> -. A R A ) ) $= fwesn_1 wrel fwesn_0 csn fwesn_1 wfr fwesn_0 csn fwesn_1 wor wa fwesn_0 fwesn_0 fwesn_1 wbr wn fwesn_0 fwesn_0 fwesn_1 wbr wn wa fwesn_0 csn fwesn_1 wwe fwesn_0 fwesn_0 fwesn_1 wbr wn fwesn_1 wrel fwesn_0 csn fwesn_1 wfr fwesn_0 fwesn_0 fwesn_1 wbr wn fwesn_0 csn fwesn_1 wor fwesn_0 fwesn_0 fwesn_1 wbr wn fwesn_0 fwesn_1 frsn fwesn_0 fwesn_1 sosn anbi12d fwesn_0 csn fwesn_1 df-we fwesn_0 fwesn_0 fwesn_1 wbr wn pm4.24 3bitr4g $.
@@ -867,6 +1167,11 @@ $}
 $( An abstraction relation is a subset of a related cross product.
        (Contributed by NM, 16-Jul-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	fopabssxp_0 $f wff ph $.
@@ -880,6 +1185,15 @@ $( The law of concretion for a binary relation.  See ~ brab2a for alternate
        proof.  TODO: should one of them be deleted?  (Contributed by Mario
        Carneiro, 28-Apr-2015.)  (Proof modification is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -901,6 +1215,14 @@ $}
 $( Implicit substitution of class for ordered pair.  (Contributed by NM,
        5-Mar-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -921,6 +1243,18 @@ $}
 $( Implicit substitution of classes for ordered pairs.  (Contributed by NM,
        12-Mar-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	$d x y z w A $.
 	$d z w B $.
 	$d x y z w C $.
@@ -949,6 +1283,22 @@ $}
 $( Implicit substitution of classes for ordered pairs.  (Contributed by NM,
        12-Mar-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v F $.
 	$d x y z w v u A $.
 	$d z w v u B $.
 	$d v u C $.
@@ -984,6 +1334,20 @@ $}
 $( Ordered pair membership in a relation.  Special case.  (Contributed by
        NM, 5-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
 	$d x y z w v u A $.
 	$d x y z w v u B $.
 	$d x y z w v u C $.
@@ -1012,6 +1376,10 @@ $}
 $( The cross product with the empty set is empty.  Part of Theorem 3.13(ii)
        of [Monk1] p. 37.  (Contributed by NM, 4-Jul-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z A $.
 	ixp0r_0 $f set x $.
 	ixp0r_1 $f set y $.
@@ -1025,6 +1393,7 @@ $( Ordinal numbers and ordered pairs are disjoint collections.  This
        (Contributed by NM, 1-Jun-2004.)  (Proof shortened by Andrew Salmon,
        27-Aug-2011.) $)
 ${
+	$v x $.
 	ionxpdisj_0 $f set x $.
 	onxpdisj $p |- ( On i^i ( _V X. _V ) ) = (/) $= con0 cvv cvv cxp cin c0 wceq ionxpdisj_0 cv cvv cvv cxp wcel wn ionxpdisj_0 con0 ionxpdisj_0 con0 cvv cvv cxp disj ionxpdisj_0 cv con0 wcel ionxpdisj_0 cv c0 wceq c0 ionxpdisj_0 cv wcel wo ionxpdisj_0 cv cvv cvv cxp wcel wn ionxpdisj_0 cv on0eqel ionxpdisj_0 cv c0 wceq ionxpdisj_0 cv cvv cvv cxp wcel wn c0 ionxpdisj_0 cv wcel ionxpdisj_0 cv c0 wceq ionxpdisj_0 cv cvv cvv cxp wcel c0 cvv cvv cxp wcel cvv cvv 0nelxp ionxpdisj_0 cv c0 cvv cvv cxp eleq1 mtbiri ionxpdisj_0 cv cvv cvv cxp wcel c0 ionxpdisj_0 cv wcel cvv cvv ionxpdisj_0 cv 0nelelxp con2i jaoi syl mprgbir $.
 $}
@@ -1036,6 +1405,8 @@ $}
 $( Equality theorem for the relation predicate.  (Contributed by NM,
      1-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	freleq_0 $f class A $.
 	freleq_1 $f class B $.
 	releq $p |- ( A = B -> ( Rel A <-> Rel B ) ) $= freleq_0 freleq_1 wceq freleq_0 cvv cvv cxp wss freleq_1 cvv cvv cxp wss freleq_0 wrel freleq_1 wrel freleq_0 freleq_1 cvv cvv cxp sseq1 freleq_0 df-rel freleq_1 df-rel 3bitr4g $.
@@ -1043,6 +1414,8 @@ $}
 $( Equality inference for the relation predicate.  (Contributed by NM,
        8-Dec-2006.) $)
 ${
+	$v A $.
+	$v B $.
 	freleqi_0 $f class A $.
 	freleqi_1 $f class B $.
 	ereleqi_0 $e |- A = B $.
@@ -1051,6 +1424,9 @@ $}
 $( Equality deduction for the relation predicate.  (Contributed by NM,
        8-Mar-2014.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	freleqd_0 $f wff ph $.
 	freleqd_1 $f class A $.
 	freleqd_2 $f class B $.
@@ -1060,6 +1436,8 @@ $}
 $( Bound-variable hypothesis builder for a relation.  (Contributed by NM,
        31-Jan-2004.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
 	fnfrel_0 $f set x $.
 	fnfrel_1 $f class A $.
 	enfrel_0 $e |- F/_ x A $.
@@ -1068,6 +1446,8 @@ $}
 $( Subclass theorem for relation predicate.  Theorem 2 of [Suppes] p. 58.
      (Contributed by NM, 15-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	frelss_0 $f class A $.
 	frelss_1 $f class B $.
 	relss $p |- ( A C_ B -> ( Rel B -> Rel A ) ) $= frelss_0 frelss_1 wss frelss_1 cvv cvv cxp wss frelss_0 cvv cvv cxp wss frelss_1 wrel frelss_0 wrel frelss_0 frelss_1 cvv cvv cxp sstr2 frelss_1 df-rel frelss_0 df-rel 3imtr4g $.
@@ -1076,6 +1456,11 @@ $( A subclass relationship depends only on a relation's ordered pairs.
        Theorem 3.2(i) of [Monk1] p. 33.  (Contributed by NM, 2-Aug-1994.)
        (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x y z B $.
 	issrel_0 $f set z $.
@@ -1088,6 +1473,10 @@ $}
 $( Extensionality principle for relations.  Theorem 3.2(ii) of [Monk1]
        p. 33.  (Contributed by NM, 2-Aug-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	feqrel_0 $f set x $.
@@ -1099,6 +1488,10 @@ $}
 $( Inference from subclass principle for relations.  (Contributed by NM,
        31-Mar-1998.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	frelssi_0 $f set x $.
@@ -1112,6 +1505,11 @@ $}
 $( Deduction from subclass principle for relations.  (Contributed by NM,
        11-Sep-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	$d x y ph $.
@@ -1127,6 +1525,10 @@ $}
 $( Inference from extensionality principle for relations.  (Contributed by
        FL, 15-Oct-2012.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	feqrelriv_0 $f set x $.
@@ -1139,6 +1541,10 @@ $}
 $( Inference from extensionality principle for relations.  (Contributed by
        NM, 17-Mar-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	feqrelriiv_0 $f set x $.
@@ -1153,6 +1559,10 @@ $}
 $( Inference from extensionality principle for relations.  (Contributed by
        NM, 12-Dec-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	feqbrriv_0 $f set x $.
@@ -1167,6 +1577,11 @@ $}
 $( Deduce equality of relations from equivalence of membership.
        (Contributed by Rodolfo Medina, 10-Oct-2010.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	$d ph x $.
@@ -1184,6 +1599,11 @@ $}
 $( Deduction from extensionality principle for relations.  (Contributed by
        Mario Carneiro, 3-Jan-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	$d ph x $.
@@ -1201,6 +1621,11 @@ $}
 $( Deduction from extensionality principle for relations.  (Contributed by
        Rodolfo Medina, 10-Oct-2010.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	$d ph x $.
@@ -1218,6 +1643,11 @@ $}
 $( A version of ~ eqrelrdv .  (Contributed by Rodolfo Medina,
        10-Oct-2010.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	$d ph x $.
@@ -1235,6 +1665,12 @@ $( A subclass relationship determined by ordered triples.  Use ~ relrelss
        (Contributed by NM, 17-Dec-2008.)  (Proof shortened by Andrew Salmon,
        27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
 	$d w x y z A $.
 	$d w x y z B $.
 	issrelrel_0 $f set w $.
@@ -1250,6 +1686,11 @@ $( Extensionality principle for ordered triples (used by 2-place operations
        antecedent in terms of the relation predicate.  (Contributed by NM,
        17-Dec-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x y z B $.
 	feqrelrel_0 $f set x $.
@@ -1262,6 +1703,10 @@ $}
 $( A member of a relation is an ordered pair.  (Contributed by NM,
        17-Sep-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v R $.
 	$d x y A $.
 	felrel_0 $f set x $.
 	felrel_1 $f set y $.
@@ -1272,6 +1717,7 @@ $}
 $( A singleton is a relation iff it is an ordered pair.  (Contributed by
        NM, 24-Sep-2013.) $)
 ${
+	$v A $.
 	frelsn_0 $f class A $.
 	erelsn_0 $e |- A e. _V $.
 	relsn $p |- ( Rel { A } <-> A e. ( _V X. _V ) ) $= frelsn_0 csn wrel frelsn_0 csn cvv cvv cxp wss frelsn_0 cvv cvv cxp wcel frelsn_0 csn df-rel frelsn_0 cvv cvv cxp erelsn_0 snss bitr4i $.
@@ -1279,6 +1725,8 @@ $}
 $( A singleton of an ordered pair is a relation.  (Contributed by NM,
        17-May-1998.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	frelsnop_0 $f class A $.
 	frelsnop_1 $f class B $.
 	erelsnop_0 $e |- A e. _V $.
@@ -1289,6 +1737,12 @@ $( Subset theorem for cross product.  Generalization of Theorem 101 of
        [Suppes] p. 52.  (Contributed by NM, 26-Aug-1995.)  (Proof shortened by
        Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -1304,6 +1758,8 @@ $}
 $( A cross product is included in the ordered pair universe.  Exercise 3 of
        [TakeutiZaring] p. 25.  (Contributed by NM, 2-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	fxpss_0 $f class A $.
 	fxpss_1 $f class B $.
 	xpss $p |- ( A X. B ) C_ ( _V X. _V ) $= fxpss_0 cvv wss fxpss_1 cvv wss fxpss_0 fxpss_1 cxp cvv cvv cxp wss fxpss_0 ssv fxpss_1 ssv fxpss_0 cvv fxpss_1 cvv xpss12 mp2an $.
@@ -1311,6 +1767,8 @@ $}
 $( A cross product is a relation.  Theorem 3.13(i) of [Monk1] p. 37.
      (Contributed by NM, 2-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	frelxp_0 $f class A $.
 	frelxp_1 $f class B $.
 	relxp $p |- Rel ( A X. B ) $= frelxp_0 frelxp_1 cxp wrel frelxp_0 frelxp_1 cxp cvv cvv cxp wss frelxp_0 frelxp_1 xpss frelxp_0 frelxp_1 cxp df-rel mpbir $.
@@ -1318,6 +1776,9 @@ $}
 $( Subset relation for cross product.  (Contributed by Jeff Hankins,
      30-Aug-2009.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fxpss1_0 $f class A $.
 	fxpss1_1 $f class B $.
 	fxpss1_2 $f class C $.
@@ -1326,6 +1787,9 @@ $}
 $( Subset relation for cross product.  (Contributed by Jeff Hankins,
      30-Aug-2009.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fxpss2_0 $f class A $.
 	fxpss2_1 $f class B $.
 	fxpss2_2 $f class C $.
@@ -1334,6 +1798,11 @@ $}
 $( A cross product is included in the power of the power of the union of
        its arguments.  (Contributed by NM, 13-Sep-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d A x y z $.
 	$d B x y z $.
 	ixpsspw_0 $f set x $.
@@ -1347,6 +1816,10 @@ $( A cross product is included in the power of the power of the union of
        its arguments.  (Contributed by NM, 13-Sep-2006.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	ixpsspwOLD_0 $f set x $.
@@ -1358,6 +1831,8 @@ $}
 $( The double class union of a cross product is included in the union of its
      arguments.  (Contributed by NM, 16-Sep-2006.) $)
 ${
+	$v A $.
+	$v B $.
 	funixpss_0 $f class A $.
 	funixpss_1 $f class B $.
 	unixpss $p |- U. U. ( A X. B ) C_ ( A u. B ) $= funixpss_0 funixpss_1 cxp cuni cuni funixpss_0 funixpss_1 cun cpw cuni funixpss_0 funixpss_1 cun funixpss_0 funixpss_1 cxp cuni funixpss_0 funixpss_1 cun cpw wss funixpss_0 funixpss_1 cxp cuni cuni funixpss_0 funixpss_1 cun cpw cuni wss funixpss_0 funixpss_1 cxp cuni funixpss_0 funixpss_1 cun cpw cpw cuni funixpss_0 funixpss_1 cun cpw funixpss_0 funixpss_1 cxp funixpss_0 funixpss_1 cun cpw cpw wss funixpss_0 funixpss_1 cxp cuni funixpss_0 funixpss_1 cun cpw cpw cuni wss funixpss_0 funixpss_1 xpsspw funixpss_0 funixpss_1 cxp funixpss_0 funixpss_1 cun cpw cpw uniss ax-mp funixpss_0 funixpss_1 cun cpw unipw sseqtri funixpss_0 funixpss_1 cxp cuni funixpss_0 funixpss_1 cun cpw uniss ax-mp funixpss_0 funixpss_1 cun unipw sseqtri $.
@@ -1366,6 +1841,10 @@ $( The cross product of two sets is a set.  Proposition 6.2 of
      [TakeutiZaring] p. 23.  See also ~ xpexgALT .  (Contributed by NM,
      14-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	fxpexg_0 $f class A $.
 	fxpexg_1 $f class B $.
 	fxpexg_2 $f class V $.
@@ -1375,6 +1854,8 @@ $}
 $( The cross product of two sets is a set.  Proposition 6.2 of
        [TakeutiZaring] p. 23.  (Contributed by NM, 14-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	fxpex_0 $f class A $.
 	fxpex_1 $f class B $.
 	expex_0 $e |- A e. _V $.
@@ -1384,6 +1865,8 @@ $}
 $( The union of two relations is a relation.  Compare Exercise 5 of
      [TakeutiZaring] p. 25.  (Contributed by NM, 12-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	frelun_0 $f class A $.
 	frelun_1 $f class B $.
 	relun $p |- ( Rel ( A u. B ) <-> ( Rel A /\ Rel B ) ) $= frelun_0 cvv cvv cxp wss frelun_1 cvv cvv cxp wss wa frelun_0 frelun_1 cun cvv cvv cxp wss frelun_0 wrel frelun_1 wrel wa frelun_0 frelun_1 cun wrel frelun_0 frelun_1 cvv cvv cxp unss frelun_0 wrel frelun_0 cvv cvv cxp wss frelun_1 wrel frelun_1 cvv cvv cxp wss frelun_0 df-rel frelun_1 df-rel anbi12i frelun_0 frelun_1 cun df-rel 3bitr4ri $.
@@ -1391,6 +1874,8 @@ $}
 $( The intersection with a relation is a relation.  (Contributed by NM,
      16-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	frelin1_0 $f class A $.
 	frelin1_1 $f class B $.
 	relin1 $p |- ( Rel A -> Rel ( A i^i B ) ) $= frelin1_0 frelin1_1 cin frelin1_0 wss frelin1_0 wrel frelin1_0 frelin1_1 cin wrel wi frelin1_0 frelin1_1 inss1 frelin1_0 frelin1_1 cin frelin1_0 relss ax-mp $.
@@ -1398,6 +1883,8 @@ $}
 $( The intersection with a relation is a relation.  (Contributed by NM,
      17-Jan-2006.) $)
 ${
+	$v A $.
+	$v B $.
 	frelin2_0 $f class A $.
 	frelin2_1 $f class B $.
 	relin2 $p |- ( Rel B -> Rel ( A i^i B ) ) $= frelin2_0 frelin2_1 cin frelin2_1 wss frelin2_1 wrel frelin2_0 frelin2_1 cin wrel wi frelin2_0 frelin2_1 inss2 frelin2_0 frelin2_1 cin frelin2_1 relss ax-mp $.
@@ -1405,6 +1892,8 @@ $}
 $( A difference cutting down a relation is a relation.  (Contributed by NM,
      31-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
 	freldif_0 $f class A $.
 	freldif_1 $f class B $.
 	reldif $p |- ( Rel A -> Rel ( A \ B ) ) $= freldif_0 freldif_1 cdif freldif_0 wss freldif_0 wrel freldif_0 freldif_1 cdif wrel wi freldif_0 freldif_1 difss freldif_0 freldif_1 cdif freldif_0 relss ax-mp $.
@@ -1412,6 +1901,10 @@ $}
 $( An indexed union is a relation iff each member of its indexed family is
        a relation.  (Contributed by NM, 19-Dec-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -1424,6 +1917,9 @@ $}
 $( An indexed intersection is a relation if at least one of the member of the
      indexed family is a relation.  (Contributed by NM, 8-Mar-2014.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	freliin_0 $f set x $.
 	freliin_1 $f class A $.
 	freliin_2 $f class B $.
@@ -1433,6 +1929,8 @@ $( The union of a class is a relation iff any member is a relation.
        Exercise 6 of [TakeutiZaring] p. 25 and its converse.  (Contributed by
        NM, 13-Aug-2004.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	freluni_0 $f set x $.
 	freluni_1 $f class A $.
@@ -1441,6 +1939,8 @@ $}
 $( The intersection of a class is a relation if at least one member is a
        relation.  (Contributed by NM, 8-Mar-2014.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	frelint_0 $f set x $.
 	frelint_1 $f class A $.
@@ -1453,6 +1953,11 @@ $}
 $( A class of ordered pairs is a relation.  (Contributed by Mario Carneiro,
        21-Dec-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d ph z $.
 	$d x z $.
 	$d y z $.
@@ -1468,6 +1973,9 @@ $( A class of ordered pairs is a relation.  (Contributed by NM, 8-Mar-1995.)
      (Unnecessary distinct variable restrictions were removed by Alan Sare,
      9-Jul-2013.)  (Proof shortened by Mario Carneiro, 21-Dec-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	frelopab_0 $f wff ph $.
 	frelopab_1 $f set x $.
 	frelopab_2 $f set y $.
@@ -1477,6 +1985,8 @@ $( The identity relation is a relation.  Part of Exercise 4.12(p) of
        [Mendelson] p. 235.  (Contributed by NM, 26-Apr-1998.)  (Revised by
        Mario Carneiro, 21-Dec-2013.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d x y $.
 	$d x y $.
@@ -1488,6 +1998,8 @@ $}
 $( The membership relation is a relation.  (Contributed by NM,
        26-Apr-1998.)  (Revised by Mario Carneiro, 21-Dec-2013.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d x y $.
 	$d x y $.
@@ -1499,6 +2011,11 @@ $}
 $( A relation expressed as an ordered pair abstraction.  (Contributed by
        NM, 11-Dec-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
 	$d w x y z A $.
 	$d x y $.
 	$d x y $.
@@ -1515,6 +2032,12 @@ $}
 $( Intersection of two ordered pair class abstractions.  (Contributed by
        NM, 30-Sep-2002.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x y z $.
 	$d x y $.
 	$d x y $.
@@ -1532,6 +2055,12 @@ $}
 $( The difference of two ordered-pair abstractions.  (Contributed by Stefan
        O'Rear, 17-Jan-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x y z $.
 	$d x y $.
 	$d x y $.
@@ -1550,6 +2079,12 @@ $( The intersection of two cross products.  Exercise 9 of [TakeutiZaring]
        p. 25.  (Contributed by NM, 3-Aug-1994.)  (Proof shortened by Andrew
        Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -1565,6 +2100,9 @@ $}
 $( Distributive law for cross product over intersection.  Theorem 102 of
        [Suppes] p. 52.  (Contributed by NM, 26-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fxpindi_0 $f class A $.
 	fxpindi_1 $f class B $.
 	fxpindi_2 $f class C $.
@@ -1573,6 +2111,9 @@ $}
 $( Distributive law for cross product over intersection.  Similar to
        Theorem 102 of [Suppes] p. 52.  (Contributed by NM, 26-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fxpindir_0 $f class A $.
 	fxpindir_1 $f class B $.
 	fxpindir_2 $f class C $.
@@ -1581,6 +2122,12 @@ $}
 $( Distributive law for cross product over indexed intersection.
        (Contributed by Mario Carneiro, 21-Mar-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y z A $.
 	$d x y z C $.
 	$d y z B $.
@@ -1595,6 +2142,11 @@ $}
 $( Distributive law for cross product over relativized indexed
        intersection.  (Contributed by Mario Carneiro, 21-Mar-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x A $.
 	$d x C $.
 	fxpriindi_0 $f set x $.
@@ -1608,6 +2160,11 @@ $( Membership in a union of cross products.  Analogue of ~ elxp for
        nonconstant ` B ( x ) ` .  (Contributed by Mario Carneiro,
        29-Dec-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d y A $.
 	$d y B $.
 	$d x y C $.
@@ -1622,6 +2179,12 @@ $}
 $( Membership in a union of cross products.  (Contributed by Mario
        Carneiro, 14-Feb-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
 	$d x C $.
 	$d x D $.
 	$d x E $.
@@ -1639,6 +2202,13 @@ $( Write a double restricted quantification as one universal quantifier.
        In this version of ~ ralxp , ` B ( y ) ` is not assumed to be constant.
        (Contributed by Mario Carneiro, 29-Dec-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x z B $.
 	$d y z ph $.
@@ -1657,6 +2227,13 @@ $( Write a double restricted quantification as one universal quantifier.
        In this version of ~ rexxp , ` B ( y ) ` is not assumed to be constant.
        (Contributed by Mario Carneiro, 14-Feb-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x z B $.
 	$d y z ph $.
@@ -1676,6 +2253,13 @@ $( Universal quantification restricted to a cross product is equivalent to
        implicit substitution.  (Contributed by NM, 7-Feb-2004.)  (Revised by
        Mario Carneiro, 29-Dec-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x z B $.
 	$d y z ph $.
@@ -1695,6 +2279,13 @@ $( Existential quantification restricted to a cross product is equivalent
        to a double restricted quantification.  (Contributed by NM,
        11-Nov-1995.)  (Revised by Mario Carneiro, 14-Feb-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x z B $.
 	$d y z ph $.
@@ -1713,6 +2304,9 @@ $}
 $( Disjoint union is a subset of a cross product.  (Contributed by Stefan
        O'Rear, 21-Nov-2014.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	fdjussxp_0 $f set x $.
 	fdjussxp_1 $f class A $.
@@ -1722,6 +2316,16 @@ $}
 $( Version of ~ ralxp with bound-variable hypotheses.  (Contributed by NM,
        18-Aug-2006.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
+	$v A $.
+	$v B $.
 	$d u v w x y A $.
 	$d u v w x y z B $.
 	$d u v w ph $.
@@ -1745,6 +2349,13 @@ $}
 $( Version of ~ rexxp with bound-variable hypotheses.  (Contributed by NM,
        19-Dec-2008.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y z B $.
 	frexxpf_0 $f wff ph $.
@@ -1764,6 +2375,14 @@ $( Indexed union on a cross product is equals a double indexed union.  The
        hypothesis specifies an implicit substitution.  (Contributed by NM,
        19-Dec-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d w x y A $.
 	$d w x y z B $.
 	$d w C $.
@@ -1785,6 +2404,11 @@ $}
 $( Deduce equality of a relation and an ordered-pair class builder.
        Compare ~ abbi2dv .  (Contributed by NM, 24-Feb-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d x y ph $.
 	fopabbi2dv_0 $f wff ph $.
@@ -1799,6 +2423,13 @@ $}
 $( A necessary and sufficient condition for a Kuratowski ordered pair to be
        a relation.  (Contributed by NM, 3-Jun-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v A $.
+	$v B $.
 	$d v w x y z A $.
 	$d v w x y z B $.
 	irelop_0 $f set z $.
@@ -1816,6 +2447,11 @@ $( For sets, the identity relation is the same as equality.  (Contributed
        by NM, 30-Apr-2004.)  (Proof shortened by Andrew Salmon,
        27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d x y A $.
 	$d x y B $.
 	iideqg_0 $f set x $.
@@ -1828,6 +2464,8 @@ $}
 $( For sets, the identity relation is the same as equality.  (Contributed
        by NM, 13-Aug-1995.) $)
 ${
+	$v A $.
+	$v B $.
 	fideq_0 $f class A $.
 	fideq_1 $f class B $.
 	eideq_0 $e |- B e. _V $.
@@ -1836,6 +2474,8 @@ $}
 $( A set is identical to itself.  (Contributed by NM, 28-May-2008.)  (Proof
        shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v A $.
+	$v V $.
 	fididg_0 $f class A $.
 	fididg_1 $f class V $.
 	ididg $p |- ( A e. V -> A _I A ) $= fididg_0 fididg_1 wcel fididg_0 fididg_0 cid wbr fididg_0 fididg_0 wceq fididg_0 eqid fididg_0 fididg_0 fididg_1 ideqg mpbiri $.
@@ -1844,11 +2484,18 @@ $( Two ways of expressing set existence.  (Contributed by NM, 16-Feb-2008.)
      (Proof shortened by Andrew Salmon, 27-Aug-2011.)  (Revised by Mario
      Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
 	fissetid_0 $f class A $.
 	issetid $p |- ( A e. _V <-> A _I A ) $= fissetid_0 cvv wcel fissetid_0 fissetid_0 cid wbr fissetid_0 cvv ididg fissetid_0 fissetid_0 cid reli brrelexi impbii $.
 $}
 $( Subclass theorem for composition.  (Contributed by FL, 30-Dec-2010.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d A x y z $.
 	$d B x y z $.
 	$d C x y z $.
@@ -1862,6 +2509,12 @@ ${
 $}
 $( Subclass theorem for composition.  (Contributed by NM, 5-Apr-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d A x y z $.
 	$d B x y z $.
 	$d C x y z $.
@@ -1876,6 +2529,9 @@ $}
 $( Equality theorem for composition of two classes.  (Contributed by NM,
      3-Jan-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fcoeq1_0 $f class A $.
 	fcoeq1_1 $f class B $.
 	fcoeq1_2 $f class C $.
@@ -1884,6 +2540,9 @@ $}
 $( Equality theorem for composition of two classes.  (Contributed by NM,
      3-Jan-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fcoeq2_0 $f class A $.
 	fcoeq2_1 $f class B $.
 	fcoeq2_2 $f class C $.
@@ -1892,6 +2551,9 @@ $}
 $( Equality inference for composition of two classes.  (Contributed by NM,
        16-Nov-2000.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fcoeq1i_0 $f class A $.
 	fcoeq1i_1 $f class B $.
 	fcoeq1i_2 $f class C $.
@@ -1901,6 +2563,9 @@ $}
 $( Equality inference for composition of two classes.  (Contributed by NM,
        16-Nov-2000.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fcoeq2i_0 $f class A $.
 	fcoeq2i_1 $f class B $.
 	fcoeq2i_2 $f class C $.
@@ -1910,6 +2575,10 @@ $}
 $( Equality deduction for composition of two classes.  (Contributed by NM,
        16-Nov-2000.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fcoeq1d_0 $f wff ph $.
 	fcoeq1d_1 $f class A $.
 	fcoeq1d_2 $f class B $.
@@ -1920,6 +2589,10 @@ $}
 $( Equality deduction for composition of two classes.  (Contributed by NM,
        16-Nov-2000.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fcoeq2d_0 $f wff ph $.
 	fcoeq2d_1 $f class A $.
 	fcoeq2d_2 $f class B $.
@@ -1930,6 +2603,10 @@ $}
 $( Equality inference for composition of two classes.  (Contributed by FL,
        7-Jun-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fcoeq12i_0 $f class A $.
 	fcoeq12i_1 $f class B $.
 	fcoeq12i_2 $f class C $.
@@ -1941,6 +2618,11 @@ $}
 $( Equality deduction for composition of two classes.  (Contributed by FL,
        7-Jun-2012.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fcoeq12d_0 $f wff ph $.
 	fcoeq12d_1 $f class A $.
 	fcoeq12d_2 $f class B $.
@@ -1953,6 +2635,12 @@ $}
 $( Bound-variable hypothesis builder for function value.  (Contributed by
        NM, 1-Sep-1999.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
 	$d w x y z $.
 	$d y z w A $.
 	$d y z w B $.
@@ -1969,6 +2657,15 @@ $}
 $( Ordered pair membership in a composition.  (Contributed by NM,
        24-Feb-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v V $.
+	$v W $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -1987,6 +2684,13 @@ $}
 $( Ordered pair membership in a composition.  (Contributed by NM,
        27-Jan-1997.)  (Revised by Mario Carneiro, 24-Feb-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v V $.
+	$v W $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -2003,6 +2707,11 @@ $}
 $( Binary relation on a composition.  (Contributed by NM, 21-Sep-2004.)
        (Revised by Mario Carneiro, 24-Feb-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -2019,6 +2728,11 @@ $}
 $( Ordered pair membership in a composition.  (Contributed by NM,
        27-Dec-1996.)  (Revised by Mario Carneiro, 24-Feb-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -2034,6 +2748,10 @@ ${
 $}
 $( Subset theorem for converse.  (Contributed by NM, 22-Mar-1998.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	icnvss_0 $f set x $.
@@ -2044,12 +2762,16 @@ ${
 $}
 $( Equality theorem for converse.  (Contributed by NM, 13-Aug-1995.) $)
 ${
+	$v A $.
+	$v B $.
 	fcnveq_0 $f class A $.
 	fcnveq_1 $f class B $.
 	cnveq $p |- ( A = B -> `' A = `' B ) $= fcnveq_0 fcnveq_1 wss fcnveq_1 fcnveq_0 wss wa fcnveq_0 ccnv fcnveq_1 ccnv wss fcnveq_1 ccnv fcnveq_0 ccnv wss wa fcnveq_0 fcnveq_1 wceq fcnveq_0 ccnv fcnveq_1 ccnv wceq fcnveq_0 fcnveq_1 wss fcnveq_0 ccnv fcnveq_1 ccnv wss fcnveq_1 fcnveq_0 wss fcnveq_1 ccnv fcnveq_0 ccnv wss fcnveq_0 fcnveq_1 cnvss fcnveq_1 fcnveq_0 cnvss anim12i fcnveq_0 fcnveq_1 eqss fcnveq_0 ccnv fcnveq_1 ccnv eqss 3imtr4i $.
 $}
 $( Equality inference for converse.  (Contributed by NM, 23-Dec-2008.) $)
 ${
+	$v A $.
+	$v B $.
 	fcnveqi_0 $f class A $.
 	fcnveqi_1 $f class B $.
 	ecnveqi_0 $e |- A = B $.
@@ -2057,6 +2779,9 @@ ${
 $}
 $( Equality deduction for converse.  (Contributed by NM, 6-Dec-2013.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fcnveqd_0 $f wff ph $.
 	fcnveqd_1 $f class A $.
 	fcnveqd_2 $f class B $.
@@ -2066,6 +2791,10 @@ $}
 $( Membership in a converse.  Equation 5 of [Suppes] p. 62.  (Contributed
        by NM, 24-Mar-1998.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v R $.
 	$d x y A $.
 	$d x y R $.
 	felcnv_0 $f set x $.
@@ -2077,6 +2806,10 @@ $}
 $( Membership in a converse.  Equation 5 of [Suppes] p. 62.  (Contributed
        by NM, 11-Aug-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v R $.
 	$d x y A $.
 	$d x y R $.
 	felcnv2_0 $f set x $.
@@ -2088,6 +2821,10 @@ $}
 $( Bound-variable hypothesis builder for converse.  (Contributed by NM,
        31-Jan-2004.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d y z A $.
 	$d x y z $.
 	infcnv_0 $f set y $.
@@ -2100,6 +2837,13 @@ $}
 $( Ordered-pair membership in converse.  (Contributed by NM, 13-May-1999.)
        (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -2115,6 +2859,11 @@ $}
 $( The converse of a binary relation swaps arguments.  Theorem 11 of [Suppes]
      p. 61.  (Contributed by NM, 10-Oct-2005.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	fbrcnvg_0 $f class A $.
 	fbrcnvg_1 $f class B $.
 	fbrcnvg_2 $f class C $.
@@ -2125,6 +2874,9 @@ $}
 $( Ordered-pair membership in converse.  (Contributed by NM,
        13-Aug-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	fopelcnv_0 $f class A $.
 	fopelcnv_1 $f class B $.
 	fopelcnv_2 $f class R $.
@@ -2135,6 +2887,9 @@ $}
 $( The converse of a binary relation swaps arguments.  Theorem 11 of
        [Suppes] p. 61.  (Contributed by NM, 13-Aug-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	fbrcnv_0 $f class A $.
 	fbrcnv_1 $f class B $.
 	fbrcnv_2 $f class R $.
@@ -2146,6 +2901,11 @@ $( Distributive law of converse over class composition.  Theorem 26 of
        [Suppes] p. 64.  (Contributed by NM, 19-Mar-1998.)  (Proof shortened by
        Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x y z B $.
 	icnvco_0 $f set x $.
@@ -2158,6 +2918,11 @@ $}
 $( The converse of a class union is the (indexed) union of the converses of
        its members.  (Contributed by NM, 11-Aug-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
 	$d x y z w A $.
 	icnvuni_0 $f set y $.
 	icnvuni_1 $f set z $.
@@ -2169,6 +2934,9 @@ $}
 $( Alternate definition of domain.  Definition 6.5(1) of [TakeutiZaring]
        p. 24.  (Contributed by NM, 28-Dec-1996.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fdfdm3_0 $f set x $.
 	fdfdm3_1 $f set y $.
@@ -2178,6 +2946,9 @@ $}
 $( Alternate definition of range.  Definition 4 of [Suppes] p. 60.
        (Contributed by NM, 27-Dec-1996.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fdfrn2_0 $f set x $.
 	fdfrn2_1 $f set y $.
@@ -2187,6 +2958,9 @@ $}
 $( Alternate definition of range.  Definition 6.5(2) of [TakeutiZaring]
        p. 24.  (Contributed by NM, 28-Dec-1996.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fdfrn3_0 $f set x $.
 	fdfrn3_1 $f set y $.
@@ -2195,6 +2969,11 @@ ${
 $}
 $( Membership in a range.  (Contributed by Scott Fenton, 2-Feb-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d A x y $.
 	$d B x y $.
 	ielrn2g_0 $f set y $.
@@ -2206,6 +2985,10 @@ ${
 $}
 $( Membership in a range.  (Contributed by Scott Fenton, 2-Feb-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d A x $.
 	$d B x $.
 	felrng_0 $f set x $.
@@ -2216,6 +2999,9 @@ ${
 $}
 $( Alternate definition of domain.  (Contributed by NM, 28-Dec-1996.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	idfdm4_0 $f set x $.
 	idfdm4_1 $f set y $.
@@ -2226,6 +3012,11 @@ $( Definition of domain, using bound-variable hypotheses instead of
        distinct variable conditions.  (Contributed by NM, 8-Mar-1995.)
        (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v w $.
+	$v v $.
+	$v A $.
 	$d x y w v $.
 	$d w v A $.
 	idfdmf_0 $f set w $.
@@ -2240,6 +3031,11 @@ $}
 $( Domain membership.  Theorem 4 of [Suppes] p. 59.  (Contributed by Mario
        Carneiro, 9-Jul-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d x y A $.
 	$d x y B $.
 	ieldmg_0 $f set x $.
@@ -2252,6 +3048,10 @@ $}
 $( Domain membership.  Theorem 4 of [Suppes] p. 59.  (Contributed by NM,
        27-Jan-1997.)  (Revised by Mario Carneiro, 9-Jul-2014.) $)
 ${
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d y A $.
 	$d y B $.
 	feldm2g_0 $f set y $.
@@ -2263,6 +3063,9 @@ $}
 $( Membership in a domain.  Theorem 4 of [Suppes] p. 59.  (Contributed by
        NM, 2-Apr-2004.) $)
 ${
+	$v y $.
+	$v A $.
+	$v B $.
 	$d y A $.
 	$d y B $.
 	feldm_0 $f set y $.
@@ -2274,6 +3077,9 @@ $}
 $( Membership in a domain.  Theorem 4 of [Suppes] p. 59.  (Contributed by
        NM, 1-Aug-1994.) $)
 ${
+	$v y $.
+	$v A $.
+	$v B $.
 	$d y A $.
 	$d y B $.
 	feldm2_0 $f set y $.
@@ -2284,6 +3090,10 @@ ${
 $}
 $( Subset theorem for domain.  (Contributed by NM, 11-Aug-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	idmss_0 $f set x $.
@@ -2294,12 +3104,16 @@ ${
 $}
 $( Equality theorem for domain.  (Contributed by NM, 11-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	fdmeq_0 $f class A $.
 	fdmeq_1 $f class B $.
 	dmeq $p |- ( A = B -> dom A = dom B ) $= fdmeq_0 fdmeq_1 wss fdmeq_1 fdmeq_0 wss wa fdmeq_0 cdm fdmeq_1 cdm wss fdmeq_1 cdm fdmeq_0 cdm wss wa fdmeq_0 fdmeq_1 wceq fdmeq_0 cdm fdmeq_1 cdm wceq fdmeq_0 fdmeq_1 wss fdmeq_0 cdm fdmeq_1 cdm wss fdmeq_1 fdmeq_0 wss fdmeq_1 cdm fdmeq_0 cdm wss fdmeq_0 fdmeq_1 dmss fdmeq_1 fdmeq_0 dmss anim12i fdmeq_0 fdmeq_1 eqss fdmeq_0 cdm fdmeq_1 cdm eqss 3imtr4i $.
 $}
 $( Equality inference for domain.  (Contributed by NM, 4-Mar-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	fdmeqi_0 $f class A $.
 	fdmeqi_1 $f class B $.
 	edmeqi_0 $e |- A = B $.
@@ -2307,6 +3121,9 @@ ${
 $}
 $( Equality deduction for domain.  (Contributed by NM, 4-Mar-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fdmeqd_0 $f wff ph $.
 	fdmeqd_1 $f class A $.
 	fdmeqd_2 $f class B $.
@@ -2316,6 +3133,10 @@ $}
 $( Membership of first of an ordered pair in a domain.  (Contributed by NM,
        30-Jul-1995.) $)
 ${
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d y A $.
 	$d y B $.
 	$d y C $.
@@ -2330,6 +3151,9 @@ $}
 $( Membership of first of a binary relation in a domain.  (Contributed by
        NM, 30-Jul-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	fbreldm_0 $f class A $.
 	fbreldm_1 $f class B $.
 	fbreldm_2 $f class R $.
@@ -2340,6 +3164,12 @@ $}
 $( Membership of first of a binary relation in a domain.  (Contributed by
        NM, 21-Mar-2007.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	$d x A $.
 	$d x B $.
 	$d x R $.
@@ -2355,6 +3185,10 @@ $( The domain of a union is the union of domains.  Exercise 56(a) of
        [Enderton] p. 65.  (Contributed by NM, 12-Aug-1994.)  (Proof shortened
        by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	idmun_0 $f set x $.
@@ -2366,6 +3200,10 @@ $}
 $( The domain of an intersection belong to the intersection of domains.
        Theorem 6 of [Suppes] p. 60.  (Contributed by NM, 15-Sep-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	idmin_0 $f set x $.
@@ -2377,6 +3215,11 @@ $}
 $( The domain of an indexed union.  (Contributed by Mario Carneiro,
        26-Apr-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z $.
 	$d y z A $.
 	$d y z B $.
@@ -2390,6 +3233,10 @@ $}
 $( The domain of a union.  Part of Exercise 8 of [Enderton] p. 41.
        (Contributed by NM, 3-Feb-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z $.
 	$d y z A $.
 	$d y z $.
@@ -2403,6 +3250,9 @@ $}
 $( The domain of a class of ordered pairs.  (Contributed by NM,
        16-May-1995.)  (Revised by Mario Carneiro, 4-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fdmopab_0 $f wff ph $.
 	fdmopab_1 $f set x $.
@@ -2412,6 +3262,10 @@ $}
 $( Upper bound for the domain of a restricted class of ordered pairs.
        (Contributed by NM, 31-Jan-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fdmopabss_0 $f wff ph $.
 	fdmopabss_1 $f set x $.
@@ -2422,6 +3276,10 @@ $}
 $( The domain of a restricted class of ordered pairs.  (Contributed by NM,
        31-Jan-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fdmopab3_0 $f wff ph $.
 	fdmopab3_1 $f set x $.
@@ -2433,6 +3291,8 @@ $( The domain of the empty set is empty.  Part of Theorem 3.8(v) of [Monk1]
        p. 36.  (Contributed by NM, 4-Jul-1994.)  (Proof shortened by Andrew
        Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	idm0_0 $f set x $.
 	idm0_1 $f set y $.
@@ -2441,6 +3301,8 @@ $}
 $( The domain of the identity relation is the universe.  (Contributed by
        NM, 30-Apr-1998.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	idmi_0 $f set x $.
 	idmi_1 $f set y $.
@@ -2454,6 +3316,9 @@ $}
 $( An empty domain implies an empty range.  (Contributed by NM,
        21-May-1998.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	idm0rn0_0 $f set x $.
 	idm0rn0_1 $f set y $.
@@ -2463,6 +3328,9 @@ $}
 $( A relation is empty iff its domain is empty.  (Contributed by NM,
        15-Sep-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	ireldm0_0 $f set x $.
 	ireldm0_1 $f set y $.
@@ -2473,6 +3341,10 @@ $( The domain of a cross product.  Part of Theorem 3.13(x) of [Monk1]
        p. 37.  (Contributed by NM, 28-Jul-1995.)  (Proof shortened by Andrew
        Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	idmxp_0 $f set x $.
@@ -2484,12 +3356,15 @@ $}
 $( The domain of a square cross product.  (Contributed by NM,
      28-Jul-1995.) $)
 ${
+	$v A $.
 	fdmxpid_0 $f class A $.
 	dmxpid $p |- dom ( A X. A ) = A $= fdmxpid_0 fdmxpid_0 cxp cdm fdmxpid_0 wceq fdmxpid_0 c0 fdmxpid_0 c0 wceq c0 cdm c0 fdmxpid_0 fdmxpid_0 cxp cdm fdmxpid_0 dm0 fdmxpid_0 c0 wceq fdmxpid_0 fdmxpid_0 cxp c0 fdmxpid_0 c0 wceq fdmxpid_0 fdmxpid_0 cxp c0 fdmxpid_0 cxp c0 fdmxpid_0 c0 fdmxpid_0 xpeq1 fdmxpid_0 xp0r syl6eq dmeqd fdmxpid_0 c0 wceq id 3eqtr4a fdmxpid_0 fdmxpid_0 dmxp pm2.61ine $.
 $}
 $( The domain of the intersection of two square cross products.  Unlike
      ~ dmin , equality holds.  (Contributed by NM, 29-Jan-2008.) $)
 ${
+	$v A $.
+	$v B $.
 	fdmxpin_0 $f class A $.
 	fdmxpin_1 $f class B $.
 	dmxpin $p |- dom ( ( A X. A ) i^i ( B X. B ) ) = ( A i^i B ) $= fdmxpin_0 fdmxpin_0 cxp fdmxpin_1 fdmxpin_1 cxp cin cdm fdmxpin_0 fdmxpin_1 cin fdmxpin_0 fdmxpin_1 cin cxp cdm fdmxpin_0 fdmxpin_1 cin fdmxpin_0 fdmxpin_0 cxp fdmxpin_1 fdmxpin_1 cxp cin fdmxpin_0 fdmxpin_1 cin fdmxpin_0 fdmxpin_1 cin cxp fdmxpin_0 fdmxpin_0 fdmxpin_1 fdmxpin_1 inxp dmeqi fdmxpin_0 fdmxpin_1 cin dmxpid eqtri $.
@@ -2497,6 +3372,8 @@ $}
 $( The cross product of a class with itself is one-to-one.  (Contributed by
      NM, 5-Nov-2006.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v A $.
+	$v B $.
 	fxpid11_0 $f class A $.
 	fxpid11_1 $f class B $.
 	xpid11 $p |- ( ( A X. A ) = ( B X. B ) <-> A = B ) $= fxpid11_0 fxpid11_0 cxp fxpid11_1 fxpid11_1 cxp wceq fxpid11_0 fxpid11_1 wceq fxpid11_0 fxpid11_0 cxp fxpid11_1 fxpid11_1 cxp wceq fxpid11_0 fxpid11_0 cxp cdm fxpid11_1 fxpid11_1 cxp cdm fxpid11_0 fxpid11_1 fxpid11_0 fxpid11_0 cxp fxpid11_1 fxpid11_1 cxp dmeq fxpid11_0 dmxpid fxpid11_1 dmxpid 3eqtr3g fxpid11_0 fxpid11_1 wceq fxpid11_0 fxpid11_0 cxp fxpid11_1 fxpid11_1 cxp wceq fxpid11_0 fxpid11_1 fxpid11_0 fxpid11_1 xpeq12 anidms impbii $.
@@ -2504,18 +3381,24 @@ $}
 $( The domain of the double converse of a class (which doesn't have to be a
      relation as in ~ dfrel2 ).  (Contributed by NM, 8-Apr-2007.) $)
 ${
+	$v A $.
 	fdmcnvcnv_0 $f class A $.
 	dmcnvcnv $p |- dom `' `' A = dom A $= fdmcnvcnv_0 cdm fdmcnvcnv_0 ccnv crn fdmcnvcnv_0 ccnv ccnv cdm fdmcnvcnv_0 dfdm4 fdmcnvcnv_0 ccnv df-rn eqtr2i $.
 $}
 $( The range of the double converse of a class.  (Contributed by NM,
      8-Apr-2007.) $)
 ${
+	$v A $.
 	frncnvcnv_0 $f class A $.
 	rncnvcnv $p |- ran `' `' A = ran A $= frncnvcnv_0 crn frncnvcnv_0 ccnv cdm frncnvcnv_0 ccnv ccnv crn frncnvcnv_0 df-rn frncnvcnv_0 ccnv dfdm4 eqtr2i $.
 $}
 $( The first member of an ordered pair in a relation belongs to the domain
        of the relation.  (Contributed by NM, 28-Jul-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	ielreldm_0 $f set x $.
@@ -2526,12 +3409,16 @@ ${
 $}
 $( Equality theorem for range.  (Contributed by NM, 29-Dec-1996.) $)
 ${
+	$v A $.
+	$v B $.
 	frneq_0 $f class A $.
 	frneq_1 $f class B $.
 	rneq $p |- ( A = B -> ran A = ran B ) $= frneq_0 frneq_1 wceq frneq_0 ccnv cdm frneq_1 ccnv cdm frneq_0 crn frneq_1 crn frneq_0 frneq_1 wceq frneq_0 ccnv frneq_1 ccnv frneq_0 frneq_1 cnveq dmeqd frneq_0 df-rn frneq_1 df-rn 3eqtr4g $.
 $}
 $( Equality inference for range.  (Contributed by NM, 4-Mar-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	frneqi_0 $f class A $.
 	frneqi_1 $f class B $.
 	erneqi_0 $e |- A = B $.
@@ -2539,6 +3426,9 @@ ${
 $}
 $( Equality deduction for range.  (Contributed by NM, 4-Mar-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	frneqd_0 $f wff ph $.
 	frneqd_1 $f class A $.
 	frneqd_2 $f class B $.
@@ -2547,6 +3437,8 @@ ${
 $}
 $( Subset theorem for range.  (Contributed by NM, 22-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
 	frnss_0 $f class A $.
 	frnss_1 $f class B $.
 	rnss $p |- ( A C_ B -> ran A C_ ran B ) $= frnss_0 frnss_1 wss frnss_0 ccnv cdm frnss_1 ccnv cdm frnss_0 crn frnss_1 crn frnss_0 frnss_1 wss frnss_0 ccnv frnss_1 ccnv wss frnss_0 ccnv cdm frnss_1 ccnv cdm wss frnss_0 frnss_1 cnvss frnss_0 ccnv frnss_1 ccnv dmss syl frnss_0 df-rn frnss_1 df-rn 3sstr4g $.
@@ -2554,6 +3446,11 @@ $}
 $( The second argument of a binary relation belongs to its range.
      (Contributed by NM, 29-Jun-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v G $.
 	fbrelrng_0 $f class A $.
 	fbrelrng_1 $f class B $.
 	fbrelrng_2 $f class C $.
@@ -2564,6 +3461,9 @@ $}
 $( The second argument of a binary relation belongs to its range.
        (Contributed by NM, 13-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fbrelrn_0 $f class A $.
 	fbrelrn_1 $f class B $.
 	fbrelrn_2 $f class C $.
@@ -2574,6 +3474,9 @@ $}
 $( Membership of second member of an ordered pair in a range.  (Contributed
        by NM, 23-Feb-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fopelrn_0 $f class A $.
 	fopelrn_1 $f class B $.
 	fopelrn_2 $f class C $.
@@ -2584,6 +3487,9 @@ $}
 $( The first argument of a binary relation belongs to its domain.
      (Contributed by NM, 2-Jul-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	freleldm_0 $f class A $.
 	freleldm_1 $f class B $.
 	freleldm_2 $f class R $.
@@ -2592,6 +3498,9 @@ $}
 $( The second argument of a binary relation belongs to its range.
      (Contributed by NM, 2-Jul-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	frelelrn_0 $f class A $.
 	frelelrn_1 $f class B $.
 	frelelrn_2 $f class R $.
@@ -2599,6 +3508,9 @@ ${
 $}
 $( Membership in a domain.  (Contributed by Mario Carneiro, 5-Nov-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v R $.
 	$d x A $.
 	$d x R $.
 	freleldmb_0 $f set x $.
@@ -2608,6 +3520,9 @@ ${
 $}
 $( Membership in a range.  (Contributed by Mario Carneiro, 5-Nov-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v R $.
 	$d x A $.
 	$d x R $.
 	frelelrnb_0 $f set x $.
@@ -2618,6 +3533,9 @@ $}
 $( The first argument of a binary relation belongs to its domain.
        (Contributed by NM, 28-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	freleldmi_0 $f class A $.
 	freleldmi_1 $f class B $.
 	freleldmi_2 $f class R $.
@@ -2627,6 +3545,9 @@ $}
 $( The second argument of a binary relation belongs to its range.
        (Contributed by NM, 28-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	frelelrni_0 $f class A $.
 	frelelrni_1 $f class B $.
 	frelelrni_2 $f class R $.
@@ -2637,6 +3558,11 @@ $( Definition of range, using bound-variable hypotheses instead of distinct
        variable conditions.  (Contributed by NM, 14-Aug-1995.)  (Revised by
        Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v w $.
+	$v v $.
+	$v A $.
 	$d x y w v $.
 	$d w v A $.
 	idfrnf_0 $f set w $.
@@ -2650,6 +3576,10 @@ ${
 $}
 $( Membership in a range.  (Contributed by NM, 10-Jul-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	ielrn2_0 $f set y $.
@@ -2661,6 +3591,9 @@ ${
 $}
 $( Membership in a range.  (Contributed by NM, 2-Apr-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	felrn_0 $f set x $.
@@ -2672,6 +3605,10 @@ $}
 $( Bound-variable hypothesis builder for domain.  (Contributed by NM,
        30-Jan-2004.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z $.
 	$d y z A $.
 	infdm_0 $f set y $.
@@ -2684,6 +3621,8 @@ $}
 $( Bound-variable hypothesis builder for range.  (Contributed by NM,
        1-Sep-1999.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
 	fnfrn_0 $f set x $.
 	fnfrn_1 $f class A $.
 	enfrn_0 $e |- F/_ x A $.
@@ -2691,6 +3630,9 @@ ${
 $}
 $( Domain of an intersection.  (Contributed by FL, 15-Oct-2012.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	fdmiin_0 $f set x $.
 	fdmiin_1 $f class A $.
 	fdmiin_2 $f class B $.
@@ -2699,6 +3641,12 @@ $}
 $( Distribute proper substitution through the range of a class.
        (Contributed by Alan Sare, 10-Nov-2012.) $)
 ${
+	$v x $.
+	$v y $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d A w y $.
 	$d B w y $.
 	$d V w y $.
@@ -2714,6 +3662,9 @@ $}
 $( The range of a class of ordered pairs.  (Contributed by NM,
        14-Aug-1995.)  (Revised by Mario Carneiro, 4-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	frnopab_0 $f wff ph $.
 	frnopab_1 $f set x $.
@@ -2723,6 +3674,11 @@ $}
 $( The range of a function in maps-to notation.  (Contributed by Scott
        Fenton, 21-Mar-2011.)  (Revised by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -2737,6 +3693,13 @@ $}
 $( The range of a function in maps-to notation.  (Contributed by Mario
        Carneiro, 20-Feb-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v V $.
 	$d y A $.
 	$d y B $.
 	$d x y C $.
@@ -2753,6 +3716,13 @@ $}
 $( Elementhood in an image set.  (Contributed by Mario Carneiro,
          12-Sep-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v V $.
 	$d x C $.
 	$d x A $.
 	$d x D $.
@@ -2770,6 +3740,13 @@ $}
 $( Elementhood in an image set.  (Contributed by Mario Carneiro,
        31-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v V $.
 	$d y z A $.
 	$d y z B $.
 	$d x y z $.
@@ -2786,6 +3763,13 @@ $}
 $( Membership in the range of a function.  (Contributed by NM,
        27-Aug-2007.)  (Revised by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v V $.
 	$d y A $.
 	$d y B $.
 	$d x y C $.
@@ -2802,6 +3786,11 @@ $}
 $( Membership in the range of a function.  (Contributed by NM,
        30-Aug-2004.)  (Revised by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d x C $.
 	felrnmpti_0 $f set x $.
 	felrnmpti_1 $f class A $.
@@ -2815,6 +3804,11 @@ $}
 $( Alternate definition of indexed union when ` B ` is a set.  (Contributed
        by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -2828,6 +3822,11 @@ $}
 $( Alternate definition of indexed intersection when ` B ` is a set.
        (Contributed by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -2841,6 +3840,9 @@ $}
 $( Alternate definition of indexed union when ` B ` is a set.  (Contributed
        by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	fdfiun3_0 $f set x $.
 	fdfiun3_1 $f class A $.
 	fdfiun3_2 $f class B $.
@@ -2850,6 +3852,9 @@ $}
 $( Alternate definition of indexed intersection when ` B ` is a set.
        (Contributed by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	fdfiin3_0 $f set x $.
 	fdfiin3_1 $f class A $.
 	fdfiin3_2 $f class B $.
@@ -2858,9 +3863,12 @@ ${
 $}
 $( Express a relative indexed intersection as an intersection.
        (Contributed by Stefan O'Rear, 22-Feb-2015.) $)
-$v k $.
-$v I $.
 ${
+	$v S $.
+	$v k $.
+	$v I $.
+	$v V $.
+	$v X $.
 	$d V k $.
 	$d X k $.
 	friinint_0 $f class S $.
@@ -2878,12 +3886,16 @@ $}
 $( A relation is empty iff its range is empty.  (Contributed by NM,
        15-Sep-2004.) $)
 ${
+	$v A $.
 	frelrn0_0 $f class A $.
 	relrn0 $p |- ( Rel A -> ( A = (/) <-> ran A = (/) ) ) $= frelrn0_0 wrel frelrn0_0 c0 wceq frelrn0_0 cdm c0 wceq frelrn0_0 crn c0 wceq frelrn0_0 reldm0 frelrn0_0 dm0rn0 syl6bb $.
 $}
 $( The domain and range of a class are included in its double union.
        (Contributed by NM, 13-May-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	idmrnssfld_0 $f set x $.
 	idmrnssfld_1 $f set y $.
@@ -2893,6 +3905,8 @@ $}
 $( The domain of a set is a set.  Corollary 6.8(2) of [TakeutiZaring] p. 26.
      (Contributed by NM, 7-Apr-1995.) $)
 ${
+	$v A $.
+	$v V $.
 	fdmexg_0 $f class A $.
 	fdmexg_1 $f class V $.
 	dmexg $p |- ( A e. V -> dom A e. _V ) $= fdmexg_0 fdmexg_1 wcel fdmexg_0 cuni cvv wcel fdmexg_0 cuni cuni cvv wcel fdmexg_0 cdm cvv wcel fdmexg_0 fdmexg_1 uniexg fdmexg_0 cuni cvv uniexg fdmexg_0 cdm fdmexg_0 cuni cuni wss fdmexg_0 cuni cuni cvv wcel fdmexg_0 cdm cvv wcel fdmexg_0 cdm fdmexg_0 cdm fdmexg_0 crn cun fdmexg_0 cuni cuni fdmexg_0 cdm fdmexg_0 crn ssun1 fdmexg_0 dmrnssfld sstri fdmexg_0 cdm fdmexg_0 cuni cuni cvv ssexg mpan 3syl $.
@@ -2901,6 +3915,8 @@ $( The range of a set is a set.  Corollary 6.8(3) of [TakeutiZaring] p. 26.
      Similar to Lemma 3D of [Enderton] p. 41.  (Contributed by NM,
      31-Mar-1995.) $)
 ${
+	$v A $.
+	$v V $.
 	frnexg_0 $f class A $.
 	frnexg_1 $f class V $.
 	rnexg $p |- ( A e. V -> ran A e. _V ) $= frnexg_0 frnexg_1 wcel frnexg_0 cuni cvv wcel frnexg_0 cuni cuni cvv wcel frnexg_0 crn cvv wcel frnexg_0 frnexg_1 uniexg frnexg_0 cuni cvv uniexg frnexg_0 crn frnexg_0 cuni cuni wss frnexg_0 cuni cuni cvv wcel frnexg_0 crn cvv wcel frnexg_0 crn frnexg_0 cdm frnexg_0 crn cun frnexg_0 cuni cuni frnexg_0 crn frnexg_0 cdm ssun2 frnexg_0 dmrnssfld sstri frnexg_0 crn frnexg_0 cuni cuni cvv ssexg mpan 3syl $.
@@ -2908,6 +3924,7 @@ $}
 $( The domain of a set is a set.  Corollary 6.8(2) of [TakeutiZaring]
        p. 26.  (Contributed by NM, 7-Jul-2008.) $)
 ${
+	$v A $.
 	fdmex_0 $f class A $.
 	edmex_0 $e |- A e. _V $.
 	dmex $p |- dom A e. _V $= fdmex_0 cvv wcel fdmex_0 cdm cvv wcel edmex_0 fdmex_0 cvv dmexg ax-mp $.
@@ -2916,6 +3933,7 @@ $( The range of a set is a set.  Corollary 6.8(3) of [TakeutiZaring]
        p. 26.  Similar to Lemma 3D of [Enderton] p. 41.  (Contributed by NM,
        7-Jul-2008.) $)
 ${
+	$v A $.
 	frnex_0 $f class A $.
 	ernex_0 $e |- A e. _V $.
 	rnex $p |- ran A e. _V $= frnex_0 cvv wcel frnex_0 crn cvv wcel ernex_0 frnex_0 cvv rnexg ax-mp $.
@@ -2930,6 +3948,11 @@ $}
 $( Domain of a composition.  Theorem 21 of [Suppes] p. 63.  (Contributed by
        NM, 19-Mar-1998.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x y z B $.
 	idmcoss_0 $f set x $.
@@ -2941,6 +3964,8 @@ ${
 $}
 $( Range of a composition.  (Contributed by NM, 19-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
 	frncoss_0 $f class A $.
 	frncoss_1 $f class B $.
 	rncoss $p |- ran ( A o. B ) C_ ran A $= frncoss_1 ccnv frncoss_0 ccnv ccom cdm frncoss_0 ccnv cdm frncoss_0 frncoss_1 ccom crn frncoss_0 crn frncoss_1 ccnv frncoss_0 ccnv dmcoss frncoss_0 frncoss_1 ccom crn frncoss_0 frncoss_1 ccom ccnv cdm frncoss_1 ccnv frncoss_0 ccnv ccom cdm frncoss_0 frncoss_1 ccom df-rn frncoss_0 frncoss_1 ccom ccnv frncoss_1 ccnv frncoss_0 ccnv ccom frncoss_0 frncoss_1 cnvco dmeqi eqtri frncoss_0 df-rn 3sstr4i $.
@@ -2948,6 +3973,11 @@ $}
 $( Domain of a composition.  (Contributed by NM, 28-May-1998.)  (Proof
        shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x y z B $.
 	idmcosseq_0 $f set x $.
@@ -2959,18 +3989,25 @@ ${
 $}
 $( Domain of a composition.  (Contributed by NM, 19-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
 	fdmcoeq_0 $f class A $.
 	fdmcoeq_1 $f class B $.
 	dmcoeq $p |- ( dom A = ran B -> dom ( A o. B ) = dom B ) $= fdmcoeq_0 cdm fdmcoeq_1 crn wceq fdmcoeq_1 crn fdmcoeq_0 cdm wss fdmcoeq_0 fdmcoeq_1 ccom cdm fdmcoeq_1 cdm wceq fdmcoeq_1 crn fdmcoeq_0 cdm eqimss2 fdmcoeq_0 fdmcoeq_1 dmcosseq syl $.
 $}
 $( Range of a composition.  (Contributed by NM, 19-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
 	frncoeq_0 $f class A $.
 	frncoeq_1 $f class B $.
 	rncoeq $p |- ( dom A = ran B -> ran ( A o. B ) = ran A ) $= frncoeq_1 ccnv cdm frncoeq_0 ccnv crn wceq frncoeq_1 ccnv frncoeq_0 ccnv ccom cdm frncoeq_0 ccnv cdm wceq frncoeq_0 cdm frncoeq_1 crn wceq frncoeq_0 frncoeq_1 ccom crn frncoeq_0 crn wceq frncoeq_1 ccnv frncoeq_0 ccnv dmcoeq frncoeq_0 cdm frncoeq_1 crn wceq frncoeq_1 crn frncoeq_0 cdm wceq frncoeq_1 ccnv cdm frncoeq_0 ccnv crn wceq frncoeq_0 cdm frncoeq_1 crn eqcom frncoeq_1 crn frncoeq_1 ccnv cdm frncoeq_0 cdm frncoeq_0 ccnv crn frncoeq_1 df-rn frncoeq_0 dfdm4 eqeq12i bitri frncoeq_0 frncoeq_1 ccom crn frncoeq_1 ccnv frncoeq_0 ccnv ccom cdm frncoeq_0 crn frncoeq_0 ccnv cdm frncoeq_0 frncoeq_1 ccom crn frncoeq_0 frncoeq_1 ccom ccnv cdm frncoeq_1 ccnv frncoeq_0 ccnv ccom cdm frncoeq_0 frncoeq_1 ccom df-rn frncoeq_0 frncoeq_1 ccom ccnv frncoeq_1 ccnv frncoeq_0 ccnv ccom frncoeq_0 frncoeq_1 cnvco dmeqi eqtri frncoeq_0 df-rn eqeq12i 3imtr4i $.
 $}
 $( Equality theorem for restrictions.  (Contributed by NM, 7-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	freseq1_0 $f class A $.
 	freseq1_1 $f class B $.
 	freseq1_2 $f class C $.
@@ -2978,6 +4015,9 @@ ${
 $}
 $( Equality theorem for restrictions.  (Contributed by NM, 8-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	freseq2_0 $f class A $.
 	freseq2_1 $f class B $.
 	freseq2_2 $f class C $.
@@ -2986,6 +4026,9 @@ $}
 $( Equality inference for restrictions.  (Contributed by NM,
        21-Oct-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	freseq1i_0 $f class A $.
 	freseq1i_1 $f class B $.
 	freseq1i_2 $f class C $.
@@ -2995,6 +4038,9 @@ $}
 $( Equality inference for restrictions.  (Contributed by Paul Chapman,
        22-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	freseq2i_0 $f class A $.
 	freseq2i_1 $f class B $.
 	freseq2i_2 $f class C $.
@@ -3004,6 +4050,10 @@ $}
 $( Equality inference for restrictions.  (Contributed by NM,
        21-Oct-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	freseq12i_0 $f class A $.
 	freseq12i_1 $f class B $.
 	freseq12i_2 $f class C $.
@@ -3015,6 +4065,10 @@ $}
 $( Equality deduction for restrictions.  (Contributed by NM,
        21-Oct-2014.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	freseq1d_0 $f wff ph $.
 	freseq1d_1 $f class A $.
 	freseq1d_2 $f class B $.
@@ -3025,6 +4079,10 @@ $}
 $( Equality deduction for restrictions.  (Contributed by Paul Chapman,
        22-Jun-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	freseq2d_0 $f wff ph $.
 	freseq2d_1 $f class A $.
 	freseq2d_2 $f class B $.
@@ -3035,6 +4093,11 @@ $}
 $( Equality deduction for restrictions.  (Contributed by NM,
        21-Oct-2014.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	freseq12d_0 $f wff ph $.
 	freseq12d_1 $f class A $.
 	freseq12d_2 $f class B $.
@@ -3047,6 +4110,9 @@ $}
 $( Bound-variable hypothesis builder for restriction.  (Contributed by NM,
        15-Sep-2003.)  (Revised by David Abernethy, 19-Jun-2012.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	fnfres_0 $f set x $.
 	fnfres_1 $f class A $.
 	fnfres_2 $f class B $.
@@ -3058,6 +4124,11 @@ $( Distribute proper substitution through the restriction of a class.
      ~ csbresg is derived from the virtual deduction proof ~ csbresgVD .
      (Contributed by Alan Sare, 10-Nov-2012.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
 	fcsbresg_0 $f set x $.
 	fcsbresg_1 $f class A $.
 	fcsbresg_2 $f class B $.
@@ -3068,12 +4139,17 @@ $}
 $( A restriction to the empty set is empty.  (Contributed by NM,
      12-Nov-1994.) $)
 ${
+	$v A $.
 	fres0_0 $f class A $.
 	res0 $p |- ( A |` (/) ) = (/) $= fres0_0 c0 cres fres0_0 c0 cvv cxp cin fres0_0 c0 cin c0 fres0_0 c0 df-res c0 cvv cxp c0 fres0_0 cvv xp0r ineq2i fres0_0 in0 3eqtri $.
 $}
 $( Ordered pair membership in a restriction.  Exercise 13 of
        [TakeutiZaring] p. 25.  (Contributed by NM, 13-Nov-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fopelres_0 $f class A $.
 	fopelres_1 $f class B $.
 	fopelres_2 $f class C $.
@@ -3083,6 +4159,10 @@ ${
 $}
 $( Binary relation on a restriction.  (Contributed by NM, 12-Dec-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fbrres_0 $f class A $.
 	fbrres_1 $f class B $.
 	fbrres_2 $f class C $.
@@ -3093,6 +4173,12 @@ $}
 $( Ordered pair membership in a restriction.  Exercise 13 of
        [TakeutiZaring] p. 25.  (Contributed by NM, 14-Oct-2005.) $)
 ${
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v V $.
 	$d y A $.
 	$d y B $.
 	$d y C $.
@@ -3108,6 +4194,11 @@ $}
 $( Binary relation on a restriction.  (Contributed by Mario Carneiro,
        4-Nov-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v V $.
 	fbrresg_0 $f class A $.
 	fbrresg_1 $f class B $.
 	fbrresg_2 $f class C $.
@@ -3119,6 +4210,10 @@ $( Ordered pair membership in a restriction when the first member belongs
        to the restricting class.  (Contributed by NM, 30-Apr-2004.)  (Proof
        shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fopres_0 $f class A $.
 	fopres_1 $f class B $.
 	fopres_2 $f class C $.
@@ -3129,6 +4224,10 @@ $}
 $( A restricted identity relation is equivalent to equality in its domain.
        (Contributed by NM, 30-Apr-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -3142,6 +4241,9 @@ $( ` <. A , A >. ` belongs to a restriction of the identity class iff ` A `
      belongs to the restricting class.  (Contributed by FL, 27-Oct-2008.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
 	fopelresiOLD_0 $f class A $.
 	fopelresiOLD_1 $f class B $.
 	fopelresiOLD_2 $f class V $.
@@ -3151,6 +4253,9 @@ $( ` <. A , A >. ` belongs to a restriction of the identity class iff ` A `
      belongs to the restricting class.  (Contributed by FL, 27-Oct-2008.)
      (Revised by NM, 30-Mar-2016.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
 	fopelresi_0 $f class A $.
 	fopelresi_1 $f class B $.
 	fopelresi_2 $f class V $.
@@ -3158,6 +4263,9 @@ ${
 $}
 $( The restriction of a restriction.  (Contributed by NM, 27-Mar-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fresres_0 $f class A $.
 	fresres_1 $f class B $.
 	fresres_2 $f class C $.
@@ -3166,6 +4274,9 @@ $}
 $( Distributive law for restriction over union.  Theorem 31 of [Suppes]
      p. 65.  (Contributed by NM, 30-Sep-2002.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fresundi_0 $f class A $.
 	fresundi_1 $f class B $.
 	fresundi_2 $f class C $.
@@ -3174,6 +4285,9 @@ $}
 $( Distributive law for restriction over union.  (Contributed by NM,
      23-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fresundir_0 $f class A $.
 	fresundir_1 $f class B $.
 	fresundir_2 $f class C $.
@@ -3182,6 +4296,9 @@ $}
 $( Class restriction distributes over intersection.  (Contributed by FL,
      6-Oct-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fresindi_0 $f class A $.
 	fresindi_1 $f class B $.
 	fresindi_2 $f class C $.
@@ -3190,6 +4307,9 @@ $}
 $( Class restriction distributes over intersection.  (Contributed by NM,
      18-Dec-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fresindir_0 $f class A $.
 	fresindir_1 $f class B $.
 	fresindir_2 $f class C $.
@@ -3198,6 +4318,9 @@ $}
 $( Move intersection into class restriction.  (Contributed by NM,
      18-Dec-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	finres_0 $f class A $.
 	finres_1 $f class B $.
 	finres_2 $f class C $.
@@ -3206,6 +4329,10 @@ $}
 $( Distribution of restriction over indexed union.  (Contributed by Mario
        Carneiro, 29-May-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x C $.
 	fresiun1_0 $f set x $.
 	fresiun1_1 $f class A $.
@@ -3216,6 +4343,10 @@ $}
 $( Distribution of restriction over indexed union.  (Contributed by Mario
        Carneiro, 29-May-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x C $.
 	fresiun2_0 $f set x $.
 	fresiun2_1 $f class A $.
@@ -3226,6 +4357,10 @@ $}
 $( The domain of a restriction.  Exercise 14 of [TakeutiZaring] p. 25.
        (Contributed by NM, 1-Aug-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	idmres_0 $f set x $.
@@ -3237,6 +4372,8 @@ $}
 $( A domain restricted to a subclass equals the subclass.  (Contributed by
      NM, 2-Mar-1997.) $)
 ${
+	$v A $.
+	$v B $.
 	fssdmres_0 $f class A $.
 	fssdmres_1 $f class B $.
 	ssdmres $p |- ( A C_ dom B <-> dom ( B |` A ) = A ) $= fssdmres_0 fssdmres_1 cdm wss fssdmres_0 fssdmres_1 cdm cin fssdmres_0 wceq fssdmres_1 fssdmres_0 cres cdm fssdmres_0 wceq fssdmres_0 fssdmres_1 cdm df-ss fssdmres_1 fssdmres_0 cres cdm fssdmres_0 fssdmres_1 cdm cin fssdmres_0 fssdmres_1 fssdmres_0 dmres eqeq1i bitr4i $.
@@ -3244,6 +4381,9 @@ $}
 $( The domain of a restriction to a set exists.  (Contributed by NM,
      7-Apr-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
 	fdmresexg_0 $f class A $.
 	fdmresexg_1 $f class B $.
 	fdmresexg_2 $f class V $.
@@ -3252,12 +4392,17 @@ $}
 $( A class includes its restriction.  Exercise 15 of [TakeutiZaring] p. 25.
      (Contributed by NM, 2-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	fresss_0 $f class A $.
 	fresss_1 $f class B $.
 	resss $p |- ( A |` B ) C_ A $= fresss_0 fresss_1 cres fresss_0 fresss_1 cvv cxp cin fresss_0 fresss_0 fresss_1 df-res fresss_0 fresss_1 cvv cxp inss1 eqsstri $.
 $}
 $( Commutative law for restriction.  (Contributed by NM, 27-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	frescom_0 $f class A $.
 	frescom_1 $f class B $.
 	frescom_2 $f class C $.
@@ -3265,6 +4410,9 @@ ${
 $}
 $( Subclass theorem for restriction.  (Contributed by NM, 16-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fssres_0 $f class A $.
 	fssres_1 $f class B $.
 	fssres_2 $f class C $.
@@ -3273,6 +4421,9 @@ $}
 $( Subclass theorem for restriction.  (Contributed by NM, 22-Mar-1998.)
      (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fssres2_0 $f class A $.
 	fssres2_1 $f class B $.
 	fssres2_2 $f class C $.
@@ -3282,6 +4433,8 @@ $( A restriction is a relation.  Exercise 12 of [TakeutiZaring] p. 25.
      (Contributed by NM, 2-Aug-1994.)  (Proof shortened by Andrew Salmon,
      27-Aug-2011.) $)
 ${
+	$v A $.
+	$v B $.
 	frelres_0 $f class A $.
 	frelres_1 $f class B $.
 	relres $p |- Rel ( A |` B ) $= frelres_0 frelres_1 cres frelres_1 cvv cxp wss frelres_1 cvv cxp wrel frelres_0 frelres_1 cres wrel frelres_0 frelres_1 cres frelres_0 frelres_1 cvv cxp cin frelres_1 cvv cxp frelres_0 frelres_1 df-res frelres_0 frelres_1 cvv cxp inss2 eqsstri frelres_1 cvv relxp frelres_0 frelres_1 cres frelres_1 cvv cxp relss mp2 $.
@@ -3289,6 +4442,9 @@ $}
 $( Absorption law for restriction.  Exercise 17 of [TakeutiZaring] p. 25.
      (Contributed by NM, 9-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fresabs1_0 $f class A $.
 	fresabs1_1 $f class B $.
 	fresabs1_2 $f class C $.
@@ -3296,6 +4452,9 @@ ${
 $}
 $( Absorption law for restriction.  (Contributed by NM, 27-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fresabs2_0 $f class A $.
 	fresabs2_1 $f class B $.
 	fresabs2_2 $f class C $.
@@ -3303,18 +4462,25 @@ ${
 $}
 $( Idempotent law for restriction.  (Contributed by NM, 27-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
 	fresidm_0 $f class A $.
 	fresidm_1 $f class B $.
 	residm $p |- ( ( A |` B ) |` B ) = ( A |` B ) $= fresidm_1 fresidm_1 wss fresidm_0 fresidm_1 cres fresidm_1 cres fresidm_0 fresidm_1 cres wceq fresidm_1 ssid fresidm_0 fresidm_1 fresidm_1 resabs2 ax-mp $.
 $}
 $( A restriction to an image.  (Contributed by NM, 29-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	fresima_0 $f class A $.
 	fresima_1 $f class B $.
 	resima $p |- ( ( A |` B ) " B ) = ( A " B ) $= fresima_0 fresima_1 cres fresima_1 cres crn fresima_0 fresima_1 cres crn fresima_0 fresima_1 cres fresima_1 cima fresima_0 fresima_1 cima fresima_0 fresima_1 cres fresima_1 cres fresima_0 fresima_1 cres fresima_0 fresima_1 residm rneqi fresima_0 fresima_1 cres fresima_1 df-ima fresima_0 fresima_1 df-ima 3eqtr4i $.
 $}
 $( Image under a restricted class.  (Contributed by FL, 31-Aug-2009.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fresima2_0 $f class A $.
 	fresima2_1 $f class B $.
 	fresima2_2 $f class C $.
@@ -3323,6 +4489,9 @@ $}
 $( Restriction of a constant function (or other cross product).  (Contributed
      by Stefan O'Rear, 24-Jan-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fxpssres_0 $f class A $.
 	fxpssres_1 $f class B $.
 	fxpssres_2 $f class C $.
@@ -3331,6 +4500,11 @@ $}
 $( Membership in a restriction.  (Contributed by Scott Fenton,
        17-Mar-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -3344,6 +4518,11 @@ $}
 $( Memebership in restriction to a singleton.  (Contributed by Scott
          Fenton, 17-Mar-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -3358,6 +4537,10 @@ $}
 $( Simplification law for restriction.  (Contributed by NM,
        16-Aug-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -3370,12 +4553,16 @@ $}
 $( A relation restricted to its domain equals itself.  (Contributed by NM,
      12-Dec-2006.) $)
 ${
+	$v A $.
 	fresdm_0 $f class A $.
 	resdm $p |- ( Rel A -> ( A |` dom A ) = A ) $= fresdm_0 wrel fresdm_0 cdm fresdm_0 cdm wss fresdm_0 fresdm_0 cdm cres fresdm_0 wceq fresdm_0 cdm ssid fresdm_0 fresdm_0 cdm relssres mpan2 $.
 $}
 $( The restriction of a set is a set.  (Contributed by NM, 28-Mar-1998.)
      (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
 	fresexg_0 $f class A $.
 	fresexg_1 $f class B $.
 	fresexg_2 $f class V $.
@@ -3384,6 +4571,8 @@ $}
 $( The restriction of a set is a set.  (Contributed by Jeff Madsen,
        19-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
 	fresex_0 $f class A $.
 	fresex_1 $f class B $.
 	eresex_0 $e |- A e. _V $.
@@ -3392,6 +4581,10 @@ $}
 $( Restriction of a class abstraction of ordered pairs.  (Contributed by
        NM, 5-Nov-2002.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fresopab_0 $f wff ph $.
 	fresopab_1 $f set x $.
@@ -3403,6 +4596,10 @@ $( The existence of a restricted identity function, proved without using
        the Axiom of Replacement (unlike ~ resfunexg ).  (Contributed by NM,
        13-Jan-2007.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v V $.
 	$d x y A $.
 	iresiexg_0 $f set x $.
 	iresiexg_1 $f set y $.
@@ -3414,6 +4611,9 @@ $( A subclass of the identity function is the identity function restricted
        to its domain.  (Contributed by NM, 13-Dec-2003.)  (Proof shortened by
        Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	iiss_0 $f set x $.
 	iiss_1 $f set y $.
@@ -3423,6 +4623,11 @@ $}
 $( Restriction of a class abstraction of ordered pairs.  (Contributed by
        NM, 24-Aug-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	fresopab2_0 $f wff ph $.
@@ -3435,6 +4640,11 @@ $}
 $( Restriction of the mapping operation.  (Contributed by Mario Carneiro,
        15-Jul-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -3449,6 +4659,10 @@ $( Unconditional restriction of the mapping operation.  (Contributed by
        Stefan O'Rear, 24-Jan-2015.)  (Proof shortened by Mario Carneiro,
        22-Mar-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	fresmpt3_0 $f set x $.
@@ -3460,6 +4674,12 @@ $}
 $( Alternate definition of the restriction operation.  (Contributed by
        Mario Carneiro, 5-Nov-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v R $.
 	$d w x y z A $.
 	$d w x y z R $.
 	idfres2_0 $f set z $.
@@ -3473,6 +4693,9 @@ $}
 $( The restricted identity expressed with the class builder.  (Contributed
        by FL, 25-Apr-2012.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d A x y $.
 	fopabresid_0 $f set x $.
 	fopabresid_1 $f set y $.
@@ -3482,6 +4705,9 @@ $}
 $( The restricted identity expressed with the "maps to" notation.
        (Contributed by FL, 25-Apr-2012.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d A x y $.
 	imptresid_0 $f set y $.
 	fmptresid_0 $f set x $.
@@ -3491,6 +4717,7 @@ $}
 $( The domain of a restricted identity function.  (Contributed by NM,
      27-Aug-2004.) $)
 ${
+	$v A $.
 	fdmresi_0 $f class A $.
 	dmresi $p |- dom ( _I |` A ) = A $= fdmresi_0 cid cdm wss cid fdmresi_0 cres cdm fdmresi_0 wceq fdmresi_0 cvv cid cdm fdmresi_0 ssv dmi sseqtr4i fdmresi_0 cid ssdmres mpbi $.
 $}
@@ -3498,11 +4725,15 @@ $( TODO - delete this and replace w/ dfres3 (in FL's mathbox) $)
 $( Any relation restricted to the universe is itself.  (Contributed by NM,
      16-Mar-2004.) $)
 ${
+	$v A $.
 	fresid_0 $f class A $.
 	resid $p |- ( Rel A -> ( A |` _V ) = A ) $= fresid_0 wrel fresid_0 cdm cvv wss fresid_0 cvv cres fresid_0 wceq fresid_0 cdm ssv fresid_0 cvv relssres mpan2 $.
 $}
 $( Equality theorem for image.  (Contributed by NM, 14-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fimaeq1_0 $f class A $.
 	fimaeq1_1 $f class B $.
 	fimaeq1_2 $f class C $.
@@ -3510,6 +4741,9 @@ ${
 $}
 $( Equality theorem for image.  (Contributed by NM, 14-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fimaeq2_0 $f class A $.
 	fimaeq2_1 $f class B $.
 	fimaeq2_2 $f class C $.
@@ -3517,6 +4751,9 @@ ${
 $}
 $( Equality theorem for image.  (Contributed by NM, 21-Dec-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fimaeq1i_0 $f class A $.
 	fimaeq1i_1 $f class B $.
 	fimaeq1i_2 $f class C $.
@@ -3525,6 +4762,9 @@ ${
 $}
 $( Equality theorem for image.  (Contributed by NM, 21-Dec-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fimaeq2i_0 $f class A $.
 	fimaeq2i_1 $f class B $.
 	fimaeq2i_2 $f class C $.
@@ -3533,6 +4773,10 @@ ${
 $}
 $( Equality theorem for image.  (Contributed by FL, 15-Dec-2006.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fimaeq1d_0 $f wff ph $.
 	fimaeq1d_1 $f class A $.
 	fimaeq1d_2 $f class B $.
@@ -3542,6 +4786,10 @@ ${
 $}
 $( Equality theorem for image.  (Contributed by FL, 15-Dec-2006.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fimaeq2d_0 $f wff ph $.
 	fimaeq2d_1 $f class A $.
 	fimaeq2d_2 $f class B $.
@@ -3552,6 +4800,11 @@ $}
 $( Equality theorem for image.  (Contributed by Mario Carneiro,
        4-Dec-2016.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fimaeq12d_0 $f wff ph $.
 	fimaeq12d_1 $f class A $.
 	fimaeq12d_2 $f class B $.
@@ -3565,6 +4818,10 @@ $( Alternate definition of image.  Compare definition (d) of [Enderton]
        p. 44.  (Contributed by NM, 19-Apr-2004.)  (Proof shortened by Andrew
        Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	fdfima2_0 $f set x $.
@@ -3577,6 +4834,10 @@ $( Alternate definition of image.  Compare definition (d) of [Enderton]
        p. 44.  (Contributed by NM, 14-Aug-1994.)  (Proof shortened by Andrew
        Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	fdfima3_0 $f set x $.
@@ -3588,6 +4849,12 @@ $}
 $( Membership in an image.  Theorem 34 of [Suppes] p. 65.  (Contributed by
        NM, 20-Jan-2007.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -3602,6 +4869,10 @@ $}
 $( Membership in an image.  Theorem 34 of [Suppes] p. 65.  (Contributed by
        NM, 19-Apr-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -3615,6 +4886,10 @@ $}
 $( Membership in an image.  Theorem 34 of [Suppes] p. 65.  (Contributed by
        NM, 11-Aug-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -3628,6 +4903,10 @@ $}
 $( Membership in an image.  Theorem 34 of [Suppes] p. 65.  (Contributed by
        NM, 14-Aug-1994.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -3641,6 +4920,9 @@ $}
 $( Bound-variable hypothesis builder for image.  (Contributed by NM,
        30-Dec-1996.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	fnfima_0 $f set x $.
 	fnfima_1 $f class A $.
 	fnfima_2 $f class B $.
@@ -3652,6 +4934,11 @@ $( Deduction version of bound-variable hypothesis builder ~ nfima .
        (Contributed by FL, 15-Dec-2006.)  (Revised by Mario Carneiro,
        15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x z $.
 	$d B z $.
 	$d A z $.
@@ -3668,6 +4955,12 @@ $( Move class substitution in and out of the image of a function.
        (Contributed by FL, 15-Dec-2006.)  (Proof shortened by Mario Carneiro,
        4-Dec-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d A y $.
 	$d B y $.
 	$d C y $.
@@ -3688,6 +4981,11 @@ $( Move class substitution in and out of the image of a function.  (This is
      used in the proof is probably longer.  (Contributed by NM, 10-Nov-2012.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	fcsbima12gALT_0 $f set x $.
 	fcsbima12gALT_1 $f class A $.
 	fcsbima12gALT_2 $f class B $.
@@ -3698,6 +4996,9 @@ $}
 $( The image of the domain of a class is the range of the class.
        (Contributed by NM, 14-Aug-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	$d x y $.
 	iimadmrn_0 $f set x $.
@@ -3708,6 +5009,10 @@ $}
 $( The image of a class is a subset of its range.  Theorem 3.16(xi) of
        [Monk1] p. 39.  (Contributed by NM, 31-Mar-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	iimassrn_0 $f set x $.
@@ -3719,6 +5024,9 @@ $}
 $( The image of a set is a set.  Theorem 3.17 of [Monk1] p. 39.  (Contributed
      by NM, 24-Jul-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
 	fimaexg_0 $f class A $.
 	fimaexg_1 $f class B $.
 	fimaexg_2 $f class V $.
@@ -3727,6 +5035,9 @@ $}
 $( Image under the identity relation.  Theorem 3.16(viii) of [Monk1]
        p. 38.  (Contributed by NM, 30-Apr-1998.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	iimai_0 $f set x $.
 	iimai_1 $f set y $.
@@ -3736,12 +5047,15 @@ $}
 $( The range of the restricted identity function.  (Contributed by NM,
      27-Aug-2004.) $)
 ${
+	$v A $.
 	frnresi_0 $f class A $.
 	rnresi $p |- ran ( _I |` A ) = A $= cid frnresi_0 cima cid frnresi_0 cres crn frnresi_0 cid frnresi_0 df-ima frnresi_0 imai eqtr3i $.
 $}
 $( The image of a restriction of the identity function.  (Contributed by FL,
      31-Dec-2006.) $)
 ${
+	$v A $.
+	$v B $.
 	fresiima_0 $f class A $.
 	fresiima_1 $f class B $.
 	resiima $p |- ( B C_ A -> ( ( _I |` A ) " B ) = B ) $= fresiima_1 fresiima_0 wss cid fresiima_0 cres fresiima_1 cima cid fresiima_0 cres fresiima_1 cres crn cid fresiima_1 cres crn fresiima_1 cid fresiima_0 cres fresiima_1 cima cid fresiima_0 cres fresiima_1 cres crn wceq fresiima_1 fresiima_0 wss cid fresiima_0 cres fresiima_1 df-ima a1i fresiima_1 fresiima_0 wss cid fresiima_0 cres fresiima_1 cres cid fresiima_1 cres cid fresiima_1 fresiima_0 resabs1 rneqd cid fresiima_1 cres crn fresiima_1 wceq fresiima_1 fresiima_0 wss fresiima_1 rnresi a1i 3eqtrd $.
@@ -3749,17 +5063,21 @@ $}
 $( Image of the empty set.  Theorem 3.16(ii) of [Monk1] p. 38.  (Contributed
      by NM, 20-May-1998.) $)
 ${
+	$v A $.
 	fima0_0 $f class A $.
 	ima0 $p |- ( A " (/) ) = (/) $= fima0_0 c0 cima fima0_0 c0 cres crn c0 crn c0 fima0_0 c0 df-ima fima0_0 c0 cres c0 fima0_0 res0 rneqi rn0 3eqtri $.
 $}
 $( Image under the empty relation.  (Contributed by FL, 11-Jan-2007.) $)
 ${
+	$v A $.
 	f0ima_0 $f class A $.
 	0ima $p |- ( (/) " A ) = (/) $= c0 f0ima_0 cima c0 c0 f0ima_0 cima c0 crn c0 c0 f0ima_0 imassrn rn0 sseqtri c0 f0ima_0 cima 0ss eqssi $.
 $}
 $( A class whose image under another is empty is disjoint with the other's
      domain.  (Contributed by FL, 24-Jan-2007.) $)
 ${
+	$v A $.
+	$v B $.
 	fimadisj_0 $f class A $.
 	fimadisj_1 $f class B $.
 	imadisj $p |- ( ( A " B ) = (/) <-> ( dom A i^i B ) = (/) ) $= fimadisj_0 fimadisj_1 cima c0 wceq fimadisj_0 fimadisj_1 cres crn c0 wceq fimadisj_0 fimadisj_1 cres cdm c0 wceq fimadisj_0 cdm fimadisj_1 cin c0 wceq fimadisj_0 fimadisj_1 cima fimadisj_0 fimadisj_1 cres crn c0 fimadisj_0 fimadisj_1 df-ima eqeq1i fimadisj_0 fimadisj_1 cres dm0rn0 fimadisj_0 fimadisj_1 cres cdm fimadisj_0 cdm fimadisj_1 cin c0 fimadisj_0 fimadisj_1 cres cdm fimadisj_1 fimadisj_0 cdm cin fimadisj_0 cdm fimadisj_1 cin fimadisj_0 fimadisj_1 dmres fimadisj_1 fimadisj_0 cdm incom eqtri eqeq1i 3bitr2i $.
@@ -3767,6 +5085,8 @@ $}
 $( A preimage under any class is included in the domain of the class.
      (Contributed by FL, 29-Jan-2007.) $)
 ${
+	$v A $.
+	$v B $.
 	fcnvimass_0 $f class A $.
 	fcnvimass_1 $f class B $.
 	cnvimass $p |- ( `' A " B ) C_ dom A $= fcnvimass_0 ccnv fcnvimass_1 cima fcnvimass_0 ccnv crn fcnvimass_0 cdm fcnvimass_0 ccnv fcnvimass_1 imassrn fcnvimass_0 dfdm4 sseqtr4i $.
@@ -3774,11 +5094,17 @@ $}
 $( The preimage of the range of a class is the domain of the class.
      (Contributed by Jeff Hankins, 15-Jul-2009.) $)
 ${
+	$v A $.
 	fcnvimarndm_0 $f class A $.
 	cnvimarndm $p |- ( `' A " ran A ) = dom A $= fcnvimarndm_0 ccnv fcnvimarndm_0 ccnv cdm cima fcnvimarndm_0 ccnv crn fcnvimarndm_0 ccnv fcnvimarndm_0 crn cima fcnvimarndm_0 cdm fcnvimarndm_0 ccnv imadmrn fcnvimarndm_0 crn fcnvimarndm_0 ccnv cdm fcnvimarndm_0 ccnv fcnvimarndm_0 df-rn imaeq2i fcnvimarndm_0 dfdm4 3eqtr4i $.
 $}
 $( The image of a singleton.  (Contributed by NM, 8-May-2005.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
 	$d x y A $.
 	$d x B $.
 	$d x y R $.
@@ -3791,6 +5117,9 @@ ${
 $}
 $( The image of a singleton.  (Contributed by NM, 20-May-1998.) $)
 ${
+	$v y $.
+	$v A $.
+	$v R $.
 	$d y A $.
 	$d y R $.
 	frelimasn_0 $f set y $.
@@ -3801,6 +5130,10 @@ $}
 $( Elementhood in the image of a singleton.  (Contributed by Mario
        Carneiro, 3-Nov-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v R $.
 	$d x A $.
 	$d x B $.
 	$d x R $.
@@ -3813,6 +5146,10 @@ $}
 $( Membership in an image of a singleton.  (Contributed by NM,
        15-Mar-2004.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -3827,6 +5164,13 @@ $}
 $( Membership in an image of a singleton.  (Contributed by Raph Levien,
        21-Oct-2006.) $)
 ${
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v W $.
 	$d A y z $.
 	$d B y z $.
 	$d C y z $.
@@ -3842,6 +5186,9 @@ $}
 $( Membership in an image of a singleton.  (Contributed by NM,
      5-Aug-2010.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	felimasni_0 $f class A $.
 	felimasni_1 $f class B $.
 	felimasni_2 $f class C $.
@@ -3855,6 +5202,9 @@ $( Two ways to express the class of unique-valued arguments of ` F ` ,
        alternative definition ~ dffv4 of function value, which is based on the
        idea in Quine's definition.  (Contributed by NM, 8-May-2005.) $)
 ${
+	$v x $.
+	$v y $.
+	$v F $.
 	$d y F $.
 	$d x y $.
 	fargs_0 $f set x $.
@@ -3867,6 +5217,10 @@ $( Membership in an initial segment.  The idiom ` ( ``' A " { B } ) ` ,
        (for example) Definition 6.21 of [TakeutiZaring] p. 30.  (Contributed by
        NM, 28-Apr-2004.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
 	feliniseg_0 $f class A $.
 	feliniseg_1 $f class B $.
 	feliniseg_2 $f class C $.
@@ -3877,6 +5231,8 @@ $}
 $( Any set is equal to its preimage under the converse epsilon relation.
        (Contributed by Mario Carneiro, 9-Mar-2013.) $)
 ${
+	$v x $.
+	$v A $.
 	$d A x $.
 	iepini_0 $f set x $.
 	fepini_0 $f class A $.
@@ -3887,6 +5243,10 @@ $( An idiom that signifies an initial segment of an ordering, used, for
        example, in Definition 6.21 of [TakeutiZaring] p. 30.  (Contributed by
        NM, 28-Apr-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d x A $.
 	$d x B $.
 	finiseg_0 $f set x $.
@@ -3899,6 +5259,11 @@ $( Alternate definition of well-founded relation.  Definition 6.21 of
        [TakeutiZaring] p. 30.  (Contributed by NM, 23-Apr-2004.)  (Revised by
        Mario Carneiro, 23-Jun-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v R $.
 	$d x y z A $.
 	$d x y z R $.
 	idffr3_0 $f set z $.
@@ -3911,6 +5276,10 @@ $}
 $( Alternate definition of set-like relation.  (Contributed by Mario
        Carneiro, 23-Jun-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v R $.
 	$d x y A $.
 	$d x y R $.
 	idfse2_0 $f set y $.
@@ -3922,6 +5291,11 @@ $}
 $( Any set relation is set-like.  (Contributed by Mario Carneiro,
        22-Jun-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v R $.
+	$v V $.
 	$d x y A $.
 	$d x y R $.
 	$d x V $.
@@ -3934,6 +5308,9 @@ ${
 $}
 $( Subset theorem for image.  (Contributed by NM, 16-Mar-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fimass1_0 $f class A $.
 	fimass1_1 $f class B $.
 	fimass1_2 $f class C $.
@@ -3942,6 +5319,9 @@ $}
 $( Subset theorem for image.  Exercise 22(a) of [Enderton] p. 53.
      (Contributed by NM, 22-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fimass2_0 $f class A $.
 	fimass2_1 $f class B $.
 	fimass2_2 $f class C $.
@@ -3950,6 +5330,8 @@ $}
 $( The image of a singleton outside the domain is empty.  (Contributed by NM,
      22-May-1998.) $)
 ${
+	$v A $.
+	$v B $.
 	fndmima_0 $f class A $.
 	fndmima_1 $f class B $.
 	ndmima $p |- ( -. A e. dom B -> ( B " { A } ) = (/) ) $= fndmima_0 fndmima_1 cdm wcel wn fndmima_1 fndmima_0 csn cima fndmima_1 fndmima_0 csn cres crn c0 fndmima_1 fndmima_0 csn df-ima fndmima_0 fndmima_1 cdm wcel wn fndmima_1 fndmima_0 csn cres cdm c0 wceq fndmima_1 fndmima_0 csn cres crn c0 wceq fndmima_0 fndmima_1 cdm wcel wn fndmima_1 fndmima_0 csn cres cdm fndmima_1 cdm fndmima_0 csn cin c0 fndmima_1 fndmima_0 csn cres cdm fndmima_0 csn fndmima_1 cdm cin fndmima_1 cdm fndmima_0 csn cin fndmima_1 fndmima_0 csn dmres fndmima_0 csn fndmima_1 cdm incom eqtri fndmima_1 cdm fndmima_0 csn cin c0 wceq fndmima_0 fndmima_1 cdm wcel wn fndmima_1 cdm fndmima_0 disjsn biimpri syl5eq fndmima_1 fndmima_0 csn cres dm0rn0 sylib syl5eq $.
@@ -3957,6 +5339,9 @@ $}
 $( A converse is a relation.  Theorem 12 of [Suppes] p. 62.  (Contributed
        by NM, 29-Oct-1996.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	irelcnv_0 $f set x $.
 	irelcnv_1 $f set y $.
@@ -3966,6 +5351,9 @@ $}
 $( When ` R ` is a relation, the sethood assumptions on ~ brcnv can be
        omitted.  (Contributed by Mario Carneiro, 28-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	frelbrcnvg_0 $f class A $.
 	frelbrcnvg_1 $f class B $.
 	frelbrcnvg_2 $f class R $.
@@ -3975,6 +5363,9 @@ $( Eliminate the class existence constraint in ~ eliniseg .  (Contributed
        by Mario Carneiro, 5-Dec-2014.)  (Revised by Mario Carneiro,
        17-Nov-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feliniseg2_0 $f class A $.
 	feliniseg2_1 $f class B $.
 	feliniseg2_2 $f class C $.
@@ -3983,6 +5374,9 @@ $}
 $( When ` R ` is a relation, the sethood assumptions on ~ brcnv can be
        omitted.  (Contributed by Mario Carneiro, 28-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
 	frelbrcnv_0 $f class A $.
 	frelbrcnv_1 $f class B $.
 	frelbrcnv_2 $f class R $.
@@ -3993,6 +5387,10 @@ $( Two ways of saying a relation is transitive.  Definition of transitivity
        in [Schechter] p. 51.  (Contributed by NM, 27-Dec-1996.)  (Proof
        shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v R $.
 	$d x y $.
 	$d x y $.
 	$d x y z R $.
@@ -4005,6 +5403,11 @@ $}
 $( Two ways to state a relation is reflexive.  Adapted from Tarski.
        (Contributed by FL, 15-Jan-2012.)  (Revised by NM, 30-Mar-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v R $.
 	$d x y z A $.
 	$d x y z $.
 	$d x y z R $.
@@ -4020,6 +5423,9 @@ $( Two ways of saying a relation is symmetric.  Similar to definition of
        symmetry in [Schechter] p. 51.  (Contributed by NM, 28-Dec-1996.)
        (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v R $.
 	$d x y $.
 	$d x y $.
 	$d x y R $.
@@ -4033,6 +5439,9 @@ $( Two ways of saying a relation is antisymmetric.  Definition of
        antisymmetry in [Schechter] p. 51.  (Contributed by NM, 9-Sep-2004.)
        (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v R $.
 	$d x y $.
 	$d x y $.
 	$d x y R $.
@@ -4046,6 +5455,9 @@ $( Two ways of saying a relation is antisymmetric and reflexive.
        ` U. U. R ` is the field of a relation by ~ relfld .  (Contributed by
        NM, 6-May-2008.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v R $.
 	$d x y $.
 	$d x y $.
 	$d x y R $.
@@ -4059,6 +5471,9 @@ $( Two ways of saying a relation is antisymmetric and reflexive.
        (Contributed by NM, 6-May-2008.)  (Proof shortened by Mario Carneiro,
        4-Dec-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v R $.
 	$d x y $.
 	$d x y $.
 	$d x y R $.
@@ -4072,6 +5487,9 @@ $( Two ways of saying a relation is irreflexive.  Definition of
        irreflexivity in [Schechter] p. 51.  (Contributed by NM, 9-Sep-2004.)
        (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v R $.
 	$d x y $.
 	$d x y $.
 	$d x y R $.
@@ -4084,6 +5502,12 @@ $}
 $( Two ways of saying that two elements have an upper bound.  (Contributed
        by Mario Carneiro, 3-Nov-2015.) $)
 ${
+	$v z $.
+	$v A $.
+	$v B $.
+	$v R $.
+	$v V $.
+	$v W $.
 	$d z A $.
 	$d z B $.
 	$d z R $.
@@ -4100,6 +5524,12 @@ $}
 $( Two ways of saying a relation is directed.  (Contributed by Mario
        Carneiro, 22-Nov-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v R $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z R $.
@@ -4115,6 +5545,11 @@ $}
 $( A quantifier-free way of expressing the total order predicate.
        (Contributed by Mario Carneiro, 22-Nov-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -4129,6 +5564,10 @@ $}
 $( A square cross product ` ( A X. A ) ` is a transitive relation.
        (Contributed by FL, 31-Jul-2009.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z A $.
 	$d x y z $.
 	$d x y z $.
@@ -4142,6 +5581,11 @@ $}
 $( The intersection of two transitive classes is transitive.  (Contributed
        by FL, 31-Jul-2009.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v R $.
+	$v S $.
 	$d x y z $.
 	$d x y z $.
 	$d x y z R $.
@@ -4156,6 +5600,10 @@ $}
 $( A partial order relation is irreflexive.  (Contributed by Mario
        Carneiro, 2-Nov-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v R $.
 	$d x y A $.
 	$d x y $.
 	$d x y R $.
@@ -4171,6 +5619,8 @@ $( The relation induced by a transitive relation on a part of its field is
      product is a way to restrict it to a subset of its field.)  (Contributed
      by FL, 31-Jul-2009.) $)
 ${
+	$v A $.
+	$v R $.
 	ftrinxp_0 $f class A $.
 	ftrinxp_1 $f class R $.
 	trinxp $p |- ( ( R o. R ) C_ R -> ( ( R i^i ( A X. A ) ) o. ( R i^i ( A X. A ) ) ) C_ ( R i^i ( A X. A ) ) ) $= ftrinxp_1 ftrinxp_1 ccom ftrinxp_1 wss ftrinxp_0 ftrinxp_0 cxp ftrinxp_0 ftrinxp_0 cxp ccom ftrinxp_0 ftrinxp_0 cxp wss ftrinxp_1 ftrinxp_0 ftrinxp_0 cxp cin ftrinxp_1 ftrinxp_0 ftrinxp_0 cxp cin ccom ftrinxp_1 ftrinxp_0 ftrinxp_0 cxp cin wss ftrinxp_0 xpidtr ftrinxp_1 ftrinxp_0 ftrinxp_0 cxp trin2 mpan2 $.
@@ -4178,6 +5628,9 @@ $}
 $( A strict order relation is irreflexive.  (Contributed by NM,
        10-Feb-1996.)  (Revised by Mario Carneiro, 10-May-2013.) $)
 ${
+	$v A $.
+	$v R $.
+	$v S $.
 	fsoirri_0 $f class A $.
 	fsoirri_1 $f class R $.
 	fsoirri_2 $f class S $.
@@ -4188,6 +5641,11 @@ $}
 $( A strict order relation is a transitive relation.  (Contributed by NM,
          10-Feb-1996.)  (Revised by Mario Carneiro, 10-May-2013.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
 	fsotri_0 $f class A $.
 	fsotri_1 $f class B $.
 	fsotri_2 $f class C $.
@@ -4200,6 +5658,10 @@ $}
 $( A strict order relation has no 2-cycle loops.  (Contributed by NM,
          10-Feb-1996.)  (Revised by Mario Carneiro, 10-May-2013.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
 	fson2lpi_0 $f class A $.
 	fson2lpi_1 $f class B $.
 	fson2lpi_2 $f class R $.
@@ -4211,6 +5673,11 @@ $}
 $( A transitivity relation.  (Read ` A <_ B ` and ` B < C ` implies
          ` A < C ` .)  (Contributed by Mario Carneiro, 10-May-2013.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
 	fsotri2_0 $f class A $.
 	fsotri2_1 $f class B $.
 	fsotri2_2 $f class C $.
@@ -4223,6 +5690,11 @@ $}
 $( A transitivity relation.  (Read ` A < B ` and ` B <_ C ` implies
          ` A < C ` .)  (Contributed by Mario Carneiro, 10-May-2013.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
 	fsotri3_0 $f class A $.
 	fsotri3_1 $f class B $.
 	fsotri3_2 $f class C $.
@@ -4236,6 +5708,9 @@ $( A strict order relation is irreflexive.  (Contributed by NM,
        10-Feb-1996.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v A $.
+	$v R $.
+	$v S $.
 	fsoirriOLD_0 $f class A $.
 	fsoirriOLD_1 $f class R $.
 	fsoirriOLD_2 $f class S $.
@@ -4248,6 +5723,11 @@ $( A strict order relation is a transitive relation.  (Contributed by NM,
          10-Feb-1996.)  (Proof modification is discouraged.)
          (New usage is discouraged.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
 	fsotriOLD_0 $f class A $.
 	fsotriOLD_1 $f class B $.
 	fsotriOLD_2 $f class C $.
@@ -4264,6 +5744,10 @@ $( A strict order relation has no 2-cycle loops.  (Contributed by NM,
          10-Feb-1996.)  (Proof modification is discouraged.)
          (New usage is discouraged.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
 	fson2lpiOLD_0 $f class A $.
 	fson2lpiOLD_1 $f class B $.
 	fson2lpiOLD_2 $f class R $.
@@ -4277,6 +5761,10 @@ $}
 $( Express "less than or equals" for general strict orders.  (Contributed by
      Stefan O'Rear, 17-Jan-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v V $.
 	fpoleloe_0 $f class A $.
 	fpoleloe_1 $f class B $.
 	fpoleloe_2 $f class R $.
@@ -4286,6 +5774,11 @@ $}
 $( Transitive law for general strict orders.  (Contributed by Stefan O'Rear,
      17-Jan-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v X $.
 	fpoltletr_0 $f class A $.
 	fpoltletr_1 $f class B $.
 	fpoltletr_2 $f class C $.
@@ -4296,6 +5789,10 @@ $}
 $( Property of a minimum in a strict order.  (Contributed by Stefan O'Rear,
      17-Jan-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v X $.
 	fsomin1_0 $f class A $.
 	fsomin1_1 $f class B $.
 	fsomin1_2 $f class R $.
@@ -4305,6 +5802,10 @@ $}
 $( Commutativity of minimum in a total order.  (Contributed by Stefan O'Rear,
      17-Jan-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v X $.
 	fsomincom_0 $f class A $.
 	fsomincom_1 $f class B $.
 	fsomincom_2 $f class R $.
@@ -4314,6 +5815,10 @@ $}
 $( Property of a minimum in a strict order.  (Contributed by Stefan O'Rear,
      17-Jan-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v X $.
 	fsomin2_0 $f class A $.
 	fsomin2_1 $f class B $.
 	fsomin2_2 $f class R $.
@@ -4323,6 +5828,11 @@ $}
 $( Being less than a minimum, for a general total order.  (Contributed by
      Stefan O'Rear, 17-Jan-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v X $.
 	fsoltmin_0 $f class A $.
 	fsoltmin_1 $f class B $.
 	fsoltmin_2 $f class C $.
@@ -4333,6 +5843,11 @@ $}
 $( The converse of a class abstraction of ordered pairs.  (Contributed by
        NM, 11-Dec-2003.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z w $.
 	$d z w ph $.
 	icnvopab_0 $f set z $.
@@ -4344,6 +5859,8 @@ ${
 $}
 $( The converse of the empty set.  (Contributed by NM, 6-Apr-1998.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	icnv0_0 $f set x $.
 	icnv0_1 $f set y $.
@@ -4353,6 +5870,8 @@ $( The converse of the identity relation.  Theorem 3.7(ii) of [Monk1]
        p. 36.  (Contributed by NM, 26-Apr-1998.)  (Proof shortened by Andrew
        Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	icnvi_0 $f set x $.
 	icnvi_1 $f set y $.
@@ -4362,6 +5881,10 @@ $( The converse of a union is the union of converses.  Theorem 16 of
        [Suppes] p. 62.  (Contributed by NM, 25-Mar-1998.)  (Proof shortened by
        Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	icnvun_0 $f set x $.
@@ -4373,6 +5896,10 @@ $}
 $( Distributive law for converse over set difference.  (Contributed by
        Mario Carneiro, 26-Jun-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	icnvdif_0 $f set x $.
@@ -4385,6 +5912,8 @@ $( Distributive law for converse over intersection.  Theorem 15 of [Suppes]
        p. 62.  (Contributed by NM, 25-Mar-1998.)  (Revised by Mario Carneiro,
        26-Jun-2014.) $)
 ${
+	$v A $.
+	$v B $.
 	fcnvin_0 $f class A $.
 	fcnvin_1 $f class B $.
 	cnvin $p |- `' ( A i^i B ) = ( `' A i^i `' B ) $= fcnvin_0 fcnvin_0 fcnvin_1 cdif cdif ccnv fcnvin_0 ccnv fcnvin_0 ccnv fcnvin_1 ccnv cdif cdif fcnvin_0 fcnvin_1 cin ccnv fcnvin_0 ccnv fcnvin_1 ccnv cin fcnvin_0 fcnvin_0 fcnvin_1 cdif cdif ccnv fcnvin_0 ccnv fcnvin_0 fcnvin_1 cdif ccnv cdif fcnvin_0 ccnv fcnvin_0 ccnv fcnvin_1 ccnv cdif cdif fcnvin_0 fcnvin_0 fcnvin_1 cdif cnvdif fcnvin_0 fcnvin_1 cdif ccnv fcnvin_0 ccnv fcnvin_1 ccnv cdif fcnvin_0 ccnv fcnvin_0 fcnvin_1 cnvdif difeq2i eqtri fcnvin_0 fcnvin_1 cin fcnvin_0 fcnvin_0 fcnvin_1 cdif cdif fcnvin_0 fcnvin_1 dfin4 cnveqi fcnvin_0 ccnv fcnvin_1 ccnv dfin4 3eqtr4i $.
@@ -4392,6 +5921,8 @@ $}
 $( Distributive law for range over union.  Theorem 8 of [Suppes] p. 60.
      (Contributed by NM, 24-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
 	frnun_0 $f class A $.
 	frnun_1 $f class B $.
 	rnun $p |- ran ( A u. B ) = ( ran A u. ran B ) $= frnun_0 frnun_1 cun ccnv cdm frnun_0 ccnv cdm frnun_1 ccnv cdm cun frnun_0 frnun_1 cun crn frnun_0 crn frnun_1 crn cun frnun_0 frnun_1 cun ccnv cdm frnun_0 ccnv frnun_1 ccnv cun cdm frnun_0 ccnv cdm frnun_1 ccnv cdm cun frnun_0 frnun_1 cun ccnv frnun_0 ccnv frnun_1 ccnv cun frnun_0 frnun_1 cnvun dmeqi frnun_0 ccnv frnun_1 ccnv dmun eqtri frnun_0 frnun_1 cun df-rn frnun_0 crn frnun_0 ccnv cdm frnun_1 crn frnun_1 ccnv cdm frnun_0 df-rn frnun_1 df-rn uneq12i 3eqtr4i $.
@@ -4399,6 +5930,8 @@ $}
 $( The range of an intersection belongs the intersection of ranges.  Theorem
      9 of [Suppes] p. 60.  (Contributed by NM, 15-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	frnin_0 $f class A $.
 	frnin_1 $f class B $.
 	rnin $p |- ran ( A i^i B ) C_ ( ran A i^i ran B ) $= frnin_0 frnin_1 cin ccnv cdm frnin_0 ccnv cdm frnin_1 ccnv cdm cin frnin_0 frnin_1 cin crn frnin_0 crn frnin_1 crn cin frnin_0 frnin_1 cin ccnv cdm frnin_0 ccnv frnin_1 ccnv cin cdm frnin_0 ccnv cdm frnin_1 ccnv cdm cin frnin_0 frnin_1 cin ccnv frnin_0 ccnv frnin_1 ccnv cin frnin_0 frnin_1 cnvin dmeqi frnin_0 ccnv frnin_1 ccnv dmin eqsstri frnin_0 frnin_1 cin df-rn frnin_0 crn frnin_0 ccnv cdm frnin_1 crn frnin_1 ccnv cdm frnin_0 df-rn frnin_1 df-rn ineq12i 3sstr4i $.
@@ -4406,6 +5939,11 @@ $}
 $( The range of an indexed union.  (Contributed by Mario Carneiro,
        29-May-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z $.
 	$d y z A $.
 	$d y z B $.
@@ -4420,6 +5958,8 @@ $( The range of a union.  Part of Exercise 8 of [Enderton] p. 41.
        (Contributed by NM, 17-Mar-2004.)  (Revised by Mario Carneiro,
        29-May-2015.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	frnuni_0 $f set x $.
 	frnuni_1 $f class A $.
@@ -4428,6 +5968,9 @@ $}
 $( Distributive law for image over union.  Theorem 35 of [Suppes] p. 65.
      (Contributed by NM, 30-Sep-2002.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fimaundi_0 $f class A $.
 	fimaundi_1 $f class B $.
 	fimaundi_2 $f class C $.
@@ -4435,6 +5978,9 @@ ${
 $}
 $( The image of a union.  (Contributed by Jeff Hoffman, 17-Feb-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fimaundir_0 $f class A $.
 	fimaundir_1 $f class B $.
 	fimaundir_2 $f class C $.
@@ -4444,6 +5990,10 @@ $( An upper bound for intersection with a domain.  Theorem 40 of [Suppes]
        p. 66, who calls it "somewhat surprising."  (Contributed by NM,
        11-Aug-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v R $.
 	$d x y A $.
 	$d x y $.
 	$d x y R $.
@@ -4456,6 +6006,11 @@ $}
 $( An upper bound for intersection with an image.  Theorem 41 of [Suppes]
        p. 66.  (Contributed by NM, 11-Aug-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v R $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -4470,6 +6025,10 @@ $( The converse of a cross product.  Exercise 11 of [Suppes] p. 67.
        (Contributed by NM, 14-Aug-1999.)  (Proof shortened by Andrew Salmon,
        27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	icnvxp_0 $f set x $.
@@ -4481,6 +6040,7 @@ $}
 $( The cross product with the empty set is empty.  Part of Theorem 3.13(ii)
      of [Monk1] p. 37.  (Contributed by NM, 12-Apr-2004.) $)
 ${
+	$v A $.
 	fxp0_0 $f class A $.
 	xp0 $p |- ( A X. (/) ) = (/) $= c0 fxp0_0 cxp ccnv c0 ccnv fxp0_0 c0 cxp c0 c0 fxp0_0 cxp c0 fxp0_0 xp0r cnveqi c0 fxp0_0 cnvxp cnv0 3eqtr3i $.
 $}
@@ -4488,6 +6048,11 @@ $( The cross product of nonempty classes is nonempty.  (Variation of a
        theorem contributed by Raph Levien, 30-Jun-2006.)  (Contributed by NM,
        30-Jun-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x y z B $.
 	ixpnz_0 $f set x $.
@@ -4500,6 +6065,8 @@ $}
 $( At least one member of an empty cross product is empty.  (Contributed by
      NM, 27-Aug-2006.) $)
 ${
+	$v A $.
+	$v B $.
 	fxpeq0_0 $f class A $.
 	fxpeq0_1 $f class B $.
 	xpeq0 $p |- ( ( A X. B ) = (/) <-> ( A = (/) \/ B = (/) ) ) $= fxpeq0_0 fxpeq0_1 cxp c0 wceq fxpeq0_0 c0 wne fxpeq0_1 c0 wne wa wn fxpeq0_0 c0 wne wn fxpeq0_1 c0 wne wn wo fxpeq0_0 c0 wceq fxpeq0_1 c0 wceq wo fxpeq0_0 c0 wne fxpeq0_1 c0 wne wa fxpeq0_0 fxpeq0_1 cxp c0 fxpeq0_0 fxpeq0_1 xpnz necon2bbii fxpeq0_0 c0 wne fxpeq0_1 c0 wne ianor fxpeq0_0 c0 wne wn fxpeq0_0 c0 wceq fxpeq0_1 c0 wne wn fxpeq0_1 c0 wceq fxpeq0_0 c0 nne fxpeq0_1 c0 nne orbi12i 3bitri $.
@@ -4507,6 +6074,10 @@ $}
 $( Cross products with disjoint sets are disjoint.  (Contributed by NM,
      13-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fxpdisj1_0 $f class A $.
 	fxpdisj1_1 $f class B $.
 	fxpdisj1_2 $f class C $.
@@ -4516,6 +6087,10 @@ $}
 $( Cross products with disjoint sets are disjoint.  (Contributed by NM,
      13-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fxpdisj2_0 $f class A $.
 	fxpdisj2_1 $f class B $.
 	fxpdisj2_2 $f class C $.
@@ -4525,6 +6100,10 @@ $}
 $( Cross products with two different singletons are disjoint.  (Contributed
      by NM, 28-Jul-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fxpsndisj_0 $f class A $.
 	fxpsndisj_1 $f class B $.
 	fxpsndisj_2 $f class C $.
@@ -4534,6 +6113,12 @@ $}
 $( Disjoint unions with disjoint index sets are disjoint.  (Contributed by
        Stefan O'Rear, 21-Nov-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x A $.
 	$d y B $.
 	fdjudisj_0 $f set x $.
@@ -4547,6 +6132,9 @@ $}
 $( A double restriction to disjoint classes is the empty set.  (Contributed
      by NM, 7-Oct-2004.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fresdisj_0 $f class A $.
 	fresdisj_1 $f class B $.
 	fresdisj_2 $f class C $.
@@ -4555,6 +6143,8 @@ $}
 $( The range of a cross product.  Part of Theorem 3.13(x) of [Monk1] p. 37.
      (Contributed by NM, 12-Apr-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	frnxp_0 $f class A $.
 	frnxp_1 $f class B $.
 	rnxp $p |- ( A =/= (/) -> ran ( A X. B ) = B ) $= frnxp_0 c0 wne frnxp_0 frnxp_1 cxp crn frnxp_1 frnxp_0 cxp cdm frnxp_1 frnxp_0 frnxp_1 cxp crn frnxp_0 frnxp_1 cxp ccnv cdm frnxp_1 frnxp_0 cxp cdm frnxp_0 frnxp_1 cxp df-rn frnxp_0 frnxp_1 cxp ccnv frnxp_1 frnxp_0 cxp frnxp_0 frnxp_1 cnvxp dmeqi eqtri frnxp_1 frnxp_0 dmxp syl5eq $.
@@ -4562,6 +6152,8 @@ $}
 $( The domain of a cross product is a subclass of the first factor.
      (Contributed by NM, 19-Mar-2007.) $)
 ${
+	$v A $.
+	$v B $.
 	fdmxpss_0 $f class A $.
 	fdmxpss_1 $f class B $.
 	dmxpss $p |- dom ( A X. B ) C_ A $= fdmxpss_0 fdmxpss_1 cxp cdm fdmxpss_0 wss fdmxpss_1 c0 fdmxpss_1 c0 wceq fdmxpss_0 fdmxpss_1 cxp cdm fdmxpss_0 wss c0 fdmxpss_0 wss fdmxpss_0 0ss fdmxpss_1 c0 wceq fdmxpss_0 fdmxpss_1 cxp cdm c0 fdmxpss_0 fdmxpss_1 c0 wceq fdmxpss_0 fdmxpss_1 cxp cdm c0 cdm c0 fdmxpss_1 c0 wceq fdmxpss_0 fdmxpss_1 cxp c0 fdmxpss_1 c0 wceq fdmxpss_0 fdmxpss_1 cxp fdmxpss_0 c0 cxp c0 fdmxpss_1 c0 fdmxpss_0 xpeq2 fdmxpss_0 xp0 syl6eq dmeqd dm0 syl6eq sseq1d mpbiri fdmxpss_1 c0 wne fdmxpss_0 fdmxpss_1 cxp cdm fdmxpss_0 wceq fdmxpss_0 fdmxpss_1 cxp cdm fdmxpss_0 wss fdmxpss_0 fdmxpss_1 dmxp fdmxpss_0 fdmxpss_1 cxp cdm fdmxpss_0 eqimss syl pm2.61ine $.
@@ -4570,18 +6162,25 @@ $( The range of a cross product is a subclass of the second factor.
      (Contributed by NM, 16-Jan-2006.)  (Proof shortened by Andrew Salmon,
      27-Aug-2011.) $)
 ${
+	$v A $.
+	$v B $.
 	frnxpss_0 $f class A $.
 	frnxpss_1 $f class B $.
 	rnxpss $p |- ran ( A X. B ) C_ B $= frnxpss_0 frnxpss_1 cxp crn frnxpss_0 frnxpss_1 cxp ccnv cdm frnxpss_1 frnxpss_0 frnxpss_1 cxp df-rn frnxpss_0 frnxpss_1 cxp ccnv cdm frnxpss_1 frnxpss_0 cxp cdm frnxpss_1 frnxpss_0 frnxpss_1 cxp ccnv frnxpss_1 frnxpss_0 cxp frnxpss_0 frnxpss_1 cnvxp dmeqi frnxpss_1 frnxpss_0 dmxpss eqsstri eqsstri $.
 $}
 $( The range of a square cross product.  (Contributed by FL, 17-May-2010.) $)
 ${
+	$v A $.
 	frnxpid_0 $f class A $.
 	rnxpid $p |- ran ( A X. A ) = A $= frnxpid_0 frnxpid_0 cxp crn frnxpid_0 wceq frnxpid_0 c0 frnxpid_0 c0 wceq c0 crn c0 frnxpid_0 frnxpid_0 cxp crn frnxpid_0 rn0 frnxpid_0 c0 wceq frnxpid_0 frnxpid_0 cxp c0 frnxpid_0 c0 wceq frnxpid_0 frnxpid_0 cxp frnxpid_0 c0 cxp c0 frnxpid_0 c0 frnxpid_0 xpeq2 frnxpid_0 xp0 syl6eq rneqd frnxpid_0 c0 wceq id 3eqtr4a frnxpid_0 frnxpid_0 rnxp pm2.61ine $.
 $}
 $( A cross-product subclass relationship is equivalent to the relationship
      for it components.  (Contributed by NM, 17-Dec-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fssxpb_0 $f class A $.
 	fssxpb_1 $f class B $.
 	fssxpb_2 $f class C $.
@@ -4591,6 +6190,10 @@ $}
 $( The cross product of non-empty classes is one-to-one.  (Contributed by NM,
      31-May-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fxp11_0 $f class A $.
 	fxp11_1 $f class B $.
 	fxp11_2 $f class C $.
@@ -4599,6 +6202,9 @@ ${
 $}
 $( Cancellation law for cross-product.  (Contributed by NM, 30-Aug-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fxpcan_0 $f class A $.
 	fxpcan_1 $f class B $.
 	fxpcan_2 $f class C $.
@@ -4606,6 +6212,9 @@ ${
 $}
 $( Cancellation law for cross-product.  (Contributed by NM, 30-Aug-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fxpcan2_0 $f class A $.
 	fxpcan2_1 $f class B $.
 	fxpcan2_2 $f class C $.
@@ -4614,6 +6223,9 @@ $}
 $( If a cross product is a set, one of its components must be a set.
      (Contributed by NM, 27-Aug-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fxpexr_0 $f class A $.
 	fxpexr_1 $f class B $.
 	fxpexr_2 $f class C $.
@@ -4622,6 +6234,9 @@ $}
 $( If a nonempty cross product is a set, so are both of its components.
      (Contributed by NM, 27-Aug-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fxpexr2_0 $f class A $.
 	fxpexr2_1 $f class B $.
 	fxpexr2_2 $f class C $.
@@ -4630,6 +6245,11 @@ $}
 $( Subset of the range of a restriction.  (Contributed by NM,
        16-Jan-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -4643,6 +6263,11 @@ $}
 $( Range of the intersection with a cross product.  (Contributed by NM,
        17-Jan-2006.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d y B $.
 	$d x y C $.
@@ -4656,6 +6281,11 @@ $}
 $( Domain of the intersection with a cross product.  (Contributed by NM,
        17-Jan-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x y B $.
 	$d x y C $.
@@ -4669,6 +6299,10 @@ $}
 $( Image of a relation restricted to a rectangular region.  (Contributed by
      Stefan O'Rear, 19-Feb-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v G $.
+	$v Y $.
 	fimainrect_0 $f class A $.
 	fimainrect_1 $f class B $.
 	fimainrect_2 $f class G $.
@@ -4679,6 +6313,10 @@ $( The base set of a strict order is contained in the field of the
        relation, except possibly for one element (note that
        ` (/) Or { B } ` ).  (Contributed by Mario Carneiro, 27-Apr-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v R $.
 	$d x A $.
 	$d x B $.
 	$d x R $.
@@ -4691,6 +6329,10 @@ $}
 $( The base set of a nonempty strict order is the same as the field of the
        relation.  (Contributed by Mario Carneiro, 15-May-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v R $.
 	$d x y A $.
 	$d x y R $.
 	isofld_0 $f set x $.
@@ -4702,6 +6344,10 @@ $}
 $( If the relation in a strict order is a set, then the base field is also
        a set.  (Contributed by Mario Carneiro, 27-Apr-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v R $.
+	$v V $.
 	$d x A $.
 	$d x R $.
 	$d x V $.
@@ -4714,6 +6360,9 @@ $}
 $( The set of all ordered pairs in a class is the same as the double
        converse.  (Contributed by Mario Carneiro, 16-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v R $.
 	$d x y R $.
 	fcnvcnv3_0 $f set x $.
 	fcnvcnv3_1 $f set y $.
@@ -4723,6 +6372,9 @@ $}
 $( Alternate definition of relation.  Exercise 2 of [TakeutiZaring] p. 25.
        (Contributed by NM, 29-Dec-1996.) $)
 ${
+	$v x $.
+	$v y $.
+	$v R $.
 	$d x y R $.
 	idfrel2_0 $f set x $.
 	idfrel2_1 $f set y $.
@@ -4733,6 +6385,9 @@ $( A relation can be expressed as the set of ordered pairs in it.  An
        analogue of ~ dffn5 for relations.  (Contributed by Mario Carneiro,
        16-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v R $.
 	$d x y R $.
 	fdfrel4v_0 $f set x $.
 	fdfrel4v_1 $f set y $.
@@ -4742,23 +6397,28 @@ $}
 $( The double converse of a class strips out all elements that are not
      ordered pairs.  (Contributed by NM, 8-Dec-2003.) $)
 ${
+	$v A $.
 	fcnvcnv_0 $f class A $.
 	cnvcnv $p |- `' `' A = ( A i^i ( _V X. _V ) ) $= fcnvcnv_0 ccnv ccnv fcnvcnv_0 ccnv ccnv cvv cvv cxp ccnv ccnv cin fcnvcnv_0 ccnv cvv cvv cxp ccnv cin ccnv fcnvcnv_0 cvv cvv cxp cin fcnvcnv_0 ccnv ccnv cvv cvv cxp ccnv ccnv wss fcnvcnv_0 ccnv ccnv fcnvcnv_0 ccnv ccnv cvv cvv cxp ccnv ccnv cin wceq fcnvcnv_0 ccnv ccnv cvv cvv cxp cvv cvv cxp ccnv ccnv fcnvcnv_0 ccnv ccnv wrel fcnvcnv_0 ccnv ccnv cvv cvv cxp wss fcnvcnv_0 ccnv relcnv fcnvcnv_0 ccnv ccnv df-rel mpbi cvv cvv cxp wrel cvv cvv cxp ccnv ccnv cvv cvv cxp wceq cvv cvv relxp cvv cvv cxp dfrel2 mpbi sseqtr4i fcnvcnv_0 ccnv ccnv cvv cvv cxp ccnv ccnv dfss mpbi fcnvcnv_0 ccnv cvv cvv cxp ccnv cnvin fcnvcnv_0 cvv cvv cxp cin ccnv ccnv fcnvcnv_0 ccnv cvv cvv cxp ccnv cin ccnv fcnvcnv_0 cvv cvv cxp cin fcnvcnv_0 cvv cvv cxp cin ccnv fcnvcnv_0 ccnv cvv cvv cxp ccnv cin fcnvcnv_0 cvv cvv cxp cnvin cnveqi fcnvcnv_0 cvv cvv cxp cin wrel fcnvcnv_0 cvv cvv cxp cin ccnv ccnv fcnvcnv_0 cvv cvv cxp cin wceq fcnvcnv_0 cvv cvv cxp cin wrel fcnvcnv_0 cvv cvv cxp cin cvv cvv cxp wss fcnvcnv_0 cvv cvv cxp inss2 fcnvcnv_0 cvv cvv cxp cin df-rel mpbir fcnvcnv_0 cvv cvv cxp cin dfrel2 mpbi eqtr3i 3eqtr2i $.
 $}
 $( The double converse of a class equals its restriction to the universe.
      (Contributed by NM, 8-Oct-2007.) $)
 ${
+	$v A $.
 	fcnvcnv2_0 $f class A $.
 	cnvcnv2 $p |- `' `' A = ( A |` _V ) $= fcnvcnv2_0 ccnv ccnv fcnvcnv2_0 cvv cvv cxp cin fcnvcnv2_0 cvv cres fcnvcnv2_0 cnvcnv fcnvcnv2_0 cvv df-res eqtr4i $.
 $}
 $( The double converse of a class is a subclass.  Exercise 2 of
      [TakeutiZaring] p. 25.  (Contributed by NM, 23-Jul-2004.) $)
 ${
+	$v A $.
 	fcnvcnvss_0 $f class A $.
 	cnvcnvss $p |- `' `' A C_ A $= fcnvcnvss_0 ccnv ccnv fcnvcnvss_0 cvv cvv cxp cin fcnvcnvss_0 fcnvcnvss_0 cnvcnv fcnvcnvss_0 cvv cvv cxp inss1 eqsstri $.
 $}
 $( Equality theorem for converse.  (Contributed by FL, 19-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
 	fcnveqb_0 $f class A $.
 	fcnveqb_1 $f class B $.
 	cnveqb $p |- ( ( Rel A /\ Rel B ) -> ( A = B <-> `' A = `' B ) ) $= fcnveqb_0 wrel fcnveqb_1 wrel wa fcnveqb_0 fcnveqb_1 wceq fcnveqb_0 ccnv fcnveqb_1 ccnv wceq fcnveqb_0 fcnveqb_1 cnveq fcnveqb_0 wrel fcnveqb_1 wrel fcnveqb_0 ccnv fcnveqb_1 ccnv wceq fcnveqb_0 fcnveqb_1 wceq wi fcnveqb_0 wrel fcnveqb_0 ccnv ccnv fcnveqb_0 wceq fcnveqb_1 wrel fcnveqb_0 ccnv fcnveqb_1 ccnv wceq fcnveqb_0 fcnveqb_1 wceq wi wi fcnveqb_0 dfrel2 fcnveqb_1 wrel fcnveqb_0 ccnv fcnveqb_1 ccnv wceq fcnveqb_0 fcnveqb_1 wceq wi wi fcnveqb_0 fcnveqb_0 ccnv ccnv fcnveqb_1 wrel fcnveqb_0 ccnv fcnveqb_1 ccnv wceq fcnveqb_0 fcnveqb_1 wceq wi fcnveqb_0 fcnveqb_0 ccnv ccnv wceq fcnveqb_0 ccnv fcnveqb_1 ccnv wceq fcnveqb_0 ccnv ccnv fcnveqb_1 wceq wi fcnveqb_1 wrel fcnveqb_1 ccnv ccnv fcnveqb_1 wceq fcnveqb_0 ccnv fcnveqb_1 ccnv wceq fcnveqb_0 ccnv ccnv fcnveqb_1 wceq wi fcnveqb_1 dfrel2 fcnveqb_0 ccnv fcnveqb_1 ccnv wceq fcnveqb_0 ccnv ccnv fcnveqb_1 wceq wi fcnveqb_1 fcnveqb_1 ccnv ccnv fcnveqb_0 ccnv fcnveqb_1 ccnv wceq fcnveqb_0 ccnv ccnv fcnveqb_1 wceq fcnveqb_1 fcnveqb_1 ccnv ccnv wceq fcnveqb_0 ccnv ccnv fcnveqb_1 ccnv ccnv wceq fcnveqb_0 ccnv fcnveqb_1 ccnv cnveq fcnveqb_1 fcnveqb_1 ccnv ccnv fcnveqb_0 ccnv ccnv eqeq2 syl5ibr eqcoms sylbi fcnveqb_0 fcnveqb_0 ccnv ccnv wceq fcnveqb_0 fcnveqb_1 wceq fcnveqb_0 ccnv ccnv fcnveqb_1 wceq fcnveqb_0 ccnv fcnveqb_1 ccnv wceq fcnveqb_0 fcnveqb_0 ccnv ccnv fcnveqb_1 eqeq1 imbi2d syl5ibr eqcoms sylbi imp impbid2 $.
@@ -4766,35 +6426,42 @@ $}
 $( A relation empty iff its converse is empty.  (Contributed by FL,
      19-Sep-2011.) $)
 ${
+	$v A $.
 	fcnveq0_0 $f class A $.
 	cnveq0 $p |- ( Rel A -> ( A = (/) <-> `' A = (/) ) ) $= c0 ccnv c0 wceq fcnveq0_0 wrel fcnveq0_0 c0 wceq fcnveq0_0 ccnv c0 wceq wb wi cnv0 fcnveq0_0 wrel fcnveq0_0 c0 wceq fcnveq0_0 ccnv c0 wceq wb wi c0 c0 ccnv fcnveq0_0 wrel fcnveq0_0 c0 wceq fcnveq0_0 ccnv c0 wceq wb c0 c0 ccnv wceq fcnveq0_0 c0 wceq fcnveq0_0 ccnv c0 ccnv wceq wb fcnveq0_0 wrel c0 wrel fcnveq0_0 c0 wceq fcnveq0_0 ccnv c0 ccnv wceq wb rel0 fcnveq0_0 c0 cnveqb mpan2 c0 c0 ccnv wceq fcnveq0_0 ccnv c0 wceq fcnveq0_0 ccnv c0 ccnv wceq fcnveq0_0 c0 wceq c0 c0 ccnv fcnveq0_0 ccnv eqeq2 bibi2d syl5ibr eqcoms ax-mp $.
 $}
 $( [19-Sep-2011] $)
 $( Alternate definition of relation.  (Contributed by NM, 14-May-2008.) $)
 ${
+	$v R $.
 	fdfrel3_0 $f class R $.
 	dfrel3 $p |- ( Rel R <-> ( R |` _V ) = R ) $= fdfrel3_0 wrel fdfrel3_0 ccnv ccnv fdfrel3_0 wceq fdfrel3_0 cvv cres fdfrel3_0 wceq fdfrel3_0 dfrel2 fdfrel3_0 ccnv ccnv fdfrel3_0 cvv cres fdfrel3_0 fdfrel3_0 cnvcnv2 eqeq1i bitri $.
 $}
 $( The domain of a universal restriction.  (Contributed by NM,
      14-May-2008.) $)
 ${
+	$v A $.
 	fdmresv_0 $f class A $.
 	dmresv $p |- dom ( A |` _V ) = dom A $= fdmresv_0 cvv cres cdm cvv fdmresv_0 cdm cin fdmresv_0 cdm cvv cin fdmresv_0 cdm fdmresv_0 cvv dmres cvv fdmresv_0 cdm incom fdmresv_0 cdm inv1 3eqtri $.
 $}
 $( The range of a universal restriction.  (Contributed by NM,
      14-May-2008.) $)
 ${
+	$v A $.
 	frnresv_0 $f class A $.
 	rnresv $p |- ran ( A |` _V ) = ran A $= frnresv_0 ccnv ccnv crn frnresv_0 cvv cres crn frnresv_0 crn frnresv_0 ccnv ccnv frnresv_0 cvv cres frnresv_0 cnvcnv2 rneqi frnresv_0 rncnvcnv eqtr3i $.
 $}
 $( Range defined in terms of image.  (Contributed by NM, 14-May-2008.) $)
 ${
+	$v A $.
 	fdfrn4_0 $f class A $.
 	dfrn4 $p |- ran A = ( A " _V ) $= fdfrn4_0 cvv cima fdfrn4_0 cvv cres crn fdfrn4_0 crn fdfrn4_0 cvv df-ima fdfrn4_0 rnresv eqtr2i $.
 $}
 $( The restriction of the double converse of a class.  (Contributed by NM,
      8-Apr-2007.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v A $.
+	$v B $.
 	frescnvcnv_0 $f class A $.
 	frescnvcnv_1 $f class B $.
 	rescnvcnv $p |- ( `' `' A |` B ) = ( A |` B ) $= frescnvcnv_0 ccnv ccnv frescnvcnv_1 cres frescnvcnv_0 cvv cres frescnvcnv_1 cres frescnvcnv_0 cvv frescnvcnv_1 cin cres frescnvcnv_0 frescnvcnv_1 cres frescnvcnv_0 ccnv ccnv frescnvcnv_0 cvv cres frescnvcnv_1 frescnvcnv_0 cnvcnv2 reseq1i frescnvcnv_0 cvv frescnvcnv_1 resres cvv frescnvcnv_1 cin frescnvcnv_1 frescnvcnv_0 frescnvcnv_1 cvv wss cvv frescnvcnv_1 cin frescnvcnv_1 wceq frescnvcnv_1 ssv frescnvcnv_1 cvv sseqin2 mpbi reseq2i 3eqtri $.
@@ -4802,6 +6469,8 @@ $}
 $( The double converse of the restriction of a class.  (Contributed by NM,
      3-Jun-2007.) $)
 ${
+	$v A $.
+	$v B $.
 	fcnvcnvres_0 $f class A $.
 	fcnvcnvres_1 $f class B $.
 	cnvcnvres $p |- `' `' ( A |` B ) = ( `' `' A |` B ) $= fcnvcnvres_0 fcnvcnvres_1 cres ccnv ccnv fcnvcnvres_0 fcnvcnvres_1 cres fcnvcnvres_0 ccnv ccnv fcnvcnvres_1 cres fcnvcnvres_0 fcnvcnvres_1 cres wrel fcnvcnvres_0 fcnvcnvres_1 cres ccnv ccnv fcnvcnvres_0 fcnvcnvres_1 cres wceq fcnvcnvres_0 fcnvcnvres_1 relres fcnvcnvres_0 fcnvcnvres_1 cres dfrel2 mpbi fcnvcnvres_0 fcnvcnvres_1 rescnvcnv eqtr4i $.
@@ -4809,6 +6478,8 @@ $}
 $( The image of the double converse of a class.  (Contributed by NM,
      8-Apr-2007.) $)
 ${
+	$v A $.
+	$v B $.
 	fimacnvcnv_0 $f class A $.
 	fimacnvcnv_1 $f class B $.
 	imacnvcnv $p |- ( `' `' A " B ) = ( A " B ) $= fimacnvcnv_0 ccnv ccnv fimacnvcnv_1 cres crn fimacnvcnv_0 fimacnvcnv_1 cres crn fimacnvcnv_0 ccnv ccnv fimacnvcnv_1 cima fimacnvcnv_0 fimacnvcnv_1 cima fimacnvcnv_0 ccnv ccnv fimacnvcnv_1 cres fimacnvcnv_0 fimacnvcnv_1 cres fimacnvcnv_0 fimacnvcnv_1 rescnvcnv rneqi fimacnvcnv_0 ccnv ccnv fimacnvcnv_1 df-ima fimacnvcnv_0 fimacnvcnv_1 df-ima 3eqtr4i $.
@@ -4817,6 +6488,9 @@ $( The domain of a singleton is nonzero iff the singleton argument is an
        ordered pair.  (Contributed by NM, 14-Dec-2008.)  (Proof shortened by
        Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	idmsnn0_0 $f set x $.
 	idmsnn0_1 $f set y $.
@@ -4826,6 +6500,7 @@ $}
 $( The range of a singleton is nonzero iff the singleton argument is an
      ordered pair.  (Contributed by NM, 14-Dec-2008.) $)
 ${
+	$v A $.
 	frnsnn0_0 $f class A $.
 	rnsnn0 $p |- ( A e. ( _V X. _V ) <-> ran { A } =/= (/) ) $= frnsnn0_0 cvv cvv cxp wcel frnsnn0_0 csn cdm c0 wne frnsnn0_0 csn crn c0 wne frnsnn0_0 dmsnn0 frnsnn0_0 csn cdm c0 frnsnn0_0 csn crn c0 frnsnn0_0 csn dm0rn0 necon3bii bitri $.
 $}
@@ -4842,12 +6517,14 @@ $}
 $( The domain of a singleton is empty if the singleton's argument contains
      the empty set.  (Contributed by NM, 15-Dec-2008.) $)
 ${
+	$v A $.
 	fdmsn0el_0 $f class A $.
 	dmsn0el $p |- ( (/) e. A -> dom { A } = (/) ) $= c0 fdmsn0el_0 wcel fdmsn0el_0 csn cdm c0 fdmsn0el_0 csn cdm c0 wne fdmsn0el_0 cvv cvv cxp wcel c0 fdmsn0el_0 wcel wn fdmsn0el_0 dmsnn0 cvv cvv fdmsn0el_0 0nelelxp sylbir necon4ai $.
 $}
 $( A singleton is a relation iff it has a nonempty domain.  (Contributed by
        NM, 25-Sep-2013.) $)
 ${
+	$v A $.
 	frelsn2_0 $f class A $.
 	erelsn2_0 $e |- A e. _V $.
 	relsn2 $p |- ( Rel { A } <-> dom { A } =/= (/) ) $= frelsn2_0 csn wrel frelsn2_0 cvv cvv cxp wcel frelsn2_0 csn cdm c0 wne frelsn2_0 erelsn2_0 relsn frelsn2_0 dmsnn0 bitri $.
@@ -4855,6 +6532,11 @@ $}
 $( The domain of a singleton of an ordered pair is the singleton of the
        first member.  (Contributed by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d x y A $.
 	$d x y B $.
 	$d x V $.
@@ -4869,6 +6551,8 @@ $( The domain of a singleton of an ordered pair is a subset of the
        singleton of the first member (with no sethood assumptions on ` B ` ).
        (Contributed by Mario Carneiro, 30-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	fdmsnopss_0 $f class A $.
 	fdmsnopss_1 $f class B $.
 	dmsnopss $p |- dom { <. A , B >. } C_ { A } $= fdmsnopss_1 cvv wcel fdmsnopss_0 fdmsnopss_1 cop csn cdm fdmsnopss_0 csn wss fdmsnopss_1 cvv wcel fdmsnopss_0 fdmsnopss_1 cop csn cdm fdmsnopss_0 csn wceq fdmsnopss_0 fdmsnopss_1 cop csn cdm fdmsnopss_0 csn wss fdmsnopss_0 fdmsnopss_1 cvv dmsnopg fdmsnopss_0 fdmsnopss_1 cop csn cdm fdmsnopss_0 csn eqimss syl fdmsnopss_1 cvv wcel wn fdmsnopss_0 fdmsnopss_1 cop csn cdm c0 fdmsnopss_0 csn fdmsnopss_1 cvv wcel wn fdmsnopss_0 fdmsnopss_1 cop csn cdm c0 csn cdm c0 fdmsnopss_1 cvv wcel wn fdmsnopss_0 fdmsnopss_1 cop csn c0 csn fdmsnopss_1 cvv wcel wn fdmsnopss_0 fdmsnopss_1 cop c0 fdmsnopss_0 fdmsnopss_1 opprc2 sneqd dmeqd dmsn0 syl6eq c0 fdmsnopss_0 csn wss fdmsnopss_1 cvv wcel wn fdmsnopss_0 csn 0ss a1i eqsstrd pm2.61i $.
@@ -4876,6 +6560,12 @@ $}
 $( The domain of an unordered pair of ordered pairs.  (Contributed by Mario
        Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v V $.
+	$v W $.
 	fdmpropg_0 $f class A $.
 	fdmpropg_1 $f class B $.
 	fdmpropg_2 $f class C $.
@@ -4889,6 +6579,8 @@ $( The domain of a singleton of an ordered pair is the singleton of the
        Andrew Salmon, 27-Aug-2011.)  (Revised by Mario Carneiro,
        26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	fdmsnop_0 $f class A $.
 	fdmsnop_1 $f class B $.
 	edmsnop_0 $e |- B e. _V $.
@@ -4897,6 +6589,10 @@ $}
 $( The domain of an unordered pair of ordered pairs.  (Contributed by NM,
        13-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fdmprop_0 $f class A $.
 	fdmprop_1 $f class B $.
 	fdmprop_2 $f class C $.
@@ -4908,6 +6604,12 @@ $}
 $( The domain of an unordered triple of ordered pairs.  (Contributed by NM,
        14-Sep-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
 	fdmtpop_0 $f class A $.
 	fdmtpop_1 $f class B $.
 	fdmtpop_2 $f class C $.
@@ -4923,6 +6625,10 @@ $( Double converse of a singleton of an ordered pair.  (Unlike ~ cnvsn ,
        this does not need any sethood assumptions on ` A ` and ` B ` .)
        (Contributed by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	icnvcnvsn_0 $f set x $.
@@ -4935,6 +6641,8 @@ $( The domain of the singleton of the singleton of a singleton.
        (Contributed by NM, 15-Sep-2004.)  (Revised by Mario Carneiro,
        26-Apr-2015.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	idmsnsnsn_0 $f set x $.
 	fdmsnsnsn_0 $f class A $.
@@ -4944,6 +6652,9 @@ $( The range of a singleton of an ordered pair is the singleton of the second
      member.  (Contributed by NM, 24-Jul-2004.)  (Revised by Mario Carneiro,
      30-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
 	frnsnopg_0 $f class A $.
 	frnsnopg_1 $f class B $.
 	frnsnopg_2 $f class V $.
@@ -4953,6 +6664,8 @@ $( The range of a singleton of an ordered pair is the singleton of the
        second member.  (Contributed by NM, 24-Jul-2004.)  (Revised by Mario
        Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	frnsnop_0 $f class A $.
 	frnsnop_1 $f class B $.
 	ernsnop_0 $e |- A e. _V $.
@@ -4962,6 +6675,8 @@ $( Extract the first member of an ordered pair.  (See ~ op2nda to extract
        the second member, ~ op1stb for an alternate version, and ~ op1st for
        the preferred version.)  (Contributed by Raph Levien, 4-Dec-2003.) $)
 ${
+	$v A $.
+	$v B $.
 	fop1sta_0 $f class A $.
 	fop1sta_1 $f class B $.
 	eop1sta_0 $e |- A e. _V $.
@@ -4971,6 +6686,8 @@ $}
 $( Converse of a singleton of an ordered pair.  (Contributed by NM,
        11-May-1998.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	fcnvsn_0 $f class A $.
 	fcnvsn_1 $f class B $.
 	ecnvsn_0 $e |- A e. _V $.
@@ -4982,6 +6699,8 @@ $( Extract the second member of an ordered pair.  Theorem 5.12(ii) of
        an alternate version, and ~ op2nd for the preferred version.)
        (Contributed by NM, 25-Nov-2003.) $)
 ${
+	$v A $.
+	$v B $.
 	fop2ndb_0 $f class A $.
 	fop2ndb_1 $f class B $.
 	eop2ndb_0 $e |- A e. _V $.
@@ -4993,6 +6712,8 @@ $( Extract the second member of an ordered pair.  (See ~ op1sta to extract
        preferred version.)  (Contributed by NM, 17-Feb-2004.)  (Proof shortened
        by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v A $.
+	$v B $.
 	fop2nda_0 $f class A $.
 	fop2nda_1 $f class B $.
 	eop2nda_0 $e |- A e. _V $.
@@ -5002,6 +6723,12 @@ $}
 $( Converse of a singleton of an ordered pair.  (Contributed by NM,
        23-Jan-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -5016,6 +6743,8 @@ $}
 $( Swap the members of an ordered pair.  (Contributed by NM, 14-Dec-2008.)
        (Revised by Mario Carneiro, 30-Aug-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	fopswap_0 $f class A $.
 	fopswap_1 $f class B $.
 	opswap $p |- U. `' { <. A , B >. } = <. B , A >. $= fopswap_0 cvv wcel fopswap_1 cvv wcel wa fopswap_0 fopswap_1 cop csn ccnv cuni fopswap_1 fopswap_0 cop wceq fopswap_0 cvv wcel fopswap_1 cvv wcel wa fopswap_0 fopswap_1 cop csn ccnv cuni fopswap_1 fopswap_0 cop csn cuni fopswap_1 fopswap_0 cop fopswap_0 cvv wcel fopswap_1 cvv wcel wa fopswap_0 fopswap_1 cop csn ccnv fopswap_1 fopswap_0 cop csn fopswap_0 fopswap_1 cvv cvv cnvsng unieqd fopswap_1 fopswap_0 cop fopswap_1 fopswap_0 opex unisn syl6eq fopswap_0 cvv wcel fopswap_1 cvv wcel wa wn c0 cuni c0 fopswap_0 fopswap_1 cop csn ccnv cuni fopswap_1 fopswap_0 cop uni0 fopswap_0 cvv wcel fopswap_1 cvv wcel wa wn fopswap_0 fopswap_1 cop csn ccnv c0 fopswap_0 cvv wcel fopswap_1 cvv wcel wa wn fopswap_0 fopswap_1 cop csn ccnv c0 csn ccnv c0 fopswap_0 cvv wcel fopswap_1 cvv wcel wa wn fopswap_0 fopswap_1 cop csn c0 csn fopswap_0 cvv wcel fopswap_1 cvv wcel wa wn fopswap_0 fopswap_1 cop c0 fopswap_0 fopswap_1 opprc sneqd cnveqd cnvsn0 syl6eq unieqd fopswap_0 cvv wcel fopswap_1 cvv wcel wa fopswap_1 cvv wcel fopswap_0 cvv wcel wa fopswap_1 fopswap_0 cop c0 wceq fopswap_0 cvv wcel fopswap_1 cvv wcel ancom fopswap_1 fopswap_0 opprc sylnbi 3eqtr4a pm2.61i $.
@@ -5024,6 +6753,11 @@ $( Membership in a cross product.  This version requires no quantifiers or
        dummy variables.  See also ~ elxp5 , ~ elxp6 , and ~ elxp7 .
        (Contributed by NM, 17-Feb-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -5039,6 +6773,11 @@ $( Membership in a cross product requiring no quantifiers or dummy
        double intersection does not create class existence problems (caused by
        ~ int0 ).  (Contributed by NM, 1-Aug-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -5052,6 +6791,11 @@ $}
 $( An image under the converse of a restriction.  (Contributed by Jeff
        Hankins, 12-Jul-2009.) $)
 ${
+	$v t $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v s $.
 	$d s t A $.
 	$d s t B $.
 	$d s t F $.
@@ -5065,12 +6809,15 @@ $}
 $( A class restricted to its domain equals its double converse.  (Contributed
      by NM, 8-Apr-2007.) $)
 ${
+	$v A $.
 	fresdm2_0 $f class A $.
 	resdm2 $p |- ( A |` dom A ) = `' `' A $= fresdm2_0 ccnv ccnv fresdm2_0 ccnv ccnv cdm cres fresdm2_0 fresdm2_0 ccnv ccnv cdm cres fresdm2_0 ccnv ccnv fresdm2_0 fresdm2_0 cdm cres fresdm2_0 fresdm2_0 ccnv ccnv cdm rescnvcnv fresdm2_0 ccnv ccnv wrel fresdm2_0 ccnv ccnv fresdm2_0 ccnv ccnv cdm cres fresdm2_0 ccnv ccnv wceq fresdm2_0 ccnv relcnv fresdm2_0 ccnv ccnv resdm ax-mp fresdm2_0 ccnv ccnv cdm fresdm2_0 cdm fresdm2_0 fresdm2_0 dmcnvcnv reseq2i 3eqtr3ri $.
 $}
 $( Restriction to the domain of a restriction.  (Contributed by NM,
      8-Apr-2007.) $)
 ${
+	$v A $.
+	$v B $.
 	fresdmres_0 $f class A $.
 	fresdmres_1 $f class B $.
 	resdmres $p |- ( A |` dom ( A |` B ) ) = ( A |` B ) $= fresdmres_0 fresdmres_0 fresdmres_1 cres cdm cres fresdmres_0 ccnv ccnv fresdmres_1 cres fresdmres_0 fresdmres_1 cres fresdmres_0 fresdmres_1 cvv cxp fresdmres_0 cdm cvv cxp cin cin fresdmres_0 ccnv ccnv fresdmres_1 cvv cxp cin fresdmres_0 fresdmres_0 fresdmres_1 cres cdm cres fresdmres_0 ccnv ccnv fresdmres_1 cres fresdmres_0 fresdmres_1 cvv cxp fresdmres_0 cdm cvv cxp cin cin fresdmres_1 cvv cxp fresdmres_0 fresdmres_0 cdm cvv cxp cin cin fresdmres_1 cvv cxp fresdmres_0 ccnv ccnv cin fresdmres_0 ccnv ccnv fresdmres_1 cvv cxp cin fresdmres_0 fresdmres_1 cvv cxp fresdmres_0 cdm cvv cxp in12 fresdmres_0 fresdmres_0 cdm cvv cxp cin fresdmres_0 ccnv ccnv fresdmres_1 cvv cxp fresdmres_0 fresdmres_0 cdm cres fresdmres_0 fresdmres_0 cdm cvv cxp cin fresdmres_0 ccnv ccnv fresdmres_0 fresdmres_0 cdm df-res fresdmres_0 resdm2 eqtr3i ineq2i fresdmres_1 cvv cxp fresdmres_0 ccnv ccnv incom 3eqtri fresdmres_0 fresdmres_0 fresdmres_1 cres cdm cres fresdmres_0 fresdmres_0 fresdmres_1 cres cdm cvv cxp cin fresdmres_0 fresdmres_1 cvv cxp fresdmres_0 cdm cvv cxp cin cin fresdmres_0 fresdmres_0 fresdmres_1 cres cdm df-res fresdmres_0 fresdmres_1 cres cdm cvv cxp fresdmres_1 cvv cxp fresdmres_0 cdm cvv cxp cin fresdmres_0 fresdmres_0 fresdmres_1 cres cdm cvv cxp fresdmres_1 fresdmres_0 cdm cin cvv cxp fresdmres_1 cvv cxp fresdmres_0 cdm cvv cxp cin fresdmres_0 fresdmres_1 cres cdm fresdmres_1 fresdmres_0 cdm cin cvv fresdmres_0 fresdmres_1 dmres xpeq1i fresdmres_1 fresdmres_0 cdm cvv xpindir eqtri ineq2i eqtri fresdmres_0 ccnv ccnv fresdmres_1 df-res 3eqtr4i fresdmres_0 fresdmres_1 rescnvcnv eqtri $.
@@ -5078,6 +6825,8 @@ $}
 $( The image of the domain of a restriction.  (Contributed by NM,
      8-Apr-2007.) $)
 ${
+	$v A $.
+	$v B $.
 	fimadmres_0 $f class A $.
 	fimadmres_1 $f class B $.
 	imadmres $p |- ( A " dom ( A |` B ) ) = ( A " B ) $= fimadmres_0 fimadmres_0 fimadmres_1 cres cdm cres crn fimadmres_0 fimadmres_1 cres crn fimadmres_0 fimadmres_0 fimadmres_1 cres cdm cima fimadmres_0 fimadmres_1 cima fimadmres_0 fimadmres_0 fimadmres_1 cres cdm cres fimadmres_0 fimadmres_1 cres fimadmres_0 fimadmres_1 resdmres rneqi fimadmres_0 fimadmres_0 fimadmres_1 cres cdm df-ima fimadmres_0 fimadmres_1 df-ima 3eqtr4i $.
@@ -5085,6 +6834,12 @@ $}
 $( The preimage of a function in maps-to notation.  (Contributed by Stefan
        O'Rear, 25-Jan-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d x y C $.
 	$d y A $.
 	$d y B $.
@@ -5101,6 +6856,12 @@ $}
 $( Converse singleton image of a function defined by maps-to.  (Contributed
        by Stefan O'Rear, 25-Jan-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v V $.
 	$d x C $.
 	$d x V $.
 	fmptiniseg_0 $f set x $.
@@ -5115,6 +6876,10 @@ $}
 $( The domain of the mapping operation in general.  (Contributed by NM,
        16-May-1995.)  (Revised by Mario Carneiro, 22-Mar-2015.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	fdmmpt_0 $f set x $.
 	fdmmpt_1 $f class A $.
 	fdmmpt_2 $f class B $.
@@ -5125,6 +6890,10 @@ $}
 $( The domain of a mapping is a subset of its base class.  (Contributed by
        Scott Fenton, 17-Jun-2013.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x A $.
 	fdmmptss_0 $f set x $.
 	fdmmptss_1 $f class A $.
@@ -5137,6 +6906,10 @@ $( The domain of the mapping operation is the stated domain, if the
        function value is always a set.  (Contributed by Mario Carneiro,
        9-Feb-2013.)  (Revised by Mario Carneiro, 14-Sep-2013.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
 	$d A x $.
 	fdmmptg_0 $f set x $.
 	fdmmptg_1 $f class A $.
@@ -5147,6 +6920,11 @@ $}
 $( A composition is a relation.  Exercise 24 of [TakeutiZaring] p. 25.
        (Contributed by NM, 26-Jan-1997.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z $.
@@ -5160,6 +6938,11 @@ $}
 $( Alternate definition of a class composition, using only one bound
        variable.  (Contributed by NM, 19-Dec-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z $.
@@ -5174,6 +6957,13 @@ $( Generalization of ~ dfco2 , where ` C ` can have any value between
        ` dom A i^i ran B ` and ` _V ` .  (Contributed by NM, 21-Dec-2008.)
        (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d w x y z A $.
 	$d w x y z B $.
 	$d w x y z C $.
@@ -5189,6 +6979,12 @@ $}
 $( Class composition distributes over union.  (Contributed by NM,
        21-Dec-2008.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -5203,6 +6999,12 @@ $}
 $( Class composition distributes over union.  (Contributed by NM,
        21-Dec-2008.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -5217,6 +7019,12 @@ $}
 $( Restricted first member of a class composition.  (Contributed by NM,
        12-Oct-2004.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -5231,6 +7039,12 @@ $}
 $( Associative law for the restriction of a composition.  (Contributed by
        NM, 12-Dec-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -5245,6 +7059,12 @@ $}
 $( Image of the composition of two classes.  (Contributed by Jason
        Orendorff, 12-Dec-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -5259,6 +7079,11 @@ $}
 $( The range of the composition of two classes.  (Contributed by NM,
        12-Dec-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z $.
@@ -5272,6 +7097,8 @@ $}
 $( The range of the composition of two classes.  (Contributed by NM,
      27-Mar-2008.) $)
 ${
+	$v A $.
+	$v B $.
 	frnco2_0 $f class A $.
 	frnco2_1 $f class B $.
 	rnco2 $p |- ran ( A o. B ) = ( A " ran B ) $= frnco2_0 frnco2_1 ccom crn frnco2_0 frnco2_1 crn cres crn frnco2_0 frnco2_1 crn cima frnco2_0 frnco2_1 rnco frnco2_0 frnco2_1 crn df-ima eqtr4i $.
@@ -5279,12 +7106,21 @@ $}
 $( The domain of a composition.  Exercise 27 of [Enderton] p. 53.
      (Contributed by NM, 4-Feb-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	fdmco_0 $f class A $.
 	fdmco_1 $f class B $.
 	dmco $p |- dom ( A o. B ) = ( `' B " dom A ) $= fdmco_0 fdmco_1 ccom cdm fdmco_0 fdmco_1 ccom ccnv crn fdmco_1 ccnv fdmco_0 ccnv ccom crn fdmco_1 ccnv fdmco_0 cdm cima fdmco_0 fdmco_1 ccom dfdm4 fdmco_0 fdmco_1 ccom ccnv fdmco_1 ccnv fdmco_0 ccnv ccom fdmco_0 fdmco_1 cnvco rneqi fdmco_1 ccnv fdmco_0 ccnv ccom crn fdmco_1 ccnv fdmco_0 ccnv crn cima fdmco_1 ccnv fdmco_0 cdm cima fdmco_1 ccnv fdmco_0 ccnv rnco2 fdmco_0 cdm fdmco_0 ccnv crn fdmco_1 ccnv fdmco_0 dfdm4 imaeq2i eqtr4i 3eqtri $.
 $}
 $( Composition with an indexed union.  (Contributed by NM, 21-Dec-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d w x y z A $.
 	$d w y z B $.
 	$d w y z C $.
@@ -5300,6 +7136,8 @@ $}
 $( A composition is not affected by a double converse of its first argument.
      (Contributed by NM, 8-Oct-2007.) $)
 ${
+	$v A $.
+	$v B $.
 	fcocnvcnv1_0 $f class A $.
 	fcocnvcnv1_1 $f class B $.
 	cocnvcnv1 $p |- ( `' `' A o. B ) = ( A o. B ) $= fcocnvcnv1_0 ccnv ccnv fcocnvcnv1_1 ccom fcocnvcnv1_0 cvv cres fcocnvcnv1_1 ccom fcocnvcnv1_0 fcocnvcnv1_1 ccom fcocnvcnv1_0 ccnv ccnv fcocnvcnv1_0 cvv cres fcocnvcnv1_1 fcocnvcnv1_0 cnvcnv2 coeq1i fcocnvcnv1_1 crn cvv wss fcocnvcnv1_0 cvv cres fcocnvcnv1_1 ccom fcocnvcnv1_0 fcocnvcnv1_1 ccom wceq fcocnvcnv1_1 crn ssv fcocnvcnv1_0 fcocnvcnv1_1 cvv cores ax-mp eqtri $.
@@ -5307,6 +7145,8 @@ $}
 $( A composition is not affected by a double converse of its second
      argument.  (Contributed by NM, 8-Oct-2007.) $)
 ${
+	$v A $.
+	$v B $.
 	fcocnvcnv2_0 $f class A $.
 	fcocnvcnv2_1 $f class B $.
 	cocnvcnv2 $p |- ( A o. `' `' B ) = ( A o. B ) $= fcocnvcnv2_0 fcocnvcnv2_1 ccnv ccnv ccom fcocnvcnv2_0 fcocnvcnv2_1 cvv cres ccom fcocnvcnv2_0 fcocnvcnv2_1 ccom cvv cres fcocnvcnv2_0 fcocnvcnv2_1 ccom fcocnvcnv2_1 ccnv ccnv fcocnvcnv2_1 cvv cres fcocnvcnv2_0 fcocnvcnv2_1 cnvcnv2 coeq2i fcocnvcnv2_0 fcocnvcnv2_1 cvv resco fcocnvcnv2_0 fcocnvcnv2_1 ccom wrel fcocnvcnv2_0 fcocnvcnv2_1 ccom cvv cres fcocnvcnv2_0 fcocnvcnv2_1 ccom wceq fcocnvcnv2_0 fcocnvcnv2_1 relco fcocnvcnv2_0 fcocnvcnv2_1 ccom dfrel3 mpbi 3eqtr2i $.
@@ -5314,6 +7154,9 @@ $}
 $( Absorption of a reverse (preimage) restriction of the second member of a
      class composition.  (Contributed by NM, 11-Dec-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fcores2_0 $f class A $.
 	fcores2_1 $f class B $.
 	fcores2_2 $f class C $.
@@ -5322,6 +7165,10 @@ $}
 $( Composition with the empty set.  Theorem 20 of [Suppes] p. 63.
        (Contributed by NM, 24-Apr-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z A $.
 	ico02_0 $f set x $.
 	ico02_1 $f set y $.
@@ -5331,12 +7178,17 @@ ${
 $}
 $( Composition with the empty set.  (Contributed by NM, 24-Apr-2004.) $)
 ${
+	$v A $.
 	fco01_0 $f class A $.
 	co01 $p |- ( (/) o. A ) = (/) $= c0 ccnv ccnv c0 fco01_0 ccom ccnv ccnv c0 c0 fco01_0 ccom c0 ccnv c0 fco01_0 ccom ccnv c0 ccnv c0 c0 fco01_0 ccom ccnv cnv0 c0 fco01_0 ccom ccnv fco01_0 ccnv c0 ccnv ccom fco01_0 ccnv c0 ccom c0 c0 fco01_0 cnvco c0 ccnv c0 fco01_0 ccnv cnv0 coeq2i fco01_0 ccnv co02 3eqtri eqtr4i cnveqi c0 wrel c0 ccnv ccnv c0 wceq rel0 c0 dfrel2 mpbi c0 fco01_0 ccom wrel c0 fco01_0 ccom ccnv ccnv c0 fco01_0 ccom wceq c0 fco01_0 relco c0 fco01_0 ccom dfrel2 mpbi 3eqtr3ri $.
 $}
 $( Composition with the identity relation.  Part of Theorem 3.7(i) of
        [Monk1] p. 36.  (Contributed by NM, 22-Apr-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z A $.
 	icoi1_0 $f set x $.
 	icoi1_1 $f set y $.
@@ -5347,12 +7199,15 @@ $}
 $( Composition with the identity relation.  Part of Theorem 3.7(i) of
        [Monk1] p. 36.  (Contributed by NM, 22-Apr-2004.) $)
 ${
+	$v A $.
 	fcoi2_0 $f class A $.
 	coi2 $p |- ( Rel A -> ( _I o. A ) = A ) $= fcoi2_0 wrel cid ccnv fcoi2_0 ccnv ccnv ccom fcoi2_0 ccnv ccnv cid fcoi2_0 ccom fcoi2_0 fcoi2_0 ccnv cid ccom ccnv cid ccnv fcoi2_0 ccnv ccnv ccom fcoi2_0 ccnv ccnv fcoi2_0 ccnv cid cnvco fcoi2_0 ccnv cid ccom fcoi2_0 ccnv fcoi2_0 ccnv wrel fcoi2_0 ccnv cid ccom fcoi2_0 ccnv wceq fcoi2_0 relcnv fcoi2_0 ccnv coi1 ax-mp cnveqi eqtr3i fcoi2_0 wrel fcoi2_0 ccnv ccnv fcoi2_0 wceq cid ccnv fcoi2_0 ccnv ccnv ccom cid fcoi2_0 ccom wceq fcoi2_0 dfrel2 fcoi2_0 ccnv ccnv fcoi2_0 wceq cid ccnv cid wceq cid ccnv fcoi2_0 ccnv ccnv ccom cid fcoi2_0 ccom wceq cnvi fcoi2_0 ccnv ccnv fcoi2_0 wceq cid ccnv cid wceq cid ccnv fcoi2_0 ccnv ccnv ccom cid ccnv fcoi2_0 ccom cid fcoi2_0 ccom fcoi2_0 ccnv ccnv fcoi2_0 cid ccnv coeq2 cid ccnv cid fcoi2_0 coeq1 sylan9eq mpan2 sylbi fcoi2_0 wrel fcoi2_0 ccnv ccnv fcoi2_0 wceq fcoi2_0 dfrel2 biimpi 3eqtr3a $.
 $}
 $( Composition with a restricted identity relation.  (Contributed by FL,
      19-Jun-2011.)  (Revised by Stefan O'Rear, 7-Mar-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	fcoires1_0 $f class A $.
 	fcoires1_1 $f class B $.
 	coires1 $p |- ( A o. ( _I |` B ) ) = ( A |` B ) $= fcoires1_0 ccnv ccnv fcoires1_1 cres fcoires1_0 cid fcoires1_1 cres ccom fcoires1_0 fcoires1_1 cres fcoires1_0 cid ccom fcoires1_1 cres fcoires1_0 ccnv ccnv fcoires1_1 cres fcoires1_0 cid fcoires1_1 cres ccom fcoires1_0 cid ccom fcoires1_0 ccnv ccnv fcoires1_1 fcoires1_0 ccnv ccnv cid ccom fcoires1_0 cid ccom fcoires1_0 ccnv ccnv fcoires1_0 cid cocnvcnv1 fcoires1_0 ccnv ccnv wrel fcoires1_0 ccnv ccnv cid ccom fcoires1_0 ccnv ccnv wceq fcoires1_0 ccnv relcnv fcoires1_0 ccnv ccnv coi1 ax-mp eqtr3i reseq1i fcoires1_0 cid fcoires1_1 resco eqtr3i fcoires1_0 fcoires1_1 rescnvcnv eqtr3i $.
@@ -5362,6 +7217,13 @@ $( Associative law for class composition.  Theorem 27 of [Suppes] p. 64.
        any classes whatsoever, not just functions or even relations.
        (Contributed by NM, 27-Jan-1997.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y z w A $.
 	$d x y z w B $.
 	$d x y z w C $.
@@ -5377,6 +7239,7 @@ $}
 $( A relation is transitive iff its converse is transitive.  (Contributed by
      FL, 19-Sep-2011.) $)
 ${
+	$v R $.
 	frelcnvtr_0 $f class R $.
 	relcnvtr $p |- ( Rel R -> ( ( R o. R ) C_ R <-> ( `' R o. `' R ) C_ `' R ) ) $= frelcnvtr_0 wrel frelcnvtr_0 frelcnvtr_0 ccom frelcnvtr_0 wss frelcnvtr_0 ccnv frelcnvtr_0 ccnv ccom frelcnvtr_0 ccnv wss frelcnvtr_0 frelcnvtr_0 ccom frelcnvtr_0 wss frelcnvtr_0 ccnv frelcnvtr_0 ccnv ccom frelcnvtr_0 frelcnvtr_0 ccom ccnv frelcnvtr_0 ccnv frelcnvtr_0 frelcnvtr_0 cnvco frelcnvtr_0 frelcnvtr_0 ccom frelcnvtr_0 cnvss syl5eqssr frelcnvtr_0 ccnv frelcnvtr_0 ccnv ccom frelcnvtr_0 ccnv wss frelcnvtr_0 wrel frelcnvtr_0 frelcnvtr_0 ccom frelcnvtr_0 wss frelcnvtr_0 ccnv frelcnvtr_0 ccnv ccom ccnv frelcnvtr_0 ccnv ccnv frelcnvtr_0 ccnv ccnv ccom wceq frelcnvtr_0 ccnv frelcnvtr_0 ccnv ccom frelcnvtr_0 ccnv wss frelcnvtr_0 ccnv frelcnvtr_0 ccnv ccom ccnv frelcnvtr_0 ccnv ccnv wss frelcnvtr_0 wrel frelcnvtr_0 frelcnvtr_0 ccom frelcnvtr_0 wss wi frelcnvtr_0 ccnv frelcnvtr_0 ccnv cnvco frelcnvtr_0 ccnv frelcnvtr_0 ccnv ccom frelcnvtr_0 ccnv cnvss frelcnvtr_0 ccnv frelcnvtr_0 ccnv ccom ccnv frelcnvtr_0 ccnv ccnv frelcnvtr_0 ccnv ccnv ccom wceq frelcnvtr_0 ccnv frelcnvtr_0 ccnv ccom ccnv frelcnvtr_0 ccnv ccnv wss frelcnvtr_0 ccnv ccnv frelcnvtr_0 ccnv ccnv ccom frelcnvtr_0 ccnv ccnv wss frelcnvtr_0 wrel frelcnvtr_0 frelcnvtr_0 ccom frelcnvtr_0 wss wi frelcnvtr_0 ccnv frelcnvtr_0 ccnv ccom ccnv frelcnvtr_0 ccnv ccnv frelcnvtr_0 ccnv ccnv ccom frelcnvtr_0 ccnv ccnv sseq1 frelcnvtr_0 wrel frelcnvtr_0 ccnv ccnv frelcnvtr_0 ccnv ccnv ccom frelcnvtr_0 ccnv ccnv wss frelcnvtr_0 frelcnvtr_0 ccom frelcnvtr_0 wss frelcnvtr_0 wrel frelcnvtr_0 ccnv ccnv frelcnvtr_0 wceq frelcnvtr_0 ccnv ccnv frelcnvtr_0 ccnv ccnv ccom frelcnvtr_0 ccnv ccnv wss frelcnvtr_0 frelcnvtr_0 ccom frelcnvtr_0 wss wi frelcnvtr_0 dfrel2 frelcnvtr_0 ccnv ccnv frelcnvtr_0 wceq frelcnvtr_0 ccnv ccnv frelcnvtr_0 ccnv ccnv ccom frelcnvtr_0 ccnv ccnv wss frelcnvtr_0 frelcnvtr_0 ccom frelcnvtr_0 wss frelcnvtr_0 ccnv ccnv frelcnvtr_0 wceq frelcnvtr_0 ccnv ccnv frelcnvtr_0 ccnv ccnv ccom frelcnvtr_0 frelcnvtr_0 ccom frelcnvtr_0 ccnv ccnv frelcnvtr_0 frelcnvtr_0 ccnv ccnv frelcnvtr_0 wceq frelcnvtr_0 ccnv ccnv frelcnvtr_0 ccnv ccnv ccom frelcnvtr_0 frelcnvtr_0 ccnv ccnv ccom frelcnvtr_0 frelcnvtr_0 ccom frelcnvtr_0 ccnv ccnv frelcnvtr_0 frelcnvtr_0 ccnv ccnv coeq1 frelcnvtr_0 ccnv ccnv frelcnvtr_0 frelcnvtr_0 coeq2 eqtrd frelcnvtr_0 ccnv ccnv frelcnvtr_0 wceq id sseq12d biimpd sylbi com12 syl6bi mpsyl com12 impbid2 $.
 $}
@@ -5384,6 +7247,9 @@ $( A relation is included in the cross product of its domain and range.
        Exercise 4.12(t) of [Mendelson] p. 235.  (Contributed by NM,
        3-Aug-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	irelssdmrn_0 $f set x $.
 	irelssdmrn_1 $f set y $.
@@ -5393,12 +7259,15 @@ $}
 $( The converse is a subset of the cartesian product of range and domain.
      (Contributed by Mario Carneiro, 2-Jan-2017.) $)
 ${
+	$v A $.
 	fcnvssrndm_0 $f class A $.
 	cnvssrndm $p |- `' A C_ ( ran A X. dom A ) $= fcnvssrndm_0 ccnv fcnvssrndm_0 ccnv cdm fcnvssrndm_0 ccnv crn cxp fcnvssrndm_0 crn fcnvssrndm_0 cdm cxp fcnvssrndm_0 ccnv wrel fcnvssrndm_0 ccnv fcnvssrndm_0 ccnv cdm fcnvssrndm_0 ccnv crn cxp wss fcnvssrndm_0 relcnv fcnvssrndm_0 ccnv relssdmrn ax-mp fcnvssrndm_0 crn fcnvssrndm_0 ccnv cdm fcnvssrndm_0 cdm fcnvssrndm_0 ccnv crn fcnvssrndm_0 df-rn fcnvssrndm_0 dfdm4 xpeq12i sseqtr4i $.
 $}
 $( Composition as a subset of the cross product of factors.  (Contributed by
      Mario Carneiro, 12-Jan-2017.) $)
 ${
+	$v A $.
+	$v B $.
 	fcossxp_0 $f class A $.
 	fcossxp_1 $f class B $.
 	cossxp $p |- ( A o. B ) C_ ( dom B X. ran A ) $= fcossxp_0 fcossxp_1 ccom fcossxp_0 fcossxp_1 ccom cdm fcossxp_0 fcossxp_1 ccom crn cxp fcossxp_1 cdm fcossxp_0 crn cxp fcossxp_0 fcossxp_1 ccom wrel fcossxp_0 fcossxp_1 ccom fcossxp_0 fcossxp_1 ccom cdm fcossxp_0 fcossxp_1 ccom crn cxp wss fcossxp_0 fcossxp_1 relco fcossxp_0 fcossxp_1 ccom relssdmrn ax-mp fcossxp_0 fcossxp_1 ccom cdm fcossxp_1 cdm wss fcossxp_0 fcossxp_1 ccom crn fcossxp_0 crn wss fcossxp_0 fcossxp_1 ccom cdm fcossxp_0 fcossxp_1 ccom crn cxp fcossxp_1 cdm fcossxp_0 crn cxp wss fcossxp_0 fcossxp_1 dmcoss fcossxp_0 fcossxp_1 rncoss fcossxp_0 fcossxp_1 ccom cdm fcossxp_1 cdm fcossxp_0 fcossxp_1 ccom crn fcossxp_0 crn xpss12 mp2an sstri $.
@@ -5406,12 +7275,17 @@ $}
 $( Two ways to describe the structure of a two-place operation.  (Contributed
      by NM, 17-Dec-2008.) $)
 ${
+	$v A $.
 	frelrelss_0 $f class A $.
 	relrelss $p |- ( ( Rel A /\ Rel dom A ) <-> A C_ ( ( _V X. _V ) X. _V ) ) $= frelrelss_0 wrel frelrelss_0 cdm wrel wa frelrelss_0 wrel frelrelss_0 cdm cvv cvv cxp wss wa frelrelss_0 cvv cvv cxp cvv cxp wss frelrelss_0 cdm wrel frelrelss_0 cdm cvv cvv cxp wss frelrelss_0 wrel frelrelss_0 cdm df-rel anbi2i frelrelss_0 wrel frelrelss_0 cdm cvv cvv cxp wss wa frelrelss_0 cvv cvv cxp cvv cxp wss frelrelss_0 wrel frelrelss_0 cdm cvv cvv cxp wss frelrelss_0 frelrelss_0 cdm frelrelss_0 crn cxp cvv cvv cxp cvv cxp frelrelss_0 relssdmrn frelrelss_0 cdm cvv cvv cxp wss frelrelss_0 crn cvv wss frelrelss_0 cdm frelrelss_0 crn cxp cvv cvv cxp cvv cxp wss frelrelss_0 crn ssv frelrelss_0 cdm cvv cvv cxp frelrelss_0 crn cvv xpss12 mpan2 sylan9ss frelrelss_0 cvv cvv cxp cvv cxp wss frelrelss_0 wrel frelrelss_0 cdm cvv cvv cxp wss frelrelss_0 cvv cvv cxp cvv cxp wss frelrelss_0 cvv cvv cxp wss frelrelss_0 wrel frelrelss_0 cvv cvv cxp cvv cxp wss cvv cvv cxp cvv cxp cvv cvv cxp wss frelrelss_0 cvv cvv cxp wss cvv cvv cxp cvv xpss frelrelss_0 cvv cvv cxp cvv cxp cvv cvv cxp sstr mpan2 frelrelss_0 df-rel sylibr frelrelss_0 cvv cvv cxp cvv cxp wss frelrelss_0 cdm cvv cvv cxp cvv cxp cdm cvv cvv cxp frelrelss_0 cvv cvv cxp cvv cxp dmss cvv c0 wne cvv cvv cxp cvv cxp cdm cvv cvv cxp wceq vn0 cvv cvv cxp cvv dmxp ax-mp syl6sseq jca impbii bitri $.
 $}
 $( The membership relation for a relation is inherited by class union.
        (Contributed by NM, 17-Sep-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v R $.
 	$d x y A $.
 	$d x y R $.
 	iunielrel_0 $f set x $.
@@ -5423,48 +7297,57 @@ $}
 $( The double union of a relation is its field.  (Contributed by NM,
      17-Sep-2006.) $)
 ${
+	$v R $.
 	frelfld_0 $f class R $.
 	relfld $p |- ( Rel R -> U. U. R = ( dom R u. ran R ) ) $= frelfld_0 wrel frelfld_0 cuni cuni frelfld_0 cdm frelfld_0 crn cun frelfld_0 wrel frelfld_0 cuni cuni frelfld_0 cdm frelfld_0 crn cxp cuni cuni frelfld_0 cdm frelfld_0 crn cun frelfld_0 wrel frelfld_0 frelfld_0 cdm frelfld_0 crn cxp wss frelfld_0 cuni frelfld_0 cdm frelfld_0 crn cxp cuni wss frelfld_0 cuni cuni frelfld_0 cdm frelfld_0 crn cxp cuni cuni wss frelfld_0 relssdmrn frelfld_0 frelfld_0 cdm frelfld_0 crn cxp uniss frelfld_0 cuni frelfld_0 cdm frelfld_0 crn cxp cuni uniss 3syl frelfld_0 cdm frelfld_0 crn unixpss syl6ss frelfld_0 cdm frelfld_0 crn cun frelfld_0 cuni cuni wss frelfld_0 wrel frelfld_0 dmrnssfld a1i eqssd $.
 $}
 $( Restriction of a relation to its field.  (Contributed by FL,
      15-Apr-2012.) $)
 ${
+	$v R $.
 	frelresfld_0 $f class R $.
 	relresfld $p |- ( Rel R -> ( R |` U. U. R ) = R ) $= frelresfld_0 wrel frelresfld_0 frelresfld_0 cuni cuni cres frelresfld_0 wceq frelresfld_0 wrel frelresfld_0 frelresfld_0 cuni cuni cres frelresfld_0 frelresfld_0 cdm frelresfld_0 crn cun cres wceq frelresfld_0 frelresfld_0 cdm frelresfld_0 crn cun cres frelresfld_0 frelresfld_0 cdm cres frelresfld_0 frelresfld_0 crn cres cun wceq frelresfld_0 wrel frelresfld_0 frelresfld_0 cuni cuni cres frelresfld_0 wceq wi frelresfld_0 wrel frelresfld_0 cuni cuni frelresfld_0 cdm frelresfld_0 crn cun frelresfld_0 frelresfld_0 relfld reseq2d frelresfld_0 frelresfld_0 cdm frelresfld_0 crn resundi frelresfld_0 frelresfld_0 cuni cuni cres frelresfld_0 frelresfld_0 cdm frelresfld_0 crn cun cres wceq frelresfld_0 frelresfld_0 cdm frelresfld_0 crn cun cres frelresfld_0 frelresfld_0 cdm cres frelresfld_0 frelresfld_0 crn cres cun wceq wa frelresfld_0 frelresfld_0 cuni cuni cres frelresfld_0 frelresfld_0 cdm cres frelresfld_0 frelresfld_0 crn cres cun wceq frelresfld_0 wrel frelresfld_0 frelresfld_0 cuni cuni cres frelresfld_0 wceq frelresfld_0 frelresfld_0 cuni cuni cres frelresfld_0 frelresfld_0 cdm frelresfld_0 crn cun cres frelresfld_0 frelresfld_0 cdm cres frelresfld_0 frelresfld_0 crn cres cun eqtr frelresfld_0 frelresfld_0 crn cres frelresfld_0 wss frelresfld_0 wrel frelresfld_0 frelresfld_0 cdm cres frelresfld_0 wceq frelresfld_0 frelresfld_0 cuni cuni cres frelresfld_0 frelresfld_0 cdm cres frelresfld_0 frelresfld_0 crn cres cun wceq frelresfld_0 frelresfld_0 cuni cuni cres frelresfld_0 wceq wi frelresfld_0 frelresfld_0 crn resss frelresfld_0 resdm frelresfld_0 frelresfld_0 crn cres frelresfld_0 wss frelresfld_0 frelresfld_0 frelresfld_0 crn cres cun frelresfld_0 wceq frelresfld_0 frelresfld_0 cdm cres frelresfld_0 wceq frelresfld_0 frelresfld_0 cuni cuni cres frelresfld_0 frelresfld_0 cdm cres frelresfld_0 frelresfld_0 crn cres cun wceq frelresfld_0 frelresfld_0 cuni cuni cres frelresfld_0 wceq wi wi frelresfld_0 frelresfld_0 crn cres frelresfld_0 ssequn2 frelresfld_0 frelresfld_0 cdm cres frelresfld_0 wceq frelresfld_0 frelresfld_0 cuni cuni cres frelresfld_0 frelresfld_0 cdm cres frelresfld_0 frelresfld_0 crn cres cun wceq frelresfld_0 frelresfld_0 frelresfld_0 crn cres cun frelresfld_0 wceq frelresfld_0 frelresfld_0 cuni cuni cres frelresfld_0 wceq frelresfld_0 frelresfld_0 cdm cres frelresfld_0 wceq frelresfld_0 frelresfld_0 cuni cuni cres frelresfld_0 frelresfld_0 cdm cres frelresfld_0 frelresfld_0 crn cres cun wceq frelresfld_0 frelresfld_0 cuni cuni cres frelresfld_0 frelresfld_0 frelresfld_0 crn cres cun wceq frelresfld_0 frelresfld_0 frelresfld_0 crn cres cun frelresfld_0 wceq frelresfld_0 frelresfld_0 cuni cuni cres frelresfld_0 wceq wi frelresfld_0 frelresfld_0 cdm cres frelresfld_0 wceq frelresfld_0 frelresfld_0 cdm cres frelresfld_0 frelresfld_0 crn cres cun frelresfld_0 frelresfld_0 frelresfld_0 crn cres cun frelresfld_0 frelresfld_0 cuni cuni cres frelresfld_0 frelresfld_0 cdm cres frelresfld_0 frelresfld_0 frelresfld_0 crn cres uneq1 eqeq2d frelresfld_0 frelresfld_0 cuni cuni cres frelresfld_0 frelresfld_0 frelresfld_0 crn cres cun wceq frelresfld_0 frelresfld_0 frelresfld_0 crn cres cun frelresfld_0 wceq frelresfld_0 frelresfld_0 cuni cuni cres frelresfld_0 wceq frelresfld_0 frelresfld_0 cuni cuni cres frelresfld_0 frelresfld_0 frelresfld_0 crn cres cun frelresfld_0 eqtr ex syl6bi com3r sylbi mpsyl syl5com sylancl pm2.43i $.
 $}
 $( Composition with the identity relation restricted to a relation's field.
      (Contributed by FL, 2-May-2011.) $)
 ${
+	$v R $.
 	frelcoi2_0 $f class R $.
 	relcoi2 $p |- ( Rel R -> ( ( _I |` U. U. R ) o. R ) = R ) $= frelcoi2_0 wrel cid frelcoi2_0 cuni cuni cres frelcoi2_0 ccom cid frelcoi2_0 ccom frelcoi2_0 frelcoi2_0 crn frelcoi2_0 cuni cuni wss cid frelcoi2_0 cuni cuni cres frelcoi2_0 ccom cid frelcoi2_0 ccom wceq frelcoi2_0 wrel frelcoi2_0 cdm frelcoi2_0 crn cun frelcoi2_0 cuni cuni wss frelcoi2_0 crn frelcoi2_0 cuni cuni wss frelcoi2_0 dmrnssfld frelcoi2_0 cdm frelcoi2_0 crn cun frelcoi2_0 cuni cuni wss frelcoi2_0 cdm frelcoi2_0 cuni cuni wss frelcoi2_0 crn frelcoi2_0 cuni cuni wss wa frelcoi2_0 crn frelcoi2_0 cuni cuni wss frelcoi2_0 cdm frelcoi2_0 crn frelcoi2_0 cuni cuni unss frelcoi2_0 cdm frelcoi2_0 cuni cuni wss frelcoi2_0 crn frelcoi2_0 cuni cuni wss simpr sylbir ax-mp cid frelcoi2_0 frelcoi2_0 cuni cuni cores mp1i frelcoi2_0 coi2 eqtrd $.
 $}
 $( Composition with the identity relation restricted to a relation's field.
      (Contributed by FL, 8-May-2011.) $)
 ${
+	$v R $.
 	frelcoi1_0 $f class R $.
 	relcoi1 $p |- ( Rel R -> ( R o. ( _I |` U. U. R ) ) = R ) $= frelcoi1_0 wrel frelcoi1_0 cid frelcoi1_0 cuni cuni cres ccom frelcoi1_0 cid ccom frelcoi1_0 frelcoi1_0 cuni cuni frelcoi1_0 cdm frelcoi1_0 crn cun wceq frelcoi1_0 wrel frelcoi1_0 cid frelcoi1_0 cuni cuni cres ccom frelcoi1_0 cid ccom wceq frelcoi1_0 relfld frelcoi1_0 wrel frelcoi1_0 cid frelcoi1_0 cuni cuni cres ccom frelcoi1_0 cid ccom wceq frelcoi1_0 cuni cuni frelcoi1_0 cdm frelcoi1_0 crn cun wceq frelcoi1_0 cid frelcoi1_0 cdm frelcoi1_0 crn cun cres ccom frelcoi1_0 cid ccom wceq cid frelcoi1_0 cdm frelcoi1_0 crn cun cres cid frelcoi1_0 cdm cres cid frelcoi1_0 crn cres cun wceq frelcoi1_0 cid frelcoi1_0 cdm frelcoi1_0 crn cun cres ccom frelcoi1_0 cid frelcoi1_0 cdm cres cid frelcoi1_0 crn cres cun ccom wceq frelcoi1_0 wrel frelcoi1_0 cid frelcoi1_0 cdm frelcoi1_0 crn cun cres ccom frelcoi1_0 cid ccom wceq wi cid frelcoi1_0 cdm frelcoi1_0 crn resundi cid frelcoi1_0 cdm frelcoi1_0 crn cun cres cid frelcoi1_0 cdm cres cid frelcoi1_0 crn cres cun frelcoi1_0 coeq2 frelcoi1_0 wrel frelcoi1_0 cid frelcoi1_0 cdm frelcoi1_0 crn cun cres ccom frelcoi1_0 cid ccom wceq frelcoi1_0 cid frelcoi1_0 cdm frelcoi1_0 crn cun cres ccom frelcoi1_0 cid frelcoi1_0 cdm cres cid frelcoi1_0 crn cres cun ccom wceq frelcoi1_0 cid frelcoi1_0 cdm cres cid frelcoi1_0 crn cres cun ccom frelcoi1_0 cid ccom wceq frelcoi1_0 wrel frelcoi1_0 cid frelcoi1_0 cdm cres cid frelcoi1_0 crn cres cun ccom frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom frelcoi1_0 cid frelcoi1_0 cdm cres cid frelcoi1_0 crn cres coundi frelcoi1_0 wrel frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 cid frelcoi1_0 cdm cres ccom wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq frelcoi1_0 cid frelcoi1_0 cdm resco frelcoi1_0 cid ccom frelcoi1_0 wceq frelcoi1_0 wrel frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 cid frelcoi1_0 cdm cres ccom wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq wi frelcoi1_0 coi1 frelcoi1_0 cid ccom frelcoi1_0 wceq frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 frelcoi1_0 cdm cres wceq frelcoi1_0 wrel frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 cid frelcoi1_0 cdm cres ccom wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq wi frelcoi1_0 cid ccom frelcoi1_0 frelcoi1_0 cdm reseq1 frelcoi1_0 frelcoi1_0 cdm cres frelcoi1_0 wceq frelcoi1_0 wrel frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 frelcoi1_0 cdm cres wceq frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 cid frelcoi1_0 cdm cres ccom wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq wi wi frelcoi1_0 resdm frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 frelcoi1_0 cdm cres wceq frelcoi1_0 frelcoi1_0 cdm cres frelcoi1_0 wceq frelcoi1_0 wrel frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 cid frelcoi1_0 cdm cres ccom wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq wi frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 frelcoi1_0 cdm cres wceq frelcoi1_0 frelcoi1_0 cdm cres frelcoi1_0 wceq frelcoi1_0 wrel frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 cid frelcoi1_0 cdm cres ccom wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq wi wi frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 frelcoi1_0 cdm cres wceq frelcoi1_0 frelcoi1_0 cdm cres frelcoi1_0 wceq wa frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 wceq frelcoi1_0 wrel frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 cid frelcoi1_0 cdm cres ccom wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq wi wi frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 frelcoi1_0 cdm cres frelcoi1_0 eqtr frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 cid frelcoi1_0 cdm cres ccom wceq frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 wceq frelcoi1_0 wrel frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 wceq frelcoi1_0 wrel frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq wi wi frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid ccom frelcoi1_0 cdm cres wceq frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 wceq frelcoi1_0 wrel frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq wi frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid ccom frelcoi1_0 cdm cres wceq frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 wceq wa frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 wceq frelcoi1_0 wrel frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq wi frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid ccom frelcoi1_0 cdm cres frelcoi1_0 eqtr frelcoi1_0 cid ccom frelcoi1_0 crn cres frelcoi1_0 cid frelcoi1_0 crn cres ccom wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 frelcoi1_0 cid frelcoi1_0 crn cres ccom cun wceq frelcoi1_0 wrel frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq wi frelcoi1_0 cid frelcoi1_0 crn resco frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 frelcoi1_0 cid frelcoi1_0 crn cres ccom uneq1 frelcoi1_0 wrel frelcoi1_0 cid ccom frelcoi1_0 crn cres frelcoi1_0 cid frelcoi1_0 crn cres ccom wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 frelcoi1_0 cid frelcoi1_0 crn cres ccom cun wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq frelcoi1_0 cid ccom frelcoi1_0 wceq frelcoi1_0 wrel frelcoi1_0 cid ccom frelcoi1_0 crn cres frelcoi1_0 cid frelcoi1_0 crn cres ccom wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 frelcoi1_0 cid frelcoi1_0 crn cres ccom cun wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq wi wi frelcoi1_0 coi1 frelcoi1_0 cid ccom frelcoi1_0 wceq frelcoi1_0 cid ccom frelcoi1_0 crn cres frelcoi1_0 frelcoi1_0 crn cres wceq frelcoi1_0 wrel frelcoi1_0 cid ccom frelcoi1_0 crn cres frelcoi1_0 cid frelcoi1_0 crn cres ccom wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 frelcoi1_0 cid frelcoi1_0 crn cres ccom cun wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq wi wi wi frelcoi1_0 cid ccom frelcoi1_0 frelcoi1_0 crn reseq1 frelcoi1_0 cid ccom frelcoi1_0 crn cres frelcoi1_0 cid frelcoi1_0 crn cres ccom wceq frelcoi1_0 cid ccom frelcoi1_0 crn cres frelcoi1_0 frelcoi1_0 crn cres wceq frelcoi1_0 wrel frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 frelcoi1_0 cid frelcoi1_0 crn cres ccom cun wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq wi frelcoi1_0 cid ccom frelcoi1_0 crn cres frelcoi1_0 frelcoi1_0 crn cres wceq frelcoi1_0 wrel frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 frelcoi1_0 cid frelcoi1_0 crn cres ccom cun wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq wi wi wi frelcoi1_0 cid frelcoi1_0 crn cres ccom frelcoi1_0 cid ccom frelcoi1_0 crn cres frelcoi1_0 cid frelcoi1_0 crn cres ccom frelcoi1_0 cid ccom frelcoi1_0 crn cres wceq frelcoi1_0 cid ccom frelcoi1_0 crn cres frelcoi1_0 frelcoi1_0 crn cres wceq frelcoi1_0 wrel frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 frelcoi1_0 cid frelcoi1_0 crn cres ccom cun wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq wi wi frelcoi1_0 cid frelcoi1_0 crn cres ccom frelcoi1_0 cid ccom frelcoi1_0 crn cres wceq frelcoi1_0 cid ccom frelcoi1_0 crn cres frelcoi1_0 frelcoi1_0 crn cres wceq wa frelcoi1_0 frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 frelcoi1_0 frelcoi1_0 crn cres cun wceq frelcoi1_0 wrel frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 frelcoi1_0 cid frelcoi1_0 crn cres ccom cun wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq wi wi frelcoi1_0 cid frelcoi1_0 crn cres ccom frelcoi1_0 cid ccom frelcoi1_0 crn cres wceq frelcoi1_0 cid ccom frelcoi1_0 crn cres frelcoi1_0 frelcoi1_0 crn cres wceq wa frelcoi1_0 cid frelcoi1_0 crn cres ccom frelcoi1_0 frelcoi1_0 crn cres frelcoi1_0 frelcoi1_0 cid frelcoi1_0 crn cres ccom frelcoi1_0 cid ccom frelcoi1_0 crn cres frelcoi1_0 frelcoi1_0 crn cres eqtr uneq2d frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 frelcoi1_0 cid frelcoi1_0 crn cres ccom cun wceq frelcoi1_0 frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 frelcoi1_0 frelcoi1_0 crn cres cun wceq frelcoi1_0 wrel frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 frelcoi1_0 cid frelcoi1_0 crn cres ccom cun wceq frelcoi1_0 frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 frelcoi1_0 frelcoi1_0 crn cres cun wceq frelcoi1_0 wrel frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq wi frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 frelcoi1_0 cid frelcoi1_0 crn cres ccom cun wceq frelcoi1_0 frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 frelcoi1_0 frelcoi1_0 crn cres cun wceq wa frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 frelcoi1_0 frelcoi1_0 crn cres cun wceq frelcoi1_0 wrel frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq wi frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 frelcoi1_0 frelcoi1_0 crn cres cun eqtr frelcoi1_0 wrel frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 cid ccom wceq frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 frelcoi1_0 frelcoi1_0 crn cres cun wceq frelcoi1_0 frelcoi1_0 frelcoi1_0 crn cres cun frelcoi1_0 cid ccom wceq frelcoi1_0 wrel frelcoi1_0 cid ccom frelcoi1_0 frelcoi1_0 frelcoi1_0 frelcoi1_0 crn cres cun frelcoi1_0 coi1 frelcoi1_0 frelcoi1_0 crn cres frelcoi1_0 wss frelcoi1_0 frelcoi1_0 frelcoi1_0 crn cres cun frelcoi1_0 wceq frelcoi1_0 frelcoi1_0 crn resss frelcoi1_0 frelcoi1_0 crn cres frelcoi1_0 ssequn2 mpbi syl6reqr frelcoi1_0 cid frelcoi1_0 cdm cres ccom frelcoi1_0 cid frelcoi1_0 crn cres ccom cun frelcoi1_0 frelcoi1_0 frelcoi1_0 crn cres cun frelcoi1_0 cid ccom eqeq1 syl5ibr syl ex com3l syl ex eqcoms com3l syl mpcom com3l mpsyl syl ex eqcoms com3l syl ex com3l mpcom syl5com mpcom mpi syl5eq frelcoi1_0 cid frelcoi1_0 cdm frelcoi1_0 crn cun cres ccom frelcoi1_0 cid frelcoi1_0 cdm cres cid frelcoi1_0 crn cres cun ccom frelcoi1_0 cid ccom eqeq1 syl5ibr mp2b frelcoi1_0 cuni cuni frelcoi1_0 cdm frelcoi1_0 crn cun wceq frelcoi1_0 cid frelcoi1_0 cuni cuni cres ccom frelcoi1_0 cid frelcoi1_0 cdm frelcoi1_0 crn cun cres ccom frelcoi1_0 cid ccom frelcoi1_0 cuni cuni frelcoi1_0 cdm frelcoi1_0 crn cun wceq cid frelcoi1_0 cuni cuni cres cid frelcoi1_0 cdm frelcoi1_0 crn cun cres frelcoi1_0 frelcoi1_0 cuni cuni frelcoi1_0 cdm frelcoi1_0 crn cun cid reseq2 coeq2d eqeq1d syl5ibr mpcom frelcoi1_0 coi1 eqtrd $.
 $}
 $( The double union of the converse of a class is its field.  (Contributed by
      NM, 4-Jun-2008.) $)
 ${
+	$v A $.
 	funidmrn_0 $f class A $.
 	unidmrn $p |- U. U. `' A = ( dom A u. ran A ) $= funidmrn_0 ccnv cuni cuni funidmrn_0 ccnv crn funidmrn_0 ccnv cdm cun funidmrn_0 cdm funidmrn_0 crn cun funidmrn_0 ccnv cuni cuni funidmrn_0 ccnv cdm funidmrn_0 ccnv crn funidmrn_0 ccnv wrel funidmrn_0 ccnv cuni cuni funidmrn_0 ccnv cdm funidmrn_0 ccnv crn cun wceq funidmrn_0 relcnv funidmrn_0 ccnv relfld ax-mp equncomi funidmrn_0 cdm funidmrn_0 ccnv crn funidmrn_0 crn funidmrn_0 ccnv cdm funidmrn_0 dfdm4 funidmrn_0 df-rn uneq12i eqtr4i $.
 $}
 $( if ` R ` is a relation, its double union equals the double union of its
      converse.  (Contributed by FL, 5-Jan-2009.) $)
 ${
+	$v R $.
 	frelcnvfld_0 $f class R $.
 	relcnvfld $p |- ( Rel R -> U. U. R = U. U. `' R ) $= frelcnvfld_0 wrel frelcnvfld_0 cuni cuni frelcnvfld_0 cdm frelcnvfld_0 crn cun frelcnvfld_0 ccnv cuni cuni frelcnvfld_0 relfld frelcnvfld_0 unidmrn syl6eqr $.
 $}
 $( Alternate definition of domain ~ df-dm that doesn't require dummy
      variables.  (Contributed by NM, 2-Aug-2010.) $)
 ${
+	$v A $.
 	fdfdm2_0 $f class A $.
 	dfdm2 $p |- dom A = U. U. ( `' A o. A ) $= fdfdm2_0 ccnv fdfdm2_0 ccom cuni cuni fdfdm2_0 ccnv fdfdm2_0 ccom cdm fdfdm2_0 ccnv fdfdm2_0 ccom crn cun fdfdm2_0 cdm fdfdm2_0 cdm cun fdfdm2_0 cdm fdfdm2_0 ccnv fdfdm2_0 ccom ccnv cuni cuni fdfdm2_0 ccnv fdfdm2_0 ccom cuni cuni fdfdm2_0 ccnv fdfdm2_0 ccom cdm fdfdm2_0 ccnv fdfdm2_0 ccom crn cun fdfdm2_0 ccnv fdfdm2_0 ccom ccnv cuni fdfdm2_0 ccnv fdfdm2_0 ccom cuni fdfdm2_0 ccnv fdfdm2_0 ccom ccnv fdfdm2_0 ccnv fdfdm2_0 ccom fdfdm2_0 ccnv fdfdm2_0 ccom ccnv fdfdm2_0 ccnv fdfdm2_0 ccnv ccnv ccom fdfdm2_0 ccnv fdfdm2_0 ccom fdfdm2_0 ccnv fdfdm2_0 cnvco fdfdm2_0 ccnv fdfdm2_0 cocnvcnv2 eqtri unieqi unieqi fdfdm2_0 ccnv fdfdm2_0 ccom unidmrn eqtr3i fdfdm2_0 ccnv fdfdm2_0 ccom cdm fdfdm2_0 cdm fdfdm2_0 ccnv fdfdm2_0 ccom crn fdfdm2_0 cdm fdfdm2_0 ccnv cdm fdfdm2_0 crn wceq fdfdm2_0 ccnv fdfdm2_0 ccom cdm fdfdm2_0 cdm wceq fdfdm2_0 crn fdfdm2_0 ccnv cdm fdfdm2_0 df-rn eqcomi fdfdm2_0 ccnv fdfdm2_0 dmcoeq ax-mp fdfdm2_0 ccnv fdfdm2_0 ccom crn fdfdm2_0 ccnv crn fdfdm2_0 cdm fdfdm2_0 ccnv cdm fdfdm2_0 crn wceq fdfdm2_0 ccnv fdfdm2_0 ccom crn fdfdm2_0 ccnv crn wceq fdfdm2_0 crn fdfdm2_0 ccnv cdm fdfdm2_0 df-rn eqcomi fdfdm2_0 ccnv fdfdm2_0 rncoeq ax-mp fdfdm2_0 dfdm4 eqtr4i uneq12i fdfdm2_0 cdm unidm 3eqtrri $.
 $}
 $( The double class union of a non-empty cross product is the union of it
      members.  (Contributed by NM, 17-Sep-2006.) $)
 ${
+	$v A $.
+	$v B $.
 	funixp_0 $f class A $.
 	funixp_1 $f class B $.
 	unixp $p |- ( ( A X. B ) =/= (/) -> U. U. ( A X. B ) = ( A u. B ) ) $= funixp_0 funixp_1 cxp c0 wne funixp_0 funixp_1 cxp cuni cuni funixp_0 funixp_1 cxp cdm funixp_0 funixp_1 cxp crn cun funixp_0 funixp_1 cun funixp_0 funixp_1 cxp wrel funixp_0 funixp_1 cxp cuni cuni funixp_0 funixp_1 cxp cdm funixp_0 funixp_1 cxp crn cun wceq funixp_0 funixp_1 relxp funixp_0 funixp_1 cxp relfld ax-mp funixp_0 funixp_1 cxp c0 wne funixp_1 c0 wne funixp_0 c0 wne funixp_0 funixp_1 cxp cdm funixp_0 funixp_1 cxp crn cun funixp_0 funixp_1 cun wceq funixp_1 c0 funixp_0 funixp_1 cxp c0 funixp_1 c0 wceq funixp_0 funixp_1 cxp funixp_0 c0 cxp c0 funixp_1 c0 funixp_0 xpeq2 funixp_0 xp0 syl6eq necon3i funixp_0 c0 funixp_0 funixp_1 cxp c0 funixp_0 c0 wceq funixp_0 funixp_1 cxp c0 funixp_1 cxp c0 funixp_0 c0 funixp_1 xpeq1 funixp_1 xp0r syl6eq necon3i funixp_1 c0 wne funixp_0 funixp_1 cxp cdm funixp_0 wceq funixp_0 funixp_1 cxp crn funixp_1 wceq funixp_0 funixp_1 cxp cdm funixp_0 funixp_1 cxp crn cun funixp_0 funixp_1 cun wceq funixp_0 c0 wne funixp_0 funixp_1 dmxp funixp_0 funixp_1 rnxp funixp_0 funixp_1 cxp cdm funixp_0 funixp_0 funixp_1 cxp crn funixp_1 uneq12 syl2an syl2anc syl5eq $.
@@ -5472,6 +7355,11 @@ $}
 $( A cross product is empty iff its union is empty.  (Contributed by NM,
        20-Sep-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x y z B $.
 	iunixp0_0 $f set x $.
@@ -5483,12 +7371,15 @@ ${
 $}
 $( Field of a square cross product.  (Contributed by FL, 10-Oct-2009.) $)
 ${
+	$v A $.
 	funixpid_0 $f class A $.
 	unixpid $p |- U. U. ( A X. A ) = A $= funixpid_0 c0 wceq funixpid_0 funixpid_0 cxp cuni cuni funixpid_0 wceq funixpid_0 funixpid_0 cxp c0 wceq funixpid_0 c0 wceq funixpid_0 funixpid_0 cxp cuni cuni funixpid_0 wceq funixpid_0 c0 wceq funixpid_0 funixpid_0 cxp c0 funixpid_0 cxp c0 funixpid_0 c0 funixpid_0 xpeq1 funixpid_0 xp0r syl6eq funixpid_0 funixpid_0 cxp c0 wceq funixpid_0 funixpid_0 cxp cuni cuni c0 cuni cuni wceq c0 cuni cuni c0 wceq funixpid_0 c0 wceq funixpid_0 funixpid_0 cxp cuni cuni funixpid_0 wceq wi funixpid_0 funixpid_0 cxp c0 wceq funixpid_0 funixpid_0 cxp cuni c0 cuni funixpid_0 funixpid_0 cxp c0 unieq unieqd c0 cuni cuni c0 cuni c0 c0 cuni c0 uni0 unieqi uni0 eqtri funixpid_0 funixpid_0 cxp cuni cuni c0 cuni cuni wceq c0 cuni cuni c0 wceq wa funixpid_0 funixpid_0 cxp cuni cuni c0 wceq funixpid_0 c0 wceq funixpid_0 funixpid_0 cxp cuni cuni funixpid_0 wceq funixpid_0 funixpid_0 cxp cuni cuni c0 cuni cuni c0 eqtr funixpid_0 funixpid_0 cxp cuni cuni c0 wceq funixpid_0 funixpid_0 cxp cuni cuni funixpid_0 wceq wi c0 funixpid_0 funixpid_0 funixpid_0 cxp cuni cuni c0 wceq c0 funixpid_0 wceq funixpid_0 funixpid_0 cxp cuni cuni funixpid_0 wceq funixpid_0 funixpid_0 cxp cuni cuni c0 funixpid_0 eqtr expcom eqcoms syl5com sylancl mpcom funixpid_0 c0 wceq wn funixpid_0 c0 wne funixpid_0 c0 wne funixpid_0 funixpid_0 cxp cuni cuni funixpid_0 wceq funixpid_0 c0 df-ne funixpid_0 c0 df-ne funixpid_0 c0 wne funixpid_0 c0 wne wa funixpid_0 funixpid_0 cxp c0 wne funixpid_0 funixpid_0 cxp cuni cuni funixpid_0 wceq funixpid_0 funixpid_0 xpnz funixpid_0 funixpid_0 cxp c0 wne funixpid_0 funixpid_0 cxp cuni cuni funixpid_0 funixpid_0 cun funixpid_0 funixpid_0 funixpid_0 unixp funixpid_0 unidm syl6eq sylbi sylancbr pm2.61i $.
 $}
 $( The converse of a set is a set.  Corollary 6.8(1) of [TakeutiZaring]
      p. 26.  (Contributed by NM, 17-Mar-1998.) $)
 ${
+	$v A $.
+	$v V $.
 	fcnvexg_0 $f class A $.
 	fcnvexg_1 $f class V $.
 	cnvexg $p |- ( A e. V -> `' A e. _V ) $= fcnvexg_0 fcnvexg_1 wcel fcnvexg_0 ccnv fcnvexg_0 ccnv cdm fcnvexg_0 ccnv crn cxp wss fcnvexg_0 ccnv cdm fcnvexg_0 ccnv crn cxp cvv wcel fcnvexg_0 ccnv cvv wcel fcnvexg_0 ccnv wrel fcnvexg_0 ccnv fcnvexg_0 ccnv cdm fcnvexg_0 ccnv crn cxp wss fcnvexg_0 relcnv fcnvexg_0 ccnv relssdmrn ax-mp fcnvexg_0 fcnvexg_1 wcel fcnvexg_0 ccnv cdm cvv wcel fcnvexg_0 ccnv crn cvv wcel fcnvexg_0 ccnv cdm fcnvexg_0 ccnv crn cxp cvv wcel fcnvexg_0 fcnvexg_1 wcel fcnvexg_0 ccnv cdm fcnvexg_0 crn cvv fcnvexg_0 df-rn fcnvexg_0 fcnvexg_1 rnexg syl5eqelr fcnvexg_0 fcnvexg_1 wcel fcnvexg_0 ccnv crn fcnvexg_0 cdm cvv fcnvexg_0 dfdm4 fcnvexg_0 fcnvexg_1 dmexg syl5eqelr fcnvexg_0 ccnv cdm fcnvexg_0 ccnv crn cvv cvv xpexg syl2anc fcnvexg_0 ccnv fcnvexg_0 ccnv cdm fcnvexg_0 ccnv crn cxp cvv ssexg sylancr $.
@@ -5496,6 +7387,7 @@ $}
 $( The converse of a set is a set.  Corollary 6.8(1) of [TakeutiZaring]
        p. 26.  (Contributed by NM, 19-Dec-2003.) $)
 ${
+	$v A $.
 	fcnvex_0 $f class A $.
 	ecnvex_0 $e |- A e. _V $.
 	cnvex $p |- `' A e. _V $= fcnvex_0 cvv wcel fcnvex_0 ccnv cvv wcel ecnvex_0 fcnvex_0 cvv cnvexg ax-mp $.
@@ -5503,12 +7395,17 @@ $}
 $( A relation is a set iff its converse is a set.  (Contributed by FL,
      3-Mar-2007.) $)
 ${
+	$v R $.
 	frelcnvexb_0 $f class R $.
 	relcnvexb $p |- ( Rel R -> ( R e. _V <-> `' R e. _V ) ) $= frelcnvexb_0 wrel frelcnvexb_0 cvv wcel frelcnvexb_0 ccnv cvv wcel frelcnvexb_0 cvv cnvexg frelcnvexb_0 wrel frelcnvexb_0 ccnv ccnv frelcnvexb_0 wceq frelcnvexb_0 ccnv cvv wcel frelcnvexb_0 cvv wcel wi frelcnvexb_0 dfrel2 frelcnvexb_0 ccnv cvv wcel frelcnvexb_0 ccnv ccnv cvv wcel frelcnvexb_0 ccnv ccnv frelcnvexb_0 wceq frelcnvexb_0 cvv wcel frelcnvexb_0 ccnv cvv cnvexg frelcnvexb_0 ccnv ccnv frelcnvexb_0 cvv eleq1 syl5ib sylbi impbid2 $.
 $}
 $( Restriction of a class to a singleton.  (Contributed by Mario Carneiro,
        28-Dec-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	iressn_0 $f set x $.
@@ -5520,6 +7417,11 @@ $}
 $( The converse of an intersection is the intersection of the converse.
        (Contributed by FL, 15-Oct-2012.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v a $.
+	$v b $.
 	$d A a b x $.
 	$d B a b $.
 	icnviin_0 $f set a $.
@@ -5532,6 +7434,11 @@ $}
 $( The converse of a partial order relation is a partial order relation.
        (Contributed by NM, 15-Jun-2005.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v R $.
 	$d x y z A $.
 	$d x y z R $.
 	icnvpo_0 $f set x $.
@@ -5544,6 +7451,10 @@ $}
 $( The converse of a strict order relation is a strict order relation.
        (Contributed by NM, 15-Jun-2005.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v R $.
 	$d x y A $.
 	$d x y R $.
 	icnvso_0 $f set x $.
@@ -5555,6 +7466,10 @@ $}
 $( The composition of two sets is a set.  (Contributed by NM,
      19-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	fcoexg_0 $f class A $.
 	fcoexg_1 $f class B $.
 	fcoexg_2 $f class V $.
@@ -5564,6 +7479,8 @@ $}
 $( The composition of two sets is a set.  (Contributed by NM,
        15-Dec-2003.) $)
 ${
+	$v A $.
+	$v B $.
 	fcoex_0 $f class A $.
 	fcoex_1 $f class B $.
 	ecoex_0 $e |- A e. _V $.

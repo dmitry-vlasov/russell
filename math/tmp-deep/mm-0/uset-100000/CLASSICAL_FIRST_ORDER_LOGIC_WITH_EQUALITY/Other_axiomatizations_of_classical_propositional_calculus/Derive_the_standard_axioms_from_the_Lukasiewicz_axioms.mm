@@ -8,6 +8,9 @@ $( Used to rederive standard propositional axioms from Lukasiewicz'.
        (Contributed by NM, 23-Dec-2002.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fluklem1_0 $f wff ph $.
 	fluklem1_1 $f wff ps $.
 	fluklem1_2 $f wff ch $.
@@ -19,6 +22,10 @@ $( Used to rederive standard propositional axioms from Lukasiewicz'.
      (Contributed by NM, 22-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fluklem2_0 $f wff ph $.
 	fluklem2_1 $f wff ps $.
 	fluklem2_2 $f wff ch $.
@@ -29,6 +36,10 @@ $( Used to rederive standard propositional axioms from Lukasiewicz'.
      (Contributed by NM, 22-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fluklem3_0 $f wff ph $.
 	fluklem3_1 $f wff ps $.
 	fluklem3_2 $f wff ch $.
@@ -39,6 +50,8 @@ $( Used to rederive standard propositional axioms from Lukasiewicz'.
      (Contributed by NM, 22-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fluklem4_0 $f wff ph $.
 	fluklem4_1 $f wff ps $.
 	luklem4 $p |- ( ( ( ( -. ph -> ph ) -> ph ) -> ps ) -> ps ) $= fluklem4_0 wn fluklem4_0 wi fluklem4_0 wi fluklem4_1 wi fluklem4_1 wn fluklem4_1 wi fluklem4_1 fluklem4_1 wn fluklem4_0 wn fluklem4_0 wi fluklem4_0 wi wi fluklem4_0 wn fluklem4_0 wi fluklem4_0 wi fluklem4_1 wi fluklem4_1 wn fluklem4_1 wi wi fluklem4_0 wn fluklem4_0 wi fluklem4_0 wi wn fluklem4_0 wn fluklem4_0 wi fluklem4_0 wi wi fluklem4_0 wn fluklem4_0 wi fluklem4_0 wi wi fluklem4_1 wn fluklem4_0 wn fluklem4_0 wi fluklem4_0 wi wi fluklem4_0 wn fluklem4_0 wi fluklem4_0 wi luk-2 fluklem4_0 wn fluklem4_0 wi fluklem4_0 wi fluklem4_0 wn fluklem4_0 wi fluklem4_0 wi wn fluklem4_0 wn fluklem4_0 wi fluklem4_0 wi wi fluklem4_0 wn fluklem4_0 wi fluklem4_0 wi wi fluklem4_1 wn fluklem4_0 wn fluklem4_0 wi fluklem4_0 wi wi wi fluklem4_0 luk-2 fluklem4_0 wn fluklem4_0 wi fluklem4_0 wi fluklem4_0 wn fluklem4_0 wi fluklem4_0 wi fluklem4_0 wn fluklem4_0 wi fluklem4_0 wi fluklem4_1 wn luklem3 ax-mp ax-mp fluklem4_1 wn fluklem4_0 wn fluklem4_0 wi fluklem4_0 wi fluklem4_1 luk-1 ax-mp fluklem4_1 luk-2 luklem1 $.
@@ -47,6 +60,8 @@ $( Used to rederive standard propositional axioms from Lukasiewicz'.
      (Contributed by NM, 22-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fluklem5_0 $f wff ph $.
 	fluklem5_1 $f wff ps $.
 	luklem5 $p |- ( ph -> ( ps -> ph ) ) $= fluklem5_0 fluklem5_0 wn fluklem5_0 wi fluklem5_0 wi fluklem5_1 fluklem5_0 wi wi fluklem5_1 fluklem5_0 wi fluklem5_0 fluklem5_0 fluklem5_0 fluklem5_1 luklem3 fluklem5_0 fluklem5_1 fluklem5_0 wi luklem4 luklem1 $.
@@ -55,6 +70,8 @@ $( Used to rederive standard propositional axioms from Lukasiewicz'.
      (Contributed by NM, 22-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fluklem6_0 $f wff ph $.
 	fluklem6_1 $f wff ps $.
 	luklem6 $p |- ( ( ph -> ( ph -> ps ) ) -> ( ph -> ps ) ) $= fluklem6_0 fluklem6_0 fluklem6_1 wi wi fluklem6_0 fluklem6_1 wi fluklem6_1 wi fluklem6_0 fluklem6_1 wi wi fluklem6_0 fluklem6_1 wi fluklem6_0 fluklem6_0 fluklem6_1 wi fluklem6_1 luk-1 fluklem6_0 fluklem6_1 wi wn fluklem6_0 fluklem6_1 wi wi fluklem6_0 fluklem6_1 wi wi fluklem6_0 fluklem6_1 wi fluklem6_1 wi fluklem6_0 fluklem6_1 wi wi fluklem6_0 fluklem6_1 wi wi wi fluklem6_0 fluklem6_1 wi fluklem6_1 wi fluklem6_0 fluklem6_1 wi wi fluklem6_0 fluklem6_1 wi wi fluklem6_0 fluklem6_1 wi fluklem6_1 wi fluklem6_0 fluklem6_1 wi wi fluklem6_0 fluklem6_1 wi wn fluklem6_0 fluklem6_1 wi wi wi fluklem6_0 fluklem6_1 wi wn fluklem6_0 fluklem6_1 wi wi fluklem6_0 fluklem6_1 wi wi fluklem6_0 fluklem6_1 wi fluklem6_1 wi fluklem6_0 fluklem6_1 wi wi fluklem6_0 fluklem6_1 wi wi wi fluklem6_0 fluklem6_1 wi wn fluklem6_0 fluklem6_1 wi fluklem6_1 wi wi fluklem6_0 fluklem6_1 wi fluklem6_1 wi fluklem6_0 fluklem6_1 wi wi fluklem6_0 fluklem6_1 wi wn fluklem6_0 fluklem6_1 wi wi wi fluklem6_0 fluklem6_1 wi wn fluklem6_1 wn fluklem6_0 fluklem6_1 wi wn wi fluklem6_0 fluklem6_1 wi fluklem6_1 wi fluklem6_0 fluklem6_1 wi wn fluklem6_1 wn luklem5 fluklem6_1 wn fluklem6_0 fluklem6_1 wi wn wi fluklem6_1 wn fluklem6_1 wi fluklem6_1 wi fluklem6_0 fluklem6_1 wi fluklem6_1 wi wi fluklem6_0 fluklem6_1 wi fluklem6_1 wi fluklem6_1 wn fluklem6_0 fluklem6_1 wi fluklem6_1 fluklem6_1 luklem2 fluklem6_1 fluklem6_0 fluklem6_1 wi fluklem6_1 wi luklem4 luklem1 luklem1 fluklem6_0 fluklem6_1 wi wn fluklem6_0 fluklem6_1 wi fluklem6_1 wi fluklem6_0 fluklem6_1 wi luk-1 ax-mp fluklem6_0 fluklem6_1 wi fluklem6_1 wi fluklem6_0 fluklem6_1 wi wi fluklem6_0 fluklem6_1 wi wn fluklem6_0 fluklem6_1 wi wi fluklem6_0 fluklem6_1 wi luk-1 ax-mp fluklem6_0 fluklem6_1 wi fluklem6_0 fluklem6_1 wi fluklem6_1 wi fluklem6_0 fluklem6_1 wi wi fluklem6_0 fluklem6_1 wi wi luklem4 ax-mp luklem1 $.
@@ -63,6 +80,9 @@ $( Used to rederive standard propositional axioms from Lukasiewicz'.
      (Contributed by NM, 22-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fluklem7_0 $f wff ph $.
 	fluklem7_1 $f wff ps $.
 	fluklem7_2 $f wff ch $.
@@ -72,6 +92,9 @@ $( Used to rederive standard propositional axioms from Lukasiewicz'.
      (Contributed by NM, 22-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fluklem8_0 $f wff ph $.
 	fluklem8_1 $f wff ps $.
 	fluklem8_2 $f wff ch $.
@@ -81,6 +104,8 @@ $( Standard propositional axiom derived from Lukasiewicz axioms.
      (Contributed by NM, 22-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fax1_0 $f wff ph $.
 	fax1_1 $f wff ps $.
 	ax1 $p |- ( ph -> ( ps -> ph ) ) $= fax1_0 fax1_1 luklem5 $.
@@ -89,6 +114,9 @@ $( Standard propositional axiom derived from Lukasiewicz axioms.
      (Contributed by NM, 22-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fax2_0 $f wff ph $.
 	fax2_1 $f wff ps $.
 	fax2_2 $f wff ch $.
@@ -98,6 +126,8 @@ $( Standard propositional axiom derived from Lukasiewicz axioms.
      (Contributed by NM, 22-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fax3_0 $f wff ph $.
 	fax3_1 $f wff ps $.
 	ax3 $p |- ( ( -. ph -> -. ps ) -> ( ps -> ph ) ) $= fax3_0 wn fax3_1 wn wi fax3_0 wn fax3_0 wi fax3_0 wi fax3_1 fax3_0 wi wi fax3_1 fax3_0 wi fax3_0 wn fax3_1 fax3_0 fax3_0 luklem2 fax3_0 fax3_1 fax3_0 wi luklem4 luklem1 $.

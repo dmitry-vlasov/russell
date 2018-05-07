@@ -8,6 +8,8 @@ $c F/_  $.
 $( Underlined not-free symbol. $)
 $( Extend wff definition to include the not-free predicate for classes. $)
 ${
+	$v x $.
+	$v A $.
 	fwnfc_0 $f set x $.
 	fwnfc_1 $f class A $.
 	wnfc $a wff F/_ x A $.
@@ -15,6 +17,10 @@ $}
 $( Justification theorem for ~ df-nfc .  (Contributed by Mario Carneiro,
        13-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z $.
 	$d y z A $.
 	fnfcjust_0 $f set x $.
@@ -31,6 +37,9 @@ $( Define the not-free predicate for classes.  This is read " ` x ` is not
        ~ df-nf for wffs; see that definition for more information.
        (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d y A $.
 	fdf-nfc_0 $f set x $.
@@ -41,6 +50,9 @@ $}
 $( Deduce that a class ` A ` does not have ` x ` free in it.
          (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d y A $.
 	fnfci_0 $f set x $.
@@ -52,6 +64,9 @@ $}
 $( Deduce that a class ` A ` does not have ` x ` free in it.
          (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d y A $.
 	fnfcii_0 $f set x $.
@@ -63,6 +78,9 @@ $}
 $( Consequence of the not-free predicate.  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d y A $.
 	fnfcr_0 $f set x $.
@@ -73,6 +91,10 @@ $}
 $( Consequence of the not-free predicate.  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z $.
 	$d z A $.
 	infcrii_0 $f set z $.
@@ -86,6 +108,9 @@ $( Consequence of the not-free predicate.  (Note that unlike ~ nfcr , this
        does not require ` y ` and ` A ` to be disjoint.)  (Contributed by Mario
        Carneiro, 11-Aug-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	fnfcri_0 $f set x $.
 	fnfcri_1 $f set y $.
@@ -96,6 +121,10 @@ $}
 $( Deduce that a class ` A ` does not have ` x ` free in it.  (Contributed
        by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d y A $.
 	fnfcd_0 $f wff ph $.
@@ -109,6 +138,10 @@ $}
 $( Equality theorem for class not-free.  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -122,6 +155,9 @@ $}
 $( A utility lemma to transfer a bound-variable hypothesis builder into a
          definition.  (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	fnfcxfr_0 $f set x $.
 	fnfcxfr_1 $f class A $.
 	fnfcxfr_2 $f class B $.
@@ -132,6 +168,10 @@ $}
 $( A utility lemma to transfer a bound-variable hypothesis builder into a
          definition.  (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	fnfcxfrd_0 $f wff ph $.
 	fnfcxfrd_1 $f set x $.
 	fnfcxfrd_2 $f class A $.
@@ -143,6 +183,11 @@ $}
 $( An equality theorem for effectively not free.  (Contributed by Mario
        Carneiro, 14-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	$d A y $.
 	$d B y $.
@@ -159,6 +204,9 @@ $}
 $( If ` x ` is disjoint from ` A ` , then ` x ` is not free in ` A ` .
        (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	infcv_0 $f set y $.
 	fnfcv_0 $f set x $.
@@ -168,6 +216,9 @@ $}
 $( If ` x ` is disjoint from ` A ` , then ` x ` is not free in ` A ` .
        (Contributed by Mario Carneiro, 7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fnfcvd_0 $f wff ph $.
 	fnfcvd_1 $f set x $.
@@ -177,6 +228,9 @@ $}
 $( Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	infab1_0 $f set y $.
@@ -187,6 +241,9 @@ $}
 $( ` x ` is bound in ` F/_ x A ` .  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d y A $.
 	infnfc1_0 $f set y $.
@@ -197,6 +254,10 @@ $}
 $( Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d z ph $.
@@ -210,6 +271,9 @@ $}
 $( Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by Mario Carneiro, 14-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fnfaba1_0 $f wff ph $.
 	fnfaba1_1 $f set x $.
 	fnfaba1_2 $f set y $.
@@ -218,6 +282,10 @@ $}
 $( Hypothesis builder for ` F/_ y A ` .  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x z $.
 	$d y z $.
 	$d z A $.
@@ -231,6 +299,10 @@ $}
 $( Hypothesis builder for equality.  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
+	$v x $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x z $.
 	$d z A $.
 	$d z B $.
@@ -245,6 +317,10 @@ $}
 $( Hypothesis builder for elementhood.  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
+	$v x $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x z $.
 	$d z A $.
 	$d z B $.
@@ -259,6 +335,9 @@ $}
 $( Hypothesis builder for equality, special case.  (Contributed by Mario
        Carneiro, 10-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x B $.
 	fnfeq1_0 $f set x $.
 	fnfeq1_1 $f class A $.
@@ -269,6 +348,9 @@ $}
 $( Hypothesis builder for elementhood, special case.  (Contributed by Mario
        Carneiro, 10-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x B $.
 	fnfel1_0 $f set x $.
 	fnfel1_1 $f class A $.
@@ -279,6 +361,9 @@ $}
 $( Hypothesis builder for equality, special case.  (Contributed by Mario
        Carneiro, 10-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	fnfeq2_0 $f set x $.
 	fnfeq2_1 $f class A $.
@@ -289,6 +374,9 @@ $}
 $( Hypothesis builder for elementhood, special case.  (Contributed by Mario
        Carneiro, 10-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	fnfel2_0 $f set x $.
 	fnfel2_1 $f class A $.
@@ -299,6 +387,10 @@ $}
 $( Consequence of the not-free predicate.  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d y A $.
 	fnfcrd_0 $f wff ph $.
@@ -311,6 +403,11 @@ $}
 $( Hypothesis builder for equality.  (Contributed by Mario Carneiro,
        7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -327,6 +424,11 @@ $}
 $( Hypothesis builder for elementhood.  (Contributed by Mario Carneiro,
        7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -343,6 +445,11 @@ $}
 $( Formula-building lemma for use with the Distinctor Reduction Theorem.
        (Contributed by Mario Carneiro, 8-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v w $.
+	$v A $.
+	$v B $.
 	$d w x $.
 	$d w y $.
 	$d w A $.
@@ -358,6 +465,12 @@ $}
 $( Formula-building lemma for use with the Distinctor Reduction Theorem.
        (Contributed by Mario Carneiro, 8-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
 	$d w x $.
 	$d w y $.
 	$d w z $.
@@ -375,6 +488,11 @@ $}
 $( Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by Mario Carneiro, 8-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d z ph $.
@@ -391,6 +509,10 @@ $}
 $( Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by Mario Carneiro, 8-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fnfabd_0 $f wff ph $.
 	fnfabd_1 $f wff ps $.
 	fnfabd_2 $f set x $.
@@ -402,6 +524,13 @@ $}
 $( Deduction form of ~ dvelimc .  (Contributed by Mario Carneiro,
        8-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
 	$d w x $.
 	$d w y $.
 	$d w z $.
@@ -425,6 +554,11 @@ $}
 $( Version of ~ dvelim for classes.  (Contributed by Mario Carneiro,
        8-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	fdvelimc_0 $f set x $.
 	fdvelimc_1 $f set y $.
 	fdvelimc_2 $f set z $.
@@ -438,6 +572,9 @@ $}
 $( If ` x ` and ` y ` are distinct, then ` x ` is not free in ` y ` .
        (Contributed by Mario Carneiro, 8-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	infcvf_0 $f set z $.
@@ -448,6 +585,8 @@ $}
 $( If ` x ` and ` y ` are distinct, then ` y ` is not free in ` x ` .
        (Contributed by Mario Carneiro, 5-Dec-2016.) $)
 ${
+	$v x $.
+	$v y $.
 	fnfcvf2_0 $f set x $.
 	fnfcvf2_1 $f set y $.
 	nfcvf2 $p |- ( -. A. x x = y -> F/_ y x ) $= fnfcvf2_1 fnfcvf2_0 cv wnfc fnfcvf2_1 fnfcvf2_0 fnfcvf2_1 fnfcvf2_0 nfcvf naecoms $.
@@ -456,6 +595,10 @@ $( Establish equality between classes, using bound-variable hypotheses
        instead of distinct variable conditions.  (Contributed by NM,
        5-Aug-1993.)  (Revised by Mario Carneiro, 7-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -471,6 +614,8 @@ $( A simplification of class abstraction.  Theorem 5.2 of [Quine] p. 35.
        (Contributed by NM, 5-Sep-2011.)  (Revised by Mario Carneiro,
        7-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
 	fabid2f_0 $f set x $.
 	fabid2f_1 $f class A $.
 	eabid2f_0 $e |- F/_ x A $.
@@ -480,6 +625,12 @@ $( Theorem to move a substitution in and out of a class abstraction.
        (Contributed by NM, 27-Sep-2003.)  (Revised by Mario Carneiro,
        7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v v $.
+	$v A $.
 	$d v A $.
 	$d x z v $.
 	$d y z v $.

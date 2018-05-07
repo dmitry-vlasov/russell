@@ -631,7 +631,7 @@ $}
 $( Relationship between a binary relation and a class abstraction.
        (Contributed by Andrew Salmon, 8-Jul-2011.) $)
 ${
-	$v x y z A R $.
+	$v x z A R y $.
 	$d x y $.
 	$d y z A $.
 	$d y z R $.
@@ -677,7 +677,7 @@ $}
 $( Move substitution in and out of a binary relation.  (Contributed by NM,
        13-Dec-2005.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
 ${
-	$v x y A B C D R $.
+	$v x A B C D R y $.
 	$d y A $.
 	$d y B $.
 	$d y C $.

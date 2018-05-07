@@ -26,7 +26,7 @@ $( Define the function operation map.  The definition is designed so that
        on functions which corresponds to applying ` R ` pointwise to the values
        of the functions.  (Contributed by Mario Carneiro, 20-Jul-2014.) $)
 ${
-	$v x f g R $.
+	$v x R f g $.
 	$d f g x R $.
 	f0 $f set x $.
 	f1 $f class R $.
@@ -40,7 +40,7 @@ $( Define the function relation map.  The definition is designed so that if
        to the corresponding element of the right function.  (Contributed by
        Mario Carneiro, 28-Jul-2014.) $)
 ${
-	$v x f g R $.
+	$v x R f g $.
 	$d f g x R $.
 	f0 $f set x $.
 	f1 $f class R $.
@@ -51,7 +51,7 @@ $}
 $( Equality theorem for function operation.  (Contributed by Mario
        Carneiro, 20-Jul-2014.) $)
 ${
-	$v x f g R S $.
+	$v R S x f g $.
 	$d f g x R $.
 	$d f g x S $.
 	f0 $f class R $.
@@ -65,7 +65,7 @@ $}
 $( Equality theorem for function relation.  (Contributed by Mario Carneiro,
        28-Jul-2014.) $)
 ${
-	$v x f g R S $.
+	$v R S x f g $.
 	$d f g x R $.
 	$d f g x S $.
 	f0 $f class R $.
@@ -79,7 +79,7 @@ $}
 $( A function operation restricted to a set is a set.  (Contributed by NM,
        28-Jul-2014.) $)
 ${
-	$v x A f g V R $.
+	$v A R V x f g $.
 	$d f g x R $.
 	$d f g x $.
 	f0 $f class A $.
@@ -94,7 +94,7 @@ $}
 $( Hypothesis builder for function operation.  (Contributed by Mario
        Carneiro, 20-Jul-2014.) $)
 ${
-	$v x y f g R $.
+	$v x R y f g $.
 	$d f g x y R $.
 	$d f g x y $.
 	e0 $e |- F/_ x R $.
@@ -109,7 +109,7 @@ $}
 $( Hypothesis builder for function relation.  (Contributed by Mario
        Carneiro, 28-Jul-2014.) $)
 ${
-	$v x y f g R $.
+	$v x R y f g $.
 	$d f g x y R $.
 	$d f g x y $.
 	e0 $e |- F/_ x R $.
@@ -124,7 +124,7 @@ $}
 $( Value of an operation applied to two functions.  (Contributed by Mario
          Carneiro, 20-Jul-2014.) $)
 ${
-	$v ph x A B f g C D F G V R S W $.
+	$v ph x A B C D R S F G V W f g $.
 	$d x A $.
 	$d f g x F $.
 	$d f g x G $.
@@ -158,7 +158,7 @@ $}
 $( Value of a relation applied to two functions.  (Contributed by Mario
          Carneiro, 28-Jul-2014.) $)
 ${
-	$v ph x A B f g C D F G V R S W $.
+	$v ph x A B C D R S F G V W f g $.
 	$d x A $.
 	$d f g x F $.
 	$d f g x G $.
@@ -192,7 +192,7 @@ $}
 $( Evaluate a function operation at a point.  (Contributed by Mario
          Carneiro, 20-Jul-2014.) $)
 ${
-	$v ph x A B C D F G V R S W X $.
+	$v ph A B C D R S F G V W X x $.
 	$d x A $.
 	$d x F $.
 	$d x G $.
@@ -226,7 +226,7 @@ $}
 $( Exhibit a function relation at a point.  (Contributed by Mario
          Carneiro, 28-Jul-2014.) $)
 ${
-	$v ph x A B C D F G V R S W X $.
+	$v ph A B C D R S F G V W X x $.
 	$d x A $.
 	$d x F $.
 	$d x G $.
@@ -260,7 +260,7 @@ $}
 $( The function operation produces a function.  (Contributed by Mario
        Carneiro, 22-Jul-2014.) $)
 ${
-	$v ph x A B F G V R S W $.
+	$v ph A B R S F G V W x $.
 	$d x A $.
 	$d x F $.
 	$d x G $.
@@ -288,7 +288,7 @@ $}
 $( Function value of a pointwise composition.  (Contributed by Stefan O'Rear,
      5-Oct-2014.)  (Proof shortened by Mario Carneiro, 5-Jun-2015.) $)
 ${
-	$v A F G V R X $.
+	$v A R F G V X $.
 	f0 $f class A $.
 	f1 $f class R $.
 	f2 $f class F $.
@@ -301,7 +301,7 @@ $}
 $( General value of ` ( F oF R G ) ` with no assumptions on functionality
        of ` F ` and ` G ` .  (Contributed by Stefan O'Rear, 24-Jan-2015.) $)
 ${
-	$v x F G V R W a b $.
+	$v x R F G V W a b $.
 	$d F x a b $.
 	$d G x a b $.
 	$d V x $.
@@ -321,7 +321,7 @@ $}
 $( Pointwise combination commutes with restriction.  (Contributed by Stefan
        O'Rear, 24-Jan-2015.) $)
 ${
-	$v x D F G V R W $.
+	$v D R F G V W x $.
 	$d F x $.
 	$d G x $.
 	$d V x $.
@@ -341,7 +341,7 @@ $}
 $( The function operation produces a function.  (Contributed by Mario
        Carneiro, 20-Jul-2014.) $)
 ${
-	$v ph x y z A B C F G V R S W T U $.
+	$v ph x y A B C R S T U F G V W z $.
 	$d z A $.
 	$d z C $.
 	$d y z G $.
@@ -379,7 +379,7 @@ $( Restrict the operands of a function operation to the same domain as that
        of the operation itself.  (Contributed by Mario Carneiro,
        15-Sep-2014.) $)
 ${
-	$v ph x A B C F G V R W $.
+	$v ph A B C R F G V W x $.
 	$d x A $.
 	$d x C $.
 	$d x F $.
@@ -407,7 +407,7 @@ $}
 $( The function operation expressed as a mapping.  (Contributed by Mario
        Carneiro, 20-Jul-2014.) $)
 ${
-	$v ph x y A B C F G V R W X $.
+	$v ph x A B C R F G V W X y $.
 	$d x y A $.
 	$d y B $.
 	$d y C $.
@@ -438,7 +438,7 @@ $}
 $( The function relation acting on maps.  (Contributed by Mario Carneiro,
        20-Jul-2014.) $)
 ${
-	$v ph x y A B C F G V R W X $.
+	$v ph x A B C R F G V W X y $.
 	$d x y A $.
 	$d y B $.
 	$d y C $.
@@ -469,7 +469,7 @@ $}
 $( The composition of a function operation with another function.
        (Contributed by Mario Carneiro, 19-Dec-2014.) $)
 ${
-	$v ph x y A B C D F G V R W H X $.
+	$v ph A B C D R F G H V W X x y $.
 	$d y A $.
 	$d x y C $.
 	$d x y F $.
@@ -505,7 +505,7 @@ $}
 $( Convert an identity of the operation to the analogous identity on the
          function operation.  (Contributed by Mario Carneiro, 24-Jul-2014.) $)
 ${
-	$v ph x A B C F G V R H $.
+	$v ph x A B C R F G H V $.
 	$d x A $.
 	$d x F $.
 	$d x G $.
@@ -536,7 +536,7 @@ $( Equivalent expressions for equality with a function operation.
        (Contributed by NM, 9-Oct-2014.)  (Proof shortened by Mario Carneiro,
        5-Dec-2016.) $)
 ${
-	$v ph x A B C F G V R H $.
+	$v ph x A B C R F G H V $.
 	$d x A $.
 	$d x F $.
 	$d x G $.
@@ -566,7 +566,7 @@ $}
 $( Left operation by a constant.  (Contributed by Mario Carneiro,
        24-Jul-2014.) $)
 ${
-	$v ph A B C F V R W X $.
+	$v ph A B C R F V W X $.
 	e0 $e |- ( ph -> A e. V ) $.
 	e1 $e |- ( ph -> B e. W ) $.
 	e2 $e |- ( ph -> F Fn A ) $.
@@ -585,7 +585,7 @@ ${
 $}
 $( Right operation by a constant.  (Contributed by NM, 7-Oct-2014.) $)
 ${
-	$v ph A B C F V R W X $.
+	$v ph A B C R F V W X $.
 	e0 $e |- ( ph -> A e. V ) $.
 	e1 $e |- ( ph -> B e. W ) $.
 	e2 $e |- ( ph -> F Fn A ) $.
@@ -605,7 +605,7 @@ $}
 $( Function operation on two constant functions.  (Contributed by Mario
        Carneiro, 28-Jul-2014.) $)
 ${
-	$v ph x A B C V R W X $.
+	$v ph A B C R V W X x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -631,7 +631,7 @@ $}
 $( Transfer a reflexive law to the function relation.  (Contributed by
          Mario Carneiro, 28-Jul-2014.) $)
 ${
-	$v ph x w A F V R S $.
+	$v ph x A R S F V w $.
 	$d w x $.
 	$d w x $.
 	$d w x F $.
@@ -662,7 +662,7 @@ $}
 $( Transfer a left inverse law to the function operation.  (Contributed
            by NM, 22-Oct-2014.) $)
 ${
-	$v ph x w A B v F G V R S W N $.
+	$v ph x v A B R S F G N V W w $.
 	$d w x B $.
 	$d w x $.
 	$d w x F $.
@@ -707,7 +707,7 @@ $}
 $( Transfer a left identity law to the function operation.
            (Contributed by NM, 21-Oct-2014.) $)
 ${
-	$v ph x w A B F V R S W $.
+	$v ph x A B R S F V W w $.
 	$d w x B $.
 	$d w x $.
 	$d w x F $.
@@ -741,7 +741,7 @@ $}
 $( Transfer a right identity law to the function operation.
            (Contributed by NM, 21-Oct-2014.) $)
 ${
-	$v ph x w A B F V R S W $.
+	$v ph x A B R S F V W w $.
 	$d w x B $.
 	$d w x $.
 	$d w x F $.
@@ -775,7 +775,7 @@ $}
 $( Transfer a right absorption law to the function operation.
            (Contributed by Mario Carneiro, 28-Jul-2014.) $)
 ${
-	$v ph x w A B C F V R S W X $.
+	$v ph x A B C R S F V W X w $.
 	$d w x B $.
 	$d w x C $.
 	$d w x F $.
@@ -812,7 +812,7 @@ $}
 $( Transfer a right absorption law to the function operation.
          (Contributed by Mario Carneiro, 28-Jul-2014.) $)
 ${
-	$v ph x w A B C F V R S W X $.
+	$v ph x A B C R S F V W X w $.
 	$d w x B $.
 	$d w x C $.
 	$d w x F $.
@@ -849,7 +849,7 @@ $}
 $( Transfer a commutative law to the function operation.  (Contributed by
          Mario Carneiro, 26-Jul-2014.) $)
 ${
-	$v ph x y w A F G V R S $.
+	$v ph x y A R S F G V w $.
 	$d w x $.
 	$d w x $.
 	$d w x y F $.
@@ -883,7 +883,7 @@ $}
 $( Transfer a relation subset law to the function relation.  (Contributed
          by Mario Carneiro, 28-Jul-2014.) $)
 ${
-	$v ph x y w A F G V R S T $.
+	$v ph x y A R S T F G V w $.
 	$d w x $.
 	$d w x $.
 	$d w x y F $.
@@ -918,7 +918,7 @@ $}
 $( Transfer an associative law to the function operation.  (Contributed
          by Mario Carneiro, 26-Jul-2014.) $)
 ${
-	$v ph x y z w A F G V R S H T P O $.
+	$v ph x y z A P R S T F G H O V w $.
 	$d w x $.
 	$d w x $.
 	$d w x y z F $.
@@ -958,7 +958,7 @@ $}
 $( Transfer a transitivity law to the function relation.  (Contributed by
          Mario Carneiro, 28-Jul-2014.) $)
 ${
-	$v ph x y z w A F G V R S H T U $.
+	$v ph x y z A R S T U F G H V w $.
 	$d w x $.
 	$d w x $.
 	$d w x y z F $.
@@ -997,7 +997,7 @@ $}
 $( Transfer a distributive law to the function operation.  (Contributed
          by Mario Carneiro, 26-Jul-2014.) $)
 ${
-	$v ph x y z w A F G V R S H T K O $.
+	$v ph x y z A R S T F G H K O V w $.
 	$d w x y z A $.
 	$d w x y z F $.
 	$d w x y z G $.
@@ -1034,7 +1034,7 @@ $}
 $( Transfer a reverse distributive law to the function operation.
          (Contributed by NM, 19-Oct-2014.) $)
 ${
-	$v ph x y z w A F G V R S H T K O $.
+	$v ph x y z A R S T F G H K O V w $.
 	$d w x y z A $.
 	$d w x y z F $.
 	$d w x y z G $.
@@ -1071,7 +1071,7 @@ $}
 $( Transfer ~ nncan -shaped laws to vectors of numbers.  (Contributed by
        Stefan O'Rear, 27-Mar-2015.) $)
 ${
-	$v ph x y z A B V S I M $.
+	$v ph x y A B S I M V z $.
 	$d ph x y z $.
 	$d A x y z $.
 	$d B y z $.
@@ -1102,7 +1102,7 @@ $( Equivalent expressions for a restriction of the function operation map.
        values are the same as the original values, allowing theorems for
        ` oF R ` to be reused.  (Contributed by NM, 20-Oct-2014.) $)
 ${
-	$v x A B f g R $.
+	$v A B R f g x $.
 	$d f g A $.
 	$d f g B $.
 	$d f g x R $.
@@ -1118,7 +1118,7 @@ $}
 $( Value of a restriction of the function operation map.  (Contributed by
        NM, 20-Oct-2014.) $)
 ${
-	$v ph A B F G R $.
+	$v ph A B R F G $.
 	e0 $e |- ( ph -> F e. A ) $.
 	e1 $e |- ( ph -> G e. B ) $.
 	f0 $f wff ph $.
@@ -1133,7 +1133,7 @@ $}
 $( Existence of a restriction of the function operation map.  (Contributed
        by NM, 20-Oct-2014.) $)
 ${
-	$v ph A B V R W $.
+	$v ph A B R V W $.
 	e0 $e |- ( ph -> A e. V ) $.
 	e1 $e |- ( ph -> B e. W ) $.
 	f0 $f wff ph $.
@@ -1148,7 +1148,7 @@ $}
 $( Formula building theorem for support restrictions: vector operation with
        left annihilator.  (Contributed by Stefan O'Rear, 9-Mar-2015.) $)
 ${
-	$v ph x A B v D V R W Y Z L O $.
+	$v ph v A B D R L O V W Y Z x $.
 	$d ph v x $.
 	$d A x $.
 	$d B v x $.

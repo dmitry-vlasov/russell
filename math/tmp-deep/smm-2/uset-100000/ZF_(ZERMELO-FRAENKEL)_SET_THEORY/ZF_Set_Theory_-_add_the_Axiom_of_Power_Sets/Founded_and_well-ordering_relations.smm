@@ -73,7 +73,7 @@ $}
 $( Property of well-founded relation (one direction of definition).
        (Contributed by NM, 18-Mar-1997.) $)
 ${
-	$v x y z A B C R $.
+	$v x y A B C R z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z R $.
@@ -91,7 +91,7 @@ $}
 $( The ` R ` -preimage of an element of the base set in a set-like relation
        is a set.  (Contributed by Mario Carneiro, 19-Nov-2014.) $)
 ${
-	$v x y A B R $.
+	$v x A B R y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -107,7 +107,7 @@ $}
 $( Any relation on a set is set-like on it.  (Contributed by Mario
        Carneiro, 22-Jun-2015.) $)
 ${
-	$v x y A V R $.
+	$v A R V x y $.
 	$d x y A $.
 	$d x y $.
 	$d x y R $.
@@ -157,7 +157,7 @@ $( Subset theorem for the well-founded predicate.  Exercise 1 of
        [TakeutiZaring] p. 31.  (Contributed by NM, 3-Apr-1994.)  (Proof
        shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
-	$v x y z A B R $.
+	$v A B R x y z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z R $.
@@ -174,7 +174,7 @@ $}
 $( Subset theorem for the set-like predicate.  (Contributed by Mario
        Carneiro, 24-Jun-2015.) $)
 ${
-	$v x y A R S $.
+	$v A R S x y $.
 	$d x y A $.
 	$d x y $.
 	$d x y R $.
@@ -190,7 +190,7 @@ $}
 $( Subset theorem for the set-like predicate.  (Contributed by Mario
        Carneiro, 24-Jun-2015.) $)
 ${
-	$v x y A B R $.
+	$v A B R x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -206,7 +206,7 @@ $}
 $( Equality theorem for the well-founded predicate.  (Contributed by NM,
        9-Mar-1997.) $)
 ${
-	$v x y z A R S $.
+	$v A R S x y z $.
 	$d x y z R $.
 	$d x y z S $.
 	$d x y z A $.
@@ -303,7 +303,7 @@ $( A well-founded relation is irreflexive.  Special case of Proposition
        6.23 of [TakeutiZaring] p. 30.  (Contributed by NM, 2-Jan-1994.)
        (Revised by Mario Carneiro, 22-Jun-2015.) $)
 ${
-	$v x y A B R $.
+	$v A B R x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -319,7 +319,7 @@ $( A well-founded relation has no 2-cycle loops.  Special case of
        Proposition 6.23 of [TakeutiZaring] p. 30.  (Contributed by NM,
        30-May-1994.)  (Revised by Mario Carneiro, 22-Jun-2015.) $)
 ${
-	$v x y A B C R $.
+	$v A B C R x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -336,7 +336,7 @@ $}
 $( Any relation is well-founded on the empty set.  (Contributed by NM,
        17-Sep-1993.) $)
 ${
-	$v x y z R $.
+	$v R x y z $.
 	$d x y z R $.
 	f0 $f class R $.
 	i0 $f set x $.
@@ -350,7 +350,7 @@ $( If an element of a well-founded set satisfies a property ` ph ` , then
        Madsen, 18-Jun-2010.)  (Proof shortened by Mario Carneiro,
        18-Nov-2016.) $)
 ${
-	$v ph ps x y z A R $.
+	$v ph ps x y A R z $.
 	$d A x y z $.
 	$d R x y z $.
 	$d ph y z $.
@@ -391,7 +391,7 @@ $( The epsilon relation is set-like on any class.  (This is the origin of
        relation of sets and their elements.)  (Contributed by Mario Carneiro,
        22-Jun-2015.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -413,7 +413,7 @@ $( An alternate way of saying that the epsilon relation is well-founded.
        (Contributed by NM, 17-Feb-2004.)  (Revised by Mario Carneiro,
        23-Jun-2015.) $)
 ${
-	$v x y z A $.
+	$v x y A z $.
 	$d x y z A $.
 	f0 $f set x $.
 	f1 $f set y $.
@@ -426,7 +426,7 @@ $( A subset of an epsilon-founded class has a minimal element.
        (Contributed by NM, 17-Feb-2004.)  (Revised by David Abernethy,
        22-Feb-2011.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y A $.
 	$d x y B $.
 	e0 $e |- B e. _V $.
@@ -509,7 +509,7 @@ $( A non-empty (possibly proper) subclass of a class well-ordered by ` _E `
        has a minimal element.  Special case of Proposition 6.26 of
        [TakeutiZaring] p. 31.  (Contributed by NM, 17-Feb-2004.) $)
 ${
-	$v x y z A B $.
+	$v x A B y z $.
 	$d x y z $.
 	$d y z A $.
 	$d x y z B $.
@@ -533,7 +533,7 @@ $( A subset of a well-ordered set has a unique minimal element.
        (Contributed by NM, 18-Mar-1997.)  (Revised by Mario Carneiro,
        28-Apr-2015.) $)
 ${
-	$v x y A B V R $.
+	$v x y A B R V $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -551,7 +551,7 @@ $( All nonempty (possibly proper) subclasses of ` A ` , which has a
        6.26 of [TakeutiZaring] p. 31.  (Contributed by Scott Fenton,
        29-Jan-2011.)  (Revised by Mario Carneiro, 24-Jun-2015.) $)
 ${
-	$v x y z w A B R $.
+	$v x y A B R z w $.
 	$d x y z A $.
 	$d w x y z B $.
 	$d w x y z R $.

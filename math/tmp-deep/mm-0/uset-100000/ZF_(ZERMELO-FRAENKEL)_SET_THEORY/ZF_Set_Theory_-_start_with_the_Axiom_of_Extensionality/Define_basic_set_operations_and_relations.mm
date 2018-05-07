@@ -18,6 +18,8 @@ $( Proper subclass or subset symbol $)
 $( Extend class notation to include class difference (read:  " ` A ` minus
      ` B ` "). $)
 ${
+	$v A $.
+	$v B $.
 	fcdif_0 $f class A $.
 	fcdif_1 $f class B $.
 	cdif $a class ( A \ B ) $.
@@ -25,6 +27,8 @@ $}
 $( Extend class notation to include union of two classes (read:  " ` A `
      union ` B ` "). $)
 ${
+	$v A $.
+	$v B $.
 	fcun_0 $f class A $.
 	fcun_1 $f class B $.
 	cun $a class ( A u. B ) $.
@@ -32,6 +36,8 @@ $}
 $( Extend class notation to include the intersection of two classes
      (read:  " ` A ` intersect ` B ` "). $)
 ${
+	$v A $.
+	$v B $.
 	fcin_0 $f class A $.
 	fcin_1 $f class B $.
 	cin $a class ( A i^i B ) $.
@@ -40,12 +46,16 @@ $( Extend wff notation to include the subclass relation.  This is
      read " ` A ` is a subclass of ` B ` " or " ` B ` includes ` A ` ."  When
      ` A ` exists as a set, it is also read " ` A ` is a subset of ` B ` ." $)
 ${
+	$v A $.
+	$v B $.
 	fwss_0 $f class A $.
 	fwss_1 $f class B $.
 	wss $a wff A C_ B $.
 $}
 $( Extend wff notation with proper subclass relation. $)
 ${
+	$v A $.
+	$v B $.
 	fwpss_0 $f class A $.
 	fwpss_1 $f class B $.
 	wpss $a wff A C. B $.
@@ -54,6 +64,11 @@ $( Soundness justification theorem for ~ df-dif .  (Contributed by Rodolfo
        Medina, 27-Apr-2010.)  (Proof shortened by Andrew Salmon,
        9-Jul-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d y A $.
@@ -82,6 +97,9 @@ $( Define class difference, also called relative complement.  Definition
        removal of an element or equivalently the exclusion of a singleton.
        (Contributed by NM, 29-Apr-1994.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fdf-dif_0 $f set x $.
@@ -93,6 +111,11 @@ $( Soundness justification theorem for ~ df-un .  (Contributed by Rodolfo
        Medina, 28-Apr-2010.)  (Proof shortened by Andrew Salmon,
        9-Jul-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d y A $.
@@ -116,6 +139,9 @@ $( Define the union of two classes.  Definition 5.6 of [TakeutiZaring]
        variables, see ~ dfun2 .  For union defined in terms of intersection,
        see ~ dfun3 .  (Contributed by NM, 23-Aug-1993.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fdf-un_0 $f set x $.
@@ -127,6 +153,11 @@ $( Soundness justification theorem for ~ df-in .  (Contributed by Rodolfo
        Medina, 28-Apr-2010.)  (Proof shortened by Andrew Salmon,
        9-Jul-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d y A $.
@@ -151,6 +182,9 @@ $( Define the intersection of two classes.  Definition 5.6 of
        intersection defined in terms of union, see ~ dfin3 .  (Contributed by
        NM, 29-Apr-1994.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fdf-in_0 $f set x $.
@@ -161,6 +195,9 @@ $}
 $( Alternate definition for the intersection of two classes.  (Contributed
        by NM, 6-Jul-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fdfin5_0 $f set x $.
@@ -171,6 +208,9 @@ $}
 $( Alternate definition of class difference.  (Contributed by NM,
        25-Mar-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fdfdif2_0 $f set x $.
@@ -181,6 +221,10 @@ $}
 $( Expansion of membership in a class difference.  (Contributed by NM,
        29-Apr-1994.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -194,6 +238,10 @@ $( If a class is in one class and not another, it is also in their
        difference.  One-way deduction form of ~ eldif .  (Contributed by David
        Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feldifd_0 $f wff ph $.
 	feldifd_1 $f class A $.
 	feldifd_2 $f class B $.
@@ -206,6 +254,10 @@ $( If a class is in the difference of two classes, it is also in the
        minuend.  One-way deduction form of ~ eldif .  (Contributed by David
        Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feldifad_0 $f wff ph $.
 	feldifad_1 $f class A $.
 	feldifad_2 $f class B $.
@@ -217,6 +269,10 @@ $( If a class is in the difference of two classes, it is not in the
        subtrahend.  One-way deduction form of ~ eldif .  (Contributed by David
        Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feldifbd_0 $f wff ph $.
 	feldifbd_1 $f class A $.
 	feldifbd_2 $f class B $.

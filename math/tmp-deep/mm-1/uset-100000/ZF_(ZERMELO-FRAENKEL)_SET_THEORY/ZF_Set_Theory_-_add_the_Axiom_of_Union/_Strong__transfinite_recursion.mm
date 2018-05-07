@@ -8,6 +8,7 @@ $)
 $c recs  $.
 $( Notation for a function defined by strong transfinite recursion. $)
 ${
+	$v F $.
 	fcrecs_0 $f class F $.
 	crecs $a class recs ( F ) $.
 $}
@@ -25,6 +26,10 @@ $( Define a function ` recs ( F ) ` on ` On ` , the class of ordinal
        ~ dfac8alem .  (Contributed by Stefan O'Rear, 18-Jan-2015.)
        (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v f $.
+	$v F $.
 	$d F f x y $.
 	fdf-recs_0 $f set x $.
 	fdf-recs_1 $f set y $.
@@ -35,6 +40,11 @@ $}
 $( Equality theorem for ` recs ` .  (Contributed by Stefan O'Rear,
        18-Jan-2015.) $)
 ${
+	$v F $.
+	$v G $.
+	$v a $.
+	$v b $.
+	$v c $.
 	$d F a b c $.
 	$d G a b c $.
 	$d a b c $.
@@ -48,6 +58,11 @@ $}
 $( Bound-variable hypothesis builder for ` recs ` .  (Contributed by Stefan
        O'Rear, 18-Jan-2015.) $)
 ${
+	$v x $.
+	$v F $.
+	$v a $.
+	$v b $.
+	$v c $.
 	$d F a b c $.
 	$d a b c $.
 	$d x a b c $.
@@ -63,6 +78,14 @@ $( A technical lemma for transfinite recursion.  Compare Lemma 1 of
        [TakeutiZaring] p. 47.  (Contributed by NM, 23-Mar-1995.)  (Revised by
        David Abernethy, 19-Jun-2012.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z A $.
 	$d y z B $.
 	$d x y z w F $.
@@ -81,6 +104,14 @@ $( Lemma for transfinite recursion.  This provides some messy details
        needed to link ~ tfrlem1 into the main proof.  (Contributed by NM,
        23-Mar-1995.)  (Revised by David Abernethy, 19-Jun-2012.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	$d w A $.
 	$d w F $.
 	$d w G $.
@@ -100,6 +131,13 @@ $( Lemma for transfinite recursion.  Let ` A ` be the class of "acceptable"
        these acceptable functions.  This lemma just changes some bound
        variables in ` A ` for later use.  (Contributed by NM, 9-Apr-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v f $.
+	$v g $.
+	$v F $.
 	$d x y f g $.
 	$d x y z $.
 	$d g z $.
@@ -120,6 +158,12 @@ $( Lemma for transfinite recursion.  Let ` A ` be the class of "acceptable"
        these acceptable functions.  This lemma just changes some bound
        variables in ` A ` for later use.  (Contributed by NM, 22-Jul-2012.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v f $.
+	$v g $.
+	$v F $.
 	$d x y f g $.
 	$d f g F $.
 	ftfrlem3a_0 $f set x $.

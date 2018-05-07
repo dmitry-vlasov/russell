@@ -11,6 +11,7 @@ $( Big cup $)
 $( Extend class notation to include the union of a class (read:  'union
      ` A ` ') $)
 ${
+	$v A $.
 	fcuni_0 $f class A $.
 	cuni $a class U. A $.
 $}
@@ -20,6 +21,9 @@ $( Define the union of a class i.e. the collection of all members of the
        This is similar to the union of two classes ~ df-un .  (Contributed by
        NM, 23-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fdf-uni_0 $f set x $.
 	fdf-uni_1 $f set y $.
@@ -29,6 +33,9 @@ $}
 $( Alternate definition of class union.  (Contributed by NM,
        28-Jun-1998.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fdfuni2_0 $f set x $.
 	fdfuni2_1 $f set y $.
@@ -37,6 +44,10 @@ ${
 $}
 $( Membership in class union.  (Contributed by NM, 22-May-1994.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x A y $.
 	$d x B y $.
 	ieluni_0 $f set y $.
@@ -48,6 +59,9 @@ $}
 $( Membership in class union.  Restricted quantifier version.  (Contributed
        by NM, 31-Aug-1999.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	feluni2_0 $f set x $.
@@ -57,6 +71,10 @@ ${
 $}
 $( Membership in class union.  (Contributed by NM, 24-Mar-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -69,6 +87,10 @@ $}
 $( Bound-variable hypothesis builder for union.  (Contributed by NM,
        30-Dec-1996.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v y $.
+	$v z $.
 	$d y z A $.
 	$d x y z $.
 	infuni_0 $f set y $.
@@ -80,6 +102,11 @@ ${
 $}
 $( Deduction version of ~ nfuni .  (Contributed by NM, 18-Feb-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v y $.
+	$v z $.
 	$d y z A $.
 	$d x y z $.
 	$d y z ph $.
@@ -94,6 +121,12 @@ $}
 $( Distribute proper substitution through the union of a class.
        (Contributed by Alan Sare, 10-Nov-2012.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v V $.
+	$v y $.
+	$v z $.
 	$d A y z $.
 	$d B y z $.
 	$d V y z $.
@@ -110,6 +143,10 @@ $( Equality theorem for class union.  Exercise 15 of [TakeutiZaring]
        p. 18.  (Contributed by NM, 10-Aug-1993.)  (Proof shortened by Andrew
        Salmon, 29-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	iunieq_0 $f set x $.
@@ -121,6 +158,8 @@ $}
 $( Inference of equality of two class unions.  (Contributed by NM,
        30-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
 	funieqi_0 $f class A $.
 	funieqi_1 $f class B $.
 	eunieqi_0 $e |- A = B $.
@@ -129,6 +168,9 @@ $}
 $( Deduction of equality of two class unions.  (Contributed by NM,
        21-Apr-1995.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	funieqd_0 $f wff ph $.
 	funieqd_1 $f class A $.
 	funieqd_2 $f class B $.
@@ -138,6 +180,10 @@ $}
 $( Membership in union of a class abstraction.  (Contributed by NM,
        11-Aug-1994.)  (Revised by Mario Carneiro, 14-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x A y $.
 	$d ph y $.
 	ieluniab_0 $f set y $.
@@ -149,6 +195,10 @@ $}
 $( Membership in union of a class abstraction.  (Contributed by NM,
        4-Oct-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	felunirab_0 $f wff ph $.
 	felunirab_1 $f set x $.
@@ -159,6 +209,10 @@ $}
 $( The union of a pair is the union of its members.  Proposition 5.7 of
        [TakeutiZaring] p. 16.  (Contributed by NM, 23-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	iunipr_0 $f set x $.
@@ -172,6 +226,12 @@ $}
 $( The union of a pair is the union of its members.  Proposition 5.7 of
        [TakeutiZaring] p. 16.  (Contributed by NM, 25-Aug-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d y B $.
 	iuniprg_0 $f set x $.
@@ -185,6 +245,7 @@ $}
 $( A set equals the union of its singleton.  Theorem 8.2 of [Quine] p. 53.
        (Contributed by NM, 30-Aug-1993.) $)
 ${
+	$v A $.
 	funisn_0 $f class A $.
 	eunisn_0 $e |- A e. _V $.
 	unisn $p |- U. { A } = A $= funisn_0 csn cuni funisn_0 funisn_0 cpr cuni funisn_0 funisn_0 cun funisn_0 funisn_0 csn funisn_0 funisn_0 cpr funisn_0 dfsn2 unieqi funisn_0 funisn_0 eunisn_0 eunisn_0 unipr funisn_0 unidm 3eqtri $.
@@ -192,6 +253,9 @@ $}
 $( A set equals the union of its singleton.  Theorem 8.2 of [Quine] p. 53.
        (Contributed by NM, 13-Aug-2002.) $)
 ${
+	$v A $.
+	$v V $.
+	$v x $.
 	$d x A $.
 	iunisng_0 $f set x $.
 	funisng_0 $f class A $.
@@ -201,6 +265,10 @@ $}
 $( An alternative statement of the effective freeness of a class ` A ` ,
        when it is a set.  (Contributed by Mario Carneiro, 14-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v V $.
 	$d x y $.
 	$d y A $.
 	fdfnfc2_0 $f set x $.
@@ -212,6 +280,10 @@ $}
 $( The class union of the union of two classes.  Theorem 8.3 of [Quine]
        p. 53.  (Contributed by NM, 20-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	iuniun_0 $f set x $.
@@ -225,6 +297,10 @@ $( The class union of the intersection of two classes.  Exercise 4.12(n) of
        (Contributed by NM, 4-Dec-2003.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	iuniin_0 $f set x $.
@@ -237,6 +313,10 @@ $( Subclass relationship for class union.  Theorem 61 of [Suppes] p. 39.
        (Contributed by NM, 22-Mar-1998.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -249,6 +329,11 @@ $}
 $( Subclass relationship for class union.  (Contributed by NM,
        24-May-1994.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -262,6 +347,8 @@ $}
 $( Subclass relationship for subclass union.  Inference form of ~ uniss .
        (Contributed by David Moews, 1-May-2017.) $)
 ${
+	$v A $.
+	$v B $.
 	funissi_0 $f class A $.
 	funissi_1 $f class B $.
 	eunissi_0 $e |- A C_ B $.
@@ -270,6 +357,9 @@ $}
 $( Subclass relationship for subclass union.  Deduction form of ~ uniss .
        (Contributed by David Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	funissd_0 $f wff ph $.
 	funissd_1 $f class A $.
 	funissd_2 $f class B $.
@@ -279,6 +369,9 @@ $}
 $( The union of a set is empty iff the set is included in the singleton of
        the empty set.  (Contributed by NM, 12-Sep-2004.) $)
 ${
+	$v A $.
+	$v x $.
+	$v y $.
 	$d x y A $.
 	iuni0b_0 $f set x $.
 	iuni0b_1 $f set y $.
@@ -288,6 +381,8 @@ $}
 $( The union of a set is empty iff all of its members are empty.
        (Contributed by NM, 16-Aug-2006.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	funi0c_0 $f set x $.
 	funi0c_1 $f class A $.
@@ -304,6 +399,8 @@ $( An element of a class is a subclass of its union.  Theorem 8.6 of [Quine]
      p. 54.  Also the basis for Proposition 7.20 of [TakeutiZaring] p. 40.
      (Contributed by NM, 6-Jun-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	felssuni_0 $f class A $.
 	felssuni_1 $f class B $.
 	elssuni $p |- ( A e. B -> A C_ U. B ) $= felssuni_0 felssuni_0 wss felssuni_0 felssuni_1 wcel felssuni_0 felssuni_1 cuni wss felssuni_0 ssid felssuni_0 felssuni_0 felssuni_1 ssuni mpan $.
@@ -311,6 +408,8 @@ $}
 $( Condition turning a subclass relationship for union into an equality.
      (Contributed by NM, 18-Jul-2006.) $)
 ${
+	$v A $.
+	$v B $.
 	funissel_0 $f class A $.
 	funissel_1 $f class B $.
 	unissel $p |- ( ( U. A C_ B /\ B e. A ) -> U. A = B ) $= funissel_0 cuni funissel_1 wss funissel_1 funissel_0 wcel wa funissel_0 cuni funissel_1 funissel_0 cuni funissel_1 wss funissel_1 funissel_0 wcel simpl funissel_1 funissel_0 wcel funissel_1 funissel_0 cuni wss funissel_0 cuni funissel_1 wss funissel_1 funissel_0 elssuni adantl eqssd $.
@@ -318,6 +417,10 @@ $}
 $( Relationship involving membership, subset, and union.  Exercise 5 of
        [Enderton] p. 26 and its converse.  (Contributed by NM, 20-Sep-2003.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	iunissb_0 $f set y $.
@@ -331,6 +434,10 @@ $( A subclass condition on the members of two classes that implies a
        p. 59.  See ~ iunss2 for a generalization to indexed unions.
        (Contributed by NM, 22-Mar-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x y B $.
 	funiss2_0 $f set x $.
@@ -343,6 +450,10 @@ $( If the difference ` A \ B ` contains the largest members of ` A ` , then
        the union of the difference is the union of ` A ` .  (Contributed by NM,
        22-Mar-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	funidif_0 $f set x $.
@@ -353,6 +464,9 @@ ${
 $}
 $( Relationship implying union.  (Contributed by NM, 10-Nov-1999.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fssunieq_0 $f set x $.
@@ -363,6 +477,10 @@ $}
 $( Any member of a class is the largest of those members that it includes.
        (Contributed by NM, 13-Aug-2002.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x y A $.
 	$d x y B $.
 	iunimax_0 $f set y $.

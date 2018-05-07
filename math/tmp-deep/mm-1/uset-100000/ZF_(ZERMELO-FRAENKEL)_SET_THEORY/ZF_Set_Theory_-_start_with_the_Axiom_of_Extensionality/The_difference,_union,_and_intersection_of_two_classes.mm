@@ -8,6 +8,10 @@ $)
 $( Equality theorem for class difference.  (Contributed by NM,
        10-Feb-1997.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -20,6 +24,10 @@ $}
 $( Equality theorem for class difference.  (Contributed by NM,
        10-Feb-1997.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -32,6 +40,10 @@ $}
 $( Equality theorem for class difference.  (Contributed by FL,
      31-Aug-2009.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fdifeq12_0 $f class A $.
 	fdifeq12_1 $f class B $.
 	fdifeq12_2 $f class C $.
@@ -41,6 +53,9 @@ $}
 $( Inference adding difference to the right in a class equality.
        (Contributed by NM, 15-Nov-2002.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fdifeq1i_0 $f class A $.
 	fdifeq1i_1 $f class B $.
 	fdifeq1i_2 $f class C $.
@@ -50,6 +65,9 @@ $}
 $( Inference adding difference to the left in a class equality.
        (Contributed by NM, 15-Nov-2002.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fdifeq2i_0 $f class A $.
 	fdifeq2i_1 $f class B $.
 	fdifeq2i_2 $f class C $.
@@ -59,6 +77,10 @@ $}
 $( Equality inference for class difference.  (Contributed by NM,
          29-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fdifeq12i_0 $f class A $.
 	fdifeq12i_1 $f class B $.
 	fdifeq12i_2 $f class C $.
@@ -70,6 +92,10 @@ $}
 $( Deduction adding difference to the right in a class equality.
        (Contributed by NM, 15-Nov-2002.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fdifeq1d_0 $f wff ph $.
 	fdifeq1d_1 $f class A $.
 	fdifeq1d_2 $f class B $.
@@ -80,6 +106,10 @@ $}
 $( Deduction adding difference to the left in a class equality.
        (Contributed by NM, 15-Nov-2002.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fdifeq2d_0 $f wff ph $.
 	fdifeq2d_1 $f class A $.
 	fdifeq2d_2 $f class B $.
@@ -90,6 +120,11 @@ $}
 $( Equality deduction for class difference.  (Contributed by FL,
        29-May-2014.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fdifeq12d_0 $f wff ph $.
 	fdifeq12d_1 $f class A $.
 	fdifeq12d_2 $f class B $.
@@ -102,6 +137,10 @@ $}
 $( Inference from membership to difference.  (Contributed by NM,
        17-May-1998.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -115,6 +154,10 @@ $}
 $( Bound-variable hypothesis builder for class difference.  (Contributed by
        NM, 3-Dec-2003.)  (Revised by Mario Carneiro, 13-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -129,6 +172,9 @@ $}
 $( Implication of membership in a class difference.  (Contributed by NM,
      29-Apr-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feldifi_0 $f class A $.
 	feldifi_1 $f class B $.
 	feldifi_2 $f class C $.
@@ -137,6 +183,9 @@ $}
 $( Implication of membership in a class difference.  (Contributed by NM,
      3-May-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feldifn_0 $f class A $.
 	feldifn_1 $f class B $.
 	feldifn_2 $f class C $.
@@ -145,6 +194,9 @@ $}
 $( A set does not belong to a class excluding it.  (Contributed by NM,
      27-Jun-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	felndif_0 $f class A $.
 	felndif_1 $f class B $.
 	felndif_2 $f class C $.
@@ -153,6 +205,9 @@ $}
 $( Implication of membership in a class difference.  (Contributed by NM,
      28-Jun-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fneldif_0 $f class A $.
 	fneldif_1 $f class B $.
 	fneldif_2 $f class C $.
@@ -161,6 +216,9 @@ $}
 $( Double class difference.  Exercise 11 of [TakeutiZaring] p. 22.
        (Contributed by NM, 17-May-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	idifdif_0 $f set x $.
@@ -171,6 +229,9 @@ $}
 $( Subclass relationship for class difference.  Exercise 14 of
        [TakeutiZaring] p. 22.  (Contributed by NM, 29-Apr-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	idifss_0 $f set x $.
@@ -181,6 +242,9 @@ $}
 $( A difference of two classes is contained in the minuend.  Deduction form
      of ~ difss .  (Contributed by David Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fdifssd_0 $f wff ph $.
 	fdifssd_1 $f class A $.
 	fdifssd_2 $f class B $.
@@ -189,6 +253,9 @@ $}
 $( If a class is contained in a difference, it is contained in the minuend.
      (Contributed by David Moews, 1-May-2017.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fdifss2_0 $f class A $.
 	fdifss2_1 $f class B $.
 	fdifss2_2 $f class C $.
@@ -198,6 +265,10 @@ $( If a class is contained in a difference, it is contained in the
        minuend.  Deduction form of ~ difss2 .  (Contributed by David Moews,
        1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fdifss2d_0 $f wff ph $.
 	fdifss2d_1 $f class A $.
 	fdifss2d_2 $f class B $.
@@ -208,6 +279,9 @@ $}
 $( Preservation of a subclass relationship by class difference.  (Contributed
      by NM, 15-Feb-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fssdifss_0 $f class A $.
 	fssdifss_1 $f class B $.
 	fssdifss_2 $f class C $.
@@ -216,6 +290,8 @@ $}
 $( Double complement under universal class.  Exercise 4.10(s) of
        [Mendelson] p. 231.  (Contributed by NM, 8-Jan-2002.) $)
 ${
+	$v A $.
+	$v x $.
 	$d x A $.
 	iddif_0 $f set x $.
 	fddif_0 $f class A $.
@@ -223,6 +299,10 @@ ${
 $}
 $( Contraposition law for subsets.  (Contributed by NM, 22-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -235,6 +315,10 @@ $}
 $( Contraposition law for subsets.  Exercise 15 of [TakeutiZaring] p. 22.
        (Contributed by NM, 22-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -246,6 +330,10 @@ ${
 $}
 $( Difference law for subsets.  (Contributed by NM, 28-May-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -259,6 +347,10 @@ $( If ` A ` is contained in ` B ` , then ` ( A \ C ) ` is contained in
        ` ( B \ C ) ` .  Deduction form of ~ ssdif .  (Contributed by David
        Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fssdifd_0 $f wff ph $.
 	fssdifd_1 $f class A $.
 	fssdifd_2 $f class B $.
@@ -270,6 +362,10 @@ $( If ` A ` is contained in ` B ` , then ` ( C \ B ) ` is contained in
        ` ( C \ A ) ` .  Deduction form of ~ sscon .  (Contributed by David
        Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsscond_0 $f wff ph $.
 	fsscond_1 $f class A $.
 	fsscond_2 $f class B $.
@@ -281,6 +377,10 @@ $( If ` A ` is contained in ` B ` , then ` ( A \ C ) ` is also contained in
        ` B ` .  Deduction form of ~ ssdifss .  (Contributed by David Moews,
        1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fssdifssd_0 $f wff ph $.
 	fssdifssd_1 $f class A $.
 	fssdifssd_2 $f class B $.
@@ -292,6 +392,11 @@ $( If ` A ` is contained in ` B ` and ` C ` is contained in ` D ` , then
        ` ( A \ D ) ` is contained in ` ( B \ C ) ` .  Deduction form.
        (Contributed by David Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fssdif2d_0 $f wff ph $.
 	fssdif2d_1 $f class A $.
 	fssdif2d_2 $f class B $.
@@ -304,6 +409,10 @@ $}
 $( Expansion of membership in class union.  Theorem 12 of [Suppes] p. 25.
        (Contributed by NM, 7-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -315,6 +424,10 @@ ${
 $}
 $( Inference from membership to union.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -328,6 +441,8 @@ $}
 $( Idempotent law for union of classes.  Theorem 23 of [Suppes] p. 27.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v x $.
 	$d x A $.
 	iunidm_0 $f set x $.
 	funidm_0 $f class A $.
@@ -337,6 +452,9 @@ $( Commutative law for union of classes.  Exercise 6 of [TakeutiZaring]
        p. 17.  (Contributed by NM, 25-Jun-1998.)  (Proof shortened by Andrew
        Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	iuncom_0 $f set x $.
@@ -350,6 +468,9 @@ $( If a class equals the union of two other classes, then it equals the
        translate_without_overwriting.cmd and minimizing.  (Contributed by Alan
        Sare, 18-Feb-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fequncom_0 $f class A $.
 	fequncom_1 $f class B $.
 	fequncom_2 $f class C $.
@@ -359,6 +480,9 @@ $( Inference form of ~ equncom . ~ equncomi was automatically derived from
        ~ equncomiVD using the tools program translate_without_overwriting.cmd
        and minimizing.  (Contributed by Alan Sare, 18-Feb-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fequncomi_0 $f class A $.
 	fequncomi_1 $f class B $.
 	fequncomi_2 $f class C $.
@@ -368,6 +492,10 @@ $}
 $( Equality theorem for union of two classes.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -380,6 +508,9 @@ $}
 $( Equality theorem for the union of two classes.  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	funeq2_0 $f class A $.
 	funeq2_1 $f class B $.
 	funeq2_2 $f class C $.
@@ -388,6 +519,10 @@ $}
 $( Equality theorem for union of two classes.  (Contributed by NM,
      29-Mar-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	funeq12_0 $f class A $.
 	funeq12_1 $f class B $.
 	funeq12_2 $f class C $.
@@ -397,6 +532,9 @@ $}
 $( Inference adding union to the right in a class equality.  (Contributed
        by NM, 30-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	funeq1i_0 $f class A $.
 	funeq1i_1 $f class B $.
 	funeq1i_2 $f class C $.
@@ -406,6 +544,9 @@ $}
 $( Inference adding union to the left in a class equality.  (Contributed by
        NM, 30-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	funeq2i_0 $f class A $.
 	funeq2i_1 $f class B $.
 	funeq2i_2 $f class C $.
@@ -415,6 +556,10 @@ $}
 $( Equality inference for union of two classes.  (Contributed by NM,
          12-Aug-2004.)  (Proof shortened by Eric Schmidt, 26-Jan-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	funeq12i_0 $f class A $.
 	funeq12i_1 $f class B $.
 	funeq12i_2 $f class C $.
@@ -426,6 +571,10 @@ $}
 $( Deduction adding union to the right in a class equality.  (Contributed
        by NM, 29-Mar-1998.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	funeq1d_0 $f wff ph $.
 	funeq1d_1 $f class A $.
 	funeq1d_2 $f class B $.
@@ -436,6 +585,10 @@ $}
 $( Deduction adding union to the left in a class equality.  (Contributed by
        NM, 29-Mar-1998.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	funeq2d_0 $f wff ph $.
 	funeq2d_1 $f class A $.
 	funeq2d_2 $f class B $.
@@ -446,6 +599,11 @@ $}
 $( Equality deduction for union of two classes.  (Contributed by NM,
          29-Sep-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	funeq12d_0 $f wff ph $.
 	funeq12d_1 $f class A $.
 	funeq12d_2 $f class B $.
@@ -459,6 +617,10 @@ $( Bound-variable hypothesis builder for the union of classes.
        (Contributed by NM, 15-Sep-2003.)  (Revised by Mario Carneiro,
        14-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -474,6 +636,10 @@ $( Associative law for union of classes.  Exercise 8 of [TakeutiZaring]
        p. 17.  (Contributed by NM, 3-May-1994.)  (Proof shortened by Andrew
        Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d A x $.
 	$d B x $.
 	$d C x $.
@@ -485,6 +651,9 @@ ${
 $}
 $( A rearrangement of union.  (Contributed by NM, 12-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fun12_0 $f class A $.
 	fun12_1 $f class B $.
 	fun12_2 $f class C $.
@@ -493,6 +662,9 @@ $}
 $( A rearrangement of union.  (Contributed by NM, 12-Aug-2004.)  (Proof
      shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fun23_0 $f class A $.
 	fun23_1 $f class B $.
 	fun23_2 $f class C $.
@@ -501,6 +673,10 @@ $}
 $( A rearrangement of the union of 4 classes.  (Contributed by NM,
      12-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fun4_0 $f class A $.
 	fun4_1 $f class B $.
 	fun4_2 $f class C $.
@@ -509,6 +685,9 @@ ${
 $}
 $( Union distributes over itself.  (Contributed by NM, 17-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	funundi_0 $f class A $.
 	funundi_1 $f class B $.
 	funundi_2 $f class C $.
@@ -516,6 +695,9 @@ ${
 $}
 $( Union distributes over itself.  (Contributed by NM, 17-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	funundir_0 $f class A $.
 	funundir_1 $f class B $.
 	funundir_2 $f class C $.
@@ -524,6 +706,9 @@ $}
 $( Subclass relationship for union of classes.  Theorem 25 of [Suppes]
        p. 27.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	issun1_0 $f set x $.
@@ -534,12 +719,17 @@ $}
 $( Subclass relationship for union of classes.  (Contributed by NM,
      30-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
 	fssun2_0 $f class A $.
 	fssun2_1 $f class B $.
 	ssun2 $p |- A C_ ( B u. A ) $= fssun2_0 fssun2_0 fssun2_1 cun fssun2_1 fssun2_0 cun fssun2_0 fssun2_1 ssun1 fssun2_0 fssun2_1 uncom sseqtri $.
 $}
 $( Subclass law for union of classes.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fssun3_0 $f class A $.
 	fssun3_1 $f class B $.
 	fssun3_2 $f class C $.
@@ -547,6 +737,9 @@ ${
 $}
 $( Subclass law for union of classes.  (Contributed by NM, 14-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fssun4_0 $f class A $.
 	fssun4_1 $f class B $.
 	fssun4_2 $f class C $.
@@ -554,6 +747,9 @@ ${
 $}
 $( Membership law for union of classes.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	felun1_0 $f class A $.
 	felun1_1 $f class B $.
 	felun1_2 $f class C $.
@@ -561,6 +757,9 @@ ${
 $}
 $( Membership law for union of classes.  (Contributed by NM, 30-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	felun2_0 $f class A $.
 	felun2_1 $f class B $.
 	felun2_2 $f class C $.
@@ -569,6 +768,10 @@ $}
 $( Subclass law for union of classes.  (Contributed by NM, 14-Oct-1999.)
        (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -582,6 +785,9 @@ $( A relationship between subclass and union.  Theorem 26 of [Suppes]
        p. 27.  (Contributed by NM, 30-Aug-1993.)  (Proof shortened by Andrew
        Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	issequn1_0 $f set x $.
@@ -592,6 +798,9 @@ $}
 $( Subclass law for union of classes.  Exercise 7 of [TakeutiZaring] p. 18.
      (Contributed by NM, 14-Oct-1999.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	funss2_0 $f class A $.
 	funss2_1 $f class B $.
 	funss2_2 $f class C $.
@@ -599,6 +808,10 @@ ${
 $}
 $( Subclass law for union of classes.  (Contributed by NM, 2-Jun-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	funss12_0 $f class A $.
 	funss12_1 $f class B $.
 	funss12_2 $f class C $.
@@ -608,6 +821,8 @@ $}
 $( A relationship between subclass and union.  (Contributed by NM,
      13-Jun-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	fssequn2_0 $f class A $.
 	fssequn2_1 $f class B $.
 	ssequn2 $p |- ( A C_ B <-> ( B u. A ) = B ) $= fssequn2_0 fssequn2_1 wss fssequn2_0 fssequn2_1 cun fssequn2_1 wceq fssequn2_1 fssequn2_0 cun fssequn2_1 wceq fssequn2_0 fssequn2_1 ssequn1 fssequn2_0 fssequn2_1 cun fssequn2_1 fssequn2_0 cun fssequn2_1 fssequn2_0 fssequn2_1 uncom eqeq1i bitri $.
@@ -615,6 +830,10 @@ $}
 $( The union of two subclasses is a subclass.  Theorem 27 of [Suppes] p. 27
        and its converse.  (Contributed by NM, 11-Jun-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -627,6 +846,9 @@ $}
 $( An inference showing the union of two subclasses is a subclass.
        (Contributed by Raph Levien, 10-Dec-2002.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	funssi_0 $f class A $.
 	funssi_1 $f class B $.
 	funssi_2 $f class C $.
@@ -637,6 +859,10 @@ $}
 $( A deduction showing the union of two subclasses is a subclass.
        (Contributed by Jonathan Ben-Naim, 3-Jun-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	funssd_0 $f wff ph $.
 	funssd_1 $f class A $.
 	funssd_2 $f class B $.
@@ -649,6 +875,10 @@ $( If ` ( A u. B ) ` is contained in ` C ` , so is ` A ` .  One-way
        deduction form of ~ unss .  Partial converse of ~ unssd .  (Contributed
        by David Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	funssad_0 $f wff ph $.
 	funssad_1 $f class A $.
 	funssad_2 $f class B $.
@@ -660,6 +890,10 @@ $( If ` ( A u. B ) ` is contained in ` C ` , so is ` B ` .  One-way
        deduction form of ~ unss .  Partial converse of ~ unssd .  (Contributed
        by David Moews, 1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	funssbd_0 $f wff ph $.
 	funssbd_1 $f class A $.
 	funssbd_2 $f class B $.
@@ -670,6 +904,9 @@ $}
 $( A condition that implies inclusion in the union of two classes.
      (Contributed by NM, 23-Nov-2003.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fssun_0 $f class A $.
 	fssun_1 $f class B $.
 	fssun_2 $f class C $.
@@ -678,6 +915,10 @@ $}
 $( Restricted existential quantification over union.  (Contributed by Jeff
      Madsen, 5-Jan-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	frexun_0 $f wff ph $.
 	frexun_1 $f set x $.
 	frexun_2 $f class A $.
@@ -687,6 +928,10 @@ $}
 $( Restricted quantification over a union.  (Contributed by Scott Fenton,
      12-Apr-2011.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	fralunb_0 $f wff ph $.
 	fralunb_1 $f set x $.
 	fralunb_2 $f class A $.
@@ -696,6 +941,10 @@ $}
 $( Restricted quantification over union.  (Contributed by Jeff Madsen,
      2-Sep-2009.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	fralun_0 $f wff ph $.
 	fralun_1 $f set x $.
 	fralun_2 $f class A $.
@@ -705,6 +954,10 @@ $}
 $( Expansion of membership in an intersection of two classes.  Theorem 12
        of [Suppes] p. 25.  (Contributed by NM, 29-Apr-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -717,6 +970,10 @@ $}
 $( Membership in a class defined as an intersection.  (Contributed by
        Stefan O'Rear, 29-Mar-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v X $.
 	felin2_0 $f class A $.
 	felin2_1 $f class B $.
 	felin2_2 $f class C $.
@@ -727,6 +984,11 @@ $}
 $( Membership in a class defined as a ternary intersection.  (Contributed
        by Stefan O'Rear, 29-Mar-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v X $.
 	felin3_0 $f class A $.
 	felin3_1 $f class B $.
 	felin3_2 $f class C $.
@@ -738,6 +1000,9 @@ $}
 $( Commutative law for intersection of classes.  Exercise 7 of
        [TakeutiZaring] p. 17.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d A x $.
 	$d B x $.
 	iincom_0 $f set x $.
@@ -748,6 +1013,10 @@ $}
 $( Inference from membership to intersection.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -761,6 +1030,10 @@ $}
 $( Equality theorem for intersection of two classes.  (Contributed by NM,
        14-Dec-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -773,6 +1046,9 @@ $}
 $( Equality theorem for intersection of two classes.  (Contributed by NM,
      26-Dec-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fineq2_0 $f class A $.
 	fineq2_1 $f class B $.
 	fineq2_2 $f class C $.
@@ -781,6 +1057,10 @@ $}
 $( Equality theorem for intersection of two classes.  (Contributed by NM,
      8-May-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fineq12_0 $f class A $.
 	fineq12_1 $f class B $.
 	fineq12_2 $f class C $.
@@ -790,6 +1070,9 @@ $}
 $( Equality inference for intersection of two classes.  (Contributed by NM,
        26-Dec-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fineq1i_0 $f class A $.
 	fineq1i_1 $f class B $.
 	fineq1i_2 $f class C $.
@@ -799,6 +1082,9 @@ $}
 $( Equality inference for intersection of two classes.  (Contributed by NM,
        26-Dec-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fineq2i_0 $f class A $.
 	fineq2i_1 $f class B $.
 	fineq2i_2 $f class C $.
@@ -808,6 +1094,10 @@ $}
 $( Equality inference for intersection of two classes.  (Contributed by
          NM, 24-Jun-2004.)  (Proof shortened by Eric Schmidt, 26-Jan-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fineq12i_0 $f class A $.
 	fineq12i_1 $f class B $.
 	fineq12i_2 $f class C $.
@@ -819,6 +1109,10 @@ $}
 $( Equality deduction for intersection of two classes.  (Contributed by NM,
        10-Apr-1994.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fineq1d_0 $f wff ph $.
 	fineq1d_1 $f class A $.
 	fineq1d_2 $f class B $.
@@ -829,6 +1123,10 @@ $}
 $( Equality deduction for intersection of two classes.  (Contributed by NM,
        10-Apr-1994.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fineq2d_0 $f wff ph $.
 	fineq2d_1 $f class A $.
 	fineq2d_2 $f class B $.
@@ -839,6 +1137,11 @@ $}
 $( Equality deduction for intersection of two classes.  (Contributed by
          NM, 24-Jun-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fineq12d_0 $f wff ph $.
 	fineq12d_1 $f class A $.
 	fineq12d_2 $f class B $.
@@ -851,6 +1154,12 @@ $}
 $( Equality deduction for intersection of two classes.  (Contributed by
          NM, 7-Feb-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fineqan12d_0 $f wff ph $.
 	fineqan12d_1 $f wff ps $.
 	fineqan12d_2 $f class A $.
@@ -864,6 +1173,8 @@ $}
 $( A frequently-used variant of subclass definition ~ df-ss .  (Contributed
      by NM, 10-Jan-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	fdfss1_0 $f class A $.
 	fdfss1_1 $f class B $.
 	dfss1 $p |- ( A C_ B <-> ( B i^i A ) = A ) $= fdfss1_0 fdfss1_1 wss fdfss1_0 fdfss1_1 cin fdfss1_0 wceq fdfss1_1 fdfss1_0 cin fdfss1_0 wceq fdfss1_0 fdfss1_1 df-ss fdfss1_0 fdfss1_1 cin fdfss1_1 fdfss1_0 cin fdfss1_0 fdfss1_0 fdfss1_1 incom eqeq1i bitri $.
@@ -871,6 +1182,8 @@ $}
 $( Another definition of subclasshood.  Similar to ~ df-ss , ~ dfss , and
      ~ dfss1 .  (Contributed by David Moews, 1-May-2017.) $)
 ${
+	$v A $.
+	$v B $.
 	fdfss5_0 $f class A $.
 	fdfss5_1 $f class B $.
 	dfss5 $p |- ( A C_ B <-> A = ( B i^i A ) ) $= fdfss5_0 fdfss5_1 wss fdfss5_1 fdfss5_0 cin fdfss5_0 wceq fdfss5_0 fdfss5_1 fdfss5_0 cin wceq fdfss5_0 fdfss5_1 dfss1 fdfss5_1 fdfss5_0 cin fdfss5_0 eqcom bitri $.
@@ -879,6 +1192,10 @@ $( Bound-variable hypothesis builder for the intersection of classes.
        (Contributed by NM, 15-Sep-2003.)  (Revised by Mario Carneiro,
        14-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -893,6 +1210,12 @@ $}
 $( Distribute proper substitution through an intersection relation.
        (Contributed by Alan Sare, 22-Jul-2012.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v y $.
 	$d A y $.
 	$d C y $.
 	$d D y $.
@@ -908,6 +1231,11 @@ $}
 $( Deduction from a wff to a restricted class abstraction.  (Contributed by
        NM, 14-Jan-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x ph $.
 	$d x A $.
 	$d x B $.
@@ -922,6 +1250,8 @@ $}
 $( Idempotent law for intersection of classes.  Theorem 15 of [Suppes]
        p. 26.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v x $.
 	$d x A $.
 	iinidm_0 $f set x $.
 	finidm_0 $f class A $.
@@ -930,6 +1260,10 @@ $}
 $( Associative law for intersection of classes.  Exercise 9 of
        [TakeutiZaring] p. 17.  (Contributed by NM, 3-May-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d A x $.
 	$d B x $.
 	$d C x $.
@@ -941,6 +1275,9 @@ ${
 $}
 $( A rearrangement of intersection.  (Contributed by NM, 21-Apr-2001.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fin12_0 $f class A $.
 	fin12_1 $f class B $.
 	fin12_2 $f class C $.
@@ -949,6 +1286,9 @@ $}
 $( A rearrangement of intersection.  (Contributed by NM, 21-Apr-2001.)
      (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fin32_0 $f class A $.
 	fin32_1 $f class B $.
 	fin32_2 $f class C $.
@@ -956,6 +1296,9 @@ ${
 $}
 $( A rearrangement of intersection.  (Contributed by NM, 27-Aug-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fin13_0 $f class A $.
 	fin13_1 $f class B $.
 	fin13_2 $f class C $.
@@ -963,6 +1306,9 @@ ${
 $}
 $( A rearrangement of intersection.  (Contributed by NM, 27-Aug-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fin31_0 $f class A $.
 	fin31_1 $f class B $.
 	fin31_2 $f class C $.
@@ -971,6 +1317,9 @@ $}
 $( Rotate the intersection of 3 classes.  (Contributed by NM,
      27-Aug-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	finrot_0 $f class A $.
 	finrot_1 $f class B $.
 	finrot_2 $f class C $.
@@ -979,6 +1328,10 @@ $}
 $( Rearrangement of intersection of 4 classes.  (Contributed by NM,
      21-Apr-2001.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fin4_0 $f class A $.
 	fin4_1 $f class B $.
 	fin4_2 $f class C $.
@@ -987,6 +1340,9 @@ ${
 $}
 $( Intersection distributes over itself.  (Contributed by NM, 6-May-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	finindi_0 $f class A $.
 	finindi_1 $f class B $.
 	finindi_2 $f class C $.
@@ -995,6 +1351,9 @@ $}
 $( Intersection distributes over itself.  (Contributed by NM,
      17-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	finindir_0 $f class A $.
 	finindir_1 $f class B $.
 	finindir_2 $f class C $.
@@ -1003,6 +1362,8 @@ $}
 $( A relationship between subclass and intersection.  Similar to Exercise 9
      of [TakeutiZaring] p. 18.  (Contributed by NM, 17-May-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	fsseqin2_0 $f class A $.
 	fsseqin2_1 $f class B $.
 	sseqin2 $p |- ( A C_ B <-> ( B i^i A ) = A ) $= fsseqin2_0 fsseqin2_1 dfss1 $.
@@ -1011,6 +1372,9 @@ $( The intersection of two classes is a subset of one of them.  Part of
        Exercise 12 of [TakeutiZaring] p. 18.  (Contributed by NM,
        27-Apr-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	iinss1_0 $f set x $.
@@ -1022,6 +1386,8 @@ $( The intersection of two classes is a subset of one of them.  Part of
      Exercise 12 of [TakeutiZaring] p. 18.  (Contributed by NM,
      27-Apr-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	finss2_0 $f class A $.
 	finss2_1 $f class B $.
 	inss2 $p |- ( A i^i B ) C_ B $= finss2_0 finss2_1 cin finss2_1 finss2_0 cin finss2_1 finss2_1 finss2_0 incom finss2_1 finss2_0 inss1 eqsstr3i $.
@@ -1030,6 +1396,10 @@ $( Subclass of intersection.  Theorem 2.8(vii) of [Monk1] p. 26.
        (Contributed by NM, 15-Jun-2004.)  (Proof shortened by Andrew Salmon,
        26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1042,6 +1412,9 @@ $}
 $( An inference showing that a subclass of two classes is a subclass of
        their intersection.  (Contributed by NM, 24-Nov-2003.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fssini_0 $f class A $.
 	fssini_1 $f class B $.
 	fssini_2 $f class C $.
@@ -1052,6 +1425,10 @@ $}
 $( A deduction showing that a subclass of two classes is a subclass of
        their intersection.  (Contributed by Jonathan Ben-Naim, 3-Jun-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fssind_0 $f wff ph $.
 	fssind_1 $f class A $.
 	fssind_2 $f class B $.
@@ -1063,6 +1440,10 @@ $}
 $( Add right intersection to subclass relation.  (Contributed by NM,
        16-Aug-1994.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1075,6 +1456,9 @@ $}
 $( Add left intersection to subclass relation.  (Contributed by NM,
        19-Oct-1999.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fsslin_0 $f class A $.
 	fsslin_1 $f class B $.
 	fsslin_2 $f class C $.
@@ -1082,6 +1466,10 @@ ${
 $}
 $( Intersection of subclasses.  (Contributed by NM, 5-May-2000.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fss2in_0 $f class A $.
 	fss2in_1 $f class B $.
 	fss2in_2 $f class C $.
@@ -1091,6 +1479,9 @@ $}
 $( Intersection preserves subclass relationship.  (Contributed by NM,
      14-Sep-1999.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fssinss1_0 $f class A $.
 	fssinss1_1 $f class B $.
 	fssinss1_2 $f class C $.
@@ -1099,6 +1490,9 @@ $}
 $( Inclusion of an intersection of two classes.  (Contributed by NM,
      30-Oct-2014.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	finss_0 $f class A $.
 	finss_1 $f class B $.
 	finss_2 $f class C $.
@@ -1106,12 +1500,16 @@ ${
 $}
 $( Absorption law for union.  (Contributed by NM, 16-Apr-2006.) $)
 ${
+	$v A $.
+	$v B $.
 	funabs_0 $f class A $.
 	funabs_1 $f class B $.
 	unabs $p |- ( A u. ( A i^i B ) ) = A $= funabs_0 funabs_1 cin funabs_0 wss funabs_0 funabs_0 funabs_1 cin cun funabs_0 wceq funabs_0 funabs_1 inss1 funabs_0 funabs_1 cin funabs_0 ssequn2 mpbi $.
 $}
 $( Absorption law for intersection.  (Contributed by NM, 16-Apr-2006.) $)
 ${
+	$v A $.
+	$v B $.
 	finabs_0 $f class A $.
 	finabs_1 $f class B $.
 	inabs $p |- ( A i^i ( A u. B ) ) = A $= finabs_0 finabs_0 finabs_1 cun wss finabs_0 finabs_0 finabs_1 cun cin finabs_0 wceq finabs_0 finabs_1 ssun1 finabs_0 finabs_0 finabs_1 cun df-ss mpbi $.
@@ -1120,6 +1518,8 @@ $( Negation of subclass expressed in terms of intersection and proper
      subclass.  (Contributed by NM, 30-Jun-2004.)  (Proof shortened by Andrew
      Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
 	fnssinpss_0 $f class A $.
 	fnssinpss_1 $f class B $.
 	nssinpss $p |- ( -. A C_ B <-> ( A i^i B ) C. A ) $= fnssinpss_0 fnssinpss_1 cin fnssinpss_0 wne fnssinpss_0 fnssinpss_1 cin fnssinpss_0 wss fnssinpss_0 fnssinpss_1 cin fnssinpss_0 wne wa fnssinpss_0 fnssinpss_1 wss wn fnssinpss_0 fnssinpss_1 cin fnssinpss_0 wpss fnssinpss_0 fnssinpss_1 cin fnssinpss_0 wss fnssinpss_0 fnssinpss_1 cin fnssinpss_0 wne fnssinpss_0 fnssinpss_1 inss1 biantrur fnssinpss_0 fnssinpss_1 wss fnssinpss_0 fnssinpss_1 cin fnssinpss_0 fnssinpss_0 fnssinpss_1 df-ss necon3bbii fnssinpss_0 fnssinpss_1 cin fnssinpss_0 df-pss 3bitr4i $.
@@ -1127,6 +1527,8 @@ $}
 $( Negation of subclass expressed in terms of proper subclass and union.
      (Contributed by NM, 15-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	fnsspssun_0 $f class A $.
 	fnsspssun_1 $f class B $.
 	nsspssun $p |- ( -. A C_ B <-> B C. ( A u. B ) ) $= fnsspssun_0 fnsspssun_1 wss wn fnsspssun_1 fnsspssun_0 fnsspssun_1 cun wss fnsspssun_0 fnsspssun_1 cun fnsspssun_1 wss wn wa fnsspssun_1 fnsspssun_0 fnsspssun_1 cun wpss fnsspssun_0 fnsspssun_1 cun fnsspssun_1 wss fnsspssun_1 fnsspssun_0 fnsspssun_1 cun wss fnsspssun_0 fnsspssun_1 cun fnsspssun_1 wss wn wa fnsspssun_0 fnsspssun_1 wss fnsspssun_1 fnsspssun_0 fnsspssun_1 cun wss fnsspssun_0 fnsspssun_1 cun fnsspssun_1 wss wn fnsspssun_1 fnsspssun_0 ssun2 biantrur fnsspssun_0 fnsspssun_1 wss fnsspssun_0 fnsspssun_1 wss fnsspssun_1 fnsspssun_1 wss wa fnsspssun_0 fnsspssun_1 cun fnsspssun_1 wss fnsspssun_1 fnsspssun_1 wss fnsspssun_0 fnsspssun_1 wss fnsspssun_1 ssid biantru fnsspssun_0 fnsspssun_1 fnsspssun_1 unss bitri xchnxbir fnsspssun_1 fnsspssun_0 fnsspssun_1 cun dfpss3 bitr4i $.
@@ -1135,6 +1537,9 @@ $( Subclass defined in terms of class difference.  See comments under
        ~ dfun2 .  (Contributed by NM, 22-Mar-1998.)  (Proof shortened by Andrew
        Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	idfss4_0 $f set x $.
@@ -1148,6 +1553,9 @@ $( An alternate definition of the union of two classes in terms of class
        in terms of the single "primitive" operation ` \ ` (class difference).
        (Contributed by NM, 10-Jun-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	idfun2_0 $f set x $.
@@ -1160,6 +1568,9 @@ $( An alternate definition of the intersection of two classes in terms of
        ~ dfun2 .  Another version is given by ~ dfin4 .  (Contributed by NM,
        10-Jun-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	idfin2_0 $f set x $.
@@ -1171,6 +1582,9 @@ $( Difference with intersection.  Theorem 33 of [Suppes] p. 29.
        (Contributed by NM, 31-Mar-1998.)  (Proof shortened by Andrew Salmon,
        26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	idifin_0 $f set x $.
@@ -1181,6 +1595,8 @@ $}
 $( Union defined in terms of intersection (De Morgan's law).  Definition of
      union in [Mendelson] p. 231.  (Contributed by NM, 8-Jan-2002.) $)
 ${
+	$v A $.
+	$v B $.
 	fdfun3_0 $f class A $.
 	fdfun3_1 $f class B $.
 	dfun3 $p |- ( A u. B ) = ( _V \ ( ( _V \ A ) i^i ( _V \ B ) ) ) $= fdfun3_0 fdfun3_1 cun cvv cvv fdfun3_0 cdif fdfun3_1 cdif cdif cvv cvv fdfun3_0 cdif cvv fdfun3_1 cdif cin cdif fdfun3_0 fdfun3_1 dfun2 cvv fdfun3_0 cdif fdfun3_1 cdif cvv fdfun3_0 cdif cvv fdfun3_1 cdif cin cvv cvv fdfun3_0 cdif cvv fdfun3_1 cdif cin cvv fdfun3_0 cdif cvv cvv fdfun3_1 cdif cdif cdif cvv fdfun3_0 cdif fdfun3_1 cdif cvv fdfun3_0 cdif cvv fdfun3_1 cdif dfin2 cvv cvv fdfun3_1 cdif cdif fdfun3_1 cvv fdfun3_0 cdif fdfun3_1 ddif difeq2i eqtr2i difeq2i eqtri $.
@@ -1189,6 +1605,8 @@ $( Intersection defined in terms of union (De Morgan's law.  Similar to
      Exercise 4.10(n) of [Mendelson] p. 231.  (Contributed by NM,
      8-Jan-2002.) $)
 ${
+	$v A $.
+	$v B $.
 	fdfin3_0 $f class A $.
 	fdfin3_1 $f class B $.
 	dfin3 $p |- ( A i^i B ) = ( _V \ ( ( _V \ A ) u. ( _V \ B ) ) ) $= cvv cvv fdfin3_0 cvv fdfin3_1 cdif cdif cdif cdif fdfin3_0 cvv fdfin3_1 cdif cdif cvv cvv fdfin3_0 cdif cvv fdfin3_1 cdif cun cdif fdfin3_0 fdfin3_1 cin fdfin3_0 cvv fdfin3_1 cdif cdif ddif cvv fdfin3_0 cdif cvv fdfin3_1 cdif cun cvv fdfin3_0 cvv fdfin3_1 cdif cdif cdif cvv cvv fdfin3_0 cdif cvv fdfin3_1 cdif cun cvv cvv cvv fdfin3_0 cdif cdif cvv fdfin3_1 cdif cdif cdif cvv fdfin3_0 cvv fdfin3_1 cdif cdif cdif cvv fdfin3_0 cdif cvv fdfin3_1 cdif dfun2 cvv cvv fdfin3_0 cdif cdif cvv fdfin3_1 cdif cdif fdfin3_0 cvv fdfin3_1 cdif cdif cvv cvv cvv fdfin3_0 cdif cdif fdfin3_0 cvv fdfin3_1 cdif fdfin3_0 ddif difeq1i difeq2i eqtri difeq2i fdfin3_0 fdfin3_1 dfin2 3eqtr4ri $.
@@ -1196,6 +1614,8 @@ $}
 $( Alternate definition of the intersection of two classes.  Exercise 4.10(q)
      of [Mendelson] p. 231.  (Contributed by NM, 25-Nov-2003.) $)
 ${
+	$v A $.
+	$v B $.
 	fdfin4_0 $f class A $.
 	fdfin4_1 $f class B $.
 	dfin4 $p |- ( A i^i B ) = ( A \ ( A \ B ) ) $= fdfin4_0 fdfin4_0 fdfin4_0 fdfin4_1 cin cdif cdif fdfin4_0 fdfin4_1 cin fdfin4_0 fdfin4_0 fdfin4_1 cdif cdif fdfin4_0 fdfin4_1 cin fdfin4_0 wss fdfin4_0 fdfin4_0 fdfin4_0 fdfin4_1 cin cdif cdif fdfin4_0 fdfin4_1 cin wceq fdfin4_0 fdfin4_1 inss1 fdfin4_0 fdfin4_1 cin fdfin4_0 dfss4 mpbi fdfin4_0 fdfin4_0 fdfin4_1 cin cdif fdfin4_0 fdfin4_1 cdif fdfin4_0 fdfin4_0 fdfin4_1 difin difeq2i eqtr3i $.
@@ -1203,6 +1623,8 @@ $}
 $( Intersection with universal complement.  Remark in [Stoll] p. 20.
      (Contributed by NM, 17-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	finvdif_0 $f class A $.
 	finvdif_1 $f class B $.
 	invdif $p |- ( A i^i ( _V \ B ) ) = ( A \ B ) $= finvdif_0 cvv finvdif_1 cdif cin finvdif_0 cvv cvv finvdif_1 cdif cdif cdif finvdif_0 finvdif_1 cdif finvdif_0 cvv finvdif_1 cdif dfin2 cvv cvv finvdif_1 cdif cdif finvdif_1 finvdif_0 finvdif_1 ddif difeq2i eqtri $.
@@ -1210,6 +1632,8 @@ $}
 $( Intersection with class difference.  Theorem 34 of [Suppes] p. 29.
      (Contributed by NM, 17-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	findif_0 $f class A $.
 	findif_1 $f class B $.
 	indif $p |- ( A i^i ( A \ B ) ) = ( A \ B ) $= findif_0 findif_0 findif_1 cdif cin findif_0 findif_0 findif_0 findif_1 cdif cdif cdif findif_0 findif_0 findif_1 cin cdif findif_0 findif_1 cdif findif_0 findif_0 findif_1 cdif dfin4 findif_0 findif_1 cin findif_0 findif_0 findif_1 cdif cdif findif_0 findif_0 findif_1 dfin4 difeq2i findif_0 findif_1 difin 3eqtr2i $.
@@ -1217,6 +1641,9 @@ $}
 $( Bring an intersection in and out of a class difference.  (Contributed by
      Jeff Hankins, 15-Jul-2009.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	findif2_0 $f class A $.
 	findif2_1 $f class B $.
 	findif2_2 $f class C $.
@@ -1225,6 +1652,9 @@ $}
 $( Bring an intersection in and out of a class difference.  (Contributed by
      Mario Carneiro, 15-May-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	findif1_0 $f class A $.
 	findif1_1 $f class B $.
 	findif1_2 $f class C $.
@@ -1233,6 +1663,9 @@ $}
 $( Commutation law for intersection and difference.  (Contributed by Scott
      Fenton, 18-Feb-2013.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	findifcom_0 $f class A $.
 	findifcom_1 $f class B $.
 	findifcom_2 $f class C $.
@@ -1242,6 +1675,10 @@ $( Distributive law for intersection over union.  Exercise 10 of
        [TakeutiZaring] p. 17.  (Contributed by NM, 30-Sep-2002.)  (Proof
        shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1255,6 +1692,10 @@ $( Distributive law for union over intersection.  Exercise 11 of
        [TakeutiZaring] p. 17.  (Contributed by NM, 30-Sep-2002.)  (Proof
        shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1267,6 +1708,9 @@ $}
 $( Distributive law for intersection over union.  Theorem 28 of [Suppes]
      p. 27.  (Contributed by NM, 30-Sep-2002.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	findir_0 $f class A $.
 	findir_1 $f class B $.
 	findir_2 $f class C $.
@@ -1275,6 +1719,9 @@ $}
 $( Distributive law for union over intersection.  Theorem 29 of [Suppes]
      p. 27.  (Contributed by NM, 30-Sep-2002.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fundir_0 $f class A $.
 	fundir_1 $f class B $.
 	fundir_2 $f class C $.
@@ -1284,6 +1731,10 @@ $( Infer equality from equalities of union and intersection.  Exercise 20
        of [Enderton] p. 32 and its converse.  (Contributed by NM,
        10-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1297,6 +1748,8 @@ $( Equality of union and intersection implies equality of their arguments.
      (Contributed by NM, 16-Apr-2006.)  (Proof shortened by Andrew Salmon,
      26-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
 	funeqin_0 $f class A $.
 	funeqin_1 $f class B $.
 	uneqin $p |- ( ( A u. B ) = ( A i^i B ) <-> A = B ) $= funeqin_0 funeqin_1 cun funeqin_0 funeqin_1 cin wceq funeqin_0 funeqin_1 wceq funeqin_0 funeqin_1 cun funeqin_0 funeqin_1 cin wceq funeqin_0 funeqin_1 wss funeqin_1 funeqin_0 wss wa funeqin_0 funeqin_1 wceq funeqin_0 funeqin_1 cun funeqin_0 funeqin_1 cin wceq funeqin_0 funeqin_1 cun funeqin_0 funeqin_1 cin wss funeqin_0 funeqin_1 wss funeqin_1 funeqin_0 wss wa funeqin_0 funeqin_1 cun funeqin_0 funeqin_1 cin eqimss funeqin_0 funeqin_1 cun funeqin_0 funeqin_1 cin wss funeqin_0 funeqin_0 funeqin_1 cin wss funeqin_1 funeqin_0 funeqin_1 cin wss wa funeqin_0 funeqin_1 wss funeqin_1 funeqin_0 wss wa funeqin_0 funeqin_1 funeqin_0 funeqin_1 cin unss funeqin_0 funeqin_0 funeqin_1 cin wss funeqin_0 funeqin_1 wss funeqin_1 funeqin_0 funeqin_1 cin wss funeqin_1 funeqin_0 wss funeqin_0 funeqin_0 funeqin_1 cin wss funeqin_0 funeqin_0 wss funeqin_0 funeqin_1 wss wa funeqin_0 funeqin_1 wss funeqin_0 funeqin_0 funeqin_1 ssin funeqin_0 funeqin_0 funeqin_1 sstr sylbir funeqin_1 funeqin_0 funeqin_1 cin wss funeqin_1 funeqin_0 wss funeqin_1 funeqin_1 wss wa funeqin_1 funeqin_0 wss funeqin_1 funeqin_0 funeqin_1 ssin funeqin_1 funeqin_0 wss funeqin_1 funeqin_1 wss simpl sylbir anim12i sylbir syl funeqin_0 funeqin_1 eqss sylibr funeqin_0 funeqin_1 wceq funeqin_0 funeqin_0 cun funeqin_0 funeqin_0 cin funeqin_0 funeqin_1 cun funeqin_0 funeqin_1 cin funeqin_0 funeqin_0 cun funeqin_0 funeqin_0 funeqin_0 cin funeqin_0 unidm funeqin_0 inidm eqtr4i funeqin_0 funeqin_1 funeqin_0 uneq2 funeqin_0 funeqin_1 funeqin_0 ineq2 3eqtr3a impbii $.
@@ -1304,6 +1757,9 @@ $}
 $( Distributive law for class difference.  Theorem 39 of [Suppes] p. 29.
      (Contributed by NM, 17-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fdifundi_0 $f class A $.
 	fdifundi_1 $f class B $.
 	fdifundi_2 $f class C $.
@@ -1312,6 +1768,9 @@ $}
 $( Distributive law for class difference.  (Contributed by NM,
      17-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fdifundir_0 $f class A $.
 	fdifundir_1 $f class B $.
 	fdifundir_2 $f class C $.
@@ -1320,6 +1779,9 @@ $}
 $( Distributive law for class difference.  Theorem 40 of [Suppes] p. 29.
      (Contributed by NM, 17-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fdifindi_0 $f class A $.
 	fdifindi_1 $f class B $.
 	fdifindi_2 $f class C $.
@@ -1328,6 +1790,9 @@ $}
 $( Distributive law for class difference.  (Contributed by NM,
      17-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fdifindir_0 $f class A $.
 	fdifindir_1 $f class B $.
 	fdifindir_2 $f class C $.
@@ -1336,6 +1801,10 @@ $}
 $( Distribute intersection over difference.  (Contributed by Scott Fenton,
        14-Apr-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d A x $.
 	$d B x $.
 	$d C x $.
@@ -1348,6 +1817,8 @@ $}
 $( De Morgan's law for union.  Theorem 5.2(13) of [Stoll] p. 19.
      (Contributed by NM, 18-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	fundm_0 $f class A $.
 	fundm_1 $f class B $.
 	undm $p |- ( _V \ ( A u. B ) ) = ( ( _V \ A ) i^i ( _V \ B ) ) $= cvv fundm_0 fundm_1 difundi $.
@@ -1355,6 +1826,8 @@ $}
 $( De Morgan's law for intersection.  Theorem 5.2(13') of [Stoll] p. 19.
      (Contributed by NM, 18-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	findm_0 $f class A $.
 	findm_1 $f class B $.
 	indm $p |- ( _V \ ( A i^i B ) ) = ( ( _V \ A ) u. ( _V \ B ) ) $= cvv findm_0 findm_1 difindi $.
@@ -1362,6 +1835,9 @@ $}
 $( A relationship involving double difference and union.  (Contributed by NM,
      29-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fdifun1_0 $f class A $.
 	fdifun1_1 $f class B $.
 	fdifun1_2 $f class C $.
@@ -1371,6 +1847,10 @@ $( An equality involving class union and class difference.  The first
        equality of Exercise 13 of [TakeutiZaring] p. 22.  (Contributed by Alan
        Sare, 17-Apr-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d A x $.
 	$d B x $.
 	$d C x $.
@@ -1383,6 +1863,10 @@ $}
 $( Represent a set difference as an intersection with a larger difference.
        (Contributed by Jeff Madsen, 2-Sep-2009.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d A x $.
 	$d B x $.
 	$d C x $.
@@ -1395,6 +1879,9 @@ $}
 $( Swap second and third argument of double difference.  (Contributed by NM,
      18-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fdif32_0 $f class A $.
 	fdif32_1 $f class B $.
 	fdif32_2 $f class C $.
@@ -1403,6 +1890,8 @@ $}
 $( Absorption-like law for class difference: you can remove a class only
      once.  (Contributed by FL, 2-Aug-2009.) $)
 ${
+	$v A $.
+	$v B $.
 	fdifabs_0 $f class A $.
 	fdifabs_1 $f class B $.
 	difabs $p |- ( ( A \ B ) \ B ) = ( A \ B ) $= fdifabs_0 fdifabs_1 fdifabs_1 cun cdif fdifabs_0 fdifabs_1 cdif fdifabs_1 cdif fdifabs_0 fdifabs_1 cdif fdifabs_0 fdifabs_1 fdifabs_1 difun1 fdifabs_1 fdifabs_1 cun fdifabs_1 fdifabs_0 fdifabs_1 unidm difeq2i eqtr3i $.
@@ -1412,6 +1901,8 @@ $( Two ways to express symmetric difference.  This theorem shows the
      the restated definition in Example 4.1 of [Stoll] p. 262.  (Contributed by
      NM, 17-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
 	fsymdif1_0 $f class A $.
 	fsymdif1_1 $f class B $.
 	symdif1 $p |- ( ( A \ B ) u. ( B \ A ) ) = ( ( A u. B ) \ ( A i^i B ) ) $= fsymdif1_0 fsymdif1_1 cun fsymdif1_0 fsymdif1_1 cin cdif fsymdif1_0 fsymdif1_0 fsymdif1_1 cin cdif fsymdif1_1 fsymdif1_0 fsymdif1_1 cin cdif cun fsymdif1_0 fsymdif1_1 cdif fsymdif1_1 fsymdif1_0 cdif cun fsymdif1_0 fsymdif1_1 fsymdif1_0 fsymdif1_1 cin difundir fsymdif1_0 fsymdif1_0 fsymdif1_1 cin cdif fsymdif1_0 fsymdif1_1 cdif fsymdif1_1 fsymdif1_0 fsymdif1_1 cin cdif fsymdif1_1 fsymdif1_0 cdif fsymdif1_0 fsymdif1_1 difin fsymdif1_1 fsymdif1_0 fsymdif1_1 cin cdif fsymdif1_1 fsymdif1_1 fsymdif1_0 cin cdif fsymdif1_1 fsymdif1_0 cdif fsymdif1_0 fsymdif1_1 cin fsymdif1_1 fsymdif1_0 cin fsymdif1_1 fsymdif1_0 fsymdif1_1 incom difeq2i fsymdif1_1 fsymdif1_0 difin eqtri uneq12i eqtr2i $.
@@ -1419,6 +1910,9 @@ $}
 $( Two ways to express symmetric difference.  (Contributed by NM,
        17-Aug-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fsymdif2_0 $f set x $.
@@ -1429,6 +1923,10 @@ $}
 $( Union of two class abstractions.  (Contributed by NM, 29-Sep-2002.)
        (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d ph y $.
 	$d ps y $.
@@ -1441,6 +1939,10 @@ $}
 $( Intersection of two class abstractions.  (Contributed by NM,
        29-Sep-2002.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d ph y $.
 	$d ps y $.
@@ -1453,6 +1955,10 @@ $}
 $( Difference of two class abstractions.  (Contributed by NM,
        23-Oct-2004.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d ph y $.
 	$d ps y $.
@@ -1465,6 +1971,8 @@ $}
 $( A class builder defined by a negation.  (Contributed by FL,
      18-Sep-2010.) $)
 ${
+	$v ph $.
+	$v x $.
 	fnotab_0 $f wff ph $.
 	fnotab_1 $f set x $.
 	notab $p |- { x | -. ph } = ( _V \ { x | ph } ) $= fnotab_1 sup_set_class cvv wcel fnotab_0 wn wa fnotab_1 cab fnotab_0 wn fnotab_1 cab cvv fnotab_0 fnotab_1 cab cdif fnotab_0 wn fnotab_1 cvv crab fnotab_1 sup_set_class cvv wcel fnotab_0 wn wa fnotab_1 cab fnotab_0 wn fnotab_1 cab fnotab_0 wn fnotab_1 cvv df-rab fnotab_0 wn fnotab_1 rabab eqtr3i fnotab_1 sup_set_class cvv wcel fnotab_1 cab fnotab_0 fnotab_1 cab cdif fnotab_1 sup_set_class cvv wcel fnotab_0 wn wa fnotab_1 cab cvv fnotab_0 fnotab_1 cab cdif fnotab_1 sup_set_class cvv wcel fnotab_0 fnotab_1 difab fnotab_1 sup_set_class cvv wcel fnotab_1 cab cvv fnotab_0 fnotab_1 cab fnotab_1 cvv abid2 difeq1i eqtr3i eqtr3i $.
@@ -1472,6 +1980,10 @@ $}
 $( Union of two restricted class abstractions.  (Contributed by NM,
      25-Mar-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	funrab_0 $f wff ph $.
 	funrab_1 $f wff ps $.
 	funrab_2 $f set x $.
@@ -1481,6 +1993,10 @@ $}
 $( Intersection of two restricted class abstractions.  (Contributed by NM,
      1-Sep-2006.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	finrab_0 $f wff ph $.
 	finrab_1 $f wff ps $.
 	finrab_2 $f set x $.
@@ -1490,6 +2006,10 @@ $}
 $( Intersection with a restricted class abstraction.  (Contributed by NM,
        19-Nov-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x B $.
 	finrab2_0 $f wff ph $.
 	finrab2_1 $f set x $.
@@ -1500,6 +2020,10 @@ $}
 $( Difference of two restricted class abstractions.  (Contributed by NM,
      23-Oct-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fdifrab_0 $f wff ph $.
 	fdifrab_1 $f wff ps $.
 	fdifrab_2 $f set x $.
@@ -1509,6 +2033,9 @@ $}
 $( Alternate definition of restricted class abstraction.  (Contributed by
        NM, 20-Sep-2003.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fdfrab2_0 $f wff ph $.
 	fdfrab2_1 $f set x $.
@@ -1518,6 +2045,9 @@ $}
 $( Alternate definition of restricted class abstraction.  (Contributed by
        Mario Carneiro, 8-Sep-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fdfrab3_0 $f wff ph $.
 	fdfrab3_1 $f set x $.
@@ -1527,6 +2057,9 @@ $}
 $( Complementation of restricted class abstractions.  (Contributed by Mario
        Carneiro, 3-Sep-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fnotrab_0 $f wff ph $.
 	fnotrab_1 $f set x $.
@@ -1537,6 +2070,10 @@ $( Restricted class abstraction with a common superset.  (Contributed by
        Stefan O'Rear, 12-Sep-2015.)  (Proof shortened by Mario Carneiro,
        8-Nov-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fdfrab3ss_0 $f wff ph $.
@@ -1548,6 +2085,10 @@ $}
 $( Abstraction restricted to a union.  (Contributed by Stefan O'Rear,
      5-Feb-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	frabun2_0 $f wff ph $.
 	frabun2_1 $f set x $.
 	frabun2_2 $f class A $.
@@ -1557,6 +2098,11 @@ $}
 $( Transfer uniqueness to a smaller subclass.  (Contributed by NM,
        20-Oct-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	freuss2_0 $f wff ph $.
@@ -1569,6 +2115,10 @@ $}
 $( Transfer uniqueness to a smaller subclass.  (Contributed by NM,
        21-Aug-1999.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	freuss_0 $f wff ph $.
@@ -1580,6 +2130,11 @@ $}
 $( Transfer uniqueness to a smaller class.  (Contributed by NM,
        21-Oct-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	freuun1_0 $f wff ph $.
@@ -1592,6 +2147,10 @@ $}
 $( Transfer uniqueness to a smaller or larger class.  (Contributed by NM,
        21-Oct-2005.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	freuun2_0 $f wff ph $.
@@ -1603,6 +2162,10 @@ $}
 $( Restricted uniqueness "picks" a member of a subclass.  (Contributed by
        NM, 21-Aug-1999.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	freupick_0 $f wff ph $.
@@ -1614,6 +2177,10 @@ $}
 $( Restricted uniqueness "picks" a member of a subclass.  (Contributed by
        Mario Carneiro, 19-Nov-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	freupick3_0 $f wff ph $.
 	freupick3_1 $f wff ps $.
@@ -1625,6 +2192,10 @@ $( Restricted uniqueness "picks" a member of a subclass.  (Contributed by
        Mario Carneiro, 15-Dec-2013.)  (Proof shortened by Mario Carneiro,
        19-Nov-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	freupick2_0 $f wff ph $.
 	freupick2_1 $f wff ps $.

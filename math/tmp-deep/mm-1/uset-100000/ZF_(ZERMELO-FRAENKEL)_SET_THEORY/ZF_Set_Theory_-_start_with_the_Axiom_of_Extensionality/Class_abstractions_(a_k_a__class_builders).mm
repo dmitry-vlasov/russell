@@ -28,6 +28,8 @@ $( Introduce the class builder or class abstraction notation ("the class of
      as a class builder per theorem ~ cvjust , justifying the assignment of set
      variables to class variables via the use of ~ cv . $)
 ${
+	$v ph $.
+	$v x $.
 	fcab_0 $f wff ph $.
 	fcab_1 $f set x $.
 	cab $a class { x | ph } $.
@@ -156,6 +158,9 @@ $( Define class abstraction notation (so-called by Quine), also called a
      ~ http://us.metamath.org/mpeuni/mmset.html#class .  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fdf-clab_0 $f wff ph $.
 	fdf-clab_1 $f set x $.
 	fdf-clab_2 $f set y $.
@@ -164,6 +169,8 @@ $}
 $( Simplification of class abstraction notation when the free and bound
      variables are identical.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
 	fabid_0 $f wff ph $.
 	fabid_1 $f set x $.
 	abid $p |- ( x e. { x | ph } <-> ph ) $= fabid_1 sup_set_class fabid_0 fabid_1 cab wcel fabid_0 fabid_1 fabid_1 wsb fabid_0 fabid_0 fabid_1 fabid_1 df-clab fabid_0 fabid_1 sbid bitri $.
@@ -171,6 +178,9 @@ $}
 $( Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fhbab1_0 $f wff ph $.
 	fhbab1_1 $f set x $.
@@ -180,6 +190,9 @@ $}
 $( Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	fnfsab1_0 $f wff ph $.
 	fnfsab1_1 $f set x $.
@@ -189,6 +202,10 @@ $}
 $( Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by NM, 1-Mar-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	fhbab_0 $f wff ph $.
 	fhbab_1 $f set x $.
@@ -200,6 +217,10 @@ $}
 $( Bound-variable hypothesis builder for a class abstraction.  (Contributed
        by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	fnfsab_0 $f wff ph $.
 	fnfsab_1 $f set x $.
@@ -247,6 +268,11 @@ $( Define the equality connective between classes.  Definition 2.7 of
        ~ http://us.metamath.org/mpeuni/mmset.html#class .  (Contributed by NM,
        15-Sep-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x y z $.
@@ -261,6 +287,11 @@ $}
 $( The same as ~ df-cleq with the hypothesis removed using the Axiom of
        Extensionality ~ ax-ext .  (Contributed by NM, 15-Sep-1993.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v y $.
+	$v z $.
 	$d x A $.
 	$d x B $.
 	$d x y z $.
@@ -283,6 +314,9 @@ $( Every set is a class.  Proposition 4.9 of [TakeutiZaring] p. 13.  This
        [Jech] p. 4 showing that "Every set can be considered to be a class."
        (Contributed by NM, 7-Nov-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	icvjust_0 $f set z $.
 	fcvjust_0 $f set x $.
@@ -309,6 +343,9 @@ $( Define the membership connective between classes.  Theorem 6.3 of
        ~ http://us.metamath.org/mpeuni/mmset.html#class .  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	fdf-clel_0 $f set x $.
@@ -319,6 +356,9 @@ $}
 $( Infer equality of classes from equivalence of membership.  (Contributed
        by NM, 5-Aug-1993.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	feqriv_0 $f set x $.
@@ -330,6 +370,10 @@ $}
 $( Deduce equality of classes from equivalence of membership.  (Contributed
        by NM, 17-Mar-1996.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	$d x ph $.
@@ -342,8 +386,12 @@ ${
 $}
 $( Deduce equality of classes from an equivalence of membership that
        depends on the membership variable.  (Contributed by NM, 7-Nov-2008.) $)
-$v C $.
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x ph $.
@@ -368,6 +416,8 @@ $( Law of identity (reflexivity of class equality).  Theorem 6.4 of [Quine]
        and Beno&icirc;t Jubin for this information.)  (Contributed by NM,
        5-Aug-1993.)  (Revised by Beno&icirc;t Jubin, 14-Oct-2017.) $)
 ${
+	$v A $.
+	$v x $.
 	$d x A $.
 	ieqid_0 $f set x $.
 	feqid_0 $f class A $.
@@ -375,6 +425,8 @@ ${
 $}
 $( Class identity law with antecedent.  (Contributed by NM, 21-Aug-2008.) $)
 ${
+	$v ph $.
+	$v A $.
 	feqidd_0 $f wff ph $.
 	feqidd_1 $f class A $.
 	eqidd $p |- ( ph -> A = A ) $= feqidd_1 feqidd_1 wceq feqidd_0 feqidd_1 eqid a1i $.
@@ -382,6 +434,9 @@ $}
 $( Commutative law for class equality.  Theorem 6.5 of [Quine] p. 41.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	ieqcom_0 $f set x $.
@@ -392,6 +447,9 @@ $}
 $( Inference applying commutative law for class equality to an antecedent.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	feqcoms_0 $f wff ph $.
 	feqcoms_1 $f class A $.
 	feqcoms_2 $f class B $.
@@ -401,6 +459,8 @@ $}
 $( Inference from commutative law for class equality.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
 	feqcomi_0 $f class A $.
 	feqcomi_1 $f class B $.
 	eeqcomi_0 $e |- A = B $.
@@ -409,6 +469,9 @@ $}
 $( Deduction from commutative law for class equality.  (Contributed by NM,
        15-Aug-1994.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	feqcomd_0 $f wff ph $.
 	feqcomd_1 $f class A $.
 	feqcomd_2 $f class B $.
@@ -418,6 +481,10 @@ $}
 $( Equality implies equivalence of equalities.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -430,6 +497,9 @@ $}
 $( Inference from equality to equivalence of equalities.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feqeq1i_0 $f class A $.
 	feqeq1i_1 $f class B $.
 	feqeq1i_2 $f class C $.
@@ -439,6 +509,10 @@ $}
 $( Deduction from equality to equivalence of equalities.  (Contributed by
        NM, 27-Dec-1993.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feqeq1d_0 $f wff ph $.
 	feqeq1d_1 $f class A $.
 	feqeq1d_2 $f class B $.
@@ -449,6 +523,9 @@ $}
 $( Equality implies equivalence of equalities.  (Contributed by NM,
      5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feqeq2_0 $f class A $.
 	feqeq2_1 $f class B $.
 	feqeq2_2 $f class C $.
@@ -457,6 +534,9 @@ $}
 $( Inference from equality to equivalence of equalities.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feqeq2i_0 $f class A $.
 	feqeq2i_1 $f class B $.
 	feqeq2i_2 $f class C $.
@@ -466,6 +546,10 @@ $}
 $( Deduction from equality to equivalence of equalities.  (Contributed by
        NM, 27-Dec-1993.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feqeq2d_0 $f wff ph $.
 	feqeq2d_1 $f class A $.
 	feqeq2d_2 $f class B $.
@@ -475,8 +559,11 @@ ${
 $}
 $( Equality relationship among 4 classes.  (Contributed by NM,
      3-Aug-1994.) $)
-$v D $.
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	feqeq12_0 $f class A $.
 	feqeq12_1 $f class B $.
 	feqeq12_2 $f class C $.
@@ -487,6 +574,10 @@ $( A useful inference for substituting definitions into an equality.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
        25-May-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	feqeq12i_0 $f class A $.
 	feqeq12i_1 $f class B $.
 	feqeq12i_2 $f class C $.
@@ -501,6 +592,11 @@ $( A useful inference for substituting definitions into an equality.
        (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew Salmon,
        25-May-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	feqeq12d_0 $f wff ph $.
 	feqeq12d_1 $f class A $.
 	feqeq12d_2 $f class B $.
@@ -514,6 +610,12 @@ $( A useful inference for substituting definitions into an equality.
        (Contributed by NM, 9-Aug-1994.)  (Proof shortened by Andrew Salmon,
        25-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	feqeqan12d_0 $f wff ph $.
 	feqeqan12d_1 $f wff ps $.
 	feqeqan12d_2 $f class A $.
@@ -527,6 +629,12 @@ $}
 $( A useful inference for substituting definitions into an equality.
        (Contributed by NM, 9-Aug-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	feqeqan12rd_0 $f wff ph $.
 	feqeqan12rd_1 $f wff ps $.
 	feqeqan12rd_2 $f class A $.
@@ -540,6 +648,9 @@ $}
 $( Transitive law for class equality.  Proposition 4.7(3) of [TakeutiZaring]
      p. 13.  (Contributed by NM, 25-Jan-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feqtr_0 $f class A $.
 	feqtr_1 $f class B $.
 	feqtr_2 $f class C $.
@@ -548,6 +659,9 @@ $}
 $( A transitive law for class equality.  (Contributed by NM, 20-May-2005.)
      (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feqtr2_0 $f class A $.
 	feqtr2_1 $f class B $.
 	feqtr2_2 $f class C $.
@@ -555,6 +669,9 @@ ${
 $}
 $( A transitive law for class equality.  (Contributed by NM, 20-May-2005.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feqtr3_0 $f class A $.
 	feqtr3_1 $f class B $.
 	feqtr3_2 $f class C $.
@@ -562,6 +679,9 @@ ${
 $}
 $( An equality transitivity inference.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feqtri_0 $f class A $.
 	feqtri_1 $f class B $.
 	feqtri_2 $f class C $.
@@ -572,6 +692,9 @@ $}
 $( An equality transitivity inference.  (Contributed by NM,
        21-Feb-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feqtr2i_0 $f class A $.
 	feqtr2i_1 $f class B $.
 	feqtr2i_2 $f class C $.
@@ -581,6 +704,9 @@ ${
 $}
 $( An equality transitivity inference.  (Contributed by NM, 6-May-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feqtr3i_0 $f class A $.
 	feqtr3i_1 $f class B $.
 	feqtr3i_2 $f class C $.
@@ -590,6 +716,9 @@ ${
 $}
 $( An equality transitivity inference.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feqtr4i_0 $f class A $.
 	feqtr4i_1 $f class B $.
 	feqtr4i_2 $f class C $.
@@ -602,6 +731,10 @@ $( $j equality 'wceq' from 'eqid' 'eqcomi' 'eqtri'; $)
 $( An inference from three chained equalities.  (Contributed by NM,
        29-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eqtri_0 $f class A $.
 	f3eqtri_1 $f class B $.
 	f3eqtri_2 $f class C $.
@@ -614,6 +747,10 @@ $}
 $( An inference from three chained equalities.  (Contributed by NM,
        3-Aug-2006.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eqtrri_0 $f class A $.
 	f3eqtrri_1 $f class B $.
 	f3eqtrri_2 $f class C $.
@@ -626,6 +763,10 @@ $}
 $( An inference from three chained equalities.  (Contributed by NM,
        3-Aug-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eqtr2i_0 $f class A $.
 	f3eqtr2i_1 $f class B $.
 	f3eqtr2i_2 $f class C $.
@@ -638,6 +779,10 @@ $}
 $( An inference from three chained equalities.  (Contributed by NM,
        3-Aug-2006.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eqtr2ri_0 $f class A $.
 	f3eqtr2ri_1 $f class B $.
 	f3eqtr2ri_2 $f class C $.
@@ -650,6 +795,10 @@ $}
 $( An inference from three chained equalities.  (Contributed by NM,
        6-May-1994.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eqtr3i_0 $f class A $.
 	f3eqtr3i_1 $f class B $.
 	f3eqtr3i_2 $f class C $.
@@ -662,6 +811,10 @@ $}
 $( An inference from three chained equalities.  (Contributed by NM,
        15-Aug-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eqtr3ri_0 $f class A $.
 	f3eqtr3ri_1 $f class B $.
 	f3eqtr3ri_2 $f class C $.
@@ -674,6 +827,10 @@ $}
 $( An inference from three chained equalities.  (Contributed by NM,
        5-Aug-1993.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eqtr4i_0 $f class A $.
 	f3eqtr4i_1 $f class B $.
 	f3eqtr4i_2 $f class C $.
@@ -686,6 +843,10 @@ $}
 $( An inference from three chained equalities.  (Contributed by NM,
        2-Sep-1995.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eqtr4ri_0 $f class A $.
 	f3eqtr4ri_1 $f class B $.
 	f3eqtr4ri_2 $f class C $.
@@ -697,6 +858,10 @@ ${
 $}
 $( An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feqtrd_0 $f wff ph $.
 	feqtrd_1 $f class A $.
 	feqtrd_2 $f class B $.
@@ -708,6 +873,10 @@ $}
 $( An equality transitivity deduction.  (Contributed by NM,
        18-Oct-1999.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feqtr2d_0 $f wff ph $.
 	feqtr2d_1 $f class A $.
 	feqtr2d_2 $f class B $.
@@ -719,6 +888,10 @@ $}
 $( An equality transitivity equality deduction.  (Contributed by NM,
        18-Jul-1995.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feqtr3d_0 $f wff ph $.
 	feqtr3d_1 $f class A $.
 	feqtr3d_2 $f class B $.
@@ -730,6 +903,10 @@ $}
 $( An equality transitivity equality deduction.  (Contributed by NM,
        18-Jul-1995.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feqtr4d_0 $f wff ph $.
 	feqtr4d_1 $f class A $.
 	feqtr4d_2 $f class B $.
@@ -741,6 +918,11 @@ $}
 $( A deduction from three chained equalities.  (Contributed by NM,
        29-Oct-1995.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eqtrd_0 $f wff ph $.
 	f3eqtrd_1 $f class A $.
 	f3eqtrd_2 $f class B $.
@@ -754,6 +936,11 @@ $}
 $( A deduction from three chained equalities.  (Contributed by NM,
        4-Aug-2006.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eqtrrd_0 $f wff ph $.
 	f3eqtrrd_1 $f class A $.
 	f3eqtrrd_2 $f class B $.
@@ -767,6 +954,11 @@ $}
 $( A deduction from three chained equalities.  (Contributed by NM,
        4-Aug-2006.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eqtr2d_0 $f wff ph $.
 	f3eqtr2d_1 $f class A $.
 	f3eqtr2d_2 $f class B $.
@@ -780,6 +972,11 @@ $}
 $( A deduction from three chained equalities.  (Contributed by NM,
        4-Aug-2006.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eqtr2rd_0 $f wff ph $.
 	f3eqtr2rd_1 $f class A $.
 	f3eqtr2rd_2 $f class B $.
@@ -793,6 +990,11 @@ $}
 $( A deduction from three chained equalities.  (Contributed by NM,
        4-Aug-1995.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eqtr3d_0 $f wff ph $.
 	f3eqtr3d_1 $f class A $.
 	f3eqtr3d_2 $f class B $.
@@ -806,6 +1008,11 @@ $}
 $( A deduction from three chained equalities.  (Contributed by NM,
        14-Jan-2006.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eqtr3rd_0 $f wff ph $.
 	f3eqtr3rd_1 $f class A $.
 	f3eqtr3rd_2 $f class B $.
@@ -819,6 +1026,11 @@ $}
 $( A deduction from three chained equalities.  (Contributed by NM,
        4-Aug-1995.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eqtr4d_0 $f wff ph $.
 	f3eqtr4d_1 $f class A $.
 	f3eqtr4d_2 $f class B $.
@@ -832,6 +1044,11 @@ $}
 $( A deduction from three chained equalities.  (Contributed by NM,
        21-Sep-1995.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eqtr4rd_0 $f wff ph $.
 	f3eqtr4rd_1 $f class A $.
 	f3eqtr4rd_2 $f class B $.
@@ -844,6 +1061,10 @@ ${
 $}
 $( An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl5eq_0 $f wff ph $.
 	fsyl5eq_1 $f class A $.
 	fsyl5eq_2 $f class B $.
@@ -855,6 +1076,10 @@ $}
 $( An equality transitivity deduction.  (Contributed by NM,
        29-Mar-1998.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl5req_0 $f wff ph $.
 	fsyl5req_1 $f class A $.
 	fsyl5req_2 $f class B $.
@@ -865,6 +1090,10 @@ ${
 $}
 $( An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl5eqr_0 $f wff ph $.
 	fsyl5eqr_1 $f class A $.
 	fsyl5eqr_2 $f class B $.
@@ -876,6 +1105,10 @@ $}
 $( An equality transitivity deduction.  (Contributed by NM,
        29-Mar-1998.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl5reqr_0 $f wff ph $.
 	fsyl5reqr_1 $f class A $.
 	fsyl5reqr_2 $f class B $.
@@ -886,6 +1119,10 @@ ${
 $}
 $( An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl6eq_0 $f wff ph $.
 	fsyl6eq_1 $f class A $.
 	fsyl6eq_2 $f class B $.
@@ -897,6 +1134,10 @@ $}
 $( An equality transitivity deduction.  (Contributed by NM,
        29-Mar-1998.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl6req_0 $f wff ph $.
 	fsyl6req_1 $f class A $.
 	fsyl6req_2 $f class B $.
@@ -907,6 +1148,10 @@ ${
 $}
 $( An equality transitivity deduction.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl6eqr_0 $f wff ph $.
 	fsyl6eqr_1 $f class A $.
 	fsyl6eqr_2 $f class B $.
@@ -918,6 +1163,10 @@ $}
 $( An equality transitivity deduction.  (Contributed by NM,
        29-Mar-1998.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl6reqr_0 $f wff ph $.
 	fsyl6reqr_1 $f class A $.
 	fsyl6reqr_2 $f class B $.
@@ -929,6 +1178,11 @@ $}
 $( An equality transitivity deduction.  (Contributed by NM, 8-May-1994.)
        (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsylan9eq_0 $f wff ph $.
 	fsylan9eq_1 $f wff ps $.
 	fsylan9eq_2 $f class A $.
@@ -941,6 +1195,11 @@ $}
 $( An equality transitivity deduction.  (Contributed by NM,
        23-Jun-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsylan9req_0 $f wff ph $.
 	fsylan9req_1 $f wff ps $.
 	fsylan9req_2 $f class A $.
@@ -952,6 +1211,11 @@ ${
 $}
 $( An equality transitivity deduction.  (Contributed by NM, 8-May-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsylan9eqr_0 $f wff ph $.
 	fsylan9eqr_1 $f wff ps $.
 	fsylan9eqr_2 $f class A $.
@@ -964,6 +1228,11 @@ $}
 $( A chained equality inference, useful for converting from definitions.
        (Contributed by NM, 15-Nov-1994.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eqtr3g_0 $f wff ph $.
 	f3eqtr3g_1 $f class A $.
 	f3eqtr3g_2 $f class B $.
@@ -977,6 +1246,11 @@ $}
 $( A chained equality inference, useful for converting from definitions.
        (Contributed by Mario Carneiro, 6-Nov-2015.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eqtr3a_0 $f wff ph $.
 	f3eqtr3a_1 $f class A $.
 	f3eqtr3a_2 $f class B $.
@@ -990,6 +1264,11 @@ $}
 $( A chained equality inference, useful for converting to definitions.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eqtr4g_0 $f wff ph $.
 	f3eqtr4g_1 $f class A $.
 	f3eqtr4g_2 $f class B $.
@@ -1004,6 +1283,11 @@ $( A chained equality inference, useful for converting to definitions.
        (Contributed by NM, 2-Feb-2007.)  (Proof shortened by Andrew Salmon,
        25-May-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eqtr4a_0 $f wff ph $.
 	f3eqtr4a_1 $f class A $.
 	f3eqtr4a_2 $f class B $.
@@ -1016,9 +1300,13 @@ ${
 $}
 $( A compound transitive inference for class equality.  (Contributed by NM,
        22-Jan-2004.) $)
-$v F $.
-$v G $.
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v G $.
 	feq2tri_0 $f class A $.
 	feq2tri_1 $f class B $.
 	feq2tri_2 $f class C $.
@@ -1032,6 +1320,10 @@ $}
 $( Equality implies equivalence of membership.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1044,6 +1336,10 @@ $}
 $( Equality implies equivalence of membership.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1056,6 +1352,10 @@ $}
 $( Equality implies equivalence of membership.  (Contributed by NM,
      31-May-1999.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	feleq12_0 $f class A $.
 	feleq12_1 $f class B $.
 	feleq12_2 $f class C $.
@@ -1065,6 +1365,9 @@ $}
 $( Inference from equality to equivalence of membership.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feleq1i_0 $f class A $.
 	feleq1i_1 $f class B $.
 	feleq1i_2 $f class C $.
@@ -1074,6 +1377,9 @@ $}
 $( Inference from equality to equivalence of membership.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feleq2i_0 $f class A $.
 	feleq2i_1 $f class B $.
 	feleq2i_2 $f class C $.
@@ -1083,6 +1389,10 @@ $}
 $( Inference from equality to equivalence of membership.  (Contributed by
          NM, 31-May-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	feleq12i_0 $f class A $.
 	feleq12i_1 $f class B $.
 	feleq12i_2 $f class C $.
@@ -1096,6 +1406,10 @@ $( $j congruence 'eleq12i'; $)
 $( Deduction from equality to equivalence of membership.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feleq1d_0 $f wff ph $.
 	feleq1d_1 $f class A $.
 	feleq1d_2 $f class B $.
@@ -1106,6 +1420,10 @@ $}
 $( Deduction from equality to equivalence of membership.  (Contributed by
        NM, 27-Dec-1993.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feleq2d_0 $f wff ph $.
 	feleq2d_1 $f class A $.
 	feleq2d_2 $f class B $.
@@ -1116,6 +1434,11 @@ $}
 $( Deduction from equality to equivalence of membership.  (Contributed by
          NM, 31-May-1994.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	feleq12d_0 $f wff ph $.
 	feleq12d_1 $f class A $.
 	feleq12d_2 $f class B $.
@@ -1128,6 +1451,9 @@ $}
 $( A transitive-type law relating membership and equality.  (Contributed by
      NM, 9-Apr-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feleq1a_0 $f class A $.
 	feleq1a_1 $f class B $.
 	feleq1a_2 $f class C $.
@@ -1136,6 +1462,9 @@ $}
 $( Substitution of equal classes into membership relation.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feqeltri_0 $f class A $.
 	feqeltri_1 $f class B $.
 	feqeltri_2 $f class C $.
@@ -1146,6 +1475,9 @@ $}
 $( Substitution of equal classes into membership relation.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feqeltrri_0 $f class A $.
 	feqeltrri_1 $f class B $.
 	feqeltrri_2 $f class C $.
@@ -1156,6 +1488,9 @@ $}
 $( Substitution of equal classes into membership relation.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feleqtri_0 $f class A $.
 	feleqtri_1 $f class B $.
 	feleqtri_2 $f class C $.
@@ -1166,6 +1501,9 @@ $}
 $( Substitution of equal classes into membership relation.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feleqtrri_0 $f class A $.
 	feleqtrri_1 $f class B $.
 	feleqtrri_2 $f class C $.
@@ -1176,6 +1514,10 @@ $}
 $( Substitution of equal classes into membership relation, deduction form.
        (Contributed by Raph Levien, 10-Dec-2002.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feqeltrd_0 $f wff ph $.
 	feqeltrd_1 $f class A $.
 	feqeltrd_2 $f class B $.
@@ -1187,6 +1529,10 @@ $}
 $( Deduction that substitutes equal classes into membership.  (Contributed
        by NM, 14-Dec-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feqeltrrd_0 $f wff ph $.
 	feqeltrrd_1 $f class A $.
 	feqeltrrd_2 $f class B $.
@@ -1198,6 +1544,10 @@ $}
 $( Deduction that substitutes equal classes into membership.  (Contributed
        by NM, 14-Dec-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feleqtrd_0 $f wff ph $.
 	feleqtrd_1 $f class A $.
 	feleqtrd_2 $f class B $.
@@ -1209,6 +1559,10 @@ $}
 $( Deduction that substitutes equal classes into membership.  (Contributed
        by NM, 14-Dec-2004.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feleqtrrd_0 $f wff ph $.
 	feleqtrrd_1 $f class A $.
 	feleqtrrd_2 $f class B $.
@@ -1220,6 +1574,10 @@ $}
 $( Substitution of equal classes into membership relation.  (Contributed by
        Mario Carneiro, 6-Jan-2017.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eltr3i_0 $f class A $.
 	f3eltr3i_1 $f class B $.
 	f3eltr3i_2 $f class C $.
@@ -1232,6 +1590,10 @@ $}
 $( Substitution of equal classes into membership relation.  (Contributed by
        Mario Carneiro, 6-Jan-2017.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eltr4i_0 $f class A $.
 	f3eltr4i_1 $f class B $.
 	f3eltr4i_2 $f class C $.
@@ -1244,6 +1606,11 @@ $}
 $( Substitution of equal classes into membership relation.  (Contributed by
        Mario Carneiro, 6-Jan-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eltr3d_0 $f wff ph $.
 	f3eltr3d_1 $f class A $.
 	f3eltr3d_2 $f class B $.
@@ -1257,6 +1624,11 @@ $}
 $( Substitution of equal classes into membership relation.  (Contributed by
        Mario Carneiro, 6-Jan-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eltr4d_0 $f wff ph $.
 	f3eltr4d_1 $f class A $.
 	f3eltr4d_2 $f class B $.
@@ -1270,6 +1642,11 @@ $}
 $( Substitution of equal classes into membership relation.  (Contributed by
        Mario Carneiro, 6-Jan-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eltr3g_0 $f wff ph $.
 	f3eltr3g_1 $f class A $.
 	f3eltr3g_2 $f class B $.
@@ -1283,6 +1660,11 @@ $}
 $( Substitution of equal classes into membership relation.  (Contributed by
        Mario Carneiro, 6-Jan-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3eltr4g_0 $f wff ph $.
 	f3eltr4g_1 $f class A $.
 	f3eltr4g_2 $f class B $.
@@ -1296,6 +1678,10 @@ $}
 $( B membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl5eqel_0 $f wff ph $.
 	fsyl5eqel_1 $f class A $.
 	fsyl5eqel_2 $f class B $.
@@ -1307,6 +1693,10 @@ $}
 $( B membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl5eqelr_0 $f wff ph $.
 	fsyl5eqelr_1 $f class A $.
 	fsyl5eqelr_2 $f class B $.
@@ -1318,6 +1708,10 @@ $}
 $( B membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl5eleq_0 $f wff ph $.
 	fsyl5eleq_1 $f class A $.
 	fsyl5eleq_2 $f class B $.
@@ -1329,6 +1723,10 @@ $}
 $( B membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl5eleqr_0 $f wff ph $.
 	fsyl5eleqr_1 $f class A $.
 	fsyl5eleqr_2 $f class B $.
@@ -1340,6 +1738,10 @@ $}
 $( A membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl6eqel_0 $f wff ph $.
 	fsyl6eqel_1 $f class A $.
 	fsyl6eqel_2 $f class B $.
@@ -1351,6 +1753,10 @@ $}
 $( A membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl6eqelr_0 $f wff ph $.
 	fsyl6eqelr_1 $f class A $.
 	fsyl6eqelr_2 $f class B $.
@@ -1362,6 +1768,10 @@ $}
 $( A membership and equality inference.  (Contributed by NM,
        4-Jan-2006.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl6eleq_0 $f wff ph $.
 	fsyl6eleq_1 $f class A $.
 	fsyl6eleq_2 $f class B $.
@@ -1373,6 +1783,10 @@ $}
 $( A membership and equality inference.  (Contributed by NM,
        24-Apr-2005.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl6eleqr_0 $f wff ph $.
 	fsyl6eleqr_1 $f class A $.
 	fsyl6eleqr_2 $f class B $.
@@ -1384,6 +1798,10 @@ $}
 $( Substitution of equal classes into a membership antecedent.
        (Contributed by Jonathan Ben-Naim, 3-Jun-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feleq2s_0 $f wff ph $.
 	feleq2s_1 $f class A $.
 	feleq2s_2 $f class B $.
@@ -1396,6 +1814,10 @@ $( If a class is not an element of another class, an equal class is also
        not an element.  Deduction form.  (Contributed by David Moews,
        1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feqneltrd_0 $f wff ph $.
 	feqneltrd_1 $f class A $.
 	feqneltrd_2 $f class B $.
@@ -1408,6 +1830,10 @@ $( If a class is not an element of another class, an equal class is also
        not an element.  Deduction form.  (Contributed by David Moews,
        1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feqneltrrd_0 $f wff ph $.
 	feqneltrrd_1 $f class A $.
 	feqneltrrd_2 $f class B $.
@@ -1420,6 +1846,10 @@ $( If a class is not an element of another class, it is also not an element
        of an equal class.  Deduction form.  (Contributed by David Moews,
        1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fneleqtrd_0 $f wff ph $.
 	fneleqtrd_1 $f class A $.
 	fneleqtrd_2 $f class B $.
@@ -1432,6 +1862,10 @@ $( If a class is not an element of another class, it is also not an element
        of an equal class.  Deduction form.  (Contributed by David Moews,
        1-May-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fneleqtrrd_0 $f wff ph $.
 	fneleqtrrd_1 $f class A $.
 	fneleqtrrd_2 $f class B $.
@@ -1444,6 +1878,10 @@ $( Establish equality between classes, using bound-variable hypotheses
        instead of distinct variable conditions.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -1458,6 +1896,9 @@ $}
 $( A way of showing two classes are not equal.  (Contributed by NM,
      1-Apr-1997.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fnelneq_0 $f class A $.
 	fnelneq_1 $f class B $.
 	fnelneq_2 $f class C $.
@@ -1466,6 +1907,9 @@ $}
 $( A way of showing two classes are not equal.  (Contributed by NM,
      12-Jan-2002.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fnelneq2_0 $f class A $.
 	fnelneq2_1 $f class B $.
 	fnelneq2_2 $f class C $.
@@ -1474,6 +1918,9 @@ $}
 $( Lemma for ~ eqsb3 .  (Contributed by Rodolfo Medina, 28-Apr-2010.)
        (Proof shortened by Andrew Salmon, 14-Jun-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d y A $.
 	feqsb3lem_0 $f set x $.
@@ -1484,6 +1931,10 @@ $}
 $( Substitution applied to an atomic wff (class version of ~ equsb3 ).
        (Contributed by Rodolfo Medina, 28-Apr-2010.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v w $.
 	$d y A $.
 	$d w y $.
 	$d w A $.
@@ -1498,6 +1949,10 @@ $( Substitution applied to an atomic wff (class version of ~ elsb3 ).
        (Contributed by Rodolfo Medina, 28-Apr-2010.)  (Proof shortened by
        Andrew Salmon, 14-Jun-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v w $.
 	$d y A $.
 	$d w y $.
 	$d w A $.
@@ -1512,6 +1967,10 @@ $( A utility lemma to transfer a bound-variable hypothesis builder into a
        definition.  See ~ hbxfrbi for equivalence version.  (Contributed by NM,
        21-Aug-2007.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	fhbxfreq_0 $f set x $.
 	fhbxfreq_1 $f set y $.
 	fhbxfreq_2 $f class A $.
@@ -1524,6 +1983,10 @@ $( Change the free variable of a hypothesis builder.  Lemma for ~ nfcrii .
        (Contributed by NM, 5-Aug-1993.)  (Revised by Andrew Salmon,
        11-Jul-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d y A $.
 	$d x z $.
 	fhblem_0 $f set x $.
@@ -1558,6 +2021,10 @@ $( Equality of a class variable and a class abstraction (also called a
        Quine pp. 15-21 and/or Takeuti and Zaring pp. 10-13.  (Contributed by
        NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x A y $.
 	$d ph y $.
 	iabeq2_0 $f set y $.
@@ -1569,6 +2036,9 @@ $}
 $( Equality of a class variable and a class abstraction.  (Contributed by
        NM, 20-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fabeq1_0 $f wff ph $.
 	fabeq1_1 $f set x $.
@@ -1578,6 +2048,9 @@ $}
 $( Equality of a class variable and a class abstraction (inference rule).
        (Contributed by NM, 3-Apr-1996.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fabeq2i_0 $f wff ph $.
 	fabeq2i_1 $f set x $.
 	fabeq2i_2 $f class A $.
@@ -1587,6 +2060,9 @@ $}
 $( Equality of a class variable and a class abstraction (inference rule).
        (Contributed by NM, 31-Jul-1994.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	fabeq1i_0 $f wff ph $.
 	fabeq1i_1 $f set x $.
 	fabeq1i_2 $f class A $.
@@ -1596,6 +2072,10 @@ $}
 $( Equality of a class variable and a class abstraction (deduction).
        (Contributed by NM, 16-Nov-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	fabeq2d_0 $f wff ph $.
 	fabeq2d_1 $f wff ps $.
 	fabeq2d_2 $f set x $.
@@ -1606,6 +2086,10 @@ $}
 $( Equivalent wff's correspond to equal class abstractions.  (Contributed
        by NM, 25-Nov-2013.)  (Revised by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d ph y $.
 	$d ps y $.
 	$d x y $.
@@ -1618,6 +2102,9 @@ $}
 $( Equality of a class variable and a class abstraction (inference rule).
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	fabbi2i_0 $f wff ph $.
 	fabbi2i_1 $f set x $.
@@ -1628,6 +2115,9 @@ $}
 $( Equivalent wff's yield equal class abstractions (inference rule).
        (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fabbii_0 $f wff ph $.
 	fabbii_1 $f wff ps $.
 	fabbii_2 $f set x $.
@@ -1641,6 +2131,10 @@ $( Equivalent wff's yield equal class abstractions (deduction rule).
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	fabbid_0 $f wff ph $.
 	fabbid_1 $f wff ps $.
 	fabbid_2 $f wff ch $.
@@ -1652,6 +2146,10 @@ $}
 $( Equivalent wff's yield equal class abstractions (deduction rule).
        (Contributed by NM, 10-Aug-1993.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	$d x ph $.
 	fabbidv_0 $f wff ph $.
 	fabbidv_1 $f wff ps $.
@@ -1664,6 +2162,10 @@ $( ` y ` is a dummy var. $)
 $( Deduction from a wff to a class abstraction.  (Contributed by NM,
        9-Jul-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	$d ph x $.
 	fabbi2dv_0 $f wff ph $.
@@ -1677,6 +2179,10 @@ $( ` y ` is a dummy var. $)
 $( Deduction from a wff to a class abstraction.  (Contributed by NM,
        9-Jul-1994.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
 	$d x A $.
 	$d ph x $.
 	fabbi1dv_0 $f wff ph $.
@@ -1689,6 +2195,8 @@ $}
 $( A simplification of class abstraction.  Theorem 5.2 of [Quine] p. 35.
        (Contributed by NM, 26-Dec-1993.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	fabid2_0 $f set x $.
 	fabid2_1 $f class A $.
@@ -1697,6 +2205,11 @@ $}
 $( Rule used to change bound variables, using implicit substitution.
        (Contributed by Andrew Salmon, 11-Jul-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d ph z $.
@@ -1714,6 +2227,10 @@ $}
 $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 26-May-1999.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d y ph $.
 	$d x ps $.
 	fcbvabv_0 $f wff ph $.
@@ -1726,6 +2243,10 @@ $}
 $( Membership of a class variable in a class abstraction.  (Contributed by
        NM, 23-Dec-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x A y $.
 	$d ph y $.
 	iclelab_0 $f set y $.
@@ -1737,6 +2258,10 @@ $}
 $( Membership of a class abstraction in another class.  (Contributed by NM,
        17-Jan-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
 	$d y A $.
 	$d y ph $.
 	$d x y $.
@@ -1750,6 +2275,10 @@ $( The right-hand side of the second equality is a way of representing
        proper substitution of ` y ` for ` x ` into a class variable.
        (Contributed by NM, 14-Sep-2003.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d z A $.
 	$d z x $.
 	$d z y $.

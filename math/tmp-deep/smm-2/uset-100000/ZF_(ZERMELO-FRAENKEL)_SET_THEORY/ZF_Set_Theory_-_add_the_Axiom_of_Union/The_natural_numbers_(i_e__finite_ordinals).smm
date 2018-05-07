@@ -50,7 +50,7 @@ $( Membership in omega.  The left conjunct can be eliminated if we assume
        the Axiom of Infinity; see ~ elom3 .  (Contributed by NM,
        15-May-1994.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d A x y $.
 	f0 $f set x $.
 	f1 $f class A $.
@@ -73,7 +73,7 @@ $( The class of natural numbers is a subclass of any (infinite) limit
        does not require the Axiom of Infinity.  (Contributed by NM,
        30-Oct-2003.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -143,7 +143,7 @@ $}
 $( A natural number is not a limit ordinal.  (Contributed by NM,
        18-Oct-1995.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.

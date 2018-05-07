@@ -48,7 +48,7 @@ $( A property of functions on ordinal numbers.  Generalization of Theorem
        Schema 8E of [Enderton] p. 218.  (Contributed by Eric Schmidt,
        26-May-2009.) $)
 ${
-	$v x y F S T $.
+	$v x y S T F $.
 	$d x y S $.
 	$d x y F $.
 	$d x T $.
@@ -65,7 +65,7 @@ $}
 $( A variant of ~ onfununi for operations.  (Contributed by Eric Schmidt,
          26-May-2009.)  (Revised by Mario Carneiro, 11-Sep-2015.) $)
 ${
-	$v x y z A F S T $.
+	$v x y A S T F z $.
 	$d x y z A $.
 	$d x y z F $.
 	$d x y z $.
@@ -88,7 +88,7 @@ $( A variant of ~ onovuni with indexed unions.  (Contributed by Eric
        Schmidt, 26-May-2009.)  (Proof shortened by Mario Carneiro,
        5-Dec-2016.) $)
 ${
-	$v x y z w A F T K L $.
+	$v x y z A T F K L w $.
 	$d w x y z A $.
 	$d w x y z F $.
 	$d w x y z K $.
@@ -113,7 +113,7 @@ $( There are no length ` om ` decreasing sequences in the ordinals.  See
        also ~ noinfep for a stronger version assuming Regularity.  (Contributed
        by Mario Carneiro, 19-May-2015.) $)
 ${
-	$v x y z w F $.
+	$v x F y z w $.
 	$d w x y z F $.
 	f0 $f set x $.
 	f1 $f class F $.
@@ -185,7 +185,7 @@ $}
 $( Equality theorem for strictly monotone functions.  (Contributed by
        Andrew Salmon, 16-Nov-2011.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -198,7 +198,7 @@ $}
 $( The domain of a strictly monotone function is an ordinal.  (Contributed
        by Andrew Salmon, 16-Nov-2011.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	$d x y $.
 	f0 $f class A $.
@@ -211,7 +211,7 @@ $( A strictly monotone function restricted to an ordinal remains strictly
        monotone.  (Contributed by Andrew Salmon, 16-Nov-2011.)  (Proof
        shortened by Mario Carneiro, 5-Dec-2016.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -234,7 +234,7 @@ $}
 $( A strictly monotone ordinal function restricted to an ordinal is still
        monotone.  (Contributed by Mario Carneiro, 15-Mar-2013.) $)
 ${
-	$v x y A F $.
+	$v A F x y $.
 	$d A x y $.
 	$d F x y $.
 	f0 $f class A $.
@@ -256,7 +256,7 @@ $}
 $( The function values of a strictly monotone ordinal function are
        ordinals.  (Contributed by Mario Carneiro, 12-Mar-2013.) $)
 ${
-	$v x y B F $.
+	$v B F x y $.
 	$d F x y $.
 	f0 $f class B $.
 	f1 $f class F $.
@@ -268,7 +268,7 @@ $}
 $( The identity relation restricted to the ordinals is a strictly monotone
        function.  (Contributed by Andrew Salmon, 16-Nov-2011.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	e0 $e |- Ord A $.
 	f0 $f class A $.
@@ -287,7 +287,7 @@ $( If ` B ` is a strictly monotone ordinal function, and ` A ` is in the
        domain of ` B ` , then the value of the function at ` A ` is an
        ordinal.  (Contributed by Andrew Salmon, 20-Nov-2011.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -303,7 +303,7 @@ $( If ` x ` is less than ` y ` then a strictly monotone function's value
        will be strictly less at ` x ` than at ` y ` .  (Contributed by Andrew
        Salmon, 22-Nov-2011.) $)
 ${
-	$v x y A B C $.
+	$v A B C x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -319,7 +319,7 @@ $}
 $( The value of a strictly monotone ordinal function contains its indexed
        union.  (Contributed by Andrew Salmon, 22-Nov-2011.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -336,7 +336,7 @@ $( If ` F ` is an isomorphism from an ordinal ` A ` onto ` B ` , which is a
        Exercise 3 in [TakeutiZaring] p. 50.  (Contributed by Andrew Salmon,
        24-Nov-2011.) $)
 ${
-	$v x y A B F $.
+	$v A B F x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -363,7 +363,7 @@ $}
 $( A strictly monotone ordinal function is one-to-one.  (Contributed by
        Mario Carneiro, 28-Feb-2013.) $)
 ${
-	$v x y z w A B F $.
+	$v A B F x y z w $.
 	$d A w x y z $.
 	$d F w x y z $.
 	f0 $f class A $.
@@ -402,7 +402,7 @@ $( A strictly monotone ordinal function is greater than or equal to its
        argument.  Exercise 1 in [TakeutiZaring] p. 50.  (Contributed by Andrew
        Salmon, 23-Nov-2011.)  (Revised by Mario Carneiro, 28-Feb-2013.) $)
 ${
-	$v x y A C F $.
+	$v A C F x y $.
 	$d A y x $.
 	$d C x $.
 	$d F y x $.
@@ -417,7 +417,7 @@ $}
 $( The range of a strictly monotone ordinal function dominates the domain.
        (Contributed by Mario Carneiro, 13-Mar-2013.) $)
 ${
-	$v x A B F $.
+	$v A B F x $.
 	$d A x $.
 	$d B x $.
 	$d F x $.
@@ -431,7 +431,7 @@ $}
 $( The strictly monotone ordinal functions are also epsilon isomorphisms of
        subclasses of ` On ` .  (Contributed by Mario Carneiro, 20-Mar-2013.) $)
 ${
-	$v x y A B F $.
+	$v A B F x y $.
 	$d A x y $.
 	$d B x y $.
 	$d F x y $.

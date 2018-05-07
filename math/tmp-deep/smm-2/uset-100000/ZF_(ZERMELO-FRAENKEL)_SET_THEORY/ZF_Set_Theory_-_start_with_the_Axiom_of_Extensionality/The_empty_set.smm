@@ -241,7 +241,7 @@ $}
 $( The union of a class with the empty set is itself.  Theorem 24 of
        [Suppes] p. 27.  (Contributed by NM, 5-Aug-1993.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -251,7 +251,7 @@ $}
 $( The intersection of a class with the empty set is the empty set.
        Theorem 16 of [Suppes] p. 26.  (Contributed by NM, 5-Aug-1993.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -278,7 +278,7 @@ $}
 $( The null set is a subset of any class.  Part of Exercise 1 of
        [TakeutiZaring] p. 22.  (Contributed by NM, 5-Aug-1993.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d A x $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -424,7 +424,7 @@ $( Two ways of saying that two classes are disjoint, using the complement
        of ` B ` relative to a universe ` C ` .  (Contributed by NM,
        15-Feb-2007.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -438,7 +438,7 @@ $}
 $( Two ways of saying that two classes are disjoint.  (Contributed by NM,
        19-May-1998.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -450,7 +450,7 @@ $}
 $( Members of disjoint sets are not equal.  (Contributed by NM,
        28-Mar-2007.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
-	$v x A B C D $.
+	$v A B C D x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -561,7 +561,7 @@ $}
 $( Distribute union over difference.  (Contributed by NM, 17-May-1998.)
        (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -585,7 +585,7 @@ $}
 $( Subclass expressed in terms of difference.  Exercise 7 of
        [TakeutiZaring] p. 22.  (Contributed by NM, 29-Apr-1994.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -660,7 +660,7 @@ $}
 $( Difference, intersection, and subclass relationship.  (Contributed by
        NM, 30-Apr-1994.)  (Proof shortened by Wolf Lammen, 30-Sep-2014.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -675,7 +675,7 @@ $( Intersection, subclass, and difference relationship.  (Contributed by
        NM, 27-Oct-1996.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.)
        (Proof shortened by Wolf Lammen, 30-Sep-2014.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -701,7 +701,7 @@ $( The difference between a class and itself is the empty set.  Proposition
        17-Jun-2012.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -783,7 +783,7 @@ $( The intersection and class difference of a class with another class
        unite to give the original class.  (Contributed by Paul Chapman,
        5-Jun-2009.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -833,7 +833,7 @@ $}
 $( A condition equivalent to inclusion in the union of two classes.
        (Contributed by NM, 26-Mar-2007.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1151,7 +1151,7 @@ $( Set substitution into the first argument of a subset relation.
        (Contributed by Rodolfo Medina, 7-Jul-2010.)  (Proof shortened by Mario
        Carneiro, 14-Nov-2016.) $)
 ${
-	$v x y z A $.
+	$v x y A z $.
 	$d z y $.
 	$d z x A $.
 	f0 $f set x $.
@@ -1165,7 +1165,7 @@ $( Distribute proper substitution through a subclass relation.
        (Contributed by Alan Sare, 22-Jul-2012.)  (Proof shortened by Alexander
        van der Vekens, 23-Jul-2017.) $)
 ${
-	$v x y A B C D $.
+	$v x A B C D y $.
 	$d A y $.
 	$d B y $.
 	$d C y $.

@@ -8,11 +8,13 @@ $c curry  $.
 $c uncurry  $.
 $( Extend class notation to include the currying function. $)
 ${
+	$v A $.
 	fccur_0 $f class A $.
 	ccur $a class curry A $.
 $}
 $( Extend class notation to include the uncurrying function. $)
 ${
+	$v A $.
 	fcunc_0 $f class A $.
 	cunc $a class uncurry A $.
 $}
@@ -20,6 +22,10 @@ $( Define the currying of ` F ` , which splits a function of two arguments
        into a function of the first argument, producing a function over the
        second argument.  (Contributed by Mario Carneiro, 7-Jan-2017.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v F $.
 	$d x y z F $.
 	fdf-cur_0 $f set x $.
 	fdf-cur_1 $f set y $.
@@ -31,6 +37,10 @@ $( Define the uncurrying of ` F ` , which takes a function producing
        functions, and transforms it into a two-argument function.  (Contributed
        by Mario Carneiro, 7-Jan-2017.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v F $.
 	$d x y z F $.
 	fdf-unc_0 $f set x $.
 	fdf-unc_1 $f set y $.

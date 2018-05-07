@@ -12,30 +12,40 @@ $c e/  $.
 $( Not an element of (epsilon with slash through it). $)
 $( Extend wff notation to include inequality. $)
 ${
+	$v A $.
+	$v B $.
 	fwne_0 $f class A $.
 	fwne_1 $f class B $.
 	wne $a wff A =/= B $.
 $}
 $( Extend wff notation to include negated membership. $)
 ${
+	$v A $.
+	$v B $.
 	fwnel_0 $f class A $.
 	fwnel_1 $f class B $.
 	wnel $a wff A e/ B $.
 $}
 $( Define inequality.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v A $.
+	$v B $.
 	fdf-ne_0 $f class A $.
 	fdf-ne_1 $f class B $.
 	df-ne $a |- ( A =/= B <-> -. A = B ) $.
 $}
 $( Define negated membership.  (Contributed by NM, 7-Aug-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	fdf-nel_0 $f class A $.
 	fdf-nel_1 $f class B $.
 	df-nel $a |- ( A e/ B <-> -. A e. B ) $.
 $}
 $( Negation of inequality.  (Contributed by NM, 9-Jun-2006.) $)
 ${
+	$v A $.
+	$v B $.
 	fnne_0 $f class A $.
 	fnne_1 $f class B $.
 	nne $p |- ( -. A =/= B <-> A = B ) $= fnne_0 fnne_1 wceq fnne_0 fnne_1 wne wn fnne_0 fnne_1 wne fnne_0 fnne_1 wceq fnne_0 fnne_1 df-ne con2bii bicomi $.
@@ -43,12 +53,15 @@ $}
 $( No class is unequal to itself.  (Contributed by Stefan O'Rear,
      1-Jan-2015.) $)
 ${
+	$v A $.
 	fneirr_0 $f class A $.
 	neirr $p |- -. A =/= A $= fneirr_0 fneirr_0 wne wn fneirr_0 fneirr_0 wceq fneirr_0 eqid fneirr_0 fneirr_0 nne mpbir $.
 $}
 $( Excluded middle with equality and inequality.  (Contributed by NM,
      3-Feb-2012.) $)
 ${
+	$v A $.
+	$v B $.
 	fexmidne_0 $f class A $.
 	fexmidne_1 $f class B $.
 	exmidne $p |- ( A = B \/ A =/= B ) $= fexmidne_0 fexmidne_1 wceq fexmidne_0 fexmidne_1 wne wo fexmidne_0 fexmidne_1 wceq fexmidne_0 fexmidne_1 wceq wn wo fexmidne_0 fexmidne_1 wceq exmid fexmidne_0 fexmidne_1 wne fexmidne_0 fexmidne_1 wceq wn fexmidne_0 fexmidne_1 wceq fexmidne_0 fexmidne_1 df-ne orbi2i mpbir $.
@@ -56,12 +69,17 @@ $}
 $( Law of noncontradiction with equality and inequality.  (Contributed by NM,
      3-Feb-2012.) $)
 ${
+	$v A $.
+	$v B $.
 	fnonconne_0 $f class A $.
 	fnonconne_1 $f class B $.
 	nonconne $p |- -. ( A = B /\ A =/= B ) $= fnonconne_0 fnonconne_1 wceq fnonconne_0 fnonconne_1 wne wa fnonconne_0 fnonconne_1 wceq fnonconne_0 fnonconne_1 wceq wn wa fnonconne_0 fnonconne_1 wceq pm3.24 fnonconne_0 fnonconne_1 wne fnonconne_0 fnonconne_1 wceq wn fnonconne_0 fnonconne_1 wceq fnonconne_0 fnonconne_1 df-ne anbi2i mtbir $.
 $}
 $( Equality theorem for inequality.  (Contributed by NM, 19-Nov-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fneeq1_0 $f class A $.
 	fneeq1_1 $f class B $.
 	fneeq1_2 $f class C $.
@@ -69,6 +87,9 @@ ${
 $}
 $( Equality theorem for inequality.  (Contributed by NM, 19-Nov-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fneeq2_0 $f class A $.
 	fneeq2_1 $f class B $.
 	fneeq2_2 $f class C $.
@@ -76,6 +97,9 @@ ${
 $}
 $( Inference for inequality.  (Contributed by NM, 29-Apr-2005.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fneeq1i_0 $f class A $.
 	fneeq1i_1 $f class B $.
 	fneeq1i_2 $f class C $.
@@ -84,6 +108,9 @@ ${
 $}
 $( Inference for inequality.  (Contributed by NM, 29-Apr-2005.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fneeq2i_0 $f class A $.
 	fneeq2i_1 $f class B $.
 	fneeq2i_2 $f class C $.
@@ -92,6 +119,10 @@ ${
 $}
 $( Inference for inequality.  (Contributed by NM, 24-Jul-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fneeq12i_0 $f class A $.
 	fneeq12i_1 $f class B $.
 	fneeq12i_2 $f class C $.
@@ -102,6 +133,10 @@ ${
 $}
 $( Deduction for inequality.  (Contributed by NM, 25-Oct-1999.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fneeq1d_0 $f wff ph $.
 	fneeq1d_1 $f class A $.
 	fneeq1d_2 $f class B $.
@@ -111,6 +146,10 @@ ${
 $}
 $( Deduction for inequality.  (Contributed by NM, 25-Oct-1999.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fneeq2d_0 $f wff ph $.
 	fneeq2d_1 $f class A $.
 	fneeq2d_2 $f class B $.
@@ -120,6 +159,11 @@ ${
 $}
 $( Deduction for inequality.  (Contributed by NM, 24-Jul-2012.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fneeq12d_0 $f wff ph $.
 	fneeq12d_1 $f class A $.
 	fneeq12d_2 $f class B $.
@@ -132,6 +176,9 @@ $}
 $( Deduction eliminating inequality definition.  (Contributed by Jonathan
        Ben-Naim, 3-Jun-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fneneqd_0 $f wff ph $.
 	fneneqd_1 $f class A $.
 	fneneqd_2 $f class B $.
@@ -141,6 +188,9 @@ $}
 $( Substitution of equal classes into an inequality.  (Contributed by NM,
        4-Jul-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feqnetri_0 $f class A $.
 	feqnetri_1 $f class B $.
 	feqnetri_2 $f class C $.
@@ -151,6 +201,10 @@ $}
 $( Substitution of equal classes into an inequality.  (Contributed by NM,
        4-Jul-2012.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feqnetrd_0 $f wff ph $.
 	feqnetrd_1 $f class A $.
 	feqnetrd_2 $f class B $.
@@ -162,6 +216,9 @@ $}
 $( Substitution of equal classes into an inequality.  (Contributed by NM,
        4-Jul-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feqnetrri_0 $f class A $.
 	feqnetrri_1 $f class B $.
 	feqnetrri_2 $f class C $.
@@ -172,6 +229,10 @@ $}
 $( Substitution of equal classes into an inequality.  (Contributed by NM,
        4-Jul-2012.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	feqnetrrd_0 $f wff ph $.
 	feqnetrrd_1 $f class A $.
 	feqnetrrd_2 $f class B $.
@@ -183,6 +244,9 @@ $}
 $( Substitution of equal classes into an inequality.  (Contributed by NM,
        4-Jul-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fneeqtri_0 $f class A $.
 	fneeqtri_1 $f class B $.
 	fneeqtri_2 $f class C $.
@@ -193,6 +257,10 @@ $}
 $( Substitution of equal classes into an inequality.  (Contributed by NM,
        4-Jul-2012.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fneeqtrd_0 $f wff ph $.
 	fneeqtrd_1 $f class A $.
 	fneeqtrd_2 $f class B $.
@@ -204,6 +272,9 @@ $}
 $( Substitution of equal classes into an inequality.  (Contributed by NM,
        4-Jul-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fneeqtrri_0 $f class A $.
 	fneeqtrri_1 $f class B $.
 	fneeqtrri_2 $f class C $.
@@ -214,6 +285,10 @@ $}
 $( Substitution of equal classes into an inequality.  (Contributed by NM,
        4-Jul-2012.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fneeqtrrd_0 $f wff ph $.
 	fneeqtrrd_1 $f class A $.
 	fneeqtrrd_2 $f class B $.
@@ -225,6 +300,10 @@ $}
 $( B chained equality inference for inequality.  (Contributed by NM,
        6-Jun-2012.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fsyl5eqner_0 $f wff ph $.
 	fsyl5eqner_1 $f class A $.
 	fsyl5eqner_2 $f class B $.
@@ -236,6 +315,11 @@ $}
 $( Substitution of equality into both sides of an inequality.  (Contributed
        by NM, 24-Jul-2012.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3netr3d_0 $f wff ph $.
 	f3netr3d_1 $f class A $.
 	f3netr3d_2 $f class B $.
@@ -249,6 +333,11 @@ $}
 $( Substitution of equality into both sides of an inequality.  (Contributed
        by NM, 24-Jul-2012.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3netr4d_0 $f wff ph $.
 	f3netr4d_1 $f class A $.
 	f3netr4d_2 $f class B $.
@@ -262,6 +351,11 @@ $}
 $( Substitution of equality into both sides of an inequality.  (Contributed
        by NM, 24-Jul-2012.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3netr3g_0 $f wff ph $.
 	f3netr3g_1 $f class A $.
 	f3netr3g_2 $f class B $.
@@ -275,6 +369,11 @@ $}
 $( Substitution of equality into both sides of an inequality.  (Contributed
        by NM, 14-Jun-2012.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	f3netr4g_0 $f wff ph $.
 	f3netr4g_1 $f class A $.
 	f3netr4g_2 $f class B $.
@@ -288,6 +387,9 @@ $}
 $( Deduction from equality to inequality.  (Contributed by NM,
        9-Nov-2007.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fnecon3abii_0 $f wff ph $.
 	fnecon3abii_1 $f class A $.
 	fnecon3abii_2 $f class B $.
@@ -297,6 +399,9 @@ $}
 $( Deduction from equality to inequality.  (Contributed by NM,
        13-Apr-2007.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fnecon3bbii_0 $f wff ph $.
 	fnecon3bbii_1 $f class A $.
 	fnecon3bbii_2 $f class B $.
@@ -306,6 +411,10 @@ $}
 $( Inference from equality to inequality.  (Contributed by NM,
        23-Feb-2005.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fnecon3bii_0 $f class A $.
 	fnecon3bii_1 $f class B $.
 	fnecon3bii_2 $f class C $.
@@ -316,6 +425,10 @@ $}
 $( Deduction from equality to inequality.  (Contributed by NM,
        21-Mar-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fnecon3abid_0 $f wff ph $.
 	fnecon3abid_1 $f wff ps $.
 	fnecon3abid_2 $f class A $.
@@ -326,6 +439,10 @@ $}
 $( Deduction from equality to inequality.  (Contributed by NM,
        2-Jun-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fnecon3bbid_0 $f wff ph $.
 	fnecon3bbid_1 $f wff ps $.
 	fnecon3bbid_2 $f class A $.
@@ -336,6 +453,11 @@ $}
 $( Deduction from equality to inequality.  (Contributed by NM,
        23-Feb-2005.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fnecon3bid_0 $f wff ph $.
 	fnecon3bid_1 $f class A $.
 	fnecon3bid_2 $f class B $.
@@ -347,6 +469,10 @@ $}
 $( Contrapositive law deduction for inequality.  (Contributed by NM,
        2-Apr-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fnecon3ad_0 $f wff ph $.
 	fnecon3ad_1 $f wff ps $.
 	fnecon3ad_2 $f class A $.
@@ -357,6 +483,10 @@ $}
 $( Contrapositive law deduction for inequality.  (Contributed by NM,
        2-Apr-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fnecon3bd_0 $f wff ph $.
 	fnecon3bd_1 $f wff ps $.
 	fnecon3bd_2 $f class A $.
@@ -367,6 +497,11 @@ $}
 $( Contrapositive law deduction for inequality.  (Contributed by NM,
        10-Jun-2006.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fnecon3d_0 $f wff ph $.
 	fnecon3d_1 $f class A $.
 	fnecon3d_2 $f class B $.
@@ -378,6 +513,10 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        9-Aug-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fnecon3i_0 $f class A $.
 	fnecon3i_1 $f class B $.
 	fnecon3i_2 $f class C $.
@@ -388,6 +527,9 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        23-May-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fnecon3ai_0 $f wff ph $.
 	fnecon3ai_1 $f class A $.
 	fnecon3ai_2 $f class B $.
@@ -397,6 +539,9 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        1-Jun-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fnecon3bi_0 $f wff ph $.
 	fnecon3bi_1 $f class A $.
 	fnecon3bi_2 $f class B $.
@@ -406,6 +551,9 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        12-Feb-2007.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fnecon1ai_0 $f wff ph $.
 	fnecon1ai_1 $f class A $.
 	fnecon1ai_2 $f class B $.
@@ -415,6 +563,9 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        18-Mar-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fnecon1bi_0 $f wff ph $.
 	fnecon1bi_1 $f class A $.
 	fnecon1bi_2 $f class B $.
@@ -424,6 +575,10 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        18-Mar-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fnecon1i_0 $f class A $.
 	fnecon1i_1 $f class B $.
 	fnecon1i_2 $f class C $.
@@ -434,6 +589,9 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        16-Jan-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fnecon2ai_0 $f wff ph $.
 	fnecon2ai_1 $f class A $.
 	fnecon2ai_2 $f class B $.
@@ -443,6 +601,9 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        1-Apr-2007.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fnecon2bi_0 $f wff ph $.
 	fnecon2bi_1 $f class A $.
 	fnecon2bi_2 $f class B $.
@@ -452,6 +613,10 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        18-Mar-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fnecon2i_0 $f class A $.
 	fnecon2i_1 $f class B $.
 	fnecon2i_2 $f class C $.
@@ -462,6 +627,10 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        19-Apr-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fnecon2ad_0 $f wff ph $.
 	fnecon2ad_1 $f wff ps $.
 	fnecon2ad_2 $f class A $.
@@ -472,6 +641,10 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        13-Apr-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fnecon2bd_0 $f wff ph $.
 	fnecon2bd_1 $f wff ps $.
 	fnecon2bd_2 $f class A $.
@@ -482,6 +655,11 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        28-Dec-2008.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fnecon2d_0 $f wff ph $.
 	fnecon2d_1 $f class A $.
 	fnecon2d_2 $f class B $.
@@ -493,6 +671,9 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        17-Mar-2007.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fnecon1abii_0 $f wff ph $.
 	fnecon1abii_1 $f class A $.
 	fnecon1abii_2 $f class B $.
@@ -502,6 +683,9 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        17-Mar-2007.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fnecon1bbii_0 $f wff ph $.
 	fnecon1bbii_1 $f class A $.
 	fnecon1bbii_2 $f class B $.
@@ -511,6 +695,10 @@ $}
 $( Contrapositive deduction for inequality.  (Contributed by NM,
        21-Aug-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fnecon1abid_0 $f wff ph $.
 	fnecon1abid_1 $f wff ps $.
 	fnecon1abid_2 $f class A $.
@@ -521,6 +709,10 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        31-Jan-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fnecon1bbid_0 $f wff ph $.
 	fnecon1bbid_1 $f wff ps $.
 	fnecon1bbid_2 $f class A $.
@@ -531,6 +723,9 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        2-Mar-2007.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fnecon2abii_0 $f wff ph $.
 	fnecon2abii_1 $f class A $.
 	fnecon2abii_2 $f class B $.
@@ -540,6 +735,9 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        13-Apr-2007.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fnecon2bbii_0 $f wff ph $.
 	fnecon2bbii_1 $f class A $.
 	fnecon2bbii_2 $f class B $.
@@ -549,6 +747,10 @@ $}
 $( Contrapositive deduction for inequality.  (Contributed by NM,
        18-Jul-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fnecon2abid_0 $f wff ph $.
 	fnecon2abid_1 $f wff ps $.
 	fnecon2abid_2 $f class A $.
@@ -559,6 +761,10 @@ $}
 $( Contrapositive deduction for inequality.  (Contributed by NM,
        13-Apr-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fnecon2bbid_0 $f wff ph $.
 	fnecon2bbid_1 $f wff ps $.
 	fnecon2bbid_2 $f class A $.
@@ -569,6 +775,9 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        16-Jan-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fnecon4ai_0 $f wff ph $.
 	fnecon4ai_1 $f class A $.
 	fnecon4ai_2 $f class B $.
@@ -578,6 +787,10 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        17-Mar-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fnecon4i_0 $f class A $.
 	fnecon4i_1 $f class B $.
 	fnecon4i_2 $f class C $.
@@ -588,6 +801,10 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        2-Apr-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fnecon4ad_0 $f wff ph $.
 	fnecon4ad_1 $f wff ps $.
 	fnecon4ad_2 $f class A $.
@@ -598,6 +815,10 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        1-Jun-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fnecon4bd_0 $f wff ph $.
 	fnecon4bd_1 $f wff ps $.
 	fnecon4bd_2 $f class A $.
@@ -608,6 +829,11 @@ $}
 $( Contrapositive inference for inequality.  (Contributed by NM,
        2-Apr-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fnecon4d_0 $f wff ph $.
 	fnecon4d_1 $f class A $.
 	fnecon4d_2 $f class B $.
@@ -619,6 +845,10 @@ $}
 $( Contrapositive law deduction for inequality.  (Contributed by NM,
        11-Jan-2008.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fnecon4abid_0 $f wff ph $.
 	fnecon4abid_1 $f wff ps $.
 	fnecon4abid_2 $f class A $.
@@ -629,6 +859,10 @@ $}
 $( Contrapositive law deduction for inequality.  (Contributed by NM,
        9-May-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fnecon4bbid_0 $f wff ph $.
 	fnecon4bbid_1 $f wff ps $.
 	fnecon4bbid_2 $f class A $.
@@ -639,6 +873,11 @@ $}
 $( Contrapositive law deduction for inequality.  (Contributed by NM,
        29-Jun-2007.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fnecon4bid_0 $f wff ph $.
 	fnecon4bid_1 $f class A $.
 	fnecon4bid_2 $f class B $.
@@ -650,6 +889,10 @@ $}
 $( Contrapositive deduction for inequality.  (Contributed by NM,
        2-Apr-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fnecon1ad_0 $f wff ph $.
 	fnecon1ad_1 $f wff ps $.
 	fnecon1ad_2 $f class A $.
@@ -660,6 +903,10 @@ $}
 $( Contrapositive deduction for inequality.  (Contributed by NM,
        21-Mar-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fnecon1bd_0 $f wff ph $.
 	fnecon1bd_1 $f wff ps $.
 	fnecon1bd_2 $f class A $.
@@ -670,6 +917,11 @@ $}
 $( Contrapositive law deduction for inequality.  (Contributed by NM,
        28-Dec-2008.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fnecon1d_0 $f wff ph $.
 	fnecon1d_1 $f class A $.
 	fnecon1d_2 $f class B $.
@@ -682,6 +934,9 @@ $( If it is not the case that two classes are equal, they are unequal.
        Converse of ~ neneqd .  One-way deduction form of ~ df-ne .
        (Contributed by David Moews, 28-Feb-2017.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fneneqad_0 $f wff ph $.
 	fneneqad_1 $f class A $.
 	fneneqad_2 $f class B $.
@@ -690,6 +945,10 @@ ${
 $}
 $( Contraposition law for inequality.  (Contributed by NM, 28-Dec-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fnebi_0 $f class A $.
 	fnebi_1 $f class B $.
 	fnebi_2 $f class C $.
@@ -699,6 +958,9 @@ $}
 $( Theorem *13.18 in [WhiteheadRussell] p. 178.  (Contributed by Andrew
      Salmon, 3-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fpm13.18_0 $f class A $.
 	fpm13.18_1 $f class B $.
 	fpm13.18_2 $f class C $.
@@ -707,6 +969,9 @@ $}
 $( Theorem *13.181 in [WhiteheadRussell] p. 178.  (Contributed by Andrew
      Salmon, 3-Jun-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fpm13.181_0 $f class A $.
 	fpm13.181_1 $f class B $.
 	fpm13.181_2 $f class C $.
@@ -715,6 +980,10 @@ $}
 $( A contradiction implies anything.  Equality/inequality deduction form.
        (Contributed by David Moews, 28-Feb-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fpm2.21ddne_0 $f wff ph $.
 	fpm2.21ddne_1 $f wff ps $.
 	fpm2.21ddne_2 $f class A $.
@@ -726,6 +995,11 @@ $}
 $( Deduction eliminating an inequality in an antecedent.  (Contributed by
        NM, 24-May-2006.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v A $.
+	$v B $.
 	fpm2.61ne_0 $f wff ph $.
 	fpm2.61ne_1 $f wff ps $.
 	fpm2.61ne_2 $f wff ch $.
@@ -739,6 +1013,9 @@ $}
 $( Inference eliminating an inequality in an antecedent.  (Contributed by
        NM, 16-Jan-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fpm2.61ine_0 $f wff ph $.
 	fpm2.61ine_1 $f class A $.
 	fpm2.61ine_2 $f class B $.
@@ -749,6 +1026,10 @@ $}
 $( Deduction eliminating an inequality in an antecedent.  (Contributed by
        NM, 1-Jun-2007.)  (Proof shortened by Andrew Salmon, 25-May-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fpm2.61dne_0 $f wff ph $.
 	fpm2.61dne_1 $f wff ps $.
 	fpm2.61dne_2 $f class A $.
@@ -760,6 +1041,10 @@ $}
 $( Deduction eliminating an inequality in an antecedent.  (Contributed by
        NM, 30-Nov-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
 	fpm2.61dane_0 $f wff ph $.
 	fpm2.61dane_1 $f wff ps $.
 	fpm2.61dane_2 $f class A $.
@@ -771,6 +1056,12 @@ $}
 $( Deduction eliminating two inequalities in an antecedent.  (Contributed
        by NM, 29-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fpm2.61da2ne_0 $f wff ph $.
 	fpm2.61da2ne_1 $f wff ps $.
 	fpm2.61da2ne_2 $f class A $.
@@ -784,8 +1075,15 @@ ${
 $}
 $( Deduction eliminating three inequalities in an antecedent.  (Contributed
        by NM, 15-Jun-2013.) $)
-$v E $.
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
 	fpm2.61da3ne_0 $f wff ph $.
 	fpm2.61da3ne_1 $f wff ps $.
 	fpm2.61da3ne_2 $f class A $.
@@ -802,6 +1100,8 @@ ${
 $}
 $( Commutation of inequality.  (Contributed by NM, 14-May-1999.) $)
 ${
+	$v A $.
+	$v B $.
 	fnecom_0 $f class A $.
 	fnecom_1 $f class B $.
 	necom $p |- ( A =/= B <-> B =/= A ) $= fnecom_0 fnecom_1 fnecom_1 fnecom_0 fnecom_0 fnecom_1 eqcom necon3bii $.
@@ -809,6 +1109,8 @@ $}
 $( Inference from commutative law for inequality.  (Contributed by NM,
        17-Oct-2012.) $)
 ${
+	$v A $.
+	$v B $.
 	fnecomi_0 $f class A $.
 	fnecomi_1 $f class B $.
 	enecomi_0 $e |- A =/= B $.
@@ -817,6 +1119,9 @@ $}
 $( Deduction from commutative law for inequality.  (Contributed by NM,
        12-Feb-2008.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fnecomd_0 $f wff ph $.
 	fnecomd_1 $f class A $.
 	fnecomd_2 $f class B $.
@@ -825,6 +1130,9 @@ ${
 $}
 $( Logical OR with an equality.  (Contributed by NM, 29-Apr-2007.) $)
 ${
+	$v ps $.
+	$v A $.
+	$v B $.
 	fneor_0 $f wff ps $.
 	fneor_1 $f class A $.
 	fneor_2 $f class B $.
@@ -832,6 +1140,10 @@ ${
 $}
 $( A De Morgan's law for inequality.  (Contributed by NM, 18-May-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fneanior_0 $f class A $.
 	fneanior_1 $f class B $.
 	fneanior_2 $f class C $.
@@ -840,6 +1152,12 @@ ${
 $}
 $( A De Morgan's law for inequality.  (Contributed by NM, 30-Sep-2013.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
 	fne3anior_0 $f class A $.
 	fne3anior_1 $f class B $.
 	fne3anior_2 $f class C $.
@@ -850,6 +1168,10 @@ ${
 $}
 $( A De Morgan's law for inequality.  (Contributed by NM, 18-May-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fneorian_0 $f class A $.
 	fneorian_1 $f class B $.
 	fneorian_2 $f class C $.
@@ -859,6 +1181,9 @@ $}
 $( An inference from an inequality, related to modus tollens.  (Contributed
        by NM, 13-Apr-2007.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
 	fnemtbir_0 $f wff ph $.
 	fnemtbir_1 $f class A $.
 	fnemtbir_2 $f class B $.
@@ -869,6 +1194,9 @@ $}
 $( Two classes are different if they don't contain the same element.
      (Contributed by NM, 3-Feb-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fnelne1_0 $f class A $.
 	fnelne1_1 $f class B $.
 	fnelne1_2 $f class C $.
@@ -877,6 +1205,9 @@ $}
 $( Two classes are different if they don't belong to the same class.
      (Contributed by NM, 25-Jun-2012.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fnelne2_0 $f class A $.
 	fnelne2_1 $f class B $.
 	fnelne2_2 $f class C $.
@@ -885,6 +1216,9 @@ $}
 $( Equality theorem for negated membership.  (Contributed by NM,
      20-Nov-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fneleq1_0 $f class A $.
 	fneleq1_1 $f class B $.
 	fneleq1_2 $f class C $.
@@ -893,6 +1227,9 @@ $}
 $( Equality theorem for negated membership.  (Contributed by NM,
      20-Nov-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fneleq2_0 $f class A $.
 	fneleq2_1 $f class B $.
 	fneleq2_2 $f class C $.
@@ -901,6 +1238,9 @@ $}
 $( Bound-variable hypothesis builder for inequality.  (Contributed by NM,
        10-Nov-2007.)  (Revised by Mario Carneiro, 7-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	fnfne_0 $f set x $.
 	fnfne_1 $f class A $.
 	fnfne_2 $f class B $.
@@ -911,6 +1251,9 @@ $}
 $( Bound-variable hypothesis builder for inequality.  (Contributed by David
        Abernethy, 26-Jun-2011.)  (Revised by Mario Carneiro, 7-Oct-2016.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	fnfnel_0 $f set x $.
 	fnfnel_1 $f class A $.
 	fnfnel_2 $f class B $.
@@ -921,6 +1264,10 @@ $}
 $( Bound-variable hypothesis builder for inequality.  (Contributed by NM,
        10-Nov-2007.)  (Revised by Mario Carneiro, 7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	fnfned_0 $f wff ph $.
 	fnfned_1 $f set x $.
 	fnfned_2 $f class A $.
@@ -932,6 +1279,10 @@ $}
 $( Bound-variable hypothesis builder for inequality.  (Contributed by David
        Abernethy, 26-Jun-2011.)  (Revised by Mario Carneiro, 7-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
 	fnfneld_0 $f wff ph $.
 	fnfneld_1 $f set x $.
 	fnfneld_2 $f class A $.

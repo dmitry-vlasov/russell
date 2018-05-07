@@ -10,6 +10,12 @@ $( A single axiom for propositional calculus offered by Meredith.
      (Contributed by Anthony Hart, 7-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fmerco2_0 $f wff ph $.
 	fmerco2_1 $f wff ps $.
 	fmerco2_2 $f wff ch $.
@@ -22,6 +28,10 @@ $( Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
      (Contributed by Anthony Hart, 16-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmercolem1_0 $f wff ph $.
 	fmercolem1_1 $f wff ps $.
 	fmercolem1_2 $f wff ch $.
@@ -32,6 +42,10 @@ $( Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
      (Contributed by Anthony Hart, 16-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmercolem2_0 $f wff ph $.
 	fmercolem2_1 $f wff ps $.
 	fmercolem2_2 $f wff ch $.
@@ -42,6 +56,9 @@ $( Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
      (Contributed by Anthony Hart, 16-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmercolem3_0 $f wff ph $.
 	fmercolem3_1 $f wff ps $.
 	fmercolem3_2 $f wff ch $.
@@ -51,6 +68,11 @@ $( Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
      (Contributed by Anthony Hart, 16-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fmercolem4_0 $f wff ph $.
 	fmercolem4_1 $f wff ch $.
 	fmercolem4_2 $f wff th $.
@@ -62,6 +84,10 @@ $( Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
      (Contributed by Anthony Hart, 16-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fmercolem5_0 $f wff ph $.
 	fmercolem5_1 $f wff ch $.
 	fmercolem5_2 $f wff th $.
@@ -72,6 +98,9 @@ $( Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
      (Contributed by Anthony Hart, 16-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmercolem6_0 $f wff ph $.
 	fmercolem6_1 $f wff ps $.
 	fmercolem6_2 $f wff ch $.
@@ -81,6 +110,10 @@ $( Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
      (Contributed by Anthony Hart, 16-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmercolem7_0 $f wff ph $.
 	fmercolem7_1 $f wff ps $.
 	fmercolem7_2 $f wff ch $.
@@ -91,6 +124,11 @@ $( Used to rederive the Tarski-Bernays-Wajsberg axioms from ~ merco2 .
      (Contributed by Anthony Hart, 16-Aug-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fmercolem8_0 $f wff ph $.
 	fmercolem8_1 $f wff ps $.
 	fmercolem8_2 $f wff ch $.
@@ -102,6 +140,9 @@ $( ~ tbw-ax1 rederived from ~ merco2 .  (Contributed by Anthony Hart,
      16-Aug-2011.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fre1tbw1_0 $f wff ph $.
 	fre1tbw1_1 $f wff ps $.
 	fre1tbw1_2 $f wff ch $.
@@ -111,6 +152,8 @@ $( ~ tbw-ax2 rederived from ~ merco2 .  (Contributed by Anthony Hart,
      16-Aug-2011.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fre1tbw2_0 $f wff ph $.
 	fre1tbw2_1 $f wff ps $.
 	re1tbw2 $p |- ( ph -> ( ps -> ph ) ) $= fre1tbw2_1 fre1tbw2_0 fre1tbw2_1 fre1tbw2_0 wi wi wi fre1tbw2_0 fre1tbw2_1 fre1tbw2_0 wi wi fre1tbw2_0 fre1tbw2_1 fre1tbw2_0 fre1tbw2_1 fre1tbw2_0 wi wi wi wi fre1tbw2_1 fre1tbw2_0 fre1tbw2_1 fre1tbw2_0 wi wi wi fre1tbw2_0 fre1tbw2_0 wi fre1tbw2_0 wi fre1tbw2_0 fre1tbw2_1 fre1tbw2_0 wi wi wi fre1tbw2_0 fre1tbw2_1 fre1tbw2_0 fre1tbw2_1 fre1tbw2_0 wi wi wi wi fre1tbw2_0 fre1tbw2_0 fre1tbw2_0 fre1tbw2_1 mercolem1 fre1tbw2_0 fre1tbw2_0 wi fre1tbw2_0 fre1tbw2_0 fre1tbw2_1 fre1tbw2_0 wi wi fre1tbw2_1 mercolem1 ax-mp fre1tbw2_0 fre1tbw2_1 fre1tbw2_1 fre1tbw2_0 wi mercolem6 ax-mp fre1tbw2_1 fre1tbw2_0 fre1tbw2_0 mercolem6 ax-mp $.
@@ -119,6 +162,8 @@ $( ~ tbw-ax3 rederived from ~ merco2 .  (Contributed by Anthony Hart,
      16-Aug-2011.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fre1tbw3_0 $f wff ph $.
 	fre1tbw3_1 $f wff ps $.
 	re1tbw3 $p |- ( ( ( ph -> ps ) -> ph ) -> ph ) $= fre1tbw3_0 fre1tbw3_0 wi fre1tbw3_0 wi fre1tbw3_0 fre1tbw3_0 fre1tbw3_0 wi wi wi fre1tbw3_0 fre1tbw3_1 wi fre1tbw3_0 wi fre1tbw3_0 wi fre1tbw3_0 fre1tbw3_0 fre1tbw3_0 fre1tbw3_0 mercolem2 fre1tbw3_0 fre1tbw3_1 wi fre1tbw3_0 wi fre1tbw3_0 fre1tbw3_0 wi fre1tbw3_0 wi fre1tbw3_0 fre1tbw3_0 fre1tbw3_0 wi wi wi fre1tbw3_0 fre1tbw3_1 wi fre1tbw3_0 wi fre1tbw3_0 wi wi wi fre1tbw3_0 fre1tbw3_0 wi fre1tbw3_0 wi fre1tbw3_0 fre1tbw3_0 fre1tbw3_0 wi wi wi fre1tbw3_0 fre1tbw3_1 wi fre1tbw3_0 wi fre1tbw3_0 wi wi fre1tbw3_0 fre1tbw3_1 fre1tbw3_0 fre1tbw3_0 wi fre1tbw3_0 wi fre1tbw3_0 fre1tbw3_0 fre1tbw3_0 wi wi wi fre1tbw3_0 fre1tbw3_1 wi fre1tbw3_0 wi mercolem2 fre1tbw3_0 fre1tbw3_1 wi fre1tbw3_0 wi fre1tbw3_0 fre1tbw3_0 wi fre1tbw3_0 wi fre1tbw3_0 fre1tbw3_0 fre1tbw3_0 wi wi wi fre1tbw3_0 mercolem6 ax-mp ax-mp $.
@@ -131,6 +176,7 @@ $( ~ tbw-ax4 rederived from ~ merco2 .
      16-Aug-2011.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
 	fre1tbw4_0 $f wff ph $.
 	re1tbw4 $p |- ( F. -> ph ) $= fre1tbw4_0 fre1tbw4_0 wi wfal fre1tbw4_0 wi fre1tbw4_0 fre1tbw4_0 wi fre1tbw4_0 wi fre1tbw4_0 wi fre1tbw4_0 fre1tbw4_0 wi fre1tbw4_0 fre1tbw4_0 re1tbw3 fre1tbw4_0 fre1tbw4_0 fre1tbw4_0 wi fre1tbw4_0 wi wi fre1tbw4_0 fre1tbw4_0 wi fre1tbw4_0 wi fre1tbw4_0 wi fre1tbw4_0 fre1tbw4_0 wi wi fre1tbw4_0 fre1tbw4_0 fre1tbw4_0 wi re1tbw2 fre1tbw4_0 fre1tbw4_0 fre1tbw4_0 wi fre1tbw4_0 wi fre1tbw4_0 re1tbw1 ax-mp ax-mp fre1tbw4_0 fre1tbw4_0 wi fre1tbw4_0 fre1tbw4_0 wi wfal fre1tbw4_0 wi wi fre1tbw4_0 fre1tbw4_0 wi fre1tbw4_0 wi fre1tbw4_0 wi fre1tbw4_0 fre1tbw4_0 wi fre1tbw4_0 fre1tbw4_0 re1tbw3 fre1tbw4_0 fre1tbw4_0 fre1tbw4_0 wi fre1tbw4_0 wi wi fre1tbw4_0 fre1tbw4_0 wi fre1tbw4_0 wi fre1tbw4_0 wi fre1tbw4_0 fre1tbw4_0 wi wi fre1tbw4_0 fre1tbw4_0 fre1tbw4_0 wi re1tbw2 fre1tbw4_0 fre1tbw4_0 fre1tbw4_0 wi fre1tbw4_0 wi fre1tbw4_0 re1tbw1 ax-mp ax-mp wfal fre1tbw4_0 wi wfal fre1tbw4_0 wi wi fre1tbw4_0 fre1tbw4_0 wi fre1tbw4_0 fre1tbw4_0 wi wfal fre1tbw4_0 wi wi wi wfal fre1tbw4_0 wi fre1tbw4_0 wi wfal fre1tbw4_0 wi wi wfal fre1tbw4_0 wi wi wfal fre1tbw4_0 wi wfal fre1tbw4_0 wi wi wfal fre1tbw4_0 wi fre1tbw4_0 re1tbw3 wfal fre1tbw4_0 wi wfal fre1tbw4_0 wi fre1tbw4_0 wi wfal fre1tbw4_0 wi wi wi wfal fre1tbw4_0 wi fre1tbw4_0 wi wfal fre1tbw4_0 wi wi wfal fre1tbw4_0 wi wi wfal fre1tbw4_0 wi wfal fre1tbw4_0 wi wi wi wfal fre1tbw4_0 wi wfal fre1tbw4_0 wi fre1tbw4_0 wi re1tbw2 wfal fre1tbw4_0 wi wfal fre1tbw4_0 wi fre1tbw4_0 wi wfal fre1tbw4_0 wi wi wfal fre1tbw4_0 wi re1tbw1 ax-mp ax-mp wfal fre1tbw4_0 wi fre1tbw4_0 wi wfal fre1tbw4_0 wi wfal fre1tbw4_0 wi wi wi wfal fre1tbw4_0 wi wfal fre1tbw4_0 wi wi fre1tbw4_0 fre1tbw4_0 wi fre1tbw4_0 fre1tbw4_0 wi wfal fre1tbw4_0 wi wi wi wi wfal wfal fre1tbw4_0 wi fre1tbw4_0 mercolem3 wfal fre1tbw4_0 wi fre1tbw4_0 fre1tbw4_0 wfal fre1tbw4_0 wi fre1tbw4_0 fre1tbw4_0 wi fre1tbw4_0 fre1tbw4_0 wi merco2 ax-mp ax-mp ax-mp ax-mp $.
 $}

@@ -11,6 +11,7 @@ $( Transitive predicate (read:  "the following class is
 $( Extend wff notation to include transitive classes.  Notation from
      [TakeutiZaring] p. 35. $)
 ${
+	$v A $.
 	fwtr_0 $f class A $.
 	wtr $a wff Tr A $.
 $}
@@ -22,12 +23,16 @@ $( Define the transitive class predicate.  Not to be confused with a
      used instead of "transitive" in Definition 3 of [Suppes] p. 130.
      (Contributed by NM, 29-Aug-1993.) $)
 ${
+	$v A $.
 	fdf-tr_0 $f class A $.
 	df-tr $a |- ( Tr A <-> U. A C_ A ) $.
 $}
 $( An alternate way of defining a transitive class.  Exercise 7 of
        [TakeutiZaring] p. 40.  (Contributed by NM, 24-Apr-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fdftr2_0 $f set x $.
 	fdftr2_1 $f set y $.
@@ -37,6 +42,9 @@ $}
 $( An alternate way of defining a transitive class.  (Contributed by NM,
        20-Mar-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	fdftr5_0 $f set x $.
 	fdftr5_1 $f set y $.
@@ -46,6 +54,9 @@ $}
 $( An alternate way of defining a transitive class.  Definition 7.1 of
        [TakeutiZaring] p. 35.  (Contributed by NM, 29-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	idftr3_0 $f set y $.
 	fdftr3_0 $f set x $.
@@ -55,12 +66,15 @@ $}
 $( An alternate way of defining a transitive class.  Definition of [Enderton]
      p. 71.  (Contributed by NM, 29-Aug-1993.) $)
 ${
+	$v A $.
 	fdftr4_0 $f class A $.
 	dftr4 $p |- ( Tr A <-> A C_ ~P A ) $= fdftr4_0 wtr fdftr4_0 cuni fdftr4_0 wss fdftr4_0 fdftr4_0 cpw wss fdftr4_0 df-tr fdftr4_0 fdftr4_0 sspwuni bitr4i $.
 $}
 $( Equality theorem for the transitive class predicate.  (Contributed by NM,
      17-Sep-1993.) $)
 ${
+	$v A $.
+	$v B $.
 	ftreq_0 $f class A $.
 	ftreq_1 $f class B $.
 	treq $p |- ( A = B -> ( Tr A <-> Tr B ) ) $= ftreq_0 ftreq_1 wceq ftreq_0 cuni ftreq_0 wss ftreq_1 cuni ftreq_1 wss ftreq_0 wtr ftreq_1 wtr ftreq_0 ftreq_1 wceq ftreq_0 cuni ftreq_0 wss ftreq_1 cuni ftreq_0 wss ftreq_1 cuni ftreq_1 wss ftreq_0 ftreq_1 wceq ftreq_0 cuni ftreq_1 cuni ftreq_0 ftreq_0 ftreq_1 unieq sseq1d ftreq_0 ftreq_1 ftreq_1 cuni sseq2 bitrd ftreq_0 df-tr ftreq_1 df-tr 3bitr4g $.
@@ -69,6 +83,11 @@ $( In a transitive class, the membership relation is transitive.
        (Contributed by NM, 19-Apr-1994.)  (Proof shortened by Andrew Salmon,
        9-Jul-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -82,6 +101,10 @@ $}
 $( In a transitive class, the membership relation is transitive.
      (Contributed by NM, 19-Apr-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	ftrel3_0 $f class A $.
 	ftrel3_1 $f class B $.
 	ftrel3_2 $f class C $.
@@ -91,6 +114,9 @@ $}
 $( An element of a transitive class is a subset of the class.  (Contributed
        by NM, 7-Aug-1994.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	itrss_0 $f set x $.
@@ -101,6 +127,9 @@ $}
 $( The intersection of transitive classes is transitive.  (Contributed by
        NM, 9-May-1994.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	itrin_0 $f set x $.
@@ -119,6 +148,10 @@ $}
 $( The indexed union of a class of transitive sets is transitive.
        (Contributed by Mario Carneiro, 16-Nov-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d y B $.
 	itriun_0 $f set y $.
@@ -131,6 +164,8 @@ $( The union of a class of transitive sets is transitive.  Exercise 5(a) of
        [Enderton] p. 73.  (Contributed by Scott Fenton, 21-Feb-2011.)  (Proof
        shortened by Mario Carneiro, 26-Apr-2014.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	ftruni_0 $f set x $.
 	ftruni_1 $f class A $.
@@ -140,6 +175,9 @@ $( The intersection of a class of transitive sets is transitive.  Exercise
        5(b) of [Enderton] p. 73.  (Contributed by Scott Fenton,
        25-Feb-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	itrint_0 $f set y $.
 	ftrint_0 $f set x $.
@@ -149,6 +187,9 @@ $}
 $( If ` A ` is transitive and non-null, then ` |^| A ` is a subset of
        ` A ` .  (Contributed by Scott Fenton, 3-Mar-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	itrintss_0 $f set x $.
 	itrintss_1 $f set y $.
@@ -158,6 +199,8 @@ $}
 $( Any non-empty transitive class includes its intersection.  Exercise 2 in
        [TakeutiZaring] p. 44.  (Contributed by Andrew Salmon, 14-Nov-2011.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	itrint0_0 $f set x $.
 	ftrint0_0 $f class A $.

@@ -38,7 +38,7 @@ $}
 $( Lemma for ~ renicax .  (Contributed by NM, 31-Jul-2011.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
-	$v ph ps ch th ta $.
+	$v th ta ph ps ch $.
 	f0 $f wff th $.
 	f1 $f wff ta $.
 	i0 $f wff ph $.

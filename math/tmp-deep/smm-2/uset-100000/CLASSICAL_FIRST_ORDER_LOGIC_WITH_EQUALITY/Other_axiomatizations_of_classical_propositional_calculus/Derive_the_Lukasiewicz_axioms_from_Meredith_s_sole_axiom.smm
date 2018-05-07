@@ -150,7 +150,7 @@ $( Step 15 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 22-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
-	$v ph ps ch th ta $.
+	$v ps ch th ta ph $.
 	f0 $f wff ps $.
 	f1 $f wff ch $.
 	f2 $f wff th $.

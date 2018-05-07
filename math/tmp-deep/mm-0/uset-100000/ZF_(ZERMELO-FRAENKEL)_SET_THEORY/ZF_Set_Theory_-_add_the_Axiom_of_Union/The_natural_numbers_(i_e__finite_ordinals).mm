@@ -25,6 +25,8 @@ $( Define the class of natural numbers, which are all ordinal numbers that
        in our development, although the two sets have analogous properties and
        operations defined on them.  (Contributed by NM, 15-May-1994.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	fdf-om_0 $f set x $.
 	fdf-om_1 $f set y $.
@@ -35,6 +37,9 @@ $( An alternate definition of the set of natural numbers ` om ` .
        inner class builder of non-limit ordinal numbers (see ~ nlimon ).
        (Contributed by NM, 1-Nov-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	idfom2_0 $f set z $.
@@ -46,6 +51,9 @@ $( Membership in omega.  The left conjunct can be eliminated if we assume
        the Axiom of Infinity; see ~ elom3 .  (Contributed by NM,
        15-May-1994.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d A x y $.
 	ielom_0 $f set y $.
 	felom_0 $f set x $.
@@ -55,6 +63,8 @@ $}
 $( Omega is a subset of ` On ` .  (Contributed by NM, 13-Jun-1994.)  (Proof
        shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	iomsson_0 $f set x $.
 	iomsson_1 $f set y $.
@@ -65,6 +75,9 @@ $( The class of natural numbers is a subclass of any (infinite) limit
        does not require the Axiom of Infinity.  (Contributed by NM,
        30-Oct-2003.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	ilimomss_0 $f set x $.
 	ilimomss_1 $f set y $.
@@ -74,18 +87,21 @@ $}
 $( A natural number is an ordinal number.  (Contributed by NM,
      27-Jun-1994.) $)
 ${
+	$v A $.
 	fnnon_0 $f class A $.
 	nnon $p |- ( A e. om -> A e. On ) $= com con0 fnnon_0 omsson sseli $.
 $}
 $( A natural number is an ordinal number.  (Contributed by NM,
        27-Jun-1994.) $)
 ${
+	$v A $.
 	fnnoni_0 $f class A $.
 	ennoni_0 $e |- A e. om $.
 	nnoni $p |- A e. On $= fnnoni_0 com wcel fnnoni_0 con0 wcel ennoni_0 fnnoni_0 nnon ax-mp $.
 $}
 $( A natural number is ordinal.  (Contributed by NM, 17-Oct-1995.) $)
 ${
+	$v A $.
 	fnnord_0 $f class A $.
 	nnord $p |- ( A e. om -> Ord A ) $= fnnord_0 com wcel fnnord_0 con0 wcel fnnord_0 word fnnord_0 nnon fnnord_0 eloni syl $.
 $}
@@ -93,6 +109,9 @@ $( Omega is ordinal.  Theorem 7.32 of [TakeutiZaring] p. 43.  (Contributed
        by NM, 18-Oct-1995.)  (Proof shortened by Andrew Salmon,
        27-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	iordom_0 $f set x $.
 	iordom_1 $f set y $.
@@ -102,6 +121,8 @@ $}
 $( A member of a natural number is a natural number.  (Contributed by NM,
      21-Jun-1998.) $)
 ${
+	$v A $.
+	$v B $.
 	felnn_0 $f class A $.
 	felnn_1 $f class B $.
 	elnn $p |- ( ( A e. B /\ B e. om ) -> A e. om ) $= com word com wtr felnn_0 felnn_1 wcel felnn_1 com wcel wa felnn_0 com wcel wi ordom com ordtr com felnn_0 felnn_1 trel mp2b $.
@@ -121,6 +142,8 @@ $}
 $( A natural number is not a limit ordinal.  (Contributed by NM,
        18-Oct-1995.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	innlim_0 $f set x $.
 	fnnlim_0 $f class A $.
@@ -130,6 +153,7 @@ $( The class of natural numbers is a subclass of the class of non-limit
        ordinal numbers.  Exercise 4 of [TakeutiZaring] p. 42.  (Contributed by
        NM, 2-Nov-2004.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
+	$v x $.
 	fomssnlim_0 $f set x $.
 	omssnlim $p |- om C_ { x e. On | -. Lim x } $= com fomssnlim_0 cv wlim wn fomssnlim_0 con0 crab wss com con0 wss fomssnlim_0 cv wlim wn fomssnlim_0 com wral omsson fomssnlim_0 cv wlim wn fomssnlim_0 com fomssnlim_0 cv nnlim rgen fomssnlim_0 cv wlim wn fomssnlim_0 con0 com ssrab mpbir2an $.
 $}
@@ -137,18 +161,22 @@ $( Omega is a limit ordinal.  Theorem 2.8 of [BellMachover] p. 473.  Our
      proof, however, does not require the Axiom of Infinity.  (Contributed by
      NM, 26-Mar-1995.)  (Proof shortened by Mario Carneiro, 2-Sep-2015.) $)
 ${
+	$v x $.
 	ilimom_0 $f set x $.
 	limom $p |- Lim om $= com word com wlim ordom com word com con0 wcel com con0 wceq wo com wlim com ordeleqon com con0 wcel com wlim com con0 wceq com con0 wcel ilimom_0 cv wlim com ilimom_0 cv wcel wi ilimom_0 wal com wlim com con0 wcel com com wcel ilimom_0 cv wlim com ilimom_0 cv wcel wi ilimom_0 wal com word com com wcel wn ordom com ordirr ax-mp com com wcel com con0 wcel ilimom_0 cv wlim com ilimom_0 cv wcel wi ilimom_0 wal ilimom_0 com elom baib mtbii com wlim wn ilimom_0 cv wlim com ilimom_0 cv wcel wi ilimom_0 ilimom_0 cv wlim com wlim wn com ilimom_0 cv wcel ilimom_0 cv wlim com ilimom_0 cv wcel com wlim ilimom_0 cv wlim com ilimom_0 cv wcel wn com ilimom_0 cv wceq com wlim ilimom_0 cv wlim com ilimom_0 cv wcel com ilimom_0 cv wceq ilimom_0 cv wlim com ilimom_0 cv wss com ilimom_0 cv wcel com ilimom_0 cv wceq wo ilimom_0 cv limomss ilimom_0 cv wlim com word ilimom_0 cv word com ilimom_0 cv wss com ilimom_0 cv wcel com ilimom_0 cv wceq wo wb ordom ilimom_0 cv limord com ilimom_0 cv ordsseleq sylancr mpbid ord com ilimom_0 cv wceq com wlim ilimom_0 cv wlim com ilimom_0 cv limeq biimprcd syld con1d com12 alrimiv nsyl2 com con0 wceq com wlim con0 wlim limon com con0 limeq mpbiri jaoi sylbi ax-mp $.
 $}
 $( A class belongs to omega iff its successor does.  (Contributed by NM,
      3-Dec-1995.) $)
 ${
+	$v A $.
 	fpeano2b_0 $f class A $.
 	peano2b $p |- ( A e. om <-> suc A e. om ) $= com wlim fpeano2b_0 com wcel fpeano2b_0 csuc com wcel wb limom com fpeano2b_0 limsuc ax-mp $.
 $}
 $( A nonzero natural number is a successor.  (Contributed by NM,
        18-Feb-2004.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	fnnsuc_0 $f set x $.
 	fnnsuc_1 $f class A $.
@@ -158,6 +186,8 @@ $( An ordinal subclass of non-limit ordinals is a class of natural
        numbers.  Exercise 7 of [TakeutiZaring] p. 42.  (Contributed by NM,
        2-Nov-2004.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	fssnlim_0 $f set x $.
 	fssnlim_1 $f class A $.

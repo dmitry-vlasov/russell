@@ -15,6 +15,10 @@ $( Axiom of Union.  An axiom of Zermelo-Fraenkel set theory.  It states
        two classes ~ df-un .  Their relationship is shown in ~ unipr .
        (Contributed by NM, 23-Dec-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x y z $.
 	fax-un_0 $f set x $.
 	fax-un_1 $f set y $.
@@ -25,6 +29,10 @@ $}
 $( Axiom of Union expressed with the fewest number of different variables.
        (Contributed by NM, 14-Aug-2003.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x y z $.
 	izfun_0 $f set w $.
 	fzfun_0 $f set x $.
@@ -37,6 +45,10 @@ $( A variant of the Axiom of Union ~ ax-un .  For any set ` x ` , there
        of ` x ` i.e. the union of ` x ` .  Axiom Union of [BellMachover]
        p. 466.  (Contributed by NM, 4-Jun-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x y z $.
 	faxun2_0 $f set x $.
 	faxun2_1 $f set y $.
@@ -47,6 +59,9 @@ $}
 $( The Axiom of Union using the standard abbreviation for union.  Given any
        set ` x ` , its union ` y ` exists.  (Contributed by NM, 4-Jun-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	iuniex2_0 $f set z $.
 	funiex2_0 $f set x $.
@@ -58,6 +73,9 @@ $( The Axiom of Union in class notation.  This says that if ` A ` is a set
        Same as Axiom 3 of [TakeutiZaring] p. 16.  (Contributed by NM,
        11-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	iuniex_0 $f set x $.
 	iuniex_1 $f set y $.
@@ -72,6 +90,9 @@ $( The ZF Axiom of Union in class notation, in the form of a theorem
        substitution for class variable ` V ` .  (Contributed by NM,
        25-Nov-1994.) $)
 ${
+	$v x $.
+	$v A $.
+	$v V $.
 	$d x A $.
 	iuniexg_0 $f set x $.
 	funiexg_0 $f class A $.
@@ -81,6 +102,8 @@ $}
 $( The union of two sets is a set.  Corollary 5.8 of [TakeutiZaring]
        p. 16.  (Contributed by NM, 1-Jul-1994.) $)
 ${
+	$v A $.
+	$v B $.
 	funex_0 $f class A $.
 	funex_1 $f class B $.
 	eunex_0 $e |- A e. _V $.
@@ -89,6 +112,9 @@ ${
 $}
 $( A triple of classes exists.  (Contributed by NM, 10-Apr-1994.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	ftpex_0 $f class A $.
 	ftpex_1 $f class B $.
 	ftpex_2 $f class C $.
@@ -97,6 +123,10 @@ $}
 $( Existence of union is equivalent to existence of its components.
        (Contributed by NM, 11-Jun-1998.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	iunexb_0 $f set x $.
@@ -108,6 +138,10 @@ $}
 $( A union of two sets is a set.  Corollary 5.8 of [TakeutiZaring] p. 16.
      (Contributed by NM, 18-Sep-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v V $.
+	$v W $.
 	funexg_0 $f class A $.
 	funexg_1 $f class B $.
 	funexg_2 $f class V $.
@@ -117,12 +151,16 @@ $}
 $( A version of ~ unisn without the ` A e. _V ` hypothesis.  (Contributed
        by Stefan Allan, 14-Mar-2006.) $)
 ${
+	$v A $.
 	funisn2_0 $f class A $.
 	unisn2 $p |- U. { A } e. { (/) , A } $= funisn2_0 cvv wcel funisn2_0 csn cuni c0 funisn2_0 cpr wcel funisn2_0 cvv wcel funisn2_0 csn cuni funisn2_0 c0 funisn2_0 cpr funisn2_0 cvv unisng c0 funisn2_0 cvv prid2g eqeltrd funisn2_0 cvv wcel wn funisn2_0 csn cuni c0 cuni c0 funisn2_0 cpr funisn2_0 cvv wcel wn funisn2_0 csn c0 funisn2_0 cvv wcel wn funisn2_0 csn c0 wceq funisn2_0 snprc biimpi unieqd c0 cuni c0 c0 funisn2_0 cpr uni0 c0 funisn2_0 0ex prid1 eqeltri syl6eqel pm2.61i $.
 $}
 $( Union of a singleton in the form of a restricted class abstraction.
        (Contributed by NM, 3-Jul-2008.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d x B $.
 	funisn3_0 $f set x $.
@@ -133,6 +171,9 @@ $}
 $( The class of all singletons is a proper class.  (Contributed by NM,
        10-Oct-2008.)  (Proof shortened by Eric Schmidt, 7-Dec-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	isnnex_0 $f set z $.
 	fsnnex_0 $f set x $.
@@ -143,6 +184,9 @@ $( If the subtrahend of a class difference exists, then the minuend exists
      iff the difference exists.  (Contributed by NM, 12-Nov-2003.)  (Proof
      shortened by Andrew Salmon, 12-Aug-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fdifex2_0 $f class A $.
 	fdifex2_1 $f class B $.
 	fdifex2_2 $f class C $.
@@ -153,6 +197,9 @@ $( Each member of an ordered pair belongs to the union of the union of a
        (Contributed by NM, 31-Mar-1995.)  (Revised by Mario Carneiro,
        27-Feb-2016.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fopeluu_0 $f class A $.
 	fopeluu_1 $f class B $.
 	fopeluu_2 $f class C $.
@@ -163,6 +210,12 @@ $}
 $( Expression for double union that moves union into a class builder.
        (Contributed by FL, 28-May-2007.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v v $.
+	$v u $.
+	$v A $.
 	$d A x y v z $.
 	$d A x y u z $.
 	iuniuni_0 $f set z $.
@@ -176,6 +229,10 @@ $}
 $( Two ways to express single-valuedness of a class expression
        ` A ( x ) ` .  (Contributed by NM, 14-Oct-2010.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z $.
 	$d A y z $.
 	ieusv1_0 $f set z $.
@@ -188,6 +245,11 @@ $( Even if ` x ` is free in ` A ` , it is effectively bound when
        ` A ( x ) ` is single-valued.  (Contributed by NM, 14-Oct-2010.)
        (Revised by Mario Carneiro, 14-Oct-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
 	$d x y z w $.
 	$d A y z w $.
 	ieusvnf_0 $f set z $.
@@ -200,6 +262,9 @@ $}
 $( Two ways to say that ` A ( x ) ` is a set expression that does not
        depend on ` x ` .  (Contributed by Mario Carneiro, 18-Nov-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d A y $.
 	feusvnfb_0 $f set x $.
@@ -211,6 +276,9 @@ $( Two ways to express single-valuedness of a class expression
        ` A ( x ) ` .  (Contributed by NM, 14-Oct-2010.)  (Revised by Mario
        Carneiro, 18-Nov-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d A y $.
 	feusv2i_0 $f set x $.
@@ -221,6 +289,9 @@ $}
 $( Two ways to express single-valuedness of a class expression
        ` A ( x ) ` .  (Contributed by Mario Carneiro, 18-Nov-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d A y $.
 	feusv2nf_0 $f set x $.
@@ -233,6 +304,9 @@ $( Two ways to express single-valuedness of a class expression
        ` A ( x ) ` .  (Contributed by NM, 15-Oct-2010.)  (Proof shortened by
        Mario Carneiro, 18-Nov-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y $.
 	$d A y $.
 	feusv2_0 $f set x $.
@@ -245,6 +319,12 @@ $( Two ways to express single-valuedness of a class expression
        ` C ( y ) ` .  (Contributed by NM, 16-Dec-2012.)  (Proof shortened by
        Mario Carneiro, 18-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -261,6 +341,10 @@ $}
 $( Lemma for ~ reusv2 .  (Contributed by NM, 22-Oct-2010.)  (Proof
        shortened by Mario Carneiro, 19-Nov-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x B $.
 	freusv2lem1_0 $f set x $.
@@ -272,6 +356,11 @@ $}
 $( Lemma for ~ reusv2 .  (Contributed by NM, 27-Oct-2010.)  (Proof
        shortened by Mario Carneiro, 19-Nov-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x z B $.
 	$d x z $.
@@ -286,6 +375,10 @@ $}
 $( Lemma for ~ reusv2 .  (Contributed by NM, 14-Dec-2012.)  (Proof
        shortened by Mario Carneiro, 19-Nov-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x B $.
 	freusv2lem3_0 $f set x $.
@@ -296,6 +389,13 @@ ${
 $}
 $( Lemma for ~ reusv2 .  (Contributed by NM, 13-Dec-2012.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y z A $.
 	$d x z B $.
 	$d x z C $.
@@ -312,6 +412,11 @@ $}
 $( Lemma for ~ reusv2 .  (Contributed by NM, 4-Jan-2013.)  (Proof shortened
        by Mario Carneiro, 19-Nov-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d x y B $.
 	$d x C $.
@@ -329,6 +434,13 @@ $( Two ways to express single-valuedness of a class expression ` C ( y ) `
        evaluated for at least one ` y ` .  (Contributed by NM, 4-Jan-2013.)
        (Proof shortened by Mario Carneiro, 19-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y z A $.
 	$d x z B $.
 	$d x z C $.
@@ -345,6 +457,15 @@ $}
 $( Two ways of expressing existential uniqueness via an indirect equality.
        (Contributed by NM, 23-Dec-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y z B $.
 	$d x z C $.
 	$d x y D $.
@@ -367,6 +488,15 @@ $( Two ways to express single-valuedness of a class expression
        ` C ( y ) ` .  See ~ reusv1 for the connection to uniqueness.
        (Contributed by NM, 27-Dec-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y z B $.
 	$d x z C $.
 	$d x y D $.
@@ -389,6 +519,10 @@ $}
 $( Two ways to express single-valuedness of a class expression
        ` B ( x ) ` .  (Contributed by NM, 27-Oct-2010.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x B $.
 	feusv4_0 $f set x $.
@@ -402,6 +536,11 @@ $( Two ways to express single-valuedness of a class expression
        ` C ( y ) ` .  (Contributed by NM, 16-Dec-2012.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x y B $.
 	$d x C $.
@@ -419,6 +558,12 @@ $( Two ways to express single-valuedness of a class expression
        30-Oct-2010.)  (Proof shortened by Mario Carneiro, 24-Dec-2016.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x z C $.
@@ -435,6 +580,11 @@ $( Two ways to express single-valuedness of a class expression
        ( ~ uniintsn ).  (Contributed by NM, 14-Dec-2012.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x y A $.
 	$d x y B $.
 	$d x C $.
@@ -450,6 +600,12 @@ $( Transfer universal quantification from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  (Contributed by NM,
        18-Feb-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x A $.
 	$d y ph $.
 	$d x ps $.
@@ -467,6 +623,14 @@ $( Transfer universal quantification from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  (Contributed by NM,
        15-Aug-2014.)  (Proof shortened by Mario Carneiro, 19-Nov-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x y B $.
 	$d x C $.
@@ -490,6 +654,14 @@ $( Transfer universal quantification from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  (Contributed by FL,
        10-Apr-2007.)  (Revised by Mario Carneiro, 15-Aug-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x y B $.
 	$d x C $.
@@ -513,6 +685,15 @@ $( Transfer universal quantification from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  (Contributed by Mario
        Carneiro, 20-Aug-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
 	$d x A $.
 	$d x y B $.
 	$d x C $.
@@ -538,6 +719,15 @@ $( Transfer universal quantification from a variable ` x ` to another
        Carneiro, 20-Aug-2014.)  (Proof shortened by Mario Carneiro,
        19-Nov-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
 	$d x A $.
 	$d x y B $.
 	$d x C $.
@@ -562,6 +752,13 @@ $( Transfer universal quantification from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  (Contributed by NM,
        10-Jun-2005.)  (Revised by Mario Carneiro, 15-Aug-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x ps $.
 	$d y ph $.
 	$d x A $.
@@ -585,6 +782,13 @@ $( Transfer universal quantification from a variable ` x ` to another
        Carneiro, 15-Aug-2014.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x ps $.
 	$d y ph $.
 	$d x A $.
@@ -606,6 +810,13 @@ $( Transfer existence from a variable ` x ` to another variable ` y `
        contained in expression ` A ` .  (Contributed by NM, 10-Jun-2005.)
        (Revised by Mario Carneiro, 15-Aug-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x ps $.
 	$d y ph $.
 	$d x A $.
@@ -627,6 +838,15 @@ $( Class builder membership after substituting an expression ` A `
        (containing ` y ` ) for ` x ` in the class expression ` ch ` .
        (Contributed by NM, 16-Jan-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x A $.
 	$d x y D $.
 	$d y ph $.
@@ -652,6 +872,14 @@ $( Class builder membership after substituting an expression ` A `
        (containing ` y ` ) for ` x ` in the class expression ` ph ` .
        (Contributed by NM, 10-Jun-2005.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x A $.
 	$d x y D $.
 	$d y ph $.
@@ -675,6 +903,12 @@ $( Transfer existential uniqueness from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  (Contributed by NM,
        16-Jan-2012.)  (Revised by NM, 16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y ph $.
 	$d x ps $.
 	$d x A $.
@@ -693,6 +927,11 @@ $( Transfer existential uniqueness from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  (Contributed by NM,
        14-Nov-2004.)  (Revised by NM, 16-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x ph $.
 	$d x A $.
 	$d x y B $.
@@ -709,6 +948,13 @@ $( Transfer existential uniqueness from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  Use ~ reuhypd to
        eliminate the second hypothesis.  (Contributed by NM, 16-Jan-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y ph $.
 	$d y ps $.
 	$d x ch $.
@@ -730,6 +976,12 @@ $( Transfer existential uniqueness from a variable ` x ` to another
        variable ` y ` contained in expression ` A ` .  Use ~ reuhyp to
        eliminate the second hypothesis.  (Contributed by NM, 14-Nov-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x ps $.
 	$d y ph $.
 	$d x A $.
@@ -748,6 +1000,12 @@ $}
 $( A theorem useful for eliminating the restricted existential uniqueness
        hypotheses in ~ riotaxfrd .  (Contributed by NM, 16-Jan-2012.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d y ph $.
 	$d y B $.
 	$d y C $.
@@ -765,6 +1023,11 @@ $}
 $( A theorem useful for eliminating the restricted existential uniqueness
        hypotheses in ~ reuxfr .  (Contributed by NM, 15-Nov-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d y B $.
 	$d y C $.
 	$d x y $.
@@ -780,12 +1043,14 @@ $}
 $( The Axiom of Union and its converse.  A class is a set iff its union is a
      set.  (Contributed by NM, 11-Nov-2003.) $)
 ${
+	$v A $.
 	funiexb_0 $f class A $.
 	uniexb $p |- ( A e. _V <-> U. A e. _V ) $= funiexb_0 cvv wcel funiexb_0 cuni cvv wcel funiexb_0 cvv uniexg funiexb_0 cuni cvv wcel funiexb_0 funiexb_0 cuni cpw wss funiexb_0 cuni cpw cvv wcel funiexb_0 cvv wcel funiexb_0 pwuni funiexb_0 cuni cvv pwexg funiexb_0 funiexb_0 cuni cpw cvv ssexg sylancr impbii $.
 $}
 $( The Axiom of Power Sets and its converse.  A class is a set iff its power
      class is a set.  (Contributed by NM, 11-Nov-2003.) $)
 ${
+	$v A $.
 	fpwexb_0 $f class A $.
 	pwexb $p |- ( A e. _V <-> ~P A e. _V ) $= fpwexb_0 cpw cvv wcel fpwexb_0 cpw cuni cvv wcel fpwexb_0 cvv wcel fpwexb_0 cpw uniexb fpwexb_0 cpw cuni fpwexb_0 cvv fpwexb_0 unipw eleq1i bitr2i $.
 $}
@@ -797,6 +1062,9 @@ $}
 $( Membership in a power class difference.  (Contributed by NM,
        25-Mar-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	feldifpw_0 $f class A $.
 	feldifpw_1 $f class B $.
 	feldifpw_2 $f class C $.
@@ -806,6 +1074,9 @@ $}
 $( Membership in the power class of a union.  (Contributed by NM,
        26-Mar-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	felpwun_0 $f class A $.
 	felpwun_1 $f class B $.
 	felpwun_2 $f class C $.
@@ -815,6 +1086,10 @@ $}
 $( Membership in an extension of a power class.  (Contributed by NM,
        26-Mar-2007.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -829,6 +1104,8 @@ $( Extract the first member of an ordered pair.  Theorem 73 of [Suppes]
        alternate version, and ~ op1st for the preferred version.)  (Contributed
        by NM, 25-Nov-2003.) $)
 ${
+	$v A $.
+	$v B $.
 	fop1stb_0 $f class A $.
 	fop1stb_1 $f class B $.
 	eop1stb_0 $e |- A e. _V $.
@@ -839,6 +1116,9 @@ $( An indexed union of a power class in terms of the power class of the
        union of its index.  Part of Exercise 24(b) of [Enderton] p. 33.
        (Contributed by NM, 29-Nov-2003.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	iiunpw_0 $f set y $.
 	fiunpw_0 $f set x $.
@@ -850,6 +1130,13 @@ $( A well-founded relation has no 3-cycle loops.  Special case of
        Proposition 6.23 of [TakeutiZaring] p. 30.  (Contributed by NM,
        10-Apr-1994.)  (Revised by Mario Carneiro, 22-Jun-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -867,6 +1154,10 @@ $}
 $( A set well-founded by epsilon contains no 3-cycle loops.  (Contributed by
      NM, 19-Apr-1994.)  (Revised by Mario Carneiro, 22-Jun-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fepne3_0 $f class A $.
 	fepne3_1 $f class B $.
 	fepne3_2 $f class C $.
@@ -877,6 +1168,11 @@ $( Alternate definition of well-ordering.  Definition 6.24(2) of
        [TakeutiZaring] p. 30.  (Contributed by NM, 16-Mar-1997.)  (Proof
        shortened by Andrew Salmon, 12-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v R $.
 	$d x y z R $.
 	$d x y z A $.
 	idfwe2_0 $f set z $.

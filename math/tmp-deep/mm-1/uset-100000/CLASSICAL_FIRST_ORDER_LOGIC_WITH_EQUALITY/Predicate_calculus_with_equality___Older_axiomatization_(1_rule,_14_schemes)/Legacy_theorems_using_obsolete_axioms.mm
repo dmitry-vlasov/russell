@@ -33,6 +33,8 @@ $( Axiom to quantify a variable over a formula in which it does not occur.
        19-Aug-2017.)  (New usage is discouraged.)  (Proof modification
        discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
 	$d x ph $.
 	fax17o_0 $f wff ph $.
 	fax17o_1 $f set x $.
@@ -48,12 +50,16 @@ $( Identity law for equality (reflexivity).  Lemma 6 of [Tarski] p. 68.  This
      alternate proof.  (Contributed by NM, 5-Aug-1993.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v x $.
 	fequid1_0 $f set x $.
 	equid1 $p |- x = x $= fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 wal wn fequid1_0 wal fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 wal wn fequid1_0 wal fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 wal wi fequid1_0 wal fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 wal wn fequid1_0 wal fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 wal wi wi fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 wal wn fequid1_0 wal fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 wal wi fequid1_0 wal wi fequid1_0 fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 wal wn fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 wal wi fequid1_0 ax-5o fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 wal wn fequid1_0 wal fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 wal wn fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 wal wn fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 wal wi fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 wal wn fequid1_0 ax-4 fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 wal wn fequid1_0 ax-4 fequid1_0 fequid1_0 fequid1_0 ax-12o sylc mpg fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 fequid1_0 ax-9o syl fequid1_0 sup_set_class fequid1_0 sup_set_class wceq fequid1_0 ax-6o pm2.61i $.
 $}
 $( Generalization of antecedent.  (Contributed by NM, 5-Aug-1993.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fsps-o_0 $f wff ph $.
 	fsps-o_1 $f wff ps $.
 	fsps-o_2 $f set x $.
@@ -68,6 +74,8 @@ $( Bound-variable hypothesis builder for ` x = x ` .  This theorem tells us
      Lammen, 23-Mar-2014.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
 	fhbequid_0 $f set x $.
 	fhbequid_1 $f set y $.
 	hbequid $p |- ( x = x -> A. y x = x ) $= fhbequid_1 sup_set_class fhbequid_0 sup_set_class wceq fhbequid_1 wal fhbequid_1 sup_set_class fhbequid_0 sup_set_class wceq fhbequid_1 wal fhbequid_0 sup_set_class fhbequid_0 sup_set_class wceq fhbequid_0 sup_set_class fhbequid_0 sup_set_class wceq fhbequid_1 wal wi fhbequid_0 fhbequid_0 fhbequid_1 ax-12o fhbequid_1 sup_set_class fhbequid_0 sup_set_class wceq fhbequid_1 wal fhbequid_0 sup_set_class fhbequid_0 sup_set_class wceq fhbequid_1 wal fhbequid_0 sup_set_class fhbequid_0 sup_set_class wceq fhbequid_1 sup_set_class fhbequid_0 sup_set_class wceq fhbequid_0 sup_set_class fhbequid_0 sup_set_class wceq fhbequid_1 fhbequid_1 sup_set_class fhbequid_0 sup_set_class wceq fhbequid_0 sup_set_class fhbequid_0 sup_set_class wceq fhbequid_1 fhbequid_0 fhbequid_0 ax-8 pm2.43i alimi a1d fhbequid_1 sup_set_class fhbequid_0 sup_set_class wceq fhbequid_1 wal fhbequid_0 sup_set_class fhbequid_0 sup_set_class wceq fhbequid_1 wal fhbequid_0 sup_set_class fhbequid_0 sup_set_class wceq fhbequid_1 sup_set_class fhbequid_0 sup_set_class wceq fhbequid_0 sup_set_class fhbequid_0 sup_set_class wceq fhbequid_1 fhbequid_1 sup_set_class fhbequid_0 sup_set_class wceq fhbequid_0 sup_set_class fhbequid_0 sup_set_class wceq fhbequid_1 fhbequid_0 fhbequid_0 ax-8 pm2.43i alimi a1d pm2.61ii $.
@@ -85,6 +93,8 @@ $( Bound-variable hypothesis builder for ` x = x ` .  This theorem tells us
      Mario Carneiro, 12-Oct-2016.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
 	fnfequid-o_0 $f set x $.
 	fnfequid-o_1 $f set y $.
 	nfequid-o $p |- F/ y x = x $= fnfequid-o_0 sup_set_class fnfequid-o_0 sup_set_class wceq fnfequid-o_1 fnfequid-o_0 fnfequid-o_1 hbequid nfi $.
@@ -94,6 +104,8 @@ $( Proof of a single axiom that can replace ~ ax-4 and ~ ax-6o .  See
      (Contributed by Scott Fenton, 12-Sep-2005.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
 	fax46_0 $f wff ph $.
 	fax46_1 $f set x $.
 	ax46 $p |- ( ( A. x -. A. x ph -> A. x ph ) -> ph ) $= fax46_0 fax46_1 wal wn fax46_1 wal fax46_0 fax46_1 wal fax46_0 fax46_0 fax46_1 ax-6o fax46_0 fax46_1 ax-4 ja $.
@@ -102,6 +114,8 @@ $( Re-derivation of ~ ax-4 from ~ ax46 .  Only propositional calculus is used
      for the re-derivation.  (Contributed by Scott Fenton, 12-Sep-2005.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
 	fax46to4_0 $f wff ph $.
 	fax46to4_1 $f set x $.
 	ax46to4 $p |- ( A. x ph -> ph ) $= fax46to4_0 fax46to4_1 wal fax46to4_0 fax46to4_1 wal wn fax46to4_1 wal fax46to4_0 fax46to4_1 wal wi fax46to4_0 fax46to4_0 fax46to4_1 wal fax46to4_0 fax46to4_1 wal wn fax46to4_1 wal ax-1 fax46to4_0 fax46to4_1 ax46 syl $.
@@ -110,6 +124,8 @@ $( Re-derivation of ~ ax-6o from ~ ax46 .  Only propositional calculus is
      used for the re-derivation.  (Contributed by Scott Fenton, 12-Sep-2005.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
 	fax46to6_0 $f wff ph $.
 	fax46to6_1 $f set x $.
 	ax46to6 $p |- ( -. A. x -. A. x ph -> ph ) $= fax46to6_0 fax46to6_1 wal wn fax46to6_1 wal wn fax46to6_0 fax46to6_1 wal wn fax46to6_1 wal fax46to6_0 fax46to6_1 wal wi fax46to6_0 fax46to6_0 fax46to6_1 wal wn fax46to6_1 wal fax46to6_0 fax46to6_1 wal pm2.21 fax46to6_0 fax46to6_1 ax46 syl $.
@@ -119,6 +135,9 @@ $( Proof of a single axiom that can replace both ~ ax-6o and ~ ax-7 .  See
      (Contributed by NM, 18-Nov-2006.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fax67_0 $f wff ph $.
 	fax67_1 $f set x $.
 	fax67_2 $f set y $.
@@ -128,6 +147,8 @@ $( ` x ` is not free in ` A. x ph ` .  (Contributed by Mario Carneiro,
      11-Aug-2016.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
 	fnfa1-o_0 $f wff ph $.
 	fnfa1-o_1 $f set x $.
 	nfa1-o $p |- F/ x A. x ph $= fnfa1-o_0 fnfa1-o_1 wal fnfa1-o_1 fnfa1-o_0 fnfa1-o_1 hba1-o nfi $.
@@ -136,6 +157,8 @@ $( Re-derivation of ~ ax-6o from ~ ax67 .  Note that ~ ax-6o and ~ ax-7 are
      not used by the re-derivation.  (Contributed by NM, 18-Nov-2006.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
 	fax67to6_0 $f wff ph $.
 	fax67to6_1 $f set x $.
 	ax67to6 $p |- ( -. A. x -. A. x ph -> ph ) $= fax67to6_0 fax67to6_1 wal wn fax67to6_1 wal wn fax67to6_0 fax67to6_1 wal fax67to6_1 wal wn fax67to6_1 wal wn fax67to6_0 fax67to6_1 wal fax67to6_0 fax67to6_0 fax67to6_1 wal fax67to6_1 wal wn fax67to6_1 wal fax67to6_0 fax67to6_1 wal wn fax67to6_1 wal fax67to6_0 fax67to6_1 wal fax67to6_1 wal wn fax67to6_0 fax67to6_1 wal wn fax67to6_1 fax67to6_0 fax67to6_1 wal fax67to6_0 fax67to6_1 wal fax67to6_1 wal fax67to6_0 fax67to6_1 hba1-o con3i alimi con3i fax67to6_0 fax67to6_1 fax67to6_1 ax67 fax67to6_0 fax67to6_1 ax-4 3syl $.
@@ -144,6 +167,9 @@ $( Re-derivation of ~ ax-7 from ~ ax67 .  Note that ~ ax-6o and ~ ax-7 are
      not used by the re-derivation.  (Contributed by NM, 18-Nov-2006.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fax67to7_0 $f wff ph $.
 	fax67to7_1 $f set x $.
 	fax67to7_2 $f set y $.
@@ -156,6 +182,9 @@ $( Proof of a single axiom that can replace ~ ax-4 , ~ ax-6o , and ~ ax-7 in
      Fenton's ~ ax46 .  (Contributed by NM, 18-Nov-2006.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fax467_0 $f wff ph $.
 	fax467_1 $f set x $.
 	fax467_2 $f set y $.
@@ -165,6 +194,8 @@ $( Re-derivation of ~ ax-4 from ~ ax467 .  Only propositional calculus is
      used by the re-derivation.  (Contributed by NM, 19-Nov-2006.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
 	fax467to4_0 $f wff ph $.
 	fax467to4_1 $f set x $.
 	ax467to4 $p |- ( A. x ph -> ph ) $= fax467to4_0 fax467to4_1 wal fax467to4_0 fax467to4_1 wal fax467to4_1 wal wn fax467to4_1 wal fax467to4_1 wal fax467to4_0 fax467to4_1 wal wi fax467to4_0 fax467to4_0 fax467to4_1 wal fax467to4_0 fax467to4_1 wal fax467to4_1 wal wn fax467to4_1 wal fax467to4_1 wal ax-1 fax467to4_0 fax467to4_1 fax467to4_1 ax467 syl $.
@@ -175,6 +206,8 @@ $( Re-derivation of ~ ax-6o from ~ ax467 .  Note that ~ ax-6o and ~ ax-7 are
      19-Nov-2006.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
 	fax467to6_0 $f wff ph $.
 	fax467to6_1 $f set x $.
 	ax467to6 $p |- ( -. A. x -. A. x ph -> ph ) $= fax467to6_0 fax467to6_1 wal wn fax467to6_1 wal wn fax467to6_0 fax467to6_1 wal fax467to6_1 wal wn fax467to6_1 wal fax467to6_1 wal wn fax467to6_0 fax467to6_1 wal fax467to6_1 wal wn fax467to6_1 wal fax467to6_1 wal fax467to6_0 fax467to6_1 wal wi fax467to6_0 fax467to6_0 fax467to6_1 wal fax467to6_1 wal wn fax467to6_1 wal fax467to6_1 wal fax467to6_0 fax467to6_1 wal wn fax467to6_1 wal fax467to6_0 fax467to6_1 wal fax467to6_1 wal wn fax467to6_1 wal fax467to6_0 fax467to6_1 wal wn fax467to6_1 wal fax467to6_1 fax467to6_0 fax467to6_1 wal fax467to6_1 wal wn fax467to6_0 fax467to6_1 wal wn fax467to6_1 fax467to6_0 fax467to6_1 wal fax467to6_0 fax467to6_1 wal fax467to6_1 wal fax467to6_0 fax467to6_1 hba1-o con3i alimi sps-o con3i fax467to6_0 fax467to6_1 wal fax467to6_1 wal wn fax467to6_1 wal fax467to6_1 wal fax467to6_0 fax467to6_1 wal pm2.21 fax467to6_0 fax467to6_1 fax467to6_1 ax467 3syl $.
@@ -185,6 +218,9 @@ $( Re-derivation of ~ ax-7 from ~ ax467 .  Note that ~ ax-6o and ~ ax-7 are
      19-Nov-2006.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fax467to7_0 $f wff ph $.
 	fax467to7_1 $f set x $.
 	fax467to7_2 $f set y $.
@@ -194,6 +230,8 @@ $( ~ equid with existential quantifier without using ~ ax-4 or ~ ax-17 .
      (Contributed by NM, 13-Jan-2011.)  (Proof shortened by Wolf Lammen,
      27-Feb-2014.)  (Proof modification is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
 	fequidqe_0 $f set x $.
 	fequidqe_1 $f set y $.
 	equidqe $p |- -. A. y -. x = x $= fequidqe_0 sup_set_class fequidqe_0 sup_set_class wceq wn fequidqe_1 wal fequidqe_1 sup_set_class fequidqe_0 sup_set_class wceq wn fequidqe_1 wal fequidqe_1 fequidqe_0 ax9from9o fequidqe_0 sup_set_class fequidqe_0 sup_set_class wceq wn fequidqe_1 sup_set_class fequidqe_0 sup_set_class wceq wn fequidqe_1 fequidqe_1 sup_set_class fequidqe_0 sup_set_class wceq fequidqe_0 sup_set_class fequidqe_0 sup_set_class wceq fequidqe_1 sup_set_class fequidqe_0 sup_set_class wceq fequidqe_0 sup_set_class fequidqe_0 sup_set_class wceq fequidqe_1 fequidqe_0 fequidqe_0 ax-8 pm2.43i con3i alimi mto $.
@@ -201,6 +239,8 @@ $}
 $( A special case of ~ ax-4 without using ~ ax-4 or ~ ax-17 .  (Contributed
      by NM, 13-Jan-2011.)  (Proof modification is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
 	fax4sp1_0 $f set x $.
 	fax4sp1_1 $f set y $.
 	ax4sp1 $p |- ( A. y -. x = x -> -. x = x ) $= fax4sp1_0 sup_set_class fax4sp1_0 sup_set_class wceq wn fax4sp1_1 wal fax4sp1_0 sup_set_class fax4sp1_0 sup_set_class wceq wn fax4sp1_0 fax4sp1_1 equidqe pm2.21i $.
@@ -209,6 +249,8 @@ $( ~ equid with universal quantifier without using ~ ax-4 or ~ ax-17 .
      (Contributed by NM, 13-Jan-2011.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
 	fequidq_0 $f set x $.
 	fequidq_1 $f set y $.
 	equidq $p |- A. y x = x $= fequidq_0 sup_set_class fequidq_0 sup_set_class wceq fequidq_1 wal fequidq_0 sup_set_class fequidq_0 sup_set_class wceq wn fequidq_1 wal fequidq_0 fequidq_1 equidqe fequidq_0 sup_set_class fequidq_0 sup_set_class wceq fequidq_1 wal wn fequidq_0 sup_set_class fequidq_0 sup_set_class wceq wn fequidq_1 fequidq_0 sup_set_class fequidq_0 sup_set_class wceq fequidq_1 ax6 fequidq_0 sup_set_class fequidq_0 sup_set_class wceq fequidq_0 sup_set_class fequidq_0 sup_set_class wceq fequidq_1 wal fequidq_0 fequidq_1 hbequid con3i alrimih mt3 $.
@@ -218,6 +260,7 @@ $( Identity law for equality (reflexivity).  Lemma 6 of [Tarski] p. 68.
      (Contributed by NM, 5-Aug-1993.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v x $.
 	fequid1ALT_0 $f set x $.
 	equid1ALT $p |- x = x $= fequid1ALT_0 sup_set_class fequid1ALT_0 sup_set_class wceq fequid1ALT_0 wal wn fequid1ALT_0 wal fequid1ALT_0 sup_set_class fequid1ALT_0 sup_set_class wceq fequid1ALT_0 sup_set_class fequid1ALT_0 sup_set_class wceq fequid1ALT_0 wal wn fequid1ALT_0 wal fequid1ALT_0 sup_set_class fequid1ALT_0 sup_set_class wceq fequid1ALT_0 sup_set_class fequid1ALT_0 sup_set_class wceq fequid1ALT_0 wal wi fequid1ALT_0 wal fequid1ALT_0 sup_set_class fequid1ALT_0 sup_set_class wceq fequid1ALT_0 sup_set_class fequid1ALT_0 sup_set_class wceq fequid1ALT_0 wal wn fequid1ALT_0 sup_set_class fequid1ALT_0 sup_set_class wceq fequid1ALT_0 sup_set_class fequid1ALT_0 sup_set_class wceq fequid1ALT_0 wal wi fequid1ALT_0 fequid1ALT_0 sup_set_class fequid1ALT_0 sup_set_class wceq fequid1ALT_0 wal wn fequid1ALT_0 sup_set_class fequid1ALT_0 sup_set_class wceq fequid1ALT_0 sup_set_class fequid1ALT_0 sup_set_class wceq fequid1ALT_0 wal wi fequid1ALT_0 fequid1ALT_0 fequid1ALT_0 ax-12o pm2.43i alimi fequid1ALT_0 sup_set_class fequid1ALT_0 sup_set_class wceq fequid1ALT_0 fequid1ALT_0 ax-9o syl fequid1ALT_0 sup_set_class fequid1ALT_0 sup_set_class wceq fequid1ALT_0 ax-6o pm2.61i $.
 $}
@@ -230,6 +273,8 @@ $( Rederivation of ~ ax-10 from original version ~ ax-10o .  See theorem
      omitting ~ ax-17 .  (Contributed by NM, 16-May-2008.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
 	fax10from10o_0 $f set x $.
 	fax10from10o_1 $f set y $.
 	ax10from10o $p |- ( A. x x = y -> A. y y = x ) $= fax10from10o_0 sup_set_class fax10from10o_1 sup_set_class wceq fax10from10o_0 wal fax10from10o_0 sup_set_class fax10from10o_1 sup_set_class wceq fax10from10o_1 wal fax10from10o_1 sup_set_class fax10from10o_0 sup_set_class wceq fax10from10o_1 wal fax10from10o_0 sup_set_class fax10from10o_1 sup_set_class wceq fax10from10o_0 wal fax10from10o_0 sup_set_class fax10from10o_1 sup_set_class wceq fax10from10o_1 wal fax10from10o_0 sup_set_class fax10from10o_1 sup_set_class wceq fax10from10o_0 fax10from10o_1 ax-10o pm2.43i fax10from10o_0 sup_set_class fax10from10o_1 sup_set_class wceq fax10from10o_1 sup_set_class fax10from10o_0 sup_set_class wceq fax10from10o_1 fax10from10o_0 fax10from10o_1 equcomi alimi syl $.
@@ -238,6 +283,9 @@ $( A commutation rule for distinct variable specifiers.  Version of
        ~ naecoms using ~ ax-10o .  (Contributed by NM, 2-Jan-2002.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fnaecoms-o_0 $f wff ph $.
 	fnaecoms-o_1 $f set x $.
 	fnaecoms-o_2 $f set y $.
@@ -249,6 +297,9 @@ $( All variables are effectively bound in a distinct variable specifier.
      using ~ ax-10o .  (Contributed by NM, 5-Aug-1993.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	fhbnae-o_0 $f set x $.
 	fhbnae-o_1 $f set y $.
 	fhbnae-o_2 $f set z $.
@@ -259,6 +310,11 @@ $( Proof of ~ dvelimh that uses ~ ax-10o but not ~ ax-11o , ~ ax-10 , or
        (Contributed by NM, 12-Nov-2002.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fdvelimf-o_0 $f wff ph $.
 	fdvelimf-o_1 $f wff ps $.
 	fdvelimf-o_2 $f set x $.
@@ -274,6 +330,11 @@ $( Formula-building lemma for use with the Distinctor Reduction Theorem.
        ~ dral2 using ~ ax-10o .  (Contributed by NM, 27-Feb-2005.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fdral2-o_0 $f wff ph $.
 	fdral2-o_1 $f wff ps $.
 	fdral2-o_2 $f set x $.
@@ -287,8 +348,14 @@ $( A "distinctor elimination" lemma with no restrictions on variables in
        ~ ax-10o .  (Contributed by NM, 8-Nov-2006.)  (Proof shortened by Andrew
        Salmon, 21-Jun-2011.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
-$v t $.
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
+	$v t $.
 	$d t u v $.
 	$d t u x y $.
 	$d u w $.
@@ -308,6 +375,9 @@ $( Theorem to add distinct quantifier to atomic formula.  (This theorem
        5-Aug-1993.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	fax17eq_0 $f set x $.
@@ -319,6 +389,10 @@ $( Quantifier introduction when one pair of variables is distinct.  Version
        of ~ dveeq2 using ~ ax-11o .  (Contributed by NM, 2-Jan-2002.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w z x $.
 	$d w y $.
 	idveeq2-o_0 $f set w $.
@@ -332,6 +406,10 @@ $( Version of ~ dveeq2 using ~ ax-16 instead of ~ ax-17 .  TO DO:  Recover
        29-Apr-2008.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w z x $.
 	$d w y $.
 	idveeq2-o16_0 $f set w $.
@@ -345,6 +423,10 @@ $( A generalization of axiom ~ ax-16 .  Version of ~ a16g using ~ ax-10o .
        25-May-2011.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y $.
 	fa16g-o_0 $f wff ph $.
 	fa16g-o_1 $f set x $.
@@ -356,6 +438,10 @@ $( Quantifier introduction when one pair of variables is distinct.  Version
        of ~ dveeq1 using ax-10o .  (Contributed by NM, 2-Jan-2002.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w z x $.
 	$d w y $.
 	idveeq1-o_0 $f set w $.
@@ -369,6 +455,10 @@ $( Version of ~ dveeq1 using ~ ax-16 instead of ~ ax-17 .  (Contributed by
        of ~ ax-17 .  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w z x $.
 	$d w y $.
 	idveeq1-o16_0 $f set w $.
@@ -382,6 +472,9 @@ $( Theorem to add distinct quantifier to atomic formula.  This theorem
        metatheorem.)  (Contributed by NM, 5-Aug-1993.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	fax17el_0 $f set x $.
@@ -394,6 +487,9 @@ $( This theorem shows that, given ~ ax-16 , we can derive a version of
        variable requirement.  (Contributed by Andrew Salmon, 27-Jul-2011.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v z $.
+	$v w $.
 	$d x z w $.
 	iax10-16_0 $f set w $.
 	fax10-16_0 $f set x $.
@@ -404,6 +500,10 @@ $( Version of ~ dveel2 using ~ ax-16 instead of ~ ax-17 .  (Contributed by
        NM, 10-May-2008.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w z x $.
 	$d w y $.
 	idveel2ALT_0 $f set w $.
@@ -417,6 +517,9 @@ $( Basis step for constructing a substitution instance of ~ ax-11o without
        not free.  (Contributed by NM, 21-Jan-2007.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fax11f_0 $f wff ph $.
 	fax11f_1 $f set x $.
 	fax11f_2 $f set y $.
@@ -428,6 +531,12 @@ $( Basis step for constructing a substitution instance of ~ ax-11o without
        by NM, 22-Jan-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
 	$d x u v $.
 	$d y u v $.
 	$d z u v $.
@@ -445,6 +554,12 @@ $( Basis step for constructing a substitution instance of ~ ax-11o without
        by NM, 22-Jan-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
 	$d x u v $.
 	$d y u v $.
 	$d z u v $.
@@ -462,6 +577,9 @@ $( Induction step for constructing a substitution instance of ~ ax-11o
        21-Jan-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fax11indn_0 $f wff ph $.
 	fax11indn_1 $f set x $.
 	fax11indn_2 $f set y $.
@@ -473,6 +591,10 @@ $( Induction step for constructing a substitution instance of ~ ax-11o
          21-Jan-2007.)  (Proof modification is discouraged.)
          (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fax11indi_0 $f wff ph $.
 	fax11indi_1 $f wff ps $.
 	fax11indi_2 $f set x $.
@@ -485,6 +607,10 @@ $( Lemma for ~ ax11inda2 and ~ ax11inda .  (Contributed by NM,
        24-Jan-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fax11indalem_0 $f wff ph $.
 	fax11indalem_1 $f set x $.
 	fax11indalem_2 $f set y $.
@@ -496,6 +622,10 @@ $( A proof of ~ ax11inda2 that is slightly more direct.  (Contributed by
        NM, 4-May-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d z y $.
 	fax11inda2ALT_0 $f wff ph $.
 	fax11inda2ALT_1 $f set x $.
@@ -510,6 +640,10 @@ $( Induction step for constructing a substitution instance of ~ ax-11o
        general ~ ax11inda .  (Contributed by NM, 24-Jan-2007.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d z y $.
 	fax11inda2_0 $f wff ph $.
 	fax11inda2_1 $f set x $.
@@ -524,6 +658,11 @@ $( Induction step for constructing a substitution instance of ~ ax-11o
        variable ` w ` in the proof.)  (Contributed by NM, 24-Jan-2007.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w ph $.
 	$d w x $.
 	$d w y $.
@@ -543,6 +682,10 @@ $( Recovery of ~ ax-11o from ~ ax11v without using ~ ax-11o .  The
        NM, 2-Feb-2007.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d z ph $.
@@ -563,6 +706,10 @@ $( Derive ~ ax-11o from a hypothesis in the form of ~ ax-11 , without using
        ~ ax-10o .  (Contributed by NM, 2-Feb-2007.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	$d z ph $.
@@ -583,6 +730,9 @@ $( Show that ~ ax-10o can be derived from ~ ax-10 .  An open problem is
      (Contributed by NM, 16-May-2008.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fax10o-o_0 $f wff ph $.
 	fax10o-o_1 $f set x $.
 	fax10o-o_2 $f set y $.

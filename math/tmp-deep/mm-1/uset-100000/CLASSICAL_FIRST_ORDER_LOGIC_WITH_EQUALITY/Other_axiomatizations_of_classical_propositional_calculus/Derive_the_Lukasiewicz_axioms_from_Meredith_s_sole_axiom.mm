@@ -28,6 +28,11 @@ $( Carew Meredith's sole axiom for propositional calculus.  This amazing
      shortened by Andrew Salmon, 25-Jul-2011.)  (Proof shortened by Wolf
      Lammen, 28-May-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fmeredith_0 $f wff ph $.
 	fmeredith_1 $f wff ps $.
 	fmeredith_2 $f wff ch $.
@@ -39,6 +44,11 @@ $( Alias for ~ meredith which "verify markup *" will match to
      ~ ax-meredith .  (Contributed by NM, 21-Aug-2017.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	faxmeredith_0 $f wff ph $.
 	faxmeredith_1 $f wff ps $.
 	faxmeredith_2 $f wff ch $.
@@ -53,6 +63,11 @@ $( Theorem ~ meredith restated as an axiom.  This will allow us to ensure
      by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fax-meredith_0 $f wff ph $.
 	fax-meredith_1 $f wff ps $.
 	fax-meredith_2 $f wff ch $.
@@ -65,6 +80,10 @@ $( Step 3 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v ta $.
 	fmerlem1_0 $f wff ph $.
 	fmerlem1_1 $f wff ps $.
 	fmerlem1_2 $f wff ch $.
@@ -75,6 +94,9 @@ $( Step 4 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ch $.
+	$v th $.
 	fmerlem2_0 $f wff ph $.
 	fmerlem2_1 $f wff ch $.
 	fmerlem2_2 $f wff th $.
@@ -84,6 +106,9 @@ $( Step 7 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fmerlem3_0 $f wff ph $.
 	fmerlem3_1 $f wff ps $.
 	fmerlem3_2 $f wff ch $.
@@ -93,6 +118,9 @@ $( Step 8 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v th $.
+	$v ta $.
 	fmerlem4_0 $f wff ph $.
 	fmerlem4_1 $f wff th $.
 	fmerlem4_2 $f wff ta $.
@@ -102,6 +130,8 @@ $( Step 11 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fmerlem5_0 $f wff ph $.
 	fmerlem5_1 $f wff ps $.
 	merlem5 $p |- ( ( ph -> ps ) -> ( -. -. ph -> ps ) ) $= fmerlem5_1 fmerlem5_1 wi fmerlem5_1 wn fmerlem5_1 wn wi wi fmerlem5_1 wi fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi wi wi fmerlem5_0 fmerlem5_1 wi fmerlem5_0 wn wn fmerlem5_1 wi wi fmerlem5_1 fmerlem5_1 fmerlem5_1 fmerlem5_1 fmerlem5_1 ax-meredith fmerlem5_1 fmerlem5_1 wi fmerlem5_1 wn fmerlem5_0 wn wn wn wi wi fmerlem5_1 wi fmerlem5_0 wi fmerlem5_0 fmerlem5_1 wi fmerlem5_0 wn wn fmerlem5_1 wi wi wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 wn fmerlem5_1 wn wi wi fmerlem5_1 wi fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi wi wi fmerlem5_0 fmerlem5_1 wi fmerlem5_0 wn wn fmerlem5_1 wi wi wi fmerlem5_1 fmerlem5_1 fmerlem5_1 fmerlem5_0 wn wn fmerlem5_0 ax-meredith fmerlem5_0 fmerlem5_1 wi fmerlem5_0 wn wn fmerlem5_1 wi wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 wn fmerlem5_1 wn wi wi fmerlem5_1 wi fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi wi wi wn wi fmerlem5_0 wn fmerlem5_1 fmerlem5_1 wi fmerlem5_1 wn fmerlem5_1 wn wi wi fmerlem5_1 wi fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi wi wi wn wi wi fmerlem5_0 wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 wn fmerlem5_0 wn wn wn wi wi fmerlem5_1 wi fmerlem5_0 wi wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 wn fmerlem5_0 wn wn wn wi wi fmerlem5_1 wi fmerlem5_0 wi fmerlem5_0 fmerlem5_1 wi fmerlem5_0 wn wn fmerlem5_1 wi wi wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 wn fmerlem5_1 wn wi wi fmerlem5_1 wi fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi wi wi fmerlem5_0 fmerlem5_1 wi fmerlem5_0 wn wn fmerlem5_1 wi wi wi wi fmerlem5_0 fmerlem5_1 wi fmerlem5_0 wn wn fmerlem5_1 wi wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 wn fmerlem5_1 wn wi wi fmerlem5_1 wi fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi wi wi wn wi fmerlem5_0 wn fmerlem5_1 fmerlem5_1 wi fmerlem5_1 wn fmerlem5_1 wn wi wi fmerlem5_1 wi fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi wi wi wn wi wi fmerlem5_0 fmerlem5_1 wi fmerlem5_0 wn wn fmerlem5_1 wi wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 wn fmerlem5_1 wn wi wi fmerlem5_1 wi fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi wi wi wn wi fmerlem5_0 wn fmerlem5_1 fmerlem5_1 wi fmerlem5_1 wn fmerlem5_1 wn wi wi fmerlem5_1 wi fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi wi wi wn wi wi fmerlem5_0 wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 wn fmerlem5_0 wn wn wn wi wi fmerlem5_1 wi fmerlem5_0 wi wi fmerlem5_0 wn fmerlem5_1 fmerlem5_0 fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 wn fmerlem5_1 wn wi wi fmerlem5_1 wi fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi wi wi wn merlem1 fmerlem5_0 fmerlem5_1 fmerlem5_1 wi fmerlem5_1 wn fmerlem5_0 wn wn wn wi wi fmerlem5_1 wi fmerlem5_0 fmerlem5_1 wi fmerlem5_0 wn wn fmerlem5_1 wi wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 wn fmerlem5_1 wn wi wi fmerlem5_1 wi fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi wi wi wn wi fmerlem5_0 wn fmerlem5_1 fmerlem5_1 wi fmerlem5_1 wn fmerlem5_1 wn wi wi fmerlem5_1 wi fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi wi wi wn wi wi merlem4 ax-mp fmerlem5_0 fmerlem5_1 wi fmerlem5_0 wn wn fmerlem5_1 wi wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 wn fmerlem5_1 wn wi wi fmerlem5_1 wi fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi wi wi wn fmerlem5_0 fmerlem5_1 fmerlem5_1 wi fmerlem5_1 wn fmerlem5_1 wn wi wi fmerlem5_1 wi fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 fmerlem5_1 wi wi wi fmerlem5_1 fmerlem5_1 wi fmerlem5_1 wn fmerlem5_0 wn wn wn wi wi fmerlem5_1 wi fmerlem5_0 wi ax-meredith ax-mp ax-mp ax-mp $.
@@ -110,6 +140,10 @@ $( Step 12 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmerlem6_0 $f wff ph $.
 	fmerlem6_1 $f wff ps $.
 	fmerlem6_2 $f wff ch $.
@@ -120,6 +154,11 @@ $( Between steps 14 and 15 of Meredith's proof of Lukasiewicz axioms from his
      sole axiom.  (Contributed by NM, 22-Dec-2002.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fmerlem7_0 $f wff ph $.
 	fmerlem7_1 $f wff ps $.
 	fmerlem7_2 $f wff ch $.
@@ -131,6 +170,11 @@ $( Step 15 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 22-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v ph $.
 	imerlem8_0 $f wff ph $.
 	fmerlem8_0 $f wff ps $.
 	fmerlem8_1 $f wff ch $.
@@ -142,6 +186,12 @@ $( Step 18 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 22-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fmerlem9_0 $f wff ph $.
 	fmerlem9_1 $f wff ps $.
 	fmerlem9_2 $f wff ch $.
@@ -154,6 +204,9 @@ $( Step 19 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v th $.
 	fmerlem10_0 $f wff ph $.
 	fmerlem10_1 $f wff ps $.
 	fmerlem10_2 $f wff th $.
@@ -163,6 +216,8 @@ $( Step 20 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fmerlem11_0 $f wff ph $.
 	fmerlem11_1 $f wff ps $.
 	merlem11 $p |- ( ( ph -> ( ph -> ps ) ) -> ( ph -> ps ) ) $= fmerlem11_0 fmerlem11_0 wi fmerlem11_0 wn fmerlem11_0 wn wi wi fmerlem11_0 wi fmerlem11_0 wi fmerlem11_0 fmerlem11_0 wi fmerlem11_0 fmerlem11_0 wi wi wi fmerlem11_0 fmerlem11_0 fmerlem11_1 wi wi fmerlem11_0 fmerlem11_1 wi wi fmerlem11_0 fmerlem11_0 fmerlem11_0 fmerlem11_0 fmerlem11_0 ax-meredith fmerlem11_0 fmerlem11_0 fmerlem11_1 wi wi fmerlem11_0 fmerlem11_0 fmerlem11_1 wi wi fmerlem11_0 fmerlem11_1 wi wi wi fmerlem11_0 fmerlem11_0 wi fmerlem11_0 wn fmerlem11_0 wn wi wi fmerlem11_0 wi fmerlem11_0 wi fmerlem11_0 fmerlem11_0 wi fmerlem11_0 fmerlem11_0 wi wi wi fmerlem11_0 fmerlem11_0 fmerlem11_1 wi wi fmerlem11_0 fmerlem11_1 wi wi wi fmerlem11_0 fmerlem11_1 fmerlem11_0 fmerlem11_0 fmerlem11_1 wi wi merlem10 fmerlem11_0 fmerlem11_0 fmerlem11_1 wi wi fmerlem11_0 fmerlem11_1 wi fmerlem11_0 fmerlem11_0 wi fmerlem11_0 wn fmerlem11_0 wn wi wi fmerlem11_0 wi fmerlem11_0 wi fmerlem11_0 fmerlem11_0 wi fmerlem11_0 fmerlem11_0 wi wi wi merlem10 ax-mp ax-mp $.
@@ -171,6 +226,9 @@ $( Step 28 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ch $.
+	$v th $.
 	fmerlem12_0 $f wff ph $.
 	fmerlem12_1 $f wff ch $.
 	fmerlem12_2 $f wff th $.
@@ -180,6 +238,10 @@ $( Step 35 of Meredith's proof of Lukasiewicz axioms from his sole axiom.
      (Contributed by NM, 14-Dec-2002.)  (Proof modification is discouraged.)
      (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fmerlem13_0 $f wff ph $.
 	fmerlem13_1 $f wff ps $.
 	fmerlem13_2 $f wff ch $.
@@ -190,6 +252,9 @@ $( 1 of 3 axioms for propositional calculus due to Lukasiewicz, derived from
      Meredith's sole axiom.  (Contributed by NM, 14-Dec-2002.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fluk-1_0 $f wff ph $.
 	fluk-1_1 $f wff ps $.
 	fluk-1_2 $f wff ch $.
@@ -199,6 +264,7 @@ $( 2 of 3 axioms for propositional calculus due to Lukasiewicz, derived from
      Meredith's sole axiom.  (Contributed by NM, 14-Dec-2002.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
 	fluk-2_0 $f wff ph $.
 	luk-2 $p |- ( ( -. ph -> ph ) -> ph ) $= fluk-2_0 wn fluk-2_0 wi fluk-2_0 wn fluk-2_0 wi fluk-2_0 wi wi fluk-2_0 wn fluk-2_0 wi fluk-2_0 wi fluk-2_0 fluk-2_0 wn fluk-2_0 wi wn wi fluk-2_0 wn wn fluk-2_0 wn fluk-2_0 wi wn wi wi fluk-2_0 wn wi fluk-2_0 wn wi fluk-2_0 wn fluk-2_0 wi fluk-2_0 wn fluk-2_0 wi fluk-2_0 wi wi fluk-2_0 fluk-2_0 wn fluk-2_0 wi wn wi fluk-2_0 wn wn fluk-2_0 wn fluk-2_0 wi wn wi wi fluk-2_0 wn wi fluk-2_0 fluk-2_0 wn fluk-2_0 wi wn wi fluk-2_0 wn wn fluk-2_0 wn fluk-2_0 wi wn wi wi fluk-2_0 wn wi fluk-2_0 wn wi wi fluk-2_0 fluk-2_0 wn fluk-2_0 wi wn wi fluk-2_0 wn wn fluk-2_0 wn fluk-2_0 wi wn wi wi fluk-2_0 wn wi fluk-2_0 wn wi fluk-2_0 fluk-2_0 wn fluk-2_0 wi wn wi fluk-2_0 wn wn fluk-2_0 wn fluk-2_0 wi wn wi wi fluk-2_0 fluk-2_0 wn fluk-2_0 wi wn wi fluk-2_0 wn wn fluk-2_0 wn fluk-2_0 wi wn wi wi fluk-2_0 wn wi fluk-2_0 fluk-2_0 wn fluk-2_0 wi wn wi fluk-2_0 wn wn fluk-2_0 wn fluk-2_0 wi wn wi wi fluk-2_0 wn wi fluk-2_0 wn wi wi fluk-2_0 fluk-2_0 wn fluk-2_0 wi wn merlem5 fluk-2_0 wn fluk-2_0 fluk-2_0 wn fluk-2_0 wi wn wi fluk-2_0 wn wn fluk-2_0 wn fluk-2_0 wi wn wi wi fluk-2_0 wn wi fluk-2_0 fluk-2_0 wn fluk-2_0 wi wn wi fluk-2_0 wn wn fluk-2_0 wn fluk-2_0 wi wn wi wi merlem4 ax-mp fluk-2_0 fluk-2_0 wn fluk-2_0 wi wn wi fluk-2_0 wn wn fluk-2_0 wn fluk-2_0 wi wn wi wi fluk-2_0 wn wi fluk-2_0 wn merlem11 ax-mp fluk-2_0 fluk-2_0 wn fluk-2_0 wi wn fluk-2_0 wn fluk-2_0 wn fluk-2_0 wi fluk-2_0 wn ax-meredith ax-mp fluk-2_0 wn fluk-2_0 wi fluk-2_0 merlem11 ax-mp $.
 $}
@@ -206,6 +272,8 @@ $( 3 of 3 axioms for propositional calculus due to Lukasiewicz, derived from
      Meredith's sole axiom.  (Contributed by NM, 14-Dec-2002.)
      (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v ps $.
 	fluk-3_0 $f wff ph $.
 	fluk-3_1 $f wff ps $.
 	luk-3 $p |- ( ph -> ( -. ph -> ps ) ) $= fluk-3_0 wn fluk-3_0 wn fluk-3_1 wi wi fluk-3_0 wn fluk-3_1 wi wi fluk-3_0 fluk-3_0 wn fluk-3_1 wi wi fluk-3_0 wn fluk-3_1 merlem11 fluk-3_0 fluk-3_1 fluk-3_0 wn fluk-3_0 wn fluk-3_1 wi merlem1 ax-mp $.

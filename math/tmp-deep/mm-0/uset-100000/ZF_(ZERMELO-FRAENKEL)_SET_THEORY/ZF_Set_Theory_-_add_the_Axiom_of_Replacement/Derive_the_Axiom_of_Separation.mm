@@ -39,6 +39,11 @@ $( Separation Scheme, which is an axiom scheme of Zermelo's original
        easily identified.  (Contributed by NM, 11-Sep-2006.)
        (New usage is discouraged.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z w $.
 	$d y z ph w $.
 	iaxsep_0 $f set w $.
@@ -53,6 +58,10 @@ $( The Axiom of Separation of ZF set theory.  See ~ axsep for more
        redundant, but we state it as a separate axiom here so that its uses can
        be identified more easily.  (Contributed by NM, 11-Sep-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	$d y z ph $.
 	fax-sep_0 $f wff ph $.
@@ -68,6 +77,11 @@ $( A less restrictive version of the Separation Scheme ~ axsep , where
        axioms.  (Contributed by NM, 10-Dec-2006.)  (Proof shortened by Mario
        Carneiro, 17-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z w $.
 	$d y ph w $.
 	$d z w $.
@@ -87,6 +101,11 @@ $( Separation Scheme (Aussonderung) using a class variable.  To derive this
        derive a contradiction, as ~ notzfaus shows.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y A z $.
 	$d y ph z $.
 	izfauscl_0 $f set z $.
@@ -101,6 +120,10 @@ $( Convert implication to equivalence using the Separation Scheme
        (Aussonderung) ~ ax-sep .  Similar to Theorem 1.3ii of [BellMachover]
        p. 463.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x ph z $.
 	$d x y z $.
 	ibm1.3ii_0 $f set z $.
@@ -116,6 +139,9 @@ $( Derive a weakened version of ~ ax9 ( i.e. ~ ax9v ), where ` x ` and
        (Contributed by NM, 12-Nov-2013.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	iax9vsep_0 $f set z $.
 	fax9vsep_0 $f set x $.

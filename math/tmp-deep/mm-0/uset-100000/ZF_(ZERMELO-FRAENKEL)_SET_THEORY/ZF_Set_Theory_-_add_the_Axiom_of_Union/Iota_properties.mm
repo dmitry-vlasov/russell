@@ -8,6 +8,14 @@ $( The value of a function that is expressed as an ordered pair
        abstraction.  (Contributed by NM, 19-Feb-2006.)  (Revised by Mario
        Carneiro, 11-Sep-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v F $.
+	$v V $.
 	$d x y z A $.
 	$d z F $.
 	$d x ps $.
@@ -26,6 +34,19 @@ $}
 $( The property of a uniquely specified ordered pair.  (Contributed by
        Mario Carneiro, 21-May-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v I $.
+	$v X $.
+	$v Y $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -56,6 +77,11 @@ $}
 $( Define a function whose value is "the unique ` y ` such that
        ` ph ( x , y ) ` ".  (Contributed by NM, 19-May-2015.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v F $.
 	$d x y z $.
 	$d x y z F $.
 	$d z ph $.
@@ -71,6 +97,10 @@ $}
 $( Define a function whose value is "the unique ` y ` such that
        ` ph ( x , y ) ` ".  (Contributed by NM, 16-Nov-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v F $.
 	$d x y $.
 	$d x y F $.
 	fopabiotadm_0 $f wff ph $.
@@ -83,6 +113,12 @@ $}
 $( Define a function whose value is "the unique ` y ` such that
        ` ph ( x , y ) ` ".  (Contributed by NM, 16-Nov-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v B $.
+	$v F $.
 	$d x y B $.
 	$d x y F $.
 	$d x ps $.

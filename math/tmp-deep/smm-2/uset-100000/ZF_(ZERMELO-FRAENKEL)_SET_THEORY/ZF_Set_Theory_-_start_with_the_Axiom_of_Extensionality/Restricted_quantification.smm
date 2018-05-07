@@ -839,7 +839,7 @@ $( Generalization rule for restricted quantification.  Note that ` x ` and
        (Contributed by NM, 23-Nov-1994.)  (Proof shortened by Andrew Salmon,
        25-May-2011.)  (Proof modification is discouraged. $)
 ${
-	$v ph x y z A $.
+	$v ph x y A z $.
 	$d y z A $.
 	$d x z $.
 	e0 $e |- ( ( x e. A /\ y e. A ) -> ph ) $.
@@ -2377,7 +2377,7 @@ $( A variable not free in a wff remains so in a restricted class
        abstraction.  (Contributed by NM, 13-Oct-2003.)  (Revised by Mario
        Carneiro, 9-Oct-2016.) $)
 ${
-	$v ph x y z A $.
+	$v ph x y A z $.
 	$d x z $.
 	$d y z $.
 	$d z A $.
@@ -2888,7 +2888,7 @@ $( Rule used to change bound variables, using implicit substitution.
        (Contributed by NM, 7-Mar-2004.)  (Revised by Mario Carneiro,
        9-Oct-2016.) $)
 ${
-	$v ph ps x y z A $.
+	$v ph ps x y A z $.
 	$d x z $.
 	$d y z $.
 	$d z A $.
@@ -2964,7 +2964,7 @@ $}
 $( Change the bound variable of a restricted uniqueness quantifier using
        implicit substitution.  (Contributed by Mario Carneiro, 15-Oct-2016.) $)
 ${
-	$v ph ps x y z A $.
+	$v ph ps x y A z $.
 	$d x z A $.
 	$d y z A $.
 	$d z ph $.
@@ -3207,7 +3207,7 @@ $}
 $( Change bound variables of triple restricted universal quantification,
        using implicit substitution.  (Contributed by NM, 10-May-2005.) $)
 ${
-	$v ph ps ch th x y z w A B v u C $.
+	$v ph ps ch th x y z w v u A B C $.
 	$d w ph $.
 	$d z ps $.
 	$d x ch $.
@@ -3246,7 +3246,7 @@ $}
 $( Change bound variable by using a substitution.  (Contributed by NM,
        20-Nov-2005.)  (Revised by Andrew Salmon, 11-Jul-2011.) $)
 ${
-	$v ph x y z A $.
+	$v ph x y A z $.
 	$d z x A $.
 	$d y A $.
 	$d z y ph $.
@@ -3261,7 +3261,7 @@ $}
 $( Change bound variable by using a substitution.  (Contributed by NM,
        2-Mar-2008.)  (Revised by Andrew Salmon, 11-Jul-2011.) $)
 ${
-	$v ph x y z A $.
+	$v ph x y A z $.
 	$d z x A $.
 	$d y z ph $.
 	$d y A $.
@@ -3409,7 +3409,7 @@ $( Rule to change the bound variable in a restricted class abstraction,
        in place of distinct variable conditions.  (Contributed by Andrew
        Salmon, 11-Jul-2011.)  (Revised by Mario Carneiro, 9-Oct-2016.) $)
 ${
-	$v ph ps x y z A $.
+	$v ph ps x y A z $.
 	$d x z $.
 	$d y z $.
 	$d A z $.

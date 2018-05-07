@@ -63,7 +63,7 @@ $}
 $( Subset theorem for the partial ordering predicate.  (Contributed by NM,
        27-Mar-1997.)  (Proof shortened by Mario Carneiro, 18-Nov-2016.) $)
 ${
-	$v x y z A B R $.
+	$v A B R x y z $.
 	$d x y z R $.
 	$d x y z A $.
 	$d x y z B $.
@@ -79,7 +79,7 @@ $}
 $( Equality theorem for partial ordering predicate.  (Contributed by NM,
        27-Mar-1997.) $)
 ${
-	$v x y z A R S $.
+	$v A R S x y z $.
 	$d x y z R $.
 	$d x y z S $.
 	$d x y z A $.
@@ -140,7 +140,7 @@ $}
 $( Properties of partial order relation in class notation.  (Contributed by
        NM, 27-Mar-1997.) $)
 ${
-	$v x y z A B C D R $.
+	$v A B C D R x y z $.
 	$d x y z R $.
 	$d x y z A $.
 	$d x y z B $.
@@ -264,7 +264,7 @@ $}
 $( Any relation is a partial ordering of the empty set.  (Contributed by
        NM, 28-Mar-1997.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
-	$v x y z R $.
+	$v R x y z $.
 	$d x y z R $.
 	f0 $f class R $.
 	i0 $f set x $.
@@ -276,7 +276,7 @@ $}
 $( A function preserves a partial order relation.  (Contributed by Jeff
        Madsen, 18-Jun-2011.) $)
 ${
-	$v x y z w A B v R S X Y $.
+	$v x y A B R S X Y z w v $.
 	$d R v w x y z $.
 	$d S v w z $.
 	$d X v w y z $.
@@ -302,7 +302,7 @@ $}
 $( A strict linear order is a strict partial order.  (Contributed by NM,
        28-Mar-1997.) $)
 ${
-	$v x y A R $.
+	$v A R x y $.
 	$d x y R $.
 	$d x y A $.
 	f0 $f class A $.
@@ -315,7 +315,7 @@ $}
 $( Subset theorem for the strict ordering predicate.  (Contributed by NM,
        16-Mar-1997.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
-	$v x y A B R $.
+	$v A B R x y $.
 	$d x y R $.
 	$d x y A $.
 	$d x y B $.
@@ -330,7 +330,7 @@ $}
 $( Equality theorem for the strict ordering predicate.  (Contributed by NM,
        16-Mar-1997.) $)
 ${
-	$v x y A R S $.
+	$v A R S x y $.
 	$d x y R $.
 	$d x y S $.
 	$d x y A $.
@@ -377,7 +377,7 @@ $}
 $( A strict order relation is linear (satisfies trichotomy).  (Contributed
        by NM, 21-Jan-1996.) $)
 ${
-	$v x y A B C R $.
+	$v A B C R x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -514,7 +514,7 @@ $}
 $( Any relation is a strict ordering of the empty set.  (Contributed by NM,
        16-Mar-1997.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
-	$v x y R $.
+	$v R x y $.
 	$d x y R $.
 	f0 $f class R $.
 	i0 $f set x $.
@@ -525,7 +525,7 @@ $}
 $( A totally ordered set has at most one minimal element.  (Contributed by
        Mario Carneiro, 24-Jun-2015.)  (Revised by NM, 16-Jun-2017.) $)
 ${
-	$v x y z A R $.
+	$v x y A R z $.
 	$d x y z A $.
 	$d x y z R $.
 	f0 $f set x $.

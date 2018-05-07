@@ -8,7 +8,7 @@ $)
 $( Equality theorem for class difference.  (Contributed by NM,
        10-Feb-1997.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -22,7 +22,7 @@ $}
 $( Equality theorem for class difference.  (Contributed by NM,
        10-Feb-1997.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -135,7 +135,7 @@ $}
 $( Bound-variable hypothesis builder for class difference.  (Contributed by
        NM, 3-Dec-2003.)  (Revised by Mario Carneiro, 13-Oct-2016.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -191,7 +191,7 @@ $}
 $( Double class difference.  Exercise 11 of [TakeutiZaring] p. 22.
        (Contributed by NM, 17-May-1998.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -203,7 +203,7 @@ $}
 $( Subclass relationship for class difference.  Exercise 14 of
        [TakeutiZaring] p. 22.  (Contributed by NM, 29-Apr-1994.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -258,7 +258,7 @@ $}
 $( Double complement under universal class.  Exercise 4.10(s) of
        [Mendelson] p. 231.  (Contributed by NM, 8-Jan-2002.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -267,7 +267,7 @@ ${
 $}
 $( Contraposition law for subsets.  (Contributed by NM, 22-Mar-1998.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -281,7 +281,7 @@ $}
 $( Contraposition law for subsets.  Exercise 15 of [TakeutiZaring] p. 22.
        (Contributed by NM, 22-Mar-1998.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -294,7 +294,7 @@ ${
 $}
 $( Difference law for subsets.  (Contributed by NM, 28-May-1998.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -362,7 +362,7 @@ $}
 $( Expansion of membership in class union.  Theorem 12 of [Suppes] p. 25.
        (Contributed by NM, 7-Aug-1994.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -390,7 +390,7 @@ $}
 $( Idempotent law for union of classes.  Theorem 23 of [Suppes] p. 27.
        (Contributed by NM, 5-Aug-1993.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -401,7 +401,7 @@ $( Commutative law for union of classes.  Exercise 6 of [TakeutiZaring]
        p. 17.  (Contributed by NM, 25-Jun-1998.)  (Proof shortened by Andrew
        Salmon, 26-Jun-2011.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -438,7 +438,7 @@ $}
 $( Equality theorem for union of two classes.  (Contributed by NM,
        5-Aug-1993.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -547,7 +547,7 @@ $( Bound-variable hypothesis builder for the union of classes.
        (Contributed by NM, 15-Sep-2003.)  (Revised by Mario Carneiro,
        14-Oct-2016.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -564,7 +564,7 @@ $( Associative law for union of classes.  Exercise 8 of [TakeutiZaring]
        p. 17.  (Contributed by NM, 3-May-1994.)  (Proof shortened by Andrew
        Salmon, 26-Jun-2011.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d A x $.
 	$d B x $.
 	$d C x $.
@@ -626,7 +626,7 @@ $}
 $( Subclass relationship for union of classes.  Theorem 25 of [Suppes]
        p. 27.  (Contributed by NM, 5-Aug-1993.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -683,7 +683,7 @@ $}
 $( Subclass law for union of classes.  (Contributed by NM, 14-Oct-1999.)
        (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -698,7 +698,7 @@ $( A relationship between subclass and union.  Theorem 26 of [Suppes]
        p. 27.  (Contributed by NM, 30-Aug-1993.)  (Proof shortened by Andrew
        Salmon, 26-Jun-2011.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -739,7 +739,7 @@ $}
 $( The union of two subclasses is a subclass.  Theorem 27 of [Suppes] p. 27
        and its converse.  (Contributed by NM, 11-Jun-2004.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -847,7 +847,7 @@ $}
 $( Expansion of membership in an intersection of two classes.  Theorem 12
        of [Suppes] p. 25.  (Contributed by NM, 29-Apr-1994.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -886,7 +886,7 @@ $}
 $( Commutative law for intersection of classes.  Exercise 7 of
        [TakeutiZaring] p. 17.  (Contributed by NM, 5-Aug-1993.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d A x $.
 	$d B x $.
 	f0 $f class A $.
@@ -913,7 +913,7 @@ $}
 $( Equality theorem for intersection of two classes.  (Contributed by NM,
        14-Dec-1993.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1055,7 +1055,7 @@ $( Bound-variable hypothesis builder for the intersection of classes.
        (Contributed by NM, 15-Sep-2003.)  (Revised by Mario Carneiro,
        14-Oct-2016.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -1071,7 +1071,7 @@ $}
 $( Distribute proper substitution through an intersection relation.
        (Contributed by Alan Sare, 22-Jul-2012.) $)
 ${
-	$v x y A B C D $.
+	$v x A B C D y $.
 	$d A y $.
 	$d C y $.
 	$d D y $.
@@ -1104,7 +1104,7 @@ $}
 $( Idempotent law for intersection of classes.  Theorem 15 of [Suppes]
        p. 26.  (Contributed by NM, 5-Aug-1993.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -1114,7 +1114,7 @@ $}
 $( Associative law for intersection of classes.  Exercise 9 of
        [TakeutiZaring] p. 17.  (Contributed by NM, 3-May-1994.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d A x $.
 	$d B x $.
 	$d C x $.
@@ -1215,7 +1215,7 @@ $( The intersection of two classes is a subset of one of them.  Part of
        Exercise 12 of [TakeutiZaring] p. 18.  (Contributed by NM,
        27-Apr-1994.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -1238,7 +1238,7 @@ $( Subclass of intersection.  Theorem 2.8(vii) of [Monk1] p. 26.
        (Contributed by NM, 15-Jun-2004.)  (Proof shortened by Andrew Salmon,
        26-Jun-2011.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1277,7 +1277,7 @@ $}
 $( Add right intersection to subclass relation.  (Contributed by NM,
        16-Aug-1994.)  (Proof shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1367,7 +1367,7 @@ $( Subclass defined in terms of class difference.  See comments under
        ~ dfun2 .  (Contributed by NM, 22-Mar-1998.)  (Proof shortened by Andrew
        Salmon, 26-Jun-2011.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -1382,7 +1382,7 @@ $( An alternate definition of the union of two classes in terms of class
        in terms of the single "primitive" operation ` \ ` (class difference).
        (Contributed by NM, 10-Jun-2004.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -1396,7 +1396,7 @@ $( An alternate definition of the intersection of two classes in terms of
        ~ dfun2 .  Another version is given by ~ dfin4 .  (Contributed by NM,
        10-Jun-2004.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -1409,7 +1409,7 @@ $( Difference with intersection.  Theorem 33 of [Suppes] p. 29.
        (Contributed by NM, 31-Mar-1998.)  (Proof shortened by Andrew Salmon,
        26-Jun-2011.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -1498,7 +1498,7 @@ $( Distributive law for intersection over union.  Exercise 10 of
        [TakeutiZaring] p. 17.  (Contributed by NM, 30-Sep-2002.)  (Proof
        shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1513,7 +1513,7 @@ $( Distributive law for union over intersection.  Exercise 11 of
        [TakeutiZaring] p. 17.  (Contributed by NM, 30-Sep-2002.)  (Proof
        shortened by Andrew Salmon, 26-Jun-2011.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1548,7 +1548,7 @@ $( Infer equality from equalities of union and intersection.  Exercise 20
        of [Enderton] p. 32 and its converse.  (Contributed by NM,
        10-Aug-2004.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1612,7 +1612,7 @@ $}
 $( Distribute intersection over difference.  (Contributed by Scott Fenton,
        14-Apr-2011.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d A x $.
 	$d B x $.
 	$d C x $.
@@ -1655,7 +1655,7 @@ $( An equality involving class union and class difference.  The first
        equality of Exercise 13 of [TakeutiZaring] p. 22.  (Contributed by Alan
        Sare, 17-Apr-2012.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d A x $.
 	$d B x $.
 	$d C x $.
@@ -1669,7 +1669,7 @@ $}
 $( Represent a set difference as an intersection with a larger difference.
        (Contributed by Jeff Madsen, 2-Sep-2009.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d A x $.
 	$d B x $.
 	$d C x $.

@@ -101,6 +101,7 @@ $( Tarski's system uses the weaker ~ ax9v instead of the bundled ~ ax-9 ,
        so here we show that the degenerate case of ~ ax-9 can be derived.
        (Contributed by NM, 23-Apr-2017.) $)
 ${
+	$v x $.
 	fax9dgen_0 $f set x $.
 	ax9dgen $p |- -. A. x -. x = x $= fax9dgen_0 sup_set_class fax9dgen_0 sup_set_class wceq wn fax9dgen_0 wal fax9dgen_0 sup_set_class fax9dgen_0 sup_set_class wceq fax9dgen_0 equid fax9dgen_0 sup_set_class fax9dgen_0 sup_set_class wceq wn fax9dgen_0 fax9dgen_0 sup_set_class fax9dgen_0 sup_set_class wceq fax9dgen_0 equid notnoti spfalw mt2 $.
 $}
@@ -108,6 +109,10 @@ $( Weak version of ~ ax-6 from which we can prove any ~ ax-6 instance not
        involving wff variables or bundling.  Uses only Tarski's FOL axiom
        schemes.  (Contributed by NM, 9-Apr-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d y ph $.
 	$d x ps $.
 	$d x y $.
@@ -123,6 +128,11 @@ $( Weak version of ~ ax-7 from which we can prove any ~ ax-7 instance not
        schemes.  Unlike ~ ax-7 , this theorem requires that ` x ` and ` y ` be
        distinct i.e. are not bundled.  (Contributed by NM, 10-Apr-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d y z $.
 	$d x y $.
 	$d z ph $.
@@ -139,6 +149,8 @@ $( Degenerate instance of ~ ax-7 where bundled variables ` x ` and ` y ` have
      a common substitution.  Uses only Tarski's FOL axiom schemes.
      (Contributed by NM, 13-Apr-2017.) $)
 ${
+	$v ph $.
+	$v x $.
 	fax7dgen_0 $f wff ph $.
 	fax7dgen_1 $f set x $.
 	ax7dgen $p |- ( A. x A. x ph -> A. x A. x ph ) $= fax7dgen_0 fax7dgen_1 wal fax7dgen_1 wal id $.
@@ -147,6 +159,10 @@ $( Lemma for weak version of ~ ax-11 .  Uses only Tarski's FOL axiom
        schemes.  In some cases, this lemma may lead to shorter proofs than
        ~ ax11w .  (Contributed by NM, 10-Apr-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x ps $.
 	fax11wlem_0 $f wff ph $.
 	fax11wlem_1 $f wff ps $.
@@ -161,6 +177,12 @@ $( Weak version of ~ ax-11 from which we can prove any ~ ax-11 instance not
        ` x ` and ` y ` be distinct (unless ` x ` does not occur in ` ph ` ).
        (Contributed by NM, 10-Apr-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d y z $.
 	$d x ps $.
 	$d z ph $.
@@ -179,6 +201,8 @@ $( Degenerate instance of ~ ax-11 where bundled variables ` x ` and ` y `
      have a common substitution.  Uses only Tarski's FOL axiom schemes.
      (Contributed by NM, 13-Apr-2017.) $)
 ${
+	$v ph $.
+	$v x $.
 	fax11dgen_0 $f wff ph $.
 	fax11dgen_1 $f set x $.
 	ax11dgen $p |- ( x = x -> ( A. x ph -> A. x ( x = x -> ph ) ) ) $= fax11dgen_0 fax11dgen_1 wal fax11dgen_1 sup_set_class fax11dgen_1 sup_set_class wceq fax11dgen_0 wi fax11dgen_1 wal wi fax11dgen_1 sup_set_class fax11dgen_1 sup_set_class wceq fax11dgen_0 fax11dgen_1 sup_set_class fax11dgen_1 sup_set_class wceq fax11dgen_0 wi fax11dgen_1 fax11dgen_0 fax11dgen_1 sup_set_class fax11dgen_1 sup_set_class wceq ax-1 alimi a1i $.
@@ -189,8 +213,12 @@ $( Example of an application of ~ ax11w that results in an instance of
        ` ph ` .  The proof illustrates bound variable renaming with ~ cbvalvw
        to obtain fresh variables to avoid distinct variable clashes.  Uses only
        Tarski's FOL axiom schemes.  (Contributed by NM, 14-Apr-2017.) $)
-$v v $.
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
 	$d x y z w v $.
 	iax11wdemo_0 $f set w $.
 	iax11wdemo_1 $f set v $.
@@ -204,6 +232,9 @@ $( Weak version (principal instance) of ~ ax-12 not involving bundling.
        included to complete the set ~ ax6w , ~ ax7w , and ~ ax11w .
        (Contributed by NM, 10-Apr-2017.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	fax12w_0 $f set x $.
 	fax12w_1 $f set y $.
@@ -214,6 +245,8 @@ $( Degenerate instance of ~ ax-12 where bundled variables ` x ` and ` y `
      have a common substitution.  Uses only Tarski's FOL axiom schemes.
      (Contributed by NM, 13-Apr-2017.) $)
 ${
+	$v x $.
+	$v z $.
 	fax12dgen1_0 $f set x $.
 	fax12dgen1_1 $f set z $.
 	ax12dgen1 $p |- ( -. x = x -> ( x = z -> A. x x = z ) ) $= fax12dgen1_0 sup_set_class fax12dgen1_0 sup_set_class wceq fax12dgen1_0 sup_set_class fax12dgen1_1 sup_set_class wceq fax12dgen1_0 sup_set_class fax12dgen1_1 sup_set_class wceq fax12dgen1_0 wal wi fax12dgen1_0 equid pm2.24i $.
@@ -222,6 +255,8 @@ $( Degenerate instance of ~ ax-12 where bundled variables ` x ` and ` z `
      have a common substitution.  Uses only Tarski's FOL axiom schemes.
      (Contributed by NM, 13-Apr-2017.) $)
 ${
+	$v x $.
+	$v y $.
 	fax12dgen2_0 $f set x $.
 	fax12dgen2_1 $f set y $.
 	ax12dgen2 $p |- ( -. x = y -> ( y = x -> A. x y = x ) ) $= fax12dgen2_1 sup_set_class fax12dgen2_0 sup_set_class wceq fax12dgen2_0 sup_set_class fax12dgen2_1 sup_set_class wceq fax12dgen2_0 sup_set_class fax12dgen2_1 sup_set_class wceq wn fax12dgen2_1 sup_set_class fax12dgen2_0 sup_set_class wceq fax12dgen2_0 wal fax12dgen2_1 fax12dgen2_0 equcomi fax12dgen2_0 sup_set_class fax12dgen2_1 sup_set_class wceq fax12dgen2_1 sup_set_class fax12dgen2_0 sup_set_class wceq fax12dgen2_0 wal pm2.21 syl5 $.
@@ -230,6 +265,8 @@ $( Degenerate instance of ~ ax-12 where bundled variables ` y ` and ` z `
      have a common substitution.  Uses only Tarski's FOL axiom schemes.
      (Contributed by NM, 13-Apr-2017.) $)
 ${
+	$v x $.
+	$v y $.
 	fax12dgen3_0 $f set x $.
 	fax12dgen3_1 $f set y $.
 	ax12dgen3 $p |- ( -. x = y -> ( y = y -> A. x y = y ) ) $= fax12dgen3_0 sup_set_class fax12dgen3_1 sup_set_class wceq wn fax12dgen3_1 sup_set_class fax12dgen3_1 sup_set_class wceq fax12dgen3_1 sup_set_class fax12dgen3_1 sup_set_class wceq fax12dgen3_0 wal fax12dgen3_1 sup_set_class fax12dgen3_1 sup_set_class wceq fax12dgen3_0 fax12dgen3_1 equid ax-gen a1ii $.
@@ -238,6 +275,7 @@ $( Degenerate instance of ~ ax-12 where bundled variables ` x ` , ` y ` , and
      ` z ` have a common substitution.  Uses only Tarski's FOL axiom schemes .
      (Contributed by NM, 13-Apr-2017.) $)
 ${
+	$v x $.
 	fax12dgen4_0 $f set x $.
 	ax12dgen4 $p |- ( -. x = x -> ( x = x -> A. x x = x ) ) $= fax12dgen4_0 fax12dgen4_0 ax12dgen1 $.
 $}

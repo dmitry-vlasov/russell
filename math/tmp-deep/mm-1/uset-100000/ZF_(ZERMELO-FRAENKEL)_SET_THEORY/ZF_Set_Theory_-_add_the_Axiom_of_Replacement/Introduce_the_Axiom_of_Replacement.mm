@@ -34,6 +34,11 @@ $( Axiom of Replacement.  An axiom scheme of Zermelo-Fraenkel set theory.
        restate them as axioms ~ ax-sep , ~ ax-nul , and ~ ax-pr below the
        theorems that prove them.  (Contributed by NM, 23-Dec-1993.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z w $.
 	fax-rep_0 $f wff ph $.
 	fax-rep_1 $f set x $.
@@ -48,6 +53,11 @@ $( The version of the Axiom of Replacement used in the Metamath Solitaire
        ~ axrepnd ` -> ` ~ zfcndrep = ~ ax-rep .  (Contributed by NM,
        19-Nov-2005.)  (Proof shortened by Mario Carneiro, 17-Nov-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w y ph $.
 	$d w x y z $.
 	iaxrep1_0 $f set w $.
@@ -61,6 +71,11 @@ $( Axiom of Replacement expressed with the fewest number of different
        variables and without any restrictions on ` ph ` .  (Contributed by NM,
        15-Aug-2003.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w ph $.
 	$d w x y z $.
 	iaxrep2_0 $f set w $.
@@ -73,6 +88,11 @@ $}
 $( Axiom of Replacement slightly strengthened from ~ axrep2 ; ` w ` may
        occur free in ` ph ` .  (Contributed by NM, 2-Jan-1997.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x y z $.
 	faxrep3_0 $f wff ph $.
 	faxrep3_1 $f set x $.
@@ -84,6 +104,11 @@ $}
 $( A more traditional version of the Axiom of Replacement.  (Contributed by
        NM, 14-Aug-1994.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z w $.
 	faxrep4_0 $f wff ph $.
 	faxrep4_1 $f set x $.
@@ -102,6 +127,11 @@ $( Axiom of Replacement (similar to Axiom Rep of [BellMachover] p. 463).
        (Contributed by NM, 26-Nov-1995.)  (Revised by Mario Carneiro,
        14-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z w $.
 	faxrep5_0 $f wff ph $.
 	faxrep5_1 $f set x $.
@@ -115,6 +145,12 @@ $( An inference rule based on the Axiom of Replacement.  Typically, ` ph `
        defines a function from ` x ` to ` y ` .  (Contributed by NM,
        26-Nov-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v v $.
 	$d y z A v $.
 	$d z ph v $.
 	$d A v $.
@@ -135,6 +171,11 @@ $( An inference rule based on the Axiom of Replacement.  Typically, ` ph `
        defines a function from ` x ` to ` y ` .  (Contributed by NM,
        26-Nov-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z A $.
 	$d z ph $.
 	fzfrep3cl_0 $f wff ph $.
@@ -149,6 +190,11 @@ $}
 $( A version of Replacement using class abstractions.  (Contributed by NM,
        26-Nov-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d ph y z $.
 	$d ps z $.
 	$d x y z $.

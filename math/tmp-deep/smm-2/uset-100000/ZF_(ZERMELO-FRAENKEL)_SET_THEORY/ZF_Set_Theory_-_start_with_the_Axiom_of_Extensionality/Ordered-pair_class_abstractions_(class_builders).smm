@@ -67,7 +67,7 @@ $( The collection of ordered pairs in a class is a subclass of it.
        (Contributed by NM, 27-Dec-1996.)  (Proof shortened by Andrew Salmon,
        9-Jul-2011.) $)
 ${
-	$v x y z R $.
+	$v x y R z $.
 	$d x z R $.
 	$d y z R $.
 	f0 $f set x $.
@@ -313,7 +313,7 @@ $}
 $( Move substitution into a class abstraction.  (Contributed by NM,
        6-Aug-2007.)  (Proof shortened by Mario Carneiro, 17-Nov-2016.) $)
 ${
-	$v ph x y z w A V $.
+	$v ph x y z A V w $.
 	$d w y z A $.
 	$d w ph $.
 	$d w x y z $.
@@ -346,7 +346,7 @@ $}
 $( An equality theorem for the maps to notation.  (Contributed by Mario
        Carneiro, 16-Dec-2013.) $)
 ${
-	$v x y A B C D $.
+	$v x A B C D y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -519,7 +519,7 @@ $}
 $( Bound-variable hypothesis builder for the maps-to notation.
        (Contributed by NM, 20-Feb-2013.) $)
 ${
-	$v x y z A B $.
+	$v x y A B z $.
 	$d z A $.
 	$d z B $.
 	$d x y z $.
@@ -536,7 +536,7 @@ $}
 $( Bound-variable hypothesis builder for the maps-to notation.
        (Contributed by FL, 17-Feb-2008.) $)
 ${
-	$v x z A B $.
+	$v x A B z $.
 	$d A z $.
 	$d B z $.
 	$d x z $.
@@ -551,7 +551,7 @@ $( Rule to change the bound variable in a maps-to function, using implicit
        substitution.  This version has bound-variable hypotheses in place of
        distinct variable conditions.  (Contributed by NM, 11-Sep-2011.) $)
 ${
-	$v x y z w A B C $.
+	$v x y A B C z w $.
 	$d w z x A $.
 	$d w z y A $.
 	$d w z B $.

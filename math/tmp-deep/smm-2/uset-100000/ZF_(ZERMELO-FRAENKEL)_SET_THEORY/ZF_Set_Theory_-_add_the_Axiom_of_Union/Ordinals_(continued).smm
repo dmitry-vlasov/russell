@@ -40,7 +40,7 @@ $( The union of a class of ordinal numbers is ordinal.  Proposition 7.19 of
        [TakeutiZaring] p. 40.  (Contributed by NM, 30-May-1994.)  (Proof
        shortened by Andrew Salmon, 12-Aug-2011.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -120,7 +120,7 @@ $( The intersection (infimum) of a non-empty class of ordinal numbers
        belongs to the class.  Compare Exercise 4 of [TakeutiZaring] p. 45.
        (Contributed by NM, 31-Jan-1997.) $)
 ${
-	$v x y z A $.
+	$v A x y z $.
 	$d x y z A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -301,7 +301,7 @@ $( The minimum of a class of ordinal numbers is less than the minimum of
        that class with its minimum removed.  (Contributed by NM,
        20-Nov-2003.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -311,7 +311,7 @@ $}
 $( The successor of an ordinal number is an ordinal number.  Proposition
        7.24 of [TakeutiZaring] p. 41.  (Contributed by NM, 6-Jun-1994.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -329,7 +329,7 @@ $}
 $( The collection of ordinals in the power class of an ordinal is its
        successor.  (Contributed by NM, 30-Jan-2005.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -422,7 +422,7 @@ $}
 $( The successor of the maximum (i.e. union) of two ordinals is the maximum
        of their successors.  (Contributed by NM, 28-Nov-2003.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -492,7 +492,7 @@ $( An ordinal class is equal to the union of its successor.  (Contributed
        by NM, 10-Dec-2004.)  (Proof shortened by Andrew Salmon,
        27-Aug-2011.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -656,7 +656,7 @@ $}
 $( The successor of a member of a limit ordinal is also a member.
        (Contributed by NM, 3-Sep-2003.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -668,7 +668,7 @@ $}
 $( A class includes a limit ordinal iff the successor of the class includes
        it.  (Contributed by NM, 30-Oct-2003.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -691,7 +691,7 @@ $}
 $( The union of a nonempty class of limit ordinals is a limit ordinal.
        (Contributed by NM, 1-Feb-2005.) $)
 ${
-	$v x y z A $.
+	$v x A y z $.
 	$d x y z A $.
 	f0 $f set x $.
 	f1 $f class A $.

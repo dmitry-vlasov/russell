@@ -941,7 +941,7 @@ $}
 $( Deduction eliminating three inequalities in an antecedent.  (Contributed
        by NM, 15-Jun-2013.) $)
 ${
-	$v ph ps A B C D F E $.
+	$v ph ps A B C D E F $.
 	e0 $e |- ( ( ph /\ A = B ) -> ps ) $.
 	e1 $e |- ( ( ph /\ C = D ) -> ps ) $.
 	e2 $e |- ( ( ph /\ E = F ) -> ps ) $.
@@ -1007,7 +1007,7 @@ ${
 $}
 $( A De Morgan's law for inequality.  (Contributed by NM, 30-Sep-2013.) $)
 ${
-	$v A B C D F E $.
+	$v A B C D E F $.
 	f0 $f class A $.
 	f1 $f class B $.
 	f2 $f class C $.

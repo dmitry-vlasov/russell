@@ -40,7 +40,7 @@ ${
 $}
 $( Equality law for intersection.  (Contributed by NM, 13-Sep-1999.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -73,7 +73,7 @@ ${
 $}
 $( Membership in class intersection.  (Contributed by NM, 21-May-1994.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x A y $.
 	$d x B y $.
 	e0 $e |- A e. _V $.
@@ -99,7 +99,7 @@ $}
 $( Membership in class intersection, with the sethood requirement expressed
        as an antecedent.  (Contributed by NM, 20-Nov-2003.) $)
 ${
-	$v x y A B V $.
+	$v x A B V y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f set x $.
@@ -113,7 +113,7 @@ $}
 $( Membership in class intersection.  (Contributed by NM, 14-Oct-1999.)
        (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -127,7 +127,7 @@ $}
 $( Bound-variable hypothesis builder for intersection.  (Contributed by NM,
        2-Feb-1997.)  (Proof shortened by Andrew Salmon, 12-Aug-2011.) $)
 ${
-	$v x y z A $.
+	$v x A y z $.
 	$d y z A $.
 	$d x y z $.
 	e0 $e |- F/_ x A $.
@@ -141,7 +141,7 @@ $}
 $( Membership in the intersection of a class abstraction.  (Contributed by
        NM, 30-Aug-1993.) $)
 ${
-	$v ph x y A $.
+	$v ph x A y $.
 	$d A x y $.
 	$d ph y $.
 	e0 $e |- A e. _V $.
@@ -168,7 +168,7 @@ $}
 $( Membership in the intersection of a class abstraction.  (Contributed by
        NM, 17-Feb-2007.) $)
 ${
-	$v ph x y A B V $.
+	$v ph x A B V y $.
 	$d x y A $.
 	$d y B $.
 	$d y ph $.
@@ -195,7 +195,7 @@ $( An element of a class includes the intersection of the class.  Exercise
        4 of [TakeutiZaring] p. 44 (with correction), generalized to classes.
        (Contributed by NM, 18-Nov-1995.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -208,7 +208,7 @@ $}
 $( Subclass of a class intersection.  Theorem 5.11(viii) of [Monk1] p. 52
        and its converse.  (Contributed by NM, 14-Oct-1999.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f set x $.
@@ -221,7 +221,7 @@ $}
 $( Subclass of the intersection of a class abstraction.  (Contributed by
        NM, 31-Jul-2006.)  (Proof shortened by Andrew Salmon, 9-Jul-2011.) $)
 ${
-	$v ph x y A $.
+	$v ph x A y $.
 	$d x y A $.
 	$d x y $.
 	$d y ph $.
@@ -234,7 +234,7 @@ ${
 $}
 $( Subclass of the least upper bound.  (Contributed by NM, 8-Aug-2000.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f set x $.
@@ -259,7 +259,7 @@ $( Any member of a class is the smallest of those members that include it.
        (Contributed by NM, 13-Aug-2002.)  (Proof shortened by Andrew Salmon,
        9-Jul-2011.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f set x $.
@@ -271,7 +271,7 @@ ${
 $}
 $( Intersection of subclasses.  (Contributed by NM, 14-Oct-1999.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -284,7 +284,7 @@ $}
 $( The intersection of a nonempty set is a subclass of its union.
        (Contributed by NM, 29-Jul-2006.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	$d x y $.
 	f0 $f class A $.
@@ -371,7 +371,7 @@ $}
 $( Elimination of a conjunct in a class intersection.  (Contributed by NM,
        31-Jul-2006.) $)
 ${
-	$v ph x y A $.
+	$v ph x A y $.
 	$d x y A $.
 	$d y ph $.
 	f0 $f wff ph $.
@@ -387,7 +387,7 @@ $( The intersection of a special case of a class abstraction. ` y ` may be
        satisfy the second hypothesis.  (Contributed by NM, 28-Jul-2006.)
        (Proof shortened by Mario Carneiro, 14-Nov-2016.) $)
 ${
-	$v ph x y z A $.
+	$v ph x y A z $.
 	$d x z A $.
 	$d x z ph $.
 	$d x y z $.
@@ -412,7 +412,7 @@ $}
 $( The class intersection of the union of two classes.  Theorem 78 of
        [Suppes] p. 42.  (Contributed by NM, 22-Sep-2002.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -425,7 +425,7 @@ $}
 $( The intersection of a pair is the intersection of its members.  Theorem
        71 of [Suppes] p. 42.  (Contributed by NM, 14-Oct-1999.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	e0 $e |- A e. _V $.
@@ -441,7 +441,7 @@ $( The intersection of a pair is the intersection of its members.  Closed
        form of ~ intpr .  Theorem 71 of [Suppes] p. 42.  (Contributed by FL,
        27-Apr-2008.) $)
 ${
-	$v x y A B V W $.
+	$v A B V W x y $.
 	$d x y A $.
 	$d y B $.
 	f0 $f class A $.
@@ -474,7 +474,7 @@ $}
 $( Two ways to express " ` A ` is a singleton."  See also ~ en1 , ~ en1b ,
        ~ card1 , and ~ eusn .  (Contributed by NM, 2-Aug-2010.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d x y A $.
 	f0 $f set x $.
 	f1 $f class A $.

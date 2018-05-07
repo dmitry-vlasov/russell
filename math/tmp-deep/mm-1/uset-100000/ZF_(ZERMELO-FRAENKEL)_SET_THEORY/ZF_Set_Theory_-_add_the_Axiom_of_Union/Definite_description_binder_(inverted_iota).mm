@@ -9,6 +9,8 @@ $c iota  $.
 $( Extend class notation with Russell's definition description binder
      (inverted iota). $)
 ${
+	$v ph $.
+	$v x $.
 	fcio_0 $f wff ph $.
 	fcio_1 $f set x $.
 	cio $a class ( iota x ph ) $.
@@ -16,6 +18,11 @@ $}
 $( Soundness justification theorem for ~ df-iota .  (Contributed by Andrew
        Salmon, 29-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x z $.
 	$d ph w z $.
 	$d ph w y $.
@@ -45,6 +52,9 @@ $( Define Russell's definition description binder, which can be read as
 
        (Contributed by Andrew Salmon, 30-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d y x $.
 	$d y ph $.
 	fdf-iota_0 $f wff ph $.
@@ -55,6 +65,9 @@ $}
 $( Alternate definition for descriptions.  Definition 8.18 in [Quine]
        p. 56.  (Contributed by Andrew Salmon, 30-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d y x $.
 	$d y ph $.
 	fdfiota2_0 $f wff ph $.
@@ -66,6 +79,9 @@ $( Bound-variable hypothesis builder for the ` iota ` class.  (Contributed
        by Andrew Salmon, 11-Jul-2011.)  (Revised by Mario Carneiro,
        15-Oct-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	infiota1_0 $f set y $.
@@ -75,6 +91,11 @@ ${
 $}
 $( Deduction version of ~ nfiota .  (Contributed by NM, 18-Feb-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d z ps $.
 	$d z ph $.
 	$d x z $.
@@ -91,6 +112,9 @@ $}
 $( Bound-variable hypothesis builder for the ` iota ` class.  (Contributed
        by NM, 23-Aug-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fnfiota_0 $f wff ph $.
 	fnfiota_1 $f set x $.
 	fnfiota_2 $f set y $.
@@ -100,6 +124,12 @@ $}
 $( Change bound variables in a description binder.  (Contributed by Andrew
        Salmon, 1-Aug-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d z w x $.
 	$d z w y $.
 	$d z w ph $.
@@ -118,6 +148,10 @@ $}
 $( Change bound variables in a description binder.  (Contributed by Andrew
        Salmon, 1-Aug-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d ph y $.
 	$d ps x $.
 	fcbviotav_0 $f wff ph $.
@@ -130,6 +164,11 @@ $}
 $( Variable substitution in description binder.  Compare ~ sb8eu .
        (Contributed by NM, 18-Mar-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w z ph $.
 	$d w z x $.
 	$d w z y $.
@@ -144,6 +183,10 @@ $}
 $( Equality theorem for descriptions.  (Contributed by Andrew Salmon,
        30-Jun-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d y z $.
 	$d x z $.
 	$d ph z $.
@@ -156,6 +199,10 @@ $}
 $( Equivalence theorem for descriptions.  (Contributed by Andrew Salmon,
        30-Jun-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v z $.
 	$d ph z $.
 	$d ps z $.
 	$d x z $.
@@ -169,6 +216,9 @@ $( Part of Theorem 8.17 in [Quine] p. 56.  This theorem serves as a lemma
        for the fundamental property of iota.  (Contributed by Andrew Salmon,
        11-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	funiabio_0 $f wff ph $.
 	funiabio_1 $f set x $.
@@ -178,6 +228,10 @@ $}
 $( Theorem 8.19 in [Quine] p. 57.  This theorem is the fundamental property
        of iota.  (Contributed by Andrew Salmon, 11-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d ph z $.
 	$d x y z $.
 	iiotaval_0 $f set z $.
@@ -189,6 +243,9 @@ $}
 $( Equivalence between two different forms of ` iota ` .  (Contributed by
        Andrew Salmon, 12-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v z $.
 	$d ph z $.
 	$d x z $.
 	iiotauni_0 $f set z $.
@@ -199,6 +256,8 @@ $}
 $( Equivalence between two different forms of ` iota ` .  (Contributed by
        Mario Carneiro, 24-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	fiotaint_0 $f wff ph $.
 	fiotaint_1 $f set x $.
 	iotaint $p |- ( E! x ph -> ( iota x ph ) = |^| { x | ph } ) $= fiotaint_0 fiotaint_1 weu fiotaint_0 fiotaint_1 cio fiotaint_0 fiotaint_1 cab cuni fiotaint_0 fiotaint_1 cab cint fiotaint_0 fiotaint_1 iotauni fiotaint_0 fiotaint_1 weu fiotaint_0 fiotaint_1 cab cuni fiotaint_0 fiotaint_1 cab cint wceq fiotaint_0 fiotaint_1 uniintab biimpi eqtrd $.
@@ -206,6 +265,9 @@ $}
 $( Property of iota.  (Contributed by NM, 23-Aug-2011.)  (Revised by Mario
        Carneiro, 23-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v z $.
 	$d ph z $.
 	$d x z $.
 	iiota1_0 $f set z $.
@@ -217,6 +279,9 @@ $( Theorem 8.22 in [Quine] p. 57.  This theorem is the result if there
        isn't exactly one ` x ` that satisfies ` ph ` .  (Contributed by Andrew
        Salmon, 11-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v z $.
 	$d ph z $.
 	$d x z $.
 	iiotanul_0 $f set z $.
@@ -227,6 +292,8 @@ $}
 $( The ` iota ` class is a subset of the union of all elements satisfying
        ` ph ` .  (Contributed by Mario Carneiro, 24-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	fiotassuni_0 $f wff ph $.
 	fiotassuni_1 $f set x $.
 	iotassuni $p |- ( iota x ph ) C_ U. { x | ph } $= fiotassuni_0 fiotassuni_1 weu fiotassuni_0 fiotassuni_1 cio fiotassuni_0 fiotassuni_1 cab cuni wss fiotassuni_0 fiotassuni_1 weu fiotassuni_0 fiotassuni_1 cio fiotassuni_0 fiotassuni_1 cab cuni wceq fiotassuni_0 fiotassuni_1 cio fiotassuni_0 fiotassuni_1 cab cuni wss fiotassuni_0 fiotassuni_1 iotauni fiotassuni_0 fiotassuni_1 cio fiotassuni_0 fiotassuni_1 cab cuni eqimss syl fiotassuni_0 fiotassuni_1 weu wn fiotassuni_0 fiotassuni_1 cio fiotassuni_0 fiotassuni_1 cab cuni wss c0 fiotassuni_0 fiotassuni_1 cab cuni wss fiotassuni_0 fiotassuni_1 cab cuni 0ss fiotassuni_0 fiotassuni_1 weu wn fiotassuni_0 fiotassuni_1 cio c0 fiotassuni_0 fiotassuni_1 cab cuni fiotassuni_0 fiotassuni_1 iotanul sseq1d mpbiri pm2.61i $.
@@ -235,6 +302,9 @@ $( Theorem 8.23 in [Quine] p. 58.  This theorem proves the existence of the
        ` iota ` class under our definition.  (Contributed by Andrew Salmon,
        11-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v z $.
 	$d ph z $.
 	$d x z $.
 	iiotaex_0 $f set z $.
@@ -245,6 +315,9 @@ $}
 $( Theorem *14.22 in [WhiteheadRussell] p. 190.  (Contributed by Andrew
        Salmon, 12-Jul-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v z $.
 	$d ph z $.
 	$d x z $.
 	iiota4_0 $f set z $.
@@ -255,6 +328,9 @@ $}
 $( Theorem *14.23 in [WhiteheadRussell] p. 191.  (Contributed by Andrew
      Salmon, 12-Jul-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fiota4an_0 $f wff ph $.
 	fiota4an_1 $f wff ps $.
 	fiota4an_2 $f set x $.
@@ -262,6 +338,12 @@ ${
 $}
 $( A method for computing iota.  (Contributed by NM, 17-Sep-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v V $.
+	$v y $.
 	$d x y A $.
 	$d x V $.
 	$d x ph $.
@@ -278,6 +360,10 @@ $}
 $( Formula-building deduction rule for iota.  (Contributed by NM,
        20-Aug-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
 	$d x ph $.
 	fiotabidv_0 $f wff ph $.
 	fiotabidv_1 $f wff ps $.
@@ -289,6 +375,9 @@ $}
 $( Formula-building deduction rule for iota.  (Contributed by Mario
        Carneiro, 2-Oct-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
 	fiotabii_0 $f wff ph $.
 	fiotabii_1 $f wff ps $.
 	fiotabii_2 $f set x $.
@@ -303,6 +392,8 @@ $( Membership law for descriptions.
 
      (Contributed by Andrew Salmon, 1-Aug-2011.) $)
 ${
+	$v ph $.
+	$v x $.
 	fiotacl_0 $f wff ph $.
 	fiotacl_1 $f set x $.
 	iotacl $p |- ( E! x ph -> ( iota x ph ) e. { x | ph } ) $= fiotacl_0 fiotacl_1 weu fiotacl_0 fiotacl_1 fiotacl_0 fiotacl_1 cio wsbc fiotacl_0 fiotacl_1 cio fiotacl_0 fiotacl_1 cab wcel fiotacl_0 fiotacl_1 iota4 fiotacl_0 fiotacl_1 fiotacl_0 fiotacl_1 cio df-sbc sylib $.
@@ -311,6 +402,12 @@ $( A condition that allows us to represent "the unique element such that
          ` ph ` " with a class expression ` A ` .  (Contributed by NM,
          30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v B $.
+	$v V $.
 	fiota2df_0 $f wff ph $.
 	fiota2df_1 $f wff ps $.
 	fiota2df_2 $f wff ch $.
@@ -329,6 +426,12 @@ $( A condition that allows us to represent "the unique element such that
        ` ph ` " with a class expression ` A ` .  (Contributed by NM,
        30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v B $.
+	$v V $.
 	$d x B $.
 	$d x ph $.
 	$d x ch $.
@@ -346,6 +449,11 @@ $}
 $( The unique element such that ` ph ` .  (Contributed by Jeff Madsen,
        1-Jun-2011.)  (Revised by Mario Carneiro, 23-Dec-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v A $.
+	$v B $.
 	$d A x $.
 	$d ps x $.
 	fiota2_0 $f wff ph $.
@@ -359,6 +467,8 @@ $}
 $( A class abstraction with a unique member can be expressed as a singleton.
      (Contributed by Mario Carneiro, 23-Dec-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	fsniota_0 $f wff ph $.
 	fsniota_1 $f set x $.
 	sniota $p |- ( E! x ph -> { x | ph } = { ( iota x ph ) } ) $= fsniota_0 fsniota_1 weu fsniota_1 sup_set_class fsniota_0 fsniota_1 cab wcel fsniota_1 sup_set_class fsniota_0 fsniota_1 cio csn wcel wb fsniota_1 wal fsniota_0 fsniota_1 cab fsniota_0 fsniota_1 cio csn wceq fsniota_0 fsniota_1 weu fsniota_1 sup_set_class fsniota_0 fsniota_1 cab wcel fsniota_1 sup_set_class fsniota_0 fsniota_1 cio csn wcel wb fsniota_1 fsniota_0 fsniota_1 nfeu1 fsniota_0 fsniota_1 weu fsniota_0 fsniota_1 sup_set_class fsniota_0 fsniota_1 cio wceq fsniota_1 sup_set_class fsniota_0 fsniota_1 cab wcel fsniota_1 sup_set_class fsniota_0 fsniota_1 cio csn wcel fsniota_0 fsniota_1 weu fsniota_0 fsniota_0 fsniota_1 cio fsniota_1 sup_set_class wceq fsniota_1 sup_set_class fsniota_0 fsniota_1 cio wceq fsniota_0 fsniota_1 iota1 fsniota_0 fsniota_1 cio fsniota_1 sup_set_class eqcom syl6bb fsniota_0 fsniota_1 abid fsniota_1 sup_set_class fsniota_0 fsniota_1 cio fsniota_1 vex elsnc 3bitr4g alrimi fsniota_1 fsniota_0 fsniota_1 cab fsniota_0 fsniota_1 cio csn fsniota_0 fsniota_1 nfab1 fsniota_1 fsniota_0 fsniota_1 cio fsniota_0 fsniota_1 nfiota1 nfsn cleqf sylibr $.
@@ -366,6 +476,8 @@ $}
 $( The ` iota ` operation using the ` if ` operator.  (Contributed by Scott
        Fenton, 6-Oct-2017.) $)
 ${
+	$v ph $.
+	$v x $.
 	fdfiota4_0 $f wff ph $.
 	fdfiota4_1 $f set x $.
 	dfiota4 $p |- ( iota x ph ) = if ( E! x ph , U. { x | ph } , (/) ) $= fdfiota4_0 fdfiota4_1 weu fdfiota4_0 fdfiota4_1 cio fdfiota4_0 fdfiota4_1 weu fdfiota4_0 fdfiota4_1 cab cuni c0 cif wceq fdfiota4_0 fdfiota4_1 weu fdfiota4_0 fdfiota4_1 cio fdfiota4_0 fdfiota4_1 cab cuni fdfiota4_0 fdfiota4_1 weu fdfiota4_0 fdfiota4_1 cab cuni c0 cif fdfiota4_0 fdfiota4_1 iotauni fdfiota4_0 fdfiota4_1 weu fdfiota4_0 fdfiota4_1 cab cuni c0 iftrue eqtr4d fdfiota4_0 fdfiota4_1 weu wn fdfiota4_0 fdfiota4_1 cio c0 fdfiota4_0 fdfiota4_1 weu fdfiota4_0 fdfiota4_1 cab cuni c0 cif fdfiota4_0 fdfiota4_1 iotanul fdfiota4_0 fdfiota4_1 weu fdfiota4_0 fdfiota4_1 cab cuni c0 iffalse eqtr4d pm2.61i $.
@@ -373,6 +485,12 @@ $}
 $( Class substitution within a description binder.  (Contributed by Scott
        Fenton, 6-Oct-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v V $.
+	$v z $.
 	$d A y z $.
 	$d x y z $.
 	$d ph z $.

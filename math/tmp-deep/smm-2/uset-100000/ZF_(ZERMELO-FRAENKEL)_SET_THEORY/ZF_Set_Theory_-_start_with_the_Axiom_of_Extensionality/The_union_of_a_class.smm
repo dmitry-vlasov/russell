@@ -41,7 +41,7 @@ ${
 $}
 $( Membership in class union.  (Contributed by NM, 22-May-1994.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x A y $.
 	$d x B y $.
 	f0 $f set x $.
@@ -65,7 +65,7 @@ ${
 $}
 $( Membership in class union.  (Contributed by NM, 24-Mar-1995.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -79,7 +79,7 @@ $}
 $( Bound-variable hypothesis builder for union.  (Contributed by NM,
        30-Dec-1996.)  (Proof shortened by Andrew Salmon, 27-Aug-2011.) $)
 ${
-	$v x y z A $.
+	$v x A y z $.
 	$d y z A $.
 	$d x y z $.
 	e0 $e |- F/_ x A $.
@@ -92,7 +92,7 @@ ${
 $}
 $( Deduction version of ~ nfuni .  (Contributed by NM, 18-Feb-2013.) $)
 ${
-	$v ph x y z A $.
+	$v ph x A y z $.
 	$d y z A $.
 	$d x y z $.
 	$d y z ph $.
@@ -108,7 +108,7 @@ $}
 $( Distribute proper substitution through the union of a class.
        (Contributed by Alan Sare, 10-Nov-2012.) $)
 ${
-	$v x y z A B V $.
+	$v x A B V y z $.
 	$d A y z $.
 	$d B y z $.
 	$d V y z $.
@@ -126,7 +126,7 @@ $( Equality theorem for class union.  Exercise 15 of [TakeutiZaring]
        p. 18.  (Contributed by NM, 10-Aug-1993.)  (Proof shortened by Andrew
        Salmon, 29-Jun-2011.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -160,7 +160,7 @@ $}
 $( Membership in union of a class abstraction.  (Contributed by NM,
        11-Aug-1994.)  (Revised by Mario Carneiro, 14-Nov-2016.) $)
 ${
-	$v ph x y A $.
+	$v ph x A y $.
 	$d x A y $.
 	$d ph y $.
 	f0 $f wff ph $.
@@ -185,7 +185,7 @@ $}
 $( The union of a pair is the union of its members.  Proposition 5.7 of
        [TakeutiZaring] p. 16.  (Contributed by NM, 23-Aug-1993.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	e0 $e |- A e. _V $.
@@ -200,7 +200,7 @@ $}
 $( The union of a pair is the union of its members.  Proposition 5.7 of
        [TakeutiZaring] p. 16.  (Contributed by NM, 25-Aug-2006.) $)
 ${
-	$v x y A B V W $.
+	$v A B V W x y $.
 	$d x y A $.
 	$d y B $.
 	f0 $f class A $.
@@ -224,7 +224,7 @@ $}
 $( A set equals the union of its singleton.  Theorem 8.2 of [Quine] p. 53.
        (Contributed by NM, 13-Aug-2002.) $)
 ${
-	$v x A V $.
+	$v A V x $.
 	$d x A $.
 	f0 $f class A $.
 	f1 $f class V $.
@@ -248,7 +248,7 @@ $}
 $( The class union of the union of two classes.  Theorem 8.3 of [Quine]
        p. 53.  (Contributed by NM, 20-Aug-1993.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -263,7 +263,7 @@ $( The class union of the intersection of two classes.  Exercise 4.12(n) of
        (Contributed by NM, 4-Dec-2003.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -277,7 +277,7 @@ $( Subclass relationship for class union.  Theorem 61 of [Suppes] p. 39.
        (Contributed by NM, 22-Mar-1998.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -291,7 +291,7 @@ $}
 $( Subclass relationship for class union.  (Contributed by NM,
        24-May-1994.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
 ${
-	$v x y A B C $.
+	$v A B C x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -327,7 +327,7 @@ $}
 $( The union of a set is empty iff the set is included in the singleton of
        the empty set.  (Contributed by NM, 12-Sep-2004.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -375,7 +375,7 @@ $}
 $( Relationship involving membership, subset, and union.  Exercise 5 of
        [Enderton] p. 26 and its converse.  (Contributed by NM, 20-Sep-2003.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f set x $.
@@ -428,7 +428,7 @@ $}
 $( Any member of a class is the largest of those members that it includes.
        (Contributed by NM, 13-Aug-2002.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f set x $.

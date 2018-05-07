@@ -14,6 +14,11 @@ $( The Axiom of Pairing of Zermelo-Fraenkel set theory.  Axiom 2 of
        can be more easily identified.  (Contributed by NM, 18-Oct-1995.)
        (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
 	$d x z w v $.
 	$d y z w v $.
 	izfpair_0 $f set z $.
@@ -31,6 +36,10 @@ $( Unabbreviated version of the Axiom of Pairing of ZF set theory, derived
        easily identified.  (Contributed by NM, 14-Nov-2006.)
        (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x z w $.
 	$d y z w $.
 	faxpr_0 $f set x $.
@@ -44,6 +53,10 @@ $( The Axiom of Pairing of ZF set theory.  It was derived as theorem ~ axpr
        here so that its uses can be identified more easily.  (Contributed by
        NM, 14-Nov-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x z w $.
 	$d y z w $.
 	fax-pr_0 $f set x $.
@@ -56,6 +69,10 @@ $( Derive the abbreviated version of the Axiom of Pairing from ~ ax-pr .
        See ~ zfpair for its derivation from the other axioms.  (Contributed by
        NM, 14-Nov-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x z w $.
 	$d y z w $.
 	izfpair2_0 $f set z $.
@@ -69,6 +86,8 @@ $( A singleton is a set.  Theorem 7.13 of [Quine] p. 51, proved using
        (Contributed by NM, 7-Aug-1994.)  (Revised by Mario Carneiro,
        19-May-2013.)  (Proof modification is discouraged.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	isnex_0 $f set x $.
 	fsnex_0 $f class A $.
@@ -80,6 +99,10 @@ $( The Axiom of Pairing using class variables.  Theorem 7.13 of [Quine]
        classes (see ~ prprc ), so we can dispense with hypotheses requiring
        them to be sets.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
 	$d x y A $.
 	$d x y B $.
 	iprex_0 $f set x $.
@@ -92,6 +115,8 @@ $( Every set is an element of some other set.  This has a shorter proof
        than ~ el but uses more axioms.  (Contributed by NM, 4-Jan-2002.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	felALT_0 $f set x $.
 	felALT_1 $f set y $.
@@ -101,6 +126,8 @@ $( An alternative proof of ~ dtru ("two things exist") using ~ ax-pr
        instead of ~ ax-pow .  (Contributed by Mario Carneiro, 31-Aug-2015.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
+	$v x $.
+	$v y $.
 	$d x y $.
 	fdtruALT2_0 $f set x $.
 	fdtruALT2_1 $f set y $.
@@ -109,6 +136,8 @@ $}
 $( A singleton of a set belongs to the power class of a class containing
        the set.  (Contributed by Alan Sare, 25-Aug-2011.) $)
 ${
+	$v A $.
+	$v B $.
 	fsnelpwi_0 $f class A $.
 	fsnelpwi_1 $f class B $.
 	snelpwi $p |- ( A e. B -> { A } e. ~P B ) $= fsnelpwi_0 fsnelpwi_1 wcel fsnelpwi_0 csn fsnelpwi_1 wss fsnelpwi_0 csn fsnelpwi_1 cpw wcel fsnelpwi_0 fsnelpwi_1 snssi fsnelpwi_0 csn fsnelpwi_1 fsnelpwi_0 snex elpw sylibr $.
@@ -116,6 +145,8 @@ $}
 $( A singleton of a set belongs to the power class of a class containing
        the set.  (Contributed by NM, 1-Apr-1998.) $)
 ${
+	$v A $.
+	$v B $.
 	fsnelpw_0 $f class A $.
 	fsnelpw_1 $f class B $.
 	esnelpw_0 $e |- A e. _V $.
@@ -125,6 +156,9 @@ $( A theorem similar to extensionality, requiring the existence of a
        singleton.  Exercise 8 of [TakeutiZaring] p. 16.  (Contributed by NM,
        10-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	frext_0 $f set x $.
 	frext_1 $f set y $.
@@ -135,6 +169,9 @@ $( Classes are subclasses if and only if their power classes are
        subclasses.  Exercise 18 of [TakeutiZaring] p. 18.  (Contributed by NM,
        13-Oct-1996.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d A x $.
 	$d B x $.
 	isspwb_0 $f set x $.
@@ -146,6 +183,9 @@ $( A class equals the union of its power class.  Exercise 6(a) of
        [Enderton] p. 38.  (Contributed by NM, 14-Oct-1996.)  (Proof shortened
        by Alan Sare, 28-Dec-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d A x y $.
 	iunipw_0 $f set x $.
 	iunipw_1 $f set y $.
@@ -155,6 +195,8 @@ $}
 $( Membership of a power class.  Exercise 10 of [Enderton] p. 26.
      (Contributed by NM, 13-Jan-2007.) $)
 ${
+	$v A $.
+	$v B $.
 	fpwel_0 $f class A $.
 	fpwel_1 $f class B $.
 	pwel $p |- ( A e. B -> ~P A e. ~P ~P U. B ) $= fpwel_0 fpwel_1 wcel fpwel_0 cpw fpwel_1 cuni cpw cpw wcel fpwel_0 cpw fpwel_1 cuni cpw wss fpwel_0 fpwel_1 wcel fpwel_0 fpwel_1 cuni wss fpwel_0 cpw fpwel_1 cuni cpw wss fpwel_0 fpwel_1 elssuni fpwel_0 fpwel_1 cuni sspwb sylib fpwel_0 fpwel_1 wcel fpwel_0 cpw cvv wcel fpwel_0 cpw fpwel_1 cuni cpw cpw wcel fpwel_0 cpw fpwel_1 cuni cpw wss wb fpwel_0 fpwel_1 pwexg fpwel_0 cpw fpwel_1 cuni cpw cvv elpwg syl mpbird $.
@@ -162,12 +204,16 @@ $}
 $( A class is transitive iff its power class is transitive.  (Contributed by
      Alan Sare, 25-Aug-2011.)  (Revised by Mario Carneiro, 15-Jun-2014.) $)
 ${
+	$v A $.
 	fpwtr_0 $f class A $.
 	pwtr $p |- ( Tr A <-> Tr ~P A ) $= fpwtr_0 cpw cuni fpwtr_0 cpw wss fpwtr_0 fpwtr_0 cpw wss fpwtr_0 cpw wtr fpwtr_0 wtr fpwtr_0 cpw cuni fpwtr_0 fpwtr_0 cpw fpwtr_0 unipw sseq1i fpwtr_0 cpw df-tr fpwtr_0 dftr4 3bitr4ri $.
 $}
 $( An extensionality-like principle defining subclass in terms of subsets.
        (Contributed by NM, 30-Jun-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d A x $.
 	$d B x $.
 	fssextss_0 $f set x $.
@@ -179,6 +225,9 @@ $( An extensionality-like principle that uses the subset instead of the
        membership relation: two classes are equal iff they have the same
        subsets.  (Contributed by NM, 30-Jun-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d A x $.
 	$d B x $.
 	fssext_0 $f set x $.
@@ -189,6 +238,9 @@ $}
 $( Negation of subclass relationship.  Compare ~ nss .  (Contributed by NM,
        30-Jun-2004.)  (Proof shortened by Andrew Salmon, 25-Jul-2011.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
 	$d A x $.
 	$d B x $.
 	fnssss_0 $f set x $.
@@ -199,6 +251,8 @@ $}
 $( Classes are equal if and only if their power classes are equal.  Exercise
      19 of [TakeutiZaring] p. 18.  (Contributed by NM, 13-Oct-1996.) $)
 ${
+	$v A $.
+	$v B $.
 	fpweqb_0 $f class A $.
 	fpweqb_1 $f class B $.
 	pweqb $p |- ( A = B <-> ~P A = ~P B ) $= fpweqb_0 fpweqb_1 wss fpweqb_1 fpweqb_0 wss wa fpweqb_0 cpw fpweqb_1 cpw wss fpweqb_1 cpw fpweqb_0 cpw wss wa fpweqb_0 fpweqb_1 wceq fpweqb_0 cpw fpweqb_1 cpw wceq fpweqb_0 fpweqb_1 wss fpweqb_0 cpw fpweqb_1 cpw wss fpweqb_1 fpweqb_0 wss fpweqb_1 cpw fpweqb_0 cpw wss fpweqb_0 fpweqb_1 sspwb fpweqb_1 fpweqb_0 sspwb anbi12i fpweqb_0 fpweqb_1 eqss fpweqb_0 cpw fpweqb_1 cpw eqss 3bitr4i $.
@@ -206,6 +260,8 @@ $}
 $( The intersection of all sets to which a set belongs is the singleton of
        that set.  (Contributed by NM, 5-Jun-2009.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	fintid_0 $f set x $.
 	fintid_1 $f class A $.
@@ -215,6 +271,9 @@ $}
 $( "At most one" existence implies a class abstraction exists.
        (Contributed by NM, 30-Dec-1996.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	$d x y $.
 	$d y ph $.
 	imoabex_0 $f set y $.
@@ -225,6 +284,9 @@ $}
 $( Restricted "at most one" existence implies a restricted class abstraction
      exists.  (Contributed by NM, 17-Jun-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
 	frmorabex_0 $f wff ph $.
 	frmorabex_1 $f set x $.
 	frmorabex_2 $f class A $.
@@ -233,6 +295,8 @@ $}
 $( The abstraction of a wff with existential uniqueness exists.  (Contributed
      by NM, 25-Nov-1994.) $)
 ${
+	$v ph $.
+	$v x $.
 	feuabex_0 $f wff ph $.
 	feuabex_1 $f set x $.
 	euabex $p |- ( E! x ph -> { x | ph } e. _V ) $= feuabex_0 feuabex_1 weu feuabex_0 feuabex_1 wmo feuabex_0 feuabex_1 cab cvv wcel feuabex_0 feuabex_1 eumo feuabex_0 feuabex_1 moabex syl $.
@@ -240,6 +304,9 @@ $}
 $( A non-empty class (even if proper) has a non-empty subset.  (Contributed
        by NM, 23-Aug-2003.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
 	$d x y A $.
 	innullss_0 $f set y $.
 	fnnullss_0 $f set x $.
@@ -249,6 +316,11 @@ $}
 $( Restricted existence in a class (even if proper) implies restricted
        existence in a subset.  (Contributed by NM, 23-Aug-2003.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
 	$d x y z A $.
 	$d y z ph $.
 	iexss_0 $f set z $.
@@ -262,6 +334,8 @@ $( An ordered pair of classes is a set.  Exercise 7 of [TakeutiZaring]
      p. 16.  (Contributed by NM, 18-Aug-1993.)  (Revised by Mario Carneiro,
      26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	fopex_0 $f class A $.
 	fopex_1 $f class B $.
 	opex $p |- <. A , B >. e. _V $= fopex_0 fopex_1 cop fopex_0 cvv wcel fopex_1 cvv wcel wa fopex_0 csn fopex_0 fopex_1 cpr cpr c0 cif cvv fopex_0 fopex_1 dfopif fopex_0 cvv wcel fopex_1 cvv wcel wa fopex_0 csn fopex_0 fopex_1 cpr cpr c0 fopex_0 csn fopex_0 fopex_1 cpr prex 0ex ifex eqeltri $.
@@ -269,6 +343,9 @@ $}
 $( An ordered triple of classes is a set.  (Contributed by NM,
      3-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	fotex_0 $f class A $.
 	fotex_1 $f class B $.
 	fotex_2 $f class C $.
@@ -278,6 +355,9 @@ $( An ordered pair has two elements.  Exercise 3 of [TakeutiZaring] p. 15.
        (Contributed by NM, 5-Aug-1993.)  (Revised by Mario Carneiro,
        26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
 	felop_0 $f class A $.
 	felop_1 $f class B $.
 	felop_2 $f class C $.
@@ -289,6 +369,8 @@ $}
 $( One of the two elements in an ordered pair.  (Contributed by NM,
        5-Aug-1993.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	fopi1_0 $f class A $.
 	fopi1_1 $f class B $.
 	eopi1_0 $e |- A e. _V $.
@@ -298,6 +380,8 @@ $}
 $( One of the two elements of an ordered pair.  (Contributed by NM,
        5-Aug-1993.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
 	fopi2_0 $f class A $.
 	fopi2_1 $f class B $.
 	eopi2_0 $e |- A e. _V $.

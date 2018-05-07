@@ -9,6 +9,11 @@ $( Virtual deduction rule ~ e22 without virtual deduction connectives.
        tool.  (Contributed by Alan Sare, 2-May-2011.)
        (New usage is discouraged.)  TODO: decide if this is worth keeping. $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fee22_0 $f wff ph $.
 	fee22_1 $f wff ps $.
 	fee22_2 $f wff ch $.
@@ -24,6 +29,11 @@ $( ~ e12an without virtual deduction connectives.  Special theorem needed
        Alan Sare, 28-Oct-2011.)  TODO: this is frequently used; come up with
        better label. $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fee12an_0 $f wff ph $.
 	fee12an_1 $f wff ps $.
 	fee12an_2 $f wff ch $.
@@ -38,6 +48,12 @@ $( ~ e23 without virtual deductions.  (Contributed by Alan Sare,
        17-Jul-2011.)  (New usage is discouraged.)  TODO: decide if this is
        worth keeping. $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v et $.
 	fee23_0 $f wff ph $.
 	fee23_1 $f wff ps $.
 	fee23_2 $f wff ch $.
@@ -54,6 +70,10 @@ $( Exportation implication also converting head from biconditional to
      minimized.  (Contributed by Alan Sare, 31-Dec-2011.)
      (New usage is discouraged.)  TODO: decide if this is worth keeping. $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fexbir_0 $f wff ph $.
 	fexbir_1 $f wff ps $.
 	fexbir_2 $f wff ch $.
@@ -63,6 +83,10 @@ $}
 $( ~ impexp with a 3-conjunct antecedent.  (Contributed by Alan Sare,
      31-Dec-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	f3impexp_0 $f wff ph $.
 	f3impexp_1 $f wff ps $.
 	f3impexp_2 $f wff ch $.
@@ -74,6 +98,11 @@ $( ~ 3impexp with biconditional consequent of antecedent that is commuted in
      Alan Sare, 31-Dec-2011.)  (New usage is discouraged.)  TODO: decide if
      this is worth keeping. $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3impexpbicom_0 $f wff ph $.
 	f3impexpbicom_1 $f wff ps $.
 	f3impexpbicom_2 $f wff ch $.
@@ -85,6 +114,11 @@ $( Deduction form of ~ 3impexpbicom .  Derived automatically from
        ~ 3impexpbicomiVD .  (Contributed by Alan Sare, 31-Dec-2011.)
        (New usage is discouraged.)  TODO: decide if this is worth keeping. $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	f3impexpbicomi_0 $f wff ph $.
 	f3impexpbicomi_1 $f wff ps $.
 	f3impexpbicomi_2 $f wff ch $.
@@ -96,6 +130,9 @@ $}
 $( Closed form of ~ ancoms .  Derived automatically from ~ ancomsimpVD .
      (Contributed by Alan Sare, 31-Dec-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fancomsimp_0 $f wff ph $.
 	fancomsimp_1 $f wff ps $.
 	fancomsimp_2 $f wff ch $.
@@ -104,6 +141,10 @@ $}
 $( Export and commute antecedents.  (Contributed by Alan Sare,
        18-Mar-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fexp3acom3r_0 $f wff ph $.
 	fexp3acom3r_1 $f wff ps $.
 	fexp3acom3r_2 $f wff ch $.
@@ -115,6 +156,10 @@ $( Implication form of ~ exp3acom23 .  (Contributed by Alan Sare,
      22-Jul-2012.)  (New usage is discouraged.)  TODO: decide if this is worth
      keeping. $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fexp3acom23g_0 $f wff ph $.
 	fexp3acom23g_1 $f wff ps $.
 	fexp3acom23g_2 $f wff ch $.
@@ -124,6 +169,10 @@ $}
 $( The exportation deduction ~ exp3a with commutation of the conjoined
        wwfs.  (Contributed by Alan Sare, 22-Jul-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fexp3acom23_0 $f wff ph $.
 	fexp3acom23_1 $f wff ps $.
 	fexp3acom23_2 $f wff ch $.
@@ -135,6 +184,9 @@ $( Implication form of ~ simplbi2com .  (Contributed by Alan Sare,
      22-Jul-2012.)  (New usage is discouraged.)  TODO: decide if this is worth
      keeping. $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fsimplbi2comg_0 $f wff ph $.
 	fsimplbi2comg_1 $f wff ps $.
 	fsimplbi2comg_2 $f wff ch $.
@@ -144,6 +196,9 @@ $( A deduction eliminating a conjunct, similar to ~ simplbi2 .
        (Contributed by Alan Sare, 22-Jul-2012.)  (Proof shortened by Wolf
        Lammen, 10-Nov-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
 	fsimplbi2com_0 $f wff ph $.
 	fsimplbi2com_1 $f wff ps $.
 	fsimplbi2com_2 $f wff ch $.
@@ -154,6 +209,11 @@ $( ~ e21 without virtual deductions.  (Contributed by Alan Sare,
        18-Mar-2012.)  (New usage is discouraged.)  TODO: decide if this is
        worth keeping. $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fee21_0 $f wff ph $.
 	fee21_1 $f wff ps $.
 	fee21_2 $f wff ch $.
@@ -168,6 +228,10 @@ $( ~ e10 without virtual deductions.  (Contributed by Alan Sare,
        25-Jul-2011.)  TODO: this is frequently used; come up with better
        label. $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
 	fee10_0 $f wff ph $.
 	fee10_1 $f wff ps $.
 	fee10_2 $f wff ch $.
@@ -181,6 +245,11 @@ $( ~ e02 without virtual deductions.  (Contributed by Alan Sare,
        22-Jul-2012.)  (New usage is discouraged.)  TODO: decide if this is
        worth keeping. $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
 	fee02_0 $f wff ph $.
 	fee02_1 $f wff ps $.
 	fee02_2 $f wff ch $.

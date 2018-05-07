@@ -50,7 +50,7 @@ $( Soundness justification theorem for ~ df-sn .  (Contributed by Rodolfo
        Medina, 28-Apr-2010.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
-	$v x y z A $.
+	$v x y A z $.
 	$d x A $.
 	$d y A $.
 	$d z x $.
@@ -146,7 +146,7 @@ $}
 $( Equality theorem for singletons.  Part of Exercise 4 of [TakeutiZaring]
        p. 15.  (Contributed by NM, 5-Aug-1993.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -208,7 +208,7 @@ $( A member of an unordered pair of classes is one or the other of them.
        Exercise 1 of [TakeutiZaring] p. 15, generalized.  (Contributed by NM,
        13-Sep-1995.) $)
 ${
-	$v x A B C V $.
+	$v A B C V x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -271,7 +271,7 @@ $( There is only one element in a singleton.  Exercise 2 of [TakeutiZaring]
        p. 15 (generalized).  (Contributed by NM, 13-Sep-1995.)  (Proof
        shortened by Andrew Salmon, 29-Jun-2011.) $)
 ${
-	$v x A B V $.
+	$v A B V x $.
 	$d A x $.
 	$d B x $.
 	f0 $f class A $.
@@ -487,7 +487,7 @@ $}
 $( Bound-variable hypothesis builder for unordered pairs.  (Contributed by
        NM, 14-Nov-1995.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d y A $.
 	$d y B $.
 	$d x y $.
@@ -734,7 +734,7 @@ $( Distribute proper substitution through the singleton of a class.
        ~ csbsng is derived from the virtual deduction proof ~ csbsngVD .
        (Contributed by Alan Sare, 10-Nov-2012.) $)
 ${
-	$v x y A B V $.
+	$v x A B V y $.
 	$d A y $.
 	$d B y $.
 	$d V y $.
@@ -751,7 +751,7 @@ $( Intersection with the singleton of a non-member is disjoint.
        (Contributed by NM, 22-May-1998.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.)  (Proof shortened by Wolf Lammen, 30-Sep-2014.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -772,7 +772,7 @@ $}
 $( The singleton of a proper class (one that doesn't exist) is the empty
        set.  Theorem 7.2 of [Quine] p. 48.  (Contributed by NM, 5-Aug-1993.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -849,7 +849,7 @@ $}
 $( Restricted existential uniqueness determined by a singleton.
        (Contributed by NM, 29-May-2006.) $)
 ${
-	$v ph x y A V $.
+	$v ph x A V y $.
 	$d x y $.
 	$d y ph $.
 	$d y A $.
@@ -1088,7 +1088,7 @@ $}
 $( Equality theorem for unordered triples.  (Contributed by NM,
        22-Jun-2014.) $)
 ${
-	$v ph A B C D F E $.
+	$v ph A B C D E F $.
 	e0 $e |- ( ph -> A = B ) $.
 	e1 $e |- ( ph -> C = D ) $.
 	e2 $e |- ( ph -> E = F ) $.
@@ -1105,7 +1105,7 @@ $}
 $( Rotation of the elements of an unordered triple.  (Contributed by Alan
        Sare, 24-Oct-2011.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1296,7 +1296,7 @@ $( Closed theorem form of ~ tpid3 .  This proof was automatically generated
        from the virtual deduction proof ~ tpid3gVD using a translation
        program.  (Contributed by Alan Sare, 24-Oct-2011.) $)
 ${
-	$v x A B C D $.
+	$v A B C D x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1350,7 +1350,7 @@ $}
 $( A pair containing a set is not empty.  (Contributed by FL,
        19-Sep-2011.) $)
 ${
-	$v x A B V $.
+	$v A B V x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -1374,7 +1374,7 @@ $}
 $( The singleton of an element of a class is a subset of the class.
        Theorem 7.4 of [Quine] p. 49.  (Contributed by NM, 5-Aug-1993.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d A x $.
 	$d B x $.
 	e0 $e |- A e. _V $.
@@ -1437,7 +1437,7 @@ $}
 $( The singleton of an element of a class is a subset of the class.
        Theorem 7.4 of [Quine] p. 49.  (Contributed by NM, 22-Jul-2001.) $)
 ${
-	$v x A B V $.
+	$v A B V x $.
 	$d A x $.
 	$d B x $.
 	f0 $f class A $.
@@ -1451,7 +1451,7 @@ $( An element not in a set can be removed without affecting the set.
        (Contributed by NM, 16-Mar-2006.)  (Proof shortened by Andrew Salmon,
        29-Jun-2011.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d A x $.
 	$d B x $.
 	f0 $f class A $.
@@ -1463,7 +1463,7 @@ $}
 $( Removal of a singleton from an unordered pair.  (Contributed by NM,
        16-Mar-2006.)  (Proof shortened by Andrew Salmon, 29-Jun-2011.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d A x $.
 	$d B x $.
 	f0 $f class A $.
@@ -1628,7 +1628,7 @@ ${
 $}
 $( The subsets of a singleton.  (Contributed by NM, 24-Apr-2004.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -1741,7 +1741,7 @@ ${
 $}
 $( Closed form of ~ sneqr .  (Contributed by Scott Fenton, 1-Apr-2011.) $)
 ${
-	$v x A B V $.
+	$v A B V x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -1764,7 +1764,7 @@ $}
 $( The singleton of a class is a subset of its power class.  (Contributed
        by NM, 5-Aug-1993.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -1857,7 +1857,7 @@ $}
 $( Closed form of ~ preq12b .  (Contributed by Scott Fenton,
        28-Mar-2014.) $)
 ${
-	$v x y z w A B C D V W X Y $.
+	$v A B C D V W X Y x y z w $.
 	$d A x y z w $.
 	$d B x y z w $.
 	$d C x y z w $.
@@ -1898,7 +1898,7 @@ $( Rewrite ~ df-op using ` if ` .  When both arguments are sets, it reduces
        to the standard Kuratowski definition; otherwise, it is defined to be
        the empty set.  (Contributed by Mario Carneiro, 26-Apr-2015.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -2105,7 +2105,7 @@ $}
 $( Equality deduction for ordered triples.  (Contributed by Mario Carneiro,
        11-Jan-2017.) $)
 ${
-	$v ph A B C D F E $.
+	$v ph A B C D E F $.
 	e0 $e |- ( ph -> A = B ) $.
 	e1 $e |- ( ph -> C = D ) $.
 	e2 $e |- ( ph -> E = F ) $.
@@ -2136,7 +2136,7 @@ $( Deduction version of bound-variable hypothesis builder ~ nfop .  This
        be created from the corresponding not-free inference theorem.
        (Contributed by NM, 4-Feb-2008.) $)
 ${
-	$v ph x z A B $.
+	$v ph x A B z $.
 	$d z B $.
 	$d z A $.
 	$d x z $.
@@ -2243,7 +2243,7 @@ ${
 $}
 $( The power set of a singleton.  (Contributed by NM, 5-Jun-2006.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -2254,7 +2254,7 @@ $( The power set of a singleton (direct proof).  TO DO - should we keep
        this?  (Contributed by NM, 5-Jun-2006.)
        (Proof modification is discouraged.)  (New usage is discouraged.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x A $.
 	$d x y $.
 	$d y A $.
@@ -2266,7 +2266,7 @@ ${
 $}
 $( The power set of an unordered pair.  (Contributed by NM, 1-May-2009.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -2278,7 +2278,7 @@ $}
 $( The power set of an unordered triple.  (Contributed by Mario Carneiro,
        2-Jul-2016.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.

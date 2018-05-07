@@ -43,7 +43,7 @@ $( The value of the function that extracts the first member of an ordered
        pair.  (Contributed by NM, 9-Oct-2004.)  (Revised by Mario Carneiro,
        8-Sep-2013.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -54,7 +54,7 @@ $( The value of the function that extracts the second member of an ordered
        pair.  (Contributed by NM, 9-Oct-2004.)  (Revised by Mario Carneiro,
        8-Sep-2013.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -122,7 +122,7 @@ $}
 $( Extract the first member of an ordered pair.  (Contributed by NM,
        19-Jul-2005.) $)
 ${
-	$v x y A B V W $.
+	$v A B V W x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -137,7 +137,7 @@ $}
 $( Extract the second member of an ordered pair.  (Contributed by NM,
        19-Jul-2005.) $)
 ${
-	$v x y A B V W $.
+	$v A B V W x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -194,7 +194,7 @@ $( Alternate value of the function that extracts the first member of an
        ordered pair.  Definition 5.13 (i) of [Monk1] p. 52.  (Contributed by
        NM, 18-Aug-2006.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	$d x y $.
 	f0 $f class A $.
@@ -207,7 +207,7 @@ $( Alternate value of the function that extracts the second member of an
        ordered pair.  Definition 5.13 (ii) of [Monk1] p. 52.  (Contributed by
        NM, 18-Aug-2006.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	$d x y $.
 	f0 $f class A $.
@@ -247,7 +247,7 @@ $( Mapping of a restriction of the ` 1st ` (first member of an ordered
        pair) function.  (Contributed by NM, 11-Oct-2004.)  (Revised by Mario
        Carneiro, 8-Sep-2013.) $)
 ${
-	$v x y z A B $.
+	$v A B x y z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z $.
@@ -266,7 +266,7 @@ $( Mapping of a restriction of the ` 2nd ` (second member of an ordered
        pair) function.  (Contributed by NM, 7-Aug-2006.)  (Revised by Mario
        Carneiro, 8-Sep-2013.) $)
 ${
-	$v x y z A B $.
+	$v A B x y z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z $.
@@ -284,7 +284,7 @@ $}
 $( Onto mapping of a restriction of the ` 1st ` (first member of an ordered
        pair) function.  (Contributed by NM, 14-Dec-2008.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -301,7 +301,7 @@ $}
 $( Onto mapping of a restriction of the ` 2nd ` (second member of an
        ordered pair) function.  (Contributed by NM, 14-Dec-2008.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -318,7 +318,7 @@ $}
 $( Value of an alternate definition of the ` 1st ` function.  (Contributed
        by NM, 14-Oct-2004.)  (Revised by Mario Carneiro, 30-Dec-2014.) $)
 ${
-	$v x y z w A v $.
+	$v x y z A w v $.
 	$d x y z w v $.
 	$d v w A $.
 	f0 $f set x $.
@@ -333,7 +333,7 @@ $}
 $( Value of an alternate definition of the ` 2nd ` function.  (Contributed
        by NM, 10-Aug-2006.)  (Revised by Mario Carneiro, 30-Dec-2014.) $)
 ${
-	$v x y z w A v $.
+	$v x y z A w v $.
 	$d x y z w v $.
 	$d v w A $.
 	f0 $f set x $.
@@ -421,7 +421,7 @@ $( Difference of Cartesian products, expressed in terms of a union of
        Cartesian products of differences.  (Contributed by Jeff Madsen,
        2-Sep-2009.)  (Revised by Mario Carneiro, 26-Jun-2014.) $)
 ${
-	$v x y A B C D $.
+	$v A B C D x y $.
 	$d A x y $.
 	$d B x y $.
 	$d C x y $.
@@ -482,7 +482,7 @@ $}
 $( The membership relation for a cross product is inherited by union.
        (Contributed by NM, 16-Sep-2006.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -611,7 +611,7 @@ $}
 $( Two ways of expressing membership in the domain of a relation.
        (Contributed by NM, 22-Sep-2013.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f set x $.
@@ -624,7 +624,7 @@ $}
 $( An expression for the domain of a relation.  (Contributed by NM,
        22-Sep-2013.) $)
 ${
-	$v x y z A $.
+	$v x A y z $.
 	$d x y z A $.
 	f0 $f set x $.
 	f1 $f class A $.
@@ -757,7 +757,7 @@ $( Define the cross product of three classes.  Compare ~ df-xp .
        (Contributed by FL, 6-Nov-2013.)  (Proof shortened by Mario Carneiro,
        3-Nov-2015.) $)
 ${
-	$v x y z A B u C $.
+	$v x y z A B C u $.
 	$d x y z u A $.
 	$d x y z u B $.
 	$d x y z u C $.
@@ -874,7 +874,7 @@ $( A consequence of membership in an operation class abstraction, using
        ordered pair extractors.  (Contributed by NM, 6-Nov-2006.)  (Revised by
        David Abernethy, 19-Jun-2012.) $)
 ${
-	$v ph ps ch th x y z w A $.
+	$v ph ps ch th x y z A w $.
 	$d w x y z A $.
 	$d w ph $.
 	$d x y z th $.
@@ -896,7 +896,7 @@ $}
 $( Express a two-argument function as a one-argument function, or
        vice-versa.  (Contributed by Mario Carneiro, 24-Dec-2016.) $)
 ${
-	$v x y z A B v u C $.
+	$v x y z A B C v u $.
 	$d u v x y z A $.
 	$d u v y z B $.
 	$d u v z C $.
@@ -931,7 +931,7 @@ $}
 $( The domain of a mapping is a subset of its base class.  (Contributed by
        Mario Carneiro, 9-Feb-2015.) $)
 ${
-	$v x y A B v u t C F $.
+	$v x y A B C F v u t $.
 	$d t u v x y A $.
 	$d t u v y B $.
 	$d t u v C $.
@@ -953,7 +953,7 @@ $( Functionality, domain and codomain of a class given by the "maps to"
        notation, where ` B ( x ) ` is not constant but depends on ` x ` .
        (Contributed by NM, 29-Dec-2014.) $)
 ${
-	$v x y z w A B v C D F $.
+	$v x y A B C D F z w v $.
 	$d v w x y z A $.
 	$d v w y z B $.
 	$d v w z C $.
@@ -1047,7 +1047,7 @@ $}
 $( Existence of an operation class abstraction (version for dependent
        domains).  (Contributed by Mario Carneiro, 30-Dec-2016.) $)
 ${
-	$v x y A B C F R S $.
+	$v x y A B C R S F $.
 	$d A x y $.
 	$d B y $.
 	e0 $e |- F = ( x e. A , y e. B |-> C ) $.
@@ -1066,7 +1066,7 @@ $( Existence of an operation class abstraction (special case).
        (Contributed by FL, 17-May-2010.)  (Revised by Mario Carneiro,
        1-Sep-2015.) $)
 ${
-	$v x y A B C F R S $.
+	$v x y A B C R S F $.
 	$d A x y $.
 	$d B y $.
 	$d x B $.
@@ -1117,7 +1117,7 @@ $}
 $( A mapping operation with empty domain.  (Contributed by Stefan O'Rear,
        29-Jan-2015.)  (Revised by Mario Carneiro, 15-May-2015.) $)
 ${
-	$v x y z w B C $.
+	$v x y B C z w $.
 	$d w x z $.
 	$d w y z $.
 	$d w z B $.
@@ -1135,7 +1135,7 @@ $( If all the values of the mapping are subsets of a class ` X ` , then so
        is any evaluation of the mapping.  (Contributed by Mario Carneiro,
        24-Dec-2016.) $)
 ${
-	$v x y z A B v u C F G E X $.
+	$v x y A B C E F G X z v u $.
 	$d u v x y z A $.
 	$d u v y z B $.
 	$d u v z C $.
@@ -1181,7 +1181,7 @@ $( Composition of two functions.  Variation of ~ fmptco when the second
        function has two arguments.  (Contributed by Mario Carneiro,
        8-Feb-2015.) $)
 ${
-	$v ph x y z w A B v u C F G R S T $.
+	$v ph x y z A B C R S T F G w v u $.
 	$d u v w x y B $.
 	$d u w x y z C $.
 	$d x y ph $.
@@ -1215,7 +1215,7 @@ $( Composition of a function with an operator abstraction.  (Contributed by
        Jeff Madsen, 2-Sep-2009.)  (Proof shortened by Mario Carneiro,
        26-Sep-2015.) $)
 ${
-	$v x y z A B C D F G H $.
+	$v x y A B C D F G H z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z D $.
@@ -1240,7 +1240,7 @@ $}
 $( Composition of operator abstractions.  (Contributed by Jeff Madsen,
        2-Sep-2009.)  (Revised by David Abernethy, 23-Apr-2013.) $)
 ${
-	$v x y A B C D F G R S M $.
+	$v x y A B C D R S F G M $.
 	$d x y A $.
 	$d x y B $.
 	$d x y M $.
@@ -1291,7 +1291,7 @@ $}
 $( The mapping of a restriction of the ` 1st ` function to a constant
        function.  (Contributed by NM, 14-Dec-2008.) $)
 ${
-	$v x y A B V $.
+	$v A B V x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y V $.
@@ -1306,7 +1306,7 @@ $}
 $( The mapping of a restriction of the ` 2nd ` function to a converse
        constant function.  (Contributed by NM, 27-Mar-2008.) $)
 ${
-	$v x y A B V $.
+	$v A B V x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y V $.
@@ -1322,7 +1322,7 @@ $( Alternate definition for the "maps to" notation ~ df-mpt2 (although it
        requires that ` C ` be a set).  (Contributed by NM, 19-Dec-2008.)
        (Revised by Mario Carneiro, 31-Aug-2015.) $)
 ${
-	$v x y w A B C $.
+	$v x y A B C w $.
 	$d w x y A $.
 	$d w x y B $.
 	$d w C $.
@@ -1362,7 +1362,7 @@ $( The value of a curried function with a constant first argument.
        (Contributed by NM, 28-Mar-2008.)  (Revised by Mario Carneiro,
        26-Apr-2015.) $)
 ${
-	$v x A B C D F G $.
+	$v A B C D F G x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1383,7 +1383,7 @@ $}
 $( Functionality of a curried function with a constant first argument.
        (Contributed by NM, 29-Mar-2008.) $)
 ${
-	$v x A B C D F G $.
+	$v A B C D F G x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1426,7 +1426,7 @@ $}
 $( Functionality of a curried function with a constant second argument.
        (Contributed by NM, 16-Dec-2008.) $)
 ${
-	$v x A B C D F G $.
+	$v A B C D F G x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1447,7 +1447,7 @@ $}
 $( The value of a curried function with a constant second argument.
        (Contributed by NM, 16-Dec-2008.) $)
 ${
-	$v x A B C D F G $.
+	$v A B C D F G x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -1477,7 +1477,7 @@ $}
 $( Describe a function that maps the elements of a set to its converse
        bijectively.  (Contributed by Mario Carneiro, 27-Apr-2014.) $)
 ${
-	$v x y A $.
+	$v x A y $.
 	$d x y A $.
 	f0 $f set x $.
 	f1 $f class A $.
@@ -1500,7 +1500,7 @@ $}
 $( Lemma for ~ fpar .  (Contributed by NM, 22-Dec-2008.)  (Revised by Mario
        Carneiro, 28-Apr-2015.) $)
 ${
-	$v x y $.
+	$v y x $.
 	$d x y $.
 	$d x y $.
 	$d x y $.
@@ -1512,7 +1512,7 @@ $}
 $( Lemma for ~ fpar .  (Contributed by NM, 22-Dec-2008.)  (Revised by Mario
        Carneiro, 28-Apr-2015.) $)
 ${
-	$v x y A F $.
+	$v x A F y $.
 	$d x A $.
 	$d x y F $.
 	$d x y $.
@@ -1527,7 +1527,7 @@ $}
 $( Lemma for ~ fpar .  (Contributed by NM, 22-Dec-2008.)  (Revised by Mario
        Carneiro, 28-Apr-2015.) $)
 ${
-	$v x y B G $.
+	$v y B G x $.
 	$d y B $.
 	$d x y $.
 	$d x y G $.
@@ -1590,7 +1590,7 @@ $( A lexicographical ordering of two well-founded classes.  (Contributed by
        Scott Fenton, 17-Mar-2011.)  (Revised by Mario Carneiro, 7-Mar-2013.)
        (Proof shortened by Wolf Lammen, 4-Oct-2014.) $)
 ${
-	$v x y z w A B v u t R S s T a b c d $.
+	$v x y A B R S T z w v u t s a b c d $.
 	$d A a b c s v w x y z $.
 	$d B a b d s v w x y z $.
 	$d R a b c s v w x y $.
@@ -1647,7 +1647,7 @@ $}
 $( A lexicographical ordering of two posets.  (Contributed by Scott Fenton,
        16-Mar-2011.)  (Revised by Mario Carneiro, 7-Mar-2013.) $)
 ${
-	$v x y A B v u f t R S T a b c e d $.
+	$v x y A B R S T v u t e f a b c d $.
 	$d A a b c d e f t u v x y $.
 	$d B a b c d e f t u v x y $.
 	$d R a b c d e f t u v x y $.
@@ -1677,7 +1677,7 @@ $( A lexicographical ordering of two strictly ordered classes.
        (Contributed by Scott Fenton, 17-Mar-2011.)  (Revised by Mario Carneiro,
        7-Mar-2013.) $)
 ${
-	$v x y A B u t R S T a b c d $.
+	$v x y A B R S T u t a b c d $.
 	$d A a b c d t u x y $.
 	$d B a b c d t u x y $.
 	$d R a b c d t u x y $.
@@ -1722,7 +1722,7 @@ $}
 $( Lemma for ~ fnwe .  (Contributed by Mario Carneiro, 10-Mar-2013.)
          (Revised by Mario Carneiro, 18-Nov-2014.) $)
 ${
-	$v ph x y z w A B v u F G R S T Q $.
+	$v ph x y z w v u A B Q R S T F G $.
 	$d u v w x y z A $.
 	$d u v w x y z B $.
 	$d w x y G $.
@@ -1762,7 +1762,7 @@ $( A variant on lexicographic order, which sorts first by some function of
        value is equal on both elements.  (Contributed by Mario Carneiro,
        10-Mar-2013.)  (Revised by Mario Carneiro, 18-Nov-2014.) $)
 ${
-	$v ph x y z w A B v u F R S T $.
+	$v ph x y w A B R S T F z v u $.
 	$d u v w x y z A $.
 	$d u v w x y z B $.
 	$d w x y $.
@@ -1796,7 +1796,7 @@ $}
 $( Condition for the well-order in ~ fnwe to be set-like.  (Contributed by
        Mario Carneiro, 25-Jun-2015.) $)
 ${
-	$v ph x y z w A B u F R S T $.
+	$v ph x y w A B R S T F z u $.
 	$d x y z A $.
 	$d u w B $.
 	$d u w x y F $.

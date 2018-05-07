@@ -72,7 +72,7 @@ $( Power set axiom expressed in class notation.  Axiom 4 of [TakeutiZaring]
        p. 17.  (Contributed by NM, 5-Aug-1993.)  (Proof shortened by Andrew
        Salmon, 25-Jul-2011.) $)
 ${
-	$v x y z A $.
+	$v A x y z $.
 	$d A x y z $.
 	e0 $e |- A e. _V $.
 	f0 $f class A $.
@@ -86,7 +86,7 @@ $( Power set axiom expressed in class notation, with the sethood
        requirement as an antecedent.  Axiom 4 of [TakeutiZaring] p. 17.
        (Contributed by NM, 30-Oct-2003.) $)
 ${
-	$v x A V $.
+	$v A V x $.
 	$d x A $.
 	f0 $f class A $.
 	f1 $f class V $.
@@ -224,7 +224,7 @@ $}
 $( A class is a subclass of the power class of its union.  Exercise 6(b) of
        [Enderton] p. 38.  (Contributed by NM, 14-Oct-1996.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d A x $.
 	f0 $f class A $.
 	i0 $f set x $.

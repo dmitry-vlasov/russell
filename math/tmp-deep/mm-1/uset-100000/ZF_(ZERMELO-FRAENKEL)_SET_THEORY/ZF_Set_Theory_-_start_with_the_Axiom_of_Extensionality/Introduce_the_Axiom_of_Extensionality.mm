@@ -49,6 +49,9 @@ $( Axiom of Extensionality.  An axiom of Zermelo-Fraenkel set theory.  It
        each other and in particular to the actual axiom of the textbook
        version.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	fax-ext_0 $f set x $.
 	fax-ext_1 $f set y $.
@@ -61,6 +64,9 @@ $( The Axiom of Extensionality ( ~ ax-ext ) restated so that it postulates
        which is to postulate the existence of sets given other sets.
        (Contributed by NM, 28-Sep-2003.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	faxext2_0 $f set x $.
 	faxext2_1 $f set y $.
@@ -71,6 +77,10 @@ $( A generalization of the Axiom of Extensionality in which ` x ` and ` y `
        need not be distinct.  (Contributed by NM, 15-Sep-1993.)  (Proof
        shortened by Andrew Salmon, 12-Aug-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d z x w $.
 	$d z y w $.
 	iaxext3_0 $f set w $.
@@ -85,6 +95,9 @@ $( A bidirectional version of Extensionality.  Although this theorem
        comments for ~ ax-ext and ~ df-cleq .  (Contributed by NM,
        14-Nov-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
 	$d z x $.
 	$d z y $.
 	faxext4_0 $f set x $.
@@ -96,6 +109,10 @@ $( Any set defined by a property is the only set defined by that property.
        Theorem 1.1 of [BellMachover] p. 462.  (Contributed by NM,
        30-Jun-1994.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	$d ph z $.
 	ibm1.1_0 $f set z $.

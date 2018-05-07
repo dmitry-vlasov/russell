@@ -50,6 +50,9 @@ $( Extend wff notation to include conditional equality.  This is a technical
      device used in the proof that ` F/ ` is the not-free predicate, and that
      definitions are conservative as a result. $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fwcdeq_0 $f wff ph $.
 	fwcdeq_1 $f set x $.
 	fwcdeq_2 $f set y $.
@@ -63,6 +66,9 @@ $( Define conditional equality.  All the notation to the left of the ` <-> `
      something like (wi (wceq (cv vx) (cv vy)) wph) ) into just (wcdeq vx vy
      wph).  (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fdf-cdeq_0 $f wff ph $.
 	fdf-cdeq_1 $f set x $.
 	fdf-cdeq_2 $f set y $.
@@ -71,6 +77,9 @@ $}
 $( Deduce conditional equality.  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fcdeqi_0 $f wff ph $.
 	fcdeqi_1 $f set x $.
 	fcdeqi_2 $f set y $.
@@ -80,6 +89,9 @@ $}
 $( Property of conditional equality.  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fcdeqri_0 $f wff ph $.
 	fcdeqri_1 $f set x $.
 	fcdeqri_2 $f set y $.
@@ -89,6 +101,9 @@ $}
 $( Deduce conditional equality from a theorem.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
 	fcdeqth_0 $f wff ph $.
 	fcdeqth_1 $f set x $.
 	fcdeqth_2 $f set y $.
@@ -98,6 +113,10 @@ $}
 $( Distribute conditional equality over negation.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	fcdeqnot_0 $f wff ph $.
 	fcdeqnot_1 $f wff ps $.
 	fcdeqnot_2 $f set x $.
@@ -108,6 +127,11 @@ $}
 $( Distribute conditional equality over quantification.  (Contributed by
          Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	fcdeqal_0 $f wff ph $.
@@ -121,6 +145,11 @@ $}
 $( Distribute conditional equality over abstraction.  (Contributed by
          Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z $.
 	$d y z $.
 	fcdeqab_0 $f wff ph $.
@@ -134,6 +163,10 @@ $}
 $( Distribute conditional equality over quantification.  (Contributed by
          Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x ps $.
 	$d y ph $.
 	fcdeqal1_0 $f wff ph $.
@@ -146,6 +179,10 @@ $}
 $( Distribute conditional equality over abstraction.  (Contributed by
          Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x ps $.
 	$d y ph $.
 	fcdeqab1_0 $f wff ph $.
@@ -158,6 +195,12 @@ $}
 $( Distribute conditional equality over implication.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
 	fcdeqim_0 $f wff ph $.
 	fcdeqim_1 $f wff ps $.
 	fcdeqim_2 $f wff ch $.
@@ -171,6 +214,8 @@ $}
 $( Conditional equality for set-to-class promotion.  (Contributed by Mario
      Carneiro, 11-Aug-2016.) $)
 ${
+	$v x $.
+	$v y $.
 	fcdeqcv_0 $f set x $.
 	fcdeqcv_1 $f set y $.
 	cdeqcv $p |- CondEq ( x = y -> x = y ) $= fcdeqcv_0 sup_set_class fcdeqcv_1 sup_set_class wceq fcdeqcv_0 fcdeqcv_1 fcdeqcv_0 sup_set_class fcdeqcv_1 sup_set_class wceq id cdeqi $.
@@ -178,6 +223,12 @@ $}
 $( Distribute conditional equality over equality.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fcdeqeq_0 $f set x $.
 	fcdeqeq_1 $f set y $.
 	fcdeqeq_2 $f class A $.
@@ -191,6 +242,12 @@ $}
 $( Distribute conditional equality over elementhood.  (Contributed by Mario
        Carneiro, 11-Aug-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fcdeqel_0 $f set x $.
 	fcdeqel_1 $f set y $.
 	fcdeqel_2 $f class A $.
@@ -207,6 +264,10 @@ $( If we have a conditional equality proof, where ` ph ` is ` ph ( x ) `
        unconditionally.  This proves that ` F/ x ph ` is actually a not-free
        predicate.  (Contributed by Mario Carneiro, 11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
 	$d x ps $.
 	$d y ph $.
 	fnfcdeq_0 $f wff ph $.
@@ -220,6 +281,11 @@ $}
 $( Variation of ~ nfcdeq for classes.  (Contributed by Mario Carneiro,
        11-Aug-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v z $.
 	$d x z B $.
 	$d y z A $.
 	infccdeq_0 $f set z $.

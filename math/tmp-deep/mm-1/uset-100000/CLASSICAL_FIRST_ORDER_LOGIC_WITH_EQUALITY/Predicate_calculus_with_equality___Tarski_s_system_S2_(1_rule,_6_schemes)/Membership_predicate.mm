@@ -24,6 +24,8 @@ $( Extend wff definition to include the membership connective between
        otherwise not used in predicate calculus.  See ~ df-clab for more
        information on the set theory usage of ~ wcel .) $)
 ${
+	$v A $.
+	$v B $.
 	fwcel_0 $f class A $.
 	fwcel_1 $f class B $.
 	wcel $a wff A e. B $.

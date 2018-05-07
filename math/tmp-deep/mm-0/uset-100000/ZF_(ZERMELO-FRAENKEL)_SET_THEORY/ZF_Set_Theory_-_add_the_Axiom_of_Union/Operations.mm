@@ -12,6 +12,9 @@ $( Extend class notation to include the value of an operation ` F ` (such as
      unambiguous.  (For an example of how syntax could become ambiguous if we
      are not careful, see the comment in ~ cneg .) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fco_0 $f class A $.
 	fco_1 $f class B $.
 	fco_2 $f class F $.
@@ -20,6 +23,10 @@ $}
 $( Extend class notation to include class abstraction (class builder) of
      nested ordered pairs. $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fcoprab_0 $f wff ph $.
 	fcoprab_1 $f set x $.
 	fcoprab_2 $f set y $.
@@ -29,6 +36,11 @@ $}
 $( Extend the definition of a class to include maps-to notation for defining
      an operation via a rule. $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
 	fcmpt2_0 $f set x $.
 	fcmpt2_1 $f set y $.
 	fcmpt2_2 $f class A $.
@@ -51,6 +63,9 @@ $( Define the value of an operation.  Definition of operation value in
      ` F ` is normally equal to a class of nested ordered pairs of the form
      defined by ~ df-oprab .  (Contributed by NM, 28-Feb-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fdf-ov_0 $f class A $.
 	fdf-ov_1 $f class B $.
 	fdf-ov_2 $f class F $.
@@ -65,6 +80,11 @@ $( Define the class abstraction (class builder) of a collection of nested
        in the literature.  The value of the most common operation class builder
        is given by ~ ovmpt2 .  (Contributed by NM, 12-Mar-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x w $.
 	$d y w $.
 	$d z w $.
@@ -81,6 +101,12 @@ $( Define maps-to notation for defining an operation via a rule.  Read as
        ` B ( x , y ) ` ."  An extension of ~ df-mpt for two arguments.
        (Contributed by NM, 17-Feb-2008.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x z $.
 	$d y z $.
 	$d z A $.
@@ -97,6 +123,10 @@ $}
 $( Equality theorem for operation value.  (Contributed by NM,
      28-Feb-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	foveq_0 $f class A $.
 	foveq_1 $f class B $.
 	foveq_2 $f class F $.
@@ -106,6 +136,10 @@ $}
 $( Equality theorem for operation value.  (Contributed by NM,
      28-Feb-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	foveq1_0 $f class A $.
 	foveq1_1 $f class B $.
 	foveq1_2 $f class C $.
@@ -115,6 +149,10 @@ $}
 $( Equality theorem for operation value.  (Contributed by NM,
      28-Feb-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	foveq2_0 $f class A $.
 	foveq2_1 $f class B $.
 	foveq2_2 $f class C $.
@@ -124,6 +162,11 @@ $}
 $( Equality theorem for operation value.  (Contributed by NM,
      16-Jul-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	foveq12_0 $f class A $.
 	foveq12_1 $f class B $.
 	foveq12_2 $f class C $.
@@ -134,6 +177,10 @@ $}
 $( Equality inference for operation value.  (Contributed by NM,
        28-Feb-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	foveq1i_0 $f class A $.
 	foveq1i_1 $f class B $.
 	foveq1i_2 $f class C $.
@@ -144,6 +191,10 @@ $}
 $( Equality inference for operation value.  (Contributed by NM,
        28-Feb-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	foveq2i_0 $f class A $.
 	foveq2i_1 $f class B $.
 	foveq2i_2 $f class C $.
@@ -154,6 +205,11 @@ $}
 $( Equality inference for operation value.  (Contributed by NM,
          28-Feb-1995.)  (Proof shortened by Andrew Salmon, 22-Oct-2011.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	foveq12i_0 $f class A $.
 	foveq12i_1 $f class B $.
 	foveq12i_2 $f class C $.
@@ -166,6 +222,10 @@ $}
 $( Equality inference for operation value.  (Contributed by NM,
        24-Nov-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	foveqi_0 $f class A $.
 	foveqi_1 $f class B $.
 	foveqi_2 $f class C $.
@@ -176,6 +236,12 @@ $}
 $( Equality inference for operation value.  (Contributed by FL,
        11-Jul-2010.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v G $.
 	foveq123i_0 $f class A $.
 	foveq123i_1 $f class B $.
 	foveq123i_2 $f class C $.
@@ -190,6 +256,11 @@ $}
 $( Equality deduction for operation value.  (Contributed by NM,
        13-Mar-1995.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	foveq1d_0 $f wff ph $.
 	foveq1d_1 $f class A $.
 	foveq1d_2 $f class B $.
@@ -201,6 +272,11 @@ $}
 $( Equality deduction for operation value.  (Contributed by NM,
        13-Mar-1995.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	foveq2d_0 $f wff ph $.
 	foveq2d_1 $f class A $.
 	foveq2d_2 $f class B $.
@@ -212,6 +288,11 @@ $}
 $( Equality deduction for operation value.  (Contributed by NM,
        9-Sep-2006.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	foveqd_0 $f wff ph $.
 	foveqd_1 $f class A $.
 	foveqd_2 $f class B $.
@@ -223,6 +304,12 @@ $}
 $( Equality deduction for operation value.  (Contributed by NM,
          13-Mar-1995.)  (Proof shortened by Andrew Salmon, 22-Oct-2011.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	foveq12d_0 $f wff ph $.
 	foveq12d_1 $f class A $.
 	foveq12d_2 $f class B $.
@@ -236,6 +323,13 @@ $}
 $( Equality deduction for operation value.  (Contributed by NM,
          10-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	foveqan12d_0 $f wff ph $.
 	foveqan12d_1 $f wff ps $.
 	foveqan12d_2 $f class A $.
@@ -250,6 +344,13 @@ $}
 $( Equality deduction for operation value.  (Contributed by NM,
          10-Aug-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	foveqan12rd_0 $f wff ph $.
 	foveqan12rd_1 $f wff ps $.
 	foveqan12rd_2 $f class A $.
@@ -264,6 +365,13 @@ $}
 $( Equality deduction for operation value.  (Contributed by FL,
        22-Dec-2008.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v G $.
 	foveq123d_0 $f wff ph $.
 	foveq123d_1 $f class A $.
 	foveq123d_2 $f class B $.
@@ -280,6 +388,11 @@ $( Deduction version of bound-variable hypothesis builder ~ nfov .
        (Contributed by NM, 13-Dec-2005.)  (Proof shortened by Andrew Salmon,
        22-Oct-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	fnfovd_0 $f wff ph $.
 	fnfovd_1 $f set x $.
 	fnfovd_2 $f class A $.
@@ -293,6 +406,10 @@ $}
 $( Bound-variable hypothesis builder for operation value.  (Contributed by
        NM, 4-May-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v F $.
 	fnfov_0 $f set x $.
 	fnfov_1 $f class A $.
 	fnfov_2 $f class B $.
@@ -305,6 +422,15 @@ $}
 $( The law of concretion.  Special case of Theorem 9.5 of [Quine] p. 61.
        (Contributed by Mario Carneiro, 20-Mar-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v t $.
+	$v s $.
+	$v r $.
+	$v a $.
 	$d a ph r s t w $.
 	$d a r s t w x $.
 	$d a r s t w y $.
@@ -322,6 +448,9 @@ ${
 $}
 $( The result of an operation is a set.  (Contributed by NM, 13-Mar-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fovex_0 $f class A $.
 	fovex_1 $f class B $.
 	fovex_2 $f class F $.
@@ -330,6 +459,9 @@ $}
 $( The result of an operation value is always a subset of the union of the
      range.  (Contributed by Mario Carneiro, 12-Jan-2017.) $)
 ${
+	$v F $.
+	$v X $.
+	$v Y $.
 	fovssunirn_0 $f class F $.
 	fovssunirn_1 $f class X $.
 	fovssunirn_2 $f class Y $.
@@ -340,6 +472,9 @@ $( The value of an operation when the one of the arguments is a proper
        operation value, function value, and ordered pair.  (Contributed by
        Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fovprc_0 $f class A $.
 	fovprc_1 $f class B $.
 	fovprc_2 $f class F $.
@@ -349,6 +484,9 @@ $}
 $( The value of an operation when the first argument is a proper class.
        (Contributed by NM, 16-Jun-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fovprc1_0 $f class A $.
 	fovprc1_1 $f class B $.
 	fovprc1_2 $f class F $.
@@ -358,6 +496,9 @@ $}
 $( The value of an operation when the second argument is a proper class.
        (Contributed by Mario Carneiro, 26-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v F $.
 	fovprc2_0 $f class A $.
 	fovprc2_1 $f class B $.
 	fovprc2_2 $f class F $.
@@ -367,6 +508,10 @@ $}
 $( Reverse closure for an operation value.  (Contributed by Mario Carneiro,
        5-May-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	fovrcl_0 $f class A $.
 	fovrcl_1 $f class B $.
 	fovrcl_2 $f class C $.
@@ -377,6 +522,13 @@ $}
 $( Move class substitution in and out of an operation.  (Contributed by NM,
        12-Nov-2005.)  (Proof shortened by Mario Carneiro, 5-Dec-2016.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d y A $.
 	$d y B $.
 	$d y C $.
@@ -395,6 +547,12 @@ $}
 $( Move class substitution in and out of an operation.  (Contributed by NM,
        12-Nov-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d x F $.
 	fcsbov12g_0 $f set x $.
 	fcsbov12g_1 $f class A $.
@@ -407,6 +565,12 @@ $}
 $( Move class substitution in and out of an operation.  (Contributed by NM,
        12-Nov-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d x C $.
 	$d x F $.
 	fcsbov1g_0 $f set x $.
@@ -420,6 +584,12 @@ $}
 $( Move class substitution in and out of an operation.  (Contributed by NM,
        12-Nov-2005.) $)
 ${
+	$v x $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d x B $.
 	$d x F $.
 	fcsbov2g_0 $f set x $.
@@ -433,6 +603,14 @@ $}
 $( A frequently used special case of ~ rspc2ev for operation values.
        (Contributed by NM, 21-Mar-2007.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v S $.
+	$v F $.
 	$d x A $.
 	$d x y B $.
 	$d x y C $.
@@ -453,6 +631,12 @@ $( Equivalence of operation value and ordered triple membership, analogous
        to ~ fnopfvb .  (Contributed by NM, 17-Dec-2008.)  (Revised by Mario
        Carneiro, 28-Apr-2015.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v F $.
 	ffnotovb_0 $f class A $.
 	ffnotovb_1 $f class B $.
 	ffnotovb_2 $f class C $.
@@ -464,6 +648,12 @@ $}
 $( Class abstraction for operations in terms of class abstraction of
        ordered pairs.  (Contributed by NM, 12-Mar-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
 	$d x z w v $.
 	$d y z w v $.
 	$d w ph v $.
@@ -478,6 +668,11 @@ $}
 $( An operation class abstraction is a relation.  (Contributed by NM,
        16-Jun-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x z w $.
 	$d y z w $.
 	$d w ph $.
@@ -507,6 +702,11 @@ $( The abstraction variables in an operation class abstraction are not
        free.  (Contributed by NM, 25-Apr-1995.)  (Revised by David Abernethy,
        19-Jun-2012.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x $.
 	$d w y $.
 	$d w z $.
@@ -522,6 +722,11 @@ $( The abstraction variables in an operation class abstraction are not
        free.  (Contributed by NM, 25-Apr-1995.)  (Revised by David Abernethy,
        30-Jul-2012.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x $.
 	$d w y $.
 	$d w z $.
@@ -536,6 +741,11 @@ $}
 $( The abstraction variables in an operation class abstraction are not
        free.  (Contributed by NM, 22-Aug-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d w x $.
 	$d w y $.
 	$d w z $.
@@ -550,6 +760,12 @@ $}
 $( Bound-variable hypothesis builder for an operation class abstraction.
        (Contributed by NM, 22-Aug-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
 	$d v w x $.
 	$d v w y $.
 	$d v w z $.
@@ -567,6 +783,13 @@ $( Equivalent wff's yield equal operation class abstractions (deduction
        rule).  (Contributed by NM, 21-Feb-2004.)  (Revised by Mario Carneiro,
        24-Jun-2014.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x z w $.
 	$d y z w $.
 	$d w ph $.
@@ -588,6 +811,12 @@ $}
 $( Equivalent wff's yield equal operation class abstractions (deduction
        rule).  (Contributed by NM, 21-Feb-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x z ph $.
 	$d y z ph $.
 	foprabbidv_0 $f wff ph $.
@@ -602,6 +831,12 @@ $}
 $( Equivalent wff's yield equal operation class abstractions.  (Contributed
        by NM, 28-May-1995.)  (Revised by David Abernethy, 19-Jun-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x z w $.
 	$d y z w $.
 	$d w ph $.
@@ -619,6 +854,12 @@ $( Equivalence of ordered pair abstraction subclass and implication.
        Compare ~ ssopab2 .  (Contributed by FL, 6-Nov-2013.)  (Proof shortened
        by Mario Carneiro, 11-Dec-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d ph w $.
 	$d ps w $.
 	$d x w $.
@@ -636,6 +877,11 @@ $( Equivalence of ordered pair abstraction subclass and implication.  Compare
      ~ ssopab2b .  (Contributed by FL, 6-Nov-2013.)  (Proof shortened by Mario
      Carneiro, 11-Dec-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	fssoprab2b_0 $f wff ph $.
 	fssoprab2b_1 $f wff ps $.
 	fssoprab2b_2 $f set x $.
@@ -646,6 +892,11 @@ $}
 $( Equivalence of ordered pair abstraction subclass and biconditional.
      Compare ~ eqopab2b .  (Contributed by Mario Carneiro, 4-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	feqoprab2b_0 $f wff ph $.
 	feqoprab2b_1 $f wff ps $.
 	feqoprab2b_2 $f set x $.
@@ -656,6 +907,15 @@ $}
 $( An equality theorem for the maps to notation.  (Contributed by Mario
        Carneiro, 16-Dec-2013.)  (Revised by Mario Carneiro, 19-Mar-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
 	$d x y z A $.
 	$d y z B $.
 	$d x y z D $.
@@ -676,6 +936,13 @@ $}
 $( An equality theorem for the maps to notation.  (Contributed by Mario
        Carneiro, 16-Dec-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -692,6 +959,16 @@ $}
 $( An equality deduction for the maps to notation.  (Contributed by Mario
          Carneiro, 26-Jan-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
 	$d z A $.
 	$d z B $.
 	$d z C $.
@@ -718,6 +995,15 @@ $}
 $( An equality deduction for the maps to notation.  (Contributed by NM,
        12-Sep-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
 	$d x ph $.
 	$d y ph $.
 	fmpt2eq123dv_0 $f wff ph $.
@@ -737,6 +1023,14 @@ $}
 $( An equality inference for the maps to notation.  (Contributed by NM,
        15-Jul-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
 	fmpt2eq123i_0 $f set x $.
 	fmpt2eq123i_1 $f set y $.
 	fmpt2eq123i_2 $f class A $.
@@ -753,6 +1047,14 @@ $}
 $( Slightly more general equality inference for the maps to notation.
        (Contributed by NM, 17-Oct-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x z ph $.
 	$d y z ph $.
 	$d z A $.
@@ -773,6 +1075,12 @@ $}
 $( An equality inference for the maps to notation.  (Contributed by Mario
        Carneiro, 16-Dec-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	fmpt2eq3ia_0 $f set x $.
 	fmpt2eq3ia_1 $f set y $.
 	fmpt2eq3ia_2 $f class A $.
@@ -785,6 +1093,12 @@ $}
 $( Bound-variable hypothesis builder for an operation in maps-to notation.
        (Contributed by NM, 27-Aug-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d z A $.
 	$d z B $.
 	$d z C $.
@@ -801,6 +1115,12 @@ $}
 $( Bound-variable hypothesis builder for an operation in maps-to notation.
        (Contributed by NM, 27-Aug-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d z A $.
 	$d z B $.
 	$d z C $.
@@ -817,6 +1137,13 @@ $}
 $( Bound-variable hypothesis builder for the maps-to notation.
        (Contributed by NM, 20-Feb-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d w x z $.
 	$d w y z $.
 	$d w A $.
@@ -837,6 +1164,12 @@ $}
 $( Two ways to state the domain of an operation.  (Contributed by FL,
        24-Jan-2010.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z $.
 	foprab4_0 $f wff ph $.
 	foprab4_1 $f set x $.
@@ -850,6 +1183,13 @@ $( Rule used to change first bound variable in an operation abstraction,
        using implicit substitution.  (Contributed by NM, 20-Dec-2008.)
        (Revised by Mario Carneiro, 5-Dec-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
 	$d x y z w v $.
 	$d v ph $.
 	$d v ps $.
@@ -869,6 +1209,13 @@ $( Change the second bound variable in an operation abstraction.
        (Contributed by Jeff Madsen, 11-Jun-2010.)  (Revised by Mario Carneiro,
        11-Dec-2016.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
 	$d v w x y z $.
 	$d ph v $.
 	$d ps v $.
@@ -888,6 +1235,14 @@ $( Rule used to change first two bound variables in an operation
        abstraction, using implicit substitution.  (Contributed by NM,
        21-Feb-2004.)  (Proof shortened by Andrew Salmon, 22-Oct-2011.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
 	$d x y z w v u $.
 	$d u ph $.
 	$d u ps $.
@@ -910,6 +1265,13 @@ $( Rule used to change first two bound variables in an operation
        abstraction, using implicit substitution.  (Contributed by NM,
        8-Oct-2004.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
 	$d x y z w v $.
 	$d w v ph $.
 	$d x y ps $.
@@ -927,6 +1289,13 @@ $( Rule used to change the third bound variable in an operation
        abstraction, using implicit substitution.  (Contributed by NM,
        22-Aug-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
 	$d x z w v $.
 	$d y z w v $.
 	$d v ph $.
@@ -947,6 +1316,12 @@ $( Rule used to change the third bound variable in an operation
        abstraction, using implicit substitution.  (Contributed by NM,
        8-Oct-2004.)  (Revised by David Abernethy, 19-Jun-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x z w $.
 	$d y z w $.
 	$d w ph $.
@@ -964,6 +1339,16 @@ $( Rule to change the bound variable in a maps-to function, using implicit
        substitution.  This version of ~ cbvmpt2 allows ` B ` to be a function
        of ` x ` .  (Contributed by NM, 29-Dec-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v u $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
 	$d u w x y z $.
 	$d u w x y z A $.
 	$d u w B $.
@@ -993,6 +1378,14 @@ $}
 $( Rule to change the bound variable in a maps-to function, using implicit
        substitution.  (Contributed by NM, 17-Dec-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d w x y z A $.
 	$d w x y z B $.
 	fcbvmpt2_0 $f set x $.
@@ -1015,6 +1408,15 @@ $( Rule to change the bound variable in a maps-to function, using implicit
        variable requirements could be eliminated.  (Contributed by NM,
        11-Jun-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
 	$d w x y z A $.
 	$d w x y z B $.
 	$d w z C $.
@@ -1036,6 +1438,14 @@ $( Eliminate a hypothesis which is a predicate expressing membership in the
        result of an operator (deduction version).  See ~ ghomgrplem for an
        example of its use.  (Contributed by Paul Chapman, 25-Mar-2008.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v X $.
+	$v Y $.
+	$v Z $.
 	felimdelov_0 $f wff ph $.
 	felimdelov_1 $f class A $.
 	felimdelov_2 $f class B $.
@@ -1051,6 +1461,11 @@ $}
 $( The domain of an operation class abstraction.  (Contributed by NM,
        17-Mar-1995.)  (Revised by David Abernethy, 19-Jun-2012.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x z w $.
 	$d y z w $.
 	$d w ph $.
@@ -1064,6 +1479,12 @@ $}
 $( The domain of an operation class abstraction.  (Contributed by NM,
        24-Aug-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x y z A $.
 	$d x y z B $.
 	fdmoprabss_0 $f wff ph $.
@@ -1077,6 +1498,11 @@ $}
 $( The range of an operation class abstraction.  (Contributed by NM,
        30-Aug-2004.)  (Revised by David Abernethy, 19-Apr-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x z w $.
 	$d y z w $.
 	$d w ph $.
@@ -1090,6 +1516,12 @@ $}
 $( The range of a restricted operation class abstraction.  (Contributed by
        Scott Fenton, 21-Mar-2012.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d A y $.
 	$d x y z $.
 	frnoprab2_0 $f wff ph $.
@@ -1103,6 +1535,10 @@ $}
 $( The domain of an operation class abstraction is a relation.
        (Contributed by NM, 17-Mar-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	freldmoprab_0 $f wff ph $.
 	freldmoprab_1 $f set x $.
@@ -1113,6 +1549,10 @@ $}
 $( Structure of an operation class abstraction.  (Contributed by NM,
        28-Nov-2006.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	foprabss_0 $f wff ph $.
 	foprabss_1 $f set x $.
@@ -1125,6 +1565,18 @@ $( The law of concretion for operation class abstraction.  Compare
        variable restrictions were removed by David Abernethy, 19-Jun-2012.)
        (Revised by Mario Carneiro, 19-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v W $.
+	$v X $.
 	$d x y z w A $.
 	$d x y z w B $.
 	$d x y z w C $.
@@ -1149,6 +1601,19 @@ $( The law of concretion for operation class abstraction.  Compare
        ~ elopab .  (Contributed by NM, 14-Sep-1999.)  (Revised by David
        Abernethy, 19-Jun-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v V $.
+	$v W $.
+	$v X $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -1175,6 +1640,12 @@ $( Inference of operation class abstraction subclass from implication.
        (Contributed by NM, 11-Nov-1995.)  (Revised by David Abernethy,
        19-Jun-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d ph w $.
 	$d ps w $.
 	$d x z w $.
@@ -1191,6 +1662,10 @@ $}
 $( Operation with universal domain in maps-to notation.  (Contributed by
        NM, 16-Aug-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v C $.
 	$d x z $.
 	$d y z $.
 	$d z C $.
@@ -1204,6 +1679,14 @@ $( Express a two-argument function as a one-argument function, or
        vice-versa.  In this version ` B ( x ) ` is not assumed to be constant
        w.r.t ` x ` .  (Contributed by Mario Carneiro, 29-Dec-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d w x y z A $.
 	$d w y z B $.
 	$d w x y C $.
@@ -1223,6 +1706,13 @@ $( Express a two-argument function as a one-argument function, or
        vice-versa.  (Contributed by Mario Carneiro, 17-Dec-2013.)  (Revised by
        Mario Carneiro, 29-Dec-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d x y z A $.
 	$d y z B $.
 	$d x y C $.
@@ -1241,6 +1731,13 @@ $}
 $( Restriction of an operation class abstraction.  (Contributed by NM,
        10-Feb-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
 	$d w x y z A $.
 	$d w x y z B $.
 	$d w ph $.
@@ -1256,6 +1753,14 @@ $}
 $( Restriction of an operator abstraction.  (Contributed by Jeff Madsen,
        2-Sep-2009.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
 	$d A x y z $.
 	$d B x y z $.
 	$d C x y z $.
@@ -1273,6 +1778,14 @@ $}
 $( Restriction of the mapping operation.  (Contributed by Mario Carneiro,
        17-Dec-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
 	$d A x y z $.
 	$d B x y z $.
 	$d C x y z $.
@@ -1291,6 +1804,11 @@ $}
 $( "At most one" is a sufficient condition for an operation class
        abstraction to be a function.  (Contributed by NM, 28-Aug-2007.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
 	$d x y z w $.
 	$d w ph $.
 	ifunoprabg_0 $f set w $.
@@ -1303,6 +1821,10 @@ $}
 $( "At most one" is a sufficient condition for an operation class
        abstraction to be a function.  (Contributed by NM, 17-Mar-1995.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	ffunoprab_0 $f wff ph $.
 	ffunoprab_1 $f set x $.
@@ -1314,6 +1836,11 @@ $}
 $( Functionality and domain of an operation class abstraction.
        (Contributed by NM, 28-Aug-2007.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	$d z ph $.
 	ffnoprabg_0 $f wff ph $.
@@ -1326,6 +1853,14 @@ $}
 $( The maps-to notation for an operation is always a function.
        (Contributed by Scott Fenton, 21-Mar-2012.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d A w z $.
 	$d B w z $.
 	$d C w z $.
@@ -1344,6 +1879,11 @@ $}
 $( Functionality and domain of an operation class abstraction.
        (Contributed by NM, 15-May-1995.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
 	$d x y z $.
 	$d z ph $.
 	ffnoprab_0 $f wff ph $.
@@ -1357,6 +1897,13 @@ $}
 $( An operation maps to a class to which all values belong.  (Contributed
        by NM, 7-Feb-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d x y w A $.
 	$d x y w B $.
 	$d x y w C $.
@@ -1372,6 +1919,14 @@ ${
 $}
 $( Closure law for an operation.  (Contributed by NM, 19-Apr-2007.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v F $.
 	$d x y A $.
 	$d y B $.
 	$d x y C $.
@@ -1392,6 +1947,15 @@ $}
 $( Equality of two operations is determined by their values.  (Contributed
        by NM, 1-Sep-2005.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v G $.
 	$d x y z A $.
 	$d x y z B $.
 	$d z C $.
@@ -1413,6 +1977,12 @@ $( Two operators with the same domain are equal iff their values at each
        point in the domain are equal.  (Contributed by Jeff Madsen,
        7-Jun-2010.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
+	$v G $.
 	$d A x y $.
 	$d B x y $.
 	$d F x y $.
@@ -1428,6 +1998,12 @@ $}
 $( Representation of a function in terms of its values.  (Contributed by
        NM, 7-Feb-2004.)  (Revised by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z F $.
@@ -1442,6 +2018,14 @@ $}
 $( Bidirectional equality theorem for a mapping abstraction.  Equivalent to
        ~ eqfnov2 .  (Contributed by Mario Carneiro, 4-Jan-2017.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v V $.
 	$d x y z A $.
 	$d y z B $.
 	$d z C $.
@@ -1459,6 +2043,13 @@ $}
 $( The range of an operation given by the "maps to" notation.  (Contributed
        by FL, 20-Jun-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d y z A $.
 	$d z B $.
 	$d z C $.
@@ -1478,6 +2069,13 @@ $}
 $( The domain of an operation defined by maps-to notation is a relation.
        (Contributed by Stefan O'Rear, 27-Nov-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d y z A $.
 	$d z B $.
 	$d z C $.
@@ -1497,6 +2095,15 @@ $}
 $( Membership in the range of an operation class abstraction.  (Contributed
        by NM, 27-Aug-2007.)  (Revised by Mario Carneiro, 31-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v V $.
 	$d y z A $.
 	$d z B $.
 	$d z C $.
@@ -1519,6 +2126,14 @@ $( Membership in the range of an operation class abstraction.
          (Contributed by NM, 1-Aug-2004.)  (Revised by Mario Carneiro,
          31-Aug-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d y z A $.
 	$d z B $.
 	$d z C $.
@@ -1540,6 +2155,17 @@ $}
 $( A restricted quantifier over an image set.  (Contributed by Mario
        Carneiro, 1-Sep-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v V $.
 	$d w x $.
 	$d w y z A $.
 	$d w z B $.
@@ -1566,6 +2192,16 @@ $}
 $( A restricted quantifier over an image set.  (Contributed by Mario
        Carneiro, 1-Sep-2015.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v V $.
 	$d y z A $.
 	$d z B $.
 	$d z C $.
@@ -1590,6 +2226,14 @@ $}
 $( Existence of an operator abstraction.  (Contributed by Jeff Madsen,
        2-Sep-2009.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d A x y z $.
 	$d B x y z $.
 	$d ph x y z $.
@@ -1610,6 +2254,13 @@ $}
 $( Existence of an operation class abstraction.  (Contributed by NM,
        19-Oct-2004.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	foprabex_0 $f wff ph $.
@@ -1628,6 +2279,16 @@ $}
 $( Existence of an operation class abstraction (special case).
        (Contributed by NM, 19-Oct-2004.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
+	$v R $.
+	$v f $.
+	$v F $.
+	$v H $.
 	$d x y z w v u f $.
 	$d x y z w v u f $.
 	$d x y z w v u f $.
@@ -1652,6 +2313,13 @@ $}
 $( Existence of an existentially restricted operation abstraction.
        (Contributed by Jeff Madsen, 11-Jun-2010.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v A $.
 	$d A v x y z w $.
 	$d ph v $.
 	ioprabrexex2_0 $f set v $.
@@ -1668,6 +2336,13 @@ $}
 $( The value of an operation class abstraction.  (Contributed by NM,
        16-May-1995.)  (Revised by David Abernethy, 19-Jun-2012.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v R $.
+	$v S $.
+	$v F $.
 	$d x y z $.
 	$d z R $.
 	$d z S $.
@@ -1686,6 +2361,11 @@ $( The value of an operation class abstraction.  Compare ~ ovidi .  The
        condition ` ( x e. R /\ y e. S ) ` is been removed.  (Contributed by
        Mario Carneiro, 29-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v F $.
 	$d x y z $.
 	fovidig_0 $f wff ph $.
 	fovidig_1 $f set x $.
@@ -1699,6 +2379,13 @@ $}
 $( The value of an operation class abstraction (weak version).
        (Contributed by Mario Carneiro, 29-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v R $.
+	$v S $.
+	$v F $.
 	$d x y z $.
 	$d z R $.
 	$d z S $.
@@ -1716,6 +2403,19 @@ $}
 $( The value of an operation class abstraction.  (Contributed by NM,
        16-May-1995.)  (Revised by David Abernethy, 19-Jun-2012.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -1747,6 +2447,18 @@ $( The value of an operation class abstraction.  Compare ~ ovig .  The
        condition ` ( x e. R /\ y e. S ) ` is been removed.  (Contributed by FL,
        24-Mar-2007.)  (Revised by Mario Carneiro, 19-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v V $.
+	$v W $.
+	$v X $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -1773,6 +2485,18 @@ $( The value of an operation class abstraction (weak version).
        Abernethy, 19-Jun-2012.)  (Contributed by NM, 14-Sep-1999.)  (Revised by
        Mario Carneiro, 19-Dec-2013.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -1800,6 +2524,14 @@ $( Value of a function given by the "maps to" notation.  (This is the
        operation analog of ~ fvmpt2 .)  (Contributed by NM, 21-Feb-2004.)
        (Revised by Mario Carneiro, 1-Sep-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v V $.
 	$d x y z $.
 	$d z A $.
 	$d z B $.
@@ -1819,6 +2551,15 @@ $}
 $( Value of a function given by the "maps to" notation, expressed using
        explicit substitution.  (Contributed by Mario Carneiro, 30-Apr-2015.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v F $.
+	$v V $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -1839,6 +2580,17 @@ $( The value of an operation class abstraction.  A version of ~ ovmpt2g
        using bound-variable hypotheses.  (Contributed by NM, 17-Aug-2006.)
        (Revised by Mario Carneiro, 19-Dec-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v G $.
+	$v H $.
 	$d x y C $.
 	$d x y D $.
 	fov2gf_0 $f set x $.
@@ -1864,8 +2616,19 @@ ${
 $}
 $( Value of an operation given by a maps-to rule, deduction form.
          (Contributed by Mario Carneiro, 29-Dec-2014.) $)
-$v L $.
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v L $.
+	$v X $.
 	$d x y $.
 	$d x A $.
 	$d y B $.
@@ -1898,6 +2661,18 @@ $}
 $( Value of an operation given by a maps-to rule, deduction form.
        (Contributed by Mario Carneiro, 29-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v L $.
+	$v X $.
 	$d x y $.
 	$d x A $.
 	$d y B $.
@@ -1928,6 +2703,17 @@ $}
 $( Value of an operation given by a maps-to rule, deduction form.
        (Contributed by Mario Carneiro, 7-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v X $.
 	$d x y A $.
 	$d x y B $.
 	$d x y S $.
@@ -1954,6 +2740,17 @@ $( The value of an operation class abstraction.  Variant of ~ ovmpt2ga
        which does not require ` D ` and ` x ` to be distinct.  (Contributed by
        Jeff Madsen, 10-Jun-2010.)  (Revised by Mario Carneiro, 20-Dec-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v H $.
+	$v L $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -1978,6 +2775,16 @@ $}
 $( Value of an operation given by a maps-to rule.  (Contributed by Mario
        Carneiro, 19-Dec-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v H $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -2000,6 +2807,15 @@ $}
 $( Value of an operation given by a maps-to rule.  (Contributed by NM,
        19-Dec-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -2022,6 +2838,17 @@ $}
 $( Alternate deduction version of ~ ovmpt2 , suitable for iteration.
          (Contributed by Mario Carneiro, 7-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v F $.
+	$v V $.
 	$d x y A $.
 	$d y B $.
 	$d x y ph $.
@@ -2049,6 +2876,17 @@ $}
 $( Alternate deduction version of ~ ovmpt2 , suitable for iteration.
        (Contributed by Mario Carneiro, 7-Jan-2017.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v F $.
+	$v V $.
 	$d x y A $.
 	$d y B $.
 	$d x y ph $.
@@ -2074,6 +2912,17 @@ $}
 $( Alternate deduction version of ~ ovmpt2 , suitable for iteration.
        (Contributed by Mario Carneiro, 7-Jan-2017.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v V $.
 	$d x y A $.
 	$d x y B $.
 	$d x y ph $.
@@ -2099,6 +2948,17 @@ $( Value of an operation given by a maps-to rule.  Special case.
        (Contributed by NM, 14-Sep-1999.)  (Revised by David Abernethy,
        19-Jun-2012.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v G $.
+	$v H $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -2124,6 +2984,16 @@ $( Value of an operation given by a maps-to rule.  Special case.
        (Contributed by NM, 16-May-1995.)  (Revised by David Abernethy,
        19-Jun-2012.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v G $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -2149,6 +3019,21 @@ $( The value of an operation class abstraction.  Special case.
        (Contributed by NM, 28-May-1995.)  (Revised by Mario Carneiro,
        29-Dec-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v f $.
+	$v F $.
+	$v H $.
 	$d f u v w x y z A $.
 	$d f u v w x y z B $.
 	$d x y z R $.
@@ -2178,8 +3063,20 @@ ${
 $}
 $( The value of an operation class abstraction.  Special case.
        (Contributed by NM, 13-Nov-2006.) $)
-$v J $.
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v G $.
+	$v H $.
+	$v J $.
 	$d w x y z A $.
 	$d w x y z B $.
 	$d w x y z C $.
@@ -2205,6 +3102,22 @@ $}
 $( The value of an operation class abstraction.  (Contributed by Jeff
        Madsen, 10-Jun-2010.) $)
 ${
+	$v ph $.
+	$v ps $.
+	$v ch $.
+	$v th $.
+	$v ta $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
+	$v c $.
 	$d ph c $.
 	$d ps x $.
 	$d ch x y $.
@@ -2240,6 +3153,11 @@ ${
 $}
 $( The value of a restricted operation.  (Contributed by FL, 10-Nov-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	fovres_0 $f class A $.
 	fovres_1 $f class B $.
 	fovres_2 $f class C $.
@@ -2250,6 +3168,11 @@ $}
 $( Lemma for converting metric theorems to metric space theorems.
        (Contributed by Mario Carneiro, 2-Oct-2015.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v D $.
+	$v X $.
 	fovresd_0 $f wff ph $.
 	fovresd_1 $f class A $.
 	fovresd_2 $f class B $.
@@ -2262,6 +3185,12 @@ $}
 $( The value of a member of the domain of a subclass of an operation.
      (Contributed by NM, 23-Aug-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v G $.
 	foprssov_0 $f class A $.
 	foprssov_1 $f class B $.
 	foprssov_2 $f class C $.
@@ -2273,6 +3202,12 @@ $}
 $( An operation's value belongs to its codomain.  (Contributed by NM,
      27-Aug-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v F $.
 	ffovrn_0 $f class A $.
 	ffovrn_1 $f class B $.
 	ffovrn_2 $f class C $.
@@ -2284,6 +3219,13 @@ $}
 $( An operation's value belongs to its codomain.  (Contributed by Mario
        Carneiro, 29-Dec-2016.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v F $.
 	ffovrnda_0 $f wff ph $.
 	ffovrnda_1 $f class A $.
 	ffovrnda_2 $f class B $.
@@ -2297,6 +3239,13 @@ $}
 $( An operation's value belongs to its codomain.  (Contributed by Mario
        Carneiro, 29-Dec-2016.) $)
 ${
+	$v ph $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v F $.
 	ffovrnd_0 $f wff ph $.
 	ffovrnd_1 $f class A $.
 	ffovrnd_2 $f class B $.
@@ -2312,6 +3261,13 @@ $}
 $( The range of an operation expressed as a collection of the operation's
        values.  (Contributed by NM, 29-Oct-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d w x y z A $.
 	$d w x y z B $.
 	$d w z $.
@@ -2328,6 +3284,14 @@ $}
 $( An onto mapping of an operation expressed in terms of operation values.
        (Contributed by NM, 29-Oct-2006.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d w x y z A $.
 	$d w x y z B $.
 	$d w z C $.
@@ -2345,6 +3309,11 @@ $}
 $( An operation's value belongs to its range.  (Contributed by NM,
      10-Feb-2007.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	ffnovrn_0 $f class A $.
 	ffnovrn_1 $f class B $.
 	ffnovrn_2 $f class C $.
@@ -2356,6 +3325,13 @@ $( A member of an operation's range is a value of the operation.
        (Contributed by NM, 7-Feb-2007.)  (Revised by Mario Carneiro,
        30-Jan-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -2373,6 +3349,13 @@ $}
 $( Membership relation for the values of a function whose image is a
        subclass.  (Contributed by Mario Carneiro, 23-Dec-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -2390,6 +3373,14 @@ $}
 $( Operation value in an image.  (Contributed by Mario Carneiro,
        23-Dec-2013.)  (Revised by Mario Carneiro, 29-Jan-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -2407,6 +3398,11 @@ ${
 $}
 $( The value of a constant operation.  (Contributed by NM, 5-Nov-2006.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
 	fovconst2_0 $f class A $.
 	fovconst2_1 $f class B $.
 	fovconst2_2 $f class C $.
@@ -2421,6 +3417,12 @@ $( Existence of a class abstraction of existentially restricted sets.
        ` C ( x , y ) ` .  See comments for ~ abrexex .  (Contributed by NM,
        20-Sep-2011.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
 	$d x z A $.
 	$d y z B $.
 	$d z C $.
@@ -2438,6 +3440,12 @@ $( Existence of an existentially restricted class abstraction. ` ph ` is
        normally has free-variable parameters ` x ` , ` y ` , and ` z ` .
        Compare ~ abrexex2 .  (Contributed by NM, 20-Sep-2011.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
 	$d x z A $.
 	$d y z B $.
 	fab2rexex2_0 $f wff ph $.
@@ -2453,6 +3461,10 @@ ${
 $}
 $( Domain of closure of an operation.  (Contributed by NM, 24-Aug-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v S $.
+	$v F $.
 	$d x y S $.
 	$d x y F $.
 	foprssdm_0 $f set x $.
@@ -2466,6 +3478,11 @@ $}
 $( The value of an operation outside its domain.  (Contributed by NM,
      28-Mar-2008.) $)
 ${
+	$v A $.
+	$v B $.
+	$v R $.
+	$v S $.
+	$v F $.
 	fndmovg_0 $f class A $.
 	fndmovg_1 $f class B $.
 	fndmovg_2 $f class R $.
@@ -2476,6 +3493,10 @@ $}
 $( The value of an operation outside its domain.  (Contributed by NM,
        24-Aug-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v S $.
+	$v F $.
 	fndmov_0 $f class A $.
 	fndmov_1 $f class B $.
 	fndmov_2 $f class S $.
@@ -2489,6 +3510,10 @@ $( The closure of an operation outside its domain, when the domain
          particular definitions of operation value, function value, and ordered
          pair.  (Contributed by NM, 24-Sep-2004.) $)
 ${
+	$v A $.
+	$v B $.
+	$v S $.
+	$v F $.
 	fndmovcl_0 $f class A $.
 	fndmovcl_1 $f class B $.
 	fndmovcl_2 $f class S $.
@@ -2501,6 +3526,10 @@ $}
 $( Reverse closure law, when an operation's domain doesn't contain the
          empty set.  (Contributed by NM, 3-Feb-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v S $.
+	$v F $.
 	fndmovrcl_0 $f class A $.
 	fndmovrcl_1 $f class B $.
 	fndmovrcl_2 $f class S $.
@@ -2512,6 +3541,10 @@ $}
 $( Any operation is commutative outside its domain.  (Contributed by NM,
        24-Aug-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v S $.
+	$v F $.
 	fndmovcom_0 $f class A $.
 	fndmovcom_1 $f class B $.
 	fndmovcom_2 $f class S $.
@@ -2522,6 +3555,11 @@ $}
 $( Any operation is associative outside its domain, if the domain doesn't
          contain the empty set.  (Contributed by NM, 24-Aug-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v S $.
+	$v F $.
 	fndmovass_0 $f class A $.
 	fndmovass_1 $f class B $.
 	fndmovass_2 $f class C $.
@@ -2534,6 +3572,12 @@ $}
 $( Any operation is distributive outside its domain, if the domain
          doesn't contain the empty set.  (Contributed by NM, 24-Aug-1995.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v S $.
+	$v F $.
+	$v G $.
 	fndmovdistr_0 $f class A $.
 	fndmovdistr_1 $f class B $.
 	fndmovdistr_2 $f class C $.
@@ -2548,6 +3592,12 @@ $}
 $( Elimination of redundant antecedents in an ordering law.  (Contributed
        by NM, 7-Mar-1996.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v F $.
 	fndmovord_0 $f class A $.
 	fndmovord_1 $f class B $.
 	fndmovord_2 $f class C $.
@@ -2563,6 +3613,12 @@ $}
 $( Elimination of redundant antecedent in an ordering law.  (Contributed by
        NM, 25-Jun-1998.) $)
 ${
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v F $.
 	fndmovordi_0 $f class A $.
 	fndmovordi_1 $f class B $.
 	fndmovordi_2 $f class C $.
@@ -2578,6 +3634,15 @@ $}
 $( Convert an operation closure law to class notation.  (Contributed by
        Mario Carneiro, 26-May-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
 	$d x y A $.
 	$d y B $.
 	$d x y C $.
@@ -2600,6 +3665,15 @@ $}
 $( Convert an operation closure law to class notation.  (Contributed by
        Mario Carneiro, 30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v E $.
+	$v F $.
 	$d x y A $.
 	$d y B $.
 	$d x y C $.
@@ -2624,6 +3698,12 @@ $}
 $( Convert an operation closure law to class notation.  (Contributed by NM,
        4-Aug-1995.)  (Revised by Mario Carneiro, 26-May-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v S $.
+	$v F $.
 	$d x y A $.
 	$d y B $.
 	$d x y F $.
@@ -2642,6 +3722,13 @@ $( General laws for commutative, associative, distributive operations. $)
 $( Convert an operation commutative law to class notation.  (Contributed
          by Mario Carneiro, 1-Jun-2013.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v S $.
+	$v F $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -2667,6 +3754,13 @@ $}
 $( Convert an operation commutative law to class notation.  (Contributed
          by Mario Carneiro, 30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v S $.
+	$v F $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -2694,6 +3788,11 @@ $}
 $( Convert an operation commutative law to class notation.  (Contributed
          by NM, 26-Aug-1995.)  (Revised by Mario Carneiro, 1-Jun-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v A $.
+	$v B $.
+	$v F $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -2720,6 +3819,15 @@ $( Convert an operation associative law to class notation.  (Contributed
          by Mario Carneiro, 1-Jun-2013.)  (Revised by Mario Carneiro,
          26-May-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -2747,6 +3855,15 @@ $}
 $( Convert an operation associative law to class notation.  (Contributed
          by Mario Carneiro, 30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -2777,6 +3894,13 @@ $}
 $( Convert an operation associative law to class notation.  (Contributed
          by NM, 26-Aug-1995.)  (Revised by Mario Carneiro, 26-May-2014.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -2805,6 +3929,16 @@ $}
 $( Convert an operation cancellation law to class notation.  (Contributed
          by NM, 20-Aug-1995.)  (Revised by Mario Carneiro, 30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v S $.
+	$v T $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -2833,6 +3967,16 @@ $}
 $( Convert an operation cancellation law to class notation.  (Contributed
          by Mario Carneiro, 30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v S $.
+	$v T $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -2864,6 +4008,16 @@ $}
 $( Commute the arguments of an operation cancellation law.  (Contributed
          by Mario Carneiro, 30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v S $.
+	$v T $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -2897,6 +4051,14 @@ $}
 $( Convert an operation cancellation law to class notation.  (Contributed
          by NM, 20-Aug-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -2924,6 +4086,16 @@ $}
 $( Convert an operation ordering law to class notation.  (Contributed by
          Mario Carneiro, 31-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -2952,6 +4124,16 @@ $}
 $( Convert an operation ordering law to class notation.  (Contributed by
          Mario Carneiro, 31-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -2983,6 +4165,16 @@ $}
 $( Convert an operation ordering law to class notation.  (Contributed by
          NM, 19-Feb-1996.)  (Revised by Mario Carneiro, 30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3011,6 +4203,16 @@ $}
 $( Convert an operation ordering law to class notation.  (Contributed by
          Mario Carneiro, 30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3042,6 +4244,16 @@ $}
 $( Operation ordering law with commuted arguments.  (Contributed by Mario
          Carneiro, 30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3073,6 +4285,17 @@ ${
 $}
 $( Ordering law.  (Contributed by Mario Carneiro, 30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3107,6 +4330,15 @@ $}
 $( Convert an operation ordering law to class notation.  (Contributed by
          NM, 19-Feb-1996.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3137,6 +4369,15 @@ $( (We don't bother to eliminate this redundant hypothesis.) $)
 $( Operation ordering law with commuted arguments.  (Contributed by NM,
          27-Feb-1996.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v R $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3168,6 +4409,16 @@ $}
 $( (We don't bother to eliminate redundant hypotheses.) $)
 $( Ordering law.  (Contributed by NM, 29-Feb-1996.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3201,6 +4452,18 @@ $}
 $( Convert an operation distributive law to class notation.  (Contributed
          by NM, 25-Aug-1995.)  (Revised by Mario Carneiro, 26-Jul-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v S $.
+	$v F $.
+	$v G $.
+	$v H $.
+	$v K $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3231,6 +4494,18 @@ $}
 $( Convert an operation distributive law to class notation.  (Contributed
          by Mario Carneiro, 30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v S $.
+	$v F $.
+	$v G $.
+	$v H $.
+	$v K $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3264,6 +4539,16 @@ $}
 $( Convert an operation distributive law to class notation.  (Contributed
          by Mario Carneiro, 30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v S $.
+	$v F $.
+	$v G $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3297,6 +4582,18 @@ $}
 $( Convert an operation reverse distributive law to class notation.
          (Contributed by Mario Carneiro, 19-Oct-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v S $.
+	$v F $.
+	$v G $.
+	$v H $.
+	$v K $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3327,6 +4624,18 @@ $}
 $( Convert an operation distributive law to class notation.  (Contributed
          by Mario Carneiro, 30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v S $.
+	$v F $.
+	$v G $.
+	$v H $.
+	$v K $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3360,6 +4669,14 @@ $}
 $( Convert an operation distributive law to class notation.  (Contributed
          by NM, 25-Aug-1995.)  (Revised by Mario Carneiro, 28-Jun-2013.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v G $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3390,6 +4707,15 @@ $( Rearrange arguments in a commutative, associative operation.
          (Contributed by NM, 26-Aug-1995.)  (Revised by Mario Carneiro,
          30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3422,6 +4748,15 @@ $( Rearrange arguments in a commutative, associative operation.
          (Contributed by NM, 26-Aug-1995.)  (Revised by Mario Carneiro,
          30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3454,6 +4789,15 @@ $( Rearrange arguments in a commutative, associative operation.
          (Contributed by NM, 26-Aug-1995.)  (Revised by Mario Carneiro,
          30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3486,6 +4830,15 @@ $( Rearrange arguments in a commutative, associative operation.
          (Contributed by NM, 26-Aug-1995.)  (Revised by Mario Carneiro,
          30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3518,6 +4871,16 @@ $( Rearrange arguments in a commutative, associative operation.
            (Contributed by NM, 26-Aug-1995.)  (Revised by Mario Carneiro,
            30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3553,6 +4916,16 @@ $( Rearrange arguments in a commutative, associative operation.
            (Contributed by NM, 26-Aug-1995.)  (Revised by Mario Carneiro,
            30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3588,6 +4961,16 @@ $( Rearrange arguments in a commutative, associative operation.
            (Contributed by NM, 26-Aug-1995.)  (Revised by Mario Carneiro,
            30-Dec-2014.) $)
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3622,6 +5005,13 @@ $}
 $( Rearrange arguments in a commutative, associative operation.
          (Contributed by NM, 26-Aug-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3651,6 +5041,13 @@ $}
 $( Rearrange arguments in a commutative, associative operation.
          (Contributed by NM, 26-Aug-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3680,6 +5077,13 @@ $}
 $( Rearrange arguments in a commutative, associative operation.
          (Contributed by NM, 26-Aug-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3709,6 +5113,13 @@ $}
 $( Rearrange arguments in a commutative, associative operation.
          (Contributed by NM, 26-Aug-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3738,6 +5149,14 @@ $}
 $( Rearrange arguments in a commutative, associative operation.
            (Contributed by NM, 26-Aug-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3769,6 +5188,14 @@ $}
 $( Rearrange arguments in a commutative, associative operation.
            (Contributed by NM, 26-Aug-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3800,6 +5227,14 @@ $}
 $( Rearrange arguments in a commutative, associative operation.
            (Contributed by NM, 26-Aug-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3830,6 +5265,14 @@ ${
 $}
 $( Reverse distributive law.  (Contributed by NM, 26-Aug-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v F $.
+	$v G $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3860,6 +5303,16 @@ $}
 $( Lemma used by real number construction.  (Contributed by NM,
          26-Aug-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v F $.
+	$v G $.
+	$v H $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3897,6 +5350,17 @@ $}
 $( Lemma used in real number construction.  (Contributed by NM,
          26-Aug-1995.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v A $.
+	$v B $.
+	$v C $.
+	$v D $.
+	$v R $.
+	$v F $.
+	$v G $.
+	$v H $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z C $.
@@ -3940,6 +5404,16 @@ $( Uniqueness of inverse element in commutative, associative operation
          with identity.  Remark in proof of Proposition 9-2.4 of [Gleason]
          p. 119.  (Contributed by NM, 4-Mar-1996.) $)
 ${
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
+	$v A $.
+	$v B $.
+	$v S $.
+	$v F $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z $.
@@ -3975,9 +5449,19 @@ ${
 	caovmo $p |- E* w ( A F w ) = B $= fcaovmo_4 fcaovmo_6 wcel fcaovmo_4 fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq wa fcaovmo_3 wmo fcaovmo_4 fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq fcaovmo_3 wmo fcaovmo_4 fcaovmo_6 wcel fcaovmo_4 fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq wa fcaovmo_3 wmo fcaovmo_4 fcaovmo_6 wcel fcaovmo_4 fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq fcaovmo_3 wmo wi icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq fcaovmo_3 wmo fcaovmo_4 fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq fcaovmo_3 wmo icaovmo_1 fcaovmo_4 fcaovmo_6 icaovmo_1 cv fcaovmo_4 wceq icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq fcaovmo_4 fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq fcaovmo_3 icaovmo_1 cv fcaovmo_4 wceq icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_4 fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 icaovmo_1 cv fcaovmo_4 fcaovmo_3 cv fcaovmo_7 oveq1 eqeq1d mobidv icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq fcaovmo_3 wmo icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 wceq wa fcaovmo_3 cv icaovmo_0 cv wceq wi icaovmo_0 wal fcaovmo_3 icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 wceq fcaovmo_3 icaovmo_0 fcaovmo_3 cv icaovmo_0 cv wceq icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 fcaovmo_3 cv icaovmo_0 cv icaovmo_1 cv fcaovmo_7 oveq2 eqeq1d mo4 icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 wceq wa fcaovmo_3 cv icaovmo_0 cv wceq wi icaovmo_0 icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 wceq wa fcaovmo_3 cv fcaovmo_5 fcaovmo_7 co icaovmo_0 cv fcaovmo_5 fcaovmo_7 co fcaovmo_3 cv icaovmo_0 cv icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 wceq wa fcaovmo_3 cv icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_7 co fcaovmo_3 cv fcaovmo_5 fcaovmo_7 co icaovmo_0 cv fcaovmo_5 fcaovmo_7 co icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 wceq wa icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 fcaovmo_3 cv fcaovmo_7 icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 wceq simpr oveq2d icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 wceq wa icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co icaovmo_0 cv fcaovmo_7 co fcaovmo_5 icaovmo_0 cv fcaovmo_7 co fcaovmo_3 cv icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_7 co icaovmo_0 cv fcaovmo_5 fcaovmo_7 co icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 wceq wa icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 icaovmo_0 cv fcaovmo_7 icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 wceq simpl oveq1d icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co icaovmo_0 cv fcaovmo_7 co icaovmo_1 cv fcaovmo_3 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_7 co fcaovmo_3 cv icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_7 co fcaovmo_0 fcaovmo_1 fcaovmo_2 icaovmo_1 cv fcaovmo_3 cv icaovmo_0 cv fcaovmo_7 icaovmo_1 vex fcaovmo_3 vex icaovmo_0 vex ecaovmo_4 caovass fcaovmo_0 fcaovmo_1 fcaovmo_2 icaovmo_1 cv fcaovmo_3 cv icaovmo_0 cv fcaovmo_7 icaovmo_1 vex fcaovmo_3 vex icaovmo_0 vex ecaovmo_3 ecaovmo_4 caov12 eqtri fcaovmo_0 fcaovmo_1 fcaovmo_5 icaovmo_0 cv fcaovmo_7 fcaovmo_5 fcaovmo_6 ecaovmo_0 elexi icaovmo_0 vex ecaovmo_3 caovcom 3eqtr3g eqtr3d icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 wceq wa fcaovmo_3 cv fcaovmo_6 wcel fcaovmo_3 cv fcaovmo_5 fcaovmo_7 co fcaovmo_3 cv wceq icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 wceq wa icaovmo_1 cv fcaovmo_6 wcel fcaovmo_3 cv fcaovmo_6 wcel icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 wceq wa icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_6 wcel icaovmo_1 cv fcaovmo_6 wcel fcaovmo_3 cv fcaovmo_6 wcel wa icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 wceq wa icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 fcaovmo_6 icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 wceq simpl ecaovmo_0 syl6eqel icaovmo_1 cv fcaovmo_3 cv fcaovmo_6 fcaovmo_7 ecaovmo_1 ecaovmo_2 ndmovrcl syl simprd fcaovmo_0 cv fcaovmo_5 fcaovmo_7 co fcaovmo_0 cv wceq fcaovmo_3 cv fcaovmo_5 fcaovmo_7 co fcaovmo_3 cv wceq fcaovmo_0 fcaovmo_3 cv fcaovmo_6 fcaovmo_0 cv fcaovmo_3 cv wceq fcaovmo_0 cv fcaovmo_5 fcaovmo_7 co fcaovmo_3 cv fcaovmo_5 fcaovmo_7 co fcaovmo_0 cv fcaovmo_3 cv fcaovmo_0 cv fcaovmo_3 cv fcaovmo_5 fcaovmo_7 oveq1 fcaovmo_0 cv fcaovmo_3 cv wceq id eqeq12d ecaovmo_5 vtoclga syl icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 wceq wa icaovmo_0 cv fcaovmo_6 wcel icaovmo_0 cv fcaovmo_5 fcaovmo_7 co icaovmo_0 cv wceq icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 wceq wa icaovmo_1 cv fcaovmo_6 wcel icaovmo_0 cv fcaovmo_6 wcel icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 wceq wa icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_6 wcel icaovmo_1 cv fcaovmo_6 wcel icaovmo_0 cv fcaovmo_6 wcel wa icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 wceq wa icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 fcaovmo_6 icaovmo_1 cv fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq icaovmo_1 cv icaovmo_0 cv fcaovmo_7 co fcaovmo_5 wceq simpr ecaovmo_0 syl6eqel icaovmo_1 cv icaovmo_0 cv fcaovmo_6 fcaovmo_7 ecaovmo_1 ecaovmo_2 ndmovrcl syl simprd fcaovmo_0 cv fcaovmo_5 fcaovmo_7 co fcaovmo_0 cv wceq icaovmo_0 cv fcaovmo_5 fcaovmo_7 co icaovmo_0 cv wceq fcaovmo_0 icaovmo_0 cv fcaovmo_6 fcaovmo_0 cv icaovmo_0 cv wceq fcaovmo_0 cv fcaovmo_5 fcaovmo_7 co icaovmo_0 cv fcaovmo_5 fcaovmo_7 co fcaovmo_0 cv icaovmo_0 cv fcaovmo_0 cv icaovmo_0 cv fcaovmo_5 fcaovmo_7 oveq1 fcaovmo_0 cv icaovmo_0 cv wceq id eqeq12d ecaovmo_5 vtoclga syl 3eqtr3d ax-gen mpgbir vtoclg fcaovmo_4 fcaovmo_6 wcel fcaovmo_4 fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq fcaovmo_3 moanimv mpbir fcaovmo_4 fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq fcaovmo_4 fcaovmo_6 wcel fcaovmo_4 fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq wa fcaovmo_3 fcaovmo_4 fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq fcaovmo_4 fcaovmo_6 wcel fcaovmo_4 fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq fcaovmo_4 fcaovmo_6 wcel fcaovmo_3 cv fcaovmo_6 wcel fcaovmo_4 fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq fcaovmo_4 fcaovmo_3 cv fcaovmo_7 co fcaovmo_6 wcel fcaovmo_4 fcaovmo_6 wcel fcaovmo_3 cv fcaovmo_6 wcel wa fcaovmo_4 fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 wceq fcaovmo_4 fcaovmo_3 cv fcaovmo_7 co fcaovmo_6 wcel fcaovmo_5 fcaovmo_6 wcel ecaovmo_0 fcaovmo_4 fcaovmo_3 cv fcaovmo_7 co fcaovmo_5 fcaovmo_6 eleq1 mpbiri fcaovmo_4 fcaovmo_3 cv fcaovmo_6 fcaovmo_7 ecaovmo_1 ecaovmo_2 ndmovrcl syl simpld ancri moimi ax-mp $.
 $}
 $( Lemma for ~ grprinvd .  (Contributed by NM, 9-Aug-2013.) $)
-$v .+ $.
-$v O $.
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
+	$v .+ $.
+	$v B $.
+	$v X $.
+	$v O $.
 	$d u v w x y z B $.
 	$d u v w x y z O $.
 	$d u v w x y z ph $.
@@ -4009,8 +5493,20 @@ $}
 $( Deduce right inverse from left inverse and left identity in an
          associative structure (such as a group).  (Contributed by NM,
          10-Aug-2013.)  (Proof shortened by Mario Carneiro, 6-Jan-2015.) $)
-$v N $.
 ${
+	$v ph $.
+	$v ps $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
+	$v .+ $.
+	$v B $.
+	$v N $.
+	$v X $.
+	$v O $.
 	$d u v w x y z B $.
 	$d u v w x y z O $.
 	$d u v w x y z ph $.
@@ -4044,8 +5540,18 @@ $}
 $( Deduce right identity from left inverse and left identity in an
        associative structure (such as a group).  (Contributed by NM,
        10-Aug-2013.)  (Proof shortened by Mario Carneiro, 6-Jan-2015.) $)
-$v n $.
 ${
+	$v ph $.
+	$v x $.
+	$v y $.
+	$v z $.
+	$v w $.
+	$v v $.
+	$v u $.
+	$v .+ $.
+	$v B $.
+	$v n $.
+	$v O $.
 	$d n u v w x y z B $.
 	$d n u v w x y z O $.
 	$d n u v w x y z ph $.

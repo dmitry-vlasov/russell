@@ -269,7 +269,7 @@ $( Definition of function, using bound-variable hypotheses instead of
        distinct variable conditions.  (Contributed by NM, 9-Mar-1995.)
        (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
-	$v x y w A v u $.
+	$v x y A w v u $.
 	$d x y w v u $.
 	$d A w v u $.
 	e0 $e |- F/_ x A $.
@@ -298,7 +298,7 @@ $}
 $( A function has at most one value for each argument.  (Contributed by NM,
        24-May-1998.) $)
 ${
-	$v x y A F $.
+	$v y A F x $.
 	$d x y A $.
 	$d x y F $.
 	f0 $f set y $.
@@ -451,7 +451,7 @@ $( A Kuratowski ordered pair is a function only if its components are
        equal.  (Contributed by NM, 5-Jun-2008.)  (Revised by Mario Carneiro,
        26-Apr-2015.) $)
 ${
-	$v x y z w A B v u t V W $.
+	$v A B V W x y z w v u t $.
 	$d t u v w x y z A $.
 	$d t u v w x y z B $.
 	f0 $f class A $.
@@ -507,7 +507,7 @@ $}
 $( A function in maps-to notation is a function.  (Contributed by Mario
        Carneiro, 13-Jan-2013.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d A y $.
 	$d B y $.
 	$d x y $.
@@ -534,7 +534,7 @@ $( The composition of two functions is a function.  Exercise 29 of
        [TakeutiZaring] p. 25.  (Contributed by NM, 26-Jan-1997.)  (Proof
        shortened by Andrew Salmon, 17-Sep-2011.) $)
 ${
-	$v x y z F G $.
+	$v F G x y z $.
 	$d x y z F $.
 	$d x y z G $.
 	f0 $f class F $.
@@ -557,7 +557,7 @@ $}
 $( The restriction of a function to the domain of a subclass equals the
        subclass.  (Contributed by NM, 15-Aug-1994.) $)
 ${
-	$v x y F G $.
+	$v F G x y $.
 	$d x y F $.
 	$d x y G $.
 	$d x y $.
@@ -581,7 +581,7 @@ $}
 $( The union of functions with disjoint domains is a function.  Theorem 4.6
        of [Monk1] p. 43.  (Contributed by NM, 12-Aug-1994.) $)
 ${
-	$v x y z F G $.
+	$v F G x y z $.
 	$d x y z F $.
 	$d x y z G $.
 	f0 $f class F $.
@@ -597,7 +597,7 @@ $( The converse singleton of an ordered pair is a function.  This is
        skip the sethood assumptions on ` A ` and ` B ` .  (Contributed by NM,
        30-Apr-2015.) $)
 ${
-	$v x y A B $.
+	$v A B x y $.
 	$d x y A $.
 	$d x y B $.
 	f0 $f class A $.
@@ -673,7 +673,7 @@ $}
 $( A function with a domain of three elements.  (Contributed by NM,
        14-Sep-2011.) $)
 ${
-	$v A B C D F E $.
+	$v A B C D E F $.
 	e0 $e |- A e. _V $.
 	e1 $e |- B e. _V $.
 	e2 $e |- C e. _V $.
@@ -719,7 +719,7 @@ $}
 $( A function with a domain of three elements.  (Contributed by NM,
        14-Sep-2011.)  (Revised by Mario Carneiro, 26-Apr-2015.) $)
 ${
-	$v A B C D F E $.
+	$v A B C D E F $.
 	e0 $e |- A e. _V $.
 	e1 $e |- B e. _V $.
 	e2 $e |- C e. _V $.
@@ -811,7 +811,7 @@ $( A single-valued relation is a function.  (See ~ fun2cnv for
        "single-valued.") Definition 6.4(4) of [TakeutiZaring] p. 24.
        (Contributed by NM, 17-Jan-2006.) $)
 ${
-	$v x y A $.
+	$v A x y $.
 	$d x y A $.
 	$d x y $.
 	$d x y $.
@@ -856,7 +856,7 @@ $}
 $( The union of a chain (with respect to inclusion) of functions is a
        function.  (Contributed by NM, 10-Aug-2004.) $)
 ${
-	$v x y z w A v f g $.
+	$v A f g x y z w v $.
 	$d f g x y z w v A $.
 	$d x y $.
 	$d x y $.
@@ -875,7 +875,7 @@ $( The union of a chain (with respect to inclusion) of single-rooted sets
        is single-rooted.  (See ~ funcnv for "single-rooted" definition.)
        (Contributed by NM, 11-Aug-2004.) $)
 ${
-	$v x y z w A v f g $.
+	$v A f g x y z w v $.
 	$d f g x y z w v A $.
 	$d x y $.
 	$d x y $.
@@ -979,7 +979,7 @@ $}
 $( The image of a difference is the difference of images.  (Contributed by
        NM, 24-May-1998.) $)
 ${
-	$v x y A B F $.
+	$v A B F x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y F $.
@@ -1005,7 +1005,7 @@ $( Axiom of Replacement using abbreviations.  Axiom 39(vi) of [Quine]
        p. 284.  Compare Exercise 9 of [TakeutiZaring] p. 29.  (Contributed by
        NM, 10-Sep-2006.) $)
 ${
-	$v x y z w A B C $.
+	$v A B C x y z w $.
 	$d w B $.
 	$d x y z w A $.
 	f0 $f class A $.
@@ -1039,7 +1039,7 @@ $( Part of a study of the Axiom of Replacement used by the Isabelle
        (Contributed by NM, 26-Oct-2006.)  (Proof shortened by Mario Carneiro,
        4-Dec-2016.) $)
 ${
-	$v ph x y z A b $.
+	$v ph x y A b z $.
 	$d x z A $.
 	$d b x y z $.
 	$d z ph $.
@@ -1277,7 +1277,7 @@ $}
 $( Extension of a function with a new ordered pair.  (Contributed by NM,
        28-Sep-2013.)  (Revised by Mario Carneiro, 30-Apr-2015.) $)
 ${
-	$v ph D F G E X Y $.
+	$v ph D E F G X Y $.
 	e0 $e |- ( ph -> X e. _V ) $.
 	e1 $e |- ( ph -> Y e. _V ) $.
 	e2 $e |- ( ph -> F Fn D ) $.
@@ -1439,7 +1439,7 @@ $}
 $( Alternate definition for the "maps to" notation ~ df-mpt .  (Contributed
        by Mario Carneiro, 30-Dec-2016.) $)
 ${
-	$v x y z A B $.
+	$v x A B y z $.
 	$d y z A $.
 	$d y z B $.
 	$d x y z $.
@@ -1485,7 +1485,7 @@ $}
 $( The maps-to notation defines a function with domain.  (Contributed by
        Scott Fenton, 21-Mar-2011.) $)
 ${
-	$v x y A B F $.
+	$v x A B F y $.
 	$d x y A $.
 	$d y B $.
 	e0 $e |- F = ( x e. A |-> B ) $.
@@ -1553,7 +1553,7 @@ $}
 $( Union of mappings which are mutually compatible.  (Contributed by Mario
        Carneiro, 31-Aug-2015.) $)
 ${
-	$v x y A B C $.
+	$v x A B C y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -2064,7 +2064,7 @@ $}
 $( The converse of a restriction of a function.  (Contributed by NM,
        26-Mar-1998.) $)
 ${
-	$v x y A B F $.
+	$v A B F x y $.
 	$d x y F $.
 	$d x y A $.
 	$d x y B $.
@@ -2177,7 +2177,7 @@ $( A cross product with a singleton is a constant function.  (Contributed
        by NM, 14-Aug-1999.)  (Proof shortened by Andrew Salmon,
        17-Sep-2011.) $)
 ${
-	$v x A B $.
+	$v A B x $.
 	$d x A $.
 	$d x B $.
 	e0 $e |- B e. _V $.
@@ -2190,7 +2190,7 @@ $}
 $( A cross product with a singleton is a constant function.  (Contributed
        by NM, 19-Oct-2004.) $)
 ${
-	$v x A B V $.
+	$v A B V x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -2794,7 +2794,7 @@ $}
 $( The class of all 1-1-onto functions mapping one set to another is a
        set.  (Contributed by Paul Chapman, 25-Feb-2008.) $)
 ${
-	$v ph A B f C D F $.
+	$v ph A B C D f F $.
 	$d A f $.
 	$d B f $.
 	e0 $e |- F = { f | ( f : A -1-1-onto-> B /\ ph ) } $.
@@ -2844,7 +2844,7 @@ $}
 $( The converse of a one-to-one-onto restricted function.  (Contributed by
      Paul Chapman, 21-Apr-2008.) $)
 ${
-	$v F R P $.
+	$v P R F $.
 	f0 $f class P $.
 	f1 $f class R $.
 	f2 $f class F $.
@@ -2902,7 +2902,7 @@ $( The union of a chain (with respect to inclusion) of one-to-one functions
        is a one-to-one function.  (Contributed by Mario Carneiro,
        20-May-2013.)  (Revised by Mario Carneiro, 24-Jun-2015.) $)
 ${
-	$v x y z A B v u C D S $.
+	$v x y A B C D S z v u $.
 	$d A u v x z $.
 	$d A u v y $.
 	$d B u v y $.
@@ -3186,7 +3186,7 @@ $( If ` A ` is a proper class, then there is no unique binary relationship
        with ` A ` as the first element.  (Contributed by Scott Fenton,
        7-Oct-2017.) $)
 ${
-	$v x y A F $.
+	$v x A F y $.
 	$d x y A $.
 	$d x y F $.
 	f0 $f set x $.
@@ -3199,7 +3199,7 @@ $}
 $( A function's value at a proper class is the empty set.  (Contributed by
        NM, 20-May-1998.) $)
 ${
-	$v x A F $.
+	$v A F x $.
 	$d x A $.
 	$d x F $.
 	f0 $f class A $.
@@ -3240,7 +3240,7 @@ $( The previous definition of function value, from before the ` iota `
        apparently does not appear in the literature.  (Contributed by NM,
        1-Aug-1994.) $)
 ${
-	$v x y A F $.
+	$v x A F y $.
 	$d x y A $.
 	$d x y F $.
 	f0 $f set x $.
@@ -3267,7 +3267,7 @@ $}
 $( Equality theorem for function value.  (Contributed by NM,
        29-Dec-1996.) $)
 ${
-	$v x A F G $.
+	$v A F G x $.
 	$d x A $.
 	$d x F $.
 	$d x G $.
@@ -3281,7 +3281,7 @@ $}
 $( Equality theorem for function value.  (Contributed by NM,
        29-Dec-1996.) $)
 ${
-	$v x A B F $.
+	$v A B F x $.
 	$d x A $.
 	$d x B $.
 	$d x F $.
@@ -3368,7 +3368,7 @@ $}
 $( Bound-variable hypothesis builder for function value.  (Contributed by
        NM, 14-Nov-1995.)  (Revised by Mario Carneiro, 15-Oct-2016.) $)
 ${
-	$v x y A F $.
+	$v x A F y $.
 	$d y F $.
 	$d y A $.
 	$d x y $.
@@ -3397,7 +3397,7 @@ $( Deduction version of bound-variable hypothesis builder ~ nffv .
        (Contributed by NM, 10-Nov-2005.)  (Revised by Mario Carneiro,
        15-Oct-2016.) $)
 ${
-	$v ph x z A F $.
+	$v ph x A F z $.
 	$d z A $.
 	$d z F $.
 	$d x z $.
@@ -3414,7 +3414,7 @@ $}
 $( Move class substitution in and out of a function value.  (Contributed by
        NM, 11-Nov-2005.) $)
 ${
-	$v x y A B C F $.
+	$v x A B C F y $.
 	$d y A $.
 	$d y B $.
 	$d y C $.
@@ -3437,7 +3437,7 @@ $( Move class substitution in and out of a function value.(This is
        (Contributed by NM, 10-Nov-2012.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
-	$v x y A B C F $.
+	$v x A B C F y $.
 	$d A y $.
 	$d F y $.
 	$d B y $.
@@ -3479,7 +3479,7 @@ $}
 $( The value of a class exists.  Corollary 6.13 of [TakeutiZaring] p. 27.
        (Contributed by NM, 30-Dec-1996.) $)
 ${
-	$v x A F $.
+	$v A F x $.
 	$d x A $.
 	$d x F $.
 	f0 $f class A $.
@@ -3503,7 +3503,7 @@ $( Alternate definition of the value of a function.  Definition 6.11 of
        [TakeutiZaring] p. 26.  (Contributed by NM, 30-Apr-2004.)  (Revised by
        Mario Carneiro, 31-Aug-2015.) $)
 ${
-	$v x y z A F $.
+	$v x y A F z $.
 	$d x y z F $.
 	$d x y z A $.
 	f0 $f set x $.
@@ -3516,7 +3516,7 @@ ${
 $}
 $( The value of a restricted function.  (Contributed by NM, 2-Aug-1994.) $)
 ${
-	$v x A B F $.
+	$v A B F x $.
 	$d x F $.
 	$d x A $.
 	$d x B $.
@@ -3564,7 +3564,7 @@ $}
 $( Function value, using bound-variable hypotheses instead of distinct
        variable conditions.  (Contributed by NM, 30-Aug-1999.) $)
 ${
-	$v y z A F $.
+	$v y A F z $.
 	$d A y z $.
 	$d z F $.
 	e0 $e |- F/_ y F $.
@@ -3590,7 +3590,7 @@ $}
 $( Corollary of Theorem 6.12(2) of [TakeutiZaring] p. 27.  (Contributed by
        Mario Carneiro, 17-Nov-2014.) $)
 ${
-	$v y A B F $.
+	$v A B F y $.
 	$d y F $.
 	$d y A $.
 	$d y B $.
@@ -3633,7 +3633,7 @@ $}
 $( The value of a class outside its domain is the empty set.  (Contributed
        by NM, 24-Aug-1995.) $)
 ${
-	$v x A F $.
+	$v A F x $.
 	$d x A $.
 	$d x F $.
 	f0 $f class A $.
@@ -3645,7 +3645,7 @@ $}
 $( Reverse closure law for function with the empty set not in its domain.
        (Contributed by NM, 26-Apr-1996.) $)
 ${
-	$v A F S $.
+	$v A S F $.
 	e0 $e |- dom F = S $.
 	e1 $e |- -. (/) e. S $.
 	f0 $f class A $.
@@ -3700,7 +3700,7 @@ $( If the restriction of a class to a singleton is not a function, its
        value is the empty set.  (Contributed by NM, 8-Aug-2010.)  (Proof
        shortened by Andrew Salmon, 22-Oct-2011.) $)
 ${
-	$v x y A F $.
+	$v A F x y $.
 	$d x y A $.
 	$d x y F $.
 	f0 $f class A $.
@@ -3733,7 +3733,7 @@ $( The second argument of a binary relation on a function is the function's
        value.  (Contributed by NM, 30-Apr-2004.)  (Revised by Mario Carneiro,
        28-Apr-2015.) $)
 ${
-	$v y A B F $.
+	$v A B F y $.
 	$d y A $.
 	$d y F $.
 	$d y B $.
@@ -3757,7 +3757,7 @@ $}
 $( Equivalence of function value and binary relation.  (Contributed by NM,
        19-Apr-2004.)  (Revised by Mario Carneiro, 28-Apr-2015.) $)
 ${
-	$v x A B C F $.
+	$v A B C F x $.
 	$d x F $.
 	$d x A $.
 	$d x B $.
@@ -3814,7 +3814,7 @@ $}
 $( Representation of a function in terms of its values.  (Contributed by
        FL, 14-Sep-2013.)  (Proof shortened by Mario Carneiro, 31-Aug-2015.) $)
 ${
-	$v x y A F $.
+	$v x A F y $.
 	$d x y A $.
 	$d x y $.
 	$d x y F $.
@@ -3845,7 +3845,7 @@ $}
 $( A member of a function's range is a value of the function.  (Contributed
        by NM, 31-Oct-1995.) $)
 ${
-	$v x y A B F $.
+	$v x A B F y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y F $.
@@ -3877,7 +3877,7 @@ $( Alternate definition of the image of a function as an indexed union of
        singletons of function values.  (Contributed by Raph Levien,
        20-Nov-2006.) $)
 ${
-	$v x y A F $.
+	$v x A F y $.
 	$d x y A $.
 	$d x y $.
 	$d x y F $.
@@ -3892,7 +3892,7 @@ $}
 $( Membership relation for the values of a function whose image is a
        subclass.  (Contributed by Raph Levien, 20-Nov-2006.) $)
 ${
-	$v x y A B F $.
+	$v x A B F y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y F $.
@@ -3956,7 +3956,7 @@ $}
 $( Representation of a function in terms of its values.  (Contributed by
        Mario Carneiro, 3-Jul-2015.) $)
 ${
-	$v x z A F $.
+	$v x A F z $.
 	$d x z $.
 	$d x z A $.
 	$d z F $.
@@ -3972,7 +3972,7 @@ $( Function value in an image.  (Contributed by NM, 20-Jan-2007.)  (Proof
        shortened by Andrew Salmon, 22-Oct-2011.)  (Revised by David Abernethy,
        17-Dec-2011.) $)
 ${
-	$v x y A B C F $.
+	$v x A B C F y $.
 	$d y A $.
 	$d x y B $.
 	$d x y C $.
@@ -3998,7 +3998,7 @@ $}
 $( The value of the identity function is a subset of the argument.
        (Contributed by Mario Carneiro, 27-Feb-2016.) $)
 ${
-	$v x A $.
+	$v A x $.
 	$d x A $.
 	f0 $f class A $.
 	i0 $f set x $.
@@ -4008,7 +4008,7 @@ $}
 $( The indexed intersection of a function's values is the intersection of
        its range.  (Contributed by NM, 20-Oct-2005.) $)
 ${
-	$v x y A F $.
+	$v x A F y $.
 	$d x y A $.
 	$d x y F $.
 	f0 $f set x $.
@@ -4020,7 +4020,7 @@ ${
 $}
 $( Singleton of function value.  (Contributed by NM, 22-May-1998.) $)
 ${
-	$v y A B F $.
+	$v A B F y $.
 	$d y A $.
 	$d y B $.
 	$d y F $.
@@ -4044,7 +4044,7 @@ ${
 $}
 $( The existence of a subimage.  (Contributed by NM, 8-Apr-2007.) $)
 ${
-	$v x y z w A B F $.
+	$v x A B F y z w $.
 	$d w x y z A $.
 	$d w x y z B $.
 	$d w x y z F $.
@@ -4061,7 +4061,7 @@ ${
 $}
 $( The existence of a subimage.  (Contributed by FL, 15-Apr-2007.) $)
 ${
-	$v x y A B C F $.
+	$v x A B C F y $.
 	$d A x y $.
 	$d B x y $.
 	$d F x y $.
@@ -4099,7 +4099,7 @@ $( The value of a function.  Version of ~ funfv2 using a bound-variable
        hypotheses instead of distinct variable conditions.  (Contributed by NM,
        19-Feb-2006.) $)
 ${
-	$v y w A F $.
+	$v y A F w $.
 	$d w A $.
 	$d w F $.
 	$d w y $.
@@ -4149,7 +4149,7 @@ $}
 $( Alternate definition of function value ~ df-fv that doesn't require
        dummy variables.  (Contributed by NM, 4-Aug-2010.) $)
 ${
-	$v x y z A F $.
+	$v A F x y z $.
 	$d x y z A $.
 	$d x y z F $.
 	f0 $f class A $.
@@ -4162,7 +4162,7 @@ ${
 $}
 $( Domains of a function composition.  (Contributed by NM, 27-Jan-1997.) $)
 ${
-	$v x y A F G $.
+	$v A F G x y $.
 	$d x y A $.
 	$d x y F $.
 	$d x y G $.
@@ -4179,7 +4179,7 @@ $( Value of a function composition.  Similar to second part of Theorem 3H
        by Andrew Salmon, 22-Oct-2011.)  (Revised by Stefan O'Rear,
        16-Oct-2014.) $)
 ${
-	$v x A F G X $.
+	$v A F G X x $.
 	$d x A $.
 	$d x F $.
 	$d x G $.
@@ -4281,7 +4281,7 @@ $}
 $( Value of a function given in maps-to notation.  (Contributed by NM,
        2-Oct-2007.)  (Revised by Mario Carneiro, 31-Aug-2015.) $)
 ${
-	$v x y A B C D F R $.
+	$v x A B C D R F y $.
 	$d x y A $.
 	$d y B $.
 	$d x C y $.
@@ -4340,7 +4340,7 @@ $( Value of a function given in maps-to notation, using explicit class
        substitution.  (Contributed by Scott Fenton, 17-Jul-2013.)  (Revised by
        Mario Carneiro, 31-Aug-2015.) $)
 ${
-	$v x y A B C F V $.
+	$v x A B C F V y $.
 	$d y A $.
 	$d y B $.
 	$d x y C $.
@@ -4422,7 +4422,7 @@ $}
 $( Value of a function given by the "maps to" notation.  (Contributed by
        Mario Carneiro, 23-Apr-2014.) $)
 ${
-	$v x y A B F $.
+	$v x A B F y $.
 	$d x y A $.
 	$d y B $.
 	$d y F $.
@@ -4453,7 +4453,7 @@ $( If all the values of the mapping are subsets of a class ` C ` , then so
        is any evaluation of the mapping, even if ` D ` is not in the base set
        ` A ` .  (Contributed by Mario Carneiro, 13-Feb-2015.) $)
 ${
-	$v x y A B C D F $.
+	$v x A B C D F y $.
 	$d x y A $.
 	$d y B $.
 	$d y D $.
@@ -4480,7 +4480,7 @@ $( Express a function ` F ` whose value ` B ` may not always be a set in
        to be the empty set.  (Contributed by Mario Carneiro, 14-Jul-2013.)
        (Revised by Mario Carneiro, 23-Apr-2014.) $)
 ${
-	$v x y A B C F G $.
+	$v x A B C F G y $.
 	$d x y A $.
 	$d y B $.
 	$d y C $.
@@ -4696,7 +4696,7 @@ $( Value of a function given by ordered-pair class abstraction.
        (Contributed by Jeff Madsen, 2-Sep-2009.)  (Revised by Mario Carneiro,
        11-Sep-2015.) $)
 ${
-	$v ph ps x y A B C D F R $.
+	$v ph ps x y A B C D R F $.
 	$d A x y $.
 	$d ps x y $.
 	$d B y $.
@@ -4789,7 +4789,7 @@ $( Equality of functions is determined by their values.  Special case of
        This version of ~ eqfnfv uses bound-variable hypotheses instead of
        distinct variable conditions.  (Contributed by NM, 29-Jan-2004.) $)
 ${
-	$v x z A F G $.
+	$v x A F G z $.
 	$d x z A $.
 	$d z F $.
 	$d z G $.
@@ -4833,7 +4833,7 @@ $}
 $( Two ways to express the locus of differences between two functions.
        (Contributed by Stefan O'Rear, 17-Jan-2015.) $)
 ${
-	$v x y A F G $.
+	$v x A F G y $.
 	$d F x y $.
 	$d G x y $.
 	$d A x y $.
@@ -4848,7 +4848,7 @@ $}
 $( The difference set between two functions is commutative.  (Contributed
        by Stefan O'Rear, 17-Jan-2015.) $)
 ${
-	$v x A F G $.
+	$v A F G x $.
 	$d F x $.
 	$d G x $.
 	$d A x $.
@@ -4862,7 +4862,7 @@ $}
 $( The difference set of two functions is empty if and only if the
        functions are equal.  (Contributed by Stefan O'Rear, 17-Jan-2015.) $)
 ${
-	$v x A F G $.
+	$v A F G x $.
 	$d F x $.
 	$d G x $.
 	$d A x $.
@@ -4876,7 +4876,7 @@ $}
 $( Two ways to express the locus of equality between two functions.
        (Contributed by Stefan O'Rear, 17-Jan-2015.) $)
 ${
-	$v x y A F G $.
+	$v x A F G y $.
 	$d F x y $.
 	$d G x y $.
 	$d A x y $.
@@ -4891,7 +4891,7 @@ $}
 $( Two functions are equal iff their equalizer is the whole domain.
        (Contributed by Stefan O'Rear, 7-Mar-2015.) $)
 ${
-	$v x A F G $.
+	$v A F G x $.
 	$d F x $.
 	$d G x $.
 	$d A x $.
@@ -4927,7 +4927,7 @@ $( The range of a choice function (a function that chooses an element from
        each member of its domain) is included in the union of its domain.
        (Contributed by NM, 31-Aug-1999.) $)
 ${
-	$v x y A F $.
+	$v x A F y $.
 	$d x y A $.
 	$d x y F $.
 	f0 $f set x $.
@@ -4984,7 +4984,7 @@ $( A kind of contraposition law that infers an image subclass from a
        a singleton, but it works this way round too."  (Contributed by Raph
        Levien, 20-Nov-2006.) $)
 ${
-	$v x A B F $.
+	$v A B F x $.
 	$d F x $.
 	$d A x $.
 	$d B x $.
@@ -5117,7 +5117,7 @@ ${
 $}
 $( Preimage of a union.  (Contributed by Jeff Madsen, 2-Sep-2009.) $)
 ${
-	$v x A B F $.
+	$v A B F x $.
 	$d x F $.
 	$d x A $.
 	$d x B $.
@@ -5151,7 +5151,7 @@ $}
 $( The preimage of a restricted function.  (Contributed by Jeff Madsen,
        2-Sep-2009.) $)
 ${
-	$v x A B F $.
+	$v A B F x $.
 	$d x F $.
 	$d x A $.
 	$d x B $.
@@ -5164,7 +5164,7 @@ ${
 $}
 $( Preimage of an intersection.  (Contributed by FL, 16-Apr-2012.) $)
 ${
-	$v x y A B F $.
+	$v x A B F y $.
 	$d A x y $.
 	$d B y $.
 	$d F x y $.
@@ -5200,7 +5200,7 @@ $}
 $( Show that the support of a function is contained in a set.  (Contributed
        by Mario Carneiro, 19-Dec-2014.) $)
 ${
-	$v ph A B F W Z k $.
+	$v ph A B k F W Z $.
 	$d k F $.
 	$d k ph $.
 	$d k W $.
@@ -5246,7 +5246,7 @@ $}
 $( A function's value belongs to its range.  (Contributed by NM,
        14-Oct-1996.) $)
 ${
-	$v x y A F $.
+	$v A F x y $.
 	$d x y F $.
 	$d x A $.
 	f0 $f class A $.
@@ -5357,7 +5357,7 @@ $}
 $( A restricted quantifier over an image set.  (Contributed by Mario
        Carneiro, 20-Aug-2015.) $)
 ${
-	$v ps ch x y z w A B F V $.
+	$v ps ch x y A B F V z w $.
 	$d w x z A $.
 	$d y B $.
 	$d y ch $.
@@ -5424,7 +5424,7 @@ ${
 $}
 $( Alternate definition of a mapping.  (Contributed by NM, 20-Mar-2007.) $)
 ${
-	$v x y z A B F $.
+	$v x y A B F z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z F $.
@@ -5516,7 +5516,7 @@ $}
 $( Property of a surjective function.  (Contributed by Jeff Madsen,
        4-Jan-2011.) $)
 ${
-	$v x y A B C F $.
+	$v x A B C F y $.
 	$d F x y $.
 	$d A x y $.
 	$d B x y $.
@@ -5533,7 +5533,7 @@ $}
 $( If a composition of two functions is surjective, then the function on
        the left is surjective.  (Contributed by Jeff Madsen, 16-Jun-2011.) $)
 ${
-	$v x y z A B C F G $.
+	$v A B C F G x y z $.
 	$d F x y z $.
 	$d G x y z $.
 	$d A y z $.
@@ -5553,7 +5553,7 @@ $}
 $( Functionality of the mapping operation.  (Contributed by Mario Carneiro,
        26-Jul-2013.)  (Revised by Mario Carneiro, 31-Aug-2015.) $)
 ${
-	$v x y A B C F $.
+	$v x A B C F y $.
 	$d x y A $.
 	$d x y B $.
 	$d y C $.
@@ -5571,7 +5571,7 @@ $}
 $( Express bijection for a mapping operation.  (Contributed by Mario
        Carneiro, 30-May-2015.)  (Revised by Mario Carneiro, 4-Dec-2016.) $)
 ${
-	$v x y z A B C F $.
+	$v x y A B C F z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d y z C $.
@@ -5624,7 +5624,7 @@ $}
 $( A function maps to a class to which all values belong.  (Contributed by
        NM, 3-Dec-2003.) $)
 ${
-	$v x y A B F $.
+	$v x A B F y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y F $.
@@ -5640,7 +5640,7 @@ $( A function maps to a class to which all values belong.  This version of
        ~ ffnfv uses bound-variable hypotheses instead of distinct variable
        conditions.  (Contributed by NM, 28-Sep-2006.) $)
 ${
-	$v x z A B F $.
+	$v x A B F z $.
 	$d z A $.
 	$d z B $.
 	$d z F $.
@@ -5737,7 +5737,7 @@ $( Composition of two functions expressed as ordered-pair class
        ` ( 3 * ( x + 2 ) ) ` .  (Contributed by FL, 21-Jun-2012.)  (Revised by
        Mario Carneiro, 24-Jul-2014.) $)
 ${
-	$v ph x y z w A B v u F G R S T $.
+	$v ph x y A B R S T F G z w v u $.
 	$d u v w x z A $.
 	$d u x y B $.
 	$d u w z F $.
@@ -5770,7 +5770,7 @@ $}
 $( Version of ~ fmptco where ` ph ` needn't be distinct from ` x ` .
          (Contributed by NM, 27-Dec-2014.) $)
 ${
-	$v ph x y z w A B F G R S T $.
+	$v ph x y A B R S T F G z w $.
 	$d w x y z B $.
 	$d w y z R $.
 	$d w x z S $.
@@ -5800,7 +5800,7 @@ $( Composition of two functions expressed as mapping abstractions.
        (Contributed by NM, 22-May-2006.)  (Revised by Mario Carneiro,
        31-Aug-2015.) $)
 ${
-	$v ph x y z A B F G R S $.
+	$v ph x y A B R S F G z $.
 	$d x y z B $.
 	$d y z R $.
 	$d x z S $.
@@ -5827,7 +5827,7 @@ $( Express composition of two functions as a maps-to applying both in
        sequence.  (Contributed by Stefan O'Rear, 5-Oct-2014.)  (Proof shortened
        by Mario Carneiro, 27-Dec-2014.) $)
 ${
-	$v x y A B C D E $.
+	$v x A B C D E y $.
 	$d x y A $.
 	$d x y B $.
 	$d x C $.
@@ -5846,7 +5846,7 @@ $}
 $( Composition with a constant function.  (Contributed by Stefan O'Rear,
        11-Mar-2015.) $)
 ${
-	$v x y F X Y I $.
+	$v F I X Y x y $.
 	$d F x y $.
 	$d I x $.
 	$d X x y $.
@@ -5863,7 +5863,7 @@ $}
 $( A function maps a singleton to a singleton iff it is the singleton of an
        ordered pair.  (Contributed by NM, 10-Dec-2003.) $)
 ${
-	$v x y A B F $.
+	$v A B F x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y F $.
@@ -5943,7 +5943,7 @@ $( A function expressed as the range of another function.  (Contributed by
        Mario Carneiro, 22-Jun-2013.)  (Proof shortened by Mario Carneiro,
        31-Aug-2015.) $)
 ${
-	$v x y A B $.
+	$v x A B y $.
 	$d x y $.
 	$d y A $.
 	$d y B $.
@@ -5984,7 +5984,7 @@ $}
 $( A function restricted to a singleton.  (Contributed by NM,
        9-Oct-2004.) $)
 ${
-	$v x A B F $.
+	$v A B F x $.
 	$d x A $.
 	$d x B $.
 	$d x F $.
@@ -6007,7 +6007,7 @@ $}
 $( The value of a function restricted to a singleton.  (Contributed by NM,
        9-Oct-2004.) $)
 ${
-	$v x A B C F $.
+	$v A B C F x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -6159,7 +6159,7 @@ $}
 $( Adjoining a point to a function gives a function.  (Contributed by Stefan
      O'Rear, 28-Feb-2015.) $)
 ${
-	$v F V S X T Y $.
+	$v S T F V X Y $.
 	f0 $f class S $.
 	f1 $f class T $.
 	f2 $f class F $.
@@ -6172,7 +6172,7 @@ $}
 $( Adjoining a point to a punctured function gives a function.  (Contributed
      by Stefan O'Rear, 28-Feb-2015.) $)
 ${
-	$v F S X T Y $.
+	$v S T F X Y $.
 	f0 $f class S $.
 	f1 $f class T $.
 	f2 $f class F $.
@@ -6196,7 +6196,7 @@ $}
 $( Recover the original function from a point-added function.  (Contributed
      by Stefan O'Rear, 28-Feb-2015.) $)
 ${
-	$v F S X Y $.
+	$v S F X Y $.
 	f0 $f class S $.
 	f1 $f class F $.
 	f2 $f class X $.
@@ -6233,7 +6233,7 @@ $}
 $( The first value of a function with a domain of three elements.
        (Contributed by NM, 14-Sep-2011.) $)
 ${
-	$v A B C D F E $.
+	$v A B C D E F $.
 	e0 $e |- A e. _V $.
 	e1 $e |- D e. _V $.
 	f0 $f class A $.
@@ -6248,7 +6248,7 @@ $}
 $( The second value of a function with a domain of three elements.
        (Contributed by NM, 14-Sep-2011.) $)
 ${
-	$v A B C D F E $.
+	$v A B C D E F $.
 	e0 $e |- B e. _V $.
 	e1 $e |- E e. _V $.
 	f0 $f class A $.
@@ -6263,7 +6263,7 @@ $}
 $( The third value of a function with a domain of three elements.
        (Contributed by NM, 14-Sep-2011.) $)
 ${
-	$v A B C D F E $.
+	$v A B C D E F $.
 	e0 $e |- C e. _V $.
 	e1 $e |- F e. _V $.
 	f0 $f class A $.
@@ -6288,7 +6288,7 @@ $}
 $( A constant function expressed as a cross product.  (Contributed by NM,
        27-Nov-2007.) $)
 ${
-	$v x A B C F $.
+	$v A B C F x $.
 	$d x A $.
 	$d x B $.
 	$d x C $.
@@ -6335,7 +6335,7 @@ $}
 $( Two ways to express restriction of a support set.  (Contributed by
        Stefan O'Rear, 5-Feb-2015.) $)
 ${
-	$v A B F V a Z $.
+	$v A B F V Z a $.
 	$d F a $.
 	$d V a $.
 	$d A a $.
@@ -6364,7 +6364,7 @@ $}
 $( A constant function expressed in terms of its functionality, domain, and
        value.  See also ~ fconst2 .  (Contributed by NM, 27-Aug-2004.) $)
 ${
-	$v x y z A B F $.
+	$v x A B F y z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z F $.
@@ -6380,7 +6380,7 @@ $}
 $( Two ways to express a constant function.  (Contributed by NM,
        15-Mar-2007.) $)
 ${
-	$v x A B F $.
+	$v A B F x $.
 	$d x A $.
 	$d x B $.
 	$d x F $.
@@ -6405,7 +6405,7 @@ $( The restriction of a function to a set exists.  Compare Proposition 6.17
        of [TakeutiZaring] p. 28.  (Contributed by NM, 7-Apr-1995.)  (Revised by
        Mario Carneiro, 22-Jun-2013.) $)
 ${
-	$v x A B C $.
+	$v A B C x $.
 	$d x A $.
 	$d x B $.
 	f0 $f class A $.
@@ -6589,7 +6589,7 @@ $}
 $( A function is uniquely determined by its values.  (Contributed by NM,
        31-Aug-2011.) $)
 ${
-	$v x z A B f $.
+	$v x A B f z $.
 	$d f x z A $.
 	$d f z B $.
 	e0 $e |- A e. _V $.
@@ -6625,7 +6625,7 @@ $}
 $( A class including a function contains the function's value in the image
        of the singleton of the argument.  (Contributed by NM, 23-Mar-2004.) $)
 ${
-	$v x A F G $.
+	$v A F G x $.
 	$d x A $.
 	$d x F $.
 	$d x G $.
@@ -6640,7 +6640,7 @@ $( The function value of an operand in a set is contained in the image of
      that set, using the ` Fn ` abbreviation.  (Contributed by Stefan O'Rear,
      10-Mar-2015.) $)
 ${
-	$v A F S X $.
+	$v A S F X $.
 	f0 $f class A $.
 	f1 $f class S $.
 	f2 $f class F $.
@@ -6730,7 +6730,7 @@ $}
 $( Existence of the class of values of a restricted class.  (Contributed by
        NM, 14-Nov-1995.)  (Revised by Mario Carneiro, 11-Sep-2015.) $)
 ${
-	$v x y z A F $.
+	$v x y A F z $.
 	$d x y z A $.
 	$d x y z F $.
 	e0 $e |- A e. _V $.
@@ -6780,7 +6780,7 @@ $}
 $( Elementhood in an image set.  (Contributed by Mario Carneiro,
        14-Jan-2014.) $)
 ${
-	$v x y z A B $.
+	$v x y A B z $.
 	$d y z B $.
 	$d x y z A $.
 	e0 $e |- B e. _V $.
@@ -6818,7 +6818,7 @@ $}
 $( The existence of an indexed union. ` x ` is normally a free-variable
        parameter in ` B ` .  (Contributed by NM, 23-Mar-2006.) $)
 ${
-	$v x y A B V W $.
+	$v x A B V W y $.
 	$d x y A $.
 	$d y B $.
 	f0 $f set x $.
@@ -6833,7 +6833,7 @@ $}
 $( Existence of an existentially restricted class abstraction.
        (Contributed by Jeff Madsen, 2-Sep-2009.) $)
 ${
-	$v ph x y z A V W $.
+	$v ph x y A V W z $.
 	$d A x y z $.
 	$d V x y z $.
 	$d W x y z $.
@@ -6851,7 +6851,7 @@ $}
 $( Existence of an ordered pair abstraction.  (Contributed by Jeff Madsen,
        2-Sep-2009.) $)
 ${
-	$v ph x y z w A v $.
+	$v ph x y A z w v $.
 	$d A x y v w z $.
 	$d ph v w z $.
 	e0 $e |- A e. _V $.
@@ -6883,7 +6883,7 @@ $}
 $( The image of an indexed union is the indexed union of the images.
        (Contributed by Mario Carneiro, 18-Jun-2014.) $)
 ${
-	$v x y z A B C $.
+	$v x A B C y z $.
 	$d x y z A $.
 	$d y z B $.
 	$d y z C $.
@@ -6913,7 +6913,7 @@ $( The indexed union of a function's values is the union of its range.
        Compare Definition 5.4 of [Monk1] p. 50.  (Contributed by NM,
        27-Sep-2004.) $)
 ${
-	$v x y A F $.
+	$v x A F y $.
 	$d x y A $.
 	$d x y F $.
 	f0 $f set x $.
@@ -6946,7 +6946,7 @@ $( The indexed union of a function's values is the union of its image under
        hypothesis in place of a distinct variable condition.  (Contributed by
        NM, 26-Mar-2006.)  (Revised by David Abernethy, 15-Apr-2013.) $)
 ${
-	$v x z A F $.
+	$v x A F z $.
 	$d x z A $.
 	$d z F $.
 	e0 $e |- F/_ x F $.
@@ -7002,7 +7002,7 @@ $( Membership in the union of the range of a function, proved directly.
        (Contributed by NM, 24-Sep-2006.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
-	$v x y A F $.
+	$v x A F y $.
 	$d x y A $.
 	$d x y F $.
 	f0 $f set x $.
@@ -7016,7 +7016,7 @@ $( Existence of an existentially restricted class abstraction. ` ph ` is
        normally has free-variable parameters ` x ` and ` y ` .  See also
        ~ abrexex .  (Contributed by NM, 12-Sep-2004.) $)
 ${
-	$v ph x y z A $.
+	$v ph x y A z $.
 	$d x y z A $.
 	$d z ph $.
 	e0 $e |- A e. _V $.
@@ -7062,7 +7062,7 @@ $}
 $( A one-to-one function in terms of function values.  Compare Theorem
        4.8(iv) of [Monk1] p. 43.  (Contributed by NM, 29-Oct-1996.) $)
 ${
-	$v x y z A B F $.
+	$v x y A B F z $.
 	$d x y z A $.
 	$d z B $.
 	$d x y z F $.
@@ -7078,7 +7078,7 @@ $}
 $( A one-to-one function in terms of function values.  Compare Theorem
        4.8(iv) of [Monk1] p. 43.  (Contributed by NM, 31-Jul-2003.) $)
 ${
-	$v x y w A B v F $.
+	$v x y A B F w v $.
 	$d x y w v A $.
 	$d w v B $.
 	$d w v F $.
@@ -7119,7 +7119,7 @@ $}
 $( Equality of function values for a one-to-one function.  (Contributed by
        NM, 11-Feb-1997.) $)
 ${
-	$v x y A B C D F $.
+	$v A B C D F x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -7138,7 +7138,7 @@ $}
 $( Membership in the image of a 1-1 map.  (Contributed by Jeff Madsen,
        2-Sep-2009.) $)
 ${
-	$v z A B F X Y $.
+	$v A B F X Y z $.
 	$d F z $.
 	$d A z $.
 	$d Y z $.
@@ -7270,7 +7270,7 @@ $( An application is injective if a retraction exists.  Proposition 8 of
        [BourbakiEns] p.  E.II.18.  (Contributed by FL, 11-Nov-2011.)  (Revised
        by Mario Carneiro, 27-Dec-2014.) $)
 ${
-	$v x y A B F R $.
+	$v A B R F x y $.
 	$d A x y $.
 	$d B x y $.
 	$d F x y $.
@@ -7288,7 +7288,7 @@ $( An application is surjective if a section exists.  Proposition 8 of
        [BourbakiEns] p.  E.II.18.  (Contributed by FL, 17-Nov-2011.)  (Proof
        shortened by Mario Carneiro, 27-Dec-2014.) $)
 ${
-	$v x y A B F S $.
+	$v A B S F x y $.
 	$d A x y $.
 	$d B x y $.
 	$d F x y $.
@@ -7346,7 +7346,7 @@ $}
 $( An injection is left-cancelable.  (Contributed by FL, 2-Aug-2009.)
        (Revised by Mario Carneiro, 21-Mar-2015.) $)
 ${
-	$v x A B C F H K $.
+	$v A B C F H K x $.
 	$d A x $.
 	$d B x $.
 	$d C x $.
@@ -7366,7 +7366,7 @@ $}
 $( A surjection is right-cancelable.  (Contributed by FL, 21-Nov-2011.)
        (Proof shortened by Mario Carneiro, 21-Mar-2015.) $)
 ${
-	$v x y A B F H K $.
+	$v A B F H K x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y F $.
@@ -7397,7 +7397,7 @@ $( Condition for function equality in terms of vanishing of the composition
        with the converse. _EDITORIAL_:  Is there a relation-algebraic proof of
        this?  (Contributed by Stefan O'Rear, 12-Feb-2015.) $)
 ${
-	$v x y A B F G $.
+	$v A B F G x y $.
 	$d F x y $.
 	$d G x y $.
 	$d A x y $.
@@ -7414,7 +7414,7 @@ $}
 $( Condition for function equality in terms of vanishing of the composition
        with the inverse.  (Contributed by Stefan O'Rear, 12-Feb-2015.) $)
 ${
-	$v x y A B F G $.
+	$v A B F G x y $.
 	$d F x y $.
 	$d G x y $.
 	$d A x y $.
@@ -7446,7 +7446,7 @@ $}
 $( ` F ` , a function lift, is a subset of ` R X. S ` .  (Contributed by
        Mario Carneiro, 23-Dec-2016.) $)
 ${
-	$v ph x A B F R S X $.
+	$v ph x A B R S F X $.
 	$d x R $.
 	$d x ph $.
 	$d x X $.
@@ -7468,7 +7468,7 @@ $}
 $( Elementhood in the relation ` F ` .  (Contributed by Mario Carneiro,
        23-Dec-2016.) $)
 ${
-	$v ph x A B C D F R S X $.
+	$v ph x A B C D R S F X $.
 	$d x C $.
 	$d x R $.
 	$d x D $.
@@ -7494,7 +7494,7 @@ $}
 $( Elementhood in the relation ` F ` .  (Contributed by Mario Carneiro,
        23-Dec-2016.) $)
 ${
-	$v ph x A B F R S X $.
+	$v ph x A B R S F X $.
 	$d x R $.
 	$d x ph $.
 	$d x X $.
@@ -7516,7 +7516,7 @@ $}
 $( Converse of the relation ` F ` .  (Contributed by Mario Carneiro,
        23-Dec-2016.) $)
 ${
-	$v ph x y z A B F R S X $.
+	$v ph x A B R S F X y z $.
 	$d y z A $.
 	$d y z B $.
 	$d x z $.
@@ -7546,7 +7546,7 @@ $( The function ` F ` is the unique function defined by ` F `` A = B ` ,
          provided that the well-definedness condition holds.  (Contributed by
          Mario Carneiro, 23-Dec-2016.) $)
 ${
-	$v ph x y z A B v u C D F R S X $.
+	$v ph x y A B C D R S F X z v u $.
 	$d u v y z A $.
 	$d u v y z B $.
 	$d u v x z C $.
@@ -7582,7 +7582,7 @@ $( The function ` F ` is the unique function defined by ` F `` A = B ` ,
          provided that the well-definedness condition holds.  (Contributed by
          Mario Carneiro, 23-Dec-2016.) $)
 ${
-	$v ph x y A B C D F R S X $.
+	$v ph x y A B C D R S F X $.
 	$d y A $.
 	$d y B $.
 	$d x C $.
@@ -7616,7 +7616,7 @@ $( The function ` F ` is the unique function defined by ` F `` A = B ` ,
        provided that the well-definedness condition holds.  (Contributed by
        Mario Carneiro, 23-Dec-2016.) $)
 ${
-	$v ph x y z A B F R S X $.
+	$v ph x y z A B R S F X $.
 	$d y z A $.
 	$d y z B $.
 	$d x z $.
@@ -7645,7 +7645,7 @@ $}
 $( The domain and range of the function ` F ` .  (Contributed by Mario
        Carneiro, 23-Dec-2016.) $)
 ${
-	$v ph x y z A B F R S X $.
+	$v ph x A B R S F X y z $.
 	$d y z A $.
 	$d y z B $.
 	$d x z $.
@@ -7674,7 +7674,7 @@ $}
 $( The value of the function ` F ` .  (Contributed by Mario Carneiro,
        23-Dec-2016.) $)
 ${
-	$v ph x A B C D F R S X Y $.
+	$v ph x A B C D R S F X Y $.
 	$d x C $.
 	$d x R $.
 	$d x Y $.
@@ -7704,7 +7704,7 @@ ${
 $}
 $( Equality theorem for isomorphisms.  (Contributed by NM, 17-May-2004.) $)
 ${
-	$v x y A B G R S H $.
+	$v A B R S G H x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -7726,7 +7726,7 @@ ${
 $}
 $( Equality theorem for isomorphisms.  (Contributed by NM, 17-May-2004.) $)
 ${
-	$v x y A B R S H T $.
+	$v A B R S T H x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -7748,7 +7748,7 @@ ${
 $}
 $( Equality theorem for isomorphisms.  (Contributed by NM, 17-May-2004.) $)
 ${
-	$v x y A B R S H T $.
+	$v A B R S T H x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -7770,7 +7770,7 @@ ${
 $}
 $( Equality theorem for isomorphisms.  (Contributed by NM, 17-May-2004.) $)
 ${
-	$v x y A B C R S H $.
+	$v A B C R S H x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -7792,7 +7792,7 @@ ${
 $}
 $( Equality theorem for isomorphisms.  (Contributed by NM, 17-May-2004.) $)
 ${
-	$v x y A B C R S H $.
+	$v A B C R S H x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -7815,7 +7815,7 @@ $}
 $( Bound-variable hypothesis builder for an isomorphism.  (Contributed by
        NM, 17-May-2004.)  (Proof shortened by Andrew Salmon, 22-Oct-2011.) $)
 ${
-	$v x y z A B R S H $.
+	$v x A B R S H y z $.
 	$d y z H $.
 	$d y z R $.
 	$d y z S $.
@@ -7841,7 +7841,7 @@ $}
 $( An isomorphism is a one-to-one onto function.  (Contributed by NM,
        27-Apr-2004.) $)
 ${
-	$v x y A B R S H $.
+	$v A B R S H x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -7860,7 +7860,7 @@ $}
 $( An isomorphism connects binary relations via its function values.
        (Contributed by NM, 27-Apr-2004.) $)
 ${
-	$v x y A B C D R S H $.
+	$v A B C D R S H x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -7884,7 +7884,7 @@ $( Express the condition of isomorphism on two strict orders for a
        function's restriction.  (Contributed by Mario Carneiro,
        22-Jan-2015.) $)
 ${
-	$v x y z w A B C F R S $.
+	$v x y A B C R S F z w $.
 	$d w x y z A $.
 	$d w z B $.
 	$d w z C $.
@@ -7928,7 +7928,7 @@ $}
 $( Identity law for isomorphism.  Proposition 6.30(1) of [TakeutiZaring]
        p. 33.  (Contributed by NM, 27-Apr-2004.) $)
 ${
-	$v x y A R $.
+	$v A R x y $.
 	$d x y A $.
 	$d x y R $.
 	f0 $f class A $.
@@ -7941,7 +7941,7 @@ $}
 $( Converse law for isomorphism.  Proposition 6.30(2) of [TakeutiZaring]
        p. 33.  (Contributed by NM, 27-Apr-2004.) $)
 ${
-	$v x y z w A B R S H $.
+	$v A B R S H x y z w $.
 	$d w x y z A $.
 	$d w x y z B $.
 	$d x y $.
@@ -7964,7 +7964,7 @@ $}
 $( Converse law for isomorphism.  (Contributed by Mario Carneiro,
        30-Jan-2014.) $)
 ${
-	$v x y A B R S H $.
+	$v A B R S H x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y $.
@@ -7985,7 +7985,7 @@ $}
 $( Complementation law for isomorphism.  (Contributed by Mario Carneiro,
        9-Sep-2015.) $)
 ${
-	$v x y A B C D R S H $.
+	$v A B C D R S H x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -8010,7 +8010,7 @@ $}
 $( An isomorphism from one well-order to another can be restricted on
        either well-order.  (Contributed by Mario Carneiro, 15-Jan-2013.) $)
 ${
-	$v x y A B R S H $.
+	$v A B R S H x y $.
 	$d A x y $.
 	$d B x y $.
 	$d H x y $.
@@ -8041,7 +8041,7 @@ $}
 $( Induced isomorphism on a subset.  (Contributed by Stefan O'Rear,
        5-Nov-2014.) $)
 ${
-	$v A B R S H X a b K $.
+	$v A B R S H K X a b $.
 	$d H a b $.
 	$d R a b $.
 	$d S a b $.
@@ -8065,7 +8065,7 @@ $( Composition (transitive) law for isomorphism.  Proposition 6.30(3) of
        [TakeutiZaring] p. 33.  (Contributed by NM, 27-Apr-2004.)  (Proof
        shortened by Mario Carneiro, 5-Dec-2016.) $)
 ${
-	$v x y z w A B C G R S H T $.
+	$v A B C R S T G H x y z w $.
 	$d x y z w A $.
 	$d x y z w B $.
 	$d x y z w C $.
@@ -8094,7 +8094,7 @@ $( Isomorphisms preserve minimal elements.  Note that ` ( ``' R " { D } ) `
        ` { x | x R D } ` .  Proposition 6.31(1) of [TakeutiZaring] p. 33.
        (Contributed by NM, 19-Apr-2004.) $)
 ${
-	$v x y A B C D R S H $.
+	$v A B C D R S H x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -8117,7 +8117,7 @@ $}
 $( Isomorphisms preserve initial segments.  Proposition 6.31(2) of
        [TakeutiZaring] p. 33.  (Contributed by NM, 20-Apr-2004.) $)
 ${
-	$v x y A B D R S H $.
+	$v A B D R S H x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -8138,7 +8138,7 @@ $}
 $( Isomorphisms are isomorphisms on their initial segments.  (Contributed
        by Mario Carneiro, 29-Mar-2014.) $)
 ${
-	$v x y A B C D R S H X $.
+	$v A B C D R S H X x y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y C $.
@@ -8164,7 +8164,7 @@ $}
 $( Lemma for ~ isofr .  (Contributed by NM, 29-Apr-2004.)  (Revised by
        Mario Carneiro, 18-Nov-2014.) $)
 ${
-	$v ph x y z w A B R S H $.
+	$v ph x A B R S H y z w $.
 	$d w x y z A $.
 	$d w x y z B $.
 	$d w x y z H $.
@@ -8188,7 +8188,7 @@ ${
 $}
 $( Lemma for ~ isose .  (Contributed by Mario Carneiro, 23-Jun-2015.) $)
 ${
-	$v ph x y z A B R S H $.
+	$v ph x A B R S H y z $.
 	$d x y z A $.
 	$d x y z B $.
 	$d x y z H $.
@@ -8213,7 +8213,7 @@ $( An isomorphism preserves well-foundedness.  Proposition 6.32(1) of
        [TakeutiZaring] p. 33.  (Contributed by NM, 30-Apr-2004.)  (Revised by
        Mario Carneiro, 18-Nov-2014.) $)
 ${
-	$v x A B R S H $.
+	$v A B R S H x $.
 	$d x A $.
 	$d x B $.
 	$d x H $.
@@ -8231,7 +8231,7 @@ $}
 $( An isomorphism preserves set-like relations.  (Contributed by Mario
        Carneiro, 23-Jun-2015.) $)
 ${
-	$v x A B R S H $.
+	$v A B R S H x $.
 	$d x A $.
 	$d x B $.
 	$d x H $.
@@ -8249,7 +8249,7 @@ $}
 $( A weak form of ~ isofr that does not need Replacement.  (Contributed by
        Mario Carneiro, 18-Nov-2014.) $)
 ${
-	$v x A B V R S H $.
+	$v A B R S H V x $.
 	$d x A $.
 	$d x B $.
 	$d x H $.
@@ -8268,7 +8268,7 @@ ${
 $}
 $( Lemma for ~ isopo .  (Contributed by Stefan O'Rear, 16-Nov-2014.) $)
 ${
-	$v A B f R S H a b c e d $.
+	$v A B R S H e f a b c d $.
 	$d H a b c d e f $.
 	$d R a b c d e f $.
 	$d S a b c d e f $.
@@ -8348,7 +8348,7 @@ $}
 $( A weak form of ~ isowe that does not need Replacement.  (Contributed by
        Mario Carneiro, 18-Nov-2014.) $)
 ${
-	$v x y A B R S H $.
+	$v x A B R S H y $.
 	$d x y A $.
 	$d x y B $.
 	$d x y R $.
@@ -8368,7 +8368,7 @@ $( Any one-to-one onto function determines an isomorphism with an induced
        relation ` S ` .  Proposition 6.33 of [TakeutiZaring] p. 34.
        (Contributed by NM, 30-Apr-2004.) $)
 ${
-	$v x y z w A B v u R S H $.
+	$v x y z w A B R S H v u $.
 	$d x y z w v u A $.
 	$d x y v u B $.
 	$d x y z w v u H $.
@@ -8391,7 +8391,7 @@ $}
 $( Any one-to-one onto function determines an isomorphism with an induced
        relation ` S ` .  (Contributed by Mario Carneiro, 9-Mar-2013.) $)
 ${
-	$v x y z w A B R S H $.
+	$v x y A B R S H z w $.
 	$d A w x y z $.
 	$d B w x y z $.
 	$d H w x y z $.
@@ -8412,7 +8412,7 @@ $}
 $( Well-ordering of isomorphic relations.  (Contributed by NM,
        4-Mar-1997.) $)
 ${
-	$v x y z w A B F R S $.
+	$v x y A B R S F z w $.
 	$d z w R $.
 	$d x y z w S $.
 	$d z w A $.
@@ -8436,7 +8436,7 @@ $( Well-ordering of isomorphic relations.  (This version is proved directly
        4-Mar-1997.)  (Proof modification is discouraged.)
        (New usage is discouraged.) $)
 ${
-	$v x y z w A B v u f F R S $.
+	$v x y A B R S F z w v u f $.
 	$d z w v u f R $.
 	$d x y z w v u f S $.
 	$d z w v u f A $.
@@ -8462,7 +8462,7 @@ $( A set-like well-ordering has no nontrivial automorphisms.  (Contributed
        by Stefan O'Rear, 16-Nov-2014.)  (Revised by Mario Carneiro,
        25-Jun-2015.) $)
 ${
-	$v A F R a b c $.
+	$v A R F a b c $.
 	$d A a b c $.
 	$d R b c $.
 	$d F a b c $.
@@ -8479,7 +8479,7 @@ $( Thus, there is at most one isomorphism between any two set-like
        well-ordered classes.  Class version of ~ wemoiso .  (Contributed by
        Mario Carneiro, 25-Jun-2015.) $)
 ${
-	$v A B F G R S $.
+	$v A B R S F G $.
 	f0 $f class A $.
 	f1 $f class B $.
 	f2 $f class R $.
@@ -8493,7 +8493,7 @@ $( Thus, there is at most one isomorphism between any two set-like
        well-ordered classes.  Class version of ~ wemoiso2 .  (Contributed by
        Mario Carneiro, 25-Jun-2015.) $)
 ${
-	$v A B F G R S $.
+	$v A B R S F G $.
 	f0 $f class A $.
 	f1 $f class B $.
 	f2 $f class R $.
@@ -8507,7 +8507,7 @@ $( Thus, there is at most one isomorphism between any two well-ordered
        sets.  TODO:  Shorten ~ finnisoeu .  (Contributed by Stefan O'Rear,
        12-Feb-2015.)  (Revised by Mario Carneiro, 25-Jun-2015.) $)
 ${
-	$v A B f g R S $.
+	$v A B R S f g $.
 	$d R f g $.
 	$d A f g $.
 	$d S f g $.
@@ -8525,7 +8525,7 @@ $( Thus, there is at most one isomorphism between any two well-ordered
        sets.  (Contributed by Stefan O'Rear, 12-Feb-2015.)  (Revised by Mario
        Carneiro, 25-Jun-2015.) $)
 ${
-	$v A B f g R S $.
+	$v A B R S f g $.
 	$d R f g $.
 	$d A f g $.
 	$d S f g $.
@@ -8544,7 +8544,7 @@ $( The Knaster-Tarski theorem says that every monotone function over a
        theorem to the case when the lattice is the powerset lattice ` ~P A ` .
        (Contributed by Mario Carneiro, 11-Jun-2015.) $)
 ${
-	$v x y z w A F V X $.
+	$v x y z A F V X w $.
 	$d w x y z A $.
 	$d w x y z F $.
 	$d w V $.

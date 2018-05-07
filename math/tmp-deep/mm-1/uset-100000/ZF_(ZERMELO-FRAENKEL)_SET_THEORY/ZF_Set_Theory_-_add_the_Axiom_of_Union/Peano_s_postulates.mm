@@ -17,6 +17,7 @@ $( The successor of any natural number is a natural number.  One of Peano's 5
      postulates for arithmetic.  Proposition 7.30(2) of [TakeutiZaring] p. 42.
      (Contributed by NM, 3-Sep-2003.) $)
 ${
+	$v A $.
 	fpeano2_0 $f class A $.
 	peano2 $p |- ( A e. om -> suc A e. om ) $= fpeano2_0 com wcel fpeano2_0 csuc com wcel fpeano2_0 peano2b biimpi $.
 $}
@@ -24,6 +25,7 @@ $( The successor of any natural number is not zero.  One of Peano's 5
      postulates for arithmetic.  Proposition 7.30(3) of [TakeutiZaring] p. 42.
      (Contributed by NM, 3-Sep-2003.) $)
 ${
+	$v A $.
 	fpeano3_0 $f class A $.
 	peano3 $p |- ( A e. om -> suc A =/= (/) ) $= fpeano3_0 csuc c0 wne fpeano3_0 com wcel fpeano3_0 nsuceq0 a1i $.
 $}
@@ -32,6 +34,8 @@ $( Two natural numbers are equal iff their successors are equal, i.e. the
      arithmetic.  Proposition 7.30(4) of [TakeutiZaring] p. 43.  (Contributed
      by NM, 3-Sep-2003.) $)
 ${
+	$v A $.
+	$v B $.
 	fpeano4_0 $f class A $.
 	fpeano4_1 $f class B $.
 	peano4 $p |- ( ( A e. om /\ B e. om ) -> ( suc A = suc B <-> A = B ) ) $= fpeano4_0 com wcel fpeano4_0 con0 wcel fpeano4_1 con0 wcel fpeano4_0 csuc fpeano4_1 csuc wceq fpeano4_0 fpeano4_1 wceq wb fpeano4_1 com wcel fpeano4_0 nnon fpeano4_1 nnon fpeano4_0 fpeano4_1 suc11 syl2an $.
@@ -44,6 +48,9 @@ $( The induction postulate: any class containing zero and closed under the
        schema, with a basis and an induction hypothesis, is derived from this
        theorem as theorem ~ findes .  (Contributed by NM, 18-Feb-2004.) $)
 ${
+	$v x $.
+	$v A $.
+	$v y $.
 	$d x y A $.
 	ipeano5_0 $f set y $.
 	fpeano5_0 $f set x $.
@@ -53,6 +60,8 @@ $}
 $( A natural number is either 0 or a successor.  (Contributed by NM,
        27-May-1998.) $)
 ${
+	$v x $.
+	$v A $.
 	$d x A $.
 	fnn0suc_0 $f set x $.
 	fnn0suc_1 $f class A $.

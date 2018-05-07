@@ -31,12 +31,14 @@ $( Extend wff definition to include the universal quantifier ('for all').
      meaning, but conceptually the idea is the same. $)
 $c class  $.
 $c set  $.
-$v x $.
 ${
+	$v x $.
 	fsup_set_class_0 $f set x $.
 	sup_set_class $a class x $.
 $}
 ${
+	$v ph $.
+	$v x $.
 	fwal_0 $f wff ph $.
 	fwal_1 $f set x $.
 	wal $a wff A. x ph $.
@@ -49,6 +51,8 @@ $( Backwards E (read:  "there exists") $)
 $( Extend wff definition to include the existential quantifier ("there
      exists"). $)
 ${
+	$v ph $.
+	$v x $.
 	fwex_0 $f wff ph $.
 	fwex_1 $f set x $.
 	wex $a wff E. x ph $.
@@ -57,12 +61,16 @@ $( Define existential quantification. ` E. x ph ` means "there exists at
      least one set ` x ` such that ` ph ` is true."  Definition of [Margaris]
      p. 49.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
 	fdf-ex_0 $f wff ph $.
 	fdf-ex_1 $f set x $.
 	df-ex $a |- ( E. x ph <-> -. A. x -. ph ) $.
 $}
 $( Theorem 19.7 of [Margaris] p. 89.  (Contributed by NM, 5-Aug-1993.) $)
 ${
+	$v ph $.
+	$v x $.
 	falnex_0 $f wff ph $.
 	falnex_1 $f set x $.
 	alnex $p |- ( A. x -. ph <-> -. E. x ph ) $= falnex_0 falnex_1 wex falnex_0 wn falnex_1 wal falnex_0 falnex_1 df-ex con2bii $.
@@ -71,6 +79,8 @@ $c F/  $.
 $( The not-free symbol. $)
 $( Extend wff definition to include the not-free predicate. $)
 ${
+	$v ph $.
+	$v x $.
 	fwnf_0 $f wff ph $.
 	fwnf_1 $f set x $.
 	wnf $a wff F/ x ph $.
@@ -102,6 +112,8 @@ $( Define the not-free predicate for wffs.  This is read " ` x ` is not free
      predicate for class variables.  (Contributed by Mario Carneiro,
      11-Aug-2016.) $)
 ${
+	$v ph $.
+	$v x $.
 	fdf-nf_0 $f wff ph $.
 	fdf-nf_1 $f set x $.
 	df-nf $a |- ( F/ x ph <-> A. x ( ph -> A. x ph ) ) $.
