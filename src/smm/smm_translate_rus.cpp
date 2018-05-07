@@ -8,7 +8,6 @@ namespace mdl { namespace smm { namespace {
 typedef vector<rus::Node>::iterator NodeIter;
 
 struct Maps {
-	map<const Assertion*, rus::Theorem*> theorems;
 	map<const Assertion*, rus::Def*>     defs;
 	map<const rus::Rule*, rus::Theory*>  rule_theory;
 	map<const rus::Type*, rus::Theory*>  type_theory;
@@ -398,7 +397,6 @@ void translate_theorem(const Assertion* ass, Maps& state) {
 	translate_assertion<rus::Theorem>(ass, thm, state);
 	state.theory.top()->nodes.push_back(thm);
 	translate_proof(ass, thm, state);
-	state.theorems[ass] = thm;
 }
 
 void translate_assertion(const Assertion* ass, Maps& state) {
