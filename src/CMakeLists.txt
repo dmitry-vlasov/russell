@@ -29,7 +29,16 @@ else()
 		mm/mm_parser.cpp 
 		mm/mm_read.cpp 
 		mm/mm_show.cpp  
-		mm/mm_translate.cpp 
+		mm/mm_translate_smm.cpp 
+		
+		mm2/mm2_cut.cpp 
+		mm2/mm2_ast.cpp 
+		mm2/mm2_sys.cpp 
+		mm2/mm2_merge.cpp 
+		mm2/mm2_parser.cpp 
+		mm2/mm2_read.cpp 
+		mm2/mm2_show.cpp  
+		mm2/mm2_translate_smm.cpp 
 		
 		rus/expr/rus_expr_parse.cpp 
 		rus/expr/rus_expr_unify.cpp 

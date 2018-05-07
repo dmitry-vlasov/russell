@@ -1,11 +1,11 @@
 //#include <boost/algorithm/string.hpp>
 
-#include <mm_ast.hpp>
-#include <mm_sys.hpp>
+#include <mm2_ast.hpp>
+#include <mm2_sys.hpp>
 #include <smm_ast.hpp>
 #include <smm_expr.hpp>
 
-namespace mdl { namespace mm { namespace {
+namespace mdl { namespace mm2 { namespace {
 
 typedef map<uint, uint> Perm;
 
@@ -174,10 +174,10 @@ void gather_inner_vars(const set<uint>& fvars, set<uint>& ivars, set<uint>& avar
 }
 
 struct Maps {
-	map<const mm::Essential*, smm::Essential*> essentials;
-	map<const mm::Floating*,  smm::Floating*>  floatings;
-	map<const mm::Floating*,  smm::Inner*>     inners;
-	map<const mm::Source*,    smm::Source*>    sources;
+	map<const Essential*, smm::Essential*> essentials;
+	map<const Floating*,  smm::Floating*>  floatings;
+	map<const Floating*,  smm::Inner*>     inners;
+	map<const Source*,    smm::Source*>    sources;
 	map<uint, Ref*> redundant;
 	map<uint, Perm> transform;
 };
@@ -271,8 +271,9 @@ struct ArgMap {
 
 	Perm create_permutation() {
 		Perm perm;
-		for (uint i = 0; i < args.size(); ++ i)
+		for (uint i = 0; i < args.size(); ++ i) {
 			perm[i] = args[i].ind;
+		}
 		return perm;
 	}
 	void remove(uint label) {
@@ -281,8 +282,9 @@ struct ArgMap {
 		Iter end   = args.end();
 		uint found_ind = -1;
 		for (auto it = begin; it != end; ++ it) {
-			if (it->ind > found_ind)
+			if (it->ind > found_ind) {
 				-- it->ind;
+			}
 			if (it->label == label) {
 				found = it;
 				found_ind = it->ind;
@@ -549,5 +551,5 @@ void translate(uint src, uint tgt) {
 	scope_stack.pop_back();
 }
 
-}} // mdl::mm
+}} // mdl::mm2
 

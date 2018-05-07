@@ -17,8 +17,7 @@
 #include "mm/mm_parser.cpp"
 #include "mm/mm_read.cpp"
 #include "mm/mm_show.cpp"
-#include "mm/mm_translate.cpp"
-
+#include "mm/mm_translate_smm.cpp"
 #include "rus/expr/rus_expr_parse.cpp"
 #include "rus/expr/rus_expr_unify.cpp"
 #include "rus/parser/rus_parser.cpp"

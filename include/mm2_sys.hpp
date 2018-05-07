@@ -2,7 +2,7 @@
 
 #include "common.hpp"
 
-namespace mdl { namespace mm {
+namespace mdl { namespace mm2 {
 
 class Theorem;
 class Axiom;
@@ -35,9 +35,9 @@ public:
 struct Sys : public mdl::Sys<Sys, Math> {
 	typedef Source Src;
 	Sys(uint id) : mdl::Sys<Sys, Math>(id) { }
-	static string descr() { return "mm"; }
-	static string lang() { return "mm"; }
-	static string ext() { return "mm"; }
+	static string descr() { return "mm2"; }
+	static string lang() { return "mm2"; }
+	static string ext() { return "mm2"; }
 	static const Actions& actions();
 };
 
