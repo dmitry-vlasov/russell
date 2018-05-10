@@ -4,41 +4,52 @@
 
 namespace mdl { namespace mm2 {
 
-typedef mdl::Token<Source> Token;
-typedef mdl::Tokenable<Source> Tokenable;
-typedef mdl::Id<Source> Id;
+struct Symbol {
+	Symbol(): lit(undef()), var(false) { }
+	Symbol(uint l, bool v = false) : lit(l), var(v) { }
+	Symbol(const Symbol& s) : lit(s.lit), var(s.var) { }
 
-struct Symbol : public Owner<Symbol> {
-	Symbol() = delete;
-	Symbol(const Symbol&) = delete;
-	Symbol(uint l, bool v, const Token& t = Token()) : Owner(l, t), is_var(v) { }
-	const bool is_var;
+	bool operator == (const Symbol& s) const { return lit == s.lit; }
+	bool operator != (const Symbol& s) const { return !operator ==(s); }
+	bool operator < (const Symbol& s) const { return lit < s.lit; }
+	bool is_undef() const { return lit == undef(); }
+	static bool is_undef(uint lit) { return lit == undef(); }
+	static uint undef() { return 0x7FFFFFFF; }
+
+	uint lit:31;
+	bool var:1;
 };
 
-inline string show(const Symbol& s, bool full = false) {
-	return Lex::toStr(s.id()) + (full ? (s.is_var ? "<var>" : "<cst>") : "") + ' ';
+typedef vector<Symbol> Expr;
+
+inline bool contains(const Expr& vect, uint lit) {
+	for (auto it = vect.cbegin(); it != vect.cend(); ++ it) {
+		if (it->lit == lit) return true;
+	}
+	return false;
 }
 
-inline ostream& operator << (ostream& os, const Symbol& s) {
-	os << show(s);
+inline bool contains(const Expr& vect, Symbol s) {
+	return contains(vect, s.lit);
+}
+
+inline string show_sy(Symbol symb) {
+	return Lex::toStr(symb.lit);
+}
+
+inline string show_ex(const Expr& vect) {
+	string s;
+	for (auto sy : vect) s += Lex::toStr(sy.lit) + " ";
+	return s;
+}
+
+inline ostream& operator << (ostream& os, Symbol s) {
+	os << Lex::toStr(s.lit) << " ";
 	return os;
-}
-
-typedef vector<User<Symbol>> Expr;
-
-inline string show(const Expr& e) {
-	string str;
-	for (auto i = e.begin(); i != e.end(); ++i) str += show(*i->get());
-	return str;
 }
 
 inline ostream& operator << (ostream& os, const Expr& ex) {
-	os << show(ex);
+	for (auto s : ex) os << s;
 	return os;
 }
-
-inline void dump(const Symbol& s) { cout << s; }
-inline void dump(const Expr& e) { cout << e; }
-inline size_t memvol(const Expr& ex) { return ex.capacity() * sizeof(Symbol); }
-
 }} // mdl::mm2

@@ -9,6 +9,8 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/../peglib
 )
 
+set(CMAKE_CXX_STANDARD 17)
+
 if (BUILD_SOLID)
 	set(RUSSELL_SRC main.cpp)
 else() 
@@ -32,13 +34,12 @@ else()
 		mm/mm_translate_smm.cpp 
 		
 		mm2/mm2_cut.cpp 
-		mm2/mm2_ast.cpp 
 		mm2/mm2_sys.cpp 
 		mm2/mm2_merge.cpp 
 		mm2/mm2_parser.cpp 
-		mm2/mm2_read.cpp 
-		mm2/mm2_show.cpp  
-		mm2/mm2_translate_smm.cpp 
+		mm2/mm2_read.cpp
+		mm2/mm2_tree.cpp  
+		mm2/mm2_translate.cpp
 		
 		rus/expr/rus_expr_parse.cpp 
 		rus/expr/rus_expr_unify.cpp 

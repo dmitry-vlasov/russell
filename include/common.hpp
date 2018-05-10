@@ -82,6 +82,20 @@ inline string showmem(size_t s) {
 	else         return to_string(b)  + " b";
 }
 
+struct Writable {
+	virtual ~Writable() { }
+	virtual void write(ostream&) const = 0;
+};
+
+struct Referable {
+	virtual ~Referable() { }
+	virtual void ref(ostream& os) const = 0;
+};
+
+inline ostream& operator << (ostream& os, const Writable& w) {
+	w.write(os); return os;
+}
+
 template<class T>
 void deep_write(const T* target, auto get_cont, auto get_inc, auto is_inc) {
 	typedef T Source;
@@ -100,9 +114,9 @@ void deep_write(const T* target, auto get_cont, auto get_inc, auto is_inc) {
 		out.close();
 		written.insert(src);
 		to_write.pop();
-		for (auto n : get_cont(src)) {
+		for (const auto& n : get_cont(src)) {
 			if (is_inc(n)) {
-				Source* inc = get_inc(n);
+				const Source* inc = get_inc(n);
 				if (!written.count(inc)) {
 					to_write.push(inc);
 				}

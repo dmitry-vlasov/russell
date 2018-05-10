@@ -13,7 +13,7 @@
 #pragma once
 
 #include <memory>
-//#include <variant>
+#include <variant>
 #include <algorithm>
 #include <exception>
 #include <stdexcept>
@@ -103,7 +103,7 @@ namespace mdl {
 	
 	typedef std::uint32_t uint;
 
-	//using std::variant;
+	using std::variant;
 	using std::vector;
 	using std::array;
 	using std::set;

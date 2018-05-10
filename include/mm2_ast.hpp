@@ -4,251 +4,198 @@
 
 namespace mdl { namespace mm2 {
 
-struct Constant : public Tokenable {
-	Constant(uint c, const Token& t = Token()) : Tokenable(t), symb(c, false, t) { }
-	Symbol symb;
-};
+typedef mdl::Token<Source> Token;
+typedef mdl::Tokenable<Source> Tokenable;
+typedef mdl::Id<Source> Id;
 
-struct Variable : public Tokenable {
-	Variable(uint v, const Token& t = Token()) : Tokenable(t), symb(v, true, t) { }
-	Symbol symb;
-};
-
-struct Disjointed : public Tokenable {
-	Disjointed(Expr&& e, const Token& t = Token()) : Tokenable(t), expr(std::move(e)) { }
-	Expr expr;
-};
-
-struct Essential : public Owner<Essential> {
-	Essential(uint l, Expr&& e, const Token& t = Token()) : Owner(l, t), expr(std::move(e)) { }
-	Expr expr;
-};
-
-struct Floating : public Owner<Floating> {
-	Floating(uint l, Expr&& e, const Token& t = Token()) : Owner(l, t), expr(std::move(e)) { }
-	uint type() const { return expr[0].id(); }
-	uint var() const { return expr[1].id(); }
-	Expr expr;
-};
-
-struct Axiom : public Owner<Axiom> {
-	Axiom(uint l, Expr&& e, const Token& t = Token()) : Owner(l, t), expr(std::move(e)), arity(-1) { }
-	Expr expr;
-	uint arity;
-};
-
-class Proof;
-
-struct Theorem : public Owner<Theorem> {
-	Theorem(uint l, Expr&& e, Proof* p = nullptr, const Token& t = Token()) :
-		Owner(l, t), expr(std::move(e)), arity(Undef<uint>::get()), proof(p) { }
-	~Theorem() override;
-	Expr   expr;
-	uint   arity;
-	Proof* proof;
-};
-
-
-struct Ref {
-	enum Type { UNRESOLVED, FLOATING, ESSENTIAL, AXIOM, THEOREM };
-
-	Ref(uint label, const Token& t = Token());
-	Ref(const Ref&);
-	~Ref();
-
-	uint label() const { return label_; }
-	uint arity() const {
-		assert(type() == AXIOM || type() == THEOREM);
-		return type() == AXIOM ?
-			val_.axm->get()->arity :
-			val_.thm->get()->arity;
-	}
-	void resolve();
-	Type type() const { return type_; }
-	bool is_assertion() const { return type_ == AXIOM || type_ == THEOREM; }
-	Floating*  flo() { return val_.flo->get(); }
-	Essential* ess() { return val_.ess->get(); }
-	Axiom*     axm() { return val_.axm->get(); }
-	Theorem*   thm() { return val_.thm->get(); }
-
-private:
-	union Value {
-		Value() : flo(nullptr) { }
-		User<Floating>*  flo;
-		User<Essential>* ess;
-		User<Axiom>*     axm;
-		User<Theorem>*   thm;
-	};
-	Value val_;
-	Type  type_;
-	uint  label_;
-	Token token_;
-};
-
-struct Proof {
-	Proof() = default;
-	Proof(const vector<Ref*>&);
-	Proof(vector<Ref*>&&);
-	Proof(const Proof& p) {
-		for (auto r : p.refs) refs.push_back(new Ref(*r));
-	}
-	~Proof();
-	vector<Ref*> refs;
-	Token        token;
-};
-
-
-struct Comment {
-	Comment(string t) : text(t) { }
-	string text;
-};
-
-class Block;
 class Source;
-class Inclusion;
+class Assertion;
 
-struct Node {
-	enum Type {
-		NONE,
-		CONSTANT,
-		VARIABLE,
-		DISJOINTED,
-		FLOATING,
-		ESSENTIAL,
-		AXIOM,
-		THEOREM,
-		BLOCK,
-		SOURCE,
-		INCLUSION,
-		COMMENT
-	};
-	union Value {
-		Value() : ptr(nullptr) { }
-		void*       ptr;
-		Constant*   cst;
-		Variable*   var;
-		Disjointed* dis;
-		Floating*   flo;
-		Essential*  ess;
-		Axiom*      ax;
-		Theorem*    th;
-		Block*      blk;
-		Source*     src;
-		Inclusion*  inc;
-		Comment*    com;
-	};
+struct Comment : public Writable {
+	string text;
+	Comment(const string& t) : text(t) { }
+	void write(ostream& os) const override {
+		os << "$(" << text << "$)\n";
+	}
+};
 
-	Node()              : ind(-1), type(NONE),       val() { }
-	Node(Constant* c)   : ind(-1), type(CONSTANT),   val() { val.cst = c; }
-	Node(Variable* v)   : ind(-1), type(VARIABLE),   val() { val.var = v; }
-	Node(Disjointed* d) : ind(-1), type(DISJOINTED), val() { val.dis = d; }
-	Node(Floating* f)   : ind(-1), type(FLOATING),   val() { val.flo = f; }
-	Node(Essential* e)  : ind(-1), type(ESSENTIAL),  val() { val.ess = e; }
-	Node(Axiom* a)      : ind(-1), type(AXIOM),      val() { val.ax  = a; }
-	Node(Theorem* t)    : ind(-1), type(THEOREM),    val() { val.th  = t; }
-	Node(Block* b)      : ind(-1), type(BLOCK),      val() { val.blk = b; }
-	Node(Source* s)     : ind(-1), type(SOURCE),     val() { val.src = s; }
-	Node(Inclusion* i)  : ind(-1), type(INCLUSION),  val() { val.inc = i; }
-	Node(Comment* c)    : ind(-1), type(COMMENT),    val() { val.com = c; }
+struct Import : public Writable {
+	User<Source> source;
+	Import(uint id) : source(id) { }
+	void write(ostream& os) const override {
+		os << "$[ " << Lex::toStr(source.id()) << ".mm $]\n";
+	}
+};
 
-	void destroy();
+struct Const : public Writable {
+	uint symb;
+	Const(uint s) : symb(s) { }
+	void write(ostream& os) const override {
+		os << "$c " << Lex::toStr(symb) << " $.\n";
+	}
+};
+
+struct Vars : public Writable {
+	vector<uint> vars;
+	void write(ostream& os) const override {
+		os << "\t$v "; for (uint v : vars) os << Lex::toStr(v) << " "; os << " $.\n";
+	}
+};
+
+struct Disj : public Writable {
+	vector<unique_ptr<vector<uint>>> vect;
+	void write(ostream& os) const override {
+		for (const auto& vars : vect) {
+			os << "\t$d "; for (uint v : *vars.get()) os << Lex::toStr(v) << " "; os << " $.\n";
+		}
+	}
+};
+
+struct Hyp : public Writable, public Referable {
+	uint index;
+	uint label;
+	Expr expr;
+	Hyp(uint i, uint l) : index(i), label(l) { }
+	void write(ostream& os) const override {
+		os << "\t"; ref(os);
+		os << "$e" << expr << "$.\n";
+	}
+	void ref(ostream& os) const override {
+		os << 'e' << index << '_' << Lex::toStr(label) << ' ';
+	}
+};
+
+struct Var : public Writable, public Referable {
+	bool inner;
+	uint index;
+	uint label;
+	Expr expr;
+	uint type() const { return expr[0].lit; }
+	uint var() const { return expr[1].lit; }
+	Var(bool i, uint ind, uint l, uint t, uint v) : inner(i), index(ind), label(l) {
+		expr.reserve(2);
+		expr.emplace_back(t, false);
+		expr.emplace_back(v, true);
+	}
+	void write(ostream& os) const override {
+		os << "\t" << (inner ? 'i' : 'f') << index << "_" << Lex::toStr(label);
+		os << " $f" << Lex::toStr(type()) << " " << Lex::toStr(var()) << " $.\n";
+	}
+	void ref(ostream& os) const override {
+		os << (inner ? 'i' : 'f') << index << '_' << Lex::toStr(label) << ' ';
+	}
+};
+
+struct Ref : public Writable {
+	typedef User<Assertion> Ass;
+
+	Ref(Hyp* h) : val(h) { }
+	Ref(Var* v) : val(v) { }
+	Ref(uint l) : val(Ass(l)) { }
+
+	bool is_assertion() const { return val.index() == 2; }
+	Hyp* hyp() { return std::get<Hyp*>(val); }
+	Var* var() { return std::get<Var*>(val); }
+	Assertion* ass() { return std::get<Ass>(val).get(); }
+	const Hyp* hyp() const { return std::get<Hyp*>(val); }
+	const Var* var() const { return std::get<Var*>(val); }
+	const Assertion* ass() const { return std::get<Ass>(val).get(); }
 
 	uint label() const {
-		switch (type) {
-		case FLOATING:   return val.flo->id();
-		case ESSENTIAL:  return val.ess->id();
-		case AXIOM:      return val.ax->id();
-		case THEOREM:    return val.th->id();
-		default : assert(false && "impossible"); break;
+		assert(is_assertion() && "must be assertion");
+		return std::get<Ass>(val).id();
+	}
+	uint index() const {
+		switch (val.index()) {
+		case 0 : return hyp()->index;
+		case 1 : return var()->index;
+		default : assert(false && "must not be assertion"); return -1;
 		}
-		return -1; // Pacifying compiler
 	}
-	Expr& expr() const {
-		switch (type) {
-		case FLOATING:   return val.flo->expr;
-		case ESSENTIAL:  return val.ess->expr;
-		case AXIOM:      return val.ax->expr;
-		case THEOREM:    return val.th->expr;
-		default : assert(false && "impossible"); break;
+
+	void write(ostream& os) const override;
+
+	variant<Var*, Hyp*, Ass> val;
+};
+
+struct Proof : public Writable {
+	vector<Ref> refs;
+	Assertion*  theorem;
+	void write(ostream& os) const override {
+		if (refs.size()) {
+			os << "p "; for (const auto& r : refs) os << r;  os << "$.\n";
 		}
-		static Expr ex; return ex; // Pacifying compiler
 	}
-	const Proof* proof() const {
-		assert(type == AXIOM || type == THEOREM);
-		return type == AXIOM ? nullptr : val.th->proof;
-	}
-	uint& arity() const {
-		assert(type == AXIOM || type == THEOREM);
-		return type == AXIOM ? val.ax->arity : val.th->arity;
-	}
-
-	uint ind;
-	Type type;
-	Value val;
 };
 
+struct Assertion : public Owner<Assertion>, public Writable, public Referable {
+	Assertion (uint label, const Token& t = Token()) : Owner(label, t) { }
+	~Assertion() override { }
 
-struct Block {
-	Block(): ind(-1), parent(nullptr), sibling(nullptr), contents() { }
-	Block(Block* p) : ind(-1), parent(p), sibling(nullptr), contents() { }
-	~ Block() {
-		for (auto& node : contents)
-			node.destroy();
+	uint arity() const { return hyps.size() + outerVars.size(); }
+	bool axiom() const { return !proof.refs.size(); }
+
+	Vars vars;
+	Disj disj;
+	vector<unique_ptr<Var>> outerVars;
+	vector<unique_ptr<Var>> innerVars;
+	vector<unique_ptr<Hyp>> hyps;
+	Expr  expr;
+	Proof proof;
+
+	void write(ostream& os) const override {
+		os << "${\n";
+		os << vars;
+		os << disj;
+		for (const auto& o : outerVars) o.get()->write(os);
+		for (const auto& i : innerVars) i.get()->write(os);
+		for (const auto& h : hyps) h.get()->write(os);
+		os << '\t'; ref(os);
+		os << (axiom() ? "$a " : "$p ") << expr << (axiom() ? "$.\n" : "$=");
+		proof.write(os);
+		os << "$}\n";
 	}
-	uint ind;
-	Block* parent;
-	Block* sibling;
-	vector<Node> contents;
-	Token token;
-};
-
-struct Source : public mdl::Source<Source, Sys> {
-	Source(uint l);
-	~Source() override { if (block) delete block; }
-
-	Block* block;
-};
-
-struct Inclusion {
-	Inclusion(uint src, bool prim, const Token& t = Token());
-	User<Source> source;
-	bool         primary;
-	Token        token;
-};
-
-inline void Node::destroy() {
-	switch(type) {
-	case NONE: break;
-	case CONSTANT:   delete val.cst; break;
-	case VARIABLE:   delete val.var; break;
-	case DISJOINTED: delete val.dis; break;
-	case FLOATING:   delete val.flo; break;
-	case ESSENTIAL:  delete val.ess; break;
-	case AXIOM:      delete val.ax;  break;
-	case THEOREM:    delete val.th;  break;
-	case BLOCK:      delete val.blk; break;
-	case SOURCE:     delete val.src; break;
-	case INCLUSION:  delete val.inc; break;
-	case COMMENT:    delete val.com; break;
-	default : assert(false && "impossible"); break;
+	void ref(ostream& os) const override {
+		os << (axiom() ? 'a' : 'p') << '_' << Lex::toStr(id()) << ' ';
 	}
-	type = NONE;
+};
+
+inline void Ref::write(ostream& os) const {
+	switch (val.index()) {
+	case 0 : hyp()->ref(os); break;
+	case 1 : var()->ref(os); break;
+	case 2 : ass()->ref(os); break;
+	default : assert(false && "impossible");
+	}
 }
 
-ostream& operator << (ostream& os, const Node& node);
-ostream& operator << (ostream& os, const Constant& cst);
-ostream& operator << (ostream& os, const Ref& ref);
-ostream& operator << (ostream& os, const Proof& proof);
-ostream& operator << (ostream& os, const Variable& vars);
-ostream& operator << (ostream& os, const Disjointed& disj);
-ostream& operator << (ostream& os, const Essential& ess);
-ostream& operator << (ostream& os, const Floating& flo);
-ostream& operator << (ostream& os, const Axiom& ax);
-ostream& operator << (ostream& os, const Theorem& th);
-ostream& operator << (ostream& os, const Block& block);
-ostream& operator << (ostream& os, const Source& source);
-ostream& operator << (ostream& os, const Inclusion& inc);
-ostream& operator << (ostream& os, const Comment& com);
+struct Source : public mdl::Source<Source, Sys>, public Writable {
+	typedef variant<
+		unique_ptr<Const>,
+		unique_ptr<Import>,
+		unique_ptr<Comment>,
+		unique_ptr<Assertion>
+	> Node;
+
+	Source(uint l) : mdl::Source<Source, Sys>(l) { }
+
+	vector<Node> contents;
+
+	void write(ostream& os) const override {
+		for (const Node& n : contents) {
+			switch (n.index()) {
+			case 0: std::get<unique_ptr<Const>>(n).get()->write(os);     break;
+			case 1: std::get<unique_ptr<Import>>(n).get()->write(os);    break;
+			case 2: std::get<unique_ptr<Comment>>(n).get()->write(os);   break;
+			case 3: std::get<unique_ptr<Assertion>>(n).get()->write(os); break;
+			}
+			os << '\n';
+		}
+	}
+};
+
+typedef map<Symbol, Expr> Subst;
+Expr apply(const Subst& sub, const Expr& expr);
 
 }} // mdl::mm
 

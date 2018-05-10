@@ -81,7 +81,7 @@ run "${binpath}/mdl -c -v
     \"smm opts verbose\" 
     
     \"rus transl in=${file}.rus out=${file}-1.smm\" 
-    \"smm write  in=${file}-1.smm\"
+    \"smm write  in=${file}-1.smm deep=true\"
     \"smm read   in=${file}-1.smm\"
     \"smm parse \"
     \"smm verify in=${file}-1.smm\"
@@ -90,7 +90,7 @@ run "${binpath}/mdl -c -v
     \"mm  opts verbose\" 
     
     \"smm transl in=${file}-1.smm out=${file}-1.mm\" 
-    \"mm  write in=${file}-1.mm\"
+    \"mm  write in=${file}-1.mm deep=true\"
     \"mm  read in=${file}-1.mm \"  
     \"mm parse \"
     
@@ -98,7 +98,7 @@ run "${binpath}/mdl -c -v
     \"smm opts verbose\"
     
     \"mm  transl in=${file}-1.mm out=$file-2.smm\" 
-    \"smm write in=$file-2.smm\"
+    \"smm write in=$file-2.smm deep=true\"
     \"smm read in=${file}-2.smm \" 
     \"smm parse \"
     \"smm verify in=${file}-2.smm\"

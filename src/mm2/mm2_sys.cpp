@@ -11,39 +11,15 @@ void translate(uint src, uint tgt);
 
 void Math::destroy() { sources.destroy(); }
 
-template<> Table<Symbol>& Math::get<Symbol>() { return symbols; }
-template<> Table<Theorem>& Math::get<Theorem>() { return theorems; }
-template<> Table<Axiom>& Math::get<Axiom>() { return axioms; }
-template<> Table<Essential>& Math::get<Essential>() { return essentials; }
+template<> Table<Assertion>& Math::get<Assertion>() { return assertions; }
 template<> Table<Source>& Math::get<Source>() { return sources; }
-template<> Table<Floating>& Math::get<Floating>() { return floatings; }
-template<> const Table<Symbol>& Math::get<Symbol>() const { return symbols; }
-template<> const Table<Theorem>& Math::get<Theorem>() const { return theorems; }
-template<> const Table<Axiom>& Math::get<Axiom>() const { return axioms; }
-template<> const Table<Essential>& Math::get<Essential>() const { return essentials; }
+template<> const Table<Assertion>& Math::get<Assertion>() const { return assertions; }
 template<> const Table<Source>& Math::get<Source>() const { return sources; }
-template<> const Table<Floating>& Math::get<Floating>() const { return floatings; }
-
-template Table<Symbol>& Math::get<Symbol>();
-template Table<Source>& Math::get<Source>();
-template Table<Floating>& Math::get<Floating>();
-template Table<Theorem>& Math::get<Theorem>();
-template Table<Axiom>& Math::get<Axiom>();
-template Table<Essential>& Math::get<Essential>();
-template const Table<Symbol>& Math::get<Symbol>() const;
-template const Table<Theorem>& Math::get<Theorem>() const;
-template const Table<Axiom>& Math::get<Axiom>() const;
-template const Table<Essential>& Math::get<Essential>() const;
-template const Table<Floating>& Math::get<Floating>() const;
-template const Table<Source>& Math::get<Source>() const;
 
 string Math::info() const {
 	string stats;
 	stats += "Size:\n";
-	stats += "\taxioms:     " + to_string(axioms.size()) + "\n";
-	stats += "\ttheorems:   " + to_string(theorems.size()) + "\n";
-	stats += "\tessentials: " + to_string(essentials.size()) + "\n";
-	stats += "\tfloatings:  " + to_string(floatings.size()) + "\n";
+	stats += "\tassertions:     " + to_string(assertions.size()) + "\n";
 	stats += "\n";
 	return stats;
 }
@@ -57,9 +33,9 @@ void write(uint s, bool deep) {
 		if (deep) {
 			deep_write(
 				src,
-				[](const Source* src) -> const vector<Node>& { return src->block->contents; },
-				[](Node n) -> Source* { return n.val.inc->source.get(); },
-				[](Node n) -> bool { return n.type == Node::INCLUSION; }
+				[](const Source* src) -> const vector<Source::Node>& { return src->contents; },
+				[](const Source::Node& n) -> const Source* { return std::get<unique_ptr<Import>>(n).get()->source.get(); },
+				[](const Source::Node& n) -> bool { return std::holds_alternative<unique_ptr<Import>>(n); }
 			);
 		} else {
 			shallow_write(src);
