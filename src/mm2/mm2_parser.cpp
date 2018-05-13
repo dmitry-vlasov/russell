@@ -119,7 +119,12 @@ struct Block {
 		// Make final set of disjointeds.
 		ass->disj.vect.reserve(all_disjointed.size());
 		for (const Disj* disj : all_disjointed) {
-			ass->disj.vect.emplace_back(disj->make(vars));
+			vector<uint>* d = disj->make(vars);
+			if (!d->empty()) {
+				ass->disj.vect.emplace_back(disj->make(vars));
+			} else {
+				delete d;
+			}
 		}
 
 		// Make final set of essentials.

@@ -1,12 +1,17 @@
 #include <rus_ast.hpp>
-#include <smm_ast.hpp>
+#include <mm2_ast.hpp>
 
 namespace mdl { namespace rus { namespace {
 
 struct RuleImage {
-	RuleImage(smm::Assertion* r = nullptr) : rule(r) { }
-	smm::Assertion*   rule;
+	RuleImage(mm2::Assertion* r = nullptr) : rule(r) { }
+	mm2::Assertion*   rule;
 	map<Symbol, uint> args;
+};
+
+struct TypeImage {
+	mm2::Const* constant;
+	vector<mm2::Assertion*> supers;
 };
 
 struct Maps {
@@ -14,23 +19,23 @@ struct Maps {
 		static uint turnstileName() {
 			static uint name = Lex::toInt("turnstile_special_source"); return name;
 		}
-		Global() : turnstile(smm::Symbol(Lex::toInt("|-"))) {
-			if (!smm::Sys::get().math.get<smm::Source>().access(turnstileName())) {
-				smm::Source* turnstileSource = new smm::Source(turnstileName());
-				turnstileSource->contents.push_back(new smm::Constant(turnstile));
+		Global() : turnstile(mm2::Symbol(Lex::toInt("|-"))) {
+			if (!mm2::Sys::get().math.get<mm2::Source>().access(turnstileName())) {
+				mm2::Source* turnstileSource = new mm2::Source(turnstileName());
+				turnstileSource->contents.emplace_back(unique_ptr<mm2::Const>(new mm2::Const(turnstile.lit)));
 			}
 		}
-		map<const Const*, smm::Constant*>   constants;
-		map<const Type*, vector<smm::Node>> types;
-		map<const Rule*, RuleImage>         rules;
-		smm::Symbol turnstile;
+		map<const Const*, mm2::Const*> constants;
+		map<const Type*, TypeImage>    types;
+		map<const Rule*, RuleImage>    rules;
+		mm2::Symbol turnstile;
 	};
 	struct Local {
 		Local() : thm(nullptr) { }
-		map<const Assertion*, map<const Hyp*, smm::Essential*>> essentials;
-		map<const Assertion*, map<Symbol, smm::Floating*>> floatings;
-		map<const Assertion*, map<Symbol, smm::Inner*>> inners;
-		smm::Assertion* thm;
+		map<const Assertion*, map<const Hyp*, mm2::Hyp*>> essentials;
+		map<const Assertion*, map<Symbol, mm2::Var*>> floatings;
+		map<const Assertion*, map<Symbol, mm2::Var*>> inners;
+		mm2::Assertion* thm;
 	};
 	Maps() { }
 	Maps(const Global& g) : global(g) { }
@@ -47,70 +52,72 @@ inline uint translate_symb(const Symbol& s) {
 	}
 }
 
-smm::Expr translate_expr(const Expr& ex, Maps& maps) {
-	smm::Expr expr; expr.reserve(ex.symbols.size() + 1);
+mm2::Expr translate_expr(const Expr& ex, Maps& maps) {
+	mm2::Expr expr; expr.reserve(ex.symbols.size() + 1);
 	expr.push_back(maps.global.turnstile);
-	for (auto& s : ex.symbols) expr.push_back(smm::Symbol(translate_symb(s), s.type()));
+	for (auto& s : ex.symbols) expr.push_back(mm2::Symbol(translate_symb(s), s.type()));
 	return expr;
 }
 
-smm::Expr translate_term(const Expr& ex, const Type* tp, Maps& maps) {
-	smm::Expr expr; expr.reserve(ex.symbols.size() + 1);
+mm2::Expr translate_term(const Expr& ex, const Type* tp, Maps& maps) {
+	mm2::Expr expr; expr.reserve(ex.symbols.size() + 1);
 	expr.emplace_back(tp->id());
 	for (auto& s : ex.symbols) expr.emplace_back(translate_symb(s), s.type());
 	return expr;
 }
 
-smm::Constant* translate_const(const Const* c) {
+mm2::Const* translate_const(const Const* c) {
 	uint symb = Symbol::is_undef(c->ascii) ? c->id() : c->ascii;
-	smm::Constant* constant = new smm::Constant(symb);
+	mm2::Const* constant = new mm2::Const(symb);
 	return constant;
 }
 
-smm::Variables* translate_vars(const Vars& rvars) {
-	smm::Variables* svars = new smm::Variables();
+vector<uint> translate_vars(const Vars& rvars) {
+	vector<uint> vars;
+	vars.reserve(rvars.v.size());
 	for (auto s : rvars.v) {
-		svars->expr.push_back(smm::Symbol(s.lit, true));
+		vars.push_back(s.lit);
 	}
-	return svars;
+	return vars;
 }
 
-vector<smm::Disjointed*> translate_disj(const Disj& rdisj) {
-	vector<smm::Disjointed*> disj_vect;
+vector<unique_ptr<vector<uint>>> translate_disj(const Disj& rdisj) {
+	vector<unique_ptr<vector<uint>>> disj;
+	disj.reserve(rdisj.d.size());
 	for (auto d : rdisj.d) {
-		smm::Disjointed* disj = new smm::Disjointed;
+		vector<uint>* dis = new vector<uint>;
+		dis->reserve(d.size());
 		for (auto s : d) {
-			disj->expr.push_back(smm::Symbol(s.lit, true));
+			dis->push_back(s.lit);
 		}
-		disj_vect.push_back(disj);
+		disj.emplace_back(dis);
 	}
-	return disj_vect;
+	return disj;
 }
 
 RuleImage translate_rule(const Rule* rule, Maps& maps);
 
-vector<smm::Node> translate_type(const Type* type, Maps& maps) {
-	smm::Constant* constant = new smm::Constant(type->id());
-	vector<smm::Node> ret;
-	ret.push_back(constant);
+TypeImage translate_type(const Type* type, Maps& maps) {
+	mm2::Const* type_const = new mm2::Const(type->id());
+	vector<mm2::Assertion*> type_supers;
+	type_supers.reserve(type->supers.size());
 	for (auto p : type->supers) {
-		RuleImage image = translate_rule(p.second, maps);
-		maps.global.rules[p.second] = image;
-		ret.push_back(image.rule);
+		RuleImage rule_image = translate_rule(p.second, maps);
+		maps.global.rules[p.second] = rule_image;
+		type_supers.push_back(rule_image.rule);
 	}
-	return ret;
+	return TypeImage{type_const, type_supers};
 }
 
-void translate_term(const Tree& t, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps);
-vector<smm::Floating*> translate_floatings(const Vars& vars, Maps& maps, const Assertion* ass = nullptr);
+vector<unique_ptr<mm2::Var>> translate_floatings(const Vars& vars, Maps& maps, uint id, const Assertion* ass = nullptr);
 
 RuleImage translate_rule(const Rule* rule, Maps& maps) {
-	RuleImage image(new smm::Assertion(rule->id()));
+	RuleImage image(new mm2::Assertion(rule->id()));
 	if (rule->vars.v.size()) {
-		image.rule->variables.push_back(translate_vars(rule->vars));
+		image.rule->vars.vars = std::move(translate_vars(rule->vars));
 	}
-	image.rule->floating = translate_floatings(rule->vars, maps);
-	image.rule->prop = new smm::Proposition(true, rule->id(), translate_term(rule->term, rule->term.type.get(), maps));
+	image.rule->outerVars = std::move(translate_floatings(rule->vars, maps, rule->id()));
+	image.rule->expr = std::move(translate_term(rule->term, rule->term.type.get(), maps));
 	for (auto v : rule->vars.v) {
 		uint i = 0;
 		for (auto& ch : rule->term.tree.children()) {
@@ -124,113 +131,105 @@ RuleImage translate_rule(const Rule* rule, Maps& maps) {
 	return image;
 }
 
-vector<smm::Essential*> translate_essentials(const Assertion* ass, Maps& maps) {
-	vector<smm::Essential*> ess_vect;
+vector<unique_ptr<mm2::Hyp>> translate_essentials(const Assertion* ass, Maps& maps) {
+	vector<unique_ptr<mm2::Hyp>> ess_vect;
+	ess_vect.reserve(ass->hyps.size());
 	for (auto hyp : ass->hyps) {
-		smm::Essential* ess = new smm::Essential(hyp->ind, translate_expr(hyp->expr, maps));
-		ess_vect.push_back(ess);
+		mm2::Hyp* ess = new mm2::Hyp(hyp->ind, ass->id());
+		ess->expr = std::move(translate_expr(hyp->expr, maps));
+		ess_vect.emplace_back(ess);
 		maps.local.essentials[ass][hyp] = ess;
 	}
 	return ess_vect;
 }
 
-vector<smm::Floating*> translate_floatings(const Vars& vars, Maps& maps, const Assertion* ass) {
-	vector<smm::Floating*> flo_vect;
+vector<unique_ptr<mm2::Var>> translate_floatings(const Vars& vars, Maps& maps, uint id, const Assertion* ass) {
+	vector<unique_ptr<mm2::Var>> flo_vect;
 	for (uint i = 0; i < vars.v.size(); ++ i) {
 		Symbol v = vars.v[i];
-		smm::Floating* flo = new smm::Floating(i);
-		flo->expr.reserve(2);
-		flo->expr.push_back(smm::Symbol(v.type()->id()));
-		flo->expr.push_back(smm::Symbol(v.lit, true));
-		flo_vect.push_back(flo);
-		if (ass) maps.local.floatings[ass][v] = flo;
+		mm2::Var* flo = new mm2::Var(false, i, id, v.type()->id(), v.literal());
+		flo_vect.emplace_back(flo);
+		if (ass) {
+			maps.local.floatings[ass][v] = flo;
+		}
 	}
 	return flo_vect;
 }
 
-vector<smm::Node> translate_assertion(const Assertion* ass, Maps& maps) {
-	vector<smm::Node> ra_vect;
+vector<mm2::Assertion*> translate_assertion(const Assertion* ass, Maps& maps) {
+	vector<mm2::Assertion*> image;
+	image.reserve(ass->props.size());
 	for (auto prop : ass->props) {
 		string ass_str = Lex::toStr(ass->id());
 		if (prop->ind) {
 			ass_str += "_" + to_string(prop->ind);
 		}
 		uint ass_lab = Lex::toInt(ass_str);
-		smm::Assertion* ra = new smm::Assertion(ass_lab);
+		mm2::Assertion* ra = new mm2::Assertion(ass_lab);
 		if (ass->vars.v.size()) {
-			ra->variables.push_back(translate_vars(ass->vars));
+			ra->vars.vars = std::move(translate_vars(ass->vars));
 		}
 		if (ass->disj.d.size()) {
-			ra->disjointed = translate_disj(ass->disj);
+			ra->disj.vect = std::move(translate_disj(ass->disj));
 		}
-		ra->floating = translate_floatings(ass->vars, maps, ass);
-		ra->essential= translate_essentials(ass, maps);
-		ra->prop = new smm::Proposition(false, ass_lab, translate_expr(prop->expr, maps));
-		ra_vect.push_back(ra);
+		ra->outerVars = std::move(translate_floatings(ass->vars, maps, ass->id(), ass));
+		ra->hyps = std::move(translate_essentials(ass, maps));
+		ra->expr = std::move(translate_expr(prop->expr, maps));
+		image.push_back(ra);
 	}
-	return ra_vect;
+	return image;
 }
 
-vector<smm::Node> translate_axiom(const Axiom* ax, Maps& maps) {
-	vector<smm::Node> asss = translate_assertion(ax, maps);
-	for (auto n : asss) {
-		assert(n.type == smm::Node::ASSERTION);
-		n.val.ass->prop->axiom = true;
-	}
-	return asss;
+inline vector<mm2::Assertion*> translate_axiom(const Axiom* ax, Maps& maps) {
+	return translate_assertion(ax, maps);
 }
 
-vector<smm::Node> translate_def(const Def* def, Maps& maps) {
-	vector<smm::Node> asss = translate_assertion(def, maps);
-	for (auto n : asss) {
-		assert(n.type == smm::Node::ASSERTION);
-		n.val.ass->prop->axiom = true;
-	}
-	return asss;
+inline vector<mm2::Assertion*> translate_def(const Def* def, Maps& maps) {
+	return translate_assertion(def, maps);
 }
 
-void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps);
+void translate_step(const Step* st, const Assertion* thm, vector<mm2::Ref>& mm2_proof, Maps& maps);
 
-void translate_ref(Ref* ref, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps) {
+void translate_ref(Ref* ref, const Assertion* thm, vector<mm2::Ref>& mm2_proof, Maps& maps) {
 	switch (ref->kind) {
-	case Ref::HYP:  smm_proof.push_back(new smm::Ref(maps.local.essentials[thm][ref->val.hyp])); break;
+	case Ref::HYP:  mm2_proof.emplace_back(maps.local.essentials[thm][ref->val.hyp]); break;
 	case Ref::PROP: break;
-	case Ref::STEP: translate_step(ref->val.step, thm, smm_proof, maps); break;
+	case Ref::STEP: translate_step(ref->val.step, thm, mm2_proof, maps); break;
 	default : assert(false); break;
 	}
 }
 
-void translate_term(const Tree& t, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps) {
+void translate_term(const Tree& t, const Assertion* thm, vector<mm2::Ref>& mm2_proof, Maps& maps) {
 	if (t.kind == Tree::VAR) {
 		if (maps.local.floatings[thm].count(*t.var())) {
-			smm_proof.push_back(new smm::Ref(maps.local.floatings[thm][*t.var()]));
+			mm2_proof.emplace_back(maps.local.floatings[thm][*t.var()]);
 		} else if (maps.local.inners[thm].count(*t.var())) {
-			smm_proof.push_back(new smm::Ref(maps.local.inners[thm][*t.var()]));
+			mm2_proof.emplace_back(maps.local.inners[thm][*t.var()]);
 		} else {
 			throw Error("undeclared variable", show(*t.var()));
 		}
 	} else {
 		for (auto v : t.rule()->vars.v) {
-			translate_term(*t.children()[maps.global.rules[t.rule()].args[v]], thm, smm_proof, maps);
+			translate_term(*t.children()[maps.global.rules[t.rule()].args[v]], thm, mm2_proof, maps);
 		}
 	}
 	if (t.kind == Tree::NODE) {
 		if (!maps.global.rules.count(t.rule())) {
 			throw Error("undefined reference to rule");
 		}
-		smm_proof.push_back(new smm::Ref(maps.global.rules[t.rule()].rule->prop->label, true));
+		mm2_proof.emplace_back(maps.global.rules[t.rule()].rule->id());
 	}
 }
 
-void translate_proof(const Proof* proof, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps, uint ind = 0);
+void translate_proof(const Proof* proof, const Assertion* thm, vector<mm2::Ref>& mm2_proof, Maps& maps, uint ind = 0);
 
-void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps) {
+void translate_step(const Step* st, const Assertion* thm, vector<mm2::Ref>& mm2_proof, Maps& maps) {
 	if (st->kind() == Step::CLAIM) {
-		translate_proof(st->proof(), thm, smm_proof, maps);
+		translate_proof(st->proof(), thm, mm2_proof, maps);
 		return;
 	}
 	for (auto ref : st->refs) {
-		translate_ref(ref, thm, smm_proof, maps);
+		translate_ref(ref, thm, mm2_proof, maps);
 	}
 	const Assertion* ass = st->ass();
 	Substitution ps = unify_forth(ass->props[0]->expr, st->expr);
@@ -241,92 +240,133 @@ void translate_step(const Step* st, const Assertion* thm, vector<smm::Ref*>& smm
 		if (!ps.join(hs)) throw Error("substitution join failed");
 	}
 	for (auto v : ass->vars.v) {
-		translate_term(ps.sub().at(v), thm, smm_proof, maps);
+		translate_term(ps.sub().at(v), thm, mm2_proof, maps);
 	}
-	smm_proof.push_back(new smm::Ref(ass->id(), ass->kind() != Assertion::THM));
+	mm2_proof.emplace_back(ass->id());
 }
 
-vector<smm::Inner*> translate_inners(const Vars& vars, Maps& maps, const Assertion* thm, uint ind_0) {
-	vector<smm::Inner*> inn_vect;
-	smm::Variables* smm_vars = nullptr;
+vector<unique_ptr<mm2::Var>> translate_inners(const Vars& vars, Maps& maps, const Assertion* thm, uint ind_0) {
+	vector<unique_ptr<mm2::Var>> inn_vect;
+	//mm2::Vars* mm2_vars = nullptr;
 	if (vars.v.size()) {
-		maps.local.thm->variables.push_back(new smm::Variables);
-		smm_vars = maps.local.thm->variables.back();
+		//maps.local.thm->vars.push_back(new mm2::Vars);
+		//mm2_vars = maps.local.thm->variables.back();
 	}
 	for (uint i = 0; i < vars.v.size(); ++ i) {
 		Symbol v = vars.v[i];
-		smm::Inner* inn = new smm::Inner(i + ind_0);
-		inn->index = i + ind_0;
+		mm2::Var* inn = new mm2::Var(true, i + ind_0, thm->id(), v.type()->id(), v.literal());
+		/*inn->index = i + ind_0;
 		inn->expr.reserve(2);
-		inn->expr.push_back(smm::Symbol(v.type()->id()));
-		inn->expr.push_back(smm::Symbol(v.lit, true));
-		inn_vect.push_back(inn);
-		smm_vars->expr.push_back(smm::Symbol(v.lit, true));
+		inn->expr.push_back(mm2::Symbol(v.type()->id()));
+		inn->expr.push_back(mm2::Symbol(v.lit, true));*/
+		inn_vect.emplace_back(inn);
+		//mm2_vars->expr.push_back(mm2::Symbol(v.lit, true));
 		maps.local.inners[thm][v] = inn;
 	}
 	return inn_vect;
 }
 
-void translate_proof(const Proof* proof, const Assertion* thm, vector<smm::Ref*>& smm_proof, Maps& maps, uint ind) {
-	join(maps.local.thm->inner, translate_inners(proof->vars, maps, thm, maps.local.thm->inner.size()));
+void translate_proof(const Proof* proof, const Assertion* thm, vector<mm2::Ref>& mm2_proof, Maps& maps, uint ind) {
+	maps.local.thm->innerVars = std::move(translate_inners(proof->vars, maps, thm, maps.local.thm->innerVars.size()));
+	//join(maps.local.thm->inner, );
 	for (auto el : proof->elems) {
 		if (el.kind == Proof::Elem::QED && el.val.qed->prop->ind == ind) {
-			translate_step(el.val.qed->step, thm, smm_proof, maps);
+			translate_step(el.val.qed->step, thm, mm2_proof, maps);
 			break;
 		}
 	}
 }
 
-vector<smm::Node> translate_proof(const Proof* proof, Maps& maps) {
-	vector<smm::Node> nodes;
-	vector<smm::Node> asss = translate_assertion(proof->thm.get(), maps);
+vector<mm2::Assertion*> translate_proof(const Proof* proof, Maps& maps) {
+	vector<mm2::Assertion*> asss = std::move(translate_assertion(proof->thm.get(), maps));
 	if (proof->id() != static_cast<uint>(-1)) {
 		// TODO ? WTF??
 	}
 	for (uint i = 0; i < asss.size(); ++ i) {
-		maps.local.thm = asss[i].val.ass;
-		maps.local.thm->proof = new smm::Proof();
-		translate_proof(proof, proof->thm.get(), maps.local.thm->proof->refs, maps, i);
+		maps.local.thm = asss[i];
+		translate_proof(proof, proof->thm.get(), maps.local.thm->proof.refs, maps, i);
 	}
-	join(nodes, asss);
-	return nodes;
+	return asss;
 }
 
-inline smm::Inclusion* translate_import(const Import* imp) {
-	return new smm::Inclusion(imp->source.id(), imp->primary);
+inline void add_turnstile(vector<mm2::Source::Node>& nodes) {
+	nodes.emplace_back(unique_ptr<mm2::Import>(new mm2::Import(Maps::Global::turnstileName())));
 }
 
-vector<smm::Node> translate_theory(const Theory* thy, Maps& maps) {
-	vector<smm::Node> nodes;
-	nodes.push_back(new smm::Inclusion(Maps::Global::turnstileName(), false));
+inline void add_const(vector<mm2::Source::Node>& nodes, const Const* c, Maps& maps) {
+	nodes.emplace_back(unique_ptr<mm2::Const>(maps.global.constants[c]));
+}
+
+inline void add_type(vector<mm2::Source::Node>& nodes, const Type* t, Maps& maps) {
+	TypeImage image = maps.global.types[t];
+	nodes.emplace_back(unique_ptr<mm2::Const>(image.constant));
+	for (auto r : image.supers) {
+		nodes.emplace_back(unique_ptr<mm2::Assertion>(r));
+	}
+}
+
+inline void add_rule(vector<mm2::Source::Node>& nodes, const Rule* r, Maps& maps) {
+	nodes.emplace_back(unique_ptr<mm2::Assertion>(maps.global.rules[r].rule));
+}
+
+inline void add_assertion(vector<mm2::Source::Node>& nodes, const Assertion* a, Maps& maps) {
+	for (auto ass : translate_assertion(a, maps)) {
+		nodes.emplace_back(unique_ptr<mm2::Assertion>(ass));
+	}
+}
+
+inline void add_proof(vector<mm2::Source::Node>& nodes, const Proof* p, Maps& maps) {
+	for (auto ass : translate_proof(p, maps)) {
+		nodes.emplace_back(unique_ptr<mm2::Assertion>(ass));
+	}
+}
+
+inline void add_import(vector<mm2::Source::Node>& nodes, const Import* i) {
+	nodes.emplace_back(unique_ptr<mm2::Import>(new mm2::Import(i->source.id())));
+}
+
+inline void add_comment(vector<mm2::Source::Node>& nodes, const Comment* c) {
+	nodes.emplace_back(unique_ptr<mm2::Comment>(new mm2::Comment(c->text)));
+}
+
+vector<mm2::Source::Node> translate_theory(const Theory* thy, Maps& maps);
+
+inline void add_theory(vector<mm2::Source::Node>& nodes, const Theory* t, Maps& maps) {
+	vector<mm2::Source::Node> image = translate_theory(t, maps);
+	std::move(std::begin(image), std::end(image), std::back_inserter(nodes));
+}
+
+vector<mm2::Source::Node> translate_theory(const Theory* thy, Maps& maps) {
+	vector<mm2::Source::Node> nodes;
+	add_turnstile(nodes);
 	for (auto n : thy->nodes) {
 		switch (n.kind) {
-		case Node::CONST:   nodes.push_back(maps.global.constants[n.val.cst]);  break;
-		case Node::TYPE:    join(nodes, maps.global.types[n.val.tp]);           break;
-		case Node::RULE:    nodes.push_back(maps.global.rules[n.val.rul].rule); break;
+		case Node::CONST:   add_const(nodes, n.val.cst, maps); break;
+		case Node::TYPE:    add_type(nodes, n.val.tp, maps);   break;
+		case Node::RULE:    add_rule(nodes, n.val.rul, maps);  break;
 
-		case Node::AXIOM:   join(nodes, translate_axiom(n.val.ax, maps));       break;
-		case Node::DEF:     join(nodes, translate_def(n.val.def, maps));        break;
+		case Node::AXIOM:   add_assertion(nodes, n.val.ax, maps);  break;
+		case Node::DEF:     add_assertion(nodes, n.val.def, maps); break;
 		case Node::THEOREM: break;  // theorem is translated implicitly in proof
-		case Node::PROOF:   join(nodes, translate_proof(n.val.prf, maps));      break;
-		case Node::THEORY:  join(nodes, translate_theory(n.val.thy, maps));     break;
-		case Node::IMPORT:  nodes.push_back(translate_import(n.val.imp));       break;
-		case Node::COMMENT: nodes.push_back(new smm::Comment(n.val.com->text)); break;
+		case Node::PROOF:   add_proof(nodes, n.val.prf, maps);  break;
+		case Node::THEORY:  add_theory(nodes, n.val.thy, maps); break;
+		case Node::IMPORT:  add_import(nodes, n.val.imp);       break;
+		case Node::COMMENT: add_comment(nodes, n.val.com);      break;
 		default : assert(false && "impossible"); break;
 		}
 	}
 	return nodes;
 }
 
-smm::Source* translate_source(uint src, Maps maps, uint tgt = -1) {
+mm2::Source* translate_source(uint src, Maps maps, uint tgt = -1) {
 	tgt = (tgt == -1) ? src : tgt;
 	const rus::Source* source = Sys::get().math.get<Source>().access(src);
-	smm::Source* target = smm::Sys::mod().math.get<smm::Source>().access(tgt);
+	mm2::Source* target = mm2::Sys::mod().math.get<mm2::Source>().access(tgt);
 	if (target) {
 		delete target;
 	}
-	target = new smm::Source(tgt);
-	target->contents = translate_theory(source->theory, maps);
+	target = new mm2::Source(tgt);
+	target->contents = std::move(translate_theory(source->theory, maps));
 	return target;
 }
 
@@ -339,7 +379,7 @@ static void find_dependencies(uint src, set<uint>& deps, set<uint>& visited) {
 			if (!visited.count(imp)) {
 				find_dependencies(imp, deps, visited);
 			}
-			const smm::Source* inpTarg = smm::Sys::mod().math.get<smm::Source>().access(imp);
+			const mm2::Source* inpTarg = mm2::Sys::mod().math.get<mm2::Source>().access(imp);
 			const Source* inpSrc = Sys::get().math.get<Source>().access(imp);
 			if (inpSrc->has_changed() || !inpTarg) {
 				deps.insert(imp);
@@ -381,7 +421,7 @@ Maps::Global translate_global() {
 
 #define PARALLEL_TRANSLATE
 
-smm::Source* translate(uint src, uint tgt) {
+mm2::Source* translate(uint src, uint tgt) {
 	const Source* source = Sys::get().math.get<Source>().access(src);
 	if (!source) throw Error("no source", Lex::toStr(src));
 	Maps::Global global = translate_global();

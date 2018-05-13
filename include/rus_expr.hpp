@@ -38,6 +38,7 @@ struct Literal {
 		default:    var = false; cst = false; rep = false; break;
 		}
 	}
+	uint literal() const { return lit; }
 
 	uint lit:27;
 
