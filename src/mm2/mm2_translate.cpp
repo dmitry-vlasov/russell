@@ -160,7 +160,7 @@ rus::Type* translate_type(Symbol type_sy, Maps& state) {
 void translate_super(const Assertion* ass, Maps& state) {
 	Symbol super_sy = ass->expr[0];
 	Symbol infer_sy = ass->outerVars[0]->type();
-	assert(ass->prop->expr[1] == ass->floating[0]->var());
+	assert(ass->expr[1] == ass->outerVars[0]->var());
 	rus::Type* super = translate_type(super_sy, state);
 	rus::Type* infer = translate_type(infer_sy, state);
 	infer->sup.push_back(super);
@@ -363,7 +363,7 @@ rus::Proof::Elem translate_step(Tree* tree, rus::Proof* proof, rus::Theorem* thm
 	rus::Proof::Elem el(new rus::Step(elems.size(), rus::Step::ASS, ass->id(), proof));
 
 	for (uint i = 0; i < ass->hyps.size(); ++ i) {
-		Tree::Node& n = tree->nodes[i];
+		Tree::Node& n = tree->nodes[i + ass->outerVars.size()];
 		assert(n.type == Tree::Node::TREE);
 		Tree* t = n.val.tree;
 		Tree::Node& h = t->nodes.back();
@@ -394,6 +394,10 @@ void translate_proof(const Assertion* ass, rus::Theorem* thm, Maps& state) {
 }
 
 void translate_theorem(const Assertion* ass, Maps& state) {
+	if (ass->proof.refs.size() == 1) {
+		// Dummy theorem
+		return;
+	}
 	rus::Theorem* thm = new rus::Theorem(ass->id());
 	translate_assertion<rus::Theorem>(ass, thm, state);
 	state.theory.top()->nodes.push_back(thm);
@@ -401,12 +405,17 @@ void translate_theorem(const Assertion* ass, Maps& state) {
 }
 
 void translate_assertion(const Assertion* ass, Maps& state) {
-	switch (node_kind(ass)) {
-	case rus::Node::RULE    : translate_rule(ass, state);    break;
-	case rus::Node::DEF     : translate_def(ass, state);     break;
-	case rus::Node::AXIOM   : translate_axiom(ass, state);   break;
-	case rus::Node::THEOREM : translate_theorem(ass, state); break;
-	default : assert(false && "impossible"); break;
+	try {
+		switch (node_kind(ass)) {
+		case rus::Node::RULE    : translate_rule(ass, state);    break;
+		case rus::Node::DEF     : translate_def(ass, state);     break;
+		case rus::Node::AXIOM   : translate_axiom(ass, state);   break;
+		case rus::Node::THEOREM : translate_theorem(ass, state); break;
+		default : assert(false && "impossible"); break;
+		}
+	} catch (Error& err) {
+		err.msg += "\nat assertion: " + Lex::toStr(ass->id()) + "\n";
+		throw err;
 	}
 }
 
@@ -424,7 +433,7 @@ inline void translate_comment(const Comment* com, Maps& s) {
 
 void translate_theory(const Source* source, Maps& state) {
 	for (const auto& node : source->contents) {
-		if (const auto& imp = std::get_if<unique_ptr<Import>>(&node)) {
+		if (auto imp = std::get_if<unique_ptr<Import>>(&node)) {
 			state.theory.top()->nodes.push_back(translate_import(imp->get(), state));
 		}
 	}

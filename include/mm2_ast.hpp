@@ -58,7 +58,7 @@ struct Hyp : public Writable, public Referable {
 	Hyp(uint i, uint l) : index(i), label(l) { }
 	void write(ostream& os) const override {
 		os << "\t"; ref(os);
-		os << "$e" << expr << "$.\n";
+		os << "$e " << expr << "$.\n";
 	}
 	void ref(ostream& os) const override {
 		os << 'e' << index << '_' << Lex::toStr(label) << ' ';
@@ -79,7 +79,7 @@ struct Var : public Writable, public Referable {
 	}
 	void write(ostream& os) const override {
 		os << "\t" << (inner ? 'i' : 'f') << index << "_" << Lex::toStr(label);
-		os << " $f" << Lex::toStr(type()) << " " << Lex::toStr(var()) << " $.\n";
+		os << " $f " << Lex::toStr(type()) << " " << Lex::toStr(var()) << " $.\n";
 	}
 	void ref(ostream& os) const override {
 		os << (inner ? 'i' : 'f') << index << '_' << Lex::toStr(label) << ' ';
@@ -107,8 +107,8 @@ struct Ref : public Writable {
 	}
 	uint index() const {
 		switch (val.index()) {
-		case 0 : return hyp()->index;
-		case 1 : return var()->index;
+		case 0 : return var()->index;
+		case 1 : return hyp()->index;
 		default : assert(false && "must not be assertion"); return -1;
 		}
 	}
@@ -123,7 +123,7 @@ struct Proof : public Writable {
 	Assertion*  theorem;
 	void write(ostream& os) const override {
 		if (refs.size()) {
-			os << "p "; for (const auto& r : refs) os << r;  os << "$.\n";
+			os << " "; for (const auto& r : refs) os << r;  os << "$.\n";
 		}
 	}
 };
@@ -162,8 +162,8 @@ struct Assertion : public Owner<Assertion>, public Writable, public Referable {
 
 inline void Ref::write(ostream& os) const {
 	switch (val.index()) {
-	case 0 : hyp()->ref(os); break;
-	case 1 : var()->ref(os); break;
+	case 0 : var()->ref(os); break;
+	case 1 : hyp()->ref(os); break;
 	case 2 : ass()->ref(os); break;
 	default : assert(false && "impossible");
 	}

@@ -50,6 +50,16 @@ struct Tree {
 		uint length() const {
 			return (type == Tree::Node::TREE) ? val.tree->length() : 1;
 		}
+		string show() const {
+			if (type == Tree::Node::TREE) return val.tree->show();
+			ostringstream oss;
+			switch (val.ref->val.index()) {
+			case 0 : val.ref->var()->ref(oss); break;
+			case 1 : val.ref->hyp()->ref(oss); break;
+			case 2 : val.ref->ass()->ref(oss); break;
+			}
+			return oss.str();
+		}
 		Type type;
 		Value val;
 		Expr expr;
@@ -61,6 +71,17 @@ struct Tree {
 		uint len = 0;
 		for (auto& n : nodes) len += n.length();
 		return len;
+	}
+	string show() const {
+		string space = length() > 16 ? "\n" : " ";
+		assert(nodes.back().type == Tree::Node::REF);
+		const Node& n = nodes.back();
+		string str = n.show();
+		str += "(";
+		for (uint i = 0; i + 1 < nodes.size(); ++ i)
+			str += Indent::paragraph(space + nodes[i].show(), "  ");
+		str += space + ") ";
+		return str;
 	}
 	vector<Node> nodes;
 };

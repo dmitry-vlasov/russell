@@ -51,6 +51,7 @@ int main (int argc, const char* argv[])
 		rus::Sys::release();
 		smm::Sys::release();
 		mm::Sys::release();
+		mm2::Sys::release();
 	} catch (const Error& err) {
 		cerr << err.what();
 		return 1;

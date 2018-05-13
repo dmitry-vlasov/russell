@@ -6,11 +6,21 @@ namespace mdl { namespace mm2 {
 
 class Source;
 class Assertion;
+class Var;
+
+struct VarDecl  {
+	VarDecl(uint l, uint t, uint v) : label(l), type(t), var(v) { }
+	uint label;
+	uint type;
+	uint var;
+	Var* make(bool inner, uint index) const;
+};
 
 class Math {
 	Table<Assertion> assertions;
 	Table<Source>    sources;
 public:
+	vector<VarDecl> decls;
 
 	string show() const;
 	string info() const;
@@ -26,7 +36,7 @@ struct Sys : public mdl::Sys<Sys, Math> {
 	typedef Source Src;
 	Sys(uint id) : mdl::Sys<Sys, Math>(id) { }
 	static string descr() { return "mm2"; }
-	static string lang() { return "mm"; }
+	static string lang() { return "mm(2)"; }
 	static string ext() { return "mm"; }
 	static const Actions& actions();
 };

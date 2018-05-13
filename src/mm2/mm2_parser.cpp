@@ -2,7 +2,13 @@
 #include <mm2_ast.hpp>
 #include "peglib.h"
 
-namespace mdl { namespace mm2 { namespace {
+namespace mdl { namespace mm2 {
+
+Var* VarDecl::make(bool inner, uint index) const {
+	return new mm2::Var(inner, index, label, type, var);
+}
+
+namespace {
 
 #define PARALLEL_PARSE
 
@@ -33,24 +39,25 @@ struct Hyp  {
 	}
 };
 
-struct Var  {
-	uint label;
-	uint type;
-	uint var;
-	mm2::Var* make(bool inner, uint index) const {
-		return new mm2::Var(inner, index, label, type, var);
-	}
-};
-
 struct Block {
-	typedef variant<Disj, Hyp, Var> Node;
+	typedef variant<Disj, Hyp, VarDecl> Node;
 
 	Block(Block* p = nullptr) : parent(p) { }
 
+	static vector<const VarDecl*> create_initial_vars() {
+		vector<const VarDecl*> vars;
+		for (const VarDecl& decl : Sys::get().math.decls) {
+			vars.push_back(&decl);
+		}
+		return vars;
+	}
+
 	Assertion* create_assertion(uint label, const vector<uint>& expr, const vector<uint>& proof) {
-		vector<const Hyp*>  essentials = gather<Hyp>();
-		vector<const Var*>  all_floatings  = gather<Var>();
-		vector<const Disj*> all_disjointed = gather<Disj>();
+		static vector<const VarDecl*> initial_vars = create_initial_vars();
+
+		vector<const VarDecl*> all_floatings = gather<VarDecl>(initial_vars);
+		vector<const Hyp*>     essentials = gather<Hyp>();
+		vector<const Disj*>    all_disjointed = gather<Disj>();
 
 		// Gather all symbols, used in assertion hypotheses and statement (header).
 		set<uint> ass_symbs;
@@ -60,12 +67,20 @@ struct Block {
 		}
 
 		// Collect floatings, which refer to assertion, and all variables.
-		vector<const Var*> floatings;
+		vector<const VarDecl*> floatings;
 		set<uint> flo_vars;
-		map<uint, const Var*> flo_map;
-		for (const Var* flo : all_floatings) {
+		map<uint, const VarDecl*> flo_map;
+		for (const VarDecl* flo : all_floatings) {
 			flo_map[flo->label] = flo;
 			if (ass_symbs.find(flo->var) != ass_symbs.end()) {
+				if (flo_vars.find(flo->var) != flo_vars.end()) {
+					for (auto it = floatings.begin(); it != floatings.end(); ++ it) {
+						if ((*it)->var == flo->var) {
+							floatings.erase(it);
+							break;
+						}
+					}
+				}
 				floatings.push_back(flo);
 				flo_vars.insert(flo->var);
 			}
@@ -76,7 +91,7 @@ struct Block {
 		for (uint l : proof) {
 			auto flo_it = flo_map.find(l);
 			if (flo_it != flo_map.end()) {
-				const Var* flo = (*flo_it).second;
+				const VarDecl* flo = (*flo_it).second;
 				if (ass_symbs.find(flo->var) == ass_symbs.end()) {
 					inner_vars.insert(flo->var);
 				}
@@ -84,8 +99,8 @@ struct Block {
 		}
 
 		// Collect inner proof floating declarations.
-		vector<const Var*> inners;
-		for (const Var* flo : all_floatings) {
+		vector<const VarDecl*> inners;
+		for (const VarDecl* flo : all_floatings) {
 			if (inner_vars.find(flo->var) != inner_vars.end()) {
 				inners.push_back(flo);
 			}
@@ -109,22 +124,27 @@ struct Block {
 
 		// Make final set of essentials.
 		uint i = 0;
+		map<uint, mm2::Hyp*> hyps_map;
+		map<uint, mm2::Var*> vars_map;
 		ass->hyps.reserve(essentials.size());
 		for (const Hyp* hyp : essentials) {
 			ass->hyps.emplace_back(hyp->make(i++, vars));
+			hyps_map[hyp->label] = ass->hyps.back().get();
 		}
 
 		// Make final set of floatings.
 		ass->outerVars.reserve(floatings.size());
 		i = 0;
-		for (const Var* flo : floatings) {
-			ass->outerVars.emplace_back(flo->make(i++, false));
+		for (const VarDecl* flo : floatings) {
+			ass->outerVars.emplace_back(flo->make(false, i++));
+			vars_map[flo->label] = ass->outerVars.back().get();
 		}
 
 		// Make final set of inners.
 		ass->innerVars.reserve(inners.size());
-		for (const Var* flo : inners) {
-			ass->innerVars.emplace_back(flo->make(i++, true));
+		for (const VarDecl* flo : inners) {
+			ass->innerVars.emplace_back(flo->make(true, i++));
+			vars_map[flo->label] = ass->innerVars.back().get();
 		}
 
 		ass->expr.reserve(expr.size());
@@ -132,34 +152,34 @@ struct Block {
 			ass->expr.emplace_back(s, vars.find(s) != vars.end());
 		}
 
+		ass->proof.refs.reserve(proof.size());
+		for (uint r : proof) {
+			auto h = hyps_map.find(r);
+			if (h != hyps_map.end()) {
+				ass->proof.refs.emplace_back((*h).second);
+				continue;
+			}
+			auto v = vars_map.find(r);
+			if (v != vars_map.end()) {
+				ass->proof.refs.emplace_back((*v).second);
+				continue;
+			}
+			ass->proof.refs.emplace_back(r);
+		}
 		return ass;
 	}
 
 	template<class N>
-	vector<const N*> gather() const {
+	vector<const N*> gather(const vector<const N*>& initial = vector<const N*>()) const {
 		vector<const N*> vect;
 		if (parent) {
-			vect = std::move(parent->gather<N>());
+			vect = std::move(parent->gather<N>(initial));
+		} else {
+			vect = initial;
 		}
 		for (const auto& n : nodes) {
 			if (std::holds_alternative<N>(n)) {
 				vect.emplace_back(&std::get<N>(n));
-			}
-		}
-		return vect;
-	}
-	template<class N, class M>
-	vector<const N*> gather() const {
-		vector<const N*> vect;
-		if (parent) {
-			vect = std::move(parent->gather<N, M>());
-		}
-		for (const auto& n : nodes) {
-			if (std::holds_alternative<N>(n)) {
-				vect.emplace_back(&std::get<N>(n));
-			}
-			if (std::holds_alternative<M>(n)) {
-				vect.emplace_back(&std::get<M>(n));
 			}
 		}
 		return vect;
@@ -240,7 +260,10 @@ public:
 			context.get<Context*>()->blocks.top().nodes.emplace_back(Hyp{sv[0].get<uint>(), sv[1].get<vector<uint>>()});
 		};
 		parser["FLO"] = [](const peg::SemanticValues& sv, peg::any& context) {
-			context.get<Context*>()->blocks.top().nodes.emplace_back(Var{sv[0].get<uint>(), sv[1].get<uint>()});
+			Context* c = context.get<Context*>();
+			if (c->blocks.top().parent) {
+				c->blocks.top().nodes.emplace_back(VarDecl{sv[0].get<uint>(), sv[1].get<uint>(), sv[2].get<uint>()});
+			}
 		};
 		parser["AX"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			Context* c = context.get<Context*>();
@@ -265,22 +288,19 @@ public:
 			Context* c = context.get<Context*>();
 			uint id = Sys::make_name(sv.token());
 			c->source->contents.emplace_back(unique_ptr<Import>(new Import(id)));
+#ifndef PARALLEL_PARSE
+			if (!Sys::get().math.get<Source>().access(id)->parsed) parse(id);
+#endif
 		};
 		parser["BLOCK"].enter = [](peg::any& c) {
 			Context* context = c.get<Context*>();
-			context->blocks.push(Block(&context->blocks.top()));
+			context->blocks.push(Block(context->blocks.empty() ? nullptr : &context->blocks.top()));
 		};
 		parser["BLOCK"].leave = [](peg::any& c) {
 			c.get<Context*>()->blocks.pop();
 		};
 		parser["SOURCE"] = [](const peg::SemanticValues& sv, peg::any& context) {
 			return context.get<Context*>()->source;
-		};
-		parser["SOURCE"].enter = [] (peg::any& c) {
-			c.get<Context*>()->blocks.push(Block());
-		};
-		parser["BLOCK"].leave = [](peg::any& c) {
-			c.get<Context*>()->blocks.pop();
 		};
 
 		parser.log = [label](size_t ln, size_t col, const std::string& err_msg) {

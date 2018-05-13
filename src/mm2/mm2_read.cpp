@@ -296,6 +296,40 @@ R"(
 }
 };
 
+template<int depth>
+struct WordStack {
+	WordStack() {
+		for (auto& w : words) {
+			w.beg = nullptr;
+			w.end = nullptr;
+		}
+	}
+	void push(const char* b, const char* e) {
+		for (auto x = b; x != e; ++ x) {
+			if (!isspace(*x)) {
+				words [index++] = Word{b, e};
+				if (index == depth) index = 0;
+				break;
+			}
+		}
+	}
+	string operator[](uint i) const {
+		Word w = words[(index + i) % depth];
+		return string (w.beg, w.end);
+	}
+	string last() const {
+		int i = (index == 0) ? depth - 1 : index - 1;
+		return string(words[i].beg, words[i].end);
+	}
+private:
+	struct Word {
+		const char* beg;
+		const char* end;
+	};
+	Word words[depth];
+	int index = 0;
+};
+
 void read(uint label) {
 	if (const Source* src = Sys::get().math.get<Source>().access(label)) {
 		if (src->has_changed()) {
@@ -315,34 +349,54 @@ void read(uint label) {
 		if (Sys::get().math.get<Source>().has(label)) continue;
 
 		Source* src = new Source(label);
-		src->read(&const_patches);
-		const string& data = src->data();
 		new_sources.push_back(label);
+		src->read(&const_patches);
 
-		string inc;
+		const string& data = src->data();
+
 		bool inside_inc = false;
 		bool inside_comm = false;
+		bool inside_flo = false;
+		int  block_depth = 0;
+		auto word_begin = data.begin();
+		WordStack<3> wordStack;
+
+		auto add_inc = [label](const WordStack<3>& wordStack, map<uint, set<uint>>& includes, queue<uint>& to_read) {
+			string inc = wordStack.last();
+			boost::trim(inc);
+			uint inc_label = Lex::toInt(Path::trim_ext(inc));
+			includes[label].insert(inc_label);
+			to_read.push(inc_label);
+		};
+
+		auto add_flo = [](const WordStack<3>& wordStack) {
+			string label = wordStack[0];
+			string type = wordStack[1];
+			string var = wordStack[2];
+			boost::trim(label);
+			boost::trim(type);
+			boost::trim(var);
+			Sys::mod().math.decls.emplace_back(Lex::toInt(label), Lex::toInt(type), Lex::toInt(var));
+		};
 
 		for (auto i = data.begin(); i != data.end(); ++ i) {
 			if (*i == '$') {
-				++i;
-				if (*i == '[' && !inside_comm) {
-					++i;
-					inside_inc = true;
+				++i; word_begin = i;
+				switch (*i) {
+				case '[': ++i; word_begin = i; if (!inside_comm) inside_inc = true; break;
+				case ']': ++i; word_begin = i; if (!inside_comm && inside_inc) { inside_inc = false; add_inc(wordStack, includes, to_read); } break;
+				case '(': ++i; word_begin = i; inside_comm = true; break;
+				case ')': ++i; word_begin = i; inside_comm = false; break;
+				case '{': ++i; word_begin = i; if (!inside_comm) { ++block_depth; } break;
+				case '}': ++i; word_begin = i; if (!inside_comm) { --block_depth; } break;
+				case 'f': ++i; word_begin = i; if (!inside_comm && block_depth == 0) inside_flo = true; break;
+				case '.': ++i; word_begin = i; if (!inside_comm && inside_flo) { inside_flo = false; add_flo(wordStack); } break;
 				}
-				if (*i == ']' && !inside_comm) {
-					++i;
-					inside_inc = false;
-					boost::trim(inc);
-					uint inc_label = Lex::toInt(Path::trim_ext(inc));
-					inc.clear();
-					includes[label].insert(inc_label);
-					to_read.push(inc_label);
-				}
-				if (*i == '(') { ++i; inside_comm = true; }
-				if (*i == ')') { ++i; inside_comm = false; }
 			} else {
-				if (inside_inc) inc += *i;
+				if (isspace(*i)) {
+					wordStack.push(&*word_begin, &*i);
+					word_begin = i;
+				}
 			}
 		}
 	}

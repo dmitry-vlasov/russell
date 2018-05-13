@@ -100,9 +100,9 @@ Expr eval(Tree::Node& n) {
 		case Tree::Node::REF: {
 			const Ref* ref = n.val.ref;
 			switch (ref->val.index()) {
-			case 0 /* Var */ : n.expr = ref->var()->expr; break;
-			case 1 /* Hyp */ : n.expr = ref->hyp()->expr; break;
-			case 2 /* Ass */ : n.expr = ref->ass()->expr; break;
+			case 0 : n.expr = ref->var()->expr; break;
+			case 1 : n.expr = ref->hyp()->expr; break;
+			case 2 : n.expr = ref->ass()->expr; break;
 			default : assert(false && "impossible");
 			}
 		}}
@@ -118,18 +118,17 @@ Expr eval(Tree* tree) {
 	if (!ref->is_assertion()) return eval(n);
 	const Assertion* ass = ref->ass();
 	Subst sub;
-	uint flo_ind = 0, esss = ass->hyps.size();
+	uint ind = 0;
 	for (const auto& flo : ass->outerVars) {
-		Tree::Node& f = tree->nodes[esss + flo_ind ++];
+		Tree::Node& f = tree->nodes[ind ++];
 		sub[flo.get()->var()] = eval(f);
 	}
-	uint ess_ind = 0;
 	for (const auto& ess : ass->hyps) {
-		if (apply_subst(sub, ess.get()->expr) != eval(tree->nodes[ess_ind ++])) {
+		if (apply_subst(sub, ess.get()->expr) != eval(tree->nodes[ind ++])) {
 			string msg = "hypothesis mismatch:\n";
 			msg += show_ex(apply_subst(sub, ess.get()->expr)) + "\n";
 			msg += "and\n";
-			msg += show_ex(eval(tree->nodes[ess_ind])) + "\n";
+			msg += show_ex(eval(tree->nodes[ind - 1])) + "\n";
 			msg += "assertion " + Lex::toStr(ass->id()) + "\n";
 			throw Error("verification", msg);
 		}

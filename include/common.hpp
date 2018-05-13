@@ -96,6 +96,10 @@ inline ostream& operator << (ostream& os, const Writable& w) {
 	w.write(os); return os;
 }
 
+inline string show(const Writable& w) {
+	ostringstream ss; w.write(ss); return ss.str();
+}
+
 template<class T>
 void deep_write(const T* target, auto get_cont, auto get_inc, auto is_inc) {
 	typedef T Source;
