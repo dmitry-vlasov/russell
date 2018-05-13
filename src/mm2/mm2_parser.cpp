@@ -120,7 +120,7 @@ struct Block {
 		ass->disj.vect.reserve(all_disjointed.size());
 		for (const Disj* disj : all_disjointed) {
 			vector<uint>* d = disj->make(vars);
-			if (!d->empty()) {
+			if (d->size() > 1) {
 				ass->disj.vect.emplace_back(disj->make(vars));
 			} else {
 				delete d;

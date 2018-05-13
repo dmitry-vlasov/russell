@@ -228,9 +228,6 @@ void translate_step(const Step* st, const Assertion* thm, vector<mm2::Ref>& mm2_
 		translate_proof(st->proof(), thm, mm2_proof, maps);
 		return;
 	}
-	for (auto ref : st->refs) {
-		translate_ref(ref, thm, mm2_proof, maps);
-	}
 	const Assertion* ass = st->ass();
 	Substitution ps = unify_forth(ass->props[0]->expr, st->expr);
 	if (!ps) throw Error("proposition unification failed");
@@ -242,25 +239,19 @@ void translate_step(const Step* st, const Assertion* thm, vector<mm2::Ref>& mm2_
 	for (auto v : ass->vars.v) {
 		translate_term(ps.sub().at(v), thm, mm2_proof, maps);
 	}
+	for (auto ref : st->refs) {
+		translate_ref(ref, thm, mm2_proof, maps);
+	}
 	mm2_proof.emplace_back(ass->id());
 }
 
 vector<unique_ptr<mm2::Var>> translate_inners(const Vars& vars, Maps& maps, const Assertion* thm, uint ind_0) {
 	vector<unique_ptr<mm2::Var>> inn_vect;
-	//mm2::Vars* mm2_vars = nullptr;
-	if (vars.v.size()) {
-		//maps.local.thm->vars.push_back(new mm2::Vars);
-		//mm2_vars = maps.local.thm->variables.back();
-	}
 	for (uint i = 0; i < vars.v.size(); ++ i) {
 		Symbol v = vars.v[i];
 		mm2::Var* inn = new mm2::Var(true, i + ind_0, thm->id(), v.type()->id(), v.literal());
-		/*inn->index = i + ind_0;
-		inn->expr.reserve(2);
-		inn->expr.push_back(mm2::Symbol(v.type()->id()));
-		inn->expr.push_back(mm2::Symbol(v.lit, true));*/
 		inn_vect.emplace_back(inn);
-		//mm2_vars->expr.push_back(mm2::Symbol(v.lit, true));
+		maps.local.thm->vars.vars.push_back(v.literal());
 		maps.local.inners[thm][v] = inn;
 	}
 	return inn_vect;

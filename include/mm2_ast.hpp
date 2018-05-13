@@ -15,7 +15,7 @@ struct Comment : public Writable {
 	string text;
 	Comment(const string& t) : text(t) { }
 	void write(ostream& os) const override {
-		os << "$(" << text << "$)\n";
+		os << "$( " << text << " $)\n";
 	}
 };
 
@@ -38,7 +38,9 @@ struct Const : public Writable {
 struct Vars : public Writable {
 	vector<uint> vars;
 	void write(ostream& os) const override {
-		os << "\t$v "; for (uint v : vars) os << Lex::toStr(v) << " "; os << " $.\n";
+		if (vars.size()) {
+			os << "\t$v "; for (uint v : vars) os << Lex::toStr(v) << " "; os << " $.\n";
+		}
 	}
 };
 
